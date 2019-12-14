@@ -1,0 +1,433 @@
+NAWALL:
+	Inherits: ^Wall
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 20
+		Prerequisites: ~structures.nod, ~techlevel.low
+		Description: Stops infantry and blocks enemy fire.\nCan NOT be crushed by tanks.
+	-SoundOnDamageTransition:
+	Tooltip:
+		Name: Concrete Wall
+	Health:
+		HP: 22500
+	Armor:
+		Type: Concrete
+	Crushable:
+		CrushClasses: heavywall
+	LineBuild:
+		NodeTypes: wall, turret
+	Replaceable:
+		Types: NodGate
+
+NAGATE_A:
+	Inherits: ^Gate_A
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 40
+		Prerequisites: nahand, ~structures.nod, ~techlevel.low
+	Tooltip:
+		Name: Nod Gate
+	Replacement:
+		ReplaceableTypes: NodGate
+
+NAGATE_B:
+	Inherits: ^Gate_B
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 60
+		Prerequisites: nahand, ~structures.nod, ~techlevel.low
+	Tooltip:
+		Name: Nod Gate
+	Replacement:
+		ReplaceableTypes: NodGate
+
+NAPOST:
+	Inherits: ^Building
+	Inherits@IDISABLED: ^DisableOnLowPowerOrPowerDown
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 150
+		Prerequisites: naapwr, ~structures.nod
+		Description: Stops infantry and blocks enemy fire.\nCan NOT be crushed by tanks.
+	Valued:
+		Cost: 200
+	Tooltip:
+		Name: Laser Fence
+	Health:
+		HP: 30000
+	Armor:
+		Type: Concrete
+	-Capturable:
+	LineBuild:
+		Range: 10
+		NodeTypes: laserfencenode
+		SegmentType: nafnce
+		SegmentsRequireNode: true
+	Selectable:
+		Bounds: 42, 44, 0, -12
+	LineBuildNode:
+		Types: laserfencenode
+	Power:
+		Amount: -25
+	RevealsShroud:
+		Range: 4c0
+	WithIdleOverlay@LIGHTS:
+		RequiresCondition: !build-incomplete && !disabled
+		Sequence: lights
+	WithIdleOverlay@CHAINOFLIGHTS:
+		RequiresCondition: !build-incomplete && !disabled
+		Sequence: chainoflights
+	LineBuildSegmentExternalCondition:
+		RequiresCondition: !build-incomplete && !disabled
+		Condition: active-posts
+
+NAFNCE:
+	Inherits: ^Wall
+	Tooltip:
+		Name: Laser Fence
+	LineBuild:
+		NodeTypes: laserfence
+	LineBuildNode:
+		Types: laserfence
+	-Crushable:
+	-Sellable:
+	Demolishable:
+		-Condition:
+	-Targetable:
+	-Building:
+	EnergyWall:
+		ActiveCondition: active-posts == 2
+		Weapon: LaserFence
+	GrantConditionOnLineBuildDirection@X:
+		Direction: X
+		Condition: laserfence-direction-x
+	GrantConditionOnLineBuildDirection@Y:
+		Direction: Y
+		Condition: laserfence-direction-y
+	-WithWallSpriteBody:
+	ExternalCondition@ACTIVE:
+		Condition: active-posts
+	WithWallSpriteBody@XENABLED:
+		RequiresCondition: laserfence-direction-x && active-posts == 2
+		Type: laserfence
+		Sequence: enabled-x
+		Name: x-enabled
+	WithWallSpriteBody@YENABLED:
+		RequiresCondition: laserfence-direction-y && active-posts == 2
+		Type: laserfence
+		Sequence: enabled-y
+		Name: y-enabled
+	WithSpriteBody@XDISABLED:
+		RequiresCondition: laserfence-direction-x && active-posts < 2
+		Sequence: disabled-x
+		Name: x-disabled
+	WithSpriteBody@YDISABLED:
+		RequiresCondition: laserfence-direction-y && active-posts < 2
+		Sequence: disabled-y
+		Name: y-disabled
+	BlocksProjectiles:
+		RequiresCondition: active-posts == 2
+	DamageMultiplier: # Prevent all normal damage, but still allows direct kills from the post
+		Modifier: 0
+	Explodes:
+		Weapon: BuildingExplosions
+		EmptyWeapon: BuildingExplosions
+		Type: Footprint
+	ThrowsShrapnel@SMALL:
+		Weapons: SmallDebris
+		Pieces: 0, 1
+		Range: 2c0, 5c0
+	Interactable:
+		Bounds: 48, 24
+
+NALASR:
+	Inherits: ^Defense
+	Inherits@IDISABLE: ^DisableOnPowerDown
+	Inherits@AUTOTARGET: ^AutoTargetGround
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Laser Turret
+	Buildable:
+		Queue: Defense
+		Prerequisites: nahand, ~structures.nod, ~techlevel.low
+		BuildPaletteOrder: 90
+		Description: Basic base defense.\nRequires power to operate.\n  Strong vs Ground units\n  Weak vs Aircraft
+	Selectable:
+		Bounds: 40, 30, -8, -6
+		DecorationBounds: 40, 36, -8, -8
+	Health:
+		HP: 50000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		Range: 7c0
+	DetectCloaked:
+		Range: 3c0
+	Turreted:
+		TurnSpeed: 10
+		InitialFacing: 224
+		Offset: 298,-171,288
+	AttackTurreted:
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: empdisable || disabled
+	Armament:
+		Weapon: TurretLaserFire
+		LocalOffset: 498,0,317
+	RenderVoxels:
+	WithVoxelTurret:
+		RequiresCondition: !build-incomplete
+	Power:
+		Amount: -40
+	SelectionDecorations:
+	BodyOrientation:
+		QuantizedFacings: 0
+
+NAOBEL:
+	Inherits: ^Defense
+	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
+	Inherits@AUTOTARGET: ^AutoTargetGround
+	Inherits@SHAPE: ^2x2Shape
+	Valued:
+		Cost: 1500
+	Tooltip:
+		Name: Obelisk of Light
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 160
+		Prerequisites: natech, ~structures.nod, ~techlevel.high
+		Description: Advanced base defense.\nRequires power to operate.\n  Strong vs Ground units\n  Weak vs Aircraft
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	Selectable:
+		Bounds: 88, 42, 0, -6
+		DecorationBounds: 88, 72, 0, -12
+	Health:
+		HP: 72500
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		Range: 8c0
+	Armament:
+		Weapon: ObeliskLaserFire
+		LocalOffset: 1980,297,1131
+	AttackCharges:
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: empdisable || disabled
+		ChargeLevel: 65
+		ChargingCondition: charging
+	AmbientSound:
+		RequiresCondition: charging && !disabled
+		SoundFiles: obelpowr.aud
+		Interval: 30, 40
+	WithChargeOverlay:
+		RequiresCondition: !build-incomplete
+		Palette: player
+		IsPlayerPalette: true
+	WithIdleOverlay@LIGHTS:
+		RequiresCondition: !build-incomplete && !disabled
+		Sequence: idle-lights
+	Power:
+		Amount: -150
+	SelectionDecorations:
+
+NASAM:
+	Inherits: ^Defense
+	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
+	Inherits@AUTOTARGET: ^AutoTargetAir
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: S.A.M. Site
+	Buildable:
+		Queue: Defense
+		Prerequisites: naradr, ~structures.nod, ~techlevel.medium
+		BuildPaletteOrder: 100
+		Description: Nod Anti-Air base defense.\nRequires power to operate.\n  Strong vs Aircraft\n  Weak vs Ground units
+	Selectable:
+		Bounds: 40, 30, -3, -8
+		DecorationBounds: 40, 36, -3, -8
+	Health:
+		HP: 60000
+	Armor:
+		Type: Wood
+	BodyOrientation:
+		QuantizedFacings: 32
+	RenderRangeCircle:
+		RangeCircleType: aa
+	Turreted:
+		TurnSpeed: 10
+		InitialFacing: 224
+	AttackTurreted:
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: empdisable || disabled
+	WithSpriteTurret:
+		RequiresCondition: !build-incomplete
+		Recoils: false
+	Armament:
+		Weapon: RedEye2
+		LocalOffset: 543,0,815
+	Power:
+		Amount: -30
+	SelectionDecorations:
+
+NASTLH:
+	Inherits: ^Building
+	Inherits@IDISABLED: ^DisableOnLowPowerOrPowerDown
+	Inherits@SHAPE: ^3x2Shape
+	HitShape:
+		TargetableOffsets: 250,0,0, 600,-864,0
+	Valued:
+		Cost: 2500
+	Tooltip:
+		Name: Stealth Generator
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 170
+		Prerequisites: proc, natech, ~structures.nod, ~techlevel.high
+		Description: Generates a cloaking field\nto hide your forces from the enemy.
+	Building:
+		Footprint: xxx XXX
+		Dimensions: 3,2
+	Health:
+		HP: 60000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		Range: 6c0
+		MaxHeightDelta: 3
+	WithIdleOverlay@pulse:
+		RequiresCondition: !build-incomplete && !empdisable && !disabled
+		Sequence: pulse
+	WithRangeCircle:
+		Range: 12c0
+		Type: cloakgenerator
+	Power:
+		Amount: -350
+	ProximityExternalCondition:
+		RequiresCondition: !empdisable && !disabled
+		Condition: cloakgenerator
+		Range: 12c0
+		EnableSound: cloak5.aud
+		DisableSound: cloak5.aud
+		AffectsParent: true
+	Selectable:
+		Bounds: 106, 48, 8, -6
+		DecorationBounds: 106, 60, 8, -15
+	SelectionDecorations:
+
+NAMISL:
+	Inherits: ^Building
+	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
+	Inherits@SHAPE: ^2x2Shape
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 180
+		Prerequisites: natech, ~structures.nod, ~techlevel.superweapons
+		BuildLimit: 1
+		Description: Launches a devastating missile\nat a target location.\nRequires power to operate.\nMaximum 1 can be built.
+	Valued:
+		Cost: 1300
+	Tooltip:
+		Name: Nod Missile Silo
+	ProvidesPrerequisite:
+		Prerequisite: tech
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	Selectable:
+		Bounds: 75,48
+		DecorationBounds: 75,48
+	Health:
+		HP: 100000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		Range: 4c0
+	WithIdleOverlay@LIGHTS:
+		RequiresCondition: !build-incomplete && !disabled
+		Sequence: idle-lights
+	Power:
+		Amount: -50
+	ProvidesPrerequisite@buildingname:
+	SupportPowerChargeBar:
+	NukePower:
+		PauseOnCondition: empdisable || disabled
+		Cursor: nuke
+		Icon: clustermissile
+		ChargeInterval: 13500
+		Description: Cluster Missile
+		LongDesc: Launches an explosive cluster warhead\nat a target location.
+		EndChargeSpeechNotification: ClusterMissileReady
+		SelectTargetSpeechNotification: SelectTarget
+		IncomingSpeechNotification: MissileLaunchDetected
+		LaunchSound: icbm1.aud
+		MissileWeapon: ClusterMissile
+		MissileDelay: 10
+		DetonationAltitude: 5c0
+		SpawnOffset: 72,72,0
+		DisplayTimerStances: None
+		DisplayBeacon: False
+		DisplayRadarPing: True
+		BeaconPoster:
+		CameraRange: 10c0
+		FlightVelocity: 1c0
+		TrailImage: small_smoke_trail
+		TrailPalette: effectalpha75
+		TrailInterval: 0
+		TrailSequences: idle
+	WithNukeLaunchOverlay:
+	SelectionDecorations:
+
+NAWAST:
+	Inherits: ^Building
+	HitShape:
+		Type: Rectangle
+			TopLeft: -1536, -1536
+			BottomRight: 512, 1536
+	Valued:
+		Cost: 1600
+	Tooltip:
+		Name: Waste Refinery
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 190
+		Prerequisites: namisl, ~structures.nod, ~techlevel.superweapons
+		BuildLimit: 1
+		Description: Processes Veins\ninto useable resources.\nMaximum 1 can be built.
+	Building:
+		Footprint: Xx= xx= Xx=
+		Dimensions: 3,3
+	Selectable:
+		Bounds: 100, 60, 5, -5
+		DecorationBounds: 100, 60, 5, -5
+	Health:
+		HP: 40000
+	RevealsShroud:
+		Range: 6c0
+		MaxHeightDelta: 3
+	TiberianSunRefinery:
+		DockAngle: 160
+		DockOffset: 2,1
+	StoresResources:
+		PipColor: Red
+		PipCount: 15
+		Capacity: 56
+	Power:
+		Amount: -40
+	FreeActor:
+		Actor: WEED
+		SpawnOffset: 3,1
+		Facing: 160
+	WithIdleOverlay@GLOW:
+		RequiresCondition: !build-incomplete
+		Sequence: idle-glow
+	WithIdleOverlay@LIGHTS:
+		RequiresCondition: !build-incomplete
+		Sequence: idle-lights
+	WithIdleOverlay@BIB:
+		RequiresCondition: !build-incomplete
+		Sequence: bib
+	ProvidesPrerequisite@buildingname:
+	SelectionDecorations:

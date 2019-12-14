@@ -1,0 +1,2705 @@
+fcom:
+	idle:
+	damaged-idle:
+		Start: 1
+	make: fcommake
+		Length: *
+	dead:
+		Start: 1
+		Tick: 800
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: missicon2
+	
+fcom.destroyed:
+	idle: fcom
+		Start: 1
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+			
+
+hosp:
+	idle:
+		Length: 4
+	damaged-idle:
+		Start: 4
+		Length: 4
+	dead:
+		Start: 8
+		Tick: 800
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	make: hospmake
+		Length: *
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: hospicon
+	
+hosp.destroyed:
+	idle: hosp
+		Start: 8
+
+bio:
+	idle:
+	damaged-idle:
+		Start: 1
+	dead:
+		Start: 2
+		Tick: 800
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	make: biomake
+		Length: *
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+		
+bio.destroyed:
+	idle: bio
+		Start: 2
+
+oilb:
+	idle:
+	damaged-idle:
+		Start: 1
+		Length: *
+	make:
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+		
+oilb.destroyed:
+	idle: oilb
+		Start: 1
+		Length: *
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+			
+orep:
+	idle:
+	damaged-idle:
+		Start: 1
+	make: orepmake
+		Length: *
+	dead:
+		Start: 1
+		Tick: 800
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: orepicon
+
+orep.destroyed:
+	idle: orep
+		Start: 1
+		Length: *
+		Offset: 0,-10
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+
+fact:
+	idle:
+	make: factmake
+		Length: *
+	build:
+		Start: 1
+		Length: 25
+	pdox: factpdox
+		Length: 80
+	damaged-idle:
+		Start: 26
+	damaged-build:
+		Start: 27
+		Length: 25
+	damaged-pdox: factpdox
+		Start: 80
+		Length: 80
+	dead: factdead
+		Tick: 800
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: facticon
+	fake-icon: facficon
+
+proc:
+	idle:
+		ZOffset: -1c511
+	damaged-idle:
+		Start: 1
+		ZOffset: -1c511
+	idle-top: proctop
+		ZOffset: 0
+	damaged-idle-top: proctop
+		Start: 1
+		ZOffset: 0
+	make: procmake
+		Length: *
+	dead: procdead
+		Tick: 800
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: procicon
+
+silo:
+	idle:
+		Offset: 0,-1
+	damaged-idle:
+		Start: 9
+		Offset: 0,-1
+	stages:
+		Length: 9
+		Offset: 0,-1
+	damaged-stages:
+		Start: 9
+		Length: 9
+		Offset: 0,-1
+	make: silomake
+		Length: *
+		Offset: 0,-1
+	bib: mbSILO
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+			BARREN: DESERT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: siloicon
+
+powr:
+	idle:
+	damaged-idle:
+		Start: 1
+	make: powrmake
+		Length: *
+	dead: powrdead
+		Tick: 800
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: powricon
+	fake-icon: fpwricon
+
+apwr:
+	idle:
+		Offset: 0,-10
+	damaged-idle:
+		Start: 1
+		Offset: 0,-10
+	make: apwrmake
+		Length: *
+		Offset: 0,-10
+	dead: apwrdead
+		Tick: 800
+		Offset: 0,-10
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: apwricon
+	fake-icon: fapwicon
+
+barr:
+	idle:
+		Length: 10
+		Offset: 0,-6
+	damaged-idle:
+		Start: 10
+		Length: 10
+		Offset: 0,-6
+	make: barrmake
+		Length: *
+		Offset: 0,-6
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: barricon
+
+tent:
+	Defaults:
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+			JUNGLE: TEMPERAT
+			WINTER: TEMPERAT
+			BARREN: TEMPERAT
+			DUNE: DESERT
+	idle:
+		Length: 10
+	damaged-idle:
+		Start: 10
+		Length: 10
+	make: tentmake
+		Length: *
+	bib: bib3
+		Length: *
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		UseTilesetExtension: false
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		UseTilesetExtension: false
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: tenticon
+		UseTilesetExtension: false
+
+kenn:
+	idle:
+	damaged-idle:
+		Start: 1
+	make: kennmake
+		Length: *
+	bib: mbSILO
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			BARREN: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: kennicon
+
+dome:
+	idle:
+	damaged-idle:
+		Start: 1
+	make: domemake
+		Length: *
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: domeicon
+	fake-icon: domficon
+
+atek:
+	idle:
+	damaged-idle:
+		Start: 1
+	make: atekmake
+		Length: *
+	active: sputdoor
+		Length: *
+		Offset: -4,0
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: atekicon
+	fake-icon: ateficon
+
+stek:
+	idle:
+	damaged-idle:
+		Start: 1
+	make: stekmake
+		Length: *
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: stekicon
+
+weap:
+	idle:
+	damaged-idle:
+		Start: 1
+	place: weapmake
+		Start: 14
+	make: weapmake
+		Length: *
+	build-top: weap3
+		Length: 10
+		ZOffset: 511
+	damaged-build-top: weap2
+		Start: 4
+		Length: 4
+		ZOffset: 511
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 1536
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: weapicon
+	fake-icon: weaficon
+
+hpad:
+	idle:
+		ZOffset: -1023
+	damaged-idle:
+		Start: 7
+		ZOffset: -1023
+	active:
+		Start: 1
+		Length: 6
+		Tick: 100
+		ZOffset: -1023
+	damaged-active:
+		Start: 8
+		Length: 6
+		Tick: 100
+		ZOffset: -1023
+	make: hpadmake
+		Length: *
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: hpadicon
+
+afld:
+	idle: afldidle
+		Length: 8
+		Tick: 160
+		ZOffset: -1023
+		Offset: 0,-4
+	damaged-idle: afldidle
+		Start: 8
+		Length: 8
+		Tick: 160
+		ZOffset: -1023
+		Offset: 0,-4
+	active:
+		Length: 8
+		Tick: 160
+		ZOffset: -1023
+		Offset: 0,-4
+	damaged-active:
+		Start: 8
+		Length: 8
+		Tick: 160
+		ZOffset: -1023
+		Offset: 0,-4
+	make: afldmake
+		Length: *
+		Offset: 0,-4
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+		ZOffset: -1024
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: afldicon
+
+spen:
+	idle:
+	damaged-idle:
+		Start: 1
+	make: spenmake
+		Length: *
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: spenicon
+
+syrd:
+	idle:
+	damaged-idle:
+		Start: 1
+	make: syrdmake
+		Length: *
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: syrdicon
+	fake-icon: syrficon
+
+fix:
+	idle:
+		Offset: 0,1
+		ZOffset: -1c511
+	damaged-idle:
+		Start: 7
+		Offset: 0,1
+		ZOffset: -1c511
+	active:
+		Start: 1
+		Length: 6
+		Offset: 0,1
+		Tick: 100
+		ZOffset: -1c511
+	damaged-active:
+		Start: 8
+		Length: 6
+		Offset: 0,1
+		Tick: 100
+		ZOffset: -1c511
+	make: fixmake
+		Length: *
+		Offset: 0,1
+	bib: mbFIX
+		Length: *
+		ZOffset: -1c511
+		Offset: 0,-4
+		UseTilesetExtension: true
+		TilesetOverrides:
+			BARREN: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: fixicon
+	fake-icon: fixficon
+
+gun:
+	idle:
+		Facings: 32
+		UseClassicFacingFudge: True
+	recoil:
+		Start: 32
+		Facings: 32
+		UseClassicFacingFudge: True
+	make: gunmake
+		Length: *
+	damaged-idle:
+		Start: 64
+		Facings: 32
+		UseClassicFacingFudge: True
+	damaged-recoil:
+		Start: 96
+		Facings: 32
+		UseClassicFacingFudge: True
+	muzzle: gunfire2
+		Length: 5
+	bib: mbGUN
+		Length: *
+		Offset: -1,-1
+		UseTilesetExtension: true
+		TilesetOverrides:
+			BARREN: TEMPERAT		
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: gunicon
+
+agun:
+	idle:
+		Facings: 32
+		UseClassicFacingFudge: True
+		Offset: 0,-13
+	recoil:
+		Start: 32
+		Facings: 32
+		UseClassicFacingFudge: True
+		Offset: 0,-13
+	make: agunmake
+		Length: *
+		Offset: 0,-13
+	damaged-idle:
+		Start: 64
+		Facings: 32
+		UseClassicFacingFudge: True
+		Offset: 0,-13
+	damaged-recoil:
+		Start: 96
+		Facings: 32
+		UseClassicFacingFudge: True
+		Offset: 0,-13
+	muzzle: gunfire2
+		Start: 1
+		Length: 4
+	bib: mbAGUN
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			JUNGLE: TEMPERAT
+			BARREN: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: agunicon
+
+sam:
+	idle: sam2
+		Facings: 32
+		UseClassicFacingFudge: True
+		Offset: -2,-2
+	damaged-idle: sam2
+		Start: 34
+		Facings: 32
+		UseClassicFacingFudge: True
+		Offset: -2,-2
+	make: sammake
+		Length: *
+		Offset: -2,-2
+	muzzle: samfire
+		Length: 18
+		Facings: 8
+	bib: mbSAM
+		Length: *
+		Offset: 0,1
+		UseTilesetExtension: true
+		TilesetOverrides:
+			BARREN: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: samicon
+
+ftur:
+	idle:
+		Offset: 0,-2
+	damaged-idle:
+		Start: 1
+		Offset: 0,-2
+	make: fturmake
+		Length: *
+		Offset: 0,-2
+	bib: mbFTUR
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			BARREN: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: fturicon
+
+tsla:
+	idle:
+		Offset: 0,-13
+	damaged-idle:
+		Start: 10
+		Offset: 0,-13
+	make: tslamake
+		Length: *
+		Offset: 0,-13
+	active:
+		Start: 0
+		Length: 10
+		Tick: 100
+		Offset: 0,-13
+	damaged-active:
+		Start: 11
+		Length: 9
+		Tick: 100
+		Offset: 0,-13
+	bib: mbTSLA
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			BARREN: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: tslaicon
+
+pbox:
+	idle:
+	damaged-idle:
+		Start: 1
+	make: pboxmake
+		Length: *
+	muzzle: minigun
+		Length: 6
+		Facings: 8
+	bib: mbPBOX
+		Length: *
+		Offset: 0,-2
+		UseTilesetExtension: true
+		TilesetOverrides:
+			JUNGLE: TEMPERAT
+			BARREN: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: pboxicon
+
+hbox:
+	Defaults:
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	idle:
+	damaged-idle:
+		Start: 2
+	make: hboxmake
+		Length: *
+	muzzle: minigun
+		Length: 6
+		Facings: 8
+		UseTilesetExtension: false
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		UseTilesetExtension: false
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		UseTilesetExtension: false
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: hboxicon
+		UseTilesetExtension: false
+
+gap:
+	idle:
+		Length: 32
+		Offset: 0,-14
+	damaged-idle:
+		Start: 32
+		Length: 32
+		Offset: 0,-14
+	make: gapmake
+		Length: *
+		Offset: 0,-14
+	bib: mbGAP
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			JUNGLE: TEMPERAT
+			BARREN: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: gapicon
+
+iron:
+	idle:
+		Offset: 0,-12
+	active:
+		Length: 11
+		Offset: 0,-12
+		Tick: 140
+	damaged-idle:
+		Start: 11
+		Offset: 0,-12
+	damaged-active:
+		Start: 11
+		Length: 11
+		Offset: 0,-12
+	make: ironmake
+		Length: *
+		Offset: 0,-12
+	bib: mbIRON
+		Length: *
+		Offset: 0,2
+		UseTilesetExtension: true
+		TilesetOverrides:
+			JUNGLE: TEMPERAT
+			BARREN: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: ironicon
+
+pdox:
+	idle:
+	damaged-idle:
+		Start: 29
+	active:
+		Length: 29
+		Tick: 140
+	damaged-active:
+		Start: 29
+		Length: 29
+	make: pdoxmake
+		Length: *
+	bib: mbPDOX
+		Length: *
+		Offset: 0,-4
+		UseTilesetExtension: true
+		TilesetOverrides:
+			JUNGLE: TEMPERAT
+			BARREN: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: pdoxicon
+	fake-icon: pdoficon
+
+mslo:
+	Defaults:
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+			WINTER: TEMPERAT
+			DUNE: DESERT
+	idle:
+	damaged-idle:
+		Start: 8
+	make: mslomake
+		Length: *
+	active:
+		Start: 1
+		Length: 7
+		Tick: 80
+	damaged-active:
+		Start: 9
+		Length: 7
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		UseTilesetExtension: false
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		UseTilesetExtension: false
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: msloicon2
+		UseTilesetExtension: false
+	fake-icon: mslficon
+		UseTilesetExtension: false
+
+miss:
+	idle:
+	damaged-idle:
+		Start: 1
+	dead:
+		Start: 2
+		Tick: 800
+	make: missmake
+		Length: *
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: missicon
+	
+gtek:
+	idle:
+	damaged-idle:
+		Start: 1
+	dead:
+		Start: 2
+		Tick: 800
+	make: gtekmake
+		Length: *
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: gtekicnh
+	
+miss.destroyed:
+	idle: miss
+		Start: 2
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+
+brik:
+	idle:
+		Length: 16
+	scratched-idle:
+		Start: 16
+		Length: 16
+	damaged-idle:
+		Start: 32
+		Length: 16
+	icon: brikicon
+
+vgate:
+	make:
+		Length: 7
+	idle:
+		Frames: 6, 5, 4, 3, 2, 1, 0
+		Length: 7
+		ZOffset: -1c511
+	damaged-idle:
+		Frames: 13, 12, 11, 10, 9, 8, 7
+		Length: 7
+		ZOffset: -1c511
+
+agate:
+	make:
+		Length: 7
+	idle:
+		Frames: 6, 5, 4, 3, 2, 1, 0
+		Length: 7
+		ZOffset: -1c511
+	damaged-idle:
+		Frames: 13, 12, 11, 10, 9, 8, 7
+		Length: 7
+		ZOffset: -1c511
+
+sgate:
+	Inherits: agate
+
+sbag:
+	idle:
+		Length: 16
+	icon: sbagicon
+
+fenc:
+	idle:
+		Length: 16
+	icon: fencicon
+
+cycl:
+	idle:
+		Length: 16
+	damaged-idle:
+		Start: 16
+		Length: 16
+
+pyle:
+	idle:
+		Length: 10
+		Tick: 100
+	damaged-idle:
+		Start: 10
+		Length: 10
+		Tick: 100
+	dead:
+		Start: 20
+		Tick: 100
+	make: pylemake
+		Length: *
+		Tick: 80
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: pyleicnh
+
+hand:
+	idle:
+	damaged-idle:
+		Start: 1
+	dead:
+		Start: 2
+	make: handmake
+		Length: *
+		Tick: 80
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: handicnh
+
+afac:
+	idle:
+		Length: 4
+		Tick: 160
+	build:
+		Start: 4
+		Length: 20
+		Tick: 100
+	buildnod:
+		Start: 4
+		Length: 20
+		Tick: 100
+	pdox: afac
+		Length: 4
+		Tick: 160
+	damaged-idle:
+		Start: 24
+		Length: 4
+		Tick: 160
+	damaged-build:
+		Start: 28
+		Length: 20
+		Tick: 100
+	damaged-pdox: afac
+		Start: 24
+		Length: 4
+		Tick: 160
+	dead:
+		Start: 48
+	make: afacmake
+		Length: *
+		Tick: 80
+	makenod: nodfactmake
+		Length: *
+		Tick: 80
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: afacicon
+
+nuke:
+	idle:
+		Length: 4
+		Tick: 1000
+	damaged-idle:
+		Start: 4
+		Length: 4
+		Tick: 1000
+	dead:
+		Start: 8
+		Tick: 1000
+	make: nukemake
+		Length: *
+		Tick: 80
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: nukeicnh
+
+nuk2:
+	idle:
+		Length: 4
+		Tick: 1000
+	damaged-idle:
+		Start: 4
+		Length: 4
+		Tick: 1000
+	dead:
+		Start: 8
+	make: nuk2make
+		Length: *
+		Tick: 80
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: nuk2icnh
+
+awep:
+	idle:
+	damaged-idle:
+		Start: 1
+	dead: awep
+		Start: 2
+	make: awepmake
+		Length: *
+		Tick: 80
+	place: awepmake
+		Start: 19
+	build-top: awep2
+		Length: 10
+		ZOffset: 511
+	damaged-build-top: awep2
+		Start: 10
+		Length: 10
+		ZOffset: 511
+	idle-top: awep2
+	damaged-idle-top: awep2
+		Start: 4
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 2048
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 2048
+	icon: awepicnh
+
+astrip:
+	idle:
+		Tick: 120
+		ZOffset: -1023
+	active:
+		Length: 16
+		Tick: 120
+		ZOffset: -1023
+	damaged-idle:
+		Start: 16
+		Tick: 120
+		ZOffset: -1023
+	damaged-active:
+		Start: 16
+		Length: 16
+		Tick: 120
+		ZOffset: -1023
+	idle-dish: astrip_d
+		Length: 16
+		Tick: 160
+	damaged-idle-dish: astrip_d
+		Start: 16
+		Length: 16
+		Tick: 160
+	dead:
+		Start: 32
+		ZOffset: -1023
+	make: astripmake
+		Length: *
+		Tick: 80
+	bib: bib1
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: astripicnh
+
+tmpl:
+	idle:
+		ZOffset: 1023
+	damaged-idle:
+		Start: 33
+		ZOffset: 1023
+	active:
+		Length: 33
+		Tick: 25
+		ZOffset: 1023
+	damaged-active:
+		Start: 33
+		Length: 33
+		Tick: 25
+		ZOffset: 1023
+	dead:
+		Start: 66
+		Tick: 800
+	make: tmplmake
+		Length: *
+		Tick: 60
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 2048
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 2048
+	icon: tmplicnh
+
+nsam:
+	closed-idle:
+		Start: 0
+	opening:
+		Start: 1
+		Length: 16
+		Tick: 30
+	idle:
+		Start: 17
+		Facings: 32
+		UseClassicFacingFudge: True
+	closing:
+		Start: 50
+		Length: 14
+		Tick: 30
+	damaged-closed-idle:
+		Start: 64
+	damaged-opening:
+		Start: 65
+		Length: 16
+		Tick: 30
+	damaged-idle:
+		Start: 81
+		Facings: 32
+		UseClassicFacingFudge: True
+	damaged-closing:
+		Start: 114
+		Length: 14
+		Tick: 30
+	dead:
+		Start: 128
+		Tick: 800
+	place:
+		Start: 0
+	make: nsammake
+		Length: 20
+		Tick: 30
+	muzzle: samfire
+		Length: 18
+		Facings: 8
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: samicon
+
+chain:
+	idle:
+		Length: 16
+	scratched-idle:
+		Start: 16
+		Length: 16
+	damaged-idle:
+		Start: 32
+		Length: 16
+	icon: chainicon
+
+hq:
+	idle:
+		Length: 16
+		Tick: 100
+	damaged-idle:
+		Start: 16
+		Length: 16
+		Tick: 100
+	dead:
+		Start: 32
+	make: hqmake
+		Length: *
+		Tick: 80
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: hqicnh
+
+eye:
+	idle:
+		Length: 16
+		Tick: 100
+	damaged-idle:
+		Start: 16
+		Length: 16
+		Tick: 100
+	dead:
+		Start: 32
+	make: eyemake
+		Length: *
+		Tick: 80
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: eyeicnh
+
+obli:
+	Defaults:
+		Offset: 0,-12
+	idle:
+	damaged-idle:
+		Start: 4
+	active:
+		Length: 4
+		Tick: 680
+	damaged-active:
+		Start: 4
+		Length: 4
+		Tick: 680
+	dead:
+		Start: 8
+	make: oblimake
+		Length: 13
+		Tick: 80
+	icon: obliicnh
+		Offset: 0,0
+	bib: mbFTUR
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+			BARREN: TEMPERAT
+		Offset: -1,-3
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+
+gtwr:
+	idle:
+	make: gtwrmake
+		Length: *
+	muzzle: minigun
+		Length: 6
+		Facings: 8
+	icon: gtwricnh
+	damaged-idle:
+		Start: 1
+	dead: gtwrmake
+		Start: 2
+	bib: mbFTUR
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+			BARREN: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+
+atwr:
+	Defaults:
+		Offset: 0,-13
+	idle:
+	damaged-idle:
+		Start: 1
+	dead:
+		Start: 2
+	make: atwrmake
+		Length: *
+		Tick: 80
+	muzzle: gunfire2
+		Length: *
+	icon: atwricnh
+		Offset: 0,0
+	bib: mbFTUR
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+			BARREN: TEMPERAT
+		Offset: -3,0
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+
+rep:
+	idle:
+		Offset: 0,1
+		ZOffset: -1c511
+	damaged-idle:
+		Start: 7
+		Offset: 0,1
+		ZOffset: -1c511
+	active:
+		Start: 1
+		Length: 6
+		Offset: 0,1
+		Tick: 100
+		ZOffset: -1c511
+	damaged-active:
+		Start: 8
+		Length: 6
+		Offset: 0,1
+		Tick: 100
+		ZOffset: -1c511
+	make: repmake
+		Length: *
+		Offset: 0,1
+	bib: mbFIX
+		Length: *
+		ZOffset: -1c511
+		Offset: 0,-4
+		UseTilesetExtension: true
+		TilesetOverrides:
+			BARREN: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: repicnh
+
+silo2:
+	idle:
+		Offset: 0,-1
+	damaged-idle:
+		Start: 5
+		Offset: 0,-1
+	dead:
+		Start: 10
+		Offset: 0,-1
+		Tick: 800
+	stages:
+		Length: 5
+		Offset: 0,-1
+	damaged-stages:
+		Start: 5
+		Length: 5
+		Offset: 0,-1
+	make: silo2make
+		Length: *
+		Tick: 80
+		Offset: 0,-1
+	bib: mbSILO
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			BARREN: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: silo2icnh
+
+gun2:
+	idle:
+		Facings: 32
+		UseClassicFacingFudge: True
+	recoil:
+		Start: 32
+		Facings: 32
+		UseClassicFacingFudge: True
+	damaged-idle:
+		Start: 64
+		Facings: 32
+		UseClassicFacingFudge: True
+	damaged-recoil:
+		Start: 96
+		Facings: 32
+		UseClassicFacingFudge: True
+	make: gun2make
+		Length: *
+		Tick: 80
+	muzzle: gunfire2
+		Length: *
+	bib: mbGUN
+		UseTilesetExtension: true
+		TilesetOverrides:
+			WINTER: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+		Length: *
+		Offset: -1,-1
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: gun2icnh
+	
+ltur:
+	idle:
+		Facings: 32
+		UseClassicFacingFudge: True
+	damaged-idle:
+		Start: 32
+		Facings: 32
+		UseClassicFacingFudge: True
+	make: lturmake
+		Length: *
+		Tick: 80
+	muzzle: gunfire2
+		Length: *
+	bib: mbGUN
+		UseTilesetExtension: true
+		TilesetOverrides:
+			WINTER: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+		Length: *
+		Offset: -1,-1
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: lturicnh
+
+hpad2:
+	idle:
+		ZOffset: -1023
+	damaged-idle:
+		Start: 7
+		ZOffset: -1023
+	active:
+		Start: 1
+		Length: 6
+		Tick: 100
+		ZOffset: -1023
+	damaged-active:
+		Start: 8
+		Length: 6
+		Tick: 100
+		ZOffset: -1023
+	dead:
+		Start: 14
+		ZOffset: -1023
+		Tick: 800
+	make: hpad2make
+		Length: *
+		Tick: 80
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: hpad2icnh
+
+proc2:
+	idle:
+		Length: 6
+		Tick: 120
+		Offset: 2,4
+	damaged-idle:
+		Start: 30
+		Length: 6
+		Tick: 120
+		Offset: 2,4
+	dead:
+		Start: 60
+		Tick: 800
+		Offset: 2,4
+	make: proc2make
+		Length: *
+		Tick: 80
+		Offset: 2,4
+	resources: proc2twr
+		Length: 6
+		Offset: -30,-17
+	damaged-resources: proc2twr
+		Start: 6
+		Length: 6
+		Offset: -30,-17
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: proc2icnh
+
+afldgdi:
+	idle: afldgdiidle
+		Length: 16
+		Tick: 160
+		ZOffset: -1023
+		Offset: 0,-4
+	damaged-idle: afldgdiidle
+		Start: 16
+		Length: 8
+		Tick: 160
+		ZOffset: -1023
+		Offset: 0,-4
+	active:
+		Length: 16
+		Tick: 160
+		ZOffset: -1023
+		Offset: 0,-4
+	damaged-active:
+		Start: 16
+		Length: 8
+		Tick: 160
+		ZOffset: -1023
+		Offset: 0,-4
+	make: afldgdimake
+		Length: *
+		Offset: 0,-4
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+		ZOffset: -1024
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: afldicon
+
+ncom:
+	idle:
+	damaged-idle:
+		Start: 1
+	make: fcommake
+		Length: *
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: ntekicon
+
+nodhq:
+	idle:
+		Length: 16
+		Tick: 100
+	damaged-idle:
+		Start: 16
+		Length: 16
+		Tick: 100
+	dead:
+		Start: 32
+	make: hqmake
+		Length: *
+		Tick: 80
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: hqicnh
+
+nodnuke:
+	idle:
+		Length: 4
+		Tick: 1000
+	damaged-idle:
+		Start: 4
+		Length: 4
+		Tick: 1000
+	dead:
+		Start: 8
+		Tick: 1000
+	make: nodnukemake
+		Length: *
+		Tick: 80
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: nukeicnh
+
+nodnuk2:
+	idle:
+		Length: 4
+		Tick: 1000
+	damaged-idle:
+		Start: 4
+		Length: 4
+		Tick: 1000
+	dead:
+		Start: 8
+	make: nodnuk2make
+		Length: *
+		Tick: 80
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: nuk2icnh
+
+nodfact:
+	idle:
+		Length: 4
+		Tick: 160
+	build:
+		Start: 4
+		Length: 20
+		Tick: 100
+	damaged-idle:
+		Start: 24
+		Length: 4
+		Tick: 160
+	damaged-build:
+		Start: 28
+		Length: 20
+		Tick: 100
+	dead:
+		Start: 48
+	make: nodfactmake
+		Length: *
+		Tick: 80
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: afacicon
+
+nodproc:
+	idle:
+		Length: 6
+		Tick: 120
+		Offset: 2,4
+	damaged-idle:
+		Start: 30
+		Length: 6
+		Tick: 120
+		Offset: 2,4
+	dead:
+		Start: 60
+		Tick: 800
+		Offset: 2,4
+	make: nodprocmake
+		Length: *
+		Tick: 80
+		Offset: 2,4
+	resources: proc2twr
+		Length: 6
+		Offset: -30,-17
+	damaged-resources: proc2twr
+		Start: 6
+		Length: 6
+		Offset: -30,-17
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: proc2icnh
+
+nodsilo:
+	idle:
+		Offset: 0,-1
+	damaged-idle:
+		Start: 5
+		Offset: 0,-1
+	dead:
+		Start: 10
+		Offset: 0,-1
+		Tick: 800
+	stages:
+		Length: 5
+		Offset: 0,-1
+	damaged-stages:
+		Start: 5
+		Length: 5
+		Offset: 0,-1
+	make: nodsilo2make
+		Length: *
+		Tick: 80
+		Offset: 0,-1
+	bib: mbSILO
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			BARREN: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: silo2icnh
+
+pris:
+	idle: prisnocharge
+		Length: 32
+		Tick: 250
+		Offset: 0,-13
+	damaged-idle: prisnocharge
+		Start: 32
+		Length: 32
+		Tick: 250
+		Offset: 0,-13
+	active:
+		Length: 3
+		Tick: 200
+		Offset: 0,-13
+	damaged-active:
+		Start: 19
+		Length: 3
+		Tick: 200
+		Offset: 0,-13
+	make: prismake
+		Length: 8
+		Tick: 60
+		Offset: 0,-13
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	bib: mbFTUR
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			BARREN: TEMPERAT
+	icon: prisimicon
+
+nodspen:
+	idle: spennod
+	damaged-idle: spennod
+		Start: 1
+	make: spennodmake
+		Length: *
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: spennodicnh
+
+htur:
+	idle:
+		Facings: 32
+		UseClassicFacingFudge: True
+		Offset: 0,0
+	damaged-idle:
+		Start: 32
+		Facings: 32
+		UseClassicFacingFudge: True
+		Offset: 0,0
+	make: hturmake
+		Length: *
+		Offset: 0,0
+		Tick: 75
+	muzzle: smokeygun
+		Length: 12
+		Tick: 30
+		Offset: 0,0
+	bib: mbSAM
+		Length: *
+		Offset: 0,-5
+		UseTilesetExtension: true
+		TilesetOverrides:
+			BARREN: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: hturicon
+
+ttur:
+	idle:
+		Offset: 0,-2
+	damaged-idle:
+		Start: 1
+		Offset: 0,-2
+	make: tturmake
+		Length: *
+		Offset: 0,-2
+	bib: mbFTUR
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			BARREN: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: tturicon
+	
+sgen:
+	idle:
+		Offset: 0,-10
+	active:
+		Length: 4
+		Offset: 0,-10
+	damaged-idle:
+		Start: 4
+		Offset: 0,-10
+	damaged-active:
+		Start: 4
+		Length: 4
+		Offset: 0,-10
+	make: sgenmake
+		Length: *
+		Offset: 0,-10
+	dead:
+		Start: 4
+		Tick: 800
+		Offset: 0,-10
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: sgenicnh
+	
+cram:
+	idle:
+		Facings: 32
+		UseClassicFacingFudge: True
+		Offset: 0,-13
+	make: crammake
+		Length: *
+		Offset: 0,-13
+	damaged-idle:
+		Start: 32
+		Facings: 32
+		UseClassicFacingFudge: True
+		Offset: 0,-13
+	muzzle: gunfire2
+		Start: 1
+		Length: 4
+	bib: mbAGUN
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			JUNGLE: TEMPERAT
+			BARREN: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: cramicnh
+	
+gsyrd:
+	idle:
+	damaged-idle:
+		Start: 1
+	make: gsyrdmake
+		Length: *
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: syrdicon
+	fake-icon: syrficon
+	
+indp:
+	idle:
+		Length: 4
+		Tick: 200
+	damaged-idle:
+		Start: 4
+		Length: 4
+		Tick: 200
+	make: indpmake
+		Length: *
+	dead:
+		Start: 4
+		Tick: 800
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: indpicon
+	
+lasp:
+	Defaults:
+		Offset: 0, 0, 0
+		UseTilesetCode: true
+	idle:
+		Start: 0
+		Length: 5
+		Tick: 250
+	idle-offline:
+		Start: 0
+		Length: 1
+	damaged-idle:
+		Start: 5
+		Length: 5
+		Tick: 250
+	damaged-idle-offline:
+		Start: 5
+		Length: 1
+	dead:
+		Start: 10
+		Tick: 400
+	make: laspmake
+		Length: *
+	emp-overlay: emp_fx01
+		Length: *
+		Offset: 0, 0, 25
+		UseTilesetCode: false
+		ZOffset: 512
+		BlendMode: Additive
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: lasficnh
+		Offset: 0, 0
+		UseTilesetCode: false
+
+lasf:
+	Defaults:
+		UseTilesetCode: true
+	idle:
+		Length: 1
+	disabled-x:
+		Start: 4
+		Length: 1
+		ZRamp: 1
+	disabled-y:
+		Start: 9
+		Length: 1
+		ZRamp: 1
+	enabled-x:
+		Frames: 3,3,1,1,3,3,1,3,3,1,0,0,2,2,0,0
+		Length: 9
+	enabled-y:
+		Frames: 7,5,7,5,6,8,6,8,7,5,7,5,6,8,6,8
+		Length: 9
+	emp-overlay: emp_fx01
+		Length: *
+		Offset: 0, 0, 25
+		UseTilesetCode: false
+		ZOffset: 512
+		BlendMode: Additive
+		
+patr:
+	idle:
+		Facings: 32
+		UseClassicFacingFudge: True
+		Offset: 0,0
+	damaged-idle: patr
+		Start: 32
+		Facings: 32
+		UseClassicFacingFudge: True
+		Offset: 0,0
+	make: patrmake
+		Length: *
+		Offset: 0,0
+		Tick: 75
+	muzzle: smokeygun
+		Length: 12
+		Tick: 30
+		Offset: 0,0
+	bib: mbSAM
+		Length: *
+		Offset: 0,5
+		UseTilesetExtension: true
+		TilesetOverrides:
+			BARREN: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: patricnh
+	
+weat:
+	idle:
+	damaged-idle:
+		Start: 1
+	dead:
+		Start: 1
+	make: weatmake
+		Length: *
+		Tick: 80
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	chrono-overlay: chronofade
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+	icon: eyeicnh

@@ -1,0 +1,1080 @@
+1TNK.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Scout Tank)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: 1tnk
+	InfiltrateForTransform:
+		IntoActor: 1tnk
+	RenderSprites:
+		Image: 1tnk.destroyed
+
+2TNK.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Medium Tank)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: 2tnk
+	InfiltrateForTransform:
+		IntoActor: 2tnk
+	RenderSprites:
+		Image: 2tnk.destroyed
+
+3TNK.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Heavy Tank)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: 3tnk
+	InfiltrateForTransform:
+		IntoActor: 3tnk
+	RenderSprites:
+		Image: 3tnk.destroyed
+
+4TNK.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Mammoth Tank)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: 4tnk
+	InfiltrateForTransform:
+		IntoActor: 4tnk
+	RenderSprites:
+		Image: 4tnk.destroyed
+
+HARV.FullHusk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Ore Truck)
+	TransformOnCapture:
+		IntoActor: harv
+	InfiltrateForTransform:
+		IntoActor: harv
+	RenderSprites:
+		Image: hhusk
+
+HARV.EmptyHusk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Ore Truck)
+	TransformOnCapture:
+		IntoActor: harv
+	InfiltrateForTransform:
+		IntoActor: harv
+	RenderSprites:
+		Image: hhusk2
+
+MCV.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Mobile Construction Vehicle)
+	TransformOnCapture:
+		IntoActor: mcv
+	InfiltrateForTransform:
+		IntoActor: mcv
+	RenderSprites:
+		Image: mcvhusk
+
+MGG.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Mobile Gap Generator)
+	ThrowsParticle@spinner:
+		Anim: spinner-idle
+		Offset: -299,0,171
+	TransformOnCapture:
+		IntoActor: mgg
+	InfiltrateForTransform:
+		IntoActor: mgg
+	RenderSprites:
+		Image: mgg.destroyed
+
+TRAN.Husk:
+	Inherits: ^HelicopterHusk
+	Tooltip:
+		Name: Chinook
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 149
+	WithIdleOverlay@PRIMARY:
+		Offset: -597,0,341
+		Sequence: rotor
+	WithIdleOverlay@SECONDARY:
+		Offset: 597,0,213
+		Sequence: rotor2
+	RevealsShroud:
+		Range: 8c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 6c0
+		Type: GroundPosition
+	RenderSprites:
+		Image: tran
+
+TRAN.Husk1:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Chinook)
+	RenderSprites:
+		Image: tran1husk
+	-Capturable:
+	-TransformOnCapture:
+	-InfiltrateForTransform:
+
+TRAN.Husk2:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Chinook)
+	RenderSprites:
+		Image: tran2husk
+	-Capturable:
+	-TransformOnCapture:
+	-InfiltrateForTransform:
+
+BADR.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Badger
+	Aircraft:
+		TurnSpeed: 5
+		Speed: 149
+	SmokeTrailWhenDamaged@0:
+		Offset: -432,560,0
+		Interval: 2
+		MinDamage: Undamaged
+	SmokeTrailWhenDamaged@1:
+		Offset: -432,-560,0
+		Interval: 2
+		MinDamage: Undamaged
+	RenderSprites:
+		Image: badr
+	-RevealOnDeath:
+	
+B2B.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: B2 Stealth Bomber
+	Aircraft:
+		TurnSpeed: 5
+		Speed: 223
+	SmokeTrailWhenDamaged@0:
+		Offset: -432,560,0
+		Interval: 2
+		MinDamage: Undamaged
+	SmokeTrailWhenDamaged@1:
+		Offset: -432,-560,0
+		Interval: 2
+		MinDamage: Undamaged
+	RenderSprites:
+		Image: b2b
+	-RevealOnDeath:
+
+MIG.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: MiG Attack Plane
+	Contrail@1:
+		Offset: -598,-683,0
+	Contrail@2:
+		Offset: -598,683,0
+	Aircraft:
+		TurnSpeed: 5
+		Speed: 186
+	SmokeTrailWhenDamaged:
+		Offset: -853,0,171
+		Interval: 2
+		MinDamage: Undamaged
+	RevealsShroud:
+		Range: 13c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 11c0
+		Type: GroundPosition
+	RenderSprites:
+		Image: mig
+
+YAK.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Yak Attack Plane
+	Contrail:
+		Offset: -853,0,0
+	Aircraft:
+		TurnSpeed: 5
+		Speed: 149
+	SmokeTrailWhenDamaged:
+		Offset: -853,0,0
+		Interval: 2
+		MinDamage: Undamaged
+	RevealsShroud:
+		Range: 11c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 9c0
+		Type: GroundPosition
+	RenderSprites:
+		Image: yak
+
+HELI.Husk:
+	Inherits: ^HelicopterHusk
+	Tooltip:
+		Name: Longbow
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 149
+	WithIdleOverlay:
+		Offset: 0,0,85
+		Sequence: rotor
+	SmokeTrailWhenDamaged:
+		Offset: -427,0,0
+		MinDamage: Undamaged
+	RevealsShroud:
+		Range: 12c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 10c0
+		Type: GroundPosition
+	RenderSprites:
+		Image: heli
+
+HIND.Husk:
+	Inherits: ^HelicopterHusk
+	Tooltip:
+		Name: Hind
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 112
+	WithIdleOverlay:
+		Sequence: rotor
+	SmokeTrailWhenDamaged:
+		Offset: -427,0,0
+		MinDamage: Undamaged
+	RevealsShroud:
+		Range: 10c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 8c0
+		Type: GroundPosition
+	RenderSprites:
+		Image: hind
+
+U2.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Husk (Spy Plane)
+	Aircraft:
+		TurnSpeed: 7
+		Speed: 373
+	Contrail@1:
+		Offset: -725,683,0
+	Contrail@2:
+		Offset: -725,-683,0
+	SmokeTrailWhenDamaged:
+		Offset: -1c43,0,0
+		Interval: 2
+		MinDamage: Undamaged
+	RenderSprites:
+		Image: u2
+
+T01.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: __ x_
+		Dimensions: 2,2
+	MapEditorData:
+		ExcludeTilesets: DESERT, INTERIOR
+
+T02.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: __ x_
+		Dimensions: 2,2
+	MapEditorData:
+		ExcludeTilesets: DESERT, INTERIOR
+
+T03.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: __ x_
+		Dimensions: 2,2
+	MapEditorData:
+		ExcludeTilesets: DESERT, INTERIOR
+
+T04.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: __ x_
+		Dimensions: 2,2
+	MapEditorData:
+		ExcludeTilesets: TEMPERAT, SNOW, INTERIOR
+
+T05.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: __ x_
+		Dimensions: 2,2
+	MapEditorData:
+		ExcludeTilesets: DESERT, INTERIOR
+
+T06.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: __ x_
+		Dimensions: 2,2
+	MapEditorData:
+		ExcludeTilesets: DESERT, INTERIOR
+
+T07.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: __ x_
+		Dimensions: 2,2
+	MapEditorData:
+		ExcludeTilesets: DESERT, INTERIOR
+
+T08.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: x_
+		Dimensions: 2,1
+
+T09.Husk:
+	Inherits: ^TreeHusk
+	MapEditorData:
+		ExcludeTilesets: TEMPERAT, SNOW, INTERIOR
+
+T10.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: __ xx
+		Dimensions: 2,2
+	MapEditorData:
+		ExcludeTilesets: DESERT, INTERIOR
+
+T11.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: __ xx
+		Dimensions: 2,2
+	MapEditorData:
+		ExcludeTilesets: DESERT, INTERIOR
+
+T12.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: __ x_
+		Dimensions: 2,2
+	MapEditorData:
+		ExcludeTilesets: DESERT, INTERIOR
+
+T13.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: __ x_
+		Dimensions: 2,2
+	MapEditorData:
+		ExcludeTilesets: DESERT, INTERIOR
+
+T14.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: ___ xx_
+		Dimensions: 3,2
+	MapEditorData:
+		ExcludeTilesets: DESERT, INTERIOR
+
+T15.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: ___ xx_
+		Dimensions: 3,2
+	MapEditorData:
+		ExcludeTilesets: DESERT, INTERIOR
+
+T16.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: __ x_
+		Dimensions: 2,2
+	MapEditorData:
+		ExcludeTilesets: DESERT, INTERIOR
+
+T17.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: __ x_
+		Dimensions: 2,2
+	MapEditorData:
+		ExcludeTilesets: DESERT, INTERIOR
+		
+T18.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: ___ xx_
+		Dimensions: 3,2
+	MapEditorData:
+		ExcludeTilesets: TEMPERAT, SNOW, INTERIOR, WINTER, BARREN, JUNGLE
+
+TC01.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: ___ xx_
+		Dimensions: 3,2
+	MapEditorData:
+		ExcludeTilesets: INTERIOR
+
+TC02.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: _x_ xx_
+		Dimensions: 3,2
+	MapEditorData:
+		ExcludeTilesets: DESERT, INTERIOR
+
+TC03.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: xx_ xx_
+		Dimensions: 3,2
+	MapEditorData:
+		ExcludeTilesets: DESERT, INTERIOR
+
+TC04.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: ____ xxx_ x___
+		Dimensions: 4,3
+	MapEditorData:
+		ExcludeTilesets: DESERT, INTERIOR
+
+TC05.Husk:
+	Inherits: ^TreeHusk
+	Building:
+		Footprint: __x_ xxx_ _xx_
+		Dimensions: 4,3
+	MapEditorData:
+		ExcludeTilesets: DESERT, INTERIOR
+		
+AMCV.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Mobile Construction Vehicle)
+	TransformOnCapture:
+		IntoActor: amcv
+	InfiltrateForTransform:
+		IntoActor: amcv
+	RenderSprites:
+		PlayerPalette: overlayplayertd
+		Image: amcv.destroyed
+		
+RTNK.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Mirage Tank)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: rtnk
+	InfiltrateForTransform:
+		IntoActor: rtnk
+	RenderSprites:
+		Image: rtnk.destroyed
+		
+TNKD.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Tank Destroyer)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: tnkd
+	InfiltrateForTransform:
+		IntoActor: tnkd
+	RenderSprites:
+		Image: tnkd.destroyed
+		
+APC2.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Husk (APC)
+	TransformOnCapture:
+		IntoActor: apc2
+	InfiltrateForTransform:
+		IntoActor: apc2
+	RenderSprites:
+		Image: apc2.destroyed
+		PlayerPalette: overlayplayertd
+
+HMMV.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Husk (Hum-Vee)
+	TransformOnCapture:
+		IntoActor: hmmv
+	InfiltrateForTransform:
+		IntoActor: hmmv
+	RenderSprites:
+		Image: hmmv.destroyed
+		PlayerPalette: overlayplayertd
+
+BGGY.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Husk (Fast Attack Buggy)
+	TransformOnCapture:
+		IntoActor: bggy
+	InfiltrateForTransform:
+		IntoActor: bggy
+	RenderSprites:
+		Image: bggy.destroyed
+		PlayerPalette: overlayplayertd
+		
+MTNK.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Husk (Battle Tank)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: mtnk
+	InfiltrateForTransform:
+		IntoActor: mtnk
+	RenderSprites:
+		Image: mtnk.destroyed
+		PlayerPalette: overlayplayertd
+
+HTNK.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Husk (Mammoth Tank)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: htnk
+	InfiltrateForTransform:
+		IntoActor: htnk
+	RenderSprites:
+		Image: htnk.destroyed
+		PlayerPalette: overlayplayertd
+
+FTNK.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Husk (Flame Tank)
+	TransformOnCapture:
+		IntoActor: ftnk
+	InfiltrateForTransform:
+		IntoActor: ftnk
+	RenderSprites:
+		Image: ftnk.destroyed
+		PlayerPalette: overlayplayertd
+
+BIKE.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Husk (Recon Bike)
+	TransformOnCapture:
+		IntoActor: bike
+	InfiltrateForTransform:
+		IntoActor: bike
+	RenderSprites:
+		Image: bike.destroyed
+		PlayerPalette: overlayplayertd
+
+MSAM.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Husk (MLRS)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: msam
+	InfiltrateForTransform:
+		IntoActor: msam
+	RenderSprites:
+		Image: msam.destroyed
+		PlayerPalette: overlayplayertd
+
+STNKnod.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Husk (Stealth Tank)
+	TransformOnCapture:
+		IntoActor: stnk.nod
+	InfiltrateForTransform:
+		IntoActor: stnk.nod
+	RenderSprites:
+		Image: stnknod.destroyed
+		PlayerPalette: overlayplayertd
+
+APCH.Husk:
+	Inherits: ^HelicopterHusk
+	Tooltip:
+		Name: Apache
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 186
+	SmokeTrailWhenDamaged:
+		Offset: -427,0,0
+		MinDamage: Undamaged
+	RevealsShroud:
+		Range: 10c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: apch
+		PlayerPalette: overlayplayertd
+
+ORCA.Husk:
+	Inherits: ^HelicopterHusk
+	Tooltip:
+		Name: Orca
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 186
+	SmokeTrailWhenDamaged:
+		Offset: -427,0,0
+		MinDamage: Undamaged
+	RevealsShroud:
+		Range: 10c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: orca
+		PlayerPalette: overlayplayertd
+		
+ORCA.Drone.Husk:
+	Inherits: ORCA.Husk
+	RenderSprites:
+		Image: orca
+		Scale: 0.5
+		PlayerPalette: overlayplayertd
+		
+ORCACA.Husk:
+	Inherits: ^HelicopterHusk
+	Tooltip:
+		Name: Orca Carryall
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 166
+	SmokeTrailWhenDamaged:
+		Offset: -427,0,0
+		MinDamage: Undamaged
+	RevealsShroud:
+		Range: 10c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: orcaca
+		PlayerPalette: overlayplayertd
+
+UAV.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Husk (UAV)
+	Aircraft:
+		TurnSpeed: 7
+		Speed: 123
+	Contrail@1:
+		Offset: -725,683,0
+	Contrail@2:
+		Offset: -725,-683,0
+	SmokeTrailWhenDamaged:
+		Offset: -1c43,0,0
+		Interval: 2
+		MinDamage: Undamaged
+	RenderSprites:
+		Image: uav
+		PlayerPalette: overlayplayertd
+
+HARV2.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Harvester (Destroyed)
+	TransformOnCapture:
+		IntoActor: harv2
+	InfiltrateForTransform:
+		IntoActor: harv2
+	RenderSprites:
+		Image: harv2.destroyed
+		PlayerPalette: overlayplayertd
+
+A10.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Husk (Warthog)
+	Aircraft:
+		TurnSpeed: 7
+		Speed: 123
+	Contrail@1:
+		Offset: -725,683,0
+	Contrail@2:
+		Offset: -725,-683,0
+	SmokeTrailWhenDamaged:
+		Offset: -1c43,0,0
+		Interval: 2
+		MinDamage: Undamaged
+	RenderSprites:
+		Image: a10
+		PlayerPalette: overlayplayertd
+
+C17.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: C17
+	Aircraft:
+		TurnSpeed: 5
+		Speed: 149
+	SmokeTrailWhenDamaged@0:
+		Offset: -432,560,0
+		Interval: 2
+		MinDamage: Undamaged
+	SmokeTrailWhenDamaged@1:
+		Offset: -432,-560,0
+		Interval: 2
+		MinDamage: Undamaged
+	RenderSprites:
+		Image: c17
+
+BTR.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (APC)
+	TransformOnCapture:
+		IntoActor: btr
+	InfiltrateForTransform:
+		IntoActor: btr
+	RenderSprites:
+		Image: BTR.destroyed
+
+RAH66.Husk:
+	Inherits: ^HelicopterHusk
+	Tooltip:
+		Name: Comanche
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 186
+	SmokeTrailWhenDamaged:
+		Offset: -427,0,0
+		MinDamage: Undamaged
+	RevealsShroud:
+		Range: 10c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: rah66
+		PlayerPalette: overlayplayertd
+
+KIROV.Husk:
+	Inherits: ^HelicopterHusk
+	Tooltip:
+		Name: Kirov
+	Aircraft:
+		TurnSpeed: 2
+		Speed: 30
+	FallsToEarth:
+		Spins: False
+	SmokeTrailWhenDamaged@0:
+		Offset: -432,560,0
+		Interval: 2
+		MinDamage: Undamaged
+	SmokeTrailWhenDamaged@1:
+		Offset: -432,-560,0
+		Interval: 2
+		MinDamage: Undamaged
+	RevealsShroud:
+		Range: 10c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: kirov
+	FallsToEarth:
+		Explosion: KirovExplode
+		
+APC.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (APC)
+	TransformOnCapture:
+		IntoActor: apc
+	InfiltrateForTransform:
+		IntoActor: apc
+	RenderSprites:
+		Image: apc.destroyed
+		
+DISR.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Husk (Disruptor)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: disr
+	InfiltrateForTransform:
+		IntoActor: disr
+	RenderSprites:
+		Image: disr.destroyed
+		PlayerPalette: overlayplayertd
+		
+MISS.Husk:
+	Inherits: ^TechHusk
+	Building:
+		Footprint: xxx xxx ===
+		Dimensions: 3,3
+		LocalCenterOffset: 0,-512,0
+	WithBuildingBib:
+	Tooltip:
+		Name: Ruin (Research Centre)
+	TransformOnCapture:
+		IntoActor: miss
+	InfiltrateForTransform:
+		IntoActor: miss
+	RenderSprites:
+		Image: MISS.destroyed
+		
+BIO.Husk:
+	Inherits: ^TechHusk
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	Tooltip:
+		Name: Ruin (Bio Lab)
+	TransformOnCapture:
+		IntoActor: bio
+	InfiltrateForTransform:
+		IntoActor: bio
+	RenderSprites:
+		Image: BIO.destroyed
+		
+HOSP.Husk:
+	Inherits: ^TechHusk
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	Tooltip:
+		Name: Ruin (Hospital)
+	TransformOnCapture:
+		IntoActor: hosp
+	InfiltrateForTransform:
+		IntoActor: hosp
+	RenderSprites:
+		Image: HOSP.destroyed
+		
+FCOM.Husk:
+	Inherits: ^TechHusk
+	Tooltip:
+		Name: Ruin (Forward Command)
+	Building:
+		Footprint: xx xx ==
+		Dimensions: 2,3
+		LocalCenterOffset: 0,-512,0
+	TransformOnCapture:
+		IntoActor: fcom
+	InfiltrateForTransform:
+		IntoActor: fcom
+	RenderSprites:
+		Image: FCOM.destroyed
+	WithBuildingBib:
+		
+OILB.Husk:
+	Inherits: ^TechHusk
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	Tooltip:
+		Name: Ruin (Oil Derrick)
+	TransformOnCapture:
+		IntoActor: oilb
+	InfiltrateForTransform:
+		IntoActor: oilb
+	RenderSprites:
+		Image: OILB.destroyed
+	Explodes:
+		Weapon: BarrelExplode
+		
+HARR.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Harrier
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 149
+	SmokeTrailWhenDamaged:
+		Offset: -427,0,0
+		MinDamage: Undamaged
+	Contrail@1:
+		Offset: -400,-483,0
+	Contrail@2:
+		Offset: -400,483,0
+	RevealsShroud:
+		Range: 12c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: harr
+		
+HARRh.Husk:
+	Inherits: ^HelicopterHusk
+	Tooltip:
+		Name: Harrier
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 149
+	SmokeTrailWhenDamaged:
+		Offset: -427,0,0
+		MinDamage: Undamaged
+	RevealsShroud:
+		Range: 12c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: harr
+		
+SCRIN.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Banshee
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 200
+	SmokeTrailWhenDamaged:
+		Offset: -427,0,0
+		MinDamage: Undamaged
+	Contrail@1:
+		Offset: -300,-183,0
+	Contrail@2:
+		Offset: -300,183,0
+	RevealsShroud:
+		Range: 12c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: scrin
+		PlayerPalette: overlayplayertd
+		
+SCRINh.Husk:
+	Inherits: ^HelicopterHusk
+	Tooltip:
+		Name: Banshee
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 200
+	SmokeTrailWhenDamaged:
+		Offset: -427,0,0
+		MinDamage: Undamaged
+	RevealsShroud:
+		Range: 12c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: scrin
+		PlayerPalette: overlayplayertd
+		
+ORCAB.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Orca Bomber
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 155
+	SmokeTrailWhenDamaged:
+		Offset: -427,0,0
+		MinDamage: Undamaged
+	RevealsShroud:
+		Range: 12c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: orcab
+		PlayerPalette: overlayplayertd
+		
+ORCABh.Husk:
+	Inherits: ^HelicopterHusk
+	Tooltip:
+		Name: Orca Bomber
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 155
+	SmokeTrailWhenDamaged:
+		Offset: -427,0,0
+		MinDamage: Undamaged
+	RevealsShroud:
+		Range: 12c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: orcab
+		PlayerPalette: overlayplayertd
+		
+FROG.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Frogfoot Attack Plane
+	Contrail:
+		Offset: -853,0,0
+	Aircraft:
+		TurnSpeed: 5
+		Speed: 149
+	SmokeTrailWhenDamaged:
+		Offset: -853,0,0
+		Interval: 2
+		MinDamage: Undamaged
+	RevealsShroud:
+		Range: 10c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: frog
+		
+PTNK.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Prism Tank)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: ptnk
+	InfiltrateForTransform:
+		IntoActor: ptnk
+	RenderSprites:
+		Image: ptnk.destroyed
+		
+MWTNK.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Husk (Microwave Tank)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: mwtnk
+	InfiltrateForTransform:
+		IntoActor: mwtnk
+	RenderSprites:
+		Image: mwtnk.destroyed
+		PlayerPalette: overlayplayertd
+		
+LTNK.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Husk (Light Tank)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: ltnk
+	InfiltrateForTransform:
+		IntoActor: ltnk
+	RenderSprites:
+		Image: ltnk.destroyed
+		PlayerPalette: overlayplayertd
+		
+BATF.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Battle Fortress)
+	TransformOnCapture:
+		IntoActor: batf
+	InfiltrateForTransform:
+		IntoActor: batf
+	RenderSprites:
+		Image: batf.destroyed

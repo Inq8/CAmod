@@ -1,0 +1,1121 @@
+Player:
+	ModularBot@brutalAI:
+		Name: Brutal AI
+		Type: brutal
+	ModularBot@NormalAI:
+		Name: Normal AI
+		Type: normal
+	ModularBot@easyAI:
+		Name: Easy AI
+		Type: easy
+	ModularBot@NavalAI:
+		Name: Naval AI
+		Type: naval
+	GrantConditionOnBotOwner@brutal:
+		Condition: enable-brutal-ai
+		Bots: brutal
+	GrantConditionOnBotOwner@normal:
+		Condition: enable-normal-ai
+		Bots: normal
+	GrantConditionOnBotOwner@easy:
+		Condition: enable-easy-ai
+		Bots: easy
+	GrantConditionOnBotOwner@naval:
+		Condition: enable-naval-ai
+		Bots: naval
+	SupportPowerBotModule:
+		RequiresCondition: enable-brutal-ai || enable-normal-ai || enable-easy-ai || enable-naval-ai
+		Decisions:
+			spyplane:
+				OrderName: SovietSpyPlane
+				MinimumAttractiveness: 1
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 5c0
+			sathack:
+				OrderName: sathack
+				MinimumAttractiveness: 1
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 5c0
+			gdiuav:
+				OrderName: gdiuav
+				MinimumAttractiveness: 1
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 5c0
+			nodairdrop:
+				OrderName: nodairdrop
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
+				Consideration@2:
+					Against: Enemy
+					Types: Water
+					Attractiveness: -5
+					TargetMetric: None
+					CheckRadius: 8c0
+			gdidropzone:
+				OrderName: dropzone
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
+				Consideration@2:
+					Against: Enemy
+					Types: Water
+					Attractiveness: -5
+					TargetMetric: None
+					CheckRadius: 8c0
+			gdihdropzone:
+				OrderName: hdropzone
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
+				Consideration@2:
+					Against: Enemy
+					Types: Water
+					Attractiveness: -5
+					TargetMetric: None
+					CheckRadius: 8c0
+			paratroopers:
+				OrderName: SovietParatroopers
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
+				Consideration@2:
+					Against: Enemy
+					Types: Water
+					Attractiveness: -5
+					TargetMetric: None
+					CheckRadius: 8c0
+			rparatroopers:
+				OrderName: RussianParatroopers
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
+				Consideration@2:
+					Against: Enemy
+					Types: Water
+					Attractiveness: -5
+					TargetMetric: None
+					CheckRadius: 8c0
+			nparatroopers:
+				OrderName: MarkedParatroopers
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
+				Consideration@2:
+					Against: Enemy
+					Types: Water
+					Attractiveness: -5
+					TargetMetric: None
+					CheckRadius: 8c0
+			lparatroopers:
+				OrderName: LegionParatroopers
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
+				Consideration@2:
+					Against: Enemy
+					Types: Water
+					Attractiveness: -5
+					TargetMetric: None
+					CheckRadius: 8c0
+			parabombs:
+				OrderName: UkraineParabombs
+				MinimumAttractiveness: 1
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 5c0
+			rparabombs:
+				OrderName: RussiaParabombs
+				MinimumAttractiveness: 1
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 5c0
+			iparabombs:
+				OrderName: IraqParabombs
+				MinimumAttractiveness: 1
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 5c0
+			nukepower:
+				OrderName: NukePowerInfoOrder
+				MinimumAttractiveness: 3000
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 5c0
+				Consideration@2:
+					Against: Ally
+					Types: Air, Ground, Water
+					Attractiveness: -10
+					TargetMetric: Value
+					CheckRadius: 7c0
+			chemmissile:
+				OrderName: chemmissile
+				MinimumAttractiveness: 3000
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 5c0
+				Consideration@2:
+					Against: Ally
+					Types: Air, Ground, Water
+					Attractiveness: -10
+					TargetMetric: Value
+					CheckRadius: 7c0
+			clustermissilepower:
+				OrderName: clustermissile
+				MinimumAttractiveness: 3000
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 5c0
+				Consideration@2:
+					Against: Ally
+					Types: Air, Ground, Water
+					Attractiveness: -10
+					TargetMetric: Value
+					CheckRadius: 7c0
+			IonCannonPower:
+				OrderName: ioncannon
+				MinimumAttractiveness: 1000
+				FineScanRadius: 2
+				Consideration@1:
+					Against: Enemy
+					Types: Air, Tank, Vehicle, Infantry, Water
+					Attractiveness: 2
+					TargetMetric: Value
+					CheckRadius: 2c0
+				Consideration@2:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 2c0
+				Consideration@3:
+					Against: Ally
+					Types: Ground, Water
+					Attractiveness: -10
+					TargetMetric: Value
+					CheckRadius: 3c0
+			EMPmissile:
+				OrderName: empmissile
+				MinimumAttractiveness: 3000
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 5c0
+				Consideration@2:
+					Against: Ally
+					Types: Air, Ground, Water
+					Attractiveness: -10
+					TargetMetric: Value
+					CheckRadius: 7c0
+			IronCurtainPower:
+				OrderName: ironcurtain
+				MinimumAttractiveness: 1000
+				FineScanRadius: 2
+				Consideration@2:
+					Against: Enemy
+					Types: Infantry
+					Attractiveness: 2
+					TargetMetric: Value
+					CheckRadius: 2c0
+				Consideration@3:
+					Against: Ally
+					Types: Tank
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 3c0
+			StealthGen:
+				OrderName: stealthgen
+				MinimumAttractiveness: 1000
+				FineScanRadius: 2
+				Consideration@2:
+					Against: Enemy
+					Types: Infantry
+					Attractiveness: 2
+					TargetMetric: Value
+					CheckRadius: 2c0
+				Consideration@3:
+					Against: Ally
+					Types: Tank
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 3c0
+	HarvesterBotModule:
+		RequiresCondition: enable-brutal-ai || enable-normal-ai || enable-easy-ai || enable-naval-ai
+		HarvesterTypes: harv, harv2
+		RefineryTypes: proc, proc2
+	CaptureManagerBotModule:
+		RequiresCondition: enable-brutal-ai || enable-normal-ai || enable-easy-ai
+		CapturingActorTypes: e6, n6
+		CheckCaptureTargetsForVisibility: false
+		MaximumCaptureTargetOptions: 15
+	BaseBuilderBotModule@brutal:
+		RequiresCondition: enable-brutal-ai
+		MinimumExcessPower: 60
+		MaximumExcessPower: 160
+		ExcessPowerIncrement: 40
+		ExcessPowerIncreaseThreshold: 4
+		PlaceDefenseTowardsEnemyChance: 75
+		StructureProductionRandomBonusDelay: 0
+		StructureProductionActiveDelay: 10
+		NewProductionCashThreshold: 15000
+		ConstructionYardTypes: fact,afac
+		RefineryTypes: proc,proc2
+		PowerTypes: powr,apwr,nuke,nuk2
+		BarracksTypes: barr.ai,tent.ai,hand.ai,pyle.ai
+		VehiclesFactoryTypes: weap.ai,astrip.ai,awep.ai
+		ProductionTypes: barr.ai,tent.ai,hand.ai,pyle.ai,astrip.ai,weap.ai,awep.ai,afld,afld.gdi,hpad,hpad2
+		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
+		SiloTypes: silo,silo2
+		BuildingDelays:
+			kenn: 2800
+			weap.ai: 2800
+			awep.ai: 2800
+			astrip.ai: 2800
+			dome: 4500
+			hq: 4500
+			afld: 5000
+			afld.gdi: 5000
+			hpad: 5000
+			hpad2: 5000
+			syrd: 6000
+			spen: 6000
+			syrd.gdi: 6000
+			spen.nod: 6000
+		BuildingLimits:
+			proc: 4
+			proc2: 4
+			barr.ai: 3
+			tent.ai: 3
+			pyle.ai: 3
+			hand.ai: 3
+			kenn: 1
+			dome: 1
+			hq: 1
+			weap.ai: 3
+			awep.ai: 3
+			astrip.ai: 5
+			afld: 1
+			hpad: 2
+			hpad2: 2
+			afld.gdi: 1
+			atek: 1
+			stek: 1
+			gtek: 1
+			tmpl: 1
+			fix: 1
+			rep: 1
+			spen: 2
+			syrd: 2
+			spen.nod: 2
+			syrd.gdi: 2
+		BuildingFractions:
+			proc: 30
+			proc2: 30
+			hand.ai: 2
+			pyle.ai: 2
+			barr.ai: 2
+			kenn: 1
+			tent.ai: 2
+			weap.ai: 3
+			awep.ai: 3
+			astrip.ai: 3
+			pbox: 7
+			hbox: 7
+			gtwr: 7
+			gun: 7
+			gun2: 7
+			tsla: 5
+			obli: 5
+			ltur: 10
+			ftur: 10
+			ttur: 10
+			htur: 3
+			atwr: 7
+			pris: 5
+			agun: 3
+			cram: 3
+			sam: 3
+			nsam: 3
+			atek: 1
+			stek: 1
+			fix: 1
+			dome: 10
+			tmpl: 1
+			gtek: 1
+			rep: 1
+			hq: 10
+			afld: 1
+			afld.gdi: 1
+			mslo: 1
+			iron: 1
+			pdox: 1
+			sgen: 1
+			eye: 1
+			indp: 1
+			orep: 1
+			patr: 1
+			hpad: 1
+			hpad2: 1
+			spen: 1
+			syrd: 1
+			spen.nod: 1
+			syrd.gdi: 1
+	BaseBuilderBotModule@normal:
+		RequiresCondition: enable-normal-ai
+		MinimumExcessPower: 60
+		MaximumExcessPower: 200
+		ExcessPowerIncrement: 40
+		ExcessPowerIncreaseThreshold: 4
+		PlaceDefenseTowardsEnemyChance: 75
+		ConstructionYardTypes: fact,afac
+		RefineryTypes: proc,proc2
+		PowerTypes: powr,apwr,nuke,nuk2
+		BarracksTypes: barr.ai,tent.ai,hand.ai,pyle.ai
+		VehiclesFactoryTypes: weap.ai,astrip.ai,awep.ai
+		ProductionTypes: barr.ai,tent.ai,hand.ai,pyle.ai,astrip.ai,weap.ai,awep.ai,afld,afld.gdi,hpad,hpad2
+		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
+		SiloTypes: silo,silo2
+		BuildingDelays:
+			kenn: 2800
+			weap.ai: 2800
+			awep.ai: 2800
+			astrip.ai: 2800
+			dome: 4500
+			hq: 4500
+			afld: 5000
+			afld.gdi: 5000
+			hpad: 5000
+			hpad2: 5000
+			syrd: 6000
+			spen: 6000
+			syrd.gdi: 6000
+			spen.nod: 6000
+		BuildingLimits:
+			proc: 4
+			proc2: 4
+			barr.ai: 3
+			tent.ai: 3
+			pyle.ai: 3
+			hand.ai: 3
+			kenn: 1
+			dome: 1
+			hq: 1
+			weap.ai: 3
+			awep.ai: 3
+			astrip.ai: 5
+			afld: 1
+			hpad: 2
+			hpad2: 2
+			afld.gdi: 1
+			atek: 1
+			stek: 1
+			gtek: 1
+			tmpl: 1
+			fix: 1
+			rep: 1
+			spen: 2
+			syrd: 2
+			spen.nod: 2
+			syrd.gdi: 2
+		BuildingFractions:
+			proc: 30
+			proc2: 30
+			hand.ai: 2
+			pyle.ai: 2
+			barr.ai: 2
+			kenn: 1
+			tent.ai: 2
+			weap.ai: 3
+			awep.ai: 3
+			astrip.ai: 3
+			pbox: 7
+			hbox: 7
+			gtwr: 7
+			gun: 7
+			gun2: 7
+			tsla: 5
+			obli: 5
+			ltur: 10
+			ftur: 10
+			ttur: 10
+			htur: 3
+			atwr: 7
+			pris: 5
+			agun: 3
+			cram: 3
+			sam: 3
+			nsam: 3
+			atek: 1
+			stek: 1
+			fix: 1
+			dome: 10
+			tmpl: 1
+			gtek: 1
+			rep: 1
+			hq: 10
+			afld: 1
+			afld.gdi: 1
+			mslo: 1
+			mslo.nod: 1
+			iron: 1
+			pdox: 1
+			sgen: 1
+			eye: 1
+			indp: 1
+			orep: 1
+			patr: 1
+			hpad: 1
+			hpad2: 1
+			spen: 1
+			syrd: 1
+			spen.nod: 1
+			syrd.gdi: 1
+	BaseBuilderBotModule@easy:
+		RequiresCondition: enable-easy-ai
+		MinimumExcessPower: 60
+		MaximumExcessPower: 250
+		ExcessPowerIncrement: 50
+		ExcessPowerIncreaseThreshold: 4
+		PlaceDefenseTowardsEnemyChance: 75
+		ConstructionYardTypes: fact,afac
+		RefineryTypes: proc,proc2
+		PowerTypes: powr,apwr,nuke,nuk2
+		BarracksTypes: barr.ai,tent.ai,hand.ai,pyle.ai
+		VehiclesFactoryTypes: weap.ai,astrip.ai,awep.ai
+		ProductionTypes: barr.ai,tent.ai,hand.ai,pyle.ai,astrip.ai,weap.ai,awep.ai,afld,afld.gdi,hpad,hpad2
+		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
+		SiloTypes: silo,silo2
+		BuildingLimits:
+			proc: 4
+			proc2: 4
+			barr.ai: 3
+			tent.ai: 3
+			pyle.ai: 3
+			hand.ai: 3
+			kenn: 1
+			dome: 1
+			hq: 1
+			weap.ai: 3
+			awep.ai: 3
+			astrip.ai: 5
+			afld: 1
+			hpad: 2
+			hpad2: 2
+			afld.gdi: 1
+			atek: 1
+			stek: 1
+			gtek: 1
+			tmpl: 1
+			fix: 1
+			rep: 1
+			spen: 2
+			syrd: 2
+			spen.nod: 2
+			syrd.gdi: 2
+		BuildingFractions:
+			proc: 30
+			proc2: 30
+			hand.ai: 2
+			pyle.ai: 2
+			barr.ai: 2
+			kenn: 1
+			tent.ai: 2
+			weap.ai: 3
+			awep.ai: 3
+			astrip.ai: 3
+			pbox: 7
+			hbox: 7
+			gtwr: 7
+			gun: 7
+			gun2: 7
+			tsla: 5
+			obli: 5
+			ltur: 10
+			ftur: 10
+			ttur: 10
+			htur: 3
+			atwr: 7
+			pris: 5
+			agun: 3
+			cram: 3
+			sam: 3
+			nsam: 3
+			atek: 1
+			stek: 1
+			fix: 1
+			dome: 10
+			tmpl: 1
+			gtek: 1
+			rep: 1
+			hq: 10
+			afld: 1
+			afld.gdi: 1
+			mslo: 1
+			iron: 1
+			pdox: 1
+			sgen: 1
+			eye: 1
+			indp: 1
+			orep: 1
+			patr: 1
+			hpad: 1
+			hpad2: 1
+			spen: 1
+			syrd: 1
+			spen.nod: 1
+			syrd.gdi: 1
+	BaseBuilderBotModule@naval:
+		RequiresCondition: enable-naval-ai
+		MinimumExcessPower: 60
+		MaximumExcessPower: 200
+		ExcessPowerIncrement: 40
+		ExcessPowerIncreaseThreshold: 4
+		PlaceDefenseTowardsEnemyChance: 75
+		ConstructionYardTypes: fact,afac
+		RefineryTypes: proc,proc2
+		PowerTypes: powr,apwr,nuke,nuk2
+		BarracksTypes: barr.ai,tent.ai,hand.ai,pyle.ai
+		VehiclesFactoryTypes: weap.ai,astrip.ai,awep.ai
+		ProductionTypes: barr.ai,tent.ai,hand.ai,pyle.ai,astrip.ai,weap.ai,awep.ai,afld,afld.gdi,hpad,hpad2
+		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
+		SiloTypes: silo,silo2
+		BuildingLimits:
+			proc: 4
+			proc2: 4
+			barr.ai: 3
+			tent.ai: 3
+			pyle.ai: 3
+			hand.ai: 3
+			kenn: 1
+			dome: 1
+			hq: 1
+			weap.ai: 3
+			awep.ai: 3
+			astrip.ai: 5
+			afld: 1
+			hpad: 2
+			hpad2: 2
+			afld.gdi: 1
+			atek: 1
+			stek: 1
+			gtek: 1
+			tmpl: 1
+			fix: 1
+			rep: 1
+			spen: 2
+			syrd: 2
+			spen.nod: 2
+			syrd.gdi: 2
+		BuildingFractions:
+			proc: 30
+			proc2: 30
+			hand.ai: 2
+			pyle.ai: 2
+			barr.ai: 2
+			kenn: 1
+			tent.ai: 2
+			weap.ai: 3
+			awep.ai: 3
+			astrip.ai: 3
+			pbox: 7
+			hbox: 7
+			gtwr: 7
+			gun: 7
+			gun2: 7
+			tsla: 5
+			obli: 5
+			ltur: 10
+			ftur: 10
+			ttur: 10
+			htur: 3
+			atwr: 7
+			pris: 5
+			agun: 3
+			cram: 3
+			sam: 3
+			nsam: 3
+			atek: 1
+			stek: 1
+			fix: 1
+			dome: 10
+			tmpl: 1
+			gtek: 1
+			rep: 1
+			hq: 10
+			afld: 1
+			afld.gdi: 1
+			mslo: 1
+			iron: 1
+			pdox: 1
+			sgen: 1
+			indp: 1
+			orep: 1
+			patr: 1
+			eye: 1
+			hpad: 1
+			hpad2: 1
+			spen: 1
+			syrd: 1
+			spen.nod: 1
+			syrd.gdi: 1
+	BuildingRepairBotModule:
+		RequiresCondition: enable-brutal-ai || enable-normal-ai || enable-easy-ai || enable-naval-ai
+	SquadManagerBotModule@brutal:
+		RequiresCondition: enable-brutal-ai
+		SquadSize: 7
+		ExcludeFromSquadsTypes: harv, harv2, mcv, amcv, dog, e6, n6
+		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,dd2,pt2,ss2,icbmsub
+		NavalProductionTypes: syrd, spen, syrd.gdi, spen.nod
+		ConstructionYardTypes: fact,afac
+		MinimumAttackForceDelay: 100
+	McvManagerBotModule@Hard:
+		RequiresCondition: enable-brutal-ai || enable-normal-ai || enable-naval-ai
+		McvTypes: mcv, amcv
+		ConstructionYardTypes: fact, afac
+		McvFactoryTypes: weap.ai, awep.ai, astrip.ai
+		ScanForNewMcvInterval: 80
+		MaxBaseRadius: 25
+		MinimumConstructionYardCount: 2
+	McvManagerBotModule@Easy:
+		RequiresCondition: enable-easy-ai
+		McvTypes: mcv, amcv
+		ConstructionYardTypes: fact, afac
+		McvFactoryTypes: weap, awep, astrip
+	UnitBuilderBotModule@brutal:
+		RequiresCondition: enable-brutal-ai
+		UnitsToBuild:
+			e1: 65
+			e2: 25
+			e3: 40
+			e4: 15
+			e6: 5
+			n1: 65
+			n2: 25
+			n3: 40
+			n4: 15
+			n5: 15
+			n6: 5
+			mort: 15
+			medi: 3
+			mech: 3
+			dog: 2
+			sab: 2
+			shok: 15
+			shok.nod: 15
+			jumpjet: 15
+			acol: 15
+			rmbo: 15
+			tnya: 15
+			boris: 15
+			harv: 10
+			harv2: 10
+			apc: 20
+			jeep: 30
+			apc2: 20
+			hmmv: 30
+			btr: 20
+			bggy: 30
+			arty: 20
+			ptnk: 20
+			v2rl: 40
+			msam: 40
+			mlrs: 20
+			spec: 20
+			hmlrs: 20
+			1tnk: 70
+			ifv.ai: 70
+			2tnk: 45
+			tnkd: 45
+			rtnk: 45
+			3tnk: 70
+			4tnk: 40
+			ltnk: 40
+			mtnk: 70
+			bike: 30
+			htnk: 40
+			v3rl: 40
+			titan: 3
+			ctnk: 3
+			batf.ai: 10
+			mwtnk: 3
+			ttnk: 25
+			stnk.nod: 15
+			ftnk: 15
+			hind: 5
+			heli: 5
+			apch: 5
+			orca: 5
+			orcab: 3
+			scrin: 5
+			rah66: 3
+			mig: 3
+			harr: 3
+			yak: 2
+			frog: 2
+			disr: 10
+			kirov: 2
+			a10: 5
+			ss: 1
+			msub: 1
+			dd: 1
+			ca: 1
+			carr: 1
+			pt: 1
+			pt2: 1
+			dd2: 1
+			ss2: 2
+			icbmsub: 1
+		UnitLimits:
+			dog: 2
+			sab: 2
+			apc: 2
+			apc2: 2
+			hmmv: 2
+			bggy: 2
+			jeep: 2
+			e6: 1
+			n6: 1
+			mech: 1
+			medi: 1
+			harv: 6
+			harv2: 6
+			msub: 4
+			ca: 4
+			icbmsub: 4
+			carr: 4
+			jumpjet: 5
+			kirov: 3
+	SquadManagerBotModule@normal:
+		RequiresCondition: enable-normal-ai
+		SquadSize: 40
+		ExcludeFromSquadsTypes: harv, harv2, mcv, amcv, dog
+		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,ss2,dd2,icbmsub
+		ConstructionYardTypes: fact,afac
+		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
+	UnitBuilderBotModule@normal:
+		RequiresCondition: enable-normal-ai
+		UnitsToBuild:
+			e1: 65
+			e2: 25
+			e3: 40
+			e4: 15
+			e6: 5
+			n1: 65
+			n2: 25
+			n3: 40
+			n4: 15
+			n5: 15
+			n6: 5
+			mort: 15
+			medi: 3
+			mech: 3
+			dog: 2
+			sab: 2
+			shok: 15
+			shok.nod: 15
+			jumpjet: 15
+			acol: 15
+			rmbo: 15
+			tnya: 15
+			boris: 15
+			harv: 10
+			harv2: 10
+			apc: 20
+			jeep: 30
+			apc2: 20
+			hmmv: 30
+			btr: 20
+			bggy: 30
+			arty: 20
+			ptnk: 20
+			v2rl: 40
+			msam: 40
+			mlrs: 20
+			spec: 20
+			hmlrs: 40
+			1tnk: 70
+			ifv.ai: 70
+			2tnk: 45
+			tnkd: 45
+			rtnk: 45
+			3tnk: 70
+			4tnk: 40
+			ltnk: 40
+			mtnk: 70
+			bike: 30
+			htnk: 40
+			v3rl: 40
+			titan: 3
+			ctnk: 3
+			batf.ai: 10
+			mwtnk: 3
+			ttnk: 25
+			stnk.nod: 15
+			ftnk: 15
+			hind: 5
+			heli: 5
+			apch: 5
+			orca: 5
+			orcab: 3
+			scrin: 5
+			rah66: 3
+			mig: 3
+			harr: 3
+			yak: 2
+			frog: 2
+			disr: 10
+			kirov: 2
+			a10: 5
+			ss: 1
+			msub: 1
+			dd: 1
+			ca: 1
+			carr: 1
+			pt: 1
+			pt2: 1
+			dd2: 1
+			ss2: 2
+			icbmsub: 1
+		UnitLimits:
+			dog: 2
+			sab: 2
+			apc: 2
+			apc2: 2
+			hmmv: 2
+			bggy: 2
+			jeep: 2
+			e6: 1
+			n6: 1
+			mech: 1
+			medi: 1
+			harv: 6
+			harv2: 6
+			msub: 4
+			ca: 4
+			carr: 4
+			icbmsub: 4
+			jumpjet: 5
+			kirov: 3
+	SquadManagerBotModule@easy:
+		RequiresCondition: enable-easy-ai
+		SquadSize: 10
+		ExcludeFromSquadsTypes: harv, harv2, mcv, amcv, dog
+		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,ss2,dd2,icbmsub
+		ConstructionYardTypes: fact,afac
+		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
+	UnitBuilderBotModule@easy:
+		RequiresCondition: enable-easy-ai
+		UnitsToBuild:
+			e1: 65
+			e2: 25
+			e3: 40
+			e4: 15
+			e6: 5
+			n1: 65
+			n2: 25
+			n3: 40
+			n4: 15
+			n5: 15
+			n6: 5
+			mort: 15
+			medi: 3
+			mech: 3
+			dog: 2
+			sab: 2
+			shok: 15
+			shok.nod: 15
+			jumpjet: 15
+			acol: 15
+			rmbo: 15
+			tnya: 15
+			boris: 15
+			harv: 10
+			harv2: 10
+			apc: 20
+			jeep: 30
+			apc2: 20
+			hmmv: 30
+			btr: 20
+			bggy: 30
+			arty: 20
+			ptnk: 20
+			spec: 20
+			v2rl: 40
+			msam: 40
+			mlrs: 20
+			hmlrs: 40
+			1tnk: 70
+			ifv.ai: 70
+			2tnk: 45
+			tnkd: 45
+			rtnk: 45
+			3tnk: 70
+			4tnk: 40
+			ltnk: 40
+			mtnk: 70
+			bike: 30
+			htnk: 40
+			v3rl: 40
+			titan: 3
+			ctnk: 3
+			batf.ai: 10
+			mwtnk: 3
+			ttnk: 25
+			stnk.nod: 15
+			ftnk: 15
+			hind: 5
+			heli: 5
+			apch: 5
+			orca: 5
+			orcab: 3
+			scrin: 5
+			rah66: 3
+			mig: 3
+			harr: 3
+			yak: 2
+			frog: 2
+			disr: 10
+			kirov: 2
+			a10: 5
+			ss: 1
+			msub: 1
+			dd: 1
+			ca: 1
+			carr: 1
+			pt: 1
+			pt2: 1
+			dd2: 1
+			ss2: 2
+			icbmsub: 1
+		UnitLimits:
+			dog: 2
+			sab: 2
+			apc: 2
+			apc2: 2
+			hmmv: 2
+			bggy: 2
+			jeep: 2
+			e6: 1
+			n6: 1
+			mech: 1
+			medi: 1
+			harv: 6
+			harv2: 6
+			msub: 4
+			carr: 4
+			ca: 4
+			icbmsub: 4
+			jumpjet: 5
+			kirov: 3
+	SquadManagerBotModule@naval:
+		RequiresCondition: enable-naval-ai
+		SquadSize: 1
+		ExcludeFromSquadsTypes: harv, harv2, mcv, amcv, dog
+		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,dd2,ss2,icbmsub
+		ConstructionYardTypes: fact,afac
+		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
+	UnitBuilderBotModule@naval:
+		RequiresCondition: enable-naval-ai
+		UnitsToBuild:
+			e1: 65
+			e2: 25
+			e3: 40
+			e4: 15
+			n1: 65
+			n2: 25
+			n3: 40
+			n4: 15
+			n5: 15
+			dog: 2
+			harv: 10
+			harv2: 10
+			hmlrs: 40
+			1tnk: 70
+			ltnk: 40
+			hind: 5
+			heli: 5
+			apch: 5
+			orca: 5
+			orcab: 3
+			scrin: 5
+			rah66: 3
+			mig: 3
+			harr: 3
+			yak: 2
+			frog: 2
+			disr: 10
+			kirov: 2
+			a10: 5
+			ss: 20
+			msub: 10
+			dd: 10
+			ca: 10
+			carr: 10
+			pt: 20
+			pt2: 20
+			dd2: 10
+			ss2: 20
+			icbmsub: 10
+		UnitLimits:
+			harv: 6
+			harv2: 6

@@ -1,0 +1,183 @@
+Player:
+	PlayerResources:
+		DefaultCash: 2000
+
+World:
+	LuaScript:
+		Scripts: intervention.lua
+	MissionData:
+		Briefing: The Soviet Air Force is flying air raids against a civilian village.\n\nWe have to do everything in our power to stop them!\n\nYour job is to establish a base on the mainland ASAP. We can prevent the village's destruction by capturing the enemy's Air Force Headquarters building. The enemy base is heavily guarded, though.  You will not have enough time to build a force big enough to overpower the Soviet defences. You will have to find a way to sneak in!\n\nGood luck, Commander!\n
+	ScriptLobbyDropdown@difficulty:
+		ID: difficulty
+		Label: Difficulty
+		Values:
+			normal: Normal
+			hard: Hard
+		Default: normal
+
+^Palettes:
+	IndexedPlayerPalette:
+		PlayerIndex:
+			Soviets: 229, 230, 231, 232, 233, 234, 235, 8, 236, 237, 238, 239, 221, 222, 223, 223
+			Allies: 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175
+			Allies1: 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175
+			Allies2: 208, 208, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 154, 155, 143
+
+CAMERA:
+	RevealsShroud:
+		Range: 18c0
+
+MISS:
+	Tooltip:
+		Name: Soviet Air Force HQ
+	Capturable:
+		Types: building
+		ValidStances: Enemy
+	CaptureManager:
+
+TENT:
+	Buildable:
+		Prerequisites: anypower, ~structures.allies, ~techlevel.infonly, mainland
+
+DOME:
+	Buildable:
+		Prerequisites: proc, ~techlevel.medium, mainland
+
+WEAP:
+	Buildable:
+		Prerequisites: proc, ~techlevel.low, mainland
+	ProvidesPrerequisite:
+		Prerequisite: givefix
+
+MAINLAND:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Reach the mainland
+	ProvidesPrerequisite:
+		Prerequisite: mainland
+
+HPAD:
+	ProvidesPrerequisite:
+		Prerequisite: givefix
+
+FIX:
+	Buildable:
+		Prerequisites: givefix
+
+GIVEFIX:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Weapons Factory or Helipad
+
+MIG.SCRIPTED:
+	Inherits: MIG
+	Buildable:
+		Prerequisites: ~disabled
+	RenderSprites:
+		Image: mig
+	AmmoPool:
+		Ammo: 2
+	Aircraft:
+		IdleBehavior: LeaveMap
+
+HELI:
+	Buildable:
+		Prerequisites: ~hpad
+	Valued:
+		Cost: 1500
+
+SAM:
+	RevealsShroud:
+		Range: 7c0
+	Power:
+		Amount: -5
+
+TSLA:
+	Power:
+		Amount: -50
+
+ATEK:
+	Buildable:
+		Prerequisites: ~disabled
+
+STEK:
+	Buildable:
+		Prerequisites: ~disabled
+
+GAP:
+	Buildable:
+		Prerequisites: ~disabled
+
+MSLO:
+	Buildable:
+		Prerequisites: ~disabled
+
+PDOX:
+	Buildable:
+		Prerequisites: ~disabled
+
+E4:
+	Buildable:
+		Prerequisites: ~disabled
+
+E7:
+	Buildable:
+		Prerequisites: ~disabled
+
+THF:
+	Buildable:
+		Prerequisites: ~disabled
+
+SHOK:
+	Buildable:
+		Prerequisites: ~disabled
+
+2TNK:
+	Buildable:
+		Prerequisites: ~disabled
+
+ARTY:
+	Buildable:
+		Prerequisites: ~disabled
+
+CTNK:
+	Buildable:
+		Prerequisites: ~disabled
+
+MGG:
+	Buildable:
+		Prerequisites: ~disabled
+
+MNLY:
+	Buildable:
+		Prerequisites: ~disabled
+
+MRJ:
+	Buildable:
+		Prerequisites: ~disabled
+
+TRUK:
+	Buildable:
+		Prerequisites: ~disabled
+
+MH60:
+	Buildable:
+		Prerequisites: ~disabled
+
+YAK:
+	Buildable:
+		Prerequisites: ~disabled
+
+CA:
+	Buildable:
+		Prerequisites: ~disabled
+
+DD:
+	Buildable:
+		Prerequisites: ~disabled
+
+STNK:
+	Buildable:
+		Prerequisites: ~disabled

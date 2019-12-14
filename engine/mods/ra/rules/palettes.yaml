@@ -1,0 +1,129 @@
+^Palettes:
+	PaletteFromFile@terrain-snow:
+		Name: terrain
+		Tileset: SNOW
+		Filename: snow.pal
+		ShadowIndex: 3, 4
+	PaletteFromFile@terrain-interior:
+		Name: terrain
+		Tileset: INTERIOR
+		Filename: interior.pal
+		ShadowIndex: 3, 4
+	PaletteFromFile@terrain-temperat:
+		Name: terrain
+		Tileset: TEMPERAT
+		Filename: temperat.pal
+		ShadowIndex: 3, 4
+	PaletteFromFile@terrain-desert:
+		Name: terrain
+		Tileset: DESERT
+		Filename: desert.pal
+		ShadowIndex: 3, 4
+	PaletteFromFile@player:
+		Name: player
+		Filename: temperat.pal
+		ShadowIndex: 4
+	PaletteFromFile@chrome:
+		Name: chrome
+		Filename: temperat.pal
+		ShadowIndex: 3
+		AllowModifiers: false
+	PaletteFromFile@cursor:
+		Name: cursor
+		Filename: temperat.pal
+		AllowModifiers: false
+		CursorPalette: true
+	PaletteFromFile@effect:
+		Name: effect
+		Filename: temperat.pal
+		ShadowIndex: 4
+	PaletteFromFile@colorpicker:
+		Name: colorpicker
+		Filename: temperat.pal
+		ShadowIndex: 4
+		AllowModifiers: false
+	PaletteFromFile@desert:
+		Name: desert
+		Filename: desert.pal
+		ShadowIndex: 4
+	PaletteFromRGBA@shadow:
+		Name: shadow
+		R: 0
+		G: 0
+		B: 0
+		A: 140
+	PaletteFromRGBA@submerged:
+		Name: submerged
+		R: 0
+		G: 0
+		B: 0
+		A: 140
+	PaletteFromRGBA@highlight:
+		Name: highlight
+		R: 255
+		G: 255
+		B: 255
+		A: 128
+	PaletteFromRGBA@moveflash:
+		Name: moveflash
+		R: 255
+		G: 255
+		B: 255
+		A: 64
+	PaletteFromRGBA@invuln:
+		Name: invuln
+		R: 128
+		G: 0
+		B: 0
+		A: 128
+	PaletteFromRGBA@invuln2:
+		Name: invuln2
+		R: 0
+		G: 0
+		B: 128
+		A: 128
+	PaletteFromRGBA@disabled:
+		Name: disabled
+		R: 0
+		G: 0
+		B: 0
+		A: 180
+	ShroudPalette@shroud:
+		Name: shroud
+	ShroudPalette@fog:
+		Name: fog
+		Fog: true
+	PlayerColorPalette:
+		BasePalette: player
+		RemapIndex: 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95
+	PaletteFromPlayerPaletteWithAlpha@cloak:
+		BaseName: cloak
+		BasePalette: player
+		Alpha: 0.55
+	PlayerHighlightPalette:
+	MenuPaletteEffect:
+	RotationPaletteEffect@defaultwater:
+		Palettes: terrain
+		ExcludeTilesets: DESERT
+	RotationPaletteEffect@actorswater:
+		Palettes: player, effect
+	RotationPaletteEffect@desertwater:
+		Palettes: terrain
+		Tilesets: DESERT
+		RotationBase: 32
+	RotationPaletteEffect@desertwater-actor:
+		Palettes: desert
+		RotationBase: 32
+	LightPaletteRotator:
+		ExcludePalettes: terrain, effect, desert
+	ChronoshiftPaletteEffect:
+	FlashPaletteEffect@NUKE:
+		Type: Nuke
+	PaletteFromPaletteWithAlpha@placelinesegment:
+		Name: placelinesegment
+		BasePalette: terrain
+		Alpha: 0.65
+	PaletteFromPlayerPaletteWithAlpha@placebuilding:
+		BaseName: placebuilding
+		BasePalette: player
+		Alpha: 0.65

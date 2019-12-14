@@ -1,0 +1,241 @@
+E2:
+	Inherits: ^Soldier
+	Inherits@EXPERIENCE: ^GainsExperience
+	Inherits@EXPHOSPITAL: ^InfantryExperienceHospitalOverrides
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Buildable:
+		Queue: Infantry
+		BuildPaletteOrder: 20
+		Prerequisites: ~gapile, ~techlevel.low
+		Description: Infantry armed with special explosive discs.\n  Strong vs Buildings, Infantry\n  Weak vs Vehicles, Aircraft
+	Valued:
+		Cost: 200
+	Tooltip:
+		Name: Disc Thrower
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 15000
+	Mobile:
+		Speed: 56
+	Armament:
+		Weapon: Grenade
+		LocalOffset: 0,0,785
+		FireDelay: 5
+	TakeCover:
+		ProneOffset: 160,128,-555
+	AttackFrontal:
+		Voice: Attack
+	WithInfantryBody:
+		DefaultAttackSequence: attack
+	RevealsShroud:
+		Range: 7c0
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+
+MEDIC:
+	Inherits: ^Soldier
+	Inherits@EXPERIENCE: ^GainsExperience
+	Inherits@EXPHOSPITAL: ^InfantryExperienceHospitalOverrides
+	Valued:
+		Cost: 600
+	Tooltip:
+		Name: Medic
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		Queue: Infantry
+		BuildPaletteOrder: 50
+		Prerequisites: ~gapile, ~techlevel.low
+		Description: Heals nearby infantry.\n  Unarmed
+	Voiced:
+		VoiceSet: Medic
+	RevealsShroud:
+		Range: 6c0
+	Mobile:
+		Speed: 56
+	Health:
+		HP: 12500
+	Crushable:
+		CrushSound: squishy2.aud
+	Armament:
+		Weapon: Heal
+		TargetStances: Ally
+		ForceTargetStances: None
+		Cursor: heal
+		OutsideRangeCursor: heal
+	AutoTarget:
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Infantry
+	AttackFrontal:
+	WithInfantryBody:
+		DefaultAttackSequence: heal
+	SelfHealing:
+		Step: 500
+		Delay: 60
+	Passenger:
+		PipType: Red
+
+JUMPJET:
+	Inherits: ^Soldier
+	Inherits@EXPERIENCE: ^GainsExperience
+	Inherits@EXPHOSPITAL: ^InfantryExperienceHospitalOverrides
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Valued:
+		Cost: 600
+	Tooltip:
+		Name: Jumpjet Infantry
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		Queue: Infantry
+		BuildPaletteOrder: 70
+		Prerequisites: ~gapile, garadr, ~techlevel.medium
+		Description: Airborne soldier.\n  Strong vs Infantry, Aircraft\n  Weak vs Vehicles
+	Voiced:
+		VoiceSet: JumpJet
+	Mobile:
+		Speed: 71
+		Locomotor: jumpjet
+	Health:
+		HP: 12000
+	Armor:
+		Type: Light
+	Passenger:
+		PipType: Green
+	RevealsShroud:
+		Range: 6c0
+	Armament:
+		Weapon: JumpCannon
+	-Crushable:
+	AttackFrontal:
+		Voice: Attack
+	WithInfantryBody:
+		RequiresCondition: !airborne
+		DefaultAttackSequence: attack
+	WithInfantryBody@flying:
+		RequiresCondition: airborne
+		DefaultAttackSequence: flying-attack
+		StandSequences: flying
+		MoveSequence: flying
+	-TakeCover:
+	Hovers:
+		RequiresCondition: airborne
+	DamagedByTerrain:
+		RequiresCondition: !inside-tunnel && !airborne
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	Targetable:
+		RequiresCondition: !airborne && !inside-tunnel
+	Targetable@AIRBORNE:
+		TargetTypes: Air
+		RequiresCondition: airborne
+	SpawnActorOnDeath@airborne:
+		Actor: JUMPJET.Husk
+		RequiresCondition: airborne
+	DeathSounds@airborne:
+		RequiresCondition: airborne
+	WithDeathAnimation@normal:
+		RequiresCondition: !airborne
+	WithDeathAnimation@explosion:
+		RequiresCondition: !airborne
+	WithDeathAnimation@energy:
+		RequiresCondition: !airborne
+	WithDeathAnimation:
+		RequiresCondition: !airborne
+	DeathSounds@NORMAL:
+		RequiresCondition: !airborne
+	DeathSounds@EXPLOSION:
+		RequiresCondition: !airborne
+	DeathSounds@BURNED:
+		RequiresCondition: !airborne
+	DeathSounds@ZAPPED:
+		RequiresCondition: !airborne
+	SpawnActorOnDeath:
+		RequiresCondition: !airborne
+	SpawnActorOnDeath@FLAMEGUY:
+		RequiresCondition: !airborne
+	WithShadow@airborne:
+		RequiresCondition: airborne
+	GrantConditionOnJumpjetLayer:
+		Condition: airborne
+
+JUMPJET.Husk:
+	RenderSprites:
+	BodyOrientation:
+		QuantizedFacings: 1
+	HiddenUnderFog:
+		Type: GroundPosition
+	ScriptTriggers:
+	Tooltip:
+		Name: Jumpjet Infantry
+	FallsToEarth:
+		Velocity: 86
+		Explosion:
+	Aircraft:
+		Speed: 186
+		CanHover: True
+		VTOL: true
+	RenderSprites:
+		Image: jumpjet
+	WithSpriteBody:
+		Sequence: die-falling
+	Health:
+	HitShape:
+	ConditionManager:
+	GrantConditionOnTerrain:
+		TerrainTypes: Water
+		Condition: water-death
+	WithDeathAnimation:
+		RequiresCondition: !water-death
+		FallbackSequence: die-flying
+	WithDeathAnimation@SPLASH:
+		RequiresCondition: water-death
+		FallbackSequence: die-splash
+	Interactable:
+
+GHOST:
+	Inherits: ^Soldier
+	Inherits@EXPERIENCE: ^GainsExperience
+	Inherits@EXPHOSPITAL: ^InfantryExperienceHospitalOverrides
+	Inherits@2: ^HealsOnTiberium
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Valued:
+		Cost: 1750
+	Tooltip:
+		Name: Ghost Stalker
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		Queue: Infantry
+		BuildPaletteOrder: 90
+		Prerequisites: ~gapile, gatech, ~techlevel.high
+		BuildLimit: 1
+		Description: Elite commando infantry, armed with\na railgun and C4.\n  Strong vs Infantry, Buildings\n  Weak vs Vehicles, Aircraft\n  Special Ability: Destroy Building with C4\nMaximum 1 can be trained.
+	Voiced:
+		VoiceSet: Ghost
+	Armor:
+		Type: Light
+	Mobile:
+		Speed: 56
+	Health:
+		HP: 20000
+	Passenger:
+	RevealsShroud:
+		Range: 6c0
+	Armament:
+		Weapon: LtRail
+		LocalOffset: 120,0,543
+	TakeCover:
+		ProneOffset: 256,32,-384
+	Crushable:
+		CrushSound: squishy2.aud
+	AttackFrontal:
+		Voice: Attack
+	Demolition:
+		DetonationDelay: 45
+		Voice: Attack
+	WithInfantryBody:
+		DefaultAttackSequence: attack
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded

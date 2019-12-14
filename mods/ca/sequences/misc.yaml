@@ -1,0 +1,1251 @@
+clock:
+	idle:
+		Length: *
+
+powerdown:
+	disabled: speed
+		Start: 3
+		ZOffset: 2047
+
+120mm:
+	idle:
+		ZOffset: 1023
+		
+120mmheat:
+	idle:
+		ZOffset: 1023
+
+50cal:
+	idle:
+		ZOffset: 1023
+
+explosion:
+	Defaults:
+		Length: *
+		ZOffset: 2047
+	piff: piff
+	piffs: piffpiff
+	water_piff: wpiff
+	water_piffs: wpifpif
+	small_explosion: veh-hit3
+	med_explosion: veh-hit2
+	flak_explosion_ground: flak
+	small_explosion_air: flak
+		ZOffset: 511 # only used by AA weapons, so a high ZOffset to overlay buildings isn't needed
+	med_explosion_air: veh-hit1
+		ZOffset: 511 # only used by AA weapons, so a high ZOffset to overlay buildings isn't needed
+	large_splash: h2o_exp1
+	napalm: napalm2
+	building_napalm: napalm2
+		FlipX: true
+	nuke: atomsfx
+	med_splash: h2o_exp2
+	self_destruct: art-exp1
+	artillery_explosion: art-exp1
+	building: fball1
+		Offset: 0,-9
+	building2: fball1
+		Offset: 0,-9
+		FlipX: true
+	small_splash: h2o_exp3
+	large_explosion: frag1
+		Offset: -2,0
+	small_napalm: napalm1
+	offseted_napalm: napalm1 # Used for E4 Explosion
+		Offset: 0, -6
+	large_napalm: napalm3
+	corpse: corpse1
+		ZOffset: -512
+		Tick: 1600
+		UseTilesetExtension: true
+		TilesetOverrides:
+			DESERT: TEMPERAT
+			INTERIOR: TEMPERAT
+	pulse_explosion: pulsefx1
+		BlendMode: Additive
+		Tick: 40
+	pulse_explosion_small: pulsefx1_small
+		BlendMode: Additive
+		Tick: 40
+	pulse_explosion2: pulsefx2
+		BlendMode: Additive
+		Tick: 40
+	pulse_explosion3: mempfx
+		BlendMode: Alpha
+		Tick: 40
+	ion_ring: ring1
+		BlendMode: Alpha
+		Tick: 40
+		ZOffset: 2046
+	ion_ring2: ring2
+		BlendMode: Alpha
+		Tick: 50
+		ZOffset: 2046
+	small_chem: chemball
+	med_chem: chemball2
+	large_chem: chemball3
+	frag_1: frag1cnc
+	frag_3: frag3cnc
+	scud_explosion: fball1cnc
+		Offset: -2,0
+	gasring: gasring
+		BlendMode: Additive
+		Tick: 70
+		ZOffset: 512
+	gasring2: cdgas
+		BlendMode: Alpha
+		Tick: 70
+		ZOffset: 512
+	ironcurtain_effect: ironcureffect
+		BlendMode: Additive
+		Tick: 85
+		ZOffset: 512
+		Offset: 2, 15
+	forceshield_effect: forceshield
+		BlendMode: Alpha
+		Tick: 85
+		ZOffset: 512
+		Offset: 2, 15
+	chronowarp_effect: chronoblast
+		BlendMode: Alpha
+		Tick: 85
+		ZOffset: 2046
+	chronowarpbig_effect: chronoblastbig
+		BlendMode: Alpha
+		Tick: 85
+		ZOffset: 2046
+	chrono_zap: chronozap
+	chaos_bomb: chaoswave
+		BlendMode: Alpha
+		Tick: 70
+		ZOffset: 2046
+	tsla_bomb: tslabomb
+	stealthbub: plxplo
+		BlendMode: Additive
+		Tick: 70
+		ZOffset: 2046
+	chem_miss: twlt070
+		Tick: 70
+		ZOffset: 2046
+	ionexp: ionexp
+		Tick: 110
+	b2bexp: b2bexp
+		BlendMode: Additive
+		Tick: 90
+		ZOffset: 2046
+	b2bexp2: b2bexp
+		BlendMode: Additive
+		Tick: 90
+		ZOffset: 2046
+		FlipX: true
+	ionbeam: ionbeam
+		Offset: -1, -210, 60
+		ZRamp: 1
+		Tick: 40
+		BlendMode: Additive
+	ionbeam2: ionbeam
+		Offset: -1, -450, 60
+		ZRamp: 1
+		Tick: 40
+		BlendMode: Additive
+	ionbeam3: ionbeam
+		Offset: -1, -690, 60
+		ZRamp: 1
+		Tick: 40
+		BlendMode: Additive
+	ionbeam4: ionbeam
+		Offset: -1, -930, 60
+		ZRamp: 1
+		Tick: 40
+		BlendMode: Additive
+	ionbeam5: ionbeam
+		Offset: -1, -1170, 60
+		ZRamp: 1
+		Tick: 60
+		BlendMode: Additive
+	ionbeam6: ionbeam
+		Offset: -1, -1410, 60
+		ZRamp: 1
+		Tick: 40
+		BlendMode: Additive
+	weathercloud1: wccloud1
+	weathercloud2: wccloud2
+	weathercloud1f: wccloud1
+		FlipX: true
+	weathercloud2f: wccloud2
+		FlipX: true
+	weatherbolt1: wclbolt1
+	weatherbolt2: wclbolt2
+	weatherbolt3: wclbolt3
+	weatherbolt1f: wclbolt1
+		FlipX: true
+	weatherbolt2f: wclbolt2
+		FlipX: true
+	weatherbolt3f: wclbolt3
+		FlipX: true
+		
+particles:
+	inviso: inviso
+
+burn-l:
+	idle:
+		Length: *
+		ZOffset: 512
+	loop:
+		Start: 16
+		Length: 44
+		ZOffset: 512
+	end:
+		Start: 60
+		Length: 6
+		ZOffset: 512
+
+burn-m:
+	idle:
+		Length: *
+		ZOffset: 512
+	loop:
+		Start: 16
+		Length: 44
+		ZOffset: 512
+	end:
+		Start: 60
+		Length: 6
+		ZOffset: 512
+
+burn-s:
+	idle:
+		Length: *
+		ZOffset: 512
+	loop:
+		Start: 12
+		Length: 46
+		ZOffset: 512
+	end:
+		Start: 59
+		Length: 5
+		ZOffset: 512
+
+pips:
+	groups:
+		Start: 8
+		Length: 10
+		Offset: 9, 5
+	medic:
+		Start: 20
+		Offset: 15, 1
+	#ready:
+	#	Start: 3
+	#hold:
+	#	Start: 4
+	tag-fake:
+		Start: 18
+		Offset: 0, 2
+	tag-primary:
+		Start: 2
+		Offset: 0, 2
+	pip-empty: pips2
+	pip-green: pips2
+		Start: 1
+	pip-yellow: pips2
+		Start: 2
+	pip-gray: pips2
+		Start: 3
+	pip-red: pips2
+		Start: 4
+	pip-blue: pips2
+		Start: 5
+	pip-disguise: pip-disguise
+		Length: *
+		Tick: 300
+		Offset: 0, -6
+	pip-hazmat: pip-hazmat
+		Length: *
+	pip-hidden: pip-hidden
+		Length: *
+		Tick: 300
+		Offset: 0, -6
+
+v2:
+	idle:
+		Facings: 32
+		ZOffset: 1023
+		
+v3:
+	idle:
+		Facings: 32
+		ZOffset: 1023
+		
+thawk:
+	idle:
+		Facings: 32
+		ZOffset: 1023
+
+rallypoint:
+	flag: flagfly
+		Length: *
+		Offset: 11,-5
+		ZOffset: 2535
+	circles: fpls
+		Length: *
+		ZOffset: 2047
+
+beacon:
+	Defaults:
+		ZOffset: 2535
+	arrow: mouse
+		Start: 5
+		Offset: 1,-12
+	circles: fpls
+		Length: *
+		ZOffset: 2047
+	atomicon: lores|atomicon
+		Length: *
+		Offset: 0,-42
+	pbmbicon: lores|pbmbicon
+		Length: *
+		Offset: 0,-42
+	camicon: lores|camicon
+		Length: *
+		Offset: 0,-42
+	pinficon: lores|pinficon
+		Length: *
+		Offset: 0,-42
+	clock: beaconclock
+		Length: *
+		Offset: 0,-42
+	clockTD: beaconclockTD
+		Length: *
+		Offset: 0,-42
+	airstrike: lores-pbmbicon
+		Length: *
+		Offset: 0,-42
+	a10airstrike: bombicnh
+		Length: *
+		Offset: 0,-42
+	cmissile: lores-cmissicon
+		Length: *
+		Offset: 0,-42
+	emp: lores-emp
+		Length: *
+		Offset: 0,-42
+	lruavicon: lores-uavicon
+		Length: *
+		Offset: 0,-42
+	lrairdropicon: lores-airdropicon
+		Length: *
+		Offset: 0,-42
+
+smoke_m:
+	idle:
+		Length: *
+		Offset: 2, -5
+		ZOffset: 512
+	loop:
+		Start: 49
+		Length: 42
+		Offset: 2, -5
+		ZOffset: 512
+	end:
+		Start: 26
+		Length: -26
+		Offset: 2, -5
+		ZOffset: 512
+		
+smoke_mtd:
+	idle:
+		Length: *
+		Offset: 2, -5
+		ZOffset: 512
+	loop:
+		Start: 49
+		Length: 42
+		Offset: 2, -5
+		ZOffset: 512
+	end:
+		Start: 26
+		Length: -26
+		Offset: 2, -5
+		ZOffset: 512
+
+dragon:
+	idle:
+		Facings: 32
+		ZOffset: 1023
+
+smokey:
+	idle:
+		Length: *
+		ZOffset: 1023
+		
+smokey2:
+	idle:
+		tick: 200
+		Length: *
+		ZOffset: 1023
+		
+firetrail:
+	idle: fire4
+		Length: *
+		ZOffset: 1023
+
+bomb:
+	idle:
+		Length: *
+		ZOffset: 1023
+
+missile:
+	idle:
+		Facings: 32
+		ZOffset: 1023
+
+torpedo:
+	idle: missile
+		Facings: 32
+		ZOffset: -1023
+		
+scrintorp:
+	idle:
+		Length: *
+		ZOffset: 1023
+
+litning:
+	bright:
+		Length: 4
+		ZOffset: 1023
+	dim:
+		Start: 4
+		Length: 4
+		ZOffset: 1023
+
+fb1:
+	idle:
+		Length: *
+		ZOffset: 1023
+
+moveflsh:
+	idle:
+		Length: *
+		Tick: 80
+		ZOffset: 2047
+		UseTilesetExtension: true
+		TilesetOverrides:
+			DESERT: TEMPERAT
+
+select:
+	repair:
+		Start: 2
+
+poweroff:
+	offline:
+		Length: *
+		Tick: 160
+		ZOffset: 2047
+
+allyrepair:
+	repair:
+		Length: *
+		Tick: 160
+		ZOffset: 2047
+
+tabs:
+	left-normal:
+	left-pressed:
+		Start: 1
+
+sputnik:
+	idle:
+		Length: *
+		Offset: -4,0
+		ZOffset: 1023
+
+dd-crnr:
+	idle:
+		Length: *
+	top-left:
+	top-right:
+		Start: 1
+	bottom-left:
+		Start: 2
+	bottom-right:
+		Start: 3
+
+fb2:
+	idle:
+		Length: *
+		ZOffset: 1023
+
+fb3:
+	idle:
+		Facings: 32
+		ZOffset: 1023
+
+fb4:
+	idle:
+		Length: *
+		ZOffset: 1023
+
+scrate:
+	Defaults:
+		ZOffset: -511
+	idle:
+	land:
+		Start: 1
+	water:
+		Start: 2
+		Length: 4
+		Tick: 500
+
+wcrate:
+	Defaults:
+		ZOffset: -511
+	idle:
+	land:
+	water: wwcrate
+		Length: *
+		Tick: 500
+
+xcratea:
+	idle:
+		ZOffset: -511
+	land:
+		Start: 1
+		ZOffset: -511
+	water:
+		Start: 2
+		Length: 4
+		Tick: 500
+		ZOffset: -511
+
+xcrateb:
+	idle:
+		ZOffset: -511
+	land:
+		Start: 1
+		ZOffset: -511
+	water:
+		Start: 2
+		Length: 4
+		Tick: 500
+		ZOffset: -511
+
+xcratec:
+	idle:
+		ZOffset: -511
+	land:
+		Start: 1
+		ZOffset: -511
+	water:
+		Start: 2
+		Length: 4
+		Tick: 500
+		ZOffset: -511
+
+xcrated:
+	idle:
+		ZOffset: -511
+	land:
+		Start: 1
+		ZOffset: -511
+	water:
+		Start: 2
+		Length: 4
+		Tick: 500
+		ZOffset: -511
+
+crate-effects:
+	Defaults:
+		ZOffset: 2047
+		Length: *
+	speed: speed
+	dollar: dollar
+	reveal-map: earth
+	hide-map: empulse
+	fpower: fpower
+	gps: gpsbox
+	invuln: invulbox
+	heal: invun
+	nuke: missile2
+	parabombs: parabox
+	sonar: sonarbox
+	stealth: stealth2
+	timequake: tquake
+	armor: armor
+	chrono: chronbox
+	rapid: rapid
+		Tick: 90
+	airstrike: deviator
+	levelup: levelup
+		Tick: 200
+
+parach:
+	open:
+		Length: 5
+	idle:
+		Start: 5
+		Length: 11
+		
+parachl:
+	open:
+		Length: 5
+	idle:
+		Start: 5
+		Length: 11
+
+parach-shadow:
+	idle:
+		Length: *
+
+bomblet:
+	idle:
+		Length: *
+		ZOffset: 1023
+		
+empbomblet:
+	idle:
+		Length: *
+		ZOffset: 1023
+
+parabomb:
+	open:
+		Length: 8
+		ZOffset: 1023
+	idle:
+		Start: 8
+		Length: 5
+		ZOffset: 1023
+		
+tbomb:
+	open:
+		Length: 8
+		ZOffset: 1023
+	idle:
+		Start: 8
+		Length: 5
+		ZOffset: 1023
+		
+b2bomb:
+	idle:
+		Length: *
+		ZOffset: 1023
+
+smokland:
+	open: playersmoke
+		Length: 60
+		Tick: 120
+		ZOffset: 1023
+	idle: playersmoke
+		Start: 60
+		Length: 32
+		Tick: 120
+		ZOffset: 1023
+
+fire:
+	Defaults:
+		Length: *
+		Offset: 0,-3
+		Tick: 105	
+		ZOffset: 511
+	1: fire1
+	2: fire2
+	3: fire7
+	4: fire4
+	5: fire5
+	6: fire6
+	7: fire6
+		FlipX: true
+	8: fire7
+		FlipX: true
+		
+rank:
+	rank-veteran-1:
+	rank-veteran-2:
+		Start: 1
+	rank-elite:
+		Start: 2
+		
+iconchevrons:
+	veteran:
+		Offset: 2, 2
+
+atomic:
+	up: atomicup
+		Length: *
+		ZOffset: 1023
+	down: atomicdn
+		Length: *
+		ZOffset: 1023
+		
+empicbm:
+	up: atomicupcnc
+		Length: *
+		ZOffset: 511
+	down: atomicdncnc
+		Length: *
+		ZOffset: 511
+		
+chemicbm:
+	up: atomicupcnc
+		Length: *
+		ZOffset: 511
+	down: atomicdncnc
+		Length: *
+		ZOffset: 511
+		
+deathhand:
+	up: atomicupcnc
+		Length: *
+		ZOffset: 511
+	down: atomicdncnc
+		Length: *
+		ZOffset: 511
+
+ionsfx:
+	idle:
+		Length: *
+		Offset: 0, -78
+		ZOffset: 2048
+		ZRamp: 1
+		BlendMode: Additive
+
+bubbles:
+	idle:
+		Length: *
+		Tick: 220
+
+mpspawn:
+	idle:
+		Length: *
+
+waypoint:
+	idle:
+		Length: *
+
+camera:
+	idle:
+		Length: *
+		
+satscan:
+	idle:
+		Length: *
+		BlendMode: Alpha
+		Tick: 80
+		ZOffset: 1023
+
+gpsdot:
+	Infantry:
+	Vehicle:
+		Start: 1
+	Ship:
+		Start: 2
+	Helicopter:
+		Start: 3
+	Plane:
+		Start: 4
+	Harvester:
+		Start: 5
+	Structure:
+		Start: 6
+	Oil:
+		Start: 7
+	Hospital:
+		Start: 8
+	Biohazard:
+		Start: 9
+	Communications:
+		Start: 10
+	Forward:
+		Start: 11
+
+icon:
+	abomb: atomicon
+	invuln: infxicon
+	chrono: warpicon
+	spyplane: smigicon
+	paratroopers: pinficon
+	gps: gpssicon
+	parabombs: pbmbicon
+	sonar: sonricon
+	ioncannon: ionicon
+	airstrike: airstkicon
+	a10airstrike: bombicnh
+	empmissile: empicon
+	chemmissile: cmissicnh
+	hacksat: hacksaticon
+	uavicon: uavicon
+	airdropicon: airdropicon
+	forceshieldicon: forceshieldicon
+	orcaca: orcacarein
+	orcacah: orcacahrein
+	invis: invisicon
+	infbomb: b2bicnh
+	carpetbomb: cbombicon
+
+quee:
+	idle:
+		Length: 10
+	damaged-idle:
+		Start: 10
+		Length: 10
+
+lar1:
+	idle:
+
+lar2:
+	idle:
+
+minp:
+	idle:
+		ZOffset: -512
+	icon: jmin
+
+minv:
+	idle:
+		ZOffset: -512
+	icon: jmin
+
+overlay:
+	Defaults: trans.icn
+		AddExtension: False
+	build-valid:
+	build-invalid:
+		Start: 2
+	target-valid:
+	target-select:
+		Start: 1
+	target-invalid:
+		Start: 2
+
+editor-overlay:
+	Defaults: trans.icn
+		AddExtension: False
+	copy:
+	paste:
+		Start: 2
+
+resources:
+	Defaults:
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+			JUNGLE: TEMPERAT
+			DESERT: TEMPERAT
+	gold01: gold01
+	gold02: gold02
+	gold03: gold03
+	gold04: gold04
+	gem01: gem01
+	gem02: gem02
+	gem03: gem03
+	gem04: gem04
+	ti1: ti1
+		TilesetOverrides:
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	ti2: ti2
+		TilesetOverrides:
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	ti3: ti3
+		TilesetOverrides:
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	ti4: ti4
+		TilesetOverrides:
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	ti5: ti5
+		TilesetOverrides:
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	ti6: ti6
+		TilesetOverrides:
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	ti7: ti7
+		TilesetOverrides:
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	ti8: ti8
+		TilesetOverrides:
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	ti9: ti9
+		TilesetOverrides:
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	ti10: ti10
+		TilesetOverrides:
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	ti11: ti11
+		TilesetOverrides:
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	ti12: ti12
+		TilesetOverrides:
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	bti1: rtib1
+		TilesetOverrides:
+			WINTER: TEMPERAT
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	bti2: rtib2
+		TilesetOverrides:
+			WINTER: TEMPERAT
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	bti3: rtib3
+		TilesetOverrides:
+			WINTER: TEMPERAT
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	bti4: rtib4
+		TilesetOverrides:
+			WINTER: TEMPERAT
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	bti5: rtib5
+		TilesetOverrides:
+			WINTER: TEMPERAT
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	bti6: rtib6
+		TilesetOverrides:
+			WINTER: TEMPERAT
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	bti7: rtib7
+		TilesetOverrides:
+			WINTER: TEMPERAT
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	bti8: rtib8
+		TilesetOverrides:
+			WINTER: TEMPERAT
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	bti9: rtib9
+		TilesetOverrides:
+			WINTER: TEMPERAT
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	bti10: rtib10
+		TilesetOverrides:
+			WINTER: TEMPERAT
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	bti11: rtib11
+		TilesetOverrides:
+			WINTER: TEMPERAT
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+	bti12: rtib12
+		TilesetOverrides:
+			WINTER: TEMPERAT
+			JUNGLE: TEMPERAT
+			SNOW: TEMPERAT
+			BARREN: TEMPERAT
+
+shroud:
+	shroud: shadow
+		Length: *
+
+# Note: The order of smudges and craters determines
+# the index that is mapped to them in maps
+scorches:
+	Defaults:
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	sc1: sc1
+	sc2: sc2
+	sc3: sc3
+	sc4: sc4
+	sc5: sc5
+	sc6: sc6
+
+craters:
+	Defaults:
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	cr1: cr1
+	cr2: cr2
+	cr3: cr3
+	cr4: cr4
+	cr5: cr5
+	cr6: cr6
+
+mine:
+	idle:
+		UseTilesetExtension: true
+		ZOffset: -1024
+
+gmine:
+	idle:
+		ZOffset: -1024
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+			BARREN: TEMPERAT
+			JUNGLE: TEMPERAT
+
+railmine:
+	idle:
+		ZOffset: -512
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+			BARREN: TEMPERAT
+			JUNGLE: TEMPERAT
+
+ctflag:
+	idle:
+		Length: 9
+		Tick: 50
+		Offset: 0,-12
+	bib: mbGAP
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			BARREN: TEMPERAT
+			JUNGLE: TEMPERAT
+		
+laserfire:
+	idle: veh-hit3
+		Length: *
+		ZOffset: 511
+		
+plaserfire:
+	idle: frag1
+		Offset: -2,0
+		Length: *
+		ZOffset: 511
+
+atkssmmis:
+	idle:
+		Facings: 32
+
+fire1:
+	idle:
+		Length: *
+		Offset: 2, -5
+		ZOffset: 510
+	loop:
+		Start: 0
+		Length: 14
+		Offset: 2, -5
+		ZOffset: 510
+	end:
+		Start: 14
+		Length: -14
+		Offset: 2, -5
+		ZOffset: 510
+
+split2:
+	Defaults:
+		Offset: 11, -15
+		UseTilesetExtension: true
+		TilesetOverrides:
+			DESERT: TEMPERAT
+			JUNGLE: TEMPERAT
+			WINTER: SNOW
+			BARREN: SNOW
+			INTERIOR: TEMPERAT
+	make:
+		Length: 30
+	active:
+		Start: 30
+		Length: 24
+	idle:
+		Start: 54
+
+split3:
+	Defaults:
+		Offset: 7, -13
+		UseTilesetExtension: true
+		TilesetOverrides:
+			DESERT: TEMPERAT
+			JUNGLE: TEMPERAT
+			WINTER: SNOW
+			BARREN: DESERT
+			INTERIOR: DESERT
+	make:
+		Length: 30
+	active:
+		Start: 30
+		Length: 24
+	idle:
+		Start: 54
+
+cb1:
+	idle:
+		Length: *
+		ZOffset: 1023
+
+cb2:
+	idle:
+		Length: *
+		ZOffset: 1023
+		
+sparks_overlay:
+	idle: emp_fx01
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		ZOffset: 512
+
+ctnkjump:
+	idle:
+		Length: *
+		BlendMode: Additive
+		Tick: 90
+		ZOffset: 510
+		
+twake:
+	idle:
+		Length: *
+		Tick: 300
+		ZOffset: -511
+		
+cloud1:
+	idle:
+		BlendMode: Alpha
+		Length: *
+		ZOffset: 1023
+	start: cloud1d
+		BlendMode: Alpha
+		Length: 12
+		ZOffset: 1023
+	loop:
+		BlendMode: Alpha
+		Length: 28
+		ZOffset: 1023
+	die: cloud1d
+		BlendMode: Alpha
+		Length: *
+		ZOffset: 1023
+		
+cloud1d:
+	idle:
+		Length: *
+		BlendMode: Alpha
+		ZOffset: 1023
+		
+cloud2:
+	idle:
+		BlendMode: Alpha
+		Length: *
+		ZOffset: 1023
+	start: cloud2d
+		BlendMode: Alpha
+		Length: 12
+		ZOffset: 1023
+	loop:
+		BlendMode: Alpha
+		Length: 28
+		ZOffset: 1023
+	die: cloud2d
+		BlendMode: Alpha
+		Length: *
+		ZOffset: 1023
+		
+cloud2d:
+	idle:
+		Length: *
+		ZOffset: 1023
+		
+mindanim:
+	idle:
+		Length: *
+		Tick: 200
+		BlendMode: Alpha
+		Offset: 0, 0
+		
+paratarget:
+	cursor: mouse
+		Start: 82
+		Length: 8
+		Tick: 80
+
+paradirection:
+	arrow-t: mouse
+		Start: 1
+		Y: -7
+		Offset: 0, -19, 0
+	arrow-tr: mouse
+		Start: 2
+		X: 6
+		Y: -5
+		Offset: 15, -15, 0
+	arrow-r: mouse
+		Start: 3
+		X: 7
+		Offset: 19, 0, 0
+	arrow-br: mouse
+		Start: 4
+		X: 6
+		Y: 5
+		Offset: 15, 15, 0
+	arrow-b: mouse
+		Start: 5
+		Y: 7
+		Offset: 0, 19, 0
+	arrow-bl: mouse
+		Start: 6
+		X: -6
+		Y: 5
+		Offset: -15, 15, 0
+	arrow-l: mouse
+		Start: 7
+		X: -8
+		Offset: -19, 0, 0
+	arrow-tl: mouse
+		Start: 8
+		X: -6
+		y: 5
+		Offset: -15, -15, 0
+
+flameall:
+	idle:
+		Length: 19
+		Facings: -8
+		Tick: 140
+		ZOffset: 1023
+		Offset: 0, 0, 6
+		
+chemall:
+	idle:
+		Length: 19
+		Facings: -8
+		Tick: 140
+		ZOffset: 1023
+		Offset: 0, 0, 6

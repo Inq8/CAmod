@@ -1,0 +1,22 @@
+^HealWeapon:
+	ReloadDelay: 80
+	Range: 2c849
+	Report: healer1.aud
+	ValidTargets: Heal
+	TargetActorCenter: true
+	Projectile: InstantHit
+	Warhead@1Dam: TargetDamage
+		DebugOverlayColor: 00FF00
+		Damage: -5000
+		ValidTargets: Heal
+
+Heal:
+	Inherits: ^HealWeapon
+
+Repair:
+	Inherits: ^HealWeapon
+	Range: 1c819
+	Report: repair11.aud
+	ValidTargets: Repair
+	Warhead@1Dam: TargetDamage
+		ValidTargets: Repair

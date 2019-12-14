@@ -1,0 +1,135 @@
+SYRF:
+	Inherits: ^FakeBuilding
+	Inherits@infiltrate: ^InfiltratableFake
+	RenderSprites:
+		PlayerPalette: playernavy
+	Buildable:
+		BuildPaletteOrder: 890
+		Queue: Defense
+		Prerequisites: syrd, ~structures.allies
+		Description: Looks like a Naval yard.
+		Icon: fake-icon
+	Tooltip:
+		Name: Fake Naval Yard
+		GenericName: Shipyard
+		GenericVisibility: Enemy
+		GenericStancePrefix: False
+	Targetable:
+		TargetTypes: Ground, Water, Structure, SpyInfiltrate
+	Building:
+		Footprint: xxx xxx xxx
+		Dimensions: 3,3
+		TerrainTypes: Water
+	RenderSprites:
+		Image: SYRD
+	Valued:
+		Cost: 100
+	Health:
+		HP: 100000
+	Armor:
+		Type: Light
+	MapEditorData:
+		ExcludeTilesets: INTERIOR
+	RequiresBuildableArea:
+		AreaTypes: building
+		Adjacent: 8
+
+WEAF:
+	Inherits: ^FakeBuilding
+	Inherits@infiltrate: ^InfiltratableFake
+	Buildable:
+		BuildPaletteOrder: 920
+		Prerequisites: weap, ~structures.allies
+		Queue: Defense
+		Description: Looks like a War Factory.
+		Icon: fake-icon
+	Tooltip:
+		Name: Fake War Factory
+		GenericName: War Factory
+		GenericVisibility: Enemy
+		GenericStancePrefix: False
+	Building:
+		Footprint: xxx xxx ===
+		Dimensions: 3,3
+		LocalCenterOffset: 0,-512,0
+	WithBuildingBib:
+	RenderSprites:
+		Image: WEAP
+	WithProductionDoorOverlay:
+		Sequence: build-top
+		RequiresCondition: !build-incomplete
+	Valued:
+		Cost: 200
+	Health:
+		HP: 150000
+	Armor:
+		Type: Wood
+	-ActorPreviewPlaceBuildingPreview:
+	SequencePlaceBuildingPreview:
+		Sequence: place
+		SequencePalette: placebuilding
+	RequiresBuildableArea:
+		AreaTypes: building
+
+DOMF:
+	Inherits: ^FakeBuilding
+	Inherits@infiltrate: ^InfiltratableFake
+	Tooltip:
+		Name: Fake Radar Dome
+		GenericName: Radar Dome
+		GenericVisibility: Enemy
+		GenericStancePrefix: False
+	Buildable:
+		BuildPaletteOrder: 930
+		Queue: Defense
+		Prerequisites: dome, ~structures.allies
+		Description: Looks like a Radar Dome.
+		Icon: fake-icon
+	Building:
+		Footprint: xx xx ==
+		Dimensions: 2,3
+		LocalCenterOffset: 0,-512,0
+	WithBuildingBib:
+	RenderSprites:
+		Image: DOME
+	Valued:
+		Cost: 180
+	Health:
+		HP: 100000
+	Armor:
+		Type: Wood
+	RequiresBuildableArea:
+		AreaTypes: building
+
+FACF:
+	Inherits: ^FakeBuilding
+	Buildable:
+		BuildPaletteOrder: 1000
+		Queue: Defense
+		Prerequisites: ~structures.allies
+		Description: Looks like a Construction Yard.
+		Icon: fake-icon
+	Tooltip:
+		Name: Fake Construction Yard
+		GenericName: Construction Yard
+		GenericVisibility: Enemy
+		GenericStancePrefix: False
+	Building:
+		Footprint: xxX xxx XxX ===
+		Dimensions: 3,4
+		LocalCenterOffset: 0,-512,0
+	Selectable:
+		Bounds: 72,72
+	WithBuildingBib:
+	WithBuildingPlacedAnimation:
+		RequiresCondition: !build-incomplete
+	RenderSprites:
+		Image: FACT
+	Valued:
+		Cost: 250
+	Health:
+		HP: 150000
+	Armor:
+		Type: Wood
+	RequiresBuildableArea:
+		AreaTypes: building

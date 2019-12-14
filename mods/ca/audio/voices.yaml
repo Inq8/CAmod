@@ -1,0 +1,419 @@
+GenericVoice:
+	Variants:
+		allies: .v01,.v03
+		england: .v01,.v03
+		france: .v01,.v03
+		germany: .v01,.v03
+		soviet: .r01,.r03
+		russia: .r01,.r03
+		ukraine: .r01,.r03
+		iraq: .r01,.r03
+		nod: .c01,.c03
+		blackh: .c01,.c03
+		marked: .c01,.c03
+		legion: .c01,.c03
+		gdi: .c01,.c03
+		talon: .c01,.c03
+		zocom: .c01,.c03
+		eagle: .c01,.c03
+	Voices:
+		Select: await1,ready,report1,yessir1
+		Action: ackno,affirm1,noprob,overout,ritaway,roger,ugotit
+		Die: dedman1,dedman2,dedman3,dedman4,dedman5,dedman7,dedman8,nuyell1,nuyell12,nuyell3,nuyell4,nuyell5
+		Burned: dedman10,yell1
+		Zapped: dedman6,nuyell3
+		Poisoned: vtoxb,vtoxc,vtoxd,vtoxe,vtoxf,vtoxh
+	DisableVariants: Die, Burned, Zapped, Poisoned
+
+VehicleVoice:
+	Variants:
+		allies: .v00,.v02
+		england: .v00,.v02
+		france: .v00,.v02
+		germany: .v00,.v02
+		soviet: .r00,.r02
+		russia: .r00,.r02
+		ukraine: .r00,.r02
+		iraq: .r00,.r02
+		nod: .c00,.c02
+		blackh: .c00,.c02
+		marked: .c00,.c02
+		legion: .c00,.c02
+		gdi: .c00,.c02
+		zocom: .c00,.c02
+		talon: .c00,.c02
+		eagle: .c00,.c02
+	Voices:
+		Select: vehic1,yessir1,report1,await1,unit1
+		Action: ackno,affirm1,movout1
+		Unload: movout1
+		
+^InfantryDeaths:
+	Voices:
+		Die: dedman1,dedman2,dedman3,dedman4,dedman5,dedman7,dedman8,nuyell1,nuyell12,nuyell3,nuyell4,nuyell5
+		Burned: dedman10,yell1
+		Zapped: dedman6,nuyell3
+		Poisoned: vtoxb,vtoxc,vtoxd,vtoxe,vtoxf,vtoxh
+
+EngineerVoice:
+	Inherits: ^InfantryDeaths
+	Voices:
+		Select: eengin1,eyessir1
+		Action: eaffirm1,emovout1
+
+MedicVoice:
+	Inherits: ^InfantryDeaths
+	Voices:
+		Select: medawait,medreporting
+		Action: medack,medaffirm,medmove,medyessir
+		#Action: medstat,medgimme,medclear
+
+MechanicVoice:
+	Inherits: ^InfantryDeaths
+	Voices:
+		Select: engawait,engyes
+		Move: engaffirm,engnoprob
+		Action: engnoprob,engicanfix
+
+TanyaVoice:
+	Voices:
+		Select: yo1,yes1,yeah1
+		Move: onit1,cmon1,rokroll1
+		Action: tuffguy1,bombit1
+		Die: tandeth1
+		Burned: tandeth1
+		Zapped: tandeth1
+		Build: laugh1
+		Kill: gotit1,lefty1
+		Demolish: keepem1,tuffguy1
+		Poisoned: tandeth1
+
+DogVoice:
+	Voices:
+		Select: dogw3px
+		Move: dogy1
+		Attack: dogg5p
+		Die: dogw5,dogw7
+		Burned: dogw6
+		Zapped: dogw6
+		Poisoned: dogw5
+
+SpyVoice:
+	Inherits: ^InfantryDeaths
+	Voices:
+		Select: syessir1,scomnd1
+		Move: sonway1,sindeed1
+		Action: sking1
+
+ThiefVoice:
+	Inherits: ^InfantryDeaths
+	Voices:
+		Select: swhat1,syeah1
+		Action: saffirm1,smout1,sokay1
+		Attack: candy,pickclean,fivefinger
+
+CivilianMaleVoice:
+	Inherits: ^InfantryDeaths
+	Voices:
+		Select: guyyeah1
+		Action: guyokay1
+
+CivilianFemaleVoice:
+	Inherits: ^InfantryDeaths
+	Voices:
+		Select: girlyeah
+		Action: girlokay
+
+EinsteinVoice:
+	Inherits: ^InfantryDeaths
+	Voices:
+		Select: einah1
+		Action: einok1,einyes1
+		
+MoebiusVoice:
+	Inherits: ^InfantryDeaths
+	Voices:
+		Select: mcomnd1,mhello1,myes1,mhmmm1,mthanks1
+		Move: myesyes1,mplan3,mtiber1,mcourse1
+		Action: myesyes1,mplan3,mtiber1,mcourse1
+
+ShokVoice:
+	Inherits: ^InfantryDeaths
+	Voices:
+		Select: jchrge1,jjuice1,jjump1,jpower1
+		Move: jdance1,jyes1
+		Attack: jburn1,jcrisp1,jshock1,jlight1
+
+StavrosVoice:
+	Inherits: ^InfantryDeaths
+	Voices:
+		Select: stavcmdr
+		Move: stavcrse, stavyes, stavmov
+		Attack: stavcrse, stavyes
+		Action: stavcrse, stavyes
+		Demolish: stavcrse
+		
+VolkovVoice:
+	Voices:
+		Select: comrade
+		Move: da, order
+		Action: attacking,fhomec,funion,frussia
+		Attack: attacking
+		Die: condia,condid
+		Burned: condia,condid
+		Zapped: condia,condid
+		Poisoned: condia,condid
+		Demolish: fhomec,frussia,funion
+		Kill: frussia,funion,fhomec
+		Build: frussia
+
+CommandoVoice:
+	Voices:
+		Select: ryeah1,ryes1,ryo1
+		Move: rcmon1,ronit1,rgotit1
+		Attack: ronit1,rgotit1,rnoprblm1
+		Action: ronit1,rgotit1,rnoprblm1
+		Demolish: rnoprblm1
+		Die: ramyell1
+		Burned: ramyell1
+		Zapped: ramyell1
+		Poisoned: ramyell1
+		Build: rrokroll1
+		Kill: rkeepem1,rlaugh1,rlefty1,rtuffguy1
+		
+ViceVoice:
+	Voices:
+		Select: fiend2
+		Move: fiend1
+		Attack: fiend1
+		Action: fiend1
+		Die: fiend2
+		Burned: fiend1
+		Zapped: fiend1
+		Poisoned: fiend1
+		Build: fiend1
+		
+KirovVoice:
+	Voices:
+		Select: kirsea,kirseb,kirsec,kirsed
+		Move: kirmoa,kirmob,kirmoc
+		Attack: kirata,kiratb,kiratc,kiratd
+		Action: kirmoa,kirmob,kirmoc
+		Die: kirdia,kirdib,kirdic,kirdid
+		Build: kirsea
+		
+ChronoVoice:
+	Inherits: ^InfantryDeaths
+	Voices:
+		Select: ichrsea,ichrseb,ichrsec,ichrsed,ichrsee
+		Move: ichrseb,ichrsec,ichrsed,ichrsee
+		Attack: ichrata,ichratb,ichratc,ichratd
+		Action: ichrseb,ichrsec,ichrsed,ichrsee
+		Build: ichrseb
+		
+TitanNodVoice:
+	Voices:
+		Select: 60-n100,60-n102,60-n104
+		Move: 60-n106,60-n108,60-n110
+		Attack: 60-n112,60-n114,60-n116
+		Action: 60-n106,60-n108,60-n110
+		
+TTruckVoice:
+	Voices:
+		Select: vdemsea, vdemseb, vdemsec, vdemsed
+		Move: vdemmoa, vdemmob, vdemmoc
+		Attack: vdemata, vdematb, vdematc, vdematd, vdemate
+		Action:  vdemmoa, vdemmob, vdemmoc
+		Build: vdemmoa
+		
+AcolVoice:
+	Inherits: ^InfantryDeaths
+	Voices:
+		Select: 12-i002,12-i004
+		Move: 12-i006,12-i008,12-i010
+		Attack: 12-i014,12-i016
+		Action: 12-i006,12-i008,12-i010
+		Build: 12-i010
+		
+InfilVoice:
+	Inherits: ^InfantryDeaths
+	Voices:
+		Select: 21-i002,21-i010
+		Move: 21-i016,21-i010
+		Attack: 21-i000, 21-i004
+		Action: 21-i000, 21-i022
+		Build: 21-i000
+		
+CarryAllVoice:
+	Voices:
+		Select: carasea,caraseb,carased
+		Move: caramoa,caramob,caramoc,caramod,carasec
+		Attack: caramoc,caramoa,caramob
+		Action:  caramoc,caramoa,caramob
+		Build: caraseb
+		
+TnkdVoice:
+	Voices:
+		Select: vtansea,vtanseb,vtansec,vtansed,vtansee
+		Move: vtanmoa,vtanmob,vtanmoc,vtanmod
+		Attack: vtanata,vtanatb,vtanatc,vtanatd,vtanate
+		Action:  vtanmoa,vtanmob,vtanmoc,vtanmod
+		Build: vtansea
+		
+SniperVoice:
+	Inherits: ^InfantryDeaths
+	Voices:
+		Select: isnisea,isniseb,isnisec,isnised
+		Move: isnimoa,isnimob,isnimoc,isnimod,isnimoe
+		Attack: isniata,isniatb,isniatc
+		Action: isnimoa,isnimob,isnimoc,isnimod,isnimoe
+		Die: isnidia,isnidib,isnidic
+		Burned: dedman10,yell1
+		Zapped: dedman6,nuyell3
+		Poisoned: vtoxb,vtoxc,vtoxd,vtoxe,vtoxf,vtoxh
+		Build: isnisea
+		
+HarrierVoice:
+	Voices:
+		Select: vintsea,vintseb,vintsec,vintsed
+		Move: vintmoa,vintmob,vintmoc,vintmod
+		Attack: vintata,vintatb,vintatc,vintatd
+		Action:  vintmoa,vintmob,vintmoc,vintmod
+		Build: vintsea
+
+DroneCarrVoice:
+	Voices:
+		Select: vairsea, vairseb, vairsec, vairsee
+		Move: vairmoa, vairmob, vairmoc, vairmod, vairmoe
+		Attack: vairata, vairatb, vairatc, vairatd, vairate
+		Action:  vairmoa, vairmob, vairmoc, vairmod, vairmoe
+		Build: vairsea
+		
+YuriVoice:
+	Voices:
+		Select: iyursea,iyurseb,iyursec,iyursed,iyursee
+		Move: iyurmoa,iyurmob,iyurmoc,iyurmod
+		Action: iyurmoa,iyurmob,iyurmoc,iyurmod
+		Attack: iyurata,iyuratb,iyuratc,iyuratd,iyurate
+		Die: iyurdia,iyurdib,iyurdic
+		Burned: iyurdia,iyurdib,iyurdic
+		Zapped: iyurdia, iyurdib,iyurdic
+		Poisoned: iyurdia,iyurdib,iyurdic
+		Demolish: iyuratc
+		Kill: iyuratc
+		Build: iyursec
+		
+DesVoice:
+	Inherits: ^InfantryDeaths
+	Voices:
+		Select: idesseb,idessec,idessed,idessee
+		Move: idesmoa,idesmob,idesmoc,idesmod,idesmoe
+		Attack: idesata,idesatb,idesatc,idesatd,idesate,idesatf
+		Action:  idesmoa,idesmob,idesmoc,idesmod,idesmoe
+		Build: idessea
+		
+BorisVoice:
+	Voices:
+		Select: iborsea,iborseb,iborsec,iborsed,iborsee
+		Move: ibormoa,ibormob,ibormoc,ibormod,ibormoe
+		Action: ibormoa,ibormob,ibormoc,ibormod,ibormoe
+		Attack: iborata,iboratb,iboratc,iboratd,iborate
+		Demolish: iboraib
+		Die: ibordia, ibordib,ibordic,ibordid,ibordie
+		Burned: ibordia,ibordib,ibordic,ibordid,ibordie
+		Zapped: ibordia,ibordib,ibordic,ibordid,ibordie
+		Poisoned: ibordia,ibordib,ibordic,ibordid,ibordie
+		Kill: iborata,iboratb,iboratc,iboratd,iborate
+		Build: iborcra,iborcrb,iborcrc,iborcrd,iborcre
+		
+V3Voice:
+	Voices:
+		Select: vv3lsea,vv3lseb,vv3lsec,vv3lsed,vv3lsee
+		Move: vv3lmob,vv3lmoc,vv3lmod,vv3lmoe
+		Attack: vv3lata,vv3latb,vv3latc,vv3latd,vv3late
+		Action:  vv3lmob,vv3lmoc,vv3lmod,vv3lmoe
+		
+MirageVoice:
+	Voices:
+		Select: vmirsea, vmirseb, vmirsec, vmirsed, vmirsee, vmirsef
+		Move: vmirmoa, vmirmob, vmirmoc, vmirmod, vmirmoe, vmirmof, vmirmog
+		Attack: vmirata, vmiratb, vmiratc, vmiratd, vmirate
+		Action:  vmirmoa, vmirmob, vmirmoc, vmirmod, vmirmoe, vmirmof, vmirmog
+
+		
+PrismVoice:
+	Voices:
+		Select: vprisea, vpriseb, vprisec, vprised, vprisee
+		Move: vprimoa, vprimob, vprimoc, vprimod, vprimoe
+		Attack: vpriata, vpriatb, vpriatc, vpriatd, vpriate
+		Action:  vprimoa, vprimob, vprimoc, vprimod, vprimoe
+		
+OrcaVoice:
+	Voices:
+		Select: 30-i000, 30-i002, 30-i004, 30-i006
+		Move: 30-i014, 30-i016, 30-i018, 30-i022
+		Attack: 30-i022, 30-i030, 30-i034, 30-i036
+		Action: 30-i014, 30-i016, 30-i018, 30-i022
+		
+ScrinVoice:
+	Voices:
+		Select: 32-i000
+		Move: 32-i002, 32-i004
+		Attack: 32-i006
+		Action: 32-i002, 32-i004
+		Die: 32-i008
+		
+CyborgVoice:
+	Inherits: ^InfantryDeaths
+	Voices:
+		Select: 22-i000, 22-i002, 22-i006
+		Move: 22-i008, 22-i010, 22-i014, 22-i016, 22-i020
+		Attack: 22-i008, 22-i010, 22-i012, 22-i018
+		Action: 22-i008, 22-i010, 22-i014, 22-i016, 22-i020
+		
+OxannaVoice:
+	Voices:
+		Select: 11-i000, 11-i002, 11-i004, 11-i006
+		Move: 11-i008, 11-i010, 11-i012
+		Attack: 11-i014, 11-i016, 11-i018
+		Action: 11-i008, 11-i010, 11-i012
+		
+GhostVoice:
+	Voices:
+		Select: 14-i000, 14-i002, 14-i004
+		Move: 14-i008, 14-i010, 14-i012, 14-i014
+		Attack: 14-i008, 14-i010, 14-i014, 14-i016
+		Action: 14-i008, 14-i010, 14-i012, 14-i014
+		
+DisrVoice:
+	Voices:
+		Select: 25-i000, 25-i002, 25-i004, 25-i006
+		Move: 25-i012, 25-i014, 25-i016, 25-i018, 25-i022
+		Attack: 25-i014, 25-i022, 25-i024, 25-i026
+		Action: 25-i012, 25-i014, 25-i016, 25-i018, 25-i022
+		Unload: 25-i018
+		
+MWTnkVoice:
+	Voices:
+		Select: 42-i000, 42-i002, 42-i004
+		Move: 42-i006, 42-i008, 42-i010
+		Attack: 42-i012, 42-i010, 42-i006
+		Action: 42-i006, 42-i008, 42-i010
+		
+JJVoice:
+	Inherits: ^InfantryDeaths
+	Voices:
+		Select: 15-i000, 15-i004, 15-i012, 15-i048
+		Move: 15-i018, 15-i024, 15-i044
+		Attack: 15-i044, 15-i050, 15-i044, 15-i046
+		Action: 15-i018, 15-i024, 15-i044
+		
+BattleFortressVoice:
+	Voices:
+		Build: vbatseb
+		Select: vbatsea, vbatseb, vbatsec, vbatsed, vbatsee, vbatsef
+		Move: vbatmoa, vbatmob, vbatmoc, vbatmod, vbatmoe
+		Attack: vbatatb, vbatatc, vbatatd, vbatate
+		Action: vbatmoa, vbatmob, vbatmoc, vbatmod, vbatmoe
+		
+

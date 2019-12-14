@@ -1,0 +1,317 @@
+Metadata:
+	Title: Combined Arms
+	Version: 85b3170
+	Website: https://www.moddb.com/mods/command-conquer-combined-arms
+	WebIcon32: https://www.openra.net/images/icons/ra_32x32.png
+
+PackageFormats: Mix
+
+Packages:
+	~^Content/ca/v2/
+	~^Content/ca/v2/expand
+	~^Content/ca/v2/cnc
+	~^Content/ca/v2/ts
+	~^Content/ca/v2/fs
+	~^Content/ca/v2/movies
+	~^Content/ca/
+	.
+	$ca: ca
+	./mods/common: common
+	~main.mix
+	~conquer.mix
+	~lores.mix: lores
+	~hires.mix
+	~local.mix
+	~sounds.mix
+	~speech.mix
+	~allies.mix
+	~russian.mix
+	~temperat.mix
+	~snow.mix
+	~interior.mix
+	~./v2/scores.mix
+	~./v2/ts/scores.mix
+	~./v2/cnc/scores.mix
+	~expand2.mix
+	~hires1.mix
+	~desert.mix
+	ca|bits
+	ca|bits/desert
+	ca|bits/jungle
+	ca|bits/winter
+	ca|bits/barren
+	ca|bits/temp
+	ca|bits/int
+	ca|bits/snow
+	ca|bits/audio
+	ca|uibits
+
+MapFolders:
+	ca|maps: System
+	~^maps/ca/85b3170: User
+
+Rules:
+	ca|rules/misc.yaml
+	ca|rules/ai.yaml
+	ca|rules/player.yaml
+	ca|rules/palettes.yaml
+	ca|rules/world.yaml
+	ca|rules/defaults.yaml
+	ca|rules/vehicles.yaml
+	ca|rules/husks.yaml
+	ca|rules/structures.yaml
+	ca|rules/infantry.yaml
+	ca|rules/civilian.yaml
+	ca|rules/decoration.yaml
+	ca|rules/aircraft.yaml
+	ca|rules/ships.yaml
+	ca|rules/fakes.yaml
+	ca|rules/bridges.yaml
+
+Sequences:
+	ca|sequences/ships.yaml
+	ca|sequences/vehicles.yaml
+	ca|sequences/structures.yaml
+	ca|sequences/infantry.yaml
+	ca|sequences/aircraft.yaml
+	ca|sequences/misc.yaml
+	ca|sequences/decorations.yaml
+
+TileSets:
+	ca|tilesets/snow.yaml
+	ca|tilesets/interior.yaml
+	ca|tilesets/temperat.yaml
+	ca|tilesets/desert.yaml
+	ca|tilesets/jungle.yaml
+	ca|tilesets/winter.yaml
+	ca|tilesets/barren.yaml
+
+Cursors:
+	ca|cursors.yaml
+
+Chrome:
+	ca|chrome.yaml
+
+Assemblies:
+	common|OpenRA.Mods.Common.dll
+	common|OpenRA.Mods.Cnc.dll
+	ca|OpenRA.Mods.CA.dll
+
+ChromeLayout:
+	common|chrome/ingame.yaml
+	common|chrome/ingame-chat.yaml
+	common|chrome/ingame-fmvplayer.yaml
+	common|chrome/ingame-info.yaml
+	common|chrome/ingame-infoscripterror.yaml
+	common|chrome/ingame-infobriefing.yaml
+	common|chrome/ingame-infoobjectives.yaml
+	common|chrome/ingame-infostats.yaml
+	common|chrome/ingame-menu.yaml
+	ca|chrome/ingame-observer.yaml
+	ca|chrome/ingame-player.yaml
+	common|chrome/ingame-perf.yaml
+	common|chrome/ingame-debug.yaml
+	common|chrome/ingame-debuginfo.yaml
+	common|chrome/ingame-infochat.yaml
+	common|chrome/mainmenu.yaml
+	common|chrome/settings.yaml
+	common|chrome/credits.yaml
+	common|chrome/lobby.yaml
+	common|chrome/lobby-mappreview.yaml
+	common|chrome/lobby-players.yaml
+	common|chrome/lobby-options.yaml
+	common|chrome/lobby-music.yaml
+	common|chrome/lobby-servers.yaml
+	common|chrome/lobby-kickdialogs.yaml
+	common|chrome/color-picker.yaml
+	common|chrome/map-chooser.yaml
+	common|chrome/multiplayer-browser.yaml
+	common|chrome/multiplayer-browserpanels.yaml
+	common|chrome/multiplayer-createserver.yaml
+	common|chrome/multiplayer-directconnect.yaml
+	common|chrome/connection.yaml
+	common|chrome/replaybrowser.yaml
+	common|chrome/dropdowns.yaml
+	common|chrome/musicplayer.yaml
+	common|chrome/tooltips.yaml
+	common|chrome/assetbrowser.yaml
+	common|chrome/missionbrowser.yaml
+	common|chrome/confirmation-dialogs.yaml
+	common|chrome/editor.yaml
+	common|chrome/playerprofile.yaml
+	common|chrome/gamesave-browser.yaml
+	ca|chrome/gamesave-loading.yaml
+
+Weapons:
+	ca|weapons/explosions.yaml
+	ca|weapons/ballistics.yaml
+	ca|weapons/missiles.yaml
+	ca|weapons/other.yaml
+	ca|weapons/smallcaliber.yaml
+	ca|weapons/superweapons.yaml
+	
+Voices:
+	ca|audio/voices.yaml
+
+Notifications:
+	ca|audio/notifications.yaml
+
+Music:
+	ca|audio/music.yaml
+
+Translations:
+	ca|languages/english.yaml
+
+Hotkeys:
+	common|hotkeys/game.yaml
+	common|hotkeys/observer.yaml
+	common|hotkeys/production-common.yaml
+	common|hotkeys/supportpowers.yaml
+	common|hotkeys/viewport.yaml
+	ca|hotkeys.yaml
+
+LoadScreen: LogoStripeLoadScreen
+	Image: ca|uibits/loadscreen.png
+	Text: Loading...
+
+ServerTraits:
+	LobbyCommands
+	PlayerPinger
+	MasterServerPinger
+	LobbySettingsNotification
+
+ChromeMetrics:
+	common|metrics.yaml
+	ca|metrics.yaml
+
+Fonts:
+	Tiny:
+		Font: common|FreeSans.ttf
+		Size: 10
+		Ascender: 8
+	TinyBold:
+		Font: common|FreeSansBold.ttf
+		Size: 10
+		Ascender: 8
+	Small:
+		Font: common|FreeSans.ttf
+		Size: 12
+		Ascender: 9
+	Regular:
+		Font: common|FreeSans.ttf
+		Size: 14
+		Ascender: 11
+	Bold:
+		Font: common|FreeSansBold.ttf
+		Size: 14
+		Ascender: 11
+	MediumBold:
+		Font: common|FreeSansBold.ttf
+		Size: 18
+		Ascender: 14
+	BigBold:
+		Font: common|FreeSansBold.ttf
+		Size: 24
+		Ascender: 18
+	Title:
+		Font: ca|ZoodRangmah.ttf
+		Size: 48
+		Ascender: 26
+
+Missions:
+	ca|missions.yaml
+
+MapGrid:
+	TileSize: 24,24
+	Type: Rectangular
+
+SupportsMapsFrom: ca, ra
+
+SoundFormats: Aud, Wav
+
+SpriteFormats: ShpD2, ShpTD, TmpRA, TmpTD, ShpTS
+
+SpriteSequenceFormat: TilesetSpecificSpriteSequence
+	TilesetExtensions:
+		TEMPERAT: .tem
+		SNOW: .sno
+		INTERIOR: .int
+		DESERT: .des
+		JUNGLE: .jun
+		WINTER: .win
+		BARREN: .bar
+
+ModelSequenceFormat: PlaceholderModelSequence
+
+GameSpeeds:
+	slowest:
+		Name: Slowest
+		Timestep: 80
+		OrderLatency: 2
+	slower:
+		Name: Slower
+		Timestep: 50
+		OrderLatency: 3
+	default:
+		Name: Normal
+		Timestep: 40
+		OrderLatency: 3
+	fast:
+		Name: Fast
+		Timestep: 35
+		OrderLatency: 4
+	faster:
+		Name: Faster
+		Timestep: 30
+		OrderLatency: 4
+	fastest:
+		Name: Fastest
+		Timestep: 20
+		OrderLatency: 6
+
+ColorValidator:
+	TeamColorPresets: FE1100, 981f1f, f57606, F5D378, ffff33, f861a4, da06f3, ddb8ff, 06f739, 35bb35, 97ee5d, abb7e4, 0e48f6, 2f86f2, 77d8f8, a9a9a9
+
+ModContent:
+	InstallPromptMessage: Combined Arms requires artwork and audio from the original game.\n\nQuick Install will automatically download this content (without music\nor videos) from a mirror of the 2008 Red Alert freeware release.\n\nAdvanced Install includes options for downloading the music and for\ncopying the videos and other content from an original game disc.
+	QuickDownload: quickinstall
+	HeaderMessage: Game content may be extracted from the original game discs or an\nexisting digital install. OpenRA can also download the base game\nfiles from an online mirror of the 2008 freeware release of RA.
+	Packages:
+		base: Base Game Files
+			TestFiles: ^Content/ca/v2/allies.mix, ^Content/ca/v2/conquer.mix, ^Content/ca/v2/interior.mix, ^Content/ca/v2/hires.mix, ^Content/ca/v2/lores.mix, ^Content/ca/v2/local.mix, ^Content/ca/v2/speech.mix, ^Content/ca/v2/russian.mix, ^Content/ca/v2/snow.mix, ^Content/ca/v2/sounds.mix, ^Content/ca/v2/temperat.mix
+			Sources: allied, allied-linux, soviet, soviet-linux, tfd, ra-origin
+			Required: true
+			Download: basefiles
+		aftermathbase: Aftermath Expansion Files
+			TestFiles: ^Content/ca/v2/expand/expand2.mix, ^Content/ca/v2/expand/hires1.mix, ^Content/ca/v2/expand/lores1.mix, ^Content/ca/v2/expand/chrotnk1.aud, ^Content/ca/v2/expand/fixit1.aud, ^Content/ca/v2/expand/jburn1.aud, ^Content/ca/v2/expand/jchrge1.aud, ^Content/ca/v2/expand/jcrisp1.aud, ^Content/ca/v2/expand/jdance1.aud, ^Content/ca/v2/expand/jjuice1.aud, ^Content/ca/v2/expand/jjump1.aud, ^Content/ca/v2/expand/jlight1.aud, ^Content/ca/v2/expand/jpower1.aud, ^Content/ca/v2/expand/jshock1.aud, ^Content/ca/v2/expand/jyes1.aud, ^Content/ca/v2/expand/madchrg2.aud, ^Content/ca/v2/expand/madexplo.aud, ^Content/ca/v2/expand/mboss1.aud, ^Content/ca/v2/expand/mhear1.aud, ^Content/ca/v2/expand/mhotdig1.aud, ^Content/ca/v2/expand/mhowdy1.aud, ^Content/ca/v2/expand/mhuh1.aud, ^Content/ca/v2/expand/mlaff1.aud, ^Content/ca/v2/expand/mrise1.aud, ^Content/ca/v2/expand/mwrench1.aud, ^Content/ca/v2/expand/myeehaw1.aud, ^Content/ca/v2/expand/myes1.aud
+			Sources: aftermath, aftermath-linux, tfd, ra-origin
+			Required: true
+			Download: aftermath
+		cncdesert: C&C Desert Tileset
+			TestFiles: ^Content/ca/v2/cnc/desert.mix
+			Sources: tfd, cnc-origin, cnc95, cnc95-linux
+			Required: true
+			Download: cncdesert
+		music: Red Alert Music
+			TestFiles: ^Content/ca/v2/scores.mix
+			Sources: allied, allied-linux, soviet, soviet-linux, tfd, ra-origin
+			Download: music
+		cncmusic: C&C Game Music
+			TestFiles: ^Content/ca/v2/cnc/scores.mix
+			Download: cncmusic
+		tsmusic: TibSun Game Music
+			TestFiles: ^Content/ca/v2/ts/scores.mix
+			Download: tsmusic
+		fsmusic: Firestorm Music
+			TestFiles: ^Content/ca/v2/fs/linkup.aud, ^Content/ca/v2/fs/hacker.aud
+			Download: fsmusic
+	Downloads:
+		ca|installer/downloads.yaml
+	Sources:
+		ca|installer/aftermath.yaml
+		ca|installer/allies95.yaml
+		ca|installer/cnc95.yaml
+		ca|installer/counterstrike.yaml
+		ca|installer/firstdecade.yaml
+		ca|installer/origin.yaml
+		ca|installer/soviet95.yaml

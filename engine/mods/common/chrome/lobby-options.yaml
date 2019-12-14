@@ -1,0 +1,69 @@
+Container@LOBBY_OPTIONS_BIN:
+	Width: PARENT_RIGHT
+	Height: PARENT_BOTTOM
+	Children:
+		Label@TITLE:
+			Y: 0 - 24
+			Width: PARENT_RIGHT
+			Height: 25
+			Font: Bold
+			Align: Center
+			Text: Map Options
+		ScrollPanel:
+			Logic: LobbyOptionsLogic
+			Width: PARENT_RIGHT
+			Height: PARENT_BOTTOM
+			Children:
+				Container@LOBBY_OPTIONS:
+					X: 10
+					Y: 9
+					Width: PARENT_RIGHT - 10 - 24
+					Children:
+						Container@CHECKBOX_ROW_TEMPLATE:
+							Height: 30
+							Children:
+								Checkbox@A:
+									Width: 175
+									Height: 20
+									Visible: False
+									TooltipContainer: TOOLTIP_CONTAINER
+								Checkbox@B:
+									X: 190
+									Width: 175
+									Height: 20
+									Visible: False
+									TooltipContainer: TOOLTIP_CONTAINER
+								Checkbox@C:
+									X: 375
+									Width: 175
+									Height: 20
+									Visible: False
+									TooltipContainer: TOOLTIP_CONTAINER
+						Container@DROPDOWN_ROW_TEMPLATE:
+							Height: 30
+							Width: PARENT_RIGHT
+							Children:
+								Label@A_DESC:
+									Width: 90
+									Height: 25
+									Align: Right
+									Visible: False
+								DropDownButton@A:
+									X: 95
+									Width: 160
+									Height: 25
+									Visible: False
+									TooltipContainer: TOOLTIP_CONTAINER
+								Label@B_DESC:
+									X: PARENT_RIGHT - WIDTH - 183
+									Width: 160
+									Height: 25
+									Align: Right
+									Visible: False
+								DropDownButton@B:
+									X: PARENT_RIGHT - WIDTH - 18
+									Width: 160
+									Height: 25
+									Font: Regular
+									Visible: False
+									TooltipContainer: TOOLTIP_CONTAINER

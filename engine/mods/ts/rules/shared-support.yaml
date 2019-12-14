@@ -1,0 +1,56 @@
+NAPULS:
+	Inherits: ^Defense
+	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
+	Inherits@SHAPE: ^2x2Shape
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: E.M. Pulse Cannon
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 110
+		Prerequisites: radar, ~techlevel.superweapons
+		Description: Disables mechanical units in an area.\nRequires power to operate.
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	Selectable:
+		Bounds: 78, 54, 0, -12
+		DecorationBounds: 78, 54, 0, -12
+	Health:
+		HP: 50000
+	Armor:
+		Type: Heavy
+	RevealsShroud:
+		Range: 8c0
+	Turreted:
+		TurnSpeed: 10
+		InitialFacing: 224
+	AttackTurreted:
+		RequiresCondition: !build-incomplete && !empdisable && !disabled
+	Armament:
+		Weapon: EMPulseCannon
+		LocalOffset: 212,0,1768
+		LocalYaw: 0,100
+	WithSpriteTurret:
+		RequiresCondition: !build-incomplete
+		Sequence: turret
+	Power:
+		Amount: -150
+	SelectionDecorations:
+	RenderSprites:
+		Image: napuls.gdi
+		FactionImages:
+			gdi: napuls.gdi
+			nod: napuls.nod
+	ProvidesPrerequisite@gdi:
+		ResetOnOwnerChange: true
+	AttackOrderPower:
+		PauseOnCondition: empdisable || disabled
+		Cursor: emp
+		Icon: emp
+		ChargeInterval: 3375
+		Description: E.M. Pulse
+		LongDesc: Fires a pulse blast which disables\nall mechanical units in the area.
+		EndChargeSpeechNotification: EmPulseCannonReady
+		SelectTargetSpeechNotification: SelectTarget

@@ -1,0 +1,85 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <LangVersion>5</LangVersion>
+    <DebugSymbols>true</DebugSymbols>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <OutputPath>../mods/ca</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <CodeAnalysisRuleSet>../engine/OpenRA.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Work around an issue where Rider does not detect files in the project root using the default glob -->
+    <Compile Include="**/*.cs" Exclude="$(DefaultItemExcludes)" />
+  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Activities\EnterAirstrikeMaster.cs" />
+    <None Remove="Activities\EnterCarrierMaster.cs" />
+    <None Remove="Activities\FallDown.cs" />
+    <None Remove="Activities\ShootableBallisticMissileFly.cs" />
+    <None Remove="Effects\SmokeParticle.cs" />
+    <None Remove="Graphics\ElectricBoltRenderable.cs" />
+    <None Remove="Graphics\RadBeamRenderable.cs" />
+    <None Remove="Graphics\TintedCell.cs" />
+    <None Remove="Orders\ShootableBallisticMissileMoveOrderTargeter.cs" />
+    <None Remove="Projectiles\AthenaProjectile.cs" />
+    <None Remove="Projectiles\ElectricBolt.cs" />
+    <None Remove="Projectiles\InstantExplode.cs" />
+    <None Remove="Projectiles\RadBeam.cs" />
+    <None Remove="TraitsInterfaces.cs" />
+    <None Remove="Traits\AirstrikeMaster.cs" />
+    <None Remove="Traits\AirstrikeSlave.cs" />
+    <None Remove="Traits\BaseSpawnerMaster.cs" />
+    <None Remove="Traits\BaseSpawnerSlave.cs" />
+    <None Remove="Traits\Berserkable.cs" />
+    <None Remove="Traits\CarrierMaster.cs" />
+    <None Remove="Traits\CarrierSlave.cs" />
+    <None Remove="Traits\ChargingSelfDestruct.cs" />
+    <None Remove="Traits\Conditions\GrantTimedConditionOnDeploy.cs" />
+    <None Remove="Traits\DamagedByTintedCells.cs" />
+    <None Remove="Traits\FlickeringPaletteEffect.cs" />
+    <None Remove="Traits\MissileSpawnerMaster.cs" />
+    <None Remove="Traits\MissileSpawnerSlave.cs" />
+    <None Remove="Traits\PeriodicExplosion.cs" />
+    <None Remove="Traits\Render\OverlayPlayerColorPalette.cs" />
+    <None Remove="Traits\ShootableBallisticMissile.cs" />
+    <None Remove="Traits\SmokeParticleEmitter.cs" />
+    <None Remove="Traits\SpawnedExplodes.cs" />
+    <None Remove="Traits\SupportPowers\DetonateWeaponPower.cs" />
+    <None Remove="Traits\World\TintedCellsLayer.cs" />
+    <None Remove="Warheads\CreateTintedCellsWarhead.cs" />
+    <None Remove="Warheads\FireFragmentWarhead.cs" />
+    <None Remove="Warheads\FireShrapnelWarhead.cs" />
+    <None Remove="Warheads\SpawnActorWarhead.cs" />
+    <None Remove="Warheads\SpawnSmokeParticleWarhead.cs" />
+    <None Remove="Warheads\WarheadAS.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Eluant">
+      <HintPath>../engine/thirdparty/download/Eluant.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <ProjectReference Include="../engine/OpenRA.Game/OpenRA.Game.csproj">
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="../engine/OpenRA.Mods.Common/OpenRA.Mods.Common.csproj">
+      <Private>False</Private>
+    </ProjectReference>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
+    <AdditionalFiles Include="../engine/stylecop.json" />
+  </ItemGroup>
+  <Target Name="DisableAnalyzers" BeforeTargets="CoreCompile" Condition="'$(Configuration)'=='Release'">
+    <!-- Disable code style analysis on Release builds to improve compile-time performance -->
+    <ItemGroup Condition="'$(Configuration)'=='Release'">
+      <Analyzer Remove="@(Analyzer)" />
+    </ItemGroup>
+  </Target>
+</Project>

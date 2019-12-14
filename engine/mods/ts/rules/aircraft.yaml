@@ -1,0 +1,419 @@
+DPOD:
+	Inherits: ^Aircraft
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Valued:
+		Cost: 10
+	Tooltip:
+		Name: Drop Pod
+	Aircraft:
+		IdleBehavior: Land
+		TurnSpeed: 5
+		Speed: 149
+		InitialFacing: 0
+	Health:
+		HP: 6000
+	Armor:
+		Type: Light
+	Cargo:
+		Types: Infantry
+		MaxWeight: 1
+		PipCount: 1
+		UnloadVoice: Move
+		EjectOnDeath: true
+	Armament:
+		Weapon: Vulcan2
+	AttackAircraft:
+		Voice: Attack
+	AmmoPool:
+		Ammo: 5
+		PipCount: 5
+		PipType: Ammo
+		PipTypeEmpty: AmmoEmpty
+	-SpawnActorOnDeath:
+
+DSHP:
+	Inherits: ^Aircraft
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Dropship
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Aircraft:
+		IdleBehavior: Land
+		TurnSpeed: 5
+		Speed: 168
+		InitialFacing: 0
+		TakeoffSounds: dropup1.aud
+		LandingSounds: dropdwn1.aud
+		IdealSeparation: 1275
+		CruiseAltitude: 12c512
+		AltitudeVelocity: 256
+		MoveIntoShroud: true
+	Health:
+		HP: 20000
+	Armor:
+		Type: Heavy
+	RevealsShroud:
+		Range: 3c0
+		Type: CenterPosition
+	Cargo:
+		Types: Infantry
+		MaxWeight: 5
+		PipCount: 5
+		UnloadVoice: Move
+		EjectOnDeath: true
+	SpawnActorOnDeath:
+		Actor: DSHP.Husk
+
+ORCA:
+	Inherits: ^Aircraft
+	Inherits@EXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@EMPDISABLE: ^EmpDisable
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Orca Fighter
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		Queue: Air
+		BuildPaletteOrder: 10
+		Prerequisites: ~gahpad
+		Description: Fast assault gunship with\ndual missile launchers.\n  Strong vs Buildings, Vehicles\n  Weak vs Infantry, Aircraft
+	Selectable:
+		Bounds: 30,24
+	Aircraft:
+		TurnSpeed: 5
+		Speed: 186
+		TakeoffSounds: orcaup1.aud
+		LandingSounds: orcadwn1.aud
+		AltitudeVelocity: 128
+		CanSlide: false
+		TakeOffOnResupply: true
+	Health:
+		HP: 20000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		Range: 2c0
+		Type: CenterPosition
+	Armament:
+		Weapon: Hellfire
+		PauseOnCondition: !ammo
+	AttackAircraft:
+		FacingTolerance: 20
+		PersistentTargeting: false
+		Voice: Attack
+		PauseOnCondition: empdisable
+		AttackType: Hover
+	AmmoPool:
+		Ammo: 5
+		PipCount: 5
+		PipType: Ammo
+		PipTypeEmpty: AmmoEmpty
+		AmmoCondition: ammo
+	RenderSprites:
+	SpawnActorOnDeath:
+		Actor: ORCA.Husk
+	Rearmable:
+		RearmActors: gahpad, nahpad
+
+ORCAB:
+	Inherits: ^Aircraft
+	Inherits@EXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@EMPDISABLE: ^EmpDisable
+	Valued:
+		Cost: 1600
+	Tooltip:
+		Name: Orca Bomber
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		Queue: Air
+		BuildPaletteOrder: 30
+		Prerequisites: ~gahpad, gatech
+		Description: Heavy bomber.\n  Strong vs Buildings, Vehicles\n  Weak vs Infantry, Aircraft
+	Selectable:
+		Bounds: 30,24
+	Aircraft:
+		CruiseAltitude: 5c512
+		TurnSpeed: 3
+		Speed: 96
+		CruisingCondition: cruising
+		TakeoffSounds: orcaup1.aud
+		LandingSounds: orcadwn1.aud
+		CanHover: false
+		CanSlide: false
+	Health:
+		HP: 26000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		Range: 2c0
+		Type: CenterPosition
+	Armament:
+		Weapon: Bomb
+		PauseOnCondition: !ammo
+	AttackAircraft:
+		Voice: Attack
+		FacingTolerance: 20
+		PersistentTargeting: false
+		PauseOnCondition: empdisable
+	AmmoPool:
+		Ammo: 10
+		PipCount: 2
+		ReloadCount: 5
+		ReloadDelay: 200
+		PipType: Ammo
+		PipTypeEmpty: AmmoEmpty
+		AmmoCondition: ammo
+	RenderSprites:
+	Hovers@CRUISING:
+		RequiresCondition: cruising
+	SpawnActorOnDeath:
+		Actor: ORCAB.Husk
+	Rearmable:
+		RearmActors: gahpad, nahpad
+
+ORCATRAN:
+	Inherits: ^Aircraft
+	Valued:
+		Cost: 1200
+	Tooltip:
+		Name: Orca Transport
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		Queue: Air
+		BuildPaletteOrder: 50
+		Prerequisites: ~disabled
+	RenderSprites:
+	Aircraft:
+		TurnSpeed: 5
+		Speed: 84
+		InitialFacing: 0
+		LandableTerrainTypes: Clear, Road, Rail, DirtRoad, Rough, Tiberium, BlueTiberium, Veins
+		Crushes: crate, infantry
+		TakeoffSounds: orcaup1.aud
+		LandingSounds: orcadwn1.aud
+		IdealSeparation: 1275
+	Health:
+		HP: 20000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		Range: 2c0
+		Type: CenterPosition
+	Cargo:
+		Types: Infantry
+		MaxWeight: 5
+		PipCount: 5
+		UnloadVoice: Move
+		EjectOnDeath: true
+		AfterUnloadDelay: 40
+	SpawnActorOnDeath:
+		Actor: ORCATRAN.Husk
+
+TRNSPORT:
+	Inherits: ^Aircraft
+	Valued:
+		Cost: 750
+	Tooltip:
+		Name: Carryall
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		Queue: Air
+		BuildPaletteOrder: 60
+		Prerequisites: ~gahpad, gadept
+		Description: VTOL aircraft capable of lifting\nand transporting vehicles.\n  Unarmed
+	Aircraft:
+		TurnSpeed: 5
+		Speed: 149
+		InitialFacing: 0
+		TakeoffSounds: dropup1.aud
+		LandingSounds: dropdwn1.aud
+	Carryall:
+		Voice: Move
+		LocalOffset: 0,0,-317
+		BeforeLoadDelay: 10
+		BeforeUnloadDelay: 10
+	Health:
+		HP: 17500
+	Armor:
+		Type: Light
+	RevealsShroud:
+		Range: 2c0
+		Type: CenterPosition
+	RenderSprites:
+	Selectable:
+		Bounds: 44,32,0,-8
+	SpawnActorOnDeath:
+		Actor: TRNSPORT.Husk
+
+SCRIN:
+	Inherits: ^Aircraft
+	Inherits@EXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@EMPDISABLE: ^EmpDisable
+	Valued:
+		Cost: 1500
+	Tooltip:
+		Name: Banshee Fighter
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		Queue: Air
+		BuildPaletteOrder: 40
+		Prerequisites: ~nahpad, natech
+		Description: Advanced fighter-bomber craft\nwith twin plasma cannons.\n  Strong vs Buildings, Vehicles\n  Weak vs Infantry, Aircraft
+	Selectable:
+		Bounds: 30,24
+	Voiced:
+		VoiceSet: Scrin
+	Aircraft:
+		CruiseAltitude: 5c0
+		TurnSpeed: 3
+		Speed: 168
+		AirborneCondition: airborne
+		TakeoffSounds: dropup1.aud
+		LandingSounds: dropdwn1.aud
+		CanHover: false
+		CanSlide: false
+	Health:
+		HP: 28000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		Range: 2c0
+		Type: CenterPosition
+	Armament:
+		Weapon: Proton
+		PauseOnCondition: !ammo
+	AttackAircraft:
+		Voice: Attack
+		FacingTolerance: 20
+		PersistentTargeting: false
+		PauseOnCondition: empdisable
+	AmmoPool:
+		Ammo: 15
+		PipCount: 3
+		ReloadCount: 5
+		PipType: Ammo
+		PipTypeEmpty: AmmoEmpty
+		AmmoCondition: ammo
+	RenderSprites:
+	DeathSounds:
+	SpawnActorOnDeath:
+		Actor: SCRIN.Husk
+	Rearmable:
+		RearmActors: gahpad, nahpad
+
+APACHE:
+	Inherits: ^Aircraft
+	Inherits@EXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@EMPDISABLE: ^EmpDisable
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Harpy
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		Queue: Air
+		BuildPaletteOrder: 20
+		Prerequisites: ~nahpad
+		Description: Anti-personnel support gunship\narmed with dual chain guns.\n  Strong vs Infantry, Light armor, Aircraft\n  Weak vs Vehicles
+	Selectable:
+		Bounds: 30,24
+	Aircraft:
+		TurnSpeed: 5
+		Speed: 130
+		CanSlide: false
+		TakeOffOnResupply: true
+	Health:
+		HP: 22500
+	Armor:
+		Type: Light
+	RevealsShroud:
+		Range: 2c0
+		Type: CenterPosition
+	Armament:
+		Weapon: HarpyClaw
+		PauseOnCondition: !ammo
+	AttackAircraft:
+		FacingTolerance: 20
+		PersistentTargeting: false
+		Voice: Attack
+		PauseOnCondition: empdisable
+		AttackType: Hover
+	AmmoPool:
+		Ammo: 12
+		PipCount: 4
+		PipType: Ammo
+		PipTypeEmpty: AmmoEmpty
+		AmmoCondition: ammo
+	WithIdleOverlay@ROTORAIR:
+		Offset: 85,0,598
+		Sequence: rotor
+		RequiresCondition: airborne
+	WithIdleOverlay@ROTORGROUND:
+		Offset: 85,0,598
+		Sequence: slow-rotor
+		RequiresCondition: !airborne
+	RenderSprites:
+	SpawnActorOnDeath:
+		Actor: APACHE.Husk
+	Rearmable:
+		RearmActors: gahpad, nahpad
+
+HUNTER:
+	Inherits@2: ^ExistsInWorld
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Hunter-Seeker Droid
+	Health:
+		HP: 50000
+	Armor:
+		Type: Light
+	Aircraft:
+		TurnSpeed: 16
+		Speed: 355
+		CruiseAltitude: 3c128
+		CruisingCondition: cruising
+		MoveIntoShroud: true
+	AttackAircraft:
+		FacingTolerance: 128
+		AttackType: Hover
+	Armament@PRIMARY:
+		Weapon: SuicideBomb
+	GrantConditionOnAttack:
+		Condition: triggered
+	KillsSelf:
+		RequiresCondition: triggered
+	Targetable:
+		TargetTypes: Ground, Vehicle
+	HiddenUnderFog:
+		Type: CenterPosition
+	BodyOrientation:
+		UseClassicPerspectiveFudge: False
+	RenderSprites:
+		Image: GGHUNT
+	WithFacingSpriteBody:
+	Hovers@CRUISING:
+		RequiresCondition: cruising
+	QuantizeFacingsFromSequence:
+	DrawLineToTarget:
+	AppearsOnRadar:
+		UseLocation: true
+	Interactable:
+	SelectionDecorations:
+		Palette: pips
+	HitShape:
+	MapEditorData:
+		Categories: System

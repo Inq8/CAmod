@@ -1,0 +1,496 @@
+^AACannon:
+	ReloadDelay: 10
+	Range: 8c0
+	Report: aacanon3.aud
+	ValidTargets: Air
+	Projectile: Bullet
+		Speed: 1c682
+		Blockable: false
+	Warhead@1Dam: SpreadDamage
+		Spread: 213
+		Damage: 2000
+		ValidTargets: Air
+		Versus:
+			None: 40
+			Wood: 10
+			Light: 60
+			Heavy: 10
+			Concrete: 20
+		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: small_explosion_air
+		ValidTargets: Air, Ground, Water, Trees
+
+ZSU-23:
+	Inherits: ^AACannon
+	Burst: 2
+	BurstDelays: 0
+	ReloadDelay: 6
+	Range: 8c0
+	Projectile: Bullet
+		Speed: 3c340
+	Warhead@1Dam: SpreadDamage
+		Damage: 1200
+		Versus:
+			None: 25
+			Wood: 75
+			Light: 75
+			Heavy: 100
+			Concrete: 50
+
+FLAK-23-AA:
+	Inherits: ^AACannon
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Air, Ground, Water
+
+FLAK-23-AG:
+	Inherits: ^AACannon
+	Range: 6c0
+	ValidTargets: Ground, Water
+	Projectile: Bullet
+		Blockable: True
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Air, Ground, Water
+	Warhead@2Eff: CreateEffect
+		Explosions: flak_explosion_ground
+		ValidTargets: Ground, Ship, Air, Trees
+	Warhead@3EffWater: CreateEffect
+		Explosions: small_splash
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+		
+Gatt.0:
+	Inherits: ^AACannon
+	ReloadDelay: 20
+	Range: 8c0
+	Report: vgatlo1a.aud
+	Projectile: Bullet
+		Speed: 3c340
+	Warhead@1Dam: SpreadDamage
+		Damage: 3000
+		Versus:
+			None: 30
+			Wood: 75
+			Light: 15
+			Heavy: 50
+			Concrete: 50
+	Warhead@2Eff: CreateEffect
+		ValidTargets: Air
+		Explosions: small_explosion_air
+		ImpactSounds: flakhit1.aud, flakhit2.aud, flakhit3.aud
+		ImpactSoundChance: 20
+		
+Gatt.1:
+	Inherits: Gatt.0
+	ReloadDelay: 5
+	Report: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 5500
+		Versus:
+			None: 30
+			Wood: 75
+			Light: 15
+			Heavy: 50
+			Concrete: 50
+Gatt.2:
+	Inherits: Gatt.1
+	Report: vgatlo5a.aud, vgatlo5b.aud
+	ReloadDelay: 5
+	Warhead@1Dam: SpreadDamage
+		Damage: 7500
+		Versus:
+			None: 30
+			Wood: 75
+			Light: 15
+			Heavy: 50
+			Concrete: 50
+Gatt.3:
+	Inherits: Gatt.2
+	Report: vgatlo8a.aud, vgatlo8b.aud
+	ReloadDelay: 5
+	Warhead@1Dam: SpreadDamage
+		Damage: 8000
+		Versus:
+			None: 30
+			Wood: 75
+			Light: 15
+			Heavy: 50
+			Concrete: 50
+
+^HeavyMG:
+	ReloadDelay: 30
+	Range: 6c0
+	Report: gun13.aud
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 2500
+		Versus:
+			None: 120
+			Wood: 60
+			Light: 72
+			Heavy: 28
+			Concrete: 28
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: piffs
+		ValidTargets: Ground, Ship, Air, Trees
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piffs
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+
+^LightMG:
+	Inherits: ^HeavyMG
+	Warhead@1Dam: SpreadDamage
+		Damage: 1000
+		Versus:
+			None: 150
+			Wood: 10
+			Light: 40
+			Heavy: 10
+			Concrete: 10
+		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
+
+Vulcan:
+	Inherits: ^HeavyMG
+	Warhead@1Dam: SpreadDamage
+		Damage: 1000
+		Versus:
+			None: 200
+			Wood: 50
+			Light: 50
+			Heavy: 20
+			Concrete: 20
+	Warhead@4Dam_2: SpreadDamage
+		Spread: 128
+		Damage: 1000
+		Delay: 2
+		Versus:
+			None: 200
+			Wood: 50
+			Light: 50
+			Heavy: 20
+			Concrete: 20
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@4Eff_2: CreateEffect
+		Explosions: piffs
+		ValidTargets: Ground, Ship, Trees
+		Delay: 2
+	Warhead@4Eff_2Water: CreateEffect
+		Explosions: water_piffs
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+		Delay: 2
+	Warhead@5Dam_3: SpreadDamage
+		Spread: 128
+		Damage: 1000
+		Delay: 4
+		Versus:
+			None: 200
+			Wood: 50
+			Light: 50
+			Heavy: 20
+			Concrete: 20
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@6Eff_3: CreateEffect
+		Explosions: piffs
+		ValidTargets: Ground, Ship, Trees
+		Delay: 4
+	Warhead@6Eff_3Water: CreateEffect
+		Explosions: water_piffs
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+		Delay: 4
+	Warhead@7Dam_4: SpreadDamage
+		Spread: 128
+		Damage: 1000
+		Delay: 6
+		Versus:
+			None: 200
+			Wood: 50
+			Light: 50
+			Heavy: 20
+			Concrete: 20
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@8Eff_4: CreateEffect
+		Explosions: piffs
+		ValidTargets: Ground, Ship, Trees
+		Delay: 6
+	Warhead@8Eff_4Water: CreateEffect
+		Explosions: water_piffs
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+		Delay: 6
+	Warhead@9Dam_5: SpreadDamage
+		Spread: 128
+		Damage: 1000
+		Delay: 8
+		Versus:
+			None: 200
+			Wood: 50
+			Light: 50
+			Heavy: 20
+			Concrete: 20
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@10Eff_5: CreateEffect
+		Explosions: piffs
+		ValidTargets: Ground, Ship, Trees
+		Delay: 8
+	Warhead@10Eff_5Water: CreateEffect
+		Explosions: water_piffs
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+		Delay: 8
+	Warhead@11Dam_6: SpreadDamage
+		Spread: 128
+		Damage: 1000
+		Delay: 10
+		Versus:
+			None: 200
+			Wood: 50
+			Light: 50
+			Heavy: 20
+			Concrete: 20
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@12Eff_6: CreateEffect
+		Explosions: piffs
+		ValidTargets: Ground, Ship, Trees
+		Delay: 10
+	Warhead@12Eff_6Water: CreateEffect
+		Explosions: water_piffs
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+		Delay: 10
+		
+GTChainGun:
+	Inherits: Vulcan
+	Report: mg42.aud
+
+ChainGun:
+	Inherits: ^HeavyMG
+	ReloadDelay: 10
+	Range: 5c0
+	MinRange: 0c768
+	Projectile: Bullet
+		Blockable: false
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			None: 144
+
+ChainGun.Yak:
+	Inherits: ^HeavyMG
+	ReloadDelay: 3
+	Range: 5c0
+	MinRange: 3c0
+	Projectile: Bullet
+		Blockable: false
+	Warhead@1Dam: SpreadDamage
+		Damage: 2000
+		Versus:
+			None: 100
+			Wood: 50
+			Light: 40
+			Heavy: 25
+			Concrete: 25
+
+Pistol:
+	Inherits: ^LightMG
+	ReloadDelay: 7
+	Range: 3c0
+	Report: gun27.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 100
+		Versus:
+			None: 100
+	Warhead@2Eff: CreateEffect
+		Explosions: piff
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piff
+
+M1Carbine:
+	Inherits: ^LightMG
+	ReloadDelay: 20
+	Range: 5c0
+	Report: gun11.aud
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			Wood: 30
+
+M1CarbineE:
+	Inherits: M1Carbine
+	Range: 7c0
+
+M16Carbine:
+	Inherits: M1Carbine
+	Report: mgun2.aud
+
+M16CarbineE:
+	Inherits: M16Carbine
+	Range: 7c0
+
+M60mg:
+	Inherits: ^LightMG
+	ReloadDelay: 30
+	Range: 4c0
+	Report: pillbox1.aud
+	Burst: 5
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			Light: 30
+	
+M60mgTD:
+	Inherits: M60mg
+	Report: m60.aud
+	
+M60mgJJ:
+	Inherits: M60mg
+	Report: jumpjet1.aud
+	ReloadDelay: 30
+	Burst: 3
+	
+M60mgJJAA:
+	Inherits: M60mg
+	Report: jumpjet1.aud
+	ValidTargets: Ground, Water, Air
+	ReloadDelay: 30
+	Burst: 3
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Air, Ground, Water
+
+^SnipeWeapon:
+	ReloadDelay: 80
+	Range: 5c512
+	Report: gun5.aud
+	ValidTargets: Ground, Infantry
+	InvalidTargets: Vehicle, Water, Structure, Wall, Husk
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 15000
+		ValidTargets: Barrel, Infantry
+		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
+
+SilencedPPK:
+	Inherits: ^SnipeWeapon
+	Range: 3c512
+	Report: silppk.aud
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+	Warhead@2Eff: CreateEffect
+		Explosions: piffs
+		ValidTargets: Ground, Ship, Air, Trees
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piffs
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+		
+SilencedPPKE:
+	Inherits: SilencedPPK
+	Range: 5c0
+
+Colt45:
+	Inherits: ^SnipeWeapon
+	ReloadDelay: 5
+	Range: 7c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 5000
+	Warhead@2Eff: CreateEffect
+		Explosions: piff
+		ValidTargets: Ground, Ship, Air, Trees
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piff
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+		
+Colt45E:
+	Inherits: Colt45
+	Range: 9c0
+		
+SMG:
+	Inherits: ^SnipeWeapon
+	Report: silppk.aud
+	ReloadDelay: 15
+	Burst: 3
+	BurstDelays: 2
+	Range: 7c0
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 5000
+		ValidTargets: Infantry
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: piff
+		ValidTargets: Ground, Ship, Air, Trees
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piff
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+		
+SMGE:
+	Inherits: SMG
+	Range: 9c0
+
+AKM:
+	Report: mg11.aud
+	ReloadDelay: 15
+	Burst: 1
+	BurstDelays: 2
+	Range: 7c0
+	InvalidTargets: Structure, Wall, Husk, Chrono, Air
+	Projectile: Bullet
+		Speed: 1c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 15000
+		Versus:
+			None: 100
+			Wood: 10
+			Light: 35
+			Heavy: 15
+			Concrete: 10
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: piff
+		ValidTargets: Ground, Ship, Air, Trees
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piff
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+		
+AKME:
+	Inherits: AKM
+	Range: 9c0
+		
+SNIPER:
+	ReloadDelay: 110
+	Range: 7c0
+	Report: snipe.aud
+	ValidTargets: Ground, Infantry
+	InvalidTargets: Vehicle, Tank, Water, Structure, Wall, Husk, Chrono
+	Projectile: Bullet
+		Speed: 2c682
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 9000
+		ValidTargets: Barrel, Infantry
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: piff
+		ValidTargets: Ground, Ship, Air, Trees
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piff
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+		
+SNIPERE:
+	Inherits: SNIPER
+	Range: 9c0
+		
+HeliGunAG:
+	Inherits: ChainGun
+	Report: mgbtr1.aud, mgbtr2.aud, mgbtr3.aud

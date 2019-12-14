@@ -1,0 +1,152 @@
+carryall.reinforce:
+	Inherits: ^Plane
+	Valued:
+		Cost: 1100
+	Tooltip:
+		Name: Carryall
+	Health:
+		HP: 48000
+	Armor:
+		Type: light
+	Aircraft:
+		CruiseAltitude: 2160
+		CruisingCondition: cruising
+		InitialFacing: 0
+		Speed: 144
+		TurnSpeed: 4
+		LandableTerrainTypes: Sand, Rock, Transition, Spice, SpiceSand, Dune, Concrete
+		Repulsable: False
+		AirborneCondition: airborne
+		CanSlide: True
+		VTOL: true
+		IdleTurnSpeed: 1
+	Targetable@GROUND:
+		TargetTypes: Ground, Vehicle
+		RequiresCondition: !airborne
+	Targetable@AIRBORNE:
+		TargetTypes: Air
+		RequiresCondition: airborne
+	SpawnActorOnDeath@CRUISING:
+		Actor: carryall.husk
+		RequiresCondition: cruising
+	SpawnActorOnDeath@LANDING:
+		Actor: carryall.huskVTOL
+		RequiresCondition: !cruising
+	Carryall:
+		BeforeLoadDelay: 10
+		BeforeUnloadDelay: 15
+		LocalOffset: 0, 0, -128
+	RenderSprites:
+		Image: carryall
+	SelfHealing:
+		Step: 50
+		Delay: 3
+		HealIfBelow: 50
+	Buildable:
+		BuildDuration: 648
+		BuildDurationModifier: 40
+		Description: Large winged, planet-bound ship\n  Automatically lifts harvesters from and to Spice.\n  Lifts vehicles to Repair Pads when ordered.
+
+carryall:
+	Inherits: carryall.reinforce
+	-Carryall:
+	AutoCarryall:
+		BeforeLoadDelay: 10
+		BeforeUnloadDelay: 15
+		LocalOffset: 0, 0, -128
+	Aircraft:
+		MinAirborneAltitude: 400
+	RevealsShroud@lifting_low:
+		Range: 2c512
+		Type: GroundPosition
+		RequiresCondition: !airborne
+	RevealsShroud@lifting_high:
+		Range: 1c256
+		Type: GroundPosition
+		RequiresCondition: !cruising
+	Buildable:
+		Queue: Aircraft
+		BuildPaletteOrder: 120
+
+frigate:
+	Inherits: ^Plane
+	ParaDrop:
+		DropRange: 1c0
+	Interactable:
+	Tooltip:
+		Name: Frigate
+	Aircraft:
+		IdleBehavior: LeaveMap
+		Speed: 189
+		TurnSpeed: 1
+		Repulsable: False
+		MaximumPitch: 20
+		CruiseAltitude: 2048
+		VTOL: true
+		CanHover: true
+		CanSlide: true
+	-AppearsOnRadar:
+	Cargo:
+		MaxWeight: 20
+		PipCount: 10
+	RejectsOrders:
+
+ornithopter:
+	Inherits: ^Plane
+	AttackBomber:
+	Armament:
+		Weapon: OrniBomb
+	Health:
+		HP: 9000
+	Armor:
+		Type: light
+	Aircraft:
+		Speed: 224
+		TurnSpeed: 2
+		Repulsable: False
+		CruiseAltitude: 1920
+	AmmoPool:
+		Ammo: 5
+	Tooltip:
+		Name: Ornithopter
+	SpawnActorOnDeath:
+		Actor: ornithopter.husk
+	RejectsOrders:
+	RevealOnFire:
+	-MapEditorData:
+
+ornithopter.husk:
+	Inherits: ^AircraftHusk
+	Tooltip:
+		Name: Ornithopter
+	Aircraft:
+		TurnSpeed: 5
+		Speed: 224
+	RenderSprites:
+		Image: ornithopter
+
+carryall.husk:
+	Inherits: ^AircraftHusk
+	Tooltip:
+		Name: Carryall
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 144
+		CanSlide: True
+		VTOL: true
+	RenderSprites:
+		Image: carryall
+
+carryall.huskVTOL:
+	Inherits: ^AircraftHusk
+	Tooltip:
+		Name: Carryall
+	FallsToEarth:
+		Moves: False
+		Velocity: 0c128
+	Aircraft:
+		TurnSpeed: 4
+		CanSlide: True
+		VTOL: true
+	RenderSprites:
+		Image: carryall

@@ -1,0 +1,498 @@
+^BaseWorld:
+	Inherits: ^Palettes
+	AlwaysVisible:
+	ActorMap:
+	ScreenMap:
+	Selection:
+	MusicPlaylist:
+		VictoryMusic: nod_win1
+		DefeatMusic: stopthem
+	TerrainGeometryOverlay:
+	DebugVisualizations:
+	Locomotor@FOOT:
+		Name: foot
+		Crushes: mine, crate
+		SharesCell: true
+		TerrainSpeeds:
+			Clear: 100
+			Rough: 90
+			Road: 110
+			Bridge: 100
+			Ore: 80
+			Gems: 80
+			Tiberium: 70
+				PathingCost: 300
+			BlueTiberium: 70
+				PathingCost: 300
+			Beach: 80
+	Locomotor@CHEM:
+		Name: chem
+		Crushes: mine, crate
+		SharesCell: true
+		TerrainSpeeds:
+			Clear: 100
+			Rough: 90
+			Road: 110
+			Bridge: 100
+			Ore: 80
+			Gems: 80
+			Tiberium: 70
+			BlueTiberium: 70
+			Beach: 80
+	Locomotor@WHEELED:
+		Name: wheeled
+		Crushes: mine, crate
+		TerrainSpeeds:
+			Clear: 80
+			Rough: 60
+			Road: 100
+			Bridge: 100
+			Ore: 70
+			Gems: 70
+			Tiberium: 70
+			BlueTiberium: 70
+			Beach: 40
+	Locomotor@HEAVYWHEELED:
+		Name: heavywheeled
+		Crushes: wall, mine, crate, infantry
+		TerrainSpeeds:
+			Clear: 90
+			Rough: 80
+			Road: 110
+			Bridge: 100
+			Ore: 80
+			Gems: 80
+			Tiberium: 80
+			BlueTiberium: 80
+			Beach: 40
+	Locomotor@LIGHTTRACKED:
+		Name: lighttracked
+		Crushes: wall, mine, crate
+		TerrainSpeeds:
+			Clear: 80
+			Rough: 70
+			Road: 100
+			Bridge: 100
+			Ore: 70
+			Gems: 70
+			Tiberium: 70
+			BlueTiberium: 70
+			Beach: 70
+	Locomotor@TRACKED:
+		Name: tracked
+		Crushes: wall, infantry, mine, crate
+		TerrainSpeeds:
+			Clear: 80
+			Rough: 70
+			Road: 100
+			Bridge: 100
+			Ore: 70
+			Gems: 70
+			Tiberium: 70
+			BlueTiberium: 70
+			Beach: 70
+	Locomotor@HEAVYTRACKED:
+		Name: heavytracked
+		Crushes: wall, infantry, mine, crate, heavywall
+		TerrainSpeeds:
+			Clear: 80
+			Rough: 70
+			Road: 100
+			Bridge: 100
+			Ore: 70
+			Gems: 70
+			Tiberium: 70
+			BlueTiberium: 70
+			Beach: 70
+	Locomotor@SHEAVYTRACKED:
+		Name: sheavytracked
+		Crushes: wall, infantry, tank, mine, crate, heavywall
+		TerrainSpeeds:
+			Clear: 80
+			Rough: 70
+			Road: 100
+			Bridge: 100
+			Ore: 70
+			Gems: 70
+			Tiberium: 70
+			BlueTiberium: 70
+			Beach: 70
+	Locomotor@NAVAL:
+		Name: naval
+		Crushes: crate
+		TerrainSpeeds:
+			Water: 100
+	Locomotor@LANDINGCRAFT:
+		Name: lcraft
+		Crushes: crate
+		TerrainSpeeds:
+			Water: 100
+			Beach: 70
+	Locomotor@HOVER:
+		Name: hover
+		Crushes: wall, infantry, mine, crate
+		TerrainSpeeds:
+			Clear: 80
+			Rough: 70
+			Road: 100
+			Bridge: 100
+			Ore: 70
+			Gems: 70
+			Tiberium: 70
+			BlueTiberium: 70
+			Beach: 70
+			Water: 80
+	Locomotor@Amphibious:
+		Name: Amphibious
+		Crushes: wall, infantry, mine, crate
+		TerrainSpeeds:
+			Clear: 80
+			Rough: 70
+			Road: 100
+			Bridge: 100
+			Ore: 70
+			Gems: 70
+			Tiberium: 70
+			BlueTiberium: 70
+			Beach: 70
+			Water: 15
+	Locomotor@CLOUD:
+		Name: cloud
+		Crushes: crate
+		SharesCell: true
+		TerrainSpeeds:
+			Clear: 100
+			Rough: 100
+			Road: 100
+			Bridge: 100
+			Ore: 100
+			Gems: 100
+			Tiberium: 100
+				PathingCost: -300
+			BlueTiberium: 100
+				PathingCost: -300
+			Beach: 100
+			Water: 100
+			River: 100
+			Rock: 100
+			Wall: 100
+			Tree: 100
+	Locomotor@IMMOBILE:
+		Name: immobile
+		TerrainSpeeds:
+	TerrainRenderer:
+	ShroudRenderer:
+		FogVariants: shroud
+		Index: 255, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 20, 40, 56, 65, 97, 130, 148, 194, 24, 33, 66, 132, 28, 41, 67, 134, 1, 2, 4, 8, 3, 6, 12, 9, 7, 14, 13, 11, 5, 10, 15, 255
+		UseExtendedIndex: true
+	Faction@0:
+		Name: Allies
+		InternalName: allies
+		Side: Allies
+		Selectable: False
+	Faction@1:
+		Name: England
+		InternalName: england
+		Side: Allies
+		Description: England: \nSpecial Unit: Mirage Tank\nSpecial Unit: Sniper
+	Faction@2:
+		Name: France
+		InternalName: france
+		Side: Allies
+		Description: France: \nSpecial Structure: Grand Cannon
+	Faction@3:
+		Name: Germany
+		InternalName: germany
+		Side: Allies
+		Description: Germany: \n Special Unit: Tank Destroyer\n Special Unit: IFV
+	Faction@4:
+		Name: Soviet
+		InternalName: soviet
+		Side: Soviet
+		Selectable: False
+	Faction@5:
+		Name: Russia
+		InternalName: russia
+		Side: Soviet
+		Description: Russia: \n Special Unit: Kirov Airship\n Special Unit: Tesla Tank
+	Faction@6:
+		Name: Ukraine
+		InternalName: ukraine
+		Side: Soviet
+		Description: Ukraine: \n Special Unit: Frogfoot\n Special Unit: MAD tank
+	Faction@7:
+		Name: Iraq
+		InternalName: iraq
+		Side: Soviet
+		Description: Iraq: \n Special Unit: Scud launcher\n Special Structure: Toxin Turret
+	Faction@8:
+		Name: GDI
+		InternalName: gdi
+		Side: GDI
+		Selectable: False
+	Faction@9:
+		Name: Talon
+		InternalName: talon
+		Side: GDI
+		Description: Steel Talons:\n Special Unit: Titan\n Special Unit: HMLRS
+	Faction@10:
+		Name: ZOCOM
+		InternalName: zocom
+		Side: GDI
+		Description: ZOCOM:\n Special Unit: Disruptor
+	Faction@11:
+		Name: Eagle
+		InternalName: eagle
+		Side: GDI
+		Description: Eagle Corps:\n Special Unit: Orca Bomber\n Special Ability: Heavy Reinforcements
+	Faction@12:
+		Name: Nod
+		InternalName: nod
+		Side: Nod
+		Selectable: False
+	Faction@13:
+		Name: Black H.
+		InternalName: blackh
+		Side: Nod
+		Description: Black Hand:\n Special Unit: Comanche\n Special Unit: Howitzer\n Special Ability: Inferno Bomb
+	Faction@14:
+		Name: Marked
+		InternalName: marked
+		Side: Nod
+		Description: Marked of Kane:\n Special Unit: Acolyte\n Special Unit: Chemical Warrior\n Special Ability: Elite Paradrop
+	Faction@15:
+		Name: Legion
+		InternalName: legion
+		Side: Nod
+		Description: Legion:\n Special Unit: Microwave Tank\n Special Ability: Stolen Technology\n Special Ability: Paradrop
+	Faction@random:
+		Name: Any
+		InternalName: Random
+		RandomFactionMembers: RandomAllies, RandomSoviet, RandomGDI, RandomNOD
+		Side: Random
+		Description: Random Country\nA random country will be chosen when the game starts.
+	Faction@randomallies:
+		Name: Allies
+		InternalName: RandomAllies
+		RandomFactionMembers: england, france, germany
+		Side: Random
+		Description: Random Allied Faction\nA random Allied faction will be chosen when the game starts.
+	Faction@randomsoviet:
+		Name: Soviet
+		InternalName: RandomSoviet
+		RandomFactionMembers: russia, ukraine, iraq
+		Side: Random
+		Description: Random Soviet Faction\nA random Soviet faction will be chosen when the game starts.
+	Faction@randomgdi:
+		Name: GDI
+		InternalName: RandomGDI
+		RandomFactionMembers: talon, zocom, eagle
+		Side: Random
+		Description: Random GDI Faction\nA random GDI faction will be chosen when the game starts.
+	Faction@randomnod:
+		Name: Nod
+		InternalName: RandomNOD
+		RandomFactionMembers: blackh, marked, legion
+		Side: Random
+		Description: Random Nod Faction\nA random Nod faction will be chosen when the game starts.
+	ResourceType@ore:
+		Type: Ore
+		Name: Valuable Minerals
+		PipColor: Yellow
+		ResourceType: 1
+		TerrainType: Ore
+		Palette: player
+		Sequences: gold01,gold02,gold03,gold04
+		MaxDensity: 12
+		ValuePerUnit: 25
+		AllowedTerrainTypes: Clear,Road
+		AllowUnderActors: true
+	ResourceType@gem:
+		Type: Gems
+		Name: Valuable Minerals
+		PipColor: Red
+		ResourceType: 2
+		TerrainType: Gems
+		Palette: player
+		Sequences: gem01,gem02,gem03,gem04
+		MaxDensity: 3
+		ValuePerUnit: 50
+		AllowedTerrainTypes: Clear,Road
+		AllowUnderActors: true
+	ResourceType@green-tib:
+		Type: Tiberium
+		ResourceType: 3
+		Palette: tiberiumpalette
+		TerrainType: Tiberium
+		Sequences: ti1,ti2,ti3,ti4,ti5,ti6,ti7,ti8,ti9,ti10,ti11,ti12
+		MaxDensity: 12
+		ValuePerUnit: 35
+		Name: Tiberium
+		PipColor: Green
+		AllowedTerrainTypes: Clear,Road
+		AllowUnderActors: true
+	ResourceType@blue-tib:
+		Type: BlueTiberium
+		ResourceType: 4
+		Palette: bluetiberium
+		TerrainType: BlueTiberium
+		Sequences: bti1,bti2,bti3,bti4,bti5,bti6,bti7,bti8,bti9,bti10,bti11,bti12
+		MaxDensity: 12
+		ValuePerUnit: 70
+		Name: Azure Tiberium
+		PipColor: Blue
+		AllowedTerrainTypes: Clear,Road
+		AllowUnderActors: true
+
+World:
+	Inherits: ^BaseWorld
+	ChatCommands:
+	DevCommands:
+	DebugVisualizationCommands:
+	PlayerCommands:
+	HelpCommand:
+	ScreenShaker:
+	BuildingInfluence:
+	ProductionQueueFromSelection:
+		ProductionPaletteWidget: PRODUCTION_PALETTE
+	LegacyBridgeLayer:
+		Bridges: bridge1, bridge2, br1, br2, br3, sbridge1, sbridge2, sbridge3, sbridge4, sbridge5, brg1, brg2, brg3, brv1, brv2, brv3, brh1, brh2, brh3
+	CustomTerrainDebugOverlay:
+	CrateSpawner:
+		DeliveryAircraft: c17
+		QuantizedFacings: 16
+		Minimum: 1
+		Maximum: 3
+		SpawnInterval: 3000
+		WaterChance: 20
+		InitialSpawnDelay: 1500
+		CheckboxDisplayOrder: 1
+	DomainIndex:
+	SmudgeLayer@SCORCH:
+		Type: Scorch
+		Sequence: scorches
+		SmokePercentage: 50
+	SmudgeLayer@CRATER:
+		Type: Crater
+		Sequence: craters
+	ResourceLayer:
+	ResourceClaimLayer:
+	TintedCellsLayer@RAD:
+		Color: 00FF00
+		Brightest: 54
+		FadeoutDelay: 400
+	WarheadDebugOverlay:
+	SpawnMapActors:
+	MapBuildRadius:
+		AllyBuildRadiusCheckboxDisplayOrder: 4
+		BuildRadiusCheckboxDisplayOrder: 5
+	MapOptions:
+		ShortGameCheckboxDisplayOrder: 2
+		TechLevelDropdownDisplayOrder: 2
+		GameSpeedDropdownDisplayOrder: 3
+	CreateMPPlayers:
+	MPStartUnits@mcvonly:
+		Class: none
+		ClassName: MCV Only
+		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq
+		BaseActor: mcv
+	MPStartUnits@lightallies:
+		Class: light
+		ClassName: Light Support
+		Factions: allies, england, france, germany
+		BaseActor: mcv
+		SupportActors: e1,e1,e1,e3,e3
+		InnerSupportRadius: 3
+		OuterSupportRadius: 5
+	MPStartUnits@lightsoviet:
+		Class: light
+		ClassName: Light Support
+		Factions: soviet, russia, ukraine, iraq
+		BaseActor: mcv
+		SupportActors: e1,e1,e1,e3,e3
+		InnerSupportRadius: 3
+		OuterSupportRadius: 5
+	MPStartUnits@heavyallies:
+		Class: heavy
+		ClassName: Heavy Support
+		Factions: allies, england, france, germany
+		BaseActor: mcv
+		SupportActors: e1,e1,e1,e3,e3,e3,2tnk,2tnk
+		InnerSupportRadius: 3
+		OuterSupportRadius: 5
+	MPStartUnits@heavysoviet:
+		Class: heavy
+		ClassName: Heavy Support
+		Factions: soviet, russia, ukraine, iraq
+		BaseActor: mcv
+		SupportActors: e1,e1,e1,e3,e3,3tnk,3tnk
+		InnerSupportRadius: 3
+		OuterSupportRadius: 5
+	MPStartUnits@mcvonly2:
+		Class: none
+		ClassName: MCV Only
+		Factions: gdi, talon, zocom, eagle, nod, blackh, marked, legion
+		BaseActor: amcv
+	MPStartUnits@defaultgdia:
+		Class: light
+		ClassName: Light Support
+		Factions: gdi, talon, zocom, eagle
+		BaseActor: amcv
+		SupportActors: n1,n1,n1,n3,n3
+		InnerSupportRadius: 3
+		OuterSupportRadius: 5
+	MPStartUnits@defaultnoda:
+		Class: light
+		ClassName: Light Support
+		Factions: nod, blackh, marked, legion
+		BaseActor: amcv
+		SupportActors: n1,n1,n1,n3,n3
+		InnerSupportRadius: 3
+		OuterSupportRadius: 5
+	MPStartUnits@heavynoda:
+		Class: heavy
+		ClassName: Heavy Support
+		Factions: nod, blackh, marked, legion
+		BaseActor: amcv
+		SupportActors: n1,n1,n1,n3,n3,mtnk,mtnk
+		InnerSupportRadius: 3
+		OuterSupportRadius: 5
+	MPStartUnits@heavygdia:
+		Class: heavy
+		ClassName: Heavy Support
+		Factions: gdi, talon, zocom, eagle
+		BaseActor: amcv
+		SupportActors: n1,n1,n1,n3,n3,mtnk,mtnk
+		InnerSupportRadius: 3
+		OuterSupportRadius: 5
+	MPStartLocations:
+		SeparateTeamSpawnsCheckboxDisplayOrder: 6
+	SpawnMPUnits:
+		DropdownDisplayOrder: 1
+	PathFinder:
+	ValidateOrder:
+	DebugPauseState:
+	RadarPings:
+	StartGameNotification:
+	ObjectivesPanel:
+		PanelName: SKIRMISH_STATS
+	LoadWidgetAtGameStart:
+	ScriptTriggers:
+	TimeLimitManager:
+		TimeLimitWarnings:
+			40: FourtyMinutesRemaining
+			30: ThirtyMinutesRemaining
+			20: TwentyMinutesRemaining
+			10: TenMinutesRemaining
+			5: WarningFiveMinutesRemaining
+			4: WarningFourMinutesRemaining
+			3: WarningThreeMinutesRemaining
+			2: WarningTwoMinutesRemaining
+			1: WarningOneMinuteRemaining
+
+EditorWorld:
+	Inherits: ^BaseWorld
+	EditorActorLayer:
+	EditorResourceLayer:
+	EditorSelectionLayer:
+	LoadWidgetAtGameStart:

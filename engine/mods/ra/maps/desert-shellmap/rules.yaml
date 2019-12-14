@@ -1,0 +1,112 @@
+Player:
+	-ConquestVictoryConditions:
+	LobbyPrerequisiteCheckbox@GLOBALBOUNTY:
+		Enabled: False
+		Locked: True
+
+World:
+	-CrateSpawner:
+	-SpawnMPUnits:
+	-MPStartLocations:
+	MusicPlaylist:
+		BackgroundMusic: intro
+		DisableWorldSounds: true
+	ResourceType@ore:
+		ValuePerUnit: 0
+	LuaScript:
+		Scripts: desert-shellmap.lua
+	-StartGameNotification:
+
+^Palettes:
+	IndexedPlayerPalette:
+		PlayerIndex:
+			Soviets: 229, 230, 231, 232, 233, 234, 235, 8, 236, 237, 238, 239, 221, 222, 223, 223
+			Allies: 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175
+
+^ExistsInWorld:
+	GivesExperience:
+		ActorExperienceModifier: 0
+
+^Vehicle:
+	DamageMultiplier@UNKILLABLE:
+		RequiresCondition: unkillable
+		Modifier: 0
+	ExternalCondition@UNKILLABLE:
+		Condition: unkillable
+
+^Infantry:
+	DeathSounds@NORMAL:
+		VolumeMultiplier: 0.1
+	DeathSounds@BURNED:
+		VolumeMultiplier: 0.1
+	DeathSounds@ZAPPED:
+		VolumeMultiplier: 0.1
+	DamageMultiplier@UNKILLABLE:
+		RequiresCondition: unkillable
+		Modifier: 0
+	ExternalCondition@UNKILLABLE:
+		Condition: unkillable
+
+^Ship:
+	DamageMultiplier@UNKILLABLE:
+		RequiresCondition: unkillable
+		Modifier: 0
+	ExternalCondition@UNKILLABLE:
+		Condition: unkillable
+
+^Plane:
+	DamageMultiplier@UNKILLABLE:
+		RequiresCondition: unkillable
+		Modifier: 0
+	ExternalCondition@UNKILLABLE:
+		Condition: unkillable
+
+^Building:
+	DamageMultiplier@UNKILLABLE:
+		RequiresCondition: unkillable
+		Modifier: 0
+	ExternalCondition@UNKILLABLE:
+		Condition: unkillable
+
+^Bridge:
+	DamageMultiplier:
+		Modifier: 0
+
+^Wall:
+	DamageMultiplier:
+		Modifier: 0
+
+OILB:
+	CashTrickler:
+		ShowTicks: false
+
+TRAN.Husk2:
+	Burns:
+		Damage: 0
+
+MISS:
+	DamageMultiplier@INVULNERABLE:
+		Modifier: 0
+
+APC:
+	Cargo:
+		InitialUnits: e1, e1, e2, e3, e4
+
+Ant:
+	Buildable:
+		Prerequisites: barr
+	Health:
+		HP: 20000
+
+E7:
+	-AnnounceOnKill:
+
+powerproxy.paratroopers:
+	ParatroopersPower:
+		DisplayBeacon: false
+		DropItems: E1,E1,E2,E3,E4
+
+powerproxy.parazombies:
+	Inherits: powerproxy.paratroopers
+	ParatroopersPower:
+		DropItems: ZOMBIE,ZOMBIE,ZOMBIE,ZOMBIE,ZOMBIE
