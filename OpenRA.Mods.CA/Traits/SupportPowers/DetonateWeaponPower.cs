@@ -23,7 +23,7 @@ using OpenRA.Mods.Common.Traits.Render;
 using OpenRA.Primitives;
 using OpenRA.Traits;
 
-namespace OpenRA.Mods.AS.Traits
+namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Support power for detonating a weapon at the target position.")]
 	public class DetonateWeaponPowerInfo : SupportPowerInfo, IRulesetLoaded
@@ -57,6 +57,9 @@ namespace OpenRA.Mods.AS.Traits
 		public readonly WDist TargetCircleRange = WDist.Zero;
 		public readonly Color TargetCircleColor = Color.White;
 		public readonly bool TargetCircleUsePlayerColor = false;
+
+		[Desc("Amount of time to keep the actor alive in ticks. Value < 0 means this actor will not remove itself.")]
+		public readonly int LifeTime = 250;
 
 		public WeaponInfo WeaponInfo { get; private set; }
 
@@ -101,20 +104,20 @@ namespace OpenRA.Mods.AS.Traits
 
 			self.World.AddFrameEndTask(w => w.Add(new DelayedAction(Info.ActivationDelay, detonateWeapon)));
 
-			if (Info.CameraActor != null)
+			self.World.AddFrameEndTask(w =>
 			{
-				var camera = self.World.CreateActor(false, Info.CameraActor, new TypeDictionary
+				var actor = w.CreateActor(Info.CameraActor, new TypeDictionary
 					{
+						new LocationInit(self.World.Map.CellContaining(order.Target.CenterPosition)),
 						new OwnerInit(self.Owner),
 					});
 
-				camera.QueueActivity(new Wait(Info.CameraSpawnAdvance + Info.CameraRemoveDelay));
-				camera.QueueActivity(new RemoveSelf());
-
-				Action addCamera = () => self.World.AddFrameEndTask(w => w.Add(camera));
-				self.World.AddFrameEndTask(w => w.Add(new DelayedAction(Info.ActivationDelay - Info.CameraSpawnAdvance, addCamera)));
-			}
-
+				if (Info.CameraRemoveDelay > -1)
+				{
+					actor.QueueActivity(new Wait(Info.CameraRemoveDelay));
+					actor.QueueActivity(new RemoveSelf());
+				}
+			});
 			if (Info.DisplayBeacon)
 			{
 				var beacon = new Beacon(
