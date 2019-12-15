@@ -3928,10 +3928,9 @@ EYE:
 		LongDesc: Initiate an Ion Cannon strike.\nApplies heavy damage over a large area.
 		Weapon: IonStormInit
 		AirburstAltitude: 4c512
-		AllowMultiple: true
+		AllowMultiple: false
 		CameraRange: 10c0
 		CameraRemoveDelay: 375
-		SpawnCameraAtGround: true
 		SelectTargetSpeechNotification: SelectTarget
 		EndChargeSpeechNotification: IonCannonReady
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -5350,6 +5349,8 @@ INDP:
 	ProvidesPrerequisite@disabled:
 		Prerequisite: indplowpower
 		RequiresCondition: disabled || empdisable
+	Sellable:
+		RequiresCondition: !build-incomplete && !being-demolished
 		
 OREP:
 	Inherits: ^ScienceBuilding
@@ -5397,6 +5398,8 @@ OREP:
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
+	Sellable:
+		RequiresCondition: !build-incomplete && !being-demolished
 		
 MISS.gdi:
 	Inherits: ^ScienceBuilding
@@ -5445,6 +5448,8 @@ MISS.gdi:
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
+	Sellable:
+		RequiresCondition: !build-incomplete && !being-demolished
 		
 FCOM.nod:
 	Inherits: ^ScienceBuilding
@@ -5493,6 +5498,8 @@ FCOM.nod:
 		UseDeathTypeSuffix: false
 	ProvidesPrerequisite@Name:
 		RequiresCondition: !disabled && !empdisable
+	Sellable:
+		RequiresCondition: !build-incomplete && !being-demolished
 
 MSLO.nod:
 	Inherits: ^ScienceBuilding
@@ -5637,10 +5644,9 @@ WEAT:
 		LongDesc: Initiate a Lightning Storm.\nApplies heavy damage over a large area.
 		Weapon: WeatherStormInit
 		AirburstAltitude: 4c512
-		AllowMultiple: true
+		AllowMultiple: false
 		CameraRange: 10c0
 		CameraRemoveDelay: 375
-		SpawnCameraAtGround: true
 		SelectTargetSpeechNotification: SelectTarget
 		EndChargeSpeechNotification: IonCannonReady
 		InsufficientPowerSpeechNotification: InsufficientPower

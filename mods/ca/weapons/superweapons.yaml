@@ -567,6 +567,9 @@ IonStormInit:
 		Palette: effect
 		Weapon: IonCloudRandomInit
 		Duration: 220
+	Warhead@5: RevealShroud
+		Duration: 345
+		Radius: 5c0
 
 IonCloudRandomInit:
 	Projectile: InstantHit
@@ -652,8 +655,6 @@ IonBolt:
 		
 DeathHand:
 	Projectile: InstantHit
-		Range: 512
-		ValidTargets: Ground, Water, Air
 	Warhead@Cluster: FireCluster
 		Weapon: DeathHandCluster
 		RandomClusterCount: 6
@@ -727,6 +728,9 @@ WeatherStormInit:
 		Delay: 50
 		ImpactSounds: sweaintr.aud
 		ValidTargets: Ground, Air, Water
+	Warhead@5: RevealShroud
+		Duration: 345
+		Radius: 6c0
 
 WeatherCloudDirectInit:
 	Projectile: InstantHit

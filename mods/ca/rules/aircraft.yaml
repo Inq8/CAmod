@@ -289,6 +289,13 @@ YAK:
 
 TRAN:
 	Inherits: ^Helicopter
+	RenderSprites:
+		FactionImages:
+			allies: tran3
+			france: tran3
+			england: tran3
+			germany: tran3
+			
 	Buildable:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
@@ -319,28 +326,51 @@ TRAN:
 		AltitudeVelocity: 0c58
 		TakeoffSounds: htoff1.aud
 		LandingSounds: hland1.aud
+	GrantConditionOnFaction:
+		Condition: allies
+		Factions: allies, england, france, germany
 	WithIdleOverlay@ROTOR1AIR:
 		Offset: 597,0,213
 		Sequence: rotor
-		RequiresCondition: airborne
+		RequiresCondition: airborne && allies
 	WithIdleOverlay@ROTOR1GROUND:
 		Offset: 597,0,213
 		Sequence: slow-rotor
-		RequiresCondition: !airborne
+		RequiresCondition: !airborne && allies
 	WithIdleOverlay@ROTOR2AIR:
 		Offset: -597,0,341
 		Sequence: rotor2
-		RequiresCondition: airborne
+		RequiresCondition: airborne && allies
 	WithIdleOverlay@ROTOR2GROUND:
 		Offset: -597,0,341
 		Sequence: slow-rotor2
-		RequiresCondition: !airborne
+		RequiresCondition: !airborne && allies
+	WithIdleOverlay@ROTOR1AIR2:
+		Offset: 597,0,85
+		Sequence: rotor
+		RequiresCondition: airborne && !allies
+	WithIdleOverlay@ROTOR1GROUND2:
+		Offset: 597,0,85
+		Sequence: slow-rotor
+		RequiresCondition: !airborne && !allies
+	WithIdleOverlay@ROTOR2AIR2:
+		Offset: -597,0,171
+		Sequence: rotor2
+		RequiresCondition: airborne && !allies
+	WithIdleOverlay@ROTOR2GROUND2:
+		Offset: -597,0,171
+		Sequence: slow-rotor2
+		RequiresCondition: !airborne && !allies
 	Cargo:
 		Types: Infantry
 		MaxWeight: 8
 		PipCount: 8
 	SpawnActorOnDeath:
+		Actor: TRAN3.Husk
+		RequiresCondition: allies
+	SpawnActorOnDeath@Soviet:
 		Actor: TRAN.Husk
+		RequiresCondition: !allies
 	SelectionDecorations:
 	Selectable:
 		DecorationBounds: 40,36
@@ -612,7 +642,7 @@ A10:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 50
-		Prerequisites: ~afld.gdi, ~aircraft.gdi, ~techlevel.high
+		Prerequisites: ~afld.gdi, ~aircraft.gdi, ~!aircraft.eagle, ~techlevel.high
 		IconPalette: chrometd
 		Description: Fast Ground-Attack Plane.\n  Strong vs Buildings, Infantry\n  Weak vs Aircraft
 	Valued:
@@ -919,7 +949,7 @@ ORCAB:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 40
-		Prerequisites: ~hpad2, ~aircraft.eagle, gtek, ~techlevel.high
+		Prerequisites: ~afld.gdi, ~aircraft.eagle, gtek, ~techlevel.high
 		IconPalette: chrometd
 		Description: VTOL Bomber armed with EMP bombs.\n  Strong vs Buildings, Vehicles\n  Weak vs Aircraft
 	Valued:
@@ -929,7 +959,7 @@ ORCAB:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 23000
+		HP: 26000
 	RevealsShroud:
 		Range: 10c0
 		Type: GroundPosition
@@ -940,7 +970,7 @@ ORCAB:
 		Type: GroundPosition
 		MoveRecalculationThreshold: 0
 	Armament:
-		Weapon: OrcaBomb
+		Weapon: NapalmTD
 		LocalOffset: 2,-256,-43, 2,256,-43
 		PauseOnCondition: !ammo
 	AttackAircraft:
@@ -960,11 +990,12 @@ ORCAB:
 		CanHover: False
 		CanSlide: False
 		Voice: Move
+		InitialFacing: 0
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: HoldFire
 	AmmoPool:
-		Ammo: 6
+		Ammo: 9
 		AmmoCondition: ammo
 	Selectable:
 		Bounds: 36,28,0,2
@@ -980,7 +1011,7 @@ ORCAB:
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
 	Rearmable:
-		RearmActors: hpad, hpad2
+		RearmActors: afld.gdi, afld
 	Voiced:
 		VoiceSet: OrcaVoice
 

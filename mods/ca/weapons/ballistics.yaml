@@ -152,6 +152,21 @@ TurretGun:
 TurretGunTD:
 	Inherits: TurretGun
 	Report: tnkfire6.aud
+	
+TitanGun:
+	Inherits: TurretGunTD
+	ReloadDelay: 90
+	Report: tnkfire6.aud
+	Range: 5c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 12000
+		Versus:
+			None: 60
+			Wood: 75
+	Warhead@3EffGround: CreateEffect
+		Explosions: large_explosion
+		ImpactSounds: kaboom12.aud, xplos.aud
+		ValidTargets: Ground, Ship, Trees
 
 ^Artillery:
 	Inherits: ^Cannon
@@ -207,9 +222,10 @@ TurretGunTD:
 	Projectile: Bullet
 		Speed: 195
 		Inaccuracy: 1c511
+		Image: firetrail
 	Projectile: Bullet
 		Inaccuracy: 1c138
-		TrailImage: firetrail
+		TrailImage: smokey
 		TrailDelay: 1
 		Speed: 200
 		LaunchAngle: 90

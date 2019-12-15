@@ -119,6 +119,29 @@ TRAN.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: tran
+		
+TRAN3.Husk:
+	Inherits: ^HelicopterHusk
+	Tooltip:
+		Name: Chinook
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 149
+	WithIdleOverlay@PRIMARY:
+		Offset: -597,0,341
+		Sequence: rotor
+	WithIdleOverlay@SECONDARY:
+		Offset: 597,0,213
+		Sequence: rotor2
+	RevealsShroud:
+		Range: 8c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 6c0
+		Type: GroundPosition
+	RenderSprites:
+		Image: tran3
 
 TRAN.Husk1:
 	Inherits: ^Husk
