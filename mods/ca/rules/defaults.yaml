@@ -125,10 +125,7 @@
 		Modifier: 125
 	ReloadDelayMultiplier@BERSERK:
 		RequiresCondition: berserk
-		Modifier: 75
-	FirepowerMultiplier@BERSERK:
-		RequiresCondition: berserk
-		Modifier: 125
+		Modifier: 50
 	ExternalCondition@BERSERK:
 		Condition: berserk
 	Berserkable@BERSERK:
@@ -138,6 +135,9 @@
 		Palette: berserk
 	TimedConditionBar@BERSERK:
 		Condition: berserk
+	AutoTargetPriority@BERSERK:
+		RequiresCondition: berserk
+		InvalidTargets: ChaosDrone
 		
 ^GDIUpgrade:
 	FirepowerMultiplier@GDIUPG:
@@ -352,8 +352,7 @@
 	Inherits@3: ^SpriteActor
 	Inherits@4: ^Cloakable
 	Inherits@5: ^EmpDisable
-	Inherits@6: ^Berserk
-	Inherits@7: ^GDIUpgrade
+	Inherits@6: ^GDIUpgrade
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
@@ -474,8 +473,7 @@
 	Inherits@2: ^GainsExperience
 	Inherits@3: ^InfantryExperienceHospitalOverrides
 	Inherits@4: ^SpriteActor
-	Inherits@5: ^Berserk
-	Inherits@6: ^NodUpgrade
+	Inherits@5: ^NodUpgrade
 	Inherits@bounty: ^GlobalBounty
 	Inherits@SELECTION_MODE: ^FlatSelectionMode
 	RenderSprites:
@@ -698,8 +696,7 @@
 	Inherits@4: ^SpriteActor
 	Inherits@5: ^EmpDisable
 	Inherits@6: ^Cloakable
-	Inherits@7: ^Berserk
-	Inherits@8: ^GDIUpgrade
+	Inherits@7: ^GDIUpgrade
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
