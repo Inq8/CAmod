@@ -3924,12 +3924,12 @@ EYE:
 		Cursor: ioncannon
 		ChargeInterval: 13500
 		Description: Ion Cannon
-		ActivationDelay: 0
+		ActivationDelay: 5
 		LongDesc: Initiate an Ion Cannon strike.\nApplies heavy damage over a large area.
 		Weapon: IonStormInit
 		AirburstAltitude: 4c512
 		AllowMultiple: false
-		CameraRange: 10c0
+		CameraActor: camera
 		CameraRemoveDelay: 375
 		SelectTargetSpeechNotification: SelectTarget
 		EndChargeSpeechNotification: IonCannonReady
@@ -3938,7 +3938,9 @@ EYE:
 		IncomingSound: nukelaunch.aud
 		DisplayTimerStances: Ally, Neutral, Enemy
 		PauseOnCondition: disabled || empdisable
+		DisplayBeacon: True
 		DisplayRadarPing: True
+		BeaconPoster: atomicon
 		TargetCircleRange: 5c0
 		TargetCircleColor: 4fff3390
 	SupportPowerChargeBar:
@@ -5640,12 +5642,12 @@ WEAT:
 		Cursor: ioncannon
 		ChargeInterval: 13500
 		Description: Lightning Storm
-		ActivationDelay: 0
+		ActivationDelay: 5
 		LongDesc: Initiate a Lightning Storm.\nApplies heavy damage over a large area.
 		Weapon: WeatherStormInit
 		AirburstAltitude: 4c512
 		AllowMultiple: false
-		CameraRange: 10c0
+		CameraActor: camera
 		CameraRemoveDelay: 375
 		SelectTargetSpeechNotification: SelectTarget
 		EndChargeSpeechNotification: IonCannonReady
@@ -5655,7 +5657,9 @@ WEAT:
 		LaunchSound: sweaintr.aud
 		DisplayTimerStances: Ally, Neutral, Enemy
 		PauseOnCondition: disabled || empdisable
+		DisplayBeacon: True
 		DisplayRadarPing: True
+		BeaconPoster: atomicon
 		TargetCircleRange: 6c512
 		TargetCircleColor: 00003390
 	SupportPowerChargeBar:
