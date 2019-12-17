@@ -39,5 +39,11 @@ namespace OpenRA.Mods.CA.Traits
 		int TurnRate { get; }
 	}
 
+	[RequireExplicitImplementation]
+	public interface IPointDefense
+	{
+		bool Destroy(WPos position, Player attacker, string type);
+	}
+
 	public interface ILoadsOverlayPlayerPalettes { void LoadOverlayPlayerPalettes(WorldRenderer wr, string playerName, Color playerColor, bool replaceExisting); }
 }
