@@ -129,7 +129,18 @@ HellfireAG.Harrier:
 		ImpactSounds: splashl1.aud, splashl2.aud
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
-			
+		
+HellfireAG.Horn:
+	Inherits: HellfireAG.Harrier
+		Range: 5c0
+		MinRange: 1c0
+		Burst: 2
+		Projectile: Missile
+			RangeLimit: 7c512
+			ContrailLength: 0
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Damage: 525
 
 HellfireAA:
 	Inherits: ^AntiAirMissile

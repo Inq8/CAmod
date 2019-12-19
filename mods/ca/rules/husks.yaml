@@ -677,13 +677,6 @@ ORCA.Husk:
 		Image: orca
 		PlayerPalette: overlayplayertd
 		
-ORCA.Drone.Husk:
-	Inherits: ORCA.Husk
-	RenderSprites:
-		Image: orca
-		Scale: 0.5
-		PlayerPalette: overlayplayertd
-		
 ORCACA.Husk:
 	Inherits: ^HelicopterHusk
 	Tooltip:
@@ -958,6 +951,23 @@ HARRh.Husk:
 		Type: CenterPosition
 	RenderSprites:
 		Image: harr
+		
+Horn.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Hornet
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 149
+	SmokeTrailWhenDamaged:
+		Offset: -427,0,0
+		MinDamage: Undamaged
+	RevealsShroud:
+		Range: 12c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: horn
+		PlayerPalette: overlayplayertd
 		
 SCRIN.Husk:
 	Inherits: ^PlaneHusk

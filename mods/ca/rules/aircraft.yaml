@@ -1463,11 +1463,7 @@ SCRIN:
 		RearmActors: hpad, hpad2
 		
 HORN:
-	Inherits: ^NeutralPlane
-	RenderSprites:
-		Image: ORCA
-		Scale: 0.6
-		PlayerPalette: overlayplayertd
+	Inherits: ^PlaneTD
 	Valued:
 		Cost: 50
 	Tooltip:
@@ -1482,7 +1478,7 @@ HORN:
 		RevealGeneratedShroud: False
 		MoveRecalculationThreshold: 0
 	Armament:
-		Weapon: HellfireAG.Harrier
+		Weapon: HellfireAG.Horn
 		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 20
@@ -1490,23 +1486,25 @@ HORN:
 	Aircraft:
 		CruiseAltitude: 1c513
 		InitialFacing: 192
+		Ideal
 		TurnSpeed: 8
 		Speed: 195
-		RepulsionSpeed: 40
 		MaximumPitch: 56
 		CanHover: False
 		CanSlide: False
+		RepulsionSpeed: 40
+		IdealSeparation: 0c256
 		VTOL: true
-		TakeoffSounds: orcaup1.aud
-		LandingSounds: orcadwn1.aud
+		TakeoffSounds: mtoff1.aud, mtoff2.aud
+		LandingSounds: mland1.aud, mland2.aud
 	Rearmable:
 		RearmActors: carr
 	AmmoPool:
-		Ammo: 4
+		Ammo: 6
 		AmmoCondition: ammo
 	RejectsOrders:
 	SpawnActorOnDeath:
-		Actor: ORCA.drone.husk
+		Actor: horn.husk
 	-EjectOnDeath:
 	-Selectable:
 	-ActorLostNotification:
