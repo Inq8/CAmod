@@ -79,15 +79,17 @@ BADR.Bomber:
 		Experience: 1000
 	Interactable:
 	
-BADR.TBomber:
-	Inherits: BADR.Bomber
-	Armament:
-		Weapon: TeslaParaBomb
-		
 BADR.CBomber:
 	Inherits: BADR.Bomber
 	Armament:
-		Weapon: ChemParaBomb
+		Weapon: CarpetBomb
+		
+BADR.NBomber:
+	Inherits: BADR.Bomber
+	AmmoPool:
+		Ammo: 1
+	Armament:
+		Weapon: AtomParaBomb
 
 MIG:
 	Inherits: ^Plane
@@ -108,11 +110,6 @@ MIG:
 		HP: 15000
 	RevealsShroud:
 		Range: 13c0
-		Type: GroundPosition
-		RevealGeneratedShroud: False
-		MoveRecalculationThreshold: 0
-	RevealsShroud@GAPGEN:
-		Range: 11c0
 		Type: GroundPosition
 		MoveRecalculationThreshold: 0
 	Armament:
@@ -174,11 +171,6 @@ FROG:
 	RevealsShroud:
 		Range: 10c0
 		Type: GroundPosition
-		RevealGeneratedShroud: False
-		MoveRecalculationThreshold: 0
-	RevealsShroud@GAPGEN:
-		Range: 8c0
-		Type: GroundPosition
 		MoveRecalculationThreshold: 0
 	Armament@PRIMARY:
 		Weapon: FrogBomb
@@ -239,20 +231,15 @@ YAK:
 	RevealsShroud:
 		Range: 11c0
 		Type: GroundPosition
-		RevealGeneratedShroud: False
-		MoveRecalculationThreshold: 0
-	RevealsShroud@GAPGEN:
-		Range: 9c0
-		Type: GroundPosition
 		MoveRecalculationThreshold: 0
 	Armament@PRIMARY:
-		Weapon: ChainGun.Yak
+		Weapon: ChainGun.Yak.R
 		LocalOffset: 256,-213,0
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
 	Armament@SECONDARY:
 		Name: secondary
-		Weapon: ChainGun.Yak
+		Weapon: ChainGun.Yak.L
 		LocalOffset: 256,213,0
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
@@ -269,7 +256,7 @@ YAK:
 		InitialStance: HoldFire
 		InitialStanceAI: HoldFire
 	AmmoPool:
-		Ammo: 18
+		Ammo: 30
 		PipCount: 6
 		ReloadDelay: 11
 		AmmoCondition: ammo
@@ -312,11 +299,6 @@ TRAN:
 		HP: 28000
 	RevealsShroud:
 		Range: 8c0
-		Type: GroundPosition
-		RevealGeneratedShroud: False
-		MoveRecalculationThreshold: 0
-	RevealsShroud@GAPGEN:
-		Range: 6c0
 		Type: GroundPosition
 		MoveRecalculationThreshold: 0
 	Aircraft:
@@ -440,11 +422,6 @@ HELI:
 	RevealsShroud:
 		Range: 12c0
 		Type: GroundPosition
-		RevealGeneratedShroud: False
-		MoveRecalculationThreshold: 0
-	RevealsShroud@GAPGEN:
-		Range: 10c0
-		Type: GroundPosition
 		MoveRecalculationThreshold: 0
 	Armament@PRIMARY:
 		Weapon: HellfireAA
@@ -508,11 +485,6 @@ HIND:
 		HP: 24000
 	RevealsShroud:
 		Range: 10c0
-		Type: GroundPosition
-		RevealGeneratedShroud: False
-		MoveRecalculationThreshold: 0
-	RevealsShroud@GAPGEN:
-		Range: 8c0
 		Type: GroundPosition
 		MoveRecalculationThreshold: 0
 	Armament@PRIMARY:
@@ -642,7 +614,7 @@ A10:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 50
-		Prerequisites: ~afld.gdi, ~aircraft.gdi, ~!aircraft.eagle, ~techlevel.high
+		Prerequisites: ~afld.gdi, ~aircraft.gdi, ~techlevel.high
 		IconPalette: chrometd
 		Description: Fast Ground-Attack Plane.\n  Strong vs Buildings, Infantry\n  Weak vs Aircraft
 	Valued:
@@ -656,16 +628,11 @@ A10:
 	RevealsShroud:
 		Range: 10c0
 		Type: GroundPosition
-		RevealGeneratedShroud: False
-		MoveRecalculationThreshold: 0
-	RevealsShroud@GAPGEN:
-		Range: 8c0
-		Type: GroundPosition
 		MoveRecalculationThreshold: 0
 	Armament:
 		Weapon: NapalmTD
 		LocalOffset: 2,-256,-43, 2,256,-43
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || being-warped
 	AttackAircraft:
 		AttackTurnDelay: 50
 		FacingTolerance: 20
@@ -747,12 +714,7 @@ c17:
 	Inherits: ^NeutralPlane
 	RenderSprites:
 		PlayerPalette: overlayplayertd
-	EjectOnDeath:
-		PilotActor: N1
-		SuccessRate: 50
-		EjectOnGround: false
-		EjectInAir: true
-		AllowUnsuitableCell: true
+	-EjectOnDeath:
 	ParaDrop:
 		DropRange: 4c0
 		ChuteSound: chute1.aud
@@ -799,12 +761,22 @@ c17:
 		Interval: 2
 	RejectsOrders:
 	Interactable:
+	GivesExperience:
+		Experience: 1000
+	-MapEditorData:
 
-c17.cargo:
+c17.clustermines:
 	Inherits: c17
+	AttackBomberCA:
+	Armament:
+		Weapon: ClusterMineSpawner
+	AmmoPool:
+		Ammo: 1
+	RejectsOrders:
 	RenderSprites:
 		Image: c17
 		PlayerPalette: overlayplayertd
+	-ParaDrop:
 		
 APCH:
 	Inherits: ^HelicopterTD
@@ -834,17 +806,12 @@ APCH:
 	RevealsShroud:
 		Range: 8c0
 		Type: GroundPosition
-		RevealGeneratedShroud: False
-		MoveRecalculationThreshold: 0
-	RevealsShroud@GAPGEN:
-		Range: 7c0
-		Type: GroundPosition
 		MoveRecalculationThreshold: 0
 	Armament@PRIMARY:
 		Weapon: HeliGunAG
 		LocalOffset: 228,0,-85
 		MuzzleSequence: muzzle
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || being-warped
 	AttackAircraft:
 		FacingTolerance: 20
 		AttackType: Hover
@@ -903,20 +870,15 @@ ORCA:
 	RevealsShroud:
 		Range: 12c0
 		Type: GroundPosition
-		RevealGeneratedShroud: False
-		MoveRecalculationThreshold: 0
-	RevealsShroud@GAPGEN:
-		Range: 10c0
-		Type: GroundPosition
 		MoveRecalculationThreshold: 0
 	Armament@PRIMARY:
 		Weapon: HellfireAG.Orca
 		LocalOffset: 0,-213,-85, 0,213,-85
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || being-warped
 	Armament@SECONDARY:
 		Weapon: HellfireAA.Orca
 		LocalOffset: 0,213,-85, 0,-213,-85
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || being-warped
 	AttackAircraft:
 		FacingTolerance: 20
 		AttackType: Hover
@@ -949,7 +911,7 @@ ORCAB:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 40
-		Prerequisites: ~afld.gdi, ~aircraft.eagle, gtek, ~techlevel.high
+		Prerequisites: ~hpad2, ~aircraft.eagle, gtek, ~techlevel.high
 		IconPalette: chrometd
 		Description: VTOL Bomber armed with EMP bombs.\n  Strong vs Buildings, Vehicles\n  Weak vs Aircraft
 	Valued:
@@ -959,20 +921,15 @@ ORCAB:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 26000
+		HP: 22000
 	RevealsShroud:
 		Range: 10c0
 		Type: GroundPosition
-		RevealGeneratedShroud: False
-		MoveRecalculationThreshold: 0
-	RevealsShroud@GAPGEN:
-		Range: 8c0
-		Type: GroundPosition
 		MoveRecalculationThreshold: 0
 	Armament:
-		Weapon: NapalmTD
+		Weapon: OrcaBomb
 		LocalOffset: 2,-256,-43, 2,256,-43
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || being-warped
 	AttackAircraft:
 		AttackTurnDelay: 50
 		FacingTolerance: 20
@@ -990,12 +947,11 @@ ORCAB:
 		CanHover: False
 		CanSlide: False
 		Voice: Move
-		InitialFacing: 0
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: HoldFire
 	AmmoPool:
-		Ammo: 9
+		Ammo: 4
 		AmmoCondition: ammo
 	Selectable:
 		Bounds: 36,28,0,2
@@ -1011,7 +967,7 @@ ORCAB:
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
 	Rearmable:
-		RearmActors: afld.gdi, afld
+		RearmActors: hpad2, hpad
 	Voiced:
 		VoiceSet: OrcaVoice
 
@@ -1073,16 +1029,11 @@ RAH66:
 	RevealsShroud:
 		Range: 10c0
 		Type: GroundPosition
-		RevealGeneratedShroud: False
-		MoveRecalculationThreshold: 0
-	RevealsShroud@GAPGEN:
-		Range: 8c0
-		Type: GroundPosition
 		MoveRecalculationThreshold: 0
 	Armament@PRIMARY:
 		Weapon: Rah66AG
 		LocalOffset: 0,-213,-85, 0,213,-85
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || being-warped
 	AttackAircraft:
 		FacingTolerance: 20
 		AttackType: Hover
@@ -1158,18 +1109,15 @@ KIROV:
 	RevealsShroud:
 		Range: 10c0
 		Type: GroundPosition
-		RevealGeneratedShroud: False
-		MoveRecalculationThreshold: 0
-	RevealsShroud@GAPGEN:
-		Range: 8c0
-		Type: GroundPosition
 		MoveRecalculationThreshold: 0
 	Armament@PRIMARY:
 		Weapon: AirshipParaBomb
 		LocalOffset: -20,0,0
+		PauseOnCondition: being-warped
 	Armament@SECONDARY:
 		Weapon: AirshipParaBombS
 		LocalOffset: -20,0,0
+		PauseOnCondition: being-warped
 	AttackFrontal:
 		Voice: Attack
 	AttackAircraft:
@@ -1244,8 +1192,8 @@ ORCACA:
 		IdealSeparation: 0c768
 		TurnSpeed: 4
 		Speed: 135
-		TakeoffSounds: orcaup1.aud
-		LandingSounds: orcadwn1.aud
+		TakeoffSounds: dropup1.aud
+		LandingSounds: dropdwn1.aud
 		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems,Tiberium,BlueTiberium
 		Repulsable: True
 		IdleTurnSpeed: 1
@@ -1262,11 +1210,6 @@ ORCACA:
 		Type: Heavy
 	RevealsShroud:
 		Range: 10c0
-		Type: GroundPosition
-		RevealGeneratedShroud: False
-		MoveRecalculationThreshold: 0
-	RevealsShroud@GAPGEN:
-		Range: 8c0
 		Type: GroundPosition
 		MoveRecalculationThreshold: 0
 	SpawnActorOnDeath:
@@ -1298,8 +1241,8 @@ ORCACA.reinforce:
 		IdealSeparation: 0c256
 		TurnSpeed: 4
 		Speed: 135
-		TakeoffSounds: orcaup1.aud
-		LandingSounds: orcadwn1.aud
+		TakeoffSounds: dropup1.aud
+		LandingSounds: dropdwn1.aud
 		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems,Tiberium,BlueTiberium
 		Repulsable: True
 		IdleTurnSpeed: 1
@@ -1332,16 +1275,11 @@ HARR:
 	RevealsShroud:
 		Range: 12c0
 		Type: GroundPosition
-		RevealGeneratedShroud: False
-		MoveRecalculationThreshold: 0
-	RevealsShroud@GAPGEN:
-		Range: 10c0
-		Type: GroundPosition
 		MoveRecalculationThreshold: 0
 	Armament:
 		Weapon: HellfireAG.Harrier
 		LocalOffset: 0,213,-85, 0,-213,-85
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || being-warped
 	AttackAircraft:
 		FacingTolerance: 20
 		Voice: Attack
@@ -1405,20 +1343,15 @@ SCRIN:
 	RevealsShroud:
 		Range: 12c0
 		Type: GroundPosition
-		RevealGeneratedShroud: False
-		MoveRecalculationThreshold: 0
-	RevealsShroud@GAPGEN:
-		Range: 10c0
-		Type: GroundPosition
 		MoveRecalculationThreshold: 0
 	Armament@PRIMARY:
 		Weapon: ScrinTorp
 		LocalOffset: 0,213,-85, 0,-213,-85
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || being-warped
 	Armament@SECONDARY:
 		Weapon: ScrinTorpAA
 		LocalOffset: 0,213,-85, 0,-213,-85
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || being-warped
 	AttackAircraft:
 		FacingTolerance: 20
 		Voice: Attack
@@ -1479,20 +1412,20 @@ HORN:
 		MoveRecalculationThreshold: 0
 	Armament:
 		Weapon: HellfireAG.Horn
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || being-warped
 	AttackAircraft:
 		FacingTolerance: 20
 		AttackType: Strafe
 	Aircraft:
 		CruiseAltitude: 1c513
 		InitialFacing: 192
-		Ideal
 		TurnSpeed: 8
 		Speed: 195
 		MaximumPitch: 56
 		CanHover: False
 		CanSlide: False
 		RepulsionSpeed: 40
+		Repulsable: False
 		IdealSeparation: 0c256
 		VTOL: true
 		TakeoffSounds: mtoff1.aud, mtoff2.aud
@@ -1519,3 +1452,108 @@ HORN:
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 6c0
+
+YF23.bomber:
+	Inherits: ^PlaneTD
+	Inherits@AUTOTARGET: ^AutoTargetAir
+	Tooltip:
+		Name: Black Widow
+	Health:
+		HP: 30000
+	Armament:
+		Weapon: WidowAA
+		LocalOffset: 0,-256,-43, 0,256,-43
+		PauseOnCondition: !ammo
+	AttackBomberCA:
+	AttackAircraft:
+	Aircraft:
+		CruiseAltitude: 2560
+		InitialFacing: 192
+		TurnSpeed: 4
+		IdleTurnSpeed: 1
+		Speed: 240
+		RepulsionSpeed: 40
+		MaximumPitch: 56
+		MoveIntoShroud: False
+	AmmoPool:
+		Ammo: 12
+		AmmoCondition: ammo
+	ReloadAmmoPool:
+		Count: 2
+	-Selectable:
+	SelectionDecorations:
+		RenderSelectionBars: False
+	-Voiced:
+	RenderSprites:
+		Image: yf23
+	RejectsOrders:
+	Contrail@1:
+		Offset: -325,483,0
+	Contrail@2:
+		Offset: -325,-483,0
+	SpawnActorOnDeath:
+		Actor: yf23.Husk
+	SmokeTrailWhenDamaged:
+		Offset: -853,0,171
+		Interval: 2
+	Interactable:
+	GivesExperience:
+		Experience: 1000
+		
+DPOD2:
+	Inherits@2: ^ExistsInWorld
+	Valued:
+		Cost: 10
+	Tooltip:
+		Name: Drop Pod
+	Health:
+		HP: 6000
+	Armor:
+		Type: Light
+	Aircraft:
+		TurnSpeed: 5
+		Speed: 300
+		CruiseAltitude: 8000
+		MaximumPitch: 110
+		VTOL: true
+		Repulsable: False
+		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium
+	HiddenUnderFog:
+		Type: CenterPosition
+	BodyOrientation:
+		UseClassicPerspectiveFudge: False
+	RenderSprites:
+		Image: pod
+		PlayerPalette: overlayplayertd
+	WithFacingSpriteBody:
+	QuantizeFacingsFromSequence:
+	SelectionDecorations:
+	HitShape:
+	Cargo:
+		Types: Infantry
+		MaxWeight: 1
+		PipCount: 1
+		UnloadVoice: Move
+		EjectOnDeath: true
+	Interactable:
+	WithShadow:
+	SmokeTrailWhenDamaged:
+		MinDamage: Undamaged
+		Sprite: smokey2
+		Palette: tseffect-ignore-lighting-alpha75
+	CrashLanding:
+		Spins: False
+		Moves: True
+		Velocity: 113
+		Explosion: DropPodVisual
+		
+DPOD1:
+	Inherits: DPOD2
+	RenderSprites:
+		Image: pod2
+		PlayerPalette: overlayplayertd
+	CrashLanding:
+		Spins: False
+		Moves: True
+		Velocity: 113
+		Explosion: DropPodVisual2

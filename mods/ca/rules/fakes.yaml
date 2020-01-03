@@ -6,7 +6,7 @@ SYRF:
 	Buildable:
 		BuildPaletteOrder: 890
 		Queue: Defense
-		Prerequisites: syrd, ~structures.allies
+		Prerequisites: syrd, ~structures.england
 		Description: Looks like a Naval yard.
 		Icon: fake-icon
 	Tooltip:
@@ -16,6 +16,7 @@ SYRF:
 		GenericStancePrefix: False
 	Targetable:
 		TargetTypes: Ground, Water, Structure, SpyInfiltrate
+		RequiresCondition: !being-warped
 	Building:
 		Footprint: xxx xxx xxx
 		Dimensions: 3,3
@@ -39,7 +40,7 @@ WEAF:
 	Inherits@infiltrate: ^InfiltratableFake
 	Buildable:
 		BuildPaletteOrder: 920
-		Prerequisites: weap, ~structures.allies
+		Prerequisites: weap, ~structures.england
 		Queue: Defense
 		Description: Looks like a War Factory.
 		Icon: fake-icon
@@ -82,7 +83,7 @@ DOMF:
 	Buildable:
 		BuildPaletteOrder: 930
 		Queue: Defense
-		Prerequisites: dome, ~structures.allies
+		Prerequisites: dome, ~structures.england
 		Description: Looks like a Radar Dome.
 		Icon: fake-icon
 	Building:
@@ -106,7 +107,7 @@ FACF:
 	Buildable:
 		BuildPaletteOrder: 1000
 		Queue: Defense
-		Prerequisites: ~structures.allies
+		Prerequisites: ~structures.england
 		Description: Looks like a Construction Yard.
 		Icon: fake-icon
 	Tooltip:

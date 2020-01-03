@@ -22,6 +22,16 @@ MINP:
 	Inherits: MINV
 	Explodes:
 		Weapon: APMine
+		
+MINVS:
+	Inherits: ^Mine
+	Explodes:
+		Weapon: ATMine
+		
+MINS:
+	Inherits: ^Mine
+	Explodes:
+		Weapon: ATMine
 
 CRATE:
 	Inherits: ^Crate
@@ -234,6 +244,14 @@ camera.sathack:
 		Range: 10c0
 		CloakTypes: Cloak
 		
+camera.nrepair.ai:
+	Inherits: CAMERA
+	EditorOnlyTooltip:
+		Name: (support power proxy camera)
+	ProximityExternalCondition@nrepairai:
+		Condition: nrepairheal
+		Range: 150c0
+
 camera.cloud:
 	Interactable:
 	ConditionManager:

@@ -47,9 +47,11 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Amount of time after detonation to remove the camera")]
 		public readonly int CameraRemoveDelay = 5;
 
-		[SequenceReference]
-		[Desc("Sequence the launching actor should play when activating this power.")]
-		public readonly string ActivationSequence = "";
+		[Desc("A condition to apply while active.")]
+		public readonly string ActiveCondition = null;
+
+		[Desc("Duration of the condition (in ticks). Set to 0 for a permanent condition.")]
+		public readonly int Duration = 0;
 
 		[Desc("Altitude above terrain below which to explode. Zero effectively deactivates airburst.")]
 		public readonly WDist AirburstAltitude = WDist.Zero;
@@ -75,7 +77,12 @@ namespace OpenRA.Mods.CA.Traits
 	public class DetonateWeaponPower : SupportPower, ITick
 	{
 		public new readonly DetonateWeaponPowerInfo Info;
+
+		[Sync]
 		int ticks;
+
+		int activeToken = ConditionManager.InvalidConditionToken;
+		ConditionManager conditionManager;
 
 		public DetonateWeaponPower(Actor self, DetonateWeaponPowerInfo info)
 			: base(self, info)
@@ -86,17 +93,20 @@ namespace OpenRA.Mods.CA.Traits
 		public override void Activate(Actor self, Order order, SupportPowerManager manager)
 		{
 			base.Activate(self, order, manager);
+			conditionManager = self.Trait<ConditionManager>();
+
+			if (conditionManager != null && !string.IsNullOrEmpty(Info.ActiveCondition) && activeToken == ConditionManager.InvalidConditionToken)
+				activeToken = conditionManager.GrantCondition(self, Info.ActiveCondition);
 
 			if (self.Owner.IsAlliedWith(self.World.RenderPlayer))
 				Game.Sound.Play(SoundType.World, Info.LaunchSound);
 			else
 				Game.Sound.Play(SoundType.World, Info.IncomingSound);
 
-			if (!string.IsNullOrEmpty(Info.ActivationSequence))
-			{
-				var wsb = self.Trait<WithSpriteBody>();
-				wsb.PlayCustomAnimation(self, Info.ActivationSequence);
-			}
+			foreach (var launchpad in self.TraitsImplementing<INotifyActivate>())
+				launchpad.Launching(self);
+
+			ticks = Info.Duration;
 
 			var targetPosition = order.Target.CenterPosition + new WVec(WDist.Zero, WDist.Zero, Info.AirburstAltitude);
 
@@ -122,7 +132,7 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				var beacon = new Beacon(
 					order.Player,
-					targetPosition,
+					order.Target.CenterPosition,
 					Info.BeaconPaletteIsPlayerPalette,
 					Info.BeaconPalette,
 					Info.BeaconImage,
@@ -148,9 +158,13 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		public void Tick(Actor self)
+		void ITick.Tick(Actor self)
 		{
-			ticks++;
+			if (--ticks < 0)
+			{
+				if (activeToken != ConditionManager.InvalidConditionToken)
+					activeToken = conditionManager.RevokeCondition(self, activeToken);
+			}
 		}
 
 		public override void SelectTarget(Actor self, string order, SupportPowerManager manager)

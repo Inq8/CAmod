@@ -69,11 +69,23 @@ Dragon:
 	Inherits: ^AntiGroundMissile
 	Projectile: Missile
 	
+Dragon.CYB:
+	Inherits: Dragon
+	Report: rketinf1.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 8500
+	
 DragonE:
 	Inherits: ^AntiGroundMissile
 	Range: 7c0
 	Projectile: Missile
 		RangeLimit: 8c0
+		
+DragonE.CYB:
+	Inherits: DragonE
+	Report: rketinf1.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 8500
 
 HellfireAG:
 	Inherits: ^AntiGroundMissile
@@ -165,6 +177,29 @@ HellfireAA:
 HellfireAA.Orca:
 	Inherits: HellfireAA
 	Report: orcamis1.aud
+	
+WidowAA:
+	Inherits: ^AntiAirMissile
+	ReloadDelay: 60
+	Report: vbleatta.aud, vbleattb.aud
+	Range: 8c0
+	MinRange: 1c256
+	Burst: 2
+	BurstDelays: 10
+	Projectile: Missile
+		Speed: 404
+		Inaccuracy: 128
+		HorizontalRateOfTurn: 10
+		RangeLimit: 12c0
+		ContrailLength: 6
+	Warhead@1Dam: SpreadDamage
+		Damage: 8000
+		ValidTargets: Air
+		Versus:
+			Wood: 75
+			Light: 75
+	Warhead@3Eff: CreateEffect
+		Explosions: med_explosion_air
 
 MammothTusk:
 	Inherits: ^AntiGroundMissile
@@ -192,6 +227,22 @@ MammothTusk:
 		Explosions: med_explosion_air
 		ImpactSounds: kaboom25.aud
 		ValidTargets: Air
+		
+TitanTusk:
+	Inherits: MammothTusk
+	Burst: 1
+	Range: 8c0
+	Report: samshot1.aud
+	Projectile: Missile
+		Image: MISSILE
+		RangeLimit: 10c614
+	Warhead@1Dam: SpreadDamage
+		Spread: 256
+		Damage: 10000
+	Warhead@3Eff: CreateEffect
+		ImpactSounds: kaboom15.aud
+		
+		ValidTargets: Ground, Trees
 		
 APCTusk:
 	Inherits: MammothTusk
@@ -233,9 +284,21 @@ RedEye:
 		Versus:
 			Light: 60
 
+RedEye.CYB:
+	Inherits: RedEye
+	Report: rketinf1.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 5000
+
 RedEyeE:
 	Inherits: RedEye
 	Range: 9c0
+
+RedEyeE.CYB:
+	Inherits: RedEyeE
+	Report: rketinf1.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 5000
 
 Stinger:
 	Inherits: ^AntiGroundMissile
@@ -273,7 +336,7 @@ StingerAA:
 StingerGTWR:
 	Inherits: Stinger
 	ReloadDelay: 50
-	Range: 8c511
+	Range: 7c0
 	Report: rocket2.aud
 	Burst: 2
 	BurstDelays: 15
@@ -479,9 +542,10 @@ SCUD:
 V3Weapon:
 	Inherits: ^AntiGroundMissile
 	-Report:
+	ValidTargets: Ground, Trees, Water
 	Warhead@1Dam: SpreadDamage
-		Spread: 1c0
-		Damage: 4000
+		Spread: 341
+		Damage: 3400
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Water, Trees
 		Versus:
@@ -493,7 +557,7 @@ V3Weapon:
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: building, building2
-		ImpactSounds: gexp14a.aud, gexp14b.aud, gexp14c.aud, gexp14d.aud
+		ImpactSounds: kaboom25.aud
 	Warhead@4EffWater: CreateEffect
 		Explosions: large_splash
 		ImpactSounds: splashl1.aud, splashl2.aud
@@ -519,9 +583,9 @@ HonestJohn:
 		Damage: 1100
 		Falloff: 1000
 		Versus:
-			None: 60
-			Wood: 75
-			Concrete: 75
+			None: 40
+			Wood: 100
+			Concrete: 100
 			Light: 60
 			Heavy: 80
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
@@ -618,6 +682,7 @@ BTRRocketsAA:
 		HorizontalRateOfTurn: 5
 		CruiseAltitude: 5c0
 		RangeLimit: 12c0
+		LockOnProbability: 80
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		Damage: 1125
@@ -641,6 +706,29 @@ BTRRocketsAA:
 		ImpactSounds: splashl1.aud, splashl2.aud
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
+		
+227mm.upg:
+	Inherits: 227mm
+	Report: vaegattb.aud, vaegatta.aud
+	Range: 10c0
+	Projectile: Missile
+		Speed: 366
+		RangeLimit: 14c0
+		Image: MISSILE
+		ContrailLength: 15
+		ContrailColor: 00FFFFE6
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Damage: 1300
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		ValidTargets: Ground, Water, Trees
+		Versus:
+			None: 70
+			Wood: 75
+			Light: 70
+			Heavy: 40
+			Concrete: 75
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		
 227mmH:
 	Inherits: 227mm
@@ -675,6 +763,36 @@ BTRRocketsAA:
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air
 		ImpactSounds: xplos.aud
+		
+227mmAA.upg:
+	Inherits: 227mmAA
+	ReloadDelay: 120
+	Burst: 2
+	BurstDelays: 4
+	Range: 10c0
+	Report: vaegattb.aud, vaegatta.aud
+	Projectile: Missile
+		Speed: 366
+		RangeLimit: 14c0
+		Image: MISSILE
+		ContrailLength: 15
+		ContrailColor: 00FFFFE6
+		Arm: 2
+		Blockable: false
+		TrailImage: smokey
+		Inaccuracy: 0
+		HorizontalRateOfTurn: 15
+		CruiseAltitude: 2c0
+	Warhead@1Dam: SpreadDamage
+		Spread: 683
+		Damage: 5000
+		ValidTargets: Air
+		Versus:
+			None: 35
+			Wood: 60
+			Light: 90
+			Heavy: 90
+
 		
 227mmAAH:
 	Inherits: 227mmAA
@@ -966,7 +1084,11 @@ ScrinTorp:
 		Duration: 2
 		Condition: greenhighlight
 		ValidTargets: Ground, Vehicle
-			
+		
+ScrinTorpReaper:
+	Inherits: ScrinTorp
+	Burst: 1
+
 ScrinTorpAA:
 	Inherits: ^AntiAirMissile
 	ReloadDelay: 60
@@ -997,6 +1119,10 @@ ScrinTorpAA:
 		Duration: 2
 		Condition: greenhighlight
 		ValidTargets: Air
+		
+ScrinTorpReaperAA:
+	Inherits: ScrinTorpAA
+	Burst: 1
 
 U2Bomb:
 	ReloadDelay: 300

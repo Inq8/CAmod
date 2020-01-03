@@ -31,51 +31,63 @@ ParaBomb:
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure
 		
-TeslaParaBomb:
+AtomParaBomb:
 	Inherits: ParaBomb
-	Warhead@1Dam: SpreadDamage
+	ReloadDelay: 80
+	ValidTargets: Ground, Trees, Water, Air
+	Warhead@1Dam_impact: SpreadDamage
 		Spread: 1c0
-		Damage: 30000
-		InvalidTargets: Air
+		Damage: 5000
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		ValidTargets: Ground, Trees, Water, Air
 		Versus:
-			None: 70
-			Wood: 25
-			Light: 75
-			Heavy: 100
 			Concrete: 25
-		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
-	Warhead@3Eff: CreateEffect
-		Explosions: tsla_bomb
-		ExplosionPalette: ra2effect
-		ImpactSounds: kirbo1.aud, kirbo2.aud
-		ValidTargets: Ground, Water, Ship, Trees
-		
-ChemParaBomb:
-	Inherits: ParaBomb
-	Warhead@1Dam: SpreadDamage
+		AffectsParent: true
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
+	Warhead@2Res_impact: DestroyResource
+	Warhead@3Eff_impact: CreateEffect
+		Explosions: nuke
+		ImpactSounds: kaboom1.aud
+		ImpactActors: false
+	Warhead@4Dam_areanuke1: SpreadDamage
 		Spread: 1c0
-		Damage: 30000
+		Damage: 3000
+		Falloff: 1000, 600, 400, 250, 150, 100, 0
+		Delay: 5
+		ValidTargets: Ground, Water, Air
 		Versus:
-			None: 100
-			Wood: 70
-			Light: 100
-			Heavy: 30
 			Concrete: 25
-		DamageTypes: Prone50Percent, TriggerProne, ToxicDeath
-	Warhead@2Smu: LeaveSmudge
+		AffectsParent: true
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
+	Warhead@5Res_areanuke1: DestroyResource
+		Size: 4
+		Delay: 5
+	Warhead@6Eff_areanuke1: CreateEffect
+		ImpactSounds: kaboom22.aud
+		Delay: 5
+		ImpactActors: false
+	Warhead@6Smu_areanuke1: LeaveSmudge
 		SmudgeType: Scorch
-		InvalidTargets: Vehicle, Structure, Wall
-		Size: 2
-	Warhead@3Eff: CreateEffect
-		Explosions: large_chem
-		ExplosionPalette: temptd
-		ImpactSounds: firetrt1.aud
-		ValidTargets: Ground, Ship, Trees
+		InvalidTargets: Vehicle, Structure, Wall, Trees
+		Size: 4
+		Delay: 5
+	Warhead@TREEKILL: SpreadDamage
+		Spread: 1c0
+		Damage: 6000
+		Falloff: 1000, 600, 400, 250, 150, 100, 0
+		Delay: 5
+		ValidTargets: Trees
+		DamageTypes: Incendiary
+	Warhead@Flames: FireCluster
+		Weapon: BurnFx
+		RandomClusterCount: 5
+		Dimensions: 3,3
+		Footprint: xxx xxx xxx
 	Warhead@18Radio: CreateTintedCells
 		Spread: 1c0
-		Level: 150
-		Falloff: 100, 75, 52, 36, 12
-		MaxLevel: 500
+		Level: 350
+		Falloff: 100, 75, 52, 37, 24, 15, 2
+		MaxLevel: 750
 		
 CarpetBomb:
 	Inherits: ParaBomb
@@ -105,7 +117,7 @@ Atomic:
 		InvalidTargets: Vehicle, Structure, Wall
 		Size: 1
 	Warhead@4Eff_impact: CreateEffect
-		Explosions: nuke
+		Explosions: nuke2
 		ImpactSounds: kaboom1.aud
 		ImpactActors: false
 		ValidTargets: Ground, Water, Air
@@ -214,6 +226,31 @@ Atomic:
 		Level: 750
 		Falloff: 100, 75, 52, 37, 24, 15, 2
 		MaxLevel: 750
+		
+IonCannon:
+	ValidTargets: Ground, Water, Air
+	Warhead@1Dam_impact: SpreadDamage
+		Range: 0, 1c1, 2c1, 2c512
+		Damage: 3000
+		Falloff: 1000, 1000, 250, 100
+		ValidTargets: Ground, Air
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: ion_ring2
+		ExplosionPalette: tseffect
+	Warhead@3Smu_impact: LeaveSmudge
+		SmudgeType: Scorch
+	Warhead@4Smu_area: LeaveSmudge
+		SmudgeType: Scorch
+		Size: 1
+		Delay: 3
+	Warhead@5Res_area2: DestroyResource
+		Size: 2
+		Delay: 6
+	Warhead@6Smu_area2: LeaveSmudge
+		SmudgeType: Scorch
+		Size: 2,1
+		Delay: 6
 
 Empicbm:
 	ValidTargets: Ground, Water
@@ -254,14 +291,14 @@ THLauncher:
 	ReloadDelay: 120
 	Range: 120c0
 	MinRange: 10c0
-	Report: samshot1.aud
+	Report: tomahawk.aud
 	Projectile: Bullet
 		Blockable: false
 		Shadow: true
 		Inaccuracy: 5c0
 		Image: thawk
-		Palette: temptd
-		IsPlayerPalette: false
+		Palette: player
+		IsPlayerPalette: true
 		TrailImage: smokey2
 		TrailPalette: tseffect-ignore-lighting-alpha75
 		TrailDelay: 3
@@ -312,6 +349,8 @@ THLauncher:
 		Delay: 6
 		
 IronCurtain:
+	Projectile: InstantExplode
+	ReloadDelay: 1
 	ValidTargets: Ground, Infantry, Water
 	Warhead@1Dam_impact: SpreadDamage
 		Range: 0, 1c1, 2c1, 2c512
@@ -355,18 +394,14 @@ IronCurtain:
 	Warhead@4Eff: CreateEffect
 		ExplosionPalette: effect-ignore-lighting-alpha85
 		Explosions: ironcurtain_effect
-	Warhead@emp: GrantExternalCondition
-		Range: 1c512
-		Duration: 500
-		Condition: invulnerability
-		ValidTargets: Ground, Vehicle
-		ValidStances: Ally
-
+		
 ForceShield:
+	Projectile: InstantExplode
+	ReloadDelay: 1
 	ValidTargets: Ground, Structure
 	Warhead@1Dam_impact: SpreadDamage
 		Range: 0, 1c1, 2c1, 2c512
-		Damage: 0
+		Damage: 1
 		Delay: 5
 		Falloff: 1000, 1000, 250, 100
 		ValidTargets: Ground, Structure
@@ -380,12 +415,6 @@ ForceShield:
 	Warhead@4Eff: CreateEffect
 		ExplosionPalette: effect-ignore-lighting-alpha85
 		Explosions: forceshield_effect
-	Warhead@fs: GrantExternalCondition
-		Range: 3c0
-		Duration: 250
-		Condition: forceshield
-		ValidTargets: Ground, Structure
-		ValidStances: Ally
 	Warhead@fspower: GrantExternalCondition
 		Range: 15c0
 		Duration: 500
@@ -394,6 +423,8 @@ ForceShield:
 		ValidStances: Ally
 		
 StealthBubble:
+	Projectile: InstantExplode
+	ReloadDelay: 1
 	ValidTargets: Ground, Infantry, Water
 	Warhead@1Dam_impact: SpreadDamage
 		Range: 0, 1c1, 2c1, 3c512
@@ -401,7 +432,7 @@ StealthBubble:
 		Delay: 5
 		Falloff: 1000, 1000, 250, 100
 		ValidTargets: Ground, Infantry, Water
-		InvalidTargets: Air, Chrono, Creep
+		InvalidTargets: Air, Creep
 		DamageTypes: Prone50Percent, TriggerProne, ToxinDeath
 		Versus:
 			None: 100
@@ -415,7 +446,7 @@ StealthBubble:
 		Delay: 10
 		Falloff: 1000, 1000, 250, 100
 		ValidTargets: Ground, Infantry, Water
-		InvalidTargets: Air, Chrono, Creep
+		InvalidTargets: Air, Creep
 		DamageTypes: Prone50Percent, TriggerProne, ToxinDeath
 		Versus:
 			None: 100
@@ -429,7 +460,7 @@ StealthBubble:
 		Delay: 15
 		Falloff: 1000, 1000, 250, 100
 		ValidTargets: Ground, Infantry, Water
-		InvalidTargets: Air, Chrono, Creep
+		InvalidTargets: Air, Creep
 		DamageTypes: Prone50Percent, TriggerProne, ToxinDeath
 		Versus:
 			None: 100
@@ -440,12 +471,6 @@ StealthBubble:
 	Warhead@4Eff: CreateEffect
 		ExplosionPalette: tseffect
 		Explosions: stealthbub
-	Warhead@emp: GrantExternalCondition
-		Range: 3c512
-		Duration: 1000
-		Condition: invisibility
-		ValidTargets: Ground, Vehicle
-		ValidStances: Ally
 		
 Chemicbm:
 	ValidTargets: Ground, Water
@@ -454,7 +479,7 @@ Chemicbm:
 		Damage: 2200
 		Falloff: 1000, 368, 135, 50, 18
 		ValidTargets: Ground, Water
-		InvalidTargets: Chrono, Air
+		InvalidTargets: Air
 		Versus:
 			None: 90
 			Wood: 50
@@ -472,7 +497,7 @@ Chemicbm:
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 20
 		ValidTargets: Ground, Water
-		InvalidTargets: Chrono, Air, Creep
+		InvalidTargets: Air, Creep
 		Versus:
 			None: 90
 			Wood: 50
@@ -487,7 +512,7 @@ Chemicbm:
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 40
 		ValidTargets: Ground, Water
-		InvalidTargets: Chrono, Air, Creep
+		InvalidTargets: Air, Creep
 		Versus:
 			None: 90
 			Wood: 50
@@ -502,7 +527,7 @@ Chemicbm:
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 80
 		ValidTargets: Ground, Water
-		InvalidTargets: Chrono, Air, Creep
+		InvalidTargets: Air, Creep
 		Versus:
 			None: 90
 			Wood: 50
@@ -522,21 +547,21 @@ Chemicbm:
 		Falloff: 100, 75, 52, 37, 24, 15, 2
 		MaxLevel: 750
 	Warhead@13Spawn: SpawnActor
-		Actors: camera.cloud, camera.cloud2
+		Actors: camera.cloud
 		Range: 5
 		ForceGround: false
 		Image: Cloud1d
 		Palette: tseffect-ignore-lighting-alpha75
 		ValidTargets: Ground, Water
 	Warhead@14Spawn: SpawnActor
-		Actors: camera.cloud, camera.cloud2
+		Actors: camera.cloud2, camera.cloud
 		Range: 5
 		ForceGround: false
 		Image: Cloud1d
 		Palette: tseffect-ignore-lighting-alpha75
 		ValidTargets: Ground, Water
 	Warhead@15Spawn: SpawnActor
-		Actors: camera.cloud, camera.cloud2
+		Actors: camera.cloud2, camera.cloud
 		Range: 5
 		ForceGround: false
 		Image: Cloud1d
@@ -789,13 +814,13 @@ WeatherBolt:
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 1c1, 2c1, 3c1
 		Falloff: 1000, 660, 330, 0
-		Damage: 1200
+		Damage: 1500
 		AffectsParent: true
 		ValidTargets: Ground, Air, Water
 		DamageTypes: TriggerProne, ElectricityDeath
 		Versus:
-			Wood: 85
-			Heavy: 75
+			Wood: 65
+			Heavy: 55
 			Concrete: 55
 	Warhead@4: CreateEffect
 		Explosions: weatherbolt1, weatherbolt2, weatherbolt3, weatherbolt1f, weatherbolt2f, weatherbolt3f

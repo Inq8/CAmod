@@ -14,13 +14,13 @@ BeachUnitTypes = { "e1", "e2", "e3", "e4", "e1", "e2", "e3", "e4", "e1", "e2", "
 GDIBeachUnitTypes = { "n1", "n2", "n3", "n2", "n1", "n2", "n3", "n1", "n1", "n2", "n3", "n1", "n1", "n1", "n1", "n1" }
 ProducedUnitTypes =
 {
-	{ factory = AlliedBarracks1, types = { "n1", "n1", "n1", "n1", "n3", "n3" } },
-	{ factory = SovietBarracks1, types = { "e1", "e1", "e1", "e2", "e3", "e3" } },
+	{ factory = AlliedBarracks1, types = { "n1", "n3" } },
+	{ factory = SovietBarracks1, types = { "e1", "e2", "e3" } },
 	{ factory = SKennel1, types = { "dog" } },
 	{ factory = ANavalYard1, types = { "pt2" } },
 	{ factory = SSubPen1, types = { "ss" } },
-	{ factory = AlliedWarFactory1, types = { "hmmv", "mtnk", "htnk", "msam", "apc2" } },
-	{ factory = SovietWarFactory1, types = { "3tnk", "4tnk", "v3rl", "ttnk", "btr" } }
+	{ factory = AlliedWarFactory1, types = { "mtnk", "htnk", "msam" } },
+	{ factory = SovietWarFactory1, types = { "3tnk", "4tnk", "ttnk" } }
 }
 
 BindActorTriggers = function(a)
@@ -34,7 +34,7 @@ BindActorTriggers = function(a)
 		else
 			Trigger.OnIdle(a, function(a)
 				if a.IsInWorld then
-					a.AttackMove(GDITechnologyCenter.Location)
+					a.Hunt()
 				end
 			end)
 		end

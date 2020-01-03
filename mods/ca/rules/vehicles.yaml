@@ -6,7 +6,7 @@ V2RL:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 80
-		Prerequisites: dome, ~vehicles.soviet, ~techlevel.medium
+		Prerequisites: dome, ~vehicles.soviet, ~!vehicles.russia, ~techlevel.medium
 		Description: Long-range rocket artillery.\n  Strong vs Infantry, Buildings\n  Weak vs Vehicles, Aircraft
 	Valued:
 		Cost: 900
@@ -22,13 +22,10 @@ V2RL:
 		Speed: 68
 	RevealsShroud:
 		Range: 5c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Armament:
 		Weapon: SCUD
 		ReloadingCondition: reloading
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AutoTarget:
 		ScanRadius: 10
 	AttackFrontal:
@@ -79,10 +76,10 @@ V2RL:
 		Condition: onwater
 	Targetable:
 		TargetTypes: Ground, Repair, Vehicle
-		RequiresCondition: !onwater && !parachute
+		RequiresCondition: !onwater && !parachute && !being-warped
 	Targetable@WATER:
 		TargetTypes: Ground, Repair, Vehicle, Water, Ship
-		RequiresCondition: onwater && !parachute
+		RequiresCondition: onwater && (!parachute && !being-warped)
 	WithFacingSpriteBody:
 		RequiresCondition: !onwater
 	WithFacingSpriteBody@WATER:
@@ -91,9 +88,6 @@ V2RL:
 		RequiresCondition: onwater
 	RevealsShroud:
 		Range: 5c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Turreted:
 		TurnSpeed: 7
 	Armament:
@@ -102,9 +96,9 @@ V2RL:
 		RecoilRecovery: 25
 		LocalOffset: 768,0,90
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || parachute
+		PauseOnCondition: empdisable || being-warped || parachute
 	AttackTurreted:
-		PauseOnCondition: empdisable || parachute
+		PauseOnCondition: empdisable || being-warped || parachute
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	SpawnActorOnDeath:
@@ -121,7 +115,7 @@ V2RL:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 110
-		Prerequisites: weap, ~vehicles.allies, ~techlevel.low
+		Prerequisites: weap, ~vehicles.allies, ~!vehicles.england, ~techlevel.low
 		Description: Allied Main Battle Tank.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
 	Valued:
 		Cost: 800
@@ -138,9 +132,6 @@ V2RL:
 		Speed: 82
 	RevealsShroud:
 		Range: 6c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Turreted:
 		TurnSpeed: 5
 		Offset: 0,0,20
@@ -150,9 +141,9 @@ V2RL:
 		RecoilRecovery: 38
 		LocalOffset: 720,0,80
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	SpawnActorOnDeath:
@@ -188,25 +179,33 @@ V2RL:
 		Speed: 68
 	RevealsShroud:
 		Range: 6c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Turreted:
 		TurnSpeed: 5
 		Offset: 0,0,20
+	GrantConditionOnFaction@IRAQTANK:
+		Condition: iraqtank
+		Factions: iraq
 	Armament:
 		Weapon: 125mm
 		Recoil: 128
 		RecoilRecovery: 38
 		LocalOffset: 768,85,90, 768,-85,90
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
+	SpeedMultiplier@IRAQTANK:
+		RequiresCondition: iraqtank
+		Modifier: 125
 	AttackTurreted:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	SpawnActorOnDeath:
 		Actor: 3TNK.Husk
+		RequiresCondition: !iraqtank
+	Explodes@IRAQTANK:
+		Weapon: UnitExplodeIraqTank
+		RequiresCondition: iraqtank
+		DamageThreshold: 10
 	SelectionDecorations:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -243,18 +242,18 @@ V2RL:
 		Weight: 2
 	RevealsShroud:
 		Range: 6c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Turreted:
 		TurnSpeed: 2
+	GrantConditionOnFaction@IRAQTANK:
+		Condition: iraqtank
+		Factions: iraq
 	Armament@PRIMARY:
 		Weapon: 130mm
 		LocalOffset: 900,180,340, 900,-180,340
 		Recoil: 171
 		RecoilRecovery: 30
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: MammothTusk
@@ -262,13 +261,21 @@ V2RL:
 		LocalYaw: -100,100
 		Recoil: 43
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
+	SpeedMultiplier@IRAQTANK:
+		RequiresCondition: iraqtank
+		Modifier: 125
 	AttackTurreted:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	SpawnActorOnDeath:
 		Actor: 4TNK.Husk
+		RequiresCondition: !iraqtank
+	Explodes@IRAQTANK:
+		Weapon: UnitExplodeIraqTank
+		RequiresCondition: iraqtank
+		DamageThreshold: 10
 	SelfHealing:
 		Step: 100
 		Delay: 3
@@ -309,18 +316,15 @@ ARTY:
 		Locomotor: lighttracked
 	RevealsShroud:
 		Range: 5c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Armament:
 		Weapon: 155mm
 		LocalOffset: 624,0,208
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	Explodes:
 		Weapon: ArtilleryExplode
@@ -340,11 +344,11 @@ ARTY.nod:
 		Queue: Vehicle
 		BuildPaletteOrder: 70
 		IconPalette: chrometd
-		Prerequisites: ~vehicles.marked, ~techlevel.medium
+		Prerequisites: ~vehicles.nod, ~techlevel.medium
 		Description: Long-range artillery.\n  Strong vs Infantry, Buildings\n  Weak vs Vehicles, Aircraft
 	Armament:
 		Weapon: 155mmTD
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		
 SPEC:
 	Inherits: ARTY.nod
@@ -372,7 +376,7 @@ SPEC:
 		Weapon: 155mmSpec
 		LocalOffset: 624,0,408
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Cloak@NORMAL:
 		InitialDelay: 90
 		CloakDelay: 200
@@ -481,7 +485,7 @@ MCV:
 		Facing: 96
 		TransformSounds: placbldg.aud, build5.aud
 		NoTransformNotification: BuildingCannotPlaceAudio
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	MustBeDestroyed:
 		RequiredForShortGame: true
 	BaseBuilding:
@@ -514,12 +518,8 @@ JEEP:
 	Mobile:
 		TurnSpeed: 10
 		Speed: 157
-		PauseOnCondition: !(!being-captured)
 	RevealsShroud:
 		Range: 8c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 5c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: 0,0,128
@@ -527,9 +527,9 @@ JEEP:
 		Weapon: M60mg
 		MuzzleSequence: muzzle
 		LocalOffset: 128,0,43
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	ProducibleWithLevel:
@@ -560,20 +560,17 @@ APC:
 		Type: Heavy
 	Mobile:
 		Speed: 135
-		PauseOnCondition: !(!notmobile && !being-captured)
+		PauseOnCondition: notmobile || being-captured || empdisable || being-warped
 	RevealsShroud:
 		Range: 4c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 3c0
 	Armament:
 		Weapon: M60mg
 		LocalOffset: 85,0,171
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	AttackFrontal:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5
@@ -606,9 +603,6 @@ MNLY:
 		Speed: 135
 	RevealsShroud:
 		Range: 5c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Minelayer:
 		Mine: MINV
 	MineImmune:
@@ -680,18 +674,21 @@ MGG:
 	WithIdleOverlay@SPINNER:
 		Offset: -299,0,171
 		Sequence: spinner
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !pickedup
 	RevealsShroud:
 		Range: 6c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	CreatesShroud:
 		Range: 6c0
 	RenderShroudCircle:
 	SpawnActorOnDeath:
 		Actor: MGG.Husk
+	ProximityExternalCondition@GAPGEN:
+		Condition: ggshroud
+		Range: 6c0
+		AffectsParent: False
+		RequiresCondition: !empdisable || !pickedup
+		ValidStances: Enemy
 
 MRJ:
 	Inherits: ^Vehicle
@@ -718,7 +715,7 @@ MRJ:
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		Offset: -256,0,256
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	ProximityExternalCondition@JAMMER:
 		Range: 18c0
 		ValidStances: Enemy, Neutral
@@ -744,28 +741,26 @@ TTNK:
 		Prerequisites: tsla, dome, ~vehicles.russia, ~techlevel.medium
 		Description: Tank with mounted Tesla coil.\n  Strong vs Infantry, Vehicles, Buildings\n  Weak vs Aircraft
 	Valued:
-		Cost: 1350
+		Cost: 1150
 	Tooltip:
 		Name: Tesla Tank
 		GenericName: Tank
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 40000
+		HP: 30000
 	Armor:
 		Type: Light
 	Mobile:
 		Speed: 113
 	RevealsShroud:
 		Range: 7c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 6c0
 	Armament:
 		Weapon: TTankZap
 		LocalOffset: 0,0,213
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
 	Turreted:
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
@@ -780,10 +775,12 @@ TTNK:
 		DecorationBounds: 30,30
 DTRK:
 	Inherits: ^Vehicle
+	Inherits@BERSERK: ^Berserk
+	-AutoTargetPriority@BERSERK:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 199
-		Prerequisites: stek, ~!vehicles.soviet, ~!vehicles.iraq, ~techlevel.high, ~techlevel.superw
+		Prerequisites: stek, ~vehicles.soviet, ~techlevel.high
 		Description: Truck with actively armed nuclear\nexplosives. Has very weak armor.
 	Valued:
 		Cost: 2000
@@ -797,6 +794,7 @@ DTRK:
 		Type: Light
 	Mobile:
 		Speed: 82
+		Voice: Move
 	RevealsShroud:
 		Range: 4c0
 	Explodes:
@@ -805,6 +803,7 @@ DTRK:
 		DamageSource: Killer
 	AttackFrontal:
 		FacingTolerance: 128
+		Voice: Attack
 	Armament@PRIMARY:
 		Weapon: DemoTruckTargeting
 	GrantConditionOnAttack:
@@ -813,9 +812,14 @@ DTRK:
 		DeployedCondition: triggered
 	-DamageMultiplier@IRONCURTAIN:
 	KillsSelf:
-		RequiresCondition: invulnerability || triggered
+		RequiresCondition: invulnerability || triggered || berserk
 	Chronoshiftable:
 		ExplodeInstead: yes
+	Passenger:
+		PipType: Red
+		Voice: Move
+	Voiced:
+		VoiceSet: TTruckVoice
 
 CTNK:
 	Inherits: ^Vehicle
@@ -844,21 +848,18 @@ CTNK:
 		Locomotor: heavywheeled
 	RevealsShroud:
 		Range: 6c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: APTusk
 		LocalOffset: -160,-276,232
 		LocalYaw: 60
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Armament@SECONDARY:
 		Weapon: APTusk
 		LocalOffset: -160,276,232
 		LocalYaw: -60
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackFrontal:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	PortableChrono:
 		ChargeDelay: 250
 	ProducibleWithLevel:
@@ -885,20 +886,18 @@ QTNK:
 	Armor:
 		Type: Heavy
 	Mobile:
-		PauseOnCondition: !(!deployed && !being-captured)
+		PauseOnCondition: deployed || being-captured || empdisable || being-warped
 		Speed: 56
 	Chronoshiftable:
-		RequiresCondition: !deployed && !being-captured
+		RequiresCondition: !deployed && !being-captured && !being-warped
 	RevealsShroud:
 		Range: 6c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	SelectionDecorations:
 	MadTank:
 		DeployedCondition: deployed
 	Targetable:
 		TargetTypes: Ground, MADTank, Repair, Vehicle
+		RequiresCondition: !being-warped
 	Selectable:
 		DecorationBounds: 44,38,0,-4
 	WithRangeCircle:
@@ -937,7 +936,7 @@ AMCV:
 		Facing: 96
 		TransformSounds: placbldg.aud, build5.aud
 		NoTransformNotification: BuildingCannotPlaceAudio
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	MustBeDestroyed:
 		RequiredForShortGame: true
 	BaseBuilding:
@@ -974,9 +973,6 @@ HMMV:
 		Speed: 157
 	RevealsShroud:
 		Range: 8c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 5c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: -85,0,128
@@ -984,9 +980,9 @@ HMMV:
 		Weapon: M60mgTD
 		LocalOffset: 171,0,85
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	AutoTarget:
@@ -1022,9 +1018,6 @@ BGGY:
 		Speed: 157
 	RevealsShroud:
 		Range: 8c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 5c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: -43,0,128
@@ -1032,9 +1025,9 @@ BGGY:
 		Weapon: M60mgTD
 		LocalOffset: 171,0,43
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	DetectCloaked:
@@ -1072,19 +1065,16 @@ APC2:
 		Type: Heavy
 	Mobile:
 		Speed: 135
-		PauseOnCondition: !(!empdisable && !being-captured && !notmobile)
+		PauseOnCondition: being-captured || empdisable || being-warped || notmobile
 	RevealsShroud:
 		Range: 4c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 3c0
 	Armament:
 		Weapon: M60mgTD
 		LocalOffset: 85,0,171
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackFrontal:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	Cargo:
 		Types: Infantry
@@ -1137,10 +1127,10 @@ LTNK:
 		Condition: onwater
 	Targetable:
 		TargetTypes: Ground, Repair, Vehicle
-		RequiresCondition: !onwater && !parachute
+		RequiresCondition: !onwater && !parachute && !being-warped
 	Targetable@WATER:
 		TargetTypes: Ground, Repair, Vehicle, Water, Ship
-		RequiresCondition: onwater && !parachute
+		RequiresCondition: onwater && (!parachute && !being-warped)
 	WithFacingSpriteBody:
 		RequiresCondition: !onwater || parachute
 	WithFacingSpriteBody@WATER:
@@ -1149,9 +1139,6 @@ LTNK:
 		RequiresCondition: onwater && !parachute
 	RevealsShroud:
 		Range: 5c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Turreted:
 		TurnSpeed: 7
 	Armament:
@@ -1160,9 +1147,9 @@ LTNK:
 		RecoilRecovery: 17
 		LocalOffset: 720,0,90
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || parachute
+		PauseOnCondition: empdisable || being-warped || parachute
 	AttackTurreted:
-		PauseOnCondition: empdisable || parachute
+		PauseOnCondition: empdisable || being-warped || parachute
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	SpawnActorOnDeath:
@@ -1203,9 +1190,6 @@ MTNK:
 		Speed: 82
 	RevealsShroud:
 		Range: 6c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Turreted:
 		TurnSpeed: 5
 		Offset: 0,0,30
@@ -1215,9 +1199,9 @@ MTNK:
 		RecoilRecovery: 26
 		LocalOffset: 768,0,90
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	SpawnActorOnDeath:
@@ -1227,6 +1211,81 @@ MTNK:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 28,28
+		
+MTNK.drone:
+	Inherits: ^TankTD
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@BERSERK: ^Berserk
+	Inherits@IDISABLE: ^DisableOnLowPower
+	RenderSprites:
+		Image: mtnk
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 120
+		Prerequisites: ~vehicles.talon, vehicles.any, ~techlevel.low
+		IconPalette: chrometd
+		Description: Drone Battle Tank.\n  Requires power to operate.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
+	Valued:
+		Cost: 720
+	Tooltip:
+		Name: Battle Drone
+		GenericName: Tank
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 52000
+	Armor:
+		Type: Heavy
+	Mobile:
+		Speed: 82
+		PauseOnCondition: disabled || empdisable || being-warped
+		Voice: Move
+	RevealsShroud:
+		Range: 6c0
+	Turreted:
+		TurnSpeed: 5
+		Offset: 0,0,30
+	Armament:
+		Weapon: 120mm
+		Recoil: 128
+		RecoilRecovery: 26
+		LocalOffset: 768,0,90
+		MuzzleSequence: muzzle
+		PauseOnCondition: disabled || empdisable || being-warped
+	AttackTurreted:
+		PauseOnCondition: disabled || empdisable || being-warped
+		Voice: Attack
+	WithMuzzleOverlay:
+	WithSpriteTurret:
+	SpawnActorOnDeath:
+		Actor: MTNK.Husk
+	SelectionDecorations:
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	Selectable:
+		DecorationBounds: 28,28
+	Voiced:
+		VoiceSet: RobotTankVoice
+	Power:
+		Amount: -1
+		RequiresCondition: !being-warped
+	WithDecoration@DISABLED:
+		Image: poweroff
+		Sequence: offline
+		Palette: chrome
+		RequiresCondition: disabled
+		ReferencePoint: Center
+	-CaptureManager:
+	-Capturable:
+	-CaptureNotification:
+	ProximityExternalCondition@POWERSOUND:
+		Condition: disablesound
+		RequiresCondition: disabled || empdisable
+		AffectsParent: True
+		Range: 1c0
+		EnableSound: vrobon
+		DisableSound: vroboff
 
 HTNK:
 	Inherits: ^TankTD
@@ -1238,7 +1297,7 @@ HTNK:
 		Queue: Vehicle
 		BuildPaletteOrder: 190
 		IconPalette: chrometd
-		Prerequisites: gtek, ~vehicles.gdi, ~!vehicles.talon, ~techlevel.high
+		Prerequisites: gtek, ~vehicles.gdi, ~!miss.gdi, ~techlevel.high
 		Description: Big and slow tank, with anti-air capability.\n  Strong vs Vehicles, Infantry, Aircraft\n  Weak vs Nothing
 	Valued:
 		Cost: 1700
@@ -1259,9 +1318,6 @@ HTNK:
 		Weight: 2
 	RevealsShroud:
 		Range: 6c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Turreted:
 		TurnSpeed: 2
 	Armament@PRIMARY:
@@ -1270,7 +1326,7 @@ HTNK:
 		Recoil: 171
 		RecoilRecovery: 30
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: MammothTusk
@@ -1278,9 +1334,9 @@ HTNK:
 		LocalYaw: -100,100
 		Recoil: 43
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	SpawnActorOnDeath:
@@ -1298,7 +1354,29 @@ HTNK:
 	Carryable:
 		LocalOffset: 0,0,500
 	-Crushable:
-
+	
+HTNK.ION:
+	Inherits: HTNK
+	RenderSprites:
+		Image: htnk.ion
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 190
+		IconPalette: chrometd
+		Prerequisites: ~gtek, ~vehicles.gdi, ~!vehicles.talon, ~miss.gdi, ~techlevel.high
+		Description: Big and slow tank, with anti-air capability.\n  Strong vs Vehicles, Infantry, Aircraft\n  Weak vs Nothing
+	Tooltip:
+		Name: Ion Mammoth Tank
+	Armament@PRIMARY:
+		Weapon: IonZap
+		LocalOffset: 900,0,340
+		Recoil: 171
+		RecoilRecovery: 30
+		MuzzleSequence: muzzle
+		PauseOnCondition: empdisable || being-warped
+	SpawnActorOnDeath:
+		Actor: HTNK.ION.Husk
+		
 MSAM:
 	Inherits: ^TankTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
@@ -1318,7 +1396,7 @@ MSAM:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 130
-		Prerequisites: hq, ~vehicles.msam, ~vehicles.td, ~techlevel.medium
+		Prerequisites: hq, ~vehicles.msam, ~vehicles.td, ~techlevel.medium, ~!miss.gdi
 		Queue: Vehicle
 		IconPalette: chrometd
 		Description: Multiple Launch Rocket System.\nLong-range guided artillery.\n  Strong vs Infantry, Vehicles and Buildings
@@ -1330,9 +1408,6 @@ MSAM:
 		Type: Light
 	RevealsShroud:
 		Range: 5c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: -256,0,128
@@ -1340,23 +1415,21 @@ MSAM:
 		Weapon: 227mm
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: 227mmAA
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: False
 		OpportunityFire: False
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithSpriteTurret:
 	Explodes:
 		Weapon: ArtilleryExplode
-	WithTurretAimAnimation:
-		Sequence: aim
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -1369,7 +1442,7 @@ MLRS:
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 	Valued:
-		Cost: 1100
+		Cost: 1350
 	Tooltip:
 		Name: SSM Launcher
 	UpdatesPlayerStatistics:
@@ -1383,16 +1456,13 @@ MLRS:
 		Description: Long-range rocket artillery.\n  Strong vs Infantry, Vehicles and Buildings
 	Mobile:
 		Speed: 82
-		PauseOnCondition: aiming && being-captured || empdisable
+		PauseOnCondition: aiming || being-captured || empdisable || being-warped
 	Health:
-		HP: 13000
+		HP: 15000
 	Armor:
 		Type: Light
 	RevealsShroud:
 		Range: 5c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Turreted:
 		TurnSpeed: 2
 		Offset: -128,0,128
@@ -1400,7 +1470,7 @@ MLRS:
 	Armament:
 		Weapon: honestjohn
 		LocalOffset: 0,171,0, 0,-171,0
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AmmoPool:
 		Ammo: 2
 		PipCount: 0
@@ -1408,7 +1478,7 @@ MLRS:
 	AttackTurreted:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		OpportunityFire: False
 	WithSpriteTurret:
 		RequiresCondition: ammo > 1
@@ -1461,9 +1531,6 @@ STNK.nod:
 		Type: Light
 	RevealsShroud:
 		Range: 5c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Cloak@NORMAL:
 		InitialDelay: 90
 		CloakDelay: 90
@@ -1479,17 +1546,17 @@ STNK.nod:
 	Armament@PRIMARY:
 		Weapon: 227mm.stnk
 		LocalOffset: 213,43,128, 213,-43,128
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: 227mm.stnkAA
 		LocalOffset: 213,43,128, 213,-43,128
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Turreted:
 		TurnSpeed: 10
 		Offset: 0,0,10
 	AttackTurreted:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithSpriteTurret:
 	AutoTarget:
 		InitialStance: HoldFire
@@ -1524,22 +1591,19 @@ BIKE:
 		Type: Light
 	RevealsShroud:
 		Range: 5c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: BikeRockets
 		LocalOffset: -128, -170, 170, -128, 170, 170
 		LocalYaw: 100, -100
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: BikeRocketsAA
 		LocalOffset: -128, -170, 170, -128, 170, 170
 		LocalYaw: 100, -100
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackFrontal:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 
@@ -1570,18 +1634,15 @@ FTNK:
 		Type: Light
 	RevealsShroud:
 		Range: 8c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 5c0
 	Armament:
 		Weapon: BigFlamer
 		MuzzleSequence: muzzle
 		MuzzlePalette: tdeffect
 		LocalOffset: 512,128,42, 512,-128,42
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	AttackFrontal:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Explodes:
 		Weapon: BarrelExplode
 		EmptyWeapon: BarrelExplode
@@ -1670,26 +1731,23 @@ BTR:
 		Type: Heavy
 	Mobile:
 		Speed: 135
-		PauseOnCondition: !(!empdisable && !being-captured && !notmobile)
+		PauseOnCondition: notmobile || being-captured || empdisable || being-warped
 	RevealsShroud:
 		Range: 5c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: 20,0,175
 	Armament@E3:
 		Weapon: BTRrockets
 		LocalOffset: 192,0,176
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Armament@E3AA:
 		Name: secondary
 		Weapon: BTRrocketsAA
 		LocalOffset: 192,0,176
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret@sam:
 		Sequence: turret
@@ -1722,20 +1780,12 @@ IFV:
 		Type: Heavy
 	Mobile:
 		Speed: 113
-		PauseOnCondition: empdisable || being-captured || notmobile
+		PauseOnCondition: notmobile || being-captured || empdisable || being-warped
 	RevealsShroud:
 		Range: 5c0
-		RevealGeneratedShroud: False
 		RequiresCondition: spyturr
-	RevealsShroud@GAPGEN:
-		Range: 4c0
-		RequiresCondition: !spyturr
 	RevealsShroud@SPY:
 		Range: 10c0
-		RevealGeneratedShroud: False
-		RequiresCondition: spyturr
-	RevealsShroud@GAPGENSPY:
-		Range: 7c0
 		RequiresCondition: spyturr
 	Turreted:
 		TurnSpeed: 10
@@ -1746,30 +1796,30 @@ IFV:
 		RecoilRecovery: 25
 		LocalOffset: 768,0,90
 		MuzzleSequence: muzzle2
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !gunturr && !samturr && !commturr && !flamturr && !chemturr && !spyturr && !testurr && !engturr && !acolturr
 	Armament@E1:
 		Weapon: M60mg
 		MuzzleSequence: muzzle
 		LocalOffset: 150,0,100
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: gunturr
 	Armament@E2:
 		Weapon: 25mmFRAG
 		MuzzleSequence: muzzle
 		LocalOffset: 150,0,100
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: fragturr
 	Armament@E3:
 		Weapon: IFVRockets
 		LocalOffset: 192,0,376
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: samturr
 	Armament@E3AA:
 		Name: secondary
 		Weapon: IFVRocketsAA
 		LocalOffset: 192,0,376
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: samturr
 	Armament@E4:
 		Weapon: FireballLauncher
@@ -1777,7 +1827,7 @@ IFV:
 		RecoilRecovery: 25
 		LocalOffset: 768,0,90
 		MuzzleSequence: muzzle2
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: flamturr
 	Armament@E5:
 		Weapon: ChemballLauncher
@@ -1785,18 +1835,18 @@ IFV:
 		RecoilRecovery: 25
 		LocalOffset: 768,0,90
 		MuzzleSequence: muzzle2
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: chemturr
 	Armament@E7:
 		Weapon: smg
 		MuzzleSequence: muzzle
 		LocalOffset: 150,0,100
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: commturr
 	Armament@Shok:
 		Weapon: TTankZap
 		LocalOffset: 0,0,213
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: testurr
 	Armament@Repair:
 		Weapon: RepairIFV
@@ -1805,22 +1855,22 @@ IFV:
 		OutsideRangeCursor: repair
 		TargetStances: Ally
 		ForceTargetStances: None
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: engturr
 		MuzzleSequence: emp-overlay
 		MuzzlePalette: tseffect-ignore-lighting-alpha75
 	Armament@Acol:
 		Weapon: LaserTur
 		LocalOffset: 0,0,213
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: acolturr
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: spyturr
 		Offset: 0,0,200
 	AttackTurreted:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !spyturr
 	WithMuzzleOverlay:
 	WithSpriteTurret@gun:
@@ -1875,7 +1925,7 @@ IFV:
 		Prerequisites: vehicles.upgraded
 	WithIdleOverlay@MEDIC:
 		Sequence: medic
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: medturr
 		Offset: 0,0,40
 	ProximityExternalCondition@MEDIC:
@@ -1926,12 +1976,8 @@ IFV.AI:
 		Type: Heavy
 	Mobile:
 		Speed: 113
-		PauseOnCondition: empdisable || being-captured
 	RevealsShroud:
 		Range: 5c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: 20,0,60
@@ -1941,27 +1987,27 @@ IFV.AI:
 		RecoilRecovery: 25
 		LocalOffset: 768,0,90
 		MuzzleSequence: muzzle2
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: canturr
 	Armament@E1:
 		Weapon: M60mg
 		MuzzleSequence: muzzle
 		LocalOffset: 150,0,100
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: gunturr
 	Armament@E3:
 		Weapon: IFVRockets
 		LocalOffset: 192,0,376
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: samturr
 	Armament@E3AA:
 		Name: secondary
 		Weapon: IFVRocketsAA
 		LocalOffset: 192,0,376
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: samturr
 	AttackTurreted:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret@gun:
 		RequiresCondition: gunturr
@@ -1980,16 +2026,16 @@ IFV.AI:
 TITAN:
 	Inherits: ^TankTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 191
+		BuildPaletteOrder: 190
 		IconPalette: chrometd
-		Prerequisites: techcenter, ~vehicles.titan, ~techlevel.high
+		Prerequisites: ~gtek, ~vehicles.gdi, ~vehicles.talon, ~miss.gdi, ~techlevel.high
 		Description: Tough Prototype Battle-Mech.\n  Strong vs Infantry, Tanks\n Weak vs Aircraft
 	Valued:
-		Cost: 2000
+		Cost: 1700
 	Selectable:
 		Bounds: 30,40,0,0
 	Tooltip:
@@ -1997,7 +2043,7 @@ TITAN:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 100000
+		HP: 90000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -2018,21 +2064,26 @@ TITAN:
 	WithSpriteTurret:
 	RevealsShroud:
 		Range: 5c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: TitanGun
 		LocalOffset: 830,260,100
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		Recoil: 171
 		RecoilRecovery: 30
 		MuzzleSequence: muzzle
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: TitanTusk
+		LocalOffset: -85,-384,340
+		LocalYaw: -100,100
+		Recoil: 43
+		MuzzleSequence: muzzle
+		PauseOnCondition: empdisable || being-warped
 	Turreted:
 		TurnSpeed: 3
 		Offset: 0,0,0
 	AttackTurreted:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		Armaments: primary, secondary, tertiary
 		Voice: Attack
 	WithMuzzleOverlay:
@@ -2053,50 +2104,20 @@ TITAN:
 		Prerequisites: vehicles.upgraded
 
 TTRK:
-	Inherits: ^VehicleTD
+	Inherits: DTRK
+	RenderSprites:
+		PlayerPalette: overlayplayertd
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 198
-		Prerequisites: stek, ~vehicles.iraq, ~techlevel.high
+		Prerequisites: ~tec.soviet.stolen, ~tmpl, ~vehicles.nod, ~techlevel.high
 		Description: Toxin Truck, actively armed with\n a nerve gas bomb. Has very weak armor.
-	Valued:
-		Cost: 2000
 	Tooltip:
 		Name: Toxin Truck
-	UpdatesPlayerStatistics:
-		AddToArmyValue: true
-	Health:
-		HP: 5000
-	Armor:
-		Type: Light
-	Mobile:
-		Speed: 82
-		Voice: Move
-	Passenger:
-		PipType: Red
-		Voice: Move
-	RevealsShroud:
-		Range: 4c0
 	Explodes:
 		Weapon: UnitExplodeToxinTruck
 		EmptyWeapon: UnitExplodeToxinTruck
 		DamageSource: Killer
-	AttackFrontal:
-		FacingTolerance: 128
-		Voice: Attack
-	Armament@PRIMARY:
-		Weapon: DemoTruckTargeting
-	GrantConditionOnAttack:
-		Condition: triggered
-	GrantConditionOnDeploy:
-		DeployedCondition: triggered
-	-DamageMultiplier@IRONCURTAIN:
-	KillsSelf:
-		RequiresCondition: invulnerability || triggered
-	Chronoshiftable:
-		ExplodeInstead: yes
-	Voiced:
-		VoiceSet: TTruckVoice
 
 DISR:
 	Inherits: ^TankTD
@@ -2128,23 +2149,33 @@ DISR:
 		Weight: 2
 	RevealsShroud:
 		Range: 7c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 6c0
 	Armament@PRIMARY:
 		Weapon: SonicZap
 		LocalOffset: 0,0,200
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !gdiupg
 	Armament@SECONDARY:
 		Weapon: SonicZapVisual
 		Name: secondary
 		LocalOffset: 0,0,200
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !gdiupg
+	Armament@PRIMARYUPG:
+		Weapon: SonicZap.UPG
+		LocalOffset: 0,0,200
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: gdiupg
+	Armament@SECONDARYUPG:
+		Weapon: SonicZapVisual.UPG
+		Name: secondary
+		LocalOffset: 0,0,200
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: gdiupg
 	Turreted:
 		TurnSpeed: 5
 		Offset: -300,0,0
 	AttackTurreted:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		OpportunityFire: False
 		Voice: Attack
 	WithSpriteTurret:
@@ -2155,7 +2186,7 @@ DISR:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Targetable:
-		RequiresCondition: !parachute
+		RequiresCondition: !being-warped
 		TargetTypes: Ground, Vehicle, Disruptor
 	Voiced:
 		VoiceSet: DisrVoice
@@ -2176,7 +2207,7 @@ HMLRS:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 130
-		Prerequisites: hq, ~vehicles.zocom, ~techlevel.medium
+		Prerequisites: ~miss.gdi, ~vehicles.gdi, ~techlevel.medium
 		Queue: Vehicle
 		IconPalette: chrometd
 		Description: Prototype Hover Multiple Launch Rocket System.\nLong-range guided artillery.\n  Strong vs Infantry, Vehicles and Buildings
@@ -2196,15 +2227,17 @@ HMLRS:
 		Type: Light
 	RevealsShroud:
 		Range: 5c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: -200,0,0
 	Hovers:
 		BobDistance: -35
-		RequiresCondition: !empdisable
+		RequiresCondition: !empdisable && !being-warped
+	GrantConditionOnTerrain:
+		TerrainTypes: Water
+		Condition: onwater
+	KillsSelf@SINK:
+		RequiresCondition: onwater && empdisable
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
@@ -2212,20 +2245,35 @@ HMLRS:
 		Weapon: 227mmH
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !gdiupg
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: 227mmAAH
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !gdiupg
+	Armament@PRIMARY-UPG:
+		Weapon: 227mm.upg
+		LocalOffset: 213,128,0, 213,-128,0
+		LocalYaw: 100, -100
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: gdiupg
+	Armament@SECONDARY-UPG:
+		Name: secondary
+		Weapon: 227mmAA.upg
+		LocalOffset: 213,-128,0, 213,128,0
+		LocalYaw: 100, -100
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: gdiupg
 	AutoTarget:
 		ScanRadius: 10
 	AttackTurreted:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: false
 		OpportunityFire: False
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithSpriteTurret:
 	Explodes:
 		Weapon: ArtilleryExplode
@@ -2241,8 +2289,8 @@ RTNK:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 120
-		Prerequisites: atek, ~vehicles.england, ~techlevel.high
+		BuildPaletteOrder: 110
+		Prerequisites: weap, ~vehicles.england, ~techlevel.high
 		Description: Advanced Battle tank that can cloak when stationary.\nHas average armor.\n  Strong vs Vehicles\n  Weak vs Aircraft.
 	Valued:
 		Cost: 900
@@ -2259,9 +2307,6 @@ RTNK:
 		Voice: Move
 	RevealsShroud:
 		Range: 6c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Turreted:
 		TurnSpeed: 5
 	Armament:
@@ -2270,10 +2315,10 @@ RTNK:
 		RecoilRecovery: 38
 		LocalOffset: 720,0,80
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
 		Voice: Attack
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	SpawnActorOnDeath:
@@ -2305,11 +2350,11 @@ V3RL:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 80
+		BuildPaletteOrder: 150
 		Prerequisites: stek, ~vehicles.soviet, ~techlevel.high
 		Description: Long-range rocket artillery.\n  Strong vs Infantry, Light armor, Buildings\n  Weak vs Tanks, Aircraft
 	Valued:
-		Cost: 1800
+		Cost: 1500
 	Tooltip:
 		Name: V3 Launcher
 	UpdatesPlayerStatistics:
@@ -2322,20 +2367,17 @@ V3RL:
 		Speed: 56
 		TurnSpeed: 4
 		Voice: Move
-		PauseOnCondition: aiming && being-captured || empdisable
+		PauseOnCondition: aiming || being-captured || empdisable || being-warped
 	RevealsShroud:
 		Range: 5c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4
 	Armament:
 		Weapon: V3Launcher
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		ReloadingCondition: reloading
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
 	WithFacingSpriteBody:
 		RequiresCondition: !reloading
@@ -2360,6 +2402,8 @@ V3RL:
 		DecorationBounds: 28,28
 	Voiced:
 		VoiceSet: V3Voice
+	Exit:
+		SpawnOffset: 0,-128,0
 		
 V3:
 	Inherits: ^ShootableMissile
@@ -2385,7 +2429,7 @@ V3:
 	MissileSpawnerSlave:
 	SpawnedExplodes:
 		Weapon: V3Weapon
-		EmptyWeapon: V3Weapon
+		EmptyWeapon: VisualExplodeHusk
 	Explodes:
 		Weapon: VisualExplodeHusk
 		RequiresCondition: airborne
@@ -2418,9 +2462,6 @@ TNKD:
 		Voice: Move
 	RevealsShroud:
 		Range: 6c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Turreted:
 		TurnSpeed: 2
 		Offset: -80,0,20
@@ -2428,11 +2469,11 @@ TNKD:
 		Weapon: 183mm
 		Recoil: 85
 		RecoilRecovery: 25
-		LocalOffset: 868,0,250
+		LocalOffset: 868,0,0
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
 	WithMuzzleOverlay:
 	WithSpriteTurret:
@@ -2465,7 +2506,7 @@ MSAR:
 		IconPalette: chrometd
 		Prerequisites: hq, ~vehicles.gdi, ~techlevel.high
 		BuildDurationModifier: 50
-		Description: Provides radar and jams missiles when deployed.\nCan detect cloaked units.\n  Unarmed
+		Description: Provides radar and increases aircraft\nand vehicle vision when deployed.\nCan detect cloaked units.\n  Unarmed
 	Health:
 		HP: 22000
 	Armor:
@@ -2498,7 +2539,7 @@ MSAR:
 	WithFacingSpriteBody:
 		RequiresCondition: undeployed
 	GrantConditionOnDeploy:
-		PauseOnCondition: empdisable || being-captured
+		PauseOnCondition: empdisable || being-warped || being-captured
 		DeployedCondition: deployed
 		UndeployedCondition: undeployed
 		Facing: 165
@@ -2511,17 +2552,18 @@ MSAR:
 		Range: 10c0
 		CloakTypes: Cloak
 		RequiresCondition: deployed && !empdisable
-	JamsMissiles:
-		Range: 6c0
-		DeflectionStances: Neutral, Enemy
-		RequiresCondition: deployed && !empdisable
-	RenderJammerCircle:
 	RenderDetectionCircle:
 		TrailCount: 3
 	ProvidesRadar:
 		RequiresCondition: deployed
 	Selectable:
 		DecorationBounds: 30,30
+	ProximityExternalCondition@Bino:
+		Condition: bino
+		Range: 10c0
+		EnableSound: dsaping1.aud
+		AffectsParent: False
+		RequiresCondition: deployed
 		
 PTNK:
 	Inherits: ^Tank
@@ -2531,7 +2573,7 @@ PTNK:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 130
-		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
+		Prerequisites: radar, ~vehicles.allies, ~techlevel.high
 		Description: A prototype mobile Prism tower.\n  Strong vs Vehicles, Infantry\n  Weak vs Tanks, Aircraft
 	Valued:
 		Cost: 1350
@@ -2549,20 +2591,17 @@ PTNK:
 		Voice: Move
 	RevealsShroud:
 		Range: 6c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	Turreted:
 		TurnSpeed: 5
 		Offset: 100,0,0
 	Armament:
 		Weapon: PrisTLaser
 		LocalOffset: 100,0,140
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
 		TargetFrozenActors: True
 		OpportunityFire: False
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
 	WithSpriteTurret:
 	SpawnActorOnDeath:
@@ -2600,23 +2639,20 @@ MWTNK:
 		Voice: Move
 	RevealsShroud:
 		Range: 7c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 6c0
 	Turreted:
 		TurnSpeed: 4
 		Offset: 0,0,0
 	Armament:
 		Weapon: MicrowaveZap
 		LocalOffset: 500,0,140
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		MuzzleSequence: muzzle
 		MuzzlePalette: tseffect-ignore-lighting-alpha75
 		ReloadingCondition: charging
 	AttackTurreted:
 		TargetFrozenActors: True
 		OpportunityFire: False
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
 	WithMuzzleOverlay:
 	AmbientSound:
@@ -2659,23 +2695,20 @@ BATF:
 	Mobile:
 		Locomotor: sheavytracked
 		Speed: 56
-		PauseOnCondition: !(!notmobile && !being-captured)
+		PauseOnCondition: notmobile || being-captured || empdisable || being-warped
 		Voice: Move
 	RevealsShroud:
 		Range: 4c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 3c0
 	AttackFrontal:
 		FacingTolerance: 20
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
 	Armament@DEFAULT:
 		Name: primary
 		Weapon: HeliGunAG
 		LocalOffset: 685,0,271
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	Cargo:
 		Types: Infantry
@@ -2728,7 +2761,7 @@ BATF:
 		PortOffsets: 768,0,0, 448,-682,0, -448,-682,0, -768,0,0, -448,682,0, 448,682,0
 		PortYaws: 0, 176, 341, 512, 682, 853
 		PortCones: 88, 88, 88, 88, 88, 88
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: loaded || loaded-air
 		Voice: Attack
 		
@@ -2746,24 +2779,27 @@ BATF.AI:
 		
 MEMP:
 	Inherits: ^TankTD
+	Inherits@IDISABLE: ^DisableOnLowPower
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 198
+		IconPalette: chrometd
 		Prerequisites: gtek, ~vehicles.gdi, ~techlevel.high
-		Description: Self destructs to disable nearby vehicles\nand structures.\n  Strong vs Vehicles, Buildings\n  Weak vs Infantry, Aircraft
+		Description: Self destructs to disable nearby vehicles\nand structures.\nRequires power to operate.\n  Strong vs Vehicles, Buildings\n  Weak vs Infantry, Aircraft
 	Valued:
-		Cost: 1500
+		Cost: 1350
 	Tooltip:
 		Name: Mobile E.M.P
 		GenericName: Tank
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 30000
+		HP: 45000
 	Armor:
 		Type: Heavy
 	Mobile:
-		PauseOnCondition: !(!deployed && !being-captured)
+		PauseOnCondition: deployed || disabled || empdisable || being-warped
+		Voice: Move
 		Speed: 113
 	ChargingSelfDestruct:
 		DeployedCondition: deployed
@@ -2774,13 +2810,11 @@ MEMP:
 		DetonationWeapon: MEMP
 		ChargeSound: mobempcharge1.aud
 		DetonationSound: mobemp1.aud
+		Voice: Attack
 	Chronoshiftable:
-		RequiresCondition: !deployed && !being-captured
+		RequiresCondition: !deployed
 	RevealsShroud:
 		Range: 6c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
 	SelectionDecorations:
 	WithIdleOverlay@charging:
 		RequiresCondition: deployed
@@ -2794,17 +2828,38 @@ MEMP:
 		Sequence: emp-overlay
 	Targetable:
 		TargetTypes: Ground, Repair, Vehicle
-	Selectable:
-		DecorationBounds: 44,38,0,-4
+		RequiresCondition: !being-warped
 	WithRangeCircle:
-		Color: FFFF0080
-		Range: 7c0
+		Color: 0000FF80
+		Range: 5c0
+	Voiced:
+		VoiceSet: RobotTankVoice
+	Power:
+		Amount: -1
+		RequiresCondition: !being-warped
+	WithDecoration@DISABLED:
+		Image: poweroff
+		Sequence: offline
+		Palette: chrome
+		RequiresCondition: disabled
+		ReferencePoint: Center
+	-CaptureManager:
+	-Capturable:
+	-CaptureNotification:
+	ProximityExternalCondition@POWERSOUND:
+		Condition: disablesound
+		RequiresCondition: disabled || empdisable
+		AffectsParent: True
+		Range: 1c0
+		EnableSound: vrobon
+		DisableSound: vroboff
 	
 CDRONE:
 	Inherits: ^VehicleTD
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 199
+		IconPalette: chrometd
 		Prerequisites: tmpl, ~vehicles.nod, ~techlevel.high
 		Description: Drone armed with Chaos Gas. Has weak armor.\nCauses units caught in the gas to being frenzied and attack each other.
 	Valued:
@@ -2819,14 +2874,17 @@ CDRONE:
 		Type: Light
 	Mobile:
 		Speed: 135
+		Voice: Move
+		PauseOnCondition: empdisable || being-warped
 	RevealsShroud:
 		Range: 5c0
 	Explodes:
-		Weapon: ChaosGas
+		Weapon: ChaosDroneExplode
 		EmptyWeapon: VisualExplodeHusk
 	AttackFrontal:
 		FacingTolerance: 128
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
+		Voice: Attack
 	Armament@PRIMARY:
 		Weapon: ChaosDroneTargeting
 	GrantConditionOnAttack:
@@ -2846,11 +2904,17 @@ CDRONE:
 		DeployedCondition: triggered
 		CooldownTicks: 100
 		DeployedTicks: 10
+		RequiresCondition: empdisable || being-warped
 	PeriodicExplosion:
 		Weapon: ChaosGas
 		RequiresCondition: triggered && ammo
 		AmmoPoolName: explosion
 	Targetable:
-		RequiresCondition: !parachute
+		RequiresCondition: !being-warped
 		TargetTypes: Ground, Vehicle, ChaosDrone
+	Voiced:
+		VoiceSet: ChaosDroneVoice
+	-CaptureManager:
+	-Capturable:
+	-CaptureNotification:
 		

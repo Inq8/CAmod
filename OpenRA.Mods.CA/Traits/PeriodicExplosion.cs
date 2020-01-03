@@ -39,6 +39,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Explosion offset relative to actor's position.")]
 		public readonly WVec LocalOffset = WVec.Zero;
 
+		[Desc("Initial Delay")]
+		public readonly int InitialDelay = 0;
+
 		public override object Create(ActorInitializer init) { return new PeriodicExplosion(init.Self, this); }
 
 		void IRulesetLoaded<ActorInfo>.RulesetLoaded(Ruleset rules, ActorInfo info)
@@ -95,7 +98,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled)
 				return;
 
-			if (--fireDelay < 0)
+			if (--fireDelay + Info.InitialDelay < 0)
 			{
 				if (ammoPool != null && !ammoPool.TakeAmmo(self, 1))
 					return;

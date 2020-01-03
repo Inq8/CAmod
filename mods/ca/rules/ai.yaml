@@ -53,6 +53,15 @@ Player:
 					Attractiveness: 1
 					TargetMetric: None
 					CheckRadius: 5c0
+			cashhack:
+				OrderName: cashhack
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
 			nodairdrop:
 				OrderName: nodairdrop
 				MinimumAttractiveness: 5
@@ -70,21 +79,6 @@ Player:
 					CheckRadius: 8c0
 			gdidropzone:
 				OrderName: dropzone
-				MinimumAttractiveness: 5
-				Consideration@1:
-					Against: Enemy
-					Types: Structure
-					Attractiveness: 1
-					TargetMetric: None
-					CheckRadius: 8c0
-				Consideration@2:
-					Against: Enemy
-					Types: Water
-					Attractiveness: -5
-					TargetMetric: None
-					CheckRadius: 8c0
-			gdihdropzone:
-				OrderName: hdropzone
 				MinimumAttractiveness: 5
 				Consideration@1:
 					Against: Enemy
@@ -128,8 +122,8 @@ Player:
 					Attractiveness: -5
 					TargetMetric: None
 					CheckRadius: 8c0
-			nparatroopers:
-				OrderName: MarkedParatroopers
+			LegionParatroopers:
+				OrderName: LegionParatroopers
 				MinimumAttractiveness: 5
 				Consideration@1:
 					Against: Enemy
@@ -143,8 +137,23 @@ Player:
 					Attractiveness: -5
 					TargetMetric: None
 					CheckRadius: 8c0
-			lparatroopers:
-				OrderName: LegionParatroopers
+			droppods:
+				OrderName: droppods
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
+				Consideration@2:
+					Against: Enemy
+					Types: Water
+					Attractiveness: -5
+					TargetMetric: None
+					CheckRadius: 8c0
+			chronoshiftai:
+				OrderName: Chronoshiftai
 				MinimumAttractiveness: 5
 				Consideration@1:
 					Against: Enemy
@@ -230,8 +239,77 @@ Player:
 					Attractiveness: -10
 					TargetMetric: Value
 					CheckRadius: 7c0
-			IonCannonPower:
+			ioncannonpower:
 				OrderName: ioncannon
+				MinimumAttractiveness: 3000
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 5c0
+				Consideration@2:
+					Against: Ally
+					Types: Air, Ground, Water
+					Attractiveness: -10
+					TargetMetric: Value
+					CheckRadius: 7c0
+			surgicalstrike:
+				OrderName: surgicalstrike
+				MinimumAttractiveness: 3000
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 5c0
+				Consideration@2:
+					Against: Ally
+					Types: Air, Ground, Water
+					Attractiveness: -10
+					TargetMetric: Value
+					CheckRadius: 7c0
+			EagleAirDef:
+				OrderName: EagleAirDef
+				MinimumAttractiveness: 3000
+				Consideration@1:
+					Against: Enemy
+					Types: Air
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 7c0
+			storm:
+				OrderName: storm
+				MinimumAttractiveness: 3000
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 5c0
+				Consideration@2:
+					Against: Ally
+					Types: Air, Ground, Water
+					Attractiveness: -10
+					TargetMetric: Value
+					CheckRadius: 7c0
+			clustermine:
+				OrderName: clustermine
+				MinimumAttractiveness: 3000
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 5c0
+				Consideration@2:
+					Against: Ally
+					Types: Air, Ground, Water
+					Attractiveness: -10
+					TargetMetric: Value
+					CheckRadius: 7c0
+			timewarp:
+				OrderName: TimeWarp
 				MinimumAttractiveness: 1000
 				FineScanRadius: 2
 				Consideration@1:
@@ -279,7 +357,7 @@ Player:
 					CheckRadius: 2c0
 				Consideration@3:
 					Against: Ally
-					Types: Tank
+					Types: Tank, Vehicle
 					Attractiveness: 1
 					TargetMetric: Value
 					CheckRadius: 3c0
@@ -295,10 +373,30 @@ Player:
 					CheckRadius: 2c0
 				Consideration@3:
 					Against: Ally
-					Types: Tank
+					Types: Tank, Vehicle
 					Attractiveness: 1
 					TargetMetric: Value
 					CheckRadius: 3c0
+			FrenzyPower:
+				OrderName: frenzy
+				MinimumAttractiveness: 1000
+				FineScanRadius: 2
+				Consideration@3:
+					Against: Ally
+					Types: Ground, Water
+					Attractiveness: 2
+					TargetMetric: Value
+					CheckRadius: 3c0
+			NaniteRepairPower:
+				OrderName: nrepairai
+				MinimumAttractiveness: 1
+				Consideration@1:
+					Against: Ally
+					Types: Ground, Water
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 5c0
+			
 	HarvesterBotModule:
 		RequiresCondition: enable-brutal-ai || enable-normal-ai || enable-easy-ai || enable-naval-ai
 		HarvesterTypes: harv, harv2
@@ -411,7 +509,11 @@ Player:
 			pdox: 1
 			sgen: 1
 			eye: 1
+			weat: 1
+			mslo.nod: 1
 			indp: 1
+			bio.nod: 1
+			miss.gdi: 1
 			orep: 1
 			patr: 1
 			hpad: 1
@@ -516,12 +618,15 @@ Player:
 			afld: 1
 			afld.gdi: 1
 			mslo: 1
+			weat: 1
 			mslo.nod: 1
 			iron: 1
 			pdox: 1
 			sgen: 1
 			eye: 1
 			indp: 1
+			bio.nod: 1
+			miss.gdi: 1
 			orep: 1
 			patr: 1
 			hpad: 1
@@ -615,7 +720,11 @@ Player:
 			pdox: 1
 			sgen: 1
 			eye: 1
+			weat: 1
+			mslo.nod: 1
 			indp: 1
+			bio.nod: 1
+			miss.gdi: 1
 			orep: 1
 			patr: 1
 			hpad: 1
@@ -709,8 +818,12 @@ Player:
 			pdox: 1
 			sgen: 1
 			indp: 1
+			bio.nod: 1
+			miss.gdi: 1
 			orep: 1
 			patr: 1
+			weat: 1
+			mslo.nod: 1
 			eye: 1
 			hpad: 1
 			hpad2: 1
@@ -755,13 +868,16 @@ Player:
 			n4: 15
 			n5: 15
 			n6: 5
+			n1c: 65
+			n3c: 40
+			rmboc: 15
 			mort: 15
 			medi: 3
 			mech: 3
 			dog: 2
 			sab: 2
 			shok: 15
-			shok.nod: 15
+			e8: 15
 			jumpjet: 15
 			acol: 15
 			rmbo: 15
@@ -793,8 +909,10 @@ Player:
 			mtnk: 70
 			bike: 30
 			htnk: 40
-			v3rl: 40
-			titan: 3
+			htnk.ion: 40
+			v3rl: 10
+			titan: 40
+			cdrone: 3
 			ctnk: 3
 			batf.ai: 10
 			mwtnk: 3
@@ -866,13 +984,16 @@ Player:
 			n4: 15
 			n5: 15
 			n6: 5
+			n1c: 65
+			n3c: 40
+			rmboc: 15
 			mort: 15
 			medi: 3
 			mech: 3
 			dog: 2
 			sab: 2
 			shok: 15
-			shok.nod: 15
+			e8: 15
 			jumpjet: 15
 			acol: 15
 			rmbo: 15
@@ -904,8 +1025,10 @@ Player:
 			mtnk: 70
 			bike: 30
 			htnk: 40
-			v3rl: 40
-			titan: 3
+			htnk.ion: 40
+			v3rl: 10
+			titan: 40
+			cdrone: 3
 			ctnk: 3
 			batf.ai: 10
 			mwtnk: 3
@@ -977,13 +1100,16 @@ Player:
 			n4: 15
 			n5: 15
 			n6: 5
+			n1c: 65
+			n3c: 40
+			rmboc: 15
 			mort: 15
 			medi: 3
 			mech: 3
 			dog: 2
 			sab: 2
 			shok: 15
-			shok.nod: 15
+			e8: 15
 			jumpjet: 15
 			acol: 15
 			rmbo: 15
@@ -1015,8 +1141,10 @@ Player:
 			mtnk: 70
 			bike: 30
 			htnk: 40
-			v3rl: 40
-			titan: 3
+			htnk.ion: 40
+			v3rl: 10
+			titan: 40
+			cdrone: 3
 			ctnk: 3
 			batf.ai: 10
 			mwtnk: 3
@@ -1086,6 +1214,9 @@ Player:
 			n3: 40
 			n4: 15
 			n5: 15
+			n1c: 65
+			n3c: 40
+			rmboc: 15
 			dog: 2
 			harv: 10
 			harv2: 10

@@ -278,11 +278,35 @@ ChainGun:
 	Warhead@1Dam: SpreadDamage
 		Versus:
 			None: 144
+			
+Vulcan2:
+	Inherits: ^LightMG
+	ReloadDelay: 50
+	Burst: 3
+	Range: 6c0
+	Report: tsgun4.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 5000
+		
+Vulcan3:
+	Inherits: ^LightMG
+	ReloadDelay: 30
+	Range: 4c0
+	Burst: 3
+	Report: infgun3.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 1000
 
-ChainGun.Yak:
+ChainGun.Yak.R:
 	Inherits: ^HeavyMG
-	ReloadDelay: 3
-	Range: 5c0
+	Burst: 5
+	ReloadDelay: 25
+	BurstDelays: 2
+	Range: 6c0
+	-Report:
+	StartBurstReport: gun13.aud
+	FirstBurstTargetOffset: -512,213,0
+	FollowingBurstTargetOffset: 478,0,0
 	MinRange: 3c0
 	Projectile: Bullet
 		Blockable: false
@@ -294,6 +318,9 @@ ChainGun.Yak:
 			Light: 40
 			Heavy: 25
 			Concrete: 25
+ChainGun.Yak.L:
+	Inherits: ChainGun.Yak.R
+	FirstBurstTargetOffset: -512,-213,0
 
 Pistol:
 	Inherits: ^LightMG
@@ -346,18 +373,9 @@ M60mgTD:
 	
 M60mgJJ:
 	Inherits: M60mg
-	Report: jumpjet1.aud
+	Report: vblhatta.aud, vblhattb.aud
 	ReloadDelay: 30
 	Burst: 3
-	
-M60mgJJAA:
-	Inherits: M60mg
-	Report: jumpjet1.aud
-	ValidTargets: Ground, Water, Air
-	ReloadDelay: 30
-	Burst: 3
-	Warhead@1Dam: SpreadDamage
-		ValidTargets: Air, Ground, Water
 
 ^SnipeWeapon:
 	ReloadDelay: 80

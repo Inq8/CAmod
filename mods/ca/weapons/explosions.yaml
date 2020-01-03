@@ -334,9 +334,46 @@ CrateNuke:
 		Footprint: xxx xxx xxx
 	Warhead@18Radio: CreateTintedCells
 		Spread: 1c0
-		Level: 750
+		Level: 350
 		Falloff: 100, 75, 52, 37, 24, 15, 2
 		MaxLevel: 750
+	Warhead@Flash: FlashEffect
+		FlashType: Nuke
+		
+		
+UnitExplodeIraqTank:
+	Inherits: CrateNuke
+	Warhead@3Eff_impact: CreateEffect
+		Explosions: nuke3
+	Warhead@1Dam_impact: SpreadDamage
+		Spread: 1c0
+		Damage: 1000
+		Falloff: 368, 135, 50, 18, 0
+	-Warhead@2Res_impact:
+	Warhead@4Dam_areanuke1: SpreadDamage
+		Spread: 1c0
+		Damage: 500
+		Falloff: 600, 400, 250, 150,  0
+		Delay: 5
+		ValidTargets: Ground, Water, Air
+	-Warhead@5Res_areanuke1:
+	Warhead@6Smu_areanuke1: LeaveSmudge
+		Size: 2
+	Warhead@TREEKILL: SpreadDamage
+		Spread: 1c0
+		Damage: 6000
+		Falloff: 600, 400, 250, 150, 0
+		Delay: 5
+		ValidTargets: Trees
+		DamageTypes: Incendiary
+	Warhead@18Radio: CreateTintedCells
+		Spread: 1c0
+		Level: 300
+		Falloff: 100, 55, 32, 5
+		MaxLevel: 750
+		LayerName: radioactivity.weak
+	-Warhead@Flames:
+	-Warhead@Flash:
 
 MiniNuke:
 	ValidTargets: Ground, Trees, Water, Underwater, Air
@@ -427,9 +464,11 @@ MiniNuke:
 		Footprint: xxx xxx xxx
 	Warhead@18Radio: CreateTintedCells
 		Spread: 1c0
-		Level: 750
+		Level: 350
 		Falloff: 100, 75, 52, 37, 24, 15, 2
 		MaxLevel: 750
+	Warhead@Flash: FlashEffect
+		FlashType: Nuke
 		
 UnitExplodeVice:
 	Warhead@1Dam: SpreadDamage
@@ -445,7 +484,7 @@ UnitExplodeVice:
 			Light: 50
 			Heavy: 25
 			Concrete: 10
-		DamageTypes: Prone50Percent, TriggerProne, ToxicDeath
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 		Size: 2
@@ -455,6 +494,12 @@ UnitExplodeVice:
 		ExplosionPalette: temptd
 		ImpactSounds: firebl3.aud
 		Delay: 5
+	Warhead@4Radio: CreateTintedCells
+		Spread: 1c0
+		Level: 250
+		Falloff: 100, 55, 32, 5
+		MaxLevel: 750
+		LayerName: radioactivity.weak
 		
 UnitExplodeToxinTruck:
 	ValidTargets: Ground, Water, Underwater
@@ -471,7 +516,7 @@ UnitExplodeToxinTruck:
 	Warhead@3Eff_impact: CreateEffect
 		Explosions: large_chem
 		ExplosionPalette: tdeffect-ignore-lighting-alpha85
-		ImpactSounds: chembomb.aud
+		ImpactSounds: vdemdiea.aud
 	Warhead@4Dam_areanuke1: SpreadDamage
 		Spread: 2c0
 		Damage: 2000
@@ -501,11 +546,11 @@ UnitExplodeToxinTruck:
 		Delay: 5
 	Warhead@18Radio: CreateTintedCells
 		Spread: 1c0
-		Level: 750
+		Level: 350
 		Falloff: 100, 75, 52, 37, 24, 15, 2
 		MaxLevel: 750
 	Warhead@15Spawn: SpawnActor
-		Actors: camera.cloud, camera.cloud2
+		Actors: camera.cloud2, camera.cloud
 		Range: 5
 		ForceGround: false
 		Image: Cloud1d
@@ -519,7 +564,7 @@ UnitExplodeToxinTruck:
 		Palette: tseffect-ignore-lighting-alpha75
 		ValidTargets: Ground, Water
 	Warhead@17Spawn: SpawnActor
-		Actors: camera.cloud2
+		Actors: camera.cloud
 		Range: 5
 		ForceGround: false
 		Image: Cloud2d
@@ -572,9 +617,48 @@ ChaosGas:
 	Warhead@3Eff_impact: CreateEffect
 		Explosions: gasring2
 		ExplosionPalette: ra2effect-ignore-lighting-alpha75
-		ImpactSounds: chembomb.aud
+		ImpactSounds: vchaatta.aud
 	Warhead@emp: GrantExternalCondition
 		Range: 5c0
 		Duration: 200
 		Condition: berserk
 		ValidTargets: Ground, Vehicle
+
+ChaosDroneExplode:
+	Inherits: ChaosGas
+	Report: vchadiea.aud
+		
+DropPodVisual:
+	Warhead@1Eff: CreateEffect
+		Explosions: droppod_explosion
+		ExplosionPalette: tseffect
+		InvalidTargets: Water
+		ImpactSounds: methit1.aud
+	Warhead@2Eff: CreateEffect
+		Explosions: ion_ring
+		ExplosionPalette: tseffect-ignore-lighting-alpha75
+		InvalidTargets: Water
+	Warhead@pod: SpawnRandomActor
+		RandomActors: n1r1, n2r1, n3r1
+		Range: 1
+		ValidTargets: Air, Ground, Water
+	Warhead@3EffWater: CreateEffect
+		Explosions: large_splash
+		ImpactSounds: splash9.aud
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+		
+DropPodVisual2:
+	Inherits: DropPodVisual
+	Warhead@1Eff: CreateEffect
+		Explosions: droppod_explosion2
+		ExplosionPalette: tseffect
+		InvalidTargets: Water
+		ImpactSounds: methit1.aud
+		
+Frenzy:
+	Inherits: VisualExplode
+	Warhead@2Eff: CreateEffect
+		Image: crate-effects
+		Explosions: rapid
+		ImpactSounds: kanebomb.aud

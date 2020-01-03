@@ -1,5 +1,5 @@
 clock:
-	idle:
+	idle: clock
 		Length: *
 
 powerdown:
@@ -8,15 +8,25 @@ powerdown:
 		ZOffset: 2047
 
 120mm:
-	idle:
+	idle: 120mm
 		ZOffset: 1023
 		
 120mmheat:
-	idle:
+	idle: 120mmheat
 		ZOffset: 1023
+		
+120mmheatn:
+	idle: 120mmheatn
+		ZOffset: 1023
+		Facings: 32
+		
+183mm:
+	idle: 183mm
+		ZOffset: 1023
+		Facings: 32
 
 50cal:
-	idle:
+	idle: 50cal
 		ZOffset: 1023
 
 explosion:
@@ -31,15 +41,18 @@ explosion:
 	med_explosion: veh-hit2
 	flak_explosion_ground: flak
 	small_explosion_air: flak
-		ZOffset: 511 # only used by AA weapons, so a high ZOffset to overlay buildings isn't needed
+		ZOffset: 511
 	med_explosion_air: veh-hit1
-		ZOffset: 511 # only used by AA weapons, so a high ZOffset to overlay buildings isn't needed
-	large_splash: h2o_exp1
+		ZOffset: 511
 	napalm: napalm2
 	building_napalm: napalm2
 		FlipX: true
 	nuke: atomsfx
+	nuke2: atomsfx-big
+	nuke3: atomsfx-small
+	large_splash: h2o_exp1
 	med_splash: h2o_exp2
+	small_splash: h2o_exp3
 	self_destruct: art-exp1
 	artillery_explosion: art-exp1
 	building: fball1
@@ -47,7 +60,6 @@ explosion:
 	building2: fball1
 		Offset: 0,-9
 		FlipX: true
-	small_splash: h2o_exp3
 	large_explosion: frag1
 		Offset: -2,0
 	small_napalm: napalm1
@@ -76,11 +88,11 @@ explosion:
 	ion_ring: ring1
 		BlendMode: Alpha
 		Tick: 40
-		ZOffset: 2046
+		ZOffset: 2045
 	ion_ring2: ring2
 		BlendMode: Alpha
 		Tick: 50
-		ZOffset: 2046
+		ZOffset: 2045
 	small_chem: chemball
 	med_chem: chemball2
 	large_chem: chemball3
@@ -129,6 +141,8 @@ explosion:
 		ZOffset: 2046
 	ionexp: ionexp
 		Tick: 110
+		ZOffset: 2046
+		Offset: 0, -1, 0
 	b2bexp: b2bexp
 		BlendMode: Additive
 		Tick: 90
@@ -195,65 +209,94 @@ explosion:
 		FlipX: true
 	weatherbolt3f: wclbolt3
 		FlipX: true
-		
+	droppod_explosion: droppody2
+		Length: 8
+		Tick: 750
+	droppod_explosion2: droppody
+		Length: 8
+		Tick: 750
+	devastator: DATA.R8
+		AddExtension: False
+		Start: 3947
+		Length: 17
+		BlendMode: Additive
+		Tick: 80
+		ZOffset: 511
+	self_destructd2k: DATA.R8
+		AddExtension: False
+		Start: 3686
+		Length: 15
+		BlendMode: Additive
+		Tick: 80
+		ZOffset: 511
+
+laserfired2k:
+	idle: DATA.R8
+		AddExtension: False
+		Start: 3639
+		Length: 4
+		Tick: 80
+		BlendMode: Additive
+		ZOffset: 511
+
 particles:
 	inviso: inviso
 
 burn-l:
-	idle:
+	idle: burn-l
 		Length: *
 		ZOffset: 512
-	loop:
+	loop: burn-l
 		Start: 16
 		Length: 44
 		ZOffset: 512
-	end:
+	end: burn-l
 		Start: 60
 		Length: 6
 		ZOffset: 512
 
 burn-m:
-	idle:
+	idle: burn-m
 		Length: *
 		ZOffset: 512
-	loop:
+	loop: burn-m
 		Start: 16
 		Length: 44
 		ZOffset: 512
-	end:
+	end: burn-m
 		Start: 60
 		Length: 6
 		ZOffset: 512
 
 burn-s:
-	idle:
+	idle: burn-s
 		Length: *
 		ZOffset: 512
-	loop:
+	loop: burn-s
 		Start: 12
 		Length: 46
 		ZOffset: 512
-	end:
+	end: burn-s
 		Start: 59
 		Length: 5
 		ZOffset: 512
 
 pips:
-	groups:
+	groups: pips
 		Start: 8
 		Length: 10
 		Offset: 9, 5
-	medic:
+	medic: pips
 		Start: 20
 		Offset: 15, 1
-	#ready:
+	#ready: pips
 	#	Start: 3
-	#hold:
+	#hold: pips
 	#	Start: 4
-	tag-fake:
+	tag-fake: pips
 		Start: 18
 		Offset: 0, 2
-	tag-primary:
+	tag-primary: pips
 		Start: 2
 		Offset: 0, 2
 	pip-empty: pips2
@@ -277,19 +320,30 @@ pips:
 		Length: *
 		Tick: 300
 		Offset: 0, -6
+	pip-bino: pip-bino
+		Length: *
+		Offset: 0, -6
+	pip-armor: pip-armor
+		Length: *
+		Offset: 0, -6
+		Tick: 300
+	pip-repair:	repair-overlay
+		Length: *
+		Offset: 0, -6
+		Tick: 300
 
 v2:
-	idle:
+	idle: v2
 		Facings: 32
 		ZOffset: 1023
 		
 v3:
-	idle:
+	idle: v3
 		Facings: 32
 		ZOffset: 1023
 		
 thawk:
-	idle:
+	idle: thawk
 		Facings: 32
 		ZOffset: 1023
 
@@ -335,6 +389,9 @@ beacon:
 	a10airstrike: bombicnh
 		Length: *
 		Offset: 0,-42
+	airsupport: lores-airsupicon
+		Length: *
+		Offset: 0,-42
 	cmissile: lores-cmissicon
 		Length: *
 		Offset: 0,-42
@@ -347,51 +404,60 @@ beacon:
 	lrairdropicon: lores-airdropicon
 		Length: *
 		Offset: 0,-42
+	stormicon: lores-stormicon
+		Length: *
+		Offset: 0,-42
+	timewarpicon: lores-timewarp
+		Length: *
+		Offset: 0,-42
+	cmineicon: lores-cmineicon
+		Length: *
+		Offset: 0,-42
 
 smoke_m:
-	idle:
+	idle: smoke_m
 		Length: *
 		Offset: 2, -5
 		ZOffset: 512
-	loop:
+	loop: smoke_m
 		Start: 49
 		Length: 42
 		Offset: 2, -5
 		ZOffset: 512
-	end:
+	end: smoke_m
 		Start: 26
 		Length: -26
 		Offset: 2, -5
 		ZOffset: 512
 		
 smoke_mtd:
-	idle:
+	idle: smoke_mtd
 		Length: *
 		Offset: 2, -5
 		ZOffset: 512
-	loop:
+	loop: smoke_mtd
 		Start: 49
 		Length: 42
 		Offset: 2, -5
 		ZOffset: 512
-	end:
+	end: smoke_mtd
 		Start: 26
 		Length: -26
 		Offset: 2, -5
 		ZOffset: 512
 
 dragon:
-	idle:
+	idle: dragon
 		Facings: 32
 		ZOffset: 1023
 
 smokey:
-	idle:
+	idle: smokey
 		Length: *
 		ZOffset: 1023
 		
 smokey2:
-	idle:
+	idle: smokey2
 		tick: 200
 		Length: *
 		ZOffset: 1023
@@ -402,12 +468,12 @@ firetrail:
 		ZOffset: 1023
 
 bomb:
-	idle:
+	idle: bomb
 		Length: *
 		ZOffset: 1023
 
 missile:
-	idle:
+	idle: missile
 		Facings: 32
 		ZOffset: 1023
 
@@ -417,21 +483,21 @@ torpedo:
 		ZOffset: -1023
 		
 scrintorp:
-	idle:
+	idle: scrintorp
 		Length: *
 		ZOffset: 1023
 
 litning:
-	bright:
+	bright: litning
 		Length: 4
 		ZOffset: 1023
-	dim:
+	dim: litning
 		Start: 4
 		Length: 4
 		ZOffset: 1023
 
 fb1:
-	idle:
+	idle: fb1
 		Length: *
 		ZOffset: 1023
 
@@ -445,121 +511,121 @@ moveflsh:
 			DESERT: TEMPERAT
 
 select:
-	repair:
+	repair: select
 		Start: 2
 
 poweroff:
-	offline:
+	offline: poweroff
 		Length: *
 		Tick: 160
 		ZOffset: 2047
 
 allyrepair:
-	repair:
+	repair: allyrepair
 		Length: *
 		Tick: 160
 		ZOffset: 2047
 
 tabs:
-	left-normal:
-	left-pressed:
+	left-normal: tabs
+	left-pressed: tabs
 		Start: 1
 
 sputnik:
-	idle:
+	idle: sputnik
 		Length: *
 		Offset: -4,0
 		ZOffset: 1023
 
 dd-crnr:
-	idle:
+	idle: dd-crnr
 		Length: *
-	top-left:
-	top-right:
+	top-left: dd-crnr
+	top-right: dd-crnr
 		Start: 1
-	bottom-left:
+	bottom-left: dd-crnr
 		Start: 2
-	bottom-right:
+	bottom-right: dd-crnr
 		Start: 3
 
 fb2:
-	idle:
+	idle: fb2
 		Length: *
 		ZOffset: 1023
 
 fb3:
-	idle:
+	idle: fb3
 		Facings: 32
 		ZOffset: 1023
 
 fb4:
-	idle:
+	idle: fb4
 		Length: *
 		ZOffset: 1023
 
 scrate:
-	Defaults:
+	Defaults: scrate
 		ZOffset: -511
-	idle:
-	land:
+	idle: scrate
+	land: scrate
 		Start: 1
-	water:
+	water: scrate
 		Start: 2
 		Length: 4
 		Tick: 500
 
 wcrate:
-	Defaults:
+	Defaults: wcrate
 		ZOffset: -511
-	idle:
-	land:
+	idle: wcrate
+	land: wcrate
 	water: wwcrate
 		Length: *
 		Tick: 500
 
 xcratea:
-	idle:
+	idle: xcratea
 		ZOffset: -511
-	land:
+	land: xcratea
 		Start: 1
 		ZOffset: -511
-	water:
+	water: xcratea
 		Start: 2
 		Length: 4
 		Tick: 500
 		ZOffset: -511
 
 xcrateb:
-	idle:
+	idle: xcrateb
 		ZOffset: -511
-	land:
+	land: xcrateb
 		Start: 1
 		ZOffset: -511
-	water:
+	water: xcrateb
 		Start: 2
 		Length: 4
 		Tick: 500
 		ZOffset: -511
 
 xcratec:
-	idle:
+	idle: xcratec
 		ZOffset: -511
-	land:
+	land: xcratec
 		Start: 1
 		ZOffset: -511
-	water:
+	water: xcratec
 		Start: 2
 		Length: 4
 		Tick: 500
 		ZOffset: -511
 
 xcrated:
-	idle:
+	idle: xcrated
 		ZOffset: -511
-	land:
+	land: xcrated
 		Start: 1
 		ZOffset: -511
-	water:
+	water: xcrated
 		Start: 2
 		Length: 4
 		Tick: 500
@@ -591,53 +657,53 @@ crate-effects:
 		Tick: 200
 
 parach:
-	open:
+	open: parach
 		Length: 5
-	idle:
+	idle: parach
 		Start: 5
 		Length: 11
 		
 parachl:
-	open:
+	open: parachl
 		Length: 5
-	idle:
+	idle: parachl
 		Start: 5
 		Length: 11
 
 parach-shadow:
-	idle:
+	idle: parach-shadow
 		Length: *
 
 bomblet:
-	idle:
+	idle: bomblet
 		Length: *
 		ZOffset: 1023
 		
 empbomblet:
-	idle:
+	idle: empbomblet
 		Length: *
 		ZOffset: 1023
 
 parabomb:
-	open:
+	open: parabomb
 		Length: 8
 		ZOffset: 1023
-	idle:
+	idle: parabomb
 		Start: 8
 		Length: 5
 		ZOffset: 1023
 		
 tbomb:
-	open:
+	open: tbomb
 		Length: 8
 		ZOffset: 1023
-	idle:
+	idle: tbomb
 		Start: 8
 		Length: 5
 		ZOffset: 1023
 		
 b2bomb:
-	idle:
+	idle: b2bomb
 		Length: *
 		ZOffset: 1023
 
@@ -670,14 +736,14 @@ fire:
 		FlipX: true
 		
 rank:
-	rank-veteran-1:
-	rank-veteran-2:
+	rank-veteran-1: rank
+	rank-veteran-2: rank
 		Start: 1
-	rank-elite:
+	rank-elite: rank
 		Start: 2
 		
 iconchevrons:
-	veteran:
+	veteran: iconchevrons
 		Offset: 2, 2
 
 atomic:
@@ -713,7 +779,7 @@ deathhand:
 		ZOffset: 511
 
 ionsfx:
-	idle:
+	idle: ionsfx
 		Length: *
 		Offset: 0, -78
 		ZOffset: 2048
@@ -721,52 +787,52 @@ ionsfx:
 		BlendMode: Additive
 
 bubbles:
-	idle:
+	idle: bubbles
 		Length: *
 		Tick: 220
 
 mpspawn:
-	idle:
+	idle: mpspawn
 		Length: *
 
 waypoint:
-	idle:
+	idle: waypoint
 		Length: *
 
 camera:
-	idle:
+	idle: camera
 		Length: *
 		
 satscan:
-	idle:
+	idle: satscan
 		Length: *
 		BlendMode: Alpha
 		Tick: 80
 		ZOffset: 1023
 
 gpsdot:
-	Infantry:
-	Vehicle:
+	Infantry: gpsdot
+	Vehicle: gpsdot
 		Start: 1
-	Ship:
+	Ship: gpsdot
 		Start: 2
-	Helicopter:
+	Helicopter: gpsdot
 		Start: 3
-	Plane:
+	Plane: gpsdot
 		Start: 4
-	Harvester:
+	Harvester: gpsdot
 		Start: 5
-	Structure:
+	Structure: gpsdot
 		Start: 6
-	Oil:
+	Oil: gpsdot
 		Start: 7
-	Hospital:
+	Hospital: gpsdot
 		Start: 8
-	Biohazard:
+	Biohazard: gpsdot
 		Start: 9
-	Communications:
+	Communications: gpsdot
 		Start: 10
-	Forward:
+	Forward: gpsdot
 		Start: 11
 
 icon:
@@ -792,27 +858,54 @@ icon:
 	invis: invisicon
 	infbomb: b2bicnh
 	carpetbomb: cbombicon
+	airsupport: airsupicon
+	storm: stormicon
+	timewarp: timewarpicon
+	surgicalstrike: surgicalsicnh
+	clustermissile: clustericnh
+	droppods: droppodicnh
+	cmines: cmineicon
+	chack: chackicon
+	nrepair: nrepairicon
+	frenzy: frenzyicon
 
 quee:
-	idle:
+	idle: quee
 		Length: 10
-	damaged-idle:
+	damaged-idle: quee
 		Start: 10
 		Length: 10
 
 lar1:
-	idle:
+	idle: lar1
 
 lar2:
-	idle:
+	idle: lar2
 
 minp:
-	idle:
+	idle: minp
 		ZOffset: -512
 	icon: jmin
 
 minv:
-	idle:
+	idle: minv
+		ZOffset: -512
+	icon: jmin
+
+minvs:
+	idle: minvs
+		ZOffset: -512
+	icon: jmin
+
+mins:
+	idle: mins
+		ZOffset: -512
+		Length: *
+		Tick: 400
+	icon: jmin
+
+minsf:
+	idle: minsf
 		ZOffset: -512
 	icon: jmin
 
@@ -1040,7 +1133,7 @@ railmine:
 			JUNGLE: TEMPERAT
 
 ctflag:
-	idle:
+	idle: ctflag
 		Length: 9
 		Tick: 50
 		Offset: 0,-12
@@ -1063,20 +1156,20 @@ plaserfire:
 		ZOffset: 511
 
 atkssmmis:
-	idle:
+	idle: atkssmmis
 		Facings: 32
 
 fire1:
-	idle:
+	idle: fire1
 		Length: *
 		Offset: 2, -5
 		ZOffset: 510
-	loop:
+	loop: fire1
 		Start: 0
 		Length: 14
 		Offset: 2, -5
 		ZOffset: 510
-	end:
+	end: fire1
 		Start: 14
 		Length: -14
 		Offset: 2, -5
@@ -1119,12 +1212,12 @@ split3:
 		Start: 54
 
 cb1:
-	idle:
+	idle: cb1
 		Length: *
 		ZOffset: 1023
 
 cb2:
-	idle:
+	idle: cb1
 		Length: *
 		ZOffset: 1023
 		
@@ -1136,20 +1229,20 @@ sparks_overlay:
 		ZOffset: 512
 
 ctnkjump:
-	idle:
+	idle: ctnkjump
 		Length: *
 		BlendMode: Additive
 		Tick: 90
 		ZOffset: 510
 		
 twake:
-	idle:
+	idle: twake
 		Length: *
 		Tick: 300
 		ZOffset: -511
 		
 cloud1:
-	idle:
+	idle: cloud1
 		BlendMode: Alpha
 		Length: *
 		ZOffset: 1023
@@ -1157,7 +1250,7 @@ cloud1:
 		BlendMode: Alpha
 		Length: 12
 		ZOffset: 1023
-	loop:
+	loop: cloud1
 		BlendMode: Alpha
 		Length: 28
 		ZOffset: 1023
@@ -1167,13 +1260,13 @@ cloud1:
 		ZOffset: 1023
 		
 cloud1d:
-	idle:
+	idle: cloud1d
 		Length: *
 		BlendMode: Alpha
 		ZOffset: 1023
 		
 cloud2:
-	idle:
+	idle: cloud2
 		BlendMode: Alpha
 		Length: *
 		ZOffset: 1023
@@ -1181,7 +1274,7 @@ cloud2:
 		BlendMode: Alpha
 		Length: 12
 		ZOffset: 1023
-	loop:
+	loop: cloud2
 		BlendMode: Alpha
 		Length: 28
 		ZOffset: 1023
@@ -1191,12 +1284,12 @@ cloud2:
 		ZOffset: 1023
 		
 cloud2d:
-	idle:
+	idle: cloud2d
 		Length: *
 		ZOffset: 1023
 		
 mindanim:
-	idle:
+	idle: mindanim
 		Length: *
 		Tick: 200
 		BlendMode: Alpha
@@ -1247,7 +1340,7 @@ paradirection:
 		Offset: -15, -15, 0
 
 flameall:
-	idle:
+	idle: flameall
 		Length: 19
 		Facings: -8
 		Tick: 140
@@ -1255,9 +1348,13 @@ flameall:
 		Offset: 0, 0, 6
 		
 chemall:
-	idle:
+	idle: chemall
 		Length: 19
 		Facings: -8
 		Tick: 140
 		ZOffset: 1023
 		Offset: 0, 0, 6
+
+chronoappear:
+	idle: chronofade
+		Length: *

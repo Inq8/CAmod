@@ -194,14 +194,6 @@ namespace OpenRA.Mods.CA.Traits
 			return candidates.Random(self.World.SharedRandom);
 		}
 
-		public virtual void Killed(Actor self, AttackInfo e)
-		{
-			// Notify slaves.
-			foreach (var slaveEntry in SlaveEntries)
-				if (slaveEntry.IsValid)
-					slaveEntry.SpawnerSlave.OnMasterKilled(slaveEntry.Actor, e.Attacker, Info.SlaveDisposalOnKill);
-		}
-
 		public virtual void OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
 		{
 			// Owner thing is so difficult and confusing, I'm expecting bugs.
@@ -265,7 +257,7 @@ namespace OpenRA.Mods.CA.Traits
 			return exits[exitRoundRobin];
 		}
 
-		void SetSpawnedFacing(Actor spawned, Actor spawner, ExitInfo exit)
+		public void SetSpawnedFacing(Actor spawned, Actor spawner, ExitInfo exit)
 		{
 			int facingOffset = facing == null ? 0 : facing.Facing;
 
@@ -291,5 +283,18 @@ namespace OpenRA.Mods.CA.Traits
 		}
 
 		public virtual void OnSlaveKilled(Actor self, Actor slave) { }
+
+		void INotifyKilled.Killed(Actor self, AttackInfo e)
+		{
+			Killed(self, e);
+		}
+
+		protected virtual void Killed(Actor self, AttackInfo e)
+		{
+			// Notify slaves.
+			foreach (var slaveEntry in SlaveEntries)
+				if (slaveEntry.IsValid)
+					slaveEntry.SpawnerSlave.OnMasterKilled(slaveEntry.Actor, e.Attacker, Info.SlaveDisposalOnKill);
+		}
 	}
 }

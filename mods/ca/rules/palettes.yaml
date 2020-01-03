@@ -108,6 +108,16 @@
 		Name: player
 		Filename: temperat.pal
 		ShadowIndex: 4
+	PaletteFromFile@d2k:
+		Name: d2k
+		Filename: PALETTE.BIN
+		ShadowIndex: 1
+		CursorPalette: true
+	PaletteFromFile@d2keffect:
+		Name: d2keffect
+		Filename: PALETTE.BIN
+		ShadowIndex: 1
+		AllowModifiers: false
 	PaletteFromFile@chrome:
 		Name: chrome
 		Filename: temperat.pal
@@ -161,6 +171,10 @@
 		Ramp: 0.14
 		BaseName: overlayplayertd
 		RemapIndex: 176, 178, 180, 182, 184, 186, 189, 191, 177, 179, 181, 183, 185, 187, 188, 190
+	PlayerColorPalette@D2K:
+		BasePalette: d2k
+		BaseName: playerd2k
+		RemapIndex: 255, 254, 253, 252, 251, 250, 249, 248, 247, 246, 245, 244, 243, 242, 241, 240
 	PaletteFromFile@tseffect:
 		Name: tseffect
 		Filename: animts.pal
@@ -204,10 +218,22 @@
 		Name: effect-ignore-lighting-alpha85
 		Alpha: 0.85
 		BasePalette: effect
+	PaletteFromPaletteWithAlpha@effect-nolite:
+		Name: effect-ignore-lighting
+		Alpha: 1
+		BasePalette: effect
 	PaletteFromPaletteWithAlpha@TDeffect-nolite-alpha85:
 		Name: tdeffect-ignore-lighting-alpha85
 		Alpha: 0.85
 		BasePalette: tdeffect
+	PaletteFromPaletteWithAlpha@D2Keffect-nolite-alpha75:
+		Name: d2keffect-ignore-lighting-alpha75
+		BasePalette: d2keffect
+		Alpha: 0.75
+	PaletteFromPaletteWithAlpha@D2Keffect-nolite-alpha50:
+		Name: d2keffect-ignore-lighting-alpha50
+		BasePalette: d2keffect
+		Alpha: 0.5
 	PaletteFromRGBA@shadow:
 		Name: shadow
 		R: 0
@@ -250,6 +276,12 @@
 		G: 0
 		B: 128
 		A: 128
+	PaletteFromRGBA@nrepair:
+		Name: nrepair
+		R: 0
+		G: 0
+		B: 128
+		A: 65
 	PaletteFromRGBA@disabled:
 		Name: disabled
 		R: 0
@@ -268,6 +300,12 @@
 		G: 0
 		B: 0
 		A: 140
+	PaletteFromRGBA@frenzy:
+		Name: frenzy
+		R: 255
+		G: 0
+		B: 0
+		A: 200
 	ShroudPalette@shroud:
 		Name: shroud
 	ShroudPalette@fog:
@@ -342,22 +380,23 @@
 		ExcludeTilesets: DESERT
 	RotationPaletteEffect@actorswater:
 		Palettes: player, overlayplayer, effect, playernavy
+		ExcludePalettes: playerd2k, d2k
 	RotationPaletteEffect@desertwater:
 		Palettes: terrain, temptd, playertd, overlayplayertd
 		Tilesets: DESERT
 		RotationBase: 32
-		ExcludePalettes: cursor, chrome, chrometd, colorpicker
+		ExcludePalettes: cursor, chrome, chrometd, colorpicker, playerd2k, d2k
 	RotationPaletteEffect@desertwater-actor:
 		Palettes: desert, temptd, playertd, overlayplayertd, tdeffect
 		RotationBase: 32
-		ExcludePalettes: cursor, chrome, chrometd, colorpicker
+		ExcludePalettes: cursor, chrome, chrometd, colorpicker, playerd2k, d2k
 	LightPaletteRotator:
-		ExcludePalettes: terrain, effect, tdeffect, desert, tseffect, ra2effect, tsunit, ra2unit, ra2unit-ignore-lighting-alpha75, tsunit-ignore-lighting-alpha75, tseffect-ignore-lighting-alpha75, tseffect-ignore-lighting-alpha90, effect-ignore-lighting-alpha85
+		ExcludePalettes: playerd2k, d2k, terrain, effect, tdeffect, desert, tseffect, ra2effect, tsunit, ra2unit, ra2unit-ignore-lighting-alpha75, tsunit-ignore-lighting-alpha75, tseffect-ignore-lighting-alpha75, tseffect-ignore-lighting-alpha90, effect-ignore-lighting-alpha85
 	ChronoshiftPaletteEffect:
 	CloakPaletteEffect:
 	FlashPaletteEffect@NUKE:
 		Type: Nuke
-		ExcludePalettes: cursor, chrome, chrometd, colorpicker, fog, shroud
+		ExcludePalettes: cursor, chrome, chrometd, colorpicker, fog, shroud, effect-ignore-lighting
 	PaletteFromPaletteWithAlpha@placelinesegment:
 		Name: placelinesegment
 		BasePalette: terrain
@@ -384,3 +423,36 @@
 		AmplitudeGreen: 0
 		AmplitudeBlue: 20
 		QuantizationCount: 96
+	FlickeringPaletteEffect@FRENZY:
+		PaletteName: frenzy
+		BaseColor: dc1e1e66
+		AmplitudeRed: 20
+		AmplitudeGreen: 0
+		AmplitudeBlue: 0
+		QuantizationCount: 48
+	FlickeringPaletteEffect@NREPAIR:
+		PaletteName: nrepair
+		BaseColor: 25cde966
+		AmplitudeRed: 0
+		AmplitudeGreen: 0
+		AmplitudeBlue: 20
+		QuantizationCount: 96
+	PaletteFromRGBA@temporal:
+		Name: temporal
+		R: 128
+		G: 200
+		B: 255
+		A: 128
+	FlickeringPaletteEffect@temporal:
+		PaletteName: temporal
+		BaseColor: 80D0FF10
+		AmplitudeRed: 8
+		AmplitudeGreen: 13
+		AmplitudeBlue: 16
+		QuantizationCount: 48
+	PaletteFromRGBA@lowpower:
+		Name: lowpower
+		R: 0
+		G: 0
+		B: 0
+		A: 96

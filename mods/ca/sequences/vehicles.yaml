@@ -1,7 +1,4 @@
-mcv:
-	idle:
-		Facings: 32
-		UseClassicFacingFudge: True
+^VehicleOverlays:
 	emp-overlay: emp_fx01
 		Length: *
 		BlendMode: Additive
@@ -14,37 +11,33 @@ mcv:
 		Offset: 0, 0
 		UseTilesetCode: false
 		ZOffset: 512
+mcv:
+	Inherits: ^VehicleOverlays
+	idle: mcv
+		Facings: 32
+		UseClassicFacingFudge: True
 	icon: mcvicon
 
 mcvhusk:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: mcvhusk
 		Facings: 32
 		UseClassicFacingFudge: True
 		ZOffset: -1023
 
 truk:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: truk
 		Facings: 32
 		UseClassicFacingFudge: True
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: trukicon
 
 harv:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: harv
 		Facings: 32
 		UseClassicFacingFudge: True
-	harvest:
+	harvest: harv
 		Start: 32
 		Length: 8
 		Facings: 8
@@ -54,20 +47,7 @@ harv:
 	dock-loop: harv
 		Start: 104
 		Length: 7
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: harvicon
-		Start: 0
 		
 harvempty:
 	Inherits: harv
@@ -76,45 +56,37 @@ harvhalf:
 	Inherits: harv
 
 hhusk:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: hhusk
 		Facings: 32
 		UseClassicFacingFudge: True
 		ZOffset: -1023
 
 hhusk2:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: hhusk2
 		Facings: 32
 		UseClassicFacingFudge: True
 		ZOffset: -1023
 
 1tnk:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: 1tnk
 		Facings: 32
 		UseClassicFacingFudge: True
 	idle-water: 1tnkwater
 		Facings: 32
 		UseClassicFacingFudge: True
-	turret:
+	turret: 1tnk
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
 	muzzle: gunfire2
 		Length: 2
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: 1tnkicon
 
 1tnk.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: 1tnk
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -126,30 +98,20 @@ hhusk2:
 		ZOffset: -512
 
 2tnk:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: 2tnk
 		Facings: 32
 		UseClassicFacingFudge: True
-	turret:
+	turret: 2tnk
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
 	muzzle: gunfire2
 		Length: 5
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: 2tnkicon
 
 2tnk.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: 2tnk
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -161,30 +123,20 @@ hhusk2:
 		ZOffset: -512
 
 3tnk:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: 3tnk
 		Facings: 32
 		UseClassicFacingFudge: True
-	turret:
+	turret: 3tnk
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
 	muzzle: gunfire2
 		Length: 5
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: 3tnkicon
 
 3tnk.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: 3tnk
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -196,30 +148,20 @@ hhusk2:
 		ZOffset: -512
 
 4tnk:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: 4tnk
 		Facings: 32
 		UseClassicFacingFudge: True
-	turret:
+	turret: 4tnk
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
 	muzzle: gunfire2
 		Length: 5
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: 4tnkicon
 
 4tnk.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: 4tnk
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -231,103 +173,60 @@ hhusk2:
 		ZOffset: -512
 
 v2rl:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: v2rl
 		Facings: 32
 		UseClassicFacingFudge: True
-	empty-idle:
+	empty-idle: v2rl
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
-	aim:
+	aim: v2rl
 		Facings: 32
 		UseClassicFacingFudge: True
-	empty-aim:
+	empty-aim: v2rl
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: v2rlicon
 
 arty:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: arty
 		Facings: 32
 		UseClassicFacingFudge: True
 	muzzle: smokeygun
 		Length: 12
 		Tick: 30
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: artyicon
 	
 artynod:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: artynod
 		Facings: 32
 		UseClassicFacingFudge: True
 	muzzle: smokeygun
 		Length: 12
 		Tick: 30
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: artyicnh
 
 jeep:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: jeep
 		Facings: 32
 		UseClassicFacingFudge: True
-	turret:
+	turret: jeep
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
 	muzzle: minigun
 		Length: 6
 		Facings: 8
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: jeepicon
 
 apc:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: apc
 		Facings: 32
 		UseClassicFacingFudge: True
 	muzzle: minigun
@@ -337,26 +236,15 @@ apc:
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
-	open:
+	open: apc
 		Start: 32
 		Length: 3
-	unload:
+	unload: apc
 		Start: 32
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: apcicon
 	
 apc.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: apc
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -369,69 +257,37 @@ apc.destroyed:
 		UseClassicFacingFudge: True
 
 mnly:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: mnly
 		Facings: 32
 		UseClassicFacingFudge: True
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: mnlyicon
 
 mrj:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: mrj
 		Facings: 32
 		UseClassicFacingFudge: True
-	spinner:
+	spinner: mrj
 		Start: 32
 		Length: 32
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: mrjicon
 
 mgg:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: mgg
 		Facings: 32
 		UseClassicFacingFudge: True
-	spinner:
+	spinner: mgg
 		Start: 32
 		Length: 8
-	spinner-idle:
+	spinner-idle: mgg
 		Start: 32
 		Length: 1
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: mggicon
 
 mgg.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: mgg
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -444,118 +300,44 @@ mgg.destroyed:
 		Start: 32
 
 ttnk:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: ttnk
 		Facings: 32
 		UseClassicFacingFudge: True
-	spinner:
+	spinner: ttnk
 		Start: 32
 		Length: 32
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: ttnkicon
 
 dtrk:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: dtrk
 		Facings: 32
 		UseClassicFacingFudge: True
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: dtrkicon
 
 ctnk:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: ctnk
 		Facings: 32
 		UseClassicFacingFudge: True
 	muzzle: gunfire2
 		Length: 5
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: ctnkicon
 
 qtnk:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: qtnk
 		Facings: 32
 		UseClassicFacingFudge: True
-	piston:
+	piston: qtnk
 		Start: 32
 		Facings: 8
 		Length: 8
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: qtnkicon
 
 apc2:
-	idle:
-		Facings: 32
-		UseClassicFacingFudge: True
-	muzzle: minigun
-		Length: 6
-		Facings: 8
-	turret: hmmv
-		Start: 32
-		Facings: 32
-		UseClassicFacingFudge: True
-	open:
-		Start: 32
-		Length: 3
-	unload:
-		Start: 35
-		Length: 3
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	icon: apc2icnh
-	
-apc2.nod:
+	Inherits: ^VehicleOverlays
 	idle: apc2
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -572,21 +354,30 @@ apc2.nod:
 	unload: apc2
 		Start: 35
 		Length: 3
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
+	icon: apc2icnh
+	
+apc2.nod:
+	Inherits: ^VehicleOverlays
+	idle: apc2
+		Facings: 32
+		UseClassicFacingFudge: True
+	muzzle: minigun
+		Length: 6
+		Facings: 8
+	turret: hmmv
+		Start: 32
+		Facings: 32
+		UseClassicFacingFudge: True
+	open: apc2
+		Start: 32
+		Length: 3
+	unload: apc2
+		Start: 35
+		Length: 3
 	icon: apc2nodicnh
 
 apc2.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: apc2
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -596,58 +387,38 @@ apc2.destroyed:
 		UseClassicFacingFudge: True
 
 amcv:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: amcv
 		Facings: 32
 		UseClassicFacingFudge: True
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: amcvicnh
 
 amcv.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: amcv
 		Facings: 32
 		UseClassicFacingFudge: True
 		ZOffset: -1023
 
 hmmv:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: hmmv
 		Facings: 32
 		UseClassicFacingFudge: True
-	turret:
+	turret: hmmv
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
 	muzzle: minigun
 		Length: 6
 		Facings: 8
-	unload:
+	unload: hmmv
 		Facings: 32
 		UseClassicFacingFudge: True
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: jeepicnh
 
 hmmv.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: hmmv
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -659,34 +430,24 @@ hmmv.destroyed:
 		ZOffset: -512
 
 bggy:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: bggy
 		Facings: 32
 		UseClassicFacingFudge: True
-	turret:
+	turret: bggy
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
 	muzzle: minigun
 		Length: 6
 		Facings: 8
-	unload:
+	unload: bggy
 		Facings: 32
 		UseClassicFacingFudge: True
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: bggyicnh
 
 bggy.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: bggy
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -698,30 +459,20 @@ bggy.destroyed:
 		ZOffset: -512
 
 mtnk:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: mtnk
 		Facings: 32
 		UseClassicFacingFudge: True
-	turret:
+	turret: mtnk
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
 	muzzle: gunfire2
 		Length: 5
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: mtnkicnh
 
 mtnk.nod:
+	Inherits: ^VehicleOverlays
 	idle: mtnknod
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -731,21 +482,10 @@ mtnk.nod:
 		UseClassicFacingFudge: True
 	muzzle: gunfire2
 		Length: 5
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: mtnknodicnh
 
 mtnk.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: mtnk
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -757,30 +497,32 @@ mtnk.destroyed:
 		ZOffset: -512
 
 htnk:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: htnk
 		Facings: 32
 		UseClassicFacingFudge: True
-	turret:
+	turret: htnk
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
 	muzzle: gunfire2
 		Length: 5
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
+	icon: htnkicnh
+	
+htnk.ion:
+	Inherits: ^VehicleOverlays
+	idle: htnk
+		Facings: 32
+		UseClassicFacingFudge: True
+	turret: htnktion
+		Facings: 32
+		UseClassicFacingFudge: True
+	muzzle: gunfire2
+		Length: 5
 	icon: htnkicnh
 
 htnk.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: htnk
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -790,43 +532,18 @@ htnk.destroyed:
 		Facings: 32
 		UseClassicFacingFudge: True
 		ZOffset: -512
+	turret-ion: htnktion
+		Facings: 32
+		UseClassicFacingFudge: True
+		ZOffset: -512
 
 msam:
-	idle:
-		Facings: 32
-		UseClassicFacingFudge: True
-	turret:
-		Start: 32
-		Facings: 32
-		UseClassicFacingFudge: True
-	empty-aim:
-		Start: 64
-		Facings: 32
-		UseClassicFacingFudge: True
-	aim:
-		Start: 64
-		Facings: 32
-		UseClassicFacingFudge: True
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	icon: msamicnh
-	
-msam.nod:
+	Inherits: ^VehicleOverlays
 	idle: msam
 		Facings: 32
 		UseClassicFacingFudge: True
 	turret: msam
-		Start: 32
+		Start: 64
 		Facings: 32
 		UseClassicFacingFudge: True
 	empty-aim: msam
@@ -837,21 +554,29 @@ msam.nod:
 		Start: 64
 		Facings: 32
 		UseClassicFacingFudge: True
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
+	icon: msamicnh
+	
+msam.nod:
+	Inherits: ^VehicleOverlays
+	idle: msam
+		Facings: 32
+		UseClassicFacingFudge: True
+	turret: msam
+		Start: 64
+		Facings: 32
+		UseClassicFacingFudge: True
+	empty-aim: msam
+		Start: 64
+		Facings: 32
+		UseClassicFacingFudge: True
+	aim: msam
+		Start: 64
+		Facings: 32
+		UseClassicFacingFudge: True
 	icon: msamnodicnh
 
 msam.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: msam
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -863,36 +588,26 @@ msam.destroyed:
 		ZOffset: -512
 
 mlrs:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: mlrs
 		Facings: 32
 		UseClassicFacingFudge: True
-	turret:
+	turret: mlrs
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
-	turret1:
+	turret1: mlrs
 		Start: 64
 		Facings: 32
 		UseClassicFacingFudge: True
-	turret0:
+	turret0: mlrs
 		Start: 96
 		Facings: 32
 		UseClassicFacingFudge: True
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: mlrsicnh
 
 mlrs.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: mlrs
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -904,27 +619,17 @@ mlrs.destroyed:
 		ZOffset: -512
 		
 stnk:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: stnk
 		Facings: 32
 		UseClassicFacingFudge: True
-	turret:
+	turret: stnk
 		Start: 38
 		Facings: 32
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: stnkicon
 	
 stnk.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: stnk
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -934,76 +639,46 @@ stnk.destroyed:
 		Facings: 32
 
 stnknod:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: stnknod
 		Facings: 32
 		UseClassicFacingFudge: True
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: stnkicnh
 	
 stnknod.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: stnknod
 		Facings: 32
 		UseClassicFacingFudge: True
 		ZOffset: -512
 	
 stnktnod:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: stnktnod
 		Facings: 32
 		UseClassicFacingFudge: True
-	turret:
+	turret: stnktnod
 		Start: 32
 		Facings: 32
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: stnkicnh
 
 bike:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: bike
 		Facings: 32
 		UseClassicFacingFudge: True
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: bikeicnh
 
 bike.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: bike
 		Facings: 32
 		UseClassicFacingFudge: True
 		ZOffset: -512
 
 ftnk:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: ftnk
 		Facings: 32
 		UseClassicFacingFudge: True
 	muzzle:
@@ -1034,54 +709,33 @@ ftnk:
 				Offset: -7,8
 		Facings: 8
 		Length: 13
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: ftnkicnh
 
 ftnk.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: ftnk
 		Facings: 32
 		UseClassicFacingFudge: True
 		ZOffset: -512
 
 ltnk:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: ltnk
 		Facings: 32
 		UseClassicFacingFudge: True
 	idle-water: ltnkwater
 		Facings: 32
 		UseClassicFacingFudge: True
-	turret:
+	turret: ltnk
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
 	muzzle: gunfire2
 		Length: 2
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: ltnkicnh
 
 ltnk.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: ltnk
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -1093,10 +747,11 @@ ltnk.destroyed:
 		ZOffset: -512
 
 harv2:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: harv2
 		Facings: 32
 		UseClassicFacingFudge: True
-	harvest:
+	harvest: harv2
 		Start: 32
 		Length: 4
 		Facings: 8
@@ -1105,54 +760,33 @@ harv2:
 		Length: 7
 	dock-loop: harv2dump
 		Start: 7
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: harv2icnh
 
 harv2.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: harv2
 		Facings: 32
 		UseClassicFacingFudge: True
 		ZOffset: -512
 
 btr:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: btr
 		Facings: 32
 		UseClassicFacingFudge: True
 	turret: stnk
 		Start: 38
 		Facings: 32
 		UseClassicFacingFudge: True
-	open:
+	open: btr
 		Start: 32
 		Length: 3
-	unload:
+	unload: btr
 		Start: 32
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: btricon
 
 btr.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: btr
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -1162,7 +796,8 @@ btr.destroyed:
 		UseClassicFacingFudge: True
 		
 ifv:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: ifv
 		Facings: 32
 		UseClassicFacingFudge: True
 	muzzle: minigun
@@ -1195,26 +830,15 @@ ifv:
 	turret5: reptur
 		Facings: 32
 		UseClassicFacingFudge: True
-	open:
+	open: ifv
 		Start: 32
 		Length: 3
-	unload:
+	unload: ifv
 		Start: 32
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: ifvicon
 
 ifv.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: ifv
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -1225,6 +849,7 @@ ifv.destroyed:
 		UseClassicFacingFudge: True
 	
 titan:
+	Inherits: ^VehicleOverlays
 	stand: titanlegs
 		Facings: 16
 	run: titanlegs
@@ -1238,60 +863,27 @@ titan:
 	muzzle: smokeygun
 		Length: 12
 		Tick: 30
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: titanicnh
 
 ttrk:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: ttrk
 		Facings: 32
 		UseClassicFacingFudge: True
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: ttrkicon
 
 disr:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: disr
 		Facings: 32
 		UseClassicFacingFudge: True
 	turret: sonict
 		Facings: 32
 		UseClassicFacingFudge: True
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: disricon
 	
 disr.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: disr
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -1302,51 +894,30 @@ disr.destroyed:
 		ZOffset: -512
 	
 hmlrs:
+	Inherits: ^VehicleOverlays
 	idle: hvrhull
 		Facings: 32
 		UseClassicFacingFudge: True
 	turret: hvrtur
 		Facings: 32
 		UseClassicFacingFudge: True
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: hmlrsicnh
 		
 tnkd:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: tnkd
 		Facings: 32
 		UseClassicFacingFudge: True
-	turret:
+	turret: tnkd
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
 	muzzle: gunfire2
 		Length: 2
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: tnkdicon
 	
 tnkd.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: tnkd
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -1356,52 +927,31 @@ tnkd.destroyed:
 		UseClassicFacingFudge: True
 	
 v3rl:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: v3rl
 		Facings: 32
 		UseClassicFacingFudge: True
-	empty-idle:
+	empty-idle: v3rl
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: v3rlicon
 	
 rtnk:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: rtnk
 		Facings: 32
 		UseClassicFacingFudge: True
-	turret:
+	turret: rtnk
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
 	muzzle: gunfire2
 		Length: 5
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: rtnkicon
 	
 rtnk.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: rtnk
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -1413,7 +963,8 @@ rtnk.destroyed:
 		ZOffset: -512
 	
 msar:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: msar
 		Facings: 32
 		UseClassicFacingFudge: True
 	spinner: msarspinner
@@ -1424,42 +975,20 @@ msar:
 	idle-static: msardeployed
 		Length: 14
 		Tick: 80
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: msaricnh
 	
 ptnk:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: ptnk
 		Facings: 32
 		UseClassicFacingFudge: True
 	turret: ptnkt
 		Facings: 32
 		UseClassicFacingFudge: True
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: ptnkicon
 
 ptnk.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: ptnk
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -1470,6 +999,7 @@ ptnk.destroyed:
 		ZOffset: -512
 		
 mwtnk:
+	Inherits: ^VehicleOverlays
 	idle: mwtnk
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -1482,21 +1012,10 @@ mwtnk:
 		Offset: 0, 0
 		UseTilesetCode: false
 		ZOffset: 512
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: mwtnkicnh
 
 mwtnk.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: mwtnk
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -1507,27 +1026,17 @@ mwtnk.destroyed:
 		ZOffset: -512
 		
 batf:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: batf
 		Facings: 32
 		UseClassicFacingFudge: True
 	muzzle: minigun
 		Length: 6
 		Facings: 8
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: batficon
 	
 batf.destroyed:
+	Inherits: ^VehicleOverlays
 	idle: batf
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -1536,65 +1045,32 @@ batf.destroyed:
 		Facings: 8
 		
 spec:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: spec
 		Facings: 32
 		UseClassicFacingFudge: True
 	muzzle: smokeygun
 		Length: 12
 		Tick: 30
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: specicnh
 	
 memp:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: memp
 		Facings: 32
 		UseClassicFacingFudge: True
-	charging:
+	charging: memp
 		Facings: 32
 	idle-overlay: pulsball
 		Length: 23
 		BlendMode: Additive
 		Tick: 40
 		ZOffset: 511
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	icon: qtnkicon
+	icon: mempicnh
 	
 cdrone:
-	idle:
+	Inherits: ^VehicleOverlays
+	idle: cdrone
 		Facings: 32
 		UseClassicFacingFudge: True
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	icon: qtnkicon
+	icon: cdroneicnh

@@ -39,7 +39,7 @@ DOG:
 	Mobile:
 		Speed: 82
 		Voice: Move
-		PauseOnCondition: !(!attack-cooldown && !eating)
+		PauseOnCondition: attack-cooldown || eating || being-warped
 	Guard:
 		Voice: Move
 	Passenger:
@@ -49,9 +49,10 @@ DOG:
 	Armament:
 		Weapon: DogJaw
 		ReloadingCondition: attack-cooldown
+		PauseOnCondition: being-warped
 	AttackLeap:
 		Voice: Attack
-		PauseOnCondition: attacking || attack-cooldown
+		PauseOnCondition: attacking || attack-cooldown || being-warped
 	AttackMove:
 		Voice: Move
 	GrantConditionOnAttack:
@@ -65,6 +66,7 @@ DOG:
 		ValidTargets: Infantry
 	Targetable:
 		TargetTypes: Ground, Infantry
+		RequiresCondition: !being-warped
 	WithInfantryBody:
 		MoveSequence: walk
 		StandSequences: stand
@@ -103,9 +105,11 @@ E1:
 		HP: 5000
 	Armament@PRIMARY:
 		Weapon: M1Carbine
+		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: M1CarbineE
+		PauseOnCondition: being-warped
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		IdleSequences: idle1,idle2,idle3,idle4
@@ -146,11 +150,13 @@ E2:
 		Weapon: Grenade
 		LocalOffset: 0,0,555
 		FireDelay: 15
+		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: GrenadeE
 		LocalOffset: 0,0,555
 		FireDelay: 15
+		PauseOnCondition: being-warped
 	TakeCover:
 		ProneOffset: 256,64,-331
 	AttackFrontal:
@@ -161,6 +167,7 @@ E2:
 		EmptyWeapon: UnitExplodeSmall
 		DamageSource: Killer
 		Chance: 33
+		DeathTypes: BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 
@@ -189,22 +196,22 @@ E3:
 	Armament@PRIMARY:
 		Weapon: RedEye
 		LocalOffset: 0,0,555
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || being-warped
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: Dragon
 		LocalOffset: 0,0,555
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: DragonE
 		LocalOffset: 0,0,555
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || being-warped
 	Armament@GarrisonAA:
 		Name: mountedaa
 		Weapon: RedEyeE
 		LocalOffset: 0,0,555
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || being-warped
 	AmmoPool:
 		Ammo: 1
 		PipCount: 0
@@ -254,12 +261,14 @@ E4:
 		LocalOffset: 341,0,256
 		MuzzleSequence: muzzle
 		MuzzlePalette: tdeffect
+		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: FlamerE
 		LocalOffset: 341,0,256
 		MuzzleSequence: muzzle
-		MuzzlePalette: tdeffect
+		MuzzlePalette: tseffect-ignore-lighting-alpha75
+		PauseOnCondition: being-warped
 	TakeCover:
 		ProneOffset: 160,0,-256
 	WithMuzzleOverlay:
@@ -268,6 +277,7 @@ E4:
 		Weapon: VisualExplode
 		EmptyWeapon: VisualExplode
 		Chance: 20
+		DeathTypes: BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 
@@ -383,14 +393,18 @@ E7:
 		Voice: Move
 	Armament@PRIMARY:
 		Weapon: Colt45
+		PauseOnCondition: being-warped
 	Armament@SECONDARY:
 		Weapon: Colt45
+		PauseOnCondition: being-warped
 	Armament@mountedPRIMARY:
 		Weapon: Colt45E
 		Name: mounted
+		PauseOnCondition: being-warped
 	Armament@mountedSECONDARY:
 		Weapon: Colt45E
 		Name: mounted
+		PauseOnCondition: being-warped
 	AttackFrontal:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
@@ -436,6 +450,7 @@ MEDI:
 		OutsideRangeCursor: heal
 		TargetStances: Ally
 		ForceTargetStances: None
+		PauseOnCondition: being-warped
 	AttackFrontal:
 	WithInfantryBody:
 		IdleSequences: idle
@@ -479,6 +494,7 @@ MECH:
 		OutsideRangeCursor: repair
 		TargetStances: Ally
 		ForceTargetStances: None
+		PauseOnCondition: being-warped
 	AttackFrontal:
 		Voice: Action
 	CaptureManager:
@@ -638,7 +654,7 @@ SHOK:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 115
-		Prerequisites: ~barr, stek, tsla, ~infantry.soviet, ~techlevel.high
+		Prerequisites: ~barr, stek, tsla, ~infantry.soviet, ~!infantry.iraq, ~techlevel.high
 		Description: Elite infantry with portable Tesla coils.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft
 	Valued:
 		Cost: 350
@@ -655,10 +671,12 @@ SHOK:
 	Armament@PRIMARY:
 		Weapon: PortaTesla
 		LocalOffset: 427,0,341
+		PauseOnCondition: being-warped
 	Armament@Garrisoned:
 		Name: mounted
 		Weapon: PortaTeslaE
 		LocalOffset: 427,0,341
+		PauseOnCondition: being-warped
 	TakeCover:
 		ProneOffset: 227,0,-245
 	AttackFrontal:
@@ -673,6 +691,10 @@ SHOK:
 		VoiceSet: ShokVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	-Crushable:
+	ProductionCostMultiplier@RussiaBonus:
+		Multiplier: 90
+		Prerequisites: infantry.russia
 		
 SHOK.nod:
 	Inherits: SHOK
@@ -694,7 +716,7 @@ N1:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 10
-		Prerequisites: ~barrackstd, ~techlevel.infonly
+		Prerequisites: ~!bio.nod, ~barrackstd, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
@@ -707,9 +729,11 @@ N1:
 		HP: 5000
 	Armament@PRIMARY:
 		Weapon: M16Carbine
+		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: M16CarbineE
+		PauseOnCondition: being-warped
 	AttackFrontal:
 	WithInfantryBody:
 		IdleSequences: idle1,idle2,idle3,idle4
@@ -718,6 +742,8 @@ N1:
 		DeathSequencePalette: playertd
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	Selectable:
+		Class: E1
 		
 N1R1:
 	Inherits: N1
@@ -754,11 +780,13 @@ N2:
 		Weapon: Grenade
 		LocalOffset: 0,0,555
 		FireDelay: 15
+		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: GrenadeE
 		LocalOffset: 0,0,555
 		FireDelay: 15
+		PauseOnCondition: being-warped
 	AttackFrontal:
 	WithInfantryBody:
 		StandSequences: stand
@@ -769,8 +797,20 @@ N2:
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall
 		Chance: 33
+		DeathTypes: BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	Selectable:
+		Class: E2
+		
+N2R1:
+	Inherits: N2
+	RenderSprites:
+		Image: N2
+	ProducibleWithLevel:
+		Prerequisites: techlevel.infonly
+		InitialLevels: 1
+	-Buildable:
 
 N3:
 	Inherits: ^Soldier
@@ -781,7 +821,7 @@ N3:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 30
-		Prerequisites: ~barrackstd, ~techlevel.infonly
+		Prerequisites: ~!bio.nod, ~barrackstd, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Anti-tank/Anti-aircraft infantry.\n  Strong vs Vehicles, Aircraft\n  Weak vs Infantry
 	Valued:
@@ -797,22 +837,22 @@ N3:
 	Armament@PRIMARY:
 		Weapon: RedEye
 		LocalOffset: 0,0,555
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || being-warped
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: Dragon
 		LocalOffset: 0,0,555
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: RedEyeE
 		LocalOffset: 0,0,555
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || being-warped
 	Armament@GarrisonAA:
 		Name: mounted
 		Weapon: DragonE
 		LocalOffset: 0,0,555
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || being-warped
 	AmmoPool:
 		Ammo: 1
 		PipCount: 0
@@ -831,6 +871,8 @@ N3:
 		ScanRadius: 5
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	Selectable:
+		Class: E3
 		
 N3R1:
 	Inherits: N3
@@ -867,13 +909,15 @@ N4:
 		Weapon: Flamer
 		LocalOffset: 341,0,254
 		MuzzleSequence: muzzle
-		MuzzlePalette: tdeffect
+		MuzzlePalette: tseffect-ignore-lighting-alpha75
+		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: FlamerE
 		LocalOffset: 341,0,254
 		MuzzleSequence: muzzle
 		MuzzlePalette: tdeffect
+		PauseOnCondition: being-warped
 	TakeCover:
 		ProneOffset: 160,0,-254
 	AttackFrontal:
@@ -886,8 +930,11 @@ N4:
 		Weapon: VisualExplode
 		EmptyWeapon: VisualExplode
 		Chance: 33
+		DeathTypes: BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	Selectable:
+		Class: E4
 
 N5:
 	Inherits: ^Soldier
@@ -915,13 +962,15 @@ N5:
 		Weapon: Chemspray
 		LocalOffset: 341,0,254
 		MuzzleSequence: muzzle
-		MuzzlePalette: tdeffect
+		MuzzlePalette: ra2effect-ignore-lighting-alpha50
+		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: ChemsprayE
 		LocalOffset: 341,0,254
 		MuzzleSequence: muzzle
 		MuzzlePalette: tdeffect
+		PauseOnCondition: being-warped
 	TakeCover:
 		ProneOffset: 160,0,-254
 	Mobile:
@@ -935,9 +984,11 @@ N5:
 		Weapon: VisualExplodeChem
 		EmptyWeapon: VisualExplodeChem
 		Chance: 33
+		DeathTypes: BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	-DamagedByTintedCells@RAD:
+	-DamagedByTintedCells@RADWEAK:
 		
 N5R1:
 	Inherits: N5
@@ -981,9 +1032,11 @@ RMBO:
 		Voice: Demolish
 	Armament:
 		Weapon: smg
+		PauseOnCondition: being-warped
 	Armament@garrison:
 		Name: mounted
 		Weapon: smgE
+		PauseOnCondition: being-warped
 	AttackFrontal:
 		Voice: Attack
 	AttackMove:
@@ -1042,7 +1095,6 @@ VICE:
 		Weapon: UnitExplodeVice
 		EmptyWeapon: UnitExplodeVice
 		Chance: 100
-		DeathTypes: BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath
 	AttackWander:
 	
 SNIPER:
@@ -1068,9 +1120,11 @@ SNIPER:
 		Range: 8c0
 	Armament@PRIMARY:
 		Weapon: sniper
+		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Weapon: sniperE
 		Name: mounted
+		PauseOnCondition: being-warped
 	Mobile:
 		Speed: 49
 		Locomotor: foot
@@ -1144,13 +1198,16 @@ BORIS:
 	Armament@PRIMARY:
 		Name: secondary
 		Weapon: akm
+		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: akmE
+		PauseOnCondition: being-warped
 	Armament@flare:
 		Name: primary
 		Weapon: Flare
 		LocalOffset: 30,0,250
+		PauseOnCondition: being-warped
 	AirstrikeMaster:
 		Actors: U2Bomber
 		SquadSize: 1
@@ -1200,11 +1257,13 @@ MORT:
 		Weapon: mortar
 		LocalOffset: 0,0,155
 		FireDelay: 15
+		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: mortarE
 		LocalOffset: 0,0,155
 		FireDelay: 15
+		PauseOnCondition: being-warped
 	AttackFrontal:
 	WithInfantryBody:
 		DefaultAttackSequence: throw
@@ -1262,9 +1321,11 @@ SAB:
 		Voice: Move
 	Armament:
 		Weapon: SilencedPPK
+		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: SilencedPPKE
+		PauseOnCondition: being-warped
 	AttackFrontal:
 		Voice: Attack
 	Cloak:
@@ -1309,10 +1370,12 @@ ACOL:
 	Armament@PRIMARY:
 		Weapon: PortaLaser
 		LocalOffset: 427,0,341
+		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: PortaLaserE
 		LocalOffset: 427,0,341
+		PauseOnCondition: being-warped
 	TakeCover:
 		ProneOffset: 227,0,-245
 	AttackFrontal:
@@ -1343,6 +1406,7 @@ ACOL:
 		Condition: tibheal
 		TerrainTypes: Tiberium, BlueTiberium
 	-DamagedByTintedCells@RAD:
+	-DamagedByTintedCells@RADWEAK:
 	WithDecoration@THEAL:
 		Image: pips
 		Sequence: medic
@@ -1354,6 +1418,7 @@ JUMPJET:
 	Inherits@1: ^ExistsInWorld
 	Inherits@3: ^IronCurtainable
 	Inherits@4: ^SpriteActor
+	Inherits@5: ^Warpable
 	Inherits@bounty: ^GlobalBounty
 	Inherits@SELECTION_MODE: ^FlatSelectionMode
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -1375,10 +1440,6 @@ JUMPJET:
 		Type: GroundPosition
 	RevealsShroud:
 		Range: 6c0
-		Type: GroundPosition
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 5c0
 		Type: GroundPosition
 	AttackMove:
 	Guard:
@@ -1419,13 +1480,13 @@ JUMPJET:
 	Health:
 		HP: 9000
 	Targetable:
-		RequiresCondition: !airborne
+		RequiresCondition: !airborne && !being-warped
 		TargetTypes: Ground, Infantry, Disguise
 	Targetable@HEAL:
-		RequiresCondition: (!airborne) && damaged
+		RequiresCondition: (!airborne && !being-warped) && damaged
 		TargetTypes: Heal
 	Targetable@AIRBORNE:
-		RequiresCondition: airborne
+		RequiresCondition: airborne && !being-warped
 		TargetTypes: Air
 	DeathSounds@NORMAL:
 		Voice: Die
@@ -1484,9 +1545,7 @@ JUMPJET:
 	Armament@PRIMARY:
 		Weapon: M60mgJJ
 		RequiresCondition: !airborne
-	Armament@AA:
-		Weapon: M60mgJJAA
-		RequiresCondition: airborne
+		PauseOnCondition: being-warped
 	AttackFrontal:
 	WithInfantryBody:
 		IdleSequences: idle1,idle2
@@ -1549,11 +1608,11 @@ JUMPJET:
 		RequiresCondition: (stance-attackanything || assault-move) && !airborne
 	AutoTargetPriority@DEFAULT_AIR:
 		RequiresCondition: !stance-attackanything && !assault-move && airborne
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
 		InvalidTargets: NoAutoTarget, WaterStructure
 	AutoTargetPriority@ATTACKANYTHING_AIR:
 		RequiresCondition: (stance-attackanything || assault-move) && airborne
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense
 		InvalidTargets: NoAutoTarget
 		
 JUMPJET.Husk:
@@ -1591,3 +1650,243 @@ JUMPJET.Husk:
 		RequiresCondition: water-death
 		FallbackSequence: die-splash
 	Interactable:
+	
+E8:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 115
+		Prerequisites: ~infantry.iraq, ttur, radar, ~techlevel.infonly
+		Description: Anti-Infantry unit.\n  Strong vs Infantry, Vehicles\n  Weak vs Tanks, Aircraft
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Desolator
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 9000
+	Mobile:
+		Voice: Move
+	RevealsShroud:
+		Range: 5c0
+	Armament@PRIMARY:
+		Weapon: RadBeamWeapon
+		LocalOffset: 427,0,341
+		PauseOnCondition: being-warped
+	Armament@Garrison:
+		Name: mounted
+		Weapon: RadBeamWeaponE
+		LocalOffset: 427,0,341
+		PauseOnCondition: being-warped
+	TakeCover:
+		ProneOffset: 384,0,-395
+	AttackFrontal:
+		Voice: Attack
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Guard:
+		Voice: Move
+	Voiced:
+		VoiceSet: DesVoice
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	-Crushable:
+	-DamagedByTerrain:
+	-DamagedByTintedCells@RAD:
+	-DamagedByTintedCells@RADWEAK:
+	PeriodicExplosion:
+		Weapon: RadEruptionWeapon
+		RequiresCondition: deployed
+		InitialDelay: 20
+	GrantTimedConditionOnDeploy:
+		DeployedCondition: deployed
+		DeployAnimation: deploy
+		UndeployAnimation: undeploy
+		BodyNames: deployed
+		CooldownTicks: 100
+		DeployedTicks: 20
+		Facing: 92
+		Voice: Attack
+		PauseOnCondition: being-warped
+		DischargingColor: 00FF0080
+		ChargingColor: FFFF0080
+	WithInfantryBody:
+		RequiresCondition: !deployed
+	WithSpriteBody@DEPLOYED:
+		Sequence: deployed
+		RequiresCondition: deployed && deploying
+		Name: deployed
+	WithMakeAnimation:
+		Sequence: deploy
+		BodyNames: deployed
+		Condition: deploying
+		
+n1c:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	RenderSprites:
+	Buildable:
+		Queue: Infantry
+		BuildPaletteOrder: 10
+		Prerequisites: ~bio.nod, ~hand, ~techlevel.medium
+		IconPalette: chrometd
+		Description: General-purpose infantry\n  Strong vs Infantry\n  Weak vs Vehicles, Artillery
+	Valued:
+		Cost: 200
+	Tooltip:
+		Name: Cyborg
+	-TakeCover:
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 10000
+	Armor:
+		Type: Light
+	Mobile:
+		Speed: 49
+		Voice: Move
+	AttackFrontal:
+		Voice: Attack
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Guard:
+		Voice: Move
+	Voiced:
+		VoiceSet: CyborgVoice
+	Armament:
+		Weapon: Vulcan3
+		PauseOnCondition: being-warped
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+		
+n3c:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	RenderSprites:
+	Buildable:
+		Queue: Infantry
+		BuildPaletteOrder: 20
+		Prerequisites: ~bio.nod, ~hand, ~techlevel.medium
+		IconPalette: chrometd
+		Description: Anti-tank infantry\n  Strong vs Tanks\n  Weak vs Infantry, Artillery
+	Valued:
+		Cost: 450
+	Tooltip:
+		Name: Cyborg Reaper
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	-TakeCover:
+	Health:
+		HP:  8000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		Range: 4c768
+	Mobile:
+		Voice: Move
+	AttackFrontal:
+		Voice: Attack
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Guard:
+		Voice: Move
+	Voiced:
+		VoiceSet: ReaperVoice
+	Armament@PRIMARY:
+		Weapon: RedEye.CYB
+		LocalOffset: 0,0,555
+		PauseOnCondition: !ammo || being-warped
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: Dragon.CYB
+		LocalOffset: 0,0,555
+		PauseOnCondition: !ammo || being-warped
+	Armament@Garrison:
+		Name: mounted
+		Weapon: RedEyeE.CYB
+		LocalOffset: 0,0,555
+		PauseOnCondition: !ammo || being-warped
+	Armament@GarrisonAA:
+		Name: mounted
+		Weapon: DragonE.CYB
+		LocalOffset: 0,0,555
+		PauseOnCondition: !ammo || being-warped
+	AmmoPool:
+		Ammo: 1
+		PipCount: 0
+		AmmoCondition: ammo
+	ReloadAmmoPool:
+		Delay: 50
+		Count: 1
+	AutoTarget:
+		ScanRadius: 5
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+		
+rmboc:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	RenderSprites:
+		PlayerPalette: playerd2k
+		Image: cycom
+		Scale: 1
+	Buildable:
+		Queue: Infantry
+		BuildPaletteOrder: 121
+		Prerequisites: bio.nod, ~hand, ~techlevel.high
+		IconPalette: chrometd
+		Description: Elite infantry unit. Armed with\na Plasma cannon.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Cyborg Elite
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 55000
+	Armor:
+		Type: Heavy
+	Mobile:
+		Speed: 49
+		Voice: Move
+	AttackFrontal:
+		Voice: Attack
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Guard:
+		Voice: Move
+	Voiced:
+		VoiceSet: CyborgCommandoVoice
+	RevealsShroud:
+		Range: 4c768
+	-TakeCover:
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+	Armament@PRIMARY:
+		Weapon: cycannon
+		PauseOnCondition: being-warped
+	Armament@Garrison:
+		Name: mounted
+		Weapon: cycannon
+		PauseOnCondition: being-warped
+	Explodes:
+		Weapon: UnitExplodeSmall
+		EmptyWeapon: UnitExplodeSmall
+		Chance: 100
+	WithDeathAnimation:
+		DeathSequencePalette: playerd2k
+	Selectable:
+		Bounds: 24,24,0,-4
+		DecorationBounds: 12,20,0,-4

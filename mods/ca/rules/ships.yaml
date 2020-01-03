@@ -25,15 +25,12 @@ SS:
 		Speed: 82
 	RevealsShroud:
 		Range: 8c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 5c0
 	Targetable:
 		TargetTypes: Ground, Water, Ship, Submarine, Repair
-		RequiresCondition: !underwater
+		RequiresCondition: !underwater && !being-warped
 	Targetable@UNDERWATER:
 		TargetTypes: Underwater, Submarine
-		RequiresCondition: underwater
+		RequiresCondition: underwater && !being-warped
 	Cloak:
 		CloakTypes: Underwater
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Heal
@@ -51,9 +48,9 @@ SS:
 		Weapon: TorpTube
 		LocalOffset: 0,-171,0, 0,171,0
 		FireDelay: 2
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackFrontal:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	SelectionDecorations:
 	AutoTarget:
 		InitialStance: HoldFire
@@ -100,15 +97,12 @@ MSUB:
 		Speed: 56
 	RevealsShroud:
 		Range: 8c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 5c0
 	Targetable:
 		TargetTypes: Ground, Water, Ship, Submarine, Repair
-		RequiresCondition: !underwater
+		RequiresCondition: !underwater && !being-warped
 	Targetable@UNDERWATER:
 		TargetTypes: Underwater, Submarine
-		RequiresCondition: underwater
+		RequiresCondition: underwater && !being-warped
 	Cloak:
 		CloakTypes: Underwater
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Heal
@@ -126,16 +120,16 @@ MSUB:
 		Weapon: SubMissile
 		LocalOffset: 0,-171,0, 0,171,0
 		FireDelay: 2
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Armament@SECONDARY:
 		Weapon: SubMissileAA
 		LocalOffset: 0,-171,0, 0,171,0
 		FireDelay: 2
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	SelectionDecorations:
 	AutoTarget:
 		InitialStance: HoldFire
@@ -178,13 +172,10 @@ DD:
 		Speed: 82
 	RevealsShroud:
 		Range: 6c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 5c0
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		Offset: -90,0,406
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Turreted:
 		TurnSpeed: 7
 		Offset: 469,0,128
@@ -192,19 +183,19 @@ DD:
 		Weapon: Stinger
 		LocalOffset: 0,-100,0, 0,100,0
 		LocalYaw: 64, -64
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Armament@SECONDARY:
 		Weapon: DepthCharge
 		LocalOffset: 0,-100,0, 0,100,0
 		LocalYaw: 80, -80
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Armament@TERTIARY:
 		Weapon: StingerAA
 		LocalOffset: 0,-100,0, 0,100,0
 		LocalYaw: 64, -64
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	SelectionDecorations:
 	WithSpriteTurret:
 	DetectCloaked:
@@ -241,13 +232,10 @@ CA:
 		Speed: 56
 	RevealsShroud:
 		Range: 7c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 5c0
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		Offset: -90,0,406
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Turreted@PRIMARY:
 		Turret: primary
 		Offset: -896,0,128
@@ -263,7 +251,7 @@ CA:
 		Recoil: 171
 		RecoilRecovery: 34
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Armament@SECONDARY:
 		Name: secondary
 		Turret: secondary
@@ -272,13 +260,13 @@ CA:
 		Recoil: 171
 		RecoilRecovery: 34
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 		FireDelay: 10
 	AttackTurreted:
 		Turrets: primary, secondary
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	SelectionDecorations:
 	WithSpriteTurret@PRIMARY:
@@ -310,15 +298,12 @@ LST:
 	Mobile:
 		Locomotor: lcraft
 		Speed: 113
-		PauseOnCondition: !(!notmobile && !empdisable)
+		PauseOnCondition: notmobile || empdisable || being-warped
 	Hovers:
 		BobDistance: -35
 		RequiresCondition: !empdisable
 	RevealsShroud:
 		Range: 6c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 5c0
 	SelectionDecorations:
 	WithLandingCraftAnimation:
 		OpenTerrainTypes: Clear, Rough, Road, Ore, Gems, Beach
@@ -359,9 +344,6 @@ PT:
 		Speed: 113
 	RevealsShroud:
 		Range: 7c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 5c0
 	Turreted:
 		TurnSpeed: 7
 		Offset: 512,0,0
@@ -369,18 +351,18 @@ PT:
 		Weapon: 2Inch
 		LocalOffset: 208,0,48
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: DepthCharge
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		Offset: -256,0,256
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	SelectionDecorations:
 	WithSpriteTurret:
@@ -419,9 +401,6 @@ PT2:
 		Speed: 100
 	RevealsShroud:
 		Range: 7c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 5c0
 	Turreted:
 		TurnSpeed: 7
 		Offset: 512,0,0
@@ -429,22 +408,22 @@ PT2:
 		Weapon: boatmissile
 		LocalOffset: 0,-100,0, 0,100,0
 		LocalYaw: 64, -64
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: DepthCharge
 		LocalOffset: 0,-100,0, 0,100,0
 		LocalYaw: 80, -80
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Armament@TERTIARY:
 		Name: tertiary
 		Weapon: BoatMissileAA
 		LocalOffset: 0,-100,0, 0,100,0
 		LocalYaw: 64, -64
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
 		Armaments: primary, secondary, tertiary
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	SelectionDecorations:
 	WithMuzzleOverlay:
 	SelectionDecorations:
@@ -487,13 +466,10 @@ DD2:
 		Speed: 82
 	RevealsShroud:
 		Range: 6c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 5c0
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		Offset: -90,0,406
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Turreted@PRIMARY:
 		Turret: primary
 		TurnSpeed: 5
@@ -505,11 +481,11 @@ DD2:
 		Recoil: 0
 		RecoilRecovery: 0
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
 		Turrets: primary, secondary, tertiary
 		Armaments: primary, secondary, tertiary
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	SelectionDecorations:
 	AutoTarget:
 	DetectCloaked:
@@ -551,10 +527,10 @@ SS2:
 		Range: 6c0
 	Targetable:
 		TargetTypes: Ground, Water, Ship, Submarine, Repair
-		RequiresCondition: !underwater
+		RequiresCondition: !underwater && !being-warped
 	Targetable@UNDERWATER:
 		TargetTypes: Underwater, Submarine
-		RequiresCondition: underwater
+		RequiresCondition: underwater && !being-warped
 	Cloak:
 		CloakTypes: Underwater
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Heal
@@ -572,14 +548,14 @@ SS2:
 		Weapon: TorpTube
 		LocalOffset: 0,-171,0, 0,171,0
 		FireDelay: 2
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Armament@secondary:
 		Name: secondary
 		Weapon: SubAA
 		LocalOffset: -300,-171,0, -300,171,0
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackFrontal:
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	SelectionDecorations:
 	AutoTarget:
 		InitialStance: HoldFire
@@ -622,15 +598,12 @@ ICBMSUB:
 		Speed: 56
 	RevealsShroud:
 		Range: 8c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 5c0
 	Targetable:
 		TargetTypes: Ground, Water, Ship, Submarine, Repair
-		RequiresCondition: !underwater
+		RequiresCondition: !underwater && !being-warped
 	Targetable@UNDERWATER:
 		TargetTypes: Underwater, Submarine
-		RequiresCondition: underwater
+		RequiresCondition: underwater && !being-warped
 	Cloak:
 		CloakTypes: Underwater
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Heal
@@ -640,7 +613,7 @@ ICBMSUB:
 		UncloakSound: subshow1.aud
 		CloakedCondition: underwater
 		Palette: submerged
-		PauseOnCondition: cloak-force-disabled || invisibility
+		PauseOnCondition: cloak-force-disabled || invisibility || being-warped
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
@@ -648,16 +621,16 @@ ICBMSUB:
 		Weapon: HonestJohnSub
 		LocalOffset: 350,-151,0, 350,151,0
 		FireDelay: 1
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Armament@secondary:
 		Weapon: HonestJohnSub
 		LocalOffset: 350,-151,0, 350,151,0
 		FireDelay: 10
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	SelectionDecorations:
 	AutoTarget:
 		InitialStance: HoldFire
@@ -702,12 +675,12 @@ CARR:
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		Offset: 30,70,600
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	RevealsShroud:
 		Range: 7c0
 	AttackOmni:
 		Voice: Attack
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	CarrierMaster:
 		Actors: horn, horn, horn
 		RearmTicks: 150
@@ -726,7 +699,7 @@ CARR:
 		Facing: -20
 	Armament:
 		Weapon: HornetLauncher
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	Selectable:
 		DecorationBounds: 44,44
 	Voiced:

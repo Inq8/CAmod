@@ -592,6 +592,17 @@ HTNK.Husk:
 	RenderSprites:
 		Image: htnk.destroyed
 		PlayerPalette: overlayplayertd
+		
+HTNK.ION.Husk:
+	Inherits: HTNK.Husk
+	Tooltip:
+		Name: Husk (Ion Mammoth Tank)
+	ThrowsParticle@turret:
+		Anim: turret-ion
+	TransformOnCapture:
+		IntoActor: htnk.ion
+	InfiltrateForTransform:
+		IntoActor: htnk.ion
 
 FTNK.Husk:
 	Inherits: ^HuskTD
@@ -744,6 +755,25 @@ A10.Husk:
 		Image: a10
 		PlayerPalette: overlayplayertd
 
+YF23.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Husk (Aurora)
+	Aircraft:
+		TurnSpeed: 7
+		Speed: 123
+	Contrail@1:
+		Offset: -325,483,0
+	Contrail@2:
+		Offset: -325,-483,0
+	SmokeTrailWhenDamaged:
+		Offset: -1c43,0,0
+		Interval: 2
+		MinDamage: Undamaged
+	RenderSprites:
+		Image: yf23
+		PlayerPalette: overlayplayertd
+
 C17.Husk:
 	Inherits: ^PlaneHusk
 	Tooltip:
@@ -761,6 +791,7 @@ C17.Husk:
 		MinDamage: Undamaged
 	RenderSprites:
 		Image: c17
+		PlayerPalette: overlayplayertd
 
 BTR.Husk:
 	Inherits: ^Husk

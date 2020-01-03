@@ -54,7 +54,7 @@ ChemballLauncher:
 			Light: 70
 			Heavy: 35
 			Concrete: 20
-		DamageTypes: Prone50Percent, TriggerProne, ToxicDeath
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: med_chem
 		ExplosionPalette: temptd
@@ -152,7 +152,7 @@ Chemspray:
 	Warhead@1Dam: SpreadDamage
 		Versus:
 			Heavy: 50
-		DamageTypes: Prone50Percent, TriggerProne, ToxicDeath
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	-Warhead@Flames:
 	
 ChemsprayE:
@@ -189,8 +189,6 @@ Napalm:
 	Warhead@3Eff: CreateEffect
 		Explosions: 1, 3
 		Image: fire
-		
-	
 
 TeslaZap:
 	Inherits: ^TeslaWeapon
@@ -215,8 +213,16 @@ PortaTeslaE:
 
 TTankZap:
 	Inherits: ^TeslaWeapon
-	ReloadDelay: 120
+	ReloadDelay: 140
+	Burst: 3
 	Range: 7c0
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 5000
+		Versus:
+			None: 1000
+			Heavy: 90
+			Light: 80
 
 DogJaw:
 	ValidTargets: Infantry
@@ -318,7 +324,7 @@ MADTankDetonate:
 Laser:
 	ReloadDelay: 120
 	ValidTargets: Ground, Water
-	InvalidTargets: Air, Chrono
+	InvalidTargets: Air
 	Range: 9c512
 	Report: oblfire.aud
 	Projectile: LaserZap
@@ -331,7 +337,7 @@ Laser:
 		SecondaryBeamZOffset: 2047
 		SecondaryBeamColor: FF000040
 	Warhead@1Dam: SpreadDamage
-		InvalidTargets: Chrono, Air
+		InvalidTargets: Air
 		Spread: 42
 		Damage: 25000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
@@ -343,6 +349,23 @@ Laser:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
+		
+Laser.Adv:
+	Inherits: Laser
+	Report: obelmod1.aud
+	Projectile: LaserZap
+		Width: 56
+		HitAnim: laserfire
+		Color: FF00FF80
+		ZOffset: 2047
+		SecondaryBeam: true
+		SecondaryBeamWidth: 90
+		SecondaryBeamZOffset: 2047
+		SecondaryBeamColor: FF00FF40
+	Warhead@1Dam: SpreadDamage
+		InvalidTargets: Air
+		Spread: 128
+		Damage: 30000
 
 LaserTur:
 	Inherits: Laser
@@ -365,6 +388,12 @@ LaserTur:
 			None: 120
 			Wood: 73
 			Heavy: 60
+			
+LaserTur.Adv:
+	Inherits: LaserTur
+	ReloadDelay: 30
+	Projectile: LaserZap
+		SecondaryBeamColor: FF00FF30
 			
 PortaLaser:
 	Inherits: Laser
@@ -413,7 +442,7 @@ PrisLaser:
 		InvalidTargets: Air
 		Spread: 512
 		Damage: 13000
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		Versus:
 			None: 100
 			Wood: 70
@@ -442,10 +471,10 @@ PrisTLaser:
 		Damage: 7750
 		Versus:
 			None: 100
-			Wood: 40
-			Concrete: 40
-			Light: 80
-			Heavy: 60  
+			Wood: 100
+			Concrete: 100
+			Light: 60
+			Heavy: 50  
 	Warhead@Burst: FireCluster
 		Weapon: PrisTBurst
 	
@@ -592,6 +621,14 @@ SonicZap:
 			Concrete: 150
 			Wood: 200
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
+
+SonicZap.UPG:
+	Inherits: SonicZap
+	Range: 7c0
+	Projectile: AreaBeam
+		Color: 00ffcc25
+	Warhead@1Dam: SpreadDamage
+		Damage: 1300
 		
 SonicZapVisual:
 	ReloadDelay: 120
@@ -633,6 +670,12 @@ SonicZapVisual:
 			Concrete: 150
 			Wood: 200
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
+
+SonicZapVisual.UPG:
+	Inherits: SonicZapVisual
+	Range: 7c0
+	Projectile: AreaBeam
+		Color: 00ffc435
 		
 Railgun:
 	ReloadDelay: 55
@@ -678,6 +721,25 @@ Railgun:
 			Heavy: 50
 			Concrete: 15
 		DamageTypes: Prone100Percent, TriggerProne, ExplosionDeath
+		
+RailgunTank:
+	Inherits: Railgun
+	ReloadDelay: 90
+	Burst: 2
+	Range: 5c512
+	Projectile: Railgun
+		DamageActorsInLine: true
+	Warhead@1Dam: SpreadDamage
+		Spread: 64
+		Damage: 7200
+		Versus:
+			Heavy: 115
+			None: 80
+			Wood: 75
+			Light: 75
+			Concrete: 50
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	-Warhead@2Dam:
 		
 IonZap:
 	ReloadDelay: 50
@@ -829,8 +891,8 @@ HornetLauncher:
 V3Launcher:
 	ReloadDelay: 300
 	Range: 18c0
+	MinRange: 8c0
 	Report: vv3latta.aud, vv3lattb.aud
-	MinRange: 5c0
 	ValidTargets: Ground, Water
 	Projectile: InstantHit
 	Warhead@1Dam: TargetDamage
@@ -845,6 +907,7 @@ Flare:
 		Duration: 8
 		SecondaryBeamWidth: 90
 		SecondaryBeamColor: FF000030
+		ZOffset: 4096
 	Warhead@1Dam: TargetDamage
 		ValidTargets: Structure
 	Warhead@2Con: GrantExternalCondition
@@ -876,9 +939,184 @@ Cloud:
 			Light: 50
 			Heavy: 25
 			Concrete: 10
-		DamageTypes: Prone50Percent, TriggerProne, ToxicDeath
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 		
 ChaosDroneTargeting:
 	Range: 2c0
 	Projectile: InstantHit
 	Warhead@1Dam: TargetDamage
+	
+RadBeamWeapon:
+	ValidTargets: Ground
+	InvalidTargets: Structure, Wall
+	Range: 6c0
+	ReloadDelay: 100
+	Report: idesat1a.aud
+	Projectile: RadBeam
+		Amplitude: 176
+		WaveLength: 384
+		Thickness: 32
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 100000
+		Versus:
+			None: 100
+			Light: 5
+			Heavy: 2
+			Wood: 0
+			Concrete: 0
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+
+RadBeamWeaponE:
+	Inherits: RadBeamWeapon
+	Range: 8c0
+	
+RadEruptionWeapon:
+	ReloadDelay: 60
+	Report: idesat2a.aud
+	Warhead@1Radiation: CreateTintedCells
+		Spread: 1c0
+		Falloff: 100, 75, 50, 25, 0
+		Level: 250
+		MaxLevel: 750
+		
+ChronoAI:
+	ReloadDelay: 1
+	Projectile: InstantExplode
+	Warhead@2Eff: CreateEffect
+		Explosions: chronowarpbig_effect
+		ExplosionPalette: ra2effect-ignore-lighting-alpha75
+		ValidTargets: Ground, Air, Water
+		ImpactSounds: chrono2.aud
+	Warhead@teleport: SpawnActor
+		Actors: 2tnk, 2tnk, 2tnk, arty, arty
+		Range: 5
+		Image: chronoappear
+		Sequence: idle
+		ValidTargets: Air, Ground, Water
+	Warhead@3Flash: ChronoFlashEffect
+		
+TimeWarp:
+	ValidTargets: Temporal
+	ReloadDelay: 1
+	Projectile: InstantExplode
+	Warhead@2Eff: CreateEffect
+		Explosions: chronowarpbig_effect
+		ExplosionPalette: ra2effect-ignore-lighting-alpha75
+		ValidTargets: Ground, Air, Water
+		ImpactSounds: chrono2.aud
+	Warhead@Damage: WarpDamage
+		Spread: 1c0
+		Damage: 1
+		ValidTargets: Temporal
+	Warhead@3Flash: ChronoFlashEffect
+		
+ClusterMineSpawner:
+	ValidTargets: Ground, Water
+	InvalidTargets: Air
+	ReloadDelay: 50
+	Report: bwhis.aud
+	Range: 2c0
+	TargetActorCenter: true
+	Projectile: Bullet
+		Image: b2bomb
+		Speed: 78
+		LaunchAngle: 10
+		Shadow: true
+		AirburstAltitude: 1c512
+	Warhead@3Eff: CreateEffect
+		Explosions: large_explosion
+		ImpactSounds: kaboom15.aud
+		ValidTargets: Air
+	Warhead@Cluster: FireCluster
+		Weapon: MineSpawner
+		RandomClusterCount: 5
+		Dimensions: 3,3
+		Footprint: xXx x_x xXx
+		ValidTargets: Ground, Air
+	Warhead@ClusterWater: FireCluster
+		Weapon: MineSpawnerWater
+		RandomClusterCount: 5
+		Dimensions: 3,3
+		Footprint: xXx x_x xXx
+		ValidTargets: Water, Air
+
+MineSpawner:
+	Range: 5c0
+	ValidTargets: Ground
+	Projectile: BulletCA
+		Image: minvs
+		Sequences: idle
+		Palette: player
+		IsPlayerPalette: true
+		Blockable: false
+		Shadow: true
+		Speed: 50
+		LaunchAngle: 90
+	Warhead@1Spa: SpawnActor
+		Actors: minvs
+		Range: 1
+		ForceGround: false
+		ValidTargets: Ground, Air
+		
+MineSpawnerWater:
+	Range: 5c0
+	ValidTargets: Water
+	Projectile: BulletCA
+		Image: minsf
+		Sequences: idle
+		Palette: player
+		IsPlayerPalette: true
+		Shadow: true
+		Blockable: false
+		Speed: 50
+		LaunchAngle: 90
+	Warhead@1Spa: SpawnActor
+		Actors: mins
+		Range: 1
+		ForceGround: false
+		ValidTargets: Water, Air
+		
+^EnergyBlast:
+	ReloadDelay: 50
+	Range: 7c0
+	Report: scrin5b.aud
+	ValidTargets: Ground
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Ground
+	Warhead@2Eff: CreateEffect
+		Explosions: large_explosion
+		ImpactSounds: expnew17.aud, expnew16.aud
+		ValidTargets: Ground, Air
+	Warhead@3EffWater: CreateEffect
+		Explosions: small_splash
+		ImpactSounds: splashm1.aud, splashm2.aud, splashm3.aud
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure
+	Warhead@4Smu: LeaveSmudge
+		SmudgeType: Scorch
+		InvalidTargets: Vehicle, Building, Wall
+
+CyCannon:
+	Inherits: ^EnergyBlast
+	Projectile: Missile
+		MaximumLaunchSpeed: 192
+		Blockable: false
+		HorizontalRateOfTurn: 2
+		Shadow: true
+		Image: laserfired2k
+		Palette: d2k
+		MinimumLaunchSpeed: 75
+		Speed: 384
+		RangeLimit: 8c0
+	Warhead@1Dam: SpreadDamage
+		Spread: 43
+		Damage: 12000
+		Versus:
+			None: 350
+			Wood: 260
+			Light: 205
+			Heavy: 150
+			Concrete: 80
+		DamageTypes: Prone350Percent, TriggerProne, ExplosionDeath
+	

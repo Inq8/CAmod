@@ -121,55 +121,96 @@
 		
 ^Berserk:
 	SpeedMultiplier@BERSERK:
-		RequiresCondition: berserk
+		RequiresCondition: berserkactive
 		Modifier: 125
 	ReloadDelayMultiplier@BERSERK:
-		RequiresCondition: berserk
+		RequiresCondition: berserkactive
 		Modifier: 50
 	ExternalCondition@BERSERK:
 		Condition: berserk
 	Berserkable@BERSERK:
-		RequiresCondition: berserk
+		RequiresCondition: berserkactive
 	WithColoredOverlay@BERSERK:
-		RequiresCondition: berserk
+		RequiresCondition: berserkactive
 		Palette: berserk
 	TimedConditionBar@BERSERK:
 		Condition: berserk
 	AutoTargetPriority@BERSERK:
-		RequiresCondition: berserk
+		RequiresCondition: berserkactive
 		InvalidTargets: ChaosDrone
+	RejectsOrders@BERSERK:
+		RequiresCondition: berserkactive
+	GrantCondition@BERSERK:
+		RequiresCondition: berserk && !invulnerability
+		Condition: berserkactive
+		
+^Frenzy:
+	SpeedMultiplier@FRENZY:
+		RequiresCondition: frenzy
+		Modifier: 125
+	ReloadDelayMultiplier@FRENZY:
+		RequiresCondition: frenzy
+		Modifier: 75
+	ExternalCondition@FRENZY:
+		Condition: frenzy
+	WithColoredOverlay@FRENZY:
+		RequiresCondition: frenzy
+		Palette: frenzy
+	TimedConditionBar@FRENZY:
+		Condition: frenzy
+		
+^Warpable:
+	Warpable:
+		Condition: being-warped
+		RevokeDelay: 350
+		DamageTypes: TemporalDeath
+		ScaleWithCurrentHealthPercentage: true
+		ShowSelectionBar: true
+		SelectionBarColor: 40FFFF
+	Targetable@Temporal:
+		TargetTypes: Temporal
+	WithColoredOverlay@temporal:
+		RequiresCondition: being-warped
+		Palette: temporal
+	WithColoredOverlay@temporal2:
+		RequiresCondition: being-warped
+		Palette: lowpower
+	TimedConditionBar@temporal:
+		Condition:  being-warped
+		Color: 2f74e2
+	WithIdleOverlay@temporal:
+		Sequence: chrono-overlay
+		RequiresCondition: being-warped
 		
 ^GDIUpgrade:
-	FirepowerMultiplier@GDIUPG:
-		RequiresCondition: gdiupg
-		Modifier: 125
 	DamageMultiplier@GDIUPG:
 		RequiresCondition: gdiupg
-		Modifier: 75
+		Modifier: 90
 	ExternalCondition@GDIUPG:
 		Condition: gdiupg
 	WithDecoration@GDIUPG:
-		Image: rank
-		Sequence: rank-elite
+		Image: pips
+		Sequence: pip-armor
 		Palette: effect
-		ReferencePoint: Top, Left
+		ReferencePoint: Bottom, Left
 		ValidStances: Ally, Enemy, Neutral
 		RequiresCondition: gdiupg
 		ZOffset: 256
+		BlinkInterval: 64
+		BlinkPatterns:
+			gdiupg && bino: Off, On
+		RequiresSelection: True
 
 ^NodUpgrade:
 	SpeedMultiplier@NODUPG:
 		RequiresCondition: nodupg
-		Modifier: 125
+		Modifier: 120
 	DamageMultiplier@NODUPG:
 		RequiresCondition: nodupg
-		Modifier: 75
-	ProductionCostMultiplier@NODUPG:
-		Multiplier: 75
-		Prerequisites: fcom.nod, !fcom.nodlowpower
-	ProductionTimeMultiplier@NODUPG:
-		Multiplier: 75
-		Prerequisites: fcom.nod, !fcom.nodlowpower
+		Modifier: 50
+	FirepowerMultiplier@NODUPG:
+		RequiresCondition: nodupg
+		Modifier: 120
 	ExternalCondition@NODUPG:
 		Condition: nodupg
 	WithDecoration@NODUPG:
@@ -180,6 +221,30 @@
 		ValidStances: Ally, Enemy, Neutral
 		RequiresCondition: nodupg
 		ZOffset: 256
+		
+^BinoUpgrade:
+	ExternalCondition@Bino:
+		Condition: bino
+	RevealsShroudMultiplier@Bino:
+		Modifier: 120
+		RequiresCondition: bino
+	WithDecoration@Bino:
+		Image: pips
+		Sequence: pip-bino
+		ReferencePoint: Bottom, Left
+		ZOffset: 256
+		RequiresCondition: bino
+		BlinkInterval: 64
+		BlinkPatterns:
+			bino && gdiupg: On, Off
+		RequiresSelection: True
+		
+^GapGenShroud:
+	ExternalCondition@GAPGEN:
+		Condition: ggshroud
+	RevealsShroudMultiplier@GAPGEN:
+		Modifier: 80
+		RequiresCondition: ggshroud
 
 
 ^InfantryExperienceHospitalOverrides:
@@ -206,6 +271,12 @@
 		Condition: invulnerability
 	ExternalCondition@INVULNERABILITY:
 		Condition: invulnerability
+		
+^IronCurtainable-Kills:
+	Inherits: ^IronCurtainable
+	KillsSelf@Immolate:
+		DamageTypes: FireDeath
+		RequiresCondition: invulnerability
 		
 ^ForceShieldable:
 	WithColoredOverlay@FS:
@@ -239,6 +310,45 @@
 		Modifier: 0
 	ExternalCondition@EMPDISABLE:
 		Condition: empdisable
+		
+^NaniteRepair:
+	SelfHealing@NREPAIR:
+		PercentageStep: 1
+		Delay: 25
+		HealIfBelow: 100
+		DamageCooldown: 0
+		RequiresCondition: nrepairheal
+	WithColoredOverlay@NREPAIR:
+		RequiresCondition: nrepairheal && !(empdisable || invulnerability || invisibility)
+		Palette: nrepair
+	TimedConditionBar@NREPAIR:
+		Condition: nrepair
+		Color: 0000FF
+	WithIdleOverlay@NREPAIR:
+		Sequence: emp-overlay
+		Palette: tseffect
+		RequiresCondition: nrepairheal
+	WithDecoration@NREPAIR:
+		Image: pips
+		Palette: chrometd
+		Sequence: pip-repair
+		ReferencePoint: Bottom, Center
+		ZOffset: 256
+		RequiresCondition: nrepairheal
+		BlinkInterval: 64
+		RequiresSelection: True
+		ValidStances: Ally, Neutral
+	ExternalCondition@NREPAIR-AI:
+		Condition: nrepairheal
+	GrantConditionOnDamageState@NREPAIR:
+		Condition: damaged
+		ValidDamageStates: Light, Medium, Heavy, Critical
+	GrantCondition@NREPAIR:
+		RequiresCondition: damaged && nrepair
+		Condition: nrepairheal
+	GrantConditionOnPrerequisite@NREPAIR:
+		Prerequisites: nrepair
+		Condition: nrepair
 		
 ^GreenFlash:
 	ExternalCondition@GHIGH:
@@ -277,6 +387,12 @@
 	WithColoredOverlay@STEALTHGEN:
 		RequiresCondition: invisibility
 		Palette: cloakgreen
+		
+^Cloakable-Kills:
+	Inherits: ^Cloakable
+	KillsSelf@Mutation:
+		DamageTypes: ToxinDeath
+		RequiresCondition: invisibility
 
 ^AutoTargetGround:
 	AutoTarget:
@@ -345,6 +461,9 @@
 	ProductionCostMultiplier@IndustrialPlant:
 		Multiplier: 75
 		Prerequisites: indp, !indplowpower
+	ProductionTimeMultiplier@IndustrialPlant:
+		Multiplier: 90
+		Prerequisites: indp, !indplowpower
 
 ^Vehicle:
 	Inherits@1: ^ExistsInWorld
@@ -353,6 +472,11 @@
 	Inherits@4: ^Cloakable
 	Inherits@5: ^EmpDisable
 	Inherits@6: ^GDIUpgrade
+	Inherits@7: ^BinoUpgrade
+	Inherits@8: ^GapGenShroud
+	Inherits@9: ^Warpable
+	Inherits@10: ^Frenzy
+	Inherits@11: ^NaniteRepair
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
@@ -364,7 +488,7 @@
 	DrawLineToTarget:
 	UpdatesPlayerStatistics:
 	Mobile:
-		PauseOnCondition: being-captured || empdisable
+		PauseOnCondition: being-captured || empdisable || being-warped
 		Locomotor: wheeled
 		TurnSpeed: 5
 	SelectionDecorations:
@@ -372,10 +496,10 @@
 	Selectable:
 		Bounds: 24, 24
 	Targetable:
-		RequiresCondition: !parachute
+		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Vehicle
 	Targetable@REPAIR:
-		RequiresCondition: !parachute && damaged
+		RequiresCondition: !parachute && damaged && !being-warped
 		TargetTypes: Repair
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
@@ -383,6 +507,7 @@
 	Repairable:
 		RepairActors: fix, rep
 	Chronoshiftable:
+		RequiresCondition: !being-warped
 	Passenger:
 		CargoType: Vehicle
 	AttackMove:
@@ -402,6 +527,7 @@
 	Capturable:
 		Types: vehicle
 		CancelActivity: True
+		RequiresCondition: !being-warped
 	CaptureNotification:
 		Notification: UnitStolen
 		LoseNotification: UnitLost
@@ -446,7 +572,7 @@
 	DamagedByTintedCells@RAD:
 		Damage: 100
 		DamageInterval: 16
-		DamageTypes: ToxicDeath
+		DamageTypes: RadiationDeath
 		LayerName: radioactivity
 		
 ^VehicleTD:
@@ -474,6 +600,11 @@
 	Inherits@3: ^InfantryExperienceHospitalOverrides
 	Inherits@4: ^SpriteActor
 	Inherits@5: ^NodUpgrade
+	Inherits@6: ^GapGenShroud
+	Inherits@7: ^Warpable
+	Inherits@8: ^Cloakable-Kills
+	Inherits@9: ^IronCurtainable-Kills
+	Inherits@10: ^Frenzy
 	Inherits@bounty: ^GlobalBounty
 	Inherits@SELECTION_MODE: ^FlatSelectionMode
 	RenderSprites:
@@ -492,12 +623,13 @@
 	Mobile:
 		Speed: 41
 		Locomotor: foot
+		PauseOnCondition: being-warped
 	DamagedByTerrain:
 		Terrain: Tiberium, BlueTiberium
 		Damage: 100
 		DamageInterval: 16
 		DamageTypes: ToxinDeath
-		RequiresCondition: !hazmatsuits
+		RequiresCondition: !hazmatsuits || !being-warped
 	GrantConditionOnPrerequisite@BIO:
 		Condition: hazmatsuits
 		Prerequisites: bio
@@ -520,10 +652,10 @@
 		Bounds: 18,18,0,-6
 		DecorationBounds: 12,17,0,-6
 	Targetable:
-		RequiresCondition: !parachute
+		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Infantry, Disguise
 	Targetable@HEAL:
-		RequiresCondition: !parachute && damaged
+		RequiresCondition: !parachute && damaged && !being-warped
 		TargetTypes: Heal
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
@@ -531,6 +663,10 @@
 	QuantizeFacingsFromSequence:
 		Sequence: stand
 	WithInfantryBody:
+		RequiresCondition: !being-warped
+	WithInfantryBody@Warped:
+		StandSequences: stand
+		RequiresCondition: being-warped
 	WithDeathAnimation:
 		DeathSequencePalette: overlayplayertd
 		DeathTypes:
@@ -543,7 +679,7 @@
 			PoisonDeath: 7
 			ChronoDeath: 8
 			ToxinDeath: 9
-			ToxicDeath: 10
+			RadiationDeath: 10
 		CrushedSequence: die-crushed
 	AttackMove:
 	Passenger:
@@ -597,7 +733,7 @@
 		DeathTypes: ElectricityDeath, ChronoDeath
 	DeathSounds@POISONED:
 		Voice: Poisoned
-		DeathTypes: PoisonDeath, ToxinDeath, ToxicDeath
+		DeathTypes: PoisonDeath, ToxinDeath, RadiationDeath
 	Parachutable:
 		FallRate: 26
 		KilledOnImpassableTerrain: true
@@ -638,8 +774,15 @@
 	DamagedByTintedCells@RAD:
 		Damage: 750
 		DamageInterval: 16
-		DamageTypes: ToxicDeath
+		DamageTypes: RadiationDeath
 		LayerName: radioactivity
+		RequiresCondition: !hazmatsuits || !being-warped
+	DamagedByTintedCells@RADWEAK:
+		Damage: 100
+		DamageInterval: 16
+		DamageTypes: RadiationDeath
+		LayerName: radioactivity.weak
+		RequiresCondition: !hazmatsuits || !being-warped
 
 ^Soldier:
 	Inherits: ^Infantry
@@ -651,7 +794,7 @@
 		DamageModifiers:
 			Prone50Percent: 50
 		DamageTriggers: TriggerProne
-		PauseOnCondition: nodupg
+		PauseOnCondition: nodupg || being-warped
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		IdleSequences: idle1,idle2
@@ -697,6 +840,11 @@
 	Inherits@5: ^EmpDisable
 	Inherits@6: ^Cloakable
 	Inherits@7: ^GDIUpgrade
+	Inherits@8: ^BinoUpgrade
+	Inherits@9: ^GapGenShroud
+	Inherits@10: ^Warpable
+	Inherits@11: ^Frenzy
+	Inherits@12: ^NaniteRepair
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
@@ -709,15 +857,16 @@
 	UpdatesPlayerStatistics:
 	Mobile:
 		Locomotor: naval
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	SelectionDecorations:
 	WithSpriteControlGroupDecoration:
 	Selectable:
 		Bounds: 24,24
 	Targetable:
 		TargetTypes: Ground, Water, Ship
+		RequiresCondition: !being-warped
 	Targetable@REPAIR:
-		RequiresCondition: damaged
+		RequiresCondition: damaged && !being-warped
 		TargetTypes: Repair
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
@@ -761,7 +910,7 @@
 	DamagedByTintedCells@RAD:
 		Damage: 100
 		DamageInterval: 16
-		DamageTypes: ToxicDeath
+		DamageTypes: RadiationDeath
 		LayerName: radioactivity
 
 ^NeutralPlane:
@@ -849,11 +998,14 @@
 	Inherits@3: ^Cloakable
 	Inherits@4: ^EmpDisable
 	Inherits@5: ^GDIUpgrade
+	Inherits@6: ^BinoUpgrade
+	Inherits@7: ^GapGenShroud
+	Inherits@8: ^Warpable
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@production: ^ProductionSpeedBoost
 	Cloak@EXTERNALCLOAK:
-		RequiresCondition: invisibility || crate-cloak && !cloak-force-disabled && !airborne
+		RequiresCondition: invisibility || crate-cloak && (!cloak-force-disabled && !airborne && !being-warped)
 		InitialDelay: 0
 		CloakDelay: 90
 		IsPlayerPalette: true
@@ -867,6 +1019,15 @@
 		CruisingCondition: cruising
 	KillsSelf:
 		RequiresCondition: empdisable && cruising
+	Targetable@GROUND:
+		RequiresCondition: !airborne && !being-warped
+		TargetTypes: Ground, Vehicle
+	Targetable@AIRBORNE:
+		RequiresCondition: airborne && !being-warped
+		TargetTypes: Air
+	Targetable@REPAIR:
+		RequiresCondition: !airborne && damaged && !being-warped
+		TargetTypes: Repair
 		
 ^PlaneTD:
 	Inherits@1: ^Plane
@@ -967,6 +1128,8 @@
 	Inherits@2: ^Cloakable
 	Inherits@3: ^ForceShieldable
 	Inherits@4: ^EmpDisable
+	Inherits@5: ^GapGenShroud
+	Inherits@6: ^Warpable
 	WithColoredOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield
 	Huntable:
@@ -987,6 +1150,7 @@
 		BeingCapturedCondition: being-captured
 	Capturable:
 		Types: building
+		RequiresCondition: !being-warped
 	CapturableProgressBar:
 	CapturableProgressBlink:
 	SpawnActorsOnSell:
@@ -1004,7 +1168,7 @@
 	Demolishable:
 		Condition: being-demolished
 	Sellable:
-		RequiresCondition: !build-incomplete && !being-captured && !being-demolished
+		RequiresCondition: !build-incomplete && !being-captured && !being-demolished && !being-warped
 		SellSounds: cashturn.aud
 	WithBuildingRepairDecoration:
 		Image: allyrepair
@@ -1012,6 +1176,9 @@
 		ReferencePoint: Center
 		Palette: player
 		IsPlayerPalette: True
+	Targetable:
+		TargetTypes: Ground, C4, DetonateAttack, Structure
+		RequiresCondition: !being-warped
 		
 ^BuildingTD:
 	Inherits@1: ^Building
@@ -1063,6 +1230,10 @@
 		Bounds: 24,24
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, Defense
+		RequiresCondition: !being-warped
+	DetectCloaked:
+		Range: 6c0
+		RequiresCondition: !being-warped
 	MustBeDestroyed:
 		RequiredForShortGame: false
 	-GivesBuildableArea:
@@ -1077,7 +1248,7 @@
 	-CapturableProgressBar:
 	-CapturableProgressBlink:
 	Sellable:
-		RequiresCondition: !build-incomplete && !being-demolished
+		RequiresCondition: !build-incomplete && !being-demolished && !being-warped
 		SellSounds: cashturn.aud
 	DrawLineToTarget:
 	RenderRangeCircle:
@@ -1755,7 +1926,7 @@
 		Weapon: Chemspray
 		LocalOffset: 384,0,0
 		MuzzleSequence: muzzle
-		MuzzlePalette: temptd
+		MuzzlePalette: tdeffect
 	AttackFrontal:
 		Voice: Attack
 	BodyOrientation:

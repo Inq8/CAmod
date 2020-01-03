@@ -124,14 +124,8 @@ function Test-Command
 	}
 
 	Write-Host "Testing mods..." -ForegroundColor Cyan
-	Write-Host "Testing Tiberian Sun mod MiniYAML..." -ForegroundColor Cyan
-	./OpenRA.Utility.exe ts --check-yaml
-	Write-Host "Testing Dune 2000 mod MiniYAML..." -ForegroundColor Cyan
-	./OpenRA.Utility.exe d2k --check-yaml
-	Write-Host "Testing Tiberian Dawn mod MiniYAML..." -ForegroundColor Cyan
-	./OpenRA.Utility.exe cnc --check-yaml
-	Write-Host "Testing Red Alert mod MiniYAML..." -ForegroundColor Cyan
-	./OpenRA.Utility.exe ra --check-yaml
+	Write-Host "Testing CA mod MiniYAML..." -ForegroundColor Cyan
+	./OpenRA.Utility.exe ca --check-yaml
 }
 
 function Check-Command

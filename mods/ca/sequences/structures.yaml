@@ -1,17 +1,4 @@
-fcom:
-	idle:
-	damaged-idle:
-		Start: 1
-	make: fcommake
-		Length: *
-	dead:
-		Start: 1
-		Tick: 800
-	bib: bib3
-		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
+^StructureOverlays:
 	emp-overlay: emp_fx01
 		Length: *
 		BlendMode: Additive
@@ -24,6 +11,22 @@ fcom:
 		Offset: 0, 0
 		UseTilesetCode: false
 		ZOffset: 512
+
+fcom:
+	Inherits: ^StructureOverlays
+	idle: fcom
+	damaged-idle: fcom
+		Start: 1
+	make: fcommake
+		Length: *
+	dead: fcom
+		Start: 1
+		Tick: 800
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
 	icon: missicon2
 	
 fcom.destroyed:
@@ -37,12 +40,13 @@ fcom.destroyed:
 			
 
 hosp:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: hosp
 		Length: 4
-	damaged-idle:
+	damaged-idle: hosp
 		Start: 4
 		Length: 4
-	dead:
+	dead: hosp
 		Start: 8
 		Tick: 800
 	bib: bib3
@@ -52,18 +56,6 @@ hosp:
 			INTERIOR: TEMPERAT
 	make: hospmake
 		Length: *
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: hospicon
 	
 hosp.destroyed:
@@ -71,10 +63,11 @@ hosp.destroyed:
 		Start: 8
 
 bio:
-	idle:
-	damaged-idle:
+	Inherits: ^StructureOverlays
+	idle: bio
+	damaged-idle: bio
 		Start: 1
-	dead:
+	dead: bio
 		Start: 2
 		Tick: 800
 	bib: bib3
@@ -84,46 +77,24 @@ bio:
 			INTERIOR: TEMPERAT
 	make: biomake
 		Length: *
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
+	icon: hospicon
 		
 bio.destroyed:
 	idle: bio
 		Start: 2
 
 oilb:
-	idle:
-	damaged-idle:
+	Inherits: ^StructureOverlays
+	idle: oilb
+	damaged-idle: oilb
 		Start: 1
 		Length: *
-	make:
+	make: oilb
 	bib: bib3
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 		
 oilb.destroyed:
 	idle: oilb
@@ -136,12 +107,13 @@ oilb.destroyed:
 			INTERIOR: TEMPERAT
 			
 orep:
-	idle:
-	damaged-idle:
+	Inherits: ^StructureOverlays
+	idle: orep
+	damaged-idle: orep
 		Start: 1
 	make: orepmake
 		Length: *
-	dead:
+	dead: orep
 		Start: 1
 		Tick: 800
 	bib: bib2
@@ -149,18 +121,6 @@ orep:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: orepicon
 
 orep.destroyed:
@@ -175,17 +135,18 @@ orep.destroyed:
 			INTERIOR: TEMPERAT
 
 fact:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: fact
 	make: factmake
 		Length: *
-	build:
+	build: fact
 		Start: 1
 		Length: 25
 	pdox: factpdox
 		Length: 80
-	damaged-idle:
+	damaged-idle: fact
 		Start: 26
-	damaged-build:
+	damaged-build: fact
 		Start: 27
 		Length: 25
 	damaged-pdox: factpdox
@@ -198,25 +159,14 @@ fact:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: facticon
 	fake-icon: facficon
 
 proc:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: proc
 		ZOffset: -1c511
-	damaged-idle:
+	damaged-idle: proc
 		Start: 1
 		ZOffset: -1c511
 	idle-top: proctop
@@ -233,30 +183,19 @@ proc:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: procicon
 
 silo:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: silo
 		Offset: 0,-1
-	damaged-idle:
+	damaged-idle: silo
 		Start: 9
 		Offset: 0,-1
-	stages:
+	stages: silo
 		Length: 9
 		Offset: 0,-1
-	damaged-stages:
+	damaged-stages: silo
 		Start: 9
 		Length: 9
 		Offset: 0,-1
@@ -269,23 +208,12 @@ silo:
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
 			BARREN: DESERT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: siloicon
 
 powr:
-	idle:
-	damaged-idle:
+	Inherits: ^StructureOverlays
+	idle: powr
+	damaged-idle: powr
 		Start: 1
 	make: powrmake
 		Length: *
@@ -296,25 +224,14 @@ powr:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: powricon
 	fake-icon: fpwricon
 
 apwr:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: apwr
 		Offset: 0,-10
-	damaged-idle:
+	damaged-idle: apwr
 		Start: 1
 		Offset: 0,-10
 	make: apwrmake
@@ -328,26 +245,15 @@ apwr:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: apwricon
 	fake-icon: fapwicon
 
 barr:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: barr
 		Length: 10
 		Offset: 0,-6
-	damaged-idle:
+	damaged-idle: barr
 		Start: 10
 		Length: 10
 		Offset: 0,-6
@@ -359,21 +265,10 @@ barr:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: barricon
 
 tent:
+	Inherits: ^StructureOverlays
 	Defaults:
 		UseTilesetExtension: true
 		TilesetOverrides:
@@ -392,25 +287,16 @@ tent:
 	bib: bib3
 		Length: *
 	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
 		UseTilesetExtension: false
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
 		UseTilesetExtension: false
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: tenticon
 		UseTilesetExtension: false
 
 kenn:
-	idle:
-	damaged-idle:
+	Inherits: ^StructureOverlays
+	idle: kenn
+	damaged-idle: kenn
 		Start: 1
 	make: kennmake
 		Length: *
@@ -419,23 +305,12 @@ kenn:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			BARREN: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: kennicon
 
 dome:
-	idle:
-	damaged-idle:
+	Inherits: ^StructureOverlays
+	idle: dome
+	damaged-idle: dome
 		Start: 1
 	make: domemake
 		Length: *
@@ -444,53 +319,40 @@ dome:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: domeicon
 	fake-icon: domficon
 
 atek:
-	idle:
-	damaged-idle:
+	Inherits: ^StructureOverlays
+	idle: atek
+	damaged-idle: atek
 		Start: 1
 	make: atekmake
 		Length: *
 	active: sputdoor
 		Length: *
 		Offset: -4,0
+	damaged-active: sputdoor
+		Length: *
+		Offset: -4,0
+	false-active: atek
+	damaged-false-active: atek
+		Start: 1
 	bib: bib3
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: atekicon
 	fake-icon: ateficon
 
 stek:
-	idle:
-	damaged-idle:
+	Inherits: ^StructureOverlays
+	idle: stek
+	active: stek
+	damaged-active: stek
+		Start: 1
+	damaged-idle: stek
 		Start: 1
 	make: stekmake
 		Length: *
@@ -499,23 +361,12 @@ stek:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: stekicon
 
 weap:
-	idle:
-	damaged-idle:
+	Inherits: ^StructureOverlays
+	idle: weap
+	damaged-idle: weap
 		Start: 1
 	place: weapmake
 		Start: 14
@@ -534,32 +385,25 @@ weap:
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
 	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 1536
+		ZOffset: 2048
 	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
+		ZOffset: 2048
 	icon: weapicon
 	fake-icon: weaficon
 
 hpad:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: hpad
 		ZOffset: -1023
-	damaged-idle:
+	damaged-idle: hpad
 		Start: 7
 		ZOffset: -1023
-	active:
+	active: hpad
 		Start: 1
 		Length: 6
 		Tick: 100
 		ZOffset: -1023
-	damaged-active:
+	damaged-active: hpad
 		Start: 8
 		Length: 6
 		Tick: 100
@@ -571,21 +415,10 @@ hpad:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: hpadicon
 
 afld:
+	Inherits: ^StructureOverlays
 	idle: afldidle
 		Length: 8
 		Tick: 160
@@ -597,12 +430,12 @@ afld:
 		Tick: 160
 		ZOffset: -1023
 		Offset: 0,-4
-	active:
+	active: afld
 		Length: 8
 		Tick: 160
 		ZOffset: -1023
 		Offset: 0,-4
-	damaged-active:
+	damaged-active: afld
 		Start: 8
 		Length: 8
 		Tick: 160
@@ -617,76 +450,43 @@ afld:
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
 		ZOffset: -1024
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: afldicon
 
 spen:
-	idle:
-	damaged-idle:
+	Inherits: ^StructureOverlays
+	idle: spen
+	damaged-idle: spen
 		Start: 1
 	make: spenmake
 		Length: *
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: spenicon
 
 syrd:
-	idle:
-	damaged-idle:
+	Inherits: ^StructureOverlays
+	idle: syrd
+	damaged-idle: syrd
 		Start: 1
 	make: syrdmake
 		Length: *
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: syrdicon
 	fake-icon: syrficon
 
 fix:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: fix
 		Offset: 0,1
 		ZOffset: -1c511
-	damaged-idle:
+	damaged-idle: fix
 		Start: 7
 		Offset: 0,1
 		ZOffset: -1c511
-	active:
+	active: fix
 		Start: 1
 		Length: 6
 		Offset: 0,1
 		Tick: 100
 		ZOffset: -1c511
-	damaged-active:
+	damaged-active: fix
 		Start: 8
 		Length: 6
 		Offset: 0,1
@@ -702,36 +502,25 @@ fix:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			BARREN: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: fixicon
 	fake-icon: fixficon
 
 gun:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: gun
 		Facings: 32
 		UseClassicFacingFudge: True
-	recoil:
+	recoil: gun
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
 	make: gunmake
 		Length: *
-	damaged-idle:
+	damaged-idle: gun
 		Start: 64
 		Facings: 32
 		UseClassicFacingFudge: True
-	damaged-recoil:
+	damaged-recoil: gun
 		Start: 96
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -742,27 +531,16 @@ gun:
 		Offset: -1,-1
 		UseTilesetExtension: true
 		TilesetOverrides:
-			BARREN: TEMPERAT		
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
+			BARREN: TEMPERAT
 	icon: gunicon
 
 agun:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: agun
 		Facings: 32
 		UseClassicFacingFudge: True
 		Offset: 0,-13
-	recoil:
+	recoil: agun
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -770,12 +548,12 @@ agun:
 	make: agunmake
 		Length: *
 		Offset: 0,-13
-	damaged-idle:
+	damaged-idle: agun
 		Start: 64
 		Facings: 32
 		UseClassicFacingFudge: True
 		Offset: 0,-13
-	damaged-recoil:
+	damaged-recoil: agun
 		Start: 96
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -789,21 +567,10 @@ agun:
 		TilesetOverrides:
 			JUNGLE: TEMPERAT
 			BARREN: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: agunicon
 
 sam:
+	Inherits: ^StructureOverlays
 	idle: sam2
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -825,24 +592,13 @@ sam:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			BARREN: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: samicon
 
 ftur:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: ftur
 		Offset: 0,-2
-	damaged-idle:
+	damaged-idle: ftur
 		Start: 1
 		Offset: 0,-2
 	make: fturmake
@@ -853,35 +609,24 @@ ftur:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			BARREN: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: fturicon
 
 tsla:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: tsla
 		Offset: 0,-13
-	damaged-idle:
+	damaged-idle: tsla
 		Start: 10
 		Offset: 0,-13
 	make: tslamake
 		Length: *
 		Offset: 0,-13
-	active:
+	active: tsla
 		Start: 0
 		Length: 10
 		Tick: 100
 		Offset: 0,-13
-	damaged-active:
+	damaged-active: tsla
 		Start: 11
 		Length: 9
 		Tick: 100
@@ -891,23 +636,12 @@ tsla:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			BARREN: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: tslaicon
 
 pbox:
-	idle:
-	damaged-idle:
+	Inherits: ^StructureOverlays
+	idle: pbox
+	damaged-idle: pbox
 		Start: 1
 	make: pboxmake
 		Length: *
@@ -921,21 +655,10 @@ pbox:
 		TilesetOverrides:
 			JUNGLE: TEMPERAT
 			BARREN: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: pboxicon
 
 hbox:
+	Inherits: ^StructureOverlays
 	Defaults:
 		UseTilesetExtension: true
 		TilesetOverrides:
@@ -950,27 +673,18 @@ hbox:
 		Facings: 8
 		UseTilesetExtension: false
 	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
 		UseTilesetExtension: false
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
 		UseTilesetExtension: false
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: hboxicon
 		UseTilesetExtension: false
 
 gap:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: gap
 		Length: 32
 		Offset: 0,-14
-	damaged-idle:
+	damaged-idle: gap
 		Start: 32
 		Length: 32
 		Offset: 0,-14
@@ -983,31 +697,20 @@ gap:
 		TilesetOverrides:
 			JUNGLE: TEMPERAT
 			BARREN: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: gapicon
 
 iron:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: iron
 		Offset: 0,-12
-	active:
+	active: iron
 		Length: 11
 		Offset: 0,-12
 		Tick: 140
-	damaged-idle:
+	damaged-idle: iron
 		Start: 11
 		Offset: 0,-12
-	damaged-active:
+	damaged-active: iron
 		Start: 11
 		Length: 11
 		Offset: 0,-12
@@ -1021,28 +724,17 @@ iron:
 		TilesetOverrides:
 			JUNGLE: TEMPERAT
 			BARREN: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: ironicon
 
 pdox:
-	idle:
-	damaged-idle:
+	Inherits: ^StructureOverlays
+	idle: pdox
+	damaged-idle: pdox
 		Start: 29
-	active:
+	active: pdox
 		Length: 29
 		Tick: 140
-	damaged-active:
+	damaged-active: pdox
 		Start: 29
 		Length: 29
 	make: pdoxmake
@@ -1054,22 +746,11 @@ pdox:
 		TilesetOverrides:
 			JUNGLE: TEMPERAT
 			BARREN: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: pdoxicon
 	fake-icon: pdoficon
 
 mslo:
+	Inherits: ^StructureOverlays
 	Defaults:
 		UseTilesetExtension: true
 		TilesetOverrides:
@@ -1089,29 +770,20 @@ mslo:
 		Start: 9
 		Length: 7
 	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
 		UseTilesetExtension: false
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
 		UseTilesetExtension: false
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: msloicon2
 		UseTilesetExtension: false
 	fake-icon: mslficon
 		UseTilesetExtension: false
 
 miss:
-	idle:
-	damaged-idle:
+	Inherits: ^StructureOverlays
+	idle: miss
+	damaged-idle: miss
 		Start: 1
-	dead:
+	dead: miss
 		Start: 2
 		Tick: 800
 	make: missmake
@@ -1121,25 +793,17 @@ miss:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: missicon
 	
 gtek:
-	idle:
-	damaged-idle:
+	Inherits: ^StructureOverlays
+	idle: gtek
+	active: gtek
+	damaged-idle: gtek
 		Start: 1
-	dead:
+	damaged-active: gtek
+		Start: 1
+	dead: gtek
 		Start: 2
 		Tick: 800
 	make: gtekmake
@@ -1149,18 +813,6 @@ gtek:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: gtekicnh
 	
 miss.destroyed:
@@ -1173,36 +825,36 @@ miss.destroyed:
 			INTERIOR: TEMPERAT
 
 brik:
-	idle:
+	idle: brik
 		Length: 16
-	scratched-idle:
+	scratched-idle: brik
 		Start: 16
 		Length: 16
-	damaged-idle:
+	damaged-idle: brik
 		Start: 32
 		Length: 16
 	icon: brikicon
 
 vgate:
-	make:
+	make: vgate
 		Length: 7
-	idle:
+	idle: vgate
 		Frames: 6, 5, 4, 3, 2, 1, 0
 		Length: 7
 		ZOffset: -1c511
-	damaged-idle:
+	damaged-idle: vgate
 		Frames: 13, 12, 11, 10, 9, 8, 7
 		Length: 7
 		ZOffset: -1c511
 
 agate:
-	make:
+	make: agate
 		Length: 7
-	idle:
+	idle: agate
 		Frames: 6, 5, 4, 3, 2, 1, 0
 		Length: 7
 		ZOffset: -1c511
-	damaged-idle:
+	damaged-idle: agate
 		Frames: 13, 12, 11, 10, 9, 8, 7
 		Length: 7
 		ZOffset: -1c511
@@ -1211,31 +863,32 @@ sgate:
 	Inherits: agate
 
 sbag:
-	idle:
+	idle: sbag
 		Length: 16
 	icon: sbagicon
 
 fenc:
-	idle:
+	idle: fenc
 		Length: 16
 	icon: fencicon
 
 cycl:
-	idle:
+	idle: cycl
 		Length: 16
-	damaged-idle:
+	damaged-idle: cycl
 		Start: 16
 		Length: 16
 
 pyle:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: pyle
 		Length: 10
 		Tick: 100
-	damaged-idle:
+	damaged-idle: pyle
 		Start: 10
 		Length: 10
 		Tick: 100
-	dead:
+	dead: pyle
 		Start: 20
 		Tick: 100
 	make: pylemake
@@ -1246,25 +899,14 @@ pyle:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: pyleicnh
 
 hand:
-	idle:
-	damaged-idle:
+	Inherits: ^StructureOverlays
+	idle: hand
+	damaged-idle: hand
 		Start: 1
-	dead:
+	dead: hand
 		Start: 2
 	make: handmake
 		Length: *
@@ -1274,40 +916,25 @@ hand:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: handicnh
 
 afac:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: afac
 		Length: 4
 		Tick: 160
-	build:
-		Start: 4
-		Length: 20
-		Tick: 100
-	buildnod:
+	build: afac
 		Start: 4
 		Length: 20
 		Tick: 100
 	pdox: afac
 		Length: 4
 		Tick: 160
-	damaged-idle:
+	damaged-idle: afac
 		Start: 24
 		Length: 4
 		Tick: 160
-	damaged-build:
+	damaged-build: afac
 		Start: 28
 		Length: 20
 		Tick: 100
@@ -1315,7 +942,7 @@ afac:
 		Start: 24
 		Length: 4
 		Tick: 160
-	dead:
+	dead: afac
 		Start: 48
 	make: afacmake
 		Length: *
@@ -1328,29 +955,18 @@ afac:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: afacicon
 
 nuke:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: nuke
 		Length: 4
 		Tick: 1000
-	damaged-idle:
+	damaged-idle: nuke
 		Start: 4
 		Length: 4
 		Tick: 1000
-	dead:
+	dead: nuke
 		Start: 8
 		Tick: 1000
 	make: nukemake
@@ -1361,29 +977,18 @@ nuke:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: nukeicnh
 
 nuk2:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: nuk2
 		Length: 4
 		Tick: 1000
-	damaged-idle:
+	damaged-idle: nuk2
 		Start: 4
 		Length: 4
 		Tick: 1000
-	dead:
+	dead: nuk2
 		Start: 8
 	make: nuk2make
 		Length: *
@@ -1393,23 +998,12 @@ nuk2:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: nuk2icnh
 
 awep:
-	idle:
-	damaged-idle:
+	Inherits: ^StructureOverlays
+	idle: awep
+	damaged-idle: awep
 		Start: 1
 	dead: awep
 		Start: 2
@@ -1434,32 +1028,25 @@ awep:
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
 	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
 		ZOffset: 2048
 	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
 		ZOffset: 2048
 	icon: awepicnh
 
 astrip:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: astrip
 		Tick: 120
 		ZOffset: -1023
-	active:
+	active: astrip
 		Length: 16
 		Tick: 120
 		ZOffset: -1023
-	damaged-idle:
+	damaged-idle: astrip
 		Start: 16
 		Tick: 120
 		ZOffset: -1023
-	damaged-active:
+	damaged-active: astrip
 		Start: 16
 		Length: 16
 		Tick: 120
@@ -1471,7 +1058,7 @@ astrip:
 		Start: 16
 		Length: 16
 		Tick: 160
-	dead:
+	dead: astrip
 		Start: 32
 		ZOffset: -1023
 	make: astripmake
@@ -1482,36 +1069,30 @@ astrip:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: astripicnh
 
 tmpl:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: tmpl
 		ZOffset: 1023
-	damaged-idle:
+	damaged-idle: tmpl
 		Start: 33
 		ZOffset: 1023
-	active:
+	active: tmpl
 		Length: 33
 		Tick: 25
 		ZOffset: 1023
-	damaged-active:
+	damaged-active: tmpl
 		Start: 33
 		Length: 33
 		Tick: 25
 		ZOffset: 1023
-	dead:
+	false-active: tmpl
+		ZOffset: 1023
+	damaged-false-active: tmpl
+		Start: 33
+		ZOffset: 1023
+	dead: tmpl
 		Start: 66
 		Tick: 800
 	make: tmplmake
@@ -1522,53 +1103,42 @@ tmpl:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 2048
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 2048
 	icon: tmplicnh
 
 nsam:
-	closed-idle:
+	Inherits: ^StructureOverlays
+	closed-idle: nsam
 		Start: 0
-	opening:
+	opening: nsam
 		Start: 1
 		Length: 16
 		Tick: 30
-	idle:
+	idle: nsam
 		Start: 17
 		Facings: 32
 		UseClassicFacingFudge: True
-	closing:
+	closing: nsam
 		Start: 50
 		Length: 14
 		Tick: 30
-	damaged-closed-idle:
+	damaged-closed-idle: nsam
 		Start: 64
-	damaged-opening:
+	damaged-opening: nsam
 		Start: 65
 		Length: 16
 		Tick: 30
-	damaged-idle:
+	damaged-idle: nsam
 		Start: 81
 		Facings: 32
 		UseClassicFacingFudge: True
-	damaged-closing:
+	damaged-closing: nsam
 		Start: 114
 		Length: 14
 		Tick: 30
-	dead:
+	dead: nsam
 		Start: 128
 		Tick: 800
-	place:
+	place: nsam
 		Start: 0
 	make: nsammake
 		Length: 20
@@ -1576,40 +1146,29 @@ nsam:
 	muzzle: samfire
 		Length: 18
 		Facings: 8
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: samicon
 
 chain:
-	idle:
+	idle: chain
 		Length: 16
-	scratched-idle:
+	scratched-idle: chain
 		Start: 16
 		Length: 16
-	damaged-idle:
+	damaged-idle: chain
 		Start: 32
 		Length: 16
 	icon: chainicon
 
 hq:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: hq
 		Length: 16
 		Tick: 100
-	damaged-idle:
+	damaged-idle: hq
 		Start: 16
 		Length: 16
 		Tick: 100
-	dead:
+	dead: hq
 		Start: 32
 	make: hqmake
 		Length: *
@@ -1619,29 +1178,18 @@ hq:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: hqicnh
 
 eye:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: eye
 		Length: 16
 		Tick: 100
-	damaged-idle:
+	damaged-idle: eye
 		Start: 16
 		Length: 16
 		Tick: 100
-	dead:
+	dead: eye
 		Start: 32
 	make: eyemake
 		Length: *
@@ -1651,34 +1199,23 @@ eye:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: eyeicnh
 
 obli:
+	Inherits: ^StructureOverlays
 	Defaults:
 		Offset: 0,-12
-	idle:
-	damaged-idle:
+	idle: obli
+	damaged-idle:   obli
 		Start: 4
-	active:
+	active: obli
 		Length: 4
 		Tick: 680
-	damaged-active:
+	damaged-active: obli
 		Start: 4
 		Length: 4
 		Tick: 680
-	dead:
+	dead: obli
 		Start: 8
 	make: oblimake
 		Length: 13
@@ -1692,28 +1229,17 @@ obli:
 			INTERIOR: TEMPERAT
 			BARREN: TEMPERAT
 		Offset: -1,-3
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 
 gtwr:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: gtwr
 	make: gtwrmake
 		Length: *
 	muzzle: minigun
 		Length: 6
 		Facings: 8
 	icon: gtwricnh
-	damaged-idle:
+	damaged-idle: gtwr
 		Start: 1
 	dead: gtwrmake
 		Start: 2
@@ -1723,26 +1249,15 @@ gtwr:
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
 			BARREN: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 
 atwr:
+	Inherits: ^StructureOverlays
 	Defaults:
 		Offset: 0,-13
-	idle:
-	damaged-idle:
+	idle: atwr
+	damaged-idle: atwr
 		Start: 1
-	dead:
+	dead: atwr
 		Start: 2
 	make: atwrmake
 		Length: *
@@ -1758,34 +1273,23 @@ atwr:
 			INTERIOR: TEMPERAT
 			BARREN: TEMPERAT
 		Offset: -3,0
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 
 rep:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: rep
 		Offset: 0,1
 		ZOffset: -1c511
-	damaged-idle:
+	damaged-idle: rep
 		Start: 7
 		Offset: 0,1
 		ZOffset: -1c511
-	active:
+	active: rep
 		Start: 1
 		Length: 6
 		Offset: 0,1
 		Tick: 100
 		ZOffset: -1c511
-	damaged-active:
+	damaged-active: rep
 		Start: 8
 		Length: 6
 		Offset: 0,1
@@ -1801,34 +1305,23 @@ rep:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			BARREN: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: repicnh
 
 silo2:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: silo2
 		Offset: 0,-1
-	damaged-idle:
+	damaged-idle: silo2
 		Start: 5
 		Offset: 0,-1
-	dead:
+	dead: silo2
 		Start: 10
 		Offset: 0,-1
 		Tick: 800
-	stages:
+	stages: silo2
 		Length: 5
 		Offset: 0,-1
-	damaged-stages:
+	damaged-stages: silo2
 		Start: 5
 		Length: 5
 		Offset: 0,-1
@@ -1841,33 +1334,22 @@ silo2:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			BARREN: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: silo2icnh
 
 gun2:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: gun2
 		Facings: 32
 		UseClassicFacingFudge: True
-	recoil:
+	recoil: gun2
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
-	damaged-idle:
+	damaged-idle: gun2
 		Start: 64
 		Facings: 32
 		UseClassicFacingFudge: True
-	damaged-recoil:
+	damaged-recoil: gun2
 		Start: 96
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -1884,25 +1366,14 @@ gun2:
 			BARREN: TEMPERAT
 		Length: *
 		Offset: -1,-1
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: gun2icnh
 	
 ltur:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: ltur
 		Facings: 32
 		UseClassicFacingFudge: True
-	damaged-idle:
+	damaged-idle: ltur
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -1919,37 +1390,26 @@ ltur:
 			BARREN: TEMPERAT
 		Length: *
 		Offset: -1,-1
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: lturicnh
 
 hpad2:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: hpad2
 		ZOffset: -1023
-	damaged-idle:
+	damaged-idle: hpad2
 		Start: 7
 		ZOffset: -1023
-	active:
+	active: hpad2
 		Start: 1
 		Length: 6
 		Tick: 100
 		ZOffset: -1023
-	damaged-active:
+	damaged-active: hpad2
 		Start: 8
 		Length: 6
 		Tick: 100
 		ZOffset: -1023
-	dead:
+	dead: hpad2
 		Start: 14
 		ZOffset: -1023
 		Tick: 800
@@ -1961,31 +1421,20 @@ hpad2:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: hpad2icnh
 
 proc2:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: proc2
 		Length: 6
 		Tick: 120
 		Offset: 2,4
-	damaged-idle:
+	damaged-idle: proc2
 		Start: 30
 		Length: 6
 		Tick: 120
 		Offset: 2,4
-	dead:
+	dead: proc2
 		Start: 60
 		Tick: 800
 		Offset: 2,4
@@ -2005,21 +1454,10 @@ proc2:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: proc2icnh
 
 afldgdi:
+	Inherits: ^StructureOverlays
 	idle: afldgdiidle
 		Length: 16
 		Tick: 160
@@ -2031,12 +1469,12 @@ afldgdi:
 		Tick: 160
 		ZOffset: -1023
 		Offset: 0,-4
-	active:
+	active: afldgdi
 		Length: 16
 		Tick: 160
 		ZOffset: -1023
 		Offset: 0,-4
-	damaged-active:
+	damaged-active: afldgdi
 		Start: 16
 		Length: 8
 		Tick: 160
@@ -2051,54 +1489,18 @@ afldgdi:
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
 		ZOffset: -1024
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: afldicon
 
-ncom:
-	idle:
-	damaged-idle:
-		Start: 1
-	make: fcommake
-		Length: *
-	bib: bib3
-		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	icon: ntekicon
-
 nodhq:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: nodhq
 		Length: 16
 		Tick: 100
-	damaged-idle:
+	damaged-idle: nodhq
 		Start: 16
 		Length: 16
 		Tick: 100
-	dead:
+	dead: nodhq
 		Start: 32
 	make: hqmake
 		Length: *
@@ -2108,29 +1510,18 @@ nodhq:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: hqicnh
 
 nodnuke:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: nodnuke
 		Length: 4
 		Tick: 1000
-	damaged-idle:
+	damaged-idle: nodnuke
 		Start: 4
 		Length: 4
 		Tick: 1000
-	dead:
+	dead: nodnuke
 		Start: 8
 		Tick: 1000
 	make: nodnukemake
@@ -2141,29 +1532,18 @@ nodnuke:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: nukeicnh
 
 nodnuk2:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: nodnuk2
 		Length: 4
 		Tick: 1000
-	damaged-idle:
+	damaged-idle: nodnuk2
 		Start: 4
 		Length: 4
 		Tick: 1000
-	dead:
+	dead: nodnuk2
 		Start: 8
 	make: nodnuk2make
 		Length: *
@@ -2173,37 +1553,33 @@ nodnuk2:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: nuk2icnh
 
 nodfact:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: nodfact
 		Length: 4
 		Tick: 160
-	build:
+	build: nodfact
 		Start: 4
 		Length: 20
 		Tick: 100
-	damaged-idle:
+	pdox: nodfact
+		Length: 4
+		Tick: 160
+	damaged-idle: nodfact
 		Start: 24
 		Length: 4
 		Tick: 160
-	damaged-build:
+	damaged-build: nodfact
 		Start: 28
 		Length: 20
 		Tick: 100
-	dead:
+	damaged-pdox: nodfact
+		Start: 24
+		Length: 4
+		Tick: 160
+	dead: nodfact
 		Start: 48
 	make: nodfactmake
 		Length: *
@@ -2213,31 +1589,20 @@ nodfact:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: afacicon
 
 nodproc:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: nodproc
 		Length: 6
 		Tick: 120
 		Offset: 2,4
-	damaged-idle:
+	damaged-idle: nodproc
 		Start: 30
 		Length: 6
 		Tick: 120
 		Offset: 2,4
-	dead:
+	dead: nodproc
 		Start: 60
 		Tick: 800
 		Offset: 2,4
@@ -2257,34 +1622,23 @@ nodproc:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: proc2icnh
 
 nodsilo:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: nodsilo
 		Offset: 0,-1
-	damaged-idle:
+	damaged-idle: nodsilo
 		Start: 5
 		Offset: 0,-1
-	dead:
+	dead: nodsilo
 		Start: 10
 		Offset: 0,-1
 		Tick: 800
-	stages:
+	stages: nodsilo
 		Length: 5
 		Offset: 0,-1
-	damaged-stages:
+	damaged-stages: nodsilo
 		Start: 5
 		Length: 5
 		Offset: 0,-1
@@ -2297,21 +1651,10 @@ nodsilo:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			BARREN: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: silo2icnh
 
 pris:
+	Inherits: ^StructureOverlays
 	idle: prisnocharge
 		Length: 32
 		Tick: 250
@@ -2321,11 +1664,11 @@ pris:
 		Length: 32
 		Tick: 250
 		Offset: 0,-13
-	active:
+	active: pris
 		Length: 3
 		Tick: 200
 		Offset: 0,-13
-	damaged-active:
+	damaged-active: pris
 		Start: 19
 		Length: 3
 		Tick: 200
@@ -2334,18 +1677,6 @@ pris:
 		Length: 8
 		Tick: 60
 		Offset: 0,-13
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	bib: mbFTUR
 		Length: *
 		UseTilesetExtension: true
@@ -2353,32 +1684,22 @@ pris:
 			BARREN: TEMPERAT
 	icon: prisimicon
 
-nodspen:
+spennod:
+	Inherits: ^StructureOverlays
 	idle: spennod
 	damaged-idle: spennod
 		Start: 1
 	make: spennodmake
 		Length: *
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: spennodicnh
 
 htur:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: htur
 		Facings: 32
 		UseClassicFacingFudge: True
 		Offset: 0,0
-	damaged-idle:
+	damaged-idle: htur
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -2397,24 +1718,13 @@ htur:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			BARREN: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: hturicon
 
 ttur:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: ttur
 		Offset: 0,-2
-	damaged-idle:
+	damaged-idle: ttur
 		Start: 1
 		Offset: 0,-2
 	make: tturmake
@@ -2425,43 +1735,26 @@ ttur:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			BARREN: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: tturicon
 	
 sgen:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: sgen
 		Offset: 0,-10
-	active:
+	active: sgen
 		Length: 4
 		Offset: 0,-10
-	damaged-idle:
+	damaged-idle: sgen
 		Start: 4
 		Offset: 0,-10
-	damaged-active:
+	damaged-active: sgen
 		Start: 4
 		Length: 4
 		Offset: 0,-10
 	make: sgenmake
 		Length: *
 		Offset: 0,-10
-	dead:
+	dead: sgen
 		Start: 4
 		Tick: 800
 		Offset: 0,-10
@@ -2470,29 +1763,18 @@ sgen:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: sgenicnh
 	
 cram:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: cram
 		Facings: 32
 		UseClassicFacingFudge: True
 		Offset: 0,-13
 	make: crammake
 		Length: *
 		Offset: 0,-13
-	damaged-idle:
+	damaged-idle: cram
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -2506,52 +1788,30 @@ cram:
 		TilesetOverrides:
 			JUNGLE: TEMPERAT
 			BARREN: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: cramicnh
 	
 gsyrd:
-	idle:
-	damaged-idle:
+	Inherits: ^StructureOverlays
+	idle: gsyrd
+	damaged-idle: gsyrd
 		Start: 1
 	make: gsyrdmake
 		Length: *
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: syrdicon
 	fake-icon: syrficon
 	
 indp:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: indp
 		Length: 4
 		Tick: 200
-	damaged-idle:
+	damaged-idle: indp
 		Start: 4
 		Length: 4
 		Tick: 200
 	make: indpmake
 		Length: *
-	dead:
+	dead: indp
 		Start: 4
 		Tick: 800
 	bib: bib2
@@ -2559,87 +1819,60 @@ indp:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: indpicon
 	
 lasp:
+	Inherits: ^StructureOverlays
 	Defaults:
 		Offset: 0, 0, 0
 		UseTilesetCode: true
-	idle:
+	idle: lasp
 		Start: 0
 		Length: 5
 		Tick: 250
-	idle-offline:
+	idle-offline: lasp
 		Start: 0
 		Length: 1
-	damaged-idle:
+	damaged-idle: lasp
 		Start: 5
 		Length: 5
 		Tick: 250
-	damaged-idle-offline:
+	damaged-idle-offline: lasp
 		Start: 5
 		Length: 1
-	dead:
+	dead: lasp
 		Start: 10
 		Tick: 400
 	make: laspmake
 		Length: *
-	emp-overlay: emp_fx01
-		Length: *
-		Offset: 0, 0, 25
-		UseTilesetCode: false
-		ZOffset: 512
-		BlendMode: Additive
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: lasficnh
 		Offset: 0, 0
 		UseTilesetCode: false
 
 lasf:
+	Inherits: ^StructureOverlays
 	Defaults:
 		UseTilesetCode: true
-	idle:
+	idle: lasf
 		Length: 1
-	disabled-x:
+	disabled-x: lasf
 		Start: 4
 		Length: 1
 		ZRamp: 1
-	disabled-y:
+	disabled-y: lasf
 		Start: 9
 		Length: 1
 		ZRamp: 1
-	enabled-x:
+	enabled-x: lasf
 		Frames: 3,3,1,1,3,3,1,3,3,1,0,0,2,2,0,0
 		Length: 9
-	enabled-y:
+	enabled-y: lasf
 		Frames: 7,5,7,5,6,8,6,8,7,5,7,5,6,8,6,8
 		Length: 9
-	emp-overlay: emp_fx01
-		Length: *
-		Offset: 0, 0, 25
-		UseTilesetCode: false
-		ZOffset: 512
-		BlendMode: Additive
 		
 patr:
-	idle:
+	Inherits: ^StructureOverlays
+	idle: patr
 		Facings: 32
 		UseClassicFacingFudge: True
 		Offset: 0,0
@@ -2662,44 +1895,32 @@ patr:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			BARREN: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	icon: patricnh
 	
 weat:
-	idle:
-	damaged-idle:
+	Inherits: ^StructureOverlays
+	idle: weat
+	damaged-idle: weat
 		Start: 1
-	dead:
+	dead: weat
 		Start: 1
 	make: weatmake
 		Length: *
 		Tick: 80
+	active: weat
+		Start: 2
+	damaged-active: weat
+		Start: 3
+	active-overlay: DATA.R8
+		AddExtension: False
+		Start: 3947
+		Length: 17
+		Tick: 100
+		BlendMode: Additive
+		ZOffset: 511
 	bib: bib3
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	chrono-overlay: chronofade
-		Length: *
-		BlendMode: Additive
-		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
-	icon: eyeicnh
+	icon: weaticon

@@ -39,6 +39,8 @@ namespace OpenRA.Mods.CA.Traits
 		int TurnRate { get; }
 	}
 
+	public interface INotifyActivate { void Launching(Actor self); }
+
 	[RequireExplicitImplementation]
 	public interface IPointDefense
 	{

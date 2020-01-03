@@ -119,12 +119,12 @@
 			Beach: 70
 	Locomotor@NAVAL:
 		Name: naval
-		Crushes: crate
+		Crushes: crate, mine
 		TerrainSpeeds:
 			Water: 100
 	Locomotor@LANDINGCRAFT:
 		Name: lcraft
-		Crushes: crate
+		Crushes: crate, mine
 		TerrainSpeeds:
 			Water: 100
 			Beach: 70
@@ -194,17 +194,17 @@
 		Name: England
 		InternalName: england
 		Side: Allies
-		Description: England: \nSpecial Unit: Mirage Tank\nSpecial Unit: Sniper
+		Description: England: Subterfuge\n Faction Unit: Sniper\n Special Units: Mirage Tank, Camo Pillbox\n Special Ability: Ambush\n Faction Bonus: Fake Buildings
 	Faction@2:
 		Name: France
 		InternalName: france
 		Side: Allies
-		Description: France: \nSpecial Structure: Grand Cannon
+		Description: France: Fortification\n Faction Unit: Grand Cannon\n Special Units: Battle Fortress\n Special Ability: Cluster Mines\n Faction Bonus: Walls & Defences (10% Discount)
 	Faction@3:
 		Name: Germany
 		InternalName: germany
 		Side: Allies
-		Description: Germany: \n Special Unit: Tank Destroyer\n Special Unit: IFV
+		Description: Germany: Innovation\n Faction Unit: Tank Destroyer\n Special Units: IFV\n Special Ability: Time Freeze\n Faction Bonus: Composite Armor (+10% Tank Armor)
 	Faction@4:
 		Name: Soviet
 		InternalName: soviet
@@ -214,17 +214,17 @@
 		Name: Russia
 		InternalName: russia
 		Side: Soviet
-		Description: Russia: \n Special Unit: Kirov Airship\n Special Unit: Tesla Tank
+		Description: Russia: Tesla Techology\n Faction Unit: Kirov Airship\n Special Units: Tesla Tank\n Special Ability: Storm Troopers\n Faction Bonus: Tesla Coil & Shocktroopers (10% Discount)
 	Faction@6:
 		Name: Ukraine
 		InternalName: ukraine
 		Side: Soviet
-		Description: Ukraine: \n Special Unit: Frogfoot\n Special Unit: MAD tank
+		Description: Ukraine: Demolition\n Faction Unit: MAD tank\n Special Units: Frogfoot\n Special Ability: Carpet Bomb\n Faction Bonus: V3 Launcher (10% Discount)
 	Faction@7:
 		Name: Iraq
 		InternalName: iraq
 		Side: Soviet
-		Description: Iraq: \n Special Unit: Scud launcher\n Special Structure: Toxin Turret
+		Description: Iraq: Nuclear Warfare\n Faction Unit: Desolator(NI)\n Special Units: Demo Truck, Toxin Turret\n Special Ability: Atomic Parabomb\n Faction Bonus: Nuclear Tanks (25% Speed, Explode when destroyed)
 	Faction@8:
 		Name: GDI
 		InternalName: gdi
@@ -234,43 +234,43 @@
 		Name: Talon
 		InternalName: talon
 		Side: GDI
-		Description: Steel Talons:\n Special Unit: Titan\n Special Unit: HMLRS
+		Description: Steel Talon: Robotics\n Faction Unit: Juggernaut(NI)\n Special Units: Titan, Battle Drone(NI)\n Special Ability: Nanite Repair\n Faction Bonus: Recon Drone (-20% Cooldown), Drone Carrier (10% Discount)
 	Faction@10:
 		Name: ZOCOM
 		InternalName: zocom
 		Side: GDI
-		Description: ZOCOM:\n Special Unit: Disruptor
+		Description: ZOCOM: Experimental Weapons\n Faction Unit: Disruptor\n Special Units: Ion Mammoth(NI), HMLRS\n Special Ability: Surgical Strike\n Faction Bonus: EMP Missile (-20% Cooldown), Adv. Communication Centre (10% Discount)
 	Faction@11:
 		Name: Eagle
 		InternalName: eagle
 		Side: GDI
-		Description: Eagle Corps:\n Special Unit: Orca Bomber\n Special Ability: Heavy Reinforcements
+		Description: Eagle Corps: Air Power\n Faction Unit: Orca Bomber\n Special Units: Combat Chinook\n Special Ability: Interceptors\n Faction Bonus: Reinforcements (-20% Cooldown), Aircraft (10% Discount)
 	Faction@12:
 		Name: Nod
 		InternalName: nod
 		Side: Nod
 		Selectable: False
 	Faction@13:
-		Name: Black H.
+		Name: Black Hand
 		InternalName: blackh
 		Side: Nod
-		Description: Black Hand:\n Special Unit: Comanche\n Special Unit: Howitzer\n Special Ability: Inferno Bomb
+		Description: Black Hand: Shadow & Flame\n Faction Unit: Comanche\n Special Units: Spectre\n Special Ability: Commando Drop\n Faction Bonus: Stealth & Flame Tanks (10% Discount)
 	Faction@14:
 		Name: Marked
 		InternalName: marked
 		Side: Nod
-		Description: Marked of Kane:\n Special Unit: Acolyte\n Special Unit: Chemical Warrior\n Special Ability: Elite Paradrop
+		Description: Marked of Kane: Alien Weaponry\n Faction Unit: Chemical Tank(NI)\n Special Units: Chemical Warrior\n Special Ability: Frenzy(NI)\n Faction Bonus: Laser Overcharge (10% Increased Damage)
 	Faction@15:
 		Name: Legion
 		InternalName: legion
 		Side: Nod
-		Description: Legion:\n Special Unit: Microwave Tank\n Special Ability: Stolen Technology\n Special Ability: Paradrop
+		Description: Legion: Stolen Technology\n Faction Unit: Microwave Tank\n Special Units: Battle Tank, APC\n Special Ability: Cash Hack(NI)\n Faction Bonus: Infiltrator (20% Discount)
 	Faction@random:
 		Name: Any
 		InternalName: Random
 		RandomFactionMembers: RandomAllies, RandomSoviet, RandomGDI, RandomNOD
 		Side: Random
-		Description: Random Country\nA random country will be chosen when the game starts.
+		Description: Random Faction\nA random faction will be chosen when the game starts.
 	Faction@randomallies:
 		Name: Allies
 		InternalName: RandomAllies
@@ -381,6 +381,13 @@ World:
 		Color: 00FF00
 		Brightest: 54
 		FadeoutDelay: 400
+		ZOffset: 0
+	TintedCellsLayer@RADWEAK:
+		Color: 00FF00
+		Brightest: 54
+		FadeoutDelay: 200
+		ZOffset: 0
+		Name: radioactivity.weak
 	WarheadDebugOverlay:
 	SpawnMapActors:
 	MapBuildRadius:

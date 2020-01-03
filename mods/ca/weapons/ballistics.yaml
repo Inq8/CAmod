@@ -20,7 +20,7 @@
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
 	Warhead@3Eff: CreateEffect
 		Explosions: small_explosion
-		ImpactSounds: kaboom12.aud, xplos.aud
+		ImpactSounds: kaboom12.aud
 		ValidTargets: Ground, Ship, Trees
 	Warhead@4EffWater: CreateEffect
 		Explosions: small_splash
@@ -57,7 +57,7 @@
 			Concrete: 32
 	Warhead@3EffGround: CreateEffect
 		Explosions: large_explosion
-		ImpactSounds: kaboom12.aud, xplos.aud
+		ImpactSounds: kaboom12.aud
 		ValidTargets: Ground, Ship, Trees
 		
 30mm:
@@ -82,7 +82,7 @@
 	Report: vmiratta.aud
 	Projectile: Bullet
 		Speed: 682
-		Image: 120MMHEAT
+		Image: 120MMHEATN
 	Warhead@1Dam: SpreadDamage
 		Versus:
 			None: 75
@@ -92,7 +92,7 @@
 			Concrete: 30
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@3Eff: CreateEffect
-		Explosions: small_napalm
+		Explosions: small_explosion
 		ImpactSounds: firetrt1.aud
 		ValidTargets: Ground, Ship, Trees
 
@@ -124,6 +124,9 @@
 	ReloadDelay: 90
 	Report: tnkfire6.aud
 	Range: 5c0
+	Projectile: Bullet
+		Speed: 768
+		Image: 183MM
 	Warhead@1Dam: SpreadDamage
 		Damage: 12000
 		Versus:
@@ -146,7 +149,7 @@ TurretGun:
 			Wood: 50
 	Warhead@3EffGround: CreateEffect
 		Explosions: large_explosion
-		ImpactSounds: kaboom12.aud, xplos.aud
+		ImpactSounds: kaboom12.aud
 		ValidTargets: Ground, Ship, Trees
 			
 TurretGunTD:
@@ -156,16 +159,17 @@ TurretGunTD:
 TitanGun:
 	Inherits: TurretGunTD
 	ReloadDelay: 60
-	Report: tnkfire6.aud
+	Report: vtadatta.aud, vtadattab.aud, vtadattc.aud
 	Range: 5c0
 	Warhead@1Dam: SpreadDamage
+		Spread: 255
 		Damage: 9000
 		Versus:
-			None: 60
+			None: 70
 			Wood: 75
 	Warhead@3EffGround: CreateEffect
 		Explosions: large_explosion
-		ImpactSounds: kaboom12.aud, xplos.aud
+		ImpactSounds: kaboom12.aud
 		ValidTargets: Ground, Ship, Trees
 
 ^Artillery:
@@ -349,7 +353,7 @@ Mortar:
 			Light: 45
 			Heavy: 45
 			Concrete: 50
-		DamageTypes: Prone50Percent, TriggerProne, ToxicDeath
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 		InvalidTargets: Vehicle, Tank, Structure, Wall, Husk, Trees
@@ -360,6 +364,12 @@ Mortar:
 	Warhead@4EffWater: CreateEffect
 		Explosions: small_splash
 		ImpactSounds: splashm1.aud, splashm2.aud, splashm3.aud
+	Warhead@18Radio: CreateTintedCells
+		Spread: 1c0
+		Level: 50
+		Falloff: 100, 52, 10
+		MaxLevel: 300
+		LayerName: radioactivity.weak
 		
 MortarE:
 	Inherits: Mortar
