@@ -379,6 +379,8 @@
 		Color: 33ff33
 	ExternalCondition@CLOAKGENERATOR:
 		Condition: invisibility
+	ExternalCondition@CRATE-CLOAK:
+		Condition: crate-cloak
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Heavy, Critical
@@ -393,21 +395,21 @@
 		RequiresCondition: invisibility
 		
 ^GpsScramble:
-	Cloak@NORMAL:
+	Cloak@GPSHIDE:
 		InitialDelay: 250
 		CloakDelay: 250
 		UncloakSound: appear1.aud
-		CloakedCondition: hidden
+		CloakedCondition: gpshide
 		Palette: cloakra
 		IsPlayerPalette: true
 		CloakTypes: Cloak
-		RequiresCondition: (hidden || crate-cloak) && !(cloak-force-disabled || invisibility)
+		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility)
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Move
-	TimedConditionBar@HIDDEN:
-		Condition: hidden
-		Color: 404040
-	ExternalCondition@HIDDEN:
-		Condition: hidden
+	TimedConditionBar@GPSHIDE:
+		Condition: gpshide
+		Color: 606060
+	ExternalCondition@GPSHIDE:
+		Condition: gpshide
 	ExternalCondition@CRATE-CLOAK:
 		Condition: crate-cloak
 	GrantConditionOnDamageState@UNCLOAK:
@@ -602,7 +604,7 @@
 		PlayerPalette: overlayplayertd
 	WithDamageOverlay:
 		Image: smoke_mtd
-	Cloak@NORMAL:
+	Cloak@GPSHIDE:
 		Palette: cloak
 
 ^Tank:
@@ -616,7 +618,7 @@
 		PlayerPalette: overlayplayertd
 	WithDamageOverlay:
 		Image: smoke_mtd
-	Cloak@NORMAL:
+	Cloak@GPSHIDE:
 		Palette: cloak
 
 ^Infantry:
@@ -809,7 +811,7 @@
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.weak
 		RequiresCondition: !hazmatsuits || !being-warped
-	Cloak@NORMAL:
+	Cloak@GPSHIDE:
 		Palette: cloak
 
 ^Soldier:
@@ -1208,6 +1210,7 @@
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure
 		RequiresCondition: !being-warped
+	-ExternalCondition@CRATE-CLOAK:
 		
 ^BuildingTD:
 	Inherits@1: ^Building
@@ -1350,6 +1353,7 @@
 		Terrain: Wall
 	MapEditorData:
 		Categories: Wall
+	-ExternalCondition@CRATE-CLOAK:
 
 ^TechBuilding:
 	Inherits: ^BasicBuilding

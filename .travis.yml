@@ -15,7 +15,7 @@ script:
  - make
  - |
    . mod.config;
-   awk '/\r$$/ { exit(1); }' mod.config || (printf "Invalid mod.config format. File must be saved using unix-style (CR, not CRLF) line endings.\n"; travis_terminate 1);
+   awk '/\r$$/ { exit(1); }' mod.config || (printf "Invalid mod.config format. File must be saved using unix-style (LF, not CRLF) line endings.\n"; travis_terminate 1);
    if [ "${TRAVIS_TEST_MOD}" == "True" ]; then
      make test || travis_terminate 1;
    fi;

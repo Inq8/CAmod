@@ -1138,6 +1138,8 @@ SNIPER:
 		CloakTypes: Cloak
 		RequiresCondition: !cloak-force-disabled
 		UncloakOn: Unload, Infiltrate, Demolish, Dock, Move
+	Cloak@GPSHIDE:
+		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden)
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Heavy, Critical
@@ -1331,12 +1333,15 @@ SAB:
 	Cloak:
 		InitialDelay: 100
 		CloakDelay: 200
+		CloakedCondition: hidden
 		Palette: cloaktd
 		IsPlayerPalette: true
 		CloakTypes: Cloak
 		RequiresCondition: !cloak-force-disabled
 		UncloakOn: Unload, Infiltrate, Demolish, Dock, Attack
 		UncloakSound: appear1.aud
+	Cloak@GPSHIDE:
+		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden)
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Heavy, Critical

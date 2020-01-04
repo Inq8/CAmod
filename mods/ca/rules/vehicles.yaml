@@ -1566,6 +1566,7 @@ STNK.nod:
 		InitialDelay: 90
 		CloakDelay: 90
 		CloakSound: trans1.aud
+		CloakedCondition: hidden
 		UncloakSound: appear1.aud
 		Palette: cloak
 		IsPlayerPalette: false
@@ -1574,6 +1575,8 @@ STNK.nod:
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
+	Cloak@GPSHIDE:
+		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden)
 	Armament@PRIMARY:
 		Weapon: 227mm.stnk
 		LocalOffset: 213,43,128, 213,-43,128
@@ -2358,11 +2361,14 @@ RTNK:
 		InitialDelay: 100
 		CloakDelay: 100
 		CloakSound: vmirat2a.aud
+		CloakedCondition: hidden
 		UncloakSound: appear1.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Move, Damage, Heal
 		Palette: cloakra
 		IsPlayerPalette: true
 		RequiresCondition: !cloak-force-disabled && !invisibility
+	Cloak@GPSHIDE:
+		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden)
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical, Heavy
