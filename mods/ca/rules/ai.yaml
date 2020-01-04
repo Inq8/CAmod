@@ -27,7 +27,7 @@ Player:
 		RequiresCondition: enable-brutal-ai || enable-normal-ai || enable-easy-ai || enable-naval-ai
 		Decisions:
 			spyplane:
-				OrderName: SovietSpyPlane
+				OrderName: spyplane
 				MinimumAttractiveness: 1
 				Consideration@1:
 					Against: Enemy
@@ -93,7 +93,7 @@ Player:
 					TargetMetric: None
 					CheckRadius: 8c0
 			paratroopers:
-				OrderName: SovietParatroopers
+				OrderName: paratroopers
 				MinimumAttractiveness: 5
 				Consideration@1:
 					Against: Enemy
@@ -108,7 +108,7 @@ Player:
 					TargetMetric: None
 					CheckRadius: 8c0
 			rparatroopers:
-				OrderName: RussianParatroopers
+				OrderName: stormtroopers
 				MinimumAttractiveness: 5
 				Consideration@1:
 					Against: Enemy
@@ -177,7 +177,7 @@ Player:
 					TargetMetric: None
 					CheckRadius: 5c0
 			rparabombs:
-				OrderName: RussiaParabombs
+				OrderName: parabombs
 				MinimumAttractiveness: 1
 				Consideration@1:
 					Against: Enemy
@@ -186,7 +186,7 @@ Player:
 					TargetMetric: None
 					CheckRadius: 5c0
 			iparabombs:
-				OrderName: IraqParabombs
+				OrderName: atombomb
 				MinimumAttractiveness: 1
 				Consideration@1:
 					Against: Enemy
@@ -270,7 +270,7 @@ Player:
 					TargetMetric: Value
 					CheckRadius: 7c0
 			EagleAirDef:
-				OrderName: EagleAirDef
+				OrderName: interceptors
 				MinimumAttractiveness: 3000
 				Consideration@1:
 					Against: Enemy
@@ -396,6 +396,22 @@ Player:
 					Attractiveness: 1
 					TargetMetric: None
 					CheckRadius: 5c0
+			GpsScramblerPower:
+				OrderName: gpsscramble
+				MinimumAttractiveness: 1000
+				FineScanRadius: 2
+				Consideration@2:
+					Against: Enemy
+					Types: Infantry, Tank, Vehicle
+					Attractiveness: -2
+					TargetMetric: Value
+					CheckRadius: 2c0
+				Consideration@3:
+					Against: Ally
+					Types: Infantry, Tank, Vehicle
+					Attractiveness: 2
+					TargetMetric: Value
+					CheckRadius: 3c0
 			
 	HarvesterBotModule:
 		RequiresCondition: enable-brutal-ai || enable-normal-ai || enable-easy-ai || enable-naval-ai

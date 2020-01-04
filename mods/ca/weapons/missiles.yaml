@@ -3,7 +3,7 @@
 	Range: 5c0
 	MinRange: 0c512
 	Report: missile6.aud
-	Projectile: Missile
+	Projectile: MissileCA
 		Speed: 213
 		Arm: 2
 		Blockable: false
@@ -13,6 +13,7 @@
 		Shadow: True
 		HorizontalRateOfTurn: 5
 		RangeLimit: 6c0
+		PointDefenseType: Missile
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
 		Damage: 5000
@@ -67,7 +68,7 @@ Maverick:
 
 Dragon:
 	Inherits: ^AntiGroundMissile
-	Projectile: Missile
+	Projectile: MissileCA
 	
 Dragon.CYB:
 	Inherits: Dragon
@@ -78,7 +79,7 @@ Dragon.CYB:
 DragonE:
 	Inherits: ^AntiGroundMissile
 	Range: 7c0
-	Projectile: Missile
+	Projectile: MissileCA
 		RangeLimit: 8c0
 		
 DragonE.CYB:
@@ -93,7 +94,7 @@ HellfireAG:
 	MinRange: 1c256
 	Burst: 4
 	BurstDelays: 14
-	Projectile: Missile
+	Projectile: MissileCA
 		Speed: 256
 		HorizontalRateOfTurn: 10
 		RangeLimit: 8c512
@@ -116,7 +117,7 @@ HellfireAG.Harrier:
 	Report: migmis.aud, migmis2.aud
 	Burst: 2
 	BurstDelays: 10
-	Projectile: Missile
+	Projectile: MissileCA
 		RangeLimit: 9c512
 		ContrailLength: 10
 		Inaccuracy: 512
@@ -147,7 +148,7 @@ HellfireAG.Horn:
 		Range: 5c0
 		MinRange: 1c0
 		Burst: 2
-		Projectile: Missile
+		Projectile: MissileCA
 			RangeLimit: 7c512
 			ContrailLength: 0
 	Warhead@1Dam: SpreadDamage
@@ -160,7 +161,7 @@ HellfireAA:
 	MinRange: 1c256
 	Burst: 2
 	BurstDelays: 10
-	Projectile: Missile
+	Projectile: MissileCA
 		Speed: 384
 		Inaccuracy: 128
 		HorizontalRateOfTurn: 10
@@ -186,7 +187,7 @@ WidowAA:
 	MinRange: 1c256
 	Burst: 2
 	BurstDelays: 10
-	Projectile: Missile
+	Projectile: MissileCA
 		Speed: 404
 		Inaccuracy: 128
 		HorizontalRateOfTurn: 10
@@ -207,7 +208,7 @@ MammothTusk:
 	Range: 6c512
 	Burst: 2
 	ValidTargets: Air, Infantry
-	Projectile: Missile
+	Projectile: MissileCA
 		Speed: 341
 		HorizontalRateOfTurn: 15
 		RangeLimit: 9c614
@@ -233,7 +234,7 @@ TitanTusk:
 	Burst: 1
 	Range: 8c0
 	Report: samshot1.aud
-	Projectile: Missile
+	Projectile: MissileCA
 		Image: MISSILE
 		RangeLimit: 10c614
 	Warhead@1Dam: SpreadDamage
@@ -253,7 +254,7 @@ Nike:
 	ReloadDelay: 15
 	Range: 7c512
 	Report: samshot1.aud
-	Projectile: Missile
+	Projectile: MissileCA
 		Arm: 3
 		Inaccuracy: 0
 		Image: MISSILE
@@ -273,7 +274,7 @@ RedEye:
 	Inherits: Nike
 	ReloadDelay: 50
 	Report: missile1.aud
-	Projectile: Missile
+	Projectile: MissileCA
 		Inaccuracy: 0
 		Image: Dragon
 		HorizontalRateOfTurn: 20
@@ -307,7 +308,7 @@ Stinger:
 	Burst: 2
 	BurstDelays: 8
 	InvalidTargets: Underwater
-	Projectile: Missile
+	Projectile: MissileCA
 		Arm: 3
 		Inaccuracy: 0
 		HorizontalRateOfTurn: 20
@@ -326,7 +327,7 @@ Stinger:
 StingerAA:
 	Inherits: Stinger
 	ValidTargets: Air
-	Projectile: Missile
+	Projectile: MissileCA
 		Speed: 255
 		CloseEnough: 298
 	Warhead@3Eff: CreateEffect
@@ -340,7 +341,7 @@ StingerGTWR:
 	Report: rocket2.aud
 	Burst: 2
 	BurstDelays: 15
-	Projectile: Missile
+	Projectile: MissileCA
 		Arm: 3
 		Blockable: false
 		TrailImage: smokey
@@ -375,7 +376,7 @@ APTusk:
 	Inherits: ^AntiGroundMissile
 	ReloadDelay: 60
 	Range: 6c0
-	Projectile: Missile
+	Projectile: MissileCA
 		Speed: 298
 		TrailImage: smokey
 		HorizontalRateOfTurn: 10
@@ -396,7 +397,7 @@ TorpTube:
 	ValidTargets: Water, Underwater, Bridge
 	Burst: 2
 	BurstDelays: 20
-	Projectile: Missile
+	Projectile: MissileCA
 		Image: torpedo
 		Arm: 3
 		Speed: 85
@@ -432,7 +433,7 @@ TorpTube:
 	ReloadDelay: 300
 	Range: 8c0
 	Burst: 2
-	Projectile: Missile
+	Projectile: MissileCA
 		Speed: 234
 		Inaccuracy: 0c614
 		HorizontalRateOfTurn: 15
@@ -672,7 +673,7 @@ BTRRocketsAA:
 	Range: 8c0
 	MinRange: 3c0
 	Report: rocket1.aud
-	Projectile: Missile
+	Projectile: MissileCA
 		Speed: 266
 		Arm: 2
 		Blockable: false
@@ -711,7 +712,7 @@ BTRRocketsAA:
 	Inherits: 227mm
 	Report: vaegattb.aud, vaegatta.aud
 	Range: 10c0
-	Projectile: Missile
+	Projectile: MissileCA
 		Speed: 366
 		RangeLimit: 14c0
 		Image: MISSILE
@@ -741,7 +742,7 @@ BTRRocketsAA:
 	BurstDelays: 4
 	Range: 7c5112
 	Report: rocket1.aud
-	Projectile: Missile
+	Projectile: MissileCA
 		Speed: 280
 		Arm: 2
 		Blockable: false
@@ -771,7 +772,7 @@ BTRRocketsAA:
 	BurstDelays: 4
 	Range: 10c0
 	Report: vaegattb.aud, vaegatta.aud
-	Projectile: Missile
+	Projectile: MissileCA
 		Speed: 366
 		RangeLimit: 14c0
 		Image: MISSILE
@@ -807,7 +808,7 @@ BTRRocketsAA:
 	BurstDelays: 4
 	ValidTargets: Ground, Water
 	InvalidTargets: Chrono, Air
-	Projectile: Missile
+	Projectile: MissileCA
 		Arm: 0
 		Blockable: false
 		Inaccuracy: 213
@@ -816,6 +817,7 @@ BTRRocketsAA:
 		TrailImage: smokey
 		Speed: 213
 		RangeLimit: 8c0
+		PointDefenseType: Missile
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
 		Damage: 6000
@@ -845,7 +847,7 @@ BTRRocketsAA:
 	Report: rocket1.aud
 	Burst: 2
 	BurstDelays: 4
-	Projectile: Missile
+	Projectile: MissileCA
 		Arm: 0
 		Blockable: false
 		Inaccuracy: 213
@@ -878,7 +880,7 @@ BoatMissile:
 	ValidTargets: Ground, Water
 	InvalidTargets: Chrono, Air
 	Report: rocket2.aud
-	Projectile: Missile
+	Projectile: MissileCA
 		Arm: 3
 		Blockable: false
 		TrailImage: smokey
@@ -887,6 +889,7 @@ BoatMissile:
 		RangeLimit: 10c0
 		Speed: 170
 		CloseEnough: 149
+		PointDefenseType: Missile
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
 		Damage: 5500
@@ -914,7 +917,7 @@ BoatMissileAA:
 	ReloadDelay: 70
 	ValidTargets: Air
 	Report: rocket2.aud
-	Projectile: Missile
+	Projectile: MissileCA
 		Blockable: false
 		TrailImage: smokey
 	Warhead@3Eff: CreateEffect
@@ -970,7 +973,7 @@ stnkRockets:
 	InvalidTargets: Air
 	Burst: 2
 	BurstDelays: 10
-	Projectile: Missile
+	Projectile: MissileCA
 		Arm: 0
 		Blockable: false
 		Inaccuracy: 128
@@ -979,6 +982,7 @@ stnkRockets:
 		TrailImage: smokey
 		Speed: 240
 		RangeLimit: 8c0
+		PointDefenseType: Missile
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
 		Damage: 3000
@@ -1009,7 +1013,7 @@ stnkRocketsAA:
 	ValidTargets: Air
 	Burst: 2
 	BurstDelays: 10
-	Projectile: Missile
+	Projectile: MissileCA
 		Arm: 0
 		Blockable: false
 		Inaccuracy: 128
@@ -1018,6 +1022,7 @@ stnkRocketsAA:
 		TrailImage: smokey
 		Speed: 300
 		RangeLimit: 8c0
+		PointDefenseType: Missile
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
 		Damage: 3000
@@ -1105,6 +1110,7 @@ ScrinTorpAA:
 		HorizontalRateOfTurn: 10
 		-TrailImage:
 		RangeLimit: 12c0
+		-PointDefenseType:
 	Warhead@1Dam: SpreadDamage
 		Damage: 2500
 		ValidTargets: Air

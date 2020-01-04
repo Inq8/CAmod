@@ -1193,6 +1193,10 @@ MTNK:
 	Turreted:
 		TurnSpeed: 5
 		Offset: 0,0,30
+	Turreted@SECONDARY:
+		Turret: secondary
+		Offset: 0,0,40
+		TurnSpeed: 255
 	Armament:
 		Weapon: 120mm
 		Recoil: 128
@@ -1200,7 +1204,14 @@ MTNK:
 		LocalOffset: 768,0,90
 		MuzzleSequence: muzzle
 		PauseOnCondition: empdisable || being-warped
+	Armament@SECONDARY:
+		Name: secondary
+		Turret: secondary
+		Weapon: PointLaser
+		LocalOffset: 0,10,90
+		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
+		Turrets: primary, secondary
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
@@ -1211,19 +1222,23 @@ MTNK:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 28,28
+	PointDefense:
+		Armament: secondary
+		PointDefenseTypes: Missile
+		RequiresCondition: gdiupg
+		ValidStances: Enemy
 		
 MTNK.drone:
 	Inherits: ^TankTD
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@BERSERK: ^Berserk
 	Inherits@IDISABLE: ^DisableOnLowPower
 	RenderSprites:
 		Image: mtnk
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 120
-		Prerequisites: ~vehicles.talon, vehicles.any, ~techlevel.low
+		Prerequisites: ~vehicles.talon, vehicles.mtnk, ~techlevel.low
 		IconPalette: chrometd
 		Description: Drone Battle Tank.\n  Requires power to operate.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
 	Valued:
@@ -1246,6 +1261,10 @@ MTNK.drone:
 	Turreted:
 		TurnSpeed: 5
 		Offset: 0,0,30
+	Turreted@SECONDARY:
+		Turret: secondary
+		Offset: 0,0,40
+		TurnSpeed: 255
 	Armament:
 		Weapon: 120mm
 		Recoil: 128
@@ -1253,7 +1272,14 @@ MTNK.drone:
 		LocalOffset: 768,0,90
 		MuzzleSequence: muzzle
 		PauseOnCondition: disabled || empdisable || being-warped
+	Armament@SECONDARY:
+		Name: secondary
+		Turret: secondary
+		Weapon: PointLaser
+		LocalOffset: 0,10,90
+		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
+		Turrets: primary, secondary
 		PauseOnCondition: disabled || empdisable || being-warped
 		Voice: Attack
 	WithMuzzleOverlay:
@@ -1286,6 +1312,11 @@ MTNK.drone:
 		Range: 1c0
 		EnableSound: vrobon
 		DisableSound: vroboff
+	PointDefense:
+		Armament: secondary
+		PointDefenseTypes: Missile
+		RequiresCondition: gdiupg
+		ValidStances: Enemy
 
 HTNK:
 	Inherits: ^TankTD
@@ -2293,7 +2324,7 @@ RTNK:
 		Prerequisites: weap, ~vehicles.england, ~techlevel.high
 		Description: Advanced Battle tank that can cloak when stationary.\nHas average armor.\n  Strong vs Vehicles\n  Weak vs Aircraft.
 	Valued:
-		Cost: 900
+		Cost: 800
 	Tooltip:
 		Name: Mirage Tank
 	UpdatesPlayerStatistics:

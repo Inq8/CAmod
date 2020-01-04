@@ -756,6 +756,29 @@ DOME:
 		DirectionArrowAnimation: paradirection
 		PauseOnCondition: disabled || being-warped
 		RequiresCondition: !build-incomplete
+	GrantExternalConditionPowerCA@GpsScramble:
+		Prerequisites: structures.england, techlevel.superw
+		OrderName: gpsscramble
+		Icon: gpsscram
+		IconPalette: chrometd
+		ChargeInterval: 6000
+		Weapon: GpsScramble
+		Description: GPS Scramble
+		Condition: hidden
+		ValidStances: Ally
+		Range: 3
+		Duration: 1000
+		ActivationDelay: 0
+		AirburstAltitude: 0c0
+		AllowMultiple: false
+		LongDesc: Makes selected ground units invisible when stationary\nfor 1 minute.
+		OnFireSound:  sscrambl.aud
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		DisplayRadarPing: True
+		Cursor: ability
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayTimerStances: Ally
 
 PBOX:
 	Inherits: ^Defense
@@ -1027,7 +1050,6 @@ ATEK:
 		LongDesc: Reveals map terrain and provides tactical\ninformation. Requires power and active radar.
 		RevealDelay: 375
 		LaunchSpeechNotification: SatelliteLaunched
-		LaunchSound: gpsreveal.aud
 		DisplayTimerStances: Ally, Neutral, Enemy
 	SupportPowerChargeBar:
 	Power:
@@ -1690,7 +1712,7 @@ AFLD:
 		RequiresPrerequisites: structures.iraq
 		Prerequisite: aircraft.iraq
 	AirstrikePower@spyplane:
-		OrderName: SovietSpyPlane
+		OrderName: spyplane
 		Prerequisites: aircraft.soviet
 		Icon: spyplane
 		ChargeInterval: 3750
@@ -1709,7 +1731,7 @@ AFLD:
 		ClockSequence: clock
 		CircleSequence: circles
 	ParatroopersPower@paratroopers:
-		OrderName: SovietParatroopers
+		OrderName: paratroopers
 		Prerequisites: aircraft.soviet, !aircraft.russia, ~techlevel.low
 		Icon: paratroopers
 		ChargeInterval: 7500
@@ -1731,7 +1753,7 @@ AFLD:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 	ParatroopersPower@Russianparatroopers:
-		OrderName: RussianParatroopers
+		OrderName: stormtroopers
 		Prerequisites: aircraft.russia, , ~techlevel.high
 		Icon: paratroopers
 		ChargeInterval: 9000
@@ -1753,7 +1775,7 @@ AFLD:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@CarpetBomb:
-		OrderName: UkraineParabombs
+		OrderName: carpetbomb
 		Prerequisites: aircraft.ukraine, techlevel.superw
 		Icon: carpetbomb
 		ChargeInterval: 10500
@@ -1774,7 +1796,7 @@ AFLD:
 		UseDirectionalTarget: False
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@Russianparabombs:
-		OrderName: RussiaParabombs
+		OrderName: parabombs
 		Prerequisites: aircraft.russia, techlevel.superw
 		Icon: parabombs
 		ChargeInterval: 7500
@@ -1795,19 +1817,19 @@ AFLD:
 		UseDirectionalTarget: False
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@Iraqiparabombs:
-		OrderName: IraqParabombs
+		OrderName: atombomb
 		Prerequisites: aircraft.iraq, techlevel.superw
-		Icon: parabombs
+		Icon: abombair
 		ChargeInterval: 12500
-		Description: Nuclear Parabomb
-		LongDesc: A Badger bomber drops a parachuted\natom bomb on your target.
+		Description: Atom Bomb
+		LongDesc: A Badger bomber drops an \natom bomb on your target.
 		SelectTargetSpeechNotification: SelectTarget
 		CameraActor: camera
 		CameraRemoveDelay: 150
 		UnitType: badr.nbomber
 		QuantizedFacings: 8
 		DisplayBeacon: true
-		BeaconPoster: pbmbicon
+		BeaconPoster: atomicon
 		SquadSize: 1
 		SquadOffset: 0,1792,0
 		ArrowSequence: arrow
@@ -4482,7 +4504,7 @@ AFLD.gdi:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 	AirstrikePowerCA@EagleAirDef:
-		OrderName: EagleAirDef
+		OrderName: interceptors
 		Prerequisites: aircraft.eagle, techlevel.superw
 		Icon: airsupport
 		ChargeInterval: 10500
@@ -5683,6 +5705,7 @@ BIO.nod:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 200
+		IconPalette: chrometd
 		Prerequisites: ~structures.nod, tmpl, ~techlevel.high
 		Description: Replaces basic infantry with cyborgs.\nMaximum 1 can be built.\nCan not be captured.
 		BuildLimit: 1
@@ -5694,7 +5717,7 @@ BIO.nod:
 	Valued:
 		Cost: 2500
 	Tooltip:
-		Name: Cybernetic Lab
+		Name: Bio-Tech Lab
 	RevealsShroud:
 		Range: 4c0
 	Power:

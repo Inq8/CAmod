@@ -366,9 +366,9 @@
 		
 ^Cloakable:
 	Cloak@EXTERNALCLOAK:
-		RequiresCondition: invisibility || crate-cloak && !cloak-force-disabled
+		RequiresCondition: invisibility && !cloak-force-disabled
 		InitialDelay: 0
-		CloakDelay: 90
+		CloakDelay: 150
 		IsPlayerPalette: true
 		Palette: cloakgreen
 		CloakSound: cloak5.aud
@@ -379,8 +379,6 @@
 		Color: 33ff33
 	ExternalCondition@CLOAKGENERATOR:
 		Condition: invisibility
-	ExternalCondition@CRATE-CLOAK:
-		Condition: crate-cloak
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Heavy, Critical
@@ -393,6 +391,28 @@
 	KillsSelf@Mutation:
 		DamageTypes: ToxinDeath
 		RequiresCondition: invisibility
+		
+^GpsScramble:
+	Cloak@NORMAL:
+		InitialDelay: 250
+		CloakDelay: 250
+		UncloakSound: appear1.aud
+		CloakedCondition: hidden
+		Palette: cloakra
+		IsPlayerPalette: true
+		CloakTypes: Cloak
+		RequiresCondition: (hidden || crate-cloak) && !(cloak-force-disabled || invisibility)
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Move
+	TimedConditionBar@HIDDEN:
+		Condition: hidden
+		Color: 404040
+	ExternalCondition@HIDDEN:
+		Condition: hidden
+	ExternalCondition@CRATE-CLOAK:
+		Condition: crate-cloak
+	GrantConditionOnDamageState@UNCLOAK:
+		Condition: cloak-force-disabled
+		ValidDamageStates: Heavy, Critical
 
 ^AutoTargetGround:
 	AutoTarget:
@@ -477,6 +497,7 @@
 	Inherits@9: ^Warpable
 	Inherits@10: ^Frenzy
 	Inherits@11: ^NaniteRepair
+	Inherits@12: ^GpsScramble
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
@@ -581,6 +602,8 @@
 		PlayerPalette: overlayplayertd
 	WithDamageOverlay:
 		Image: smoke_mtd
+	Cloak@NORMAL:
+		Palette: cloak
 
 ^Tank:
 	Inherits: ^Vehicle
@@ -593,6 +616,8 @@
 		PlayerPalette: overlayplayertd
 	WithDamageOverlay:
 		Image: smoke_mtd
+	Cloak@NORMAL:
+		Palette: cloak
 
 ^Infantry:
 	Inherits@1: ^ExistsInWorld
@@ -605,6 +630,7 @@
 	Inherits@8: ^Cloakable-Kills
 	Inherits@9: ^IronCurtainable-Kills
 	Inherits@10: ^Frenzy
+	Inherits@11: ^GpsScramble
 	Inherits@bounty: ^GlobalBounty
 	Inherits@SELECTION_MODE: ^FlatSelectionMode
 	RenderSprites:
@@ -783,6 +809,8 @@
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.weak
 		RequiresCondition: !hazmatsuits || !being-warped
+	Cloak@NORMAL:
+		Palette: cloak
 
 ^Soldier:
 	Inherits: ^Infantry
@@ -845,6 +873,7 @@
 	Inherits@10: ^Warpable
 	Inherits@11: ^Frenzy
 	Inherits@12: ^NaniteRepair
+	Inherits@13: ^GpsScramble
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty

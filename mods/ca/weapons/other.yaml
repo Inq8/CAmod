@@ -324,7 +324,6 @@ MADTankDetonate:
 Laser:
 	ReloadDelay: 120
 	ValidTargets: Ground, Water
-	InvalidTargets: Air
 	Range: 9c512
 	Report: oblfire.aud
 	Projectile: LaserZap
@@ -337,7 +336,6 @@ Laser:
 		SecondaryBeamZOffset: 2047
 		SecondaryBeamColor: FF000040
 	Warhead@1Dam: SpreadDamage
-		InvalidTargets: Air
 		Spread: 42
 		Damage: 25000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
@@ -422,10 +420,30 @@ PortaLaser:
 PortaLaserE:
 	Inherits: PortaLaser
 	Range: 8c0
+	
+PointLaser:
+	Inherits: Laser
+	ReloadDelay: 50
+	ValidTargets: Ground, Missile
+	InvalidTargets: Infantry, Vehicle, Tank, Structure, Wall
+	Range: 1c768
+	Report: vpalwe2d.aud
+	Projectile: LaserZap
+		Width: 30
+		Duration: 3
+		-HitAnim:
+		Color: 03f0fc
+		ZOffset: 2047
+		SecondaryBeam: true
+		SecondaryBeamWidth: 50
+		SecondaryBeamZOffset: 2047
+		SecondaryBeamColor: 03fcfc30
+		Blockable: true
+	Warhead@1Dam:
+		Damage: 1
 
 PrisLaser:
 	ValidTargets: Ground, Water
-	InvalidTargets: Air
 	ReloadDelay: 50
 	Range: 8c512
 	Report: prisfire.aud
@@ -439,7 +457,6 @@ PrisLaser:
 		SecondaryBeamZOffset: 2047
 		SecondaryBeamColor: 75D1FF
 	Warhead@1Dam: SpreadDamage
-		InvalidTargets: Air
 		Spread: 512
 		Damage: 13000
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
@@ -1119,4 +1136,9 @@ CyCannon:
 			Heavy: 150
 			Concrete: 80
 		DamageTypes: Prone350Percent, TriggerProne, ExplosionDeath
+		
+GpsScramble:
+	Warhead@2Eff: CreateEffect
+		Image: crate-effects
+		Explosions: stealth
 	
