@@ -470,6 +470,20 @@ mtnk:
 	muzzle: gunfire2
 		Length: 5
 	icon: mtnkicnh
+	
+drone:
+	Inherits: ^VehicleOverlays
+	idle: mtnk
+		Facings: 32
+		UseClassicFacingFudge: True
+	turret: dronet
+		Facings: 32
+		UseClassicFacingFudge: True
+	muzzle: gunfire2
+		Length: 5
+	spinner: drad
+		Length: *
+	icon: droneicnh
 
 mtnk.nod:
 	Inherits: ^VehicleOverlays
@@ -519,7 +533,7 @@ htnk.ion:
 		UseClassicFacingFudge: True
 	muzzle: gunfire2
 		Length: 5
-	icon: htnkicnh
+	icon: htnkionicnh
 
 htnk.destroyed:
 	Inherits: ^VehicleOverlays
@@ -864,6 +878,23 @@ titan:
 		Length: 12
 		Tick: 30
 	icon: titanicnh
+
+jugg:
+	Inherits: ^VehicleOverlays
+	stand: titanlegs
+		Facings: 16
+	run: titanlegs
+		Start: 16
+		Facings: 16
+		Length: 14
+		Tick: 90
+	turret: juggt
+		Facings: 32
+		UseClassicFacingFudge: True
+	muzzle: smokeygun
+		Length: 12
+		Tick: 30
+	icon: juggicnh
 
 ttrk:
 	Inherits: ^VehicleOverlays

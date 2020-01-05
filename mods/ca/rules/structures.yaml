@@ -548,6 +548,9 @@ PDOX:
 		DisplayTimerStances: Ally, Neutral, Enemy
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayRadarPing: True
+		LaunchSound: chrono2.aud
+		IncomingSound: chrono2.aud
+		ActiveCondition: active
 	DetonateWeaponPower@TimeWarp:
 		OrderName: TimeWarp
 		Icon: timewarp
@@ -576,6 +579,17 @@ PDOX:
 		DisplayRadarPing: True
 		TargetCircleRange: 3c0
 		TargetCircleColor: 0000FF90
+		LaunchSound: chrono2.aud
+		IncomingSound: chrono2.aud
+		ActiveCondition: active
+	WithSpriteBody:
+		RequiresCondition: !active
+	WithSpriteBody@Active:
+		Name: active
+		Sequence: active
+		RequiresCondition: active
+	ExternalCondition@ACTIVE:
+		Condition: active
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -627,6 +641,9 @@ TSLA:
 	DetectCloaked:
 		Range: 6c0
 		RequiresCondition: !disabled && !being-warped
+	ProductionCostMultiplier@RussiaBonus:
+		Multiplier: 90
+		Prerequisites: structures.russia
 
 AGUN:
 	Inherits: ^Defense
@@ -754,6 +771,7 @@ DOME:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SelectTargetSpeechNotification: SelectTarget
 		PauseOnCondition: disabled || being-warped
 		RequiresCondition: !build-incomplete
 	GrantExternalConditionPowerCA@GpsScramble:
@@ -764,7 +782,7 @@ DOME:
 		ChargeInterval: 6000
 		Weapon: GpsScramble
 		Description: GPS Scramble
-		Condition: hidden
+		Condition: gpshide
 		ValidStances: Ally
 		Range: 3
 		Duration: 1000
@@ -1820,7 +1838,7 @@ AFLD:
 		OrderName: atombomb
 		Prerequisites: aircraft.iraq, techlevel.superw
 		Icon: abombair
-		ChargeInterval: 12500
+		ChargeInterval: 10500
 		Description: Atom Bomb
 		LongDesc: A Badger bomber drops an \natom bomb on your target.
 		SelectTargetSpeechNotification: SelectTarget
@@ -2857,7 +2875,7 @@ HAND:
 		RequiresCondition: nodupgbuilt
 	GrantConditionOnPrerequisite@nodupg:
 		Condition: nodupgbuilt
-		Prerequisites: fcom.nod
+		Prerequisites: bio.nod
 		
 HAND.AI:
 	Inherits: HAND
@@ -3169,7 +3187,7 @@ ASTRIP:
 	ProductionAirdrop:
 		Produces: Vehicle
 		PauseOnCondition: forceshield
-		ActorType: c17
+		ActorType: c17.cargo
 		ReadyAudio: ReinforcementsArrived
 	ProvidesPrerequisite@any:
 		Factions: gdi, talon, zocom, eagle, nod, marked, blackh, legion, allies, england, france, germany, soviet, russia, ukraine, iraq
@@ -3919,7 +3937,7 @@ HQ:
 		DropPodsAvailableNotification: DropPodsAvailable
 		SelectTargetSpeechNotification: SelectTarget
 		DisplayRadarPing: True
-		ChargeInterval: 3000
+		ChargeInterval: 4500
 		DropPodType: dpod2
 		DropPodType2: dpod1
 		DropItems: N3R1,N1R1,N1R1,N2R1,N2R1,N3R1,N3R1
@@ -3944,6 +3962,30 @@ HQ:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable || being-warped
+	AirstrikePower@BlackhandFirebomb:
+		OrderName: infernobomb
+		Prerequisites: radar.blackh, techlevel.superw
+		Icon: infbomb
+		IconPalette: chrometd
+		ChargeInterval: 9000
+		Description: Inferno Bomb
+		LongDesc: A B2 bomber drops\ninferno bombs on your target.
+		SelectTargetSpeechNotification: SelectTarget
+		CameraActor: camera
+		CameraRemoveDelay: 150
+		UnitType: b2b
+		QuantizedFacings: 8
+		DisplayBeacon: true
+		BeaconPoster: a10airstrike
+		BeaconPosterPalette: temptd
+		SquadSize: 1
+		SquadOffset: 0,1792,0
+		ArrowSequence: arrow
+		ClockSequence: clockTD
+		CircleSequence: circles
+		UseDirectionalTarget: False
+		DirectionArrowAnimation: paradirection
+		PauseOnCondition: disabled || being-warped
 	Power:
 		Amount: -40
 		RequiresCondition: !being-warped
@@ -4046,16 +4088,16 @@ EYE:
 		IconPalette: chrometd
 		ChargeInterval: 3500
 		WeaponDelay: 3
-		Description: Ion Cannon
+		Description: Surgical Strike
 		EffectPalette: tdeffect-ignore-lighting-alpha85
-		LongDesc: Initiate an Ion Cannon strike.\nApplies instant damage to a small area.
+		LongDesc: Initiate an precision Ion Cannon strike.\nApplies instant damage to a small area.
 		BeginChargeSpeechNotification: IonCannonCharging
 		EndChargeSpeechNotification: IonCannonReady
 		LaunchSound: ion2.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayRadarPing: True
-		DisplayTimerStances: Ally, Neutral, Enemy
+		DisplayTimerStances: Ally
 		DisplayBeacon: True
 		CameraActor: camera
 		ArrowSequence: arrow
@@ -4072,6 +4114,9 @@ EYE:
 		Condition: jammed
 	MustBeDestroyed:
 		RequiredForShortGame: false
+	ProductionCostMultiplier@ZocomBonus:
+		Multiplier: 90
+		Prerequisites: structures.zocom
 
 REP:
 	Inherits: ^BuildingTD
@@ -4245,12 +4290,12 @@ HPAD2:
 		EndChargeSpeechNotification: ReinforceAva
 		LaunchSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
-	SpawnActorPower@GDIHeavyDropzone:
+	SpawnActorPower@GDIEagleDropzone:
 		Actor: FLARE.dropzone
 		Prerequisites: ~radar.gdi, ~structures.eagle, ~techlevel.low
 		LifeTime: 280
-		OrderName: dropzone
-		Icon: orcacah
+		OrderName: dropzoneeagle
+		Icon: orcaca
 		IconPalette: chrometd
 		ChargeInterval: 7200
 		Description: Reinforcements
@@ -4620,13 +4665,13 @@ GTEK:
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
 	GrantPrerequisiteChargeDrainPower@Nrepair:
-		OrderName: nrepairai
+		OrderName: nrepair
 		Icon: nrepair
 		Prerequisites: structures.talon, techlevel.high, !botplayer
-		ChargeInterval: 6000
+		ChargeInterval: 7500
 		Prerequisite: nrepair
 		Description: Nanite Repair
-		DischargeModifier: 600
+		DischargeModifier: 300
 		AllowMultiple: false
 		LaunchSound: srepaira.aud
 		LongDesc: Repairs damaged vehicles\nfor 30 seconds.
@@ -4635,16 +4680,17 @@ GTEK:
 		LaunchSpeechNotification: Repairing
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayTimerStances: Ally
-	SpawnActorPower@Nrepair:
+	SpawnActorPower@NrepairAI:
+		OrderName: nrepairai
 		Prerequisites: structures.talon, techlevel.high, !botplayer
 		Actor: camera.nrepair.ai
 		LifeTime: 600
-		ChargeInterval: 6000
+		ChargeInterval: 7500
 		DeploySound: srepaira.aud
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayTimerStances: Ally
 		Icon: nrepair
-		Description: Nanite Repair
+		Description: Nanite Repair AI
 		LongDesc: Repairs damaged vehicles\nfor 30 seconds.
 	SupportPowerChargeBar:
 	GrantConditionOnPowerState@LOWPOWER:
@@ -4738,7 +4784,7 @@ TMPL:
 		OrderName: frenzy
 		Icon: frenzy
 		Prerequisites: structures.marked, techlevel.high
-		ChargeInterval: 3000
+		ChargeInterval: 4500
 		Weapon: Frenzy
 		Description: Frenzy
 		Condition: frenzy
@@ -4749,7 +4795,7 @@ TMPL:
 		AirburstAltitude: 0c0
 		AllowMultiple: false
 		LongDesc: Increases Vehicle & Infantry movement and attack speed\nfor 20 seconds.
-		OnFireSound: ironcur9.aud
+		OnFireSound: nodfrenzy.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayRadarPing: True
@@ -5107,6 +5153,7 @@ HTUR:
 	DetectCloaked:
 		Range: 6c0
 		RequiresCondition: !disabled && !being-warped
+	-ProductionCostMultiplier@FranceBonus:
 		
 GUN2:
 	Inherits: ^DefenseTD
@@ -5495,7 +5542,7 @@ PATR:
 		PauseOnCondition: disabled || empdisable || being-warped
 		LocalOffset: 1000,0,500
 		ReloadingCondition: reloading
-	AttackOrderPower@EMPMISSILE:
+	AttackOrderPowerCA@EMPMISSILE:
 		OrderName: empmissile
 		PauseOnCondition: empdisable || disabled || being-warped
 		Cursor: empmissile
@@ -5540,7 +5587,7 @@ INDP:
 		Queue: Building
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.soviet, stek, ~techlevel.high
-		Description: Reduces cost of vehicles & aircraft by 25%\n Can not be Captured.\n Maximum 1 can be built.
+		Description: Reduces cost of vehicles & aircraft by 25%\nand increases production speed bt 10%\n Can not be Captured.\n Maximum 1 can be built.
 		BuildLimit: 1
 	Valued:
 		Cost: 2500

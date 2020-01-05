@@ -114,6 +114,7 @@ E1:
 		DefaultAttackSequence: shoot
 		IdleSequences: idle1,idle2,idle3,idle4
 	AttackFrontal:
+		PauseOnCondition: being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 
@@ -160,6 +161,7 @@ E2:
 	TakeCover:
 		ProneOffset: 256,64,-331
 	AttackFrontal:
+		PauseOnCondition: being-warped
 	WithInfantryBody:
 		DefaultAttackSequence: throw
 	Explodes:
@@ -222,6 +224,7 @@ E3:
 	TakeCover:
 		ProneOffset: 384,0,-395
 	AttackFrontal:
+		PauseOnCondition: being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	AutoTarget:
@@ -273,6 +276,7 @@ E4:
 		ProneOffset: 160,0,-256
 	WithMuzzleOverlay:
 	AttackFrontal:
+		PauseOnCondition: being-warped
 	Explodes:
 		Weapon: VisualExplode
 		EmptyWeapon: VisualExplode
@@ -371,7 +375,7 @@ E7:
 		BuildLimit: 1
 		Description: Elite commando infantry. Armed with\ndual pistols and C4.\nCan detect cloaked units.\nMaximum 1 can be trained.\n  Strong vs Infantry, Buildings\n  Weak vs Vehicles, Aircraft\n  Special Ability: Destroy Building with C4
 	Valued:
-		Cost: 1200
+		Cost: 1000
 	Tooltip:
 		Name: Tanya
 	UpdatesPlayerStatistics:
@@ -406,6 +410,7 @@ E7:
 		Name: mounted
 		PauseOnCondition: being-warped
 	AttackFrontal:
+		PauseOnCondition: being-warped
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		StandSequences: stand
@@ -452,6 +457,7 @@ MEDI:
 		ForceTargetStances: None
 		PauseOnCondition: being-warped
 	AttackFrontal:
+		PauseOnCondition: being-warped
 	WithInfantryBody:
 		IdleSequences: idle
 		StandSequences: stand
@@ -497,6 +503,7 @@ MECH:
 		PauseOnCondition: being-warped
 	AttackFrontal:
 		Voice: Action
+		PauseOnCondition: being-warped
 	CaptureManager:
 	Captures:
 		CaptureTypes: husk
@@ -581,6 +588,7 @@ GNRL:
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
+		PauseOnCondition: being-warped
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -681,6 +689,7 @@ SHOK:
 		ProneOffset: 227,0,-245
 	AttackFrontal:
 		Voice: Attack
+		PauseOnCondition: being-warped
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -735,6 +744,7 @@ N1:
 		Weapon: M16CarbineE
 		PauseOnCondition: being-warped
 	AttackFrontal:
+		PauseOnCondition: being-warped
 	WithInfantryBody:
 		IdleSequences: idle1,idle2,idle3,idle4
 		DefaultAttackSequence: shoot
@@ -788,6 +798,7 @@ N2:
 		FireDelay: 15
 		PauseOnCondition: being-warped
 	AttackFrontal:
+		PauseOnCondition: being-warped
 	WithInfantryBody:
 		StandSequences: stand
 		DefaultAttackSequence: throw
@@ -863,6 +874,7 @@ N3:
 	TakeCover:
 		ProneOffset: 384,0,-395
 	AttackFrontal:
+		PauseOnCondition: being-warped
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 	WithDeathAnimation:
@@ -921,6 +933,7 @@ N4:
 	TakeCover:
 		ProneOffset: 160,0,-254
 	AttackFrontal:
+		PauseOnCondition: being-warped
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 	WithDeathAnimation:
@@ -962,20 +975,21 @@ N5:
 		Weapon: Chemspray
 		LocalOffset: 341,0,254
 		MuzzleSequence: muzzle
-		MuzzlePalette: ra2effect-ignore-lighting-alpha50
+		MuzzlePalette: tdeffect-ignore-lighting-alpha85
 		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: ChemsprayE
 		LocalOffset: 341,0,254
 		MuzzleSequence: muzzle
-		MuzzlePalette: tdeffect
+		MuzzlePalette: tdeffect-ignore-lighting-alpha85
 		PauseOnCondition: being-warped
 	TakeCover:
 		ProneOffset: 160,0,-254
 	Mobile:
 		Locomotor: chem
 	AttackFrontal:
+		PauseOnCondition: being-warped
 	-Crushable:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
@@ -987,8 +1001,14 @@ N5:
 		DeathTypes: BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
-	-DamagedByTintedCells@RAD:
-	-DamagedByTintedCells@RADWEAK:
+	GrantCondition@HAZMAT:
+		Condition: hazmatsuits
+		-RequiresCondition:
+	GrantConditionOnPrerequisite@BIO:
+		Condition: biofirepower
+	FirepowerMultiplier@BIOLAB:
+		RequiresCondition: nodupg || biofirepower
+		Modifier: 110
 		
 N5R1:
 	Inherits: N5
@@ -1039,6 +1059,7 @@ RMBO:
 		PauseOnCondition: being-warped
 	AttackFrontal:
 		Voice: Attack
+		PauseOnCondition: being-warped
 	AttackMove:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
@@ -1152,6 +1173,7 @@ SNIPER:
 		RequiresCondition: hidden
 	AttackFrontal:
 		Voice: Attack
+		PauseOnCondition: being-warped
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		StandSequences: stand, stand2
@@ -1177,7 +1199,7 @@ BORIS:
 		BuildLimit: 1
 		Description: Elite commando infantry. Armed with C4.\nCan detect cloaked units.\n Maximum 1 can be trained.\n  Strong vs Infantry, Buildings\n  Weak vs Aircraft\n  Special Ability: Destroy Building with C4
 	Valued:
-		Cost: 1200
+		Cost: 1000
 	Tooltip:
 		Name: Boris
 	UpdatesPlayerStatistics:
@@ -1197,6 +1219,7 @@ BORIS:
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
+		PauseOnCondition: being-warped
 	Armament@PRIMARY:
 		Name: secondary
 		Weapon: akm
@@ -1267,6 +1290,7 @@ MORT:
 		FireDelay: 15
 		PauseOnCondition: being-warped
 	AttackFrontal:
+		PauseOnCondition: being-warped
 	WithInfantryBody:
 		DefaultAttackSequence: throw
 	Explodes:
@@ -1330,6 +1354,7 @@ SAB:
 		PauseOnCondition: being-warped
 	AttackFrontal:
 		Voice: Attack
+		PauseOnCondition: being-warped
 	Cloak:
 		InitialDelay: 100
 		CloakDelay: 200
@@ -1348,9 +1373,13 @@ SAB:
 	IgnoresDisguise:
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	ProductionCostMultiplier@LegionBonus:
+		Multiplier: 80
+		Prerequisites: infantry.legion
 		
 ACOL:
 	Inherits: ^Soldier
+	Inherits@EMP: ^EmpDisable
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Buildable:
 		Queue: Infantry
@@ -1370,6 +1399,7 @@ ACOL:
 	Mobile:
 		Speed: 49
 		Voice: Move
+		PauseOnCondition: being-warped || empdisable
 	RevealsShroud:
 		Range: 5c0
 	Armament@PRIMARY:
@@ -1383,12 +1413,18 @@ ACOL:
 		PauseOnCondition: being-warped
 	TakeCover:
 		ProneOffset: 227,0,-245
+		PauseOnCondition: being-warped || nodupg || empdisable
 	AttackFrontal:
 		Voice: Attack
+		PauseOnCondition: being-warped || empdisable
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		StandSequences: stand,stand2
 		IdleSequences: idle3
+		RequiresCondition: !being-warped || !empdisable
+	WithInfantryBody@Warped:
+		StandSequences: stand
+		RequiresCondition: being-warped || empdisable
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -1412,18 +1448,26 @@ ACOL:
 		TerrainTypes: Tiberium, BlueTiberium
 	-DamagedByTintedCells@RAD:
 	-DamagedByTintedCells@RADWEAK:
+	-GrantCondition@HAZMAT:
 	WithDecoration@THEAL:
 		Image: pips
 		Sequence: medic
 		Palette: temptd
 		ReferencePoint: Bottom, Left
 		RequiresCondition: tibheal
+	SpeedMultiplier@NODUPG:
+		RequiresCondition: nodupg
+		Modifier: 120
+	DamageMultiplier@NODUPG:
+		RequiresCondition: nodupg
+		Modifier: 50
 		
 JUMPJET:
 	Inherits@1: ^ExistsInWorld
 	Inherits@3: ^IronCurtainable
 	Inherits@4: ^SpriteActor
 	Inherits@5: ^Warpable
+	Inherits@6: ^EmpDisable
 	Inherits@bounty: ^GlobalBounty
 	Inherits@SELECTION_MODE: ^FlatSelectionMode
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -1542,6 +1586,7 @@ JUMPJET:
 		CanHover: true
 		CanSlide: true
 		VTOL: true
+		LandOnCondition: empdisable
 	AttackAircraft:
 		AttackType: Hover
 		AttackTurnDelay: 0
@@ -1549,9 +1594,9 @@ JUMPJET:
 		Voice: Attack
 	Armament@PRIMARY:
 		Weapon: M60mgJJ
-		RequiresCondition: !airborne
 		PauseOnCondition: being-warped
 	AttackFrontal:
+		PauseOnCondition: being-warped
 	WithInfantryBody:
 		IdleSequences: idle1,idle2
 		DefaultAttackSequence: attack
@@ -1619,6 +1664,8 @@ JUMPJET:
 		RequiresCondition: (stance-attackanything || assault-move) && airborne
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense
 		InvalidTargets: NoAutoTarget
+	KillsSelf:
+		RequiresCondition: empdisable && cruising
 		
 JUMPJET.Husk:
 	BodyOrientation:
@@ -1691,6 +1738,7 @@ E8:
 		ProneOffset: 384,0,-395
 	AttackFrontal:
 		Voice: Attack
+		PauseOnCondition: being-warped
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -1702,9 +1750,6 @@ E8:
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	-Crushable:
-	-DamagedByTerrain:
-	-DamagedByTintedCells@RAD:
-	-DamagedByTintedCells@RADWEAK:
 	PeriodicExplosion:
 		Weapon: RadEruptionWeapon
 		RequiresCondition: deployed
@@ -1731,9 +1776,19 @@ E8:
 		Sequence: deploy
 		BodyNames: deployed
 		Condition: deploying
-		
+	GrantCondition@HAZMAT:
+		Condition: hazmatsuits
+		-RequiresCondition:
+	GrantConditionOnPrerequisite@BIO:
+		Condition: biofirepower
+	FirepowerMultiplier@BIOLAB:
+		RequiresCondition: nodupg || biofirepower
+		Modifier: 110
+
+
 n1c:
 	Inherits: ^Soldier
+	Inherits@EMP: ^EmpDisable
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	RenderSprites:
 	Buildable:
@@ -1743,7 +1798,7 @@ n1c:
 		IconPalette: chrometd
 		Description: General-purpose infantry\n  Strong vs Infantry\n  Weak vs Vehicles, Artillery
 	Valued:
-		Cost: 200
+		Cost: 150
 	Tooltip:
 		Name: Cyborg
 	-TakeCover:
@@ -1756,8 +1811,10 @@ n1c:
 	Mobile:
 		Speed: 49
 		Voice: Move
+		PauseOnCondition: being-warped || empdisable
 	AttackFrontal:
 		Voice: Attack
+		PauseOnCondition: being-warped || empdisable
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -1771,9 +1828,37 @@ n1c:
 		PauseOnCondition: being-warped
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+	-KillsSelf@Mutation:
+	-GrantConditionOnPrerequisite@BIO:
+	-GrantCondition@HAZMAT:
+	-WithDecoration@HAZMAT:
+	-DamagedByTerrain:
+	DamagedByTerrain:
+		Terrain: Tiberium, BlueTiberium
+		Damage: -100
+		DamageInterval: 16
+		DamageTypes: ToxinDeath
+	GrantConditionOnTerrain@THEAL:
+		Condition: tibheal
+		TerrainTypes: Tiberium, BlueTiberium
+	-DamagedByTintedCells@RAD:
+	-DamagedByTintedCells@RADWEAK:
+	WithDecoration@THEAL:
+		Image: pips
+		Sequence: medic
+		Palette: temptd
+		ReferencePoint: Bottom, Left
+		RequiresCondition: tibheal
+	SpeedMultiplier@NODUPG:
+		RequiresCondition: nodupg
+		Modifier: 120
+	DamageMultiplier@NODUPG:
+		RequiresCondition: nodupg
+		Modifier: 50
 		
 n3c:
 	Inherits: ^Soldier
+	Inherits@EMP: ^EmpDisable
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	RenderSprites:
 	Buildable:
@@ -1783,22 +1868,24 @@ n3c:
 		IconPalette: chrometd
 		Description: Anti-tank infantry\n  Strong vs Tanks\n  Weak vs Infantry, Artillery
 	Valued:
-		Cost: 450
+		Cost: 350
 	Tooltip:
 		Name: Cyborg Reaper
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	-TakeCover:
 	Health:
-		HP:  8000
+		HP:  9000
 	Armor:
 		Type: Light
 	RevealsShroud:
 		Range: 4c768
 	Mobile:
 		Voice: Move
+		PauseOnCondition: being-warped || empdisable
 	AttackFrontal:
 		Voice: Attack
+		PauseOnCondition: being-warped || empdisable
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -1837,10 +1924,38 @@ n3c:
 		ScanRadius: 5
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+	-KillsSelf@Mutation:
+	-GrantConditionOnPrerequisite@BIO:
+	-GrantCondition@HAZMAT:
+	-WithDecoration@HAZMAT:
+	-DamagedByTerrain:
+	DamagedByTerrain:
+		Terrain: Tiberium, BlueTiberium
+		Damage: -100
+		DamageInterval: 16
+		DamageTypes: ToxinDeath
+	GrantConditionOnTerrain@THEAL:
+		Condition: tibheal
+		TerrainTypes: Tiberium, BlueTiberium
+	-DamagedByTintedCells@RAD:
+	-DamagedByTintedCells@RADWEAK:
+	WithDecoration@THEAL:
+		Image: pips
+		Sequence: medic
+		Palette: temptd
+		ReferencePoint: Bottom, Left
+		RequiresCondition: tibheal
+	SpeedMultiplier@NODUPG:
+		RequiresCondition: nodupg
+		Modifier: 120
+	DamageMultiplier@NODUPG:
+		RequiresCondition: nodupg
+		Modifier: 50
 		
 rmboc:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@EMP: ^EmpDisable
 	RenderSprites:
 		PlayerPalette: playerd2k
 		Image: cycom
@@ -1852,7 +1967,7 @@ rmboc:
 		IconPalette: chrometd
 		Description: Elite infantry unit. Armed with\na Plasma cannon.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft
 	Valued:
-		Cost: 1000
+		Cost: 1500
 	Tooltip:
 		Name: Cyborg Elite
 	UpdatesPlayerStatistics:
@@ -1864,8 +1979,10 @@ rmboc:
 	Mobile:
 		Speed: 49
 		Voice: Move
+		PauseOnCondition: being-warped || empdisable
 	AttackFrontal:
 		Voice: Attack
+		PauseOnCondition: being-warped || empdisable
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -1895,3 +2012,37 @@ rmboc:
 	Selectable:
 		Bounds: 24,24,0,-4
 		DecorationBounds: 12,20,0,-4
+	-Crushable:
+	-KillsSelf@Mutation:
+	-GrantConditionOnPrerequisite@BIO:
+	-WithDecoration@HAZMAT:
+	-GrantCondition@HAZMAT:
+	-ExternalCondition@NODUPG:
+	-DamagedByTerrain:
+	DamagedByTerrain:
+		Terrain: Tiberium, BlueTiberium
+		Damage: -100
+		DamageInterval: 16
+		DamageTypes: ToxinDeath
+	GrantConditionOnTerrain@THEAL:
+		Condition: tibheal
+		TerrainTypes: Tiberium, BlueTiberium
+	-DamagedByTintedCells@RAD:
+	-DamagedByTintedCells@RADWEAK:
+	WithDecoration@THEAL:
+		Image: pips
+		Sequence: medic
+		Palette: temptd
+		ReferencePoint: Bottom, Left
+		RequiresCondition: tibheal
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Infantry
+	Targetable@REPAIR:
+		RequiresCondition: !parachute && damaged && !being-warped
+		TargetTypes: Repair
+	WithInfantryBody:
+		RequiresCondition: !being-warped || !empdisable
+	WithInfantryBody@Warped:
+		StandSequences: stand
+		RequiresCondition: being-warped || empdisable

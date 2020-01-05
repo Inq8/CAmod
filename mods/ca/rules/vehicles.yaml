@@ -31,7 +31,7 @@ V2RL:
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable
+		PauseOnCondition: empdisable || being-warped
 	WithFacingSpriteBody:
 		RequiresCondition: !reloading
 		Name: loaded
@@ -204,8 +204,8 @@ V2RL:
 		RequiresCondition: !iraqtank
 	Explodes@IRAQTANK:
 		Weapon: UnitExplodeIraqTank
+		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: iraqtank
-		DamageThreshold: 10
 	SelectionDecorations:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -274,8 +274,8 @@ V2RL:
 		RequiresCondition: !iraqtank
 	Explodes@IRAQTANK:
 		Weapon: UnitExplodeIraqTank
+		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: iraqtank
-		DamageThreshold: 10
 	SelfHealing:
 		Step: 100
 		Delay: 3
@@ -866,6 +866,9 @@ CTNK:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 30,30
+	ProductionCostMultiplier@GermanyBonus:
+		Multiplier: 90
+		Prerequisites: vehicles.germany
 
 QTNK:
 	Inherits: ^Tank
@@ -1209,6 +1212,8 @@ MTNK:
 		Turret: secondary
 		Weapon: PointLaser
 		LocalOffset: 0,10,90
+		RequiresCondition: gdiupg
+		ForceTargetStances: enemy
 		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
 		Turrets: primary, secondary
@@ -1234,11 +1239,11 @@ MTNK.drone:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@IDISABLE: ^DisableOnLowPower
 	RenderSprites:
-		Image: mtnk
+		Image: drone
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 120
-		Prerequisites: ~vehicles.talon, vehicles.mtnk, ~techlevel.low
+		Prerequisites: ~vehicles.talon, awep, ~techlevel.low
 		IconPalette: chrometd
 		Description: Drone Battle Tank.\n  Requires power to operate.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
 	Valued:
@@ -1277,6 +1282,8 @@ MTNK.drone:
 		Turret: secondary
 		Weapon: PointLaser
 		LocalOffset: 0,10,90
+		RequiresCondition: gdiupg
+		ForceTargetStances: enemy
 		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
 		Turrets: primary, secondary
@@ -1597,6 +1604,9 @@ STNK.nod:
 		InitialStanceAI: ReturnFire
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	ProductionCostMultiplier@BlackhBonus:
+		Multiplier: 90
+		Prerequisites: vehicles.blackh
 
 BIKE:
 	Inherits: ^VehicleTD
@@ -1682,6 +1692,9 @@ FTNK:
 		EmptyWeapon: BarrelExplode
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	ProductionCostMultiplier@BlackhBonus:
+		Multiplier: 90
+		Prerequisites: vehicles.blackh
 
 HARV2:
 	Inherits: ^VehicleTD
@@ -1933,14 +1946,16 @@ IFV:
 			e3: samturr
 			e4: flamturr
 			n1: gunturr
+			n1c: gunturr
 			n2: fragturr
 			n3: samturr
+			n3c: samturr
 			n4: flamturr
 			n5: chemturr
+			e8: chemturr
 			e6: engturr
 			n6: engturr
 			mech: engturr
-			mech.nod: engturr
 			mort: chemturr
 			shok: testurr
 			rmbo: commturr
@@ -1950,11 +1965,10 @@ IFV:
 			sniper: commturr
 			spy: spyturr
 			thf: spyturr
-			mort.tech: chemturr
 			shok.nod: testurr
 			medi: medturr
-			medi.gdi: medturr
-			acol: acolturr
+			acol: acolturr # needs turret
+			rmboc: acolturr # same
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithIdleOverlay@MEDIC:
@@ -2067,9 +2081,9 @@ TITAN:
 		BuildPaletteOrder: 190
 		IconPalette: chrometd
 		Prerequisites: ~gtek, ~vehicles.gdi, ~vehicles.talon, ~miss.gdi, ~techlevel.high
-		Description: Tough Prototype Battle-Mech.\n  Strong vs Infantry, Tanks\n Weak vs Aircraft
+		Description: Tough Combat Battle-Mech.\n  Strong vs Infantry, Tanks\n Weak vs Aircraft
 	Valued:
-		Cost: 1700
+		Cost: 2000
 	Selectable:
 		Bounds: 30,40,0,0
 	Tooltip:
@@ -2077,7 +2091,7 @@ TITAN:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 90000
+		HP: 100000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -2136,6 +2150,40 @@ TITAN:
 		LocalOffset: 0,0,700
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+		
+JUGG:
+	Inherits: TITAN
+	RenderSprites:
+		Image: jugg
+	Tooltip:
+		Name: Juggernaut
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 130
+		IconPalette: chrometd
+		Prerequisites: ~gtek, ~vehicles.gdi, ~vehicles.talon, ~miss.gdi, ~techlevel.high
+		Description: Tough Artillery Battle-Mech.\n  Strong vs Infantry, Structures\n Weak vs Aircraft
+	Valued:
+		Cost: 1500
+	Armament@PRIMARY:
+		Weapon: JuggernautGun
+		LocalOffset: 830,0,450, 830,100,450, 830,-100,450
+		PauseOnCondition: empdisable || being-warped
+		Recoil: 171
+		RecoilRecovery: 30
+		MuzzleSequence: muzzle
+	AttackTurreted:
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: True
+	Turreted:
+		TurnSpeed: 3
+		Offset: -20,0,20
+	-Armament@SECONDARY:
+	-SelfHealing@DEFAULT:
+	Health:
+		HP: 50000
+	Voiced:
+		VoiceSet: DisrVoice
 
 TTRK:
 	Inherits: DTRK
@@ -2234,14 +2282,14 @@ HMLRS:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Valued:
-		Cost: 900
+		Cost: 1150
 	Tooltip:
 		Name: Hover MLRS
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 130
-		Prerequisites: ~miss.gdi, ~vehicles.gdi, ~techlevel.medium
+		Prerequisites: ~miss.gdi, ~vehicles.gdi, ~!vehicles.talon, ~techlevel.medium
 		Queue: Vehicle
 		IconPalette: chrometd
 		Description: Prototype Hover Multiple Launch Rocket System.\nLong-range guided artillery.\n  Strong vs Infantry, Vehicles and Buildings
@@ -2441,6 +2489,9 @@ V3RL:
 		VoiceSet: V3Voice
 	Exit:
 		SpawnOffset: 0,-128,0
+	ProductionCostMultiplier@UkraineBonus:
+		Multiplier: 90
+		Prerequisites: vehicles.ukraine
 		
 V3:
 	Inherits: ^ShootableMissile
@@ -2758,6 +2809,7 @@ BATF:
 			e3: loaded-air
 			e4: loaded
 			e7: loaded
+			e8: loaded
 			n1: loaded
 			n2: loaded
 			n3: loaded-air
@@ -2766,9 +2818,13 @@ BATF:
 			rmbo: loaded
 			boris: loaded
 			acol: loaded
+			mort: loaded
 			sniper: loaded
 			shok: loaded
 			sab: loaded
+			n1c: loaded
+			n3c: loaded-air
+			rmboc: loaded
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:

@@ -92,6 +92,21 @@ Player:
 					Attractiveness: -5
 					TargetMetric: None
 					CheckRadius: 8c0
+			eagledropzone:
+				OrderName: dropzoneeagle
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
+				Consideration@2:
+					Against: Enemy
+					Types: Water
+					Attractiveness: -5
+					TargetMetric: None
+					CheckRadius: 8c0
 			paratroopers:
 				OrderName: paratroopers
 				MinimumAttractiveness: 5
@@ -167,8 +182,8 @@ Player:
 					Attractiveness: -5
 					TargetMetric: None
 					CheckRadius: 8c0
-			parabombs:
-				OrderName: UkraineParabombs
+			carpetbomb:
+				OrderName: carpetbomb
 				MinimumAttractiveness: 1
 				Consideration@1:
 					Against: Enemy
@@ -176,7 +191,7 @@ Player:
 					Attractiveness: 1
 					TargetMetric: None
 					CheckRadius: 5c0
-			rparabombs:
+			parabombs:
 				OrderName: parabombs
 				MinimumAttractiveness: 1
 				Consideration@1:
@@ -187,6 +202,15 @@ Player:
 					CheckRadius: 5c0
 			iparabombs:
 				OrderName: atombomb
+				MinimumAttractiveness: 1
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 5c0
+			infernobombs:
+				OrderName: infernobomb
 				MinimumAttractiveness: 1
 				Consideration@1:
 					Against: Enemy
@@ -209,7 +233,7 @@ Player:
 					Attractiveness: -10
 					TargetMetric: Value
 					CheckRadius: 7c0
-			chemmissile:
+			chemmissilepower:
 				OrderName: chemmissile
 				MinimumAttractiveness: 3000
 				Consideration@1:
@@ -254,7 +278,7 @@ Player:
 					Attractiveness: -10
 					TargetMetric: Value
 					CheckRadius: 7c0
-			surgicalstrike:
+			surgicalstrikepower:
 				OrderName: surgicalstrike
 				MinimumAttractiveness: 3000
 				Consideration@1:
@@ -269,16 +293,22 @@ Player:
 					Attractiveness: -10
 					TargetMetric: Value
 					CheckRadius: 7c0
-			EagleAirDef:
+			interceptorpower:
 				OrderName: interceptors
 				MinimumAttractiveness: 3000
 				Consideration@1:
 					Against: Enemy
 					Types: Air
-					Attractiveness: 1
+					Attractiveness: 5
 					TargetMetric: Value
 					CheckRadius: 7c0
-			storm:
+				Consideration@2:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 2
+					TargetMetric: Value
+					CheckRadius: 3c0
+			stormpower:
 				OrderName: storm
 				MinimumAttractiveness: 3000
 				Consideration@1:
@@ -293,7 +323,7 @@ Player:
 					Attractiveness: -10
 					TargetMetric: Value
 					CheckRadius: 7c0
-			clustermine:
+			clusterminepower:
 				OrderName: clustermine
 				MinimumAttractiveness: 3000
 				Consideration@1:
@@ -308,7 +338,7 @@ Player:
 					Attractiveness: -10
 					TargetMetric: Value
 					CheckRadius: 7c0
-			timewarp:
+			timewarppower:
 				OrderName: TimeWarp
 				MinimumAttractiveness: 1000
 				FineScanRadius: 2
@@ -330,7 +360,7 @@ Player:
 					Attractiveness: -10
 					TargetMetric: Value
 					CheckRadius: 3c0
-			EMPmissile:
+			empmissilepower:
 				OrderName: empmissile
 				MinimumAttractiveness: 3000
 				Consideration@1:
@@ -345,10 +375,16 @@ Player:
 					Attractiveness: -10
 					TargetMetric: Value
 					CheckRadius: 7c0
-			IronCurtainPower:
+			ironcurtainpower:
 				OrderName: ironcurtain
 				MinimumAttractiveness: 1000
 				FineScanRadius: 2
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: -10
+					TargetMetric: Value
+					CheckRadius: 3c0
 				Consideration@2:
 					Against: Enemy
 					Types: Infantry
@@ -357,14 +393,26 @@ Player:
 					CheckRadius: 2c0
 				Consideration@3:
 					Against: Ally
-					Types: Tank, Vehicle
-					Attractiveness: 1
+					Types: Tank
+					Attractiveness: 5
 					TargetMetric: Value
 					CheckRadius: 3c0
-			StealthGen:
+				Consideration@4:
+					Against: Ally
+					Types: Infantry
+					Attractiveness: -2
+					TargetMetric: Value
+					CheckRadius: 2c0
+			stealthgenpower:
 				OrderName: stealthgen
 				MinimumAttractiveness: 1000
 				FineScanRadius: 2
+				Consideration@1:
+					Against: Enemy
+					Types: Structure, Tank, Vehicle
+					Attractiveness: -10
+					TargetMetric: Value
+					CheckRadius: 3c0
 				Consideration@2:
 					Against: Enemy
 					Types: Infantry
@@ -374,10 +422,16 @@ Player:
 				Consideration@3:
 					Against: Ally
 					Types: Tank, Vehicle
-					Attractiveness: 1
+					Attractiveness: 3
 					TargetMetric: Value
 					CheckRadius: 3c0
-			FrenzyPower:
+				Consideration@4:
+					Against: Ally
+					Types: Infantry
+					Attractiveness: -2
+					TargetMetric: Value
+					CheckRadius: 2c0
+			frenzypower:
 				OrderName: frenzy
 				MinimumAttractiveness: 1000
 				FineScanRadius: 2
@@ -387,7 +441,7 @@ Player:
 					Attractiveness: 2
 					TargetMetric: Value
 					CheckRadius: 3c0
-			NaniteRepairPower:
+			naniterepairpower:
 				OrderName: nrepairai
 				MinimumAttractiveness: 1
 				Consideration@1:
@@ -396,7 +450,7 @@ Player:
 					Attractiveness: 1
 					TargetMetric: None
 					CheckRadius: 5c0
-			GpsScramblerPower:
+			gpsscramblerpower:
 				OrderName: gpsscramble
 				MinimumAttractiveness: 1000
 				FineScanRadius: 2
@@ -923,11 +977,13 @@ Player:
 			4tnk: 40
 			ltnk: 40
 			mtnk: 70
+			mtnk.drone: 70
 			bike: 30
 			htnk: 40
 			htnk.ion: 40
 			v3rl: 10
 			titan: 40
+			jugg: 10
 			cdrone: 3
 			ctnk: 3
 			batf.ai: 10
@@ -1039,11 +1095,13 @@ Player:
 			4tnk: 40
 			ltnk: 40
 			mtnk: 70
+			mtnk.drone: 70
 			bike: 30
 			htnk: 40
 			htnk.ion: 40
 			v3rl: 10
 			titan: 40
+			jugg: 10
 			cdrone: 3
 			ctnk: 3
 			batf.ai: 10
@@ -1155,11 +1213,13 @@ Player:
 			4tnk: 40
 			ltnk: 40
 			mtnk: 70
+			mtnk.drone: 70
 			bike: 30
 			htnk: 40
 			htnk.ion: 40
 			v3rl: 10
 			titan: 40
+			jugg: 10
 			cdrone: 3
 			ctnk: 3
 			batf.ai: 10

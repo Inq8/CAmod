@@ -627,38 +627,3 @@ ChaosGas:
 ChaosDroneExplode:
 	Inherits: ChaosGas
 	Report: vchadiea.aud
-		
-DropPodVisual:
-	Warhead@1Eff: CreateEffect
-		Explosions: droppod_explosion
-		ExplosionPalette: tseffect
-		InvalidTargets: Water
-		ImpactSounds: methit1.aud
-	Warhead@2Eff: CreateEffect
-		Explosions: ion_ring
-		ExplosionPalette: tseffect-ignore-lighting-alpha75
-		InvalidTargets: Water
-	Warhead@pod: SpawnRandomActor
-		RandomActors: n1r1, n2r1, n3r1
-		Range: 1
-		ValidTargets: Air, Ground, Water
-	Warhead@3EffWater: CreateEffect
-		Explosions: large_splash
-		ImpactSounds: splash9.aud
-		ValidTargets: Water, Underwater
-		InvalidTargets: Ship, Structure, Bridge
-		
-DropPodVisual2:
-	Inherits: DropPodVisual
-	Warhead@1Eff: CreateEffect
-		Explosions: droppod_explosion2
-		ExplosionPalette: tseffect
-		InvalidTargets: Water
-		ImpactSounds: methit1.aud
-		
-Frenzy:
-	Inherits: VisualExplode
-	Warhead@2Eff: CreateEffect
-		Image: crate-effects
-		Explosions: rapid
-		ImpactSounds: kanebomb.aud

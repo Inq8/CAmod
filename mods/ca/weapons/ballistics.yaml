@@ -271,10 +271,33 @@ TitanGun:
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Versus:
 			None: 60
-			Wood: 35
+			Wood: 55
 			Light: 60
 			Heavy: 25
 			Concrete: 50
+	Warhead@4EffWater: CreateEffect
+		Explosions: large_splash
+		
+JuggernautGun:
+	Inherits: ^Artillery
+	MinRange: 2c0
+	ReloadDelay: 120
+	Range: 10c0
+	Burst: 3
+	StartBurstReport: jugger1.aud
+	TargetActorCenter: true
+	Projectile: Bullet
+		Inaccuracy: 1c938
+	Warhead@1Dam: SpreadDamage
+		Spread: 213
+		Damage: 2200
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		Versus:
+			None: 60
+			Wood: 55
+			Light: 60
+			Heavy: 25
+			Concrete: 60
 	Warhead@4EffWater: CreateEffect
 		Explosions: large_splash
 

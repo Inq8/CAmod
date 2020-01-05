@@ -500,7 +500,7 @@ DD2:
 
 SS2:
 	Inherits: ^Ship
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 		PlayerPalette: playernavy
@@ -708,6 +708,6 @@ CARR:
 		Type: jammer
 		Range: 18c0
 		Color: 0000FF80
-	DetectCloaked:
-		CloakTypes: Underwater
-		Range: 7c0
+	ProductionCostMultiplier@talonBonus:
+		Multiplier: 90
+		Prerequisites: structures.talon

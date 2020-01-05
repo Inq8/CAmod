@@ -193,7 +193,7 @@
 		Sequence: pip-armor
 		Palette: effect
 		ReferencePoint: Bottom, Left
-		ValidStances: Ally, Enemy, Neutral
+		ValidStances: Ally
 		RequiresCondition: gdiupg
 		ZOffset: 256
 		BlinkInterval: 64
@@ -202,25 +202,11 @@
 		RequiresSelection: True
 
 ^NodUpgrade:
-	SpeedMultiplier@NODUPG:
-		RequiresCondition: nodupg
-		Modifier: 120
-	DamageMultiplier@NODUPG:
-		RequiresCondition: nodupg
-		Modifier: 50
-	FirepowerMultiplier@NODUPG:
-		RequiresCondition: nodupg
-		Modifier: 120
 	ExternalCondition@NODUPG:
 		Condition: nodupg
-	WithDecoration@NODUPG:
-		Image: rank
-		Sequence: rank-elite
-		Palette: effect
-		ReferencePoint: Top, Left
-		ValidStances: Ally, Enemy, Neutral
+	GrantCondition@HAZMAT:
+		Condition: hazmatsuits
 		RequiresCondition: nodupg
-		ZOffset: 256
 		
 ^BinoUpgrade:
 	ExternalCondition@Bino:
@@ -824,7 +810,7 @@
 		DamageModifiers:
 			Prone50Percent: 50
 		DamageTriggers: TriggerProne
-		PauseOnCondition: nodupg || being-warped
+		PauseOnCondition: being-warped
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		IdleSequences: idle1,idle2
@@ -1059,6 +1045,9 @@
 	Targetable@REPAIR:
 		RequiresCondition: !airborne && damaged && !being-warped
 		TargetTypes: Repair
+	ProductionCostMultiplier@EagleBonus:
+		Multiplier: 90
+		Prerequisites: structures.eagle
 		
 ^PlaneTD:
 	Inherits@1: ^Plane
@@ -1083,6 +1072,7 @@
 		InitialFacing: 224
 		CanSlide: True
 		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems,Tiberium,BlueTiberium
+		LandOnCondition: empdisable
 	GpsDot:
 		String: Helicopter
 	Hovers@CRUISING:
@@ -1298,6 +1288,9 @@
 	RevealOnFire:
 		RevealGeneratedShroud: True
 		RequiresCondition: revealonfire
+	ProductionCostMultiplier@FranceBonus:
+		Multiplier: 90
+		Prerequisites: structures.france
 	
 ^DefenseTD:
 	Inherits@1: ^Defense
@@ -1354,6 +1347,9 @@
 	MapEditorData:
 		Categories: Wall
 	-ExternalCondition@CRATE-CLOAK:
+	ProductionCostMultiplier@FranceBonus:
+		Multiplier: 90
+		Prerequisites: structures.france
 
 ^TechBuilding:
 	Inherits: ^BasicBuilding
@@ -1959,7 +1955,7 @@
 		Weapon: Chemspray
 		LocalOffset: 384,0,0
 		MuzzleSequence: muzzle
-		MuzzlePalette: tdeffect
+		MuzzlePalette: tdeffect-ignore-lighting-alpha85
 	AttackFrontal:
 		Voice: Attack
 	BodyOrientation:

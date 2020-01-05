@@ -76,7 +76,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			var ownResources = self.Owner.PlayerActor.Trait<PlayerResources>();
 
-			Game.Sound.Play(SoundType.World, info.OnFireSound, self.CenterPosition);
+			Game.Sound.Play(SoundType.World, info.OnFireSound, order.Target.CenterPosition);
 
 			foreach (var a in UnitsInRange(self.World.Map.CellContaining(order.Target.CenterPosition)))
 			{

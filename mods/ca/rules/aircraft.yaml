@@ -41,7 +41,7 @@ BADR.Bomber:
 	Inherits: ^NeutralPlane
 	AttackBomber:
 	Armament:
-		Weapon: CarpetBomb
+		Weapon: ParaBomb
 	Health:
 		HP: 30000
 	Aircraft:
@@ -89,7 +89,58 @@ BADR.NBomber:
 	AmmoPool:
 		Ammo: 1
 	Armament:
-		Weapon: AtomParaBomb
+		Weapon: AtomBomb
+
+B2B:
+	Inherits: ^NeutralPlane
+	AttackBomber:
+	Armament:
+		Weapon: InfernoBomb
+	Health:
+		HP: 30000
+	Aircraft:
+		CruiseAltitude: 2560
+		TurnSpeed: 5
+		Speed: 180
+		Repulsable: False
+		MaximumPitch: 56
+	AmmoPool:
+		Ammo: 1
+	-Selectable:
+	SelectionDecorations:
+		RenderSelectionBars: False
+	-Voiced:
+	Tooltip:
+		Name: B2 Stealth Bomber
+	Contrail@1:
+		Offset: -432,560,0
+	Contrail@2:
+		Offset: -432,-560,0
+	SpawnActorOnDeath:
+		Actor: B2B.Husk
+	SmokeTrailWhenDamaged@0:
+		Offset: -432,560,0
+		Interval: 2
+	SmokeTrailWhenDamaged@1:
+		Offset: -432,-560,0
+		Interval: 2
+	-EjectOnDeath:
+	-MapEditorData:
+	RejectsOrders:
+	GivesExperience:
+		Experience: 1000
+	Interactable:
+	Cloak@NORMAL:
+		InitialDelay: 0
+		CloakDelay: 200
+		UncloakSound: appear1.aud
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
+		IsPlayerPalette: true
+		Palette: cloakra
+		RequiresCondition: !cloak-force-disabled && airborne
+	GrantConditionOnDamageState@UNCLOAK:
+		Condition: cloak-force-disabled
+		ValidDamageStates: Critical
 
 MIG:
 	Inherits: ^Plane
@@ -277,17 +328,12 @@ YAK:
 TRAN:
 	Inherits: ^Helicopter
 	RenderSprites:
-		FactionImages:
-			allies: tran3
-			france: tran3
-			england: tran3
-			germany: tran3
-			
+		Image: tran3
 	Buildable:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 10
-		Prerequisites: ~aircraft.all, ~techlevel.infonly
+		Prerequisites: ~aircraft.all, ~!aircraft.eagle, ~techlevel.infonly
 		Description: Fast Infantry Transport Helicopter.\n  Unarmed
 	Valued:
 		Cost: 900
@@ -308,55 +354,104 @@ TRAN:
 		AltitudeVelocity: 0c58
 		TakeoffSounds: htoff1.aud
 		LandingSounds: hland1.aud
-	GrantConditionOnFaction:
-		Condition: allies
-		Factions: allies, england, france, germany
 	WithIdleOverlay@ROTOR1AIR:
 		Offset: 597,0,213
 		Sequence: rotor
-		RequiresCondition: airborne && allies
+		RequiresCondition: airborne
 	WithIdleOverlay@ROTOR1GROUND:
 		Offset: 597,0,213
 		Sequence: slow-rotor
-		RequiresCondition: !airborne && allies
+		RequiresCondition: !airborne
 	WithIdleOverlay@ROTOR2AIR:
 		Offset: -597,0,341
 		Sequence: rotor2
-		RequiresCondition: airborne && allies
+		RequiresCondition: airborne
 	WithIdleOverlay@ROTOR2GROUND:
 		Offset: -597,0,341
 		Sequence: slow-rotor2
-		RequiresCondition: !airborne && allies
-	WithIdleOverlay@ROTOR1AIR2:
-		Offset: 597,0,85
-		Sequence: rotor
-		RequiresCondition: airborne && !allies
-	WithIdleOverlay@ROTOR1GROUND2:
-		Offset: 597,0,85
-		Sequence: slow-rotor
-		RequiresCondition: !airborne && !allies
-	WithIdleOverlay@ROTOR2AIR2:
-		Offset: -597,0,171
-		Sequence: rotor2
-		RequiresCondition: airborne && !allies
-	WithIdleOverlay@ROTOR2GROUND2:
-		Offset: -597,0,171
-		Sequence: slow-rotor2
-		RequiresCondition: !airborne && !allies
+		RequiresCondition: !airborne
 	Cargo:
 		Types: Infantry
 		MaxWeight: 8
 		PipCount: 8
 	SpawnActorOnDeath:
 		Actor: TRAN3.Husk
-		RequiresCondition: allies
-	SpawnActorOnDeath@Soviet:
-		Actor: TRAN.Husk
-		RequiresCondition: !allies
 	SelectionDecorations:
 	Selectable:
 		DecorationBounds: 40,36
 		
+TRAN.Eagle:
+	Inherits: TRAN
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	RenderSprites:
+		Image: ctran
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Combat Chinook
+	Buildable:
+		Queue: Aircraft
+		BuildAtProductionType: Helicopter
+		BuildPaletteOrder: 10
+		IconPalette: chrometd
+		Prerequisites: hpad2, ~aircraft.eagle, ~techlevel.infonly
+		Description: Fast Infantry Transport Helicopter.\n  Infantry can fire from weapon ports.
+	Health:
+		HP: 28000
+	Armor:
+		Type: Heavy
+	AttackGarrisoned:
+		Armaments: mounted
+		MuzzlePalette: tdeffect
+		PortOffsets: 768,0,0, 448,-682,0, -448,-682,0, -768,0,0, -448,682,0, 448,682,0
+		PortYaws: 0, 176, 341, 512, 682, 853
+		PortCones: 88, 88, 88, 88, 88, 88
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: loaded || loaded-air
+	Cargo:
+		Types: Infantry
+		MaxWeight: 5
+		PipCount: 5
+		PassengerConditions:
+			e1: loaded
+			e2: loaded
+			e3: loaded-air
+			e4: loaded
+			e7: loaded
+			e8: loaded
+			n1: loaded
+			n2: loaded
+			n3: loaded-air
+			n4: loaded
+			n5: loaded
+			mort: loaded
+			rmbo: loaded
+			boris: loaded
+			acol: loaded
+			sniper: loaded
+			shok: loaded
+			sab: loaded
+			n1c: loaded
+			n3c: loaded-air
+			rmboc: loaded
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: HoldFire
+		RequiresCondition: loaded || loaded-air
+	AutoTargetPriority@DEFAULT:
+		RequiresCondition: !stance-attackanything && !assault-move && !loaded-air
+	AutoTargetPriority@ATTACKANYTHING:
+		RequiresCondition: (stance-attackanything || assault-move) && !loaded-air
+	AutoTargetPriority@DEFAULT_AIR:
+		RequiresCondition: !stance-attackanything && !assault-move && loaded-air
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
+		InvalidTargets: NoAutoTarget, WaterStructure
+	AutoTargetPriority@ATTACKANYTHING_AIR:
+		RequiresCondition: (stance-attackanything || assault-move) && loaded-air
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
+		InvalidTargets: NoAutoTarget
+	-ProductionCostMultiplier@EagleBonus:
+
 TRAN.paradrop:
 	Inherits: ^Helicopter
 	Tooltip:
@@ -393,7 +488,7 @@ TRAN.paradrop:
 	-Voiced:
 	RejectsOrders:
 	RenderSprites:
-		Image: TRAN
+		Image: tran2
 	SpawnActorOnDeath:
 		Actor: TRAN.Husk
 	SelectionDecorations:
@@ -764,6 +859,21 @@ c17:
 	GivesExperience:
 		Experience: 1000
 	-MapEditorData:
+	
+c17.cargo:
+	Inherits: c17
+	RenderSprites:
+		Image: c17
+		PlayerPalette: overlayplayertd
+	Aircraft:
+		CruiseAltitude: 2560
+		TurnSpeed: 5
+		Speed: 266
+		LandingSounds: vc130diva.aud, vc130divb.aud
+		Repulsable: False
+		MaximumPitch: 36
+		IdleBehavior: LeaveMap
+	-Targetable@AIRBORNE:
 
 c17.clustermines:
 	Inherits: c17
@@ -970,6 +1080,7 @@ ORCAB:
 		RearmActors: hpad2, hpad
 	Voiced:
 		VoiceSet: OrcaVoice
+	-ProductionCostMultiplier@EagleBonus:
 
 UAV:
 	Inherits: ^PlaneTD
