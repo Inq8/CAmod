@@ -1682,7 +1682,7 @@ pris:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			BARREN: TEMPERAT
-	icon: prisimicon
+	icon: prisicon
 
 spennod:
 	Inherits: ^StructureOverlays
@@ -1902,15 +1902,16 @@ weat:
 	idle: weat
 	damaged-idle: weat
 		Start: 1
-	dead: weat
-		Start: 1
-	make: weatmake
-		Length: *
-		Tick: 80
 	active: weat
 		Start: 2
+		Length: 1
+		Tick: 10000
 	damaged-active: weat
 		Start: 3
+		Length: 1
+		Tick: 10000
+	make: weatmake
+		Length: *
 	active-overlay: DATA.R8
 		AddExtension: False
 		Start: 3947
@@ -1918,9 +1919,11 @@ weat:
 		Tick: 100
 		BlendMode: Additive
 		ZOffset: 511
-	bib: bib3
+	bib: mbPDOX
 		Length: *
+		Offset: 0,-10
 		UseTilesetExtension: true
 		TilesetOverrides:
-			INTERIOR: TEMPERAT
+			JUNGLE: TEMPERAT
+			BARREN: TEMPERAT
 	icon: weaticon

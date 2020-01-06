@@ -195,6 +195,24 @@ TeslaZap:
 	Warhead@1Dam: SpreadDamage
 		Versus:
 			Wood: 60
+			
+TeslaZapBoost1:
+	Inherits: TeslaZap
+	Range: 8c512
+	Warhead@1Dam: SpreadDamage
+		Damage: 11000
+		
+TeslaZapBoost2:
+	Inherits: TeslaZap
+	Range: 9c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 12000
+		
+TeslaZapBoost3:
+	Inherits: TeslaZap
+	Range: 9c512
+	Warhead@1Dam: SpreadDamage
+		Damage: 13000
 
 PortaTesla:
 	Inherits: ^TeslaWeapon
@@ -210,19 +228,35 @@ PortaTesla:
 PortaTeslaE:
 	Inherits: PortaTesla
 	Range: 8c0
-
+	
+PortaTeslaCharge:
+	Inherits: ^TeslaWeapon
+	ValidTargets: TeslaBoost
+	ReloadDelay: 70
+	Range: 1c768
+	Report: iteschaa.aud
+	-Warhead@1Dam:
+	-Warhead@3Eff:
+	Warhead@charge: GrantExternalCondition
+		Range: 42
+		Duration: 70
+		Condition: charged
+		ValidStances: Ally
+		ValidTargets: TeslaBoost
+	
 TTankZap:
 	Inherits: ^TeslaWeapon
 	ReloadDelay: 140
 	Burst: 3
-	Range: 7c0
+	Range: 8c0
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 5000
+		Damage: 3000
 		Versus:
-			None: 1000
-			Heavy: 90
-			Light: 80
+			Wood: 120
+			Concrete: 120
+			Heavy: 80
+			Light: 70
 
 DogJaw:
 	ValidTargets: Infantry

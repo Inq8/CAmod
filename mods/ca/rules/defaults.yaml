@@ -217,6 +217,7 @@
 	WithDecoration@Bino:
 		Image: pips
 		Sequence: pip-bino
+		Palette: chrome
 		ReferencePoint: Bottom, Left
 		ZOffset: 256
 		RequiresCondition: bino
@@ -359,7 +360,7 @@
 		Palette: cloakgreen
 		CloakSound: cloak5.aud
 		UncloakSound: appear1.aud
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
 	TimedConditionBar@STEALTHGEN:
 		Condition: invisibility
 		Color: 33ff33
@@ -385,12 +386,11 @@
 		InitialDelay: 250
 		CloakDelay: 250
 		UncloakSound: appear1.aud
-		CloakedCondition: gpshide
 		Palette: cloakra
 		IsPlayerPalette: true
 		CloakTypes: Cloak
 		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility)
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Move
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, Move, SelfHeal
 	TimedConditionBar@GPSHIDE:
 		Condition: gpshide
 		Color: 606060
@@ -643,14 +643,14 @@
 		Damage: 100
 		DamageInterval: 16
 		DamageTypes: ToxinDeath
-		RequiresCondition: !hazmatsuits || !being-warped
+		RequiresCondition: !(hazmatsuits || being-warped)
 	GrantConditionOnPrerequisite@BIO:
 		Condition: hazmatsuits
 		Prerequisites: bio
 	WithDecoration@HAZMAT:
 		Image: pips
 		Sequence: pip-hazmat
-		Palette: temptd
+		Palette: chrometd
 		ReferencePoint: Bottom, Left
 		RequiresCondition: hazmatsuits
 	SpawnActorOnDeath:
@@ -732,6 +732,7 @@
 	WithDecoration@REDCROSS:
 		Image: pips
 		Sequence: medic
+		Palette: chrome
 		ReferencePoint: Bottom, Right
 		RequiresCondition: hospitalheal
 		BlinkInterval: 32
@@ -790,13 +791,13 @@
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity
-		RequiresCondition: !hazmatsuits || !being-warped
+		RequiresCondition: !(hazmatsuits || being-warped)
 	DamagedByTintedCells@RADWEAK:
 		Damage: 100
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.weak
-		RequiresCondition: !hazmatsuits || !being-warped
+		RequiresCondition: !(hazmatsuits || being-warped)
 	Cloak@GPSHIDE:
 		Palette: cloak
 
@@ -1381,6 +1382,7 @@
 	WithDecoration@fake:
 		RequiresSelection: true
 		Image: pips
+		Palette: chrome
 		Sequence: tag-fake
 		ReferencePoint: Top
 		ZOffset: 256
@@ -1396,6 +1398,7 @@
 		Types: SpyInfiltrate
 		RequiresSelection: true
 		Image: pips
+		Palette: chrome
 		Sequence: tag-fake
 		ReferencePoint: Top
 		ZOffset: 256

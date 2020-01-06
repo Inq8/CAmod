@@ -19,6 +19,7 @@ using OpenRA.Mods.Common.Effects;
 using OpenRA.Mods.Common.Graphics;
 using OpenRA.Mods.Common.Orders;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Mods.Common.Traits.Render;
 using OpenRA.Primitives;
 using OpenRA.Traits;
 
@@ -48,6 +49,11 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("A condition to apply while active.")]
 		public readonly string ActiveCondition = null;
+
+		[SequenceReference]
+		[Desc("Sequence to play for granting actor when activated.",
+	"This requires the actor to have the WithSpriteBody trait or one of its derivatives.")]
+		public readonly string Sequence = "active";
 
 		[Desc("Duration of the condition (in ticks). Set to 0 for a permanent condition.")]
 		public readonly int Duration = 0;
@@ -96,6 +102,10 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (conditionManager != null && !string.IsNullOrEmpty(Info.ActiveCondition) && activeToken == ConditionManager.InvalidConditionToken)
 				activeToken = conditionManager.GrantCondition(self, Info.ActiveCondition);
+
+			var wsb = self.TraitOrDefault<WithSpriteBody>();
+			if (wsb != null && wsb.DefaultAnimation.HasSequence(Info.Sequence))
+				wsb.PlayCustomAnimation(self, Info.Sequence);
 
 			if (self.Owner.IsAlliedWith(self.World.RenderPlayer))
 				Game.Sound.Play(SoundType.World, Info.LaunchSound);

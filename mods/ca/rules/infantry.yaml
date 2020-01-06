@@ -658,6 +658,19 @@ SHOK:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	AutoTargetPriority@DEFAULT:
+		InvalidTargets: NoAutoTarget, WaterStructure, TeslaBoost
+	AutoTargetPriority@ATTACKANYTHING:
+		InvalidTargets: NoAutoTarget, TeslaBoost
+	AutoTargetPriority@TESLANORMAL:
+		RequiresCondition: !assault-move && !attack-move
+		ValidTargets: TeslaBoost
+	AutoTargetPriority@TESLAAMOVE:
+		RequiresCondition: assault-move || attack-move
+		ValidTargets: TeslaBoost
+		ValidStances: Enemy
+	AttackMove:
+		AttackMoveCondition: attack-move
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -684,6 +697,15 @@ SHOK:
 		Name: mounted
 		Weapon: PortaTeslaE
 		LocalOffset: 427,0,341
+		PauseOnCondition: being-warped
+	Armament@charge:
+		Name: secondary
+		Weapon: PortaTeslaCharge
+		LocalOffset: 427,0,341
+		TargetStances: Ally
+		ForceTargetStances: None
+		Cursor: ability
+		OutsideRangeCursor: ability
 		PauseOnCondition: being-warped
 	TakeCover:
 		ProneOffset: 227,0,-245
@@ -1379,7 +1401,6 @@ SAB:
 		
 ACOL:
 	Inherits: ^Soldier
-	Inherits@EMP: ^EmpDisable
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Buildable:
 		Queue: Infantry
@@ -1399,7 +1420,7 @@ ACOL:
 	Mobile:
 		Speed: 49
 		Voice: Move
-		PauseOnCondition: being-warped || empdisable
+		PauseOnCondition: being-warped
 	RevealsShroud:
 		Range: 5c0
 	Armament@PRIMARY:
@@ -1413,18 +1434,18 @@ ACOL:
 		PauseOnCondition: being-warped
 	TakeCover:
 		ProneOffset: 227,0,-245
-		PauseOnCondition: being-warped || nodupg || empdisable
+		PauseOnCondition: being-warped || nodupg
 	AttackFrontal:
 		Voice: Attack
-		PauseOnCondition: being-warped || empdisable
+		PauseOnCondition: being-warped
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		StandSequences: stand,stand2
 		IdleSequences: idle3
-		RequiresCondition: !being-warped || !empdisable
+		RequiresCondition: !being-warped
 	WithInfantryBody@Warped:
 		StandSequences: stand
-		RequiresCondition: being-warped || empdisable
+		RequiresCondition: being-warped
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -1460,7 +1481,7 @@ ACOL:
 		Modifier: 120
 	DamageMultiplier@NODUPG:
 		RequiresCondition: nodupg
-		Modifier: 50
+		Modifier: 35
 		
 JUMPJET:
 	Inherits@1: ^ExistsInWorld
@@ -1788,7 +1809,6 @@ E8:
 
 n1c:
 	Inherits: ^Soldier
-	Inherits@EMP: ^EmpDisable
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	RenderSprites:
 	Buildable:
@@ -1806,15 +1826,13 @@ n1c:
 		AddToArmyValue: true
 	Health:
 		HP: 10000
-	Armor:
-		Type: Light
 	Mobile:
 		Speed: 49
 		Voice: Move
-		PauseOnCondition: being-warped || empdisable
+		PauseOnCondition: being-warped
 	AttackFrontal:
 		Voice: Attack
-		PauseOnCondition: being-warped || empdisable
+		PauseOnCondition: being-warped
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -1854,11 +1872,10 @@ n1c:
 		Modifier: 120
 	DamageMultiplier@NODUPG:
 		RequiresCondition: nodupg
-		Modifier: 50
+		Modifier: 35
 		
 n3c:
 	Inherits: ^Soldier
-	Inherits@EMP: ^EmpDisable
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	RenderSprites:
 	Buildable:
@@ -1876,16 +1893,14 @@ n3c:
 	-TakeCover:
 	Health:
 		HP:  9000
-	Armor:
-		Type: Light
 	RevealsShroud:
 		Range: 4c768
 	Mobile:
 		Voice: Move
-		PauseOnCondition: being-warped || empdisable
+		PauseOnCondition: being-warped
 	AttackFrontal:
 		Voice: Attack
-		PauseOnCondition: being-warped || empdisable
+		PauseOnCondition: being-warped
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -1950,7 +1965,7 @@ n3c:
 		Modifier: 120
 	DamageMultiplier@NODUPG:
 		RequiresCondition: nodupg
-		Modifier: 50
+		Modifier: 35
 		
 rmboc:
 	Inherits: ^Soldier
@@ -2014,6 +2029,7 @@ rmboc:
 		DecorationBounds: 12,20,0,-4
 	-Crushable:
 	-KillsSelf@Mutation:
+	-KillsSelf@Immolate:
 	-GrantConditionOnPrerequisite@BIO:
 	-WithDecoration@HAZMAT:
 	-GrantCondition@HAZMAT:

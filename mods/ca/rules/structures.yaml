@@ -550,7 +550,6 @@ PDOX:
 		DisplayRadarPing: True
 		LaunchSound: chrono2.aud
 		IncomingSound: chrono2.aud
-		ActiveCondition: active
 	DetonateWeaponPower@TimeWarp:
 		OrderName: TimeWarp
 		Icon: timewarp
@@ -581,15 +580,6 @@ PDOX:
 		TargetCircleColor: 0000FF90
 		LaunchSound: chrono2.aud
 		IncomingSound: chrono2.aud
-		ActiveCondition: active
-	WithSpriteBody:
-		RequiresCondition: !active
-	WithSpriteBody@Active:
-		Name: active
-		Sequence: active
-		RequiresCondition: active
-	ExternalCondition@ACTIVE:
-		Condition: active
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -606,7 +596,7 @@ TSLA:
 		Queue: Defense
 		BuildPaletteOrder: 80
 		Prerequisites: weap, ~structures.soviet, ~techlevel.medium
-		Description: Advanced base defense.\nRequires power to operate.\nCan detect cloaked units.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
+		Description: Advanced base defense.\nCan be buffed or made work during low power by Shock Troopers.\nRequires power to operate.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft
 	Valued:
 		Cost: 1200
 	Tooltip:
@@ -621,13 +611,28 @@ TSLA:
 		Type: Concrete
 	RevealsShroud:
 		Range: 8c0
+	Targetable@TeslaBoost:
+		TargetTypes: TeslaBoost
+		RequiresCondition: !powerdown
 	WithBuildingBib:
 		HasMinibib: Yes
 	WithTeslaChargeAnimation:
 	Armament:
 		Weapon: TeslaZap
 		LocalOffset: 0,0,896
-		PauseOnCondition: disabled || empdisable || being-warped
+		RequiresCondition: (!lowpower && !charged) || (lowpower && charged == 1)
+	Armament@1:
+		Weapon: TeslaZapBoost1
+		LocalOffset: 0,0,896
+		RequiresCondition: (!lowpower && charged == 1) || (lowpower && charged == 2)
+	Armament@2:
+		Weapon: TeslaZapBoost2
+		LocalOffset: 0,0,896
+		RequiresCondition: (!lowpower && charged == 2) || (lowpower && charged >= 3)
+	Armament@3:
+		Weapon: TeslaZapBoost3
+		LocalOffset: 0,0,896
+		RequiresCondition: !lowpower && charged >= 3
 	AttackTesla:
 		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -644,6 +649,19 @@ TSLA:
 	ProductionCostMultiplier@RussiaBonus:
 		Multiplier: 90
 		Prerequisites: structures.russia
+	GrantConditionOnPowerState@LOWPOWER:
+		RequiresCondition: !charged
+	ExternalCondition@CHARGED:
+		Condition: charged
+	WithDecoration@CHARGED:
+		Image: poweroff
+		Sequence: offline
+		Palette: chrome
+		ReferencePoint: Bottom, Left
+		ValidStances: Ally
+		RequiresCondition: charged
+		ZOffset: 256
+		BlinkInterval: 64
 
 AGUN:
 	Inherits: ^Defense
@@ -1386,10 +1404,10 @@ FACT:
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
-	GrantConditionOnBotOwner@brutal:
+	GrantConditionOnBotOwner@brutalbonus:
 		Condition: brutalbotplayer
 		Bots: brutal
-	GrantConditionOnBotOwner@normal:
+	GrantConditionOnBotOwner@normalbonus:
 		Condition: normalbotplayer
 		Bots: normal
 	CashTrickler@brutal:
@@ -1466,10 +1484,10 @@ PROC:
 	StoresResources:
 		PipCount: 17
 		Capacity: 2000
-	GrantConditionOnBotOwner@brutal:
+	GrantConditionOnBotOwner@brutalbonus:
 		Condition: brutalbotplayer
 		Bots: brutal
-	GrantConditionOnBotOwner@normal:
+	GrantConditionOnBotOwner@normalbonus:
 		Condition: normalbotplayer
 		Bots: normal
 	CashTrickler@brutal:
@@ -1773,7 +1791,7 @@ AFLD:
 	ParatroopersPower@Russianparatroopers:
 		OrderName: stormtroopers
 		Prerequisites: aircraft.russia, , ~techlevel.high
-		Icon: paratroopers
+		Icon: stormtroopers
 		ChargeInterval: 9000
 		Description: Storm-troopers
 		LongDesc: A Badger drops a squad of shock troops\nanywhere on the map.
@@ -1839,7 +1857,7 @@ AFLD:
 		Prerequisites: aircraft.iraq, techlevel.superw
 		Icon: abombair
 		ChargeInterval: 10500
-		Description: Atom Bomb
+		Description: Atomic Bomb
 		LongDesc: A Badger bomber drops an \natom bomb on your target.
 		SelectTargetSpeechNotification: SelectTarget
 		CameraActor: camera
@@ -3561,10 +3579,10 @@ AFAC:
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
-	GrantConditionOnBotOwner@brutal:
+	GrantConditionOnBotOwner@brutalbonus:
 		Condition: brutalbotplayer
 		Bots: brutal
-	GrantConditionOnBotOwner@normal:
+	GrantConditionOnBotOwner@normalbonus:
 		Condition: normalbotplayer
 		Bots: normal
 	CashTrickler@brutal:
@@ -3739,7 +3757,7 @@ ATWR:
 		BuildPaletteOrder: 80
 		Prerequisites: hq, ~structures.gdi, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Ground defensive structure.\n  Strong vs Tanks\n  Weak vs Infantry
+		Description: Ground defensive structure.\n  Strong vs Tanks, Infantry\n  Weak vs Aircraft
 	Valued:
 		Cost: 1000
 	Tooltip:
@@ -3789,7 +3807,7 @@ OBLI:
 		IconPalette: chrometd
 		Description: Experimental Base defence.\nRequires power to operate.\nCan detect cloaked units.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
 	Valued:
-		Cost: 1500
+		Cost: 1200
 	Tooltip:
 		Name: Obelisk of Light
 	Building:
@@ -4361,10 +4379,10 @@ PROC2:
 		PipColor: Green
 		PipCount: 17
 		Capacity: 2000
-	GrantConditionOnBotOwner@brutal:
+	GrantConditionOnBotOwner@brutalbonus:
 		Condition: brutalbotplayer
 		Bots: brutal
-	GrantConditionOnBotOwner@normal:
+	GrantConditionOnBotOwner@normalbonus:
 		Condition: normalbotplayer
 		Bots: normal
 	CashTrickler@brutal:
@@ -4529,7 +4547,7 @@ AFLD.gdi:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@uavST:
-		OrderName: gdiuav
+		OrderName: gdiuavtalon
 		Prerequisites: aircraft.gdi, aircraft.talon
 		Icon: uavicon
 		ChargeInterval: 2880
@@ -4830,7 +4848,7 @@ PRIS:
 		Prerequisites: radar, ~structures.allies, ~!structures.france, ~techlevel.high
 		Description: Experimental base defense.\nRequires power to operate.\nCan detect cloaked units.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
 	Valued:
-		Cost: 1200
+		Cost: 1500
 	Tooltip:
 		Name: Prism Tower
 	Building:
@@ -4839,7 +4857,7 @@ PRIS:
 		DecorationBounds: 24,40,0,-8
 	SelectionDecorations:
 	Health:
-		HP: 40000
+		HP: 35000
 	Armor:
 		Type: Concrete
 	RevealsShroud:
@@ -5926,14 +5944,8 @@ WEAT:
 		BeaconPoster: stormicon
 		TargetCircleRange: 6c512
 		TargetCircleColor: 0000FF90
-		ActiveCondition: active
 		Duration: 350
-	WithSpriteBody:
-		RequiresCondition: !active
-	WithSpriteBody@Active:
-		Name: active
-		Sequence: active
-		RequiresCondition: active
+		ActiveCondition: active
 	WithIdleOverlay@ACTIVE:
 		Sequence: active-overlay
 		Palette: d2keffect

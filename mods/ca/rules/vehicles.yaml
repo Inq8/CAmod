@@ -159,6 +159,9 @@ V2RL:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		FactionImages:
+			iraq: 3tnki
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 120
@@ -169,6 +172,11 @@ V2RL:
 	Tooltip:
 		Name: Heavy Tank
 		GenericName: Tank
+		RequiresCondition: !iraqtank
+	Tooltip@Iraq:
+		Name: Atomic Heavy Tank
+		GenericName: Tank
+		RequiresCondition: iraqtank
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -217,6 +225,9 @@ V2RL:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		FactionImages:
+			iraq: 4tnki
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 180
@@ -228,6 +239,11 @@ V2RL:
 	Tooltip:
 		Name: Mammoth Tank
 		GenericName: Tank
+		RequiresCondition: !iraqtank
+	Tooltip@Iraq:
+		Name: Atomic Mammoth Tank
+		GenericName: Tank
+		RequiresCondition: iraqtank
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -737,7 +753,7 @@ TTNK:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 170
+		BuildPaletteOrder: 80
 		Prerequisites: tsla, dome, ~vehicles.russia, ~techlevel.medium
 		Description: Tank with mounted Tesla coil.\n  Strong vs Infantry, Vehicles, Buildings\n  Weak vs Aircraft
 	Valued:
@@ -1265,13 +1281,13 @@ MTNK.drone:
 		Range: 6c0
 	Turreted:
 		TurnSpeed: 5
-		Offset: 0,0,30
+		Offset: 0,0,20
 	Turreted@SECONDARY:
 		Turret: secondary
 		Offset: 0,0,40
 		TurnSpeed: 255
 	Armament:
-		Weapon: 120mm
+		Weapon: 90mm
 		Recoil: 128
 		RecoilRecovery: 26
 		LocalOffset: 768,0,90
@@ -1577,7 +1593,7 @@ STNK.nod:
 		UncloakSound: appear1.aud
 		Palette: cloak
 		IsPlayerPalette: false
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
 		RequiresCondition: !cloak-force-disabled && !invisibility
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
@@ -2167,7 +2183,7 @@ JUGG:
 		Cost: 1500
 	Armament@PRIMARY:
 		Weapon: JuggernautGun
-		LocalOffset: 830,0,450, 830,100,450, 830,-100,450
+		LocalOffset: 830,0,500, 830,100,500, 830,-100,500
 		PauseOnCondition: empdisable || being-warped
 		Recoil: 171
 		RecoilRecovery: 30
@@ -2411,7 +2427,7 @@ RTNK:
 		CloakSound: vmirat2a.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1.aud
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Move, Damage, Heal
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Move, Damage, Heal, SelfHeal
 		Palette: cloakra
 		IsPlayerPalette: true
 		RequiresCondition: !cloak-force-disabled && !invisibility
@@ -2480,7 +2496,7 @@ V3RL:
 		RespawnTicks: 300
 	SelectionDecorations:
 	Explodes:
-		Weapon: V2Explode
+		Weapon: BarrelExplode
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
