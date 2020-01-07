@@ -395,16 +395,22 @@ SPEC:
 		PauseOnCondition: empdisable || being-warped
 	Cloak@NORMAL:
 		InitialDelay: 90
-		CloakDelay: 200
+		CloakDelay: 90
 		CloakSound: trans1.aud
+		CloakedCondition: hidden
 		UncloakSound: appear1.aud
 		Palette: cloak
 		IsPlayerPalette: false
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
 		RequiresCondition: !cloak-force-disabled && !invisibility
+	Cloak@GPSHIDE:
+		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden)
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: ReturnFire
 
 HARV:
 	Inherits: ^Vehicle
@@ -1249,7 +1255,7 @@ MTNK:
 		RequiresCondition: gdiupg
 		ValidStances: Enemy
 		
-MTNK.drone:
+MTNK.Drone:
 	Inherits: ^TankTD
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
@@ -1308,7 +1314,7 @@ MTNK.drone:
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	SpawnActorOnDeath:
-		Actor: MTNK.Husk
+		Actor: MTNK.Drone.Husk
 	SelectionDecorations:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -1423,7 +1429,7 @@ HTNK.ION:
 		Name: Ion Mammoth Tank
 	Armament@PRIMARY:
 		Weapon: IonZap
-		LocalOffset: 900,0,340
+		LocalOffset: 870,0,360
 		Recoil: 171
 		RecoilRecovery: 30
 		MuzzleSequence: muzzle
@@ -1503,7 +1509,7 @@ MLRS:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 91
-		Prerequisites: tmpl, ~vehicles.nod, ~techlevel.high
+		Prerequisites: tmpl, ~vehicles.nod, ~!vehicles.blackh, ~techlevel.high
 		Queue: Vehicle
 		IconPalette: chrometd
 		BuildDurationModifier: 20
@@ -1846,7 +1852,7 @@ IFV:
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped
 	RevealsShroud:
 		Range: 5c0
-		RequiresCondition: spyturr
+		RequiresCondition: !spyturr
 	RevealsShroud@SPY:
 		Range: 10c0
 		RequiresCondition: spyturr
@@ -1860,13 +1866,13 @@ IFV:
 		LocalOffset: 768,0,90
 		MuzzleSequence: muzzle2
 		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: !gunturr && !samturr && !commturr && !flamturr && !chemturr && !spyturr && !testurr && !engturr && !acolturr
+		RequiresCondition: !(gunturr || samturr || commturr || flamturr || chemturr || spyturr || testurr || engturr || acolturr || desoturr || tecnturr)
 	Armament@E1:
 		Weapon: M60mg
 		MuzzleSequence: muzzle
 		LocalOffset: 150,0,100
 		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: gunturr
+		RequiresCondition: gunturr || tecnturr
 	Armament@E2:
 		Weapon: 25mmFRAG
 		MuzzleSequence: muzzle
@@ -1911,6 +1917,11 @@ IFV:
 		LocalOffset: 0,0,213
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: testurr
+	Armament@Deso:
+		Weapon: RadBeamWeapon
+		LocalOffset: 0,0,213
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: desoturr
 	Armament@Repair:
 		Weapon: RepairIFV
 		LocalOffset: 0,0,213
@@ -1937,14 +1948,14 @@ IFV:
 		RequiresCondition: !spyturr
 	WithMuzzleOverlay:
 	WithSpriteTurret@gun:
-		RequiresCondition: gunturr || commturr
+		RequiresCondition: gunturr || commturr || desoturr || tecnturr
 		Sequence: turret
 	WithSpriteTurret@samturr:
 		RequiresCondition: samturr
 		Sequence: turret3
 	WithSpriteTurret@default:
 		Sequence: turret2
-		RequiresCondition: !gunturr && !commturr && !samturr && !spyturr && !testurr && !medturr && !engturr && !acolturr
+		RequiresCondition: !(gunturr || commturr || samturr || spyturr || testurr || medturr || engturr || acolturr || desoturr || tecnturr)
 	WithSpriteTurret@tes:
 		Sequence: turret4
 		RequiresCondition: testurr || acolturr
@@ -1968,12 +1979,13 @@ IFV:
 			n3c: samturr
 			n4: flamturr
 			n5: chemturr
-			e8: chemturr
+			e8: desoturr
 			e6: engturr
 			n6: engturr
 			mech: engturr
 			mort: chemturr
 			shok: testurr
+			shok.nod: testurr
 			rmbo: commturr
 			boris: commturr
 			e7: commturr
@@ -1981,10 +1993,12 @@ IFV:
 			sniper: commturr
 			spy: spyturr
 			thf: spyturr
-			shok.nod: testurr
 			medi: medturr
 			acol: acolturr # needs turret
 			rmboc: acolturr # same
+			tecn: tecnturr
+			tecn2: tecnturr
+			tecn3: tecnturr
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithIdleOverlay@MEDIC:
@@ -2209,7 +2223,7 @@ TTRK:
 		Queue: Vehicle
 		BuildPaletteOrder: 198
 		Prerequisites: ~tec.soviet.stolen, ~tmpl, ~vehicles.nod, ~techlevel.high
-		Description: Toxin Truck, actively armed with\n a nerve gas bomb. Has very weak armor.
+		Description: Toxin Truck, actively armed with\n a Tiberium bomb. Has very weak armor.
 	Tooltip:
 		Name: Toxin Truck
 	Explodes:
@@ -2388,7 +2402,7 @@ RTNK:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 110
-		Prerequisites: weap, ~vehicles.england, ~techlevel.high
+		Prerequisites: weap, ~vehicles.england, ~techlevel.low
 		Description: Advanced Battle tank that can cloak when stationary.\nHas average armor.\n  Strong vs Vehicles\n  Weak vs Aircraft.
 	Valued:
 		Cost: 800
@@ -2837,10 +2851,14 @@ BATF:
 			mort: loaded
 			sniper: loaded
 			shok: loaded
+			shok.nod: loaded
 			sab: loaded
 			n1c: loaded
 			n3c: loaded-air
 			rmboc: loaded
+			tecn: loaded
+			tecn2: loaded
+			tecn3: loaded
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:

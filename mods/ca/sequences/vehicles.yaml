@@ -478,20 +478,6 @@ mtnk:
 	muzzle: gunfire2
 		Length: 5
 	icon: mtnkicnh
-	
-drone:
-	Inherits: ^VehicleOverlays
-	idle: mtnk
-		Facings: 32
-		UseClassicFacingFudge: True
-	turret: dronet
-		Facings: 32
-		UseClassicFacingFudge: True
-	muzzle: gunfire2
-		Length: 5
-	spinner: drad
-		Length: *
-	icon: droneicnh
 
 mtnk.nod:
 	Inherits: ^VehicleOverlays
@@ -514,6 +500,31 @@ mtnk.destroyed:
 		ZOffset: -512
 	turret: mtnk
 		Start: 32
+		Facings: 32
+		UseClassicFacingFudge: True
+		ZOffset: -512
+		
+drone:
+	Inherits: ^VehicleOverlays
+	idle: mtnk
+		Facings: 32
+		UseClassicFacingFudge: True
+	turret: dronet
+		Facings: 32
+		UseClassicFacingFudge: True
+	muzzle: gunfire2
+		Length: 5
+	spinner: drad
+		Length: *
+	icon: droneicnh
+	
+drone.destroyed:
+	Inherits: ^VehicleOverlays
+	idle: mtnk
+		Facings: 32
+		UseClassicFacingFudge: True
+		ZOffset: -512
+	turret: dronet
 		Facings: 32
 		UseClassicFacingFudge: True
 		ZOffset: -512

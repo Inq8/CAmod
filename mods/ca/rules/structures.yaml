@@ -592,6 +592,7 @@ TSLA:
 	Inherits: ^Defense
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetGround
+	Inherits@Flash: ^WhiteFlash
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 80
@@ -868,7 +869,7 @@ HBOX:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 50
-		Prerequisites: tent, ~structures.england, ~techlevel.medium
+		Prerequisites: tent, ~structures.england, ~techlevel.low
 		Description: Camouflaged static defense with a fireport\nfor a garrisoned soldier.\nCan detect cloaked units.\n  Strong vs Infantry, Light armor\n  Weak vs Tanks, Aircraft
 	Valued:
 		Cost: 700
@@ -1374,6 +1375,9 @@ FACT:
 	ProvidesPrerequisite@iraq:
 		Factions: iraq
 		Prerequisite: structures.iraq
+	ProvidesPrerequisite@sandbag:
+		Factions: allies, england, france, germany
+		Prerequisite: structures.sandbag
 	ProvidesPrerequisite@ai:
 		Prerequisite: botplayer
 		RequiresCondition: normalbotplayer || brutalbotplayer
@@ -2429,7 +2433,7 @@ SBAG:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 10
-		Prerequisites: fact, ~structures.allies, ~techlevel.low
+		Prerequisites: ~structures.sandbag, ~techlevel.low
 		Description: Stops infantry and light vehicles.\nCan be crushed by tanks.
 	Valued:
 		Cost: 30
@@ -2447,16 +2451,6 @@ SBAG:
 		Types: sandbag
 	WithWallSpriteBody:
 		Type: sandbag
-		
-SBAG.gdi:
-	Inherits: SBAG
-	RenderSprites:
-		Image: SBAG
-	Buildable:
-		Queue: Defense
-		BuildPaletteOrder: 10
-		Prerequisites: afac, ~structures.gdi, ~techlevel.low
-		Description: Stops infantry and light vehicles.\nCan be crushed by tanks.
 
 FENC:
 	Inherits: ^Wall
@@ -3625,6 +3619,9 @@ AFAC:
 	ProvidesPrerequisite@AWEPFAC:
 		Factions: gdi, talon, zocom, eagle, legion
 		Prerequisite: structures.awep
+	ProvidesPrerequisite@sandbag:
+		Factions: gdi, talon, zocom, eagle
+		Prerequisite: structures.sandbag
 	ProvidesPrerequisite@ai:
 		Prerequisite: botplayer
 		RequiresCondition: normalbotplayer || brutalbotplayer
@@ -3807,7 +3804,7 @@ OBLI:
 		IconPalette: chrometd
 		Description: Experimental Base defence.\nRequires power to operate.\nCan detect cloaked units.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
 	Valued:
-		Cost: 1200
+		Cost: 1500
 	Tooltip:
 		Name: Obelisk of Light
 	Building:
@@ -4044,7 +4041,7 @@ EYE:
 		BuildLimit: 1
 		Description: Provides radar and Orbital Ion Cannon support power.\n  Requires power to operate.\n  Special Ability: Ion Cannon\nMaximum 1 can be built
 	Valued:
-		Cost: 1500
+		Cost: 2500
 	Tooltip:
 		Name: Advanced Communications Center
 	Building:
@@ -4366,7 +4363,7 @@ PROC2:
 		Range: 5c0
 	WithBuildingBib:
 	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack, TheifInfiltrate
+		TargetTypes: Ground, Structure, C4, DetonateAttack, ThiefInfiltrate
 		RequiresCondition: !being-warped
 	Refinery:
 		DockAngle: 112
@@ -4400,7 +4397,7 @@ PROC2:
 		Bounds: 72,56,0,12
 		DecorationBounds: 73,72
 	InfiltrateForCash:
-		Types: TheifInfiltrate
+		Types: ThiefInfiltrate
 		Percentage: 50
 		Notification: CreditsStolen
 	WithDeathAnimation:
@@ -4848,7 +4845,7 @@ PRIS:
 		Prerequisites: radar, ~structures.allies, ~!structures.france, ~techlevel.high
 		Description: Experimental base defense.\nRequires power to operate.\nCan detect cloaked units.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
 	Valued:
-		Cost: 1500
+		Cost: 1300
 	Tooltip:
 		Name: Prism Tower
 	Building:
@@ -5799,14 +5796,12 @@ BIO.nod:
 	Sellable:
 		RequiresCondition: !build-incomplete && !being-demolished && !being-warped
 
-MSLO.nod:
+NMSLO:
 	Inherits: ^ScienceBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@shape: ^2x1Shape
-	RenderSprites:
-		Image: mslo
 	Selectable:
-		Bounds: 48,24
+		Bounds: 48,24,0,12
 	Valued:
 		Cost: 2500
 	Tooltip:
@@ -5814,12 +5809,14 @@ MSLO.nod:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 140
+		IconPalette: chrometd
 		Prerequisites: tmpl, ~techlevel.unrestricted, ~techlevel.superw, ~structures.nod
 		BuildLimit: 1
-		Description: Provides a chemical missile.\nRequires power to operate.\nMaximum 1 can be built.\n  Special Ability: Chemical Missilqe
+		Description: Provides a chemical missile.\nRequires power to operate.\nMaximum 1 can be built.\n  Special Ability: Chemical Missile
 	Building:
 		Footprint: xx
 		Dimensions: 2,1
+		LocalCenterOffset: 0,-512,0
 	Health:
 		HP: 100000
 	Armor:
@@ -5844,6 +5841,7 @@ MSLO.nod:
 		InsufficientPowerSpeechNotification: InsufficientPower
 		IncomingSpeechNotification: MissileLaunchDetected
 		MissileWeapon: Chemicbm
+		MissileDelay: 5
 		IncomingSound: nukelaunch.aud
 		LaunchSound: nukelaunch.aud
 		MissilePalette: temptd
@@ -5851,7 +5849,7 @@ MSLO.nod:
 		DisplayBeacon: True
 		DisplayRadarPing: True
 		BeaconPoster: cmissile
-		SpawnOffset: 1c0,427,0
+		SpawnOffset: 1000, 0, 0
 		CameraRange: 10c0
 		ArrowSequence: arrow
 		ClockSequence: clock
@@ -5886,7 +5884,7 @@ WEAT:
 		BuildLimit: 1
 		Description: Provides Lightning Storm support power.\n  Requires power to operate.\n  Special Ability: Lightning Storm\nMaximum 1 can be built
 	Valued:
-		Cost: 1500
+		Cost: 2500
 	Tooltip:
 		Name: Weather Control Device
 	Building:

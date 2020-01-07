@@ -243,6 +243,11 @@ PortaTeslaCharge:
 		Condition: charged
 		ValidStances: Ally
 		ValidTargets: TeslaBoost
+	Warhead@highlight: GrantExternalCondition
+		Range: 0c511
+		Duration: 2
+		Condition: highlight
+		ValidTargets: Ground, Vehicle
 	
 TTankZap:
 	Inherits: ^TeslaWeapon
@@ -254,7 +259,7 @@ TTankZap:
 		Damage: 3000
 		Versus:
 			Wood: 120
-			Concrete: 120
+			Concrete: 100
 			Heavy: 80
 			Light: 70
 
@@ -371,7 +376,7 @@ Laser:
 		SecondaryBeamColor: FF000040
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 25000
+		Damage: 35000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
 			Light: 70
@@ -397,7 +402,7 @@ Laser.Adv:
 	Warhead@1Dam: SpreadDamage
 		InvalidTargets: Air
 		Spread: 128
-		Damage: 30000
+		Damage: 40000
 
 LaserTur:
 	Inherits: Laser
@@ -522,7 +527,7 @@ PrisTLaser:
 		Damage: 7750
 		Versus:
 			None: 100
-			Wood: 100
+			Wood: 90
 			Concrete: 100
 			Light: 60
 			Heavy: 50  
@@ -657,7 +662,7 @@ SonicZap:
 		ValidTargets: Ground, Water
 		Versus:
 			Heavy: 80
-			Concrete: 150
+			Concrete: 100
 			Wood: 200
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Dam: SpreadDamage
@@ -706,7 +711,7 @@ SonicZapVisual:
 		ValidTargets: Ground, Water
 		Versus:
 			Heavy: 80
-			Concrete: 150
+			Concrete: 100
 			Wood: 200
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Dam: SpreadDamage
@@ -815,6 +820,7 @@ IonZap:
 		HitAnim: explosion
 		HitAnimSequence: ionexp
 		HitAnimPalette: temptd
+		Inaccuracy: 64
 		ZOffset: 2045
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
@@ -950,7 +956,7 @@ V3Launcher:
 		ValidTargets: Ground, Water
 Flare:
 	ReloadDelay: 1
-	Range: 12c0
+	Range: 10c0
 	ValidTargets: Structure
 	TargetActorCenter: true
 	Projectile: LaserZap
@@ -995,6 +1001,7 @@ Cloud:
 ChaosDroneTargeting:
 	Range: 2c0
 	Projectile: InstantHit
+	ValidTargets: Infantry, Vehicle, Ship
 	Warhead@1Dam: TargetDamage
 	
 RadBeamWeapon:

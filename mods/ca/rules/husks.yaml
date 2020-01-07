@@ -576,6 +576,20 @@ MTNK.Husk:
 	RenderSprites:
 		Image: mtnk.destroyed
 		PlayerPalette: overlayplayertd
+		
+MTNK.Drone.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Husk (Battle Drone)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: mtnk.drone
+	InfiltrateForTransform:
+		IntoActor: mtnk.drone
+	RenderSprites:
+		Image: drone.destroyed
+		PlayerPalette: overlayplayertd
 
 HTNK.Husk:
 	Inherits: ^HuskTD
