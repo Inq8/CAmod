@@ -13,7 +13,8 @@
 			None: 30
 			Wood: 75
 			Light: 75
-			Concrete: 50
+			Concrete: 100
+			Brick: 50
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
@@ -42,7 +43,8 @@
 			Wood: 52
 			Light: 116
 			Heavy: 48
-			Concrete: 32
+			Concrete: 48
+			Brick: 32
 			
 25mmFRAG:
 	Inherits: ^Cannon
@@ -54,7 +56,8 @@
 			Wood: 62
 			Light: 66
 			Heavy: 28
-			Concrete: 32
+			Concrete: 28
+			Brick: 32
 	Warhead@3EffGround: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: kaboom12.aud
@@ -62,7 +65,7 @@
 		
 30mm:
 	Inherits: 25mm
-	ReloadDelay: 41
+	ReloadDelay: 36
 	Report: tnkfire3.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 3500
@@ -89,7 +92,8 @@
 			Wood: 85
 			Light: 85
 			Heavy: 90
-			Concrete: 30
+			Concrete: 90
+			Brick: 32
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: small_explosion
@@ -134,7 +138,8 @@
 			None: 10
 			Wood: 15
 			Light: 65
-			Concrete: 10
+			Concrete: 32
+			Brick: 32
 		InvalidTargets: Air
 
 TurretGun:
@@ -190,6 +195,7 @@ TitanGun:
 			Light: 60
 			Heavy: 25
 			Concrete: 60
+			Brick: 60
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: artillery_explosion
@@ -243,6 +249,7 @@ TitanGun:
 			Light: 60
 			Heavy: 20
 			Concrete: 50
+			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -275,6 +282,7 @@ TitanGun:
 			Light: 60
 			Heavy: 25
 			Concrete: 50
+			Brick: 60
 	Warhead@4EffWater: CreateEffect
 		Explosions: large_splash
 		
@@ -297,7 +305,8 @@ JuggernautGun:
 			Wood: 70
 			Light: 65
 			Heavy: 45
-			Concrete: 55
+			Concrete: 45
+			Brick: 55
 	Warhead@4EffWater: CreateEffect
 		Explosions: large_splash
 
@@ -316,6 +325,7 @@ JuggernautGun:
 			Wood: 72
 			Light: 72
 			Concrete: 48
+			Brick: 48
 
 Grenade:
 	Inherits: ^Artillery
@@ -335,6 +345,7 @@ Grenade:
 			Light: 25
 			Heavy: 25
 			Concrete: 100
+			Brick: 100
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Dam: SpreadDamage
 		Spread: 28
@@ -376,6 +387,7 @@ Mortar:
 			Light: 45
 			Heavy: 45
 			Concrete: 50
+			Brick: 75
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -448,6 +460,7 @@ DepthCharge:
 			Light: 60
 			Heavy: 50
 			Concrete: 60
+			Brick: 60
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
@@ -482,6 +495,7 @@ ClusterBomb:
 			Light: 45
 			Heavy: 45
 			Concrete: 80
+			Brick: 80
 	Warhead@Smu: LeaveSmudge
 		SmudgeType: Crater
 		InvalidTargets: Structure, Wall, Trees

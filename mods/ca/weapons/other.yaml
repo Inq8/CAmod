@@ -12,7 +12,8 @@
 			Wood: 50
 			Light: 60
 			Heavy: 25
-			Concrete: 20
+			Concrete: 25
+			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -53,7 +54,8 @@ ChemballLauncher:
 			Wood: 50
 			Light: 70
 			Heavy: 35
-			Concrete: 20
+			Concrete: 35
+			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: med_chem
@@ -85,6 +87,9 @@ Napalmtd:
 			Wood: 60
 			Light: 60
 			Heavy: 40
+			Concrete: 40
+			Brick: 40
+
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -118,7 +123,8 @@ BigFlamer:
 			Wood: 100
 			Light: 59
 			Heavy: 30
-			Concrete: 2
+			Concrete: 30
+			Brick: 2
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -174,6 +180,7 @@ Napalm:
 		Versus:
 			Wood: 100
 			Concrete: 50
+			Brick: 50
 
 ^TeslaWeapon:
 	ReloadDelay: 3
@@ -577,6 +584,7 @@ AirshipParaBomb:
 			Light: 65
 			Heavy: 30
 			Concrete: 40
+			Brick: 50
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
@@ -675,6 +683,7 @@ SonicZap:
 		Versus:
 			Heavy: 80
 			Concrete: 150
+			Brick: 150
 			Wood: 200
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 
@@ -724,6 +733,7 @@ SonicZapVisual:
 		Versus:
 			Heavy: 80
 			Concrete: 150
+			Brick: 150
 			Wood: 200
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 
@@ -775,27 +785,9 @@ Railgun:
 			Wood: 65
 			Light: 75
 			Heavy: 50
-			Concrete: 15
+			Concrete: 40
+			Brick: 15
 		DamageTypes: Prone100Percent, TriggerProne, ExplosionDeath
-		
-RailgunTank:
-	Inherits: Railgun
-	ReloadDelay: 90
-	Burst: 2
-	Range: 5c512
-	Projectile: Railgun
-		DamageActorsInLine: true
-	Warhead@1Dam: SpreadDamage
-		Spread: 64
-		Damage: 7200
-		Versus:
-			Heavy: 115
-			None: 80
-			Wood: 75
-			Light: 75
-			Concrete: 50
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
-	-Warhead@2Dam:
 		
 IonZap:
 	ReloadDelay: 50
@@ -834,6 +826,7 @@ IonZap:
 			Light: 85
 			Heavy: 75
 			Concrete: 45
+			Brick: 45
 		DamageTypes: Prone100Percent, TriggerProne, ExplosionDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: ion_ring
@@ -886,6 +879,7 @@ OrcaBomb:
 			Light: 20
 			Heavy: 20
 			Concrete: 20
+			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -996,6 +990,7 @@ Cloud:
 			Light: 50
 			Heavy: 25
 			Concrete: 10
+			Brick: 10
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 		
 ChaosDroneTargeting:
@@ -1023,6 +1018,7 @@ RadBeamWeapon:
 			Heavy: 2
 			Wood: 0
 			Concrete: 0
+			Brick: 0
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 
 RadBeamWeaponE:
@@ -1176,5 +1172,6 @@ CyCannon:
 			Light: 205
 			Heavy: 150
 			Concrete: 80
+			Brick: 80
 		DamageTypes: Prone350Percent, TriggerProne, ExplosionDeath
 	

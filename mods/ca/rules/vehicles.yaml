@@ -56,7 +56,7 @@ V2RL:
 		Queue: Vehicle
 		BuildPaletteOrder: 50
 		Prerequisites: weap, ~vehicles.allies, ~!vehicles.germany, ~techlevel.low
-		Description: Fast tank, good for scouting.\n  Strong vs Light armor\n  Weak vs Infantry, Tanks, Aircraft
+		Description: Fast tank, good for scouting.\n  Strong vs Light armor\n  Weak vs Infantry, Tanks, Aircraft\n  Special Ability: Amphibious
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -475,6 +475,9 @@ HARV:
 		ImageByFullness: harvempty, harvhalf, harv
 	-WithFacingSpriteBody:
 	-Crushable:
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Vehicle, ChaosImmune
 
 MCV:
 	Inherits: ^Vehicle
@@ -516,6 +519,9 @@ MCV:
 	TransferTimedExternalConditionOnTransform:
 		Condition: invulnerability
 	-Crushable:
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Vehicle, ChaosImmune
 
 JEEP:
 	Inherits: ^Vehicle
@@ -641,6 +647,9 @@ MNLY:
 		Image: MNLY
 	Rearmable:
 		RearmActors: fix, rep
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Vehicle, ChaosImmune
 
 TRUK:
 	Inherits: ^Vehicle
@@ -669,6 +678,9 @@ TRUK:
 		PlayerExperience: 50
 	SpawnActorOnDeath:
 		Actor: moneycrate
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Vehicle, ChaosImmune
 
 MGG:
 	Inherits: ^Vehicle
@@ -711,6 +723,9 @@ MGG:
 		AffectsParent: False
 		RequiresCondition: !empdisable || !pickedup
 		ValidStances: Enemy
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Vehicle, ChaosImmune
 
 MRJ:
 	Inherits: ^Vehicle
@@ -751,6 +766,9 @@ MRJ:
 		DeflectionStances: Neutral, Enemy
 		RequiresCondition: !empdisable
 	RenderJammerCircle:
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Vehicle, ChaosImmune
 
 TTNK:
 	Inherits: ^Tank
@@ -798,7 +816,6 @@ TTNK:
 DTRK:
 	Inherits: ^Vehicle
 	Inherits@BERSERK: ^Berserk
-	-AutoTargetPriority@BERSERK:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 199
@@ -920,15 +937,15 @@ QTNK:
 	SelectionDecorations:
 	MadTank:
 		DeployedCondition: deployed
-	Targetable:
-		TargetTypes: Ground, MADTank, Repair, Vehicle
-		RequiresCondition: !being-warped
 	Selectable:
 		DecorationBounds: 44,38,0,-4
 	WithRangeCircle:
 		Color: FFFF0080
 		Range: 7c0
 	-Crushable:
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, MADTank, Vehicle, ChaosImmune
 		
 AMCV:
 	Inherits: ^VehicleTD
@@ -970,6 +987,9 @@ AMCV:
 	TransferTimedExternalConditionOnTransform:
 		Condition: invulnerability
 	-Crushable:
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Vehicle, ChaosImmune
 		
 HMMV:
 	Inherits: ^VehicleTD
@@ -1133,7 +1153,7 @@ LTNK:
 		BuildPaletteOrder: 40
 		IconPalette: chrometd
 		Prerequisites: astrip, ~!vehicles.legion, ~vehicles.nod, ~techlevel.low
-		Description: Fast, light tank.\n  Strong vs Vehicles, Tanks\n  Weak vs Infantry
+		Description: Fast, light tank.\n  Strong vs Vehicles, Tanks\n  Weak vs Infantry\n  Special Ability: Amphibious
 	Valued:
 		Cost: 675
 	Tooltip:
@@ -1346,6 +1366,9 @@ MTNK.Drone:
 		PointDefenseTypes: Missile
 		RequiresCondition: gdiupg
 		ValidStances: Enemy
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Vehicle, ChaosImmune
 
 HTNK:
 	Inherits: ^TankTD
@@ -1777,6 +1800,9 @@ HARV2:
 		Weapon: TibExplosion
 	SelectionDecorations:
 	-Crushable:
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Vehicle, ChaosImmune
 
 BTR:
 	Inherits: ^Tank
@@ -2682,6 +2708,9 @@ MSAR:
 		EnableSound: dsaping1.aud
 		AffectsParent: False
 		RequiresCondition: deployed
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Vehicle, ChaosImmune
 		
 PTNK:
 	Inherits: ^Tank
@@ -2954,8 +2983,8 @@ MEMP:
 		Offset: 0, 0, 0
 		Sequence: emp-overlay
 	Targetable:
-		TargetTypes: Ground, Repair, Vehicle
-		RequiresCondition: !being-warped
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Vehicle, ChaosImmune
 	WithRangeCircle:
 		Color: 0000FF80
 		Range: 5c0
@@ -2983,6 +3012,14 @@ MEMP:
 	
 CDRONE:
 	Inherits: ^VehicleTD
+	Inherits@AUTOTARGET: ^AutoTargetGround
+	AutoTargetPriority@DEFAULT:
+		RequiresCondition: !stance-attackanything
+		ValidTargets: Infantry, Vehicle, Water
+		InvalidTargets: NoAutoTarget, WaterStructure, Underwater, Defense, ChaosImmune
+	AutoTargetPriority@ATTACKANYTHING:
+		ValidTargets: Infantry, Vehicle, Water, Underwater
+		InvalidTargets: NoAutoTarget, ChaosImmune
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 199
@@ -3037,8 +3074,8 @@ CDRONE:
 		RequiresCondition: triggered && ammo
 		AmmoPoolName: explosion
 	Targetable:
-		RequiresCondition: !being-warped
-		TargetTypes: Ground, Vehicle, ChaosDrone
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Vehicle, ChaosImmune
 	Voiced:
 		VoiceSet: ChaosDroneVoice
 	-CaptureManager:

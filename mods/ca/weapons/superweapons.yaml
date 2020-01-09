@@ -17,6 +17,7 @@ ParaBomb:
 			Light: 65
 			Heavy: 80
 			Concrete: 50
+			Brick: 50
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
@@ -53,7 +54,7 @@ AtomBomb:
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Trees, Water, Air
 		Versus:
-			Concrete: 25
+			Brick: 25
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@2Res_impact: DestroyResource
@@ -68,7 +69,7 @@ AtomBomb:
 		Delay: 5
 		ValidTargets: Ground, Water, Air
 		Versus:
-			Concrete: 25
+			Brick: 25
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@5Res_areanuke1: DestroyResource
@@ -113,7 +114,8 @@ InfernoBomb:
 			Wood: 60
 			Light: 85
 			Heavy: 70
-			Concrete: 25
+			Concrete: 50
+			Brick: 25
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -132,7 +134,8 @@ InfernoBomb:
 		ValidTargets: Ground, Trees, Water, Underwater, Air
 		Versus:
 			Wood: 50
-			Concrete: 25
+			Concrete: 40
+			Brick: 25
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@8Dam_areanuke2: SpreadDamage
@@ -157,7 +160,7 @@ Atomic:
 		ValidTargets: Ground, Trees, Water, Underwater, Air
 		Versus:
 			Wood: 25
-			Concrete: 25
+			Brick: 25
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@2Res_impact: DestroyResource
 		Size: 1
@@ -178,7 +181,7 @@ Atomic:
 		ValidTargets: Ground, Trees, Water, Underwater, Air
 		Versus:
 			Wood: 25
-			Concrete: 25
+			Brick: 25
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@6Res_areanuke1: DestroyResource
 		Size: 2
@@ -200,7 +203,7 @@ Atomic:
 		ValidTargets: Ground, Water, Underwater, Air
 		Versus:
 			Wood: 50
-			Concrete: 25
+			Brick: 25
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@10Dam_areanuke2: SpreadDamage
 		Spread: 3c0
@@ -224,7 +227,7 @@ Atomic:
 		Delay: 15
 		ValidTargets: Ground, Water, Underwater, Air
 		Versus:
-			Concrete: 25
+			Brick: 25
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@14Dam_areanuke3: SpreadDamage
 		Spread: 4c0
@@ -248,7 +251,7 @@ Atomic:
 		Delay: 20
 		ValidTargets: Ground, Water, Underwater, Air
 		Versus:
-			Concrete: 25
+			Brick: 25
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@18Dam_areanuke4: SpreadDamage
 		Spread: 5c0
@@ -314,6 +317,7 @@ Empicbm:
 			Light: 20
 			Heavy: 20
 			Concrete: 20
+			Brick: 20
 	Warhead@2Eff: CreateEffect
 		ExplosionPalette: tseffect-ignore-lighting-alpha75
 		Explosions: pulse_explosion
@@ -364,6 +368,7 @@ THLauncher:
 			Light: 60
 			Heavy: 40
 			Concrete: 60
+			Brick: 50
 	Warhead@1Dam_impact: SpreadDamage
 		Range: 0, 1c1, 2c1, 3c1, 3c512, 4c1, 4c512
 		Damage: 4500
@@ -375,6 +380,7 @@ THLauncher:
 			Light: 20
 			Heavy: 20
 			Concrete: 20
+			Brick: 20
 	Warhead@2Eff: CreateEffect
 		ExplosionPalette: tseffect-ignore-lighting-alpha75
 		Explosions: pulse_explosion
@@ -414,6 +420,7 @@ IronCurtain:
 			Light: 0
 			Heavy: 0
 			Concrete: 0
+			Brick: 0
 	Warhead@2Dam_impact: SpreadDamage
 		Range: 0, 1c1, 2c1, 2c512
 		Damage: 500
@@ -427,6 +434,7 @@ IronCurtain:
 			Light: 0
 			Heavy: 0
 			Concrete: 0
+			Brick: 0
 	Warhead@3Dam_impact: SpreadDamage
 		Range: 0, 1c1, 2c1, 2c512
 		Damage: 500
@@ -440,6 +448,7 @@ IronCurtain:
 			Light: 0
 			Heavy: 0
 			Concrete: 0
+			Brick: 0
 	Warhead@4Eff: CreateEffect
 		ExplosionPalette: effect-ignore-lighting-alpha85
 		Explosions: ironcurtain_effect
@@ -461,6 +470,7 @@ ForceShield:
 			Light: 0
 			Heavy: 0
 			Concrete: 0
+			Brick: 0
 	Warhead@4Eff: CreateEffect
 		ExplosionPalette: effect-ignore-lighting-alpha85
 		Explosions: forceshield_effect
@@ -489,6 +499,7 @@ StealthBubble:
 			Light: 0
 			Heavy: 0
 			Concrete: 0
+			Brick: 0
 	Warhead@2Dam_impact: SpreadDamage
 		Range: 0, 1c1, 2c1, 3c512
 		Damage: 1000
@@ -503,6 +514,7 @@ StealthBubble:
 			Light: 0
 			Heavy: 0
 			Concrete: 0
+			Brick: 0
 	Warhead@3Dam_impact: SpreadDamage
 		Range: 0, 1c1, 2c1, 3c512
 		Damage: 1000
@@ -517,6 +529,7 @@ StealthBubble:
 			Light: 0
 			Heavy: 0
 			Concrete: 0
+			Brick: 0
 	Warhead@4Eff: CreateEffect
 		ExplosionPalette: tseffect
 		Explosions: stealthbub
@@ -535,6 +548,7 @@ Chemicbm:
 			Concrete: 30
 			Light: 60
 			Heavy: 30
+			Brick: 30
 		DamageTypes: Prone50Percent, TriggerProne, ToxinDeath
 	Warhead@3Eff_impact: CreateEffect
 		Explosions: chem_miss
@@ -553,6 +567,7 @@ Chemicbm:
 			Concrete: 30
 			Light: 60
 			Heavy: 30
+			Brick: 30
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, ToxinDeath
 	Warhead@3Dam_chem2: SpreadDamage
@@ -568,6 +583,7 @@ Chemicbm:
 			Concrete: 30
 			Light: 60
 			Heavy: 30
+			Brick: 30
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, ToxinDeath
 	Warhead@4Dam_chem2: SpreadDamage
@@ -583,6 +599,7 @@ Chemicbm:
 			Concrete: 30
 			Light: 60
 			Heavy: 30
+			Brick: 30
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, ToxinDeath
 	Warhead@11Smu_areanuke3: LeaveSmudge
@@ -759,7 +776,8 @@ DeathHandCluster:
 		Falloff: 1000, 500, 250, 100
 		Versus:
 			None: 90
-			Concrete: 20
+			Concrete: 30
+			Brick: 20
 			Wood: 30
 			Light: 60
 			Heavy: 60
@@ -815,6 +833,7 @@ WeatherCloudDirectInit:
 			Wood: 85
 			Heavy: 75
 			Concrete: 55
+			Brick: 55
 	Warhead@barrage3: FireFragment
 		Weapon: WeatherCloud
 		ValidTargets: Air, Ground, Water
@@ -834,6 +853,7 @@ WeatherCloudRandomInit:
 			Wood: 85
 			Heavy: 75
 			Concrete: 15
+			Brick: 15
 	Warhead@barrage3: FireShrapnel
 		Weapon: WeatherCloud
 		Amount: 2
@@ -871,6 +891,7 @@ WeatherBolt:
 			Wood: 65
 			Heavy: 55
 			Concrete: 55
+			Brick: 55
 	Warhead@4: CreateEffect
 		Explosions: weatherbolt1, weatherbolt2, weatherbolt3, weatherbolt1f, weatherbolt2f, weatherbolt3f
 		ImpactSounds: sweastra.aud, sweastrb.aud, sweastrc.aud, sweastrd.aud

@@ -65,8 +65,8 @@ DOG:
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Infantry
 	Targetable:
-		TargetTypes: Ground, Infantry
 		RequiresCondition: !being-warped
+		TargetTypes: Ground, Infantry, ChaosImmune
 	WithInfantryBody:
 		MoveSequence: walk
 		StandSequences: stand
@@ -247,7 +247,7 @@ E4:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 70
-		Prerequisites: ~barr, dome, ~techlevel.infonly
+		Prerequisites: ~barr, ~!infantry.iraq, ftur, ~techlevel.infonly
 		Description: Advanced anti-structure unit.\n  Strong vs Infantry, Buildings\n  Weak vs Vehicles, Aircraft
 	Valued:
 		Cost: 200
@@ -314,6 +314,9 @@ E6:
 		VoiceSet: EngineerVoice
 	Selectable:
 		Priority: 5
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
 SPY:
 	Inherits: ^Soldier
@@ -363,6 +366,9 @@ SPY:
 		Voice: Move
 	Voiced:
 		VoiceSet: SpyVoice
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
 E7:
 	Inherits: ^Soldier
@@ -427,6 +433,9 @@ E7:
 		VoiceSet: TanyaVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
 MEDI:
 	Inherits: ^Soldier
@@ -469,6 +478,9 @@ MEDI:
 		ValidTargets: Infantry
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
 MECH:
 	Inherits: ^Soldier
@@ -524,6 +536,9 @@ MECH:
 		ValidTargets: Vehicle, Ship
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
 EINSTEIN:
 	Inherits: ^CivInfantry
@@ -653,6 +668,9 @@ THF:
 		ValidDamageStates: Critical
 	Mobile:
 		Speed: 49
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
 SHOK:
 	Inherits: ^Soldier
@@ -675,7 +693,7 @@ SHOK:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 115
-		Prerequisites: ~barr, stek, tsla, ~infantry.soviet, ~!infantry.iraq, ~techlevel.high
+		Prerequisites: ~barr, tsla, ~infantry.soviet, ~techlevel.high
 		Description: Elite infantry with portable Tesla coils.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft\n  Special Ability: Can over-charge Tesla Coil
 	Valued:
 		Cost: 350
@@ -1096,6 +1114,9 @@ RMBO:
 	IgnoresDisguise:
 	DetectCloaked:
 		CloakTypes: Cloak, Thief
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
 N6:
 	Inherits: ^Soldier
@@ -1126,6 +1147,9 @@ N6:
 		Priority: 5
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 		
 VICE:
 	Inherits: ^Viceroid
@@ -1138,6 +1162,8 @@ VICE:
 		EmptyWeapon: UnitExplodeVice
 		Chance: 100
 	AttackWander:
+	Targetable:
+		TargetTypes: Ground, Infantry, Creep, ChaosImmune
 	
 SNIPER:
 	Inherits: ^Soldier
@@ -1279,6 +1305,9 @@ BORIS:
 		VoiceSet: BorisVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 		
 MORT:
 	Inherits: ^Soldier
@@ -1481,6 +1510,9 @@ ACOL:
 	DamageMultiplier@NODUPG:
 		RequiresCondition: nodupg
 		Modifier: 35
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 		
 JUMPJET:
 	Inherits@1: ^ExistsInWorld
@@ -1730,7 +1762,7 @@ E8:
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 115
+		BuildPaletteOrder: 70
 		Prerequisites: ~infantry.iraq, ttur, radar, ~techlevel.infonly
 		Description: Anti-Infantry unit.\n  Strong vs Infantry, Vehicles\n  Weak vs Tanks, Aircraft
 	Valued:
@@ -1872,6 +1904,9 @@ n1c:
 	DamageMultiplier@NODUPG:
 		RequiresCondition: nodupg
 		Modifier: 35
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 		
 n3c:
 	Inherits: ^Soldier
@@ -1965,6 +2000,9 @@ n3c:
 	DamageMultiplier@NODUPG:
 		RequiresCondition: nodupg
 		Modifier: 35
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 		
 rmboc:
 	Inherits: ^Soldier
@@ -2052,7 +2090,7 @@ rmboc:
 		RequiresCondition: tibheal
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Infantry
+		TargetTypes: Ground, Infantry, ChaosImmune
 	Targetable@REPAIR:
 		RequiresCondition: !parachute && damaged && !being-warped
 		TargetTypes: Repair

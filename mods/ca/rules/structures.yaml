@@ -2495,7 +2495,7 @@ BRIK:
 	Health:
 		HP: 40000
 	Armor:
-		Type: Concrete
+		Type: Brick
 	Crushable:
 		CrushClasses: heavywall
 	BlocksProjectiles:
@@ -3346,7 +3346,7 @@ ASTRIP:
 		ChargeInterval: 13500
 		Description: Air Drop
 		LongDesc: Cargo Planes air drop tanks anywhere on the map.
-		DropItems: ltnk, ltnk, ltnk
+		DropItems: ltnk, ftnk, ltnk
 		SelectTargetSpeechNotification: SelectTarget
 		AllowImpassableCells: false
 		EndChargeSpeechNotification: ReinforceAva
@@ -4903,7 +4903,7 @@ SPEN.nod:
 		Queue: Building
 		BuildPaletteOrder: 50
 		IconPalette: chrometd
-		Prerequisites: hand, ~structures.nod, ~techlevel.low
+		Prerequisites: anypower, ~structures.nod, ~techlevel.low
 		Description: Produces and repairs\nsubmarines and transports.
 	Targetable:
 		TargetTypes: Ground, Water, WaterStructure, Structure, C4, DetonateAttack, SpyInfiltrate
@@ -5003,7 +5003,7 @@ SYRD.gdi:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 40
-		Prerequisites: pyle, ~structures.gdi, ~techlevel.low
+		Prerequisites: anypower, ~structures.gdi, ~techlevel.low
 		Description: Produces and repairs ships\nand transports.
 	Valued:
 		Cost: 1000
@@ -5432,7 +5432,7 @@ LASP:
 	Health:
 		HP: 40000
 	Armor:
-		Type: Concrete
+		Type: Brick
 	-Capturable:
 	-CaptureNotification:
 	-ProximityCaptor:
@@ -5584,7 +5584,7 @@ PATR:
 	Selectable:
 		Bounds: 48,48
 	RejectsOrders:
-		Except: Sell
+		Except: Sell, PowerDown
 		
 INDP:
 	Inherits: ^ScienceBuilding
@@ -5673,7 +5673,7 @@ OREP:
 	Valued:
 		Cost: 2500
 	Tooltip:
-		Name: Ore Refinery
+		Name: Ore Purifier
 	ResourcePurifier:
 		Modifier: 25
 		RequiresCondition: !disabled && !being-warped

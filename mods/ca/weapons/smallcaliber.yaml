@@ -15,7 +15,8 @@
 			Wood: 10
 			Light: 60
 			Heavy: 10
-			Concrete: 20
+			Concrete: 10
+			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: small_explosion_air
@@ -36,7 +37,8 @@ ZSU-23:
 			Wood: 75
 			Light: 75
 			Heavy: 100
-			Concrete: 50
+			Concrete: 100
+			Brick: 50
 
 FLAK-23-AA:
 	Inherits: ^AACannon
@@ -74,6 +76,7 @@ Gatt.0:
 			Light: 15
 			Heavy: 50
 			Concrete: 50
+			Brick: 50
 	Warhead@2Eff: CreateEffect
 		ValidTargets: Air
 		Explosions: small_explosion_air
@@ -86,36 +89,18 @@ Gatt.1:
 	Report: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 5500
-		Versus:
-			None: 30
-			Wood: 75
-			Light: 15
-			Heavy: 50
-			Concrete: 50
 Gatt.2:
 	Inherits: Gatt.1
 	Report: vgatlo5a.aud, vgatlo5b.aud
 	ReloadDelay: 5
 	Warhead@1Dam: SpreadDamage
 		Damage: 7500
-		Versus:
-			None: 30
-			Wood: 75
-			Light: 15
-			Heavy: 50
-			Concrete: 50
 Gatt.3:
 	Inherits: Gatt.2
 	Report: vgatlo8a.aud, vgatlo8b.aud
 	ReloadDelay: 5
 	Warhead@1Dam: SpreadDamage
 		Damage: 8000
-		Versus:
-			None: 30
-			Wood: 75
-			Light: 15
-			Heavy: 50
-			Concrete: 50
 
 ^HeavyMG:
 	ReloadDelay: 30
@@ -132,6 +117,7 @@ Gatt.3:
 			Light: 72
 			Heavy: 28
 			Concrete: 28
+			Brick: 28
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piffs
@@ -151,6 +137,7 @@ Gatt.3:
 			Light: 40
 			Heavy: 10
 			Concrete: 10
+			Brick: 10
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 
 Vulcan:
@@ -163,6 +150,7 @@ Vulcan:
 			Light: 50
 			Heavy: 20
 			Concrete: 20
+			Brick: 20
 	Warhead@4Dam_2: SpreadDamage
 		Spread: 128
 		Damage: 1000
@@ -173,6 +161,7 @@ Vulcan:
 			Light: 50
 			Heavy: 20
 			Concrete: 20
+			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@4Eff_2: CreateEffect
 		Explosions: piffs
@@ -193,6 +182,7 @@ Vulcan:
 			Light: 50
 			Heavy: 20
 			Concrete: 20
+			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@6Eff_3: CreateEffect
 		Explosions: piffs
@@ -213,6 +203,7 @@ Vulcan:
 			Light: 50
 			Heavy: 20
 			Concrete: 20
+			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@8Eff_4: CreateEffect
 		Explosions: piffs
@@ -233,6 +224,7 @@ Vulcan:
 			Light: 50
 			Heavy: 20
 			Concrete: 20
+			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@10Eff_5: CreateEffect
 		Explosions: piffs
@@ -253,6 +245,7 @@ Vulcan:
 			Light: 50
 			Heavy: 20
 			Concrete: 20
+			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@12Eff_6: CreateEffect
 		Explosions: piffs
@@ -318,6 +311,7 @@ ChainGun.Yak.R:
 			Light: 80
 			Heavy: 25
 			Concrete: 25
+			Brick: 25
 ChainGun.Yak.L:
 	Inherits: ChainGun.Yak.R
 	FirstBurstTargetOffset: -512,-213,0
@@ -373,6 +367,8 @@ M60mgTD:
 	
 M60mgJJ:
 	Inherits: M60mg
+	Projectile: Bullet
+		Blockable: false
 	Report: vblhatta.aud, vblhattb.aud
 	ReloadDelay: 30
 	Burst: 3
@@ -470,7 +466,8 @@ AKM:
 			Wood: 10
 			Light: 35
 			Heavy: 15
-			Concrete: 10
+			Concrete: 15
+			Brick: 10
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piff
