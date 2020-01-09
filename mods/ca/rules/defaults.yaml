@@ -1795,7 +1795,7 @@
 
 ^DisableOnLowPower:
 	WithColoredOverlay@IDISABLE:
-		RequiresCondition: disabled && !invulnerability && !empdisable
+		RequiresCondition: disabled && !(invulnerability || empdisable || being-warped)
 		Palette: disabled
 	GrantConditionOnPowerState@LOWPOWER:
 		Condition: lowpower
@@ -1806,7 +1806,7 @@
 		
 ^DisableOnLowPowerOrForceDisabled:
 	WithColoredOverlay@IDISABLE:
-		RequiresCondition: disabled && !invulnerability && !empdisable && !forceshield
+		RequiresCondition: disabled && !(invulnerability || empdisable || forceshield || being-warped)
 		Palette: disabled
 	GrantConditionOnPowerState@LOWPOWER:
 		Condition: lowpower
