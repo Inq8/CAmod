@@ -84,10 +84,10 @@ Napalmtd:
 		ValidTargets: Ground, Water
 		Versus:
 			None: 100
-			Wood: 60
+			Wood: 55
 			Light: 60
-			Heavy: 40
-			Concrete: 40
+			Heavy: 50
+			Concrete: 30
 			Brick: 40
 
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
@@ -526,18 +526,18 @@ PrisLaser:
 PrisTLaser:
 	Inherits: PrisLaser
 	Report: ptnkfire.aud
-	ReloadDelay: 90
+	ReloadDelay: 45
 	Range: 9c0
 	Projectile: LaserZap
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
-		Damage: 7750
+		Damage: 3875
 		Versus:
 			None: 100
 			Wood: 90
 			Concrete: 100
-			Light: 60
-			Heavy: 50  
+			Light: 70
+			Heavy: 60
 	Warhead@Burst: FireCluster
 		Weapon: PrisTBurst
 	
@@ -559,7 +559,7 @@ PrisBurst:
 PrisTBurst:
 	Inherits: PrisBurst
 	Warhead@1Dam: SpreadDamage
-		Damage: 4200
+		Damage: 2100
 		
 AirshipParaBomb:
 	ReloadDelay: 40
@@ -623,8 +623,9 @@ FrogBomb:
 		Versus:
 			None: 100
 			Wood: 70
-			Light: 60
+			Light: 50
 			Heavy: 40
+			Concrete: 40
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@Cluster: FireCluster
 		Weapon: ClusterBomb
@@ -670,7 +671,7 @@ SonicZap:
 		ValidTargets: Ground, Water
 		Versus:
 			Heavy: 80
-			Concrete: 100
+			Concrete: 85
 			Wood: 200
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Dam: SpreadDamage
@@ -682,7 +683,7 @@ SonicZap:
 		ValidStances: Ally
 		Versus:
 			Heavy: 80
-			Concrete: 150
+			Concrete: 120
 			Brick: 150
 			Wood: 200
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
@@ -1174,4 +1175,3 @@ CyCannon:
 			Concrete: 80
 			Brick: 80
 		DamageTypes: Prone350Percent, TriggerProne, ExplosionDeath
-	

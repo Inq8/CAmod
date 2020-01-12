@@ -13,7 +13,7 @@
 			None: 30
 			Wood: 75
 			Light: 75
-			Concrete: 100
+			Concrete: 55
 			Brick: 50
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge
@@ -43,7 +43,7 @@
 			Wood: 52
 			Light: 116
 			Heavy: 48
-			Concrete: 48
+			Concrete: 40
 			Brick: 32
 			
 25mmFRAG:
@@ -92,7 +92,7 @@
 			Wood: 85
 			Light: 85
 			Heavy: 90
-			Concrete: 90
+			Concrete: 50
 			Brick: 32
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@3Eff: CreateEffect
@@ -134,11 +134,11 @@
 	Warhead@1Dam: SpreadDamage
 		Damage: 12000
 		Versus:
-			Heavy: 125
+			Heavy: 130
 			None: 10
 			Wood: 15
-			Light: 65
-			Concrete: 32
+			Light: 50
+			Concrete: 20
 			Brick: 32
 		InvalidTargets: Air
 
@@ -163,15 +163,16 @@ TurretGunTD:
 	
 TitanGun:
 	Inherits: TurretGunTD
-	ReloadDelay: 60
+	ReloadDelay: 90
 	Report: vtadatta.aud, vtadattab.aud, vtadattc.aud
 	Range: 5c0
 	Warhead@1Dam: SpreadDamage
 		Spread: 255
-		Damage: 9000
+		Damage: 14000
 		Versus:
 			None: 70
-			Wood: 75
+			Wood: 65
+			Light: 60
 	Warhead@3EffGround: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: kaboom12.aud
@@ -230,7 +231,7 @@ TitanGun:
 	Burst: 3
 	BurstDelays: 7
 	Projectile: Bullet
-		Speed: 195
+		Speed: 180
 		Inaccuracy: 1c511
 		Image: firetrail
 	Projectile: Bullet
@@ -244,11 +245,11 @@ TitanGun:
 		Damage: 12000
 		Falloff: 100, 55, 20, 5
 		Versus:
-			None: 40
+			None: 70
 			Wood: 55
-			Light: 60
-			Heavy: 20
-			Concrete: 50
+			Light: 40
+			Heavy: 25
+			Concrete: 40
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Smu: LeaveSmudge
@@ -302,9 +303,9 @@ JuggernautGun:
 		Falloff: 800, 368, 135, 50, 18, 7, 0
 		Versus:
 			None: 90
-			Wood: 70
-			Light: 65
-			Heavy: 45
+			Wood: 60
+			Light: 60
+			Heavy: 40
 			Concrete: 45
 			Brick: 55
 	Warhead@4EffWater: CreateEffect
@@ -494,7 +495,7 @@ ClusterBomb:
 			Wood: 80
 			Light: 45
 			Heavy: 45
-			Concrete: 80
+			Concrete: 70
 			Brick: 80
 	Warhead@Smu: LeaveSmudge
 		SmudgeType: Crater

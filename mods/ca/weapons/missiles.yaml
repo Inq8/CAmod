@@ -23,7 +23,8 @@
 			Wood: 74
 			Light: 34
 			Heavy: 100
-			Concrete: 50
+			Concrete: 75
+			Brick: 50
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
@@ -63,8 +64,9 @@ Maverick:
 			None: 30
 			Wood: 90
 			Light: 90
-			Heavy: 115
+			Heavy: 125
 			Concrete: 100
+			Brick: 100
 
 Dragon:
 	Inherits: ^AntiGroundMissile
@@ -105,6 +107,7 @@ HellfireAG:
 			Wood: 90
 			Light: 90
 			Concrete: 100
+			Brick: 100
 			
 HellfireAG.Orca:
 	Inherits: HellfireAG
@@ -123,15 +126,15 @@ HellfireAG.Harrier:
 		Inaccuracy: 512
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 1525
+		Damage: 1250
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Water, Trees
 		Versus:
 			None: 90
-			Wood: 75
+			Wood: 65
 			Light: 70
 			Heavy: 40
-			Concrete: 100
+			Concrete: 55
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
@@ -219,7 +222,6 @@ MammothTusk:
 			None: 100
 			Light: 60
 			Heavy: 24
-			Concrete: 50
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: kaboom15.aud
@@ -323,6 +325,7 @@ Stinger:
 			Light: 88
 			Heavy: 120
 			Concrete: 60
+			Brick: 60
 
 StingerAA:
 	Inherits: Stinger
@@ -359,8 +362,9 @@ StingerGTWR:
 			None: 45
 			Wood: 55
 			Light: 55
-			heavy: 60
+			Heavy: 60
 			Concrete: 40
+			Brick: 40
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
@@ -382,12 +386,12 @@ APTusk:
 		HorizontalRateOfTurn: 10
 		RangeLimit: 7c204
 	Warhead@1Dam: SpreadDamage
-		Damage: 2500
+		Damage: 6000
 		Versus:
-			None: 28
-			Wood: 88
-			Light: 88
-			Heavy: 120
+			None: 35
+			Wood: 85
+			Light: 45
+			Heavy: 75
 			Concrete: 60
 
 TorpTube:
@@ -416,7 +420,8 @@ TorpTube:
 			Wood: 75
 			Light: 75
 			Heavy: 100
-			Concrete: 500
+			Concrete: 100
+			Brick: 500
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: artillery_explosion
@@ -450,6 +455,7 @@ TorpTube:
 			Light: 30
 			Heavy: 30
 			Concrete: 60
+			Brick: 60
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: building, building2
@@ -488,6 +494,7 @@ HonestJohnSub:
 			Concrete: 70
 			Light: 70
 			Heavy: 60
+			Brick: 70
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Eff: CreateEffect
@@ -531,7 +538,8 @@ SCUD:
 			Wood: 65
 			Light: 70
 			Heavy: 40
-			Concrete: 45
+			Concrete: 40
+			Brick: 45
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: building, building2
@@ -554,7 +562,8 @@ V3Weapon:
 			Wood: 65
 			Light: 70
 			Heavy: 40
-			Concrete: 45
+			Concrete: 40
+			Brick: 45
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: building, building2
@@ -580,27 +589,55 @@ HonestJohn:
 		Speed: 210
 		LaunchAngle: 37
 	Warhead@1Dam: SpreadDamage
-		Spread: 49
-		Damage: 1600
-		Falloff: 1000
+		Spread: 512
+		Damage: 500
+		Falloff: 500, 368, 135, 50, 18, 7, 0
 		Versus:
-			None: 40
-			Wood: 100
-			Concrete: 100
-			Light: 60
-			Heavy: 80
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+			None: 100
+			Wood: 85
+			Concrete: 60
+			Light: 55
+			Heavy: 40
+			Brick: 15
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Dam: SpreadDamage
 		Spread: 512
-		Damage: 2000
+		Damage: 500
 		Falloff: 500, 368, 135, 50, 18, 7, 0
-		Delay: 2
+		Delay: 3
 		Versus:
-			None: 80
-			Wood: 80
-			Concrete: 80
-			Light: 50
+			None: 100
+			Wood: 85
+			Concrete: 60
+			Light: 55
 			Heavy: 40
+			Brick: 15
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@3Dam: SpreadDamage
+		Spread: 512
+		Damage: 500
+		Falloff: 500, 368, 135, 50, 18, 7, 0
+		Delay: 6
+		Versus:
+			None: 100
+			Wood: 85
+			Concrete: 60
+			Light: 55
+			Heavy: 40
+			Brick: 15
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@4Dam: SpreadDamage
+		Spread: 512
+		Damage: 500
+		Falloff: 500, 368, 135, 50, 18, 7, 0
+		Delay: 9
+		Versus:
+			None: 100
+			Wood: 85
+			Concrete: 60
+			Light: 55
+			Heavy: 40
+			Brick: 15
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -655,6 +692,9 @@ BTRRockets:
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
 		Damage: 3000
+		Versus:
+			None: 50
+			Light: 50
 
 BTRRocketsAA:
 	Inherits: RedEye
@@ -892,6 +932,7 @@ BoatMissile:
 			Concrete: 45
 			Light: 20
 			Heavy: 15
+			Brick: 45
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
@@ -941,9 +982,10 @@ Rah66AG:
 		Versus:
 			None: 60
 			Wood: 60
-			Concrete: 80
+			Concrete: 30
 			Light: 50
 			Heavy: 30
+			Brick: 15
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -1068,9 +1110,10 @@ ScrinTorp:
 		Versus:
 			None: 10
 			Wood: 35
-			Concrete: 35
+			Concrete: 55
 			Light: 90
-			Heavy: 80
+			Heavy: 60
+			Brick: 35
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
