@@ -102,7 +102,7 @@ namespace OpenRA.Mods.CA.Traits
 				throw new YamlException("Actors ruleset does not include the entry '{0}'".F(utLower));
 
 			var altitude = unitType.TraitInfo<AircraftInfo>().CruiseAltitude.Length;
-			var pFacing = podFacing.RandomOrDefault(Game.CosmeticRandom);
+			var pFacing = podFacing.RandomOrDefault(self.World.SharedRandom);
 			var approachRotation = WRot.FromFacing(pFacing);
 			var delta = new WVec(0, -altitude, 0).Rotate(approachRotation);
 

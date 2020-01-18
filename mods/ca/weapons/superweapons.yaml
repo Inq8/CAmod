@@ -10,7 +10,7 @@ ParaBomb:
 		Shadow: False
 	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
-		Damage: 30000
+		Damage: 40000
 		Versus:
 			None: 30
 			Wood: 30
@@ -41,16 +41,19 @@ CarpetBomb:
 		Velocity: 0, 0, -45
 		Acceleration: 0, 0, 0
 		Shadow: true
-		
+	Warhead@1Dam: SpreadDamage
+		Damage: 30000
+
 AtomBomb:
 	Inherits: CarpetBomb
+	Range: 0c768
 	Projectile: GravityBomb
 		Image: B2BOMB
 	ReloadDelay: 80
 	ValidTargets: Ground, Trees, Water, Air
 	Warhead@1Dam_impact: SpreadDamage
 		Spread: 1c0
-		Damage: 5000
+		Damage: 6250
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Trees, Water, Air
 		Versus:
@@ -538,7 +541,7 @@ Chemicbm:
 	ValidTargets: Ground, Water
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
-		Damage: 2200
+		Damage: 2400
 		Falloff: 1000, 368, 135, 50, 18
 		ValidTargets: Ground, Water
 		InvalidTargets: Air
@@ -556,7 +559,7 @@ Chemicbm:
 		ImpactSounds: expnew19.aud
 	Warhead@2Dam_chem: SpreadDamage
 		Spread: 3c0
-		Damage: 2000
+		Damage: 2200
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 20
 		ValidTargets: Ground, Water
@@ -572,7 +575,7 @@ Chemicbm:
 		DamageTypes: Prone50Percent, TriggerProne, ToxinDeath
 	Warhead@3Dam_chem2: SpreadDamage
 		Spread: 3c0
-		Damage: 1000
+		Damage: 1100
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 40
 		ValidTargets: Ground, Water
@@ -588,7 +591,7 @@ Chemicbm:
 		DamageTypes: Prone50Percent, TriggerProne, ToxinDeath
 	Warhead@4Dam_chem2: SpreadDamage
 		Spread: 3c0
-		Damage: 1000
+		Damage: 1100
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 80
 		ValidTargets: Ground, Water
@@ -687,7 +690,7 @@ IonBolt:
 	Warhead@1Dam_impact: SpreadDamage
 		Range: 0, 1c1, 2c1, 2c512
 		Delay: 1
-		Damage: 3500
+		Damage: 3250
 		Falloff: 1000, 1000, 250, 100
 		ValidTargets: Ground, Water, Air
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
@@ -883,7 +886,7 @@ WeatherBolt:
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 1c1, 2c1, 3c1
 		Falloff: 1000, 660, 330, 0
-		Damage: 1500
+		Damage: 1250
 		AffectsParent: true
 		ValidTargets: Ground, Air, Water
 		DamageTypes: TriggerProne, ElectricityDeath

@@ -68,9 +68,9 @@ Napalmtd:
 	InvalidTargets: Air
 	ReloadDelay: 50
 	Report: chute1.aud
-	Burst: 3
-	BurstDelays: 4
-	Range: 2c0
+	Burst: 7
+	BurstDelays: 6
+	Range: 4c256
 	TargetActorCenter: true
 	Projectile: GravityBomb
 		Image: BOMBLET
@@ -78,18 +78,17 @@ Napalmtd:
 		Acceleration: 0, 0, 0
 		Shadow: true
 	Warhead@1Dam: SpreadDamage
-		Spread: 726
-		Damage: 1400
-		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		Spread: 512
+		Damage: 1500
+		Falloff: 1000, 255, 128, 50, 18, 7, 0
 		ValidTargets: Ground, Water
 		Versus:
 			None: 100
 			Wood: 55
-			Light: 60
-			Heavy: 50
-			Concrete: 30
-			Brick: 40
-
+			Light: 75
+			Heavy: 65
+			Concrete: 35
+			Brick: 25
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -259,16 +258,13 @@ PortaTeslaCharge:
 TTankZap:
 	Inherits: ^TeslaWeapon
 	ReloadDelay: 140
-	Burst: 3
 	Range: 8c0
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 3000
+		Damage: 10000
 		Versus:
 			Wood: 120
-			Concrete: 100
-			Heavy: 80
-			Light: 70
+			Concrete: 110
 
 DogJaw:
 	ValidTargets: Infantry
@@ -533,10 +529,10 @@ PrisTLaser:
 	Warhead@1Dam: SpreadDamage
 		Damage: 3875
 		Versus:
-			None: 100
+			None: 150
 			Wood: 90
 			Concrete: 100
-			Light: 70
+			Light: 80
 			Heavy: 60
 	Warhead@Burst: FireCluster
 		Weapon: PrisTBurst
@@ -606,9 +602,9 @@ FrogBomb:
 	InvalidTargets: Air
 	ReloadDelay: 50
 	Report: chute1.aud
-	Burst: 3
-	BurstDelays: 4
-	Range: 2c0
+	Burst: 5
+	BurstDelays: 10
+	Range: 4c512
 	TargetActorCenter: true
 	Projectile: GravityBomb
 		Image: BOMBLET
@@ -617,15 +613,15 @@ FrogBomb:
 		Shadow: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 726
-		Damage: 800
-		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		Damage: 1000
+		Falloff: 1000, 650, 350, 150, 30, 7, 0
 		ValidTargets: Ground, Water
 		Versus:
 			None: 100
-			Wood: 70
-			Light: 50
-			Heavy: 40
-			Concrete: 40
+			Wood: 55
+			Light: 35
+			Heavy: 30
+			Concrete: 55
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@Cluster: FireCluster
 		Weapon: ClusterBomb
@@ -817,16 +813,16 @@ IonZap:
 		ZOffset: 2045
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
-		Damage: 10000
+		Damage: 6200
 		ValidStances: Ally, Neutral, Enemy
 		InvalidTargets: Air
 		AffectsParent: false
 		Versus:
-			None: 100
+			None: 50
 			Wood: 75
-			Light: 85
-			Heavy: 75
-			Concrete: 45
+			Light: 75
+			Heavy: 120
+			Concrete: 55
 			Brick: 45
 		DamageTypes: Prone100Percent, TriggerProne, ExplosionDeath
 	Warhead@2Eff: CreateEffect
@@ -1166,12 +1162,12 @@ CyCannon:
 		RangeLimit: 8c0
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
-		Damage: 8000
+		Damage: 13000
 		Versus:
-			None: 150
-			Wood: 100
-			Light: 205
-			Heavy: 150
-			Concrete: 80
-			Brick: 80
+			None: 75
+			Wood: 70
+			Light: 100
+			Heavy: 75
+			Concrete: 40
+			Brick: 70
 		DamageTypes: Prone350Percent, TriggerProne, ExplosionDeath

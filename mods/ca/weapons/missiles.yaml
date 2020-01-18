@@ -59,14 +59,14 @@ Maverick:
 		CruiseAltitude: 2c0
 		RangeLimit: 14c410
 	Warhead@1Dam: SpreadDamage
-		Damage: 7000
+		Damage: 14000
 		Versus:
-			None: 30
-			Wood: 90
-			Light: 90
-			Heavy: 125
-			Concrete: 100
-			Brick: 100
+			None: 25
+			Wood: 45
+			Light: 105
+			Heavy: 70
+			Concrete: 75
+			Brick: 80
 
 Dragon:
 	Inherits: ^AntiGroundMissile
@@ -126,14 +126,14 @@ HellfireAG.Harrier:
 		Inaccuracy: 512
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 1250
+		Damage: 1600
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Water, Trees
 		Versus:
-			None: 90
-			Wood: 65
-			Light: 70
-			Heavy: 40
+			None: 100
+			Wood: 68
+			Light: 55
+			Heavy: 45
 			Concrete: 55
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
@@ -264,10 +264,10 @@ Nike:
 		RangeLimit: 9c0
 		Speed: 341
 	Warhead@1Dam: SpreadDamage
-		Damage: 5000
+		Damage: 5750
 		ValidTargets: Air
 		Versus:
-			Light: 90
+			Light: 75
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air
 		ImpactSounds: kaboom25.aud
@@ -355,13 +355,13 @@ StingerGTWR:
 		Speed: 320
 		CloseEnough: 149
 	Warhead@1Dam: SpreadDamage
-		Spread: 0c256
-		Damage: 5500
+		Spread: 0c384
+		Damage: 6250
 		ValidTargets: Ground, Water
 		Versus:
 			None: 45
 			Wood: 55
-			Light: 55
+			Light: 70
 			Heavy: 60
 			Concrete: 40
 			Brick: 40
@@ -389,7 +389,7 @@ APTusk:
 		Damage: 6000
 		Versus:
 			None: 35
-			Wood: 85
+			Wood: 60
 			Light: 45
 			Heavy: 75
 			Concrete: 60
@@ -704,6 +704,8 @@ BTRRocketsAA:
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
 		Damage: 2000
+		Versus
+			Light: 70
 
 227mm:
 	Inherits: ^AntiGroundMissile
@@ -791,8 +793,8 @@ BTRRocketsAA:
 		Versus:
 			None: 35
 			Wood: 60
-			Light: 90
-			Heavy: 90
+			Light: 40
+			Heavy: 80
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air
 		ImpactSounds: xplos.aud
@@ -823,8 +825,8 @@ BTRRocketsAA:
 		Versus:
 			None: 35
 			Wood: 60
-			Light: 90
-			Heavy: 90
+			Light: 40
+			Heavy: 80
 
 		
 227mmAAH:
@@ -984,7 +986,7 @@ Rah66AG:
 			Wood: 60
 			Concrete: 30
 			Light: 50
-			Heavy: 30
+			Heavy: 25
 			Brick: 15
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Smu: LeaveSmudge

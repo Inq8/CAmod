@@ -452,7 +452,7 @@ IRON:
 		Condition: invulnerability
 		Range: 1
 		ValidStances: Ally, Neutral, Enemy
-		Duration: 500
+		Duration: 600
 		ActivationDelay: 0
 		AirburstAltitude: 0c0
 		AllowMultiple: false
@@ -513,7 +513,7 @@ PDOX:
 		OrderName: Chronoshift
 		Prerequisites: !botplayer
 		PauseOnCondition: disabled || empdisable || being-warped
-		Duration: -1
+		Duration: 600
 		Icon: chrono
 		ChargeInterval: 3000
 		Description: Chronoshift
@@ -532,7 +532,7 @@ PDOX:
 		Prerequisites: botplayer
 		Icon: chrono
 		Cursor: ability
-		ChargeInterval: 4500
+		ChargeInterval: 7000
 		Description: Chronoshift
 		ActivationDelay: 25
 		LongDesc: Teleports a group of units across the map.
@@ -4082,6 +4082,7 @@ EYE:
 		CameraActor: camera
 		CameraRemoveDelay: 375
 		SelectTargetSpeechNotification: SelectTarget
+		BeginChargeSpeechNotification: IonCannonCharging
 		EndChargeSpeechNotification: IonCannonReady
 		InsufficientPowerSpeechNotification: InsufficientPower
 		IncomingSpeechNotification: IonCannonApproach
@@ -4697,7 +4698,7 @@ GTEK:
 		DisplayTimerStances: Ally
 	SpawnActorPower@NrepairAI:
 		OrderName: nrepairai
-		Prerequisites: structures.talon, techlevel.high, !botplayer
+		Prerequisites: structures.talon, techlevel.high, botplayer
 		Actor: camera.nrepair.ai
 		LifeTime: 600
 		ChargeInterval: 7500
@@ -5331,7 +5332,7 @@ SGEN:
 		Condition: invisibility
 		ValidStances: Ally, Neutral, Enemy
 		Range: 3
-		Duration: 500
+		Duration: 900
 		ActivationDelay: 0
 		AirburstAltitude: 0c0
 		AllowMultiple: false

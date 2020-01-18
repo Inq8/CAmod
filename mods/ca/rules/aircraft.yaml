@@ -182,7 +182,7 @@ MIG:
 		InitialStance: HoldFire
 		InitialStanceAI: HoldFire
 	AmmoPool:
-		Ammo: 8
+		Ammo: 4
 		PipCount: 4
 		AmmoCondition: ammo
 	Selectable:
@@ -228,8 +228,7 @@ FROG:
 		LocalOffset: 256,-213,0
 		PauseOnCondition: !ammo
 	AttackAircraft:
-		AttackTurnDelay: 50
-		FacingTolerance: 20
+		FacingTolerance: 128
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
@@ -242,8 +241,8 @@ FROG:
 		InitialStance: HoldFire
 		InitialStanceAI: HoldFire
 	AmmoPool:
-		Ammo: 6
-		PipCount: 6
+		Ammo: 5
+		PipCount: 5
 		AmmoCondition: ammo
 	SelectionDecorations:
 	Contrail@1:
@@ -296,6 +295,8 @@ YAK:
 		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 20
+		AttackType: Strafe
+		StrafeRunLength: 3c0
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
@@ -511,7 +512,7 @@ HELI:
 		Prerequisites: ~hpad, ~aircraft.allies, ~techlevel.medium
 		Description: Helicopter gunship armed\nwith multi-purpose missiles.\n  Strong vs Buildings, Vehicles, Aircraft\n  Weak vs Infantry
 	Valued:
-		Cost: 1800
+		Cost: 1500
 	Tooltip:
 		Name: Longbow
 	UpdatesPlayerStatistics:
@@ -575,7 +576,7 @@ HIND:
 		Prerequisites: ~hpad, ~aircraft.soviet, ~techlevel.medium
 		Description: Helicopter gunship armed\nwith dual chainguns.\n  Strong vs Infantry, Light armor\n  Weak vs Tanks, Aircraft
 	Valued:
-		Cost: 1550
+		Cost: 1350
 	Tooltip:
 		Name: Hind
 	UpdatesPlayerStatistics:
@@ -733,8 +734,7 @@ A10:
 		LocalOffset: 2,-256,-43, 2,256,-43
 		PauseOnCondition: !ammo || being-warped
 	AttackAircraft:
-		AttackTurnDelay: 50
-		FacingTolerance: 20
+		FacingTolerance: 128
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
@@ -747,7 +747,8 @@ A10:
 		InitialStance: HoldFire
 		InitialStanceAI: HoldFire
 	AmmoPool:
-		Ammo: 6
+		Ammo: 7
+		PipCount: 7
 		AmmoCondition: ammo
 	Selectable:
 		Bounds: 36,28,0,2
@@ -897,7 +898,7 @@ APCH:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Valued:
-		Cost: 1350
+		Cost: 1250
 	Tooltip:
 		Name: Apache
 	UpdatesPlayerStatistics:
@@ -916,7 +917,7 @@ APCH:
 		TakeoffSounds: htoff1.aud
 		LandingSounds: hland1.aud
 	Health:
-		HP: 19000
+		HP: 20000
 	RevealsShroud:
 		Range: 8c0
 		Type: GroundPosition
@@ -961,7 +962,7 @@ ORCA:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Valued:
-		Cost: 1750
+		Cost: 1500
 	Tooltip:
 		Name: Orca
 	UpdatesPlayerStatistics:
@@ -972,15 +973,15 @@ ORCA:
 		BuildPaletteOrder: 20
 		Prerequisites: ~hpad2, ~aircraft.gdi, ~techlevel.high
 		IconPalette: chrometd
-		Description: VTOL Gunship with AG Missiles.\n  Strong vs Buildings, Tanks\n  Weak vs Infantry
+		Description: VTOL Gunship armed\nwith multi-purpose missiles.\n  Strong vs Buildings, Vehicles, Aircraft\n  Weak vs Infantry
 	Aircraft:
 		AltitudeVelocity: 0c100
 		TurnSpeed: 5
 		TakeoffSounds: orcaup1.aud
 		LandingSounds: orcadwn1.aud
-		Speed: 180
+		Speed: 201
 	Health:
-		HP: 19000
+		HP: 18500
 	RevealsShroud:
 		Range: 12c0
 		Type: GroundPosition
@@ -1029,7 +1030,7 @@ ORCAB:
 		IconPalette: chrometd
 		Description: VTOL Bomber armed with EMP bombs.\n  Strong vs Buildings, Vehicles\n  Weak vs Aircraft
 	Valued:
-		Cost: 2000
+		Cost: 1750
 	Tooltip:
 		Name: Orca Bomber
 	UpdatesPlayerStatistics:
@@ -1045,9 +1046,7 @@ ORCAB:
 		LocalOffset: 2,-256,-43, 2,256,-43
 		PauseOnCondition: !ammo || being-warped
 	AttackAircraft:
-		AttackTurnDelay: 50
 		FacingTolerance: 20
-		AttackType: Strafe
 		Voice: Attack
 	Aircraft:
 		CruiseAltitude: 2560
@@ -1134,7 +1133,7 @@ RAH66:
 		Prerequisites: ~hpad2, ~aircraft.blackh, ~techlevel.high
 		Description: Stealth Helicopter armed\nwith napalm rockets.\n  Strong vs Structures, Infantry.\n  Weak vs Tanks
 	Valued:
-		Cost: 1700
+		Cost: 1500
 	Tooltip:
 		Name: Comanche
 	UpdatesPlayerStatistics:
@@ -1398,7 +1397,6 @@ HARR:
 	AttackAircraft:
 		FacingTolerance: 20
 		Voice: Attack
-		AttackType: Strafe
 	Aircraft:
 		CruiseAltitude: 2560
 		TurnSpeed: 4
@@ -1417,6 +1415,7 @@ HARR:
 		InitialStanceAI: HoldFire
 	AmmoPool:
 		Ammo: 4
+		PipCount: 4
 		AmmoCondition: ammo
 	Contrail@1:
 		Offset: -400,-443,0
@@ -1470,7 +1469,6 @@ SCRIN:
 	AttackAircraft:
 		FacingTolerance: 20
 		Voice: Attack
-		AttackType: Strafe
 	Aircraft:
 		CruiseAltitude: 2560
 		TurnSpeed: 5
@@ -1533,7 +1531,6 @@ HORN:
 		PauseOnCondition: !ammo || being-warped
 	AttackAircraft:
 		FacingTolerance: 20
-		AttackType: Strafe
 	Aircraft:
 		CruiseAltitude: 1c513
 		InitialFacing: 192
