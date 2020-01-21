@@ -104,7 +104,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			// Attack a random target.
 			var target = Target.FromActor(targets.Random(self.World.SharedRandom));
-			self.QueueActivity(atbs.First().GetAttackActivity(self, target, true, true));
+			self.QueueActivity(atbs.First().GetAttackActivity(self, AttackSource.AutoTarget, target, true, true));
 		}
 	}
 }

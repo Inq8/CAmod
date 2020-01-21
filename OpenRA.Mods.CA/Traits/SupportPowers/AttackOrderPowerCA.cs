@@ -48,7 +48,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			base.Activate(self, order, manager);
 
-			attack.AttackTarget(order.Target, false, false, true);
+			attack.AttackTarget(order.Target, AttackSource.Default, false, false, true);
 		}
 
 		protected override void Created(Actor self)

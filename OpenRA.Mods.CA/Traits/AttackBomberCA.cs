@@ -88,9 +88,9 @@ namespace OpenRA.Mods.CA.Traits
 			OnRemovedFromWorld(self);
 		}
 
-		public override Activity GetAttackActivity(Actor self, Target newTarget, bool allowMove, bool forceAttack, Color? targetLineColor)
+		public override Activity GetAttackActivity(Actor self, AttackSource source, Target newTarget, bool allowMove, bool forceAttack, Color? targetLineColor)
 		{
-			return new FlyAttack(self, newTarget, forceAttack, targetLineColor);
+			return new FlyAttack(self, source, newTarget, forceAttack, targetLineColor);
 		}
 	}
 }
