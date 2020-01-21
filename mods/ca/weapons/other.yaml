@@ -265,6 +265,28 @@ TTankZap:
 		Versus:
 			Wood: 120
 			Concrete: 110
+	Warhead@Burst: FireShrapnel
+		Weapon: TTankArc1
+		Amount: 1
+		AimChance: 90
+		ValidTargets: Infantry
+		ThrowWithoutTarget: true
+		
+TTankArc1:
+	Inherits: TTankZap
+	Range: 1c768
+	Projectile: TeslaZap
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Infantry
+	-Report:
+	-Warhead@3Eff:
+	Warhead@Burst: FireShrapnel
+		Weapon: TTankArc2
+		AimChance: 80
+
+TTankArc2:
+	Inherits: TTankArc1
+	-Warhead@Burst:
 
 DogJaw:
 	ValidTargets: Infantry
@@ -382,7 +404,7 @@ Laser:
 		Damage: 35000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
-			Light: 70
+			Light: 101
 			Wood: 60
 			Heavy: 101
 			Concrete: 45

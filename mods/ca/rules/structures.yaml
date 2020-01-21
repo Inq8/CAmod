@@ -576,7 +576,7 @@ PDOX:
 		CircleSequence: circles
 		BeaconPoster: timewarpicon
 		DisplayRadarPing: True
-		TargetCircleRange: 3c0
+		TargetCircleRange: 2c0
 		TargetCircleColor: 0000FF90
 		LaunchSound: chrono2.aud
 		IncomingSound: chrono2.aud
@@ -1301,36 +1301,10 @@ WEAP:
 	SequencePlaceBuildingPreview:
 		Sequence: place
 		SequencePalette: placebuilding
-		
-WEAP.AI:
-	Inherits: WEAP
-	RenderSprites:
-		Image: WEAP
-	Buildable:
-		Queue: Building
-		BuildPaletteOrder: 80
-		Prerequisites: ~barracksRA, ~structures.ra, ~botplayer
-		Description: Produces vehicles.
-	Valued:
-		Cost: 1000
-	Tooltip:
-		Name: AI War Factory
-	ProductionQueue:
-		Type: Vehicle
-		DisplayOrder: 3
-		Group: Vehicle
-		LowPowerModifier: 300
-		BuildDurationModifier: 80
-		LimitedAudio: BuildingInProgress
-	TransformOnCapture:
-		IntoActor: WEAP
-	-WithDecoration@primary:
-	ProvidesPrerequisite@factname:
-		Prerequisite: weap
-	-PrimaryBuilding:
 
 FACT:
 	Inherits: ^Building
+	Inherits: ^BotProductionBuilding
 	Selectable:
 		Bounds: 72,72
 	Building:
@@ -1378,9 +1352,9 @@ FACT:
 	ProvidesPrerequisite@sandbag:
 		Factions: allies, england, france, germany
 		Prerequisite: structures.sandbag
-	ProvidesPrerequisite@ai:
+	ProvidesPrerequisite@BOTPlayer:
 		Prerequisite: botplayer
-		RequiresCondition: normalbotplayer || brutalbotplayer
+		RequiresCondition: owned-by-hard-ai || owned-by-brutal-ai
 	Health:
 		HP: 150000
 	Armor:
@@ -1408,22 +1382,16 @@ FACT:
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
-	GrantConditionOnBotOwner@brutalbonus:
-		Condition: brutalbotplayer
-		Bots: brutal
-	GrantConditionOnBotOwner@normalbonus:
-		Condition: normalbotplayer
-		Bots: normal
 	CashTrickler@brutal:
 		Interval: 500
 		Amount: 1500
 		ShowTicks: False
-		RequiresCondition: brutalbotplayer
+		RequiresCondition: owned-by-brutal-ai
 	CashTrickler@normal:
 		Interval: 500
 		Amount: 500
 		ShowTicks: False
-		RequiresCondition: normalbotplayer
+		RequiresCondition: owned-by-hard-ai
 	ProductionBar@Building:
 		ProductionType: Building
 	ProductionBar@Defense:
@@ -2162,33 +2130,6 @@ BARR:
 		ZOffset: 256
 		RequiresCondition: primary
 
-BARR.AI:
-	Inherits: BARR
-	RenderSprites:
-		Image: BARR
-	Buildable:
-		Queue: Building
-		BuildPaletteOrder: 30
-		Prerequisites: anypower, ~structures.soviet, ~botplayer
-		Description: Trains Infantry.
-	Valued:
-		Cost: 150
-	Tooltip:
-		Name: AI Soviet Barracks
-	-PrimaryBuilding:
-	-WithDecoration@primary:
-	ProductionQueue:
-		Type: Infantry
-		DisplayOrder: 2
-		Group: Infantry
-		LowPowerModifier: 300
-		BuildDurationModifier: 80
-		LimitedAudio: BuildingInProgress
-	TransformOnCapture:
-		IntoActor: BARR
-	ProvidesPrerequisite@factname:
-		Prerequisite: barr
-
 KENN:
 	Inherits: ^Building
 	Selectable:
@@ -2353,33 +2294,6 @@ TENT:
 		ReferencePoint: Top
 		ZOffset: 256
 		RequiresCondition: primary
-		
-TENT.AI:
-	Inherits: TENT
-	RenderSprites:
-		Image: TENT
-	Buildable:
-		Queue: Building
-		BuildPaletteOrder: 20
-		Prerequisites: anypower, ~structures.allies, ~botplayer
-		Description: Trains Infantry.
-	Valued:
-		Cost: 150
-	Tooltip:
-		Name: AI Allied Barracks
-	-PrimaryBuilding:
-	-WithDecoration@primary:
-	ProductionQueue:
-		Type: Infantry
-		DisplayOrder: 2
-		Group: Infantry
-		LowPowerModifier: 300
-		BuildDurationModifier: 80
-		LimitedAudio: BuildingInProgress
-	TransformOnCapture:
-		IntoActor: TENT
-	ProvidesPrerequisite@factname:
-		Prerequisite: tent
 
 FIX:
 	Inherits: ^Building
@@ -2757,35 +2671,7 @@ PYLE:
 		Proxy: barracks.upgraded
 		Types: SpyInfiltrate
 		
-PYLE.AI:
-	Inherits: PYLE
-	RenderSprites:
-		Image: pyle
-	Buildable:
-		Queue: Building
-		BuildPaletteOrder: 20
-		Prerequisites: anypower, ~structures.gdi, ~botplayer
-		Description: Trains Infantry.
-	Valued:
-		Cost: 150
-	Tooltip:
-		Name: AI GDI Barracks
-	-PrimaryBuilding:
-	-WithDecoration@primary:
-	ProductionQueue:
-		Type: Infantry
-		DisplayOrder: 2
-		Group: Infantry
-		LowPowerModifier: 300
-		BuildDurationModifier: 80
-		LimitedAudio: BuildingInProgress
-	TransformOnCapture:
-		IntoActor: PYLE
-	ProvidesPrerequisite@factname:
-		Prerequisite: pyle
-		
 HAND:
-	RenderSprites:
 	Inherits: ^BuildingTD
 	Inherits@shape: ^2x2Shape
 	HitShape:
@@ -2888,33 +2774,6 @@ HAND:
 	GrantConditionOnPrerequisite@nodupg:
 		Condition: nodupgbuilt
 		Prerequisites: bio.nod
-		
-HAND.AI:
-	Inherits: HAND
-	RenderSprites:
-		Image: hand
-	Buildable:
-		Queue: Building
-		BuildPaletteOrder: 20
-		Prerequisites: anypower, ~structures.nod, ~botplayer
-		Description: Trains Infantry.
-	Valued:
-		Cost: 150
-	Tooltip:
-		Name: AI Hand of Nod
-	-PrimaryBuilding:
-	-WithDecoration@primary:
-	ProductionQueue:
-		Type: Infantry
-		DisplayOrder: 2
-		Group: Infantry
-		LowPowerModifier: 300
-		BuildDurationModifier: 80
-		LimitedAudio: BuildingInProgress
-	TransformOnCapture:
-		IntoActor: HAND
-	ProvidesPrerequisite@factname:
-		Prerequisite: hand
 		
 AWEP:
 	Inherits: ^BuildingTD
@@ -3132,33 +2991,6 @@ AWEP:
 	GrantConditionOnPrerequisite@gdiupg:
 		Condition: gdiupgbuilt
 		Prerequisites: miss.gdi
-		
-AWEP.AI:
-	Inherits: AWEP
-	RenderSprites:
-		Image: awep
-	Buildable:
-		Queue: Building
-		BuildPaletteOrder: 80
-		Prerequisites: barracks, ~structures.awep, ~structures.td, ~botplayer
-		Description: Produces vehicles.
-	Valued:
-		Cost: 1000
-	Tooltip:
-		Name: AI Weapons Factory
-	-PrimaryBuilding:
-	ProductionQueue:
-		Type: Vehicle
-		DisplayOrder: 3
-		Group: Vehicle
-		LowPowerModifier: 300
-		BuildDurationModifier: 80
-		LimitedAudio: BuildingInProgress
-	TransformOnCapture:
-		IntoActor: AWEP
-	-WithDecoration@primary:
-	ProvidesPrerequisite@factname:
-		Prerequisite: awep
 		
 ASTRIP:
 	Inherits: ^BuildingTD
@@ -3385,42 +3217,6 @@ ASTRIP:
 	InfiltrateForSupportPower@spy:
 		Proxy: vehicles.upgraded
 		Types: SpyInfiltrate
-		
-ASTRIP.AI:
-	Inherits: ASTRIP
-	RenderSprites:
-		Image: ASTRIP
-	Buildable:
-		Queue: Building
-		BuildPaletteOrder: 80
-		Prerequisites: hand, ~structures.nod, ~!structures.legion, ~botplayer
-		Description: Produces vehicles.
-	Valued:
-		Cost: 1000
-	Tooltip:
-		Name: AI Airstrip
-	-PrimaryBuilding:
-	-WithDecoration@primary:
-	TransformOnCapture:
-		IntoActor: ASTRIP
-	-ProductionAirdrop:
-	-WithDeliveryAnimation:
-	Production:
-		Produces: Vehicle
-		PauseOnCondition: forceshield || invulnerability || being-warped
-	ProductionQueue:
-		Type: Vehicle
-		DisplayOrder: 3
-		Group: Vehicle
-		LowPowerModifier: 300
-		BuildDurationModifier: 80
-		ReadyAudio:
-		LimitedAudio: BuildingInProgress
-	WithProductionOverlay:
-		Queues: Vehicle
-		Sequence: active
-	ProvidesPrerequisite@factname:
-		Prerequisite: astrip
 
 NUKE:
 	Inherits: ^BuildingTD
@@ -3530,6 +3326,7 @@ NUK2:
 
 AFAC:
 	Inherits: ^BuildingTD
+	Inherits: ^BotProductionBuilding
 	Inherits@shape: ^3x2Shape
 	RenderSprites:
 		FactionImages:
@@ -3573,22 +3370,16 @@ AFAC:
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
-	GrantConditionOnBotOwner@brutalbonus:
-		Condition: brutalbotplayer
-		Bots: brutal
-	GrantConditionOnBotOwner@normalbonus:
-		Condition: normalbotplayer
-		Bots: normal
 	CashTrickler@brutal:
 		Interval: 500
 		Amount: 1500
 		ShowTicks: False
-		RequiresCondition: brutalbotplayer
+		RequiresCondition: owned-by-brutal-ai
 	CashTrickler@normal:
 		Interval: 500
 		Amount: 500
 		ShowTicks: False
-		RequiresCondition: normalbotplayer
+		RequiresCondition: owned-by-hard-ai
 	ProvidesPrerequisite@cnc:
 		Factions: gdi, talon, zocom, eagle, nod, blackh, marked, legion
 		Prerequisite: structures.td
@@ -3622,9 +3413,9 @@ AFAC:
 	ProvidesPrerequisite@sandbag:
 		Factions: gdi, talon, zocom, eagle
 		Prerequisite: structures.sandbag
-	ProvidesPrerequisite@ai:
+	ProvidesPrerequisite@BOTPlayer:
 		Prerequisite: botplayer
-		RequiresCondition: normalbotplayer || brutalbotplayer
+		RequiresCondition: owned-by-brutal-ai || owned-by-hard-ai
 	ProductionBar@Building:
 		ProductionType: Building
 	ProductionBar@Defense:
@@ -5730,6 +5521,9 @@ MISS.gdi:
 		Name: Research Center
 	ProvidesPrerequisite@Name:
 		RequiresCondition: !being-warped
+	ProvidesPrerequisite@HMLRS:
+		Factions: gdi, zocom, eagle
+		Prerequisite: hmlrs.buildable
 	RevealsShroud:
 		Range: 4c0
 	Power:

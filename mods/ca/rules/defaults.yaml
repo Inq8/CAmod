@@ -40,6 +40,20 @@
 		Type: Rectangle
 			TopLeft: -1536, -1024
 			BottomRight: 1536, 1024
+			
+^BotProductionBonus:
+	ProductionCostMultiplier@brutalbonus:
+		Multiplier: 70
+		Prerequisites: is-brutal-ai
+	ProductionTimeMultiplier@brutalbonus:
+		Multiplier: 70
+		Prerequisites: is-brutal-ai
+	ProductionCostMultiplier@hardbonus:
+		Multiplier: 85
+		Prerequisites: is-hard-ai
+	ProductionTimeMultiplier@hardbonus:
+		Multiplier: 85
+		Prerequisites: is-hard-ai
 
 ^GainsExperience:
 	GainsExperience:
@@ -162,7 +176,7 @@
 		RevokeDelay: 350
 		DamageTypes: TemporalDeath
 		ScaleWithCurrentHealthPercentage: true
-		ShowSelectionBar: true
+		ShowSelectionBar: false
 		SelectionBarColor: 40FFFF
 	Targetable@Temporal:
 		TargetTypes: Temporal
@@ -323,7 +337,7 @@
 		RequiresSelection: True
 		ValidStances: Ally, Neutral
 	ExternalCondition@NREPAIR-AI:
-		Condition: nrepairheal
+		Condition: nrepair
 	GrantConditionOnDamageState@NREPAIR:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
@@ -483,6 +497,7 @@
 	Inherits@10: ^Frenzy
 	Inherits@11: ^NaniteRepair
 	Inherits@12: ^GpsScramble
+	Inherits@13: ^BotProductionBonus
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
@@ -618,6 +633,7 @@
 	Inherits@9: ^IronCurtainable-Kills
 	Inherits@10: ^Frenzy
 	Inherits@11: ^GpsScramble
+	Inherits@12: ^BotProductionBonus
 	Inherits@bounty: ^GlobalBounty
 	Inherits@SELECTION_MODE: ^FlatSelectionMode
 	RenderSprites:
@@ -1151,6 +1167,7 @@
 	Inherits@4: ^EmpDisable
 	Inherits@5: ^GapGenShroud
 	Inherits@6: ^Warpable
+	Inherits@7: ^BotProductionBonus
 	WithColoredOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield
 	Huntable:
@@ -1364,6 +1381,21 @@
 	FrozenUnderFog:
 	MapEditorData:
 		Categories: Tech building
+		
+^BotProductionBuilding:
+	GrantConditionOnBotOwner@BrutalAI:
+		Condition: owned-by-brutal-ai
+		Bots: brutal
+	ProvidesPrerequisite@BrutalAI:
+		Prerequisite: is-brutal-ai
+		RequiresCondition: owned-by-brutal-ai
+	GrantConditionOnBotOwner@HardAI:
+		Condition: owned-by-hard-ai
+		Bots: hard
+	ProvidesPrerequisite@HardAI:
+		Prerequisite: is-hard-ai
+		RequiresCondition: owned-by-hard-ai
+
 
 ^FakeBuilding:
 	Inherits: ^Building
