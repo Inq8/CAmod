@@ -49,6 +49,17 @@
     <None Remove="Traits\BaseSpawnerMaster.cs" />
     <None Remove="Traits\BaseSpawnerSlave.cs" />
     <None Remove="Traits\Berserkable.cs" />
+    <None Remove="Traits\BotModules\HarvesterBotModuleCA.cs" />
+    <None Remove="Traits\BotModules\SquadManagerBotModuleCA.cs" />
+    <None Remove="Traits\BotModules\Squads\AttackOrFleeFuzzyCA.cs" />
+    <None Remove="Traits\BotModules\Squads\SquadCA.cs" />
+    <None Remove="Traits\BotModules\Squads\StateMachineCA.cs" />
+    <None Remove="Traits\BotModules\Squads\States\AirStatesCA.cs" />
+    <None Remove="Traits\BotModules\Squads\States\GroundStatesCA.cs" />
+    <None Remove="Traits\BotModules\Squads\States\NavyStatesCA.cs" />
+    <None Remove="Traits\BotModules\Squads\States\ProtectionStatesCA.cs" />
+    <None Remove="Traits\BotModules\Squads\States\StateBaseCA.cs" />
+    <None Remove="Traits\BotModules\UnitBuilderBotModuleCA.cs" />
     <None Remove="Traits\CarrierMaster.cs" />
     <None Remove="Traits\CarrierSlave.cs" />
     <None Remove="Traits\CashHackable.cs" />
@@ -90,6 +101,10 @@
   <ItemGroup>
     <Reference Include="Eluant">
       <HintPath>../engine/thirdparty/download/Eluant.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+	<Reference Include="FuzzyLogicLibrary">
+      <HintPath>../engine/thirdparty/download/FuzzyLogicLibrary.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <ProjectReference Include="../engine/OpenRA.Game/OpenRA.Game.csproj">

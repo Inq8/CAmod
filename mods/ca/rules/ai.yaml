@@ -481,10 +481,11 @@ Player:
 					Attractiveness: 2
 					TargetMetric: Value
 					CheckRadius: 3c0
-	HarvesterBotModule:
+	HarvesterBotModuleCA:
 		RequiresCondition: enable-brutal-ai || enable-hard-ai || enable-normal-ai || enable-easy-ai || enable-naval-ai
 		HarvesterTypes: harv, harv2
 		RefineryTypes: proc, proc2
+		HarvestersPerRefinery: 3
 	CaptureManagerBotModule:
 		RequiresCondition: enable-brutal-ai || enable-hard-ai || enable-normal-ai || enable-easy-ai
 		CapturingActorTypes: e6, n6
@@ -505,13 +506,12 @@ Player:
 		McvTypes: mcv, amcv
 		ConstructionYardTypes: fact, afac
 		McvFactoryTypes: weap, awep, astrip
-
 	BaseBuilderBotModule@brutal:
 		RequiresCondition: enable-brutal-ai
-		MinimumExcessPower: 80
-		MaximumExcessPower: 200
-		ExcessPowerIncrement: 40
-		ExcessPowerIncreaseThreshold: 4
+		MinimumExcessPower: 50
+		MaximumExcessPower: 350
+		ExcessPowerIncrement: 10
+		ExcessPowerIncreaseThreshold: 1
 		PlaceDefenseTowardsEnemyChance: 75
 		ConstructionYardTypes: fact,afac
 		RefineryTypes: proc,proc2
@@ -735,11 +735,10 @@ Player:
 			syrd: 1
 			spen.nod: 1
 			syrd.gdi: 1
-
 	BaseBuilderBotModule@normal:
 		RequiresCondition: enable-normal-ai
 		MinimumExcessPower: 80
-		MaximumExcessPower: 200
+		MaximumExcessPower: 300
 		ExcessPowerIncrement: 40
 		ExcessPowerIncreaseThreshold: 4
 		PlaceDefenseTowardsEnemyChance: 75
@@ -849,7 +848,6 @@ Player:
 			syrd: 1
 			spen.nod: 1
 			syrd.gdi: 1
-
 	BaseBuilderBotModule@easy:
 		RequiresCondition: enable-easy-ai
 		MinimumExcessPower: 80
@@ -963,11 +961,10 @@ Player:
 			syrd: 1
 			spen.nod: 1
 			syrd.gdi: 1
-
 	BaseBuilderBotModule@naval:
 		RequiresCondition: enable-naval-ai
 		MinimumExcessPower: 60
-		MaximumExcessPower: 200
+		MaximumExcessPower: 300
 		ExcessPowerIncrement: 40
 		ExcessPowerIncreaseThreshold: 4
 		PlaceDefenseTowardsEnemyChance: 75
@@ -1062,17 +1059,28 @@ Player:
 			syrd: 1
 			spen.nod: 1
 			syrd.gdi: 1
-
-	SquadManagerBotModule@brutal:
+	SquadManagerBotModuleCA@brutal:
 		RequiresCondition: enable-brutal-ai
 		SquadSize: 10
 		ExcludeFromSquadsTypes: harv, harv2, mcv, amcv, dog, e6, n6
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,dd2,pt2,ss2,icbmsub
 		NavalProductionTypes: syrd, spen, syrd.gdi, spen.nod
 		ConstructionYardTypes: fact,afac
-	UnitBuilderBotModule@brutal:
+		IdleScanRadius: 18
+		AttackScanRadius: 9
+		MaxBaseRadius: 16
+		RushInterval: 600
+		RushAttackScanRadius: 25
+		ProtectUnitScanRadius: 28
+		ProtectionScanRadius: 10
+		AssignRolesInterval: 50
+		AttackForceInterval: 75
+		DangerScanRadius: 8
+		MinimumAttackForceDelay: 6000
+	UnitBuilderBotModuleCA@brutal:
 		RequiresCondition: enable-brutal-ai
-		IdleBaseUnitsMaximum: 25
+		IdleBaseUnitsMaximum: 160
+		UnitBuilderMinCredits: 1800
 		UnitsToBuild:
 			e1: 65
 			e2: 25
@@ -1182,15 +1190,14 @@ Player:
 			carr: 4
 			jumpjet: 5
 			kirov: 3
-
-	SquadManagerBotModule@hard:
+	SquadManagerBotModuleCA@hard:
 		RequiresCondition: enable-hard-ai
 		SquadSize: 20
 		ExcludeFromSquadsTypes: harv, harv2, mcv, amcv, dog, e6, n6
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,dd2,pt2,ss2,icbmsub
 		NavalProductionTypes: syrd, spen, syrd.gdi, spen.nod
 		ConstructionYardTypes: fact,afac
-	UnitBuilderBotModule@hard:
+	UnitBuilderBotModuleCA@hard:
 		RequiresCondition: enable-hard-ai
 		IdleBaseUnitsMaximum: 35
 		UnitsToBuild:
@@ -1302,15 +1309,14 @@ Player:
 			carr: 4
 			jumpjet: 5
 			kirov: 3
-
-	SquadManagerBotModule@normal:
+	SquadManagerBotModuleCA@normal:
 		RequiresCondition: enable-normal-ai
 		SquadSize: 30
 		ExcludeFromSquadsTypes: harv, harv2, mcv, amcv, dog
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,ss2,dd2,icbmsub
 		ConstructionYardTypes: fact,afac
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
-	UnitBuilderBotModule@normal:
+	UnitBuilderBotModuleCA@normal:
 		RequiresCondition: enable-normal-ai
 		IdleBaseUnitsMaximum: 45
 		UnitsToBuild:
@@ -1422,15 +1428,14 @@ Player:
 			carr: 4
 			jumpjet: 5
 			kirov: 3
-
-	SquadManagerBotModule@easy:
+	SquadManagerBotModuleCA@easy:
 		RequiresCondition: enable-easy-ai
 		SquadSize: 10
 		ExcludeFromSquadsTypes: harv, harv2, mcv, amcv, dog
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,ss2,dd2,icbmsub
 		ConstructionYardTypes: fact,afac
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
-	UnitBuilderBotModule@easy:
+	UnitBuilderBotModuleCA@easy:
 		RequiresCondition: enable-easy-ai
 		IdleBaseUnitsMaximum: 25
 		UnitsToBuild:
@@ -1542,15 +1547,14 @@ Player:
 			carr: 4
 			jumpjet: 5
 			kirov: 3
-
-	SquadManagerBotModule@naval:
+	SquadManagerBotModuleCA@naval:
 		RequiresCondition: enable-naval-ai
 		SquadSize: 1
 		ExcludeFromSquadsTypes: harv, harv2, mcv, amcv, dog
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,dd2,ss2,icbmsub
 		ConstructionYardTypes: fact,afac
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
-	UnitBuilderBotModule@naval:
+	UnitBuilderBotModuleCA@naval:
 		RequiresCondition: enable-naval-ai
 		UnitsToBuild:
 			e1: 65

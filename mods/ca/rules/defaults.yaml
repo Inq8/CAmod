@@ -93,21 +93,37 @@
 		Multiplier: 45
 		Prerequisites: is-normal-ai
 
-^BotIncome:
-	CashTrickler@brutalincome:
+# The Bot does not know how to sell up when he does not have an income. This provides an income, when floating less than 2000$ 	
+^BotFallbackInsurance:
+	GrantConditionOnPlayerResources@botinsurance:
+		Condition: noinsurance
+		Threshold: 2000
+	CashTrickler@brutalinsurance:
 		Interval: 500
 		Amount: 1000
 		ShowTicks: True
-		RequiresCondition: owned-by-brutal-ai
-	CashTrickler@hardincome:
+		RequiresCondition: owned-by-brutal-ai && !noinsurance
+	CashTrickler@hardinsurance:
 		Interval: 500
 		Amount: 800
 		ShowTicks: True
-		RequiresCondition: owned-by-hard-ai	 
-	CashTrickler@normalincome:
+		RequiresCondition: owned-by-hard-ai && !noinsurance
+	CashTrickler@normalinsurance:
 		Interval: 500
 		Amount: 600
 		ShowTicks: True
+		RequiresCondition: owned-by-normal-ai && !noinsurance
+
+# ResourcePurifier on Proc's so AI income is still tied to harvesters, so eco sniping AI is possible.
+^BotIncome:
+	ResourcePurifier@brutalincome:
+		Modifier: 100
+		RequiresCondition: owned-by-brutal-ai
+	ResourcePurifier@hardincome:
+		Modifier: 50
+		RequiresCondition: owned-by-hard-ai
+	ResourcePurifier@normalincome:
+		Modifier: 25
 		RequiresCondition: owned-by-normal-ai
 
 ^GainsExperience:
