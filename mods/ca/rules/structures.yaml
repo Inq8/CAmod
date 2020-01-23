@@ -1304,7 +1304,6 @@ WEAP:
 
 FACT:
 	Inherits: ^Building
-	Inherits: ^BotProductionBuilding
 	Selectable:
 		Bounds: 72,72
 	Building:
@@ -1352,9 +1351,6 @@ FACT:
 	ProvidesPrerequisite@sandbag:
 		Factions: allies, england, france, germany
 		Prerequisite: structures.sandbag
-	ProvidesPrerequisite@BOTPlayer:
-		Prerequisite: botplayer
-		RequiresCondition: owned-by-hard-ai || owned-by-brutal-ai
 	Health:
 		HP: 150000
 	Armor:
@@ -1382,16 +1378,6 @@ FACT:
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
-	CashTrickler@brutal:
-		Interval: 500
-		Amount: 1500
-		ShowTicks: False
-		RequiresCondition: owned-by-brutal-ai
-	CashTrickler@normal:
-		Interval: 500
-		Amount: 500
-		ShowTicks: False
-		RequiresCondition: owned-by-hard-ai
 	ProductionBar@Building:
 		ProductionType: Building
 	ProductionBar@Defense:
@@ -1424,6 +1410,7 @@ FACT:
 
 PROC:
 	Inherits: ^Building
+	Inherits@2: ^BotIncome
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 60
@@ -1456,22 +1443,6 @@ PROC:
 	StoresResources:
 		PipCount: 17
 		Capacity: 2000
-	GrantConditionOnBotOwner@brutalbonus:
-		Condition: brutalbotplayer
-		Bots: brutal
-	GrantConditionOnBotOwner@normalbonus:
-		Condition: normalbotplayer
-		Bots: normal
-	CashTrickler@brutal:
-		Interval: 500
-		Amount: 100
-		ShowTicks: False
-		RequiresCondition: brutalbotplayer
-	CashTrickler@normal:
-		Interval: 500
-		Amount: 50
-		ShowTicks: False
-		RequiresCondition: normalbotplayer
 	DrawLineToTarget:
 	CustomSellValue:
 		Value: 300
@@ -3326,7 +3297,6 @@ NUK2:
 
 AFAC:
 	Inherits: ^BuildingTD
-	Inherits: ^BotProductionBuilding
 	Inherits@shape: ^3x2Shape
 	RenderSprites:
 		FactionImages:
@@ -3370,16 +3340,6 @@ AFAC:
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
-	CashTrickler@brutal:
-		Interval: 500
-		Amount: 1500
-		ShowTicks: False
-		RequiresCondition: owned-by-brutal-ai
-	CashTrickler@normal:
-		Interval: 500
-		Amount: 500
-		ShowTicks: False
-		RequiresCondition: owned-by-hard-ai
 	ProvidesPrerequisite@cnc:
 		Factions: gdi, talon, zocom, eagle, nod, blackh, marked, legion
 		Prerequisite: structures.td
@@ -3413,9 +3373,6 @@ AFAC:
 	ProvidesPrerequisite@sandbag:
 		Factions: gdi, talon, zocom, eagle
 		Prerequisite: structures.sandbag
-	ProvidesPrerequisite@BOTPlayer:
-		Prerequisite: botplayer
-		RequiresCondition: owned-by-brutal-ai || owned-by-hard-ai
 	ProductionBar@Building:
 		ProductionType: Building
 	ProductionBar@Defense:
@@ -4119,6 +4076,7 @@ HPAD2:
 
 PROC2:
 	Inherits: ^BuildingTD
+	Inherits@2: ^BotIncome
 	HitShape:
 		Type: Rectangle
 			TopLeft: -1536, -512
@@ -4168,22 +4126,6 @@ PROC2:
 		PipColor: Green
 		PipCount: 17
 		Capacity: 2000
-	GrantConditionOnBotOwner@brutalbonus:
-		Condition: brutalbotplayer
-		Bots: brutal
-	GrantConditionOnBotOwner@normalbonus:
-		Condition: normalbotplayer
-		Bots: normal
-	CashTrickler@brutal:
-		Interval: 500
-		Amount: 100
-		ShowTicks: False
-		RequiresCondition: brutalbotplayer
-	CashTrickler@normal:
-		Interval: 500
-		Amount: 50
-		ShowTicks: False
-		RequiresCondition: normalbotplayer
 	DrawLineToTarget:
 	Selectable:
 		Bounds: 72,56,0,12
@@ -4912,7 +4854,7 @@ HTUR:
 		Prerequisites: radar, ~structures.france, ~techlevel.high
 		Description: Artillery base defence.\n  Strong vs Ground units\n  Cannot target Air targets.
 	Valued:
-		Cost: 1500
+		Cost: 1650
 	Tooltip:
 		Name: Grand Cannon
 	Building:

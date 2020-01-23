@@ -41,19 +41,74 @@
 			TopLeft: -1536, -1024
 			BottomRight: 1536, 1024
 			
-^BotProductionBonus:
-	ProductionCostMultiplier@brutalbonus:
-		Multiplier: 70
-		Prerequisites: is-brutal-ai
+^BotBuilding:
+	GrantConditionOnBotOwner@BrutalAI:
+		Condition: owned-by-brutal-ai
+		Bots: brutal
+	ProvidesPrerequisite@BrutalAI:
+		Prerequisite: is-brutal-ai
+		RequiresCondition: owned-by-brutal-ai
+	GrantConditionOnBotOwner@HardAI:
+		Condition: owned-by-hard-ai
+		Bots: hard
+	ProvidesPrerequisite@HardAI:
+		Prerequisite: is-hard-ai
+		RequiresCondition: owned-by-hard-ai
+	GrantConditionOnBotOwner@NormalAI:
+		Condition: owned-by-normal-ai
+		Bots: normal
+	ProvidesPrerequisite@NormalAI:
+		Prerequisite: is-normal-ai
+		RequiresCondition: owned-by-normal-ai
+	GrantConditionOnBotOwner@EasyAI:
+		Condition: owned-by-easy-ai
+		Bots: easy
+	ProvidesPrerequisite@EasyAI:
+		Prerequisite: is-easy-ai
+		RequiresCondition: owned-by-easy-ai
+	GrantConditionOnBotOwner@NavalAI:
+		Condition: owned-by-naval-ai
+		Bots: naval
+	ProvidesPrerequisite@NavalAI:
+		Prerequisite: is-naval-ai
+		RequiresCondition: owned-by-naval-ai
+	ProvidesPrerequisite@AI:
+		Prerequisite: botplayer
+		RequiresCondition: owned-by-brutal-ai || owned-by-hard-ai || owned-by-normal-ai || owned-by-easy-ai || owned-by-naval-ai
 	ProductionTimeMultiplier@brutalbonus:
-		Multiplier: 70
+		Multiplier: 80
 		Prerequisites: is-brutal-ai
-	ProductionCostMultiplier@hardbonus:
-		Multiplier: 85
-		Prerequisites: is-hard-ai
 	ProductionTimeMultiplier@hardbonus:
-		Multiplier: 85
+		Multiplier: 90
 		Prerequisites: is-hard-ai
+
+^BotProductionBonus:
+	ProductionTimeMultiplier@brutalbonus:
+		Multiplier: 25
+		Prerequisites: is-brutal-ai
+	ProductionTimeMultiplier@hardbonus:
+		Multiplier: 35
+		Prerequisites: is-hard-ai
+	ProductionTimeMultiplier@normalbonus:
+		Multiplier: 45
+		Prerequisites: is-normal-ai
+
+^BotIncome:
+	CashTrickler@brutalincome:
+		Interval: 500
+		Amount: 1000
+		ShowTicks: True
+		RequiresCondition: owned-by-brutal-ai
+	CashTrickler@hardincome:
+		Interval: 500
+		Amount: 800
+		ShowTicks: True
+		RequiresCondition: owned-by-hard-ai	 
+	CashTrickler@normalincome:
+		Interval: 500
+		Amount: 600
+		ShowTicks: True
+		RequiresCondition: owned-by-normal-ai
 
 ^GainsExperience:
 	GainsExperience:
@@ -1034,6 +1089,7 @@
 	Inherits@6: ^BinoUpgrade
 	Inherits@7: ^GapGenShroud
 	Inherits@8: ^Warpable
+	Inherits@9: ^BotProductionBonus
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@production: ^ProductionSpeedBoost
@@ -1167,7 +1223,7 @@
 	Inherits@4: ^EmpDisable
 	Inherits@5: ^GapGenShroud
 	Inherits@6: ^Warpable
-	Inherits@7: ^BotProductionBonus
+	Inherits@7: ^BotBuilding
 	WithColoredOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield
 	Huntable:
@@ -1381,21 +1437,6 @@
 	FrozenUnderFog:
 	MapEditorData:
 		Categories: Tech building
-		
-^BotProductionBuilding:
-	GrantConditionOnBotOwner@BrutalAI:
-		Condition: owned-by-brutal-ai
-		Bots: brutal
-	ProvidesPrerequisite@BrutalAI:
-		Prerequisite: is-brutal-ai
-		RequiresCondition: owned-by-brutal-ai
-	GrantConditionOnBotOwner@HardAI:
-		Condition: owned-by-hard-ai
-		Bots: hard
-	ProvidesPrerequisite@HardAI:
-		Prerequisite: is-hard-ai
-		RequiresCondition: owned-by-hard-ai
-
 
 ^FakeBuilding:
 	Inherits: ^Building
