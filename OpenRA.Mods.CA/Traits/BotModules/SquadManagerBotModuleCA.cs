@@ -70,6 +70,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Radius in cells that squads should scan for danger around their position to make flee decisions.")]
 		public readonly int DangerScanRadius = 10;
 
+		[Desc("Radius in cells that squads should scan for danger around their position to make flee decisions.")]
+		public readonly int AircraftDangerScanRadius = 5;
+
 		[Desc("Radius in cells that attack squads should scan for enemies around their position when trying to attack.")]
 		public readonly int AttackScanRadius = 12;
 

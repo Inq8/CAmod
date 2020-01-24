@@ -90,9 +90,10 @@ namespace OpenRA.Mods.CA.Warheads
 			var cell = targetCells.GetEnumerator();
 
 			var placed = false;
+			var world = firedBy.World;
 			var td = new TypeDictionary();
 			var ai = map.Rules.Actors;
-			var actor = RandomActors.RandomOrDefault(Game.CosmeticRandom);
+			var actor = RandomActors.Random(world.SharedRandom);
 
 			if (OwnerType == ASOwnerType.Attacker)
 				td.Add(new OwnerInit(firedBy.Owner));

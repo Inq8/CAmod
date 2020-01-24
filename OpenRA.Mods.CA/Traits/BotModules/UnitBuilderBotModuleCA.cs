@@ -203,6 +203,7 @@ namespace OpenRA.Mods.CA.Traits
 		}
 
 		// For mods like RA (number of RearmActors must match the number of aircraft)
+		// Default is 1:1, 3:1 makes AI reloading aircraft attacks more dangerous
 		bool HasAdequateAirUnitReloadBuildings(ActorInfo actorInfo)
 		{
 			var aircraftInfo = actorInfo.TraitInfoOrDefault<AircraftInfo>();
@@ -216,7 +217,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			var countOwnAir = AIUtils.CountActorsWithTrait<IPositionable>(actorInfo.Name, player);
 			var countBuildings = rearmableInfo.RearmActors.Sum(b => AIUtils.CountActorsWithTrait<Building>(b, player));
-			if (countOwnAir >= countBuildings)
+			if (countOwnAir >= countBuildings * 3)
 				return false;
 
 			return true;

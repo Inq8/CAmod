@@ -22,7 +22,8 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 	{
 		static readonly BitSet<TargetableType> AirTargetTypes = new BitSet<TargetableType>("Air");
 
-		protected const int MissileUnitMultiplier = 3;
+		// Default is 3, multipler used to calculate odds of fleeing when faced with with enemy AA
+		protected const int MissileUnitMultiplier = 2;
 
 		protected static int CountAntiAirUnits(IEnumerable<Actor> units)
 		{
@@ -64,7 +65,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		protected static CPos? FindSafePlace(SquadCA owner, out Actor detectedEnemyTarget, bool needTarget)
 		{
 			var map = owner.World.Map;
-			var dangerRadius = owner.SquadManager.Info.DangerScanRadius;
+			var dangerRadius = owner.SquadManager.Info.AircraftDangerScanRadius;
 			detectedEnemyTarget = null;
 			var x = (map.MapSize.X % dangerRadius) == 0 ? map.MapSize.X : map.MapSize.X + dangerRadius;
 			var y = (map.MapSize.Y % dangerRadius) == 0 ? map.MapSize.Y : map.MapSize.Y + dangerRadius;

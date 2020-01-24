@@ -102,7 +102,7 @@ namespace OpenRA.Mods.CA.Traits
 				throw new YamlException("Actors ruleset does not include the entry '{0}'".F(utLower));
 
 			var altitude = unitType.TraitInfo<AircraftInfo>().CruiseAltitude.Length;
-			var pFacing = podFacing.RandomOrDefault(self.World.SharedRandom);
+			var pFacing = podFacing.Random(self.World.SharedRandom);
 			var approachRotation = WRot.FromFacing(pFacing);
 			var delta = new WVec(0, -altitude, 0).Rotate(approachRotation);
 
@@ -154,12 +154,9 @@ namespace OpenRA.Mods.CA.Traits
 						if (sound != null)
 							Game.Sound.Play(SoundType.World, sound, target);
 
-						var cargo = a.Trait<Cargo>();
 						var unloadDist = new WDist(10);
-						cargo.Load(a, u);
 
 						a.QueueActivity(new Land(a, Target.FromCell(a.World, podDropCellPos)));
-						a.QueueActivity(new UnloadCargo(a, unloadDist, true));
 						a.QueueActivity(new CallFunc(() => a.Kill(a)));
 						pe.MoveNext();
 					}
