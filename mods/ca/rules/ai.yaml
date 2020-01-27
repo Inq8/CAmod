@@ -567,14 +567,14 @@ Player:
 		BuildingFractions:
 			proc: 30
 			proc2: 30
-			hand: 2
-			pyle: 2
-			barr: 2
-			tent: 2
+			hand: 3
+			pyle: 3
+			barr: 3
+			tent: 3
 			kenn: 1
-			weap: 3
-			awep: 3
-			astrip: 3
+			weap: 5
+			awep: 5
+			astrip: 5
 			pbox: 7
 			hbox: 7
 			gtwr: 7
@@ -682,14 +682,14 @@ Player:
 		BuildingFractions:
 			proc: 30
 			proc2: 30
-			hand: 2
-			pyle: 2
-			barr: 2
-			tent: 2
+			hand: 3
+			pyle: 3
+			barr: 3
+			tent: 3
 			kenn: 1
-			weap: 3
-			awep: 3
-			astrip: 3
+			weap: 5
+			awep: 5
+			astrip: 5
 			pbox: 7
 			hbox: 7
 			gtwr: 7
@@ -795,14 +795,14 @@ Player:
 		BuildingFractions:
 			proc: 30
 			proc2: 30
-			hand: 2
-			pyle: 2
-			barr: 2
-			tent: 2
+			hand: 3
+			pyle: 3
+			barr: 3
+			tent: 3
 			kenn: 1
-			weap: 3
-			awep: 3
-			astrip: 3
+			weap: 5
+			awep: 5
+			astrip: 5
 			pbox: 7
 			hbox: 7
 			gtwr: 7
@@ -1061,7 +1061,7 @@ Player:
 			syrd.gdi: 1
 	SquadManagerBotModuleCA@brutal:
 		RequiresCondition: enable-brutal-ai
-		SquadSize: 10
+		SquadSize: 30
 		ExcludeFromSquadsTypes: harv, harv2, mcv, amcv, dog, e6, n6
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,dd2,pt2,ss2,icbmsub
 		NavalProductionTypes: syrd, spen, syrd.gdi, spen.nod
@@ -1076,10 +1076,10 @@ Player:
 		AssignRolesInterval: 50
 		AttackForceInterval: 75
 		DangerScanRadius: 8
-		MinimumAttackForceDelay: 6000
+		MinimumAttackForceDelay: 0
 	UnitBuilderBotModuleCA@brutal:
 		RequiresCondition: enable-brutal-ai
-		IdleBaseUnitsMaximum: 160
+		IdleBaseUnitsMaximum: 50
 		UnitBuilderMinCredits: 1800
 		UnitsToBuild:
 			e1: 65
@@ -1118,11 +1118,11 @@ Player:
 			bggy: 30
 			arty: 20
 			ptnk: 20
-			v2rl: 40
-			msam: 40
+			v2rl: 20
+			msam: 25
 			mlrs: 20
 			spec: 20
-			hmlrs: 20
+			hmlrs: 25
 			1tnk: 70
 			ifv.ai: 70
 			2tnk: 45
@@ -1189,16 +1189,18 @@ Player:
 			carr: 4
 			jumpjet: 5
 			kirov: 3
+			harv: 8
+			harv2: 8
 	SquadManagerBotModuleCA@hard:
 		RequiresCondition: enable-hard-ai
-		SquadSize: 20
+		SquadSize: 25
 		ExcludeFromSquadsTypes: harv, harv2, mcv, amcv, dog, e6, n6
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,dd2,pt2,ss2,icbmsub
 		NavalProductionTypes: syrd, spen, syrd.gdi, spen.nod
 		ConstructionYardTypes: fact,afac
 	UnitBuilderBotModuleCA@hard:
 		RequiresCondition: enable-hard-ai
-		IdleBaseUnitsMaximum: 35
+		IdleBaseUnitsMaximum: 50
 		UnitsToBuild:
 			e1: 65
 			e2: 25
@@ -1236,11 +1238,11 @@ Player:
 			bggy: 30
 			arty: 20
 			ptnk: 20
-			v2rl: 40
-			msam: 40
+			v2rl: 20
+			msam: 25
 			mlrs: 20
 			spec: 20
-			hmlrs: 20
+			hmlrs: 25
 			1tnk: 70
 			ifv.ai: 70
 			2tnk: 45
@@ -1307,16 +1309,18 @@ Player:
 			carr: 4
 			jumpjet: 5
 			kirov: 3
+			harv: 8
+			harv2: 8
 	SquadManagerBotModuleCA@normal:
 		RequiresCondition: enable-normal-ai
-		SquadSize: 30
+		SquadSize: 20
 		ExcludeFromSquadsTypes: harv, harv2, mcv, amcv, dog
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,ss2,dd2,icbmsub
 		ConstructionYardTypes: fact,afac
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
 	UnitBuilderBotModuleCA@normal:
 		RequiresCondition: enable-normal-ai
-		IdleBaseUnitsMaximum: 45
+		IdleBaseUnitsMaximum: 50
 		UnitsToBuild:
 			e1: 65
 			e2: 25
@@ -1354,11 +1358,11 @@ Player:
 			bggy: 30
 			arty: 20
 			ptnk: 20
-			v2rl: 40
-			msam: 40
+			v2rl: 20
+			msam: 25
 			mlrs: 20
 			spec: 20
-			hmlrs: 20
+			hmlrs: 25
 			1tnk: 70
 			ifv.ai: 70
 			2tnk: 45
@@ -1424,7 +1428,16 @@ Player:
 			icbmsub: 4
 			carr: 4
 			jumpjet: 5
-			kirov: 3
+			kirov: 2
+			harv: 8
+			harv2: 8
+			a10: 2
+			frog: 2
+			harr: 2
+			mig: 2
+			yak: 2
+			scrin: 2
+			orcab: 2
 	SquadManagerBotModuleCA@easy:
 		RequiresCondition: enable-easy-ai
 		SquadSize: 10
@@ -1434,7 +1447,6 @@ Player:
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
 	UnitBuilderBotModuleCA@easy:
 		RequiresCondition: enable-easy-ai
-		IdleBaseUnitsMaximum: 25
 		UnitsToBuild:
 			e1: 65
 			e2: 25
@@ -1472,11 +1484,11 @@ Player:
 			bggy: 30
 			arty: 20
 			ptnk: 20
-			v2rl: 40
-			msam: 40
+			v2rl: 20
+			msam: 25
 			mlrs: 20
 			spec: 20
-			hmlrs: 20
+			hmlrs: 25
 			1tnk: 70
 			ifv.ai: 70
 			2tnk: 45
@@ -1542,7 +1554,21 @@ Player:
 			icbmsub: 4
 			carr: 4
 			jumpjet: 5
-			kirov: 3
+			kirov: 1
+			harv: 8
+			harv2: 8
+			a10: 1
+			frog: 1
+			harr: 1
+			mig: 1
+			yak: 1
+			scrin: 1
+			orcab: 1
+			apch: 1
+			rah66: 1
+			hind: 1
+			orca: 1
+			heli: 1
 	SquadManagerBotModuleCA@naval:
 		RequiresCondition: enable-naval-ai
 		SquadSize: 1
@@ -1596,3 +1622,5 @@ Player:
 			ss2: 20
 			icbmsub: 10
 		UnitLimits:
+			harv: 8
+			harv2: 8
