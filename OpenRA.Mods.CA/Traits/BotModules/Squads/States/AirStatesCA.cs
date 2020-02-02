@@ -97,7 +97,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		protected static bool NearToPosSafely(SquadCA owner, WPos loc, out Actor detectedEnemyTarget)
 		{
 			detectedEnemyTarget = null;
-			var dangerRadius = owner.SquadManager.Info.DangerScanRadius;
+			var dangerRadius = owner.SquadManager.Info.AircraftDangerScanRadius;
 			var unitsAroundPos = owner.World.FindActorsInCircle(loc, WDist.FromCells(dangerRadius))
 				.Where(owner.SquadManager.IsEnemyUnit).ToList();
 
