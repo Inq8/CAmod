@@ -488,7 +488,67 @@
 	KillsSelf@Mutation:
 		DamageTypes: ToxinDeath
 		RequiresCondition: invisibility
-		
+
+^Chillable:
+	TimedConditionBar@chilled:
+		Condition: chilled
+		Color: 72edff
+	ExternalCondition@chilled:
+		Condition: chilled
+	SpeedMultiplier@chilled1:
+		Modifier: 80
+		RequiresCondition: chilled == 1
+	DamageMultiplier@chilled1:
+		Modifier: 110
+		RequiresCondition: chilled == 1
+	WithColoredOverlay@chilled1:
+		Palette: cold1
+		RequiresCondition: chilled == 1
+	SpeedMultiplier@chilled2:
+		Modifier: 60
+		RequiresCondition: chilled == 2
+	DamageMultiplier@chilled2:
+		Modifier: 120
+		RequiresCondition: chilled == 2
+	WithColoredOverlay@chilled2:
+		Palette: cold2
+		RequiresCondition: chilled == 2
+	SpeedMultiplier@chilled3:
+		Modifier: 40
+		RequiresCondition: chilled == 3 || (chilled > 3 && !frozen)
+	DamageMultiplier@chilled3:
+		Modifier: 130
+		RequiresCondition: chilled == 3 || (chilled > 3 && !frozen)
+	WithColoredOverlay@chilled3:
+		Palette: cold3
+		RequiresCondition: chilled == 3 || (chilled > 3 && !frozen)
+
+^Freezable:
+	ReloadDelayMultiplier@frozen:
+		Modifier: 120
+		RequiresCondition: chilled == 1
+	ReloadDelayMultiplier@frozen:
+		Modifier: 140
+		RequiresCondition: chilled == 2
+	ReloadDelayMultiplier@frozen:
+		Modifier: 160
+		RequiresCondition: chilled == 3		
+	GrantCondition@frozen:
+		RequiresCondition: chilled > 3
+		Condition: frozen
+	SpeedMultiplier@frozen:
+		Modifier: 0
+		RequiresCondition: frozen
+	DamageMultiplier@frozen:
+		Modifier: 140
+		RequiresCondition: frozen
+	WithColoredOverlay@frozen:
+		Palette: frozen
+		RequiresCondition: frozen
+	ReloadDelayMultiplier@frozen:
+		Modifier: 500
+		RequiresCondition: frozen
+
 ^GpsScramble:
 	Cloak@GPSHIDE:
 		InitialDelay: 250
@@ -595,6 +655,7 @@
 	Inherits@11: ^NaniteRepair
 	Inherits@12: ^GpsScramble
 	Inherits@13: ^BotGroundProductionBonus
+	Inherits@14: ^Chillable
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
@@ -731,6 +792,8 @@
 	Inherits@10: ^Frenzy
 	Inherits@11: ^GpsScramble
 	Inherits@12: ^BotGroundProductionBonus
+	Inherits@13: ^Chillable
+	Inherits@14: ^Freezable
 	Inherits@bounty: ^GlobalBounty
 	Inherits@SELECTION_MODE: ^FlatSelectionMode
 	RenderSprites:
@@ -1132,6 +1195,7 @@
 	Inherits@7: ^GapGenShroud
 	Inherits@8: ^Warpable
 	Inherits@9: ^BotAirProductionBonus
+	Inherits@10: ^Chillable
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@production: ^ProductionSpeedBoost
@@ -1266,6 +1330,7 @@
 	Inherits@5: ^GapGenShroud
 	Inherits@6: ^Warpable
 	Inherits@7: ^BotBuilding
+	Inherits@8: ^Chillable
 	WithColoredOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield
 	Huntable:

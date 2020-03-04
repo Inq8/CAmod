@@ -3079,4 +3079,41 @@ CDRONE:
 	-CaptureManager:
 	-Capturable:
 	-CaptureNotification:
-		
+
+CRYOL:
+	Inherits: ^TankTD
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+	Valued:
+		Cost: 1400
+	Tooltip:
+		Name: Cryo Launcher
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 135
+		Prerequisites:  atek, ~vehicles.allies, ~techlevel.high
+		Queue: Vehicle
+		IconPalette: chrometd
+		Description: Long-range support artillery that slows enemies and makes them take more damage.\n  Strong vs Infantry, Vehicles, Buildings\n  Weak vs Aircraft
+	Mobile:
+		Speed: 82
+		TurnSpeed: 3
+		PauseOnCondition: aiming || being-captured || empdisable || being-warped
+	Health:
+		HP: 32000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		Range: 5c0
+	Armament:
+		Weapon: CryoMissile
+		LocalOffset: 150,100,0, 150,-100,0
+		PauseOnCondition: empdisable || being-warped
+	AttackFrontal:
+		PauseOnCondition: empdisable || being-warped
+	SelectionDecorations:
+	Selectable:
+		DecorationBounds: 28,28

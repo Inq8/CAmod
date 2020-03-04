@@ -1205,3 +1205,51 @@ U2Bomb:
 		ImpactSounds: splashm1.aud, splashm2.aud, splashm3.aud
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure
+
+CryoMissile:
+	ReloadDelay: 140
+	Range: 10c0
+	MinRange: 2c0
+	Report: cryomissile.aud
+	Burst: 2
+	BurstDelays: 20
+	Projectile: Bullet
+		Blockable: false
+		Shadow: true
+		Inaccuracy: 0c341
+		Image: missile
+		TrailImage: smokey
+		TrailPalette: cold1
+		TrailInterval: 1
+		TrailDelay: 1
+		Speed: 300
+		LaunchAngle: 65
+		ContrailLength: 17
+		ContrailColor: 8fc6ffaa
+		ContrailWidth: 0c48
+	ValidTargets: Ground, Trees, Water, Underwater, Air
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Damage: 1500
+		Falloff: 100, 50, 25, 0
+		Versus:
+			None: 100
+			Wood: 10
+			Light: 15
+			Heavy: 5
+			Concrete: 5
+			Brick: 1
+		DamageTypes: SmallExplosionDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: cryoblast
+		ImpactSounds: cryoblast.aud
+	Warhead@chill: GrantExternalCondition
+		Condition: chilled
+		Duration: 180
+		Range: 1c768
+	Warhead@ice: CreateTintedCells
+		LayerName: cryoresidue
+		Spread: 1c0
+		Level: 100
+		Falloff: 100, 75, 52, 15, 2
+		MaxLevel: 600
