@@ -44,6 +44,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Mininum amount of credits in reserve for the Unit Builder to be active.")]
 		public readonly int UnitBuilderMinCredits = 2000;
 
+		[Desc("Maximum number of aircraft AI can build.")]
+		public readonly int MaxAircraft = 4;
+
 		public override object Create(ActorInitializer init) { return new UnitBuilderBotModuleCA(init.Self, this); }
 	}
 
@@ -179,7 +182,7 @@ namespace OpenRA.Mods.CA.Traits
 				return null;
 
 			var unit = buildableThings.Random(world.LocalRandom);
-			return HasAdequateAirUnitReloadBuildings(unit) ? unit : null;
+			return CanBuildMoreOfAircraft(unit) ? unit : null;
 		}
 
 		ActorInfo ChooseUnitToBuild(ProductionQueue queue)
@@ -196,31 +199,20 @@ namespace OpenRA.Mods.CA.Traits
 			foreach (var unit in Info.UnitsToBuild.Shuffle(world.LocalRandom))
 				if (buildableThings.Any(b => b.Name == unit.Key))
 					if (myUnits.Count(a => a == unit.Key) * 100 < unit.Value * myUnits.Count)
-						if (HasAdequateAirUnitReloadBuildings(world.Map.Rules.Actors[unit.Key]))
+						if (CanBuildMoreOfAircraft(world.Map.Rules.Actors[unit.Key]))
 							return world.Map.Rules.Actors[unit.Key];
 
 			return null;
 		}
 
-		// For mods like RA (number of RearmActors must match the number of aircraft)
-		// Default is 1:1, 3:1 makes AI reloading aircraft attacks more dangerous
-		bool HasAdequateAirUnitReloadBuildings(ActorInfo actorInfo)
+		bool CanBuildMoreOfAircraft(ActorInfo actorInfo)
 		{
-			var aircraftInfo = actorInfo.TraitInfoOrDefault<AircraftInfo>();
-			if (aircraftInfo == null)
+			var attackAircraftInfo = actorInfo.TraitInfoOrDefault<AttackAircraftInfo>();
+			if (attackAircraftInfo == null)
 				return true;
-
-			// If actor isn't Rearmable, it doesn't need a RearmActor to reload
-			var rearmableInfo = actorInfo.TraitInfoOrDefault<RearmableInfo>();
-			if (rearmableInfo == null)
-				return true;
-
-			var countOwnAir = AIUtils.CountActorsWithTrait<IPositionable>(actorInfo.Name, player);
-			var countBuildings = rearmableInfo.RearmActors.Sum(b => AIUtils.CountActorsWithTrait<Building>(b, player));
-			if (countOwnAir >= countBuildings * 3)
-				return false;
-
-			return true;
+			
+			var numAirUnits = AIUtils.GetActorsWithTrait<AttackAircraft>(player.World).Count(a => a.Owner == player);
+			return numAirUnits < Info.MaxAircraft;
 		}
 
 		List<MiniYamlNode> IGameSaveTraitData.IssueTraitData(Actor self)
