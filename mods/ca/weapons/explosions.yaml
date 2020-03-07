@@ -631,3 +631,18 @@ ChaosGas:
 ChaosDroneExplode:
 	Inherits: ChaosGas
 	Report: vchadiea.aud
+
+CryoExplosion:
+	Warhead@2Eff: CreateEffect
+		Explosions: cryoblast
+		ImpactSounds: cryoblast.aud
+	Warhead@chill: GrantExternalCondition
+		Condition: chilled
+		Duration: 150
+		Range: 1c768
+	Warhead@cryoresidue: CreateTintedCells
+		LayerName: cryoresidue
+		Spread: 1c0
+		Level: 100
+		Falloff: 100, 75, 52, 15, 2
+		MaxLevel: 600

@@ -496,58 +496,50 @@
 	ExternalCondition@chilled:
 		Condition: chilled
 	SpeedMultiplier@chilled1:
-		Modifier: 80
+		Modifier: 75
 		RequiresCondition: chilled == 1
 	DamageMultiplier@chilled1:
-		Modifier: 110
+		Modifier: 116
 		RequiresCondition: chilled == 1
 	WithColoredOverlay@chilled1:
 		Palette: cold1
 		RequiresCondition: chilled == 1
 	SpeedMultiplier@chilled2:
-		Modifier: 60
+		Modifier: 58
 		RequiresCondition: chilled == 2
 	DamageMultiplier@chilled2:
-		Modifier: 120
+		Modifier: 132
 		RequiresCondition: chilled == 2
 	WithColoredOverlay@chilled2:
 		Palette: cold2
 		RequiresCondition: chilled == 2
 	SpeedMultiplier@chilled3:
-		Modifier: 40
-		RequiresCondition: chilled == 3 || (chilled > 3 && !frozen)
+		Modifier: 47
+		RequiresCondition: chilled == 3
 	DamageMultiplier@chilled3:
-		Modifier: 130
-		RequiresCondition: chilled == 3 || (chilled > 3 && !frozen)
+		Modifier: 148
+		RequiresCondition: chilled == 3
 	WithColoredOverlay@chilled3:
 		Palette: cold3
-		RequiresCondition: chilled == 3 || (chilled > 3 && !frozen)
-
-^Freezable:
-	ReloadDelayMultiplier@frozen:
-		Modifier: 120
-		RequiresCondition: chilled == 1
-	ReloadDelayMultiplier@frozen:
-		Modifier: 140
-		RequiresCondition: chilled == 2
-	ReloadDelayMultiplier@frozen:
-		Modifier: 160
-		RequiresCondition: chilled == 3		
-	GrantCondition@frozen:
-		RequiresCondition: chilled > 3
-		Condition: frozen
-	SpeedMultiplier@frozen:
-		Modifier: 0
-		RequiresCondition: frozen
-	DamageMultiplier@frozen:
-		Modifier: 140
-		RequiresCondition: frozen
-	WithColoredOverlay@frozen:
-		Palette: frozen
-		RequiresCondition: frozen
-	ReloadDelayMultiplier@frozen:
-		Modifier: 500
-		RequiresCondition: frozen
+		RequiresCondition: chilled == 3
+	SpeedMultiplier@chilled4:
+		Modifier: 40
+		RequiresCondition: chilled == 4
+	DamageMultiplier@chilled4:
+		Modifier: 164
+		RequiresCondition: chilled == 4
+	WithColoredOverlay@chilled4:
+		Palette: cold4
+		RequiresCondition: chilled == 4
+	SpeedMultiplier@chilled5:
+		Modifier: 35
+		RequiresCondition: chilled > 4
+	DamageMultiplier@chilled5:
+		Modifier: 180
+		RequiresCondition: chilled > 4
+	WithColoredOverlay@chilled5:
+		Palette: cold5
+		RequiresCondition: chilled > 4
 
 ^GpsScramble:
 	Cloak@GPSHIDE:
@@ -793,7 +785,6 @@
 	Inherits@11: ^GpsScramble
 	Inherits@12: ^BotGroundProductionBonus
 	Inherits@13: ^Chillable
-	Inherits@14: ^Freezable
 	Inherits@bounty: ^GlobalBounty
 	Inherits@SELECTION_MODE: ^FlatSelectionMode
 	RenderSprites:

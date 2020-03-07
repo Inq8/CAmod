@@ -1207,17 +1207,17 @@ U2Bomb:
 		InvalidTargets: Ship, Structure
 
 CryoMissile:
-	ReloadDelay: 140
-	Range: 10c0
+	ReloadDelay: 125
+	Range: 9c0
 	MinRange: 2c0
 	Report: cryomissile.aud
 	Burst: 2
-	BurstDelays: 20
+	BurstDelays: 6
 	Projectile: Bullet
 		Blockable: false
 		Shadow: true
-		Inaccuracy: 0c341
-		Image: missile
+		Inaccuracy: 1c341
+		Image: dragon
 		TrailImage: smokey
 		TrailPalette: cold1
 		TrailInterval: 1
@@ -1230,7 +1230,7 @@ CryoMissile:
 	ValidTargets: Ground, Trees, Water, Underwater, Air
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 1500
+		Damage: 700
 		Falloff: 100, 50, 25, 0
 		Versus:
 			None: 100
@@ -1245,9 +1245,9 @@ CryoMissile:
 		ImpactSounds: cryoblast.aud
 	Warhead@chill: GrantExternalCondition
 		Condition: chilled
-		Duration: 180
+		Duration: 150
 		Range: 1c768
-	Warhead@ice: CreateTintedCells
+	Warhead@cryoresidue: CreateTintedCells
 		LayerName: cryoresidue
 		Spread: 1c0
 		Level: 100
