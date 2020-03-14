@@ -156,7 +156,7 @@ HellfireAG.Horn:
 			ContrailLength: 0
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 525
+		Damage: 850
 
 HellfireAA:
 	Inherits: ^AntiAirMissile
@@ -318,12 +318,12 @@ Stinger:
 		Speed: 170
 		CloseEnough: 149
 	Warhead@1Dam: SpreadDamage
-		Damage: 2500
+		Damage: 3500
 		Versus:
 			None: 36
 			Wood: 88
-			Light: 88
-			Heavy: 120
+			Light: 75
+			Heavy: 100
 			Concrete: 60
 			Brick: 60
 
@@ -414,11 +414,11 @@ TorpTube:
 		CruiseAltitude: 0
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
-		Damage: 18000
+		Damage: 12000
 		ValidTargets: Water, Underwater, Bridge
 		Versus:
 			Wood: 75
-			Light: 75
+			Light: 65
 			Heavy: 100
 			Concrete: 100
 			Brick: 500
@@ -451,9 +451,9 @@ TorpTube:
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Versus:
 			None: 40
-			Wood: 50
+			Wood: 60
 			Light: 30
-			Heavy: 30
+			Heavy: 50
 			Concrete: 60
 			Brick: 60
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
@@ -487,13 +487,13 @@ HonestJohnSub:
 		Inaccuracy: 1c0
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
-		Damage: 2200
+		Damage: 2000
 		Versus:
 			None: 70
-			Wood: 60
-			Concrete: 70
-			Light: 70
-			Heavy: 60
+			Wood: 100
+			Concrete: 90
+			Light: 75
+			Heavy: 35
 			Brick: 70
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -508,6 +508,7 @@ HonestJohnSub:
 
 SubMissileAA:
 	Inherits: ^SubMissileDefault
+	ReloadDelay: 100
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
 		Damage: 1500
@@ -939,8 +940,8 @@ BoatMissile:
 			None: 90
 			Wood: 55
 			Concrete: 45
-			Light: 20
-			Heavy: 15
+			Light: 55
+			Heavy: 30
 			Brick: 45
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
