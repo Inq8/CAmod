@@ -90,10 +90,10 @@
 
 ^BotGroundProductionBonus:
 	ProductionTimeMultiplier@brutalbonus:
-		Multiplier: 30
+		Multiplier: 35
 		Prerequisites: is-brutal-ai
 	ProductionTimeMultiplier@hardbonus:
-		Multiplier: 45
+		Multiplier: 50
 		Prerequisites: is-hard-ai
 	ProductionTimeMultiplier@normalbonus:
 		Multiplier: 60
@@ -140,15 +140,15 @@
 # ResourcePurifier on Proc's so AI income is still tied to harvesters, so eco sniping AI is possible.
 ^BotIncome:
 	ResourcePurifier@brutalincome:
-		Modifier: 24
+		Modifier: 20
 		RequiresCondition: owned-by-brutal-ai
 		ShowTicks: False
 	ResourcePurifier@hardincome:
-		Modifier: 20
+		Modifier: 16
 		RequiresCondition: owned-by-hard-ai
 		ShowTicks: False
 	ResourcePurifier@normalincome:
-		Modifier: 16
+		Modifier: 14
 		RequiresCondition: owned-by-normal-ai
 		ShowTicks: False
 
@@ -488,6 +488,66 @@
 	KillsSelf@Mutation:
 		DamageTypes: ToxinDeath
 		RequiresCondition: invisibility
+
+^Chillable:
+	TimedConditionBar@chilled:
+		Condition: chilled
+		Color: 72edff
+	ExternalCondition@chilled:
+		Condition: chilled
+	SpeedMultiplier@chilled1:
+		Modifier: 80
+		RequiresCondition: chilled == 1
+	DamageMultiplier@chilled1:
+		Modifier: 110
+		RequiresCondition: chilled == 1
+	WithColoredOverlay@chilled1:
+		Palette: cold1
+		RequiresCondition: chilled == 1
+	SpeedMultiplier@chilled2:
+		Modifier: 60
+		RequiresCondition: chilled == 2
+	DamageMultiplier@chilled2:
+		Modifier: 120
+		RequiresCondition: chilled == 2
+	WithColoredOverlay@chilled2:
+		Palette: cold2
+		RequiresCondition: chilled == 2
+	SpeedMultiplier@chilled3:
+		Modifier: 40
+		RequiresCondition: chilled == 3 || (chilled > 3 && !frozen)
+	DamageMultiplier@chilled3:
+		Modifier: 130
+		RequiresCondition: chilled == 3 || (chilled > 3 && !frozen)
+	WithColoredOverlay@chilled3:
+		Palette: cold3
+		RequiresCondition: chilled == 3 || (chilled > 3 && !frozen)
+
+^Freezable:
+	ReloadDelayMultiplier@frozen:
+		Modifier: 120
+		RequiresCondition: chilled == 1
+	ReloadDelayMultiplier@frozen:
+		Modifier: 140
+		RequiresCondition: chilled == 2
+	ReloadDelayMultiplier@frozen:
+		Modifier: 160
+		RequiresCondition: chilled == 3		
+	GrantCondition@frozen:
+		RequiresCondition: chilled > 3
+		Condition: frozen
+	SpeedMultiplier@frozen:
+		Modifier: 0
+		RequiresCondition: frozen
+	DamageMultiplier@frozen:
+		Modifier: 140
+		RequiresCondition: frozen
+	WithColoredOverlay@frozen:
+		Palette: frozen
+		RequiresCondition: frozen
+	ReloadDelayMultiplier@frozen:
+		Modifier: 500
+		RequiresCondition: frozen
 		
 ^GpsScramble:
 	Cloak@GPSHIDE:
@@ -595,6 +655,7 @@
 	Inherits@11: ^NaniteRepair
 	Inherits@12: ^GpsScramble
 	Inherits@13: ^BotGroundProductionBonus
+	Inherits@14: ^Chillable
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
@@ -731,6 +792,8 @@
 	Inherits@10: ^Frenzy
 	Inherits@11: ^GpsScramble
 	Inherits@12: ^BotGroundProductionBonus
+	Inherits@13: ^Chillable
+	Inherits@14: ^Freezable
 	Inherits@bounty: ^GlobalBounty
 	Inherits@SELECTION_MODE: ^FlatSelectionMode
 	RenderSprites:
@@ -806,6 +869,7 @@
 			ChronoDeath: 8
 			ToxinDeath: 9
 			RadiationDeath: 10
+			FrozenDeath: 11
 		CrushedSequence: die-crushed
 	AttackMove:
 	Passenger:
@@ -857,7 +921,7 @@
 		DeathTypes: FireDeath
 	DeathSounds@ZAPPED:
 		Voice: Zapped
-		DeathTypes: ElectricityDeath, ChronoDeath
+		DeathTypes: ElectricityDeath, ChronoDeath, FrozenDeath
 	DeathSounds@POISONED:
 		Voice: Poisoned
 		DeathTypes: PoisonDeath, ToxinDeath, RadiationDeath
@@ -975,6 +1039,7 @@
 	Inherits@11: ^Frenzy
 	Inherits@12: ^NaniteRepair
 	Inherits@13: ^GpsScramble
+	Inherits@14: ^Chillable
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
@@ -1186,7 +1251,6 @@
 		InitialFacing: 224
 		CanSlide: True
 		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems,Tiberium,BlueTiberium
-		LandOnCondition: empdisable
 	GpsDot:
 		String: Helicopter
 	Hovers@CRUISING:
@@ -1266,6 +1330,7 @@
 	Inherits@5: ^GapGenShroud
 	Inherits@6: ^Warpable
 	Inherits@7: ^BotBuilding
+	Inherits@8: ^Chillable
 	WithColoredOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield
 	Huntable:
@@ -1735,7 +1800,7 @@
 		GenericName: Destroyed Plane
 	Aircraft:
 	FallsToEarth:
-		Spins: False
+		MaximumSpinSpeed: 0
 		Moves: True
 		Velocity: 86
 		Explosion: UnitExplodePlane
@@ -1743,6 +1808,11 @@
 	RevealOnDeath:
 		Duration: 60
 		Radius: 4c0
+		
+^PlaneHuskEmpty:
+	Inherits: ^PlaneHusk
+	FallsToEarth:
+		Explosion: UnitExplodePlaneEmpty
 
 ^HelicopterHusk:
 	Inherits: ^BasicHusk
@@ -1763,6 +1833,11 @@
 	RevealOnDeath:
 		Duration: 60
 		Radius: 4c0
+		
+^HelicopterHuskEmpty:
+	Inherits: ^PlaneHusk
+	FallsToEarth:
+		Explosion: UnitExplodeHeliEmpty
 		
 ^TechHusk:
 	Inherits@1: ^BasicBuilding

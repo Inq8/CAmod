@@ -111,7 +111,7 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				var targetPosition = order.Target.CenterPosition + new WVec(WDist.Zero, WDist.Zero, info.AirburstAltitude);
 
-				Action detonateWeapon = () => self.World.AddFrameEndTask(w => info.WeaponInfo.Impact(Target.FromPos(targetPosition), self, Enumerable.Empty<int>()));
+				Action detonateWeapon = () => self.World.AddFrameEndTask(w => info.WeaponInfo.Impact(Target.FromPos(targetPosition), self));
 
 				self.World.AddFrameEndTask(w => w.Add(new DelayedAction(info.ActivationDelay, detonateWeapon)));
 			}
@@ -170,13 +170,15 @@ namespace OpenRA.Mods.CA.Traits
 					world.CancelInputMode();
 			}
 
-			protected override IEnumerable<IRenderable> RenderAboveShroud(WorldRenderer wr, World world)
+			protected override IEnumerable<IRenderable> RenderAboveShroud(WorldRenderer wr, World world) { yield break; }
+
+			protected override IEnumerable<IRenderable> RenderAnnotations(WorldRenderer wr, World world)
 			{
 				var xy = wr.Viewport.ViewToWorld(Viewport.LastMousePos);
 				foreach (var unit in power.UnitsInRange(xy))
 				{
 					var bounds = unit.TraitsImplementing<IDecorationBounds>().FirstNonEmptyBounds(unit, wr);
-					yield return new SelectionBoxRenderable(unit, bounds, Color.Red);
+					yield return new SelectionBoxAnnotationRenderable(unit, bounds, Color.Red);
 				}
 			}
 

@@ -55,7 +55,7 @@ V2RL:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 50
-		Prerequisites: weap, ~vehicles.allies, ~!vehicles.germany, ~techlevel.low
+		Prerequisites: weap, ~vehicles.allies, ~techlevel.low
 		Description: Fast tank, good for scouting.\n  Strong vs Light armor\n  Weak vs Infantry, Tanks, Aircraft\n  Special Ability: Amphibious
 	Valued:
 		Cost: 600
@@ -852,7 +852,7 @@ DTRK:
 	KillsSelf:
 		RequiresCondition: invulnerability || triggered || berserk
 	Chronoshiftable:
-		ExplodeInstead: yes
+		ExplodeInstead: true
 	Passenger:
 		PipType: Red
 		Voice: Move
@@ -1000,7 +1000,7 @@ HMMV:
 		Queue: Vehicle
 		BuildPaletteOrder: 15
 		IconPalette: chrometd
-		Prerequisites: awep, ~vehicles.gdi, ~techlevel.low
+		Prerequisites: weap.td, ~vehicles.gdi, ~techlevel.low
 		Description: Fast scout & anti-infantry vehicle.\nCan detect cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
 		Cost: 400
@@ -1128,7 +1128,7 @@ APC2:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 		
-APC2.reinforce:
+APC2.Reinforce:
 	Inherits: APC2
 	RenderSprites:
 		Image: APC2
@@ -1151,7 +1151,7 @@ LTNK:
 		Queue: Vehicle
 		BuildPaletteOrder: 40
 		IconPalette: chrometd
-		Prerequisites: astrip, ~!vehicles.legion, ~vehicles.nod, ~techlevel.low
+		Prerequisites: airs, ~!vehicles.legion, ~vehicles.nod, ~techlevel.low
 		Description: Fast, light tank.\n  Strong vs Vehicles, Tanks\n  Weak vs Infantry\n  Special Ability: Amphibious
 	Valued:
 		Cost: 675
@@ -1284,7 +1284,7 @@ MTNK.Drone:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 120
-		Prerequisites: ~vehicles.talon, awep, ~techlevel.low
+		Prerequisites: ~vehicles.talon, weap.td, ~techlevel.low
 		IconPalette: chrometd
 		Description: Drone Battle Tank.\n  Requires power to operate.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
 	Valued:
@@ -1437,7 +1437,7 @@ HTNK:
 		LocalOffset: 0,0,500
 	-Crushable:
 	
-HTNK.ION:
+HTNK.Ion:
 	Inherits: HTNK
 	RenderSprites:
 		Image: htnk.ion
@@ -1457,7 +1457,7 @@ HTNK.ION:
 		MuzzleSequence: muzzle
 		PauseOnCondition: empdisable || being-warped
 	SpawnActorOnDeath:
-		Actor: HTNK.ION.Husk
+		Actor: HTNK.Ion.Husk
 		
 MSAM:
 	Inherits: ^TankTD
@@ -1584,7 +1584,7 @@ MLRS:
 	Selectable:
 		DecorationBounds: 28,28
 
-STNK.nod:
+STNK.Nod:
 	Inherits: ^VehicleTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
@@ -1739,10 +1739,11 @@ FTNK:
 		Multiplier: 90
 		Prerequisites: vehicles.blackh
 
-HARV2:
+HAR2:
 	Inherits: ^VehicleTD
 	Inherits@SELECTION_MODE: ^LowPrioritySelectionMode
 	RenderSprites:
+		Image: harv2
 	Valued:
 		Cost: 1400
 	Tooltip:
@@ -1750,7 +1751,7 @@ HARV2:
 		GenericName: Harvester
 	Buildable:
 		BuildPaletteOrder: 10
-		Prerequisites: ~proc2, ~vehicles.td, ~techlevel.infonly
+		Prerequisites: ~proc.td, ~vehicles.td, ~techlevel.infonly
 		Queue: Vehicle
 		IconPalette: chrometd
 		Description: Collects Tiberium, Ore and Gems for processing.\n  Unarmed
@@ -1776,7 +1777,7 @@ HARV2:
 	GpsDot:
 		String: Harvester
 	SpawnActorOnDeath:
-		Actor: HARV2.Husk
+		Actor: HAR2.Husk
 	WithHarvestAnimation:
 	WithDockingAnimation:
 	SelfHealing:
@@ -1859,7 +1860,7 @@ IFV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 40
-		Prerequisites: tent, ~vehicles.germany, ~techlevel.low
+		Prerequisites: tent, ~vehicles.allies, ~techlevel.low
 		Description: Adaptable infantry transport.\n  Strong vs Infantry, Light armor\n  Weak vs Tanks, Aircraft\n Special Ability: Transform
 	Valued:
 		Cost: 650
@@ -2064,7 +2065,7 @@ IFV.AI:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 40
-		Prerequisites: ~tent, ~vehicles.germany, ~botplayer, ~techlevel.low
+		Prerequisites: ~tent, ~vehicles.allies, ~botplayer, ~techlevel.low
 		Description: Adaptable infantry transport.\n  Strong vs Infantry, Light armor\n  Weak vs Tanks, Aircraft\n Special Ability: Transform
 	Valued:
 		Cost: 650
@@ -2125,11 +2126,13 @@ IFV.AI:
 	GrantRandomCondition:
 		Conditions: gunturr, samturr, canturr
 		
-TITAN:
+TITN:
 	Inherits: ^TankTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		Image: titan
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 190
@@ -2206,7 +2209,7 @@ TITAN:
 		Prerequisites: vehicles.upgraded
 		
 JUGG:
-	Inherits: TITAN
+	Inherits: TITN
 	RenderSprites:
 		Image: jugg
 	Tooltip:
@@ -2330,11 +2333,13 @@ DISR:
 	SpawnActorOnDeath:
 		Actor: DISR.Husk
 	
-HMLRS:
+HSAM:
 	Inherits: ^VehicleTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		Image: hmlrs
 	Valued:
 		Cost: 1150
 	Tooltip:
@@ -2759,11 +2764,13 @@ PTNK:
 	Selectable:
 		DecorationBounds: 28,28
 		
-MWTNK:
+WTNK:
 	Inherits: ^TankTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		Image: mwtnk
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 130
@@ -2808,7 +2815,7 @@ MWTNK:
 		Condition: aiming
 	WithSpriteTurret:
 	SpawnActorOnDeath:
-		Actor: MWTNK.Husk
+		Actor: WTNK.Husk
 	SelectionDecorations:
 	Voiced:
 		VoiceSet: MWTnkVoice
@@ -2822,7 +2829,7 @@ MWTNK:
 BATF:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
@@ -2844,48 +2851,51 @@ BATF:
 		Voice: Move
 	RevealsShroud:
 		Range: 4c0
-	AttackFrontal:
-		FacingTolerance: 20
+	AttackTurreted:
+		Turrets: primary, secondary, tertiary
+		Armaments: primary, secondary, tertiary
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
-	Armament@DEFAULT:
+	Armament@PRIMARY:
 		Name: primary
-		Weapon: HeliGunAG
-		LocalOffset: 685,0,271
+		Turret: primary
+		Weapon: 25mm
+		LocalOffset: 100,0,300
 		MuzzleSequence: muzzle
 		PauseOnCondition: empdisable || being-warped
+	Armament@SECONDARY:
+		Name: secondary
+		Turret: secondary
+		Weapon: 25mm
+		FireDelay: 8
+		LocalOffset: 100,0,300
+		MuzzleSequence: muzzle
+		PauseOnCondition: empdisable || being-warped
+	Armament@tertiary:
+		Name: tertiary
+		Turret: tertiary
+		Weapon: BikeRockets
+		LocalOffset: -200,0,300
+		MuzzleSequence: muzzle
+		PauseOnCondition: empdisable || being-warped
+	Turreted@PRIMARY:
+		Turret: primary
+		Offset: 200,-300,0
+		TurnSpeed: 3
+	Turreted@SECONDARY:
+		Turret: secondary
+		Offset: 200,300,0
+		TurnSpeed: 3
+	Turreted@TERTIARY:
+		Turret: tertiary
+		Offset: -300,0,358
+		TurnSpeed: 3
 	WithMuzzleOverlay:
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5
 		PipCount: 5
 		LoadingCondition: notmobile
-		PassengerConditions:
-			e1: loaded
-			e2: loaded
-			e3: loaded-air
-			e4: loaded
-			e7: loaded
-			e8: loaded
-			n1: loaded
-			n2: loaded
-			n3: loaded-air
-			n4: loaded
-			n5: loaded
-			rmbo: loaded
-			boris: loaded
-			acol: loaded
-			mort: loaded
-			sniper: loaded
-			shok: loaded
-			shok.nod: loaded
-			sab: loaded
-			n1c: loaded
-			n3c: loaded-air
-			rmboc: loaded
-			tecn: loaded
-			tecn2: loaded
-			tecn3: loaded
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -2893,31 +2903,17 @@ BATF:
 	Carryable:
 		LocalOffset: 0,0,500
 	-Crushable:
-	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !stance-attackanything && !assault-move && !loaded-air
-	AutoTargetPriority@ATTACKANYTHING:
-		RequiresCondition: (stance-attackanything || assault-move) && !loaded-air
-	AutoTargetPriority@DEFAULT_AIR:
-		RequiresCondition: !stance-attackanything && !assault-move && loaded-air
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
-		InvalidTargets: NoAutoTarget, WaterStructure
-	AutoTargetPriority@ATTACKANYTHING_AIR:
-		RequiresCondition: (stance-attackanything || assault-move) && loaded-air
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
-		InvalidTargets: NoAutoTarget
 	Voiced:
 		VoiceSet: BattleFortressVoice
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
-	AttackGarrisoned:
-		Armaments: mounted
-		MuzzlePalette: tdeffect
-		PortOffsets: 768,0,0, 448,-682,0, -448,-682,0, -768,0,0, -448,682,0, 448,682,0
-		PortYaws: 0, 176, 341, 512, 682, 853
-		PortCones: 88, 88, 88, 88, 88, 88
-		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: loaded || loaded-air
-		Voice: Attack
+	WithSpriteTurret@PRIMARY:
+		Turret: primary
+	WithSpriteTurret@SECONDARY:
+		Turret: secondary
+	WithSpriteTurret@TERTIARY:
+		Turret: tertiary
+		Sequence: turret2
 		
 BATF.AI:
 	Inherits: BATF
@@ -3008,9 +3004,11 @@ MEMP:
 		EnableSound: vrobon
 		DisableSound: vroboff
 	
-CDRONE:
+CDRN:
 	Inherits: ^VehicleTD
 	Inherits@AUTOTARGET: ^AutoTargetGround
+	RenderSprites:
+		Image: cdrone
 	AutoTargetPriority@DEFAULT:
 		RequiresCondition: !stance-attackanything
 		ValidTargets: Infantry, Vehicle, Water
@@ -3079,4 +3077,42 @@ CDRONE:
 	-CaptureManager:
 	-Capturable:
 	-CaptureNotification:
+	
+CRYO:
+	Inherits: ^TankTD
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+	Valued:
+		Cost: 1400
+	Tooltip:
+		Name: Cryo Launcher
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 91
+		Prerequisites:  atek, ~vehicles.allies, ~techlevel.high
+		Queue: Vehicle
+		IconPalette: chrometd
+		Description: Long-range support artillery that slows enemies and makes them take more damage.\n  Strong vs Infantry, Vehicles and Buildings\n  Weak vs Aircraft
+	Mobile:
+		Speed: 82
+		TurnSpeed: 3
+		PauseOnCondition: aiming || being-captured || empdisable || being-warped
+	Health:
+		HP: 32000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		Range: 5c0
+	Armament:
+		Weapon: CryoMissile
+		LocalOffset: 150,100,0, 150,-100,0
+		PauseOnCondition: empdisable || being-warped
+	AttackFrontal:
+		PauseOnCondition: empdisable || being-warped
+	SelectionDecorations:
+	Selectable:
+		DecorationBounds: 28,28
 		

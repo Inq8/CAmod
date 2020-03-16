@@ -39,6 +39,9 @@ namespace OpenRA.Mods.CA.Warheads
 		[Desc("Should the shrapnel hit the direct target?")]
 		public readonly bool AllowDirectHit = false;
 
+		[Desc("Should the weapons be fired around the intended target or at the explosion's epicenter.")]
+		public readonly bool AroundTarget = false;
+
 		WeaponInfo weapon;
 
 		public void RulesetLoaded(Ruleset rules, WeaponInfo info)
@@ -47,8 +50,9 @@ namespace OpenRA.Mods.CA.Warheads
 				throw new YamlException("Weapons Ruleset does not contain an entry '{0}'".F(Weapon.ToLowerInvariant()));
 		}
 
-		public override void DoImpact(Target target, Actor firedBy, IEnumerable<int> damageModifiers)
+		public override void DoImpact(Target target, WarheadArgs args)
 		{
+			var firedBy = args.SourceActor;
 			if (!target.IsValidFor(firedBy))
 				return;
 
@@ -58,6 +62,10 @@ namespace OpenRA.Mods.CA.Warheads
 			if (!IsValidImpact(target.CenterPosition, firedBy))
 				return;
 
+			var epicenter = AroundTarget && args.WeaponTarget.Type != TargetType.Invalid
+				? args.WeaponTarget.CenterPosition
+				: target.CenterPosition;
+
 			var directActors = world.FindActorsOnCircle(target.CenterPosition, WDist.Zero)
 				.Where(a =>
 				{
@@ -65,7 +73,7 @@ namespace OpenRA.Mods.CA.Warheads
 					if (!activeShapes.Any())
 						return false;
 
-					var distance = activeShapes.Min(t => t.Info.Type.DistanceFromEdge(target.CenterPosition, a));
+					var distance = activeShapes.Min(t => t.DistanceFromEdge(a, epicenter));
 
 					if (distance != WDist.Zero)
 						return false;
@@ -83,7 +91,7 @@ namespace OpenRA.Mods.CA.Warheads
 					if (!activeShapes.Any())
 						return false;
 
-					var distance = activeShapes.Min(t => t.Info.Type.DistanceFromEdge(target.CenterPosition, x));
+					var distance = activeShapes.Min(t => t.DistanceFromEdge(x, epicenter));
 
 					if (distance < weapon.Range)
 						return true;
@@ -118,7 +126,7 @@ namespace OpenRA.Mods.CA.Warheads
 				if (shrapnelTarget.Type == TargetType.Invalid)
 					continue;
 
-				var args = new ProjectileArgs
+				var projectileArgs = new ProjectileArgs
 				{
 					Weapon = weapon,
 					Facing = (shrapnelTarget.CenterPosition - target.CenterPosition).Yaw.Facing,
@@ -141,12 +149,12 @@ namespace OpenRA.Mods.CA.Warheads
 
 				if (args.Weapon.Projectile != null)
 				{
-					var projectile = args.Weapon.Projectile.Create(args);
+					var projectile = projectileArgs.Weapon.Projectile.Create(projectileArgs);
 					if (projectile != null)
 						firedBy.World.AddFrameEndTask(w => w.Add(projectile));
 
-					if (args.Weapon.Report != null && args.Weapon.Report.Any())
-						Game.Sound.Play(SoundType.World, args.Weapon.Report.Random(firedBy.World.SharedRandom), target.CenterPosition);
+					if (projectileArgs.Weapon.Report != null && projectileArgs.Weapon.Report.Any())
+						Game.Sound.Play(SoundType.World, projectileArgs.Weapon.Report.Random(firedBy.World.SharedRandom), target.CenterPosition);
 				}
 			}
 		}

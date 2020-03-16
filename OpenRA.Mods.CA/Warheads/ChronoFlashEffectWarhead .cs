@@ -8,7 +8,7 @@
  */
 #endregion
 
-using System.Collections.Generic;
+using OpenRA.GameRules;
 using OpenRA.Mods.Cnc.Traits;
 using OpenRA.Traits;
 
@@ -17,8 +17,9 @@ namespace OpenRA.Mods.CA.Warheads
 	[Desc("This warhead activates the global flash effect when detonated.")]
 	public class ChronoFlashEffectWarhead : WarheadAS
 	{
-		public override void DoImpact(Target target, Actor firedBy, IEnumerable<int> damageModifiers)
+		public override void DoImpact(Target target, WarheadArgs args)
 		{
+			var firedBy = args.SourceActor;
 			if (!target.IsValidFor(firedBy))
 				return;
 

@@ -44,6 +44,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Mininum amount of credits in reserve for the Unit Builder to be active.")]
 		public readonly int UnitBuilderMinCredits = 2000;
 
+		[Desc("Maximum number of rearmable aircraft per rearming structure.")]
+		public readonly int MaxAircraftPerRearmActor = 2;
+
 		public override object Create(ActorInitializer init) { return new UnitBuilderBotModuleCA(init.Self, this); }
 	}
 
@@ -203,7 +206,7 @@ namespace OpenRA.Mods.CA.Traits
 		}
 
 		// For mods like RA (number of RearmActors must match the number of aircraft)
-		// Default is 1:1, 3:1 makes AI reloading aircraft attacks more dangerous
+		// This instead uses a configurable cap per rearming structure, which limits the total number of aircraft rather than limting each aircraft type separately
 		bool HasAdequateAirUnitReloadBuildings(ActorInfo actorInfo)
 		{
 			var aircraftInfo = actorInfo.TraitInfoOrDefault<AircraftInfo>();
@@ -215,12 +218,40 @@ namespace OpenRA.Mods.CA.Traits
 			if (rearmableInfo == null)
 				return true;
 
-			var countOwnAir = AIUtils.CountActorsWithTrait<IPositionable>(actorInfo.Name, player);
-			var countBuildings = rearmableInfo.RearmActors.Sum(b => AIUtils.CountActorsWithTrait<Building>(b, player));
-			if (countOwnAir >= countBuildings * 3)
-				return false;
+			// Get the buildings the unit can rearm at, grouped by type
+			var rearmActorTypes = new Dictionary<string, IEnumerable<Actor>>();
+			foreach (var rearmActorType in rearmableInfo.RearmActors)
+			{
+				var rearmActor = AIUtils.GetActorsWithTrait<Building>(player.World).Where(b => b.Owner == player && b.Info.Name == rearmActorType);
+				rearmActorTypes.Add(rearmActorType, rearmActor);
+			}
 
-			return true;
+			// For each rearm actor type, count how many air units the bot owns competing for the same rearm actor type, and see if existing rearm actors are sufficient
+			foreach (var rearmActorType in rearmActorTypes)
+			{
+				var numCompetingAirUnits = 0;
+				var airUnits = AIUtils.GetActorsWithTrait<Aircraft>(player.World).Where(a => a.Owner == player);
+
+				foreach (var airUnit in airUnits)
+				{
+					var unitRearmableInfo = airUnit.Info.TraitInfoOrDefault<RearmableInfo>();
+
+					if (unitRearmableInfo == null)
+						continue;
+
+					if (unitRearmableInfo.RearmActors.Contains(rearmActorType.Key))
+					{
+						numCompetingAirUnits++;
+					}
+				}
+
+				if (numCompetingAirUnits < Info.MaxAircraftPerRearmActor * rearmActorType.Value.Count())
+				{
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		List<MiniYamlNode> IGameSaveTraitData.IssueTraitData(Actor self)

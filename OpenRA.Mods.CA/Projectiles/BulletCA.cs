@@ -301,7 +301,7 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			world.AddFrameEndTask(w => w.Remove(this));
 
-			args.Weapon.Impact(Target.FromPos(pos), args.SourceActor, args.DamageModifiers);
+			args.Weapon.Impact(Target.FromPos(pos), new WarheadArgs(args));
 		}
 
 		bool AnyValidTargetsInRadius(World world, WPos pos, WDist radius, Actor firedBy, bool checkTargetType)
@@ -316,7 +316,7 @@ namespace OpenRA.Mods.CA.Projectiles
 
 				// If the impact position is within any actor's HitShape, we have a direct hit
 				var activeShapes = victim.TraitsImplementing<HitShape>().Where(Exts.IsTraitEnabled);
-				if (activeShapes.Any(i => i.Info.Type.DistanceFromEdge(pos, victim).Length <= 0))
+				if (activeShapes.Any(i => i.DistanceFromEdge(victim, pos).Length <= 0))
 					return true;
 			}
 

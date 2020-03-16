@@ -54,7 +54,6 @@ SS:
 	SelectionDecorations:
 	AutoTarget:
 		InitialStance: HoldFire
-		InitialStanceAI: ReturnFire
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Water, Underwater
 	AutoTargetPriority@ATTACKANYTHING:
@@ -133,7 +132,6 @@ MSUB:
 	SelectionDecorations:
 	AutoTarget:
 		InitialStance: HoldFire
-		InitialStanceAI: ReturnFire
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 4c0
@@ -559,7 +557,6 @@ SS2:
 	SelectionDecorations:
 	AutoTarget:
 		InitialStance: HoldFire
-		InitialStanceAI: ReturnFire
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 4c0
@@ -571,11 +568,12 @@ SS2:
 	Selectable:
 		DecorationBounds: 38,38
 
-ICBMSUB:
+ISUB:
 	Inherits: ^Ship
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
+		Image: icbmsub
 		PlayerPalette: playernavy
 	Buildable:
 		Queue: Ship
@@ -634,7 +632,6 @@ ICBMSUB:
 	SelectionDecorations:
 	AutoTarget:
 		InitialStance: HoldFire
-		InitialStanceAI: ReturnFire
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 4c0

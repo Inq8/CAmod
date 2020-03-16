@@ -59,17 +59,40 @@ namespace OpenRA.Mods.CA.Traits
 			if (weapon.Report != null && weapon.Report.Any())
 				Game.Sound.Play(SoundType.World, weapon.Report.Random(source.World.SharedRandom), self.CenterPosition);
 
+			var spawner = self.Trait<BaseSpawnerSlave>().Master;
+			var damageModifiers = !spawner.IsDead ? spawner.TraitsImplementing<IFirepowerModifier>()
+						.Select(a => a.GetFirepowerModifier()).ToArray() : new int[0];
+
+			var args = new ProjectileArgs
+			{
+				Weapon = weapon,
+				Facing = 0,
+				CurrentMuzzleFacing = () => 0,
+
+				DamageModifiers = !spawner.IsDead ? spawner.TraitsImplementing<IFirepowerModifier>()
+						.Select(a => a.GetFirepowerModifier()).ToArray() : new int[0],
+
+				InaccuracyModifiers = new int[0],
+
+				RangeModifiers = new int[0],
+
+				Source = self.CenterPosition,
+				CurrentSource = () => self.CenterPosition,
+				SourceActor = spawner,
+				PassiveTarget = self.CenterPosition
+			};
+
 			if (Info.Type == ExplosionType.Footprint && buildingInfo != null)
 			{
-				var cells = buildingInfo.UnpathableTiles(self.Location);
+				var cells = buildingInfo.OccupiedTiles(self.Location);
 				foreach (var c in cells)
-					weapon.Impact(Target.FromPos(self.World.Map.CenterOfCell(c)), source, firepowerModifiers.Select(fm => fm.GetFirepowerModifier()));
+					weapon.Impact(Target.FromPos(self.World.Map.CenterOfCell(c)), new WarheadArgs(args));
 
 				return;
 			}
 
 			// Use .FromPos since this actor is killed. Cannot use Target.FromActor
-			weapon.Impact(Target.FromPos(self.CenterPosition), self.Trait<MissileSpawnerSlave>().Master, firepowerModifiers.Select(fm => fm.GetFirepowerModifier()));
+			weapon.Impact(Target.FromPos(self.CenterPosition), new WarheadArgs(args));
 		}
 
 		WeaponInfo ChooseWeaponForExplosion(Actor self)

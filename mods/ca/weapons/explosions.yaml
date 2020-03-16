@@ -66,24 +66,55 @@ UnitExplode:
 
 UnitExplodePlane:
 	Inherits: UnitExplode
+	Warhead@1Dam: SpreadDamage
+		Damage: 4000
 	Warhead@2Eff: CreateEffect
 		Explosions: large_napalm
+		
+UnitExplodePlaneLight:
+	Inherits: UnitExplodePlane
+	Warhead@1Dam: SpreadDamage
+		Damage: 3000
+		
+UnitExplodePlaneEmpty:
+	Inherits: UnitExplode
+	Warhead@1Dam: SpreadDamage
+		Damage: 2000
 
 UnitExplodeHeli:
 	Inherits: UnitExplode
+	Warhead@1Dam: SpreadDamage
+		Damage: 4000
 	Warhead@2Eff: CreateEffect
 		Explosions: napalm
 
-VisualExplode:
+UnitExplodeHeliEmpty:	
+	Inherits: UnitExplodeHeli
+	Warhead@1Dam: SpreadDamage
+		Damage: 2000
+		
+UnitExplodeDrone:
+	Inherits: UnitExplodeHeli
+	Warhead@1Dam: SpreadDamage
+		Damage: 2000
+		
+UnitExplodeDroneEmpty:
+	Inherits: UnitExplodeHeli
+	Warhead@1Dam: SpreadDamage
+		Damage: 1000
+
+UnitExplodeFlameSmall:
 	Inherits: ^Explosion
-	-Warhead@1Dam:
+	Warhead@1Dam: SpreadDamage
+		Damage: 4000
 	Warhead@2Eff: CreateEffect
 		Explosions: offseted_napalm
 		ImpactSounds: firebl3.aud
 		
-VisualExplodeChem:
+UnitExplodeChemSmall:
 	Inherits: ^Explosion
-	-Warhead@1Dam:
+	Warhead@1Dam: SpreadDamage
+		Damage: 4000
 	Warhead@2Eff: CreateEffect
 		Explosions: small_chem
 		ExplosionPalette: temptd

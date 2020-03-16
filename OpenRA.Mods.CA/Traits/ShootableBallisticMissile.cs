@@ -47,7 +47,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public IReadOnlyDictionary<CPos, SubCell> OccupiedCells(ActorInfo info, CPos location, SubCell subCell = SubCell.Any) { return new ReadOnlyDictionary<CPos, SubCell>(); }
 		bool IOccupySpaceInfo.SharesCell { get { return false; } }
-		public bool CanEnterCell(World world, Actor self, CPos cell, SubCell subCell = SubCell.FullCell, Actor ignoreActor = null, bool checkTransientActors = true)
+		public bool CanEnterCell(World world, Actor self, CPos cell, SubCell subCell = SubCell.FullCell, Actor ignoreActor = null, BlockedByActor check = BlockedByActor.All)
 		{
 			// SBMs may not land.
 			return false;
@@ -139,9 +139,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		public bool CanExistInCell(CPos cell) { return true; }
 		public bool IsLeavingCell(CPos location, SubCell subCell = SubCell.Any) { return false; } // TODO: Handle landing
-		public bool CanEnterCell(CPos cell, Actor ignoreActor = null, bool checkTransientActors = true) { return true; }
+		public bool CanEnterCell(CPos cell, Actor ignoreActor = null, BlockedByActor check = BlockedByActor.All) { return true; }
 		public SubCell GetValidSubCell(SubCell preferred) { return SubCell.Invalid; }
-		public SubCell GetAvailableSubCell(CPos a, SubCell preferredSubCell = SubCell.Any, Actor ignoreActor = null, bool checkTransientActors = true)
+		public SubCell GetAvailableSubCell(CPos a, SubCell preferredSubCell = SubCell.Any, Actor ignoreActor = null, BlockedByActor check = BlockedByActor.All)
 		{
 			// Does not use any subcell
 			return SubCell.Invalid;
@@ -176,12 +176,14 @@ namespace OpenRA.Mods.CA.Traits
 
 		#region Implement IMove
 
-		public Activity MoveTo(CPos cell, int nearEnough, Color? targetLineColor = null)
+		public Activity MoveTo(CPos cell, int nearEnough = 0, Actor ignoreActor = null,
+			bool evaluateNearestMovableCell = false, Color? targetLineColor = null)
 		{
 			return new ShootableBallisticMissileFly(self, Target.FromCell(self.World, cell));
 		}
 
-		public Activity MoveTo(CPos cell, Actor ignoredActor, Color? targetLineColor = null)
+		public Activity MoveTo(CPos cell, Actor ignoreActor = null,
+			bool evaluateNearestMovableCell = false, Color? targetLineColor = null)
 		{
 			return new ShootableBallisticMissileFly(self, Target.FromCell(self.World, cell));
 		}

@@ -231,14 +231,7 @@ namespace OpenRA.Mods.CA.Traits
 				var mv = slave.Trait<IMove>();
 				slave.QueueActivity(mv.ReturnToCell(slave));
 
-				// Move to rally point if any.
-				if (rallyPoint != null)
-					slave.QueueActivity(mv.MoveTo(rallyPoint.Location, 2));
-				else
-				{
-					// Move to a valid position, if no rally point.
-					slave.QueueActivity(mv.MoveTo(location, 2));
-				}
+				slave.QueueActivity(mv.MoveTo(location, 2));
 
 				w.Add(slave);
 			});

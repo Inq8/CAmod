@@ -9,7 +9,7 @@
 
 UnitTypes = { "3tnk", "ttnk" }
 GDIUnitTypes = { "mtnk", "mtnk" }
-GDIMLRSTypes = { "hmlrs", "hmlrs" }
+GDIMLRSTypes = { "hsam", "hsam" }
 BeachUnitTypes = { "e1", "e2", "e3", "e4", "e1", "e2", "e3", "e4", "e1", "e2", "e3", "e4", "e1", "e2", "e3", "shok" }
 GDIBeachUnitTypes = { "n1", "n2", "n3", "n2", "n1", "n2", "n3", "n1", "n1", "n2", "n3", "n1", "n1", "n1", "n1", "n1" }
 ProducedUnitTypes =

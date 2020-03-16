@@ -376,6 +376,8 @@ World:
 		Type: Crater
 		Sequence: craters
 	ResourceLayer:
+	ResourceRenderer:
+		RenderTypes: Ore, Gems, Tiberium, BlueTiberium
 	ResourceClaimLayer:
 	TintedCellsLayer@RAD:
 		Color: 00FF00
@@ -388,6 +390,12 @@ World:
 		FadeoutDelay: 200
 		ZOffset: 0
 		Name: radioactivity.weak
+	TintedCellsLayer@CRYORES:
+		Color: 51aed9
+		Brightest: 54
+		FadeoutDelay: 100
+		ZOffset: 0
+		Name: cryoresidue
 	WarheadDebugOverlay:
 	SpawnMapActors:
 	MapBuildRadius:
@@ -500,6 +508,8 @@ World:
 EditorWorld:
 	Inherits: ^BaseWorld
 	EditorActorLayer:
+	EditorCursorLayer:
 	EditorResourceLayer:
 	EditorSelectionLayer:
 	LoadWidgetAtGameStart:
+	EditorActionManager:

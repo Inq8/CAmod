@@ -92,7 +92,7 @@ namespace OpenRA.Mods.CA.Effects
 
 			if (canDamage && --explosionInterval < 0)
 			{
-				smoke.Weapon.Impact(Target.FromPos(pos), invoker, new int[0]);
+				smoke.Weapon.Impact(Target.FromPos(pos), invoker);
 				explosionInterval = smoke.Weapon.ReloadDelay;
 			}
 		}

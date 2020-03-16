@@ -8,7 +8,6 @@
  */
 #endregion
 
-using System.Collections.Generic;
 using System.Linq;
 using OpenRA.GameRules;
 using OpenRA.Mods.Common;
@@ -55,7 +54,7 @@ namespace OpenRA.Mods.CA.Warheads
 
 				// If the impact position is within any HitShape, we have a direct hit
 				var activeShapes = victim.TraitsImplementing<HitShape>().Where(Exts.IsTraitEnabled);
-				if (activeShapes.Any(i => i.Info.Type.DistanceFromEdge(pos, victim).Length <= 0))
+				if (activeShapes.Any(i => i.DistanceFromEdge(victim, pos).Length <= 0))
 					return true;
 			}
 

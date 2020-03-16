@@ -39,8 +39,9 @@ namespace OpenRA.Mods.CA.Warheads
 				throw new YamlException("Weapons Ruleset does not contain an entry '{0}'".F(Weapon.ToLowerInvariant()));
 		}
 
-		public override void DoImpact(Target target, Actor firedBy, IEnumerable<int> damageModifiers)
+		public override void DoImpact(Target target, WarheadArgs args)
 		{
+			var firedBy = args.SourceActor;
 			if (!target.IsValidFor(firedBy))
 				return;
 
@@ -71,7 +72,7 @@ namespace OpenRA.Mods.CA.Warheads
 				if (radiusTarget.Type == TargetType.Invalid)
 					continue;
 
-				var args = new ProjectileArgs
+				var projectileArgs = new ProjectileArgs
 				{
 					Weapon = weapon,
 					Facing = (radiusTarget.CenterPosition - target.CenterPosition).Yaw.Facing,
@@ -94,12 +95,12 @@ namespace OpenRA.Mods.CA.Warheads
 
 				if (args.Weapon.Projectile != null)
 				{
-					var projectile = args.Weapon.Projectile.Create(args);
+					var projectile = projectileArgs.Weapon.Projectile.Create(projectileArgs);
 					if (projectile != null)
 						firedBy.World.AddFrameEndTask(w => w.Add(projectile));
 
-					if (args.Weapon.Report != null && args.Weapon.Report.Any())
-						Game.Sound.Play(SoundType.World, args.Weapon.Report.Random(firedBy.World.SharedRandom), target.CenterPosition);
+					if (args.Weapon.Report != null && projectileArgs.Weapon.Report.Any())
+						Game.Sound.Play(SoundType.World, projectileArgs.Weapon.Report.Random(firedBy.World.SharedRandom), target.CenterPosition);
 				}
 			}
 		}

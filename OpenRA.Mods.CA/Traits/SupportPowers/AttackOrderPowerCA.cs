@@ -115,19 +115,20 @@ namespace OpenRA.Mods.CA.Traits
 		}
 
 		protected override IEnumerable<IRenderable> Render(WorldRenderer wr, World world) { yield break; }
+		protected override IEnumerable<IRenderable> RenderAboveShroud(WorldRenderer wr, World world) { yield break; }
 
-		protected override IEnumerable<IRenderable> RenderAboveShroud(WorldRenderer wr, World world)
+		protected override IEnumerable<IRenderable> RenderAnnotations(WorldRenderer wr, World world)
 		{
 			foreach (var a in instance.Instances.Where(i => !i.IsTraitPaused))
 			{
-				yield return new RangeCircleRenderable(
+				yield return new RangeCircleAnnotationRenderable(
 					a.Self.CenterPosition,
 					attack.GetMinimumRange(),
 					0,
 					Color.Red,
 					Color.FromArgb(96, Color.Black));
 
-				yield return new RangeCircleRenderable(
+				yield return new RangeCircleAnnotationRenderable(
 					a.Self.CenterPosition,
 					attack.GetMaximumRange(),
 					0,

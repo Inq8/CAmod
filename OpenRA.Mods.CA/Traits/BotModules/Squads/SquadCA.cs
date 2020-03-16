@@ -89,6 +89,38 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 		public WPos CenterPosition { get { return Units.Select(u => u.CenterPosition).Average(); } }
 
+		public CPos CenterLocation { get { return World.Map.CellContaining(CenterPosition); } }
+
+		void ReflexAvoidance(Actor attacker)
+		{
+			// Like when you retract your finger when it touches hot stuff,
+			// let air untis avoid the attacker very quickly. (faster than flee state's response)
+			WVec vec = CenterPosition - attacker.CenterPosition;
+			WPos dest = CenterPosition + vec;
+			CPos cdest = World.Map.CellContaining(dest);
+
+			foreach (var a in Units)
+				Bot.QueueOrder(new Order("Move", a, Target, false));
+		}
+
+		internal void Damage(AttackInfo e)
+		{
+			if (Type == SquadTypeCA.Air)
+			{
+				// decide flee or retaliate.
+				if (AirStateBase.NearToPosSafely(this, CenterPosition))
+				{
+					TargetActor = e.Attacker;
+					FuzzyStateMachine.ChangeState(this, new AirAttackState(), true);
+					return;
+				}
+
+				// Flee
+				ReflexAvoidance(e.Attacker);
+				FuzzyStateMachine.ChangeState(this, new AirFleeState(), true);
+			}
+		}
+
 		public MiniYaml Serialize()
 		{
 			var nodes = new MiniYaml("", new List<MiniYamlNode>()

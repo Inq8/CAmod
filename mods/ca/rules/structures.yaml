@@ -90,7 +90,7 @@ GAP:
 	RevealsShroud:
 		Range: 6c0
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	CreatesShroud:
 		Range: 6c0
 		RequiresCondition: !disabled || !empdisable || !being-warped
@@ -442,7 +442,7 @@ IRON:
 		Range: 5c0
 		RequiresCondition: disabled
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	GrantExternalConditionPowerCA@IRONCURTAIN:
 		OrderName: ironcurtain
 		Icon: invuln
@@ -502,7 +502,7 @@ PDOX:
 		Range: 5c0
 		RequiresCondition: disabled
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	ProvidesPrerequisite@germany:
 		Factions: germany
 		Prerequisite: pdox.germany
@@ -523,7 +523,7 @@ PDOX:
 		BeginChargeSpeechNotification: ChronosphereCharging
 		EndChargeSpeechNotification: ChronosphereReady
 		LaunchSound: chrono2.aud
-		KillCargo: yes
+		KillCargo: true
 		DisplayRadarPing: True
 		Range: 2
 		DisplayTimerStances: Ally, Neutral, Enemy
@@ -616,7 +616,7 @@ TSLA:
 		TargetTypes: TeslaBoost
 		RequiresCondition: !powerdown
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	WithTeslaChargeAnimation:
 	Armament:
 		Weapon: TeslaZap
@@ -688,7 +688,7 @@ AGUN:
 	RevealsShroud:
 		Range: 6c0
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	Turreted:
 		TurnSpeed: 15
 		InitialFacing: 224
@@ -839,7 +839,7 @@ PBOX:
 	RevealsShroud:
 		Range: 6c0
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	Turreted:
 		TurnSpeed: 255
 	-QuantizeFacingsFromSequence:
@@ -931,7 +931,7 @@ GUN:
 	RevealsShroud:
 		Range: 7c0
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	Turreted:
 		TurnSpeed: 12
 		InitialFacing: 56
@@ -972,7 +972,7 @@ FTUR:
 	RevealsShroud:
 		Range: 6c0
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	Turreted:
 		TurnSpeed: 255
 		Offset: 0,0,112
@@ -1024,7 +1024,7 @@ SAM:
 	RevealsShroud:
 		Range: 8c0
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	Turreted:
 		TurnSpeed: 30
 		InitialFacing: 0
@@ -1081,7 +1081,7 @@ ATEK:
 	GpsPower:
 		PauseOnCondition: disabled
 		Icon: gps
-		OneShot: yes
+		OneShot: true
 		ChargeInterval: 12000
 		Description: GPS Satellite
 		LongDesc: Reveals map terrain and provides tactical\ninformation. Requires power and active radar.
@@ -1510,7 +1510,7 @@ SILO:
 	RevealsShroud:
 		Range: 4c0
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	-WithSpriteBody:
 	WithResourceLevelSpriteBody:
 		Sequence: stages
@@ -2125,7 +2125,6 @@ KENN:
 	WithBuildingBib:
 		HasMinibib: True
 	RallyPoint:
-		Offset: 0,2
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: -280,400,0
@@ -2300,7 +2299,7 @@ FIX:
 		FinishRepairingNotification: UnitRepaired
 		PlayerExperience: 15
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
 	Power:
@@ -2747,9 +2746,11 @@ HAND:
 		Condition: nodupgbuilt
 		Prerequisites: bio.nod
 		
-AWEP:
+WEAP.TD:
 	Inherits: ^BuildingTD
 	Inherits@shape: ^3x2Shape
+	RenderSprites:
+		Image: awep
 	Selectable:
 		Bounds: 72,48
 	HitShape:
@@ -2760,7 +2761,7 @@ AWEP:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 80
-		Prerequisites: proc2, ~structures.awep, ~structures.td, ~techlevel.low
+		Prerequisites: proc.td, ~structures.weap.td, ~structures.td, ~techlevel.low
 		IconPalette: chrometd
 		Description: Produces vehicles.
 	Valued:
@@ -2964,8 +2965,10 @@ AWEP:
 		Condition: gdiupgbuilt
 		Prerequisites: miss.gdi
 		
-ASTRIP:
+AIRS:
 	Inherits: ^BuildingTD
+	RenderSprites:
+		Image: astrip
 	HitShape:
 		TargetableOffsets: 0,0,0, 0,-512,256, 0,-1451,384, 0,512,128, 0,1536,85
 		Type: Rectangle
@@ -2974,7 +2977,7 @@ ASTRIP:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 80
-		Prerequisites: proc2, ~structures.nod, ~!structures.legion, ~techlevel.low
+		Prerequisites: proc.td, ~structures.nod, ~!structures.legion, ~techlevel.low
 		IconPalette: chrometd
 		Description: Provides a dropzone\nfor vehicle reinforcements
 	Valued:
@@ -2996,7 +2999,6 @@ ASTRIP:
 		Sequence: idle-dish
 		RequiresCondition: !build-incomplete
 	RallyPoint:
-		Offset: 4,2
 	Exit@1:
 		SpawnOffset: -1024,0,0
 		ExitCell: 3,1
@@ -3145,7 +3147,7 @@ ASTRIP:
 		OrderName: nodairdrop
 		SquadSize: 3
 		UnitType: c17
-		Prerequisites: astrip
+		Prerequisites: airs
 		Icon: airdropicon
 		ChargeInterval: 13500
 		Description: Air Drop
@@ -3369,9 +3371,9 @@ AFAC:
 	ProvidesPrerequisite@legion:
 		Factions: legion
 		Prerequisite: structures.legion	
-	ProvidesPrerequisite@AWEPFAC:
+	ProvidesPrerequisite@weap.tdFAC:
 		Factions: gdi, talon, zocom, eagle, legion
-		Prerequisite: structures.awep
+		Prerequisite: structures.weap.td
 	ProvidesPrerequisite@sandbag:
 		Factions: gdi, talon, zocom, eagle
 		Prerequisite: structures.sandbag
@@ -3477,7 +3479,7 @@ GTWR:
 	RevealsShroud:
 		Range: 7c0
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	Armament:
 		Weapon: gtchaingun
 		LocalOffset: 256,0,256
@@ -3519,7 +3521,7 @@ ATWR:
 	RevealsShroud:
 		Range: 8c0
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	Turreted:
 		TurnSpeed: 255
 		Offset: 128,128,384
@@ -3571,7 +3573,7 @@ OBLI:
 	RevealsShroud:
 		Range: 8c0
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	-WithSpriteBody:
 	WithChargeSpriteBody:
 		Sequence: active
@@ -3623,7 +3625,7 @@ HQ:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 90
-		Prerequisites: proc2, ~structures.td, ~techlevel.medium
+		Prerequisites: proc.td, ~structures.td, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Provides an overview of the battlefield.\n  Requires power to operate.
 	Valued:
@@ -3703,8 +3705,8 @@ HQ:
 		SelectTargetSpeechNotification: SelectTarget
 		DisplayRadarPing: True
 		ChargeInterval: 4500
-		DropPodType: dpod2
-		DropPodType2: dpod1
+		DropPodType: pod2
+		DropPodType2: pod1
 		DropItems: N3R1,N1R1,N1R1,N2R1,N2R1,N3R1,N3R1
 		PodScatter: 3
 		SpawnSounds: meteor1.aud, meteor2.aud
@@ -3914,7 +3916,7 @@ REP:
 	RevealsShroud:
 		Range: 5c0
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	Reservable:
 	RallyPoint:
 	RepairsUnits:
@@ -3933,9 +3935,11 @@ REP:
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair
 
-HPAD2:
+HPAD.TD:
 	Inherits: ^BuildingTD
 	Inherits@shape: ^2x2Shape
+	RenderSprites:
+		Image: hpad2
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 768,-512,0, 768,512,0, -281,-512,0, -630,512,0
@@ -4076,7 +4080,7 @@ HPAD2:
 		Condition: gdiupgbuilt
 		Prerequisites: miss.gdi
 
-PROC2:
+PROC.TD:
 	Inherits: ^BuildingTD
 	Inherits@2: ^BotIncome
 	HitShape:
@@ -4088,6 +4092,7 @@ PROC2:
 			TopLeft: -512, -1450
 			BottomRight: 896, -512
 	RenderSprites:
+		Image: proc2
 		FactionImages:
 			nod: nodproc
 			blackh: nodproc
@@ -4141,7 +4146,7 @@ PROC2:
 		UseDeathTypeSuffix: false
 		DeathSequencePalette: overlayplayertd
 	FreeActor:
-		Actor: HARV2
+		Actor: HAR2
 		SpawnOffset: 1,2
 		Facing: 64
 	WithResourceLevelOverlay:
@@ -4153,16 +4158,18 @@ PROC2:
 	SelectionDecorations:
 	CashHackable:
 
-SILO2:
+SILO.TD:
 	Inherits: ^BuildingTD
 	Inherits@shape: ^2x1Shape
+	RenderSprites:
+		Image: silo2
 	Valued:
 		Cost: 150
 	Tooltip:
 		Name: Silo
 	Buildable:
 		BuildPaletteOrder: 35
-		Prerequisites: proc2, ~structures.td, ~techlevel.infonly
+		Prerequisites: proc.td, ~structures.td, ~techlevel.infonly
 		Queue: Defense
 		IconPalette: chrometd
 		Description: Stores processed Tiberium, Ore and Gems
@@ -4177,7 +4184,7 @@ SILO2:
 	RevealsShroud:
 		Range: 4c0
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack
 		RequiresCondition: !being-warped
@@ -4200,7 +4207,7 @@ SILO2:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
 
-AFLD.gdi:
+AFLD.GDI:
 	Inherits: ^Building
 	Inherits@shape: ^3x2Shape
 	RenderSprites:
@@ -4364,7 +4371,7 @@ GTEK:
 		Queue: Building
 		BuildPaletteOrder: 150
 		IconPalette: chrometd
-		Prerequisites: awep, hq, ~structures.gdi, ~techlevel.high
+		Prerequisites: weap.td, hq, ~structures.gdi, ~techlevel.high
 		Description: Provides GDI advanced technologies.
 	Valued:
 		Cost: 2500
@@ -4597,7 +4604,7 @@ PRIS:
 	RevealsShroud:
 		Range: 8c0
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	WithSpriteBody:
 		PauseOnCondition: disabled || empdisable || being-warped
 		RequiresCondition: !charging
@@ -4899,7 +4906,7 @@ HTUR:
 		Weapon: BuildingExplode
 		EmptyWeapon: BuildingExplode
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	Selectable:
 		Bounds: 48,48
 	DetectCloaked:
@@ -4907,9 +4914,11 @@ HTUR:
 		RequiresCondition: !disabled && !being-warped
 	-ProductionCostMultiplier@FranceBonus:
 		
-GUN2:
+GUN.Nod:
 	Inherits: ^DefenseTD
 	Inherits@AUTOTARGET: ^AutoTargetGround
+	RenderSprites:
+		Image: gun2
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -4928,7 +4937,7 @@ GUN2:
 	RevealsShroud:
 		Range: 7c0
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	Turreted:
 		TurnSpeed: 12
 		InitialFacing: 56
@@ -4950,7 +4959,7 @@ GUN2:
 		UseClassicFacingFudge: True
 		
 LTUR:
-	Inherits: GUN2
+	Inherits: GUN.Nod
 	RenderSprites:
 		Image: ltur
 	Valued:
@@ -5005,7 +5014,7 @@ TTUR:
 	RevealsShroud:
 		Range: 6c0
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	Turreted:
 		TurnSpeed: 255
 		Offset: 0,0,112
@@ -5317,7 +5326,7 @@ PATR:
 		Weapon: BuildingExplode
 		EmptyWeapon: BuildingExplode
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	Selectable:
 		Bounds: 48,48
 	RejectsOrders:
@@ -5428,7 +5437,7 @@ OREP:
 	Sellable:
 		RequiresCondition: !build-incomplete && !being-demolished && !being-warped
 		
-MISS.gdi:
+MISS.GDI:
 	Inherits: ^ScienceBuilding
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@shape: ^3x2Shape
@@ -5483,7 +5492,7 @@ MISS.gdi:
 	Sellable:
 		RequiresCondition: !build-incomplete && !being-demolished && !being-warped
 		
-BIO.nod:
+BIO.Nod:
 	Inherits: ^ScienceBuilding
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@shape: ^2x2Shape
@@ -5536,10 +5545,12 @@ BIO.nod:
 	Sellable:
 		RequiresCondition: !build-incomplete && !being-demolished && !being-warped
 
-NMSLO:
+MSLO.Nod:
 	Inherits: ^ScienceBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@shape: ^2x1Shape
+	RenderSprites:
+		Image: nmslo
 	Selectable:
 		Bounds: 48,24,0,12
 	Valued:

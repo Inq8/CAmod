@@ -167,7 +167,7 @@ function Docs-Command
 
 function CheckForUtility
 {
-	if (Test-Path OpenRA.Utility.exe)
+	if (Test-Path $utilityPath)
 	{
 		return 0
 	}

@@ -126,7 +126,7 @@ namespace OpenRA.Mods.CA.Traits
 					/* Target deprives me of force fire information.
 					 * This is a glitch if force fire weapon and normal fire are different, as in
 					 * RA mod spies but won't matter too much for carriers. */
-					ab.AttackTarget(target, AttackSource.Default, false, true, target.RequiresForceFire);
+					ab.AttackTarget(target, AttackSource.Default, false, true, true);
 			}
 		}
 

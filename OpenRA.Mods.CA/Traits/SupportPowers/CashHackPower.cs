@@ -144,7 +144,9 @@ namespace OpenRA.Mods.CA.Traits
 					world.CancelInputMode();
 			}
 
-			protected override IEnumerable<IRenderable> RenderAboveShroud(WorldRenderer wr, World world)
+			protected override IEnumerable<IRenderable> RenderAboveShroud(WorldRenderer wr, World world) { yield break; }
+
+			protected override IEnumerable<IRenderable> RenderAnnotations(WorldRenderer wr, World world)
 			{
 				var xy = wr.Viewport.ViewToWorld(Viewport.LastMousePos);
 				foreach (var unit in power.UnitsInRange(xy))
@@ -152,7 +154,7 @@ namespace OpenRA.Mods.CA.Traits
 					var bounds = unit.TraitsImplementing<IDecorationBounds>()
 						.Select(b => b.DecorationBounds(unit, wr))
 						.FirstOrDefault(b => !b.IsEmpty);
-					yield return new SelectionBoxRenderable(unit, bounds, Color.Red);
+					yield return new SelectionBoxAnnotationRenderable(unit, bounds, Color.Red);
 				}
 			}
 

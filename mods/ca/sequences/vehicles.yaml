@@ -1080,9 +1080,17 @@ batf:
 	idle: batf
 		Facings: 32
 		UseClassicFacingFudge: True
-	muzzle: minigun
-		Length: 6
-		Facings: 8
+	muzzle: smokeygun
+		Length: 12
+		Tick: 30
+	turret:
+		Start: 32
+		Facings: 32
+		UseClassicFacingFudge: True
+	turret2: stnk
+		Start: 38
+		Facings: 32
+		UseClassicFacingFudge: True
 	icon: batficon
 	
 batf.destroyed:
@@ -1090,9 +1098,18 @@ batf.destroyed:
 	idle: batf
 		Facings: 32
 		UseClassicFacingFudge: True
-	muzzle: minigun
-		Length: 6
-		Facings: 8
+	muzzle: smokeygun
+		Length: 12
+		Tick: 30
+	turret:
+		Start: 32
+		Facings: 32
+		UseClassicFacingFudge: True
+	turret2: stnk
+		Start: 38
+		Facings: 32
+		UseClassicFacingFudge: True
+		
 		
 spec:
 	Inherits: ^VehicleOverlays
@@ -1124,3 +1141,13 @@ cdrone:
 		Facings: 32
 		UseClassicFacingFudge: True
 	icon: cdroneicnh
+	
+cryo:
+	Inherits: ^VehicleOverlays
+	idle: cryo
+		Facings: 32
+		UseClassicFacingFudge: True
+	muzzle: smokeygun
+		Length: 12
+		Tick: 30
+	icon: cryolicnh

@@ -135,7 +135,7 @@ namespace OpenRA.Mods.CA.Projectiles
 				}
 			}
 
-			args.Weapon.Impact(Target.FromPos(args.PassiveTarget), args.SourceActor, args.DamageModifiers);
+			args.Weapon.Impact(Target.FromPos(args.PassiveTarget), args.SourceActor);
 		}
 
 		public void Tick(World world)

@@ -120,7 +120,7 @@ TRAN.Husk:
 	RenderSprites:
 		Image: tran2
 		
-TRAN3.Husk:
+TRA3.Husk:
 	Inherits: ^HelicopterHusk
 	Tooltip:
 		Name: Chinook
@@ -181,6 +181,10 @@ BADR.Husk:
 	RenderSprites:
 		Image: badr
 	-RevealOnDeath:
+
+BADR.Husk.Empty:
+	Inherits: BADR.Husk
+	Inherits: ^PlaneHuskEmpty
 	
 B2B.Husk:
 	Inherits: ^PlaneHusk
@@ -200,6 +204,10 @@ B2B.Husk:
 	RenderSprites:
 		Image: b2b
 	-RevealOnDeath:
+	
+B2B.Husk.Empty:
+	Inherits: B2B.Husk
+	Inherits: ^PlaneHuskEmpty
 
 MIG.Husk:
 	Inherits: ^PlaneHusk
@@ -225,6 +233,10 @@ MIG.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: mig
+		
+MIG.Husk.Empty:
+	Inherits: MIG.Husk
+	Inherits: ^PlaneHuskEmpty
 
 YAK.Husk:
 	Inherits: ^PlaneHusk
@@ -246,6 +258,12 @@ YAK.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: yak
+	FallsToEarth:
+		Explosion: UnitExplodePlaneLight
+		
+YAK.Husk.Empty:
+	Inherits: YAK.Husk
+	Inherits: ^PlaneHuskEmpty
 
 HELI.Husk:
 	Inherits: ^HelicopterHusk
@@ -269,6 +287,10 @@ HELI.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: heli
+		
+HELI.Husk.Empty:
+	Inherits: HELI.Husk
+	Inherits: ^HelicopterHuskEmpty
 
 HIND.Husk:
 	Inherits: ^HelicopterHusk
@@ -291,6 +313,10 @@ HIND.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: hind
+		
+HIND.Husk.Empty:
+	Inherits: HIND.Husk
+	Inherits: ^HelicopterHuskEmpty
 
 U2.Husk:
 	Inherits: ^PlaneHusk
@@ -309,6 +335,10 @@ U2.Husk:
 		MinDamage: Undamaged
 	RenderSprites:
 		Image: u2
+		
+U2.Husk.Empty:
+	Inherits: U2.Husk
+	Inherits: ^PlaneHuskEmpty
 
 T01.Husk:
 	Inherits: ^TreeHusk
@@ -490,7 +520,7 @@ TC05.Husk:
 		ExcludeTilesets: DESERT, INTERIOR
 		
 AMCV.Husk:
-	Inherits: ^Husk
+	Inherits: ^HuskTD
 	Tooltip:
 		Name: Husk (Mobile Construction Vehicle)
 	TransformOnCapture:
@@ -577,7 +607,7 @@ MTNK.Husk:
 		Image: mtnk.destroyed
 		PlayerPalette: overlayplayertd
 		
-MTNK.Drone.Husk:
+MTNK.DRONE.Husk:
 	Inherits: ^HuskTD
 	Tooltip:
 		Name: Husk (Battle Drone)
@@ -654,7 +684,7 @@ MSAM.Husk:
 		Image: msam.destroyed
 		PlayerPalette: overlayplayertd
 
-STNKnod.Husk:
+STNK.NOD.Husk:
 	Inherits: ^HuskTD
 	Tooltip:
 		Name: Husk (Stealth Tank)
@@ -682,6 +712,10 @@ APCH.Husk:
 	RenderSprites:
 		Image: apch
 		PlayerPalette: overlayplayertd
+		
+APCH.Husk.Empty:
+	Inherits: APCH.Husk
+	Inherits: ^HelicopterHuskEmpty
 
 ORCA.Husk:
 	Inherits: ^HelicopterHusk
@@ -700,7 +734,11 @@ ORCA.Husk:
 		Image: orca
 		PlayerPalette: overlayplayertd
 		
-ORCACA.Husk:
+ORCA.Husk.Empty:
+	Inherits: ORCA.Husk
+	Inherits: ^HelicopterHuskEmpty
+		
+OCAR.Husk:
 	Inherits: ^HelicopterHusk
 	Tooltip:
 		Name: Orca Carryall
@@ -736,14 +774,14 @@ UAV.Husk:
 		Image: uav
 		PlayerPalette: overlayplayertd
 
-HARV2.Husk:
+HAR2.Husk:
 	Inherits: ^HuskTD
 	Tooltip:
 		Name: Harvester (Destroyed)
 	TransformOnCapture:
-		IntoActor: harv2
+		IntoActor: har2
 	InfiltrateForTransform:
-		IntoActor: harv2
+		IntoActor: har2
 	RenderSprites:
 		Image: harv2.destroyed
 		PlayerPalette: overlayplayertd
@@ -766,6 +804,10 @@ A10.Husk:
 	RenderSprites:
 		Image: a10
 		PlayerPalette: overlayplayertd
+		
+A10.Husk.Empty:
+	Inherits: A10.Husk
+	Inherits: ^PlaneHuskEmpty
 
 YF23.Husk:
 	Inherits: ^PlaneHusk
@@ -816,7 +858,7 @@ BTR.Husk:
 	RenderSprites:
 		Image: BTR.destroyed
 
-RAH66.Husk:
+RAH.Husk:
 	Inherits: ^HelicopterHusk
 	Tooltip:
 		Name: Comanche
@@ -832,8 +874,12 @@ RAH66.Husk:
 	RenderSprites:
 		Image: rah66
 		PlayerPalette: overlayplayertd
+		
+RAH.Husk.Empty:
+	Inherits: RAH.Husk
+	Inherits: ^HelicopterHuskEmpty
 
-KIROV.Husk:
+KIRO.Husk:
 	Inherits: ^HelicopterHusk
 	Tooltip:
 		Name: Kirov
@@ -841,7 +887,7 @@ KIROV.Husk:
 		TurnSpeed: 2
 		Speed: 30
 	FallsToEarth:
-		Spins: False
+		MaximumSpinSpeed: 0
 	SmokeTrailWhenDamaged@0:
 		Offset: -432,560,0
 		Interval: 2
@@ -979,23 +1025,11 @@ HARR.Husk:
 	RenderSprites:
 		Image: harr
 		
-HARRh.Husk:
-	Inherits: ^HelicopterHusk
-	Tooltip:
-		Name: Harrier
-	Aircraft:
-		TurnSpeed: 4
-		Speed: 149
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
-		MinDamage: Undamaged
-	RevealsShroud:
-		Range: 12c0
-		Type: CenterPosition
-	RenderSprites:
-		Image: harr
-		
-Horn.Husk:
+HARR.Husk.Empty:
+	Inherits: HARR.Husk
+	Inherits: ^PlaneHuskEmpty
+	
+HORN.Husk:
 	Inherits: ^PlaneHusk
 	Tooltip:
 		Name: Hornet
@@ -1011,8 +1045,16 @@ Horn.Husk:
 	RenderSprites:
 		Image: horn
 		PlayerPalette: overlayplayertd
+	FallsToEarth:
+		Explosion: UnitExplodeDrone
 		
-SCRIN.Husk:
+HORN.Husk.Empty:
+	Inherits: HORN.Husk
+	Inherits: ^PlaneHuskEmpty
+	FallsToEarth:
+		Explosion: UnitExplodeDroneEmpty
+		
+SCRN.Husk:
 	Inherits: ^PlaneHusk
 	Tooltip:
 		Name: Banshee
@@ -1033,24 +1075,11 @@ SCRIN.Husk:
 		Image: scrin
 		PlayerPalette: overlayplayertd
 		
-SCRINh.Husk:
-	Inherits: ^HelicopterHusk
-	Tooltip:
-		Name: Banshee
-	Aircraft:
-		TurnSpeed: 4
-		Speed: 200
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
-		MinDamage: Undamaged
-	RevealsShroud:
-		Range: 12c0
-		Type: CenterPosition
-	RenderSprites:
-		Image: scrin
-		PlayerPalette: overlayplayertd
+SCRN.Husk.Empty:
+	Inherits: SCRN.Husk
+	Inherits: ^PlaneHuskEmpty
 		
-ORCAB.Husk:
+ORCB.Husk:
 	Inherits: ^PlaneHusk
 	Tooltip:
 		Name: Orca Bomber
@@ -1067,23 +1096,10 @@ ORCAB.Husk:
 		Image: orcab
 		PlayerPalette: overlayplayertd
 		
-ORCABh.Husk:
-	Inherits: ^HelicopterHusk
-	Tooltip:
-		Name: Orca Bomber
-	Aircraft:
-		TurnSpeed: 4
-		Speed: 155
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
-		MinDamage: Undamaged
-	RevealsShroud:
-		Range: 12c0
-		Type: CenterPosition
-	RenderSprites:
-		Image: orcab
-		PlayerPalette: overlayplayertd
-		
+ORCB.Husk.Empty:
+	Inherits: ORCB.Husk
+	Inherits: ^PlaneHuskEmpty
+
 FROG.Husk:
 	Inherits: ^PlaneHusk
 	Tooltip:
@@ -1103,6 +1119,10 @@ FROG.Husk:
 	RenderSprites:
 		Image: frog
 		
+FROG.Husk.Empty:
+	Inherits: FROG.Husk
+	Inherits: ^PlaneHuskEmpty
+		
 PTNK.Husk:
 	Inherits: ^Husk
 	Tooltip:
@@ -1116,16 +1136,16 @@ PTNK.Husk:
 	RenderSprites:
 		Image: ptnk.destroyed
 		
-MWTNK.Husk:
+WTNK.Husk:
 	Inherits: ^HuskTD
 	Tooltip:
 		Name: Husk (Microwave Tank)
 	ThrowsParticle@turret:
 		Anim: turret
 	TransformOnCapture:
-		IntoActor: mwtnk
+		IntoActor: wtnk
 	InfiltrateForTransform:
-		IntoActor: mwtnk
+		IntoActor: wtnk
 	RenderSprites:
 		Image: mwtnk.destroyed
 		PlayerPalette: overlayplayertd

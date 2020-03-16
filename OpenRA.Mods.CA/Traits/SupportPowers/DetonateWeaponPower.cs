@@ -119,7 +119,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			var targetPosition = order.Target.CenterPosition + new WVec(WDist.Zero, WDist.Zero, Info.AirburstAltitude);
 
-			Action detonateWeapon = () => self.World.AddFrameEndTask(w => Info.WeaponInfo.Impact(Target.FromPos(targetPosition), self, Enumerable.Empty<int>()));
+			Action detonateWeapon = () => self.World.AddFrameEndTask(w => Info.WeaponInfo.Impact(Target.FromPos(targetPosition), self));
 
 			self.World.AddFrameEndTask(w => w.Add(new DelayedAction(Info.ActivationDelay, detonateWeapon)));
 
@@ -220,7 +220,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override IEnumerable<IRenderable> Render(WorldRenderer wr, World world) { yield break; }
 
-		protected override IEnumerable<IRenderable> RenderAboveShroud(WorldRenderer wr, World world)
+		protected override IEnumerable<IRenderable> RenderAboveShroud(WorldRenderer wr, World world) { yield break; }
+
+		protected override IEnumerable<IRenderable> RenderAnnotations(WorldRenderer wr, World world)
 		{
 			var xy = wr.Viewport.ViewToWorld(Viewport.LastMousePos);
 
@@ -230,7 +232,7 @@ namespace OpenRA.Mods.CA.Traits
 			}
 			else
 			{
-				yield return new RangeCircleRenderable(
+				yield return new RangeCircleAnnotationRenderable(
 					world.Map.CenterOfCell(xy),
 					power.Info.TargetCircleRange,
 					0,

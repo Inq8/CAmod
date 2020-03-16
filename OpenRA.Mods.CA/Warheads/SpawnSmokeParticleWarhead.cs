@@ -104,8 +104,9 @@ namespace OpenRA.Mods.CA.Warheads
 				throw new YamlException("Weapons Ruleset does not contain an entry '{0}'".F(Weapon.ToLowerInvariant()));
 		}
 
-		public override void DoImpact(Target target, Actor firedBy, IEnumerable<int> damageModifiers)
+		public override void DoImpact(Target target, WarheadArgs args)
 		{
+			var firedBy = args.SourceActor;
 			if (!target.IsValidFor(firedBy))
 				return;
 

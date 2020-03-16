@@ -342,23 +342,9 @@ FLARE.dropzone:
 		Name: Dropzone Flare
 		ShowOwnerRow: false
 	FreeActorWithDelivery@2:
-		Actor: APC2.reinforce
+		Actor: APC2.Reinforce
 		DeliveryOffset: -1,1
-		DeliveringActor: orcaca.reinforce
-		Facing: 0
-		
-FLAREH.dropzone:
-	Inherits: FLARE
-	RevealsShroud:
-		Range: 4c0
-		Type: CenterPosition
-	Tooltip:
-		Name: Dropzone Flare
-		ShowOwnerRow: false
-	FreeActorWithDelivery@2:
-		Actor: HTNK
-		DeliveryOffset: -1,1
-		DeliveringActor: orcaca.reinforce
+		DeliveringActor: ocar.reinforce
 		Facing: 0
 
 MINE:
@@ -378,7 +364,7 @@ MINE:
 		Terrain: Ore
 	AppearsOnMapPreview:
 		Terrain: Ore
-	SeedsResource:
+	SeedsResourceCA:
 	MapEditorData:
 		Categories: Resource spawn
 	RequiresSpecificOwners:
@@ -401,7 +387,7 @@ GMINE:
 		Terrain: Gems
 	AppearsOnMapPreview:
 		Terrain: Gems
-	SeedsResource:
+	SeedsResourceCA:
 		ResourceType: Gems
 	MapEditorData:
 		Categories: Resource spawn
@@ -534,7 +520,7 @@ powerproxy.paratroopers2:
 		LongDesc: A Chinook drops a squad of infantry\nanywhere on the map.
 		OneShot: true
 		AllowMultiple: true
-		DropItems: E1,E1,SNIPER,E3,E3
+		DropItems: E1,E1,SNIP,E3,E3
 		SelectTargetSpeechNotification: SelectTarget
 		EndChargeSpeechNotification: ReinforceAva
 		LaunchSpeechNotification: ReinforcementsArrived
@@ -692,7 +678,7 @@ CTFLAG:
 	Tooltip:
 		Name: Flag
 	WithBuildingBib:
-		HasMinibib: Yes
+		HasMinibib: true
 	-HitShape:
 	-Health:
 	-Explodes:
@@ -707,7 +693,7 @@ SPLIT2:
 	Inherits: ^TibTree
 	RenderSprites:
 		Palette: temptd
-	SeedsResource:
+	SeedsResourceCA:
 		ResourceType: Tiberium
 		Interval: 55
 	AppearsOnMapPreview:
@@ -720,7 +706,7 @@ SPLIT3:
 	RenderSprites:
 		Image: split3
 		Palette: temptd
-	SeedsResource:
+	SeedsResourceCA:
 		ResourceType: Tiberium
 		Interval: 55
 	AppearsOnMapPreview:
@@ -735,7 +721,7 @@ SPLITBLUE:
 	RenderSprites:
 		Image: split3
 		Palette: temptd
-	SeedsResource:
+	SeedsResourceCA:
 		ResourceType: BlueTiberium
 		Interval: 110
 	AppearsOnMapPreview:

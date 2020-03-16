@@ -88,7 +88,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			return null;
 		}
 
-		protected static bool NearToPosSafely(SquadCA owner, WPos loc)
+		public static bool NearToPosSafely(SquadCA owner, WPos loc)
 		{
 			Actor a;
 			return NearToPosSafely(owner, loc, out a);
@@ -97,7 +97,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		protected static bool NearToPosSafely(SquadCA owner, WPos loc, out Actor detectedEnemyTarget)
 		{
 			detectedEnemyTarget = null;
-			var dangerRadius = owner.SquadManager.Info.DangerScanRadius;
+			var dangerRadius = owner.SquadManager.Info.AircraftDangerScanRadius;
 			var unitsAroundPos = owner.World.FindActorsInCircle(loc, WDist.FromCells(dangerRadius))
 				.Where(owner.SquadManager.IsEnemyUnit).ToList();
 
@@ -116,13 +116,13 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		protected static bool FullAmmo(Actor a)
 		{
 			var ammoPools = a.TraitsImplementing<AmmoPool>();
-			return ammoPools.All(x => x.FullAmmo());
+			return ammoPools.All(x => x.HasFullAmmo);
 		}
 
 		protected static bool HasAmmo(Actor a)
 		{
 			var ammoPools = a.TraitsImplementing<AmmoPool>();
-			return ammoPools.All(x => x.HasAmmo());
+			return ammoPools.All(x => x.HasFullAmmo);
 		}
 
 		protected static bool ReloadsAutomatically(Actor a)

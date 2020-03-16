@@ -257,11 +257,24 @@ namespace OpenRA.Mods.CA.Traits
 
 				if (a.Info.HasTraitInfo<AircraftInfo>() && a.Info.HasTraitInfo<AttackBaseInfo>())
 				{
-					var air = GetSquadOfType(SquadTypeCA.Air);
-					if (air == null)
-						air = RegisterNewSquad(bot, SquadTypeCA.Air);
+					var airSquads = SquadsCA.Where(s => s.Type == SquadTypeCA.Air);
+					var matchingSquadFound = false;
 
-					air.Units.Add(a);
+					foreach (var airSquad in airSquads)
+					{
+						if (airSquad.Units.Any(u => u.Info.Name == a.Info.Name))
+						{
+							airSquad.Units.Add(a);
+							matchingSquadFound = true;
+							break;
+						}
+					}
+
+					if (!matchingSquadFound)
+					{
+						var newAirSquad = RegisterNewSquad(bot, SquadTypeCA.Air);
+						newAirSquad.Units.Add(a);
+					}
 				}
 				else if (Info.NavalUnitsTypes.Contains(a.Info.Name))
 				{

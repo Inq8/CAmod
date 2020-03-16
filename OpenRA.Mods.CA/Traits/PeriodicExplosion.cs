@@ -44,8 +44,10 @@ namespace OpenRA.Mods.CA.Traits
 
 		public override object Create(ActorInitializer init) { return new PeriodicExplosion(init.Self, this); }
 
-		void IRulesetLoaded<ActorInfo>.RulesetLoaded(Ruleset rules, ActorInfo info)
+		public override void RulesetLoaded(Ruleset rules, ActorInfo ai)
 		{
+			base.RulesetLoaded(rules, ai);
+
 			WeaponInfo weaponInfo;
 
 			var weaponToLower = Weapon.ToLowerInvariant();
@@ -81,6 +83,8 @@ namespace OpenRA.Mods.CA.Traits
 		protected override void Created(Actor self)
 		{
 			ammoPool = self.TraitsImplementing<AmmoPool>().FirstOrDefault(la => la.Info.Name == Info.AmmoPoolName);
+
+			base.Created(self);
 		}
 
 		void ITick.Tick(Actor self)
@@ -107,8 +111,16 @@ namespace OpenRA.Mods.CA.Traits
 					? body.LocalToWorld(info.LocalOffset.Rotate(body.QuantizeOrientation(self, self.Orientation)))
 					: info.LocalOffset;
 
-				weapon.Impact(Target.FromPos(self.CenterPosition + localoffset), self,
-					self.TraitsImplementing<IFirepowerModifier>().Select(a => a.GetFirepowerModifier()).ToArray());
+				var args = new WarheadArgs
+				{
+					Weapon = weapon,
+					DamageModifiers = self.TraitsImplementing<IFirepowerModifier>().Select(a => a.GetFirepowerModifier()).ToArray(),
+					Source = self.CenterPosition,
+					SourceActor = self,
+					WeaponTarget = Target.FromPos(self.CenterPosition + localoffset)
+				};
+
+				weapon.Impact(Target.FromPos(self.CenterPosition + localoffset), args);
 
 				if (weapon.Report != null && weapon.Report.Any())
 					Game.Sound.Play(SoundType.World, weapon.Report.Random(self.World.SharedRandom), self.CenterPosition);

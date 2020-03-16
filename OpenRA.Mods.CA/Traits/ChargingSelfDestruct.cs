@@ -207,7 +207,7 @@ namespace OpenRA.Mods.CA.Traits
 					if (csd.info.ChargingDamageWeapon != null)
 					{
 						// Use .FromPos since this weapon needs to affect more than just the actor
-						csd.info.ThumpDamageWeaponInfo.Impact(Target.FromPos(self.CenterPosition), self, Enumerable.Empty<int>());
+						csd.info.ThumpDamageWeaponInfo.Impact(Target.FromPos(self.CenterPosition), self);
 					}
 				}
 
@@ -229,7 +229,7 @@ namespace OpenRA.Mods.CA.Traits
 					if (csd.info.DetonationWeapon != null)
 					{
 						// Use .FromPos since this actor is killed. Cannot use Target.FromActor
-						csd.info.DetonationWeaponInfo.Impact(Target.FromPos(self.CenterPosition), self, Enumerable.Empty<int>());
+						csd.info.DetonationWeaponInfo.Impact(Target.FromPos(self.CenterPosition), self);
 					}
 
 					self.Kill(self, csd.info.DamageTypes);

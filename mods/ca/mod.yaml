@@ -1,6 +1,6 @@
 Metadata:
 	Title: Combined Arms
-	Version: d006601
+	Version: 580a96c
 	Website: https://www.moddb.com/mods/command-conquer-combined-arms
 	WebIcon32: https://www.openra.net/images/icons/ra_32x32.png
 
@@ -48,7 +48,7 @@ Packages:
 
 MapFolders:
 	ca|maps: System
-	~^maps/ca/d006601: User
+	~^maps/ca/580a96c: User
 
 Rules:
 	ca|rules/misc.yaml
@@ -124,6 +124,7 @@ ChromeLayout:
 	common|chrome/lobby-servers.yaml
 	common|chrome/lobby-kickdialogs.yaml
 	common|chrome/color-picker.yaml
+	common|chrome/mainmenu-prompts.yaml
 	common|chrome/map-chooser.yaml
 	common|chrome/multiplayer-browser.yaml
 	common|chrome/multiplayer-browserpanels.yaml
@@ -131,6 +132,8 @@ ChromeLayout:
 	common|chrome/multiplayer-directconnect.yaml
 	common|chrome/connection.yaml
 	common|chrome/replaybrowser.yaml
+	common|chrome/gamesave-browser.yaml
+	ca|chrome/gamesave-loading.yaml
 	common|chrome/dropdowns.yaml
 	common|chrome/musicplayer.yaml
 	common|chrome/tooltips.yaml
@@ -139,8 +142,6 @@ ChromeLayout:
 	common|chrome/confirmation-dialogs.yaml
 	common|chrome/editor.yaml
 	common|chrome/playerprofile.yaml
-	common|chrome/gamesave-browser.yaml
-	ca|chrome/gamesave-loading.yaml
 
 Weapons:
 	ca|weapons/explosions.yaml
@@ -172,6 +173,8 @@ Hotkeys:
 
 LoadScreen: LogoStripeLoadScreen
 	Image: ca|uibits/loadscreen.png
+	Image2x: ca|uibits/loadscreen-2x.png
+	Image3x: ca|uibits/loadscreen-3x.png
 	Text: Loading...
 
 ServerTraits:
@@ -242,6 +245,9 @@ SpriteSequenceFormat: TilesetSpecificSpriteSequence
 		BARREN: .bar
 
 ModelSequenceFormat: PlaceholderModelSequence
+
+AssetBrowser:
+	SupportedExtensions: .r8, .shp, .tmp, .tem, .des, .sno, .int, .vqa
 
 GameSpeeds:
 	slowest:

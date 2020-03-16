@@ -862,7 +862,7 @@ namespace OpenRA.Mods.CA.Projectiles
 			if (!string.IsNullOrEmpty(info.TrailImage) && --ticksToNextSmoke < 0 && (state != States.Freefall || info.TrailWhenDeactivated))
 			{
 				world.AddFrameEndTask(w => w.Add(new SpriteEffect(pos - 3 * move / 2, w, info.TrailImage, info.TrailSequences.Random(world.SharedRandom),
-					trailPalette, false, false, renderFacing)));
+					trailPalette, facing: renderFacing)));
 
 				ticksToNextSmoke = info.TrailInterval;
 			}
@@ -898,7 +898,7 @@ namespace OpenRA.Mods.CA.Projectiles
 			if (ticks <= info.Arm)
 				return;
 
-			args.Weapon.Impact(Target.FromPos(pos), args.SourceActor, args.DamageModifiers);
+			args.Weapon.Impact(Target.FromPos(pos), new WarheadArgs(args));
 		}
 
 		public IEnumerable<IRenderable> Render(WorldRenderer wr)

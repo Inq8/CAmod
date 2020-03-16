@@ -33,7 +33,7 @@ namespace OpenRA.Mods.AS.Projectiles
 		{
 			world.AddFrameEndTask(w => w.Remove(this));
 
-			args.Weapon.Impact(Target.FromPos(args.Source), args.SourceActor, args.DamageModifiers);
+			args.Weapon.Impact(Target.FromPos(args.Source), new WarheadArgs(args));
 		}
 
 		public IEnumerable<IRenderable> Render(WorldRenderer wr)

@@ -47,5 +47,11 @@ namespace OpenRA.Mods.CA.Traits
 		bool Destroy(WPos position, Player attacker, string type);
 	}
 
+	public interface IBotCAInfo : ITraitInfoInterface { string Name { get; } }
+	public interface IBotCA
+	{
+		bool IsEnemyUnit(Actor a);
+	}
+
 	public interface ILoadsOverlayPlayerPalettes { void LoadOverlayPlayerPalettes(WorldRenderer wr, string playerName, Color playerColor, bool replaceExisting); }
 }

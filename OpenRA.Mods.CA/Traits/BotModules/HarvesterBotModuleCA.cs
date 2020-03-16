@@ -48,14 +48,12 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			public readonly Actor Actor;
 			public readonly Harvester Harvester;
-			public readonly Parachutable Parachutable;
 			public readonly Locomotor Locomotor;
 
 			public HarvesterTraitWrapper(Actor actor)
 			{
 				Actor = actor;
 				Harvester = actor.Trait<Harvester>();
-				Parachutable = actor.TraitOrDefault<Parachutable>();
 				var mobile = actor.Trait<Mobile>();
 				Locomotor = mobile.Locomotor;
 			}
@@ -131,9 +129,6 @@ namespace OpenRA.Mods.CA.Traits
 						continue;
 				}
 
-				if (h.Value.Parachutable != null && h.Value.Parachutable.IsInAir)
-					continue;
-
 				// Tell the idle harvester to quit slacking:
 				var newSafeResourcePatch = FindNextResource(h.Key, h.Value);
 				AIUtils.BotDebug("AI: Harvester {0} is idle. Ordering to {1} in search for new resources.".F(h.Key, newSafeResourcePatch));
@@ -159,7 +154,7 @@ namespace OpenRA.Mods.CA.Traits
 				claimLayer.CanClaimCell(actor, cell);
 
 			var path = pathfinder.FindPath(
-				PathSearch.Search(world, harv.Locomotor, actor, true, isValidResource)
+				PathSearch.Search(world, harv.Locomotor, actor, BlockedByActor.Stationary, isValidResource)
 					.WithCustomCost(loc => world.FindActorsInCircle(world.Map.CenterOfCell(loc), Info.HarvesterEnemyAvoidanceRadius)
 						.Where(u => !u.IsDead && actor.Owner.Stances[u.Owner] == Stance.Enemy)
 						.Sum(u => Math.Max(WDist.Zero.Length, Info.HarvesterEnemyAvoidanceRadius.Length - (world.Map.CenterOfCell(loc) - u.CenterPosition).Length)))

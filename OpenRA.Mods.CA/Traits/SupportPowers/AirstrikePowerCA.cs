@@ -191,7 +191,7 @@ namespace OpenRA.Mods.CA.Traits
 						attack.SetTarget(w, target + targetOffset);
 						a.QueueActivity(new Fly(a, Target.FromPos(target + spawnOffset)));
 						attack.OnEnteredAttackRange += onEnterRange;
-						a.QueueActivity(new AttackMoveActivity(a, () => new FlyCircle(a, info.GuardDuration)));
+						a.QueueActivity(new AttackMoveActivity(a, () => new FlyIdle(a, info.GuardDuration)));
 						attack.OnExitedAttackRange += onExitRange;
 						a.QueueActivity(new FlyOffMap(a));
 						a.QueueActivity(new RemoveSelf());
