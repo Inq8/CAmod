@@ -331,6 +331,9 @@ Repair:
 		
 RepairIFV:
 	Inherits: Repair
+	ReloadDelay: 125
+	Burst: 10
+	BurstDelays: 30
 	Report: repair11.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: -3000
@@ -508,7 +511,7 @@ PointLaser:
 
 PrisLaser:
 	ValidTargets: Ground, Water
-	ReloadDelay: 50
+	ReloadDelay: 40
 	Range: 8c512
 	Report: prisfire.aud
 	Projectile: LaserZap
@@ -525,10 +528,10 @@ PrisLaser:
 		Damage: 13000
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		Versus:
-			None: 100
+			None: 55
 			Wood: 70
-			Light: 80
-			Heavy: 65
+			Light: 75
+			Heavy: 70
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
@@ -554,7 +557,7 @@ PrisTLaser:
 			None: 150
 			Wood: 90
 			Concrete: 100
-			Light: 80
+			Light: 95
 			Heavy: 60
 	Warhead@Burst: FireCluster
 		Weapon: PrisTBurst
@@ -594,7 +597,7 @@ AirshipParaBomb:
 		Shadow: True
 	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
-		Damage: 30000
+		Damage: 25000
 		InvalidTargets: Air
 		Versus:
 			None: 30
@@ -683,19 +686,19 @@ SonicZap:
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 32
 		Falloff: 100, 100
-		Damage: 1100
+		Damage: 1000
 		AffectsParent: false
 		ValidStances: Neutral, Enemy
 		ValidTargets: Ground, Water
 		Versus:
 			Heavy: 80
-			Concrete: 85
-			Wood: 200
+			Concrete: 130
+			Wood: 180
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Dam: SpreadDamage
 		Range: 0, 32
 		Falloff: 50, 50
-		Damage: 550
+		Damage: 500
 		InvalidTargets: Disruptor, Air
 		AffectsParent: false
 		ValidStances: Ally
@@ -703,7 +706,7 @@ SonicZap:
 			Heavy: 80
 			Concrete: 120
 			Brick: 150
-			Wood: 200
+			Wood: 180
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 
 SonicZap.UPG:
@@ -763,7 +766,7 @@ SonicZapVisual.UPG:
 		Color: 00ffc435
 		
 Railgun:
-	ReloadDelay: 55
+	ReloadDelay: 75
 	Range: 8c512
 	Report: railuse5.aud
 	InvalidTargets: Air
@@ -781,7 +784,7 @@ Railgun:
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 32
 		Falloff: 1000, 1000
-		Damage: 1500
+		Damage: 1375
 		ValidStances: Neutral, Enemy
 		InvalidTargets: Air
 		AffectsParent: false
@@ -795,7 +798,7 @@ Railgun:
 	Warhead@2Dam: SpreadDamage
 		Range: 0, 32
 		Falloff: 1000, 1000
-		Damage: 2000
+		Damage: 650
 		ValidStances: Ally
 		InvalidTargets: Air
 		AffectsParent: false
@@ -835,7 +838,7 @@ IonZap:
 		ZOffset: 2045
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
-		Damage: 6200
+		Damage: 6350
 		ValidStances: Ally, Neutral, Enemy
 		InvalidTargets: Air
 		AffectsParent: false
@@ -1187,10 +1190,10 @@ CyCannon:
 		Damage: 13000
 		Versus:
 			None: 75
-			Wood: 70
+			Wood: 35
 			Light: 100
 			Heavy: 75
-			Concrete: 40
+			Concrete: 25
 			Brick: 70
 		DamageTypes: Prone350Percent, TriggerProne, ExplosionDeath
 		

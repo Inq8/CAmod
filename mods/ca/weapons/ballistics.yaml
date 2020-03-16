@@ -213,11 +213,15 @@ TitanGun:
 		Speed: 195
 		Inaccuracy: 1c138
 	Warhead@1Dam: SpreadDamage
+		Damage: 6500
 		Falloff: 100, 55, 20, 5
 		Versus:
-			None: 40
-			Light: 50
-			Heavy: 20
+			None: 85
+			Wood: 100
+			Concrete: 100
+			Brick: 100
+			Light: 100
+			Heavy: 42
 
 155mmTD:
 	Inherits: 155mm
@@ -249,7 +253,7 @@ TitanGun:
 			Wood: 55
 			Light: 40
 			Heavy: 25
-			Concrete: 40
+			Concrete: 35
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Smu: LeaveSmudge
@@ -313,20 +317,21 @@ JuggernautGun:
 
 2Inch:
 	Inherits: ^Cannon
-	ReloadDelay: 60
+	ReloadDelay: 40
 	Range: 5c512
 	Report: cannon2.aud
 	InvalidTargets: Underwater
 	Projectile: Bullet
 		Speed: 426
 	Warhead@1Dam: SpreadDamage
-		Damage: 2500
+		Damage: 4000
 		Versus:
-			None: 28
-			Wood: 72
-			Light: 72
-			Concrete: 48
-			Brick: 48
+			None: 15
+			Wood: 30
+			Light: 75
+			Heavy: 60
+			Concrete: 20
+			Brick: 20
 
 Grenade:
 	Inherits: ^Artillery
@@ -423,10 +428,14 @@ DepthCharge:
 		Inaccuracy: 128
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
-		Damage: 8000
+		Damage: 6000
 		ValidTargets: Submarine
 		Versus:
-			Light: 75
+			None: 100
+			Wood: 100
+			Concrete: 100
+			Light: 100
+			Heavy: 100
 		DamageTypes: ExplosionDeath
 	Warhead@4EffWater: CreateEffect
 		Explosions: large_splash

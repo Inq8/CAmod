@@ -115,13 +115,13 @@ HellfireAG.Orca:
 	
 HellfireAG.Harrier:
 	Inherits: HellfireAG
-	Range: 9c0
+	Range: 12c0
 	MinRange: 2c0
 	Report: migmis.aud, migmis2.aud
 	Burst: 2
 	BurstDelays: 10
 	Projectile: MissileCA
-		RangeLimit: 9c512
+		RangeLimit: 12c512
 		ContrailLength: 10
 		Inaccuracy: 512
 	Warhead@1Dam: SpreadDamage
@@ -156,7 +156,7 @@ HellfireAG.Horn:
 			ContrailLength: 0
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 525
+		Damage: 850
 
 HellfireAA:
 	Inherits: ^AntiAirMissile
@@ -318,12 +318,12 @@ Stinger:
 		Speed: 170
 		CloseEnough: 149
 	Warhead@1Dam: SpreadDamage
-		Damage: 2500
+		Damage: 3500
 		Versus:
 			None: 36
 			Wood: 88
-			Light: 88
-			Heavy: 120
+			Light: 75
+			Heavy: 100
 			Concrete: 60
 			Brick: 60
 
@@ -359,7 +359,7 @@ StingerGTWR:
 		Damage: 6750
 		ValidTargets: Ground, Water
 		Versus:
-			None: 45
+			None: 55
 			Wood: 55
 			Light: 70
 			Heavy: 60
@@ -391,7 +391,7 @@ APTusk:
 			None: 35
 			Wood: 60
 			Light: 45
-			Heavy: 75
+			Heavy: 65
 			Concrete: 60
 
 TorpTube:
@@ -414,11 +414,11 @@ TorpTube:
 		CruiseAltitude: 0
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
-		Damage: 18000
+		Damage: 12000
 		ValidTargets: Water, Underwater, Bridge
 		Versus:
 			Wood: 75
-			Light: 75
+			Light: 65
 			Heavy: 100
 			Concrete: 100
 			Brick: 500
@@ -451,9 +451,9 @@ TorpTube:
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Versus:
 			None: 40
-			Wood: 50
+			Wood: 60
 			Light: 30
-			Heavy: 30
+			Heavy: 50
 			Concrete: 60
 			Brick: 60
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
@@ -487,13 +487,13 @@ HonestJohnSub:
 		Inaccuracy: 1c0
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
-		Damage: 2200
+		Damage: 2000
 		Versus:
 			None: 70
-			Wood: 60
-			Concrete: 70
-			Light: 70
-			Heavy: 60
+			Wood: 100
+			Concrete: 90
+			Light: 75
+			Heavy: 35
 			Brick: 70
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -508,6 +508,7 @@ HonestJohnSub:
 
 SubMissileAA:
 	Inherits: ^SubMissileDefault
+	ReloadDelay: 100
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
 		Damage: 1500
@@ -573,9 +574,9 @@ V3Weapon:
 		ImpactSounds: splashl1.aud, splashl2.aud
 		
 HonestJohn:
-	ReloadDelay: 160
+	ReloadDelay: 130
 	Burst: 2
-	BurstDelays: 80
+	BurstDelays: 50
 	Range: 12c0
 	MinRange: 4c0
 	Report: rocket2.aud
@@ -594,9 +595,9 @@ HonestJohn:
 		Falloff: 500, 368, 135, 50, 18, 7, 0
 		Versus:
 			None: 100
-			Wood: 85
+			Wood: 95
 			Concrete: 60
-			Light: 55
+			Light: 65
 			Heavy: 40
 			Brick: 15
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
@@ -607,9 +608,9 @@ HonestJohn:
 		Delay: 3
 		Versus:
 			None: 100
-			Wood: 85
+			Wood: 95
 			Concrete: 60
-			Light: 55
+			Light: 65
 			Heavy: 40
 			Brick: 15
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
@@ -620,9 +621,9 @@ HonestJohn:
 		Delay: 6
 		Versus:
 			None: 100
-			Wood: 85
+			Wood: 95
 			Concrete: 60
-			Light: 55
+			Light: 65
 			Heavy: 40
 			Brick: 15
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
@@ -633,9 +634,9 @@ HonestJohn:
 		Delay: 9
 		Versus:
 			None: 100
-			Wood: 85
+			Wood: 95
 			Concrete: 60
-			Light: 55
+			Light: 65
 			Heavy: 40
 			Brick: 15
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
@@ -657,6 +658,10 @@ BikeRockets:
 	Report: bazook1.aud
 	Burst: 2
 	BurstDelays: 5
+	Warhead@1Dam: SpreadDamage
+		Damage: 4400
+			Light: 38
+			Concrete: 70
 
 BikeRocketsAA:
 	Inherits: RedEye
@@ -665,6 +670,8 @@ BikeRocketsAA:
 	ValidTargets: Air
 	Burst: 2
 	BurstDelays: 5
+	Warhead@1Dam: SpreadDamage
+		Damage: 2500
 	
 IFVRockets:
 	Inherits: Dragon
@@ -705,7 +712,7 @@ BTRRocketsAA:
 	Warhead@1Dam: SpreadDamage
 		Damage: 2000
 		Versus
-			Light: 70
+			Light: 75
 
 227mm:
 	Inherits: ^AntiGroundMissile
@@ -733,8 +740,8 @@ BTRRocketsAA:
 		ValidTargets: Ground, Water, Trees
 		Versus:
 			None: 70
-			Wood: 60
-			Light: 70
+			Wood: 50
+			Light: 60
 			Heavy: 40
 			Concrete: 40
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
@@ -854,13 +861,14 @@ BTRRocketsAA:
 		PointDefenseType: Missile
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
-		Damage: 6000
+		Damage: 5500
 		ValidTargets: Ground, Water
 		Versus:
-			None: 25
+			None: 30
 			Wood: 75
 			Light: 100
-			Heavy: 90
+			Concrete: 85
+			Heavy: 100
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
@@ -897,7 +905,7 @@ BTRRocketsAA:
 		Versus:
 			None: 25
 			Wood: 75
-			Light: 20
+			Light: 25
 			Heavy: 70
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge
@@ -932,8 +940,8 @@ BoatMissile:
 			None: 90
 			Wood: 55
 			Concrete: 45
-			Light: 20
-			Heavy: 15
+			Light: 55
+			Heavy: 30
 			Brick: 45
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
