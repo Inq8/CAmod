@@ -210,7 +210,6 @@ namespace OpenRA.Mods.CA.Traits
 			var attackAircraftInfo = actorInfo.TraitInfoOrDefault<AttackAircraftInfo>();
 			if (attackAircraftInfo == null)
 				return true;
-			
 			var numAirUnits = AIUtils.GetActorsWithTrait<AttackAircraft>(player.World).Count(a => a.Owner == player);
 			return numAirUnits < Info.MaxAircraft;
 		}

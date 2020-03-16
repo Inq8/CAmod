@@ -9,10 +9,10 @@
  */
 #endregion
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
@@ -44,12 +44,6 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Tells the AI what building types are considered silos (resource storage).")]
 		public readonly HashSet<string> SiloTypes = new HashSet<string>();
-
-		[Desc("Tells the AI what building types are considered ground defense.")]
-		public readonly HashSet<string> GroundDefense = new HashSet<string>();
-
-		[Desc("Tells the AI what building types are considered air defence.")]
-		public readonly HashSet<string> AirDefense = new HashSet<string>();
 
 		[Desc("Production queues AI uses for buildings.")]
 		public readonly HashSet<string> BuildingQueues = new HashSet<string> { "Building" };
@@ -107,9 +101,6 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Maximum range at which to build defensive structures near a combat hotspot.")]
 		public readonly int MaximumDefenseRadius = 20;
-
-		[Desc("Minimum range at which to build fragile structures near a combat hotspot.")]
-		public readonly int MinFragilePlacementRadius = 5;
 
 		[Desc("Try to build another production building if there is too much cash.")]
 		public readonly int NewProductionCashThreshold = 5000;
@@ -275,19 +266,33 @@ namespace OpenRA.Mods.CA.Traits
 			get
 			{
 				// Require at least one refinery, unless we can't build it.
-				return AIUtils.CountBuildingByCommonName(Info.RefineryTypes, player) >= MinimumRefineryCount ||
+				return AIUtils.CountBuildingByCommonName(Info.RefineryTypes, player) >= 1 ||
 					AIUtils.CountBuildingByCommonName(Info.PowerTypes, player) == 0 ||
 					AIUtils.CountBuildingByCommonName(Info.ConstructionYardTypes, player) == 0;
 			}
 		}
 
-		int MinimumRefineryCount
+		public bool HasAdequateBarracksCount
 		{
 			get
 			{
-				// Unless we have no barracks (higher priority), require a 2nd refinery.
-				// TODO: Possibly unhardcode this, at least the targeted minimum of 2 (the fallback can probably stay at 1).
-				return AIUtils.CountBuildingByCommonName(Info.BarracksTypes, player) > 0 ? 2 : 1;
+				// Require at least one barracks, unless we can't build it.
+				return AIUtils.CountBuildingByCommonName(Info.BarracksTypes, player) >= 1 ||
+					AIUtils.CountBuildingByCommonName(Info.PowerTypes, player) == 0 ||
+					AIUtils.CountBuildingByCommonName(Info.RefineryTypes, player) == 0 ||
+					AIUtils.CountBuildingByCommonName(Info.ConstructionYardTypes, player) == 0;
+			}
+		}
+
+		public bool HasAdequateFactoryCount
+		{
+			get
+			{
+				// Require at least one factory, unless we can't build it.
+				return AIUtils.CountBuildingByCommonName(Info.VehiclesFactoryTypes, player) >= 1 ||
+					AIUtils.CountBuildingByCommonName(Info.PowerTypes, player) == 0 ||
+					AIUtils.CountBuildingByCommonName(Info.RefineryTypes, player) == 0 ||
+					AIUtils.CountBuildingByCommonName(Info.ConstructionYardTypes, player) == 0;
 			}
 		}
 

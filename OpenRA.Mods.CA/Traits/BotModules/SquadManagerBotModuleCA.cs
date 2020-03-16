@@ -262,7 +262,8 @@ namespace OpenRA.Mods.CA.Traits
 
 					foreach (var airSquad in airSquads)
 					{
-						if (airSquad.Units.Any(u => u.Info.Name == a.Info.Name)) {
+						if (airSquad.Units.Any(u => u.Info.Name == a.Info.Name))
+						{
 							airSquad.Units.Add(a);
 							matchingSquadFound = true;
 							break;
