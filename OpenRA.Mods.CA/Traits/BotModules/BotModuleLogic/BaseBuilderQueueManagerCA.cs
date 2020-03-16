@@ -1,4 +1,4 @@
-﻿#region Copyright & License Information
+#region Copyright & License Information
 /*
  * Copyright 2007-2020 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
@@ -13,8 +13,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Mods.Common;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
@@ -22,7 +22,7 @@ namespace OpenRA.Mods.CA.Traits
 	class BaseBuilderQueueManagerCA
 	{
 		readonly string category;
-		readonly Func<Actor, bool> isEnemyUnit;
+
 		readonly BaseBuilderBotModuleCA baseBuilder;
 		readonly World world;
 		readonly Player player;
@@ -53,16 +53,6 @@ namespace OpenRA.Mods.CA.Traits
 			failRetryTicks = baseBuilder.Info.StructureProductionResumeDelay;
 			minimumExcessPower = baseBuilder.Info.MinimumExcessPower;
 			this.resourceTypeIndices = resourceTypeIndices;
-			isEnemyUnit = unit =>
-				player.Stances[unit.Owner] == Stance.Enemy
-					&& !unit.Info.HasTraitInfo<HuskInfo>()
-					&& unit.Info.HasTraitInfo<ITargetableInfo>();
-		}
-
-		public IEnumerable<Actor> GetConstructionYards()
-		{
-			return world.ActorsHavingTrait<Building>().Where(b => b.Owner == player
-				&& !b.IsDead && !b.Disposed && baseBuilder.Info.ConstructionYardTypes.Contains(b.Info.Name));
 		}
 
 		public void Tick(IBot bot)
@@ -130,16 +120,6 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			var currentBuilding = queue.AllQueued().FirstOrDefault();
 
-			// Are we building but, is it something duplicated?
-			if (currentBuilding != null
-				&& baseBuilder.Info.BuildingLimits.ContainsKey(currentBuilding.Item)
-				&& playerBuildings.Count(a => a.Info.Name == currentBuilding.Item)
-					>= baseBuilder.Info.BuildingLimits[currentBuilding.Item])
-			{
-				bot.QueueOrder(Order.CancelProduction(queue.Actor, currentBuilding.Item, 1));
-				return false;
-			}
-
 			// Waiting to build something
 			if (currentBuilding == null && failCount < baseBuilder.Info.MaximumFailedPlacementAttempts)
 			{
@@ -160,8 +140,6 @@ namespace OpenRA.Mods.CA.Traits
 				// Check if Building is a defense and if we should place it towards the enemy or not.
 				if (world.Map.Rules.Actors[currentBuilding.Item].HasTraitInfo<AttackBaseInfo>() && world.LocalRandom.Next(100) < baseBuilder.Info.PlaceDefenseTowardsEnemyChance)
 					type = BuildingType.Defense;
-				else if (baseBuilder.Info.RefineryTypes.Contains(world.Map.Rules.Actors[currentBuilding.Item].Name))
-					type = BuildingType.Fragile;
 				else if (baseBuilder.Info.RefineryTypes.Contains(world.Map.Rules.Actors[currentBuilding.Item].Name))
 					type = BuildingType.Refinery;
 
@@ -254,6 +232,40 @@ namespace OpenRA.Mods.CA.Traits
 				}
 
 				if (power != null && refinery != null && !HasSufficientPowerForActor(refinery))
+				{
+					AIUtils.BotDebug("{0} decided to build {1}: Priority override (would be low power)", queue.Actor.Owner, power.Name);
+					return power;
+				}
+			}
+
+			// Should always have a barracks
+			if (!baseBuilder.HasAdequateBarracksCount)
+			{
+				var barracks = GetProducibleBuilding(baseBuilder.Info.BarracksTypes, buildableThings);
+				if (barracks != null && HasSufficientPowerForActor(barracks))
+				{
+					AIUtils.BotDebug("AI: {0} decided to build {1}: Priority override (barracks)", queue.Actor.Owner, barracks.Name);
+					return barracks;
+				}
+
+				if (power != null && barracks != null && !HasSufficientPowerForActor(barracks))
+				{
+					AIUtils.BotDebug("{0} decided to build {1}: Priority override (would be low power)", queue.Actor.Owner, power.Name);
+					return power;
+				}
+			}
+
+			// Should always have a vehicles factory
+			if (!baseBuilder.HasAdequateFactoryCount)
+			{
+				var factory = GetProducibleBuilding(baseBuilder.Info.VehiclesFactoryTypes, buildableThings);
+				if (factory != null && HasSufficientPowerForActor(factory))
+				{
+					AIUtils.BotDebug("AI: {0} decided to build {1}: Priority override (factory)", queue.Actor.Owner, factory.Name);
+					return factory;
+				}
+
+				if (power != null && factory != null && !HasSufficientPowerForActor(factory))
 				{
 					AIUtils.BotDebug("{0} decided to build {1}: Priority override (would be low power)", queue.Actor.Owner, power.Name);
 					return power;
@@ -371,36 +383,6 @@ namespace OpenRA.Mods.CA.Traits
 			return null;
 		}
 
-		public CPos? GetNoRefCYLoc()
-		{
-			var cys = GetConstructionYards().ToList();
-			var refs = world.Actors.Where(a => a.Owner == player &&
-				baseBuilder.Info.RefineryTypes.Contains(a.Info.Name));
-
-			if (cys.Count() == 0)
-				return null;
-
-			// If there's a CY without any ref within 10 cells, return it.
-			var coveredCYs = new List<Actor>();
-			foreach (var cy in cys)
-				foreach (var r in refs)
-				{
-					if ((r.Location - cy.Location).LengthSquared < 100)
-					{
-						coveredCYs.Add(cy);
-						break;
-					}
-				}
-
-			foreach (var cy in coveredCYs)
-				cys.Remove(cy);
-
-			if (cys.Count() == 0)
-				return null;
-
-			return cys.Random(world.LocalRandom).Location;
-		}
-
 		CPos? ChooseBuildLocation(string actorType, bool distanceToBaseIsImportant, BuildingType type)
 		{
 			var actorInfo = world.Map.Rules.Actors[actorType];
@@ -446,52 +428,16 @@ namespace OpenRA.Mods.CA.Traits
 					var targetCell = closestEnemy != null ? closestEnemy.Location : baseCenter;
 					return findPos(baseBuilder.DefenseCenter, targetCell, baseBuilder.Info.MinimumDefenseRadius, baseBuilder.Info.MaximumDefenseRadius);
 
-				case BuildingType.Fragile:
-
-					// Build far from the closest enemy structure
-					var closestEnemyBuilding = world.ActorsHavingTrait<Building>().Where(a => !a.Disposed && player.Stances[a.Owner] == Stance.Enemy)
-						.ClosestTo(world.Map.CenterOfCell(baseBuilder.DefenseCenter));
-					CVec direction = CVec.Zero;
-					if (closestEnemyBuilding != null)
-						direction = baseCenter - closestEnemyBuilding.Location;
-
-					// MinFragilePlacementRadius introduced to push fragile buildings away from base center.
-					// Resilient to nuke.
-					var pos = findPos(baseCenter, baseCenter, baseBuilder.Info.MinFragilePlacementRadius, baseBuilder.Info.MaxBaseRadius);
-					if (pos == null) // rear placement failed but we can still try placing anywhere.
-						pos = findPos(baseCenter, baseCenter, baseBuilder.Info.MinBaseRadius,
-							distanceToBaseIsImportant ? baseBuilder.Info.MaxBaseRadius : world.Map.Grid.MaximumTileSearchRange);
-					return pos;
-
 				case BuildingType.Refinery:
 
-					var tmp = GetNoRefCYLoc();
-					if (tmp != null)
-						baseCenter = tmp.Value;
-
-					WDist refineryCoverRadius = WDist.FromCells(8);
-
-					// We'd only have only at most 6 of those so it won't be a performance issue.
-					var refs = world.ActorsHavingTrait<Building>().Where(b => b.Owner == player && !b.IsDead && !b.Disposed);
-
 					// Try and place the refinery near a resource field
-					var nearbyMines = world.FindActorsInCircle(world.Map.CenterOfCell(baseCenter), WDist.FromCells(baseBuilder.Info.MaxBaseRadius))
-						.Where(a => a.Owner.NonCombatant && a.Info.HasTraitInfo<SeedsResourceCAInfo>()).ToList();
+					var nearbyResources = world.Map.FindTilesInAnnulus(baseCenter, baseBuilder.Info.MinBaseRadius, baseBuilder.Info.MaxBaseRadius)
+						.Where(a => resourceTypeIndices.Get(world.Map.GetTerrainIndex(a)))
+						.Shuffle(world.LocalRandom).Take(baseBuilder.Info.MaxResourceCellsToCheck);
 
-					// Remove covered ones
-					if (refs.Any())
-						nearbyMines.RemoveAll(m =>
-							(refs.ClosestTo(m).CenterPosition - m.CenterPosition).LengthSquared <= refineryCoverRadius.LengthSquared);
-
-					// Also remove ones under enemy influence.
-					nearbyMines.RemoveAll(m =>
-						world.FindActorsInCircle(m.CenterPosition, WDist.FromCells(baseBuilder.Info.MaxBaseRadius))
-							.Where(isEnemyUnit).Count() > 5);
-
-					if (nearbyMines.Any())
+					foreach (var r in nearbyResources)
 					{
-						var found = findPos(baseCenter, baseCenter,
-							baseBuilder.Info.MinBaseRadius, baseBuilder.Info.MaxBaseRadius);
+						var found = findPos(baseCenter, r, baseBuilder.Info.MinBaseRadius, baseBuilder.Info.MaxBaseRadius);
 						if (found != null)
 							return found;
 					}
