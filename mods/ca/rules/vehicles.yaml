@@ -3077,8 +3077,8 @@ CDRN:
 	-CaptureManager:
 	-Capturable:
 	-CaptureNotification:
-	
-CRYO:
+
+CRYOL:
 	Inherits: ^TankTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -3091,17 +3091,17 @@ CRYO:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 91
+		BuildPaletteOrder: 135
 		Prerequisites:  atek, ~vehicles.allies, ~techlevel.high
 		Queue: Vehicle
 		IconPalette: chrometd
-		Description: Long-range support artillery that slows enemies and makes them take more damage.\n  Strong vs Infantry, Vehicles and Buildings\n  Weak vs Aircraft
+		Description: Long-range support artillery that slows enemies and makes them take more damage.\n  Strong vs Infantry, Vehicles, Buildings\n  Weak vs Aircraft
 	Mobile:
 		Speed: 82
-		TurnSpeed: 3
+		TurnSpeed: 4
 		PauseOnCondition: aiming || being-captured || empdisable || being-warped
 	Health:
-		HP: 32000
+		HP: 26000
 	Armor:
 		Type: Light
 	RevealsShroud:
@@ -3112,7 +3112,8 @@ CRYO:
 		PauseOnCondition: empdisable || being-warped
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
+	Explodes:
+		Weapon: CryoExplosion
 	SelectionDecorations:
 	Selectable:
 		DecorationBounds: 28,28
-		
