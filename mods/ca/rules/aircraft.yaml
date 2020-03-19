@@ -399,14 +399,15 @@ TRAN:
 	SelectionDecorations:
 	Selectable:
 		DecorationBounds: 40,36
-		
+
+#to replace
 TRAN.Eagle:
 	Inherits: TRAN
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	RenderSprites:
 		Image: ctran
 	Valued:
-		Cost: 1000
+		Cost: 2000
 	Tooltip:
 		Name: Combat Chinook
 	Buildable:
@@ -414,7 +415,7 @@ TRAN.Eagle:
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 10
 		IconPalette: chrometd
-		Prerequisites: hpad.td, ~aircraft.eagle, ~techlevel.infonly
+		Prerequisites: hpad.td, gtek, ~aircraft.eagle, ~techlevel.infonly
 		Description: Fast Infantry Transport Helicopter.\n  Infantry can fire from weapon ports.
 	Health:
 		HP: 28000

@@ -1196,39 +1196,3 @@ CyCannon:
 			Concrete: 25
 			Brick: 70
 		DamageTypes: Prone350Percent, TriggerProne, ExplosionDeath
-		
-FreezeRay:
-	ReloadDelay: 120
-	Range: 8c0
-	Report: railuse5.aud
-	Projectile: Railgun
-		Duration: 10
-		Blockable: true
-		DamageActorsInLine: false
-		BeamColor: 00FFFFC8
-		BeamWidth: 40
-		HelixThickness: 16
-		HelixRadius: 32
-		HitAnim: explosion
-		HitAnimSequence: small_explosion
-		ZOffset: 2046
-	Warhead@1Dam: SpreadDamage
-		Damage: 5000
-		Versus:
-			None: 100
-			Wood: 10
-			Light: 15
-			Heavy: 5
-			Concrete: 5
-			Brick: 1
-		ValidTargets: Ground, Water
-		DamageTypes: Prone50Percent, TriggerProne, FrozenDeath
-	Warhead@chill: GrantExternalCondition
-		Condition: chilled
-		Duration: 50
-	Warhead@ice: CreateTintedCells
-		LayerName: cryoresidue
-		Spread: 1c0
-		Level: 100
-		Falloff: 100, 75, 52, 15, 2
-		MaxLevel: 600

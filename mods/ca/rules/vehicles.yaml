@@ -573,7 +573,7 @@ APC:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 40
-		Prerequisites: tent, ~weap, ~!vehicles.soviet, ~!vehicles.germany, ~techlevel.low
+		Prerequisites: tent, ~weap, ~!vehicles.soviet, ~techlevel.low
 		Description: Tough infantry transport.\n  Strong vs Light armor\n  Weak vs Tanks, Aircraft
 	Valued:
 		Cost: 700
@@ -2825,7 +2825,8 @@ WTNK:
 		DecorationBounds: 28,28
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
-		
+	
+#adjust offsets
 BATF:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
@@ -2860,42 +2861,50 @@ BATF:
 		Name: primary
 		Turret: primary
 		Weapon: 25mm
-		LocalOffset: 100,0,300
+		LocalOffset: 200,0,300
 		MuzzleSequence: muzzle
 		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: cargo
 	Armament@SECONDARY:
 		Name: secondary
 		Turret: secondary
 		Weapon: 25mm
 		FireDelay: 8
-		LocalOffset: 100,0,300
+		LocalOffset: 200,0,300
 		MuzzleSequence: muzzle
 		PauseOnCondition: empdisable || being-warped
-	Armament@tertiary:
+		RequiresCondition: cargo >= 2
+	Armament@TERTIARY:
 		Name: tertiary
 		Turret: tertiary
 		Weapon: BikeRockets
 		LocalOffset: -200,0,300
 		MuzzleSequence: muzzle
 		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: cargo >= 3
 	Turreted@PRIMARY:
 		Turret: primary
 		Offset: 200,-300,0
 		TurnSpeed: 3
+		PauseOnCondition: !cargo
 	Turreted@SECONDARY:
 		Turret: secondary
 		Offset: 200,300,0
 		TurnSpeed: 3
+		PauseOnCondition: cargo < 2
 	Turreted@TERTIARY:
 		Turret: tertiary
 		Offset: -300,0,358
 		TurnSpeed: 3
+		PauseOnCondition: cargo < 3
 	WithMuzzleOverlay:
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5
 		PipCount: 5
 		LoadingCondition: notmobile
+		LoadedCondition: cargo
+		EjectOnDeath: true
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -2919,13 +2928,46 @@ BATF.AI:
 	Inherits: BATF
 	RenderSprites:
 		Image: batf
-	Buildable:
-		Queue: Vehicle
-		BuildPaletteOrder: 198
-		Prerequisites: tent, radar, ~weap, ~vehicles.france, ~botplayer, ~techlevel.high
-		Description: Tough infantry transport\nwith weapon ports for infantry.\n  Special Ability: Can crush enemy vehicles.
-	Cargo:
-		InitialUnits: e1,e1,e3,e3,e3
+	-Armament@PRIMARY:
+	-Armament@SECONDARY:
+	-Armament@TERTIARY:
+	Armament@PRIMARY:
+		Name: primary
+		Turret: primary
+		Weapon: 25mm
+		LocalOffset: 200,0,300
+		MuzzleSequence: muzzle
+		PauseOnCondition: empdisable || being-warped
+	Armament@SECONDARY:
+		Name: secondary
+		Turret: secondary
+		Weapon: 25mm
+		FireDelay: 8
+		LocalOffset: 200,0,300
+		MuzzleSequence: muzzle
+		PauseOnCondition: empdisable || being-warped
+	Armament@TERTIARY:
+		Name: tertiary
+		Turret: tertiary
+		Weapon: BikeRockets
+		LocalOffset: -200,0,300
+		MuzzleSequence: muzzle
+		PauseOnCondition: empdisable || being-warped
+	-Turreted@PRIMARY:
+	-Turreted@SECONDARY:
+	-Turreted@TERTIARY:
+	Turreted@PRIMARY:
+		Turret: primary
+		Offset: 200,-300,0
+		TurnSpeed: 3
+	Turreted@SECONDARY:
+		Turret: secondary
+		Offset: 200,300,0
+		TurnSpeed: 3
+	Turreted@TERTIARY:
+		Turret: tertiary
+		Offset: -300,0,358
+		TurnSpeed: 3
 		
 MEMP:
 	Inherits: ^TankTD
@@ -3078,7 +3120,7 @@ CDRN:
 	-Capturable:
 	-CaptureNotification:
 
-CRYOL:
+CRYO:
 	Inherits: ^TankTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -3099,7 +3141,7 @@ CRYOL:
 	Mobile:
 		Speed: 82
 		TurnSpeed: 4
-		PauseOnCondition: aiming || being-captured || empdisable || being-warped
+		PauseOnCondition:  being-captured || empdisable || being-warped
 	Health:
 		HP: 26000
 	Armor:
@@ -3111,6 +3153,8 @@ CRYOL:
 		LocalOffset: 150,100,0, 150,-100,0
 		PauseOnCondition: empdisable || being-warped
 	AttackFrontal:
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
 	Explodes:
 		Weapon: CryoExplosion

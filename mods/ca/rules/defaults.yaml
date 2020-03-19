@@ -912,7 +912,7 @@
 		DeathTypes: FireDeath
 	DeathSounds@ZAPPED:
 		Voice: Zapped
-		DeathTypes: ElectricityDeath, ChronoDeath, FrozenDeath
+		DeathTypes: ElectricityDeath, ChronoDeath
 	DeathSounds@POISONED:
 		Voice: Poisoned
 		DeathTypes: PoisonDeath, ToxinDeath, RadiationDeath
@@ -965,6 +965,12 @@
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.weak
 		RequiresCondition: !(hazmatsuits || being-warped)
+	DamagedByTintedCells@FROZEN:
+		Damage: 100
+		DamageInterval: 16
+		DamageTypes: FrozenDeath
+		LayerName: cryoresidue
+		RequiresCondition: !being-warped
 	Cloak@GPSHIDE:
 		Palette: cloak
 
