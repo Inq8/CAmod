@@ -950,7 +950,7 @@ APCH:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 20
-		Prerequisites: ~hpad.td, ~aircraft.nod, ~techlevel.medium
+		Prerequisites: ~hpad.td, ~aircraft.nod, ~!aircraft.marked, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Helicopter Gunship with a Chaingun.\n  Strong vs Infantry, Light Vehicles\n  Weak vs Tanks
 	Aircraft:
@@ -1769,7 +1769,7 @@ VENM:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 20
-		Prerequisites: ~hpad2, ~aircraft.marked, ~techlevel.medium
+		Prerequisites: ~hpad.td, ~aircraft.marked, ~techlevel.medium
 		IconPalette: chrometd
 		Description: VTOL Gunship armed\nwith laser.\n  Strong vs Infantry, Aircraft\n  Weak vs Vehicles
 	Aircraft:
@@ -1818,4 +1818,4 @@ VENM:
 	Selectable:
 		DecorationBounds: 30,24
 	Rearmable:
-		RearmActors: hpad, hpad2
+		RearmActors: hpad, hpad.td
