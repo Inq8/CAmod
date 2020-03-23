@@ -949,7 +949,7 @@ N4:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 70
-		Prerequisites: ~infantry.nod, ~!infantry.marked, hand, ~techlevel.infonly
+		Prerequisites: ~infantry.nod, ~!bio.nod, hand, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Advanced Anti-infantry unit.\n  Strong vs Infantry, Buildings\n  Weak vs Vehicles, Aircraft
 	Valued:
@@ -1004,17 +1004,17 @@ N5:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 115
-		Prerequisites: ~infantry.marked, hand, ~techlevel.infonly
+		Prerequisites: ~bio.nod, ~hand, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Advanced general-purpose infantry.\n  Strong vs all Ground units
 	Valued:
-		Cost: 225
+		Cost: 250
 	Tooltip:
 		Name: Chemical Warrior
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 7000
+		HP: 13000
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
 	Armament:
@@ -1033,12 +1033,48 @@ N5:
 	TakeCover:
 		ProneOffset: 160,0,-254
 	Mobile:
-		Locomotor: chem
-	AttackFrontal:
+		Speed: 49
+		Voice: Move
 		PauseOnCondition: being-warped
+	AttackFrontal:
+		Voice: Attack
+		PauseOnCondition: being-warped
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Guard:
+		Voice: Move
+	Voiced:
+		VoiceSet: CyborgVoice
 	-Crushable:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+	-KillsSelf@Mutation:
+	-GrantCondition@HAZMAT:
+	-WithDecoration@HAZMAT:
+	DamagedByTerrain:
+		Terrain: Tiberium, BlueTiberium
+		Damage: -100
+		DamageInterval: 16
+		DamageTypes: ToxinDeath
+	GrantConditionOnTerrain@THEAL:
+		Condition: tibheal
+		TerrainTypes: Tiberium, BlueTiberium
+	-DamagedByTintedCells@RAD:
+	-DamagedByTintedCells@RADWEAK:
+	WithDecoration@THEAL:
+		Image: pips
+		Sequence: medic
+		Palette: temptd
+		ReferencePoint: Bottom, Left
+		RequiresCondition: tibheal
+	SpeedMultiplier@NODUPG:
+		RequiresCondition: nodupg
+		Modifier: 120
+	DamageMultiplier@NODUPG:
+		RequiresCondition: nodupg
+		Modifier: 35
 	WithMuzzleOverlay:
 	Explodes:
 		Weapon: UnitExplodeChemSmall
@@ -1056,6 +1092,9 @@ N5:
 	FirepowerMultiplier@BIOLAB:
 		RequiresCondition: nodupg || biofirepower
 		Modifier: 110
+	Targetable:
+		RequiresCondition: !parachute && !being-warped
+		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 		
 N5R1:
 	Inherits: N5
@@ -1854,13 +1893,15 @@ E8:
 N1C:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 	Buildable:
 		Queue: Infantry
 		BuildPaletteOrder: 10
 		Prerequisites: ~bio.nod, ~hand, ~techlevel.medium
 		IconPalette: chrometd
-		Description: General-purpose infantry\n  Strong vs Infantry\n  Weak vs Vehicles, Artillery
+		Description: General-purpose Cyborg infantry\n  Strong vs Infantry\n  Weak vs Vehicles, Artillery
 	Valued:
 		Cost: 150
 	Tooltip:
@@ -1924,13 +1965,15 @@ N1C:
 N3C:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 	Buildable:
 		Queue: Infantry
 		BuildPaletteOrder: 20
 		Prerequisites: ~bio.nod, ~hand, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Anti-tank infantry\n  Strong vs Tanks\n  Weak vs Infantry, Artillery
+		Description: Anti-tank Cyborg infantry\n  Strong vs Tanks\n  Weak vs Infantry, Artillery
 	Valued:
 		Cost: 350
 	Tooltip:
@@ -2020,6 +2063,8 @@ N3C:
 RMBC:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@BERSERK: ^Berserk
 	Inherits@EMP: ^EmpDisable
 	RenderSprites:
 		PlayerPalette: playerd2k
@@ -2030,7 +2075,7 @@ RMBC:
 		BuildPaletteOrder: 121
 		Prerequisites: bio.nod, ~hand, ~techlevel.high
 		IconPalette: chrometd
-		Description: Elite infantry unit. Armed with\na Plasma cannon.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft
+		Description: Elite Cyborg infantry unit. Armed with\na Plasma cannon.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft
 	Valued:
 		Cost: 1500
 	Tooltip:
