@@ -487,7 +487,45 @@ PortaLaser:
 PortaLaserE:
 	Inherits: PortaLaser
 	Range: 8c0
-	
+
+VenomLaser:
+	ReloadDelay: 30
+	ValidTargets: Ground, Water
+	Range: 6c0
+	Report: venmfire1.aud, venmfire2.aud
+	Projectile: LaserZap
+		Width: 35
+		HitAnim: laserfire
+		Color: FF000080
+		ZOffset: 2047
+		SecondaryBeam: true
+		SecondaryBeamWidth: 65
+		SecondaryBeamZOffset: 2047
+		SecondaryBeamColor: FF000040
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 5500
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		Versus:
+			Wood: 25
+			Concrete: 10
+			Light: 50
+			Heavy: 10
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch
+		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
+
+VenomLaserAA:
+	Inherits: VenomLaser
+	ValidTargets: Air
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Air
+		Damage: 3500
+		Versus:
+			Light: 40
+			Heavy: 50
+	-Warhead@2Smu:
+
 PointLaser:
 	Inherits: Laser
 	ReloadDelay: 50
