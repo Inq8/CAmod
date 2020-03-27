@@ -65,14 +65,19 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		protected static CPos? FindSafePlace(SquadCA owner, out Actor detectedEnemyTarget, bool needTarget)
 		{
 			var map = owner.World.Map;
-			var dangerRadius = owner.SquadManager.Info.AircraftDangerScanRadius;
+			var dangerRadius = owner.SquadManager.Info.DangerScanRadius;
 			detectedEnemyTarget = null;
-			var x = (map.MapSize.X % dangerRadius) == 0 ? map.MapSize.X : map.MapSize.X + dangerRadius;
-			var y = (map.MapSize.Y % dangerRadius) == 0 ? map.MapSize.Y : map.MapSize.Y + dangerRadius;
+			var maxX = (map.MapSize.X % dangerRadius) == 0 ? map.MapSize.X : map.MapSize.X + dangerRadius;
+			var maxY = (map.MapSize.Y % dangerRadius) == 0 ? map.MapSize.Y : map.MapSize.Y + dangerRadius;
 
-			for (var i = 0; i < x; i += dangerRadius * 2)
+			// Random starting coordinates for scanning the map to find a target.
+			var startX = owner.World.SharedRandom.Next(0, map.MapSize.X);
+			var startY = owner.World.SharedRandom.Next(0, map.MapSize.Y);
+			var scanReset = false;
+
+			for (var i = startX; i < maxX; i += dangerRadius * 2)
 			{
-				for (var j = 0; j < y; j += dangerRadius * 2)
+				for (var j = startY; j < maxY; j += dangerRadius * 2)
 				{
 					var pos = new CPos(i, j);
 					if (NearToPosSafely(owner, map.CenterOfCell(pos), out detectedEnemyTarget))
@@ -82,6 +87,16 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 						return pos;
 					}
+				}
+
+				// If the next iteration will be beyond the maximum, reset to 0,0 and continue scanning until we're back to the starting coordinates.
+				if (i + dangerRadius * 2 >= maxX && !scanReset)
+				{
+					scanReset = true;
+					maxX = startX;
+					maxY = startY;
+					i = 0;
+					startY = 0;
 				}
 			}
 
