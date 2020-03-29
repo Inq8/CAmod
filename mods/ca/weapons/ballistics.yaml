@@ -518,3 +518,12 @@ ClusterBomb:
 		ImpactSounds: splashl1.aud, splashl2.aud
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
+
+BATFGun:
+	Inherits: 25mm
+	Warhead@1Dam: SpreadDamage
+		Damage: 1750
+		Versus:
+			Wood: 40
+			Concrete: 25
+			Light: 100
