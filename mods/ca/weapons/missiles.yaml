@@ -1225,7 +1225,7 @@ CryoMissile:
 		Blockable: false
 		Shadow: true
 		Inaccuracy: 1c341
-		Image: missile
+		Image: dragon
 		TrailImage: smokey
 		TrailPalette: cold1
 		TrailInterval: 1
@@ -1261,3 +1261,13 @@ CryoMissile:
 		Level: 100
 		Falloff: 100, 75, 52, 15, 2
 		MaxLevel: 600
+
+BATFRockets:
+	Inherits: Dragon
+	Burst: 2
+	Range: 4c768
+	Warhead@1Dam: SpreadDamage
+		Damage: 2200
+		Versus:
+			Concrete: 50
+			Light: 25
