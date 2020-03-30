@@ -1863,7 +1863,7 @@ IFV:
 		Prerequisites: tent, ~vehicles.allies, ~techlevel.low
 		Description: Adaptable infantry transport.\n  Strong vs Infantry, Light armor\n  Weak vs Tanks, Aircraft\n Special Ability: Transform
 	Valued:
-		Cost: 650
+		Cost: 750
 	Tooltip:
 		Name: Infantry Fighting Vehicle
 	UpdatesPlayerStatistics:
@@ -1884,14 +1884,6 @@ IFV:
 	Turreted:
 		TurnSpeed: 10
 		Offset: 20,0,60
-	Armament@DEFAULT:
-		Weapon: 25mm
-		Recoil: 85
-		RecoilRecovery: 25
-		LocalOffset: 768,0,90
-		MuzzleSequence: muzzle2
-		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: !(gunturr || samturr || commturr || flamturr || chemturr || spyturr || testurr || engturr || acolturr || desoturr || tecnturr)
 	Armament@E1:
 		Weapon: M60mg
 		MuzzleSequence: muzzle
@@ -1904,14 +1896,25 @@ IFV:
 		LocalOffset: 150,0,100
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: fragturr
-	Armament@E3:
+	Armament@Default:
 		Weapon: IFVRockets
+		LocalOffset: 192,0,376
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !(gunturr || samturr || commturr || flamturr || chemturr || spyturr || testurr || engturr || acolturr || desoturr || tecnturr)
+	Armament@DefaultAA:
+		Name: secondary
+		Weapon: IFVRocketsAA
+		LocalOffset: 192,0,376
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !(gunturr || samturr || commturr || flamturr || chemturr || spyturr || testurr || engturr || acolturr || desoturr || tecnturr)
+	Armament@E3:
+		Weapon: IFVRocketsE
 		LocalOffset: 192,0,376
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: samturr
 	Armament@E3AA:
 		Name: secondary
-		Weapon: IFVRocketsAA
+		Weapon: IFVRocketsAAE
 		LocalOffset: 192,0,376
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: samturr
@@ -1976,11 +1979,8 @@ IFV:
 		RequiresCondition: gunturr || commturr || desoturr || tecnturr
 		Sequence: turret
 	WithSpriteTurret@samturr:
-		RequiresCondition: samturr
+		RequiresCondition: !full || samturr
 		Sequence: turret3
-	WithSpriteTurret@default:
-		Sequence: turret2
-		RequiresCondition: !(gunturr || commturr || samturr || spyturr || testurr || medturr || engturr || acolturr || desoturr || tecnturr)
 	WithSpriteTurret@tes:
 		Sequence: turret4
 		RequiresCondition: testurr || acolturr
@@ -1992,6 +1992,7 @@ IFV:
 		MaxWeight: 1
 		PipCount: 1
 		LoadingCondition: notmobile
+		LoadedCondition: full
 		PassengerConditions:
 			e1: gunturr
 			e2: fragturr
