@@ -3126,6 +3126,68 @@ CDRN:
 	-Capturable:
 	-CaptureNotification:
 
+CHPR:
+	Inherits: ^Tank
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		Image: chpr
+		PlayerPalette: overlayplayer
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 190
+		IconPalette: chrometd
+		Prerequisites: atek, ~vehicles.germany, ~techlevel.high
+		Description: Advanced heavy tank that can erase targets from existence.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft, Buildings
+	Valued:
+		Cost: 1700
+	Tooltip:
+		Name: Chrono Prison
+		GenericName: Tank
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 75000
+	Armor:
+		Type: Heavy
+	Mobile:
+		Speed: 52
+		Locomotor: heavytracked
+	Passenger:
+		CargoType: Vehicle
+		Weight: 2
+	RevealsShroud:
+		Range: 6c0
+	Turreted:
+		TurnSpeed: 3
+		Offset: -156,0,0
+	Armament@PRIMARY:
+		Weapon: Railgun
+		LocalOffset: 600,0,480
+		PauseOnCondition: empdisable || being-warped
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
+	WithMuzzleOverlay:
+	WithSpriteTurret@inactiveturret:
+		RequiresCondition: !aiming
+		Sequence: turret
+	WithSpriteTurret@activeturret:
+		RequiresCondition: aiming
+		Sequence: turretactive
+	SpawnActorOnDeath:
+		Actor: CHPR.Husk
+	SelectionDecorations:
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	Selectable:
+		DecorationBounds: 44,38,0,-4
+	Carryable:
+		LocalOffset: 0,0,500
+	-Crushable:
+	GrantConditionWhileAiming:
+		Condition: aiming
+
 CRYO:
 	Inherits: ^TankTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
