@@ -270,10 +270,10 @@
 ^Warpable:
 	Warpable:
 		Condition: being-warped
-		RevokeDelay: 350
-		DamageTypes: TemporalDeath
+		RevokeDelay: 30
+		DamageTypes: ChronoDeath
 		ScaleWithCurrentHealthPercentage: true
-		ShowSelectionBar: false
+		ShowSelectionBar: true
 		SelectionBarColor: 40FFFF
 	Targetable@Temporal:
 		TargetTypes: Temporal
@@ -289,6 +289,10 @@
 	WithIdleOverlay@temporal:
 		Sequence: chrono-overlay
 		RequiresCondition: being-warped
+	Explodes@temporal:
+		Weapon: TemporalExplode
+		EmptyWeapon: TemporalExplode
+		DeathTypes: ChronoDeath
 		
 ^GDIUpgrade:
 	DamageMultiplier@GDIUPG:
@@ -712,6 +716,7 @@
 	Explodes:
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall
+		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
 	WithFacingSpriteBody:
 	WithParachute:
 		ShadowImage: parach-shadow
@@ -1078,6 +1083,7 @@
 	Explodes:
 		Weapon: UnitExplodeShip
 		EmptyWeapon: UnitExplodeShip
+		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
 	Guard:
 	Guardable:
 	Tooltip:
@@ -1174,6 +1180,7 @@
 	Explodes:
 		Weapon: UnitExplode
 		RequiresCondition: !airborne
+		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
 	GrantConditionOnPrerequisite@ROF:
 		Condition: revealonfire
 		Prerequisites: global.revealonfire
@@ -1299,6 +1306,7 @@
 		Type: Footprint
 		Weapon: BuildingExplode
 		EmptyWeapon: BuildingExplode
+		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
 	CaptureNotification:
 		LoseNotification: StructureLost
 	ShakeOnDeath:
@@ -1311,6 +1319,7 @@
 	Tooltip:
 		GenericName: Structure
 	Demolishable:
+		RequiresCondition: !being-warped
 	MapEditorData:
 		Categories: Building
 	CommandBarBlacklist:
@@ -1357,9 +1366,11 @@
 	SpawnActorOnDeath@1:
 		Actor: e1
 		Probability: 5
+		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
 	SpawnActorOnDeath@2:
 		Actor: tecn
 		Probability: 10
+		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
 	MustBeDestroyed:
 		RequiredForShortGame: true
 	GpsDot:
@@ -1379,6 +1390,9 @@
 		TargetTypes: Ground, C4, DetonateAttack, Structure
 		RequiresCondition: !being-warped
 	-ExternalCondition@CRATE-CLOAK:
+	Explodes@temporal:
+		Weapon: TemporalExplodeLarge
+		EmptyWeapon: TemporalExplodeLarge
 		
 ^BuildingTD:
 	Inherits@1: ^Building
@@ -1469,6 +1483,9 @@
 	ProductionCostMultiplier@FranceBonus:
 		Multiplier: 90
 		Prerequisites: structures.france
+	Explodes@temporal:
+		Weapon: TemporalExplode
+		EmptyWeapon: TemporalExplode
 	
 ^DefenseTD:
 	Inherits@1: ^Defense

@@ -1122,8 +1122,33 @@ TimeWarp:
 		ExplosionPalette: ra2effect-ignore-lighting-alpha75
 		ValidTargets: Ground, Air, Water
 		ImpactSounds: chrono2.aud
-	Warhead@Damage: WarpDamage
+	Warhead@Damage1: WarpDamage
 		Spread: 1c0
+		Damage: 1
+		ValidTargets: Temporal
+	Warhead@Damage2: WarpDamage
+		Spread: 1c0
+		Delay: 25
+		Damage: 1
+		ValidTargets: Temporal
+	Warhead@Damage3: WarpDamage
+		Spread: 1c0
+		Delay: 50
+		Damage: 1
+		ValidTargets: Temporal
+	Warhead@Damage4: WarpDamage
+		Spread: 1c0
+		Delay: 75
+		Damage: 1
+		ValidTargets: Temporal
+	Warhead@Damage5: WarpDamage
+		Spread: 1c0
+		Delay: 100
+		Damage: 1
+		ValidTargets: Temporal
+	Warhead@Damage6: WarpDamage
+		Spread: 1c0
+		Delay: 125
 		Damage: 1
 		ValidTargets: Temporal
 	Warhead@3Flash: ChronoFlashEffect
@@ -1237,3 +1262,32 @@ CyCannon:
 			Concrete: 25
 			Brick: 70
 		DamageTypes: Prone350Percent, TriggerProne, ExplosionDeath
+		
+NeutronCannon:
+	ValidTargets: Temporal
+	ReloadDelay: 1
+	Range: 5c0
+	Projectile: InstantHit
+	Warhead@Damage: WarpDamage
+		Damage: 220
+		Spread: 1
+		ValidTargets: Temporal
+		DamageTypes: ChronoDeath
+
+NeutronCannonVisual:
+	ValidTargets: Temporal
+	ReloadDelay: 120
+	Range: 5c0
+	Report: chronogun.aud
+	Projectile: RadBeam
+		Amplitude: 176
+		WaveLength: 284
+		Color: 80C8FF
+	Warhead@Damage: WarpDamage
+		Damage: 1
+		Spread: 1
+		ValidTargets: Temporal
+		DamageTypes: ChronoDeath
+	Warhead@Stars: CreateEffect
+		Explosions: chrono_zap
+		ValidTargets: Ground, Water

@@ -677,3 +677,20 @@ CryoExplosion:
 		Level: 100
 		Falloff: 100, 75, 52, 15, 2
 		MaxLevel: 600
+		
+TemporalExplode:
+	Warhead@1Eff: CreateEffect
+		Explosions: chronowarp_effect
+		ExplosionPalette: ra2effect-ignore-lighting-alpha75
+		ImpactSounds: chronowarp.aud
+		ValidTargets: Ground, Water, Air
+	Warhead@3Flash: ChronoFlashEffect
+		
+
+TemporalExplodeLarge:
+	Warhead@1Eff: CreateEffect
+		Explosions: chronowarpbig_effect
+		ExplosionPalette: ra2effect-ignore-lighting-alpha75
+		ImpactSounds: chronowarp.aud
+		ValidTargets: Ground, Water, Air
+	Warhead@3Flash: ChronoFlashEffect
