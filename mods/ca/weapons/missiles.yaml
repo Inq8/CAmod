@@ -42,6 +42,14 @@
 ^AntiAirMissile:
 	Inherits: ^AntiGroundMissile
 	ValidTargets: Air
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			None: 100
+			Wood: 100
+			Light: 100
+			Heavy: 100
+			Concrete: 100
+			Brick: 100	
 	Warhead@3Eff: CreateEffect
 		ImpactActors: false
 
@@ -170,11 +178,8 @@ HellfireAA:
 		HorizontalRateOfTurn: 10
 		RangeLimit: 7c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 4000
+		Damage: 3000
 		ValidTargets: Air
-		Versus:
-			Wood: 75
-			Light: 75
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air
 		
@@ -197,11 +202,8 @@ WidowAA:
 		RangeLimit: 12c0
 		ContrailLength: 6
 	Warhead@1Dam: SpreadDamage
-		Damage: 8000
+		Damage: 6000
 		ValidTargets: Air
-		Versus:
-			Wood: 75
-			Light: 75
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air
 
@@ -253,7 +255,7 @@ APCTusk:
 
 Nike:
 	Inherits: ^AntiAirMissile
-	ReloadDelay: 15
+	ReloadDelay: 20
 	Range: 7c512
 	Report: samshot1.aud
 	Projectile: MissileCA
@@ -264,10 +266,8 @@ Nike:
 		RangeLimit: 9c0
 		Speed: 341
 	Warhead@1Dam: SpreadDamage
-		Damage: 5750
+		Damage: 7500
 		ValidTargets: Air
-		Versus:
-			Light: 75
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air
 		ImpactSounds: kaboom25.aud
@@ -282,16 +282,14 @@ RedEye:
 		HorizontalRateOfTurn: 20
 		Speed: 298
 	Warhead@1Dam: SpreadDamage
-		Damage: 4000
+		Damage: 2800
 		ValidTargets: Air
-		Versus:
-			Light: 60
 
 RedEye.CYB:
 	Inherits: RedEye
 	Report: rocket.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 5000
+		Damage: 3500
 
 RedEyeE:
 	Inherits: RedEye
@@ -301,7 +299,7 @@ RedEyeE.CYB:
 	Inherits: RedEyeE
 	Report: rocket.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 5000
+		Damage: 3500
 
 Stinger:
 	Inherits: ^AntiGroundMissile
@@ -333,6 +331,10 @@ StingerAA:
 	Projectile: MissileCA
 		Speed: 255
 		CloseEnough: 298
+	Warhead@1Dam: SpreadDamage
+		Damage: 2600	
+		Versus:
+			Light: 100
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air
 		ImpactSounds: kaboom25.aud
@@ -511,7 +513,10 @@ SubMissileAA:
 	ReloadDelay: 100
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
-		Damage: 1500
+		Damage: 450
+		Versus:
+			Light: 100
+			Heavy: 100
 
 SCUD:
 	Inherits: ^AntiGroundMissile
@@ -671,7 +676,7 @@ BikeRocketsAA:
 	Burst: 2
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
-		Damage: 2500
+		Damage: 1800
 	
 IFVRockets:
 	Inherits: Dragon
@@ -723,9 +728,7 @@ BTRRocketsAA:
 	Burst: 2
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
-		Damage: 2000
-		Versus
-			Light: 75
+		Damage: 1800
 
 227mm:
 	Inherits: ^AntiGroundMissile
@@ -808,13 +811,8 @@ BTRRocketsAA:
 		RangeLimit: 12c0
 	Warhead@1Dam: SpreadDamage
 		Spread: 683
-		Damage: 4500
+		Damage: 2200
 		ValidTargets: Air
-		Versus:
-			None: 35
-			Wood: 60
-			Light: 40
-			Heavy: 80
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air
 		ImpactSounds: xplos.aud
@@ -840,19 +838,12 @@ BTRRocketsAA:
 		CruiseAltitude: 2c0
 	Warhead@1Dam: SpreadDamage
 		Spread: 683
-		Damage: 5000
+		Damage: 2400
 		ValidTargets: Air
-		Versus:
-			None: 35
-			Wood: 60
-			Light: 40
-			Heavy: 80
 
-		
 227mmAAH:
 	Inherits: 227mmAA
 	Report: hovrmis1.aud
-
 
 227mm.stnk:
 	ReloadDelay: 70
@@ -913,13 +904,8 @@ BTRRocketsAA:
 		RangeLimit: 9c0
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
-		Damage: 6000
+		Damage: 1800
 		ValidTargets: Air
-		Versus:
-			None: 25
-			Wood: 75
-			Light: 25
-			Heavy: 70
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
@@ -1170,11 +1156,8 @@ ScrinTorpAA:
 		-TrailImage:
 		RangeLimit: 12c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 2500
+		Damage: 1600
 		ValidTargets: Air
-		Versus:
-			Wood: 75
-			Light: 65
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air
 		ImpactSounds: expnew17.aud

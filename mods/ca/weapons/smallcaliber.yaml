@@ -10,13 +10,6 @@
 		Spread: 213
 		Damage: 2000
 		ValidTargets: Air
-		Versus:
-			None: 40
-			Wood: 10
-			Light: 60
-			Heavy: 10
-			Concrete: 10
-			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: small_explosion_air
@@ -24,21 +17,12 @@
 
 ZSU-23:
 	Inherits: ^AACannon
-	Burst: 2
-	BurstDelays: 0
-	ReloadDelay: 6
+	ReloadDelay: 8
 	Range: 8c0
 	Projectile: Bullet
 		Speed: 3c340
 	Warhead@1Dam: SpreadDamage
-		Damage: 1200
-		Versus:
-			None: 25
-			Wood: 75
-			Light: 75
-			Heavy: 100
-			Concrete: 100
-			Brick: 50
+		Damage: 2800
 
 FLAK-23-AA:
 	Inherits: ^AACannon
@@ -63,20 +47,13 @@ FLAK-23-AG:
 		
 Gatt.0:
 	Inherits: ^AACannon
-	ReloadDelay: 20
+	ReloadDelay: 15
 	Range: 8c0
 	Report: vgatlo1a.aud
 	Projectile: Bullet
 		Speed: 3c340
 	Warhead@1Dam: SpreadDamage
-		Damage: 1100
-		Versus:
-			None: 30
-			Wood: 75
-			Light: 75
-			Heavy: 100
-			Concrete: 50
-			Brick: 50
+		Damage: 1000
 	Warhead@2Eff: CreateEffect
 		ValidTargets: Air
 		Explosions: small_explosion_air
@@ -88,19 +65,21 @@ Gatt.1:
 	ReloadDelay: 5
 	Report: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 1600
+		Damage: 1500
+
 Gatt.2:
 	Inherits: Gatt.1
 	Report: vgatlo5a.aud, vgatlo5b.aud
 	ReloadDelay: 5
 	Warhead@1Dam: SpreadDamage
-		Damage: 2000
+		Damage: 1900
+
 Gatt.3:
 	Inherits: Gatt.2
 	Report: vgatlo8a.aud, vgatlo8b.aud
 	ReloadDelay: 5
 	Warhead@1Dam: SpreadDamage
-		Damage: 2100
+		Damage: 2200
 
 ^HeavyMG:
 	ReloadDelay: 30
