@@ -270,7 +270,7 @@
 ^Warpable:
 	Warpable:
 		Condition: being-warped
-		RevokeDelay: 30
+		RevokeDelay: 120
 		DamageTypes: ChronoDeath
 		ScaleWithCurrentHealthPercentage: true
 		ShowSelectionBar: true
@@ -1229,9 +1229,15 @@
 	Targetable@REPAIR:
 		RequiresCondition: !airborne && damaged && !being-warped
 		TargetTypes: Repair
+	Targetable@Temporal:
+		RequiresCondition: !airborne
+		TargetTypes: Temporal
 	ProductionCostMultiplier@EagleBonus:
 		Multiplier: 90
 		Prerequisites: structures.eagle
+	Explodes:
+		Weapon: UnitExplode
+		RequiresCondition: !airborne && !being-warped
 		
 ^PlaneTD:
 	Inherits@1: ^Plane
@@ -1319,7 +1325,6 @@
 	Tooltip:
 		GenericName: Structure
 	Demolishable:
-		RequiresCondition: !being-warped
 	MapEditorData:
 		Categories: Building
 	CommandBarBlacklist:
@@ -1366,17 +1371,18 @@
 	SpawnActorOnDeath@1:
 		Actor: e1
 		Probability: 5
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
+		RequiresCondition: !being-warped
 	SpawnActorOnDeath@2:
 		Actor: tecn
 		Probability: 10
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
+		RequiresCondition: !being-warped
 	MustBeDestroyed:
 		RequiredForShortGame: true
 	GpsDot:
 		String: Structure
 	Demolishable:
 		Condition: being-demolished
+		RequiresCondition: !being-warped
 	Sellable:
 		RequiresCondition: !build-incomplete && !being-captured && !being-demolished && !being-warped
 		SellSounds: cashturn.aud
