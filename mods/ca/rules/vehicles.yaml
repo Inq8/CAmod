@@ -2811,7 +2811,7 @@ WTNK:
 		Prerequisites: tmpl, ~vehicles.legion, ~techlevel.high
 		Description: Prototype microwave weapon.\nDisables Vehicles & Structures.\n Strong vs Vehicles, Infantry\n  Weak vs Aircraft
 	Valued:
-		Cost: 1500
+		Cost: 1350
 	Tooltip:
 		Name: Microwave Tank
 		GenericName: Tank
@@ -2827,25 +2827,21 @@ WTNK:
 	Turreted:
 		TurnSpeed: 4
 		Offset: 0,0,0
-	Armament:
+	Armament@PRIMARY:
 		Weapon: MicrowaveZap
+		FireDelay: 7
 		LocalOffset: 500,0,140
 		PauseOnCondition: empdisable || being-warped
 		MuzzleSequence: muzzle
 		MuzzlePalette: tseffect-ignore-lighting-alpha75
-		ReloadingCondition: charging
+	Armament@PRIMARYSOUND:
+		Weapon: MicrowaveZapSound
 	AttackTurreted:
 		TargetFrozenActors: True
 		OpportunityFire: False
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
 	WithMuzzleOverlay:
-	AmbientSound:
-		RequiresCondition: charging && aiming
-		SoundFiles: coreup1.aud
-		Interval: 110, 115
-	GrantConditionWhileAiming:
-		Condition: aiming
 	WithSpriteTurret:
 	SpawnActorOnDeath:
 		Actor: WTNK.Husk
