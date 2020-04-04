@@ -1240,29 +1240,65 @@ CyCannon:
 		
 NeutronCannon:
 	ValidTargets: Temporal
-	ReloadDelay: 110
+	ReloadDelay: 5
+	Burst: 22
+	BurstDelays: 5
 	Range: 5c0
 	Projectile: InstantHit
 	Warhead@Damage: WarpDamage
-		Damage: 10000
+		Damage: 750
 		Spread: 1
+		Versus:
+			None: 40
+			Wood: 60
+			Light: 50
+			Heavy: 100
+			Concrete: 55
+			Brick: 55
 		ValidTargets: Temporal
 		DamageTypes: ChronoDeath
 
-NeutronCannonVisual:
+NeutronCannonBeam:
 	ValidTargets: Temporal
-	ReloadDelay: 110
+	ReloadDelay: 5
 	Range: 5c0
-	Report: chronogun.aud
-	Projectile: RadBeam
-		Amplitude: 176
-		WaveLength: 284
-		Color: 80C8FF
-	Warhead@Damage: WarpDamage
+	TargetActorCenter: true
+	Projectile: LaserZap
+		Width: 60
+		Duration: 15
+		Color: 80C8FF88
+		ZOffset: 2046
+		SecondaryBeam: true
+		SecondaryBeamWidth: 120
+		SecondaryBeamZOffset: 2046
+		SecondaryBeamColor: 80C8FF33
+	Warhead@Damage: SpreadDamage
 		Damage: 1
 		Spread: 1
+		Versus:
+			None: 0
+			Wood: 0
+			Light: 0
+			Heavy: 0
+			Concrete: 0
+			Brick: 0
 		ValidTargets: Temporal
 		DamageTypes: ChronoDeath
-	Warhead@Stars: CreateEffect
-		Explosions: chrono_zap
-		ValidTargets: Ground, Water
+
+NeutronCannonPulse:
+	Inherits: NeutronCannonBeam
+	ReloadDelay: 20
+	Projectile: AreaBeam
+		Speed: 0c768
+		Duration: 8
+		Width: 60
+		Shape: Flat
+		ZOffset: 2047
+		TrackTarget: true
+		Color: d8f9f7cc
+
+NeutronCannonSound:
+	Inherits: NeutronCannonBeam
+	Report: chronogun.aud
+	ReloadDelay: 60
+	Projectile: InstantHit
