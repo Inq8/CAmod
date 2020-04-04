@@ -959,7 +959,7 @@ MicrowaveZap:
 	ValidTargets: Ground, Water
 	InvalidTargets: Air
 	TargetActorCenter: true
-	ReloadDelay: 120
+	ReloadDelay: 100
 	Range: 6c0
 	Report: corefir1.aud
 	Projectile: Railgun
@@ -978,7 +978,7 @@ MicrowaveZap:
 	Warhead@1Dam: SpreadDamage
 		InvalidTargets: Air
 		Spread: 512
-		Damage: 15000
+		Damage: 5000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
 			None: 100
@@ -988,14 +988,9 @@ MicrowaveZap:
 			Heavy: 85
 	Warhead@emp: GrantExternalCondition
 		Range: 0c511
-		Duration: 60
+		Duration: 90
 		Condition: empdisable
 		ValidTargets: Ground, Structure, Vehicle
-	Warhead@microwave: GrantExternalCondition
-		Range: 0c511
-		Duration: 130
-		Condition: 	microwaved
-		ValidTargets: Ground, Vehicle
 
 MicrowaveZapSound:
 	Inherits: MicrowaveZap
@@ -1011,7 +1006,6 @@ MicrowaveZapSound:
 			Heavy: 0
 			Brick: 0
 	-Warhead@emp:
-	-Warhead@microwave:
 
 HornetLauncher:
 	ReloadDelay: 175
