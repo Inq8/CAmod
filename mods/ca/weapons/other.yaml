@@ -1318,3 +1318,31 @@ NeutronCannonSound:
 	Report: chronogun.aud
 	ReloadDelay: 60
 	Projectile: InstantHit
+
+SonicPulse:
+	ReloadDelay: 120
+	Range: 9c0
+	Report: sonicpulse1.aud, sonicpulse2.aud
+	Projectile: LinearPulse
+	Warhead@1Dam: SpreadDamage
+		Spread: 0c256
+		Falloff: 100, 50, 25, 5, 0
+		Damage: 7500
+		ValidTargets: Ground, Water
+		ValidStances: Enemy, Neutral
+		Versus:
+			None: 70
+			Wood: 45
+			Light: 60
+			Heavy: 100
+			Concrete: 35
+			Brick: 20
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@3Eff: CreateEffect
+		Explosions: sonicpulse1, sonicpulse2
+		ExplosionPalette: effect-ignore-lighting-alpha40
+		ValidTargets: Ground, Air, Ship, Trees
+	Warhead@2Eff: CreateEffect
+		Explosions: sonicblast1, sonicblast2
+		ExplosionPalette: effect-ignore-lighting-alpha40
+		ValidTargets: Ground, Air, Ship, Trees
