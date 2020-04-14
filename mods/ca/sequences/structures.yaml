@@ -1944,3 +1944,28 @@ nmslo:
 		Length: 17
 		Tick: 80
 	icon: nmsloicnh
+
+stwr:
+	Inherits: ^StructureOverlays
+	Defaults:
+		Offset: 0,-13
+	idle: stwr
+		Facings: 32
+		UseClassicFacingFudge: True
+	make: stwrmake
+		Length: *
+	damaged-idle: stwr
+		Start: 32
+		Facings: 32
+		UseClassicFacingFudge: True
+	dead: stwr
+		Start: 64
+	bib: mbFTUR
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+			BARREN: TEMPERAT
+		Offset: 0, 2
+	icon: stwricnh
+		Offset: 0,0
