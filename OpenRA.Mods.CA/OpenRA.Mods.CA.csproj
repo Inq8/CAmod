@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -21,88 +21,6 @@
     <Optimize>false</Optimize>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Activities\CrashLand.cs" />
-    <None Remove="Activities\EnterAirstrikeMaster.cs" />
-    <None Remove="Activities\EnterCarrierMaster.cs" />
-    <None Remove="Activities\FallDown.cs" />
-    <None Remove="Activities\ShootableBallisticMissileFly.cs" />
-    <None Remove="Effects\SmokeParticle.cs" />
-    <None Remove="Graphics\ArcRenderable.cs" />
-    <None Remove="Graphics\ElectricBoltRenderable.cs" />
-    <None Remove="Graphics\KKNDLaserRenderable.cs" />
-    <None Remove="Graphics\RadBeamRenderable.cs" />
-    <None Remove="Graphics\TintedCell.cs" />
-    <None Remove="Orders\ShootableBallisticMissileMoveOrderTargeter.cs" />
-    <None Remove="Projectiles\ArcLaserZap.cs" />
-    <None Remove="Projectiles\AthenaProjectile.cs" />
-    <None Remove="Projectiles\BulletCA.cs" />
-    <None Remove="Projectiles\ElectricBolt.cs" />
-    <None Remove="Projectiles\InstantExplode.cs" />
-    <None Remove="Projectiles\KKNDLaser.cs" />
-    <None Remove="Projectiles\MissileCA.cs" />
-    <None Remove="Projectiles\RadBeam.cs" />
-    <None Remove="SpriteLoaders\R8Loader.cs" />
-    <None Remove="TraitsInterfaces.cs" />
-    <None Remove="Traits\AirstrikeMaster.cs" />
-    <None Remove="Traits\AirstrikeSlave.cs" />
-    <None Remove="Traits\AIUtils.cs" />
-    <None Remove="Traits\AttackBomberCA.cs" />
-    <None Remove="Traits\BaseSpawnerMaster.cs" />
-    <None Remove="Traits\BaseSpawnerSlave.cs" />
-    <None Remove="Traits\Berserkable.cs" />
-    <None Remove="Traits\BotModules\BotModuleLogic\BaseBuilderQueueManagerCA.cs" />
-    <None Remove="Traits\BotModules\HarvesterBotModuleCA.cs" />
-    <None Remove="Traits\BotModules\MCVManagerBotModuleCA.cs" />
-    <None Remove="Traits\BotModules\SquadManagerBotModuleCA.cs" />
-    <None Remove="Traits\BotModules\Squads\AttackOrFleeFuzzyCA.cs" />
-    <None Remove="Traits\BotModules\Squads\SquadCA.cs" />
-    <None Remove="Traits\BotModules\Squads\StateMachineCA.cs" />
-    <None Remove="Traits\BotModules\Squads\States\AirStatesCA.cs" />
-    <None Remove="Traits\BotModules\Squads\States\GroundStatesCA.cs" />
-    <None Remove="Traits\BotModules\Squads\States\NavyStatesCA.cs" />
-    <None Remove="Traits\BotModules\Squads\States\ProtectionStatesCA.cs" />
-    <None Remove="Traits\BotModules\Squads\States\StateBaseCA.cs" />
-    <None Remove="Traits\BotModules\UnitBuilderBotModuleCA.cs" />
-    <None Remove="Traits\CarrierMaster.cs" />
-    <None Remove="Traits\CarrierSlave.cs" />
-    <None Remove="Traits\CashHackable.cs" />
-    <None Remove="Traits\ChargingSelfDestruct.cs" />
-    <None Remove="Traits\Conditions\GrantTimedConditionOnDeploy.cs" />
-    <None Remove="Traits\CrashLanding.cs" />
-    <None Remove="Traits\DamagedByTintedCells.cs" />
-    <None Remove="Traits\FlickeringPaletteEffect.cs" />
-    <None Remove="Traits\MissileSpawnerMaster.cs" />
-    <None Remove="Traits\MissileSpawnerSlave.cs" />
-    <None Remove="Traits\PeriodicExplosion.cs" />
-    <None Remove="Traits\PointDefense.cs" />
-    <None Remove="Traits\Render\OverlayPlayerColorPalette.cs" />
-    <None Remove="Traits\SeedsResourceCA.cs" />
-    <None Remove="Traits\ShootableBallisticMissile.cs" />
-    <None Remove="Traits\SmokeParticleEmitter.cs" />
-    <None Remove="Traits\SpawnedExplodes.cs" />
-    <None Remove="Traits\SupportPowers\AirstrikePowerCA.cs" />
-    <None Remove="Traits\SupportPowers\AttackOrderPowerCA.cs" />
-    <None Remove="Traits\SupportPowers\CashHackPower.cs" />
-    <None Remove="Traits\SupportPowers\DetonateWeaponPower.cs" />
-    <None Remove="Traits\SupportPowers\DropPodsPower.cs" />
-    <None Remove="Traits\SupportPowers\GrantExternalConditionPowerCA.cs" />
-    <None Remove="Traits\Warpable.cs" />
-    <None Remove="Traits\World\TintedCellsLayer.cs" />
-    <None Remove="Warheads\ChronoFlashEffectWarhead .cs" />
-    <None Remove="Warheads\CreateTintedCellsWarhead.cs" />
-    <None Remove="Warheads\FireFragmentWarhead.cs" />
-    <None Remove="Warheads\FireRadiusWarhead.cs" />
-    <None Remove="Warheads\FireShrapnelWarhead.cs" />
-    <None Remove="Warheads\FlashEffectWarhead.cs" />
-    <None Remove="Warheads\RevealShroudWarhead.cs" />
-    <None Remove="Warheads\SpawnActorWarhead.cs" />
-    <None Remove="Warheads\SpawnBuildingWarhead.cs" />
-    <None Remove="Warheads\SpawnRandomActorWarhead.cs" />
-    <None Remove="Warheads\SpawnSmokeParticleWarhead.cs" />
-    <None Remove="Warheads\WarheadAS.cs" />
-    <None Remove="Warheads\WarpDamageWarhead.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="Eluant">
       <HintPath>../engine/thirdparty/download/Eluant.dll</HintPath>
       <Private>False</Private>
@@ -117,7 +35,9 @@
     <ProjectReference Include="../engine/OpenRA.Mods.Common/OpenRA.Mods.Common.csproj">
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\engine\OpenRA.Mods.Cnc\OpenRA.Mods.Cnc.csproj" />
+    <ProjectReference Include="../engine/OpenRA.Mods.Cnc/OpenRA.Mods.Cnc.csproj">
+      <Private>False</Private>
+    </ProjectReference>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
     <AdditionalFiles Include="../engine/stylecop.json" />
   </ItemGroup>
