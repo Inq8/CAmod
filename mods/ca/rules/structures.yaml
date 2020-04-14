@@ -596,7 +596,7 @@ TSLA:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 80
-		Prerequisites: weap, ~structures.soviet, ~techlevel.medium
+		Prerequisites: weap, ~structures.soviet, ~techlevel.high
 		Description: Advanced base defense.\nCan be buffed or made work during low power by Shock Troopers.\nRequires power to operate.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft
 	Valued:
 		Cost: 1200
@@ -850,7 +850,6 @@ PBOX:
 		LocalOffset: 456,0,86
 		MuzzleSequence: muzzle
 		RequiresCondition: !being-warped
-	-SpawnActorsOnSell:
 	AttackTurreted:
 		RequiresCondition: !build-incomplete && !being-warped
 	RenderRangeCircle:
@@ -895,7 +894,6 @@ HBOX:
 	-QuantizeFacingsFromSequence:
 	BodyOrientation:
 		QuantizedFacings: 8
-	-SpawnActorsOnSell:
 	RenderRangeCircle:
 		FallbackRange: 6c0
 	Armament:
@@ -3523,7 +3521,6 @@ GTWR:
 	Power:
 		Amount: -10
 		RequiresCondition: !being-warped
-	-SpawnActorsOnSell:
 
 ATWR:
 	Inherits: ^DefenseTD
@@ -3532,7 +3529,7 @@ ATWR:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 80
-		Prerequisites: hq, ~structures.gdi, ~techlevel.medium
+		Prerequisites: hq, ~structures.gdi, ~!structures.zocom, ~techlevel.high
 		IconPalette: chrometd
 		Description: Ground defensive structure.\n  Strong vs Tanks, Infantry\n  Weak vs Aircraft
 	Valued:
@@ -3568,10 +3565,56 @@ ATWR:
 	Power:
 		Amount: -50
 		RequiresCondition: !being-warped
-	-SpawnActorsOnSell:
 	DetectCloaked:
 		Range: 6c0
 		RequiresCondition: !disabled && !being-warped
+		
+STWR:
+	Inherits: ^Defense
+	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
+	Inherits@AUTOTARGET: ^AutoTargetGround
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 80
+		Prerequisites: hq, ~structures.zocom, ~techlevel.high
+		Description: Advanced base defense that emits devastating sonic shockwaves.\nCan detect cloaked units.\n  Strong vs Infatnry, Vehicles\n  Weak vs Aircraft
+	Valued:
+		Cost: 1350
+	Tooltip:
+		Name: Sonic Tower
+	Building:
+	Health:
+		HP: 55000
+	Armor:
+		Type: Concrete
+	RevealsShroud:
+		Range: 8c0
+	WithBuildingBib:
+		HasMinibib: true
+	Turreted:
+		TurnSpeed: 5
+		InitialFacing: 48
+	-WithSpriteBody:
+	WithEmbeddedTurretSpriteBody:
+	Armament:
+		Weapon: SonicPulse
+		PauseOnCondition: empdisable && being-warped
+	AttackTurreted:
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: empdisable && being-warped
+	WithMuzzleOverlay:
+	RenderRangeCircle:
+	Power:
+		Amount: -80
+		RequiresCondition: !being-warped
+	BodyOrientation:
+		UseClassicFacingFudge: True
+	DetectCloaked:
+		Range: 6c0
+		RequiresCondition: !disabled && !being-warped
+	Selectable:
+		Bounds: 24,24
+		DecorationBounds: 24,40,0,-8
 
 OBLI:
 	Inherits: ^DefenseTD
@@ -3630,7 +3673,6 @@ OBLI:
 	Power:
 		Amount: -90
 		RequiresCondition: !being-warped
-	-SpawnActorsOnSell:
 	ProvidesPrerequisite@buildingname:
 	DetectCloaked:
 		Range: 6c0
@@ -5736,50 +5778,3 @@ WEAT:
 	ProvidesPrerequisite@buildingname:
 	MustBeDestroyed:
 		RequiredForShortGame: false
-
-STWR:
-	Inherits: ^Defense
-	Inherits@IDISABLE: ^DisableOnLowPower
-	Inherits@AUTOTARGET: ^AutoTargetGround
-	Buildable:
-		Queue: Defense
-		BuildPaletteOrder: 80
-		Prerequisites: hq, ~structures.zocom, ~techlevel.medium
-		Description: Advanced base defense that emits devastating sonic shockwaves.\nCan detect cloaked units.\n  Strong vs Infatnry, Vehicles\n  Weak vs Aircraft
-	Valued:
-		Cost: 1500
-	Tooltip:
-		Name: Sonic Tower
-	Building:
-	Health:
-		HP: 50000
-	Armor:
-		Type: Concrete
-	RevealsShroud:
-		Range: 8c0
-	WithBuildingBib:
-		HasMinibib: true
-	Turreted:
-		TurnSpeed: 5
-		InitialFacing: 48
-	-WithSpriteBody:
-	WithEmbeddedTurretSpriteBody:
-	Armament:
-		Weapon: SonicPulse
-		PauseOnCondition: empdisable && being-warped
-	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: empdisable && being-warped
-	WithMuzzleOverlay:
-	RenderRangeCircle:
-	Power:
-		Amount: -80
-		RequiresCondition: !being-warped
-	BodyOrientation:
-		UseClassicFacingFudge: True
-	DetectCloaked:
-		Range: 6c0
-		RequiresCondition: !disabled && !being-warped
-	Selectable:
-		Bounds: 24,24
-		DecorationBounds: 24,40,0,-8
