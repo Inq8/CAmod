@@ -1818,15 +1818,16 @@ E8:
 		Prerequisites: ~infantry.iraq, ttur, radar, ~techlevel.infonly
 		Description: Anti-Infantry unit.\n  Strong vs Infantry, Vehicles\n  Weak vs Tanks, Aircraft
 	Valued:
-		Cost: 500
+		Cost: 700
 	Tooltip:
 		Name: Desolator
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 9000
+		HP: 10000
 	Mobile:
 		Voice: Move
+		PauseOnCondition: !undeployed && being-warped
 	RevealsShroud:
 		Range: 5c0
 	Armament@PRIMARY:
@@ -1858,28 +1859,22 @@ E8:
 		Weapon: RadEruptionWeapon
 		RequiresCondition: deployed
 		InitialDelay: 20
-	GrantTimedConditionOnDeploy:
+	GrantConditionOnDeploy:
 		DeployedCondition: deployed
-		DeployAnimation: deploy
-		UndeployAnimation: undeploy
-		BodyNames: deployed
-		CooldownTicks: 100
-		DeployedTicks: 20
+		UndeployedCondition: undeployed
+		UndeployOnMove: True
 		Facing: 92
 		Voice: Attack
 		PauseOnCondition: being-warped
-		DischargingColor: 00FF0080
-		ChargingColor: FFFF0080
 	WithInfantryBody:
-		RequiresCondition: !deployed
+		RequiresCondition: !being-warped && undeployed
 	WithSpriteBody@DEPLOYED:
 		Sequence: deployed
-		RequiresCondition: deployed && deploying
+		RequiresCondition: !undeployed
 		Name: deployed
 	WithMakeAnimation:
 		Sequence: deploy
 		BodyNames: deployed
-		Condition: deploying
 	GrantCondition@HAZMAT:
 		Condition: hazmatsuits
 		-RequiresCondition:
