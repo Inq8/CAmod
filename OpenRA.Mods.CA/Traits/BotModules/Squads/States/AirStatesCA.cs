@@ -71,8 +71,8 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			var maxY = (map.MapSize.Y % dangerRadius) == 0 ? map.MapSize.Y : map.MapSize.Y + dangerRadius;
 
 			// Random starting coordinates for scanning the map to find a target.
-			var startX = owner.World.SharedRandom.Next(0, map.MapSize.X);
-			var startY = owner.World.SharedRandom.Next(0, map.MapSize.Y);
+			var startX = owner.World.LocalRandom.Next(0, map.MapSize.X);
+			var startY = owner.World.LocalRandom.Next(0, map.MapSize.Y);
 			var scanReset = false;
 
 			for (var i = startX; i < maxX; i += dangerRadius * 2)
