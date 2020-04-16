@@ -40,14 +40,13 @@ LISTEN_PORT="${ListenPort:-"1234"}"
 ADVERTISE_ONLINE="${AdvertiseOnline:-"True"}"
 PASSWORD="${Password:-""}"
 
-GEOIP_DATABASE_PATH="${GeoIPDatabase:-""}"
-
 REQUIRE_AUTHENTICATION="${RequireAuthentication:-"False"}"
 PROFILE_ID_BLACKLIST="${ProfileIDBlacklist:-""}"
 PROFILE_ID_WHITELIST="${ProfileIDWhitelist:-""}"
 
 ENABLE_SINGLE_PLAYER="${EnableSingleplayer:-"False"}"
 ENABLE_SYNC_REPORTS="${EnableSyncReports:-"False"}"
+EnableGeoIP="${EnableGeoIP:-"True"}"
 SHARE_ANONYMISED_IPS="${ShareAnonymizedIPs:-"True"}"
 
 SUPPORT_DIR="${SupportDir:-""}"
@@ -72,6 +71,7 @@ while true; do
      Server.ProfileIDWhitelist="${PROFILE_ID_WHITELIST}" \
      Server.EnableSingleplayer="${ENABLE_SINGLE_PLAYER}" \
      Server.EnableSyncReports="${ENABLE_SYNC_REPORTS}" \
+	 Server.EnableGeoIP="$EnableGeoIP" \
      Server.ShareAnonymizedIPs="${SHARE_ANONYMISED_IPS}" \
      Engine.SupportDir="${SUPPORT_DIR}"
 done
