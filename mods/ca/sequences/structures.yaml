@@ -247,6 +247,29 @@ apwr:
 			INTERIOR: TEMPERAT
 	icon: apwricon
 	fake-icon: fapwicon
+	
+tpwr:
+	Inherits: ^StructureOverlays
+	idle: tpwr
+		Offset: 0,-10
+	damaged-idle: tpwr
+		Start: 1
+		Offset: 0,-10
+	make: tpwrmake
+		Length: *
+		Offset: 0,-10
+	dead: tpwr
+		Start: 1
+		Tick: 800
+		Offset: 0,-10
+	power: litning
+		Length: *
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: tpwricon
 
 barr:
 	Inherits: ^StructureOverlays

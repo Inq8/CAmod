@@ -663,6 +663,7 @@ TSLA:
 		RequiresCondition: charged
 		ZOffset: 256
 		BlinkInterval: 64
+		RequiresSelection: true
 
 AGUN:
 	Inherits: ^Defense
@@ -771,7 +772,7 @@ DOME:
 		Types: SabInfiltrate
 		Proxy: rad.soviet.stolen
 	AirstrikePowerCA@clustermines:
-		ChargeInterval: 8000
+		ChargeInterval: 6000
 		Prerequisites: structures.france, techlevel.superw
 		Description: Cluster Mines
 		LongDesc: Send a cargo plane\nto deploy a minefield.
@@ -798,7 +799,7 @@ DOME:
 		OrderName: gpsscramble
 		Icon: gpsscram
 		IconPalette: chrometd
-		ChargeInterval: 6000
+		ChargeInterval: 4500
 		Weapon: GpsScramble
 		Description: GPS Scramble
 		Condition: gpshide
@@ -1909,7 +1910,7 @@ APWR:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 110
-		Prerequisites: dome, ~techlevel.medium, ~structures.ra
+		Prerequisites: dome, ~techlevel.medium, ~structures.ra, ~!structures.russia
 		Description: Provides double the power of\na standard Power Plant.
 	Valued:
 		Cost: 500
@@ -1944,6 +1945,53 @@ APWR:
 		UseDeathTypeSuffix: false
 	InfiltrateForPowerOutage:
 		Types: SpyInfiltrate, PowerInfiltrate
+		
+TPWR:
+	Inherits: APWR
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 110
+		Prerequisites: dome, ~techlevel.medium, ~structures.russia
+		Description: Provides double the power of\na standard Power Plant.\n  Special Ability: Overload
+	Valued:
+		Cost: 600
+	Tooltip:
+		Name: Tesla Reactor
+	WithIdleOverlay@POWER:
+		Offset: -20,-70,0
+		Sequence: power
+		RequiresCondition: overcharge && !(empdisable || being-warped || build-incomplete)
+	GrantTimedConditionOnDeploy@OVERCHARGE: 
+		DeployedCondition: overcharge 
+		CooldownTicks: 300 
+		DeployedTicks: 900
+		PauseOnCondition: disabled || empdisable || being-warped 
+		DischargingColor: 0080FF60
+		ChargingColor: FFFF0080
+		StartsFullyCharged: false
+		DeploySound: btesat1a.aud
+		RequiresCondition: !(owned-by-brutal-ai || owned-by-hard-ai || owned-by-normal-ai || owned-by-easy-ai || owned-by-naval-ai)
+	GrantConditionOnDamageState@VOLATILE:
+		Condition: volatile
+		ValidDamageStates: Medium, Heavy, Critical
+	PowerMultiplier:
+		Modifier: 200
+		RequiresCondition: overcharge
+	PeriodicExplosion:
+		Weapon: TPWRZap
+		RequiresCondition: overcharge && volatile
+	SoundOnDamageTransition:
+		DamagedSounds: bpowdiea.aud
+		DestroyedSounds: bpowdieb.aud
+	GrantPeriodicCondition@BOTHELPER:
+		Condition: overcharge
+		CooldownDuration: 300 
+		ActiveDuration: 900
+		StartsGranted: false
+		ShowSelectionBar: false
+		ActiveColor: 0080FF60
+		CooldownColor: FFFF0080
+		RequiresCondition: (owned-by-brutal-ai || owned-by-hard-ai || owned-by-normal-ai || owned-by-easy-ai || owned-by-naval-ai)
 
 STEK:
 	Inherits: ^ScienceBuilding

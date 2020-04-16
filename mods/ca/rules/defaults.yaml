@@ -716,7 +716,7 @@
 	Explodes:
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
+		RequiresCondition: !being-warped
 	WithFacingSpriteBody:
 	WithParachute:
 		ShadowImage: parach-shadow
@@ -1083,7 +1083,7 @@
 	Explodes:
 		Weapon: UnitExplodeShip
 		EmptyWeapon: UnitExplodeShip
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
+		RequiresCondition: !being-warped
 	Guard:
 	Guardable:
 	Tooltip:
@@ -1180,7 +1180,6 @@
 	Explodes:
 		Weapon: UnitExplode
 		RequiresCondition: !airborne
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
 	GrantConditionOnPrerequisite@ROF:
 		Condition: revealonfire
 		Prerequisites: global.revealonfire
@@ -1312,7 +1311,6 @@
 		Type: Footprint
 		Weapon: BuildingExplode
 		EmptyWeapon: BuildingExplode
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
 	CaptureNotification:
 		LoseNotification: StructureLost
 	ShakeOnDeath:

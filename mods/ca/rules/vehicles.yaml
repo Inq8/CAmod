@@ -42,7 +42,7 @@ V2RL:
 	SelectionDecorations:
 	Explodes:
 		Weapon: BarrelExplode
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
+		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -76,10 +76,10 @@ V2RL:
 		TerrainTypes: Water
 		Condition: onwater
 	Targetable:
-		TargetTypes: Ground, Repair, Vehicle
+		TargetTypes: Ground, Vehicle
 		RequiresCondition: !onwater && !parachute && !being-warped
 	Targetable@WATER:
-		TargetTypes: Ground, Repair, Vehicle, Water, Ship
+		TargetTypes: Ground, Vehicle, Water, Ship
 		RequiresCondition: onwater && (!parachute && !being-warped)
 	WithFacingSpriteBody:
 		RequiresCondition: !onwater
@@ -215,8 +215,7 @@ V2RL:
 	Explodes@IRAQTANK:
 		Weapon: UnitExplodeIraqTank
 		EmptyWeapon: UnitExplodeIraqTank
-		RequiresCondition: iraqtank
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
+		RequiresCondition: iraqtank && !being-warped
 	SelectionDecorations:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -293,8 +292,7 @@ V2RL:
 	Explodes@IRAQTANK:
 		Weapon: UnitExplodeIraqTank
 		EmptyWeapon: UnitExplodeIraqTank
-		RequiresCondition: iraqtank
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
+		RequiresCondition: iraqtank && !being-warped
 	SelfHealing:
 		Step: 100
 		Delay: 3
@@ -349,7 +347,7 @@ ARTY:
 		Weapon: ArtilleryExplode
 		EmptyWeapon: UnitExplodeSmall
 		LoadedChance: 75
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
+		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 		
@@ -471,13 +469,11 @@ HARV:
 		Condition: onore
 		TerrainTypes: Ore
 	Explodes@Ore:
-		RequiresCondition: !no-ore && onore
+		RequiresCondition: !no-ore && onore && !being-warped
 		Weapon: OreExplosion
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
 	Explodes@Tib:
-		RequiresCondition: !no-ore && ontib
+		RequiresCondition: !no-ore && ontib && !being-warped
 		Weapon: TibExplosion
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
 	WithHarvesterSpriteBody:
 		ImageByFullness: harvempty, harvhalf, harv
 	-WithFacingSpriteBody:
@@ -651,7 +647,7 @@ MNLY:
 	RenderDetectionCircle:
 	Explodes:
 		Weapon: ATMine
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
+		RequiresCondition: !being-warped
 	RenderSprites:
 		Image: MNLY
 	Rearmable:
@@ -851,7 +847,7 @@ DTRK:
 		Weapon: MiniNuke
 		EmptyWeapon: MiniNuke
 		DamageSource: Killer
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
+		RequiresCondition: !being-warped
 	AttackFrontal:
 		FacingTolerance: 128
 		Voice: Attack
@@ -1184,10 +1180,10 @@ LTNK:
 		TerrainTypes: Water
 		Condition: onwater
 	Targetable:
-		TargetTypes: Ground, Repair, Vehicle
+		TargetTypes: Ground, Vehicle
 		RequiresCondition: !onwater && !parachute && !being-warped
 	Targetable@WATER:
-		TargetTypes: Ground, Repair, Vehicle, Water, Ship
+		TargetTypes: Ground, Vehicle, Water, Ship
 		RequiresCondition: onwater && (!parachute && !being-warped)
 	WithFacingSpriteBody:
 		RequiresCondition: !onwater || parachute
@@ -1530,7 +1526,7 @@ MSAM:
 	WithSpriteTurret:
 	Explodes:
 		Weapon: ArtilleryExplode
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
+		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -1595,7 +1591,7 @@ MLRS:
 	AutoTarget:
 	Explodes:
 		Weapon: BarrelExplode
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
+		RequiresCondition: !being-warped
 	ReloadAmmoPool@1:
 		Delay: 120
 		Count: 2
@@ -1753,7 +1749,7 @@ FTNK:
 	Explodes:
 		Weapon: BarrelExplode
 		EmptyWeapon: BarrelExplode
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
+		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	ProductionCostMultiplier@BlackhBonus:
@@ -1814,13 +1810,11 @@ HAR2:
 		Condition: onore
 		TerrainTypes: Ore
 	Explodes@Ore:
-		RequiresCondition: !no-ore && onore
+		RequiresCondition: !no-ore && onore && !being-warped
 		Weapon: OreExplosion
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
 	Explodes@Tib:
-		RequiresCondition: !no-ore && ontib
+		RequiresCondition: !no-ore && ontib && !being-warped
 		Weapon: TibExplosion
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
 	SelectionDecorations:
 	-Crushable:
 	Targetable:
@@ -1885,7 +1879,7 @@ IFV:
 		Queue: Vehicle
 		BuildPaletteOrder: 40
 		Prerequisites: tent, ~vehicles.allies, ~techlevel.low
-		Description: Adaptable infantry transport.\n  Strong vs Infantry, Light armor\n  Weak vs Tanks, Aircraft\n Special Ability: Transform
+		Description: Adaptable infantry transport.\n  Strong vs Light armor, Aircraft\n  Weak vs Infantry, Tanks\n Special Ability: Transform
 	Valued:
 		Cost: 750
 	Tooltip:
@@ -1922,24 +1916,24 @@ IFV:
 		RequiresCondition: fragturr
 	Armament@Default:
 		Weapon: IFVRockets
-		LocalOffset: 192,0,376
+		LocalOffset: 192,10,176, 192,-10,176
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !(gunturr || samturr || commturr || flamturr || chemturr || spyturr || testurr || engturr || acolturr || desoturr || tecnturr)
 	Armament@DefaultAA:
 		Name: secondary
 		Weapon: IFVRocketsAA
-		LocalOffset: 192,0,376
+		LocalOffset: 192,10,176, 192,-10,176
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !(gunturr || samturr || commturr || flamturr || chemturr || spyturr || testurr || engturr || acolturr || desoturr || tecnturr)
 	Armament@E3:
 		Weapon: IFVRocketsE
-		LocalOffset: 192,0,376
+		LocalOffset: 192,10,176, 192,-10,176
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: samturr
 	Armament@E3AA:
 		Name: secondary
 		Weapon: IFVRocketsAAE
-		LocalOffset: 192,0,376
+		LocalOffset: 192,10,176, 192,-10,176
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: samturr
 	Armament@E4:
@@ -2125,13 +2119,13 @@ IFV.AI:
 		RequiresCondition: gunturr
 	Armament@E3:
 		Weapon: IFVRockets
-		LocalOffset: 192,0,376
+		LocalOffset: 192,-10,176, 192,10,176
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: samturr
 	Armament@E3AA:
 		Name: secondary
 		Weapon: IFVRocketsAA
-		LocalOffset: 192,0,376
+		LocalOffset: 192,-10,176, 192,10,176
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: samturr
 	AttackTurreted:
@@ -2221,7 +2215,7 @@ TITN:
 		Weapon: ArtilleryExplode
 		EmptyWeapon: UnitExplodeSmall
 		LoadedChance: 100
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
+		RequiresCondition: !being-warped
 	Voiced:
 		VoiceSet: GhostVoice
 	SelfHealing@DEFAULT:
@@ -2283,7 +2277,7 @@ TTRK:
 		Weapon: UnitExplodeToxinTruck
 		EmptyWeapon: UnitExplodeToxinTruck
 		DamageSource: Killer
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
+		RequiresCondition: !being-warped
 
 DISR:
 	Inherits: ^TankTD
@@ -2448,7 +2442,7 @@ HSAM:
 		Weapon: ArtilleryExplode
 		EmptyWeapon: UnitExplodeSmall
 		LoadedChance: 75
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
+		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 
@@ -2570,7 +2564,7 @@ V3RL:
 	SelectionDecorations:
 	Explodes:
 		Weapon: BarrelExplode
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
+		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -2597,7 +2591,7 @@ V3:
 		Type: Light
 	ShootableBallisticMissile:
 		LaunchAngle: 95
-		Speed: 145
+		Speed: 165
 	LeavesTrails:
 		Image: smokey2
 		Palette: tseffect-ignore-lighting-alpha75
@@ -3118,7 +3112,7 @@ CDRN:
 	Explodes:
 		Weapon: ChaosDroneExplode
 		EmptyWeapon: VisualExplodeHusk
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
+		RequiresCondition: !being-warped
 	AttackFrontal:
 		FacingTolerance: 128
 		PauseOnCondition: empdisable || being-warped
@@ -3285,7 +3279,7 @@ CRYO:
 		PauseOnCondition: empdisable || being-warped
 	Explodes:
 		Weapon: CryoExplosion
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
+		RequiresCondition: !being-warped
 	SelectionDecorations:
 	Selectable:
 		DecorationBounds: 28,28

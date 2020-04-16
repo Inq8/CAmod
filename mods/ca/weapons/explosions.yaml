@@ -694,3 +694,38 @@ TemporalExplodeLarge:
 		ImpactSounds: chronowarp.aud
 		ValidTargets: Ground, Water, Air
 	Warhead@3Flash: ChronoFlashEffect
+
+TPWRZap:
+	Inherits: ^TeslaWeapon
+	ReloadDelay: 80
+	Range: 5c0
+	ValidTargets: Ground, Water, Infantry, Tank
+	-Report:
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 1000
+		AffectsParent: True
+		Versus:
+			Wood: 120
+			Concrete: 110
+	Warhead@Burst: FireShrapnel
+		Weapon: TPWRArc1
+		Amount: 1
+		AimChance: 90
+		ValidTargets: Ground, Water, Infantry, Tank
+		ThrowWithoutTarget: true
+		
+TPWRArc1:
+	Inherits: TTankZap
+	Range: 3c0
+	Projectile: TeslaZap
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Ground, Water, Infantry, Tank
+	-Warhead@3Eff:
+	Warhead@Burst: FireShrapnel
+		Weapon: TPWRArc2
+		AimChance: 80
+
+TPWRArc2:
+	Inherits: TPWRArc1
+	-Warhead@Burst:

@@ -170,7 +170,7 @@ E2:
 		EmptyWeapon: UnitExplodeSmall
 		Chance: 33
 		DamageSource: Killer
-		DeathTypes: BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath
+		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 
@@ -283,7 +283,7 @@ E4:
 		EmptyWeapon: UnitExplodeFlameSmall
 		Chance: 33
 		DamageSource: Killer
-		DeathTypes: BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath
+		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 
@@ -850,7 +850,7 @@ N2:
 		EmptyWeapon: UnitExplodeSmall
 		Chance: 33
 		DamageSource: Killer
-		DeathTypes: BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath
+		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	Selectable:
@@ -990,7 +990,7 @@ N4:
 		EmptyWeapon: UnitExplodeFlameSmall
 		Chance: 33
 		DamageSource: Killer
-		DeathTypes: BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath
+		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	Selectable:
@@ -1081,7 +1081,7 @@ N5:
 		EmptyWeapon: UnitExplodeChemSmall
 		Chance: 33
 		DamageSource: Killer
-		DeathTypes: BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath
+		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	GrantCondition@HAZMAT:
@@ -1400,7 +1400,7 @@ MORT:
 		Weapon: UnitExplodeChemSmall
 		EmptyWeapon: UnitExplodeChemSmall
 		Chance: 33
-		DeathTypes: BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath
+		RequiresCondition: !being-warped
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
 	ProducibleWithLevel:
@@ -2111,7 +2111,7 @@ RMBC:
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall
 		Chance: 100
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath, FireDeath, ElectricityDeath, PoisonDeath, ToxinDeath, RadiationDeath
+		RequiresCondition: !being-warped
 	WithDeathAnimation:
 		DeathSequencePalette: playerd2k
 	Selectable:
