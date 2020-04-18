@@ -389,7 +389,7 @@ MADTankDetonate:
 		ImpactActors: false
 		
 Laser:
-	ReloadDelay: 120
+	ReloadDelay: 100
 	ValidTargets: Ground, Water
 	Range: 9c512
 	Report: oblfire.aud
@@ -404,7 +404,7 @@ Laser:
 		SecondaryBeamColor: FF000040
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 35000
+		Damage: 37500
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
 			Light: 101
@@ -1322,21 +1322,22 @@ NeutronCannonSound:
 	Projectile: InstantHit
 
 SonicPulse:
-	ReloadDelay: 120
-	Range: 9c0
+	ReloadDelay: 110
+	Range: 8c256
 	Report: sonicpulse1.aud, sonicpulse2.aud
 	Projectile: LinearPulse
+		Speed: 768
 	Warhead@1Dam: SpreadDamage
 		Spread: 0c256
-		Falloff: 100, 50, 25, 5, 0
-		Damage: 7500
+		Falloff: 100, 50, 25, 0
+		Damage: 9000
 		ValidTargets: Ground, Water
 		ValidStances: Enemy, Neutral
 		Versus:
-			None: 80
+			None: 70
 			Wood: 45
-			Light: 100
-			Heavy: 120
+			Light: 90
+			Heavy: 100
 			Concrete: 35
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath

@@ -74,9 +74,6 @@ namespace OpenRA.Mods.CA.Projectiles
 		{
 			var lastPos = pos;
 			pos = WPos.LerpQuadratic(source, target, WAngle.Zero, ticks, length);
-			totalDistanceTravelled += speed.Length;
-			intervalDistanceTravelled += speed.Length;
-			ticks++;
 
 			if (intervalDistanceTravelled >= info.Spacing.Length)
 			{
@@ -84,6 +81,10 @@ namespace OpenRA.Mods.CA.Projectiles
 				if (totalDistanceTravelled > 512)
 					Explode(world);
 			}
+
+			totalDistanceTravelled += speed.Length;
+			intervalDistanceTravelled += speed.Length;
+			ticks++;
 		}
 
 		public IEnumerable<IRenderable> Render(WorldRenderer wr)
