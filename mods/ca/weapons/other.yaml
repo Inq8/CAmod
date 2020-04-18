@@ -881,7 +881,7 @@ IonZap:
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
 		Damage: 6350
-		ValidStances: Ally, Neutral, Enemy
+		ValidStances: Neutral, Enemy
 		InvalidTargets: Air
 		AffectsParent: false
 		Versus:
@@ -892,10 +892,24 @@ IonZap:
 			Concrete: 55
 			Brick: 45
 		DamageTypes: Prone100Percent, TriggerProne, ExplosionDeath
-	Warhead@2Eff: CreateEffect
+	Warhead@2Dam: SpreadDamage
+		Spread: 512
+		Damage: 2250
+		ValidStances: Ally
+		InvalidTargets: Air
+		AffectsParent: false
+		Versus:
+			None: 50
+			Wood: 75
+			Light: 75
+			Heavy: 120
+			Concrete: 55
+			Brick: 45
+		DamageTypes: Prone100Percent, TriggerProne, ExplosionDeath
+	Warhead@3Eff: CreateEffect
 		Explosions: ion_ring
 		ExplosionPalette: tseffect
-	Warhead@3Smu_impact: LeaveSmudge
+	Warhead@4Smu_impact: LeaveSmudge
 		SmudgeType: Scorch
 		
 BurnFX:
