@@ -1902,30 +1902,30 @@ IFV:
 		RequiresCondition: spyturr
 	Turreted:
 		TurnSpeed: 10
-		Offset: 20,0,60
-	Armament@E1:
-		Weapon: M60mg
-		MuzzleSequence: muzzle
-		LocalOffset: 150,0,100
-		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: gunturr || tecnturr
-	Armament@E2:
-		Weapon: 25mmFRAG
-		MuzzleSequence: muzzle
-		LocalOffset: 150,0,100
-		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: fragturr
+		Offset: 20,0,0
 	Armament@Default:
 		Weapon: IFVRockets
 		LocalOffset: 192,10,176, 192,-10,176
 		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: !(gunturr || samturr || commturr || flamturr || chemturr || spyturr || testurr || engturr || acolturr || desoturr || tecnturr)
+		RequiresCondition: !full
 	Armament@DefaultAA:
 		Name: secondary
 		Weapon: IFVRocketsAA
 		LocalOffset: 192,10,176, 192,-10,176
 		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: !(gunturr || samturr || commturr || flamturr || chemturr || spyturr || testurr || engturr || acolturr || desoturr || tecnturr)
+		RequiresCondition: !full
+	Armament@E1:
+		Weapon: M60mg
+		MuzzleSequence: muzzle
+		LocalOffset: 250,0,150
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: gunturr || tecnturr
+	Armament@E2:
+		Weapon: 25mmFRAG
+		MuzzleSequence: muzzle
+		LocalOffset: 450,0,200
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: fragturr
 	Armament@E3:
 		Weapon: IFVRocketsE
 		LocalOffset: 192,10,176, 192,-10,176
@@ -1941,7 +1941,7 @@ IFV:
 		Weapon: FireballLauncher
 		Recoil: 85
 		RecoilRecovery: 25
-		LocalOffset: 768,0,90
+		LocalOffset: 350,0,150
 		MuzzleSequence: muzzle2
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: flamturr
@@ -1949,14 +1949,14 @@ IFV:
 		Weapon: ChemballLauncher
 		Recoil: 85
 		RecoilRecovery: 25
-		LocalOffset: 768,0,90
+		LocalOffset: 350,0,150
 		MuzzleSequence: muzzle2
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: chemturr
 	Armament@E7:
 		Weapon: smg
 		MuzzleSequence: muzzle
-		LocalOffset: 150,0,100
+		LocalOffset: 560,0,200
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: commturr
 	Armament@Shok:
@@ -1966,7 +1966,7 @@ IFV:
 		RequiresCondition: testurr
 	Armament@Deso:
 		Weapon: RadBeamWeapon
-		LocalOffset: 0,0,213
+		LocalOffset: 400,0,213
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: desoturr
 	Armament@Repair:
@@ -1982,7 +1982,7 @@ IFV:
 		MuzzlePalette: tseffect-ignore-lighting-alpha75
 	Armament@Acol:
 		Weapon: LaserTur
-		LocalOffset: 0,0,213
+		LocalOffset: 385,0,300
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: acolturr
 	WithIdleOverlay@SPINNER:
@@ -1990,21 +1990,43 @@ IFV:
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: spyturr
 		Offset: 0,0,200
+	WithIdleOverlay@TESLA:
+		Sequence: tesla
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: testurr
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !spyturr
 	WithMuzzleOverlay:
-	WithSpriteTurret@gun:
-		RequiresCondition: gunturr || commturr || desoturr || tecnturr
-		Sequence: turret
 	WithSpriteTurret@samturr:
-		RequiresCondition: !full || samturr
+		RequiresCondition: !full
+		Sequence: turret
+	WithSpriteTurret@samturr2:
+		RequiresCondition: samturr
+		Sequence: turret2
+	WithSpriteTurret@gun:
+		RequiresCondition: gunturr || tecnturr
 		Sequence: turret3
-	WithSpriteTurret@tes:
+	WithSpriteTurret@frg:
 		Sequence: turret4
-		RequiresCondition: testurr || acolturr
-	WithSpriteTurret@rep:
+		RequiresCondition: fragturr
+	WithSpriteTurret@fla:
 		Sequence: turret5
+		RequiresCondition: flamturr
+	WithSpriteTurret@che:
+		Sequence: turret6
+		RequiresCondition: chemturr
+	WithSpriteTurret@las:
+		Sequence: turret7
+		RequiresCondition: acolturr
+	WithSpriteTurret@des:
+		Sequence: turret8
+		RequiresCondition: desoturr
+	WithSpriteTurret@com:
+		Sequence: turret9
+		RequiresCondition: commturr
+	WithSpriteTurret@rep:
+		Sequence: turret10
 		RequiresCondition: engturr
 	Cargo:
 		Types: Infantry
@@ -2032,15 +2054,15 @@ IFV:
 			shok: testurr
 			shok.nod: testurr
 			rmbo: commturr
-			boris: commturr
+			bori: commturr
 			e7: commturr
 			sab: commturr
-			sniper: commturr
+			snip: commturr
 			spy: spyturr
 			thf: spyturr
 			medi: medturr
-			acol: acolturr # needs turret
-			rmboc: acolturr # same
+			acol: acolturr
+			rmbc: acolturr
 			tecn: tecnturr
 			tecn2: tecnturr
 			tecn3: tecnturr
