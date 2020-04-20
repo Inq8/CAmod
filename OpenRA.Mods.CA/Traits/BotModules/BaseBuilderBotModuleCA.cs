@@ -36,6 +36,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Tells the AI what building types are considered infantry production facilities.")]
 		public readonly HashSet<string> BarracksTypes = new HashSet<string>();
 
+		[Desc("Tells the AI what building types are considered anti-air defenses.")]
+		public readonly HashSet<string> AntiAirTypes = new HashSet<string>();
+
 		[Desc("Tells the AI what building types are considered production facilities.")]
 		public readonly HashSet<string> ProductionTypes = new HashSet<string>();
 

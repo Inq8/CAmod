@@ -136,12 +136,21 @@ namespace OpenRA.Mods.CA.Traits
 				// HACK: HACK HACK HACK
 				// TODO: Derive this from BuildingCommonNames instead
 				var type = BuildingType.Building;
+				var placeDefenseTowardsEnemyChance = baseBuilder.Info.PlaceDefenseTowardsEnemyChance;
 
 				// Check if Building is a defense and if we should place it towards the enemy or not.
-				if (world.Map.Rules.Actors[currentBuilding.Item].HasTraitInfo<AttackBaseInfo>() && world.LocalRandom.Next(100) < baseBuilder.Info.PlaceDefenseTowardsEnemyChance)
-					type = BuildingType.Defense;
+				if (world.Map.Rules.Actors[currentBuilding.Item].HasTraitInfo<AttackBaseInfo>())
+				{
+					if (baseBuilder.Info.AntiAirTypes.Contains(world.Map.Rules.Actors[currentBuilding.Item].Name))
+						placeDefenseTowardsEnemyChance = (int)Math.Ceiling(placeDefenseTowardsEnemyChance / 1.5);
+
+					if (world.LocalRandom.Next(100) < placeDefenseTowardsEnemyChance)
+						type = BuildingType.Defense;
+				}
 				else if (baseBuilder.Info.RefineryTypes.Contains(world.Map.Rules.Actors[currentBuilding.Item].Name))
+				{
 					type = BuildingType.Refinery;
+				}
 
 				var location = ChooseBuildLocation(currentBuilding.Item, true, type);
 				if (location == null)

@@ -48,6 +48,12 @@
 	ProvidesPrerequisite@BrutalAI:
 		Prerequisite: is-brutal-ai
 		RequiresCondition: owned-by-brutal-ai
+	GrantConditionOnBotOwner@VeryHardAI:
+		Condition: owned-by-vhard-ai
+		Bots: vhard
+	ProvidesPrerequisite@VeryHardAI:
+		Prerequisite: is-vhard-ai
+		RequiresCondition: owned-by-vhard-ai
 	GrantConditionOnBotOwner@HardAI:
 		Condition: owned-by-hard-ai
 		Bots: hard
@@ -74,49 +80,64 @@
 		RequiresCondition: owned-by-naval-ai
 	ProvidesPrerequisite@AI:
 		Prerequisite: botplayer
-		RequiresCondition: owned-by-brutal-ai || owned-by-hard-ai || owned-by-normal-ai || owned-by-easy-ai || owned-by-naval-ai
+		RequiresCondition: owned-by-brutal-ai || owned-by-vhard-ai || owned-by-hard-ai || owned-by-normal-ai || owned-by-easy-ai || owned-by-naval-ai
 	ProductionTimeMultiplier@brutalbonus:
-		Multiplier: 84
+		Multiplier: 85
 		Prerequisites: is-brutal-ai
+	ProductionTimeMultiplier@vhardbonus:
+		Multiplier: 90
+		Prerequisites: is-vhard-ai
 	ProductionTimeMultiplier@hardbonus:
-		Multiplier: 92
+		Multiplier: 95
 		Prerequisites: is-hard-ai
 	ProductionCostMultiplier@brutalbonus:
-		Multiplier: 92
+		Multiplier: 94
 		Prerequisites: is-brutal-ai
-	ProductionCostMultiplier@hardbonus:
+	ProductionCostMultiplier@vhardbonus:
 		Multiplier: 96
+		Prerequisites: is-vhard-ai
+	ProductionCostMultiplier@hardbonus:
+		Multiplier: 98
 		Prerequisites: is-hard-ai
 
 ^BotGroundProductionBonus:
 	ProductionTimeMultiplier@brutalbonus:
-		Multiplier: 45
+		Multiplier: 48
 		Prerequisites: is-brutal-ai
+	ProductionTimeMultiplier@vhardbonus:
+		Multiplier: 56
+		Prerequisites: is-vhard-ai
 	ProductionTimeMultiplier@hardbonus:
-		Multiplier: 55
+		Multiplier: 64
 		Prerequisites: is-hard-ai
 	ProductionTimeMultiplier@normalbonus:
-		Multiplier: 65
+		Multiplier: 80
 		Prerequisites: is-normal-ai
 	ProductionCostMultiplier@brutalbonus:
-		Multiplier: 92
+		Multiplier: 94
 		Prerequisites: is-brutal-ai
-	ProductionCostMultiplier@hardbonus:
+	ProductionCostMultiplier@vhardbonus:
 		Multiplier: 96
+		Prerequisites: is-vhard-ai
+	ProductionCostMultiplier@hardbonus:
+		Multiplier: 98
 		Prerequisites: is-hard-ai
 
 ^BotAirProductionBonus:
 	ProductionTimeMultiplier@brutalbonus:
-		Multiplier: 85
+		Multiplier: 84
 		Prerequisites: is-brutal-ai
+	ProductionTimeMultiplier@vhardbonus:
+		Multiplier: 88
+		Prerequisites: is-vhard-ai
 	ProductionTimeMultiplier@hardbonus:
-		Multiplier: 90
+		Multiplier: 92
 		Prerequisites: is-hard-ai
 	ProductionTimeMultiplier@normalbonus:
-		Multiplier: 95
+		Multiplier: 96
 		Prerequisites: is-normal-ai
 
-# The Bot does not know how to sell up when he does not have an income. This provides an income, when floating less than 2000$ 	
+# The Bot does not know how to sell up when he does not have an income. This provides an income, when floating less than 2000$
 ^BotFallbackInsurance:
 	GrantConditionOnPlayerResources@botinsurance:
 		Condition: noinsurance
@@ -126,29 +147,38 @@
 		Amount: 1000
 		ShowTicks: False
 		RequiresCondition: owned-by-brutal-ai && !noinsurance
-	CashTrickler@hardinsurance:
+	CashTrickler@vhardinsurance:
 		Interval: 500
 		Amount: 800
+		ShowTicks: False
+		RequiresCondition: owned-by-vhard-ai && !noinsurance
+	CashTrickler@hardinsurance:
+		Interval: 500
+		Amount: 600
 		ShowTicks: False
 		RequiresCondition: owned-by-hard-ai && !noinsurance
 	CashTrickler@normalinsurance:
 		Interval: 500
-		Amount: 600
+		Amount: 400
 		ShowTicks: False
 		RequiresCondition: owned-by-normal-ai && !noinsurance
 
 # ResourcePurifier on Proc's so AI income is still tied to harvesters, so eco sniping AI is possible.
 ^BotIncome:
 	ResourcePurifier@brutalincome:
-		Modifier: 18
+		Modifier: 13
 		RequiresCondition: owned-by-brutal-ai
 		ShowTicks: False
+	ResourcePurifier@vhardincome:
+		Modifier: 11
+		RequiresCondition: owned-by-vhard-ai
+		ShowTicks: False
 	ResourcePurifier@hardincome:
-		Modifier: 16
+		Modifier: 9
 		RequiresCondition: owned-by-hard-ai
 		ShowTicks: False
 	ResourcePurifier@normalincome:
-		Modifier: 14
+		Modifier: 5
 		RequiresCondition: owned-by-normal-ai
 		ShowTicks: False
 
@@ -1049,6 +1079,7 @@
 	Inherits@12: ^NaniteRepair
 	Inherits@13: ^GpsScramble
 	Inherits@14: ^Chillable
+	Inherits@15: ^BotGroundProductionBonus
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
