@@ -50,7 +50,6 @@ DOG:
 	Armament:
 		Weapon: DogJaw
 		ReloadingCondition: attack-cooldown
-		PauseOnCondition: being-warped
 	AttackLeap:
 		Voice: Attack
 		PauseOnCondition: attacking || attack-cooldown || being-warped
@@ -106,11 +105,9 @@ E1:
 		HP: 5000
 	Armament@PRIMARY:
 		Weapon: M1Carbine
-		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: M1CarbineE
-		PauseOnCondition: being-warped
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		IdleSequences: idle1,idle2,idle3,idle4
@@ -152,13 +149,11 @@ E2:
 		Weapon: Grenade
 		LocalOffset: 0,0,555
 		FireDelay: 15
-		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: GrenadeE
 		LocalOffset: 0,0,555
 		FireDelay: 15
-		PauseOnCondition: being-warped
 	TakeCover:
 		ProneOffset: 256,64,-331
 	AttackFrontal:
@@ -265,14 +260,12 @@ E4:
 		LocalOffset: 341,0,256
 		MuzzleSequence: muzzle
 		MuzzlePalette: tdeffect
-		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: FlamerE
 		LocalOffset: 341,0,256
 		MuzzleSequence: muzzle
 		MuzzlePalette: tseffect-ignore-lighting-alpha75
-		PauseOnCondition: being-warped
 	TakeCover:
 		ProneOffset: 160,0,-256
 	WithMuzzleOverlay:
@@ -405,18 +398,14 @@ E7:
 		Voice: Move
 	Armament@PRIMARY:
 		Weapon: Colt45
-		PauseOnCondition: being-warped
 	Armament@SECONDARY:
 		Weapon: Colt45
-		PauseOnCondition: being-warped
 	Armament@mountedPRIMARY:
 		Weapon: Colt45E
 		Name: mounted
-		PauseOnCondition: being-warped
 	Armament@mountedSECONDARY:
 		Weapon: Colt45E
 		Name: mounted
-		PauseOnCondition: being-warped
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	WithInfantryBody:
@@ -466,7 +455,6 @@ MEDI:
 		OutsideRangeCursor: heal
 		TargetStances: Ally
 		ForceTargetStances: None
-		PauseOnCondition: being-warped
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	WithInfantryBody:
@@ -514,7 +502,6 @@ MECH:
 		OutsideRangeCursor: repair
 		TargetStances: Ally
 		ForceTargetStances: None
-		PauseOnCondition: being-warped
 	AttackFrontal:
 		Voice: Action
 		PauseOnCondition: being-warped
@@ -712,12 +699,10 @@ SHOK:
 	Armament@PRIMARY:
 		Weapon: PortaTesla
 		LocalOffset: 427,0,341
-		PauseOnCondition: being-warped
 	Armament@Garrisoned:
 		Name: mounted
 		Weapon: PortaTeslaE
 		LocalOffset: 427,0,341
-		PauseOnCondition: being-warped
 	Armament@charge:
 		Name: secondary
 		Weapon: PortaTeslaCharge
@@ -726,7 +711,6 @@ SHOK:
 		ForceTargetStances: None
 		Cursor: ability
 		OutsideRangeCursor: ability
-		PauseOnCondition: being-warped
 	TakeCover:
 		ProneOffset: 227,0,-245
 	AttackFrontal:
@@ -778,11 +762,9 @@ N1:
 		HP: 5000
 	Armament@PRIMARY:
 		Weapon: M16Carbine
-		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: M16CarbineE
-		PauseOnCondition: being-warped
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	WithInfantryBody:
@@ -831,13 +813,11 @@ N2:
 		Weapon: Grenade
 		LocalOffset: 0,0,555
 		FireDelay: 15
-		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: GrenadeE
 		LocalOffset: 0,0,555
 		FireDelay: 15
-		PauseOnCondition: being-warped
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	WithInfantryBody:
@@ -968,14 +948,12 @@ N4:
 		LocalOffset: 341,0,254
 		MuzzleSequence: muzzle
 		MuzzlePalette: tseffect-ignore-lighting-alpha75
-		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: FlamerE
 		LocalOffset: 341,0,254
 		MuzzleSequence: muzzle
 		MuzzlePalette: tdeffect
-		PauseOnCondition: being-warped
 	TakeCover:
 		ProneOffset: 160,0,-254
 	AttackFrontal:
@@ -1022,14 +1000,12 @@ N5:
 		LocalOffset: 341,0,254
 		MuzzleSequence: muzzle
 		MuzzlePalette: tdeffect-ignore-lighting-alpha85
-		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: ChemsprayE
 		LocalOffset: 341,0,254
 		MuzzleSequence: muzzle
 		MuzzlePalette: tdeffect-ignore-lighting-alpha85
-		PauseOnCondition: being-warped
 	TakeCover:
 		ProneOffset: 160,0,-254
 	Mobile:
@@ -1140,11 +1116,9 @@ RMBO:
 		Voice: Demolish
 	Armament:
 		Weapon: smg
-		PauseOnCondition: being-warped
 	Armament@garrison:
 		Name: mounted
 		Weapon: smgE
-		PauseOnCondition: being-warped
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
@@ -1239,11 +1213,9 @@ SNIP:
 		Range: 8c0
 	Armament@PRIMARY:
 		Weapon: sniper
-		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Weapon: sniperE
 		Name: mounted
-		PauseOnCondition: being-warped
 	Mobile:
 		Speed: 49
 		Locomotor: foot
@@ -1323,16 +1295,13 @@ BORI:
 	Armament@PRIMARY:
 		Name: secondary
 		Weapon: akm
-		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: akmE
-		PauseOnCondition: being-warped
 	Armament@flare:
 		Name: primary
 		Weapon: Flare
 		LocalOffset: 30,0,250
-		PauseOnCondition: being-warped
 	AirstrikeMaster:
 		Actors: U2.Bomber
 		SquadSize: 1
@@ -1385,13 +1354,11 @@ MORT:
 		Weapon: mortar
 		LocalOffset: 0,0,155
 		FireDelay: 15
-		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: mortarE
 		LocalOffset: 0,0,155
 		FireDelay: 15
-		PauseOnCondition: being-warped
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	WithInfantryBody:
@@ -1450,11 +1417,9 @@ SAB:
 		Voice: Move
 	Armament:
 		Weapon: SilencedPPK
-		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: SilencedPPKE
-		PauseOnCondition: being-warped
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
@@ -1507,12 +1472,10 @@ ACOL:
 	Armament@PRIMARY:
 		Weapon: PortaLaser
 		LocalOffset: 427,0,341
-		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: PortaLaserE
 		LocalOffset: 427,0,341
-		PauseOnCondition: being-warped
 	TakeCover:
 		ProneOffset: 227,0,-245
 		PauseOnCondition: being-warped || nodupg
@@ -1698,7 +1661,6 @@ JJET:
 		Voice: Attack
 	Armament@PRIMARY:
 		Weapon: M60mgJJ
-		PauseOnCondition: being-warped
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	WithInfantryBody:
@@ -1833,12 +1795,10 @@ E8:
 	Armament@PRIMARY:
 		Weapon: RadBeamWeapon
 		LocalOffset: 427,0,341
-		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: RadBeamWeaponE
 		LocalOffset: 427,0,341
-		PauseOnCondition: being-warped
 	TakeCover:
 		ProneOffset: 384,0,-395
 	AttackFrontal:
@@ -1922,7 +1882,6 @@ N1C:
 		VoiceSet: CyborgVoice
 	Armament:
 		Weapon: Vulcan3
-		PauseOnCondition: being-warped
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 	-KillsSelf@Mutation:
@@ -2101,12 +2060,10 @@ RMBC:
 	Armament@PRIMARY:
 		Weapon: CyCannon
 		LocalOffset: 0,0,555
-		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: cycannon
 		LocalOffset: 0,0,555
-		PauseOnCondition: being-warped
 	Explodes:
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall

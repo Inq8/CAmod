@@ -25,7 +25,6 @@ V2RL:
 	Armament:
 		Weapon: SCUD
 		ReloadingCondition: reloading
-		PauseOnCondition: empdisable || being-warped
 	AutoTarget:
 		ScanRadius: 10
 	AttackFrontal:
@@ -97,7 +96,6 @@ V2RL:
 		RecoilRecovery: 25
 		LocalOffset: 768,0,90
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped || parachute
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || parachute
 	WithMuzzleOverlay:
@@ -142,7 +140,6 @@ V2RL:
 		RecoilRecovery: 38
 		LocalOffset: 720,0,80
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
@@ -201,7 +198,6 @@ V2RL:
 		RecoilRecovery: 38
 		LocalOffset: 768,85,90, 768,-85,90
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 	SpeedMultiplier@IRAQTANK:
 		RequiresCondition: iraqtank
 		Modifier: 125
@@ -270,7 +266,6 @@ V2RL:
 		Recoil: 171
 		RecoilRecovery: 30
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: MammothTusk
@@ -278,7 +273,6 @@ V2RL:
 		LocalYaw: -100,100
 		Recoil: 43
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 	SpeedMultiplier@IRAQTANK:
 		RequiresCondition: iraqtank
 		Modifier: 125
@@ -337,7 +331,6 @@ ARTY:
 		Weapon: 155mm
 		LocalOffset: 624,0,208
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
@@ -366,7 +359,6 @@ ARTY.nod:
 		Description: Long-range artillery.\n  Strong vs Buildings, Infantry\n  Weak vs Vehicles, Aircraft
 	Armament:
 		Weapon: 155mmTD
-		PauseOnCondition: empdisable || being-warped
 		
 SPEC:
 	Inherits: ARTY.nod
@@ -394,7 +386,6 @@ SPEC:
 		Weapon: 155mmSpec
 		LocalOffset: 624,0,408
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 	Cloak@NORMAL:
 		InitialDelay: 90
 		CloakDelay: 90
@@ -559,7 +550,6 @@ JEEP:
 		Weapon: M60mg
 		MuzzleSequence: muzzle
 		LocalOffset: 128,0,43
-		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
@@ -600,7 +590,6 @@ APC:
 		Weapon: M60mg
 		LocalOffset: 85,0,171
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
@@ -807,7 +796,6 @@ TTNK:
 	Armament:
 		Weapon: TTankZap
 		LocalOffset: 0,0,213
-		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	Turreted:
@@ -902,12 +890,10 @@ CTNK:
 		Weapon: APTusk
 		LocalOffset: -160,-276,232
 		LocalYaw: 60
-		PauseOnCondition: empdisable || being-warped
 	Armament@SECONDARY:
 		Weapon: APTusk
 		LocalOffset: -160,276,232
 		LocalYaw: -60
-		PauseOnCondition: empdisable || being-warped
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
 	PortableChrono:
@@ -1037,7 +1023,6 @@ HMMV:
 		Weapon: M60mgTD
 		LocalOffset: 171,0,85
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
@@ -1083,7 +1068,6 @@ BGGY:
 		Weapon: M60mgTD
 		LocalOffset: 171,0,43
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
@@ -1131,7 +1115,6 @@ APC2:
 		Weapon: M60mgTD
 		LocalOffset: 85,0,171
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
@@ -1206,7 +1189,6 @@ LTNK:
 		RecoilRecovery: 17
 		LocalOffset: 720,0,90
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped || parachute
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped || parachute
 	WithMuzzleOverlay:
@@ -1262,7 +1244,6 @@ MTNK:
 		RecoilRecovery: 26
 		LocalOffset: 768,0,90
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 	Armament@SECONDARY:
 		Name: secondary
 		Turret: secondary
@@ -1270,7 +1251,6 @@ MTNK:
 		LocalOffset: 0,10,90
 		RequiresCondition: gdiupg
 		ForceTargetStances: enemy
-		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
 		Turrets: primary, secondary
 		PauseOnCondition: empdisable || being-warped
@@ -1333,7 +1313,6 @@ MTNK.Drone:
 		RecoilRecovery: 26
 		LocalOffset: 768,0,90
 		MuzzleSequence: muzzle
-		PauseOnCondition: disabled || empdisable || being-warped
 	Armament@SECONDARY:
 		Name: secondary
 		Turret: secondary
@@ -1341,7 +1320,6 @@ MTNK.Drone:
 		LocalOffset: 0,10,90
 		RequiresCondition: gdiupg
 		ForceTargetStances: enemy
-		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
 		Turrets: primary, secondary
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -1425,7 +1403,6 @@ HTNK:
 		Recoil: 171
 		RecoilRecovery: 30
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: MammothTusk
@@ -1433,7 +1410,6 @@ HTNK:
 		LocalYaw: -100,100
 		Recoil: 43
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
@@ -1473,7 +1449,6 @@ HTNK.Ion:
 		Recoil: 171
 		RecoilRecovery: 30
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 	SpawnActorOnDeath:
 		Actor: HTNK.Ion.Husk
 		RequiresCondition: !being-warped
@@ -1516,13 +1491,11 @@ MSAM:
 		Weapon: 227mm
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
-		PauseOnCondition: empdisable || being-warped
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: 227mmAA
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
-		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: False
@@ -1571,7 +1544,6 @@ MLRS:
 	Armament:
 		Weapon: honestjohn
 		LocalOffset: 0,171,0, 0,-171,0
-		PauseOnCondition: empdisable || being-warped
 	AmmoPool:
 		Ammo: 2
 		PipCount: 0
@@ -1651,12 +1623,10 @@ STNK.Nod:
 	Armament@PRIMARY:
 		Weapon: 227mm.stnk
 		LocalOffset: 213,43,128, 213,-43,128
-		PauseOnCondition: empdisable || being-warped
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: 227mm.stnkAA
 		LocalOffset: 213,43,128, 213,-43,128
-		PauseOnCondition: empdisable || being-warped
 	Turreted:
 		TurnSpeed: 10
 		Offset: 0,0,10
@@ -1703,13 +1673,11 @@ BIKE:
 		Weapon: BikeRockets
 		LocalOffset: -128, -170, 170, -128, 170, 170
 		LocalYaw: 100, -100
-		PauseOnCondition: empdisable || being-warped
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: BikeRocketsAA
 		LocalOffset: -128, -170, 170, -128, 170, 170
 		LocalYaw: 100, -100
-		PauseOnCondition: empdisable || being-warped
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
 	ProducibleWithLevel:
@@ -1747,7 +1715,6 @@ FTNK:
 		MuzzleSequence: muzzle
 		MuzzlePalette: tdeffect
 		LocalOffset: 512,128,42, 512,-128,42
-		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
@@ -1857,12 +1824,10 @@ BTR:
 	Armament@E3:
 		Weapon: BTRrockets
 		LocalOffset: 192,0,176
-		PauseOnCondition: empdisable || being-warped
 	Armament@E3AA:
 		Name: secondary
 		Weapon: BTRrocketsAA
 		LocalOffset: 192,0,176
-		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
@@ -1910,36 +1875,30 @@ IFV:
 	Armament@Default:
 		Weapon: IFVRockets
 		LocalOffset: 192,10,176, 192,-10,176
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !full
 	Armament@DefaultAA:
 		Name: secondary
 		Weapon: IFVRocketsAA
 		LocalOffset: 192,10,176, 192,-10,176
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !full
 	Armament@E1:
 		Weapon: M60mg
 		MuzzleSequence: muzzle
 		LocalOffset: 250,0,150
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: gunturr || tecnturr
 	Armament@E2:
 		Weapon: 25mmFRAG
 		MuzzleSequence: muzzle
 		LocalOffset: 450,0,200
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: fragturr
 	Armament@E3:
 		Weapon: IFVRocketsE
 		LocalOffset: 192,10,176, 192,-10,176
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: samturr
 	Armament@E3AA:
 		Name: secondary
 		Weapon: IFVRocketsAAE
 		LocalOffset: 192,10,176, 192,-10,176
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: samturr
 	Armament@E4:
 		Weapon: FireballLauncher
@@ -1947,7 +1906,6 @@ IFV:
 		RecoilRecovery: 25
 		LocalOffset: 350,0,150
 		MuzzleSequence: muzzle2
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: flamturr
 	Armament@E5:
 		Weapon: ChemballLauncher
@@ -1955,23 +1913,19 @@ IFV:
 		RecoilRecovery: 25
 		LocalOffset: 350,0,150
 		MuzzleSequence: muzzle2
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: chemturr
 	Armament@E7:
 		Weapon: smg
 		MuzzleSequence: muzzle
 		LocalOffset: 560,0,200
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: commturr
 	Armament@Shok:
 		Weapon: TTankZap
 		LocalOffset: 0,0,213
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: testurr
 	Armament@Deso:
 		Weapon: RadBeamWeapon
 		LocalOffset: 400,0,213
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: desoturr
 	Armament@Repair:
 		Weapon: RepairIFV
@@ -1980,14 +1934,12 @@ IFV:
 		OutsideRangeCursor: repair
 		TargetStances: Ally
 		ForceTargetStances: None
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: engturr
 		MuzzleSequence: emp-overlay
 		MuzzlePalette: tseffect-ignore-lighting-alpha75
 	Armament@Acol:
 		Weapon: LaserTur
 		LocalOffset: 385,0,300
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: acolturr
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
@@ -2133,30 +2085,25 @@ IFV.AI:
 	Armament@Default:
 		Weapon: IFVRockets
 		LocalOffset: 192,10,176, 192,-10,176
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: defturr
 	Armament@DefaultAA:
 		Name: secondary
 		Weapon: IFVRocketsAA
 		LocalOffset: 192,10,176, 192,-10,176
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: defturr
 	Armament@E1:
 		Weapon: M60mg
 		MuzzleSequence: muzzle
 		LocalOffset: 250,0,150
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: gunturr
 	Armament@E3:
 		Weapon: IFVRocketsE
 		LocalOffset: 192,10,176, 192,-10,176
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: samturr
 	Armament@E3AA:
 		Name: secondary
 		Weapon: IFVRocketsAAE
 		LocalOffset: 192,10,176, 192,-10,176
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: samturr
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
@@ -2221,7 +2168,6 @@ TITN:
 	Armament@PRIMARY:
 		Weapon: TitanGun
 		LocalOffset: 830,260,100
-		PauseOnCondition: empdisable || being-warped
 		Recoil: 171
 		RecoilRecovery: 30
 		MuzzleSequence: muzzle
@@ -2232,7 +2178,6 @@ TITN:
 		LocalYaw: -100,100
 		Recoil: 43
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 	Turreted:
 		TurnSpeed: 3
 		Offset: 0,0,0
@@ -2275,7 +2220,6 @@ JUGG:
 	Armament@PRIMARY:
 		Weapon: JuggernautGun
 		LocalOffset: 830,0,500, 830,100,500, 830,-100,500
-		PauseOnCondition: empdisable || being-warped
 		Recoil: 171
 		RecoilRecovery: 30
 		MuzzleSequence: muzzle
@@ -2342,24 +2286,20 @@ DISR:
 	Armament@PRIMARY:
 		Weapon: SonicZap
 		LocalOffset: 0,0,200
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !gdiupg
 	Armament@SECONDARY:
 		Weapon: SonicZapVisual
 		Name: secondary
 		LocalOffset: 0,0,200
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !gdiupg
 	Armament@PRIMARYUPG:
 		Weapon: SonicZap.UPG
 		LocalOffset: 0,0,200
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: gdiupg
 	Armament@SECONDARYUPG:
 		Weapon: SonicZapVisual.UPG
 		Name: secondary
 		LocalOffset: 0,0,200
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: gdiupg
 	Turreted:
 		TurnSpeed: 5
@@ -2438,27 +2378,23 @@ HSAM:
 		Weapon: 227mmH
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !gdiupg
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: 227mmAAH
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !gdiupg
 	Armament@PRIMARY-UPG:
 		Weapon: 227mm.upg
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: gdiupg
 	Armament@SECONDARY-UPG:
 		Name: secondary
 		Weapon: 227mmAA.upg
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: gdiupg
 	AutoTarget:
 		ScanRadius: 10
@@ -2509,7 +2445,6 @@ RTNK:
 		RecoilRecovery: 38
 		LocalOffset: 720,0,80
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
 		Voice: Attack
 		PauseOnCondition: empdisable || being-warped
@@ -2570,7 +2505,6 @@ V3RL:
 		Range: 5c0
 	Armament:
 		Weapon: V3Launcher
-		PauseOnCondition: empdisable || being-warped
 		ReloadingCondition: reloading
 	AttackFrontal:
 		TargetFrozenActors: True
@@ -2673,7 +2607,6 @@ TNKD:
 		RecoilRecovery: 25
 		LocalOffset: 868,0,0
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
@@ -2804,7 +2737,6 @@ PTNK:
 	Armament:
 		Weapon: PrisTLaser
 		LocalOffset: 100,0,140
-		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
 		TargetFrozenActors: True
 		OpportunityFire: False
@@ -2856,7 +2788,6 @@ WTNK:
 		Weapon: MicrowaveZap
 		FireDelay: 7
 		LocalOffset: 500,0,140
-		PauseOnCondition: empdisable || being-warped
 		MuzzleSequence: muzzle
 		MuzzlePalette: tseffect-ignore-lighting-alpha75
 	Armament@PRIMARYSOUND:
@@ -2918,7 +2849,6 @@ BATF:
 		Weapon: BATFGun
 		LocalOffset: 200,0,300
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: cargo
 	Armament@SECONDARY:
 		Name: secondary
@@ -2927,7 +2857,6 @@ BATF:
 		FireDelay: 8
 		LocalOffset: 200,0,300
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: cargo >= 2
 	Armament@TERTIARY:
 		Name: tertiary
@@ -2935,7 +2864,6 @@ BATF:
 		Weapon: BATFRockets
 		LocalOffset: -200,0,300
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: cargo >= 3
 	Turreted@PRIMARY:
 		Turret: primary
@@ -2994,7 +2922,6 @@ BATF.AI:
 		Weapon: BATFGun
 		LocalOffset: 200,0,300
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 	Armament@SECONDARY:
 		Name: secondary
 		Turret: secondary
@@ -3002,14 +2929,12 @@ BATF.AI:
 		FireDelay: 8
 		LocalOffset: 200,0,300
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 	Armament@TERTIARY:
 		Name: tertiary
 		Turret: tertiary
 		Weapon: BATFRockets
 		LocalOffset: -200,0,300
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 	-Turreted@PRIMARY:
 	-Turreted@SECONDARY:
 	-Turreted@TERTIARY:
@@ -3220,19 +3145,15 @@ CHPR:
 	Armament@PRIMARY:
 		Weapon: NeutronCannon
 		LocalOffset: 600,0,480
-		PauseOnCondition: empdisable || being-warped
 	Armament@PRIMARYVISUAL:
 		Weapon: NeutronCannonBeam
 		LocalOffset: 600,0,480
-		PauseOnCondition: empdisable || being-warped
 	Armament@PRIMARYVISUALCORE:
 		Weapon: NeutronCannonPulse
 		LocalOffset: 600,0,480
-		PauseOnCondition: empdisable || being-warped
 	Armament@PRIMARYSOUND:
 		Weapon: NeutronCannonSound
 		LocalOffset: 600,0,480
-		PauseOnCondition: empdisable || being-warped
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
@@ -3303,7 +3224,6 @@ CRYO:
 	Armament:
 		Weapon: CryoMissile
 		LocalOffset: 150,100,0, 150,-100,0
-		PauseOnCondition: empdisable || being-warped
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
