@@ -410,6 +410,13 @@
 	ExternalCondition@EMPDISABLE:
 		Condition: empdisable
 		
+^EmpVisualEffect:
+	WithColoredOverlay@EMPDISABLE:
+		Palette: disabled
+	WithIdleOverlay@EMPDISABLE:
+		Sequence: emp-overlay
+		Palette: tseffect
+		
 ^NaniteRepair:
 	SelfHealing@NREPAIR:
 		PercentageStep: 1
@@ -1217,6 +1224,7 @@
 		RepairActors: fix, rep
 	Aircraft:
 		CruisingCondition: cruising
+		PauseOnCondition: empdisable && !airborne
 	KillsSelf:
 		RequiresCondition: empdisable && cruising
 	Targetable@GROUND:
@@ -1261,6 +1269,7 @@
 		InitialFacing: 224
 		CanSlide: True
 		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems,Tiberium,BlueTiberium
+		Crushes: crate, mine, infantry
 	GpsDot:
 		String: Helicopter
 	Hovers@CRUISING:
@@ -1451,7 +1460,7 @@
 		RequiresCondition: !being-warped
 	DetectCloaked:
 		Range: 6c0
-		RequiresCondition: !being-warped
+		RequiresCondition: !(empdisable || being-warped)
 	MustBeDestroyed:
 		RequiredForShortGame: false
 	-GivesBuildableArea:

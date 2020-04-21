@@ -38,7 +38,7 @@ BADR:
 	Interactable:
 
 BADR.Bomber:
-	Inherits: ^NeutralPlane
+	Inherits: ^Plane
 	AttackBomber:
 	Armament:
 		Weapon: ParaBomb
@@ -52,7 +52,6 @@ BADR.Bomber:
 		MaximumPitch: 56
 	AmmoPool:
 		Ammo: 7
-		AmmoCondition: ammo
 	-Selectable:
 	SelectionDecorations:
 		RenderSelectionBars: False
@@ -65,10 +64,10 @@ BADR.Bomber:
 		Offset: -432,-560,0
 	SpawnActorOnDeath:
 		Actor: BADR.Husk
-		RequiresCondition: ammo
-	SpawnActorOnDeath@Empty:
-		Actor: BADR.Husk.Empty
-		RequiresCondition: !ammo
+		RequiresCondition: !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: BADR.Husk.EMP
+		RequiresCondition: empdisable
 	SmokeTrailWhenDamaged@0:
 		Offset: -432,560,0
 		Interval: 2
@@ -97,7 +96,7 @@ BADR.NBomber:
 		Weapon: AtomBomb
 
 B2B:
-	Inherits: ^NeutralPlane
+	Inherits: ^Plane
 	AttackBomber:
 	Armament:
 		Weapon: InfernoBomb
@@ -111,7 +110,6 @@ B2B:
 		MaximumPitch: 56
 	AmmoPool:
 		Ammo: 1
-		AmmoCondition: ammo
 	-Selectable:
 	SelectionDecorations:
 		RenderSelectionBars: False
@@ -124,10 +122,10 @@ B2B:
 		Offset: -432,-560,0
 	SpawnActorOnDeath:
 		Actor: B2B.Husk
-		RequiresCondition: ammo
-	SpawnActorOnDeath@Empty:
-		Actor: B2B.Husk.Empty
-		RequiresCondition: !ammo
+		RequiresCondition: !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: B2B.Husk.EMP
+		RequiresCondition: empdisable
 	SmokeTrailWhenDamaged@0:
 		Offset: -432,560,0
 		Interval: 2
@@ -180,6 +178,9 @@ MIG:
 		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 20
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
@@ -206,10 +207,16 @@ MIG:
 		Offset: -598,683,0
 	SpawnActorOnDeath:
 		Actor: MIG.Husk
-		RequiresCondition: ammo
+		RequiresCondition: ammo && !empdisable
 	SpawnActorOnDeath@Empty:
-		Actor: MIG.Husk.Empty
-		RequiresCondition: !ammo
+		Actor: MIG.Husk.empty
+		RequiresCondition: !ammo && !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: MIG.Husk.EMP
+		RequiresCondition: ammo && empdisable
+	SpawnActorOnDeath@EmptyEMP:
+		Actor: MIG.Husk.empty.EMP
+		RequiresCondition: !ammo && empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -853,0,171
 		Interval: 2
@@ -244,6 +251,9 @@ FROG:
 		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 128
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
@@ -266,10 +276,16 @@ FROG:
 		Offset: -258,723,0
 	SpawnActorOnDeath:
 		Actor: FROG.Husk
-		RequiresCondition: ammo
+		RequiresCondition: ammo && !empdisable
 	SpawnActorOnDeath@Empty:
-		Actor: FROG.Husk.Empty
-		RequiresCondition: !ammo
+		Actor: FROG.Husk.empty
+		RequiresCondition: !ammo && !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: FROG.Husk.EMP
+		RequiresCondition: ammo && empdisable
+	SpawnActorOnDeath@EmptyEMP:
+		Actor: FROG.Husk.empty.EMP
+		RequiresCondition: !ammo && empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -853,0,0
 		Interval: 2
@@ -316,6 +332,9 @@ YAK:
 		FacingTolerance: 20
 		AttackType: Strafe
 		StrafeRunLength: 3c512
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
@@ -335,6 +354,10 @@ YAK:
 	WithMuzzleOverlay:
 	SpawnActorOnDeath:
 		Actor: YAK.Husk
+		RequiresCondition: !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: YAK.Husk.EMP
+		RequiresCondition: empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -853,0,0
 		Interval: 2
@@ -395,7 +418,11 @@ TRAN:
 		MaxWeight: 8
 		PipCount: 8
 	SpawnActorOnDeath:
-		Actor: TRA3.Husk
+		Actor: TRAN.Husk
+		RequiresCondition: !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: TRAN.Husk.EMP
+		RequiresCondition: empdisable
 	SelectionDecorations:
 	Selectable:
 		DecorationBounds: 40,36
@@ -513,7 +540,11 @@ TRAN.paradrop:
 	RenderSprites:
 		Image: tran3
 	SpawnActorOnDeath:
-		Actor: TRA3.Husk
+		Actor: TRAN.Husk
+		RequiresCondition: !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: TRAN.Husk.EMP
+		RequiresCondition: empdisable
 	SelectionDecorations:
 	Interactable:
 	GivesExperience:
@@ -552,6 +583,9 @@ HELI:
 	AttackAircraft:
 		FacingTolerance: 20
 		AttackType: Hover
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		TurnSpeed: 4
 		Speed: 180
@@ -576,10 +610,16 @@ HELI:
 	SelectionDecorations:
 	SpawnActorOnDeath:
 		Actor: HELI.Husk
-		RequiresCondition: ammo
+		RequiresCondition: ammo && !empdisable
 	SpawnActorOnDeath@Empty:
-		Actor: HELI.Husk.Empty
-		RequiresCondition: !ammo
+		Actor: HELI.Husk.empty
+		RequiresCondition: !ammo && !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: HELI.Husk.EMP
+		RequiresCondition: ammo && empdisable
+	SpawnActorOnDeath@EmptyEMP:
+		Actor: HELI.Husk.empty.EMP
+		RequiresCondition: !ammo && empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -427,0,0
 	ProducibleWithLevel:
@@ -624,6 +664,9 @@ HIND:
 	AttackAircraft:
 		FacingTolerance: 20
 		AttackType: Hover
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		TurnSpeed: 4
 		Speed: 135
@@ -647,10 +690,16 @@ HIND:
 	WithMuzzleOverlay:
 	SpawnActorOnDeath:
 		Actor: HIND.Husk
-		RequiresCondition: ammo
+		RequiresCondition: ammo && !empdisable
 	SpawnActorOnDeath@Empty:
-		Actor: HIND.Husk.Empty
-		RequiresCondition: !ammo
+		Actor: HIND.Husk.empty
+		RequiresCondition: !ammo && !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: HIND.Husk.EMP
+		RequiresCondition: ammo && empdisable
+	SpawnActorOnDeath@EmptyEMP:
+		Actor: HIND.Husk.empty.EMP
+		RequiresCondition: !ammo && empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -427,0,0
 	ProducibleWithLevel:
@@ -661,7 +710,7 @@ HIND:
 		RearmActors: hpad, hpad.td
 
 U2:
-	Inherits: ^NeutralPlane
+	Inherits: ^Plane
 	Health:
 		HP: 200000
 	Tooltip:
@@ -684,6 +733,10 @@ U2:
 		Offset: -725,-683,0
 	SpawnActorOnDeath:
 		Actor: U2.Husk
+		RequiresCondition: !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: U2.Husk.EMP
+		RequiresCondition: empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -1c43,0,0
 		Interval: 2
@@ -692,7 +745,7 @@ U2:
 	-MapEditorData:
 	
 U2.Bomber:
-	Inherits: ^NeutralPlane
+	Inherits: ^Plane
 	RenderSprites:
 		Image: U2
 	Health:
@@ -716,20 +769,21 @@ U2.Bomber:
 		Offset: -725,-683,0
 	AttackAircraft:
 		FacingTolerance: 20
+		PersistentTargeting: false
+		OpportunityFire: false
 	Armament:
 		Weapon: U2Bomb
 	AmmoPool:
 		Ammo: 1
 		PipCount: 1
-		AmmoCondition: ammo
 	AirstrikeSlave:
 		LandingDistance: 1c0
 	SpawnActorOnDeath:
 		Actor: U2.Husk
-		RequiresCondition: ammo
-	SpawnActorOnDeath@Empty:
-		Actor: U2.Husk.Empty
-		RequiresCondition: !ammo
+		RequiresCondition: !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: U2.Husk.EMP
+		RequiresCondition: empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -1c43,0,0
 		Interval: 2
@@ -764,9 +818,12 @@ A10:
 	Armament:
 		Weapon: NapalmTD
 		LocalOffset: 2,-256,-43, 2,256,-43
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 128
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
@@ -792,11 +849,17 @@ A10:
 	Contrail@2:
 		Offset: -258,823,0
 	SpawnActorOnDeath:
-		Actor: a10.Husk
-		RequiresCondition: ammo
+		Actor: A10.Husk
+		RequiresCondition: ammo && !empdisable
 	SpawnActorOnDeath@Empty:
-		Actor: a10.Husk.Empty
-		RequiresCondition: !ammo
+		Actor: A10.Husk.empty
+		RequiresCondition: !ammo && !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: A10.Husk.EMP
+		RequiresCondition: ammo && empdisable
+	SpawnActorOnDeath@EmptyEMP:
+		Actor: A10.Husk.empty.EMP
+		RequiresCondition: !ammo && empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -853,0,171
 		Interval: 2
@@ -839,11 +902,17 @@ A10.bomber:
 	Contrail@2:
 		Offset: -258,823,0
 	SpawnActorOnDeath:
-		Actor: a10.Husk
-		RequiresCondition: ammo
+		Actor: A10.Husk
+		RequiresCondition: ammo && !empdisable
 	SpawnActorOnDeath@Empty:
-		Actor: a10.Husk.Empty
-		RequiresCondition: !ammo
+		Actor: A10.Husk.empty
+		RequiresCondition: !ammo && !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: A10.Husk.EMP
+		RequiresCondition: ammo && empdisable
+	SpawnActorOnDeath@EmptyEMP:
+		Actor: A10.Husk.empty.EMP
+		RequiresCondition: !ammo && empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -853,0,171
 		Interval: 2
@@ -852,7 +921,7 @@ A10.bomber:
 		Experience: 1000
 		
 C17:
-	Inherits: ^NeutralPlane
+	Inherits: ^Plane
 	RenderSprites:
 		PlayerPalette: overlayplayertd
 	-EjectOnDeath:
@@ -893,7 +962,11 @@ C17:
 		Offset: -261,650,0
 		TrailLength: 15
 	SpawnActorOnDeath:
-		Actor: c17.Husk
+		Actor: C17.Husk
+		RequiresCondition: !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: C17.Husk.EMP
+		RequiresCondition: empdisable
 	SmokeTrailWhenDamaged@0:
 		Offset: -432,560,0
 		Interval: 2
@@ -967,10 +1040,13 @@ APCH:
 		Weapon: HeliGunAG
 		LocalOffset: 228,0,-85
 		MuzzleSequence: muzzle
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 20
 		AttackType: Hover
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
 	AmmoPool:
 		Ammo: 12
 		PipCount: 6
@@ -990,10 +1066,16 @@ APCH:
 		InitialStanceAI: HoldFire
 	SpawnActorOnDeath:
 		Actor: APCH.Husk
-		RequiresCondition: ammo
+		RequiresCondition: ammo && !empdisable
 	SpawnActorOnDeath@Empty:
-		Actor: APCH.Husk.Empty
-		RequiresCondition: !ammo
+		Actor: APCH.Husk.empty
+		RequiresCondition: !ammo && !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: APCH.Husk.EMP
+		RequiresCondition: ammo && empdisable
+	SpawnActorOnDeath@EmptyEMP:
+		Actor: APCH.Husk.empty.EMP
+		RequiresCondition: !ammo && empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -427,0,0
 	SelectionDecorations:
@@ -1034,14 +1116,17 @@ ORCA:
 	Armament@PRIMARY:
 		Weapon: HellfireAG.Orca
 		LocalOffset: 0,-213,-85, 0,213,-85
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 	Armament@SECONDARY:
 		Weapon: HellfireAA.Orca
 		LocalOffset: 0,213,-85, 0,-213,-85
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 20
 		AttackType: Hover
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
 	AmmoPool:
 		Ammo: 8
 		PipCount: 4
@@ -1049,10 +1134,16 @@ ORCA:
 		AmmoCondition: ammo
 	SpawnActorOnDeath:
 		Actor: ORCA.Husk
-		RequiresCondition: ammo
+		RequiresCondition: ammo && !empdisable
 	SpawnActorOnDeath@Empty:
-		Actor: ORCA.Husk.Empty
-		RequiresCondition: !ammo
+		Actor: ORCA.Husk.empty
+		RequiresCondition: !ammo && !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: ORCA.Husk.EMP
+		RequiresCondition: ammo && empdisable
+	SpawnActorOnDeath@EmptyEMP:
+		Actor: ORCA.Husk.empty.EMP
+		RequiresCondition: !ammo && empdisable
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: HoldFire
@@ -1095,10 +1186,13 @@ ORCB:
 	Armament:
 		Weapon: OrcaBomb
 		LocalOffset: 2,-256,-43, 2,256,-43
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 20
 		Voice: Attack
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
 		AltitudeVelocity: 0c120
@@ -1122,11 +1216,17 @@ ORCB:
 		DecorationBounds: 40,29,0,1
 	SelectionDecorations:
 	SpawnActorOnDeath:
-		Actor: orcb.Husk
-		RequiresCondition: ammo
+		Actor: ORCB.Husk
+		RequiresCondition: ammo && !empdisable
 	SpawnActorOnDeath@Empty:
-		Actor: orcb.Husk.Empty
-		RequiresCondition: !ammo
+		Actor: ORCB.Husk.empty
+		RequiresCondition: !ammo && !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: ORCB.Husk.EMP
+		RequiresCondition: ammo && empdisable
+	SpawnActorOnDeath@EmptyEMP:
+		Actor: ORCB.Husk.empty.EMP
+		RequiresCondition: !ammo && empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -853,0,171
 		Interval: 2
@@ -1161,7 +1261,11 @@ UAV:
 	SelectionDecorations:
 		RenderSelectionBars: False
 	SpawnActorOnDeath:
-		Actor: uav.Husk
+		Actor: UAV.Husk
+		RequiresCondition: !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: UAV.Husk.EMP
+		RequiresCondition: empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -1c43,0,0
 		Interval: 2
@@ -1204,11 +1308,14 @@ RAH:
 	Armament@PRIMARY:
 		Weapon: Rah66AG
 		LocalOffset: 0,-213,-85, 0,213,-85
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 20
 		AttackType: Hover
 		Voice: Attack
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		AltitudeVelocity: 0c100
 		TurnSpeed: 4
@@ -1247,11 +1354,17 @@ RAH:
 		ReloadCount: 2
 	SelectionDecorations:
 	SpawnActorOnDeath:
-		Actor: rah.Husk
-		RequiresCondition: ammo
+		Actor: RAH.Husk
+		RequiresCondition: ammo && !empdisable
 	SpawnActorOnDeath@Empty:
-		Actor: rah.Husk.Empty
-		RequiresCondition: !ammo
+		Actor: RAH.Husk.empty
+		RequiresCondition: !ammo && !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: RAH.Husk.EMP
+		RequiresCondition: ammo && empdisable
+	SpawnActorOnDeath@EmptyEMP:
+		Actor: RAH.Husk.empty.EMP
+		RequiresCondition: !ammo && empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -427,0,0
 	Selectable:
@@ -1290,16 +1403,15 @@ KIRO:
 	Armament@PRIMARY:
 		Weapon: AirshipParaBomb
 		LocalOffset: -20,0,0
-		PauseOnCondition: being-warped
 	Armament@SECONDARY:
 		Weapon: AirshipParaBombS
 		LocalOffset: -20,0,0
-		PauseOnCondition: being-warped
 	AttackFrontal:
 		Voice: Attack
 	AttackAircraft:
 		FacingTolerance: 20
 		AttackType: Hover
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2c0
 		InitialFacing: 192
@@ -1314,7 +1426,11 @@ KIRO:
 		ScanRadius: 10
 	SelectionDecorations:
 	SpawnActorOnDeath:
-		Actor: kiro.Husk
+		Actor: KIRO.Husk
+		RequiresCondition: !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: KIRO.Husk.EMP
+		RequiresCondition: empdisable
 	WithIdleOverlay@ROTOR1AIR:
 		Offset: -180,597,250
 		Sequence: rotor
@@ -1393,6 +1509,10 @@ OCAR:
 		MoveRecalculationThreshold: 0
 	SpawnActorOnDeath:
 		Actor: OCAR.Husk
+		RequiresCondition: !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: OCAR.Husk.EMP
+		RequiresCondition: empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -427,0,0
 		Interval: 2
@@ -1458,10 +1578,13 @@ HARR:
 	Armament:
 		Weapon: HellfireAG.Harrier
 		LocalOffset: 0,213,-85, 0,-213,-85
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 20
 		Voice: Attack
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
 		TurnSpeed: 4
@@ -1490,10 +1613,16 @@ HARR:
 	SelectionDecorations:
 	SpawnActorOnDeath:
 		Actor: HARR.Husk
-		RequiresCondition: ammo
+		RequiresCondition: ammo && !empdisable
 	SpawnActorOnDeath@Empty:
-		Actor: HARR.Husk.Empty
-		RequiresCondition: !ammo
+		Actor: HARR.Husk.empty
+		RequiresCondition: !ammo && !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: HARR.Husk.EMP
+		RequiresCondition: ammo && empdisable
+	SpawnActorOnDeath@EmptyEMP:
+		Actor: HARR.Husk.empty.EMP
+		RequiresCondition: !ammo && empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -427,0,0
 	Selectable:
@@ -1533,14 +1662,17 @@ SCRN:
 	Armament@PRIMARY:
 		Weapon: ScrinTorp
 		LocalOffset: 0,213,-85, 0,-213,-85
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 	Armament@SECONDARY:
 		Weapon: ScrinTorpAA
 		LocalOffset: 0,213,-85, 0,-213,-85
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 20
 		Voice: Attack
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
 		TurnSpeed: 5
@@ -1569,10 +1701,16 @@ SCRN:
 	SelectionDecorations:
 	SpawnActorOnDeath:
 		Actor: SCRN.Husk
-		RequiresCondition: ammo
+		RequiresCondition: ammo && !empdisable
 	SpawnActorOnDeath@Empty:
-		Actor: SCRN.Husk.Empty
-		RequiresCondition: !ammo
+		Actor: SCRN.Husk.empty
+		RequiresCondition: !ammo && !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: SCRN.Husk.EMP
+		RequiresCondition: ammo && empdisable
+	SpawnActorOnDeath@EmptyEMP:
+		Actor: SCRN.Husk.empty.EMP
+		RequiresCondition: !ammo && empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -427,0,0
 	Selectable:
@@ -1604,9 +1742,12 @@ HORN:
 		MoveRecalculationThreshold: 0
 	Armament:
 		Weapon: HellfireAG.Horn
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 20
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 1c513
 		InitialFacing: 192
@@ -1628,11 +1769,17 @@ HORN:
 		AmmoCondition: ammo
 	RejectsOrders:
 	SpawnActorOnDeath:
-		Actor: horn.husk
-		RequiresCondition: ammo
+		Actor: HORN.Husk
+		RequiresCondition: ammo && !empdisable
 	SpawnActorOnDeath@Empty:
-		Actor: horn.husk.empty
-		RequiresCondition: !ammo
+		Actor: HORN.Husk.empty
+		RequiresCondition: !ammo && !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: HORN.Husk.EMP
+		RequiresCondition: ammo && empdisable
+	SpawnActorOnDeath@EmptyEMP:
+		Actor: HORN.Husk.empty.EMP
+		RequiresCondition: !ammo && empdisable
 	-EjectOnDeath:
 	-Selectable:
 	-ActorLostNotification:
@@ -1661,6 +1808,9 @@ YF23.Bomber:
 		PauseOnCondition: !ammo
 	AttackBomberCA:
 	AttackAircraft:
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
@@ -1687,7 +1837,11 @@ YF23.Bomber:
 	Contrail@2:
 		Offset: -325,-483,0
 	SpawnActorOnDeath:
-		Actor: yf23.Husk
+		Actor: YF23.Husk
+		RequiresCondition: !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: YF23.Husk.EMP
+		RequiresCondition: empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -853,0,171
 		Interval: 2
@@ -1785,14 +1939,17 @@ VENM:
 	Armament@PRIMARY:
 		Weapon: VenomLaser
 		LocalOffset: 600,0,-270
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 	Armament@SECONDARY:
 		Weapon: VenomLaserAA
 		LocalOffset: 600,0,-270
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 10
 		AttackType: Hover
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
 	AmmoPool:
 		Ammo: 12
 		PipCount: 6
@@ -1804,6 +1961,16 @@ VENM:
 		ResetOnFire: true
 	SpawnActorOnDeath:
 		Actor: VENM.Husk
+		RequiresCondition: ammo && !empdisable
+	SpawnActorOnDeath@Empty:
+		Actor: VENM.Husk.empty
+		RequiresCondition: !ammo && !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: VENM.Husk.EMP
+		RequiresCondition: ammo && empdisable
+	SpawnActorOnDeath@EmptyEMP:
+		Actor: VENM.Husk.empty.EMP
+		RequiresCondition: !ammo && empdisable
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: HoldFire

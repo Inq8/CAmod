@@ -569,6 +569,7 @@ JEEP:
 	DetectCloaked:
 		Range: 6c0
 		CloakTypes: Cloak, Thief
+		RequiresCondition: !(empdisable || being-warped)
 
 APC:
 	Inherits: ^Tank
@@ -644,6 +645,7 @@ MNLY:
 	DetectCloaked:
 		Range: 5c0
 		CloakTypes: Mine
+		RequiresCondition: !(empdisable || being-warped)
 	RenderDetectionCircle:
 	Explodes:
 		Weapon: ATMine
@@ -1044,6 +1046,7 @@ HMMV:
 	DetectCloaked:
 		Range: 6c0
 		CloakTypes: Cloak, Thief
+		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 
@@ -1088,6 +1091,7 @@ BGGY:
 	DetectCloaked:
 		Range: 6c0
 		CloakTypes: Cloak, Thief
+		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 
@@ -2728,12 +2732,13 @@ MSAR:
 		BodyNames: deployedbody
 	Carryable:
 		LocalOffset: 0,0,400
+		CarriedCondition: airborne
 	WithSpriteBody@deployed:
 		Sequence: idle-static
 		RequiresCondition: !undeployed && real-actor
 		Name: deployedbody
 	WithFacingSpriteBody:
-		RequiresCondition: undeployed
+		RequiresCondition: undeployed || airborne
 	GrantConditionOnDeploy:
 		PauseOnCondition: empdisable || being-warped || being-captured
 		DeployedCondition: deployed
@@ -2747,7 +2752,7 @@ MSAR:
 	DetectCloaked@Deployed:
 		Range: 10c0
 		CloakTypes: Cloak
-		RequiresCondition: deployed && !empdisable
+		RequiresCondition: deployed && !(empdisable || being-warped)
 	RenderDetectionCircle:
 		TrailCount: 3
 	ProvidesRadar:

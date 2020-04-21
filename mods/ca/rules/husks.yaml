@@ -96,7 +96,7 @@ MGG.Husk:
 		IntoActor: mgg
 	RenderSprites:
 		Image: mgg.destroyed
-
+		
 TRAN.Husk:
 	Inherits: ^HelicopterHusk
 	Tooltip:
@@ -118,30 +118,11 @@ TRAN.Husk:
 		Range: 6c0
 		Type: GroundPosition
 	RenderSprites:
-		Image: tran2
-		
-TRA3.Husk:
-	Inherits: ^HelicopterHusk
-	Tooltip:
-		Name: Chinook
-	Aircraft:
-		TurnSpeed: 4
-		Speed: 149
-	WithIdleOverlay@PRIMARY:
-		Offset: -597,0,341
-		Sequence: rotor
-	WithIdleOverlay@SECONDARY:
-		Offset: 597,0,213
-		Sequence: rotor2
-	RevealsShroud:
-		Range: 8c0
-		Type: GroundPosition
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 6c0
-		Type: GroundPosition
-	RenderSprites:
 		Image: tran3
+		
+TRAN.Husk.EMP:
+	Inherits: TRAN.Husk
+	Inherits: ^EmpVisualEffect
 
 TRAN.Husk1:
 	Inherits: ^Husk
@@ -182,9 +163,9 @@ BADR.Husk:
 		Image: badr
 	-RevealOnDeath:
 
-BADR.Husk.Empty:
-	Inherits: ^PlaneHuskEmpty
+BADR.Husk.EMP:
 	Inherits: BADR.Husk
+	Inherits: ^EmpVisualEffect
 	
 B2B.Husk:
 	Inherits: ^PlaneHusk
@@ -205,9 +186,9 @@ B2B.Husk:
 		Image: b2b
 	-RevealOnDeath:
 	
-B2B.Husk.Empty:
-	Inherits: ^PlaneHuskEmpty
+B2B.Husk.EMP:
 	Inherits: B2B.Husk
+	Inherits: ^EmpVisualEffect
 
 MIG.Husk:
 	Inherits: ^PlaneHusk
@@ -234,9 +215,17 @@ MIG.Husk:
 	RenderSprites:
 		Image: mig
 		
+MIG.Husk.EMP:
+	Inherits: MIG.Husk
+	Inherits: ^EmpVisualEffect
+		
 MIG.Husk.Empty:
 	Inherits: ^PlaneHuskEmpty
 	Inherits: MIG.Husk
+		
+MIG.Husk.Empty.EMP:
+	Inherits: MIG.Husk.Empty
+	Inherits: ^EmpVisualEffect
 
 YAK.Husk:
 	Inherits: ^PlaneHusk
@@ -261,9 +250,9 @@ YAK.Husk:
 	FallsToEarth:
 		Explosion: UnitExplodePlaneLight
 		
-YAK.Husk.Empty:
-	Inherits: ^PlaneHuskEmpty
+YAK.Husk.EMP:
 	Inherits: YAK.Husk
+	Inherits: ^EmpVisualEffect
 
 HELI.Husk:
 	Inherits: ^HelicopterHusk
@@ -288,9 +277,17 @@ HELI.Husk:
 	RenderSprites:
 		Image: heli
 		
-HELI.Husk.Empty:
+HELI.Husk.EMP:
 	Inherits: HELI.Husk
+	Inherits: ^EmpVisualEffect
+		
+HELI.Husk.Empty:
 	Inherits: ^HelicopterHuskEmpty
+	Inherits: HELI.Husk
+		
+HELI.Husk.Empty.EMP:
+	Inherits: HELI.Husk.Empty
+	Inherits: ^EmpVisualEffect
 
 HIND.Husk:
 	Inherits: ^HelicopterHusk
@@ -314,9 +311,17 @@ HIND.Husk:
 	RenderSprites:
 		Image: hind
 		
-HIND.Husk.Empty:
+HIND.Husk.EMP:
 	Inherits: HIND.Husk
+	Inherits: ^EmpVisualEffect
+		
+HIND.Husk.Empty:
 	Inherits: ^HelicopterHuskEmpty
+	Inherits: HIND.Husk
+		
+HIND.Husk.Empty.EMP:
+	Inherits: HIND.Husk.Empty
+	Inherits: ^EmpVisualEffect
 
 U2.Husk:
 	Inherits: ^PlaneHusk
@@ -336,9 +341,9 @@ U2.Husk:
 	RenderSprites:
 		Image: u2
 		
-U2.Husk.Empty:
-	Inherits: ^PlaneHuskEmpty
+U2.Husk.EMP:
 	Inherits: U2.Husk
+	Inherits: ^EmpVisualEffect
 
 T01.Husk:
 	Inherits: ^TreeHusk
@@ -713,9 +718,17 @@ APCH.Husk:
 		Image: apch
 		PlayerPalette: overlayplayertd
 		
-APCH.Husk.Empty:
+APCH.Husk.EMP:
 	Inherits: APCH.Husk
+	Inherits: ^EmpVisualEffect
+		
+APCH.Husk.Empty:
 	Inherits: ^HelicopterHuskEmpty
+	Inherits: APCH.Husk
+		
+APCH.Husk.Empty.EMP:
+	Inherits: APCH.Husk.Empty
+	Inherits: ^EmpVisualEffect
 
 ORCA.Husk:
 	Inherits: ^HelicopterHusk
@@ -734,9 +747,17 @@ ORCA.Husk:
 		Image: orca
 		PlayerPalette: overlayplayertd
 		
-ORCA.Husk.Empty:
+ORCA.Husk.EMP:
 	Inherits: ORCA.Husk
+	Inherits: ^EmpVisualEffect
+		
+ORCA.Husk.Empty:
 	Inherits: ^HelicopterHuskEmpty
+	Inherits: ORCA.Husk
+		
+ORCA.Husk.Empty.EMP:
+	Inherits: ORCA.Husk.Empty
+	Inherits: ^EmpVisualEffect
 		
 OCAR.Husk:
 	Inherits: ^HelicopterHusk
@@ -754,6 +775,10 @@ OCAR.Husk:
 	RenderSprites:
 		Image: orcaca
 		PlayerPalette: overlayplayertd
+
+OCAR.Husk.EMP:
+	Inherits: OCAR.Husk
+	Inherits: ^EmpVisualEffect
 
 UAV.Husk:
 	Inherits: ^PlaneHusk
@@ -773,6 +798,10 @@ UAV.Husk:
 	RenderSprites:
 		Image: uav
 		PlayerPalette: overlayplayertd
+		
+UAV.Husk.EMP:
+	Inherits: UAV.Husk
+	Inherits: ^EmpVisualEffect
 
 HAR2.Husk:
 	Inherits: ^HuskTD
@@ -805,9 +834,17 @@ A10.Husk:
 		Image: a10
 		PlayerPalette: overlayplayertd
 		
+A10.Husk.EMP:
+	Inherits: A10.Husk
+	Inherits: ^EmpVisualEffect
+		
 A10.Husk.Empty:
 	Inherits: ^PlaneHuskEmpty
 	Inherits: A10.Husk
+		
+A10.Husk.Empty.EMP:
+	Inherits: A10.Husk.Empty
+	Inherits: ^EmpVisualEffect
 
 YF23.Husk:
 	Inherits: ^PlaneHusk
@@ -827,6 +864,10 @@ YF23.Husk:
 	RenderSprites:
 		Image: yf23
 		PlayerPalette: overlayplayertd
+		
+YF23.Husk.EMP:
+	Inherits: YF23.Husk
+	Inherits: ^EmpVisualEffect
 
 C17.Husk:
 	Inherits: ^PlaneHusk
@@ -846,6 +887,10 @@ C17.Husk:
 	RenderSprites:
 		Image: c17
 		PlayerPalette: overlayplayertd
+		
+C17.Husk.EMP:
+	Inherits: C17.Husk
+	Inherits: ^EmpVisualEffect
 
 BTR.Husk:
 	Inherits: ^Husk
@@ -875,9 +920,17 @@ RAH.Husk:
 		Image: rah66
 		PlayerPalette: overlayplayertd
 		
-RAH.Husk.Empty:
+RAH.Husk.EMP:
 	Inherits: RAH.Husk
+	Inherits: ^EmpVisualEffect
+		
+RAH.Husk.Empty:
 	Inherits: ^HelicopterHuskEmpty
+	Inherits: RAH.Husk
+		
+RAH.Husk.Empty.EMP:
+	Inherits: RAH.Husk.Empty
+	Inherits: ^EmpVisualEffect
 
 KIRO.Husk:
 	Inherits: ^HelicopterHusk
@@ -903,6 +956,10 @@ KIRO.Husk:
 		Image: kirov
 	FallsToEarth:
 		Explosion: KirovExplode
+
+KIRO.Husk.EMP:
+	Inherits: KIRO.Husk
+	Inherits: ^EmpVisualEffect
 		
 APC.Husk:
 	Inherits: ^Husk
@@ -1025,9 +1082,17 @@ HARR.Husk:
 	RenderSprites:
 		Image: harr
 		
+HARR.Husk.EMP:
+	Inherits: HARR.Husk
+	Inherits: ^EmpVisualEffect
+		
 HARR.Husk.Empty:
 	Inherits: ^PlaneHuskEmpty
 	Inherits: HARR.Husk
+		
+HARR.Husk.Empty.EMP:
+	Inherits: HARR.Husk.Empty
+	Inherits: ^EmpVisualEffect
 	
 HORN.Husk:
 	Inherits: ^PlaneHusk
@@ -1048,11 +1113,19 @@ HORN.Husk:
 	FallsToEarth:
 		Explosion: UnitExplodeDrone
 		
+HORN.Husk.EMP:
+	Inherits: HORN.Husk
+	Inherits: ^EmpVisualEffect
+		
 HORN.Husk.Empty:
 	Inherits: ^PlaneHuskEmpty
 	Inherits: HORN.Husk
 	FallsToEarth:
 		Explosion: UnitExplodeDroneEmpty
+		
+HORN.Husk.Empty.EMP:
+	Inherits: HORN.Husk.Empty
+	Inherits: ^EmpVisualEffect
 		
 SCRN.Husk:
 	Inherits: ^PlaneHusk
@@ -1075,9 +1148,17 @@ SCRN.Husk:
 		Image: scrin
 		PlayerPalette: overlayplayertd
 		
+SCRN.Husk.EMP:
+	Inherits: SCRN.Husk
+	Inherits: ^EmpVisualEffect
+		
 SCRN.Husk.Empty:
 	Inherits: ^PlaneHuskEmpty
 	Inherits: SCRN.Husk
+		
+SCRN.Husk.Empty.EMP:
+	Inherits: SCRN.Husk.Empty
+	Inherits: ^EmpVisualEffect
 		
 ORCB.Husk:
 	Inherits: ^PlaneHusk
@@ -1096,9 +1177,19 @@ ORCB.Husk:
 		Image: orcab
 		PlayerPalette: overlayplayertd
 		
+ORCB.Husk.EMP:
+	Inherits: ORCB.Husk
+	Inherits: ^EmpVisualEffect
+		
 ORCB.Husk.Empty:
 	Inherits: ^PlaneHuskEmpty
 	Inherits: ORCB.Husk
+	FallsToEarth:
+		Explosion: UnitExplodeDroneEmpty
+		
+ORCB.Husk.Empty.EMP:
+	Inherits: ORCB.Husk.Empty
+	Inherits: ^EmpVisualEffect
 
 FROG.Husk:
 	Inherits: ^PlaneHusk
@@ -1119,9 +1210,19 @@ FROG.Husk:
 	RenderSprites:
 		Image: frog
 		
+FROG.Husk.EMP:
+	Inherits: FROG.Husk
+	Inherits: ^EmpVisualEffect
+		
 FROG.Husk.Empty:
 	Inherits: ^PlaneHuskEmpty
 	Inherits: FROG.Husk
+	FallsToEarth:
+		Explosion: UnitExplodeDroneEmpty
+		
+FROG.Husk.Empty.EMP:
+	Inherits: FROG.Husk.Empty
+	Inherits: ^EmpVisualEffect
 		
 PTNK.Husk:
 	Inherits: ^Husk
@@ -1193,3 +1294,17 @@ VENM.Husk:
 	RenderSprites:
 		Image: venm
 		PlayerPalette: overlayplayertd
+		
+VENM.Husk.EMP:
+	Inherits: VENM.Husk
+	Inherits: ^EmpVisualEffect
+		
+VENM.Husk.Empty:
+	Inherits: ^HelicopterHuskEmpty
+	Inherits: VENM.Husk
+	FallsToEarth:
+		Explosion: UnitExplodeDroneEmpty
+		
+VENM.Husk.Empty.EMP:
+	Inherits: VENM.Husk.Empty
+	Inherits: ^EmpVisualEffect
