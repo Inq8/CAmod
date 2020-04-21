@@ -2087,15 +2087,15 @@ IFV:
 		ScanRadius: 6
 	AutoTargetPriority@DEFAULTAA:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
-		RequiresCondition: (!stance-attackanything && !assault-move) && samturr
+		RequiresCondition: (!stance-attackanything && !assault-move) && (!full || samturr)
 	AutoTargetPriority@ATTACKANYTHINGAA:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
-		RequiresCondition: (stance-attackanything || assault-move) && samturr
+		RequiresCondition: (stance-attackanything || assault-move) && (!full || samturr)
 	AutoTargetPriority@DEFAULTG:
-		RequiresCondition: (!stance-attackanything && !assault-move) && (fragturr || gunturr || flamturr || chemturr || acolturr || testurr || commturr)
+		RequiresCondition: !stance-attackanything && !assault-move && full && !samturr
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
 	AutoTargetPriority@ATTACKANYTHINGG:
-		RequiresCondition: (stance-attackanything || assault-move) && (fragturr || gunturr || flamturr || chemturr || acolturr || testurr || commturr)
+		RequiresCondition: (stance-attackanything || assault-move) && full && !samturr
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense, Mine
 	AttackMove:
 		AssaultMoveCondition: assault-move
@@ -2130,47 +2130,50 @@ IFV.AI:
 	Turreted:
 		TurnSpeed: 10
 		Offset: 20,0,60
-	Armament@DEFAULT:
-		Weapon: 25mm
-		Recoil: 85
-		RecoilRecovery: 25
-		LocalOffset: 768,0,90
-		MuzzleSequence: muzzle2
+	Armament@Default:
+		Weapon: IFVRockets
+		LocalOffset: 192,10,176, 192,-10,176
 		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: canturr
+		RequiresCondition: defturr
+	Armament@DefaultAA:
+		Name: secondary
+		Weapon: IFVRocketsAA
+		LocalOffset: 192,10,176, 192,-10,176
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: defturr
 	Armament@E1:
 		Weapon: M60mg
 		MuzzleSequence: muzzle
-		LocalOffset: 150,0,100
+		LocalOffset: 250,0,150
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: gunturr
 	Armament@E3:
-		Weapon: IFVRockets
-		LocalOffset: 192,-10,176, 192,10,176
+		Weapon: IFVRocketsE
+		LocalOffset: 192,10,176, 192,-10,176
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: samturr
 	Armament@E3AA:
 		Name: secondary
-		Weapon: IFVRocketsAA
-		LocalOffset: 192,-10,176, 192,10,176
+		Weapon: IFVRocketsAAE
+		LocalOffset: 192,10,176, 192,-10,176
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: samturr
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
+	WithSpriteTurret@default:
+		Sequence: turret
+		RequiresCondition: defturr		
 	WithSpriteTurret@gun:
 		RequiresCondition: gunturr
-		Sequence: turret
+		Sequence: turret3
 	WithSpriteTurret@samturr:
 		RequiresCondition: samturr
-		Sequence: turret3
-	WithSpriteTurret@default:
 		Sequence: turret2
-		RequiresCondition: canturr
 	RenderSprites:
 		Image: ifv
 	GrantRandomCondition:
-		Conditions: gunturr, samturr, canturr
+		Conditions: defturr, samturr, gunturr
 
 TITN:
 	Inherits: ^TankTD
