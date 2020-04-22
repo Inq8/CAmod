@@ -1369,7 +1369,7 @@ FACT:
 	BaseBuilding:
 	Transforms:
 		RequiresCondition: factundeploy
-		PauseOnCondition: chrono-vortex || being-captured || being-demolished || build-incomplete
+		PauseOnCondition: chrono-vortex || being-captured || being-demolished || build-incomplete || being-warped
 		IntoActor: mcv
 		Offset: 1,1
 		Facing: 96
@@ -1388,7 +1388,7 @@ FACT:
 	TransformsIntoTransforms:
 		RequiresCondition: factundeploy && build-incomplete
 	Sellable:
-		RequiresCondition: !build-incomplete && !chrono-vortex && !being-captured && !being-demolished
+		RequiresCondition: !build-incomplete && !chrono-vortex && !being-captured && !being-demolished && !being-warped
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
@@ -3403,7 +3403,7 @@ AFAC:
 	BaseBuilding:
 	Transforms:
 		RequiresCondition: factundeploy
-		PauseOnCondition: chrono-vortex || being-captured || being-demolished || build-incomplete
+		PauseOnCondition: chrono-vortex || being-captured || being-demolished || build-incomplete || being-warped
 		IntoActor: amcv
 		Offset: 1,1
 		Facing: 96
@@ -3422,7 +3422,7 @@ AFAC:
 	TransformsIntoTransforms:
 		RequiresCondition: factundeploy && build-incomplete
 	Sellable:
-		RequiresCondition: !build-incomplete && !chrono-vortex && !being-captured && !being-demolished
+		RequiresCondition: !build-incomplete && !chrono-vortex && !being-captured && !being-demolished && !being-warped
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
