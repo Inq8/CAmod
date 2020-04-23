@@ -73,13 +73,19 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			// Random starting coordinates for scanning the map to find a target.
 			var startX = owner.World.LocalRandom.Next(0, map.MapSize.X);
 			var startY = owner.World.LocalRandom.Next(0, map.MapSize.Y);
+
+			var initialY = startY;
 			var scanReset = false;
 
-			for (var i = startX; i < maxX; i += dangerRadius * 2)
+			for (var x = startX; x <= maxX; x += dangerRadius * 2)
 			{
-				for (var j = startY; j < maxY; j += dangerRadius * 2)
+				// On second pass of initial column, maximum y should be the initial y.
+				if (x == startX && scanReset)
+					maxY = initialY;
+
+				for (var y = startY; y <= maxY; y += dangerRadius * 2)
 				{
-					var pos = new CPos(i, j);
+					var pos = new CPos(x, y);
 					if (NearToPosSafely(owner, map.CenterOfCell(pos), out detectedEnemyTarget))
 					{
 						if (needTarget && detectedEnemyTarget == null)
@@ -89,14 +95,16 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 					}
 				}
 
-				// If the next iteration will be beyond the maximum, reset to 0,0 and continue scanning until we're back to the starting coordinates.
-				if (i + dangerRadius * 2 >= maxX && !scanReset)
+				// On first pass of initial column, set to start from y = 0 on subsequent columns.
+				if (x == startX && !scanReset)
+					startY = 0;
+
+				// If the next iteration will be beyond the maximum, reset x so it starts from 0 on next iteration and set max to where it started.
+				if (x + dangerRadius * 2 > maxX && !scanReset)
 				{
 					scanReset = true;
 					maxX = startX;
-					maxY = startY;
-					i = 0;
-					startY = 0;
+					x = dangerRadius * 2 * -1;
 				}
 			}
 
