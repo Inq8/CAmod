@@ -1255,7 +1255,11 @@ MTNK:
 		Turrets: primary, secondary
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
-	WithSpriteTurret:
+	WithSpriteTurret@default:
+		RequiresCondition: !gdiupg
+	WithSpriteTurret@gdiupg:
+		Sequence: turretpd
+		RequiresCondition: gdiupg
 	SpawnActorOnDeath:
 		Actor: MTNK.Husk
 		RequiresCondition: !being-warped
