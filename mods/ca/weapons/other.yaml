@@ -625,9 +625,9 @@ PrisTBurst:
 			Wood: 35
 		
 AirshipParaBomb:
-	ReloadDelay: 40
+	ReloadDelay: 35
 	ValidTargets: Ground, Water
-	InvalidTargets: Air, Structure
+	InvalidTargets: Air
 	Report: bwhis.aud
 	Range: 1c0
 	TargetActorCenter: true
@@ -639,14 +639,15 @@ AirshipParaBomb:
 		Shadow: True
 	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
-		Damage: 20000
+		Falloff: 100, 40, 5, 0
+		Damage: 12000
 		InvalidTargets: Air
 		Versus:
-			None: 30
-			Wood: 75
+			None: 40
+			Wood: 100
 			Light: 65
-			Heavy: 30
-			Concrete: 40
+			Heavy: 40
+			Concrete: 55
 			Brick: 50
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
 	Warhead@2Smu: LeaveSmudge
@@ -657,12 +658,6 @@ AirshipParaBomb:
 		ExplosionPalette: ra2effect
 		ImpactSounds: kirbo1.aud, kirbo2.aud
 		ValidTargets: Ground, Water, Ship, Trees
-		
-AirshipParaBombS:
-	Inherits: AirshipParaBomb
-	ValidTargets: Ground, Water, Structure
-	InvalidTargets: Air
-	TargetActorCenter: false
 	
 FrogBomb:
 	ValidTargets: Ground, Water

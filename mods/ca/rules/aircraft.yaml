@@ -1338,8 +1338,9 @@ KIRO:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 55
+		BuildDurationModifier: 115
 		Prerequisites: ~afld, stek, ~aircraft.russia, ~techlevel.high
-		Description: Heavily armoured airship equipped with Tesla bombs.\n  Strong vs Buildings, Infantry, Slow Vehicles\n  Weak vs Aircraft
+		Description: Heavily armoured airship equipped with Tesla bombs.\n  Vulnerable when dropping bombs.\n  Strong vs Buildings, Infantry, Slow Vehicles\n  Weak vs Aircraft
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -1347,7 +1348,7 @@ KIRO:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 75000
+		HP: 100000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -1357,9 +1358,18 @@ KIRO:
 	Armament@PRIMARY:
 		Weapon: AirshipParaBomb
 		LocalOffset: -20,0,0
-	Armament@SECONDARY:
-		Weapon: AirshipParaBombS
-		LocalOffset: -20,0,0
+		PauseOnCondition: !ammo
+	AmmoPool:
+		Ammo: 8
+		PipCount: 8
+		AmmoCondition: ammo
+	ReloadAmmoPoolCA:
+		Delay: 360
+		Count: 8
+		DelayOnFire: 120
+		DelayAfterReset: 50
+		ShowSelectionBar: true
+		SelectionBarColor: ff00ff
 	AttackFrontal:
 		Voice: Attack
 	AttackAircraft:
@@ -1407,7 +1417,7 @@ KIRO:
 		Offset: -100,-500,100
 	Selectable:
 		Bounds: 36,28,0,2
-		DecorationBounds: 40,29,0,1
+		DecorationBounds: 40,40,0,1
 	SelfHealing:
 		Step: 100
 		Delay: 3
@@ -1418,7 +1428,13 @@ KIRO:
 	Explodes:
 		Weapon: KirovExplode
 		RequiresCondition: !airborne
-		
+	DamageMultiplier@doorsopen:
+		RequiresCondition: doorsopen
+		Modifier: 200
+	GrantConditionOnAttack@doorsopen:
+		Condition: doorsopen
+		RevokeDelay: 50
+
 OCAR:
 	Inherits: ^HelicopterTD
 	RenderSprites:
