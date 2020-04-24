@@ -67,25 +67,34 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			var map = owner.World.Map;
 			var dangerRadius = owner.SquadManager.Info.DangerScanRadius;
 			detectedEnemyTarget = null;
-			var maxX = (map.MapSize.X % dangerRadius) == 0 ? map.MapSize.X : map.MapSize.X + dangerRadius;
-			var maxY = (map.MapSize.Y % dangerRadius) == 0 ? map.MapSize.Y : map.MapSize.Y + dangerRadius;
+			var initialMaxX = (map.MapSize.X % dangerRadius) == 0 ? map.MapSize.X : map.MapSize.X + dangerRadius;
+			var initialMaxY = (map.MapSize.Y % dangerRadius) == 0 ? map.MapSize.Y : map.MapSize.Y + dangerRadius;
+			var maxX = initialMaxX;
+			var maxY = initialMaxY;
 
 			// Random starting coordinates for scanning the map to find a target.
 			var startX = owner.World.LocalRandom.Next(0, map.MapSize.X);
 			var startY = owner.World.LocalRandom.Next(0, map.MapSize.Y);
+			var initialStartY = startY;
 
-			var initialY = startY;
 			var scanReset = false;
+			var scanDirectionX = owner.World.LocalRandom.Next(0, 1);
+			var scanDirectionY = owner.World.LocalRandom.Next(0, 1);
+			var scanIncrement = dangerRadius * 2;
 
-			for (var x = startX; x <= maxX; x += dangerRadius * 2)
+			for (var x = startX; x <= maxX; x += scanIncrement)
 			{
 				// On second pass of initial column, maximum y should be the initial y.
 				if (x == startX && scanReset)
-					maxY = initialY;
+					maxY = initialStartY;
 
-				for (var y = startY; y <= maxY; y += dangerRadius * 2)
+				for (var y = startY; y <= maxY; y += scanIncrement)
 				{
-					var pos = new CPos(x, y);
+					// Translate to position based on the scan direction.
+					var posX = scanDirectionX == 1 ? x : initialMaxX - x;
+					var posY = scanDirectionY == 1 ? y : initialMaxY - y;
+
+					var pos = new CPos(posX, posY);
 					if (NearToPosSafely(owner, map.CenterOfCell(pos), out detectedEnemyTarget))
 					{
 						if (needTarget && detectedEnemyTarget == null)
@@ -100,11 +109,11 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 					startY = 0;
 
 				// If the next iteration will be beyond the maximum, reset x so it starts from 0 on next iteration and set max to where it started.
-				if (x + dangerRadius * 2 > maxX && !scanReset)
+				if (x + scanIncrement > maxX && !scanReset)
 				{
 					scanReset = true;
 					maxX = startX;
-					x = dangerRadius * 2 * -1;
+					x = scanIncrement * -1;
 				}
 			}
 
