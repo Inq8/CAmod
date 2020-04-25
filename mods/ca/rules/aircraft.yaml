@@ -428,81 +428,6 @@ TRAN:
 		DecorationBounds: 40,36
 	WithCargoHatchAnimation:
 
-#to replace
-TRAN.Eagle:
-	Inherits: TRAN
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	RenderSprites:
-		Image: ctran
-	Valued:
-		Cost: 2000
-	Tooltip:
-		Name: Combat Chinook
-	Buildable:
-		Queue: Aircraft
-		BuildAtProductionType: Helicopter
-		BuildPaletteOrder: 10
-		IconPalette: chrometd
-		Prerequisites: hpad.td, gtek, ~aircraft.eagle, ~techlevel.infonly
-		Description: Fast infantry transport helicopter.\n  Infantry can fire from weapon ports.
-	Health:
-		HP: 34000
-	AttackGarrisoned:
-		Armaments: mounted
-		MuzzlePalette: tdeffect
-		PortOffsets: 768,0,0, 448,-682,0, -448,-682,0, -768,0,0, -448,682,0, 448,682,0
-		PortYaws: 0, 176, 341, 512, 682, 853
-		PortCones: 88, 88, 88, 88, 88, 88
-		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: loaded || loaded-air
-	Cargo:
-		Types: Infantry
-		MaxWeight: 5
-		PipCount: 5
-		PassengerConditions:
-			e1: loaded
-			e2: loaded
-			e3: loaded-air
-			e4: loaded
-			e7: loaded
-			e8: loaded
-			n1: loaded
-			n2: loaded
-			n3: loaded-air
-			n4: loaded
-			n5: loaded
-			mort: loaded
-			rmbo: loaded
-			boris: loaded
-			acol: loaded
-			sniper: loaded
-			shok: loaded
-			shok.nod: loaded
-			sab: loaded
-			n1c: loaded
-			n3c: loaded-air
-			rmboc: loaded
-			tecn: loaded
-			tecn2: loaded
-			tecn3: loaded
-	AutoTarget:
-		InitialStance: HoldFire
-		InitialStanceAI: HoldFire
-		RequiresCondition: loaded || loaded-air
-	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !stance-attackanything && !assault-move && !loaded-air
-	AutoTargetPriority@ATTACKANYTHING:
-		RequiresCondition: (stance-attackanything || assault-move) && !loaded-air
-	AutoTargetPriority@DEFAULT_AIR:
-		RequiresCondition: !stance-attackanything && !assault-move && loaded-air
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
-		InvalidTargets: NoAutoTarget, WaterStructure
-	AutoTargetPriority@ATTACKANYTHING_AIR:
-		RequiresCondition: (stance-attackanything || assault-move) && loaded-air
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
-		InvalidTargets: NoAutoTarget
-	-ProductionCostMultiplier@EagleBonus:
-
 TRAN.paradrop:
 	Inherits: ^Helicopter
 	Tooltip:
@@ -801,7 +726,7 @@ A10:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 50
-		Prerequisites: ~afld.gdi, ~aircraft.gdi, ~techlevel.high
+		Prerequisites: ~afld.gdi, ~aircraft.gdi, ~!aircraft.eagle, ~techlevel.high
 		IconPalette: chrometd
 		Description: Ground attack aircraft with incendiary bombs.\n  Strong vs Buildings, Light Armor, Infantry\n  Weak vs Aircraft
 	Valued:
@@ -959,9 +884,13 @@ C17:
 	Contrail@3:
 		Offset: -85,384,0
 		TrailLength: 16
+		UsePlayerColor: false
+		Color: FFFFFF80
 	Contrail@4:
 		Offset: -261,650,0
 		TrailLength: 15
+		UsePlayerColor: false
+		Color: FFFFFF80
 	SpawnActorOnDeath:
 		Actor: C17.Husk
 		RequiresCondition: !empdisable
@@ -1609,8 +1538,14 @@ HARR:
 		AmmoCondition: ammo
 	Contrail@1:
 		Offset: -400,-443,0
+		UsePlayerColor: false
+		ZOffset: -512
+		Color: FFFFFF80
 	Contrail@2:
 		Offset: -400,443,0
+		UsePlayerColor: false
+		ZOffset: -512
+		Color: FFFFFF80
 	SelectionDecorations:
 	SpawnActorOnDeath:
 		Actor: HARR.Husk
@@ -1697,8 +1632,14 @@ SCRN:
 		AmmoCondition: ammo
 	Contrail@1:
 		Offset: -300,-143,0
+		Color: 00FF0080
+		UsePlayerColor: false
+		ZOffset: -512
 	Contrail@2:
 		Offset: -300,143,0
+		Color: 00FF0080
+		UsePlayerColor: false
+		ZOffset: -512
 	SelectionDecorations:
 	SpawnActorOnDeath:
 		Actor: SCRN.Husk
@@ -1791,6 +1732,7 @@ HORN:
 		LandingDistance: 8c0
 	Contrail@1:
 		Offset: -432,0,0
+	-Contrail@2:
 	Interactable:
 	DetectCloaked:
 		CloakTypes: Underwater
@@ -1985,3 +1927,105 @@ VENM:
 		DecorationBounds: 30,24
 	Rearmable:
 		RearmActors: hpad, hpad.td
+
+AURO:
+	Inherits: ^PlaneTD
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Buildable:
+		Queue: Aircraft
+		BuildAtProductionType: Plane
+		BuildPaletteOrder: 50
+		Prerequisites: ~afld.gdi, ~aircraft.eagle, ~techlevel.high
+		IconPalette: chrometd
+		Description: Supersonic bomber armed with a MOAB bomb.\n  Strong vs Buildings, Light Armor, Infantry\n  Weak vs Aircraft\n  Special Ability: Afterburner
+	Valued:
+		Cost: 2000
+	Tooltip:
+		Name: Aurora
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 16000
+	RevealsShroud:
+		Range: 10c0
+		Type: GroundPosition
+		MoveRecalculationThreshold: 0
+	Armament:
+		Weapon: JDAM
+		LocalOffset: 2,0,-43
+		PauseOnCondition: !ammo
+	AttackAircraft:
+		FacingTolerance: 128
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
+		Voice: Attack
+	Aircraft:
+		CruiseAltitude: 2560
+		InitialFacing: 192
+		TurnSpeed: 4
+		Speed: 200
+		RepulsionSpeed: 40
+		MaximumPitch: 56
+		TakeoffSounds: cjetbana.aud
+		Voice: Move
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: HoldFire
+	AmmoPool:
+		Ammo: 1
+		PipCount: 1
+		ReloadDelay: 100
+		AmmoCondition: ammo
+	GrantConditionOnActivity@AFTERBURNER:
+		Condition: afterburner
+		ActiveSound: cjetband.aud
+	SpeedMultiplier@AFTERBURNER:
+		Modifier: 130
+		RequiresCondition: afterburner && ammo
+	DamageMultiplier@AFTERBURNER:
+		Modifier: 50
+		RequiresCondition: afterburner && ammo
+	Selectable:
+		Bounds: 36,28,0,2
+		DecorationBounds: 40,29,0,1
+	SelectionDecorations:
+	Contrail@AB1:
+		Offset: -400,-70,-50
+		UsePlayerColor: false
+		ZOffset: -512
+		Color: cc550080
+		TrailLength: 10
+	Contrail@AB2:
+		Offset: -400,70,-50
+		UsePlayerColor: false
+		ZOffset: -512
+		Color: cc550080
+		TrailLength: 10
+	Contrail@1:
+		Offset: -300,-800,-50
+	Contrail@2:
+		Offset: -300,800,-50
+	SpawnActorOnDeath:
+		Actor: AURO.Husk
+		RequiresCondition: ammo && !empdisable
+	SpawnActorOnDeath@Empty:
+		Actor: AURO.Husk.empty
+		RequiresCondition: !ammo && !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: AURO.Husk.EMP
+		RequiresCondition: ammo && empdisable
+	SpawnActorOnDeath@EmptyEMP:
+		Actor: AURO.Husk.empty.EMP
+		RequiresCondition: !ammo && empdisable
+	SmokeTrailWhenDamaged:
+		Offset: -853,0,171
+		Interval: 2
+	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
+	Rearmable:
+		RearmActors: afld, afld.gdi
+	Voiced:
+		VoiceSet: AuroraVoice
+	-ProductionCostMultiplier@EagleBonus:

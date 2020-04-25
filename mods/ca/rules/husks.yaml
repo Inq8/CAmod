@@ -869,6 +869,37 @@ YF23.Husk.EMP:
 	Inherits: YF23.Husk
 	Inherits: ^EmpVisualEffect
 
+AURO.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Husk (Aurora)
+	Aircraft:
+		TurnSpeed: 7
+		Speed: 123
+	Contrail@1:
+		Offset: -300,-800,-50
+	Contrail@2:
+		Offset: -300,800,-50
+	SmokeTrailWhenDamaged:
+		Offset: -1c43,0,0
+		Interval: 2
+		MinDamage: Undamaged
+	RenderSprites:
+		Image: auro
+		PlayerPalette: overlayplayertd
+		
+AURO.Husk.EMP:
+	Inherits: AURO.Husk
+	Inherits: ^EmpVisualEffect
+		
+AURO.Husk.Empty:
+	Inherits: ^PlaneHuskEmpty
+	Inherits: AURO.Husk
+		
+AURO.Husk.Empty.EMP:
+	Inherits: AURO.Husk.Empty
+	Inherits: ^EmpVisualEffect
+
 C17.Husk:
 	Inherits: ^PlaneHusk
 	Tooltip:
