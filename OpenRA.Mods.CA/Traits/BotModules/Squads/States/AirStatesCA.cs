@@ -78,8 +78,8 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			var initialStartY = startY;
 
 			var scanReset = false;
-			var scanDirectionX = owner.World.LocalRandom.Next(0, 1);
-			var scanDirectionY = owner.World.LocalRandom.Next(0, 1);
+			var scanDirectionX = startX % 2;
+			var scanDirectionY = startY % 2;
 			var scanIncrement = dangerRadius * 2;
 
 			for (var x = startX; x <= maxX; x += scanIncrement)
@@ -91,8 +91,8 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				for (var y = startY; y <= maxY; y += scanIncrement)
 				{
 					// Translate to position based on the scan direction.
-					var posX = scanDirectionX == 1 ? x : initialMaxX - x;
-					var posY = scanDirectionY == 1 ? y : initialMaxY - y;
+					var posX = scanDirectionX == 0 ? initialMaxX - x : x;
+					var posY = scanDirectionY == 0 ? initialMaxY - y : y;
 
 					var pos = new CPos(posX, posY);
 					if (NearToPosSafely(owner, map.CenterOfCell(pos), out detectedEnemyTarget))
