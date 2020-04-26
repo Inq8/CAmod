@@ -6,14 +6,17 @@
 	Projectile: Bullet
 		Speed: 1c682
 		Blockable: false
+		Inaccuracy: 0c3
 	Warhead@1Dam: SpreadDamage
-		Spread: 213
+		Spread: 313
 		Damage: 2000
 		ValidTargets: Air
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: small_explosion_air
 		ValidTargets: Air, Ground, Water, Trees
+		ImpactSounds: flakhit1.aud, flakhit2.aud, flakhit3.aud
+		ImpactSoundChance: 100
 
 ZSU-23:
 	Inherits: ^AACannon
@@ -26,16 +29,32 @@ ZSU-23:
 
 FLAK-23-AA:
 	Inherits: ^AACannon
+	Report: AAgun.aud
 	Warhead@1Dam: SpreadDamage
+		Damage: 1800
 		ValidTargets: Air, Ground, Water
 
 FLAK-23-AG:
 	Inherits: ^AACannon
-	Range: 6c0
+	Report: AAgun.aud
+	Range: 4c768
 	ValidTargets: Ground, Water
 	Projectile: Bullet
+		LaunchAngle: 62
+		Speed: 403
+		Image: 50CAL
 		Blockable: True
+		Inaccuracy: 0c768
 	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 1800
+		Versus:
+			None: 120
+			Wood: 60
+			Light: 72
+			Heavy: 28
+			Concrete: 28
+			Brick: 28
 		ValidTargets: Air, Ground, Water
 	Warhead@2Eff: CreateEffect
 		Explosions: flak_explosion_ground
@@ -57,7 +76,6 @@ Gatt.0:
 	Warhead@2Eff: CreateEffect
 		ValidTargets: Air
 		Explosions: small_explosion_air
-		ImpactSounds: flakhit1.aud, flakhit2.aud, flakhit3.aud
 		ImpactSoundChance: 20
 		
 Gatt.1:
@@ -469,7 +487,7 @@ AKME:
 		
 SNIPER:
 	ReloadDelay: 110
-	Range: 7c0
+	Range: 6c0
 	Report: snipe.aud
 	ValidTargets: Ground, Infantry
 	InvalidTargets: Vehicle, Tank, Water, Structure, Wall, Husk, Chrono
@@ -491,6 +509,28 @@ SNIPER:
 SNIPERE:
 	Inherits: SNIPER
 	Range: 9c0
+	
+
+SNIPER.vehicle:
+	ReloadDelay: 600
+	Range: 6c0
+	Report: ijarwe2a.aud
+	ValidTargets: Vehicle, Tank
+	InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air
+	Projectile: InstantHit
+		Blockable: true
+	Warhead@1Dam: TargetDamage
+		ValidTargets: Vehicle, Tank
+	Warhead@3: ChangeOwnerToNeutral
+		ValidTargets: Vehicle, Tank
+		InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air
+		ValidStances: Enemy
+		Range: 0c1
+	Warhead@highlight: GrantExternalCondition
+		Range: 0c1
+		Duration: 2
+		Condition: highlight
+		ValidTargets: Vehicle, Tank
 		
 HeliGunAG:
 	Inherits: ChainGun

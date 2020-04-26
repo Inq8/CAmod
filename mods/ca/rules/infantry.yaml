@@ -82,6 +82,8 @@ DOG:
 	Voiced:
 		VoiceSet: DogVoice
 	-TakeCover:
+	-Captures@DRIVER_KILL:
+	-CaptureManager:
 
 E1:
 	Inherits: ^Soldier
@@ -1200,9 +1202,9 @@ SNIP:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 55
 		Prerequisites: ~infantry.england, dome, ~techlevel.medium
-		Description: Special marksman infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft\n  Special Ability: Stealth
+		Description: Special marksman infantry.\n  Strong vs Infantry\n  Weak vs Aircraft\n  Special Ability: Camouflage\n  Special Ability: Kill Driver, Neutralizes enemy vehicles allowing infantry to capture them.
 	Valued:
-		Cost: 500
+		Cost: 800
 	Tooltip:
 		Name: Sniper
 	UpdatesPlayerStatistics:
@@ -1216,6 +1218,18 @@ SNIP:
 	Armament@Garrison:
 		Weapon: sniperE
 		Name: mounted
+	Armament@DRIVER_SNIPE:
+		Name: driver_snipe
+		Weapon: sniper.vehicle
+		PauseOnCondition: !ammo
+	AmmoPool:
+		Ammo: 1
+		Armaments: driver_snipe
+		Name: driver_snipe
+		AmmoCondition: ammo
+	ReloadAmmoPool:
+		AmmoPool: driver_snipe
+		Delay: 750
 	Mobile:
 		Speed: 49
 		Locomotor: foot
@@ -1243,6 +1257,7 @@ SNIP:
 		RequiresCondition: hidden
 	AttackFrontal:
 		Voice: Attack
+		Armaments: primary, driver_snipe
 		PauseOnCondition: being-warped
 	WithInfantryBody:
 		DefaultAttackSequence: shoot

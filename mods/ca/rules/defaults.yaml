@@ -240,7 +240,7 @@
 		Sequence: rank-veteran-1
 		Palette: effect
 		ReferencePoint: Bottom, Right
-		ValidStances: Ally, Enemy, Neutral
+		ValidStances: Ally, Enemy
 		RequiresCondition: rank-veteran == 1
 		ZOffset: 256
 	WithDecoration@RANK-2:
@@ -248,7 +248,7 @@
 		Sequence: rank-veteran-2
 		Palette: effect
 		ReferencePoint: Bottom, Right
-		ValidStances: Ally, Enemy, Neutral
+		ValidStances: Ally, Enemy
 		RequiresCondition: rank-veteran == 2
 		ZOffset: 256
 	WithDecoration@RANK-ELITE:
@@ -256,7 +256,7 @@
 		Sequence: rank-elite
 		Palette: effect
 		ReferencePoint: Bottom, Right
-		ValidStances: Ally, Enemy, Neutral
+		ValidStances: Ally, Enemy
 		RequiresCondition: rank-elite
 		ZOffset: 256
 		
@@ -486,6 +486,21 @@
 		Prerequisites: nrepair
 		Condition: nrepair
 		
+^AffectedByDriverKill:
+	GrantConditionIfOwnerIsNeutral:
+		Condition: driver_dead
+	Capturable@DRIVER_DEAD:
+		Types: driverless_vehicle
+		RequiresCondition: driver_dead
+		ValidStances: Neutral
+		CancelActivity: true
+	CaptureManager:
+
+^CanCaptureDriverlessVehicles:
+	Captures@DRIVER_KILL:
+		CaptureTypes: driverless_vehicle
+	CaptureManager:
+		
 ^GreenFlash:
 	ExternalCondition@GHIGH:
 		Condition: greenhighlight
@@ -689,6 +704,7 @@
 	Inherits@12: ^GpsScramble
 	Inherits@13: ^BotGroundProductionBonus
 	Inherits@14: ^Chillable
+	Inherits@15: ^AffectedByDriverKill
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
@@ -700,7 +716,7 @@
 	DrawLineToTarget:
 	UpdatesPlayerStatistics:
 	Mobile:
-		PauseOnCondition: being-captured || empdisable || being-warped
+		PauseOnCondition: being-captured || empdisable || being-warped || driver_dead
 		Locomotor: wheeled
 		TurnSpeed: 5
 	SelectionDecorations:
@@ -1018,6 +1034,7 @@
 
 ^Soldier:
 	Inherits: ^Infantry
+	Inherits@DRIVER: ^CanCaptureDriverlessVehicles
 	UpdatesPlayerStatistics:
 	MustBeDestroyed:
 	ProximityCaptor:
