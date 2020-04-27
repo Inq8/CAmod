@@ -29,10 +29,11 @@ ZSU-23:
 
 FLAK-23-AA:
 	Inherits: ^AACannon
+	Range: 7c512
 	Report: flak1.aud, flak2.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 1800
-		ValidTargets: Air, Ground, Water
+		Damage: 700
+		ValidTargets: Air
 
 FLAK-23-AG:
 	Inherits: ^AACannon
@@ -50,15 +51,15 @@ FLAK-23-AG:
 		Damage: 1800
 		Versus:
 			None: 120
-			Wood: 60
-			Light: 72
-			Heavy: 28
-			Concrete: 28
-			Brick: 28
-		ValidTargets: Air, Ground, Water
+			Wood: 30
+			Light: 35
+			Heavy: 10
+			Concrete: 20
+			Brick: 20
+		ValidTargets: Ground, Water
 	Warhead@2Eff: CreateEffect
 		Explosions: flak_explosion_ground
-		ValidTargets: Ground, Ship, Air, Trees
+		ValidTargets: Ground, Ship, Trees
 	Warhead@3EffWater: CreateEffect
 		Explosions: small_splash
 		ValidTargets: Water, Underwater
