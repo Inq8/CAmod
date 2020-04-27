@@ -257,32 +257,35 @@ PortaTeslaCharge:
 	
 TTankZap:
 	Inherits: ^TeslaWeapon
-	ReloadDelay: 140
-	Range: 8c0
+	ReloadDelay: 130
+	Range: 7c0
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
 		Damage: 10000
 		Versus:
-			Wood: 120
-			Concrete: 110
+			Wood: 60
+			Concrete: 60
 	Warhead@Burst: FireShrapnel
 		Weapon: TTankArc1
 		Amount: 1
-		AimChance: 90
-		ValidTargets: Infantry
-		ThrowWithoutTarget: true
-		
+		AimChance: 85
+		ValidTargets: Infantry, Vehicle, Ship
+		ThrowWithoutTarget: false
+
 TTankArc1:
 	Inherits: TTankZap
 	Range: 1c768
 	Projectile: TeslaZap
 	Warhead@1Dam: SpreadDamage
-		ValidTargets: Infantry
+		Versus:
+			Light: 30
+			Heavy: 30
 	-Report:
 	-Warhead@3Eff:
 	Warhead@Burst: FireShrapnel
 		Weapon: TTankArc2
-		AimChance: 80
+		ValidTargets: Infantry
+		AimChance: 75
 
 TTankArc2:
 	Inherits: TTankArc1
