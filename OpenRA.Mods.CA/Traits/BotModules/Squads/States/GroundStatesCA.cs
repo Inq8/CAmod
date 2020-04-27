@@ -14,7 +14,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 {
-	abstract class GroundStateBase : StateBaseCA
+	abstract class GroundStateBaseCA : StateBaseCA
 	{
 		protected virtual bool ShouldFlee(SquadCA owner)
 		{
@@ -32,7 +32,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		}
 	}
 
-	class GroundUnitsIdleState : GroundStateBase, IState
+	class GroundUnitsIdleState : GroundStateBaseCA, IState
 	{
 		public void Activate(SquadCA owner) { }
 
@@ -71,7 +71,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		public void Deactivate(SquadCA owner) { }
 	}
 
-	class GroundUnitsAttackMoveState : GroundStateBase, IState
+	class GroundUnitsAttackMoveState : GroundStateBaseCA, IState
 	{
 		public void Activate(SquadCA owner) { }
 
@@ -128,7 +128,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		public void Deactivate(SquadCA owner) { }
 	}
 
-	class GroundUnitsAttackState : GroundStateBase, IState
+	class GroundUnitsAttackState : GroundStateBaseCA, IState
 	{
 		public void Activate(SquadCA owner) { }
 
@@ -160,7 +160,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		public void Deactivate(SquadCA owner) { }
 	}
 
-	class GroundUnitsFleeState : GroundStateBase, IState
+	class GroundUnitsFleeState : GroundStateBaseCA, IState
 	{
 		public void Activate(SquadCA owner) { }
 
