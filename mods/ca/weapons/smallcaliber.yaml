@@ -22,10 +22,10 @@ ZSU-23:
 	Inherits: ^AACannon
 	ReloadDelay: 8
 	Range: 8c0
-	Projectile: Bullet
-		Speed: 3c340
 	Warhead@1Dam: SpreadDamage
-		Damage: 2800
+		Damage: 2500
+		Range: 0, 0c64, 0c256, 4c512
+		Falloff: 100, 100, 15, 5
 
 FLAK-23-AA:
 	Inherits: ^AACannon
@@ -70,10 +70,10 @@ Gatt.0:
 	ReloadDelay: 15
 	Range: 8c0
 	Report: vgatlo1a.aud
-	Projectile: Bullet
-		Speed: 3c340
 	Warhead@1Dam: SpreadDamage
-		Damage: 1000
+		Damage: 900
+		Range: 0, 0c64, 0c256, 3c0
+		Falloff: 100, 100, 15, 5		
 	Warhead@2Eff: CreateEffect
 		ValidTargets: Air
 		Explosions: small_explosion_air
@@ -84,21 +84,21 @@ Gatt.1:
 	ReloadDelay: 5
 	Report: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 1500
+		Damage: 1100
 
 Gatt.2:
 	Inherits: Gatt.1
 	Report: vgatlo5a.aud, vgatlo5b.aud
 	ReloadDelay: 5
 	Warhead@1Dam: SpreadDamage
-		Damage: 1900
+		Damage: 1700
 
 Gatt.3:
 	Inherits: Gatt.2
 	Report: vgatlo8a.aud, vgatlo8b.aud
 	ReloadDelay: 5
 	Warhead@1Dam: SpreadDamage
-		Damage: 2200
+		Damage: 1900
 
 ^HeavyMG:
 	ReloadDelay: 30
