@@ -798,12 +798,17 @@
 	Crushable:
 		CrushClasses: tank
 		WarnProbability: 10
-	DamagedByTintedCells@RAD:
+	DamagedByTintedCells@RADSTRONG:
 		Damage: 100
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
-		LayerName: radioactivity
-		
+		LayerName: radioactivity.strong
+	DamagedByTintedCells@RADMED:
+		Damage: 95
+		DamageInterval: 16
+		DamageTypes: RadiationDeath
+		LayerName: radioactivity.medium
+
 ^VehicleTD:
 	Inherits@1: ^Vehicle
 	RenderSprites:
@@ -1011,11 +1016,17 @@
 	DetectCloaked:
 		CloakTypes: Cloak
 		Range: 1c0
-	DamagedByTintedCells@RAD:
+	DamagedByTintedCells@RADSTRONG:
 		Damage: 750
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
-		LayerName: radioactivity
+		LayerName: radioactivity.strong
+		RequiresCondition: !(hazmatsuits || being-warped)
+	DamagedByTintedCells@RADMED:
+		Damage: 300
+		DamageInterval: 16
+		DamageTypes: RadiationDeath
+		LayerName: radioactivity.medium
 		RequiresCondition: !(hazmatsuits || being-warped)
 	DamagedByTintedCells@RADWEAK:
 		Damage: 100
@@ -1160,11 +1171,16 @@
 	RevealOnDeath:
 		Duration: 100
 		Radius: 2c512
-	DamagedByTintedCells@RAD:
+	DamagedByTintedCells@RADSTRONG:
 		Damage: 100
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
-		LayerName: radioactivity
+		LayerName: radioactivity.strong
+	DamagedByTintedCells@RADMED:
+		Damage: 95
+		DamageInterval: 16
+		DamageTypes: RadiationDeath
+		LayerName: radioactivity.medium
 
 ^NeutralPlane:
 	Inherits@1: ^ExistsInWorld

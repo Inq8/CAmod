@@ -1339,8 +1339,8 @@ KIRO:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 55
 		BuildDurationModifier: 115
-		Prerequisites: ~afld, stek, ~aircraft.russia, ~techlevel.high
-		Description: Heavily armoured airship equipped with Tesla bombs.\n  Vulnerable when dropping bombs.\n  Strong vs Buildings, Infantry, Slow Vehicles\n  Weak vs Aircraft
+		Prerequisites: ~afld, stek, ~aircraft.soviet, ~techlevel.high
+		Description: Heavily armoured airship equipped with specialised bombs.\n  Vulnerable when dropping bombs.\n  Strong vs Buildings, Infantry, Slow Vehicles\n  Weak vs Aircraft
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -1356,9 +1356,25 @@ KIRO:
 		Type: GroundPosition
 		MoveRecalculationThreshold: 0
 	Armament@PRIMARY:
-		Weapon: AirshipParaBomb
+		Weapon: KirovBomb
 		LocalOffset: -20,0,0
 		PauseOnCondition: !ammo
+		RequiresCondition: !russiabombs && !ukrainebombs && !iraqbombs
+	Armament@PRIMARY-RUSSIA:
+		Weapon: KirovTeslaBomb
+		LocalOffset: -20,0,0
+		PauseOnCondition: !ammo
+		RequiresCondition: russiabombs
+	Armament@PRIMARY-UKRAINE:
+		Weapon: KirovClusterBomb
+		LocalOffset: -20,0,0
+		PauseOnCondition: !ammo
+		RequiresCondition: ukrainebombs
+	Armament@PRIMARY-IRAQ:
+		Weapon: KirovNukeBomb
+		LocalOffset: -20,0,0
+		PauseOnCondition: !ammo
+		RequiresCondition: iraqbombs
 	AmmoPool:
 		Ammo: 8
 		PipCount: 8
@@ -1434,6 +1450,15 @@ KIRO:
 	GrantConditionOnAttack@doorsopen:
 		Condition: doorsopen
 		RevokeDelay: 50
+	GrantConditionOnFaction@russia:
+		Condition: russiabombs
+		Factions: russia
+	GrantConditionOnFaction@ukraine:
+		Condition: ukrainebombs
+		Factions: ukraine
+	GrantConditionOnFaction@iraq:
+		Condition: iraqbombs
+		Factions: iraq
 
 OCAR:
 	Inherits: ^HelicopterTD

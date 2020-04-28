@@ -623,8 +623,8 @@ PrisTBurst:
 		Damage: 2100
 		Versus:
 			Wood: 35
-		
-AirshipParaBomb:
+
+KirovBomb:
 	ReloadDelay: 35
 	ValidTargets: Ground, Water
 	InvalidTargets: Air
@@ -640,25 +640,114 @@ AirshipParaBomb:
 	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
 		Falloff: 100, 40, 5, 0
-		Damage: 12000
+		Damage: 10500
 		InvalidTargets: Air
+		Versus:
+			None: 40
+			Wood: 100
+			Light: 60
+			Heavy: 40
+			Concrete: 55
+			Brick: 50
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
+	Warhead@3Eff: CreateEffect
+		Explosions: artillery_explosion
+		ImpactSounds: kaboom15.aud
+		ValidTargets: Ground, Ship, Trees
+	Warhead@4EffWater: CreateEffect
+		Explosions: large_splash
+		ImpactSounds: splashl1.aud, splashl2.aud
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+
+KirovTeslaBomb:
+	Inherits: KirovBomb
+	Warhead@1Dam: SpreadDamage
+		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
+	Warhead@3Eff: CreateEffect
+		Explosions: tsla_bomb
+		ExplosionPalette: ra2effect
+		ImpactSounds: kirbo1.aud, kirbo2.aud
+	Warhead@5Tesla: FireShrapnel
+		Weapon: KirovTeslaArc
+		Amount: 3
+		AimChance: 75
+		AllowDirectHit: true
+		ThrowWithoutTarget: false
+
+KirovClusterBomb:
+	Inherits: KirovBomb
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			Concrete: 60
+	Warhead@6Cluster: FireCluster
+		Weapon: KirovCluster
+		RandomClusterCount: 3
+		Dimensions: 3,3
+		Footprint: xxx x_x xxx
+
+KirovNukeBomb:
+	Inherits: KirovBomb
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			Light: 70
+			Heavy: 50
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+	Warhead@3Eff: CreateEffect
+		Explosions: nuke3
+		ImpactSounds: kaboom1.aud
+	Warhead@7Radio: CreateTintedCells
+		Spread: 1c0
+		Level: 300
+		Falloff: 100, 55, 32, 5
+		MaxLevel: 750
+		LayerName: radioactivity.medium
+
+KirovTeslaArc:
+	Inherits: TTankZap
+	Range: 3c512
+	Report: shktrop1.aud	
+	Warhead@1Dam: SpreadDamage
+		Damage: 3000
+		ValidTargets: Infantry, Vehicle, Ship
+	-Warhead@3Eff:
+	-Warhead@Arc:
+
+KirovCluster:
+	ReloadDelay: 35
+	Range: 3c0
+	Projectile: Bullet
+		Image: BOMB
+		Speed: 96
+		LaunchAngle: 0, 32
+		Inaccuracy: 1c0
+		BounceCount: 0
+	Warhead@1Dam: SpreadDamage
+		Spread: 256
+		Damage: 1100
 		Versus:
 			None: 40
 			Wood: 100
 			Light: 65
 			Heavy: 40
-			Concrete: 55
+			Concrete: 60
 			Brick: 50
-		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
-	Warhead@2Smu: LeaveSmudge
+	Warhead@Smu: LeaveSmudge
 		SmudgeType: Crater
-		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
+		InvalidTargets: Structure, Wall, Trees
 	Warhead@3Eff: CreateEffect
-		Explosions: tsla_bomb
-		ExplosionPalette: ra2effect
-		ImpactSounds: kirbo1.aud, kirbo2.aud
-		ValidTargets: Ground, Water, Ship, Trees
-	
+		Explosions: large_explosion
+		ImpactSounds: kaboom15.aud
+		ValidTargets: Ground, Air, Ship, Trees
+	Warhead@4EffWater: CreateEffect
+		Explosions: med_splash
+		ImpactSounds: splashl1.aud, splashl2.aud
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+
 FrogBomb:
 	ValidTargets: Ground, Water
 	InvalidTargets: Air
@@ -1099,6 +1188,7 @@ Cloud:
 		Level: 50
 		Falloff: 100, 75, 52, 15, 2
 		MaxLevel: 750
+		LayerName: radioactivity.strong		
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
 		Damage: 500
@@ -1155,7 +1245,8 @@ RadEruptionWeapon:
 		Falloff: 100, 75, 50, 25, 0
 		Level: 250
 		MaxLevel: 750
-		
+		LayerName: radioactivity.strong
+
 ChronoAI:
 	ReloadDelay: 1
 	Projectile: InstantExplode
