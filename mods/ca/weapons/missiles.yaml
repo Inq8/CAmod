@@ -80,8 +80,15 @@ MaverickSU:
 	Inherits: Maverick
 	Range: 10c0
 	Report: vbleatta.aud, vbleattb.aud
+	Burst: 4
+	Projectile: Missile
+		Inaccuracy: 1c0
+		Speed: 180
 	Warhead@1Dam: SpreadDamage
-		Spread: 768
+		Spread: 341
+		Versus:
+			Wood: 18
+			Light: 65
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: gexp14a.aud, gexp14b.aud, gexp14c.aud, gexp14d.aud
