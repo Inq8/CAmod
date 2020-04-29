@@ -129,9 +129,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			if (!Info.ShowSelectionBar || remainingDelay > 0)
 				return 0;
-			
 			var maxTicks = Util.ApplyPercentageModifiers(Info.Delay, modifiers.Select(m => m.GetReloadAmmoModifier()));
-
 			if (remainingTicks == maxTicks)
 				return 0;
 
@@ -140,6 +138,6 @@ namespace OpenRA.Mods.CA.Traits
 
 		bool ISelectionBar.DisplayWhenEmpty { get { return false; } }
 
-		Color ISelectionBar.GetColor() { return Info.SelectionBarColor; }		
+		Color ISelectionBar.GetColor() { return Info.SelectionBarColor; }
 	}
 }
