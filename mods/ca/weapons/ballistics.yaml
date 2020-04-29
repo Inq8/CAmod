@@ -270,6 +270,40 @@ TitanGun:
 		RandomClusterCount: 1
 		Dimensions: 1,1
 		Footprint: X
+		
+380mm:
+	Inherits: ^Artillery
+	ReloadDelay: 120
+	Report: bgraatta.aud
+	MinRange: 2c0
+	Range: 6c768
+	TargetActorCenter: true
+	Projectile: Bullet
+		Speed: 145
+		Image: 380mm
+		Inaccuracy: 1c138
+	Warhead@1Dam: SpreadDamage
+		Damage: 14500
+		Falloff: 100, 55, 20, 5
+		Versus:
+			None: 90
+			Wood: 110
+			Concrete: 110
+			Brick: 110
+			Light: 110
+			Heavy: 52
+	Warhead@3Eff: CreateEffect
+		Explosions: large_artillery_explosion
+		ImpactSounds: artyhit.aud, artyhit2.aud, artyhit3.aud
+	Warhead@Concussion: GrantExternalCondition
+		Range: 3c0
+		Duration: 100
+		Condition: concussion
+		ValidTargets: Ground, Infantry, Vehicle, Ship
+	Warhead@5Shake: ShakeScreen
+		Duration: 5
+		Intensity: 1
+		Multiplier: 0.5,0.5
 
 8Inch:
 	Inherits: ^Artillery

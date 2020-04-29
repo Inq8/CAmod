@@ -238,6 +238,10 @@ YAK.Husk:
 		Offset: -853,0,0
 		Interval: 2
 		MinDamage: Undamaged
+	Contrail@1:
+		Offset: -98,-683,-10
+	Contrail@2:
+		Offset: -98,683,-10
 	RevealsShroud:
 		Range: 11c0
 		Type: GroundPosition
@@ -1003,6 +1007,28 @@ APC.Husk:
 	RenderSprites:
 		Image: apc.destroyed
 		
+TTNK.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Tesla Tank)
+	TransformOnCapture:
+		IntoActor: ttnk
+	InfiltrateForTransform:
+		IntoActor: ttnk
+	RenderSprites:
+		Image: ttnk.destroyed
+		
+ISU.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Siege Tank)
+	TransformOnCapture:
+		IntoActor: isu
+	InfiltrateForTransform:
+		IntoActor: isu
+	RenderSprites:
+		Image: isu.destroyed
+		
 DISR.Husk:
 	Inherits: ^HuskTD
 	Tooltip:
@@ -1016,6 +1042,44 @@ DISR.Husk:
 	RenderSprites:
 		Image: disr.destroyed
 		PlayerPalette: overlayplayertd
+		
+WTNK.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Husk (Microwave Tank)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: wtnk
+	InfiltrateForTransform:
+		IntoActor: wtnk
+	RenderSprites:
+		Image: wtnk.destroyed
+		PlayerPalette: overlayplayertd
+		
+BATF.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Battle Fortress)
+	TransformOnCapture:
+		IntoActor: batf
+	InfiltrateForTransform:
+		IntoActor: batf
+	RenderSprites:
+		Image: batf.destroyed
+		
+CHPR.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Chrono Prison)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: chpr
+	InfiltrateForTransform:
+		IntoActor: chpr
+	RenderSprites:
+		Image: chpr.destroyed
 		
 MISS.Husk:
 	Inherits: ^TechHusk
@@ -1222,12 +1286,14 @@ ORCB.Husk.Empty.EMP:
 	Inherits: ORCB.Husk.Empty
 	Inherits: ^EmpVisualEffect
 
-FROG.Husk:
+SUK.Husk:
 	Inherits: ^PlaneHusk
 	Tooltip:
-		Name: Frogfoot Attack Plane
-	Contrail:
-		Offset: -853,0,0
+		Name: Sukhoi Attack Plane
+	Contrail@1:
+		Offset: -598,-683,-10
+	Contrail@2:
+		Offset: -598,683,-10
 	Aircraft:
 		TurnSpeed: 5
 		Speed: 149
@@ -1239,20 +1305,20 @@ FROG.Husk:
 		Range: 10c0
 		Type: CenterPosition
 	RenderSprites:
-		Image: frog
+		Image: suk
 		
-FROG.Husk.EMP:
-	Inherits: FROG.Husk
+SUK.Husk.EMP:
+	Inherits: SUK.Husk
 	Inherits: ^EmpVisualEffect
 		
-FROG.Husk.Empty:
+SUK.Husk.Empty:
 	Inherits: ^PlaneHuskEmpty
-	Inherits: FROG.Husk
+	Inherits: SUK.Husk
 	FallsToEarth:
 		Explosion: UnitExplodeDroneEmpty
 		
-FROG.Husk.Empty.EMP:
-	Inherits: FROG.Husk.Empty
+SUK.Husk.Empty.EMP:
+	Inherits: SUK.Husk.Empty
 	Inherits: ^EmpVisualEffect
 		
 PTNK.Husk:

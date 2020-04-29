@@ -317,6 +317,13 @@ ttnk:
 		Length: 32
 	icon: ttnkicon
 
+ttnk.destroyed:
+	Inherits: ^VehicleOverlays
+	idle: ttnk
+		Facings: 32
+		UseClassicFacingFudge: True
+		ZOffset: -512
+
 dtrk:
 	Inherits: ^VehicleOverlays
 	idle: dtrk
@@ -1116,7 +1123,7 @@ batf:
 	muzzle: smokeygun
 		Length: 12
 		Tick: 30
-	turret:
+	turret: batf
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -1134,7 +1141,7 @@ batf.destroyed:
 	muzzle: smokeygun
 		Length: 12
 		Tick: 30
-	turret:
+	turret: batf
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -1211,3 +1218,20 @@ cryo:
 		Length: 12
 		Tick: 30
 	icon: cryolicnh
+	
+isu:
+	Inherits: ^VehicleOverlays
+	idle: isu
+		Facings: 32
+		UseClassicFacingFudge: True
+	muzzle: smokeygun
+		Length: 12
+		Tick: 30
+	icon: isuicon
+	
+isu.destroyed:
+	Inherits: ^VehicleOverlays
+	idle: isu
+		Facings: 32
+		UseClassicFacingFudge: True
+		ZOffset: -512

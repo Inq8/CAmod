@@ -75,6 +75,22 @@ Maverick:
 			Heavy: 85
 			Concrete: 75
 			Brick: 80
+			
+MaverickSU:
+	Inherits: Maverick
+	Range: 10c0
+	Report: vbleatta.aud, vbleattb.aud
+	Warhead@1Dam: SpreadDamage
+		Spread: 768
+	Warhead@3Eff: CreateEffect
+		Explosions: large_explosion
+		ImpactSounds: gexp14a.aud, gexp14b.aud, gexp14c.aud, gexp14d.aud
+		ValidTargets: Ground, Air, Ship, Trees
+	Warhead@4EffWater: CreateEffect
+		Explosions: med_splash
+		ImpactSounds: splashl1.aud, splashl2.aud
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
 
 Dragon:
 	Inherits: ^AntiGroundMissile

@@ -10,37 +10,16 @@
 #endregion
 
 using System.Linq;
-using OpenRA.Mods.Common.Traits;
+using OpenRA.Mods.CA.Traits.BotModules.Squads;
 using OpenRA.Traits;
 
-namespace OpenRA.Mods.CA.Traits.BotModules.Squads
+namespace OpenRA.Mods.Common.Traits.BotModules.Squads
 {
-	class ProtectionStateBase : GroundStateBaseCA
+	abstract class ProtectionStateBase : GroundStateBaseCA
 	{
-		protected static bool FullAmmo(Actor a)
-		{
-			var ammoPools = a.TraitsImplementing<AmmoPool>();
-			return ammoPools.All(x => x.HasFullAmmo);
-		}
-
-		protected static bool HasAmmo(Actor a)
-		{
-			var ammoPools = a.TraitsImplementing<AmmoPool>();
-			return ammoPools.All(x => x.HasAmmo);
-		}
-
-		protected static bool ReloadsAutomatically(Actor a)
-		{
-			var ammoPools = a.TraitsImplementing<AmmoPool>();
-			var rearmable = a.TraitOrDefault<Rearmable>();
-			if (rearmable == null)
-				return true;
-
-			return ammoPools.All(ap => !rearmable.Info.AmmoPools.Contains(ap.Info.Name));
-		}
 	}
 
-	class UnitsForProtectionIdleState : GroundStateBaseCA, IState
+	class UnitsForProtectionIdleState : ProtectionStateBase, IState
 	{
 		public void Activate(SquadCA owner) { }
 		public void Tick(SquadCA owner) { owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionAttackState(), true); }
@@ -65,26 +44,29 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 				if (owner.TargetActor == null)
 				{
-					owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionFleeStateCA(), true);
+					owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionFleeState(), true);
 					return;
 				}
 			}
 
 			// rescan target to prevent being ambushed and die without fight
-			var leader = owner.Units.ClosestTo(owner.TargetActor.CenterPosition);
-			var enemies = owner.World.FindActorsInCircle(leader.CenterPosition, WDist.FromCells(owner.SquadManager.Info.ProtectionScanRadius))
-				.Where(a => owner.SquadManager.IsEnemyUnit(a) && owner.SquadManager.IsNotHiddenUnit(a));
-			var target = enemies.ClosestTo(leader.CenterPosition);
-			if (target != null)
-				owner.TargetActor = target;
-
+			// return to AttackMove state for formation
+			var teamLeader = owner.Units.ClosestTo(owner.TargetActor.CenterPosition);
+			if (teamLeader == null)
+				return;
+			var teamTail = owner.Units.MaxByOrDefault(a => (a.CenterPosition - owner.TargetActor.CenterPosition).LengthSquared);
+			var protectionScanRadius = WDist.FromCells(owner.SquadManager.Info.ProtectionScanRadius);
+			var targetActor = ThreatScan(owner, teamLeader, protectionScanRadius) ?? ThreatScan(owner, teamTail, protectionScanRadius);
 			var cannotRetaliate = false;
+
+			if (targetActor != null)
+				owner.TargetActor = targetActor;
 
 			if (!owner.IsTargetVisible)
 			{
 				if (Backoff < 0)
 				{
-					owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionFleeStateCA(), true);
+					owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionFleeState(), true);
 					Backoff = BackoffTicks;
 					return;
 				}
@@ -98,7 +80,8 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				foreach (var a in owner.Units)
 				{
 					// Air units control:
-					if (a.Info.HasTraitInfo<AircraftInfo>() && a.Info.HasTraitInfo<AmmoPoolInfo>())
+					var ammoPools = a.TraitsImplementing<AmmoPool>().ToArray();
+					if (a.Info.HasTraitInfo<AircraftInfo>() && ammoPools.Any())
 					{
 						if (BusyAttack(a))
 						{
@@ -106,12 +89,12 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 							continue;
 						}
 
-						if (!ReloadsAutomatically(a))
+						if (!ReloadsAutomatically(ammoPools, a.TraitOrDefault<Rearmable>()))
 						{
 							if (IsRearming(a))
 								continue;
 
-							if (!HasAmmo(a))
+							if (!HasAmmo(ammoPools))
 							{
 								owner.Bot.QueueOrder(new Order("ReturnToBase", a, false));
 								continue;
@@ -124,7 +107,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 							cannotRetaliate = false;
 						}
 						else if (a.Info.HasTraitInfo<GuardableInfo>())
-							owner.Bot.QueueOrder(new Order("Guard", a, Target.FromActor(leader), false));
+							owner.Bot.QueueOrder(new Order("Guard", a, Target.FromActor(teamLeader), false));
 					}
 
 					// Ground/naval units control:
@@ -135,20 +118,20 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 							owner.Bot.QueueOrder(new Order("Attack", a, Target.FromActor(owner.TargetActor), false));
 							cannotRetaliate = false;
 						}
-						else if (leader.TraitsImplementing<Guardable>().Any())
-							owner.Bot.QueueOrder(new Order("Guard", a, Target.FromActor(leader), false));
+						else if (a.Info.HasTraitInfo<GuardableInfo>())
+							owner.Bot.QueueOrder(new Order("Guard", a, Target.FromActor(teamLeader), false));
 					}
 				}
 			}
 
 			if (cannotRetaliate)
-				owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionFleeStateCA(), true);
+				owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionFleeState(), true);
 		}
 
 		public void Deactivate(SquadCA owner) { }
 	}
 
-	class UnitsForProtectionFleeStateCA : GroundStateBaseCA, IState
+	class UnitsForProtectionFleeState : ProtectionStateBase, IState
 	{
 		public void Activate(SquadCA owner) { }
 

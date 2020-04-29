@@ -157,10 +157,10 @@ MIG:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 50
-		Prerequisites: ~afld, stek, ~techlevel.high
+		Prerequisites: ~afld, stek, ~!aircraft.ukraine, ~techlevel.high
 		Description: Precision strike aircraft.\n  Strong vs Vehicles, Defenses\n  Weak vs Infantry, Aircraft
 	Valued:
-		Cost: 2000
+		Cost: 1750
 	Tooltip:
 		Name: MiG Attack Plane
 	UpdatesPlayerStatistics:
@@ -205,6 +205,18 @@ MIG:
 		Offset: -598,-683,0
 	Contrail@2:
 		Offset: -598,683,0
+	Contrail@AB1:
+		Offset: -400,-50,-20
+		UsePlayerColor: false
+		ZOffset: -512
+		Color: cc550080
+		TrailLength: 10
+	Contrail@AB2:
+		Offset: -400,50,-20
+		UsePlayerColor: false
+		ZOffset: -512
+		Color: cc550080
+		TrailLength: 10
 	SpawnActorOnDeath:
 		Actor: MIG.Husk
 		RequiresCondition: ammo && !empdisable
@@ -225,7 +237,7 @@ MIG:
 	Rearmable:
 		RearmActors: afld, afld.gdi
 		
-FROG:
+SUK:
 	Inherits: ^Plane
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
@@ -233,24 +245,25 @@ FROG:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 51
-		Prerequisites: ~afld, ~aircraft.ukraine, ~techlevel.high
-		Description: Ground attack aircraft with cluster bombs.\n  Strong vs Buildings, Light Armor, Infantry\n  Weak vs Aircraft
+		Prerequisites: ~afld, stek, ~aircraft.ukraine, ~techlevel.high
+		Description: Fast ground attack aircraft armed\nwith powerful explosive missiles.\n  Strong vs Tanks, Defenses\n  Weak vs Aircraft
 	Valued:
-		Cost: 1850
+		Cost: 2000
 	Tooltip:
-		Name: Frogfoot Attack Plane
+		Name: Sukhoi Attack Plane
 	Health:
 		HP: 20000
 	RevealsShroud:
 		Range: 10c0
 		Type: GroundPosition
 		MoveRecalculationThreshold: 0
-	Armament@PRIMARY:
-		Weapon: FrogBomb
-		LocalOffset: 256,-213,0
+	Armament:
+		Weapon: MaverickSU
+		LocalOffset: 0,-640,0, 0,640,0
+		LocalYaw: -40, 24
 		PauseOnCondition: !ammo
 	AttackAircraft:
-		FacingTolerance: 128
+		FacingTolerance: 20
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
@@ -258,7 +271,7 @@ FROG:
 		CruiseAltitude: 2560
 		InitialFacing: 192
 		TurnSpeed: 4
-		Speed: 180
+		Speed: 225
 		RepulsionSpeed: 40
 		MaximumPitch: 56
 		TakeoffSounds: migtoff1.aud
@@ -266,25 +279,38 @@ FROG:
 		InitialStance: HoldFire
 		InitialStanceAI: HoldFire
 	AmmoPool:
-		Ammo: 5
-		PipCount: 5
+		Ammo: 6
+		PipCount: 6
+		ReloadDelay: 60
 		AmmoCondition: ammo
 	SelectionDecorations:
 	Contrail@1:
-		Offset: -258,-723,0
+		Offset: -598,-683,-10
 	Contrail@2:
-		Offset: -258,723,0
+		Offset: -598,683,-10
+	Contrail@AB1:
+		Offset: -400,-70,-20
+		UsePlayerColor: false
+		ZOffset: -512
+		Color: cc550080
+		TrailLength: 10
+	Contrail@AB2:
+		Offset: -400,70,-20
+		UsePlayerColor: false
+		ZOffset: -512
+		Color: cc550080
+		TrailLength: 10
 	SpawnActorOnDeath:
-		Actor: FROG.Husk
+		Actor: SUK.Husk
 		RequiresCondition: ammo && !empdisable
 	SpawnActorOnDeath@Empty:
-		Actor: FROG.Husk.empty
+		Actor: SUK.Husk.empty
 		RequiresCondition: !ammo && !empdisable
 	SpawnActorOnDeath@EMP:
-		Actor: FROG.Husk.EMP
+		Actor: SUK.Husk.EMP
 		RequiresCondition: ammo && empdisable
 	SpawnActorOnDeath@EmptyEMP:
-		Actor: FROG.Husk.empty.EMP
+		Actor: SUK.Husk.empty.EMP
 		RequiresCondition: !ammo && empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -853,0,0
@@ -367,6 +393,10 @@ YAK:
 		DecorationBounds: 30,28,0,2
 	Rearmable:
 		RearmActors: afld, afld.gdi
+	Contrail@1:
+		Offset: -98,-683,-10
+	Contrail@2:
+		Offset: -98,683,-10
 
 TRAN:
 	Inherits: ^Helicopter
@@ -1756,6 +1786,10 @@ HORN:
 		LandingDistance: 8c0
 	Contrail@1:
 		Offset: -432,0,0
+		UsePlayerColor: false
+		ZOffset: -512
+		Color: cc550080
+		TrailLength: 10
 	-Contrail@2:
 	Interactable:
 	DetectCloaked:

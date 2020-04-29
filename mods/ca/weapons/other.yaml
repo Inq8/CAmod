@@ -373,6 +373,11 @@ MADTankThump:
 		Spread: 7c0
 		Damage: 1
 		InvalidTargets: MADTank, Infantry
+	Warhead@Concussion: GrantExternalCondition
+		Range: 7c0
+		Duration: 100
+		Condition: concussion
+		ValidTargets: Ground, Infantry, Vehicle, Ship
 
 MADTankDetonate:
 	InvalidTargets: MADTank, Infantry
@@ -387,6 +392,11 @@ MADTankDetonate:
 		Explosions: med_explosion
 		ImpactSounds: madexplo.aud
 		ImpactActors: false
+	Warhead@Concussion: GrantExternalCondition
+		Range: 7c0
+		Duration: 600
+		Condition: concussion
+		ValidTargets: Ground, Infantry, Vehicle, Ship
 		
 Laser:
 	ReloadDelay: 100
@@ -663,50 +673,6 @@ AirshipParaBombS:
 	ValidTargets: Ground, Water, Structure
 	InvalidTargets: Air
 	TargetActorCenter: false
-	
-FrogBomb:
-	ValidTargets: Ground, Water
-	InvalidTargets: Air
-	ReloadDelay: 50
-	Report: chute1.aud
-	Burst: 5
-	BurstDelays: 10
-	Range: 4c512
-	TargetActorCenter: true
-	Projectile: GravityBomb
-		Image: BOMBLET
-		Velocity: 25, 0, -74
-		Acceleration: 0, 0, 0
-		Shadow: true
-	Warhead@1Dam: SpreadDamage
-		Spread: 726
-		Damage: 1000
-		Falloff: 1000, 650, 350, 150, 30, 7, 0
-		ValidTargets: Ground, Water
-		Versus:
-			None: 100
-			Wood: 55
-			Light: 35
-			Heavy: 30
-			Concrete: 55
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
-	Warhead@Cluster: FireCluster
-		Weapon: ClusterBomb
-		RandomClusterCount: 3
-		Dimensions: 3,3
-		Footprint: xxx x_x xxx
-	Warhead@2Smu: LeaveSmudge
-		SmudgeType: Crater
-		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
-	Warhead@3Eff: CreateEffect
-		Explosions: artillery_explosion
-		ImpactSounds: kaboom15.aud
-		ValidTargets: Ground, Ship, Trees
-	Warhead@4EffWater: CreateEffect
-		Explosions: large_splash
-		ImpactSounds: splashl1.aud, splashl2.aud
-		ValidTargets: Water, Underwater
-		InvalidTargets: Ship, Structure, Bridge
 		
 SonicZap:
 	ReloadDelay: 120
@@ -907,7 +873,7 @@ IonZap:
 			Brick: 45
 		DamageTypes: Prone100Percent, TriggerProne, ExplosionDeath
 	Warhead@3Eff: CreateEffect
-		Explosions: ion_ring
+		Explosions: shock_wave
 		ExplosionPalette: tseffect
 	Warhead@4Smu_impact: LeaveSmudge
 		SmudgeType: Scorch

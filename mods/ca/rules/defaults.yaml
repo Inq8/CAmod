@@ -596,6 +596,31 @@
 	WithColoredOverlay@chilled5:
 		Palette: cold5
 		RequiresCondition: chilled > 4
+		
+^Concussion:
+	TimedConditionBar@concussion:
+		Condition: concussion
+		Color: ffffff
+	ExternalCondition@concussion:
+		Condition: concussion
+	SpeedMultiplier@concussion:
+		Modifier: 80
+		RequiresCondition: concussion
+	ReloadDelayMultiplier@concussion:
+		Modifier: 150
+		RequiresCondition: concussion
+	WithDecoration@Concussion:
+		Image: pips
+		Sequence: pip-conc
+		Palette: chrome
+		ReferencePoint: Top, Center
+		ZOffset: 256
+		RequiresCondition: concussion
+		BlinkInterval: 16
+		BlinkPatterns:
+			concussion: On, On, Off
+		RequiresSelection: False
+		ValidStances: Ally, Neutral, Enemy
 
 ^GpsScramble:
 	Cloak@GPSHIDE:
@@ -705,6 +730,7 @@
 	Inherits@13: ^BotGroundProductionBonus
 	Inherits@14: ^Chillable
 	Inherits@15: ^AffectedByDriverKill
+	Inherits@16: ^Concussion
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
@@ -843,6 +869,7 @@
 	Inherits@11: ^GpsScramble
 	Inherits@12: ^BotGroundProductionBonus
 	Inherits@13: ^Chillable
+	Inherits@14: ^Concussion
 	Inherits@bounty: ^GlobalBounty
 	Inherits@SELECTION_MODE: ^FlatSelectionMode
 	RenderSprites:
@@ -1097,6 +1124,7 @@
 	Inherits@13: ^GpsScramble
 	Inherits@14: ^Chillable
 	Inherits@15: ^BotGroundProductionBonus
+	Inherits@16: ^Concussion
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
@@ -1130,7 +1158,7 @@
 	ProximityCaptor:
 		Types: Ship
 	Chronoshiftable:
-	RepairableNear:
+	RepairableNearCA:
 		RepairActors: syrd, spen, syrd.gdi, spen.nod
 	GpsDot:
 		String: Ship

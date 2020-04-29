@@ -360,6 +360,58 @@ ARTY.nod:
 	Armament:
 		Weapon: 155mmTD
 		
+ISU:
+	Inherits: ^Tank
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 175
+		Prerequisites: weap, radar, ~vehicles.ukraine, ~techlevel.medium
+		Description: Powerful Medium-range artillery.\n  Strong vs Buildings, Infantry\n  Weak vs Aircraft\n  Special Ability: Concussion Shells
+	Valued:
+		Cost: 1350
+	Tooltip:
+		Name: Siege Tank
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 60000
+	Armor:
+		Type: Heavy
+	Mobile:
+		TurnSpeed: 2
+		Speed: 56
+		Locomotor: heavytracked
+		Voice: Move
+	RevealsShroud:
+		Range: 5c0
+	Armament:
+		Weapon: 380mm
+		LocalOffset: 824,0,208
+		MuzzleSequence: muzzle
+	AttackFrontal:
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: True
+		PauseOnCondition: empdisable || being-warped
+		Voice: Attack
+	WithMuzzleOverlay:
+	Explodes:
+		Weapon: ArtilleryExplode
+		EmptyWeapon: UnitExplodeSmall
+		LoadedChance: 75
+		RequiresCondition: !being-warped
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	Passenger:
+		Voice: Move
+	Voiced:
+		VoiceSet: SiegeTankVoice
+	SpawnActorOnDeath:
+		Actor: ISU.Husk
+		RequiresCondition: !being-warped
+		
 SPEC:
 	Inherits: ARTY.nod
 	RenderSprites:
@@ -678,6 +730,7 @@ TRUK:
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Vehicle, ChaosImmune
+	-ProductionCostMultiplier@IndustrialPlant:
 
 MGG:
 	Inherits: ^Vehicle
@@ -738,7 +791,7 @@ MRJ:
 		BuildPaletteOrder: 235
 		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
 		BuildDurationModifier: 50
-		Description: Jams nearby enemy radar domes\nand deflects incoming missiles.\n  Unarmed
+		Description: Jams nearby enemy radar systems.\n  Unarmed\n  Special Ability: Jams Missile-Lock Systems
 	Health:
 		HP: 22000
 	Armor:
@@ -777,7 +830,7 @@ TTNK:
 		Queue: Vehicle
 		BuildPaletteOrder: 125
 		Prerequisites: tsla, dome, ~vehicles.russia, ~techlevel.medium
-		Description: Tank with mounted Tesla coil.\n  Strong vs Infantry, Buildings, Vehicles\n  Weak vs Aircraft
+		Description: Tank with mounted Tesla coil.\n  Strong vs Infantry, Buildings, Vehicles\n  Weak vs Aircraft\n  Special Ability: Jams Radar
 	Valued:
 		Cost: 1150
 	Tooltip:
@@ -791,6 +844,7 @@ TTNK:
 		Type: Light
 	Mobile:
 		Speed: 113
+		Voice: Move
 	RevealsShroud:
 		Range: 7c0
 	Armament:
@@ -798,6 +852,7 @@ TTNK:
 		LocalOffset: 0,0,213
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
+		Voice: Attack
 	Turreted:
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
@@ -810,6 +865,13 @@ TTNK:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 30,30
+	Passenger:
+		Voice: Move
+	Voiced:
+		VoiceSet: TeslaTankVoice
+	SpawnActorOnDeath:
+		Actor: TTNK.Husk
+		RequiresCondition: !being-warped
 
 DTRK:
 	Inherits: ^Vehicle
@@ -911,7 +973,7 @@ QTNK:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 250
-		Prerequisites: stek, ~vehicles.ukraine, ~techlevel.high
+		Prerequisites: stek, ~vehicles.soviet, ~techlevel.high
 		Description: Deals seismic damage to nearby vehicles and structures.\n  Strong vs Vehicles, Buildings\n  Weak vs Infantry, Aircraft
 	Valued:
 		Cost: 1700
@@ -943,6 +1005,9 @@ QTNK:
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, MADTank, Vehicle, ChaosImmune
+	ProductionCostMultiplier@UkraineBonus:
+		Multiplier: 90
+		Prerequisites: vehicles.ukraine
 
 AMCV:
 	Inherits: ^VehicleTD
@@ -1307,25 +1372,14 @@ MTNK.Drone:
 	Turreted:
 		TurnSpeed: 5
 		Offset: 0,0,20
-	Turreted@SECONDARY:
-		Turret: secondary
-		Offset: 0,0,40
-		TurnSpeed: 255
 	Armament:
 		Weapon: 90mm
 		Recoil: 128
 		RecoilRecovery: 26
 		LocalOffset: 768,0,90
 		MuzzleSequence: muzzle
-	Armament@SECONDARY:
-		Name: secondary
-		Turret: secondary
-		Weapon: PointLaser
-		LocalOffset: 0,10,90
-		RequiresCondition: gdiupg
-		ForceTargetStances: enemy
 	AttackTurreted:
-		Turrets: primary, secondary
+		Turrets: primary
 		PauseOnCondition: disabled || empdisable || being-warped
 		Voice: Attack
 	WithMuzzleOverlay:
@@ -1356,11 +1410,6 @@ MTNK.Drone:
 		Range: 1c0
 		EnableSound: vrobon
 		DisableSound: vroboff
-	PointDefense:
-		Armament: secondary
-		PointDefenseTypes: Missile
-		RequiresCondition: gdiupg
-		ValidStances: Enemy
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Vehicle, ChaosImmune
@@ -2289,6 +2338,7 @@ DISR:
 	Passenger:
 		CargoType: Vehicle
 		Weight: 2
+		Voice: Move
 	RevealsShroud:
 		Range: 7c0
 	Armament@PRIMARY:
@@ -2443,6 +2493,8 @@ RTNK:
 	Mobile:
 		Speed: 82
 		Voice: Move
+	Passenger:
+		Voice: Move
 	RevealsShroud:
 		Range: 6c0
 	Turreted:
@@ -2509,6 +2561,8 @@ V3RL:
 		TurnSpeed: 4
 		Voice: Move
 		PauseOnCondition: aiming || being-captured || empdisable || being-warped
+	Passenger:
+		Voice: Move
 	RevealsShroud:
 		Range: 5c0
 	Armament:
@@ -2603,6 +2657,8 @@ TNKD:
 	Mobile:
 		Speed: 68
 		TurnSpeed: 4
+		Voice: Move
+	Passenger:
 		Voice: Move
 	RevealsShroud:
 		Range: 6c0
@@ -2737,6 +2793,8 @@ PTNK:
 	Mobile:
 		Speed: 82
 		Voice: Move
+	Passenger:
+		Voice: Move
 	RevealsShroud:
 		Range: 6c0
 	Turreted:
@@ -2786,6 +2844,8 @@ WTNK:
 		Type: Light
 	Mobile:
 		Speed: 100
+		Voice: Move
+	Passenger:
 		Voice: Move
 	RevealsShroud:
 		Range: 7c0
@@ -2844,6 +2904,10 @@ BATF:
 		Speed: 56
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped
 		Voice: Move
+	Passenger:
+		CargoType: Vehicle
+		Weight: 2
+		Voice: Move
 	RevealsShroud:
 		Range: 4c0
 	AttackTurreted:
@@ -2895,7 +2959,6 @@ BATF:
 		PipCount: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
-		EjectOnDeath: true
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -2914,6 +2977,9 @@ BATF:
 	WithSpriteTurret@TERTIARY:
 		Turret: tertiary
 		Sequence: turret2
+	SpawnActorOnDeath:
+		Actor: BATF.Husk
+		RequiresCondition: !being-warped
 
 BATF.AI:
 	Inherits: BATF
@@ -3149,6 +3215,7 @@ CHPR:
 	Passenger:
 		CargoType: Vehicle
 		Weight: 2
+		Voice: Move
 	RevealsShroud:
 		Range: 6c0
 	Turreted:
@@ -3204,6 +3271,9 @@ CHPR:
 		RequiresCondition: stance-attackanything || assault-move
 		ValidTargets: Temporal
 		InvalidTargets: NoAutoTarget
+	SpawnActorOnDeath:
+		Actor: CHPR.Husk
+		RequiresCondition: !being-warped
 
 CRYO:
 	Inherits: ^TankTD
