@@ -1368,8 +1368,9 @@ KIRO:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 55
-		Prerequisites: ~afld, stek, ~aircraft.russia, ~techlevel.high
-		Description: Heavily armoured airship equipped with Tesla bombs.\n  Strong vs Buildings, Infantry, Slow Vehicles\n  Weak vs Aircraft
+		BuildDurationModifier: 115
+		Prerequisites: ~afld, stek, ~aircraft.soviet, ~techlevel.high
+		Description: Heavily armoured airship equipped with specialised bombs.\n  Vulnerable when dropping bombs.\n  Strong vs Buildings, Infantry, Slow Vehicles\n  Weak vs Aircraft
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -1377,7 +1378,7 @@ KIRO:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 75000
+		HP: 100000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -1385,11 +1386,36 @@ KIRO:
 		Type: GroundPosition
 		MoveRecalculationThreshold: 0
 	Armament@PRIMARY:
-		Weapon: AirshipParaBomb
+		Weapon: KirovBomb
 		LocalOffset: -20,0,0
-	Armament@SECONDARY:
-		Weapon: AirshipParaBombS
+		PauseOnCondition: !ammo
+		RequiresCondition: !russiabombs && !ukrainebombs && !iraqbombs
+	Armament@PRIMARY-RUSSIA:
+		Weapon: KirovTeslaBomb
 		LocalOffset: -20,0,0
+		PauseOnCondition: !ammo
+		RequiresCondition: russiabombs
+	Armament@PRIMARY-UKRAINE:
+		Weapon: KirovClusterBomb
+		LocalOffset: -20,0,0
+		PauseOnCondition: !ammo
+		RequiresCondition: ukrainebombs
+	Armament@PRIMARY-IRAQ:
+		Weapon: KirovNukeBomb
+		LocalOffset: -20,0,0
+		PauseOnCondition: !ammo
+		RequiresCondition: iraqbombs
+	AmmoPool:
+		Ammo: 8
+		PipCount: 8
+		AmmoCondition: ammo
+	ReloadAmmoPoolCA:
+		Delay: 360
+		Count: 8
+		DelayOnFire: 120
+		DelayAfterReset: 50
+		ShowSelectionBar: true
+		SelectionBarColor: ff00ff
 	AttackFrontal:
 		Voice: Attack
 	AttackAircraft:
@@ -1437,7 +1463,7 @@ KIRO:
 		Offset: -100,-500,100
 	Selectable:
 		Bounds: 36,28,0,2
-		DecorationBounds: 40,29,0,1
+		DecorationBounds: 40,40,0,1
 	SelfHealing:
 		Step: 100
 		Delay: 3
@@ -1448,7 +1474,22 @@ KIRO:
 	Explodes:
 		Weapon: KirovExplode
 		RequiresCondition: !airborne
-		
+	DamageMultiplier@doorsopen:
+		RequiresCondition: doorsopen
+		Modifier: 200
+	GrantConditionOnAttack@doorsopen:
+		Condition: doorsopen
+		RevokeDelay: 50
+	GrantConditionOnFaction@russia:
+		Condition: russiabombs
+		Factions: russia
+	GrantConditionOnFaction@ukraine:
+		Condition: ukrainebombs
+		Factions: ukraine
+	GrantConditionOnFaction@iraq:
+		Condition: iraqbombs
+		Factions: iraq
+
 OCAR:
 	Inherits: ^HelicopterTD
 	RenderSprites:
