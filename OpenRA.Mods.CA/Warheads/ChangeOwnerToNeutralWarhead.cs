@@ -38,6 +38,9 @@ namespace OpenRA.Mods.CA.Warheads
 				if (a.Owner == firedBy.Owner)
 					continue;
 
+				if (!target.IsValidFor(firedBy))
+					return;
+
 				a.ChangeOwner(a.World.Players.First(p => p.InternalName == Owner)); // Permanent
 
 				// Stop shooting, you have new enemies

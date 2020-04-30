@@ -449,28 +449,28 @@
 		
 ^NaniteRepair:
 	SelfHealing@NREPAIR:
-		PercentageStep: 1
-		Delay: 25
+		PercentageStep: 3
+		Delay: 30
 		HealIfBelow: 100
 		DamageCooldown: 0
-		RequiresCondition: nrepairheal
+		RequiresCondition: nrepair
 	WithColoredOverlay@NREPAIR:
-		RequiresCondition: nrepairheal && !(empdisable || invulnerability || invisibility)
+		RequiresCondition: nrepair && damaged && !(empdisable || invulnerability || invisibility)
 		Palette: nrepair
 	TimedConditionBar@NREPAIR:
 		Condition: nrepair
-		Color: 0000FF
+		Color: 25cde999
 	WithIdleOverlay@NREPAIR:
 		Sequence: emp-overlay
 		Palette: tseffect
-		RequiresCondition: nrepairheal
+		RequiresCondition: nrepair && damaged
 	WithDecoration@NREPAIR:
 		Image: pips
 		Palette: chrometd
 		Sequence: pip-repair
 		ReferencePoint: Bottom, Center
 		ZOffset: 256
-		RequiresCondition: nrepairheal
+		RequiresCondition: nrepair
 		BlinkInterval: 64
 		RequiresSelection: True
 		ValidStances: Ally, Neutral
@@ -479,12 +479,6 @@
 	GrantConditionOnDamageState@NREPAIR:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
-	GrantCondition@NREPAIR:
-		RequiresCondition: damaged && nrepair
-		Condition: nrepairheal
-	GrantConditionOnPrerequisite@NREPAIR:
-		Prerequisites: nrepair
-		Condition: nrepair
 		
 ^AffectedByDriverKill:
 	GrantConditionIfOwnerIsNeutral:
@@ -494,6 +488,12 @@
 		RequiresCondition: driver_dead
 		ValidStances: Neutral
 		CancelActivity: true
+	SelfHealing@DRIVER_DEAD:
+		PercentageStep: -1
+		Delay: 20
+		HealIfBelow: 101
+		DamageCooldown: 0
+		RequiresCondition: driver_dead
 	CaptureManager:
 
 ^CanCaptureDriverlessVehicles:

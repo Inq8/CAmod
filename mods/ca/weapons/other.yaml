@@ -351,6 +351,21 @@ RepairIFV:
 		Image: sparks_overlay
 		Explosions: idle
 		ExplosionPalette: tseffect-ignore-lighting-alpha75
+		
+RepairNanite:
+	Report: srepaira.aud
+	Warhead@highlight: GrantExternalCondition
+		Range: 4c0
+		Duration: 2
+		Condition: highlight
+		ValidStances: Ally
+		ValidTargets: Ground, Vehicle
+	Warhead@repair: GrantExternalCondition
+		Range: 4c0
+		Duration: 750
+		Condition: nrepair
+		ValidStances: Ally
+		ValidTargets: Ground, Vehicle
 
 Demolish:
 	Warhead@1Dam: SpreadDamage
@@ -1180,9 +1195,9 @@ Flare:
 	ValidTargets: Structure
 	TargetActorCenter: true
 	Projectile: LaserZap
-		Width: 26
+		Width: 45
 		Duration: 8
-		SecondaryBeamWidth: 90
+		SecondaryBeamWidth: 65
 		SecondaryBeamColor: FF000030
 		ZOffset: 4096
 	Warhead@1Dam: TargetDamage

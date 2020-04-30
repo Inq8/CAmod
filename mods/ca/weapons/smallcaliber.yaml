@@ -488,7 +488,7 @@ AKME:
 		
 SNIPER:
 	ReloadDelay: 110
-	Range: 6c0
+	Range: 6c768
 	Report: snipe.aud
 	ValidTargets: Ground, Infantry
 	InvalidTargets: Vehicle, Tank, Water, Structure, Wall, Husk, Chrono
@@ -514,10 +514,10 @@ SNIPERE:
 
 SNIPER.vehicle:
 	ReloadDelay: 600
-	Range: 6c0
+	Range: 6c768
 	Report: ijarwe2a.aud
 	ValidTargets: Vehicle, Tank
-	InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air
+	InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air, DriverKillImmune
 	Projectile: InstantHit
 		Blockable: true
 	Warhead@1Dam: TargetDamage
@@ -526,9 +526,9 @@ SNIPER.vehicle:
 		ValidTargets: Vehicle, Tank
 		InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air, DriverKillImmune
 		ValidStances: Enemy
-		Range: 0c1
+		Range: 0c256
 	Warhead@highlight: GrantExternalCondition
-		Range: 0c1
+		Range: 0c256
 		Duration: 2
 		Condition: highlight
 		ValidTargets: Vehicle, Tank

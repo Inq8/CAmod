@@ -1,5 +1,6 @@
 BADR:
 	Inherits: ^NeutralPlane
+	Inherits@EMP: ^EmpDisable
 	ParaDrop:
 		DropRange: 4c0
 		ChuteSound: chute1.aud
@@ -38,7 +39,8 @@ BADR:
 	Interactable:
 
 BADR.Bomber:
-	Inherits: ^Plane
+	Inherits: ^NeutralPlane
+	Inherits@EMP: ^EmpDisable
 	AttackBomber:
 	Armament:
 		Weapon: ParaBomb
@@ -96,7 +98,8 @@ BADR.NBomber:
 		Weapon: AtomBomb
 
 B2B:
-	Inherits: ^Plane
+	Inherits: ^NeutralPlane
+	Inherits@EMP: ^EmpDisable
 	AttackBomber:
 	Armament:
 		Weapon: InfernoBomb
@@ -280,14 +283,14 @@ SUK:
 		InitialStanceAI: HoldFire
 	AmmoPool:
 		Ammo: 8
-		PipCount: 8
+		PipCount: 4
 		ReloadDelay: 30
 		AmmoCondition: ammo
 	SelectionDecorations:
 	Contrail@1:
-		Offset: -598,-683,-10
+		Offset: -598,-683,-40
 	Contrail@2:
-		Offset: -598,683,-10
+		Offset: -598,683,-40
 	Contrail@AB1:
 		Offset: -400,-70,-20
 		UsePlayerColor: false
@@ -666,7 +669,8 @@ HIND:
 		RearmActors: hpad, hpad.td
 
 U2:
-	Inherits: ^Plane
+	Inherits: ^NeutralPlane
+	Inherits@EMP: ^EmpDisable
 	Health:
 		HP: 200000
 	Tooltip:
@@ -713,7 +717,8 @@ U2:
 	-MapEditorData:
 	
 U2.Bomber:
-	Inherits: ^Plane
+	Inherits: ^NeutralPlane
+	Inherits@EMP: ^EmpDisable
 	RenderSprites:
 		Image: U2
 	Health:
@@ -849,7 +854,8 @@ A10:
 		RearmActors: afld, afld.gdi
 
 A10.bomber:
-	Inherits: ^PlaneTD
+	Inherits: ^NeutralPlane
+	Inherits@EMP: ^EmpDisable
 	Tooltip:
 		Name: Warthog
 	Health:
@@ -876,6 +882,13 @@ A10.bomber:
 	-Voiced:
 	RenderSprites:
 		Image: a10
+		PlayerPalette: overlayplayertd
+	EjectOnDeath:
+		PilotActor: N1
+		SuccessRate: 50
+		EjectOnGround: false
+		EjectInAir: true
+		AllowUnsuitableCell: true
 	RejectsOrders:
 	Contrail@1:
 		Offset: -258,-823,0
@@ -901,7 +914,8 @@ A10.bomber:
 		Experience: 1000
 		
 C17:
-	Inherits: ^Plane
+	Inherits: ^NeutralPlane
+	Inherits@EMP: ^EmpDisable
 	RenderSprites:
 		PlayerPalette: overlayplayertd
 	-EjectOnDeath:
@@ -1225,7 +1239,8 @@ ORCB:
 	-ProductionCostMultiplier@EagleBonus:
 
 UAV:
-	Inherits: ^PlaneTD
+	Inherits: ^NeutralPlane
+	Inherits@EMP: ^EmpDisable
 	Health:
 		HP: 30000
 	Tooltip:
@@ -1263,6 +1278,9 @@ UAV:
 	Interactable:
 	GivesExperience:
 		Experience: 1000
+	RenderSprites:
+		PlayerPalette: overlayplayertd
+	-EjectOnDeath:
 
 RAH:
 	Inherits: ^HelicopterTD
@@ -1465,9 +1483,9 @@ KIRO:
 		Bounds: 36,28,0,2
 		DecorationBounds: 40,40,0,1
 	SelfHealing:
-		Step: 100
+		PercentageStep: 1
 		Delay: 3
-		HealIfBelow: 50
+		HealIfBelow: 75
 		DamageCooldown: 150
 	Voiced:
 		VoiceSet: KirovVoice

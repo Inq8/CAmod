@@ -288,8 +288,8 @@ V2RL:
 		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: iraqtank && !being-warped
 	SelfHealing:
-		Step: 100
-		Delay: 3
+		PercentageStep: 1
+		Delay: 20
 		HealIfBelow: 50
 		DamageCooldown: 150
 	SelectionDecorations:
@@ -501,7 +501,7 @@ HARV:
 		FullHuskActor: HARV.FullHusk
 		FullnessThreshold: 50
 	SelfHealing:
-		Step: 100
+		PercentageStep: 1
 		Delay: 25
 		HealIfBelow: 50
 		DamageCooldown: 500
@@ -1412,12 +1412,13 @@ MTNK.Drone:
 		DisableSound: vroboff
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Vehicle, ChaosImmune
+		TargetTypes: Ground, Vehicle, ChaosImmune, DriverKillImmune
 	-CaptureManager:
 	-Capturable:
 	-CaptureNotification:
 	-Capturable@DRIVER_DEAD:
 	-GrantConditionIfOwnerIsNeutral:
+	-SelfHealing@DRIVER_DEAD:
 
 HTNK:
 	Inherits: ^TankTD
@@ -1473,8 +1474,8 @@ HTNK:
 		Actor: HTNK.Husk
 		RequiresCondition: !being-warped
 	SelfHealing:
-		Step: 100
-		Delay: 3
+		PercentageStep: 1
+		Delay: 20
 		HealIfBelow: 50
 		DamageCooldown: 150
 	SelectionDecorations:
@@ -1826,7 +1827,7 @@ HAR2:
 	WithHarvestAnimation:
 	WithDockingAnimation:
 	SelfHealing:
-		Step: 100
+		PercentageStep: 1
 		Delay: 25
 		HealIfBelow: 50
 		DamageCooldown: 500
@@ -2251,8 +2252,8 @@ TITN:
 	Voiced:
 		VoiceSet: GhostVoice
 	SelfHealing@DEFAULT:
-		Step: 300
-		Delay: 3
+		PercentageStep: 1
+		Delay: 20
 		HealIfBelow: 50
 		DamageCooldown: 150
 	Carryable:
@@ -3079,7 +3080,7 @@ MEMP:
 		Sequence: emp-overlay
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Vehicle, ChaosImmune
+		TargetTypes: Ground, Vehicle, ChaosImmune, DriverKillImmune
 	WithRangeCircle:
 		Color: 0000FF80
 		Range: 5c0
@@ -3106,6 +3107,7 @@ MEMP:
 	-CaptureNotification:
 	-Capturable@DRIVER_DEAD:
 	-GrantConditionIfOwnerIsNeutral:
+	-SelfHealing@DRIVER_DEAD:
 
 CDRN:
 	Inherits: ^VehicleTD
@@ -3175,7 +3177,7 @@ CDRN:
 		AmmoPoolName: explosion
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Vehicle, ChaosImmune
+		TargetTypes: Ground, Vehicle, ChaosImmune, DriverKillImmune
 	Voiced:
 		VoiceSet: ChaosDroneVoice
 	-CaptureManager:
@@ -3183,6 +3185,7 @@ CDRN:
 	-CaptureNotification:
 	-Capturable@DRIVER_DEAD:
 	-GrantConditionIfOwnerIsNeutral:
+	-SelfHealing@DRIVER_DEAD:
 
 CHPR:
 	Inherits: ^Tank

@@ -4546,34 +4546,31 @@ GTEK:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
-	GrantPrerequisiteChargeDrainPower@Nrepair:
+	DetonateWeaponPower@Nrepair:
 		OrderName: nrepair
 		Icon: nrepair
-		Prerequisites: structures.talon, techlevel.high, !botplayer
+		Cursor: repair
 		ChargeInterval: 7500
-		Prerequisite: nrepair
 		Description: Nanite Repair
-		DischargeModifier: 300
-		AllowMultiple: false
-		LaunchSound: srepaira.aud
+		ActivationDelay: 10
 		LongDesc: Repairs damaged vehicles\nfor 30 seconds.
+		Weapon: RepairNanite
+		AirburstAltitude: 0
+		AllowMultiple: false
+		CameraActor: camera
+		CameraRemoveDelay: 375
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
-		LaunchSpeechNotification: Repairing
+		DisplayTimerStances: Ally, Neutral
 		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayTimerStances: Ally
-	SpawnActorPower@NrepairAI:
-		OrderName: nrepairai
-		Prerequisites: structures.talon, techlevel.high, botplayer
-		Actor: camera.nrepair.ai
-		LifeTime: 600
-		ChargeInterval: 7500
-		DeploySound: srepaira.aud
-		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayTimerStances: Ally
-		Icon: nrepair
-		Description: Nanite Repair AI
-		LongDesc: Repairs damaged vehicles\nfor 30 seconds.
+		DisplayBeacon: False
+		DisplayRadarPing: False
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		TargetCircleRange: 4c0
+		TargetCircleColor: ffffff90
+		LaunchSound: srepaira.aud
 	SupportPowerChargeBar:
 	GrantConditionOnPowerState@LOWPOWER:
 		Condition: lowpower
