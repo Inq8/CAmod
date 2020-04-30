@@ -422,6 +422,7 @@ E7:
 	IgnoresDisguise:
 	DetectCloaked:
 		CloakTypes: Cloak, Thief
+		Range: 5c0
 	Voiced:
 		VoiceSet: TanyaVoice
 	ProducibleWithLevel:
@@ -1139,6 +1140,7 @@ RMBO:
 	IgnoresDisguise:
 	DetectCloaked:
 		CloakTypes: Cloak, Thief
+		Range: 5c0
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
@@ -1201,16 +1203,17 @@ SNIP:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 55
+		BuildLimit: 5
 		Prerequisites: ~infantry.england, dome, ~techlevel.medium
-		Description: Special marksman infantry.\n  Strong vs Infantry\n  Weak vs Aircraft\n  Special Ability: Camouflage\n  Special Ability: Kill Driver, Neutralizes enemy vehicles allowing infantry to capture them.
+		Description: Elite marksman infantry.\n Armed with a powerful sniper rifle.\n  Maximum 5 can be trained.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft, Structures\n  Special Ability: Camouflage\n  Special Ability: Kill Driver
 	Valued:
-		Cost: 800
+		Cost: 850
 	Tooltip:
 		Name: Sniper
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 2500
+		HP: 4500
 	RevealsShroud:
 		Range: 8c0
 	Armament@PRIMARY:
@@ -1340,6 +1343,7 @@ BORI:
 	IgnoresDisguise:
 	DetectCloaked:
 		CloakTypes: Cloak, Thief
+		Range: 5c0
 	Voiced:
 		VoiceSet: BorisVoice
 	ProducibleWithLevel:
