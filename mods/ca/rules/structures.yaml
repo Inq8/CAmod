@@ -509,7 +509,12 @@ PDOX:
 	ProvidesPrerequisite@germanstructure:
 		RequiresPrerequisites: structures.germany
 		Prerequisite: pdox.germany
-	ChronoshiftPower@chronoshift:
+	WithChronosphereOverlay:
+		Image: chronobubble
+		WarpInSequence: warpin
+		WarpOutSequence: warpout
+		Palette: ra2effect-ignore-lighting-alpha75
+	ChronoshiftPowerCA@chronoshift:
 		OrderName: Chronoshift
 		Prerequisites: !botplayer
 		PauseOnCondition: disabled || empdisable || being-warped

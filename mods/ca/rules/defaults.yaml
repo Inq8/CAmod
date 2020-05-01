@@ -760,8 +760,12 @@
 		ValidDamageStates: Light, Medium, Heavy, Critical
 	Repairable:
 		RepairActors: fix, rep
-	Chronoshiftable:
+	ChronoshiftableWithSpriteEffect:
+		Image: chrono
+		WarpInSequence: warpin
+		WarpOutSequence: warpout
 		RequiresCondition: !being-warped
+		Palette: ra2effect-ignore-lighting-alpha75
 	Passenger:
 		CargoType: Vehicle
 	AttackMove:
@@ -1168,7 +1172,11 @@
 		Notification: NavalUnitLost
 	ProximityCaptor:
 		Types: Ship
-	Chronoshiftable:
+	ChronoshiftableWithSpriteEffect:
+		Image: chrono
+		WarpInSequence: warpin
+		WarpOutSequence: warpout
+		Palette: ra2effect-ignore-lighting-alpha75
 	RepairableNearCA:
 		RepairActors: syrd, spen, syrd.gdi, spen.nod
 	GpsDot:
@@ -1902,7 +1910,11 @@
 	Targetable:
 		TargetTypes: Ground, Husk, NoAutoTarget
 		RequiresForceFire: true
-	Chronoshiftable:
+	ChronoshiftableWithSpriteEffect:
+		Image: chrono
+		WarpInSequence: warpin
+		WarpOutSequence: warpout
+		Palette: ra2effect-ignore-lighting-alpha75
 	Tooltip:
 		GenericName: Destroyed Vehicle
 	BodyOrientation:

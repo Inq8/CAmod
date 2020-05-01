@@ -53,5 +53,8 @@ namespace OpenRA.Mods.CA.Traits
 		bool IsEnemyUnit(Actor a);
 	}
 
+	[RequireExplicitImplementation]
+	public interface INotifyChronosphere { void Teleporting(WPos from, WPos to); }
+
 	public interface ILoadsOverlayPlayerPalettes { void LoadOverlayPlayerPalettes(WorldRenderer wr, string playerName, Color playerColor, bool replaceExisting); }
 }

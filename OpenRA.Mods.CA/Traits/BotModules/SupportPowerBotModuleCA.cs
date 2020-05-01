@@ -162,7 +162,7 @@ namespace OpenRA.Mods.CA.Traits
 					if (consideredAttractiveness < powerDecision.MinimumAttractiveness)
 						continue;
 
-					suitableLocations.Add(new int[] { i, j, consideredAttractiveness } );
+					suitableLocations.Add(new int[] { i, j, consideredAttractiveness });
 					totalAttractiveness += consideredAttractiveness;
 				}
 			}

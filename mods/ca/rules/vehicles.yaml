@@ -913,7 +913,7 @@ DTRK:
 	-DamageMultiplier@IRONCURTAIN:
 	KillsSelf:
 		RequiresCondition: invulnerability || triggered || berserk
-	Chronoshiftable:
+	ChronoshiftableWithSpriteEffect:
 		ExplodeInstead: true
 	Passenger:
 		PipType: Red
@@ -989,7 +989,7 @@ QTNK:
 	Mobile:
 		PauseOnCondition: deployed || being-captured || empdisable || being-warped
 		Speed: 56
-	Chronoshiftable:
+	ChronoshiftableWithSpriteEffect:
 		RequiresCondition: !deployed && !being-captured && !being-warped
 	RevealsShroud:
 		Range: 6c0
@@ -3063,8 +3063,8 @@ MEMP:
 		ChargeSound: mobempcharge1.aud
 		DetonationSound: mobemp1.aud
 		Voice: Attack
-	Chronoshiftable:
-		RequiresCondition: !deployed
+	ChronoshiftableWithSpriteEffect:
+		RequiresCondition: !being-warped && !deployed
 	RevealsShroud:
 		Range: 6c0
 	SelectionDecorations:
