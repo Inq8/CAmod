@@ -1,16 +1,16 @@
 ﻿#region Copyright & License Information
 /*
- * Copyright 2007-2020 The OpenRA Developers (see AUTHORS)
- * This file is part of OpenRA, which is free software. It is made
- * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation, either version 3 of
- * the License, or (at your option) any later version. For more
- * information, see COPYING.
+ * Copyright 2015- OpenRA.Mods.AS Developers (see AUTHORS)
+ * This file is a part of a third-party plugin for OpenRA, which is
+ * free software. It is made available to you under the terms of the
+ * GNU General Public License as published by the Free Software
+ * Foundation. For more information, see COPYING.
  */
 #endregion
 
 using System.Linq;
 using OpenRA.GameRules;
+using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
@@ -59,20 +59,37 @@ namespace OpenRA.Mods.CA.Traits
 				Game.Sound.Play(SoundType.World, weapon.Report.Random(self.World.SharedRandom), self.CenterPosition);
 
 			var spawner = self.Trait<BaseSpawnerSlave>().Master;
-			var damageModifiers = !spawner.IsDead ? spawner.TraitsImplementing<IFirepowerModifier>()
-				.Select(a => a.GetFirepowerModifier()).ToArray() : new int[0];
+
+			var args = new ProjectileArgs
+			{
+				Weapon = weapon,
+				Facing = 0,
+				CurrentMuzzleFacing = () => 0,
+
+				DamageModifiers = !spawner.IsDead ? spawner.TraitsImplementing<IFirepowerModifier>()
+						.Select(a => a.GetFirepowerModifier()).ToArray() : new int[0],
+
+				InaccuracyModifiers = new int[0],
+
+				RangeModifiers = new int[0],
+
+				Source = self.CenterPosition,
+				CurrentSource = () => self.CenterPosition,
+				SourceActor = spawner,
+				PassiveTarget = self.CenterPosition
+			};
 
 			if (Info.Type == ExplosionType.Footprint && buildingInfo != null)
 			{
 				var cells = buildingInfo.OccupiedTiles(self.Location);
 				foreach (var c in cells)
-					weapon.Impact(Target.FromPos(self.World.Map.CenterOfCell(c)), spawner);
+					weapon.Impact(Target.FromPos(self.World.Map.CenterOfCell(c)), new WarheadArgs(args));
 
 				return;
 			}
 
 			// Use .FromPos since this actor is killed. Cannot use Target.FromActor
-			weapon.Impact(Target.FromPos(self.CenterPosition), spawner);
+			weapon.Impact(Target.FromPos(self.CenterPosition), new WarheadArgs(args));
 		}
 
 		WeaponInfo ChooseWeaponForExplosion(Actor self)
