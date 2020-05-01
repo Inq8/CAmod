@@ -1,6 +1,6 @@
 ﻿#region Copyright & License Information
 /*
- * Copyright 2007-2019 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2020 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
  * as published by the Free Software Foundation, either version 3 of
@@ -22,22 +22,22 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new SpawnedExplodes(this, init.Self); }
 	}
 
-	public class SpawnedExplodes : ConditionalTrait<SpawnedExplodesInfo>, INotifyKilled, INotifyDamage, INotifyCreated
+	public class SpawnedExplodes : ConditionalTrait<SpawnedExplodesInfo>, INotifyKilled, INotifyDamage
 	{
-		readonly IHealth health;
-		IFirepowerModifier[] firepowerModifiers;
+		readonly Health health;
 		BuildingInfo buildingInfo;
 
 		public SpawnedExplodes(SpawnedExplodesInfo info, Actor self)
 			: base(info)
 		{
-			health = self.Trait<IHealth>();
-			firepowerModifiers = self.TraitsImplementing<IFirepowerModifier>().ToArray();
+			health = self.Trait<Health>();
 		}
 
-		void INotifyCreated.Created(Actor self)
+		protected override void Created(Actor self)
 		{
 			buildingInfo = self.Info.TraitInfoOrDefault<BuildingInfo>();
+
+			base.Created(self);
 		}
 
 		void INotifyKilled.Killed(Actor self, AttackInfo e)
@@ -55,44 +55,24 @@ namespace OpenRA.Mods.CA.Traits
 			if (weapon == null)
 				return;
 
-			var source = Info.DamageSource == DamageSource.Self ? self : e.Attacker;
 			if (weapon.Report != null && weapon.Report.Any())
-				Game.Sound.Play(SoundType.World, weapon.Report.Random(source.World.SharedRandom), self.CenterPosition);
+				Game.Sound.Play(SoundType.World, weapon.Report.Random(self.World.SharedRandom), self.CenterPosition);
 
 			var spawner = self.Trait<BaseSpawnerSlave>().Master;
 			var damageModifiers = !spawner.IsDead ? spawner.TraitsImplementing<IFirepowerModifier>()
-						.Select(a => a.GetFirepowerModifier()).ToArray() : new int[0];
-
-			var args = new ProjectileArgs
-			{
-				Weapon = weapon,
-				Facing = 0,
-				CurrentMuzzleFacing = () => 0,
-
-				DamageModifiers = !spawner.IsDead ? spawner.TraitsImplementing<IFirepowerModifier>()
-						.Select(a => a.GetFirepowerModifier()).ToArray() : new int[0],
-
-				InaccuracyModifiers = new int[0],
-
-				RangeModifiers = new int[0],
-
-				Source = self.CenterPosition,
-				CurrentSource = () => self.CenterPosition,
-				SourceActor = spawner,
-				PassiveTarget = self.CenterPosition
-			};
+				.Select(a => a.GetFirepowerModifier()).ToArray() : new int[0];
 
 			if (Info.Type == ExplosionType.Footprint && buildingInfo != null)
 			{
 				var cells = buildingInfo.OccupiedTiles(self.Location);
 				foreach (var c in cells)
-					weapon.Impact(Target.FromPos(self.World.Map.CenterOfCell(c)), new WarheadArgs(args));
+					weapon.Impact(Target.FromPos(self.World.Map.CenterOfCell(c)), spawner);
 
 				return;
 			}
 
 			// Use .FromPos since this actor is killed. Cannot use Target.FromActor
-			weapon.Impact(Target.FromPos(self.CenterPosition), new WarheadArgs(args));
+			weapon.Impact(Target.FromPos(self.CenterPosition), spawner);
 		}
 
 		WeaponInfo ChooseWeaponForExplosion(Actor self)
