@@ -2485,6 +2485,22 @@ RTNK:
 		Cost: 800
 	Tooltip:
 		Name: Mirage Tank
+		RequiresCondition: !tree
+	MirageTooltip@Tree:
+		Name: Mirage Tank
+		GenericName: Civilian building
+		GenericVisibility: Enemy, Neutral
+		RequiresCondition: tree
+	Mirage:
+		RequiresCondition: !empdisable && !being-warped
+		RevealOn: Attack, Move
+		MirageCondition: tree
+		DefaultTargetTypes: v08, v09, v10, v11, v12, v13, v14, v15, v16, v17, v18
+		InitialDelay: 100
+		RevealDelay: 100
+	WithMirageSpriteBody:
+		RequiresCondition: tree
+		Name: tree
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -2510,7 +2526,10 @@ RTNK:
 		Voice: Attack
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
+	WithFacingSpriteBody:
+		RequiresCondition: !tree
 	WithSpriteTurret:
+		RequiresCondition: !tree
 	SpawnActorOnDeath:
 		Actor: RTNK.Husk
 		RequiresCondition: !being-warped
@@ -2521,8 +2540,8 @@ RTNK:
 		CloakedCondition: hidden
 		UncloakSound: appear1.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Move, Damage, Heal, SelfHeal
-		Palette: cloakra
-		IsPlayerPalette: true
+		Palette: player
+		IsPlayerPalette: false
 		RequiresCondition: !cloak-force-disabled && !invisibility
 	Cloak@GPSHIDE:
 		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden)
