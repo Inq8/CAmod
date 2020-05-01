@@ -167,15 +167,18 @@ namespace OpenRA.Mods.CA.Traits
 				}
 			}
 
-			// Only consider locations of above average attractiveness.
-			var avgAttractiveness = totalAttractiveness / suitableLocations.Count();
-
-			foreach (int[] location in Util.Shuffle(suitableLocations, world.LocalRandom))
+			if (suitableLocations.Count() > 0)
 			{
-				if (location[2] >= avgAttractiveness)
+				// Only consider locations of above average attractiveness.
+				var avgAttractiveness = totalAttractiveness / suitableLocations.Count();
+
+				foreach (int[] location in Util.Shuffle(suitableLocations, world.LocalRandom))
 				{
-					bestLocation = new MPos(location[0], location[1]).ToCPos(map);
-					break;
+					if (location[2] >= avgAttractiveness)
+					{
+						bestLocation = new MPos(location[0], location[1]).ToCPos(map);
+						break;
+					}
 				}
 			}
 
