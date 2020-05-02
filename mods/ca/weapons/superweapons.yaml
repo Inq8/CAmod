@@ -31,15 +31,13 @@ ParaBomb:
 		ImpactSounds: splash9.aud
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure
-		
+
 CarpetBomb:
 	Inherits: ParaBomb
 	Report: bwhis.aud
 	-Projectile:
 	Projectile: GravityBomb
 		Image: BOMBLET
-		Velocity: 0, 0, -45
-		Acceleration: 0, 0, 0
 		Shadow: true
 	Warhead@1Dam: SpreadDamage
 		Damage: 30000
@@ -105,14 +103,12 @@ AtomBomb:
 		Falloff: 100, 75, 52, 37, 24, 15, 2
 		MaxLevel: 750
 		LayerName: radioactivity.strong
-		
+
 InfernoBomb:
 	Inherits: CarpetBomb
 	Projectile: GravityBomb
 		Image: B2BOMB
 	Warhead@1Dam: SpreadDamage
-		Spread: 1c0
-		Damage: 30000
 		Versus:
 			None: 80
 			Wood: 60
@@ -129,7 +125,6 @@ InfernoBomb:
 		Explosions: b2bexp, b2bexp2
 		ExplosionPalette: tseffect
 		ImpactSounds: expnew06.aud
-		ValidTargets: Ground, Ship, Trees
 	Warhead@4Dam_areanuke1: SpreadDamage
 		Spread: 2c0
 		Damage: 1000
@@ -283,7 +278,7 @@ Atomic:
 		Falloff: 100, 75, 52, 37, 24, 15, 2
 		MaxLevel: 750
 		LayerName: radioactivity.strong
-		
+
 IonCannon:
 	ValidTargets: Ground, Water, Air
 	Warhead@1Dam_impact: SpreadDamage
@@ -344,7 +339,7 @@ Empicbm:
 		InvalidTargets: Vehicle, Tank, Structure, Wall, Husk, Trees
 		Size: 2,1
 		Delay: 6
-		
+
 THLauncher:
 	ReloadDelay: 120
 	Range: 300c0
@@ -407,7 +402,7 @@ THLauncher:
 		InvalidTargets: Vehicle, Tank, Structure, Wall, Husk, Trees
 		Size: 2,1
 		Delay: 6
-		
+
 IronCurtain:
 	Projectile: InstantExplode
 	ReloadDelay: 1
@@ -457,7 +452,7 @@ IronCurtain:
 	Warhead@4Eff: CreateEffect
 		ExplosionPalette: effect-ignore-lighting-alpha85
 		Explosions: ironcurtain_effect
-		
+
 ForceShield:
 	Projectile: InstantExplode
 	ReloadDelay: 1
@@ -485,7 +480,7 @@ ForceShield:
 		Condition: forcedisabled
 		ValidTargets: Ground, Structure
 		ValidStances: Ally
-		
+
 StealthBubble:
 	Projectile: InstantExplode
 	ReloadDelay: 1
@@ -538,7 +533,7 @@ StealthBubble:
 	Warhead@4Eff: CreateEffect
 		ExplosionPalette: tseffect
 		Explosions: stealthbub
-		
+
 Chemicbm:
 	ValidTargets: Ground, Water
 	Warhead@1Dam: SpreadDamage
@@ -617,7 +612,7 @@ Chemicbm:
 		Level: 750
 		Falloff: 100, 75, 52, 37, 24, 15, 2
 		MaxLevel: 750
-		LayerName: radioactivity.strong		
+		LayerName: radioactivity.strong
 	Warhead@13Spawn: SpawnActor
 		Actors: camera.cloud
 		Range: 5
@@ -653,7 +648,7 @@ Chemicbm:
 		Image: Cloud2d
 		Palette: tseffect-ignore-lighting-alpha75
 		ValidTargets: Ground, Water
-		
+
 IonStormInit:
 	Projectile: InstantExplode
 	ReloadDelay: 1
@@ -746,7 +741,7 @@ IonBolt:
 		SmudgeType: Scorch
 		Size: 2,1
 		Delay: 6
-		
+
 DeathHand:
 	Projectile: InstantHit
 	Warhead@Cluster: FireCluster
@@ -801,7 +796,7 @@ DeathHandCluster:
 		RandomClusterCount: 5
 		Dimensions: 3,3
 		Footprint: xxx xxx xxx
-		
+
 WeatherStormInit:
 	Projectile: InstantExplode
 	ReloadDelay: 1
@@ -908,7 +903,7 @@ WeatherBolt:
 		ValidTargets: Ground, Water
 	Warhead@6Smu: LeaveSmudge
 		SmudgeType: Scorch
-		
+
 DropPodVisual:
 	Warhead@1Eff: CreateEffect
 		Explosions: droppod_explosion
@@ -928,20 +923,17 @@ DropPodVisual:
 		ImpactSounds: splash9.aud
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
-		
+
 DropPodVisual2:
 	Inherits: DropPodVisual
 	Warhead@1Eff: CreateEffect
 		Explosions: droppod_explosion2
-		ExplosionPalette: tseffect
-		InvalidTargets: Water
-		ImpactSounds: methit1.aud
-		
+
 Frenzy:
 	Warhead@2Eff: CreateEffect
 		Image: crate-effects
 		Explosions: rapid
-		
+
 GpsScramble:
 	Warhead@2Eff: CreateEffect
 		Image: crate-effects

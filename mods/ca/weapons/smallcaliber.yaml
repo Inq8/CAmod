@@ -21,7 +21,6 @@
 ZSU-23:
 	Inherits: ^AACannon
 	ReloadDelay: 8
-	Range: 8c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 2500
 		Range: 0, 0c64, 0c256, 3c768
@@ -33,7 +32,6 @@ FLAK-23-AA:
 	Report: flak1.aud, flak2.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 700
-		ValidTargets: Air
 
 FLAK-23-AG:
 	Inherits: ^AACannon
@@ -64,21 +62,19 @@ FLAK-23-AG:
 		Explosions: small_splash
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
-		
+
 Gatt.0:
 	Inherits: ^AACannon
 	ReloadDelay: 15
-	Range: 8c0
 	Report: vgatlo1a.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 900
 		Range: 0, 0c64, 0c256, 3c256
-		Falloff: 100, 100, 15, 5		
+		Falloff: 100, 100, 15, 5
 	Warhead@2Eff: CreateEffect
 		ValidTargets: Air
-		Explosions: small_explosion_air
 		ImpactSoundChance: 20
-		
+
 Gatt.1:
 	Inherits: Gatt.0
 	ReloadDelay: 5
@@ -89,14 +85,12 @@ Gatt.1:
 Gatt.2:
 	Inherits: Gatt.1
 	Report: vgatlo5a.aud, vgatlo5b.aud
-	ReloadDelay: 5
 	Warhead@1Dam: SpreadDamage
 		Damage: 1700
 
 Gatt.3:
 	Inherits: Gatt.2
 	Report: vgatlo8a.aud, vgatlo8b.aud
-	ReloadDelay: 5
 	Warhead@1Dam: SpreadDamage
 		Damage: 1900
 
@@ -254,7 +248,7 @@ Vulcan:
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
 		Delay: 10
-		
+
 GTChainGun:
 	Inherits: Vulcan
 	Report: mg42.aud
@@ -272,31 +266,26 @@ ChainGun:
 			Wood: 50
 			Light: 65
 			Heavy: 20
-			
+
 Vulcan2:
 	Inherits: ^LightMG
 	ReloadDelay: 50
 	Burst: 3
-	Range: 6c0
 	Report: tsgun4.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 5000
-		
+
 Vulcan3:
 	Inherits: ^LightMG
-	ReloadDelay: 30
 	Range: 4c0
 	Burst: 3
 	Report: infgun3.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: 1000
 
 ChainGun.Yak.R:
 	Inherits: ^HeavyMG
 	Burst: 5
 	ReloadDelay: 25
 	BurstDelays: 2
-	Range: 6c0
 	-Report:
 	StartBurstReport: gun13.aud
 	FirstBurstTargetOffset: -512,213,0
@@ -313,6 +302,7 @@ ChainGun.Yak.R:
 			Heavy: 25
 			Concrete: 25
 			Brick: 25
+
 ChainGun.Yak.L:
 	Inherits: ChainGun.Yak.R
 	FirstBurstTargetOffset: -512,-213,0
@@ -354,24 +344,22 @@ M16CarbineE:
 
 M60mg:
 	Inherits: ^LightMG
-	ReloadDelay: 30
 	Range: 4c0
 	Report: pillbox1.aud
 	Burst: 5
 	Warhead@1Dam: SpreadDamage
 		Versus:
 			Light: 30
-	
+
 M60mgTD:
 	Inherits: M60mg
 	Report: m60.aud
-	
+
 M60mgJJ:
 	Inherits: M60mg
 	Projectile: Bullet
 		Blockable: false
 	Report: vblhatta.aud, vblhattb.aud
-	ReloadDelay: 30
 	Burst: 3
 
 M60mgIFV:
@@ -405,7 +393,7 @@ SilencedPPK:
 		Explosions: water_piffs
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
-		
+
 SilencedPPKE:
 	Inherits: SilencedPPK
 	Range: 5c0
@@ -423,11 +411,11 @@ Colt45:
 		Explosions: water_piff
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
-		
+
 Colt45E:
 	Inherits: Colt45
 	Range: 9c0
-		
+
 SMG:
 	Inherits: ^SnipeWeapon
 	Report: silppk.aud
@@ -435,10 +423,7 @@ SMG:
 	Burst: 3
 	BurstDelays: 2
 	Range: 7c0
-	Projectile: Bullet
-		Speed: 1c682
 	Warhead@1Dam: SpreadDamage
-		Spread: 42
 		Damage: 5100
 		ValidTargets: Infantry
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
@@ -449,7 +434,7 @@ SMG:
 		Explosions: water_piff
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
-		
+
 SMGE:
 	Inherits: SMG
 	Range: 9c0
@@ -481,11 +466,11 @@ AKM:
 		Explosions: water_piff
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
-		
+
 AKME:
 	Inherits: AKM
 	Range: 9c0
-		
+
 SNIPER:
 	ReloadDelay: 110
 	Range: 6c768
@@ -506,11 +491,11 @@ SNIPER:
 		Explosions: water_piff
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
-		
+
 SNIPERE:
 	Inherits: SNIPER
 	Range: 9c0
-	
+
 
 SNIPER.vehicle:
 	ReloadDelay: 600
@@ -532,7 +517,7 @@ SNIPER.vehicle:
 		Duration: 2
 		Condition: highlight
 		ValidTargets: Vehicle, Tank
-		
+
 HeliGunAG:
 	Inherits: ChainGun
 	Report: mgbtr1.aud, mgbtr2.aud, mgbtr3.aud

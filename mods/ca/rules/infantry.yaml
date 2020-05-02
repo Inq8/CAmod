@@ -11,19 +11,6 @@ DOG:
 		PlayerPalette: player
 	WithDeathAnimation:
 		DeathSequencePalette: player
-		DeathTypes:
-			DefaultDeath: 1
-			BulletDeath: 2
-			SmallExplosionDeath: 3
-			ExplosionDeath: 4
-			FireDeath: 5
-			ElectricityDeath: 6
-			PoisonDeath: 7
-			ChronoDeath: 8
-			ToxinDeath: 9
-			RadiationDeath: 10
-			FrozenDeath: 11
-		CrushedSequence: die-crushed
 	Valued:
 		Cost: 200
 	Tooltip:
@@ -34,7 +21,6 @@ DOG:
 	Selectable:
 		Bounds: 12,17,-1,-4
 		DecorationBounds: 12,17,-1,-4
-	SelectionDecorations:
 	Health:
 		HP: 1800
 	Mobile:
@@ -111,7 +97,6 @@ E1:
 		Name: mounted
 		Weapon: M1CarbineE
 	WithInfantryBody:
-		DefaultAttackSequence: shoot
 		IdleSequences: idle1,idle2,idle3,idle4
 	AttackFrontal:
 		PauseOnCondition: being-warped
@@ -312,7 +297,6 @@ E6:
 	Selectable:
 		Priority: 5
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
 SPY:
@@ -364,7 +348,6 @@ SPY:
 	Voiced:
 		VoiceSet: SpyVoice
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
 E7:
@@ -418,8 +401,8 @@ E7:
 		AttackSequences:
 			primary: shoot
 			secondary: stand
-	Demolition: 
-		DetonationDelay: 45 
+	Demolition:
+		DetonationDelay: 45
 		Voice: Demolish
 	ExternalCondition@PRODUCED:
 		Condition: produced
@@ -436,7 +419,6 @@ E7:
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	-Crushable:
 	TakeCover:
@@ -483,7 +465,6 @@ MEDI:
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
 MECH:
@@ -551,7 +532,6 @@ MECH:
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
 EINSTEIN:
@@ -592,7 +572,7 @@ CHAN:
 		Class: CHAN
 	Tooltip:
 		Name: Scientist
-		
+
 MOEBIUS:
 	Inherits: ^CivInfantry
 	-Wanders:
@@ -683,7 +663,6 @@ THF:
 	Mobile:
 		Speed: 49
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
 SHOK:
@@ -755,17 +734,15 @@ SHOK:
 	ProductionCostMultiplier@RussiaBonus:
 		Multiplier: 90
 		Prerequisites: infantry.russia
-		
+
 SHOK.Nod:
 	Inherits: SHOK
 	RenderSprites:
 		Image: SHOK
 	Buildable:
-		Queue: Infantry
-		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 130
 		Prerequisites: ~inf.soviet.stolen, ~infantry.nod, ~tmpl, ~techlevel.high
-		
+
 N1:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -794,14 +771,13 @@ N1:
 		PauseOnCondition: being-warped
 	WithInfantryBody:
 		IdleSequences: idle1,idle2,idle3,idle4
-		DefaultAttackSequence: shoot
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	Selectable:
 		Class: E1
-		
+
 N1R1:
 	Inherits: N1
 	RenderSprites:
@@ -860,7 +836,7 @@ N2:
 		Prerequisites: barracks.upgraded
 	Selectable:
 		Class: E2
-		
+
 N2R1:
 	Inherits: N2
 	RenderSprites:
@@ -924,8 +900,6 @@ N3:
 		ProneOffset: 384,0,-395
 	AttackFrontal:
 		PauseOnCondition: being-warped
-	WithInfantryBody:
-		DefaultAttackSequence: shoot
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
 	AutoTarget:
@@ -934,7 +908,7 @@ N3:
 		Prerequisites: barracks.upgraded
 	Selectable:
 		Class: E3
-		
+
 N3R1:
 	Inherits: N3
 	RenderSprites:
@@ -983,8 +957,6 @@ N4:
 		ProneOffset: 160,0,-254
 	AttackFrontal:
 		PauseOnCondition: being-warped
-	WithInfantryBody:
-		DefaultAttackSequence: shoot
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
 	WithMuzzleOverlay:
@@ -1036,7 +1008,6 @@ N5:
 	Mobile:
 		Speed: 49
 		Voice: Move
-		PauseOnCondition: being-warped
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
@@ -1049,11 +1020,8 @@ N5:
 	Voiced:
 		VoiceSet: CyborgVoice
 	-Crushable:
-	WithInfantryBody:
-		DefaultAttackSequence: shoot
 	-KillsSelf@Mutation:
-	-GrantCondition@HAZMAT:
-	-WithDecoration@HAZMAT:
+	-DamagedByTerrain:
 	DamagedByTerrain:
 		Terrain: Tiberium, BlueTiberium
 		Damage: -100
@@ -1085,18 +1053,18 @@ N5:
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	-GrantCondition@HAZMAT:
+	-WithDecoration@HAZMAT:
 	GrantCondition@HAZMAT:
 		Condition: hazmatsuits
-		-RequiresCondition:
 	GrantConditionOnPrerequisite@BIO:
 		Condition: biofirepower
 	FirepowerMultiplier@BIOLAB:
 		RequiresCondition: nodupg || biofirepower
 		Modifier: 110
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
-		
+
 N5R1:
 	Inherits: N5
 	RenderSprites:
@@ -1151,15 +1119,13 @@ RMBO:
 		Voice: Attack
 		Armaments: primary, secondary
 		PauseOnCondition: being-warped
-	AttackMove:
 	WithInfantryBody:
-		StandSequences: stand,stand2
 		IdleSequences: idle1,idle2,idle3
 		AttackSequences:
 			primary: shoot
 			secondary: stand
-	Demolition: 
-		DetonationDelay: 45 
+	Demolition:
+		DetonationDelay: 45
 		Voice: Demolish
 	VoiceAnnouncement:
 		Voice: Build
@@ -1173,7 +1139,6 @@ RMBO:
 		CloakTypes: Cloak, Thief
 		Range: 5c0
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	-Crushable:
 	TakeCover:
@@ -1209,9 +1174,8 @@ N6:
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
-		
+
 VICE:
 	Inherits: ^Viceroid
 	Mobile:
@@ -1225,7 +1189,7 @@ VICE:
 	AttackWander:
 	Targetable:
 		TargetTypes: Ground, Infantry, Creep, ChaosImmune
-	
+
 SNIP:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -1271,7 +1235,6 @@ SNIP:
 		Delay: 750
 	Mobile:
 		Speed: 49
-		Locomotor: foot
 		Voice: Move
 	Cloak@NORMAL:
 		InitialDelay: 200
@@ -1299,7 +1262,6 @@ SNIP:
 		Armaments: primary, driver_snipe, laser
 		PauseOnCondition: being-warped
 	WithInfantryBody:
-		DefaultAttackSequence: shoot
 		StandSequences: stand, stand2
 	Passenger:
 		PipType: Red
@@ -1310,7 +1272,7 @@ SNIP:
 		VoiceSet: SniperVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
-		
+
 BORI:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -1364,8 +1326,8 @@ BORI:
 		SlaveDisposalOnKill: KillSlaves
 		SpawnAllAtOnce: true
 		SpawnerArmamentName: primary
-	Demolition: 
-		DetonationDelay: 45 
+	Demolition:
+		DetonationDelay: 45
 		Voice: Demolish
 	AutoTarget:
 	-WithInfantryBody:
@@ -1386,11 +1348,10 @@ BORI:
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	TakeCover:
 		SpeedModifier: 70
-		
+
 MORT:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -1432,7 +1393,7 @@ MORT:
 		DeathSequencePalette: playertd
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
-		
+
 SAB:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -1467,7 +1428,6 @@ SAB:
 	Voiced:
 		VoiceSet: InfilVoice
 	WithInfantryBody:
-		DefaultAttackSequence: shoot
 		StandSequences: stand
 		IdleSequences: idle1
 	Health:
@@ -1504,7 +1464,7 @@ SAB:
 	ProductionCostMultiplier@LegionBonus:
 		Multiplier: 80
 		Prerequisites: infantry.legion
-		
+
 ACOL:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -1526,7 +1486,6 @@ ACOL:
 	Mobile:
 		Speed: 49
 		Voice: Move
-		PauseOnCondition: being-warped
 	RevealsShroud:
 		Range: 5c0
 	Armament@PRIMARY:
@@ -1543,13 +1502,7 @@ ACOL:
 		Voice: Attack
 		PauseOnCondition: being-warped
 	WithInfantryBody:
-		DefaultAttackSequence: shoot
-		StandSequences: stand,stand2
 		IdleSequences: idle3
-		RequiresCondition: !being-warped
-	WithInfantryBody@Warped:
-		StandSequences: stand
-		RequiresCondition: being-warped
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -1588,9 +1541,8 @@ ACOL:
 		RequiresCondition: nodupg
 		Modifier: 35
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
-		
+
 JJET:
 	Inherits@1: ^ExistsInWorld
 	Inherits@3: ^IronCurtainable
@@ -1793,7 +1745,7 @@ JJET:
 		InvalidTargets: NoAutoTarget
 	KillsSelf:
 		RequiresCondition: empdisable && cruising
-		
+
 JJET.Husk:
 	BodyOrientation:
 		QuantizedFacings: 1
@@ -1829,7 +1781,7 @@ JJET.Husk:
 		RequiresCondition: water-death
 		FallbackSequence: die-splash
 	Interactable:
-	
+
 E8:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
@@ -1898,13 +1850,11 @@ E8:
 		BodyNames: deployed
 	GrantCondition@HAZMAT:
 		Condition: hazmatsuits
-		-RequiresCondition:
 	GrantConditionOnPrerequisite@BIO:
 		Condition: biofirepower
 	FirepowerMultiplier@BIOLAB:
 		RequiresCondition: nodupg || biofirepower
 		Modifier: 110
-
 
 N1C:
 	Inherits: ^Soldier
@@ -1929,7 +1879,6 @@ N1C:
 	Mobile:
 		Speed: 49
 		Voice: Move
-		PauseOnCondition: being-warped
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
@@ -1943,8 +1892,6 @@ N1C:
 		VoiceSet: CyborgVoice
 	Armament:
 		Weapon: Vulcan3
-	WithInfantryBody:
-		DefaultAttackSequence: shoot
 	-KillsSelf@Mutation:
 	-GrantConditionOnPrerequisite@BIO:
 	-GrantCondition@HAZMAT:
@@ -1974,9 +1921,8 @@ N1C:
 		RequiresCondition: nodupg
 		Modifier: 35
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
-		
+
 N3C:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
@@ -2001,7 +1947,6 @@ N3C:
 		Range: 4c768
 	Mobile:
 		Voice: Move
-		PauseOnCondition: being-warped
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
@@ -2041,8 +1986,6 @@ N3C:
 		Count: 1
 	AutoTarget:
 		ScanRadius: 5
-	WithInfantryBody:
-		DefaultAttackSequence: shoot
 	-KillsSelf@Mutation:
 	-GrantConditionOnPrerequisite@BIO:
 	-GrantCondition@HAZMAT:
@@ -2072,9 +2015,8 @@ N3C:
 		RequiresCondition: nodupg
 		Modifier: 35
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
-		
+
 RMBC:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -2163,7 +2105,6 @@ RMBC:
 		ReferencePoint: Bottom, Left
 		RequiresCondition: tibheal
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Vehicle, Tank, ChaosImmune, DriverKillImmune
 	Targetable@REPAIR:
 		RequiresCondition: !parachute && damaged && !being-warped
@@ -2171,5 +2112,4 @@ RMBC:
 	WithInfantryBody:
 		RequiresCondition: !being-warped || !empdisable
 	WithInfantryBody@Warped:
-		StandSequences: stand
 		RequiresCondition: being-warped || empdisable

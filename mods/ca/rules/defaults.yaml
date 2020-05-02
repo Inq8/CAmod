@@ -40,7 +40,7 @@
 		Type: Rectangle
 			TopLeft: -1536, -1024
 			BottomRight: 1536, 1024
-			
+
 ^BotBuilding:
 	GrantConditionOnBotOwner@BrutalAI:
 		Condition: owned-by-brutal-ai
@@ -258,7 +258,7 @@
 		ValidStances: Ally, Enemy
 		RequiresCondition: rank-elite
 		ZOffset: 256
-		
+
 ^Berserk:
 	SpeedMultiplier@BERSERK:
 		RequiresCondition: berserkactive
@@ -280,7 +280,7 @@
 	GrantCondition@BERSERK:
 		RequiresCondition: berserk && !invulnerability
 		Condition: berserkactive
-		
+
 ^Frenzy:
 	SpeedMultiplier@FRENZY:
 		RequiresCondition: frenzy
@@ -295,7 +295,7 @@
 		Palette: frenzy
 	TimedConditionBar@FRENZY:
 		Condition: frenzy
-		
+
 ^Warpable:
 	Warpable:
 		Condition: being-warped
@@ -348,7 +348,7 @@
 	GrantCondition@HAZMAT:
 		Condition: hazmatsuits
 		RequiresCondition: nodupg
-		
+
 ^BinoUpgrade:
 	ExternalCondition@Bino:
 		Condition: bino
@@ -366,7 +366,7 @@
 		BlinkPatterns:
 			bino && gdiupg: On, Off
 		RequiresSelection: True
-		
+
 ^GapGenShroud:
 	ExternalCondition@GAPGEN:
 		Condition: ggshroud
@@ -399,13 +399,13 @@
 		Condition: invulnerability
 	ExternalCondition@INVULNERABILITY:
 		Condition: invulnerability
-		
+
 ^IronCurtainable-Kills:
 	Inherits: ^IronCurtainable
 	KillsSelf@Immolate:
 		DamageTypes: FireDeath
 		RequiresCondition: invulnerability
-		
+
 ^ForceShieldable:
 	WithColoredOverlay@FS:
 		Palette: forces
@@ -421,7 +421,7 @@
 	PowerMultiplier@FSPOWERDOWN:
 		RequiresCondition: forceshield && !invulnerability
 		Modifier: 0
-		
+
 ^EmpDisable:
 	WithColoredOverlay@EMPDISABLE:
 		RequiresCondition: empdisable
@@ -438,14 +438,14 @@
 		Modifier: 0
 	ExternalCondition@EMPDISABLE:
 		Condition: empdisable
-		
+
 ^EmpVisualEffect:
 	WithColoredOverlay@EMPDISABLE:
 		Palette: disabled
 	WithIdleOverlay@EMPDISABLE:
 		Sequence: emp-overlay
 		Palette: tseffect
-		
+
 ^NaniteRepair:
 	SelfHealing@NREPAIR:
 		PercentageStep: 3
@@ -478,7 +478,7 @@
 	GrantConditionOnDamageState@NREPAIR:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
-		
+
 ^AffectedByDriverKill:
 	GrantConditionIfOwnerIsNeutral:
 		Condition: driver_dead
@@ -499,21 +499,21 @@
 	Captures@DRIVER_KILL:
 		CaptureTypes: driverless_vehicle
 	CaptureManager:
-		
+
 ^GreenFlash:
 	ExternalCondition@GHIGH:
 		Condition: greenhighlight
 	WithColoredOverlay@GHIGH:
 		RequiresCondition: greenhighlight
 		Palette: greenhighlight
-		
+
 ^WhiteFlash:
 	ExternalCondition@HIGH:
 		Condition: highlight
 	WithColoredOverlay@HIGH:
 		RequiresCondition: highlight
 		Palette: highlight
-		
+
 ^Cloakable:
 	Cloak@EXTERNALCLOAK:
 		RequiresCondition: invisibility && !cloak-force-disabled
@@ -537,7 +537,7 @@
 	WithColoredOverlay@STEALTHGEN:
 		RequiresCondition: invisibility
 		Palette: cloakgreen
-		
+
 ^Cloakable-Kills:
 	Inherits: ^Cloakable
 	KillsSelf@Mutation:
@@ -595,7 +595,7 @@
 	WithColoredOverlay@chilled5:
 		Palette: cold5
 		RequiresCondition: chilled > 4
-		
+
 ^Concussion:
 	TimedConditionBar@concussion:
 		Condition: concussion
@@ -641,7 +641,7 @@
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Heavy, Critical
-		
+
 ^C4Plantable:
 	DelayedWeaponAttachable@C4:
 		Type: c4
@@ -723,7 +723,7 @@
 		Prerequisites: global-bounty
 	GivesBounty:
 		RequiresCondition: global-bounty
-		
+
 ^FlatSelectionMode:
 	Selectable:
 		PriorityModifiers: Ctrl
@@ -731,7 +731,7 @@
 ^LowPrioritySelectionMode:
 	Selectable:
 		PriorityModifiers: Ctrl, Alt
-		
+
 ^ProductionSpeedBoost:
 	ProductionCostMultiplier@IndustrialPlant:
 		Multiplier: 75
@@ -881,7 +881,7 @@
 		Locomotor: tracked
 	Targetable:
 		TargetTypes: Ground, Vehicle, Tank
-		
+
 ^TankTD:
 	Inherits: ^Tank
 	RenderSprites:
@@ -1368,33 +1368,24 @@
 		TargetTypes: Ground, Vehicle, C4
 	Targetable@AIRBORNE:
 		RequiresCondition: airborne && !being-warped
-		TargetTypes: Air
 	Targetable@REPAIR:
 		RequiresCondition: !airborne && damaged && !being-warped
-		TargetTypes: Repair
 	Targetable@Temporal:
 		RequiresCondition: !airborne
-		TargetTypes: Temporal
 	Targetable@c4:
-		TargetTypes: C4Attached
 		RequiresCondition: c4 && !airborne
 	ProductionCostMultiplier@EagleBonus:
 		Multiplier: 90
 		Prerequisites: structures.eagle
 	Explodes:
-		Weapon: UnitExplode
 		RequiresCondition: !airborne && !being-warped
-		
+
 ^PlaneTD:
 	Inherits@1: ^Plane
 	RenderSprites:
 		PlayerPalette: overlayplayertd
 	EjectOnDeath:
 		PilotActor: N1
-		SuccessRate: 50
-		EjectOnGround: false
-		EjectInAir: true
-		AllowUnsuitableCell: true
 
 ^Helicopter:
 	Inherits: ^Plane
@@ -1403,7 +1394,6 @@
 	Aircraft:
 		CanHover: True
 		WaitDistanceFromResupplyBase: 4c0
-		TakeOffOnResupply: true
 		VTOL: true
 		InitialFacing: 224
 		CanSlide: True
@@ -1417,17 +1407,13 @@
 		UseClassicFacingFudge: True
 	-Contrail@1:
 	-Contrail@2:
-		
+
 ^HelicopterTD:
 	Inherits@1: ^Helicopter
 	RenderSprites:
 		PlayerPalette: overlayplayertd
 	EjectOnDeath:
 		PilotActor: N1
-		SuccessRate: 50
-		EjectOnGround: false
-		EjectInAir: true
-		AllowUnsuitableCell: true
 
 ^BasicBuilding:
 	Inherits@1: ^ExistsInWorld
@@ -1540,23 +1526,18 @@
 		Palette: player
 		IsPlayerPalette: True
 	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure
 		RequiresCondition: !being-warped
 	-ExternalCondition@CRATE-CLOAK:
 	Explodes@temporal:
 		Weapon: TemporalExplodeLarge
 		EmptyWeapon: TemporalExplodeLarge
-		
+
 ^BuildingTD:
 	Inherits@1: ^Building
 	RenderSprites:
 		PlayerPalette: overlayplayertd
 	SpawnActorOnDeath@1:
 		Actor: n1
-		Probability: 5
-	SpawnActorOnDeath@2:
-		Actor: tecn
-		Probability: 10
 	SpawnActorsOnSell:
 		ActorTypes: n1,n1,n1,tecn,tecn2
 	ActorPreviewPlaceBuildingPreview:
@@ -1564,16 +1545,9 @@
 
 ^ScienceBuilding:
 	Inherits: ^Building
-	RenderSprites:
-		PlayerPalette: overlayplayer
 	SpawnActorsOnSell:
 		ActorTypes: e1,e1,e1,e1,tecn,tecn2,tecn,tecn2,tecn3,tecn,tecn,tecn2,tecn,tecn3,e6,e6,e6,e6,e6
-	SpawnActorOnDeath@1:
-		Actor: e1
-		Probability: 5
-	SpawnActorOnDeath@2:
-		Actor: tecn
-		Probability: 10
+
 ^ScienceBuildingTD:
 	Inherits@1: ^Building
 	RenderSprites:
@@ -1582,10 +1556,6 @@
 		ActorTypes: n1,n1,n1,n1,tecn,tecn,tecn,tecn2,tecn,tecn3,tecn,tecn,tecn2,tecn3,n6,n6,n6,n6,n6
 	SpawnActorOnDeath@1:
 		Actor: n1
-		Probability: 5
-	SpawnActorOnDeath@2:
-		Actor: tecn
-		Probability: 10
 	ActorPreviewPlaceBuildingPreview:
 		OverridePalette: placebuildingtd
 
@@ -1597,7 +1567,6 @@
 		Bounds: 24,24
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, Defense
-		RequiresCondition: !being-warped
 	DetectCloaked:
 		Range: 6c0
 		RequiresCondition: !(empdisable || being-warped)
@@ -1617,7 +1586,6 @@
 	-SpawnActorsOnSell:
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
-		SellSounds: cashturn.aud
 	DrawLineToTarget:
 	RenderRangeCircle:
 	Explodes:
@@ -1640,7 +1608,7 @@
 	Explodes@temporal:
 		Weapon: TemporalExplode
 		EmptyWeapon: TemporalExplode
-	
+
 ^DefenseTD:
 	Inherits@1: ^Defense
 	RenderSprites:
@@ -1710,7 +1678,6 @@
 	Tooltip:
 		Name: Civilian Building
 		GenericVisibility: None
-	FrozenUnderFog:
 	MapEditorData:
 		Categories: Tech building
 
@@ -1803,10 +1770,8 @@
 	Tooltip:
 		Name: Field
 	-Targetable:
-	MapEditorData:
-		ExcludeTilesets: INTERIOR
 	Interactable:
-	
+
 ^TibTree:
 	Inherits@1: ^SpriteActor
 	Interactable:
@@ -1956,12 +1921,11 @@
 		CrushClasses: wall
 		CrushSound: destw.aud
 		CrushedByFriendlies: true
-		
+
 ^HuskTD:
 	Inherits: ^Husk
 	Burns:
 		Anim: 5
-		Damage: 200
 
 ^PlaneHusk:
 	Inherits: ^BasicHusk
@@ -1988,7 +1952,7 @@
 		UsePlayerColor: false
 		ZOffset: -512
 		Color: FFFFFF80
-		
+
 ^PlaneHuskEmpty:
 	Inherits: ^PlaneHusk
 	FallsToEarth:
@@ -2013,12 +1977,12 @@
 	RevealOnDeath:
 		Duration: 60
 		Radius: 4c0
-		
+
 ^HelicopterHuskEmpty:
 	Inherits: ^PlaneHusk
 	FallsToEarth:
 		Explosion: UnitExplodeHeliEmpty
-		
+
 ^TechHusk:
 	Inherits@1: ^BasicBuilding
 	Health:
@@ -2173,7 +2137,7 @@
 	GrantCondition@IDISABLE:
 		RequiresCondition: lowpower || empdisable
 		Condition: disabled
-		
+
 ^DisableOnLowPowerOrForceDisabled:
 	WithColoredOverlay@IDISABLE:
 		RequiresCondition: disabled && !(invulnerability || empdisable || forceshield || being-warped)
@@ -2204,7 +2168,6 @@
 	Inherits: ^DisableOnLowPower
 	GrantCondition@IDISABLE:
 		RequiresCondition: lowpower || powerdown || empdisable
-		Condition: disabled
 	ToggleConditionOnOrder:
 		DisabledSound: EnablePower
 		EnabledSound: DisablePower
@@ -2226,12 +2189,11 @@
 	WithBuildingRepairDecoration:
 		Offsets:
 			powerdown: -10, 0
-			
+
 ^DisableOnLowPowerOrPowerDownOrForceDisable:
 	Inherits: ^DisableOnLowPower
 	GrantCondition@IDISABLE:
 		RequiresCondition: lowpower || powerdown || empdisable || forcedisabled
-		Condition: disabled
 	ToggleConditionOnOrder:
 		DisabledSound: EnablePower
 		EnabledSound: DisablePower
@@ -2349,7 +2311,7 @@
 			Radius: 427
 	MapEditorData:
 		Categories: Critter
-		
+
 ^ShootableMissile:
 	Inherits@1: ^ExistsInWorld
 	Inherits@4: ^SpriteActor

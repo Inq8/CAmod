@@ -70,12 +70,12 @@ UnitExplodePlane:
 		Damage: 4000
 	Warhead@2Eff: CreateEffect
 		Explosions: large_napalm
-		
+
 UnitExplodePlaneLight:
 	Inherits: UnitExplodePlane
 	Warhead@1Dam: SpreadDamage
 		Damage: 3000
-		
+
 UnitExplodePlaneEmpty:
 	Inherits: UnitExplode
 	Warhead@1Dam: SpreadDamage
@@ -84,20 +84,20 @@ UnitExplodePlaneEmpty:
 UnitExplodeHeli:
 	Inherits: UnitExplode
 	Warhead@1Dam: SpreadDamage
-		Damage: 3750	
+		Damage: 3750
 	Warhead@2Eff: CreateEffect
 		Explosions: napalm
 
-UnitExplodeHeliEmpty:	
+UnitExplodeHeliEmpty:
 	Inherits: UnitExplodeHeli
 	Warhead@1Dam: SpreadDamage
 		Damage: 2000
-		
+
 UnitExplodeDrone:
 	Inherits: UnitExplodeHeli
 	Warhead@1Dam: SpreadDamage
 		Damage: 2000
-		
+
 UnitExplodeDroneEmpty:
 	Inherits: UnitExplodeHeli
 	Warhead@1Dam: SpreadDamage
@@ -110,7 +110,7 @@ UnitExplodeFlameSmall:
 	Warhead@2Eff: CreateEffect
 		Explosions: offseted_napalm
 		ImpactSounds: firebl3.aud
-		
+
 UnitExplodeChemSmall:
 	Inherits: ^Explosion
 	Warhead@1Dam: SpreadDamage
@@ -119,13 +119,13 @@ UnitExplodeChemSmall:
 		Explosions: small_chem
 		ExplosionPalette: temptd
 		ImpactSounds: firebl3.aud
-		
+
 VisualExplodeHusk:
 	Inherits: ^Explosion
 	-Warhead@1Dam:
 	Warhead@2Eff: CreateEffect
 		Explosions: large_explosion
-		
+
 VisualExplodeAirborne:
 	Inherits: VisualExplodeHusk
 	Warhead@2Eff: CreateEffect
@@ -159,9 +159,6 @@ ArtilleryExplode:
 	Inherits: ^Explosion
 	Warhead@1Dam: SpreadDamage
 		Damage: 15000
-	Warhead@2Eff: CreateEffect
-		Explosions: self_destruct
-		ImpactSounds: kaboom22.aud
 
 V2Explode:
 	Inherits: SCUD
@@ -184,7 +181,6 @@ SmallBuildingExplode:
 	Warhead@2Eff: CreateEffect
 		Explosions: building, building_napalm, large_explosion, self_destruct
 	Warhead@Flames: FireCluster
-		Weapon: BurnFx
 		RandomClusterCount: 1
 		Dimensions: 2,2
 		Footprint: xx xx
@@ -222,7 +218,7 @@ BarrelExplode:
 		RandomClusterCount: 1
 		Dimensions: 2,2
 		Footprint: xx xx
-		
+
 KirovExplode:
 	Inherits: ^Explosion
 	Warhead@1Dam: SpreadDamage
@@ -233,7 +229,6 @@ KirovExplode:
 		Versus:
 			None: 120
 			Wood: 100
-			Light: 60
 			Heavy: 35
 			Concrete: 35
 			Brick: 10
@@ -245,8 +240,6 @@ KirovExplode:
 	Warhead@3EffWater: CreateEffect
 		Explosions: large_napalm
 		ImpactSounds: firebl3.aud
-		ValidTargets: Water, Underwater
-		InvalidTargets: Ship, Structure, Bridge
 	Warhead@Smu: LeaveSmudge
 		SmudgeType: Scorch
 		Size: 2
@@ -378,38 +371,26 @@ CrateNuke:
 		LayerName: radioactivity.strong
 	Warhead@Flash: FlashEffect
 		FlashType: Nuke
-		
-		
+
 UnitExplodeIraqTank:
 	Inherits: CrateNuke
 	Warhead@3Eff_impact: CreateEffect
 		Explosions: nuke3
 	Warhead@1Dam_impact: SpreadDamage
-		Spread: 1c0
 		Damage: 1000
 		Falloff: 368, 135, 50, 18, 0
 	-Warhead@2Res_impact:
 	Warhead@4Dam_areanuke1: SpreadDamage
-		Spread: 1c0
 		Damage: 500
 		Falloff: 600, 400, 250, 150,  0
-		Delay: 5
-		ValidTargets: Ground, Water, Air
 	-Warhead@5Res_areanuke1:
 	Warhead@6Smu_areanuke1: LeaveSmudge
 		Size: 2
 	Warhead@TREEKILL: SpreadDamage
-		Spread: 1c0
-		Damage: 6000
 		Falloff: 600, 400, 250, 150, 0
-		Delay: 5
-		ValidTargets: Trees
-		DamageTypes: Incendiary
 	Warhead@18Radio: CreateTintedCells
-		Spread: 1c0
 		Level: 300
 		Falloff: 100, 55, 32, 5
-		MaxLevel: 750
 		LayerName: radioactivity.weak
 	-Warhead@Flames:
 	-Warhead@Flash:
@@ -509,7 +490,7 @@ MiniNuke:
 		LayerName: radioactivity.strong
 	Warhead@Flash: FlashEffect
 		FlashType: Nuke
-		
+
 UnitExplodeVice:
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
@@ -541,7 +522,7 @@ UnitExplodeVice:
 		Falloff: 100, 55, 32, 5
 		MaxLevel: 750
 		LayerName: radioactivity.weak
-		
+
 UnitExplodeToxinTruck:
 	ValidTargets: Ground, Water, Underwater
 	Warhead@1Dam_impact: SpreadDamage
@@ -590,7 +571,7 @@ UnitExplodeToxinTruck:
 		Level: 350
 		Falloff: 100, 75, 52, 37, 24, 15, 2
 		MaxLevel: 750
-		LayerName: radioactivity.strong    
+		LayerName: radioactivity.strong
 	Warhead@15Spawn: SpawnActor
 		Actors: camera.cloud2, camera.cloud
 		Range: 5
@@ -612,7 +593,7 @@ UnitExplodeToxinTruck:
 		Image: Cloud2d
 		Palette: tseffect-ignore-lighting-alpha75
 		ValidTargets: Ground, Water
-		
+
 MEMP:
 	ValidTargets: Ground, Water
 	Warhead@1Dam_impact: SpreadDamage
@@ -653,7 +634,7 @@ EMPExplode:
 	-Warhead@1Dam:
 	-Warhead@2Eff:
 	-Warhead@Smu:
-	
+
 ChaosGas:
 	ReloadDelay: 200
 	ValidTargets: Ground, Water, Underwater
@@ -685,7 +666,7 @@ CryoExplosion:
 		Level: 100
 		Falloff: 100, 75, 52, 15, 2
 		MaxLevel: 600
-		
+
 TemporalExplode:
 	Warhead@1Eff: CreateEffect
 		Explosions: chronowarp_effect
@@ -693,7 +674,7 @@ TemporalExplode:
 		ImpactSounds: chronowarp.aud
 		ValidTargets: Ground, Water, Air
 	Warhead@3Flash: ChronoFlashEffect
-		
+
 
 TemporalExplodeLarge:
 	Warhead@1Eff: CreateEffect
@@ -710,7 +691,6 @@ TPWRZap:
 	ValidTargets: Ground, Water, Infantry, Tank
 	-Report:
 	Warhead@1Dam: SpreadDamage
-		Spread: 42
 		Damage: 1000
 		AffectsParent: True
 		Versus:
@@ -722,11 +702,10 @@ TPWRZap:
 		AimChance: 90
 		ValidTargets: Ground, Water, Infantry, Tank
 		ThrowWithoutTarget: true
-		
+
 TPWRArc1:
 	Inherits: TTankZap
 	Range: 3c0
-	Projectile: TeslaZap
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Ground, Water, Infantry, Tank
 	-Warhead@3Eff:
