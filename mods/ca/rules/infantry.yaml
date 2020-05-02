@@ -376,9 +376,9 @@ E7:
 		BuildPaletteOrder: 120
 		Prerequisites: ~tent, atek, ~techlevel.infonly
 		BuildLimit: 1
-		Description: Elite commando infantry. Armed with\ndual pistols and C4.\n  Can detect cloaked units.\n  Maximum 1 can be trained.\n  Strong vs Infantry, Buildings\n  Weak vs Vehicles, Aircraft\n  Special Ability: Destroy building with C4
+		Description: Elite commando infantry. Armed with\ndual pistols and C4.\n  Can detect cloaked units.\n  Maximum 1 can be trained.\n  Strong vs Infantry, Buildings\n  Weak vs Aircraft\n  Special Ability: C4 Explosives
 	Valued:
-		Cost: 1000
+		Cost: 1200
 	Tooltip:
 		Name: Tanya
 	UpdatesPlayerStatistics:
@@ -392,9 +392,6 @@ E7:
 		Voice: Move
 	RevealsShroud:
 		Range: 6c0
-	Demolition:
-		DetonationDelay: 45
-		Voice: Demolish
 	Passenger:
 		PipType: Red
 		Voice: Move
@@ -408,11 +405,22 @@ E7:
 	Armament@mountedSECONDARY:
 		Weapon: Colt45E
 		Name: mounted
+	Armament@sapper:
+		Weapon: PlaceC4
+		Cursor: c4
+		OutsideRangeCursor: c4
+		Name: secondary
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		Armaments: primary, secondary
 	WithInfantryBody:
-		DefaultAttackSequence: shoot
 		StandSequences: stand
+		AttackSequences:
+			primary: shoot
+			secondary: stand
+	Demolition: 
+		DetonationDelay: 45 
+		Voice: Demolish
 	ExternalCondition@PRODUCED:
 		Condition: produced
 	VoiceAnnouncement:
@@ -430,6 +438,9 @@ E7:
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+	-Crushable:
+	TakeCover:
+		SpeedModifier: 70
 
 MEDI:
 	Inherits: ^Soldier
@@ -505,6 +516,17 @@ MECH:
 		OutsideRangeCursor: repair
 		TargetStances: Ally
 		ForceTargetStances: None
+	Armament@defuse:
+		Weapon: DefuseKit
+		Cursor: goldwrench
+		OutsideRangeCursor: goldwrench
+		TargetStances: Ally
+		ForceTargetStances: None
+		Name: secondary
+	AutoTargetPriority@defuse:
+		ValidTargets: C4Attached
+		InvalidTargets: NoAutoTarget
+		ValidStances: Ally
 	AttackFrontal:
 		Voice: Action
 		PauseOnCondition: being-warped
@@ -1091,7 +1113,7 @@ RMBO:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Valued:
-		Cost: 1000
+		Cost: 1200
 	Tooltip:
 		Name: Commando
 	UpdatesPlayerStatistics:
@@ -1102,34 +1124,43 @@ RMBO:
 		Queue: Infantry
 		IconPalette: chrometd
 		BuildLimit: 1
-		Description: Elite infantry unit. Armed with\nSMG and C4.\n  Strong vs Infantry, Buildings\n  Weak vs Vehicles, Aircraft\n  Special Ability: Destroy Building with C4\n  Maximum 1 can be trained.
+		Description: Elite infantry unit. Armed with\na SMG and C4.\n  Can detect cloaked units.\n  Maximum 1 can be trained.\n  Strong vs Infantry, Buildings\n  Weak vs Aircraft\n  Special Ability: C4 Explosives
 	Mobile:
 		Speed: 49
 		Voice: Move
 	Guard:
 		Voice: Move
 	Health:
-		HP: 8000
+		HP: 11000
 	Passenger:
 		PipType: Red
 		Voice: Move
 	RevealsShroud:
 		Range: 6c0
-	Demolition:
-		Voice: Demolish
 	Armament:
 		Weapon: smg
 	Armament@garrison:
 		Name: mounted
 		Weapon: smgE
+	Armament@sapper:
+		Weapon: PlaceC4
+		Cursor: c4
+		OutsideRangeCursor: c4
+		Name: secondary
 	AttackFrontal:
 		Voice: Attack
+		Armaments: primary, secondary
 		PauseOnCondition: being-warped
 	AttackMove:
 	WithInfantryBody:
-		DefaultAttackSequence: shoot
 		StandSequences: stand,stand2
 		IdleSequences: idle1,idle2,idle3
+		AttackSequences:
+			primary: shoot
+			secondary: stand
+	Demolition: 
+		DetonationDelay: 45 
+		Voice: Demolish
 	VoiceAnnouncement:
 		Voice: Build
 	AnnounceOnKill:
@@ -1144,6 +1175,9 @@ RMBO:
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+	-Crushable:
+	TakeCover:
+		SpeedModifier: 70
 
 N6:
 	Inherits: ^Soldier
@@ -1291,13 +1325,13 @@ BORI:
 		BuildLimit: 1
 		Description: Elite commando infantry. Armed with C4.\n  Can detect cloaked units.\n  Maximum 1 can be trained.\n  Strong vs Infantry, Buildings\n  Weak vs Aircraft\n  Special Ability: Can call an Airstrike on Structures
 	Valued:
-		Cost: 1000
+		Cost: 1200
 	Tooltip:
 		Name: Boris
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 8000
+		HP: 11000
 	Mobile:
 		Speed: 49
 		Voice: Move
@@ -1330,6 +1364,9 @@ BORI:
 		SlaveDisposalOnKill: KillSlaves
 		SpawnAllAtOnce: true
 		SpawnerArmamentName: primary
+	Demolition: 
+		DetonationDelay: 45 
+		Voice: Demolish
 	AutoTarget:
 	-WithInfantryBody:
 	WithInfantryBody:
@@ -1351,6 +1388,8 @@ BORI:
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+	TakeCover:
+		SpeedModifier: 70
 		
 MORT:
 	Inherits: ^Soldier

@@ -229,7 +229,6 @@
 		RequiresCondition: rank-elite
 		Modifier: 80
 	SelfHealing@ELITE:
-		Step: 0
 		PercentageStep: 5
 		Delay: 100
 		HealIfBelow: 100
@@ -642,6 +641,33 @@
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Heavy, Critical
+		
+^C4Plantable:
+	DelayedWeaponAttachable@C4:
+		Type: c4
+		Condition: c4
+		ProgressBarColor: FF000080
+	Targetable@c4:
+		TargetTypes: C4Attached
+		RequiresCondition: c4
+	WithDecoration@c4:
+		Image: c4
+		Sequence: c4
+		ReferencePoint: center, center
+		ZOffset: 2047
+		RequiresCondition: c4
+		RequiresSelection: False
+		ValidStances: Ally, Neutral, Enemy
+	ExternalCondition@detachable:
+		Condition: detach
+	WithColoredOverlay@detach:
+		Palette: moveflash
+		RequiresCondition: detach
+	AmbientSound@c4:
+		SoundFiles: icoltima.aud, icoltimb.aud, icoltimc.aud
+		Delay: 5
+		Interval: 5
+		RequiresCondition: c4
 
 ^AutoTargetGround:
 	AutoTarget:
@@ -731,6 +757,7 @@
 	Inherits@14: ^Chillable
 	Inherits@15: ^AffectedByDriverKill
 	Inherits@16: ^Concussion
+	Inherits@C4: ^C4Plantable
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
@@ -751,7 +778,7 @@
 		Bounds: 24, 24
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Vehicle
+		TargetTypes: Ground, Vehicle, C4
 	Targetable@REPAIR:
 		RequiresCondition: !parachute && damaged && !being-warped
 		TargetTypes: Repair
@@ -1319,6 +1346,7 @@
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@production: ^ProductionSpeedBoost
+	Inherits@C4: ^C4Plantable
 	Cloak@EXTERNALCLOAK:
 		RequiresCondition: invisibility || crate-cloak && (!cloak-force-disabled && !airborne && !being-warped)
 		InitialDelay: 0
@@ -1337,7 +1365,7 @@
 		RequiresCondition: empdisable && cruising
 	Targetable@GROUND:
 		RequiresCondition: !airborne && !being-warped
-		TargetTypes: Ground, Vehicle
+		TargetTypes: Ground, Vehicle, C4
 	Targetable@AIRBORNE:
 		RequiresCondition: airborne && !being-warped
 		TargetTypes: Air
@@ -1347,6 +1375,9 @@
 	Targetable@Temporal:
 		RequiresCondition: !airborne
 		TargetTypes: Temporal
+	Targetable@c4:
+		TargetTypes: C4Attached
+		RequiresCondition: c4 && !airborne
 	ProductionCostMultiplier@EagleBonus:
 		Multiplier: 90
 		Prerequisites: structures.eagle
@@ -1402,6 +1433,7 @@
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^IronCurtainable
 	Inherits@3: ^SpriteActor
+	Inherits@4: ^C4Plantable
 	Inherits@shape: ^1x1Shape
 	Inherits@bounty: ^GlobalBounty
 	SelectionDecorations:
@@ -1441,7 +1473,6 @@
 	FrozenUnderFogUpdatedByGps:
 	Tooltip:
 		GenericName: Structure
-	Demolishable:
 	MapEditorData:
 		Categories: Building
 	CommandBarBlacklist:
@@ -1460,6 +1491,7 @@
 	Inherits@6: ^Warpable
 	Inherits@7: ^BotBuilding
 	Inherits@8: ^Chillable
+	Inherits@wflash: ^WhiteFlash
 	WithColoredOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield
 	Huntable:
@@ -1483,6 +1515,7 @@
 		RequiresCondition: !being-warped
 	CapturableProgressBar:
 	CapturableProgressBlink:
+	BotRepairOrSellCaptures:
 	SpawnActorsOnSell:
 		ActorTypes: e1,e1,e1,tecn,tecn2
 	SpawnActorOnDeath@1:
@@ -1497,11 +1530,8 @@
 		RequiredForShortGame: true
 	GpsDot:
 		String: Structure
-	Demolishable:
-		Condition: being-demolished
-		RequiresCondition: !being-warped
 	Sellable:
-		RequiresCondition: !build-incomplete && !being-captured && !being-demolished && !being-warped
+		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped
 		SellSounds: cashturn.aud
 	WithBuildingRepairDecoration:
 		Image: allyrepair
@@ -1586,7 +1616,7 @@
 	-CapturableProgressBlink:
 	-SpawnActorsOnSell:
 	Sellable:
-		RequiresCondition: !build-incomplete && !being-demolished && !being-warped
+		RequiresCondition: !build-incomplete && !c4 && !being-warped
 		SellSounds: cashturn.aud
 	DrawLineToTarget:
 	RenderRangeCircle:
@@ -1773,7 +1803,6 @@
 	Tooltip:
 		Name: Field
 	-Targetable:
-	-Demolishable:
 	MapEditorData:
 		ExcludeTilesets: INTERIOR
 	Interactable:

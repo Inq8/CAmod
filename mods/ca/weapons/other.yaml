@@ -378,7 +378,73 @@ Demolish:
 		RandomClusterCount: 5
 		Dimensions: 3,3
 		Footprint: xxx xxx xxx
+		
+PlaceC4:
+	ReloadDelay: 10
+	Range: 1c849
+	Projectile: InstantHit
+	Report: icolseta.aud
+	ValidTargets: C4, Vehicle, Structure
+	InvalidTargets: C4Attached
+	Warhead@AttachDelayedWeapon: AttachDelayedWeapon
+		Weapon: C4
+		Type: c4
+		TriggerTime: 60
+		DeathTypes: ExplosionDeath
+		Range: 1
+	Warhead@TargetValidator: SpreadDamage
+	Warhead@highlight: GrantExternalCondition
+		Range: 0c256
+		Duration: 2
+		Condition: highlight
+		ValidTargets: Ground, Structure, Vehicle
 
+C4:
+	Projectile: InstantHit
+	Warhead@1Dam: HealthPercentageDamage
+		ValidTargets: Air, Ground, Water
+		Spread: 64
+		Damage: 100
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: large_explosion
+		ImpactSounds: icolexpa.aud
+		ValidTargets: Ground, Water, Air
+	Warhead@Smu: LeaveSmudge
+		SmudgeType: Crater
+		InvalidTargets: Structure, Wall, Trees
+	Warhead@Flames: FireCluster
+		Weapon: BurnFx
+		RandomClusterCount: 3
+		Dimensions: 3,3
+		Footprint: xxx xxx xxx
+		
+DefuseKit:
+	ReloadDelay: 50
+	Range: 2c0
+	Report: gdefuse.aud
+	ValidTargets: C4Attached
+	Projectile: LaserZap
+		Width: 48
+		Duration: 4
+		Color: FFFFFF80
+	Warhead@emp: GrantExternalCondition
+		Range: 128
+		Duration: 3
+		Condition: detach
+		ValidTargets: C4Attached
+		ValidStances: Ally
+	Warhead@DetachDelayedWeapon: DetachDelayedWeapon
+		Types: c4
+		Range: 128
+		ValidStances: Ally
+		ValidTargets: C4Attached
+	Warhead@TargetValidator: SpreadDamage
+		ValidTargets: C4Attached
+
+IFVDefuseKit:
+	Inherits: DefuseKit
+	Range: 4c512
 
 DemoTruckTargeting:
 	ValidTargets: DetonateAttack
@@ -1192,6 +1258,7 @@ V3Launcher:
 Flare:
 	ReloadDelay: 1
 	Range: 10c0
+	MinRange: 3c0
 	ValidTargets: Structure
 	TargetActorCenter: true
 	Projectile: LaserZap

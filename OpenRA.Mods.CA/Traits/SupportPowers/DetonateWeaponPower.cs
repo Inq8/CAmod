@@ -50,6 +50,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("A condition to apply while active.")]
 		public readonly string ActiveCondition = null;
 
+		[Desc("Palette effect on the world actor.")]
+		public readonly string PaletteEffectType = null;
+
 		[SequenceReference]
 		[Desc("Sequence to play for granting actor when activated.",
 	"This requires the actor to have the WithSpriteBody trait or one of its derivatives.")]
@@ -125,6 +128,13 @@ namespace OpenRA.Mods.CA.Traits
 
 			self.World.AddFrameEndTask(w =>
 			{
+				if (!string.IsNullOrEmpty(Info.PaletteEffectType))
+				{
+					var paletteEffects = w.WorldActor.TraitsImplementing<WeatherPaletteEffect>().Where(p => p.Info.Type == Info.PaletteEffectType);
+					foreach (var paletteEffect in paletteEffects)
+						paletteEffect.Enable(-1);
+				}
+
 				var actor = w.CreateActor(Info.CameraActor, new TypeDictionary
 					{
 						new LocationInit(self.World.Map.CellContaining(order.Target.CenterPosition)),

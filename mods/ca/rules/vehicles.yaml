@@ -75,7 +75,7 @@ V2RL:
 		TerrainTypes: Water
 		Condition: onwater
 	Targetable:
-		TargetTypes: Ground, Vehicle
+		TargetTypes: Ground, Vehicle, C4
 		RequiresCondition: !onwater && !parachute && !being-warped
 	Targetable@WATER:
 		TargetTypes: Ground, Vehicle, Water, Ship
@@ -289,7 +289,7 @@ V2RL:
 		RequiresCondition: iraqtank && !being-warped
 	SelfHealing:
 		PercentageStep: 1
-		Delay: 20
+		Delay: 25
 		HealIfBelow: 50
 		DamageCooldown: 150
 	SelectionDecorations:
@@ -523,7 +523,7 @@ HARV:
 	-Crushable:
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Vehicle, ChaosImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 
 MCV:
 	Inherits: ^Vehicle
@@ -568,7 +568,7 @@ MCV:
 	-Crushable:
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Vehicle, ChaosImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 
 JEEP:
 	Inherits: ^Vehicle
@@ -697,7 +697,7 @@ MNLY:
 		RearmActors: fix, rep
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Vehicle, ChaosImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 
 TRUK:
 	Inherits: ^Vehicle
@@ -729,7 +729,7 @@ TRUK:
 		RequiresCondition: !being-warped
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Vehicle, ChaosImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 	-ProductionCostMultiplier@IndustrialPlant:
 
 MGG:
@@ -776,7 +776,7 @@ MGG:
 		ValidStances: Enemy
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Vehicle, ChaosImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 
 MRJ:
 	Inherits: ^Vehicle
@@ -819,7 +819,7 @@ MRJ:
 	RenderJammerCircle:
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Vehicle, ChaosImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 
 TTNK:
 	Inherits: ^Tank
@@ -1004,7 +1004,7 @@ QTNK:
 	-Crushable:
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, MADTank, Vehicle, ChaosImmune
+		TargetTypes: Ground, MADTank, Vehicle, C4, ChaosImmune
 	ProductionCostMultiplier@UkraineBonus:
 		Multiplier: 90
 		Prerequisites: vehicles.ukraine
@@ -1052,7 +1052,7 @@ AMCV:
 	-Crushable:
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Vehicle, ChaosImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 
 HMMV:
 	Inherits: ^VehicleTD
@@ -1233,7 +1233,7 @@ LTNK:
 		TerrainTypes: Water
 		Condition: onwater
 	Targetable:
-		TargetTypes: Ground, Vehicle
+		TargetTypes: Ground, Vehicle, C4
 		RequiresCondition: !onwater && !parachute && !being-warped
 	Targetable@WATER:
 		TargetTypes: Ground, Vehicle, Water, Ship
@@ -1412,7 +1412,7 @@ MTNK.Drone:
 		DisableSound: vroboff
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Vehicle, ChaosImmune, DriverKillImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune
 	-CaptureManager:
 	-Capturable:
 	-CaptureNotification:
@@ -1475,7 +1475,7 @@ HTNK:
 		RequiresCondition: !being-warped
 	SelfHealing:
 		PercentageStep: 1
-		Delay: 20
+		Delay: 25
 		HealIfBelow: 50
 		DamageCooldown: 150
 	SelectionDecorations:
@@ -1847,7 +1847,7 @@ HAR2:
 	-Crushable:
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Vehicle, ChaosImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 
 BTR:
 	Inherits: ^Tank
@@ -1995,6 +1995,18 @@ IFV:
 		RequiresCondition: engturr
 		MuzzleSequence: emp-overlay
 		MuzzlePalette: tseffect-ignore-lighting-alpha75
+	Armament@defuse:
+		Weapon: IFVDefuseKit
+		Cursor: goldwrench
+		OutsideRangeCursor: goldwrench
+		TargetStances: Ally
+		RequiresCondition: engturr
+		ForceTargetStances: None
+		Name: secondary
+	AutoTargetPriority@defuse:
+		ValidTargets: C4Attached
+		InvalidTargets: NoAutoTarget
+		ValidStances: Ally
 	Armament@Acol:
 		Weapon: LaserTur
 		LocalOffset: 385,0,300
@@ -2253,7 +2265,7 @@ TITN:
 		VoiceSet: GhostVoice
 	SelfHealing@DEFAULT:
 		PercentageStep: 1
-		Delay: 20
+		Delay: 25
 		HealIfBelow: 50
 		DamageCooldown: 150
 	Carryable:
@@ -2376,7 +2388,7 @@ DISR:
 		Prerequisites: vehicles.upgraded
 	Targetable:
 		RequiresCondition: !being-warped
-		TargetTypes: Ground, Vehicle, Disruptor
+		TargetTypes: Ground, Vehicle, C4, Disruptor
 	Voiced:
 		VoiceSet: DisrVoice
 	-Crushable:
@@ -2788,7 +2800,7 @@ MSAR:
 		RequiresCondition: deployed
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Vehicle, ChaosImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 
 PTNK:
 	Inherits: ^Tank
@@ -3100,7 +3112,7 @@ MEMP:
 		Sequence: emp-overlay
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Vehicle, ChaosImmune, DriverKillImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune
 	WithRangeCircle:
 		Color: 0000FF80
 		Range: 5c0
@@ -3197,7 +3209,7 @@ CDRN:
 		AmmoPoolName: explosion
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Vehicle, ChaosImmune, DriverKillImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune
 	Voiced:
 		VoiceSet: ChaosDroneVoice
 	-CaptureManager:

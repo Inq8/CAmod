@@ -1374,7 +1374,7 @@ FACT:
 	BaseBuilding:
 	Transforms:
 		RequiresCondition: factundeploy
-		PauseOnCondition: chrono-vortex || being-captured || being-demolished || build-incomplete || being-warped
+		PauseOnCondition: chrono-vortex || being-captured || c4 || build-incomplete || being-warped
 		IntoActor: mcv
 		Offset: 1,1
 		Facing: 96
@@ -1393,7 +1393,7 @@ FACT:
 	TransformsIntoTransforms:
 		RequiresCondition: factundeploy && build-incomplete
 	Sellable:
-		RequiresCondition: !build-incomplete && !chrono-vortex && !being-captured && !being-demolished && !being-warped
+		RequiresCondition: !build-incomplete && !chrono-vortex && !being-captured && !c4 && !being-warped
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
@@ -3408,7 +3408,7 @@ AFAC:
 	BaseBuilding:
 	Transforms:
 		RequiresCondition: factundeploy
-		PauseOnCondition: chrono-vortex || being-captured || being-demolished || build-incomplete || being-warped
+		PauseOnCondition: chrono-vortex || being-captured || c4 || build-incomplete || being-warped
 		IntoActor: amcv
 		Offset: 1,1
 		Facing: 96
@@ -3427,7 +3427,7 @@ AFAC:
 	TransformsIntoTransforms:
 		RequiresCondition: factundeploy && build-incomplete
 	Sellable:
-		RequiresCondition: !build-incomplete && !chrono-vortex && !being-captured && !being-demolished && !being-warped
+		RequiresCondition: !build-incomplete && !chrono-vortex && !being-captured && !c4 && !being-warped
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
@@ -5282,7 +5282,7 @@ LASP:
 	-CapturableProgressBar:
 	-CapturableProgressBlink:
 	Sellable:
-		RequiresCondition: !build-incomplete && !being-demolished && !being-warped
+		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	Power:
 		Amount: -15
 		RequiresCondition: !being-warped
@@ -5312,8 +5312,6 @@ LASF:
 	-RenderSprites:
 	RenderSprites:
 		Palette: effect-ignore-lighting-alpha85
-	Demolishable:
-		-Condition:
 	-Targetable:
 	-Building:
 	-SoundOnDamageTransition:
@@ -5481,7 +5479,7 @@ INDP:
 		Prerequisite: indplowpower
 		RequiresCondition: disabled || empdisable || being-warped
 	Sellable:
-		RequiresCondition: !build-incomplete && !being-demolished && !being-warped
+		RequiresCondition: !build-incomplete && !c4 && !being-warped
 		
 OREP:
 	Inherits: ^ScienceBuilding
@@ -5532,7 +5530,7 @@ OREP:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
 	Sellable:
-		RequiresCondition: !build-incomplete && !being-demolished && !being-warped
+		RequiresCondition: !build-incomplete && !c4 && !being-warped
 		
 MISS.GDI:
 	Inherits: ^ScienceBuilding
@@ -5587,7 +5585,7 @@ MISS.GDI:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
 	Sellable:
-		RequiresCondition: !build-incomplete && !being-demolished && !being-warped
+		RequiresCondition: !build-incomplete && !c4 && !being-warped
 		
 BIO.Nod:
 	Inherits: ^ScienceBuilding
@@ -5640,7 +5638,7 @@ BIO.Nod:
 	ProvidesPrerequisite@Name:
 		RequiresCondition: !being-warped
 	Sellable:
-		RequiresCondition: !build-incomplete && !being-demolished && !being-warped
+		RequiresCondition: !build-incomplete && !c4 && !being-warped
 
 MSLO.Nod:
 	Inherits: ^ScienceBuilding
@@ -5792,6 +5790,7 @@ WEAT:
 		TargetCircleColor: 0000FF90
 		Duration: 350
 		ActiveCondition: active
+		PaletteEffectType: LightningStorm
 	WithIdleOverlay@ACTIVE:
 		Sequence: active-overlay
 		Palette: d2keffect
