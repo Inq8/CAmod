@@ -559,62 +559,71 @@ vehicles.upgraded:
 aircraft.upgraded:
 	AlwaysVisible:
 	ProvidesPrerequisite:
-	
+
+#Nod shock trooper
 inf.soviet.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 		Prerequisite: infantry.shok
 		Factions: blackh, marked, legion
 
+#weap, 3tnk, even from allies (need to fix later)
 veh.soviet.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.3tnk
 		Factions: blackh, marked, legion
-	
-rad.soviet.stolen:
-	AlwaysVisible:
-	ProvidesPrerequisite:
-		Prerequisite: vehicles.v3rl
-		Factions: blackh, marked, legion
 
-tec.soviet.stolen:
+#dome, toxin truck
+rad.soviet.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.ttrk
 		Factions: blackh, marked, legion
+
+#Soviet tech center, V3
+tec.soviet.stolen:
+	AlwaysVisible:
+	ProvidesPrerequisite:
+		Prerequisite: vehicles.v3rl
+		Factions: blackh, marked, legion
 	
+#Tent, Medic
 inf.allies.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 		Prerequisite: infantry.medi
 		Factions: blackh, marked, legion
 
+#Not used
 veh.allies.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.ifv
 		Factions: blackh, marked, legion
-	
+
+#Not used
 rad.allies.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.ptnk
 		Factions: blackh, marked, legion
 
+#Allied Tech, MRJ
 tec.allies.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.mrj
 		Factions: blackh, marked, legion
-	
+
+#Pyle, Medic , APC on airstrip
 inf.gdi.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 		Prerequisite: infantry.medi
 		Factions: blackh, marked, legion
 
-#Legion has mtnk already
+#War factory, Legion has mtnk already so make vet
 veh.gdi.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite@BHM:
@@ -623,13 +632,15 @@ veh.gdi.stolen:
 	ProvidesPrerequisite@LEGION:
 		Prerequisite: vehicles.upgraded
 		Factions: legion
-	
+
+#HQ, MSAM for everyone!
 rad.gdi.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.msam
 		Factions: blackh, marked, legion
 
+#GDI Tech, Mammoth
 tec.gdi.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
@@ -641,28 +652,25 @@ inf.nod.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 
-#Legion has mtnk already
+#Airstrip, Tank Vet
 veh.nod.stolen:
 	AlwaysVisible:
-	ProvidesPrerequisite@BHM:
-		Prerequisite: vehicles.mtnk
-		Factions: blackh, marked
-	ProvidesPrerequisite@LEGION:
+	ProvidesPrerequisite:
 		Prerequisite: vehicles.upgraded
-		Factions: legion
+		Factions: legion, blackh, marked
 	
-#MSAM
+#Not used
 rad.nod.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.msam
 		Factions: blackh, marked, legion
 
-#Upgrade Aircraft for now
+#Temple, toxin truck
 tec.nod.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
-		Prerequisite: aircraft.upgraded
+		Prerequisite: vehicles.ttrk
 		Factions: blackh, marked, legion
 
 mpspawn:

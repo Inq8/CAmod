@@ -2163,7 +2163,7 @@ BARR:
 		Types: SpyInfiltrate
 	InfiltrateForSupportPower@sab:
 		Types: SabInfiltrate
-		Proxy: inf.nod.stolen
+		Proxy: inf.soviet.stolen
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
 	WithDecoration@primary:
@@ -2326,7 +2326,7 @@ TENT:
 		Types: SpyInfiltrate
 	InfiltrateForSupportPower@sab:
 		Types: SabInfiltrate
-		Proxy: inf.gdi.stolen
+		Proxy: inf.allies.stolen
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate, SabInfiltrate
 	WithDecoration@primary:
@@ -2986,13 +2986,6 @@ WEAP.TD:
 	ProvidesPrerequisite@htnk:
 		Factions: gdi, talon, zocom, eagle
 		Prerequisite: vehicles.htnk
-	ProvidesPrerequisite@titan:
-		Factions: talon
-		Prerequisite: vehicles.titan
-	ProvidesPrerequisite@titanstolen:
-		Factions: nod, legion, marked, blackh
-		Prerequisite: vehicles.titan
-		RequiresPrerequisites: rad.gdi.stolen
 	WithBuildingBib:
 	WithProductionDoorOverlay:
 		RequiresCondition: !build-incomplete
@@ -3206,21 +3199,8 @@ AIRS:
 		Factions: nod, blackh, marked, legion
 		Prerequisite: vehicles.arty
 	ProvidesPrerequisite@apc2:
-		Factions: nod, blackh, marked, legion, gdi, zocom, talon, eagle
 		Prerequisite: vehicles.apc2
 		RequiresPrerequisites: inf.gdi.stolen
-	ProvidesPrerequisite@mtnk:
-		Factions: nod, blackh, marked, legion, gdi, zocom, eagle
-		Prerequisite: vehicles.mtnk
-		RequiresPrerequisites: veh.gdi.stolen
-	ProvidesPrerequisite@msam:
-		Factions: gdi, zocom, talon, eagle
-		Prerequisite: vehicles.msam
-		RequiresPrerequisites: rad.gdi.stolen
-	ProvidesPrerequisite@titanstolen:
-		Factions: nod, legion, marked, blackh
-		Prerequisite: vehicles.titan
-		RequiresPrerequisites: rad.gdi.stolen
 	ParatroopersPower@airdrop:
 		OrderName: nodairdrop
 		SquadSize: 3
