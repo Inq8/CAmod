@@ -281,9 +281,14 @@ TitanGun:
 	Warhead@3Eff: CreateEffect
 		Explosions: large_artillery_explosion
 		ImpactSounds: artyhit.aud, artyhit2.aud, artyhit3.aud
-	Warhead@Concussion: GrantExternalCondition
+	Warhead@Concussion1: GrantExternalCondition
+		Range: 1c512
+		Duration: 120
+		Condition: concussion
+		ValidTargets: Ground, Infantry, Vehicle, Ship
+	Warhead@Concussion2: GrantExternalCondition
 		Range: 3c0
-		Duration: 100
+		Duration: 60
 		Condition: concussion
 		ValidTargets: Ground, Infantry, Vehicle, Ship
 	Warhead@5Shake: ShakeScreen
