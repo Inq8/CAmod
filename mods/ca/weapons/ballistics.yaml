@@ -493,36 +493,6 @@ DepthCharge:
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
 
-ClusterBomb:
-	Inherits: ^Artillery
-	-Report:
-	Range: 4c0
-	Projectile: Bullet
-		Speed: 96
-		LaunchAngle: 0, 32
-		Inaccuracy: 1c0
-		BounceCount: 0
-		Image: BOMB
-	Warhead@1Dam: SpreadDamage
-		Spread: 256
-		Damage: 10000
-		Versus:
-			None: 80
-			Wood: 55
-			Light: 70
-			Heavy: 40
-			Concrete: 50
-			Brick: 80
-	Warhead@Smu: LeaveSmudge
-		SmudgeType: Crater
-		InvalidTargets: Structure, Wall, Trees
-	Warhead@3Eff: CreateEffect
-		Explosions: large_explosion
-		ImpactSounds: kaboom15.aud
-		ValidTargets: Ground, Air, Ship, Trees
-	Warhead@4EffWater: CreateEffect
-		ImpactSounds: splashl1.aud, splashl2.aud
-
 BATFGun:
 	Inherits: 25mm
 	Warhead@1Dam: SpreadDamage
