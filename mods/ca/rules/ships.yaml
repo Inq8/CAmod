@@ -50,7 +50,6 @@ SS:
 		FireDelay: 2
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
-	SelectionDecorations:
 	AutoTarget:
 		InitialStance: HoldFire
 	AutoTargetPriority@DEFAULT:
@@ -126,7 +125,6 @@ MSUB:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
-	SelectionDecorations:
 	AutoTarget:
 		InitialStance: HoldFire
 	DetectCloaked:
@@ -188,7 +186,6 @@ DD:
 		LocalYaw: 64, -64
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
-	SelectionDecorations:
 	WithSpriteTurret:
 	DetectCloaked:
 		CloakTypes: Underwater
@@ -258,7 +255,6 @@ CA:
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
-	SelectionDecorations:
 	WithSpriteTurret@PRIMARY:
 		Turret: primary
 	WithSpriteTurret@SECONDARY:
@@ -294,7 +290,6 @@ LST:
 		RequiresCondition: !empdisable
 	RevealsShroud:
 		Range: 6c0
-	SelectionDecorations:
 	WithLandingCraftAnimation:
 		OpenTerrainTypes: Clear, Rough, Road, Ore, Gems, Beach
 	Cargo:
@@ -352,7 +347,6 @@ PT:
 		Offset: -256,0,256
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
-	SelectionDecorations:
 	WithSpriteTurret:
 	DetectCloaked:
 		CloakTypes: Underwater
@@ -360,7 +354,7 @@ PT:
 	RenderDetectionCircle:
 	Selectable:
 		DecorationBounds: 36,36
-		
+
 PT2:
 	Inherits: ^Ship
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
@@ -409,9 +403,7 @@ PT2:
 	AttackTurreted:
 		Armaments: primary, secondary, tertiary
 		PauseOnCondition: empdisable || being-warped
-	SelectionDecorations:
 	WithMuzzleOverlay:
-	SelectionDecorations:
 	WithSpriteTurret:
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
@@ -470,7 +462,6 @@ DD2:
 		Turrets: primary, secondary, tertiary
 		Armaments: primary, secondary, tertiary
 		PauseOnCondition: empdisable || being-warped
-	SelectionDecorations:
 	AutoTarget:
 	DetectCloaked:
 		CloakTypes: Underwater
@@ -538,7 +529,6 @@ SS2:
 		LocalOffset: -300,-171,0, -300,171,0
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
-	SelectionDecorations:
 	AutoTarget:
 		InitialStance: HoldFire
 	DetectCloaked:
@@ -611,7 +601,6 @@ ISUB:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
-	SelectionDecorations:
 	AutoTarget:
 		InitialStance: HoldFire
 	DetectCloaked:
@@ -624,7 +613,7 @@ ISUB:
 	-MustBeDestroyed:
 	Selectable:
 		DecorationBounds: 44,44
-		
+
 CARR:
 	Inherits: ^Ship
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove

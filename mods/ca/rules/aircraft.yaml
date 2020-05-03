@@ -84,12 +84,12 @@ BADR.Bomber:
 	GivesExperience:
 		Experience: 1000
 	Interactable:
-	
+
 BADR.CBomber:
 	Inherits: BADR.Bomber
 	Armament:
 		Weapon: CarpetBomb
-		
+
 BADR.NBomber:
 	Inherits: BADR.Bomber
 	AmmoPool:
@@ -203,7 +203,6 @@ MIG:
 	Selectable:
 		Bounds: 36,28,0,2
 		DecorationBounds: 40,29,0,1
-	SelectionDecorations:
 	Contrail@1:
 		Offset: -598,-683,0
 	Contrail@2:
@@ -239,7 +238,7 @@ MIG:
 		Prerequisites: aircraft.upgraded
 	Rearmable:
 		RearmActors: afld, afld.gdi
-		
+
 SUK:
 	Inherits: ^Plane
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -286,7 +285,6 @@ SUK:
 		PipCount: 4
 		ReloadDelay: 30
 		AmmoCondition: ammo
-	SelectionDecorations:
 	Contrail@1:
 		Offset: -598,-683,-40
 	Contrail@2:
@@ -379,7 +377,6 @@ YAK:
 		PipCount: 6
 		ReloadDelay: 7
 		AmmoCondition: ammo
-	SelectionDecorations:
 	WithMuzzleOverlay:
 	SpawnActorOnDeath:
 		Actor: YAK.Husk
@@ -426,7 +423,6 @@ TRAN:
 	Aircraft:
 		TurnSpeed: 5
 		Speed: 135
-		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems,Tiberium,BlueTiberium
 		AltitudeVelocity: 0c58
 		TakeoffSounds: htoff1.aud
 		LandingSounds: hland1.aud
@@ -456,7 +452,6 @@ TRAN:
 	SpawnActorOnDeath@EMP:
 		Actor: TRAN.Husk.EMP
 		RequiresCondition: empdisable
-	SelectionDecorations:
 	Selectable:
 		DecorationBounds: 40,36
 	WithCargoHatchAnimation:
@@ -504,7 +499,6 @@ TRAN.paradrop:
 	SpawnActorOnDeath@EMP:
 		Actor: TRAN.Husk.EMP
 		RequiresCondition: empdisable
-	SelectionDecorations:
 	Interactable:
 	GivesExperience:
 		Experience: 1000
@@ -566,7 +560,6 @@ HELI:
 		PipCount: 4
 		ReloadCount: 2
 		AmmoCondition: ammo
-	SelectionDecorations:
 	SpawnActorOnDeath:
 		Actor: HELI.Husk
 		RequiresCondition: ammo && !empdisable
@@ -645,7 +638,6 @@ HIND:
 		PipCount: 6
 		ReloadDelay: 8
 		AmmoCondition: ammo
-	SelectionDecorations:
 	WithMuzzleOverlay:
 	SpawnActorOnDeath:
 		Actor: HIND.Husk
@@ -715,7 +707,7 @@ U2:
 	RejectsOrders:
 	Interactable:
 	-MapEditorData:
-	
+
 U2.Bomber:
 	Inherits: ^NeutralPlane
 	Inherits@EMP: ^EmpDisable
@@ -776,7 +768,7 @@ U2.Bomber:
 	Interactable:
 	Rearmable:
 		RearmActors: bori
-	
+
 A10:
 	Inherits: ^PlaneTD
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -828,7 +820,6 @@ A10:
 	Selectable:
 		Bounds: 36,28,0,2
 		DecorationBounds: 40,29,0,1
-	SelectionDecorations:
 	Contrail@1:
 		Offset: -258,-823,0
 	Contrail@2:
@@ -885,10 +876,6 @@ A10.bomber:
 		PlayerPalette: overlayplayertd
 	EjectOnDeath:
 		PilotActor: N1
-		SuccessRate: 50
-		EjectOnGround: false
-		EjectInAir: true
-		AllowUnsuitableCell: true
 	RejectsOrders:
 	Contrail@1:
 		Offset: -258,-823,0
@@ -912,7 +899,7 @@ A10.bomber:
 	Interactable:
 	GivesExperience:
 		Experience: 1000
-		
+
 C17:
 	Inherits: ^NeutralPlane
 	Inherits@EMP: ^EmpDisable
@@ -976,20 +963,13 @@ C17:
 	GivesExperience:
 		Experience: 1000
 	-MapEditorData:
-	
+
 C17.Cargo:
 	Inherits: C17
 	RenderSprites:
 		Image: c17
-		PlayerPalette: overlayplayertd
 	Aircraft:
-		CruiseAltitude: 2560
-		TurnSpeed: 5
 		Speed: 266
-		LandingSounds: vc130diva.aud, vc130divb.aud
-		Repulsable: False
-		MaximumPitch: 36
-		IdleBehavior: LeaveMap
 	-Targetable@AIRBORNE:
 
 C17.Clustermines:
@@ -999,12 +979,10 @@ C17.Clustermines:
 		Weapon: ClusterMineSpawner
 	AmmoPool:
 		Ammo: 1
-	RejectsOrders:
 	RenderSprites:
 		Image: c17
-		PlayerPalette: overlayplayertd
 	-ParaDrop:
-		
+
 APCH:
 	Inherits: ^HelicopterTD
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -1076,7 +1054,6 @@ APCH:
 		RequiresCondition: !ammo && empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -427,0,0
-	SelectionDecorations:
 	Selectable:
 		DecorationBounds: 30,24
 	Rearmable:
@@ -1150,12 +1127,11 @@ ORCA:
 		Interval: 2
 	WithMoveAnimation:
 		MoveSequence: move
-	SelectionDecorations:
 	Selectable:
 		DecorationBounds: 30,24
 	Rearmable:
 		RearmActors: hpad, hpad.td
-		
+
 ORCB:
 	Inherits: ^HelicopterTD
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -1212,7 +1188,6 @@ ORCB:
 	Selectable:
 		Bounds: 36,28,0,2
 		DecorationBounds: 40,29,0,1
-	SelectionDecorations:
 	SpawnActorOnDeath:
 		Actor: ORCB.Husk
 		RequiresCondition: ammo && !empdisable
@@ -1354,7 +1329,6 @@ RAH:
 		PipCount: 4
 		AmmoCondition: ammo
 		ReloadCount: 2
-	SelectionDecorations:
 	SpawnActorOnDeath:
 		Actor: RAH.Husk
 		RequiresCondition: ammo && !empdisable
@@ -1451,7 +1425,6 @@ KIRO:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
 		ScanRadius: 10
-	SelectionDecorations:
 	SpawnActorOnDeath:
 		Actor: KIRO.Husk
 		RequiresCondition: !empdisable
@@ -1531,7 +1504,6 @@ OCAR:
 		Speed: 135
 		TakeoffSounds: dropup1.aud
 		LandingSounds: dropdwn1.aud
-		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems,Tiberium,BlueTiberium
 		Repulsable: True
 		IdleTurnSpeed: 1
 		Voice: Move
@@ -1558,43 +1530,27 @@ OCAR:
 	SmokeTrailWhenDamaged:
 		Offset: -427,0,0
 		Interval: 2
-	SelectionDecorations:
 	Selectable:
 		DecorationBounds: 30,24
 	Voiced:
 		VoiceSet: CarryAllVoice
 	WithMoveAnimation:
 		MoveSequence: move
-		
+
 OCAR.Reinforce:
 	Inherits: OCAR
 	-Buildable:
-	RenderSprites:
-		Image: orcaca
 	Carryall:
-		BeforeLoadDelay: 10
-		BeforeUnloadDelay: 15
-		LocalOffset: 0, 0, -128
-		Voice: Action
 		DropRange: 30c0
 	Aircraft:
-		AltitudeVelocity: 0c100
 		IdealSeparation: 0c256
-		TurnSpeed: 4
-		Speed: 135
-		TakeoffSounds: dropup1.aud
-		LandingSounds: dropdwn1.aud
-		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems,Tiberium,BlueTiberium
-		Repulsable: True
-		IdleTurnSpeed: 1
-		Voice: Move
 	-Selectable:
 	SelectionDecorations:
 		RenderSelectionBars: False
 	-Voiced:
 	RejectsOrders:
 	Interactable:
-	
+
 HARR:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -1650,15 +1606,8 @@ HARR:
 		AmmoCondition: ammo
 	Contrail@1:
 		Offset: -400,-443,0
-		UsePlayerColor: false
-		ZOffset: -512
-		Color: FFFFFF80
 	Contrail@2:
 		Offset: -400,443,0
-		UsePlayerColor: false
-		ZOffset: -512
-		Color: FFFFFF80
-	SelectionDecorations:
 	SpawnActorOnDeath:
 		Actor: HARR.Husk
 		RequiresCondition: ammo && !empdisable
@@ -1681,7 +1630,7 @@ HARR:
 		Prerequisites: aircraft.upgraded
 	Rearmable:
 		RearmActors: hpad, hpad.td
-		
+
 SCRN:
 	Inherits: ^HelicopterTD
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
@@ -1745,14 +1694,9 @@ SCRN:
 	Contrail@1:
 		Offset: -300,-143,0
 		Color: 00FF0080
-		UsePlayerColor: false
-		ZOffset: -512
 	Contrail@2:
 		Offset: -300,143,0
 		Color: 00FF0080
-		UsePlayerColor: false
-		ZOffset: -512
-	SelectionDecorations:
 	SpawnActorOnDeath:
 		Actor: SCRN.Husk
 		RequiresCondition: ammo && !empdisable
@@ -1778,7 +1722,7 @@ SCRN:
 	ProductionCostMultiplier@markedBonus:
 		Multiplier: 90
 		Prerequisites: structures.marked
-		
+
 HORN:
 	Inherits: ^PlaneTD
 	Valued:
@@ -1787,8 +1731,6 @@ HORN:
 		Name: Hornet
 	Health:
 		HP: 7200
-	Armor:
-		Type: Light
 	RevealsShroud:
 		Range: 2c0
 		Type: GroundPosition
@@ -1844,8 +1786,6 @@ HORN:
 		LandingDistance: 8c0
 	Contrail@1:
 		Offset: -432,0,0
-		UsePlayerColor: false
-		ZOffset: -512
 		Color: cc550080
 		TrailLength: 10
 	-Contrail@2:
@@ -1919,7 +1859,7 @@ YF23.Bomber:
 	Interactable:
 	GivesExperience:
 		Experience: 1000
-		
+
 POD2:
 	Inherits@2: ^ExistsInWorld
 	Valued:
@@ -1966,16 +1906,12 @@ POD2:
 		Moves: True
 		Velocity: 113
 		Explosion: DropPodVisual
-		
+
 POD1:
 	Inherits: POD2
 	RenderSprites:
 		Image: pod2
-		PlayerPalette: overlayplayertd
 	CrashLanding:
-		Spins: False
-		Moves: True
-		Velocity: 113
 		Explosion: DropPodVisual2
 
 VENM:
@@ -2050,7 +1986,6 @@ VENM:
 		Interval: 2
 	WithMoveAnimation:
 		MoveSequence: move
-	SelectionDecorations:
 	Selectable:
 		DecorationBounds: 30,24
 	Rearmable:
@@ -2118,7 +2053,6 @@ AURO:
 	Selectable:
 		Bounds: 36,28,0,2
 		DecorationBounds: 40,29,0,1
-	SelectionDecorations:
 	Contrail@AB1:
 		Offset: -400,-70,-50
 		UsePlayerColor: false

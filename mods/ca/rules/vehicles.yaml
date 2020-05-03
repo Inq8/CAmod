@@ -38,10 +38,8 @@ V2RL:
 		RequiresCondition: reloading
 		Sequence: empty-idle
 		Name: reloading
-	SelectionDecorations:
 	Explodes:
 		Weapon: BarrelExplode
-		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -147,7 +145,6 @@ V2RL:
 	SpawnActorOnDeath:
 		Actor: 2TNK.Husk
 		RequiresCondition: !being-warped
-	SelectionDecorations:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -212,7 +209,6 @@ V2RL:
 		Weapon: UnitExplodeIraqTank
 		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: iraqtank && !being-warped
-	SelectionDecorations:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -251,7 +247,6 @@ V2RL:
 		Speed: 52
 		Locomotor: heavytracked
 	Passenger:
-		CargoType: Vehicle
 		Weight: 2
 	RevealsShroud:
 		Range: 6c0
@@ -292,7 +287,6 @@ V2RL:
 		Delay: 25
 		HealIfBelow: 50
 		DamageCooldown: 150
-	SelectionDecorations:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -338,9 +332,7 @@ ARTY:
 	WithMuzzleOverlay:
 	Explodes:
 		Weapon: ArtilleryExplode
-		EmptyWeapon: UnitExplodeSmall
 		LoadedChance: 75
-		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 
@@ -352,14 +344,11 @@ ARTY.nod:
 	WithDamageOverlay:
 		Image: smoke_mtd
 	Buildable:
-		Queue: Vehicle
-		BuildPaletteOrder: 110
 		IconPalette: chrometd
 		Prerequisites: ~vehicles.nod, ~techlevel.medium
-		Description: Long-range artillery.\n  Strong vs Buildings, Infantry\n  Weak vs Vehicles, Aircraft
 	Armament:
 		Weapon: 155mmTD
-		
+
 ISU:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
@@ -399,9 +388,7 @@ ISU:
 	WithMuzzleOverlay:
 	Explodes:
 		Weapon: ArtilleryExplode
-		EmptyWeapon: UnitExplodeSmall
 		LoadedChance: 75
-		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Passenger:
@@ -411,15 +398,13 @@ ISU:
 	SpawnActorOnDeath:
 		Actor: ISU.Husk
 		RequiresCondition: !being-warped
-		
+
 SPEC:
 	Inherits: ARTY.nod
 	RenderSprites:
 		Image: spec
 	Buildable:
-		Queue: Vehicle
 		BuildPaletteOrder: 155
-		IconPalette: chrometd
 		Prerequisites: tmpl, ~vehicles.blackh, ~techlevel.medium
 		Description: Long-range stealth artillery.\n  Strong vs Buildings, Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
@@ -428,16 +413,12 @@ SPEC:
 		Name: Spectre
 	Health:
 		HP: 11000
-	Armor:
-		Type: Light
 	Mobile:
 		TurnSpeed: 5
 		Speed: 100
-		Locomotor: lighttracked
 	Armament:
 		Weapon: 155mmSpec
 		LocalOffset: 624,0,408
-		MuzzleSequence: muzzle
 	Cloak@NORMAL:
 		InitialDelay: 90
 		CloakDelay: 90
@@ -473,7 +454,6 @@ HARV:
 	Selectable:
 		Priority: 7
 		DecorationBounds: 42,42
-	SelectionDecorations:
 	Harvester:
 		Capacity: 30
 		Resources: Tiberium, BlueTiberium, Ore, Gems
@@ -522,7 +502,6 @@ HARV:
 	-WithFacingSpriteBody:
 	-Crushable:
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 
 MCV:
@@ -540,7 +519,6 @@ MCV:
 	Selectable:
 		Priority: 4
 		DecorationBounds: 42,42
-	SelectionDecorations:
 	Health:
 		HP: 75000
 	Armor:
@@ -567,7 +545,6 @@ MCV:
 		Condition: invulnerability
 	-Crushable:
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 
 JEEP:
@@ -690,13 +667,11 @@ MNLY:
 	RenderDetectionCircle:
 	Explodes:
 		Weapon: ATMine
-		RequiresCondition: !being-warped
 	RenderSprites:
 		Image: MNLY
 	Rearmable:
 		RearmActors: fix, rep
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 
 TRUK:
@@ -728,7 +703,6 @@ TRUK:
 		Actor: moneycrate
 		RequiresCondition: !being-warped
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 	-ProductionCostMultiplier@IndustrialPlant:
 
@@ -775,7 +749,6 @@ MGG:
 		RequiresCondition: !empdisable || !pickedup
 		ValidStances: Enemy
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 
 MRJ:
@@ -818,7 +791,6 @@ MRJ:
 		RequiresCondition: !empdisable
 	RenderJammerCircle:
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 
 TTNK:
@@ -856,7 +828,6 @@ TTNK:
 	Turreted:
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
-	SelectionDecorations:
 	ProximityExternalCondition@JAMMER:
 		Range: 8c0
 		ValidStances: Enemy, Neutral
@@ -900,7 +871,6 @@ DTRK:
 		Weapon: MiniNuke
 		EmptyWeapon: MiniNuke
 		DamageSource: Killer
-		RequiresCondition: !being-warped
 	AttackFrontal:
 		FacingTolerance: 128
 		Voice: Attack
@@ -938,7 +908,6 @@ CTNK:
 		GenericName: Tank
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
-	SelectionDecorations:
 	Health:
 		HP: 45000
 	Armor:
@@ -993,7 +962,6 @@ QTNK:
 		RequiresCondition: !deployed && !being-captured && !being-warped
 	RevealsShroud:
 		Range: 6c0
-	SelectionDecorations:
 	MadTank:
 		DeployedCondition: deployed
 	Selectable:
@@ -1003,7 +971,6 @@ QTNK:
 		Range: 7c0
 	-Crushable:
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, MADTank, Vehicle, C4, ChaosImmune
 	ProductionCostMultiplier@UkraineBonus:
 		Multiplier: 90
@@ -1051,7 +1018,6 @@ AMCV:
 		Condition: invulnerability
 	-Crushable:
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 
 HMMV:
@@ -1197,12 +1163,8 @@ APC2.Reinforce:
 		Image: APC2
 	-Buildable:
 	Cargo:
-		Types: Infantry
 		InitialUnits: n1,n1,n2,n3,n3
 		EjectOnDeath: False
-		MaxWeight: 5
-		PipCount: 5
-		LoadingCondition: notmobile
 
 LTNK:
 	Inherits: ^TankTD
@@ -1328,7 +1290,6 @@ MTNK:
 	SpawnActorOnDeath:
 		Actor: MTNK.Husk
 		RequiresCondition: !being-warped
-	SelectionDecorations:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -1387,7 +1348,6 @@ MTNK.Drone:
 	SpawnActorOnDeath:
 		Actor: MTNK.Drone.Husk
 		RequiresCondition: !being-warped
-	SelectionDecorations:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -1411,7 +1371,6 @@ MTNK.Drone:
 		EnableSound: vrobon
 		DisableSound: vroboff
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune
 	-CaptureManager:
 	-Capturable:
@@ -1447,7 +1406,6 @@ HTNK:
 		Speed: 52
 		Locomotor: heavytracked
 	Passenger:
-		CargoType: Vehicle
 		Weight: 2
 	RevealsShroud:
 		Range: 6c0
@@ -1478,7 +1436,6 @@ HTNK:
 		Delay: 25
 		HealIfBelow: 50
 		DamageCooldown: 150
-	SelectionDecorations:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -1492,22 +1449,15 @@ HTNK.Ion:
 	RenderSprites:
 		Image: htnk.ion
 	Buildable:
-		Queue: Vehicle
 		BuildPaletteOrder: 190
-		IconPalette: chrometd
 		Prerequisites: ~gtek, ~vehicles.gdi, ~!vehicles.talon, ~miss.gdi, ~techlevel.high
-		Description: Big and slow tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry, Aircraft\n  Weak vs Nothing
 	Tooltip:
 		Name: Ion Mammoth Tank
 	Armament@PRIMARY:
 		Weapon: IonZap
 		LocalOffset: 870,0,360
-		Recoil: 171
-		RecoilRecovery: 30
-		MuzzleSequence: muzzle
 	SpawnActorOnDeath:
 		Actor: HTNK.Ion.Husk
-		RequiresCondition: !being-warped
 
 MSAM:
 	Inherits: ^TankTD
@@ -1560,7 +1510,6 @@ MSAM:
 	WithSpriteTurret:
 	Explodes:
 		Weapon: ArtilleryExplode
-		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -1624,7 +1573,6 @@ MLRS:
 	AutoTarget:
 	Explodes:
 		Weapon: BarrelExplode
-		RequiresCondition: !being-warped
 	ReloadAmmoPool@1:
 		Delay: 120
 		Count: 2
@@ -1777,7 +1725,6 @@ FTNK:
 	Explodes:
 		Weapon: BarrelExplode
 		EmptyWeapon: BarrelExplode
-		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	ProductionCostMultiplier@BlackhBonus:
@@ -1843,10 +1790,8 @@ HAR2:
 	Explodes@Tib:
 		RequiresCondition: !no-ore && ontib && !being-warped
 		Weapon: TibExplosion
-	SelectionDecorations:
 	-Crushable:
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 
 BTR:
@@ -2180,7 +2125,7 @@ IFV.AI:
 	WithMuzzleOverlay:
 	WithSpriteTurret@default:
 		Sequence: turret
-		RequiresCondition: defturr		
+		RequiresCondition: defturr
 	WithSpriteTurret@gun:
 		RequiresCondition: gunturr
 		Sequence: turret3
@@ -2222,7 +2167,6 @@ TITN:
 		Speed: 50
 		Voice: Move
 	Passenger:
-		CargoType: Vehicle
 		PipType: Red
 		Weight: 3
 		Voice: Move
@@ -2258,9 +2202,7 @@ TITN:
 	WithMuzzleOverlay:
 	Explodes:
 		Weapon: ArtilleryExplode
-		EmptyWeapon: UnitExplodeSmall
 		LoadedChance: 100
-		RequiresCondition: !being-warped
 	Voiced:
 		VoiceSet: GhostVoice
 	SelfHealing@DEFAULT:
@@ -2280,24 +2222,17 @@ JUGG:
 	Tooltip:
 		Name: Juggernaut
 	Buildable:
-		Queue: Vehicle
 		BuildPaletteOrder: 200
-		IconPalette: chrometd
-		Prerequisites: ~gtek, ~vehicles.gdi, ~vehicles.talon, ~miss.gdi, ~techlevel.high
 		Description: Tough artillery battle-mech.\n  Strong vs Infantry, Structures\n  Weak vs Aircraft
 	Valued:
 		Cost: 1500
 	Armament@PRIMARY:
 		Weapon: JuggernautGun
 		LocalOffset: 830,0,500, 830,100,500, 830,-100,500
-		Recoil: 171
-		RecoilRecovery: 30
-		MuzzleSequence: muzzle
 	AttackTurreted:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 	Turreted:
-		TurnSpeed: 3
 		Offset: -20,0,20
 	-Armament@SECONDARY:
 	-SelfHealing@DEFAULT:
@@ -2311,7 +2246,6 @@ TTRK:
 	RenderSprites:
 		PlayerPalette: overlayplayertd
 	Buildable:
-		Queue: Vehicle
 		BuildPaletteOrder: 255
 		Prerequisites: ~tec.soviet.stolen, ~tmpl, ~vehicles.nod, ~techlevel.high
 		Description: Truck actively armed with\n a Tiberium bomb. Has very weak armor.
@@ -2320,8 +2254,6 @@ TTRK:
 	Explodes:
 		Weapon: UnitExplodeToxinTruck
 		EmptyWeapon: UnitExplodeToxinTruck
-		DamageSource: Killer
-		RequiresCondition: !being-warped
 
 DISR:
 	Inherits: ^TankTD
@@ -2349,7 +2281,6 @@ DISR:
 		Speed: 56
 		Voice: Move
 	Passenger:
-		CargoType: Vehicle
 		Weight: 2
 		Voice: Move
 	RevealsShroud:
@@ -2477,9 +2408,7 @@ HSAM:
 	WithSpriteTurret:
 	Explodes:
 		Weapon: ArtilleryExplode
-		EmptyWeapon: UnitExplodeSmall
 		LoadedChance: 75
-		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 
@@ -2560,7 +2489,6 @@ RTNK:
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical, Heavy
-	SelectionDecorations:
 	Selectable:
 		DecorationBounds: 28,28
 	ProducibleWithLevel:
@@ -2619,10 +2547,8 @@ V3RL:
 	MissileSpawnerMaster:
 		Actors: V3
 		RespawnTicks: 300
-	SelectionDecorations:
 	Explodes:
 		Weapon: BarrelExplode
-		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -2645,8 +2571,6 @@ V3:
 		Name: V3 Rocket
 	Health:
 		HP: 5000
-	Armor:
-		Type: Light
 	ShootableBallisticMissile:
 		LaunchAngle: 95
 		Speed: 165
@@ -2712,7 +2636,6 @@ TNKD:
 	SpawnActorOnDeath:
 		Actor: TNKD.Husk
 		RequiresCondition: !being-warped
-	SelectionDecorations:
 	Voiced:
 		VoiceSet: TnkdVoice
 	ProducibleWithLevel:
@@ -2799,7 +2722,6 @@ MSAR:
 		AffectsParent: False
 		RequiresCondition: deployed
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 
 PTNK:
@@ -2845,7 +2767,6 @@ PTNK:
 	SpawnActorOnDeath:
 		Actor: PTNK.Husk
 		RequiresCondition: !being-warped
-	SelectionDecorations:
 	Voiced:
 		VoiceSet: PrismVoice
 	ProducibleWithLevel:
@@ -2903,7 +2824,6 @@ WTNK:
 	SpawnActorOnDeath:
 		Actor: WTNK.Husk
 		RequiresCondition: !being-warped
-	SelectionDecorations:
 	Voiced:
 		VoiceSet: MWTnkVoice
 	ProducibleWithLevel:
@@ -2938,7 +2858,6 @@ BATF:
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped
 		Voice: Move
 	Passenger:
-		CargoType: Vehicle
 		Weight: 2
 		Voice: Move
 	RevealsShroud:
@@ -3020,43 +2939,18 @@ BATF.AI:
 		Prerequisites: tent, radar, ~weap, ~vehicles.france, ~techlevel.low, ~botplayer
 	RenderSprites:
 		Image: batf
-	-Armament@PRIMARY:
-	-Armament@SECONDARY:
-	-Armament@TERTIARY:
 	Armament@PRIMARY:
-		Name: primary
-		Turret: primary
-		Weapon: BATFGun
-		LocalOffset: 200,0,300
-		MuzzleSequence: muzzle
+		-RequiresCondition:
 	Armament@SECONDARY:
-		Name: secondary
-		Turret: secondary
-		Weapon: BATFGun
-		FireDelay: 8
-		LocalOffset: 200,0,300
-		MuzzleSequence: muzzle
+		-RequiresCondition:
 	Armament@TERTIARY:
-		Name: tertiary
-		Turret: tertiary
-		Weapon: BATFRockets
-		LocalOffset: -200,0,300
-		MuzzleSequence: muzzle
-	-Turreted@PRIMARY:
-	-Turreted@SECONDARY:
-	-Turreted@TERTIARY:
+		-RequiresCondition:
 	Turreted@PRIMARY:
-		Turret: primary
-		Offset: 200,-300,0
-		TurnSpeed: 3
+		-PauseOnCondition:
 	Turreted@SECONDARY:
-		Turret: secondary
-		Offset: 200,300,0
-		TurnSpeed: 3
+		-PauseOnCondition:
 	Turreted@TERTIARY:
-		Turret: tertiary
-		Offset: -300,0,358
-		TurnSpeed: 3
+		-PauseOnCondition:
 	-Cargo:
 	Mobile:
 		PauseOnCondition: being-captured || empdisable || being-warped
@@ -3099,7 +2993,6 @@ MEMP:
 		RequiresCondition: !being-warped && !deployed
 	RevealsShroud:
 		Range: 6c0
-	SelectionDecorations:
 	WithIdleOverlay@charging:
 		RequiresCondition: deployed
 		Palette: tseffect
@@ -3111,7 +3004,6 @@ MEMP:
 		Offset: 0, 0, 0
 		Sequence: emp-overlay
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune
 	WithRangeCircle:
 		Color: 0000FF80
@@ -3147,7 +3039,6 @@ CDRN:
 	RenderSprites:
 		Image: cdrone
 	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !stance-attackanything
 		ValidTargets: Infantry, Vehicle, Water
 		InvalidTargets: NoAutoTarget, WaterStructure, Underwater, Defense, ChaosImmune
 	AutoTargetPriority@ATTACKANYTHING:
@@ -3178,7 +3069,6 @@ CDRN:
 	Explodes:
 		Weapon: ChaosDroneExplode
 		EmptyWeapon: VisualExplodeHusk
-		RequiresCondition: !being-warped
 	AttackFrontal:
 		FacingTolerance: 128
 		PauseOnCondition: empdisable || being-warped
@@ -3208,7 +3098,6 @@ CDRN:
 		RequiresCondition: triggered && ammo
 		AmmoPoolName: explosion
 	Targetable:
-		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune
 	Voiced:
 		VoiceSet: ChaosDroneVoice
@@ -3225,7 +3114,6 @@ CHPR:
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 		Image: chpr
-		PlayerPalette: overlayplayer
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 225
@@ -3248,7 +3136,6 @@ CHPR:
 		Locomotor: heavytracked
 		Voice: Move
 	Passenger:
-		CargoType: Vehicle
 		Weight: 2
 		Voice: Move
 	RevealsShroud:
@@ -3281,7 +3168,6 @@ CHPR:
 	SpawnActorOnDeath:
 		Actor: CHPR.Husk
 		RequiresCondition: !being-warped
-	SelectionDecorations:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -3347,7 +3233,5 @@ CRYO:
 		PauseOnCondition: empdisable || being-warped
 	Explodes:
 		Weapon: CryoExplosion
-		RequiresCondition: !being-warped
-	SelectionDecorations:
 	Selectable:
 		DecorationBounds: 28,28

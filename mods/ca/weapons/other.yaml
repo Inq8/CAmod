@@ -38,29 +38,24 @@ FireballLauncher:
 	Warhead@1Dam: SpreadDamage
 		Versus:
 			Light: 50
-			
+
 ChemballLauncher:
 	Inherits: FireballLauncher
 	ReloadDelay: 70
 	Projectile: Bullet
-		Speed: 250
 		TrailImage: cb2
 		TrailPalette: temptd
 		Image: cb1
 		Palette: temptd
 	Warhead@1Dam: SpreadDamage
 		Versus:
-			None: 90
-			Wood: 50
 			Light: 70
 			Heavy: 35
 			Concrete: 35
-			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: med_chem
 		ExplosionPalette: temptd
-		ImpactSounds: firetrt1.aud
 	-Warhead@Flames:
 
 Napalmtd:
@@ -133,20 +128,17 @@ BigFlamer:
 		RandomClusterCount: 1
 		Dimensions: 1,1
 		Footprint: x
-		
+
 Flamer:
 	Inherits: BigFlamer
 	Projectile: Bullet
 	Range: 3c769
 	StartBurstReport: flamer2.aud
 	Warhead@1Dam: SpreadDamage
-		Spread: 288
-		Falloff: 100, 50, 25, 12, 6, 3, 0
 		Damage: 1300
-		
+
 FlamerE:
 	Inherits: Flamer
-	Projectile: Bullet
 	Range: 5c0
 
 Chemspray:
@@ -159,10 +151,9 @@ Chemspray:
 			Heavy: 50
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	-Warhead@Flames:
-	
+
 ChemsprayE:
 	Inherits: Chemspray
-	Projectile: Bullet
 	Range: 5c0
 
 Napalm:
@@ -201,19 +192,19 @@ TeslaZap:
 	Warhead@1Dam: SpreadDamage
 		Versus:
 			Wood: 60
-			
+
 TeslaZapBoost1:
 	Inherits: TeslaZap
 	Range: 8c512
 	Warhead@1Dam: SpreadDamage
 		Damage: 11000
-		
+
 TeslaZapBoost2:
 	Inherits: TeslaZap
 	Range: 9c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 12000
-		
+
 TeslaZapBoost3:
 	Inherits: TeslaZap
 	Range: 9c512
@@ -234,7 +225,7 @@ PortaTesla:
 PortaTeslaE:
 	Inherits: PortaTesla
 	Range: 8c0
-	
+
 PortaTeslaCharge:
 	Inherits: ^TeslaWeapon
 	ValidTargets: TeslaBoost
@@ -254,14 +245,12 @@ PortaTeslaCharge:
 		Duration: 2
 		Condition: highlight
 		ValidTargets: Ground, Vehicle
-	
+
 TTankZap:
 	Inherits: ^TeslaWeapon
 	ReloadDelay: 130
 	Range: 7c0
 	Warhead@1Dam: SpreadDamage
-		Spread: 42
-		Damage: 10000
 		Versus:
 			Wood: 60
 			Concrete: 60
@@ -274,7 +263,6 @@ TTankZap:
 TTankArc1:
 	Inherits: TTankZap
 	Range: 1c768
-	Projectile: TeslaZap
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Infantry, Vehicle, Ship
 		Versus:
@@ -333,25 +321,18 @@ Repair:
 		Duration: 2
 		Condition: highlight
 		ValidTargets: Ground, Vehicle
-		
+
 RepairIFV:
 	Inherits: Repair
 	ReloadDelay: 125
 	Burst: 10
 	BurstDelays: 30
 	Report: repair11.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: -3000
-	Warhead@highlight: GrantExternalCondition
-		Range: 0c511
-		Duration: 2
-		Condition: highlight
-		ValidTargets: Ground, Vehicle
 	Warhead@3Eff: CreateEffect
 		Image: sparks_overlay
 		Explosions: idle
 		ExplosionPalette: tseffect-ignore-lighting-alpha75
-		
+
 RepairNanite:
 	Report: srepaira.aud
 	Warhead@highlight: GrantExternalCondition
@@ -378,7 +359,7 @@ Demolish:
 		RandomClusterCount: 5
 		Dimensions: 3,3
 		Footprint: xxx xxx xxx
-		
+
 PlaceC4:
 	ReloadDelay: 10
 	Range: 1c849
@@ -418,7 +399,7 @@ C4:
 		RandomClusterCount: 3
 		Dimensions: 3,3
 		Footprint: xxx xxx xxx
-		
+
 DefuseKit:
 	ReloadDelay: 50
 	Range: 2c0
@@ -483,7 +464,7 @@ MADTankDetonate:
 		Duration: 600
 		Condition: concussion
 		ValidTargets: Ground, Infantry, Vehicle, Ship
-		
+
 Laser:
 	ReloadDelay: 100
 	ValidTargets: Ground, Water
@@ -510,18 +491,12 @@ Laser:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
-		
+
 Laser.Adv:
 	Inherits: Laser
 	Report: obelmod1.aud
 	Projectile: LaserZap
-		Width: 56
-		HitAnim: laserfire
 		Color: FF00FF80
-		ZOffset: 2047
-		SecondaryBeam: true
-		SecondaryBeamWidth: 90
-		SecondaryBeamZOffset: 2047
 		SecondaryBeamColor: FF00FF40
 	Warhead@1Dam: SpreadDamage
 		InvalidTargets: Air
@@ -536,11 +511,7 @@ LaserTur:
 	Projectile: LaserZap
 		Width: 45
 		Duration: 5
-		HitAnim: laserfire
-		ZOffset: 2047
-		SecondaryBeam: true
 		SecondaryBeamWidth: 65
-		SecondaryBeamZOffset: 2047
 		SecondaryBeamColor: FF000030
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
@@ -549,13 +520,13 @@ LaserTur:
 			None: 120
 			Wood: 73
 			Heavy: 60
-			
+
 LaserTur.Adv:
 	Inherits: LaserTur
 	ReloadDelay: 30
 	Projectile: LaserZap
 		SecondaryBeamColor: FF00FF30
-			
+
 PortaLaser:
 	Inherits: Laser
 	ReloadDelay: 30
@@ -567,11 +538,7 @@ PortaLaser:
 	Projectile: LaserZap
 		Width: 30
 		Duration: 3
-		HitAnim: laserfire
-		ZOffset: 2047
-		SecondaryBeam: true
 		SecondaryBeamWidth: 50
-		SecondaryBeamZOffset: 2047
 		SecondaryBeamColor: FF000030
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
@@ -579,7 +546,7 @@ PortaLaser:
 		Versus:
 			Wood: 73
 			Heavy: 90
-			
+
 PortaLaserE:
 	Inherits: PortaLaser
 	Range: 8c0
@@ -636,10 +603,7 @@ PointLaser:
 		Duration: 3
 		-HitAnim:
 		Color: 03f0fc
-		ZOffset: 2047
-		SecondaryBeam: true
 		SecondaryBeamWidth: 50
-		SecondaryBeamZOffset: 2047
 		SecondaryBeamColor: 03fcfc30
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
@@ -697,7 +661,7 @@ PrisTLaser:
 			Heavy: 60
 	Warhead@Burst: FireCluster
 		Weapon: PrisTBurst
-	
+
 PrisBurst:
 	Inherits: PrisTLaser
 	-Report:
@@ -711,8 +675,7 @@ PrisBurst:
 	Warhead@3Eff: CreateEffect
 		Explosions: small_explosion
 		-ImpactSounds:
-		ValidTargets: Ground, Water, Ship, Trees
-		
+
 PrisTBurst:
 	Inherits: PrisBurst
 	Warhead@1Dam: SpreadDamage
@@ -805,7 +768,7 @@ KirovNukeBomb:
 KirovTeslaArc:
 	Inherits: TTankZap
 	Range: 3c512
-	Report: shktrop1.aud	
+	Report: shktrop1.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 3000
 		ValidTargets: Infantry, Vehicle, Ship
@@ -887,7 +850,7 @@ FrogBomb:
 		ImpactSounds: splashl1.aud, splashl2.aud
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
-		
+
 SonicZap:
 	ReloadDelay: 120
 	Range: 6c0
@@ -938,7 +901,7 @@ SonicZap.UPG:
 		Color: 00ffcc25
 	Warhead@1Dam: SpreadDamage
 		Damage: 1300
-		
+
 SonicZapVisual:
 	ReloadDelay: 120
 	Range: 6c0
@@ -986,7 +949,7 @@ SonicZapVisual.UPG:
 	Range: 7c0
 	Projectile: AreaBeam
 		Color: 00ffc435
-		
+
 Railgun:
 	ReloadDelay: 75
 	Range: 8c512
@@ -1032,7 +995,7 @@ Railgun:
 			Concrete: 40
 			Brick: 15
 		DamageTypes: Prone100Percent, TriggerProne, ExplosionDeath
-		
+
 IonZap:
 	ReloadDelay: 50
 	Range: 5c768
@@ -1091,7 +1054,7 @@ IonZap:
 		ExplosionPalette: tseffect
 	Warhead@4Smu_impact: LeaveSmudge
 		SmudgeType: Scorch
-		
+
 BurnFX:
 	ValidTargets: Ground, Water, Trees
 	InvalidTargets: Air
@@ -1103,7 +1066,7 @@ BurnFX:
 	Warhead@3Eff: CreateEffect
 		Image: fire
 		Explosions: 3, 6, 7, 8
-		
+
 LaserFence:
 	TargetActorCenter: true
 	Projectile: InstantHit
@@ -1111,7 +1074,7 @@ LaserFence:
 		DebugOverlayColor: FF0000
 		Damage: 10000000
 		DamageTypes: FireDeath
-		
+
 OrcaBomb:
 	ValidTargets: Ground, Water
 	InvalidTargets: Air
@@ -1150,7 +1113,7 @@ OrcaBomb:
 		Duration: 300
 		Condition: empdisable
 		ValidTargets: Ground, Structure, Vehicle
-		
+
 MicrowaveZap:
 	ValidTargets: Ground, Water
 	InvalidTargets: Air
@@ -1244,7 +1207,7 @@ HornetLauncher:
 	Projectile: InstantHit
 	Warhead@1Dam: TargetDamage
 		ValidTargets: Ground, Water
-		
+
 V3Launcher:
 	ReloadDelay: 300
 	Range: 18c0
@@ -1274,7 +1237,7 @@ Flare:
 		Range: 0c32
 		Duration: 8
 		Condition: flare
-		
+
 Cloud:
 	ReloadDelay: 20
 	Range: 1c0
@@ -1285,7 +1248,7 @@ Cloud:
 		Level: 50
 		Falloff: 100, 75, 52, 15, 2
 		MaxLevel: 750
-		LayerName: radioactivity.strong		
+		LayerName: radioactivity.strong
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
 		Damage: 500
@@ -1301,13 +1264,13 @@ Cloud:
 			Concrete: 10
 			Brick: 10
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
-		
+
 ChaosDroneTargeting:
 	Range: 2c0
 	Projectile: InstantHit
 	ValidTargets: Infantry, Vehicle, Ship
 	Warhead@1Dam: TargetDamage
-	
+
 RadBeamWeapon:
 	ValidTargets: Ground, Water
 	InvalidTargets: Air
@@ -1333,7 +1296,7 @@ RadBeamWeapon:
 RadBeamWeaponE:
 	Inherits: RadBeamWeapon
 	Range: 8c0
-	
+
 RadEruptionWeapon:
 	ReloadDelay: 60
 	Report: idesat2a.aud
@@ -1359,7 +1322,7 @@ ChronoAI:
 		Sequence: idle
 		ValidTargets: Air, Ground, Water
 	Warhead@3Flash: ChronoFlashEffect
-		
+
 TimeWarp:
 	ValidTargets: Temporal
 	ReloadDelay: 1
@@ -1374,7 +1337,7 @@ TimeWarp:
 		Damage: 1
 		ValidTargets: Temporal
 	Warhead@3Flash: ChronoFlashEffect
-		
+
 ClusterMineSpawner:
 	ValidTargets: Ground, Water
 	InvalidTargets: Air
@@ -1422,7 +1385,7 @@ MineSpawner:
 		Range: 1
 		ForceGround: false
 		ValidTargets: Ground, Air
-		
+
 MineSpawnerWater:
 	Range: 5c0
 	ValidTargets: Water
@@ -1440,7 +1403,7 @@ MineSpawnerWater:
 		Range: 1
 		ForceGround: false
 		ValidTargets: Water, Air
-		
+
 ^EnergyBlast:
 	ReloadDelay: 50
 	Range: 7c0
@@ -1484,7 +1447,7 @@ CyCannon:
 			Concrete: 25
 			Brick: 70
 		DamageTypes: Prone350Percent, TriggerProne, ExplosionDeath
-		
+
 NeutronCannon:
 	ValidTargets: Temporal
 	ReloadDelay: 5
