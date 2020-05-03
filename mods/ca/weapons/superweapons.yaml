@@ -154,7 +154,7 @@ Atomic:
 	ValidTargets: Ground, Trees, Water, Underwater, Air
 	Warhead@1Dam_impact: SpreadDamage
 		Spread: 1c0
-		Damage: 12000
+		Damage: 12200
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Trees, Water, Underwater, Air
 		Versus:
@@ -169,12 +169,12 @@ Atomic:
 		Size: 1
 	Warhead@4Eff_impact: CreateEffect
 		Explosions: nuke2
-		ImpactSounds: kaboom1.aud
+		ImpactSounds: nuke.aud
 		ImpactActors: false
 		ValidTargets: Ground, Water, Air
 	Warhead@5Dam_areanuke1: SpreadDamage
 		Spread: 2c0
-		Damage: 4000
+		Damage: 4200
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 5
 		ValidTargets: Ground, Trees, Water, Underwater, Air
@@ -196,7 +196,7 @@ Atomic:
 		ImpactActors: false
 	Warhead@9Dam_areanuke2: SpreadDamage
 		Spread: 3c0
-		Damage: 4000
+		Damage: 4200
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 10
 		ValidTargets: Ground, Water, Underwater, Air
@@ -206,7 +206,7 @@ Atomic:
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@10Dam_areanuke2: SpreadDamage
 		Spread: 3c0
-		Damage: 10000
+		Damage: 10200
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 15
 		ValidTargets: Trees
@@ -221,7 +221,7 @@ Atomic:
 		Delay: 10
 	Warhead@13Dam_areanuke3: SpreadDamage
 		Spread: 4c0
-		Damage: 4000
+		Damage: 4200
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 15
 		ValidTargets: Ground, Water, Underwater, Air
@@ -230,7 +230,7 @@ Atomic:
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@14Dam_areanuke3: SpreadDamage
 		Spread: 4c0
-		Damage: 10000
+		Damage: 10200
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 15
 		ValidTargets: Trees
@@ -245,7 +245,7 @@ Atomic:
 		Delay: 15
 	Warhead@17Dam_areanuke4: SpreadDamage
 		Spread: 5c0
-		Damage: 4000
+		Damage: 4200
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 20
 		ValidTargets: Ground, Water, Underwater, Air
@@ -254,7 +254,7 @@ Atomic:
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@18Dam_areanuke4: SpreadDamage
 		Spread: 5c0
-		Damage: 10000
+		Damage: 10200
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 20
 		ValidTargets: Trees
@@ -853,7 +853,7 @@ WeatherCloudRandomInit:
 		Versus:
 			Wood: 85
 			Heavy: 75
-			Concrete: 10
+			Concrete: 15
 			Brick: 15
 	Warhead@barrage3: FireShrapnel
 		Weapon: WeatherCloud
@@ -884,14 +884,14 @@ WeatherBolt:
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 1c1, 2c1, 3c1
 		Falloff: 1000, 660, 330, 0
-		Damage: 1150
+		Damage: 1000
 		AffectsParent: true
 		ValidTargets: Ground, Air, Water
 		DamageTypes: TriggerProne, ElectricityDeath
 		Versus:
-			Wood: 65
+			Wood: 80
 			Heavy: 55
-			Concrete: 40
+			Concrete: 35
 			Brick: 55
 	Warhead@4: CreateEffect
 		Explosions: weatherbolt1, weatherbolt2, weatherbolt3, weatherbolt1f, weatherbolt2f, weatherbolt3f

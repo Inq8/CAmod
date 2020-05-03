@@ -428,9 +428,9 @@ SPEC:
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
-		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped
+		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver_dead
 	Cloak@GPSHIDE:
-		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden)
+		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden || driver_dead)
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
@@ -1618,12 +1618,12 @@ STNK.Nod:
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
-		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped
+		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver_dead
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
 	Cloak@GPSHIDE:
-		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden)
+		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden || driver_dead)
 	Armament@PRIMARY:
 		Weapon: 227mm.stnk
 		LocalOffset: 213,43,128, 213,-43,128
@@ -2421,7 +2421,7 @@ RTNK:
 		Queue: Vehicle
 		BuildPaletteOrder: 75
 		Prerequisites: weap, ~vehicles.england, ~techlevel.low
-		Description: Advanced battle tank that can cloak when stationary.\n  Strong vs Vehicles\n  Weak vs Aircraft
+		Description: Advanced battle tank that can disguise when stationary.\n  Strong vs Vehicles\n  Weak vs Aircraft\n  Special Ability: Disguise
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -2433,7 +2433,7 @@ RTNK:
 		GenericVisibility: Enemy, Neutral
 		RequiresCondition: tree
 	Mirage:
-		RequiresCondition: !empdisable && !being-warped
+		RequiresCondition: !empdisable && !being-warped && !driver_dead
 		RevealOn: Attack, Move
 		MirageCondition: tree
 		DefaultTargetTypes: v08, v09, v10, v11, v12, v13, v14, v15, v16, v17, v18
@@ -2483,9 +2483,9 @@ RTNK:
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Move, Damage, Heal, SelfHeal
 		Palette: player
 		IsPlayerPalette: false
-		RequiresCondition: !cloak-force-disabled && !invisibility
+		RequiresCondition: !cloak-force-disabled && !invisibility && !driver_dead
 	Cloak@GPSHIDE:
-		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden)
+		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden || driver_dead)
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical, Heavy

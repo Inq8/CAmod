@@ -75,6 +75,7 @@ E1:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@BOTHELPER: ^BotCaptureHelper
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -747,6 +748,7 @@ N1:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@BOTHELPER: ^BotCaptureHelper
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -1228,6 +1230,7 @@ SNIP:
 		Armaments: driver_snipe
 		Name: driver_snipe
 		AmmoCondition: ammo
+	RenderRangeCircle:
 	ReloadArmamentsBar:
 		Armaments: driver_snipe
 	ReloadAmmoPool:
@@ -1241,6 +1244,8 @@ SNIP:
 		CloakDelay: 200
 		CloakedCondition: hidden
 		Palette: cloaktd
+		CloakSound: gstealon.aud
+		UncloakSound: gstealof.aud
 		IsPlayerPalette: true
 		CloakTypes: Cloak
 		RequiresCondition: !cloak-force-disabled
@@ -1452,7 +1457,8 @@ SAB:
 		CloakTypes: Cloak
 		RequiresCondition: !cloak-force-disabled
 		UncloakOn: Unload, Infiltrate, Demolish, Dock, Attack
-		UncloakSound: appear1.aud
+		CloakSound: gstealon.aud
+		UncloakSound: gstealof.aud
 	Cloak@GPSHIDE:
 		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden)
 	GrantConditionOnDamageState@UNCLOAK:
@@ -1860,6 +1866,7 @@ N1C:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@BOTHELPER: ^BotCaptureHelper
 	RenderSprites:
 	Buildable:
 		Queue: Infantry

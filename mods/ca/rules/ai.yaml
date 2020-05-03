@@ -400,12 +400,6 @@ Player:
 				OrderName: ironcurtain
 				MinimumAttractiveness: 1000
 				FineScanRadius: 2
-				Consideration@1:
-					Against: Enemy
-					Types: Structure
-					Attractiveness: -10
-					TargetMetric: Value
-					CheckRadius: 3c0
 				Consideration@2:
 					Against: Enemy
 					Types: Infantry
@@ -414,7 +408,7 @@ Player:
 					CheckRadius: 2c0
 				Consideration@3:
 					Against: Ally
-					Types: Tank
+					Types: Vehicle, Tank
 					Attractiveness: 5
 					TargetMetric: Value
 					CheckRadius: 3c0

@@ -182,6 +182,32 @@
 		RequiresCondition: owned-by-normal-ai
 		ShowTicks: False
 
+#Hacky but helps Bots deal with abandoned vehicles due to snipers
+^BotCaptureHelper:		
+	Armament@AIHELPER:
+		Weapon: commandeer
+		Name: secondary
+		TargetStances: Neutral
+		RequiresCondition: botowner
+	GrantConditionOnBotOwner@AIHELPER:
+		Condition: botowner
+		Bots: brutal, vhard, hard, normal, easy, naval
+	GrantConditionOnAttack@AIHELPER:
+		Condition: removeunit
+		ArmamentNames: secondary
+		RequiresCondition: botowner
+	KillsSelf@AIHELPER:
+		RemoveInstead: true
+		RequiresCondition: removeunit
+	AutoTargetPriority@AIHELPER:
+		ValidTargets: NoCrew
+		RequiresCondition: botowner
+		Priority: 1
+	WithInfantryBody:
+		AttackSequences:
+			primary: shoot
+			secondary: stand
+
 ^GainsExperience:
 	GainsExperience:
 		LevelUpNotification: LevelUp
@@ -489,11 +515,13 @@
 		CancelActivity: true
 	SelfHealing@DRIVER_DEAD:
 		PercentageStep: -1
-		Delay: 20
+		Delay: 30
 		HealIfBelow: 101
 		DamageCooldown: 0
 		RequiresCondition: driver_dead
 	CaptureManager:
+	Targetable@AICAPTURE:
+		TargetTypes: NoCrew
 
 ^CanCaptureDriverlessVehicles:
 	Captures@DRIVER_KILL:

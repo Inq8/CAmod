@@ -293,6 +293,17 @@ DogJaw:
 		ValidTargets: Infantry
 		InvalidTargets: Ant
 		DamageTypes: DefaultDeath
+		
+Commandeer:
+	ReloadDelay: 5
+	Range: 1c0
+	Report: ggarenta.aud, ggarentb.aud, ggarentc.aud
+	ValidTargets: NoCrew
+	Projectile: InstantHit
+	Warhead@1Change: ChangeOwner
+		Range: 0c511
+		ValidStances: Neutral
+		ValidTargets: NoCrew
 
 Heal:
 	ReloadDelay: 80
@@ -1251,7 +1262,7 @@ Cloud:
 		LayerName: radioactivity.strong
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
-		Damage: 500
+		Damage: 400
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 5
 		ValidTargets: Ground, Trees
