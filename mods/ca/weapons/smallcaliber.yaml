@@ -93,6 +93,38 @@ Gatt.3:
 	Report: vgatlo8a.aud, vgatlo8b.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 1900
+		
+MGatt.0:
+	Inherits: ^AACannon
+	ReloadDelay: 15
+	Report: vgatlo1a.aud
+	Range: 7c512
+	Warhead@1Dam: SpreadDamage
+		Damage: 250
+		Range: 0, 0c64, 0c256, 3c256
+		Falloff: 100, 100, 15, 5
+	Warhead@2Eff: CreateEffect
+		ValidTargets: Air
+		ImpactSoundChance: 20
+
+MGatt.1:
+	Inherits: MGatt.0
+	ReloadDelay: 5
+	Report: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 300
+
+MGatt.2:
+	Inherits: MGatt.1
+	Report: vgatlo5a.aud, vgatlo5b.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 400
+
+MGatt.3:
+	Inherits: MGatt.2
+	Report: vgatlo8a.aud, vgatlo8b.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 500
 
 ^HeavyMG:
 	ReloadDelay: 30
