@@ -64,6 +64,10 @@ MSLO:
 	WithNukeLaunchAnimation:
 		RequiresCondition: !build-incomplete
 	ProvidesPrerequisite@buildingname:
+	InfiltrateForSupportPowerReset:
+		Types: SpyInfiltrate, SabInfiltrate
+	Targetable:
+		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
 
 GAP:
 	Inherits: ^ScienceBuilding
@@ -466,6 +470,10 @@ IRON:
 		RequiresCondition: !being-warped
 	MustBeDestroyed:
 		RequiredForShortGame: false
+	InfiltrateForSupportPowerReset:
+		Types: SpyInfiltrate, SabInfiltrate
+	Targetable:
+		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
 
 PDOX:
 	Inherits: ^ScienceBuilding
@@ -587,6 +595,10 @@ PDOX:
 	MustBeDestroyed:
 		RequiredForShortGame: false
 	ProvidesPrerequisite@buildingname:
+	InfiltrateForSupportPowerReset:
+		Types: SpyInfiltrate, SabInfiltrate
+	Targetable:
+		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
 
 TSLA:
 	Inherits: ^Defense
@@ -1109,6 +1121,9 @@ ATEK:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
+	InfiltrateForSupportPower@tec:
+		Types: SabInfiltrate
+		Proxy: tec.allies.stolen
 
 WEAP:
 	Inherits: ^Building
@@ -1263,6 +1278,21 @@ WEAP:
 	ProvidesPrerequisite@markedstructure:
 		RequiresPrerequisites: structures.marked
 		Prerequisite: vehicles.marked
+	ProvidesPrerequisite@mrj:
+		Factions: allies, france, england, germany
+		Prerequisite: vehicles.mrj
+	ProvidesPrerequisite@ifv:
+		Factions: allies, france, england, germany
+		Prerequisite: vehicles.ifv
+	ProvidesPrerequisite@ptnk:
+		Factions: allies, france, england, germany
+		Prerequisite: vehicles.ptnk
+	ProvidesPrerequisite@3tnk:
+		Factions: soviet, russia, ukraine, iraq
+		Prerequisite: vehicles.3tnk
+	ProvidesPrerequisite@v3rl:
+		Factions: soviet, russia, ukraine, iraq
+		Prerequisite: vehicles.v3rl
 	PrimaryBuilding:
 		PrimaryCondition: primary
 		SelectionNotification: PrimaryBuildingSelected
@@ -2121,6 +2151,9 @@ BARR:
 	ProvidesPrerequisite@iraqistructure:
 		RequiresPrerequisites: structures.iraq
 		Prerequisite: infantry.iraq
+	ProvidesPrerequisite@shok:
+		Factions: soviet, russia, ukraine, iraq
+		Prerequisite: infantry.shok
 	Power:
 		Amount: -20
 		RequiresCondition: !being-warped
@@ -2950,6 +2983,9 @@ WEAP.TD:
 	ProvidesPrerequisite@msam:
 		Factions: gdi, zocom, talon, eagle
 		Prerequisite: vehicles.msam
+	ProvidesPrerequisite@htnk:
+		Factions: gdi, talon, zocom, eagle
+		Prerequisite: vehicles.htnk
 	ProvidesPrerequisite@titan:
 		Factions: talon
 		Prerequisite: vehicles.titan
@@ -5106,6 +5142,10 @@ SGEN:
 		Type: Rectangle
 			TopLeft: -1536, -1024
 			BottomRight: 1024, 1024
+	InfiltrateForSupportPowerReset:
+		Types: SpyInfiltrate, SabInfiltrate
+	Targetable:
+		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
 
 CRAM:
 	Inherits: AGUN
@@ -5325,6 +5365,10 @@ PATR:
 		Bounds: 48,48
 	RejectsOrders:
 		Except: Sell, PowerDown
+	InfiltrateForSupportPowerReset:
+		Types: SpyInfiltrate, SabInfiltrate
+	Targetable:
+		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
 
 INDP:
 	Inherits: ^ScienceBuilding
@@ -5609,6 +5653,10 @@ MSLO.Nod:
 	WithNukeLaunchAnimation:
 		RequiresCondition: !build-incomplete
 	ProvidesPrerequisite@buildingname:
+	InfiltrateForSupportPowerReset:
+		Types: SpyInfiltrate, SabInfiltrate
+	Targetable:
+		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
 
 WEAT:
 	Inherits: ^ScienceBuilding
@@ -5688,3 +5736,7 @@ WEAT:
 	ProvidesPrerequisite@buildingname:
 	MustBeDestroyed:
 		RequiredForShortGame: false
+	InfiltrateForSupportPowerReset:
+		Types: SpyInfiltrate, SabInfiltrate
+	Targetable:
+		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate

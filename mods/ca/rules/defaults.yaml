@@ -507,10 +507,10 @@
 
 ^AffectedByDriverKill:
 	GrantConditionIfOwnerIsNeutral:
-		Condition: driver_dead
+		Condition: driver-dead
 	Capturable@DRIVER_DEAD:
 		Types: driverless_vehicle
-		RequiresCondition: driver_dead
+		RequiresCondition: driver-dead
 		ValidStances: Neutral
 		CancelActivity: true
 	SelfHealing@DRIVER_DEAD:
@@ -518,7 +518,7 @@
 		Delay: 30
 		HealIfBelow: 101
 		DamageCooldown: 0
-		RequiresCondition: driver_dead
+		RequiresCondition: driver-dead
 	CaptureManager:
 	Targetable@AICAPTURE:
 		TargetTypes: NoCrew
@@ -797,7 +797,7 @@
 	DrawLineToTarget:
 	UpdatesPlayerStatistics:
 	Mobile:
-		PauseOnCondition: being-captured || empdisable || being-warped || driver_dead
+		PauseOnCondition: being-captured || empdisable || being-warped || driver-dead
 		Locomotor: wheeled
 		TurnSpeed: 5
 	SelectionDecorations:

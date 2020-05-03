@@ -112,7 +112,7 @@ V2RL:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 70
-		Prerequisites: weap, ~vehicles.allies, ~!vehicles.england, ~techlevel.low
+		Prerequisites: vehicles.any, ~vehicles.allies, ~!vehicles.england, ~techlevel.low
 		Description: Allied main battle tank.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
 	Valued:
 		Cost: 800
@@ -161,7 +161,7 @@ V2RL:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 100
-		Prerequisites: weap, ~vehicles.soviet, ~techlevel.low
+		Prerequisites: vehicles.any, ~vehicles.3tnk, ~techlevel.low
 		Description: Soviet main battle tank with dual cannons.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
 	Valued:
 		Cost: 1150
@@ -428,9 +428,9 @@ SPEC:
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
-		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver_dead
+		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver-dead
 	Cloak@GPSHIDE:
-		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden || driver_dead)
+		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
@@ -762,7 +762,7 @@ MRJ:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 235
-		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
+		Prerequisites: techcenter, ~vehicles.mrj, ~techlevel.high
 		BuildDurationModifier: 50
 		Description: Jams nearby enemy radar systems.\n  Unarmed\n  Special Ability: Jams Missile-Lock Systems
 	Health:
@@ -1457,7 +1457,7 @@ HTNK:
 		Queue: Vehicle
 		BuildPaletteOrder: 185
 		IconPalette: chrometd
-		Prerequisites: gtek, ~vehicles.gdi, ~!miss.gdi, ~techlevel.high
+		Prerequisites: techcenter, ~vehicles.htnk, ~!miss.gdi, ~techlevel.high
 		Description: Big and slow tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry, Aircraft\n  Weak vs Nothing
 	Valued:
 		Cost: 1700
@@ -1686,12 +1686,12 @@ STNK.Nod:
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
-		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver_dead
+		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver-dead
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
 	Cloak@GPSHIDE:
-		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden || driver_dead)
+		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	Armament@PRIMARY:
 		Weapon: 227mm.stnk
 		LocalOffset: 213,43,128, 213,-43,128
@@ -1919,7 +1919,7 @@ IFV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 60
-		Prerequisites: tent, ~vehicles.allies, ~techlevel.low
+		Prerequisites: barracks, ~vehicles.ifv, ~techlevel.low
 		Description: Adaptable infantry transport.\n  Can attack Aircraft.\n  Strong vs Light Armor, Aircraft\n  Weak vs Infantry, Tanks\n  Special Ability: Transform
 	Valued:
 		Cost: 750
@@ -2315,7 +2315,7 @@ TTRK:
 		PlayerPalette: overlayplayertd
 	Buildable:
 		BuildPaletteOrder: 255
-		Prerequisites: ~tec.soviet.stolen, ~tmpl, ~vehicles.nod, ~techlevel.high
+		Prerequisites: ~vehicles.ttrk, ~tmpl, ~vehicles.nod, ~techlevel.high
 		Description: Truck actively armed with\n a Tiberium bomb. Has very weak armor.
 	Tooltip:
 		Name: Toxin Truck
@@ -2435,12 +2435,12 @@ HSAM:
 		Offset: -200,0,0
 	Hovers:
 		BobDistance: -35
-		RequiresCondition: !empdisable && !being-warped
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
 	GrantConditionOnTerrain:
 		TerrainTypes: Water
 		Condition: onwater
 	KillsSelf@SINK:
-		RequiresCondition: onwater && empdisable
+		RequiresCondition: onwater && (empdisable || driver-dead)
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
@@ -2501,7 +2501,7 @@ RTNK:
 		GenericVisibility: Enemy, Neutral
 		RequiresCondition: tree
 	Mirage:
-		RequiresCondition: !empdisable && !being-warped && !driver_dead
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
 		RevealOn: Attack, Move
 		MirageCondition: tree
 		DefaultTargetTypes: v08, v09, v10, v11, v12, v13, v14, v15, v16, v17, v18
@@ -2551,9 +2551,9 @@ RTNK:
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Move, Damage, Heal, SelfHeal
 		Palette: player
 		IsPlayerPalette: false
-		RequiresCondition: !cloak-force-disabled && !invisibility && !driver_dead
+		RequiresCondition: !cloak-force-disabled && !invisibility && !driver-dead
 	Cloak@GPSHIDE:
-		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden || driver_dead)
+		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical, Heavy
@@ -2572,7 +2572,7 @@ V3RL:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 160
-		Prerequisites: stek, ~vehicles.soviet, ~techlevel.high
+		Prerequisites: techcenter, ~vehicles.v3rl, ~techlevel.high
 		Description: Extreme long-range rocket artillery.\n  Rockets can be shot down by anti-air.\n  Strong vs Buildings, Infantry\n  Weak vs Tanks, Aircraft
 	Valued:
 		Cost: 1500
@@ -2800,7 +2800,7 @@ PTNK:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 135
-		Prerequisites: radar, ~vehicles.allies, ~techlevel.high
+		Prerequisites: radar, ~vehicles.ptnk, ~techlevel.high
 		Description: Long-range artillery with Prism Tower derived weapon.\n  Strong vs Buildings, Infantry, Light Armor\n  Weak vs Tanks, Aircraft
 	Valued:
 		Cost: 1350

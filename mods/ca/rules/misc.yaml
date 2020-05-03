@@ -563,66 +563,107 @@ aircraft.upgraded:
 inf.soviet.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
+		Prerequisite: infantry.shok
+		Factions: blackh, marked, legion
 
 veh.soviet.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
+		Prerequisite: vehicles.3tnk
+		Factions: blackh, marked, legion
 	
 rad.soviet.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
+		Prerequisite: vehicles.v3rl
+		Factions: blackh, marked, legion
 
 tec.soviet.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
+		Prerequisite: vehicles.ttrk
+		Factions: blackh, marked, legion
 	
 inf.allies.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
+		Prerequisite: infantry.medi
+		Factions: blackh, marked, legion
 
 veh.allies.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
+		Prerequisite: vehicles.ifv
+		Factions: blackh, marked, legion
 	
 rad.allies.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
+		Prerequisite: vehicles.ptnk
+		Factions: blackh, marked, legion
 
 tec.allies.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
+		Prerequisite: vehicles.mrj
+		Factions: blackh, marked, legion
 	
 inf.gdi.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
+		Prerequisite: infantry.medi
+		Factions: blackh, marked, legion
 
+#Legion has mtnk already
 veh.gdi.stolen:
 	AlwaysVisible:
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@BHM:
+		Prerequisite: vehicles.mtnk
+		Factions: blackh, marked
+	ProvidesPrerequisite@LEGION:
+		Prerequisite: vehicles.upgraded
+		Factions: legion
 	
 rad.gdi.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
+		Prerequisite: vehicles.msam
+		Factions: blackh, marked, legion
 
 tec.gdi.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
-	
+		Prerequisite: vehicles.htnk
+		Factions: blackh, marked, legion
+
+#Chem mortar
 inf.nod.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
-	
+
+#Legion has mtnk already
 veh.nod.stolen:
 	AlwaysVisible:
-	ProvidesPrerequisite:
+	ProvidesPrerequisite@BHM:
+		Prerequisite: vehicles.mtnk
+		Factions: blackh, marked
+	ProvidesPrerequisite@LEGION:
+		Prerequisite: vehicles.upgraded
+		Factions: legion
 	
+#MSAM
 rad.nod.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
+		Prerequisite: vehicles.msam
+		Factions: blackh, marked, legion
 
+#Upgrade Aircraft for now
 tec.nod.stolen:
 	AlwaysVisible:
 	ProvidesPrerequisite:
+		Prerequisite: aircraft.upgraded
+		Factions: blackh, marked, legion
 
 mpspawn:
 	Interactable:
