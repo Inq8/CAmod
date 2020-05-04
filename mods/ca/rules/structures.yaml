@@ -22,13 +22,16 @@ MSLO:
 	Armor:
 		Type: Wood
 	RevealsShroud:
+		MinRange: 5c0
 		Range: 6c0
-		MinRange: 4c0
 		RequiresCondition: !disabled
+		RevealGeneratedShroud: False
 	RevealsShroud@Offline:
 		Range: 5c0
-		MinRange: 4c0
 		RequiresCondition: disabled
+	RevealsShroud@GAPGEN:
+		Range: 5c0
+		RequiresCondition: !disabled
 	NukePower:
 		PauseOnCondition: disabled || empdisable || being-warped
 		Cursor: nuke
@@ -93,8 +96,11 @@ GAP:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
-		Range: 6c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	WithBuildingBib:
 		HasMinibib: true
 	CreatesShroud:
@@ -147,8 +153,11 @@ SPEN:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,-213,0
@@ -306,8 +315,11 @@ SYRD:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: -1024,1024,0
@@ -434,13 +446,16 @@ IRON:
 	Armor:
 		Type: Wood
 	RevealsShroud:
+		MinRange: 5c0
 		Range: 6c0
-		MinRange: 4c0
 		RequiresCondition: !disabled
+		RevealGeneratedShroud: False
 	RevealsShroud@Offline:
 		Range: 5c0
-		MinRange: 4c0
 		RequiresCondition: disabled
+	RevealsShroud@GAPGEN:
+		Range: 5c0
+		RequiresCondition: !disabled
 	WithBuildingBib:
 		HasMinibib: true
 	GrantExternalConditionPowerCA@IRONCURTAIN:
@@ -500,13 +515,16 @@ PDOX:
 	Armor:
 		Type: Wood
 	RevealsShroud:
+		MinRange: 5c0
 		Range: 6c0
-		MinRange: 4c0
 		RequiresCondition: !disabled
+		RevealGeneratedShroud: False
 	RevealsShroud@Offline:
 		Range: 5c0
-		MinRange: 4c0
 		RequiresCondition: disabled
+	RevealsShroud@GAPGEN:
+		Range: 5c0
+		RequiresCondition: !disabled
 	WithBuildingBib:
 		HasMinibib: true
 	ProvidesPrerequisite@germany:
@@ -624,8 +642,11 @@ TSLA:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
-		Range: 8c0
 		MinRange: 6c0
+		Range: 8c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 6c0
 	Targetable@TeslaBoost:
 		TargetTypes: TeslaBoost
 		RequiresCondition: !powerdown
@@ -698,8 +719,11 @@ AGUN:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
+		MinRange: 5c0
 		Range: 6c0
-		MinRange: 4c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 5c0
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
@@ -755,12 +779,16 @@ DOME:
 	Armor:
 		Type: Wood
 	RevealsShroud:
+		MinRange: 6c0
 		Range: 10c0
-		MinRange: 4c0
 		RequiresCondition: !disabled
+		RevealGeneratedShroud: False
 	RevealsShroud@Offline:
 		Range: 5c0
-		MinRange: 4c0
+		RequiresCondition: disabled
+	RevealsShroud@GAPGEN:
+		Range: 6c0
+		RequiresCondition: !disabled
 	WithBuildingBib:
 	ProvidesRadar:
 		RequiresCondition: !jammed && !disabled && !being-warped
@@ -850,8 +878,11 @@ PBOX:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
+		MinRange: 5c0
 		Range: 6c0
-		MinRange: 4c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 5c0
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
@@ -893,8 +924,11 @@ HBOX:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
+		MinRange: 5c0
 		Range: 6c0
-		MinRange: 4c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 5c0
 	Cloak:
 		InitialDelay: 125
 		CloakDelay: 60
@@ -942,8 +976,11 @@ GUN:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
+		MinRange: 5c0
 		Range: 7c0
-		MinRange: 4c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 5c0
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
@@ -985,8 +1022,11 @@ FTUR:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
+		MinRange: 5c0
 		Range: 6c0
-		MinRange: 4c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 5c0
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
@@ -1037,8 +1077,11 @@ SAM:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
+		MinRange: 5c0
 		Range: 8c0
-		MinRange: 4c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 5c0
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
@@ -1091,8 +1134,11 @@ ATEK:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	WithBuildingBib:
 	GpsPower:
 		PauseOnCondition: disabled
@@ -1161,8 +1207,11 @@ WEAP:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	WithBuildingBib:
 	WithProductionDoorOverlay:
 		RequiresCondition: !build-incomplete
@@ -1391,8 +1440,11 @@ FACT:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Production:
 		Produces: Building, Defense
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -1484,8 +1536,11 @@ PROC:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Refinery:
 		DockAngle: 64
 		DockOffset: 1,2
@@ -1556,7 +1611,6 @@ SILO:
 		Type: Wood
 	RevealsShroud:
 		Range: 4c0
-		MinRange: 3c0
 	WithBuildingBib:
 		HasMinibib: true
 	-WithSpriteBody:
@@ -1600,8 +1654,11 @@ HPAD:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	WithBuildingBib:
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
@@ -1699,8 +1756,11 @@ AFLD:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Exit@1:
 		RequiresCondition: !being-captured
 		ExitCell: 1,1
@@ -1922,7 +1982,6 @@ POWR:
 		Type: Wood
 	RevealsShroud:
 		Range: 4c0
-		MinRange: 3c0
 	WithBuildingBib:
 	Power:
 		Amount: 100
@@ -1966,7 +2025,6 @@ APWR:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
-		MinRange: 4c0
 	WithBuildingBib:
 	Power:
 		Amount: 200
@@ -2053,8 +2111,11 @@ STEK:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	WithBuildingBib:
 	Power:
 		Amount: -100
@@ -2116,8 +2177,11 @@ BARR:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	WithBuildingBib:
 	RallyPoint:
 	Exit@1:
@@ -2217,7 +2281,6 @@ KENN:
 		Type: Wood
 	RevealsShroud:
 		Range: 4c0
-		MinRange: 3c0
 	WithBuildingBib:
 		HasMinibib: True
 	RallyPoint:
@@ -2278,8 +2341,11 @@ TENT:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	WithBuildingBib:
 	RallyPoint:
 	Exit@1:
@@ -2384,8 +2450,11 @@ FIX:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Reservable:
 	RallyPoint:
 	RepairsUnits:
@@ -2668,8 +2737,11 @@ PYLE:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	WithBuildingBib:
 	RallyPoint:
 	Exit@1:
@@ -2771,8 +2843,11 @@ HAND:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	WithBuildingBib:
 	RallyPoint:
 	Exit@1:
@@ -2881,8 +2956,11 @@ WEAP.TD:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	ProvidesPrerequisite@any:
 		Factions: gdi, talon, zocom, eagle, nod, marked, blackh, legion, allies, england, france, germany, soviet, russia, ukraine, iraq
 		Prerequisite: vehicles.any
@@ -3093,8 +3171,11 @@ AIRS:
 	Armor:
 		Type: Wood
 	RevealsShroud:
+		MinRange: 5c0
 		Range: 7c0
-		MinRange: 4c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 5c0
 	WithBuildingBib:
 	WithIdleOverlay@DISH:
 		Sequence: idle-dish
@@ -3314,8 +3395,7 @@ NUKE:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
-		MinRange: 4c0
+		Range: 4c0
 	WithBuildingBib:
 	WithDeathAnimation:
 		DeathSequence: dead
@@ -3369,7 +3449,6 @@ NUK2:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
-		MinRange: 4c0
 	WithBuildingBib:
 	WithDeathAnimation:
 		DeathSequence: dead
@@ -3410,8 +3489,11 @@ AFAC:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	WithBuildingBib:
 	Production:
 		Produces: Building, Defense
@@ -3532,8 +3614,11 @@ NSAM:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
+		MinRange: 5c0
+		Range: 8c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
 		Range: 5c0
-		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 30
 		InitialFacing: 0
@@ -3579,8 +3664,11 @@ GTWR:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
-		Range: 7c0
-		MinRange: 4c0
+		MinRange: 5c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 5c0
 	WithBuildingBib:
 		HasMinibib: true
 	Armament:
@@ -3619,8 +3707,11 @@ ATWR:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
+		MinRange: 6c0
 		Range: 8c0
-		MinRange: 4c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 6c0
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
@@ -3660,8 +3751,11 @@ STWR:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
+		MinRange: 6c0
 		Range: 8c0
-		MinRange: 4c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 6c0
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
@@ -3707,8 +3801,11 @@ OBLI:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
+		MinRange: 6c0
 		Range: 8c0
-		MinRange: 4c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 6c0
 	WithBuildingBib:
 		HasMinibib: true
 	-WithSpriteBody:
@@ -3778,13 +3875,16 @@ HQ:
 	Armor:
 		Type: Wood
 	RevealsShroud:
+		MinRange: 6c0
 		Range: 10c0
-		MinRange: 4c0
 		RequiresCondition: !disabled
+		RevealGeneratedShroud: False
 	RevealsShroud@Offline:
 		Range: 5c0
-		MinRange: 4c0
 		RequiresCondition: disabled
+	RevealsShroud@GAPGEN:
+		Range: 6c0
+		RequiresCondition: !disabled
 	ProvidesRadar:
 		RequiresCondition: !jammed && !disabled && !being-warped
 	WithBuildingBib:
@@ -3943,13 +4043,16 @@ EYE:
 	Armor:
 		Type: Wood
 	RevealsShroud:
+		MinRange: 6c0
 		Range: 10c0
-		MinRange: 4c0
 		RequiresCondition: !disabled
+		RevealGeneratedShroud: False
 	RevealsShroud@Offline:
 		Range: 5c0
-		MinRange: 4c0
 		RequiresCondition: disabled
+	RevealsShroud@GAPGEN:
+		Range: 6c0
+		RequiresCondition: !disabled
 	WithBuildingBib:
 	ProvidesRadar:
 		RequiresCondition: !jammed && !disabled && !being-warped
@@ -4048,8 +4151,11 @@ REP:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	WithBuildingBib:
 		HasMinibib: true
 	Reservable:
@@ -4097,8 +4203,11 @@ HPAD.TD:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Exit@1:
 		SpawnOffset: 0,-256,0
 		ExitCell: 0,0
@@ -4252,8 +4361,11 @@ PROC.TD:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	WithBuildingBib:
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack, ThiefInfiltrate
@@ -4317,7 +4429,6 @@ SILO.TD:
 		Type: Wood
 	RevealsShroud:
 		Range: 4c0
-		MinRange: 3c0
 	WithBuildingBib:
 		HasMinibib: true
 	Targetable:
@@ -4365,8 +4476,11 @@ AFLD.GDI:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Exit@1:
 		RequiresCondition: !being-captured
 		ExitCell: 1,1
@@ -4519,8 +4633,16 @@ GTEK:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 4c0
-		MinRange: 3c0
+		MinRange: 5c0
+		Range: 6c0
+		RequiresCondition: !disabled
+		RevealGeneratedShroud: False
+	RevealsShroud@Offline:
+		Range: 5c0
+		RequiresCondition: disabled
+	RevealsShroud@GAPGEN:
+		Range: 5c0
+		RequiresCondition: !disabled
 	InfiltrateForSupportPower@tec:
 		Types: SabInfiltrate
 		Proxy: tec.gdi.stolen
@@ -4606,8 +4728,16 @@ TMPL:
 	Armor:
 		Type: Wood
 	RevealsShroud:
+		MinRange: 5c0
+		Range: 6c0
+		RequiresCondition: !disabled
+		RevealGeneratedShroud: False
+	RevealsShroud@Offline:
 		Range: 5c0
-		MinRange: 4c0
+		RequiresCondition: disabled
+	RevealsShroud@GAPGEN:
+		Range: 5c0
+		RequiresCondition: !disabled
 	NukePower@Cluster:
 		OrderName: clustermissile
 		Icon: clustermissile
@@ -4725,8 +4855,11 @@ PRIS:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
+		MinRange: 6c0
 		Range: 8c0
-		MinRange: 4c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 6c0
 	WithBuildingBib:
 		HasMinibib: true
 	WithSpriteBody:
@@ -4785,8 +4918,11 @@ SPEN.nod:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,-213,0
@@ -4888,8 +5024,11 @@ SYRD.gdi:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: -1024,1024,0
@@ -4994,8 +5133,11 @@ HTUR:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
-		Range: 5c0
-		MinRange: 4c0
+		MinRange: 6c0
+		Range: 8c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 6c0
 	Turreted:
 		TurnSpeed: 2
 		InitialFacing: 0
@@ -5087,8 +5229,11 @@ TTUR:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
+		MinRange: 5c0
 		Range: 6c0
-		MinRange: 4c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 5c0
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
@@ -5134,13 +5279,16 @@ SGEN:
 	Armor:
 		Type: Wood
 	RevealsShroud:
+		MinRange: 5c0
 		Range: 6c0
-		MinRange: 4c0
 		RequiresCondition: !disabled
+		RevealGeneratedShroud: False
 	RevealsShroud@Offline:
 		Range: 5c0
-		MinRange: 4c0
 		RequiresCondition: disabled
+	RevealsShroud@GAPGEN:
+		Range: 5c0
+		RequiresCondition: !disabled
 	WithBuildingBib:
 	GrantExternalConditionPowerCA@STEALTHGEN:
 		Prerequisites: techlevel.superw
@@ -5262,8 +5410,7 @@ LASP:
 		Amount: -15
 		RequiresCondition: !being-warped
 	RevealsShroud:
-		Range: 4c0
-		MinRange: 3c0
+		Range: 3c0
 	LineBuild:
 		Range: 10
 		NodeTypes: laserfencenode
@@ -5351,13 +5498,16 @@ PATR:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
+		MinRange: 5c0
 		Range: 6c0
-		MinRange: 4c0
 		RequiresCondition: !disabled
+		RevealGeneratedShroud: False
 	RevealsShroud@Offline:
 		Range: 5c0
-		MinRange: 4c0
 		RequiresCondition: disabled
+	RevealsShroud@GAPGEN:
+		Range: 5c0
+		RequiresCondition: !disabled
 	Turreted:
 		TurnSpeed: 2
 		InitialFacing: 0
@@ -5445,8 +5595,11 @@ INDP:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
 		Range: 4c0
-		MinRange: 3c0
 	WithBuildingBib:
 	Power:
 		Amount: -150
@@ -5480,8 +5633,11 @@ OREP:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
 		Range: 4c0
-		MinRange: 3c0
 	WithBuildingBib:
 	Buildable:
 		Queue: Building
@@ -5534,8 +5690,11 @@ MISS.GDI:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
 		Range: 4c0
-		MinRange: 3c0
 	WithBuildingBib:
 	Buildable:
 		Queue: Building
@@ -5590,8 +5749,11 @@ BIO.Nod:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
 		Range: 4c0
-		MinRange: 3c0
 	WithBuildingBib:
 	Buildable:
 		Queue: Building
@@ -5653,13 +5815,16 @@ MSLO.Nod:
 	Armor:
 		Type: Wood
 	RevealsShroud:
+		MinRange: 5c0
 		Range: 6c0
-		MinRange: 4c0
 		RequiresCondition: !disabled
+		RevealGeneratedShroud: False
 	RevealsShroud@Offline:
 		Range: 5c0
-		MinRange: 4c0
 		RequiresCondition: disabled
+	RevealsShroud@GAPGEN:
+		Range: 5c0
+		RequiresCondition: !disabled
 	NukePower@Chemmiss:
 		OrderName: chemmissile
 		Icon: chemmissile
@@ -5733,13 +5898,16 @@ WEAT:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		Range: 10c0
-		MinRange: 4c0
+		MinRange: 5c0
+		Range: 6c0
 		RequiresCondition: !disabled
+		RevealGeneratedShroud: False
 	RevealsShroud@Offline:
 		Range: 5c0
-		MinRange: 4c0
 		RequiresCondition: disabled
+	RevealsShroud@GAPGEN:
+		Range: 5c0
+		RequiresCondition: !disabled
 	WithBuildingBib:
 	DetonateWeaponPower@LightningStorm:
 		OrderName: storm

@@ -21,8 +21,11 @@ V2RL:
 	Mobile:
 		Speed: 68
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Armament:
 		Weapon: SCUD
 		ReloadingCondition: reloading
@@ -86,8 +89,11 @@ V2RL:
 		Name: body-water
 		RequiresCondition: onwater
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Turreted:
 		TurnSpeed: 7
 	Armament:
@@ -130,8 +136,11 @@ V2RL:
 	Mobile:
 		Speed: 82
 	RevealsShroud:
-		Range: 6c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Turreted:
 		TurnSpeed: 5
 		Offset: 0,0,20
@@ -185,8 +194,11 @@ V2RL:
 	Mobile:
 		Speed: 68
 	RevealsShroud:
-		Range: 6c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Turreted:
 		TurnSpeed: 5
 		Offset: 0,0,20
@@ -253,8 +265,11 @@ V2RL:
 	Passenger:
 		Weight: 2
 	RevealsShroud:
-		Range: 6c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Turreted:
 		TurnSpeed: 2
 	GrantConditionOnFaction@IRAQTANK:
@@ -325,8 +340,11 @@ ARTY:
 		Speed: 56
 		Locomotor: lighttracked
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Armament:
 		Weapon: 155mm
 		LocalOffset: 624,0,208
@@ -381,8 +399,11 @@ ISU:
 		Locomotor: heavytracked
 		Voice: Move
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Armament:
 		Weapon: 380mm
 		LocalOffset: 824,0,208
@@ -477,7 +498,6 @@ HARV:
 		Locomotor: heavywheeled
 	RevealsShroud:
 		Range: 4c0
-		MinRange: 3c0
 	WithHarvestAnimation:
 	WithDockingAnimation:
 	GpsDot:
@@ -536,7 +556,6 @@ MCV:
 		Locomotor: heavywheeled
 	RevealsShroud:
 		Range: 4c0
-		MinRange: 3c0
 	Transforms:
 		IntoActor: fact
 		Offset: -1,-1
@@ -580,8 +599,11 @@ JEEP:
 		TurnSpeed: 10
 		Speed: 157
 	RevealsShroud:
+		MinRange: 4c0
 		Range: 8c0
-		MinRange: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: 0,0,128
@@ -625,8 +647,11 @@ APC:
 		Speed: 135
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped
 	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
 		Range: 4c0
-		MinRange: 3c0
 	Armament:
 		Weapon: M60mg
 		LocalOffset: 85,0,171
@@ -665,8 +690,11 @@ MNLY:
 	Mobile:
 		Speed: 135
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Minelayer:
 		Mine: MINV
 	MineImmune:
@@ -709,7 +737,6 @@ TRUK:
 		Speed: 135
 	RevealsShroud:
 		Range: 4c0
-		MinRange: 3c0
 	DeliversCash:
 		Payload: 500
 		PlayerExperience: 50
@@ -749,8 +776,11 @@ MGG:
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !pickedup
 	RevealsShroud:
-		Range: 6c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	CreatesShroud:
 		Range: 6c0
 	RenderShroudCircle:
@@ -782,7 +812,6 @@ MRJ:
 		Speed: 82
 	RevealsShroud:
 		Range: 7c0
-		MinRange: 4c0
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		Offset: -256,0,256
@@ -828,8 +857,11 @@ TTNK:
 		Speed: 113
 		Voice: Move
 	RevealsShroud:
+		MinRange: 6c0
 		Range: 7c0
-		MinRange: 4c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 6c0
 	Armament:
 		Weapon: TTankZap
 		LocalOffset: 0,0,213
@@ -878,7 +910,6 @@ DTRK:
 		Voice: Move
 	RevealsShroud:
 		Range: 4c0
-		MinRange: 3c0
 	Explodes:
 		Weapon: MiniNuke
 		EmptyWeapon: MiniNuke
@@ -928,8 +959,11 @@ CTNK:
 		Speed: 113
 		Locomotor: heavywheeled
 	RevealsShroud:
-		Range: 6c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: APTusk
 		LocalOffset: -160,-276,232
@@ -974,8 +1008,11 @@ QTNK:
 	ChronoshiftableWithSpriteEffect:
 		RequiresCondition: !deployed && !being-captured && !being-warped
 	RevealsShroud:
-		Range: 6c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	MadTank:
 		DeployedCondition: deployed
 	Selectable:
@@ -1015,7 +1052,6 @@ AMCV:
 		Locomotor: heavywheeled
 	RevealsShroud:
 		Range: 4c0
-		MinRange: 3c0
 	Transforms:
 		IntoActor: afac
 		Offset: -1,-1
@@ -1061,8 +1097,11 @@ HMMV:
 		TurnSpeed: 10
 		Speed: 157
 	RevealsShroud:
-		Range: 8c0
 		MinRange: 4c0
+		Range: 8c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: -85,0,128
@@ -1108,8 +1147,11 @@ BGGY:
 	Mobile:
 		Speed: 157
 	RevealsShroud:
-		Range: 8c0
 		MinRange: 4c0
+		Range: 8c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: -43,0,128
@@ -1160,8 +1202,11 @@ APC2:
 		Speed: 135
 		PauseOnCondition: being-captured || empdisable || being-warped || notmobile
 	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
 		Range: 4c0
-		MinRange: 3c0
 	Armament:
 		Weapon: M60mgTD
 		LocalOffset: 85,0,171
@@ -1211,8 +1256,11 @@ VULC:
 		Speed: 100
 		PauseOnCondition: being-captured || empdisable || being-warped || notmobile
 	RevealsShroud:
-		Range: 6c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Armament@GAT0:
 		Weapon: MGatt.0
 		LocalOffset: 220,0,350
@@ -1296,8 +1344,11 @@ LTNK:
 		Name: body-water
 		RequiresCondition: onwater && !parachute
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Turreted:
 		TurnSpeed: 7
 	Armament:
@@ -1347,8 +1398,11 @@ MTNK:
 	Mobile:
 		Speed: 82
 	RevealsShroud:
-		Range: 6c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Turreted:
 		TurnSpeed: 5
 		Offset: 0,0,30
@@ -1420,8 +1474,11 @@ MTNK.Drone:
 		PauseOnCondition: disabled || empdisable || being-warped
 		Voice: Move
 	RevealsShroud:
-		Range: 6c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Turreted:
 		TurnSpeed: 5
 		Offset: 0,0,20
@@ -1500,8 +1557,11 @@ HTNK:
 	Passenger:
 		Weight: 2
 	RevealsShroud:
-		Range: 6c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Turreted:
 		TurnSpeed: 2
 	Armament@PRIMARY:
@@ -1582,8 +1642,11 @@ MSAM:
 	Armor:
 		Type: Light
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: -256,0,128
@@ -1635,8 +1698,11 @@ MLRS:
 	Armor:
 		Type: Light
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Turreted:
 		TurnSpeed: 2
 		Offset: -128,0,128
@@ -1703,8 +1769,11 @@ STNK.Nod:
 	Armor:
 		Type: Light
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Cloak@NORMAL:
 		InitialDelay: 90
 		CloakDelay: 90
@@ -1768,8 +1837,11 @@ BIKE:
 	Armor:
 		Type: Light
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: BikeRockets
 		LocalOffset: -128, -170, 170, -128, 170, 170
@@ -1810,8 +1882,11 @@ FTNK:
 	Armor:
 		Type: Light
 	RevealsShroud:
-		Range: 8c0
-		MinRange: 6c0
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Armament:
 		Weapon: BigFlamer
 		MuzzleSequence: muzzle
@@ -1864,7 +1939,6 @@ HAR2:
 		Type: Heavy
 	RevealsShroud:
 		Range: 4c0
-		MinRange: 3c0
 	GpsDot:
 		String: Harvester
 	SpawnActorOnDeath:
@@ -1917,8 +1991,11 @@ BTR:
 		Speed: 100
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: 5,0,70
@@ -1967,12 +2044,19 @@ IFV:
 		Speed: 113
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+		RequiresCondition: !spyturr
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 		RequiresCondition: !spyturr
 	RevealsShroud@SPY:
 		Range: 10c0
-		MinRange: 6c0
+		MinRange: 4c0
+		RequiresCondition: spyturr
+	RevealsShroud@SPYGAPGEN:
+		Range: 4c0
 		RequiresCondition: spyturr
 	Turreted:
 		TurnSpeed: 10
@@ -2195,8 +2279,11 @@ IFV.AI:
 	Mobile:
 		Speed: 113
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: 20,0,0
@@ -2281,8 +2368,11 @@ TITN:
 		MoveSequence: run
 	WithSpriteTurret:
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: TitanGun
 		LocalOffset: 830,260,100
@@ -2388,8 +2478,11 @@ DISR:
 		Weight: 2
 		Voice: Move
 	RevealsShroud:
-		Range: 7c0
 		MinRange: 4c0
+		Range: 7c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: SonicZap
 		LocalOffset: 0,0,200
@@ -2466,8 +2559,11 @@ HSAM:
 	Armor:
 		Type: Light
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: -200,0,0
@@ -2560,8 +2656,11 @@ RTNK:
 	Passenger:
 		Voice: Move
 	RevealsShroud:
-		Range: 6c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Turreted:
 		TurnSpeed: 5
 	Armament:
@@ -2631,8 +2730,11 @@ V3RL:
 	Passenger:
 		Voice: Move
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Armament:
 		Weapon: V3Launcher
 		ReloadingCondition: reloading
@@ -2726,8 +2828,11 @@ TNKD:
 	Passenger:
 		Voice: Move
 	RevealsShroud:
-		Range: 6c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Turreted:
 		TurnSpeed: 2
 		Offset: -80,0,20
@@ -2780,13 +2885,16 @@ MSAR:
 		Speed: 82
 		RequireForceMoveCondition: !undeployed
 	RevealsShroud:
-		RequiresCondition: undeployed
-		Range: 6c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+		RequiresCondition: undeployed
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+		RequiresCondition: undeployed
 	RevealsShroud@DEPLOYED:
 		RequiresCondition: !undeployed
 		Range: 10c0
-		MinRange: 8c0
 	RenderSprites:
 		Image: msar
 	Repairable:
@@ -2862,8 +2970,11 @@ PTNK:
 	Passenger:
 		Voice: Move
 	RevealsShroud:
-		Range: 6c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Turreted:
 		TurnSpeed: 5
 		Offset: 100,0,0
@@ -2914,8 +3025,11 @@ WTNK:
 	Passenger:
 		Voice: Move
 	RevealsShroud:
-		Range: 7c0
 		MinRange: 4c0
+		Range: 7c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Turreted:
 		TurnSpeed: 4
 		Offset: 0,0,0
@@ -2974,8 +3088,11 @@ BATF:
 		Weight: 2
 		Voice: Move
 	RevealsShroud:
-		Range: 4c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	AttackTurreted:
 		Turrets: primary, secondary, tertiary
 		Armaments: primary, secondary, tertiary
@@ -3106,8 +3223,11 @@ MEMP:
 	ChronoshiftableWithSpriteEffect:
 		RequiresCondition: !being-warped && !deployed
 	RevealsShroud:
-		Range: 6c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	WithIdleOverlay@charging:
 		RequiresCondition: deployed
 		Palette: tseffect
@@ -3180,8 +3300,11 @@ CDRN:
 		Voice: Move
 		PauseOnCondition: empdisable || being-warped
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Explodes:
 		Weapon: ChaosDroneExplode
 		EmptyWeapon: VisualExplodeHusk
@@ -3255,8 +3378,11 @@ CHPR:
 		Weight: 2
 		Voice: Move
 	RevealsShroud:
-		Range: 6c0
 		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Turreted:
 		TurnSpeed: 2
 		Offset: -156,0,0
@@ -3340,8 +3466,11 @@ CRYO:
 	Armor:
 		Type: Light
 	RevealsShroud:
-		Range: 5c0
 		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Armament:
 		Weapon: CryoMissile
 		LocalOffset: 150,100,0, 150,-100,0
