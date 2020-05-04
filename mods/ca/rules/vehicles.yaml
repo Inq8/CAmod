@@ -556,7 +556,7 @@ JEEP:
 		Queue: Vehicle
 		BuildPaletteOrder: 15
 		Prerequisites: weap, ~vehicles.allies, ~techlevel.low
-		Description: Fast scout & anti-infantry vehicle.\n  Can detect cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+		Description: Fast scout & anti-infantry vehicle.\n  Can detect spies and cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
 		Cost: 400
 	Tooltip:
@@ -585,6 +585,7 @@ JEEP:
 	WithSpriteTurret:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
 		CloakTypes: Cloak, Thief
@@ -1031,7 +1032,7 @@ HMMV:
 		BuildPaletteOrder: 15
 		IconPalette: chrometd
 		Prerequisites: weap.td, ~vehicles.gdi, ~techlevel.low
-		Description: Fast scout & anti-infantry vehicle.\n  Can detect cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+		Description: Fast scout & anti-infantry vehicle.\n  Can detect spies and cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
 		Cost: 400
 	Tooltip:
@@ -1059,6 +1060,7 @@ HMMV:
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	AutoTarget:
+	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
 		CloakTypes: Cloak, Thief
@@ -1077,7 +1079,7 @@ BGGY:
 		BuildPaletteOrder: 15
 		IconPalette: chrometd
 		Prerequisites: ~vehicles.nod, ~techlevel.low
-		Description: Fast scout & anti-infantry vehicle.\n  Can detect cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+		Description: Fast scout & anti-infantry vehicle.\n  Can detect spies and cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
 		Cost: 350
 	Tooltip:
@@ -1103,6 +1105,7 @@ BGGY:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
+	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
 		CloakTypes: Cloak, Thief

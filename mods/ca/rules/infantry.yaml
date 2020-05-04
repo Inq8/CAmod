@@ -5,7 +5,7 @@ DOG:
 		BuildAtProductionType: Dog
 		BuildPaletteOrder: 50
 		Prerequisites: ~kenn, ~techlevel.infonly
-		Description: Anti-infantry unit.\n  Can detect spies.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+		Description: Anti-infantry unit.\n  Can detect spies and cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
 	RenderSprites:
 		Scale: 0.7
 		PlayerPalette: player
@@ -65,6 +65,9 @@ DOG:
 		Modifier: 150
 		RequiresCondition: run
 	IgnoresDisguise:
+	DetectCloaked:
+		CloakTypes: Cloak, Thief
+		Range: 4c0
 	Voiced:
 		VoiceSet: DogVoice
 	-TakeCover:
@@ -1410,7 +1413,7 @@ SAB:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 90
 		Prerequisites: hq, ~infantry.nod, ~techlevel.medium
-		Description: Covert infantry. Infiltrates enemy structures and steals technology.\n  Can detect cloaked units and spies.\n  Special Ability: Infiltrate\n  Special Ability: Stealth
+		Description: Covert infantry. Infiltrates enemy structures and steals technology.\n  Can detect spies and cloaked units.\n  Special Ability: Infiltrate\n  Special Ability: Stealth
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -1466,6 +1469,9 @@ SAB:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Heavy, Critical
 	IgnoresDisguise:
+	DetectCloaked:
+		CloakTypes: Cloak, Thief
+		Range: 4c0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	ProductionCostMultiplier@LegionBonus:
@@ -1744,12 +1750,24 @@ JJET:
 		RequiresCondition: (stance-attackanything || assault-move) && !airborne
 	AutoTargetPriority@DEFAULT_AIR:
 		RequiresCondition: !stance-attackanything && !assault-move && airborne
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
+		ValidTargets: Vehicle, Water, Underwater, Defense
 		InvalidTargets: NoAutoTarget, WaterStructure
+		Priority: 1
+	AutoTargetPriority@DEFAULT_AIR_ATTACK_INFANTRY:
+		RequiresCondition: !stance-attackanything && !assault-move && airborne
+		ValidTargets: Infantry
+		InvalidTargets: NoAutoTarget, WaterStructure
+		Priority: 10
 	AutoTargetPriority@ATTACKANYTHING_AIR:
 		RequiresCondition: (stance-attackanything || assault-move) && airborne
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense
+		ValidTargets: Vehicle, Water, Underwater, Structure, Defense
 		InvalidTargets: NoAutoTarget
+		Priority: 1
+	AutoTargetPriority@ATTACKANYTHING_AIR_ATTACK_INFANTRY:
+		RequiresCondition: (stance-attackanything || assault-move) && airborne
+		ValidTargets: Infantry
+		InvalidTargets: NoAutoTarget
+		Priority: 10
 	KillsSelf:
 		RequiresCondition: empdisable && cruising
 
