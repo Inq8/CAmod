@@ -378,7 +378,7 @@
 ^BinoUpgrade:
 	ExternalCondition@Bino:
 		Condition: bino
-	RevealsShroudMultiplier@Bino:
+	RangeMultiplier@Bino:
 		Modifier: 120
 		RequiresCondition: bino
 	WithDecoration@Bino:
@@ -392,14 +392,6 @@
 		BlinkPatterns:
 			bino && gdiupg: On, Off
 		RequiresSelection: True
-
-^GapGenShroud:
-	ExternalCondition@GAPGEN:
-		Condition: ggshroud
-	RevealsShroudMultiplier@GAPGEN:
-		Modifier: 80
-		RequiresCondition: ggshroud
-
 
 ^InfantryExperienceHospitalOverrides:
 	WithDecoration@RANK-1:
@@ -1525,8 +1517,8 @@
 	CaptureManager:
 		BeingCapturedCondition: being-captured
 	Capturable:
+		RequiresCondition: !build-incomplete
 		Types: building
-		RequiresCondition: !being-warped
 	CapturableProgressBar:
 	CapturableProgressBlink:
 	BotRepairOrSellCaptures:
@@ -1723,6 +1715,7 @@
 		DamageThreshold: 70
 	RevealsShroud:
 		Range: 1c0
+		MinRange: 1c0
 	WithDecoration@fake:
 		RequiresSelection: true
 		Image: pips
@@ -2294,6 +2287,7 @@
 		Type: Light
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	Mobile:
 		Voice: Move
 		Speed: 56

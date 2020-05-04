@@ -22,6 +22,7 @@ V2RL:
 		Speed: 68
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Armament:
 		Weapon: SCUD
 		ReloadingCondition: reloading
@@ -86,6 +87,7 @@ V2RL:
 		RequiresCondition: onwater
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 7
 	Armament:
@@ -129,6 +131,7 @@ V2RL:
 		Speed: 82
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 5
 		Offset: 0,0,20
@@ -183,6 +186,7 @@ V2RL:
 		Speed: 68
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 5
 		Offset: 0,0,20
@@ -250,6 +254,7 @@ V2RL:
 		Weight: 2
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 2
 	GrantConditionOnFaction@IRAQTANK:
@@ -321,6 +326,7 @@ ARTY:
 		Locomotor: lighttracked
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Armament:
 		Weapon: 155mm
 		LocalOffset: 624,0,208
@@ -376,6 +382,7 @@ ISU:
 		Voice: Move
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Armament:
 		Weapon: 380mm
 		LocalOffset: 824,0,208
@@ -470,6 +477,7 @@ HARV:
 		Locomotor: heavywheeled
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 3c0
 	WithHarvestAnimation:
 	WithDockingAnimation:
 	GpsDot:
@@ -528,6 +536,7 @@ MCV:
 		Locomotor: heavywheeled
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 3c0
 	Transforms:
 		IntoActor: fact
 		Offset: -1,-1
@@ -572,6 +581,7 @@ JEEP:
 		Speed: 157
 	RevealsShroud:
 		Range: 8c0
+		MinRange: 6c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: 0,0,128
@@ -616,6 +626,7 @@ APC:
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 3c0
 	Armament:
 		Weapon: M60mg
 		LocalOffset: 85,0,171
@@ -655,6 +666,7 @@ MNLY:
 		Speed: 135
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Minelayer:
 		Mine: MINV
 	MineImmune:
@@ -697,6 +709,7 @@ TRUK:
 		Speed: 135
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 3c0
 	DeliversCash:
 		Payload: 500
 		PlayerExperience: 50
@@ -737,6 +750,7 @@ MGG:
 		RequiresCondition: !pickedup
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	CreatesShroud:
 		Range: 6c0
 	RenderShroudCircle:
@@ -774,6 +788,7 @@ MRJ:
 		Speed: 82
 	RevealsShroud:
 		Range: 7c0
+		MinRange: 4c0
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		Offset: -256,0,256
@@ -820,6 +835,7 @@ TTNK:
 		Voice: Move
 	RevealsShroud:
 		Range: 7c0
+		MinRange: 4c0
 	Armament:
 		Weapon: TTankZap
 		LocalOffset: 0,0,213
@@ -868,6 +884,7 @@ DTRK:
 		Voice: Move
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 3c0
 	Explodes:
 		Weapon: MiniNuke
 		EmptyWeapon: MiniNuke
@@ -918,6 +935,7 @@ CTNK:
 		Locomotor: heavywheeled
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	Armament@PRIMARY:
 		Weapon: APTusk
 		LocalOffset: -160,-276,232
@@ -963,6 +981,7 @@ QTNK:
 		RequiresCondition: !deployed && !being-captured && !being-warped
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	MadTank:
 		DeployedCondition: deployed
 	Selectable:
@@ -1002,6 +1021,7 @@ AMCV:
 		Locomotor: heavywheeled
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 3c0
 	Transforms:
 		IntoActor: afac
 		Offset: -1,-1
@@ -1048,6 +1068,7 @@ HMMV:
 		Speed: 157
 	RevealsShroud:
 		Range: 8c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: -85,0,128
@@ -1094,6 +1115,7 @@ BGGY:
 		Speed: 157
 	RevealsShroud:
 		Range: 8c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: -43,0,128
@@ -1145,6 +1167,7 @@ APC2:
 		PauseOnCondition: being-captured || empdisable || being-warped || notmobile
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 3c0
 	Armament:
 		Weapon: M60mgTD
 		LocalOffset: 85,0,171
@@ -1195,6 +1218,7 @@ VULC:
 		PauseOnCondition: being-captured || empdisable || being-warped || notmobile
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	Armament@GAT0:
 		Weapon: MGatt.0
 		LocalOffset: 220,0,350
@@ -1279,6 +1303,7 @@ LTNK:
 		RequiresCondition: onwater && !parachute
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 7
 	Armament:
@@ -1329,6 +1354,7 @@ MTNK:
 		Speed: 82
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 5
 		Offset: 0,0,30
@@ -1401,6 +1427,7 @@ MTNK.Drone:
 		Voice: Move
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 5
 		Offset: 0,0,20
@@ -1480,6 +1507,7 @@ HTNK:
 		Weight: 2
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 2
 	Armament@PRIMARY:
@@ -1561,6 +1589,7 @@ MSAM:
 		Type: Light
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: -256,0,128
@@ -1613,6 +1642,7 @@ MLRS:
 		Type: Light
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 2
 		Offset: -128,0,128
@@ -1680,6 +1710,7 @@ STNK.Nod:
 		Type: Light
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Cloak@NORMAL:
 		InitialDelay: 90
 		CloakDelay: 90
@@ -1744,6 +1775,7 @@ BIKE:
 		Type: Light
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Armament@PRIMARY:
 		Weapon: BikeRockets
 		LocalOffset: -128, -170, 170, -128, 170, 170
@@ -1785,6 +1817,7 @@ FTNK:
 		Type: Light
 	RevealsShroud:
 		Range: 8c0
+		MinRange: 6c0
 	Armament:
 		Weapon: BigFlamer
 		MuzzleSequence: muzzle
@@ -1837,6 +1870,7 @@ HAR2:
 		Type: Heavy
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 3c0
 	GpsDot:
 		String: Harvester
 	SpawnActorOnDeath:
@@ -1890,6 +1924,7 @@ BTR:
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: 5,0,70
@@ -1939,9 +1974,11 @@ IFV:
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 		RequiresCondition: !spyturr
 	RevealsShroud@SPY:
 		Range: 10c0
+		MinRange: 6c0
 		RequiresCondition: spyturr
 	Turreted:
 		TurnSpeed: 10
@@ -2165,6 +2202,7 @@ IFV.AI:
 		Speed: 113
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: 20,0,0
@@ -2250,6 +2288,7 @@ TITN:
 	WithSpriteTurret:
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Armament@PRIMARY:
 		Weapon: TitanGun
 		LocalOffset: 830,260,100
@@ -2356,6 +2395,7 @@ DISR:
 		Voice: Move
 	RevealsShroud:
 		Range: 7c0
+		MinRange: 4c0
 	Armament@PRIMARY:
 		Weapon: SonicZap
 		LocalOffset: 0,0,200
@@ -2433,6 +2473,7 @@ HSAM:
 		Type: Light
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 10
 		Offset: -200,0,0
@@ -2526,6 +2567,7 @@ RTNK:
 		Voice: Move
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 5
 	Armament:
@@ -2596,6 +2638,7 @@ V3RL:
 		Voice: Move
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Armament:
 		Weapon: V3Launcher
 		ReloadingCondition: reloading
@@ -2690,6 +2733,7 @@ TNKD:
 		Voice: Move
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 2
 		Offset: -80,0,20
@@ -2733,7 +2777,7 @@ MSAR:
 		IconPalette: chrometd
 		Prerequisites: hq, ~vehicles.gdi, ~techlevel.high
 		BuildDurationModifier: 50
-		Description: When deployed, provides radar, increases aircraft/vehicle vision,\n and detects cloaked units.\n  Unarmed
+		Description: When deployed, provides radar and increases nearby vehicle weapon range.\n  Detects cloaked units.\n  Unarmed
 	Health:
 		HP: 22000
 	Armor:
@@ -2744,9 +2788,11 @@ MSAR:
 	RevealsShroud:
 		RequiresCondition: undeployed
 		Range: 6c0
+		MinRange: 4c0
 	RevealsShroud@DEPLOYED:
 		RequiresCondition: !undeployed
 		Range: 10c0
+		MinRange: 8c0
 	RenderSprites:
 		Image: msar
 	Repairable:
@@ -2778,7 +2824,7 @@ MSAR:
 		UndeployOnPickup: true
 	DetectCloaked@Deployed:
 		Range: 10c0
-		CloakTypes: Cloak
+		CloakTypes: Cloak, Thief
 		RequiresCondition: deployed && !(empdisable || being-warped)
 	RenderDetectionCircle:
 		TrailCount: 3
@@ -2823,6 +2869,7 @@ PTNK:
 		Voice: Move
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 5
 		Offset: 100,0,0
@@ -2874,6 +2921,7 @@ WTNK:
 		Voice: Move
 	RevealsShroud:
 		Range: 7c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 4
 		Offset: 0,0,0
@@ -2933,6 +2981,7 @@ BATF:
 		Voice: Move
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 4c0
 	AttackTurreted:
 		Turrets: primary, secondary, tertiary
 		Armaments: primary, secondary, tertiary
@@ -3064,6 +3113,7 @@ MEMP:
 		RequiresCondition: !being-warped && !deployed
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	WithIdleOverlay@charging:
 		RequiresCondition: deployed
 		Palette: tseffect
@@ -3137,6 +3187,7 @@ CDRN:
 		PauseOnCondition: empdisable || being-warped
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Explodes:
 		Weapon: ChaosDroneExplode
 		EmptyWeapon: VisualExplodeHusk
@@ -3211,6 +3262,7 @@ CHPR:
 		Voice: Move
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 2
 		Offset: -156,0,0
@@ -3295,6 +3347,7 @@ CRYO:
 		Type: Light
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Armament:
 		Weapon: CryoMissile
 		LocalOffset: 150,100,0, 150,-100,0

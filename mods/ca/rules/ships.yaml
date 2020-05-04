@@ -25,6 +25,7 @@ SS:
 		Speed: 82
 	RevealsShroud:
 		Range: 8c0
+		MinRange: 5c0
 	Targetable:
 		TargetTypes: Ground, Water, Ship, Submarine, Repair
 		RequiresCondition: !underwater && !being-warped
@@ -94,6 +95,7 @@ MSUB:
 		Speed: 56
 	RevealsShroud:
 		Range: 8c0
+		MinRange: 5c0
 	Targetable:
 		TargetTypes: Ground, Water, Ship, Submarine, Repair
 		RequiresCondition: !underwater && !being-warped
@@ -165,6 +167,7 @@ DD:
 		Speed: 82
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 5c0
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		Offset: -90,0,406
@@ -221,6 +224,7 @@ CA:
 		Speed: 56
 	RevealsShroud:
 		Range: 7c0
+		MinRange: 5c0
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		Offset: -90,0,406
@@ -290,6 +294,7 @@ LST:
 		RequiresCondition: !empdisable
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 5c0
 	WithLandingCraftAnimation:
 		OpenTerrainTypes: Clear, Rough, Road, Ore, Gems, Beach
 	Cargo:
@@ -329,6 +334,7 @@ PT:
 		Speed: 113
 	RevealsShroud:
 		Range: 7c0
+		MinRange: 5c0
 	Turreted:
 		TurnSpeed: 7
 		Offset: 512,0,0
@@ -383,6 +389,7 @@ PT2:
 		Speed: 100
 	RevealsShroud:
 		Range: 7c0
+		MinRange: 5c0
 	Turreted:
 		TurnSpeed: 7
 		Offset: 512,0,0
@@ -443,6 +450,7 @@ DD2:
 		Speed: 68
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 5c0
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		Offset: -90,0,406
@@ -500,6 +508,7 @@ SS2:
 		Speed: 82
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 5c0
 	Targetable:
 		TargetTypes: Ground, Water, Ship, Submarine, Repair
 		RequiresCondition: !underwater && !being-warped
@@ -570,6 +579,7 @@ ISUB:
 		Speed: 56
 	RevealsShroud:
 		Range: 8c0
+		MinRange: 5c0
 	Targetable:
 		TargetTypes: Ground, Water, Ship, Submarine, Repair
 		RequiresCondition: !underwater && !being-warped
@@ -635,6 +645,7 @@ CARR:
 		Type: Heavy
 	RevealsShroud:
 		Range: 7c0
+		MinRange: 5c0
 		Type: CenterPosition
 	Mobile:
 		TurnSpeed: 5
@@ -644,8 +655,6 @@ CARR:
 		Sequence: spinner
 		Offset: 30,70,600
 		PauseOnCondition: empdisable || being-warped
-	RevealsShroud:
-		Range: 7c0
 	AttackOmni:
 		Voice: Attack
 		PauseOnCondition: empdisable || being-warped

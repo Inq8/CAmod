@@ -23,9 +23,11 @@ MSLO:
 		Type: Wood
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 		RequiresCondition: !disabled
 	RevealsShroud@Offline:
 		Range: 5c0
+		MinRange: 4c0
 		RequiresCondition: disabled
 	NukePower:
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -92,6 +94,7 @@ GAP:
 		Type: Concrete
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	WithBuildingBib:
 		HasMinibib: true
 	CreatesShroud:
@@ -110,12 +113,6 @@ GAP:
 		Type: Rectangle
 			TopLeft: -512, -512
 			BottomRight: 512, 512
-	ProximityExternalCondition@GAPGEN:
-		Condition: ggshroud
-		Range: 6c0
-		AffectsParent: False
-		RequiresCondition: !disabled || !empdisable || !being-warped
-		ValidStances: Enemy
 
 SPEN:
 	Inherits: ^Building
@@ -151,6 +148,7 @@ SPEN:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,-213,0
@@ -309,6 +307,7 @@ SYRD:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: -1024,1024,0
@@ -436,9 +435,11 @@ IRON:
 		Type: Wood
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 		RequiresCondition: !disabled
 	RevealsShroud@Offline:
 		Range: 5c0
+		MinRange: 4c0
 		RequiresCondition: disabled
 	WithBuildingBib:
 		HasMinibib: true
@@ -500,9 +501,11 @@ PDOX:
 		Type: Wood
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 		RequiresCondition: !disabled
 	RevealsShroud@Offline:
 		Range: 5c0
+		MinRange: 4c0
 		RequiresCondition: disabled
 	WithBuildingBib:
 		HasMinibib: true
@@ -622,6 +625,7 @@ TSLA:
 		Type: Concrete
 	RevealsShroud:
 		Range: 8c0
+		MinRange: 6c0
 	Targetable@TeslaBoost:
 		TargetTypes: TeslaBoost
 		RequiresCondition: !powerdown
@@ -695,6 +699,7 @@ AGUN:
 		Type: Concrete
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
@@ -751,9 +756,11 @@ DOME:
 		Type: Wood
 	RevealsShroud:
 		Range: 10c0
+		MinRange: 4c0
 		RequiresCondition: !disabled
 	RevealsShroud@Offline:
 		Range: 5c0
+		MinRange: 4c0
 	WithBuildingBib:
 	ProvidesRadar:
 		RequiresCondition: !jammed && !disabled && !being-warped
@@ -844,6 +851,7 @@ PBOX:
 		Type: Concrete
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
@@ -886,6 +894,7 @@ HBOX:
 		Type: Concrete
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	Cloak:
 		InitialDelay: 125
 		CloakDelay: 60
@@ -934,6 +943,7 @@ GUN:
 		Type: Concrete
 	RevealsShroud:
 		Range: 7c0
+		MinRange: 4c0
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
@@ -976,6 +986,7 @@ FTUR:
 		Type: Concrete
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
@@ -1027,6 +1038,7 @@ SAM:
 		Type: Concrete
 	RevealsShroud:
 		Range: 8c0
+		MinRange: 4c0
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
@@ -1080,6 +1092,7 @@ ATEK:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	WithBuildingBib:
 	GpsPower:
 		PauseOnCondition: disabled
@@ -1149,6 +1162,7 @@ WEAP:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	WithBuildingBib:
 	WithProductionDoorOverlay:
 		RequiresCondition: !build-incomplete
@@ -1378,6 +1392,7 @@ FACT:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Production:
 		Produces: Building, Defense
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -1470,6 +1485,7 @@ PROC:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Refinery:
 		DockAngle: 64
 		DockOffset: 1,2
@@ -1540,6 +1556,7 @@ SILO:
 		Type: Wood
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 3c0
 	WithBuildingBib:
 		HasMinibib: true
 	-WithSpriteBody:
@@ -1584,6 +1601,7 @@ HPAD:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	WithBuildingBib:
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
@@ -1682,6 +1700,7 @@ AFLD:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Exit@1:
 		RequiresCondition: !being-captured
 		ExitCell: 1,1
@@ -1903,6 +1922,7 @@ POWR:
 		Type: Wood
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 3c0
 	WithBuildingBib:
 	Power:
 		Amount: 100
@@ -1946,6 +1966,7 @@ APWR:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	WithBuildingBib:
 	Power:
 		Amount: 200
@@ -2033,6 +2054,7 @@ STEK:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	WithBuildingBib:
 	Power:
 		Amount: -100
@@ -2095,6 +2117,7 @@ BARR:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	WithBuildingBib:
 	RallyPoint:
 	Exit@1:
@@ -2194,6 +2217,7 @@ KENN:
 		Type: Wood
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 3c0
 	WithBuildingBib:
 		HasMinibib: True
 	RallyPoint:
@@ -2255,6 +2279,7 @@ TENT:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	WithBuildingBib:
 	RallyPoint:
 	Exit@1:
@@ -2360,6 +2385,7 @@ FIX:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Reservable:
 	RallyPoint:
 	RepairsUnits:
@@ -2643,6 +2669,7 @@ PYLE:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	WithBuildingBib:
 	RallyPoint:
 	Exit@1:
@@ -2745,6 +2772,7 @@ HAND:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	WithBuildingBib:
 	RallyPoint:
 	Exit@1:
@@ -2854,6 +2882,7 @@ WEAP.TD:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	ProvidesPrerequisite@any:
 		Factions: gdi, talon, zocom, eagle, nod, marked, blackh, legion, allies, england, france, germany, soviet, russia, ukraine, iraq
 		Prerequisite: vehicles.any
@@ -3065,6 +3094,7 @@ AIRS:
 		Type: Wood
 	RevealsShroud:
 		Range: 7c0
+		MinRange: 4c0
 	WithBuildingBib:
 	WithIdleOverlay@DISH:
 		Sequence: idle-dish
@@ -3285,6 +3315,7 @@ NUKE:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	WithBuildingBib:
 	WithDeathAnimation:
 		DeathSequence: dead
@@ -3338,6 +3369,7 @@ NUK2:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	WithBuildingBib:
 	WithDeathAnimation:
 		DeathSequence: dead
@@ -3379,6 +3411,7 @@ AFAC:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	WithBuildingBib:
 	Production:
 		Produces: Building, Defense
@@ -3500,6 +3533,7 @@ NSAM:
 		Type: Concrete
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 30
 		InitialFacing: 0
@@ -3546,6 +3580,7 @@ GTWR:
 		Type: Concrete
 	RevealsShroud:
 		Range: 7c0
+		MinRange: 4c0
 	WithBuildingBib:
 		HasMinibib: true
 	Armament:
@@ -3585,6 +3620,7 @@ ATWR:
 		Type: Concrete
 	RevealsShroud:
 		Range: 8c0
+		MinRange: 4c0
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
@@ -3625,6 +3661,7 @@ STWR:
 		Type: Concrete
 	RevealsShroud:
 		Range: 8c0
+		MinRange: 4c0
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
@@ -3671,6 +3708,7 @@ OBLI:
 		Type: Concrete
 	RevealsShroud:
 		Range: 8c0
+		MinRange: 4c0
 	WithBuildingBib:
 		HasMinibib: true
 	-WithSpriteBody:
@@ -3741,9 +3779,11 @@ HQ:
 		Type: Wood
 	RevealsShroud:
 		Range: 10c0
+		MinRange: 4c0
 		RequiresCondition: !disabled
 	RevealsShroud@Offline:
 		Range: 5c0
+		MinRange: 4c0
 		RequiresCondition: disabled
 	ProvidesRadar:
 		RequiresCondition: !jammed && !disabled && !being-warped
@@ -3904,9 +3944,11 @@ EYE:
 		Type: Wood
 	RevealsShroud:
 		Range: 10c0
+		MinRange: 4c0
 		RequiresCondition: !disabled
 	RevealsShroud@Offline:
 		Range: 5c0
+		MinRange: 4c0
 		RequiresCondition: disabled
 	WithBuildingBib:
 	ProvidesRadar:
@@ -4007,6 +4049,7 @@ REP:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	WithBuildingBib:
 		HasMinibib: true
 	Reservable:
@@ -4055,6 +4098,7 @@ HPAD.TD:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Exit@1:
 		SpawnOffset: 0,-256,0
 		ExitCell: 0,0
@@ -4209,6 +4253,7 @@ PROC.TD:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	WithBuildingBib:
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack, ThiefInfiltrate
@@ -4272,6 +4317,7 @@ SILO.TD:
 		Type: Wood
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 3c0
 	WithBuildingBib:
 		HasMinibib: true
 	Targetable:
@@ -4320,6 +4366,7 @@ AFLD.GDI:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Exit@1:
 		RequiresCondition: !being-captured
 		ExitCell: 1,1
@@ -4473,6 +4520,7 @@ GTEK:
 		Type: Wood
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 3c0
 	InfiltrateForSupportPower@tec:
 		Types: SabInfiltrate
 		Proxy: tec.gdi.stolen
@@ -4559,6 +4607,7 @@ TMPL:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	NukePower@Cluster:
 		OrderName: clustermissile
 		Icon: clustermissile
@@ -4677,6 +4726,7 @@ PRIS:
 		Type: Concrete
 	RevealsShroud:
 		Range: 8c0
+		MinRange: 4c0
 	WithBuildingBib:
 		HasMinibib: true
 	WithSpriteBody:
@@ -4736,6 +4786,7 @@ SPEN.nod:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,-213,0
@@ -4838,6 +4889,7 @@ SYRD.gdi:
 		Type: Wood
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: -1024,1024,0
@@ -4943,6 +4995,7 @@ HTUR:
 		Type: Concrete
 	RevealsShroud:
 		Range: 5c0
+		MinRange: 4c0
 	Turreted:
 		TurnSpeed: 2
 		InitialFacing: 0
@@ -5035,6 +5088,7 @@ TTUR:
 		Type: Concrete
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
@@ -5081,9 +5135,11 @@ SGEN:
 		Type: Wood
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 		RequiresCondition: !disabled
 	RevealsShroud@Offline:
 		Range: 5c0
+		MinRange: 4c0
 		RequiresCondition: disabled
 	WithBuildingBib:
 	GrantExternalConditionPowerCA@STEALTHGEN:
@@ -5207,6 +5263,7 @@ LASP:
 		RequiresCondition: !being-warped
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 3c0
 	LineBuild:
 		Range: 10
 		NodeTypes: laserfencenode
@@ -5295,9 +5352,11 @@ PATR:
 		Type: Concrete
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 		RequiresCondition: !disabled
 	RevealsShroud@Offline:
 		Range: 5c0
+		MinRange: 4c0
 		RequiresCondition: disabled
 	Turreted:
 		TurnSpeed: 2
@@ -5387,6 +5446,7 @@ INDP:
 		Type: Concrete
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 3c0
 	WithBuildingBib:
 	Power:
 		Amount: -150
@@ -5421,6 +5481,7 @@ OREP:
 		Type: Concrete
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 3c0
 	WithBuildingBib:
 	Buildable:
 		Queue: Building
@@ -5442,6 +5503,7 @@ OREP:
 		RequiresCondition: !disabled && !being-warped
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 3c0
 	Power:
 		Amount: -150
 		RequiresCondition: !being-warped
@@ -5473,6 +5535,7 @@ MISS.GDI:
 		Type: Concrete
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 3c0
 	WithBuildingBib:
 	Buildable:
 		Queue: Building
@@ -5496,6 +5559,7 @@ MISS.GDI:
 		Prerequisite: hmlrs.buildable
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 3c0
 	Power:
 		Amount: -150
 		RequiresCondition: !being-warped
@@ -5527,6 +5591,7 @@ BIO.Nod:
 		Type: Concrete
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 3c0
 	WithBuildingBib:
 	Buildable:
 		Queue: Building
@@ -5546,6 +5611,7 @@ BIO.Nod:
 		Name: Bio-Tech Lab
 	RevealsShroud:
 		Range: 4c0
+		MinRange: 3c0
 	Power:
 		Amount: -150
 		RequiresCondition: !being-warped
@@ -5588,9 +5654,11 @@ MSLO.Nod:
 		Type: Wood
 	RevealsShroud:
 		Range: 6c0
+		MinRange: 4c0
 		RequiresCondition: !disabled
 	RevealsShroud@Offline:
 		Range: 5c0
+		MinRange: 4c0
 		RequiresCondition: disabled
 	NukePower@Chemmiss:
 		OrderName: chemmissile
@@ -5666,9 +5734,11 @@ WEAT:
 		Type: Wood
 	RevealsShroud:
 		Range: 10c0
+		MinRange: 4c0
 		RequiresCondition: !disabled
 	RevealsShroud@Offline:
 		Range: 5c0
+		MinRange: 4c0
 		RequiresCondition: disabled
 	WithBuildingBib:
 	DetonateWeaponPower@LightningStorm:
