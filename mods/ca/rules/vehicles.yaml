@@ -161,6 +161,79 @@ V2RL:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 28,28
+		
+2TNK.Chrono:
+	Inherits: 2TNK
+	RenderSprites:
+		Image: 2tnk
+		FactionImages:
+			england: rtnk
+			germany: tnkd
+	-Buildable:
+	GrantConditionOnFaction@England:
+		Factions: england
+		Condition: england
+	GrantConditionOnFaction@Germany:
+		Factions: germany
+		Condition: germany
+	Armament:
+		RequiresCondition: !(germany || england)
+	Armament@Germany:
+		Weapon: 183mm
+		Recoil: 85
+		RecoilRecovery: 25
+		LocalOffset: 868,0,0
+		MuzzleSequence: muzzle
+		RequiresCondition: germany
+	Armament@England:
+		Weapon: 120mmHEAT
+		Recoil: 128
+		RecoilRecovery: 38
+		LocalOffset: 720,0,80
+		MuzzleSequence: muzzle
+		RequiresCondition: england
+	Tooltip:
+		Name: Medium Tank
+		GenericName: Tank
+		RequiresCondition: !germany
+	Tooltip@germany:
+		Name: Tank Destroyer
+		GenericName: Tank
+		RequiresCondition: germany
+	MirageTooltip@Tree:
+		Name: Mirage Tank
+		GenericName: Civilian building
+		GenericVisibility: Enemy, Neutral
+		RequiresCondition: tree && england
+	Mirage:
+		RequiresCondition: england && !empdisable && !being-warped && !driver-dead
+		RevealOn: Attack, Move
+		MirageCondition: tree
+		DefaultTargetTypes: v08, v09, v10, v11, v12, v13, v14, v15, v16, v17, v18
+		InitialDelay: 100
+		RevealDelay: 100
+	WithMirageSpriteBody:
+		RequiresCondition: tree && england
+		Name: tree
+	SpawnActorOnDeath:
+		RequiresCondition: !(being-warped || warpout) && warpin && !(england || germany)
+	SpawnActorOnDeath@England:
+		Actor: RTNK.Husk
+		RequiresCondition: warpin && england && !(being-warped || warpout)
+	SpawnActorOnDeath@Germany:
+		Actor: TNKD.Husk
+		RequiresCondition: warpin && germany && !(being-warped || warpout)
+	GrantTimedCondition@warpin:
+		Condition: warpin
+		Duration: 850
+	KillsSelf@warpout:
+		GrantsCondition: warpout
+		RequiresCondition: !warpin
+	Explodes@warpout:
+		Weapon: UnitExplodeWarpOut
+		EmptyWeapon: UnitExplodeWarpOut
+		RequiresCondition: warpout
+		
 
 3TNK:
 	Inherits: ^Tank
@@ -372,6 +445,24 @@ ARTY.nod:
 		Prerequisites: ~vehicles.nod, ~techlevel.medium
 	Armament:
 		Weapon: 155mmTD
+		
+ARTY.Chrono:
+	Inherits: ARTY
+	RenderSprites:
+		Image: arty
+	-Buildable:
+	GrantTimedCondition@warpin:
+		Condition: warpin
+		Duration: 850
+	KillsSelf@warpout:
+		GrantsCondition: warpout
+		RequiresCondition: !warpin
+	Explodes:
+		RequiresCondition: !warpout
+	Explodes@warpout:
+		Weapon: UnitExplodeWarpOut
+		EmptyWeapon: UnitExplodeWarpOut
+		RequiresCondition: warpout
 
 ISU:
 	Inherits: ^Tank

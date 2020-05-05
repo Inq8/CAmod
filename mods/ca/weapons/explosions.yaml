@@ -120,6 +120,15 @@ UnitExplodeChemSmall:
 		ExplosionPalette: temptd
 		ImpactSounds: firebl3.aud
 
+UnitExplodeWarpOut:
+	Inherits: ^Explosion
+	-Warhead@1Dam:
+	Warhead@2Eff: CreateEffect
+		Image: chrono
+		Explosions: warpout
+		ExplosionPalette: ra2effect-ignore-lighting-alpha75
+		ImpactSounds: chrono2.aud
+
 VisualExplodeHusk:
 	Inherits: ^Explosion
 	-Warhead@1Dam:

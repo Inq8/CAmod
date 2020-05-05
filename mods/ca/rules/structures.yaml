@@ -218,7 +218,7 @@ SPEN:
 		StartRepairingNotification: Repairing
 		FinishRepairingNotification: UnitRepaired
 		PlayerExperience: 15
-		RequiresCondition: !forceshield || !invulnerability || !being-warped
+		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	RallyPoint:
 	ProductionBar:
 		ProductionType: Ship
@@ -356,7 +356,7 @@ SYRD:
 		StartRepairingNotification: Repairing
 		FinishRepairingNotification: UnitRepaired
 		PlayerExperience: 15
-		RequiresCondition: !forceshield || !invulnerability || !being-warped
+		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	RallyPoint:
 	ProductionBar:
 		ProductionType: Ship
@@ -471,7 +471,7 @@ IRON:
 		ActivationDelay: 0
 		AirburstAltitude: 0c0
 		AllowMultiple: false
-		LongDesc: Makes a vehicles or structures invulnerable\nfor 20 seconds. Lethal to Infantry.
+		LongDesc: Makes selected vehicles and structures temporarily invulnerable\n  Warning: Harmful to Infantry.
 		OnFireSound: ironcur9.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -845,11 +845,11 @@ DOME:
 		Condition: gpshide
 		ValidStances: Ally
 		Range: 3
-		Duration: 1000
+		Duration: 2500
 		ActivationDelay: 0
 		AirburstAltitude: 0c0
 		AllowMultiple: false
-		LongDesc: Makes selected ground units invisible when stationary\nfor 1 minute.
+		LongDesc: Makes selected ground units temporarily invisible when stationary.
 		OnFireSound:  sscrambl.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -1171,7 +1171,7 @@ ATEK:
 		AllowMultiple: false
 		Sequence: false-active
 		Description: Force Shield
-		LongDesc: Makes friendly structures invulnerable\nfor 10 seconds. Causes structure power failure.
+		LongDesc: Makes selected friendly structures temporarily invulnerable.\n  Warning: Causes power failure.
 		OnFireSound: forceon.aud
 		DisplayTimerStances: Ally
 		SelectTargetSpeechNotification: SelectTarget
@@ -2136,7 +2136,7 @@ STEK:
 		AirburstAltitude: 0c0
 		AllowMultiple: false
 		Description: Force Shield
-		LongDesc: Makes friendly structures invulnerable\nfor 10 seconds. Causes structure power failure.
+		LongDesc: Makes selected friendly structures temporarily invulnerable.\n  Warning: Causes power failure.
 		OnFireSound: forceon.aud
 		DisplayTimerStances: Ally
 		SelectTargetSpeechNotification: SelectTarget
@@ -2463,6 +2463,7 @@ FIX:
 		StartRepairingNotification: Repairing
 		FinishRepairingNotification: UnitRepaired
 		PlayerExperience: 15
+		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	WithBuildingBib:
 		HasMinibib: true
 	WithResupplyAnimation:
@@ -4166,7 +4167,7 @@ REP:
 		StartRepairingNotification: Repairing
 		FinishRepairingNotification: UnitRepaired
 		PlayerExperience: 15
-		RequiresCondition: !being-warped
+		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
 	Power:
@@ -4666,7 +4667,7 @@ GTEK:
 		AirburstAltitude: 0c0
 		AllowMultiple: false
 		Description: Force Shield
-		LongDesc: Makes friendly structures invulnerable\nfor 10 seconds. Causes structure power failure.
+		LongDesc: Makes selected friendly structures temporarily invulnerable.\n  Warning: Causes power failure.
 		OnFireSound: forceon.aud
 		DisplayTimerStances: Ally
 		SelectTargetSpeechNotification: SelectTarget
@@ -4677,12 +4678,13 @@ GTEK:
 		PauseOnCondition: disabled || empdisable ||  being-warped
 	DetonateWeaponPower@Nrepair:
 		OrderName: nrepair
+		Prerequisites: ~structures.talon
 		Icon: nrepair
 		Cursor: repair
 		ChargeInterval: 7500
 		Description: Nanite Repair
 		ActivationDelay: 10
-		LongDesc: Repairs damaged vehicles\nfor 30 seconds.
+		LongDesc: Repairs selected damaged vehicles.
 		Weapon: RepairNanite
 		AirburstAltitude: 0
 		AllowMultiple: false
@@ -4785,7 +4787,7 @@ TMPL:
 		AllowMultiple: false
 		Sequence: false-active
 		Description: Force Shield
-		LongDesc: Makes friendly structures invulnerable\nfor 10 seconds. Causes structure power failure.
+		LongDesc: Makes selected friendly structures temporarily invulnerable.\n  Warning: Causes power failure.
 		OnFireSound: forceon.aud
 		DisplayTimerStances: Ally
 		SelectTargetSpeechNotification: SelectTarget
@@ -4809,7 +4811,7 @@ TMPL:
 		AirburstAltitude: 0c0
 		Sequence: false-active
 		AllowMultiple: false
-		LongDesc: Increases Vehicle & Infantry movement and attack speed\nfor 20 seconds.
+		LongDesc: Temporarily increases ground unit movement and attack speed.
 		OnFireSound: nodfrenzy.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -4951,7 +4953,7 @@ SPEN.nod:
 		StartRepairingNotification: Repairing
 		FinishRepairingNotification: UnitRepaired
 		PlayerExperience: 15
-		RequiresCondition: !being-warped
+		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	RallyPoint:
 	ProductionBar:
 		ProductionType: Ship
@@ -5063,7 +5065,7 @@ SYRD.gdi:
 		StartRepairingNotification: Repairing
 		FinishRepairingNotification: UnitRepaired
 		PlayerExperience: 15
-		RequiresCondition: !being-warped
+		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	RallyPoint:
 	ProductionBar:
 		ProductionType: Ship
@@ -5305,7 +5307,7 @@ SGEN:
 		ActivationDelay: 0
 		AirburstAltitude: 0c0
 		AllowMultiple: false
-		LongDesc: Makes a vehicles or structures invisible\nfor 30 seconds. Harmful to Infantry.
+		LongDesc: Makes vehicles and structures temporarily invisible.\n  Warning: Harmful to Infantry.
 		OnFireSound: cloak6.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
