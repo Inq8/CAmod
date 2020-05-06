@@ -83,7 +83,7 @@ E1:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 10
-		Prerequisites: ~barracksRA, ~techlevel.infonly
+		Prerequisites: ~infantry.ra, ~techlevel.infonly
 		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
 	Selectable:
 		Class: E1
@@ -168,7 +168,7 @@ E3:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 30
-		Prerequisites: ~barracksRA, ~techlevel.infonly
+		Prerequisites: ~infantry.ra, ~techlevel.infonly
 		Description: Anti-tank/anti-aircraft infantry.\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
 	Selectable:
 		Class: E3
@@ -278,7 +278,7 @@ E6:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 60
-		Prerequisites: ~barracksRA, ~techlevel.infonly
+		Prerequisites: ~infantry.ra, ~techlevel.infonly
 		Description: Infiltrates and captures\nenemy structures.\n  Can repair friendly structures & bridges.\n  Special Ability: Repair\n  Unarmed
 	Valued:
 		Cost: 500
@@ -435,7 +435,7 @@ MEDI:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 40
-		Prerequisites: barracks, ~infantry.medi, ~techlevel.infonly
+		Prerequisites: infantry.any, ~infantry.medi, ~techlevel.infonly
 		Description: Heals nearby infantry.\n  Unarmed
 	Valued:
 		Cost: 200
@@ -690,7 +690,7 @@ SHOK:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 115
-		Prerequisites: ~barr, tsla, ~infantry.soviet, ~techlevel.high
+		Prerequisites: ~infantry.any, structures.tsla, ~infantry.shok, ~techlevel.high
 		Description: Elite infantry with portable Tesla weapon.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft\n  Special Ability: Can over-charge Tesla Coil
 	Valued:
 		Cost: 350
@@ -739,14 +739,6 @@ SHOK:
 		Multiplier: 90
 		Prerequisites: infantry.russia
 
-SHOK.Nod:
-	Inherits: SHOK
-	RenderSprites:
-		Image: SHOK
-	Buildable:
-		BuildPaletteOrder: 130
-		Prerequisites: ~infantry.shok, ~infantry.nod, ~hq, ~techlevel.high
-
 N1:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -756,7 +748,7 @@ N1:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 10
-		Prerequisites: ~!bio.nod, ~barrackstd, ~techlevel.infonly
+		Prerequisites: ~!bio.nod, infantry.any, ~infantry.td, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
@@ -802,7 +794,7 @@ N2:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 40
-		Prerequisites: ~pyle, ~techlevel.infonly
+		Prerequisites: infantry.any, ~infantry.gdi, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Infantry armed with grenades.\n  Strong vs Buildings, Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
@@ -862,7 +854,7 @@ N3:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 30
-		Prerequisites: ~!bio.nod, ~barrackstd, ~techlevel.infonly
+		Prerequisites: ~!bio.nod, infantry.any, ~infantry.td, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Anti-tank/anti-aircraft infantry.\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
 	Valued:
@@ -1093,7 +1085,7 @@ RMBO:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 120
-		Prerequisites: ~barrackstd, techcenter, ~techlevel.high
+		Prerequisites: ~infantry.td, techcenter, ~techlevel.high
 		Queue: Infantry
 		IconPalette: chrometd
 		BuildLimit: 1
@@ -1156,7 +1148,7 @@ N6:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 60
-		Prerequisites: ~barrackstd, ~techlevel.infonly
+		Prerequisites: infantry.any, ~infantry.td, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Infiltrates and captures\nenemy structures.\n  Can repair friendly structures & bridges.\n  Special Ability: Repair\n  Unarmed
 	Valued:
@@ -1370,7 +1362,7 @@ MORT:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 40
-		Prerequisites: ~inf.nod.stolen, ~barracks
+		Prerequisites: ~inf.nod.stolen, ~infantry.any
 		Description: Infantry armed with a Chemical Mortar.\n  Strong vs Buildings, Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
 		Cost: 250
@@ -1555,71 +1547,19 @@ ACOL:
 		Modifier: 35
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
-
+		
 JJET:
-	Inherits@1: ^ExistsInWorld
-	Inherits@3: ^IronCurtainable
-	Inherits@4: ^SpriteActor
-	Inherits@5: ^Warpable
-	Inherits@6: ^EmpDisable
-	Inherits@bounty: ^GlobalBounty
-	Inherits@SELECTION_MODE: ^FlatSelectionMode
+	Inherits: ^Infantry
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
-	Huntable:
-	BodyOrientation:
-		QuantizedFacings: 8
-		UseClassicFacingFudge: true
-	RenderSprites:
-		Image: jumpjet
-		PlayerPalette: overlayplayertd
-	OwnerLostAction:
-		Action: Kill
-	DrawLineToTarget:
-	AppearsOnRadar:
-		UseLocation: true
-	SelectionDecorations:
-	HiddenUnderFog:
-		Type: GroundPosition
-	RevealsShroud:
-		Range: 6c0
-		MinRange: 4c0
-		Type: GroundPosition
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
-		Type: GroundPosition
-	AttackMove:
-	Guard:
-	Guardable:
-	ActorLostNotification:
-		Notification: AirUnitLost
-	GpsDot:
-		String: Infantry
-	MustBeDestroyed:
-	Voiced:
-		VoiceSet: GenericVoice
-	HitShape:
-	MapEditorData:
-		Categories: Aircraft
-	GrantConditionOnPrerequisite@ROF:
-		Condition: revealonfire
-		Prerequisites: global.revealonfire
-	RevealOnFire:
-		RevealGeneratedShroud: True
-		RequiresCondition: revealonfire
-	RevealOnDeath:
-		Duration: 100
-		Radius: 2c512
-	WithSpriteControlGroupDecoration:
+	Inherits@EMP: ^EmpDisable
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 59
 		Prerequisites: ~pyle, hq, ~infantry.gdi, ~techlevel.infonly
 		IconPalette: chrometd
-		Description: Flying general-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+		Description: Flying general-purpose infantry.\n  Can detect cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
 		Cost: 350
 	Tooltip:
@@ -1628,193 +1568,115 @@ JJET:
 		AddToArmyValue: true
 	Health:
 		HP: 9000
-	Targetable:
-		RequiresCondition: !airborne && !being-warped
-		TargetTypes: Ground, Infantry, Disguise
-	Targetable@HEAL:
-		RequiresCondition: (!airborne && !being-warped) && damaged
-		TargetTypes: Heal
-	Targetable@AIRBORNE:
-		RequiresCondition: airborne && !being-warped
-		TargetTypes: Air
-	DeathSounds@NORMAL:
-		Voice: Die
-		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath
-	DeathSounds@BURNED:
-		Voice: Burned
-		DeathTypes: FireDeath
-	DeathSounds@ZAPPED:
-		Voice: Zapped
-		DeathTypes: ElectricityDeath, ChronoDeath
-	DeathSounds@POISONED:
-		Voice: Poisoned
-		DeathTypes: PoisonDeath, ToxinDeath, ToxicDeath
-	SelfHealing@HOSPITAL:
-		Step: 500
-		Delay: 100
-		HealIfBelow: 100
-		DamageCooldown: 125
-		RequiresCondition: hospitalheal
-	ExternalCondition@MEDIFV:
-		Condition: hospitalheal
-	GrantConditionOnPrerequisite@HOSPITAL:
-		Condition: hospital
-		Prerequisites: hosp
-	GrantConditionOnDamageState@HOSPITAL:
-		Condition: damaged
-		ValidDamageStates: Light, Medium, Heavy, Critical
-	GrantCondition@HOSPITAL:
-		RequiresCondition: hospital && damaged
-		Condition: hospitalheal
-	WithDecoration@REDCROSS:
-		Image: pips
-		Sequence: medic
-		ReferencePoint: Bottom, Right
-		RequiresCondition: hospitalheal
-		BlinkInterval: 32
-		BlinkPattern: Off, On
-	Armor:
-		Type: Light
-	Aircraft:
-		CruiseAltitude: 1c0
-		IdealSeparation: 0c255
-		InitialFacing: 92
-		Speed: 99
-		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems,Tiberium,BlueTiberium
-		AirborneCondition: airborne
-		CruisingCondition: cruising
-		CanHover: true
-		CanSlide: true
-		VTOL: true
-	AttackAircraft:
-		AttackType: Hover
-		FacingTolerance: 0
-		Voice: Attack
-	Armament@PRIMARY:
+	Armament@AIR:
 		Weapon: M60mgJJ
+		RequiresCondition: undeployed
+	Armament@GROUND:
+		Weapon: M60mgJJ.Ground
+		RequiresCondition: deployed
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		Voice: Attack
 	WithInfantryBody:
-		IdleSequences: idle1,idle2
-		DefaultAttackSequence: attack
-		RequiresCondition: !airborne
-	WithInfantryBody@AIRBORNE:
-		DefaultAttackSequence: flying-attack
+		RequiresCondition: !being-warped && undeployed
 		StandSequences: hover
-		MinIdleDelay: 0
-		MaxIdleDelay: 1
-		IdleSequences: hover
+		DefaultAttackSequence: flying-attack
 		MoveSequence: flying
-		RequiresCondition: airborne
-	DeathSounds@airborne:
-		RequiresCondition: airborne
-	SpawnActorOnDeath@airborne:
-		Actor: JJET.Husk
-		RequiresCondition: airborne
-	WithDeathAnimation:
-		DeathSequencePalette: overlayplayertd
-		DeathTypes:
-			DefaultDeath: 1
-			BulletDeath: 2
-			SmallExplosionDeath: 3
-			ExplosionDeath: 4
-			FireDeath: 5
-			ElectricityDeath: 6
-			PoisonDeath: 7
-			ChronoDeath: 8
-			ToxinDeath: 9
-			ToxicDeath: 10
-		CrushedSequence: die-crushed
-		RequiresCondition: !airborne
+	WithInfantryBody@Ground:
+		RequiresCondition: !being-warped && deployed
+		StandSequences: stand
+		DefaultAttackSequence: attack
+		IdleSequences: idle1, idle2
+	WithInfantryBody@Warped:
+		StandSequences: stand
+		RequiresCondition: being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
-	WithShadow:
-		Offset: 43, 128, 0
-		ZOffset: -129
-		RequiresCondition: airborne
-	Hovers@CRUISING:
-		RequiresCondition: cruising
-	DetectCloaked:
-		CloakTypes: Cloak
-		Range: 3c0
-	ActorLostNotification:
-	Selectable:
-		Bounds: 18,18,0,-6
-		DecorationBounds: 12,17,0,-6
 	AttackMove:
 		Voice: Move
-	Passenger:
-		Voice: Move
+	-Passenger:
+	-GainsExperienceMultiplier:
 	Guard:
 		Voice: Move
 	Voiced:
 		VoiceSet: JJVoice
-	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !stance-attackanything && !assault-move && !airborne
-	AutoTargetPriority@ATTACKANYTHING:
-		RequiresCondition: (stance-attackanything || assault-move) && !airborne
-	AutoTargetPriority@DEFAULT_AIR:
-		RequiresCondition: !stance-attackanything && !assault-move && airborne
-		ValidTargets: Vehicle, Water, Underwater, Defense
-		InvalidTargets: NoAutoTarget, WaterStructure
-		Priority: 1
-	AutoTargetPriority@DEFAULT_AIR_ATTACK_INFANTRY:
-		RequiresCondition: !stance-attackanything && !assault-move && airborne
-		ValidTargets: Infantry
-		InvalidTargets: NoAutoTarget, WaterStructure
-		Priority: 10
-	AutoTargetPriority@ATTACKANYTHING_AIR:
-		RequiresCondition: (stance-attackanything || assault-move) && airborne
-		ValidTargets: Vehicle, Water, Underwater, Structure, Defense
-		InvalidTargets: NoAutoTarget
-		Priority: 1
-	AutoTargetPriority@ATTACKANYTHING_AIR_ATTACK_INFANTRY:
-		RequiresCondition: (stance-attackanything || assault-move) && airborne
-		ValidTargets: Infantry
-		InvalidTargets: NoAutoTarget
-		Priority: 10
-	KillsSelf:
-		RequiresCondition: empdisable && cruising
-
-JJET.Husk:
-	BodyOrientation:
-		QuantizedFacings: 1
-	HiddenUnderFog:
-		Type: GroundPosition
-	ScriptTriggers:
-	Tooltip:
-		Name: Jumpjet Infantry
-	FallsToEarth:
-		Velocity: 86
-		Explosion:
-	Aircraft:
-		CruiseAltitude: 1c0
-		Speed: 186
-		CanHover: True
-		VTOL: true
-	RenderSprites:
-		Image: jumpjet
-		PlayerPalette: overlayplayertd
-	WithSpriteBody:
-		Sequence: die-falling
-	Health:
-	HitShape:
-	ConditionManager:
-	GrantConditionOnTerrain:
+	KillsSelf@EMP:
+		RequiresCondition: (empdisable && undeployed)
+		DamageTypes: DefaultDeath
+	KillsSelf@BADTERRAIN:
+		RequiresCondition: (badterrain && deployed)
+		DamageTypes: DefaultDeath
+		Delay: 25
+	KillsSelf@SPLASH:
+		RequiresCondition: (badwater && deployed)
+		GrantsCondition: splash
+		Delay: 25
+	Explodes@SPLASH:
+		Weapon: UnitExplodeSubmarine
+		RequiresCondition: splash
+	Targetable:
+		RequiresCondition: deployed && !being-warped
+		TargetTypes: Ground, Infantry
+	Targetable@HEAL:
+		RequiresCondition: deployed && !being-warped && damaged
+		TargetTypes: Heal
+	Targetable@AIRBORNE:
+		RequiresCondition: !being-warped && undeployed
+		TargetTypes: Air
+	Targetable@Temporal:
+		TargetTypes: Temporal
+		RequiresCondition: deployed
+	Mobile:
+		Speed: 82
+		Locomotor: jumpjet
+		PauseOnCondition: being-warped
+	Hovers:
+		InitialHeight: 0c511
+		BobDistance: -48
+		MinHoveringAltitude: 0c3
+		RiseTicks: 150
+		RequiresCondition: undeployed
+	WithShadow:
+		RequiresCondition: undeployed
+		Offset: 0,0,-768
+	GrantConditionOnDeploy:
+		DeployedCondition: deployed
+		UndeployedCondition: undeployed
+		UndeployOnMove: False
+		Voice: Move
+		PauseOnCondition: being-warped
+	UpdatesPlayerStatistics:
+	MustBeDestroyed:
+	-DamagedByTerrain:
+	-SpawnActorOnDeath:
+	-Crushable:
+	SpeedMultiplier:
+		Modifier: 55
+		RequiresCondition: deployed
+	GrantConditionOnTerrain@KILLJUMPJET:
+		Condition: badterrain
+		TerrainTypes: Cliff, Rock, Tree, Wall
+	GrantConditionOnTerrain@KILLJUMPJETWATER:
+		Condition: badwater
 		TerrainTypes: Water
-		Condition: water-death
-	WithDeathAnimation:
-		RequiresCondition: !water-death
-		FallbackSequence: die-flying
-		DeathSequencePalette: overlayplayertd
-	WithDeathAnimation@SPLASH:
-		RequiresCondition: water-death
-		FallbackSequence: die-splash
-	Interactable:
+	HitShape:
+		RequiresCondition: deployed
+	HitShape@AIRBORNE:
+		Type: Circle
+			Radius: 768
+		TargetableOffsets: 0, 0, 768
+		UseTargetableCellsOffsets: true
+		RequiresCondition: undeployed
+	Selectable:
+		Bounds: 12,24,0,-10
+		DecorationBounds: 12,24,0,-10
+	DetectCloaked:
+		Range: 3c0
+		CloakTypes: Cloak, Thief
 
 E8:
 	Inherits: ^Soldier
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Infantry

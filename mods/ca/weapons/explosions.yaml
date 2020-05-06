@@ -139,6 +139,13 @@ VisualExplodeAirborne:
 	Inherits: VisualExplodeHusk
 	Warhead@2Eff: CreateEffect
 		Explosions: med_explosion_air
+		
+VisualUnitExplodeWater:
+	Inherits: VisualExplodeHusk
+	-Warhead@Smu:
+	Warhead@4EffWater: CreateEffect
+		Explosions: small_splash
+		ImpactSounds: splash9.aud
 
 UnitExplodeShip:
 	Inherits: ^Explosion

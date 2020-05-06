@@ -698,6 +698,9 @@ TSLA:
 		ZOffset: 256
 		BlinkInterval: 64
 		RequiresSelection: true
+	ProvidesPrerequisite@TSLA:
+		Factions: soviet, russia, ukraine, iraq
+		Prerequisite: structures.tsla
 
 AGUN:
 	Inherits: ^Defense
@@ -1843,7 +1846,7 @@ AFLD:
 		DirectionArrowAnimation: paradirection
 	ParatroopersPower@Russianparatroopers:
 		OrderName: stormtroopers
-		Prerequisites: aircraft.russia, , ~techlevel.high
+		Prerequisites: aircraft.russia, ~techlevel.high
 		Icon: stormtroopers
 		ChargeInterval: 9000
 		Description: Storm-troopers
@@ -2204,10 +2207,10 @@ BARR:
 		SelectionNotification: PrimaryBuildingSelected
 	ProductionBar:
 		ProductionType: Infantry
-	ProvidesPrerequisite@barracks:
-		Prerequisite: barracks
-	ProvidesPrerequisite@barracksRA:
-		Prerequisite: barracksRA
+	ProvidesPrerequisite@infantryany:
+		Prerequisite: infantry.any
+	ProvidesPrerequisite@infantryra:
+		Prerequisite: infantry.ra
 	ProvidesPrerequisite@soviet:
 		Factions: soviet, russia, ukraine, iraq
 		Prerequisite: infantry.soviet
@@ -2368,10 +2371,10 @@ TENT:
 		SelectionNotification: PrimaryBuildingSelected
 	ProductionBar:
 		ProductionType: Infantry
-	ProvidesPrerequisite@barracksRA:
-		Prerequisite: barracksRA
-	ProvidesPrerequisite@barracks:
-		Prerequisite: barracks
+	ProvidesPrerequisite@infantryra:
+		Prerequisite: infantry.ra
+	ProvidesPrerequisite@infantryany:
+		Prerequisite: infantry.any
 	ProvidesPrerequisite@allies:
 		Factions: allies, england, france, germany
 		Prerequisite: infantry.allies
@@ -2620,7 +2623,15 @@ WOOD:
 	WithWallSpriteBody:
 		Type: woodfence
 
-BARRACKS:
+INFANTRY.ANY:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Infantry Production
+	Buildable:
+		Description: Infantry Production
+		
+INFANTRY.RA:
 	AlwaysVisible:
 	Interactable:
 	Tooltip:
@@ -2628,7 +2639,7 @@ BARRACKS:
 	Buildable:
 		Description: Infantry Production
 
-BARRACKSTD:
+INFANTRY.TD:
 	AlwaysVisible:
 	Interactable:
 	Tooltip:
@@ -2636,15 +2647,15 @@ BARRACKSTD:
 	Buildable:
 		Description: Infantry Production
 
-VEHICLES.TD:
+VEHICLES.ANY:
 	AlwaysVisible:
 	Interactable:
 	Tooltip:
 		Name: Vehicle Production
 	Buildable:
 		Description: Vehicle Production
-
-VEHICLES.ANY:
+		
+VEHICLES.TD:
 	AlwaysVisible:
 	Interactable:
 	Tooltip:
@@ -2707,6 +2718,15 @@ INFANTRY.MECH:
 		Name: Barracks
 	Buildable:
 		Description: Mechanical Barracks
+		
+STRUCTURES.TSLA:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		GenericName:
+		Name: Tesla Coil
+	Buildable:
+		Description: Tesla Coil
 
 PYLE:
 	Inherits: ^BuildingTD
@@ -2762,10 +2782,10 @@ PYLE:
 		PrimaryCondition: primary
 	ProductionBar:
 		ProductionType: Infantry
-	ProvidesPrerequisite@barracks:
-		Prerequisite: barracks
-	ProvidesPrerequisite@barrackstd:
-		Prerequisite: barrackstd
+	ProvidesPrerequisite@infantryany:
+		Prerequisite: infantry.any
+	ProvidesPrerequisite@infantrytd:
+		Prerequisite: infantry.td
 	ProvidesPrerequisite@gdi:
 		Factions: gdi, talon, zocom, eagle
 		Prerequisite: infantry.gdi
@@ -2865,10 +2885,10 @@ HAND:
 		ProductionType: Infantry
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
-	ProvidesPrerequisite@barracks:
-		Prerequisite: barracks
-	ProvidesPrerequisite@barrackstd:
-		Prerequisite: barrackstd
+	ProvidesPrerequisite@infantryany:
+		Prerequisite: infantry.any
+	ProvidesPrerequisite@infantrytd:
+		Prerequisite: infantry.td
 	ProvidesPrerequisite@nod:
 		Factions: nod, blackh, marked, legion
 		Prerequisite: infantry.nod

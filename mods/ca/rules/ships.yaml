@@ -1,6 +1,6 @@
 SS:
 	Inherits: ^Ship
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 		PlayerPalette: playernavy
@@ -73,7 +73,7 @@ SS:
 
 MSUB:
 	Inherits: ^Ship
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 		PlayerPalette: playernavy
@@ -148,7 +148,7 @@ MSUB:
 
 DD:
 	Inherits: ^Ship
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 		PlayerPalette: playernavy
@@ -208,7 +208,7 @@ DD:
 
 CA:
 	Inherits: ^Ship
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 		PlayerPalette: playernavy
@@ -324,7 +324,7 @@ LST:
 
 PT:
 	Inherits: ^Ship
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 		PlayerPalette: playernavy
@@ -381,7 +381,7 @@ PT:
 
 PT2:
 	Inherits: ^Ship
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 		PlayerPalette: playernavy
@@ -445,7 +445,7 @@ PT2:
 
 DD2:
 	Inherits: ^Ship
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 		PlayerPalette: playernavy
@@ -507,7 +507,7 @@ DD2:
 
 SS2:
 	Inherits: ^Ship
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 		PlayerPalette: playernavy
@@ -580,7 +580,7 @@ SS2:
 
 ISUB:
 	Inherits: ^Ship
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 		Image: icbmsub
@@ -656,7 +656,7 @@ ISUB:
 
 CARR:
 	Inherits: ^Ship
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 		PlayerPalette: playernavy
@@ -693,10 +693,10 @@ CARR:
 	CarrierMaster:
 		Actors: horn, horn, horn
 		RearmTicks: 150
-		RespawnTicks: 300
+		RespawnTicks: 500
 		InstaRepair: true
 		SlaveDisposalOnKill: KillSlaves
-		SpawnAllAtOnce: true
+		SpawnAllAtOnce: false
 	Exit@0:
 		SpawnOffset: 0,0,0
 		Facing: 0

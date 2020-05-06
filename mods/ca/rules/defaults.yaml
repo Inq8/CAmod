@@ -709,6 +709,14 @@
 		RequiresCondition: stance-attackanything || assault-move
 	AttackMove:
 		AssaultMoveCondition: assault-move
+		
+^AutoTargetNavalAssaultMove:
+	Inherits: ^AutoTargetGroundAssaultMove
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
+		InvalidTargets: NoAutoTarget
+	AutoTargetPriority@ATTACKANYTHING:
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense, Mine, Bridge
 
 ^AutoTargetAir:
 	AutoTarget:
@@ -736,6 +744,15 @@
 		RequiresCondition: stance-attackanything || assault-move
 	AttackMove:
 		AssaultMoveCondition: assault-move
+		
+^AutoTargetAllNavalAssaultMove:
+	Inherits: ^AutoTargetAllAssaultMove
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense, Bridge
+		InvalidTargets: NoAutoTarget
+	AutoTargetPriority@ATTACKANYTHING:
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense, Bridge
+		InvalidTargets: NoAutoTarget
 
 ^GlobalBounty:
 	GrantConditionOnPrerequisite@GLOBALBOUNTY:
@@ -1519,7 +1536,6 @@
 		Types: building
 	CapturableProgressBar:
 	CapturableProgressBlink:
-	BotRepairOrSellCaptures:
 	SpawnActorsOnSell:
 		ActorTypes: e1,e1,e1,tecn,tecn2
 	SpawnActorOnDeath@1:
@@ -1579,6 +1595,8 @@
 
 ^Defense:
 	Inherits: ^Building
+	Inherits@Concussion: ^Concussion
+	-SpeedMultiplier@concussion:
 	WithColoredOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability
 	Selectable:

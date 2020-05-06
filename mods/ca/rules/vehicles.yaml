@@ -233,7 +233,16 @@ V2RL:
 		Weapon: UnitExplodeWarpOut
 		EmptyWeapon: UnitExplodeWarpOut
 		RequiresCondition: warpout
-		
+	AutoTargetPriority@TANKDEFAULT:
+		RequiresCondition: !stance-attackanything && !assault-move && germany
+		ValidTargets: Tank
+		InvalidTargets: NoAutoTarget, WaterStructure
+		Priority: 10
+	AutoTargetPriority@TANKATTACKANYTHING:
+		RequiresCondition: (stance-attackanything || assault-move) && germany
+		ValidTargets: Tank
+		InvalidTargets: NoAutoTarget
+		Priority: 10
 
 3TNK:
 	Inherits: ^Tank
@@ -788,6 +797,7 @@ MNLY:
 		Range: 4c0
 	Minelayer:
 		Mine: MINV
+		TileUnknownName: build-valid
 	MineImmune:
 	AmmoPool:
 		Ammo: 5
@@ -931,7 +941,7 @@ TTNK:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 125
-		Prerequisites: tsla, dome, ~vehicles.russia, ~techlevel.medium
+		Prerequisites: structures.tsla, dome, ~vehicles.russia, ~techlevel.medium
 		Description: Tank with mounted Tesla coil.\n  Strong vs Infantry, Buildings, Vehicles\n  Weak vs Aircraft\n  Special Ability: Jams Radar
 	Valued:
 		Cost: 1250
@@ -1276,7 +1286,7 @@ APC2:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 40
-		Prerequisites: ~vehicles.td, ~!gtek, ~vehicles.apc2, barracks, ~techlevel.low
+		Prerequisites: ~vehicles.td, ~!gtek, ~vehicles.apc2, infantry.any, ~techlevel.low
 		IconPalette: chrometd
 		Description: Tough infantry transport.\n  Strong vs Infantry\n  Weak vs Tanks, Aircraft
 	Valued:
@@ -1330,7 +1340,7 @@ VULC:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 40
-		Prerequisites: ~vehicles.gdi, ~gtek, ~barracks, ~techlevel.high
+		Prerequisites: ~vehicles.gdi, ~gtek, ~infantry.any, ~techlevel.high
 		IconPalette: chrometd
 		Description: Tough infantry transport, armed with a powerful AA gun.\n  Strong vs Aircraft\n  Weak vs Infantry, Tanks
 	Valued:
@@ -2119,7 +2129,7 @@ IFV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 60
-		Prerequisites: barracks, ~vehicles.ifv, ~techlevel.low
+		Prerequisites: infantry.any, ~vehicles.ifv, ~techlevel.low
 		Description: Adaptable infantry transport.\n  Can attack Aircraft.\n  Strong vs Light Armor, Aircraft\n  Weak vs Infantry, Tanks\n  Special Ability: Transform
 	Valued:
 		Cost: 750
@@ -2947,6 +2957,16 @@ TNKD:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 28,28
+	AutoTargetPriority@TANKDEFAULT:
+		RequiresCondition: !stance-attackanything && !assault-move
+		ValidTargets: Tank
+		InvalidTargets: NoAutoTarget, WaterStructure
+		Priority: 10
+	AutoTargetPriority@TANKATTACKANYTHING:
+		RequiresCondition: stance-attackanything || assault-move
+		ValidTargets: Tank
+		InvalidTargets: NoAutoTarget
+		Priority: 10
 
 MSAR:
 	Inherits: ^VehicleTD
