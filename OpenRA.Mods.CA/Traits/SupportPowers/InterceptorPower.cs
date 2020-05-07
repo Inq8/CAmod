@@ -21,13 +21,11 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	public enum AirstrikeMission { Attack, Guard }
-
-	public class AirstrikePowerCAInfo : SupportPowerInfo
+	public class InterceptorPowerInfo : SupportPowerInfo
 	{
 		[ActorReference(typeof(AircraftInfo))]
-		public readonly string UnitType = "badr.bomber";
-		public readonly int SquadSize = 1;
+		public readonly string UnitType = "yf23";
+		public readonly int SquadSize = 3;
 		public readonly WVec SquadOffset = new WVec(-1536, 1536, 0);
 
 		public readonly int QuantizedFacings = 32;
@@ -52,18 +50,16 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Weapon range offset to apply during the beacon clock calculation")]
 		public readonly WDist BeaconDistanceOffset = WDist.FromCells(6);
 
-		public readonly AirstrikeMission Mission = AirstrikeMission.Attack;
-
 		public readonly int GuardDuration = 150;
 
-		public override object Create(ActorInitializer init) { return new AirstrikePowerCA(init.Self, this); }
+		public override object Create(ActorInitializer init) { return new InterceptorPower(init.Self, this); }
 	}
 
-	public class AirstrikePowerCA : SupportPower
+	public class InterceptorPower : SupportPower
 	{
-		readonly AirstrikePowerCAInfo info;
+		readonly InterceptorPowerInfo info;
 
-		public AirstrikePowerCA(Actor self, AirstrikePowerCAInfo info)
+		public InterceptorPower(Actor self, InterceptorPowerInfo info)
 			: base(self, info)
 		{
 			this.info = info;
@@ -171,33 +167,16 @@ namespace OpenRA.Mods.CA.Traits
 						new FacingInit(attackFacing),
 					});
 
-					if (info.Mission == AirstrikeMission.Attack)
-					{
-						var attack = a.Trait<AttackBomberCA>();
-						attack.SetTarget(w, target + targetOffset);
-						attack.OnEnteredAttackRange += onEnterRange;
-						attack.OnExitedAttackRange += onExitRange;
-						attack.OnRemovedFromWorld += onRemovedFromWorld;
-
-						a.QueueActivity(new Fly(a, Target.FromPos(target + spawnOffset)));
-						a.QueueActivity(new Fly(a, Target.FromPos(finishEdge + spawnOffset)));
-						a.QueueActivity(new RemoveSelf());
-						aircraftInRange.Add(a, false);
-						distanceTestActor = a;
-					}
-					else
-					{
-						var attack = a.Trait<AttackBomberCA>();
-						attack.SetTarget(w, target + targetOffset);
-						a.QueueActivity(new Fly(a, Target.FromPos(target + spawnOffset)));
-						attack.OnEnteredAttackRange += onEnterRange;
-						a.QueueActivity(new AttackMoveActivity(a, () => new FlyIdle(a, info.GuardDuration)));
-						attack.OnExitedAttackRange += onExitRange;
-						a.QueueActivity(new FlyOffMap(a));
-						a.QueueActivity(new RemoveSelf());
-						aircraftInRange.Add(a, false);
-						distanceTestActor = a;
-					}
+					var attack = a.Trait<AttackBomberCA>();
+					attack.SetTarget(w, target + targetOffset);
+					a.QueueActivity(new Fly(a, Target.FromPos(target + spawnOffset)));
+					attack.OnEnteredAttackRange += onEnterRange;
+					a.QueueActivity(new AttackMoveActivity(a, () => new FlyIdle(a, info.GuardDuration)));
+					attack.OnExitedAttackRange += onExitRange;
+					a.QueueActivity(new FlyOffMap(a));
+					a.QueueActivity(new RemoveSelf());
+					aircraftInRange.Add(a, false);
+					distanceTestActor = a;
 				}
 
 				if (Info.DisplayBeacon)

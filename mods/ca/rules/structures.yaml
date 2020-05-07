@@ -814,7 +814,7 @@ DOME:
 	InfiltrateForSupportPower@tec:
 		Types: SabInfiltrate
 		Proxy: rad.soviet.stolen
-	AirstrikePowerCA@clustermines:
+	AirstrikePower@clustermines:
 		ChargeInterval: 6000
 		Prerequisites: structures.france, techlevel.superw
 		Description: Cluster Mines
@@ -3205,10 +3205,13 @@ AIRS:
 	Exit@1:
 		SpawnOffset: -1024,0,0
 		ExitCell: 3,1
-	ProductionAirdrop:
+	ProductionAirdropCA:
 		Produces: Vehicle
 		PauseOnCondition: forceshield || invulnerability || being-warped
 		ActorType: c17.cargo
+		EntryType: DropSiteClosestEdge
+		ExitType: StraightAhead
+		LandingFacing: 64
 		ReadyAudio: ReinforcementsArrived
 	ProvidesPrerequisite@any:
 		Factions: gdi, talon, zocom, eagle, nod, marked, blackh, legion, allies, england, france, germany, soviet, russia, ukraine, iraq
@@ -3359,6 +3362,7 @@ AIRS:
 	WithDeliveryAnimation:
 	PrimaryBuilding:
 		PrimaryCondition: primary
+		SelectionNotification: PrimaryBuildingSelected
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
 	ProductionBar:
@@ -4243,6 +4247,7 @@ HPAD.TD:
 	WithBuildingBib:
 	PrimaryBuilding:
 		PrimaryCondition: primary
+		SelectionNotification: PrimaryBuildingSelected
 	Power:
 		Amount: -10
 		RequiresCondition: !being-warped
@@ -4575,7 +4580,7 @@ AFLD.GDI:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
-	AirstrikePowerCA@EagleAirDef:
+	InterceptorPower@EagleAirDef:
 		OrderName: interceptors
 		Prerequisites: aircraft.eagle, techlevel.superw
 		Icon: airsupport
@@ -4596,7 +4601,6 @@ AFLD.GDI:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
-		Mission: Guard
 		GuardDuration: 500
 		Cordon: 5c0
 	ProductionBar:
@@ -4604,6 +4608,7 @@ AFLD.GDI:
 	SupportPowerChargeBar:
 	PrimaryBuilding:
 		PrimaryCondition: primary
+		SelectionNotification: PrimaryBuildingSelected
 	Power:
 		Amount: -20
 		RequiresCondition: !being-warped
@@ -4968,6 +4973,7 @@ SPEN.nod:
 		PauseOnCondition: forceshield || invulnerability || being-warped
 	PrimaryBuilding:
 		PrimaryCondition: primary
+		SelectionNotification: PrimaryBuildingSelected
 	RepairsUnits:
 		HpPerStep: 1000
 		StartRepairingNotification: Repairing
@@ -5080,6 +5086,7 @@ SYRD.gdi:
 		PauseOnCondition: forceshield || invulnerability || being-warped
 	PrimaryBuilding:
 		PrimaryCondition: primary
+		SelectionNotification: PrimaryBuildingSelected
 	RepairsUnits:
 		HpPerStep: 1000
 		StartRepairingNotification: Repairing
