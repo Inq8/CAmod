@@ -2045,7 +2045,7 @@ TPWR:
 	Inherits: APWR
 	Buildable:
 		Prerequisites: dome, ~techlevel.medium, ~structures.russia
-		Description: Provides double the power of\na standard Power Plant.\n  Special Ability: Overload
+		Description: Provides double the power of\na standard Power Plant.\n  Special Ability: Overload (Toggle)\n  Warning: Unstable when damaged and overloaded.
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -2054,19 +2054,35 @@ TPWR:
 		Offset: -20,-70,0
 		Sequence: power
 		RequiresCondition: overcharge && !(empdisable || being-warped || build-incomplete)
-	GrantTimedConditionOnDeploy@OVERCHARGE:
+	GrantTimedCondition@LOCKOUT:
+		Duration: 1500
+		Condition: lockout
+		RequiresCondition: overcharge
+	GrantTimedCondition@COOLDOWN:
+		Duration: 250
+		Condition: cooldown
+		RequiresCondition: !overcharge
+	TimedConditionBar@LOCKOUT:
+		Condition: lockout
+		Color: FF0000
+	TimedConditionBar@COOLDOWN:
+		Condition: cooldown
+		Color: FFFF0080
+	GrantConditionOnDeploy@OVERCHARGE:
+		DeploySounds: btesat1a.aud
+		UndeploySounds: btesat1a.aud
 		DeployedCondition: overcharge
-		CooldownTicks: 300
-		DeployedTicks: 900
-		PauseOnCondition: disabled || empdisable || being-warped
-		DischargingColor: 0080FF60
-		ChargingColor: FFFF0080
-		StartsFullyCharged: false
-		DeploySound: btesat1a.aud
-		RequiresCondition: !(owned-by-brutal-ai || owned-by-hard-ai || owned-by-normal-ai || owned-by-easy-ai || owned-by-naval-ai)
+		DeployCursor: powerdown
+		DeployBlockedCursor: powerdown-blocked
+		PauseOnCondition: lockout || cooldown
+		SkipMakeAnimation: true
+		RequiresCondition: !(empdisable || being-warped || build-incomplete) && !(owned-by-brutal-ai || owned-by-hard-ai || owned-by-normal-ai || owned-by-easy-ai || owned-by-naval-ai)
 	GrantConditionOnDamageState@VOLATILE:
 		Condition: volatile
 		ValidDamageStates: Heavy, Critical
+	GrantConditionOnDamageState@CRITICAL:
+		Condition: critical
+		ValidDamageStates: Critical
 	PowerMultiplier:
 		Modifier: 200
 		RequiresCondition: overcharge
@@ -2084,7 +2100,7 @@ TPWR:
 		ShowSelectionBar: false
 		ActiveColor: 0080FF60
 		CooldownColor: FFFF0080
-		RequiresCondition: (owned-by-brutal-ai || owned-by-hard-ai || owned-by-normal-ai || owned-by-easy-ai || owned-by-naval-ai)
+		RequiresCondition: !critical && (owned-by-brutal-ai || owned-by-hard-ai || owned-by-normal-ai || owned-by-easy-ai || owned-by-naval-ai)
 
 STEK:
 	Inherits: ^ScienceBuilding
@@ -5903,11 +5919,9 @@ MSLO.Nod:
 WEAT:
 	Inherits: ^ScienceBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
-	HitShape:
-		TargetableOffsets: 0,0,0, 0,512,128, 420,-598,213
-		Type: Rectangle
-			TopLeft: -1024, -384
-			BottomRight: 1024, 1024
+	Inherits@shape: ^2x2Shape
+	Selectable:
+		Bounds: 48,48
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 130
@@ -5919,9 +5933,8 @@ WEAT:
 	Tooltip:
 		Name: Weather Control Device
 	Building:
-		Footprint: xx xx ==
-		Dimensions: 2,3
-		LocalCenterOffset: 0,-512,0
+		Footprint: xx xx
+		Dimensions: 2,2
 	Health:
 		HP: 100000
 	Armor:
@@ -5987,3 +6000,5 @@ WEAT:
 		Types: SpyInfiltrate, SabInfiltrate
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
+	WithBuildingBib:
+		HasMinibib: true

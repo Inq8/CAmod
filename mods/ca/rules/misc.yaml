@@ -166,6 +166,18 @@ CRATE:
 		Sound: ironcur9.aud
 		Condition: invulnerability
 		Duration: 600
+	SupportPowerCrateAction@airstrike:
+		Proxy: powerproxy.airstrike
+		SelectionShares: 5
+		Notification: ReinforceAva
+		Sequence: airstrike
+		TimeDelay: 4500
+	SupportPowerCrateAction@parabombs:
+		Proxy: powerproxy.parabombs
+		SelectionShares: 5
+		Notification: ReinforceAva
+		Sequence: parabombs
+		TimeDelay: 4500
 
 MONEYCRATE:
 	Inherits: ^Crate
@@ -463,6 +475,7 @@ powerproxy.parabombs:
 		ArrowSequence: arrow
 		ClockSequence: clock
 		CircleSequence: circles
+		OrderName: crateparabombs
 
 powerproxy.sonarpulse:
 	AlwaysVisible:
@@ -556,6 +569,7 @@ powerproxy.airstrike:
 		CircleSequence: circles
 		Strikes: 2
 		CircleDelay: 20
+		OrderName: crateairstrike
 
 barracks.upgraded:
 	AlwaysVisible:
