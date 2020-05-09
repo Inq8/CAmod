@@ -90,15 +90,6 @@
 	ProductionTimeMultiplier@hardbonus:
 		Multiplier: 95
 		Prerequisites: is-hard-ai
-	ProductionCostMultiplier@brutalbonus:
-		Multiplier: 94
-		Prerequisites: is-brutal-ai
-	ProductionCostMultiplier@vhardbonus:
-		Multiplier: 96
-		Prerequisites: is-vhard-ai
-	ProductionCostMultiplier@hardbonus:
-		Multiplier: 98
-		Prerequisites: is-hard-ai
 
 ^BotGroundProductionBonus:
 	ProductionTimeMultiplier@brutalbonus:
@@ -113,15 +104,6 @@
 	ProductionTimeMultiplier@normalbonus:
 		Multiplier: 80
 		Prerequisites: is-normal-ai
-	ProductionCostMultiplier@brutalbonus:
-		Multiplier: 94
-		Prerequisites: is-brutal-ai
-	ProductionCostMultiplier@vhardbonus:
-		Multiplier: 96
-		Prerequisites: is-vhard-ai
-	ProductionCostMultiplier@hardbonus:
-		Multiplier: 98
-		Prerequisites: is-hard-ai
 
 ^BotAirProductionBonus:
 	ProductionTimeMultiplier@brutalbonus:
@@ -163,24 +145,20 @@
 		ShowTicks: False
 		RequiresCondition: owned-by-normal-ai && !noinsurance
 
-# ResourcePurifier on Proc's so AI income is still tied to harvesters, so eco sniping AI is possible.
+# RefineryResourceMultiplier on Proc's so AI income is still tied to harvesters, so eco sniping AI is possible.
 ^BotIncome:
-	ResourcePurifier@brutalincome:
-		Modifier: 13
+	RefineryResourceMultiplier@brutalincome:
+		Modifier: 152
 		RequiresCondition: owned-by-brutal-ai
-		ShowTicks: False
-	ResourcePurifier@vhardincome:
-		Modifier: 11
+	RefineryResourceMultiplier@vhardincome:
+		Modifier: 144
 		RequiresCondition: owned-by-vhard-ai
-		ShowTicks: False
-	ResourcePurifier@hardincome:
-		Modifier: 9
+	RefineryResourceMultiplier@hardincome:
+		Modifier: 136
 		RequiresCondition: owned-by-hard-ai
-		ShowTicks: False
-	ResourcePurifier@normalincome:
-		Modifier: 5
+	RefineryResourceMultiplier@normalincome:
+		Modifier: 120
 		RequiresCondition: owned-by-normal-ai
-		ShowTicks: False
 
 #Hacky but helps Bots deal with abandoned vehicles due to snipers
 ^BotCaptureHelper:
@@ -709,7 +687,7 @@
 		RequiresCondition: stance-attackanything || assault-move
 	AttackMove:
 		AssaultMoveCondition: assault-move
-		
+
 ^AutoTargetNavalAssaultMove:
 	Inherits: ^AutoTargetGroundAssaultMove
 	AutoTargetPriority@DEFAULT:
@@ -744,7 +722,7 @@
 		RequiresCondition: stance-attackanything || assault-move
 	AttackMove:
 		AssaultMoveCondition: assault-move
-		
+
 ^AutoTargetAllNavalAssaultMove:
 	Inherits: ^AutoTargetAllAssaultMove
 	AutoTargetPriority@DEFAULT:
