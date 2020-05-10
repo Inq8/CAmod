@@ -371,6 +371,17 @@
 			bino && gdiupg: On, Off
 		RequiresSelection: True
 
+^OrePurifierUpgrade:
+	GrantConditionOnPrerequisite@OREPUPG:
+		Prerequisites: orep
+		Condition: orepbuff
+	SpeedMultiplier@OREPUPG:
+		RequiresCondition: orepbuff
+		Modifier: 130
+	DamageMultiplier@OREPUPG:
+		RequiresCondition: orepbuff
+		Modifier: 60
+
 ^InfantryExperienceHospitalOverrides:
 	WithDecoration@RANK-1:
 		BlinkInterval: 32
@@ -747,12 +758,12 @@
 	Selectable:
 		PriorityModifiers: Ctrl, Alt
 
-^ProductionSpeedBoost:
-	ProductionCostMultiplier@IndustrialPlant:
-		Multiplier: 75
-		Prerequisites: indp, !indplowpower
+^ProductionEfficiencyBoost:
 	ProductionTimeMultiplier@IndustrialPlant:
 		Multiplier: 90
+		Prerequisites: indp, !indplowpower
+	ProductionCostMultiplier@IndustrialPlant:
+		Multiplier: 95
 		Prerequisites: indp, !indplowpower
 
 ^Vehicle:
@@ -775,7 +786,7 @@
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
-	Inherits@production: ^ProductionSpeedBoost
+	Inherits@production: ^ProductionEfficiencyBoost
 	Inherits@SELECTION_MODE: ^FlatSelectionMode
 	Huntable:
 	OwnerLostAction:
@@ -1183,7 +1194,7 @@
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
 	Inherits@SELECTION_MODE: ^FlatSelectionMode
-	Inherits@production: ^ProductionSpeedBoost
+	Inherits@production: ^ProductionEfficiencyBoost
 	Huntable:
 	OwnerLostAction:
 		Action: Kill
@@ -1359,7 +1370,7 @@
 	Inherits@10: ^Chillable
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
-	Inherits@production: ^ProductionSpeedBoost
+	Inherits@production: ^ProductionEfficiencyBoost
 	Inherits@C4: ^C4Plantable
 	Cloak@EXTERNALCLOAK:
 		RequiresCondition: invisibility || crate-cloak && (!cloak-force-disabled && !airborne && !being-warped)
