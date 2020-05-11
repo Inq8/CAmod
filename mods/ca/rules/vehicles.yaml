@@ -745,7 +745,7 @@ APC:
 		Type: Heavy
 	Mobile:
 		Speed: 135
-		PauseOnCondition: notmobile || being-captured || empdisable || being-warped
+		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -764,8 +764,15 @@ APC:
 		MaxWeight: 5
 		PipCount: 5
 		LoadingCondition: notmobile
+		LoadedCondition: cargo
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	Capturable:
+		RequiresCondition: !being-warped && !cargo
+	Capturable@DRIVER_DEAD:
+		RequiresCondition: driver-dead && !cargo
+	Targetable@DRIVERKILL:
+		RequiresCondition: !driver-dead && !cargo
 
 MNLY:
 	Inherits: ^Tank
@@ -1104,7 +1111,7 @@ QTNK:
 	Armor:
 		Type: Heavy
 	Mobile:
-		PauseOnCondition: deployed || being-captured || empdisable || being-warped
+		PauseOnCondition: deployed || being-captured || empdisable || being-warped || driver-dead
 		Speed: 56
 	ChronoshiftableWithSpriteEffect:
 		RequiresCondition: !deployed && !being-captured && !being-warped
@@ -1301,7 +1308,7 @@ APC2:
 		Type: Heavy
 	Mobile:
 		Speed: 135
-		PauseOnCondition: being-captured || empdisable || being-warped || notmobile
+		PauseOnCondition: being-captured || empdisable || being-warped || notmobile || driver-dead
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -1320,8 +1327,15 @@ APC2:
 		MaxWeight: 5
 		PipCount: 5
 		LoadingCondition: notmobile
+		LoadedCondition: cargo
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	Capturable:
+		RequiresCondition: !being-warped && !cargo
+	Capturable@DRIVER_DEAD:
+		RequiresCondition: driver-dead && !cargo
+	Targetable@DRIVERKILL:
+		RequiresCondition: !driver-dead && !cargo
 
 APC2.Reinforce:
 	Inherits: APC2
@@ -1330,7 +1344,6 @@ APC2.Reinforce:
 	-Buildable:
 	Cargo:
 		InitialUnits: n1,n1,n2,n3,n3
-		EjectOnDeath: False
 		
 VULC:
 	Inherits: ^TankTD
@@ -1401,8 +1414,15 @@ VULC:
 		MaxWeight: 5
 		PipCount: 5
 		LoadingCondition: notmobile
+		LoadedCondition: cargo
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	Capturable:
+		RequiresCondition: !being-warped && !cargo
+	Capturable@DRIVER_DEAD:
+		RequiresCondition: driver-dead && !cargo
+	Targetable@DRIVERKILL:
+		RequiresCondition: !driver-dead && !cargo
 
 LTNK:
 	Inherits: ^TankTD
@@ -1628,6 +1648,8 @@ MTNK.Drone:
 	-Capturable@DRIVER_DEAD:
 	-GrantConditionIfOwnerIsNeutral:
 	-SelfHealing@DRIVER_DEAD:
+	-Targetable@DRIVERKILL:
+	-Targetable@AICAPTURE:
 
 HTNK:
 	Inherits: ^TankTD
@@ -1793,7 +1815,7 @@ MLRS:
 		Description: Long-range incendiary rocket artillery.\n  Has weak armor.\n  Strong vs Buildings, Infantry\n  Weak vs Tanks, Aircraft
 	Mobile:
 		Speed: 82
-		PauseOnCondition: aiming || being-captured || empdisable || being-warped
+		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead
 	Health:
 		HP: 15000
 	Armor:
@@ -2090,7 +2112,7 @@ BTR:
 		Type: Heavy
 	Mobile:
 		Speed: 100
-		PauseOnCondition: notmobile || being-captured || empdisable || being-warped
+		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -2119,8 +2141,15 @@ BTR:
 		MaxWeight: 5
 		PipCount: 5
 		LoadingCondition: notmobile
+		LoadedCondition: cargo
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	Capturable:
+		RequiresCondition: !being-warped && !cargo
+	Capturable@DRIVER_DEAD:
+		RequiresCondition: driver-dead && !cargo
+	Targetable@DRIVERKILL:
+		RequiresCondition: !driver-dead && !cargo
 
 IFV:
 	Inherits: ^Tank
@@ -2143,7 +2172,7 @@ IFV:
 		Type: Heavy
 	Mobile:
 		Speed: 113
-		PauseOnCondition: notmobile || being-captured || empdisable || being-warped
+		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -2356,6 +2385,12 @@ IFV:
 	AutoTargetPriority@DEFAULTREPAIR:
 		ValidTargets: Vehicle, Ship
 		RequiresCondition: engturr
+	Capturable:
+		RequiresCondition: !being-warped && !full
+	Capturable@DRIVER_DEAD:
+		RequiresCondition: driver-dead && !full
+	Targetable@DRIVERKILL:
+		RequiresCondition: !driver-dead && !full
 
 IFV.AI:
 	Inherits: ^Tank
@@ -2427,6 +2462,9 @@ IFV.AI:
 		Image: ifv
 	GrantRandomCondition:
 		Conditions: defturr, samturr, gunturr
+	-Capturable:
+	-Capturable@DRIVER_DEAD:
+	-Targetable@DRIVERKILL:
 
 TITN:
 	Inherits: ^TankTD
@@ -2827,7 +2865,7 @@ V3RL:
 		Speed: 56
 		TurnSpeed: 4
 		Voice: Move
-		PauseOnCondition: aiming || being-captured || empdisable || being-warped
+		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead
 	Passenger:
 		Voice: Move
 	RevealsShroud:
@@ -3193,7 +3231,7 @@ BATF:
 	Mobile:
 		Locomotor: sheavytracked
 		Speed: 56
-		PauseOnCondition: notmobile || being-captured || empdisable || being-warped
+		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 		Voice: Move
 	Passenger:
 		Weight: 2
@@ -3274,6 +3312,12 @@ BATF:
 	SpawnActorOnDeath:
 		Actor: BATF.Husk
 		RequiresCondition: !being-warped
+	Capturable:
+		RequiresCondition: !being-warped && !cargo
+	Capturable@DRIVER_DEAD:
+		RequiresCondition: driver-dead && !cargo
+	Targetable@DRIVERKILL:
+		RequiresCondition: !driver-dead && !cargo
 
 BATF.AI:
 	Inherits: BATF
@@ -3281,21 +3325,24 @@ BATF.AI:
 		Prerequisites: tent, radar, ~weap, ~vehicles.france, ~techlevel.low, ~botplayer
 	RenderSprites:
 		Image: batf
-	Armament@PRIMARY:
-		-RequiresCondition:
-	Armament@SECONDARY:
-		-RequiresCondition:
-	Armament@TERTIARY:
-		-RequiresCondition:
-	Turreted@PRIMARY:
-		-PauseOnCondition:
-	Turreted@SECONDARY:
-		-PauseOnCondition:
-	Turreted@TERTIARY:
-		-PauseOnCondition:
-	-Cargo:
-	Mobile:
-		PauseOnCondition: being-captured || empdisable || being-warped
+	Armament@PRIMARY: 
+		-RequiresCondition: 
+	Armament@SECONDARY: 
+		-RequiresCondition: 
+	Armament@TERTIARY: 
+		-RequiresCondition: 
+	Turreted@PRIMARY: 
+		-PauseOnCondition: 
+	Turreted@SECONDARY: 
+		-PauseOnCondition: 
+	Turreted@TERTIARY: 
+		-PauseOnCondition: 
+	-Cargo: 
+	Mobile: 
+		PauseOnCondition: being-captured || empdisable || being-warped || driver-dead
+	-Capturable:
+	-Capturable@DRIVER_DEAD:
+	-Targetable@DRIVERKILL:
 
 MEMP:
 	Inherits: ^TankTD
@@ -3378,6 +3425,8 @@ MEMP:
 	-Capturable@DRIVER_DEAD:
 	-GrantConditionIfOwnerIsNeutral:
 	-SelfHealing@DRIVER_DEAD:
+	-Targetable@DRIVERKILL:
+	-Targetable@AICAPTURE:
 
 CDRN:
 	Inherits: ^VehicleTD
@@ -3457,6 +3506,8 @@ CDRN:
 	-Capturable@DRIVER_DEAD:
 	-GrantConditionIfOwnerIsNeutral:
 	-SelfHealing@DRIVER_DEAD:
+	-Targetable@DRIVERKILL:
+	-Targetable@AICAPTURE:
 
 CHPR:
 	Inherits: ^Tank
@@ -3571,7 +3622,7 @@ CRYO:
 	Mobile:
 		Speed: 82
 		TurnSpeed: 4
-		PauseOnCondition:  being-captured || empdisable || being-warped
+		PauseOnCondition:  being-captured || empdisable || being-warped || driver-dead
 	Health:
 		HP: 26000
 	Armor:

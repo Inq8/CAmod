@@ -1,9 +1,7 @@
 SS:
-	Inherits: ^Ship
+	Inherits: ^Submarine
 	Inherits@AUTOTARGET: ^AutoTargetNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
-	RenderSprites:
-		PlayerPalette: playernavy
 	Buildable:
 		Queue: Ship
 		BuildAtProductionType: Submarine
@@ -29,29 +27,11 @@ SS:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 5c0
-	Targetable:
-		TargetTypes: Ground, Water, Ship, Submarine, Repair
-		RequiresCondition: !underwater && !being-warped
-	Targetable@UNDERWATER:
-		TargetTypes: Underwater, Submarine
-		RequiresCondition: underwater && !being-warped
-	Cloak:
-		CloakTypes: Underwater
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Heal
-		InitialDelay: 0
-		CloakDelay: 50
-		CloakSound: subshow1.aud
-		UncloakSound: subshow1.aud
-		CloakedCondition: underwater
-		Palette: submerged
-		PauseOnCondition: cloak-force-disabled || invisibility || being-warped
-	GrantConditionOnDamageState@UNCLOAK:
-		Condition: cloak-force-disabled
-		ValidDamageStates: Critical
 	Armament:
 		Weapon: TorpTube
 		LocalOffset: 0,-171,0, 0,171,0
 		FireDelay: 2
+		PauseOnCondition: under-bridge
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
 	AutoTarget:
@@ -60,23 +40,13 @@ SS:
 		ValidTargets: Water, Underwater
 	AutoTargetPriority@ATTACKANYTHING:
 		ValidTargets: Water, Underwater
-	DetectCloaked:
-		CloakTypes: Underwater
-		Range: 4c0
-	RenderDetectionCircle:
-	Explodes:
-		Weapon: UnitExplodeSubmarine
-		EmptyWeapon: UnitExplodeSubmarine
-	-MustBeDestroyed:
 	Selectable:
 		DecorationBounds: 38,38
 
 MSUB:
-	Inherits: ^Ship
+	Inherits: ^Submarine
 	Inherits@AUTOTARGET: ^AutoTargetAllNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
-	RenderSprites:
-		PlayerPalette: playernavy
 	Buildable:
 		Queue: Ship
 		BuildAtProductionType: Submarine
@@ -102,47 +72,22 @@ MSUB:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 5c0
-	Targetable:
-		TargetTypes: Ground, Water, Ship, Submarine, Repair
-		RequiresCondition: !underwater && !being-warped
-	Targetable@UNDERWATER:
-		TargetTypes: Underwater, Submarine
-		RequiresCondition: underwater && !being-warped
-	Cloak:
-		CloakTypes: Underwater
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Heal
-		InitialDelay: 0
-		CloakDelay: 100
-		CloakSound: subshow1.aud
-		UncloakSound: subshow1.aud
-		CloakedCondition: underwater
-		Palette: submerged
-		PauseOnCondition: cloak-force-disabled || invisibility || being-warped
-	GrantConditionOnDamageState@UNCLOAK:
-		Condition: cloak-force-disabled
-		ValidDamageStates: Critical
 	Armament@PRIMARY:
 		Weapon: SubMissile
 		LocalOffset: 0,-171,0, 0,171,0
 		FireDelay: 2
+		PauseOnCondition: under-bridge
 	Armament@SECONDARY:
 		Weapon: SubMissileAA
 		LocalOffset: 0,-171,0, 0,171,0
 		FireDelay: 2
+		PauseOnCondition: under-bridge
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
 	AutoTarget:
 		InitialStance: HoldFire
-	DetectCloaked:
-		CloakTypes: Underwater
-		Range: 4c0
-	RenderDetectionCircle:
-	Explodes:
-		Weapon: UnitExplodeSubmarine
-		EmptyWeapon: UnitExplodeSubmarine
-	-MustBeDestroyed:
 	Selectable:
 		DecorationBounds: 44,44
 
@@ -150,8 +95,6 @@ DD:
 	Inherits: ^Ship
 	Inherits@AUTOTARGET: ^AutoTargetAllNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
-	RenderSprites:
-		PlayerPalette: playernavy
 	Buildable:
 		Queue: Ship
 		BuildAtProductionType: Boat
@@ -181,6 +124,7 @@ DD:
 		Sequence: spinner
 		Offset: -90,0,406
 		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !under-bridge
 	Turreted:
 		TurnSpeed: 7
 		Offset: 469,0,128
@@ -188,14 +132,17 @@ DD:
 		Weapon: Stinger
 		LocalOffset: 0,-100,0, 0,100,0
 		LocalYaw: 64, -64
+		PauseOnCondition: under-bridge
 	Armament@SECONDARY:
 		Weapon: DepthCharge
 		LocalOffset: 0,-100,0, 0,100,0
 		LocalYaw: 80, -80
+		PauseOnCondition: under-bridge
 	Armament@TERTIARY:
 		Weapon: StingerAA
 		LocalOffset: 0,-100,0, 0,100,0
 		LocalYaw: 64, -64
+		PauseOnCondition: under-bridge
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithSpriteTurret:
@@ -210,8 +157,6 @@ CA:
 	Inherits: ^Ship
 	Inherits@AUTOTARGET: ^AutoTargetNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
-	RenderSprites:
-		PlayerPalette: playernavy
 	Buildable:
 		Queue: Ship
 		BuildAtProductionType: Boat
@@ -241,6 +186,7 @@ CA:
 		Sequence: spinner
 		Offset: -90,0,406
 		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !under-bridge
 	Turreted@PRIMARY:
 		Turret: primary
 		Offset: -896,0,128
@@ -256,6 +202,7 @@ CA:
 		Recoil: 171
 		RecoilRecovery: 34
 		MuzzleSequence: muzzle
+		PauseOnCondition: under-bridge
 	Armament@SECONDARY:
 		Name: secondary
 		Turret: secondary
@@ -265,6 +212,7 @@ CA:
 		RecoilRecovery: 34
 		MuzzleSequence: muzzle
 		FireDelay: 10
+		PauseOnCondition: under-bridge
 	AttackTurreted:
 		Turrets: primary, secondary
 		TargetFrozenActors: True
@@ -280,8 +228,6 @@ CA:
 
 LST:
 	Inherits: ^Ship
-	RenderSprites:
-		PlayerPalette: playernavy
 	Buildable:
 		Queue: Ship
 		BuildPaletteOrder: 10
@@ -326,8 +272,6 @@ PT:
 	Inherits: ^Ship
 	Inherits@AUTOTARGET: ^AutoTargetNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
-	RenderSprites:
-		PlayerPalette: playernavy
 	Buildable:
 		Queue: Ship
 		BuildAtProductionType: Boat
@@ -360,16 +304,19 @@ PT:
 		Weapon: 2Inch
 		LocalOffset: 208,0,48
 		MuzzleSequence: muzzle
+		PauseOnCondition: under-bridge
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: DepthCharge
 		MuzzleSequence: muzzle
+		PauseOnCondition: under-bridge
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		Offset: -256,0,256
 		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !under-bridge
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	DetectCloaked:
@@ -383,8 +330,6 @@ PT2:
 	Inherits: ^Ship
 	Inherits@AUTOTARGET: ^AutoTargetAllNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
-	RenderSprites:
-		PlayerPalette: playernavy
 	Buildable:
 		Queue: Ship
 		BuildAtProductionType: Boat
@@ -418,16 +363,19 @@ PT2:
 		Weapon: boatmissile
 		LocalOffset: 0,-100,0, 0,100,0
 		LocalYaw: 64, -64
+		PauseOnCondition: under-bridge
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: DepthCharge
 		LocalOffset: 0,-100,0, 0,100,0
 		LocalYaw: 80, -80
+		PauseOnCondition: under-bridge
 	Armament@TERTIARY:
 		Name: tertiary
 		Weapon: BoatMissileAA
 		LocalOffset: 0,-100,0, 0,100,0
 		LocalYaw: 64, -64
+		PauseOnCondition: under-bridge
 	AttackTurreted:
 		Armaments: primary, secondary, tertiary
 		PauseOnCondition: empdisable || being-warped
@@ -436,6 +384,8 @@ PT2:
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		Offset: -256,0,256
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !under-bridge
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 4c0
@@ -447,8 +397,6 @@ DD2:
 	Inherits: ^Ship
 	Inherits@AUTOTARGET: ^AutoTargetNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
-	RenderSprites:
-		PlayerPalette: playernavy
 	Buildable:
 		Queue: Ship
 		BuildAtProductionType: Boat
@@ -479,6 +427,7 @@ DD2:
 		Sequence: spinner
 		Offset: -90,0,406
 		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !under-bridge
 	Turreted@PRIMARY:
 		Turret: primary
 		TurnSpeed: 5
@@ -490,6 +439,7 @@ DD2:
 		Recoil: 0
 		RecoilRecovery: 0
 		MuzzleSequence: muzzle
+		PauseOnCondition: under-bridge
 	AttackTurreted:
 		Turrets: primary, secondary, tertiary
 		Armaments: primary, secondary, tertiary
@@ -506,11 +456,9 @@ DD2:
 		DecorationBounds: 38,38
 
 SS2:
-	Inherits: ^Ship
+	Inherits: ^Submarine
 	Inherits@AUTOTARGET: ^AutoTargetAllNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
-	RenderSprites:
-		PlayerPalette: playernavy
 	Buildable:
 		Queue: Ship
 		BuildAtProductionType: Submarine
@@ -536,55 +484,27 @@ SS2:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 5c0
-	Targetable:
-		TargetTypes: Ground, Water, Ship, Submarine, Repair
-		RequiresCondition: !underwater && !being-warped
-	Targetable@UNDERWATER:
-		TargetTypes: Underwater, Submarine
-		RequiresCondition: underwater && !being-warped
-	Cloak:
-		CloakTypes: Underwater
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Heal
-		InitialDelay: 0
-		CloakDelay: 50
-		CloakSound: subshow1.aud
-		UncloakSound: subshow1.aud
-		CloakedCondition: underwater
-		Palette: submerged
-		PauseOnCondition: cloak-force-disabled || invisibility || being-warped
-	GrantConditionOnDamageState@UNCLOAK:
-		Condition: cloak-force-disabled
-		ValidDamageStates: Critical
 	Armament@PRIMARY:
 		Weapon: TorpTube
 		LocalOffset: 0,-171,0, 0,171,0
 		FireDelay: 2
+		PauseOnCondition: under-bridge
 	Armament@secondary:
 		Name: secondary
 		Weapon: SubAA
 		LocalOffset: -300,-171,0, -300,171,0
+		PauseOnCondition: under-bridge
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
 	AutoTarget:
 		InitialStance: HoldFire
-	DetectCloaked:
-		CloakTypes: Underwater
-		Range: 4c0
-	RenderDetectionCircle:
-	Explodes:
-		Weapon: UnitExplodeSubmarine
-		EmptyWeapon: UnitExplodeSubmarine
-	-MustBeDestroyed:
 	Selectable:
 		DecorationBounds: 38,38
 
 ISUB:
-	Inherits: ^Ship
+	Inherits: ^Submarine
 	Inherits@AUTOTARGET: ^AutoTargetAllNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
-	RenderSprites:
-		Image: icbmsub
-		PlayerPalette: playernavy
 	Buildable:
 		Queue: Ship
 		BuildAtProductionType: Submarine
@@ -610,47 +530,22 @@ ISUB:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 5c0
-	Targetable:
-		TargetTypes: Ground, Water, Ship, Submarine, Repair
-		RequiresCondition: !underwater && !being-warped
-	Targetable@UNDERWATER:
-		TargetTypes: Underwater, Submarine
-		RequiresCondition: underwater && !being-warped
-	Cloak:
-		CloakTypes: Underwater
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Heal
-		InitialDelay: 0
-		CloakDelay: 100
-		CloakSound: subshow1.aud
-		UncloakSound: subshow1.aud
-		CloakedCondition: underwater
-		Palette: submerged
-		PauseOnCondition: cloak-force-disabled || invisibility || being-warped
-	GrantConditionOnDamageState@UNCLOAK:
-		Condition: cloak-force-disabled
-		ValidDamageStates: Critical
 	Armament@primary:
 		Weapon: HonestJohnSub
 		LocalOffset: 350,-151,0, 350,151,0
 		FireDelay: 1
+		PauseOnCondition: under-bridge
 	Armament@secondary:
 		Weapon: HonestJohnSub
 		LocalOffset: 350,-151,0, 350,151,0
 		FireDelay: 10
+		PauseOnCondition: under-bridge
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
 	AutoTarget:
 		InitialStance: HoldFire
-	DetectCloaked:
-		CloakTypes: Underwater
-		Range: 4c0
-	RenderDetectionCircle:
-	Explodes:
-		Weapon: UnitExplodeSubmarine
-		EmptyWeapon: UnitExplodeSubmarine
-	-MustBeDestroyed:
 	Selectable:
 		DecorationBounds: 44,44
 
@@ -658,8 +553,6 @@ CARR:
 	Inherits: ^Ship
 	Inherits@AUTOTARGET: ^AutoTargetNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
-	RenderSprites:
-		PlayerPalette: playernavy
 	Buildable:
 		Queue: Ship
 		BuildPaletteOrder: 60
@@ -687,6 +580,7 @@ CARR:
 		Sequence: spinner
 		Offset: 30,70,600
 		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !under-bridge
 	AttackOmni:
 		Voice: Attack
 		PauseOnCondition: empdisable || being-warped
@@ -708,6 +602,7 @@ CARR:
 		Facing: -20
 	Armament:
 		Weapon: HornetLauncher
+		PauseOnCondition: under-bridge
 	Selectable:
 		DecorationBounds: 44,44
 	Voiced:

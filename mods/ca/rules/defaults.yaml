@@ -137,29 +137,29 @@
 		Multiplier: 96
 		Prerequisites: is-normal-ai
 
-# The Bot does not know how to sell up when he does not have an income. This provides an income, when floating less than 2000$
+# The Bot does not know how to sell up when he does not have an income. This provides an income, when floating less than 2500$
 ^BotFallbackInsurance:
 	GrantConditionOnPlayerResources@botinsurance:
 		Condition: noinsurance
-		Threshold: 2000
+		Threshold: 2500
 	CashTrickler@brutalinsurance:
-		Interval: 500
+		Interval: 250
 		Amount: 1000
 		ShowTicks: False
 		RequiresCondition: owned-by-brutal-ai && !noinsurance
 	CashTrickler@vhardinsurance:
-		Interval: 500
-		Amount: 800
+		Interval: 250
+		Amount: 750
 		ShowTicks: False
 		RequiresCondition: owned-by-vhard-ai && !noinsurance
 	CashTrickler@hardinsurance:
-		Interval: 500
-		Amount: 600
+		Interval: 250
+		Amount: 500
 		ShowTicks: False
 		RequiresCondition: owned-by-hard-ai && !noinsurance
 	CashTrickler@normalinsurance:
-		Interval: 500
-		Amount: 400
+		Interval: 250
+		Amount: 250
 		ShowTicks: False
 		RequiresCondition: owned-by-normal-ai && !noinsurance
 
@@ -512,8 +512,12 @@
 		DamageCooldown: 0
 		RequiresCondition: driver-dead
 	CaptureManager:
+	Targetable@DRIVERKILL:
+		TargetTypes: DriverKill
+		RequiresCondition: !driver-dead
 	Targetable@AICAPTURE:
 		TargetTypes: NoCrew
+		RequiresCondition: driver-dead
 
 ^CanCaptureDriverlessVehicles:
 	Captures@DRIVER_KILL:
@@ -716,7 +720,7 @@
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
 		InvalidTargets: NoAutoTarget
 	AutoTargetPriority@ATTACKANYTHING:
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense, Mine, Bridge
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense, Mine
 
 ^AutoTargetAir:
 	AutoTarget:
@@ -748,10 +752,10 @@
 ^AutoTargetAllNavalAssaultMove:
 	Inherits: ^AutoTargetAllAssaultMove
 	AutoTargetPriority@DEFAULT:
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense, Bridge
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
 		InvalidTargets: NoAutoTarget
 	AutoTargetPriority@ATTACKANYTHING:
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense, Bridge
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
 		InvalidTargets: NoAutoTarget
 
 ^GlobalBounty:
@@ -901,6 +905,9 @@
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.medium
+	DetectCloaked@UNDERBRIDGE:
+		CloakTypes: Underbridge
+		Range: 5c0
 
 ^VehicleTD:
 	Inherits@1: ^Vehicle
@@ -1207,6 +1214,8 @@
 	Inherits@SELECTION_MODE: ^FlatSelectionMode
 	Inherits@production: ^ProductionSpeedBoost
 	Huntable:
+	RenderSprites:
+		PlayerPalette: playernavy
 	OwnerLostAction:
 		Action: Kill
 	DrawLineToTarget:
@@ -1281,7 +1290,60 @@
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.medium
-
+	GrantConditionOnTerrain@UNDERBRIDGE:
+		Condition: under-bridge
+		TerrainTypes: Bridge, Tunnel, Rock
+	Cloak@UNDERBRIDGE:
+		CloakTypes: Underbridge
+		UncloakOn: Unload
+		InitialDelay: 0
+		CloakDelay: 0
+		Palette: submerged
+		RequiresCondition: under-bridge
+	DamageMultiplier@UNDERBRIDGE:
+		RequiresCondition: under-bridge
+		Modifier: 1
+	Targetable@UNDERBRIDGE:
+		RequiresCondition: under-bridge
+		TargetTypes: Underbridge
+	DetectCloaked@UNDERBRIDGE:
+		CloakTypes: Underbridge
+		Range: 5c0
+		
+^Submarine:
+	Inherits@1: ^Ship
+	Targetable:
+		TargetTypes: Ground, Water, Ship, Submarine, Repair
+		RequiresCondition: !underwater && !being-warped
+	Targetable@UNDERWATER:
+		TargetTypes: Underwater, Submarine
+		RequiresCondition: underwater && !being-warped
+	GrantConditionOnTerrain@FORD:
+		Condition: crossing-ford
+		TerrainTypes: Ford
+	Cloak:
+		CloakTypes: Underwater
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Heal
+		InitialDelay: 0
+		CloakDelay: 50
+		CloakSound: subshow1.aud
+		UncloakSound: subshow1.aud
+		CloakedCondition: underwater
+		Palette: submerged
+		PauseOnCondition: cloak-force-disabled || invisibility || being-warped || crossing-ford
+	GrantConditionOnDamageState@UNCLOAK:
+		Condition: cloak-force-disabled
+		ValidDamageStates: Critical
+	DetectCloaked:
+		CloakTypes: Underwater
+		Range: 4c0
+	RenderDetectionCircle:
+	Explodes:
+		Weapon: UnitExplodeSubmarine
+		EmptyWeapon: UnitExplodeSubmarine
+		RequiresCondition: !under-bridge
+	-MustBeDestroyed:
+	
 ^NeutralPlane:
 	Inherits@1: ^ExistsInWorld
 	Inherits@3: ^IronCurtainable
@@ -1645,6 +1707,9 @@
 	Explodes@temporal:
 		Weapon: TemporalExplode
 		EmptyWeapon: TemporalExplode
+	DetectCloaked@UNDERBRIDGE:
+		CloakTypes: Underbridge
+		Range: 6c0
 
 ^DefenseTD:
 	Inherits@1: ^Defense

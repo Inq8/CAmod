@@ -77,6 +77,14 @@ Terrain:
 		TargetTypes: Ground, Bridge
 		AcceptsSmudgeType: Crater, Scorch
 		Color: 606060
+	TerrainType@Ford:
+		Type: Ford
+		TargetTypes: Ground
+		Color: 9e8e70
+	TerrainType@Tunnel:
+		Type: Tunnel
+		TargetTypes: Ground
+		Color: 606060
 
 Templates:
 	Template@255:
@@ -2515,12 +2523,12 @@ Templates:
 			1: Rock
 			2: Bridge
 			4: Rock
-			5: Bridge
-			6: Bridge
+			5: Rough
+			6: Rough
 			7: Rock
 			9: Bridge
-			10: Rock
-			11: Rock
+			10: Tunnel
+			11: Tunnel
 	Template@236:
 		Id: 236
 		Images: br1b.bar
@@ -2533,9 +2541,9 @@ Templates:
 			5: Rough
 			6: Rough
 			7: Rock
-			9: Rough
-			10: Rock
-			11: Rock
+			9: Bridge
+			10: Tunnel
+			11: Tunnel
 	Template@237:
 		Id: 237
 		Images: br1c.bar
@@ -2557,11 +2565,11 @@ Templates:
 		Size: 5,3
 		Categories: Bridge
 		Tiles:
-			1: Rock
+			1: Tunnel
 			2: Bridge
 			5: Rock
-			6: Bridge
-			7: Bridge
+			6: Rough
+			7: Rough
 			8: Rock
 			9: Rock
 			11: Bridge
@@ -2573,8 +2581,8 @@ Templates:
 		Size: 5,3
 		Categories: Bridge
 		Tiles:
-			1: Rock
-			2: Rough
+			1: Tunnel
+			2: Bridge
 			5: Rock
 			6: Rough
 			7: Rough
@@ -2605,44 +2613,44 @@ Templates:
 		Size: 4,2
 		Categories: Bridge
 		Tiles:
-			0: Rock
+			0: Tunnel
 			1: Bridge
 			5: Bridge
-			6: Rock
-			7: Rock
+			6: Tunnel
+			7: Tunnel
 	Template@242:
 		Id: 242
 		Images: br3b.bar
 		Size: 4,2
 		Categories: Bridge
 		Tiles:
-			0: Rock
+			0: Tunnel
 			1: Bridge
 			5: Bridge
-			6: Rock
-			7: Rock
+			6: Tunnel
+			7: Tunnel
 	Template@243:
 		Id: 243
 		Images: br3c.bar
 		Size: 4,2
 		Categories: Bridge
 		Tiles:
-			0: Rock
-			1: Rock
-			5: Rock
-			6: Rock
-			7: Rock
+			0: Tunnel
+			1: Tunnel
+			5: Tunnel
+			6: Tunnel
+			7: Tunnel
 	Template@244:
 		Id: 244
 		Images: br3d.bar
 		Size: 4,2
 		Categories: Bridge
 		Tiles:
-			0: River
-			1: Rock
-			5: River
-			6: River
-			7: River
+			0: Tunnel
+			1: Bridge
+			5: Tunnel
+			6: Tunnel
+			7: Tunnel
 	Template@245:
 		Id: 245
 		Images: br3e.bar
@@ -2651,7 +2659,7 @@ Templates:
 		Tiles:
 			0: Water
 			1: Water
-			5: Rock
+			5: Bridge
 			6: Water
 			7: Water
 	Template@246:
@@ -2672,7 +2680,7 @@ Templates:
 		Categories: Bridge
 		Tiles:
 			0: Rock
-			3: Road
+			3: Bridge
 			4: Clear
 			9: Rock
 			14: Water
@@ -2682,7 +2690,7 @@ Templates:
 		Size: 5,1
 		Categories: Bridge
 		Tiles:
-			0: Road
+			0: Bridge
 			4: Beach
 	Template@131:
 		Id: 131
@@ -2824,33 +2832,33 @@ Templates:
 			3: Beach
 			4: Beach
 			5: Beach
-			6: Beach
-			7: Beach
-			8: Beach
+			6: Ford
+			7: Ford
+			8: Ford
 	Template@248:
 		Id: 248
 		Images: f02.bar
 		Size: 3,3
 		Categories: Bridge
 		Tiles:
-			0: Beach
-			1: Beach
-			2: Beach
-			3: Beach
-			4: Beach
-			5: Beach
-			6: Beach
-			7: Beach
-			8: Beach
+			0: Ford
+			1: Ford
+			2: Ford
+			3: Ford
+			4: Ford
+			5: Ford
+			6: Ford
+			7: Ford
+			8: Ford
 	Template@249:
 		Id: 249
 		Images: f03.bar
 		Size: 3,3
 		Categories: Bridge
 		Tiles:
-			0: Beach
-			1: Beach
-			2: Beach
+			0: Ford
+			1: Ford
+			2: Ford
 			3: Beach
 			4: Beach
 			5: Beach
@@ -2865,41 +2873,41 @@ Templates:
 		Tiles:
 			0: Clear
 			1: Beach
-			2: Beach
+			2: Ford
 			3: Road
 			4: Beach
-			5: Beach
+			5: Ford
 			6: Clear
 			7: Beach
-			8: Beach
+			8: Ford
 	Template@251:
 		Id: 251
 		Images: f05.bar
 		Size: 3,3
 		Categories: Bridge
 		Tiles:
-			0: Beach
-			1: Beach
-			2: Beach
-			3: Beach
-			4: Beach
-			5: Beach
-			6: Beach
-			7: Beach
-			8: Beach
+			0: Ford
+			1: Ford
+			2: Ford
+			3: Ford
+			4: Ford
+			5: Ford
+			6: Ford
+			7: Ford
+			8: Ford
 	Template@252:
 		Id: 252
 		Images: f06.bar
 		Size: 3,3
 		Categories: Bridge
 		Tiles:
-			0: Beach
+			0: Ford
 			1: Beach
 			2: Clear
-			3: Beach
+			3: Ford
 			4: Beach
 			5: Road
-			6: Beach
+			6: Ford
 			7: Beach
 			8: Clear
 	Template@129:

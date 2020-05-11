@@ -77,6 +77,14 @@ Terrain:
 		AcceptsSmudgeType: Crater, Scorch
 		Color: A1E21C
 		RestrictPlayerColor: true
+	TerrainType@Ford:
+		Type: Ford
+		TargetTypes: Ground
+		Color: B09C78
+	TerrainType@Tunnel:
+		Type: Tunnel
+		TargetTypes: Ground
+		Color: 606060
 
 Templates:
 	Template@255:
@@ -2521,14 +2529,14 @@ Templates:
 		Categories: Bridge
 		Tiles:
 			1: Rock
-			2: Bridge
+			2: Rough
 			4: Rock
-			5: Bridge
-			6: Bridge
+			5: Rough
+			6: Rough
 			7: Rock
 			9: Bridge
-			10: Rock
-			11: Rock
+			10: Tunnel
+			11: Tunnel
 	Template@236:
 		Id: 236
 		Images: br1b.sno
@@ -2541,9 +2549,9 @@ Templates:
 			5: Rough
 			6: Rough
 			7: Rock
-			9: Rough
-			10: Rock
-			11: Rock
+			9: Bridge
+			10: Tunnel
+			11: Tunnel
 	Template@237:
 		Id: 237
 		Images: br1c.sno
@@ -2565,14 +2573,14 @@ Templates:
 		Size: 5,3
 		Categories: Bridge
 		Tiles:
-			1: Rock
+			1: Tunnel
 			2: Bridge
 			5: Rock
-			6: Bridge
-			7: Bridge
+			6: Rough
+			7: Rough
 			8: Rock
 			9: Rock
-			11: Bridge
+			11: Rough
 			12: Rock
 			13: Rock
 	Template@239:
@@ -2581,8 +2589,8 @@ Templates:
 		Size: 5,3
 		Categories: Bridge
 		Tiles:
-			1: Rock
-			2: Rough
+			1: Tunnel
+			2: Bridge
 			5: Rock
 			6: Rough
 			7: Rough
@@ -2613,44 +2621,44 @@ Templates:
 		Size: 4,2
 		Categories: Bridge
 		Tiles:
-			0: Rock
+			0: Tunnel
 			1: Bridge
 			5: Bridge
-			6: Rock
-			7: Rock
+			6: Tunnel
+			7: Tunnel
 	Template@242:
 		Id: 242
 		Images: br3b.sno
 		Size: 4,2
 		Categories: Bridge
 		Tiles:
-			0: Rock
+			0: Tunnel
 			1: Bridge
 			5: Bridge
-			6: Rock
-			7: Rock
+			6: Tunnel
+			7: Tunnel
 	Template@243:
 		Id: 243
 		Images: br3c.sno
 		Size: 4,2
 		Categories: Bridge
 		Tiles:
-			0: Rock
-			1: Rock
-			5: Rock
-			6: Rock
-			7: Rock
+			0: Tunnel
+			1: Tunnel
+			5: Tunnel
+			6: Tunnel
+			7: Tunnel
 	Template@244:
 		Id: 244
 		Images: br3d.sno
 		Size: 4,2
 		Categories: Bridge
 		Tiles:
-			0: River
-			1: Rock
-			5: River
-			6: River
-			7: River
+			0: Tunnel
+			1: Bridge
+			5: Tunnel
+			6: Tunnel
+			7: Tunnel
 	Template@245:
 		Id: 245
 		Images: br3e.sno
@@ -2659,7 +2667,7 @@ Templates:
 		Tiles:
 			0: Water
 			1: Water
-			5: Rock
+			5: Bridge
 			6: Water
 			7: Water
 	Template@246:
@@ -2740,6 +2748,8 @@ Templates:
 			8: Rock
 			9: Rock
 			12: Rough
+			13: Clear
+			14: Clear
 	Template@382:
 		Id: 382
 		Images: bridge1x.sno
@@ -2747,11 +2757,11 @@ Templates:
 		Categories: Bridge
 		Tiles:
 			2: Clear
-			3: Road
-			4: Road
+			3: Bridge
+			4: Bridge
 			5: Rock
-			15: Road
-			16: Road
+			15: Bridge
+			16: Bridge
 			18: Rock
 			19: Rock
 	Template@133:
@@ -2805,8 +2815,8 @@ Templates:
 		Size: 5,5
 		Categories: Bridge
 		Tiles:
-			0: Road
-			1: Road
+			0: Bridge
+			1: Bridge
 			2: Rough
 			3: Clear
 			4: Rough
@@ -2814,10 +2824,10 @@ Templates:
 			15: Rock
 			16: Rock
 			17: Rough
-			18: Road
-			19: Road
-			23: Road
-			24: Road
+			18: Bridge
+			19: Bridge
+			23: Bridge
+			24: Bridge
 	Template@247:
 		Id: 247
 		Images: f01.sno
@@ -2830,33 +2840,33 @@ Templates:
 			3: Beach
 			4: Beach
 			5: Beach
-			6: Beach
-			7: Beach
-			8: Beach
+			6: Ford
+			7: Ford
+			8: Ford
 	Template@248:
 		Id: 248
 		Images: f02.sno
 		Size: 3,3
 		Categories: Bridge
 		Tiles:
-			0: Beach
-			1: Beach
-			2: Beach
-			3: Beach
-			4: Beach
-			5: Beach
-			6: Beach
-			7: Beach
-			8: Beach
+			0: Ford
+			1: Ford
+			2: Ford
+			3: Ford
+			4: Ford
+			5: Ford
+			6: Ford
+			7: Ford
+			8: Ford
 	Template@249:
 		Id: 249
 		Images: f03.sno
 		Size: 3,3
 		Categories: Bridge
 		Tiles:
-			0: Beach
-			1: Beach
-			2: Beach
+			0: Ford
+			1: Ford
+			2: Ford
 			3: Beach
 			4: Beach
 			5: Beach
@@ -2871,41 +2881,41 @@ Templates:
 		Tiles:
 			0: Clear
 			1: Beach
-			2: Beach
+			2: Ford
 			3: Road
 			4: Beach
-			5: Beach
+			5: Ford
 			6: Clear
 			7: Beach
-			8: Beach
+			8: Ford
 	Template@251:
 		Id: 251
 		Images: f05.sno
 		Size: 3,3
 		Categories: Bridge
 		Tiles:
-			0: Beach
-			1: Beach
-			2: Beach
-			3: Beach
-			4: Beach
-			5: Beach
-			6: Beach
-			7: Beach
-			8: Beach
+			0: Ford
+			1: Ford
+			2: Ford
+			3: Ford
+			4: Ford
+			5: Ford
+			6: Ford
+			7: Ford
+			8: Ford
 	Template@252:
 		Id: 252
 		Images: f06.sno
 		Size: 3,3
 		Categories: Bridge
 		Tiles:
-			0: Beach
+			0: Ford
 			1: Beach
 			2: Clear
-			3: Beach
+			3: Ford
 			4: Beach
 			5: Road
-			6: Beach
+			6: Ford
 			7: Beach
 			8: Clear
 	Template@129:
@@ -3244,12 +3254,12 @@ Templates:
 		Tiles:
 			1: Bridge
 			2: Rock
-			4: Rock
+			4: Tunnel
 			5: Bridge
 			6: Bridge
-			7: Rock
-			8: Rock
-			9: Rock
+			7: Tunnel
+			8: Tunnel
+			9: Tunnel
 			10: Bridge
 	Template@701:
 		Id: 701
@@ -3260,12 +3270,12 @@ Templates:
 		Tiles:
 			1: Rough
 			2: Rock
-			4: Rock
+			4: Tunnel
 			5: Rough
 			6: Rough
-			7: Rock
-			8: Rock
-			9: Rock
+			7: Tunnel
+			8: Tunnel
+			9: Tunnel
 			10: Rough
 	Template@702:
 		Id: 702
@@ -3291,7 +3301,7 @@ Templates:
 		Categories: Bridge
 		Tiles:
 			2: Bridge
-			3: Rock
+			3: Tunnel
 			5: Rock
 			6: Rock
 			7: Bridge
@@ -3308,7 +3318,7 @@ Templates:
 		Categories: Bridge
 		Tiles:
 			2: Rough
-			3: Rock
+			3: Tunnel
 			5: Rock
 			6: Rock
 			7: Rough
@@ -3342,9 +3352,9 @@ Templates:
 		Categories: Bridge
 		Tiles:
 			2: Bridge
-			3: Rock
-			4: Rock
-			5: Rock
+			3: Tunnel
+			4: Tunnel
+			5: Tunnel
 			6: Bridge
 	Template@707:
 		Id: 707
@@ -3354,9 +3364,9 @@ Templates:
 		Categories: Bridge
 		Tiles:
 			2: Bridge
-			3: Rock
-			4: Rock
-			5: Rock
+			3: Tunnel
+			4: Tunnel
+			5: Tunnel
 			6: Bridge
 	Template@708:
 		Id: 708
@@ -3380,8 +3390,8 @@ Templates:
 			2: River
 			3: Rock
 			4: River
-			5: River
-			6: River
+			5: Water
+			6: Water
 	Template@710:
 		Id: 710
 		Images: bridgecb5.sno
@@ -3434,17 +3444,17 @@ Templates:
 		Categories: Bridge
 		Tiles:
 			0: Clear
-			1: Road
-			2: Road
+			1: Rough
+			2: Rough
 			3: Clear
 			4: Rock
-			5: Bridge
-			6: Bridge
+			5: Rough
+			6: Rough
 			7: Rock
-			8: Rock
+			8: Tunnel
 			9: Bridge
 			10: Bridge
-			11: Rock
+			11: Tunnel
 	Template@715:
 		Id: 715
 		Images: bridgevd1.sno
@@ -3452,17 +3462,17 @@ Templates:
 		Categories: Bridge
 		Tiles:
 			0: Clear
-			1: Road
-			2: Road
+			1: Rough
+			2: Rough
 			3: Clear
 			4: Rock
 			5: Rough
 			6: Rough
 			7: Rock
-			8: Rock
-			9: Rough
-			10: Rough
-			11: Rock
+			8: Tunnel
+			9: Bridge
+			10: Bridge
+			11: Tunnel
 	Template@716:
 		Id: 716
 		Images: bridgevb1.sno
@@ -3470,8 +3480,8 @@ Templates:
 		Categories: Bridge
 		Tiles:
 			0: Clear
-			1: Road
-			2: Road
+			1: Rough
+			2: Rough
 			3: Clear
 			4: Rock
 			5: Rock
@@ -3487,17 +3497,17 @@ Templates:
 		Size: 4,3
 		Categories: Bridge
 		Tiles:
-			0: Rock
+			0: Tunnel
 			1: Bridge
 			2: Bridge
-			3: Rock
+			3: Tunnel
 			4: Rock
-			5: Bridge
-			6: Bridge
+			5: Rough
+			6: Rough
 			7: Rock
 			8: Clear
-			9: Road
-			10: Road
+			9: Rough
+			10: Rough
 			11: Clear
 	Template@718:
 		Id: 718
@@ -3505,17 +3515,17 @@ Templates:
 		Size: 4,3
 		Categories: Bridge
 		Tiles:
-			0: Rock
-			1: Rough
-			2: Rough
-			3: Rock
+			0: Tunnel
+			1: Bridge
+			2: Bridge
+			3: Tunnel
 			4: Rock
 			5: Rough
 			6: Rough
 			7: Rock
 			8: Clear
-			9: Road
-			10: Road
+			9: Rough
+			10: Rough
 			11: Clear
 	Template@719:
 		Id: 719
@@ -3523,17 +3533,17 @@ Templates:
 		Size: 4,3
 		Categories: Bridge
 		Tiles:
-			0: Rock
-			1: Rock
-			2: Rock
-			3: Rock
+			0: Water
+			1: Water
+			2: Water
+			3: Water
 			4: Rock
 			5: Rock
 			6: Rock
 			7: Rock
 			8: Clear
-			9: Road
-			10: Road
+			9: Rough
+			10: Rough
 			11: Clear
 	Template@720:
 		Id: 720
@@ -3541,28 +3551,28 @@ Templates:
 		Size: 4,2
 		Categories: Bridge
 		Tiles:
-			0: Rock
+			0: Tunnel
 			1: Bridge
 			2: Bridge
-			3: Rock
-			4: Rock
+			3: Tunnel
+			4: Tunnel
 			5: Bridge
 			6: Bridge
-			7: Rock
+			7: Tunnel
 	Template@721:
 		Id: 721
 		Images: bridgevd3.sno
 		Size: 4,2
 		Categories: Bridge
 		Tiles:
-			0: Rock
+			0: Tunnel
 			1: Bridge
 			2: Bridge
-			3: Rock
-			4: Rock
+			3: Tunnel
+			4: Tunnel
 			5: Bridge
 			6: Bridge
-			7: Rock
+			7: Tunnel
 	Template@722:
 		Id: 722
 		Images: bridgevb3.sno
@@ -3628,16 +3638,16 @@ Templates:
 		Tiles:
 			0: Beach
 			1: Rock
-			2: Rock
-			3: Road
-			4: Bridge
+			2: Tunnel
+			3: Rough
+			4: Rough
 			5: Bridge
-			6: Road
-			7: Bridge
+			6: Rough
+			7: Rough
 			8: Bridge
 			9: Beach
 			10: Rock
-			11: Rock
+			11: Tunnel
 	Template@727:
 		Id: 727
 		Images: bridgehd1.sno
@@ -3646,16 +3656,16 @@ Templates:
 		Tiles:
 			0: Beach
 			1: Rock
-			2: Rock
-			3: Road
+			2: Tunnel
+			3: Rough
 			4: Rough
-			5: Rough
-			6: Road
+			5: Bridge
+			6: Rough
 			7: Rough
-			8: Rough
+			8: Bridge
 			9: Beach
 			10: Rock
-			11: Rock
+			11: Tunnel
 	Template@728:
 		Id: 728
 		Images: bridgehb1.sno
@@ -3664,7 +3674,7 @@ Templates:
 		Tiles:
 			0: Beach
 			1: Rock
-			2: Rock
+			2: Water
 			3: Road
 			4: Rock
 			5: Rock
@@ -3673,23 +3683,23 @@ Templates:
 			8: Rock
 			9: Beach
 			10: Rock
-			11: Rock
+			11: Water
 	Template@729:
 		Id: 729
 		Images: bridgeh2.sno
 		Size: 3,4
 		Categories: Bridge
 		Tiles:
-			0: Rock
+			0: Tunnel
 			1: Rock
 			2: Beach
 			3: Bridge
-			4: Bridge
-			5: Road
+			4: Rough
+			5: Rough
 			6: Bridge
-			7: Bridge
-			8: Road
-			9: Rock
+			7: Rough
+			8: Rough
+			9: Tunnel
 			10: Rock
 			11: Beach
 	Template@730:
@@ -3698,16 +3708,16 @@ Templates:
 		Size: 3,4
 		Categories: Bridge
 		Tiles:
-			0: Rock
+			0: Tunnel
 			1: Rock
 			2: Beach
-			3: Rough
+			3: Bridge
 			4: Rough
-			5: Road
-			6: Rough
+			5: Rough
+			6: Bridge
 			7: Rough
-			8: Road
-			9: Rock
+			8: Rough
+			9: Tunnel
 			10: Rock
 			11: Beach
 	Template@731:
@@ -3716,7 +3726,7 @@ Templates:
 		Size: 3,4
 		Categories: Bridge
 		Tiles:
-			0: Rock
+			0: Water
 			1: Rock
 			2: Beach
 			3: Rock
@@ -3734,28 +3744,28 @@ Templates:
 		Size: 2,4
 		Categories: Bridge
 		Tiles:
-			0: Rock
-			1: Rock
+			0: Tunnel
+			1: Tunnel
 			2: Bridge
 			3: Bridge
 			4: Bridge
 			5: Bridge
-			6: Rock
-			7: Rock
+			6: Tunnel
+			7: Tunnel
 	Template@733:
 		Id: 733
 		Images: bridgehd3.sno
 		Size: 2,4
 		Categories: Bridge
 		Tiles:
-			0: Rock
-			1: Rock
+			0: Tunnel
+			1: Tunnel
 			2: Bridge
 			3: Bridge
 			4: Bridge
 			5: Bridge
-			6: Rock
-			7: Rock
+			6: Tunnel
+			7: Tunnel
 	Template@734:
 		Id: 734
 		Images: bridgehb3.sno
