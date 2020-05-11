@@ -43,6 +43,9 @@
 	Inherits: ^AntiGroundMissile
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
+		Range: 0, 0c64, 0c256, 3c0
+		Falloff: 100, 100, 20, 10
+		ValidTargets: Air
 		Versus:
 			None: 100
 			Wood: 100
@@ -232,7 +235,7 @@ MammothTusk:
 		Versus:
 			None: 100
 			Light: 35
-			Heavy: 24
+			Heavy: 35
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: kaboom15.aud
@@ -272,7 +275,6 @@ Nike:
 	Warhead@1Dam: SpreadDamage
 		Damage: 6750
 		Range: 0, 0c64, 0c256, 4c256
-		Falloff: 100, 100, 15, 5
 		ValidTargets: Air
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air
@@ -287,8 +289,7 @@ RedEye:
 		Speed: 298
 	Warhead@1Dam: SpreadDamage
 		Damage: 2800
-		-Range:
-		-Falloff:
+		Range: 0, 0c64, 0c256, 3c0
 
 RedEye.CYB:
 	Inherits: RedEye
@@ -337,6 +338,8 @@ StingerAA:
 		CloseEnough: 298
 	Warhead@1Dam: SpreadDamage
 		Damage: 2600
+		Range: 0, 0c64, 0c256, 3c0
+		Falloff: 100, 100, 20, 10
 		Versus:
 			Light: 100
 	Warhead@3Eff: CreateEffect
@@ -462,12 +465,12 @@ SubMissile:
 	-Projectile:
 	Projectile: Bullet
 		Speed: 192
-		Blockable: false 
+		Blockable: false
 		LaunchAngle: 120
-		Inaccuracy: 0c614 
-		Image: MISSILE 
-		Shadow: True 
-		TrailImage: smokey 
+		Inaccuracy: 0c614
+		Image: MISSILE
+		Shadow: True
+		TrailImage: smokey
 
 HonestJohnSub:
 	Inherits: SubMissile
@@ -502,6 +505,8 @@ SubMissileAA:
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
 		Damage: 450
+		Range: 0, 0c64, 0c256, 3c0
+		Falloff: 100, 100, 20, 10
 		Versus:
 			Light: 100
 			Heavy: 100
@@ -515,12 +520,12 @@ SCUD:
 	-Projectile:
 	Projectile: Bullet
 		Speed: 200
-		Blockable: false 
-		TrailImage: smokey 
+		Blockable: false
+		TrailImage: smokey
 		TrailDelay: 5
 		Inaccuracy: 213
 		Image: V2
-		Shadow: True 
+		Shadow: True
 		LaunchAngle: 62
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
@@ -678,7 +683,7 @@ IFVRocketsAA:
 	Burst: 2
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
-		Damage: 1800
+		Damage: 2100
 
 IFVRocketsE:
 	Inherits: IFVRockets
@@ -695,7 +700,7 @@ IFVRocketsAAE:
 	Projectile: MissileCA
 		ContrailLength: 10
 	Warhead@1Dam: SpreadDamage
-		Damage: 2000
+		Damage: 2650
 
 227mm:
 	Inherits: ^AntiGroundMissile
@@ -749,7 +754,7 @@ IFVRocketsAAE:
 
 227mmAA:
 	Inherits: ^AntiAirMissile
-	ReloadDelay: 120
+	ReloadDelay: 80
 	Burst: 2
 	BurstDelays: 4
 	Range: 7c5112
@@ -762,8 +767,7 @@ IFVRocketsAAE:
 		CruiseAltitude: 2c0
 		RangeLimit: 12c0
 	Warhead@1Dam: SpreadDamage
-		Spread: 683
-		Damage: 2200
+		Damage: 1500
 		ValidTargets: Air
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air
@@ -780,7 +784,7 @@ IFVRocketsAAE:
 		ContrailLength: 15
 		ContrailColor: 00FFFFE6
 	Warhead@1Dam: SpreadDamage
-		Damage: 2400
+		Damage: 1700
 
 227mmAAH:
 	Inherits: 227mmAA
@@ -841,8 +845,7 @@ IFVRocketsAAE:
 		Speed: 283
 		RangeLimit: 9c0
 	Warhead@1Dam: SpreadDamage
-		Spread: 256
-		Damage: 1800
+		Damage: 2600
 		ValidTargets: Air
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air

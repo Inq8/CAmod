@@ -82,59 +82,44 @@
 		Prerequisite: botplayer
 		RequiresCondition: owned-by-brutal-ai || owned-by-vhard-ai || owned-by-hard-ai || owned-by-normal-ai || owned-by-easy-ai || owned-by-naval-ai
 	ProductionTimeMultiplier@brutalbonus:
-		Multiplier: 85
+		Multiplier: 80
 		Prerequisites: is-brutal-ai
 	ProductionTimeMultiplier@vhardbonus:
-		Multiplier: 90
+		Multiplier: 85
 		Prerequisites: is-vhard-ai
 	ProductionTimeMultiplier@hardbonus:
+		Multiplier: 90
+		Prerequisites: is-hard-ai
+	ProductionTimeMultiplier@normalbonus:
 		Multiplier: 95
-		Prerequisites: is-hard-ai
-	ProductionCostMultiplier@brutalbonus:
-		Multiplier: 94
-		Prerequisites: is-brutal-ai
-	ProductionCostMultiplier@vhardbonus:
-		Multiplier: 96
-		Prerequisites: is-vhard-ai
-	ProductionCostMultiplier@hardbonus:
-		Multiplier: 98
-		Prerequisites: is-hard-ai
+		Prerequisites: is-normal-ai
 
 ^BotGroundProductionBonus:
 	ProductionTimeMultiplier@brutalbonus:
-		Multiplier: 48
+		Multiplier: 40
 		Prerequisites: is-brutal-ai
 	ProductionTimeMultiplier@vhardbonus:
-		Multiplier: 56
+		Multiplier: 50
 		Prerequisites: is-vhard-ai
 	ProductionTimeMultiplier@hardbonus:
-		Multiplier: 64
+		Multiplier: 60
 		Prerequisites: is-hard-ai
 	ProductionTimeMultiplier@normalbonus:
 		Multiplier: 80
 		Prerequisites: is-normal-ai
-	ProductionCostMultiplier@brutalbonus:
-		Multiplier: 94
-		Prerequisites: is-brutal-ai
-	ProductionCostMultiplier@vhardbonus:
-		Multiplier: 96
-		Prerequisites: is-vhard-ai
-	ProductionCostMultiplier@hardbonus:
-		Multiplier: 98
-		Prerequisites: is-hard-ai
 
 ^BotAirProductionBonus:
 	ProductionTimeMultiplier@brutalbonus:
-		Multiplier: 84
+		Multiplier: 80
 		Prerequisites: is-brutal-ai
 	ProductionTimeMultiplier@vhardbonus:
-		Multiplier: 88
+		Multiplier: 85
 		Prerequisites: is-vhard-ai
 	ProductionTimeMultiplier@hardbonus:
-		Multiplier: 92
+		Multiplier: 90
 		Prerequisites: is-hard-ai
 	ProductionTimeMultiplier@normalbonus:
-		Multiplier: 96
+		Multiplier: 95
 		Prerequisites: is-normal-ai
 
 # The Bot does not know how to sell up when he does not have an income. This provides an income, when floating less than 2500$
@@ -163,24 +148,20 @@
 		ShowTicks: False
 		RequiresCondition: owned-by-normal-ai && !noinsurance
 
-# ResourcePurifier on Proc's so AI income is still tied to harvesters, so eco sniping AI is possible.
+# RefineryResourceMultiplier on Proc's so AI income is still tied to harvesters, so eco sniping AI is possible.
 ^BotIncome:
-	ResourcePurifier@brutalincome:
-		Modifier: 13
+	RefineryResourceMultiplier@brutalincome:
+		Modifier: 160
 		RequiresCondition: owned-by-brutal-ai
-		ShowTicks: False
-	ResourcePurifier@vhardincome:
-		Modifier: 11
+	RefineryResourceMultiplier@vhardincome:
+		Modifier: 150
 		RequiresCondition: owned-by-vhard-ai
-		ShowTicks: False
-	ResourcePurifier@hardincome:
-		Modifier: 9
+	RefineryResourceMultiplier@hardincome:
+		Modifier: 140
 		RequiresCondition: owned-by-hard-ai
-		ShowTicks: False
-	ResourcePurifier@normalincome:
-		Modifier: 5
+	RefineryResourceMultiplier@normalincome:
+		Modifier: 120
 		RequiresCondition: owned-by-normal-ai
-		ShowTicks: False
 
 #Hacky but helps Bots deal with abandoned vehicles due to snipers
 ^BotCaptureHelper:
@@ -392,6 +373,17 @@
 		BlinkPatterns:
 			bino && gdiupg: On, Off
 		RequiresSelection: True
+
+^OrePurifierUpgrade:
+	GrantConditionOnPrerequisite@OREPUPG:
+		Prerequisites: orep
+		Condition: orepbuff
+	SpeedMultiplier@OREPUPG:
+		RequiresCondition: orepbuff
+		Modifier: 130
+	DamageMultiplier@OREPUPG:
+		RequiresCondition: orepbuff
+		Modifier: 60
 
 ^InfantryExperienceHospitalOverrides:
 	WithDecoration@RANK-1:
@@ -713,7 +705,7 @@
 		RequiresCondition: stance-attackanything || assault-move
 	AttackMove:
 		AssaultMoveCondition: assault-move
-		
+
 ^AutoTargetNavalAssaultMove:
 	Inherits: ^AutoTargetGroundAssaultMove
 	AutoTargetPriority@DEFAULT:
@@ -748,7 +740,7 @@
 		RequiresCondition: stance-attackanything || assault-move
 	AttackMove:
 		AssaultMoveCondition: assault-move
-		
+
 ^AutoTargetAllNavalAssaultMove:
 	Inherits: ^AutoTargetAllAssaultMove
 	AutoTargetPriority@DEFAULT:
@@ -773,12 +765,12 @@
 	Selectable:
 		PriorityModifiers: Ctrl, Alt
 
-^ProductionSpeedBoost:
-	ProductionCostMultiplier@IndustrialPlant:
-		Multiplier: 75
-		Prerequisites: indp, !indplowpower
+^ProductionEfficiencyBoost:
 	ProductionTimeMultiplier@IndustrialPlant:
 		Multiplier: 90
+		Prerequisites: indp, !indplowpower
+	ProductionCostMultiplier@IndustrialPlant:
+		Multiplier: 95
 		Prerequisites: indp, !indplowpower
 
 ^Vehicle:
@@ -801,7 +793,7 @@
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
-	Inherits@production: ^ProductionSpeedBoost
+	Inherits@production: ^ProductionEfficiencyBoost
 	Inherits@SELECTION_MODE: ^FlatSelectionMode
 	Huntable:
 	OwnerLostAction:
@@ -1212,7 +1204,7 @@
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
 	Inherits@SELECTION_MODE: ^FlatSelectionMode
-	Inherits@production: ^ProductionSpeedBoost
+	Inherits@production: ^ProductionEfficiencyBoost
 	Huntable:
 	RenderSprites:
 		PlayerPalette: playernavy
@@ -1443,7 +1435,7 @@
 	Inherits@10: ^Chillable
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
-	Inherits@production: ^ProductionSpeedBoost
+	Inherits@production: ^ProductionEfficiencyBoost
 	Inherits@C4: ^C4Plantable
 	Cloak@EXTERNALCLOAK:
 		RequiresCondition: invisibility || crate-cloak && (!cloak-force-disabled && !airborne && !being-warped)

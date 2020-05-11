@@ -8,7 +8,8 @@
 		Blockable: false
 		Inaccuracy: 0c3
 	Warhead@1Dam: SpreadDamage
-		Spread: 313
+		Range: 0, 0c64, 0c256, 3c0
+		Falloff: 100, 100, 20, 10
 		Damage: 2000
 		ValidTargets: Air
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
@@ -24,14 +25,13 @@ ZSU-23:
 	Warhead@1Dam: SpreadDamage
 		Damage: 2500
 		Range: 0, 0c64, 0c256, 3c768
-		Falloff: 100, 100, 15, 5
 
 FLAK-23-AA:
 	Inherits: ^AACannon
 	Range: 7c512
 	Report: flak1.aud, flak2.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 700
+		Damage: 850
 
 FLAK-23-AG:
 	Inherits: ^AACannon
@@ -45,7 +45,8 @@ FLAK-23-AG:
 		Blockable: True
 		Inaccuracy: 0c768
 	Warhead@1Dam: SpreadDamage
-		Spread: 128
+		-Range:
+		-Falloff:
 		Damage: 1800
 		Versus:
 			None: 120
@@ -70,7 +71,6 @@ Gatt.0:
 	Warhead@1Dam: SpreadDamage
 		Damage: 900
 		Range: 0, 0c64, 0c256, 3c256
-		Falloff: 100, 100, 15, 5
 	Warhead@2Eff: CreateEffect
 		ValidTargets: Air
 		ImpactSoundChance: 20
@@ -93,16 +93,14 @@ Gatt.3:
 	Report: vgatlo8a.aud, vgatlo8b.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 1900
-		
+
 MGatt.0:
 	Inherits: ^AACannon
 	ReloadDelay: 15
 	Report: vgatlo1a.aud
 	Range: 7c512
 	Warhead@1Dam: SpreadDamage
-		Damage: 250
-		Range: 0, 0c64, 0c256, 3c256
-		Falloff: 100, 100, 15, 5
+		Damage: 290
 	Warhead@2Eff: CreateEffect
 		ValidTargets: Air
 		ImpactSoundChance: 20
@@ -112,19 +110,19 @@ MGatt.1:
 	ReloadDelay: 5
 	Report: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 300
+		Damage: 345
 
 MGatt.2:
 	Inherits: MGatt.1
 	Report: vgatlo5a.aud, vgatlo5b.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 400
+		Damage: 480
 
 MGatt.3:
 	Inherits: MGatt.2
 	Report: vgatlo8a.aud, vgatlo8b.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 500
+		Damage: 575
 
 ^HeavyMG:
 	ReloadDelay: 30
@@ -393,7 +391,7 @@ M60mgJJ:
 		Blockable: false
 	Report: vblhatta.aud, vblhattb.aud
 	Burst: 3
-	
+
 M60mgJJ.ground:
 	Inherits: M60mgJJ
 	Projectile: Bullet
@@ -518,7 +516,7 @@ SNIPER:
 		Speed: 2c682
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 9000
+		Damage: 35000
 		ValidTargets: Barrel, Infantry
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
@@ -532,7 +530,6 @@ SNIPER:
 SNIPERE:
 	Inherits: SNIPER
 	Range: 9c0
-
 
 SNIPER.vehicle:
 	ReloadDelay: 600
