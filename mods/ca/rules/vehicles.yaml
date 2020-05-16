@@ -3283,7 +3283,6 @@ BATF:
 		Weapon: BATFGun
 		LocalOffset: 200,0,300
 		MuzzleSequence: muzzle
-		RequiresCondition: cargo
 	Armament@SECONDARY:
 		Name: secondary
 		Turret: secondary
@@ -3291,29 +3290,26 @@ BATF:
 		FireDelay: 8
 		LocalOffset: 200,0,300
 		MuzzleSequence: muzzle
-		RequiresCondition: cargo >= 2
 	Armament@TERTIARY:
 		Name: tertiary
 		Turret: tertiary
 		Weapon: BATFRockets
 		LocalOffset: -200,0,300
 		MuzzleSequence: muzzle
-		RequiresCondition: cargo >= 3
+		RequiresCondition: cargo
 	Turreted@PRIMARY:
 		Turret: primary
 		Offset: 200,-300,0
 		TurnSpeed: 3
-		PauseOnCondition: !cargo
 	Turreted@SECONDARY:
 		Turret: secondary
 		Offset: 200,300,0
 		TurnSpeed: 3
-		PauseOnCondition: cargo < 2
 	Turreted@TERTIARY:
 		Turret: tertiary
 		Offset: -300,0,358
 		TurnSpeed: 3
-		PauseOnCondition: cargo < 3
+		PauseOnCondition: !cargo
 	WithMuzzleOverlay:
 	Cargo:
 		Types: Infantry
@@ -3355,16 +3351,8 @@ BATF.AI:
 		Prerequisites: tent, radar, ~weap, ~vehicles.france, ~techlevel.low, ~botplayer
 	RenderSprites:
 		Image: batf
-	Armament@PRIMARY: 
-		-RequiresCondition: 
-	Armament@SECONDARY: 
-		-RequiresCondition: 
 	Armament@TERTIARY: 
 		-RequiresCondition: 
-	Turreted@PRIMARY: 
-		-PauseOnCondition: 
-	Turreted@SECONDARY: 
-		-PauseOnCondition: 
 	Turreted@TERTIARY: 
 		-PauseOnCondition: 
 	-Cargo: 
@@ -3638,7 +3626,7 @@ CRYO:
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 	Valued:
-		Cost: 1400
+		Cost: 1350
 	Tooltip:
 		Name: Cryo Launcher
 	UpdatesPlayerStatistics:
