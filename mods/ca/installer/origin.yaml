@@ -1,4 +1,4 @@
-ra-origin: C&C The Ultimate Collection (Origin version, English)
+origin-ra: C&C The Ultimate Collection RA (Origin version, English)
 	Type: Install
 	RegistryPrefixes: HKEY_LOCAL_MACHINE\Software\, HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\
 	RegistryKey: EA Games\Command and Conquer Red Alert
@@ -457,7 +457,7 @@ ra-origin: C&C The Ultimate Collection (Origin version, English)
 				Offset: 844509702
 				Length: 9073
 
-cnc-origin: Command & Conquer (Origin version, English)
+origin-cnc: Command & Conquer (Origin version, English)
 	Type: Install
 	RegistryPrefixes: HKEY_LOCAL_MACHINE\Software\, HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\
 	RegistryKey: EA Games\CNC and The Covert Operations
@@ -468,3 +468,36 @@ cnc-origin: Command & Conquer (Origin version, English)
 	Install:
 		copy: .
 			^Content/ca/v2/cnc/desert.mix: DESERT.MIX
+			
+origin-ts: C&C The Ultimate Collection TS (Origin version, English)
+	Type: Install
+	RegistryPrefixes: HKEY_LOCAL_MACHINE\Software\, HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\
+	RegistryKey: EA Games\Command and Conquer Tiberian Sun
+	RegistryValue: Install Dir
+	IDFiles:
+		GDFBinary_en_US.dll: 4bb56a449bd0003e7ae67625d90a11ae169319d6
+	Install:
+		copy: .
+			^Content/ca/v2/ts/scores.mix: SCORES.MIX
+			
+origin-ra2: C&C The Ultimate Collection RA2 (Origin version, English)
+	Type: Install
+	RegistryPrefixes: HKEY_LOCAL_MACHINE\Software\, HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\
+	RegistryKey: EA Games\Command and Conquer Red Alert II
+	RegistryValue: Install Dir
+	IDFiles:
+		theme.mix: 184f99e3292ab19c71c08a1ad7097ce739396190
+	Install:
+		copy: .
+			^Content/ca/v2/theme.mix: theme.mix
+			
+origin-yr: C&C The Ultimate Collection YR (Origin version, English)
+	Type: Install
+	RegistryPrefixes: HKEY_LOCAL_MACHINE\Software\, HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\
+	RegistryKey: EA Games\Command and Conquer Red Alert II
+	RegistryValue: Install Dir
+	IDFiles:
+		theme.mix: 184f99e3292ab19c71c08a1ad7097ce739396190
+	Install:
+		copy: .
+			^Content/ca/v2/thememd.mix: thememd.mix

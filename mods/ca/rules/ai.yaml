@@ -501,8 +501,8 @@ Player:
 					CheckRadius: 3c0
 	HarvesterBotModuleCA:
 		RequiresCondition: enable-brutal-ai || enable-vhard-ai || enable-hard-ai || enable-normal-ai || enable-easy-ai || enable-naval-ai
-		HarvesterTypes: harv, har2
-		RefineryTypes: proc, proc.td
+		HarvesterTypes: harv,har2,harv.chrono
+		RefineryTypes: proc,proc.td,proc.chrono
 		HarvestersPerRefinery: 2
 	CaptureManagerBotModuleCA:
 		RequiresCondition: enable-brutal-ai || enable-vhard-ai || enable-hard-ai || enable-normal-ai || enable-easy-ai
@@ -532,7 +532,7 @@ Player:
 		ExcessPowerIncreaseThreshold: 1
 		PlaceDefenseTowardsEnemyChance: 75
 		ConstructionYardTypes: fact,afac
-		RefineryTypes: proc,proc.td
+		RefineryTypes: proc,proc.td,proc.chrono
 		PowerTypes: powr,apwr,nuke,nuk2,tpwr
 		BarracksTypes: barr,tent,hand,pyle
 		VehiclesFactoryTypes: weap,airs,weap.td
@@ -568,6 +568,7 @@ Player:
 		BuildingLimits:
 			proc: 4
 			proc.td: 4
+			proc.chrono: 4
 			barr: 3
 			tent: 3
 			pyle: 3
@@ -595,6 +596,7 @@ Player:
 		BuildingFractions:
 			proc: 30
 			proc.td: 30
+			proc.chrono: 30
 			hand: 3
 			pyle: 3
 			barr: 3
@@ -660,7 +662,7 @@ Player:
 		ExcessPowerIncreaseThreshold: 3
 		PlaceDefenseTowardsEnemyChance: 75
 		ConstructionYardTypes: fact,afac
-		RefineryTypes: proc,proc.td
+		RefineryTypes: proc,proc.td,proc.chrono
 		PowerTypes: powr,apwr,nuke,nuk2,tpwr
 		BarracksTypes: barr,tent,hand,pyle
 		VehiclesFactoryTypes: weap,airs,weap.td
@@ -696,6 +698,7 @@ Player:
 		BuildingLimits:
 			proc: 4
 			proc.td: 4
+			proc.chrono: 4
 			barr: 3
 			tent: 3
 			pyle: 3
@@ -723,6 +726,7 @@ Player:
 		BuildingFractions:
 			proc: 30
 			proc.td: 30
+			proc.chrono: 30
 			hand: 3
 			pyle: 3
 			barr: 3
@@ -787,7 +791,7 @@ Player:
 		ExcessPowerIncreaseThreshold: 4
 		PlaceDefenseTowardsEnemyChance: 75
 		ConstructionYardTypes: fact,afac
-		RefineryTypes: proc,proc.td
+		RefineryTypes: proc,proc.td,proc.chrono
 		PowerTypes: powr,apwr,nuke,nuk2,tpwr
 		BarracksTypes: barr,tent,hand,pyle
 		VehiclesFactoryTypes: weap,airs,weap.td
@@ -822,6 +826,7 @@ Player:
 		BuildingLimits:
 			proc: 4
 			proc.td: 4
+			proc.chrono: 4
 			barr: 3
 			tent: 3
 			pyle: 3
@@ -849,6 +854,7 @@ Player:
 		BuildingFractions:
 			proc: 30
 			proc.td: 30
+			proc.chrono: 30
 			hand: 3
 			pyle: 3
 			barr: 3
@@ -913,7 +919,7 @@ Player:
 		ExcessPowerIncreaseThreshold: 5
 		PlaceDefenseTowardsEnemyChance: 75
 		ConstructionYardTypes: fact,afac
-		RefineryTypes: proc,proc.td
+		RefineryTypes: proc,proc.td,proc.chrono
 		PowerTypes: powr,apwr,nuke,nuk2,tpwr
 		BarracksTypes: barr,tent,hand,pyle
 		VehiclesFactoryTypes: weap,airs,weap.td
@@ -948,6 +954,7 @@ Player:
 		BuildingLimits:
 			proc: 4
 			proc.td: 4
+			proc.chrono: 4
 			barr: 3
 			tent: 3
 			pyle: 3
@@ -975,6 +982,7 @@ Player:
 		BuildingFractions:
 			proc: 30
 			proc.td: 30
+			proc.chrono: 30
 			hand: 2
 			pyle: 2
 			barr: 2
@@ -1039,7 +1047,7 @@ Player:
 		ExcessPowerIncreaseThreshold: 2
 		PlaceDefenseTowardsEnemyChance: 75
 		ConstructionYardTypes: fact,afac
-		RefineryTypes: proc,proc.td
+		RefineryTypes: proc,proc.td,proc.chrono
 		PowerTypes: powr,apwr,nuke,nuk2,tpwr
 		BarracksTypes: barr,tent,hand,pyle
 		VehiclesFactoryTypes: weap,airs,weap.td
@@ -1050,6 +1058,7 @@ Player:
 		BuildingLimits:
 			proc: 4
 			proc.td: 4
+			proc.chrono: 4
 			barr: 3
 			tent: 3
 			pyle: 3
@@ -1077,6 +1086,7 @@ Player:
 		BuildingFractions:
 			proc: 30
 			proc.td: 30
+			proc.chrono: 30
 			hand: 2
 			pyle: 2
 			barr: 2
@@ -1134,7 +1144,7 @@ Player:
 	SquadManagerBotModuleCA@brutal-vhard:
 		RequiresCondition: enable-brutal-ai || enable-vhard-ai
 		SquadSize: 30
-		ExcludeFromSquadsTypes: harv, har2, mcv, amcv, dog, e6, n6
+		ExcludeFromSquadsTypes: harv, har2, harv.chrono, mcv, amcv, dog, e6, n6
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,dd2,pt2,ss2,isub
 		NavalProductionTypes: syrd, spen, syrd.gdi, spen.nod
 		ConstructionYardTypes: fact,afac
@@ -1187,6 +1197,7 @@ Player:
 			bori: 15
 			harv: 10
 			har2: 10
+			harv.chrono:10
 			apc: 20
 			jeep: 30
 			apc2: 20
@@ -1274,13 +1285,14 @@ Player:
 			jjet: 8
 			kiro: 3
 			harv: 8
+			harv.chrono: 8
 			har2: 8
 			ss: 10
 			ss2: 10
 	SquadManagerBotModuleCA@hard:
 		RequiresCondition: enable-hard-ai
 		SquadSize: 25
-		ExcludeFromSquadsTypes: harv, har2, mcv, amcv, dog, e6, n6
+		ExcludeFromSquadsTypes: harv, har2, harv.chrono, mcv, amcv, dog, e6, n6
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,dd2,pt2,ss2,isub
 		NavalProductionTypes: syrd, spen, syrd.gdi, spen.nod
 		ConstructionYardTypes: fact,afac
@@ -1321,6 +1333,7 @@ Player:
 			bori: 15
 			harv: 10
 			har2: 10
+			harv.chrono: 10
 			apc: 20
 			jeep: 30
 			apc2: 20
@@ -1409,12 +1422,13 @@ Player:
 			kiro: 3
 			harv: 8
 			har2: 8
+			harv.chrono: 8
 			ss: 10
 			ss2: 10
 	SquadManagerBotModuleCA@normal:
 		RequiresCondition: enable-normal-ai
 		SquadSize: 20
-		ExcludeFromSquadsTypes: harv, har2, mcv, amcv, dog
+		ExcludeFromSquadsTypes: harv, har2, harv.chrono, mcv, amcv, dog
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,ss2,dd2,isub
 		ConstructionYardTypes: fact,afac
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
@@ -1455,6 +1469,7 @@ Player:
 			bori: 15
 			harv: 10
 			har2: 10
+			harv.chrono: 10
 			apc: 20
 			jeep: 30
 			apc2: 20
@@ -1543,12 +1558,13 @@ Player:
 			kiro: 2
 			harv: 8
 			har2: 8
+			harv.chrono: 8
 			ss: 10
 			ss2: 10
 	SquadManagerBotModuleCA@easy:
 		RequiresCondition: enable-easy-ai
 		SquadSize: 15
-		ExcludeFromSquadsTypes: harv, har2, mcv, amcv, dog
+		ExcludeFromSquadsTypes: harv, har2, harv.chrono, mcv, amcv, dog
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,ss2,dd2,isub
 		ConstructionYardTypes: fact,afac
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
@@ -1588,6 +1604,7 @@ Player:
 			bori: 15
 			harv: 10
 			har2: 10
+			harv.chrono: 10
 			apc: 20
 			jeep: 30
 			apc2: 20
@@ -1676,12 +1693,13 @@ Player:
 			kiro: 1
 			harv: 8
 			har2: 8
+			harv.chrono: 8
 			ss: 10
 			ss2: 10
 	SquadManagerBotModuleCA@naval:
 		RequiresCondition: enable-naval-ai
 		SquadSize: 1
-		ExcludeFromSquadsTypes: harv, har2, mcv, amcv, dog
+		ExcludeFromSquadsTypes: harv, har2, harv.chrono, mcv, amcv, dog
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,dd2,ss2,isub
 		ConstructionYardTypes: fact,afac
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
@@ -1707,6 +1725,7 @@ Player:
 			dog: 2
 			harv: 10
 			har2: 10
+			harv.chrono: 10
 			hsam: 40
 			1tnk: 70
 			ltnk: 40

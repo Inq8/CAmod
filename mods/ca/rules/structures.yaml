@@ -1519,7 +1519,7 @@ PROC:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 60
-		Prerequisites: anypower, ~structures.ra, ~techlevel.infonly
+		Prerequisites: anypower, ~!orep, ~structures.ra, ~techlevel.infonly
 		Description: Processes raw Tiberium, Ore and Gems\ninto credits.
 	Valued:
 		Cost: 2000
@@ -1591,6 +1591,19 @@ PROC:
 		Sequence: idle
 		SequencePalette: placebuilding
 	CashHackable:
+	
+PROC.Chrono:
+	Inherits: PROC
+	RenderSprites:
+		Image: proc
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 60
+		Prerequisites: ~anypower, ~orep, ~structures.ra, ~techlevel.infonly
+	FreeActor:
+		Actor: HARV.Chrono
+		SpawnOffset: 1,2
+		Facing: 64
 
 SILO:
 	Inherits: ^Building
@@ -4450,7 +4463,7 @@ SILO.TD:
 	RenderSprites:
 		Image: silo2
 	Valued:
-		Cost: 150
+		Cost: 300
 	Tooltip:
 		Name: Silo
 	Buildable:
@@ -4464,7 +4477,7 @@ SILO.TD:
 		Dimensions: 2,1
 	-GivesBuildableArea:
 	Health:
-		HP: 30000
+		HP: 60000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -4479,7 +4492,7 @@ SILO.TD:
 	StoresResources:
 		PipCount: 5
 		PipColor: Green
-		Capacity: 3000
+		Capacity: 6000
 	-MustBeDestroyed:
 	-SpawnActorsOnSell:
 	Power:
@@ -5686,13 +5699,14 @@ OREP:
 		Queue: Building
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.allies, atek, ~techlevel.high
-		Description: Refines income from ore, gems & tiberium by 15%.\nIncreases harvester durability and speed.\n  Maximum 1 can be built.\n  Cannot be captured.
+		Description: Refines income from ore, gems & tiberium by 15%.\nProvides access to advanced chrono harvester technology.\n  Maximum 1 can be built.\n  Cannot be captured.
 		BuildLimit: 1
 	-Capturable:
 	-CaptureNotification:
 	-CapturableProgressBar:
 	-CapturableProgressBlink:
 	-CaptureManager:
+	ProvidesPrerequisite@buildingname:
 	Valued:
 		Cost: 2500
 	Tooltip:

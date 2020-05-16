@@ -573,7 +573,7 @@ HARV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 10
-		Prerequisites: ~proc, ~vehicles.ra, ~techlevel.infonly
+		Prerequisites: ~proc, ~vehicles.ra, ~!orep, ~techlevel.infonly
 		Description: Collects Ore, Gems and Tiberium for processing.\n  Unarmed
 	Valued:
 		Cost: 1400
@@ -626,12 +626,42 @@ HARV:
 	Explodes@Tib:
 		RequiresCondition: !no-ore && ontib && !being-warped
 		Weapon: TibExplosion
-	WithHarvesterSpriteBody:
-		ImageByFullness: harvempty, harvhalf, harv
-	-WithFacingSpriteBody:
+	WithFacingSpriteBody:
 	-Crushable:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+		
+HARV.Chrono:
+	Inherits: HARV
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 10
+		Prerequisites: ~proc, ~orep, ~vehicles.allies, ~techlevel.high
+		Description: Collects Ore, Gems and Tiberium for processing.\n  Unarmed\n  Special Ability: Teleport
+	Valued:
+		Cost: 1400
+	RenderSprites:
+		Image: charv
+	Tooltip:
+		Name: Chrono Miner
+		GenericName: Harvester
+	Mobile:
+		Speed: 56
+		Locomotor: heavywheeled
+		Voice: Move
+	Harvester:
+		Capacity: 30
+		HarvestVoice: Harvest
+		DeliverVoice: Deliver
+	ChronoResourceDelivery:
+		Image: chrono
+		Palette: ra2effect
+		WarpInSequence: warpout
+		WarpOutSequence: warpout
+		WarpInSound: vchrtele.aud
+		WarpOutSound: ichrmova.aud
+	Voiced:
+		VoiceSet: ChronoMinerVoice
 
 MCV:
 	Inherits: ^Vehicle
@@ -1354,7 +1384,7 @@ VULC:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 40
-		Prerequisites: ~vehicles.gdi, ~gtek, ~infantry.any, ~techlevel.high
+		Prerequisites: ~vehicles.gdi, ~gtek, infantry.any, ~techlevel.high
 		IconPalette: chrometd
 		Description: Tough infantry transport, armed with a powerful AA gun.\n  Strong vs Aircraft\n  Weak vs Infantry, Tanks
 	Valued:
