@@ -357,6 +357,9 @@ namespace OpenRA.Mods.CA.Traits
 				if (baseBuilder.Info.BuildingLimits.ContainsKey(name) && baseBuilder.Info.BuildingLimits[name] <= count)
 					continue;
 
+				if (baseBuilder.Info.RefineryTypes.Contains(name) && baseBuilder.HasMaxRefineries)
+					continue;
+
 				// If we're considering to build a naval structure, check whether there is enough water inside the base perimeter
 				// and any structure providing buildable area close enough to that water.
 				// TODO: Extend this check to cover any naval structure, not just production.
