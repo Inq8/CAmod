@@ -60,6 +60,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Radius in cells around the center of the base to expand.")]
 		public readonly int MaxBaseRadius = 20;
 
+		[Desc("Maximum number of refineries to build.")]
+		public readonly int MaxRefineries = 4;
+
 		[Desc("Minimum excess power the AI should try to maintain.")]
 		public readonly int MinimumExcessPower = 0;
 
@@ -262,6 +265,14 @@ namespace OpenRA.Mods.CA.Traits
 		bool IsRallyPointValid(CPos x, BuildingInfo info)
 		{
 			return info != null && world.IsCellBuildable(x, null, info);
+		}
+
+		public bool HasMaxRefineries
+		{
+			get
+			{
+				return AIUtils.CountBuildingByCommonName(Info.RefineryTypes, player) >= Info.MaxRefineries;
+			}
 		}
 
 		public bool HasAdequateRefineryCount

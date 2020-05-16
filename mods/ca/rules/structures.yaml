@@ -1604,6 +1604,8 @@ PROC.Chrono:
 		Actor: HARV.Chrono
 		SpawnOffset: 1,2
 		Facing: 64
+	ProvidesPrerequisite@proc:
+		Prerequisite: proc
 
 SILO:
 	Inherits: ^Building
@@ -5699,7 +5701,7 @@ OREP:
 		Queue: Building
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.allies, atek, ~techlevel.high
-		Description: Refines income from ore, gems & tiberium by 15%.\nProvides access to advanced chrono harvester technology.\n  Maximum 1 can be built.\n  Cannot be captured.
+		Description: Refines income from ore, gems & tiberium by 10%.\nProvides access to advanced chrono harvester technology.\n  Maximum 1 can be built.\n  Cannot be captured.
 		BuildLimit: 1
 	-Capturable:
 	-CaptureNotification:
@@ -5712,7 +5714,7 @@ OREP:
 	Tooltip:
 		Name: Ore Purifier
 	ResourcePurifier:
-		Modifier: 15
+		Modifier: 10
 		RequiresCondition: !disabled && !being-warped
 	RevealsShroud:
 		Range: 4c0
