@@ -605,10 +605,7 @@ HARV:
 		String: Harvester
 	SpawnActorOnDeath:
 		Actor: HARV.EmptyHusk
-		RequiresCondition: !being-warped
-	HarvesterHuskModifier:
-		FullHuskActor: HARV.FullHusk
-		FullnessThreshold: 50
+		RequiresCondition: !being-warped && !orep-upgrade
 	SelfHealing:
 		PercentageStep: 1
 		Delay: 25
@@ -630,6 +627,19 @@ HARV:
 	-Crushable:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	GrantConditionOnPrerequisite@OREPUPGRADE:
+		Prerequisites: orep
+		Condition: orep-upgrade
+	KillsSelf@OREPUPGRADE:
+		Delay: 1
+		RemoveInstead: true
+		RequiresCondition: orep-upgrade
+	GrantCondition@WARPOUT:
+		Condition: being-warped
+		RequiresCondition: orep-upgrade
+	PeriodicExplosion@WARPOUT:
+		Weapon: HarvSwap
+		RequiresCondition: orep-upgrade
 		
 HARV.Chrono:
 	Inherits: HARV
@@ -656,13 +666,20 @@ HARV.Chrono:
 		DeliverVoice: Deliver
 	ChronoResourceDelivery:
 		Image: chrono
-		Palette: ra2effect
+		Palette: ra2effect-ignore-lighting-alpha75
 		WarpInSequence: warpout
 		WarpOutSequence: warpout
 		WarpInSound: vchrtele.aud
 		WarpOutSound: ichrmova.aud
 	Voiced:
 		VoiceSet: ChronoMinerVoice
+	SpawnActorOnDeath:
+		Actor: HARV.Chrono.EmptyHusk
+		RequiresCondition: !being-warped
+	-GrantConditionOnPrerequisite@OREPUPGRADE:
+	-KillsSelf@OREPUPGRADE:
+	-GrantCondition@WARPOUT:
+	-PeriodicExplosion@WARPOUT:
 
 MCV:
 	Inherits: ^Vehicle

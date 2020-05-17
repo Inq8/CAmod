@@ -1519,7 +1519,7 @@ PROC:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 60
-		Prerequisites: anypower, ~!orep, ~structures.ra, ~techlevel.infonly
+		Prerequisites: anypower, ~structures.ra, ~techlevel.infonly
 		Description: Processes raw Tiberium, Ore and Gems\ninto credits.
 	Valued:
 		Cost: 2000
@@ -1553,10 +1553,30 @@ PROC:
 	DrawLineToTarget:
 	CustomSellValue:
 		Value: 300
+	GrantConditionOnPrerequisite@OREP:
+		Prerequisites: orep
+		Condition: orep-built
+	GrantConditionOnPrerequisite@NOOREP:
+		Prerequisites: !orep
+		Condition: orep-notbuilt
+	GrantCondition@SPAWNHARV:
+		Condition: spawn-harv
+		GrantPermanently: true
+		RequiresCondition: orep-notbuilt
+	GrantCondition@SPAWNCHARV:
+		Condition: spawn-charv
+		GrantPermanently: true
+		RequiresCondition: orep-built
 	FreeActor:
 		Actor: HARV
 		SpawnOffset: 1,2
 		Facing: 64
+		RequiresCondition: spawn-harv && !spawn-charv && !build-incomplete
+	FreeActor@CHARV:
+		Actor: HARV.Chrono
+		SpawnOffset: 1,2
+		Facing: 64
+		RequiresCondition: spawn-charv && !spawn-harv && !build-incomplete
 	InfiltrateForCash:
 		Percentage: 50
 		Types: ThiefInfiltrate
@@ -1591,21 +1611,6 @@ PROC:
 		Sequence: idle
 		SequencePalette: placebuilding
 	CashHackable:
-	
-PROC.Chrono:
-	Inherits: PROC
-	RenderSprites:
-		Image: proc
-	Buildable:
-		Queue: Building
-		BuildPaletteOrder: 60
-		Prerequisites: ~anypower, ~orep, ~structures.ra, ~techlevel.infonly
-	FreeActor:
-		Actor: HARV.Chrono
-		SpawnOffset: 1,2
-		Facing: 64
-	ProvidesPrerequisite@proc:
-		Prerequisite: proc
 
 SILO:
 	Inherits: ^Building

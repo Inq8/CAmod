@@ -1550,3 +1550,20 @@ JDAM:
 		RandomClusterCount: 3
 		Dimensions: 3,3
 		Footprint: xxx xxx xxx
+		
+HarvSwap:
+	ReloadDelay: 1
+	Projectile: InstantExplode
+	Warhead@2Eff: CreateEffect
+		Explosions: chronowarp_effect
+		ExplosionPalette: ra2effect-ignore-lighting-alpha75
+		ValidTargets: Ground, Air, Water
+		ImpactSounds: chrono2.aud
+	Warhead@teleport: SpawnActor
+		Actors: harv.chrono
+		Range: 1
+		Image: chronoappear
+		Sequence: idle
+		ValidTargets: Air, Ground, Water
+	Warhead@3Flash: ChronoFlashEffect
+	
