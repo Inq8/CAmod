@@ -1,75 +1,38 @@
 C1:
 	Inherits@1: ^CivInfantry
 	Inherits@2: ^ArmedCivilian
-
+	Inherits@CREW: ^CanCaptureDriverlessVehicles
+	Valued:
+		Cost: 75
+	
 C2:
-	Inherits: ^CivInfantry
-	Voiced:
-		VoiceSet: CivilianFemaleVoice
+	Inherits@1: C1
 
 C3:
-	Inherits: ^CivInfantry
-
+	Inherits@1: C1
+	Voiced:
+		VoiceSet: CivilianFemaleVoice
+		
 C4:
-	Inherits: ^CivInfantry
-	RenderSprites:
-		Image: C2
-	Voiced:
-		VoiceSet: CivilianFemaleVoice
-
+	Inherits@1: C1
+	
 C5:
-	Inherits: ^CivInfantry
-	RenderSprites:
-		Image: C1
-
+	Inherits@1: C1
+	
 C6:
-	Inherits: ^CivInfantry
-	RenderSprites:
-		Image: C2
-	Voiced:
-		VoiceSet: CivilianFemaleVoice
-
+	Inherits@1: C1
+	
 C7:
-	Inherits@1: ^CivInfantry
-	Inherits@2: ^ArmedCivilian
-	RenderSprites:
-		Image: C1
-
+	Inherits@1: C1
+	
 C8:
-	Inherits: ^CivInfantry
-	RenderSprites:
-		Image: C2
-	Voiced:
-		VoiceSet: CivilianFemaleVoice
-
+	Inherits@1: C1
+	
 C9:
-	Inherits: ^CivInfantry
-	RenderSprites:
-		Image: C1
-
+	Inherits@1: C1
+	
 C10:
-	Inherits: ^CivInfantry
-	RenderSprites:
-		Image: C2
-	Voiced:
-		VoiceSet: CivilianFemaleVoice
-
-TECN:
-	Inherits@1: ^CivInfantry
-	Inherits@2: ^ArmedCivilian
-	Inherits@CREW: ^CanCaptureDriverlessVehicles
-	RenderSprites:
-		Image: C1
-		
-TECN2:
-	Inherits@1: TECN
-	RenderSprites:
-		Image: C2
-		
-TECN3:
-	Inherits@1: TECN
-	RenderSprites:
-		Image: moebius
+	Inherits@1: C1
 
 FCOM:
 	Inherits: ^TechBuilding
@@ -324,9 +287,9 @@ V19:
 		Palette: player
 	Tooltip:
 		Name: Oil Pump
-	-SpawnActorOnDeath@1:
-	-SpawnActorOnDeath@2:
-	-SpawnActorOnDeath@3:
+	-SpawnRandomActorOnDeath@1:
+	-SpawnRandomActorOnDeath@2:
+	-SpawnRandomActorOnDeath@3:
 	SpawnActorOnDeath:
 		Actor: V19.Husk
 	Targetable:

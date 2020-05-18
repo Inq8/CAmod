@@ -279,8 +279,8 @@ SPEN:
 		Type: Rectangle
 			TopLeft: -555, -1110
 			BottomRight: 555, 1110
-	-SpawnActorOnDeath@1:
-	-SpawnActorOnDeath@2:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
 
 SYRD:
 	Inherits: ^Building
@@ -418,8 +418,8 @@ SYRD:
 		Type: Rectangle
 			TopLeft: -512, 598
 			BottomRight: 512, 1110
-	-SpawnActorOnDeath@1:
-	-SpawnActorOnDeath@2:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
 
 IRON:
 	Inherits: ^ScienceBuilding
@@ -1455,8 +1455,6 @@ FACT:
 		Cost: 2500
 	Tooltip:
 		Name: Construction Yard
-	SpawnActorsOnSell:
-		ActorTypes: e1,e1,e1,tecn,tecn,e6
 	BaseBuilding:
 	Transforms:
 		RequiresCondition: factundeploy
@@ -1512,6 +1510,8 @@ FACT:
 		Damage: 950
 	TransferTimedExternalConditionOnTransform:
 		Condition: invulnerability
+	SpawnActorsOnSell:
+		ActorTypes: e1,e1,e1,e1,e6
 
 PROC:
 	Inherits: ^Building
@@ -3644,6 +3644,8 @@ AFAC:
 		Damage: 950
 	TransferTimedExternalConditionOnTransform:
 		Condition: invulnerability
+	SpawnActorsOnSell:
+		ActorTypes: n1,n1,n1,n1,n6
 
 NSAM:
 	Inherits: ^DefenseTD
@@ -4501,7 +4503,8 @@ SILO.TD:
 		PipColor: Green
 		Capacity: 6000
 	-MustBeDestroyed:
-	-SpawnActorsOnSell:
+	SpawnActorsOnSell:
+		ActorTypes: c1,c7
 	Power:
 		Amount: -10
 		RequiresCondition: !being-warped
@@ -5050,8 +5053,8 @@ SPEN.nod:
 		Type: Rectangle
 			TopLeft: -555, -1110
 			BottomRight: 555, 1110
-	-SpawnActorOnDeath@1:
-	-SpawnActorOnDeath@2:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
 	-SpawnActorsOnSell:
 
 SYRD.gdi:
@@ -5164,8 +5167,8 @@ SYRD.gdi:
 		Type: Rectangle
 			TopLeft: -512, 598
 			BottomRight: 512, 1110
-	-SpawnActorOnDeath@1:
-	-SpawnActorOnDeath@2:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
 	-SpawnActorsOnSell:
 	GrantExternalConditionToProduced@gdiupg:
 		Condition: gdiupg

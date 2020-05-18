@@ -339,17 +339,23 @@ ChainGun.Yak.L:
 
 Pistol:
 	Inherits: ^LightMG
-	ReloadDelay: 7
+	Burst: 10
+	BurstDelays: 8
+	ReloadDelay: 80
 	Range: 3c0
 	Report: gun27.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 100
+		Damage: 134
 		Versus:
 			None: 100
 	Warhead@2Eff: CreateEffect
 		Explosions: piff
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piff
+		
+PistolTD:
+	Inherits: Pistol
+	Report: gun18.aud
 
 M1Carbine:
 	Inherits: ^LightMG

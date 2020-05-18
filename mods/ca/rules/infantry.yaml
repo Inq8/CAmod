@@ -554,10 +554,6 @@ EINSTEIN:
 
 DELPHI:
 	Inherits: ^CivInfantry
-	RenderSprites:
-		PlayerPalette: player
-	WithDeathAnimation:
-		DeathSequencePalette: player
 	-Wanders:
 	Tooltip:
 		Name: Agent Delphi
@@ -566,12 +562,11 @@ DELPHI:
 
 CHAN:
 	Inherits: ^CivInfantry
+	Inherits@CREW: ^CanCaptureDriverlessVehicles
 	RenderSprites:
-		PlayerPalette: player
+		Palette: player
 	WithDeathAnimation:
 		DeathSequencePalette: player
-	Valued:
-		Cost: 500
 	Selectable:
 		Class: CHAN
 	Tooltip:
@@ -610,7 +605,6 @@ GNRL:
 		Voice: Move
 	Voiced:
 		VoiceSet: StavrosVoice
-	-ScaredyCat:
 	TakeCover:
 		DamageModifiers:
 			Prone50Percent: 50
@@ -873,17 +867,17 @@ N3:
 		PauseOnCondition: !ammo || being-warped
 	Armament@SECONDARY:
 		Name: secondary
-		Weapon: Dragon
-		LocalOffset: 0,0,555
-		PauseOnCondition: !ammo || being-warped
-	Armament@Garrison:
-		Name: mounted
-		Weapon: RedEyeE
+		Weapon: Dragon.TD
 		LocalOffset: 0,0,555
 		PauseOnCondition: !ammo || being-warped
 	Armament@GarrisonAA:
 		Name: mounted
-		Weapon: DragonE
+		Weapon: RedEyeE
+		LocalOffset: 0,0,555
+		PauseOnCondition: !ammo || being-warped
+	Armament@Garrison:
+		Name: mounted
+		Weapon: DragonE.TD
 		LocalOffset: 0,0,555
 		PauseOnCondition: !ammo || being-warped
 	AmmoPool:

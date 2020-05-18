@@ -1143,20 +1143,33 @@
 
 ^CivInfantry:
 	Inherits: ^Infantry
+	-RenderSprites:
+	RenderSprites:
+		Palette: temptd
+	WithDeathAnimation:
+		DeathPaletteIsPlayerPalette: false
+		DeathSequencePalette: temptd
 	Selectable:
 		Class: CivInfantry
 	Valued:
 		Cost: 10
+	GrantConditionOnFaction@FACTION:
+		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq, gdi, zocom, eagle, talon, nod, blackh, legion, marked
+		Condition: owned-by-faction
 	Tooltip:
 		Name: Civilian
 		GenericVisibility: None
+		RequiresCondition: !owned-by-faction
+	Tooltip@FACTION:
+		Name: Technician
+		GenericVisibility: None
+		RequiresCondition: owned-by-faction
 	RevealsShroud:
 		Range: 3c0
 	Passenger:
 		PipType: Gray
 	ProximityCaptor:
 		Types: CivilianInfantry
-	ScaredyCat:
 	Voiced:
 		VoiceSet: CivilianMaleVoice
 	Wanders:
@@ -1167,8 +1180,18 @@
 
 ^ArmedCivilian:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Armament:
+	GrantConditionOnFaction@RA:
+		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq
+		Condition: ra-faction
+	GrantConditionOnFaction@TD:
+		Factions: gdi, zocom, eagle, talon, nod, blackh, legion, marked
+		Condition: td-faction
+	Armament@RA:
 		Weapon: Pistol
+		RequiresCondition: ra-faction
+	Armament@TD:
+		Weapon: PistolTD
+		RequiresCondition: td-faction
 	AttackFrontal:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
@@ -1580,13 +1603,13 @@
 	CapturableProgressBar:
 	CapturableProgressBlink:
 	SpawnActorsOnSell:
-		ActorTypes: e1,e1,e1,tecn,tecn2
-	SpawnActorOnDeath@1:
+		ActorTypes: e1,e1,e1,e1,e1,e1,e1,e1,e1,e1,c1,c1,c1,c1,c7,c7,c7,c7,c10,c10
+	SpawnActorOnDeath:
 		Actor: e1
 		Probability: 5
 		RequiresCondition: !being-warped
-	SpawnActorOnDeath@2:
-		Actor: tecn
+	SpawnRandomActorOnDeath:
+		Actors: c1,c7,c10
 		Probability: 10
 		RequiresCondition: !being-warped
 	MustBeDestroyed:
@@ -1613,29 +1636,23 @@
 	Inherits@1: ^Building
 	RenderSprites:
 		PlayerPalette: overlayplayertd
-	SpawnActorOnDeath@1:
+	SpawnActorOnDeath:
 		Actor: n1
 	SpawnActorsOnSell:
-		ActorTypes: n1,n1,n1,tecn,tecn2
+		ActorTypes: n1,n1,n1,n1,n1,n1,n1,n1,n1,n1,c1,c1,c1,c1,c7,c7,c7,c7,c10,c10
+	ActorPreviewPlaceBuildingPreview:
 	ActorPreviewPlaceBuildingPreview:
 		OverridePalette: placebuildingtd
 
 ^ScienceBuilding:
 	Inherits: ^Building
 	SpawnActorsOnSell:
-		ActorTypes: e1,e1,e1,e1,tecn,tecn2,tecn,tecn2,tecn3,tecn,tecn,tecn2,tecn,tecn3,e6,e6,e6,e6,e6
+		ActorTypes: e1,e1,e1,e1,e1,e1,e1,e1,e1,e1,c1,c1,c1,c1,c7,c7,c7,c7,c10,c10
 
 ^ScienceBuildingTD:
-	Inherits@1: ^Building
-	RenderSprites:
-		PlayerPalette: overlayplayertd
+	Inherits@1: ^BuildingTD
 	SpawnActorsOnSell:
-		ActorTypes: n1,n1,n1,n1,tecn,tecn,tecn,tecn2,tecn,tecn3,tecn,tecn,tecn2,tecn3,n6,n6,n6,n6,n6
-	SpawnActorOnDeath@1:
-		Actor: n1
-	ActorPreviewPlaceBuildingPreview:
-		OverridePalette: placebuildingtd
-
+		ActorTypes: n1,n1,n1,n1,n1,n1,n1,n1,n1,n1,c1,c1,c1,c1,c7,c7,c7,c7,c10,c10
 ^Defense:
 	Inherits: ^Building
 	Inherits@Concussion: ^Concussion
@@ -1829,14 +1846,14 @@
 	MapEditorData:
 		ExcludeTilesets: INTERIOR
 		Categories: Civilian building
-	SpawnActorOnDeath@1:
-		Actor: c1
+	SpawnRandomActorOnDeath@1:
+		Actors: c1,c2,c3,c4
 		Probability: 40
-	SpawnActorOnDeath@2:
-		Actor: c4
+	SpawnRandomActorOnDeath@2:
+		Actors: c10,c4,c5,c6
 		Probability: 20
-	SpawnActorOnDeath@3:
-		Actor: c3
+	SpawnRandomActorOnDeath@3:
+		Actors: c5,c7,c8,c9
 		Probability: 15
 	Explodes:
 		Weapon: SmallBuildingExplode
