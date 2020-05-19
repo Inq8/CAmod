@@ -11,6 +11,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
@@ -67,53 +68,19 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			var map = owner.World.Map;
 			var dangerRadius = owner.SquadManager.Info.DangerScanRadius;
 			detectedEnemyTarget = null;
-			var initialMaxX = (map.MapSize.X % dangerRadius) == 0 ? map.MapSize.X : map.MapSize.X + dangerRadius;
-			var initialMaxY = (map.MapSize.Y % dangerRadius) == 0 ? map.MapSize.Y : map.MapSize.Y + dangerRadius;
-			var maxX = initialMaxX;
-			var maxY = initialMaxY;
 
-			// Random starting coordinates for scanning the map to find a target.
-			var startX = owner.World.LocalRandom.Next(0, map.MapSize.X);
-			var startY = owner.World.LocalRandom.Next(0, map.MapSize.Y);
-			var initialStartY = startY;
-
-			var scanReset = false;
-			var scanDirectionX = startX % 2;
-			var scanDirectionY = startY % 2;
-			var scanIncrement = dangerRadius * 2;
-
-			for (var x = startX; x <= maxX; x += scanIncrement)
+			var columnCount = (map.MapSize.X + dangerRadius - 1) / dangerRadius;
+			var rowCount = (map.MapSize.Y + dangerRadius - 1) / dangerRadius;
+			var checkIndices = Exts.MakeArray(columnCount * rowCount, i => i).Shuffle(owner.World.LocalRandom);
+			foreach (var i in checkIndices)
 			{
-				// On second pass of initial column, maximum y should be the initial y.
-				if (x == startX && scanReset)
-					maxY = initialStartY;
-
-				for (var y = startY; y <= maxY; y += scanIncrement)
+				var pos = new CPos((i % columnCount) * dangerRadius + dangerRadius / 2, (i / columnCount) * dangerRadius + dangerRadius / 2);
+				if (NearToPosSafely(owner, map.CenterOfCell(pos), out detectedEnemyTarget))
 				{
-					// Translate to position based on the scan direction.
-					var posX = scanDirectionX == 0 ? initialMaxX - x : x;
-					var posY = scanDirectionY == 0 ? initialMaxY - y : y;
+					if (needTarget && detectedEnemyTarget == null)
+						continue;
 
-					var pos = new CPos(posX, posY);
-					if (NearToPosSafely(owner, map.CenterOfCell(pos), out detectedEnemyTarget))
-					{
-						if (needTarget && detectedEnemyTarget == null)
-							continue;
-
-						return pos;
-					}
-				}
-
-				// On first pass of initial column, set to start from y = 0 on subsequent columns.
-				if (x == startX && !scanReset)
-					startY = 0;
-
-				// If the next iteration will be beyond the maximum, reset x so it starts from 0 on next iteration and set max to where it started.
-				if (x + scanIncrement > maxX && !scanReset)
-				{
-					scanReset = true;
-					maxX = startX;
-					x = scanIncrement * -1;
+					return pos;
 				}
 			}
 
