@@ -34,6 +34,7 @@ SS:
 		PauseOnCondition: under-bridge
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !crossing-ford
 	AutoTarget:
 		InitialStance: HoldFire
 	AutoTargetPriority@DEFAULT:
@@ -42,6 +43,23 @@ SS:
 		ValidTargets: Water, Underwater
 	Selectable:
 		DecorationBounds: 38,38
+	GrantConditionOnAttack@STOPSHOOTINGROCKS:
+		Condition: im-dumb
+		RequiredShotsPerInstance: 2
+		MaximumInstances: 3
+		RevokeDelay: 110
+		RevokeOnNewTarget: true
+		RevokeAll: true
+		RequiresCondition: botowner
+	RangeMultiplier@STOPSHOOTINGROCKS1:
+		Modifier: 50
+		RequiresCondition: im-dumb == 1
+	RangeMultiplier@STOPSHOOTINGROCKS2:
+		Modifier: 35
+		RequiresCondition: im-dumb == 2
+	RangeMultiplier@STOPSHOOTINGROCKS3:
+		Modifier: 25
+		RequiresCondition: im-dumb == 3
 
 MSUB:
 	Inherits: ^Submarine
@@ -496,10 +514,28 @@ SS2:
 		PauseOnCondition: under-bridge
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !crossing-ford
 	AutoTarget:
 		InitialStance: HoldFire
 	Selectable:
 		DecorationBounds: 38,38
+	GrantConditionOnAttack@STOPSHOOTINGROCKS:
+		Condition: im-dumb
+		RequiredShotsPerInstance: 2
+		MaximumInstances: 3
+		RevokeDelay: 110
+		RevokeOnNewTarget: true
+		RevokeAll: true
+		RequiresCondition: botowner
+	RangeMultiplier@STOPSHOOTINGROCKS1:
+		Modifier: 50
+		RequiresCondition: im-dumb == 1
+	RangeMultiplier@STOPSHOOTINGROCKS2:
+		Modifier: 35
+		RequiresCondition: im-dumb == 2
+	RangeMultiplier@STOPSHOOTINGROCKS3:
+		Modifier: 25
+		RequiresCondition: im-dumb == 3
 
 ISUB:
 	Inherits: ^Submarine

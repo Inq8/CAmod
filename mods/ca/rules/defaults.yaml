@@ -1296,7 +1296,7 @@
 		LayerName: radioactivity.medium
 	GrantConditionOnTerrain@UNDERBRIDGE:
 		Condition: under-bridge
-		TerrainTypes: Bridge, Tunnel, Rock
+		TerrainTypes: Bridge, Tunnel
 	Cloak@UNDERBRIDGE:
 		CloakTypes: Underbridge
 		UncloakOn: Unload
@@ -1313,6 +1313,12 @@
 	DetectCloaked@UNDERBRIDGE:
 		CloakTypes: Underbridge
 		Range: 5c0
+	GrantConditionOnBotOwner@IAMBOT:
+		Condition: botowner
+		Bots: brutal, vhard, hard, normal, easy, naval
+	Wanders@NOIDLENAVY:
+		WanderMoveRadius: 3
+		RequiresCondition: (botowner && under-bridge)
 		
 ^Submarine:
 	Inherits@1: ^Ship
@@ -1322,7 +1328,7 @@
 	Targetable@UNDERWATER:
 		TargetTypes: Underwater, Submarine
 		RequiresCondition: underwater && !being-warped
-	GrantConditionOnTerrain@FORD:
+	GrantConditionOnTerrain@CROSSINGFORD:
 		Condition: crossing-ford
 		TerrainTypes: Ford
 	Cloak:
@@ -1345,8 +1351,11 @@
 	Explodes:
 		Weapon: UnitExplodeSubmarine
 		EmptyWeapon: UnitExplodeSubmarine
-		RequiresCondition: !under-bridge
+		RequiresCondition: !under-bridge && !being-warped
 	-MustBeDestroyed:
+	Wanders@NOIDLENAVY:
+		WanderMoveRadius: 3
+		RequiresCondition: (botowner && crossing-ford) ||  (botowner && under-bridge)
 	
 ^NeutralPlane:
 	Inherits@1: ^ExistsInWorld
