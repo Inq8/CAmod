@@ -1404,9 +1404,9 @@ VULC:
 		BuildPaletteOrder: 40
 		Prerequisites: ~vehicles.gdi, ~gtek, infantry.any, ~techlevel.high
 		IconPalette: chrometd
-		Description: Tough infantry transport, armed with a powerful AA gun.\n  Strong vs Aircraft\n  Weak vs Infantry, Tanks
+		Description: Tough infantry transport, armed with a powerful chain gun.\n  Strong vs Aircraft, Light Armor, Infantry\n  Weak vs Tanks
 	Valued:
-		Cost: 750
+		Cost: 800
 	Tooltip:
 		Name: Vulcan
 	UpdatesPlayerStatistics:
@@ -1429,21 +1429,53 @@ VULC:
 		LocalOffset: 220,0,350
 		MuzzleSequence: muzzle
 		RequiresCondition: gattling == 0
+		PauseOnCondition: engage-ground
+		ReloadingCondition: engage-air
 	Armament@GAT1:
 		Weapon: MGatt.1
 		LocalOffset: 220,0,350
 		MuzzleSequence: muzzle
 		RequiresCondition: gattling == 1
+		PauseOnCondition: engage-ground
+		ReloadingCondition: engage-air
 	Armament@GAT2:
 		Weapon: MGatt.2
 		LocalOffset: 220,0,350
 		MuzzleSequence: muzzle
 		RequiresCondition: gattling == 2
+		PauseOnCondition: engage-ground
+		ReloadingCondition: engage-air
 	Armament@GAT3:
 		Weapon: MGatt.3
 		LocalOffset: 220,0,350
 		MuzzleSequence: muzzle
 		RequiresCondition: gattling == 3
+		PauseOnCondition: engage-ground
+		ReloadingCondition: engage-air
+	Armament@GAT0G:
+		Name: secondary
+		Weapon: MGatt.0G
+		LocalOffset: 321,0,85
+		MuzzleSequence: muzzle
+		RequiresCondition: gattling-ground == 0
+		PauseOnCondition: engage-air
+		ReloadingCondition: engage-ground
+	Armament@GAT1G:
+		Name: secondary
+		Weapon: MGatt.1G
+		LocalOffset: 321,0,85
+		MuzzleSequence: muzzle
+		RequiresCondition: gattling-ground == 1
+		PauseOnCondition: engage-air
+		ReloadingCondition: engage-ground
+	Armament@GAT2G:
+		Name: secondary
+		Weapon: MGatt.2G
+		LocalOffset: 321,0,85
+		MuzzleSequence: muzzle
+		RequiresCondition: gattling-ground == 2
+		ReloadingCondition: engage-ground
+		PauseOnCondition: engage-air
 	GrantConditionOnAttack:
 		Condition: gattling
 		RequiredShotsPerInstance: 1,6,12
@@ -1451,13 +1483,27 @@ VULC:
 		RevokeDelay: 40
 		RevokeOnNewTarget: False
 		RevokeAll: True
+	GrantConditionOnAttack@GROUND:
+		ArmamentNames: secondary
+		Condition: gattling-ground
+		RequiredShotsPerInstance: 1,6
+		MaximumInstances: 2
+		RevokeDelay: 40
+		RevokeOnNewTarget: False
+		RevokeAll: True
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
+		Armaments: primary, secondary
 	Turreted:
 		TurnSpeed: 7
 		Offset: 0,0,150
 	WithMuzzleOverlay:
 	WithSpriteTurret:
+		RequiresCondition: !gattling-ground
+	WithSpriteTurret@GROUND:
+		Armament: secondary
+		Sequence: turret-ground
+		RequiresCondition: gattling-ground
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5

@@ -162,6 +162,7 @@ MGatt.3:
 			Brick: 10
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 
+
 Vulcan:
 	Inherits: ^HeavyMG
 	Warhead@1Dam: SpreadDamage
@@ -406,6 +407,27 @@ M60mgJJ.ground:
 M60mgIFV:
 	Inherits: M60mg
 	ReloadDelay: 20
+
+MGatt.0G:
+	Inherits: ^HeavyMG
+	Range: 4c0
+	ReloadDelay: 15
+	Report: vgatlo1a.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 200
+
+MGatt.1G:
+	Inherits: MGatt.0G
+	ReloadDelay: 5
+	Report: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 300
+
+MGatt.2G:
+	Inherits: MGatt.1G
+	Report: vgatlo5a.aud, vgatlo5b.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 400
 
 ^SnipeWeapon:
 	ReloadDelay: 80
