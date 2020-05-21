@@ -91,6 +91,20 @@
 		Multiplier: 96
 		Prerequisites: is-hard-ai
 
+^BotDefenseProductionBonus:
+	ProductionTimeMultiplier@brutalbonus:
+		Multiplier: 80
+		Prerequisites: is-brutal-ai
+	ProductionTimeMultiplier@vhardbonus:
+		Multiplier: 85
+		Prerequisites: is-vhard-ai
+	ProductionTimeMultiplier@hardbonus:
+		Multiplier: 90
+		Prerequisites: is-hard-ai
+	ProductionTimeMultiplier@normalbonus:
+		Multiplier: 95
+		Prerequisites: is-normal-ai
+
 ^BotGroundProductionBonus:
 	ProductionTimeMultiplier@brutalbonus:
 		Multiplier: 40
@@ -1659,8 +1673,10 @@
 	Inherits@1: ^BuildingTD
 	SpawnActorsOnSell:
 		ActorTypes: n1,n1,n1,n1,n1,n1,n1,n1,n1,n1,c1,c1,c1,c1,c7,c7,c7,c7,c10,c10
+
 ^Defense:
 	Inherits: ^Building
+	Inherits@botbonus: ^BotDefenseProductionBonus
 	Inherits@Concussion: ^Concussion
 	-SpeedMultiplier@concussion:
 	WithColoredOverlay@IRONCURTAIN:
