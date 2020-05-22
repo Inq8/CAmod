@@ -5687,7 +5687,7 @@ OREP:
 		Queue: Building
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.allies, atek, ~techlevel.high
-		Description: Refines income from ore, gems & tiberium by 10%.\nProvides access to advanced chrono harvester technology.\n  Maximum 1 can be built.\n  Cannot be captured.
+		Description: Refines income from ore, gems & tiberium by 5-10%.\nProvides access to advanced chrono harvester technology.\n  Maximum 1 can be built.\n  Cannot be captured.
 		BuildLimit: 1
 	-Capturable:
 	-CaptureNotification:
@@ -5699,9 +5699,12 @@ OREP:
 		Cost: 2500
 	Tooltip:
 		Name: Ore Purifier
-	ResourcePurifier:
-		Modifier: 10
+	ResourcePurifier@orep1:
+		Modifier: 5
 		RequiresCondition: !disabled && !being-warped
+	ResourcePurifier@orep2:
+		Modifier: 5
+		RequiresCondition: !disabled && !being-warped && orep2
 	RevealsShroud:
 		Range: 4c0
 		MinRange: 3c0
@@ -5715,6 +5718,13 @@ OREP:
 		UseDeathTypeSuffix: false
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
+	GrantConditionOnPrerequisite@orep2:
+		Condition: orep2
+		Prerequisites: orep2
+	ProvidesDelayedPrerequisite@orep2:
+		Prerequisite: orep2
+		Delay: 7500
+		RequiresCondition: !being-warped
 
 MISS.GDI:
 	Inherits: ^ScienceBuilding
