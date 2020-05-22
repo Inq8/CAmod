@@ -15,7 +15,7 @@ SS:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 25000
+		HP: 33000
 	Armor:
 		Type: Light
 	Mobile:
@@ -72,7 +72,7 @@ MSUB:
 		Prerequisites: ~spen, stek, ~techlevel.high
 		Description: Submerged anti-ground siege unit\nwith anti-air capabilities.\n  Can detect other submarines.\n  Strong vs Buildings, Ground Units, Aircraft\n  Weak vs Naval Units\n  Special Ability: Submerge
 	Valued:
-		Cost: 2000
+		Cost: 1700
 	Tooltip:
 		Name: Missile Submarine
 	UpdatesPlayerStatistics:
@@ -138,16 +138,21 @@ DD:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 5c0
-	Turreted:
+	Turreted@PRIMARY:
+		Turret: primary
 		TurnSpeed: 7
 		Offset: 469,0,128
+	Turreted@SECONDARY:
+		Turret: secondary
+		TurnSpeed: 15
+		Offset: -469,0,128
 	Armament@PRIMARY:
 		Weapon: Stinger
 		LocalOffset: 0,-100,0, 0,100,0
 		LocalYaw: 64, -64
 		PauseOnCondition: under-bridge
 	Armament@SECONDARY:
-		Weapon: DepthCharge
+		Weapon: DepthCharge.destroyer
 		LocalOffset: 0,-100,0, 0,100,0
 		LocalYaw: 80, -80
 		PauseOnCondition: under-bridge
@@ -157,6 +162,8 @@ DD:
 		LocalYaw: 64, -64
 		PauseOnCondition: under-bridge
 	AttackTurreted:
+		Turrets: primary, secondary, tertiary
+		Armaments: primary, secondary, tertiary
 		PauseOnCondition: empdisable || being-warped
 	WithSpriteTurret:
 	DetectCloaked:
@@ -177,7 +184,7 @@ CA:
 		Prerequisites: ~syrd, atek, ~techlevel.high
 		Description: Very slow long-range bombardment ship.\n  Strong vs Buildings, Ground Units\n  Weak vs Naval Units, Aircraft
 	Valued:
-		Cost: 2400
+		Cost: 2000
 	Tooltip:
 		Name: Cruiser
 	UpdatesPlayerStatistics:
@@ -406,7 +413,7 @@ DD2:
 		BuildPaletteOrder: 40
 		IconPalette: chrometd
 		Prerequisites: ~syrd.gdi, hq, ~techlevel.medium
-		Description: Advanced warship armed with\na powerful railgun.\n  Can detect submarines.\n  Strong vs Naval Units\n  Weak vs Aircraft
+		Description: Advanced warship armed with\na powerful railgun.\n  Can detect submarines.\n  Strong vs Naval Units, Vehicles\n  Weak vs Aircraft
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -435,6 +442,10 @@ DD2:
 		Turret: primary
 		TurnSpeed: 5
 		Offset: 551,0,158
+	Turreted@SECONDARY:
+		Turret: secondary
+		TurnSpeed: 15
+		Offset: -469,0,128
 	Armament@PRIMARY:
 		Turret: primary
 		Weapon: Railgun
@@ -442,6 +453,12 @@ DD2:
 		Recoil: 0
 		RecoilRecovery: 0
 		MuzzleSequence: muzzle
+		PauseOnCondition: under-bridge
+	Armament@SECONDARY:
+		Weapon: DepthCharge.destroyer
+		Turret: secondary
+		LocalOffset: 0,-100,0, 0,100,0
+		LocalYaw: 80, -80
 		PauseOnCondition: under-bridge
 	AttackTurreted:
 		Turrets: primary, secondary, tertiary
@@ -460,7 +477,7 @@ DD2:
 
 SS2:
 	Inherits: ^Submarine
-	Inherits@AUTOTARGET: ^AutoTargetAllNavalAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Ship
@@ -469,18 +486,18 @@ SS2:
 		Prerequisites: ~spen.nod, ~ships.nod, ~techlevel.low
 		Description: Submerged anti-naval unit\narmed with torpedoes.\n  Can detect other submarines.\n  Strong vs Naval Units\n  Weak vs Ground Units\n  Special Ability: Submerge
 	Valued:
-		Cost: 1150
+		Cost: 950
 	Tooltip:
 		Name: Attack Submarine
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 31000
+		HP: 26500
 	Armor:
 		Type: Light
 	Mobile:
-		TurnSpeed: 4
-		Speed: 82
+		TurnSpeed: 5
+		Speed: 92
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 8c0
@@ -492,16 +509,15 @@ SS2:
 		LocalOffset: 0,-171,0, 0,171,0
 		FireDelay: 2
 		PauseOnCondition: under-bridge
-	Armament@secondary:
-		Name: secondary
-		Weapon: SubAA
-		LocalOffset: -300,-171,0, -300,171,0
-		PauseOnCondition: under-bridge
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !crossing-ford
 	AutoTarget:
 		InitialStance: HoldFire
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Water, Underwater
+	AutoTargetPriority@ATTACKANYTHING:
+		ValidTargets: Water, Underwater
 	Selectable:
 		DecorationBounds: 38,38
 	GrantConditionOnAttack@STOPSHOOTINGROCKS:
@@ -563,13 +579,12 @@ ISUB:
 		PauseOnCondition: under-bridge
 	AttackFrontal:
 		TargetFrozenActors: True
-		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
 	AutoTarget:
 		InitialStance: HoldFire
 	Selectable:
 		DecorationBounds: 44,44
-
+		
 CARR:
 	Inherits: ^Ship
 	Inherits@AUTOTARGET: ^AutoTargetNavalAssaultMove
@@ -586,7 +601,7 @@ CARR:
 	Tooltip:
 		Name: Drone Carrier
 	Health:
-		HP: 80000
+		HP: 75000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -637,3 +652,54 @@ CARR:
 	ProductionCostMultiplier@talonBonus:
 		Multiplier: 90
 		Prerequisites: structures.talon
+		
+SB:
+	Inherits: ^Ship
+	Inherits@AUTOTARGET: ^AutoTargetAllNavalAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: Ship
+		BuildAtProductionType: Boat
+		BuildPaletteOrder: 20
+		IconPalette: chrometd
+		Prerequisites: ~spen.nod, ~techlevel.low
+		Description: Fast scout boat, armed with\nrockets.\n  Can attack Aircraft.\n  Strong vs Vehicles, Tanks\n  Weak vs Infantry
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Recon Boat
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 11000
+	Armor:
+		Type: Light
+	Mobile:
+		TurnSpeed: 10
+		Speed: 180
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament@PRIMARY:
+		Weapon: BikeRockets
+		LocalOffset: -128, -170, 170, -128, 170, 170
+		LocalYaw: 100, -100
+		PauseOnCondition: under-bridge
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: BikeRocketsAA
+		LocalOffset: -128, -170, 170, -128, 170, 170
+		LocalYaw: 100, -100
+		PauseOnCondition: under-bridge
+	AttackFrontal:
+		PauseOnCondition: empdisable || being-warped
+	WithMuzzleOverlay:
+	DetectCloaked:
+		CloakTypes: Underwater
+		Range: 2c0
+	RenderDetectionCircle:
+	Selectable:
+		DecorationBounds: 36,36
