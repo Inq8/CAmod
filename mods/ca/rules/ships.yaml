@@ -138,11 +138,6 @@ DD:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 5c0
-	WithIdleOverlay@SPINNER:
-		Sequence: spinner
-		Offset: -90,0,406
-		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: !under-bridge
 	Turreted:
 		TurnSpeed: 7
 		Offset: 469,0,128
@@ -200,11 +195,6 @@ CA:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 5c0
-	WithIdleOverlay@SPINNER:
-		Sequence: spinner
-		Offset: -90,0,406
-		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: !under-bridge
 	Turreted@PRIMARY:
 		Turret: primary
 		Offset: -896,0,128
@@ -330,11 +320,6 @@ PT:
 		PauseOnCondition: under-bridge
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
-	WithIdleOverlay@SPINNER:
-		Sequence: spinner
-		Offset: -256,0,256
-		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: !under-bridge
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	DetectCloaked:
@@ -589,6 +574,8 @@ CARR:
 	Inherits: ^Ship
 	Inherits@AUTOTARGET: ^AutoTargetNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		Image: cv
 	Buildable:
 		Queue: Ship
 		BuildPaletteOrder: 60
