@@ -342,12 +342,15 @@
 		DeathTypes: ChronoDeath
 
 ^GDIUpgrade:
-	DamageMultiplier@GDIUPG:
-		RequiresCondition: gdiupg
+	DamageMultiplier@gdiupg1:
+		RequiresCondition: gdiupg == 1
 		Modifier: 90
-	ExternalCondition@GDIUPG:
+	DamageMultiplier@gdiupg2:
+		RequiresCondition: gdiupg > 1
+		Modifier: 80
+	ExternalCondition@gdiupg:
 		Condition: gdiupg
-	WithDecoration@GDIUPG:
+	WithDecoration@gdiupg:
 		Image: pips
 		Sequence: pip-armor
 		Palette: effect
@@ -359,6 +362,20 @@
 		BlinkPatterns:
 			gdiupg && bino: Off, On
 		RequiresSelection: True
+
+^GDIUpgradeProducer:
+	GrantExternalConditionToProduced@gdiupg1:
+		Condition: gdiupg
+		RequiresCondition: gdiupglevel1
+	GrantExternalConditionToProduced@gdiupg2:
+		Condition: gdiupg
+		RequiresCondition: gdiupglevel2		
+	GrantConditionOnPrerequisite@gdiupg1:
+		Condition: gdiupglevel1
+		Prerequisites: miss.gdi
+	GrantConditionOnPrerequisite@gdiupg2:
+		Condition: gdiupglevel2
+		Prerequisites: miss.gdi2
 
 ^NodUpgrade:
 	ExternalCondition@NODUPG:

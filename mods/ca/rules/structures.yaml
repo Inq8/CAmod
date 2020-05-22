@@ -2984,6 +2984,7 @@ HAND:
 WEAP.TD:
 	Inherits: ^BuildingTD
 	Inherits@shape: ^3x2Shape
+	Inherits@gdiupg: ^GDIUpgradeProducer
 	RenderSprites:
 		Image: awep
 	Selectable:
@@ -3192,12 +3193,6 @@ WEAP.TD:
 	ProvidesPrerequisite@msam:
 		Factions: gdi, zocom, talon, eagle
 		Prerequisite: vehicles.msam
-	GrantExternalConditionToProduced@gdiupg:
-		Condition: gdiupg
-		RequiresCondition: gdiupgbuilt
-	GrantConditionOnPrerequisite@gdiupg:
-		Condition: gdiupgbuilt
-		Prerequisites: miss.gdi
 
 AIRS:
 	Inherits: ^BuildingTD
@@ -4241,6 +4236,7 @@ REP:
 HPAD.TD:
 	Inherits: ^BuildingTD
 	Inherits@shape: ^2x2Shape
+	Inherits@gdiupg: ^GDIUpgradeProducer
 	RenderSprites:
 		Image: hpad2
 	HitShape:
@@ -4380,12 +4376,6 @@ HPAD.TD:
 		EndChargeSpeechNotification: ReinforceAva
 		LaunchSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
-	GrantExternalConditionToProduced@gdiupg:
-		Condition: gdiupg
-		RequiresCondition: gdiupgbuilt
-	GrantConditionOnPrerequisite@gdiupg:
-		Condition: gdiupgbuilt
-		Prerequisites: miss.gdi
 
 PROC.TD:
 	Inherits: ^BuildingTD
@@ -4518,6 +4508,7 @@ SILO.TD:
 AFLD.GDI:
 	Inherits: ^Building
 	Inherits@shape: ^3x2Shape
+	Inherits@gdiupg: ^GDIUpgradeProducer
 	RenderSprites:
 		Image: afldgdi
 	HitShape:
@@ -4665,12 +4656,6 @@ AFLD.GDI:
 	InfiltrateForSupportPower:
 		Types: SpyInfiltrate
 		Proxy: powerproxy.airstrike
-	GrantExternalConditionToProduced@gdiupg:
-		Condition: gdiupg
-		RequiresCondition: gdiupgbuilt
-	GrantConditionOnPrerequisite@gdiupg:
-		Condition: gdiupgbuilt
-		Prerequisites: miss.gdi
 
 GTEK:
 	Inherits: ^ScienceBuilding
@@ -5061,6 +5046,7 @@ SPEN.nod:
 SYRD.gdi:
 	Inherits: ^Building
 	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
+	Inherits@gdiupg: ^GDIUpgradeProducer
 	RenderSprites:
 		Image: GSYRD
 		PlayerPalette: playernavy
@@ -5171,12 +5157,6 @@ SYRD.gdi:
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
 	-SpawnActorsOnSell:
-	GrantExternalConditionToProduced@gdiupg:
-		Condition: gdiupg
-		RequiresCondition: gdiupgbuilt
-	GrantConditionOnPrerequisite@gdiupg:
-		Condition: gdiupgbuilt
-		Prerequisites: miss.gdi
 
 HTUR:
 	Inherits: ^Defense
@@ -5784,6 +5764,10 @@ MISS.GDI:
 		Name: Research Center
 	ProvidesPrerequisite@Name:
 		RequiresCondition: !being-warped
+	ProvidesDelayedPrerequisite:
+		Prerequisite: miss.gdi2
+		Delay: 7500
+		RequiresCondition: !being-warped		
 	ProvidesPrerequisite@HMLRS:
 		Factions: gdi, zocom, eagle
 		Prerequisite: hmlrs.buildable
