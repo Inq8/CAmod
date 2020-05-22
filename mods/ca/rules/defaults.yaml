@@ -769,9 +769,12 @@
 	ProductionTimeMultiplier@IndustrialPlant:
 		Multiplier: 90
 		Prerequisites: indp, !indplowpower
-	ProductionCostMultiplier@IndustrialPlant:
+	ProductionCostMultiplier@IndustrialPlantLevel1:
 		Multiplier: 95
-		Prerequisites: indp, !indplowpower
+		Prerequisites: indp, !indp2, !indplowpower
+	ProductionCostMultiplier@IndustrialPlantLevel2:
+		Multiplier: 90
+		Prerequisites: indp2, !indplowpower
 
 ^Vehicle:
 	Inherits@1: ^ExistsInWorld

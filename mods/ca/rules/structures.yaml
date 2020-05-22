@@ -5677,6 +5677,9 @@ INDP:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
 	ProvidesPrerequisite@buildingname:
+	ProvidesDelayedPrerequisite@indp2:
+		Prerequisite: indp2
+		Delay: 7500
 	ProvidesPrerequisite@disabled:
 		Prerequisite: indplowpower
 		RequiresCondition: disabled || empdisable || being-warped
