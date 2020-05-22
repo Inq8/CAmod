@@ -36,7 +36,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly bool ResetOnOwnerChange = false;
 
 		public readonly bool ShowSelectionBar = true;
-		public readonly Color SelectionBarColor = Color.FromArgb(128, 200, 255);
+		public readonly Color SelectionBarColor = Color.FromArgb(200, 200, 200);
 
 		IEnumerable<string> ITechTreePrerequisiteInfo.Prerequisites(ActorInfo info)
 		{
