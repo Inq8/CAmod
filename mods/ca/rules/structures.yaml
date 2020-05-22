@@ -2974,12 +2974,6 @@ HAND:
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
 		Types: SpyInfiltrate
-	GrantExternalConditionToProduced@nodupg:
-		Condition: nodupg
-		RequiresCondition: nodupgbuilt
-	GrantConditionOnPrerequisite@nodupg:
-		Condition: nodupgbuilt
-		Prerequisites: bio.nod
 
 WEAP.TD:
 	Inherits: ^BuildingTD
@@ -5841,6 +5835,10 @@ BIO.Nod:
 		RequiresCondition: !being-warped
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
+	ProvidesDelayedPrerequisite@nodupg2:
+		Prerequisite: bio.nod2
+		Delay: 7500
+		RequiresCondition: !being-warped
 
 MSLO.Nod:
 	Inherits: ^ScienceBuilding

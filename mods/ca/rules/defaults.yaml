@@ -377,12 +377,24 @@
 		Condition: gdiupglevel2
 		Prerequisites: miss.gdi2
 
-^NodUpgrade:
-	ExternalCondition@NODUPG:
-		Condition: nodupg
+^NodHazmatUpgrade:
+	GrantConditionOnPrerequisite@nodupg1:
+		Condition: nodupg1
+		Prerequisites: bio.nod
 	GrantCondition@HAZMAT:
 		Condition: hazmatsuits
-		RequiresCondition: nodupg
+		RequiresCondition: nodupg1
+
+^NodCyborgUpgrade:
+	SpeedMultiplier@nodupg2:
+		RequiresCondition: nodupg2
+		Modifier: 120
+	DamageMultiplier@nodupg2:
+		RequiresCondition: nodupg2
+		Modifier: 80
+	GrantConditionOnPrerequisite@nodupg2:
+		Condition: nodupg2
+		Prerequisites: bio.nod2
 
 ^BinoUpgrade:
 	ExternalCondition@Bino:
@@ -951,7 +963,7 @@
 	Inherits@2: ^GainsExperience
 	Inherits@3: ^InfantryExperienceHospitalOverrides
 	Inherits@4: ^SpriteActor
-	Inherits@5: ^NodUpgrade
+	Inherits@5: ^NodHazmatUpgrade
 	Inherits@7: ^Warpable
 	Inherits@8: ^Cloakable-Kills
 	Inherits@9: ^IronCurtainable-Kills

@@ -966,6 +966,7 @@ N5:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@nodupg2: ^NodCyborgUpgrade
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -980,7 +981,7 @@ N5:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 13000
+		HP: 35000
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
 	Armament:
@@ -997,7 +998,7 @@ N5:
 	TakeCover:
 		ProneOffset: 160,0,-254
 	Mobile:
-		Speed: 49
+		Speed: 56
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
@@ -1029,12 +1030,6 @@ N5:
 		Palette: temptd
 		ReferencePoint: Bottom, Left
 		RequiresCondition: tibheal
-	SpeedMultiplier@NODUPG:
-		RequiresCondition: nodupg
-		Modifier: 120
-	DamageMultiplier@NODUPG:
-		RequiresCondition: nodupg
-		Modifier: 35
 	WithMuzzleOverlay:
 	Explodes:
 		Weapon: UnitExplodeChemSmall
@@ -1051,7 +1046,7 @@ N5:
 	GrantConditionOnPrerequisite@BIO:
 		Condition: biofirepower
 	FirepowerMultiplier@BIOLAB:
-		RequiresCondition: nodupg || biofirepower
+		RequiresCondition: biofirepower
 		Modifier: 110
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
@@ -1467,6 +1462,7 @@ SAB:
 ACOL:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@nodupg2: ^NodCyborgUpgrade
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -1496,7 +1492,7 @@ ACOL:
 		LocalOffset: 427,0,341
 	TakeCover:
 		ProneOffset: 227,0,-245
-		PauseOnCondition: being-warped || nodupg
+		PauseOnCondition: being-warped || nodupg1
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
@@ -1533,12 +1529,21 @@ ACOL:
 		Palette: temptd
 		ReferencePoint: Bottom, Left
 		RequiresCondition: tibheal
-	SpeedMultiplier@NODUPG:
-		RequiresCondition: nodupg
+	SpeedMultiplier@nodupg1:
+		RequiresCondition: nodupg1 && !nodupg2
 		Modifier: 120
-	DamageMultiplier@NODUPG:
-		RequiresCondition: nodupg
-		Modifier: 35
+	DamageMultiplier@nodupg1:
+		RequiresCondition: nodupg1 && !nodupg2
+		Modifier: 28		
+	SpeedMultiplier@nodupg2:
+		RequiresCondition: nodupg2
+		Modifier: 140
+	DamageMultiplier@nodupg2:
+		RequiresCondition: nodupg2
+		Modifier: 22
+	RangeMultiplier@nodupg2:
+		RequiresCondition: nodupg2
+		Modifier: 120
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 		
@@ -1737,7 +1742,7 @@ E8:
 	GrantConditionOnPrerequisite@BIO:
 		Condition: biofirepower
 	FirepowerMultiplier@BIOLAB:
-		RequiresCondition: nodupg || biofirepower
+		RequiresCondition: biofirepower
 		Modifier: 110
 	-DamagedByTintedCells@RADSTRONG:
 	-DamagedByTintedCells@RADMED:
@@ -1750,6 +1755,7 @@ N1C:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BOTHELPER: ^BotCaptureHelper
+	Inherits@nodupg2: ^NodCyborgUpgrade	
 	RenderSprites:
 	Buildable:
 		Queue: Infantry
@@ -1765,9 +1771,9 @@ N1C:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 10000
+		HP: 28000
 	Mobile:
-		Speed: 49
+		Speed: 56
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
@@ -1804,12 +1810,6 @@ N1C:
 		Palette: temptd
 		ReferencePoint: Bottom, Left
 		RequiresCondition: tibheal
-	SpeedMultiplier@NODUPG:
-		RequiresCondition: nodupg
-		Modifier: 120
-	DamageMultiplier@NODUPG:
-		RequiresCondition: nodupg
-		Modifier: 35
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
@@ -1817,6 +1817,7 @@ N3C:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@nodupg2: ^NodCyborgUpgrade	
 	RenderSprites:
 	Buildable:
 		Queue: Infantry
@@ -1832,10 +1833,11 @@ N3C:
 		AddToArmyValue: true
 	-TakeCover:
 	Health:
-		HP:  9000
+		HP:  25000
 	RevealsShroud:
 		Range: 4c768
 	Mobile:
+		Speed: 49
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
@@ -1898,12 +1900,6 @@ N3C:
 		Palette: temptd
 		ReferencePoint: Bottom, Left
 		RequiresCondition: tibheal
-	SpeedMultiplier@NODUPG:
-		RequiresCondition: nodupg
-		Modifier: 120
-	DamageMultiplier@NODUPG:
-		RequiresCondition: nodupg
-		Modifier: 35
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
@@ -1912,6 +1908,7 @@ RMBC:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@EMP: ^EmpDisable
+	Inherits@nodupg2: ^NodCyborgUpgrade	
 	RenderSprites:
 		PlayerPalette: playerd2k
 		Image: cycom
@@ -1929,11 +1926,11 @@ RMBC:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 45000
+		HP: 42000
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 49
+		Speed: 56
 		Voice: Move
 		PauseOnCondition: being-warped || empdisable
 	AttackFrontal:
@@ -1975,7 +1972,6 @@ RMBC:
 	-GrantConditionOnPrerequisite@BIO:
 	-WithDecoration@HAZMAT:
 	-GrantCondition@HAZMAT:
-	-ExternalCondition@NODUPG:
 	-DamagedByTerrain:
 	DamagedByTerrain:
 		Terrain: Tiberium, BlueTiberium
