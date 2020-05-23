@@ -35,6 +35,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Should it recheck everything when it is captured?")]
 		public readonly bool ResetOnOwnerChange = false;
 
+		[Desc("If true, unmet conditions will disable the prerequisite entirely, otherwise the timer will be paused.")]
+		public readonly bool FullDisable = false;
+
 		public readonly bool ShowSelectionBar = true;
 		public readonly Color SelectionBarColor = Color.FromArgb(200, 200, 200);
 
@@ -120,9 +123,13 @@ namespace OpenRA.Mods.CA.Traits
 
 		void Update()
 		{
-			enabled = !IsTraitDisabled;
-			if (IsTraitDisabled)
+			if (IsTraitDisabled && Info.FullDisable)
+			{
+				enabled = false;
 				return;
+			}
+
+			enabled = remainingDelay <= 0;
 
 			if (Info.Factions.Any())
 				enabled = Info.Factions.Contains(faction);
@@ -144,12 +151,14 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override void TraitEnabled(Actor self)
 		{
-			Reset(self);
+			Update();
+			techTree.ActorChanged(self);
 		}
 
 		protected override void TraitDisabled(Actor self)
 		{
-			Reset(self);
+			Update();
+			techTree.ActorChanged(self);
 		}
 
 		float ISelectionBar.GetValue()
