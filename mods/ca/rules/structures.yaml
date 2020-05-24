@@ -5654,6 +5654,7 @@ INDP:
 	ProvidesDelayedPrerequisite@indp2:
 		Prerequisite: indp2
 		Delay: 7500
+		RequiresCondition: !disabled && !empdisable && !being-warped
 	ProvidesPrerequisite@disabled:
 		Prerequisite: indplowpower
 		RequiresCondition: disabled || empdisable || being-warped
@@ -5724,7 +5725,7 @@ OREP:
 	ProvidesDelayedPrerequisite@orep2:
 		Prerequisite: orep2
 		Delay: 7500
-		RequiresCondition: !being-warped
+		RequiresCondition: !disabled && !empdisable && !being-warped
 
 MISS.GDI:
 	Inherits: ^ScienceBuilding
@@ -5771,7 +5772,7 @@ MISS.GDI:
 	ProvidesDelayedPrerequisite:
 		Prerequisite: miss.gdi2
 		Delay: 7500
-		RequiresCondition: !being-warped		
+		RequiresCondition: !disabled && !empdisable && !being-warped	
 	ProvidesPrerequisite@HMLRS:
 		Factions: gdi, zocom, eagle
 		Prerequisite: hmlrs.buildable
@@ -5848,7 +5849,7 @@ BIO.Nod:
 	ProvidesDelayedPrerequisite@nodupg2:
 		Prerequisite: bio.nod2
 		Delay: 7500
-		RequiresCondition: !being-warped
+		RequiresCondition: !disabled && !empdisable && !being-warped
 
 MSLO.Nod:
 	Inherits: ^ScienceBuilding
