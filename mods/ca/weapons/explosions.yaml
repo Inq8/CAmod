@@ -703,7 +703,7 @@ TPWRZap:
 	Inherits: ^TeslaWeapon
 	ReloadDelay: 80
 	Range: 5c0
-	ValidTargets: Ground, Water, Infantry, Tank
+	ValidTargets: Ground, Water, Infantry, Vehicle
 	-Report:
 	Warhead@1Dam: SpreadDamage
 		Damage: 1000
@@ -715,7 +715,7 @@ TPWRZap:
 		Weapon: TPWRArc1
 		Amount: 1
 		AimChance: 90
-		ValidTargets: Ground, Water, Infantry, Tank
+		ValidTargets: Ground, Water, Infantry, Vehicle
 		ThrowWithoutTarget: true
 	-Warhead@3Eff:
 
@@ -723,7 +723,7 @@ TPWRArc1:
 	Inherits: TTankZap
 	Range: 3c0
 	Warhead@1Dam: SpreadDamage
-		ValidTargets: Ground, Water, Infantry, Tank
+		ValidTargets: Ground, Water, Infantry, Vehicle
 	Warhead@Burst: FireShrapnel
 		Weapon: TPWRArc2
 		AimChance: 80

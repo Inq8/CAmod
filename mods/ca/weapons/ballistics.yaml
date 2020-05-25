@@ -179,10 +179,11 @@ TitanGun:
 	ReloadDelay: 60
 	Range: 8c0
 	Projectile: Bullet
-		Speed: 204
+		Speed: 224
 		Blockable: false
 		LaunchAngle: 62
 		Inaccuracy: 1c938
+		Shadow: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
 		Damage: 14000
@@ -301,21 +302,31 @@ TitanGun:
 8Inch:
 	Inherits: ^Artillery
 	MinRange: 3c0
-	ReloadDelay: 250
-	Range: 20c0
-	Burst: 2
-	Report: turret1.aud
+	ReloadDelay: 120
+	Range: 21c768
+	Report: tank6.aud
 	TargetActorCenter: true
+	Projectile: Bullet
+		Speed: 345
+		LaunchAngle: 40
+		Inaccuracy: 2c511
 	Warhead@1Dam: SpreadDamage
-		Spread: 213
+		Spread: 256
 		Damage: 2000
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Versus:
-			None: 60
-			Wood: 55
+			None: 100
+			Wood: 100
 			Concrete: 50
+			Heavy: 55
+	Warhead@3Eff: CreateEffect
+		Explosions: building, building2
 	Warhead@4EffWater: CreateEffect
 		Explosions: large_splash
+		
+8Inch.NoReport:
+	Inherits: 8Inch
+	-Report:
 
 JuggernautGun:
 	Inherits: ^Artillery
@@ -351,7 +362,7 @@ JuggernautGun:
 		Versus:
 			None: 15
 			Wood: 30
-			Heavy: 60
+			Heavy: 90
 			Concrete: 20
 			Brick: 20
 

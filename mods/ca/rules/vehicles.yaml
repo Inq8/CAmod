@@ -233,14 +233,18 @@ V2RL:
 		Weapon: UnitExplodeWarpOut
 		EmptyWeapon: UnitExplodeWarpOut
 		RequiresCondition: warpout
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Infantry, Water, Underwater, Defense
+	AutoTargetPriority@ATTACKANYTHING:
+		ValidTargets: Infantry, Water, Underwater, Structure, Defense, Mine
 	AutoTargetPriority@TANKDEFAULT:
 		RequiresCondition: !stance-attackanything && !assault-move && germany
-		ValidTargets: Tank
+		ValidTargets: Vehicle
 		InvalidTargets: NoAutoTarget, WaterStructure
 		Priority: 10
 	AutoTargetPriority@TANKATTACKANYTHING:
 		RequiresCondition: (stance-attackanything || assault-move) && germany
-		ValidTargets: Tank
+		ValidTargets: Vehicle
 		InvalidTargets: NoAutoTarget
 		Priority: 10
 
@@ -1501,7 +1505,6 @@ VULC:
 	WithSpriteTurret:
 		RequiresCondition: !gattling-ground
 	WithSpriteTurret@GROUND:
-		Armament: secondary
 		Sequence: turret-ground
 		RequiresCondition: gattling-ground
 	Cargo:
@@ -2008,11 +2011,11 @@ STNK.Nod:
 	Cloak@GPSHIDE:
 		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	Armament@PRIMARY:
-		Weapon: 227mm.stnk
+		Weapon: StnkMissile
 		LocalOffset: 213,43,128, 213,-43,128
 	Armament@SECONDARY:
 		Name: secondary
-		Weapon: 227mm.stnkAA
+		Weapon: StnkMissileAA
 		LocalOffset: 213,43,128, 213,-43,128
 	Turreted:
 		TurnSpeed: 10
@@ -2991,7 +2994,7 @@ V3RL:
 		RevokeAll: false
 	MissileSpawnerMaster:
 		Actors: V3
-		RespawnTicks: 300
+		RespawnTicks: 250
 	Explodes:
 		Weapon: BarrelExplode
 	ProducibleWithLevel:
@@ -3091,14 +3094,18 @@ TNKD:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 28,28
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Infantry, Water, Underwater, Defense
+	AutoTargetPriority@ATTACKANYTHING:
+		ValidTargets: Infantry, Water, Underwater, Structure, Defense, Mine
 	AutoTargetPriority@TANKDEFAULT:
 		RequiresCondition: !stance-attackanything && !assault-move
-		ValidTargets: Tank
+		ValidTargets: Vehicle
 		InvalidTargets: NoAutoTarget, WaterStructure
 		Priority: 10
 	AutoTargetPriority@TANKATTACKANYTHING:
-		RequiresCondition: stance-attackanything || assault-move
-		ValidTargets: Tank
+		RequiresCondition: (stance-attackanything || assault-move)
+		ValidTargets: Vehicle
 		InvalidTargets: NoAutoTarget
 		Priority: 10
 

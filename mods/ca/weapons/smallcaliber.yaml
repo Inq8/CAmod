@@ -46,7 +46,8 @@ FLAK-23-AG:
 		Inaccuracy: 0c768
 	Warhead@1Dam: SpreadDamage
 		-Range:
-		-Falloff:
+		Spread: 0c128
+		Falloff: 100, 37, 14, 5, 0
 		Damage: 1800
 		Versus:
 			None: 120
@@ -63,6 +64,30 @@ FLAK-23-AG:
 		Explosions: small_splash
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
+		
+FLAK-SEAS-AA:
+	Inherits: FLAK-23-AA
+	Report: vflaat1a.aud, vflaat1b.aud
+	ReloadDelay: 10
+	Range: 8c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 2200
+		
+FLAK-SEAS-AG:
+	Inherits: FLAK-23-AG
+	Range: 5c256
+	Report: vflaat1a.aud, vflaat1b.aud
+	Projectile: Bullet
+		LaunchAngle: 82
+	Warhead@1Dam: SpreadDamage
+		Damage: 2200
+		Versus:
+			None: 150
+			Wood: 60
+			Light: 35
+			Heavy: 25
+			Concrete: 20
+			Brick: 20
 
 Gatt.0:
 	Inherits: ^AACannon

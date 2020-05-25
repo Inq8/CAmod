@@ -20,7 +20,7 @@ SS:
 		Type: Light
 	Mobile:
 		TurnSpeed: 4
-		Speed: 82
+		Speed: 52
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 8c0
@@ -63,27 +63,27 @@ SS:
 
 MSUB:
 	Inherits: ^Submarine
-	Inherits@AUTOTARGET: ^AutoTargetAllNavalAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Ship
 		BuildAtProductionType: Submarine
 		BuildPaletteOrder: 60
 		Prerequisites: ~spen, stek, ~techlevel.high
-		Description: Submerged anti-ground siege unit\nwith anti-air capabilities.\n  Can detect other submarines.\n  Strong vs Buildings, Ground Units, Aircraft\n  Weak vs Naval Units\n  Special Ability: Submerge
+		Description: Submerged anti-ground siege unit.\n  Can detect other submarines.\n  Strong vs Buildings, Ground Units\n  Weak vs Naval Units\n  Special Ability: Submerge
 	Valued:
-		Cost: 1700
+		Cost: 1650
 	Tooltip:
 		Name: Missile Submarine
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 40000
+		HP: 35000
 	Armor:
 		Type: Light
 	Mobile:
-		TurnSpeed: 3
-		Speed: 56
+		TurnSpeed: 4
+		Speed: 45
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 8c0
@@ -92,11 +92,6 @@ MSUB:
 		Range: 5c0
 	Armament@PRIMARY:
 		Weapon: SubMissile
-		LocalOffset: 0,-171,0, 0,171,0
-		FireDelay: 2
-		PauseOnCondition: under-bridge
-	Armament@SECONDARY:
-		Weapon: SubMissileAA
 		LocalOffset: 0,-171,0, 0,171,0
 		FireDelay: 2
 		PauseOnCondition: under-bridge
@@ -131,7 +126,7 @@ DD:
 		Type: Heavy
 	Mobile:
 		TurnSpeed: 7
-		Speed: 82
+		Speed: 52
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 6c0
@@ -194,8 +189,8 @@ CA:
 	Armor:
 		Type: Heavy
 	Mobile:
-		TurnSpeed: 3
-		Speed: 56
+		TurnSpeed: 4
+		Speed: 28
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 7c0
@@ -221,12 +216,12 @@ CA:
 	Armament@SECONDARY:
 		Name: secondary
 		Turret: secondary
-		Weapon: 8Inch
+		Weapon: 8Inch.NoReport
 		LocalOffset: 480,-100,40, 480,100,40
 		Recoil: 171
 		RecoilRecovery: 34
 		MuzzleSequence: muzzle
-		FireDelay: 10
+		FireDelay: 4
 		PauseOnCondition: under-bridge
 	AttackTurreted:
 		Turrets: primary, secondary
@@ -260,7 +255,7 @@ LST:
 		Type: Heavy
 	Mobile:
 		Locomotor: lcraft
-		Speed: 113
+		Speed: 100
 		PauseOnCondition: notmobile || empdisable || being-warped
 	Hovers:
 		BobDistance: -35
@@ -305,7 +300,7 @@ PT:
 		Type: Heavy
 	Mobile:
 		TurnSpeed: 7
-		Speed: 113
+		Speed: 82
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 7c0
@@ -359,7 +354,7 @@ PT2:
 		Type: Heavy
 	Mobile:
 		TurnSpeed: 7
-		Speed: 100
+		Speed: 68
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 7c0
@@ -415,18 +410,18 @@ DD2:
 		Prerequisites: ~syrd.gdi, hq, ~techlevel.medium
 		Description: Advanced warship armed with\na powerful railgun.\n  Can detect submarines.\n  Strong vs Naval Units, Vehicles\n  Weak vs Aircraft
 	Valued:
-		Cost: 1350
+		Cost: 1000
 	Tooltip:
 		Name: Frigate
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 50000
+		HP: 38000
 	Armor:
 		Type: Heavy
 	Mobile:
-		TurnSpeed: 5
-		Speed: 68
+		TurnSpeed: 7
+		Speed: 56
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 6c0
@@ -446,6 +441,10 @@ DD2:
 		Turret: secondary
 		TurnSpeed: 15
 		Offset: -469,0,128
+	Turreted@TERTIARY:
+		Turret: tertiary
+		Offset: 551,0,158
+		TurnSpeed: 255
 	Armament@PRIMARY:
 		Turret: primary
 		Weapon: Railgun
@@ -460,6 +459,14 @@ DD2:
 		LocalOffset: 0,-100,0, 0,100,0
 		LocalYaw: 80, -80
 		PauseOnCondition: under-bridge
+	Armament@TERTIARY:
+		Name: tertiary
+		Turret: tertiary
+		Weapon: PointLaser
+		LocalOffset: 0,10,90
+		PauseOnCondition: under-bridge
+		RequiresCondition: gdiupg
+		ForceTargetStances: enemy
 	AttackTurreted:
 		Turrets: primary, secondary, tertiary
 		Armaments: primary, secondary, tertiary
@@ -474,6 +481,11 @@ DD2:
 	WithMuzzleOverlay:
 	Selectable:
 		DecorationBounds: 38,38
+	PointDefense:
+		Armament: tertiary
+		PointDefenseTypes: Missile
+		RequiresCondition: gdiupg
+		ValidStances: Enemy
 
 SS2:
 	Inherits: ^Submarine
@@ -497,7 +509,7 @@ SS2:
 		Type: Light
 	Mobile:
 		TurnSpeed: 5
-		Speed: 92
+		Speed: 56
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 8c0
@@ -555,12 +567,12 @@ ISUB:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 45000
+		HP: 60000
 	Armor:
 		Type: Light
 	Mobile:
-		TurnSpeed: 3
-		Speed: 56
+		TurnSpeed: 4
+		Speed: 30
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 8c0
@@ -568,15 +580,14 @@ ISUB:
 	RevealsShroud@GAPGEN:
 		Range: 5c0
 	Armament@primary:
-		Weapon: HonestJohnSub
+		Weapon: ICBMLauncher
 		LocalOffset: 350,-151,0, 350,151,0
 		FireDelay: 1
 		PauseOnCondition: under-bridge
-	Armament@secondary:
-		Weapon: HonestJohnSub
-		LocalOffset: 350,-151,0, 350,151,0
-		FireDelay: 10
-		PauseOnCondition: under-bridge
+	MissileSpawnerMaster:
+		Actors: ICBM
+		RespawnTicks: 300
+		SpawnAllAtOnce: true
 	AttackFrontal:
 		TargetFrozenActors: True
 		PauseOnCondition: empdisable || being-warped
@@ -584,6 +595,37 @@ ISUB:
 		InitialStance: HoldFire
 	Selectable:
 		DecorationBounds: 44,44
+		
+ICBM:
+	Inherits: ^ShootableMissile
+	RenderSprites:
+		Image: ICBM
+		Palette: temptd
+	Valued:
+		Cost: 50
+	Tooltip:
+		Name: ICBM
+	Tooltip@NoRow:
+		Name: ICBM
+	Health:
+		HP: 7000
+	ShootableBallisticMissile:
+		LaunchAngle: 155
+		Speed: 140
+	LeavesTrails:
+		Image: smokey2
+		Palette: tseffect-ignore-lighting-alpha75
+		MovingInterval: 2
+		Type: CenterPosition
+		Offsets: -200, 0, 0
+	MissileSpawnerSlave:
+	SpawnedExplodes:
+		Weapon: HonestJohnSub
+		EmptyWeapon: VisualExplodeHusk
+		RequiresCondition: !airborne
+	Explodes:
+		Weapon: VisualExplodeAirborne
+		RequiresCondition: airborne
 		
 CARR:
 	Inherits: ^Ship
@@ -601,7 +643,7 @@ CARR:
 	Tooltip:
 		Name: Drone Carrier
 	Health:
-		HP: 75000
+		HP: 70000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -611,8 +653,8 @@ CARR:
 	RevealsShroud@GAPGEN:
 		Range: 5c0
 	Mobile:
-		TurnSpeed: 5
-		Speed: 45
+		TurnSpeed: 4
+		Speed: 30
 		Voice: Move
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
@@ -659,7 +701,6 @@ SB:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Ship
-		BuildAtProductionType: Boat
 		BuildPaletteOrder: 20
 		IconPalette: chrometd
 		Prerequisites: ~spen.nod, ~techlevel.low
@@ -676,7 +717,7 @@ SB:
 		Type: Light
 	Mobile:
 		TurnSpeed: 10
-		Speed: 180
+		Speed: 100
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -684,7 +725,7 @@ SB:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Armament@PRIMARY:
-		Weapon: BikeRockets
+		Weapon: SBRockets
 		LocalOffset: -128, -170, 170, -128, 170, 170
 		LocalYaw: 100, -100
 		PauseOnCondition: under-bridge
@@ -700,6 +741,55 @@ SB:
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 2c0
+	RenderDetectionCircle:
+	Selectable:
+		DecorationBounds: 36,36
+
+SEAS:
+	Inherits: ^Ship
+	Inherits@AUTOTARGET: ^AutoTargetAllNavalAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: Ship
+		BuildPaletteOrder: 20
+		Prerequisites: ~spen, ~techlevel.low
+		Description: Light scout & support ship.\n  Can detect submarines.\n  Strong vs Aircraft, Infantry\n  Weak vs Naval Units, Tanks
+	Valued:
+		Cost: 600
+	Tooltip:
+		Name: Sea Scorpion
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 28000
+	Armor:
+		Type: Heavy
+	Mobile:
+		TurnSpeed: 9
+		Speed: 82
+	RevealsShroud:
+		MinRange: 5c0
+		Range: 7c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 5c0
+	Armament@1:
+		Weapon: FLAK-SEAS-AG
+		LocalOffset: 50,0,376
+		MuzzleSequence: muzzle
+		PauseOnCondition: under-bridge
+	Armament@2AA:
+		Name: secondary
+		Weapon: FLAK-SEAS-AA
+		LocalOffset: 50,0,376
+		MuzzleSequence: muzzle
+		PauseOnCondition: under-bridge
+	AttackFrontal:
+		PauseOnCondition: empdisable || being-warped
+	WithMuzzleOverlay:
+	DetectCloaked:
+		CloakTypes: Underwater
+		Range: 4c0
 	RenderDetectionCircle:
 	Selectable:
 		DecorationBounds: 36,36
