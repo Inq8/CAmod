@@ -2974,16 +2974,11 @@ HAND:
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
 		Types: SpyInfiltrate
-	GrantExternalConditionToProduced@nodupg:
-		Condition: nodupg
-		RequiresCondition: nodupgbuilt
-	GrantConditionOnPrerequisite@nodupg:
-		Condition: nodupgbuilt
-		Prerequisites: bio.nod
 
 WEAP.TD:
 	Inherits: ^BuildingTD
 	Inherits@shape: ^3x2Shape
+	Inherits@gdiupg: ^GDIUpgradeProducer
 	RenderSprites:
 		Image: awep
 	Selectable:
@@ -3192,12 +3187,6 @@ WEAP.TD:
 	ProvidesPrerequisite@msam:
 		Factions: gdi, zocom, talon, eagle
 		Prerequisite: vehicles.msam
-	GrantExternalConditionToProduced@gdiupg:
-		Condition: gdiupg
-		RequiresCondition: gdiupgbuilt
-	GrantConditionOnPrerequisite@gdiupg:
-		Condition: gdiupgbuilt
-		Prerequisites: miss.gdi
 
 AIRS:
 	Inherits: ^BuildingTD
@@ -4241,6 +4230,7 @@ REP:
 HPAD.TD:
 	Inherits: ^BuildingTD
 	Inherits@shape: ^2x2Shape
+	Inherits@gdiupg: ^GDIUpgradeProducer
 	RenderSprites:
 		Image: hpad2
 	HitShape:
@@ -4380,12 +4370,6 @@ HPAD.TD:
 		EndChargeSpeechNotification: ReinforceAva
 		LaunchSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
-	GrantExternalConditionToProduced@gdiupg:
-		Condition: gdiupg
-		RequiresCondition: gdiupgbuilt
-	GrantConditionOnPrerequisite@gdiupg:
-		Condition: gdiupgbuilt
-		Prerequisites: miss.gdi
 
 PROC.TD:
 	Inherits: ^BuildingTD
@@ -4518,6 +4502,7 @@ SILO.TD:
 AFLD.GDI:
 	Inherits: ^Building
 	Inherits@shape: ^3x2Shape
+	Inherits@gdiupg: ^GDIUpgradeProducer
 	RenderSprites:
 		Image: afldgdi
 	HitShape:
@@ -4665,12 +4650,6 @@ AFLD.GDI:
 	InfiltrateForSupportPower:
 		Types: SpyInfiltrate
 		Proxy: powerproxy.airstrike
-	GrantExternalConditionToProduced@gdiupg:
-		Condition: gdiupg
-		RequiresCondition: gdiupgbuilt
-	GrantConditionOnPrerequisite@gdiupg:
-		Condition: gdiupgbuilt
-		Prerequisites: miss.gdi
 
 GTEK:
 	Inherits: ^ScienceBuilding
@@ -5061,6 +5040,7 @@ SPEN.nod:
 SYRD.gdi:
 	Inherits: ^Building
 	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
+	Inherits@gdiupg: ^GDIUpgradeProducer
 	RenderSprites:
 		Image: GSYRD
 		PlayerPalette: playernavy
@@ -5171,12 +5151,6 @@ SYRD.gdi:
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
 	-SpawnActorsOnSell:
-	GrantExternalConditionToProduced@gdiupg:
-		Condition: gdiupg
-		RequiresCondition: gdiupgbuilt
-	GrantConditionOnPrerequisite@gdiupg:
-		Condition: gdiupgbuilt
-		Prerequisites: miss.gdi
 
 HTUR:
 	Inherits: ^Defense
@@ -5642,7 +5616,7 @@ INDP:
 		Queue: Building
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.soviet, stek, ~techlevel.high
-		Description: Vehicles & aircraft are produced 15% faster and cost 5% less.\n  Maximum 1 can be built.\n  Cannot be captured.
+		Description: Vehicles & aircraft are produced 15-20% faster and cost 5-10% less.\n  Maximum 1 can be built.\n  Cannot be captured.
 		BuildLimit: 1
 	Valued:
 		Cost: 2500
@@ -5677,6 +5651,10 @@ INDP:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
 	ProvidesPrerequisite@buildingname:
+	ProvidesDelayedPrerequisite@indp2:
+		Prerequisite: indp2
+		Delay: 7500
+		RequiresCondition: !disabled && !empdisable && !being-warped
 	ProvidesPrerequisite@disabled:
 		Prerequisite: indplowpower
 		RequiresCondition: disabled || empdisable || being-warped
@@ -5710,7 +5688,7 @@ OREP:
 		Queue: Building
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.allies, atek, ~techlevel.high
-		Description: Refines income from ore, gems & tiberium by 10%.\nProvides access to advanced chrono harvester technology.\n  Maximum 1 can be built.\n  Cannot be captured.
+		Description: Refines income from ore, gems & tiberium by 5-10%.\nProvides access to advanced chrono harvester technology.\n  Maximum 1 can be built.\n  Cannot be captured.
 		BuildLimit: 1
 	-Capturable:
 	-CaptureNotification:
@@ -5722,9 +5700,12 @@ OREP:
 		Cost: 2500
 	Tooltip:
 		Name: Ore Purifier
-	ResourcePurifier:
-		Modifier: 10
+	ResourcePurifier@orep1:
+		Modifier: 5
 		RequiresCondition: !disabled && !being-warped
+	ResourcePurifier@orep2:
+		Modifier: 5
+		RequiresCondition: !disabled && !being-warped && orep2
 	RevealsShroud:
 		Range: 4c0
 		MinRange: 3c0
@@ -5738,6 +5719,13 @@ OREP:
 		UseDeathTypeSuffix: false
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
+	GrantConditionOnPrerequisite@orep2:
+		Condition: orep2
+		Prerequisites: orep2
+	ProvidesDelayedPrerequisite@orep2:
+		Prerequisite: orep2
+		Delay: 7500
+		RequiresCondition: !disabled && !empdisable && !being-warped
 
 MISS.GDI:
 	Inherits: ^ScienceBuilding
@@ -5768,7 +5756,7 @@ MISS.GDI:
 		Queue: Building
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.gdi, gtek, ~techlevel.high
-		Description: Allows the construction of advanced weaponry &\nequips all units with composite armor,\nreducing damage taken by 10%.\n  Maximum 1 can be built.\n  Cannot be captured.
+		Description: Allows the construction of advanced weaponry &\nequips all units with composite armor,\nreducing damage taken by 10-20%.\n  Maximum 1 can be built.\n  Cannot be captured.
 		BuildLimit: 1
 	-Capturable:
 	-CaptureNotification:
@@ -5781,6 +5769,10 @@ MISS.GDI:
 		Name: Research Center
 	ProvidesPrerequisite@Name:
 		RequiresCondition: !being-warped
+	ProvidesDelayedPrerequisite:
+		Prerequisite: miss.gdi2
+		Delay: 7500
+		RequiresCondition: !disabled && !empdisable && !being-warped	
 	ProvidesPrerequisite@HMLRS:
 		Factions: gdi, zocom, eagle
 		Prerequisite: hmlrs.buildable
@@ -5854,6 +5846,10 @@ BIO.Nod:
 		RequiresCondition: !being-warped
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
+	ProvidesDelayedPrerequisite@nodupg2:
+		Prerequisite: bio.nod2
+		Delay: 7500
+		RequiresCondition: !disabled && !empdisable && !being-warped
 
 MSLO.Nod:
 	Inherits: ^ScienceBuilding

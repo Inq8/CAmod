@@ -342,12 +342,15 @@
 		DeathTypes: ChronoDeath
 
 ^GDIUpgrade:
-	DamageMultiplier@GDIUPG:
-		RequiresCondition: gdiupg
+	DamageMultiplier@gdiupg1:
+		RequiresCondition: gdiupg == 1
 		Modifier: 90
-	ExternalCondition@GDIUPG:
+	DamageMultiplier@gdiupg2:
+		RequiresCondition: gdiupg > 1
+		Modifier: 80
+	ExternalCondition@gdiupg:
 		Condition: gdiupg
-	WithDecoration@GDIUPG:
+	WithDecoration@gdiupg:
 		Image: pips
 		Sequence: pip-armor
 		Palette: effect
@@ -360,12 +363,38 @@
 			gdiupg && bino: Off, On
 		RequiresSelection: True
 
-^NodUpgrade:
-	ExternalCondition@NODUPG:
-		Condition: nodupg
+^GDIUpgradeProducer:
+	GrantExternalConditionToProduced@gdiupg1:
+		Condition: gdiupg
+		RequiresCondition: gdiupglevel1
+	GrantExternalConditionToProduced@gdiupg2:
+		Condition: gdiupg
+		RequiresCondition: gdiupglevel2		
+	GrantConditionOnPrerequisite@gdiupg1:
+		Condition: gdiupglevel1
+		Prerequisites: miss.gdi
+	GrantConditionOnPrerequisite@gdiupg2:
+		Condition: gdiupglevel2
+		Prerequisites: miss.gdi2
+
+^NodHazmatUpgrade:
+	GrantConditionOnPrerequisite@nodupg1:
+		Condition: nodupg1
+		Prerequisites: bio.nod
 	GrantCondition@HAZMAT:
 		Condition: hazmatsuits
-		RequiresCondition: nodupg
+		RequiresCondition: nodupg1
+
+^NodCyborgUpgrade:
+	SpeedMultiplier@nodupg2:
+		RequiresCondition: nodupg2
+		Modifier: 115
+	DamageMultiplier@nodupg2:
+		RequiresCondition: nodupg2
+		Modifier: 85
+	GrantConditionOnPrerequisite@nodupg2:
+		Condition: nodupg2
+		Prerequisites: bio.nod2
 
 ^BinoUpgrade:
 	ExternalCondition@Bino:
@@ -769,9 +798,12 @@
 	ProductionTimeMultiplier@IndustrialPlant:
 		Multiplier: 90
 		Prerequisites: indp, !indplowpower
-	ProductionCostMultiplier@IndustrialPlant:
+	ProductionCostMultiplier@IndustrialPlantLevel1:
 		Multiplier: 95
-		Prerequisites: indp, !indplowpower
+		Prerequisites: indp, !indp2, !indplowpower
+	ProductionCostMultiplier@IndustrialPlantLevel2:
+		Multiplier: 90
+		Prerequisites: indp2, !indplowpower
 
 ^Vehicle:
 	Inherits@1: ^ExistsInWorld
@@ -931,7 +963,7 @@
 	Inherits@2: ^GainsExperience
 	Inherits@3: ^InfantryExperienceHospitalOverrides
 	Inherits@4: ^SpriteActor
-	Inherits@5: ^NodUpgrade
+	Inherits@5: ^NodHazmatUpgrade
 	Inherits@7: ^Warpable
 	Inherits@8: ^Cloakable-Kills
 	Inherits@9: ^IronCurtainable-Kills
