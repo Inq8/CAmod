@@ -108,7 +108,6 @@ namespace OpenRA.Mods.CA.Traits
 			if (--remainingDelay == 0)
 			{
 				Update();
-				
 				if (enabled)
 					techTree.ActorChanged(self);
 			}
@@ -167,7 +166,7 @@ namespace OpenRA.Mods.CA.Traits
 				return 0;
 
 			var maxTicks = Info.Delay;
-			
+
 			if (remainingDelay == maxTicks)
 				return 0;
 
