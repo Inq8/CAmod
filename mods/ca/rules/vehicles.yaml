@@ -1647,17 +1647,17 @@ MTNK:
 		Turret: secondary
 		Weapon: PointLaser
 		LocalOffset: 0,10,90
-		RequiresCondition: gdiupg
+		RequiresCondition: gdiupg2
 		ForceTargetStances: enemy
 	AttackTurreted:
 		Turrets: primary, secondary
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret@default:
-		RequiresCondition: !gdiupg
+		RequiresCondition: !gdiupg2
 	WithSpriteTurret@gdiupg:
 		Sequence: turretpd
-		RequiresCondition: gdiupg
+		RequiresCondition: gdiupg2
 	SpawnActorOnDeath:
 		Actor: MTNK.Husk
 		RequiresCondition: !being-warped
@@ -1668,7 +1668,7 @@ MTNK:
 	PointDefense:
 		Armament: secondary
 		PointDefenseTypes: Missile
-		RequiresCondition: gdiupg
+		RequiresCondition: gdiupg2
 		ValidStances: Enemy
 
 MTNK.Drone:
@@ -1889,8 +1889,6 @@ MSAM:
 		LocalYaw: 100, -100
 	AttackTurreted:
 		TargetFrozenActors: True
-		ForceFireIgnoresActors: False
-		OpportunityFire: False
 		PauseOnCondition: empdisable || being-warped
 	WithSpriteTurret:
 	Explodes:
@@ -2731,21 +2729,21 @@ DISR:
 	Armament@PRIMARY:
 		Weapon: SonicZap
 		LocalOffset: 0,0,200
-		RequiresCondition: !gdiupg
+		RequiresCondition: !gdiupg2
 	Armament@SECONDARY:
 		Weapon: SonicZapVisual
 		Name: secondary
 		LocalOffset: 0,0,200
-		RequiresCondition: !gdiupg
+		RequiresCondition: !gdiupg2
 	Armament@PRIMARYUPG:
 		Weapon: SonicZap.UPG
 		LocalOffset: 0,0,200
-		RequiresCondition: gdiupg
+		RequiresCondition: gdiupg2
 	Armament@SECONDARYUPG:
 		Weapon: SonicZapVisual.UPG
 		Name: secondary
 		LocalOffset: 0,0,200
-		RequiresCondition: gdiupg
+		RequiresCondition: gdiupg2
 	Turreted:
 		TurnSpeed: 5
 		Offset: -300,0,0
@@ -2827,30 +2825,29 @@ HSAM:
 		Weapon: 227mmH
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
-		RequiresCondition: !gdiupg
+		RequiresCondition: !gdiupg2
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: 227mmAAH
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
-		RequiresCondition: !gdiupg
-	Armament@PRIMARY-UPG:
+		RequiresCondition: !gdiupg2
+	Armament@PRIMARY-UPG2:
 		Weapon: 227mm.upg
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
-		RequiresCondition: gdiupg
-	Armament@SECONDARY-UPG:
+		RequiresCondition: gdiupg2
+	Armament@SECONDARY-UPG2:
 		Name: secondary
 		Weapon: 227mmAA.upg
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
-		RequiresCondition: gdiupg
+		RequiresCondition: gdiupg2
 	AutoTarget:
 		ScanRadius: 10
 	AttackTurreted:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: false
-		OpportunityFire: False
 		PauseOnCondition: empdisable || being-warped
 	WithSpriteTurret:
 	Explodes:

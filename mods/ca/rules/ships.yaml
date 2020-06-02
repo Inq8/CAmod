@@ -147,11 +147,14 @@ DD:
 		LocalYaw: 64, -64
 		PauseOnCondition: under-bridge
 	Armament@SECONDARY:
+		Name: secondary
+		Turret: secondary
 		Weapon: DepthCharge.destroyer
 		LocalOffset: 0,-100,0, 0,100,0
 		LocalYaw: 80, -80
 		PauseOnCondition: under-bridge
 	Armament@TERTIARY:
+		Name: tertiary
 		Weapon: StingerAA
 		LocalOffset: 0,-100,0, 0,100,0
 		LocalYaw: 64, -64
@@ -439,10 +442,6 @@ DD2:
 		Offset: 551,0,158
 	Turreted@SECONDARY:
 		Turret: secondary
-		TurnSpeed: 15
-		Offset: -469,0,128
-	Turreted@TERTIARY:
-		Turret: tertiary
 		Offset: 551,0,158
 		TurnSpeed: 255
 	Armament@PRIMARY:
@@ -454,22 +453,16 @@ DD2:
 		MuzzleSequence: muzzle
 		PauseOnCondition: under-bridge
 	Armament@SECONDARY:
-		Weapon: DepthCharge.destroyer
+		Name: secondary
 		Turret: secondary
-		LocalOffset: 0,-100,0, 0,100,0
-		LocalYaw: 80, -80
-		PauseOnCondition: under-bridge
-	Armament@TERTIARY:
-		Name: tertiary
-		Turret: tertiary
 		Weapon: PointLaser
 		LocalOffset: 0,10,90
 		PauseOnCondition: under-bridge
-		RequiresCondition: gdiupg
+		RequiresCondition: gdiupg2
 		ForceTargetStances: enemy
 	AttackTurreted:
-		Turrets: primary, secondary, tertiary
-		Armaments: primary, secondary, tertiary
+		Turrets: primary, secondary
+		Armaments: primary, secondary
 		PauseOnCondition: empdisable || being-warped
 	AutoTarget:
 	DetectCloaked:
@@ -482,9 +475,9 @@ DD2:
 	Selectable:
 		DecorationBounds: 38,38
 	PointDefense:
-		Armament: tertiary
+		Armament: secondary
 		PointDefenseTypes: Missile
-		RequiresCondition: gdiupg
+		RequiresCondition: gdiupg2
 		ValidStances: Enemy
 
 SS2:
@@ -552,7 +545,7 @@ SS2:
 
 ISUB:
 	Inherits: ^Submarine
-	Inherits@AUTOTARGET: ^AutoTargetAllNavalAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Ship
@@ -656,6 +649,7 @@ CARR:
 		TurnSpeed: 4
 		Speed: 30
 		Voice: Move
+		PauseOnCondition: empdisable || being-warped || (hornet-loaded <= 3 && botowner)
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		Offset: 30,70,600
@@ -671,6 +665,7 @@ CARR:
 		InstaRepair: true
 		SlaveDisposalOnKill: KillSlaves
 		SpawnAllAtOnce: false
+		LoadedCondition: hornet-loaded
 	Exit@0:
 		SpawnOffset: 0,0,0
 		Facing: 0

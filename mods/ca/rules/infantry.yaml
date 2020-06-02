@@ -1039,10 +1039,7 @@ N5:
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
-	-GrantCondition@HAZMAT:
 	-WithDecoration@HAZMAT:
-	GrantCondition@HAZMAT:
-		Condition: hazmatsuits
 	GrantConditionOnPrerequisite@BIO:
 		Condition: biofirepower
 	FirepowerMultiplier@BIOLAB:
@@ -1790,8 +1787,9 @@ N1C:
 		Weapon: Vulcan3
 	-KillsSelf@Mutation:
 	-GrantConditionOnPrerequisite@BIO:
-	-GrantCondition@HAZMAT:
+	-GrantConditionOnPrerequisite@NODUPG1:
 	-WithDecoration@HAZMAT:
+	-GrantCondition@HAZMAT:
 	-DamagedByTerrain:
 	DamagedByTerrain:
 		Terrain: Tiberium, BlueTiberium
@@ -1880,8 +1878,9 @@ N3C:
 		ScanRadius: 5
 	-KillsSelf@Mutation:
 	-GrantConditionOnPrerequisite@BIO:
-	-GrantCondition@HAZMAT:
+	-GrantConditionOnPrerequisite@NODUPG1:
 	-WithDecoration@HAZMAT:
+	-GrantCondition@HAZMAT:
 	-DamagedByTerrain:
 	DamagedByTerrain:
 		Terrain: Tiberium, BlueTiberium
@@ -1970,8 +1969,9 @@ RMBC:
 	-KillsSelf@Mutation:
 	-KillsSelf@Immolate:
 	-GrantConditionOnPrerequisite@BIO:
-	-WithDecoration@HAZMAT:
+	-GrantConditionOnPrerequisite@NODUPG1:
 	-GrantCondition@HAZMAT:
+	-WithDecoration@HAZMAT:
 	-DamagedByTerrain:
 	DamagedByTerrain:
 		Terrain: Tiberium, BlueTiberium

@@ -105,7 +105,7 @@ GAP:
 		HasMinibib: true
 	CreatesShroud:
 		Range: 6c0
-		RequiresCondition: !disabled || !empdisable || !being-warped
+		RequiresCondition: !disabled && !empdisable && !being-warped
 	RenderShroudCircle:
 	Power:
 		Amount: -60
@@ -122,7 +122,6 @@ GAP:
 
 SPEN:
 	Inherits: ^Building
-	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
 	Selectable:
 		Bounds: 72,48
 	RenderSprites:
@@ -228,7 +227,7 @@ SPEN:
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 10c0
-		RequiresCondition: !(disabled || empdisable || being-warped)
+		RequiresCondition: !(empdisable || being-warped)
 	RenderDetectionCircle:
 	ProvidesPrerequisite@soviet:
 		Factions: soviet, russia, ukraine, iraq
@@ -284,7 +283,6 @@ SPEN:
 
 SYRD:
 	Inherits: ^Building
-	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
 	Selectable:
 		Bounds: 72,48
 	RenderSprites:
@@ -366,7 +364,7 @@ SYRD:
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 10c0
-		RequiresCondition: !(disabled || empdisable || being-warped)
+		RequiresCondition: !(empdisable || being-warped)
 	RenderDetectionCircle:
 	ProvidesPrerequisite@allies:
 		Factions: allies, england, france, germany
@@ -4931,7 +4929,6 @@ PRIS:
 
 SPEN.nod:
 	Inherits: ^Building
-	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
 	RenderSprites:
 		Image: SPENNOD
 		PlayerPalette: playernavy
@@ -5022,7 +5019,7 @@ SPEN.nod:
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 10c0
-		RequiresCondition: !(disabled || empdisable || being-warped)
+		RequiresCondition: !(empdisable || being-warped)
 	RenderDetectionCircle:
 	HitShape:
 		Type: Rectangle
@@ -5039,7 +5036,6 @@ SPEN.nod:
 
 SYRD.gdi:
 	Inherits: ^Building
-	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@gdiupg: ^GDIUpgradeProducer
 	RenderSprites:
 		Image: GSYRD
@@ -5136,7 +5132,7 @@ SYRD.gdi:
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 10c0
-		RequiresCondition: !(disabled || empdisable || being-warped)
+		RequiresCondition: !(empdisable || being-warped)
 	RenderDetectionCircle:
 	HitShape:
 		TargetableOffsets: 768,0,0, 768,-1024,0, 768,1024,0
@@ -5756,7 +5752,7 @@ MISS.GDI:
 		Queue: Building
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.gdi, gtek, ~techlevel.high
-		Description: Allows the construction of advanced weaponry &\nequips all units with composite armor,\nreducing damage taken by 10-20%.\n  Maximum 1 can be built.\n  Cannot be captured.
+		Description: Allows the construction of advanced weaponry &\nimproves all tanks, aircraft & naval units with with composite armor,\nreducing damage taken by 10%.\nImproved unit ammunition will also become available after a short research time,\nincreasing unit damage dealt by 10%\n  Maximum 1 can be built.\n  Cannot be captured.
 		BuildLimit: 1
 	-Capturable:
 	-CaptureNotification:
@@ -5767,11 +5763,15 @@ MISS.GDI:
 		Cost: 2500
 	Tooltip:
 		Name: Research Center
-	ProvidesPrerequisite@Name:
-		RequiresCondition: !being-warped
-	ProvidesDelayedPrerequisite:
+	ProvidesDelayedPrerequisite@UPGRADE1:
+		Prerequisite: miss.gdi
+		Delay: 3
+		Notification: UnitArmorUpgraded
+		RequiresCondition: !disabled && !empdisable && !being-warped	
+	ProvidesDelayedPrerequisite@UPGRADE2:
 		Prerequisite: miss.gdi2
 		Delay: 7500
+		Notification: UnitFirepowerUpgraded
 		RequiresCondition: !disabled && !empdisable && !being-warped	
 	ProvidesPrerequisite@HMLRS:
 		Factions: gdi, zocom, eagle

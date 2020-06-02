@@ -73,6 +73,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		int respawnTicks = 0;
 
+		int launchCondition = ConditionManager.InvalidConditionToken;
+		int launchConditionTicks;
+
 		public CarrierMaster(ActorInitializer init, CarrierMasterInfo info)
 			: base(init, info)
 		{
@@ -143,7 +146,12 @@ namespace OpenRA.Mods.CA.Traits
 
 			// Launching condition is timed, so not saving the token.
 			if (Info.LaunchingCondition != null)
-				conditionManager.GrantCondition(self, Info.LaunchingCondition); // TODO removed Info.LaunchingTicks
+			{
+				if (launchCondition == ConditionManager.InvalidConditionToken)
+					conditionManager.GrantCondition(self, Info.LaunchingCondition);
+
+				launchConditionTicks = Info.LaunchingTicks;
+			}
 
 			SpawnIntoWorld(self, carrierSlaveEntry.Actor, self.CenterPosition);
 

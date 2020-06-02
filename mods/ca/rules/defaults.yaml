@@ -342,43 +342,45 @@
 		DeathTypes: ChronoDeath
 
 ^GDIUpgrade:
-	DamageMultiplier@gdiupg1:
-		RequiresCondition: gdiupg == 1
+	DamageMultiplier@GDIUPG1:
+		RequiresCondition: gdiupg1
 		Modifier: 90
-	DamageMultiplier@gdiupg2:
-		RequiresCondition: gdiupg > 1
-		Modifier: 80
-	ExternalCondition@gdiupg:
-		Condition: gdiupg
-	WithDecoration@gdiupg:
+	FirepowerMultiplier@GDIUPG2:
+		RequiresCondition: gdiupg2
+		Modifier: 110
+	ExternalCondition@GDIUPG1:
+		Condition: gdiupg1
+	ExternalCondition@GDIUPG2:
+		Condition: gdiupg2
+	WithDecoration@GDIUPG:
 		Image: pips
 		Sequence: pip-armor
 		Palette: effect
 		ReferencePoint: Bottom, Left
 		ValidStances: Ally
-		RequiresCondition: gdiupg
+		RequiresCondition: gdiupg1
 		ZOffset: 256
 		BlinkInterval: 64
 		BlinkPatterns:
-			gdiupg && bino: Off, On
+			gdiupg1 && bino: Off, On
 		RequiresSelection: True
 
 ^GDIUpgradeProducer:
-	GrantExternalConditionToProduced@gdiupg1:
-		Condition: gdiupg
+	GrantExternalConditionToProduced@GDIUPG1:
+		Condition: gdiupg1
 		RequiresCondition: gdiupglevel1
-	GrantExternalConditionToProduced@gdiupg2:
-		Condition: gdiupg
+	GrantExternalConditionToProduced@GDIUPG2:
+		Condition: gdiupg2
 		RequiresCondition: gdiupglevel2		
-	GrantConditionOnPrerequisite@gdiupg1:
+	GrantConditionOnPrerequisite@GDIUPG1:
 		Condition: gdiupglevel1
 		Prerequisites: miss.gdi
-	GrantConditionOnPrerequisite@gdiupg2:
+	GrantConditionOnPrerequisite@GDIUPG2:
 		Condition: gdiupglevel2
 		Prerequisites: miss.gdi2
 
 ^NodHazmatUpgrade:
-	GrantConditionOnPrerequisite@nodupg1:
+	GrantConditionOnPrerequisite@NODUPG1:
 		Condition: nodupg1
 		Prerequisites: bio.nod
 	GrantCondition@HAZMAT:
@@ -386,26 +388,26 @@
 		RequiresCondition: nodupg1
 
 ^NodCyborgUpgrade:
-	SpeedMultiplier@nodupg2:
+	SpeedMultiplier@NODUPG2:
 		RequiresCondition: nodupg2
 		Modifier: 115
-	DamageMultiplier@nodupg2:
+	DamageMultiplier@NODUPG2:
 		RequiresCondition: nodupg2
 		Modifier: 85
-	GrantConditionOnPrerequisite@nodupg2:
+	GrantConditionOnPrerequisite@NODUPG2:
 		Condition: nodupg2
 		Prerequisites: bio.nod2
 
 ^BinoUpgrade:
-	ExternalCondition@Bino:
+	ExternalCondition@BINO:
 		Condition: bino
-	RangeMultiplier@Bino:
+	RangeMultiplier@BINO:
 		Modifier: 120
 		RequiresCondition: bino
-	InaccuracyMultiplier@Bino:
+	InaccuracyMultiplier@BINO:
 		Modifier: 50
 		RequiresCondition: bino
-	WithDecoration@Bino:
+	WithDecoration@BINO:
 		Image: pips
 		Sequence: pip-bino
 		Palette: chrome
@@ -414,7 +416,7 @@
 		RequiresCondition: bino
 		BlinkInterval: 64
 		BlinkPatterns:
-			bino && gdiupg: On, Off
+			bino && gdiupg1: On, Off
 		RequiresSelection: True
 
 ^InfantryExperienceHospitalOverrides:

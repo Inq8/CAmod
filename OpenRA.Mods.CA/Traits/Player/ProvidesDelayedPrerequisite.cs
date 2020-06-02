@@ -41,6 +41,10 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly bool ShowSelectionBar = true;
 		public readonly Color SelectionBarColor = Color.FromArgb(200, 200, 200);
 
+		[NotificationReference("Speech")]
+		[Desc("Sound played when prerequisite is granted.")]
+		public readonly string Notification = null;
+
 		IEnumerable<string> ITechTreePrerequisiteInfo.Prerequisites(ActorInfo info)
 		{
 			return new string[] { Prerequisite ?? info.Name };
@@ -110,6 +114,8 @@ namespace OpenRA.Mods.CA.Traits
 				Update();
 				if (enabled)
 					techTree.ActorChanged(self);
+				if (Info.Notification != null && enabled)
+					Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.Notification, self.Owner.Faction.InternalName);
 			}
 		}
 
