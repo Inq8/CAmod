@@ -1470,7 +1470,7 @@ FACT:
 		RequiresForceMove: true
 	TransformsIntoRepairable:
 		RequiresCondition: factundeploy
-		RepairActors: fix
+		RepairActors: fix, rep
 		RequiresForceMove: true
 	TransformsIntoTransforms:
 		RequiresCondition: factundeploy && build-incomplete
@@ -3566,7 +3566,7 @@ AFAC:
 		RequiresForceMove: true
 	TransformsIntoRepairable:
 		RequiresCondition: factundeploy
-		RepairActors: fix
+		RepairActors: fix, rep
 		RequiresForceMove: true
 	TransformsIntoTransforms:
 		RequiresCondition: factundeploy && build-incomplete
@@ -5752,7 +5752,7 @@ MISS.GDI:
 		Queue: Building
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.gdi, gtek, ~techlevel.high
-		Description: Allows the construction of advanced weaponry &\nimproves all tanks, aircraft & naval units with with composite armor,\nreducing damage taken by 10%.\nImproved unit ammunition will also become available after a short research time,\nincreasing unit damage dealt by 10%\n  Maximum 1 can be built.\n  Cannot be captured.
+		Description: Allows the construction of advanced weaponry &\nimproves all vehicles, aircraft & naval units with with composite armor,\nreducing damage taken by 10%.\nImproved unit ammunition will also become available after a short research time,\nincreasing unit damage dealt by 10%\n  Maximum 1 can be built.\n  Cannot be captured.
 		BuildLimit: 1
 	-Capturable:
 	-CaptureNotification:

@@ -1646,14 +1646,16 @@
 		RepairStep: 700
 		PlayerExperience: 25
 		RepairingNotification: Repairing
+		RequiresCondition: !being-warped
 	EngineerRepairable:
+		RequiresCondition: !being-warped
 	AcceptsDeliveredCash:
 	WithMakeAnimation:
 		Condition: build-incomplete
 	CaptureManager:
 		BeingCapturedCondition: being-captured
 	Capturable:
-		RequiresCondition: !build-incomplete
+		RequiresCondition: !build-incomplete && !being-warped
 		Types: building
 	CapturableProgressBar:
 	CapturableProgressBlink:
@@ -1680,6 +1682,7 @@
 		ReferencePoint: Center
 		Palette: player
 		IsPlayerPalette: True
+		RequiresCondition: !being-warped
 	Targetable:
 		RequiresCondition: !being-warped
 	-ExternalCondition@CRATE-CLOAK:
@@ -2278,7 +2281,7 @@
 	Tooltip:
 		Name: Mine
 	Targetable:
-		TargetTypes: Ground, Mine
+		TargetTypes: Ground, Water, Mine
 	Immobile:
 		OccupiesSpace: true
 	HitShape:

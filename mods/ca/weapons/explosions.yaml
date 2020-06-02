@@ -271,6 +271,7 @@ ATMine:
 		Spread: 256
 		Damage: 40000
 		AffectsParent: true
+		ValidTargets: Ground, Water, Underwater
 		InvalidTargets: Mine
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Eff: CreateEffect
@@ -283,7 +284,7 @@ ATMine:
 APMine:
 	Inherits: ATMine
 	Warhead@1Dam: SpreadDamage
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: napalm
 		ImpactSounds: mine1.aud
