@@ -1,0 +1,101 @@
+PlasmaDiscs:
+	Range: 6c0
+	Report: seeker-fire1.aud, seeker-fire2.aud, seeker-fire3.aud
+	ReloadDelay: 90
+	Burst: 5
+	BurstDelays: 4
+	Projectile: Bullet
+		Image: plasdiscsm
+		TrailImage: smokey
+		TrailPalette: scrinplasma
+		TrailDelay: 1
+		Speed: 250
+		LaunchAngle: 50
+		Inaccuracy: 0c768
+	Warhead@1Dam: SpreadDamage
+		Damage: 12000
+		Versus:
+			None: 70
+			Wood: 55
+			Light: 40
+			Heavy: 25
+			Concrete: 35
+			Brick: 20
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch
+	Warhead@3Eff: CreateEffect
+		Explosions: small_explosion
+		ImpactSounds: seeker-hit1.aud, seeker-hit2.aud
+
+DevastatorDiscs:
+	Inherits: PlasmaDiscs
+	Range: 18c0
+	ReloadDelay: 240
+	Report: devastator-fire1.aud, devastator-fire2.aud, devastator-fire3.aud
+	Burst: 7
+	BurstDelays: 4
+	Projectile: Bullet
+		Image: plasdisclg	
+		Inaccuracy: 1c768
+		Speed: 180
+	Warhead@3Eff: CreateEffect
+		Explosions: large_explosion
+
+DevourerLaser:
+	Inherits: Laser
+	Range: 8c0
+	Report: devourer-fire1.aud, devourer-fire2.aud, devourer-fire3.aud
+	ReloadDelay: 100
+	Projectile: LaserZap
+		Duration: 20
+		Color: 00FF0080
+		SecondaryBeamColor: 00FF0040
+		Width: 45
+		SecondaryBeamWidth: 65
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 15000
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		Versus:
+			None: 250
+			Light: 101
+			Wood: 60
+			Heavy: 101
+			Concrete: 45
+
+TripodLaser:
+	Inherits: DevourerLaser
+	Report: tripod-fire1.aud, tripod-fire2.aud, tripod-fire3.aud
+	Burst: 2
+	BurstDelays: 25
+	Projectile: LaserZap
+		Color: FAFAFFFF
+		SecondaryBeamColor: 382EFFAA
+		SecondaryBeamWidth: 75
+
+GunWalkerZap:
+	Range: 5c0
+	Report: gunwalker-fire1.aud, gunwalker-fire2.aud
+	ReloadDelay: 30
+	Burst: 5
+	BurstDelays: 15
+	Projectile: Bullet
+		Image: gunwalkerfire
+		Speed: 590
+	Warhead@1Dam: SpreadDamage
+		Damage: 500
+		Versus:
+			None: 175
+			Wood: 73
+			Concrete: 45
+			Light: 101
+			Heavy: 90
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: piffs
+		ValidTargets: Ground, Ship, Air, Trees
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piffs
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge

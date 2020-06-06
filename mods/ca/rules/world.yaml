@@ -305,10 +305,15 @@
 		InternalName: legion
 		Side: Nod
 		Description: Legion: Stolen Technology\n Faction Unit: Microwave Tank\n Special Units: Battle Tank, APC\n Special Ability: Cash Hack, Paratroopers\n Faction Bonus: Infiltrator (20% Discount)
+	Faction@16:
+		Name: Scrin
+		InternalName: scrin
+		Side: Scrin
+		Description: Work in progress!
 	Faction@random:
 		Name: Any
 		InternalName: Random
-		RandomFactionMembers: RandomAllies, RandomSoviet, RandomGDI, RandomNOD
+		RandomFactionMembers: RandomAllies, RandomSoviet, RandomGDI, RandomNOD, scrin
 		Side: Random
 		Description: Random Faction\nA random faction will be chosen when the game starts.
 	Faction@randomallies:
@@ -493,7 +498,7 @@ World:
 	MPStartUnits@mcvonly2:
 		Class: none
 		ClassName: MCV Only
-		Factions: gdi, talon, zocom, eagle, nod, blackh, marked, legion
+		Factions: gdi, talon, zocom, eagle, nod, blackh, marked, legion, scrin
 		BaseActor: amcv
 	MPStartUnits@defaultgdia:
 		Class: light
@@ -523,6 +528,22 @@ World:
 		Class: heavy
 		ClassName: Heavy Support
 		Factions: gdi, talon, zocom, eagle
+		BaseActor: amcv
+		SupportActors: n1,n1,n1,n3,n3,mtnk,mtnk
+		InnerSupportRadius: 3
+		OuterSupportRadius: 5
+	MPStartUnits@lightscrin:
+		Class: light
+		ClassName: Light Support
+		Factions: scrin
+		BaseActor: amcv
+		SupportActors: n1,n1,n1,n3,n3
+		InnerSupportRadius: 3
+		OuterSupportRadius: 5
+	MPStartUnits@heavyscrin:
+		Class: heavy
+		ClassName: Heavy Support
+		Factions: scrin
 		BaseActor: amcv
 		SupportActors: n1,n1,n1,n3,n3,mtnk,mtnk
 		InnerSupportRadius: 3

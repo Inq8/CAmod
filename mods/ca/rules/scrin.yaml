@@ -1,0 +1,288 @@
+
+# Vehicles
+
+GUNW:
+	Inherits: ^Tank
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 40
+		Prerequisites: tent, ~weap, ~!vehicles.soviet, ~techlevel.low
+		Description: Tough infantry transport.\n  Strong vs Infantry\n  Weak vs Tanks, Aircraft
+	Valued:
+		Cost: 600
+	Tooltip:
+		Name: Gun Walker
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 20000
+	Armor:
+		Type: Light
+	Mobile:
+		Speed: 113
+		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament:
+		Weapon: GunWalkerZap
+		LocalOffset: 85,0,171
+		MuzzleSequence: muzzle
+	WithMuzzleOverlay:
+	AttackFrontal:
+		PauseOnCondition: empdisable || being-warped
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+
+SEEK:
+	Inherits: ^Vehicle
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Valued:
+		Cost: 1150
+	Tooltip:
+		Name: Seeker
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 165
+		Prerequisites: ~miss.gdi, ~vehicles.gdi, ~!vehicles.talon, ~techlevel.medium
+		Queue: Vehicle
+		Description: Prototype Hover Multiple Launch Rocket System.\nLong-range guided artillery.\n	Can attack Aircraft.\n	Has weak armor.\n	Strong vs Infantry, Vehicles, Buildings
+	Mobile:
+		Speed: 135
+		Locomotor: hover
+	LeavesTrails:
+		Image: twake
+		Palette: effect
+		TerrainTypes: Water
+		TrailWhileStationary: true
+		StationaryInterval: 18
+		MovingInterval: 6
+	Health:
+		HP: 24000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Turreted:
+		TurnSpeed: 10
+		Offset: -100,0,0
+	Hovers:
+		BobDistance: -25
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
+	GrantConditionOnTerrain:
+		TerrainTypes: Water
+		Condition: onwater
+	KillsSelf@SINK:
+		RequiresCondition: onwater && (empdisable || driver-dead)
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+	Armament@PRIMARY:
+		Weapon: PlasmaDiscs
+		LocalOffset: 213,128,0, 213,-128,0
+		LocalYaw: 100, -100
+		RequiresCondition: !gdiupg
+	AutoTarget:
+		ScanRadius: 10
+	AttackTurreted:
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: false
+		OpportunityFire: False
+		PauseOnCondition: empdisable || being-warped
+	WithSpriteTurret:
+	Explodes:
+		Weapon: ArtilleryExplode
+		LoadedChance: 75
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+
+DEVO:
+	Inherits: ^Tank
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 175
+		Prerequisites: weap, radar, ~vehicles.ukraine, ~techlevel.medium
+		Description: Powerful Medium-range artillery.\n  Strong vs Buildings, Infantry\n  Weak vs Aircraft\n  Special Ability: Concussion Shells
+	Valued:
+		Cost: 1250
+	Tooltip:
+		Name: Devourer Tank
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 45000
+	Armor:
+		Type: Light
+	Mobile:
+		TurnSpeed: 4
+		Speed: 82
+		Locomotor: hover
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament:
+		Weapon: DevourerLaser
+		LocalOffset: 824,0,208
+		MuzzleSequence: muzzle
+	AttackFrontal:
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: True
+		PauseOnCondition: empdisable || being-warped
+	WithMuzzleOverlay:
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+
+TPOD:
+	Inherits: ^Tank
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 195
+		Prerequisites: ~gtek, ~vehicles.gdi, ~vehicles.talon, ~miss.gdi, ~techlevel.high
+		Description: Tough combat battle-mech.\n  Can attack Aircraft.\n  Strong vs Infantry, Tanks
+	Valued:
+		Cost: 2000
+	Selectable:
+		Bounds: 30,40,0,0
+	Tooltip:
+		Name: Annihilator Tripod
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 70000
+	Armor:
+		Type: Heavy
+	Mobile:
+		Locomotor: sheavytracked
+		Speed: 50
+		TurnSpeed: 4
+	Passenger:
+		PipType: Red
+		Weight: 3
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament@PRIMARY:
+		Weapon: TripodLaser
+		LocalOffset: 750,420,850, 750,-420,850
+		Recoil: 171
+		RecoilRecovery: 30
+	AttackFrontal:
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: True
+		PauseOnCondition: empdisable || being-warped
+	WithMuzzleOverlay:
+	Explodes:
+		Weapon: ArtilleryExplode
+		LoadedChance: 100
+	SelfHealing@DEFAULT:
+		PercentageStep: 1
+		Delay: 25
+		HealIfBelow: 50
+		DamageCooldown: 150
+	Carryable:
+		LocalOffset: 0,0,700
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+
+#	Turreted:
+#		TurnSpeed: 3
+#		Offset: 0,0,0
+#	AttackTurreted:
+#		PauseOnCondition: empdisable || being-warped
+#		Armaments: primary, secondary, tertiary
+#	QuantizeFacingsFromSequence:
+#		Sequence: stand
+#	WithFacingSpriteBody:
+#		Sequence: stand
+#	WithMoveAnimation:
+#		MoveSequence: run
+#	WithSpriteTurret:
+#	RenderSprites:
+#		Image: titan
+
+# Aircraft
+
+DEVA:
+	Inherits: ^Helicopter
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Buildable:
+		Queue: Aircraft
+		BuildAtProductionType: Plane
+		BuildPaletteOrder: 55
+		BuildDurationModifier: 115
+		Prerequisites: ~afld, stek, ~aircraft.soviet, ~techlevel.high
+		Description: Heavily armoured airship equipped with specialised bombs.\n	Vulnerable when dropping bombs.\n	Strong vs Buildings, Infantry, Slow Vehicles\n	Weak vs Aircraft
+	Valued:
+		Cost: 2000
+	Tooltip:
+		Name: Devastator Warship
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 40000
+	Armor:
+		Type: Heavy
+	RevealsShroud:
+		Range: 10c0
+		MinRange: 8c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 8c0
+		Type: GroundPosition
+	Armament@PRIMARY:
+		Weapon: DevastatorDiscs
+		LocalOffset: -20,0,0
+	AttackAircraft:
+		FacingTolerance: 10
+		AttackType: Hover
+		PauseOnCondition: empdisable || being-warped
+	Aircraft:
+		CruiseAltitude: 2c0
+		InitialFacing: 192
+		TurnSpeed: 3
+		Speed: 56
+		AltitudeVelocity: 0c50
+		CanForceLand: False
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: AttackAnything
+		ScanRadius: 10
+	SmokeTrailWhenDamaged@1:
+		Offset: -100,500,100
+	SmokeTrailWhenDamaged@2:
+		Offset: -100,-500,100
+	Selectable:
+		Bounds: 36,28,0,2
+		DecorationBounds: 40,40,0,1
+	Explodes:
+		Weapon: KirovExplode
+		RequiresCondition: !airborne
+	SpawnActorOnDeath:
+		Actor: BADR.Husk
