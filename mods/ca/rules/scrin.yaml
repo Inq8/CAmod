@@ -1,6 +1,34 @@
 
 # Vehicles
 
+HARV.Scrin:
+	Inherits: HARV
+	Buildable:
+		Prerequisites: ~proc, ~vehicles.ra, ~!orep, ~techlevel.infonly
+	Tooltip:
+		Name: Harvester
+		GenericName: Harvester
+	Mobile:
+		Speed: 56
+		Locomotor: hover
+	WithDockingAnimation:
+		DockSequence: idle
+		DockLoopSequence: idle
+	-WithHarvestAnimation:
+	-GrantConditionOnPrerequisite@OREPUPGRADE:
+	-KillsSelf@OREPUPGRADE:
+	-GrantCondition@WARPOUT:
+	-PeriodicExplosion@WARPOUT:
+	SpawnActorOnDeath:
+		Actor: HARV.EmptyHusk
+		RequiresCondition: !being-warped && !orep-upgrade
+	WithShadow:
+		Offset: 43, 255, 0
+		ZOffset: -256
+	WithHarvestOverlay:
+		Palette: scrinplasma
+		LocalOffset: 400, 0, 0
+
 GUNW:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
