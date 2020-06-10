@@ -5,7 +5,7 @@ DOG:
 		BuildAtProductionType: Dog
 		BuildPaletteOrder: 50
 		Prerequisites: ~kenn, ~techlevel.infonly
-		Description: Anti-infantry unit.\n  Can detect spies and cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+		Description: Anti-infantry unit.\n  Can detect spies, mines and cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
 	RenderSprites:
 		Scale: 0.7
 		PlayerPalette: player
@@ -66,7 +66,7 @@ DOG:
 		RequiresCondition: run
 	IgnoresDisguise:
 	DetectCloaked:
-		CloakTypes: Cloak, Thief
+		CloakTypes: Cloak, Thief, Mine
 		Range: 4c0
 	Voiced:
 		VoiceSet: DogVoice
@@ -273,7 +273,7 @@ E4:
 
 E6:
 	Inherits: ^Soldier
-	Inherits@SELECTION_MODE: ^LowPrioritySelectionMode
+	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -298,8 +298,6 @@ E6:
 		CaptureDelay: 100
 	Voiced:
 		VoiceSet: EngineerVoice
-	Selectable:
-		Priority: 5
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
@@ -430,7 +428,6 @@ E7:
 
 MEDI:
 	Inherits: ^Soldier
-	Inherits@SELECTION_MODE: ^LowPrioritySelectionMode
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -449,6 +446,9 @@ MEDI:
 		Range: 3c0
 	Passenger:
 		PipType: Blue
+		Voice: Move
+	Guard:
+		Voice: Move
 	Armament:
 		Weapon: Heal
 		Cursor: heal
@@ -466,6 +466,9 @@ MEDI:
 	AutoTarget:
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Infantry
+	Mobile:
+		Voice: Move
+		PauseOnCondition: being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	Targetable:
@@ -473,7 +476,6 @@ MEDI:
 
 MECH:
 	Inherits: ^Soldier
-	Inherits@SELECTION_MODE: ^LowPrioritySelectionMode
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -494,6 +496,8 @@ MECH:
 		Range: 3c0
 	Passenger:
 		PipType: Blue
+		Voice: Move
+	Guard:
 		Voice: Move
 	Armament:
 		Weapon: Repair
@@ -528,6 +532,9 @@ MECH:
 		IdleSequences: idle
 		DefaultAttackSequence: repair
 		StandSequences: stand
+	Mobile:
+		Voice: Move
+		PauseOnCondition: being-warped
 	Voiced:
 		VoiceSet: MechanicVoice
 	AutoTarget:
@@ -1129,7 +1136,7 @@ RMBO:
 
 N6:
 	Inherits: ^Soldier
-	Inherits@SELECTION_MODE: ^LowPrioritySelectionMode
+	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -1152,8 +1159,6 @@ N6:
 		CaptureDelay: 100
 	Voiced:
 		VoiceSet: EngineerVoice
-	Selectable:
-		Priority: 5
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
 	Targetable:

@@ -782,14 +782,6 @@
 	GivesBounty:
 		RequiresCondition: global-bounty
 
-^FlatSelectionMode:
-	Selectable:
-		PriorityModifiers: Ctrl
-
-^LowPrioritySelectionMode:
-	Selectable:
-		PriorityModifiers: Ctrl, Alt
-
 ^ProductionEfficiencyBoost:
 	ProductionTimeMultiplier@IndustrialPlant:
 		Multiplier: 90
@@ -822,18 +814,15 @@
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
 	Inherits@production: ^ProductionEfficiencyBoost
-	Inherits@SELECTION_MODE: ^FlatSelectionMode
+	Inherits@selection: ^SelectableCombatUnit
 	Huntable:
 	OwnerLostAction:
 		Action: Kill
-	DrawLineToTarget:
 	UpdatesPlayerStatistics:
 	Mobile:
 		PauseOnCondition: being-captured || empdisable || being-warped || driver-dead
 		Locomotor: wheeled
 		TurnSpeed: 5
-	SelectionDecorations:
-	WithSpriteControlGroupDecoration:
 	Selectable:
 		Bounds: 24, 24
 	Targetable:
@@ -914,7 +903,7 @@
 		LocalOffset: 0,0,200
 	Crushable:
 		CrushClasses: tank
-		WarnProbability: 10
+		WarnProbability: 0
 	DamagedByTintedCells@RADSTRONG:
 		Damage: 100
 		DamageInterval: 16
@@ -967,14 +956,13 @@
 	Inherits@13: ^Chillable
 	Inherits@14: ^Concussion
 	Inherits@bounty: ^GlobalBounty
-	Inherits@SELECTION_MODE: ^FlatSelectionMode
+	Inherits@selection: ^SelectableCombatUnit
 	RenderSprites:
 		PlayerPalette: overlayplayertd
 	Huntable:
 	OwnerLostAction:
 		Action: Kill
 		DeathTypes: DefaultDeath
-	DrawLineToTarget:
 	Health:
 		HP: 2500
 	Armor:
@@ -1007,8 +995,6 @@
 		InternalOwner: Creeps
 		DeathType: ToxinDeath
 		RequiresLobbyCreeps: false
-	SelectionDecorations:
-	WithSpriteControlGroupDecoration:
 	Selectable:
 		Bounds: 18,18,0,-6
 		DecorationBounds: 12,17,0,-6
@@ -1055,6 +1041,7 @@
 	GpsDot:
 		String: Infantry
 	Crushable:
+		WarnProbability: 20
 		CrushSound: squishy2.aud
 	Guard:
 	Guardable:
@@ -1252,20 +1239,17 @@
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
-	Inherits@SELECTION_MODE: ^FlatSelectionMode
+	Inherits@selection: ^SelectableCombatUnit
 	Inherits@production: ^ProductionEfficiencyBoost
 	Huntable:
 	RenderSprites:
 		PlayerPalette: playernavy
 	OwnerLostAction:
 		Action: Kill
-	DrawLineToTarget:
 	UpdatesPlayerStatistics:
 	Mobile:
 		Locomotor: naval
 		PauseOnCondition: empdisable || being-warped
-	SelectionDecorations:
-	WithSpriteControlGroupDecoration:
 	Selectable:
 		Bounds: 24,24
 	Targetable:
@@ -1399,18 +1383,15 @@
 	Inherits@3: ^IronCurtainable
 	Inherits@4: ^SpriteActor
 	Inherits@bounty: ^GlobalBounty
-	Inherits@SELECTION_MODE: ^FlatSelectionMode
+	Inherits@selection: ^SelectableCombatUnit
 	Huntable:
 	OwnerLostAction:
 		Action: Kill
-	DrawLineToTarget:
 	Armor:
 		Type: Light
 	UpdatesPlayerStatistics:
 	AppearsOnRadar:
 		UseLocation: true
-	SelectionDecorations:
-	WithSpriteControlGroupDecoration:
 	Selectable:
 		Bounds: 24,24
 	Aircraft:
@@ -1570,10 +1551,7 @@
 	Inherits@4: ^C4Plantable
 	Inherits@shape: ^1x1Shape
 	Inherits@bounty: ^GlobalBounty
-	SelectionDecorations:
-	WithSpriteControlGroupDecoration:
-	Selectable:
-		Priority: 3
+	Inherits@selection: ^SelectableBuilding
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure
 	Building:
@@ -1610,6 +1588,7 @@
 	MapEditorData:
 		Categories: Building
 	CommandBarBlacklist:
+	WithColoredOverlay@FLARE:
 	WithColoredOverlay@FLARE:
 		Palette: flare
 		RequiresCondition: flare
@@ -1706,6 +1685,7 @@
 	Inherits: ^Building
 	Inherits@botbonus: ^BotDefenseProductionBonus
 	Inherits@Concussion: ^Concussion
+	Inherits@selection: ^SelectableCombatBuilding
 	-SpeedMultiplier@concussion:
 	WithColoredOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability
@@ -1732,7 +1712,6 @@
 	-SpawnActorsOnSell:
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
-	DrawLineToTarget:
 	RenderRangeCircle:
 		Color: C12900
 	Explodes:
@@ -2402,6 +2381,40 @@
 		Modifier: 0
 	Power:
 		RequiresCondition: !disabled
+		
+^Selectable:
+	Selectable:
+	SelectionDecorations:
+	WithSpriteControlGroupDecoration:
+	DrawLineToTarget:
+
+^SelectableCombatUnit:
+	Inherits@selectiondecorations: ^Selectable
+	Selectable:
+		Priority: 10
+		PriorityModifiers: Ctrl
+
+^SelectableSupportUnit:
+	Inherits@selectiondecorations: ^Selectable
+	Selectable:
+		Priority: 8
+		PriorityModifiers: Ctrl, Alt
+
+^SelectableEconomicUnit:
+	Inherits@selectiondecorations: ^Selectable
+	Selectable:
+		Priority: 6
+		PriorityModifiers: Ctrl, Alt
+
+^SelectableCombatBuilding:
+	Inherits@selectiondecorations: ^Selectable
+	Selectable:
+		Priority: 4
+
+^SelectableBuilding:
+	Inherits@selectiondecorations: ^Selectable
+	Selectable:
+		Priority: 2
 
 ^Viceroid:
 	Inherits@1: ^ExistsInWorld

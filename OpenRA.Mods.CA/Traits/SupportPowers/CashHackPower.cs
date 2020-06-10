@@ -30,6 +30,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Amount of guaranteed funds to claim when the victim does not have enough resources.")]
 		public readonly int Minimum = 0;
 
+		[Desc("Should visibility (Shroud, Fog, Cloak, etc) be considered when searching for hackable targets?")]
+		public readonly bool CheckHackTargetForVisibility = true;
+
 		[Desc("Maximum amount of funds which will be stolen.")]
 		public readonly int Maximum = int.MaxValue;
 
@@ -106,7 +109,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			return units.Distinct().Where(a =>
 			{
-				if (a.Owner.IsAlliedWith(Self.Owner) || a.Info.TraitInfoOrDefault<CashHackableInfo>() == null)
+				if (a.Owner.IsAlliedWith(Self.Owner) || a.Info.TraitInfoOrDefault<CashHackableInfo>() == null || (info.CheckHackTargetForVisibility == true && !(a.CanBeViewedByPlayer(Self.Owner))))
 					return false;
 
 				return a.Info.TraitInfoOrDefault<CashHackableInfo>().ValidTypes.Contains(info.Type);
