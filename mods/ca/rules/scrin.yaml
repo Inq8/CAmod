@@ -130,9 +130,12 @@ DEVO:
 	Armor:
 		Type: Light
 	Mobile:
-		TurnSpeed: 4
+		TurnSpeed: 255
 		Speed: 82
 		Locomotor: hover
+	Hovers:
+		BobDistance: -25
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -143,13 +146,21 @@ DEVO:
 		Weapon: DevourerLaser
 		LocalOffset: 824,0,208
 		MuzzleSequence: muzzle
-	AttackFrontal:
-		TargetFrozenActors: True
-		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	Turreted:
+		TurnSpeed: 4
+		Offset: 0,0,0
+	AttackTurreted:
+		TargetFrozenActors: True
+		PauseOnCondition: empdisable || being-warped
+		Armaments: primary
+	WithSpriteTurret:
+	QuantizeFacingsFromSequence:
+		Sequence: idle
+	WithFacingSpriteBody:
+		Sequence: idle
 
 TPOD:
 	Inherits: ^Tank
@@ -176,7 +187,7 @@ TPOD:
 	Mobile:
 		Locomotor: sheavytracked
 		Speed: 50
-		TurnSpeed: 4
+		TurnSpeed: 255
 	Passenger:
 		PipType: Red
 		Weight: 3
@@ -189,12 +200,6 @@ TPOD:
 	Armament@PRIMARY:
 		Weapon: TripodLaser
 		LocalOffset: 750,420,850, 750,-420,850
-		Recoil: 171
-		RecoilRecovery: 30
-	AttackFrontal:
-		TargetFrozenActors: True
-		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	Explodes:
 		Weapon: ArtilleryExplode
@@ -208,22 +213,18 @@ TPOD:
 		LocalOffset: 0,0,700
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
-
-#	Turreted:
-#		TurnSpeed: 3
-#		Offset: 0,0,0
-#	AttackTurreted:
-#		PauseOnCondition: empdisable || being-warped
-#		Armaments: primary, secondary, tertiary
-#	QuantizeFacingsFromSequence:
-#		Sequence: stand
-#	WithFacingSpriteBody:
-#		Sequence: stand
-#	WithMoveAnimation:
-#		MoveSequence: run
-#	WithSpriteTurret:
-#	RenderSprites:
-#		Image: titan
+	Turreted:
+		TurnSpeed: 3
+		Offset: 0,0,0
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
+		Armaments: primary
+	WithSpriteTurret:
+	QuantizeFacingsFromSequence:
+		Sequence: idle
+	WithFacingSpriteBody:
+		Sequence: idle
+	WithMoveAnimation:
 
 # Aircraft
 
