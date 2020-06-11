@@ -3162,14 +3162,13 @@ MSAR:
 	WithMakeAnimation:
 		BodyNames: deployedbody
 	Carryable:
-		LocalOffset: 0,0,400
-		CarriedCondition: airborne
+		LocalOffset: 0,0,150
 	WithSpriteBody@deployed:
 		Sequence: idle-static
 		RequiresCondition: !undeployed && real-actor
 		Name: deployedbody
 	WithFacingSpriteBody:
-		RequiresCondition: undeployed || airborne
+		RequiresCondition: !deployed
 	GrantConditionOnDeploy:
 		PauseOnCondition: empdisable || being-warped || being-captured
 		DeployedCondition: deployed
