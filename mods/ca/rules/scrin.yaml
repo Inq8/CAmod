@@ -50,7 +50,8 @@ GUNW:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 113
+		Speed: 100
+		TurnSpeed: 4
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 	RevealsShroud:
 		MinRange: 4c0
@@ -67,6 +68,8 @@ GUNW:
 		PauseOnCondition: empdisable || being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithMoveAnimation:
+		MovementType: Horizontal, Vertical, Turn
 
 SEEK:
 	Inherits: ^Vehicle
@@ -189,6 +192,59 @@ DEVO:
 		Sequence: idle
 	WithFacingSpriteBody:
 		Sequence: idle
+
+RUIN:
+	Inherits: ^Tank
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+	Valued:
+		Cost: 1350
+	Tooltip:
+		Name: Ruiner
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 150
+		Prerequisites: tmpl, ~vehicles.nod, ~!vehicles.blackh, ~techlevel.high
+		Queue: Vehicle
+		IconPalette: chrometd
+		Description: Long-range incendiary rocket artillery.\n  Has weak armor.\n  Strong vs Buildings, Infantry\n  Weak vs Tanks, Aircraft
+	Mobile:
+		Speed: 82
+		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead
+		TurnSpeed: 4
+	Health:
+		HP: 15000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Turreted:
+		TurnSpeed: 4
+		Offset: -350,0,0
+		RealignDelay: 0
+	Armament:
+		Weapon: honestjohn
+		LocalOffset: 0,171,0, 0,-171,0
+	AttackTurreted:
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: True
+		PauseOnCondition: empdisable || being-warped
+		OpportunityFire: False
+	WithSpriteTurret:
+	AutoTarget:
+	Explodes:
+		Weapon: BarrelExplode
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	Selectable:
+		DecorationBounds: 28,28
 
 TPOD:
 	Inherits: ^Tank
