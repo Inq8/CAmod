@@ -193,12 +193,59 @@ DEVO:
 	WithFacingSpriteBody:
 		Sequence: idle
 
+CORR:
+	Inherits: ^Tank
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		PlayerPalette: scrin
+	Valued:
+		Cost: 800
+	Tooltip:
+		Name: Corrupter
+		GenericName: Tank
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 65
+		Prerequisites: hq, ~vehicles.nod, ~techlevel.low
+		Queue: Vehicle
+		IconPalette: chrometd
+		Description: Heavily armored flame-throwing vehicle.\n  Strong vs Infantry, Buildings, Vehicles\n  Weak vs Tanks
+	Mobile:
+		Speed: 82
+		TurnSpeed: 4
+	Health:
+		HP: 40000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament:
+		Weapon: Chemspray
+		LocalOffset: 512,128,42, 512,-128,42
+	AttackFrontal:
+		PauseOnCondition: empdisable || being-warped
+	Explodes:
+		Weapon: BarrelExplode
+		EmptyWeapon: BarrelExplode
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithMoveAnimation:
+		MovementType: Horizontal, Vertical, Turn
+
 RUIN:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
+		PlayerPalette: scrin
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -214,6 +261,7 @@ RUIN:
 		Speed: 82
 		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead
 		TurnSpeed: 4
+		Locomotor: hover
 	Health:
 		HP: 15000
 	Armor:
@@ -224,19 +272,11 @@ RUIN:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
-	Turreted:
-		TurnSpeed: 4
-		Offset: -350,0,0
-		RealignDelay: 0
 	Armament:
 		Weapon: honestjohn
 		LocalOffset: 0,171,0, 0,-171,0
-	AttackTurreted:
-		TargetFrozenActors: True
-		ForceFireIgnoresActors: True
+	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
-		OpportunityFire: False
-	WithSpriteTurret:
 	AutoTarget:
 	Explodes:
 		Weapon: BarrelExplode
@@ -244,6 +284,12 @@ RUIN:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 28,28
+	Hovers:
+		BobDistance: -25
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
 
 TPOD:
 	Inherits: ^Tank
