@@ -10,7 +10,6 @@ HARV.Scrin:
 		GenericName: Harvester
 	Mobile:
 		Speed: 56
-		Locomotor: hover
 	WithDockingAnimation:
 		DockSequence: idle
 		DockLoopSequence: idle
@@ -30,7 +29,7 @@ HARV.Scrin:
 		LocalOffset: 400, 0, 0
 
 GUNW:
-	Inherits: ^Tank
+	Inherits: ^Vehicle
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
@@ -76,6 +75,8 @@ SEEK:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin	
 	Valued:
 		Cost: 1150
 	Tooltip:
@@ -89,7 +90,6 @@ SEEK:
 		Description: Prototype Hover Multiple Launch Rocket System.\nLong-range guided artillery.\n	Can attack Aircraft.\n	Has weak armor.\n	Strong vs Infantry, Vehicles, Buildings
 	Mobile:
 		Speed: 135
-		Locomotor: hover
 	LeavesTrails:
 		Image: twake
 		Palette: effect
@@ -109,7 +109,7 @@ SEEK:
 		Range: 4c0
 	Turreted:
 		TurnSpeed: 10
-		Offset: -100,0,0
+		Offset: -280,0,0
 	Hovers:
 		BobDistance: -25
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
@@ -163,7 +163,6 @@ DEVO:
 	Mobile:
 		TurnSpeed: 255
 		Speed: 82
-		Locomotor: hover
 	Hovers:
 		BobDistance: -25
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
@@ -194,24 +193,22 @@ DEVO:
 		Sequence: idle
 
 CORR:
-	Inherits: ^Tank
+	Inherits: ^Vehicle
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
-		PlayerPalette: scrin
+		PlayerPalette: overlayplayerscrin
 	Valued:
 		Cost: 800
 	Tooltip:
 		Name: Corrupter
-		GenericName: Tank
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 65
 		Prerequisites: hq, ~vehicles.nod, ~techlevel.low
 		Queue: Vehicle
-		IconPalette: chrometd
 		Description: Heavily armored flame-throwing vehicle.\n  Strong vs Infantry, Buildings, Vehicles\n  Weak vs Tanks
 	Mobile:
 		Speed: 82
@@ -245,7 +242,7 @@ RUIN:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
-		PlayerPalette: scrin
+		PlayerPalette: overlayplayerscrin
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -261,7 +258,6 @@ RUIN:
 		Speed: 82
 		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead
 		TurnSpeed: 4
-		Locomotor: hover
 	Health:
 		HP: 15000
 	Armor:
@@ -314,7 +310,7 @@ TPOD:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Locomotor: sheavytracked
+		Locomotor: heavytracked
 		Speed: 50
 		TurnSpeed: 255
 	Passenger:
