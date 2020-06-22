@@ -1,4 +1,39 @@
 
+
+# Infantry
+
+S1:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@BOTHELPER: ^BotCaptureHelper
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 10
+		Prerequisites: ~infantry.ra, ~techlevel.infonly
+		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+	Valued:
+		Cost: 100
+	Tooltip:
+		Name: Warrior
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 5000
+	Armament@PRIMARY:
+		Weapon: WarriorGun
+	Armament@Garrison:
+		Name: mounted
+		Weapon: M1CarbineE
+	WithInfantryBody:
+	AttackFrontal:
+		PauseOnCondition: being-warped
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+
 # Vehicles
 
 HARV.Scrin:
@@ -76,7 +111,7 @@ SEEK:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin	
+		PlayerPalette: overlayplayerscrin
 	Valued:
 		Cost: 1150
 	Tooltip:
@@ -380,15 +415,10 @@ STMR:
 		Range: 10c0
 		Type: GroundPosition
 	Armament@PRIMARY:
-		Weapon: ScrinTorp
+		Weapon: StormriderZap
 		LocalOffset: 0,213,-85, 0,-213,-85
-		PauseOnCondition: !ammo
-	Armament@SECONDARY:
-		Weapon: ScrinTorpAA
-		LocalOffset: 0,213,-85, 0,-213,-85
-		PauseOnCondition: !ammo
 	AttackAircraft:
-		FacingTolerance: 20
+		FacingTolerance: 90
 		Voice: Attack
 		PersistentTargeting: false
 		OpportunityFire: false
@@ -409,19 +439,14 @@ STMR:
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: HoldFire
-	AmmoPool:
-		Ammo: 9
-		PipCount: 3
-		ReloadDelay: 25
-		AmmoCondition: ammo
 	Contrail@1:
 		Offset: -300,-143,0
-		UsePlayerColor: true 
-		ZOffset: -512 
+		UsePlayerColor: true
+		ZOffset: -512
 	Contrail@2:
 		Offset: -300,143,0
-		UsePlayerColor: true 
-		ZOffset: -512 
+		UsePlayerColor: true
+		ZOffset: -512
 	SpawnActorOnDeath:
 		Actor: SCRN.Husk
 		RequiresCondition: ammo && !empdisable
@@ -507,3 +532,166 @@ DEVA:
 		RequiresCondition: !airborne
 	SpawnActorOnDeath:
 		Actor: BADR.Husk
+	-Hovers@CRUISING:
+
+PAC:
+	Inherits: ^Helicopter
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Buildable:
+		Queue: Aircraft
+		BuildAtProductionType: Plane
+		BuildPaletteOrder: 55
+		BuildDurationModifier: 115
+		Prerequisites: ~afld, stek, ~aircraft.soviet, ~techlevel.high
+		Description: Heavily armoured airship equipped with specialised bombs.\n	Vulnerable when dropping bombs.\n	Strong vs Buildings, Infantry, Slow Vehicles\n	Weak vs Aircraft
+	Valued:
+		Cost: 2000
+	Tooltip:
+		Name: Planetary Assault Carrier
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 40000
+	Armor:
+		Type: Heavy
+	RevealsShroud:
+		Range: 10c0
+		MinRange: 8c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 8c0
+		Type: GroundPosition
+	Armament@PRIMARY:
+		Weapon: InvaderLauncher
+		LocalOffset: 0,0,0
+	Aircraft:
+		CruiseAltitude: 2c0
+		InitialFacing: 192
+		TurnSpeed: 3
+		Speed: 48
+		AltitudeVelocity: 0c50
+		CanForceLand: False
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: AttackAnything
+		ScanRadius: 10
+	SmokeTrailWhenDamaged@1:
+		Offset: -100,500,100
+	SmokeTrailWhenDamaged@2:
+		Offset: -100,-500,100
+	Selectable:
+		Bounds: 36,28,0,2
+		DecorationBounds: 40,40,0,1
+	Explodes:
+		Weapon: KirovExplode
+		RequiresCondition: !airborne
+	SpawnActorOnDeath:
+		Actor: BADR.Husk
+	-Hovers@CRUISING:
+	WithFacingSpriteBody:
+		RequiresCondition: inva-loaded == 4
+		Name: idle
+	WithFacingSpriteBody@HALF:
+		RequiresCondition: inva-loaded < 4
+		Sequence: half-deployed
+		Name: half-deployed
+	AttackOmni:
+		PauseOnCondition: empdisable || being-warped
+	CarrierMaster@carr1:
+		Actors: inva, inva, inva, inva
+		RearmTicks: 0
+		RespawnTicks: 500
+		InstaRepair: true
+		SlaveDisposalOnKill: KillSlaves
+		SpawnAllAtOnce: true
+		LoadedCondition: inva-loaded
+	Exit@0:
+		SpawnOffset: -100,0,0
+		Facing: 60
+	Exit@1:
+		SpawnOffset: -100,0,0
+		Facing: -60
+	Exit@2:
+		SpawnOffset: 100,0,0
+		Facing: 60
+	Exit@3:
+		SpawnOffset: 100,0,0
+		Facing: -60
+	WithRangeCircle@Attack:
+		Type: jammer
+		Range: 16c0
+		Color: 0000FF80
+
+INVA:
+	Inherits: ^Plane
+	Valued:
+		Cost: 50
+	Tooltip:
+		Name: Invader
+	Health:
+		HP: 3500
+	RevealsShroud:
+		Range: 2c0
+		MinRange: 1c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 1c0
+		Type: GroundPosition
+	Armament:
+		Weapon: InvaderZap
+		PauseOnCondition: !ammo
+	AttackAircraft:
+		FacingTolerance: 20
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
+	Aircraft:
+		CruiseAltitude: 2c0
+		InitialFacing: 192
+		TurnSpeed: 8
+		Speed: 220
+		MaximumPitch: 56
+		CanHover: False
+		CanSlide: False
+		RepulsionSpeed: 40
+		Repulsable: False
+		IdealSeparation: 0c256
+		VTOL: true
+		TakeoffSounds: invader-launch1.aud, invader-launch2.aud
+		LandingSounds: invader-dock.aud
+	Rearmable:
+		RearmActors: pac
+	AmmoPool:
+		Ammo: 12
+		AmmoCondition: ammo
+		ReloadDelay: 0
+	RejectsOrders:
+	SpawnActorOnDeath:
+		Actor: HORN.Husk
+		RequiresCondition: ammo && !empdisable
+	SpawnActorOnDeath@Empty:
+		Actor: HORN.Husk.empty
+		RequiresCondition: !ammo && !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: HORN.Husk.EMP
+		RequiresCondition: ammo && empdisable
+	SpawnActorOnDeath@EmptyEMP:
+		Actor: HORN.Husk.empty.EMP
+		RequiresCondition: !ammo && empdisable
+	-EjectOnDeath:
+	-Selectable:
+	-ActorLostNotification:
+	SmokeTrailWhenDamaged:
+		Offset: -253,0,171
+		Interval: 2
+	CarrierSlave:
+		LandingDistance: 8c0
+	Contrail@1:
+		Offset: -432,0,0
+		UsePlayerColor: true
+		TrailLength: 10
+	-Contrail@2:
+	Interactable:

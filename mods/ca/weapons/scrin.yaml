@@ -30,17 +30,44 @@ PlasmaDiscs:
 
 DevastatorDiscs:
 	Inherits: PlasmaDiscs
-	Range: 18c0
+	Range: 16c0
 	ReloadDelay: 240
 	Report: devastator-fire1.aud, devastator-fire2.aud, devastator-fire3.aud
 	Burst: 7
 	BurstDelays: 5
 	Projectile: Bullet
-		Image: plasdisclg	
+		Image: plasdisclg
 		Inaccuracy: 1c768
 		Speed: 180
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
+
+StormriderZap:
+	Range: 7c0
+	Report: stormrider-fire1.aud, stormrider-fire2.aud, stormrider-fire3.aud
+	ReloadDelay: 40
+	Burst: 3
+	BurstDelays: 15
+	Projectile: Bullet
+		Image: scrinzaplgdown
+		Speed: 590
+		Palette: scrin
+	Warhead@1Dam: SpreadDamage
+		Damage: 500
+		Versus:
+			None: 175
+			Wood: 73
+			Concrete: 45
+			Light: 101
+			Heavy: 90
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: piffs
+		ValidTargets: Ground, Ship, Air, Trees
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piffs
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
 
 DevourerLaser:
 	Inherits: Laser
@@ -81,8 +108,9 @@ GunWalkerZap:
 	Burst: 5
 	BurstDelays: 15
 	Projectile: Bullet
-		Image: gunwalkerfire
+		Image: scrinzapsm
 		Speed: 590
+		Palette: scrin
 	Warhead@1Dam: SpreadDamage
 		Damage: 500
 		Versus:
@@ -99,3 +127,64 @@ GunWalkerZap:
 		Explosions: water_piffs
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
+
+InvaderZap:
+	Range: 5c0
+	Report: gunwalker-fire1.aud, gunwalker-fire2.aud
+	ReloadDelay: 50
+	Burst: 3
+	BurstDelays: 5
+	Projectile: Bullet
+		Image: scrinzapsm
+		Speed: 590
+		Palette: scrin
+	Warhead@1Dam: SpreadDamage
+		Damage: 500
+		Versus:
+			None: 175
+			Wood: 73
+			Concrete: 45
+			Light: 101
+			Heavy: 90
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: piffs
+		ValidTargets: Ground, Ship, Air, Trees
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piffs
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+
+InvaderLauncher:
+	ReloadDelay: 175
+	Burst: 4
+	BurstDelays: 5
+	Range: 16c0
+	ValidTargets: Ground, Water
+	Projectile: InstantHit
+	Warhead@1Dam: TargetDamage
+		ValidTargets: Ground, Water
+
+WarriorGun:
+	Inherits: M1Carbine
+	Report: warrior-fire1.aud
+
+DisintegratorBeam:
+	Inherits: Laser
+	ReloadDelay: 30
+	Range: 5c0
+	-Report:
+	StartBurstReport: lasgun.aud
+	Projectile: LaserZap
+		Color: 00FFCCAA
+		Width: 30
+		Duration: 3
+		SecondaryBeamWidth: 50
+		SecondaryBeamColor:00FFCC30
+		Blockable: true
+	Warhead@1Dam: SpreadDamage
+		Damage: 1500
+		Versus:
+			None: 175
+			Wood: 73
+			Heavy: 90
