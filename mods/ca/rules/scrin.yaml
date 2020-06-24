@@ -2,13 +2,31 @@
 
 # Infantry
 
+^ScrinInfantry:
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	WithDeathAnimation:
+		DeathSequencePalette: overlayplayerscrin
+		DeathTypes:
+			DefaultDeath: 1
+			BulletDeath: 2
+			SmallExplosionDeath: 3
+			ExplosionDeath: 4
+			FireDeath: 5
+			ElectricityDeath: 6
+			PoisonDeath: 7
+			ChronoDeath: 8
+			ToxinDeath: 9
+			RadiationDeath: 10
+			FrozenDeath: 11
+		CrushedSequence: die-crushed
+
 S1:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
-	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -25,14 +43,146 @@ S1:
 		HP: 5000
 	Armament@PRIMARY:
 		Weapon: WarriorGun
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+		LocalOffset: 150,0,400
 	Armament@Garrison:
 		Name: mounted
-		Weapon: M1CarbineE
+		Weapon: WarriorGun
+		MuzzleSequence: muzzle
+	WithMuzzleOverlay:
 	WithInfantryBody:
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	-TakeCover:
+
+S3:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@BOTHELPER: ^BotCaptureHelper
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 10
+		Prerequisites: ~infantry.ra, ~techlevel.infonly
+		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Disintegrator
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 5000
+	Armament@PRIMARY:
+		Weapon: DisintegratorBeam
+		LocalOffset: 150,0,400
+	Armament@Garrison:
+		Name: mounted
+		Weapon: DisintegratorBeam
+	WithInfantryBody:
+	AttackFrontal:
+		PauseOnCondition: being-warped
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	-TakeCover:
+
+S4:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@BOTHELPER: ^BotCaptureHelper
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 10
+		Prerequisites: ~infantry.ra, ~techlevel.infonly
+		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+	Valued:
+		Cost: 400
+	Tooltip:
+		Name: Shock Trooper
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 5000
+	Armament@PRIMARY:
+		Weapon: PlasmaDiscs
+		LocalOffset: 150,0,400
+	Armament@Garrison:
+		Name: mounted
+		Weapon: PlasmaDiscs
+	WithInfantryBody:
+	AttackFrontal:
+		PauseOnCondition: being-warped
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	-TakeCover:
+
+S6:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@BOTHELPER: ^BotCaptureHelper
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 10
+		Prerequisites: ~infantry.ra, ~techlevel.infonly
+		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+	Valued:
+		Cost: 100
+	Tooltip:
+		Name: Assimilator
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 5000
+	WithInfantryBody:
+	AttackFrontal:
+		PauseOnCondition: being-warped
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	-TakeCover:
+
+MAST:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@BOTHELPER: ^BotCaptureHelper
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 10
+		Prerequisites: ~infantry.ra, ~techlevel.infonly
+		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+	Valued:
+		Cost: 400
+	Tooltip:
+		Name: Mastermind
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 5000
+	Armament@PRIMARY:
+		Weapon: PlasmaDiscs
+		LocalOffset: 150,0,400
+	Armament@Garrison:
+		Name: mounted
+		Weapon: PlasmaDiscs
+	WithInfantryBody:
+	AttackFrontal:
+		PauseOnCondition: being-warped
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	-TakeCover:
 
 # Vehicles
 
