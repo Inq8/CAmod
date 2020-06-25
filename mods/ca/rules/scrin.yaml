@@ -472,6 +472,59 @@ RUIN:
 		Offset: 43, 128, 0
 		ZOffset: -129
 
+
+INTL:
+	Inherits: ^Tank
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Valued:
+		Cost: 800
+	Tooltip:
+		Name: Interloper
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 150
+		Prerequisites: tmpl, ~vehicles.nod, ~!vehicles.blackh, ~techlevel.high
+		Queue: Vehicle
+		Description: Long-range incendiary rocket artillery.\n  Has weak armor.\n  Strong vs Buildings, Infantry\n  Weak vs Tanks, Aircraft
+	Mobile:
+		Speed: 82
+		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead
+		TurnSpeed: 4
+	Health:
+		HP: 15000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament:
+		Weapon: TibLobber
+		LocalOffset: 650,0,600
+	AttackFrontal:
+		PauseOnCondition: empdisable || being-warped
+	AutoTarget:
+	Explodes:
+		Weapon: BarrelExplode
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	Selectable:
+		DecorationBounds: 28,28
+	Hovers:
+		BobDistance: -25
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+
+
 TPOD:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
@@ -509,7 +562,7 @@ TPOD:
 		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: TripodLaser
-		LocalOffset: 750,420,850, 750,-420,850
+		LocalOffset: 650,420,1000, 650,-420,1000
 	WithMuzzleOverlay:
 	Explodes:
 		Weapon: ArtilleryExplode
