@@ -1,5 +1,33 @@
+^ScrinCommonDeaths:
+	die5: scrininfdeaths
+		Length: 19
+		Tick: 80
+	die6: scrininfdeaths
+		Length: 14
+		Start: 19
+	die8: chronozap
+		Length: *
+		BlendMode: Alpha
+	die9: scrininfdeaths
+		Start: 33
+		Length: 15
+		Tick: 80
+	die10: scrininfdeaths
+		Start: 33
+		Length: 15
+		Tick: 80
+	die11: frozen
+		Start: 48
+		Length: 14
+		Tick: 80
+	die-crushed: scrininfdeaths
+		Start: 62
+		Length: 6
+		Tick: 1600
+		ZOffset: -511
+
 s1:
-	Inherits: ^CommonDeaths
+	Inherits: ^ScrinCommonDeaths
 	stand: s1
 		Facings: 8
 	stand2: s1
@@ -44,10 +72,6 @@ s1:
 		Start: 406
 		Length: 12
 		Tick: 80
-	die5: n1
-		Start: 418
-		Length: 18
-		Tick: 80
 	die7: n1
 		Start: 366
 		Length: 11
@@ -56,9 +80,10 @@ s1:
 		Length: 4
 		Facings: 8
 		Tick: 80
-	garrison-muzzle: minigun
-		Length: 6
+	garrison-muzzle: scrinmuzz
+		Length: 4
 		Facings: 8
+		Tick: 80
 	chrono-overlay: chronofade_small
 		Length: *
 		BlendMode: Additive
@@ -69,7 +94,7 @@ s1:
 	icon: wipicon
 
 s3:
-	Inherits: ^CommonDeaths
+	Inherits: ^ScrinCommonDeaths
 	stand: s3
 		Facings: 8
 	stand2: s3
@@ -122,9 +147,6 @@ s3:
 		Start: 366
 		Length: 11
 		Tick: 80
-	garrison-muzzle: minigun
-		Length: 6
-		Facings: 8
 	chrono-overlay: chronofade_small
 		Length: *
 		BlendMode: Additive
@@ -135,7 +157,7 @@ s3:
 	icon: wipicon
 
 s4:
-	Inherits: ^CommonDeaths
+	Inherits: ^ScrinCommonDeaths
 	stand: s4
 		Facings: 8
 	stand2: s4
@@ -188,9 +210,6 @@ s4:
 		Start: 366
 		Length: 11
 		Tick: 80
-	garrison-muzzle: minigun
-		Length: 6
-		Facings: 8
 	chrono-overlay: chronofade_small
 		Length: *
 		BlendMode: Additive
@@ -201,7 +220,7 @@ s4:
 	icon: wipicon
 
 s6:
-	Inherits: ^CommonDeaths
+	Inherits: ^ScrinCommonDeaths
 	stand: s6
 		Facings: 8
 	stand2: s6
@@ -260,7 +279,7 @@ s6:
 	icon: wipicon
 
 mast:
-	Inherits: ^CommonDeaths
+	Inherits: ^ScrinCommonDeaths
 	stand: mast
 		Facings: 8
 	stand2: mast
@@ -313,9 +332,6 @@ mast:
 		Start: 366
 		Length: 11
 		Tick: 80
-	garrison-muzzle: minigun
-		Length: 6
-		Facings: 8
 	chrono-overlay: chronofade_small
 		Length: *
 		BlendMode: Additive

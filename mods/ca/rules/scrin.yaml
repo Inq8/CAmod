@@ -5,6 +5,8 @@
 ^ScrinInfantry:
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
+	Voiced:
+		VoiceSet: ScrinInfantryVoice
 	WithDeathAnimation:
 		DeathSequencePalette: overlayplayerscrin
 		DeathTypes:
@@ -136,6 +138,8 @@ S6:
 		BuildPaletteOrder: 10
 		Prerequisites: ~infantry.ra, ~techlevel.infonly
 		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+	Voiced:
+		VoiceSet: AssimilatorVoice
 	Valued:
 		Cost: 100
 	Tooltip:
@@ -163,6 +167,8 @@ MAST:
 		BuildPaletteOrder: 10
 		Prerequisites: ~infantry.ra, ~techlevel.infonly
 		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+	Voiced:
+		VoiceSet: MastermindVoice
 	Valued:
 		Cost: 400
 	Tooltip:
@@ -183,6 +189,9 @@ MAST:
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	-TakeCover:
+	VoiceAnnouncement:
+		RequiresCondition: produced
+		Voice: Build
 
 # Vehicles
 
@@ -535,6 +544,8 @@ TPOD:
 		BuildPaletteOrder: 195
 		Prerequisites: ~gtek, ~vehicles.gdi, ~vehicles.talon, ~miss.gdi, ~techlevel.high
 		Description: Tough combat battle-mech.\n  Can attack Aircraft.\n  Strong vs Infantry, Tanks
+	Voiced:
+		VoiceSet: TripodVoice
 	Valued:
 		Cost: 2000
 	Selectable:
@@ -687,6 +698,8 @@ DEVA:
 		BuildDurationModifier: 115
 		Prerequisites: ~afld, stek, ~aircraft.soviet, ~techlevel.high
 		Description: Heavily armoured airship equipped with specialised bombs.\n	Vulnerable when dropping bombs.\n	Strong vs Buildings, Infantry, Slow Vehicles\n	Weak vs Aircraft
+	Voiced:
+		VoiceSet: DevastatorVoice
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -748,6 +761,8 @@ PAC:
 		BuildDurationModifier: 115
 		Prerequisites: ~afld, stek, ~aircraft.soviet, ~techlevel.high
 		Description: Heavily armoured airship equipped with specialised bombs.\n	Vulnerable when dropping bombs.\n	Strong vs Buildings, Infantry, Slow Vehicles\n	Weak vs Aircraft
+	Voiced:
+		VoiceSet: PlanetaryAssaultCarrierVoice
 	Valued:
 		Cost: 2000
 	Tooltip:

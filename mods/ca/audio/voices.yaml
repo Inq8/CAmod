@@ -16,7 +16,7 @@ GenericVoice:
 		talon: .c01,.c03
 		zocom: .c01,.c03
 		eagle: .c01,.c03
-		scrin: .c01,.c03
+		scrin: .s01,.s03
 	Voices:
 		Select: await1,ready,report1,yessir1
 		Action: ackno,affirm1,noprob,overout,ritaway,roger,ugotit
@@ -44,7 +44,7 @@ VehicleVoice:
 		zocom: .c00,.c02
 		talon: .c00,.c02
 		eagle: .c00,.c02
-		scrin: .s00
+		scrin: .s00,.s02
 	Voices:
 		Select: vehic1,yessir1,report1,await1,unit1
 		Action: ackno,affirm1,movout1
@@ -482,3 +482,58 @@ ChronoMinerVoice:
 		Action: vchrmoa, vchrmob, vchrmoc, vchrmod, vchrmoe
 		Harvest: vchrhaa, vchrhab, vchrhac, vchrhad, vchrhae
 		Deliver: vchrgoa, vchrgob, vchrgoc, vchrgod, vchrgoe
+
+ScrinInfantryVoice:
+	Inherits: GenericVoice
+	Voices:
+		Die: scrin-die1, scrin-die2, scrin-die3, scrin-die4, scrin-die5
+		Burned: scrin-firedeath
+		Zapped: scrin-die2, scrin-die5
+		Poisoned: scrin-die2, scrin-die5
+
+MastermindVoice:
+	Voices:
+		Select: mastermind-select1, mastermind-select2, mastermind-select3
+		Move: mastermind-action1, mastermind-action2, mastermind-action3
+		Attack: mastermind-action1, mastermind-action2, mastermind-action3
+		Action: mastermind-action1, mastermind-action2, mastermind-action3
+		Die: mastermind-die
+		Build: mastermind-create
+		Burned: mastermind-die
+		Zapped: mastermind-die
+		Poisoned: mastermind-die
+
+AssimilatorVoice:
+	Voices:
+		Select: assimilator-select1, assimilator-select2, assimilator-select3
+		Move: assimilator-action1, assimilator-action2, assimilator-action3
+		Attack: assimilator-action1, assimilator-action2, assimilator-action3
+		Action: assimilator-action1, assimilator-action2, assimilator-action3
+		Die: assimilator-die
+		Burned: assimilator-die
+		Zapped: assimilator-die
+		Poisoned: assimilator-die
+
+TripodVoice:
+	Voices:
+		Select: tripod-select1, tripod-select2, tripod-select3, tripod-select4
+		Move: tripod-action1, tripod-action2, tripod-action3
+		Attack: tripod-action1, tripod-action2, tripod-action3
+		Action: tripod-action1, tripod-action2, tripod-action3
+		Die: tripod-die1, tripod-die2
+
+DevastatorVoice:
+	Voices:
+		Select: devastator-select1, devastator-select2, devastator-select3
+		Move: devastator-action1, devastator-action2, devastator-action3
+		Attack: devastator-action1, devastator-action2, devastator-action3
+		Action: devastator-action1, devastator-action2, devastator-action3
+		Die: devastator-die
+
+PlanetaryAssaultCarrierVoice:
+	Voices:
+		Select: pac-select1, pac-select2, pac-select3
+		Move: pac-action1, pac-action2, pac-action3
+		Attack: pac-action1, pac-action2, pac-action3
+		Action: pac-action1, pac-action2, pac-action3
+		Die: pac-die
