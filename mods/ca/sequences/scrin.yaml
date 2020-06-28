@@ -325,26 +325,32 @@ mast:
 		Tick: 80
 	icon: wipicon
 
-deva:
+harv.scrin:
 	Inherits: ^VehicleOverlays
-	idle: deva
+	idle: harvscrin
 		Facings: 32
 		UseClassicFacingFudge: True
+	harvest: scrinharvest
+		Length: *
+		ZOffset: -128
+		BlendMode: Additive
 	icon: wipicon
 
-pac:
+gunw:
 	Inherits: ^VehicleOverlays
-	idle: pac
+	idle: gunw
 		Facings: 32
 		UseClassicFacingFudge: True
-	half-deployed: pac
+	move: gunw
 		Start: 32
 		Facings: 32
+		Length: 2
+		Tick: 80
 		UseClassicFacingFudge: True
-	fully-deployed: pac
-		Start: 64
-		Facings: 32
-		UseClassicFacingFudge: True
+	muzzle: scrinmuzz1
+		Length: 4
+		Facings: 8
+		Tick: 80
 	icon: wipicon
 
 seek:
@@ -362,70 +368,29 @@ seek:
 		Tick: 80
 	icon: wipicon
 
-tpod:
+intl:
 	Inherits: ^VehicleOverlays
-	idle: tpod
-		Facings: 1
-		Start: 32
-	turret: tpod
+	idle: intl
 		Facings: 32
 		UseClassicFacingFudge: True
-	move: tpod
-		Start: 33
+	muzzle: scrinmuzz1
+		Length: 4
 		Facings: 8
-		Length: 14
-		Tick: 60
-	muzzle: scrinmuzz2
-		Length: 5
+		Tick: 80
 	icon: wipicon
 
-plasdisclg:
-	idle: plasdisclg
-		BlendMode: Additive
-		Length: *
-		ZOffset: 1023
-		Tick: 50
-
-plasdiscmd:
-	idle: plasdiscmd
-		BlendMode: Additive
-		Length: *
-		ZOffset: 1023
-		Tick: 50
-
-plasdiscsm:
-	idle: plasdiscsm
-		BlendMode: Additive
-		Length: *
-		ZOffset: 1023
-		Tick: 50
-
-tibglob:
-	idle: tibglob
-		BlendMode: Additive
-		Length: *
-		ZOffset: 1023
-		Tick: 40
-
-tibexplode:
-	idle: tibexplode
-		Length: *
-		ZOffset: 2047
-
-scrinzaplg:
-	idle: scrinzaplg
-		ZOffset: 1023
+corr:
+	Inherits: ^VehicleOverlays
+	idle: corr
 		Facings: 32
-
-scrinzaplgdown:
-	idle: scrinzaplgdown
-		ZOffset: 1023
+		UseClassicFacingFudge: True
+	move: corr
+		Start: 32
 		Facings: 32
-
-scrinzapsm:
-	idle: scrinzapsm
-		ZOffset: 1023
-		Facings: 32
+		Length: 2
+		Tick: 150
+		UseClassicFacingFudge: True
+	icon: wipicon
 
 devo:
 	Inherits: ^VehicleOverlays
@@ -448,63 +413,48 @@ ruin:
 		Length: 5
 	icon: wipicon
 
-intl:
+tpod:
 	Inherits: ^VehicleOverlays
-	idle: intl
-		Facings: 32
-		UseClassicFacingFudge: True
-	muzzle: scrinmuzz1
-		Length: 4
-		Facings: 8
-		Tick: 80
-	icon: wipicon
-
-gunw:
-	Inherits: ^VehicleOverlays
-	idle: gunw
-		Facings: 32
-		UseClassicFacingFudge: True
-	move: gunw
+	idle: tpod
+		Facings: 1
 		Start: 32
+	turret: tpod
 		Facings: 32
-		Length: 2
-		Tick: 80
 		UseClassicFacingFudge: True
-	muzzle: scrinmuzz1
-		Length: 4
+	move: tpod
+		Start: 33
 		Facings: 8
-		Tick: 80
-	hit: scrinmuzz2
+		Length: 14
+		Tick: 60
+	muzzle: scrinmuzz2
 		Length: 5
-	icon: wipicon
-
-corr:
-	Inherits: ^VehicleOverlays
-	idle: corr
-		Facings: 32
-		UseClassicFacingFudge: True
-	move: corr
-		Start: 32
-		Facings: 32
-		Length: 2
-		Tick: 150
-		UseClassicFacingFudge: True
-	icon: wipicon
-
-harv.scrin:
-	Inherits: ^VehicleOverlays
-	idle: harvscrin
-		Facings: 32
-		UseClassicFacingFudge: True
-	harvest: scrinharvest
-		Length: *
-		ZOffset: -128
-		BlendMode: Additive
 	icon: wipicon
 
 stmr:
 	Inherits: ^VehicleOverlays
 	idle: stmr
+		Facings: 32
+		UseClassicFacingFudge: True
+	icon: wipicon
+
+deva:
+	Inherits: ^VehicleOverlays
+	idle: deva
+		Facings: 32
+		UseClassicFacingFudge: True
+	icon: wipicon
+
+pac:
+	Inherits: ^VehicleOverlays
+	idle: pac
+		Facings: 32
+		UseClassicFacingFudge: True
+	half-deployed: pac
+		Start: 32
+		Facings: 32
+		UseClassicFacingFudge: True
+	fully-deployed: pac
+		Start: 64
 		Facings: 32
 		UseClassicFacingFudge: True
 	icon: wipicon
@@ -515,3 +465,76 @@ inva:
 		Facings: 32
 		UseClassicFacingFudge: True
 	icon: wipicon
+
+#
+# ---- animations
+#
+
+plasdiscsm:
+	idle: plasdiscsm
+		BlendMode: Additive
+		Length: *
+		ZOffset: 1023
+		Tick: 50
+
+plasdiscmd:
+	idle: plasdiscmd
+		BlendMode: Additive
+		Length: *
+		ZOffset: 1023
+		Tick: 50
+
+plasdisclg:
+	idle: plasdisclg
+		BlendMode: Additive
+		Length: *
+		ZOffset: 1023
+		Tick: 50
+
+tibglob:
+	idle: tibglob
+		BlendMode: Additive
+		Length: *
+		ZOffset: 1023
+		Tick: 40
+
+tibexplode:
+	idle: tibexplode
+		Length: *
+		ZOffset: 2047
+
+scrinzap:
+	idle: scrinzap
+		ZOffset: 1023
+		Facings: 32
+
+scrinzapdown:
+	idle: scrinzapdown
+		ZOffset: 1023
+		Facings: 32
+
+scrinzapup:
+	idle: scrinzapup
+		ZOffset: 1023
+		Facings: 32
+
+scrinzaphit:
+	idle: scrinmuzz2
+		ZOffset: 1023
+		Length: 5
+
+scrinzaphitsm:
+	idle: scrinzaphitsm
+		ZOffset: 1023
+		Length: 3
+
+mindcontrol:
+	idle: mindcontrol
+		ZOffset: 1023
+		Length: 10
+
+rift:
+	idle: rift
+		Length: *
+		ZOffset: 1023
+		BlendMode: Subtractive

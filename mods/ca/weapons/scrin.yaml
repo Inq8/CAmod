@@ -21,6 +21,60 @@ DisintegratorBeam:
 			Wood: 73
 			Heavy: 90
 
+DisintegratorBeamAA:
+	Inherits: DisintegratorBeam
+	ValidTargets: Air
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Air
+
+IntruderDiscs:
+	Inherits: PlasmaDiscs
+	Burst: 3
+
+EnslaveInfantry:
+	Range: 7c0
+	ReloadDelay: 100
+	Report: mastermind-fire.aud
+	Projectile: LaserZap
+		Color: FF00FFAA
+		Width: 56
+		Duration: 25
+		SecondaryBeamWidth: 90
+		SecondaryBeamColor:FF00FF30
+	ValidTargets: Infantry
+	Warhead@1Dam: TargetDamage
+	Warhead@2Owner: ChangeOwner
+		ValidTargets: Infantry
+		Duration: 500
+		Range: 0c42
+	Warhead@2Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: scrin
+		Image: mindcontrol
+		ValidTargets: Ground
+
+EnslaveVehicle:
+	Range: 3c0
+	ReloadDelay: 100
+	Report: mastermind-fire.aud
+	Projectile: LaserZap
+		Color: FF00FFAA
+		Width: 56
+		Duration: 25
+		SecondaryBeamWidth: 90
+		SecondaryBeamColor:FF00FF30
+	ValidTargets: Vehicle
+	Warhead@1Dam: TargetDamage
+	Warhead@2Owner: ChangeOwner
+		ValidTargets: Vehicle
+		Duration: 500
+		Range: 0c42
+	Warhead@2Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: scrin
+		Image: mindcontrol
+		ValidTargets: Ground
+
 GunWalkerZap:
 	Range: 5c0
 	Report: gunwalker-fire1.aud, gunwalker-fire2.aud
@@ -28,7 +82,7 @@ GunWalkerZap:
 	Burst: 5
 	BurstDelays: 15
 	Projectile: Bullet
-		Image: scrinzapsm
+		Image: scrinzap
 		Speed: 650
 		Palette: scrin
 	Warhead@1Dam: SpreadDamage
@@ -41,14 +95,22 @@ GunWalkerZap:
 			Heavy: 90
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Eff: CreateEffect
-		Explosions: hit
+		Explosions: idle
 		ExplosionPalette: scrin
-		Image: gunw
+		Image: scrinzaphit
 		ValidTargets: Ground, Ship, Air, Trees
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piffs
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
+
+GunWalkerZapAA:
+	Inherits: GunWalkerZap
+	Projectile: Bullet
+		Image: scrinzapup
+	ValidTargets: Air
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Air
 
 PlasmaDiscs:
 	Range: 6c0
@@ -131,7 +193,7 @@ StormriderZap:
 	Burst: 3
 	BurstDelays: 15
 	Projectile: Bullet
-		Image: scrinzaplgdown
+		Image: scrinzapdown
 		Speed: 590
 		Palette: scrin
 	Warhead@1Dam: SpreadDamage
@@ -144,12 +206,22 @@ StormriderZap:
 			Heavy: 90
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Eff: CreateEffect
-		Explosions: piffs
+		Explosions: idle
+		ExplosionPalette: scrin
+		Image: scrinzaphit
 		ValidTargets: Ground, Ship, Air, Trees
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piffs
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
+
+StormRiderZapAA:
+	Inherits: StormriderZap
+	Projectile: Bullet
+		Image: scrinzap
+	ValidTargets: Air
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Air
 
 DevastatorDiscs:
 	Inherits: PlasmaDiscs
@@ -170,10 +242,10 @@ InvaderLauncher:
 	Burst: 4
 	BurstDelays: 5
 	Range: 16c0
-	ValidTargets: Ground, Water
+	ValidTargets: Air, Ground, Water
 	Projectile: InstantHit
 	Warhead@1Dam: TargetDamage
-		ValidTargets: Ground, Water
+		ValidTargets: Air, Ground, Water
 
 InvaderZap:
 	Range: 5c0
@@ -182,9 +254,10 @@ InvaderZap:
 	Burst: 3
 	BurstDelays: 5
 	Projectile: Bullet
-		Image: scrinzapsm
-		Speed: 590
+		Image: scrinzapdown
+		Speed: 650
 		Palette: scrin
+		Inaccuracy: 0c256
 	Warhead@1Dam: SpreadDamage
 		Damage: 500
 		Versus:
@@ -195,9 +268,19 @@ InvaderZap:
 			Heavy: 90
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Eff: CreateEffect
-		Explosions: piffs
+		Explosions: idle
+		ExplosionPalette: scrin
+		Image: scrinzaphitsm
 		ValidTargets: Ground, Ship, Air, Trees
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piffs
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
+
+InvaderZapAA:
+	Inherits: InvaderZap
+	Projectile: Bullet
+		Image: scrinzap
+	ValidTargets: Air
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Air

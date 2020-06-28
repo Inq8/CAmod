@@ -84,8 +84,14 @@ S3:
 	Mobile:
 		Speed: 36
 	Armament@PRIMARY:
+		Weapon: DisintegratorBeamAA
+		LocalOffset: 150,0,400
+		PauseOnCondition: being-warped
+	Armament@SECONDARY:
+		Name: secondary
 		Weapon: DisintegratorBeam
 		LocalOffset: 150,0,400
+		PauseOnCondition: being-warped
 	Armament@Garrison:
 		Name: mounted
 		Weapon: DisintegratorBeam
@@ -113,17 +119,17 @@ S4:
 	Valued:
 		Cost: 400
 	Tooltip:
-		Name: Enforcer
+		Name: Intruder
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
 		HP: 10000
 	Armament@PRIMARY:
-		Weapon: PlasmaDiscs
+		Weapon: IntruderDiscs
 		LocalOffset: 150,0,400
 	Armament@Garrison:
 		Name: mounted
-		Weapon: PlasmaDiscs
+		Weapon: IntruderDiscs
 	WithInfantryBody:
 	AttackFrontal:
 		PauseOnCondition: being-warped
@@ -189,11 +195,12 @@ MAST:
 	Mobile:
 		Speed: 49
 	Armament@PRIMARY:
-		Weapon: PlasmaDiscs
+		Weapon: EnslaveInfantry
 		LocalOffset: 150,0,400
-	Armament@Garrison:
-		Name: mounted
-		Weapon: PlasmaDiscs
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: EnslaveVehicle
+		LocalOffset: 150,0,400
 	WithInfantryBody:
 	AttackFrontal:
 		PauseOnCondition: being-warped
@@ -205,6 +212,12 @@ MAST:
 	VoiceAnnouncement:
 		RequiresCondition: produced
 		Voice: Build
+	CaptureManager:
+	Captures:
+		CaptureTypes: building
+		PlayerExperience: 25
+		CaptureDelay: 100
+		ConsumedByCapture: false
 
 #
 # ---- Vehicles
@@ -264,6 +277,12 @@ GUNW:
 		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: GunWalkerZap
+		LocalOffset: 700,92,60, 700,-92,60
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: GunWalkerZapAA
 		LocalOffset: 700,92,60, 700,-92,60
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
@@ -690,6 +709,8 @@ STMR:
 		Description: Durable patrol craft.\n  Strong vs Vehicles, Aircraft\n  Weak vs Infantry, Buildings
 	Valued:
 		Cost: 1750
+	Voiced:
+		VoiceSet: VehicleVoice
 	Tooltip:
 		Name: Stormrider
 	UpdatesPlayerStatistics:
@@ -707,9 +728,12 @@ STMR:
 	Armament@PRIMARY:
 		Weapon: StormriderZap
 		LocalOffset: 0,213,-85, 0,-213,-85
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: StormriderZapAA
+		LocalOffset: 0,213,-85, 0,-213,-85
 	AttackAircraft:
 		FacingTolerance: 90
-		Voice: Attack
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
@@ -723,7 +747,6 @@ STMR:
 		TakeoffSounds: dropup1.aud
 		LandingSounds: dropdwn1.aud
 		IdealSeparation: 1c682
-		Voice: Move
 		CanSlide: False
 		AltitudeVelocity: 0c200
 	AutoTarget:
@@ -924,8 +947,12 @@ INVA:
 	RevealsShroud@GAPGEN:
 		Range: 1c0
 		Type: GroundPosition
-	Armament:
+	Armament@PRIMARY:
 		Weapon: InvaderZap
+		PauseOnCondition: !ammo
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: InvaderZapAA
 		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 20
@@ -979,7 +1006,6 @@ INVA:
 		TrailLength: 10
 	-Contrail@2:
 	Interactable:
-
 
 #
 # ---- Buildings
