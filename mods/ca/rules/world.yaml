@@ -498,7 +498,7 @@ World:
 	MPStartUnits@mcvonly2:
 		Class: none
 		ClassName: MCV Only
-		Factions: gdi, talon, zocom, eagle, nod, blackh, marked, legion, scrin
+		Factions: gdi, talon, zocom, eagle, nod, blackh, marked, legion
 		BaseActor: amcv
 	MPStartUnits@defaultgdia:
 		Class: light
@@ -532,20 +532,25 @@ World:
 		SupportActors: n1,n1,n1,n3,n3,mtnk,mtnk
 		InnerSupportRadius: 3
 		OuterSupportRadius: 5
+	MPStartUnits@mcvonlyscrin:
+		Class: none
+		ClassName: MCV Only
+		Factions: scrin
+		BaseActor: smcv
 	MPStartUnits@lightscrin:
 		Class: light
 		ClassName: Light Support
 		Factions: scrin
-		BaseActor: amcv
-		SupportActors: n1,n1,n1,n3,n3
+		BaseActor: smcv
+		SupportActors: s1,s1,s1,s3,s3
 		InnerSupportRadius: 3
 		OuterSupportRadius: 5
 	MPStartUnits@heavyscrin:
 		Class: heavy
 		ClassName: Heavy Support
 		Factions: scrin
-		BaseActor: amcv
-		SupportActors: n1,n1,n1,n3,n3,mtnk,mtnk
+		BaseActor: smcv
+		SupportActors: s1,s1,s1,s3,s3,seek,gunw
 		InnerSupportRadius: 3
 		OuterSupportRadius: 5
 	MPStartLocations:

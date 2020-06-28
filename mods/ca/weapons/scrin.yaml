@@ -1,3 +1,55 @@
+WarriorGun:
+	Inherits: M1Carbine
+	Report: warrior-fire1.aud
+
+DisintegratorBeam:
+	Inherits: Laser
+	ReloadDelay: 30
+	Range: 5c0
+	Report: disintegrator-fire1.aud, disintegrator-fire2.aud, disintegrator-fire3.aud
+	Projectile: LaserZap
+		Color: 00FFCCAA
+		Width: 30
+		Duration: 3
+		SecondaryBeamWidth: 50
+		SecondaryBeamColor:00FFCC30
+		Blockable: true
+	Warhead@1Dam: SpreadDamage
+		Damage: 1500
+		Versus:
+			None: 175
+			Wood: 73
+			Heavy: 90
+
+GunWalkerZap:
+	Range: 5c0
+	Report: gunwalker-fire1.aud, gunwalker-fire2.aud
+	ReloadDelay: 30
+	Burst: 5
+	BurstDelays: 15
+	Projectile: Bullet
+		Image: scrinzapsm
+		Speed: 650
+		Palette: scrin
+	Warhead@1Dam: SpreadDamage
+		Damage: 500
+		Versus:
+			None: 175
+			Wood: 73
+			Concrete: 45
+			Light: 101
+			Heavy: 90
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: hit
+		ExplosionPalette: scrin
+		Image: gunw
+		ValidTargets: Ground, Ship, Air, Trees
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piffs
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+
 PlasmaDiscs:
 	Range: 6c0
 	Report: seeker-fire1.aud, seeker-fire2.aud, seeker-fire3.aud
@@ -28,19 +80,49 @@ PlasmaDiscs:
 		Explosions: small_explosion
 		ImpactSounds: seeker-hit1.aud, seeker-hit2.aud
 
-DevastatorDiscs:
-	Inherits: PlasmaDiscs
-	Range: 16c0
-	ReloadDelay: 240
-	Report: devastator-fire1.aud, devastator-fire2.aud, devastator-fire3.aud
-	Burst: 7
-	BurstDelays: 5
+DevourerLaser:
+	Inherits: Laser
+	Range: 8c0
+	Report: devourer-fire1.aud, devourer-fire2.aud, devourer-fire3.aud
+	ReloadDelay: 100
+	Projectile: LaserZap
+		Duration: 20
+		Color: 00FF0080
+		SecondaryBeamColor: 00FF0040
+		Width: 45
+		SecondaryBeamWidth: 65
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 15000
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		Versus:
+			None: 250
+			Light: 101
+			Wood: 60
+			Heavy: 101
+			Concrete: 45
+
+RuinerCannon:
+	Inherits: 155mm
+	Report: ruiner-fire1.aud
 	Projectile: Bullet
-		Image: plasdisclg
-		Inaccuracy: 1c768
-		Speed: 180
+		Image: tibglob
+		Palette: scrin
 	Warhead@3Eff: CreateEffect
-		Explosions: large_explosion
+		ImpactSounds: ruiner-hit1.aud
+		Explosions: idle
+		ExplosionPalette: scrin
+		Image: tibexplode
+
+TripodLaser:
+	Inherits: DevourerLaser
+	Report: tripod-fire1.aud, tripod-fire2.aud, tripod-fire3.aud
+	Burst: 2
+	BurstDelays: 25
+	Projectile: LaserZap
+		Color: FAFAFFFF
+		SecondaryBeamColor: 382EFFAA
+		SecondaryBeamWidth: 75
 
 StormriderZap:
 	Range: 7c0
@@ -69,71 +151,29 @@ StormriderZap:
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
 
-DevourerLaser:
-	Inherits: Laser
-	Range: 8c0
-	Report: devourer-fire1.aud, devourer-fire2.aud, devourer-fire3.aud
-	ReloadDelay: 100
-	Projectile: LaserZap
-		Duration: 20
-		Color: 00FF0080
-		SecondaryBeamColor: 00FF0040
-		Width: 45
-		SecondaryBeamWidth: 65
-	Warhead@1Dam: SpreadDamage
-		Spread: 42
-		Damage: 15000
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
-		Versus:
-			None: 250
-			Light: 101
-			Wood: 60
-			Heavy: 101
-			Concrete: 45
-
-TibLobber:
-	Inherits: 155mm
-	Report: ruiner-fire1.aud, ruiner-fire2.aud
+DevastatorDiscs:
+	Inherits: PlasmaDiscs
+	Range: 16c0
+	ReloadDelay: 240
+	Report: devastator-fire1.aud, devastator-fire2.aud, devastator-fire3.aud
+	Burst: 7
+	BurstDelays: 5
 	Projectile: Bullet
-		Image: tibshot
-		Palette: scrin
+		Image: plasdisclg
+		Inaccuracy: 1c768
+		Speed: 180
+	Warhead@3Eff: CreateEffect
+		Explosions: large_explosion
 
-TripodLaser:
-	Inherits: DevourerLaser
-	Report: tripod-fire1.aud, tripod-fire2.aud, tripod-fire3.aud
-	Burst: 2
-	BurstDelays: 25
-	Projectile: LaserZap
-		Color: FAFAFFFF
-		SecondaryBeamColor: 382EFFAA
-		SecondaryBeamWidth: 75
-
-GunWalkerZap:
-	Range: 5c0
-	Report: gunwalker-fire1.aud, gunwalker-fire2.aud
-	ReloadDelay: 30
-	Burst: 5
-	BurstDelays: 15
-	Projectile: Bullet
-		Image: scrinzapsm
-		Speed: 590
-		Palette: scrin
-	Warhead@1Dam: SpreadDamage
-		Damage: 500
-		Versus:
-			None: 175
-			Wood: 73
-			Concrete: 45
-			Light: 101
-			Heavy: 90
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
-	Warhead@2Eff: CreateEffect
-		Explosions: piffs
-		ValidTargets: Ground, Ship, Air, Trees
-	Warhead@3EffWater: CreateEffect
-		Explosions: water_piffs
-		ValidTargets: Water, Underwater
-		InvalidTargets: Ship, Structure, Bridge
+InvaderLauncher:
+	ReloadDelay: 175
+	Burst: 4
+	BurstDelays: 5
+	Range: 16c0
+	ValidTargets: Ground, Water
+	Projectile: InstantHit
+	Warhead@1Dam: TargetDamage
+		ValidTargets: Ground, Water
 
 InvaderZap:
 	Range: 5c0
@@ -161,36 +201,3 @@ InvaderZap:
 		Explosions: water_piffs
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
-
-InvaderLauncher:
-	ReloadDelay: 175
-	Burst: 4
-	BurstDelays: 5
-	Range: 16c0
-	ValidTargets: Ground, Water
-	Projectile: InstantHit
-	Warhead@1Dam: TargetDamage
-		ValidTargets: Ground, Water
-
-WarriorGun:
-	Inherits: M1Carbine
-	Report: warrior-fire1.aud
-
-DisintegratorBeam:
-	Inherits: Laser
-	ReloadDelay: 30
-	Range: 5c0
-	Report: disintegrator-fire1.aud, disintegrator-fire2.aud, disintegrator-fire3.aud
-	Projectile: LaserZap
-		Color: 00FFCCAA
-		Width: 30
-		Duration: 3
-		SecondaryBeamWidth: 50
-		SecondaryBeamColor:00FFCC30
-		Blockable: true
-	Warhead@1Dam: SpreadDamage
-		Damage: 1500
-		Versus:
-			None: 175
-			Wood: 73
-			Heavy: 90

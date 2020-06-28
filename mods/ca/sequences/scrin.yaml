@@ -76,11 +76,11 @@ s1:
 		Start: 72
 		Length: 8
 		Tick: 80
-	muzzle: scrinmuzz
+	muzzle: scrinmuzz1
 		Length: 4
 		Facings: 8
 		Tick: 80
-	garrison-muzzle: scrinmuzz
+	garrison-muzzle: scrinmuzz1
 		Length: 4
 		Facings: 8
 		Tick: 80
@@ -356,7 +356,7 @@ seek:
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
-	muzzle: scrinmuzz
+	muzzle: scrinmuzz1
 		Length: 4
 		Facings: 8
 		Tick: 80
@@ -375,6 +375,8 @@ tpod:
 		Facings: 8
 		Length: 14
 		Tick: 60
+	muzzle: scrinmuzz2
+		Length: 5
 	icon: wipicon
 
 plasdisclg:
@@ -398,12 +400,17 @@ plasdiscsm:
 		ZOffset: 1023
 		Tick: 50
 
-tibshot:
-	idle: tibshot
+tibglob:
+	idle: tibglob
 		BlendMode: Additive
 		Length: *
 		ZOffset: 1023
 		Tick: 40
+
+tibexplode:
+	idle: tibexplode
+		Length: *
+		ZOffset: 2047
 
 scrinzaplg:
 	idle: scrinzaplg
@@ -428,9 +435,8 @@ devo:
 	turret: devo
 		Facings: 32
 		UseClassicFacingFudge: True
-	muzzle: smokeygun
-		Length: 12
-		Tick: 30
+	muzzle: scrinmuzz3
+		Length: 5
 	icon: wipicon
 
 ruin:
@@ -438,6 +444,8 @@ ruin:
 	idle: ruin
 		Facings: 32
 		UseClassicFacingFudge: True
+	muzzle: scrinmuzz3
+		Length: 5
 	icon: wipicon
 
 intl:
@@ -445,6 +453,10 @@ intl:
 	idle: intl
 		Facings: 32
 		UseClassicFacingFudge: True
+	muzzle: scrinmuzz1
+		Length: 4
+		Facings: 8
+		Tick: 80
 	icon: wipicon
 
 gunw:
@@ -458,10 +470,12 @@ gunw:
 		Length: 2
 		Tick: 80
 		UseClassicFacingFudge: True
-	muzzle: scrinmuzz
+	muzzle: scrinmuzz1
 		Length: 4
 		Facings: 8
 		Tick: 80
+	hit: scrinmuzz2
+		Length: 5
 	icon: wipicon
 
 corr:
