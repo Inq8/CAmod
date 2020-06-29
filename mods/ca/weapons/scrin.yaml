@@ -25,6 +25,7 @@ DisintegratorBeam:
 
 DisintegratorBeamAA:
 	Inherits: DisintegratorBeam
+	Range: 7c0
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air
@@ -109,12 +110,12 @@ GunWalkerZap:
 		Palette: scrin
 		Inaccuracy: 0c64
 	Warhead@1Dam: SpreadDamage
-		Damage: 3600
+		Damage: 3300
 		Versus:
 			None: 100
 			Wood: 30
 			Concrete: 20
-			Light: 35
+			Light: 30
 			Heavy: 20
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Eff: CreateEffect
@@ -129,8 +130,10 @@ GunWalkerZap:
 
 GunWalkerZapAA:
 	Inherits: GunWalkerZap
+	Range: 7c512
 	Projectile: Bullet
 		Image: scrinzapup
+		Speed: 1c448
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
 		Damage: 1600
@@ -174,9 +177,25 @@ PlasmaDiscs:
 		Explosions: small_explosion
 		ImpactSounds: seeker-hit1.aud, seeker-hit2.aud
 
-InterloperGun:
-	Inherits: M60mg
-	Report: warrior-fire1.aud
+InterloperLaser:
+	Inherits: DevourerLaser
+	Range: 4c0
+	ReloadDelay: 40
+	Burst: 2
+	BurstDelays: 5
+	Report: interloper-fire1.aud, interloper-fire2.aud
+	Projectile: LaserZap
+		Width: 30
+		Duration: 3
+		SecondaryBeamWidth: 50
+	Warhead@1Dam: SpreadDamage
+		Damage: 1500
+		Versus:
+			None: 100
+			Light: 100
+			Wood: 50
+			Heavy: 100
+			Concrete: 50
 
 CorrupterSpew:
 	Inherits: BigFlamer
@@ -213,13 +232,15 @@ DevourerLaser:
 RuinerCannon:
 	Inherits: 155mm
 	Report: ruiner-fire1.aud
-	ReloadDelay: 80
+	ReloadDelay: 160
+	Burst: 4
+	BurstDelays: 20
 	Range: 10c0
 	Projectile: Bullet
 		Image: tibglob
 		Palette: scrin
 	Warhead@1Dam: SpreadDamage
-		Damage: 10000
+		Damage: 6000
 		Versus:
 			None: 120
 			Wood: 95
