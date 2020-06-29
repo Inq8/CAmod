@@ -15,21 +15,43 @@ DisintegratorBeam:
 		SecondaryBeamColor:00FFCC30
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
-		Damage: 1500
+		Damage: 3000
 		Versus:
-			None: 175
-			Wood: 73
-			Heavy: 90
+			None: 15
+			Wood: 74
+			Heavy: 100
+			Light: 34
+			Concrete: 75
 
 DisintegratorBeamAA:
 	Inherits: DisintegratorBeam
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air
+		Range: 0, 0c64, 0c256, 3c0
+		Falloff: 100, 100, 20, 10
+		Damage: 1600
+		Versus:
+			None: 100
+			Wood: 100
+			Concrete: 100
+			Light: 100
+			Heavy: 100
 
 IntruderDiscs:
 	Inherits: PlasmaDiscs
+	Range: 5c0
+	ReloadDelay: 70
 	Burst: 3
+	Warhead@1Dam: SpreadDamage
+		Damage: 2500
+		Versus:
+			None: 40
+			Wood: 85
+			Light: 40
+			Heavy: 50
+			Concrete: 85
+			Brick: 50
 
 EnslaveInfantry:
 	Range: 7c0
@@ -76,23 +98,24 @@ EnslaveVehicle:
 		ValidTargets: Ground
 
 GunWalkerZap:
-	Range: 5c0
+	Range: 4c512
 	Report: gunwalker-fire1.aud, gunwalker-fire2.aud
-	ReloadDelay: 30
+	ReloadDelay: 40
 	Burst: 5
 	BurstDelays: 15
 	Projectile: Bullet
 		Image: scrinzap
 		Speed: 650
 		Palette: scrin
+		Inaccuracy: 0c64
 	Warhead@1Dam: SpreadDamage
-		Damage: 500
+		Damage: 3600
 		Versus:
-			None: 175
-			Wood: 73
-			Concrete: 45
-			Light: 101
-			Heavy: 90
+			None: 100
+			Wood: 30
+			Concrete: 20
+			Light: 35
+			Heavy: 20
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
@@ -110,12 +133,21 @@ GunWalkerZapAA:
 		Image: scrinzapup
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
+		Damage: 1600
 		ValidTargets: Air
+		Range: 0, 0c64, 0c256, 3c0
+		Falloff: 100, 100, 20, 10
+		Versus:
+			None: 100
+			Wood: 100
+			Concrete: 100
+			Light: 100
+			Heavy: 100
 
 PlasmaDiscs:
 	Range: 6c0
 	Report: seeker-fire1.aud, seeker-fire2.aud, seeker-fire3.aud
-	ReloadDelay: 90
+	ReloadDelay: 60
 	Burst: 5
 	BurstDelays: 4
 	Projectile: Bullet
@@ -127,14 +159,14 @@ PlasmaDiscs:
 		LaunchAngle: 50
 		Inaccuracy: 0c768
 	Warhead@1Dam: SpreadDamage
-		Damage: 12000
+		Damage: 1800
 		Versus:
-			None: 70
-			Wood: 55
-			Light: 40
-			Heavy: 25
-			Concrete: 35
-			Brick: 20
+			None: 40
+			Wood: 65
+			Light: 85
+			Heavy: 100
+			Concrete: 80
+			Brick: 50
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -142,34 +174,59 @@ PlasmaDiscs:
 		Explosions: small_explosion
 		ImpactSounds: seeker-hit1.aud, seeker-hit2.aud
 
+InterloperGun:
+	Inherits: M60mg
+	Report: warrior-fire1.aud
+
+CorrupterSpew:
+	Inherits: BigFlamer
+	ReloadDelay: 100
+	Burst: 10
+	Projectile: Bullet
+		Image: chemall
+		Palette: ra2effect-ignore-lighting-alpha50
+	-Warhead@Flames:
+
 DevourerLaser:
 	Inherits: Laser
-	Range: 8c0
+	Range: 7c512
 	Report: devourer-fire1.aud, devourer-fire2.aud, devourer-fire3.aud
-	ReloadDelay: 100
+	ReloadDelay: 130
 	Projectile: LaserZap
 		Duration: 20
 		Color: 00FF0080
-		SecondaryBeamColor: 00FF0040
 		Width: 45
+		SecondaryBeamColor: 00FF0040
 		SecondaryBeamWidth: 65
+		Blockable: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 15000
+		Damage: 16000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
-			None: 250
-			Light: 101
-			Wood: 60
-			Heavy: 101
-			Concrete: 45
+			None: 40
+			Light: 70
+			Wood: 20
+			Heavy: 100
+			Concrete: 65
 
 RuinerCannon:
 	Inherits: 155mm
 	Report: ruiner-fire1.aud
+	ReloadDelay: 80
+	Range: 10c0
 	Projectile: Bullet
 		Image: tibglob
 		Palette: scrin
+	Warhead@1Dam: SpreadDamage
+		Damage: 10000
+		Versus:
+			None: 120
+			Wood: 95
+			Concrete: 60
+			Brick: 100
+			Light: 65
+			Heavy: 45
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: ruiner-hit1.aud
 		Explosions: idle
@@ -177,14 +234,28 @@ RuinerCannon:
 		Image: tibexplode
 
 TripodLaser:
-	Inherits: DevourerLaser
+	Inherits: Laser
+	Range: 6c0
 	Report: tripod-fire1.aud, tripod-fire2.aud, tripod-fire3.aud
+	ReloadDelay: 100
 	Burst: 2
 	BurstDelays: 25
 	Projectile: LaserZap
+		Duration: 20
 		Color: FAFAFFFF
+		Width: 45
 		SecondaryBeamColor: 382EFFAA
 		SecondaryBeamWidth: 75
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 9800
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		Versus:
+			None: 70
+			Light: 60
+			Wood: 62
+			Heavy: 105
+			Concrete: 30
 
 StormriderZap:
 	Range: 7c0
