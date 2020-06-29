@@ -238,7 +238,7 @@ HARV.Scrin:
 		Prerequisites: ~proc.scrin, ~vehicles.scrin, ~techlevel.infonly
 		IconPalette: chrome
 	SpawnActorOnDeath:
-		Actor: HAR2.Husk
+		Actor: HARV.Scrin.Husk
 		RequiresCondition: !being-warped
 	WithDockingAnimation:
 		DockSequence: idle
@@ -523,6 +523,9 @@ DEVO:
 		Sequence: idle
 	WithFacingSpriteBody:
 		Sequence: idle
+	SpawnActorOnDeath:
+		Actor: DEVO.Husk
+		RequiresCondition: !being-warped
 
 RUIN:
 	Inherits: ^Vehicle
@@ -643,6 +646,9 @@ TPOD:
 	WithMoveAnimation:
 	DeathSounds:
 		Voice: Die
+	SpawnActorOnDeath:
+		Actor: TPOD.Husk
+		RequiresCondition: !being-warped
 
 SMCV:
 	Inherits: ^VehicleTD
@@ -682,7 +688,7 @@ SMCV:
 		RequiredForShortGame: true
 	BaseBuilding:
 	SpawnActorOnDeath:
-		Actor: AMCV.Husk
+		Actor: SMCV.Husk
 		RequiresCondition: !being-warped
 	TransferTimedExternalConditionOnTransform:
 		Condition: invulnerability
@@ -737,7 +743,7 @@ STMR:
 	Aircraft:
 		CruiseAltitude: 2560
 		TurnSpeed: 5
-		Speed: 180
+		Speed: 170
 		RepulsionSpeed: 40
 		MaximumPitch: 56
 		CanHover: False
@@ -758,26 +764,18 @@ STMR:
 		UsePlayerColor: true
 		ZOffset: -512
 	SpawnActorOnDeath:
-		Actor: SCRN.Husk
-		RequiresCondition: ammo && !empdisable
-	SpawnActorOnDeath@Empty:
-		Actor: SCRN.Husk.empty
-		RequiresCondition: !ammo && !empdisable
+		Actor: STMR.Husk
+		RequiresCondition: !empdisable
 	SpawnActorOnDeath@EMP:
-		Actor: SCRN.Husk.EMP
-		RequiresCondition: ammo && empdisable
-	SpawnActorOnDeath@EmptyEMP:
-		Actor: SCRN.Husk.empty.EMP
-		RequiresCondition: !ammo && empdisable
+		Actor: STMR.Husk.EMP
+		RequiresCondition: empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -427,0,0
 	Selectable:
 		DecorationBounds: 36,28
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
-	ProductionCostMultiplier@markedBonus:
-		Multiplier: 90
-		Prerequisites: structures.marked
+	-EjectOnDeath:
 
 DEVA:
 	Inherits: ^Helicopter
@@ -789,7 +787,7 @@ DEVA:
 		BuildPaletteOrder: 55
 		BuildDurationModifier: 115
 		Prerequisites: scrt, grav, ~aircraft.scrin, ~techlevel.high
-		Description: Long-range siege warship.\n	Vulnerable when dropping bombs.\n	Strong vs Buildings, Infantry, Slow Vehicles\n	Weak vs Aircraft
+		Description: Long-range siege warship.\n	Strong vs Buildings, Infantry, Slow Vehicles\n	Weak vs Aircraft
 	Voiced:
 		VoiceSet: DevastatorVoice
 	Valued:
@@ -835,8 +833,13 @@ DEVA:
 		Weapon: KirovExplode
 		RequiresCondition: !airborne
 	SpawnActorOnDeath:
-		Actor: BADR.Husk
+		Actor: DEVA.Husk
+		RequiresCondition: !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: DEVA.Husk.EMP
+		RequiresCondition: empdisable
 	-Hovers@CRUISING:
+	-EjectOnDeath:
 
 PAC:
 	Inherits: ^Helicopter
@@ -890,7 +893,11 @@ PAC:
 		Weapon: KirovExplode
 		RequiresCondition: !airborne
 	SpawnActorOnDeath:
-		Actor: BADR.Husk
+		Actor: PAC.Husk
+		RequiresCondition: !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: PAC.Husk.EMP
+		RequiresCondition: empdisable
 	-Hovers@CRUISING:
 	WithFacingSpriteBody:
 		RequiresCondition: inva-loaded == 4
@@ -927,6 +934,7 @@ PAC:
 		Color: 0000FF80
 	DeathSounds:
 		Voice: Die
+	-EjectOnDeath:
 
 INVA:
 	Inherits: ^Plane
@@ -978,16 +986,16 @@ INVA:
 		ReloadDelay: 0
 	RejectsOrders:
 	SpawnActorOnDeath:
-		Actor: HORN.Husk
+		Actor: INVA.Husk
 		RequiresCondition: ammo && !empdisable
 	SpawnActorOnDeath@Empty:
-		Actor: HORN.Husk.empty
+		Actor: INVA.Husk.empty
 		RequiresCondition: !ammo && !empdisable
 	SpawnActorOnDeath@EMP:
-		Actor: HORN.Husk.EMP
+		Actor: INVA.Husk.EMP
 		RequiresCondition: ammo && empdisable
 	SpawnActorOnDeath@EmptyEMP:
-		Actor: HORN.Husk.empty.EMP
+		Actor: INVA.Husk.empty.EMP
 		RequiresCondition: !ammo && empdisable
 	-EjectOnDeath:
 	-Selectable:
@@ -1003,6 +1011,221 @@ INVA:
 		TrailLength: 10
 	-Contrail@2:
 	Interactable:
+
+#
+# ---- Husks
+#
+
+SMCV.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Husk (Mobile Construction Vehicle)
+	TransformOnCapture:
+		IntoActor: smcv
+	InfiltrateForTransform:
+		IntoActor: smcv
+	RenderSprites:
+		PlayerPalette: overlayplayertd
+		Image: amcv.destroyed
+
+HARV.Scrin.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Harvester)
+	TransformOnCapture:
+		IntoActor: harv.scrin
+	InfiltrateForTransform:
+		IntoActor: harv.scrin
+	RenderSprites:
+		Image: harv.scrin.destroyed
+	WithShadow:
+		Offset: 43, 255, 0
+		ZOffset: -256
+
+GUNW.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Gun Walker)
+	TransformOnCapture:
+		IntoActor: gunw
+	InfiltrateForTransform:
+		IntoActor: gunw
+	RenderSprites:
+		Image: gunw.destroyed
+		PlayerPalette: overlayplayerscrin
+
+SEEK.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Seeker)
+	TransformOnCapture:
+		IntoActor: seek
+	InfiltrateForTransform:
+		IntoActor: seek
+	RenderSprites:
+		Image: seek.destroyed
+		PlayerPalette: overlayplayerscrin
+
+INTL.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Interloper)
+	TransformOnCapture:
+		IntoActor: intl
+	InfiltrateForTransform:
+		IntoActor: intl
+	RenderSprites:
+		Image: intl.destroyed
+		PlayerPalette: overlayplayerscrin
+
+CORR.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Corrupter)
+	TransformOnCapture:
+		IntoActor: corr
+	InfiltrateForTransform:
+		IntoActor: corr
+	RenderSprites:
+		Image: corr.destroyed
+		PlayerPalette: overlayplayerscrin
+
+DEVO.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Devourer)
+	TransformOnCapture:
+		IntoActor: devo
+	InfiltrateForTransform:
+		IntoActor: devo
+	RenderSprites:
+		Image: devo.destroyed
+		PlayerPalette: overlayplayerscrin
+
+RUIN.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Ruiner)
+	TransformOnCapture:
+		IntoActor: ruin
+	InfiltrateForTransform:
+		IntoActor: ruin
+	RenderSprites:
+		Image: ruin.destroyed
+		PlayerPalette: overlayplayerscrin
+
+TPOD.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Annihilator Tripod)
+	TransformOnCapture:
+		IntoActor: tpod
+	InfiltrateForTransform:
+		IntoActor: tpod
+	RenderSprites:
+		Image: tpod.destroyed
+		PlayerPalette: overlayplayerscrin
+
+STMR.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Stormrider
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 170
+	SmokeTrailWhenDamaged:
+		Offset: -427,0,0
+		MinDamage: Undamaged
+	Contrail@1:
+		Offset: -300,-143,0
+		UsePlayerColor: true
+		ZOffset: -512
+	Contrail@2:
+		Offset: -300,143,0
+		UsePlayerColor: true
+		ZOffset: -512
+	RevealsShroud:
+		Range: 12c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: stmr
+		PlayerPalette: overlayplayerscrin
+
+STMR.Husk.EMP:
+	Inherits: STMR.Husk
+	Inherits: ^EmpVisualEffect
+
+DEVA.Husk:
+	Inherits: ^HelicopterHusk
+	Tooltip:
+		Name: Devastator Warship
+	Aircraft:
+		TurnSpeed: 2
+		Speed: 30
+	FallsToEarth:
+		MaximumSpinSpeed: 0
+	RevealsShroud:
+		Range: 10c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: deva
+	FallsToEarth:
+		Explosion: KirovExplode
+
+DEVA.Husk.EMP:
+	Inherits: DEVA.Husk
+	Inherits: ^EmpVisualEffect
+
+PAC.Husk:
+	Inherits: ^HelicopterHusk
+	Tooltip:
+		Name: Planetary Assault Carrier
+	Aircraft:
+		TurnSpeed: 2
+		Speed: 30
+	FallsToEarth:
+		MaximumSpinSpeed: 0
+	RevealsShroud:
+		Range: 10c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: pac
+	FallsToEarth:
+		Explosion: KirovExplode
+
+PAC.Husk.EMP:
+	Inherits: PAC.Husk
+	Inherits: ^EmpVisualEffect
+
+INVA.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Invader
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 149
+	RevealsShroud:
+		Range: 12c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: inva
+		PlayerPalette: overlayplayerscrin
+	FallsToEarth:
+		Explosion: UnitExplodeDrone
+
+INVA.Husk.EMP:
+	Inherits: INVA.Husk
+	Inherits: ^EmpVisualEffect
+
+INVA.Husk.Empty:
+	Inherits: ^PlaneHuskEmpty
+	Inherits: INVA.Husk
+	FallsToEarth:
+		Explosion: UnitExplodeDroneEmpty
+
+INVA.Husk.Empty.EMP:
+	Inherits: INVA.Husk.Empty
+	Inherits: ^EmpVisualEffect
 
 #
 # ---- Buildings
