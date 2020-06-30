@@ -115,9 +115,9 @@ S4:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 115
 		Prerequisites: nerv, ~infantry.scrin, ~techlevel.infonly
-		Description: Heavy assault infantry.\n  Strong vs Buildings, Defenses\n  Weak vs Aircraft
+		Description: Heavy assault infantry.\n  Strong vs Buildings, Defenses, Vehicles\n  Weak vs Aircraft
 	Valued:
-		Cost: 400
+		Cost: 450
 	Tooltip:
 		Name: Intruder
 	UpdatesPlayerStatistics:
@@ -355,9 +355,6 @@ SEEK:
 		OpportunityFire: False
 		PauseOnCondition: empdisable || being-warped
 	WithSpriteTurret:
-	Explodes:
-		Weapon: ArtilleryExplode
-		LoadedChance: 75
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
@@ -365,6 +362,9 @@ SEEK:
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	SpawnActorOnDeath:
+		Actor: SEEK.Husk
+		RequiresCondition: !being-warped
 
 INTL:
 	Inherits: ^Tank
@@ -523,9 +523,6 @@ DEVO:
 		Sequence: idle
 	WithFacingSpriteBody:
 		Sequence: idle
-	SpawnActorOnDeath:
-		Actor: DEVO.Husk
-		RequiresCondition: !being-warped
 
 RUIN:
 	Inherits: ^Vehicle
@@ -1058,6 +1055,8 @@ SEEK.Husk:
 	Inherits: ^Husk
 	Tooltip:
 		Name: Husk (Seeker)
+	ThrowsParticle@turret:
+		Anim: turret
 	TransformOnCapture:
 		IntoActor: seek
 	InfiltrateForTransform:
@@ -1065,6 +1064,9 @@ SEEK.Husk:
 	RenderSprites:
 		Image: seek.destroyed
 		PlayerPalette: overlayplayerscrin
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
 
 INTL.Husk:
 	Inherits: ^Husk
@@ -1118,6 +1120,8 @@ TPOD.Husk:
 	Inherits: ^Husk
 	Tooltip:
 		Name: Husk (Annihilator Tripod)
+	ThrowsParticle@turret:
+		Anim: turret
 	TransformOnCapture:
 		IntoActor: tpod
 	InfiltrateForTransform:
@@ -2287,11 +2291,9 @@ RIFT:
 	WithBuildingBib:
 		HasMinibib: true
 
-PLAS:
+PTUR:
 	Inherits: ^Defense
 	Inherits@AUTOTARGET: ^AutoTargetGround
-	RenderSprites:
-		Image: ftur
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 60
@@ -2308,38 +2310,38 @@ PLAS:
 		Type: Concrete
 	RevealsShroud:
 		MinRange: 5c0
-		Range: 6c0
+		Range: 7c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 5c0
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
-		TurnSpeed: 255
-		Offset: 0,0,112
-	Armament:
-		Weapon: FireballLauncher
-		LocalOffset: 512,0,0
-	AttackTurreted:
+		TurnSpeed: 12
+		InitialFacing: 56
 		PauseOnCondition: empdisable || being-warped
+	-WithSpriteBody:
+	WithEmbeddedTurretSpriteBody:
+		PauseOnCondition: empdisable || being-warped
+	Armament:
+		Weapon: PlasmaTurretGun
+		LocalOffset: 512,0,112
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	AttackTurreted:
 		RequiresCondition: !build-incomplete
-	-QuantizeFacingsFromSequence:
-	BodyOrientation:
-		QuantizedFacings: 8
+		PauseOnCondition: empdisable || being-warped
+	WithMuzzleOverlay:
 	Power:
-		Amount: -20
+		Amount: -40
 		RequiresCondition: !being-warped
-	ProvidesPrerequisite@buildingname:
-	Explodes:
-		Weapon: BuildingExplode
-		EmptyWeapon: BuildingExplode
+	BodyOrientation:
+		UseClassicFacingFudge: True
 
 SHAR:
 	Inherits: ^Defense
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetAir
-	RenderSprites:
-		Image: agun
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 90
@@ -2369,14 +2371,13 @@ SHAR:
 	-WithSpriteBody:
 	WithEmbeddedTurretSpriteBody:
 		PauseOnCondition: disabled || empdisable || being-warped
-	Armament:
-		Weapon: ZSU-23
-		LocalOffset: 520,100,450, 520,-150,450
-		MuzzleSequence: muzzle
+	Armament@PRIMARY:
+		Weapon: ShardLauncher
+		LocalOffset: 520,0,450, 520,0,450
+		LocalYaw: 64, -64
 	AttackTurreted:
 		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled || empdisable || being-warped
-	WithMuzzleOverlay:
 	RenderRangeCircle:
 		RangeCircleType: aa
 	Power:
@@ -2400,13 +2401,13 @@ SCOL:
 		Prerequisites: nerv, ~structures.scrin, ~techlevel.high
 		Description: Advanced base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft
 	Valued:
-		Cost: 1200
+		Cost: 1500
 	Tooltip:
 		Name: Storm Column
 	Selectable:
 		DecorationBounds: 24,40,0,-8
 	Health:
-		HP: 40000
+		HP: 45000
 	Armor:
 		Type: Concrete
 	RevealsShroud:
@@ -2415,39 +2416,17 @@ SCOL:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 6c0
-	Targetable@TeslaBoost:
-		TargetTypes: TeslaBoost
-		RequiresCondition: !powerdown
 	WithBuildingBib:
 		HasMinibib: true
-	WithTeslaChargeAnimation:
 	Armament:
-		Weapon: TeslaZap
+		Weapon: StormColumnZap
 		LocalOffset: 0,0,896
-		RequiresCondition: !lowpower && !charged
-	AttackTesla:
+		RequiresCondition: !lowpower
+	AttackOmni:
 		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled || empdisable || being-warped
-		ChargeAudio: tslachg2.aud
-		MaxCharges: 3
-		ReloadDelay: 120
 	Power:
 		Amount: -100
 		RequiresCondition: !being-warped
-	ProvidesPrerequisite@buildingname:
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
-	GrantConditionOnPowerState@LOWPOWER:
-		RequiresCondition: !charged
-	ExternalCondition@CHARGED:
-		Condition: charged
-	WithDecoration@CHARGED:
-		Image: poweroff
-		Sequence: offline
-		Palette: chrome
-		ReferencePoint: Bottom, Left
-		ValidStances: Ally
-		RequiresCondition: charged
-		ZOffset: 256
-		BlinkInterval: 64
-		RequiresSelection: true

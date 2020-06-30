@@ -530,6 +530,65 @@ inva:
 	icon: wipicon
 
 #
+# ---- buildings
+#
+
+ptur:
+	Inherits: ^StructureOverlays
+	idle: gun
+		Facings: 32
+		UseClassicFacingFudge: True
+	recoil: gun
+		Start: 32
+		Facings: 32
+		UseClassicFacingFudge: True
+	make: gunmake
+		Length: *
+	damaged-idle: gun
+		Start: 64
+		Facings: 32
+		UseClassicFacingFudge: True
+	damaged-recoil: gun
+		Start: 96
+		Facings: 32
+		UseClassicFacingFudge: True
+	muzzle: scrinmuzz1
+		Length: 4
+		Facings: 8
+		Tick: 80
+	bib: mbGUN
+		Length: *
+		Offset: -1,-1
+		UseTilesetExtension: true
+		TilesetOverrides:
+			BARREN: TEMPERAT
+	icon: gunicon
+
+shar:
+	Inherits: ^StructureOverlays
+	idle: cram
+		Facings: 32
+		UseClassicFacingFudge: True
+		Offset: 0,-13
+	make: crammake
+		Length: *
+		Offset: 0,-13
+	damaged-idle: cram
+		Start: 32
+		Facings: 32
+		UseClassicFacingFudge: True
+		Offset: 0,-13
+	muzzle: scrinmuzz3
+		Length: *
+	bib: mbAGUN
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			JUNGLE: TEMPERAT
+			BARREN: TEMPERAT
+	icon: cramicnh
+
+#
 # ---- animations
 #
 
@@ -590,6 +649,28 @@ scrinzaphitsm:
 	idle: scrinzaphitsm
 		ZOffset: 1023
 		Length: 3
+
+shardhit:
+	idle: shardhit
+		Length: 3
+		ZOffset: 1023
+	idle2: shardhit
+		Start: 3
+		Length: 3
+		ZOffset: 1023
+	idle3: shardhit
+		Start: 6
+		Length: 3
+		ZOffset: 1023
+	idle4: shardhit
+		Start: 9
+		Length: 3
+		ZOffset: 1023
+
+shard:
+	idle: shard
+		Facings: 32
+		ZOffset: 1023
 
 mindcontrol:
 	idle: mindcontrol

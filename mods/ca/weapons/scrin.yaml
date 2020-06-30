@@ -44,15 +44,17 @@ IntruderDiscs:
 	Range: 5c0
 	ReloadDelay: 70
 	Burst: 3
+	Projectile: Bullet
+		Inaccuracy: 0c256
 	Warhead@1Dam: SpreadDamage
 		Damage: 2500
 		Versus:
-			None: 40
+			None: 50
 			Wood: 85
-			Light: 40
-			Heavy: 50
+			Light: 55
+			Heavy: 55
 			Concrete: 85
-			Brick: 50
+			Brick: 85
 
 EnslaveInfantry:
 	Range: 7c0
@@ -162,6 +164,7 @@ PlasmaDiscs:
 		LaunchAngle: 50
 		Inaccuracy: 0c768
 	Warhead@1Dam: SpreadDamage
+		Spread: 368
 		Damage: 1800
 		Versus:
 			None: 40
@@ -199,6 +202,7 @@ InterloperLaser:
 
 CorrupterSpew:
 	Inherits: BigFlamer
+	StartBurstReport: corrupter-fire1.aud
 	ReloadDelay: 100
 	Burst: 10
 	Projectile: Bullet
@@ -376,3 +380,89 @@ InvaderZapAA:
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air
+
+PlasmaTurretGun:
+	Range: 6c0
+	StartBurstReport: plasma-fire1.aud
+	ReloadDelay: 30
+	Burst: 2
+	BurstDelays: 4
+	Projectile: InstantHit
+		Inaccuracy: 0c64
+	Warhead@1Dam: SpreadDamage
+		Damage: 5000
+		Versus:
+			None: 100
+			Wood: 25
+			Concrete: 10
+			Light: 25
+			Heavy: 10
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: scrin
+		Image: scrinzaphit
+		ValidTargets: Ground, Ship, Air, Trees
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piffs
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+
+StormColumnZap:
+	ReloadDelay: 30
+	Burst: 4
+	BurstDelays: 3
+	Range: 8c512
+	StartBurstReport: stormcolumn-fire1.aud, stormcolumn-fire2.aud
+	Projectile: ElectricBolt
+		Colors: 8A2BFFAA,B961FDAA,B5A3E8BB,6D4AD2AA,B289DCAA
+		Duration: 5
+		Angle: 90
+	Warhead@1Dam: SpreadDamage
+		Damage: 2350
+		Versus:
+			None: 100
+			Wood: 50
+			Concrete: 100
+			Light: 100
+			Heavy: 100
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@3Eff: CreateEffect
+		Explosions: 1, 3
+		Image: fire
+
+ShardLauncher:
+	StartBurstReport: shard-fire1.aud
+	ReloadDelay: 25
+	Burst: 5
+	BurstDelays: 4
+	Range: 7c512
+	ValidTargets: Air
+	Projectile: Missile
+		Speed: 366
+		Palette: scrin
+		ContrailWidth: 0c48
+		ContrailLength: 12
+		ContrailColor: 00FF00AA
+		Jammable: false
+		Inaccuracy: 0
+		Image: shard
+		HorizontalRateOfTurn: 35
+		RangeLimit: 9c0
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Air
+		Range: 0, 0c64, 0c256, 3c0
+		Falloff: 100, 100, 20, 10
+		Damage: 2500
+		Versus:
+			None: 175
+			Wood: 73
+			Concrete: 45
+			Light: 101
+			Heavy: 90
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@3Eff: CreateEffect
+		Explosions: idle, idle2, idle3, idle4
+		ExplosionPalette: scrin
+		Image: shardhit
+		ValidTargets: Air, Ground, Water, Trees
