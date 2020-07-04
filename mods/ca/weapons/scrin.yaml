@@ -15,7 +15,7 @@ DisintegratorBeam:
 		SecondaryBeamColor:00FFCC30
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
-		Damage: 3000
+		Damage: 2800
 		Versus:
 			None: 15
 			Wood: 74
@@ -25,7 +25,7 @@ DisintegratorBeam:
 
 DisintegratorBeamAA:
 	Inherits: DisintegratorBeam
-	Range: 7c0
+	Range: 6c0
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air
@@ -160,11 +160,11 @@ PlasmaDiscs:
 		TrailImage: smokey
 		TrailPalette: scrinplasma
 		TrailDelay: 1
-		Speed: 250
+		Speed: 350
 		LaunchAngle: 50
 		Inaccuracy: 0c768
 	Warhead@1Dam: SpreadDamage
-		Spread: 368
+		Spread: 341
 		Damage: 1800
 		Versus:
 			None: 40
@@ -293,16 +293,16 @@ StormriderZap:
 	BurstDelays: 15
 	Projectile: Bullet
 		Image: scrinzapdown
-		Speed: 590
+		Speed: 700
 		Palette: scrin
 	Warhead@1Dam: SpreadDamage
-		Damage: 500
+		Damage: 3000
 		Versus:
-			None: 175
-			Wood: 73
-			Concrete: 45
-			Light: 101
-			Heavy: 90
+			None: 100
+			Wood: 50
+			Concrete: 30
+			Light: 100
+			Heavy: 80
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
@@ -318,13 +318,14 @@ StormRiderZapAA:
 	Inherits: StormriderZap
 	Projectile: Bullet
 		Image: scrinzap
+		Speed: 700
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air
 
 DevastatorDiscs:
 	Inherits: PlasmaDiscs
-	Range: 16c0
+	Range: 14c0
 	ReloadDelay: 240
 	Report: devastator-fire1.aud, devastator-fire2.aud, devastator-fire3.aud
 	Burst: 7
@@ -333,6 +334,16 @@ DevastatorDiscs:
 		Image: plasdisclg
 		Inaccuracy: 1c768
 		Speed: 180
+	Warhead@1Dam: SpreadDamage
+		Damage: 2600
+		Versus:
+			None: 100
+			Wood: 100
+			Light: 80
+			Heavy: 70
+			Concrete: 90
+			Brick: 90
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 
@@ -354,17 +365,17 @@ InvaderZap:
 	BurstDelays: 5
 	Projectile: Bullet
 		Image: scrinzapdown
-		Speed: 650
+		Speed: 700
 		Palette: scrin
 		Inaccuracy: 0c256
 	Warhead@1Dam: SpreadDamage
-		Damage: 500
+		Damage: 1000
 		Versus:
-			None: 175
-			Wood: 73
-			Concrete: 45
-			Light: 101
-			Heavy: 90
+			None: 100
+			Wood: 50
+			Concrete: 30
+			Light: 100
+			Heavy: 80
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
@@ -393,7 +404,7 @@ PlasmaTurretGun:
 	Projectile: InstantHit
 		Inaccuracy: 0c64
 	Warhead@1Dam: SpreadDamage
-		Spread: 384
+		Spread: 341
 		Damage: 2200
 		Versus:
 			None: 100

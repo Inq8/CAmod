@@ -270,7 +270,7 @@ GUNW:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 100
+		Speed: 113
 		TurnSpeed: 5
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 	RevealsShroud:
@@ -317,7 +317,7 @@ SEEK:
 		BuildPaletteOrder: 30
 		Prerequisites: warp, ~vehicles.scrin, ~techlevel.low
 		Queue: Vehicle
-		Description: Light hover tank.\n  Can detect cloaked units.\n	 Strong vs Vehicles\n  Weak vs Aircraft
+		Description: Light hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles\n  Weak vs Aircraft
 	Mobile:
 		Speed: 135
 	LeavesTrails:
@@ -389,7 +389,7 @@ INTL:
 		BuildPaletteOrder: 40
 		Prerequisites: warp, ~vehicles.scrin, ~techlevel.low
 		Queue: Vehicle
-		Description: Heavily armoured transport craft.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+		Description: Heavily armoured transport craft.\n  Strong vs Light Vehicles, Infantry\n  Weak vs Tanks, Aircraft
 	Mobile:
 		Speed: 135
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
@@ -793,7 +793,7 @@ DEVA:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 55
 		BuildDurationModifier: 115
-		Prerequisites: scrt, grav, ~aircraft.scrin, ~techlevel.high
+		Prerequisites: sign, scrt, grav, ~aircraft.scrin, ~techlevel.high
 		Description: Long-range siege warship.\n	Strong vs Buildings, Infantry, Slow Vehicles\n	Weak vs Aircraft
 	Voiced:
 		VoiceSet: DevastatorVoice
@@ -857,7 +857,7 @@ PAC:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 55
 		BuildDurationModifier: 115
-		Prerequisites: scrt, grav, ~aircraft.scrin, ~techlevel.high
+		Prerequisites: sign, scrt, grav, ~aircraft.scrin, ~techlevel.high
 		Description: Warship that launches a squadron\nof assault craft.\n	Strong vs Vehicles, Infantry, Aircraft
 	Voiced:
 		VoiceSet: PlanetaryAssaultCarrierVoice
