@@ -225,6 +225,8 @@ MAST:
 
 HARV.Scrin:
 	Inherits: HAR2
+	Selectable:
+		DecorationBounds: 42,42
 	RenderSprites:
 		Image: harv.scrin
 		PlayerPalette: overlayplayer
@@ -259,6 +261,8 @@ GUNW:
 		Cost: 650
 	Tooltip:
 		Name: Gun Walker
+	Selectable:
+		DecorationBounds: 28,28
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -305,6 +309,8 @@ SEEK:
 		Cost: 800
 	Tooltip:
 		Name: Seeker
+	Selectable:
+		DecorationBounds: 28,28
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
@@ -438,6 +444,8 @@ CORR:
 		Cost: 1000
 	Tooltip:
 		Name: Corrupter
+	Selectable:
+		DecorationBounds: 36,36,0,-3
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
@@ -485,6 +493,8 @@ DEVO:
 		Cost: 1250
 	Tooltip:
 		Name: Devourer Tank
+	Selectable:
+		DecorationBounds: 28,28
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -535,6 +545,8 @@ RUIN:
 		Cost: 1100
 	Tooltip:
 		Name: Ruiner
+	Selectable:
+		DecorationBounds: 28,28
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
@@ -569,8 +581,6 @@ RUIN:
 		Weapon: BarrelExplode
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
-	Selectable:
-		DecorationBounds: 28,28
 	Hovers:
 		BobDistance: -25
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
@@ -593,7 +603,7 @@ TPOD:
 	Valued:
 		Cost: 2000
 	Selectable:
-		Bounds: 30,40,0,0
+		Bounds: 30,52,0,-10
 	Tooltip:
 		Name: Annihilator Tripod
 	UpdatesPlayerStatistics:
@@ -2239,25 +2249,24 @@ RIFT:
 		Range: 5c0
 		RequiresCondition: !disabled
 	WithBuildingBib:
-	DetonateWeaponPower@LightningStorm:
-		OrderName: storm
+	DetonateWeaponPower@RiftGenerator:
+		OrderName: rift
 		Icon: storm
 		Cursor: ability
 		ChargeInterval: 13500
-		Description: Lightning Storm
+		Description: Rift
 		ActivationDelay: 50
 		LongDesc: Initiate a Lightning Storm.\nApplies heavy damage over a large area.
-		Weapon: WeatherStormInit
-		AirburstAltitude: 4c512
+		Weapon: RiftInit
 		AllowMultiple: false
 		CameraActor: camera
 		CameraRemoveDelay: 375
 		SelectTargetSpeechNotification: SelectTarget
-		EndChargeSpeechNotification: StormReady
+		EndChargeSpeechNotification: RiftReady
 		InsufficientPowerSpeechNotification: InsufficientPower
-		IncomingSpeechNotification: StormApproach
-		IncomingSound: sweaintr.aud
-		LaunchSound: sweaintr.aud
+		IncomingSpeechNotification: RiftApproach
+		IncomingSound: nukelaunch.aud
+		LaunchSound: nukelaunch.aud
 		DisplayTimerStances: Ally, Neutral, Enemy
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayBeacon: True
@@ -2270,7 +2279,6 @@ RIFT:
 		TargetCircleColor: 0000FF90
 		Duration: 350
 		ActiveCondition: active
-		PaletteEffectType: LightningStorm
 	WithIdleOverlay@ACTIVE:
 		Sequence: active-overlay
 		Palette: d2keffect
@@ -2294,6 +2302,8 @@ RIFT:
 PTUR:
 	Inherits: ^Defense
 	Inherits@AUTOTARGET: ^AutoTargetGround
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 60
@@ -2303,6 +2313,8 @@ PTUR:
 		Cost: 600
 	Tooltip:
 		Name: Plasma Cannon
+	Selectable:
+		DecorationBounds: 24,28,0,-6
 	Building:
 	Health:
 		HP: 40000
@@ -2318,14 +2330,14 @@ PTUR:
 		HasMinibib: true
 	Turreted:
 		TurnSpeed: 12
-		InitialFacing: 56
+		InitialFacing: 48
 		PauseOnCondition: empdisable || being-warped
 	-WithSpriteBody:
 	WithEmbeddedTurretSpriteBody:
 		PauseOnCondition: empdisable || being-warped
 	Armament:
 		Weapon: PlasmaTurretGun
-		LocalOffset: 512,0,112
+		LocalOffset: 450,70,500, 450,-70,500
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
 	AttackTurreted:
@@ -2342,6 +2354,8 @@ SHAR:
 	Inherits: ^Defense
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetAir
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 90
@@ -2352,7 +2366,7 @@ SHAR:
 	Tooltip:
 		Name: Shard Launcher
 	Selectable:
-		DecorationBounds: 24,32,0,-4
+		DecorationBounds: 24,44,0,-11
 	Health:
 		HP: 40000
 	Armor:
@@ -2367,14 +2381,13 @@ SHAR:
 		HasMinibib: true
 	Turreted:
 		TurnSpeed: 15
-		InitialFacing: 224
+		InitialFacing: 48
 	-WithSpriteBody:
 	WithEmbeddedTurretSpriteBody:
 		PauseOnCondition: disabled || empdisable || being-warped
 	Armament@PRIMARY:
 		Weapon: ShardLauncher
-		LocalOffset: 520,0,450, 520,0,450
-		LocalYaw: 64, -64
+		LocalOffset: 0,0,1050
 	AttackTurreted:
 		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -2394,7 +2407,7 @@ SCOL:
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Inherits@Flash: ^WhiteFlash
 	RenderSprites:
-		Image: tsla
+		PlayerPalette: overlayplayerscrin
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 80
@@ -2405,7 +2418,7 @@ SCOL:
 	Tooltip:
 		Name: Storm Column
 	Selectable:
-		DecorationBounds: 24,40,0,-8
+		DecorationBounds: 24,48,0,-14
 	Health:
 		HP: 45000
 	Armor:
@@ -2420,7 +2433,7 @@ SCOL:
 		HasMinibib: true
 	Armament:
 		Weapon: StormColumnZap
-		LocalOffset: 0,0,896
+		LocalOffset: 0,0,900, 0,0,1100, 0,0,700, 0,0,1300, 0,0,500
 		RequiresCondition: !lowpower
 	AttackOmni:
 		RequiresCondition: !build-incomplete
@@ -2430,3 +2443,41 @@ SCOL:
 		RequiresCondition: !being-warped
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
+
+#
+# ---- misc
+#
+
+camera.rift:
+	Interactable:
+	ConditionManager:
+	EditorOnlyTooltip:
+		Name: (support power)
+	RenderSprites:
+		Image: rift
+		Palette: effect-ignore-lighting-alpha85
+	WithSpriteBody:
+		StartSequence: spawn
+	BodyOrientation:
+		QuantizedFacings: 1
+	AlwaysVisible:
+	HitShape:
+	RevealsShroud:
+		Range: 6c0
+	Health:
+		HP: 45000
+	DamagedByTerrain:
+		Terrain: Clear, Rough, Road, Ore, Water, Gems, River, Tiberium, BlueTiberium
+		Damage: 1000
+		DamageInterval: 8
+	PeriodicExplosion:
+		Weapon: Rift
+	Immobile:
+		OccupiesSpace: false
+	AmbientSound:
+		SoundFiles: rift1.aud, rift2.aud, rift3.aud
+		Interval: 50
+	WithDeathAnimation:
+		UseDeathTypeSuffix: False
+		CrushedSequence: fade
+		FallbackSequence: fade

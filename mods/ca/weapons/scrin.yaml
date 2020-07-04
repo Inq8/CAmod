@@ -119,7 +119,7 @@ GunWalkerZap:
 			Concrete: 20
 			Light: 30
 			Heavy: 20
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
@@ -173,7 +173,7 @@ PlasmaDiscs:
 			Heavy: 100
 			Concrete: 80
 			Brick: 50
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Eff: CreateEffect
@@ -208,6 +208,8 @@ CorrupterSpew:
 	Projectile: Bullet
 		Image: chemall
 		Palette: ra2effect-ignore-lighting-alpha50
+	Warhead@1Dam: SpreadDamage
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	-Warhead@Flames:
 
 DevourerLaser:
@@ -252,6 +254,7 @@ RuinerCannon:
 			Brick: 100
 			Light: 65
 			Heavy: 45
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: ruiner-hit1.aud
 		Explosions: idle
@@ -277,7 +280,7 @@ TripodLaser:
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
 			None: 70
-			Light: 60
+			Light: 70
 			Wood: 62
 			Heavy: 105
 			Concrete: 30
@@ -384,20 +387,21 @@ InvaderZapAA:
 PlasmaTurretGun:
 	Range: 6c0
 	StartBurstReport: plasma-fire1.aud
-	ReloadDelay: 30
+	ReloadDelay: 15
 	Burst: 2
 	BurstDelays: 4
 	Projectile: InstantHit
 		Inaccuracy: 0c64
 	Warhead@1Dam: SpreadDamage
-		Damage: 5000
+		Spread: 384
+		Damage: 2200
 		Versus:
 			None: 100
 			Wood: 25
 			Concrete: 10
-			Light: 25
-			Heavy: 10
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+			Light: 35
+			Heavy: 20
+		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
@@ -410,7 +414,7 @@ PlasmaTurretGun:
 
 StormColumnZap:
 	ReloadDelay: 30
-	Burst: 4
+	Burst: 5
 	BurstDelays: 3
 	Range: 8c512
 	StartBurstReport: stormcolumn-fire1.aud, stormcolumn-fire2.aud
@@ -419,14 +423,14 @@ StormColumnZap:
 		Duration: 5
 		Angle: 90
 	Warhead@1Dam: SpreadDamage
-		Damage: 2350
+		Damage: 2000
 		Versus:
-			None: 100
+			None: 60
 			Wood: 50
 			Concrete: 100
 			Light: 100
 			Heavy: 100
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: 1, 3
 		Image: fire
@@ -466,3 +470,33 @@ ShardLauncher:
 		ExplosionPalette: scrin
 		Image: shardhit
 		ValidTargets: Air, Ground, Water, Trees
+
+RiftInit:
+	ValidTargets: Ground, Water
+	Projectile: InstantExplode
+	ReloadDelay: 1
+	Warhead@Spawn: SpawnActor
+		Actors: camera.rift
+		Range: 1
+		ForceGround: false
+		ValidTargets: Ground, Water
+
+Rift:
+	ReloadDelay: 24
+	Range: 1c0
+	ValidTargets: Ground, Water
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Spread: 1c0
+		Damage: 10000
+		Falloff: 100, 100, 50, 40, 30, 20, 10
+		ValidTargets: Ground, Trees
+		InvalidTargets: Air, Creep
+		Versus:
+			None: 30
+			Wood: 100
+			Light: 100
+			Heavy: 70
+			Concrete: 70
+			Brick: 25
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath

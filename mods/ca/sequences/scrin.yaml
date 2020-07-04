@@ -535,23 +535,18 @@ inva:
 
 ptur:
 	Inherits: ^StructureOverlays
-	idle: gun
+	idle: ptur
 		Facings: 32
 		UseClassicFacingFudge: True
-	recoil: gun
+		Offset: 1,-6
+	make: pturmake
+		Length: *
+		Offset: 1,-6
+	damaged-idle: ptur
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
-	make: gunmake
-		Length: *
-	damaged-idle: gun
-		Start: 64
-		Facings: 32
-		UseClassicFacingFudge: True
-	damaged-recoil: gun
-		Start: 96
-		Facings: 32
-		UseClassicFacingFudge: True
+		Offset: 1,-6
 	muzzle: scrinmuzz1
 		Length: 4
 		Facings: 8
@@ -566,27 +561,43 @@ ptur:
 
 shar:
 	Inherits: ^StructureOverlays
-	idle: cram
+	idle: shar
 		Facings: 32
 		UseClassicFacingFudge: True
-		Offset: 0,-13
-	make: crammake
+		Offset: 1,-11
+	make: sharmake
 		Length: *
-		Offset: 0,-13
-	damaged-idle: cram
+		Offset: 1,-11
+	damaged-idle: shar
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
-		Offset: 0,-13
-	muzzle: scrinmuzz3
-		Length: *
-	bib: mbAGUN
+		Offset: 1,-11
+	bib: mbTSLA
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
-			JUNGLE: TEMPERAT
 			BARREN: TEMPERAT
 	icon: cramicnh
+
+scol:
+	Inherits: ^StructureOverlays
+	idle: scol
+		Length: 1
+		Offset: 0,-12
+	damaged-idle: scol
+		Start: 1
+		Length: 1
+		Offset: 0,-12
+	make: scolmake
+		Length: *
+		Offset: 0,-12
+	bib: mbTSLA
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			BARREN: TEMPERAT
+	icon: tslaicon
 
 #
 # ---- animations
@@ -679,6 +690,20 @@ mindcontrol:
 
 rift:
 	idle: rift
+		Tick: 40
 		Length: *
-		ZOffset: 1023
+		ZOffset: 2048
 		BlendMode: Subtractive
+	spawn: riftstart
+		Tick: 40
+		Length: *
+		ZOffset: 2048
+		BlendMode: Subtractive
+	fade: riftend
+		Tick: 40
+		Length: *
+		ZOffset: 2048
+		BlendMode: Subtractive
+
+scrinwipicon:
+	icon: wipicon
