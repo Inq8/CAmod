@@ -91,7 +91,7 @@ s1:
 		UseTilesetCode: false
 		ZOffset: 512
 		Tick: 80
-	icon: wipicon
+	icon: s1icon
 
 s3:
 	Inherits: ^ScrinCommonDeaths
@@ -150,7 +150,7 @@ s3:
 		UseTilesetCode: false
 		ZOffset: 512
 		Tick: 80
-	icon: wipicon
+	icon: s3icon
 
 s4:
 	Inherits: ^ScrinCommonDeaths
@@ -209,7 +209,7 @@ s4:
 		UseTilesetCode: false
 		ZOffset: 512
 		Tick: 80
-	icon: wipicon
+	icon: s4icon
 
 s6:
 	Inherits: ^ScrinCommonDeaths
@@ -264,7 +264,7 @@ s6:
 		UseTilesetCode: false
 		ZOffset: 512
 		Tick: 80
-	icon: wipicon
+	icon: s6icon
 
 mast:
 	Inherits: ^ScrinCommonDeaths
@@ -323,7 +323,7 @@ mast:
 		UseTilesetCode: false
 		ZOffset: 512
 		Tick: 80
-	icon: wipicon
+	icon: masticon
 
 harv.scrin:
 	Inherits: ^VehicleOverlays
@@ -334,7 +334,7 @@ harv.scrin:
 		Length: *
 		ZOffset: -128
 		BlendMode: Additive
-	icon: wipicon
+	icon: harvscrinicon
 
 harv.scrin.destroyed:
 	Inherits: ^VehicleOverlays
@@ -358,7 +358,7 @@ gunw:
 		Length: 4
 		Facings: 8
 		Tick: 80
-	icon: wipicon
+	icon: gunwicon
 
 gunw.destroyed:
 	Inherits: ^VehicleOverlays
@@ -380,7 +380,7 @@ seek:
 		Length: 4
 		Facings: 8
 		Tick: 80
-	icon: wipicon
+	icon: seekicon
 
 seek.destroyed:
 	Inherits: ^VehicleOverlays
@@ -401,7 +401,7 @@ intl:
 		UseClassicFacingFudge: True
 	muzzle: scrinmuzz3
 		Length: 2
-	icon: wipicon
+	icon: intlicon
 
 intl.destroyed:
 	Inherits: ^VehicleOverlays
@@ -421,7 +421,7 @@ corr:
 		Length: 2
 		Tick: 150
 		UseClassicFacingFudge: True
-	icon: wipicon
+	icon: corricon
 
 corr.destroyed:
 	Inherits: ^VehicleOverlays
@@ -440,7 +440,7 @@ devo:
 		UseClassicFacingFudge: True
 	muzzle: scrinmuzz3
 		Length: 5
-	icon: wipicon
+	icon: devoicon
 
 devo.destroyed:
 	Inherits: ^VehicleOverlays
@@ -456,7 +456,7 @@ ruin:
 		UseClassicFacingFudge: True
 	muzzle: scrinmuzz3
 		Length: 5
-	icon: wipicon
+	icon: ruinicon
 
 ruin.destroyed:
 	Inherits: ^VehicleOverlays
@@ -480,7 +480,7 @@ tpod:
 		Tick: 60
 	muzzle: scrinmuzz2
 		Length: 5
-	icon: wipicon
+	icon: tpodicon
 
 tpod.destroyed:
 	Inherits: ^VehicleOverlays
@@ -498,14 +498,14 @@ stmr:
 	idle: stmr
 		Facings: 32
 		UseClassicFacingFudge: True
-	icon: wipicon
+	icon: stmricon
 
 deva:
 	Inherits: ^VehicleOverlays
 	idle: deva
 		Facings: 32
 		UseClassicFacingFudge: True
-	icon: wipicon
+	icon: devaicon
 
 pac:
 	Inherits: ^VehicleOverlays
@@ -520,7 +520,7 @@ pac:
 		Start: 64
 		Facings: 32
 		UseClassicFacingFudge: True
-	icon: wipicon
+	icon: pacicon
 
 inva:
 	Inherits: ^VehicleOverlays
@@ -557,7 +557,7 @@ ptur:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			BARREN: TEMPERAT
-	icon: gunicon
+	icon: pturicon
 
 shar:
 	Inherits: ^StructureOverlays
@@ -578,7 +578,7 @@ shar:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			BARREN: TEMPERAT
-	icon: cramicnh
+	icon: sharicon
 
 scol:
 	Inherits: ^StructureOverlays
@@ -597,7 +597,66 @@ scol:
 		UseTilesetExtension: true
 		TilesetOverrides:
 			BARREN: TEMPERAT
-	icon: tslaicon
+	icon: scolicon
+
+mani:
+	Inherits: ^StructureOverlays
+	idle: sgen
+		Offset: 0,-10
+	active: sgen
+		Length: 4
+		Offset: 0,-10
+	damaged-idle: sgen
+		Start: 4
+		Offset: 0,-10
+	damaged-active: sgen
+		Start: 4
+		Length: 4
+		Offset: 0,-10
+	make: sgenmake
+		Length: *
+		Offset: 0,-10
+	dead: sgen
+		Start: 4
+		Tick: 800
+		Offset: 0,-10
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: maniicon
+
+rift:
+	Inherits: ^StructureOverlays
+	idle: weat
+	damaged-idle: weat
+		Start: 1
+	active: weat
+		Start: 2
+		Length: 1
+		Tick: 10000
+	damaged-active: weat
+		Start: 3
+		Length: 1
+		Tick: 10000
+	make: weatmake
+		Length: *
+	active-overlay: DATA.R8
+		AddExtension: False
+		Start: 3947
+		Length: 17
+		Tick: 100
+		BlendMode: Additive
+		ZOffset: 511
+	bib: mbIRON
+		Length: *
+		Offset: 0,2
+		UseTilesetExtension: true
+		TilesetOverrides:
+			JUNGLE: TEMPERAT
+			BARREN: TEMPERAT
+	icon: rifticon
 
 #
 # ---- animations
@@ -688,8 +747,8 @@ mindcontrol:
 		ZOffset: 1023
 		Length: 10
 
-rift:
-	idle: rift
+riftanim:
+	idle: riftloop
 		Tick: 40
 		Length: *
 		ZOffset: 2048

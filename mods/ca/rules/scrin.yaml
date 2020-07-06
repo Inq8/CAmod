@@ -4,6 +4,7 @@
 #
 
 ^ScrinInfantry:
+	Inherits: ^Soldier
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Voiced:
@@ -23,19 +24,20 @@
 			RadiationDeath: 10
 			FrozenDeath: 11
 		CrushedSequence: die-crushed
+	-DamagedByTerrain:
 
 S1:
-	Inherits: ^Soldier
+	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
-	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 10
 		Prerequisites: ~infantry.scrin, ~techlevel.infonly
 		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+		IconPalette: chrome
 	Valued:
 		Cost: 100
 	Tooltip:
@@ -62,17 +64,17 @@ S1:
 	-TakeCover:
 
 S3:
-	Inherits: ^Soldier
+	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
-	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 30
 		Prerequisites: ~infantry.scrin, ~techlevel.infonly
 		Description: Anti-tank/anti-aircraft infantry.\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
+		IconPalette: chrome
 	Valued:
 		Cost: 300
 	Tooltip:
@@ -105,17 +107,17 @@ S3:
 		ScanRadius: 5
 
 S4:
-	Inherits: ^Soldier
+	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
-	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 115
 		Prerequisites: nerv, ~infantry.scrin, ~techlevel.infonly
 		Description: Heavy assault infantry.\n  Strong vs Buildings, Defenses, Vehicles\n  Weak vs Aircraft
+		IconPalette: chrome
 	Valued:
 		Cost: 450
 	Tooltip:
@@ -136,9 +138,11 @@ S4:
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	-TakeCover:
+	PortableChrono:
+		ChargeDelay: 250
+		ChronoshiftSound: scrinport.aud
 
 S6:
-	Inherits: ^Soldier
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
@@ -147,6 +151,7 @@ S6:
 		BuildPaletteOrder: 60
 		Prerequisites: ~infantry.scrin, ~techlevel.infonly
 		Description: Infiltrates and captures\nenemy structures.\n  Can repair friendly structures & bridges.\n  Special Ability: Repair\n  Unarmed
+		IconPalette: chrome
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -170,11 +175,10 @@ S6:
 	-TakeCover:
 
 MAST:
-	Inherits: ^Soldier
+	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
-	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -182,10 +186,11 @@ MAST:
 		Prerequisites: scrt, ~infantry.scrin, ~techlevel.infonly
 		BuildLimit: 1
 		Description: Elite specialist infantry.\n  Can mind-control enemy units.\n  Can detect cloaked units.\n  Maximum 1 can be trained.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft
+		IconPalette: chrome
 	Voiced:
 		VoiceSet: MastermindVoice
 	Valued:
-		Cost: 10000
+		Cost: 1350
 	Tooltip:
 		Name: Mastermind
 	UpdatesPlayerStatistics:
@@ -257,6 +262,7 @@ GUNW:
 		BuildPaletteOrder: 15
 		Prerequisites: warp, ~vehicles.scrin, ~techlevel.low
 		Description: Light assault walker.\n  Strong vs Infantry, Aircraft\n  Weak vs Tanks
+		IconPalette: chrome
 	Valued:
 		Cost: 650
 	Tooltip:
@@ -318,6 +324,7 @@ SEEK:
 		Prerequisites: warp, ~vehicles.scrin, ~techlevel.low
 		Queue: Vehicle
 		Description: Light hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles\n  Weak vs Aircraft
+		IconPalette: chrome
 	Mobile:
 		Speed: 135
 	LeavesTrails:
@@ -390,6 +397,7 @@ INTL:
 		Prerequisites: warp, ~vehicles.scrin, ~techlevel.low
 		Queue: Vehicle
 		Description: Heavily armoured transport craft.\n  Strong vs Light Vehicles, Infantry\n  Weak vs Tanks, Aircraft
+		IconPalette: chrome
 	Mobile:
 		Speed: 135
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
@@ -453,6 +461,7 @@ CORR:
 		Prerequisites: nerv, ~vehicles.scrin, ~techlevel.medium
 		Queue: Vehicle
 		Description: Short-ranged anti-infantry/structure unit.\n  Strong vs Infantry, Buildings\n  Weak vs Tanks, Aircraft
+		IconPalette: chrome
 	Mobile:
 		Speed: 82
 		TurnSpeed: 4
@@ -489,6 +498,7 @@ DEVO:
 		BuildPaletteOrder: 135
 		Prerequisites: nerv, ~vehicles.scrin, ~techlevel.medium
 		Description: Medium hover tank.\n  Can move in any direction while firing.\n  Strong vs Vehicles, Buildings\n  Weak vs Aircraft
+		IconPalette: chrome
 	Valued:
 		Cost: 1250
 	Tooltip:
@@ -554,6 +564,7 @@ RUIN:
 		Prerequisites: scrt, ~vehicles.scrin, ~techlevel.high
 		Queue: Vehicle
 		Description: Long-range artillery.\n  Strong vs Buildings, Infantry\n  Weak vs Tanks, Aircraft
+		IconPalette: chrome
 	Mobile:
 		Speed: 100
 		PauseOnCondition: being-captured || empdisable || being-warped || driver-dead
@@ -575,6 +586,7 @@ RUIN:
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
 	AttackFrontal:
+		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
 	AutoTarget:
 	Explodes:
@@ -598,10 +610,11 @@ TPOD:
 		BuildPaletteOrder: 195
 		Prerequisites: scrt, ~vehicles.scrin, ~techlevel.high
 		Description: Heavy assault walker with beam weapons.\n  Strong vs Vehicles.\n  Weak vs Aircraft
+		IconPalette: chrome
 	Voiced:
 		VoiceSet: TripodVoice
 	Valued:
-		Cost: 2000
+		Cost: 1800
 	Selectable:
 		Bounds: 30,52,0,-10
 	Tooltip:
@@ -609,12 +622,12 @@ TPOD:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 70000
+		HP: 74000
 	Armor:
 		Type: Heavy
 	Mobile:
 		Locomotor: heavytracked
-		Speed: 50
+		Speed: 56
 		TurnSpeed: 255
 	Passenger:
 		Weight: 3
@@ -717,6 +730,7 @@ STMR:
 		BuildPaletteOrder: 40
 		Prerequisites: nerv, grav, ~aircraft.scrin, ~techlevel.medium
 		Description: Durable patrol craft.\n  Strong vs Vehicles, Aircraft\n  Weak vs Infantry, Buildings
+		IconPalette: chrome
 	Valued:
 		Cost: 1750
 	Voiced:
@@ -793,8 +807,9 @@ DEVA:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 55
 		BuildDurationModifier: 115
-		Prerequisites: sign, scrt, grav, ~aircraft.scrin, ~techlevel.high
+		Prerequisites: scrt, grav, ~aircraft.scrin, ~techlevel.high
 		Description: Long-range siege warship.\n	Strong vs Buildings, Infantry, Slow Vehicles\n	Weak vs Aircraft
+		IconPalette: chrome
 	Voiced:
 		VoiceSet: DevastatorVoice
 	Valued:
@@ -820,6 +835,7 @@ DEVA:
 		LocalOffset: -20,0,0
 	AttackAircraft:
 		FacingTolerance: 10
+		ForceFireIgnoresActors: True
 		AttackType: Hover
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
@@ -829,10 +845,6 @@ DEVA:
 		Speed: 56
 		AltitudeVelocity: 0c50
 		CanForceLand: False
-	AutoTarget:
-		InitialStance: HoldFire
-		InitialStanceAI: AttackAnything
-		ScanRadius: 10
 	Selectable:
 		Bounds: 36,28,0,2
 		DecorationBounds: 40,40,0,1
@@ -859,6 +871,7 @@ PAC:
 		BuildDurationModifier: 115
 		Prerequisites: sign, scrt, grav, ~aircraft.scrin, ~techlevel.high
 		Description: Warship that launches a squadron\nof assault craft.\n	Strong vs Vehicles, Infantry, Aircraft
+		IconPalette: chrome
 	Voiced:
 		VoiceSet: PlanetaryAssaultCarrierVoice
 	Valued:
@@ -889,10 +902,6 @@ PAC:
 		Speed: 48
 		AltitudeVelocity: 0c50
 		CanForceLand: False
-	AutoTarget:
-		InitialStance: HoldFire
-		InitialStanceAI: AttackAnything
-		ScanRadius: 10
 	Selectable:
 		Bounds: 36,28,0,2
 		DecorationBounds: 40,40,0,1
@@ -913,7 +922,8 @@ PAC:
 		RequiresCondition: inva-loaded < 4
 		Sequence: half-deployed
 		Name: half-deployed
-	AttackOmni:
+	AttackFrontal:
+		FacingTolerance: 40
 		PauseOnCondition: empdisable || being-warped
 	CarrierMaster@carr1:
 		Actors: inva, inva, inva, inva
@@ -937,7 +947,7 @@ PAC:
 		Facing: -60
 	WithRangeCircle@Attack:
 		Type: jammer
-		Range: 16c0
+		Range: 15c0
 		Color: 0000FF80
 	DeathSounds:
 		Voice: Die
@@ -1855,6 +1865,31 @@ NERV:
 	InfiltrateForSupportPower@tec:
 		Types: SabInfiltrate
 		Proxy: rad.scrin.stolen
+	RevealActorsPower@RESOURCESCAN:
+		CameraActor: camera.resourcescan
+		TargetActors: mine, gmine, split2, split3, splitblue
+		LifeTime: 250
+		OrderName: resourcescan
+		Icon: rescanpower
+		ChargeInterval: 3000
+		Description: Resource Scan
+		LongDesc: Reveals map resources.
+		LaunchSound: tibscan.aud
+		PauseOnCondition: disabled || empdisable || being-warped
+	SpawnActorPower@ICHORSEED:
+		OrderName: ichorseed
+		Icon: ichorpower
+		Actor: ichor.seeder
+		ChargeInterval: 4500
+		Description: Ichor Seed
+		Duration: 250
+		ActivationDelay: 0
+		AllowMultiple: false
+		LongDesc: Seeds tiberium at selected location.
+		LaunchSound: ichorseed.aud
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		PauseOnCondition: disabled || empdisable || being-warped
 
 SCRT:
 	Inherits: ^ScienceBuilding
@@ -2138,14 +2173,12 @@ SILO.SCRIN:
 MANI:
 	Inherits: ^ScienceBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
-	RenderSprites:
-		Image: sgen
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 130
 		Prerequisites: scrt, ~structures.scrin, ~techlevel.superw
 		BuildLimit: 1
-		IconPalette: chrometd
+		IconPalette: chrome
 		Description: Makes a group of units invisible for a short time.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Tiberium Stealth
 	Valued:
 		Cost: 1500
@@ -2171,31 +2204,6 @@ MANI:
 		Range: 5c0
 		RequiresCondition: !disabled
 	WithBuildingBib:
-	GrantExternalConditionPowerCA@STEALTHGEN:
-		Prerequisites: techlevel.superw
-		OrderName: stealthgen
-		Icon: invis
-		IconPalette: chrometd
-		ChargeInterval: 4500
-		Weapon: StealthBubble
-		Description: Tiberium Stealth
-		Condition: invisibility
-		ValidStances: Ally, Neutral, Enemy
-		Range: 3
-		Duration: 900
-		ActivationDelay: 0
-		AirburstAltitude: 0c0
-		AllowMultiple: false
-		LongDesc: Makes vehicles and structures temporarily invisible.\n  Warning: Harmful to Infantry.
-		OnFireSound: cloak6.aud
-		SelectTargetSpeechNotification: SelectTarget
-		InsufficientPowerSpeechNotification: InsufficientPower
-		BeginChargeSpeechNotification: ChemStealthCharging
-		EndChargeSpeechNotification: ChemStealthReady
-		DisplayRadarPing: True
-		Cursor: chemmissile
-		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayTimerStances: Ally, Neutral, Enemy
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -2216,8 +2224,6 @@ RIFT:
 	Inherits: ^ScienceBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@shape: ^2x2Shape
-	RenderSprites:
-		Image: weat
 	Selectable:
 		Bounds: 48,48
 	Buildable:
@@ -2226,6 +2232,7 @@ RIFT:
 		Prerequisites: scrt, ~structures.scrin, ~techlevel.superw
 		BuildLimit: 1
 		Description: Provides Rift support power.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Rift
+		IconPalette: chrome
 	Valued:
 		Cost: 2500
 	Tooltip:
@@ -2251,7 +2258,7 @@ RIFT:
 	WithBuildingBib:
 	DetonateWeaponPower@RiftGenerator:
 		OrderName: rift
-		Icon: storm
+		Icon: riftpower
 		Cursor: ability
 		ChargeInterval: 13500
 		Description: Rift
@@ -2274,7 +2281,7 @@ RIFT:
 		ArrowSequence: arrow
 		ClockSequence: clock
 		CircleSequence: circles
-		BeaconPoster: stormicon
+		BeaconPoster: riftpower
 		TargetCircleRange: 6c512
 		TargetCircleColor: 0000FF90
 		Duration: 350
@@ -2309,6 +2316,7 @@ PTUR:
 		BuildPaletteOrder: 60
 		Prerequisites: port, ~structures.scrin, ~techlevel.low
 		Description: Anti-infantry base defense.\n  Can detect cloaked units.\n  Strong vs Infantry, Light Armor\n  Weak vs Tanks, Aircraft
+		IconPalette: chrome
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -2361,6 +2369,7 @@ SHAR:
 		BuildPaletteOrder: 90
 		Prerequisites: nerv, ~structures.scrin, ~techlevel.medium
 		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Strong vs Aircraft\n  Weak vs Ground Units
+		IconPalette: chrome
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -2413,6 +2422,7 @@ SCOL:
 		BuildPaletteOrder: 80
 		Prerequisites: nerv, ~structures.scrin, ~techlevel.high
 		Description: Advanced base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft
+		IconPalette: chrome
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -2454,7 +2464,7 @@ camera.rift:
 	EditorOnlyTooltip:
 		Name: (support power)
 	RenderSprites:
-		Image: rift
+		Image: riftanim
 		Palette: effect-ignore-lighting-alpha85
 	WithSpriteBody:
 		StartSequence: spawn
@@ -2481,3 +2491,18 @@ camera.rift:
 		UseDeathTypeSuffix: False
 		CrushedSequence: fade
 		FallbackSequence: fade
+
+camera.resourcescan:
+	Inherits: CAMERA
+	EditorOnlyTooltip:
+		Name: (support power proxy camera)
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+
+ichor.seeder:
+	Inherits: CAMERA
+	SeedsResourceCA:
+		ResourceType: Tiberium
+		Interval: 2
+	-RevealsShroud:

@@ -27,6 +27,8 @@ DisintegratorBeamAA:
 	Inherits: DisintegratorBeam
 	Range: 6c0
 	ValidTargets: Air
+	Projectile: LaserZap
+		Blockable: false
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air
 		Range: 0, 0c64, 0c256, 3c0
@@ -103,16 +105,16 @@ EnslaveVehicle:
 GunWalkerZap:
 	Range: 4c512
 	Report: gunwalker-fire1.aud, gunwalker-fire2.aud
-	ReloadDelay: 40
+	ReloadDelay: 30
 	Burst: 5
-	BurstDelays: 15
+	BurstDelays: 10
 	Projectile: Bullet
 		Image: scrinzap
 		Speed: 650
 		Palette: scrin
 		Inaccuracy: 0c64
 	Warhead@1Dam: SpreadDamage
-		Damage: 3300
+		Damage: 2300
 		Versus:
 			None: 100
 			Wood: 30
@@ -136,6 +138,7 @@ GunWalkerZapAA:
 	Projectile: Bullet
 		Image: scrinzapup
 		Speed: 1c448
+		Blockable: false
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
 		Damage: 1600
@@ -265,9 +268,9 @@ TripodLaser:
 	Inherits: Laser
 	Range: 6c0
 	Report: tripod-fire1.aud, tripod-fire2.aud, tripod-fire3.aud
-	ReloadDelay: 100
+	ReloadDelay: 45
 	Burst: 2
-	BurstDelays: 25
+	BurstDelays: 15
 	Projectile: LaserZap
 		Duration: 20
 		Color: FAFAFFFF
@@ -276,7 +279,7 @@ TripodLaser:
 		SecondaryBeamWidth: 75
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 9800
+		Damage: 5200
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
 			None: 70
@@ -295,6 +298,7 @@ StormriderZap:
 		Image: scrinzapdown
 		Speed: 700
 		Palette: scrin
+		Blockable: false
 	Warhead@1Dam: SpreadDamage
 		Damage: 3000
 		Versus:
@@ -351,7 +355,7 @@ InvaderLauncher:
 	ReloadDelay: 175
 	Burst: 4
 	BurstDelays: 5
-	Range: 16c0
+	Range: 14c0
 	ValidTargets: Air, Ground, Water
 	Projectile: InstantHit
 	Warhead@1Dam: TargetDamage
@@ -368,6 +372,7 @@ InvaderZap:
 		Speed: 700
 		Palette: scrin
 		Inaccuracy: 0c256
+		Blockable: false
 	Warhead@1Dam: SpreadDamage
 		Damage: 1000
 		Versus:
