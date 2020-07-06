@@ -1002,8 +1002,6 @@ N5:
 		LocalOffset: 341,0,254
 		MuzzleSequence: muzzle
 		MuzzlePalette: tdeffect-ignore-lighting-alpha85
-	TakeCover:
-		ProneOffset: 160,0,-254
 	Mobile:
 		Speed: 56
 		Voice: Move
@@ -1018,6 +1016,7 @@ N5:
 		Voice: Move
 	Voiced:
 		VoiceSet: CyborgVoice
+	-TakeCover:
 	-Crushable:
 	-KillsSelf@Mutation:
 	-DamagedByTerrain:
@@ -1548,7 +1547,7 @@ ACOL:
 		Modifier: 115
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
-		
+
 JJET:
 	Inherits: ^Infantry
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -1757,7 +1756,7 @@ N1C:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BOTHELPER: ^BotCaptureHelper
-	Inherits@nodupg2: ^NodCyborgUpgrade	
+	Inherits@nodupg2: ^NodCyborgUpgrade
 	RenderSprites:
 	Buildable:
 		Queue: Infantry
@@ -1820,7 +1819,7 @@ N3C:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@nodupg2: ^NodCyborgUpgrade	
+	Inherits@nodupg2: ^NodCyborgUpgrade
 	RenderSprites:
 	Buildable:
 		Queue: Infantry
@@ -1912,7 +1911,7 @@ RMBC:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@EMP: ^EmpDisable
-	Inherits@nodupg2: ^NodCyborgUpgrade	
+	Inherits@nodupg2: ^NodCyborgUpgrade
 	RenderSprites:
 		PlayerPalette: playerd2k
 		Image: cycom
