@@ -599,6 +599,23 @@ scol:
 			BARREN: TEMPERAT
 	icon: scolicon
 
+sign:
+	Inherits: ^StructureOverlays
+	idle: bio
+	damaged-idle: bio
+		Start: 1
+	dead: bio
+		Start: 2
+		Tick: 800
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	make: biomake
+		Length: *
+	icon: signicon
+
 mani:
 	Inherits: ^StructureOverlays
 	idle: sgen
