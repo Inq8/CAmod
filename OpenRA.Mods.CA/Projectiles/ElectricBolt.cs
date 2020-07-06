@@ -1,10 +1,11 @@
 ﻿#region Copyright & License Information
 /*
- * Copyright 2015- OpenRA.Mods.AS Developers (see AUTHORS)
- * This file is a part of a third-party plugin for OpenRA, which is
- * free software. It is made available to you under the terms of the
- * GNU General Public License as published by the Free Software
- * Foundation. For more information, see COPYING.
+ * Copyright 2007-2020 The OpenRA Developers (see AUTHORS)
+ * This file is part of OpenRA, which is free software. It is made
+ * available to you under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -76,13 +77,12 @@ namespace OpenRA.Mods.CA.Projectiles
 		readonly WVec upVector;
 		readonly MersenneTwister random;
 		readonly bool hasLaunchEffect;
+		readonly HashSet<Pair<Color, WPos[]>> zaps;
 
 		[Sync]
 		readonly WPos target, source;
 
 		int ticks = 0;
-
-		HashSet<Pair<Color, WPos[]>> zaps;
 
 		public ElectricBolt(ElectricBoltInfo info, ProjectileArgs args)
 		{
@@ -90,12 +90,12 @@ namespace OpenRA.Mods.CA.Projectiles
 			this.info = info;
 			var playerColors = args.SourceActor.Owner.Color;
 			var colors = info.Colors;
-			for (int i = 0; i < info.PlayerColorZaps; i++)
+			for (var i = 0; i < info.PlayerColorZaps; i++)
 				colors.Append(playerColors);
 
 			target = args.PassiveTarget;
 			source = args.Source;
-			random = args.SourceActor.World.SharedRandom;
+			random = args.SourceActor.World.LocalRandom;
 
 			hasLaunchEffect = !string.IsNullOrEmpty(info.LaunchEffectImage) && !string.IsNullOrEmpty(info.LaunchEffectSequence);
 
