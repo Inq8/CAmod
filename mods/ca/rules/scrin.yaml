@@ -2219,6 +2219,21 @@ MANI:
 		Types: SpyInfiltrate, SabInfiltrate
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
+	GrantExternalConditionPower@SUPPRESSION:
+		PauseOnCondition: disabled || empdisable || being-warped
+		Icon: spresspower
+		ChargeInterval: 4500
+		Description: Suppression Field
+		LongDesc: Applies a suppression field to the target area, slowing ground units.
+		Duration: 600
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		DisplayRadarPing: True
+		Condition: suppression
+		OnFireSound: suppression.aud
+		SupportPowerPaletteOrder: 10
+		Range: 2
+		ValidStances: Enemy, Neutral
 
 RIFT:
 	Inherits: ^ScienceBuilding

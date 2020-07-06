@@ -332,6 +332,22 @@
 		EmptyWeapon: TemporalExplode
 		DeathTypes: ChronoDeath
 
+^Suppressable:
+	SpeedMultiplier@SUPPRESSION:
+		RequiresCondition: suppression
+		Modifier: 40
+	ReloadDelayMultiplier@SUPPRESSION:
+		RequiresCondition: suppression
+		Modifier: 125
+	ExternalCondition@SUPPRESSION:
+		Condition: suppression
+	WithColoredOverlay@SUPPRESSION:
+		RequiresCondition: suppression
+		Palette: suppression
+	TimedConditionBar@SUPPRESSION:
+		Condition: suppression
+		Color: f454d0
+
 ^GDIUpgrade:
 	DamageMultiplier@GDIUPG1:
 		RequiresCondition: gdiupg1
@@ -362,7 +378,7 @@
 		RequiresCondition: gdiupglevel1
 	GrantExternalConditionToProduced@GDIUPG2:
 		Condition: gdiupg2
-		RequiresCondition: gdiupglevel2		
+		RequiresCondition: gdiupglevel2
 	GrantConditionOnPrerequisite@GDIUPG1:
 		Condition: gdiupglevel1
 		Prerequisites: miss.gdi
@@ -809,6 +825,7 @@
 	Inherits@14: ^Chillable
 	Inherits@15: ^AffectedByDriverKill
 	Inherits@16: ^Concussion
+	Inherits@17: ^Suppressable
 	Inherits@C4: ^C4Plantable
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
@@ -957,6 +974,7 @@
 	Inherits@12: ^BotGroundProductionBonus
 	Inherits@13: ^Chillable
 	Inherits@14: ^Concussion
+	Inherits@15: ^Suppressable
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
 	RenderSprites:
@@ -1240,6 +1258,7 @@
 	Inherits@14: ^Chillable
 	Inherits@15: ^BotGroundProductionBonus
 	Inherits@16: ^Concussion
+	Inherits@17: ^Suppressable
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
@@ -1344,7 +1363,7 @@
 	Wanders@NOIDLENAVY:
 		WanderMoveRadius: 3
 		RequiresCondition: (botowner && under-bridge)
-		
+
 ^Submarine:
 	Inherits@1: ^Ship
 	Targetable:
@@ -1381,7 +1400,7 @@
 	Wanders@NOIDLENAVY:
 		WanderMoveRadius: 3
 		RequiresCondition: (botowner && crossing-ford) ||  (botowner && under-bridge)
-	
+
 ^NeutralPlane:
 	Inherits@1: ^ExistsInWorld
 	Inherits@3: ^IronCurtainable
@@ -2385,7 +2404,7 @@
 		Modifier: 0
 	Power:
 		RequiresCondition: !disabled
-		
+
 ^Selectable:
 	Selectable:
 	SelectionDecorations:
