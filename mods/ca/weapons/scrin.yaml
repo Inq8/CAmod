@@ -47,14 +47,14 @@ IntruderDiscs:
 	ReloadDelay: 70
 	Burst: 3
 	Projectile: Bullet
-		Inaccuracy: 0c256
+		Inaccuracy: 0c128
 	Warhead@1Dam: SpreadDamage
 		Damage: 2500
 		Versus:
-			None: 50
-			Wood: 85
+			None: 75
+			Wood: 100
 			Light: 85
-			Heavy: 55
+			Heavy: 75
 			Concrete: 100
 			Brick: 85
 
@@ -110,17 +110,17 @@ GunWalkerZap:
 	BurstDelays: 10
 	Projectile: Bullet
 		Image: scrinzap
-		Speed: 750
+		Speed: 800
 		Palette: scrin
 		Inaccuracy: 0c64
 	Warhead@1Dam: SpreadDamage
-		Damage: 2300
+		Damage: 2700
 		Versus:
 			None: 100
-			Wood: 30
-			Concrete: 20
-			Light: 30
-			Heavy: 20
+			Wood: 25
+			Concrete: 15
+			Light: 25
+			Heavy: 15
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
@@ -139,6 +139,7 @@ GunWalkerZapAA:
 		Image: scrinzapup
 		Speed: 1c448
 		Blockable: false
+		Inaccuracy: 0
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
 		Damage: 1600
@@ -163,18 +164,18 @@ PlasmaDiscs:
 		TrailImage: smokey
 		TrailPalette: scrinplasma
 		TrailDelay: 1
-		Speed: 350
+		Speed: 450
 		LaunchAngle: 50
-		Inaccuracy: 0c512
+		Inaccuracy: 0c256
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 1800
+		Damage: 2200
 		Versus:
-			None: 30
-			Wood: 65
+			None: 40
+			Wood: 80
 			Light: 85
 			Heavy: 100
-			Concrete: 90
+			Concrete: 80
 			Brick: 50
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
@@ -195,7 +196,7 @@ InterloperLaser:
 		Duration: 3
 		SecondaryBeamWidth: 50
 	Warhead@1Dam: SpreadDamage
-		Damage: 1500
+		Damage: 1700
 		Versus:
 			None: 100
 			Light: 100
@@ -206,12 +207,14 @@ InterloperLaser:
 CorrupterSpew:
 	Inherits: BigFlamer
 	StartBurstReport: corrupter-fire1.aud
-	ReloadDelay: 100
-	Burst: 10
+	ReloadDelay: 110
+	Burst: 12
 	Projectile: Bullet
 		Image: chemall
 		Palette: ra2effect-ignore-lighting-alpha50
+		Speed: 130
 	Warhead@1Dam: SpreadDamage
+		Spread: 341
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	-Warhead@Flames:
 
@@ -233,7 +236,7 @@ DevourerLaser:
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
 			None: 40
-			Light: 70
+			Light: 80
 			Wood: 20
 			Heavy: 100
 			Concrete: 65
@@ -296,17 +299,17 @@ StormriderZap:
 	BurstDelays: 15
 	Projectile: Bullet
 		Image: scrinzapdown
-		Speed: 750
+		Speed: 850
 		Palette: scrin
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
-		Damage: 3000
+		Damage: 3500
 		Versus:
 			None: 100
 			Wood: 50
 			Concrete: 30
-			Light: 100
-			Heavy: 80
+			Light: 85
+			Heavy: 35
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
@@ -338,9 +341,9 @@ DevastatorDiscs:
 		Inaccuracy: 1c768
 		Speed: 180
 	Warhead@1Dam: SpreadDamage
-		Damage: 2600
+		Damage: 3000
 		Versus:
-			None: 100
+			None: 150
 			Wood: 100
 			Light: 80
 			Heavy: 70
@@ -368,19 +371,19 @@ InvaderZap:
 	BurstDelays: 5
 	Projectile: Bullet
 		Image: scrinzapdown
-		Speed: 750
+		Speed: 850
 		Palette: scrin
-		Inaccuracy: 0c256
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
-		Damage: 1000
+		Damage: 1500
 		Versus:
 			None: 100
-			Wood: 50
-			Concrete: 30
-			Light: 100
-			Heavy: 80
+			Wood: 20
+			Concrete: 20
+			Light: 70
+			Heavy: 100
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		ValidTargets: Enemy, Neutral
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
@@ -504,7 +507,7 @@ Rift:
 	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
 		Damage: 10000
-		Falloff: 100, 100, 50, 40, 30, 20, 10
+		Falloff: 100, 100, 65, 50, 35, 20, 10
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air, Creep
 		Versus:

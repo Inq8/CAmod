@@ -83,8 +83,6 @@ S3:
 		AddToArmyValue: true
 	Health:
 		HP: 2500
-	Mobile:
-		Speed: 36
 	Armament@PRIMARY:
 		Weapon: DisintegratorBeamAA
 		LocalOffset: 150,0,400
@@ -116,10 +114,10 @@ S4:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 115
 		Prerequisites: nerv, ~infantry.scrin, ~techlevel.infonly
-		Description: Heavy assault infantry.\n  Strong vs Buildings, Defenses, Vehicles\n  Weak vs Aircraft
+		Description: Heavy assault infantry.\n  Can teleport short distances.\n  Strong vs Buildings, Defenses, Light Vehicles\n  Weak vs Infantry, Aircraft
 		IconPalette: chrome
 	Valued:
-		Cost: 450
+		Cost: 500
 	Tooltip:
 		Name: Intruder
 	UpdatesPlayerStatistics:
@@ -272,7 +270,7 @@ GUNW:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 30000
+		HP: 26000
 	Armor:
 		Type: Light
 	Mobile:
@@ -387,7 +385,7 @@ INTL:
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
-		Cost: 800
+		Cost: 700
 	Tooltip:
 		Name: Interloper
 	UpdatesPlayerStatistics:
@@ -396,7 +394,7 @@ INTL:
 		BuildPaletteOrder: 40
 		Prerequisites: warp, ~vehicles.scrin, ~techlevel.low
 		Queue: Vehicle
-		Description: Heavily armoured transport craft.\n  Strong vs Light Vehicles, Infantry\n  Weak vs Tanks, Aircraft
+		Description: Heavily armoured transport craft.\n  Strong vs Light Vehicles\n  Weak vs Tanks, Aircraft
 		IconPalette: chrome
 	Mobile:
 		Speed: 135
@@ -508,7 +506,7 @@ DEVO:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 35000
+		HP: 30000
 	Armor:
 		Type: Light
 	Mobile:
@@ -729,7 +727,7 @@ STMR:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 40
 		Prerequisites: nerv, grav, ~aircraft.scrin, ~techlevel.medium
-		Description: Durable patrol craft.\n  Strong vs Vehicles, Aircraft\n  Weak vs Infantry, Buildings
+		Description: Durable patrol craft.\n  Strong vs Light Vehicles, Aircraft\n  Weak vs Tanks, Buildings
 		IconPalette: chrome
 	Valued:
 		Cost: 1750
@@ -1867,7 +1865,7 @@ NERV:
 		Proxy: rad.scrin.stolen
 	RevealActorsPower@RESOURCESCAN:
 		CameraActor: camera.resourcescan
-		TargetActors: mine, gmine, split2, split3, splitblue
+		TargetActors: mine, gmine, split2, split3, splitblue, proc, proc.td, proc.scrin
 		LifeTime: 250
 		OrderName: resourcescan
 		Icon: rescanpower
@@ -2230,7 +2228,7 @@ MANI:
 		OnFireSound: suppression.aud
 		SupportPowerPaletteOrder: 10
 		Range: 2
-		ValidStances: Enemy, Neutral
+		ValidStances: Ally, Enemy, Neutral
 
 RIFT:
 	Inherits: ^ScienceBuilding
@@ -2365,7 +2363,7 @@ PTUR:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	Power:
-		Amount: -40
+		Amount: -25
 		RequiresCondition: !being-warped
 	BodyOrientation:
 		UseClassicFacingFudge: True
