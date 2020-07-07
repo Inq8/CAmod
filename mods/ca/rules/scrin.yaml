@@ -45,7 +45,7 @@ S1:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 5000
+		HP: 6500
 	Armament@PRIMARY:
 		Weapon: WarriorGun
 		MuzzleSequence: muzzle
@@ -82,7 +82,7 @@ S3:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 2500
+		HP: 3800
 	Armament@PRIMARY:
 		Weapon: DisintegratorBeamAA
 		LocalOffset: 150,0,400
@@ -114,7 +114,7 @@ S4:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 115
 		Prerequisites: nerv, ~infantry.scrin, ~techlevel.infonly
-		Description: Heavy assault infantry.\n  Can teleport short distances.\n  Strong vs Buildings, Defenses, Light Vehicles\n  Weak vs Infantry, Aircraft
+		Description: Heavy assault infantry.\n  Can teleport short distances.\n  Strong vs Structures, Defenses, Light Vehicles\n  Weak vs Infantry, Aircraft
 		IconPalette: chrome
 	Valued:
 		Cost: 500
@@ -156,6 +156,8 @@ S6:
 		Name: Assimilator
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
+	Health:
+		HP: 3000
 	WithInfantryBody:
 	Passenger:
 		PipType: Yellow
@@ -194,7 +196,7 @@ MAST:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 5000
+		HP: 7500
 	Mobile:
 		Speed: 49
 	Armament@PRIMARY:
@@ -270,12 +272,12 @@ GUNW:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 26000
+		HP: 30000
 	Armor:
 		Type: Light
 	Mobile:
 		Speed: 113
-		TurnSpeed: 5
+		TurnSpeed: 7
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 	RevealsShroud:
 		MinRange: 4c0
@@ -321,7 +323,7 @@ SEEK:
 		BuildPaletteOrder: 30
 		Prerequisites: warp, ~vehicles.scrin, ~techlevel.low
 		Queue: Vehicle
-		Description: Light hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles\n  Weak vs Aircraft
+		Description: Light hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles, Structures\n  Weak vs Aircraft, Infantry
 		IconPalette: chrome
 	Mobile:
 		Speed: 135
@@ -458,7 +460,7 @@ CORR:
 		BuildPaletteOrder: 65
 		Prerequisites: nerv, ~vehicles.scrin, ~techlevel.medium
 		Queue: Vehicle
-		Description: Short-ranged anti-infantry/structure unit.\n  Strong vs Infantry, Buildings\n  Weak vs Tanks, Aircraft
+		Description: Short-ranged anti-infantry/structure unit.\n  Strong vs Infantry, Structures\n  Weak vs Tanks, Aircraft
 		IconPalette: chrome
 	Mobile:
 		Speed: 82
@@ -495,7 +497,7 @@ DEVO:
 		Queue: Vehicle
 		BuildPaletteOrder: 135
 		Prerequisites: nerv, ~vehicles.scrin, ~techlevel.medium
-		Description: Medium hover tank.\n  Can move in any direction while firing.\n  Strong vs Vehicles, Buildings\n  Weak vs Aircraft
+		Description: Medium hover tank.\n  Can move in any direction while firing.\n  Strong vs Vehicles, Structures\n  Weak vs Aircraft
 		IconPalette: chrome
 	Valued:
 		Cost: 1250
@@ -511,7 +513,7 @@ DEVO:
 		Type: Light
 	Mobile:
 		TurnSpeed: 255
-		Speed: 82
+		Speed: 100
 	Hovers:
 		BobDistance: -25
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
@@ -561,7 +563,7 @@ RUIN:
 		BuildPaletteOrder: 150
 		Prerequisites: scrt, ~vehicles.scrin, ~techlevel.high
 		Queue: Vehicle
-		Description: Long-range artillery.\n  Strong vs Buildings, Infantry\n  Weak vs Tanks, Aircraft
+		Description: Long-range artillery.\n  Strong vs Structures, Infantry\n  Weak vs Tanks, Aircraft
 		IconPalette: chrome
 	Mobile:
 		Speed: 100
@@ -727,7 +729,7 @@ STMR:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 40
 		Prerequisites: nerv, grav, ~aircraft.scrin, ~techlevel.medium
-		Description: Durable patrol craft.\n  Strong vs Light Vehicles, Aircraft\n  Weak vs Tanks, Buildings
+		Description: Durable patrol craft.\n  Strong vs Light Vehicles, Aircraft\n  Weak vs Tanks, Structures
 		IconPalette: chrome
 	Valued:
 		Cost: 1750
@@ -806,7 +808,7 @@ DEVA:
 		BuildPaletteOrder: 55
 		BuildDurationModifier: 115
 		Prerequisites: scrt, grav, ~aircraft.scrin, ~techlevel.high
-		Description: Long-range siege warship.\n	Strong vs Buildings, Infantry, Slow Vehicles\n	Weak vs Aircraft
+		Description: Long-range siege warship.\n	Strong vs Structures, Infantry\n	Weak vs Aircraft, Tanks
 		IconPalette: chrome
 	Voiced:
 		VoiceSet: DevastatorVoice
