@@ -154,7 +154,7 @@ GunWalkerZapAA:
 			Heavy: 100
 
 PlasmaDiscs:
-	Range: 6c0
+	Range: 5c512
 	Report: seeker-fire1.aud, seeker-fire2.aud, seeker-fire3.aud
 	ReloadDelay: 60
 	Burst: 5
@@ -167,15 +167,16 @@ PlasmaDiscs:
 		Speed: 450
 		LaunchAngle: 50
 		Inaccuracy: 0c256
+		Blockable: false
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 2200
+		Damage: 2000
 		Versus:
 			None: 40
-			Wood: 80
+			Wood: 75
 			Light: 85
 			Heavy: 100
-			Concrete: 80
+			Concrete: 85
 			Brick: 50
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
@@ -222,7 +223,7 @@ DevourerLaser:
 	Inherits: Laser
 	Range: 7c512
 	Report: devourer-fire1.aud, devourer-fire2.aud, devourer-fire3.aud
-	ReloadDelay: 130
+	ReloadDelay: 90
 	Projectile: LaserZap
 		Duration: 20
 		Color: 00FF0080
@@ -232,14 +233,14 @@ DevourerLaser:
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 16000
+		Damage: 12000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
 			None: 50
 			Light: 80
-			Wood: 20
+			Wood: 30
 			Heavy: 100
-			Concrete: 65
+			Concrete: 50
 
 RuinerCannon:
 	Inherits: 155mm
@@ -285,7 +286,7 @@ TripodLaser:
 		Damage: 5200
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
-			None: 70
+			None: 80
 			Light: 70
 			Wood: 62
 			Heavy: 105
@@ -341,11 +342,11 @@ DevastatorDiscs:
 		Inaccuracy: 1c768
 		Speed: 180
 	Warhead@1Dam: SpreadDamage
-		Damage: 3000
+		Damage: 3400
 		Versus:
 			None: 150
 			Wood: 100
-			Light: 80
+			Light: 100
 			Heavy: 70
 			Concrete: 90
 			Brick: 90
@@ -383,7 +384,6 @@ InvaderZap:
 			Light: 70
 			Heavy: 100
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
-		ValidTargets: Enemy, Neutral
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
@@ -401,6 +401,7 @@ InvaderZapAA:
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air
+		ValidStances: Enemy, Neutral
 
 PlasmaTurretGun:
 	Range: 6c0

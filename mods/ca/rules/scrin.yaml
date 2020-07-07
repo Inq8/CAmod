@@ -643,11 +643,6 @@ TPOD:
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
-	SelfHealing@DEFAULT:
-		PercentageStep: 1
-		Delay: 25
-		HealIfBelow: 50
-		DamageCooldown: 150
 	Carryable:
 		LocalOffset: 0,0,700
 	ProducibleWithLevel:
@@ -742,8 +737,8 @@ STMR:
 	Health:
 		HP: 40000
 	RevealsShroud:
-		Range: 12c0
-		MinRange: 10c0
+		Range: 10c0
+		MinRange: 8c0
 		Type: GroundPosition
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
@@ -806,7 +801,7 @@ DEVA:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 55
-		BuildDurationModifier: 115
+		BuildDurationModifier: 80
 		Prerequisites: scrt, grav, ~aircraft.scrin, ~techlevel.high
 		Description: Long-range siege warship.\n	Strong vs Structures, Infantry\n	Weak vs Aircraft, Tanks
 		IconPalette: chrome
@@ -868,7 +863,7 @@ PAC:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 55
-		BuildDurationModifier: 115
+		BuildDurationModifier: 80
 		Prerequisites: sign, scrt, grav, ~aircraft.scrin, ~techlevel.high
 		Description: Warship that launches a squadron\nof assault craft.\n	Strong vs Vehicles, Infantry, Aircraft
 		IconPalette: chrome
