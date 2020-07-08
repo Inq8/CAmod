@@ -279,7 +279,9 @@ namespace OpenRA.Mods.CA.Traits
 					unitsHangingAroundTheBase.Add(a);
 				}
 
-				if (a.Info.HasTraitInfo<AircraftInfo>() && a.Info.HasTraitInfo<AttackBaseInfo>())
+				if (a.Info.HasTraitInfo<AircraftInfo>()
+					&& a.Info.HasTraitInfo<AttackBaseInfo>()
+					&& a.Info.HasTraitInfo<AmmoPoolInfo>())
 				{
 					var airSquads = SquadsCA.Where(s => s.Type == SquadTypeCA.Air);
 					var matchingSquadFound = false;
@@ -328,7 +330,7 @@ namespace OpenRA.Mods.CA.Traits
 				var attackForce = RegisterNewSquad(bot, SquadTypeCA.Assault);
 
 				foreach (var a in unitsHangingAroundTheBase)
-					if (!a.Info.HasTraitInfo<AircraftInfo>() && !Info.NavalUnitsTypes.Contains(a.Info.Name))
+					if ((!a.Info.HasTraitInfo<AircraftInfo>() || !a.Info.HasTraitInfo<AmmoPoolInfo>()) && !Info.NavalUnitsTypes.Contains(a.Info.Name))
 						attackForce.Units.Add(a);
 
 				unitsHangingAroundTheBase.Clear();
