@@ -136,6 +136,7 @@ S4:
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	-TakeCover:
+	-Crushable:
 	PortableChrono:
 		ChargeDelay: 250
 		ChronoshiftSound: scrinport.aud
@@ -211,6 +212,7 @@ MAST:
 		PauseOnCondition: being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	-Crushable:
 	-TakeCover:
 	ExternalCondition@PRODUCED:
 		Condition: produced
@@ -1866,7 +1868,7 @@ NERV:
 		LifeTime: 250
 		OrderName: resourcescan
 		Icon: rescanpower
-		ChargeInterval: 3000
+		ChargeInterval: 4500
 		Description: Resource Scan
 		LongDesc: Reveals map resources.
 		LaunchSound: tibscan.aud
@@ -1875,7 +1877,7 @@ NERV:
 		OrderName: ichorseed
 		Icon: ichorpower
 		Actor: ichor.seeder
-		ChargeInterval: 4500
+		ChargeInterval: 6000
 		Description: Ichor Seed
 		Duration: 250
 		ActivationDelay: 0
