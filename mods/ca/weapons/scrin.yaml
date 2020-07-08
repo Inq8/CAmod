@@ -69,9 +69,11 @@ EnslaveInfantry:
 		SecondaryBeamWidth: 90
 		SecondaryBeamColor:FF00FF30
 	ValidTargets: Infantry
+	InvalidTargets: MindControlImmune
 	Warhead@1Dam: TargetDamage
 	Warhead@2Owner: ChangeOwner
 		ValidTargets: Infantry
+		InvalidTargets: MindControlImmune
 		Duration: 500
 		Range: 0c42
 	Warhead@2Eff: CreateEffect
@@ -91,9 +93,11 @@ EnslaveVehicle:
 		SecondaryBeamWidth: 90
 		SecondaryBeamColor:FF00FF30
 	ValidTargets: Vehicle
+	InvalidTargets: MindControlImmune
 	Warhead@1Dam: TargetDamage
 	Warhead@2Owner: ChangeOwner
 		ValidTargets: Vehicle
+		InvalidTargets: MindControlImmune
 		Duration: 500
 		Range: 0c42
 	Warhead@2Eff: CreateEffect
@@ -333,7 +337,7 @@ StormRiderZapAA:
 DevastatorDiscs:
 	Inherits: PlasmaDiscs
 	Range: 14c0
-	ReloadDelay: 240
+	ReloadDelay: 180
 	Report: devastator-fire1.aud, devastator-fire2.aud, devastator-fire3.aud
 	Burst: 7
 	BurstDelays: 5
@@ -342,7 +346,7 @@ DevastatorDiscs:
 		Inaccuracy: 1c768
 		Speed: 180
 	Warhead@1Dam: SpreadDamage
-		Damage: 3400
+		Damage: 2600
 		Versus:
 			None: 150
 			Wood: 100
@@ -378,9 +382,9 @@ InvaderZap:
 	Warhead@1Dam: SpreadDamage
 		Damage: 1500
 		Versus:
-			None: 100
-			Wood: 20
-			Concrete: 20
+			None: 80
+			Wood: 15
+			Concrete: 15
 			Light: 70
 			Heavy: 100
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath

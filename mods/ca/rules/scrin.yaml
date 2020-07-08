@@ -225,6 +225,8 @@ MAST:
 		PlayerExperience: 25
 		CaptureDelay: 100
 		ConsumedByCapture: false
+	Targetable:
+		TargetTypes: Ground, Infantry, Disguise, MindControlImmune
 
 #
 # ---- Vehicles
@@ -289,13 +291,13 @@ GUNW:
 		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: GunWalkerZap
-		LocalOffset: 700,92,60, 700,-92,60
+		LocalOffset: 750,92,25, 750,-92,25
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: GunWalkerZapAA
-		LocalOffset: 700,92,60, 700,-92,60
+		LocalOffset: 750,92,25, 750,-92,25
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
@@ -748,11 +750,11 @@ STMR:
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: StormriderZap
-		LocalOffset: 0,213,-85, 0,-213,-85
+		LocalOffset: 350,213,-85, 350,-213,-85
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: StormriderZapAA
-		LocalOffset: 0,213,-85, 0,-213,-85
+		LocalOffset: 350,213,-85, 350,-213,-85
 	AttackAircraft:
 		FacingTolerance: 90
 		PersistentTargeting: false
@@ -774,11 +776,11 @@ STMR:
 		InitialStance: HoldFire
 		InitialStanceAI: HoldFire
 	Contrail@1:
-		Offset: -300,-143,0
+		Offset: -250,-250,100
 		UsePlayerColor: true
 		ZOffset: -512
 	Contrail@2:
-		Offset: -300,143,0
+		Offset: -250,250,100
 		UsePlayerColor: true
 		ZOffset: -512
 	SpawnActorOnDeath:
@@ -810,7 +812,7 @@ DEVA:
 	Voiced:
 		VoiceSet: DevastatorVoice
 	Valued:
-		Cost: 2000
+		Cost: 2200
 	Tooltip:
 		Name: Devastator Warship
 	UpdatesPlayerStatistics:
@@ -829,7 +831,7 @@ DEVA:
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: DevastatorDiscs
-		LocalOffset: -20,0,0
+		LocalOffset: 500,0,0
 	AttackAircraft:
 		FacingTolerance: 10
 		ForceFireIgnoresActors: True
@@ -867,12 +869,12 @@ PAC:
 		BuildPaletteOrder: 55
 		BuildDurationModifier: 80
 		Prerequisites: sign, scrt, grav, ~aircraft.scrin, ~techlevel.high
-		Description: Warship that launches a squadron\nof assault craft.\n	Strong vs Vehicles, Infantry, Aircraft
+		Description: Warship that launches a squadron\nof assault craft.\n	Strong vs Vehicles, Infantry, Aircraft\n  Weak vs Structures
 		IconPalette: chrome
 	Voiced:
 		VoiceSet: PlanetaryAssaultCarrierVoice
 	Valued:
-		Cost: 2500
+		Cost: 2600
 	Tooltip:
 		Name: Planetary Assault Carrier
 	UpdatesPlayerStatistics:
