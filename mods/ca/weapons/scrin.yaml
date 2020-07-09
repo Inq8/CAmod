@@ -332,6 +332,9 @@ StormRiderZapAA:
 		Image: scrinzap
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
+		Damage: 2400
+		Range: 0, 0c64, 0c256, 3c0
+		Falloff: 100, 100, 20, 10
 		ValidTargets: Air
 
 DevastatorDiscs:
@@ -346,13 +349,13 @@ DevastatorDiscs:
 		Inaccuracy: 1c768
 		Speed: 180
 	Warhead@1Dam: SpreadDamage
-		Damage: 2600
+		Damage: 2800
 		Versus:
 			None: 150
 			Wood: 100
-			Light: 100
-			Heavy: 50
-			Concrete: 90
+			Light: 90
+			Heavy: 40
+			Concrete: 100
 			Brick: 90
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
@@ -404,6 +407,8 @@ InvaderZapAA:
 		Image: scrinzap
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
+		Range: 0, 0c64, 0c256, 3c0
+		Falloff: 100, 100, 20, 10
 		ValidTargets: Air
 		ValidStances: Enemy, Neutral
 
@@ -440,7 +445,7 @@ StormColumnZap:
 	ReloadDelay: 30
 	Burst: 5
 	BurstDelays: 3
-	Range: 8c512
+	Range: 9c0
 	StartBurstReport: stormcolumn-fire1.aud, stormcolumn-fire2.aud
 	Projectile: ElectricBolt
 		Colors: 8A2BFFAA,B961FDAA,B5A3E8BB,6D4AD2AA,B289DCAA

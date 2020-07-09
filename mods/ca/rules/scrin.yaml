@@ -281,7 +281,7 @@ GUNW:
 		Type: Light
 	Mobile:
 		Speed: 113
-		TurnSpeed: 7
+		TurnSpeed: 8
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 	RevealsShroud:
 		MinRange: 4c0
@@ -302,6 +302,7 @@ GUNW:
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
 	AttackFrontal:
+		FacingTolerance: 10
 		PauseOnCondition: empdisable || being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -959,7 +960,7 @@ INVA:
 	Tooltip:
 		Name: Invader
 	Health:
-		HP: 3500
+		HP: 5000
 	RevealsShroud:
 		Range: 2c0
 		MinRange: 1c0
@@ -1870,7 +1871,7 @@ NERV:
 		LifeTime: 250
 		OrderName: resourcescan
 		Icon: rescanpower
-		ChargeInterval: 4500
+		ChargeInterval: 6000
 		Description: Resource Scan
 		LongDesc: Reveals map resources.
 		LaunchSound: tibscan.aud
@@ -1879,7 +1880,7 @@ NERV:
 		OrderName: ichorseed
 		Icon: ichorpower
 		Actor: ichor.seeder
-		ChargeInterval: 6000
+		ChargeInterval: 4500
 		Description: Ichor Seed
 		Duration: 250
 		ActivationDelay: 0
