@@ -533,6 +533,322 @@ inva:
 # ---- buildings
 #
 
+reac:
+	Inherits: ^StructureOverlays
+	idle: reac
+	damaged-idle: nuke
+		Start: 4
+		Length: 4
+		Tick: 1000
+	dead: nuke
+		Start: 8
+		Tick: 1000
+	make: reacmake
+		Length: *
+		Tick: 80
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: nukeicnh
+
+proc.scrin:
+	Inherits: ^StructureOverlays
+	idle: procscrin
+		Length: 1
+		Tick: 120
+		Offset: -2,0
+	damaged-idle: proc2
+		Start: 30
+		Length: 6
+		Tick: 120
+		Offset: 2,4
+	dead: proc2
+		Start: 60
+		Tick: 800
+		Offset: 2,4
+	make: proc2make
+		Length: *
+		Tick: 80
+		Offset: 2,4
+	resources: proc2twr
+		Length: 6
+		Offset: -30,-17
+	damaged-resources: proc2twr
+		Start: 6
+		Length: 6
+		Offset: -30,-17
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: proc2icnh
+
+port:
+	Inherits: ^StructureOverlays
+	idle:
+		Length: 1
+	idle-overlay:
+		Start: 1
+		Length: 13
+		BlendMode: Additive
+		ZOffset: -512
+	damaged-idle: pyle
+		Start: 10
+		Length: 10
+		Tick: 100
+	dead: pyle
+		Start: 20
+		Tick: 100
+	make: pylemake
+		Length: *
+		Tick: 80
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: pyleicnh
+
+warp:
+	Inherits: ^StructureOverlays
+	idle: warp
+		ZOffset: -512
+	idle-overlay:
+		Start: 1
+		Length: 13
+		BlendMode: Additive
+		ZOffset: -256
+	damaged-idle: weap
+		Start: 1
+	place: weapmake
+		Start: 14
+	make: weapmake
+		Length: *
+	build-top: weap3
+		Length: 10
+		ZOffset: 511
+	damaged-build-top: weap2
+		Start: 4
+		Length: 4
+		ZOffset: 511
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	emp-overlay: emp_fx01
+		ZOffset: 2048
+	chrono-overlay: chronofade
+		ZOffset: 2048
+	icon: weapicon
+	fake-icon: weaficon
+
+grav:
+	Inherits: ^StructureOverlays
+	idle: grav
+		ZOffset: -512
+	idle-overlay: grav
+		Start: 2
+		Length: 13
+		BlendMode: Additive
+		ZOffset: -256
+	idle-pylon: grav
+		Start: 1
+		Length: 1
+		ZOffset: 2048
+	damaged-idle: miss
+		Start: 1
+	dead: miss
+		Start: 2
+		Tick: 800
+	make: missmake
+		Length: *
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: missicon
+
+nerv:
+	Inherits: ^StructureOverlays
+	idle: nerv
+	damaged-idle: dome
+		Start: 1
+	make: domemake
+		Length: *
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: domeicon
+
+srep:
+	Inherits: ^StructureOverlays
+	idle: srep
+		Offset: 0,1
+		ZOffset: -1c511
+	damaged-idle: fix
+		Start: 7
+		Offset: 0,1
+		ZOffset: -1c511
+	active: fix
+		Start: 1
+		Length: 6
+		Offset: 0,1
+		Tick: 100
+		ZOffset: -1c511
+	damaged-active: fix
+		Start: 8
+		Length: 6
+		Offset: 0,1
+		Tick: 100
+		ZOffset: -1c511
+	make: fixmake
+		Length: *
+		Offset: 0,1
+	bib: mbFIX
+		Length: *
+		ZOffset: -1c511
+		Offset: 0,-4
+		UseTilesetExtension: true
+		TilesetOverrides:
+			BARREN: TEMPERAT
+	icon: fixicon
+	fake-icon: fixficon
+
+rea2:
+	Inherits: ^StructureOverlays
+	idle: rea2
+		Offset: 2,0
+	damaged-idle: apwr
+		Start: 1
+		Offset: 0,-10
+	make: apwrmake
+		Length: *
+		Offset: 0,-10
+	dead: apwrdead
+		Tick: 800
+		Offset: 0,-10
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: apwricon
+
+scrt:
+	Inherits: ^StructureOverlays
+	idle: scrt
+		Offset: 3,0
+	active: stek
+	damaged-active: stek
+		Start: 1
+	damaged-idle: stek
+		Start: 1
+	make: stekmake
+		Length: *
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: stekicon
+
+silo.scrin:
+	Inherits: ^StructureOverlays
+	idle: siloscrin
+		Offset: 0,-1
+	damaged-idle: silo
+		Start: 9
+		Offset: 0,-1
+	stages: silo
+		Length: 9
+		Offset: 0,-1
+	damaged-stages: silo
+		Start: 9
+		Length: 9
+		Offset: 0,-1
+	make: silomake
+		Length: *
+		Offset: 0,-1
+	bib: mbSILO
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+			BARREN: TEMPERAT
+	icon: siloicon
+
+sign:
+	Inherits: ^StructureOverlays
+	idle: sign
+	damaged-idle: bio
+		Start: 1
+	dead: bio
+		Start: 2
+		Tick: 800
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	make: biomake
+		Length: *
+	icon: signicon
+
+mani:
+	Inherits: ^StructureOverlays
+	idle: mani
+	damaged-idle: bio
+		Start: 1
+	dead: bio
+		Start: 2
+		Tick: 800
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	make: biomake
+		Length: *
+	icon: maniicon
+
+rift:
+	Inherits: ^StructureOverlays
+	idle: rift
+	damaged-idle: weat
+		Start: 1
+	active: weat
+		Start: 2
+		Length: 1
+		Tick: 10000
+	damaged-active: weat
+		Start: 3
+		Length: 1
+		Tick: 10000
+	make: weatmake
+		Length: *
+	active-overlay: DATA.R8
+		AddExtension: False
+		Start: 3947
+		Length: 17
+		Tick: 100
+		BlendMode: Additive
+		ZOffset: 511
+	bib: mbIRON
+		Length: *
+		Offset: 0,2
+		UseTilesetExtension: true
+		TilesetOverrides:
+			JUNGLE: TEMPERAT
+			BARREN: TEMPERAT
+	icon: rifticon
+
 ptur:
 	Inherits: ^StructureOverlays
 	idle: ptur
@@ -598,82 +914,6 @@ scol:
 		TilesetOverrides:
 			BARREN: TEMPERAT
 	icon: scolicon
-
-sign:
-	Inherits: ^StructureOverlays
-	idle: bio
-	damaged-idle: bio
-		Start: 1
-	dead: bio
-		Start: 2
-		Tick: 800
-	bib: bib3
-		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	make: biomake
-		Length: *
-	icon: signicon
-
-mani:
-	Inherits: ^StructureOverlays
-	idle: sgen
-		Offset: 0,-10
-	active: sgen
-		Length: 4
-		Offset: 0,-10
-	damaged-idle: sgen
-		Start: 4
-		Offset: 0,-10
-	damaged-active: sgen
-		Start: 4
-		Length: 4
-		Offset: 0,-10
-	make: sgenmake
-		Length: *
-		Offset: 0,-10
-	dead: sgen
-		Start: 4
-		Tick: 800
-		Offset: 0,-10
-	bib: bib2
-		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: maniicon
-
-rift:
-	Inherits: ^StructureOverlays
-	idle: weat
-	damaged-idle: weat
-		Start: 1
-	active: weat
-		Start: 2
-		Length: 1
-		Tick: 10000
-	damaged-active: weat
-		Start: 3
-		Length: 1
-		Tick: 10000
-	make: weatmake
-		Length: *
-	active-overlay: DATA.R8
-		AddExtension: False
-		Start: 3947
-		Length: 17
-		Tick: 100
-		BlendMode: Additive
-		ZOffset: 511
-	bib: mbIRON
-		Length: *
-		Offset: 0,2
-		UseTilesetExtension: true
-		TilesetOverrides:
-			JUNGLE: TEMPERAT
-			BARREN: TEMPERAT
-	icon: rifticon
 
 #
 # ---- animations

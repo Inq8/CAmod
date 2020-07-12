@@ -1,4 +1,18 @@
 
+^ScrinBuilding:
+	Inherits@1: ^Building
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	SpawnActorOnDeath:
+		Actor: s1
+	SpawnActorsOnSell:
+		ActorTypes: s1
+	ActorPreviewPlaceBuildingPreview:
+	ActorPreviewPlaceBuildingPreview:
+		OverridePalette: placebuilding
+	Building:
+		BuildSounds: scrinbuild.aud
+
 #
 # ---- Infantry
 #
@@ -1352,13 +1366,13 @@ SFAC:
 		ActorTypes: s1,s1,s1,s1,s6
 
 REAC:
-	Inherits: ^BuildingTD
+	Inherits: ^ScrinBuilding
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@shape: ^2x2Shape
 	HitShape:
 		TargetableOffsets: 630,299,0
 	RenderSprites:
-		Image: nuke
+		PlayerPalette: overlayplayerscrin
 	WithSpriteBody:
 		PauseOnCondition: disabled
 	Buildable:
@@ -1401,21 +1415,19 @@ REAC:
 		Types: SpyInfiltrate, PowerInfiltrate
 
 REA2:
-	Inherits: ^BuildingTD
+	Inherits: ^ScrinBuilding
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
-	Inherits@shape: ^2x2Shape
+	Inherits@shape: ^3x2Shape
 	HitShape:
-		TargetableOffsets: 630,299,0
-	RenderSprites:
-		Image: nuk2
+		TargetableOffsets: -355,-1024,0
 	WithSpriteBody:
 		PauseOnCondition: disabled
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 110
 		Prerequisites: nerv, ~structures.scrin, ~techlevel.low
-		IconPalette: chrometd
-		Description: Provides double the power of\na standard Nuclear Power Plant.
+		IconPalette: chrome
+		Description: Provides double the power of\na standard Reactor.
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -1423,8 +1435,8 @@ REA2:
 	ProvidesPrerequisite:
 		Prerequisite: anypower
 	Building:
-		Footprint: xX xx ==
-		Dimensions: 2,3
+		Footprint: xxx Xxx ===
+		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Health:
 		HP: 70000
@@ -1448,7 +1460,7 @@ REA2:
 		Types: SpyInfiltrate, PowerInfiltrate
 
 PROC.SCRIN:
-	Inherits: ^BuildingTD
+	Inherits: ^ScrinBuilding
 	Inherits@2: ^BotIncome
 	HitShape:
 		Type: Rectangle
@@ -1458,8 +1470,6 @@ PROC.SCRIN:
 		Type: Rectangle
 			TopLeft: -512, -1450
 			BottomRight: 896, -512
-	RenderSprites:
-		Image: proc2
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -1522,10 +1532,8 @@ PROC.SCRIN:
 	CashHackable:
 
 PORT:
-	Inherits: ^BuildingTD
+	Inherits: ^ScrinBuilding
 	Inherits@shape: ^2x2Shape
-	RenderSprites:
-		Image: pyle
 	Selectable:
 		Bounds: 48,48
 	HitShape:
@@ -1562,14 +1570,8 @@ PORT:
 	RallyPoint:
 	Exit@1:
 		RequiresCondition: !being-captured
-		SpawnOffset: -170,810,0
+		SpawnOffset: 0,512,0
 		ExitCell: 1,2
-		ProductionTypes: Soldier, Infantry
-	Exit@2:
-		RequiresCondition: !being-captured
-		SpawnOffset: -725,640,0
-		ExitCell: 0,2
-		ProductionTypes: Soldier, Infantry
 	Production:
 		Produces: Infantry, Soldier
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -1602,13 +1604,11 @@ PORT:
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
 		Types: SpyInfiltrate
+	WithIdleOverlay:
 
 WARP:
-	Inherits: ^BuildingTD
+	Inherits: ^ScrinBuilding
 	Inherits@shape: ^3x2Shape
-	Inherits@gdiupg: ^GDIUpgradeProducer
-	RenderSprites:
-		Image: awep
 	Selectable:
 		Bounds: 72,48
 	HitShape:
@@ -1763,13 +1763,10 @@ WARP:
 		RequiresPrerequisites: structures.scrin
 		Prerequisite: vehicles.scrin
 	WithBuildingBib:
-	WithProductionDoorOverlay:
-		RequiresCondition: !build-incomplete
-		Sequence: build-top
 	RallyPoint:
 	Exit@1:
 		RequiresCondition: !being-captured
-		SpawnOffset: -341,-341,0
+		SpawnOffset: 0,0,0
 		ExitCell: 0,2
 	Production:
 		Produces: Vehicle
@@ -1802,33 +1799,27 @@ WARP:
 	SequencePlaceBuildingPreview:
 		Sequence: place
 		SequencePalette: placebuildingtd
+	WithIdleOverlay:
 
 NERV:
-	Inherits: ^BuildingTD
+	Inherits: ^ScrinBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	HitShape:
-		TargetableOffsets: 0,0,0, 0,512,0, 420,-598,256
-		Type: Rectangle
-			TopLeft: -1024, -384
-			BottomRight: 1024, 1024
-	RenderSprites:
-		Image: hq
+		UseTargetableCellsOffsets: false
+		TargetableOffsets: 0,0,0, 630,-384,0, 630,384,0, -700,-512,0, -700,512,0
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 90
 		Prerequisites: proc.scrin, ~structures.scrin, ~techlevel.medium
-		IconPalette: chrometd
 		Description: Provides an overview of the battlefield.\n  Requires power to operate.
 	Valued:
 		Cost: 1800
 	Tooltip:
 		Name: Nerve Center
 	Building:
-		Footprint: X_ xx ==
+		Footprint: xx xx ==
 		Dimensions: 2,3
-		LocalCenterOffset: 0,-512,0
-	WithSpriteBody:
-		PauseOnCondition: disabled || being-warped
+		LocalCenterOffset: 0,-768,0
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate,  SabInfiltrate
 	Health:
@@ -1892,15 +1883,12 @@ NERV:
 		PauseOnCondition: disabled || empdisable || being-warped
 
 SCRT:
-	Inherits: ^ScienceBuilding
+	Inherits: ^ScrinBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
-	Inherits@shape: ^3x2Shape
-	RenderSprites:
-		Image: gtek
+	Inherits@shape: ^2x2Shape
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 150
-		IconPalette: chrometd
 		Prerequisites: warp, nerv, ~structures.scrin, ~techlevel.high
 		Description: Provides Scrin advanced technologies.
 	Valued:
@@ -1908,8 +1896,8 @@ SCRT:
 	Tooltip:
 		Name: Scrin Tech Assembler
 	Building:
-		Footprint: xxx =xx ===
-		Dimensions: 3,3
+		Footprint: xx xx ==
+		Dimensions: 2,3
 		LocalCenterOffset: 0,-512,0
 	Health:
 		HP: 100000
@@ -1940,18 +1928,15 @@ SCRT:
 	ProvidesPrerequisite@buildingname:
 
 GRAV:
-	Inherits: ^Building
+	Inherits: ^ScrinBuilding
 	Inherits@shape: ^3x2Shape
-	RenderSprites:
-		Image: afld
 	HitShape:
-		UseTargetableCellsOffsets: false
-		TargetableOffsets: 0,0,0, 420,0,0, 420,-1024,0, 420,1024,0, -777,0,0, -777,-1024,0, -777,1024,0
+		TargetableOffsets: -355,-1024,0
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 130
 		Prerequisites: nerv, ~structures.scrin, ~techlevel.medium
-		Description: Produces and reloads aircraft.
+		Description: Produces Scrin aircraft.
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -1959,8 +1944,9 @@ GRAV:
 	Selectable:
 		Bounds: 72,48
 	Building:
-		Footprint: xxx xxx
-		Dimensions: 3,2
+		Footprint: xxx xxx ===
+		Dimensions: 3,3
+		LocalCenterOffset: 0,-768,0
 	Health:
 		HP: 100000
 	Armor:
@@ -1974,12 +1960,11 @@ GRAV:
 	Exit@1:
 		RequiresCondition: !being-captured
 		ExitCell: 1,1
-		Facing: 192
+		Facing: 180
 	RallyPoint:
 	Production:
 		Produces: Aircraft, Plane
 		PauseOnCondition: forceshield || invulnerability || being-warped
-	Reservable:
 	ProvidesPrerequisite@scrin:
 		Factions: scrin
 		Prerequisite: aircraft.scrin
@@ -1998,9 +1983,6 @@ GRAV:
 	ProvidesPrerequisite@buildingname:
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate
-	InfiltrateForSupportPower:
-		Proxy: powerproxy.airstrike
-		Types: SpyInfiltrate
 	WithDecoration@primary:
 		RequiresSelection: true
 		Image: pips
@@ -2008,20 +1990,22 @@ GRAV:
 		ReferencePoint: Top
 		ZOffset: 256
 		RequiresCondition: primary
-	WithResupplyAnimation:
-		RequiresCondition: !build-incomplete
+	WithBuildingBib:
+	WithIdleOverlay@orb:
+	WithIdleOverlay@pylon:
+		Sequence: idle-pylon
 
 SIGN:
-	Inherits: ^ScienceBuilding
+	Inherits: ^ScrinBuilding
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
-	Inherits@shape: ^2x2Shape
+	Inherits@shape: ^3x2Shape
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Selectable:
-		Bounds: 48,48
+		Bounds: 72,48
 	Building:
-		Footprint: xx xx
-		Dimensions: 2,2
+		Footprint: xxx xxx ===
+		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Health:
 		HP: 80000
@@ -2066,9 +2050,7 @@ SIGN:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
 
 SREP:
-	Inherits: ^BuildingTD
-	RenderSprites:
-		Image: rep
+	Inherits: ^ScrinBuilding
 	HitShape:
 		TargetableOffsets: 840,0,0, 598,-640,0, 598,640,0, -1060,0,0, -768,-640,0, -768,640,0
 		Type: Polygon
@@ -2120,26 +2102,20 @@ SREP:
 		Prerequisite: repair
 
 SILO.SCRIN:
-	Inherits: ^BuildingTD
-	Inherits@shape: ^2x1Shape
-	RenderSprites:
-		Image: silo2
+	Inherits: ^ScrinBuilding
 	Valued:
-		Cost: 300
+		Cost: 150
 	Tooltip:
 		Name: Silo
 	Buildable:
 		BuildPaletteOrder: 35
 		Prerequisites: proc.scrin, ~structures.scrin, ~techlevel.infonly
 		Queue: Defense
-		IconPalette: chrometd
+		IconPalette: chrome
 		Description: Stores processed Tiberium, Ore and Gems
-	Building:
-		Footprint: xx
-		Dimensions: 2,1
 	-GivesBuildableArea:
 	Health:
-		HP: 60000
+		HP: 30000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -2148,13 +2124,11 @@ SILO.SCRIN:
 		HasMinibib: true
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack
-	-WithSpriteBody:
-	WithResourceLevelSpriteBody:
-		Sequence: stages
+	WithSpriteBody:
 	StoresResources:
 		PipCount: 5
+		Capacity: 3000
 		PipColor: Green
-		Capacity: 6000
 	-MustBeDestroyed:
 	SpawnActorsOnSell:
 		ActorTypes: c1,c7
@@ -2162,29 +2136,30 @@ SILO.SCRIN:
 		Amount: -10
 		RequiresCondition: !being-warped
 	Selectable:
-		DecorationBounds: 49,30
+		Bounds: 24,24
 	Explodes:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
 
 MANI:
-	Inherits: ^ScienceBuilding
+	Inherits: ^ScrinBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
+	Inherits@shape: ^2x2Shape
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 130
 		Prerequisites: scrt, ~structures.scrin, ~techlevel.superw
 		BuildLimit: 1
 		IconPalette: chrome
-		Description: Makes a group of units invisible for a short time.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Tiberium Stealth
+		Description: Slows enemy ground units movement and rate of fire.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Suppression Field
 	Valued:
 		Cost: 1500
 	Tooltip:
-		Name: Manipulator
+		Name: Field Manipulator
 	Building:
-		Footprint: xxx xx+
-		Dimensions: 3,2
-		LocalCenterOffset: 0,0,0
+		Footprint: xx xx
+		Dimensions: 2,2
+		LocalCenterOffset: 0,-512,0
 	Health:
 		HP: 100000
 	Armor:
@@ -2233,7 +2208,7 @@ MANI:
 		ValidStances: Ally, Enemy, Neutral
 
 RIFT:
-	Inherits: ^ScienceBuilding
+	Inherits: ^ScrinBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@shape: ^2x2Shape
 	Selectable:
@@ -2252,6 +2227,7 @@ RIFT:
 	Building:
 		Footprint: xx xx
 		Dimensions: 2,2
+		LocalCenterOffset: 0,-512,0
 	Health:
 		HP: 100000
 	Armor:
