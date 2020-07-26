@@ -493,6 +493,13 @@ tpod.destroyed:
 		UseClassicFacingFudge: True
 		ZOffset: -512
 
+smcv:
+	Inherits: ^VehicleOverlays
+	idle: smcv
+		Facings: 1
+		Offset: 0, -4
+	icon: amcvicnh
+
 stmr:
 	Inherits: ^VehicleOverlays
 	idle: stmr
@@ -533,6 +540,43 @@ inva:
 # ---- buildings
 #
 
+sfac:
+	Inherits: ^StructureOverlays
+	idle: sfac
+		Length: 1
+		Tick: 160
+		Offset: 0, -13
+	build: sfac
+		Length: 1
+		Tick: 160
+		Offset: 0, -13
+	pdox: afac
+		Length: 1
+		Tick: 160
+		Offset: 0, -13
+	damaged-idle: afac
+		Start: 24
+		Length: 4
+		Tick: 160
+	damaged-build: afac
+		Start: 24
+		Length: 4
+		Tick: 160
+	damaged-pdox: afac
+		Length: 1
+		Tick: 160
+		Offset: 0, -13
+	make: sfacmake
+		Length: *
+		Tick: 80
+		Offset: 0, -13
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: afacicon
+
 reac:
 	Inherits: ^StructureOverlays
 	idle: reac
@@ -572,13 +616,6 @@ proc.scrin:
 		Length: *
 		Tick: 80
 		Offset: 2,4
-	resources: proc2twr
-		Length: 6
-		Offset: -30,-17
-	damaged-resources: proc2twr
-		Start: 6
-		Length: 6
-		Offset: -30,-17
 	bib: bib2
 		Length: *
 		UseTilesetExtension: true

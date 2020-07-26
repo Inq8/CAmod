@@ -685,16 +685,16 @@ TPOD:
 		RequiresCondition: !being-warped
 
 SMCV:
-	Inherits: ^VehicleTD
+	Inherits: ^Vehicle
 	Inherits@SELECTION: ^SelectableSupportUnit
-	RenderSprites:
-		Image: amcv
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 300
 		Prerequisites: srep, ~vehicles.scrin, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Deploys into another Construction Yard.\n  Unarmed
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
 	Valued:
 		Cost: 3000
 	Tooltip:
@@ -709,11 +709,12 @@ SMCV:
 	Mobile:
 		Speed: 56
 		Locomotor: heavywheeled
+		TurnSpeed: 255
 	RevealsShroud:
 		Range: 4c0
 	Transforms:
 		IntoActor: sfac
-		Offset: -1,-1
+		Offset: -1, 0
 		Facing: 96
 		TransformSounds: placbldg.aud, build5.aud
 		NoTransformNotification: BuildingCannotPlaceAudio
@@ -729,6 +730,9 @@ SMCV:
 	-Crushable:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	Hovers:
+		BobDistance: -25
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
 
 #
 # ---- Aircraft
@@ -1270,11 +1274,9 @@ INVA.Husk.Empty.EMP:
 #
 
 SFAC:
-	Inherits: ^BuildingTD
+	Inherits: ^ScrinBuilding
 	Inherits@shape: ^3x2Shape
 	Inherits: ^BotFallbackInsurance
-	RenderSprites:
-		Image: afac
 	Building:
 		Footprint: xxx xxx ===
 		Dimensions: 3,3
@@ -1308,7 +1310,7 @@ SFAC:
 		RequiresCondition: factundeploy
 		PauseOnCondition: chrono-vortex || being-captured || c4 || build-incomplete || being-warped
 		IntoActor: smcv
-		Offset: 1,1
+		Offset: 1,0
 		Facing: 96
 	TransformsIntoMobile:
 		RequiresCondition: factundeploy
@@ -1343,10 +1345,6 @@ SFAC:
 	ProductionBar@Defense:
 		ProductionType: Defense
 		Color: 8A8A8A
-	WithDeathAnimation:
-		DeathSequence: dead
-		UseDeathTypeSuffix: false
-		DeathSequencePalette: overlayplayertd
 	BaseProvider:
 		PauseOnCondition: being-captured
 		Range: 16c0
@@ -1523,8 +1521,6 @@ PROC.SCRIN:
 		Actor: HARV.Scrin
 		SpawnOffset: 1,2
 		Facing: 64
-	WithResourceLevelOverlay:
-		RequiresCondition: !build-incomplete
 	Power:
 		Amount: -30
 		RequiresCondition: !being-warped
@@ -1605,6 +1601,7 @@ PORT:
 		Proxy: barracks.upgraded
 		Types: SpyInfiltrate
 	WithIdleOverlay:
+		RequiresCondition: !build-incomplete
 
 WARP:
 	Inherits: ^ScrinBuilding
@@ -1800,6 +1797,7 @@ WARP:
 		Sequence: place
 		SequencePalette: placebuildingtd
 	WithIdleOverlay:
+		RequiresCondition: !build-incomplete
 
 NERV:
 	Inherits: ^ScrinBuilding
@@ -1992,6 +1990,7 @@ GRAV:
 		RequiresCondition: primary
 	WithBuildingBib:
 	WithIdleOverlay@orb:
+		RequiresCondition: !build-incomplete
 	WithIdleOverlay@pylon:
 		Sequence: idle-pylon
 
