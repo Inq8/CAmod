@@ -691,14 +691,14 @@ SMCV:
 		Queue: Vehicle
 		BuildPaletteOrder: 300
 		Prerequisites: srep, ~vehicles.scrin, ~techlevel.infonly
-		IconPalette: chrometd
+		IconPalette: scrin
 		Description: Deploys into another Construction Yard.\n  Unarmed
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
 		Cost: 3000
 	Tooltip:
-		Name: Mobile Construction Vehicle
+		Name: Colony Ship
 	Selectable:
 		Priority: 4
 		Bounds: 42,42
@@ -1304,7 +1304,7 @@ SFAC:
 	Valued:
 		Cost: 2500
 	Tooltip:
-		Name: Drone Platform (Construction Yard)
+		Name: Colony Platform
 	BaseBuilding:
 	Transforms:
 		RequiresCondition: factundeploy
@@ -1377,7 +1377,7 @@ REAC:
 		Queue: Building
 		BuildPaletteOrder: 10
 		Prerequisites: ~structures.scrin, ~techlevel.low
-		IconPalette: chrometd
+		IconPalette: scrin
 		Description: Provides power for other structures.
 	Valued:
 		Cost: 300
@@ -1396,10 +1396,6 @@ REAC:
 	RevealsShroud:
 		Range: 4c0
 	WithBuildingBib:
-	WithDeathAnimation:
-		DeathSequence: dead
-		UseDeathTypeSuffix: false
-		DeathSequencePalette: overlayplayertd
 	Power:
 		Amount: 100
 		RequiresCondition: !forceshield || !being-warped
@@ -1443,10 +1439,6 @@ REA2:
 	RevealsShroud:
 		Range: 5c0
 	WithBuildingBib:
-	WithDeathAnimation:
-		DeathSequence: dead
-		UseDeathTypeSuffix: false
-		DeathSequencePalette: overlayplayertd
 	Power:
 		Amount: 200
 		RequiresCondition: !forceshield || !being-warped
@@ -1470,13 +1462,15 @@ PROC.SCRIN:
 			BottomRight: 896, -512
 	Valued:
 		Cost: 2000
+	CustomSellValue:
+		Value: 300
 	Tooltip:
 		Name: Refinery
 	Buildable:
 		BuildPaletteOrder: 60
 		Prerequisites: anypower, ~structures.scrin, ~techlevel.low
 		Queue: Building
-		IconPalette: chrometd
+		IconPalette: scrin
 		Description: Processes raw Tiberium, Ore and Gems\ninto credits.
 	Building:
 		Footprint: _x_ xxx === ===
@@ -1513,10 +1507,6 @@ PROC.SCRIN:
 		Types: ThiefInfiltrate
 		Percentage: 50
 		Notification: CreditsStolen
-	WithDeathAnimation:
-		DeathSequence: dead
-		UseDeathTypeSuffix: false
-		DeathSequencePalette: overlayplayertd
 	FreeActor:
 		Actor: HARV.Scrin
 		SpawnOffset: 1,2
@@ -1542,7 +1532,7 @@ PORT:
 		Queue: Building
 		BuildPaletteOrder: 20
 		Prerequisites: anypower, ~structures.scrin, ~techlevel.low
-		IconPalette: chrometd
+		IconPalette: scrin
 		Description: Produces infantry.
 	Valued:
 		Cost: 500
@@ -1617,7 +1607,7 @@ WARP:
 		Queue: Building
 		BuildPaletteOrder: 80
 		Prerequisites: proc.scrin, ~structures.warp, ~techlevel.low
-		IconPalette: chrometd
+		IconPalette: scrin
 		Description: Produces vehicles.
 	Valued:
 		Cost: 2000
@@ -1792,10 +1782,6 @@ WARP:
 	InfiltrateForSupportPower@veh:
 		Types: SabInfiltrate
 		Proxy: veh.gdi.stolen
-	-ActorPreviewPlaceBuildingPreview:
-	SequencePlaceBuildingPreview:
-		Sequence: place
-		SequencePalette: placebuildingtd
 	WithIdleOverlay:
 		RequiresCondition: !build-incomplete
 
@@ -1810,6 +1796,7 @@ NERV:
 		BuildPaletteOrder: 90
 		Prerequisites: proc.scrin, ~structures.scrin, ~techlevel.medium
 		Description: Provides an overview of the battlefield.\n  Requires power to operate.
+		IconPalette: scrin
 	Valued:
 		Cost: 1800
 	Tooltip:
@@ -1889,10 +1876,11 @@ SCRT:
 		BuildPaletteOrder: 150
 		Prerequisites: warp, nerv, ~structures.scrin, ~techlevel.high
 		Description: Provides Scrin advanced technologies.
+		IconPalette: scrin
 	Valued:
 		Cost: 1500
 	Tooltip:
-		Name: Scrin Tech Assembler
+		Name: Tech Center
 	Building:
 		Footprint: xx xx ==
 		Dimensions: 2,3
@@ -1935,6 +1923,7 @@ GRAV:
 		BuildPaletteOrder: 130
 		Prerequisites: nerv, ~structures.scrin, ~techlevel.medium
 		Description: Produces Scrin aircraft.
+		IconPalette: scrin
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -1993,6 +1982,10 @@ GRAV:
 		RequiresCondition: !build-incomplete
 	WithIdleOverlay@pylon:
 		Sequence: idle-pylon
+		RequiresCondition: !build-incomplete && !damaged
+	GrantConditionOnDamageState@DAMAGED:
+		Condition: damaged
+		ValidDamageStates: Light, Medium, Heavy, Critical
 
 SIGN:
 	Inherits: ^ScrinBuilding
@@ -2023,6 +2016,7 @@ SIGN:
 		Prerequisites: ~structures.scrin, scrt, ~techlevel.high
 		Description: Provides Scrin tier 4 technologies.\n  Maximum 1 can be built.\n  Cannot be captured.
 		BuildLimit: 1
+		IconPalette: scrin
 	-Capturable:
 	-CaptureNotification:
 	-CapturableProgressBar:
@@ -2040,9 +2034,6 @@ SIGN:
 		RequiresCondition: !being-warped
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack
-	WithDeathAnimation:
-		DeathSequence: dead
-		UseDeathTypeSuffix: false
 	ProvidesPrerequisite@Name:
 		RequiresCondition: !being-warped
 	Sellable:
@@ -2058,12 +2049,12 @@ SREP:
 		Queue: Building
 		BuildPaletteOrder: 100
 		Prerequisites: vehicles.scrin, ~structures.scrin, ~techlevel.medium
-		IconPalette: chrometd
 		Description: Repairs vehicles for credits.
+		IconPalette: scrin
 	Valued:
 		Cost: 1200
 	Tooltip:
-		Name: Repair Facility
+		Name: Repair Bay
 	Building:
 		Footprint: _+_ +++ _+_
 		Dimensions: 3,3
@@ -2110,7 +2101,7 @@ SILO.SCRIN:
 		BuildPaletteOrder: 35
 		Prerequisites: proc.scrin, ~structures.scrin, ~techlevel.infonly
 		Queue: Defense
-		IconPalette: chrome
+		IconPalette: scrin
 		Description: Stores processed Tiberium, Ore and Gems
 	-GivesBuildableArea:
 	Health:
@@ -2123,7 +2114,9 @@ SILO.SCRIN:
 		HasMinibib: true
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack
-	WithSpriteBody:
+	-WithSpriteBody:
+	WithResourceLevelSpriteBody:
+		Sequence: stages
 	StoresResources:
 		PipCount: 5
 		Capacity: 3000
