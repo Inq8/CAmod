@@ -2203,8 +2203,6 @@ RIFT:
 	Inherits: ^ScrinBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@shape: ^2x2Shape
-	Selectable:
-		Bounds: 48,48
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 130
@@ -2264,11 +2262,11 @@ RIFT:
 		BeaconPoster: riftpower
 		TargetCircleRange: 6c512
 		TargetCircleColor: 0000FF90
-		Duration: 350
+		Duration: 425
 		ActiveCondition: active
 	WithIdleOverlay@ACTIVE:
 		Sequence: active-overlay
-		Palette: d2keffect
+		Palette: scrin
 		RequiresCondition: active
 	ExternalCondition@ACTIVE:
 		Condition: active
