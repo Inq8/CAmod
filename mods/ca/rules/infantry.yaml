@@ -988,7 +988,7 @@ N5:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 28000
+		HP: 25000
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
 	Armament:
@@ -1002,8 +1002,6 @@ N5:
 		LocalOffset: 341,0,254
 		MuzzleSequence: muzzle
 		MuzzlePalette: tdeffect-ignore-lighting-alpha85
-	TakeCover:
-		ProneOffset: 160,0,-254
 	Mobile:
 		Speed: 56
 		Voice: Move
@@ -1018,6 +1016,7 @@ N5:
 		Voice: Move
 	Voiced:
 		VoiceSet: CyborgVoice
+	-TakeCover:
 	-Crushable:
 	-KillsSelf@Mutation:
 	-DamagedByTerrain:
@@ -1536,19 +1535,19 @@ ACOL:
 		Modifier: 115
 	DamageMultiplier@nodupg1:
 		RequiresCondition: nodupg1 && !nodupg2
-		Modifier: 28		
+		Modifier: 30
 	SpeedMultiplier@nodupg2:
 		RequiresCondition: nodupg2
 		Modifier: 130
 	DamageMultiplier@nodupg2:
 		RequiresCondition: nodupg2
-		Modifier: 22
+		Modifier: 24
 	RangeMultiplier@nodupg2:
 		RequiresCondition: nodupg2
 		Modifier: 115
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
-		
+
 JJET:
 	Inherits: ^Infantry
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -1757,7 +1756,7 @@ N1C:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BOTHELPER: ^BotCaptureHelper
-	Inherits@nodupg2: ^NodCyborgUpgrade	
+	Inherits@nodupg2: ^NodCyborgUpgrade
 	RenderSprites:
 	Buildable:
 		Queue: Infantry
@@ -1820,7 +1819,7 @@ N3C:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@nodupg2: ^NodCyborgUpgrade	
+	Inherits@nodupg2: ^NodCyborgUpgrade
 	RenderSprites:
 	Buildable:
 		Queue: Infantry
@@ -1836,7 +1835,7 @@ N3C:
 		AddToArmyValue: true
 	-TakeCover:
 	Health:
-		HP:  25000
+		HP:  22000
 	RevealsShroud:
 		Range: 4c768
 	Mobile:
@@ -1912,7 +1911,7 @@ RMBC:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@EMP: ^EmpDisable
-	Inherits@nodupg2: ^NodCyborgUpgrade	
+	Inherits@nodupg2: ^NodCyborgUpgrade
 	RenderSprites:
 		PlayerPalette: playerd2k
 		Image: cycom
@@ -1930,7 +1929,7 @@ RMBC:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 42000
+		HP: 38000
 	Armor:
 		Type: Heavy
 	Mobile:

@@ -1408,7 +1408,7 @@ KIRO:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 55
-		BuildDurationModifier: 115
+		BuildDurationModifier: 75
 		Prerequisites: ~afld, stek, ~aircraft.soviet, ~techlevel.high
 		Description: Heavily armoured airship equipped with specialised bombs.\n  Vulnerable when dropping bombs.\n  Strong vs Buildings, Infantry, Slow Vehicles\n  Weak vs Aircraft
 	Valued:
@@ -1454,7 +1454,7 @@ KIRO:
 		PipCount: 8
 		AmmoCondition: ammo
 	ReloadAmmoPoolCA:
-		Delay: 360
+		Delay: 350
 		Count: 8
 		DelayOnFire: 120
 		DelayAfterReset: 50
@@ -1518,7 +1518,7 @@ KIRO:
 		RequiresCondition: !airborne
 	DamageMultiplier@doorsopen:
 		RequiresCondition: doorsopen
-		Modifier: 200
+		Modifier: 175
 	GrantConditionOnAttack@doorsopen:
 		Condition: doorsopen
 		RevokeDelay: 50
@@ -1666,14 +1666,14 @@ HARR:
 		AmmoCondition: ammo
 	Contrail@1:
 		Offset: -400,-443,0
-		UsePlayerColor: false 
-		ZOffset: -512 
-		Color: FFFFFF80 
+		UsePlayerColor: false
+		ZOffset: -512
+		Color: FFFFFF80
 	Contrail@2:
 		Offset: -400,443,0
-		UsePlayerColor: false 
-		ZOffset: -512 
-		Color: FFFFFF80 
+		UsePlayerColor: false
+		ZOffset: -512
+		Color: FFFFFF80
 	SpawnActorOnDeath:
 		Actor: HARR.Husk
 		RequiresCondition: ammo && !empdisable
@@ -1764,13 +1764,13 @@ SCRN:
 	Contrail@1:
 		Offset: -300,-143,0
 		Color: 00FF0080
-		UsePlayerColor: false 
-		ZOffset: -512 
+		UsePlayerColor: false
+		ZOffset: -512
 	Contrail@2:
 		Offset: -300,143,0
 		Color: 00FF0080
-		UsePlayerColor: false 
-		ZOffset: -512 
+		UsePlayerColor: false
+		ZOffset: -512
 	SpawnActorOnDeath:
 		Actor: SCRN.Husk
 		RequiresCondition: ammo && !empdisable
