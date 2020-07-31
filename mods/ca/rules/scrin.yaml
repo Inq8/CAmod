@@ -340,7 +340,7 @@ SEEK:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: warp, ~vehicles.scrin, ~techlevel.low
+		Prerequisites: vehicles.any, ~vehicles.seek, ~techlevel.low
 		Queue: Vehicle
 		Description: Light hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles, Structures\n  Weak vs Aircraft, Infantry
 		IconPalette: chrome
@@ -515,7 +515,7 @@ DEVO:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 135
-		Prerequisites: nerv, ~vehicles.scrin, ~techlevel.medium
+		Prerequisites: radar, ~vehicles.devo, ~techlevel.medium
 		Description: Medium hover tank.\n  Can move in any direction while firing.\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft
 		IconPalette: chrome
 	Valued:
@@ -627,7 +627,7 @@ TPOD:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 195
-		Prerequisites: scrt, ~vehicles.scrin, ~techlevel.high
+		Prerequisites: techcenter, ~vehicles.tpod, ~techlevel.high
 		Description: Heavy assault walker with beam weapons.\n  Strong vs Vehicles.\n  Weak vs Aircraft
 		IconPalette: chrome
 	Voiced:
@@ -1579,7 +1579,7 @@ PORT:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
 	InfiltrateForSupportPower@inf:
 		Types: SabInfiltrate
-		Proxy: inf.gdi.stolen
+		Proxy: inf.scrin.stolen
 	WithDecoration@primary:
 		RequiresSelection: true
 		Image: pips
@@ -1749,6 +1749,15 @@ WARP:
 	ProvidesPrerequisite@scrinstructure:
 		RequiresPrerequisites: structures.scrin
 		Prerequisite: vehicles.scrin
+	ProvidesPrerequisite@seek:
+		Factions: scrin
+		Prerequisite: vehicles.seek
+	ProvidesPrerequisite@devo:
+		Factions: scrin
+		Prerequisite: vehicles.devo
+	ProvidesPrerequisite@tpod:
+		Factions: scrin
+		Prerequisite: vehicles.tpod
 	WithBuildingBib:
 	RallyPoint:
 	Exit@1:
@@ -1781,7 +1790,7 @@ WARP:
 		Types: SpyInfiltrate
 	InfiltrateForSupportPower@veh:
 		Types: SabInfiltrate
-		Proxy: veh.gdi.stolen
+		Proxy: veh.scrin.stolen
 	WithIdleOverlay:
 		RequiresCondition: !build-incomplete
 
@@ -1834,7 +1843,7 @@ NERV:
 		Prerequisite: radar
 	ProvidesPrerequisite@scrinrad:
 		Factions: scrin
-		Prerequisite: scrin.nod
+		Prerequisite: radar.scrin
 	ProvidesPrerequisite@buildingname:
 	ExternalCondition@JAMMED:
 		Condition: jammed
@@ -2485,3 +2494,33 @@ ichor.seeder:
 		ResourceType: Tiberium
 		Interval: 2
 	-RevealsShroud:
+
+# infiltrator stolen tech
+
+# portal
+inf.scrin.stolen:
+	AlwaysVisible:
+	ProvidesPrerequisite:
+		Prerequisite: inf.nod.stolen
+		Factions: blackh, marked, legion
+
+# warp sphere
+veh.scrin.stolen:
+	AlwaysVisible:
+	ProvidesPrerequisite:
+		Prerequisite: vehicles.seek
+		Factions: blackh, marked, legion
+
+# nerve center devourer
+rad.scrin.stolen:
+	AlwaysVisible:
+	ProvidesPrerequisite:
+		Prerequisite: vehicles.devo
+		Factions: blackh, marked, legion
+
+# tech center tripod
+tec.scrin.stolen:
+	AlwaysVisible:
+	ProvidesPrerequisite:
+		Prerequisite: vehicles.tpod
+		Factions: blackh, marked, legion
