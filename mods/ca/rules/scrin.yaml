@@ -8,7 +8,6 @@
 	SpawnActorsOnSell:
 		ActorTypes: s1
 	ActorPreviewPlaceBuildingPreview:
-	ActorPreviewPlaceBuildingPreview:
 		OverridePalette: placebuilding
 	Building:
 		BuildSounds: scrinbuild.aud
@@ -39,6 +38,7 @@
 			FrozenDeath: 11
 		CrushedSequence: die-crushed
 	-DamagedByTerrain:
+	-TakeCover:
 
 S1:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -75,7 +75,6 @@ S1:
 		PauseOnCondition: being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
-	-TakeCover:
 
 S3:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -114,7 +113,6 @@ S3:
 		PauseOnCondition: being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
-	-TakeCover:
 	AutoTarget:
 		ScanRadius: 5
 
@@ -149,7 +147,6 @@ S4:
 		PauseOnCondition: being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
-	-TakeCover:
 	-Crushable:
 	PortableChrono:
 		ChargeDelay: 250
@@ -187,7 +184,6 @@ S6:
 		VoiceSet: AssimilatorVoice
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
-	-TakeCover:
 
 MAST:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -227,7 +223,6 @@ MAST:
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	-Crushable:
-	-TakeCover:
 	ExternalCondition@PRODUCED:
 		Condition: produced
 	VoiceAnnouncement:
