@@ -1398,7 +1398,7 @@ REAC:
 	WithBuildingBib:
 	Power:
 		Amount: 100
-		RequiresCondition: !forceshield || !being-warped
+		RequiresCondition: !disabled && !forceshield && !being-warped
 	ProvidesPrerequisite:
 		Prerequisite: anypower
 	Targetable:
@@ -1441,7 +1441,7 @@ REA2:
 	WithBuildingBib:
 	Power:
 		Amount: 200
-		RequiresCondition: !forceshield || !being-warped
+		RequiresCondition: !disabled && !forceshield && !being-warped
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate, PowerInfiltrate
 	ProvidesPrerequisite@buildingname:
