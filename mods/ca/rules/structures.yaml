@@ -1184,6 +1184,8 @@ ATEK:
 	InfiltrateForSupportPower@tec:
 		Types: SabInfiltrate
 		Proxy: tec.allies.stolen
+	Targetable:
+		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate
 
 WEAP:
 	Inherits: ^Building
@@ -2005,7 +2007,7 @@ POWR:
 	WithBuildingBib:
 	Power:
 		Amount: 100
-		RequiresCondition: !being-warped
+		RequiresCondition: !disabled && !forceshield && !being-warped
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, PowerInfiltrate
 	ScalePowerWithHealth:
@@ -2048,7 +2050,7 @@ APWR:
 	WithBuildingBib:
 	Power:
 		Amount: 200
-		RequiresCondition: !being-warped
+		RequiresCondition: !disabled && !forceshield && !being-warped
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, PowerInfiltrate
 	ScalePowerWithHealth:
@@ -2661,7 +2663,7 @@ INFANTRY.ANY:
 		Name: Infantry Production
 	Buildable:
 		Description: Infantry Production
-		
+
 INFANTRY.RA:
 	AlwaysVisible:
 	Interactable:
@@ -2685,7 +2687,7 @@ VEHICLES.ANY:
 		Name: Vehicle Production
 	Buildable:
 		Description: Vehicle Production
-		
+
 VEHICLES.TD:
 	AlwaysVisible:
 	Interactable:
@@ -2749,7 +2751,7 @@ INFANTRY.MECH:
 		Name: Barracks
 	Buildable:
 		Description: Mechanical Barracks
-		
+
 STRUCTURES.TSLA:
 	AlwaysVisible:
 	Interactable:
@@ -3449,7 +3451,7 @@ NUKE:
 		DeathSequencePalette: overlayplayertd
 	Power:
 		Amount: 100
-		RequiresCondition: !forceshield || !being-warped
+		RequiresCondition: !disabled && !forceshield && !being-warped
 	ProvidesPrerequisite:
 		Prerequisite: anypower
 	Targetable:
@@ -3502,7 +3504,7 @@ NUK2:
 		DeathSequencePalette: overlayplayertd
 	Power:
 		Amount: 200
-		RequiresCondition: !forceshield || !being-warped
+		RequiresCondition: !disabled && !forceshield && !being-warped
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate, PowerInfiltrate
 	ProvidesPrerequisite@buildingname:
@@ -4159,6 +4161,8 @@ EYE:
 		CircleSequence: circles
 		Cursor: ioncannon
 		PauseOnCondition: disabled || empdisable || being-warped
+	InfiltrateForSupportPowerReset:
+		Types: SpyInfiltrate, SabInfiltrate
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -4388,6 +4392,8 @@ PROC.TD:
 			legion: nodproc
 	Valued:
 		Cost: 2000
+	CustomSellValue:
+		Value: 300
 	Tooltip:
 		Name: Refinery
 	Buildable:
@@ -5574,6 +5580,7 @@ PATR:
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		IncomingSpeechNotification: MissileLaunchDetected
+		DisplayTimerStances: Ally, Neutral, Enemy
 	SupportPowerChargeBar:
 	Power:
 		Amount: -150
@@ -5765,12 +5772,12 @@ MISS.GDI:
 		Prerequisite: miss.gdi
 		Delay: 3
 		Notification: UnitArmorUpgraded
-		RequiresCondition: !disabled && !empdisable && !being-warped	
+		RequiresCondition: !disabled && !empdisable && !being-warped
 	ProvidesDelayedPrerequisite@UPGRADE2:
 		Prerequisite: miss.gdi2
 		Delay: 7500
 		Notification: UnitFirepowerUpgraded
-		RequiresCondition: !disabled && !empdisable && !being-warped	
+		RequiresCondition: !disabled && !empdisable && !being-warped
 	ProvidesPrerequisite@HMLRS:
 		Factions: gdi, zocom, eagle
 		Prerequisite: hmlrs.buildable
