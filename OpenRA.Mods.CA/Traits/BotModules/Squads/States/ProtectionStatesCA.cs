@@ -22,7 +22,25 @@ namespace OpenRA.Mods.Common.Traits.BotModules.Squads
 	class UnitsForProtectionIdleState : ProtectionStateBase, IState
 	{
 		public void Activate(SquadCA owner) { }
-		public void Tick(SquadCA owner) { owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionAttackState(), true); }
+		public void Tick(SquadCA owner)
+		{
+			if (!owner.IsValid)
+				return;
+
+			if (!owner.IsTargetValid)
+			{
+				owner.TargetActor = owner.SquadManager.FindClosestEnemy(owner.CenterPosition, WDist.FromCells(owner.SquadManager.Info.ProtectionScanRadius));
+
+				if (owner.TargetActor == null)
+				{
+					Retreat(owner, false, true, true);
+					return;
+				}
+			}
+
+			owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionAttackState(), true);
+		}
+
 		public void Deactivate(SquadCA owner) { }
 	}
 
@@ -50,7 +68,6 @@ namespace OpenRA.Mods.Common.Traits.BotModules.Squads
 			}
 
 			// rescan target to prevent being ambushed and die without fight
-			// return to AttackMove state for formation
 			var teamLeader = owner.Units.ClosestTo(owner.TargetActor.CenterPosition);
 			if (teamLeader == null)
 				return;
@@ -106,8 +123,8 @@ namespace OpenRA.Mods.Common.Traits.BotModules.Squads
 							owner.Bot.QueueOrder(new Order("Attack", a, Target.FromActor(owner.TargetActor), false));
 							cannotRetaliate = false;
 						}
-						else if (a.Info.HasTraitInfo<GuardableInfo>())
-							owner.Bot.QueueOrder(new Order("Guard", a, Target.FromActor(teamLeader), false));
+						else
+							owner.Bot.QueueOrder(new Order("AttackMove", a, Target.FromCell(owner.World, teamLeader.Location), false));
 					}
 
 					// Ground/naval units control:
@@ -118,8 +135,8 @@ namespace OpenRA.Mods.Common.Traits.BotModules.Squads
 							owner.Bot.QueueOrder(new Order("Attack", a, Target.FromActor(owner.TargetActor), false));
 							cannotRetaliate = false;
 						}
-						else if (a.Info.HasTraitInfo<GuardableInfo>())
-							owner.Bot.QueueOrder(new Order("Guard", a, Target.FromActor(teamLeader), false));
+						else
+							owner.Bot.QueueOrder(new Order("AttackMove", a, Target.FromCell(owner.World, teamLeader.Location), false));
 					}
 				}
 			}
@@ -140,7 +157,7 @@ namespace OpenRA.Mods.Common.Traits.BotModules.Squads
 			if (!owner.IsValid)
 				return;
 
-			GoToRandomOwnBuilding(owner);
+			Retreat(owner, true, true, true);
 			owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionIdleState(), true);
 		}
 
