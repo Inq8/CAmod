@@ -237,14 +237,53 @@ DevourerLaser:
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 12000
+		Damage: 15000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
 			None: 50
-			Light: 80
+			Light: 60
 			Wood: 30
 			Heavy: 100
-			Concrete: 50
+			Concrete: 80
+
+RiftCannon:
+	Inherits: DevourerLaser
+	Range: 6c0
+	Report: darkener-fire1.aud, darkener-fire2.aud
+	ReloadDelay: 120
+	Projectile: LaserZap
+		Color: 000000FF
+		Width: 65
+		SecondaryBeamColor: 00000099
+		SecondaryBeamWidth: 85
+	Warhead@1Dam: SpreadDamage
+		Damage: 9500
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@Spawn: SpawnActor
+		Actors: camera.minirift
+		Range: 1
+		ForceGround: false
+		ValidTargets: Ground, Water
+
+MiniRift:
+	ReloadDelay: 10
+	Range: 1c0
+	ValidTargets: Ground, Water
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Spread: 1c0
+		Damage: 800
+		Falloff: 100, 70, 0
+		ValidTargets: Ground, Trees
+		InvalidTargets: Air, Creep
+		Versus:
+			None: 65
+			Wood: 30
+			Light: 70
+			Heavy: 100
+			Concrete: 80
+			Brick: 25
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 
 RuinerCannon:
 	Inherits: 155mm
@@ -511,14 +550,14 @@ RiftInit:
 		ValidTargets: Ground, Water
 
 Rift:
-	ReloadDelay: 24
+	ReloadDelay: 5
 	Range: 1c0
 	ValidTargets: Ground, Water
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
-		Damage: 10000
-		Falloff: 100, 100, 80, 70, 50, 35, 25, 15, 5
+		Damage: 2300
+		Falloff: 100, 100, 75, 60, 45, 35, 25, 15, 5
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air, Creep
 		Versus:
@@ -529,3 +568,23 @@ Rift:
 			Concrete: 70
 			Brick: 25
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+
+BuzzerVortex:
+	ReloadDelay: 5
+	Range: 1c0
+	ValidTargets: Ground, Water
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Spread: 0c768
+		Damage: 1000
+		ValidTargets: Ground, Trees
+		InvalidTargets: Air, Creep
+		Versus:
+			None: 100
+			Wood: 10
+			Light: 80
+			Heavy: 30
+			Concrete: 40
+			Brick: 0
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		ValidStances: Enemy, Neutral

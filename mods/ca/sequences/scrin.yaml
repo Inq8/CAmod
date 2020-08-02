@@ -449,6 +449,20 @@ devo.destroyed:
 		UseClassicFacingFudge: True
 		ZOffset: -512
 
+dark:
+	Inherits: ^VehicleOverlays
+	idle: dark
+		Facings: 32
+		UseClassicFacingFudge: True
+	turret: dark
+		Facings: 32
+		Start: 32
+		UseClassicFacingFudge: True
+	muzzle: scrinmuzz3
+		Length: 5
+		BlendMode: Subtractive
+	icon: darkicon
+
 ruin:
 	Inherits: ^VehicleOverlays
 	idle: ruin
@@ -1024,6 +1038,20 @@ riftanim:
 		Length: *
 		ZOffset: 2048
 		BlendMode: Subtractive
+
+miniriftanim:
+	idle: miniriftloop
+		Tick: 40
+		Length: *
+		ZOffset: 2048
+		BlendMode: Subtractive
+
+buzz:
+	idle: buzz
+		Tick: 60
+		Length: *
+		ZOffset: 2048
+		BlendMode: Additive
 
 scrinwipicon:
 	icon: wipicon

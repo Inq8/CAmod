@@ -539,7 +539,7 @@ DEVO:
 		Range: 4c0
 	Armament:
 		Weapon: DevourerLaser
-		LocalOffset: 824,0,208
+		LocalOffset: 850,0,208
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
@@ -558,6 +558,67 @@ DEVO:
 	WithFacingSpriteBody:
 		Sequence: idle
 
+DARK:
+	Inherits: ^Tank
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 135
+		Prerequisites: nerv, ~vehicles.harbinger, ~techlevel.medium
+		Description: Heavy hover tank with armed with rift cannon.\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft
+		IconPalette: chrome
+	Valued:
+		Cost: 1350
+	Tooltip:
+		Name: Darkener Tank
+	Selectable:
+		DecorationBounds: 28,28
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 42000
+	Armor:
+		Type: Heavy
+	Mobile:
+		TurnSpeed: 4
+		Speed: 71
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament:
+		Weapon: RiftCannon
+		LocalOffset: 835,0,350
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	WithMuzzleOverlay:
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	Turreted:
+		TurnSpeed: 4
+		Offset: 0,0,0
+	AttackTurreted:
+		TargetFrozenActors: True
+		PauseOnCondition: empdisable || being-warped
+		Armaments: primary
+	WithSpriteTurret:
+	QuantizeFacingsFromSequence:
+		Sequence: idle
+	WithFacingSpriteBody:
+		Sequence: idle
+	Hovers:
+		BobDistance: -25
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+
 RUIN:
 	Inherits: ^Vehicle
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
@@ -575,7 +636,7 @@ RUIN:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 150
-		Prerequisites: scrt, ~vehicles.scrin, ~techlevel.high
+		Prerequisites: scrt, ~vehicles.harbinger, ~techlevel.high
 		Queue: Vehicle
 		Description: Long-range artillery.\n  Strong vs Structures, Infantry\n  Weak vs Tanks, Aircraft
 		IconPalette: chrome
@@ -872,6 +933,9 @@ DEVA:
 		RequiresCondition: empdisable
 	-Hovers@CRUISING:
 	-EjectOnDeath:
+	ProductionCostMultiplier@VANQBONUS:
+		Multiplier: 90
+		Prerequisites: vehicles.harbinger
 
 PAC:
 	Inherits: ^Helicopter
@@ -912,7 +976,7 @@ PAC:
 		CruiseAltitude: 2c0
 		InitialFacing: 192
 		TurnSpeed: 3
-		Speed: 48
+		Speed: 49
 		AltitudeVelocity: 0c50
 		CanForceLand: False
 	Selectable:
@@ -1327,14 +1391,17 @@ SFAC:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
 	ProvidesPrerequisite@scrin:
-		Factions: scrin
+		Factions: scrin, reaper, traveler, harbinger
 		Prerequisite: structures.scrin
-	ProvidesPrerequisite@warpFAC:
-		Factions: scrin
-		Prerequisite: structures.warp
-	ProvidesPrerequisite@sandbag:
-		Factions: scrin
-		Prerequisite: structures.sandbag
+	ProvidesPrerequisite@reaper:
+		Factions: reaper
+		Prerequisite: structures.reaper
+	ProvidesPrerequisite@traveler:
+		Factions: traveler
+		Prerequisite: structures.traveler
+	ProvidesPrerequisite@harbinger:
+		Factions: harbinger
+		Prerequisite: structures.harbinger
 	ProductionBar@Building:
 		ProductionType: Building
 	ProductionBar@Defense:
@@ -1564,7 +1631,7 @@ PORT:
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@scrin:
-		Factions: scrin
+		Factions: scrin, reaper, traveler, harbinger
 		Prerequisite: infantry.scrin
 	Power:
 		Amount: -20
@@ -1601,7 +1668,7 @@ WARP:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 80
-		Prerequisites: proc.scrin, ~structures.warp, ~techlevel.low
+		Prerequisites: proc.scrin, ~structures.scrin, ~techlevel.low
 		IconPalette: scrin
 		Description: Produces vehicles.
 	Valued:
@@ -1685,8 +1752,17 @@ WARP:
 		Factions: legion
 		Prerequisite: vehicles.legion
 	ProvidesPrerequisite@scrin:
-		Factions: scrin
+		Factions: scrin, reaper, traveler, harbinger
 		Prerequisite: vehicles.scrin
+	ProvidesPrerequisite@reaper:
+		Factions: reaper
+		Prerequisite: vehicles.reaper
+	ProvidesPrerequisite@traveler:
+		Factions: traveler
+		Prerequisite: vehicles.traveler
+	ProvidesPrerequisite@harbinger:
+		Factions: harbinger
+		Prerequisite: vehicles.harbinger
 	ProvidesPrerequisite@alliedstructure:
 		RequiresPrerequisites: structures.allies
 		Prerequisite: vehicles.allies
@@ -1744,14 +1820,23 @@ WARP:
 	ProvidesPrerequisite@scrinstructure:
 		RequiresPrerequisites: structures.scrin
 		Prerequisite: vehicles.scrin
+	ProvidesPrerequisite@reaperstructure:
+		RequiresPrerequisites: structures.reaper
+		Prerequisite: vehicles.reaper
+	ProvidesPrerequisite@travelerstructure:
+		RequiresPrerequisites: structures.traveler
+		Prerequisite: vehicles.traveler
+	ProvidesPrerequisite@harbingerstructure:
+		RequiresPrerequisites: structures.harbinger
+		Prerequisite: vehicles.harbinger
 	ProvidesPrerequisite@seek:
-		Factions: scrin
+		Factions: scrin, reaper, harbinger
 		Prerequisite: vehicles.seek
 	ProvidesPrerequisite@devo:
-		Factions: scrin
+		Factions: scrin, reaper, traveler
 		Prerequisite: vehicles.devo
 	ProvidesPrerequisite@tpod:
-		Factions: scrin
+		Factions: scrin, traveler, harbinger
 		Prerequisite: vehicles.tpod
 	WithBuildingBib:
 	RallyPoint:
@@ -1837,7 +1922,7 @@ NERV:
 	ProvidesPrerequisite@radar:
 		Prerequisite: radar
 	ProvidesPrerequisite@scrinrad:
-		Factions: scrin
+		Factions: scrin, reaper, traveler, harbinger
 		Prerequisite: radar.scrin
 	ProvidesPrerequisite@buildingname:
 	ExternalCondition@JAMMED:
@@ -1870,6 +1955,18 @@ NERV:
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		PauseOnCondition: disabled || empdisable || being-warped
+	SpawnActorPower@BUZZERSWARM:
+		Actor: BUZZ
+		OrderName: buzzerswarm
+		Icon: buzzpower
+		Prerequisites: structures.harbinger
+		ChargeInterval: 4500
+		Description: Buzzer Swarm
+		LongDesc: Spawns controllable buzzer swarm which damages anything nearby.
+		LaunchSound: buzzers-create.aud
+		SelectTargetSpeechNotification: SelectTarget
+		PauseOnCondition: disabled || being-warped
+		DisplayRadarPing: True
 
 SCRT:
 	Inherits: ^ScrinBuilding
@@ -1957,7 +2054,7 @@ GRAV:
 		Produces: Aircraft, Plane
 		PauseOnCondition: forceshield || invulnerability || being-warped
 	ProvidesPrerequisite@scrin:
-		Factions: scrin
+		Factions: scrin, reaper, traveler, harbinger
 		Prerequisite: aircraft.scrin
 	ProvidesPrerequisite@scrinstructure:
 		RequiresPrerequisites: structures.scrin
@@ -2441,6 +2538,40 @@ SCOL:
 # ---- misc
 #
 
+BUZZ:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^SpriteActor
+	Inherits@3: ^SelectableSupportUnit
+	Interactable:
+	ConditionManager:
+	HiddenUnderFog:
+	Tooltip:
+		Name: Buzzer Swarm
+	Health:
+		HP: 1
+	RevealsShroud:
+		MinRange: 2c0
+		Range: 4c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 2c0
+	PeriodicExplosion:
+		Weapon: BuzzerVortex
+	WithSpriteBody:
+	HitShape:
+	KillsSelf:
+		RemoveInstead: true
+		Delay: 450
+	Aircraft:
+		CanHover: True
+		Speed: 36
+		CruiseAltitude: 1
+	AmbientSound:
+		SoundFiles: buzzers-idle1.aud, buzzers-idle2.aud, buzzers-idle3.aud
+		Interval: 10
+	Voiced:
+		VoiceSet: BuzzersVoice
+
 camera.rift:
 	Interactable:
 	ConditionManager:
@@ -2458,11 +2589,7 @@ camera.rift:
 	RevealsShroud:
 		Range: 6c0
 	Health:
-		HP: 45000
-	DamagedByTerrain:
-		Terrain: Clear, Rough, Road, Ore, Water, Gems, River, Tiberium, BlueTiberium
-		Damage: 1000
-		DamageInterval: 8
+		HP: 1
 	PeriodicExplosion:
 		Weapon: Rift
 	Immobile:
@@ -2474,6 +2601,21 @@ camera.rift:
 		UseDeathTypeSuffix: False
 		CrushedSequence: fade
 		FallbackSequence: fade
+	KillsSelf:
+		Delay: 360
+
+camera.minirift
+	Inherits: camera.rift
+	RenderSprites:
+		Image: miniriftanim
+	PeriodicExplosion:
+		Weapon: MiniRift
+	KillsSelf:
+		Delay: 120
+	WithSpriteBody:
+		-StartSequence:
+	-AmbientSound:
+	-WithDeathAnimation:
 
 camera.resourcescan:
 	Inherits: CAMERA
