@@ -132,6 +132,12 @@ namespace OpenRA.Mods.CA.Traits
 			unitCannotBeOrdered = a => a == null || a.Owner != Player || a.IsDead || !a.IsInWorld;
 		}
 
+		public bool IsFriendly(Actor a)
+		{
+			return a != null && !a.IsDead && Player.Stances[a.Owner] == Stance.Ally
+				&& !a.Info.HasTraitInfo<HuskInfo>();
+		}
+
 		public bool IsEnemyUnit(Actor a)
 		{
 			return a != null && !a.IsDead && Player.Stances[a.Owner] == Stance.Enemy
