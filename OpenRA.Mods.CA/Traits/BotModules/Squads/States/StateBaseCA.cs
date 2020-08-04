@@ -104,51 +104,119 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		}
 
 		protected static bool IsRearming(Actor a)
-			{
-				if (a.IsIdle)
-					return false;
-
-				var activity = a.CurrentActivity;
-				if (activity.GetType() == typeof(Resupply))
-					return true;
-
-				var next = activity.NextActivity;
-				if (next == null)
-					return false;
-
-				if (next.GetType() == typeof(Resupply))
-					return true;
-
+		{
+			if (a.IsIdle)
 				return false;
-			}
+
+			var activity = a.CurrentActivity;
+			if (activity.GetType() == typeof(Resupply))
+				return true;
+
+			var next = activity.NextActivity;
+			if (next == null)
+				return false;
+
+			if (next.GetType() == typeof(Resupply))
+				return true;
+
+			return false;
+		}
 
 		protected static bool FullAmmo(IEnumerable<AmmoPool> ammoPools)
-			{
-				foreach (var ap in ammoPools)
-					if (!ap.HasFullAmmo)
-						return false;
+		{
+			foreach (var ap in ammoPools)
+				if (!ap.HasFullAmmo)
+					return false;
 
-				return true;
-			}
+			return true;
+		}
 
 		protected static bool HasAmmo(IEnumerable<AmmoPool> ammoPools)
-			{
-				foreach (var ap in ammoPools)
-					if (!ap.HasAmmo)
-						return false;
+		{
+			foreach (var ap in ammoPools)
+				if (!ap.HasAmmo)
+					return false;
 
-				return true;
-			}
+			return true;
+		}
 
 		protected static bool ReloadsAutomatically(IEnumerable<AmmoPool> ammoPools, Rearmable rearmable)
-			{
-				if (rearmable == null)
-					return true;
-
-				foreach (var ap in ammoPools)
-					if (!rearmable.Info.AmmoPools.Contains(ap.Info.Name))
-						return false;
+		{
+			if (rearmable == null)
 				return true;
+
+			foreach (var ap in ammoPools)
+				if (!rearmable.Info.AmmoPools.Contains(ap.Info.Name))
+					return false;
+			return true;
+		}
+
+		// Retreat units from combat, or for supply only in idle
+		protected void Retreat(SquadCA squad, bool flee, bool rearm, bool repair)
+		{
+			var loc = new CPos(0, 0, 0);
+
+			// HACK: "alreadyRepair" is to solve repairpad performance
+			// if repairpad logic is better we will only need
+			// this function for all flee states.
+			var alreadyRepair = false;
+
+			if (flee)
+				loc = RandomBuildingLocation(squad);
+
+			foreach (var a in squad.Units)
+			{
+				if (IsRearming(a))
+					continue;
+
+				var orderQueued = false;
+
+				// Try rearm units.
+				if (rearm)
+				{
+					var ammoPools = a.TraitsImplementing<AmmoPool>().ToArray();
+					if (!ReloadsAutomatically(ammoPools, a.TraitOrDefault<Rearmable>()) && !FullAmmo(ammoPools))
+					{
+						squad.Bot.QueueOrder(new Order("ReturnToBase", a, orderQueued));
+						orderQueued = true;
+					}
+				}
+
+				// Try repair units.
+				if (repair && !alreadyRepair)
+				{
+					Actor repairBuilding = null;
+					var orderId = "Repair";
+					var health = a.TraitOrDefault<IHealth>();
+
+					if (health != null && health.DamageState > DamageState.Undamaged)
+					{
+						var repairable = a.TraitOrDefault<Repairable>();
+						if (repairable != null)
+							repairBuilding = repairable.FindRepairBuilding(a);
+						else
+						{
+							var repairableNear = a.TraitOrDefault<RepairableNearCA>();
+							if (repairableNear != null)
+							{
+								orderId = "RepairNear";
+								repairBuilding = repairableNear.FindRepairBuilding(a);
+							}
+						}
+
+						if (repairBuilding != null)
+						{
+							squad.Bot.QueueOrder(new Order(orderId, a, Target.FromActor(repairBuilding), orderQueued));
+							orderQueued = true;
+							alreadyRepair = true;
+						}
+					}
+				}
+
+				// If there is no order in queue and units should flee, try flee.
+				if (flee && !orderQueued)
+					squad.Bot.QueueOrder(new Order("Move", a, Target.FromCell(squad.World, loc), false));
+			}
 		}
 	}
 }

@@ -53,50 +53,6 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 			return owner.SquadManager.FindClosestEnemy(first.CenterPosition);
 		}
-
-		// Retreat units from combat, or for supply only in idle
-		protected virtual void Retreat(SquadCA owner, bool resupplyonly)
-		{
-			// Repair units. One by one to avoid give out mass orders
-			var alreadysend = false;
-
-			foreach (var a in owner.Units)
-			{
-				if (IsRearming(a))
-					continue;
-
-				Actor repairBuilding = null;
-				var orderId = "Repair";
-				var health = a.TraitOrDefault<IHealth>();
-
-				if (!alreadysend && health != null && health.DamageState > DamageState.Undamaged)
-				{
-					var repairable = a.TraitOrDefault<Repairable>();
-					if (repairable != null)
-						repairBuilding = repairable.FindRepairBuilding(a);
-					else
-					{
-						var repairableNear = a.TraitOrDefault<RepairableNearCA>();
-						if (repairableNear != null)
-						{
-							orderId = "RepairNear";
-							repairBuilding = repairableNear.FindRepairBuilding(a);
-						}
-					}
-
-					if (repairBuilding != null)
-					{
-						owner.Bot.QueueOrder(new Order(orderId, a, Target.FromActor(repairBuilding), false));
-						alreadysend = true;
-						continue;
-					}
-					else if (!resupplyonly)
-						owner.Bot.QueueOrder(new Order("Move", a, Target.FromCell(owner.World, RandomBuildingLocation(owner)), false));
-				}
-				else if (!resupplyonly)
-					owner.Bot.QueueOrder(new Order("Move", a, Target.FromCell(owner.World, RandomBuildingLocation(owner)), false));
-			}
-		}
 	}
 
 	class NavyUnitsIdleState : NavyStateBase, IState
@@ -122,7 +78,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 			if (enemyUnits.Count == 0)
 			{
-				Retreat(owner, true);
+				Retreat(owner, false, true, true);
 				return;
 			}
 
@@ -230,7 +186,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			if (!owner.IsValid)
 				return;
 
-			Retreat(owner, false);
+			Retreat(owner, true, true, true);
 			owner.FuzzyStateMachine.ChangeState(owner, new NavyUnitsIdleState(), true);
 		}
 
