@@ -326,7 +326,7 @@ TripodLaser:
 		SecondaryBeamWidth: 75
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 5200
+		Damage: 5700
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
 			None: 80
@@ -334,6 +334,17 @@ TripodLaser:
 			Wood: 62
 			Heavy: 105
 			Concrete: 30
+
+ReaperLaser:
+	Inherits: TripodLaser
+	Range: 5c0
+	ReloadDelay: 40
+	BurstDelays: 10
+	Report: rtripod-fire1.aud, rtripod-fire2.aud, rtripod-fire3.aud
+	Projectile: LaserZap
+		Duration: 30
+		Color: 00FF0090
+		SecondaryBeamColor: 00FF0050
 
 StormriderZap:
 	Range: 7c0
@@ -532,12 +543,64 @@ ShardLauncher:
 			Concrete: 45
 			Light: 101
 			Heavy: 90
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: idle, idle2, idle3, idle4
 		ExplosionPalette: scrin
 		Image: shardhit
 		ValidTargets: Air, Ground, Water, Trees
+
+RavagerShards:
+	Inherits: ShardLauncher
+	StartBurstReport: ravager-fire1.aud
+	ValidTargets: Ground, Water, Trees
+	ReloadDelay: 40
+	BurstDelays: 5
+	Range: 5c512
+	Projectile: Missile
+		Speed: 213
+		Palette: scrin
+		ContrailWidth: 0c48
+		ContrailLength: 9
+		ContrailColor: 00FF0044
+		Jammable: false
+		Inaccuracy: 128
+		Image: shard
+		HorizontalRateOfTurn: 35
+		RangeLimit: 7c512
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Ground, Water
+		-Range:
+		-Falloff:
+		Spread: 128
+		Damage: 900
+		Versus:
+			None: 40
+			Wood: 75
+			Light: 85
+			Heavy: 100
+			Concrete: 85
+			Brick: 50
+
+LaceratorShards:
+	Inherits: RavagerShards
+	StartBurstReport: lacerator-fire1.aud, lacerator-fire2.aud
+	Burst: 3
+	Projectile: Missile
+		Image: bshard
+		ContrailColor: 4499FFAA
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 2000
+		Versus:
+			None: 40
+			Wood: 75
+			Light: 85
+			Heavy: 100
+			Concrete: 85
+			Brick: 50
+	Warhead@3Eff: CreateEffect
+		Image: bshardhit
 
 RiftInit:
 	ValidTargets: Ground, Water

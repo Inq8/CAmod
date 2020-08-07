@@ -93,6 +93,74 @@ s1:
 		Tick: 80
 	icon: s1icon
 
+s2:
+	Inherits: ^ScrinCommonDeaths
+	stand: s2
+		Facings: 8
+	stand2: s2
+		Facings: 8
+	run: s2
+		Start: 8
+		Length: 4
+		Facings: 8
+		Tick: 120
+	shoot: s2
+		Start: 40
+		Length: 4
+		Facings: 8
+		Tick: 80
+	idle1: s2
+		Start: 1
+		Length: 1
+		Tick: 120
+	idle2: s2
+		Start: 3
+		Length: 1
+		Tick: 120
+	idle3: s2
+		Start: 5
+		Length: 1
+		Tick: 120
+	idle4: s2
+		Start: 7
+		Length: 1
+		Tick: 120
+	die1: s2
+		Start: 72
+		Length: 8
+		Tick: 80
+	die2: s2
+		Start: 80
+		Length: 8
+		Tick: 80
+	die3: s2
+		Start: 88
+		Length: 8
+		Tick: 80
+	die4: s2
+		Start: 88
+		Length: 8
+		Tick: 80
+	die7: s2
+		Start: 72
+		Length: 8
+		Tick: 80
+	muzzle: scrinmuzz3
+		Length: 2
+		Tick: 80
+	garrison-muzzle: scrinmuzz1
+		Length: 4
+		Facings: 8
+		Tick: 80
+	chrono-overlay: chronofade_small
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+		Tick: 80
+	icon: s2icon
+
 s3:
 	Inherits: ^ScrinCommonDeaths
 	stand: s3
@@ -376,10 +444,6 @@ seek:
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
-	muzzle: scrinmuzz1
-		Length: 4
-		Facings: 8
-		Tick: 80
 	icon: seekicon
 
 seek.destroyed:
@@ -393,6 +457,17 @@ seek.destroyed:
 		Facings: 32
 		UseClassicFacingFudge: True
 		ZOffset: -512
+
+lace:
+	Inherits: ^VehicleOverlays
+	idle: lace
+		Facings: 32
+		UseClassicFacingFudge: True
+	turret: lace
+		Start: 32
+		Facings: 32
+		UseClassicFacingFudge: True
+	icon: laceicon
 
 intl:
 	Inherits: ^VehicleOverlays
@@ -506,6 +581,24 @@ tpod.destroyed:
 		Facings: 32
 		UseClassicFacingFudge: True
 		ZOffset: -512
+
+rptp:
+	Inherits: ^VehicleOverlays
+	idle: tpod
+		Facings: 1
+		Start: 32
+	turret: rptp
+		Facings: 32
+		UseClassicFacingFudge: True
+		Offset: 0,-25
+	move: tpod
+		Start: 33
+		Facings: 8
+		Length: 14
+		Tick: 60
+	muzzle: scrinmuzz3
+		Length: 5
+	icon: rptpicon
 
 smcv:
 	Inherits: ^VehicleOverlays
@@ -1014,6 +1107,28 @@ shardhit:
 
 shard:
 	idle: shard
+		Facings: 32
+		ZOffset: 1023
+
+bshardhit:
+	idle: bshardhit
+		Length: 3
+		ZOffset: 1023
+	idle2: bshardhit
+		Start: 3
+		Length: 3
+		ZOffset: 1023
+	idle3: bshardhit
+		Start: 6
+		Length: 3
+		ZOffset: 1023
+	idle4: bshardhit
+		Start: 9
+		Length: 3
+		ZOffset: 1023
+
+bshard:
+	idle: bshard
 		Facings: 32
 		ZOffset: 1023
 

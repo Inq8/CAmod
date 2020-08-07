@@ -76,6 +76,40 @@ S1:
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 
+S2:
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@BOTHELPER: ^BotCaptureHelper
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 35
+		Prerequisites: nerv, ~infantry.traveler, ~techlevel.infonly
+		Description: Fast assault infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+		IconPalette: scrin
+	Valued:
+		Cost: 250
+	Tooltip:
+		Name: Ravager
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 7000
+	Mobile:
+		Speed: 71
+	Armament@PRIMARY:
+		Weapon: RavagerShards
+		LocalOffset: 0,-100,250, 0,100,250
+	Armament@Garrison:
+		Name: mounted
+		Weapon: RavagerShards
+	WithInfantryBody:
+	AttackFrontal:
+		PauseOnCondition: being-warped
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+
 S3:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
@@ -375,7 +409,6 @@ SEEK:
 	Armament@PRIMARY:
 		Weapon: PlasmaDiscs
 		LocalOffset: 320,0,320
-		RequiresCondition: !gdiupg
 	AttackTurreted:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: false
@@ -392,6 +425,78 @@ SEEK:
 	SpawnActorOnDeath:
 		Actor: SEEK.Husk
 		RequiresCondition: !being-warped
+
+LACE:
+	Inherits: ^Vehicle
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Valued:
+		Cost: 700
+	Tooltip:
+		Name: Lacerator
+	Selectable:
+		DecorationBounds: 28,28
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: vehicles.any, ~vehicles.traveler, ~techlevel.low
+		Queue: Vehicle
+		Description: Fast hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles, Structures\n  Weak vs Aircraft, Infantry
+		IconPalette: chrome
+	Mobile:
+		TurnSpeed: 10
+		Speed: 157
+	LeavesTrails:
+		Image: twake
+		Palette: effect
+		TerrainTypes: Water
+		TrailWhileStationary: true
+		StationaryInterval: 18
+		MovingInterval: 6
+	Health:
+		HP: 16000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 8c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Turreted:
+		TurnSpeed: 10
+		Offset: -50,0,0
+	Hovers:
+		BobDistance: -25
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
+	GrantConditionOnTerrain:
+		TerrainTypes: Water
+		Condition: onwater
+	KillsSelf@SINK:
+		RequiresCondition: onwater && (empdisable || driver-dead)
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+	Armament@PRIMARY:
+		Weapon: LaceratorShards
+		LocalOffset: 0,50,320, 0,-50,320
+	AttackTurreted:
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: false
+		OpportunityFire: False
+		PauseOnCondition: empdisable || being-warped
+	WithSpriteTurret:
+	IgnoresDisguise:
+	DetectCloaked:
+		Range: 6c0
+		CloakTypes: Cloak, Thief
+		RequiresCondition: !(empdisable || being-warped)
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
 
 INTL:
 	Inherits: ^Tank
@@ -739,6 +844,23 @@ TPOD:
 	SpawnActorOnDeath:
 		Actor: TPOD.Husk
 		RequiresCondition: !being-warped
+
+RPTP:
+	Inherits: TPOD
+	Buildable:
+		Prerequisites: techcenter, ~vehicles.reaper, ~techlevel.high
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Valued:
+		Cost: 2200
+	Tooltip:
+		Name: Reaper Tripod
+	Health:
+		HP: 86000
+	Armament@PRIMARY:
+		Weapon: ReaperLaser
+		LocalOffset: 700,550,1000, 700,-550,1000
+	-SpawnActorOnDeath:
 
 SMCV:
 	Inherits: ^Vehicle
