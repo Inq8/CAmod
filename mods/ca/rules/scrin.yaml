@@ -323,7 +323,7 @@ GUNW:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 15
-		Prerequisites: warp, ~vehicles.scrin, ~techlevel.low
+		Prerequisites: wsph, ~vehicles.scrin, ~techlevel.low
 		Description: Light assault walker.\n  Strong vs Infantry, Aircraft\n  Weak vs Tanks
 		IconPalette: chrome
 	Valued:
@@ -535,7 +535,7 @@ INTL:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: warp, ~vehicles.scrin, ~techlevel.low
+		Prerequisites: wsph, ~vehicles.scrin, ~techlevel.low
 		Queue: Vehicle
 		Description: Heavily armoured transport craft.\n  Strong vs Light Vehicles\n  Weak vs Tanks, Aircraft
 		IconPalette: chrome
@@ -1889,7 +1889,7 @@ PORT:
 	WithIdleOverlay:
 		RequiresCondition: !build-incomplete
 
-WARP:
+WSPH:
 	Inherits: ^ScrinBuilding
 	Inherits@shape: ^3x2Shape
 	Selectable:
@@ -2237,7 +2237,7 @@ SCRT:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 150
-		Prerequisites: warp, nerv, ~structures.scrin, ~techlevel.high
+		Prerequisites: wsph, nerv, ~structures.scrin, ~techlevel.high
 		Description: Provides Scrin advanced technologies.
 		IconPalette: scrin
 	Valued:
