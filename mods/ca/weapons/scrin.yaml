@@ -32,7 +32,7 @@ DisintegratorBeamAA:
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air
 		Range: 0, 0c64, 0c256, 3c0
-		Falloff: 100, 100, 20, 10
+		Falloff: 100, 100, 30, 15
 		Damage: 1600
 		Versus:
 			None: 100
@@ -149,7 +149,7 @@ GunWalkerZapAA:
 		Damage: 1100
 		ValidTargets: Air
 		Range: 0, 0c64, 0c256, 3c0
-		Falloff: 100, 100, 20, 10
+		Falloff: 100, 100, 30, 15
 		Versus:
 			None: 100
 			Wood: 100
@@ -237,14 +237,53 @@ DevourerLaser:
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 12000
+		Damage: 15000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
 			None: 50
-			Light: 80
+			Light: 60
 			Wood: 30
 			Heavy: 100
-			Concrete: 50
+			Concrete: 80
+
+RiftCannon:
+	Inherits: DevourerLaser
+	Range: 6c0
+	Report: darkener-fire1.aud, darkener-fire2.aud
+	ReloadDelay: 120
+	Projectile: LaserZap
+		Color: 000000FF
+		Width: 65
+		SecondaryBeamColor: 00000099
+		SecondaryBeamWidth: 85
+	Warhead@1Dam: SpreadDamage
+		Damage: 9500
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@Spawn: SpawnActor
+		Actors: camera.minirift
+		Range: 1
+		ForceGround: false
+		ValidTargets: Ground, Water
+
+MiniRift:
+	ReloadDelay: 10
+	Range: 1c0
+	ValidTargets: Ground, Water
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Spread: 1c0
+		Damage: 800
+		Falloff: 100, 70, 0
+		ValidTargets: Ground, Trees
+		InvalidTargets: Air, Creep
+		Versus:
+			None: 65
+			Wood: 30
+			Light: 70
+			Heavy: 100
+			Concrete: 80
+			Brick: 25
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 
 RuinerCannon:
 	Inherits: 155mm
@@ -287,7 +326,7 @@ TripodLaser:
 		SecondaryBeamWidth: 75
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 5200
+		Damage: 5700
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
 			None: 80
@@ -295,6 +334,17 @@ TripodLaser:
 			Wood: 62
 			Heavy: 105
 			Concrete: 30
+
+ReaperLaser:
+	Inherits: TripodLaser
+	Range: 5c0
+	ReloadDelay: 40
+	BurstDelays: 10
+	Report: rtripod-fire1.aud, rtripod-fire2.aud, rtripod-fire3.aud
+	Projectile: LaserZap
+		Duration: 30
+		Color: 00FF0090
+		SecondaryBeamColor: 00FF0050
 
 StormriderZap:
 	Range: 7c0
@@ -334,7 +384,7 @@ StormRiderZapAA:
 	Warhead@1Dam: SpreadDamage
 		Damage: 2400
 		Range: 0, 0c64, 0c256, 3c0
-		Falloff: 100, 100, 20, 10
+		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
 
 DevastatorDiscs:
@@ -365,7 +415,7 @@ InvaderLauncher:
 	ReloadDelay: 10
 	Burst: 4
 	BurstDelays: 5
-	Range: 14c0
+	Range: 12c0
 	ValidTargets: Air, Ground, Water
 	Projectile: InstantHit
 	Warhead@1Dam: TargetDamage
@@ -385,8 +435,8 @@ InvaderZap:
 	Warhead@1Dam: SpreadDamage
 		Damage: 1500
 		Versus:
-			None: 80
-			Wood: 15
+			None: 70
+			Wood: 10
 			Concrete: 15
 			Light: 70
 			Heavy: 100
@@ -407,8 +457,8 @@ InvaderZapAA:
 		Image: scrinzap
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
-		Range: 0, 0c64, 0c256, 3c0
-		Falloff: 100, 100, 20, 10
+		Range: 0, 0c64, 0c256, 1c512
+		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
 		ValidStances: Enemy, Neutral
 
@@ -464,6 +514,20 @@ StormColumnZap:
 		Explosions: 1, 3
 		Image: fire
 
+StormcrawlerZap:
+	Inherits: StormColumnZap
+	ReloadDelay: 50
+	Range: 5c0
+	StartBurstReport: stormcrawler-fire1.aud, stormcrawler-fire2.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 1200
+		Versus:
+			None: 100
+			Wood: 80
+			Concrete: 80
+			Light: 60
+			Heavy: 60
+
 ShardLauncher:
 	StartBurstReport: shard-fire1.aud
 	ReloadDelay: 25
@@ -485,7 +549,7 @@ ShardLauncher:
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air
 		Range: 0, 0c64, 0c256, 3c0
-		Falloff: 100, 100, 20, 10
+		Falloff: 100, 100, 30, 15
 		Damage: 2500
 		Versus:
 			None: 175
@@ -493,12 +557,64 @@ ShardLauncher:
 			Concrete: 45
 			Light: 101
 			Heavy: 90
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: idle, idle2, idle3, idle4
 		ExplosionPalette: scrin
 		Image: shardhit
 		ValidTargets: Air, Ground, Water, Trees
+
+RavagerShards:
+	Inherits: ShardLauncher
+	StartBurstReport: ravager-fire1.aud
+	ValidTargets: Ground, Water, Trees
+	ReloadDelay: 40
+	BurstDelays: 5
+	Range: 5c512
+	Projectile: Missile
+		Speed: 213
+		Palette: scrin
+		ContrailWidth: 0c48
+		ContrailLength: 9
+		ContrailColor: 00FF0044
+		Jammable: false
+		Inaccuracy: 128
+		Image: shard
+		HorizontalRateOfTurn: 35
+		RangeLimit: 7c512
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Ground, Water
+		-Range:
+		-Falloff:
+		Spread: 128
+		Damage: 900
+		Versus:
+			None: 40
+			Wood: 75
+			Light: 85
+			Heavy: 100
+			Concrete: 85
+			Brick: 50
+
+LaceratorShards:
+	Inherits: RavagerShards
+	StartBurstReport: lacerator-fire1.aud, lacerator-fire2.aud
+	Burst: 3
+	Projectile: Missile
+		Image: bshard
+		ContrailColor: 4499FFAA
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 2000
+		Versus:
+			None: 40
+			Wood: 75
+			Light: 85
+			Heavy: 100
+			Concrete: 85
+			Brick: 50
+	Warhead@3Eff: CreateEffect
+		Image: bshardhit
 
 RiftInit:
 	ValidTargets: Ground, Water
@@ -511,14 +627,14 @@ RiftInit:
 		ValidTargets: Ground, Water
 
 Rift:
-	ReloadDelay: 24
+	ReloadDelay: 5
 	Range: 1c0
 	ValidTargets: Ground, Water
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
-		Damage: 10000
-		Falloff: 100, 100, 80, 70, 50, 35, 25, 15, 5
+		Damage: 2300
+		Falloff: 100, 100, 75, 60, 45, 35, 25, 15, 5
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air, Creep
 		Versus:
@@ -529,3 +645,23 @@ Rift:
 			Concrete: 70
 			Brick: 25
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+
+BuzzerVortex:
+	ReloadDelay: 5
+	Range: 1c0
+	ValidTargets: Ground, Water
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Spread: 0c768
+		Damage: 1000
+		ValidTargets: Ground, Trees
+		InvalidTargets: Air, Creep
+		Versus:
+			None: 100
+			Wood: 10
+			Light: 80
+			Heavy: 30
+			Concrete: 40
+			Brick: 0
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		ValidStances: Enemy, Neutral

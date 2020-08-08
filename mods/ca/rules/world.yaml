@@ -309,11 +309,26 @@
 		Name: Scrin
 		InternalName: scrin
 		Side: Scrin
-		Description: Scrin: Alien Invaders\n Superweapon: Rift Generator\n Minor Superweapon: Suppression Field
+		Selectable: False
+	Faction@17:
+		Name: Reaper-17
+		InternalName: reaper
+		Side: Scrin
+		Description: Reaper-17: Direct Assault\n Faction Unit: Stormcrawler\n Special Units: Reaper Tripod\n Special Ability: Storm Spike\n Faction Bonus: Devourer (10% Discount)
+	Faction@18:
+		Name: Traveler-59
+		InternalName: traveler
+		Side: Scrin
+		Description: Traveler-59: Fast Attack\n Faction Unit: Ravager\n Special Units: Lacerator\n Special Ability: Ion Surge\n Faction Bonus: Fast Walkers (+10% Speed)
+	Faction@19:
+		Name: Harbinger-31
+		InternalName: harbinger
+		Side: Scrin
+		Description: Harbinger-31: Area Damage\n Faction Unit: Ruiner\n Special Units: Darkener\n Special Ability: Buzzer Swarm\n Faction Bonus: Devastator Warship (10% Discount)
 	Faction@random:
 		Name: Any
 		InternalName: Random
-		RandomFactionMembers: RandomAllies, RandomSoviet, RandomGDI, RandomNOD, scrin
+		RandomFactionMembers: RandomAllies, RandomSoviet, RandomGDI, RandomNOD, RandomScrin
 		Side: Random
 		Description: Random Faction\nA random faction will be chosen when the game starts.
 	Faction@randomallies:
@@ -340,6 +355,12 @@
 		RandomFactionMembers: blackh, marked, legion
 		Side: Random
 		Description: Random Nod Faction\nA random Nod faction will be chosen when the game starts.
+	Faction@randomscrin:
+		Name: Scrin
+		InternalName: RandomScrin
+		RandomFactionMembers: reaper, traveler, harbinger
+		Side: Random
+		Description: Random Scrin Faction\nA random Scrin faction will be chosen when the game starts.
 	ResourceType@ore:
 		Type: Ore
 		Name: Valuable Minerals
@@ -535,12 +556,12 @@ World:
 	MPStartUnits@mcvonlyscrin:
 		Class: none
 		ClassName: MCV Only
-		Factions: scrin
+		Factions: scrin, reaper, traveler, harbinger
 		BaseActor: smcv
 	MPStartUnits@lightscrin:
 		Class: light
 		ClassName: Light Support
-		Factions: scrin
+		Factions: scrin, reaper, traveler, harbinger
 		BaseActor: smcv
 		SupportActors: s1,s1,s1,s3,s3
 		InnerSupportRadius: 3
@@ -548,7 +569,7 @@ World:
 	MPStartUnits@heavyscrin:
 		Class: heavy
 		ClassName: Heavy Support
-		Factions: scrin
+		Factions: scrin, reaper, traveler, harbinger
 		BaseActor: smcv
 		SupportActors: s1,s1,s1,s3,s3,seek,gunw
 		InnerSupportRadius: 3

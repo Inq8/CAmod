@@ -12,6 +12,22 @@
 	Building:
 		BuildSounds: scrinbuild.aud
 
+INFANTRY.SCRIN:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Infantry Production
+	Buildable:
+		Description: Infantry Production
+
+VEHICLES.SCRIN:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Vehicle Production
+	Buildable:
+		Description: Vehicle Production
+
 #
 # ---- Infantry
 #
@@ -70,6 +86,40 @@ S1:
 		Weapon: WarriorGun
 		MuzzleSequence: muzzle
 	WithMuzzleOverlay:
+	WithInfantryBody:
+	AttackFrontal:
+		PauseOnCondition: being-warped
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+
+S2:
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@BOTHELPER: ^BotCaptureHelper
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 35
+		Prerequisites: nerv, ~infantry.traveler, ~techlevel.infonly
+		Description: Fast assault infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+		IconPalette: scrin
+	Valued:
+		Cost: 250
+	Tooltip:
+		Name: Ravager
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 7000
+	Mobile:
+		Speed: 71
+	Armament@PRIMARY:
+		Weapon: RavagerShards
+		LocalOffset: 0,-100,250, 0,100,250
+	Armament@Garrison:
+		Name: mounted
+		Weapon: RavagerShards
 	WithInfantryBody:
 	AttackFrontal:
 		PauseOnCondition: being-warped
@@ -273,7 +323,7 @@ GUNW:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 15
-		Prerequisites: warp, ~vehicles.scrin, ~techlevel.low
+		Prerequisites: wsph, ~vehicles.scrin, ~techlevel.low
 		Description: Light assault walker.\n  Strong vs Infantry, Aircraft\n  Weak vs Tanks
 		IconPalette: chrome
 	Valued:
@@ -317,6 +367,12 @@ GUNW:
 		Prerequisites: vehicles.upgraded
 	WithMoveAnimation:
 		MovementType: Horizontal, Vertical, Turn
+	GrantConditionOnFaction@TRAVELERSPEED:
+		Condition: travelerspeed
+		Factions: traveler
+	SpeedMultiplier@TRAVELERSPEED:
+		RequiresCondition: travelerspeed
+		Modifier: 115
 
 SEEK:
 	Inherits: ^Vehicle
@@ -375,7 +431,6 @@ SEEK:
 	Armament@PRIMARY:
 		Weapon: PlasmaDiscs
 		LocalOffset: 320,0,320
-		RequiresCondition: !gdiupg
 	AttackTurreted:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: false
@@ -393,6 +448,78 @@ SEEK:
 		Actor: SEEK.Husk
 		RequiresCondition: !being-warped
 
+LACE:
+	Inherits: ^Vehicle
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Valued:
+		Cost: 700
+	Tooltip:
+		Name: Lacerator
+	Selectable:
+		DecorationBounds: 28,28
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: vehicles.any, ~vehicles.traveler, ~techlevel.low
+		Queue: Vehicle
+		Description: Fast hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles, Structures\n  Weak vs Aircraft, Infantry
+		IconPalette: chrome
+	Mobile:
+		TurnSpeed: 10
+		Speed: 157
+	LeavesTrails:
+		Image: twake
+		Palette: effect
+		TerrainTypes: Water
+		TrailWhileStationary: true
+		StationaryInterval: 18
+		MovingInterval: 6
+	Health:
+		HP: 16000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 8c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Turreted:
+		TurnSpeed: 10
+		Offset: -50,0,0
+	Hovers:
+		BobDistance: -25
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
+	GrantConditionOnTerrain:
+		TerrainTypes: Water
+		Condition: onwater
+	KillsSelf@SINK:
+		RequiresCondition: onwater && (empdisable || driver-dead)
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+	Armament@PRIMARY:
+		Weapon: LaceratorShards
+		LocalOffset: 0,50,320, 0,-50,320
+	AttackTurreted:
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: false
+		OpportunityFire: False
+		PauseOnCondition: empdisable || being-warped
+	WithSpriteTurret:
+	IgnoresDisguise:
+	DetectCloaked:
+		Range: 6c0
+		CloakTypes: Cloak, Thief
+		RequiresCondition: !(empdisable || being-warped)
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+
 INTL:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
@@ -408,7 +535,7 @@ INTL:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: warp, ~vehicles.scrin, ~techlevel.low
+		Prerequisites: wsph, ~vehicles.scrin, ~techlevel.low
 		Queue: Vehicle
 		Description: Heavily armoured transport craft.\n  Strong vs Light Vehicles\n  Weak vs Tanks, Aircraft
 		IconPalette: chrome
@@ -501,6 +628,64 @@ CORR:
 		Prerequisites: vehicles.upgraded
 	WithMoveAnimation:
 		MovementType: Horizontal, Vertical, Turn
+	GrantConditionOnFaction@TRAVELERSPEED:
+		Condition: travelerspeed
+		Factions: traveler
+	SpeedMultiplier@TRAVELERSPEED:
+		RequiresCondition: travelerspeed
+		Modifier: 115
+
+STCR:
+	Inherits: ^Vehicle
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Valued:
+		Cost: 1100
+	Tooltip:
+		Name: Stormcrawler
+	Selectable:
+		DecorationBounds: 36,36,0,-3
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 65
+		Prerequisites: nerv, ~vehicles.reaper, ~techlevel.medium
+		Queue: Vehicle
+		Description: Slow moving, durable, short-range assault unit.\n  Regenerates rapidly.\n  Weak vs Aircraft
+		IconPalette: scrin
+	Mobile:
+		Speed: 71
+		TurnSpeed: 3
+	Health:
+		HP: 40000
+	Armor:
+		Type: Heavy
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament:
+		Weapon: StormcrawlerZap
+		LocalOffset: 0,0,350, -250,0,350, 250,0,350
+	AttackFrontal:
+		FacingTolerance: 50
+		PauseOnCondition: empdisable || being-warped
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithShadow:
+		Offset: 80, 80, 0
+		ZOffset: -81
+	SelfHealing:
+		PercentageStep: 1
+		Delay: 10
+		HealIfBelow: 100
+		DamageCooldown: 0
+		PauseOnCondition: empdisable || being-warped
 
 DEVO:
 	Inherits: ^Tank
@@ -539,7 +724,7 @@ DEVO:
 		Range: 4c0
 	Armament:
 		Weapon: DevourerLaser
-		LocalOffset: 824,0,208
+		LocalOffset: 850,0,208
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
@@ -557,6 +742,70 @@ DEVO:
 		Sequence: idle
 	WithFacingSpriteBody:
 		Sequence: idle
+	ProductionCostMultiplier@REAPBONUS:
+		Multiplier: 90
+		Prerequisites: vehicles.reaper
+
+DARK:
+	Inherits: ^Tank
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 135
+		Prerequisites: nerv, ~vehicles.harbinger, ~techlevel.medium
+		Description: Heavy hover tank with armed with rift cannon.\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft
+		IconPalette: scrin
+	Valued:
+		Cost: 1350
+	Tooltip:
+		Name: Darkener Tank
+	Selectable:
+		DecorationBounds: 28,28
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 42000
+	Armor:
+		Type: Heavy
+	Mobile:
+		TurnSpeed: 4
+		Speed: 71
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament:
+		Weapon: RiftCannon
+		LocalOffset: 835,0,350
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	WithMuzzleOverlay:
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	Turreted:
+		TurnSpeed: 4
+		Offset: 0,0,0
+	AttackTurreted:
+		TargetFrozenActors: True
+		PauseOnCondition: empdisable || being-warped
+		Armaments: primary
+	WithSpriteTurret:
+	QuantizeFacingsFromSequence:
+		Sequence: idle
+	WithFacingSpriteBody:
+		Sequence: idle
+	Hovers:
+		BobDistance: -25
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
 
 RUIN:
 	Inherits: ^Vehicle
@@ -575,7 +824,7 @@ RUIN:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 150
-		Prerequisites: scrt, ~vehicles.scrin, ~techlevel.high
+		Prerequisites: scrt, ~vehicles.harbinger, ~techlevel.high
 		Queue: Vehicle
 		Description: Long-range artillery.\n  Strong vs Structures, Infantry\n  Weak vs Tanks, Aircraft
 		IconPalette: chrome
@@ -636,7 +885,7 @@ TPOD:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 74000
+		HP: 70000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -678,6 +927,29 @@ TPOD:
 	SpawnActorOnDeath:
 		Actor: TPOD.Husk
 		RequiresCondition: !being-warped
+	GrantConditionOnFaction@TRAVELERSPEED:
+		Condition: travelerspeed
+		Factions: traveler
+	SpeedMultiplier@TRAVELERSPEED:
+		RequiresCondition: travelerspeed
+		Modifier: 115
+
+RPTP:
+	Inherits: TPOD
+	Buildable:
+		Prerequisites: techcenter, ~vehicles.reaper, ~techlevel.high
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Valued:
+		Cost: 2200
+	Tooltip:
+		Name: Reaper Tripod
+	Health:
+		HP: 88000
+	Armament@PRIMARY:
+		Weapon: ReaperLaser
+		LocalOffset: 700,550,1000, 700,-550,1000
+	-SpawnActorOnDeath:
 
 SMCV:
 	Inherits: ^Vehicle
@@ -872,6 +1144,9 @@ DEVA:
 		RequiresCondition: empdisable
 	-Hovers@CRUISING:
 	-EjectOnDeath:
+	ProductionCostMultiplier@VANQBONUS:
+		Multiplier: 90
+		Prerequisites: vehicles.harbinger
 
 PAC:
 	Inherits: ^Helicopter
@@ -912,7 +1187,7 @@ PAC:
 		CruiseAltitude: 2c0
 		InitialFacing: 192
 		TurnSpeed: 3
-		Speed: 48
+		Speed: 49
 		AltitudeVelocity: 0c50
 		CanForceLand: False
 	Selectable:
@@ -944,7 +1219,7 @@ PAC:
 		RespawnTicks: 500
 		InstaRepair: true
 		SlaveDisposalOnKill: KillSlaves
-		SpawnAllAtOnce: true
+		SpawnAllAtOnce: false
 		LoadedCondition: inva-loaded
 	Exit@0:
 		SpawnOffset: -100,0,0
@@ -958,10 +1233,6 @@ PAC:
 	Exit@3:
 		SpawnOffset: 100,0,0
 		Facing: -60
-	WithRangeCircle@Attack:
-		Type: jammer
-		Range: 15c0
-		Color: 0000FF80
 	DeathSounds:
 		Voice: Die
 	-EjectOnDeath:
@@ -1327,14 +1598,17 @@ SFAC:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
 	ProvidesPrerequisite@scrin:
-		Factions: scrin
+		Factions: scrin, reaper, traveler, harbinger
 		Prerequisite: structures.scrin
-	ProvidesPrerequisite@warpFAC:
-		Factions: scrin
-		Prerequisite: structures.warp
-	ProvidesPrerequisite@sandbag:
-		Factions: scrin
-		Prerequisite: structures.sandbag
+	ProvidesPrerequisite@reaper:
+		Factions: reaper
+		Prerequisite: structures.reaper
+	ProvidesPrerequisite@traveler:
+		Factions: traveler
+		Prerequisite: structures.traveler
+	ProvidesPrerequisite@harbinger:
+		Factions: harbinger
+		Prerequisite: structures.harbinger
 	ProductionBar@Building:
 		ProductionType: Building
 	ProductionBar@Defense:
@@ -1362,6 +1636,7 @@ REAC:
 	Inherits: ^ScrinBuilding
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@shape: ^2x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: 630,299,0
 	RenderSprites:
@@ -1407,6 +1682,7 @@ REA2:
 	Inherits: ^ScrinBuilding
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@shape: ^3x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	WithSpriteBody:
@@ -1564,8 +1840,29 @@ PORT:
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@scrin:
-		Factions: scrin
+		Factions: scrin, reaper, traveler, harbinger
 		Prerequisite: infantry.scrin
+	ProvidesPrerequisite@reaper:
+		Factions: reaper
+		Prerequisite: infantry.reaper
+	ProvidesPrerequisite@traveler:
+		Factions: traveler
+		Prerequisite: infantry.traveler
+	ProvidesPrerequisite@harbinger:
+		Factions: harbinger
+		Prerequisite: infantry.harbinger
+	ProvidesPrerequisite@scrinstructure:
+		RequiresPrerequisites: structures.scrin
+		Prerequisite: infantry.scrin
+	ProvidesPrerequisite@reaperstructure:
+		RequiresPrerequisites: structures.reaper
+		Prerequisite: infantry.reaper
+	ProvidesPrerequisite@travelerstructure:
+		RequiresPrerequisites: structures.traveler
+		Prerequisite: infantry.traveler
+	ProvidesPrerequisite@harbingerstructure:
+		RequiresPrerequisites: structures.harbinger
+		Prerequisite: infantry.harbinger
 	Power:
 		Amount: -20
 		RequiresCondition: !being-warped
@@ -1588,7 +1885,7 @@ PORT:
 	WithIdleOverlay:
 		RequiresCondition: !build-incomplete
 
-WARP:
+WSPH:
 	Inherits: ^ScrinBuilding
 	Inherits@shape: ^3x2Shape
 	Selectable:
@@ -1601,7 +1898,7 @@ WARP:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 80
-		Prerequisites: proc.scrin, ~structures.warp, ~techlevel.low
+		Prerequisites: proc.scrin, ~structures.scrin, ~techlevel.low
 		IconPalette: scrin
 		Description: Produces vehicles.
 	Valued:
@@ -1685,8 +1982,17 @@ WARP:
 		Factions: legion
 		Prerequisite: vehicles.legion
 	ProvidesPrerequisite@scrin:
-		Factions: scrin
+		Factions: scrin, reaper, traveler, harbinger
 		Prerequisite: vehicles.scrin
+	ProvidesPrerequisite@reaper:
+		Factions: reaper
+		Prerequisite: vehicles.reaper
+	ProvidesPrerequisite@traveler:
+		Factions: traveler
+		Prerequisite: vehicles.traveler
+	ProvidesPrerequisite@harbinger:
+		Factions: harbinger
+		Prerequisite: vehicles.harbinger
 	ProvidesPrerequisite@alliedstructure:
 		RequiresPrerequisites: structures.allies
 		Prerequisite: vehicles.allies
@@ -1744,14 +2050,23 @@ WARP:
 	ProvidesPrerequisite@scrinstructure:
 		RequiresPrerequisites: structures.scrin
 		Prerequisite: vehicles.scrin
+	ProvidesPrerequisite@reaperstructure:
+		RequiresPrerequisites: structures.reaper
+		Prerequisite: vehicles.reaper
+	ProvidesPrerequisite@travelerstructure:
+		RequiresPrerequisites: structures.traveler
+		Prerequisite: vehicles.traveler
+	ProvidesPrerequisite@harbingerstructure:
+		RequiresPrerequisites: structures.harbinger
+		Prerequisite: vehicles.harbinger
 	ProvidesPrerequisite@seek:
-		Factions: scrin
+		Factions: scrin, reaper, harbinger
 		Prerequisite: vehicles.seek
 	ProvidesPrerequisite@devo:
-		Factions: scrin
+		Factions: scrin, reaper, traveler
 		Prerequisite: vehicles.devo
 	ProvidesPrerequisite@tpod:
-		Factions: scrin
+		Factions: scrin, traveler, harbinger
 		Prerequisite: vehicles.tpod
 	WithBuildingBib:
 	RallyPoint:
@@ -1837,7 +2152,7 @@ NERV:
 	ProvidesPrerequisite@radar:
 		Prerequisite: radar
 	ProvidesPrerequisite@scrinrad:
-		Factions: scrin
+		Factions: scrin, reaper, traveler, harbinger
 		Prerequisite: radar.scrin
 	ProvidesPrerequisite@buildingname:
 	ExternalCondition@JAMMED:
@@ -1860,9 +2175,9 @@ NERV:
 		OrderName: ichorseed
 		Icon: ichorpower
 		Actor: ichor.seeder
-		ChargeInterval: 4500
+		ChargeInterval: 6000
 		Description: Ichor Seed
-		Duration: 250
+		Lifetime: 250
 		ActivationDelay: 0
 		AllowMultiple: false
 		LongDesc: Seeds tiberium at selected location.
@@ -1870,6 +2185,46 @@ NERV:
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		PauseOnCondition: disabled || empdisable || being-warped
+	SpawnActorPower@BUZZERSWARM:
+		Actor: BUZZ
+		OrderName: buzzerswarm
+		Icon: buzzpower
+		Prerequisites: structures.harbinger
+		ChargeInterval: 4500
+		LifeTime: -1
+		Description: Buzzer Swarm
+		LongDesc: Spawns controllable buzzer swarm which damages anything nearby.
+		LaunchSound: buzzers-create.aud
+		SelectTargetSpeechNotification: SelectTarget
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayRadarPing: True
+	SpawnActorPower@STORMSPIKE:
+		Actor: SCOL.Temp
+		OrderName: stormspike
+		Icon: stormspikepower
+		IconPalette: scrin
+		Prerequisites: structures.reaper
+		ChargeInterval: 4500
+		LifeTime: -1
+		Description: Storm Spike
+		LongDesc: Creates a temporary storm column.
+		LaunchSound: scrinbuild.aud
+		SelectTargetSpeechNotification: SelectTarget
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayRadarPing: True
+	SpawnActorPower@IONSURGE:
+		Actor: ion.surge
+		OrderName: ionsurge
+		Icon: ionsurgepower
+		Prerequisites: structures.traveler
+		ChargeInterval: 4500
+		LifeTime: -1
+		Description: Ion Surge
+		LongDesc: Reduces power output of power plants and disables radar within affected area.
+		LaunchSound: ionsurge.aud
+		SelectTargetSpeechNotification: SelectTarget
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayRadarPing: True
 
 SCRT:
 	Inherits: ^ScrinBuilding
@@ -1878,7 +2233,7 @@ SCRT:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 150
-		Prerequisites: warp, nerv, ~structures.scrin, ~techlevel.high
+		Prerequisites: wsph, nerv, ~structures.scrin, ~techlevel.high
 		Description: Provides Scrin advanced technologies.
 		IconPalette: scrin
 	Valued:
@@ -1956,12 +2311,32 @@ GRAV:
 	Production:
 		Produces: Aircraft, Plane
 		PauseOnCondition: forceshield || invulnerability || being-warped
+	ProvidesPrerequisite@all:
+		Prerequisite: aircraft.all
 	ProvidesPrerequisite@scrin:
-		Factions: scrin
+		Factions: scrin, reaper, traveler, harbinger
 		Prerequisite: aircraft.scrin
+	ProvidesPrerequisite@reaper:
+		Factions: reaper
+		Prerequisite: aircraft.reaper
+	ProvidesPrerequisite@traveler:
+		Factions:  traveler
+		Prerequisite: aircraft.traveler
+	ProvidesPrerequisite@harbinger:
+		Factions: harbinger
+		Prerequisite: aircraft.harbinger
 	ProvidesPrerequisite@scrinstructure:
 		RequiresPrerequisites: structures.scrin
 		Prerequisite: aircraft.scrin
+	ProvidesPrerequisite@reaperstructure:
+		RequiresPrerequisites: structures.reaper
+		Prerequisite: aircraft.reaper
+	ProvidesPrerequisite@travelerstructure:
+		RequiresPrerequisites: structures.traveler
+		Prerequisite: aircraft.traveler
+	ProvidesPrerequisite@habringerstructure:
+		RequiresPrerequisites: structures.harbinger
+		Prerequisite: aircraft.harbinger
 	ProductionBar:
 		ProductionType: Aircraft
 	SupportPowerChargeBar:
@@ -2340,6 +2715,9 @@ PTUR:
 		RequiresCondition: !being-warped
 	BodyOrientation:
 		UseClassicFacingFudge: True
+	SpawnActorOnDeath:
+		Actor: s1
+	-SpawnRandomActorOnDeath:
 
 SHAR:
 	Inherits: ^Defense
@@ -2392,10 +2770,12 @@ SHAR:
 		UseClassicFacingFudge: True
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
+	SpawnActorOnDeath:
+		Actor: s1
+	-SpawnRandomActorOnDeath:
 
 SCOL:
 	Inherits: ^Defense
-	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Inherits@Flash: ^WhiteFlash
 	RenderSprites:
@@ -2436,14 +2816,65 @@ SCOL:
 		RequiresCondition: !being-warped
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
+	SpawnActorOnDeath:
+		Actor: s1
+	-SpawnRandomActorOnDeath:
+
+SCOL.Temp:
+	RenderSprites:
+		Image: scol
+	Inherits: SCOL
+	-Sellable:
+	-Buildable:
+	Health:
+		HP: 60000
+	KillsSelf:
+		Delay: 750
+	-Power:
+	-SpawnActorOnDeath:
+	-WithBuildingRepairDecoration:
+	-RepairableBuilding:
+	-EngineerRepairable:
 
 #
 # ---- misc
 #
 
+BUZZ:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^SpriteActor
+	Inherits@3: ^SelectableSupportUnit
+	Interactable:
+	HiddenUnderFog:
+	Tooltip:
+		Name: Buzzer Swarm
+	Health:
+		HP: 1
+	RevealsShroud:
+		MinRange: 2c0
+		Range: 4c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 2c0
+	PeriodicExplosion:
+		Weapon: BuzzerVortex
+	WithSpriteBody:
+	HitShape:
+	KillsSelf:
+		RemoveInstead: true
+		Delay: 450
+	Aircraft:
+		CanHover: True
+		Speed: 36
+		CruiseAltitude: 1
+	AmbientSound:
+		SoundFiles: buzzers-idle1.aud, buzzers-idle2.aud, buzzers-idle3.aud
+		Interval: 10
+	Voiced:
+		VoiceSet: BuzzersVoice
+
 camera.rift:
 	Interactable:
-	ConditionManager:
 	EditorOnlyTooltip:
 		Name: (support power)
 	RenderSprites:
@@ -2458,11 +2889,7 @@ camera.rift:
 	RevealsShroud:
 		Range: 6c0
 	Health:
-		HP: 45000
-	DamagedByTerrain:
-		Terrain: Clear, Rough, Road, Ore, Water, Gems, River, Tiberium, BlueTiberium
-		Damage: 1000
-		DamageInterval: 8
+		HP: 1
 	PeriodicExplosion:
 		Weapon: Rift
 	Immobile:
@@ -2474,6 +2901,21 @@ camera.rift:
 		UseDeathTypeSuffix: False
 		CrushedSequence: fade
 		FallbackSequence: fade
+	KillsSelf:
+		Delay: 360
+
+camera.minirift
+	Inherits: camera.rift
+	RenderSprites:
+		Image: miniriftanim
+	PeriodicExplosion:
+		Weapon: MiniRift
+	KillsSelf:
+		Delay: 120
+	WithSpriteBody:
+		-StartSequence:
+	-AmbientSound:
+	-WithDeathAnimation:
 
 camera.resourcescan:
 	Inherits: CAMERA
@@ -2489,6 +2931,29 @@ ichor.seeder:
 		ResourceType: Tiberium
 		Interval: 2
 	-RevealsShroud:
+
+ion.surge:
+	Interactable:
+	WithSpriteBody:
+	BodyOrientation:
+		QuantizedFacings: 1
+	HitShape:
+	AlwaysVisible:
+	Immobile:
+		OccupiesSpace: false
+	RenderSprites:
+		Image: ionsurge
+	ProximityExternalCondition@JAMMER:
+		Range: 10c0
+		Condition: jammed
+	ProximityExternalCondition@POWERDRAIN:
+		Range: 10c0
+		Condition: powerdrain
+	KillsSelf:
+		Delay: 375
+	AmbientSound:
+		SoundFiles: ionsurgeloop.aud
+		Interval: 50
 
 # infiltrator stolen tech
 
