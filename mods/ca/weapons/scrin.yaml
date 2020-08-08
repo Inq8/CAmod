@@ -415,7 +415,7 @@ InvaderLauncher:
 	ReloadDelay: 10
 	Burst: 4
 	BurstDelays: 5
-	Range: 14c0
+	Range: 12c0
 	ValidTargets: Air, Ground, Water
 	Projectile: InstantHit
 	Warhead@1Dam: TargetDamage
@@ -517,8 +517,16 @@ StormColumnZap:
 StormcrawlerZap:
 	Inherits: StormColumnZap
 	ReloadDelay: 50
-	Burst: 5
 	Range: 5c0
+	StartBurstReport: stormcrawler-fire1.aud, stormcrawler-fire2.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 1200
+		Versus:
+			None: 100
+			Wood: 80
+			Concrete: 80
+			Light: 60
+			Heavy: 60
 
 ShardLauncher:
 	StartBurstReport: shard-fire1.aud

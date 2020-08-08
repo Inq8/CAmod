@@ -351,6 +351,12 @@ GUNW:
 		Prerequisites: vehicles.upgraded
 	WithMoveAnimation:
 		MovementType: Horizontal, Vertical, Turn
+	GrantConditionOnFaction@TRAVELERSPEED:
+		Condition: travelerspeed
+		Factions: traveler
+	SpeedMultiplier@TRAVELERSPEED:
+		RequiresCondition: travelerspeed
+		Modifier: 115
 
 SEEK:
 	Inherits: ^Vehicle
@@ -606,6 +612,12 @@ CORR:
 		Prerequisites: vehicles.upgraded
 	WithMoveAnimation:
 		MovementType: Horizontal, Vertical, Turn
+	GrantConditionOnFaction@TRAVELERSPEED:
+		Condition: travelerspeed
+		Factions: traveler
+	SpeedMultiplier@TRAVELERSPEED:
+		RequiresCondition: travelerspeed
+		Modifier: 115
 
 STCR:
 	Inherits: ^Vehicle
@@ -615,7 +627,7 @@ STCR:
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
-		Cost: 1000
+		Cost: 1100
 	Tooltip:
 		Name: Stormcrawler
 	Selectable:
@@ -626,13 +638,13 @@ STCR:
 		BuildPaletteOrder: 65
 		Prerequisites: nerv, ~vehicles.reaper, ~techlevel.medium
 		Queue: Vehicle
-		Description: Slow moving, durable, short-range assault unit.\n  Regenerates rapidly.\n  Strong vs Infantry, Structures\n  Weak vs Tanks, Aircraft
+		Description: Slow moving, durable, short-range assault unit.\n  Regenerates rapidly.\n  Weak vs Aircraft
 		IconPalette: scrin
 	Mobile:
 		Speed: 71
-		TurnSpeed: 4
+		TurnSpeed: 3
 	Health:
-		HP: 45000
+		HP: 40000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -645,6 +657,7 @@ STCR:
 		Weapon: StormcrawlerZap
 		LocalOffset: 0,0,350, -250,0,350, 250,0,350
 	AttackFrontal:
+		FacingTolerance: 50
 		PauseOnCondition: empdisable || being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -655,7 +668,8 @@ STCR:
 		PercentageStep: 1
 		Delay: 10
 		HealIfBelow: 100
-		DamageCooldown: 50
+		DamageCooldown: 0
+		PauseOnCondition: empdisable || being-warped
 
 DEVO:
 	Inherits: ^Tank
@@ -712,6 +726,9 @@ DEVO:
 		Sequence: idle
 	WithFacingSpriteBody:
 		Sequence: idle
+	ProductionCostMultiplier@REAPBONUS:
+		Multiplier: 90
+		Prerequisites: vehicles.reaper
 
 DARK:
 	Inherits: ^Tank
@@ -894,6 +911,12 @@ TPOD:
 	SpawnActorOnDeath:
 		Actor: TPOD.Husk
 		RequiresCondition: !being-warped
+	GrantConditionOnFaction@TRAVELERSPEED:
+		Condition: travelerspeed
+		Factions: traveler
+	SpeedMultiplier@TRAVELERSPEED:
+		RequiresCondition: travelerspeed
+		Modifier: 115
 
 RPTP:
 	Inherits: TPOD
@@ -1196,7 +1219,7 @@ PAC:
 		Facing: -60
 	WithRangeCircle@Attack:
 		Type: jammer
-		Range: 15c0
+		Range: 13c0
 		Color: 0000FF80
 	DeathSounds:
 		Voice: Die
@@ -1601,6 +1624,7 @@ REAC:
 	Inherits: ^ScrinBuilding
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@shape: ^2x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: 630,299,0
 	RenderSprites:
@@ -1646,6 +1670,7 @@ REA2:
 	Inherits: ^ScrinBuilding
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@shape: ^3x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	WithSpriteBody:
@@ -2117,9 +2142,9 @@ NERV:
 		OrderName: ichorseed
 		Icon: ichorpower
 		Actor: ichor.seeder
-		ChargeInterval: 4500
+		ChargeInterval: 6000
 		Description: Ichor Seed
-		Duration: 250
+		Lifetime: 250
 		ActivationDelay: 0
 		AllowMultiple: false
 		LongDesc: Seeds tiberium at selected location.
@@ -2133,11 +2158,39 @@ NERV:
 		Icon: buzzpower
 		Prerequisites: structures.harbinger
 		ChargeInterval: 4500
+		LifeTime: -1
 		Description: Buzzer Swarm
 		LongDesc: Spawns controllable buzzer swarm which damages anything nearby.
 		LaunchSound: buzzers-create.aud
 		SelectTargetSpeechNotification: SelectTarget
-		PauseOnCondition: disabled || being-warped
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayRadarPing: True
+	SpawnActorPower@STORMSPIKE:
+		Actor: SCOL.Temp
+		OrderName: stormspike
+		Icon: stormspikepower
+		IconPalette: scrin
+		Prerequisites: structures.reaper
+		ChargeInterval: 4500
+		LifeTime: -1
+		Description: Storm Spike
+		LongDesc: Creates a temporary storm column.
+		LaunchSound: scrinbuild.aud
+		SelectTargetSpeechNotification: SelectTarget
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayRadarPing: True
+	SpawnActorPower@IONSURGE:
+		Actor: ion.surge
+		OrderName: ionsurge
+		Icon: ionsurgepower
+		Prerequisites: structures.traveler
+		ChargeInterval: 4500
+		LifeTime: -1
+		Description: Ion Surge
+		LongDesc: Reduces power output of power plants and disables radar within affected area.
+		LaunchSound: ionsurge.aud
+		SelectTargetSpeechNotification: SelectTarget
+		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayRadarPing: True
 
 SCRT:
@@ -2609,6 +2662,9 @@ PTUR:
 		RequiresCondition: !being-warped
 	BodyOrientation:
 		UseClassicFacingFudge: True
+	SpawnActorOnDeath:
+		Actor: s1
+	-SpawnRandomActorOnDeath:
 
 SHAR:
 	Inherits: ^Defense
@@ -2661,10 +2717,12 @@ SHAR:
 		UseClassicFacingFudge: True
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
+	SpawnActorOnDeath:
+		Actor: s1
+	-SpawnRandomActorOnDeath:
 
 SCOL:
 	Inherits: ^Defense
-	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Inherits@Flash: ^WhiteFlash
 	RenderSprites:
@@ -2705,6 +2763,25 @@ SCOL:
 		RequiresCondition: !being-warped
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
+	SpawnActorOnDeath:
+		Actor: s1
+	-SpawnRandomActorOnDeath:
+
+SCOL.Temp:
+	RenderSprites:
+		Image: scol
+	Inherits: SCOL
+	-Sellable:
+	-Buildable:
+	Health:
+		HP: 60000
+	KillsSelf:
+		Delay: 750
+	-Power:
+	-SpawnActorOnDeath:
+	-WithBuildingRepairDecoration:
+	-RepairableBuilding:
+	-EngineerRepairable:
 
 #
 # ---- misc
@@ -2715,7 +2792,6 @@ BUZZ:
 	Inherits@2: ^SpriteActor
 	Inherits@3: ^SelectableSupportUnit
 	Interactable:
-	ConditionManager:
 	HiddenUnderFog:
 	Tooltip:
 		Name: Buzzer Swarm
@@ -2746,7 +2822,6 @@ BUZZ:
 
 camera.rift:
 	Interactable:
-	ConditionManager:
 	EditorOnlyTooltip:
 		Name: (support power)
 	RenderSprites:
@@ -2803,6 +2878,29 @@ ichor.seeder:
 		ResourceType: Tiberium
 		Interval: 2
 	-RevealsShroud:
+
+ion.surge:
+	Interactable:
+	WithSpriteBody:
+	BodyOrientation:
+		QuantizedFacings: 1
+	HitShape:
+	AlwaysVisible:
+	Immobile:
+		OccupiesSpace: false
+	RenderSprites:
+		Image: ionsurge
+	ProximityExternalCondition@JAMMER:
+		Range: 10c0
+		Condition: jammed
+	ProximityExternalCondition@POWERDRAIN:
+		Range: 10c0
+		Condition: powerdrain
+	KillsSelf:
+		Delay: 375
+	AmbientSound:
+		SoundFiles: ionsurgeloop.aud
+		Interval: 50
 
 # infiltrator stolen tech
 
