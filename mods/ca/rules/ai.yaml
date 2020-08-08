@@ -499,6 +499,34 @@ Player:
 					Attractiveness: 2
 					TargetMetric: Value
 					CheckRadius: 3c0
+			stormspikepower:
+				OrderName: stormspike
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
+			buzzerswarmpower:
+				OrderName: buzzerswarm
+				MinimumAttractiveness: 1000
+				FineScanRadius: 2
+				Consideration@3:
+					Against: Enemy
+					Types: Infantry, Vehicle
+					Attractiveness: 2
+					TargetMetric: Value
+					CheckRadius: 3c0
+			ionsurgepower:
+				OrderName: ionsurge
+				MinimumAttractiveness: 3000
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 7c0
 			suppressionpower:
 				OrderName: suppression
 				MinimumAttractiveness: 1000
@@ -1307,6 +1335,7 @@ Player:
 			n1c: 65
 			n3c: 40
 			s1: 65
+			s2: 40
 			s3: 40
 			s4: 15
 			s6: 5
@@ -1350,11 +1379,14 @@ Player:
 			3tnk: 70
 			4tnk: 40
 			tpod: 40
+			rtpd: 40
 			ltnk: 40
 			mtnk: 70
 			mtnk.drone: 70
 			seek: 40
+			lace: 40
 			devo: 45
+			dark: 45
 			bike: 30
 			htnk: 40
 			htnk.ion: 40
@@ -1372,6 +1404,7 @@ Player:
 			stnk.nod: 15
 			ftnk: 15
 			corr: 15
+			stcr: 25
 			hind: 5
 			heli: 5
 			apch: 5
@@ -1462,6 +1495,7 @@ Player:
 			n1c: 65
 			n3c: 40
 			s1: 65
+			s2: 40
 			s3: 40
 			s4: 15
 			s6: 5
@@ -1505,11 +1539,14 @@ Player:
 			3tnk: 70
 			4tnk: 40
 			tpod: 40
+			rtpd: 40
 			ltnk: 40
 			mtnk: 70
 			mtnk.drone: 70
 			seek: 40
+			lace: 40
 			devo: 45
+			dark: 45
 			bike: 30
 			htnk: 40
 			htnk.ion: 40
@@ -1527,6 +1564,7 @@ Player:
 			stnk.nod: 15
 			ftnk: 15
 			corr: 15
+			stcr: 25
 			hind: 5
 			heli: 5
 			apch: 5
@@ -1616,6 +1654,7 @@ Player:
 			n1c: 65
 			n3c: 40
 			s1: 65
+			s2: 40
 			s3: 40
 			s4: 15
 			s6: 5
@@ -1659,11 +1698,14 @@ Player:
 			3tnk: 70
 			4tnk: 40
 			tpod: 40
+			rtpd: 40
 			ltnk: 40
 			mtnk: 70
 			mtnk.drone: 70
 			seek: 40
+			lace: 40
 			devo: 45
+			dark: 45
 			bike: 30
 			htnk: 40
 			htnk.ion: 40
@@ -1681,6 +1723,7 @@ Player:
 			stnk.nod: 15
 			ftnk: 15
 			corr: 15
+			stcr: 25
 			hind: 5
 			heli: 5
 			apch: 5
@@ -1769,6 +1812,7 @@ Player:
 			n1c: 65
 			n3c: 40
 			s1: 65
+			s2: 40
 			s3: 40
 			s4: 15
 			s6: 5
@@ -1812,11 +1856,14 @@ Player:
 			3tnk: 70
 			4tnk: 40
 			tpod: 40
+			rtpd: 40
 			ltnk: 40
 			mtnk: 70
 			mtnk.drone: 70
 			seek: 40
+			lace: 40
 			devo: 45
+			dark: 45
 			bike: 30
 			htnk: 40
 			htnk.ion: 40
@@ -1834,6 +1881,7 @@ Player:
 			stnk.nod: 15
 			ftnk: 15
 			corr: 15
+			stcr: 25
 			hind: 5
 			heli: 5
 			apch: 5
@@ -1920,6 +1968,7 @@ Player:
 			n1c: 65
 			n3c: 40
 			s1: 65
+			s2: 40
 			s3: 40
 			s4: 15
 			s6: 5
