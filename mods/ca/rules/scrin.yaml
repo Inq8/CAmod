@@ -12,6 +12,22 @@
 	Building:
 		BuildSounds: scrinbuild.aud
 
+INFANTRY.SCRIN:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Infantry Production
+	Buildable:
+		Description: Infantry Production
+
+VEHICLES.SCRIN:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Vehicle Production
+	Buildable:
+		Description: Vehicle Production
+
 #
 # ---- Infantry
 #
@@ -2299,12 +2315,32 @@ GRAV:
 	Production:
 		Produces: Aircraft, Plane
 		PauseOnCondition: forceshield || invulnerability || being-warped
+	ProvidesPrerequisite@all:
+		Prerequisite: aircraft.all
 	ProvidesPrerequisite@scrin:
 		Factions: scrin, reaper, traveler, harbinger
 		Prerequisite: aircraft.scrin
+	ProvidesPrerequisite@reaper:
+		Factions: reaper
+		Prerequisite: aircraft.reaper
+	ProvidesPrerequisite@traveler:
+		Factions:  traveler
+		Prerequisite: aircraft.traveler
+	ProvidesPrerequisite@harbinger:
+		Factions: harbinger
+		Prerequisite: aircraft.harbinger
 	ProvidesPrerequisite@scrinstructure:
 		RequiresPrerequisites: structures.scrin
 		Prerequisite: aircraft.scrin
+	ProvidesPrerequisite@reaperstructure:
+		RequiresPrerequisites: structures.reaper
+		Prerequisite: aircraft.reaper
+	ProvidesPrerequisite@travelerstructure:
+		RequiresPrerequisites: structures.traveler
+		Prerequisite: aircraft.traveler
+	ProvidesPrerequisite@habringerstructure:
+		RequiresPrerequisites: structures.harbinger
+		Prerequisite: aircraft.harbinger
 	ProductionBar:
 		ProductionType: Aircraft
 	SupportPowerChargeBar:
