@@ -161,7 +161,7 @@ V2RL:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 28,28
-		
+
 2TNK.Chrono:
 	Inherits: 2TNK
 	RenderSprites:
@@ -458,7 +458,7 @@ ARTY.nod:
 		Prerequisites: ~vehicles.nod, ~techlevel.medium
 	Armament:
 		Weapon: 155mmTD
-		
+
 ARTY.Chrono:
 	Inherits: ARTY
 	RenderSprites:
@@ -644,7 +644,7 @@ HARV:
 	PeriodicExplosion@WARPOUT:
 		Weapon: HarvSwap
 		RequiresCondition: orep-upgrade
-		
+
 HARV.Chrono:
 	Inherits: HARV
 	Buildable:
@@ -1404,7 +1404,7 @@ APC2.Reinforce:
 	-Buildable:
 	Cargo:
 		InitialUnits: n1,n1,n2,n3,n3
-		
+
 VULC:
 	Inherits: ^TankTD
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
@@ -1976,7 +1976,7 @@ STNK.Nod:
 	RenderSprites:
 		Image: STNKTnod
 	Valued:
-		Cost: 900
+		Cost: 1100
 	Tooltip:
 		Name: Stealth Tank
 		GenericName: Tank
@@ -2151,7 +2151,7 @@ HAR2:
 		DecorationBounds: 36,36
 	Harvester:
 		Capacity: 30
-		PipCount: 6		
+		PipCount: 6
 		Resources: Tiberium, BlueTiberium, Ore, Gems
 		BaleUnloadDelay: 1
 		SearchFromProcRadius: 30
@@ -3427,12 +3427,12 @@ BATF.AI:
 		Prerequisites: tent, radar, ~weap, ~vehicles.france, ~techlevel.low, ~botplayer
 	RenderSprites:
 		Image: batf
-	Armament@TERTIARY: 
-		-RequiresCondition: 
-	Turreted@TERTIARY: 
-		-PauseOnCondition: 
-	-Cargo: 
-	Mobile: 
+	Armament@TERTIARY:
+		-RequiresCondition:
+	Turreted@TERTIARY:
+		-PauseOnCondition:
+	-Cargo:
+	Mobile:
 		PauseOnCondition: being-captured || empdisable || being-warped || driver-dead
 	-Capturable:
 	-Capturable@DRIVER_DEAD:

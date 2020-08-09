@@ -48,7 +48,7 @@
 		LockOnProbability: 95
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 0c64, 0c256, 3c0
-		Falloff: 100, 100, 20, 10
+		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
 		Versus:
 			None: 100
@@ -106,7 +106,7 @@ Dragon:
 	Inherits: ^AntiGroundMissile
 	Projectile: MissileCA
 		LockOnProbability: 95
-	
+
 Dragon.TD:
 	Inherits: Dragon
 	Report: bazook1.aud
@@ -122,7 +122,7 @@ DragonE:
 	Range: 7c0
 	Projectile: MissileCA
 		RangeLimit: 8c0
-		
+
 DragonE.TD:
 	Inherits: DragonE
 	Report: bazook1.aud
@@ -368,7 +368,7 @@ StingerAA:
 	Warhead@1Dam: SpreadDamage
 		Damage: 3375
 		Range: 0, 0c64, 0c256, 3c0
-		Falloff: 100, 100, 20, 10
+		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
 		Versus:
 			None: 100
@@ -716,7 +716,7 @@ BikeRocketsAA:
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
 		Damage: 1800
-		
+
 SBRockets:
 	Inherits: BikeRockets
 	Range: 5c0
@@ -756,7 +756,7 @@ IFVRocketsAAE:
 		ContrailLength: 10
 	Warhead@1Dam: SpreadDamage
 		Damage: 2650
-		
+
 
 #Artillery Missiles, lock-on but act dumb
 227mm:
@@ -796,7 +796,7 @@ IFVRocketsAAE:
 227mmH:
 	Inherits: 227mm
 	Report: hovrmis1.aud
-	
+
 227mm.upg:
 	Inherits: 227mm
 	Report: vaegattb.aud, vaegatta.aud
@@ -888,7 +888,7 @@ StnkMissileAA:
 		Speed: 283
 		RangeLimit: 9c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 2600
+		Damage: 2850
 		ValidTargets: Air
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air
