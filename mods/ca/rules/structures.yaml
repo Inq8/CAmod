@@ -1228,7 +1228,6 @@ WEAP:
 		Produces: Vehicle
 		PauseOnCondition: forceshield || invulnerability || being-warped
 	ProvidesPrerequisite@any:
-		Factions: gdi, talon, zocom, eagle, nod, marked, blackh, legion, allies, england, france, germany, soviet, russia, ukraine, iraq
 		Prerequisite: vehicles.any
 	ProvidesPrerequisite@allies:
 		Factions: allies, england, france, germany
@@ -1290,6 +1289,18 @@ WEAP:
 	ProvidesPrerequisite@legion:
 		Factions: legion
 		Prerequisite: vehicles.legion
+	ProvidesPrerequisite@scrin:
+		Factions: scrin, reaper, traveler, harbinger
+		Prerequisite: vehicles.scrin
+	ProvidesPrerequisite@reaper:
+		Factions: reaper
+		Prerequisite: vehicles.reaper
+	ProvidesPrerequisite@traveler:
+		Factions: traveler
+		Prerequisite: vehicles.traveler
+	ProvidesPrerequisite@harbinger:
+		Factions: harbinger
+		Prerequisite: vehicles.harbinger
 	ProvidesPrerequisite@alliedstructure:
 		RequiresPrerequisites: structures.allies
 		Prerequisite: vehicles.allies
@@ -1344,6 +1355,21 @@ WEAP:
 	ProvidesPrerequisite@markedstructure:
 		RequiresPrerequisites: structures.marked
 		Prerequisite: vehicles.marked
+	ProvidesPrerequisite@legionstructure:
+		RequiresPrerequisites: structures.legion
+		Prerequisite: vehicles.legion
+	ProvidesPrerequisite@scrinstructure:
+		RequiresPrerequisites: structures.scrin
+		Prerequisite: vehicles.scrin
+	ProvidesPrerequisite@reaperstructure:
+		RequiresPrerequisites: structures.reaper
+		Prerequisite: vehicles.reaper
+	ProvidesPrerequisite@travelerstructure:
+		RequiresPrerequisites: structures.traveler
+		Prerequisite: vehicles.traveler
+	ProvidesPrerequisite@harbingerstructure:
+		RequiresPrerequisites: structures.harbinger
+		Prerequisite: vehicles.harbinger
 	ProvidesPrerequisite@mrj:
 		Factions: allies, france, england, germany
 		Prerequisite: vehicles.mrj
@@ -1736,7 +1762,6 @@ HPAD:
 		Factions: soviet, russia, ukraine, iraq
 		Prerequisite: aircraft.soviet
 	ProvidesPrerequisite@all:
-		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq, gdi, talon, zocom, nod, blackh, marked
 		Prerequisite: aircraft.all
 	ProvidesPrerequisite@buildingname:
 	Targetable:
@@ -1978,6 +2003,7 @@ POWR:
 	Inherits: ^Building
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@shape: ^2x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
 	Selectable:
 		Bounds: 48,48
 	HitShape:
@@ -2021,6 +2047,7 @@ APWR:
 	Inherits: ^Building
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@shape: ^3x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Buildable:
@@ -3012,7 +3039,6 @@ WEAP.TD:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	ProvidesPrerequisite@any:
-		Factions: gdi, talon, zocom, eagle, nod, marked, blackh, legion, allies, england, france, germany, soviet, russia, ukraine, iraq
 		Prerequisite: vehicles.any
 	ProvidesPrerequisite@allies:
 		Factions: allies, england, france, germany
@@ -3074,6 +3100,18 @@ WEAP.TD:
 	ProvidesPrerequisite@legion:
 		Factions: legion
 		Prerequisite: vehicles.legion
+	ProvidesPrerequisite@scrin:
+		Factions: scrin, reaper, traveler, harbinger
+		Prerequisite: vehicles.scrin
+	ProvidesPrerequisite@reaper:
+		Factions: reaper
+		Prerequisite: vehicles.reaper
+	ProvidesPrerequisite@traveler:
+		Factions: traveler
+		Prerequisite: vehicles.traveler
+	ProvidesPrerequisite@harbinger:
+		Factions: harbinger
+		Prerequisite: vehicles.harbinger
 	ProvidesPrerequisite@alliedstructure:
 		RequiresPrerequisites: structures.allies
 		Prerequisite: vehicles.allies
@@ -3128,6 +3166,21 @@ WEAP.TD:
 	ProvidesPrerequisite@markedstructure:
 		RequiresPrerequisites: structures.marked
 		Prerequisite: vehicles.marked
+	ProvidesPrerequisite@legionstructure:
+		RequiresPrerequisites: structures.legion
+		Prerequisite: vehicles.legion
+	ProvidesPrerequisite@scrinstructure:
+		RequiresPrerequisites: structures.scrin
+		Prerequisite: vehicles.scrin
+	ProvidesPrerequisite@reaperstructure:
+		RequiresPrerequisites: structures.reaper
+		Prerequisite: vehicles.reaper
+	ProvidesPrerequisite@travelerstructure:
+		RequiresPrerequisites: structures.traveler
+		Prerequisite: vehicles.traveler
+	ProvidesPrerequisite@harbingerstructure:
+		RequiresPrerequisites: structures.harbinger
+		Prerequisite: vehicles.harbinger
 	ProvidesPrerequisite@nodarty:
 		Factions: nod, blackh, marked, legion
 		Prerequisite: vehicles.arty
@@ -3237,7 +3290,6 @@ AIRS:
 		LandingFacing: 64
 		ReadyAudio: ReinforcementsArrived
 	ProvidesPrerequisite@any:
-		Factions: gdi, talon, zocom, eagle, nod, marked, blackh, legion, allies, england, france, germany, soviet, russia, ukraine, iraq
 		Prerequisite: vehicles.any
 	ProvidesPrerequisite@allies:
 		Factions: allies, england, france, germany
@@ -3299,6 +3351,18 @@ AIRS:
 	ProvidesPrerequisite@legion:
 		Factions: legion
 		Prerequisite: vehicles.legion
+	ProvidesPrerequisite@scrin:
+		Factions: scrin, reaper, traveler, harbinger
+		Prerequisite: vehicles.scrin
+	ProvidesPrerequisite@reaper:
+		Factions: reaper
+		Prerequisite: vehicles.reaper
+	ProvidesPrerequisite@traveler:
+		Factions: traveler
+		Prerequisite: vehicles.traveler
+	ProvidesPrerequisite@harbinger:
+		Factions: harbinger
+		Prerequisite: vehicles.harbinger
 	ProvidesPrerequisite@alliedstructure:
 		RequiresPrerequisites: structures.allies
 		Prerequisite: vehicles.allies
@@ -3353,6 +3417,18 @@ AIRS:
 	ProvidesPrerequisite@legionstructure:
 		RequiresPrerequisites: structures.legion
 		Prerequisite: vehicles.legion
+	ProvidesPrerequisite@scrinstructure:
+		RequiresPrerequisites: structures.scrin
+		Prerequisite: vehicles.scrin
+	ProvidesPrerequisite@reaperstructure:
+		RequiresPrerequisites: structures.reaper
+		Prerequisite: vehicles.reaper
+	ProvidesPrerequisite@travelerstructure:
+		RequiresPrerequisites: structures.traveler
+		Prerequisite: vehicles.traveler
+	ProvidesPrerequisite@harbingerstructure:
+		RequiresPrerequisites: structures.harbinger
+		Prerequisite: vehicles.harbinger
 	ProvidesPrerequisite@nodarty:
 		Factions: nod, blackh, marked, legion
 		Prerequisite: vehicles.arty
@@ -3412,6 +3488,7 @@ NUKE:
 	Inherits: ^BuildingTD
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@shape: ^2x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: 630,299,0
 	RenderSprites:
@@ -3465,6 +3542,7 @@ NUK2:
 	Inherits: ^BuildingTD
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@shape: ^2x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: 630,299,0
 	RenderSprites:
@@ -4280,7 +4358,6 @@ HPAD.TD:
 		Amount: -10
 		RequiresCondition: !being-warped
 	ProvidesPrerequisite@all:
-		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq, gdi, talon, zocom, eagle, nod, blackh, marked, legion
 		Prerequisite: aircraft.all
 	ProvidesPrerequisite@gdi:
 		Factions: gdi, zocom, talon, eagle

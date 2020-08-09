@@ -732,7 +732,7 @@ MCV:
 		Condition: invulnerability
 	-Crushable:
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
 
 JEEP:
 	Inherits: ^Vehicle
@@ -1237,7 +1237,7 @@ AMCV:
 		Condition: invulnerability
 	-Crushable:
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
 
 HMMV:
 	Inherits: ^VehicleTD
@@ -1746,7 +1746,7 @@ MTNK.Drone:
 		EnableSound: vrobon
 		DisableSound: vroboff
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
 	-CaptureManager:
 	-Capturable:
 	-CaptureNotification:
@@ -3491,7 +3491,7 @@ MEMP:
 		Offset: 0, 0, 0
 		Sequence: emp-overlay
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
 	WithRangeCircle:
 		Color: 0000FF80
 		Range: 5c0
@@ -3591,7 +3591,7 @@ CDRN:
 		RequiresCondition: triggered && ammo
 		AmmoPoolName: explosion
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
 	Voiced:
 		VoiceSet: ChaosDroneVoice
 	-CaptureManager:

@@ -1,0 +1,2987 @@
+
+^ScrinBuilding:
+	Inherits@1: ^Building
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	SpawnActorOnDeath:
+		Actor: s1
+	SpawnActorsOnSell:
+		ActorTypes: s1
+	ActorPreviewPlaceBuildingPreview:
+		OverridePalette: placebuilding
+	Building:
+		BuildSounds: scrinbuild.aud
+
+INFANTRY.SCRIN:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Infantry Production
+	Buildable:
+		Description: Infantry Production
+
+VEHICLES.SCRIN:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Vehicle Production
+	Buildable:
+		Description: Vehicle Production
+
+#
+# ---- Infantry
+#
+
+^ScrinInfantry:
+	Inherits: ^Soldier
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Voiced:
+		VoiceSet: ScrinInfantryVoice
+	WithDeathAnimation:
+		DeathSequencePalette: overlayplayerscrin
+		DeathTypes:
+			DefaultDeath: 1
+			BulletDeath: 2
+			SmallExplosionDeath: 3
+			ExplosionDeath: 4
+			FireDeath: 5
+			ElectricityDeath: 6
+			PoisonDeath: 7
+			ChronoDeath: 8
+			ToxinDeath: 9
+			RadiationDeath: 10
+			FrozenDeath: 11
+		CrushedSequence: die-crushed
+	-DamagedByTerrain:
+	-TakeCover:
+
+S1:
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@BOTHELPER: ^BotCaptureHelper
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 10
+		Prerequisites: ~infantry.scrin, ~techlevel.infonly
+		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+		IconPalette: chrome
+	Valued:
+		Cost: 100
+	Tooltip:
+		Name: Warrior
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 6500
+	Armament@PRIMARY:
+		Weapon: WarriorGun
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+		LocalOffset: 150,0,400
+	Armament@Garrison:
+		Name: mounted
+		Weapon: WarriorGun
+		MuzzleSequence: muzzle
+	WithMuzzleOverlay:
+	WithInfantryBody:
+	AttackFrontal:
+		PauseOnCondition: being-warped
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+
+S2:
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@BOTHELPER: ^BotCaptureHelper
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 35
+		Prerequisites: nerv, ~infantry.traveler, ~techlevel.infonly
+		Description: Fast assault infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+		IconPalette: scrin
+	Valued:
+		Cost: 250
+	Tooltip:
+		Name: Ravager
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 7000
+	Mobile:
+		Speed: 71
+	Armament@PRIMARY:
+		Weapon: RavagerShards
+		LocalOffset: 0,-100,250, 0,100,250
+	Armament@Garrison:
+		Name: mounted
+		Weapon: RavagerShards
+	WithInfantryBody:
+	AttackFrontal:
+		PauseOnCondition: being-warped
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+
+S3:
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@BOTHELPER: ^BotCaptureHelper
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 30
+		Prerequisites: ~infantry.scrin, ~techlevel.infonly
+		Description: Anti-tank/anti-aircraft infantry.\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
+		IconPalette: chrome
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Disintegrator
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 3800
+	Armament@PRIMARY:
+		Weapon: DisintegratorBeamAA
+		LocalOffset: 150,0,400
+		PauseOnCondition: being-warped
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: DisintegratorBeam
+		LocalOffset: 150,0,400
+		PauseOnCondition: being-warped
+	Armament@Garrison:
+		Name: mounted
+		Weapon: DisintegratorBeam
+	WithInfantryBody:
+	AttackFrontal:
+		PauseOnCondition: being-warped
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	AutoTarget:
+		ScanRadius: 5
+
+S4:
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@BOTHELPER: ^BotCaptureHelper
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 115
+		Prerequisites: nerv, ~infantry.scrin, ~techlevel.infonly
+		Description: Heavy assault infantry.\n  Can teleport short distances.\n  Strong vs Structures, Defenses, Light Vehicles\n  Weak vs Infantry, Aircraft
+		IconPalette: chrome
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Intruder
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 12000
+	Armament@PRIMARY:
+		Weapon: IntruderDiscs
+		LocalOffset: 150,0,400
+	Armament@Garrison:
+		Name: mounted
+		Weapon: IntruderDiscs
+	WithInfantryBody:
+	AttackFrontal:
+		PauseOnCondition: being-warped
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	-Crushable:
+	PortableChrono:
+		ChargeDelay: 250
+		ChronoshiftSound: scrinport.aud
+
+S6:
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@SELECTION: ^SelectableSupportUnit
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 60
+		Prerequisites: ~infantry.scrin, ~techlevel.infonly
+		Description: Infiltrates and captures\nenemy structures.\n  Can repair friendly structures & bridges.\n  Special Ability: Repair\n  Unarmed
+		IconPalette: chrome
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Assimilator
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 3000
+	WithInfantryBody:
+	Passenger:
+		PipType: Yellow
+	EngineerRepair:
+	RepairsBridges:
+	CaptureManager:
+	Captures:
+		CaptureTypes: building
+		PlayerExperience: 25
+		CaptureDelay: 100
+	Voiced:
+		VoiceSet: AssimilatorVoice
+	Targetable:
+		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+
+MAST:
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@BOTHELPER: ^BotCaptureHelper
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 120
+		Prerequisites: scrt, ~infantry.scrin, ~techlevel.infonly
+		BuildLimit: 1
+		Description: Elite specialist infantry.\n  Can mind-control enemy units.\n  Can detect cloaked units.\n  Maximum 1 can be trained.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft
+		IconPalette: chrome
+	Voiced:
+		VoiceSet: MastermindVoice
+	Valued:
+		Cost: 1350
+	Tooltip:
+		Name: Mastermind
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 7500
+	Mobile:
+		Speed: 49
+	Armament@PRIMARY:
+		Weapon: EnslaveInfantry
+		LocalOffset: 150,0,400
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: EnslaveVehicle
+		LocalOffset: 150,0,400
+	WithInfantryBody:
+	AttackFrontal:
+		PauseOnCondition: being-warped
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	-Crushable:
+	ExternalCondition@PRODUCED:
+		Condition: produced
+	VoiceAnnouncement:
+		RequiresCondition: produced
+		Voice: Build
+	CaptureManager:
+	Captures:
+		CaptureTypes: building
+		PlayerExperience: 25
+		CaptureDelay: 100
+		ConsumedByCapture: false
+	Targetable:
+		TargetTypes: Ground, Infantry, Disguise, MindControlImmune
+
+#
+# ---- Vehicles
+#
+
+HARV.Scrin:
+	Inherits: HAR2
+	Selectable:
+		DecorationBounds: 42,42
+	RenderSprites:
+		Image: harv.scrin
+		PlayerPalette: overlayplayer
+	WithShadow:
+		Offset: 43, 255, 0
+		ZOffset: -256
+	WithHarvestOverlay:
+		Palette: scrin
+		LocalOffset: 400, 0, 0
+	Buildable:
+		Prerequisites: ~proc.scrin, ~vehicles.scrin, ~techlevel.infonly
+		IconPalette: chrome
+	SpawnActorOnDeath:
+		Actor: HARV.Scrin.Husk
+		RequiresCondition: !being-warped
+	WithDockingAnimation:
+		DockSequence: idle
+		DockLoopSequence: idle
+	-WithHarvestAnimation:
+
+GUNW:
+	Inherits: ^Vehicle
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 15
+		Prerequisites: wsph, ~vehicles.scrin, ~techlevel.low
+		Description: Light assault walker.\n  Strong vs Infantry, Aircraft\n  Weak vs Tanks
+		IconPalette: chrome
+	Valued:
+		Cost: 650
+	Tooltip:
+		Name: Gun Walker
+	Selectable:
+		DecorationBounds: 28,28
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 30000
+	Armor:
+		Type: Light
+	Mobile:
+		Speed: 113
+		TurnSpeed: 8
+		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament@PRIMARY:
+		Weapon: GunWalkerZap
+		LocalOffset: 750,92,25, 750,-92,25
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: GunWalkerZapAA
+		LocalOffset: 750,92,25, 750,-92,25
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	WithMuzzleOverlay:
+	AttackFrontal:
+		FacingTolerance: 10
+		PauseOnCondition: empdisable || being-warped
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithMoveAnimation:
+		MovementType: Horizontal, Vertical, Turn
+	GrantConditionOnFaction@TRAVELERSPEED:
+		Condition: travelerspeed
+		Factions: traveler
+	SpeedMultiplier@TRAVELERSPEED:
+		RequiresCondition: travelerspeed
+		Modifier: 115
+
+SEEK:
+	Inherits: ^Vehicle
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Valued:
+		Cost: 800
+	Tooltip:
+		Name: Seeker
+	Selectable:
+		DecorationBounds: 28,28
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: vehicles.any, ~vehicles.seek, ~techlevel.low
+		Queue: Vehicle
+		Description: Light hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles, Structures\n  Weak vs Aircraft, Infantry
+		IconPalette: chrome
+	Mobile:
+		Speed: 135
+	LeavesTrails:
+		Image: twake
+		Palette: effect
+		TerrainTypes: Water
+		TrailWhileStationary: true
+		StationaryInterval: 18
+		MovingInterval: 6
+	Health:
+		HP: 20000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 8c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Turreted:
+		TurnSpeed: 10
+		Offset: -280,0,0
+	Hovers:
+		BobDistance: -25
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
+	GrantConditionOnTerrain:
+		TerrainTypes: Water
+		Condition: onwater
+	KillsSelf@SINK:
+		RequiresCondition: onwater && (empdisable || driver-dead)
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+	Armament@PRIMARY:
+		Weapon: PlasmaDiscs
+		LocalOffset: 320,0,320
+	AttackTurreted:
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: false
+		OpportunityFire: False
+		PauseOnCondition: empdisable || being-warped
+	WithSpriteTurret:
+	IgnoresDisguise:
+	DetectCloaked:
+		Range: 6c0
+		CloakTypes: Cloak, Thief
+		RequiresCondition: !(empdisable || being-warped)
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	SpawnActorOnDeath:
+		Actor: SEEK.Husk
+		RequiresCondition: !being-warped
+
+LACE:
+	Inherits: ^Vehicle
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Valued:
+		Cost: 700
+	Tooltip:
+		Name: Lacerator
+	Selectable:
+		DecorationBounds: 28,28
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: vehicles.any, ~vehicles.traveler, ~techlevel.low
+		Queue: Vehicle
+		Description: Fast hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles, Structures\n  Weak vs Aircraft, Infantry
+		IconPalette: chrome
+	Mobile:
+		TurnSpeed: 10
+		Speed: 157
+	LeavesTrails:
+		Image: twake
+		Palette: effect
+		TerrainTypes: Water
+		TrailWhileStationary: true
+		StationaryInterval: 18
+		MovingInterval: 6
+	Health:
+		HP: 16000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 8c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Turreted:
+		TurnSpeed: 10
+		Offset: -50,0,0
+	Hovers:
+		BobDistance: -25
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
+	GrantConditionOnTerrain:
+		TerrainTypes: Water
+		Condition: onwater
+	KillsSelf@SINK:
+		RequiresCondition: onwater && (empdisable || driver-dead)
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+	Armament@PRIMARY:
+		Weapon: LaceratorShards
+		LocalOffset: 0,50,320, 0,-50,320
+	AttackTurreted:
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: false
+		OpportunityFire: False
+		PauseOnCondition: empdisable || being-warped
+	WithSpriteTurret:
+	IgnoresDisguise:
+	DetectCloaked:
+		Range: 6c0
+		CloakTypes: Cloak, Thief
+		RequiresCondition: !(empdisable || being-warped)
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+
+INTL:
+	Inherits: ^Tank
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Valued:
+		Cost: 700
+	Tooltip:
+		Name: Interloper
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 40
+		Prerequisites: wsph, ~vehicles.scrin, ~techlevel.low
+		Queue: Vehicle
+		Description: Heavily armoured transport craft.\n  Strong vs Light Vehicles\n  Weak vs Tanks, Aircraft
+		IconPalette: chrome
+	Mobile:
+		Speed: 135
+		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
+		TurnSpeed: 4
+	Health:
+		HP: 30000
+	Armor:
+		Type: Heavy
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament:
+		Weapon: InterloperLaser
+		LocalOffset: 400,110,30, 400,-110,30
+	AttackFrontal:
+		PauseOnCondition: empdisable || being-warped
+	AutoTarget:
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	Selectable:
+		DecorationBounds: 28,28
+	Cargo:
+		Types: Infantry
+		MaxWeight: 5
+		PipCount: 5
+		LoadingCondition: notmobile
+		LoadedCondition: cargo
+	Hovers:
+		BobDistance: -25
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+	Capturable:
+		RequiresCondition: !being-warped && !cargo
+	Capturable@DRIVER_DEAD:
+		RequiresCondition: driver-dead && !cargo
+	Targetable@DRIVERKILL:
+		RequiresCondition: !driver-dead && !cargo
+
+CORR:
+	Inherits: ^Vehicle
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Corrupter
+	Selectable:
+		DecorationBounds: 36,36,0,-3
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 65
+		Prerequisites: nerv, ~vehicles.scrin, ~techlevel.medium
+		Queue: Vehicle
+		Description: Short-ranged anti-infantry/structure unit.\n  Strong vs Infantry, Structures\n  Weak vs Tanks, Aircraft
+		IconPalette: chrome
+	Mobile:
+		Speed: 82
+		TurnSpeed: 4
+	Health:
+		HP: 45000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament:
+		Weapon: CorrupterSpew
+		LocalOffset: 750,0,0
+	AttackFrontal:
+		PauseOnCondition: empdisable || being-warped
+	Explodes:
+		Weapon: BarrelExplode
+		EmptyWeapon: BarrelExplode
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithMoveAnimation:
+		MovementType: Horizontal, Vertical, Turn
+	GrantConditionOnFaction@TRAVELERSPEED:
+		Condition: travelerspeed
+		Factions: traveler
+	SpeedMultiplier@TRAVELERSPEED:
+		RequiresCondition: travelerspeed
+		Modifier: 115
+
+STCR:
+	Inherits: ^Vehicle
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Valued:
+		Cost: 1100
+	Tooltip:
+		Name: Stormcrawler
+	Selectable:
+		DecorationBounds: 36,36,0,-3
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 65
+		Prerequisites: nerv, ~vehicles.reaper, ~techlevel.medium
+		Queue: Vehicle
+		Description: Slow moving, durable, short-range assault unit.\n  Regenerates rapidly.\n  Weak vs Aircraft
+		IconPalette: scrin
+	Mobile:
+		Speed: 71
+		TurnSpeed: 3
+	Health:
+		HP: 40000
+	Armor:
+		Type: Heavy
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament:
+		Weapon: StormcrawlerZap
+		LocalOffset: 0,0,350, -250,0,350, 250,0,350
+	AttackFrontal:
+		FacingTolerance: 50
+		PauseOnCondition: empdisable || being-warped
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithShadow:
+		Offset: 80, 80, 0
+		ZOffset: -81
+	SelfHealing:
+		PercentageStep: 1
+		Delay: 10
+		HealIfBelow: 100
+		DamageCooldown: 0
+		PauseOnCondition: empdisable || being-warped
+
+DEVO:
+	Inherits: ^Tank
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 135
+		Prerequisites: radar, ~vehicles.devo, ~techlevel.medium
+		Description: Medium hover tank.\n  Can move in any direction while firing.\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft
+		IconPalette: chrome
+	Valued:
+		Cost: 1250
+	Tooltip:
+		Name: Devourer Tank
+	Selectable:
+		DecorationBounds: 28,28
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 30000
+	Armor:
+		Type: Light
+	Mobile:
+		TurnSpeed: 255
+		Speed: 100
+	Hovers:
+		BobDistance: -25
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament:
+		Weapon: DevourerLaser
+		LocalOffset: 850,0,208
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	WithMuzzleOverlay:
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	Turreted:
+		TurnSpeed: 4
+		Offset: 0,0,0
+	AttackTurreted:
+		TargetFrozenActors: True
+		PauseOnCondition: empdisable || being-warped
+		Armaments: primary
+	WithSpriteTurret:
+	QuantizeFacingsFromSequence:
+		Sequence: idle
+	WithFacingSpriteBody:
+		Sequence: idle
+	ProductionCostMultiplier@REAPBONUS:
+		Multiplier: 90
+		Prerequisites: vehicles.reaper
+
+DARK:
+	Inherits: ^Tank
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 135
+		Prerequisites: nerv, ~vehicles.harbinger, ~techlevel.medium
+		Description: Heavy hover tank with armed with rift cannon.\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft
+		IconPalette: scrin
+	Valued:
+		Cost: 1350
+	Tooltip:
+		Name: Darkener Tank
+	Selectable:
+		DecorationBounds: 28,28
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 42000
+	Armor:
+		Type: Heavy
+	Mobile:
+		TurnSpeed: 4
+		Speed: 71
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament:
+		Weapon: RiftCannon
+		LocalOffset: 835,0,350
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	WithMuzzleOverlay:
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	Turreted:
+		TurnSpeed: 4
+		Offset: 0,0,0
+	AttackTurreted:
+		TargetFrozenActors: True
+		PauseOnCondition: empdisable || being-warped
+		Armaments: primary
+	WithSpriteTurret:
+	QuantizeFacingsFromSequence:
+		Sequence: idle
+	WithFacingSpriteBody:
+		Sequence: idle
+	Hovers:
+		BobDistance: -25
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+
+RUIN:
+	Inherits: ^Vehicle
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Valued:
+		Cost: 1100
+	Tooltip:
+		Name: Ruiner
+	Selectable:
+		DecorationBounds: 28,28
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 150
+		Prerequisites: scrt, ~vehicles.harbinger, ~techlevel.high
+		Queue: Vehicle
+		Description: Long-range artillery.\n  Strong vs Structures, Infantry\n  Weak vs Tanks, Aircraft
+		IconPalette: chrome
+	Mobile:
+		Speed: 100
+		PauseOnCondition: being-captured || empdisable || being-warped || driver-dead
+		TurnSpeed: 4
+	Health:
+		HP: 15000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament:
+		Weapon: RuinerCannon
+		LocalOffset: 650,0,600
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	WithMuzzleOverlay:
+	AttackFrontal:
+		ForceFireIgnoresActors: True
+		PauseOnCondition: empdisable || being-warped
+	AutoTarget:
+	Explodes:
+		Weapon: BarrelExplode
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	Hovers:
+		BobDistance: -25
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+
+TPOD:
+	Inherits: ^Tank
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 195
+		Prerequisites: techcenter, ~vehicles.tpod, ~techlevel.high
+		Description: Heavy assault walker with beam weapons.\n  Strong vs Vehicles.\n  Weak vs Aircraft
+		IconPalette: chrome
+	Voiced:
+		VoiceSet: TripodVoice
+	Valued:
+		Cost: 1800
+	Selectable:
+		Bounds: 30,52,0,-10
+	Tooltip:
+		Name: Annihilator Tripod
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 70000
+	Armor:
+		Type: Heavy
+	Mobile:
+		Locomotor: heavytracked
+		Speed: 56
+		TurnSpeed: 255
+	Passenger:
+		Weight: 3
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament@PRIMARY:
+		Weapon: TripodLaser
+		LocalOffset: 650,420,1000, 650,-420,1000
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	WithMuzzleOverlay:
+	Carryable:
+		LocalOffset: 0,0,700
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	Turreted:
+		TurnSpeed: 3
+		Offset: 0,0,0
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
+		Armaments: primary
+	WithSpriteTurret:
+	QuantizeFacingsFromSequence:
+		Sequence: idle
+	WithFacingSpriteBody:
+		Sequence: idle
+	WithMoveAnimation:
+	DeathSounds:
+		Voice: Die
+	SpawnActorOnDeath:
+		Actor: TPOD.Husk
+		RequiresCondition: !being-warped
+	GrantConditionOnFaction@TRAVELERSPEED:
+		Condition: travelerspeed
+		Factions: traveler
+	SpeedMultiplier@TRAVELERSPEED:
+		RequiresCondition: travelerspeed
+		Modifier: 115
+
+RPTP:
+	Inherits: TPOD
+	Buildable:
+		Prerequisites: techcenter, ~vehicles.reaper, ~techlevel.high
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Valued:
+		Cost: 2200
+	Tooltip:
+		Name: Reaper Tripod
+	Health:
+		HP: 88000
+	Armament@PRIMARY:
+		Weapon: ReaperLaser
+		LocalOffset: 700,550,1000, 700,-550,1000
+	-SpawnActorOnDeath:
+
+SMCV:
+	Inherits: ^Vehicle
+	Inherits@SELECTION: ^SelectableSupportUnit
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 300
+		Prerequisites: srep, ~vehicles.scrin, ~techlevel.infonly
+		IconPalette: scrin
+		Description: Deploys into another Construction Yard.\n  Unarmed
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Valued:
+		Cost: 3000
+	Tooltip:
+		Name: Colony Ship
+	Selectable:
+		Priority: 4
+		Bounds: 42,42
+	Health:
+		HP: 75000
+	Armor:
+		Type: Heavy
+	Mobile:
+		Speed: 56
+		Locomotor: heavywheeled
+		TurnSpeed: 255
+	RevealsShroud:
+		Range: 4c0
+	Transforms:
+		IntoActor: sfac
+		Offset: -1, 0
+		Facing: 96
+		TransformSounds: placbldg.aud, build5.aud
+		NoTransformNotification: BuildingCannotPlaceAudio
+		PauseOnCondition: empdisable || being-warped
+	MustBeDestroyed:
+		RequiredForShortGame: true
+	BaseBuilding:
+	SpawnActorOnDeath:
+		Actor: SMCV.Husk
+		RequiresCondition: !being-warped
+	TransferTimedExternalConditionOnTransform:
+		Condition: invulnerability
+	-Crushable:
+	Targetable:
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	Hovers:
+		BobDistance: -25
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
+
+#
+# ---- Aircraft
+#
+
+STMR:
+	Inherits: ^Helicopter
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Buildable:
+		Queue: Aircraft
+		BuildAtProductionType: Plane
+		BuildPaletteOrder: 40
+		Prerequisites: nerv, grav, ~aircraft.scrin, ~techlevel.medium
+		Description: Durable patrol craft.\n  Strong vs Light Vehicles, Aircraft\n  Weak vs Tanks, Structures
+		IconPalette: chrome
+	Valued:
+		Cost: 1750
+	Voiced:
+		VoiceSet: VehicleVoice
+	Tooltip:
+		Name: Stormrider
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 40000
+	RevealsShroud:
+		Range: 10c0
+		MinRange: 8c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 10c0
+		Type: GroundPosition
+	Armament@PRIMARY:
+		Weapon: StormriderZap
+		LocalOffset: 350,213,-85, 350,-213,-85
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: StormriderZapAA
+		LocalOffset: 350,213,-85, 350,-213,-85
+	AttackAircraft:
+		FacingTolerance: 90
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
+	Aircraft:
+		CruiseAltitude: 2560
+		TurnSpeed: 5
+		Speed: 170
+		RepulsionSpeed: 40
+		MaximumPitch: 56
+		CanHover: False
+		TakeoffSounds: dropup1.aud
+		LandingSounds: dropdwn1.aud
+		IdealSeparation: 1c682
+		CanSlide: False
+		AltitudeVelocity: 0c200
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: HoldFire
+	Contrail@1:
+		Offset: -250,-250,100
+		UsePlayerColor: true
+		ZOffset: -512
+	Contrail@2:
+		Offset: -250,250,100
+		UsePlayerColor: true
+		ZOffset: -512
+	SpawnActorOnDeath:
+		Actor: STMR.Husk
+		RequiresCondition: !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: STMR.Husk.EMP
+		RequiresCondition: empdisable
+	SmokeTrailWhenDamaged:
+		Offset: -427,0,0
+	Selectable:
+		DecorationBounds: 36,28
+	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
+	-EjectOnDeath:
+
+DEVA:
+	Inherits: ^Helicopter
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Buildable:
+		Queue: Aircraft
+		BuildAtProductionType: Plane
+		BuildPaletteOrder: 55
+		BuildDurationModifier: 75
+		Prerequisites: scrt, grav, ~aircraft.scrin, ~techlevel.high
+		Description: Long-range siege warship.\n	Strong vs Structures, Infantry\n	Weak vs Aircraft, Tanks
+		IconPalette: chrome
+	Voiced:
+		VoiceSet: DevastatorVoice
+	Valued:
+		Cost: 2200
+	Tooltip:
+		Name: Devastator Warship
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 35000
+	Armor:
+		Type: Heavy
+	RevealsShroud:
+		Range: 10c0
+		MinRange: 8c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 8c0
+		Type: GroundPosition
+	Armament@PRIMARY:
+		Weapon: DevastatorDiscs
+		LocalOffset: 500,0,0
+	AttackAircraft:
+		FacingTolerance: 10
+		ForceFireIgnoresActors: True
+		AttackType: Hover
+		PauseOnCondition: empdisable || being-warped
+	Aircraft:
+		CruiseAltitude: 2c0
+		InitialFacing: 192
+		TurnSpeed: 3
+		Speed: 56
+		AltitudeVelocity: 0c50
+		CanForceLand: False
+	Selectable:
+		Bounds: 36,28,0,2
+		DecorationBounds: 40,40,0,1
+	Explodes:
+		Weapon: KirovExplode
+		RequiresCondition: !airborne
+	SpawnActorOnDeath:
+		Actor: DEVA.Husk
+		RequiresCondition: !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: DEVA.Husk.EMP
+		RequiresCondition: empdisable
+	-Hovers@CRUISING:
+	-EjectOnDeath:
+	ProductionCostMultiplier@VANQBONUS:
+		Multiplier: 90
+		Prerequisites: vehicles.harbinger
+
+PAC:
+	Inherits: ^Helicopter
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Buildable:
+		Queue: Aircraft
+		BuildAtProductionType: Plane
+		BuildPaletteOrder: 55
+		BuildDurationModifier: 75
+		Prerequisites: sign, scrt, grav, ~aircraft.scrin, ~techlevel.high
+		Description: Warship that launches a squadron\nof assault craft.\n	Strong vs Vehicles, Infantry, Aircraft\n  Weak vs Structures
+		IconPalette: chrome
+	Voiced:
+		VoiceSet: PlanetaryAssaultCarrierVoice
+	Valued:
+		Cost: 2600
+	Tooltip:
+		Name: Planetary Assault Carrier
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 50000
+	Armor:
+		Type: Heavy
+	RevealsShroud:
+		Range: 10c0
+		MinRange: 8c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 8c0
+		Type: GroundPosition
+	Armament@PRIMARY:
+		Weapon: InvaderLauncher
+		LocalOffset: 0,0,0
+	Aircraft:
+		CruiseAltitude: 2c0
+		InitialFacing: 192
+		TurnSpeed: 3
+		Speed: 49
+		AltitudeVelocity: 0c50
+		CanForceLand: False
+	Selectable:
+		Bounds: 36,28,0,2
+		DecorationBounds: 40,40,0,1
+	Explodes:
+		Weapon: KirovExplode
+		RequiresCondition: !airborne
+	SpawnActorOnDeath:
+		Actor: PAC.Husk
+		RequiresCondition: !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: PAC.Husk.EMP
+		RequiresCondition: empdisable
+	-Hovers@CRUISING:
+	WithFacingSpriteBody:
+		RequiresCondition: inva-loaded == 4
+		Name: idle
+	WithFacingSpriteBody@HALF:
+		RequiresCondition: inva-loaded < 4
+		Sequence: half-deployed
+		Name: half-deployed
+	AttackFrontal:
+		FacingTolerance: 96
+		PauseOnCondition: empdisable || being-warped
+	CarrierMaster@carr1:
+		Actors: inva, inva, inva, inva
+		RearmTicks: 0
+		RespawnTicks: 500
+		InstaRepair: true
+		SlaveDisposalOnKill: KillSlaves
+		SpawnAllAtOnce: false
+		LoadedCondition: inva-loaded
+	Exit@0:
+		SpawnOffset: -100,0,0
+		Facing: 60
+	Exit@1:
+		SpawnOffset: -100,0,0
+		Facing: -60
+	Exit@2:
+		SpawnOffset: 100,0,0
+		Facing: 60
+	Exit@3:
+		SpawnOffset: 100,0,0
+		Facing: -60
+	DeathSounds:
+		Voice: Die
+	-EjectOnDeath:
+
+INVA:
+	Inherits: ^Plane
+	Valued:
+		Cost: 50
+	Tooltip:
+		Name: Invader
+	Health:
+		HP: 5000
+	RevealsShroud:
+		Range: 2c0
+		MinRange: 1c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 1c0
+		Type: GroundPosition
+	Armament@PRIMARY:
+		Weapon: InvaderZap
+		PauseOnCondition: !ammo
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: InvaderZapAA
+		PauseOnCondition: !ammo
+	AttackAircraft:
+		FacingTolerance: 20
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
+	Aircraft:
+		CruiseAltitude: 2c0
+		InitialFacing: 192
+		TurnSpeed: 8
+		Speed: 220
+		MaximumPitch: 56
+		CanHover: False
+		CanSlide: False
+		RepulsionSpeed: 40
+		Repulsable: False
+		IdealSeparation: 0c256
+		VTOL: true
+		TakeoffSounds: invader-launch1.aud, invader-launch2.aud
+		LandingSounds: invader-dock.aud
+	Rearmable:
+		RearmActors: pac
+	AmmoPool:
+		Ammo: 12
+		AmmoCondition: ammo
+		ReloadDelay: 0
+	RejectsOrders:
+	SpawnActorOnDeath:
+		Actor: INVA.Husk
+		RequiresCondition: ammo && !empdisable
+	SpawnActorOnDeath@Empty:
+		Actor: INVA.Husk.empty
+		RequiresCondition: !ammo && !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: INVA.Husk.EMP
+		RequiresCondition: ammo && empdisable
+	SpawnActorOnDeath@EmptyEMP:
+		Actor: INVA.Husk.empty.EMP
+		RequiresCondition: !ammo && empdisable
+	-EjectOnDeath:
+	-Selectable:
+	-ActorLostNotification:
+	SmokeTrailWhenDamaged:
+		Offset: -253,0,171
+		Interval: 2
+	CarrierSlave:
+		LandingDistance: 8c0
+	Contrail@1:
+		Offset: -432,0,0
+		UsePlayerColor: true
+		TrailLength: 10
+	-Contrail@2:
+	Interactable:
+
+#
+# ---- Husks
+#
+
+SMCV.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Husk (Mobile Construction Vehicle)
+	TransformOnCapture:
+		IntoActor: smcv
+	InfiltrateForTransform:
+		IntoActor: smcv
+	RenderSprites:
+		PlayerPalette: overlayplayertd
+		Image: amcv.destroyed
+
+HARV.Scrin.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Harvester)
+	TransformOnCapture:
+		IntoActor: harv.scrin
+	InfiltrateForTransform:
+		IntoActor: harv.scrin
+	RenderSprites:
+		Image: harv.scrin.destroyed
+	WithShadow:
+		Offset: 43, 255, 0
+		ZOffset: -256
+
+GUNW.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Gun Walker)
+	TransformOnCapture:
+		IntoActor: gunw
+	InfiltrateForTransform:
+		IntoActor: gunw
+	RenderSprites:
+		Image: gunw.destroyed
+		PlayerPalette: overlayplayerscrin
+
+SEEK.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Seeker)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: seek
+	InfiltrateForTransform:
+		IntoActor: seek
+	RenderSprites:
+		Image: seek.destroyed
+		PlayerPalette: overlayplayerscrin
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+
+INTL.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Interloper)
+	TransformOnCapture:
+		IntoActor: intl
+	InfiltrateForTransform:
+		IntoActor: intl
+	RenderSprites:
+		Image: intl.destroyed
+		PlayerPalette: overlayplayerscrin
+
+CORR.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Corrupter)
+	TransformOnCapture:
+		IntoActor: corr
+	InfiltrateForTransform:
+		IntoActor: corr
+	RenderSprites:
+		Image: corr.destroyed
+		PlayerPalette: overlayplayerscrin
+
+DEVO.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Devourer)
+	TransformOnCapture:
+		IntoActor: devo
+	InfiltrateForTransform:
+		IntoActor: devo
+	RenderSprites:
+		Image: devo.destroyed
+		PlayerPalette: overlayplayerscrin
+
+RUIN.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Ruiner)
+	TransformOnCapture:
+		IntoActor: ruin
+	InfiltrateForTransform:
+		IntoActor: ruin
+	RenderSprites:
+		Image: ruin.destroyed
+		PlayerPalette: overlayplayerscrin
+
+TPOD.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Annihilator Tripod)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: tpod
+	InfiltrateForTransform:
+		IntoActor: tpod
+	RenderSprites:
+		Image: tpod.destroyed
+		PlayerPalette: overlayplayerscrin
+
+STMR.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Stormrider
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 170
+	SmokeTrailWhenDamaged:
+		Offset: -427,0,0
+		MinDamage: Undamaged
+	Contrail@1:
+		Offset: -300,-143,0
+		UsePlayerColor: true
+		ZOffset: -512
+	Contrail@2:
+		Offset: -300,143,0
+		UsePlayerColor: true
+		ZOffset: -512
+	RevealsShroud:
+		Range: 12c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: stmr
+		PlayerPalette: overlayplayerscrin
+
+STMR.Husk.EMP:
+	Inherits: STMR.Husk
+	Inherits: ^EmpVisualEffect
+
+DEVA.Husk:
+	Inherits: ^HelicopterHusk
+	Tooltip:
+		Name: Devastator Warship
+	Aircraft:
+		TurnSpeed: 2
+		Speed: 30
+	FallsToEarth:
+		MaximumSpinSpeed: 0
+	RevealsShroud:
+		Range: 10c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: deva
+	FallsToEarth:
+		Explosion: KirovExplode
+
+DEVA.Husk.EMP:
+	Inherits: DEVA.Husk
+	Inherits: ^EmpVisualEffect
+
+PAC.Husk:
+	Inherits: ^HelicopterHusk
+	Tooltip:
+		Name: Planetary Assault Carrier
+	Aircraft:
+		TurnSpeed: 2
+		Speed: 30
+	FallsToEarth:
+		MaximumSpinSpeed: 0
+	RevealsShroud:
+		Range: 10c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: pac
+	FallsToEarth:
+		Explosion: KirovExplode
+
+PAC.Husk.EMP:
+	Inherits: PAC.Husk
+	Inherits: ^EmpVisualEffect
+
+INVA.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Invader
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 149
+	RevealsShroud:
+		Range: 12c0
+		Type: CenterPosition
+	RenderSprites:
+		Image: inva
+		PlayerPalette: overlayplayerscrin
+	FallsToEarth:
+		Explosion: UnitExplodeDrone
+
+INVA.Husk.EMP:
+	Inherits: INVA.Husk
+	Inherits: ^EmpVisualEffect
+
+INVA.Husk.Empty:
+	Inherits: ^PlaneHuskEmpty
+	Inherits: INVA.Husk
+	FallsToEarth:
+		Explosion: UnitExplodeDroneEmpty
+
+INVA.Husk.Empty.EMP:
+	Inherits: INVA.Husk.Empty
+	Inherits: ^EmpVisualEffect
+
+#
+# ---- Buildings
+#
+
+SFAC:
+	Inherits: ^ScrinBuilding
+	Inherits@shape: ^3x2Shape
+	Inherits: ^BotFallbackInsurance
+	Building:
+		Footprint: xxx xxx ===
+		Dimensions: 3,3
+		LocalCenterOffset: 0,-512,0
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 1000
+		Prerequisites: ~disabled
+		IconPalette: chrometd
+		Description: Produces structures.
+	Health:
+		HP: 150000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	WithBuildingBib:
+	Production:
+		Produces: Building, Defense
+		PauseOnCondition: forceshield || invulnerability || being-warped
+	Valued:
+		Cost: 2500
+	Tooltip:
+		Name: Colony Platform
+	BaseBuilding:
+	Transforms:
+		RequiresCondition: factundeploy
+		PauseOnCondition: chrono-vortex || being-captured || c4 || build-incomplete || being-warped
+		IntoActor: smcv
+		Offset: 1,0
+		Facing: 96
+	TransformsIntoMobile:
+		RequiresCondition: factundeploy
+		Locomotor: heavywheeled
+		RequiresForceMove: true
+	TransformsIntoPassenger:
+		RequiresCondition: factundeploy
+		CargoType: Vehicle
+		RequiresForceMove: true
+	TransformsIntoRepairable:
+		RequiresCondition: factundeploy
+		RepairActors: fix, rep
+		RequiresForceMove: true
+	TransformsIntoTransforms:
+		RequiresCondition: factundeploy && build-incomplete
+	Sellable:
+		RequiresCondition: !build-incomplete && !chrono-vortex && !being-captured && !c4 && !being-warped
+	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
+		Condition: factundeploy
+		Prerequisites: global-factundeploy
+	ProvidesPrerequisite@scrin:
+		Factions: scrin, reaper, traveler, harbinger
+		Prerequisite: structures.scrin
+	ProvidesPrerequisite@reaper:
+		Factions: reaper
+		Prerequisite: structures.reaper
+	ProvidesPrerequisite@traveler:
+		Factions: traveler
+		Prerequisite: structures.traveler
+	ProvidesPrerequisite@harbinger:
+		Factions: harbinger
+		Prerequisite: structures.harbinger
+	ProductionBar@Building:
+		ProductionType: Building
+	ProductionBar@Defense:
+		ProductionType: Defense
+		Color: 8A8A8A
+	BaseProvider:
+		PauseOnCondition: being-captured
+		Range: 16c0
+	WithBuildingPlacedAnimation:
+		RequiresCondition: !build-incomplete && !chrono-vortex
+	Power:
+		Amount: 0
+		RequiresCondition: !being-warped
+	ProvidesPrerequisite@buildingname:
+	ConyardChronoReturn:
+		ReturnOriginalActorOnCondition: build-incomplete
+		Condition: chrono-vortex
+		Damage: 950
+	TransferTimedExternalConditionOnTransform:
+		Condition: invulnerability
+	SpawnActorsOnSell:
+		ActorTypes: s1,s1,s1,s1,s6
+
+REAC:
+	Inherits: ^ScrinBuilding
+	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
+	Inherits@shape: ^2x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
+	HitShape:
+		TargetableOffsets: 630,299,0
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	WithSpriteBody:
+		PauseOnCondition: disabled
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 10
+		Prerequisites: ~structures.scrin, ~techlevel.low
+		IconPalette: scrin
+		Description: Provides power for other structures.
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Reactor
+	ProvidesPrerequisite:
+		Prerequisite: anypower
+	Building:
+		Footprint: xX xx ==
+		Dimensions: 2,3
+		LocalCenterOffset: 0,-512,0
+	Health:
+		HP: 40000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		Range: 4c0
+	WithBuildingBib:
+	Power:
+		Amount: 100
+		RequiresCondition: !disabled && !forceshield && !being-warped
+	ProvidesPrerequisite:
+		Prerequisite: anypower
+	Targetable:
+		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate, PowerInfiltrate
+	ScalePowerWithHealth:
+	ProvidesPrerequisite@buildingname:
+	InfiltrateForPowerOutage:
+		Types: SpyInfiltrate, PowerInfiltrate
+
+REA2:
+	Inherits: ^ScrinBuilding
+	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
+	Inherits@shape: ^3x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
+	HitShape:
+		TargetableOffsets: -355,-1024,0
+	WithSpriteBody:
+		PauseOnCondition: disabled
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 110
+		Prerequisites: nerv, ~structures.scrin, ~techlevel.low
+		IconPalette: chrome
+		Description: Provides double the power of\na standard Reactor.
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Advanced Reactor
+	ProvidesPrerequisite:
+		Prerequisite: anypower
+	Building:
+		Footprint: xxx Xxx ===
+		Dimensions: 3,3
+		LocalCenterOffset: 0,-512,0
+	Health:
+		HP: 70000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		Range: 5c0
+	WithBuildingBib:
+	Power:
+		Amount: 200
+		RequiresCondition: !disabled && !forceshield && !being-warped
+	Targetable:
+		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate, PowerInfiltrate
+	ProvidesPrerequisite@buildingname:
+	ScalePowerWithHealth:
+	InfiltrateForPowerOutage:
+		Types: SpyInfiltrate, PowerInfiltrate
+
+PROC.SCRIN:
+	Inherits: ^ScrinBuilding
+	Inherits@2: ^BotIncome
+	HitShape:
+		Type: Rectangle
+			TopLeft: -1536, -512
+			BottomRight: 1536, 853
+	HitShape@TOP:
+		Type: Rectangle
+			TopLeft: -512, -1450
+			BottomRight: 896, -512
+	Valued:
+		Cost: 2000
+	CustomSellValue:
+		Value: 300
+	Tooltip:
+		Name: Refinery
+	Buildable:
+		BuildPaletteOrder: 60
+		Prerequisites: anypower, ~structures.scrin, ~techlevel.low
+		Queue: Building
+		IconPalette: scrin
+		Description: Processes raw Tiberium, Ore and Gems\ninto credits.
+	Building:
+		Footprint: _x_ xxx === ===
+		Dimensions: 3,4
+		LocalCenterOffset: 0,-512,0
+	Health:
+		HP: 90000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	WithBuildingBib:
+	Targetable:
+		TargetTypes: Ground, Structure, C4, DetonateAttack, ThiefInfiltrate
+	Refinery:
+		DockAngle: 112
+		DockOffset: 0,2
+		IsDragRequired: True
+		DragOffset: -554,512,0
+		DragLength: 12
+		TickRate: 15
+	StoresResources:
+		PipColor: Green
+		PipCount: 17
+		Capacity: 2000
+	Selectable:
+		Bounds: 72,56,0,12
+		DecorationBounds: 73,72
+	InfiltrateForCash:
+		Types: ThiefInfiltrate
+		Percentage: 50
+		Notification: CreditsStolen
+	FreeActor:
+		Actor: HARV.Scrin
+		SpawnOffset: 1,2
+		Facing: 64
+	Power:
+		Amount: -30
+		RequiresCondition: !being-warped
+	ProvidesPrerequisite@buildingname:
+	CashHackable:
+
+PORT:
+	Inherits: ^ScrinBuilding
+	Inherits@shape: ^2x2Shape
+	Selectable:
+		Bounds: 48,48
+	HitShape:
+		UseTargetableCellsOffsets: false
+		TargetableOffsets: 0,0,0, 840,-256,0, 840,512,0, 210,-512,0, -71,512,0
+		Type: Rectangle
+			TopLeft: -1024, -1024
+			BottomRight: 1024, 640
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 20
+		Prerequisites: anypower, ~structures.scrin, ~techlevel.low
+		IconPalette: scrin
+		Description: Produces infantry.
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Portal
+	Building:
+		Footprint: xx xx ++
+		Dimensions: 2,3
+		LocalCenterOffset: 0,-512,0
+	Health:
+		HP: 60000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	WithBuildingBib:
+	RallyPoint:
+	Exit@1:
+		RequiresCondition: !being-captured
+		SpawnOffset: 0,512,0
+		ExitCell: 1,2
+	Production:
+		Produces: Infantry, Soldier
+		PauseOnCondition: forceshield || invulnerability || being-warped
+	PrimaryBuilding:
+		PrimaryCondition: primary
+		SelectionNotification: PrimaryBuildingSelected
+	ProductionBar:
+		ProductionType: Infantry
+	ProvidesPrerequisite@infantryany:
+		Prerequisite: infantry.any
+	ProvidesPrerequisite@scrin:
+		Factions: scrin, reaper, traveler, harbinger
+		Prerequisite: infantry.scrin
+	ProvidesPrerequisite@reaper:
+		Factions: reaper
+		Prerequisite: infantry.reaper
+	ProvidesPrerequisite@traveler:
+		Factions: traveler
+		Prerequisite: infantry.traveler
+	ProvidesPrerequisite@harbinger:
+		Factions: harbinger
+		Prerequisite: infantry.harbinger
+	ProvidesPrerequisite@scrinstructure:
+		RequiresPrerequisites: structures.scrin
+		Prerequisite: infantry.scrin
+	ProvidesPrerequisite@reaperstructure:
+		RequiresPrerequisites: structures.reaper
+		Prerequisite: infantry.reaper
+	ProvidesPrerequisite@travelerstructure:
+		RequiresPrerequisites: structures.traveler
+		Prerequisite: infantry.traveler
+	ProvidesPrerequisite@harbingerstructure:
+		RequiresPrerequisites: structures.harbinger
+		Prerequisite: infantry.harbinger
+	Power:
+		Amount: -20
+		RequiresCondition: !being-warped
+	ProvidesPrerequisite@buildingname:
+	Targetable:
+		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
+	InfiltrateForSupportPower@inf:
+		Types: SabInfiltrate
+		Proxy: inf.scrin.stolen
+	WithDecoration@primary:
+		RequiresSelection: true
+		Image: pips
+		Sequence: tag-primary
+		ReferencePoint: Top
+		ZOffset: 256
+		RequiresCondition: primary
+	InfiltrateForSupportPower@spy:
+		Proxy: barracks.upgraded
+		Types: SpyInfiltrate
+	WithIdleOverlay:
+		RequiresCondition: !build-incomplete
+
+WSPH:
+	Inherits: ^ScrinBuilding
+	Inherits@shape: ^3x2Shape
+	Selectable:
+		Bounds: 72,48
+	HitShape:
+		TargetableOffsets: 0,0,0, 0,1024,0, 0,-1024,0
+		Type: Rectangle
+			TopLeft: -1536, -1024
+			BottomRight: 1536, 512
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 80
+		Prerequisites: proc.scrin, ~structures.scrin, ~techlevel.low
+		IconPalette: scrin
+		Description: Produces vehicles.
+	Valued:
+		Cost: 2000
+	Tooltip:
+		Name: Warp Sphere
+	Building:
+		Footprint: xxx xxx +++
+		Dimensions: 3,3
+		LocalCenterOffset: 0,-512,0
+	Health:
+		HP: 150000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	ProvidesPrerequisite@any:
+		Prerequisite: vehicles.any
+	ProvidesPrerequisite@allies:
+		Factions: allies, england, france, germany
+		Prerequisite: vehicles.allies
+	ProvidesPrerequisite@td:
+		Factions: gdi, talon, zocom, eagle, nod, marked, blackh, legion
+		Prerequisite: vehicles.td
+	ProvidesPrerequisite@ra:
+		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq
+		Prerequisite: vehicles.ra
+	ProvidesPrerequisite@alliesvanilla:
+		Factions: allies
+		Prerequisite: vehicles.alliesvanilla
+	ProvidesPrerequisite@england:
+		Factions: england
+		Prerequisite: vehicles.england
+	ProvidesPrerequisite@france:
+		Factions: france
+		Prerequisite: vehicles.france
+	ProvidesPrerequisite@germany:
+		Factions: germany
+		Prerequisite: vehicles.germany
+	ProvidesPrerequisite@soviet:
+		Factions: soviet, russia, ukraine, iraq
+		Prerequisite: vehicles.soviet
+	ProvidesPrerequisite@sovietvanilla:
+		Factions: soviet
+		Prerequisite: vehicles.sovietvanilla
+	ProvidesPrerequisite@russia:
+		Factions: russia
+		Prerequisite: vehicles.russia
+	ProvidesPrerequisite@ukraine:
+		Factions: ukraine
+		Prerequisite: vehicles.ukraine
+	ProvidesPrerequisite@iraq:
+		Factions: iraq
+		Prerequisite: vehicles.iraq
+	ProvidesPrerequisite@gdi:
+		Factions: gdi, zocom, talon, eagle
+		Prerequisite: vehicles.gdi
+	ProvidesPrerequisite@talon:
+		Factions: talon
+		Prerequisite: vehicles.talon
+	ProvidesPrerequisite@zocom:
+		Factions: zocom
+		Prerequisite: vehicles.zocom
+	ProvidesPrerequisite@eagle:
+		Factions: eagle
+		Prerequisite: vehicles.eagle
+	ProvidesPrerequisite@nod:
+		Factions: nod, blackh, marked, legion
+		Prerequisite: vehicles.nod
+	ProvidesPrerequisite@blackh:
+		Factions: blackh
+		Prerequisite: vehicles.blackh
+	ProvidesPrerequisite@marked:
+		Factions: marked
+		Prerequisite: vehicles.marked
+	ProvidesPrerequisite@legion:
+		Factions: legion
+		Prerequisite: vehicles.legion
+	ProvidesPrerequisite@scrin:
+		Factions: scrin, reaper, traveler, harbinger
+		Prerequisite: vehicles.scrin
+	ProvidesPrerequisite@reaper:
+		Factions: reaper
+		Prerequisite: vehicles.reaper
+	ProvidesPrerequisite@traveler:
+		Factions: traveler
+		Prerequisite: vehicles.traveler
+	ProvidesPrerequisite@harbinger:
+		Factions: harbinger
+		Prerequisite: vehicles.harbinger
+	ProvidesPrerequisite@alliedstructure:
+		RequiresPrerequisites: structures.allies
+		Prerequisite: vehicles.allies
+	ProvidesPrerequisite@alliedvanillastructure:
+		RequiresPrerequisites: structures.alliesvanilla
+		Prerequisite: vehicles.alliesvanilla
+	ProvidesPrerequisite@englishstructure:
+		RequiresPrerequisites: structures.england
+		Prerequisite: vehicles.england
+	ProvidesPrerequisite@frenchstructure:
+		RequiresPrerequisites: structures.france
+		Prerequisite: vehicles.france
+	ProvidesPrerequisite@germanstructure:
+		RequiresPrerequisites: structures.germany
+		Prerequisite: vehicles.germany
+	ProvidesPrerequisite@sovietstructure:
+		RequiresPrerequisites: structures.soviet
+		Prerequisite: vehicles.soviet
+	ProvidesPrerequisite@sovietvanillastructure:
+		RequiresPrerequisites: structures.sovietvanilla
+		Prerequisite: vehicles.sovietvanilla
+	ProvidesPrerequisite@russianstructure:
+		RequiresPrerequisites: structures.russia
+		Prerequisite: vehicles.russia
+	ProvidesPrerequisite@ukrainianstructure:
+		RequiresPrerequisites: structures.ukraine
+		Prerequisite: vehicles.ukraine
+	ProvidesPrerequisite@iraqistructure:
+		RequiresPrerequisites: structures.iraq
+		Prerequisite: vehicles.iraq
+	ProvidesPrerequisite@gdistructure:
+		RequiresPrerequisites: structures.gdi
+		Prerequisite: vehicles.gdi
+	ProvidesPrerequisite@gdivanillastructure:
+		RequiresPrerequisites: structures.gdivanilla
+		Prerequisite: vehicles.gdivanilla
+	ProvidesPrerequisite@talonstructure:
+		RequiresPrerequisites: structures.talon
+		Prerequisite: vehicles.talon
+	ProvidesPrerequisite@zocomstructure:
+		RequiresPrerequisites: structures.zocom
+		Prerequisite: vehicles.zocom
+	ProvidesPrerequisite@nodvanillastructure:
+		RequiresPrerequisites: structures.nodvanilla
+		Prerequisite: vehicles.nodvanilla
+	ProvidesPrerequisite@nodstructure:
+		RequiresPrerequisites: structures.nod
+		Prerequisite: vehicles.nod
+	ProvidesPrerequisite@blackhstructure:
+		RequiresPrerequisites: structures.blackh
+		Prerequisite: vehicles.blackh
+	ProvidesPrerequisite@markedstructure:
+		RequiresPrerequisites: structures.marked
+		Prerequisite: vehicles.marked
+	ProvidesPrerequisite@scrinstructure:
+		RequiresPrerequisites: structures.scrin
+		Prerequisite: vehicles.scrin
+	ProvidesPrerequisite@reaperstructure:
+		RequiresPrerequisites: structures.reaper
+		Prerequisite: vehicles.reaper
+	ProvidesPrerequisite@travelerstructure:
+		RequiresPrerequisites: structures.traveler
+		Prerequisite: vehicles.traveler
+	ProvidesPrerequisite@harbingerstructure:
+		RequiresPrerequisites: structures.harbinger
+		Prerequisite: vehicles.harbinger
+	ProvidesPrerequisite@seek:
+		Factions: scrin, reaper, harbinger
+		Prerequisite: vehicles.seek
+	ProvidesPrerequisite@devo:
+		Factions: scrin, reaper, traveler
+		Prerequisite: vehicles.devo
+	ProvidesPrerequisite@tpod:
+		Factions: scrin, traveler, harbinger
+		Prerequisite: vehicles.tpod
+	WithBuildingBib:
+	RallyPoint:
+	Exit@1:
+		RequiresCondition: !being-captured
+		SpawnOffset: 0,0,0
+		ExitCell: 0,2
+	Production:
+		Produces: Vehicle
+		PauseOnCondition: forceshield || invulnerability || being-warped
+	PrimaryBuilding:
+		PrimaryCondition: primary
+		SelectionNotification: PrimaryBuildingSelected
+	Targetable:
+		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
+	ProductionBar:
+		ProductionType: Vehicle
+	Power:
+		Amount: -30
+		RequiresCondition: !being-warped
+	WithDecoration@primary:
+		RequiresSelection: true
+		Image: pips
+		Sequence: tag-primary
+		ReferencePoint: Top
+		ZOffset: 256
+		RequiresCondition: primary
+	ProvidesPrerequisite@buildingname:
+	InfiltrateForSupportPower@spy:
+		Proxy: vehicles.upgraded
+		Types: SpyInfiltrate
+	InfiltrateForSupportPower@veh:
+		Types: SabInfiltrate
+		Proxy: veh.scrin.stolen
+	WithIdleOverlay:
+		RequiresCondition: !build-incomplete
+
+NERV:
+	Inherits: ^ScrinBuilding
+	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
+	HitShape:
+		UseTargetableCellsOffsets: false
+		TargetableOffsets: 0,0,0, 630,-384,0, 630,384,0, -700,-512,0, -700,512,0
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 90
+		Prerequisites: proc.scrin, ~structures.scrin, ~techlevel.medium
+		Description: Provides an overview of the battlefield.\n  Requires power to operate.
+		IconPalette: scrin
+	Valued:
+		Cost: 1800
+	Tooltip:
+		Name: Nerve Center
+	Building:
+		Footprint: xx xx ==
+		Dimensions: 2,3
+		LocalCenterOffset: 0,-768,0
+	Targetable:
+		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate,  SabInfiltrate
+	Health:
+		HP: 100000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		MinRange: 6c0
+		Range: 10c0
+		RequiresCondition: !disabled
+		RevealGeneratedShroud: False
+	RevealsShroud@Offline:
+		Range: 5c0
+		RequiresCondition: disabled
+	RevealsShroud@GAPGEN:
+		Range: 6c0
+		RequiresCondition: !disabled
+	ProvidesRadar:
+		RequiresCondition: !jammed && !disabled && !being-warped
+	WithBuildingBib:
+	InfiltrateForExploration:
+		Types: SpyInfiltrate, SabInfiltrate
+	Power:
+		Amount: -40
+		RequiresCondition: !being-warped
+	ProvidesPrerequisite@radar:
+		Prerequisite: radar
+	ProvidesPrerequisite@scrinrad:
+		Factions: scrin, reaper, traveler, harbinger
+		Prerequisite: radar.scrin
+	ProvidesPrerequisite@buildingname:
+	ExternalCondition@JAMMED:
+		Condition: jammed
+	InfiltrateForSupportPower@tec:
+		Types: SabInfiltrate
+		Proxy: rad.scrin.stolen
+	RevealActorsPower@RESOURCESCAN:
+		CameraActor: camera.resourcescan
+		TargetActors: mine, gmine, split2, split3, splitblue, proc, proc.td, proc.scrin
+		LifeTime: 250
+		OrderName: resourcescan
+		Icon: rescanpower
+		ChargeInterval: 6000
+		Description: Resource Scan
+		LongDesc: Reveals map resources.
+		LaunchSound: tibscan.aud
+		PauseOnCondition: disabled || empdisable || being-warped
+	SpawnActorPower@ICHORSEED:
+		OrderName: ichorseed
+		Icon: ichorpower
+		Actor: ichor.seeder
+		ChargeInterval: 6000
+		Description: Ichor Seed
+		Lifetime: 250
+		ActivationDelay: 0
+		AllowMultiple: false
+		LongDesc: Seeds tiberium at selected location.
+		LaunchSound: ichorseed.aud
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		PauseOnCondition: disabled || empdisable || being-warped
+	SpawnActorPower@BUZZERSWARM:
+		Actor: BUZZ
+		OrderName: buzzerswarm
+		Icon: buzzpower
+		Prerequisites: structures.harbinger
+		ChargeInterval: 4500
+		LifeTime: -1
+		Description: Buzzer Swarm
+		LongDesc: Spawns controllable buzzer swarm which damages anything nearby.
+		LaunchSound: buzzers-create.aud
+		SelectTargetSpeechNotification: SelectTarget
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayRadarPing: True
+	SpawnActorPower@STORMSPIKE:
+		Actor: SCOL.Temp
+		OrderName: stormspike
+		Icon: stormspikepower
+		IconPalette: scrin
+		Prerequisites: structures.reaper
+		ChargeInterval: 4500
+		LifeTime: -1
+		Description: Storm Spike
+		LongDesc: Creates a temporary storm column.
+		LaunchSound: scrinbuild.aud
+		SelectTargetSpeechNotification: SelectTarget
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayRadarPing: True
+	SpawnActorPower@IONSURGE:
+		Actor: ion.surge
+		OrderName: ionsurge
+		Icon: ionsurgepower
+		Prerequisites: structures.traveler
+		ChargeInterval: 4500
+		LifeTime: -1
+		Description: Ion Surge
+		LongDesc: Reduces power output of power plants and disables radar within affected area.
+		LaunchSound: ionsurge.aud
+		SelectTargetSpeechNotification: SelectTarget
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayRadarPing: True
+
+SCRT:
+	Inherits: ^ScrinBuilding
+	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
+	Inherits@shape: ^2x2Shape
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 150
+		Prerequisites: wsph, nerv, ~structures.scrin, ~techlevel.high
+		Description: Provides Scrin advanced technologies.
+		IconPalette: scrin
+	Valued:
+		Cost: 1500
+	Tooltip:
+		Name: Scrin Tech Center
+	Building:
+		Footprint: xx xx ==
+		Dimensions: 2,3
+		LocalCenterOffset: 0,-512,0
+	Health:
+		HP: 100000
+	Targetable:
+		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		MinRange: 5c0
+		Range: 6c0
+		RequiresCondition: !disabled
+		RevealGeneratedShroud: False
+	RevealsShroud@Offline:
+		Range: 5c0
+		RequiresCondition: disabled
+	RevealsShroud@GAPGEN:
+		Range: 5c0
+		RequiresCondition: !disabled
+	InfiltrateForSupportPower@tec:
+		Types: SabInfiltrate
+		Proxy: tec.scrin.stolen
+	WithBuildingBib:
+	Power:
+		Amount: -200
+		RequiresCondition: !being-warped
+	ProvidesPrerequisite:
+		Prerequisite: techcenter
+	ProvidesPrerequisite@buildingname:
+
+GRAV:
+	Inherits: ^ScrinBuilding
+	Inherits@shape: ^3x2Shape
+	HitShape:
+		TargetableOffsets: -355,-1024,0
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 130
+		Prerequisites: nerv, ~structures.scrin, ~techlevel.medium
+		Description: Produces Scrin aircraft.
+		IconPalette: scrin
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Gravity Stabilizer
+	Selectable:
+		Bounds: 72,48
+	Building:
+		Footprint: xxx xxx ===
+		Dimensions: 3,3
+		LocalCenterOffset: 0,-768,0
+	Health:
+		HP: 100000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Exit@1:
+		RequiresCondition: !being-captured
+		ExitCell: 1,1
+		Facing: 180
+	RallyPoint:
+	Production:
+		Produces: Aircraft, Plane
+		PauseOnCondition: forceshield || invulnerability || being-warped
+	ProvidesPrerequisite@all:
+		Prerequisite: aircraft.all
+	ProvidesPrerequisite@scrin:
+		Factions: scrin, reaper, traveler, harbinger
+		Prerequisite: aircraft.scrin
+	ProvidesPrerequisite@reaper:
+		Factions: reaper
+		Prerequisite: aircraft.reaper
+	ProvidesPrerequisite@traveler:
+		Factions:  traveler
+		Prerequisite: aircraft.traveler
+	ProvidesPrerequisite@harbinger:
+		Factions: harbinger
+		Prerequisite: aircraft.harbinger
+	ProvidesPrerequisite@scrinstructure:
+		RequiresPrerequisites: structures.scrin
+		Prerequisite: aircraft.scrin
+	ProvidesPrerequisite@reaperstructure:
+		RequiresPrerequisites: structures.reaper
+		Prerequisite: aircraft.reaper
+	ProvidesPrerequisite@travelerstructure:
+		RequiresPrerequisites: structures.traveler
+		Prerequisite: aircraft.traveler
+	ProvidesPrerequisite@habringerstructure:
+		RequiresPrerequisites: structures.harbinger
+		Prerequisite: aircraft.harbinger
+	ProductionBar:
+		ProductionType: Aircraft
+	SupportPowerChargeBar:
+	PrimaryBuilding:
+		PrimaryCondition: primary
+		SelectionNotification: PrimaryBuildingSelected
+	Power:
+		Amount: -20
+		RequiresCondition: !being-warped
+	ProvidesPrerequisite@buildingname:
+	Targetable:
+		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate
+	WithDecoration@primary:
+		RequiresSelection: true
+		Image: pips
+		Sequence: tag-primary
+		ReferencePoint: Top
+		ZOffset: 256
+		RequiresCondition: primary
+	WithBuildingBib:
+	WithIdleOverlay@orb:
+		RequiresCondition: !build-incomplete
+	WithIdleOverlay@pylon:
+		Sequence: idle-pylon
+		RequiresCondition: !build-incomplete && !damaged
+	GrantConditionOnDamageState@DAMAGED:
+		Condition: damaged
+		ValidDamageStates: Light, Medium, Heavy, Critical
+
+SIGN:
+	Inherits: ^ScrinBuilding
+	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
+	Inherits@shape: ^3x2Shape
+	HitShape:
+		TargetableOffsets: -355,-1024,0
+	Selectable:
+		Bounds: 72,48
+	Building:
+		Footprint: xxx xxx ===
+		Dimensions: 3,3
+		LocalCenterOffset: 0,-512,0
+	Health:
+		HP: 80000
+	Armor:
+		Type: Concrete
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	WithBuildingBib:
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 200
+		Prerequisites: ~structures.scrin, scrt, ~techlevel.high
+		Description: Provides Scrin tier 4 technologies.\n  Maximum 1 can be built.\n  Cannot be captured.
+		BuildLimit: 1
+		IconPalette: scrin
+	-Capturable:
+	-CaptureNotification:
+	-CapturableProgressBar:
+	-CapturableProgressBlink:
+	-CaptureManager:
+	Valued:
+		Cost: 2500
+	Tooltip:
+		Name: Signal Transmitter
+	RevealsShroud:
+		Range: 4c0
+		MinRange: 3c0
+	Power:
+		Amount: -150
+		RequiresCondition: !being-warped
+	Targetable:
+		TargetTypes: Ground, Structure, C4, DetonateAttack
+	ProvidesPrerequisite@Name:
+		RequiresCondition: !being-warped
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-warped
+
+SREP:
+	Inherits: ^ScrinBuilding
+	HitShape:
+		TargetableOffsets: 840,0,0, 598,-640,0, 598,640,0, -1060,0,0, -768,-640,0, -768,640,0
+		Type: Polygon
+			Points: -1536,-300, -640,-811, 640,-811, 1536,-300, 1536,555, 640,1110, -640,1110, -1536,555
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 100
+		Prerequisites: vehicles.scrin, ~structures.scrin, ~techlevel.medium
+		Description: Repairs vehicles for credits.
+		IconPalette: scrin
+	Valued:
+		Cost: 1200
+	Tooltip:
+		Name: Repair Bay
+	Building:
+		Footprint: _+_ +++ _+_
+		Dimensions: 3,3
+	Selectable:
+		Bounds: 68,34,0,3
+		DecorationBounds: 72,48
+	Health:
+		HP: 80000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	WithBuildingBib:
+		HasMinibib: true
+	Reservable:
+	RallyPoint:
+	RepairsUnits:
+		HpPerStep: 1000
+		Interval: 7
+		StartRepairingNotification: Repairing
+		FinishRepairingNotification: UnitRepaired
+		PlayerExperience: 15
+		RequiresCondition: !forceshield && !invulnerability && !being-warped
+	WithResupplyAnimation:
+		RequiresCondition: !build-incomplete
+	Power:
+		Amount: -30
+		RequiresCondition: !being-warped
+	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite@repair:
+		Prerequisite: repair
+
+SILO.SCRIN:
+	Inherits: ^ScrinBuilding
+	Valued:
+		Cost: 150
+	Tooltip:
+		Name: Silo
+	Buildable:
+		BuildPaletteOrder: 35
+		Prerequisites: proc.scrin, ~structures.scrin, ~techlevel.infonly
+		Queue: Defense
+		IconPalette: scrin
+		Description: Stores processed Tiberium, Ore and Gems
+	-GivesBuildableArea:
+	Health:
+		HP: 30000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		Range: 4c0
+	WithBuildingBib:
+		HasMinibib: true
+	Targetable:
+		TargetTypes: Ground, Structure, C4, DetonateAttack
+	-WithSpriteBody:
+	WithResourceLevelSpriteBody:
+		Sequence: stages
+	StoresResources:
+		PipCount: 5
+		Capacity: 3000
+		PipColor: Green
+	-MustBeDestroyed:
+	SpawnActorsOnSell:
+		ActorTypes: c1,c7
+	Power:
+		Amount: -10
+		RequiresCondition: !being-warped
+	Selectable:
+		Bounds: 24,24
+	Explodes:
+		Weapon: SmallBuildingExplode
+		EmptyWeapon: SmallBuildingExplode
+
+MANI:
+	Inherits: ^ScrinBuilding
+	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
+	Inherits@shape: ^2x2Shape
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 130
+		Prerequisites: scrt, ~structures.scrin, ~techlevel.superw
+		BuildLimit: 1
+		IconPalette: chrome
+		Description: Slows enemy ground units movement and rate of fire.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Suppression Field
+	Valued:
+		Cost: 1500
+	Tooltip:
+		Name: Field Manipulator
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+		LocalCenterOffset: 0,-512,0
+	Health:
+		HP: 100000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		MinRange: 5c0
+		Range: 6c0
+		RequiresCondition: !disabled
+		RevealGeneratedShroud: False
+	RevealsShroud@Offline:
+		Range: 5c0
+		RequiresCondition: disabled
+	RevealsShroud@GAPGEN:
+		Range: 5c0
+		RequiresCondition: !disabled
+	WithBuildingBib:
+	SupportPowerChargeBar:
+	Power:
+		Amount: -200
+		RequiresCondition: !being-warped
+	MustBeDestroyed:
+		RequiredForShortGame: false
+	HitShape:
+		UseTargetableCellsOffsets: true
+		Type: Rectangle
+			TopLeft: -1536, -1024
+			BottomRight: 1024, 1024
+	InfiltrateForSupportPowerReset:
+		Types: SpyInfiltrate, SabInfiltrate
+	Targetable:
+		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
+	GrantExternalConditionPower@SUPPRESSION:
+		PauseOnCondition: disabled || empdisable || being-warped
+		OrderName: suppression
+		Icon: spresspower
+		ChargeInterval: 4500
+		Description: Suppression Field
+		LongDesc: Applies a suppression field to the target area, slowing ground units.
+		Duration: 600
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		DisplayRadarPing: True
+		Condition: suppression
+		OnFireSound: suppression.aud
+		SupportPowerPaletteOrder: 10
+		Range: 2
+		ValidStances: Ally, Enemy, Neutral
+		DisplayTimerStances: Ally, Neutral, Enemy
+
+RIFT:
+	Inherits: ^ScrinBuilding
+	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
+	Inherits@shape: ^2x2Shape
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 130
+		Prerequisites: scrt, ~structures.scrin, ~techlevel.superw
+		BuildLimit: 1
+		Description: Provides Rift support power.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Rift
+		IconPalette: chrome
+	Valued:
+		Cost: 2500
+	Tooltip:
+		Name: Rift Generator
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+		LocalCenterOffset: 0,-512,0
+	Health:
+		HP: 100000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		MinRange: 5c0
+		Range: 6c0
+		RequiresCondition: !disabled
+		RevealGeneratedShroud: False
+	RevealsShroud@Offline:
+		Range: 5c0
+		RequiresCondition: disabled
+	RevealsShroud@GAPGEN:
+		Range: 5c0
+		RequiresCondition: !disabled
+	WithBuildingBib:
+	DetonateWeaponPower@RiftGenerator:
+		OrderName: rift
+		Icon: riftpower
+		Cursor: ability
+		ChargeInterval: 13500
+		Description: Rift
+		ActivationDelay: 50
+		LongDesc: Initiate a Lightning Storm.\nApplies heavy damage over a large area.
+		Weapon: RiftInit
+		AllowMultiple: false
+		CameraActor: camera
+		CameraRemoveDelay: 375
+		SelectTargetSpeechNotification: SelectTarget
+		EndChargeSpeechNotification: RiftReady
+		InsufficientPowerSpeechNotification: InsufficientPower
+		IncomingSpeechNotification: RiftApproach
+		IncomingSound: nukelaunch.aud
+		LaunchSound: nukelaunch.aud
+		DisplayTimerStances: Ally, Neutral, Enemy
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayBeacon: True
+		DisplayRadarPing: True
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		BeaconPoster: riftpower
+		TargetCircleRange: 6c512
+		TargetCircleColor: 0000FF90
+		Duration: 425
+		ActiveCondition: active
+	WithIdleOverlay@ACTIVE:
+		Sequence: active-overlay
+		Palette: scrin
+		RequiresCondition: active
+	ExternalCondition@ACTIVE:
+		Condition: active
+	SupportPowerChargeBar:
+	Power:
+		Amount: -200
+		RequiresCondition: !being-warped
+	ProvidesPrerequisite@buildingname:
+	MustBeDestroyed:
+		RequiredForShortGame: false
+	InfiltrateForSupportPowerReset:
+		Types: SpyInfiltrate, SabInfiltrate
+	Targetable:
+		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
+	WithBuildingBib:
+		HasMinibib: true
+
+PTUR:
+	Inherits: ^Defense
+	Inherits@AUTOTARGET: ^AutoTargetGround
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 60
+		Prerequisites: port, ~structures.scrin, ~techlevel.low
+		Description: Anti-infantry base defense.\n  Can detect cloaked units.\n  Strong vs Infantry, Light Armor\n  Weak vs Tanks, Aircraft
+		IconPalette: chrome
+	Valued:
+		Cost: 600
+	Tooltip:
+		Name: Plasma Cannon
+	Selectable:
+		DecorationBounds: 24,28,0,-6
+	Building:
+	Health:
+		HP: 40000
+	Armor:
+		Type: Concrete
+	RevealsShroud:
+		MinRange: 5c0
+		Range: 7c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 5c0
+	WithBuildingBib:
+		HasMinibib: true
+	Turreted:
+		TurnSpeed: 12
+		InitialFacing: 48
+		PauseOnCondition: empdisable || being-warped
+	-WithSpriteBody:
+	WithEmbeddedTurretSpriteBody:
+		PauseOnCondition: empdisable || being-warped
+	Armament:
+		Weapon: PlasmaTurretGun
+		LocalOffset: 450,70,500, 450,-70,500
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	AttackTurreted:
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: empdisable || being-warped
+	WithMuzzleOverlay:
+	Power:
+		Amount: -25
+		RequiresCondition: !being-warped
+	BodyOrientation:
+		UseClassicFacingFudge: True
+	SpawnActorOnDeath:
+		Actor: s1
+	-SpawnRandomActorOnDeath:
+
+SHAR:
+	Inherits: ^Defense
+	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
+	Inherits@AUTOTARGET: ^AutoTargetAir
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 90
+		Prerequisites: nerv, ~structures.scrin, ~techlevel.medium
+		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Strong vs Aircraft\n  Weak vs Ground Units
+		IconPalette: chrome
+	Valued:
+		Cost: 800
+	Tooltip:
+		Name: Shard Launcher
+	Selectable:
+		DecorationBounds: 24,44,0,-11
+	Health:
+		HP: 40000
+	Armor:
+		Type: Concrete
+	RevealsShroud:
+		MinRange: 5c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 5c0
+	WithBuildingBib:
+		HasMinibib: true
+	Turreted:
+		TurnSpeed: 15
+		InitialFacing: 48
+	-WithSpriteBody:
+	WithEmbeddedTurretSpriteBody:
+		PauseOnCondition: disabled || empdisable || being-warped
+	Armament@PRIMARY:
+		Weapon: ShardLauncher
+		LocalOffset: 0,0,1050
+	AttackTurreted:
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: disabled || empdisable || being-warped
+	RenderRangeCircle:
+		RangeCircleType: aa
+	Power:
+		Amount: -50
+		RequiresCondition: !being-warped
+	BodyOrientation:
+		UseClassicFacingFudge: True
+	DetectCloaked:
+		RequiresCondition: !(disabled || empdisable || being-warped)
+	SpawnActorOnDeath:
+		Actor: s1
+	-SpawnRandomActorOnDeath:
+
+SCOL:
+	Inherits: ^Defense
+	Inherits@AUTOTARGET: ^AutoTargetGround
+	Inherits@Flash: ^WhiteFlash
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 80
+		Prerequisites: nerv, ~structures.scrin, ~techlevel.high
+		Description: Advanced base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft
+		IconPalette: chrome
+	Valued:
+		Cost: 1500
+	Tooltip:
+		Name: Storm Column
+	Selectable:
+		DecorationBounds: 24,48,0,-14
+	Health:
+		HP: 45000
+	Armor:
+		Type: Concrete
+	RevealsShroud:
+		MinRange: 6c0
+		Range: 8c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 6c0
+	WithBuildingBib:
+		HasMinibib: true
+	Armament:
+		Weapon: StormColumnZap
+		LocalOffset: 0,0,900, 0,0,1100, 0,0,700, 0,0,1300, 0,0,500
+		RequiresCondition: !lowpower
+	AttackOmni:
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: disabled || empdisable || being-warped
+	Power:
+		Amount: -100
+		RequiresCondition: !being-warped
+	DetectCloaked:
+		RequiresCondition: !(disabled || empdisable || being-warped)
+	SpawnActorOnDeath:
+		Actor: s1
+	-SpawnRandomActorOnDeath:
+
+SCOL.Temp:
+	RenderSprites:
+		Image: scol
+	Inherits: SCOL
+	-Sellable:
+	-Buildable:
+	Health:
+		HP: 60000
+	KillsSelf:
+		Delay: 750
+	-Power:
+	-SpawnActorOnDeath:
+	-WithBuildingRepairDecoration:
+	-RepairableBuilding:
+	-EngineerRepairable:
+
+#
+# ---- misc
+#
+
+BUZZ:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^SpriteActor
+	Inherits@3: ^SelectableSupportUnit
+	Interactable:
+	HiddenUnderFog:
+	Tooltip:
+		Name: Buzzer Swarm
+	Health:
+		HP: 1
+	RevealsShroud:
+		MinRange: 2c0
+		Range: 4c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 2c0
+	PeriodicExplosion:
+		Weapon: BuzzerVortex
+	WithSpriteBody:
+	HitShape:
+	KillsSelf:
+		RemoveInstead: true
+		Delay: 450
+	Aircraft:
+		CanHover: True
+		Speed: 36
+		CruiseAltitude: 1
+	AmbientSound:
+		SoundFiles: buzzers-idle1.aud, buzzers-idle2.aud, buzzers-idle3.aud
+		Interval: 10
+	Voiced:
+		VoiceSet: BuzzersVoice
+
+camera.rift:
+	Interactable:
+	EditorOnlyTooltip:
+		Name: (support power)
+	RenderSprites:
+		Image: riftanim
+		Palette: effect-ignore-lighting-alpha85
+	WithSpriteBody:
+		StartSequence: spawn
+	BodyOrientation:
+		QuantizedFacings: 1
+	AlwaysVisible:
+	HitShape:
+	RevealsShroud:
+		Range: 6c0
+	Health:
+		HP: 1
+	PeriodicExplosion:
+		Weapon: Rift
+	Immobile:
+		OccupiesSpace: false
+	AmbientSound:
+		SoundFiles: rift1.aud, rift2.aud, rift3.aud
+		Interval: 50
+	WithDeathAnimation:
+		UseDeathTypeSuffix: False
+		CrushedSequence: fade
+		FallbackSequence: fade
+	KillsSelf:
+		Delay: 360
+
+camera.minirift
+	Inherits: camera.rift
+	RenderSprites:
+		Image: miniriftanim
+	PeriodicExplosion:
+		Weapon: MiniRift
+	KillsSelf:
+		Delay: 120
+	WithSpriteBody:
+		-StartSequence:
+	-AmbientSound:
+	-WithDeathAnimation:
+
+camera.resourcescan:
+	Inherits: CAMERA
+	EditorOnlyTooltip:
+		Name: (support power proxy camera)
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+
+ichor.seeder:
+	Inherits: CAMERA
+	SeedsResourceCA:
+		ResourceType: Tiberium
+		Interval: 2
+	-RevealsShroud:
+
+ion.surge:
+	Interactable:
+	WithSpriteBody:
+	BodyOrientation:
+		QuantizedFacings: 1
+	HitShape:
+	AlwaysVisible:
+	Immobile:
+		OccupiesSpace: false
+	RenderSprites:
+		Image: ionsurge
+	ProximityExternalCondition@JAMMER:
+		Range: 10c0
+		Condition: jammed
+	ProximityExternalCondition@POWERDRAIN:
+		Range: 10c0
+		Condition: powerdrain
+	KillsSelf:
+		Delay: 375
+	AmbientSound:
+		SoundFiles: ionsurgeloop.aud
+		Interval: 50
+
+# infiltrator stolen tech
+
+# portal
+inf.scrin.stolen:
+	AlwaysVisible:
+	ProvidesPrerequisite:
+		Prerequisite: inf.nod.stolen
+		Factions: blackh, marked, legion
+
+# warp sphere
+veh.scrin.stolen:
+	AlwaysVisible:
+	ProvidesPrerequisite:
+		Prerequisite: vehicles.seek
+		Factions: blackh, marked, legion
+
+# nerve center devourer
+rad.scrin.stolen:
+	AlwaysVisible:
+	ProvidesPrerequisite:
+		Prerequisite: vehicles.devo
+		Factions: blackh, marked, legion
+
+# tech center tripod
+tec.scrin.stolen:
+	AlwaysVisible:
+	ProvidesPrerequisite:
+		Prerequisite: vehicles.tpod
+		Factions: blackh, marked, legion

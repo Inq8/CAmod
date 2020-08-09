@@ -332,6 +332,38 @@
 		EmptyWeapon: TemporalExplode
 		DeathTypes: ChronoDeath
 
+^Suppressable:
+	SpeedMultiplier@SUPPRESSION:
+		RequiresCondition: suppression
+		Modifier: 40
+	ReloadDelayMultiplier@SUPPRESSION:
+		RequiresCondition: suppression
+		Modifier: 125
+	ExternalCondition@SUPPRESSION:
+		Condition: suppression
+	WithColoredOverlay@SUPPRESSION:
+		RequiresCondition: suppression
+		Palette: suppression
+	TimedConditionBar@SUPPRESSION:
+		Condition: suppression
+		Color: f454d0
+
+^PowerDrainable:
+	PowerMultiplier@POWERDRAIN:
+		RequiresCondition: powerdrain
+		Modifier: 50
+	ExternalCondition@POWERDRAIN:
+		Condition: powerdrain
+	WithDecoration@POWERDRAIN:
+		Image: poweroff
+		Sequence: offline
+		Palette: chrome
+		RequiresCondition: powerdrain
+		ReferencePoint: Center
+		ValidStances: Ally, Enemy, Neutral
+		Offsets:
+			repairing: 10, 0
+
 ^GDIUpgrade:
 	DamageMultiplier@GDIUPG1:
 		RequiresCondition: gdiupg1
@@ -362,7 +394,7 @@
 		RequiresCondition: gdiupglevel1
 	GrantExternalConditionToProduced@GDIUPG2:
 		Condition: gdiupg2
-		RequiresCondition: gdiupglevel2		
+		RequiresCondition: gdiupglevel2
 	GrantConditionOnPrerequisite@GDIUPG1:
 		Condition: gdiupglevel1
 		Prerequisites: miss.gdi
@@ -809,6 +841,7 @@
 	Inherits@14: ^Chillable
 	Inherits@15: ^AffectedByDriverKill
 	Inherits@16: ^Concussion
+	Inherits@17: ^Suppressable
 	Inherits@C4: ^C4Plantable
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
@@ -835,7 +868,7 @@
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
 	Repairable:
-		RepairActors: fix, rep
+		RepairActors: fix, rep, srep
 	ChronoshiftableWithSpriteEffect:
 		Image: chrono
 		WarpInSequence: warpin
@@ -917,6 +950,8 @@
 	DetectCloaked@UNDERBRIDGE:
 		CloakTypes: Underbridge
 		Range: 5c0
+	TemporaryOwnerManager:
+		BarColor: FF00FF
 
 ^VehicleTD:
 	Inherits@1: ^Vehicle
@@ -955,6 +990,7 @@
 	Inherits@12: ^BotGroundProductionBonus
 	Inherits@13: ^Chillable
 	Inherits@14: ^Concussion
+	Inherits@15: ^Suppressable
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
 	RenderSprites:
@@ -1147,6 +1183,8 @@
 		RequiresCondition: !being-warped
 	Cloak@GPSHIDE:
 		Palette: cloak
+	TemporaryOwnerManager:
+		BarColor: FF00FF
 
 ^Soldier:
 	Inherits: ^Infantry
@@ -1236,6 +1274,7 @@
 	Inherits@14: ^Chillable
 	Inherits@15: ^BotGroundProductionBonus
 	Inherits@16: ^Concussion
+	Inherits@17: ^Suppressable
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
@@ -1340,7 +1379,7 @@
 	Wanders@NOIDLENAVY:
 		WanderMoveRadius: 3
 		RequiresCondition: (botowner && under-bridge)
-		
+
 ^Submarine:
 	Inherits@1: ^Ship
 	Targetable:
@@ -1377,7 +1416,7 @@
 	Wanders@NOIDLENAVY:
 		WanderMoveRadius: 3
 		RequiresCondition: (botowner && crossing-ford) ||  (botowner && under-bridge)
-	
+
 ^NeutralPlane:
 	Inherits@1: ^ExistsInWorld
 	Inherits@3: ^IronCurtainable
@@ -1486,7 +1525,7 @@
 		UncloakSound: appear1.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Damage, Heal
 	Repairable:
-		RepairActors: fix, rep
+		RepairActors: fix, rep, srep
 	Aircraft:
 		CruisingCondition: cruising
 		PauseOnCondition: empdisable && !airborne
@@ -2381,7 +2420,7 @@
 		Modifier: 0
 	Power:
 		RequiresCondition: !disabled
-		
+
 ^Selectable:
 	Selectable:
 	SelectionDecorations:

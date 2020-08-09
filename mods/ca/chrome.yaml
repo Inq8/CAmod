@@ -1,8 +1,11 @@
 ^Sidebar:
 	Image: sidebar.png
-	
+
 ^Sidebar2:
 	Image: sidebar2.png
+
+^Sidebar3:
+	Image: sidebar3.png
 
 ^Dialog:
 	Image: dialog.png
@@ -131,7 +134,7 @@ command-button-soviet-disabled:
 	Inherits: command-button-soviet
 command-button-soviet-highlighted-disabled:
 	Inherits: command-button-soviet-highlighted
-	
+
 sidebar-gdi:
 	Inherits: ^Sidebar2
 	Regions:
@@ -245,6 +248,63 @@ command-button-nod-disabled:
 	Inherits: command-button-nod
 command-button-nod-highlighted-disabled:
 	Inherits: command-button-nod-highlighted
+
+sidebar-scrin:
+	Inherits: ^Sidebar3
+	Regions:
+		radar: 290, 290, 222, 222
+		background-top: 0, 185, 238, 262
+		background-moneybin: 0, 54, 238, 28
+		background-iconbg: 12, 275, 190, 47
+		background-iconrow: 0, 116, 238, 47
+		background-bottom: 0, 166, 238, 8
+		background-supportoverlay: 77, 324, 64, 48
+
+sidebar-button-scrin:
+	Inherits: ^Sidebar3
+	PanelRegion: 260, 165, 5, 5, 18, 18, 5, 5
+sidebar-button-scrin-hover:
+	Inherits: ^Sidebar3
+	PanelRegion: 260, 136, 5, 5, 18, 18, 5, 5
+sidebar-button-scrin-pressed:
+	Inherits: sidebar-button-scrin
+sidebar-button-scrin-highlighted:
+	Inherits: ^Sidebar3
+	PanelRegion: 260, 223, 5, 5, 18, 18, 5, 5
+sidebar-button-scrin-highlighted-hover:
+	Inherits: ^Sidebar3
+	PanelRegion: 260, 194, 5, 5, 18, 18, 5, 5
+sidebar-button-scrin-highlighted-pressed:
+	Inherits: sidebar-button-scrin-highlighted
+sidebar-button-scrin-disabled:
+	Inherits: sidebar-button-allies-disabled
+sidebar-button-scrin-highlighted-disabled:
+	Inherits: sidebar-button-allies-disabled
+
+command-button-scrin:
+	Inherits: ^Sidebar3
+	PanelRegion: 260, 165, 3, 3, 22, 22, 3, 3
+	PanelSides: Center
+command-button-scrin-hover:
+	Inherits: ^Sidebar3
+	PanelRegion: 260, 136, 3, 3, 22, 22, 3, 3
+	PanelSides: Center
+command-button-scrin-pressed:
+	Inherits: command-button-scrin
+command-button-scrin-highlighted:
+	Inherits: ^Sidebar3
+	PanelRegion: 260, 223, 3, 3, 22, 22, 3, 3
+	PanelSides: Center
+command-button-scrin-highlighted-hover:
+	Inherits: ^Sidebar3
+	PanelRegion: 260, 194, 3, 3, 22, 22, 3, 3
+	PanelSides: Center
+command-button-scrin-highlighted-pressed:
+	Inherits: command-button-scrin-highlighted
+command-button-scrin-disabled:
+	Inherits: command-button-scrin
+command-button-scrin-highlighted-disabled:
+	Inherits: command-button-scrin-highlighted
 
 sidebar-bits:
 	Inherits: ^Glyphs
@@ -502,10 +562,15 @@ flags:
 		soviet: 226, 193, 30, 15
 		gdi: 226, 97, 30, 15
 		nod: 195, 161, 30, 15
+		scrin: 164, 177, 30, 15
+		reaper: 133, 177, 30, 15
+		traveler: 102, 177, 30, 15
+		harbinger: 164, 177, 30, 15
 		RandomSoviet: 226, 209, 30, 15
 		RandomAllies: 226, 225, 30, 15
 		RandomGDI: 195, 177, 30, 15
 		RandomNOD: 195, 193, 30, 15
+		RandomScrin: 164, 193, 30,15
 		Random: 226, 241, 30, 15
 		spectator: 226, 241, 30, 15
 
