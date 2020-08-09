@@ -97,13 +97,13 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 	class GroundUnitsAttackMoveState : GroundStateBaseCA, IState
 	{
-		public const int StuckedInPathCheckTimes = 6;
+		public const int StuckInPathCheckTimes = 6;
 		public const int MakeWayTick = 2;
 
 		internal Actor PathGuider = null;
 
 		// Give tolerance for AI grouping team at start
-		internal int StuckedInPath = StuckedInPathCheckTimes;
+		internal int StuckInPath = StuckInPathCheckTimes;
 		internal int TryMakeWay = MakeWayTick;
 		internal WPos LastPos = new WPos(0, 0, 0);
 		internal int LastPosIndex = 0;
@@ -150,7 +150,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			}
 
 			// 2. Force scattered for navigator if needed
-			if (StuckedInPath <= 0)
+			if (StuckInPath <= 0)
 			{
 				if (TryMakeWay > 0)
 				{
@@ -167,7 +167,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				else
 				{
 					// When going through is over, restore the check
-					StuckedInPath = StuckedInPathCheckTimes + MakeWayTick;
+					StuckInPath = StuckInPathCheckTimes + MakeWayTick;
 					TryMakeWay = MakeWayTick;
 				}
 
@@ -176,10 +176,10 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 			// 3. Check if the squad is stucked due to the map has very twisted path
 			// or currently bridge and tunnel from TS mod
-			if ((PathGuider.CenterPosition - LastPos).LengthSquared <= 4)
-				StuckedInPath--;
+			if (PathGuider.CenterPosition == LastPos)
+				StuckInPath--;
 			else
-				StuckedInPath = StuckedInPathCheckTimes;
+				StuckInPath = StuckInPathCheckTimes;
 
 			LastPos = PathGuider.CenterPosition;
 
@@ -204,8 +204,8 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 			var groupArea = (long)WDist.FromCells(validUnits.Length).Length * 1024;
 
-			var unitsHurryUp = validUnits.Where(a => (a.CenterPosition - PathGuider.CenterPosition).LengthSquared >= groupArea * 2).ToArray();
-			var lookAround = validUnits.Where(a => (a.CenterPosition - PathGuider.CenterPosition).LengthSquared <= groupArea * 5).ToArray();
+			var unitsHurryUp = validUnits.Where(a => (a.CenterPosition - PathGuider.CenterPosition).LengthSquared >= groupArea).ToArray();
+			var lookAround = validUnits.Where(a => (a.CenterPosition - PathGuider.CenterPosition).LengthSquared <= groupArea * 4).ToArray();
 
 			if (validUnits.Length > lookAround.Length)
 				owner.Bot.QueueOrder(new Order("Stop", PathGuider, false));
@@ -249,10 +249,6 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			if (targetActor == null)
 			{
 				owner.TargetActor = GetRandomValuableTarget(owner);
-
-				// Inform human player about AI's rush attack.
-				owner.Bot.QueueOrder(new Order("PlaceBeacon", owner.SquadManager.Player.PlayerActor, Target.FromCell(owner.World, owner.TargetActor.Location), false)
-					{ SuppressVisualFeedback = true });
 				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsAttackMoveState(), true);
 				return;
 			}
