@@ -1541,6 +1541,46 @@ INVA.Husk.Empty.EMP:
 # ---- Buildings
 #
 
+SWAL:
+	Inherits: ^Wall
+	RenderSprites:
+		Palette: scrin
+	Building:
+		BuildSounds: scrinbuild.aud
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 30
+		Prerequisites: anypower, ~structures.scrin, ~techlevel.medium
+		Description: Stops units and blocks enemy fire. Regenerates over time.
+		IconPalette: scrin
+	Valued:
+		Cost: 200
+	CustomSellValue:
+		Value: 0
+	Tooltip:
+		Name: Biometallic Wall
+	SoundOnDamageTransition:
+		DamagedSounds: crmble2.aud
+		DestroyedSounds: kaboom30.aud
+	Health:
+		HP: 36000
+	SelfHealing:
+		PercentageStep: 1
+		Delay: 10
+		HealIfBelow: 100
+		DamageCooldown: 25
+	Armor:
+		Type: Brick
+	Crushable:
+		CrushClasses: heavywall
+	BlocksProjectiles:
+	LineBuild:
+		NodeTypes: scrinwall
+	LineBuildNode:
+		Types: scrinwall
+	WithWallSpriteBody:
+		Type: scrinwall
+
 SFAC:
 	Inherits: ^ScrinBuilding
 	Inherits@shape: ^3x2Shape
