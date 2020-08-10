@@ -46,11 +46,6 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 					.Where(a => owner.SquadManager.IsEnemyUnit(a) && owner.SquadManager.IsNotHiddenUnit(a));
 			return enemies.ClosestTo(teamLeader.CenterPosition);
 		}
-
-		protected bool UnitCanBeOrdered(Actor a, SquadCA owner)
-		{
-			return !(a == null || a.Owner != owner.SquadManager.Player || a.IsDead || !a.IsInWorld);
-		}
 	}
 
 	class GroundUnitsIdleState : GroundStateBaseCA, IState
@@ -128,15 +123,10 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				}
 			}
 
-			var validUnits = owner.Units.Where(a => UnitCanBeOrdered(a, owner)).ToArray();
-
 			// Initialize PathGuider. Optimaze pathfinding by using PathGuider.
-			if (!UnitCanBeOrdered(PathGuider, owner))
-			{
-				PathGuider = validUnits.FirstOrDefault();
-				if (PathGuider == null)
-					return;
-			}
+			PathGuider = owner.Units.FirstOrDefault();
+			if (PathGuider == null)
+				return;
 
 			// 1. Threat scan surroundings
 			var attackScanRadius = WDist.FromCells(owner.SquadManager.Info.AttackScanRadius);
@@ -156,7 +146,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				{
 					owner.Bot.QueueOrder(new Order("AttackMove", PathGuider, Target.FromCell(owner.World, owner.TargetActor.Location), false));
 
-					foreach (var a in validUnits)
+					foreach (var a in owner.Units)
 					{
 						if (a != PathGuider)
 							owner.Bot.QueueOrder(new Order("Scatter", a, false));
@@ -202,12 +192,12 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			 * "lookAround" now has the radius of two times of the circle mentioned before.
 			 */
 
-			var groupArea = (long)WDist.FromCells(validUnits.Length).Length * 1024;
+			var groupArea = (long)WDist.FromCells(owner.Units.Count).Length * 1024;
 
-			var unitsHurryUp = validUnits.Where(a => (a.CenterPosition - PathGuider.CenterPosition).LengthSquared >= groupArea).ToArray();
-			var lookAround = validUnits.Where(a => (a.CenterPosition - PathGuider.CenterPosition).LengthSquared <= groupArea * 4).ToArray();
+			var unitsHurryUp = owner.Units.Where(a => (a.CenterPosition - PathGuider.CenterPosition).LengthSquared >= groupArea).ToArray();
+			var lookAround = owner.Units.Where(a => (a.CenterPosition - PathGuider.CenterPosition).LengthSquared <= groupArea * 4).ToArray();
 
-			if (validUnits.Length > lookAround.Length)
+			if (owner.Units.Count > lookAround.Length)
 				owner.Bot.QueueOrder(new Order("Stop", PathGuider, false));
 			else
 				owner.Bot.QueueOrder(new Order("AttackMove", PathGuider, Target.FromCell(owner.World, owner.TargetActor.Location), false));
@@ -228,18 +218,14 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		public void Tick(SquadCA owner)
 		{
 			var cannotRetaliate = false;
-			var validUnits = owner.Units.Where(a => UnitCanBeOrdered(a, owner)).ToArray();
 
 			// Basic check
 			if (!owner.IsValid)
 				return;
 
-			if (!UnitCanBeOrdered(TeamLeader, owner))
-			{
-				if (validUnits.Length == 0)
-					return;
-				TeamLeader = validUnits.FirstOrDefault();
-			}
+			TeamLeader = owner.Units.FirstOrDefault();
+			if (TeamLeader == null)
+				return;
 
 			// Rescan target to prevent being ambushed and die without fight
 			// If there is no threat around, return to AttackMove state for formation
@@ -257,7 +243,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				cannotRetaliate = true;
 				owner.TargetActor = targetActor;
 
-				foreach (var a in validUnits)
+				foreach (var a in owner.Units)
 				{
 					if (!BusyAttack(a))
 					{
