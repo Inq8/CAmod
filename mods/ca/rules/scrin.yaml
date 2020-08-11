@@ -2819,6 +2819,7 @@ SHAR:
 
 SCOL:
 	Inherits: ^Defense
+	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Inherits@Flash: ^WhiteFlash
 	RenderSprites:
@@ -2878,6 +2879,8 @@ SCOL.Temp:
 	-WithBuildingRepairDecoration:
 	-RepairableBuilding:
 	-EngineerRepairable:
+	-GrantConditionOnPowerState@LOWPOWER:
+	-ToggleConditionOnOrder:
 
 #
 # ---- misc
@@ -2992,6 +2995,7 @@ ion.surge:
 	ProximityExternalCondition@POWERDRAIN:
 		Range: 10c0
 		Condition: powerdrain
+		ValidStances: Ally, Enemy, Neutral
 	KillsSelf:
 		Delay: 375
 	AmbientSound:
