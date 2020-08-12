@@ -314,6 +314,8 @@ HARV.Scrin:
 		DockSequence: idle
 		DockLoopSequence: idle
 	-WithHarvestAnimation:
+	WithDamageOverlay:
+		Palette: chrometd
 
 GUNW:
 	Inherits: ^Vehicle
@@ -958,7 +960,7 @@ SMCV:
 		Queue: Vehicle
 		BuildPaletteOrder: 300
 		Prerequisites: srep, ~vehicles.scrin, ~techlevel.infonly
-		IconPalette: scrin
+		IconPalette: chrome
 		Description: Deploys into another Construction Yard.\n  Unarmed
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
@@ -1538,6 +1540,46 @@ INVA.Husk.Empty.EMP:
 #
 # ---- Buildings
 #
+
+SWAL:
+	Inherits: ^Wall
+	RenderSprites:
+		Palette: scrin
+	Building:
+		BuildSounds: scrinbuild.aud
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 30
+		Prerequisites: anypower, ~structures.scrin, ~techlevel.medium
+		Description: Stops units and blocks enemy fire. Regenerates over time.
+		IconPalette: scrin
+	Valued:
+		Cost: 200
+	CustomSellValue:
+		Value: 0
+	Tooltip:
+		Name: Biometallic Wall
+	SoundOnDamageTransition:
+		DamagedSounds: crmble2.aud
+		DestroyedSounds: kaboom30.aud
+	Health:
+		HP: 36000
+	SelfHealing:
+		PercentageStep: 1
+		Delay: 10
+		HealIfBelow: 100
+		DamageCooldown: 25
+	Armor:
+		Type: Brick
+	Crushable:
+		CrushClasses: heavywall
+	BlocksProjectiles:
+	LineBuild:
+		NodeTypes: scrinwall
+	LineBuildNode:
+		Types: scrinwall
+	WithWallSpriteBody:
+		Type: scrinwall
 
 SFAC:
 	Inherits: ^ScrinBuilding
@@ -2777,6 +2819,7 @@ SHAR:
 
 SCOL:
 	Inherits: ^Defense
+	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Inherits@Flash: ^WhiteFlash
 	RenderSprites:
@@ -2836,6 +2879,8 @@ SCOL.Temp:
 	-WithBuildingRepairDecoration:
 	-RepairableBuilding:
 	-EngineerRepairable:
+	-GrantConditionOnPowerState@LOWPOWER:
+	-ToggleConditionOnOrder:
 
 #
 # ---- misc
@@ -2950,6 +2995,7 @@ ion.surge:
 	ProximityExternalCondition@POWERDRAIN:
 		Range: 10c0
 		Condition: powerdrain
+		ValidStances: Ally, Enemy, Neutral
 	KillsSelf:
 		Delay: 375
 	AmbientSound:

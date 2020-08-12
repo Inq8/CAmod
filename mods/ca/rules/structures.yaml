@@ -1461,6 +1461,8 @@ FACT:
 	ProvidesPrerequisite@iraq:
 		Factions: iraq
 		Prerequisite: structures.iraq
+	ProvidesPrerequisite@wall:
+		Prerequisite: structures.wall
 	ProvidesPrerequisite@sandbag:
 		Factions: allies, england, france, germany
 		Prerequisite: structures.sandbag
@@ -2595,7 +2597,7 @@ BRIK:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 30
-		Prerequisites: anypower, ~techlevel.medium
+		Prerequisites: anypower, ~structures.wall, ~techlevel.medium
 		Description: Stops units and blocks enemy fire.
 	Valued:
 		Cost: 200
@@ -3684,6 +3686,8 @@ AFAC:
 	ProvidesPrerequisite@weap.tdFAC:
 		Factions: gdi, talon, zocom, eagle, legion
 		Prerequisite: structures.weap.td
+	ProvidesPrerequisite@wall:
+		Prerequisite: structures.wall
 	ProvidesPrerequisite@sandbag:
 		Factions: gdi, talon, zocom, eagle
 		Prerequisite: structures.sandbag
