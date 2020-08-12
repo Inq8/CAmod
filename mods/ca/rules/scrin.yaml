@@ -240,6 +240,8 @@ MAST:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
+	AutoTargetPriority@DEFAULT:
+		RequiresCondition: mindcontrolling < 3 && !stance-attackanything && !assault-move
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -271,6 +273,7 @@ MAST:
 		ArmamentNames: primary, secondary
 		Capacity: 3
 		Sounds: mastermind-fire.aud
+		ControllingCondition: mindcontrolling
 	WithInfantryBody:
 	AttackFrontal:
 		PauseOnCondition: being-warped
@@ -1002,7 +1005,7 @@ SMCV:
 		Condition: invulnerability
 	-Crushable:
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
 	Hovers:
 		BobDistance: -25
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
