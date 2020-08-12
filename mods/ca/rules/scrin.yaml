@@ -267,6 +267,10 @@ MAST:
 		Name: secondary
 		Weapon: EnslaveVehicle
 		LocalOffset: 150,0,400
+	MindController:
+		ArmamentNames: primary, secondary
+		Capacity: 3
+		Sounds: mastermind-fire.aud
 	WithInfantryBody:
 	AttackFrontal:
 		PauseOnCondition: being-warped
@@ -343,7 +347,7 @@ GUNW:
 	Mobile:
 		Speed: 113
 		TurnSpeed: 8
-		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
+		PauseOnCondition:  being-captured || empdisable || being-warped || driver-dead
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -368,7 +372,7 @@ GUNW:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithMoveAnimation:
-		MovementType: Horizontal, Vertical, Turn
+		ValidMovementTypes: Horizontal, Vertical, Turn
 	GrantConditionOnFaction@TRAVELERSPEED:
 		Condition: travelerspeed
 		Factions: traveler
@@ -629,7 +633,7 @@ CORR:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithMoveAnimation:
-		MovementType: Horizontal, Vertical, Turn
+		ValidMovementTypes: Horizontal, Vertical, Turn
 	GrantConditionOnFaction@TRAVELERSPEED:
 		Condition: travelerspeed
 		Factions: traveler
@@ -687,7 +691,7 @@ STCR:
 		Delay: 10
 		HealIfBelow: 100
 		DamageCooldown: 0
-		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !empdisable && !being-warped
 
 DEVO:
 	Inherits: ^Tank
@@ -2219,8 +2223,7 @@ NERV:
 		Actor: ichor.seeder
 		ChargeInterval: 6000
 		Description: Ichor Seed
-		Lifetime: 250
-		ActivationDelay: 0
+		LifeTime: 250
 		AllowMultiple: false
 		LongDesc: Seeds tiberium at selected location.
 		LaunchSound: ichorseed.aud
@@ -2880,7 +2883,20 @@ SCOL.Temp:
 	-RepairableBuilding:
 	-EngineerRepairable:
 	-GrantConditionOnPowerState@LOWPOWER:
+	-WithColoredOverlay@IDISABLE:
+	-GrantCondition@IDISABLE:
+	-PowerMultiplier@POWERDOWN:
+	-WithDecoration@POWERDOWN:
 	-ToggleConditionOnOrder:
+	-Armament:
+	Armament:
+		Weapon: StormColumnZap
+		LocalOffset: 0,0,900, 0,0,1100, 0,0,700, 0,0,1300, 0,0,500
+	AttackOmni:
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: empdisable || being-warped
+	DetectCloaked:
+		RequiresCondition: !(empdisable || being-warped)
 
 #
 # ---- misc
@@ -2890,8 +2906,8 @@ BUZZ:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^SpriteActor
 	Inherits@3: ^SelectableSupportUnit
-	Interactable:
 	HiddenUnderFog:
+		Type: CenterPosition
 	Tooltip:
 		Name: Buzzer Swarm
 	Health:
@@ -2900,8 +2916,10 @@ BUZZ:
 		MinRange: 2c0
 		Range: 4c0
 		RevealGeneratedShroud: False
+		Type: CenterPosition
 	RevealsShroud@GAPGEN:
 		Range: 2c0
+		Type: CenterPosition
 	PeriodicExplosion:
 		Weapon: BuzzerVortex
 	WithSpriteBody:
@@ -2934,6 +2952,7 @@ camera.rift:
 	HitShape:
 	RevealsShroud:
 		Range: 6c0
+		Type: CenterPosition
 	Health:
 		HP: 1
 	PeriodicExplosion:
@@ -2950,7 +2969,7 @@ camera.rift:
 	KillsSelf:
 		Delay: 360
 
-camera.minirift
+camera.minirift:
 	Inherits: camera.rift
 	RenderSprites:
 		Image: miniriftanim

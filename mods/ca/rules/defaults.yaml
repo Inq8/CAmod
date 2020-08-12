@@ -361,8 +361,6 @@
 		RequiresCondition: powerdrain
 		ReferencePoint: Center
 		ValidStances: Ally, Enemy, Neutral
-		Offsets:
-			repairing: 10, 0
 
 ^GDIUpgrade:
 	DamageMultiplier@GDIUPG1:
@@ -741,6 +739,27 @@
 		Delay: 5
 		Interval: 5
 		RequiresCondition: c4
+		
+^MindControllable:
+	ExternalCondition@prevent-mindcontrol:
+		Condition: prevent-mindcontrol
+	MindControllable:
+		Condition: controlled
+		PauseOnCondition: prevent-mindcontrol
+	WithMindControlArc:
+		Color: c71585
+		Transparency: 55
+		Offset: 0,0,511
+		Angle: 32
+		Width: 116
+	Targetable@MC:
+		TargetTypes: MindControl
+		RequiresCondition: !controlled && !prevent-mindcontrol
+	WithIdleOverlay@mindcontrol:
+		Sequence: mind-overlay
+		Palette: ra2effect-ignore-lighting-alpha75
+		RequiresCondition: controlled
+		Offset: 0,0,3
 
 ^AutoTargetGround:
 	AutoTarget:
@@ -848,6 +867,7 @@
 	Inherits@bounty: ^GlobalBounty
 	Inherits@production: ^ProductionEfficiencyBoost
 	Inherits@selection: ^SelectableCombatUnit
+	Inherits@mind: ^MindControllable
 	Huntable:
 	OwnerLostAction:
 		Action: Kill
@@ -882,8 +902,6 @@
 	ActorLostNotification:
 	ProximityCaptor:
 		Types: Vehicle
-	GpsDot:
-		String: Vehicle
 	WithDamageOverlay:
 	Guard:
 	Guardable:
@@ -950,8 +968,6 @@
 	DetectCloaked@UNDERBRIDGE:
 		CloakTypes: Underbridge
 		Range: 5c0
-	TemporaryOwnerManager:
-		BarColor: FF00FF
 
 ^VehicleTD:
 	Inherits@1: ^Vehicle
@@ -993,6 +1009,7 @@
 	Inherits@15: ^Suppressable
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
+	Inherits@mind: ^MindControllable
 	RenderSprites:
 		PlayerPalette: overlayplayertd
 	Huntable:
@@ -1074,8 +1091,6 @@
 		RequiresCondition: disable-experience
 	HiddenUnderFog:
 	ActorLostNotification:
-	GpsDot:
-		String: Infantry
 	Crushable:
 		WarnProbability: 20
 		CrushSound: squishy2.aud
@@ -1183,8 +1198,6 @@
 		RequiresCondition: !being-warped
 	Cloak@GPSHIDE:
 		Palette: cloak
-	TemporaryOwnerManager:
-		BarColor: FF00FF
 
 ^Soldier:
 	Inherits: ^Infantry
@@ -1280,6 +1293,7 @@
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@production: ^ProductionEfficiencyBoost
+	Inherits@mind: ^MindControllable
 	Huntable:
 	RenderSprites:
 		PlayerPalette: playernavy
@@ -1316,8 +1330,6 @@
 	#For AI
 	RepairableNearCA:
 		RepairActors: syrd, spen, syrd.gdi, spen.nod
-	GpsDot:
-		String: Ship
 	WithDamageOverlay:
 	Explodes:
 		Weapon: UnitExplodeShip
@@ -1464,8 +1476,6 @@
 		EjectInAir: true
 		AllowUnsuitableCell: true
 		ChuteSound: chute1.aud
-	GpsDot:
-		String: Plane
 	Tooltip:
 		GenericName: Plane
 	WithShadow:
@@ -1567,8 +1577,6 @@
 		CanSlide: True
 		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems,Tiberium,BlueTiberium
 		Crushes: crate, mine, infantry
-	GpsDot:
-		String: Helicopter
 	Hovers@CRUISING:
 		RequiresCondition: cruising
 	BodyOrientation:
@@ -1621,7 +1629,6 @@
 	Guardable:
 		Range: 3c0
 	FrozenUnderFog:
-	FrozenUnderFogUpdatedByGps:
 	Tooltip:
 		GenericName: Structure
 	MapEditorData:
@@ -1679,8 +1686,6 @@
 		RequiresCondition: !being-warped
 	MustBeDestroyed:
 		RequiredForShortGame: true
-	GpsDot:
-		String: Structure
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped
 		SellSounds: cashturn.aud
@@ -1725,6 +1730,7 @@
 	Inherits@botbonus: ^BotDefenseProductionBonus
 	Inherits@Concussion: ^Concussion
 	Inherits@selection: ^SelectableCombatBuilding
+	Inherits@mind: ^MindControllable
 	-SpeedMultiplier@concussion:
 	WithColoredOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability
@@ -1824,7 +1830,6 @@
 		SellSounds: cashturn.aud
 	Guardable:
 	FrozenUnderFog:
-	FrozenUnderFogUpdatedByGps:
 	Health:
 		HP: 10000
 	AppearsOnMapPreview:
@@ -2328,10 +2333,6 @@
 		Palette: chrome
 		RequiresCondition: forcedisabled && !forceshield
 		ReferencePoint: Center
-		Offsets:
-			repairing: 10, 0
-	RepairableBuilding:
-		RepairCondition: repairing
 
 ^DisableOnLowPowerOrPowerDown:
 	Inherits: ^DisableOnLowPower
@@ -2348,13 +2349,9 @@
 		Palette: chrome
 		RequiresCondition: powerdown
 		ReferencePoint: Center
-		Offsets:
-			repairing: 10, 0
 	PowerMultiplier@POWERDOWN:
 		RequiresCondition: powerdown
 		Modifier: 0
-	RepairableBuilding:
-		RepairCondition: repairing
 	WithBuildingRepairDecoration:
 		Offsets:
 			powerdown: -10, 0
@@ -2374,16 +2371,12 @@
 		Palette: chrome
 		RequiresCondition: powerdown || forcedisabled
 		ReferencePoint: Center
-		Offsets:
-			repairing: 10, 0
 	PowerMultiplier@POWERDOWN:
 		RequiresCondition: powerdown
 		Modifier: 0
 	PowerMultiplier@FORCEDISABLE:
 		RequiresCondition: forcedisabled
 		Modifier: 0
-	RepairableBuilding:
-		RepairCondition: repairing
 	WithBuildingRepairDecoration:
 		Offsets:
 			powerdown: -10, 0

@@ -649,7 +649,7 @@ CARR:
 		TurnSpeed: 4
 		Speed: 30
 		Voice: Move
-		PauseOnCondition: empdisable || being-warped || (hornet-loaded <= 3 && botowner)
+		PauseOnCondition: empdisable || being-warped
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		Offset: 30,70,600
@@ -665,7 +665,6 @@ CARR:
 		InstaRepair: true
 		SlaveDisposalOnKill: KillSlaves
 		SpawnAllAtOnce: false
-		LoadedCondition: hornet-loaded
 	Exit@0:
 		SpawnOffset: 0,0,0
 		Facing: 0

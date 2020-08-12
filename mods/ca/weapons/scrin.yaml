@@ -61,50 +61,30 @@ IntruderDiscs:
 EnslaveInfantry:
 	Range: 7c0
 	ReloadDelay: 100
-	Report: mastermind-fire.aud
-	Projectile: LaserZap
-		Color: FF00FFAA
-		Width: 56
-		Duration: 25
-		SecondaryBeamWidth: 90
-		SecondaryBeamColor:FF00FF30
+	Projectile: InstantHit
 	ValidTargets: Infantry
 	InvalidTargets: MindControlImmune
 	Warhead@1Dam: TargetDamage
-	Warhead@2Owner: ChangeOwner
-		ValidTargets: Infantry
-		InvalidTargets: MindControlImmune
-		Duration: 500
-		Range: 0c42
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
 		Image: mindcontrol
 		ValidTargets: Ground
+		ValidStances: Neutral, Enemy
 
 EnslaveVehicle:
-	Range: 3c0
+	Range: 5c0
 	ReloadDelay: 100
-	Report: mastermind-fire.aud
-	Projectile: LaserZap
-		Color: FF00FFAA
-		Width: 56
-		Duration: 25
-		SecondaryBeamWidth: 90
-		SecondaryBeamColor:FF00FF30
-	ValidTargets: Vehicle
+	Projectile: InstantHit
+	ValidTargets: Vehicle, Defense
 	InvalidTargets: MindControlImmune
 	Warhead@1Dam: TargetDamage
-	Warhead@2Owner: ChangeOwner
-		ValidTargets: Vehicle
-		InvalidTargets: MindControlImmune
-		Duration: 500
-		Range: 0c42
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
 		Image: mindcontrol
 		ValidTargets: Ground
+		ValidStances: Neutral, Enemy
 
 GunWalkerZap:
 	Range: 4c512

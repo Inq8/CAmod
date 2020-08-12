@@ -1,0 +1,111 @@
+#region Copyright & License Information
+/*
+ * Copyright 2007-2019 The OpenRA Developers (see AUTHORS)
+ * This file is part of OpenRA, which is free software. It is made
+ * available to you under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
+ */
+#endregion
+
+using System.Linq;
+using OpenRA.Mods.Common;
+using OpenRA.Mods.Common.Traits;
+using OpenRA.Primitives;
+using OpenRA.Traits;
+
+namespace OpenRA.Mods.CA.Traits
+{
+	[Desc("Produces an actor without using the standard production queue.")]
+	public class ProduceActorPowerCAInfo : SupportPowerInfo
+	{
+		[ActorReference]
+		[Desc("Actors to produce.")]
+		public readonly string[] Actors = null;
+
+		[FieldLoader.Require]
+		[Desc("Production queue type to use")]
+		public readonly string Type = null;
+
+		[NotificationReference("Speech")]
+		[Desc("Notification played when production is activated.",
+			"The filename of the audio is defined per faction in notifications.yaml.")]
+		public readonly string ReadyAudio = null;
+
+		[NotificationReference("Speech")]
+		[Desc("Notification played when the exit is jammed.",
+			"The filename of the audio is defined per faction in notifications.yaml.")]
+		public readonly string BlockedAudio = null;
+
+		[Desc("Allows the actors to be produced immediately when charged.")]
+		public readonly bool AutoFire = false;
+
+		public override object Create(ActorInitializer init) { return new ProduceActorPowerCA(init, this); }
+	}
+
+	public class ProduceActorPowerCA : SupportPower
+	{
+		readonly string faction;
+
+		public ProduceActorPowerCA(ActorInitializer init, ProduceActorPowerCAInfo info)
+			: base(init.Self, info)
+		{
+			faction = init.Contains<FactionInit>() ? init.Get<FactionInit, string>() : init.Self.Owner.Faction.InternalName;
+		}
+
+		public override void SelectTarget(Actor self, string order, SupportPowerManager manager)
+		{
+			self.World.IssueOrder(new Order(order, manager.Self, false));
+		}
+
+		public override void Charged(Actor self, string key)
+		{
+			base.Charged(self, key);
+
+			var info = Info as ProduceActorPowerCAInfo;
+			if (info.AutoFire)
+				self.Owner.PlayerActor.Trait<SupportPowerManager>().Powers[key].Activate(new Order());
+		}
+
+		public override void Activate(Actor self, Order order, SupportPowerManager manager)
+		{
+			base.Activate(self, order, manager);
+
+			var info = Info as ProduceActorPowerCAInfo;
+			var producers = self.World.ActorsWithTrait<Production>()
+				.Where(x => x.Actor.Owner == self.Owner
+					&& !x.Trait.IsTraitDisabled
+					&& x.Trait.Info.Produces.Contains(info.Type))
+					.OrderByDescending(x => x.Actor.Exits())
+					.ThenByDescending(x => x.Actor.ActorID);
+
+			// TODO: The power should not reset if the production fails.
+			// Fixing this will require a larger rework of the support power code
+			var activated = false;
+
+			foreach (var p in producers)
+			{
+				foreach (var name in info.Actors)
+				{
+					var ai = self.World.Map.Rules.Actors[name];
+					var inits = new TypeDictionary
+					{
+						new OwnerInit(self.Owner),
+						new FactionInit(BuildableInfo.GetInitialFaction(ai, faction))
+					};
+
+					activated |= p.Trait.Produce(p.Actor, ai, info.Type, inits);
+				}
+
+				if (activated)
+					break;
+			}
+
+			if (activated)
+				Game.Sound.PlayNotification(self.World.Map.Rules, manager.Self.Owner, "Speech", info.ReadyAudio, self.Owner.Faction.InternalName);
+			else
+				Game.Sound.PlayNotification(self.World.Map.Rules, manager.Self.Owner, "Speech", info.BlockedAudio, self.Owner.Faction.InternalName);
+		}
+	}
+}

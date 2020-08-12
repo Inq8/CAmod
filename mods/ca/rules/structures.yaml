@@ -1141,16 +1141,17 @@ ATEK:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	WithBuildingBib:
-	GpsPower:
+	DummyGpsPower:
 		PauseOnCondition: disabled
 		Icon: gps
 		OneShot: true
-		ChargeInterval: 12000
-		Description: GPS Satellite
-		LongDesc: Reveals map terrain and provides tactical information. Requires power and active radar.
+		ChargeInterval: 500
+		Description: Satellite Launch
+		LongDesc: Launches GPS Satellite.
 		RevealDelay: 375
 		LaunchSpeechNotification: SatelliteLaunched
-		DisplayTimerStances: Ally, Neutral, Enemy
+		DisplayTimerStances: Ally
+		Prerequisite: satlaunch
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -1163,7 +1164,7 @@ ATEK:
 		Icon: forceshieldicon
 		ChargeInterval: 7500
 		Condition: forceshield
-		Range: 2
+		Range: 3
 		Duration: 250
 		Prerequisites: forceshield.enabled, techlevel.high
 		Weapon: ForceShield
@@ -1186,6 +1187,21 @@ ATEK:
 		Proxy: tec.allies.stolen
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate
+	Production:
+		Produces: SpySatellite
+	Exit:
+	ProduceActorPowerCA@SatelliteScan:
+		PauseOnCondition: disabled || being-warped
+		Prerequisites: atek, satlaunch
+		Description: Spy Satellite
+		LongDesc: Reveals the whole map for 30 seconds.\nActivated automatically.\n  Requires active radar.
+		Icon: gps
+		Actors: camera.satscan
+		Type: SpySatellite
+		ChargeInterval: 3000
+		OrderName: SatelliteScanPowerInfoOrder
+		AutoFire: True
+		DisplayTimerStances: Ally, Neutral, Enemy
 
 WEAP:
 	Inherits: ^Building
@@ -2193,7 +2209,7 @@ STEK:
 		Icon: forceshieldicon
 		ChargeInterval: 7500
 		Condition: forceshield
-		Range: 2
+		Range: 3
 		Duration: 250
 		Prerequisites: forceshield.enabled, techlevel.high
 		Weapon: ForceShield
@@ -4784,7 +4800,7 @@ GTEK:
 		Icon: forceshieldicon
 		ChargeInterval: 7500
 		Condition: forceshield
-		Range: 2
+		Range: 3
 		Duration: 250
 		Prerequisites: forceshield.enabled, techlevel.high
 		Weapon: ForceShield
@@ -4903,7 +4919,7 @@ TMPL:
 		Icon: forceshieldicon
 		ChargeInterval: 7500
 		Condition: forceshield
-		Range: 2
+		Range: 3
 		Duration: 250
 		Prerequisites: forceshield.enabled, techlevel.high
 		Weapon: ForceShield

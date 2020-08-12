@@ -255,6 +255,32 @@ camera.sathack:
 	DetectCloaked:
 		Range: 10c0
 		CloakTypes: Cloak
+		
+camera.satscan:
+	Inherits: CAMERA
+	-RevealsShroud:
+	ConditionManager:
+	Buildable:
+		Queue: SpySatellite
+	Tooltip:
+		Name: Satellite Scan
+	RevealsMap:
+		RevealGeneratedShroud: false
+		RequiresCondition: uplinkavailable
+	KillsSelf:
+		RemoveInstead: true
+		Delay: 750
+		GrantsCondition: killsself
+	GrantConditionOnPrerequisite@UPLINK:
+		Condition: uplinkavailable
+		Prerequisites: atek
+	VoiceAnnouncement:
+		Voice: Build
+	VoiceAnnouncement@Die:
+		Voice: Die
+		RequiresCondition: killsself
+	Voiced:
+		VoiceSet: SatelliteScanVoice
 
 camera.cloud:
 	Interactable:
