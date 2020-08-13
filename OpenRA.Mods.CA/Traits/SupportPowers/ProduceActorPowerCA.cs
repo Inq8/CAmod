@@ -63,9 +63,12 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			base.Charged(self, key);
 
-			var info = Info as ProduceActorPowerCAInfo;
-			if (info.AutoFire)
-				self.Owner.PlayerActor.Trait<SupportPowerManager>().Powers[key].Activate(new Order());
+			self.World.AddFrameEndTask(w =>
+			{
+				var info = Info as ProduceActorPowerCAInfo;
+				if (info.AutoFire)
+					self.Owner.PlayerActor.Trait<SupportPowerManager>().Powers[key].Activate(new Order());
+			});
 		}
 
 		public override void Activate(Actor self, Order order, SupportPowerManager manager)
