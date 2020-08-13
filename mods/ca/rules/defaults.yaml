@@ -739,7 +739,7 @@
 		Delay: 5
 		Interval: 5
 		RequiresCondition: c4
-		
+
 ^MindControllable:
 	ExternalCondition@prevent-mindcontrol:
 		Condition: prevent-mindcontrol
@@ -757,9 +757,9 @@
 		RequiresCondition: !controlled && !prevent-mindcontrol
 	WithIdleOverlay@mindcontrol:
 		Sequence: mind-overlay
-		Palette: ra2effect-ignore-lighting-alpha75
+		Palette: scrin
 		RequiresCondition: controlled
-		Offset: 0,0,3
+		Offset: 0,0,300
 
 ^AutoTargetGround:
 	AutoTarget:
