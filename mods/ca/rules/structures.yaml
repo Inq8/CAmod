@@ -1142,10 +1142,10 @@ ATEK:
 		Range: 4c0
 	WithBuildingBib:
 	DummyGpsPower:
-		PauseOnCondition: disabled
+		PauseOnCondition: disabled || being-warped
 		Icon: gps
 		OneShot: true
-		ChargeInterval: 500
+		ChargeInterval: 750
 		Description: Satellite Launch
 		LongDesc: Launches GPS Satellite.
 		RevealDelay: 375
@@ -1159,6 +1159,39 @@ ATEK:
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
+	InfiltrateForSupportPower@tec:
+		Types: SabInfiltrate
+		Proxy: tec.allies.stolen
+	Targetable:
+		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate
+	Production:
+		Produces: SpySatellite
+	Exit:
+	ProduceActorPowerCA@SatelliteScan:
+		PauseOnCondition: disabled || being-warped
+		Prerequisites: atek, satlaunch, ~fogenabled
+		Description: Spy Satellite
+		LongDesc: Periodically reveals the entire map for a short time.\nActivated automatically.
+		Icon: gps
+		Actors: camera.satscan
+		Type: SpySatellite
+		ChargeInterval: 3000
+		OrderName: SatelliteScanPower
+		AutoFire: True
+		DisplayTimerStances: Ally, Neutral, Enemy
+	ProduceActorPowerCA@SatelliteScanNoFog:
+		PauseOnCondition: disabled || being-warped
+		Prerequisites: atek, satlaunch, ~!fogenabled
+		Description: Spy Satellite
+		LongDesc: Permanently reveals the entire map.\nActivated automatically.
+		Icon: gps
+		Actors: camera.satscan.oneshot
+		Type: SpySatellite
+		ChargeInterval: 11625
+		OneShot: True
+		OrderName: SatelliteScanNoFogPower
+		AutoFire: True
+		DisplayTimerStances: Ally, Neutral, Enemy
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
 		Icon: forceshieldicon
@@ -1182,26 +1215,11 @@ ATEK:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
-	InfiltrateForSupportPower@tec:
-		Types: SabInfiltrate
-		Proxy: tec.allies.stolen
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate
-	Production:
-		Produces: SpySatellite
-	Exit:
-	ProduceActorPowerCA@SatelliteScan:
-		PauseOnCondition: disabled || being-warped
-		Prerequisites: atek, satlaunch
-		Description: Spy Satellite
-		LongDesc: Reveals the whole map for 30 seconds.\nActivated automatically.\n  Requires active radar.
-		Icon: gps
-		Actors: camera.satscan
-		Type: SpySatellite
-		ChargeInterval: 3000
-		OrderName: SatelliteScanPowerInfoOrder
-		AutoFire: True
-		DisplayTimerStances: Ally, Neutral, Enemy
+	GrantConditionOnFogEnabled@FOGENABLED:
+		Condition: fogenabled
+	ProvidesPrerequisite@FOGENABLED:
+		Prerequisite: fogenabled
+		RequiresCondition: fogenabled
 
 WEAP:
 	Inherits: ^Building

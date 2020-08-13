@@ -22,12 +22,12 @@ MINP:
 	Inherits: MINV
 	Explodes:
 		Weapon: APMine
-		
+
 MINVS:
 	Inherits: ^Mine
 	Explodes:
 		Weapon: ATMine
-		
+
 MINS:
 	Inherits: ^Mine
 	Explodes:
@@ -240,7 +240,7 @@ camera.spyplane:
 	Inherits: CAMERA
 	EditorOnlyTooltip:
 		Name: (support power proxy camera)
-		
+
 camera.sathack:
 	Inherits: CAMERA
 	-RenderSpritesEditorOnly:
@@ -255,7 +255,7 @@ camera.sathack:
 	DetectCloaked:
 		Range: 10c0
 		CloakTypes: Cloak
-		
+
 camera.satscan:
 	Inherits: CAMERA
 	-RevealsShroud:
@@ -281,6 +281,10 @@ camera.satscan:
 		RequiresCondition: killsself
 	Voiced:
 		VoiceSet: SatelliteScanVoice
+
+camera.satscan.oneshot:
+	Inherits: camera.satscan
+	-VoiceAnnouncement@Die:
 
 camera.cloud:
 	Interactable:
@@ -319,7 +323,7 @@ camera.cloud:
 		FallbackSequence: die
 	PeriodicExplosion:
 		Weapon: Cloud
-		
+
 camera.cloud2:
 	Inherits: camera.cloud
 	RenderSprites:
@@ -330,7 +334,7 @@ camera.cloud2:
 		Damage: 300
 		DamageInterval: 5
 		DamageTypes: ToxinDeath
-	
+
 
 SONAR:
 	Inherits: camera.spyplane
@@ -540,7 +544,7 @@ powerproxy.paratroopers:
 		ArrowSequence: arrow
 		ClockSequence: clock
 		CircleSequence: circles
-		
+
 powerproxy.paratroopers2:
 	AlwaysVisible:
 	ParatroopersPower:
@@ -564,7 +568,7 @@ powerproxy.paratroopers2:
 		ArrowSequence: arrow
 		ClockSequence: clock
 		CircleSequence: circles
-		
+
 powerproxy.airstrike:
 	AlwaysVisible:
 	ClassicAirstrikePower:
@@ -639,7 +643,7 @@ tec.soviet.stolen:
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.v3rl
 		Factions: blackh, marked, legion
-	
+
 #Tent, Medic
 inf.allies.stolen:
 	AlwaysVisible:
@@ -710,7 +714,7 @@ veh.nod.stolen:
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.upgraded
 		Factions: legion, blackh, marked
-	
+
 #Not used
 rad.nod.stolen:
 	AlwaysVisible:
@@ -781,7 +785,7 @@ CTFLAG:
 	MapEditorData:
 		Categories: Decoration
 	Interactable:
-	
+
 SPLIT2:
 	Inherits: ^TibTree
 	RenderSprites:
