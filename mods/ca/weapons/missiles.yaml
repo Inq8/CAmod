@@ -793,10 +793,6 @@ IFVRocketsAAE:
 	Warhead@4EffWater: CreateEffect
 		ImpactSounds: splashl1.aud, splashl2.aud
 
-227mmH:
-	Inherits: 227mm
-	Report: hovrmis1.aud
-
 227mm.upg:
 	Inherits: 227mm
 	Report: vaegattb.aud, vaegatta.aud
@@ -812,6 +808,22 @@ IFVRocketsAAE:
 		Versus:
 			None: 100
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+
+227mmH:
+	Inherits: 227mm
+	Report: hovrmis1.aud
+	ReloadDelay: 110
+	Range: 9c0
+	Warhead@1Dam: SpreadDamage
+	Projectile: MissileCA
+		Damage: 1200
+
+227mmH.upg:
+	Inherits: 227mm.upg
+	ReloadDelay: 110
+	Range: 10c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 1275
 
 227mmAA:
 	Inherits: ^AntiAirMissile
