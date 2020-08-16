@@ -64,7 +64,7 @@ FLAK-23-AG:
 		Explosions: small_splash
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
-		
+
 FLAK-SEAS-AA:
 	Inherits: FLAK-23-AA
 	Report: vflaat1a.aud, vflaat1b.aud
@@ -72,7 +72,7 @@ FLAK-SEAS-AA:
 	Range: 8c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 2200
-		
+
 FLAK-SEAS-AG:
 	Inherits: FLAK-23-AG
 	Range: 5c256
@@ -353,7 +353,7 @@ ChainGun.Yak.R:
 		Damage: 3200
 		Versus:
 			None: 200
-			Wood: 30
+			Wood: 25
 			Light: 50
 			Heavy: 25
 			Concrete: 25
@@ -362,6 +362,30 @@ ChainGun.Yak.R:
 ChainGun.Yak.L:
 	Inherits: ChainGun.Yak.R
 	FirstBurstTargetOffset: -512,-213,0
+
+ChainGun.Yak.AA:
+	Inherits: ChainGun.Yak.R
+	Projectile: InstantHit
+		Inaccuracy: 0c341
+	ValidTargets: Air
+	Warhead@1Dam: SpreadDamage
+		Range: 0, 0c64, 0c256, 1c512
+		Falloff: 100, 100, 30, 15
+		ValidTargets: Air
+		Damage: 600
+		Versus:
+			None: 100
+			Wood: 100
+			Light: 100
+			Heavy: 100
+			Concrete: 100
+			Brick: 100
+	Warhead@2Eff: CreateEffect
+		Explosions: small_explosion_air
+		ValidTargets: Air
+	-FirstBurstTargetOffset:
+	-FollowingBurstTargetOffset:
+	-Warhead@3EffWater: CreateEffect
 
 Pistol:
 	Inherits: ^LightMG
@@ -378,7 +402,7 @@ Pistol:
 		Explosions: piff
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piff
-		
+
 PistolTD:
 	Inherits: Pistol
 	Report: gun18.aud
