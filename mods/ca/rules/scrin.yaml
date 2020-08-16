@@ -293,6 +293,11 @@ MAST:
 		ConsumedByCapture: false
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, MindControlImmune
+	WithIdleOverlay@mindcontrolling:
+		Sequence: mc
+		Palette: scrin
+		RequiresCondition: mindcontrolling
+		Offset: 0,0,400
 
 #
 # ---- Vehicles
@@ -958,7 +963,8 @@ RPTP:
 	Armament@PRIMARY:
 		Weapon: ReaperLaser
 		LocalOffset: 700,550,1000, 700,-550,1000
-	-SpawnActorOnDeath:
+	SpawnActorOnDeath:
+		Actor: RPTP.Husk
 
 SMCV:
 	Inherits: ^Vehicle
@@ -1441,6 +1447,20 @@ TPOD.Husk:
 		IntoActor: tpod
 	RenderSprites:
 		Image: tpod.destroyed
+		PlayerPalette: overlayplayerscrin
+
+RPTP.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Reaper Tripod)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: rptp
+	InfiltrateForTransform:
+		IntoActor: rptp
+	RenderSprites:
+		Image: rptp.destroyed
 		PlayerPalette: overlayplayerscrin
 
 STMR.Husk:
@@ -2908,7 +2928,8 @@ SCOL.Temp:
 BUZZ:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^SpriteActor
-	Inherits@3: ^SelectableSupportUnit
+	Inherits@selection: ^SelectableCombatUnit
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	HiddenUnderFog:
 		Type: CenterPosition
 	Tooltip:
@@ -2939,6 +2960,9 @@ BUZZ:
 		Interval: 10
 	Voiced:
 		VoiceSet: BuzzersVoice
+	Armament@PRIMARY:
+		Weapon: BuzzerDummyWeapon
+	AttackFrontal:
 
 camera.rift:
 	Interactable:

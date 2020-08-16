@@ -645,3 +645,14 @@ BuzzerVortex:
 			Brick: 0
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 		ValidStances: Enemy, Neutral
+
+BuzzerDummyWeapon:
+	ReloadDelay: 50
+	Range: 1c0
+	ValidTargets: Ground, Water
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Damage: 1
+		ValidTargets: Ground, Trees
+		InvalidTargets: Air
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
