@@ -293,6 +293,11 @@ MAST:
 		ConsumedByCapture: false
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, MindControlImmune
+	WithIdleOverlay@mindcontrolling:
+		Sequence: mc
+		Palette: scrin
+		RequiresCondition: mindcontrolling
+		Offset: 0,0,400
 
 #
 # ---- Vehicles
@@ -958,7 +963,8 @@ RPTP:
 	Armament@PRIMARY:
 		Weapon: ReaperLaser
 		LocalOffset: 700,550,1000, 700,-550,1000
-	-SpawnActorOnDeath:
+	SpawnActorOnDeath:
+		Actor: RPTP.Husk
 
 SMCV:
 	Inherits: ^Vehicle
@@ -1102,8 +1108,9 @@ DEVA:
 		BuildPaletteOrder: 55
 		BuildDurationModifier: 75
 		Prerequisites: scrt, grav, ~aircraft.scrin, ~techlevel.high
-		Description: Long-range siege warship.\n	Strong vs Structures, Infantry\n	Weak vs Aircraft, Tanks
+		Description: Long-range siege warship.\n  Maximum 5 can be built.\n  Strong vs Structures, Infantry\n	Weak vs Aircraft, Tanks
 		IconPalette: chrome
+		BuildLimit: 5
 	Voiced:
 		VoiceSet: DevastatorVoice
 	Valued:
@@ -1167,8 +1174,9 @@ PAC:
 		BuildPaletteOrder: 55
 		BuildDurationModifier: 75
 		Prerequisites: sign, scrt, grav, ~aircraft.scrin, ~techlevel.high
-		Description: Warship that launches a squadron\nof assault craft.\n	Strong vs Vehicles, Infantry, Aircraft\n  Weak vs Structures
+		Description: Warship that launches a squadron\nof assault craft.\n  Maximum 5 can be built.\n	Strong vs Vehicles, Infantry, Aircraft\n  Weak vs Structures
 		IconPalette: chrome
+		BuildLimit: 5
 	Voiced:
 		VoiceSet: PlanetaryAssaultCarrierVoice
 	Valued:
@@ -1327,16 +1335,16 @@ INVA:
 #
 
 SMCV.Husk:
-	Inherits: ^HuskTD
+	Inherits: ^Husk
 	Tooltip:
-		Name: Husk (Mobile Construction Vehicle)
+		Name: Husk (Colony Ship)
 	TransformOnCapture:
 		IntoActor: smcv
 	InfiltrateForTransform:
 		IntoActor: smcv
 	RenderSprites:
-		PlayerPalette: overlayplayertd
-		Image: amcv.destroyed
+		PlayerPalette: overlayplayerscrin
+		Image: smcv.destroyed
 
 HARV.Scrin.Husk:
 	Inherits: ^Husk
@@ -1441,6 +1449,20 @@ TPOD.Husk:
 		IntoActor: tpod
 	RenderSprites:
 		Image: tpod.destroyed
+		PlayerPalette: overlayplayerscrin
+
+RPTP.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Reaper Tripod)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: rptp
+	InfiltrateForTransform:
+		IntoActor: rptp
+	RenderSprites:
+		Image: rptp.destroyed
 		PlayerPalette: overlayplayerscrin
 
 STMR.Husk:
@@ -2908,7 +2930,8 @@ SCOL.Temp:
 BUZZ:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^SpriteActor
-	Inherits@3: ^SelectableSupportUnit
+	Inherits@selection: ^SelectableCombatUnit
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	HiddenUnderFog:
 		Type: CenterPosition
 	Tooltip:
@@ -2939,6 +2962,9 @@ BUZZ:
 		Interval: 10
 	Voiced:
 		VoiceSet: BuzzersVoice
+	Armament@PRIMARY:
+		Weapon: BuzzerDummyWeapon
+	AttackFrontal:
 
 camera.rift:
 	Interactable:

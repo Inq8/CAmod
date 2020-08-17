@@ -33,7 +33,7 @@ DisintegratorBeamAA:
 		ValidTargets: Air
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
-		Damage: 1600
+		Damage: 2050
 		Versus:
 			None: 100
 			Wood: 100
@@ -126,7 +126,7 @@ GunWalkerZapAA:
 		Inaccuracy: 0
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
-		Damage: 1100
+		Damage: 1300
 		ValidTargets: Air
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
@@ -362,7 +362,7 @@ StormRiderZapAA:
 		Image: scrinzap
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
-		Damage: 2400
+		Damage: 2800
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
@@ -645,3 +645,14 @@ BuzzerVortex:
 			Brick: 0
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 		ValidStances: Enemy, Neutral
+
+BuzzerDummyWeapon:
+	ReloadDelay: 50
+	Range: 1c0
+	ValidTargets: Ground, Water
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Damage: 1
+		ValidTargets: Ground, Trees
+		InvalidTargets: Air
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath

@@ -307,14 +307,14 @@ RedEye:
 		HorizontalRateOfTurn: 20
 		Speed: 298
 	Warhead@1Dam: SpreadDamage
-		Damage: 2800
+		Damage: 3500
 		Range: 0, 0c64, 0c256, 3c0
 
 RedEye.CYB:
 	Inherits: RedEye
 	Report: rocket.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 3500
+		Damage: 4500
 
 RedEyeE:
 	Inherits: RedEye
@@ -323,8 +323,6 @@ RedEyeE:
 RedEyeE.CYB:
 	Inherits: RedEyeE
 	Report: rocket.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: 3500
 
 Stinger:
 	Inherits: ^AntiGroundMissile
@@ -408,7 +406,7 @@ StingerGTWR:
 	Warhead@3Eff: CreateEffect
 		Explosions: frag_3
 		ExplosionPalette: temptd
-		ImpactSounds: kaboom15.aud
+		ImpactSounds: xplobig4.aud
 
 APTusk:
 	Inherits: ^AntiGroundMissile
@@ -715,7 +713,7 @@ BikeRocketsAA:
 	Burst: 2
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
-		Damage: 1800
+		Damage: 2100
 
 SBRockets:
 	Inherits: BikeRockets
@@ -738,7 +736,7 @@ IFVRocketsAA:
 	Burst: 2
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
-		Damage: 2100
+		Damage: 2500
 
 IFVRocketsE:
 	Inherits: IFVRockets
@@ -755,7 +753,7 @@ IFVRocketsAAE:
 	Projectile: MissileCA
 		ContrailLength: 10
 	Warhead@1Dam: SpreadDamage
-		Damage: 2650
+		Damage: 3200
 
 
 #Artillery Missiles, lock-on but act dumb
@@ -793,10 +791,6 @@ IFVRocketsAAE:
 	Warhead@4EffWater: CreateEffect
 		ImpactSounds: splashl1.aud, splashl2.aud
 
-227mmH:
-	Inherits: 227mm
-	Report: hovrmis1.aud
-
 227mm.upg:
 	Inherits: 227mm
 	Report: vaegattb.aud, vaegatta.aud
@@ -813,6 +807,22 @@ IFVRocketsAAE:
 			None: 100
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 
+227mmH:
+	Inherits: 227mm
+	Report: hovrmis1.aud
+	ReloadDelay: 110
+	Range: 9c0
+	Warhead@1Dam: SpreadDamage
+	Projectile: MissileCA
+		Damage: 1200
+
+227mmH.upg:
+	Inherits: 227mm.upg
+	ReloadDelay: 110
+	Range: 10c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 1275
+
 227mmAA:
 	Inherits: ^AntiAirMissile
 	ReloadDelay: 80
@@ -827,7 +837,7 @@ IFVRocketsAAE:
 		HorizontalRateOfTurn: 15
 		CruiseAltitude: 2c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 1500
+		Damage: 1800
 		ValidTargets: Air
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air
@@ -842,7 +852,7 @@ IFVRocketsAAE:
 		ContrailLength: 15
 		ContrailColor: 00FFFFE6
 	Warhead@1Dam: SpreadDamage
-		Damage: 1700
+		Damage: 2050
 
 227mmAAH:
 	Inherits: 227mmAA
@@ -888,7 +898,7 @@ StnkMissileAA:
 		Speed: 283
 		RangeLimit: 9c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 2850
+		Damage: 3400
 		ValidTargets: Air
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air
@@ -1025,8 +1035,17 @@ ScrinTorpAA:
 		-TrailImage:
 		RangeLimit: 12c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 1600
+		Range: 0, 0c64, 0c256, 1c512
+		Falloff: 100, 100, 30, 15
+		Damage: 2000
 		ValidTargets: Air
+		Versus:
+			None: 100
+			Wood: 100
+			Concrete: 100
+			Light: 100
+			Heavy: 100
+			Brick: 100
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air
 		ImpactSounds: expnew17.aud
