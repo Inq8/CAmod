@@ -79,9 +79,7 @@ namespace OpenRA.Mods.CA.Traits
 			var producers = self.World.ActorsWithTrait<Production>()
 				.Where(x => x.Actor.Owner == self.Owner
 					&& !x.Trait.IsTraitDisabled
-					&& x.Trait.Info.Produces.Contains(info.Type))
-					.OrderByDescending(x => x.Actor.Exits())
-					.ThenByDescending(x => x.Actor.ActorID);
+					&& x.Trait.Info.Produces.Contains(info.Type));
 
 			// TODO: The power should not reset if the production fails.
 			// Fixing this will require a larger rework of the support power code

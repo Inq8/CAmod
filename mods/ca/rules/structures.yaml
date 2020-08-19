@@ -1145,7 +1145,7 @@ ATEK:
 		PauseOnCondition: disabled || being-warped
 		Icon: gps
 		OneShot: true
-		ChargeInterval: 750
+		ChargeInterval: 7500
 		Description: Satellite Launch
 		LongDesc: Launches GPS Satellite.
 		RevealDelay: 375
@@ -1187,7 +1187,7 @@ ATEK:
 		Icon: gps
 		Actors: camera.satscan.oneshot
 		Type: SpySatellite
-		ChargeInterval: 11625
+		ChargeInterval: 4500
 		OneShot: True
 		OrderName: SatelliteScanNoFogPower
 		AutoFire: True
@@ -1799,6 +1799,8 @@ HPAD:
 		Prerequisite: aircraft.soviet
 	ProvidesPrerequisite@all:
 		Prerequisite: aircraft.all
+	ProvidesPrerequisite@chinook:
+		Prerequisite: aircraft.chinook
 	ProvidesPrerequisite@buildingname:
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate
@@ -4445,6 +4447,8 @@ HPAD.TD:
 	ProvidesPrerequisite@eaglestructure:
 		RequiresPrerequisites: structures.eagle
 		Prerequisite: aircraft.eagle
+	ProvidesPrerequisite@chinook:
+		Prerequisite: aircraft.chinook
 	ProvidesPrerequisite@buildingname:
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate
