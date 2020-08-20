@@ -2343,6 +2343,28 @@ SCRT:
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
 	ProvidesPrerequisite@buildingname:
+	GrantExternalConditionPowerCA@FSHIELD:
+		OrderName: fshield
+		Icon: forceshieldicon
+		ChargeInterval: 7500
+		Condition: forceshield
+		Range: 3
+		Duration: 250
+		Prerequisites: forceshield.enabled, techlevel.high
+		Weapon: ForceShield
+		ActivationDelay: 5
+		AirburstAltitude: 0c0
+		AllowMultiple: false
+		Description: Force Shield
+		LongDesc: Makes selected friendly structures temporarily invulnerable.\n  Warning: Causes power failure.
+		OnFireSound: forceon.aud
+		DisplayTimerStances: Ally
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeSpeechNotification: ForceShieldReady
+		DisplayRadarPing: True
+		Cursor: ability
+		PauseOnCondition: disabled || empdisable ||  being-warped
 
 GRAV:
 	Inherits: ^ScrinBuilding
