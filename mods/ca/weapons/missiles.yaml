@@ -78,6 +78,7 @@ Maverick:
 		Versus:
 			None: 25
 			Wood: 35
+			Concrete: 85
 			Light: 100
 			Heavy: 85
 			Brick: 80
@@ -147,9 +148,9 @@ HellfireAG:
 		Damage: 4500
 		Versus:
 			None: 25
-			Wood: 65
-			Light: 80
-			Concrete: 90
+			Wood: 60
+			Light: 70
+			Concrete: 100
 			Brick: 100
 
 HellfireAG.Orca:
@@ -704,6 +705,7 @@ BikeRockets:
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
 		Damage: 4400
+		Versus:
 			Light: 38
 			Concrete: 70
 
@@ -725,7 +727,7 @@ IFVRockets:
 	Burst: 2
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
-		Damage: 2500
+		Damage: 2750
 		Versus:
 			Wood: 55
 			Concrete: 60
@@ -745,7 +747,7 @@ IFVRocketsE:
 	Projectile: MissileCA
 		ContrailLength: 10
 	Warhead@1Dam: SpreadDamage
-		Damage: 3200
+		Damage: 3550
 
 IFVRocketsAAE:
 	Inherits: IFVRocketsAA
@@ -781,8 +783,8 @@ IFVRocketsAAE:
 		Versus:
 			None: 70
 			Wood: 50
-			Light: 60
-			Heavy: 40
+			Light: 50
+			Heavy: 35
 			Concrete: 40
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
@@ -813,7 +815,6 @@ IFVRocketsAAE:
 	ReloadDelay: 110
 	Range: 9c0
 	Warhead@1Dam: SpreadDamage
-	Projectile: MissileCA
 		Damage: 1200
 
 227mmH.upg:
@@ -1003,7 +1004,7 @@ ScrinTorp:
 		Versus:
 			None: 10
 			Wood: 35
-			Concrete: 55
+			Concrete: 75
 			Light: 25
 			Heavy: 65
 			Brick: 35
@@ -1035,9 +1036,9 @@ ScrinTorpAA:
 		-TrailImage:
 		RangeLimit: 12c0
 	Warhead@1Dam: SpreadDamage
-		Range: 0, 0c64, 0c256, 1c512
+		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
-		Damage: 2000
+		Damage: 3000
 		ValidTargets: Air
 		Versus:
 			None: 100
@@ -1149,5 +1150,5 @@ BATFRockets:
 	Warhead@1Dam: SpreadDamage
 		Damage: 2200
 		Versus:
-			Concrete: 40
+			Concrete: 55
 			Light: 25
