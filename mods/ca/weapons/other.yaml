@@ -1516,16 +1516,19 @@ SonicPulse:
 		Explosions: sonicblast1, sonicblast2
 		ExplosionPalette: effect-ignore-lighting-alpha40
 		ValidTargets: Ground, Air, Ship, Trees
-	
-#TODO Add new effect
+
 SonicPulse.UPG:
 	Inherits: SonicPulse
 	ReloadDelay: 110
-	Range: 9c256
+	Range: 9c0
 	Warhead@1Dam: SpreadDamage
 		Spread: 0c256
 		Falloff: 100, 50, 25, 0
 		Damage: 9700
+	Warhead@3Eff: CreateEffect
+		Explosions: sonicpulseupg1, sonicpulseupg2
+	Warhead@2Eff: CreateEffect
+		Explosions: sonicblastupg1, sonicblastupg2
 
 JDAM:
 	ValidTargets: Ground, Water, Trees

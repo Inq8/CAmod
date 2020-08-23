@@ -447,17 +447,22 @@
 		Condition: hazmat-upgrade
 
 ^NodCyborgUpgrade:
-	SpeedMultiplier@CYBORG:
-		RequiresCondition: cyborg-upgrade
+	GrantConditionOnPrerequisite@CYBORGSPEED:
+		Condition: cyborgspeed-upgrade
+		Prerequisites: cyborgspeed.upgrade
+	ExternalCondition@CYBORGSPEED:
+		Condition: cyborgspeed-upgrade
+	SpeedMultiplier@CYBORGSPEED:
+		RequiresCondition: cyborgspeed-upgrade
 		Modifier: 115
-	DamageMultiplier@CYBORG:
-		RequiresCondition: cyborg-upgrade
+	GrantConditionOnPrerequisite@CYBORGARMOR:
+		Condition: cyborgarmor-upgrade
+		Prerequisites: cyborgarmor.upgrade
+	ExternalCondition@CYBORGARMOR:
+		Condition: cyborgarmor-upgrade
+	DamageMultiplier@CYBORGARMOR:
+		RequiresCondition: cyborgarmor-upgrade
 		Modifier: 85
-	GrantConditionOnPrerequisite@CYBORG:
-		Condition: cyborg-upgrade
-		Prerequisites: cyborg.upgrade
-	ExternalCondition@CYBORG:
-		Condition: cyborg-upgrade
 
 ^BinoUpgrade:
 	ExternalCondition@BINO:
