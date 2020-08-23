@@ -44,23 +44,23 @@ DisintegratorBeamAA:
 IntruderDiscs:
 	Inherits: PlasmaDiscs
 	Range: 5c0
-	ReloadDelay: 70
+	ReloadDelay: 85
 	Burst: 3
 	Projectile: Bullet
 		Inaccuracy: 0c128
 	Warhead@1Dam: SpreadDamage
-		Damage: 2500
+		Damage: 3250
 		Versus:
-			None: 75
+			None: 70
 			Wood: 100
-			Light: 85
-			Heavy: 75
+			Light: 65
+			Heavy: 70
 			Concrete: 100
 			Brick: 85
 
 EnslaveInfantry:
 	Range: 7c0
-	ReloadDelay: 100
+	ReloadDelay: 50
 	Projectile: InstantHit
 	ValidTargets: Infantry
 	InvalidTargets: MindControlImmune
@@ -140,7 +140,7 @@ GunWalkerZapAA:
 PlasmaDiscs:
 	Range: 5c512
 	Report: seeker-fire1.aud, seeker-fire2.aud, seeker-fire3.aud
-	ReloadDelay: 60
+	ReloadDelay: 55
 	Burst: 5
 	BurstDelays: 4
 	Projectile: Bullet
@@ -169,17 +169,46 @@ PlasmaDiscs:
 		Explosions: small_explosion
 		ImpactSounds: seeker-hit1.aud, seeker-hit2.aud
 
+^ScrinLaser:
+	ValidTargets: Ground, Water
+	Range: 7c512
+	ReloadDelay: 60
+	Projectile: LaserZap
+		Duration: 20
+		Color: 00FF00AA
+		Width: 45
+		HitAnim: laserfire
+		ZOffset: 2047
+		SecondaryBeam: true
+		SecondaryBeamColor: 00FF0040
+		SecondaryBeamWidth: 65
+		SecondaryBeamZOffset: 2047
+		Blockable: true
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 7000
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		Versus:
+			None: 90
+			Light: 70
+			Wood: 30
+			Heavy: 100
+			Concrete: 80
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch
+		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
+
 InterloperLaser:
-	Inherits: DevourerLaser
+	Inherits: ^ScrinLaser
 	Range: 4c0
 	ReloadDelay: 40
 	Burst: 2
 	BurstDelays: 5
 	Report: interloper-fire1.aud, interloper-fire2.aud
 	Projectile: LaserZap
-		Width: 30
+		Width: 35
 		Duration: 3
-		SecondaryBeamWidth: 50
+		SecondaryBeamWidth: 55
 	Warhead@1Dam: SpreadDamage
 		Damage: 1700
 		Versus:
@@ -204,40 +233,37 @@ CorrupterSpew:
 	-Warhead@Flames:
 
 DevourerLaser:
-	Inherits: Laser
-	Range: 7c512
-	Report: devourer-fire1.aud, devourer-fire2.aud, devourer-fire3.aud
-	ReloadDelay: 90
+	Inherits: ^ScrinLaser
+	StartBurstReport: devourer-fire1.aud, devourer-fire2.aud, devourer-fire3.aud
+	FirstBurstTargetOffset: 0,-600,0
+	FollowingBurstTargetOffset: -0,100,0
+	Burst: 13
+	BurstDelays: 1
 	Projectile: LaserZap
-		Duration: 20
-		Color: 00FF0080
-		Width: 45
-		SecondaryBeamColor: 00FF0040
-		SecondaryBeamWidth: 65
-		Blockable: true
+		TrackTarget: false
+		Duration: 2
+		LaunchEffectImage: devo
+		LaunchEffectSequence: muzzle
+		LaunchEffectPalette: scrin
 	Warhead@1Dam: SpreadDamage
-		Spread: 42
-		Damage: 15000
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
-		Versus:
-			None: 50
-			Light: 60
-			Wood: 30
-			Heavy: 100
-			Concrete: 80
+		Spread: 341
+		Damage: 1000
 
 RiftCannon:
-	Inherits: DevourerLaser
+	Inherits: ^ScrinLaser
 	Range: 6c0
 	Report: darkener-fire1.aud, darkener-fire2.aud
 	ReloadDelay: 120
 	Projectile: LaserZap
 		Color: 000000FF
-		Width: 65
+		Width: 70
 		SecondaryBeamColor: 00000099
-		SecondaryBeamWidth: 85
+		SecondaryBeamWidth: 90
 	Warhead@1Dam: SpreadDamage
-		Damage: 11000
+		Spread: 341
+		Damage: 10000
+		Versus:
+			None: 50
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@Spawn: SpawnActor
 		Actors: camera.minirift
@@ -252,12 +278,12 @@ MiniRift:
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
-		Damage: 800
+		Damage: 1200
 		Falloff: 100, 70, 0
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air, Creep
 		Versus:
-			None: 65
+			None: 55
 			Wood: 30
 			Light: 70
 			Heavy: 100
@@ -338,6 +364,7 @@ StormriderZap:
 		Palette: scrin
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
+		Spread: 341
 		Damage: 3500
 		Versus:
 			None: 100
@@ -413,6 +440,7 @@ InvaderZap:
 		Palette: scrin
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
+		Spread: 341
 		Damage: 1500
 		Versus:
 			None: 70
@@ -496,13 +524,13 @@ StormColumnZap:
 
 StormcrawlerZap:
 	Inherits: StormColumnZap
-	ReloadDelay: 50
+	ReloadDelay: 30
 	Range: 4c768
 	StartBurstReport: stormcrawler-fire1.aud, stormcrawler-fire2.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 1200
+		Damage: 850
 		Versus:
-			None: 100
+			None: 175
 			Wood: 80
 			Concrete: 80
 			Light: 60
@@ -567,18 +595,19 @@ RavagerShards:
 		-Range:
 		-Falloff:
 		Spread: 128
-		Damage: 900
+		Damage: 800
 		Versus:
-			None: 40
-			Wood: 75
-			Light: 85
+			None: 110
+			Wood: 70
+			Light: 100
 			Heavy: 100
-			Concrete: 85
+			Concrete: 90
 			Brick: 50
 
 LaceratorShards:
 	Inherits: RavagerShards
 	StartBurstReport: lacerator-fire1.aud, lacerator-fire2.aud
+	ReloadDelay: 35
 	Burst: 3
 	Projectile: Missile
 		Image: bshard

@@ -102,16 +102,16 @@ S2:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 35
 		Prerequisites: nerv, ~infantry.traveler, ~techlevel.infonly
-		Description: Fast assault infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+		Description: Fast assault infantry.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
 		IconPalette: scrin
 	Valued:
-		Cost: 250
+		Cost: 300
 	Tooltip:
 		Name: Ravager
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 7000
+		HP: 5000
 	Mobile:
 		Speed: 71
 	Armament@PRIMARY:
@@ -741,9 +741,6 @@ DEVO:
 	Armament:
 		Weapon: DevourerLaser
 		LocalOffset: 850,0,208
-		MuzzleSequence: muzzle
-		MuzzlePalette: scrin
-	WithMuzzleOverlay:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Turreted:
@@ -1077,7 +1074,7 @@ STMR:
 		AltitudeVelocity: 0c200
 	AutoTarget:
 		InitialStance: HoldFire
-		InitialStanceAI: HoldFire
+		InitialStanceAI: AttackAnything
 	Contrail@1:
 		Offset: -250,-250,100
 		UsePlayerColor: true
@@ -2833,7 +2830,7 @@ SHAR:
 	Selectable:
 		DecorationBounds: 24,44,0,-11
 	Health:
-		HP: 40000
+		HP: 50000
 	Armor:
 		Type: Concrete
 	RevealsShroud:
