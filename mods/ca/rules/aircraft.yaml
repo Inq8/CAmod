@@ -252,7 +252,7 @@ SUK:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 51
 		Prerequisites: ~afld, stek, ~aircraft.ukraine, ~techlevel.high
-		Description: Fast ground attack aircraft armed\nwith powerful explosive missiles.\n  Strong vs Tanks, Defenses\n  Weak vs Aircraft
+		Description: Fast ground attack aircraft armed\nwith powerful explosive munitions.\n  Strong vs Tanks, Defenses\n  Weak vs Aircraft
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -272,6 +272,13 @@ SUK:
 		LocalOffset: 0,-640,0, 0,640,0
 		LocalYaw: -40, 24
 		PauseOnCondition: !ammo
+		RequiresCondition: !cluster-upgrade
+	Armament@UPGRADE:
+		Weapon: SuBomb
+		LocalOffset: 0,-640,0, 0,640,0
+		LocalYaw: -40, 24
+		PauseOnCondition: !ammo
+		RequiresCondition: cluster-upgrade
 	AttackAircraft:
 		FacingTolerance: 20
 		PersistentTargeting: false
@@ -330,6 +337,8 @@ SUK:
 		Prerequisites: aircraft.upgraded
 	Rearmable:
 		RearmActors: afld, afld.gdi
+	ExternalCondition@UPGRADE:
+		Condition: cluster-upgrade
 
 YAK:
 	Inherits: ^Plane
@@ -1947,6 +1956,9 @@ YF23.Bomber:
 	Interactable:
 	GivesExperience:
 		Experience: 1000
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: AttackAnything
 
 POD2:
 	Inherits@2: ^ExistsInWorld

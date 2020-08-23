@@ -1162,6 +1162,18 @@ DEVA:
 	ProductionCostMultiplier@VANQBONUS:
 		Multiplier: 90
 		Prerequisites: vehicles.harbinger
+	GrantConditionOnPrerequisite@REGEN:
+		Condition: regen-upgrade
+		Prerequisites: regen.upgrade
+	SelfHealing@REGEN:
+		PercentageStep: 3
+		Delay: 25
+		HealIfBelow: 75
+		DamageCooldown: 150
+		RequiresCondition: regen-upgrade
+	DamageMultiplier@REGEN:
+		RequiresCondition: regen-upgrade
+		Modifier: 90
 
 PAC:
 	Inherits: ^Helicopter
@@ -1252,6 +1264,18 @@ PAC:
 	DeathSounds:
 		Voice: Die
 	-EjectOnDeath:
+	GrantConditionOnPrerequisite@REGEN:
+		Condition: regen-upgrade
+		Prerequisites: regen.upgrade
+	SelfHealing@REGEN:
+		PercentageStep: 3
+		Delay: 25
+		HealIfBelow: 75
+		DamageCooldown: 150
+		RequiresCondition: regen-upgrade
+	DamageMultiplier@REGEN:
+		RequiresCondition: regen-upgrade
+		Modifier: 90
 
 INVA:
 	Inherits: ^Plane
@@ -2294,6 +2318,12 @@ NERV:
 		SelectTargetSpeechNotification: SelectTarget
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayRadarPing: True
+	Production:
+		Produces: Upgrade
+		PauseOnCondition: forceshield || invulnerability || being-warped
+	ProductionBar:
+		ProductionType: Upgrade
+	Exit:
 
 SCRT:
 	Inherits: ^ScrinBuilding
@@ -2362,6 +2392,12 @@ SCRT:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
+	Production:
+		Produces: Upgrade
+		PauseOnCondition: forceshield || invulnerability || being-warped
+	ProductionBar:
+		ProductionType: Upgrade
+	Exit:
 
 GRAV:
 	Inherits: ^ScrinBuilding
@@ -2508,6 +2544,12 @@ SIGN:
 		RequiresCondition: !being-warped
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
+	Production:
+		Produces: Upgrade
+		PauseOnCondition: forceshield || invulnerability || being-warped
+	ProductionBar:
+		ProductionType: Upgrade
+	Exit:
 
 SREP:
 	Inherits: ^ScrinBuilding

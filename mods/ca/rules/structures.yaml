@@ -858,6 +858,12 @@ DOME:
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayTimerStances: Ally
+	Production:
+		Produces: Upgrade
+		PauseOnCondition: forceshield || invulnerability || being-warped
+	ProductionBar:
+		ProductionType: Upgrade
+	Exit:
 
 PBOX:
 	Inherits: ^Defense
@@ -1220,6 +1226,12 @@ ATEK:
 	ProvidesPrerequisite@FOGENABLED:
 		Prerequisite: fogenabled
 		RequiresCondition: fogenabled
+	Production:
+		Produces: Upgrade
+		PauseOnCondition: forceshield || invulnerability || being-warped
+	ProductionBar:
+		ProductionType: Upgrade
+	Exit:
 
 WEAP:
 	Inherits: ^Building
@@ -2036,6 +2048,12 @@ AFLD:
 		RequiresCondition: primary
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
+	GrantExternalConditionToProduced@CLUSTER:
+		Condition: cluster-upgrade
+		RequiresCondition: cluster-upgrade-built
+	GrantConditionOnPrerequisite@CLUSTER:
+		Condition: cluster-upgrade-built
+		Prerequisites: cluster.upgrade
 
 POWR:
 	Inherits: ^Building
@@ -2251,6 +2269,12 @@ STEK:
 		Proxy: tec.soviet.stolen
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate
+	Production:
+		Produces: Upgrade
+		PauseOnCondition: forceshield || invulnerability || being-warped
+	ProductionBar:
+		ProductionType: Upgrade
+	Exit:
 
 BARR:
 	Inherits: ^Building
@@ -3226,7 +3250,7 @@ WEAP.TD:
 		Factions: nod, blackh, marked, legion, gdi, zocom, talon, eagle
 		Prerequisite: vehicles.apc2
 	ProvidesPrerequisite@mtnk:
-		Factions: nod, blackh, marked, legion, gdi, zocom, eagle
+		Factions: nod, blackh, marked, legion, gdi, zocom, eagle, talon
 		Prerequisite: vehicles.mtnk
 	ProvidesPrerequisite@msam:
 		Factions: gdi, zocom, talon, eagle
@@ -3274,9 +3298,6 @@ WEAP.TD:
 	SequencePlaceBuildingPreview:
 		Sequence: place
 		SequencePalette: placebuildingtd
-	ProvidesPrerequisite@msam:
-		Factions: gdi, zocom, talon, eagle
-		Prerequisite: vehicles.msam
 
 AIRS:
 	Inherits: ^BuildingTD
@@ -3934,6 +3955,10 @@ STWR:
 		PauseOnCondition: disabled || empdisable || being-warped
 	Armament:
 		Weapon: SonicPulse
+		RequiresCondition: !sonic-upgrade
+	Armament@Upgrade:
+		Weapon: SonicPulse.UPG
+		RequiresCondition: sonic-upgrade
 	AttackTurreted:
 		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -3947,6 +3972,9 @@ STWR:
 		RequiresCondition: !(disabled || empdisable || being-warped)
 	Selectable:
 		DecorationBounds: 24,40,0,-8
+	GrantConditionOnPrerequisite@SONIC:
+		Condition: sonic-upgrade
+		Prerequisites: sonic.upgrade
 
 OBLI:
 	Inherits: ^DefenseTD
@@ -4178,6 +4206,12 @@ HQ:
 	InfiltrateForSupportPower@tec:
 		Types: SabInfiltrate
 		Proxy: rad.gdi.stolen
+	Production:
+		Produces: Upgrade
+		PauseOnCondition: forceshield || invulnerability || being-warped
+	ProductionBar:
+		ProductionType: Upgrade
+	Exit:
 
 EYE:
 	Inherits: ^ScienceBuildingTD
@@ -4866,6 +4900,12 @@ GTEK:
 		TargetCircleColor: ffffff90
 		LaunchSound: srepaira.aud
 	SupportPowerChargeBar:
+	Production:
+		Produces: Upgrade
+		PauseOnCondition: forceshield || invulnerability || being-warped
+	ProductionBar:
+		ProductionType: Upgrade
+	Exit:
 
 TMPL:
 	Inherits: ^ScienceBuildingTD
@@ -4998,6 +5038,12 @@ TMPL:
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
+	Production:
+		Produces: Upgrade
+		PauseOnCondition: forceshield || invulnerability || being-warped
+	ProductionBar:
+		ProductionType: Upgrade
+	Exit:
 
 PRIS:
 	Inherits: ^Defense
@@ -5771,10 +5817,6 @@ INDP:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
 	ProvidesPrerequisite@buildingname:
-	ProvidesDelayedPrerequisite@indp2:
-		Prerequisite: indp2
-		Delay: 7500
-		RequiresCondition: !disabled && !empdisable && !being-warped
 	ProvidesPrerequisite@disabled:
 		Prerequisite: indplowpower
 		RequiresCondition: disabled || empdisable || being-warped
@@ -5820,12 +5862,12 @@ OREP:
 		Cost: 2500
 	Tooltip:
 		Name: Ore Purifier
-	ResourcePurifier@orep1:
+	ResourcePurifier@NORMAL:
 		Modifier: 5
 		RequiresCondition: !disabled && !being-warped
-	ResourcePurifier@orep2:
+	ResourcePurifier@UPGRADE:
 		Modifier: 5
-		RequiresCondition: !disabled && !being-warped && orep2
+		RequiresCondition: !disabled && !being-warped && orep-upgrade
 	RevealsShroud:
 		Range: 4c0
 		MinRange: 3c0
@@ -5839,13 +5881,9 @@ OREP:
 		UseDeathTypeSuffix: false
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
-	GrantConditionOnPrerequisite@orep2:
-		Condition: orep2
-		Prerequisites: orep2
-	ProvidesDelayedPrerequisite@orep2:
-		Prerequisite: orep2
-		Delay: 7500
-		RequiresCondition: !disabled && !empdisable && !being-warped
+	GrantConditionOnPrerequisite@UPGRADE:
+		Condition: orep-upgrade
+		Prerequisites: orep.upgrade
 
 MISS.GDI:
 	Inherits: ^ScienceBuilding
@@ -5887,19 +5925,10 @@ MISS.GDI:
 		Cost: 2500
 	Tooltip:
 		Name: Research Center
-	ProvidesDelayedPrerequisite@UPGRADE1:
-		Prerequisite: miss.gdi
-		Delay: 3
-		Notification: UnitArmorUpgraded
-		RequiresCondition: !disabled && !empdisable && !being-warped
-	ProvidesDelayedPrerequisite@UPGRADE2:
-		Prerequisite: miss.gdi2
-		Delay: 7500
-		Notification: UnitFirepowerUpgraded
-		RequiresCondition: !disabled && !empdisable && !being-warped
 	ProvidesPrerequisite@HMLRS:
 		Factions: gdi, zocom, eagle
 		Prerequisite: hmlrs.buildable
+	ProvidesPrerequisite@Name:
 	RevealsShroud:
 		Range: 4c0
 		MinRange: 3c0
@@ -5913,6 +5942,12 @@ MISS.GDI:
 		UseDeathTypeSuffix: false
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
+	Production:
+		Produces: Upgrade
+		PauseOnCondition: forceshield || invulnerability || being-warped
+	ProductionBar:
+		ProductionType: Upgrade
+	Exit:
 
 BIO.Nod:
 	Inherits: ^ScienceBuilding
@@ -5970,10 +6005,12 @@ BIO.Nod:
 		RequiresCondition: !being-warped
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
-	ProvidesDelayedPrerequisite@nodupg2:
-		Prerequisite: bio.nod2
-		Delay: 7500
-		RequiresCondition: !disabled && !empdisable && !being-warped
+	Production:
+		Produces: Upgrade
+		PauseOnCondition: forceshield || invulnerability || being-warped
+	ProductionBar:
+		ProductionType: Upgrade
+	Exit:
 
 MSLO.Nod:
 	Inherits: ^ScienceBuilding

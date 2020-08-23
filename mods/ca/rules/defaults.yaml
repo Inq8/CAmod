@@ -363,66 +363,106 @@
 		ValidStances: Ally, Enemy, Neutral
 
 ^GDIUpgrade:
-	DamageMultiplier@GDIUPG1:
-		RequiresCondition: gdiupg1
-		Modifier: 90
-	FirepowerMultiplier@GDIUPG2:
-		RequiresCondition: gdiupg2
-		Modifier: 110
-	ExternalCondition@GDIUPG1:
-		Condition: gdiupg1
-	ExternalCondition@GDIUPG2:
-		Condition: gdiupg2
-	WithDecoration@GDIUPG:
+	GrantConditionOnPrerequisite@HOLD:
+		Condition: hold
+		Prerequisites: hold.strat
+	GrantConditionOnPrerequisite@BOMBARD:
+		Condition: bombard
+		Prerequisites: bombard.strat
+	GrantConditionOnPrerequisite@SEEK:
+		Condition: seek
+		Prerequisites: seek.strat
+	DamageMultiplier@HOLD:
+		RequiresCondition: hold
+		Modifier: 80
+	FirepowerMultiplier@BOMBARD:
+		RequiresCondition: bombard
+		Modifier: 120
+	RangeMultiplier@SEEK:
+		RequiresCondition: seek
+		Modifier: 120
+	DetectCloaked@SEEK:
+		CloakTypes: Cloak
+		Range: 5c0
+		RequiresCondition: seek
+	WithDecoration@HOLD:
 		Image: pips
 		Sequence: pip-armor
 		Palette: effect
 		ReferencePoint: Bottom, Left
 		ValidStances: Ally
-		RequiresCondition: gdiupg1
+		RequiresCondition: hold
 		ZOffset: 256
 		BlinkInterval: 64
 		BlinkPatterns:
-			gdiupg1 && bino: Off, On
+			hold && bino: Off, On
+		RequiresSelection: True
+	WithDecoration@BOMBARD:
+		Image: pips
+		Sequence: pip-bombard
+		Palette: effect
+		ReferencePoint: Bottom, Left
+		ValidStances: Ally
+		RequiresCondition: bombard
+		ZOffset: 256
+		BlinkInterval: 64
+		BlinkPatterns:
+			bombard && bino: Off, On
+		RequiresSelection: True
+	WithDecoration@SEEK:
+		Image: pips
+		Sequence: pip-seek
+		Palette: effect
+		ReferencePoint: Bottom, Left
+		ValidStances: Ally
+		RequiresCondition: seek
+		ZOffset: 256
+		BlinkInterval: 64
+		BlinkPatterns:
+			seek && bino: Off, On
 		RequiresSelection: True
 
 ^GDIUpgradeProducer:
-	GrantExternalConditionToProduced@GDIUPG1:
-		Condition: gdiupg1
-		RequiresCondition: gdiupglevel1
-	GrantExternalConditionToProduced@GDIUPG2:
-		Condition: gdiupg2
-		RequiresCondition: gdiupglevel2
-	GrantConditionOnPrerequisite@GDIUPG1:
-		Condition: gdiupglevel1
-		Prerequisites: miss.gdi
-	GrantConditionOnPrerequisite@GDIUPG2:
-		Condition: gdiupglevel2
-		Prerequisites: miss.gdi2
+	GrantExternalConditionToProduced@HSONIC:
+		Condition: hypersonic-upgrade
+		RequiresCondition: hypersonic-upgrade-built
+	GrantConditionOnPrerequisite@HSONIC:
+		Condition: hypersonic-upgrade-built
+		Prerequisites: hypersonic.upgrade
+	GrantExternalConditionToProduced@POINTL:
+		Condition: pointlaser-upgrade
+		RequiresCondition: pointlaser-upgrade-built
+	GrantConditionOnPrerequisite@POINTL:
+		Condition: pointlaser-upgrade-built
+		Prerequisites: pointlaser.upgrade
 
 ^NodHazmatUpgrade:
-	GrantConditionOnPrerequisite@NODUPG1:
-		Condition: nodupg1
-		Prerequisites: bio.nod
+	GrantConditionOnPrerequisite@HAZMAT:
+		Condition: hazmat-upgrade
+		Prerequisites: hazmat.upgrade
 	GrantCondition@HAZMAT:
 		Condition: hazmatsuits
-		RequiresCondition: nodupg1
+		RequiresCondition: hazmat-upgrade
+	ExternalCondition@HAZMAT:
+		Condition: hazmat-upgrade
 
 ^NodCyborgUpgrade:
-	SpeedMultiplier@NODUPG2:
-		RequiresCondition: nodupg2
+	SpeedMultiplier@CYBORG:
+		RequiresCondition: cyborg-upgrade
 		Modifier: 115
-	DamageMultiplier@NODUPG2:
-		RequiresCondition: nodupg2
+	DamageMultiplier@CYBORG:
+		RequiresCondition: cyborg-upgrade
 		Modifier: 85
-	GrantConditionOnPrerequisite@NODUPG2:
-		Condition: nodupg2
-		Prerequisites: bio.nod2
+	GrantConditionOnPrerequisite@CYBORG:
+		Condition: cyborg-upgrade
+		Prerequisites: cyborg.upgrade
+	ExternalCondition@CYBORG:
+		Condition: cyborg-upgrade
 
 ^BinoUpgrade:
 	ExternalCondition@BINO:
 		Condition: bino
-	RangeMultiplier@BINO:
+	RevealsShroudMultiplier@BINO:
 		Modifier: 120
 		RequiresCondition: bino
 	InaccuracyMultiplier@BINO:
@@ -437,7 +477,9 @@
 		RequiresCondition: bino
 		BlinkInterval: 64
 		BlinkPatterns:
-			bino && gdiupg1: On, Off
+			bino && hold: On, Off
+			bino && seek: On, Off
+			bino && bombard: On, Off
 		RequiresSelection: True
 
 ^InfantryExperienceHospitalOverrides:
@@ -839,10 +881,10 @@
 		Prerequisites: indp, !indplowpower
 	ProductionCostMultiplier@IndustrialPlantLevel1:
 		Multiplier: 95
-		Prerequisites: indp, !indp2, !indplowpower
+		Prerequisites: indp, !indp.upgrade, !indplowpower
 	ProductionCostMultiplier@IndustrialPlantLevel2:
 		Multiplier: 90
-		Prerequisites: indp2, !indplowpower
+		Prerequisites: indp.upgrade, !indplowpower
 
 ^Vehicle:
 	Inherits@1: ^ExistsInWorld

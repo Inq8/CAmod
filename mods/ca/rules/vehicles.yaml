@@ -253,24 +253,16 @@ V2RL:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
-	RenderSprites:
-		FactionImages:
-			iraq: 3tnki
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 100
-		Prerequisites: vehicles.any, ~vehicles.3tnk, ~techlevel.low
+		Prerequisites: vehicles.any, ~!iraqtank.upgrade, ~vehicles.3tnk, ~techlevel.low
 		Description: Soviet main battle tank with dual cannons.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
 	Valued:
 		Cost: 1150
 	Tooltip:
 		Name: Heavy Tank
 		GenericName: Tank
-		RequiresCondition: !iraqtank
-	Tooltip@Iraq:
-		Name: Atomic Heavy Tank
-		GenericName: Tank
-		RequiresCondition: iraqtank
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -288,57 +280,59 @@ V2RL:
 	Turreted:
 		TurnSpeed: 5
 		Offset: 0,0,20
-	GrantConditionOnFaction@IRAQTANK:
-		Condition: iraqtank
-		Factions: iraq
 	Armament:
 		Weapon: 125mm
 		Recoil: 128
 		RecoilRecovery: 38
 		LocalOffset: 768,85,90, 768,-85,90
 		MuzzleSequence: muzzle
-	SpeedMultiplier@IRAQTANK:
-		RequiresCondition: iraqtank
-		Modifier: 125
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	SpawnActorOnDeath:
 		Actor: 3TNK.Husk
-		RequiresCondition: !iraqtank && !being-warped
-	Explodes@IRAQTANK:
-		Weapon: UnitExplodeIraqTank
-		EmptyWeapon: UnitExplodeIraqTank
-		RequiresCondition: iraqtank && !being-warped
+		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 28,28
+		
+3TNK.IRAQ:
+	Inherits: 3TNK
+	RenderSprites:
+		Image: 3tnki
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 100
+		Prerequisites: vehicles.any, ~iraqtank.upgrade, ~vehicles.iraq, ~techlevel.low
+		Description: Soviet main battle tank with dual cannons.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
+	Tooltip:
+		Name: Atomic Heavy Tank
+		GenericName: Tank
+	SpeedMultiplier@IRAQTANK:
+		Modifier: 125
+	-SpawnActorOnDeath:
+	Explodes@IRAQTANK:
+		Weapon: UnitExplodeIraqTank
+		EmptyWeapon: UnitExplodeIraqTank
+		RequiresCondition: !being-warped
 
 4TNK:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
-	RenderSprites:
-		FactionImages:
-			iraq: 4tnki
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 180
-		Prerequisites: stek, ~vehicles.soviet, ~techlevel.high
+		Prerequisites: stek, ~!iraqtank.upgrade, ~vehicles.soviet, ~techlevel.high
 		Description: Big and slow tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry, Aircraft\n  Weak vs Nothing
 	Valued:
 		Cost: 1700
 	Tooltip:
 		Name: Mammoth Tank
 		GenericName: Tank
-		RequiresCondition: !iraqtank
-	Tooltip@Iraq:
-		Name: Atomic Mammoth Tank
-		GenericName: Tank
-		RequiresCondition: iraqtank
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -358,9 +352,6 @@ V2RL:
 		Range: 4c0
 	Turreted:
 		TurnSpeed: 2
-	GrantConditionOnFaction@IRAQTANK:
-		Condition: iraqtank
-		Factions: iraq
 	Armament@PRIMARY:
 		Weapon: 130mm
 		LocalOffset: 900,180,340, 900,-180,340
@@ -374,20 +365,13 @@ V2RL:
 		LocalYaw: -100,100
 		Recoil: 43
 		MuzzleSequence: muzzle
-	SpeedMultiplier@IRAQTANK:
-		RequiresCondition: iraqtank
-		Modifier: 125
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	SpawnActorOnDeath:
 		Actor: 4TNK.Husk
-		RequiresCondition: !iraqtank && !being-warped
-	Explodes@IRAQTANK:
-		Weapon: UnitExplodeIraqTank
-		EmptyWeapon: UnitExplodeIraqTank
-		RequiresCondition: iraqtank && !being-warped
+		RequiresCondition: !being-warped
 	SelfHealing:
 		PercentageStep: 1
 		Delay: 25
@@ -400,6 +384,26 @@ V2RL:
 	Carryable:
 		LocalOffset: 0,0,500
 	-Crushable:
+	
+4TNK.IRAQ:
+	Inherits: 4TNK
+	RenderSprites:
+		Image: 4tnki
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 180
+		Prerequisites: stek, ~iraqtank.upgrade, ~vehicles.iraq, ~techlevel.high
+		Description: Big and slow tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry, Aircraft\n  Weak vs Nothing
+	Tooltip:
+		Name: Atomic Mammoth Tank
+		GenericName: Tank
+	SpeedMultiplier@IRAQTANK:
+		Modifier: 125
+	-SpawnActorOnDeath:
+	Explodes@IRAQTANK:
+		Weapon: UnitExplodeIraqTank
+		EmptyWeapon: UnitExplodeIraqTank
+		RequiresCondition: !being-warped
 
 ARTY:
 	Inherits: ^Tank
@@ -576,7 +580,7 @@ HARV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 10
-		Prerequisites: ~proc, ~vehicles.ra, ~!orep, ~techlevel.infonly
+		Prerequisites: ~proc, ~vehicles.ra, ~!charv.upgrade, ~techlevel.infonly
 		Description: Collects Ore, Gems and Tiberium for processing.\n  Unarmed
 	Valued:
 		Cost: 1400
@@ -607,7 +611,7 @@ HARV:
 	WithDockingAnimation:
 	SpawnActorOnDeath:
 		Actor: HARV.EmptyHusk
-		RequiresCondition: !being-warped && !orep-upgrade
+		RequiresCondition: !being-warped && !charv-upgrade
 	SelfHealing:
 		PercentageStep: 1
 		Delay: 25
@@ -630,25 +634,25 @@ HARV:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 	GrantConditionOnPrerequisite@OREPUPGRADE:
-		Prerequisites: orep
-		Condition: orep-upgrade
+		Prerequisites: charv.upgrade
+		Condition: charv-upgrade
 	KillsSelf@OREPUPGRADE:
 		Delay: 1
 		RemoveInstead: true
-		RequiresCondition: orep-upgrade
+		RequiresCondition: charv-upgrade
 	GrantCondition@WARPOUT:
 		Condition: being-warped
-		RequiresCondition: orep-upgrade
+		RequiresCondition: charv-upgrade
 	PeriodicExplosion@WARPOUT:
 		Weapon: HarvSwap
-		RequiresCondition: orep-upgrade
+		RequiresCondition: charv-upgrade
 
 HARV.Chrono:
 	Inherits: HARV
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 10
-		Prerequisites: ~proc, ~orep, ~vehicles.allies, ~techlevel.high
+		Prerequisites: ~proc, ~charv.upgrade, ~vehicles.allies, ~techlevel.high
 		Description: Collects Ore, Gems and Tiberium for processing.\n  Unarmed\n  Special Ability: Teleport
 	Valued:
 		Cost: 1400
@@ -682,12 +686,6 @@ HARV.Chrono:
 	-KillsSelf@OREPUPGRADE:
 	-GrantCondition@WARPOUT:
 	-PeriodicExplosion@WARPOUT:
-	DamageMultiplier@orep2:
-		RequiresCondition: orep2
-		Modifier: 60
-	GrantConditionOnPrerequisite@orep2:
-		Condition: orep2
-		Prerequisites: orep2
 
 MCV:
 	Inherits: ^Vehicle
@@ -1351,7 +1349,7 @@ APC2:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 40
-		Prerequisites: ~vehicles.td, ~!gtek, ~vehicles.apc2, infantry.any, ~techlevel.low
+		Prerequisites: ~vehicles.td, ~!vulcan.upgrade, ~vehicles.apc2, infantry.any, ~techlevel.low
 		IconPalette: chrometd
 		Description: Tough infantry transport.\n  Strong vs Infantry\n  Weak vs Tanks, Aircraft
 	Valued:
@@ -1411,7 +1409,7 @@ VULC:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 40
-		Prerequisites: ~vehicles.gdi, ~gtek, infantry.any, ~techlevel.high
+		Prerequisites: ~vehicles.gdi, ~vulcan.upgrade, infantry.any, ~techlevel.high
 		IconPalette: chrometd
 		Description: Tough infantry transport, armed with a powerful chain gun.\n  Strong vs Aircraft, Light Armor, Infantry\n  Weak vs Tanks
 	Valued:
@@ -1605,7 +1603,7 @@ MTNK:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 80
-		Prerequisites: ~vehicles.td, ~vehicles.mtnk, vehicles.any, ~techlevel.low
+		Prerequisites: ~!drone.upgrade, ~vehicles.td, ~vehicles.mtnk, vehicles.any, ~techlevel.low
 		IconPalette: chrometd
 		Description: Main battle tank.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
 	Valued:
@@ -1645,17 +1643,17 @@ MTNK:
 		Turret: secondary
 		Weapon: PointLaser
 		LocalOffset: 0,10,90
-		RequiresCondition: gdiupg2
+		RequiresCondition: pointlaser-upgrade
 		ForceTargetStances: enemy
 	AttackTurreted:
 		Turrets: primary, secondary
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret@default:
-		RequiresCondition: !gdiupg2
-	WithSpriteTurret@gdiupg:
+		RequiresCondition: !pointlaser-upgrade
+	WithSpriteTurret@pointlaser:
 		Sequence: turretpd
-		RequiresCondition: gdiupg2
+		RequiresCondition: pointlaser-upgrade
 	SpawnActorOnDeath:
 		Actor: MTNK.Husk
 		RequiresCondition: !being-warped
@@ -1666,8 +1664,10 @@ MTNK:
 	PointDefense:
 		Armament: secondary
 		PointDefenseTypes: Missile
-		RequiresCondition: gdiupg2
+		RequiresCondition: pointlaser-upgrade
 		ValidStances: Enemy
+	ExternalCondition@POINTL:
+		Condition: pointlaser-upgrade
 
 MTNK.Drone:
 	Inherits: ^TankTD
@@ -1679,7 +1679,7 @@ MTNK.Drone:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 85
-		Prerequisites: ~vehicles.talon, weap.td, ~techlevel.low
+		Prerequisites: ~drone.upgrade, ~vehicles.talon, weap.td, ~techlevel.low
 		IconPalette: chrometd
 		Description: Drone battle tank.\n  Requires power to operate.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
 	Valued:
@@ -1764,7 +1764,7 @@ HTNK:
 		Queue: Vehicle
 		BuildPaletteOrder: 185
 		IconPalette: chrometd
-		Prerequisites: techcenter, ~vehicles.htnk, ~!miss.gdi, ~techlevel.high
+		Prerequisites: techcenter, ~vehicles.htnk, ~!ionmam.upgrade, ~!walker.upgrade, ~techlevel.high
 		Description: Big and slow tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry, Aircraft\n  Weak vs Nothing
 	Valued:
 		Cost: 1700
@@ -1829,7 +1829,7 @@ HTNK.Ion:
 		Image: htnk.ion
 	Buildable:
 		BuildPaletteOrder: 190
-		Prerequisites: ~gtek, ~vehicles.gdi, ~!vehicles.talon, ~miss.gdi, ~techlevel.high
+		Prerequisites: ~ionmam.upgrade, ~gtek, ~vehicles.gdi, ~!vehicles.talon, ~miss.gdi, ~techlevel.high
 	Tooltip:
 		Name: Ion Mammoth Tank
 	Armament@PRIMARY:
@@ -1880,11 +1880,24 @@ MSAM:
 		Weapon: 227mm
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
+		RequiresCondition: !hypersonic-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: 227mmAA
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
+		RequiresCondition: !hypersonic-upgrade
+	Armament@PRIMARY-UPG2:
+		Weapon: 227mm.upg
+		LocalOffset: 213,128,0, 213,-128,0
+		LocalYaw: 100, -100
+		RequiresCondition: hypersonic-upgrade
+	Armament@SECONDARY-UPG2:
+		Name: secondary
+		Weapon: 227mmAA.upg
+		LocalOffset: 213,-128,0, 213,128,0
+		LocalYaw: 100, -100
+		RequiresCondition: hypersonic-upgrade
 	AttackTurreted:
 		TargetFrozenActors: True
 		PauseOnCondition: empdisable || being-warped
@@ -1895,6 +1908,8 @@ MSAM:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 28,28
+	ExternalCondition@HSONIC:
+		Condition: hypersonic-upgrade
 
 MLRS:
 	Inherits: ^TankTD
@@ -2577,7 +2592,7 @@ TITN:
 		Queue: Vehicle
 		BuildPaletteOrder: 195
 		IconPalette: chrometd
-		Prerequisites: ~gtek, ~vehicles.gdi, ~vehicles.talon, ~miss.gdi, ~techlevel.high
+		Prerequisites: ~walker.upgrade, ~gtek, ~vehicles.gdi, ~vehicles.talon, ~miss.gdi, ~techlevel.high
 		Description: Tough combat battle-mech.\n  Can attack Aircraft.\n  Strong vs Infantry, Tanks
 	Valued:
 		Cost: 2000
@@ -2725,21 +2740,21 @@ DISR:
 	Armament@PRIMARY:
 		Weapon: SonicZap
 		LocalOffset: 0,0,200
-		RequiresCondition: !gdiupg2
+		RequiresCondition: !sonic-upgrade
 	Armament@SECONDARY:
 		Weapon: SonicZapVisual
 		Name: secondary
 		LocalOffset: 0,0,200
-		RequiresCondition: !gdiupg2
+		RequiresCondition: !sonic-upgrade
 	Armament@PRIMARYUPG:
 		Weapon: SonicZap.UPG
 		LocalOffset: 0,0,200
-		RequiresCondition: gdiupg2
+		RequiresCondition: sonic-upgrade
 	Armament@SECONDARYUPG:
 		Weapon: SonicZapVisual.UPG
 		Name: secondary
 		LocalOffset: 0,0,200
-		RequiresCondition: gdiupg2
+		RequiresCondition: sonic-upgrade
 	Turreted:
 		TurnSpeed: 5
 		Offset: -300,0,0
@@ -2763,6 +2778,9 @@ DISR:
 	SpawnActorOnDeath:
 		Actor: DISR.Husk
 		RequiresCondition: !being-warped
+	GrantConditionOnPrerequisite@SONIC:
+		Condition: sonic-upgrade
+		Prerequisites: sonic.upgrade
 
 HSAM:
 	Inherits: ^VehicleTD
@@ -2821,24 +2839,24 @@ HSAM:
 		Weapon: 227mmH
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
-		RequiresCondition: !gdiupg2
+		RequiresCondition: !hypersonic-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: 227mmAAH
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
-		RequiresCondition: !gdiupg2
+		RequiresCondition: !hypersonic-upgrade
 	Armament@PRIMARY-UPG2:
 		Weapon: 227mmH.upg
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
-		RequiresCondition: gdiupg2
+		RequiresCondition: hypersonic-upgrade
 	Armament@SECONDARY-UPG2:
 		Name: secondary
 		Weapon: 227mmAA.upg
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
-		RequiresCondition: gdiupg2
+		RequiresCondition: hypersonic-upgrade
 	AutoTarget:
 		ScanRadius: 10
 	AttackTurreted:
@@ -2851,6 +2869,8 @@ HSAM:
 		LoadedChance: 75
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	ExternalCondition@HSONIC:
+		Condition: hypersonic-upgrade
 
 RTNK:
 	Inherits: ^Tank
@@ -3128,7 +3148,7 @@ MSAR:
 		IconPalette: chrometd
 		Prerequisites: hq, ~vehicles.gdi, ~techlevel.high
 		BuildDurationModifier: 50
-		Description: When deployed, provides radar and increases nearby vehicle weapon range.\n  Detects cloaked units.\n  Unarmed
+		Description: When deployed, provides radar and increases nearby vehicle view range.\n  Detects cloaked units.\n  Unarmed
 	Health:
 		HP: 22000
 	Armor:

@@ -749,7 +749,7 @@ N1:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 10
-		Prerequisites: ~!bio.nod, infantry.any, ~infantry.td, ~techlevel.infonly
+		Prerequisites: ~!cyborg.upgrade, infantry.any, ~infantry.td, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
@@ -855,7 +855,7 @@ N3:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 30
-		Prerequisites: ~!bio.nod, infantry.any, ~infantry.td, ~techlevel.infonly
+		Prerequisites: ~!cyborg.upgrade, infantry.any, ~infantry.td, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Anti-tank/anti-aircraft infantry.\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
 	Valued:
@@ -927,7 +927,7 @@ N4:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 70
-		Prerequisites: ~infantry.nod, ~!bio.nod, hand, ~techlevel.infonly
+		Prerequisites: ~infantry.nod, ~!cyborg.upgrade, hand, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Anti-infantry/anti-structure unit.\n  Strong vs Infantry, Buildings\n  Weak vs Vehicles, Aircraft
 	Valued:
@@ -978,7 +978,7 @@ N5:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 70
-		Prerequisites: ~bio.nod, ~hand, ~techlevel.infonly
+		Prerequisites: ~cyborg.upgrade, ~hand, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Advanced general-purpose infantry.\n  Strong vs all Ground Units
 	Valued:
@@ -1019,6 +1019,12 @@ N5:
 	-TakeCover:
 	-Crushable:
 	-KillsSelf@Mutation:
+	-GrantConditionOnPrerequisite@BIO:
+	-GrantConditionOnPrerequisite@CYBORG:
+	-GrantConditionOnPrerequisite@HAZMAT:
+	-WithDecoration@HAZMAT:
+	-GrantCondition@HAZMAT:
+	-ExternalCondition@HAZMAT:
 	-DamagedByTerrain:
 	DamagedByTerrain:
 		Terrain: Tiberium, BlueTiberium
@@ -1029,6 +1035,7 @@ N5:
 		Condition: tibheal
 		TerrainTypes: Tiberium, BlueTiberium
 	-DamagedByTintedCells@RADSTRONG:
+	-DamagedByTintedCells@RADMED:
 	-DamagedByTintedCells@RADWEAK:
 	WithDecoration@THEAL:
 		Image: pips
@@ -1045,9 +1052,9 @@ N5:
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
-	-WithDecoration@HAZMAT:
 	GrantConditionOnPrerequisite@BIO:
 		Condition: biofirepower
+		Prerequisites: bio
 	FirepowerMultiplier@BIOLAB:
 		RequiresCondition: biofirepower
 		Modifier: 110
@@ -1493,7 +1500,7 @@ ACOL:
 		LocalOffset: 427,0,341
 	TakeCover:
 		ProneOffset: 227,0,-245
-		PauseOnCondition: being-warped || nodupg1
+		PauseOnCondition: being-warped || cyborg-upgrade
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
@@ -1524,27 +1531,14 @@ ACOL:
 	-DamagedByTintedCells@RADMED:
 	-DamagedByTintedCells@RADWEAK:
 	-GrantCondition@HAZMAT:
+	-GrantConditionOnPrerequisite@HAZMAT:
+	-ExternalCondition@HAZMAT:
 	WithDecoration@THEAL:
 		Image: pips
 		Sequence: medic
 		Palette: temptd
 		ReferencePoint: Bottom, Left
 		RequiresCondition: tibheal
-	SpeedMultiplier@nodupg1:
-		RequiresCondition: nodupg1 && !nodupg2
-		Modifier: 115
-	DamageMultiplier@nodupg1:
-		RequiresCondition: nodupg1 && !nodupg2
-		Modifier: 30
-	SpeedMultiplier@nodupg2:
-		RequiresCondition: nodupg2
-		Modifier: 130
-	DamageMultiplier@nodupg2:
-		RequiresCondition: nodupg2
-		Modifier: 24
-	RangeMultiplier@nodupg2:
-		RequiresCondition: nodupg2
-		Modifier: 115
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
@@ -1756,12 +1750,12 @@ N1C:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BOTHELPER: ^BotCaptureHelper
-	Inherits@nodupg2: ^NodCyborgUpgrade
+	Inherits@CYBORG: ^NodCyborgUpgrade
 	RenderSprites:
 	Buildable:
 		Queue: Infantry
 		BuildPaletteOrder: 10
-		Prerequisites: ~bio.nod, ~hand, ~techlevel.medium
+		Prerequisites: ~cyborg.upgrade, ~hand, ~techlevel.medium
 		IconPalette: chrometd
 		Description: General-purpose cyborg infantry\n  Strong vs Infantry\n  Weak vs Vehicles, Artillery
 	Valued:
@@ -1791,9 +1785,11 @@ N1C:
 		Weapon: Vulcan3
 	-KillsSelf@Mutation:
 	-GrantConditionOnPrerequisite@BIO:
-	-GrantConditionOnPrerequisite@NODUPG1:
+	-GrantConditionOnPrerequisite@CYBORG:
+	-GrantConditionOnPrerequisite@HAZMAT:
 	-WithDecoration@HAZMAT:
 	-GrantCondition@HAZMAT:
+	-ExternalCondition@HAZMAT:
 	-DamagedByTerrain:
 	DamagedByTerrain:
 		Terrain: Tiberium, BlueTiberium
@@ -1819,12 +1815,12 @@ N3C:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@nodupg2: ^NodCyborgUpgrade
+	Inherits@CYBORG: ^NodCyborgUpgrade
 	RenderSprites:
 	Buildable:
 		Queue: Infantry
 		BuildPaletteOrder: 20
-		Prerequisites: ~bio.nod, ~hand, ~techlevel.medium
+		Prerequisites: ~cyborg.upgrade, ~hand, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Anti-tank cyborg infantry\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry, Artillery
 	Valued:
@@ -1882,9 +1878,11 @@ N3C:
 		ScanRadius: 5
 	-KillsSelf@Mutation:
 	-GrantConditionOnPrerequisite@BIO:
-	-GrantConditionOnPrerequisite@NODUPG1:
+	-GrantConditionOnPrerequisite@CYBORG:
+	-GrantConditionOnPrerequisite@HAZMAT:
 	-WithDecoration@HAZMAT:
 	-GrantCondition@HAZMAT:
+	-ExternalCondition@HAZMAT:
 	-DamagedByTerrain:
 	DamagedByTerrain:
 		Terrain: Tiberium, BlueTiberium
@@ -1911,7 +1909,7 @@ RMBC:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@EMP: ^EmpDisable
-	Inherits@nodupg2: ^NodCyborgUpgrade
+	Inherits@CYBORG: ^NodCyborgUpgrade
 	RenderSprites:
 		PlayerPalette: playerd2k
 		Image: cycom
@@ -1973,9 +1971,11 @@ RMBC:
 	-KillsSelf@Mutation:
 	-KillsSelf@Immolate:
 	-GrantConditionOnPrerequisite@BIO:
-	-GrantConditionOnPrerequisite@NODUPG1:
+	-GrantConditionOnPrerequisite@CYBORG:
+	-GrantConditionOnPrerequisite@HAZMAT:
 	-GrantCondition@HAZMAT:
 	-WithDecoration@HAZMAT:
+	-ExternalCondition@HAZMAT:
 	-DamagedByTerrain:
 	DamagedByTerrain:
 		Terrain: Tiberium, BlueTiberium
