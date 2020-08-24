@@ -1171,8 +1171,11 @@ DEVA:
 		HealIfBelow: 75
 		DamageCooldown: 150
 		RequiresCondition: regen-upgrade
-	DamageMultiplier@REGEN:
-		RequiresCondition: regen-upgrade
+	GrantConditionOnPrerequisite@SHIELDS:
+		Condition: shields-upgrade
+		Prerequisites: shields.upgrade
+	DamageMultiplier@SHIELDS:
+		RequiresCondition: shields-upgrade
 		Modifier: 90
 
 PAC:
@@ -1273,8 +1276,11 @@ PAC:
 		HealIfBelow: 75
 		DamageCooldown: 150
 		RequiresCondition: regen-upgrade
-	DamageMultiplier@REGEN:
-		RequiresCondition: regen-upgrade
+	GrantConditionOnPrerequisite@SHIELDS:
+		Condition: shields-upgrade
+		Prerequisites: shields.upgrade
+	DamageMultiplier@SHIELDS:
+		RequiresCondition: shields-upgrade
 		Modifier: 90
 
 INVA:
@@ -2260,7 +2266,7 @@ NERV:
 		LifeTime: 250
 		OrderName: resourcescan
 		Icon: rescanpower
-		ChargeInterval: 6000
+		ChargeInterval: 7500
 		Description: Resource Scan
 		LongDesc: Reveals map resources.
 		LaunchSound: tibscan.aud

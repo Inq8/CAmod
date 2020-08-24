@@ -290,6 +290,22 @@ MiniRift:
 			Concrete: 80
 			Brick: 25
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		ValidStances: Enemy, Neutral
+	Warhead@2Dam: SpreadDamage
+		Spread: 1c0
+		Damage: 300
+		Falloff: 100, 70, 0
+		ValidTargets: Ground, Trees
+		InvalidTargets: Air, Creep
+		Versus:
+			None: 55
+			Wood: 30
+			Light: 70
+			Heavy: 100
+			Concrete: 80
+			Brick: 25
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		ValidStances: Ally
 
 RuinerCannon:
 	Inherits: 155mm
@@ -662,6 +678,7 @@ BuzzerVortex:
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
+		Falloff: 100, 60, 20, 0
 		Damage: 1000
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air, Creep

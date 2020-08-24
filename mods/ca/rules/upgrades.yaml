@@ -238,7 +238,7 @@ cyborg.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~bio.nod, ~structures.nod, ~techlevel.high
 		Queue: Upgrade
-		IconPalette: chrometd
+		IconPalette: chrome
 		BuildLimit: 1
 		BuildDuration: 590
 		BuildDurationModifier: 40
@@ -248,7 +248,49 @@ cyborg.upgrade:
 	RenderSprites:
 		Image: cyborg.upgrade
 	ProvidesPrerequisite@upgradename:
-	
+
+cyborgspeed.upgrade:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	Tooltip:
+		Name: Improved Cyborg Speed
+	Buildable:
+		BuildPaletteOrder: 50
+		Prerequisites: cyborg.upgrade, ~bio.nod, ~structures.nod, ~techlevel.high
+		Queue: Upgrade
+		IconPalette: chrome
+		BuildLimit: 1
+		BuildDuration: 590
+		BuildDurationModifier: 40
+		Description: Research Improved Cyborg Speed.\n  Upgrade: Cyborg\n  Upgrade: Cyborg Reaper\n  Upgrade: Chemical Warrior\n  Upgrade: Acolyte\n  Upgrade: Cyborg Elite
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: cyborgspeed.upgrade
+	ProvidesPrerequisite@upgradename:
+
+cyborgarmor.upgrade:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	Tooltip:
+		Name: Improved Cyborg Armour
+	Buildable:
+		BuildPaletteOrder: 50
+		Prerequisites: cyborg.upgrade, ~bio.nod, ~structures.nod, ~techlevel.high
+		Queue: Upgrade
+		IconPalette: chrome
+		BuildLimit: 1
+		BuildDuration: 590
+		BuildDurationModifier: 40
+		Description: Research Improved Cyborg Armor.\n  Upgrade: Cyborg\n  Upgrade: Cyborg Reaper\n  Upgrade: Chemical Warrior\n  Upgrade: Acolyte\n  Upgrade: Cyborg Elite
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: cyborgarmor.upgrade
+	ProvidesPrerequisite@upgradename:
+
 #########################SOVIET#########
 ########################################
 
@@ -372,9 +414,30 @@ regen.upgrade:
 		BuildDuration: 590
 		BuildDurationModifier: 40
 		Description: Research Regenerative Hull.\n  Upgrade: Devastator\n  Upgrade: Planetary Assault Carrier
+		IconPalette: scrin
 	Valued:
-		Cost: 2000
+		Cost: 1000
 	RenderSprites:
 		Image: regen.upgrade
 	ProvidesPrerequisite@upgradename:
-	
+
+shields.upgrade:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	Tooltip:
+		Name: Research: Fleet Shields
+	Buildable:
+		BuildPaletteOrder: 50
+		Prerequisites: ~sign, ~structures.scrin, ~techlevel.high
+		Queue: Upgrade
+		BuildLimit: 1
+		BuildDuration: 590
+		BuildDurationModifier: 40
+		Description: Research Fleet Shields.\n  Upgrade: Devastator\n  Upgrade: Planetary Assault Carrier
+		IconPalette: scrin
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: shields.upgrade
+	ProvidesPrerequisite@upgradename:

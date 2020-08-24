@@ -973,7 +973,7 @@ N5:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@nodupg2: ^NodCyborgUpgrade
+	Inherits@CYBORG: ^NodCyborgUpgrade
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -1020,7 +1020,6 @@ N5:
 	-Crushable:
 	-KillsSelf@Mutation:
 	-GrantConditionOnPrerequisite@BIO:
-	-GrantConditionOnPrerequisite@CYBORG:
 	-GrantConditionOnPrerequisite@HAZMAT:
 	-WithDecoration@HAZMAT:
 	-GrantCondition@HAZMAT:
@@ -1470,7 +1469,7 @@ SAB:
 ACOL:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@nodupg2: ^NodCyborgUpgrade
+	Inherits@CYBORG: ^NodCyborgUpgrade
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -1541,6 +1540,24 @@ ACOL:
 		RequiresCondition: tibheal
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+	GrantConditionOnPrerequisite@CYBORG:
+		Condition: cyborg-upgrade
+		Prerequisites: cyborg.upgrade
+	ExternalCondition@CYBORG:
+		Condition: cyborg-upgrade
+	RangeMultiplier@CYBORG:
+		Modifier: 115
+		RequiresCondition: cyborg-upgrade
+	SpeedMultiplier@CYBORG:
+		Modifier: 115
+		RequiresCondition: cyborg-upgrade && !cyborgspeed-upgrade
+	DamageMultiplier@CYBORG:
+		Modifier: 30
+		RequiresCondition: cyborg-upgrade && !cyborgarmor-upgrade
+	SpeedMultiplier@CYBORGSPEED:
+		Modifier: 130
+	DamageMultiplier@CYBORGARMOR:
+		Modifier: 24
 
 JJET:
 	Inherits: ^Infantry
@@ -1785,7 +1802,6 @@ N1C:
 		Weapon: Vulcan3
 	-KillsSelf@Mutation:
 	-GrantConditionOnPrerequisite@BIO:
-	-GrantConditionOnPrerequisite@CYBORG:
 	-GrantConditionOnPrerequisite@HAZMAT:
 	-WithDecoration@HAZMAT:
 	-GrantCondition@HAZMAT:
@@ -1878,7 +1894,6 @@ N3C:
 		ScanRadius: 5
 	-KillsSelf@Mutation:
 	-GrantConditionOnPrerequisite@BIO:
-	-GrantConditionOnPrerequisite@CYBORG:
 	-GrantConditionOnPrerequisite@HAZMAT:
 	-WithDecoration@HAZMAT:
 	-GrantCondition@HAZMAT:
@@ -1971,7 +1986,6 @@ RMBC:
 	-KillsSelf@Mutation:
 	-KillsSelf@Immolate:
 	-GrantConditionOnPrerequisite@BIO:
-	-GrantConditionOnPrerequisite@CYBORG:
 	-GrantConditionOnPrerequisite@HAZMAT:
 	-GrantCondition@HAZMAT:
 	-WithDecoration@HAZMAT:
