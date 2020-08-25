@@ -10,10 +10,10 @@
 #endregion
 
 using System.Linq;
-using OpenRA.Mods.CA.Traits.BotModules.Squads;
+using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
-namespace OpenRA.Mods.Common.Traits.BotModules.Squads
+namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 {
 	abstract class ProtectionStateBase : GroundStateBaseCA
 	{

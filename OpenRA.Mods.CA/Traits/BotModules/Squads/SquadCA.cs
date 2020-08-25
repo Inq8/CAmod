@@ -55,7 +55,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 					FuzzyStateMachine.ChangeState(this, new AirIdleState(), true);
 					break;
 				case SquadTypeCA.Protection:
-					FuzzyStateMachine.ChangeState(this, new Common.Traits.BotModules.Squads.UnitsForProtectionIdleState(), true);
+					FuzzyStateMachine.ChangeState(this, new UnitsForProtectionIdleState(), true);
 					break;
 				case SquadTypeCA.Naval:
 					FuzzyStateMachine.ChangeState(this, new NavyUnitsIdleState(), true);
