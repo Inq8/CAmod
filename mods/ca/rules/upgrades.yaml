@@ -1,443 +1,330 @@
+^Upgrade:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	Buildable:
+		Queue: Upgrade
+		BuildLimit: 1
+		BuildDurationModifier: 100
+	ProvidesPrerequisite@upgradename:
+
 #########################GDI#########
 ########################################
 
 bombard.strat:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits: ^Upgrade
 	Tooltip:
 		Name: Strategy: Bombardment
 	Buildable:
 		BuildPaletteOrder: 1
 		Prerequisites: ~miss.gdi, !seek.strat, !hold.strat, ~structures.gdi, ~techlevel.high
-		Queue: Upgrade
-		BuildLimit: 1
-		BuildDuration: 590
+		BuildDuration: 3000
 		Description: Increase Unit Firepower 20%\n  Only one Strategy may be chosen.
 	Valued:
-		Cost: 1000
+		Cost: 2000
 	RenderSprites:
 		Image: bombard.strat
-	ProvidesPrerequisite@upgradename:
-	
+
 seek.strat:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits: ^Upgrade
 	Tooltip:
 		Name: Strategy: Seek & Destroy
 	Buildable:
 		BuildPaletteOrder: 2
 		Prerequisites: ~miss.gdi, !bombard.strat, !hold.strat, ~structures.gdi, ~techlevel.high
-		Queue: Upgrade
-		BuildLimit: 1
-		BuildDuration: 590
+		BuildDuration: 3000
 		Description: Increase Unit Range 20%\nIncrease Stealth Detection\n  Only one Strategy may be chosen.
 	Valued:
-		Cost: 1000
+		Cost: 2000
 	RenderSprites:
 		Image: seek.strat
-	ProvidesPrerequisite@upgradename:
-	
+
 hold.strat:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits: ^Upgrade
 	Tooltip:
 		Name: Strategy: Hold the Line
 	Buildable:
 		BuildPaletteOrder: 3
 		Prerequisites: ~miss.gdi, !bombard.strat, !seek.strat, ~structures.gdi, ~techlevel.high
-		Queue: Upgrade
-		BuildLimit: 1
-		BuildDuration: 590
+		BuildDuration: 3000
 		Description: Increase Unit Armor 20%\n  Only one Strategy may be chosen.
 	Valued:
-		Cost: 1000
+		Cost: 2000
 	RenderSprites:
 		Image: hold.strat
-	ProvidesPrerequisite@upgradename:
-	
+
 sonic.upgrade:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits: ^Upgrade
 	Tooltip:
 		Name: Research: Sonic Amplifiers
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~gtek, ~structures.zocom, ~techlevel.high
-		Queue: Upgrade
-		BuildLimit: 1
-		BuildDuration: 590
-		BuildDurationModifier: 40
+		BuildDuration: 1500
 		Description: Research Sonic Amplifiers\n  Upgrade: Sonic Tower\n  Upgrade: Disruptor
 	Valued:
 		Cost: 1000
 	RenderSprites:
 		Image: sonic.upgrade
-	ProvidesPrerequisite@upgradename:
-	
+
 drone.upgrade:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits: ^Upgrade
 	Tooltip:
 		Name: Research: Battle Drone
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~hq, ~structures.talon, ~techlevel.high
-		Queue: Upgrade
 		IconPalette: chrometd
-		BuildLimit: 1
-		BuildDuration: 590
-		BuildDurationModifier: 40
+		BuildDuration: 1500
 		Description: Research Battle Drone.\n  Upgrade: Battle Tank
 	Valued:
 		Cost: 1000
 	RenderSprites:
 		Image: drone.upgrade
-	ProvidesPrerequisite@upgradename:
-	
+
 pointlaser.upgrade:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits: ^Upgrade
 	Tooltip:
 		Name: Research: Point Laser Defense
 	Buildable:
 		BuildPaletteOrder: 50
-		Prerequisites: ~gtek, ~structures.zocom, ~techlevel.high
-		Queue: Upgrade
+		Prerequisites: ~gtek, ~structures.gdi, ~!structures.talon, ~techlevel.high
 		IconPalette: chrometd
-		BuildLimit: 1
-		BuildDuration: 590
-		BuildDurationModifier: 40
+		BuildDuration: 1500
 		Description: Research Point Laser Defense\n  Upgrade: Battle Tank\n  Upgrade: Frigate
 	Valued:
 		Cost: 1000
 	RenderSprites:
 		Image: pointlaser.upgrade
-	ProvidesPrerequisite@upgradename:
 
 hypersonic.upgrade:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits: ^Upgrade
 	Tooltip:
 		Name: Research: Hypersonic Missiles
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~miss.gdi, ~structures.gdi, ~techlevel.high
-		Queue: Upgrade
 		IconPalette: chrometd
-		BuildLimit: 1
-		BuildDuration: 590
-		BuildDurationModifier: 40
+		BuildDuration: 1500
 		Description: Research Hypersonic missiles\n  Upgrade: MLRS\n  Upgrade: HMLRS
 	Valued:
 		Cost: 1000
 	RenderSprites:
 		Image: hypersonic.upgrade
-	ProvidesPrerequisite@upgradename:
-	
+
 walker.upgrade:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits: ^Upgrade
 	Tooltip:
 		Name: Research: Battle Walkers
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~miss.gdi, ~structures.talon, ~techlevel.high
-		Queue: Upgrade
 		IconPalette: chrometd
-		BuildLimit: 1
-		BuildDuration: 590
-		BuildDurationModifier: 40
+		BuildDuration: 1500
 		Description: Research the Titan and Juggernaut battle walkers.\n  Upgrade: Mammoth Tank\n  Unlock: Juggernaut
 	Valued:
 		Cost: 1000
 	RenderSprites:
 		Image: walker.upgrade
-	ProvidesPrerequisite@upgradename:
-	
+
 ionmam.upgrade:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits: ^Upgrade
 	Tooltip:
 		Name: Research: Ion Mammoth
 	Buildable:
 		BuildPaletteOrder: 50
-		Prerequisites: ~miss.gdi, ~structures.zocom, ~techlevel.high
-		Queue: Upgrade
+		Prerequisites: ~miss.gdi, ~structures.gdi, ~!structures.talon, ~techlevel.high
 		IconPalette: chrometd
-		BuildLimit: 1
-		BuildDuration: 590
-		BuildDurationModifier: 40
+		BuildDuration: 1500
 		Description: Research Ion Mammoth Tank.\n  Upgrade: Mammoth Tank
 	Valued:
 		Cost: 1000
 	RenderSprites:
 		Image: ionmam.upgrade
-	ProvidesPrerequisite@upgradename:
-	
+
 vulcan.upgrade:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits: ^Upgrade
 	Tooltip:
 		Name: Research: Vulcan
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~hq, ~structures.gdi, ~techlevel.high
-		Queue: Upgrade
 		IconPalette: chrometd
-		BuildLimit: 1
-		BuildDuration: 590
-		BuildDurationModifier: 40
+		BuildDuration: 1500
 		Description: Research Vulcan.\n  Upgrade: APC
 	Valued:
 		Cost: 1000
 	RenderSprites:
 		Image: vulcan.upgrade
-	ProvidesPrerequisite@upgradename:
-	
+
 #########################NOD#########
 ########################################
 
 hazmat.upgrade:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits: ^Upgrade
 	Tooltip:
 		Name: Hazmat Suits
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~tmpl, ~structures.nod, ~techlevel.high
-		Queue: Upgrade
 		IconPalette: chrometd
-		BuildLimit: 1
-		BuildDuration: 590
-		BuildDurationModifier: 40
+		BuildDuration: 1500
 		Description: Research Hazmat suits for infantry.\n  Upgrade: Infantry\n  Provides protection on tiberium fields.
 	Valued:
 		Cost: 1000
 	RenderSprites:
 		Image: hazmat.upgrade
-	ProvidesPrerequisite@upgradename:
-	
+
 cyborg.upgrade:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits: ^Upgrade
 	Tooltip:
 		Name: Cybernetic Enhancement
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~bio.nod, ~structures.nod, ~techlevel.high
-		Queue: Upgrade
 		IconPalette: chrome
-		BuildLimit: 1
-		BuildDuration: 590
-		BuildDurationModifier: 40
+		BuildDuration: 1500
 		Description: Research Cybernetic Enhancement.\n  Upgrade: Mini-Gunner\n  Upgrade: Rocket Soldier\n  Upgrade: Flamethrower
 	Valued:
 		Cost: 1000
 	RenderSprites:
 		Image: cyborg.upgrade
-	ProvidesPrerequisite@upgradename:
 
 cyborgspeed.upgrade:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits: ^Upgrade
 	Tooltip:
 		Name: Improved Cyborg Speed
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: cyborg.upgrade, ~bio.nod, ~structures.nod, ~techlevel.high
-		Queue: Upgrade
 		IconPalette: chrome
-		BuildLimit: 1
-		BuildDuration: 590
-		BuildDurationModifier: 40
+		BuildDuration: 1500
 		Description: Research Improved Cyborg Speed.\n  Upgrade: Cyborg\n  Upgrade: Cyborg Reaper\n  Upgrade: Chemical Warrior\n  Upgrade: Acolyte\n  Upgrade: Cyborg Elite
 	Valued:
 		Cost: 1000
 	RenderSprites:
 		Image: cyborgspeed.upgrade
-	ProvidesPrerequisite@upgradename:
 
 cyborgarmor.upgrade:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits: ^Upgrade
 	Tooltip:
 		Name: Improved Cyborg Armour
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: cyborg.upgrade, ~bio.nod, ~structures.nod, ~techlevel.high
-		Queue: Upgrade
 		IconPalette: chrome
-		BuildLimit: 1
-		BuildDuration: 590
-		BuildDurationModifier: 40
+		BuildDuration: 1500
 		Description: Research Improved Cyborg Armor.\n  Upgrade: Cyborg\n  Upgrade: Cyborg Reaper\n  Upgrade: Chemical Warrior\n  Upgrade: Acolyte\n  Upgrade: Cyborg Elite
 	Valued:
 		Cost: 1000
 	RenderSprites:
 		Image: cyborgarmor.upgrade
-	ProvidesPrerequisite@upgradename:
 
 #########################SOVIET#########
 ########################################
 
 cluster.upgrade:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits: ^Upgrade
 	Tooltip:
 		Name: Research: Cluster Bombs
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~stek, ~structures.ukraine, ~techlevel.high
-		Queue: Upgrade
-		BuildLimit: 1
-		BuildDuration: 590
-		BuildDurationModifier: 40
+		BuildDuration: 1500
 		Description: Research Cluster Bombs.\n  Upgrade: Sukhoi
 	Valued:
 		Cost: 1000
 	RenderSprites:
 		Image: cluster.upgrade
-	ProvidesPrerequisite@upgradename:
-	
+
 indp.upgrade:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits: ^Upgrade
 	Tooltip:
 		Name: Research: Production Efficiency
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~indp, ~structures.soviet, ~techlevel.high
-		Queue: Upgrade
-		BuildLimit: 1
-		BuildDuration: 590
-		BuildDurationModifier: 40
+		BuildDuration: 3000
 		Description: Research Production Efficiency.\n  Upgrade: Industrial Plant
 	Valued:
 		Cost: 2000
 	RenderSprites:
 		Image: indp.upgrade
-	ProvidesPrerequisite@upgradename:
 
 iraqtank.upgrade:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits: ^Upgrade
 	Tooltip:
 		Name: Research: Atomic Engines
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~dome, ~structures.iraq, ~techlevel.high
-		Queue: Upgrade
-		BuildLimit: 1
-		BuildDuration: 590
-		BuildDurationModifier: 40
+		BuildDuration: 1500
 		Description: Research Atomic Engines.\n  Upgrade: Heavy Tank\n  Upgrade: Mammoth Tank
 	Valued:
 		Cost: 1000
 	RenderSprites:
 		Image: iraqtank.upgrade
-	ProvidesPrerequisite@upgradename:
-	
+
 #######################ALLIES############################
 #########################################################
 
 orep.upgrade:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits: ^Upgrade
 	Tooltip:
 		Name: Research: Advanced Ore Processing
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~orep, ~structures.allies, ~techlevel.high
-		Queue: Upgrade
-		BuildLimit: 1
-		BuildDuration: 590
-		BuildDurationModifier: 40
+		BuildDuration: 3000
 		Description: Research Advanced Ore Processing.\n  Upgrade: Ore Purifier
 	Valued:
 		Cost: 2000
 	RenderSprites:
 		Image: orep.upgrade
-	ProvidesPrerequisite@upgradename:
-	
+
 charv.upgrade:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits: ^Upgrade
 	Tooltip:
 		Name: Research: Chrono Harvester
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~orep, ~structures.allies, ~techlevel.high
-		Queue: Upgrade
-		BuildLimit: 1
-		BuildDuration: 590
-		BuildDurationModifier: 40
+		BuildDuration: 3000
 		Description: Research Chrono Harvester.\n  Unlock: Chrono Harvester
 	Valued:
-		Cost: 1000
+		Cost: 2000
 	RenderSprites:
 		Image: charv.upgrade
-	ProvidesPrerequisite@upgradename:
-	
+
 ################################SCRIN##############################
 ###################################################################
 
 regen.upgrade:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits: ^Upgrade
 	Tooltip:
 		Name: Research: Regenerative Hull
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~sign, ~structures.scrin, ~techlevel.high
-		Queue: Upgrade
-		BuildLimit: 1
-		BuildDuration: 590
-		BuildDurationModifier: 40
+		BuildDuration: 3000
 		Description: Research Regenerative Hull.\n  Upgrade: Devastator\n  Upgrade: Planetary Assault Carrier
 		IconPalette: scrin
 	Valued:
-		Cost: 1000
+		Cost: 2000
 	RenderSprites:
 		Image: regen.upgrade
-	ProvidesPrerequisite@upgradename:
 
 shields.upgrade:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits: ^Upgrade
 	Tooltip:
 		Name: Research: Fleet Shields
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~sign, ~structures.scrin, ~techlevel.high
-		Queue: Upgrade
-		BuildLimit: 1
-		BuildDuration: 590
-		BuildDurationModifier: 40
+		BuildDuration: 3000
 		Description: Research Fleet Shields.\n  Upgrade: Devastator\n  Upgrade: Planetary Assault Carrier
 		IconPalette: scrin
 	Valued:
-		Cost: 1000
+		Cost: 2000
 	RenderSprites:
 		Image: shields.upgrade
-	ProvidesPrerequisite@upgradename:
