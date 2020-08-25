@@ -104,6 +104,21 @@ MaverickSU:
 	Warhead@4EffWater: CreateEffect
 		ImpactSounds: splashl1.aud, splashl2.aud
 
+SuClusterMissile:
+	Inherits: MaverickSU
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			Heavy: 15
+			Wood: 20
+			Light: 45
+			None: 80
+			Concrete: 60
+	Warhead@Cluster: FireCluster
+		Weapon: ClusterBomb
+		RandomClusterCount: 3
+		Dimensions: 3,3
+		Footprint: xxx x_x xxx
+
 Dragon:
 	Inherits: ^AntiGroundMissile
 	Projectile: MissileCA
