@@ -422,20 +422,6 @@
 			seek && bino: Off, On
 		RequiresSelection: True
 
-^GDIUpgradeProducer:
-	GrantExternalConditionToProduced@HSONIC:
-		Condition: hypersonic-upgrade
-		RequiresCondition: hypersonic-upgrade-built
-	GrantConditionOnPrerequisite@HSONIC:
-		Condition: hypersonic-upgrade-built
-		Prerequisites: hypersonic.upgrade
-	GrantExternalConditionToProduced@POINTL:
-		Condition: pointlaser-upgrade
-		RequiresCondition: pointlaser-upgrade-built
-	GrantConditionOnPrerequisite@POINTL:
-		Condition: pointlaser-upgrade-built
-		Prerequisites: pointlaser.upgrade
-
 ^NodHazmatUpgrade:
 	GrantConditionOnPrerequisite@HAZMAT:
 		Condition: hazmat-upgrade

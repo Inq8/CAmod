@@ -2048,12 +2048,6 @@ AFLD:
 		RequiresCondition: primary
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
-	GrantExternalConditionToProduced@CLUSTER:
-		Condition: cluster-upgrade
-		RequiresCondition: cluster-upgrade-built
-	GrantConditionOnPrerequisite@CLUSTER:
-		Condition: cluster-upgrade-built
-		Prerequisites: cluster.upgrade
 
 POWR:
 	Inherits: ^Building
@@ -3066,7 +3060,6 @@ HAND:
 WEAP.TD:
 	Inherits: ^BuildingTD
 	Inherits@shape: ^3x2Shape
-	Inherits@gdiupg: ^GDIUpgradeProducer
 	RenderSprites:
 		Image: awep
 	Selectable:
@@ -4383,7 +4376,6 @@ REP:
 HPAD.TD:
 	Inherits: ^BuildingTD
 	Inherits@shape: ^2x2Shape
-	Inherits@gdiupg: ^GDIUpgradeProducer
 	RenderSprites:
 		Image: hpad2
 	HitShape:
@@ -4657,7 +4649,6 @@ SILO.TD:
 AFLD.GDI:
 	Inherits: ^Building
 	Inherits@shape: ^3x2Shape
-	Inherits@gdiupg: ^GDIUpgradeProducer
 	RenderSprites:
 		Image: afldgdi
 	HitShape:
@@ -5205,7 +5196,6 @@ SPEN.nod:
 
 SYRD.gdi:
 	Inherits: ^Building
-	Inherits@gdiupg: ^GDIUpgradeProducer
 	RenderSprites:
 		Image: GSYRD
 		PlayerPalette: playernavy

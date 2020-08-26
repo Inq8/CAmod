@@ -1666,8 +1666,9 @@ MTNK:
 		PointDefenseTypes: Missile
 		RequiresCondition: pointlaser-upgrade
 		ValidStances: Enemy
-	ExternalCondition@POINTL:
+	GrantConditionOnPrerequisite@POINTL:
 		Condition: pointlaser-upgrade
+		Prerequisites: pointlaser.upgrade
 
 MTNK.Drone:
 	Inherits: ^TankTD
@@ -1908,8 +1909,9 @@ MSAM:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 28,28
-	ExternalCondition@HSONIC:
+	GrantConditionOnPrerequisite@HSONIC:
 		Condition: hypersonic-upgrade
+		Prerequisites: hypersonic.upgrade
 
 MLRS:
 	Inherits: ^TankTD

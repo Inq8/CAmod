@@ -296,7 +296,7 @@ SUK:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
 	AmmoPool:
-		Ammo: 8
+		Ammo: 4
 		PipCount: 4
 		ReloadDelay: 30
 		AmmoCondition: ammo
@@ -337,8 +337,9 @@ SUK:
 		Prerequisites: aircraft.upgraded
 	Rearmable:
 		RearmActors: afld, afld.gdi
-	ExternalCondition@UPGRADE:
+	GrantConditionOnPrerequisite@CLUSTER:
 		Condition: cluster-upgrade
+		Prerequisites: cluster.upgrade
 
 YAK:
 	Inherits: ^Plane

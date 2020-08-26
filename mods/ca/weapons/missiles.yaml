@@ -87,12 +87,13 @@ MaverickSU:
 	Inherits: Maverick
 	Range: 10c0
 	Report: vbleatta.aud, vbleattb.aud
-	Burst: 4
+	Burst: 2
 	Projectile: Missile
 		Inaccuracy: 1c0
-		Speed: 180
+		Speed: 190
 		LockOnInaccuracy: 1024
 	Warhead@1Dam: SpreadDamage
+		Damage: 28000
 		Spread: 341
 		Versus:
 			Wood: 18
@@ -105,19 +106,48 @@ MaverickSU:
 		ImpactSounds: splashl1.aud, splashl2.aud
 
 SuClusterMissile:
-	Inherits: MaverickSU
+	ReloadDelay: 70
+	Range: 12c0
+	MinRange: 4c0
+	Report: vbleatta.aud, vbleattb.aud
+	Burst: 2
+	BurstDelays: 7
+	Projectile: Bullet
+		Image: MISSILE
+		Blockable: false
+		Shadow: true
+		Inaccuracy: 0c768
+		TrailImage: smokey
+		TrailDelay: 2
+		ContrailLength: 4
+		ContrailColor: FFFFFF80
+		Speed: 270
+		LaunchAngle: 10
+		AirburstAltitude: 0c678
 	Warhead@1Dam: SpreadDamage
+		Damage: 1
 		Versus:
 			Heavy: 15
 			Wood: 20
 			Light: 45
 			None: 80
 			Concrete: 60
-	Warhead@Cluster: FireCluster
-		Weapon: ClusterBomb
-		RandomClusterCount: 3
-		Dimensions: 3,3
-		Footprint: xxx x_x xxx
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@3Eff: CreateEffect
+		Explosions: med_explosion_air
+		ImpactActors: false
+		ImpactSounds: gexp14a.aud, gexp14b.aud, gexp14c.aud, gexp14d.aud
+		ValidTargets: Ground, Air, Ship, Trees
+	Warhead@4EffWater: CreateEffect
+		ImpactSounds: splashl1.aud, splashl2.aud
+		Explosions: med_splash
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+	Warhead@Cluster: FireCluster 
+		Weapon: ClusterBomb 
+		RandomClusterCount: 3 
+		Dimensions: 3,3 
+		Footprint: xxx x_x xxx 
 
 Dragon:
 	Inherits: ^AntiGroundMissile
