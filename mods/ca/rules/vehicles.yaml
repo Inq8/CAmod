@@ -297,7 +297,7 @@ V2RL:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 28,28
-		
+
 3TNK.IRAQ:
 	Inherits: 3TNK
 	RenderSprites:
@@ -384,7 +384,7 @@ V2RL:
 	Carryable:
 		LocalOffset: 0,0,500
 	-Crushable:
-	
+
 4TNK.IRAQ:
 	Inherits: 4TNK
 	RenderSprites:
@@ -2871,8 +2871,9 @@ HSAM:
 		LoadedChance: 75
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
-	ExternalCondition@HSONIC:
+	GrantConditionOnPrerequisite@HSONIC:
 		Condition: hypersonic-upgrade
+		Prerequisites: hypersonic.upgrade
 
 RTNK:
 	Inherits: ^Tank
