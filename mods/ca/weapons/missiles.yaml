@@ -107,8 +107,8 @@ MaverickSU:
 
 SuClusterMissile:
 	ReloadDelay: 70
-	Range: 12c0
-	MinRange: 4c0
+	Range: 10c0
+	MinRange: 3c0
 	Report: vbleatta.aud, vbleattb.aud
 	Burst: 2
 	BurstDelays: 7
@@ -126,12 +126,6 @@ SuClusterMissile:
 		AirburstAltitude: 0c678
 	Warhead@1Dam: SpreadDamage
 		Damage: 1
-		Versus:
-			Heavy: 15
-			Wood: 20
-			Light: 45
-			None: 80
-			Concrete: 60
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air
@@ -143,11 +137,11 @@ SuClusterMissile:
 		Explosions: med_splash
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
-	Warhead@Cluster: FireCluster 
-		Weapon: ClusterBomb 
-		RandomClusterCount: 3 
-		Dimensions: 3,3 
-		Footprint: xxx x_x xxx 
+	Warhead@Cluster: FireCluster
+		Weapon: ClusterBomb
+		RandomClusterCount: 4
+		Dimensions: 3,3
+		Footprint: xxx x_x xxx
 
 Dragon:
 	Inherits: ^AntiGroundMissile
