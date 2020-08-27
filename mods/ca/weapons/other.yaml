@@ -704,6 +704,26 @@ PrisTBurst:
 		Versus:
 			Wood: 35
 
+PrisCLaser:
+	Inherits: PrisTLaser
+	Report: pcanfire.aud
+	ReloadDelay: 75
+	Range: 10c0
+	Projectile: LaserZap
+		Width: 30
+		Duration: 15
+		Color: 00FFDEC8
+		SecondaryBeamWidth: 60
+		SecondaryBeamColor: 84f5ff
+		Blockable: true
+	Warhead@1Dam: SpreadDamage
+		Damage: 9000
+		Spread: 348
+		Versus:
+			Wood: 90
+			Concrete: 85
+	-Warhead@Burst:
+
 KirovBomb:
 	ReloadDelay: 35
 	ValidTargets: Ground, Water
