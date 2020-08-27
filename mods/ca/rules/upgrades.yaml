@@ -76,7 +76,7 @@ drone.upgrade:
 		Prerequisites: ~hq, ~structures.talon, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
-		Description: Research Battle Drone.\n  Upgrade: Battle Tank
+		Description: Research Battle Drone.\n  Replace: Battle Tank
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -121,7 +121,7 @@ walker.upgrade:
 		Prerequisites: ~miss.gdi, ~structures.talon, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
-		Description: Research the Titan and Juggernaut battle walkers.\n  Upgrade: Mammoth Tank\n  Unlock: Juggernaut
+		Description: Research the Titan and Juggernaut battle walkers.\n  Replace: Mammoth Tank\n  Unlock: Juggernaut
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -184,7 +184,7 @@ cyborg.upgrade:
 		Prerequisites: ~bio.nod, ~structures.nod, ~techlevel.high
 		IconPalette: chrome
 		BuildDuration: 1500
-		Description: Research Cybernetic Enhancement.\n  Upgrade: Mini-Gunner\n  Upgrade: Rocket Soldier\n  Upgrade: Flamethrower
+		Description: Research Cybernetic Enhancement.\n  Replace: Mini-Gunner\n  Replace: Rocket Soldier\n  Replace: Flamethrower\n  Upgrade: Acolyte
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -251,6 +251,20 @@ indp.upgrade:
 	RenderSprites:
 		Image: indp.upgrade
 
+v2.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: V2 Launcher
+	Buildable:
+		BuildPaletteOrder: 50
+		Prerequisites: ~dome, ~structures.soviet, ~!structures.russia, ~techlevel.medium
+		BuildDuration: 1500
+		Description: Research V2 Launcher.\n  Replace: Katyusha
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: v2.upgrade
+
 iraqtank.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -290,11 +304,25 @@ charv.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~orep, ~structures.allies, ~techlevel.high
 		BuildDuration: 3000
-		Description: Research Chrono Harvester.\n  Unlock: Chrono Harvester
+		Description: Research Chrono Harvester.\n  Upgrade: Ore Truck
 	Valued:
 		Cost: 2000
 	RenderSprites:
 		Image: charv.upgrade
+
+pcan.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Prism Cannon
+	Buildable:
+		BuildPaletteOrder: 50
+		Prerequisites: ~dome, ~structures.allies, ~techlevel.high
+		BuildDuration: 1500
+		Description: Research Prism Cannon.\n  Replace: Prism Tank
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: pcan.upgrade
 
 ################################SCRIN##############################
 ###################################################################
