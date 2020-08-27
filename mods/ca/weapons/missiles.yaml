@@ -659,6 +659,39 @@ V3Weapon:
 		Explosions: large_splash
 		ImpactSounds: splashl1.aud, splashl2.aud
 
+KatyushaRockets:
+	Inherits: ^AntiGroundMissile
+	ReloadDelay: 240
+	Range: 16c0
+	MinRange: 4c0
+	Report: missile6.aud
+	Burst: 8
+	BurstDelays: 6
+	Projectile: Bullet
+		Blockable: false
+		Shadow: true
+		Inaccuracy: 3c512
+		Image: dragon
+		TrailImage: smokey
+		Speed: 250
+		LaunchAngle: 65
+	ValidTargets: Ground, Trees, Water
+	Warhead@1Dam: SpreadDamage
+		Spread: 384
+		Damage: 3000
+		Versus:
+			None: 100
+			Wood: 95
+			Concrete: 55
+			Light: 80
+			Heavy: 45
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@3Eff: CreateEffect
+		Explosions: frag_3
+		ExplosionPalette: temptd
+		ImpactSounds: kaboom15.aud
+		ValidTargets: Ground, Ship, Trees
+
 HonestJohn:
 	ReloadDelay: 130
 	Burst: 2
