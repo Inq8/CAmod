@@ -950,7 +950,7 @@ TPOD:
 RPTP:
 	Inherits: TPOD
 	Buildable:
-		Prerequisites: techcenter, ~vehicles.reaper, ~techlevel.high
+		Prerequisites: scrt, ~vehicles.reaper, ~techlevel.high
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
@@ -1358,6 +1358,12 @@ INVA:
 		TrailLength: 10
 	-Contrail@2:
 	Interactable:
+	GrantConditionOnPrerequisite@SHIELDS:
+		Condition: shields-upgrade
+		Prerequisites: shields.upgrade
+	DamageMultiplier@SHIELDS:
+		RequiresCondition: shields-upgrade
+		Modifier: 80
 
 #
 # ---- Husks
