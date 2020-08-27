@@ -137,7 +137,7 @@ namespace OpenRA.Mods.CA.Traits
 				// Checking for attack range is not relevant here because
 				// aircraft may be shot down before entering. Thus we remove
 				// the camera and beacon only if the whole squad is dead.
-				if (aircraftInRange.All(kv => kv.Key.IsDead))
+				if (aircraftInRange.All(kv => !kv.Key.IsInWorld))
 				{
 					RemoveCamera(camera);
 					RemoveBeacon(beacon);
