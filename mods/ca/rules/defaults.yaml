@@ -81,6 +81,9 @@
 	ProvidesPrerequisite@AI:
 		Prerequisite: botplayer
 		RequiresCondition: owned-by-brutal-ai || owned-by-vhard-ai || owned-by-hard-ai || owned-by-normal-ai || owned-by-easy-ai || owned-by-naval-ai
+	GrantConditionOnBotOwner@AI
+		Condition: owned-by-ai
+		Bots: brutal, vhard, hard, normal, easy, naval
 	ProductionTimeMultiplier@brutalbonus:
 		Multiplier: 88
 		Prerequisites: is-brutal-ai
