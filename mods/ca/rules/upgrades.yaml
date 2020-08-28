@@ -18,6 +18,7 @@ bombard.strat:
 	Buildable:
 		BuildPaletteOrder: 1
 		Prerequisites: ~miss.gdi, !seek.strat, !hold.strat, ~structures.gdi, ~techlevel.high
+		IconPalette: chrometd
 		BuildDuration: 3000
 		Description: Increase Unit Firepower 20%\n  Only one Strategy may be chosen.
 	Valued:
@@ -32,6 +33,7 @@ seek.strat:
 	Buildable:
 		BuildPaletteOrder: 2
 		Prerequisites: ~miss.gdi, !bombard.strat, !hold.strat, ~structures.gdi, ~techlevel.high
+		IconPalette: chrometd
 		BuildDuration: 3000
 		Description: Increase Unit Range 20%\nIncrease Stealth Detection\n  Only one Strategy may be chosen.
 	Valued:
@@ -46,6 +48,7 @@ hold.strat:
 	Buildable:
 		BuildPaletteOrder: 3
 		Prerequisites: ~miss.gdi, !bombard.strat, !seek.strat, ~structures.gdi, ~techlevel.high
+		IconPalette: chrometd
 		BuildDuration: 3000
 		Description: Increase Unit Armor 20%\n  Only one Strategy may be chosen.
 	Valued:
@@ -76,7 +79,7 @@ drone.upgrade:
 		Prerequisites: ~hq, ~structures.talon, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
-		Description: Research Battle Drone.\n  Upgrade: Battle Tank
+		Description: Research Battle Drone.\n  Replace: Battle Tank
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -85,13 +88,12 @@ drone.upgrade:
 pointlaser.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Point Laser Defense
+		Name: Research: Point Defense Lasers
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~gtek, ~structures.gdi, ~!structures.talon, ~techlevel.high
-		IconPalette: chrometd
 		BuildDuration: 1500
-		Description: Research Point Laser Defense\n  Upgrade: Battle Tank\n  Upgrade: Frigate
+		Description: Research Point Defense Lasers\n  Upgrade: Battle Tank\n  Upgrade: Frigate
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -104,7 +106,6 @@ hypersonic.upgrade:
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~miss.gdi, ~structures.gdi, ~techlevel.high
-		IconPalette: chrometd
 		BuildDuration: 1500
 		Description: Research Hypersonic missiles\n  Upgrade: MLRS\n  Upgrade: HMLRS
 	Valued:
@@ -119,9 +120,8 @@ walker.upgrade:
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~miss.gdi, ~structures.talon, ~techlevel.high
-		IconPalette: chrometd
 		BuildDuration: 1500
-		Description: Research the Titan and Juggernaut battle walkers.\n  Upgrade: Mammoth Tank\n  Unlock: Juggernaut
+		Description: Research the Titan and Juggernaut battle walkers.\n  Replace: Mammoth Tank\n  Unlock: Juggernaut
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -136,7 +136,7 @@ ionmam.upgrade:
 		Prerequisites: ~miss.gdi, ~structures.gdi, ~!structures.talon, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
-		Description: Research Ion Mammoth Tank.\n  Upgrade: Mammoth Tank
+		Description: Research Ion Mammoth Tank.\n  Replace: Mammoth Tank
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -151,7 +151,7 @@ vulcan.upgrade:
 		Prerequisites: ~hq, ~structures.gdi, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
-		Description: Research Vulcan.\n  Upgrade: APC
+		Description: Research Vulcan.\n  Replace: APC
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -182,9 +182,8 @@ cyborg.upgrade:
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~bio.nod, ~structures.nod, ~techlevel.high
-		IconPalette: chrome
 		BuildDuration: 1500
-		Description: Research Cybernetic Enhancement.\n  Upgrade: Mini-Gunner\n  Upgrade: Rocket Soldier\n  Upgrade: Flamethrower
+		Description: Research Cybernetic Enhancement.\n  Replace: Mini-Gunner\n  Replace: Rocket Soldier\n  Replace: Flamethrower\n  Upgrade: Acolyte
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -197,7 +196,6 @@ cyborgspeed.upgrade:
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: cyborg.upgrade, ~bio.nod, ~structures.nod, ~techlevel.high
-		IconPalette: chrome
 		BuildDuration: 1500
 		Description: Research Improved Cyborg Speed.\n  Upgrade: Cyborg\n  Upgrade: Cyborg Reaper\n  Upgrade: Chemical Warrior\n  Upgrade: Acolyte\n  Upgrade: Cyborg Elite
 	Valued:
@@ -212,7 +210,6 @@ cyborgarmor.upgrade:
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: cyborg.upgrade, ~bio.nod, ~structures.nod, ~techlevel.high
-		IconPalette: chrome
 		BuildDuration: 1500
 		Description: Research Improved Cyborg Armor.\n  Upgrade: Cyborg\n  Upgrade: Cyborg Reaper\n  Upgrade: Chemical Warrior\n  Upgrade: Acolyte\n  Upgrade: Cyborg Elite
 	Valued:
@@ -251,6 +248,20 @@ indp.upgrade:
 	RenderSprites:
 		Image: indp.upgrade
 
+v2.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: V2 Launcher
+	Buildable:
+		BuildPaletteOrder: 50
+		Prerequisites: ~dome, ~structures.soviet, ~!structures.russia, ~techlevel.medium
+		BuildDuration: 1500
+		Description: Research V2 Launcher.\n  Replace: Katyusha
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: v2.upgrade
+
 iraqtank.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -259,7 +270,7 @@ iraqtank.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~dome, ~structures.iraq, ~techlevel.high
 		BuildDuration: 1500
-		Description: Research Atomic Engines.\n  Upgrade: Heavy Tank\n  Upgrade: Mammoth Tank
+		Description: Research Atomic Engines.\n  Replace: Heavy Tank\n  Replace: Mammoth Tank
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -285,16 +296,30 @@ orep.upgrade:
 charv.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Chrono Harvester
+		Name: Research: Chrono Miner
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~orep, ~structures.allies, ~techlevel.high
 		BuildDuration: 3000
-		Description: Research Chrono Harvester.\n  Unlock: Chrono Harvester
+		Description: Research Chrono Miner.\n  Upgrade: Ore Truck
 	Valued:
 		Cost: 2000
 	RenderSprites:
 		Image: charv.upgrade
+
+pcan.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Prism Cannon
+	Buildable:
+		BuildPaletteOrder: 50
+		Prerequisites: ~dome, ~structures.allies, ~techlevel.high
+		BuildDuration: 1500
+		Description: Research Prism Cannon.\n  Replace: Prism Tank
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: pcan.upgrade
 
 ################################SCRIN##############################
 ###################################################################

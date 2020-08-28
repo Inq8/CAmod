@@ -6,7 +6,7 @@ V2RL:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 115
-		Prerequisites: dome, ~vehicles.soviet, ~techlevel.medium
+		Prerequisites: dome, ~vehicles.soviet, ~v2.upgrade, ~techlevel.medium
 		Description: Long-range rocket artillery.\n  Strong vs Buildings, Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
 		Cost: 900
@@ -42,6 +42,46 @@ V2RL:
 		RequiresCondition: reloading
 		Sequence: empty-idle
 		Name: reloading
+	Explodes:
+		Weapon: BarrelExplode
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	Selectable:
+		DecorationBounds: 28,28
+
+KATY:
+	Inherits: ^Vehicle
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 115
+		IconPalette: chrometd
+		Prerequisites: dome, ~vehicles.soviet, ~!v2.upgrade, ~techlevel.medium
+		Description: Long-range rocket artillery.\n  Strong vs Infantry, Light Armor, Buildings\n  Weak vs Tanks, Aircraft
+	Valued:
+		Cost: 900
+	Tooltip:
+		Name: Katyusha
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 15000
+	Armor:
+		Type: Light
+	Mobile:
+		Speed: 68
+		TurnSpeed: 4
+	RevealsShroud:
+		Range: 5c0
+	Armament:
+		Weapon: KatyushaRockets
+	AttackFrontal:
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: True
+		PauseOnCondition: empdisable || being-warped
+	SelectionDecorations:
 	Explodes:
 		Weapon: BarrelExplode
 	ProducibleWithLevel:
@@ -3225,7 +3265,7 @@ PTNK:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 135
-		Prerequisites: radar, ~vehicles.ptnk, ~techlevel.high
+		Prerequisites: radar, ~vehicles.ptnk, ~!pcan.upgrade, ~techlevel.high
 		Description: Long-range artillery with Prism Tower derived weapon.\n  Strong vs Buildings, Infantry, Light Armor\n  Weak vs Tanks, Aircraft
 	Valued:
 		Cost: 1350
@@ -3270,6 +3310,28 @@ PTNK:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 28,28
+
+PCAN:
+	Inherits: PTNK
+	Buildable:
+		Prerequisites: radar, ~vehicles.ptnk, ~pcan.upgrade, ~techlevel.high
+		Description: A prototype long range artillery that fires highly focused beams of light.\n  Strong vs Buildings, Infantry, Light Armor\n  Weak vs Tanks, Aircraft
+	Tooltip:
+		Name: Prism Cannon
+	Armament:
+		Weapon: PrisCLaser
+		FireDelay: 10
+		LocalOffset: 420,0,180
+	-Turreted:
+	-AttackTurreted:
+	-WithSpriteTurret:
+	AttackFrontal:
+		TargetFrozenActors: True
+		OpportunityFire: False
+		PauseOnCondition: empdisable || being-warped
+		Voice: Attack
+	SpawnActorOnDeath:
+		Actor: PCAN.Husk
 
 WTNK:
 	Inherits: ^TankTD
