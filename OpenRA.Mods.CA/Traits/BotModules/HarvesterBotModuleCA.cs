@@ -28,7 +28,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly HashSet<string> HarvesterTypes = new HashSet<string>();
 
 		[Desc("Number of harvesters per refinery to maintain.")]
-		public readonly int HarvestersPerRefinery = 1;
+		public readonly int HarvestersPerRefinery = 2;
 
 		[Desc("Maximum number of harvesters to build.")]
 		public readonly int MaxHarvesters = 8;
@@ -37,7 +37,10 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly HashSet<string> RefineryTypes = new HashSet<string>();
 
 		[Desc("Interval (in ticks) between giving out orders to idle harvesters.")]
-		public readonly int ScanForIdleHarvestersInterval = 50;
+		public readonly int ScanForIdleHarvestersInterval = 75;
+
+		[Desc("Interval (in ticks) between checking whether to produce new harvesters.")]
+		public readonly int ProduceHarvestersInterval = 375;
 
 		[Desc("Avoid enemy actors nearby when searching for a new resource patch. Should be somewhere near the max weapon range.")]
 		public readonly WDist HarvesterEnemyAvoidanceRadius = WDist.FromCells(8);
@@ -73,6 +76,7 @@ namespace OpenRA.Mods.CA.Traits
 		ResourceClaimLayer claimLayer;
 		IBotRequestUnitProduction[] requestUnitProduction;
 		int scanForIdleHarvestersTicks;
+		int scanForEnoughHarvestersTicks;
 
 		public HarvesterBotModuleCA(Actor self, HarvesterBotModuleCAInfo info)
 			: base(info)
@@ -98,6 +102,7 @@ namespace OpenRA.Mods.CA.Traits
 			resLayer = world.WorldActor.TraitOrDefault<ResourceLayer>();
 			claimLayer = world.WorldActor.TraitOrDefault<ResourceClaimLayer>();
 			scanForIdleHarvestersTicks = Info.ScanForIdleHarvestersInterval;
+			scanForEnoughHarvestersTicks = Info.ProduceHarvestersInterval;
 		}
 
 		void IBotTick.BotTick(IBot bot)
@@ -106,13 +111,23 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			if (--scanForIdleHarvestersTicks > 0)
-				return;
+			{
+				OrderHarvesters(bot);
+				scanForIdleHarvestersTicks = Info.ScanForIdleHarvestersInterval;
+			}
 
+			if (--scanForEnoughHarvestersTicks > 0)
+			{
+				ProduceHarvesters(bot);
+				scanForEnoughHarvestersTicks = Info.ProduceHarvestersInterval;
+			}
+		}
+
+		protected void OrderHarvesters(IBot bot)
+		{
 			var toRemove = harvesters.Keys.Where(unitCannotBeOrdered).ToList();
 			foreach (var a in toRemove)
 				harvesters.Remove(a);
-
-			scanForIdleHarvestersTicks = Info.ScanForIdleHarvestersInterval;
 
 			// Find new harvesters
 			// TODO: Look for a more performance-friendly way to update this list
@@ -137,7 +152,10 @@ namespace OpenRA.Mods.CA.Traits
 				AIUtils.BotDebug("AI: Harvester {0} is idle. Ordering to {1} in search for new resources.".F(h.Key, newSafeResourcePatch));
 				bot.QueueOrder(new Order("Harvest", h.Key, newSafeResourcePatch, false));
 			}
+		}
 
+		protected void ProduceHarvesters(IBot bot)
+		{
 			// Less harvesters than refineries - build a new harvester
 			var unitBuilder = requestUnitProduction.FirstOrDefault(Exts.IsTraitEnabled);
 			if (unitBuilder != null && Info.HarvesterTypes.Any())

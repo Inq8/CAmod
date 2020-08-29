@@ -5815,6 +5815,11 @@ INDP:
 		RequiresCondition: disabled || empdisable || being-warped
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
+	GrantRandomCondition@ai-v2:
+		Conditions: ai-v2-upgrade, noupgrade
+	ProvidesPrerequisite@ai-v2:
+		Prerequisite: v2.upgrade
+		RequiresCondition: ai-v2-upgrade && owned-by-ai
 
 OREP:
 	Inherits: ^ScienceBuilding
@@ -5877,6 +5882,11 @@ OREP:
 	GrantConditionOnPrerequisite@UPGRADE:
 		Condition: orep-upgrade
 		Prerequisites: orep.upgrade
+	GrantRandomCondition@ai-pcan:
+		Conditions: ai-pcan-upgrade, noupgrade
+	ProvidesPrerequisite@ai-pcan:
+		Prerequisite: pcan.upgrade
+		RequiresCondition: ai-pcan-upgrade && owned-by-ai
 
 MISS.GDI:
 	Inherits: ^ScienceBuilding
