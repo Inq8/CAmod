@@ -77,6 +77,7 @@ KATY:
 		Range: 5c0
 	Armament:
 		Weapon: KatyushaRockets
+		LocalOffset: 268,0,500
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
@@ -303,6 +304,11 @@ KATY:
 	Tooltip:
 		Name: Heavy Tank
 		GenericName: Tank
+		RequiresCondition: !iraqtank-upgrade
+	Tooltip@UPG:
+		Name: Atomic Heavy Tank
+		GenericName: Tank
+		RequiresCondition: iraqtank-upgrade
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -311,6 +317,9 @@ KATY:
 		Type: Heavy
 	Mobile:
 		Speed: 68
+	SpeedMultiplier@IRAQTANK:
+		Modifier: 125
+		RequiresCondition: iraqtank-upgrade
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -330,13 +339,24 @@ KATY:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
+		RequiresCondition: !iraqtank-upgrade 
+	WithSpriteTurret@UPG:
+		Sequence: turret2
+		RequiresCondition: iraqtank-upgrade 
 	SpawnActorOnDeath:
 		Actor: 3TNK.Husk
-		RequiresCondition: !being-warped
+		RequiresCondition: !being-warped && !iraqtank-upgrade
+	Explodes@IRAQTANK:
+		Weapon: UnitExplodeIraqTank
+		EmptyWeapon: UnitExplodeIraqTank
+		RequiresCondition: !being-warped && iraqtank-upgrade
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 28,28
+	GrantConditionOnPrerequisite@IRAQ:
+		Condition: iraqtank-upgrade
+		Prerequisites: iraqtank.upgrade
 
 3TNK.IRAQ:
 	Inherits: 3TNK
@@ -373,6 +393,11 @@ KATY:
 	Tooltip:
 		Name: Mammoth Tank
 		GenericName: Tank
+		RequiresCondition: !iraqtank-upgrade
+	Tooltip@UPG:
+		Name: Atomic Mammoth Tank
+		GenericName: Tank
+		RequiresCondition: iraqtank-upgrade
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -382,6 +407,9 @@ KATY:
 	Mobile:
 		Speed: 52
 		Locomotor: heavytracked
+	SpeedMultiplier@IRAQTANK:
+		Modifier: 125
+		RequiresCondition: iraqtank-upgrade
 	Passenger:
 		Weight: 2
 	RevealsShroud:
@@ -409,9 +437,17 @@ KATY:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
+		RequiresCondition: !iraqtank-upgrade 
+	WithSpriteTurret@UPG:
+		Sequence: turret2
+		RequiresCondition: iraqtank-upgrade 
 	SpawnActorOnDeath:
 		Actor: 4TNK.Husk
-		RequiresCondition: !being-warped
+		RequiresCondition: !being-warped && !iraqtank-upgrade
+	Explodes@IRAQTANK:
+		Weapon: UnitExplodeIraqTank
+		EmptyWeapon: UnitExplodeIraqTank
+		RequiresCondition: !being-warped && iraqtank-upgrade
 	SelfHealing:
 		PercentageStep: 1
 		Delay: 25
@@ -424,6 +460,9 @@ KATY:
 	Carryable:
 		LocalOffset: 0,0,500
 	-Crushable:
+	GrantConditionOnPrerequisite@IRAQ:
+		Condition: iraqtank-upgrade
+		Prerequisites: iraqtank.upgrade
 
 4TNK.IRAQ:
 	Inherits: 4TNK
@@ -1396,6 +1435,10 @@ APC2:
 		Cost: 600
 	Tooltip:
 		Name: Armored Personnel Carrier
+		RequiresCondition: !vulcan-upgrade
+	Tooltip@UPG:
+		Name: Vulcan
+		RequiresCondition: vulcan-upgrade
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -1405,6 +1448,9 @@ APC2:
 	Mobile:
 		Speed: 135
 		PauseOnCondition: being-captured || empdisable || being-warped || notmobile || driver-dead
+	SpeedMultiplier@UPG:
+		Modifier: 74
+		RequiresCondition: vulcan-upgrade
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -1415,8 +1461,91 @@ APC2:
 		Weapon: M60mgTD
 		LocalOffset: 85,0,171
 		MuzzleSequence: muzzle
+		RequiresCondition: !vulcan-upgrade
+	Armament@GAT0:
+		Weapon: MGatt.0
+		LocalOffset: 220,0,350
+		MuzzleSequence: muzzle
+		RequiresCondition: gattling == 0 && vulcan-upgrade
+		PauseOnCondition: engage-ground
+		ReloadingCondition: engage-air
+	Armament@GAT1:
+		Weapon: MGatt.1
+		LocalOffset: 220,0,350
+		MuzzleSequence: muzzle
+		RequiresCondition: gattling == 1 && vulcan-upgrade
+		PauseOnCondition: engage-ground
+		ReloadingCondition: engage-air
+	Armament@GAT2:
+		Weapon: MGatt.2
+		LocalOffset: 220,0,350
+		MuzzleSequence: muzzle
+		RequiresCondition: gattling == 2 && vulcan-upgrade
+		PauseOnCondition: engage-ground
+		ReloadingCondition: engage-air
+	Armament@GAT3:
+		Weapon: MGatt.3
+		LocalOffset: 220,0,350
+		MuzzleSequence: muzzle
+		RequiresCondition: gattling == 3 && vulcan-upgrade
+		PauseOnCondition: engage-ground
+		ReloadingCondition: engage-air
+	Armament@GAT0G:
+		Name: secondary
+		Weapon: MGatt.0G
+		LocalOffset: 321,0,85
+		MuzzleSequence: muzzle
+		RequiresCondition: gattling-ground == 0 && vulcan-upgrade
+		PauseOnCondition: engage-air
+		ReloadingCondition: engage-ground
+	Armament@GAT1G:
+		Name: secondary
+		Weapon: MGatt.1G
+		LocalOffset: 321,0,85
+		MuzzleSequence: muzzle
+		RequiresCondition: gattling-ground == 1 && vulcan-upgrade
+		PauseOnCondition: engage-air
+		ReloadingCondition: engage-ground
+	Armament@GAT2G:
+		Name: secondary
+		Weapon: MGatt.2G
+		LocalOffset: 321,0,85
+		MuzzleSequence: muzzle
+		RequiresCondition: gattling-ground == 2 && vulcan-upgrade
+		ReloadingCondition: engage-ground
+		PauseOnCondition: engage-air
+	GrantConditionOnAttack:
+		Condition: gattling
+		RequiredShotsPerInstance: 1,6,12
+		MaximumInstances: 3
+		RevokeDelay: 40
+		RevokeOnNewTarget: False
+		RevokeAll: True
+	GrantConditionOnAttack@GROUND:
+		ArmamentNames: secondary
+		Condition: gattling-ground
+		RequiredShotsPerInstance: 1,6
+		MaximumInstances: 2
+		RevokeDelay: 40
+		RevokeOnNewTarget: False
+		RevokeAll: True
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !vulcan-upgrade
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
+		Armaments: primary, secondary
+		RequiresCondition: vulcan-upgrade
+	Turreted:
+		TurnSpeed: 7
+		Offset: 0,0,150
+		RequiresCondition: vulcan-upgrade
+	WithSpriteTurret:
+		Sequence: turret2
+		RequiresCondition: !gattling-ground && vulcan-upgrade
+	WithSpriteTurret@GROUND:
+		Sequence: turret2-ground
+		RequiresCondition: gattling-ground && vulcan-upgrade
 	WithMuzzleOverlay:
 	Cargo:
 		Types: Infantry
@@ -1432,6 +1561,10 @@ APC2:
 		RequiresCondition: driver-dead && !cargo
 	Targetable@DRIVERKILL:
 		RequiresCondition: !driver-dead && !cargo
+	GrantConditionOnPrerequisite@VULCAN:
+		Condition: vulcan-upgrade
+		Prerequisites: vulcan.upgrade
+		
 
 APC2.Reinforce:
 	Inherits: APC2
@@ -1651,6 +1784,11 @@ MTNK:
 	Tooltip:
 		Name: Battle Tank
 		GenericName: Tank
+		RequiresCondition: !drone-upgrade
+	Tooltip@UPG:
+		Name: Battle Drone (Crewed)
+		GenericName: Tank
+		RequiresCondition: drone-upgrade
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -1678,25 +1816,39 @@ MTNK:
 		RecoilRecovery: 26
 		LocalOffset: 768,0,90
 		MuzzleSequence: muzzle
+		RequiresCondition: !drone-upgrade
+	Armament@UPG:
+		Weapon: 90mm
+		Recoil: 128
+		RecoilRecovery: 26
+		LocalOffset: 768,0,90
+		MuzzleSequence: muzzle
+		RequiresCondition: drone-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Turret: secondary
 		Weapon: PointLaser
 		LocalOffset: 0,10,90
-		RequiresCondition: pointlaser-upgrade
+		RequiresCondition: pointlaser-upgrade && !drone-upgrade
 		ForceTargetStances: enemy
 	AttackTurreted:
 		Turrets: primary, secondary
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret@default:
-		RequiresCondition: !pointlaser-upgrade
+		RequiresCondition: !pointlaser-upgrade && !drone-upgrade
+	WithSpriteTurret@UPG:
+		Sequence: turret2
+		RequiresCondition: !pointlaser-upgrade && drone-upgrade
 	WithSpriteTurret@pointlaser:
 		Sequence: turretpd
 		RequiresCondition: pointlaser-upgrade
 	SpawnActorOnDeath:
 		Actor: MTNK.Husk
-		RequiresCondition: !being-warped
+		RequiresCondition: !being-warped && !drone-upgrade
+	SpawnActorOnDeath@UPG:
+		Actor: MTNK.Drone.Husk
+		RequiresCondition: !being-warped && drone-upgrade
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -1709,6 +1861,16 @@ MTNK:
 	GrantConditionOnPrerequisite@POINTL:
 		Condition: pointlaser-upgrade
 		Prerequisites: pointlaser.upgrade
+	GrantConditionOnPrerequisite@DRONE:
+		Condition: drone-upgrade
+		Prerequisites: drone.upgrade
+	Transforms:
+		IntoActor: mtnk.drone
+		TransformSounds: ggarenta.aud, ggarentb.aud, ggarentc.aud
+		RequiresCondition: drone-upgrade
+	EjectOnTransform:
+		PilotActor: N1
+		RequiresCondition: drone-upgrade
 
 MTNK.Drone:
 	Inherits: ^TankTD
@@ -1812,6 +1974,11 @@ HTNK:
 	Tooltip:
 		Name: Mammoth Tank
 		GenericName: Tank
+		RequiresCondition: !ionmam-upgrade
+	Tooltip@UPG:
+		Name: Ion Mammoth Tank
+		GenericName: Tank
+		RequiresCondition: ionmam-upgrade
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -1837,6 +2004,14 @@ HTNK:
 		Recoil: 171
 		RecoilRecovery: 30
 		MuzzleSequence: muzzle
+		RequiresCondition: !ionmam-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: IonZap
+		LocalOffset: 870,0,360
+		Recoil: 171
+		RecoilRecovery: 30
+		MuzzleSequence: muzzle
+		RequiresCondition: ionmam-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: MammothTusk
@@ -1848,9 +2023,16 @@ HTNK:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
+		RequiresCondition: !ionmam-upgrade
+	WithSpriteTurret@UPG:
+		Sequence: turret2
+		RequiresCondition: ionmam-upgrade
 	SpawnActorOnDeath:
 		Actor: HTNK.Husk
-		RequiresCondition: !being-warped
+		RequiresCondition: !being-warped && !ionmam-upgrade
+	SpawnActorOnDeath@UPG:
+		Actor: HTNK.Husk
+		RequiresCondition: !being-warped && ionmam-upgrade
 	SelfHealing:
 		PercentageStep: 1
 		Delay: 25
@@ -1863,6 +2045,9 @@ HTNK:
 	Carryable:
 		LocalOffset: 0,0,500
 	-Crushable:
+	GrantConditionOnPrerequisite@ION:
+		Condition: ionmam-upgrade
+		Prerequisites: ionmam-upgrade
 
 HTNK.Ion:
 	Inherits: HTNK
