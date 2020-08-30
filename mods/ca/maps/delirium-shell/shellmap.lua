@@ -15,7 +15,7 @@ ProducedUnitTypes =
 {
 	{ factory = AlliedBarracks1, types = { "e1", "e3" } },
 	{ factory = ScrinBarracks1, types = { "s1", "s3" } },
-	{ factory = NodBarracks1, types = { "n1", "n3", "n5" } },
+	{ factory = NodBarracks1, types = { "n1", "n3", "n4" } },
 	{ factory = AlliedWarFactory1, types = { "1tnk", "2tnk", "ptnk", "jeep", "ifv.ai", "cryo", "arty" } },
 	{ factory = ScrinWarFactory1, types = { "seek", "tpod", "gunw", "devo", "corr" } },
 	{ factory = NodWarFactory1, types = { "ltnk", "ftnk", "stnk.nod", "arty.nod", "mlrs" } }
