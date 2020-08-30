@@ -1629,20 +1629,20 @@ PROC:
 		Capacity: 2000
 	CustomSellValue:
 		Value: 300
-	GrantConditionOnPrerequisite@OREP:
-		Prerequisites: orep
-		Condition: orep-built
-	GrantConditionOnPrerequisite@NOOREP:
-		Prerequisites: !orep
-		Condition: orep-notbuilt
+	GrantConditionOnPrerequisite@CHARVUPG:
+		Prerequisites: charv.upgrade
+		Condition: charv-upgraded
+	GrantConditionOnPrerequisite@NOCHARVUPG:
+		Prerequisites: !charv.upgrade
+		Condition: charv-notupgraded
 	GrantCondition@SPAWNHARV:
 		Condition: spawn-harv
 		GrantPermanently: true
-		RequiresCondition: orep-notbuilt
+		RequiresCondition: charv-notupgraded
 	GrantCondition@SPAWNCHARV:
 		Condition: spawn-charv
 		GrantPermanently: true
-		RequiresCondition: orep-built
+		RequiresCondition: charv-upgraded
 	FreeActor:
 		Actor: HARV
 		SpawnOffset: 1,2
@@ -3490,9 +3490,9 @@ AIRS:
 	ProvidesPrerequisite@apc2:
 		Prerequisite: vehicles.apc2
 		RequiresPrerequisites: inf.gdi.stolen
-	ProvidesPrerequisite@howiupgrade: 
-		Factions: blackh 
-		Prerequisite: howi.upgrade 
+	ProvidesPrerequisite@howiupgrade:
+		Factions: blackh
+		Prerequisite: howi.upgrade
 	ParatroopersPower@airdrop:
 		OrderName: nodairdrop
 		SquadSize: 3
