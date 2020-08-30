@@ -3490,6 +3490,9 @@ AIRS:
 	ProvidesPrerequisite@apc2:
 		Prerequisite: vehicles.apc2
 		RequiresPrerequisites: inf.gdi.stolen
+	ProvidesPrerequisite@howiupgrade: 
+		Factions: blackh 
+		Prerequisite: howi.upgrade 
 	ParatroopersPower@airdrop:
 		OrderName: nodairdrop
 		SquadSize: 3
@@ -4096,7 +4099,7 @@ HQ:
 		PauseOnCondition: disabled || being-warped
 	ParatroopersPower@Legionparatroopers:
 		OrderName: LegionParatroopers
-		Prerequisites: structures.legion, hand, techlevel.medium
+		Prerequisites: structures.legion, !cyborg.upgrade, hand, techlevel.medium
 		Icon: paratroopers
 		UnitType: c17
 		ChargeInterval: 7500
@@ -4105,6 +4108,30 @@ HQ:
 		SquadSize: 1
 		SquadOffset: 0,1792,0
 		DropItems: N1,N1,N4,N3,N3,N1,N1,N4
+		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
+		SelectTargetSpeechNotification: SelectTarget
+		AllowImpassableCells: false
+		QuantizedFacings: 8
+		CameraActor: camera.paradrop
+		DisplayBeacon: true
+		BeaconPoster: pinficon
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+		PauseOnCondition: disabled || being-warped
+	ParatroopersPower@LegionparatroopersUPG:
+		OrderName: LegionParatroopersUPG
+		Prerequisites: structures.legion, cyborg.upgrade, hand, techlevel.medium
+		Icon: paratroopers
+		UnitType: c17
+		ChargeInterval: 7500
+		Description: Paratroopers
+		LongDesc: A Cargo Plane drops a squad of infantry\nanywhere on the map.
+		SquadSize: 1
+		SquadOffset: 0,1792,0
+		DropItems: N1C,N1C,N5,N3C,N3C,N1C,N1C,N5
 		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
 		AllowImpassableCells: false

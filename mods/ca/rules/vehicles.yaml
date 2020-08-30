@@ -538,9 +538,29 @@ ARTY.nod:
 		Image: smoke_mtd
 	Buildable:
 		IconPalette: chrometd
-		Prerequisites: ~vehicles.nod, ~techlevel.medium
+		Prerequisites: ~vehicles.nod, ~!howi.upgrade, ~techlevel.medium
 	Armament:
 		Weapon: 155mmTD
+		
+HOWI:
+	Inherits: ARTY.nod
+	RenderSprites:
+		Image: howi
+	Tooltip:
+		Name: Howitzer
+	Buildable:
+		IconPalette: chrometd
+		Prerequisites: ~vehicles.nod, ~howi.upgrade, ~techlevel.medium
+	-AttackFrontal:
+	AttackTurreted:
+	Turreted:
+		TurnSpeed: 2
+	Armament:
+		Weapon: 155mmTDM
+		LocalOffset: 624,0,208
+	Mobile:
+		Speed: 68
+	WithSpriteTurret:
 
 ARTY.Chrono:
 	Inherits: ARTY

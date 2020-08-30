@@ -64,6 +64,7 @@ sonic.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~gtek, ~structures.zocom, ~techlevel.high
 		BuildDuration: 1500
+		IconPalette: chrometd
 		Description: Research Sonic Amplifiers\n  Upgrade: Sonic Tower\n  Upgrade: Disruptor
 	Valued:
 		Cost: 1000
@@ -92,6 +93,7 @@ pointlaser.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~gtek, ~structures.gdi, ~!structures.talon, ~techlevel.high
 		BuildDuration: 1500
+		IconPalette: chrometd
 		Description: Research Point Defense Lasers\n  Upgrade: Battle Tank\n  Upgrade: Frigate
 	Valued:
 		Cost: 1000
@@ -106,6 +108,7 @@ hypersonic.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~miss.gdi, ~structures.gdi, ~techlevel.high
 		BuildDuration: 1500
+		IconPalette: chrometd
 		Description: Research Hypersonic missiles\n  Upgrade: MLRS\n  Upgrade: HMLRS
 	Valued:
 		Cost: 1000
@@ -120,6 +123,7 @@ walker.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~miss.gdi, ~structures.talon, ~techlevel.high
 		BuildDuration: 1500
+		IconPalette: chrometd
 		Description: Research the Titan and Juggernaut battle walkers.\n  Replace: Mammoth Tank\n  New Unit: Juggernaut
 	Valued:
 		Cost: 1000
@@ -162,10 +166,10 @@ vulcan.upgrade:
 hazmat.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Hazmat Suits
+		Name: Research: Hazmat Suits
 	Buildable:
 		BuildPaletteOrder: 50
-		Prerequisites: ~tmpl, ~structures.nod, ~techlevel.high
+		Prerequisites: ~hq, ~structures.nod, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
 		Description: Research Hazmat suits for infantry.\n  Upgrade: Infantry\n  Provides protection on tiberium fields.
@@ -173,16 +177,32 @@ hazmat.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: hazmat.upgrade
+		
+howi.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Howitzer
+	Buildable:
+		BuildPaletteOrder: 50
+		Prerequisites: ~hq, ~structures.nod, ~!structures.blackh, ~techlevel.high
+		IconPalette: chrometd
+		BuildDuration: 1500
+		Description: Research Howitzer.\n  Replace: Artillery
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: howi.upgrade
 
 cyborg.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Cybernetic Enhancement
+		Name: Research: Cybernetics
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~bio.nod, ~structures.nod, ~techlevel.high
 		BuildDuration: 1500
-		Description: Research Cybernetic Enhancement.\n  Replace: Mini-Gunner\n  Replace: Rocket Soldier\n  Replace: Flamethrower\n  Upgrade: Acolyte
+		IconPalette: chrometd
+		Description: Research Cybernetics.\n  Replace: Mini-Gunner\n  Replace: Rocket Soldier\n  Replace: Flamethrower\n  Upgrade: Acolyte
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -191,11 +211,12 @@ cyborg.upgrade:
 cyborgspeed.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Improved Cyborg Speed
+		Name: Research: Improved Cyborg Speed
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: cyborg.upgrade, ~bio.nod, ~structures.nod, ~techlevel.high
 		BuildDuration: 1500
+		IconPalette: chrometd
 		Description: Research Improved Cyborg Speed.\n  Upgrade: Cyborg\n  Upgrade: Cyborg Reaper\n  Upgrade: Chemical Warrior\n  Upgrade: Acolyte\n  Upgrade: Cyborg Elite
 	Valued:
 		Cost: 1000
@@ -205,11 +226,12 @@ cyborgspeed.upgrade:
 cyborgarmor.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Improved Cyborg Armour
+		Name: Research: Improved Cyborg Armour
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: cyborg.upgrade, ~bio.nod, ~structures.nod, ~techlevel.high
 		BuildDuration: 1500
+		IconPalette: chrometd
 		Description: Research Improved Cyborg Armor.\n  Upgrade: Cyborg\n  Upgrade: Cyborg Reaper\n  Upgrade: Chemical Warrior\n  Upgrade: Acolyte\n  Upgrade: Cyborg Elite
 	Valued:
 		Cost: 1000
