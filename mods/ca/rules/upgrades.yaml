@@ -35,7 +35,7 @@ seek.strat:
 		Prerequisites: ~miss.gdi, !bombard.strat, !hold.strat, ~structures.gdi, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 3000
-		Description: Increase Unit Range 20%\nIncrease Stealth Detection\n  Only one Strategy may be chosen.
+		Description: Increase Unit Range 20%\Provides Unit Stealth Detection\n  Only one Strategy may be chosen.
 	Valued:
 		Cost: 2000
 	RenderSprites:
@@ -59,13 +59,13 @@ hold.strat:
 sonic.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Sonic Amplifiers
+		Name: Upgrade: Sonic Amplifiers
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~gtek, ~structures.zocom, ~techlevel.high
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Research Sonic Amplifiers\n  Upgrade: Sonic Tower\n  Upgrade: Disruptor
+		Description: Increases the firepower of Disruptors and Sonic Towers.\n  Upgrades: Sonic Tower\n  Upgrades: Disruptor
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -74,12 +74,12 @@ sonic.upgrade:
 drone.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Battle Drone
+		Name: Upgrade: Battle Drone
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~hq, ~structures.talon, ~techlevel.high
 		BuildDuration: 1500
-		Description: Research Battle Drone.\n  Upgrade: Battle Tank
+		Description: Battle tanks become crewless and are immune to mind control weapons\nbut they require power to operate.\n  Replaces: Battle Tank
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -88,13 +88,13 @@ drone.upgrade:
 pointlaser.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Point Defense Lasers
+		Name: Upgrade: Point Defense Lasers
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~gtek, ~structures.gdi, ~!structures.talon, ~techlevel.high
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Research Point Defense Lasers\n  Upgrade: Battle Tank\n  Upgrade: Frigate
+		Description: Equips Battle tanks and Frigates with\npoint defence lasers.\n  Upgrades: Battle Tank\n  Upgrades: Frigate
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -103,13 +103,13 @@ pointlaser.upgrade:
 hypersonic.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Hypersonic Missiles
+		Name: Upgrade: Hypersonic Missiles
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~miss.gdi, ~structures.gdi, ~techlevel.high
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Research Hypersonic missiles\n  Upgrade: MLRS\n  Upgrade: HMLRS
+		Description: Equip the MLRS/HMLRS with Hypersonic missiles.\n  Upgrades: MLRS\n  Upgrades: HMLRS
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -118,13 +118,13 @@ hypersonic.upgrade:
 walker.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Battle Walkers
+		Name: Research: Battle Mechs
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~miss.gdi, ~structures.talon, ~techlevel.high
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Research the Titan and Juggernaut battle walkers.\n  Replace: Mammoth Tank\n  New Unit: Juggernaut
+		Description: Allows construction the Titan and\nJuggernaut battle mechs.\n  Replaces: Mammoth Tank\n  Unlocks: Juggernaut
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -133,13 +133,13 @@ walker.upgrade:
 ionmam.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Ion Mammoth
+		Name: Upgrade: Ion Mammoth
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~miss.gdi, ~structures.gdi, ~!structures.talon, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
-		Description: Research Ion Mammoth Tank.\n  Upgrade: Mammoth Tank
+		Description: Equips the Mammoth tank with a\nprototype portable ion cannon.\n  Upgrades: Mammoth Tank
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -148,13 +148,13 @@ ionmam.upgrade:
 vulcan.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Vulcan
+		Name: Upgrade: Vulcan
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~hq, ~structures.gdi, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
-		Description: Research Vulcan.\n  Upgrade: APC
+		Description: Adds anti aircraft capability to the APC.\n  Upgrades: APC
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -166,13 +166,13 @@ vulcan.upgrade:
 hazmat.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Hazmat Suits
+		Name: Upgrade: Hazmat Suits
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~hq, ~structures.nod, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
-		Description: Research Hazmat suits for infantry.\n  Upgrade: Infantry\n  Provides protection on tiberium fields.
+		Description: Infantry are equiped with Hazmat suits which\nprovides protection on tiberium fields.\n  Upgrades: Infantry
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -187,7 +187,7 @@ howi.upgrade:
 		Prerequisites: ~hq, ~structures.nod, ~!structures.blackh, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
-		Description: Research Howitzer.\n  Replace: Artillery
+		Description: Allows construction of Howitzers which are\nfaster more mobile artillery that sacrifice firepower.\n  Replaces: Artillery
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -202,7 +202,7 @@ cyborg.upgrade:
 		Prerequisites: ~bio.nod, ~structures.nod, ~techlevel.high
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Research Cybernetics.\n  Replace: Mini-Gunner\n  Replace: Rocket Soldier\n  Replace: Flamethrower\n  Upgrade: Acolyte
+		Description: Basic Infantry become cyborg units.\n  Replaces: Mini-Gunner\n  Replaces: Rocket Soldier\n  Replaces: Flamethrower\n  Upgrades: Acolyte
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -211,13 +211,13 @@ cyborg.upgrade:
 cyborgspeed.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Improved Cyborg Speed
+		Name: Upgrade: Improved Cyborg Speed
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: cyborg.upgrade, ~bio.nod, ~structures.nod, ~techlevel.high
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Research Improved Cyborg Speed.\n  Upgrade: Cyborg\n  Upgrade: Cyborg Reaper\n  Upgrade: Chemical Warrior\n  Upgrade: Acolyte\n  Upgrade: Cyborg Elite
+		Description: Improves Cyborg movement speed.\n  Upgrades: Cyborg\n  Upgrades: Cyborg Reaper\n  Upgrades: Chemical Warrior\n  Upgrades: Acolyte\n  Upgrades: Cyborg Elite
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -226,13 +226,13 @@ cyborgspeed.upgrade:
 cyborgarmor.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Improved Cyborg Armour
+		Name: Upgrade: Improved Cyborg Armour
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: cyborg.upgrade, ~bio.nod, ~structures.nod, ~techlevel.high
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Research Improved Cyborg Armor.\n  Upgrade: Cyborg\n  Upgrade: Cyborg Reaper\n  Upgrade: Chemical Warrior\n  Upgrade: Acolyte\n  Upgrade: Cyborg Elite
+		Description: Improves Cyborg armor.\n  Upgrades: Cyborg\n  Upgrades: Cyborg Reaper\n  Upgrades: Chemical Warrior\n  Upgrades: Acolyte\n  Upgrades: Cyborg Elite
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -244,12 +244,12 @@ cyborgarmor.upgrade:
 cluster.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Cluster Bombs
+		Name: Upgrade: Cluster Bombs
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~stek, ~structures.ukraine, ~techlevel.high
 		BuildDuration: 1500
-		Description: Research Cluster Bombs.\n  Upgrade: Sukhoi
+		Description: Arms the Sukhoi with Anti-infantry Cluster Bombs.\n  Upgrades: Sukhoi
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -258,12 +258,12 @@ cluster.upgrade:
 indp.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Rapid Industry
+		Name: Upgrade: Rapid Industry
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~indp, ~structures.soviet, ~techlevel.high
 		BuildDuration: 3000
-		Description: Research Rapid Industry.\n  Upgrade: Industrial Plant
+		Description: Increases Industrial Plant perfomance.\n  Upgrades: Industrial Plant
 	Valued:
 		Cost: 2000
 	RenderSprites:
@@ -277,7 +277,7 @@ v2.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~dome, ~structures.soviet, ~!structures.russia, ~techlevel.medium
 		BuildDuration: 1500
-		Description: Research V2 Launcher.\n  Replace: Katyusha
+		Description: Allows construction of the V2 Launcher.\n  Replaces: Katyusha
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -286,12 +286,12 @@ v2.upgrade:
 iraqtank.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Atomic Engines
+		Name: Upgrade: Atomic Engines
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~dome, ~structures.iraq, ~techlevel.high
 		BuildDuration: 1500
-		Description: Research Atomic Engines.\n  Replace: Heavy Tank\n  Replace: Mammoth Tank
+		Description: Upgrades Mammoth and Heavy tanks\nwith volatile atomic engines.\n  Replaces: Heavy Tank\n  Replaces: Mammoth Tank
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -303,12 +303,12 @@ iraqtank.upgrade:
 orep.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Advanced Ore Processing
+		Name: Upgrade: Advanced Ore Processing
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~orep, ~structures.allies, ~techlevel.high
 		BuildDuration: 3000
-		Description: Research Advanced Ore Processing.\n  Upgrade: Ore Purifier
+		Description: Increases Ore Purifier efficiency.\n  Upgrades: Ore Purifier
 	Valued:
 		Cost: 2000
 	RenderSprites:
@@ -322,7 +322,7 @@ charv.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~orep, ~structures.allies, ~techlevel.high
 		BuildDuration: 3000
-		Description: Research Chrono Miner.\n  Upgrade: Ore Truck
+		Description: Allows construction of Chrono Miners.\n  Replaces: Ore Truck
 	Valued:
 		Cost: 2000
 	RenderSprites:
@@ -336,7 +336,7 @@ pcan.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~dome, ~structures.allies, ~techlevel.high
 		BuildDuration: 1500
-		Description: Research Prism Cannon.\n  Replace: Prism Tank
+		Description: Allows construction of Prism Cannons.\n  Replaces: Prism Tank
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -348,12 +348,12 @@ pcan.upgrade:
 regen.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Regenerative Hull
+		Name: Upgrade: Regenerative Hull
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~sign, ~structures.scrin, ~techlevel.high
 		BuildDuration: 3000
-		Description: Research Regenerative Hull.\n  Upgrade: Devastator\n  Upgrade: Planetary Assault Carrier
+		Description: Units self repair.\n  Upgrades: Devastator\n  Upgrades: Planetary Assault Carrier
 		IconPalette: scrin
 	Valued:
 		Cost: 2000
@@ -363,12 +363,12 @@ regen.upgrade:
 shields.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Fleet Shields
+		Name: Upgrade: Fleet Shields
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~sign, ~structures.scrin, ~techlevel.high
 		BuildDuration: 3000
-		Description: Research Fleet Shields.\n  Upgrade: Devastator\n  Upgrade: Planetary Assault Carrier
+		Description:  Increases unit armor.\n  Upgrades: Devastator\n  Upgrades: Planetary Assault Carrier
 		IconPalette: scrin
 	Valued:
 		Cost: 2000
