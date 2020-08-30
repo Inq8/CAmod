@@ -339,10 +339,10 @@ KATY:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
-		RequiresCondition: !iraqtank-upgrade 
+		RequiresCondition: !iraqtank-upgrade
 	WithSpriteTurret@UPG:
 		Sequence: turret2
-		RequiresCondition: iraqtank-upgrade 
+		RequiresCondition: iraqtank-upgrade
 	SpawnActorOnDeath:
 		Actor: 3TNK.Husk
 		RequiresCondition: !being-warped && !iraqtank-upgrade
@@ -437,10 +437,10 @@ KATY:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
-		RequiresCondition: !iraqtank-upgrade 
+		RequiresCondition: !iraqtank-upgrade
 	WithSpriteTurret@UPG:
 		Sequence: turret2
-		RequiresCondition: iraqtank-upgrade 
+		RequiresCondition: iraqtank-upgrade
 	SpawnActorOnDeath:
 		Actor: 4TNK.Husk
 		RequiresCondition: !being-warped && !iraqtank-upgrade
@@ -1564,7 +1564,7 @@ APC2:
 	GrantConditionOnPrerequisite@VULCAN:
 		Condition: vulcan-upgrade
 		Prerequisites: vulcan.upgrade
-		
+
 
 APC2.Reinforce:
 	Inherits: APC2
@@ -3187,6 +3187,13 @@ RTNK:
 		Prerequisites: vehicles.upgraded
 	Voiced:
 		VoiceSet: MirageVoice
+	WithDecoration@disguise:
+		Image: pips
+		Sequence: pip-disguise
+		Palette: effect
+		ReferencePoint: Top, Right
+		ZOffset: 256
+		RequiresCondition: hidden
 
 V3RL:
 	Inherits: ^Vehicle
