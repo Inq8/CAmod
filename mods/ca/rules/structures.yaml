@@ -1158,6 +1158,14 @@ ATEK:
 		LaunchSpeechNotification: SatelliteLaunched
 		DisplayTimerStances: Ally
 		Condition: sat-launch
+	ProduceActorPowerCA@SatelliteLaunched:
+		Actors: gps.satellite
+		Type: SpySatellite 
+		ChargeInterval: 0
+		OneShot: true
+		OrderName: ProduceActorSat
+		AutoFire: True
+		RequiresCondition: sat-launch
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -1172,7 +1180,7 @@ ATEK:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate
 	ProduceActorPowerCA@SatelliteScan:
 		PauseOnCondition: disabled || being-warped
-		Prerequisites: dome, ~fogenabled 
+		Prerequisites: radar, ~gps.satellite, ~fogenabled 
 		Description: Spy Satellite
 		LongDesc: Periodically reveals the entire map for a short time.\nActivated automatically.
 		Icon: gps
@@ -1182,10 +1190,9 @@ ATEK:
 		OrderName: SatelliteScanPower
 		AutoFire: True
 		DisplayTimerStances: Ally, Neutral, Enemy
-		RequiresCondition: sat-launch
 	ProduceActorPowerCA@SatelliteScanNoFog: 
 		PauseOnCondition: disabled || being-warped 
-		Prerequisites: dome, ~!fogenabled 
+		Prerequisites: radar, ~gps.satellite, ~!fogenabled 
 		Description: Spy Satellite 
 		LongDesc: Permanently reveals the entire map.\nActivated automatically. 
 		Icon: gps 
@@ -1196,7 +1203,6 @@ ATEK:
 		OrderName: SatelliteScanNoFogPower 
 		AutoFire: True 
 		DisplayTimerStances: Ally, Neutral, Enemy
-		RequiresCondition: sat-launch
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
 		Icon: forceshieldicon
