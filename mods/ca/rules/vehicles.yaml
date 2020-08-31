@@ -628,7 +628,7 @@ ARTY.nod:
 		Prerequisites: ~vehicles.nod, ~!howi.upgrade, ~techlevel.medium
 	Armament:
 		Weapon: 155mmTD
-		
+
 HOWI:
 	Inherits: ARTY.nod
 	RenderSprites:
@@ -3677,6 +3677,7 @@ PCAN:
 		LocalOffset: 420,0,180
 	Mobile:
 		Speed: 68
+		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead
 	-Turreted:
 	-AttackTurreted:
 	-WithSpriteTurret:
@@ -3686,6 +3687,10 @@ PCAN:
 		Voice: Attack
 	SpawnActorOnDeath:
 		Actor: PCAN.Husk
+	GrantConditionOnAttack:
+		Condition: aiming
+		RevokeDelay: 20
+		RevokeAll: false
 
 WTNK:
 	Inherits: ^TankTD
