@@ -1569,6 +1569,7 @@ APC2:
 		LocalOffset: 85,0,171
 		MuzzleSequence: muzzle
 		RequiresCondition: !vulcan-upgrade
+		Turret: null
 	Armament@GAT0:
 		Weapon: MGatt.0
 		LocalOffset: 220,0,350
@@ -1621,6 +1622,11 @@ APC2:
 		RequiresCondition: gattling-ground == 2 && vulcan-upgrade
 		ReloadingCondition: engage-ground
 		PauseOnCondition: engage-air
+	GrantConditionOnAttack@APCFIRING:
+		Condition: apcfiring
+		RevokeDelay: 25
+		RevokeAll: True
+		RequiresCondition: !vulcan-upgrade
 	GrantConditionOnAttack:
 		Condition: gattling
 		RequiredShotsPerInstance: 1,6,12
@@ -1642,17 +1648,17 @@ APC2:
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 		Armaments: primary, secondary
-		RequiresCondition: vulcan-upgrade
+		RequiresCondition: vulcan-upgrade && !apcfiring
 	Turreted:
 		TurnSpeed: 7
 		Offset: 0,0,150
-		RequiresCondition: vulcan-upgrade
+		RequiresCondition: vulcan-upgrade && !apcfiring
 	WithSpriteTurret:
 		Sequence: turret2
-		RequiresCondition: !gattling-ground && vulcan-upgrade
+		RequiresCondition: !gattling-ground && vulcan-upgrade && !apcfiring
 	WithSpriteTurret@GROUND:
 		Sequence: turret2-ground
-		RequiresCondition: gattling-ground && vulcan-upgrade
+		RequiresCondition: gattling-ground && vulcan-upgrade && !apcfiring
 	WithMuzzleOverlay:
 	Cargo:
 		Types: Infantry
@@ -1671,7 +1677,6 @@ APC2:
 	GrantConditionOnPrerequisite@VULCAN:
 		Condition: vulcan-upgrade
 		Prerequisites: vulcan.upgrade
-
 
 APC2.Reinforce:
 	Inherits: APC2
