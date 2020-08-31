@@ -13,12 +13,11 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.CA.Effects;
 using OpenRA.Mods.Common.Traits;
-using OpenRA.Mods.Common.Traits.Radar;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	class DummyGpsPowerInfo : SupportPowerInfo, ITechTreePrerequisiteInfo
+	class DummyGpsPowerInfo : SupportPowerInfo
 	{
 		[Desc("Delay in ticks between launching and revealing the map.")]
 		public readonly int RevealDelay = 0;
@@ -51,23 +50,18 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly bool RequiresActiveRadar = true;
 
 		[FieldLoader.Require]
-		[Desc("The prerequisite type that this provides.")]
-		public readonly string Prerequisite = null;
+		[Desc("The condition to apply. Must be included in the target actor's ExternalConditions list.")]
+		public readonly string Condition = null;
 
-		IEnumerable<string> ITechTreePrerequisiteInfo.Prerequisites(ActorInfo info)
-		{
-			yield return Prerequisite;
-		}
-
-		public override object Create(ActorInitializer init) { return new GpsPower(init.Self, this); }
+		public override object Create(ActorInitializer init) { return new DummyGpsPower(init.Self, this); }
 	}
 
-	class GpsPower : SupportPower, INotifyKilled, INotifySold, INotifyOwnerChanged, ITick, ITechTreePrerequisite
+	class DummyGpsPower : SupportPower, INotifyKilled, INotifySold, INotifyOwnerChanged
 	{
-		readonly Actor self;
+		Actor self;
 		readonly DummyGpsPowerInfo info;
-		TechTree techTree;
-		bool active;
+		ConditionManager conditionManager;
+		int conditionToken = ConditionManager.InvalidConditionToken;
 
 		protected override void Created(Actor self)
 		{
@@ -77,12 +71,10 @@ namespace OpenRA.Mods.CA.Traits
 			// it refers to the same actor as self.Owner.PlayerActor
 			var playerActor = self.Info.Name == "player" ? self : self.Owner.PlayerActor;
 
-			techTree = playerActor.Trait<TechTree>();
-
 			base.Created(self);
 		}
 
-		public GpsPower(Actor self, DummyGpsPowerInfo info)
+		public DummyGpsPower(Actor self, DummyGpsPowerInfo info)
 			: base(self, info)
 		{
 			this.self = self;
@@ -92,6 +84,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override void Charged(Actor self, string key)
 		{
 			self.Owner.PlayerActor.Trait<SupportPowerManager>().Powers[key].Activate(new Order());
+			conditionManager = self.TraitOrDefault<ConditionManager>();
 		}
 
 		public override void Activate(Actor self, Order order, SupportPowerManager manager)
@@ -102,57 +95,23 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				PlayLaunchSounds();
 
-				active = true;
-				techTree.ActorChanged(self);
-
 				w.Add(new SatelliteLaunchCA(self, info));
+
+				if (conditionToken == ConditionManager.InvalidConditionToken)
+					conditionToken = conditionManager.GrantCondition(self, info.Condition);
 			});
 		}
 
 		void INotifyKilled.Killed(Actor self, AttackInfo e) { RemoveGps(self); }
-
 		void INotifySold.Selling(Actor self) { }
 		void INotifySold.Sold(Actor self) { RemoveGps(self); }
 
 		void RemoveGps(Actor self)
 		{
-			// Extra function just in case something needs to be added later
 		}
 
 		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
 		{
-			techTree = newOwner.PlayerActor.Trait<TechTree>();
-			active = false;
-		}
-
-		bool NoActiveRadar { get { return !self.World.ActorsHavingTrait<ProvidesRadar>(r => !r.IsTraitDisabled).Any(a => a.Owner == self.Owner); } }
-		bool wasPaused;
-
-		void ITick.Tick(Actor self)
-		{
-			if (!wasPaused && (IsTraitPaused || (info.RequiresActiveRadar && NoActiveRadar)))
-			{
-				wasPaused = true;
-				active = false;
-				techTree.ActorChanged(self);
-			}
-			else if (wasPaused && !IsTraitPaused && !(info.RequiresActiveRadar && NoActiveRadar))
-			{
-				wasPaused = false;
-				active = true;
-				techTree.ActorChanged(self);
-			}
-		}
-
-		IEnumerable<string> ITechTreePrerequisite.ProvidesPrerequisites
-		{
-			get
-			{
-				if (!active)
-					yield break;
-
-				yield return info.Prerequisite;
-			}
 		}
 	}
 }

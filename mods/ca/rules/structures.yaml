@@ -1151,13 +1151,13 @@ ATEK:
 		PauseOnCondition: disabled || being-warped
 		Icon: gps
 		OneShot: true
-		ChargeInterval: 7500
+		ChargeInterval: 4500
 		Description: Satellite Launch
 		LongDesc: Launches GPS Satellite.
 		RevealDelay: 375
 		LaunchSpeechNotification: SatelliteLaunched
 		DisplayTimerStances: Ally
-		Prerequisite: satlaunch
+		Condition: sat-launch
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -1170,12 +1170,9 @@ ATEK:
 		Proxy: tec.allies.stolen
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate
-	Production:
-		Produces: SpySatellite
-	Exit:
 	ProduceActorPowerCA@SatelliteScan:
 		PauseOnCondition: disabled || being-warped
-		Prerequisites: atek, satlaunch, ~fogenabled
+		Prerequisites: dome, ~fogenabled 
 		Description: Spy Satellite
 		LongDesc: Periodically reveals the entire map for a short time.\nActivated automatically.
 		Icon: gps
@@ -1185,19 +1182,21 @@ ATEK:
 		OrderName: SatelliteScanPower
 		AutoFire: True
 		DisplayTimerStances: Ally, Neutral, Enemy
-	ProduceActorPowerCA@SatelliteScanNoFog:
-		PauseOnCondition: disabled || being-warped
-		Prerequisites: atek, satlaunch, ~!fogenabled
-		Description: Spy Satellite
-		LongDesc: Permanently reveals the entire map.\nActivated automatically.
-		Icon: gps
-		Actors: camera.satscan.oneshot
-		Type: SpySatellite
-		ChargeInterval: 4500
-		OneShot: True
-		OrderName: SatelliteScanNoFogPower
-		AutoFire: True
+		RequiresCondition: sat-launch
+	ProduceActorPowerCA@SatelliteScanNoFog: 
+		PauseOnCondition: disabled || being-warped 
+		Prerequisites: dome, ~!fogenabled 
+		Description: Spy Satellite 
+		LongDesc: Permanently reveals the entire map.\nActivated automatically. 
+		Icon: gps 
+		Actors: camera.satscan.oneshot 
+		Type: SpySatellite 
+		ChargeInterval: 4500 
+		OneShot: True 
+		OrderName: SatelliteScanNoFogPower 
+		AutoFire: True 
 		DisplayTimerStances: Ally, Neutral, Enemy
+		RequiresCondition: sat-launch
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
 		Icon: forceshieldicon
@@ -1227,7 +1226,7 @@ ATEK:
 		Prerequisite: fogenabled
 		RequiresCondition: fogenabled
 	Production:
-		Produces: Upgrade
+		Produces: Upgrade, SpySatellite
 		PauseOnCondition: forceshield || invulnerability || being-warped
 	ProductionBar:
 		ProductionType: Upgrade
