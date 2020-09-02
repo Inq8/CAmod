@@ -1571,6 +1571,7 @@ APC2:
 		RequiresCondition: !vulcan-upgrade
 		Turret: null
 	Armament@GAT0:
+		Name: primary-upg
 		Weapon: MGatt.0
 		LocalOffset: 220,0,350
 		MuzzleSequence: muzzle
@@ -1578,6 +1579,7 @@ APC2:
 		PauseOnCondition: engage-ground
 		ReloadingCondition: engage-air
 	Armament@GAT1:
+		Name: primary-upg
 		Weapon: MGatt.1
 		LocalOffset: 220,0,350
 		MuzzleSequence: muzzle
@@ -1585,6 +1587,7 @@ APC2:
 		PauseOnCondition: engage-ground
 		ReloadingCondition: engage-air
 	Armament@GAT2:
+		Name: primary-upg
 		Weapon: MGatt.2
 		LocalOffset: 220,0,350
 		MuzzleSequence: muzzle
@@ -1592,6 +1595,7 @@ APC2:
 		PauseOnCondition: engage-ground
 		ReloadingCondition: engage-air
 	Armament@GAT3:
+		Name: primary-upg
 		Weapon: MGatt.3
 		LocalOffset: 220,0,350
 		MuzzleSequence: muzzle
@@ -1599,7 +1603,7 @@ APC2:
 		PauseOnCondition: engage-ground
 		ReloadingCondition: engage-air
 	Armament@GAT0G:
-		Name: secondary
+		Name: secondary-upg
 		Weapon: MGatt.0G
 		LocalOffset: 321,0,85
 		MuzzleSequence: muzzle
@@ -1607,7 +1611,7 @@ APC2:
 		PauseOnCondition: engage-air
 		ReloadingCondition: engage-ground
 	Armament@GAT1G:
-		Name: secondary
+		Name: secondary-upg
 		Weapon: MGatt.1G
 		LocalOffset: 321,0,85
 		MuzzleSequence: muzzle
@@ -1615,7 +1619,7 @@ APC2:
 		PauseOnCondition: engage-air
 		ReloadingCondition: engage-ground
 	Armament@GAT2G:
-		Name: secondary
+		Name: secondary-upg
 		Weapon: MGatt.2G
 		LocalOffset: 321,0,85
 		MuzzleSequence: muzzle
@@ -1624,10 +1628,11 @@ APC2:
 		PauseOnCondition: engage-air
 	GrantConditionOnAttack@APCFIRING:
 		Condition: apcfiring
-		RevokeDelay: 25
+		RevokeDelay: 30
 		RevokeAll: True
-		RequiresCondition: !vulcan-upgrade
+		RequiresCondition: !vulcan-upgrade || apcfiring
 	GrantConditionOnAttack:
+		ArmamentNames: primary-upg
 		Condition: gattling
 		RequiredShotsPerInstance: 1,6,12
 		MaximumInstances: 3
@@ -1635,7 +1640,7 @@ APC2:
 		RevokeOnNewTarget: False
 		RevokeAll: True
 	GrantConditionOnAttack@GROUND:
-		ArmamentNames: secondary
+		ArmamentNames: secondary-upg
 		Condition: gattling-ground
 		RequiredShotsPerInstance: 1,6
 		MaximumInstances: 2
@@ -1643,11 +1648,12 @@ APC2:
 		RevokeOnNewTarget: False
 		RevokeAll: True
 	AttackFrontal:
+		Armaments: primary
 		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: !vulcan-upgrade
+		RequiresCondition: !vulcan-upgrade || apcfiring
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
-		Armaments: primary, secondary
+		Armaments: primary-upg, secondary-upg
 		RequiresCondition: vulcan-upgrade && !apcfiring
 	Turreted:
 		TurnSpeed: 7
@@ -1655,10 +1661,10 @@ APC2:
 		RequiresCondition: vulcan-upgrade && !apcfiring
 	WithSpriteTurret:
 		Sequence: turret2
-		RequiresCondition: !gattling-ground && vulcan-upgrade && !apcfiring
+		RequiresCondition: !gattling-ground && vulcan-upgrade
 	WithSpriteTurret@GROUND:
 		Sequence: turret2-ground
-		RequiresCondition: gattling-ground && vulcan-upgrade && !apcfiring
+		RequiresCondition: gattling-ground && vulcan-upgrade
 	WithMuzzleOverlay:
 	Cargo:
 		Types: Infantry
