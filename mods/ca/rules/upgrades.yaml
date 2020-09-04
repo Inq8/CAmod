@@ -20,7 +20,7 @@ bombard.strat:
 		Prerequisites: ~miss.gdi, !seek.strat, !hold.strat, ~structures.gdi, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 3000
-		Description: Increase Unit Firepower 20%\n  Only one Strategy may be chosen.
+		Description: Increase unit firepower by 20%.\n\n  Only one Strategy may be chosen.
 	Valued:
 		Cost: 2000
 	RenderSprites:
@@ -35,7 +35,7 @@ seek.strat:
 		Prerequisites: ~miss.gdi, !bombard.strat, !hold.strat, ~structures.gdi, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 3000
-		Description: Increase Unit Range 20%\Provides Unit Stealth Detection\n  Only one Strategy may be chosen.
+		Description: Increase unit range by 20% and provides\nunits with stealth detection.\n\n  Only one Strategy may be chosen.
 	Valued:
 		Cost: 2000
 	RenderSprites:
@@ -50,7 +50,7 @@ hold.strat:
 		Prerequisites: ~miss.gdi, !bombard.strat, !seek.strat, ~structures.gdi, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 3000
-		Description: Increase Unit Armor 20%\n  Only one Strategy may be chosen.
+		Description: Increase unit armor by 20%.\n\n  Only one Strategy may be chosen.
 	Valued:
 		Cost: 2000
 	RenderSprites:
@@ -65,7 +65,7 @@ sonic.upgrade:
 		Prerequisites: ~gtek, ~structures.zocom, ~techlevel.high
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Increases the firepower of Disruptors and Sonic Towers.\n  Upgrades: Sonic Tower\n  Upgrades: Disruptor
+		Description: Increases the firepower of Disruptors and Sonic Towers.\n\n  Upgrades: Sonic Tower\n  Upgrades: Disruptor
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -79,7 +79,7 @@ drone.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~hq, ~structures.talon, ~techlevel.high
 		BuildDuration: 1500
-		Description: Battle tanks become crewless and are immune to mind control weapons\nbut they require power to operate.\n  Replaces: Battle Tank
+		Description: Allows construction of a modified crewless Battle Tank.\n\n  Replaces: Battle Tank\n  + Immunity to snipers, chaos gas and mind control\n  + Reduced cost\n  – Disabled on low power
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -94,7 +94,7 @@ pointlaser.upgrade:
 		Prerequisites: ~gtek, ~structures.gdi, ~!structures.talon, ~techlevel.high
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Equips Battle tanks and Frigates with\npoint defence lasers.\n  Upgrades: Battle Tank\n  Upgrades: Frigate
+		Description: Equips Battle Tanks and Frigates with point defense lasers\nwhich can destroy approaching missiles.\n\n  Upgrades: Battle Tank\n  Upgrades: Frigate
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -109,7 +109,7 @@ hypersonic.upgrade:
 		Prerequisites: ~miss.gdi, ~structures.gdi, ~techlevel.high
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Equip the MLRS/HMLRS with Hypersonic missiles.\n  Upgrades: MLRS\n  Upgrades: HMLRS
+		Description: Equip the MLRS/HMLRS with Hypersonic Missiles.\n\n  Upgrades: MLRS\n  Upgrades: HMLRS
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -124,7 +124,7 @@ walker.upgrade:
 		Prerequisites: ~miss.gdi, ~structures.talon, ~techlevel.high
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Allows construction the Titan and\nJuggernaut battle mechs.\n  Replaces: Mammoth Tank\n  Unlocks: Juggernaut
+		Description: Allows construction the Titan and\nJuggernaut battle mechs.\n\n  Replaces: Mammoth Tank\n  Unlocks: Juggernaut
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -139,7 +139,7 @@ ionmam.upgrade:
 		Prerequisites: ~miss.gdi, ~structures.gdi, ~!structures.talon, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
-		Description: Equips the Mammoth tank with a\nprototype portable ion cannon.\n  Upgrades: Mammoth Tank
+		Description: Equips the Mammoth tank with a\nprototype portable ion cannon.\n\n  Upgrades: Mammoth Tank
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -154,7 +154,7 @@ vulcan.upgrade:
 		Prerequisites: ~hq, ~structures.gdi, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
-		Description: Adds anti aircraft capability to the APC.\n  Upgrades: APC
+		Description: Adds anti-aircraft capability to the APC.\n\n  Upgrades: APC
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -172,12 +172,12 @@ hazmat.upgrade:
 		Prerequisites: ~hq, ~structures.nod, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
-		Description: Infantry are equiped with Hazmat suits which\nprovides protection on tiberium fields.\n  Upgrades: Infantry
+		Description: Infantry are equiped with hazmat suits which\nprovides protection on tiberium fields.\n\n  Upgrades: Infantry
 	Valued:
 		Cost: 1000
 	RenderSprites:
 		Image: hazmat.upgrade
-		
+
 howi.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -187,7 +187,7 @@ howi.upgrade:
 		Prerequisites: ~hq, ~structures.nod, ~!structures.blackh, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
-		Description: Allows construction of Howitzers which are\nfaster more mobile artillery that sacrifice firepower.\n  Replaces: Artillery
+		Description: Allows construction of Howitzers.\n\n  Replaces: Artillery\n  + Increased speed\n  + Has turret\n  – Reduced rate of fire
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -202,7 +202,7 @@ cyborg.upgrade:
 		Prerequisites: ~bio.nod, ~structures.nod, ~techlevel.high
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Basic Infantry become cyborg units.\n  Replaces: Mini-Gunner\n  Replaces: Rocket Soldier\n  Replaces: Flamethrower\n  Upgrades: Acolyte
+		Description: Basic infantry are superseded by more\npowerful cyborg equivalents.\n\n  Replaces: Mini-Gunner\n  Replaces: Rocket Soldier\n  Replaces: Flamethrower\n  Upgrades: Acolyte
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -217,7 +217,7 @@ cyborgspeed.upgrade:
 		Prerequisites: cyborg.upgrade, ~bio.nod, ~structures.nod, ~techlevel.high
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Improves Cyborg movement speed.\n  Upgrades: Cyborg\n  Upgrades: Cyborg Reaper\n  Upgrades: Chemical Warrior\n  Upgrades: Acolyte\n  Upgrades: Cyborg Elite
+		Description: Improves cyborg movement speed.\n\n  Upgrades: Cyborg\n  Upgrades: Cyborg Reaper\n  Upgrades: Chemical Warrior\n  Upgrades: Acolyte\n  Upgrades: Cyborg Elite
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -232,7 +232,7 @@ cyborgarmor.upgrade:
 		Prerequisites: cyborg.upgrade, ~bio.nod, ~structures.nod, ~techlevel.high
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Improves Cyborg armor.\n  Upgrades: Cyborg\n  Upgrades: Cyborg Reaper\n  Upgrades: Chemical Warrior\n  Upgrades: Acolyte\n  Upgrades: Cyborg Elite
+		Description: Improves cyborg armor.\n\n  Upgrades: Cyborg\n  Upgrades: Cyborg Reaper\n  Upgrades: Chemical Warrior\n  Upgrades: Acolyte\n  Upgrades: Cyborg Elite
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -249,7 +249,7 @@ cluster.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~stek, ~structures.ukraine, ~techlevel.high
 		BuildDuration: 1500
-		Description: Arms the Sukhoi with Anti-infantry Cluster Bombs.\n  Upgrades: Sukhoi
+		Description: Arms the Sukhoi with anti-infantry Cluster Bombs.\n\n  Upgrades: Sukhoi\n  + High area damage vs infantry, structures and light armour\n  – Weak against heavy armour
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -263,7 +263,7 @@ indp.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~indp, ~structures.soviet, ~techlevel.high
 		BuildDuration: 3000
-		Description: Increases Industrial Plant perfomance.\n  Upgrades: Industrial Plant
+		Description: Increases Industrial Plant performance.\n\n  Upgrades: Industrial Plant
 	Valued:
 		Cost: 2000
 	RenderSprites:
@@ -277,7 +277,7 @@ v2.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~dome, ~structures.soviet, ~!structures.russia, ~techlevel.medium
 		BuildDuration: 1500
-		Description: Allows construction of the V2 Launcher.\n  Replaces: Katyusha
+		Description: Allows construction of the V2 Launcher.\n\n  Replaces: Katyusha\n  + Improved accuracy\n  + Increased burst damage\n  – Reduced area of effect\n  – Slower projectiles
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -291,7 +291,7 @@ iraqtank.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~dome, ~structures.iraq, ~techlevel.high
 		BuildDuration: 1500
-		Description: Upgrades Mammoth and Heavy tanks\nwith volatile atomic engines.\n  Replaces: Heavy Tank\n  Replaces: Mammoth Tank
+		Description: Upgrades Mammoth and Heavy tanks\nwith volatile atomic engines.\n\n  Replaces: Heavy Tank\n  Replaces: Mammoth Tank\n  + Increased speed\n  – Explode on death
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -308,7 +308,7 @@ orep.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~orep, ~structures.allies, ~techlevel.high
 		BuildDuration: 3000
-		Description: Increases Ore Purifier efficiency.\n  Upgrades: Ore Purifier
+		Description: Increases Ore Purifier efficiency.\n\n  Upgrades: Ore Purifier
 	Valued:
 		Cost: 2000
 	RenderSprites:
@@ -322,7 +322,7 @@ charv.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~orep, ~structures.allies, ~techlevel.high
 		BuildDuration: 3000
-		Description: Allows construction of Chrono Miners.\n  Replaces: Ore Truck
+		Description: Allows construction of Chrono Miners which\nteleport back to refineries.\n\n  Replaces: Ore Truck
 	Valued:
 		Cost: 2000
 	RenderSprites:
@@ -336,7 +336,7 @@ pcan.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~dome, ~structures.allies, ~techlevel.high
 		BuildDuration: 1500
-		Description: Allows construction of Prism Cannons.\n  Replaces: Prism Tank
+		Description: Allows construction of Prism Cannons.\n\n  Replaces: Prism Tank\n  + Increased range\n  + Increased burst damage\n  – Reduced speed\n  – Reduced rate of fire\n  – Reduced splash damage\n  – No turret
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -353,7 +353,7 @@ regen.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~sign, ~structures.scrin, ~techlevel.high
 		BuildDuration: 3000
-		Description: Units self repair.\n  Upgrades: Devastator\n  Upgrades: Planetary Assault Carrier
+		Description: Larger Scrin vessels will regenerate health over time.\n\n  Upgrades: Devastator\n  Upgrades: Planetary Assault Carrier
 		IconPalette: scrin
 	Valued:
 		Cost: 2000
@@ -368,7 +368,7 @@ shields.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~sign, ~structures.scrin, ~techlevel.high
 		BuildDuration: 3000
-		Description:  Increases unit armor.\n  Upgrades: Devastator\n  Upgrades: Planetary Assault Carrier
+		Description: Larger Scrin vessels take reduced damage.\n\n  Upgrades: Devastator\n  Upgrades: Planetary Assault Carrier
 		IconPalette: scrin
 	Valued:
 		Cost: 2000

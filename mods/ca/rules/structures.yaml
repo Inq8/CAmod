@@ -1160,7 +1160,7 @@ ATEK:
 		Condition: sat-launch
 	ProduceActorPowerCA@SatelliteLaunched:
 		Actors: gps.satellite
-		Type: SpySatellite 
+		Type: SpySatellite
 		ChargeInterval: 0
 		OneShot: true
 		OrderName: ProduceActorSat
@@ -1180,7 +1180,7 @@ ATEK:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate
 	ProduceActorPowerCA@SatelliteScan:
 		PauseOnCondition: disabled || being-warped
-		Prerequisites: radar, ~gps.satellite, ~fogenabled 
+		Prerequisites: radar, ~gps.satellite, ~fogenabled
 		Description: Spy Satellite
 		LongDesc: Periodically reveals the entire map for a short time.\nActivated automatically.
 		Icon: gps
@@ -1190,18 +1190,18 @@ ATEK:
 		OrderName: SatelliteScanPower
 		AutoFire: True
 		DisplayTimerStances: Ally, Neutral, Enemy
-	ProduceActorPowerCA@SatelliteScanNoFog: 
-		PauseOnCondition: disabled || being-warped 
-		Prerequisites: radar, ~gps.satellite, ~!fogenabled 
-		Description: Spy Satellite 
-		LongDesc: Permanently reveals the entire map.\nActivated automatically. 
-		Icon: gps 
-		Actors: camera.satscan.oneshot 
-		Type: SpySatellite 
-		ChargeInterval: 4500 
-		OneShot: True 
-		OrderName: SatelliteScanNoFogPower 
-		AutoFire: True 
+	ProduceActorPowerCA@SatelliteScanNoFog:
+		PauseOnCondition: disabled || being-warped
+		Prerequisites: radar, ~gps.satellite, ~!fogenabled
+		Description: Spy Satellite
+		LongDesc: Permanently reveals the entire map.\nActivated automatically.
+		Icon: gps
+		Actors: camera.satscan.oneshot
+		Type: SpySatellite
+		ChargeInterval: 4500
+		OneShot: True
+		OrderName: SatelliteScanNoFogPower
+		AutoFire: True
 		DisplayTimerStances: Ally, Neutral, Enemy
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
@@ -4988,7 +4988,6 @@ TMPL:
 		MissilePalette: temptd
 		LaunchSound: icbm1.aud
 		IncomingSound: nukelaunch.aud
-		DisplayBeacon: False
 		SpawnOffset: 1024,80,0
 		DetonationAltitude: 3c0
 		RemoveMissileOnDetonation: True
@@ -4997,12 +4996,15 @@ TMPL:
 		DisplayRadarPing: True
 		CameraRange: 10c0
 		ArrowSequence: arrow
-		ClockSequence: clock
+		ClockSequence: clockTD
 		CircleSequence: circles
 		PauseOnCondition: disabled || empdisable || being-warped
 		TrailImage: smokey2
 		TrailSequences: idle
 		TrailPalette: tseffect-ignore-lighting-alpha75
+		DisplayBeacon: True
+		BeaconPoster: a10airstrike
+		BeaconPosterPalette: temptd
 	WithBuildingBib:
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
