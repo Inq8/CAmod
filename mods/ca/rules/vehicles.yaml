@@ -185,6 +185,10 @@ KATY:
 	Turreted:
 		TurnSpeed: 5
 		Offset: 0,0,20
+	QuantizeFacingsFromSequence:
+		Sequence: idle
+	WithFacingSpriteBody:
+		Sequence: idle
 	Armament:
 		Weapon: 90mm
 		Recoil: 128
@@ -210,15 +214,51 @@ KATY:
 		FactionImages:
 			england: rtnk
 			germany: tnkd
+			russia: 3tnk
+			ukraine: 3tnk
+			iraq: 3tnk
+			blackh: mtnk.nod.chrono
+			marked: mtnk.nod.chrono
+			legion: mtnk.nod.chrono
+			eagle: mtnk.gdi.chrono
+			zocom: mtnk.gdi.chrono
+			talon: mtnk.gdi.chrono
+			reaper: devo
+			traveler: devo
+			harbinger: devo
 	-Buildable:
+	GrantConditionOnFaction@France:
+		Factions: france
+		Condition: france
 	GrantConditionOnFaction@England:
 		Factions: england
 		Condition: england
 	GrantConditionOnFaction@Germany:
 		Factions: germany
 		Condition: germany
+	GrantConditionOnFaction@GDI:
+		Factions: talon, zocom, eagle
+		Condition: gdi
+	GrantConditionOnFaction@NOD:
+		Factions: blackh, marked, legion
+		Condition: nod
+	GrantConditionOnFaction@SOVIET:
+		Factions: russia, ukraine, iraq
+		Condition: soviet
+	GrantConditionOnFaction@SCRIN:
+		Factions: reaper, traveler, harbinger
+		Condition: scrin
+	SpeedMultiplier@SCRIN:
+		Modifier: 140
+		RequiresCondition: scrin
+	DamageMultiplier@SCRIN:
+		Modifier: 120
+		RequiresCondition: scrin
+	Hovers:
+		BobDistance: -25
+		RequiresCondition: !empdisable && !being-warped && !driver-dead && scrin
 	Armament:
-		RequiresCondition: !(germany || england)
+		RequiresCondition: france
 	Armament@Germany:
 		Weapon: 183mm
 		Recoil: 85
@@ -233,14 +273,66 @@ KATY:
 		LocalOffset: 720,0,80
 		MuzzleSequence: muzzle
 		RequiresCondition: england
+	Armament@TD:
+		Weapon: 120mm
+		Recoil: 128
+		RecoilRecovery: 26
+		LocalOffset: 768,0,90
+		MuzzleSequence: muzzle
+		RequiresCondition: gdi || nod
+	Armament@SOVIET:
+		Weapon: 125mm
+		Recoil: 128
+		RecoilRecovery: 38
+		LocalOffset: 768,85,90, 768,-85,90
+		MuzzleSequence: muzzle
+		RequiresCondition: soviet
+	Armament@SCRIN:
+		Weapon: DevourerLaser
+		LocalOffset: 850,0,208
+		Turret: secondary
+		RequiresCondition: scrin
 	Tooltip:
 		Name: Medium Tank
 		GenericName: Tank
-		RequiresCondition: !germany
-	Tooltip@germany:
+		RequiresCondition: france
+	Tooltip@TD:
 		Name: Tank Destroyer
 		GenericName: Tank
 		RequiresCondition: germany
+	Tooltip@Mirage:
+		Name: Mirage Tank
+		GenericName: Tank
+		RequiresCondition: england
+	Tooltip@TD:
+		Name: Battle Tank
+		GenericName: Tank
+		RequiresCondition: nod || gdi
+	Tooltip@SOVIET:
+		Name: Heavy Tank
+		GenericName: Tank
+		RequiresCondition: soviet
+	Tooltip@SCRIN:
+		Name: Devourer
+		GenericName: Tank
+		RequiresCondition: scrin
+	Turreted:
+		RequiresCondition: !scrin
+	Turreted@SCRIN:
+		Turret: secondary
+		TurnSpeed: 4
+		Offset: 0,0,0
+		RequiresCondition: scrin
+	Turreted@TD:
+		Turret: tertiary
+		TurnSpeed: 5
+		Offset: 0,0,30
+		RequiresCondition: gdi || nod
+	AttackTurreted:
+		Turrets: primary, secondary, tertiary
+		TargetFrozenActors: True
+		PauseOnCondition: empdisable || being-warped
+		Armaments: primary
 	MirageTooltip@Tree:
 		Name: Mirage Tank
 		GenericName: Civilian building
@@ -256,14 +348,30 @@ KATY:
 	WithMirageSpriteBody:
 		RequiresCondition: tree && england
 		Name: tree
+	WithSpriteTurret:
+		RequiresCondition: !scrin && !(gdi || nod)
+	WithSpriteTurret@TD:
+		RequiresCondition: gdi || nod
+		Turret: tertiary
+		IsPlayerPalette: true
+		Palette: overlayplayertd
+	WithSpriteTurret@SCRIN:
+		Turret: secondary
+		RequiresCondition: scrin
+	WithFacingSpriteBody:
+	WithMuzzleOverlay:
+		RequiresCondition: !scrin
 	SpawnActorOnDeath:
-		RequiresCondition: !(being-warped || warpout) && warpin && !(england || germany)
+		RequiresCondition: !(being-warped || warpout) && warpin && france
 	SpawnActorOnDeath@England:
 		Actor: RTNK.Husk
 		RequiresCondition: warpin && england && !(being-warped || warpout)
 	SpawnActorOnDeath@Germany:
 		Actor: TNKD.Husk
 		RequiresCondition: warpin && germany && !(being-warped || warpout)
+	SpawnActorOnDeath@TD:
+		Actor: MTNK.Husk
+		RequiresCondition: warpin && (nod || gdi) && !(being-warped || warpout)
 	GrantTimedCondition@warpin:
 		Condition: warpin
 		Duration: 850
@@ -653,6 +761,22 @@ ARTY.Chrono:
 	Inherits: ARTY
 	RenderSprites:
 		Image: arty
+		FactionImages:
+			russia: katy
+			ukraine: katy
+			iraq: katy
+			reaper: gunw
+			traveler: gunw
+			harbinger: gunw
+	GrantConditionOnFaction@SOVIET:
+		Factions: russia, ukraine, iraq
+		Condition: soviet
+	GrantConditionOnFaction@SCRIN:
+		Factions: reaper, traveler, harbinger
+		Condition: scrin
+	GrantConditionOnFaction@TD:
+		Factions: eagle, zocom, talon, blackh, marked, legion
+		Condition: td
 	-Buildable:
 	GrantTimedCondition@warpin:
 		Condition: warpin
@@ -666,6 +790,44 @@ ARTY.Chrono:
 		Weapon: UnitExplodeWarpOut
 		EmptyWeapon: UnitExplodeWarpOut
 		RequiresCondition: warpout
+	Armament:
+		RequiresCondition: !scrin && !soviet && !td
+	Armament@TD:
+		Weapon: 155mmTD
+		LocalOffset: 624,0,208
+		MuzzleSequence: muzzle
+		RequiresCondition: td
+	Armament@SOVIET:
+		Weapon: KatyushaRockets
+		LocalOffset: 268,0,500
+		RequiresCondition: soviet
+	Armament@PRIMARY:
+		Weapon: GunWalkerZap
+		LocalOffset: 750,92,25, 750,-92,25
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+		RequiresCondition: scrin
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: GunWalkerZapAA
+		LocalOffset: 750,92,25, 750,-92,25
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+		RequiresCondition: scrin
+	Tooltip:
+		RequiresCondition: !scrin && !soviet
+	Tooltip@KATY:
+		Name: Katyusha
+		RequiresCondition: soviet
+	Tooltip@SCRIN:
+		Name: Gun Walker
+		RequiresCondition: scrin
+	SpeedMultiplier@SCRIN:
+		RequiresCondition: scrin
+		Modifier: 200
+	WithMoveAnimation:
+		ValidMovementTypes: Horizontal, Vertical, Turn
+		RequiresCondition: scrin
 
 ISU:
 	Inherits: ^Tank
@@ -1626,11 +1788,6 @@ APC2:
 		RequiresCondition: gattling-ground == 2 && vulcan-upgrade
 		ReloadingCondition: engage-ground
 		PauseOnCondition: engage-air
-	GrantConditionOnAttack@APCFIRING:
-		Condition: apcfiring
-		RevokeDelay: 30
-		RevokeAll: True
-		RequiresCondition: !vulcan-upgrade || apcfiring
 	GrantConditionOnAttack:
 		ArmamentNames: primary-upg
 		Condition: gattling
@@ -1650,15 +1807,15 @@ APC2:
 	AttackFrontal:
 		Armaments: primary
 		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: !vulcan-upgrade || apcfiring
+		RequiresCondition: !vulcan-upgrade
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 		Armaments: primary-upg, secondary-upg
-		RequiresCondition: vulcan-upgrade && !apcfiring
+		RequiresCondition: vulcan-upgrade
 	Turreted:
 		TurnSpeed: 7
 		Offset: 0,0,150
-		RequiresCondition: vulcan-upgrade && !apcfiring
+		RequiresCondition: vulcan-upgrade
 	WithSpriteTurret:
 		Sequence: turret2
 		RequiresCondition: !gattling-ground && vulcan-upgrade
@@ -1683,6 +1840,12 @@ APC2:
 	GrantConditionOnPrerequisite@VULCAN:
 		Condition: vulcan-upgrade
 		Prerequisites: vulcan.upgrade
+	Berserkable@UPGRADING:
+		RequiresCondition: upgrading
+	GrantTimedCondition@UPGRADING:
+		RequiresCondition: vulcan-upgrade
+		Condition: upgrading
+		Duration: 1
 
 APC2.Reinforce:
 	Inherits: APC2
