@@ -77,7 +77,7 @@ KATY:
 		Range: 5c0
 	Armament:
 		Weapon: KatyushaRockets
-		LocalOffset: 268,0,500
+		LocalOffset: 268,0,440
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
@@ -372,6 +372,9 @@ KATY:
 	SpawnActorOnDeath@TD:
 		Actor: MTNK.Husk
 		RequiresCondition: warpin && (nod || gdi) && !(being-warped || warpout)
+	SpawnActorOnDeath@SOVIET:
+		Actor: 3TNK.Husk
+		RequiresCondition: warpin && soviet && !(being-warped || warpout)
 	GrantTimedCondition@warpin:
 		Condition: warpin
 		Duration: 850
@@ -799,7 +802,7 @@ ARTY.Chrono:
 		RequiresCondition: td
 	Armament@SOVIET:
 		Weapon: KatyushaRockets
-		LocalOffset: 268,0,500
+		LocalOffset: 268,0,440
 		RequiresCondition: soviet
 	Armament@PRIMARY:
 		Weapon: GunWalkerZap
