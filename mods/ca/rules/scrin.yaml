@@ -457,7 +457,7 @@ SEEK:
 	WithSpriteTurret:
 	IgnoresDisguise:
 	DetectCloaked:
-		Range: 6c0
+		Range: 5c0
 		CloakTypes: Cloak, Thief
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
@@ -555,7 +555,7 @@ INTL:
 		BuildPaletteOrder: 40
 		Prerequisites: wsph, ~vehicles.scrin, ~techlevel.low
 		Queue: Vehicle
-		Description: Heavily armoured transport craft.\n  Strong vs Light Vehicles\n  Weak vs Tanks, Aircraft
+		Description: Heavily armoured transport craft.\n  Can detect mines.\n  Strong vs Light Vehicles\n  Weak vs Tanks, Aircraft
 		IconPalette: chrome
 	Mobile:
 		Speed: 135
@@ -599,6 +599,10 @@ INTL:
 		RequiresCondition: driver-dead && !cargo
 	Targetable@DRIVERKILL:
 		RequiresCondition: !driver-dead && !cargo
+	DetectCloaked:
+		Range: 5c0
+		CloakTypes: Mine
+		RequiresCondition: !(empdisable || being-warped)
 
 CORR:
 	Inherits: ^Vehicle

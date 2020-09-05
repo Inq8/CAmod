@@ -678,11 +678,11 @@ KatyushaRockets:
 	ValidTargets: Ground, Trees, Water
 	Warhead@1Dam: SpreadDamage
 		Spread: 384
-		Damage: 3600
+		Damage: 5000
 		Versus:
 			None: 100
-			Wood: 95
-			Concrete: 55
+			Wood: 80
+			Concrete: 50
 			Light: 80
 			Heavy: 45
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
@@ -1207,8 +1207,14 @@ CryoMissile:
 		ImpactSounds: cryoblast.aud
 	Warhead@chill: GrantExternalCondition
 		Condition: chilled
-		Duration: 150
+		Duration: 200
 		Range: 1c768
+		ValidStances: Enemy, Neutral
+	Warhead@chillally: GrantExternalCondition
+		Condition: chilled
+		Duration: 50
+		Range: 0c682
+		ValidStances: Ally
 	Warhead@cryoresidue: CreateTintedCells
 		LayerName: cryoresidue
 		Spread: 1c0
