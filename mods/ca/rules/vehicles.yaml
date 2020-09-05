@@ -1788,11 +1788,6 @@ APC2:
 		RequiresCondition: gattling-ground == 2 && vulcan-upgrade
 		ReloadingCondition: engage-ground
 		PauseOnCondition: engage-air
-	GrantConditionOnAttack@APCFIRING:
-		Condition: apcfiring
-		RevokeDelay: 30
-		RevokeAll: True
-		RequiresCondition: !vulcan-upgrade || apcfiring
 	GrantConditionOnAttack:
 		ArmamentNames: primary-upg
 		Condition: gattling
@@ -1812,15 +1807,15 @@ APC2:
 	AttackFrontal:
 		Armaments: primary
 		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: !vulcan-upgrade || apcfiring
+		RequiresCondition: !vulcan-upgrade
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 		Armaments: primary-upg, secondary-upg
-		RequiresCondition: vulcan-upgrade && !apcfiring
+		RequiresCondition: vulcan-upgrade
 	Turreted:
 		TurnSpeed: 7
 		Offset: 0,0,150
-		RequiresCondition: vulcan-upgrade && !apcfiring
+		RequiresCondition: vulcan-upgrade
 	WithSpriteTurret:
 		Sequence: turret2
 		RequiresCondition: !gattling-ground && vulcan-upgrade
@@ -1845,6 +1840,12 @@ APC2:
 	GrantConditionOnPrerequisite@VULCAN:
 		Condition: vulcan-upgrade
 		Prerequisites: vulcan.upgrade
+	Berserkable@UPGRADING:
+		RequiresCondition: upgrading
+	GrantTimedCondition@UPGRADING:
+		RequiresCondition: vulcan-upgrade
+		Condition: upgrading
+		Duration: 1
 
 APC2.Reinforce:
 	Inherits: APC2
