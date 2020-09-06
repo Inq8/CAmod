@@ -178,7 +178,7 @@ S4:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 115
 		Prerequisites: nerv, ~infantry.scrin, ~techlevel.infonly
-		Description: Heavy assault infantry.\n  Can teleport short distances.\n  Strong vs Structures, Defenses, Light Vehicles\n  Weak vs Infantry, Aircraft
+		Description: Heavy assault infantry.\n  Can teleport short distances.\n  Strong vs Buildings, Defenses, Light Vehicles\n  Weak vs Infantry, Aircraft
 		IconPalette: chrome
 	Mobile:
 		Speed: 49
@@ -252,7 +252,7 @@ MAST:
 		BuildPaletteOrder: 120
 		Prerequisites: scrt, ~infantry.scrin, ~techlevel.infonly
 		BuildLimit: 1
-		Description: Elite specialist infantry.\n  Can mind-control enemy units.\n  Can detect cloaked units.\n  Maximum 1 can be trained.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft
+		Description: Elite specialist infantry.\n  Can mind-control enemy units and defenses.\n  Can detect cloaked units.\n  Maximum 1 can be trained.\n  Strong vs Infantry, Vehicles, Defenses\n  Weak vs Aircraft
 		IconPalette: chrome
 	Voiced:
 		VoiceSet: MastermindVoice
@@ -411,7 +411,7 @@ SEEK:
 		BuildPaletteOrder: 30
 		Prerequisites: vehicles.any, ~vehicles.seek, ~techlevel.low
 		Queue: Vehicle
-		Description: Light hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles, Structures\n  Weak vs Aircraft, Infantry
+		Description: Light hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles, Buildings\n  Weak vs Aircraft, Infantry
 		IconPalette: chrome
 	Mobile:
 		Speed: 135
@@ -457,7 +457,7 @@ SEEK:
 	WithSpriteTurret:
 	IgnoresDisguise:
 	DetectCloaked:
-		Range: 6c0
+		Range: 5c0
 		CloakTypes: Cloak, Thief
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
@@ -485,7 +485,7 @@ LACE:
 		BuildPaletteOrder: 30
 		Prerequisites: vehicles.any, ~vehicles.traveler, ~techlevel.low
 		Queue: Vehicle
-		Description: Fast hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles, Structures\n  Weak vs Aircraft, Infantry
+		Description: Fast hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles, Buildings\n  Weak vs Aircraft, Infantry
 		IconPalette: chrome
 	Mobile:
 		TurnSpeed: 10
@@ -555,7 +555,7 @@ INTL:
 		BuildPaletteOrder: 40
 		Prerequisites: wsph, ~vehicles.scrin, ~techlevel.low
 		Queue: Vehicle
-		Description: Heavily armoured transport craft.\n  Strong vs Light Vehicles\n  Weak vs Tanks, Aircraft
+		Description: Heavily armoured transport craft.\n  Can detect mines.\n  Strong vs Light Vehicles\n  Weak vs Tanks, Aircraft
 		IconPalette: chrome
 	Mobile:
 		Speed: 135
@@ -599,6 +599,10 @@ INTL:
 		RequiresCondition: driver-dead && !cargo
 	Targetable@DRIVERKILL:
 		RequiresCondition: !driver-dead && !cargo
+	DetectCloaked:
+		Range: 5c0
+		CloakTypes: Mine
+		RequiresCondition: !(empdisable || being-warped)
 
 CORR:
 	Inherits: ^Vehicle
@@ -619,7 +623,7 @@ CORR:
 		BuildPaletteOrder: 65
 		Prerequisites: nerv, ~vehicles.scrin, ~techlevel.medium
 		Queue: Vehicle
-		Description: Short-ranged anti-infantry/structure unit.\n  Strong vs Infantry, Structures\n  Weak vs Tanks, Aircraft
+		Description: Short-ranged anti-infantry/structure unit.\n  Strong vs Infantry, Buildings\n  Weak vs Tanks, Defenses, Aircraft
 		IconPalette: chrome
 	Mobile:
 		Speed: 82
@@ -841,7 +845,7 @@ RUIN:
 		BuildPaletteOrder: 150
 		Prerequisites: scrt, ~vehicles.harbinger, ~techlevel.high
 		Queue: Vehicle
-		Description: Long-range artillery.\n  Strong vs Structures, Infantry\n  Weak vs Tanks, Aircraft
+		Description: Long-range artillery.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Tanks, Aircraft
 		IconPalette: chrome
 	Mobile:
 		Speed: 100
@@ -975,7 +979,7 @@ SMCV:
 		BuildPaletteOrder: 300
 		Prerequisites: srep, ~vehicles.scrin, ~techlevel.infonly
 		IconPalette: chrome
-		Description: Deploys into another Construction Yard.\n  Unarmed
+		Description: Deploys into another Colony Platform.\n  Unarmed
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
@@ -1030,7 +1034,7 @@ STMR:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 40
 		Prerequisites: nerv, grav, ~aircraft.scrin, ~techlevel.medium
-		Description: Durable patrol craft.\n  Strong vs Light Vehicles, Aircraft\n  Weak vs Tanks, Structures
+		Description: Durable patrol craft.\n  Strong vs Infantry, Light Armor, Aircraft\n  Weak vs Tanks, Buildings
 		IconPalette: chrome
 	Valued:
 		Cost: 1650
@@ -1109,7 +1113,7 @@ DEVA:
 		BuildPaletteOrder: 55
 		BuildDurationModifier: 75
 		Prerequisites: scrt, grav, ~aircraft.scrin, ~techlevel.high
-		Description: Long-range siege warship.\n  Maximum 5 can be built.\n  Strong vs Structures, Infantry\n	Weak vs Aircraft, Tanks
+		Description: Long-range siege warship.\n  Maximum 5 can be built.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Aircraft, Tanks
 		IconPalette: chrome
 		BuildLimit: 5
 	Voiced:
@@ -1190,7 +1194,7 @@ PAC:
 		BuildPaletteOrder: 55
 		BuildDurationModifier: 75
 		Prerequisites: sign, scrt, grav, ~aircraft.scrin, ~techlevel.high
-		Description: Warship that launches a squadron\nof assault craft.\n  Maximum 5 can be built.\n	Strong vs Vehicles, Infantry, Aircraft\n  Weak vs Structures
+		Description: Warship that launches a squadron\nof assault craft.\n  Maximum 5 can be built.\n	Strong vs Vehicles, Infantry, Aircraft\n  Weak vs Buildings, Defenses
 		IconPalette: chrome
 		BuildLimit: 5
 	Voiced:
