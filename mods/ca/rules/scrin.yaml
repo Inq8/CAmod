@@ -2309,19 +2309,23 @@ NERV:
 		SelectTargetSpeechNotification: SelectTarget
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayRadarPing: True
-	SpawnActorPower@STORMSPIKE:
-		Actor: SCOL.Temp
+	DetonateWeaponPower@STORMSPIKE:
 		OrderName: stormspike
 		Icon: stormspikepower
 		IconPalette: scrin
 		Prerequisites: structures.reaper
+		Cursor: ability
 		ChargeInterval: 4500
-		LifeTime: -1
 		Description: Storm Spike
+		ActivationDelay: 1
 		LongDesc: Creates a temporary storm column.
 		LaunchSound: scrinbuild.aud
+		Weapon: StormSpikeSpawner
+		AirburstAltitude: 0c0
 		SelectTargetSpeechNotification: SelectTarget
 		PauseOnCondition: disabled || empdisable || being-warped
+		CameraActor: camera
+		CameraRemoveDelay: 1
 		DisplayRadarPing: True
 	SpawnActorPower@IONSURGE:
 		Actor: ion.surge
@@ -2974,27 +2978,26 @@ SCOL:
 	-SpawnRandomActorOnDeath:
 
 SCOL.Temp:
+	Inherits: ^Vehicle
+	Inherits@AUTOTARGET: ^AutoTargetGround
 	RenderSprites:
 		Image: scol
-	Inherits: SCOL
-	-Sellable:
-	-Buildable:
 	Health:
 		HP: 60000
 	KillsSelf:
 		Delay: 750
-	-Power:
-	-SpawnActorOnDeath:
-	-WithBuildingRepairDecoration:
-	-RepairableBuilding:
-	-EngineerRepairable:
-	-GrantConditionOnPowerState@LOWPOWER:
-	-WithColoredOverlay@IDISABLE:
-	-GrantCondition@IDISABLE:
-	-PowerMultiplier@POWERDOWN:
-	-WithDecoration@POWERDOWN:
-	-ToggleConditionOnOrder:
-	-Armament:
+	Tooltip:
+		Name: Storm Spike
+	Armor:
+		Type: Concrete
+	Selectable:
+		DecorationBounds: 24,48,0,-14
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Armament:
 		Weapon: StormColumnZap
 		LocalOffset: 0,0,900, 0,0,1100, 0,0,700, 0,0,1300, 0,0,500
@@ -3003,6 +3006,33 @@ SCOL.Temp:
 		PauseOnCondition: empdisable || being-warped
 	DetectCloaked:
 		RequiresCondition: !(empdisable || being-warped)
+	Targetable:
+		TargetTypes: Ground, C4, DetonateAttack, Structure, Defense, DriverKillImmune
+	Mobile:
+		Speed: 1
+		PauseOnCondition: !never
+	-AttackMove:
+	-Voiced:
+	-Repairable
+	-WithFacingSpriteBody:
+	WithSpriteBody:
+	-Guardable:
+	-Parachutable:
+	-Guard:
+	WithMakeAnimation:
+	RenderRangeCircle:
+		Color: C12900
+	Explodes:
+		Weapon: SmallBuildingExplode
+		EmptyWeapon: SmallBuildingExplode
+	Explodes@temporal:
+		Weapon: TemporalExplode
+		EmptyWeapon: TemporalExplode
+	RevealOnDeath:
+		Radius: 2c768
+	GrantConditionOnPrerequisite@ROF:
+		Condition: revealonfire
+		Prerequisites: global.revealonfire
 
 #
 # ---- misc

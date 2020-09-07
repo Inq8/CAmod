@@ -702,3 +702,11 @@ BuzzerDummyWeapon:
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+
+StormSpikeSpawner:
+	ReloadDelay: 1
+	Projectile: InstantExplode
+	Warhead@spawn: SpawnActor
+		Actors: SCOL.Temp
+		Range: 3
+		ValidTargets: Air, Ground, Water
