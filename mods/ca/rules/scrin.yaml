@@ -2324,7 +2324,7 @@ NERV:
 		AirburstAltitude: 0c0
 		SelectTargetSpeechNotification: SelectTarget
 		PauseOnCondition: disabled || empdisable || being-warped
-		CameraActor: camera
+		CameraActor: camera.paradrop
 		CameraRemoveDelay: 1
 		DisplayRadarPing: True
 	SpawnActorPower@IONSURGE:
@@ -2987,6 +2987,12 @@ SCOL.Temp:
 		HP: 60000
 	KillsSelf:
 		Delay: 750
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	-Power:
 	-SpawnActorOnDeath:
 	-WithBuildingRepairDecoration:
