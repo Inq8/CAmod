@@ -2289,7 +2289,7 @@ NERV:
 		Actor: ichor.seeder
 		ChargeInterval: 6000
 		Description: Ichor Seed
-		LifeTime: 250
+		LifeTime: -1
 		AllowMultiple: false
 		LongDesc: Seeds tiberium at selected location.
 		LaunchSound: ichorseed.aud
@@ -3112,10 +3112,25 @@ camera.resourcescan:
 
 ichor.seeder:
 	Inherits: CAMERA
+	HitShape:
+	Health:
+		HP: 1
 	SeedsResourceCA:
 		ResourceType: Tiberium
 		Interval: 2
 	-RevealsShroud:
+	WithSpriteBody:
+	RenderSprites:
+		Image: ichorseed
+		Palette: scrin
+	-RenderSpritesEditorOnly:
+	WithDeathAnimation:
+		UseDeathTypeSuffix: False
+		CrushedSequence: fade
+		FallbackSequence: fade
+		DeathSequencePalette: overlayplayerscrin
+	KillsSelf:
+		Delay: 225
 
 ion.surge:
 	Interactable:
