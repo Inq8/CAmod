@@ -114,7 +114,7 @@ namespace OpenRA.Mods.CA.Warheads
 							if (Image != null)
 								w.Add(new SpriteEffect(building.CenterPosition, w, Image, Sequence, palette));
 
-							var sound = Sounds.RandomOrDefault(Game.CosmeticRandom);
+							var sound = Sounds.RandomOrDefault(firedBy.World.LocalRandom);
 							if (sound != null)
 								Game.Sound.Play(SoundType.World, sound, building.CenterPosition);
 						});
