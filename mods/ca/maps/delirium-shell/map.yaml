@@ -26,22 +26,17 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: england
-		Enemies: Multi0, Multi1, Multi2
+		Enemies: Multi0, Multi2, Multi3
 	PlayerReference@Multi0:
 		Name: Multi0
 		Faction: england
 		Color: 9FBAFF
-		Enemies: Creeps, Multi1, Multi2
-	PlayerReference@Multi1:
-		Name: Multi1
-		Faction: blackh
-		Color: EEEEEE
-		Enemies: Creeps, Multi0, Multi2
+		Enemies: Creeps, Multi2, Multi3
 	PlayerReference@Multi2:
 		Name: Multi2
 		Faction: reaper
-		Color: 7353ff
-		Enemies: Creeps, Multi0, Multi1
+		Color: 7353FF
+		Enemies: Creeps, Multi0, Multi3
 	PlayerReference@Multi3:
 		Name: Multi3
 		Faction: blackh
@@ -145,24 +140,6 @@ Actors:
 	Actor73: split2
 		Owner: Neutral
 		Location: 147,149
-	Actor74: mpspawn
-		Owner: Neutral
-		Location: 24,22
-	Actor75: mpspawn
-		Owner: Neutral
-		Location: 79,22
-	Actor76: mpspawn
-		Owner: Neutral
-		Location: 136,22
-	Actor77: mpspawn
-		Owner: Neutral
-		Location: 136,139
-	Actor78: mpspawn
-		Owner: Neutral
-		Location: 78,139
-	Actor79: mpspawn
-		Owner: Neutral
-		Location: 24,139
 	Actor80: tc01
 		Owner: Neutral
 		Location: 3,41
@@ -349,9 +326,6 @@ Actors:
 	Actor165: split2
 		Owner: Neutral
 		Location: 72,58
-	Actor166: t15
-		Owner: Neutral
-		Location: 64,63
 	Actor167: t17.husk
 		Owner: Neutral
 		Location: 77,64
@@ -376,9 +350,6 @@ Actors:
 	Actor157: t17.husk
 		Owner: Neutral
 		Location: 26,96
-	Actor158: tc02.husk
-		Owner: Neutral
-		Location: 64,97
 	Actor159: t14
 		Owner: Neutral
 		Location: 37,98
@@ -409,9 +380,6 @@ Actors:
 	Actor151: tc02
 		Owner: Neutral
 		Location: 108,88
-	Actor153: tc05
-		Owner: Neutral
-		Location: 99,97
 	Actor154: split2
 		Owner: Neutral
 		Location: 94,100
@@ -517,30 +485,6 @@ Actors:
 	Actor203: brik
 		Owner: Multi0
 		Location: 63,90
-	Actor204: brik
-		Owner: Multi0
-		Location: 63,91
-	Actor205: brik
-		Owner: Multi0
-		Location: 63,92
-	Actor206: brik
-		Owner: Multi0
-		Location: 63,93
-	Actor207: brik
-		Owner: Multi0
-		Location: 63,94
-	Actor208: brik
-		Owner: Multi0
-		Location: 63,95
-	Actor209: brik
-		Owner: Multi0
-		Location: 63,96
-	Actor210: brik
-		Owner: Multi0
-		Location: 64,96
-	Actor211: brik
-		Owner: Multi0
-		Location: 64,95
 	Actor212: sbag
 		Owner: Multi0
 		Location: 57,95
@@ -650,10 +594,6 @@ Actors:
 		Owner: Multi0
 		TurretFacing: 96
 		Location: 62,82
-	Actor271: pbox
-		Owner: Multi0
-		TurretFacing: 96
-		Location: 90,84
 	Actor272: pbox
 		Owner: Multi0
 		TurretFacing: 96
@@ -682,10 +622,10 @@ Actors:
 	Actor281: fact
 		Owner: Multi0
 		Location: 75,99
-	AlliedAirfield1: hpad
+	HPAD1: hpad
 		Owner: Multi0
 		Location: 71,100
-	Actor283: hpad
+	HPAD2: hpad
 		Owner: Multi0
 		Location: 68,100
 	Actor284: proc
@@ -703,21 +643,10 @@ Actors:
 	Actor288: silo
 		Owner: Multi0
 		Location: 63,100
-	Actor289: fix
-		Owner: Multi0
-		Location: 67,93
-	Actor290: agun
-		Owner: Multi0
-		Location: 83,92
-		TurretFacing: 241
 	Actor294: agun
 		Owner: Multi0
 		Location: 80,82
 		TurretFacing: 232
-	Actor295: agun
-		Owner: Multi0
-		Location: 65,93
-		TurretFacing: 42
 	Actor296: pris
 		Owner: Multi0
 		Location: 82,91
@@ -730,9 +659,6 @@ Actors:
 	Actor299: atek
 		Owner: Multi0
 		Location: 80,102
-	Actor300: pdox
-		Owner: Multi0
-		Location: 69,104
 	Actor301: gun
 		Owner: Multi0
 		Location: 82,83
@@ -790,61 +716,61 @@ Actors:
 		Owner: Multi0
 		Location: 72,98
 	Actor302: mlrs
-		Owner: Multi1
 		Location: 62,73
 		TurretFacing: 140
 		Facing: 140
 		Stance: AttackAnything
+		Owner: Multi3
 	Actor303: mlrs
-		Owner: Multi1
 		Location: 56,76
 		TurretFacing: 150
 		Facing: 150
 		Stance: AttackAnything
+		Owner: Multi3
 	Actor304: mlrs
-		Owner: Multi1
 		Location: 53,80
 		TurretFacing: 165
 		Facing: 165
 		Stance: AttackAnything
+		Owner: Multi3
 	Actor305: ftnk
-		Owner: Multi1
 		Location: 61,81
 		Facing: 155
+		Owner: Multi3
 	Actor306: ftnk
-		Owner: Multi1
 		Location: 58,84
 		Facing: 194
+		Owner: Multi3
 	Actor307: ltnk
-		Owner: Multi1
 		Location: 61,79
 		Facing: 153
 		TurretFacing: 181
 		Stance: AttackAnything
+		Owner: Multi3
 	Actor308: ltnk
-		Owner: Multi1
 		Location: 55,89
 		TurretFacing: 190
 		Facing: 190
 		Stance: AttackAnything
+		Owner: Multi3
 	Actor309: ltnk
-		Owner: Multi1
 		Location: 56,92
 		Facing: 189
 		TurretFacing: 158
+		Owner: Multi3
 	Actor310: arty.nod
-		Owner: Multi1
 		Location: 58,81
 		Facing: 165
+		Owner: Multi3
 	Actor311: arty.nod
-		Owner: Multi1
 		Location: 53,84
 		Facing: 189
 		Stance: AttackAnything
+		Owner: Multi3
 	Actor312: arty.nod
-		Owner: Multi1
 		Location: 68,76
 		Facing: 163
+		Owner: Multi3
 	Actor313: nsam
 		TurretFacing: 96
 		Location: 56,66
@@ -857,9 +783,6 @@ Actors:
 		Location: 59,66
 		TurretFacing: 162
 		Owner: Multi3
-	NodBarracks2: hand
-		Owner: Multi3
-		Location: 58,62
 	Actor317: nuke
 		Owner: Multi3
 		Location: 52,61
@@ -882,15 +805,9 @@ Actors:
 		Owner: Multi3
 		TurretFacing: 96
 		Location: 46,62
-	Actor324: obli
-		Owner: Multi3
-		Location: 61,63
 	Actor325: hq
 		Owner: Multi3
 		Location: 60,54
-	Actor326: nuk2
-		Owner: Multi3
-		Location: 49,57
 	Actor328: rep
 		Owner: Multi3
 		Location: 49,53
@@ -1209,65 +1126,65 @@ Actors:
 		Location: 59,86
 		SubCell: 3
 	Actor393: acol
-		Owner: Multi1
 		Facing: 96
 		TurretFacing: 96
 		SubCell: 3
 		Location: 55,79
+		Owner: Multi3
 	Actor396: acol
-		Owner: Multi1
 		Facing: 96
 		TurretFacing: 96
 		SubCell: 3
 		Location: 55,87
+		Owner: Multi3
 	Actor397: n3c
-		Owner: Multi1
 		Facing: 96
 		SubCell: 3
 		Location: 54,82
+		Owner: Multi3
 	Actor400: n3c
-		Owner: Multi1
 		Facing: 96
 		SubCell: 3
 		Location: 64,72
+		Owner: Multi3
 	Actor402: n1c
-		Owner: Multi1
 		Facing: 96
 		SubCell: 3
 		Location: 56,86
+		Owner: Multi3
 	Actor403: n1c
-		Owner: Multi1
 		Facing: 96
 		SubCell: 3
 		Location: 57,78
+		Owner: Multi3
 	Actor406: n1c
-		Owner: Multi1
 		Facing: 96
 		Location: 65,73
 		SubCell: 3
+		Owner: Multi3
 	Actor408: n1c
-		Owner: Multi1
 		Facing: 96
 		SubCell: 3
 		Location: 67,72
+		Owner: Multi3
 	Actor409: n1
-		Owner: Multi1
 		Facing: 96
 		TurretFacing: 96
 		SubCell: 3
 		Location: 54,83
+		Owner: Multi3
 	Actor410: n1
-		Owner: Multi1
 		Facing: 96
 		TurretFacing: 96
 		SubCell: 3
 		Location: 56,79
+		Owner: Multi3
 	Actor411: n1
-		Owner: Multi1
 		Facing: 96
 		TurretFacing: 96
 		SubCell: 3
 		Location: 61,74
+		Owner: Multi3
 	Actor423: deva
 		Owner: Multi2
 		Facing: 96
@@ -1551,13 +1468,13 @@ Actors:
 		Owner: Neutral
 		Location: 101,126
 	NodSpawn2: waypoint
-		Owner: Neutral
 		Location: 23,45
-	NodBarracks1: hand
-		Owner: Multi1
+		Owner: Neutral
+	NodBarracks2: hand
+		Owner: Multi3
 		Location: 29,42
 	NodWarFactory1: airs
-		Owner: Multi1
+		Owner: Multi3
 		Location: 33,40
 	Actor496: srep
 		Owner: Multi2
@@ -1607,9 +1524,6 @@ Actors:
 	Actor510: proc.td
 		Owner: Multi3
 		Location: 66,49
-	Actor511: obli
-		Owner: Multi3
-		Location: 65,60
 	Actor512: nsam
 		Owner: Multi3
 		TurretFacing: 96
@@ -1677,9 +1591,6 @@ Actors:
 	Actor533: brik
 		Owner: Multi3
 		Location: 39,57
-	Actor534: nuk2
-		Owner: Multi3
-		Location: 47,56
 	Actor535: nuk2
 		Owner: Multi3
 		Location: 36,54
@@ -1687,10 +1598,6 @@ Actors:
 		Owner: Multi0
 		Location: 64,82
 		TurretFacing: 41
-	Actor537: gun
-		Owner: Multi0
-		Location: 88,84
-		TurretFacing: 222
 	Actor538: scol
 		Owner: Multi2
 		Location: 103,68
@@ -1717,9 +1624,6 @@ Actors:
 	Actor544: obli
 		Owner: Multi3
 		Location: 42,61
-	Actor545: obli
-		Owner: Multi3
-		Location: 54,65
 	Actor546: nuk2
 		Owner: Multi3
 		Location: 54,43
@@ -1727,8 +1631,8 @@ Actors:
 		Owner: Multi2
 		Location: 94,52
 	NodSpawn1: waypoint
-		Owner: Neutral
 		Location: 23,63
+		Owner: Neutral
 	ScrinAirfield1: grav
 		Owner: Multi2
 		Location: 119,42
@@ -1738,5 +1642,291 @@ Actors:
 	ScrinSpawn2: waypoint
 		Owner: Neutral
 		Location: 129,43
+	Actor468: weat
+		Owner: Multi0
+		Location: 79,106
+	Actor537: chpr
+		Owner: Multi0
+		Location: 82,78
+		TurretFacing: 214
+		Facing: 214
+	Actor543: batf.ai
+		Owner: Multi0
+		Location: 91,83
+		TurretFacing: 252
+		Facing: 252
+	Actor548: tnkd
+		Owner: Multi0
+		Location: 69,78
+		TurretFacing: 5
+		Facing: 5
+	Actor549: cdrn
+		Owner: Multi3
+		Location: 65,68
+		Facing: 146
+		Stance: AttackAnything
+	Actor550: howi
+		Owner: Multi3
+		Location: 61,76
+		TurretFacing: 170
+		Facing: 170
+	Actor551: howi
+		Owner: Multi3
+		Location: 53,88
+		Facing: 206
+		TurretFacing: 175
+	Actor552: stnk.nod
+		Owner: Multi3
+		Location: 70,74
+		Facing: 146
+		TurretFacing: 112
+	Actor511: chain
+		Owner: Multi3
+		Location: 66,64
+	Actor553: chain
+		Owner: Multi3
+		Location: 67,64
+	Actor554: chain
+		Owner: Multi3
+		Location: 67,64
+	Actor555: chain
+		Owner: Multi3
+		Location: 67,63
+	Actor556: chain
+		Owner: Multi3
+		Location: 66,63
+	Actor557: chain
+		Owner: Multi3
+		Location: 65,64
+	Actor558: chain
+		Owner: Multi3
+		Location: 64,64
+	Actor559: chain
+		Owner: Multi3
+		Location: 64,63
+	Actor560: chain
+		Owner: Multi3
+		Location: 64,63
+	Actor561: chain
+		Owner: Multi3
+		Location: 63,63
+	Actor567: lasp
+		Owner: Multi3
+		Location: 48,64
+	Actor545: lasp
+		Owner: Multi3
+		Location: 54,64
+	Actor569: lasp
+		Owner: Multi3
+		Location: 54,60
+	Actor570: lasp
+		Owner: Multi3
+		Location: 46,60
+	Actor571: lasp
+		Owner: Multi3
+		Location: 46,55
+	Actor534: nuk2
+		Owner: Multi3
+		Location: 47,56
+	Actor568: nuk2
+		Owner: Multi3
+		Location: 49,56
+	Actor572: obli
+		Owner: Multi3
+		Location: 65,63
+	NodBarracks1: hand
+		Owner: Multi3
+		Location: 56,61
+	Actor574: scrn
+		Owner: Multi3
+		Location: 103,121
+		Stance: AttackAnything
+		Facing: 46
+	Actor575: scrn
+		Owner: Multi3
+		Location: 105,119
+		Stance: AttackAnything
+		Facing: 29
+	Actor576: scrn
+		Owner: Multi3
+		Location: 106,116
+		Stance: AttackAnything
+		Facing: 44
+	Actor577: rmbc
+		Owner: Multi3
+		Facing: 96
+		SubCell: 3
+		Location: 59,72
+		Stance: AttackAnything
+	Actor578: rmbc
+		Owner: Multi3
+		Facing: 96
+		SubCell: 3
+		Location: 64,70
+		Stance: AttackAnything
+	Actor584: chain
+		Owner: Multi3
+		Location: 60,63
+	Actor585: chain
+		Owner: Multi3
+		Location: 60,64
+	Actor586: chain
+		Owner: Multi3
+		Location: 59,64
+	Actor587: chain
+		Owner: Multi3
+		Location: 59,63
+	Actor582: chain
+		Owner: Multi3
+		Location: 43,62
+	Actor589: chain
+		Owner: Multi3
+		Location: 42,62
+	Actor590: chain
+		Owner: Multi3
+		Location: 41,62
+	Actor591: chain
+		Owner: Multi3
+		Location: 41,60
+	Actor592: chain
+		Owner: Multi3
+		Location: 41,61
+	Actor593: chain
+		Owner: Multi3
+		Location: 42,60
+	Actor594: chain
+		Owner: Multi3
+		Location: 43,60
+	Actor595: chain
+		Owner: Multi3
+		Location: 43,61
+	Actor596: ptnk
+		Owner: Multi0
+		Facing: 96
+		TurretFacing: 96
+		Location: 71,84
+	Actor597: orep
+		Owner: Multi0
+		Location: 82,93
+	Actor599: pbox
+		Owner: Multi0
+		TurretFacing: 96
+		Location: 87,84
+	Actor600: ifv.ai
+		Owner: Multi0
+		Location: 60,92
+		TurretFacing: 45
+		Facing: 45
+	Actor601: harv.chrono
+		Owner: Multi0
+		Facing: 0
+		Location: 57,109
+	Actor602: harv.chrono
+		Owner: Multi0
+		Location: 92,100
+		Facing: 0
+	Actor603: harv.chrono
+		Owner: Multi0
+		Facing: 96
+		Location: 56,106
+	Actor604: harv.chrono
+		Owner: Multi0
+		Location: 90,98
+		Facing: 177
+	Actor507: syrd
+		Owner: Multi0
+		Location: 92,94
+	Actor562: v19.husk
+		Location: 80,74
+		Owner: Neutral
+	Actor563: brl3
+		Location: 81,73
+		Owner: Neutral
+	Actor564: ca
+		Owner: Multi0
+		Location: 94,92
+		Stance: AttackAnything
+		TurretFacing: 246
+		Facing: 63
+	Actor565: dd
+		Owner: Multi0
+		Location: 97,94
+		Facing: 177
+		TurretFacing: 107
+	Actor566: t02
+		Owner: Neutral
+		Location: 94,87
+	Actor573: syrd
+		Owner: Multi0
+		Location: 57,98
+	Actor579: ca
+		Owner: Multi0
+		Location: 52,98
+		Facing: 68
+		TurretFacing: 233
+	Actor580: dd
+		Owner: Multi0
+		Location: 47,97
+		Facing: 24
+		TurretFacing: 0
+	DropZone2: waypoint
+		Owner: Neutral
+		Location: 77,88
+	DropZone1: waypoint
+		Owner: Neutral
+		Location: 68,87
+	Actor581: brik
+		Owner: Multi0
+		Location: 62,95
+	Actor583: brik
+		Owner: Multi0
+		Location: 62,96
+	Actor588: brik
+		Owner: Multi0
+		Location: 62,94
+	Actor605: brik
+		Owner: Multi0
+		Location: 62,93
+	Actor606: brik
+		Owner: Multi0
+		Location: 62,92
+	Actor607: brik
+		Owner: Multi0
+		Location: 62,91
+	Actor608: brik
+		Owner: Multi0
+		Location: 62,90
+	Actor609: brik
+		Owner: Multi0
+		Location: 63,95
+	Actor610: brik
+		Owner: Multi0
+		Location: 63,96
+	Actor611: pris
+		Owner: Multi0
+		Location: 63,91
+	Actor598: pris
+		Owner: Multi0
+		Location: 85,91
+	Actor612: agun
+		Owner: Multi0
+		Location: 85,94
+		TurretFacing: 185
+	Actor613: agun
+		Owner: Multi0
+		TurretFacing: 96
+		Location: 63,94
+	Actor614: fix
+		Owner: Multi0
+		Location: 64,97
+	Actor615: apwr
+		Owner: Multi0
+		Location: 66,109
+	Actor616: apwr
+		Owner: Multi0
+		Location: 66,105
+	Chronosphere: pdox
+		Owner: Multi0
+		Location: 71,106
 
 Rules: rules.yaml

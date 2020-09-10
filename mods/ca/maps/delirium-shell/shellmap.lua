@@ -7,8 +7,10 @@
    information, see COPYING.
 ]]
 
-NodUnitTypes = { "bike", "bike", "bggy", "ltnk", "ltnk", "n1", "n1", "n1", "n1", "n3", "n3" }
-AlliedUnitTypes = { "jeep", "1tnk", "ifv.ai", "1tnk", "2tnk", "ifv.ai", "ptnk", "e1", "e1", "e1", "e1", "e3", "e3", "e3", "e3" }
+NodLightUnitTypes = { "bike", "bike", "bggy", "rmbc", "rmbc", "n1c", "n1c", "n1c", "n1c", "n3c", "n3c" }
+NodHeavyUnitTypes = { "mtnk", "mtnk", "ftnk", "ftnk", "wtnk", "wtnk", "cdrn" }
+NodAirUnitTypes = {"scrn", "scrn", "scrn"}
+AlliedUnitTypes = { "jeep", "1tnk", "ifv.ai", "1tnk", "rtnk", "ifv.ai", "ptnk", "e1", "e1", "e1", "e1", "e3", "e3", "e3", "e3" }
 ScrinUnitTypes = { "seek", "seek", "gunw", "devo", "tpod", "s1", "s1", "s1", "s1", "s3", "s3" }
 ScrinAirUnitTypes = {"deva", "stmr", "stmr"}
 ProducedUnitTypes =
@@ -16,10 +18,12 @@ ProducedUnitTypes =
 	{ factory = AlliedBarracks1, types = { "e1", "e3" } },
 	{ factory = ScrinBarracks1, types = { "s1", "s3" } },
 	{ factory = NodBarracks1, types = { "n1", "n3", "n4" } },
-	{ factory = AlliedWarFactory1, types = { "1tnk", "2tnk", "ptnk", "jeep", "ifv.ai", "cryo", "arty" } },
+	{ factory = AlliedWarFactory1, types = { "1tnk", "2tnk", "ptnk", "jeep", "ifv.ai", "cryo", "rtnk" } },
 	{ factory = ScrinWarFactory1, types = { "seek", "tpod", "gunw", "devo", "corr" } },
 	{ factory = NodWarFactory1, types = { "ltnk", "ftnk", "stnk.nod", "arty.nod", "mlrs" } }
 }
+
+HelicopterUnitTypes = { "e1", "e1", "e1", "e1", "e3", "e3" };
 
 BindActorTriggers = function(a)
 	if a.HasProperty("Hunt") then
@@ -91,6 +95,29 @@ SetupAlliedUnits = function()
 	end)
 end
 
+InsertAlliedChinookReinforcements = function(entry, waypoint)
+	local units = Reinforcements.ReinforceWithTransport(allies, "tran",
+		HelicopterUnitTypes, { entry.Location, waypoint.Location + CVec.New(1, 2) }, { entry.Location })[2]
+
+	Utils.Do(units, function(unit)
+		BindActorTriggers(unit)
+	end)
+
+	Trigger.AfterDelay(DateTime.Seconds(60), function() InsertAlliedChinookReinforcements(entry, waypoint) end)
+end
+
+ChronoshiftAlliedUnits = function()
+	local cells = Utils.ExpandFootprint({ AlliesOuterBase.Location }, false)
+	local units = { }
+	for i = 1, #cells do
+		local unit = Actor.Create("rtnk", true, { Owner = allies, Facing = 0 })
+		BindActorTriggers(unit)
+		units[unit] = cells[i]
+	end
+	Chronosphere.Chronoshift(units)
+	Trigger.AfterDelay(DateTime.Seconds(60), ChronoshiftAlliedUnits)
+end
+
 SetupFactories = function()
 	Utils.Do(ProducedUnitTypes, function(production)
 		Trigger.OnProduction(production.factory, function(_, a) BindActorTriggers(a) end)
@@ -98,28 +125,44 @@ SetupFactories = function()
 end
 
 ticks = 0
-speed = 5
+speed = 8
 
 Tick = function()
 	ticks = ticks + 1
+	
+	if (Utils.RandomInteger(1, 200) == 10) then
+		local delay = Utils.RandomInteger(1, 10)
+		Lighting.Flash("LightningStrike", delay)
+		Trigger.AfterDelay(delay, function()
+			Media.PlaySound("thunder" .. Utils.RandomInteger(1,6) .. ".aud")
+		end)
+	end
+	if (Utils.RandomInteger(1, 200) == 10) then
+		Media.PlaySound("thunder-ambient.aud")
+	end
 
 	local t = (ticks + 45) % (360 * speed) * (math.pi / 180) / speed;
-	Camera.Position = viewportOrigin + WVec.New(8200 * math.sin(t), 9480 * math.cos(t), 0)
+	Camera.Position = viewportOrigin + WVec.New(16200 * math.sin(t), 10480 * math.cos(t), 0)
 end
 
 WorldLoaded = function()
 	allies = Player.GetPlayer("Multi0")
-	nod = Player.GetPlayer("Multi1")
 	scrin = Player.GetPlayer("Multi2")
-	nodbase = Player.GetPlayer("Multi3")
+	nod = Player.GetPlayer("Multi3")
 	viewportOrigin = Camera.Position
 
 	SetupAlliedUnits()
 	SetupFactories()
 	Utils.Do(ProducedUnitTypes, ProduceUnits)
+	
+	Trigger.AfterDelay(DateTime.Seconds(30), ChronoshiftAlliedUnits)
+	
+	InsertAlliedChinookReinforcements(AlliesSpawn1, DropZone1)
+	InsertAlliedChinookReinforcements(AlliesSpawn2, DropZone2)
 
-	SendNodUnits(NodSpawn1.Location, NodUnitTypes, 50)
-	SendNodUnits(NodSpawn2.Location, NodUnitTypes, 40)
+	SendNodUnits(NodSpawn1.Location, NodLightUnitTypes, 50)
+	SendNodUnits(NodSpawn2.Location, NodHeavyUnitTypes, 40)
+	SendNodUnits(AlliesSpawn2.Location, NodAirUnitTypes, 300)
 	SendAlliedUnits(AlliesSpawn1.Location, AlliedUnitTypes, 50)
 	SendAlliedUnits(AlliesSpawn2.Location, AlliedUnitTypes, 40)
 	SendScrinUnits(ScrinSpawn1.Location, ScrinUnitTypes, 50)

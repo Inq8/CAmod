@@ -5,9 +5,11 @@ World:
 	-MPStartLocations:
 	-CrateSpawner:
 	-StartGameNotification:
+	FlashPaletteEffect@LIGHTNINGSTRIKE:
+		Type: LightningStrike
 	MusicPlaylist:
-		BackgroundMusic: bigf226m
-		DisableWorldSounds: true
+		BackgroundMusic: kmachine
+		DisableWorldSounds: false
 	LuaScript:
 		Scripts: shellmap.lua
 	ResourceType@ore:
@@ -89,3 +91,31 @@ powerproxy.paratroopers:
 	ParatroopersPower:
 		DisplayBeacon: false
 		DropItems: E1,E1,E2,E3,E4
+		
+PROC:
+	FreeActor:
+		RequiresCondition: spawn-harv && !spawn-charv && build-incomplete
+	FreeActor@CHARV:
+		RequiresCondition: spawn-charv && !spawn-harv && build-incomplete
+APWR:
+	PowerMultiplier:
+		Modifier: 300
+		
+PDOX:
+	-ChronoshiftPowerCA@chronoshift:
+	ChronoshiftPower@chronoshift:
+		OrderName: Chronoshift
+		PauseOnCondition: disabled
+		Prerequisites: !pdox.germany
+		Icon: chrono
+		ChargeInterval: 3000
+		Description: Chronoshift
+		LongDesc: Teleports a group of units across\nthe map for 20 seconds.
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		BeginChargeSpeechNotification: ChronosphereCharging
+		EndChargeSpeechNotification: ChronosphereReady
+		Duration: 400
+		KillCargo: true
+		DisplayRadarPing: True
+		SupportPowerPaletteOrder: 20
