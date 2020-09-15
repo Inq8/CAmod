@@ -62,8 +62,8 @@ namespace OpenRA.Mods.Common.Traits
 			else
 			{
 				self.Owner.Shroud.RemoveSource(this);
+			}
 		}
-	}
 
 		protected PPos[] ProjectedCells(Actor self)
 		{

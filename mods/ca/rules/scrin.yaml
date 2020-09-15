@@ -2296,10 +2296,23 @@ NERV:
 		Actor: BUZZ
 		OrderName: buzzerswarm
 		Icon: buzzpower
-		Prerequisites: structures.harbinger
+		Prerequisites: structures.harbinger, !botplayer
 		ChargeInterval: 4500
 		LifeTime: -1
 		Description: Buzzer Swarm
+		LongDesc: Spawns controllable buzzer swarm which damages anything nearby.
+		LaunchSound: buzzers-create.aud
+		SelectTargetSpeechNotification: SelectTarget
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayRadarPing: True
+	SpawnActorPower@BUZZERSWARMAI:
+		Actor: BUZZ.AI
+		OrderName: buzzerswarmai
+		Icon: buzzpower
+		Prerequisites: structures.harbinger, botplayer
+		ChargeInterval: 4500
+		LifeTime: -1
+		Description: Buzzer Swarm (AI)
 		LongDesc: Spawns controllable buzzer swarm which damages anything nearby.
 		LaunchSound: buzzers-create.aud
 		SelectTargetSpeechNotification: SelectTarget
@@ -3052,6 +3065,18 @@ BUZZ:
 	Armament@PRIMARY:
 		Weapon: BuzzerDummyWeapon
 	AttackFrontal:
+	
+BUZZ.AI:
+	Inherits: BUZZ
+	RenderSprites:
+		Image: buzz
+	AttackWander:
+		WanderMoveRadius: 1
+		ReduceMoveRadiusDelay: 3
+	-Aircraft:
+	Mobile:
+		Speed: 36
+		Locomotor: cloud
 
 camera.rift:
 	Interactable:
