@@ -290,7 +290,7 @@ camera.satscan.oneshot:
 	KillsSelf:
 		RemoveInstead: true
 		Delay: 375
-		
+
 gps.satellite:
 	AlwaysVisible:
 	ProvidesPrerequisite:
@@ -406,11 +406,20 @@ MINE:
 		Terrain: Ore
 	AppearsOnMapPreview:
 		Terrain: Ore
-	SeedsResourceCA:
+	SeedsResourceCA@normalregrowth:
+		Interval: 75
+		RequiresCondition: !fast-regrowth
+	SeedsResourceCA@fastregrowth:
+		Interval: 55
+		RequiresCondition: fast-regrowth
 	MapEditorData:
 		Categories: Resource spawn
 	RequiresSpecificOwners:
 		ValidOwnerNames: Neutral
+	ConditionManager:
+	GrantConditionOnPrerequisite@FASTREGROWTH:
+		Condition: fast-regrowth
+		Prerequisites: global.fastregrowth
 
 GMINE:
 	Inherits@1: ^SpriteActor
@@ -798,9 +807,18 @@ SPLIT2:
 	Inherits: ^TibTree
 	RenderSprites:
 		Palette: temptd
-	SeedsResourceCA:
+	SeedsResourceCA@normalregrowth:
+		ResourceType: Tiberium
+		Interval: 75
+		RequiresCondition: !fast-regrowth
+	SeedsResourceCA@fastregrowth:
 		ResourceType: Tiberium
 		Interval: 55
+		RequiresCondition: fast-regrowth
+	GrantConditionOnPrerequisite@FASTREGROWTH:
+		Condition: fast-regrowth
+		Prerequisites: global.fastregrowth
+	ConditionManager:
 	AppearsOnMapPreview:
 		Terrain: Tiberium
 	MapEditorData:
@@ -811,9 +829,18 @@ SPLIT3:
 	RenderSprites:
 		Image: split3
 		Palette: temptd
-	SeedsResourceCA:
+	SeedsResourceCA@normalregrowth:
+		ResourceType: Tiberium
+		Interval: 75
+		RequiresCondition: !fast-regrowth
+	SeedsResourceCA@fastregrowth:
 		ResourceType: Tiberium
 		Interval: 55
+		RequiresCondition: fast-regrowth
+	GrantConditionOnPrerequisite@FASTREGROWTH:
+		Condition: fast-regrowth
+		Prerequisites: global.fastregrowth
+	ConditionManager:
 	AppearsOnMapPreview:
 		Terrain: Tiberium
 	WithIdleAnimation:
@@ -828,7 +855,6 @@ SPLITBLUE:
 		Palette: temptd
 	SeedsResourceCA:
 		ResourceType: BlueTiberium
-		Interval: 110
 	AppearsOnMapPreview:
 		Terrain: BlueTiberium
 	WithIdleAnimation:

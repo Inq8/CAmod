@@ -82,56 +82,47 @@
 		Prerequisite: botplayer
 		RequiresCondition: owned-by-brutal-ai || owned-by-vhard-ai || owned-by-hard-ai || owned-by-normal-ai || owned-by-easy-ai || owned-by-naval-ai
 	ProductionTimeMultiplier@brutalbonus:
-		Multiplier: 88
+		Multiplier: 90
 		Prerequisites: is-brutal-ai
 	ProductionTimeMultiplier@vhardbonus:
-		Multiplier: 92
+		Multiplier: 95
 		Prerequisites: is-vhard-ai
-	ProductionTimeMultiplier@hardbonus:
-		Multiplier: 96
-		Prerequisites: is-hard-ai
 
 ^BotDefenseProductionBonus:
 	ProductionTimeMultiplier@brutalbonus:
-		Multiplier: 80
+		Multiplier: 85
 		Prerequisites: is-brutal-ai
 	ProductionTimeMultiplier@vhardbonus:
-		Multiplier: 85
+		Multiplier: 90
 		Prerequisites: is-vhard-ai
 	ProductionTimeMultiplier@hardbonus:
-		Multiplier: 90
-		Prerequisites: is-hard-ai
-	ProductionTimeMultiplier@normalbonus:
 		Multiplier: 95
-		Prerequisites: is-normal-ai
+		Prerequisites: is-hard-ai
 
 ^BotGroundProductionBonus:
 	ProductionTimeMultiplier@brutalbonus:
-		Multiplier: 40
+		Multiplier: 50
 		Prerequisites: is-brutal-ai
 	ProductionTimeMultiplier@vhardbonus:
-		Multiplier: 50
+		Multiplier: 60
 		Prerequisites: is-vhard-ai
 	ProductionTimeMultiplier@hardbonus:
-		Multiplier: 60
+		Multiplier: 70
 		Prerequisites: is-hard-ai
 	ProductionTimeMultiplier@normalbonus:
-		Multiplier: 80
+		Multiplier: 85
 		Prerequisites: is-normal-ai
 
 ^BotAirProductionBonus:
 	ProductionTimeMultiplier@brutalbonus:
-		Multiplier: 80
+		Multiplier: 85
 		Prerequisites: is-brutal-ai
 	ProductionTimeMultiplier@vhardbonus:
-		Multiplier: 85
+		Multiplier: 90
 		Prerequisites: is-vhard-ai
 	ProductionTimeMultiplier@hardbonus:
-		Multiplier: 90
-		Prerequisites: is-hard-ai
-	ProductionTimeMultiplier@normalbonus:
 		Multiplier: 95
-		Prerequisites: is-normal-ai
+		Prerequisites: is-hard-ai
 
 # The Bot does not know how to sell up when he does not have an income. This provides an income, when floating less than 2500$
 ^BotFallbackInsurance:
@@ -139,22 +130,22 @@
 		Condition: noinsurance
 		Threshold: 2500
 	CashTrickler@brutalinsurance:
-		Interval: 250
+		Interval: 375
 		Amount: 1000
 		ShowTicks: False
 		RequiresCondition: owned-by-brutal-ai && !noinsurance
 	CashTrickler@vhardinsurance:
-		Interval: 250
+		Interval: 375
 		Amount: 750
 		ShowTicks: False
 		RequiresCondition: owned-by-vhard-ai && !noinsurance
 	CashTrickler@hardinsurance:
-		Interval: 250
+		Interval: 375
 		Amount: 500
 		ShowTicks: False
 		RequiresCondition: owned-by-hard-ai && !noinsurance
 	CashTrickler@normalinsurance:
-		Interval: 250
+		Interval: 375
 		Amount: 250
 		ShowTicks: False
 		RequiresCondition: owned-by-normal-ai && !noinsurance
@@ -162,16 +153,16 @@
 # RefineryResourceMultiplier on Proc's so AI income is still tied to harvesters, so eco sniping AI is possible.
 ^BotIncome:
 	RefineryResourceMultiplier@brutalincome:
-		Modifier: 160
+		Modifier: 140
 		RequiresCondition: owned-by-brutal-ai
 	RefineryResourceMultiplier@vhardincome:
-		Modifier: 150
+		Modifier: 130
 		RequiresCondition: owned-by-vhard-ai
 	RefineryResourceMultiplier@hardincome:
-		Modifier: 140
+		Modifier: 120
 		RequiresCondition: owned-by-hard-ai
 	RefineryResourceMultiplier@normalincome:
-		Modifier: 120
+		Modifier: 110
 		RequiresCondition: owned-by-normal-ai
 
 #Hacky but helps Bots deal with abandoned vehicles due to snipers
