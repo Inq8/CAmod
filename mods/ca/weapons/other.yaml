@@ -257,6 +257,9 @@ TTankZap:
 		Versus:
 			Wood: 60
 			Concrete: 60
+
+TTankZap.UPG:
+	Inherits: TTankZap
 	Warhead@Arc: FireShrapnel
 		Weapon: TTankArc1
 		Amount: 1
@@ -264,7 +267,7 @@ TTankZap:
 		ThrowWithoutTarget: false
 
 TTankArc1:
-	Inherits: TTankZap
+	Inherits: TTankZap.UPG
 	Range: 2c0
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Infantry, Vehicle, Ship
@@ -817,7 +820,6 @@ KirovTeslaArc:
 		ValidTargets: Infantry, Vehicle, Ship
 		ValidStances: Enemy, Neutral
 	-Warhead@3Eff:
-	-Warhead@Arc:
 
 KirovCluster:
 	ReloadDelay: 35
