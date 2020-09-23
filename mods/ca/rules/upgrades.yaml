@@ -8,6 +8,24 @@
 		BuildDurationModifier: 100
 	ProvidesPrerequisite@upgradename:
 
+#########################SHARED#########
+########################################
+
+hazmat.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Hazmat Suits
+	Buildable:
+		BuildPaletteOrder: 50
+		Prerequisites: ~radar, ~!nerv, ~infantry.any, ~!structures.scrin, ~techlevel.high
+		IconPalette: chrometd
+		BuildDuration: 1500
+		Description: Infantry are equiped with hazmat suits which\nprovides protection on tiberium fields.\n\n  Upgrades: Infantry
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: hazmat.upgrade
+
 #########################GDI#########
 ########################################
 
@@ -162,21 +180,6 @@ vulcan.upgrade:
 
 #########################NOD#########
 ########################################
-
-hazmat.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Hazmat Suits
-	Buildable:
-		BuildPaletteOrder: 50
-		Prerequisites: ~hq, ~structures.nod, ~techlevel.high
-		IconPalette: chrometd
-		BuildDuration: 1500
-		Description: Infantry are equiped with hazmat suits which\nprovides protection on tiberium fields.\n\n  Upgrades: Infantry
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: hazmat.upgrade
 
 howi.upgrade:
 	Inherits: ^Upgrade
