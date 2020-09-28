@@ -41,7 +41,7 @@ Player:
 		OnHoldAudio: OnHold
 		CancelledAudio: Cancelled
 		SpeedUp: True
-		BuildTimeSpeedReduction: 100, 80, 60
+		BuildTimeSpeedReduction: 100, 80, 64, 52
 	ClassicProductionQueue@Infantry:
 		Type: Infantry
 		DisplayOrder: 2
@@ -53,7 +53,7 @@ Player:
 		OnHoldAudio: OnHold
 		CancelledAudio: Cancelled
 		SpeedUp: True
-		BuildTimeSpeedReduction: 100, 80, 60
+		BuildTimeSpeedReduction: 100, 83, 70, 60, 52
 	ClassicProductionQueue@Ship:
 		Type: Ship
 		DisplayOrder: 5
@@ -65,7 +65,7 @@ Player:
 		OnHoldAudio: OnHold
 		CancelledAudio: Cancelled
 		SpeedUp: True
-		BuildTimeSpeedReduction: 100, 80, 60
+		BuildTimeSpeedReduction: 100, 80, 64, 52
 	ClassicProductionQueue@Aircraft:
 		Type: Aircraft
 		DisplayOrder: 4
@@ -77,7 +77,7 @@ Player:
 		OnHoldAudio: OnHold
 		CancelledAudio: Cancelled
 		SpeedUp: True
-		BuildTimeSpeedReduction: 100, 80, 60
+		BuildTimeSpeedReduction: 100, 83, 70, 60, 52
 	ClassicProductionQueue@Upgrade:
 		Type: Upgrade
 		DisplayOrder: 6
@@ -107,7 +107,7 @@ Player:
 		CashTickUpNotification: CashTickUp
 		CashTickDownNotification: CashTickDown
 	DeveloperMode:
-		CheckboxDisplayOrder: 16
+		CheckboxDisplayOrder: 17
 	Shroud:
 		FogCheckboxEnabled: True
 		FogCheckboxLocked: False
@@ -148,6 +148,20 @@ Player:
 		Enabled: True
 		DisplayOrder: 14
 		Prerequisites: global.revealonfire
+	LobbyPrerequisiteCheckbox@INCREASEDINCOME:
+		ID: increasedincome
+		Label: Increased Income
+		Description: Resources have a higher value.
+		Enabled: False
+		DisplayOrder: 15
+		Prerequisites: global.increasedincome
+	LobbyPrerequisiteCheckbox@FASTREGROWTH:
+		ID: fastregrowth
+		Label: Fast Regrowth
+		Description: Resources regrow at a faster rate.
+		Enabled: False
+		DisplayOrder: 16
+		Prerequisites: global.fastregrowth
 	FrozenActorLayer:
 	BaseAttackNotifier:
 	PlayerStatistics:

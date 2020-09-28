@@ -186,11 +186,24 @@ E3:
 		Weapon: RedEye
 		LocalOffset: 0,0,555
 		PauseOnCondition: !ammo || being-warped
+		RequiresCondition: !cryr-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: RedEye.CRYO
+		LocalOffset: 0,0,555
+		PauseOnCondition: !ammo || being-warped
+		RequiresCondition: cryr-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: Dragon
 		LocalOffset: 0,0,555
 		PauseOnCondition: !ammo || being-warped
+		RequiresCondition: !cryr-upgrade
+	Armament@SECONDARYUPG:
+		Name: secondary
+		Weapon: Dragon.CRYO
+		LocalOffset: 0,0,555
+		PauseOnCondition: !ammo || being-warped
+		RequiresCondition: cryr-upgrade
 	Armament@Garrison:
 		Name: mounted
 		Weapon: DragonE
@@ -216,6 +229,41 @@ E3:
 		Prerequisites: barracks.upgraded
 	AutoTarget:
 		ScanRadius: 5
+	GrantConditionOnPrerequisite@CRYO:
+		Condition: cryr-upgrade
+		Prerequisites: cryr.upgrade
+	GrantCondition@CRYO:
+		Condition: cryr-upgrade
+		RequiresCondition: cryr-upgrade
+	ExternalCondition@CRYO:
+		Condition: cryr-upgrade
+	WithInfantryBody:
+		RequiresCondition: !cryr-upgrade
+	WithInfantryBody@CRYO:
+		IdleSequences: idle-cryo1, idle-cryo2
+		StandSequences: stand-cryo, stand-cryo2
+		AttackSequences: shoot-cryo
+		DefaultAttackSequence: shoot-cryo
+		MoveSequence: run-cryo
+		RequiresCondition: cryr-upgrade
+	WithDeathAnimation:
+		RequiresCondition: !cryr-upgrade
+	WithDeathAnimation@CRYO:
+		DeathSequence: die-cryo
+		DeathSequencePalette: overlayplayertd
+		DeathTypes:
+			DefaultDeath: 1
+			BulletDeath: 2
+			SmallExplosionDeath: 3
+			ExplosionDeath: 4
+			FireDeath: 5
+			ElectricityDeath: 6
+			PoisonDeath: 7
+			ChronoDeath: 8
+			ToxinDeath: 9
+			RadiationDeath: 10
+			FrozenDeath: 11
+		CrushedSequence: die-crushed
 
 E3R1:
 	Inherits: E3

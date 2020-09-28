@@ -55,6 +55,7 @@ VEHICLES.SCRIN:
 			RadiationDeath: 10
 			FrozenDeath: 11
 		CrushedSequence: die-crushed
+		CrushedSequencePalette: scrin
 	-DamagedByTerrain:
 	-TakeCover:
 
@@ -1830,7 +1831,8 @@ REA2:
 
 PROC.SCRIN:
 	Inherits: ^ScrinBuilding
-	Inherits@2: ^BotIncome
+	Inherits@2: ^ConfigurableIncome
+	Inherits@3: ^BotIncome
 	HitShape:
 		Type: Rectangle
 			TopLeft: -1536, -512
@@ -3065,7 +3067,7 @@ BUZZ:
 	Armament@PRIMARY:
 		Weapon: BuzzerDummyWeapon
 	AttackFrontal:
-	
+
 BUZZ.AI:
 	Inherits: BUZZ
 	RenderSprites:

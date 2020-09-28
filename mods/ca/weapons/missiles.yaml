@@ -50,6 +50,7 @@
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
+		ValidStances: Enemy, Neutral
 		Versus:
 			None: 100
 			Wood: 100
@@ -157,6 +158,20 @@ Dragon.CYB:
 	Report: rocket.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 8500
+
+Dragon.CRYO:
+	Inherits: Dragon
+	Projectile: MissileCA
+		Image: cryomiss
+	Warhead@1Dam: SpreadDamage
+		DamageTypes: Prone50Percent, TriggerProne, FrozenDeath
+	Warhead@3Eff: CreateEffect
+		Explosions: cryohit
+		ImpactSounds: cryohit.aud
+	Warhead@chill: GrantExternalCondition
+		Condition: chilled
+		Duration: 65
+		Range: 0c341
 
 DragonE:
 	Inherits: ^AntiGroundMissile
@@ -357,6 +372,19 @@ RedEye.CYB:
 	Warhead@1Dam: SpreadDamage
 		Damage: 4500
 
+RedEye.CRYO:
+	Inherits: RedEye
+	Projectile: MissileCA
+		Image: cryomiss
+	Warhead@3Eff: CreateEffect
+		Explosions: cryohit
+		ImpactSounds: cryoblast.aud
+	Warhead@chill: GrantExternalCondition
+		Condition: chilled
+		Duration: 65
+		Range: 0c341
+		ValidTargets: Air
+
 RedEyeE:
 	Inherits: RedEye
 	Range: 9c0
@@ -409,6 +437,7 @@ StingerAA:
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
+		ValidStances: Enemy, Neutral
 		Versus:
 			None: 100
 			Wood: 100
@@ -1115,6 +1144,7 @@ ScrinTorpAA:
 		Falloff: 100, 100, 30, 15
 		Damage: 3000
 		ValidTargets: Air
+		ValidStances: Enemy, Neutral
 		Versus:
 			None: 100
 			Wood: 100

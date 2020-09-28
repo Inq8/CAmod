@@ -160,6 +160,7 @@ Atomic:
 		Versus:
 			Wood: 25
 			Brick: 25
+			Heavy: 80
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@2Res_impact: DestroyResource
 		Size: 1
@@ -181,6 +182,7 @@ Atomic:
 		Versus:
 			Wood: 25
 			Brick: 25
+			Heavy: 80
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@6Res_areanuke1: DestroyResource
 		Size: 2
@@ -203,6 +205,7 @@ Atomic:
 		Versus:
 			Wood: 50
 			Brick: 25
+			Heavy: 80
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@10Dam_areanuke2: SpreadDamage
 		Spread: 3c0
@@ -537,69 +540,69 @@ StealthBubble:
 Chemicbm:
 	ValidTargets: Ground, Water
 	Warhead@1Dam: SpreadDamage
-		Spread: 512
-		Damage: 2400
+		Spread: 1c0
+		Damage: 6500
 		Falloff: 1000, 368, 135, 50, 18
 		ValidTargets: Ground, Water
 		InvalidTargets: Air
 		Versus:
-			None: 90
-			Wood: 50
-			Concrete: 30
-			Light: 60
-			Heavy: 30
-			Brick: 30
+			None: 36
+			Wood: 20
+			Concrete: 100
+			Light: 65
+			Heavy: 100
+			Brick: 10
 		DamageTypes: Prone50Percent, TriggerProne, ToxinDeath
 	Warhead@3Eff_impact: CreateEffect
 		Explosions: chem_miss
 		ExplosionPalette: tseffect-ignore-lighting-alpha75
 		ImpactSounds: chembomb.aud
 	Warhead@2Dam_chem: SpreadDamage
-		Spread: 3c0
-		Damage: 2200
+		Spread: 2c0
+		Damage: 6000
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 20
 		ValidTargets: Ground, Water
 		InvalidTargets: Air, Creep
 		Versus:
-			None: 90
-			Wood: 50
-			Concrete: 30
-			Light: 60
-			Heavy: 30
-			Brick: 30
+			None: 36
+			Wood: 45
+			Concrete: 110
+			Light: 65
+			Heavy: 100
+			Brick: 10
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, ToxinDeath
 	Warhead@3Dam_chem2: SpreadDamage
 		Spread: 3c0
-		Damage: 1100
+		Damage: 3250
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 40
 		ValidTargets: Ground, Water
 		InvalidTargets: Air, Creep
 		Versus:
-			None: 90
-			Wood: 50
-			Concrete: 30
-			Light: 60
-			Heavy: 30
-			Brick: 30
+			None: 36
+			Wood: 140
+			Concrete: 180
+			Light: 85
+			Heavy: 140
+			Brick: 10
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, ToxinDeath
 	Warhead@4Dam_chem2: SpreadDamage
-		Spread: 3c0
-		Damage: 1100
+		Spread: 4c0
+		Damage: 2750
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
-		Delay: 80
+		Delay: 65
 		ValidTargets: Ground, Water
 		InvalidTargets: Air, Creep
 		Versus:
-			None: 90
-			Wood: 50
-			Concrete: 30
-			Light: 60
-			Heavy: 30
-			Brick: 30
+			None: 36
+			Wood: 170
+			Concrete: 180
+			Light: 85
+			Heavy: 140
+			Brick: 10
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, ToxinDeath
 	Warhead@11Smu_areanuke3: LeaveSmudge
@@ -686,12 +689,16 @@ IonBolt:
 	Range: 512
 	ValidTargets: Ground, Water, Air
 	Warhead@1Dam_impact: SpreadDamage
-		Range: 0, 1c1, 2c1, 2c512
+		Range: 0, 1c1, 2c1, 3c1, 4c1
 		Delay: 1
-		Damage: 3250
-		Falloff: 1000, 1000, 250, 100
+		Damage: 2650
+		Falloff: 1000, 1000, 250, 100, 75
 		ValidTargets: Ground, Water, Air
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		Versus:
+			Concrete: 220
+			Heavy: 170
+			Light: 120
 	Warhead@4Effect: CreateEffect
 		Explosions: ionbeam
 		ExplosionPalette: tdeffect-ignore-lighting-alpha85
@@ -818,6 +825,7 @@ WeatherStormInit:
 		Delay: 50
 		ImpactSounds: sweaintr.aud
 		ValidTargets: Ground, Air, Water
+
 WeatherCloudDirectInit:
 	Projectile: InstantHit
 	ReloadDelay: 140
@@ -833,7 +841,7 @@ WeatherCloudDirectInit:
 		Versus:
 			Wood: 85
 			Heavy: 75
-			Concrete: 30
+			Concrete: 45
 			Brick: 55
 	Warhead@barrage3: FireFragment
 		Weapon: WeatherCloud
@@ -883,16 +891,16 @@ WeatherBolt:
 	ValidTargets: Ground, Water, Air
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 1c1, 2c1, 3c1
-		Falloff: 1000, 660, 330, 0
+		Falloff: 1000, 700, 450, 0
 		Damage: 1000
 		AffectsParent: true
 		ValidTargets: Ground, Air, Water
 		DamageTypes: TriggerProne, ElectricityDeath
 		Versus:
-			Wood: 80
-			Heavy: 55
-			Concrete: 35
+			Wood: 70
+			Concrete: 130
 			Brick: 55
+			Heavy: 115
 	Warhead@4: CreateEffect
 		Explosions: weatherbolt1, weatherbolt2, weatherbolt3, weatherbolt1f, weatherbolt2f, weatherbolt3f
 		ImpactSounds: sweastra.aud, sweastrb.aud, sweastrc.aud, sweastrd.aud
