@@ -847,7 +847,7 @@ RUIN:
 	Mobile:
 		Speed: 100
 		PauseOnCondition: being-captured || empdisable || being-warped || driver-dead
-		TurnSpeed: 4
+		TurnSpeed: 255
 	Health:
 		HP: 15000
 	Armor:
@@ -864,9 +864,6 @@ RUIN:
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
-	AttackFrontal:
-		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable || being-warped
 	AutoTarget:
 	Explodes:
 		Weapon: BarrelExplode
@@ -878,6 +875,19 @@ RUIN:
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
+	Turreted:
+		TurnSpeed: 4
+		Offset: 0,0,0
+	AttackTurreted:
+		ForceFireIgnoresActors: True
+		TargetFrozenActors: True
+		PauseOnCondition: empdisable || being-warped
+		Armaments: primary
+	WithSpriteTurret:
+	QuantizeFacingsFromSequence:
+		Sequence: idle
+	WithFacingSpriteBody:
+		Sequence: idle
 
 TPOD:
 	Inherits: ^Tank
