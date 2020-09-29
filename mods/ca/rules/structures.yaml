@@ -1599,7 +1599,8 @@ FACT:
 
 PROC:
 	Inherits: ^Building
-	Inherits@2: ^BotIncome
+	Inherits@2: ^ConfigurableIncome
+	Inherits@3: ^BotIncome
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 60
@@ -4556,7 +4557,8 @@ HPAD.TD:
 
 PROC.TD:
 	Inherits: ^BuildingTD
-	Inherits@2: ^BotIncome
+	Inherits@2: ^ConfigurableIncome
+	Inherits@3: ^BotIncome
 	HitShape:
 		Type: Rectangle
 			TopLeft: -1536, -512
@@ -5902,11 +5904,11 @@ OREP:
 		Cost: 2500
 	Tooltip:
 		Name: Ore Purifier
-	ResourcePurifier@NORMAL:
+	ResourcePurifierCA@NORMAL:
 		Modifier: 5
-		RequiresCondition: !disabled && !being-warped
-	ResourcePurifier@UPGRADE:
-		Modifier: 5
+		RequiresCondition: !disabled && !being-warped && !orep-upgrade
+	ResourcePurifierCA@UPGRADE:
+		Modifier: 10
 		RequiresCondition: !disabled && !being-warped && orep-upgrade
 	RevealsShroud:
 		Range: 4c0
