@@ -1377,9 +1377,14 @@ TTNK:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 6c0
-	Armament:
+	Armament@PRIMARY:
 		Weapon: TTankZap
 		LocalOffset: 0,0,213
+		RequiresCondition: !tarc-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: TTankZap.UPG
+		LocalOffset: 0,0,213
+		RequiresCondition: tarc-upgrade
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
@@ -1401,6 +1406,9 @@ TTNK:
 	SpawnActorOnDeath:
 		Actor: TTNK.Husk
 		RequiresCondition: !being-warped
+	GrantConditionOnPrerequisite@TARC:
+		Condition: tarc-upgrade
+		Prerequisites: tarc.upgrade
 
 DTRK:
 	Inherits: ^Vehicle
