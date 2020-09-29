@@ -1052,7 +1052,7 @@ STMR:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 35000
+		HP: 32000
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -1064,10 +1064,12 @@ STMR:
 	Armament@PRIMARY:
 		Weapon: StormriderZap
 		LocalOffset: 350,213,-85, 350,-213,-85
+		PauseOnCondition: !ammo
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: StormriderZapAA
 		LocalOffset: 350,213,-85, 350,-213,-85
+		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 90
 		PersistentTargeting: false
@@ -1109,6 +1111,14 @@ STMR:
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
 	-EjectOnDeath:
+	AmmoPool:
+		Ammo: 16
+		PipCount: 4
+		AmmoCondition: ammo
+	ReloadAmmoPool:
+		Delay: 175
+		Count: 4
+		ResetOnFire: true
 
 DEVA:
 	Inherits: ^Helicopter
