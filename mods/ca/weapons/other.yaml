@@ -481,6 +481,18 @@ MADTankDetonate:
 		Explosions: med_explosion
 		ImpactSounds: madexplo.aud
 		ImpactActors: false
+	Warhead@4Dam: SpreadDamage
+		Spread: 1c0
+		Damage: 100000
+		Falloff: 100, 50, 33, 20, 10, 5, 0
+		ValidTargets: Ground, Water
+		Versus:
+			None: 0
+			Wood: 0
+			Light: 0
+			Heavy: 0
+			Concrete: 100
+			Brick: 100
 	Warhead@Concussion: GrantExternalCondition
 		Range: 7c0
 		Duration: 600
