@@ -847,7 +847,7 @@ RUIN:
 	Mobile:
 		Speed: 100
 		PauseOnCondition: being-captured || empdisable || being-warped || driver-dead
-		TurnSpeed: 4
+		TurnSpeed: 255
 	Health:
 		HP: 15000
 	Armor:
@@ -864,9 +864,6 @@ RUIN:
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
-	AttackFrontal:
-		ForceFireIgnoresActors: True
-		PauseOnCondition: empdisable || being-warped
 	AutoTarget:
 	Explodes:
 		Weapon: BarrelExplode
@@ -878,6 +875,19 @@ RUIN:
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
+	Turreted:
+		TurnSpeed: 4
+		Offset: 0,0,0
+	AttackTurreted:
+		ForceFireIgnoresActors: True
+		TargetFrozenActors: True
+		PauseOnCondition: empdisable || being-warped
+		Armaments: primary
+	WithSpriteTurret:
+	QuantizeFacingsFromSequence:
+		Sequence: idle
+	WithFacingSpriteBody:
+		Sequence: idle
 
 TPOD:
 	Inherits: ^Tank
@@ -1042,7 +1052,7 @@ STMR:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 35000
+		HP: 32000
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -1054,10 +1064,12 @@ STMR:
 	Armament@PRIMARY:
 		Weapon: StormriderZap
 		LocalOffset: 350,213,-85, 350,-213,-85
+		PauseOnCondition: !ammo
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: StormriderZapAA
 		LocalOffset: 350,213,-85, 350,-213,-85
+		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 90
 		PersistentTargeting: false
@@ -1099,6 +1111,14 @@ STMR:
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
 	-EjectOnDeath:
+	AmmoPool:
+		Ammo: 16
+		PipCount: 4
+		AmmoCondition: ammo
+	ReloadAmmoPool:
+		Delay: 175
+		Count: 4
+		ResetOnFire: true
 
 DEVA:
 	Inherits: ^Helicopter
@@ -1293,7 +1313,7 @@ INVA:
 	Tooltip:
 		Name: Invader
 	Health:
-		HP: 5000
+		HP: 7000
 	RevealsShroud:
 		Range: 2c0
 		MinRange: 1c0
@@ -3169,6 +3189,7 @@ ion.surge:
 	ProximityExternalCondition@JAMMER:
 		Range: 10c0
 		Condition: jammed
+		ValidStances: Ally, Enemy, Neutral
 	ProximityExternalCondition@POWERDRAIN:
 		Range: 10c0
 		Condition: powerdrain

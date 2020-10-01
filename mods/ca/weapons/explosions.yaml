@@ -139,7 +139,7 @@ VisualExplodeAirborne:
 	Inherits: VisualExplodeHusk
 	Warhead@2Eff: CreateEffect
 		Explosions: med_explosion_air
-		
+
 VisualUnitExplodeWater:
 	Inherits: VisualExplodeHusk
 	-Warhead@Smu:
@@ -179,6 +179,24 @@ ArtilleryExplode:
 V2Explode:
 	Inherits: SCUD
 	-Report:
+
+V3ExplodeAirborne:
+	Inherits: ^Explosion
+	Warhead@1Dam: SpreadDamage
+		Range: 0, 4c0, 5c0
+		Falloff: 100, 100, 0
+		Damage: 6750
+		ValidTargets: Ground, Water, Trees
+		Versus:
+			None: 10
+			Wood: 55
+			Light: 30
+			Heavy: 20
+			Concrete: 100
+			Brick: 55
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: med_explosion_air
 
 BuildingExplode:
 	Warhead@2Eff: CreateEffect
@@ -420,8 +438,8 @@ MiniNuke:
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Trees, Water, Air
 		Versus:
-			Wood: 25
-			Concrete: 25
+			Wood: 35
+			Concrete: 35
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@2Res_impact: DestroyResource
@@ -437,7 +455,7 @@ MiniNuke:
 		Delay: 5
 		ValidTargets: Ground, Trees, Water, Underwater, Air
 		Versus:
-			Wood: 50
+			Wood: 75
 			Brick: 25
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
@@ -455,7 +473,7 @@ MiniNuke:
 		Delay: 10
 		ValidTargets: Ground, Water, Underwater, Air
 		Versus:
-			Wood: 50
+			Wood: 75
 			Brick: 25
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
