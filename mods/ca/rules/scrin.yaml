@@ -1200,6 +1200,11 @@ DEVA:
 	DamageMultiplier@SHIELDS:
 		RequiresCondition: shields-upgrade
 		Modifier: 90
+	KillsSelf:
+		RequiresCondition: empdisable && cruising && !shields-upgrade
+	SpeedMultiplier@EMPDISABLE:
+		Modifier: 0
+		RequiresCondition: empdisable
 
 PAC:
 	Inherits: ^Helicopter
@@ -1275,6 +1280,7 @@ PAC:
 		SlaveDisposalOnKill: KillSlaves
 		SpawnAllAtOnce: false
 		LoadedCondition: inva-loaded
+		PauseOnCondition: empdisable || being-warped
 	Exit@0:
 		SpawnOffset: -100,0,0
 		Facing: 60
@@ -1305,6 +1311,11 @@ PAC:
 	DamageMultiplier@SHIELDS:
 		RequiresCondition: shields-upgrade
 		Modifier: 90
+	KillsSelf:
+		RequiresCondition: empdisable && cruising && !shields-upgrade
+	SpeedMultiplier@EMPDISABLE:
+		Modifier: 0
+		RequiresCondition: empdisable
 
 INVA:
 	Inherits: ^Plane
