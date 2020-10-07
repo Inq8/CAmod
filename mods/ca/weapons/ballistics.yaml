@@ -408,6 +408,27 @@ GrenadeE:
 	Inherits: Grenade
 	Range: 6c768
 
+EMPGrenade:
+	Inherits: Grenade
+	Projectile: Bullet
+		Image: empgren
+	Warhead@1Dam: SpreadDamage
+		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
+	Warhead@2Dam: SpreadDamage
+		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
+	Warhead@5emp: GrantExternalCondition
+		Range: 0c768
+		Duration: 45
+		Condition: empdisable
+		ValidTargets: Ground, Structure, Vehicle
+	Warhead@3Eff: CreateEffect
+		-ImpactSounds:
+	Warhead@6Eff: CreateEffect
+		Image: sparks_overlay
+		Explosions: idle
+		ExplosionPalette: tseffect-ignore-lighting-alpha75
+		ImpactSounds: expnew16.aud
+
 Mortar:
 	Inherits: ^Artillery
 	ReloadDelay: 90

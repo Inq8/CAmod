@@ -859,6 +859,12 @@ N2:
 		Weapon: Grenade
 		LocalOffset: 0,0,555
 		FireDelay: 15
+		RequiresCondition: !empgren-upgrade
+	Armament@PRIMARYEMP:
+		Weapon: EMPGrenade
+		LocalOffset: 0,0,555
+		FireDelay: 15
+		RequiresCondition: empgren-upgrade
 	Armament@Garrison:
 		Name: mounted
 		Weapon: GrenadeE
@@ -881,6 +887,11 @@ N2:
 		Prerequisites: barracks.upgraded
 	Selectable:
 		Class: E2
+	GrantConditionOnPrerequisite@EMPUPG:
+		Condition: empgren-upgrade
+		Prerequisites: empgren.upgrade
+	ExternalCondition@EMPUPG:
+		Condition: empgren-upgrade
 
 N2R1:
 	Inherits: N2
