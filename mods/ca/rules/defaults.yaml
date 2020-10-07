@@ -1219,6 +1219,8 @@
 		RequiresCondition: !being-warped
 	Cloak@GPSHIDE:
 		Palette: cloak
+	ExternalCondition@CLOAKGENERATOR:
+		Condition: invisibility
 
 ^Soldier:
 	Inherits: ^Infantry
@@ -1581,12 +1583,7 @@
 	Inherits@C4: ^C4Plantable
 	Cloak@EXTERNALCLOAK:
 		RequiresCondition: invisibility || crate-cloak && (!cloak-force-disabled && !airborne && !being-warped)
-		InitialDelay: 0
 		CloakDelay: 90
-		IsPlayerPalette: true
-		Palette: cloakgreen
-		CloakSound: cloak5.aud
-		UncloakSound: appear1.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Damage, Heal
 	Repairable:
 		RepairActors: fix, rep, srep
