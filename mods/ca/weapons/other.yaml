@@ -1343,11 +1343,15 @@ TimeWarp:
 		ExplosionPalette: ra2effect-ignore-lighting-alpha75
 		ValidTargets: Ground, Air, Water
 		ImpactSounds: chrono2.aud
-	Warhead@Damage1: WarpDamage
-		Spread: 1c0
+	Warhead@Damage1: SpreadDamage
 		Damage: 1
 		ValidTargets: Temporal
 	Warhead@3Flash: ChronoFlashEffect
+	Warhead@4Warp: GrantExternalCondition
+		Range: 1c512
+		Duration: 375
+		Condition: being-warped
+		ValidTargets: Temporal
 
 ClusterMineSpawner:
 	ValidTargets: Ground, Water
