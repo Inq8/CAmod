@@ -865,3 +865,21 @@ SPLITBLUE:
 		Terrain: BlueTiberium
 	MapEditorData:
 		Categories: Resource spawn
+
+gps.scrambler
+	Inherits@1: CAMERA
+	CreatesShroud:
+		Range: 9c512
+		Type: CenterPosition
+	-RevealsShroud:
+	RenderShroudCircleCA:
+		Visible: Always
+		Color: 999999AA
+	-RenderSpritesEditorOnly:
+	RenderSprites:
+		Image: gpsscrambler
+	WithMakeAnimation:
+	ProximityExternalCondition@GPSSCRAMBLE:
+		Range: 9c512
+		Condition: gpsscramble
+		ValidStances: Enemy, Neutral

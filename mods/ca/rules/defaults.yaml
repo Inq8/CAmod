@@ -723,25 +723,11 @@
 		ValidStances: Ally, Neutral, Enemy
 
 ^GpsScramble:
-	Cloak@GPSHIDE:
-		InitialDelay: 100
-		CloakDelay: 75
-		UncloakSound: appear1.aud
-		Palette: cloakra
-		IsPlayerPalette: true
-		CloakTypes: Cloak
-		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility)
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, Move, SelfHeal
-	TimedConditionBar@GPSHIDE:
-		Condition: gpshide
-		Color: 606060
-	ExternalCondition@GPSHIDE:
-		Condition: gpshide
-	ExternalCondition@CRATE-CLOAK:
-		Condition: crate-cloak
-	GrantConditionOnDamageState@UNCLOAK:
-		Condition: cloak-force-disabled
-		ValidDamageStates: Heavy, Critical
+	RangeMultiplier@GPSSCRAMBLE:
+		Modifier: 60
+		RequiresCondition: gpsscramble
+	ExternalCondition@GPSSCRAMBLE:
+		Condition: gpsscramble
 
 ^C4Plantable:
 	DelayedWeaponAttachable@C4:
@@ -1005,8 +991,6 @@
 		PlayerPalette: overlayplayertd
 	WithDamageOverlay:
 		Image: smoke_mtd
-	Cloak@GPSHIDE:
-		Palette: cloak
 
 ^Tank:
 	Inherits: ^Vehicle
@@ -1019,8 +1003,6 @@
 		PlayerPalette: overlayplayertd
 	WithDamageOverlay:
 		Image: smoke_mtd
-	Cloak@GPSHIDE:
-		Palette: cloak
 
 ^Infantry:
 	Inherits@1: ^ExistsInWorld
@@ -1225,8 +1207,6 @@
 		DamageTypes: FrozenDeath
 		LayerName: cryoresidue
 		RequiresCondition: !being-warped
-	Cloak@GPSHIDE:
-		Palette: cloak
 	ExternalCondition@CLOAKGENERATOR:
 		Condition: invisibility
 
@@ -1797,6 +1777,7 @@
 	Inherits@Concussion: ^Concussion
 	Inherits@selection: ^SelectableCombatBuilding
 	Inherits@mind: ^MindControllable
+	Inherits@gpsscramble: ^GpsScramble
 	-SpeedMultiplier@concussion:
 	WithColoredOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability

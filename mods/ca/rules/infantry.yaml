@@ -1273,8 +1273,6 @@ SNIP:
 		CloakTypes: Cloak
 		RequiresCondition: !cloak-force-disabled
 		UncloakOn: Unload, Infiltrate, Demolish, Dock, Attack
-	Cloak@GPSHIDE:
-		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden)
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Heavy, Critical
@@ -1482,8 +1480,6 @@ SAB:
 		UncloakOn: Unload, Infiltrate, Demolish, Dock, Attack
 		CloakSound: gstealon.aud
 		UncloakSound: gstealof.aud
-	Cloak@GPSHIDE:
-		RequiresCondition: (gpshide || crate-cloak) && !(cloak-force-disabled || invisibility || hidden)
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Heavy, Critical
