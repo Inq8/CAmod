@@ -363,7 +363,7 @@ RedEye:
 		HorizontalRateOfTurn: 20
 		Speed: 298
 	Warhead@1Dam: SpreadDamage
-		Damage: 3500
+		Damage: 3800
 		Range: 0, 0c64, 0c256, 3c0
 
 RedEye.CYB:
@@ -656,7 +656,7 @@ SCUD:
 			Wood: 65
 			Light: 70
 			Heavy: 40
-			Concrete: 40
+			Concrete: 50
 			Brick: 45
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
@@ -679,7 +679,7 @@ V3Weapon:
 			Wood: 65
 			Light: 70
 			Heavy: 40
-			Concrete: 40
+			Concrete: 50
 			Brick: 45
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
@@ -711,7 +711,7 @@ KatyushaRockets:
 		Versus:
 			None: 100
 			Wood: 80
-			Concrete: 50
+			Concrete: 60
 			Light: 80
 			Heavy: 45
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
@@ -744,7 +744,7 @@ HonestJohn:
 		Versus:
 			None: 120
 			Wood: 95
-			Concrete: 70
+			Concrete: 85
 			Light: 65
 			Heavy: 40
 			Brick: 15
@@ -757,7 +757,7 @@ HonestJohn:
 		Versus:
 			None: 120
 			Wood: 95
-			Concrete: 70
+			Concrete: 85
 			Light: 65
 			Heavy: 40
 			Brick: 15
@@ -770,7 +770,7 @@ HonestJohn:
 		Versus:
 			None: 120
 			Wood: 95
-			Concrete: 70
+			Concrete: 85
 			Light: 65
 			Heavy: 40
 			Brick: 15
@@ -783,7 +783,7 @@ HonestJohn:
 		Versus:
 			None: 120
 			Wood: 95
-			Concrete: 70
+			Concrete: 85
 			Light: 65
 			Heavy: 40
 			Brick: 15
@@ -840,7 +840,7 @@ IFVRocketsAA:
 	Burst: 2
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
-		Damage: 2500
+		Damage: 2750
 
 IFVRocketsE:
 	Inherits: IFVRockets
@@ -857,7 +857,7 @@ IFVRocketsAAE:
 	Projectile: MissileCA
 		ContrailLength: 10
 	Warhead@1Dam: SpreadDamage
-		Damage: 3600
+		Damage: 3900
 
 
 #Artillery Missiles, lock-on but act dumb
@@ -879,7 +879,7 @@ IFVRocketsAAE:
 		RangeLimit: 13c0
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 1125
+		Damage: 1000
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Water, Trees
 		Versus:
@@ -887,7 +887,7 @@ IFVRocketsAAE:
 			Wood: 50
 			Light: 50
 			Heavy: 30
-			Concrete: 40
+			Concrete: 50
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
@@ -906,7 +906,7 @@ IFVRocketsAAE:
 		Inaccuracy: 341
 		LockOnInaccuracy: 512
 	Warhead@1Dam: SpreadDamage
-		Damage: 1200
+		Damage: 1100
 		Versus:
 			None: 100
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
@@ -914,24 +914,24 @@ IFVRocketsAAE:
 227mmH:
 	Inherits: 227mm
 	Report: hovrmis1.aud
-	ReloadDelay: 110
+	ReloadDelay: 105
 	Range: 9c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 1200
+		Damage: 1125
 
 227mmH.upg:
 	Inherits: 227mm.upg
-	ReloadDelay: 110
+	ReloadDelay: 105
 	Range: 10c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 1275
+		Damage: 1230
 
 227mmAA:
 	Inherits: ^AntiAirMissile
 	ReloadDelay: 80
 	Burst: 2
 	BurstDelays: 4
-	Range: 7c0
+	Range: 6c512
 	Report: rocket1.aud
 	Projectile: MissileCA
 		Speed: 280
@@ -939,7 +939,7 @@ IFVRocketsAAE:
 		Inaccuracy: 0
 		HorizontalRateOfTurn: 15
 		CruiseAltitude: 2c0
-		RangeLimit: 8c0
+		RangeLimit: 7c512
 	Warhead@1Dam: SpreadDamage
 		Damage: 1800
 		ValidTargets: Air
@@ -949,13 +949,13 @@ IFVRocketsAAE:
 
 227mmAA.upg:
 	Inherits: 227mmAA
-	Range: 8c0
+	Range: 7c512
 	Report: vaegattb.aud, vaegatta.aud
 	Projectile: MissileCA
 		Speed: 366
 		ContrailLength: 15
 		ContrailColor: 00FFFFE6
-		RangeLimit: 9c0
+		RangeLimit: 8c512
 	Warhead@1Dam: SpreadDamage
 		Damage: 2050
 
@@ -1003,7 +1003,7 @@ StnkMissileAA:
 		Speed: 283
 		RangeLimit: 9c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 3400
+		Damage: 3600
 		ValidTargets: Air
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air

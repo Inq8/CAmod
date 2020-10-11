@@ -285,24 +285,35 @@ Atomic:
 IonCannon:
 	ValidTargets: Ground, Water, Air
 	Warhead@1Dam_impact: SpreadDamage
-		Range: 0, 1c1, 2c1, 2c512
-		Damage: 3000
-		Falloff: 1000, 1000, 250, 100
-		ValidTargets: Ground, Air
+		Range: 0, 0c512, 1c512, 2c512
+		Damage: 10500
+		Falloff: 1000, 350, 100, 50
+		ValidTargets: Ground
+		Versus:
+			None: 50
+			Light: 65
+			Wood: 15
+			Heavy: 70
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
-	Warhead@2Eff: CreateEffect
+	Warhead@2Dam_impact: SpreadDamage
+		Range: 0, 0c682, 1c341, 2c682
+		Damage: 34000
+		Falloff: 100, 100, 35, 10
+		ValidTargets: Air
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@3Eff: CreateEffect
 		Explosions: ion_ring2
 		ExplosionPalette: tseffect
-	Warhead@3Smu_impact: LeaveSmudge
+	Warhead@4Smu_impact: LeaveSmudge
 		SmudgeType: Scorch
-	Warhead@4Smu_area: LeaveSmudge
+	Warhead@5Smu_area: LeaveSmudge
 		SmudgeType: Scorch
 		Size: 1
 		Delay: 3
-	Warhead@5Res_area2: DestroyResource
+	Warhead@6Res_area2: DestroyResource
 		Size: 2
 		Delay: 6
-	Warhead@6Smu_area2: LeaveSmudge
+	Warhead@7Smu_area2: LeaveSmudge
 		SmudgeType: Scorch
 		Size: 2,1
 		Delay: 6
@@ -490,11 +501,11 @@ StealthBubble:
 	ValidTargets: Ground, Infantry, Water
 	Warhead@1Dam_impact: SpreadDamage
 		Range: 0, 1c1, 2c1, 3c512
-		Damage: 1000
+		Damage: 600
 		Delay: 5
 		Falloff: 1000, 1000, 250, 100
 		ValidTargets: Ground, Infantry, Water
-		InvalidTargets: Air, Creep
+		InvalidTargets: Air, Creep, Cyborg
 		DamageTypes: Prone50Percent, TriggerProne, ToxinDeath
 		Versus:
 			None: 100
@@ -505,11 +516,11 @@ StealthBubble:
 			Brick: 0
 	Warhead@2Dam_impact: SpreadDamage
 		Range: 0, 1c1, 2c1, 3c512
-		Damage: 1000
+		Damage: 600
 		Delay: 10
 		Falloff: 1000, 1000, 250, 100
 		ValidTargets: Ground, Infantry, Water
-		InvalidTargets: Air, Creep
+		InvalidTargets: Air, Creep, Cyborg
 		DamageTypes: Prone50Percent, TriggerProne, ToxinDeath
 		Versus:
 			None: 100
@@ -520,11 +531,11 @@ StealthBubble:
 			Brick: 0
 	Warhead@3Dam_impact: SpreadDamage
 		Range: 0, 1c1, 2c1, 3c512
-		Damage: 1000
+		Damage: 600
 		Delay: 15
 		Falloff: 1000, 1000, 250, 100
 		ValidTargets: Ground, Infantry, Water
-		InvalidTargets: Air, Creep
+		InvalidTargets: Air, Creep, Cyborg
 		DamageTypes: Prone50Percent, TriggerProne, ToxinDeath
 		Versus:
 			None: 100

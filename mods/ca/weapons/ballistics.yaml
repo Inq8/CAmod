@@ -251,7 +251,7 @@ TitanGun:
 			Wood: 55
 			Light: 40
 			Heavy: 25
-			Concrete: 40
+			Concrete: 50
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Smu: LeaveSmudge
@@ -349,7 +349,7 @@ JuggernautGun:
 		Falloff: 800, 368, 135, 50, 18, 7, 0
 		Versus:
 			None: 90
-			Heavy: 40
+			Heavy: 35
 			Concrete: 45
 			Brick: 55
 	Warhead@4EffWater: CreateEffect
@@ -407,6 +407,27 @@ Grenade:
 GrenadeE:
 	Inherits: Grenade
 	Range: 6c768
+
+EMPGrenade:
+	Inherits: Grenade
+	Projectile: Bullet
+		Image: empgren
+	Warhead@1Dam: SpreadDamage
+		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
+	Warhead@2Dam: SpreadDamage
+		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
+	Warhead@5emp: GrantExternalCondition
+		Range: 0c768
+		Duration: 45
+		Condition: empdisable
+		ValidTargets: Ground, Structure, Vehicle
+	Warhead@3Eff: CreateEffect
+		-ImpactSounds:
+	Warhead@6Eff: CreateEffect
+		Image: sparks_overlay
+		Explosions: idle
+		ExplosionPalette: tseffect-ignore-lighting-alpha75
+		ImpactSounds: expnew16.aud
 
 Mortar:
 	Inherits: ^Artillery

@@ -178,6 +178,20 @@ vulcan.upgrade:
 	RenderSprites:
 		Image: vulcan.upgrade
 
+empgren.upgrade
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: EMP Grenades
+	Buildable:
+		BuildPaletteOrder: 33
+		Prerequisites: ~gtek, ~structures.gdi, ~techlevel.high
+		BuildDuration: 1500
+		Description: Upgrades Grenadier to use EMP Grenades that briefly disable vehicles and defenses.\n\n  Upgrades: Grenadier
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: empgren.upgrade
+
 #########################NOD#########
 ########################################
 
@@ -399,7 +413,7 @@ shields.upgrade:
 		BuildPaletteOrder: 41
 		Prerequisites: ~sign, ~structures.scrin, ~techlevel.high
 		BuildDuration: 3000
-		Description: Larger Scrin vessels take reduced damage.\n\n  Upgrades: Devastator\n  Upgrades: Planetary Assault Carrier
+		Description: Larger Scrin vessels take reduced damage and become resistant to EMP.\n\n  Upgrades: Devastator\n  Upgrades: Planetary Assault Carrier
 		IconPalette: scrin
 	Valued:
 		Cost: 2000

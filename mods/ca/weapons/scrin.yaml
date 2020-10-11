@@ -34,7 +34,7 @@ DisintegratorBeamAA:
 		ValidStances: Enemy, Neutral
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
-		Damage: 2050
+		Damage: 2200
 		Versus:
 			None: 100
 			Wood: 100
@@ -92,7 +92,7 @@ GunWalkerZap:
 	Report: gunwalker-fire1.aud, gunwalker-fire2.aud
 	ReloadDelay: 30
 	Burst: 5
-	BurstDelays: 10
+	BurstDelays: 8
 	Projectile: Bullet
 		Image: scrinzap
 		Speed: 800
@@ -127,7 +127,7 @@ GunWalkerZapAA:
 		Inaccuracy: 0
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
-		Damage: 1300
+		Damage: 1400
 		ValidTargets: Air
 		ValidStances: Enemy, Neutral
 		Range: 0, 0c64, 0c256, 3c0
@@ -232,6 +232,8 @@ CorrupterSpew:
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+		Versus:
+			Light: 80
 	-Warhead@Flames:
 
 DevourerLaser:
@@ -250,6 +252,8 @@ DevourerLaser:
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		Damage: 1000
+		Versus:
+			Wood: 20
 
 RiftCannon:
 	Inherits: ^ScrinLaser
@@ -324,7 +328,7 @@ RuinerCannon:
 		Versus:
 			None: 120
 			Wood: 95
-			Concrete: 70
+			Concrete: 80
 			Brick: 100
 			Light: 65
 			Heavy: 45
@@ -552,7 +556,7 @@ StormcrawlerZap:
 			None: 175
 			Wood: 80
 			Concrete: 80
-			Light: 60
+			Light: 80
 			Heavy: 60
 
 ShardLauncher:
@@ -674,6 +678,19 @@ Rift:
 			Concrete: 120
 			Brick: 25
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+
+SuppressionField:
+	Projectile: InstantExplode
+	ReloadDelay: 1
+	ValidTargets: Ground, Air, Ship
+	Warhead@1Dam: SpreadDamage
+		Spread: 1c0
+		Damage: 1
+	Warhead@2sup: GrantExternalCondition
+		Range: 3c512
+		Duration: 600
+		Condition: suppression
+		ValidTargets: Ground, Air, Ship
 
 BuzzerVortex:
 	ReloadDelay: 5

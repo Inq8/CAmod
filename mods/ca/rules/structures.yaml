@@ -603,7 +603,7 @@ PDOX:
 		CircleSequence: circles
 		BeaconPoster: timewarpicon
 		DisplayRadarPing: True
-		TargetCircleRange: 2c0
+		TargetCircleRange: 1c512
 		TargetCircleColor: 0000FF90
 		LaunchSound: chrono2.aud
 		IncomingSound: chrono2.aud
@@ -1186,7 +1186,7 @@ ATEK:
 		Icon: gps
 		Actors: camera.satscan
 		Type: SpySatellite
-		ChargeInterval: 4500
+		ChargeInterval: 5250
 		OrderName: SatelliteScanPower
 		AutoFire: True
 		DisplayTimerStances: Ally, Neutral, Enemy
@@ -1912,7 +1912,7 @@ AFLD:
 		OrderName: spyplane
 		Prerequisites: aircraft.soviet
 		Icon: spyplane
-		ChargeInterval: 3750
+		ChargeInterval: 3000
 		Description: Spy Plane
 		LongDesc: Reveals an area of the map.
 		SelectTargetSpeechNotification: SelectTarget
@@ -5502,7 +5502,7 @@ SGEN:
 		Prerequisites: tmpl, ~structures.nod, ~techlevel.superw
 		BuildLimit: 1
 		IconPalette: chrometd
-		Description: Makes a group of units invisible for a short time.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Tiberium Stealth
+		Description: Makes a group of units/structures invisible for a short time.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Tiberium Stealth
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -5537,7 +5537,7 @@ SGEN:
 		Description: Tiberium Stealth
 		Condition: invisibility
 		ValidStances: Ally, Neutral, Enemy
-		Range: 3
+		Range: 5
 		Duration: 900
 		ActivationDelay: 0
 		AirburstAltitude: 0c0

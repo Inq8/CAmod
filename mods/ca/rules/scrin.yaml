@@ -1200,6 +1200,11 @@ DEVA:
 	DamageMultiplier@SHIELDS:
 		RequiresCondition: shields-upgrade
 		Modifier: 90
+	KillsSelf:
+		RequiresCondition: empdisable && cruising && !shields-upgrade
+	SpeedMultiplier@EMPDISABLE:
+		Modifier: 0
+		RequiresCondition: empdisable
 
 PAC:
 	Inherits: ^Helicopter
@@ -1275,6 +1280,7 @@ PAC:
 		SlaveDisposalOnKill: KillSlaves
 		SpawnAllAtOnce: false
 		LoadedCondition: inva-loaded
+		PauseOnCondition: empdisable || being-warped
 	Exit@0:
 		SpawnOffset: -100,0,0
 		Facing: 60
@@ -1305,6 +1311,11 @@ PAC:
 	DamageMultiplier@SHIELDS:
 		RequiresCondition: shields-upgrade
 		Modifier: 90
+	KillsSelf:
+		RequiresCondition: empdisable && cruising && !shields-upgrade
+	SpeedMultiplier@EMPDISABLE:
+		Modifier: 0
+		RequiresCondition: empdisable
 
 INVA:
 	Inherits: ^Plane
@@ -1671,7 +1682,7 @@ SWAL:
 SFAC:
 	Inherits: ^ScrinBuilding
 	Inherits@shape: ^3x2Shape
-	Inherits: ^BotFallbackInsurance
+	Inherits@BOTI: ^BotFallbackInsurance
 	Building:
 		Footprint: xxx xxx ===
 		Dimensions: 3,3
@@ -2708,7 +2719,7 @@ MANI:
 		Prerequisites: scrt, ~structures.scrin, ~techlevel.superw
 		BuildLimit: 1
 		IconPalette: chrome
-		Description: Slows enemy ground units movement and rate of fire.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Suppression Field
+		Description: Slows enemy unit movement and rate of fire.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Suppression Field
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -2748,23 +2759,26 @@ MANI:
 		Types: SpyInfiltrate, SabInfiltrate
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
-	GrantExternalConditionPower@SUPPRESSION:
+	DetonateWeaponPower@SUPPRESSION:
 		PauseOnCondition: disabled || empdisable || being-warped
 		OrderName: suppression
 		Icon: spresspower
 		ChargeInterval: 4500
 		Description: Suppression Field
-		LongDesc: Applies a suppression field to the target area, slowing ground units.
+		LongDesc: Applies a suppression field to the target area, slowing units.
 		Duration: 600
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayRadarPing: True
-		Condition: suppression
-		OnFireSound: suppression.aud
+		ActivationDelay: 0
 		SupportPowerPaletteOrder: 10
-		Range: 2
-		ValidStances: Ally, Enemy, Neutral
+		TargetCircleRange: 3c512
+		TargetCircleColor: ff55ffcc
+		LaunchSound: suppression.aud
 		DisplayTimerStances: Ally, Neutral, Enemy
+		Weapon: SuppressionField
+		CameraActor: camera.dummy
+		CameraRemoveDelay: 1
 
 RIFT:
 	Inherits: ^ScrinBuilding
@@ -3152,6 +3166,10 @@ camera.resourcescan:
 	RevealsShroud:
 		Range: 5c0
 		Type: CenterPosition
+
+camera.dummy:
+	Inherits: CAMERA
+	-RevealsShroud:
 
 ichor.seeder:
 	Inherits: CAMERA

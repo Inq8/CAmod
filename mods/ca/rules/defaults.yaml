@@ -321,7 +321,7 @@
 		RequiresCondition: being-warped
 		Palette: lowpower
 	TimedConditionBar@temporal:
-		Condition:  being-warped
+		Condition: being-warped
 		Color: 2f74e2
 	WithIdleOverlay@temporal:
 		Sequence: chrono-overlay
@@ -330,6 +330,8 @@
 		Weapon: TemporalExplode
 		EmptyWeapon: TemporalExplode
 		DeathTypes: ChronoDeath
+	ExternalCondition@temporal:
+		Condition: being-warped
 
 ^Suppressable:
 	SpeedMultiplier@SUPPRESSION:
@@ -360,6 +362,12 @@
 		RequiresCondition: powerdrain
 		ReferencePoint: Center
 		ValidStances: Ally, Enemy, Neutral
+	DamagedByTerrain@POWERDRAIN:
+		Damage: 750
+		DamageInterval: 15
+		RequiresCondition: powerdrain
+		DamageTypes: DefaultDeath
+		Terrain: Clear, Rough, Road, Beach
 
 ^GDIUpgrade:
 	GrantConditionOnPrerequisite@HOLD:
@@ -421,7 +429,7 @@
 			seek && bino: Off, On
 		RequiresSelection: True
 
-^NodHazmatUpgrade:
+^HazmatUpgrade:
 	GrantConditionOnPrerequisite@HAZMAT:
 		Condition: hazmat-upgrade
 		Prerequisites: hazmat.upgrade
@@ -637,12 +645,6 @@
 		RequiresCondition: invisibility
 		Palette: cloakgreen
 
-^Cloakable-Kills:
-	Inherits: ^Cloakable
-	KillsSelf@Mutation:
-		DamageTypes: ToxinDeath
-		RequiresCondition: invisibility
-
 ^Chillable:
 	TimedConditionBar@chilled:
 		Condition: chilled
@@ -722,8 +724,8 @@
 
 ^GpsScramble:
 	Cloak@GPSHIDE:
-		InitialDelay: 250
-		CloakDelay: 250
+		InitialDelay: 100
+		CloakDelay: 75
 		UncloakSound: appear1.aud
 		Palette: cloakra
 		IsPlayerPalette: true
@@ -1025,9 +1027,8 @@
 	Inherits@2: ^GainsExperience
 	Inherits@3: ^InfantryExperienceHospitalOverrides
 	Inherits@4: ^SpriteActor
-	Inherits@5: ^NodHazmatUpgrade
+	Inherits@5: ^HazmatUpgrade
 	Inherits@7: ^Warpable
-	Inherits@8: ^Cloakable-Kills
 	Inherits@9: ^IronCurtainable-Kills
 	Inherits@10: ^Frenzy
 	Inherits@11: ^GpsScramble
@@ -1226,6 +1227,8 @@
 		RequiresCondition: !being-warped
 	Cloak@GPSHIDE:
 		Palette: cloak
+	ExternalCondition@CLOAKGENERATOR:
+		Condition: invisibility
 
 ^Soldier:
 	Inherits: ^Infantry
@@ -1243,6 +1246,38 @@
 		DefaultAttackSequence: shoot
 		IdleSequences: idle1,idle2
 		StandSequences: stand,stand2
+
+^Cyborg:
+	Inherits: ^Soldier
+	Inherits@CYBORGUPG: ^NodCyborgUpgrade
+	Targetable:
+		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, Cyborg
+	SelfHealing@THEAL:
+		Step: 0
+		PercentageStep: 1
+		Delay: 15
+		HealIfBelow: 100
+		DamageCooldown: 150
+		RequiresCondition: tibheal
+		DamageTypes: ToxinDeath
+	WithDecoration@THEAL:
+		Image: pips
+		Sequence: medic
+		Palette: effect
+		ReferencePoint: Bottom, Left
+		RequiresCondition: tibheal
+	GrantConditionOnTerrain@THEAL:
+		Condition: tibheal
+		TerrainTypes: Tiberium, BlueTiberium
+	-GrantConditionOnPrerequisite@BIO:
+	-GrantConditionOnPrerequisite@HAZMAT:
+	-WithDecoration@HAZMAT:
+	-GrantCondition@HAZMAT:
+	-ExternalCondition@HAZMAT:
+	-DamagedByTerrain:
+	-DamagedByTintedCells@RADSTRONG:
+	-DamagedByTintedCells@RADMED:
+	-DamagedByTintedCells@RADWEAK:
 
 ^CivInfantry:
 	Inherits: ^Infantry
@@ -1550,18 +1585,14 @@
 	Inherits@8: ^Warpable
 	Inherits@9: ^BotAirProductionBonus
 	Inherits@10: ^Chillable
+	Inherits@11: ^Suppressable
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@production: ^ProductionEfficiencyBoost
 	Inherits@C4: ^C4Plantable
 	Cloak@EXTERNALCLOAK:
 		RequiresCondition: invisibility || crate-cloak && (!cloak-force-disabled && !airborne && !being-warped)
-		InitialDelay: 0
 		CloakDelay: 90
-		IsPlayerPalette: true
-		Palette: cloakgreen
-		CloakSound: cloak5.aud
-		UncloakSound: appear1.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Damage, Heal
 	Repairable:
 		RepairActors: fix, rep, srep
@@ -1590,6 +1621,8 @@
 	-SpeedMultiplier@chilled3:
 	-SpeedMultiplier@chilled4:
 	-SpeedMultiplier@chilled5:
+	SpeedMultiplier@SUPPRESSION:
+		Modifier: 60
 
 ^PlaneTD:
 	Inherits@1: ^Plane

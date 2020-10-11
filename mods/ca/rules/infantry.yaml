@@ -859,6 +859,12 @@ N2:
 		Weapon: Grenade
 		LocalOffset: 0,0,555
 		FireDelay: 15
+		RequiresCondition: !empgren-upgrade
+	Armament@PRIMARYEMP:
+		Weapon: EMPGrenade
+		LocalOffset: 0,0,555
+		FireDelay: 15
+		RequiresCondition: empgren-upgrade
 	Armament@Garrison:
 		Name: mounted
 		Weapon: GrenadeE
@@ -881,6 +887,11 @@ N2:
 		Prerequisites: barracks.upgraded
 	Selectable:
 		Class: E2
+	GrantConditionOnPrerequisite@EMPUPG:
+		Condition: empgren-upgrade
+		Prerequisites: empgren.upgrade
+	ExternalCondition@EMPUPG:
+		Condition: empgren-upgrade
 
 N2R1:
 	Inherits: N2
@@ -1017,10 +1028,9 @@ N4:
 		Class: E4
 
 N5:
-	Inherits: ^Soldier
+	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@CYBORG: ^NodCyborgUpgrade
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -1065,33 +1075,6 @@ N5:
 		VoiceSet: CyborgVoice
 	-TakeCover:
 	-Crushable:
-	-KillsSelf@Mutation:
-	-GrantConditionOnPrerequisite@BIO:
-	-GrantConditionOnPrerequisite@HAZMAT:
-	-WithDecoration@HAZMAT:
-	-GrantCondition@HAZMAT:
-	-ExternalCondition@HAZMAT:
-	-DamagedByTerrain:
-	SelfHealing@THEAL:
-		Step: 0
-		PercentageStep: 1
-		Delay: 15
-		HealIfBelow: 100
-		DamageCooldown: 150
-		RequiresCondition: tibheal
-		DamageTypes: ToxinDeath
-	GrantConditionOnTerrain@THEAL:
-		Condition: tibheal
-		TerrainTypes: Tiberium, BlueTiberium
-	-DamagedByTintedCells@RADSTRONG:
-	-DamagedByTintedCells@RADMED:
-	-DamagedByTintedCells@RADWEAK:
-	WithDecoration@THEAL:
-		Image: pips
-		Sequence: medic
-		Palette: temptd
-		ReferencePoint: Bottom, Left
-		RequiresCondition: tibheal
 	WithMuzzleOverlay:
 	Explodes:
 		Weapon: UnitExplodeChemSmall
@@ -1107,8 +1090,6 @@ N5:
 	FirepowerMultiplier@BIOLAB:
 		RequiresCondition: biofirepower
 		Modifier: 110
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
 N5R1:
 	Inherits: N5
@@ -1517,9 +1498,8 @@ SAB:
 		Prerequisites: infantry.legion
 
 ACOL:
-	Inherits: ^Soldier
+	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@CYBORG: ^NodCyborgUpgrade
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -1565,34 +1545,6 @@ ACOL:
 		VoiceSet: CyborgVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
-	-GrantConditionOnPrerequisite@BIO:
-	-WithDecoration@HAZMAT:
-	-DamagedByTerrain:
-	SelfHealing@THEAL:
-		Step: 0
-		PercentageStep: 1
-		Delay: 15
-		HealIfBelow: 100
-		DamageCooldown: 150
-		RequiresCondition: tibheal
-		DamageTypes: ToxinDeath
-	GrantConditionOnTerrain@THEAL:
-		Condition: tibheal
-		TerrainTypes: Tiberium, BlueTiberium
-	-DamagedByTintedCells@RADSTRONG:
-	-DamagedByTintedCells@RADMED:
-	-DamagedByTintedCells@RADWEAK:
-	-GrantCondition@HAZMAT:
-	-GrantConditionOnPrerequisite@HAZMAT:
-	-ExternalCondition@HAZMAT:
-	WithDecoration@THEAL:
-		Image: pips
-		Sequence: medic
-		Palette: temptd
-		ReferencePoint: Bottom, Left
-		RequiresCondition: tibheal
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	GrantConditionOnPrerequisite@CYBORG:
 		Condition: cyborg-upgrade
 		Prerequisites: cyborg.upgrade
@@ -1816,11 +1768,10 @@ E8:
 		RequiresCondition: biofirepower
 
 N1C:
-	Inherits: ^Soldier
+	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BOTHELPER: ^BotCaptureHelper
-	Inherits@CYBORG: ^NodCyborgUpgrade
 	RenderSprites:
 	Buildable:
 		Queue: Infantry
@@ -1853,41 +1804,11 @@ N1C:
 		VoiceSet: CyborgVoice
 	Armament:
 		Weapon: Vulcan3
-	-KillsSelf@Mutation:
-	-GrantConditionOnPrerequisite@BIO:
-	-GrantConditionOnPrerequisite@HAZMAT:
-	-WithDecoration@HAZMAT:
-	-GrantCondition@HAZMAT:
-	-ExternalCondition@HAZMAT:
-	-DamagedByTerrain:
-	SelfHealing@THEAL:
-		Step: 0
-		PercentageStep: 1
-		Delay: 15
-		HealIfBelow: 100
-		DamageCooldown: 150
-		RequiresCondition: tibheal
-		DamageTypes: ToxinDeath
-	GrantConditionOnTerrain@THEAL:
-		Condition: tibheal
-		TerrainTypes: Tiberium, BlueTiberium
-	-DamagedByTintedCells@RADSTRONG:
-	-DamagedByTintedCells@RADMED:
-	-DamagedByTintedCells@RADWEAK:
-	WithDecoration@THEAL:
-		Image: pips
-		Sequence: medic
-		Palette: temptd
-		ReferencePoint: Bottom, Left
-		RequiresCondition: tibheal
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
 N3C:
-	Inherits: ^Soldier
+	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@CYBORG: ^NodCyborgUpgrade
 	RenderSprites:
 	Buildable:
 		Queue: Infantry
@@ -1948,42 +1869,13 @@ N3C:
 		Count: 1
 	AutoTarget:
 		ScanRadius: 5
-	-KillsSelf@Mutation:
-	-GrantConditionOnPrerequisite@BIO:
-	-GrantConditionOnPrerequisite@HAZMAT:
-	-WithDecoration@HAZMAT:
-	-GrantCondition@HAZMAT:
-	-ExternalCondition@HAZMAT:
-	-DamagedByTerrain:
-	SelfHealing@THEAL:
-		Step: 0
-		PercentageStep: 1
-		Delay: 15
-		HealIfBelow: 100
-		DamageCooldown: 150
-		RequiresCondition: tibheal
-		DamageTypes: ToxinDeath
-	GrantConditionOnTerrain@THEAL:
-		Condition: tibheal
-		TerrainTypes: Tiberium, BlueTiberium
-	-DamagedByTintedCells@RADSTRONG:
-	-DamagedByTintedCells@RADMED:
-	-DamagedByTintedCells@RADWEAK:
-	WithDecoration@THEAL:
-		Image: pips
-		Sequence: medic
-		Palette: temptd
-		ReferencePoint: Bottom, Left
-		RequiresCondition: tibheal
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
 RMBC:
-	Inherits: ^Soldier
+	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@EMP: ^EmpDisable
-	Inherits@CYBORG: ^NodCyborgUpgrade
+	Inherits@CLOAK: ^Cloakable
 	RenderSprites:
 		PlayerPalette: playerd2k
 		Image: cycom
@@ -2021,7 +1913,6 @@ RMBC:
 		VoiceSet: CyborgCommandoVoice
 	RevealsShroud:
 		Range: 4c768
-	-TakeCover:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 	Armament@PRIMARY:
@@ -2041,37 +1932,11 @@ RMBC:
 	Selectable:
 		Bounds: 24,24,0,-4
 		DecorationBounds: 12,20,0,-4
+	-TakeCover:
 	-Crushable:
-	-KillsSelf@Mutation:
 	-KillsSelf@Immolate:
-	-GrantConditionOnPrerequisite@BIO:
-	-GrantConditionOnPrerequisite@HAZMAT:
-	-GrantCondition@HAZMAT:
-	-WithDecoration@HAZMAT:
-	-ExternalCondition@HAZMAT:
-	-DamagedByTerrain:
-	SelfHealing@THEAL:
-		Step: 0
-		PercentageStep: 1
-		Delay: 15
-		HealIfBelow: 100
-		DamageCooldown: 150
-		RequiresCondition: tibheal
-		DamageTypes: ToxinDeath
-	GrantConditionOnTerrain@THEAL:
-		Condition: tibheal
-		TerrainTypes: Tiberium, BlueTiberium
-	-DamagedByTintedCells@RADSTRONG:
-	-DamagedByTintedCells@RADMED:
-	-DamagedByTintedCells@RADWEAK:
-	WithDecoration@THEAL:
-		Image: pips
-		Sequence: medic
-		Palette: temptd
-		ReferencePoint: Bottom, Left
-		RequiresCondition: tibheal
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4Immune, ChaosImmune, DriverKillImmune
+		TargetTypes: Ground, Vehicle, C4Immune, ChaosImmune, DriverKillImmune, Cyborg
 	Targetable@REPAIR:
 		RequiresCondition: !parachute && damaged && !being-warped
 		TargetTypes: Repair
