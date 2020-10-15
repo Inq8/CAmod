@@ -179,7 +179,6 @@ PlasmaDiscs:
 		Duration: 20
 		Color: 00FF00AA
 		Width: 45
-		HitAnim: laserfire
 		ZOffset: 2047
 		SecondaryBeam: true
 		SecondaryBeamColor: 00FF0040
@@ -199,6 +198,8 @@ PlasmaDiscs:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
+	Warhead@3Eff: CreateEffect
+		Explosions: small_explosion_alt1, small_explosion_alt2, small_explosion_alt3
 
 InterloperLaser:
 	Inherits: ^ScrinLaser
@@ -340,39 +341,67 @@ RuinerCannon:
 		Image: tibexplode
 
 TripodLaser:
-	Inherits: Laser
+	Inherits: ^ScrinLaser
 	Range: 6c0
-	Report: tripod-fire1.aud, tripod-fire2.aud, tripod-fire3.aud
-	ReloadDelay: 45
-	Burst: 2
-	BurstDelays: 15
+	StartBurstReport: tripod-fire1.aud, tripod-fire2.aud, tripod-fire3.aud
+	FirstBurstTargetOffset: -150,300,0
+	FollowingBurstTargetOffset: 50,-100,0
+	ReloadDelay: 60
+	Burst: 7
+	BurstDelays: 1
 	Projectile: LaserZap
-		Duration: 20
+		TrackTarget: false
+		Duration: 2
 		Color: FAFAFFFF
 		Width: 45
 		SecondaryBeamColor: 382EFFAA
 		SecondaryBeamWidth: 75
 	Warhead@1Dam: SpreadDamage
-		Spread: 42
-		Damage: 5700
+		Spread: 341
+		Damage: 900
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
 			None: 80
 			Light: 70
-			Wood: 62
+			Wood: 58
 			Heavy: 105
 			Concrete: 30
 
 ReaperLaser:
 	Inherits: TripodLaser
 	Range: 5c0
-	ReloadDelay: 40
-	BurstDelays: 10
-	Report: rtripod-fire1.aud, rtripod-fire2.aud, rtripod-fire3.aud
+	ReloadDelay: 50
+	StartBurstReport: rtripod-fire1.aud, rtripod-fire2.aud, rtripod-fire3.aud
 	Projectile: LaserZap
-		Duration: 30
 		Color: 00FF0090
 		SecondaryBeamColor: 00FF0050
+
+TripodLaserReversed:
+	Inherits: TripodLaser
+	-StartBurstReport:
+	FirstBurstTargetOffset: -150,-300,0
+	FollowingBurstTargetOffset: 50,100,0
+
+ReaperLaserReversed:
+	Inherits: ReaperLaser
+	-StartBurstReport:
+	FirstBurstTargetOffset: -150,-300,0
+	FollowingBurstTargetOffset: 50,100,0
+
+TripodLaserSound:
+	ReloadDelay: 66
+	Range: 6c0
+	ValidTargets: Ground, Water
+	Projectile: InstantHit
+	Report: tripod-fire1.aud, tripod-fire2.aud, tripod-fire3.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 1
+
+ReaperLaserSound:
+	Inherits: TripodLaserSound
+	ReloadDelay: 56
+	Report: rtripod-fire1.aud, rtripod-fire2.aud, rtripod-fire3.aud
+	Range: 5c0
 
 StormriderZap:
 	Range: 7c0
