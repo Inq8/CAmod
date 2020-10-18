@@ -726,7 +726,7 @@ DEVO:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 30000
+		HP: 27500
 	Armor:
 		Type: Light
 	Mobile:
@@ -928,9 +928,21 @@ TPOD:
 		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: TripodLaser
-		LocalOffset: 650,420,1000, 650,-420,1000
+		LocalOffset: 650,420,1000
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: TripodLaserReversed
+		LocalOffset: 650,-420,1000
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+		FireDelay: 20
+	Armament@SOUND:
+		Name: sound
+		Weapon: TripodLaserSound
+		LocalOffset: 650,-420,1000
+		FireDelay: 20
 	WithMuzzleOverlay:
 	Carryable:
 		LocalOffset: 0,0,700
@@ -941,7 +953,7 @@ TPOD:
 		Offset: 0,0,0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
-		Armaments: primary
+		Armaments: primary, secondary, sound
 	WithSpriteTurret:
 	QuantizeFacingsFromSequence:
 		Sequence: idle
@@ -974,7 +986,17 @@ RPTP:
 		HP: 88000
 	Armament@PRIMARY:
 		Weapon: ReaperLaser
-		LocalOffset: 700,550,1000, 700,-550,1000
+		LocalOffset: 700,550,1000
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: ReaperLaserReversed
+		LocalOffset: 700,-550,1000
+		FireDelay: 15
+	Armament@SOUND:
+		Name: sound
+		Weapon: ReaperLaserSound
+		LocalOffset: 700,-550,1000
+		FireDelay: 15
 	SpawnActorOnDeath:
 		Actor: RPTP.Husk
 
@@ -1128,7 +1150,6 @@ DEVA:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 55
-		BuildDurationModifier: 75
 		Prerequisites: scrt, grav, ~aircraft.scrin, ~techlevel.high
 		Description: Long-range siege warship.\n  Maximum 5 can be built.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Aircraft, Tanks
 		IconPalette: chrome
@@ -1214,7 +1235,6 @@ PAC:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 55
-		BuildDurationModifier: 75
 		Prerequisites: sign, scrt, grav, ~aircraft.scrin, ~techlevel.high
 		Description: Warship that launches a squadron\nof assault craft.\n  Maximum 5 can be built.\n	Strong vs Vehicles, Infantry, Aircraft\n  Weak vs Buildings, Defenses
 		IconPalette: chrome
@@ -1397,7 +1417,7 @@ INVA:
 		Prerequisites: shields.upgrade
 	DamageMultiplier@SHIELDS:
 		RequiresCondition: shields-upgrade
-		Modifier: 80
+		Modifier: 50
 
 #
 # ---- Husks

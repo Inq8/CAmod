@@ -2120,6 +2120,7 @@ MTNK:
 		Turret: secondary
 		Weapon: PointLaser
 		LocalOffset: 0,10,90
+		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: pointlaser-upgrade && !drone-upgrade
 		ForceTargetStances: enemy
 	AttackTurreted:
@@ -4182,7 +4183,7 @@ CDRN:
 	Explodes:
 		Weapon: ChaosDroneExplode
 		EmptyWeapon: VisualExplodeHusk
-		Chance: 50
+		LoadedChance: 50
 	AttackFrontal:
 		FacingTolerance: 128
 		PauseOnCondition: empdisable || being-warped

@@ -16,7 +16,7 @@ ParaBomb:
 			Wood: 30
 			Light: 65
 			Heavy: 80
-			Concrete: 50
+			Concrete: 80
 			Brick: 50
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge
@@ -41,6 +41,8 @@ CarpetBomb:
 		Shadow: true
 	Warhead@1Dam: SpreadDamage
 		Damage: 30000
+		Versus:
+			Concrete: 60
 
 AtomBomb:
 	Inherits: CarpetBomb
@@ -114,7 +116,7 @@ InfernoBomb:
 			Wood: 60
 			Light: 85
 			Heavy: 70
-			Concrete: 35
+			Concrete: 80
 			Brick: 25
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@2Smu: LeaveSmudge
@@ -795,7 +797,7 @@ DeathHandCluster:
 		Falloff: 1000, 500, 250, 100
 		Versus:
 			None: 90
-			Concrete: 30
+			Concrete: 50
 			Brick: 20
 			Wood: 30
 			Light: 60

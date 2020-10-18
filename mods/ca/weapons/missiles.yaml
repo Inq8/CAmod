@@ -203,7 +203,7 @@ HellfireAG:
 		Damage: 4500
 		Versus:
 			None: 25
-			Wood: 50
+			Wood: 40
 			Light: 70
 			Concrete: 120
 			Brick: 100
@@ -495,7 +495,7 @@ APTusk:
 			Wood: 60
 			Light: 45
 			Heavy: 65
-			Concrete: 75
+			Concrete: 80
 
 TorpTube:
 	ReloadDelay: 100
@@ -941,8 +941,11 @@ IFVRocketsAAE:
 		CruiseAltitude: 2c0
 		RangeLimit: 7c512
 	Warhead@1Dam: SpreadDamage
-		Damage: 1800
+		Damage: 1600
 		ValidTargets: Air
+		Falloff: 100, 37, 14, 5, 0
+		Spread: 0c128
+		-Range:
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air
 		ImpactSounds: xplos.aud
@@ -957,7 +960,7 @@ IFVRocketsAAE:
 		ContrailColor: 00FFFFE6
 		RangeLimit: 8c512
 	Warhead@1Dam: SpreadDamage
-		Damage: 2050
+		Damage: 1900
 
 227mmAAH:
 	Inherits: 227mmAA
