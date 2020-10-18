@@ -835,29 +835,24 @@ DOME:
 		SelectTargetSpeechNotification: SelectTarget
 		PauseOnCondition: disabled || being-warped
 		RequiresCondition: !build-incomplete
-	GrantExternalConditionPowerCA@GpsScramble:
-		Prerequisites: structures.england, techlevel.superw
+	SpawnActorPower@GpsScramble:
+		Actor: gps.scrambler
 		OrderName: gpsscramble
 		Icon: gpsscram
 		IconPalette: chrometd
+		Prerequisites: structures.england, techlevel.superw
 		ChargeInterval: 4500
-		Weapon: GpsScramble
-		Description: GPS Scramble
-		Condition: gpshide
-		ValidStances: Ally
-		Range: 3
-		Duration: 2500
-		ActivationDelay: 0
-		AirburstAltitude: 0c0
-		AllowMultiple: false
-		LongDesc: Makes selected ground units temporarily invisible when stationary.
-		OnFireSound:  sscrambl.aud
+		LifeTime: 375
+		Description: GPS Scrambler
+		LongDesc: Shrouds the target area. Reduces range of enemy units\nand defenses in area while active.
+		LaunchSound: sscrambl.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
-		DisplayRadarPing: True
-		Cursor: ability
 		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayRadarPing: True
 		DisplayTimerStances: Ally
+		Cursor: ability
+		AllowMultiple: false
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped
