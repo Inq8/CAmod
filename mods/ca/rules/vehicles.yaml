@@ -916,6 +916,8 @@ SPEC:
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
 		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver-dead
+	Cloak@CRATE-CLOAK:
+		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
@@ -2596,6 +2598,8 @@ STNK.Nod:
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
 		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver-dead
+	Cloak@CRATE-CLOAK:
+		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
@@ -3520,6 +3524,8 @@ RTNK:
 		Palette: player
 		IsPlayerPalette: false
 		RequiresCondition: !cloak-force-disabled && !invisibility && !driver-dead
+	Cloak@CRATE-CLOAK:
+		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical, Heavy

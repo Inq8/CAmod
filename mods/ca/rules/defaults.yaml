@@ -721,6 +721,25 @@
 			concussion: On, On, Off
 		RequiresSelection: False
 		ValidStances: Ally, Neutral, Enemy
+		
+^CrateCloak:
+	Cloak@CRATE-CLOAK:
+		InitialDelay: 90
+		CloakDelay: 90
+		CloakSound: trans1.aud
+		UncloakSound: appear1.aud
+		Palette: cloak
+		IsPlayerPalette: false
+		RequiresCondition: (crate-cloak) && !(cloak-force-disabled || invisibility)
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
+	TimedConditionBar@CRATE-CLOAK:
+		Condition: crate-cloak
+		Color: 606060
+	ExternalCondition@CRATE-CLOAK:
+		Condition: crate-cloak
+	GrantConditionOnDamageState@UNCLOAK:
+		Condition: cloak-force-disabled
+		ValidDamageStates: Heavy, Critical
 
 ^GpsScramble:
 	RangeMultiplier@GPSSCRAMBLE:
@@ -877,6 +896,7 @@
 	Inherits@15: ^AffectedByDriverKill
 	Inherits@16: ^Concussion
 	Inherits@17: ^Suppressable
+	Inherits@18: ^CrateCloak
 	Inherits@C4: ^C4Plantable
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
@@ -991,6 +1011,8 @@
 		PlayerPalette: overlayplayertd
 	WithDamageOverlay:
 		Image: smoke_mtd
+	Cloak@CRATE-CLOAK:
+		Palette: cloak
 
 ^Tank:
 	Inherits: ^Vehicle
@@ -1018,6 +1040,7 @@
 	Inherits@13: ^Chillable
 	Inherits@14: ^Concussion
 	Inherits@15: ^Suppressable
+	Inherits@16: ^CrateCloak
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@mind: ^MindControllable
@@ -1207,6 +1230,8 @@
 		DamageTypes: FrozenDeath
 		LayerName: cryoresidue
 		RequiresCondition: !being-warped
+	Cloak@CRATE-CLOAK:
+		Palette: cloak
 	ExternalCondition@CLOAKGENERATOR:
 		Condition: invisibility
 
@@ -1331,6 +1356,7 @@
 	Inherits@15: ^BotGroundProductionBonus
 	Inherits@16: ^Concussion
 	Inherits@17: ^Suppressable
+	Inherits@18: ^CrateCloak
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
@@ -1755,7 +1781,6 @@
 		Actor: n1
 	SpawnActorsOnSell:
 		ActorTypes: n1,n1,n1,n1,n1,n1,n1,n1,n1,n1,c1,c1,c1,c1,c7,c7,c7,c7,c10,c10
-	ActorPreviewPlaceBuildingPreview:
 	ActorPreviewPlaceBuildingPreview:
 		OverridePalette: placebuildingtd
 
