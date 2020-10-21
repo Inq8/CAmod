@@ -580,7 +580,7 @@ Chemicbm:
 		Versus:
 			None: 36
 			Wood: 45
-			Concrete: 110
+			Concrete: 120
 			Light: 65
 			Heavy: 100
 			Brick: 10
@@ -596,7 +596,7 @@ Chemicbm:
 		Versus:
 			None: 36
 			Wood: 140
-			Concrete: 180
+			Concrete: 210
 			Light: 85
 			Heavy: 140
 			Brick: 10
@@ -612,7 +612,7 @@ Chemicbm:
 		Versus:
 			None: 36
 			Wood: 170
-			Concrete: 180
+			Concrete: 210
 			Light: 85
 			Heavy: 140
 			Brick: 10
@@ -709,9 +709,10 @@ IonBolt:
 		ValidTargets: Ground, Water, Air
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		Versus:
-			Concrete: 220
-			Heavy: 170
-			Light: 120
+			None: 50
+			Concrete: 300
+			Heavy: 100
+			Light: 70
 	Warhead@4Effect: CreateEffect
 		Explosions: ionbeam
 		ExplosionPalette: tdeffect-ignore-lighting-alpha85
@@ -910,10 +911,12 @@ WeatherBolt:
 		ValidTargets: Ground, Air, Water
 		DamageTypes: TriggerProne, ElectricityDeath
 		Versus:
+			None: 35
 			Wood: 70
-			Concrete: 130
+			Concrete: 150
 			Brick: 55
-			Heavy: 115
+			Heavy: 70
+			Light: 40
 	Warhead@4: CreateEffect
 		Explosions: weatherbolt1, weatherbolt2, weatherbolt3, weatherbolt1f, weatherbolt2f, weatherbolt3f
 		ImpactSounds: sweastra.aud, sweastrb.aud, sweastrc.aud, sweastrd.aud
