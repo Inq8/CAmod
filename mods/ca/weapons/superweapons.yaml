@@ -340,7 +340,7 @@ Empicbm:
 		ImpactSounds: empexpl.aud
 	Warhead@emp: GrantExternalCondition
 		Range: 5c0
-		Duration: 600
+		Duration: 500
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle, Air
 	Warhead@2Smu_impact: LeaveSmudge
@@ -401,9 +401,14 @@ THLauncher:
 		ExplosionPalette: tseffect-ignore-lighting-alpha75
 		Explosions: pulse_explosion
 		ImpactSounds: empexpl.aud
-	Warhead@emp: GrantExternalCondition
-		Range: 5c0
+	Warhead@emp1: GrantExternalCondition
+		Range: 2c512
 		Duration: 600
+		Condition: empdisable
+		ValidTargets: Ground, Vehicle, Air
+	Warhead@emp2: GrantExternalCondition
+		Range: 5c0
+		Duration: 400
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle, Air
 	Warhead@2Smu_impact: LeaveSmudge
