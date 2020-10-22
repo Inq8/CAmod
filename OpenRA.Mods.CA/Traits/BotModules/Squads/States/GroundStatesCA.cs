@@ -78,9 +78,6 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			if (AttackOrFleeFuzzyCA.Default.CanAttack(owner.Units, enemyUnits))
 			{
 				// We have gathered sufficient units. Attack the nearest enemy unit.
-				// Inform human allies about AI's rush attack.
-				owner.Bot.QueueOrder(new Order("PlaceBeacon", owner.SquadManager.Player.PlayerActor, Target.FromCell(owner.World, owner.TargetActor.Location), false)
-					{ SuppressVisualFeedback = true });
 				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsAttackMoveState(), true);
 			}
 			else

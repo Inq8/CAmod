@@ -134,13 +134,13 @@ Player:
 		Enabled: True
 		DisplayOrder: 12
 		Prerequisites: forceshield.enabled
-	LobbyPrerequisiteCheckbox@SUPERW:
-		ID: superweapon
-		Label: Super Weapons
-		Description: Enable or Disable Super Weapons
+	LobbyPrerequisiteCheckbox@NAVY:
+		ID: navy
+		Label: Naval Units
+		Description: Enable or Disable Naval Units
 		Enabled: True
 		DisplayOrder: 13
-		Prerequisites: techlevel.superw
+		Prerequisites: techlevel.navy
 	LobbyPrerequisiteCheckbox@REVEALONFIRE:
 		ID: revealonfire
 		Label: Reveal on Fire
@@ -178,8 +178,12 @@ Player:
 		Name: Medium
 		Prerequisites: techlevel.infonly, techlevel.low, techlevel.medium
 		Id: medium
+	ProvidesTechPrerequisite@high:
+		Name: High
+		Prerequisites: techlevel.infonly, techlevel.low, techlevel.medium, techlevel.high
+		Id: high
 	ProvidesTechPrerequisite@unrestricted:
-		Name: Unrestricted
+		Name: Super Weapons
 		Prerequisites: techlevel.infonly, techlevel.low, techlevel.medium, techlevel.high, techlevel.unrestricted
 		Id: unrestricted
 	GrantConditionOnPrerequisiteManager:

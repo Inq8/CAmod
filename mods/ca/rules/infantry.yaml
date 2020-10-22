@@ -1565,17 +1565,70 @@ ACOL:
 		Modifier: 25
 
 JJET:
-	Inherits: ^Infantry
+	Inherits@1: ^ExistsInWorld
+	Inherits@3: ^IronCurtainable
+	Inherits@4: ^SpriteActor
+	Inherits@5: ^Warpable
+	Inherits@6: ^EmpDisable
+	Inherits@7: ^GDIUpgrade
+	Inherits@8: ^BinoUpgrade
+	Inherits@bounty: ^GlobalBounty
+	Inherits@selection: ^SelectableCombatUnit
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
-	Inherits@EMP: ^EmpDisable
+	Inherits@mind: ^MindControllable
+	Huntable:
+	BodyOrientation:
+		QuantizedFacings: 8
+		UseClassicFacingFudge: true
+	RenderSprites:
+		Image: jjet
+		PlayerPalette: overlayplayertd
+	OwnerLostAction:
+		Action: Kill
+	DrawLineToTarget:
+	AppearsOnRadar:
+		UseLocation: true
+	SelectionDecorations:
+	HiddenUnderFog:
+		Type: GroundPosition
+	RevealsShroud:
+		Range: 6c0
+		MinRange: 4c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+		Type: GroundPosition
+	AttackMove:
+	Guard:
+	Guardable:
+	ActorLostNotification:
+		Notification: AirUnitLost
+	MustBeDestroyed:
+	Voiced:
+		VoiceSet: GenericVoice
+	HitShape:
+	MapEditorData:
+		Categories: Aircraft
+	GrantConditionOnPrerequisite@ROF:
+		Condition: revealonfire
+		Prerequisites: global.revealonfire
+	RevealOnFire:
+		RevealGeneratedShroud: True
+		RequiresCondition: revealonfire
+	RevealOnDeath:
+		Duration: 100
+		Radius: 2c512
+	WithSpriteControlGroupDecoration:
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 59
 		Prerequisites: ~pyle, hq, ~infantry.gdi, ~techlevel.infonly
 		IconPalette: chrometd
-		Description: Flying general-purpose infantry.\n  Can detect cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+		Description: Flying general-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
 		Cost: 350
 	Tooltip:
@@ -1584,112 +1637,190 @@ JJET:
 		AddToArmyValue: true
 	Health:
 		HP: 9000
-	Armament@AIR:
+	Targetable:
+		RequiresCondition: !airborne && !being-warped
+		TargetTypes: Ground, Infantry, Disguise
+	Targetable@HEAL:
+		RequiresCondition: (!airborne && !being-warped) && damaged
+		TargetTypes: Heal
+	Targetable@AIRBORNE:
+		RequiresCondition: airborne && !being-warped
+		TargetTypes: Air
+	DeathSounds@NORMAL:
+		Voice: Die
+		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath
+	DeathSounds@BURNED:
+		Voice: Burned
+		DeathTypes: FireDeath
+	DeathSounds@ZAPPED:
+		Voice: Zapped
+		DeathTypes: ElectricityDeath, ChronoDeath
+	DeathSounds@POISONED:
+		Voice: Poisoned
+		DeathTypes: PoisonDeath, ToxinDeath, ToxicDeath
+	SelfHealing@HOSPITAL:
+		Step: 500
+		Delay: 100
+		HealIfBelow: 100
+		DamageCooldown: 125
+		RequiresCondition: hospitalheal
+	ExternalCondition@MEDIFV:
+		Condition: hospitalheal
+	GrantConditionOnPrerequisite@HOSPITAL:
+		Condition: hospital
+		Prerequisites: hosp
+	GrantConditionOnDamageState@HOSPITAL:
+		Condition: damaged
+		ValidDamageStates: Light, Medium, Heavy, Critical
+	GrantCondition@HOSPITAL:
+		RequiresCondition: hospital && damaged
+		Condition: hospitalheal
+	WithDecoration@REDCROSS:
+		Image: pips
+		Sequence: medic
+		ReferencePoint: Bottom, Right
+		RequiresCondition: hospitalheal
+		BlinkInterval: 32
+		BlinkPattern: Off, On
+	Armor:
+		Type: Light
+	Aircraft:
+		CruiseAltitude: 1c0
+		IdealSeparation: 0c255
+		InitialFacing: 92
+		Speed: 99
+		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems,Tiberium,BlueTiberium
+		AirborneCondition: airborne
+		CruisingCondition: cruising
+		CanHover: true
+		CanSlide: true
+		VTOL: true
+	AttackAircraft:
+		AttackType: Hover
+		FacingTolerance: 0
+		Voice: Attack
+	Armament@PRIMARY:
 		Weapon: M60mgJJ
-		RequiresCondition: undeployed
-	Armament@GROUND:
-		Weapon: M60mgJJ.Ground
-		RequiresCondition: deployed
 	AttackFrontal:
 		PauseOnCondition: being-warped
-		Voice: Attack
 	WithInfantryBody:
-		RequiresCondition: !being-warped && undeployed
-		StandSequences: hover
-		DefaultAttackSequence: flying-attack
-		MoveSequence: flying
-	WithInfantryBody@Ground:
-		RequiresCondition: !being-warped && deployed
-		StandSequences: stand
+		IdleSequences: idle1,idle2
 		DefaultAttackSequence: attack
-		IdleSequences: idle1, idle2
-	WithInfantryBody@Warped:
-		StandSequences: stand
-		RequiresCondition: being-warped
+		RequiresCondition: !airborne
+	WithInfantryBody@AIRBORNE:
+		DefaultAttackSequence: flying-attack
+		StandSequences: hover
+		MinIdleDelay: 0
+		MaxIdleDelay: 1
+		IdleSequences: hover
+		MoveSequence: flying
+		RequiresCondition: airborne
+	DeathSounds@airborne:
+		RequiresCondition: airborne
+	SpawnActorOnDeath@airborne:
+		Actor: JJET.Husk
+		RequiresCondition: airborne
+	WithDeathAnimation:
+		DeathSequencePalette: overlayplayertd
+		DeathTypes:
+			DefaultDeath: 1
+			BulletDeath: 2
+			SmallExplosionDeath: 3
+			ExplosionDeath: 4
+			FireDeath: 5
+			ElectricityDeath: 6
+			PoisonDeath: 7
+			ChronoDeath: 8
+			ToxinDeath: 9
+			RadiationDeath: 10
+			FrozenDeath: 11
+		CrushedSequence: die-crushed
+		RequiresCondition: !airborne
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+		RequiresCondition: airborne
+	Hovers@CRUISING:
+		RequiresCondition: cruising
+	DetectCloaked:
+		CloakTypes: Cloak
+		Range: 3c0
+	ActorLostNotification:
+	Selectable:
+		Bounds: 18,18,0,-6
+		DecorationBounds: 12,17,0,-6
 	AttackMove:
 		Voice: Move
-	-Passenger:
-	-GainsExperienceMultiplier:
+	Passenger:
+		Voice: Move
 	Guard:
 		Voice: Move
 	Voiced:
 		VoiceSet: JJVoice
-	KillsSelf@EMP:
-		RequiresCondition: (empdisable && undeployed)
-		DamageTypes: DefaultDeath
-	KillsSelf@BADTERRAIN:
-		RequiresCondition: (badterrain && deployed)
-		DamageTypes: DefaultDeath
-		Delay: 25
-	KillsSelf@SPLASH:
-		RequiresCondition: (badwater && deployed)
-		GrantsCondition: splash
-		Delay: 25
-	Explodes@SPLASH:
-		Weapon: UnitExplodeSubmarine
-		RequiresCondition: splash
-	Targetable:
-		RequiresCondition: deployed && !being-warped
-		TargetTypes: Ground, Infantry
-	Targetable@HEAL:
-		RequiresCondition: deployed && !being-warped && damaged
-		TargetTypes: Heal
-	Targetable@AIRBORNE:
-		RequiresCondition: !being-warped && undeployed
-		TargetTypes: Air
-	Targetable@Temporal:
-		TargetTypes: Temporal
-		RequiresCondition: deployed
-	Mobile:
-		Speed: 82
-		Locomotor: jumpjet
-		PauseOnCondition: being-warped
-	Hovers:
-		InitialHeight: 0c511
-		BobDistance: -48
-		MinHoveringAltitude: 0c3
-		RiseTicks: 150
-		RequiresCondition: undeployed
-	WithShadow:
-		RequiresCondition: undeployed
-		Offset: 0,0,-768
-	GrantConditionOnDeploy:
-		DeployedCondition: deployed
-		UndeployedCondition: undeployed
-		UndeployOnMove: False
-		Voice: Move
-		PauseOnCondition: being-warped
-		RequiresCondition: !badterrain
-	UpdatesPlayerStatistics:
-	MustBeDestroyed:
-	-DamagedByTerrain:
-	-SpawnActorOnDeath:
-	-Crushable:
-	SpeedMultiplier:
-		Modifier: 55
-		RequiresCondition: deployed
-	GrantConditionOnTerrain@KILLJUMPJET:
-		Condition: badterrain
-		TerrainTypes: Cliff, Rock, Tree, Wall
-	GrantConditionOnTerrain@KILLJUMPJETWATER:
-		Condition: badwater
-		TerrainTypes: Water
+	AutoTargetPriority@DEFAULT:
+		RequiresCondition: !stance-attackanything && !assault-move && !airborne
+	AutoTargetPriority@ATTACKANYTHING:
+		RequiresCondition: (stance-attackanything || assault-move) && !airborne
+	AutoTargetPriority@DEFAULT_AIR:
+		RequiresCondition: !stance-attackanything && !assault-move && airborne
+		ValidTargets: Vehicle, Water, Underwater, Defense
+		InvalidTargets: NoAutoTarget, WaterStructure
+		Priority: 1
+	AutoTargetPriority@DEFAULT_AIR_ATTACK_INFANTRY:
+		RequiresCondition: !stance-attackanything && !assault-move && airborne
+		ValidTargets: Infantry
+		InvalidTargets: NoAutoTarget, WaterStructure
+		Priority: 10
+	AutoTargetPriority@ATTACKANYTHING_AIR:
+		RequiresCondition: (stance-attackanything || assault-move) && airborne
+		ValidTargets: Vehicle, Water, Underwater, Structure, Defense
+		InvalidTargets: NoAutoTarget
+		Priority: 1
+	AutoTargetPriority@ATTACKANYTHING_AIR_ATTACK_INFANTRY:
+		RequiresCondition: (stance-attackanything || assault-move) && airborne
+		ValidTargets: Infantry
+		InvalidTargets: NoAutoTarget
+		Priority: 10
+	KillsSelf:
+		RequiresCondition: empdisable && cruising
+
+JJET.Husk:
+	BodyOrientation:
+		QuantizedFacings: 1
+	HiddenUnderFog:
+		Type: GroundPosition
+	ScriptTriggers:
+	Tooltip:
+		Name: Jumpjet Infantry
+	FallsToEarth:
+		Velocity: 86
+		Explosion:
+	Aircraft:
+		CruiseAltitude: 1c0
+		Speed: 186
+		CanHover: True
+		VTOL: true
+	RenderSprites:
+		Image: jjet
+		PlayerPalette: overlayplayertd
+	WithSpriteBody:
+		Sequence: die-falling
+	Health:
 	HitShape:
-		RequiresCondition: deployed
-	HitShape@AIRBORNE:
-		Type: Circle
-			Radius: 768
-		TargetableOffsets: 0, 0, 768
-		UseTargetableCellsOffsets: true
-		RequiresCondition: undeployed
-	Selectable:
-		Bounds: 12,24,0,-10
-		DecorationBounds: 12,24,0,-10
-	DetectCloaked:
-		Range: 3c0
-		CloakTypes: Cloak, Thief
+	ConditionManager:
+	GrantConditionOnTerrain:
+		TerrainTypes: Water
+		Condition: water-death
+	WithDeathAnimation:
+		RequiresCondition: !water-death
+		FallbackSequence: die-flying
+		DeathSequencePalette: overlayplayertd
+	WithDeathAnimation@SPLASH:
+		RequiresCondition: water-death
+		FallbackSequence: die-splash
+	Interactable:
 
 E8:
 	Inherits: ^Soldier

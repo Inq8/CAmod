@@ -11,7 +11,7 @@ MSLO:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 140
-		Prerequisites: stek, ~techlevel.unrestricted, ~techlevel.superw, ~structures.soviet
+		Prerequisites: stek, ~techlevel.unrestricted, ~structures.soviet
 		BuildLimit: 1
 		Description: Provides an atomic bomb.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Atom Bomb
 	Building:
@@ -136,7 +136,7 @@ SPEN:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 50
-		Prerequisites: anypower, ~structures.soviet, ~techlevel.low
+		Prerequisites: anypower, ~structures.soviet, ~techlevel.navy, ~techlevel.low
 		Description: Produces and repairs\nsubmarines and transports.
 	Targetable:
 		TargetTypes: Ground, Water, Structure, WaterStructure, C4, DetonateAttack, SpyInfiltrate
@@ -293,7 +293,7 @@ SYRD:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 40
-		Prerequisites: anypower, ~structures.allies, ~techlevel.low
+		Prerequisites: anypower, ~structures.allies, ~techlevel.navy, ~techlevel.low
 		Description: Produces and repairs\nships and transports.
 	Valued:
 		Cost: 1000
@@ -426,7 +426,7 @@ IRON:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 130
-		Prerequisites: stek, ~structures.soviet, ~techlevel.superw
+		Prerequisites: stek, ~structures.soviet, ~techlevel.unrestricted
 		BuildLimit: 1
 		Description: Makes a group of units invulnerable\nfor a short time.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Iron Curtain
 	Valued:
@@ -498,7 +498,7 @@ PDOX:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 120
-		Prerequisites: atek, ~structures.allies, ~techlevel.superw
+		Prerequisites: atek, ~structures.allies, ~techlevel.unrestricted
 		BuildLimit: 1
 		Description: Teleports a group of units across the\nmap for a short time.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Chronoshift
 	Valued:
@@ -814,7 +814,7 @@ DOME:
 		Proxy: rad.soviet.stolen
 	AirstrikePower@clustermines:
 		ChargeInterval: 6000
-		Prerequisites: structures.france, techlevel.superw
+		Prerequisites: structures.france, techlevel.unrestricted
 		Description: Cluster Mines
 		LongDesc: Send a cargo plane\nto deploy a minefield.
 		OrderName: clustermine
@@ -840,7 +840,7 @@ DOME:
 		OrderName: gpsscramble
 		Icon: gpsscram
 		IconPalette: chrometd
-		Prerequisites: structures.england, techlevel.superw
+		Prerequisites: structures.england, techlevel.unrestricted
 		ChargeInterval: 4500
 		LifeTime: 375
 		Description: GPS Scrambler
@@ -1968,7 +1968,7 @@ AFLD:
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@CarpetBomb:
 		OrderName: carpetbomb
-		Prerequisites: aircraft.ukraine, techlevel.superw
+		Prerequisites: aircraft.ukraine, techlevel.unrestricted
 		Icon: carpetbomb
 		ChargeInterval: 10500
 		Description: Carpet Bomb
@@ -1989,7 +1989,7 @@ AFLD:
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@Russianparabombs:
 		OrderName: parabombs
-		Prerequisites: aircraft.russia, techlevel.superw
+		Prerequisites: aircraft.russia, techlevel.unrestricted
 		Icon: parabombs
 		ChargeInterval: 7500
 		Description: Parabombs
@@ -2010,7 +2010,7 @@ AFLD:
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@Iraqiparabombs:
 		OrderName: atombomb
-		Prerequisites: aircraft.iraq, techlevel.superw
+		Prerequisites: aircraft.iraq, techlevel.unrestricted
 		Icon: abombair
 		ChargeInterval: 10500
 		Description: Atomic Bomb
@@ -4187,7 +4187,7 @@ HQ:
 		PauseOnCondition: disabled || empdisable || being-warped
 	AirstrikePower@BlackhandFirebomb:
 		OrderName: infernobomb
-		Prerequisites: radar.blackh, techlevel.superw
+		Prerequisites: radar.blackh, techlevel.unrestricted
 		Icon: infbomb
 		IconPalette: chrometd
 		ChargeInterval: 9000
@@ -4250,7 +4250,7 @@ EYE:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 130
-		Prerequisites: gtek, ~structures.gdi, ~techlevel.superw
+		Prerequisites: gtek, ~structures.gdi, ~techlevel.unrestricted
 		IconPalette: chrometd
 		BuildLimit: 1
 		Description: Provides radar and Orbital Ion Cannon support power.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Ion Cannon
@@ -4317,7 +4317,7 @@ EYE:
 		TargetCircleColor: 4fff3390
 	IonCannonPower@surgicals:
 		OrderName: surgicalstrike
-		Prerequisites: structures.zocom, techlevel.superw
+		Prerequisites: structures.zocom, techlevel.unrestricted
 		Icon: surgicalstrike
 		IconPalette: chrometd
 		ChargeInterval: 3500
@@ -4785,7 +4785,7 @@ AFLD.GDI:
 		DirectionArrowAnimation: paradirection
 	InterceptorPower@EagleAirDef:
 		OrderName: interceptors
-		Prerequisites: aircraft.eagle, techlevel.superw
+		Prerequisites: aircraft.eagle, techlevel.unrestricted
 		Icon: airsupport
 		ChargeInterval: 10500
 		Description: Interceptors
@@ -4972,7 +4972,7 @@ TMPL:
 		OrderName: clustermissile
 		Icon: clustermissile
 		IconPalette: chrometd
-		Prerequisites: ~structures.nod, techlevel.high, techlevel.superw
+		Prerequisites: ~structures.nod, techlevel.high, techlevel.unrestricted
 		Cursor: ability
 		ChargeInterval: 10500
 		Description: Cluster Missile
@@ -5139,7 +5139,7 @@ SPEN.nod:
 		Queue: Building
 		BuildPaletteOrder: 50
 		IconPalette: chrometd
-		Prerequisites: anypower, ~structures.nod, ~techlevel.low
+		Prerequisites: anypower, ~structures.nod, ~techlevel.navy, ~techlevel.low
 		Description: Produces and repairs\nsubmarines and transports.
 	Targetable:
 		TargetTypes: Ground, Water, WaterStructure, Structure, C4, DetonateAttack, SpyInfiltrate
@@ -5241,7 +5241,7 @@ SYRD.gdi:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 40
-		Prerequisites: anypower, ~structures.gdi, ~techlevel.low
+		Prerequisites: anypower, ~structures.gdi, ~techlevel.navy, ~techlevel.low
 		Description: Produces and repairs ships\nand transports.
 	Valued:
 		Cost: 1000
@@ -5494,7 +5494,7 @@ SGEN:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 130
-		Prerequisites: tmpl, ~structures.nod, ~techlevel.superw
+		Prerequisites: tmpl, ~structures.nod, ~techlevel.unrestricted
 		BuildLimit: 1
 		IconPalette: chrometd
 		Description: Makes a group of units/structures invisible for a short time.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Tiberium Stealth
@@ -5523,7 +5523,7 @@ SGEN:
 		RequiresCondition: !disabled
 	WithBuildingBib:
 	GrantExternalConditionPowerCA@STEALTHGEN:
-		Prerequisites: techlevel.superw
+		Prerequisites: techlevel.unrestricted
 		OrderName: stealthgen
 		Icon: invis
 		IconPalette: chrometd
@@ -5714,7 +5714,7 @@ PATR:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 130
-		Prerequisites: gtek, ~structures.gdi, ~techlevel.superw
+		Prerequisites: gtek, ~structures.gdi, ~techlevel.unrestricted
 		BuildLimit: 1
 		IconPalette: chrometd
 		Description: Launches E.M. Pulse Missiles that disable vehicles & structures.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: E.M. Pulse Missile
@@ -6067,7 +6067,7 @@ MSLO.Nod:
 		Queue: Defense
 		BuildPaletteOrder: 140
 		IconPalette: chrometd
-		Prerequisites: tmpl, ~techlevel.unrestricted, ~techlevel.superw, ~structures.nod
+		Prerequisites: tmpl, ~techlevel.unrestricted, ~structures.nod
 		BuildLimit: 1
 		Description: Provides a chemical missile.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Chemical Missile
 	Building:
@@ -6093,7 +6093,7 @@ MSLO.Nod:
 		OrderName: chemmissile
 		Icon: chemmissile
 		IconPalette: chrometd
-		Prerequisites: techlevel.superw
+		Prerequisites: techlevel.unrestricted
 		Cursor: chemmissile
 		ChargeInterval: 13500
 		Description: Chemical Missile
@@ -6144,7 +6144,7 @@ WEAT:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 130
-		Prerequisites: atek, ~structures.allies, ~techlevel.superw
+		Prerequisites: atek, ~structures.allies, ~techlevel.unrestricted
 		BuildLimit: 1
 		Description: Provides Lightning Storm support power.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Lightning Storm
 	Valued:
