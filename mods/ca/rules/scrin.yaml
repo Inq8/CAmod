@@ -1141,6 +1141,15 @@ STMR:
 		Delay: 175
 		Count: 4
 		ResetOnFire: true
+	GrantConditionOnPrerequisite@REGEN:
+		Condition: regen-upgrade
+		Prerequisites: regen.upgrade
+	SelfHealing@REGEN:
+		PercentageStep: 3
+		Delay: 25
+		HealIfBelow: 50
+		DamageCooldown: 150
+		RequiresCondition: regen-upgrade
 
 DEVA:
 	Inherits: ^Helicopter
