@@ -721,7 +721,7 @@
 			concussion: On, On, Off
 		RequiresSelection: False
 		ValidStances: Ally, Neutral, Enemy
-		
+
 ^CrateCloak:
 	Cloak@CRATE-CLOAK:
 		InitialDelay: 90
@@ -851,6 +851,19 @@
 		RequiresCondition: stance-attackanything || assault-move
 	AttackMove:
 		AssaultMoveCondition: assault-move
+
+^AutoTargetAllAssaultMoveAntiAir:
+	Inherits: ^AutoTargetAllAssaultMove
+	AutoTargetPriority@DEFAULTAA:
+		RequiresCondition: !stance-attackanything && !assault-move
+		ValidTargets: Air
+		InvalidTargets: NoAutoTarget
+		Priority: 10
+	AutoTargetPriority@ATTACKANYTHINGAA:
+		RequiresCondition: stance-attackanything || assault-move
+		ValidTargets: Air
+		InvalidTargets: NoAutoTarget
+		Priority: 10
 
 ^AutoTargetAllNavalAssaultMove:
 	Inherits: ^AutoTargetAllAssaultMove

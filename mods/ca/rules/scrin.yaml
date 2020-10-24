@@ -130,7 +130,7 @@ S2:
 
 S3:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Infantry
@@ -333,7 +333,7 @@ HARV.Scrin:
 GUNW:
 	Inherits: ^Vehicle
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
@@ -1141,6 +1141,15 @@ STMR:
 		Delay: 175
 		Count: 4
 		ResetOnFire: true
+	GrantConditionOnPrerequisite@REGEN:
+		Condition: regen-upgrade
+		Prerequisites: regen.upgrade
+	SelfHealing@REGEN:
+		PercentageStep: 3
+		Delay: 25
+		HealIfBelow: 50
+		DamageCooldown: 150
+		RequiresCondition: regen-upgrade
 
 DEVA:
 	Inherits: ^Helicopter
@@ -1185,7 +1194,7 @@ DEVA:
 	Aircraft:
 		CruiseAltitude: 2c0
 		InitialFacing: 192
-		TurnSpeed: 3
+		TurnSpeed: 4
 		Speed: 56
 		AltitudeVelocity: 0c50
 		CanForceLand: False
@@ -1265,7 +1274,7 @@ PAC:
 	Aircraft:
 		CruiseAltitude: 2c0
 		InitialFacing: 192
-		TurnSpeed: 3
+		TurnSpeed: 4
 		Speed: 49
 		AltitudeVelocity: 0c50
 		CanForceLand: False
@@ -3049,7 +3058,7 @@ SCOL.Temp:
 	-Sellable:
 	-Buildable:
 	Health:
-		HP: 60000
+		HP: 75000
 	KillsSelf:
 		Delay: 750
 	RevealsShroud:

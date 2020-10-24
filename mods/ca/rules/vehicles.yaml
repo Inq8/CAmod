@@ -1697,7 +1697,6 @@ BGGY:
 
 APC2:
 	Inherits: ^TankTD
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
@@ -1858,6 +1857,36 @@ APC2:
 		RequiresCondition: vulcan-upgrade
 		Condition: upgrading
 		Duration: 1
+	AutoTarget:
+		AttackAnythingCondition: stance-attackanything
+	AutoTargetPriority@DEFAULTAA:
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
+		InvalidTargets: NoAutoTarget
+		RequiresCondition: (!stance-attackanything && !assault-move) && vulcan-upgrade
+	AutoTargetPriority@ATTACKANYTHINGAA:
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
+		InvalidTargets: NoAutoTarget
+		RequiresCondition: (stance-attackanything || assault-move) && vulcan-upgrade
+	AutoTargetPriority@DEFAULTAAPRIO:
+		RequiresCondition: (!stance-attackanything && !assault-move) && vulcan-upgrade
+		ValidTargets: Air
+		InvalidTargets: NoAutoTarget
+		Priority: 10
+	AutoTargetPriority@ATTACKANYTHINGAAPRIO:
+		RequiresCondition: (!stance-attackanything && !assault-move) && vulcan-upgrade
+		ValidTargets: Air
+		InvalidTargets: NoAutoTarget
+		Priority: 10
+	AutoTargetPriority@DEFAULTG:
+		RequiresCondition: !stance-attackanything && !assault-move && !vulcan-upgrade
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
+		InvalidTargets: NoAutoTarget
+	AutoTargetPriority@ATTACKANYTHINGG:
+		RequiresCondition: (stance-attackanything || assault-move) && !vulcan-upgrade
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense, Mine
+		InvalidTargets: NoAutoTarget
+	AttackMove:
+		AssaultMoveCondition: assault-move
 
 APC2.Reinforce:
 	Inherits: APC2
@@ -1869,7 +1898,7 @@ APC2.Reinforce:
 
 VULC:
 	Inherits: ^TankTD
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
 	Buildable:
@@ -2559,7 +2588,7 @@ MLRS:
 STNK.Nod:
 	Inherits: ^VehicleTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 		Image: STNKTnod
@@ -2783,7 +2812,7 @@ HAR2:
 BTR:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
@@ -3055,37 +3084,50 @@ IFV:
 		EnableSound: heal2.aud
 		Condition: hospitalheal
 		Range: 3c0
-	AutoTarget:
-		AttackAnythingCondition: stance-attackanything
-		ScanRadius: 6
-	AutoTargetPriority@DEFAULTAA:
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
-		RequiresCondition: (!stance-attackanything && !assault-move) && (!full || samturr)
-	AutoTargetPriority@ATTACKANYTHINGAA:
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
-		RequiresCondition: (stance-attackanything || assault-move) && (!full || samturr)
-	AutoTargetPriority@DEFAULTG:
-		RequiresCondition: !stance-attackanything && !assault-move && full && !samturr
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
-	AutoTargetPriority@ATTACKANYTHINGG:
-		RequiresCondition: (stance-attackanything || assault-move) && full && !samturr
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense, Mine
-	AttackMove:
-		AssaultMoveCondition: assault-move
-	AutoTargetPriority@DEFAULTREPAIR:
-		ValidTargets: Vehicle, Ship
-		RequiresCondition: engturr
 	Capturable:
 		RequiresCondition: !being-warped && !full
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !full
 	Targetable@DRIVERKILL:
 		RequiresCondition: !driver-dead && !full
+	AutoTarget:
+		AttackAnythingCondition: stance-attackanything
+		ScanRadius: 6
+	AutoTargetPriority@DEFAULTAA:
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
+		InvalidTargets: NoAutoTarget
+		RequiresCondition: (!stance-attackanything && !assault-move) && (!full || samturr)
+	AutoTargetPriority@ATTACKANYTHINGAA:
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
+		InvalidTargets: NoAutoTarget
+		RequiresCondition: (stance-attackanything || assault-move) && (!full || samturr)
+	AutoTargetPriority@DEFAULTAAPRIO:
+		RequiresCondition: (!stance-attackanything && !assault-move) && (!full || samturr)
+		ValidTargets: Air
+		InvalidTargets: NoAutoTarget
+		Priority: 10
+	AutoTargetPriority@ATTACKANYTHINGAAPRIO:
+		RequiresCondition: (!stance-attackanything && !assault-move) && (!full || samturr)
+		ValidTargets: Air
+		InvalidTargets: NoAutoTarget
+		Priority: 10
+	AutoTargetPriority@DEFAULTG:
+		RequiresCondition: !stance-attackanything && !assault-move && full && !samturr
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
+		InvalidTargets: NoAutoTarget
+	AutoTargetPriority@ATTACKANYTHINGG:
+		RequiresCondition: (stance-attackanything || assault-move) && full && !samturr
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense, Mine
+		InvalidTargets: NoAutoTarget
+	AttackMove:
+		AssaultMoveCondition: assault-move
+	AutoTargetPriority@DEFAULTREPAIR:
+		ValidTargets: Vehicle, Ship
+		RequiresCondition: engturr
 
 IFV.AI:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
@@ -3155,6 +3197,37 @@ IFV.AI:
 	-Capturable:
 	-Capturable@DRIVER_DEAD:
 	-Targetable@DRIVERKILL:
+	AutoTarget:
+		AttackAnythingCondition: stance-attackanything
+		ScanRadius: 6
+	AutoTargetPriority@DEFAULTAA:
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
+		InvalidTargets: NoAutoTarget
+		RequiresCondition: (!stance-attackanything && !assault-move) && (defturr || samturr)
+	AutoTargetPriority@ATTACKANYTHINGAA:
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
+		InvalidTargets: NoAutoTarget
+		RequiresCondition: (stance-attackanything || assault-move) && (defturr || samturr)
+	AutoTargetPriority@DEFAULTAAPRIO:
+		RequiresCondition: (!stance-attackanything && !assault-move) && (defturr || samturr)
+		ValidTargets: Air
+		InvalidTargets: NoAutoTarget
+		Priority: 10
+	AutoTargetPriority@ATTACKANYTHINGAAPRIO:
+		RequiresCondition: (!stance-attackanything && !assault-move) && (defturr || samturr)
+		ValidTargets: Air
+		InvalidTargets: NoAutoTarget
+		Priority: 10
+	AutoTargetPriority@DEFAULTG:
+		RequiresCondition: !stance-attackanything && !assault-move && !defturr && !samturr
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
+		InvalidTargets: NoAutoTarget
+	AutoTargetPriority@ATTACKANYTHINGG:
+		RequiresCondition: (stance-attackanything || assault-move) && !defturr && !samturr
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense, Mine
+		InvalidTargets: NoAutoTarget
+	AttackMove:
+		AssaultMoveCondition: assault-move
 
 TITN:
 	Inherits: ^TankTD
