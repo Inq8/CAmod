@@ -16,6 +16,7 @@ using System.Linq;
 using OpenRA.Mods.CA.Traits.BotModules.Squads;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Primitives;
 using OpenRA.Support;
 using OpenRA.Traits;
 
@@ -79,6 +80,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Radius in cells that protecting squads should scan for enemies around their position.")]
 		public readonly int ProtectionScanRadius = 8;
 
+		[Desc("Enemy target types to never target.")]
+		public readonly BitSet<TargetableType> IgnoredEnemyTargetTypes = default(BitSet<TargetableType>);
+
 		public override void RulesetLoaded(Ruleset rules, ActorInfo ai)
 		{
 			base.RulesetLoaded(rules, ai);
@@ -132,11 +136,13 @@ namespace OpenRA.Mods.CA.Traits
 			unitCannotBeOrdered = a => a == null || a.Owner != Player || a.IsDead || !a.IsInWorld;
 		}
 
-		public bool IsEnemyUnit(Actor a)
+		public bool IsPreferredEnemyUnit(Actor a)
 		{
-			return a != null && !a.IsDead && Player.Stances[a.Owner] == Stance.Enemy
-				&& !a.Info.HasTraitInfo<HuskInfo>()
-				&& !a.GetEnabledTargetTypes().IsEmpty;
+			if (a == null || a.IsDead || Player.Stances[a.Owner] != Stance.Enemy || a.Info.HasTraitInfo<HuskInfo>())
+				return false;
+
+			var targetTypes = a.GetEnabledTargetTypes();
+			return !targetTypes.IsEmpty && !targetTypes.Overlaps(Info.IgnoredEnemyTargetTypes);
 		}
 
 		public bool IsNotHiddenUnit(Actor a)
@@ -188,21 +194,21 @@ namespace OpenRA.Mods.CA.Traits
 
 		internal Actor FindClosestEnemyBuilding(WPos pos)
 		{
-			var enemy = World.ActorsHavingTrait<Building>().Where(IsEnemyUnit).ClosestTo(pos);
+			var enemy = World.ActorsHavingTrait<Building>().Where(IsPreferredEnemyUnit).ClosestTo(pos);
 			if (enemy != null)
 				return enemy;
-			return World.Actors.Where(IsEnemyUnit).ClosestTo(pos);
+			return World.Actors.Where(IsPreferredEnemyUnit).ClosestTo(pos);
 		}
 
 		internal Actor FindClosestEnemy(WPos pos)
 		{
-			var units = World.Actors.Where(IsEnemyUnit);
+			var units = World.Actors.Where(IsPreferredEnemyUnit);
 			return units.Where(IsNotHiddenUnit).ClosestTo(pos) ?? units.ClosestTo(pos);
 		}
 
 		internal Actor FindClosestEnemy(WPos pos, WDist radius)
 		{
-			return World.FindActorsInCircle(pos, radius).Where(a => IsEnemyUnit(a) && IsNotHiddenUnit(a)).ClosestTo(pos);
+			return World.FindActorsInCircle(pos, radius).Where(a => IsPreferredEnemyUnit(a) && IsNotHiddenUnit(a)).ClosestTo(pos);
 		}
 
 		void CleanSquads()
@@ -392,7 +398,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		void IBotRespondToAttack.RespondToAttack(IBot bot, Actor self, AttackInfo e)
 		{
-			if (!IsEnemyUnit(e.Attacker))
+			if (!IsPreferredEnemyUnit(e.Attacker))
 				return;
 
 			// Protected priority assets, MCVs, harvesters and buildings

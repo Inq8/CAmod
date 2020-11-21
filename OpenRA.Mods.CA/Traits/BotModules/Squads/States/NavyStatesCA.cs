@@ -74,7 +74,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			}
 
 			var enemyUnits = owner.World.FindActorsInCircle(owner.TargetActor.CenterPosition, WDist.FromCells(owner.SquadManager.Info.IdleScanRadius))
-				.Where(owner.SquadManager.IsEnemyUnit).ToList();
+				.Where(owner.SquadManager.IsPreferredEnemyUnit).ToList();
 
 			if (enemyUnits.Count == 0)
 			{

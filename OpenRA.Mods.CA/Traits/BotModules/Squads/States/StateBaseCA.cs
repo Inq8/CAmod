@@ -96,7 +96,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				if (u.Owner == squad.Bot.Player && u.Info.HasTraitInfo<BuildingInfo>())
 					return false;
 
-			var enemyAroundUnit = units.Where(unit => squad.SquadManager.IsEnemyUnit(unit) && unit.Info.HasTraitInfo<AttackBaseInfo>());
+			var enemyAroundUnit = units.Where(unit => squad.SquadManager.IsPreferredEnemyUnit(unit) && unit.Info.HasTraitInfo<AttackBaseInfo>());
 			if (!enemyAroundUnit.Any())
 				return false;
 
@@ -154,7 +154,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		// Retreat units from combat, or for supply only in idle
 		protected void Retreat(SquadCA squad, bool flee, bool rearm, bool repair)
 		{
-			var loc = new CPos(0, 0, 0);
+			var loc = CPos.Zero;
 
 			// HACK: "alreadyRepair" is to solve repairpad performance
 			// if repairpad logic is better we will only need

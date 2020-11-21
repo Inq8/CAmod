@@ -98,7 +98,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			detectedEnemyTarget = null;
 			var dangerRadius = owner.SquadManager.Info.AircraftDangerScanRadius;
 			var unitsAroundPos = owner.World.FindActorsInCircle(loc, WDist.FromCells(dangerRadius))
-				.Where(owner.SquadManager.IsEnemyUnit).ToList();
+				.Where(owner.SquadManager.IsPreferredEnemyUnit).ToList();
 
 			if (!unitsAroundPos.Any())
 				return true;
@@ -170,10 +170,10 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				}
 			}
 
-			var teamLeader = owner.Units.ClosestTo(owner.TargetActor.CenterPosition);
+			var leader = owner.Units.ClosestTo(owner.TargetActor.CenterPosition);
 
-			var unitsAroundPos = owner.World.FindActorsInCircle(teamLeader.CenterPosition, WDist.FromCells(owner.SquadManager.Info.DangerScanRadius))
-				.Where(a => owner.SquadManager.IsEnemyUnit(a) && owner.SquadManager.IsNotHiddenUnit(a));
+			var unitsAroundPos = owner.World.FindActorsInCircle(leader.CenterPosition, WDist.FromCells(owner.SquadManager.Info.DangerScanRadius))
+				.Where(a => owner.SquadManager.IsPreferredEnemyUnit(a) && owner.SquadManager.IsNotHiddenUnit(a));
 			var ambushed = CountAntiAirUnits(unitsAroundPos) > owner.Units.Count;
 
 			if ((!NearToPosSafely(owner, owner.TargetActor.CenterPosition)) || ambushed)
@@ -182,6 +182,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				return;
 			}
 
+			var ownBuilding = RandomBuildingLocation(owner);
 			foreach (var a in owner.Units)
 			{
 				if (BusyAttack(a))
@@ -203,7 +204,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				if (CanAttackTarget(a, owner.TargetActor))
 					owner.Bot.QueueOrder(new Order("Attack", a, Target.FromActor(owner.TargetActor), false));
 				else
-					owner.Bot.QueueOrder(new Order("Move", a, Target.FromCell(owner.World, RandomBuildingLocation(owner)), false));
+					owner.Bot.QueueOrder(new Order("Move", a, Target.FromCell(owner.World, ownBuilding), false));
 			}
 		}
 
