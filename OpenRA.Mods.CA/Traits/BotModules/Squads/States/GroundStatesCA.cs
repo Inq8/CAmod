@@ -71,10 +71,10 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			if (AttackOrFleeFuzzyCA.Default.CanAttack(owner.Units, enemyUnits))
 			{
 				// We have gathered sufficient units. Attack the nearest enemy unit.
-				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsAttackMoveState(), true);
+				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsAttackMoveState(), false);
 			}
 			else
-				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeState(), true);
+				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeState(), false);
 		}
 
 		public void Deactivate(SquadCA owner) { }
@@ -89,6 +89,9 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		int failedAttempts = -(MaxAttemptsToAdvance * 2);
 		int makeWay = MakeWayTicks;
 		WPos lastPos = WPos.Zero;
+
+		// Optimazing state switch
+		bool attackLoop = false;
 
 		public void Activate(SquadCA owner) { }
 
@@ -105,7 +108,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 					owner.TargetActor = targetActor;
 				else
 				{
-					owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeState(), true);
+					owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeState(), false);
 					return;
 				}
 			}
@@ -126,7 +129,13 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			if (enemyActor != null)
 			{
 				owner.TargetActor = enemyActor;
-				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsAttackState(), true);
+				if (!attackLoop)
+				{
+					attackLoop = true;
+					owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsAttackState(), true);
+				}
+				else
+					owner.FuzzyStateMachine.RevertToPreviousState(owner, true);
 				return;
 			}
 
@@ -221,8 +230,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 			if (targetActor == null)
 			{
-				owner.TargetActor = GetRandomPreferredTarget(owner);
-				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsAttackMoveState(), true);
+				owner.FuzzyStateMachine.RevertToPreviousState(owner, true);
 				return;
 			}
 			else
@@ -248,7 +256,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			}
 
 			if (ShouldFlee(owner) || cannotRetaliate)
-				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeState(), true);
+				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeState(), false);
 		}
 
 		public void Deactivate(SquadCA owner) { }
@@ -264,7 +272,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				return;
 
 			Retreat(owner, true, true, true);
-			owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsIdleState(), true);
+			owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsIdleState(), false);
 		}
 
 		public void Deactivate(SquadCA owner) { owner.Units.Clear(); }
