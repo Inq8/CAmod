@@ -21,7 +21,7 @@ namespace OpenRA.Mods.CA.Traits
 {
 	public enum RangeCircleVisibility { Always, WhenSelected }
 
-	class RenderShroudCircleCAInfo : ITraitInfo
+	public class RenderShroudCircleCAInfo : ITraitInfo
 	{
 		[Desc("Color of the circle.")]
 		public readonly Color Color = Color.FromArgb(128, Color.Cyan);
@@ -35,7 +35,7 @@ namespace OpenRA.Mods.CA.Traits
 		public object Create(ActorInitializer init) { return new RenderShroudCircleCA(init.Self, this); }
 	}
 
-	class RenderShroudCircleCA : INotifyCreated, IRenderAnnotationsWhenSelected, IRenderAnnotations
+	public class RenderShroudCircleCA : INotifyCreated, IRenderAnnotationsWhenSelected, IRenderAnnotations
 	{
 		readonly RenderShroudCircleCAInfo info;
 		WDist range;
