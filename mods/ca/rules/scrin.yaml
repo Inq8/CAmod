@@ -447,9 +447,6 @@ SEEK:
 		Weapon: PlasmaDiscs
 		LocalOffset: 320,0,320
 	AttackTurreted:
-		TargetFrozenActors: True
-		ForceFireIgnoresActors: false
-		OpportunityFire: False
 		PauseOnCondition: empdisable || being-warped
 	WithSpriteTurret:
 	IgnoresDisguise:
@@ -522,9 +519,6 @@ LACE:
 		Weapon: LaceratorShards
 		LocalOffset: 0,50,320, 0,-50,320
 	AttackTurreted:
-		TargetFrozenActors: True
-		ForceFireIgnoresActors: false
-		OpportunityFire: False
 		PauseOnCondition: empdisable || being-warped
 	WithSpriteTurret:
 	IgnoresDisguise:
@@ -750,7 +744,6 @@ DEVO:
 		TurnSpeed: 4
 		Offset: 0,0,0
 	AttackTurreted:
-		TargetFrozenActors: True
 		PauseOnCondition: empdisable || being-warped
 		Armaments: primary
 	WithSpriteTurret:
@@ -808,7 +801,6 @@ DARK:
 		TurnSpeed: 4
 		Offset: 0,0,0
 	AttackTurreted:
-		TargetFrozenActors: True
 		PauseOnCondition: empdisable || being-warped
 		Armaments: primary
 	WithSpriteTurret:
@@ -1189,6 +1181,7 @@ DEVA:
 	AttackAircraft:
 		FacingTolerance: 10
 		ForceFireIgnoresActors: True
+		TargetFrozenActors: True
 		AttackType: Hover
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
