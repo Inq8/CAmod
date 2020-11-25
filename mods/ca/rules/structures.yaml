@@ -5122,6 +5122,8 @@ PRIS:
 		Amount: -75
 		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-warped && !charging
 
 SPEN.nod:
 	Inherits: ^Building

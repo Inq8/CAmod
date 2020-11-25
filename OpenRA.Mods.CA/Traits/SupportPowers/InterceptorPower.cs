@@ -135,8 +135,8 @@ namespace OpenRA.Mods.CA.Traits
 				aircraftInRange[a] = false;
 
 				// Checking for attack range is not relevant here because
-				// aircraft may be shot down before entering. Thus we remove
-				// the camera and beacon only if the whole squad is dead.
+				// aircraft may be shot down before entering the range.
+				// If at the map's edge, they may be removed from world before leaving.
 				if (aircraftInRange.All(kv => !kv.Key.IsInWorld))
 				{
 					RemoveCamera(camera);
@@ -169,10 +169,11 @@ namespace OpenRA.Mods.CA.Traits
 
 					var attack = a.Trait<AttackBomberCA>();
 					attack.SetTarget(w, target + targetOffset);
-					a.QueueActivity(new Fly(a, Target.FromPos(target + spawnOffset)));
 					attack.OnEnteredAttackRange += onEnterRange;
-					a.QueueActivity(new AttackMoveActivity(a, () => new FlyIdle(a, info.GuardDuration)));
 					attack.OnExitedAttackRange += onExitRange;
+					attack.OnRemovedFromWorld += onRemovedFromWorld;
+					a.QueueActivity(new Fly(a, Target.FromPos(target + spawnOffset)));
+					a.QueueActivity(new AttackMoveActivity(a, () => new FlyIdle(a, info.GuardDuration)));
 					a.QueueActivity(new FlyOffMap(a));
 					a.QueueActivity(new RemoveSelf());
 					aircraftInRange.Add(a, false);
