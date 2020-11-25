@@ -38,7 +38,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				}
 			}
 
-			owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionAttackState(), true);
+			owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionAttackState(), false);
 		}
 
 		public void Deactivate(SquadCA owner) { }
@@ -62,18 +62,17 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 				if (owner.TargetActor == null)
 				{
-					owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionFleeState(), true);
+					owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionFleeState(), false);
 					return;
 				}
 			}
 
 			// rescan target to prevent being ambushed and die without fight
-			var teamLeader = owner.Units.ClosestTo(owner.TargetActor.CenterPosition);
-			if (teamLeader == null)
+			var leader = owner.Units.ClosestTo(owner.TargetActor.CenterPosition);
+			if (leader == null)
 				return;
-			var teamTail = owner.Units.MaxByOrDefault(a => (a.CenterPosition - owner.TargetActor.CenterPosition).LengthSquared);
 			var protectionScanRadius = WDist.FromCells(owner.SquadManager.Info.ProtectionScanRadius);
-			var targetActor = ThreatScan(owner, teamLeader, protectionScanRadius) ?? ThreatScan(owner, teamTail, protectionScanRadius);
+			var targetActor = owner.SquadManager.FindClosestEnemy(leader.CenterPosition, protectionScanRadius);
 			var cannotRetaliate = false;
 
 			if (targetActor != null)
@@ -83,7 +82,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			{
 				if (Backoff < 0)
 				{
-					owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionFleeState(), true);
+					owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionFleeState(), false);
 					Backoff = BackoffTicks;
 					return;
 				}
@@ -124,7 +123,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 							cannotRetaliate = false;
 						}
 						else
-							owner.Bot.QueueOrder(new Order("AttackMove", a, Target.FromCell(owner.World, teamLeader.Location), false));
+							owner.Bot.QueueOrder(new Order("AttackMove", a, Target.FromCell(owner.World, leader.Location), false));
 					}
 
 					// Ground/naval units control:
@@ -136,13 +135,13 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 							cannotRetaliate = false;
 						}
 						else
-							owner.Bot.QueueOrder(new Order("AttackMove", a, Target.FromCell(owner.World, teamLeader.Location), false));
+							owner.Bot.QueueOrder(new Order("AttackMove", a, Target.FromCell(owner.World, leader.Location), false));
 					}
 				}
 			}
 
 			if (cannotRetaliate)
-				owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionFleeState(), true);
+				owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionFleeState(), false);
 		}
 
 		public void Deactivate(SquadCA owner) { }
@@ -158,7 +157,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				return;
 
 			Retreat(owner, true, true, true);
-			owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionIdleState(), true);
+			owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionIdleState(), false);
 		}
 
 		public void Deactivate(SquadCA owner) { owner.Units.Clear(); }

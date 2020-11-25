@@ -74,7 +74,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			}
 
 			var enemyUnits = owner.World.FindActorsInCircle(owner.TargetActor.CenterPosition, WDist.FromCells(owner.SquadManager.Info.IdleScanRadius))
-				.Where(owner.SquadManager.IsEnemyUnit).ToList();
+				.Where(owner.SquadManager.IsPreferredEnemyUnit).ToList();
 
 			if (enemyUnits.Count == 0)
 			{
@@ -88,10 +88,10 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 					owner.Bot.QueueOrder(new Order("AttackMove", u, Target.FromCell(owner.World, owner.TargetActor.Location), false));
 
 				// We have gathered sufficient units. Attack the nearest enemy unit.
-				owner.FuzzyStateMachine.ChangeState(owner, new NavyUnitsAttackMoveState(), true);
+				owner.FuzzyStateMachine.ChangeState(owner, new NavyUnitsAttackMoveState(), false);
 			}
 			else
-				owner.FuzzyStateMachine.ChangeState(owner, new NavyUnitsFleeState(), true);
+				owner.FuzzyStateMachine.ChangeState(owner, new NavyUnitsFleeState(), false);
 		}
 
 		public void Deactivate(SquadCA owner) { }
@@ -123,7 +123,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 					owner.TargetActor = closestEnemy;
 				else
 				{
-					owner.FuzzyStateMachine.ChangeState(owner, new NavyUnitsFleeState(), true);
+					owner.FuzzyStateMachine.ChangeState(owner, new NavyUnitsFleeState(), false);
 					hadNavalYard = false;
 					return;
 				}
@@ -137,7 +137,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 			if (ShouldFlee(owner))
 			{
-				owner.FuzzyStateMachine.ChangeState(owner, new NavyUnitsFleeState(), true);
+				owner.FuzzyStateMachine.ChangeState(owner, new NavyUnitsFleeState(), false);
 				hadNavalYard = false;
 			}
 		}
@@ -161,7 +161,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 					owner.TargetActor = closestEnemy;
 				else
 				{
-					owner.FuzzyStateMachine.ChangeState(owner, new NavyUnitsFleeState(), true);
+					owner.FuzzyStateMachine.ChangeState(owner, new NavyUnitsFleeState(), false);
 					return;
 				}
 			}
@@ -171,7 +171,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 					owner.Bot.QueueOrder(new Order("Attack", a, Target.FromCell(owner.World, owner.TargetActor.Location), false));
 
 			if (ShouldFlee(owner))
-				owner.FuzzyStateMachine.ChangeState(owner, new NavyUnitsFleeState(), true);
+				owner.FuzzyStateMachine.ChangeState(owner, new NavyUnitsFleeState(), false);
 		}
 
 		public void Deactivate(SquadCA owner) { }
@@ -187,7 +187,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				return;
 
 			Retreat(owner, true, true, true);
-			owner.FuzzyStateMachine.ChangeState(owner, new NavyUnitsIdleState(), true);
+			owner.FuzzyStateMachine.ChangeState(owner, new NavyUnitsIdleState(), false);
 		}
 
 		public void Deactivate(SquadCA owner) { owner.Units.Clear(); }
