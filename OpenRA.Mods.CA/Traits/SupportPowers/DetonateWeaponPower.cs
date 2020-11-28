@@ -110,10 +110,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (wsb != null && wsb.DefaultAnimation.HasSequence(Info.Sequence))
 				wsb.PlayCustomAnimation(self, Info.Sequence);
 
-			if (self.Owner.IsAlliedWith(self.World.RenderPlayer))
-				Game.Sound.Play(SoundType.World, Info.LaunchSound);
-			else
-				Game.Sound.Play(SoundType.World, Info.IncomingSound);
+			PlayLaunchSounds();
 
 			foreach (var launchpad in self.TraitsImplementing<INotifyActivate>())
 				launchpad.Launching(self);
