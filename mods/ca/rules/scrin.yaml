@@ -57,7 +57,9 @@ VEHICLES.SCRIN:
 		CrushedSequence: die-crushed
 		CrushedSequencePalette: scrin
 	-DamagedByTerrain:
-	-TakeCover:
+	TakeCover:
+		ProneSequencePrefix:
+		ProneOffset: 0,0,0
 
 S1:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -78,7 +80,7 @@ S1:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 6500
+		HP: 5000
 	Armament@PRIMARY:
 		Weapon: WarriorGun
 		MuzzleSequence: muzzle
@@ -89,7 +91,6 @@ S1:
 		Weapon: WarriorGun
 		MuzzleSequence: muzzle
 	WithMuzzleOverlay:
-	WithInfantryBody:
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	ProducibleWithLevel:
@@ -113,7 +114,7 @@ S2:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 6500
+		HP: 8000
 	Mobile:
 		Speed: 100
 	Armament@PRIMARY:
@@ -122,11 +123,11 @@ S2:
 	Armament@Garrison:
 		Name: mounted
 		Weapon: RavagerShards
-	WithInfantryBody:
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	-TakeCover:
 
 S3:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -146,7 +147,7 @@ S3:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 3800
+		HP: 2500
 	Armament@PRIMARY:
 		Weapon: DisintegratorBeamAA
 		LocalOffset: 150,0,400
@@ -159,7 +160,6 @@ S3:
 	Armament@Garrison:
 		Name: mounted
 		Weapon: DisintegratorBeam
-	WithInfantryBody:
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	ProducibleWithLevel:
@@ -187,14 +187,13 @@ S4:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 12000
+		HP: 14000
 	Armament@PRIMARY:
 		Weapon: IntruderDiscs
 		LocalOffset: 150,0,400
 	Armament@Garrison:
 		Name: mounted
 		Weapon: IntruderDiscs
-	WithInfantryBody:
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	ProducibleWithLevel:
@@ -203,6 +202,7 @@ S4:
 	PortableChrono:
 		ChargeDelay: 250
 		ChronoshiftSound: scrinport.aud
+	-TakeCover:
 
 S6:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -221,8 +221,7 @@ S6:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 3000
-	WithInfantryBody:
+		HP: 2500
 	Passenger:
 		PipType: Yellow
 	EngineerRepair:
@@ -236,7 +235,7 @@ S6:
 		VoiceSet: AssimilatorVoice
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
-		
+
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@SELECTION: ^SelectableSupportUnit
@@ -254,7 +253,7 @@ SMEDI:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 6500
+		HP: 5000
 	Armament:
 		Weapon: Heal
 		Cursor: heal
@@ -301,7 +300,7 @@ MAST:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 7500
+		HP: 11000
 	Mobile:
 		Speed: 49
 	Armament@PRIMARY:
@@ -316,7 +315,6 @@ MAST:
 		Capacity: 3
 		Sounds: mastermind-fire.aud
 		ControllingCondition: mindcontrolling
-	WithInfantryBody:
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	ProducibleWithLevel:
