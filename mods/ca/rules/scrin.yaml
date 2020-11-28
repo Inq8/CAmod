@@ -236,6 +236,47 @@ S6:
 		VoiceSet: AssimilatorVoice
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+		
+SMEDI:
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@SELECTION: ^SelectableSupportUnit
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 40
+		Prerequisites: ~infantry.scrin, ~infantry.smedi, ~techlevel.infonly
+		Description: Heals nearby life forms.\n  Unarmed
+		IconPalette: scrin
+	Valued:
+		Cost: 200
+	Tooltip:
+		Name: Rejuvenator
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 6500
+	Armament:
+		Weapon: Heal
+		Cursor: heal
+		OutsideRangeCursor: heal
+		TargetStances: Ally
+		ForceTargetStances: None
+	AttackFrontal:
+		PauseOnCondition: being-warped
+	WithInfantryBody:
+		DefaultAttackSequence: heal
+	Passenger:
+		PipType: Blue
+		Voice: Move
+	Guard:
+		Voice: Move
+	AutoTarget:
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Infantry
+	Voiced:
+		VoiceSet: AssimilatorVoice
+	Targetable:
+		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
 MAST:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -2000,8 +2041,6 @@ PORT:
 		SelectionNotification: PrimaryBuildingSelected
 	ProductionBar:
 		ProductionType: Infantry
-	ProvidesPrerequisite@infantryany:
-		Prerequisite: infantry.any
 	ProvidesPrerequisite@scrin:
 		Factions: scrin, reaper, traveler, harbinger
 		Prerequisite: infantry.scrin

@@ -125,11 +125,22 @@ HOSP:
 		UseDeathTypeSuffix: false
 	ProvidesPrerequisite@medi:
 		Prerequisite: infantry.medi
+		RequiresPrerequisites: infantry.any
+	ProvidesPrerequisite@smedi:
+		Prerequisite: infantry.smedi
+		RequiresPrerequisites: infantry.scrin
 	SpawnActorOnDeath:
 		Actor: HOSP.Husk
 		OwnerType: InternalName
 	-Explodes:
 	AppearsOnMapPreview:
+	ProximityExternalCondition@HOSPITAL:
+		Condition: hospitalheal
+		Range: 9c0
+		Color: 00FF00
+	WithRangeCircle@HOSPITAL:
+		Range: 9c0
+		Color: 00FF0080
 
 V01:
 	Inherits: ^CivBuilding
