@@ -580,6 +580,27 @@
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
 
+^RepairsAircraftWithRepairBay:
+	ExternalCondition@AIRCRAFTREPAIR:
+		Condition: aircraft-repair
+	RepairsUnits:
+		ValuePercentage: 0
+		HpPerStep: 1000
+		Interval: 7
+		StartRepairingNotification: Repairing
+		FinishRepairingNotification: UnitRepaired
+		PlayerExperience: 15
+		RequiresCondition: aircraft-repair && !forceshield && !invulnerability && !being-warped
+	WithDecoration@AIRCRAFTREPAIR:
+		Image: pips
+		Palette: chrometd
+		Sequence: pip-wrench
+		ReferencePoint: Bottom, Left
+		ZOffset: 256
+		RequiresCondition: aircraft-repair
+		RequiresSelection: False
+		ValidStances: Ally, Neutral
+
 ^AffectedByDriverKill:
 	GrantConditionIfOwnerIsNeutral:
 		Condition: driver-dead
@@ -1614,7 +1635,7 @@
 		CloakDelay: 90
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Damage, Heal
 	Repairable:
-		RepairActors: fix, rep, srep
+		RepairActors: fix, rep, srep, afld, afld.gdi
 	Aircraft:
 		CruisingCondition: cruising
 		PauseOnCondition: empdisable && !airborne
@@ -1660,6 +1681,8 @@
 		CanSlide: True
 		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems,Tiberium,BlueTiberium
 		Crushes: crate, mine, infantry
+	Repairable:
+		RepairActors: fix, rep, srep, hpad, hpad.td
 	Hovers@CRUISING:
 		RequiresCondition: cruising
 	BodyOrientation:
