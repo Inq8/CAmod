@@ -512,10 +512,9 @@ DepthCharge.destroyer:
 	Range: 10c0
 	Burst: 3
 	BurstDelays: 10
-	MinRange: 2c0
 	Report: hvygun10.aud
 	Projectile: Bullet
-		Speed: 244
+		Speed: 341
 		Blockable: false
 		LaunchAngle: 50
 		Inaccuracy: 1c382
@@ -523,14 +522,29 @@ DepthCharge.destroyer:
 	Warhead@1Dam: SpreadDamage
 		InvalidTargets: Air
 		Spread: 626
+		Falloff: 100, 50, 15, 5, 0
 		Damage: 15000
 		Versus:
 			None: 40
-			Wood: 45
+			Wood: 20
 			Light: 60
 			Heavy: 50
-			Concrete: 60
+			Concrete: 0
 			Brick: 60
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@2Dam: SpreadDamage
+		InvalidTargets: Air
+		ValidStances: Enemy, Neutral
+		Spread: 626
+		Falloff: 100, 50, 15, 5, 0
+		Damage: 15000
+		Versus:
+			None: 0
+			Wood: 25
+			Light: 0
+			Heavy: 0
+			Concrete: 60
+			Brick: 0
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
