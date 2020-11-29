@@ -4020,15 +4020,15 @@ WTNK:
 BATF:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 230
 		Prerequisites: tent, radar, ~weap, ~vehicles.france, ~techlevel.low
-		Description: Tough infantry transport with multiple\nturrets that must be occuped by infantry.\n  Can crush enemy vehicles.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
+		Description: Tough infantry transport\nwith weapon ports for infantry.\n  Special Ability: Can crush enemy vehicles.
 	Valued:
-		Cost: 1800
+		Cost: 2000
 	Tooltip:
 		Name: Battle Fortress
 	Health:
@@ -4037,7 +4037,7 @@ BATF:
 		Type: Heavy
 	Mobile:
 		Locomotor: sheavytracked
-		Speed: 56
+		Speed: 60
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 		Voice: Move
 	Passenger:
@@ -4049,51 +4049,47 @@ BATF:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
-	AttackTurreted:
-		Turrets: primary, secondary, tertiary
-		Armaments: primary, secondary, tertiary
+	AttackFrontal:
+		FacingTolerance: 5
 		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !(loaded || loaded-air)
 		Voice: Attack
-	Armament@PRIMARY:
+	Armament@DEFAULT:
 		Name: primary
-		Turret: primary
-		Weapon: BATFGun
-		LocalOffset: 200,0,300
+		Weapon: HeliGunAG
+		LocalOffset: 725,0,271
 		MuzzleSequence: muzzle
-	Armament@SECONDARY:
-		Name: secondary
-		Turret: secondary
-		Weapon: BATFGun
-		FireDelay: 8
-		LocalOffset: 200,0,300
-		MuzzleSequence: muzzle
-	Armament@TERTIARY:
-		Name: tertiary
-		Turret: tertiary
-		Weapon: BATFRockets
-		LocalOffset: -200,0,300
-		MuzzleSequence: muzzle
-		RequiresCondition: cargo
-	Turreted@PRIMARY:
-		Turret: primary
-		Offset: 200,-300,0
-		TurnSpeed: 3
-	Turreted@SECONDARY:
-		Turret: secondary
-		Offset: 200,300,0
-		TurnSpeed: 3
-	Turreted@TERTIARY:
-		Turret: tertiary
-		Offset: -300,0,358
-		TurnSpeed: 3
-		PauseOnCondition: !cargo
+		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5
 		PipCount: 5
 		LoadingCondition: notmobile
-		LoadedCondition: cargo
+		PassengerConditions:
+			e1: loaded
+			e2: loaded
+			e3: loaded-air
+			e4: loaded
+			e7: loaded
+			e8: loaded
+			n1: loaded
+			n2: loaded
+			n3: loaded-air
+			n4: loaded
+			n5: loaded
+			rmbo: loaded
+			boris: loaded
+			acol: loaded
+			mort: loaded
+			snip: loaded
+			shok: loaded
+			sab: loaded
+			n1c: loaded
+			n3c: loaded-air
+			rmboc: loaded
+			tecn: loaded
+			rmbc: loaded
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -4101,43 +4097,46 @@ BATF:
 	Carryable:
 		LocalOffset: 0,0,500
 	-Crushable:
+	AutoTargetPriority@DEFAULT:
+		RequiresCondition: !stance-attackanything && !assault-move && !loaded-air
+	AutoTargetPriority@ATTACKANYTHING:
+		RequiresCondition: (stance-attackanything || assault-move) && !loaded-air
+	AutoTargetPriority@DEFAULT_AIR:
+		RequiresCondition: !stance-attackanything && !assault-move && loaded-air
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
+		InvalidTargets: NoAutoTarget, WaterStructure
+	AutoTargetPriority@ATTACKANYTHING_AIR:
+		RequiresCondition: (stance-attackanything || assault-move) && loaded-air
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
+		InvalidTargets: NoAutoTarget
 	Voiced:
 		VoiceSet: BattleFortressVoice
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
-	WithSpriteTurret@PRIMARY:
-		Turret: primary
-	WithSpriteTurret@SECONDARY:
-		Turret: secondary
-	WithSpriteTurret@TERTIARY:
-		Turret: tertiary
-		Sequence: turret2
-	SpawnActorOnDeath:
-		Actor: BATF.Husk
-		RequiresCondition: !being-warped
+	AttackOpenTopped:
+		Voice: Attack
+		Armaments: mounted
+		PortOffsets: 568,0,0, 348,-482,0, -348,-482,0, -448,482,0, 448,482,0
+		PauseOnCondition: being-warped || empdisable
+		RequiresCondition: loaded || loaded-air
 	Capturable:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
 	Targetable@DRIVERKILL:
 		RequiresCondition: !driver-dead && !cargo
-
+		
 BATF.AI:
 	Inherits: BATF
-	Buildable:
-		Prerequisites: tent, radar, ~weap, ~vehicles.france, ~techlevel.low, ~botplayer
 	RenderSprites:
 		Image: batf
-	Armament@TERTIARY:
-		-RequiresCondition:
-	Turreted@TERTIARY:
-		-PauseOnCondition:
-	-Cargo:
-	Mobile:
-		PauseOnCondition: being-captured || empdisable || being-warped || driver-dead
-	-Capturable:
-	-Capturable@DRIVER_DEAD:
-	-Targetable@DRIVERKILL:
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 198
+		Prerequisites: tent, radar, ~weap, ~vehicles.france, ~botplayer, ~techlevel.high
+		Description: Tough infantry transport\nwith weapon ports for infantry.\n  Special Ability: Can crush enemy vehicles.
+	Cargo:
+		InitialUnits: e1,e1,e3,e3,e3
 
 MEMP:
 	Inherits: ^TankTD

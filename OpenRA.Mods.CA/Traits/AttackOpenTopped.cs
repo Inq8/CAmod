@@ -1,0 +1,188 @@
+﻿#region Copyright & License Information
+/*
+ * Copyright 2015- OpenRA.Mods.AS Developers (see AUTHORS)
+ * This file is a part of a third-party plugin for OpenRA, which is
+ * free software. It is made available to you under the terms of the
+ * GNU General Public License as published by the Free Software
+ * Foundation. For more information, see COPYING.
+ */
+#endregion
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using OpenRA.Graphics;
+using OpenRA.Mods.Common.Traits;
+using OpenRA.Mods.Common.Traits.Render;
+using OpenRA.Primitives;
+using OpenRA.Traits;
+
+namespace OpenRA.Mods.CA.Traits
+{
+	[Desc("Implements the YR OpenTopped logic where transported actors used separate firing offsets, ignoring facing."
+		+ "Compatible with `Cargo`/`Passengers`")]
+	public class AttackOpenToppedInfo : AttackFollowInfo, IRulesetLoaded
+	{
+		[FieldLoader.Require]
+		[Desc("Fire port offsets in local coordinates.")]
+		public readonly WVec[] PortOffsets = null;
+
+		public override object Create(ActorInitializer init) { return new AttackOpenTopped(init.Self, this); }
+		public override void RulesetLoaded(Ruleset rules, ActorInfo ai)
+		{
+			if (PortOffsets.Length == 0)
+				throw new YamlException("PortOffsets must have at least one entry.");
+
+			base.RulesetLoaded(rules, ai);
+		}
+	}
+
+	public class AttackOpenTopped : AttackFollow, IRender, INotifyPassengerEntered, INotifyPassengerExited
+	{
+		public readonly new AttackOpenToppedInfo Info;
+		readonly Lazy<BodyOrientation> coords;
+		readonly List<Actor> actors;
+		readonly List<Armament> armaments;
+		readonly HashSet<Pair<AnimationWithOffset, string>> muzzles;
+		readonly Dictionary<Actor, IFacing> paxFacing;
+		readonly Dictionary<Actor, IPositionable> paxPos;
+		readonly Dictionary<Actor, RenderSprites> paxRender;
+
+		public AttackOpenTopped(Actor self, AttackOpenToppedInfo info)
+			: base(self, info)
+		{
+			Info = info;
+			coords = Exts.Lazy(() => self.Trait<BodyOrientation>());
+			actors = new List<Actor>();
+			armaments = new List<Armament>();
+			muzzles = new HashSet<Pair<AnimationWithOffset, string>>();
+			paxFacing = new Dictionary<Actor, IFacing>();
+			paxPos = new Dictionary<Actor, IPositionable>();
+			paxRender = new Dictionary<Actor, RenderSprites>();
+		}
+
+		protected override Func<IEnumerable<Armament>> InitializeGetArmaments(Actor self)
+		{
+			return () => armaments;
+		}
+
+		void OnActorEntered(Actor enterer)
+		{
+			actors.Add(enterer);
+			paxFacing.Add(enterer, enterer.Trait<IFacing>());
+			paxPos.Add(enterer, enterer.Trait<IPositionable>());
+			paxRender.Add(enterer, enterer.Trait<RenderSprites>());
+			armaments.AddRange(
+				enterer.TraitsImplementing<Armament>()
+				.Where(a => Info.Armaments.Contains(a.Info.Name)));
+		}
+
+		void OnActorExited(Actor exiter)
+		{
+			actors.Remove(exiter);
+			paxFacing.Remove(exiter);
+			paxPos.Remove(exiter);
+			paxRender.Remove(exiter);
+			armaments.RemoveAll(a => a.Actor == exiter);
+		}
+
+		void INotifyPassengerEntered.OnPassengerEntered(Actor self, Actor passenger)
+		{
+			OnActorEntered(passenger);
+		}
+
+		void INotifyPassengerExited.OnPassengerExited(Actor self, Actor passenger)
+		{
+			OnActorExited(passenger);
+		}
+
+		WVec SelectFirePort(Actor self, Actor firer)
+		{
+			var passengerIndex = actors.IndexOf(firer);
+			if (passengerIndex == -1)
+				return new WVec(0, 0, 0);
+
+			var portIndex = passengerIndex % Info.PortOffsets.Length;
+
+			return Info.PortOffsets[portIndex];
+		}
+
+		WVec PortOffset(Actor self, WVec offset)
+		{
+			var bodyOrientation = coords.Value.QuantizeOrientation(self, self.Orientation);
+			return coords.Value.LocalToWorld(offset.Rotate(bodyOrientation));
+		}
+
+		public override void DoAttack(Actor self, Target target)
+		{
+			if (!CanAttack(self, target))
+				return;
+
+			var pos = self.CenterPosition;
+			var targetedPosition = GetTargetPosition(pos, target);
+			var targetYaw = (targetedPosition - pos).Yaw;
+
+			foreach (var a in Armaments)
+			{
+				if (a.IsTraitDisabled)
+					continue;
+
+				var port = SelectFirePort(self, a.Actor);
+
+				var muzzleFacing = targetYaw.Angle / 4;
+				paxFacing[a.Actor].Facing = muzzleFacing;
+				paxPos[a.Actor].SetVisualPosition(a.Actor, pos + PortOffset(self, port));
+
+				var barrel = a.CheckFire(a.Actor, facing, target);
+				if (barrel == null)
+					continue;
+
+				if (a.Info.MuzzleSequence != null)
+				{
+					// Muzzle facing is fixed once the firing starts
+					var muzzleAnim = new Animation(self.World, paxRender[a.Actor].GetImage(a.Actor), () => muzzleFacing);
+					var sequence = a.Info.MuzzleSequence;
+					var palette = a.Info.MuzzlePalette;
+
+					if (a.Info.MuzzleSplitFacings > 0)
+						sequence += Common.Util.QuantizeFacing(muzzleFacing, a.Info.MuzzleSplitFacings).ToString();
+
+					var muzzleFlash = new AnimationWithOffset(muzzleAnim,
+						() => PortOffset(self, port),
+						() => false,
+						p => RenderUtils.ZOffsetFromCenter(self, p, 1024));
+
+					var pair = Pair.New(muzzleFlash, palette);
+					muzzles.Add(pair);
+					muzzleAnim.PlayThen(sequence, () => muzzles.Remove(pair));
+				}
+
+				foreach (var npa in self.TraitsImplementing<INotifyAttack>())
+					npa.Attacking(self, target, a, barrel);
+			}
+		}
+
+		IEnumerable<IRenderable> IRender.Render(Actor self, WorldRenderer wr)
+		{
+			// Display muzzle flashes
+			foreach (var m in muzzles)
+				foreach (var r in m.First.Render(self, wr, wr.Palette(m.Second), 1f))
+					yield return r;
+		}
+
+		IEnumerable<Rectangle> IRender.ScreenBounds(Actor self, WorldRenderer wr)
+		{
+			// Muzzle flashes don't contribute to actor bounds
+			yield break;
+		}
+
+		protected override void Tick(Actor self)
+		{
+			base.Tick(self);
+
+			// Take a copy so that Tick() can remove animations
+			foreach (var m in muzzles.ToArray())
+				m.First.Animation.Tick();
+		}
+	}
+}
