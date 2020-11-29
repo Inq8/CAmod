@@ -1175,11 +1175,17 @@ STMR:
 	GrantConditionOnPrerequisite@REGEN:
 		Condition: regen-upgrade
 		Prerequisites: regen.upgrade
-	SelfHealing@REGEN:
-		PercentageStep: 3
+	SelfHealing@REGEN1:
+		Step: 600
 		Delay: 25
-		HealIfBelow: 50
-		DamageCooldown: 150
+		HealIfBelow: 66
+		DamageCooldown: 200
+		RequiresCondition: regen-upgrade
+	SelfHealing@REGEN2:
+		Step: 300
+		Delay: 25
+		HealIfBelow: 100
+		DamageCooldown: 200
 		RequiresCondition: regen-upgrade
 
 DEVA:
@@ -1246,15 +1252,6 @@ DEVA:
 	ProductionCostMultiplier@VANQBONUS:
 		Multiplier: 90
 		Prerequisites: vehicles.harbinger
-	GrantConditionOnPrerequisite@REGEN:
-		Condition: regen-upgrade
-		Prerequisites: regen.upgrade
-	SelfHealing@REGEN:
-		PercentageStep: 3
-		Delay: 25
-		HealIfBelow: 75
-		DamageCooldown: 150
-		RequiresCondition: regen-upgrade
 	GrantConditionOnPrerequisite@SHIELDS:
 		Condition: shields-upgrade
 		Prerequisites: shields.upgrade
@@ -1266,6 +1263,23 @@ DEVA:
 	SpeedMultiplier@EMPDISABLE:
 		Modifier: 0
 		RequiresCondition: empdisable
+	GrantConditionOnPrerequisite@REGEN:
+		Condition: regen-upgrade
+		Prerequisites: regen.upgrade
+	SelfHealing@REGEN1:
+		Step: 600
+		Delay: 25
+		HealIfBelow: 66
+		DamageCooldown: 200
+		RequiresCondition: regen-upgrade
+	SelfHealing@REGEN2:
+		Step: 300
+		Delay: 25
+		HealIfBelow: 100
+		DamageCooldown: 200
+		RequiresCondition: regen-upgrade
+	Repairable:
+		RepairActors: fix, rep, srep
 
 PAC:
 	Inherits: ^Helicopter
@@ -1355,15 +1369,6 @@ PAC:
 	DeathSounds:
 		Voice: Die
 	-EjectOnDeath:
-	GrantConditionOnPrerequisite@REGEN:
-		Condition: regen-upgrade
-		Prerequisites: regen.upgrade
-	SelfHealing@REGEN:
-		PercentageStep: 3
-		Delay: 25
-		HealIfBelow: 75
-		DamageCooldown: 150
-		RequiresCondition: regen-upgrade
 	GrantConditionOnPrerequisite@SHIELDS:
 		Condition: shields-upgrade
 		Prerequisites: shields.upgrade
@@ -1375,6 +1380,23 @@ PAC:
 	SpeedMultiplier@EMPDISABLE:
 		Modifier: 0
 		RequiresCondition: empdisable
+	GrantConditionOnPrerequisite@REGEN:
+		Condition: regen-upgrade
+		Prerequisites: regen.upgrade
+	SelfHealing@REGEN1:
+		Step: 500
+		Delay: 25
+		HealIfBelow: 66
+		DamageCooldown: 200
+		RequiresCondition: regen-upgrade
+	SelfHealing@REGEN2:
+		Step: 250
+		Delay: 25
+		HealIfBelow: 100
+		DamageCooldown: 200
+		RequiresCondition: regen-upgrade
+	Repairable:
+		RepairActors: fix, rep, srep
 
 INVA:
 	Inherits: ^Plane
@@ -2709,6 +2731,7 @@ SREP:
 	Reservable:
 	RallyPoint:
 	RepairsUnits:
+		ValuePercentage: 0
 		HpPerStep: 1000
 		Interval: 7
 		StartRepairingNotification: Repairing
@@ -2723,6 +2746,12 @@ SREP:
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair
+	ProximityExternalCondition@AIRCRAFTREPAIR:
+		Condition: aircraft-repair
+		Range: 10c0
+	WithRangeCircle@AIRCRAFTREPAIR:
+		Color: 888899AA
+		Range: 10c0
 
 SILO.SCRIN:
 	Inherits: ^ScrinBuilding
