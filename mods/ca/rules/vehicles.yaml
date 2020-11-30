@@ -4037,9 +4037,10 @@ BATF:
 		Type: Heavy
 	Mobile:
 		Locomotor: sheavytracked
-		Speed: 60
+		Speed: 52
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 		Voice: Move
+		TurnSpeed: 2
 	Passenger:
 		Weight: 2
 		Voice: Move
@@ -4057,7 +4058,7 @@ BATF:
 	Armament@DEFAULT:
 		Name: primary
 		Weapon: HeliGunAG
-		LocalOffset: 725,0,271
+		LocalOffset: 825,0,271
 		MuzzleSequence: muzzle
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
@@ -4079,7 +4080,7 @@ BATF:
 			n4: loaded
 			n5: loaded
 			rmbo: loaded
-			boris: loaded
+			bori: loaded
 			acol: loaded
 			mort: loaded
 			snip: loaded
@@ -4087,9 +4088,13 @@ BATF:
 			sab: loaded
 			n1c: loaded
 			n3c: loaded-air
-			rmboc: loaded
 			tecn: loaded
 			rmbc: loaded
+			s1: loaded
+			s2: loaded
+			s3: loaded
+			s4: loaded
+			mast: loaded
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -4116,7 +4121,7 @@ BATF:
 	AttackOpenTopped:
 		Voice: Attack
 		Armaments: mounted
-		PortOffsets: 568,0,0, 348,-482,0, -348,-482,0, -448,482,0, 448,482,0
+		PortOffsets: 825,0,256, 348,-482,256, -348,-482,256, -448,482,256, 448,482,256
 		PauseOnCondition: being-warped || empdisable
 		RequiresCondition: loaded || loaded-air
 	Capturable:
@@ -4125,7 +4130,7 @@ BATF:
 		RequiresCondition: driver-dead && !cargo
 	Targetable@DRIVERKILL:
 		RequiresCondition: !driver-dead && !cargo
-		
+
 BATF.AI:
 	Inherits: BATF
 	RenderSprites:
