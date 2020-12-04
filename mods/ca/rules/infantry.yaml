@@ -207,10 +207,24 @@ E3:
 		Name: mounted
 		Weapon: DragonE
 		PauseOnCondition: !ammo || being-warped
+		RequiresCondition: !cryr-upgrade
 	Armament@GarrisonAA:
 		Name: mountedaa
 		Weapon: RedEyeE
 		PauseOnCondition: !ammo || being-warped
+		RequiresCondition: !cryr-upgrade
+	Armament@GarrisonUPG:
+		Name: mounted
+		Weapon: RedEye.CRYO
+		LocalOffset: 0,0,555
+		PauseOnCondition: !ammo || being-warped
+		RequiresCondition: cryr-upgrade
+	Armament@GarrisonAAUPG:
+		Name: mountedaa
+		Weapon: Dragon.CRYO
+		LocalOffset: 0,0,555
+		PauseOnCondition: !ammo || being-warped
+		RequiresCondition: cryr-upgrade
 	AmmoPool:
 		Ammo: 1
 		PipCount: 0
@@ -1209,11 +1223,10 @@ SNIP:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 105
-		BuildLimit: 5
-		Prerequisites: ~infantry.england, atek, ~techlevel.medium
-		Description: Elite marksman infantry.\n Armed with a powerful sniper rifle.\n  Maximum 5 can be trained.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft, Buildings, Defenses\n  Special Ability: Camouflage\n  Special Ability: Kill Driver
+		Prerequisites: ~infantry.england, dome, ~techlevel.medium
+		Description: Elite marksman infantry.\n Armed with a powerful sniper rifle.\n\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft, Buildings, Defenses\n  Special Ability: Camouflage
 	Valued:
-		Cost: 850
+		Cost: 550
 	Tooltip:
 		Name: Sniper
 	UpdatesPlayerStatistics:
@@ -1227,22 +1240,10 @@ SNIP:
 	Armament@Garrison:
 		Weapon: sniperE
 		Name: mounted
-	Armament@DRIVER_SNIPE:
-		Name: driver_snipe
+	Armament@APROUND:
+		Name: secondary
 		Weapon: sniper.vehicle
-		PauseOnCondition: !ammo
-	AmmoPool:
-		Ammo: 1
-		Armaments: driver_snipe
-		Name: driver_snipe
-		AmmoCondition: ammo
-	RenderRangeCircle:
-		Color: 0A880A
-	ReloadArmamentsBar:
-		Armaments: driver_snipe
-	ReloadAmmoPool:
-		AmmoPool: driver_snipe
-		Delay: 750
+		RequiresCondition: apb-upgrade
 	Mobile:
 		Speed: 49
 		Voice: Move
@@ -1256,12 +1257,15 @@ SNIP:
 		IsPlayerPalette: true
 		CloakTypes: Cloak
 		RequiresCondition: !cloak-force-disabled
-		UncloakOn: Unload, Infiltrate, Demolish, Dock, Attack
+		UncloakOn: Move, Unload, Infiltrate, Demolish, Dock, Attack
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden)
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Heavy, Critical
+	GrantConditionOnPrerequisite@APB:
+		Condition: apb-upgrade
+		Prerequisites: apb.upgrade
 	WithDecoration@hidden:
 		Image: pips
 		Sequence: pip-hidden
@@ -1271,7 +1275,6 @@ SNIP:
 		RequiresCondition: hidden
 	AttackFrontal:
 		Voice: Attack
-		Armaments: primary, driver_snipe, laser
 		PauseOnCondition: being-warped
 	WithInfantryBody:
 		StandSequences: stand, stand2

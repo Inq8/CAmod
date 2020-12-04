@@ -1118,7 +1118,7 @@ MicrowaveZap:
 	ValidTargets: Ground, Water
 	InvalidTargets: Air
 	TargetActorCenter: true
-	ReloadDelay: 100
+	ReloadDelay: 210
 	Range: 6c0
 	Report: corefir1.aud
 	Projectile: Railgun
@@ -1145,43 +1145,16 @@ MicrowaveZap:
 			Concrete: 50
 			Light: 70
 			Heavy: 85
-	Warhead@emp: GrantExternalCondition
+	Warhead@3: ChangeOwnerToNeutral
+		ValidTargets: DriverKill
+		InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air, DriverKillImmune
+		ValidStances: Ally, Enemy, Neutral
 		Range: 0c256
-		Duration: 90
-		Condition: empdisable
-		ValidTargets: Ground, Structure, Vehicle
-	Warhead@Arc: FireShrapnel
-		Weapon: MicrowaveArc
-		Amount: 1
-		AimChance: 100
-		ValidTargets: Vehicle, Ship
-		ThrowWithoutTarget: false
-
-MicrowaveArc:
-	Inherits: MicrowaveZap
-	Range: 1c256
-	Projectile: Bullet
-		Image: mwarc
-		Sequences: idle, idle2, idle3
-		Palette: tseffect-ignore-lighting-alpha75
-		Speed: 260
-	Warhead@1Dam: SpreadDamage
-		Damage: 1250
-		ValidStances: Enemy, Neutral
-	-Report:
-	Warhead@emp: GrantExternalCondition
-		Duration: 30
-	Warhead@Arc: FireShrapnel
-		Weapon: MicrowaveArc2
-		Amount: 2
-		AimChance: 70
-
-MicrowaveArc2:
-	Inherits: MicrowaveArc
-	-Warhead@Arc:
-	-Warhead@1Dam:
-	Warhead@emp: GrantExternalCondition
-		Duration: 15
+	Warhead@highlight: GrantExternalCondition
+		Range: 0c256
+		Duration: 2
+		Condition: highlight
+		ValidTargets: Vehicle
 
 MicrowaveZapSound:
 	Inherits: MicrowaveZap
@@ -1196,8 +1169,8 @@ MicrowaveZapSound:
 			Light: 0
 			Heavy: 0
 			Brick: 0
-	-Warhead@emp:
-	-Warhead@Arc:
+	-Warhead@3: ChangeOwnerToNeutral
+	-Warhead@highlight: GrantExternalCondition
 
 HornetLauncher:
 	ReloadDelay: 175

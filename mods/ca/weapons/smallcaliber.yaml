@@ -592,7 +592,7 @@ SNIPER:
 	Range: 6c0
 	Report: snipe.aud
 	ValidTargets: Ground, Infantry
-	InvalidTargets: Vehicle, Water, Structure, Wall, Husk, Chrono
+	InvalidTargets: Vehicle, Ship, Water, Structure, Wall, Husk, Chrono
 	Projectile: Bullet
 		Speed: 2c682
 	Warhead@1Dam: SpreadDamage
@@ -613,25 +613,38 @@ SNIPERE:
 	Range: 9c0
 
 SNIPER.vehicle:
-	ReloadDelay: 600
+	ReloadDelay: 110
 	Range: 6c0
 	Report: ijarwe2a.aud
-	ValidTargets: DriverKill
-	InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air, DriverKillImmune
-	Projectile: InstantHit
+	ValidTargets: Vehicle, Ship
+	InvalidTargets: Infantry, Structure, Wall, Husk, Air
+	Projectile: Bullet
+		Speed: 2c682
 		Blockable: true
-	Warhead@1Dam: TargetDamage
-		ValidTargets: DriverKill
-	Warhead@3: ChangeOwnerToNeutral
-		ValidTargets: DriverKill
-		InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air, DriverKillImmune
-		ValidStances: Enemy
+		Image: 50CAL
+		Shadow: True
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 7000
+		ValidTargets: Vehicle, Ship
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
+	Warhead@3Eff: CreateEffect
+		Explosions: small_explosion
+		ImpactSounds: kaboom12.aud
+		ValidTargets: Ground, Ship, Trees
+	Warhead@4EffWater: CreateEffect
+		Explosions: small_splash
+		ImpactSounds: splash9.aud
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+	Warhead@Concussion: GrantExternalCondition
 		Range: 0c256
-	Warhead@highlight: GrantExternalCondition
-		Range: 0c256
-		Duration: 2
-		Condition: highlight
-		ValidTargets: Vehicle
+		Duration: 120
+		Condition: concussion
+		ValidTargets: Vehicle, Ship
 
 HeliGunAG:
 	Inherits: ChainGun
