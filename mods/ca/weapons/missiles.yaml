@@ -806,10 +806,10 @@ BikeRockets:
 	Burst: 2
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
-		Damage: 4400
+		Damage: 4000
 		Versus:
-			Light: 38
-			Concrete: 70
+			Light: 45
+			Concrete: 75
 
 BikeRocketsAA:
 	Inherits: RedEye
@@ -866,7 +866,7 @@ IFVRocketsAAE:
 	ReloadDelay: 120
 	Burst: 2
 	BurstDelays: 4
-	Range: 7c0
+	Range: 8c0
 	MinRange: 3c0
 	Report: rocket1.aud
 	Projectile: MissileCA
@@ -886,7 +886,7 @@ IFVRocketsAAE:
 			None: 70
 			Wood: 45
 			Light: 50
-			Heavy: 30
+			Heavy: 25
 			Concrete: 50
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
@@ -898,7 +898,7 @@ IFVRocketsAAE:
 227mm.upg:
 	Inherits: 227mm
 	Report: vaegattb.aud, vaegatta.aud
-	Range: 8c0
+	Range: 9c0
 	Projectile: MissileCA
 		Speed: 366
 		ContrailLength: 15
@@ -915,16 +915,18 @@ IFVRocketsAAE:
 	Inherits: 227mm
 	Report: hovrmis1.aud
 	ReloadDelay: 105
-	Range: 8c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 1125
+		Versus:
+			Light: 45
 
 227mmH.upg:
 	Inherits: 227mm.upg
 	ReloadDelay: 105
-	Range: 9c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 1230
+		Versus:
+			Light: 45
 
 227mmAA:
 	Inherits: ^AntiAirMissile

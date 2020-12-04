@@ -113,7 +113,7 @@ KATY:
 		Type: Heavy
 	Mobile:
 		Locomotor: Amphibious
-		Speed: 113
+		Speed: 118
 	GrantConditionOnTerrain:
 		TerrainTypes: Water
 		Condition: onwater
@@ -547,7 +547,7 @@ KATY:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 78000
+		HP: 82000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -630,7 +630,7 @@ KATY:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 78000
+		HP: 82000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -1370,7 +1370,7 @@ TTNK:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 113
+		Speed: 100
 		Voice: Move
 	RevealsShroud:
 		MinRange: 6c0
@@ -2045,7 +2045,7 @@ LTNK:
 		Type: Heavy
 	Mobile:
 		Locomotor: Amphibious
-		Speed: 100
+		Speed: 105
 	GrantConditionOnTerrain:
 		TerrainTypes: Water
 		Condition: onwater
@@ -2306,7 +2306,7 @@ HTNK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 78000
+		HP: 82000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -2393,7 +2393,7 @@ HTNK.Ion:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 78000
+		HP: 82000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -2827,11 +2827,11 @@ BTR:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 28000
+		HP: 25000
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 100
+		Speed: 113
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 	RevealsShroud:
 		MinRange: 4c0
@@ -2877,8 +2877,8 @@ IFV:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 60
-		Prerequisites: infantry.any, ~vehicles.ifv, ~techlevel.low
+		BuildPaletteOrder: 115
+		Prerequisites: infantry.any, radar, ~vehicles.ifv, ~techlevel.low
 		Description: Adaptable infantry transport.\n  Can attack Aircraft.\n  Strong vs Aircraft, Vehicles\n  Weak vs Infantry\n  Special Ability: Transform
 	Valued:
 		Cost: 750
@@ -3132,8 +3132,8 @@ IFV.AI:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 60
-		Prerequisites: ~tent, ~vehicles.allies, ~botplayer, ~techlevel.low
+		BuildPaletteOrder: 115
+		Prerequisites: ~tent, radar, ~vehicles.allies, ~botplayer, ~techlevel.low
 		Description: Adaptable infantry transport.\n  Can attack Aircraft.\n  Strong vs Aircraft, Vehicles\n  Weak vs Infantry\n  Special Ability: Transform
 	Valued:
 		Cost: 650

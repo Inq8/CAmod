@@ -38,6 +38,7 @@ FireballLauncher:
 	Warhead@1Dam: SpreadDamage
 		Versus:
 			Light: 50
+			Concrete: 15
 
 ChemballLauncher:
 	Inherits: FireballLauncher
@@ -136,6 +137,8 @@ Flamer:
 	StartBurstReport: flamer2.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 1300
+		Versus:
+			Wood: 135
 
 FlamerE:
 	Inherits: Flamer
@@ -149,6 +152,7 @@ Chemspray:
 	Warhead@1Dam: SpreadDamage
 		Damage: 1450
 		Versus:
+			Wood: 120
 			Light: 85
 			Heavy: 50
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
@@ -223,7 +227,7 @@ PortaTesla:
 		Versus:
 			None: 350
 			Wood: 73
-			Heavy: 90
+			Heavy: 85
 
 PortaTeslaE:
 	Inherits: PortaTesla
@@ -251,7 +255,7 @@ PortaTeslaCharge:
 
 TTankZap:
 	Inherits: ^TeslaWeapon
-	ReloadDelay: 110
+	ReloadDelay: 120
 	Range: 7c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 11000
@@ -524,7 +528,7 @@ Laser:
 			Light: 101
 			Wood: 60
 			Heavy: 101
-			Concrete: 45
+			Concrete: 90
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
@@ -556,6 +560,7 @@ LaserTur:
 		Versus:
 			Wood: 73
 			Heavy: 60
+			Concrete: 50
 
 LaserTur.Adv:
 	Inherits: LaserTur
@@ -583,6 +588,7 @@ PortaLaser:
 			None: 175
 			Wood: 73
 			Heavy: 70
+			Concrete: 45
 
 PortaLaserE:
 	Inherits: PortaLaser
@@ -685,7 +691,7 @@ PrisLaser:
 PrisTLaser:
 	Inherits: PrisLaser
 	Report: ptnkfire.aud
-	ReloadDelay: 45
+	ReloadDelay: 50
 	Range: 9c0
 	Projectile: LaserZap
 		Blockable: true
@@ -724,7 +730,7 @@ PrisTBurst:
 PrisCLaser:
 	Inherits: PrisTLaser
 	Report: pcanfire.aud
-	ReloadDelay: 130
+	ReloadDelay: 140
 	Range: 11c0
 	Projectile: LaserZap
 		Width: 70
@@ -1140,7 +1146,7 @@ MicrowaveZap:
 		Damage: 5000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
-			None: 400
+			None: 200
 			Wood: 45
 			Concrete: 50
 			Light: 70
