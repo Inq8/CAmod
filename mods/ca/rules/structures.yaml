@@ -229,36 +229,6 @@ SPEN:
 		Range: 10c0
 		RequiresCondition: !(empdisable || being-warped)
 	RenderDetectionCircle:
-	ProvidesPrerequisite@soviet:
-		Factions: soviet, russia, ukraine, iraq
-		Prerequisite: ships.soviet
-	ProvidesPrerequisite@sovietvanilla:
-		Factions: soviet
-		Prerequisite: ships.sovietvanilla
-	ProvidesPrerequisite@russia:
-		Factions: russia
-		Prerequisite: ships.russia
-	ProvidesPrerequisite@ukraine:
-		Factions: ukraine
-		Prerequisite: ships.ukraine
-	ProvidesPrerequisite@iraq:
-		Factions: iraq
-		Prerequisite: ships.iraq
-	ProvidesPrerequisite@sovietstructure:
-		RequiresPrerequisites: structures.soviet
-		Prerequisite: ships.soviet
-	ProvidesPrerequisite@sovietvanillastructure:
-		RequiresPrerequisites: structures.sovietvanilla
-		Prerequisite: ships.sovietvanilla
-	ProvidesPrerequisite@russianstructure:
-		RequiresPrerequisites: structures.russia
-		Prerequisite: ships.russia
-	ProvidesPrerequisite@ukrainianstructure:
-		RequiresPrerequisites: structures.ukraine
-		Prerequisite: ships.ukraine
-	ProvidesPrerequisite@iraqistructure:
-		RequiresPrerequisites: structures.iraq
-		Prerequisite: ships.iraq
 	ProvidesPrerequisite@buildingname:
 	MapEditorData:
 		ExcludeTilesets: INTERIOR
@@ -366,36 +336,6 @@ SYRD:
 		Range: 10c0
 		RequiresCondition: !(empdisable || being-warped)
 	RenderDetectionCircle:
-	ProvidesPrerequisite@allies:
-		Factions: allies, england, france, germany
-		Prerequisite: ships.allies
-	ProvidesPrerequisite@alliesvanilla:
-		Factions: allies
-		Prerequisite: ships.alliesvanilla
-	ProvidesPrerequisite@england:
-		Factions: england
-		Prerequisite: ships.england
-	ProvidesPrerequisite@france:
-		Factions: france
-		Prerequisite: ships.france
-	ProvidesPrerequisite@germany:
-		Factions: germany
-		Prerequisite: ships.germany
-	ProvidesPrerequisite@alliedstructure:
-		RequiresPrerequisites: structures.allies
-		Prerequisite: ships.allies
-	ProvidesPrerequisite@alliedvanillastructure:
-		RequiresPrerequisites: structures.alliesvanilla
-		Prerequisite: ships.alliesvanilla
-	ProvidesPrerequisite@englishstructure:
-		RequiresPrerequisites: structures.england
-		Prerequisite: ships.england
-	ProvidesPrerequisite@frenchstructure:
-		RequiresPrerequisites: structures.france
-		Prerequisite: ships.france
-	ProvidesPrerequisite@germanstructure:
-		RequiresPrerequisites: structures.germany
-		Prerequisite: ships.germany
 	ProvidesPrerequisite@buildingname:
 	MapEditorData:
 		ExcludeTilesets: INTERIOR
@@ -525,11 +465,10 @@ PDOX:
 		RequiresCondition: !disabled
 	WithBuildingBib:
 		HasMinibib: true
-	ProvidesPrerequisite@germany:
+	ValidFactions:
+		Factions: england, france, germany
+	ProvidesPrerequisiteValidatedFaction@germany:
 		Factions: germany
-		Prerequisite: pdox.germany
-	ProvidesPrerequisite@germanstructure:
-		RequiresPrerequisites: structures.germany
 		Prerequisite: pdox.germany
 	WithChronosphereOverlay:
 		Image: chronobubble
@@ -580,7 +519,7 @@ PDOX:
 	DetonateWeaponPower@TimeWarp:
 		OrderName: TimeWarp
 		Icon: timewarp
-		Prerequisites: structures.germany
+		Prerequisites: pdox.germany
 		Cursor: ability
 		ChargeInterval: 4500
 		Description: Time Warp
@@ -627,7 +566,7 @@ TSLA:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 80
-		Prerequisites: weap, ~structures.soviet, ~techlevel.high
+		Prerequisites: vehicles.any, ~structures.soviet, ~techlevel.high
 		Description: Advanced base defense.\n  Can be buffed or made work during low power by Shock Troopers.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft
 	Valued:
 		Cost: 1200
@@ -707,7 +646,7 @@ AGUN:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 90
-		Prerequisites: dome, ~structures.allies, ~techlevel.medium
+		Prerequisites: anyradar, ~structures.allies, ~techlevel.medium
 		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Strong vs Aircraft\n  Weak vs Ground Units
 	Valued:
 		Cost: 800
@@ -763,7 +702,7 @@ DOME:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 90
-		Prerequisites: proc, ~structures.ra, ~techlevel.medium
+		Prerequisites: anyrefinery, ~structures.ra, ~techlevel.medium
 		Description: Provides an overview of the battlefield.\n  Requires power to operate.
 	Valued:
 		Cost: 1800
@@ -798,14 +737,16 @@ DOME:
 	Power:
 		Amount: -40
 		RequiresCondition: !being-warped
-	ProvidesPrerequisite@radar:
-		Prerequisite: radar
-	ProvidesPrerequisite@nodrad:
-		Factions: nod, marked, blackh, legion
-		Prerequisite: radar.nod
-	ProvidesPrerequisite@gdirad:
-		Factions: gdi, zocom, talon, eagle
-		Prerequisite: radar.gdi
+	ValidFactions:
+		Factions: england, france, germany, russia, ukraine, iraq
+	ProvidesPrerequisite@anyradar:
+		Prerequisite: anyradar
+	ProvidesPrerequisiteValidatedFaction@engrad:
+		Factions: england
+		Prerequisite: radar.england
+	ProvidesPrerequisiteValidatedFaction@frarad:
+		Factions: france
+		Prerequisite: radar.france
 	ProvidesPrerequisite@buildingname:
 	ExternalCondition@JAMMED:
 		Condition: jammed
@@ -814,7 +755,7 @@ DOME:
 		Proxy: rad.soviet.stolen
 	AirstrikePower@clustermines:
 		ChargeInterval: 6000
-		Prerequisites: structures.france, techlevel.unrestricted
+		Prerequisites: ~radar.france, ~techlevel.unrestricted
 		Description: Cluster Mines
 		LongDesc: Send a cargo plane\nto deploy a minefield.
 		OrderName: clustermine
@@ -840,7 +781,7 @@ DOME:
 		OrderName: gpsscramble
 		Icon: gpsscram
 		IconPalette: chrometd
-		Prerequisites: structures.england, techlevel.unrestricted
+		Prerequisites: ~radar.england, ~techlevel.unrestricted
 		ChargeInterval: 4500
 		LifeTime: 375
 		Description: GPS Scrambler
@@ -869,7 +810,7 @@ PBOX:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 40
-		Prerequisites: tent, ~structures.allies, ~!structures.england, ~techlevel.low
+		Prerequisites: infantry.any, ~structures.allies, ~!structures.england, ~techlevel.low
 		Description: Anti-infantry base defense.\n  Can detect cloaked units.\n  Strong vs Infantry, Light Armor\n  Weak vs Tanks, Aircraft
 	Valued:
 		Cost: 600
@@ -915,7 +856,7 @@ HBOX:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 50
-		Prerequisites: tent, ~structures.england, ~techlevel.low
+		Prerequisites: infantry.any, ~structures.england, ~techlevel.low
 		Description: Anti-infantry base defense.\n  Can detect cloaked units.\n  Strong vs Infantry, Light Armor\n  Weak vs Tanks, Aircraft
 	Valued:
 		Cost: 700
@@ -966,7 +907,7 @@ GUN:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 70
-		Prerequisites: tent, ~structures.allies, ~techlevel.medium
+		Prerequisites: infantry.any, ~structures.allies, ~techlevel.medium
 		Description: Basic anti-tank base defense.\n  Can detect cloaked units.\n  Strong vs Tanks, Vehicles\n  Weak vs Infantry
 	Valued:
 		Cost: 800
@@ -1012,7 +953,7 @@ FTUR:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 60
-		Prerequisites: barr, ~!structures.iraq, ~structures.soviet, ~techlevel.low
+		Prerequisites: infantry.any, ~!structures.iraq, ~structures.soviet, ~techlevel.low
 		Description: Anti-infantry base defense.\n  Can detect cloaked units.\n  Strong vs Infantry, Light Armor\n  Weak vs Tanks, Aircraft
 	Valued:
 		Cost: 600
@@ -1065,7 +1006,7 @@ SAM:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 100
-		Prerequisites: dome, ~structures.soviet, ~techlevel.medium
+		Prerequisites: anyradar, ~structures.soviet, ~techlevel.medium
 		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Aircraft\n  Weak vs Ground Units
 	Valued:
 		Cost: 700
@@ -1119,14 +1060,12 @@ ATEK:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 140
-		Prerequisites: weap, dome, ~structures.allies, ~techlevel.high
+		Prerequisites: vehicles.any, anyradar, ~structures.allies, ~techlevel.high
 		Description: Provides Allied advanced technologies.\n  Special Ability: GPS Satellite
 	Valued:
 		Cost: 1500
 	Tooltip:
 		Name: Allied Tech Center
-	ProvidesPrerequisite:
-		Prerequisite: techcenter
 	Building:
 		Footprint: xx xx ==
 		Dimensions: 2,3
@@ -1175,7 +1114,7 @@ ATEK:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate
 	ProduceActorPowerCA@SatelliteScan:
 		PauseOnCondition: disabled || being-warped
-		Prerequisites: radar, ~gps.satellite, ~fogenabled
+		Prerequisites: anyradar, ~gps.satellite, ~fogenabled
 		Description: Spy Satellite
 		LongDesc: Periodically reveals the entire map for a short time.\nActivated automatically.
 		Icon: gps
@@ -1187,7 +1126,7 @@ ATEK:
 		DisplayTimerStances: Ally, Neutral, Enemy
 	ProduceActorPowerCA@SatelliteScanNoFog:
 		PauseOnCondition: disabled || being-warped
-		Prerequisites: radar, ~gps.satellite, ~!fogenabled
+		Prerequisites: anyradar, ~gps.satellite, ~!fogenabled
 		Description: Spy Satellite
 		LongDesc: Permanently reveals the entire map.\nActivated automatically.
 		Icon: gps
@@ -1243,7 +1182,7 @@ WEAP:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 80
-		Prerequisites: proc, ~structures.ra, ~techlevel.low
+		Prerequisites: anyrefinery, ~structures.ra, ~techlevel.low
 		Description: Produces vehicles.
 	Valued:
 		Cost: 2000
@@ -1275,166 +1214,53 @@ WEAP:
 	Production:
 		Produces: Vehicle
 		PauseOnCondition: forceshield || invulnerability || being-warped
+	ValidFactions:
+		Factions: england, france, germany, russia, ukraine, iraq
 	ProvidesPrerequisite@any:
 		Prerequisite: vehicles.any
-	ProvidesPrerequisite@allies:
-		Factions: allies, england, france, germany
+	ProvidesPrerequisiteValidatedFaction@allies:
+		Factions: england, france, germany
 		Prerequisite: vehicles.allies
-	ProvidesPrerequisite@td:
-		Factions: gdi, talon, zocom, eagle, nod, marked, blackh, legion
-		Prerequisite: vehicles.td
 	ProvidesPrerequisite@ra:
-		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq
 		Prerequisite: vehicles.ra
-	ProvidesPrerequisite@alliesvanilla:
-		Factions: allies
-		Prerequisite: vehicles.alliesvanilla
-	ProvidesPrerequisite@england:
+	ProvidesPrerequisiteValidatedFaction@england:
 		Factions: england
 		Prerequisite: vehicles.england
-	ProvidesPrerequisite@france:
+	ProvidesPrerequisiteValidatedFaction@france:
 		Factions: france
 		Prerequisite: vehicles.france
-	ProvidesPrerequisite@germany:
+	ProvidesPrerequisiteValidatedFaction@germany:
 		Factions: germany
 		Prerequisite: vehicles.germany
-	ProvidesPrerequisite@soviet:
-		Factions: soviet, russia, ukraine, iraq
+	ProvidesPrerequisiteValidatedFaction@soviet:
+		Factions: russia, ukraine, iraq
 		Prerequisite: vehicles.soviet
-	ProvidesPrerequisite@sovietvanilla:
-		Factions: soviet
-		Prerequisite: vehicles.sovietvanilla
-	ProvidesPrerequisite@russia:
+	ProvidesPrerequisiteValidatedFaction@russia:
 		Factions: russia
 		Prerequisite: vehicles.russia
-	ProvidesPrerequisite@ukraine:
+	ProvidesPrerequisiteValidatedFaction@ukraine:
 		Factions: ukraine
 		Prerequisite: vehicles.ukraine
-	ProvidesPrerequisite@iraq:
+	ProvidesPrerequisiteValidatedFaction@iraq:
 		Factions: iraq
 		Prerequisite: vehicles.iraq
-	ProvidesPrerequisite@gdi:
-		Factions: gdi, zocom, talon, eagle
-		Prerequisite: vehicles.gdi
-	ProvidesPrerequisite@talon:
-		Factions: talon
-		Prerequisite: vehicles.talon
-	ProvidesPrerequisite@zocom:
-		Factions: zocom
-		Prerequisite: vehicles.zocom
-	ProvidesPrerequisite@eagle:
-		Factions: eagle
-		Prerequisite: vehicles.eagle
-	ProvidesPrerequisite@nod:
-		Factions: nod, blackh, marked, legion
-		Prerequisite: vehicles.nod
-	ProvidesPrerequisite@blackh:
-		Factions: blackh
-		Prerequisite: vehicles.blackh
-	ProvidesPrerequisite@marked:
-		Factions: marked
-		Prerequisite: vehicles.marked
-	ProvidesPrerequisite@legion:
-		Factions: legion
-		Prerequisite: vehicles.legion
-	ProvidesPrerequisite@scrin:
-		Factions: scrin, reaper, traveler, harbinger
-		Prerequisite: vehicles.scrin
-	ProvidesPrerequisite@reaper:
-		Factions: reaper
-		Prerequisite: vehicles.reaper
-	ProvidesPrerequisite@traveler:
-		Factions: traveler
-		Prerequisite: vehicles.traveler
-	ProvidesPrerequisite@harbinger:
-		Factions: harbinger
-		Prerequisite: vehicles.harbinger
-	ProvidesPrerequisite@alliedstructure:
-		RequiresPrerequisites: structures.allies
-		Prerequisite: vehicles.allies
-	ProvidesPrerequisite@alliedvanillastructure:
-		RequiresPrerequisites: structures.alliesvanilla
-		Prerequisite: vehicles.alliesvanilla
-	ProvidesPrerequisite@englishstructure:
-		RequiresPrerequisites: structures.england
-		Prerequisite: vehicles.england
-	ProvidesPrerequisite@frenchstructure:
-		RequiresPrerequisites: structures.france
-		Prerequisite: vehicles.france
-	ProvidesPrerequisite@germanstructure:
-		RequiresPrerequisites: structures.germany
-		Prerequisite: vehicles.germany
-	ProvidesPrerequisite@sovietstructure:
-		RequiresPrerequisites: structures.soviet
-		Prerequisite: vehicles.soviet
-	ProvidesPrerequisite@sovietvanillastructure:
-		RequiresPrerequisites: structures.sovietvanilla
-		Prerequisite: vehicles.sovietvanilla
-	ProvidesPrerequisite@russianstructure:
-		RequiresPrerequisites: structures.russia
-		Prerequisite: vehicles.russia
-	ProvidesPrerequisite@ukrainianstructure:
-		RequiresPrerequisites: structures.ukraine
-		Prerequisite: vehicles.ukraine
-	ProvidesPrerequisite@iraqistructure:
-		RequiresPrerequisites: structures.iraq
-		Prerequisite: vehicles.iraq
-	ProvidesPrerequisite@gdistructure:
-		RequiresPrerequisites: structures.gdi
-		Prerequisite: vehicles.gdi
-	ProvidesPrerequisite@gdivanillastructure:
-		RequiresPrerequisites: structures.gdivanilla
-		Prerequisite: vehicles.gdivanilla
-	ProvidesPrerequisite@talonstructure:
-		RequiresPrerequisites: structures.talon
-		Prerequisite: vehicles.talon
-	ProvidesPrerequisite@zocomstructure:
-		RequiresPrerequisites: structures.zocom
-		Prerequisite: vehicles.zocom
-	ProvidesPrerequisite@nodvanillastructure:
-		RequiresPrerequisites: structures.nodvanilla
-		Prerequisite: vehicles.nodvanilla
-	ProvidesPrerequisite@nodstructure:
-		RequiresPrerequisites: structures.nod
-		Prerequisite: vehicles.nod
-	ProvidesPrerequisite@blackhstructure:
-		RequiresPrerequisites: structures.blackh
-		Prerequisite: vehicles.blackh
-	ProvidesPrerequisite@markedstructure:
-		RequiresPrerequisites: structures.marked
-		Prerequisite: vehicles.marked
-	ProvidesPrerequisite@legionstructure:
-		RequiresPrerequisites: structures.legion
-		Prerequisite: vehicles.legion
-	ProvidesPrerequisite@scrinstructure:
-		RequiresPrerequisites: structures.scrin
-		Prerequisite: vehicles.scrin
-	ProvidesPrerequisite@reaperstructure:
-		RequiresPrerequisites: structures.reaper
-		Prerequisite: vehicles.reaper
-	ProvidesPrerequisite@travelerstructure:
-		RequiresPrerequisites: structures.traveler
-		Prerequisite: vehicles.traveler
-	ProvidesPrerequisite@harbingerstructure:
-		RequiresPrerequisites: structures.harbinger
-		Prerequisite: vehicles.harbinger
-	ProvidesPrerequisite@mrj:
-		Factions: allies, france, england, germany
+	ProvidesPrerequisiteValidatedFaction@mrj:
+		Factions: england, france, germany
 		Prerequisite: vehicles.mrj
-	ProvidesPrerequisite@ifv:
-		Factions: allies, france, england, germany
+	ProvidesPrerequisiteValidatedFaction@ifv:
+		Factions: england, france, germany
 		Prerequisite: vehicles.ifv
-	ProvidesPrerequisite@ptnk:
-		Factions: allies, france, england, germany
+	ProvidesPrerequisiteValidatedFaction@ptnk:
+		Factions: england, france, germany
 		Prerequisite: vehicles.ptnk
-	ProvidesPrerequisite@v2upgrade:
+	ProvidesPrerequisiteValidatedFaction@v2upgrade:
 		Factions: russia
 		Prerequisite: v2.upgrade
-	ProvidesPrerequisite@3tnk:
-		Factions: soviet, russia, ukraine, iraq
+	ProvidesPrerequisiteValidatedFaction@3tnk:
+		Factions: russia, ukraine, iraq
 		Prerequisite: vehicles.3tnk
-	ProvidesPrerequisite@v3rl:
-		Factions: soviet, russia, ukraine, iraq
+	ProvidesPrerequisiteValidatedFaction@v3rl:
+		Factions: russia, ukraine, iraq
 		Prerequisite: vehicles.v3rl
 	PrimaryBuilding:
 		PrimaryCondition: primary
@@ -1479,43 +1305,38 @@ FACT:
 		BuildPaletteOrder: 1000
 		Prerequisites: ~disabled
 		Description: Produces structures.
+	ValidFactions:
+		Factions: england, france, germany, russia, ukraine, iraq
 	ProvidesPrerequisite@ra:
-		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq
 		Prerequisite: structures.ra
-	ProvidesPrerequisite@allies:
-		Factions: allies, england, france, germany
+	ProvidesPrerequisiteValidatedFaction@allies:
+		Factions: england, france, germany
 		Prerequisite: structures.allies
-	ProvidesPrerequisite@alliesvanilla:
-		Factions: allies
-		Prerequisite: structures.alliesvanilla
-	ProvidesPrerequisite@england:
+	ProvidesPrerequisiteValidatedFaction@england:
 		Factions: england
 		Prerequisite: structures.england
-	ProvidesPrerequisite@france:
+	ProvidesPrerequisiteValidatedFaction@france:
 		Factions: france
 		Prerequisite: structures.france
-	ProvidesPrerequisite@germany:
+	ProvidesPrerequisiteValidatedFaction@germany:
 		Factions: germany
 		Prerequisite: structures.germany
-	ProvidesPrerequisite@soviet:
-		Factions: soviet, russia, ukraine, iraq
+	ProvidesPrerequisiteValidatedFaction@soviet:
+		Factions: russia, ukraine, iraq
 		Prerequisite: structures.soviet
-	ProvidesPrerequisite@sovietvanilla:
-		Factions: soviet
-		Prerequisite: structures.sovietvanilla
-	ProvidesPrerequisite@russia:
+	ProvidesPrerequisiteValidatedFaction@russia:
 		Factions: russia
 		Prerequisite: structures.russia
-	ProvidesPrerequisite@ukraine:
+	ProvidesPrerequisiteValidatedFaction@ukraine:
 		Factions: ukraine
 		Prerequisite: structures.ukraine
-	ProvidesPrerequisite@iraq:
+	ProvidesPrerequisiteValidatedFaction@iraq:
 		Factions: iraq
 		Prerequisite: structures.iraq
 	ProvidesPrerequisite@wall:
 		Prerequisite: structures.wall
-	ProvidesPrerequisite@sandbag:
-		Factions: allies, england, france, germany
+	ProvidesPrerequisiteValidatedFaction@sandbag:
+		Factions: england, france, germany
 		Prerequisite: structures.sandbag
 	Health:
 		HP: 150000
@@ -1671,6 +1492,8 @@ PROC:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
 	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite@anyrefinery:
+		Prerequisite: anyrefinery
 	HitShape:
 		Type: Rectangle
 			TopLeft: -1536, -512
@@ -1698,7 +1521,7 @@ SILO:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 35
-		Prerequisites: proc, ~structures.ra, ~techlevel.infonly
+		Prerequisites: anyrefinery, ~structures.ra, ~techlevel.infonly
 		Description: Stores excess refined\nTiberium, Ore and Gems.
 	Valued:
 		Cost: 150
@@ -1742,7 +1565,7 @@ HPAD:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 120
-		Prerequisites: dome, ~structures.ra, ~techlevel.infonly
+		Prerequisites: anyradar, ~structures.ra, ~techlevel.infonly
 		Description: Produces and reloads helicopters.
 	Valued:
 		Cost: 500
@@ -1783,38 +1606,13 @@ HPAD:
 	Power:
 		Amount: -10
 		RequiresCondition: !being-warped
-	ProvidesPrerequisite@allies:
-		Factions: allies, england, france, germany
+	ValidFactions:
+		Factions: england, france, germany, russia, ukraine, iraq
+	ProvidesPrerequisiteValidatedFaction@allies:
+		Factions: england, france, germany
 		Prerequisite: aircraft.allies
-	ProvidesPrerequisite@alliesvanilla:
-		Factions: allies
-		Prerequisite: aircraft.alliesvanilla
-	ProvidesPrerequisite@england:
-		Factions: england
-		Prerequisite: aircraft.england
-	ProvidesPrerequisite@france:
-		Factions: france
-		Prerequisite: aircraft.france
-	ProvidesPrerequisite@germany:
-		Factions: germany
-		Prerequisite: aircraft.germany
-	ProvidesPrerequisite@alliedstructure:
-		RequiresPrerequisites: structures.allies
-		Prerequisite: aircraft.allies
-	ProvidesPrerequisite@alliedvanillastructure:
-		RequiresPrerequisites: structures.alliesvanilla
-		Prerequisite: aircraft.alliesvanilla
-	ProvidesPrerequisite@englishstructure:
-		RequiresPrerequisites: structures.england
-		Prerequisite: aircraft.england
-	ProvidesPrerequisite@frenchstructure:
-		RequiresPrerequisites: structures.france
-		Prerequisite: aircraft.france
-	ProvidesPrerequisite@germanstructure:
-		RequiresPrerequisites: structures.germany
-		Prerequisite: aircraft.germany
-	ProvidesPrerequisite@soviets:
-		Factions: soviet, russia, ukraine, iraq
+	ProvidesPrerequisiteValidatedFaction@soviets:
+		Factions: russia, ukraine, iraq
 		Prerequisite: aircraft.soviet
 	ProvidesPrerequisite@all:
 		Prerequisite: aircraft.all
@@ -1844,7 +1642,7 @@ AFLD:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 130
-		Prerequisites: dome, ~structures.soviet, ~techlevel.low
+		Prerequisites: anyradar, ~structures.soviet, ~techlevel.low
 		Description: Produces and reloads aircraft.\n  Special Ability: Spy Plane\n  Special Ability: Paratroopers
 	Valued:
 		Cost: 500
@@ -1876,11 +1674,8 @@ AFLD:
 		PauseOnCondition: forceshield || invulnerability || being-warped
 	Reservable:
 	ProvidesPrerequisite@soviet:
-		Factions: soviet, russia, ukraine, iraq
+		Factions: russia, ukraine, iraq
 		Prerequisite: aircraft.soviet
-	ProvidesPrerequisite@sovietvanilla:
-		Factions: soviet
-		Prerequisite: aircraft.sovietvanilla
 	ProvidesPrerequisite@russia:
 		Factions: russia
 		Prerequisite: aircraft.russia
@@ -1890,24 +1685,8 @@ AFLD:
 	ProvidesPrerequisite@iraq:
 		Factions: iraq
 		Prerequisite: aircraft.iraq
-	ProvidesPrerequisite@sovietstructure:
-		RequiresPrerequisites: structures.soviet
-		Prerequisite: aircraft.soviet
-	ProvidesPrerequisite@sovietvanillastructure:
-		RequiresPrerequisites: structures.sovietvanilla
-		Prerequisite: aircraft.sovietvanilla
-	ProvidesPrerequisite@russianstructure:
-		RequiresPrerequisites: structures.russia
-		Prerequisite: aircraft.russia
-	ProvidesPrerequisite@ukrainianstructure:
-		RequiresPrerequisites: structures.ukraine
-		Prerequisite: aircraft.ukraine
-	ProvidesPrerequisite@iraqistructure:
-		RequiresPrerequisites: structures.iraq
-		Prerequisite: aircraft.iraq
 	AirstrikePower@spyplane:
 		OrderName: spyplane
-		Prerequisites: aircraft.soviet
 		Icon: spyplane
 		ChargeInterval: 3000
 		Description: Spy Plane
@@ -1926,7 +1705,7 @@ AFLD:
 		CircleSequence: circles
 	ParatroopersPower@paratroopers:
 		OrderName: paratroopers
-		Prerequisites: aircraft.soviet, !aircraft.russia, ~techlevel.low
+		Prerequisites: ~!aircraft.russia, ~techlevel.low
 		Icon: paratroopers
 		ChargeInterval: 7500
 		Description: Paratroopers
@@ -2111,7 +1890,7 @@ APWR:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 110
-		Prerequisites: dome, ~techlevel.medium, ~structures.ra, ~!structures.russia
+		Prerequisites: anyradar, ~techlevel.medium, ~structures.ra, ~!structures.russia
 		Description: Provides double the power of\na standard Power Plant.
 	Valued:
 		Cost: 500
@@ -2148,7 +1927,7 @@ APWR:
 TPWR:
 	Inherits: APWR
 	Buildable:
-		Prerequisites: dome, ~techlevel.medium, ~structures.russia
+		Prerequisites: anyradar, ~techlevel.medium, ~structures.russia
 		Description: Provides double the power of\na standard Power Plant.\n  Special Ability: Overload (Toggle)\n  Warning: Unstable when damaged and overloaded.
 	Valued:
 		Cost: 600
@@ -2215,7 +1994,7 @@ STEK:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 150
-		Prerequisites: weap, dome, ~structures.soviet, ~techlevel.high
+		Prerequisites: vehicles.any, anyradar, ~structures.soviet, ~techlevel.high
 		Description: Provides Soviet advanced technologies.
 	Valued:
 		Cost: 1500
@@ -2335,12 +2114,6 @@ BARR:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@infantryra:
 		Prerequisite: infantry.ra
-	ProvidesPrerequisite@soviet:
-		Factions: soviet, russia, ukraine, iraq
-		Prerequisite: infantry.soviet
-	ProvidesPrerequisite@sovietvanilla:
-		Factions: soviet
-		Prerequisite: infantry.sovietvanilla
 	ProvidesPrerequisite@russia:
 		Factions: russia
 		Prerequisite: infantry.russia
@@ -2350,23 +2123,7 @@ BARR:
 	ProvidesPrerequisite@iraq:
 		Factions: iraq
 		Prerequisite: infantry.iraq
-	ProvidesPrerequisite@sovietstructure:
-		RequiresPrerequisites: structures.soviet
-		Prerequisite: infantry.soviet
-	ProvidesPrerequisite@sovietvanillastructure:
-		RequiresPrerequisites: structures.sovietvanilla
-		Prerequisite: infantry.sovietvanilla
-	ProvidesPrerequisite@russianstructure:
-		RequiresPrerequisites: structures.russia
-		Prerequisite: infantry.russia
-	ProvidesPrerequisite@ukrainianstructure:
-		RequiresPrerequisites: structures.ukraine
-		Prerequisite: infantry.ukraine
-	ProvidesPrerequisite@iraqistructure:
-		RequiresPrerequisites: structures.iraq
-		Prerequisite: infantry.iraq
 	ProvidesPrerequisite@shok:
-		Factions: soviet, russia, ukraine, iraq
 		Prerequisite: infantry.shok
 	Power:
 		Amount: -20
@@ -2499,12 +2256,6 @@ TENT:
 		Prerequisite: infantry.ra
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
-	ProvidesPrerequisite@allies:
-		Factions: allies, england, france, germany
-		Prerequisite: infantry.allies
-	ProvidesPrerequisite@alliesvanilla:
-		Factions: allies
-		Prerequisite: infantry.alliesvanilla
 	ProvidesPrerequisite@england:
 		Factions: england
 		Prerequisite: infantry.england
@@ -2514,26 +2265,9 @@ TENT:
 	ProvidesPrerequisite@germany:
 		Factions: germany
 		Prerequisite: infantry.germany
-	ProvidesPrerequisite@alliedstructure:
-		RequiresPrerequisites: structures.allies
-		Prerequisite: infantry.allies
-	ProvidesPrerequisite@alliedvanillastructure:
-		RequiresPrerequisites: structures.alliesvanilla
-		Prerequisite: infantry.alliesvanilla
-	ProvidesPrerequisite@englishstructure:
-		RequiresPrerequisites: structures.england
-		Prerequisite: infantry.england
-	ProvidesPrerequisite@frenchstructure:
-		RequiresPrerequisites: structures.france
-		Prerequisite: infantry.france
-	ProvidesPrerequisite@germanstructure:
-		RequiresPrerequisites: structures.germany
-		Prerequisite: infantry.germany
 	ProvidesPrerequisite@mech:
-		Factions: allies, england, france, germany
 		Prerequisite: infantry.mech
 	ProvidesPrerequisite@medi:
-		Factions: allies, england, france, germany
 		Prerequisite: infantry.medi
 	Power:
 		Amount: -20
@@ -2560,7 +2294,7 @@ FIX:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 100
-		Prerequisites: weap, ~structures.ra, ~techlevel.medium
+		Prerequisites: vehicles.any, ~structures.ra, ~techlevel.medium
 		Description: Repairs vehicles for credits.
 	Valued:
 		Cost: 1200
@@ -2642,7 +2376,7 @@ FENC:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 20
-		Prerequisites: fact, ~structures.soviet, ~techlevel.low
+		Prerequisites: ~structures.soviet, ~techlevel.low
 		Description: Stops infantry and light vehicles.\n  Can be crushed by tanks.
 	Valued:
 		Cost: 30
@@ -2696,7 +2430,7 @@ CHAIN:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 20
-		Prerequisites: afac, ~structures.nod, ~techlevel.low
+		Prerequisites: ~structures.nod, ~techlevel.low
 		Description: Stops infantry and light vehicles.\n  Can be crushed by tanks.
 	Valued:
 		Cost: 30
@@ -2818,7 +2552,15 @@ ANYPOWER:
 	Buildable:
 		Description: Power Plant
 
-RADAR:
+ANYREFINERY:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Refinery
+	Buildable:
+		Description: Refinery
+
+ANYRADAR:
 	AlwaysVisible:
 	Interactable:
 	Tooltip:
@@ -2918,12 +2660,6 @@ PYLE:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@infantrytd:
 		Prerequisite: infantry.td
-	ProvidesPrerequisite@gdi:
-		Factions: gdi, talon, zocom, eagle
-		Prerequisite: infantry.gdi
-	ProvidesPrerequisite@gdivanilla:
-		Factions: gdi
-		Prerequisite: infantry.gdivanilla
 	ProvidesPrerequisite@talon:
 		Factions: talon
 		Prerequisite: infantry.talon
@@ -2933,23 +2669,7 @@ PYLE:
 	ProvidesPrerequisite@eagle:
 		Factions: eagle
 		Prerequisite: infantry.eagle
-	ProvidesPrerequisite@gdistructure:
-		RequiresPrerequisites: structures.gdi
-		Prerequisite: infantry.gdi
-	ProvidesPrerequisite@gdivanillastructure:
-		RequiresPrerequisites: structures.gdivanilla
-		Prerequisite: infantry.gdivanilla
-	ProvidesPrerequisite@talonstructure:
-		RequiresPrerequisites: structures.talon
-		Prerequisite: infantry.talon
-	ProvidesPrerequisite@zocomstructure:
-		RequiresPrerequisites: structures.zocom
-		Prerequisite: infantry.zocom
-	ProvidesPrerequisite@eaglestructure:
-		RequiresPrerequisites: structures.eagle
-		Prerequisite: infantry.eagle
 	ProvidesPrerequisite@medi:
-		Factions: gdi, talon, zocom, eagle
 		Prerequisite: infantry.medi
 	Power:
 		Amount: -20
@@ -3021,12 +2741,6 @@ HAND:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@infantrytd:
 		Prerequisite: infantry.td
-	ProvidesPrerequisite@nod:
-		Factions: nod, blackh, marked, legion
-		Prerequisite: infantry.nod
-	ProvidesPrerequisite@nodvanilla:
-		Factions: nod
-		Prerequisite: infantry.nodvanilla
 	ProvidesPrerequisite@blackh:
 		Factions: blackh
 		Prerequisite: infantry.blackh
@@ -3036,23 +2750,7 @@ HAND:
 	ProvidesPrerequisite@legion:
 		Factions: legion
 		Prerequisite: infantry.legion
-	ProvidesPrerequisite@nodstructure:
-		RequiresPrerequisites: structures.nod
-		Prerequisite: infantry.nod
-	ProvidesPrerequisite@nodvanillastructure:
-		RequiresPrerequisites: structures.nodvanilla
-		Prerequisite: infantry.nodvanilla
-	ProvidesPrerequisite@blackhstructure:
-		RequiresPrerequisites: structures.blackh
-		Prerequisite: infantry.blackh
-	ProvidesPrerequisite@markedstructure:
-		RequiresPrerequisites: structures.marked
-		Prerequisite: infantry.marked
-	ProvidesPrerequisite@legionstructure:
-		RequiresPrerequisites: structures.legion
-		Prerequisite: infantry.legion
 	ProvidesPrerequisite@mech:
-		Factions: nod, blackh, marked, legion
 		Prerequisite: infantry.mech
 	InfiltrateForSupportPower@inf:
 		Types: SabInfiltrate
@@ -3087,7 +2785,7 @@ WEAP.TD:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 80
-		Prerequisites: proc.td, ~structures.weap.td, ~structures.td, ~techlevel.low
+		Prerequisites: anyrefinery, ~structures.weap.td, ~structures.td, ~techlevel.low
 		IconPalette: chrometd
 		Description: Produces vehicles.
 	Valued:
@@ -3108,163 +2806,44 @@ WEAP.TD:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
+	ValidFactions:
+		Factions: talon, zocom, eagle, legion
 	ProvidesPrerequisite@any:
 		Prerequisite: vehicles.any
-	ProvidesPrerequisite@allies:
-		Factions: allies, england, france, germany
-		Prerequisite: vehicles.allies
 	ProvidesPrerequisite@td:
-		Factions: gdi, talon, zocom, eagle, nod, marked, blackh, legion
 		Prerequisite: vehicles.td
-	ProvidesPrerequisite@ra:
-		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq
-		Prerequisite: vehicles.ra
-	ProvidesPrerequisite@alliesvanilla:
-		Factions: allies
-		Prerequisite: vehicles.alliesvanilla
-	ProvidesPrerequisite@england:
-		Factions: england
-		Prerequisite: vehicles.england
-	ProvidesPrerequisite@france:
-		Factions: france
-		Prerequisite: vehicles.france
-	ProvidesPrerequisite@germany:
-		Factions: germany
-		Prerequisite: vehicles.germany
-	ProvidesPrerequisite@soviet:
-		Factions: soviet, russia, ukraine, iraq
-		Prerequisite: vehicles.soviet
-	ProvidesPrerequisite@sovietvanilla:
-		Factions: soviet
-		Prerequisite: vehicles.sovietvanilla
-	ProvidesPrerequisite@russia:
-		Factions: russia
-		Prerequisite: vehicles.russia
-	ProvidesPrerequisite@ukraine:
-		Factions: ukraine
-		Prerequisite: vehicles.ukraine
-	ProvidesPrerequisite@iraq:
-		Factions: iraq
-		Prerequisite: vehicles.iraq
-	ProvidesPrerequisite@gdi:
-		Factions: gdi, zocom, talon, eagle
+	ProvidesPrerequisiteValidatedFaction@gdi:
+		Factions: talon, zocom, eagle
+		ValidFactions:
 		Prerequisite: vehicles.gdi
-	ProvidesPrerequisite@talon:
+	ProvidesPrerequisiteValidatedFaction@talon:
 		Factions: talon
 		Prerequisite: vehicles.talon
-	ProvidesPrerequisite@zocom:
+	ProvidesPrerequisiteValidatedFaction@zocom:
 		Factions: zocom
 		Prerequisite: vehicles.zocom
-	ProvidesPrerequisite@eagle:
+	ProvidesPrerequisiteValidatedFaction@eagle:
 		Factions: eagle
 		Prerequisite: vehicles.eagle
-	ProvidesPrerequisite@nod:
-		Factions: nod, blackh, marked, legion
+	ProvidesPrerequisiteValidatedFaction@nod:
+		Factions: legion
 		Prerequisite: vehicles.nod
-	ProvidesPrerequisite@blackh:
-		Factions: blackh
-		Prerequisite: vehicles.blackh
-	ProvidesPrerequisite@marked:
-		Factions: marked
-		Prerequisite: vehicles.marked
-	ProvidesPrerequisite@legion:
+	ProvidesPrerequisiteValidatedFaction@legion:
 		Factions: legion
 		Prerequisite: vehicles.legion
-	ProvidesPrerequisite@scrin:
-		Factions: scrin, reaper, traveler, harbinger
-		Prerequisite: vehicles.scrin
-	ProvidesPrerequisite@reaper:
-		Factions: reaper
-		Prerequisite: vehicles.reaper
-	ProvidesPrerequisite@traveler:
-		Factions: traveler
-		Prerequisite: vehicles.traveler
-	ProvidesPrerequisite@harbinger:
-		Factions: harbinger
-		Prerequisite: vehicles.harbinger
-	ProvidesPrerequisite@alliedstructure:
-		RequiresPrerequisites: structures.allies
-		Prerequisite: vehicles.allies
-	ProvidesPrerequisite@alliedvanillastructure:
-		RequiresPrerequisites: structures.alliesvanilla
-		Prerequisite: vehicles.alliesvanilla
-	ProvidesPrerequisite@englishstructure:
-		RequiresPrerequisites: structures.england
-		Prerequisite: vehicles.england
-	ProvidesPrerequisite@frenchstructure:
-		RequiresPrerequisites: structures.france
-		Prerequisite: vehicles.france
-	ProvidesPrerequisite@germanstructure:
-		RequiresPrerequisites: structures.germany
-		Prerequisite: vehicles.germany
-	ProvidesPrerequisite@sovietstructure:
-		RequiresPrerequisites: structures.soviet
-		Prerequisite: vehicles.soviet
-	ProvidesPrerequisite@sovietvanillastructure:
-		RequiresPrerequisites: structures.sovietvanilla
-		Prerequisite: vehicles.sovietvanilla
-	ProvidesPrerequisite@russianstructure:
-		RequiresPrerequisites: structures.russia
-		Prerequisite: vehicles.russia
-	ProvidesPrerequisite@ukrainianstructure:
-		RequiresPrerequisites: structures.ukraine
-		Prerequisite: vehicles.ukraine
-	ProvidesPrerequisite@iraqistructure:
-		RequiresPrerequisites: structures.iraq
-		Prerequisite: vehicles.iraq
-	ProvidesPrerequisite@gdistructure:
-		RequiresPrerequisites: structures.gdi
-		Prerequisite: vehicles.gdi
-	ProvidesPrerequisite@gdivanillastructure:
-		RequiresPrerequisites: structures.gdivanilla
-		Prerequisite: vehicles.gdivanilla
-	ProvidesPrerequisite@talonstructure:
-		RequiresPrerequisites: structures.talon
-		Prerequisite: vehicles.talon
-	ProvidesPrerequisite@zocomstructure:
-		RequiresPrerequisites: structures.zocom
-		Prerequisite: vehicles.zocom
-	ProvidesPrerequisite@nodvanillastructure:
-		RequiresPrerequisites: structures.nodvanilla
-		Prerequisite: vehicles.nodvanilla
-	ProvidesPrerequisite@nodstructure:
-		RequiresPrerequisites: structures.nod
-		Prerequisite: vehicles.nod
-	ProvidesPrerequisite@blackhstructure:
-		RequiresPrerequisites: structures.blackh
-		Prerequisite: vehicles.blackh
-	ProvidesPrerequisite@markedstructure:
-		RequiresPrerequisites: structures.marked
-		Prerequisite: vehicles.marked
-	ProvidesPrerequisite@legionstructure:
-		RequiresPrerequisites: structures.legion
-		Prerequisite: vehicles.legion
-	ProvidesPrerequisite@scrinstructure:
-		RequiresPrerequisites: structures.scrin
-		Prerequisite: vehicles.scrin
-	ProvidesPrerequisite@reaperstructure:
-		RequiresPrerequisites: structures.reaper
-		Prerequisite: vehicles.reaper
-	ProvidesPrerequisite@travelerstructure:
-		RequiresPrerequisites: structures.traveler
-		Prerequisite: vehicles.traveler
-	ProvidesPrerequisite@harbingerstructure:
-		RequiresPrerequisites: structures.harbinger
-		Prerequisite: vehicles.harbinger
-	ProvidesPrerequisite@nodarty:
-		Factions: nod, blackh, marked, legion
+	ProvidesPrerequisiteValidatedFaction@nodarty:
+		Factions: legion
 		Prerequisite: vehicles.arty
 	ProvidesPrerequisite@apc2:
-		Factions: nod, blackh, marked, legion, gdi, zocom, talon, eagle
 		Prerequisite: vehicles.apc2
-	ProvidesPrerequisite@mtnk:
-		Factions: nod, blackh, marked, legion, gdi, zocom, eagle, talon
+	ProvidesPrerequisiteValidatedFaction@mtnk:
+		Factions: talon, zocom, eagle, legion
 		Prerequisite: vehicles.mtnk
-	ProvidesPrerequisite@msam:
-		Factions: gdi, zocom, talon, eagle
+	ProvidesPrerequisiteValidatedFaction@msam:
+		Factions: talon, zocom, eagle
 		Prerequisite: vehicles.msam
-	ProvidesPrerequisite@htnk:
-		Factions: gdi, talon, zocom, eagle
+	ProvidesPrerequisiteValidatedFaction@htnk:
+		Factions: talon, zocom, eagle
 		Prerequisite: vehicles.htnk
 	WithBuildingBib:
 	WithProductionDoorOverlay:
@@ -3319,7 +2898,7 @@ AIRS:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 80
-		Prerequisites: proc.td, ~structures.nod, ~!structures.legion, ~techlevel.low
+		Prerequisites: anyrefinery, ~structures.nod, ~!structures.legion, ~techlevel.low
 		IconPalette: chrometd
 		Description: Provides a dropzone\nfor vehicle reinforcements
 	Valued:
@@ -3356,153 +2935,27 @@ AIRS:
 		ExitType: StraightAhead
 		LandingFacing: 64
 		ReadyAudio: ReinforcementsArrived
+	ValidFactions:
+		Factions: blackh, marked
 	ProvidesPrerequisite@any:
 		Prerequisite: vehicles.any
-	ProvidesPrerequisite@allies:
-		Factions: allies, england, france, germany
-		Prerequisite: vehicles.allies
 	ProvidesPrerequisite@td:
-		Factions: gdi, talon, zocom, eagle, nod, marked, blackh, legion
 		Prerequisite: vehicles.td
-	ProvidesPrerequisite@ra:
-		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq
-		Prerequisite: vehicles.ra
-	ProvidesPrerequisite@alliesvanilla:
-		Factions: allies
-		Prerequisite: vehicles.alliesvanilla
-	ProvidesPrerequisite@england:
-		Factions: england
-		Prerequisite: vehicles.england
-	ProvidesPrerequisite@france:
-		Factions: france
-		Prerequisite: vehicles.france
-	ProvidesPrerequisite@germany:
-		Factions: germany
-		Prerequisite: vehicles.germany
-	ProvidesPrerequisite@soviet:
-		Factions: soviet, russia, ukraine, iraq
-		Prerequisite: vehicles.soviet
-	ProvidesPrerequisite@sovietvanilla:
-		Factions: soviet
-		Prerequisite: vehicles.sovietvanilla
-	ProvidesPrerequisite@russia:
-		Factions: russia
-		Prerequisite: vehicles.russia
-	ProvidesPrerequisite@ukraine:
-		Factions: ukraine
-		Prerequisite: vehicles.ukraine
-	ProvidesPrerequisite@iraq:
-		Factions: iraq
-		Prerequisite: vehicles.iraq
-	ProvidesPrerequisite@gdi:
-		Factions: gdi, talon, zocom
-		Prerequisite: vehicles.gdi
-	ProvidesPrerequisite@talon:
-		Factions: talon
-		Prerequisite: vehicles.talon
-	ProvidesPrerequisite@zocom:
-		Factions: zocom
-		Prerequisite: vehicles.zocom
-	ProvidesPrerequisite@eagle:
-		Factions: eagle
-		Prerequisite: vehicles.eagle
 	ProvidesPrerequisite@nod:
-		Factions: nod, blackh, marked, legion
 		Prerequisite: vehicles.nod
-	ProvidesPrerequisite@blackh:
+	ProvidesPrerequisiteValidatedFaction@blackh:
 		Factions: blackh
 		Prerequisite: vehicles.blackh
-	ProvidesPrerequisite@marked:
+	ProvidesPrerequisiteValidatedFaction@marked:
 		Factions: marked
 		Prerequisite: vehicles.marked
-	ProvidesPrerequisite@legion:
-		Factions: legion
-		Prerequisite: vehicles.legion
-	ProvidesPrerequisite@scrin:
-		Factions: scrin, reaper, traveler, harbinger
-		Prerequisite: vehicles.scrin
-	ProvidesPrerequisite@reaper:
-		Factions: reaper
-		Prerequisite: vehicles.reaper
-	ProvidesPrerequisite@traveler:
-		Factions: traveler
-		Prerequisite: vehicles.traveler
-	ProvidesPrerequisite@harbinger:
-		Factions: harbinger
-		Prerequisite: vehicles.harbinger
-	ProvidesPrerequisite@alliedstructure:
-		RequiresPrerequisites: structures.allies
-		Prerequisite: vehicles.allies
-	ProvidesPrerequisite@alliedvanillastructure:
-		RequiresPrerequisites: structures.alliesvanilla
-		Prerequisite: vehicles.alliesvanilla
-	ProvidesPrerequisite@englishstructure:
-		RequiresPrerequisites: structures.england
-		Prerequisite: vehicles.england
-	ProvidesPrerequisite@frenchstructure:
-		RequiresPrerequisites: structures.france
-		Prerequisite: vehicles.france
-	ProvidesPrerequisite@germanstructure:
-		RequiresPrerequisites: structures.germany
-		Prerequisite: vehicles.germany
-	ProvidesPrerequisite@sovietstructure:
-		RequiresPrerequisites: structures.soviet
-		Prerequisite: vehicles.soviet
-	ProvidesPrerequisite@sovietvanillastructure:
-		RequiresPrerequisites: structures.sovietvanilla
-		Prerequisite: vehicles.sovietvanilla
-	ProvidesPrerequisite@russianstructure:
-		RequiresPrerequisites: structures.russia
-		Prerequisite: vehicles.russia
-	ProvidesPrerequisite@ukrainianstructure:
-		RequiresPrerequisites: structures.ukraine
-		Prerequisite: vehicles.ukraine
-	ProvidesPrerequisite@iraqistructure:
-		RequiresPrerequisites: structures.iraq
-		Prerequisite: vehicles.iraq
-	ProvidesPrerequisite@gdivanillastructure:
-		RequiresPrerequisites: structures.gdivanilla
-		Prerequisite: vehicles.gdivanilla
-	ProvidesPrerequisite@talonstructure:
-		RequiresPrerequisites: structures.talon
-		Prerequisite: vehicles.talon
-	ProvidesPrerequisite@zocomstructure:
-		RequiresPrerequisites: structures.zocom
-		Prerequisite: vehicles.zocom
-	ProvidesPrerequisite@eaglestructure:
-		RequiresPrerequisites: structures.eagle
-		Prerequisite: vehicles.eagle
-	ProvidesPrerequisite@nodvanillastructure:
-		RequiresPrerequisites: structures.nodvanilla
-		Prerequisite: vehicles.nodvanilla
-	ProvidesPrerequisite@blackhstructure:
-		RequiresPrerequisites: structures.blackh
-		Prerequisite: vehicles.blackh
-	ProvidesPrerequisite@markedstructure:
-		RequiresPrerequisites: structures.marked
-		Prerequisite: vehicles.marked
-	ProvidesPrerequisite@legionstructure:
-		RequiresPrerequisites: structures.legion
-		Prerequisite: vehicles.legion
-	ProvidesPrerequisite@scrinstructure:
-		RequiresPrerequisites: structures.scrin
-		Prerequisite: vehicles.scrin
-	ProvidesPrerequisite@reaperstructure:
-		RequiresPrerequisites: structures.reaper
-		Prerequisite: vehicles.reaper
-	ProvidesPrerequisite@travelerstructure:
-		RequiresPrerequisites: structures.traveler
-		Prerequisite: vehicles.traveler
-	ProvidesPrerequisite@harbingerstructure:
-		RequiresPrerequisites: structures.harbinger
-		Prerequisite: vehicles.harbinger
-	ProvidesPrerequisite@nodarty:
-		Factions: nod, blackh, marked, legion
+	ProvidesPrerequisiteValidatedFaction@nodarty:
+		Factions: blackh, marked
 		Prerequisite: vehicles.arty
 	ProvidesPrerequisite@apc2:
 		Prerequisite: vehicles.apc2
 		RequiresPrerequisites: inf.gdi.stolen
-	ProvidesPrerequisite@howiupgrade:
+	ProvidesPrerequisiteValidatedFaction@howiupgrade:
 		Factions: blackh
 		Prerequisite: howi.upgrade
 	ParatroopersPower@airdrop:
@@ -3626,7 +3079,7 @@ NUK2:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 110
-		Prerequisites: hq, ~structures.td, ~techlevel.low
+		Prerequisites: anyradar, ~structures.td, ~techlevel.low
 		IconPalette: chrometd
 		Description: Provides double the power of\na standard Nuclear Power Plant.
 	Valued:
@@ -3724,40 +3177,41 @@ AFAC:
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
-	ProvidesPrerequisite@cnc:
-		Factions: gdi, talon, zocom, eagle, nod, blackh, marked, legion
+	ValidFactions:
+		Factions: talon, zocom, eagle, blackh, marked, legion
+	ProvidesPrerequisite@td:
 		Prerequisite: structures.td
-	ProvidesPrerequisite@gdi:
-		Factions: gdi, talon, zocom, eagle
+	ProvidesPrerequisiteValidatedFaction@gdi:
+		Factions: talon, zocom, eagle
 		Prerequisite: structures.gdi
-	ProvidesPrerequisite@talon:
+	ProvidesPrerequisiteValidatedFaction@talon:
 		Factions: talon
 		Prerequisite: structures.talon
-	ProvidesPrerequisite@zocom:
+	ProvidesPrerequisiteValidatedFaction@zocom:
 		Factions: zocom
 		Prerequisite: structures.zocom
-	ProvidesPrerequisite@eagle:
+	ProvidesPrerequisiteValidatedFaction@eagle:
 		Factions: eagle
 		Prerequisite: structures.eagle
-	ProvidesPrerequisite@nod:
-		Factions: nod, blackh, marked, legion
+	ProvidesPrerequisiteValidatedFaction@nod:
+		Factions: blackh, marked, legion
 		Prerequisite: structures.nod
-	ProvidesPrerequisite@blackh:
+	ProvidesPrerequisiteValidatedFaction@blackh:
 		Factions: blackh
 		Prerequisite: structures.blackh
-	ProvidesPrerequisite@marked:
+	ProvidesPrerequisiteValidatedFaction@marked:
 		Factions: marked
 		Prerequisite: structures.marked
-	ProvidesPrerequisite@legion:
+	ProvidesPrerequisiteValidatedFaction@legion:
 		Factions: legion
 		Prerequisite: structures.legion
-	ProvidesPrerequisite@weap.tdFAC:
-		Factions: gdi, talon, zocom, eagle, legion
+	ProvidesPrerequisiteValidatedFaction@weap.tdFAC:
+		Factions: talon, zocom, eagle, legion
 		Prerequisite: structures.weap.td
 	ProvidesPrerequisite@wall:
 		Prerequisite: structures.wall
-	ProvidesPrerequisite@sandbag:
-		Factions: gdi, talon, zocom, eagle
+	ProvidesPrerequisiteValidatedFaction@sandbag:
+		Factions: talon, zocom, eagle
 		Prerequisite: structures.sandbag
 	ProductionBar@Building:
 		ProductionType: Building
@@ -3800,7 +3254,7 @@ NSAM:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 100
-		Prerequisites: hq, ~structures.nod, ~techlevel.medium
+		Prerequisites: anyradar, ~structures.nod, ~techlevel.medium
 		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Aircraft\n  Cannot target Ground Units.
 	Valued:
 		Cost: 700
@@ -3851,7 +3305,7 @@ GTWR:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 50
-		Prerequisites: pyle, ~structures.gdi, ~techlevel.low
+		Prerequisites: infantry.any, ~structures.gdi, ~techlevel.low
 		IconPalette: chrometd
 		Description: Anti-infantry base defense.\n  Can detect cloaked units.\n  Strong vs Infantry, Light Armor\n  Weak vs Tanks
 	Valued:
@@ -3895,7 +3349,7 @@ ATWR:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 80
-		Prerequisites: hq, ~structures.gdi, ~!structures.zocom, ~techlevel.high
+		Prerequisites: anyradar, ~structures.gdi, ~!structures.zocom, ~techlevel.high
 		IconPalette: chrometd
 		Description: Advanced base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
 	Valued:
@@ -3939,7 +3393,7 @@ STWR:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 80
-		Prerequisites: hq, ~structures.zocom, ~techlevel.high
+		Prerequisites: anyradar, ~structures.zocom, ~techlevel.high
 		Description: Advanced base defense that emits devastating sonic shockwaves.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
 	Valued:
 		Cost: 1350
@@ -3994,7 +3448,7 @@ OBLI:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 80
-		Prerequisites: hq, ~structures.nod, ~techlevel.high
+		Prerequisites: anyradar, ~structures.nod, ~techlevel.high
 		IconPalette: chrometd
 		Description: Advanced experimental base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
 	Valued:
@@ -4062,7 +3516,7 @@ HQ:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 90
-		Prerequisites: proc.td, ~structures.td, ~techlevel.medium
+		Prerequisites: anyrefinery, ~structures.td, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Provides an overview of the battlefield.\n  Requires power to operate.
 	Valued:
@@ -4111,7 +3565,7 @@ HQ:
 		PauseOnCondition: disabled || being-warped
 	ParatroopersPower@Legionparatroopers:
 		OrderName: LegionParatroopers
-		Prerequisites: structures.legion, !cyborg.upgrade, hand, techlevel.medium
+		Prerequisites: ~radar.legion, !cyborg.upgrade, infantry.any, ~techlevel.medium
 		Icon: paratroopers
 		UnitType: c17
 		ChargeInterval: 7500
@@ -4135,7 +3589,7 @@ HQ:
 		PauseOnCondition: disabled || being-warped
 	ParatroopersPower@LegionparatroopersUPG:
 		OrderName: LegionParatroopersUPG
-		Prerequisites: structures.legion, cyborg.upgrade, hand, techlevel.medium
+		Prerequisites: ~radar.legion, cyborg.upgrade, infantry.any, ~techlevel.medium
 		Icon: paratroopers
 		UnitType: c17
 		ChargeInterval: 7500
@@ -4160,7 +3614,7 @@ HQ:
 	DropPodsPower@Zocom:
 		OrderName: droppods
 		Cursor: ability
-		Prerequisites: structures.zocom, techlevel.high
+		Prerequisites: ~radar.zocom, techlevel.high
 		PauseOnCondition: disabled || being-warped
 		Icon: droppods
 		IconPalette: chrometd
@@ -4182,7 +3636,7 @@ HQ:
 		ChargeInterval: 6000
 		Minimum: 500
 		Maximum: 2000
-		Prerequisites: structures.legion, techlevel.high
+		Prerequisites: ~radar.legion, techlevel.high
 		AllowMultiple: false
 		Description: Cash Hack
 		LongDesc: Steal up to $2000 credits from the enemy.\n\nTarget their Refinery to do so.
@@ -4196,7 +3650,7 @@ HQ:
 		PauseOnCondition: disabled || empdisable || being-warped
 	AirstrikePower@BlackhandFirebomb:
 		OrderName: infernobomb
-		Prerequisites: radar.blackh, techlevel.unrestricted
+		Prerequisites: ~radar.blackh, techlevel.unrestricted
 		Icon: infbomb
 		IconPalette: chrometd
 		ChargeInterval: 9000
@@ -4221,20 +3675,22 @@ HQ:
 	Power:
 		Amount: -40
 		RequiresCondition: !being-warped
-	ProvidesPrerequisite@radar:
-		Prerequisite: radar
-	ProvidesPrerequisite@nodrad:
-		Factions: nod, marked, blackh, legion
+	ValidFactions:
+		Factions: talon, zocom, eagle, blackh, marked, legion
+	ProvidesPrerequisiteValidatedFaction@anyradar:
+		Prerequisite: anyradar
+	ProvidesPrerequisiteValidatedFaction@zocrad:
+		Factions: zocom
+		Prerequisite: radar.zocom
+	ProvidesPrerequisiteValidatedFaction@nodrad:
+		Factions: blackh, marked, legion
 		Prerequisite: radar.nod
-	ProvidesPrerequisite@bhrad:
+	ProvidesPrerequisiteValidatedFaction@bhrad:
 		Factions: blackh
 		Prerequisite: radar.blackh
-	ProvidesPrerequisite@lrad:
+	ProvidesPrerequisiteValidatedFaction@legrad:
 		Factions: legion
 		Prerequisite: radar.legion
-	ProvidesPrerequisite@gdirad:
-		Factions: gdi, zocom, talon, eagle
-		Prerequisite: radar.gdi
 	ProvidesPrerequisite@buildingname:
 	ExternalCondition@JAMMED:
 		Condition: jammed
@@ -4327,7 +3783,7 @@ EYE:
 		TargetCircleColor: 4fff3390
 	IonCannonPower@surgicals:
 		OrderName: surgicalstrike
-		Prerequisites: structures.zocom, techlevel.unrestricted
+		Prerequisites: ~eye.zocom, techlevel.unrestricted
 		Icon: surgicalstrike
 		IconPalette: chrometd
 		ChargeInterval: 3500
@@ -4355,6 +3811,11 @@ EYE:
 	Power:
 		Amount: -200
 		RequiresCondition: !being-warped
+	ValidFactions:
+		Factions: talon, zocom, eagle
+	ProvidesPrerequisiteValidatedFaction@zoceye:
+		Factions: zocom
+		Prerequisite: eye.zocom
 	ProvidesPrerequisite@buildingname:
 	ExternalCondition@JAMMED:
 		Condition: jammed
@@ -4373,7 +3834,7 @@ REP:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 100
-		Prerequisites: vehicles.td, ~structures.td, ~techlevel.medium
+		Prerequisites: vehicles.any, ~structures.td, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Repairs vehicles for credits.
 	Valued:
@@ -4435,7 +3896,7 @@ HPAD.TD:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 120
-		Prerequisites: radar, ~structures.td, ~techlevel.infonly
+		Prerequisites: anyradar, ~structures.td, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Produces and reloads helicopters.
 	Valued:
@@ -4474,56 +3935,25 @@ HPAD.TD:
 	Power:
 		Amount: -10
 		RequiresCondition: !being-warped
+	ValidFactions:
+		Factions: talon, zocom, eagle, blackh, marked, legion
 	ProvidesPrerequisite@all:
 		Prerequisite: aircraft.all
-	ProvidesPrerequisite@gdi:
-		Factions: gdi, zocom, talon, eagle
+	ProvidesPrerequisiteValidatedFaction@gdi:
+		Factions: talon, zocom, eagle
 		Prerequisite: aircraft.gdi
-	ProvidesPrerequisite@gdistructure:
-		RequiresPrerequisites: structures.gdi
-		Prerequisite: aircraft.gdi
-	ProvidesPrerequisite@nod:
-		Factions: nod, marked, blackh, legion
-		Prerequisite: aircraft.nod
-	ProvidesPrerequisite@nodstructure:
-		RequiresPrerequisites: structures.nod
-		Prerequisite: aircraft.nod
-	ProvidesPrerequisite@blackh:
-		Factions: blackh
-		Prerequisite: aircraft.blackh
-	ProvidesPrerequisite@blackhstructure:
-		RequiresPrerequisites: structures.blackh
-		Prerequisite: aircraft.blackh
-	ProvidesPrerequisite@legion:
-		Factions: legion
-		Prerequisite: aircraft.legion
-	ProvidesPrerequisite@legionstructure:
-		RequiresPrerequisites: structures.legion
-		Prerequisite: aircraft.legion
-	ProvidesPrerequisite@marked:
-		Factions: marked
-		Prerequisite: aircraft.marked
-	ProvidesPrerequisite@markedstructure:
-		RequiresPrerequisites: structures.marked
-		Prerequisite: aircraft.marked
-	ProvidesPrerequisite@zocom:
-		Factions: zocom
-		Prerequisite: aircraft.zocom
-	ProvidesPrerequisite@zocomstructure:
-		RequiresPrerequisites: structures.zocom
-		Prerequisite: aircraft.zocom
-	ProvidesPrerequisite@talon:
-		Factions: talon
-		Prerequisite: aircraft.talon
-	ProvidesPrerequisite@talonstructure:
-		RequiresPrerequisites: structures.talon
-		Prerequisite: aircraft.talon
-	ProvidesPrerequisite@eagle:
+	ProvidesPrerequisiteValidatedFaction@eagle:
 		Factions: eagle
 		Prerequisite: aircraft.eagle
-	ProvidesPrerequisite@eaglestructure:
-		RequiresPrerequisites: structures.eagle
-		Prerequisite: aircraft.eagle
+	ProvidesPrerequisiteValidatedFaction@nod:
+		Factions: blackh, marked, legion
+		Prerequisite: aircraft.nod
+	ProvidesPrerequisiteValidatedFaction@blackh:
+		Factions: blackh
+		Prerequisite: aircraft.blackh
+	ProvidesPrerequisiteValidatedFaction@marked:
+		Factions: marked
+		Prerequisite: aircraft.marked
 	ProvidesPrerequisite@chinook:
 		Prerequisite: aircraft.chinook
 	ProvidesPrerequisite@buildingname:
@@ -4543,7 +3973,7 @@ HPAD.TD:
 		Proxy: powerproxy.paratroopers2
 	SpawnActorPower@GDIDropzone:
 		Actor: FLARE.dropzone
-		Prerequisites: ~radar.gdi, ~structures.gdi, ~!structures.eagle, ~techlevel.low
+		Prerequisites: ~aircraft.gdi, ~!aircraft.eagle, anyradar, ~techlevel.low
 		LifeTime: 280
 		OrderName: dropzone
 		Icon: orcaca
@@ -4556,7 +3986,7 @@ HPAD.TD:
 		SelectTargetSpeechNotification: SelectTarget
 	SpawnActorPower@GDIEagleDropzone:
 		Actor: FLARE.dropzone
-		Prerequisites: ~radar.gdi, ~structures.eagle, ~techlevel.low
+		Prerequisites: ~aircraft.gdi, ~aircraft.eagle, anyradar, ~techlevel.low
 		LifeTime: 280
 		OrderName: dropzoneeagle
 		Icon: orcaca
@@ -4648,6 +4078,8 @@ PROC.TD:
 		Amount: -30
 		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite@anyrefinery:
+		Prerequisite: anyrefinery
 	CashHackable:
 
 SILO.TD:
@@ -4661,7 +4093,7 @@ SILO.TD:
 		Name: Silo
 	Buildable:
 		BuildPaletteOrder: 35
-		Prerequisites: proc.td, ~structures.td, ~techlevel.infonly
+		Prerequisites: anyrefinery, ~structures.td, ~techlevel.infonly
 		Queue: Defense
 		IconPalette: chrometd
 		Description: Stores processed Tiberium, Ore and Gems
@@ -4710,7 +4142,7 @@ AFLD.GDI:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 130
-		Prerequisites: radar, ~structures.gdi, ~techlevel.high
+		Prerequisites: anyradar, ~structures.gdi, ~techlevel.high
 		Description: Produces and reloads aircraft.\n  Special Ability: Recon Drone
 	Valued:
 		Cost: 500
@@ -4738,33 +4170,19 @@ AFLD.GDI:
 		Produces: Aircraft, Plane
 		PauseOnCondition: forceshield || invulnerability || being-warped
 	Reservable:
-	ProvidesPrerequisite@GDI:
-		Factions: gdi, eagle, zocom, talon
+	ValidFactions:
+		Factions: talon, zocom, eagle
+	ProvidesPrerequisiteValidatedFaction@gdi:
 		Prerequisite: aircraft.gdi
-	ProvidesPrerequisite@gdistructure:
-		RequiresPrerequisites: structures.gdi
-		Prerequisite: aircraft.gdi
-	ProvidesPrerequisite@zocom:
-		Factions: zocom
-		Prerequisite: aircraft.zocom
-	ProvidesPrerequisite@zocomstructure:
-		RequiresPrerequisites: structures.zocom
-		Prerequisite: aircraft.zocom
-	ProvidesPrerequisite@talon:
+	ProvidesPrerequisiteValidatedFaction@talon:
 		Factions: talon
 		Prerequisite: aircraft.talon
-	ProvidesPrerequisite@talonstructure:
-		RequiresPrerequisites: structures.talon
-		Prerequisite: aircraft.talon
-	ProvidesPrerequisite@eagle:
+	ProvidesPrerequisiteValidatedFaction@eagle:
 		Factions: eagle
-		Prerequisite: aircraft.eagle
-	ProvidesPrerequisite@eaglestructure:
-		RequiresPrerequisites: structures.eagle
 		Prerequisite: aircraft.eagle
 	AirstrikePower@uav:
 		OrderName: gdiuav
-		Prerequisites: aircraft.gdi, !aircraft.talon
+		Prerequisites: ~!aircraft.talon
 		Icon: uavicon
 		ChargeInterval: 3600
 		Description: Recon Drone
@@ -4784,7 +4202,7 @@ AFLD.GDI:
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@uavST:
 		OrderName: gdiuavtalon
-		Prerequisites: aircraft.gdi, aircraft.talon
+		Prerequisites: ~aircraft.talon
 		Icon: uavicon
 		ChargeInterval: 2880
 		Description: Recon Drone
@@ -4804,7 +4222,7 @@ AFLD.GDI:
 		DirectionArrowAnimation: paradirection
 	InterceptorPower@EagleAirDef:
 		OrderName: interceptors
-		Prerequisites: aircraft.eagle, techlevel.unrestricted
+		Prerequisites: ~aircraft.eagle, techlevel.unrestricted
 		Icon: airsupport
 		ChargeInterval: 10500
 		Description: Interceptors
@@ -4858,7 +4276,7 @@ GTEK:
 		Queue: Building
 		BuildPaletteOrder: 150
 		IconPalette: chrometd
-		Prerequisites: weap.td, hq, ~structures.gdi, ~techlevel.high
+		Prerequisites: vehicles.any, anyradar, ~structures.gdi, ~techlevel.high
 		Description: Provides GDI advanced technologies.
 	Valued:
 		Cost: 1500
@@ -4892,8 +4310,13 @@ GTEK:
 	Power:
 		Amount: -200
 		RequiresCondition: !being-warped
+	ValidFactions:
+		Factions: talon, zocom, eagle
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
+	ProvidesPrerequisiteValidatedFaction@talgtek:
+		Factions: talon
+		Prerequisite: gtek.talon
 	ProvidesPrerequisite@buildingname:
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
@@ -4902,7 +4325,7 @@ GTEK:
 		Condition: forceshield
 		Range: 3
 		Duration: 250
-		Prerequisites: forceshield.enabled, techlevel.high
+		Prerequisites: forceshield.enabled, ~techlevel.high
 		Weapon: ForceShield
 		ActivationDelay: 5
 		AirburstAltitude: 0c0
@@ -4919,7 +4342,7 @@ GTEK:
 		PauseOnCondition: disabled || empdisable ||  being-warped
 	DetonateWeaponPower@Nrepair:
 		OrderName: nrepair
-		Prerequisites: ~structures.talon
+		Prerequisites: ~gtek.talon
 		Icon: nrepair
 		Cursor: repair
 		ChargeInterval: 7500
@@ -4965,7 +4388,7 @@ TMPL:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 140
-		Prerequisites: vehicles.nod, hq, ~structures.nod, ~techlevel.high
+		Prerequisites: vehicles.any, anyradar, ~structures.nod, ~techlevel.high
 		IconPalette: chrometd
 		Description: Provides Nod advanced technologies.\n  Requires power to operate.\n  Special Ability: Cluster Missile
 	Building:
@@ -4991,7 +4414,7 @@ TMPL:
 		OrderName: clustermissile
 		Icon: clustermissile
 		IconPalette: chrometd
-		Prerequisites: ~structures.nod, techlevel.high, techlevel.unrestricted
+		Prerequisites: ~techlevel.high, ~techlevel.unrestricted
 		Cursor: ability
 		ChargeInterval: 10500
 		Description: Cluster Missile
@@ -5029,7 +4452,7 @@ TMPL:
 		Condition: forceshield
 		Range: 3
 		Duration: 250
-		Prerequisites: forceshield.enabled, techlevel.high
+		Prerequisites: ~forceshield.enabled, ~techlevel.high
 		Weapon: ForceShield
 		ActivationDelay: 5
 		AirburstAltitude: 0c0
@@ -5048,7 +4471,7 @@ TMPL:
 	GrantExternalConditionPowerCA@Frenzy:
 		OrderName: frenzy
 		Icon: frenzy
-		Prerequisites: structures.marked, techlevel.high
+		Prerequisites: ~tmpl.marked, ~techlevel.high
 		ChargeInterval: 4500
 		Weapon: Frenzy
 		Description: Frenzy
@@ -5081,9 +4504,14 @@ TMPL:
 	InfiltrateForSupportPower@tec:
 		Types: SabInfiltrate
 		Proxy: tec.nod.stolen
+	ValidFactions:
+		Factions: blackh, marked, legion
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
+	ProvidesPrerequisiteValidatedFaction@markedtmpl:
+		Factions: marked
+		Prerequisite: tmpl.marked
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -5098,7 +4526,7 @@ PRIS:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 90
-		Prerequisites: radar, ~structures.allies, ~!structures.france, ~techlevel.high
+		Prerequisites: anyradar, ~structures.allies, ~!structures.france, ~techlevel.high
 		Description: Advanced experimental base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
 	Valued:
 		Cost: 1300
@@ -5217,12 +4645,6 @@ SPEN.nod:
 	Power:
 		Amount: -30
 		RequiresCondition: !being-warped
-	ProvidesPrerequisite@nod:
-		Factions: nod, marked, blackh, legion
-		Prerequisite: ships.nod
-	ProvidesPrerequisite@nodstructure:
-		RequiresPrerequisites: structures.nod
-		Prerequisite: ships.nod
 	ProvidesPrerequisite@buildingname:
 	MapEditorData:
 		ExcludeTilesets: INTERIOR
@@ -5329,12 +4751,6 @@ SYRD.gdi:
 	Power:
 		Amount: -30
 		RequiresCondition: !being-warped
-	ProvidesPrerequisite@gdi:
-		Factions: gdi, zocom, talon, eagle
-		Prerequisite: ships.gdi
-	ProvidesPrerequisite@gdistructure:
-		RequiresPrerequisites: structures.gdi
-		Prerequisite: ships.gdi
 	ProvidesPrerequisite@buildingname:
 	MapEditorData:
 		ExcludeTilesets: INTERIOR
@@ -5372,7 +4788,7 @@ HTUR:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 100
-		Prerequisites: radar, ~structures.france, ~techlevel.high
+		Prerequisites: anyradar, ~structures.france, ~techlevel.high
 		Description: Artillery base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Ground Units\n  Weak vs Aircraft
 	Valued:
 		Cost: 1650
@@ -5429,7 +4845,7 @@ GUN.Nod:
 	ActorPreviewPlaceBuildingPreview:
 		OverridePalette: placebuildingtd
 	Buildable:
-		Prerequisites: hand, ~structures.nod, ~techlevel.medium
+		Prerequisites: infantry.any, ~structures.nod, ~techlevel.medium
 		IconPalette: chrometd
 	Armament:
 		Weapon: TurretGunTD
@@ -5444,7 +4860,7 @@ LTUR:
 		Name: Laser Turret
 	Buildable:
 		BuildPaletteOrder: 60
-		Prerequisites: hand, ~structures.nod, ~techlevel.low
+		Prerequisites: infantry.any, ~structures.nod, ~techlevel.low
 		Description: Anti-infantry base defense.\n  Can detect cloaked units.\n  Strong vs Infantry, Light armor\n  Weak vs Tanks, Aircraft
 	Turreted:
 		InitialFacing: 34
@@ -5469,7 +4885,7 @@ TTUR:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 60
-		Prerequisites: barr, ~structures.iraq, ~techlevel.low
+		Prerequisites: infantry.any, ~structures.iraq, ~techlevel.low
 		IconPalette: chrometd
 		Description: Anti-infantry base defense.\n  Can detect cloaked units.\n  Strong vs Infantry, Light armor\n  Weak vs Tanks, Aircraft
 	Valued:
@@ -5587,7 +5003,7 @@ SGEN:
 CRAM:
 	Inherits: AGUN
 	Buildable:
-		Prerequisites: hq, ~structures.gdi, ~techlevel.medium
+		Prerequisites: anyradar, ~structures.gdi, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Aircraft\n  Weak vs Ground Units
 	-Armament:
