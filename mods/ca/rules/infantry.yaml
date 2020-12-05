@@ -364,7 +364,7 @@ SPY:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 90
-		Prerequisites: ~infantry.allies, dome, ~tent, ~techlevel.medium
+		Prerequisites: ~tent, anyradar, ~techlevel.medium
 		Description: Infiltrates enemy structures for intel or\nsabotage. Exact effect depends on the\nbuilding infiltrated.\n  Loses disguise when attacking.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft\n  Special Ability: Disguise
 	Valued:
 		Cost: 500
@@ -489,7 +489,7 @@ MEDI:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 40
-		Prerequisites: infantry.any, ~infantry.medi, ~techlevel.infonly
+		Prerequisites: ~infantry.medi, ~techlevel.infonly
 		Description: Heals nearby infantry.\n  Unarmed
 	Valued:
 		Cost: 200
@@ -680,7 +680,7 @@ THF:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 110
-		Prerequisites: ~barr, dome, ~techlevel.medium
+		Prerequisites: ~barr, anyradar, ~techlevel.medium
 		Description: Steals enemy credits and hijacks enemy vehicles.\n  Unarmed
 	Valued:
 		Cost: 500
@@ -746,7 +746,7 @@ SHOK:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 115
-		Prerequisites: ~infantry.any, structures.tsla, ~infantry.shok, ~techlevel.high
+		Prerequisites: structures.tsla, ~infantry.shok, ~techlevel.high
 		Description: Elite infantry with portable Tesla weapon.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft\n  Special Ability: Can over-charge Tesla Coil
 	Valued:
 		Cost: 350
@@ -803,7 +803,7 @@ N1:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 10
-		Prerequisites: ~!cyborg.upgrade, infantry.any, ~infantry.td, ~techlevel.infonly
+		Prerequisites: ~!cyborg.upgrade, ~infantry.td, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
@@ -849,7 +849,7 @@ N2:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 40
-		Prerequisites: infantry.any, ~infantry.gdi, ~techlevel.infonly
+		Prerequisites: ~pyle, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Infantry armed with grenades.\n  Strong vs Buildings, Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
@@ -919,7 +919,7 @@ N3:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 30
-		Prerequisites: ~!cyborg.upgrade, infantry.any, ~infantry.td, ~techlevel.infonly
+		Prerequisites: ~!cyborg.upgrade, ~infantry.td, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Anti-tank/anti-aircraft infantry.\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
 	Valued:
@@ -989,7 +989,7 @@ N4:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 70
-		Prerequisites: ~infantry.nod, ~!cyborg.upgrade, hand, ~techlevel.infonly
+		Prerequisites: ~hand, ~!cyborg.upgrade, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Anti-infantry/anti-structure unit.\n  Strong vs Infantry, Buildings\n  Weak vs Vehicles, Aircraft
 	Valued:
@@ -1175,7 +1175,7 @@ N6:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 60
-		Prerequisites: infantry.any, ~infantry.td, ~techlevel.infonly
+		Prerequisites: ~infantry.td, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Infiltrates and captures\nenemy structures.\n  Can repair friendly structures & bridges.\n  Special Ability: Repair\n  Unarmed
 	Valued:
@@ -1298,7 +1298,7 @@ BORI:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 120
-		Prerequisites: ~infantry.soviet, stek, ~techlevel.high
+		Prerequisites: ~barr, stek, ~techlevel.high
 		BuildLimit: 1
 		Description: Elite commando infantry. Armed with C4.\n  Can detect cloaked units.\n  Maximum 1 can be trained.\n  Strong vs Infantry, Buildings, Defenses\n  Weak vs Aircraft\n  Special Ability: Can call an Airstrike on Structures
 	Valued:
@@ -1376,7 +1376,7 @@ MORT:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 40
-		Prerequisites: ~inf.nod.stolen, ~infantry.any
+		Prerequisites: ~inf.nod.stolen
 		Description: Infantry armed with a Chemical Mortar.\n  Strong vs Buildings, Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
 		Cost: 250
@@ -1417,7 +1417,7 @@ SAB:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 90
-		Prerequisites: hq, ~infantry.nod, ~techlevel.medium
+		Prerequisites: anyradar, ~hand, ~techlevel.medium
 		Description: Covert infantry. Infiltrates enemy structures and steals technology.\n  Can detect spies and cloaked units.\n  Special Ability: Infiltrate\n  Special Ability: Stealth
 	Valued:
 		Cost: 500
@@ -1491,7 +1491,7 @@ ACOL:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 115
 		IconPalette: chrometd
-		Prerequisites: ~hand, hq, obli, ~infantry.marked, ~techlevel.high
+		Prerequisites: anyradar, obli, ~infantry.marked, ~techlevel.high
 		Description: Elite infantry with a laser weapon.\n  Strong vs Infantry, Light Armor\n  Weak vs Aircraft\n  Special Ability: Regains health on tiberium
 	Valued:
 		Cost: 400
@@ -1609,7 +1609,7 @@ JJET:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 59
-		Prerequisites: ~pyle, hq, ~infantry.gdi, ~techlevel.infonly
+		Prerequisites: anyradar, ~pyle, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Flying general-purpose infantry.\n Can detect cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
@@ -1815,7 +1815,7 @@ E8:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 70
-		Prerequisites: ~infantry.iraq, ttur, radar, ~techlevel.infonly
+		Prerequisites: ~infantry.iraq, ttur, anyradar, ~techlevel.infonly
 		Description: Anti-infantry unit.\n  Strong vs Infantry, Light Armor\n  Weak vs Tanks, Aircraft\n  Special Ability: Desolate Ground
 	Valued:
 		Cost: 600
