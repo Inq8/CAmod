@@ -569,6 +569,7 @@ ISUB:
 	Mobile:
 		TurnSpeed: 4
 		Speed: 30
+		PauseOnCondition: aiming || empdisable || being-warped
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 8c0
@@ -577,20 +578,24 @@ ISUB:
 		Range: 5c0
 	Armament@primary:
 		Weapon: ICBMLauncher
-		LocalOffset: 350,-151,0, 350,151,0
-		FireDelay: 1
-		PauseOnCondition: under-bridge
+	GrantConditionOnAttack:
+		Condition: aiming
+		RevokeDelay: 50
+		RevokeAll: false
 	MissileSpawnerMaster:
 		Actors: ICBM
 		RespawnTicks: 300
-		SpawnAllAtOnce: true
+	Exit:
+		SpawnOffset: 0,-128,0
 	AttackFrontal:
 		TargetFrozenActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: under-bridge || empdisable || being-warped
 	AutoTarget:
 		InitialStance: HoldFire
 	Selectable:
 		DecorationBounds: 44,44
+	Cloak:
+		PauseOnCondition: aiming || cloak-force-disabled || invisibility || being-warped || crossing-ford
 		
 ICBM:
 	Inherits: ^ShootableMissile
@@ -604,7 +609,7 @@ ICBM:
 	Tooltip@NoRow:
 		Name: ICBM
 	Health:
-		HP: 7000
+		HP: 7500
 	ShootableBallisticMissile:
 		LaunchAngle: 155
 		Speed: 140
@@ -622,6 +627,7 @@ ICBM:
 	Explodes:
 		Weapon: VisualExplodeAirborne
 		RequiresCondition: airborne
+	WithFacingSpriteBody:
 		
 CARR:
 	Inherits: ^Ship
