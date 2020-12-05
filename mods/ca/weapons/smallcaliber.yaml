@@ -41,19 +41,20 @@ FLAK-23-AG:
 	ValidTargets: Ground, Water
 	Projectile: Bullet
 		LaunchAngle: 62
-		Speed: 403
+		Speed: 520
 		Image: FLAKBALL
 		Blockable: True
 		Inaccuracy: 0c682
 	Warhead@1Dam: SpreadDamage
+		ValidStances: Enemy, Neutral, Ally
 		-Range:
 		Spread: 0c128
 		Falloff: 100, 37, 14, 5, 0
 		Damage: 2000
 		Versus:
-			None: 120
+			None: 110
 			Wood: 30
-			Light: 35
+			Light: 50
 			Heavy: 10
 			Concrete: 20
 			Brick: 20
@@ -198,7 +199,7 @@ Vulcan:
 			Wood: 50
 			Light: 50
 			Heavy: 20
-			Concrete: 20
+			Concrete: 46
 			Brick: 20
 	Warhead@4Dam_2: SpreadDamage
 		Spread: 128
@@ -209,7 +210,7 @@ Vulcan:
 			Wood: 50
 			Light: 50
 			Heavy: 20
-			Concrete: 20
+			Concrete: 46
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@4Eff_2: CreateEffect
@@ -230,7 +231,7 @@ Vulcan:
 			Wood: 50
 			Light: 50
 			Heavy: 20
-			Concrete: 20
+			Concrete: 46
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@6Eff_3: CreateEffect
@@ -251,7 +252,7 @@ Vulcan:
 			Wood: 50
 			Light: 50
 			Heavy: 20
-			Concrete: 20
+			Concrete: 46
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@8Eff_4: CreateEffect
@@ -272,7 +273,7 @@ Vulcan:
 			Wood: 50
 			Light: 50
 			Heavy: 20
-			Concrete: 20
+			Concrete: 46
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@10Eff_5: CreateEffect
@@ -293,7 +294,7 @@ Vulcan:
 			Wood: 50
 			Light: 50
 			Heavy: 20
-			Concrete: 20
+			Concrete: 46
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@12Eff_6: CreateEffect
@@ -468,6 +469,8 @@ MGatt.0G:
 	Report: vgatlo1a.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 200
+		Versus:
+			None: 210
 
 MGatt.1G:
 	Inherits: MGatt.0G

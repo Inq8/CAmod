@@ -44,7 +44,6 @@ DisintegratorBeamAA:
 
 IntruderDiscs:
 	Inherits: PlasmaDiscs
-	Range: 5c0
 	ReloadDelay: 85
 	Burst: 3
 	Projectile: Bullet
@@ -55,7 +54,7 @@ IntruderDiscs:
 			None: 70
 			Wood: 100
 			Light: 65
-			Heavy: 70
+			Heavy: 60
 			Concrete: 100
 			Brick: 85
 
@@ -140,7 +139,7 @@ GunWalkerZapAA:
 			Heavy: 100
 
 PlasmaDiscs:
-	Range: 5c512
+	Range: 5c0
 	Report: seeker-fire1.aud, seeker-fire2.aud, seeker-fire3.aud
 	ReloadDelay: 55
 	Burst: 5
@@ -156,7 +155,7 @@ PlasmaDiscs:
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 2000
+		Damage: 1900
 		Versus:
 			None: 40
 			Wood: 75
@@ -173,8 +172,8 @@ PlasmaDiscs:
 
 ^ScrinLaser:
 	ValidTargets: Ground, Water
-	Range: 7c512
-	ReloadDelay: 70
+	Range: 7c0
+	ReloadDelay: 85
 	Projectile: LaserZap
 		Duration: 20
 		Color: 00FF00AA
@@ -258,7 +257,7 @@ DevourerLaser:
 
 RiftCannon:
 	Inherits: ^ScrinLaser
-	Range: 6c0
+	Range: 7c0
 	Report: darkener-fire1.aud, darkener-fire2.aud
 	ReloadDelay: 120
 	Projectile: LaserZap
@@ -268,7 +267,7 @@ RiftCannon:
 		SecondaryBeamWidth: 90
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 10000
+		Damage: 9500
 		Versus:
 			None: 50
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
@@ -285,12 +284,12 @@ MiniRift:
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
-		Damage: 1200
+		Damage: 1150
 		Falloff: 100, 70, 0
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air, Creep
 		Versus:
-			None: 55
+			None: 65
 			Wood: 30
 			Light: 70
 			Heavy: 100
@@ -305,7 +304,7 @@ MiniRift:
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air, Creep
 		Versus:
-			None: 55
+			None: 65
 			Wood: 30
 			Light: 70
 			Heavy: 100
@@ -361,7 +360,7 @@ TripodLaser:
 		Damage: 900
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
-			None: 80
+			None: 95
 			Light: 70
 			Wood: 58
 			Heavy: 105
@@ -538,7 +537,7 @@ PlasmaTurretGun:
 		Versus:
 			None: 100
 			Wood: 25
-			Concrete: 10
+			Concrete: 30
 			Light: 35
 			Heavy: 20
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
@@ -655,12 +654,13 @@ RavagerShards:
 			None: 90
 			Wood: 55
 			Light: 100
-			Heavy: 85
+			Heavy: 80
 			Concrete: 75
 			Brick: 50
 
 LaceratorShards:
 	Inherits: RavagerShards
+	Range: 5c0
 	StartBurstReport: lacerator-fire1.aud, lacerator-fire2.aud
 	ReloadDelay: 35
 	Burst: 3
@@ -669,7 +669,7 @@ LaceratorShards:
 		ContrailColor: 4499FFAA
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
-		Damage: 2000
+		Damage: 1900
 		Versus:
 			None: 40
 			Wood: 75
