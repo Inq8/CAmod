@@ -22,24 +22,8 @@
 Name "${PACKAGING_DISPLAY_NAME}"
 OutFile "OpenRA.Setup.exe"
 
-ManifestDPIAware true
-
-Unicode True
-
-Function .onInit
-	!ifndef USE_PROGRAMFILES32
-		SetRegView 64
-	!endif
-	ReadRegStr $INSTDIR HKLM "Software\${PACKAGING_WINDOWS_REGISTRY_KEY}" "InstallDir"
-	StrCmp $INSTDIR "" unset done
-	unset:
-	!ifndef USE_PROGRAMFILES32
-		StrCpy $INSTDIR "$PROGRAMFILES64\${PACKAGING_WINDOWS_INSTALL_DIR_NAME}"
-	!else
-		StrCpy $INSTDIR "$PROGRAMFILES32\${PACKAGING_WINDOWS_INSTALL_DIR_NAME}"
-	!endif
-	done:
-FunctionEnd
+InstallDir "$PROGRAMFILES\${PACKAGING_WINDOWS_INSTALL_DIR_NAME}"
+InstallDirRegKey HKLM "Software\${PACKAGING_WINDOWS_REGISTRY_KEY}" "InstallDir"
 
 SetCompressor lzma
 RequestExecutionLevel admin
@@ -102,7 +86,7 @@ Section "Game" GAME
 	File "${SRCDIR}\SDL2-CS.dll"
 	File "${SRCDIR}\OpenAL-CS.dll"
 	File "${SRCDIR}\global mix database.dat"
-	File "${SRCDIR}\IP2LOCATION-LITE-DB1.IPV6.BIN.ZIP"
+;	File "${SRCDIR}\IP2LOCATION-LITE-DB1.IPV6.BIN.ZIP"
 	File "${SRCDIR}\eluant.dll"
 	File "${SRCDIR}\rix0rrr.BeaconLib.dll"
 	File "${DEPSDIR}\soft_oal.dll"
@@ -196,7 +180,7 @@ Function ${UN}Clean
 	Delete $INSTDIR\COPYING
 	Delete $INSTDIR\${MOD_ID}.ico
 	Delete "$INSTDIR\global mix database.dat"
-	Delete $INSTDIR\IP2LOCATION-LITE-DB1.IPV6.BIN.ZIP
+;	Delete $INSTDIR\IP2LOCATION-LITE-DB1.IPV6.BIN.ZIP
 	Delete $INSTDIR\soft_oal.dll
 	Delete $INSTDIR\SDL2.dll
 	Delete $INSTDIR\lua51.dll
