@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e
-command -v makensis >/dev/null 2>&1 || { echo >&2 "Windows packaging requires makensis."; exit 1; }
-command -v convert >/dev/null 2>&1 || { echo >&2 "Windows packaging requires ImageMagick."; exit 1; }
+command -v makensis >/dev/null 2>&1 || { echo >&2 "The OpenRA mod SDK Windows packaging requires makensis."; exit 1; }
+command -v convert >/dev/null 2>&1 || { echo >&2 "The OpenRA mod SDK Windows packaging requires ImageMagick."; exit 1; }
+command -v python3 >/dev/null 2>&1 || { echo >&2 "The OpenRA mod SDK Windows packaging requires python 3."; exit 1; }
 
 require_variables() {
 	missing=""
@@ -20,7 +21,7 @@ if [ $# -eq "0" ]; then
 	exit 1
 fi
 
-PACKAGING_DIR=$(python -c "import os; print(os.path.dirname(os.path.realpath('$0')))")
+PACKAGING_DIR=$(python3 -c "import os; print(os.path.dirname(os.path.realpath('$0')))")
 TEMPLATE_ROOT="${PACKAGING_DIR}/../../"
 ARTWORK_DIR="${PACKAGING_DIR}/../artwork/"
 
@@ -38,9 +39,9 @@ require_variables "MOD_ID" "ENGINE_DIRECTORY" "PACKAGING_DISPLAY_NAME" "PACKAGIN
 
 TAG="$1"
 if [ $# -eq "1" ]; then
-	OUTPUTDIR=$(python -c "import os; print(os.path.realpath('.'))")
+	OUTPUTDIR=$(python3 -c "import os; print(os.path.realpath('.'))")
 else
-	OUTPUTDIR=$(python -c "import os; print(os.path.realpath('$2'))")
+	OUTPUTDIR=$(python3 -c "import os; print(os.path.realpath('$2'))")
 fi
 
 BUILTDIR="${PACKAGING_DIR}/build"
@@ -77,8 +78,10 @@ function build_platform()
 {
 	if [ "$1" = "x86" ]; then
 		IS_WIN32="WIN32=true"
+		USE_PROGRAMFILES32="-DUSE_PROGRAMFILES32=true"
 	else
 		IS_WIN32="WIN32=false"
+		USE_PROGRAMFILES32=""
 	fi
 
 	pushd ${TEMPLATE_ROOT} > /dev/null
@@ -125,7 +128,7 @@ function build_platform()
 
  	echo "Building Windows setup.exe ($1)"
 	pushd "${PACKAGING_DIR}" > /dev/null
-	makensis -V2 -DSRCDIR="${BUILTDIR}" -DDEPSDIR="${SRC_DIR}/thirdparty/download/windows" -DTAG="${TAG}" -DMOD_ID="${MOD_ID}" -DPACKAGING_WINDOWS_INSTALL_DIR_NAME="${PACKAGING_WINDOWS_INSTALL_DIR_NAME}" -DPACKAGING_WINDOWS_LAUNCHER_NAME="${PACKAGING_WINDOWS_LAUNCHER_NAME}" -DPACKAGING_DISPLAY_NAME="${PACKAGING_DISPLAY_NAME}" -DPACKAGING_WEBSITE_URL="${PACKAGING_WEBSITE_URL}" -DPACKAGING_AUTHORS="${PACKAGING_AUTHORS}" -DPACKAGING_WINDOWS_REGISTRY_KEY="${PACKAGING_WINDOWS_REGISTRY_KEY}" -DPACKAGING_WINDOWS_LICENSE_FILE="${TEMPLATE_ROOT}/${PACKAGING_WINDOWS_LICENSE_FILE}" buildpackage.nsi
+	makensis -V2 -DSRCDIR="${BUILTDIR}" -DDEPSDIR="${SRC_DIR}/thirdparty/download/windows" -DTAG="${TAG}" -DMOD_ID="${MOD_ID}" -DPACKAGING_WINDOWS_INSTALL_DIR_NAME="${PACKAGING_WINDOWS_INSTALL_DIR_NAME}" -DPACKAGING_WINDOWS_LAUNCHER_NAME="${PACKAGING_WINDOWS_LAUNCHER_NAME}" -DPACKAGING_DISPLAY_NAME="${PACKAGING_DISPLAY_NAME}" -DPACKAGING_WEBSITE_URL="${PACKAGING_WEBSITE_URL}" -DPACKAGING_AUTHORS="${PACKAGING_AUTHORS}" -DPACKAGING_WINDOWS_REGISTRY_KEY="${PACKAGING_WINDOWS_REGISTRY_KEY}" -DPACKAGING_WINDOWS_LICENSE_FILE="${TEMPLATE_ROOT}/${PACKAGING_WINDOWS_LICENSE_FILE}" ${USE_PROGRAMFILES32} buildpackage.nsi
 	if [ $? -eq 0 ]; then
 		mv OpenRA.Setup.exe "${OUTPUTDIR}/${PACKAGING_INSTALLER_NAME}-${TAG}-${1}.exe"
 	fi

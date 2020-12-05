@@ -5,8 +5,13 @@
 #  Read the file to see which settings you can override
 
 set -e
-command -v python >/dev/null 2>&1 || { echo >&2 "The OpenRA mod template requires python."; exit 1; }
-command -v mono >/dev/null 2>&1 || { echo >&2 "The OpenRA mod template requires mono."; exit 1; }
+command -v mono >/dev/null 2>&1 || { echo >&2 "The OpenRA mod SDK requires mono."; exit 1; }
+if command -v python3 >/dev/null 2>&1; then
+	PYTHON="python3"
+else
+	command -v python >/dev/null 2>&1 || { echo >&2 "The OpenRA mod SDK requires python."; exit 1; }
+	PYTHON="python"
+fi
 
 require_variables() {
 	missing=""
@@ -20,7 +25,7 @@ require_variables() {
 	fi
 }
 
-TEMPLATE_LAUNCHER=$(python -c "import os; print(os.path.realpath('$0'))")
+TEMPLATE_LAUNCHER=$(${PYTHON} -c "import os; print(os.path.realpath('$0'))")
 TEMPLATE_ROOT=$(dirname "${TEMPLATE_LAUNCHER}")
 MOD_SEARCH_PATHS="${TEMPLATE_ROOT}/mods,./mods"
 
@@ -46,7 +51,7 @@ PROFILE_ID_WHITELIST="${ProfileIDWhitelist:-""}"
 
 ENABLE_SINGLE_PLAYER="${EnableSingleplayer:-"False"}"
 ENABLE_SYNC_REPORTS="${EnableSyncReports:-"False"}"
-EnableGeoIP="${EnableGeoIP:-"True"}"
+ENABLE_GEOIP="${EnableGeoIP:-"True"}"
 SHARE_ANONYMISED_IPS="${ShareAnonymizedIPs:-"True"}"
 
 SUPPORT_DIR="${SupportDir:-""}"
@@ -65,13 +70,12 @@ while true; do
      Server.Name="${NAME}" Server.ListenPort="${LISTEN_PORT}" \
      Server.AdvertiseOnline="${ADVERTISE_ONLINE}" \
      Server.Password="${PASSWORD}" \
-     Server.GeoIPDatabase="${GEOIP_DATABASE_PATH}" \
      Server.RequireAuthentication="${REQUIRE_AUTHENTICATION}" \
      Server.ProfileIDBlacklist="${PROFILE_ID_BLACKLIST}" \
      Server.ProfileIDWhitelist="${PROFILE_ID_WHITELIST}" \
      Server.EnableSingleplayer="${ENABLE_SINGLE_PLAYER}" \
      Server.EnableSyncReports="${ENABLE_SYNC_REPORTS}" \
-	 Server.EnableGeoIP="$EnableGeoIP" \
+     Server.EnableGeoIP="${ENABLE_GEOIP}" \
      Server.ShareAnonymizedIPs="${SHARE_ANONYMISED_IPS}" \
      Engine.SupportDir="${SUPPORT_DIR}"
 done
