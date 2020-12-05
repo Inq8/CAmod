@@ -112,7 +112,7 @@ DD:
 		Queue: Ship
 		BuildAtProductionType: Boat
 		BuildPaletteOrder: 40
-		Prerequisites: ~syrd, dome, ~techlevel.medium
+		Prerequisites: ~syrd, anyradar, ~techlevel.medium
 		Description: Fast multi-role ship.\n  Can detect submarines.\n  Strong vs Naval Units, Vehicles, Aircraft\n  Weak vs Infantry
 	Valued:
 		Cost: 1000
@@ -410,7 +410,7 @@ DD2:
 		BuildAtProductionType: Boat
 		BuildPaletteOrder: 40
 		IconPalette: chrometd
-		Prerequisites: ~syrd.gdi, hq, ~techlevel.medium
+		Prerequisites: ~syrd.gdi, anyradar, ~techlevel.medium
 		Description: Advanced warship armed with\na powerful railgun.\n  Can detect submarines.\n  Strong vs Naval Units, Vehicles\n  Weak vs Aircraft
 	Valued:
 		Cost: 1000
@@ -491,7 +491,7 @@ SS2:
 		Queue: Ship
 		BuildAtProductionType: Submarine
 		BuildPaletteOrder: 30
-		Prerequisites: ~spen.nod, ~ships.nod, ~techlevel.low
+		Prerequisites: ~spen.nod, ~techlevel.low
 		Description: Submerged anti-naval unit\narmed with torpedoes.\n  Can detect other submarines.\n  Strong vs Naval Units\n  Weak vs Ground Units\n  Special Ability: Submerge
 	Valued:
 		Cost: 950
@@ -554,7 +554,7 @@ ISUB:
 		Queue: Ship
 		BuildAtProductionType: Submarine
 		BuildPaletteOrder: 30
-		Prerequisites: ~spen.nod, tmpl, ~ships.nod, ~techlevel.high
+		Prerequisites: ~spen.nod, tmpl, ~techlevel.high
 		Description: Submerged unit armed with\nlong-range missiles.\n  Can detect other submarines.\n  Strong vs Buildings, Ground Units\n  Weak vs Naval Units, Aircraft\n  Special Ability: Submerge
 	Valued:
 		Cost: 2000
@@ -638,7 +638,7 @@ CARR:
 	Buildable:
 		Queue: Ship
 		BuildPaletteOrder: 60
-		Prerequisites: ~syrd.gdi, gtek, ~ships.gdi, ~techlevel.high
+		Prerequisites: ~syrd.gdi, gtek, ~techlevel.high
 		Description: Carrier that launches a squadron\nof drone aircraft.\n  Strong vs Vehicles, Buildings\n  Weak vs Aircraft
 	Valued:
 		Cost: 2000
@@ -697,7 +697,7 @@ CARR:
 	ProductionCostMultiplier@talonBonus:
 		Multiplier: 90
 		Prerequisites: structures.talon
-		
+
 SB:
 	Inherits: ^Ship
 	Inherits@AUTOTARGET: ^AutoTargetAllNavalAssaultMove

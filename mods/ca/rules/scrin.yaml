@@ -104,7 +104,7 @@ S2:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 35
-		Prerequisites: nerv, ~infantry.traveler, ~techlevel.infonly
+		Prerequisites: anyradar, ~infantry.traveler, ~techlevel.infonly
 		Description: Fast assault infantry.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
 		IconPalette: scrin
 	Valued:
@@ -175,7 +175,7 @@ S4:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 115
-		Prerequisites: nerv, ~infantry.scrin, ~techlevel.infonly
+		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.infonly
 		Description: Heavy assault infantry.\n  Can teleport short distances.\n  Strong vs Buildings, Defenses, Light Vehicles\n  Weak vs Infantry, Aircraft
 		IconPalette: chrome
 	Mobile:
@@ -445,7 +445,7 @@ SEEK:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: vehicles.any, ~vehicles.seek, ~techlevel.low
+		Prerequisites: ~vehicles.seek, ~techlevel.low
 		Queue: Vehicle
 		Description: Light hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles, Buildings\n  Weak vs Aircraft, Infantry
 		IconPalette: chrome
@@ -516,7 +516,7 @@ LACE:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: vehicles.any, ~vehicles.traveler, ~techlevel.low
+		Prerequisites: ~vehicles.traveler, ~techlevel.low
 		Queue: Vehicle
 		Description: Fast hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles, Buildings\n  Weak vs Aircraft, Infantry
 		IconPalette: chrome
@@ -651,7 +651,7 @@ CORR:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 65
-		Prerequisites: nerv, ~vehicles.scrin, ~techlevel.medium
+		Prerequisites: anyradar, ~vehicles.scrin, ~techlevel.medium
 		Queue: Vehicle
 		Description: Short-ranged anti-infantry/structure unit.\n  Strong vs Infantry, Buildings\n  Weak vs Tanks, Defenses, Aircraft
 		IconPalette: chrome
@@ -704,7 +704,7 @@ STCR:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 65
-		Prerequisites: nerv, ~vehicles.reaper, ~techlevel.medium
+		Prerequisites: anyradar, ~vehicles.reaper, ~techlevel.medium
 		Queue: Vehicle
 		Description: Slow moving, durable, short-range assault unit.\n  Regenerates rapidly.\n  Weak vs Aircraft
 		IconPalette: scrin
@@ -747,7 +747,7 @@ DEVO:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 135
-		Prerequisites: radar, ~vehicles.devo, ~techlevel.medium
+		Prerequisites: anyradar, ~vehicles.devo, ~techlevel.medium
 		Description: Medium hover tank.\n  Can move in any direction while firing.\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft
 		IconPalette: chrome
 	Valued:
@@ -804,7 +804,7 @@ DARK:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 135
-		Prerequisites: nerv, ~vehicles.harbinger, ~techlevel.medium
+		Prerequisites: anyradar, ~vehicles.harbinger, ~techlevel.medium
 		Description: Heavy hover tank with armed with rift cannon.\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft
 		IconPalette: scrin
 	Valued:
@@ -1037,7 +1037,7 @@ SMCV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 300
-		Prerequisites: srep, ~vehicles.scrin, ~techlevel.infonly
+		Prerequisites: repair, ~vehicles.scrin, ~techlevel.infonly
 		IconPalette: chrome
 		Description: Deploys into another Colony Platform.\n  Unarmed
 	RenderSprites:
@@ -1093,7 +1093,7 @@ STMR:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 40
-		Prerequisites: nerv, grav, ~aircraft.scrin, ~techlevel.medium
+		Prerequisites: anyradar, grav, ~aircraft.scrin, ~techlevel.medium
 		Description: Durable patrol craft.\n  Strong vs Infantry, Light Armor, Aircraft\n  Weak vs Tanks, Buildings
 		IconPalette: chrome
 	Valued:
@@ -1818,16 +1818,17 @@ SFAC:
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
+	ValidFactions:
+		Factions: reaper, traveler, harbinger
 	ProvidesPrerequisite@scrin:
-		Factions: scrin, reaper, traveler, harbinger
 		Prerequisite: structures.scrin
-	ProvidesPrerequisite@reaper:
+	ProvidesPrerequisiteValidatedFaction@reaper:
 		Factions: reaper
 		Prerequisite: structures.reaper
-	ProvidesPrerequisite@traveler:
+	ProvidesPrerequisiteValidatedFaction@traveler:
 		Factions: traveler
 		Prerequisite: structures.traveler
-	ProvidesPrerequisite@harbinger:
+	ProvidesPrerequisiteValidatedFaction@harbinger:
 		Factions: harbinger
 		Prerequisite: structures.harbinger
 	ProductionBar@Building:
@@ -1911,7 +1912,7 @@ REA2:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 110
-		Prerequisites: nerv, ~structures.scrin, ~techlevel.low
+		Prerequisites: anyradar, ~structures.scrin, ~techlevel.low
 		IconPalette: chrome
 		Description: Provides double the power of\na standard Reactor.
 	Valued:
@@ -2008,6 +2009,8 @@ PROC.SCRIN:
 		Amount: -30
 		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite@anyrefinery:
+		Prerequisite: anyrefinery
 	CashHackable:
 
 PORT:
@@ -2060,7 +2063,6 @@ PORT:
 	ProductionBar:
 		ProductionType: Infantry
 	ProvidesPrerequisite@scrin:
-		Factions: scrin, reaper, traveler, harbinger
 		Prerequisite: infantry.scrin
 	ProvidesPrerequisite@reaper:
 		Factions: reaper
@@ -2070,18 +2072,6 @@ PORT:
 		Prerequisite: infantry.traveler
 	ProvidesPrerequisite@harbinger:
 		Factions: harbinger
-		Prerequisite: infantry.harbinger
-	ProvidesPrerequisite@scrinstructure:
-		RequiresPrerequisites: structures.scrin
-		Prerequisite: infantry.scrin
-	ProvidesPrerequisite@reaperstructure:
-		RequiresPrerequisites: structures.reaper
-		Prerequisite: infantry.reaper
-	ProvidesPrerequisite@travelerstructure:
-		RequiresPrerequisites: structures.traveler
-		Prerequisite: infantry.traveler
-	ProvidesPrerequisite@harbingerstructure:
-		RequiresPrerequisites: structures.harbinger
 		Prerequisite: infantry.harbinger
 	Power:
 		Amount: -20
@@ -2139,154 +2129,29 @@ WSPH:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
+	ValidFactions:
+		Factions: reaper, traveler, harbinger
 	ProvidesPrerequisite@any:
 		Prerequisite: vehicles.any
-	ProvidesPrerequisite@allies:
-		Factions: allies, england, france, germany
-		Prerequisite: vehicles.allies
-	ProvidesPrerequisite@td:
-		Factions: gdi, talon, zocom, eagle, nod, marked, blackh, legion
-		Prerequisite: vehicles.td
-	ProvidesPrerequisite@ra:
-		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq
-		Prerequisite: vehicles.ra
-	ProvidesPrerequisite@alliesvanilla:
-		Factions: allies
-		Prerequisite: vehicles.alliesvanilla
-	ProvidesPrerequisite@england:
-		Factions: england
-		Prerequisite: vehicles.england
-	ProvidesPrerequisite@france:
-		Factions: france
-		Prerequisite: vehicles.france
-	ProvidesPrerequisite@germany:
-		Factions: germany
-		Prerequisite: vehicles.germany
-	ProvidesPrerequisite@soviet:
-		Factions: soviet, russia, ukraine, iraq
-		Prerequisite: vehicles.soviet
-	ProvidesPrerequisite@sovietvanilla:
-		Factions: soviet
-		Prerequisite: vehicles.sovietvanilla
-	ProvidesPrerequisite@russia:
-		Factions: russia
-		Prerequisite: vehicles.russia
-	ProvidesPrerequisite@ukraine:
-		Factions: ukraine
-		Prerequisite: vehicles.ukraine
-	ProvidesPrerequisite@iraq:
-		Factions: iraq
-		Prerequisite: vehicles.iraq
-	ProvidesPrerequisite@gdi:
-		Factions: gdi, zocom, talon, eagle
-		Prerequisite: vehicles.gdi
-	ProvidesPrerequisite@talon:
-		Factions: talon
-		Prerequisite: vehicles.talon
-	ProvidesPrerequisite@zocom:
-		Factions: zocom
-		Prerequisite: vehicles.zocom
-	ProvidesPrerequisite@eagle:
-		Factions: eagle
-		Prerequisite: vehicles.eagle
-	ProvidesPrerequisite@nod:
-		Factions: nod, blackh, marked, legion
-		Prerequisite: vehicles.nod
-	ProvidesPrerequisite@blackh:
-		Factions: blackh
-		Prerequisite: vehicles.blackh
-	ProvidesPrerequisite@marked:
-		Factions: marked
-		Prerequisite: vehicles.marked
-	ProvidesPrerequisite@legion:
-		Factions: legion
-		Prerequisite: vehicles.legion
 	ProvidesPrerequisite@scrin:
-		Factions: scrin, reaper, traveler, harbinger
 		Prerequisite: vehicles.scrin
-	ProvidesPrerequisite@reaper:
+	ProvidesPrerequisiteValidatedFaction@reaper:
 		Factions: reaper
 		Prerequisite: vehicles.reaper
-	ProvidesPrerequisite@traveler:
+	ProvidesPrerequisiteValidatedFaction@traveler:
 		Factions: traveler
 		Prerequisite: vehicles.traveler
-	ProvidesPrerequisite@harbinger:
+	ProvidesPrerequisiteValidatedFaction@harbinger:
 		Factions: harbinger
 		Prerequisite: vehicles.harbinger
-	ProvidesPrerequisite@alliedstructure:
-		RequiresPrerequisites: structures.allies
-		Prerequisite: vehicles.allies
-	ProvidesPrerequisite@alliedvanillastructure:
-		RequiresPrerequisites: structures.alliesvanilla
-		Prerequisite: vehicles.alliesvanilla
-	ProvidesPrerequisite@englishstructure:
-		RequiresPrerequisites: structures.england
-		Prerequisite: vehicles.england
-	ProvidesPrerequisite@frenchstructure:
-		RequiresPrerequisites: structures.france
-		Prerequisite: vehicles.france
-	ProvidesPrerequisite@germanstructure:
-		RequiresPrerequisites: structures.germany
-		Prerequisite: vehicles.germany
-	ProvidesPrerequisite@sovietstructure:
-		RequiresPrerequisites: structures.soviet
-		Prerequisite: vehicles.soviet
-	ProvidesPrerequisite@sovietvanillastructure:
-		RequiresPrerequisites: structures.sovietvanilla
-		Prerequisite: vehicles.sovietvanilla
-	ProvidesPrerequisite@russianstructure:
-		RequiresPrerequisites: structures.russia
-		Prerequisite: vehicles.russia
-	ProvidesPrerequisite@ukrainianstructure:
-		RequiresPrerequisites: structures.ukraine
-		Prerequisite: vehicles.ukraine
-	ProvidesPrerequisite@iraqistructure:
-		RequiresPrerequisites: structures.iraq
-		Prerequisite: vehicles.iraq
-	ProvidesPrerequisite@gdistructure:
-		RequiresPrerequisites: structures.gdi
-		Prerequisite: vehicles.gdi
-	ProvidesPrerequisite@gdivanillastructure:
-		RequiresPrerequisites: structures.gdivanilla
-		Prerequisite: vehicles.gdivanilla
-	ProvidesPrerequisite@talonstructure:
-		RequiresPrerequisites: structures.talon
-		Prerequisite: vehicles.talon
-	ProvidesPrerequisite@zocomstructure:
-		RequiresPrerequisites: structures.zocom
-		Prerequisite: vehicles.zocom
-	ProvidesPrerequisite@nodvanillastructure:
-		RequiresPrerequisites: structures.nodvanilla
-		Prerequisite: vehicles.nodvanilla
-	ProvidesPrerequisite@nodstructure:
-		RequiresPrerequisites: structures.nod
-		Prerequisite: vehicles.nod
-	ProvidesPrerequisite@blackhstructure:
-		RequiresPrerequisites: structures.blackh
-		Prerequisite: vehicles.blackh
-	ProvidesPrerequisite@markedstructure:
-		RequiresPrerequisites: structures.marked
-		Prerequisite: vehicles.marked
-	ProvidesPrerequisite@scrinstructure:
-		RequiresPrerequisites: structures.scrin
-		Prerequisite: vehicles.scrin
-	ProvidesPrerequisite@reaperstructure:
-		RequiresPrerequisites: structures.reaper
-		Prerequisite: vehicles.reaper
-	ProvidesPrerequisite@travelerstructure:
-		RequiresPrerequisites: structures.traveler
-		Prerequisite: vehicles.traveler
-	ProvidesPrerequisite@harbingerstructure:
-		RequiresPrerequisites: structures.harbinger
-		Prerequisite: vehicles.harbinger
-	ProvidesPrerequisite@seek:
-		Factions: scrin, reaper, harbinger
+	ProvidesPrerequisiteValidatedFaction@seek:
+		Factions: reaper, harbinger
 		Prerequisite: vehicles.seek
-	ProvidesPrerequisite@devo:
-		Factions: scrin, reaper, traveler
+	ProvidesPrerequisiteValidatedFaction@devo:
+		Factions: reaper, traveler
 		Prerequisite: vehicles.devo
-	ProvidesPrerequisite@tpod:
-		Factions: scrin, traveler, harbinger
+	ProvidesPrerequisiteValidatedFaction@tpod:
+		Factions: traveler, harbinger
 		Prerequisite: vehicles.tpod
 	WithBuildingBib:
 	RallyPoint:
@@ -2369,11 +2234,21 @@ NERV:
 	Power:
 		Amount: -40
 		RequiresCondition: !being-warped
-	ProvidesPrerequisite@radar:
-		Prerequisite: radar
+	ValidFactions:
+		Factions: reaper, traveler, harbinger
+	ProvidesPrerequisite@anyradar:
+		Prerequisite: anyradar
 	ProvidesPrerequisite@scrinrad:
-		Factions: scrin, reaper, traveler, harbinger
 		Prerequisite: radar.scrin
+	ProvidesPrerequisiteValidatedFaction@reaprad:
+		Factions: reaper
+		Prerequisite: radar.reaper
+	ProvidesPrerequisiteValidatedFaction@travrad:
+		Factions: traveler
+		Prerequisite: radar.traveler
+	ProvidesPrerequisiteValidatedFaction@harbrad:
+		Factions: harbinger
+		Prerequisite: radar.harbinger
 	ProvidesPrerequisite@buildingname:
 	ExternalCondition@JAMMED:
 		Condition: jammed
@@ -2408,7 +2283,7 @@ NERV:
 		Actor: BUZZ
 		OrderName: buzzerswarm
 		Icon: buzzpower
-		Prerequisites: structures.harbinger, !botplayer
+		Prerequisites: radar.harbinger, !botplayer
 		ChargeInterval: 4500
 		LifeTime: -1
 		Description: Buzzer Swarm
@@ -2421,7 +2296,7 @@ NERV:
 		Actor: BUZZ.AI
 		OrderName: buzzerswarmai
 		Icon: buzzpower
-		Prerequisites: structures.harbinger, botplayer
+		Prerequisites: radar.harbinger, botplayer
 		ChargeInterval: 4500
 		LifeTime: -1
 		Description: Buzzer Swarm (AI)
@@ -2434,7 +2309,7 @@ NERV:
 		OrderName: stormspike
 		Icon: stormspikepower
 		IconPalette: scrin
-		Prerequisites: structures.reaper
+		Prerequisites: radar.reaper
 		Cursor: ability
 		ChargeInterval: 4500
 		Description: Storm Spike
@@ -2452,7 +2327,7 @@ NERV:
 		Actor: ion.surge
 		OrderName: ionsurge
 		Icon: ionsurgepower
-		Prerequisites: structures.traveler
+		Prerequisites: radar.traveler
 		ChargeInterval: 4500
 		LifeTime: -1
 		Description: Ion Surge
@@ -2475,7 +2350,7 @@ SCRT:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 150
-		Prerequisites: wsph, nerv, ~structures.scrin, ~techlevel.high
+		Prerequisites: vehicles.any, anyradar, ~structures.scrin, ~techlevel.high
 		Description: Provides Scrin advanced technologies.
 		IconPalette: scrin
 	Valued:
@@ -2550,7 +2425,7 @@ GRAV:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 130
-		Prerequisites: nerv, ~structures.scrin, ~techlevel.medium
+		Prerequisites: anyradar, ~structures.scrin, ~techlevel.medium
 		Description: Produces Scrin aircraft.
 		IconPalette: scrin
 	Valued:
@@ -2584,29 +2459,7 @@ GRAV:
 	ProvidesPrerequisite@all:
 		Prerequisite: aircraft.all
 	ProvidesPrerequisite@scrin:
-		Factions: scrin, reaper, traveler, harbinger
 		Prerequisite: aircraft.scrin
-	ProvidesPrerequisite@reaper:
-		Factions: reaper
-		Prerequisite: aircraft.reaper
-	ProvidesPrerequisite@traveler:
-		Factions:  traveler
-		Prerequisite: aircraft.traveler
-	ProvidesPrerequisite@harbinger:
-		Factions: harbinger
-		Prerequisite: aircraft.harbinger
-	ProvidesPrerequisite@scrinstructure:
-		RequiresPrerequisites: structures.scrin
-		Prerequisite: aircraft.scrin
-	ProvidesPrerequisite@reaperstructure:
-		RequiresPrerequisites: structures.reaper
-		Prerequisite: aircraft.reaper
-	ProvidesPrerequisite@travelerstructure:
-		RequiresPrerequisites: structures.traveler
-		Prerequisite: aircraft.traveler
-	ProvidesPrerequisite@habringerstructure:
-		RequiresPrerequisites: structures.harbinger
-		Prerequisite: aircraft.harbinger
 	ProductionBar:
 		ProductionType: Aircraft
 	SupportPowerChargeBar:
@@ -3015,7 +2868,7 @@ SHAR:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 90
-		Prerequisites: nerv, ~structures.scrin, ~techlevel.medium
+		Prerequisites: anyradar, ~structures.scrin, ~techlevel.medium
 		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Strong vs Aircraft\n  Weak vs Ground Units
 		IconPalette: chrome
 	Valued:
@@ -3071,7 +2924,7 @@ SCOL:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 80
-		Prerequisites: nerv, ~structures.scrin, ~techlevel.high
+		Prerequisites: anyradar, ~structures.scrin, ~techlevel.high
 		Description: Advanced base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft
 		IconPalette: chrome
 	Valued:
