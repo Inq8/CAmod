@@ -11,9 +11,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using OpenRA.Traits;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
@@ -85,8 +85,8 @@ namespace OpenRA.Mods.CA.Traits
 			if (
 				validFactions != null
 				&& Info.Factions.Any()
-				&& !validFactions.Info.Factions.Contains(faction)
-			) {
+				&& !validFactions.Info.Factions.Contains(faction))
+			{
 				var players = self.World.Players.Where(p => !p.NonCombatant && p.Playable);
 
 				foreach (var p in players)
