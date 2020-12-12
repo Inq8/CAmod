@@ -743,6 +743,17 @@
 		RequiresSelection: False
 		ValidStances: Ally, Neutral, Enemy
 
+^HarvesterBalancer:
+	GrantConditionOnPrerequisite@HARVBALANCE:
+		Condition: global-balancedharvesting
+		Prerequisites: global.balancedharvesting
+	SpeedMultiplier@HARVBALANCE:
+		RequiresCondition: harv-balance
+		Modifier: 133
+	HarvesterBalancer:
+		Condition: harv-balance
+		RequiresCondition: global-balancedharvesting
+
 ^CrateCloak:
 	Cloak@CRATE-CLOAK:
 		InitialDelay: 90
