@@ -414,20 +414,13 @@ MINE:
 		Terrain: Ore
 	AppearsOnMapPreview:
 		Terrain: Ore
-	SeedsResourceCA@normalregrowth:
+	SeedsResourceCA:
 		Interval: 75
-		RequiresCondition: !fast-regrowth
-	SeedsResourceCA@fastregrowth:
-		Interval: 55
-		RequiresCondition: fast-regrowth
 	MapEditorData:
 		Categories: Resource spawn
 	RequiresSpecificOwners:
 		ValidOwnerNames: Neutral
 	ConditionManager:
-	GrantConditionOnPrerequisite@FASTREGROWTH:
-		Condition: fast-regrowth
-		Prerequisites: global.fastregrowth
 
 GMINE:
 	Inherits@1: ^SpriteActor
@@ -815,17 +808,9 @@ SPLIT2:
 	Inherits: ^TibTree
 	RenderSprites:
 		Palette: temptd
-	SeedsResourceCA@normalregrowth:
+	SeedsResourceCA:
 		ResourceType: Tiberium
 		Interval: 75
-		RequiresCondition: !fast-regrowth
-	SeedsResourceCA@fastregrowth:
-		ResourceType: Tiberium
-		Interval: 55
-		RequiresCondition: fast-regrowth
-	GrantConditionOnPrerequisite@FASTREGROWTH:
-		Condition: fast-regrowth
-		Prerequisites: global.fastregrowth
 	ConditionManager:
 	AppearsOnMapPreview:
 		Terrain: Tiberium
@@ -837,17 +822,9 @@ SPLIT3:
 	RenderSprites:
 		Image: split3
 		Palette: temptd
-	SeedsResourceCA@normalregrowth:
+	SeedsResourceCA:
 		ResourceType: Tiberium
 		Interval: 75
-		RequiresCondition: !fast-regrowth
-	SeedsResourceCA@fastregrowth:
-		ResourceType: Tiberium
-		Interval: 55
-		RequiresCondition: fast-regrowth
-	GrantConditionOnPrerequisite@FASTREGROWTH:
-		Condition: fast-regrowth
-		Prerequisites: global.fastregrowth
 	ConditionManager:
 	AppearsOnMapPreview:
 		Terrain: Tiberium
