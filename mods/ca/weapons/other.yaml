@@ -915,6 +915,10 @@ SonicZap:
 			Brick: 150
 			Wood: 180
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
+		
+SonicZap.Seek:
+	Inherits: SonicZap
+	Range: 7c128
 
 SonicZap.UPG:
 	Inherits: SonicZap
@@ -923,6 +927,10 @@ SonicZap.UPG:
 		Color: 00ffcc25
 	Warhead@1Dam: SpreadDamage
 		Damage: 1300
+		
+SonicZap.Seek.UPG:
+	Inherits: SonicZap.UPG
+	Range: 8c256
 
 SonicZapVisual:
 	ReloadDelay: 120
@@ -966,11 +974,19 @@ SonicZapVisual:
 			Wood: 200
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 
+SonicZapVisual.Seek:
+	Inherits: SonicZapVisual
+	Range: 7c128
+
 SonicZapVisual.UPG:
 	Inherits: SonicZapVisual
 	Range: 7c0
 	Projectile: AreaBeam
 		Color: 00ffc435
+		
+SonicZapVisual.Seek.UPG:
+	Inherits: SonicZapVisual.UPG
+	Range: 8c256
 
 Railgun:
 	ReloadDelay: 70

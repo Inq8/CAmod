@@ -140,7 +140,6 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void MovingToResources(Actor self, CPos targetCell)
 		{
-
 		}
 
 		public void MovingToRefinery(Actor self, Actor refineryActor)
