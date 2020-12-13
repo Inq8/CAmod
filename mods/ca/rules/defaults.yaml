@@ -193,7 +193,7 @@
 
 ^ConfigurableIncome:
 	RefineryResourceMultiplier@INCREASEDINCOME:
-		Modifier: 140
+		Modifier: 132
 		RequiresCondition: increased-income
 	GrantConditionOnPrerequisite@INCREASEDINCOME:
 		Condition: increased-income
@@ -742,6 +742,17 @@
 			concussion: On, On, Off
 		RequiresSelection: False
 		ValidStances: Ally, Neutral, Enemy
+
+^HarvesterBalancer:
+	GrantConditionOnPrerequisite@HARVBALANCE:
+		Condition: global-balancedharvesting
+		Prerequisites: global.balancedharvesting
+	SpeedMultiplier@HARVBALANCE:
+		RequiresCondition: harv-balance
+		Modifier: 133
+	HarvesterBalancer:
+		Condition: harv-balance
+		RequiresCondition: global-balancedharvesting
 
 ^CrateCloak:
 	Cloak@CRATE-CLOAK:
