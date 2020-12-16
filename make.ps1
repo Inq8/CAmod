@@ -24,13 +24,6 @@ function All-Command
 	{
 		Write-Host "Build succeeded." -ForegroundColor Green
 	}
-
-	if (!(Test-Path "IP2LOCATION-LITE-DB1.IPV6.BIN.ZIP") -Or (((get-date) - (get-item "IP2LOCATION-LITE-DB1.IPV6.BIN.ZIP").LastWriteTime) -gt (new-timespan -days 30)))
-	{
-		echo "Downloading IP2Location GeoIP database."
-		$target = Join-Path $pwd.ToString() "IP2LOCATION-LITE-DB1.IPV6.BIN.ZIP"
-		(New-Object System.Net.WebClient).DownloadFile("https://download.ip2location.com/lite/IP2LOCATION-LITE-DB1.IPV6.BIN.ZIP", $target)
-	}
 }
 
 function Clean-Command
@@ -240,6 +233,7 @@ function ParseConfigFile($fileName)
 			ReadConfigLine $line $name
 		}
 	}
+	$reader.Close()
 
 	$missing = @()
 	foreach ($name in $names)
@@ -315,7 +309,9 @@ if ($command -eq "all" -or $command -eq "clean")
 	$currentEngine = ""
 	if (Test-Path $versionFile)
 	{
-		$currentEngine = [System.IO.File]::OpenText($versionFile).ReadLine()
+		$reader = [System.IO.File]::OpenText($versionFile)
+		$currentEngine = $reader.ReadLine()
+		$reader.Close()
 	}
 
 	if ($currentEngine -ne "" -and $currentEngine -eq $env:ENGINE_VERSION)
