@@ -452,7 +452,7 @@ SEEK:
 		Description: Light hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles, Buildings\n  Weak vs Aircraft, Infantry
 		IconPalette: chrome
 	Mobile:
-		Speed: 135
+		Speed: 118
 	LeavesTrails:
 		Image: twake
 		Palette: effect
@@ -524,7 +524,7 @@ LACE:
 		IconPalette: chrome
 	Mobile:
 		TurnSpeed: 10
-		Speed: 157
+		Speed: 135
 	LeavesTrails:
 		Image: twake
 		Palette: effect
@@ -753,7 +753,7 @@ DEVO:
 		Description: Medium hover tank.\n  Can move in any direction while firing.\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft
 		IconPalette: chrome
 	Valued:
-		Cost: 1250
+		Cost: 1350
 	Tooltip:
 		Name: Devourer Tank
 	Selectable:
@@ -807,10 +807,10 @@ DARK:
 		Queue: Vehicle
 		BuildPaletteOrder: 135
 		Prerequisites: anyradar, ~vehicles.harbinger, ~techlevel.medium
-		Description: Heavy hover tank with armed with rift cannon.\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft
+		Description: Heavy hover tank with armed with rift cannon.\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft, Infantry
 		IconPalette: scrin
 	Valued:
-		Cost: 1250
+		Cost: 1350
 	Tooltip:
 		Name: Darkener Tank
 	Selectable:
@@ -818,12 +818,12 @@ DARK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 45000
+		HP: 40000
 	Armor:
 		Type: Heavy
 	Mobile:
 		TurnSpeed: 4
-		Speed: 73
+		Speed: 68
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -3099,6 +3099,7 @@ camera.minirift:
 		-StartSequence:
 	-AmbientSound:
 	-WithDeathAnimation:
+	-RevealsShroud:
 
 camera.resourcescan:
 	Inherits: CAMERA
