@@ -105,7 +105,7 @@ S2:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 35
 		Prerequisites: anyradar, ~infantry.traveler, ~techlevel.infonly
-		Description: Fast assault infantry.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
+		Description: Fast assault infantry.\n  Strong vs Light Vehicles, Infantry\n  Weak vs Tanks, Aircraft
 		IconPalette: scrin
 	Valued:
 		Cost: 300
@@ -178,7 +178,7 @@ S4:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 115
 		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.infonly
-		Description: Heavy assault infantry.\n  Can teleport short distances.\n  Strong vs Buildings, Defenses, Light Vehicles\n  Weak vs Infantry, Aircraft
+		Description: Heavy assault infantry with high burst damage.\n  Can teleport short distances.\n  Strong vs Buildings, Defenses, Vehicles\n  Weak vs Infantry, Aircraft
 		IconPalette: chrome
 	Mobile:
 		Speed: 49
@@ -202,7 +202,7 @@ S4:
 		Prerequisites: barracks.upgraded
 	-Crushable:
 	PortableChrono:
-		ChargeDelay: 250
+		ChargeDelay: 375
 		ChronoshiftSound: scrinport.aud
 	-TakeCover:
 
@@ -1107,7 +1107,7 @@ STMR:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 32000
+		HP: 30000
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0

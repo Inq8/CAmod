@@ -44,17 +44,17 @@ DisintegratorBeamAA:
 
 IntruderDiscs:
 	Inherits: PlasmaDiscs
-	ReloadDelay: 85
+	ReloadDelay: 100
 	Burst: 3
 	Projectile: Bullet
 		Inaccuracy: 0c128
 	Warhead@1Dam: SpreadDamage
 		Damage: 3250
 		Versus:
-			None: 70
+			None: 30
 			Wood: 100
 			Light: 65
-			Heavy: 60
+			Heavy: 85
 			Concrete: 100
 			Brick: 85
 
@@ -648,15 +648,15 @@ RavagerShards:
 		-ValidStances:
 		-Range:
 		-Falloff:
-		Spread: 128
-		Damage: 1000
+		Spread: 256
+		Damage: 1300
 		Versus:
-			None: 90
-			Wood: 55
-			Light: 100
-			Heavy: 80
-			Concrete: 75
-			Brick: 50
+			None: 100
+			Wood: 50
+			Light: 70
+			Heavy: 15
+			Concrete: 60
+			Brick: 15
 
 LaceratorShards:
 	Inherits: RavagerShards
