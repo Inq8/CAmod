@@ -4046,7 +4046,7 @@ BATF:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 230
-		Prerequisites: infantry.any, anyradar, ~vehicles.france, ~techlevel.low
+		Prerequisites: infantry.any, atek, ~vehicles.france, ~techlevel.high
 		Description: Tough infantry transport\nwith weapon ports for infantry.\n  Special Ability: Can crush enemy vehicles.
 	Valued:
 		Cost: 2000
@@ -4058,7 +4058,7 @@ BATF:
 		Type: Heavy
 	Mobile:
 		Locomotor: sheavytracked
-		Speed: 52
+		Speed: 50
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 		Voice: Move
 		TurnSpeed: 2
@@ -4160,7 +4160,7 @@ BATF.AI:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 230
-		Prerequisites: tent, anyradar, ~weap, ~vehicles.france, ~botplayer, ~techlevel.high
+		Prerequisites: infantry.any, atek, ~vehicles.france, ~botplayer, ~techlevel.high
 		Description: Tough infantry transport\nwith weapon ports for infantry.\n  Special Ability: Can crush enemy vehicles.
 	Cargo:
 		InitialUnits: e1,e1,e3,e3,e3
