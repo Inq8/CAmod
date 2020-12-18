@@ -222,7 +222,7 @@ InterloperLaser:
 CorrupterSpew:
 	Inherits: BigFlamer
 	StartBurstReport: corrupter-fire1.aud
-	ReloadDelay: 110
+	ReloadDelay: 115
 	Burst: 12
 	Projectile: Bullet
 		Image: chemall
@@ -575,17 +575,18 @@ StormColumnZap:
 
 StormcrawlerZap:
 	Inherits: StormColumnZap
-	ReloadDelay: 30
+	ReloadDelay: 10
 	Range: 4c768
 	StartBurstReport: stormcrawler-fire1.aud, stormcrawler-fire2.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 850
+		Damage: 1600
+		Spread: 341
 		Versus:
-			None: 175
-			Wood: 80
-			Concrete: 80
-			Light: 80
-			Heavy: 60
+			None: 100
+			Wood: 20
+			Concrete: 35
+			Light: 30
+			Heavy: 15
 
 ShardLauncher:
 	StartBurstReport: shard-fire1.aud
