@@ -1415,15 +1415,15 @@ FACT:
 
 PROC:
 	Inherits: ^Building
-	Inherits@2: ^ConfigurableIncome
-	Inherits@3: ^BotIncome
+	Inherits@2: ^BotIncome
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 60
 		Prerequisites: anypower, ~structures.ra, ~techlevel.infonly
 		Description: Processes raw Tiberium, Ore and Gems\ninto credits.
+		BuildDuration: 1400
 	Valued:
-		Cost: 2000
+		Cost: 1800
 	Tooltip:
 		Name: Ore Refinery
 	Building:
@@ -1452,7 +1452,7 @@ PROC:
 		PipCount: 17
 		Capacity: 2000
 	CustomSellValue:
-		Value: 300
+		Value: 400
 	GrantConditionOnPrerequisite@CHARVUPG:
 		Prerequisites: charv.upgrade
 		Condition: charv-upgraded
@@ -3999,8 +3999,7 @@ HPAD.TD:
 
 PROC.TD:
 	Inherits: ^BuildingTD
-	Inherits@2: ^ConfigurableIncome
-	Inherits@3: ^BotIncome
+	Inherits@2: ^BotIncome
 	HitShape:
 		Type: Rectangle
 			TopLeft: -1536, -512
@@ -4017,9 +4016,9 @@ PROC.TD:
 			marked: nodproc
 			legion: nodproc
 	Valued:
-		Cost: 2000
+		Cost: 1800
 	CustomSellValue:
-		Value: 300
+		Value: 400
 	Tooltip:
 		Name: Refinery
 	Buildable:
@@ -4028,6 +4027,7 @@ PROC.TD:
 		Queue: Building
 		IconPalette: chrometd
 		Description: Processes raw Tiberium, Ore and Gems\ninto credits.
+		BuildDuration: 1400
 	Building:
 		Footprint: _x_ xxx === ===
 		Dimensions: 3,4
