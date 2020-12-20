@@ -728,9 +728,9 @@ BuzzerVortex:
 	ValidTargets: Ground, Water
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
-		Spread: 1c0
-		Falloff: 100, 66, 33, 0
-		Damage: 1200
+		Spread: 682
+		Falloff: 100, 55, 20, 0
+		Damage: 800
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air, Creep
 		Versus:
@@ -740,6 +740,14 @@ BuzzerVortex:
 			Heavy: 30
 			Concrete: 40
 			Brick: 0
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		ValidStances: Enemy, Neutral
+	Warhead@2Dam: SpreadDamage
+		Spread: 1c0
+		Falloff: 100, 66, 33, 0
+		Damage: 900
+		ValidTargets: Cyborg
+		InvalidTargets: Air, Creep
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 		ValidStances: Enemy, Neutral
 
