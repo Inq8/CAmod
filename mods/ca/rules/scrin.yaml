@@ -1096,7 +1096,7 @@ STMR:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 40
 		Prerequisites: anyradar, grav, ~aircraft.scrin, ~techlevel.medium
-		Description: Durable patrol craft.\n  Strong vs Infantry, Light Armor, Aircraft\n  Weak vs Tanks, Buildings
+		Description: Durable patrol craft.\n  Can detect submarines.\n  Strong vs Infantry, Light Armor, Aircraft\n  Weak vs Tanks, Buildings
 		IconPalette: chrome
 	Valued:
 		Cost: 1650
@@ -1189,6 +1189,9 @@ STMR:
 		HealIfBelow: 100
 		DamageCooldown: 200
 		RequiresCondition: regen-upgrade
+	DetectCloaked:
+		CloakTypes: Underwater
+		Range: 8c0
 
 DEVA:
 	Inherits: ^Helicopter

@@ -407,12 +407,14 @@ StormriderZap:
 	ReloadDelay: 50
 	Burst: 4
 	BurstDelays: 12
+	ValidTargets: Ground, Water, Underwater
 	Projectile: Bullet
 		Image: scrinzapdown
 		Speed: 1c128
 		Palette: scrin
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
+		ValidTargets: Ground, Water, Underwater
 		Spread: 341
 		Damage: 2600
 		Versus:
@@ -422,12 +424,17 @@ StormriderZap:
 			Light: 85
 			Heavy: 35
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
-	Warhead@2Eff: CreateEffect
+	Warhead@2Dam: SpreadDamage
+		ValidTargets: Water
+		Spread: 341
+		Damage: 1000
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
 		Image: scrinzaphit
 		ValidTargets: Ground, Ship, Air, Trees
-	Warhead@3EffWater: CreateEffect
+	Warhead@4EffWater: CreateEffect
 		Explosions: water_piffs
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
