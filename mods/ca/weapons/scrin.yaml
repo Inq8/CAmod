@@ -44,17 +44,16 @@ DisintegratorBeamAA:
 
 IntruderDiscs:
 	Inherits: PlasmaDiscs
-	ReloadDelay: 85
+	ReloadDelay: 100
 	Burst: 3
 	Projectile: Bullet
 		Inaccuracy: 0c128
 	Warhead@1Dam: SpreadDamage
 		Damage: 3250
 		Versus:
-			None: 70
 			Wood: 100
 			Light: 65
-			Heavy: 60
+			Heavy: 85
 			Concrete: 100
 			Brick: 85
 
@@ -157,11 +156,11 @@ PlasmaDiscs:
 		Spread: 341
 		Damage: 1900
 		Versus:
-			None: 40
-			Wood: 75
+			None: 30
+			Wood: 65
 			Light: 70
 			Heavy: 100
-			Concrete: 85
+			Concrete: 50
 			Brick: 50
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
@@ -223,7 +222,7 @@ InterloperLaser:
 CorrupterSpew:
 	Inherits: BigFlamer
 	StartBurstReport: corrupter-fire1.aud
-	ReloadDelay: 110
+	ReloadDelay: 115
 	Burst: 12
 	Projectile: Bullet
 		Image: chemall
@@ -269,7 +268,7 @@ RiftCannon:
 		Spread: 341
 		Damage: 9500
 		Versus:
-			None: 50
+			None: 15
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@Spawn: SpawnActor
 		Actors: camera.minirift
@@ -283,13 +282,13 @@ MiniRift:
 	ValidTargets: Ground, Water
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
-		Spread: 1c0
-		Damage: 1150
+		Spread: 682
+		Damage: 1200
 		Falloff: 100, 70, 0
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air, Creep
 		Versus:
-			None: 65
+			None: 10
 			Wood: 30
 			Light: 70
 			Heavy: 100
@@ -298,13 +297,13 @@ MiniRift:
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 		ValidStances: Enemy, Neutral
 	Warhead@2Dam: SpreadDamage
-		Spread: 1c0
+		Spread: 682
 		Damage: 300
 		Falloff: 100, 70, 0
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air, Creep
 		Versus:
-			None: 65
+			None: 10
 			Wood: 30
 			Light: 70
 			Heavy: 100
@@ -408,12 +407,14 @@ StormriderZap:
 	ReloadDelay: 50
 	Burst: 4
 	BurstDelays: 12
+	ValidTargets: Ground, Water, Underwater
 	Projectile: Bullet
 		Image: scrinzapdown
 		Speed: 1c128
 		Palette: scrin
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
+		ValidTargets: Ground, Water, Underwater
 		Spread: 341
 		Damage: 2600
 		Versus:
@@ -423,12 +424,17 @@ StormriderZap:
 			Light: 85
 			Heavy: 35
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
-	Warhead@2Eff: CreateEffect
+	Warhead@2Dam: SpreadDamage
+		ValidTargets: Water
+		Spread: 341
+		Damage: 1000
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
 		Image: scrinzaphit
 		ValidTargets: Ground, Ship, Air, Trees
-	Warhead@3EffWater: CreateEffect
+	Warhead@4EffWater: CreateEffect
 		Explosions: water_piffs
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
@@ -576,17 +582,17 @@ StormColumnZap:
 
 StormcrawlerZap:
 	Inherits: StormColumnZap
-	ReloadDelay: 30
+	ReloadDelay: 10
 	Range: 4c768
 	StartBurstReport: stormcrawler-fire1.aud, stormcrawler-fire2.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 850
+		Damage: 2000
 		Versus:
-			None: 175
-			Wood: 80
-			Concrete: 80
-			Light: 80
-			Heavy: 60
+			None: 100
+			Wood: 15
+			Concrete: 28
+			Light: 25
+			Heavy: 10
 
 ShardLauncher:
 	StartBurstReport: shard-fire1.aud
@@ -648,15 +654,15 @@ RavagerShards:
 		-ValidStances:
 		-Range:
 		-Falloff:
-		Spread: 128
-		Damage: 1000
+		Spread: 256
+		Damage: 1300
 		Versus:
-			None: 90
-			Wood: 55
-			Light: 100
-			Heavy: 80
-			Concrete: 75
-			Brick: 50
+			None: 100
+			Wood: 50
+			Light: 70
+			Heavy: 15
+			Concrete: 60
+			Brick: 15
 
 LaceratorShards:
 	Inherits: RavagerShards
@@ -671,11 +677,11 @@ LaceratorShards:
 		Spread: 128
 		Damage: 1900
 		Versus:
-			None: 40
-			Wood: 75
+			None: 30
+			Wood: 65
 			Light: 70
 			Heavy: 100
-			Concrete: 85
+			Concrete: 50
 			Brick: 50
 	Warhead@3Eff: CreateEffect
 		Image: bshardhit
@@ -729,9 +735,9 @@ BuzzerVortex:
 	ValidTargets: Ground, Water
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
-		Spread: 1c0
-		Falloff: 100, 66, 33, 0
-		Damage: 1200
+		Spread: 682
+		Falloff: 100, 55, 20, 0
+		Damage: 800
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air, Creep
 		Versus:
@@ -741,6 +747,14 @@ BuzzerVortex:
 			Heavy: 30
 			Concrete: 40
 			Brick: 0
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		ValidStances: Enemy, Neutral
+	Warhead@2Dam: SpreadDamage
+		Spread: 1c0
+		Falloff: 100, 66, 33, 0
+		Damage: 900
+		ValidTargets: Cyborg
+		InvalidTargets: Air, Creep
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 		ValidStances: Enemy, Neutral
 

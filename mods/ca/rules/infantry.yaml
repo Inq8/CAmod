@@ -180,7 +180,7 @@ E3:
 	Health:
 		HP: 2500
 	Mobile:
-		Speed: 36
+		Speed: 38
 	Armament@PRIMARY:
 		Weapon: RedEye
 		LocalOffset: 0,0,555
@@ -203,25 +203,25 @@ E3:
 		LocalOffset: 0,0,555
 		PauseOnCondition: !ammo || being-warped
 		RequiresCondition: cryr-upgrade
-	Armament@Garrison:
-		Name: mounted
-		Weapon: DragonE
-		PauseOnCondition: !ammo || being-warped
-		RequiresCondition: !cryr-upgrade
 	Armament@GarrisonAA:
 		Name: mountedaa
 		Weapon: RedEyeE
 		PauseOnCondition: !ammo || being-warped
 		RequiresCondition: !cryr-upgrade
-	Armament@GarrisonUPG:
-		Name: mounted
+	Armament@GarrisonAAUPG:
+		Name: mountedaa
 		Weapon: RedEye.CRYO
 		LocalOffset: 0,0,555
 		PauseOnCondition: !ammo || being-warped
 		RequiresCondition: cryr-upgrade
-	Armament@GarrisonAAUPG:
-		Name: mountedaa
-		Weapon: Dragon.CRYO
+	Armament@Garrison:
+		Name: mounted
+		Weapon: DragonE
+		PauseOnCondition: !ammo || being-warped
+		RequiresCondition: !cryr-upgrade
+	Armament@GarrisonUPG:
+		Name: mounted
+		Weapon: DragonE.CRYO
 		LocalOffset: 0,0,555
 		PauseOnCondition: !ammo || being-warped
 		RequiresCondition: cryr-upgrade
@@ -931,7 +931,7 @@ N3:
 	Health:
 		HP: 2500
 	Mobile:
-		Speed: 36
+		Speed: 38
 	Armament@PRIMARY:
 		Weapon: RedEye
 		LocalOffset: 0,0,555
@@ -1223,7 +1223,7 @@ SNIP:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 105
-		Prerequisites: ~infantry.england, dome, ~techlevel.medium
+		Prerequisites: ~infantry.england, anyradar, ~techlevel.medium
 		Description: Elite marksman infantry.\n Armed with a powerful sniper rifle.\n\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft, Buildings, Defenses\n  Special Ability: Camouflage
 	Valued:
 		Cost: 550

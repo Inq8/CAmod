@@ -105,7 +105,7 @@ S2:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 35
 		Prerequisites: anyradar, ~infantry.traveler, ~techlevel.infonly
-		Description: Fast assault infantry.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
+		Description: Fast assault infantry.\n  Strong vs Light Vehicles, Infantry\n  Weak vs Tanks, Aircraft
 		IconPalette: scrin
 	Valued:
 		Cost: 300
@@ -116,7 +116,7 @@ S2:
 	Health:
 		HP: 8000
 	Mobile:
-		Speed: 100
+		Speed: 90
 	Armament@PRIMARY:
 		Weapon: RavagerShards
 		LocalOffset: 0,-100,250, 0,100,250
@@ -149,7 +149,7 @@ S3:
 	Health:
 		HP: 2500
 	Mobile:
-		Speed: 36
+		Speed: 38
 	Armament@PRIMARY:
 		Weapon: DisintegratorBeamAA
 		LocalOffset: 150,0,400
@@ -178,7 +178,7 @@ S4:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 115
 		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.infonly
-		Description: Heavy assault infantry.\n  Can teleport short distances.\n  Strong vs Buildings, Defenses, Light Vehicles\n  Weak vs Infantry, Aircraft
+		Description: Heavy assault infantry with high burst damage.\n  Can teleport short distances.\n  Strong vs Buildings, Defenses, Vehicles\n  Weak vs Infantry, Aircraft
 		IconPalette: chrome
 	Mobile:
 		Speed: 49
@@ -202,7 +202,7 @@ S4:
 		Prerequisites: barracks.upgraded
 	-Crushable:
 	PortableChrono:
-		ChargeDelay: 250
+		ChargeDelay: 375
 		ChronoshiftSound: scrinport.aud
 	-TakeCover:
 
@@ -452,7 +452,7 @@ SEEK:
 		Description: Light hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles, Buildings\n  Weak vs Aircraft, Infantry
 		IconPalette: chrome
 	Mobile:
-		Speed: 135
+		Speed: 118
 	LeavesTrails:
 		Image: twake
 		Palette: effect
@@ -524,7 +524,7 @@ LACE:
 		IconPalette: chrome
 	Mobile:
 		TurnSpeed: 10
-		Speed: 157
+		Speed: 135
 	LeavesTrails:
 		Image: twake
 		Palette: effect
@@ -708,10 +708,10 @@ STCR:
 		BuildPaletteOrder: 65
 		Prerequisites: anyradar, ~vehicles.reaper, ~techlevel.medium
 		Queue: Vehicle
-		Description: Slow moving, durable, short-range assault unit.\n  Regenerates rapidly.\n  Weak vs Aircraft
+		Description: Slow moving, durable, short-range assault unit.\n  Regenerates rapidly.\n  Strong vs Infantry, Light Armor\n  Weak vs Tanks, Buildings, Aircraft
 		IconPalette: scrin
 	Mobile:
-		Speed: 71
+		Speed: 68
 		TurnSpeed: 3
 	Health:
 		HP: 50000
@@ -753,7 +753,7 @@ DEVO:
 		Description: Medium hover tank.\n  Can move in any direction while firing.\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft
 		IconPalette: chrome
 	Valued:
-		Cost: 1250
+		Cost: 1350
 	Tooltip:
 		Name: Devourer Tank
 	Selectable:
@@ -807,10 +807,10 @@ DARK:
 		Queue: Vehicle
 		BuildPaletteOrder: 135
 		Prerequisites: anyradar, ~vehicles.harbinger, ~techlevel.medium
-		Description: Heavy hover tank with armed with rift cannon.\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft
+		Description: Heavy hover tank with armed with rift cannon.\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft, Infantry
 		IconPalette: scrin
 	Valued:
-		Cost: 1250
+		Cost: 1350
 	Tooltip:
 		Name: Darkener Tank
 	Selectable:
@@ -818,12 +818,12 @@ DARK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 45000
+		HP: 40000
 	Armor:
 		Type: Heavy
 	Mobile:
 		TurnSpeed: 4
-		Speed: 71
+		Speed: 68
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -1096,7 +1096,7 @@ STMR:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 40
 		Prerequisites: anyradar, grav, ~aircraft.scrin, ~techlevel.medium
-		Description: Durable patrol craft.\n  Strong vs Infantry, Light Armor, Aircraft\n  Weak vs Tanks, Buildings
+		Description: Durable patrol craft.\n  Can detect submarines.\n  Strong vs Infantry, Light Armor, Aircraft\n  Weak vs Tanks, Buildings
 		IconPalette: chrome
 	Valued:
 		Cost: 1650
@@ -1107,7 +1107,7 @@ STMR:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 32000
+		HP: 30000
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -1133,7 +1133,7 @@ STMR:
 	Aircraft:
 		CruiseAltitude: 2560
 		TurnSpeed: 5
-		Speed: 170
+		Speed: 180
 		RepulsionSpeed: 40
 		MaximumPitch: 56
 		CanHover: False
@@ -1189,6 +1189,9 @@ STMR:
 		HealIfBelow: 100
 		DamageCooldown: 200
 		RequiresCondition: regen-upgrade
+	DetectCloaked:
+		CloakTypes: Underwater
+		Range: 8c0
 
 DEVA:
 	Inherits: ^Helicopter
@@ -3032,7 +3035,7 @@ BUZZ:
 		Delay: 450
 	Aircraft:
 		CanHover: True
-		Speed: 36
+		Speed: 30
 		CruiseAltitude: 1
 	AmbientSound:
 		SoundFiles: buzzers-idle1.aud, buzzers-idle2.aud, buzzers-idle3.aud
@@ -3052,7 +3055,7 @@ BUZZ.AI:
 		ReduceMoveRadiusDelay: 3
 	-Aircraft:
 	Mobile:
-		Speed: 36
+		Speed: 30
 		Locomotor: cloud
 
 camera.rift:
@@ -3099,6 +3102,7 @@ camera.minirift:
 		-StartSequence:
 	-AmbientSound:
 	-WithDeathAnimation:
+	-RevealsShroud:
 
 camera.resourcescan:
 	Inherits: CAMERA

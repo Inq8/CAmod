@@ -2046,7 +2046,7 @@ LTNK:
 		Type: Heavy
 	Mobile:
 		Locomotor: Amphibious
-		Speed: 105
+		Speed: 113
 	GrantConditionOnTerrain:
 		TerrainTypes: Water
 		Condition: onwater
@@ -2923,7 +2923,7 @@ IFV:
 		LocalOffset: 192,10,176, 192,-10,176
 		RequiresCondition: !full
 	Armament@E1:
-		Weapon: M60mg
+		Weapon: M60mgIFV
 		MuzzleSequence: muzzle
 		LocalOffset: 250,0,150
 		RequiresCondition: gunturr || tecnturr
@@ -3075,6 +3075,13 @@ IFV:
 			tecn: tecnturr
 			tecn2: tecnturr
 			tecn3: tecnturr
+			s1: gunturr
+			s2: chemturr
+			s3: acolturr
+			s4: flamturr
+			s6: engturr
+			smedi: medturr
+			mast: commturr
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithIdleOverlay@MEDIC:
@@ -4046,7 +4053,7 @@ BATF:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 230
-		Prerequisites: infantry.any, anyradar, ~vehicles.france, ~techlevel.low
+		Prerequisites: infantry.any, atek, ~vehicles.france, ~techlevel.high
 		Description: Tough infantry transport\nwith weapon ports for infantry.\n  Special Ability: Can crush enemy vehicles.
 	Valued:
 		Cost: 2000
@@ -4058,7 +4065,7 @@ BATF:
 		Type: Heavy
 	Mobile:
 		Locomotor: sheavytracked
-		Speed: 52
+		Speed: 50
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 		Voice: Move
 		TurnSpeed: 2
@@ -4160,7 +4167,7 @@ BATF.AI:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 230
-		Prerequisites: tent, anyradar, ~weap, ~vehicles.france, ~botplayer, ~techlevel.high
+		Prerequisites: infantry.any, atek, ~vehicles.france, ~botplayer, ~techlevel.high
 		Description: Tough infantry transport\nwith weapon ports for infantry.\n  Special Ability: Can crush enemy vehicles.
 	Cargo:
 		InitialUnits: e1,e1,e3,e3,e3

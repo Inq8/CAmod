@@ -174,10 +174,20 @@ Dragon.CRYO:
 		Range: 0c341
 
 DragonE:
-	Inherits: ^AntiGroundMissile
+	Inherits: Dragon
 	Range: 7c0
 	Projectile: MissileCA
 		RangeLimit: 8c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 2800
+
+DragonE.CRYO:
+	Inherits: Dragon.CRYO
+	Range: 7c0
+	Projectile: MissileCA
+		RangeLimit: 8c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 2800
 
 DragonE.TD:
 	Inherits: DragonE

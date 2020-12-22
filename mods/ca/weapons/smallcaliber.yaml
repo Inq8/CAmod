@@ -460,7 +460,7 @@ M60mgJJ.ground:
 M60mgIFV:
 	Inherits: M60mg
 	Warhead@1Dam: SpreadDamage
-		Damage: 1500
+		Damage: 1800
 
 MGatt.0G:
 	Inherits: ^HeavyMG
@@ -468,9 +468,11 @@ MGatt.0G:
 	ReloadDelay: 15
 	Report: vgatlo1a.aud
 	Warhead@1Dam: SpreadDamage
+		Spread: 256
 		Damage: 200
 		Versus:
-			None: 210
+			None: 220
+			Light: 100
 
 MGatt.1G:
 	Inherits: MGatt.0G
@@ -600,7 +602,7 @@ SNIPER:
 		Speed: 2c682
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 45000
+		Damage: 23000
 		ValidTargets: Barrel, Infantry
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
