@@ -188,7 +188,7 @@ PlasmaDiscs:
 		Damage: 7000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
-			None: 90
+			None: 60
 			Light: 65
 			Wood: 30
 			Heavy: 100
@@ -265,10 +265,11 @@ RiftCannon:
 		SecondaryBeamColor: 00000099
 		SecondaryBeamWidth: 90
 	Warhead@1Dam: SpreadDamage
-		Spread: 341
+		Spread: 512
+		Falloff: 100, 37, 23, 10, 0
 		Damage: 9500
 		Versus:
-			None: 15
+			None: 10
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@Spawn: SpawnActor
 		Actors: camera.minirift
