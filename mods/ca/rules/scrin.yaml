@@ -7,8 +7,6 @@
 		Actor: s1
 	SpawnActorsOnSell:
 		ActorTypes: s1
-	ActorPreviewPlaceBuildingPreview:
-		OverridePalette: placebuilding
 	Building:
 		BuildSounds: scrinbuild.aud
 
@@ -42,19 +40,6 @@ VEHICLES.SCRIN:
 		TargetTypes: Ground, Infantry
 	WithDeathAnimation:
 		DeathSequencePalette: overlayplayerscrin
-		DeathTypes:
-			DefaultDeath: 1
-			BulletDeath: 2
-			SmallExplosionDeath: 3
-			ExplosionDeath: 4
-			FireDeath: 5
-			ElectricityDeath: 6
-			PoisonDeath: 7
-			ChronoDeath: 8
-			ToxinDeath: 9
-			RadiationDeath: 10
-			FrozenDeath: 11
-		CrushedSequence: die-crushed
 		CrushedSequencePalette: scrin
 	-DamagedByTerrain:
 	TakeCover:
@@ -363,7 +348,6 @@ HARV.Scrin:
 		IconPalette: chrome
 	SpawnActorOnDeath:
 		Actor: HARV.Scrin.Husk
-		RequiresCondition: !being-warped
 	WithDockingAnimation:
 		DockSequence: idle
 		DockLoopSequence: idle
@@ -397,7 +381,6 @@ GUNW:
 	Mobile:
 		Speed: 113
 		TurnSpeed: 8
-		PauseOnCondition:  being-captured || empdisable || being-warped || driver-dead
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -879,7 +862,6 @@ RUIN:
 		IconPalette: chrome
 	Mobile:
 		Speed: 100
-		PauseOnCondition: being-captured || empdisable || being-warped || driver-dead
 		TurnSpeed: 255
 	Health:
 		HP: 15000
@@ -1021,12 +1003,10 @@ RPTP:
 		Weapon: ReaperLaser
 		LocalOffset: 700,550,1000
 	Armament@SECONDARY:
-		Name: secondary
 		Weapon: ReaperLaserReversed
 		LocalOffset: 700,-550,1000
 		FireDelay: 15
 	Armament@SOUND:
-		Name: sound
 		Weapon: ReaperLaserSound
 		LocalOffset: 700,-550,1000
 		FireDelay: 15
@@ -1631,13 +1611,11 @@ STMR.Husk:
 		Offset: -427,0,0
 		MinDamage: Undamaged
 	Contrail@1:
-		Offset: -300,-143,0
+		Offset: -250,-250,100
 		UsePlayerColor: true
-		ZOffset: -512
 	Contrail@2:
-		Offset: -300,143,0
+		Offset: -250,250,100
 		UsePlayerColor: true
-		ZOffset: -512
 	RevealsShroud:
 		Range: 12c0
 		Type: CenterPosition
@@ -1866,8 +1844,6 @@ REAC:
 	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: 630,299,0
-	RenderSprites:
-		PlayerPalette: overlayplayerscrin
 	WithSpriteBody:
 		PauseOnCondition: disabled
 	Buildable:
@@ -2945,7 +2921,7 @@ SCOL:
 	RevealsShroud:
 		MinRange: 6c0
 		Range: 8c0
-		RevealGeneratedShroud: False
+		RevealGeneratedShroud: false
 	RevealsShroud@GAPGEN:
 		Range: 6c0
 	WithBuildingBib:
@@ -2979,7 +2955,6 @@ SCOL.Temp:
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
-		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	-Power:
@@ -2998,7 +2973,6 @@ SCOL.Temp:
 		Weapon: StormColumnZap
 		LocalOffset: 0,0,900, 0,0,1100, 0,0,700, 0,0,1300, 0,0,500
 	AttackOmni:
-		RequiresCondition: !build-incomplete
 		PauseOnCondition: empdisable || being-warped
 	DetectCloaked:
 		RequiresCondition: !(empdisable || being-warped)
@@ -3110,7 +3084,6 @@ camera.resourcescan:
 		Name: (support power proxy camera)
 	RevealsShroud:
 		Range: 5c0
-		Type: CenterPosition
 
 camera.dummy:
 	Inherits: CAMERA
@@ -3125,7 +3098,6 @@ ichor.seeder:
 		ResourceType: Tiberium
 		Interval: 2
 	-RevealsShroud:
-	WithSpriteBody:
 	RenderSprites:
 		Image: ichorseed
 		Palette: scrin

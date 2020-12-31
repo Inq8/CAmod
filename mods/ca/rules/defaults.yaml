@@ -91,13 +91,10 @@
 ^BotDefenseProductionBonus:
 	ProductionTimeMultiplier@brutalbonus:
 		Multiplier: 85
-		Prerequisites: is-brutal-ai
 	ProductionTimeMultiplier@vhardbonus:
 		Multiplier: 90
-		Prerequisites: is-vhard-ai
 	ProductionTimeMultiplier@hardbonus:
 		Multiplier: 95
-		Prerequisites: is-hard-ai
 
 ^BotGroundProductionBonus:
 	ProductionTimeMultiplier@brutalbonus:
@@ -852,10 +849,7 @@
 ^AutoTargetNavalAssaultMove:
 	Inherits: ^AutoTargetGroundAssaultMove
 	AutoTargetPriority@DEFAULT:
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
 		InvalidTargets: NoAutoTarget
-	AutoTargetPriority@ATTACKANYTHING:
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense, Mine
 
 ^AutoTargetAir:
 	AutoTarget:
@@ -900,10 +894,6 @@
 ^AutoTargetAllNavalAssaultMove:
 	Inherits: ^AutoTargetAllAssaultMove
 	AutoTargetPriority@DEFAULT:
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
-		InvalidTargets: NoAutoTarget
-	AutoTargetPriority@ATTACKANYTHING:
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
 		InvalidTargets: NoAutoTarget
 
 ^GlobalBounty:
@@ -1542,7 +1532,6 @@
 		RequiresCondition: !under-bridge && !being-warped
 	-MustBeDestroyed:
 	Wanders@NOIDLENAVY:
-		WanderMoveRadius: 3
 		RequiresCondition: (botowner && crossing-ford) ||  (botowner && under-bridge)
 
 ^NeutralPlane:
@@ -1833,16 +1822,6 @@
 	ActorPreviewPlaceBuildingPreview:
 		OverridePalette: placebuildingtd
 
-^ScienceBuilding:
-	Inherits: ^Building
-	SpawnActorsOnSell:
-		ActorTypes: e1,e1,e1,e1,e1,e1,e1,e1,e1,e1,c1,c1,c1,c1,c7,c7,c7,c7,c10,c10
-
-^ScienceBuildingTD:
-	Inherits@1: ^BuildingTD
-	SpawnActorsOnSell:
-		ActorTypes: n1,n1,n1,n1,n1,n1,n1,n1,n1,n1,c1,c1,c1,c1,c7,c7,c7,c7,c10,c10
-
 ^Defense:
 	Inherits: ^Building
 	Inherits@botbonus: ^BotDefenseProductionBonus
@@ -1970,7 +1949,6 @@
 	Tooltip:
 		Name: Civilian Building
 		GenericVisibility: None
-	FrozenUnderFog:
 	MapEditorData:
 		Categories: Tech building
 

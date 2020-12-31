@@ -257,9 +257,6 @@ camera.sathack:
 		Scale: 0.5
 	EditorOnlyTooltip:
 		Name: (support power proxy camera)
-	RevealsShroud:
-		Range: 10c0
-		Type: CenterPosition
 	DetectCloaked:
 		Range: 10c0
 		CloakTypes: Cloak
@@ -345,17 +342,11 @@ camera.cloud2:
 	Inherits: camera.cloud
 	RenderSprites:
 		Image: cloud2
-		Palette: tseffect-ignore-lighting-alpha75
 	DamagedByTerrain:
-		Terrain: Clear, Rough, Road, Ore, Water, Gems, River, Tiberium, BlueTiberium
 		Damage: 300
-		DamageInterval: 5
-		DamageTypes: ToxinDeath
 
 SONAR:
 	Inherits: camera.spyplane
-	EditorOnlyTooltip:
-		Name: (support power proxy camera)
 	-RevealsShroud:
 	DetectCloaked:
 		CloakTypes: Underwater
@@ -387,10 +378,8 @@ FLARE.dropzone:
 	Inherits: FLARE
 	RevealsShroud:
 		Range: 4c0
-		Type: CenterPosition
 	Tooltip:
 		Name: Dropzone Flare
-		ShowOwnerRow: false
 	FreeActorWithDelivery@2:
 		Actor: APC2.Reinforce
 		DeliveryOffset: -1,1
@@ -787,9 +776,6 @@ fact.colorpicker:
 
 CTFLAG:
 	Inherits: ^TechBuilding
-	Building:
-		Footprint: x
-		Dimensions: 1,1
 	Tooltip:
 		Name: Flag
 	WithBuildingBib:
@@ -806,8 +792,6 @@ CTFLAG:
 
 SPLIT2:
 	Inherits: ^TibTree
-	RenderSprites:
-		Palette: temptd
 	SeedsResourceCA:
 		ResourceType: Tiberium
 		Interval: 75
@@ -819,9 +803,6 @@ SPLIT2:
 
 SPLIT3:
 	Inherits: ^TibTree
-	RenderSprites:
-		Image: split3
-		Palette: temptd
 	SeedsResourceCA:
 		ResourceType: Tiberium
 		Interval: 75
@@ -837,7 +818,6 @@ SPLITBLUE:
 	Inherits: ^TibTree
 	RenderSprites:
 		Image: split3
-		Palette: temptd
 	SeedsResourceCA:
 		ResourceType: BlueTiberium
 	AppearsOnMapPreview:

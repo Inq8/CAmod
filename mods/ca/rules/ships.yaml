@@ -596,7 +596,7 @@ ISUB:
 		DecorationBounds: 44,44
 	Cloak:
 		PauseOnCondition: aiming || cloak-force-disabled || invisibility || being-warped || crossing-ford
-		
+
 ICBM:
 	Inherits: ^ShootableMissile
 	RenderSprites:
@@ -627,8 +627,7 @@ ICBM:
 	Explodes:
 		Weapon: VisualExplodeAirborne
 		RequiresCondition: airborne
-	WithFacingSpriteBody:
-		
+
 CARR:
 	Inherits: ^Ship
 	Inherits@AUTOTARGET: ^AutoTargetNavalAssaultMove
@@ -658,7 +657,6 @@ CARR:
 		TurnSpeed: 4
 		Speed: 30
 		Voice: Move
-		PauseOnCondition: empdisable || being-warped
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		Offset: 30,70,600
