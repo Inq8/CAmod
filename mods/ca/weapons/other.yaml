@@ -698,7 +698,7 @@ PrisTLaser:
 		Damage: 3875
 		Versus:
 			None: 150
-			Wood: 75
+			Wood: 85
 			Concrete: 100
 			Light: 95
 			Heavy: 60
@@ -737,13 +737,11 @@ PrisCLaser:
 		Color: 00FFEEDD
 		SecondaryBeamWidth: 180
 		SecondaryBeamColor: 84FFEF99
-		Blockable: true
 	Warhead@1Dam: SpreadDamage
 		Damage: 15750
-		Spread: 512
 		Versus:
 			None: 70
-			Wood: 90
+			Wood: 100
 			Concrete: 85
 			Heavy: 40
 	-Warhead@Burst:
@@ -1509,6 +1507,7 @@ NeutronCannonBeam:
 NeutronCannonPulse:
 	Inherits: NeutronCannonBeam
 	ReloadDelay: 20
+	-Projectile:
 	Projectile: AreaBeam
 		Speed: 0c768
 		Duration: 8
@@ -1555,11 +1554,8 @@ SonicPulse:
 
 SonicPulse.UPG:
 	Inherits: SonicPulse
-	ReloadDelay: 110
 	Range: 9c0
 	Warhead@1Dam: SpreadDamage
-		Spread: 0c256
-		Falloff: 100, 50, 25, 0
 		Damage: 9700
 	Warhead@3Eff: CreateEffect
 		Explosions: sonicpulseupg1, sonicpulseupg2

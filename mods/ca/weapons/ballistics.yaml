@@ -5,7 +5,7 @@
 	Projectile: Bullet
 		Speed: 682
 		Image: 120MM
-		Shadow: True
+		Shadow: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
 		Damage: 4000
@@ -88,7 +88,7 @@
 		Image: 120MMHEATN
 	Warhead@1Dam: SpreadDamage
 		Versus:
-			None: 75
+			None: 55
 			Wood: 85
 			Concrete: 45
 			Light: 100
@@ -123,7 +123,7 @@
 
 183mm:
 	Inherits: ^Cannon
-	ReloadDelay: 90
+	ReloadDelay: 100
 	Report: tnkfire6.aud
 	Range: 5c0
 	Projectile: Bullet
@@ -132,10 +132,10 @@
 	Warhead@1Dam: SpreadDamage
 		Damage: 12000
 		Versus:
-			Heavy: 140
+			Heavy: 170
 			None: 10
 			Wood: 15
-			Light: 50
+			Light: 35
 			Concrete: 20
 			Brick: 32
 		InvalidTargets: Air
@@ -184,7 +184,6 @@ TitanGun:
 		Blockable: false
 		LaunchAngle: 62
 		Inaccuracy: 1c938
-		Shadow: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
 		Damage: 14000
@@ -454,7 +453,6 @@ Mortar:
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
-		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
 	Warhead@3Eff: CreateEffect
 		Explosions: small_chem
 		ExplosionPalette: temptd

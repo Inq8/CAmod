@@ -82,7 +82,6 @@ KATY:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
-	SelectionDecorations:
 	Explodes:
 		Weapon: BarrelExplode
 	ProducibleWithLevel:
@@ -118,7 +117,6 @@ KATY:
 		TerrainTypes: Water
 		Condition: onwater
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4
 		RequiresCondition: !onwater && !parachute && !being-warped
 	Targetable@WATER:
 		TargetTypes: Ground, Vehicle, Water, Ship
@@ -293,8 +291,6 @@ KATY:
 		Turret: secondary
 		RequiresCondition: scrin
 	Tooltip:
-		Name: Medium Tank
-		GenericName: Tank
 		RequiresCondition: france
 	Tooltip@TD:
 		Name: Tank Destroyer
@@ -331,7 +327,6 @@ KATY:
 	AttackTurreted:
 		Turrets: primary, secondary, tertiary
 		TargetFrozenActors: True
-		PauseOnCondition: empdisable || being-warped
 		Armaments: primary
 	MirageTooltip@Tree:
 		Name: Mirage Tank
@@ -358,7 +353,6 @@ KATY:
 	WithSpriteTurret@SCRIN:
 		Turret: secondary
 		RequiresCondition: scrin
-	WithFacingSpriteBody:
 	WithMuzzleOverlay:
 		RequiresCondition: !scrin
 	SpawnActorOnDeath:
@@ -747,7 +741,6 @@ HOWI:
 	Tooltip:
 		Name: Howitzer
 	Buildable:
-		IconPalette: chrometd
 		Prerequisites: ~vehicles.nod, ~howi.upgrade, ~techlevel.medium
 	-AttackFrontal:
 	AttackTurreted:
@@ -756,7 +749,6 @@ HOWI:
 		TurnSpeed: 2
 	Armament:
 		Weapon: 155mmTDM
-		LocalOffset: 624,0,208
 	Mobile:
 		Speed: 68
 	WithSpriteTurret:
@@ -982,7 +974,6 @@ HARV:
 	Explodes@Tib:
 		RequiresCondition: !no-ore && ontib && !being-warped
 		Weapon: TibExplosion
-	WithFacingSpriteBody:
 	-Crushable:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
@@ -1003,20 +994,13 @@ HARV:
 HARV.Chrono:
 	Inherits: HARV
 	Buildable:
-		Queue: Vehicle
-		BuildPaletteOrder: 10
 		Prerequisites: anyrefinery, ~charv.upgrade, ~vehicles.allies, ~techlevel.high
 		Description: Collects Ore, Gems and Tiberium for processing.\n  Unarmed\n  Special Ability: Teleport
-	Valued:
-		Cost: 1400
 	RenderSprites:
 		Image: charv
 	Tooltip:
 		Name: Chrono Miner
-		GenericName: Harvester
 	Mobile:
-		Speed: 56
-		Locomotor: heavywheeled
 		Voice: Move
 	Harvester:
 		Capacity: 20
@@ -2051,7 +2035,6 @@ LTNK:
 		TerrainTypes: Water
 		Condition: onwater
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4
 		RequiresCondition: !onwater && !parachute && !being-warped
 	Targetable@WATER:
 		TargetTypes: Ground, Vehicle, Water, Ship
@@ -3741,7 +3724,6 @@ V3:
 	Explodes:
 		Weapon: V3ExplodeAirborne
 		RequiresCondition: airborne
-	WithFacingSpriteBody:
 
 TNKD:
 	Inherits: ^Tank
@@ -3761,7 +3743,7 @@ TNKD:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 60000
+		HP: 46000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -4165,10 +4147,7 @@ BATF.AI:
 	RenderSprites:
 		Image: batf
 	Buildable:
-		Queue: Vehicle
-		BuildPaletteOrder: 230
 		Prerequisites: infantry.any, atek, ~vehicles.france, ~botplayer, ~techlevel.high
-		Description: Tough infantry transport\nwith weapon ports for infantry.\n  Special Ability: Can crush enemy vehicles.
 	Cargo:
 		InitialUnits: e1,e1,e3,e3,e3
 
@@ -4451,7 +4430,6 @@ CRYO:
 	Mobile:
 		Speed: 82
 		TurnSpeed: 4
-		PauseOnCondition:  being-captured || empdisable || being-warped || driver-dead
 	Health:
 		HP: 26000
 	Armor:

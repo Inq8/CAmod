@@ -40,7 +40,6 @@ DisintegratorBeamAA:
 			Wood: 100
 			Concrete: 100
 			Light: 100
-			Heavy: 100
 
 IntruderDiscs:
 	Inherits: PlasmaDiscs
@@ -131,7 +130,6 @@ GunWalkerZapAA:
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
 		Versus:
-			None: 100
 			Wood: 100
 			Concrete: 100
 			Light: 100
@@ -188,7 +186,7 @@ PlasmaDiscs:
 		Damage: 7000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
-			None: 90
+			None: 60
 			Light: 65
 			Wood: 30
 			Heavy: 100
@@ -256,7 +254,6 @@ DevourerLaser:
 
 RiftCannon:
 	Inherits: ^ScrinLaser
-	Range: 7c0
 	Report: darkener-fire1.aud, darkener-fire2.aud
 	ReloadDelay: 120
 	Projectile: LaserZap
@@ -265,10 +262,11 @@ RiftCannon:
 		SecondaryBeamColor: 00000099
 		SecondaryBeamWidth: 90
 	Warhead@1Dam: SpreadDamage
-		Spread: 341
+		Spread: 512
+		Falloff: 100, 37, 23, 10, 0
 		Damage: 9500
 		Versus:
-			None: 15
+			None: 10
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@Spawn: SpawnActor
 		Actors: camera.minirift
@@ -328,7 +326,6 @@ RuinerCannon:
 			None: 120
 			Wood: 95
 			Concrete: 80
-			Brick: 100
 			Light: 65
 			Heavy: 45
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
@@ -351,13 +348,11 @@ TripodLaser:
 		TrackTarget: false
 		Duration: 2
 		Color: FAFAFFFF
-		Width: 45
 		SecondaryBeamColor: 382EFFAA
 		SecondaryBeamWidth: 75
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		Damage: 900
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
 			None: 95
 			Light: 70
@@ -471,7 +466,6 @@ DevastatorDiscs:
 			Heavy: 30
 			Concrete: 95
 			Brick: 90
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 
@@ -586,7 +580,6 @@ StormcrawlerZap:
 	Range: 4c768
 	StartBurstReport: stormcrawler-fire1.aud, stormcrawler-fire2.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 2000
 		Versus:
 			None: 100
 			Wood: 15
@@ -640,14 +633,9 @@ RavagerShards:
 	Range: 5c512
 	Projectile: Missile
 		Speed: 213
-		Palette: scrin
-		ContrailWidth: 0c48
 		ContrailLength: 9
 		ContrailColor: 00FF0044
-		Jammable: false
 		Inaccuracy: 128
-		Image: shard
-		HorizontalRateOfTurn: 35
 		RangeLimit: 7c512
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Ground, Water
@@ -657,7 +645,6 @@ RavagerShards:
 		Spread: 256
 		Damage: 1300
 		Versus:
-			None: 100
 			Wood: 50
 			Light: 70
 			Heavy: 15
@@ -679,7 +666,6 @@ LaceratorShards:
 		Versus:
 			None: 30
 			Wood: 65
-			Light: 70
 			Heavy: 100
 			Concrete: 50
 			Brick: 50
