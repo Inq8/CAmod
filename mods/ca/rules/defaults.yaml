@@ -1108,6 +1108,8 @@
 	DetectCloaked@UNDERBRIDGE:
 		CloakTypes: Underbridge
 		Range: 5c0
+	GpsDot:
+		String: Vehicle
 
 ^VehicleTD:
 	Inherits@1: ^Vehicle
@@ -1314,6 +1316,8 @@
 		Palette: cloak
 	ExternalCondition@CLOAKGENERATOR:
 		Condition: invisibility
+	GpsDot:
+		String: Infantry
 
 ^Soldier:
 	Inherits: ^Infantry
@@ -1544,6 +1548,8 @@
 	Wanders@NOIDLENAVY:
 		WanderMoveRadius: 3
 		RequiresCondition: (botowner && under-bridge)
+	GpsDot:
+		String: Ship
 
 ^Submarine:
 	Inherits@1: ^Ship
@@ -1663,6 +1669,8 @@
 		UsePlayerColor: false
 		ZOffset: -512
 		Color: FFFFFF80
+	GpsDot:
+		String: Plane
 
 ^Plane:
 	Inherits: ^NeutralPlane
@@ -1741,6 +1749,8 @@
 		UseClassicFacingFudge: True
 	-Contrail@1:
 	-Contrail@2:
+	GpsDot:
+		String: Helicopter
 
 ^HelicopterTD:
 	Inherits@1: ^Helicopter
@@ -1788,6 +1798,7 @@
 	Guardable:
 		Range: 3c0
 	FrozenUnderFog:
+	FrozenUnderFogUpdatedByGps:
 	Tooltip:
 		GenericName: Structure
 	MapEditorData:
@@ -1863,6 +1874,8 @@
 	Explodes@temporal:
 		Weapon: TemporalExplodeLarge
 		EmptyWeapon: TemporalExplodeLarge
+	GpsDot:
+		String: Structure
 
 ^BuildingTD:
 	Inherits@1: ^Building
@@ -1940,6 +1953,20 @@
 		PlayerPalette: overlayplayertd
 	ActorPreviewPlaceBuildingPreview:
 		OverridePalette: placebuildingtd
+		
+^BuildingPlug:
+	Interactable:
+	AlwaysVisible:
+	Building:
+		BuildSounds: placbldg.aud
+		UndeploySounds: cashturn.aud
+	SequencePlaceBuildingPreview:
+		Sequence: place
+		SequencePalette: placebuildingtd
+		Palette: terrain
+	KillsSelf:
+		RemoveInstead: true
+	RenderSprites:
 
 ^Wall:
 	Inherits@1: ^ExistsInWorld

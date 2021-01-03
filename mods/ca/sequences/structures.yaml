@@ -841,6 +841,48 @@ miss:
 			INTERIOR: TEMPERAT
 	icon: missicon
 	
+upgc:
+	Inherits: ^StructureOverlays
+	idle: upgc
+		Length: *
+		Tick: 120
+	damaged-idle: upgcd
+		Start: 0
+		Length: *
+		Tick: 120
+	dead: upgcd
+		Start: 0
+		Tick: 800
+	make: upgcmake
+		Length: *
+	turret-rocket: upgc-plug1
+		Facings: 32
+		UseTilesetCode: false
+	turret-radar: upgc-plug2
+		Start: 0
+		Length: *
+		UseTilesetCode: false
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: missicon
+	
+garock:
+	place: upgc-plug1
+		Offset: 0, -12, 12
+		UseTilesetCode: true
+		Start: 28
+	icon: missicon
+	
+garadar:
+	place: upgc-plug2
+		Offset: 0, -12, 12
+		UseTilesetCode: true
+		Start: 28
+	icon: missicon
+	
 gtek:
 	Inherits: ^StructureOverlays
 	idle: gtek
