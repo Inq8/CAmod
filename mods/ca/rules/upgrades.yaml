@@ -35,7 +35,7 @@ bombard.strat:
 		Name: Strategy: Bombardment
 	Buildable:
 		BuildPaletteOrder: 1
-		Prerequisites: ~miss.gdi, !seek.strat, !hold.strat, ~structures.gdi, ~techlevel.high
+		Prerequisites: ~upgc, !seek.strat, !hold.strat, ~structures.gdi, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 3000
 		Description: Increase unit firepower by 20%.\n\n  Only one Strategy may be chosen.
@@ -50,7 +50,7 @@ seek.strat:
 		Name: Strategy: Seek & Destroy
 	Buildable:
 		BuildPaletteOrder: 2
-		Prerequisites: ~miss.gdi, !bombard.strat, !hold.strat, ~structures.gdi, ~techlevel.high
+		Prerequisites: ~upgc, !bombard.strat, !hold.strat, ~structures.gdi, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 3000
 		Description: Increase unit speed and weapon range by 20%.\n\n  Only one Strategy may be chosen.
@@ -65,7 +65,7 @@ hold.strat:
 		Name: Strategy: Hold the Line
 	Buildable:
 		BuildPaletteOrder: 3
-		Prerequisites: ~miss.gdi, !bombard.strat, !seek.strat, ~structures.gdi, ~techlevel.high
+		Prerequisites: ~upgc, !bombard.strat, !seek.strat, ~structures.gdi, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 3000
 		Description: Increase unit armor by 20%.\n\n  Only one Strategy may be chosen.
@@ -139,7 +139,7 @@ walker.upgrade:
 		Name: Research: Battle Mechs
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~miss.gdi, ~structures.talon, ~techlevel.high
+		Prerequisites: ~upgc, ~structures.talon, ~techlevel.high
 		BuildDuration: 1500
 		IconPalette: chrometd
 		Description: Allows construction the Titan and\nJuggernaut battle mechs.\n\n  Replaces: Mammoth Tank\n  Unlocks: Juggernaut
@@ -154,7 +154,7 @@ ionmam.upgrade:
 		Name: Upgrade: Ion Mammoth
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~miss.gdi, ~structures.gdi, ~!structures.talon, ~techlevel.high
+		Prerequisites: ~upgc, ~structures.gdi, ~!structures.talon, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
 		Description: Equips the Mammoth tank with a\nprototype portable ion cannon.\n\n  Upgrades: Mammoth Tank

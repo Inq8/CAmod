@@ -5369,8 +5369,6 @@ MISS.GDI:
 	Inherits: ^Building
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@shape: ^3x2Shape
-	RenderSprites:
-		Image: miss
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Selectable:
@@ -5378,7 +5376,7 @@ MISS.GDI:
 	Building:
 		Footprint: xxx xxx ===
 		Dimensions: 3,3
-		LocalCenterOffset: 0,-512,0
+		LocalCenterOffset: 0,-1024,0
 	Health:
 		HP: 80000
 	Armor:
@@ -5390,6 +5388,8 @@ MISS.GDI:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	WithBuildingBib:
+	WithSpriteBody:
+		PauseOnCondition: disabled || being-warped
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 200
@@ -5417,6 +5417,7 @@ MISS.GDI:
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
+		DeathSequencePalette: overlayplayertd
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	Production:
@@ -5425,6 +5426,92 @@ MISS.GDI:
 	ProductionBar:
 		ProductionType: Upgrade
 	Exit:
+	Turreted:
+		TurnSpeed: 40
+		InitialFacing: 896
+		RealignDelay: -1
+		Offset: 2,-1,0
+	AttackTurreted:
+		RequiresCondition: !build-incomplete && tower.rocket
+		PauseOnCondition: empdisable || disabled
+	WithSpriteTurret@ROCKET:
+		RequiresCondition: !build-incomplete && tower.rocket
+		Recoils: false
+		Sequence: turret-rocket
+	WithIdleOverlay@RADAR:
+		RequiresCondition: !build-incomplete && tower.radar
+		Sequence: turret-radar
+		PauseOnCondition: disabled || being-warped && !radar
+	GpsPower:
+		PauseOnCondition: disabled || being-warped
+		Icon: gps
+		OneShot: true
+		StartFullyCharged: true
+		ChargeInterval: 0
+		Description: Advanced Radar
+		LongDesc: Reveals map terrain and provides tactical\ninformation. Requires power and active radar.
+		RevealDelay: 0
+		LaunchSound:
+		IncomingSound:
+		DisplayTimerRelationships: Ally, Neutral, Enemy
+		SupportPowerPaletteOrder: 90
+		RequiresCondition: tower.radar
+	Armament@ROCKET:
+		RequiresCondition: tower.rocket
+		Weapon: StingerGTWR
+		LocalOffset: 256,128,0, 256,-128,0
+		LocalYaw: -100,100
+	Pluggable:
+		Conditions:
+			tower.rocket: tower.rocket
+			tower.radar: tower.radar
+		Requirements:
+			tower.rocket: !build-incomplete && !tower.rocket && !tower.radar
+			tower.radar: !build-incomplete && !tower.radar && !tower.rocket
+	ProvidesPrerequisite@pluggable:
+		RequiresCondition: !build-incomplete && !(tower.rocket || tower.radar)
+		Prerequisite: gactwr.socket
+	GrantConditionOnPrerequisite@radar:
+		Prerequisites: anyradar
+		Condition: radar
+		
+GACTWR.SOCKET:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Component Tower (unupgraded)
+		
+GAROCK:
+	Inherits: ^BuildingPlug
+	Valued:
+		Cost: 1100
+	Tooltip:
+		Name: RPG Upgrade
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 90
+		Prerequisites: gactwr.socket, upgc, ~structures.gdi, ~techlevel.high
+		Description: GDI Advanced base defense.\nDoes not require power to operate.\n  Strong vs Armored ground units\n  Weak vs Aircraft
+	Plug:
+		Type: tower.rocket
+	Power:
+		Amount: -20
+		
+GARADAR:
+	Inherits: ^BuildingPlug
+	Valued:
+		Cost: 1500
+	Tooltip:
+		Name: Radar Upgrade
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 90
+		Prerequisites: gactwr.socket, upgc, ~structures.gdi, ~techlevel.high
+		Description: GDI Advanced Radar System.
+	Plug:
+		Type: tower.radar
+	Power:
+		Amount: -100
 
 BIO.Nod:
 	Inherits: ^Building
