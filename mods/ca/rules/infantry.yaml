@@ -101,6 +101,7 @@ E1:
 		Name: mounted
 		Weapon: M1CarbineE
 	WithInfantryBody:
+		DefaultAttackSequence: shoot
 		IdleSequences: idle1,idle2,idle3,idle4
 	AttackFrontal:
 		PauseOnCondition: being-warped
@@ -227,7 +228,6 @@ E3:
 		RequiresCondition: cryr-upgrade
 	AmmoPool:
 		Ammo: 1
-		PipCount: 0
 		AmmoCondition: ammo
 	ReloadAmmoPool:
 		Delay: 50
@@ -249,6 +249,7 @@ E3:
 	ExternalCondition@CRYO:
 		Condition: cryr-upgrade
 	WithInfantryBody:
+		DefaultAttackSequence: shoot
 		RequiresCondition: !cryr-upgrade
 	WithInfantryBody@CRYO:
 		IdleSequences: idle-cryo1, idle-cryo2
@@ -319,6 +320,8 @@ E4:
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: being-warped
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
 	Explodes:
 		Weapon: UnitExplodeFlameSmall
 		EmptyWeapon: UnitExplodeFlameSmall
@@ -345,7 +348,7 @@ E6:
 		AddToArmyValue: true
 	WithInfantryBody:
 	Passenger:
-		PipType: Yellow
+		CustomPipType: yellow
 	EngineerRepair:
 	RepairsBridges:
 	CaptureManager:
@@ -396,7 +399,7 @@ SPY:
 	RevealsShroud:
 		Range: 5c0
 	Passenger:
-		PipType: Blue
+		CustomPipType: blue
 		Voice: Move
 	Disguise:
 		DisguisedCondition: disguise
@@ -413,8 +416,7 @@ SPY:
 		Image: pips
 		Sequence: pip-disguise
 		Palette: effect
-		ReferencePoint: Top, Right
-		ZOffset: 256
+		Position: TopRight
 		RequiresCondition: disguise
 	IgnoresDisguise:
 	AttackMove:
@@ -450,7 +452,7 @@ E7:
 	RevealsShroud:
 		Range: 6c0
 	Passenger:
-		PipType: Red
+		CustomPipType: red
 		Voice: Move
 	Armament@PRIMARY:
 		Weapon: Colt45
@@ -466,6 +468,7 @@ E7:
 		PauseOnCondition: being-warped
 		Armaments: primary, secondary
 	WithInfantryBody:
+		DefaultAttackSequence: shoot
 		StandSequences: stand
 		AttackSequences:
 			primary: shoot
@@ -512,7 +515,7 @@ MEDI:
 	RevealsShroud:
 		Range: 3c0
 	Passenger:
-		PipType: Blue
+		CustomPipType: blue
 		Voice: Move
 	Guard:
 		Voice: Move
@@ -520,8 +523,8 @@ MEDI:
 		Weapon: Heal
 		Cursor: heal
 		OutsideRangeCursor: heal
-		TargetStances: Ally
-		ForceTargetStances: None
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	WithInfantryBody:
@@ -563,7 +566,7 @@ MECH:
 	RevealsShroud:
 		Range: 3c0
 	Passenger:
-		PipType: Blue
+		CustomPipType: blue
 		Voice: Move
 	Guard:
 		Voice: Move
@@ -571,8 +574,19 @@ MECH:
 		Weapon: Repair
 		Cursor: repair
 		OutsideRangeCursor: repair
-		TargetStances: Ally
-		ForceTargetStances: None
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+	Armament@defuse:
+		Weapon: DefuseKit
+		Cursor: goldwrench
+		OutsideRangeCursor: goldwrench
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+		Name: secondary
+	AutoTargetPriority@defuse:
+		ValidTargets: C4Attached
+		InvalidTargets: NoAutoTarget
+		ValidRelationships: Ally
 	AttackFrontal:
 		Voice: Action
 		PauseOnCondition: being-warped
@@ -582,7 +596,7 @@ MECH:
 		PlayerExperience: 25
 	Infiltrates:
 		Types: Husk
-		ValidStances: Ally
+		ValidRelationships: Ally
 		EnterCursor: goldwrench
 		PlayerExperience: 25
 	WithInfantryBody:
@@ -692,7 +706,7 @@ THF:
 	RevealsShroud:
 		Range: 5c0
 	Passenger:
-		PipType: Blue
+		CustomPipType: blue
 	CaptureManager:
 	Captures:
 		CaptureTypes: vehicle
@@ -738,7 +752,7 @@ SHOK:
 	AutoTargetPriority@TESLAAMOVE:
 		RequiresCondition: assault-move || attack-move
 		ValidTargets: TeslaBoost
-		ValidStances: Enemy
+		ValidRelationships: Enemy
 	AttackMove:
 		AttackMoveCondition: attack-move
 	Buildable:
@@ -769,8 +783,8 @@ SHOK:
 		Name: secondary
 		Weapon: PortaTeslaCharge
 		LocalOffset: 427,0,341
-		TargetStances: Ally
-		ForceTargetStances: None
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
 		Cursor: ability
 		OutsideRangeCursor: ability
 	TakeCover:
@@ -821,6 +835,7 @@ N1:
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	WithInfantryBody:
+		DefaultAttackSequence: shoot
 		IdleSequences: idle1,idle2,idle3,idle4
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
@@ -950,7 +965,6 @@ N3:
 		PauseOnCondition: !ammo || being-warped
 	AmmoPool:
 		Ammo: 1
-		PipCount: 0
 		AmmoCondition: ammo
 	ReloadAmmoPool:
 		Delay: 50
@@ -961,6 +975,8 @@ N3:
 		PauseOnCondition: being-warped
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
 	AutoTarget:
 		ScanRadius: 5
 	ProducibleWithLevel:
@@ -1011,6 +1027,8 @@ N4:
 		Weapon: FlamerE
 	TakeCover:
 		ProneOffset: 160,0,-254
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	WithDeathAnimation:
@@ -1048,6 +1066,8 @@ N5:
 		HP: 22000
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
 	Armament:
 		Weapon: Chemspray
 		LocalOffset: 341,0,254
@@ -1124,7 +1144,7 @@ RMBO:
 	Health:
 		HP: 11000
 	Passenger:
-		PipType: Red
+		CustomPipType: red
 		Voice: Move
 	RevealsShroud:
 		Range: 6c0
@@ -1143,6 +1163,7 @@ RMBO:
 		Armaments: primary, secondary
 		PauseOnCondition: being-warped
 	WithInfantryBody:
+		DefaultAttackSequence: shoot
 		IdleSequences: idle1,idle2,idle3
 		AttackSequences:
 			primary: shoot
@@ -1182,22 +1203,7 @@ N6:
 	Tooltip:
 		Name: Engineer
 	Passenger:
-		PipType: Yellow
-	Armament@defuse:
-		Weapon: DefuseKit
-		Cursor: goldwrench
-		OutsideRangeCursor: goldwrench
-		TargetStances: Ally
-		ForceTargetStances: None
-		Name: secondary
-	AutoTarget:
-	AutoTargetPriority@defuse:
-		ValidTargets: C4Attached, TNTAttached
-		InvalidTargets: NoAutoTarget
-		ValidStances: Ally
-	AttackFrontal:
-		Armaments: primary, secondary
-		PauseOnCondition: being-warped
+		CustomPipType: yellow
 	EngineerRepair:
 	RepairsBridges:
 	CaptureManager:
@@ -1284,16 +1290,16 @@ SNIP:
 		Image: pips
 		Sequence: pip-hidden
 		Palette: temptd
-		ReferencePoint: Top, Right
-		ZOffset: 256
+		Position: TopRight
 		RequiresCondition: hidden
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
 	WithInfantryBody:
+		DefaultAttackSequence: shoot
 		StandSequences: stand, stand2
 	Passenger:
-		PipType: Red
+		CustomPipType: red
 		Voice: Move
 	Guard:
 		Voice: Move
@@ -1332,7 +1338,7 @@ BORI:
 	RevealsShroud:
 		Range: 6c0
 	Passenger:
-		PipType: Red
+		CustomPipType: red
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
@@ -1347,20 +1353,13 @@ BORI:
 		Name: primary
 		Weapon: Flare
 		LocalOffset: 30,0,250
-	AirstrikeMaster:
-		Actors: U2.Bomber
-		SquadSize: 1
-		RespawnTicks: 150
-		InstaRepair: true
-		SlaveDisposalOnKill: KillSlaves
-		SpawnAllAtOnce: true
-		SpawnerArmamentName: primary
 	Demolition:
 		DetonationDelay: 45
 		Voice: Demolish
 	AutoTarget:
 	-WithInfantryBody:
 	WithInfantryBody:
+		DefaultAttackSequence: shoot
 		IdleSequences: idle1
 		AttackSequences:
 			primary: shoot-laser
@@ -1442,7 +1441,7 @@ SAB:
 	RevealsShroud:
 		Range: 6c0
 	Passenger:
-		PipType: Red
+		CustomPipType: red
 		Voice: Move
 	Guard:
 		Voice: Move
@@ -1456,6 +1455,7 @@ SAB:
 	Voiced:
 		VoiceSet: InfilVoice
 	WithInfantryBody:
+		DefaultAttackSequence: shoot
 		StandSequences: stand
 		IdleSequences: idle1
 	Health:
@@ -1531,6 +1531,7 @@ ACOL:
 		Voice: Attack
 		PauseOnCondition: being-warped
 	WithInfantryBody:
+		DefaultAttackSequence: shoot
 		IdleSequences: idle3
 	AttackMove:
 		Voice: Move
@@ -1572,9 +1573,8 @@ JJET:
 	Inherits@BERSERK: ^Berserk
 	Inherits@mind: ^MindControllable
 	Huntable:
-	BodyOrientation:
+	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
-		UseClassicFacingFudge: true
 	RenderSprites:
 		Image: jjet
 		PlayerPalette: overlayplayertd
@@ -1646,6 +1646,30 @@ JJET:
 	DeathSounds@POISONED:
 		Voice: Poisoned
 		DeathTypes: PoisonDeath, ToxinDeath, ToxicDeath
+	ChangesHealth@HOSPITAL:
+		Step: 500
+		Delay: 100
+		StartIfBelow: 100
+		DamageCooldown: 125
+		RequiresCondition: hospitalheal
+	ExternalCondition@MEDIFV:
+		Condition: hospitalheal
+	GrantConditionOnPrerequisite@HOSPITAL:
+		Condition: hospital
+		Prerequisites: hosp
+	GrantConditionOnDamageState@HOSPITAL:
+		Condition: damaged
+		ValidDamageStates: Light, Medium, Heavy, Critical
+	GrantCondition@HOSPITAL:
+		RequiresCondition: hospital && damaged
+		Condition: hospitalheal
+	WithDecoration@REDCROSS:
+		Image: pips
+		Sequence: medic
+		Position: BottomRight
+		RequiresCondition: hospitalheal
+		BlinkInterval: 32
+		BlinkPattern: Off, On
 	Armor:
 		Type: Light
 	Aircraft:
@@ -1756,7 +1780,7 @@ JJET:
 		ValidDamageStates: Light, Medium, Heavy, Critical
 
 JJET.Husk:
-	BodyOrientation:
+	ClassicFacingBodyOrientation:
 		QuantizedFacings: 1
 	HiddenUnderFog:
 		Type: GroundPosition
@@ -1778,7 +1802,6 @@ JJET.Husk:
 		Sequence: die-falling
 	Health:
 	HitShape:
-	ConditionManager:
 	GrantConditionOnTerrain:
 		TerrainTypes: Water
 		Condition: water-death
@@ -1848,6 +1871,7 @@ E8:
 		Voice: Attack
 		PauseOnCondition: being-warped
 	WithInfantryBody:
+		DefaultAttackSequence: shoot
 		RequiresCondition: !being-warped && undeployed
 	WithSpriteBody@DEPLOYED:
 		Sequence: deployed
@@ -1958,7 +1982,6 @@ N3C:
 		PauseOnCondition: !ammo || being-warped
 	AmmoPool:
 		Ammo: 1
-		PipCount: 0
 		AmmoCondition: ammo
 	ReloadAmmoPool:
 		Delay: 50
@@ -2034,6 +2057,9 @@ RMBC:
 		RequiresCondition: !parachute && damaged && !being-warped
 		TargetTypes: Repair
 	WithInfantryBody:
+		DefaultAttackSequence: shoot
+		StandSequences: stand
+		IdleSequences: idle1, idle2
 		RequiresCondition: !being-warped || !empdisable
 	WithInfantryBody@Warped:
 		RequiresCondition: being-warped || empdisable

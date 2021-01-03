@@ -17,7 +17,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	public class WithMindControlArcInfo : ITraitInfo
+	public class WithMindControlArcInfo : TraitInfo
 	{
 		[Desc("Color of the arc")]
 		public readonly Color Color = Color.Red;
@@ -41,7 +41,7 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("The width of the zap.")]
 		public readonly WDist Width = new WDist(43);
 
-		public virtual object Create(ActorInitializer init) { return new WithMindControlArc(init.Self, this); }
+		public override object Create(ActorInitializer init) { return new WithMindControlArc(init.Self, this); }
 	}
 
 	public class WithMindControlArc : IRenderAboveShroudWhenSelected, INotifySelected, INotifyCreated

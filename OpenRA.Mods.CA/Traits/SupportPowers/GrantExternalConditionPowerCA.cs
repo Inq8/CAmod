@@ -40,7 +40,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly string OnFireSound = null;
 
 		[Desc("Player stances which condition can be applied to.")]
-		public readonly Stance ValidStances = Stance.Ally;
+		public readonly PlayerRelationship ValidRelationships = PlayerRelationship.Ally;
 
 		[SequenceReference]
 		[Desc("Sequence to play for granting actor when activated.",
@@ -127,7 +127,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			return units.Distinct().Where(a =>
 			{
-				if (!info.ValidStances.HasStance(a.Owner.Stances[Self.Owner]))
+				if (!info.ValidRelationships.HasStance(a.Owner.RelationshipWith(Self.Owner)))
 					return false;
 
 				return a.TraitsImplementing<ExternalCondition>()
@@ -177,8 +177,10 @@ namespace OpenRA.Mods.CA.Traits
 				var xy = wr.Viewport.ViewToWorld(Viewport.LastMousePos);
 				foreach (var unit in power.UnitsInRange(xy))
 				{
-					var bounds = unit.TraitsImplementing<IDecorationBounds>().FirstNonEmptyBounds(unit, wr);
-					yield return new SelectionBoxAnnotationRenderable(unit, bounds, Color.Red);
+					var decorations = unit.TraitsImplementing<ISelectionDecorations>().FirstEnabledTraitOrDefault();
+					if (decorations != null)
+						foreach (var d in decorations.RenderSelectionAnnotations(unit, wr, Color.Red))
+							yield return d;
 				}
 			}
 
@@ -188,7 +190,7 @@ namespace OpenRA.Mods.CA.Traits
 				var pal = wr.Palette(TileSet.TerrainPaletteInternalName);
 
 				foreach (var t in world.Map.FindTilesInCircle(xy, range))
-					yield return new SpriteRenderable(tile, wr.World.Map.CenterOfCell(t), WVec.Zero, -511, pal, 1f, true);
+					yield return new SpriteRenderable(tile, wr.World.Map.CenterOfCell(t), WVec.Zero, -511, pal, 1f, true, true);
 			}
 
 			protected override string GetCursor(World world, CPos cell, int2 worldPixel, MouseInput mi)

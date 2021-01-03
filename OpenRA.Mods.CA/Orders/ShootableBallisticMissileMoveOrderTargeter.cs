@@ -20,18 +20,18 @@ namespace OpenRA.Mods.CA.Orders
 	{
 		public string OrderID { get; protected set; }
 		public int OrderPriority { get; protected set; }
-		public bool TargetOverridesSelection(Actor self, Target target, List<Actor> actorsAt, CPos xy, TargetModifiers modifiers)
+		public bool TargetOverridesSelection(Actor self, in Target target, List<Actor> actorsAt, CPos xy, TargetModifiers modifiers)
 		{
 			return modifiers.HasModifier(TargetModifiers.ForceMove);
 		}
 
-		public ShootableBallisticMissileMoveOrderTargeter(ShootableBallisticMissileInfo info)
+		public ShootableBallisticMissileMoveOrderTargeter(BallisticMissileInfo info)
 		{
 			OrderID = "Move";
 			OrderPriority = 4;
 		}
 
-		public virtual bool CanTarget(Actor self, Target target, List<Actor> othersAtTarget, ref TargetModifiers modifiers, ref string cursor)
+		public virtual bool CanTarget(Actor self, in Target target, List<Actor> othersAtTarget, ref TargetModifiers modifiers, ref string cursor)
 		{
 			// BMs can always move
 			return true;

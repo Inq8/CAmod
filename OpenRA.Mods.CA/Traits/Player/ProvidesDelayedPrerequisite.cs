@@ -72,7 +72,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (string.IsNullOrEmpty(prerequisite))
 				prerequisite = init.Self.Info.Name;
 
-			faction = init.Contains<FactionInit>() ? init.Get<FactionInit, string>() : init.Self.Owner.Faction.InternalName;
+			faction = init.GetValue<FactionInit, string>(init.Self.Owner.Faction.InternalName);
 		}
 
 		public IEnumerable<string> ProvidesPrerequisites

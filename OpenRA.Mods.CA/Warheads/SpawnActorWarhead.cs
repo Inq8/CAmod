@@ -8,7 +8,6 @@
  */
 #endregion
 
-using System.Collections.Generic;
 using System.Linq;
 using OpenRA.GameRules;
 using OpenRA.Mods.CA.Activities;
@@ -20,6 +19,8 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Warheads
 {
+	public enum ASOwnerType { Attacker, InternalName }
+
 	[Desc("Spawn actors upon explosion. Don't use this with buildings.")]
 	public class SpawnActorWarhead : WarheadAS, IRulesetLoaded<WeaponInfo>
 	{
@@ -48,7 +49,7 @@ namespace OpenRA.Mods.CA.Warheads
 		[Desc("Defines the image of an optional animation played at the spawning location.")]
 		public readonly string Image = null;
 
-		[SequenceReference("Image")]
+		[SequenceReference(nameof(Image), allowNullImage: true)]
 		[Desc("Defines the sequence of an optional animation played at the spawning location.")]
 		public readonly string Sequence = "idle";
 
@@ -73,7 +74,7 @@ namespace OpenRA.Mods.CA.Warheads
 			}
 		}
 
-		public override void DoImpact(Target target, WarheadArgs args)
+		public override void DoImpact(in Target target, WarheadArgs args)
 		{
 			var firedBy = args.SourceActor;
 			if (!target.IsValidFor(firedBy))
@@ -103,10 +104,14 @@ namespace OpenRA.Mods.CA.Warheads
 				// Immobile does not offer a check directly if the actor can exist in a position.
 				// It also crashes the game if it's actor's created without a LocationInit.
 				// See AS/Engine#84.
-				if (!ai.HasTraitInfo<MobileInfo>())
+				if (ai.HasTraitInfo<MobileInfo>())
 				{
+					var immobileInfo = ai.TraitInfo<MobileInfo>();
+
 					while (cell.MoveNext())
 					{
+						if (immobileInfo.ImmovableCondition != null || !firedBy.World.ActorMap.GetActorsAt(cell.Current).Any())
+						{
 							td.Add(new LocationInit(cell.Current));
 							var immobileunit = firedBy.World.CreateActor(false, a.ToLowerInvariant(), td);
 
@@ -123,16 +128,20 @@ namespace OpenRA.Mods.CA.Warheads
 								if (Image != null)
 									w.Add(new SpriteEffect(immobilespawnpos, w, Image, Sequence, palette));
 
-								var sound = Sounds.RandomOrDefault(Game.CosmeticRandom);
+								var sound = Sounds.RandomOrDefault(firedBy.World.LocalRandom);
 								if (sound != null)
 									Game.Sound.Play(SoundType.World, sound, immobilespawnpos);
 							});
 
 							break;
+						}
 					}
 
 					continue;
 				}
+
+				// Lambdas can't use 'in' variables, so capture a copy for later
+				var delayedTarget = target;
 
 				firedBy.World.AddFrameEndTask(w =>
 				{
@@ -144,13 +153,17 @@ namespace OpenRA.Mods.CA.Warheads
 					{
 						var subCell = positionable.GetAvailableSubCell(cell.Current);
 
+						if (ai.HasTraitInfo<AircraftInfo>()
+							&& ai.TraitInfo<AircraftInfo>().CanEnterCell(firedBy.World, unit, cell.Current))
+							subCell = SubCell.FullCell;
+
 						if (subCell != SubCell.Invalid)
 						{
 							positionable.SetPosition(unit, cell.Current, subCell);
 
 							var pos = unit.CenterPosition;
 							if (!ForceGround)
-								pos += new WVec(WDist.Zero, WDist.Zero, firedBy.World.Map.DistanceAboveTerrain(target.CenterPosition));
+								pos += new WVec(WDist.Zero, WDist.Zero, firedBy.World.Map.DistanceAboveTerrain(delayedTarget.CenterPosition));
 
 							positionable.SetVisualPosition(unit, pos);
 							w.Add(unit);
@@ -167,7 +180,7 @@ namespace OpenRA.Mods.CA.Warheads
 							if (Image != null)
 								w.Add(new SpriteEffect(pos, w, Image, Sequence, palette));
 
-							var sound = Sounds.RandomOrDefault(Game.CosmeticRandom);
+							var sound = Sounds.RandomOrDefault(firedBy.World.LocalRandom);
 							if (sound != null)
 								Game.Sound.Play(SoundType.World, sound, pos);
 

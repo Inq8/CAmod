@@ -32,11 +32,11 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			// (Way better than finding a nearest target which is likely to be on Ground)
 			// You might be tempted to move these lookups into Activate() but that causes null reference exception.
 			var domainIndex = first.World.WorldActor.Trait<DomainIndex>();
-			var locomotorInfo = first.Info.TraitInfo<MobileInfo>().LocomotorInfo;
+			var locomotor = first.Trait<Mobile>().Locomotor;
 
 			var navalProductions = owner.World.ActorsHavingTrait<Building>().Where(a
 				=> owner.SquadManager.Info.NavalProductionTypes.Contains(a.Info.Name)
-				&& domainIndex.IsPassable(first.Location, a.Location, locomotorInfo)
+				&& domainIndex.IsPassable(first.Location, a.Location, locomotor)
 				&& a.AppearsHostileTo(first));
 
 			if (navalProductions.Any())
@@ -113,10 +113,10 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			// Check if we have an enemy naval yard this tick
 			var first = owner.Units.First();
 			var domainIndex = first.World.WorldActor.Trait<DomainIndex>();
-			var locomotorInfo = first.Info.TraitInfo<MobileInfo>().LocomotorInfo;
+			var locomotor = first.Trait<Mobile>().Locomotor;
 			var navalProductions = owner.World.ActorsHavingTrait<Building>().Where(a
 				=> owner.SquadManager.Info.NavalProductionTypes.Contains(a.Info.Name)
-				&& domainIndex.IsPassable(first.Location, a.Location, locomotorInfo)
+				&& domainIndex.IsPassable(first.Location, a.Location, locomotor)
 				&& a.AppearsHostileTo(first));
 
 			// if target is dead or if we have a newly built naval yard this tick invalidate the current target and select a new one.

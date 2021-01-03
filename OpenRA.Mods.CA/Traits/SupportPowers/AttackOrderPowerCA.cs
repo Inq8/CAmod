@@ -22,6 +22,18 @@ namespace OpenRA.Mods.CA.Traits
 {
 	class AttackOrderPowerCAInfo : SupportPowerInfo, Requires<AttackBaseInfo>
 	{
+		[Desc("Range circle color.")]
+		public readonly Color CircleColor = Color.Red;
+
+		[Desc("Range circle line width.")]
+		public readonly float CircleWidth = 1;
+
+		[Desc("Range circle border color.")]
+		public readonly Color CircleBorderColor = Color.FromArgb(96, Color.Black);
+
+		[Desc("Range circle border width.")]
+		public readonly float CircleBorderWidth = 3;
+
 		public override object Create(ActorInitializer init) { return new AttackOrderPowerCA(init.Self, this); }
 	}
 
@@ -58,7 +70,7 @@ namespace OpenRA.Mods.CA.Traits
 			base.Created(self);
 		}
 
-		void INotifyBurstComplete.FiredBurst(Actor self, Target target, Armament a)
+		void INotifyBurstComplete.FiredBurst(Actor self, in Target target, Armament a)
 		{
 			self.World.IssueOrder(new Order("Stop", self, false));
 		}
@@ -119,21 +131,26 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override IEnumerable<IRenderable> RenderAnnotations(WorldRenderer wr, World world)
 		{
+			var info = instance.Info as AttackOrderPowerCAInfo;
 			foreach (var a in instance.Instances.Where(i => !i.IsTraitPaused))
 			{
 				yield return new RangeCircleAnnotationRenderable(
 					a.Self.CenterPosition,
 					attack.GetMinimumRange(),
 					0,
-					Color.Red,
-					Color.FromArgb(96, Color.Black));
+					info.CircleColor,
+					info.CircleWidth,
+					info.CircleBorderColor,
+					info.CircleBorderWidth);
 
 				yield return new RangeCircleAnnotationRenderable(
 					a.Self.CenterPosition,
 					attack.GetMaximumRange(),
 					0,
-					Color.Red,
-					Color.FromArgb(96, Color.Black));
+					info.CircleColor,
+					info.CircleWidth,
+					info.CircleBorderColor,
+					info.CircleBorderWidth);
 			}
 		}
 

@@ -51,7 +51,7 @@ namespace OpenRA.Mods.CA.Traits
 		public ProduceActorPowerCA(ActorInitializer init, ProduceActorPowerCAInfo info)
 			: base(init.Self, info)
 		{
-			faction = init.Contains<FactionInit>() ? init.Get<FactionInit, string>() : init.Self.Owner.Faction.InternalName;
+			faction = init.GetValue<FactionInit, string>(init.Self.Owner.Faction.InternalName);
 		}
 
 		public override void SelectTarget(Actor self, string order, SupportPowerManager manager)
@@ -96,7 +96,7 @@ namespace OpenRA.Mods.CA.Traits
 						new FactionInit(BuildableInfo.GetInitialFaction(ai, faction))
 					};
 
-					activated |= p.Trait.Produce(p.Actor, ai, info.Type, inits);
+					activated |= p.Trait.Produce(p.Actor, ai, info.Type, inits, 0);
 				}
 
 				if (activated)

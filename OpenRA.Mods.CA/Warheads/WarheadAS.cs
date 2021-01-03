@@ -22,69 +22,65 @@ namespace OpenRA.Mods.CA.Warheads
 		"These warheads check for the Air TargetType when detonated inair!")]
 	public abstract class WarheadAS : Warhead
 	{
-		public ImpactType GetImpactType(World world, CPos cell, WPos pos, Actor firedBy)
+		[Desc("Whether to consider actors in determining whether the explosion should happen. If false, only terrain will be considered.")]
+		public readonly bool ImpactActors = true;
+
+		static readonly BitSet<TargetableType> TargetTypeAir = new BitSet<TargetableType>("Air");
+
+		protected enum ImpactActorType
 		{
-			// Missiles need a margin because they sometimes explode a little above ground
-			// due to their explosion check triggering slightly too early (because of CloseEnough).
-			// TODO: Base ImpactType on target altitude instead of explosion altitude.
-			var airMargin = new WDist(128);
-
-			// Matching target actor
-			if (GetDirectHit(world, cell, pos, firedBy, true))
-				return ImpactType.TargetHit;
-
-			var dat = world.Map.DistanceAboveTerrain(pos);
-
-			if (dat.Length > airMargin.Length)
-				return ImpactType.Air;
-
-			return ImpactType.Ground;
+			None,
+			Invalid,
+			Valid,
 		}
 
-		public bool GetDirectHit(World world, CPos cell, WPos pos, Actor firedBy, bool checkTargetType = false)
+		/// <summary>Checks if there are any actors at impact position and if the warhead is valid against any of them.</summary>
+		protected ImpactActorType ActorTypeAtImpact(World world, WPos pos, Actor firedBy)
 		{
-			foreach (var victim in world.FindActorsOnCircle(pos, WDist.Zero))
+			var anyInvalidActor = false;
+
+			// Check whether the impact position overlaps with an actor's hitshape
+			var potentialVictims = world.FindActorsOnCircle(pos, WDist.Zero);
+			foreach (var victim in potentialVictims)
 			{
-				if (checkTargetType && !IsValidAgainst(victim, firedBy))
+				if (!AffectsParent && victim == firedBy)
 					continue;
 
-				var healthInfo = victim.Info.TraitInfoOrDefault<HealthInfo>();
-				if (healthInfo == null)
-					continue;
-
-				// If the impact position is within any HitShape, we have a direct hit
 				var activeShapes = victim.TraitsImplementing<HitShape>().Where(Exts.IsTraitEnabled);
-				if (activeShapes.Any(i => i.DistanceFromEdge(victim, pos).Length <= 0))
-					return true;
+				if (!activeShapes.Any(s => s.DistanceFromEdge(victim, pos).Length <= 0))
+					continue;
+
+				if (IsValidAgainst(victim, firedBy))
+					return ImpactActorType.Valid;
+
+				anyInvalidActor = true;
 			}
 
-			return false;
+			return anyInvalidActor ? ImpactActorType.Invalid : ImpactActorType.None;
 		}
 
-		public bool IsValidImpact(WPos pos, Actor firedBy)
+		/// <summary>Checks if the warhead is valid against the terrain at impact position.</summary>
+		protected bool IsValidAgainstTerrain(World world, WPos pos)
 		{
-			var world = firedBy.World;
-			var targetTile = world.Map.CellContaining(pos);
-			if (!world.Map.Contains(targetTile))
+			var cell = world.Map.CellContaining(pos);
+			if (!world.Map.Contains(cell))
 				return false;
 
-			var impactType = GetImpactType(world, targetTile, pos, firedBy);
-			var validImpact = false;
-			switch (impactType)
-			{
-				case ImpactType.TargetHit:
-					validImpact = true;
-					break;
-				case ImpactType.Air:
-					validImpact = IsValidTarget(new BitSet<TargetableType>("Air"));
-					break;
-				case ImpactType.Ground:
-					var tileInfo = world.Map.GetTerrainInfo(targetTile);
-					validImpact = IsValidTarget(tileInfo.TargetTypes);
-					break;
-			}
+			var dat = world.Map.DistanceAboveTerrain(pos);
+			return IsValidTarget(dat > AirThreshold ? TargetTypeAir : world.Map.GetTerrainInfo(cell).TargetTypes);
+		}
 
-			return validImpact;
+		protected bool IsValidImpact(WPos pos, Actor firedBy)
+		{
+			var actorAtImpact = ImpactActors ? ActorTypeAtImpact(firedBy.World, pos, firedBy) : ImpactActorType.None;
+
+			// If there's either a) an invalid actor, or b) no actor and invalid terrain, we don't trigger the effect(s).
+			if (actorAtImpact == ImpactActorType.Invalid)
+				return false;
+			else if (actorAtImpact == ImpactActorType.None && !IsValidAgainstTerrain(firedBy.World, pos))
+				return false;
+
+			return true;
 		}
 	}
 }

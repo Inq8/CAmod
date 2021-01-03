@@ -588,10 +588,10 @@ KATY:
 		Weapon: UnitExplodeIraqTank
 		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: !being-warped && iraqtank-upgrade
-	SelfHealing:
+	ChangesHealth:
 		PercentageStep: 1
 		Delay: 25
-		HealIfBelow: 50
+		StartIfBelow: 50
 		DamageCooldown: 150
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -663,10 +663,10 @@ KATY:
 		Weapon: UnitExplodeIraqTank
 		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: !being-warped
-	SelfHealing:
+	ChangesHealth:
 		PercentageStep: 1
 		Delay: 25
-		HealIfBelow: 50
+		StartIfBelow: 50
 		DamageCooldown: 150
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -937,12 +937,21 @@ HARV:
 		DecorationBounds: 42,42
 	Harvester:
 		Capacity: 30
-		PipCount: 6
 		Resources: Tiberium, BlueTiberium, Ore, Gems
 		BaleUnloadDelay: 1
 		SearchFromProcRadius: 15
 		SearchFromHarvesterRadius: 8
 		EmptyCondition: no-ore
+	WithHarvesterPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+		PipCount: 6
+		ResourceSequences:
+			Ore: pip-yellow
+			Gems: pip-red
+			Tiberium: pip-green
+			BlueTiberium: pip-blue
 	Health:
 		HP: 75000
 	Armor:
@@ -957,10 +966,10 @@ HARV:
 	SpawnActorOnDeath:
 		Actor: HARV.EmptyHusk
 		RequiresCondition: !being-warped && !charv-upgrade
-	SelfHealing:
+	ChangesHealth:
 		PercentageStep: 1
 		Delay: 25
-		HealIfBelow: 50
+		StartIfBelow: 50
 		DamageCooldown: 500
 	GrantConditionOnTerrain@Tiberium:
 		Condition: ontib
@@ -1007,9 +1016,10 @@ HARV.Chrono:
 		Voice: Move
 	Harvester:
 		Capacity: 20
-		PipCount: 4
 		HarvestVoice: Harvest
 		DeliverVoice: Deliver
+	WithHarvesterPipsDecoration:
+		PipCount: 4
 	ChronoResourceDelivery:
 		Image: chrono
 		Palette: ra2effect-ignore-lighting-alpha75
@@ -1035,7 +1045,6 @@ MCV:
 		BuildPaletteOrder: 300
 		Prerequisites: repair, ~vehicles.ra, ~techlevel.medium
 		Description: Deploys into another Construction Yard.\n  Unarmed
-		BuildDurationModifier: 50
 	Valued:
 		Cost: 3000
 	Tooltip:
@@ -1124,6 +1133,7 @@ APC:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@TRANSPORT: ^Transport
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 40
@@ -1158,7 +1168,6 @@ APC:
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5
-		PipCount: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
 	ProducibleWithLevel:
@@ -1341,7 +1350,7 @@ MRJ:
 		PauseOnCondition: empdisable || being-warped
 	ProximityExternalCondition@JAMMER:
 		Range: 18c0
-		ValidStances: Enemy, Neutral
+		ValidRelationships: Enemy, Neutral
 		Condition: jammed
 	WithRangeCircle@JAMMER:
 		Type: jammer
@@ -1349,7 +1358,7 @@ MRJ:
 		Color: 0000FF80
 	JamsMissiles:
 		Range: 5c0
-		DeflectionStances: Neutral, Enemy
+		DeflectionRelationships: Neutral, Enemy
 		RequiresCondition: !empdisable
 	RenderJammerCircle:
 	Targetable:
@@ -1401,7 +1410,7 @@ TTNK:
 		Sequence: spinner
 	ProximityExternalCondition@JAMMER:
 		Range: 8c0
-		ValidStances: Enemy, Neutral
+		ValidRelationships: Enemy, Neutral
 		Condition: jammed
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -1460,7 +1469,7 @@ DTRK:
 	ChronoshiftableWithSpriteEffect:
 		ExplodeInstead: true
 	Passenger:
-		PipType: Red
+		CustomPipType: red
 		Voice: Move
 	Voiced:
 		VoiceSet: TTruckVoice
@@ -1564,7 +1573,6 @@ AMCV:
 		Prerequisites: repair, ~vehicles.td, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Deploys into another Construction Yard.\n  Unarmed
-		BuildDurationModifier: 50
 	Valued:
 		Cost: 3000
 	Tooltip:
@@ -1704,6 +1712,7 @@ APC2:
 	Inherits: ^TankTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
+	Inherits@TRANSPORT: ^Transport
 	RenderSprites:
 		FactionImages:
 			nod: apc2.nod
@@ -1842,7 +1851,6 @@ APC2:
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5
-		PipCount: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
 	ProducibleWithLevel:
@@ -1906,6 +1914,7 @@ VULC:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
+	Inherits@TRANSPORT: ^Transport
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 40
@@ -2013,7 +2022,6 @@ VULC:
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5
-		PipCount: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
 	ProducibleWithLevel:
@@ -2157,7 +2165,7 @@ MTNK:
 		LocalOffset: 0,10,90
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: pointlaser-upgrade && !drone-upgrade
-		ForceTargetStances: enemy
+		ForceTargetRelationships: enemy
 	AttackTurreted:
 		Turrets: primary, secondary
 		PauseOnCondition: empdisable || being-warped
@@ -2184,7 +2192,7 @@ MTNK:
 		Armament: secondary
 		PointDefenseTypes: Missile
 		RequiresCondition: pointlaser-upgrade
-		ValidStances: Enemy
+		ValidRelationships: Enemy
 	GrantConditionOnPrerequisite@POINTL:
 		Condition: pointlaser-upgrade
 		Prerequisites: pointlaser.upgrade
@@ -2265,7 +2273,7 @@ MTNK.Drone:
 		Sequence: offline
 		Palette: chrome
 		RequiresCondition: disabled
-		ReferencePoint: Center
+		Position: Center
 	ProximityExternalCondition@POWERSOUND:
 		Condition: disablesound
 		RequiresCondition: disabled || empdisable
@@ -2280,7 +2288,7 @@ MTNK.Drone:
 	-CaptureNotification:
 	-Capturable@DRIVER_DEAD:
 	-GrantConditionIfOwnerIsNeutral:
-	-SelfHealing@DRIVER_DEAD:
+	-ChangesHealth@DRIVER_DEAD:
 	-Targetable@DRIVERKILL:
 	-Targetable@AICAPTURE:
 
@@ -2340,10 +2348,10 @@ HTNK:
 	SpawnActorOnDeath:
 		Actor: HTNK.Husk
 		RequiresCondition: !being-warped
-	SelfHealing:
+	ChangesHealth:
 		PercentageStep: 1
 		Delay: 25
-		HealIfBelow: 50
+		StartIfBelow: 50
 		DamageCooldown: 150
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -2409,10 +2417,10 @@ HTNK.Ion:
 	SpawnActorOnDeath:
 		Actor: HTNK.Ion.Husk
 		RequiresCondition: !being-warped
-	SelfHealing:
+	ChangesHealth:
 		PercentageStep: 1
 		Delay: 25
-		HealIfBelow: 50
+		StartIfBelow: 50
 		DamageCooldown: 150
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -2597,7 +2605,6 @@ MLRS:
 		LocalOffset: 0,171,0, 0,-171,0
 	AmmoPool:
 		Ammo: 2
-		PipCount: 0
 		AmmoCondition: ammo
 	AttackTurreted:
 		TargetFrozenActors: True
@@ -2811,12 +2818,21 @@ HAR2:
 		DecorationBounds: 36,36
 	Harvester:
 		Capacity: 30
-		PipCount: 6
 		Resources: Tiberium, BlueTiberium, Ore, Gems
 		BaleUnloadDelay: 1
 		SearchFromProcRadius: 15
 		SearchFromHarvesterRadius: 8
 		EmptyCondition: no-ore
+	WithHarvesterPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+		PipCount: 6
+		ResourceSequences:
+			Ore: pip-yellow
+			Gems: pip-red
+			Tiberium: pip-green
+			BlueTiberium: pip-blue
 	Mobile:
 		Speed: 56
 		Locomotor: heavywheeled
@@ -2827,14 +2843,14 @@ HAR2:
 	RevealsShroud:
 		Range: 4c0
 	SpawnActorOnDeath:
-		Actor: HAR2.Husk
+		Actor: HARV.TD.Husk
 		RequiresCondition: !being-warped
 	WithHarvestAnimation:
 	WithDockingAnimation:
-	SelfHealing:
+	ChangesHealth:
 		PercentageStep: 1
 		Delay: 25
-		HealIfBelow: 50
+		StartIfBelow: 50
 		DamageCooldown: 500
 	GrantConditionOnTerrain@Tiberium:
 		Condition: ontib
@@ -2857,6 +2873,7 @@ BTR:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@BERSERK: ^Berserk
+	Inherits@TRANSPORT: ^Transport
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 45
@@ -2901,7 +2918,6 @@ BTR:
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5
-		PipCount: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
 	ProducibleWithLevel:
@@ -2917,6 +2933,7 @@ IFV:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
+	Inherits@TRANSPORT: ^Transport
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 115
@@ -3013,8 +3030,8 @@ IFV:
 		LocalOffset: 0,0,213
 		Cursor: repair
 		OutsideRangeCursor: repair
-		TargetStances: Ally
-		ForceTargetStances: None
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
 		RequiresCondition: engturr
 		MuzzleSequence: emp-overlay
 		MuzzlePalette: tseffect-ignore-lighting-alpha75
@@ -3022,14 +3039,14 @@ IFV:
 		Weapon: IFVDefuseKit
 		Cursor: goldwrench
 		OutsideRangeCursor: goldwrench
-		TargetStances: Ally
+		TargetRelationships: Ally
 		RequiresCondition: engturr
-		ForceTargetStances: None
+		ForceTargetRelationships: None
 		Name: secondary
 	AutoTargetPriority@defuse:
 		ValidTargets: C4Attached
 		InvalidTargets: NoAutoTarget
-		ValidStances: Ally
+		ValidRelationships: Ally
 	Armament@Acol:
 		Weapon: LaserTur
 		LocalOffset: 385,0,300
@@ -3080,7 +3097,6 @@ IFV:
 	Cargo:
 		Types: Infantry
 		MaxWeight: 1
-		PipCount: 1
 		LoadingCondition: notmobile
 		LoadedCondition: full
 		PassengerConditions:
@@ -3101,7 +3117,6 @@ IFV:
 			mech: engturr
 			mort: chemturr
 			shok: testurr
-			shok.nod: testurr
 			rmbo: commturr
 			bori: commturr
 			e7: commturr
@@ -3113,8 +3128,6 @@ IFV:
 			acol: acolturr
 			rmbc: acolturr
 			tecn: tecnturr
-			tecn2: tecnturr
-			tecn3: tecnturr
 			s1: gunturr
 			s2: chemturr
 			s3: acolturr
@@ -3311,7 +3324,7 @@ TITN:
 		Speed: 50
 		Voice: Move
 	Passenger:
-		PipType: Red
+		CustomPipType: red
 		Weight: 3
 		Voice: Move
 	QuantizeFacingsFromSequence:
@@ -3353,10 +3366,10 @@ TITN:
 		LoadedChance: 100
 	Voiced:
 		VoiceSet: GhostVoice
-	SelfHealing@DEFAULT:
+	ChangesHealth@DEFAULT:
 		PercentageStep: 1
 		Delay: 25
-		HealIfBelow: 50
+		StartIfBelow: 50
 		DamageCooldown: 150
 	Carryable:
 		LocalOffset: 0,0,700
@@ -3775,8 +3788,7 @@ RTNK:
 		Image: pips
 		Sequence: pip-disguise
 		Palette: effect
-		ReferencePoint: Top, Right
-		ZOffset: 256
+		Position: TopRight
 		RequiresCondition: hidden
 
 V3RL:
@@ -3814,17 +3826,16 @@ V3RL:
 		Range: 4c0
 	Armament:
 		Weapon: V3Launcher
-		ReloadingCondition: reloading
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
 	WithFacingSpriteBody:
-		RequiresCondition: !reloading
+		RequiresCondition: loaded
 		Name: loaded
 	WithFacingSpriteBody@EMPTY:
-		RequiresCondition: reloading
+		RequiresCondition: !loaded
 		Sequence: empty-idle
 		Name: reloading
 	GrantConditionOnAttack:
@@ -3834,6 +3845,7 @@ V3RL:
 	MissileSpawnerMaster:
 		Actors: V3
 		RespawnTicks: 250
+		LoadedCondition: loaded
 	Explodes:
 		Weapon: BarrelExplode
 	ProducibleWithLevel:
@@ -3858,7 +3870,7 @@ V3:
 		Name: V3 Rocket
 	Health:
 		HP: 7500
-	ShootableBallisticMissile:
+	BallisticMissile:
 		LaunchAngle: 95
 		Speed: 165
 	LeavesTrails:
@@ -4198,6 +4210,7 @@ BATF:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@TRANSPORT: ^Transport
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 230
@@ -4241,7 +4254,6 @@ BATF:
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5
-		PipCount: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
 		PassengerConditions:
@@ -4384,7 +4396,7 @@ MEMP:
 		Sequence: offline
 		Palette: chrome
 		RequiresCondition: disabled
-		ReferencePoint: Center
+		Position: Center
 	ProximityExternalCondition@POWERSOUND:
 		Condition: disablesound
 		RequiresCondition: disabled || empdisable
@@ -4397,7 +4409,7 @@ MEMP:
 	-CaptureNotification:
 	-Capturable@DRIVER_DEAD:
 	-GrantConditionIfOwnerIsNeutral:
-	-SelfHealing@DRIVER_DEAD:
+	-ChangesHealth@DRIVER_DEAD:
 	-Targetable@DRIVERKILL:
 	-Targetable@AICAPTURE:
 
@@ -4454,9 +4466,13 @@ CDRN:
 		Name: explosion
 		Armaments: explosion
 		ReloadDelay: 0
-		PipType: Red
 		InitialAmmo: 0
 		AmmoCondition: ammo
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+		FullSequence: pip-red
 	ReloadAmmoPool:
 		AmmoPool: explosion
 		Delay: 100
@@ -4479,7 +4495,7 @@ CDRN:
 	-CaptureNotification:
 	-Capturable@DRIVER_DEAD:
 	-GrantConditionIfOwnerIsNeutral:
-	-SelfHealing@DRIVER_DEAD:
+	-ChangesHealth@DRIVER_DEAD:
 	-Targetable@DRIVERKILL:
 	-Targetable@AICAPTURE:
 

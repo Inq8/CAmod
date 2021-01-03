@@ -37,6 +37,8 @@ namespace OpenRA.Mods.CA.Traits
 		WeaponInfo Weapon { get; }
 
 		int TurnRate { get; }
+
+		int RandomRate { get; }
 	}
 
 	public interface INotifyActivate { void Launching(Actor self); }

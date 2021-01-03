@@ -1,17 +1,17 @@
 ﻿#region Copyright & License Information
 /*
- * Copyright 2007-2018 The OpenRA Developers (see AUTHORS)
- * This file is part of OpenRA, which is free software. It is made
- * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation, either version 3 of
- * the License, or (at your option) any later version. For more
- * information, see COPYING.
+ * Copyright 2015- OpenRA.Mods.AS Developers (see AUTHORS)
+ * This file is a part of a third-party plugin for OpenRA, which is
+ * free software. It is made available to you under the terms of the
+ * GNU General Public License as published by the Free Software
+ * Foundation. For more information, see COPYING.
  */
 #endregion
 
 using System.Linq;
 using OpenRA.Activities;
 using OpenRA.Mods.CA.Traits;
+using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
@@ -19,10 +19,10 @@ namespace OpenRA.Mods.CA.Activities
 {
 	class EnterAirstrikeMaster : Activity
 	{
-		readonly Actor master; // remember the spawner.
+		readonly Actor master;
 		readonly AirstrikeMaster spawnerMaster;
 
-		public EnterAirstrikeMaster(Actor self, Actor master, AirstrikeMaster spawnerMaster)
+		public EnterAirstrikeMaster(Actor master, AirstrikeMaster spawnerMaster)
 		{
 			this.master = master;
 			this.spawnerMaster = spawnerMaster;
@@ -30,12 +30,9 @@ namespace OpenRA.Mods.CA.Activities
 
 		public override bool Tick(Actor self)
 		{
-			// Master got killed :(
 			if (master.IsDead)
 				return true;
 
-			// Load this thingy.
-			// Issue attack move to the rally point.
 			self.World.AddFrameEndTask(w =>
 			{
 				if (self.IsDead || master.IsDead)
@@ -44,22 +41,48 @@ namespace OpenRA.Mods.CA.Activities
 				spawnerMaster.PickupSlave(master, self);
 				w.Remove(self);
 
-				// Insta repair.
-				if (spawnerMaster.Info.InstaRepair)
+				if (spawnerMaster.AirstrikeMasterInfo.InstantRepair)
 				{
 					var health = self.Trait<Health>();
 					self.InflictDamage(self, new Damage(-health.MaxHP));
 				}
 
-				// Insta re-arm. (Delayed launching is handled at spawner.)
+				// Delayed launching is handled at spawner.
 				var ammoPools = self.TraitsImplementing<AmmoPool>().ToArray();
 				if (ammoPools != null)
 					foreach (var pool in ammoPools)
-						while (!pool.HasFullAmmo)
-							pool.GiveAmmo(self, 1);
+						while (pool.GiveAmmo(self, 1))
+						{ }
 			});
 
 			return true;
+		}
+	}
+
+	class ReturnAirstrikeMaster : Activity
+	{
+		readonly Actor master;
+		readonly AirstrikeMaster spawnerMaster;
+		readonly WPos edgePos;
+
+		public ReturnAirstrikeMaster(Actor master, AirstrikeMaster spawnerMaster, WPos edgePos)
+		{
+			this.master = master;
+			this.spawnerMaster = spawnerMaster;
+			this.edgePos = edgePos;
+		}
+
+		protected override void OnFirstRun(Actor self)
+		{
+			if (spawnerMaster.AirstrikeMasterInfo.SendAndForget)
+			{
+				QueueChild(new FlyOffMap(self));
+			}
+			else
+			{
+				QueueChild(new Fly(self, Target.FromPos(edgePos)));
+				QueueChild(new EnterAirstrikeMaster(master, spawnerMaster));
+			}
 		}
 	}
 }

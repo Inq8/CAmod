@@ -210,7 +210,7 @@ S6:
 	Health:
 		HP: 2500
 	Passenger:
-		PipType: Yellow
+		CustomPipType: yellow
 	EngineerRepair:
 	RepairsBridges:
 	CaptureManager:
@@ -245,14 +245,14 @@ SMEDI:
 		Weapon: Heal
 		Cursor: heal
 		OutsideRangeCursor: heal
-		TargetStances: Ally
-		ForceTargetStances: None
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	WithInfantryBody:
 		DefaultAttackSequence: heal
 	Passenger:
-		PipType: Blue
+		CustomPipType: blue
 		Voice: Move
 	Guard:
 		Voice: Move
@@ -331,7 +331,7 @@ MAST:
 #
 
 HARV.Scrin:
-	Inherits: HAR2
+	Inherits: HARV.TD
 	Selectable:
 		DecorationBounds: 42,42
 	RenderSprites:
@@ -558,6 +558,7 @@ INTL:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@TRANSPORT: ^Transport
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
@@ -599,7 +600,6 @@ INTL:
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5
-		PipCount: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
 	Hovers:
@@ -738,10 +738,10 @@ STCR:
 	RangeMultiplier@STORMCRAWLERCHARGE2:
 		Modifier: 120
 		RequiresCondition: stormcrawlercharge >= 10
-	SelfHealing@STORMCRAWLERCHARGE1:
-		Step: 300
+	ChangesHealth:
+		PercentageStep: 1
 		Delay: 10
-		HealIfBelow: 100
+		StartIfBelow: 100
 		DamageCooldown: 0
 		RequiresCondition: stormcrawlercharge >= 5 && stormcrawlercharge < 10
 	SelfHealing@STORMCRAWLERCHARGE2:
@@ -1045,7 +1045,6 @@ SMCV:
 		Prerequisites: repair, ~vehicles.scrin, ~techlevel.infonly
 		IconPalette: chrome
 		Description: Deploys into another Colony Platform.\n  Unarmed
-		BuildDurationModifier: 50
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
@@ -1172,8 +1171,11 @@ STMR:
 	-EjectOnDeath:
 	AmmoPool:
 		Ammo: 16
-		PipCount: 4
 		AmmoCondition: ammo
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 	ReloadAmmoPool:
 		Delay: 175
 		Count: 4
@@ -1181,16 +1183,16 @@ STMR:
 	GrantConditionOnPrerequisite@REGEN:
 		Condition: regen-upgrade
 		Prerequisites: regen.upgrade
-	SelfHealing@REGEN1:
+	ChangesHealth@REGEN1:
 		Step: 600
 		Delay: 25
-		HealIfBelow: 66
+		StartIfBelow: 66
 		DamageCooldown: 200
 		RequiresCondition: regen-upgrade
-	SelfHealing@REGEN2:
+	ChangesHealth@REGEN2:
 		Step: 300
 		Delay: 25
-		HealIfBelow: 100
+		StartIfBelow: 100
 		DamageCooldown: 200
 		RequiresCondition: regen-upgrade
 	DetectCloaked:
@@ -1275,16 +1277,16 @@ DEVA:
 	GrantConditionOnPrerequisite@REGEN:
 		Condition: regen-upgrade
 		Prerequisites: regen.upgrade
-	SelfHealing@REGEN1:
+	ChangesHealth@REGEN1:
 		Step: 600
 		Delay: 25
-		HealIfBelow: 66
+		StartIfBelow: 66
 		DamageCooldown: 200
 		RequiresCondition: regen-upgrade
-	SelfHealing@REGEN2:
+	ChangesHealth@REGEN2:
 		Step: 300
 		Delay: 25
-		HealIfBelow: 100
+		StartIfBelow: 100
 		DamageCooldown: 200
 		RequiresCondition: regen-upgrade
 	Repairable:
@@ -1392,16 +1394,16 @@ PAC:
 	GrantConditionOnPrerequisite@REGEN:
 		Condition: regen-upgrade
 		Prerequisites: regen.upgrade
-	SelfHealing@REGEN1:
+	ChangesHealth@REGEN1:
 		Step: 500
 		Delay: 25
-		HealIfBelow: 66
+		StartIfBelow: 66
 		DamageCooldown: 200
 		RequiresCondition: regen-upgrade
-	SelfHealing@REGEN2:
+	ChangesHealth@REGEN2:
 		Step: 250
 		Delay: 25
-		HealIfBelow: 100
+		StartIfBelow: 100
 		DamageCooldown: 200
 		RequiresCondition: regen-upgrade
 	Repairable:
@@ -1757,10 +1759,10 @@ SWAL:
 		DestroyedSounds: kaboom30.aud
 	Health:
 		HP: 36000
-	SelfHealing:
+	ChangesHealth:
 		PercentageStep: 1
 		Delay: 10
-		HealIfBelow: 100
+		StartIfBelow: 100
 		DamageCooldown: 25
 	Armor:
 		Type: Brick
@@ -1956,7 +1958,8 @@ REA2:
 
 PROC.SCRIN:
 	Inherits: ^ScrinBuilding
-	Inherits@2: ^BotIncome
+	Inherits@2: ^ConfigurableIncome
+	Inherits@3: ^BotIncome
 	HitShape:
 		Type: Rectangle
 			TopLeft: -1536, -512
@@ -1966,9 +1969,9 @@ PROC.SCRIN:
 			TopLeft: -512, -1450
 			BottomRight: 896, -512
 	Valued:
-		Cost: 1800
+		Cost: 2000
 	CustomSellValue:
-		Value: 400
+		Value: 300
 	Tooltip:
 		Name: Refinery
 	Buildable:
@@ -1977,7 +1980,6 @@ PROC.SCRIN:
 		Queue: Building
 		IconPalette: scrin
 		Description: Processes raw Tiberium, Ore and Gems\ninto credits.
-		BuildDuration: 1400
 	Building:
 		Footprint: _x_ xxx === ===
 		Dimensions: 3,4
@@ -2003,16 +2005,19 @@ PROC.SCRIN:
 		DragLength: 12
 		TickRate: 15
 	StoresResources:
-		PipColor: Green
-		PipCount: 17
 		Capacity: 2000
+	WithResourceStoragePipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+		PipCount: 17
 	Selectable:
 		Bounds: 72,56,0,12
 		DecorationBounds: 73,72
 	InfiltrateForCash:
 		Types: ThiefInfiltrate
 		Percentage: 50
-		Notification: CreditsStolen
+		InfiltrationNotification: CreditsStolen
 	FreeActor:
 		Actor: HARV.Scrin
 		SpawnOffset: 1,2
@@ -2027,6 +2032,7 @@ PROC.SCRIN:
 
 PORT:
 	Inherits: ^ScrinBuilding
+	Inherits: ^PrimaryBuilding
 	Inherits@shape: ^2x2Shape
 	Selectable:
 		Bounds: 48,48
@@ -2069,9 +2075,6 @@ PORT:
 	Production:
 		Produces: Infantry, Soldier
 		PauseOnCondition: forceshield || invulnerability || being-warped
-	PrimaryBuilding:
-		PrimaryCondition: primary
-		SelectionNotification: PrimaryBuildingSelected
 	ProductionBar:
 		ProductionType: Infantry
 	ProvidesPrerequisite@scrin:
@@ -2094,13 +2097,6 @@ PORT:
 	InfiltrateForSupportPower@inf:
 		Types: SabInfiltrate
 		Proxy: inf.scrin.stolen
-	WithDecoration@primary:
-		RequiresSelection: true
-		Image: pips
-		Sequence: tag-primary
-		ReferencePoint: Top
-		ZOffset: 256
-		RequiresCondition: primary
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
 		Types: SpyInfiltrate
@@ -2109,6 +2105,7 @@ PORT:
 
 WSPH:
 	Inherits: ^ScrinBuilding
+	Inherits: ^PrimaryBuilding
 	Inherits@shape: ^3x2Shape
 	Selectable:
 		Bounds: 72,48
@@ -2174,9 +2171,6 @@ WSPH:
 	Production:
 		Produces: Vehicle
 		PauseOnCondition: forceshield || invulnerability || being-warped
-	PrimaryBuilding:
-		PrimaryCondition: primary
-		SelectionNotification: PrimaryBuildingSelected
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
 	ProductionBar:
@@ -2184,13 +2178,6 @@ WSPH:
 	Power:
 		Amount: -30
 		RequiresCondition: !being-warped
-	WithDecoration@primary:
-		RequiresSelection: true
-		Image: pips
-		Sequence: tag-primary
-		ReferencePoint: Top
-		ZOffset: 256
-		RequiresCondition: primary
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPower@spy:
 		Proxy: vehicles.upgraded
@@ -2278,6 +2265,9 @@ NERV:
 		LongDesc: Reveals map resources.
 		LaunchSound: tibscan.aud
 		PauseOnCondition: disabled || empdisable || being-warped
+		EffectImage: empty
+		EffectSequence: idle
+		EffectPalette: tseffect-ignore-lighting-alpha75
 	SpawnActorPower@ICHORSEED:
 		OrderName: ichorseed
 		Icon: ichorpower
@@ -2327,6 +2317,9 @@ NERV:
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
 		DisplayRadarPing: True
+		EffectImage: empty
+		EffectSequence: idle
+		EffectPalette: tseffect-ignore-lighting-alpha75
 	DetonateWeaponPower@STORMSPIKE:
 		OrderName: stormspike
 		Icon: stormspikepower
@@ -2358,6 +2351,9 @@ NERV:
 		SelectTargetSpeechNotification: SelectTarget
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayRadarPing: True
+		EffectImage: empty
+		EffectSequence: idle
+		EffectPalette: tseffect-ignore-lighting-alpha75
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -2425,7 +2421,7 @@ SCRT:
 		Description: Force Shield
 		LongDesc: Makes selected friendly structures temporarily invulnerable.\n  Warning: Causes power failure.
 		OnFireSound: forceon.aud
-		DisplayTimerStances: Ally
+		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		EndChargeSpeechNotification: ForceShieldReady
@@ -2441,6 +2437,7 @@ SCRT:
 
 GRAV:
 	Inherits: ^ScrinBuilding
+	Inherits: ^PrimaryBuilding
 	Inherits@shape: ^3x2Shape
 	HitShape:
 		TargetableOffsets: -355,-1024,0
@@ -2485,22 +2482,12 @@ GRAV:
 	ProductionBar:
 		ProductionType: Aircraft
 	SupportPowerChargeBar:
-	PrimaryBuilding:
-		PrimaryCondition: primary
-		SelectionNotification: PrimaryBuildingSelected
 	Power:
 		Amount: -20
 		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate
-	WithDecoration@primary:
-		RequiresSelection: true
-		Image: pips
-		Sequence: tag-primary
-		ReferencePoint: Top
-		ZOffset: 256
-		RequiresCondition: primary
 	WithBuildingBib:
 	WithIdleOverlay@orb:
 		RequiresCondition: !build-incomplete
@@ -2655,9 +2642,12 @@ SILO.SCRIN:
 	WithResourceLevelSpriteBody:
 		Sequence: stages
 	StoresResources:
-		PipCount: 5
 		Capacity: 3000
-		PipColor: Green
+	WithResourceStoragePipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+		PipCount: 5
 	-MustBeDestroyed:
 	SpawnActorsOnSell:
 		ActorTypes: c1,c7
@@ -2736,7 +2726,7 @@ MANI:
 		TargetCircleRange: 3c512
 		TargetCircleColor: ff55ffcc
 		LaunchSound: suppression.aud
-		DisplayTimerStances: Ally, Neutral, Enemy
+		DisplayTimerRelationships: Ally, Neutral, Enemy
 		Weapon: SuppressionField
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
@@ -2794,7 +2784,7 @@ RIFT:
 		IncomingSpeechNotification: RiftApproach
 		IncomingSound: nukelaunch.aud
 		LaunchSound: nukelaunch.aud
-		DisplayTimerStances: Ally, Neutral, Enemy
+		DisplayTimerRelationships: Ally, Neutral, Enemy
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayBeacon: True
 		DisplayRadarPing: True
@@ -2875,8 +2865,7 @@ PTUR:
 	Power:
 		Amount: -25
 		RequiresCondition: !being-warped
-	BodyOrientation:
-		UseClassicFacingFudge: True
+	ClassicFacingBodyOrientation:
 	SpawnActorOnDeath:
 		Actor: s1
 	-SpawnRandomActorOnDeath:
@@ -2928,8 +2917,7 @@ SHAR:
 	Power:
 		Amount: -50
 		RequiresCondition: !being-warped
-	BodyOrientation:
-		UseClassicFacingFudge: True
+	ClassicFacingBodyOrientation:
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
 	SpawnActorOnDeath:
@@ -3082,7 +3070,7 @@ camera.rift:
 		Palette: effect-ignore-lighting-alpha85
 	WithSpriteBody:
 		StartSequence: spawn
-	BodyOrientation:
+	ClassicFacingBodyOrientation:
 		QuantizedFacings: 1
 	AlwaysVisible:
 	HitShape:
@@ -3099,7 +3087,7 @@ camera.rift:
 		SoundFiles: rift1.aud, rift2.aud, rift3.aud
 		Interval: 50
 	WithDeathAnimation:
-		UseDeathTypeSuffix: False
+		UseDeathTypeSuffix: false
 		CrushedSequence: fade
 		FallbackSequence: fade
 	KillsSelf:
@@ -3154,7 +3142,7 @@ ichor.seeder:
 ion.surge:
 	Interactable:
 	WithSpriteBody:
-	BodyOrientation:
+	ClassicFacingBodyOrientation:
 		QuantizedFacings: 1
 	HitShape:
 	AlwaysVisible:
@@ -3165,11 +3153,11 @@ ion.surge:
 	ProximityExternalCondition@JAMMER:
 		Range: 10c0
 		Condition: jammed
-		ValidStances: Ally, Enemy, Neutral
+		ValidRelationships: Ally, Enemy, Neutral
 	ProximityExternalCondition@POWERDRAIN:
 		Range: 10c0
 		Condition: powerdrain
-		ValidStances: Ally, Enemy, Neutral
+		ValidRelationships: Ally, Enemy, Neutral
 	KillsSelf:
 		Delay: 375
 	AmbientSound:

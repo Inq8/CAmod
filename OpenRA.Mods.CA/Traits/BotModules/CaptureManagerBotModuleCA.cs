@@ -39,7 +39,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly bool CheckCaptureTargetsForVisibility = true;
 
 		[Desc("Player stances that capturers should attempt to target.")]
-		public readonly Stance CapturableStances = Stance.Enemy | Stance.Neutral;
+		public readonly PlayerRelationship CapturableStances = PlayerRelationship.Enemy | PlayerRelationship.Neutral;
 
 		public override object Create(ActorInitializer init) { return new CaptureManagerBotModuleCA(init.Self, this); }
 	}
@@ -68,7 +68,7 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			isEnemyUnit = unit =>
-				player.Stances[unit.Owner] == Stance.Enemy
+				player.RelationshipWith(unit.Owner) == PlayerRelationship.Enemy
 					&& !unit.Info.HasTraitInfo<HuskInfo>()
 					&& unit.Info.HasTraitInfo<ITargetableInfo>();
 
@@ -136,7 +136,7 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			var randPlayer = world.Players.Where(p => !p.Spectating
-				&& Info.CapturableStances.HasStance(player.Stances[p])).Random(world.LocalRandom);
+				&& Info.CapturableStances.HasStance(player.RelationshipWith(p))).Random(world.LocalRandom);
 
 			var targetOptions = Info.CheckCaptureTargetsForVisibility
 				? GetVisibleActorsBelongingToPlayer(randPlayer)

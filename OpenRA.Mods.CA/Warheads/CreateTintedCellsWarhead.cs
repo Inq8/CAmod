@@ -9,7 +9,6 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using OpenRA.GameRules;
 using OpenRA.Mods.CA.Traits;
@@ -57,7 +56,7 @@ namespace OpenRA.Mods.CA.Warheads
 			}
 		}
 
-		public override void DoImpact(WPos pos, Actor firedBy, IEnumerable<int> damageModifiers)
+		protected override void DoImpact(WPos pos, Actor firedBy, WarheadArgs args)
 		{
 			var world = firedBy.World;
 

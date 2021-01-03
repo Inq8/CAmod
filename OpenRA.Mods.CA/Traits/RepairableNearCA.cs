@@ -20,7 +20,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	class RepairableNearCAInfo : ITraitInfo, Requires<IHealthInfo>, Requires<IMoveInfo>, IObservesVariablesInfo
+	class RepairableNearCAInfo : TraitInfo, Requires<IHealthInfo>, Requires<IMoveInfo>, IObservesVariablesInfo
 	{
 		[ActorReference]
 		[FieldLoader.Require]
@@ -35,7 +35,13 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Boolean expression defining the condition under which the regular (non-force) enter cursor is disabled.")]
 		public readonly BooleanExpression RequireForceMoveCondition = null;
 
-		public object Create(ActorInitializer init) { return new RepairableNearCA(init.Self, this); }
+		[Desc("Cursor to display when able to be repaired near target actor.")]
+		public readonly string EnterCursor = "enter";
+
+		[Desc("Cursor to display when unable to be repaired near target actor.")]
+		public readonly string EnterBlockedCursor = "enter-blocked";
+
+		public override object Create(ActorInitializer init) { return new RepairableNearCA(init.Self, this); }
 	}
 
 	class RepairableNearCA : IIssueOrder, IResolveOrder, IOrderVoice, IObservesVariables
@@ -54,12 +60,17 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			get
 			{
-				yield return new EnterAlliedActorTargeter<BuildingInfo>("RepairNear", 5,
-					CanRepairAt, _ => ShouldRepair());
+				yield return new EnterAlliedActorTargeter<BuildingInfo>(
+					"RepairNear",
+					5,
+					Info.EnterCursor,
+					Info.EnterBlockedCursor,
+					CanRepairAt,
+					_ => ShouldRepair());
 			}
 		}
 
-		Order IIssueOrder.IssueOrder(Actor self, IOrderTargeter order, Target target, bool queued)
+		Order IIssueOrder.IssueOrder(Actor self, IOrderTargeter order, in Target target, bool queued)
 		{
 			if (order.OrderID == "RepairNear")
 				return new Order(order.OrderID, self, target, queued);

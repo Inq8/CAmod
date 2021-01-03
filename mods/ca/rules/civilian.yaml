@@ -60,10 +60,10 @@ FCOM:
 		Name: Forward Command
 	TooltipDescription@ally:
 		Description: Provides buildable area.
-		ValidStances: Ally
+		ValidRelationships: Ally
 	TooltipDescription@other:
 		Description: Capture to give buildable area.
-		ValidStances: Neutral, Enemy
+		ValidRelationships: Neutral, Enemy
 	RevealsShroud:
 		Range: 5c0
 		RevealGeneratedShroud: False
@@ -112,10 +112,10 @@ HOSP:
 		Name: Hospital
 	TooltipDescription@ally:
 		Description: Provides infantry with self-healing.
-		ValidStances: Ally
+		ValidRelationships: Ally
 	TooltipDescription@other:
 		Description: Capture to enable self-healing for infantry.
-		ValidStances: Neutral, Enemy
+		ValidRelationships: Neutral, Enemy
 	RevealsShroud:
 		Range: 4c0
 	WithBuildingBib:
@@ -319,8 +319,6 @@ V19.Husk:
 		StartSequence: fire-start
 		Sequence: fire-loop
 	-Selectable:
-	SelectionDecorations:
-		RenderSelectionBars: False
 	-Targetable:
 	-Explodes:
 	-Explodes@CIVPANIC:
@@ -329,8 +327,6 @@ V19.Husk:
 BARL:
 	Inherits: ^TechBuilding
 	-Selectable:
-	SelectionDecorations:
-		RenderSelectionBars: False
 	Health:
 		HP: 1000
 	Explodes:
@@ -352,8 +348,6 @@ BARL:
 BRL3:
 	Inherits: ^TechBuilding
 	-Selectable:
-	SelectionDecorations:
-		RenderSelectionBars: False
 	Health:
 		HP: 1000
 	Explodes:
@@ -409,10 +403,10 @@ MISS:
 		Name: Communications Center
 	TooltipDescription@ally:
 		Description: Provides range of vision.
-		ValidStances: Ally
+		ValidRelationships: Ally
 	TooltipDescription@other:
 		Description: Capture to give visual range.
-		ValidStances: Neutral, Enemy
+		ValidRelationships: Neutral, Enemy
 	WithBuildingBib:
 	CaptureManager:
 	Capturable:
@@ -451,10 +445,10 @@ BIO:
 		Name: Biological Lab
 	TooltipDescription@ally:
 		Description: Provides prerequisite for Bio-Lab units.
-		ValidStances: Ally
+		ValidRelationships: Ally
 	TooltipDescription@other:
 		Description: Capture to produce Bio-Lab units.
-		ValidStances: Neutral, Enemy
+		ValidRelationships: Neutral, Enemy
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
@@ -498,10 +492,10 @@ OILB:
 		Name: Oil Derrick
 	TooltipDescription@ally:
 		Description: Provides additional funds.
-		ValidStances: Ally
+		ValidRelationships: Ally
 	TooltipDescription@other:
 		Description: Capture to receive additional funds.
-		ValidStances: Neutral, Enemy
+		ValidRelationships: Neutral, Enemy
 	Explodes:
 		Weapon: BarrelExplode
 	GivesCashOnCapture:

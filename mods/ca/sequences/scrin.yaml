@@ -907,6 +907,7 @@ grav:
 nerv:
 	Inherits: ^StructureOverlays
 	idle: nerv
+	active: nerv
 	damaged-idle: nerv
 		Start: 1
 	make: nervmake
@@ -974,6 +975,7 @@ scrt:
 	Inherits: ^StructureOverlays
 	idle: scrt
 		Offset: 3,0
+	active: scrt
 	damaged-idle: scrt
 		Offset: 3,0
 		Start: 1
@@ -1274,6 +1276,11 @@ riftanim:
 		Length: *
 		ZOffset: 2048
 		BlendMode: Subtractive
+	die: riftend
+		Tick: 40
+		Length: *
+		ZOffset: 2048
+		BlendMode: Subtractive
 	fade: riftend
 		Tick: 40
 		Length: *
@@ -1309,6 +1316,10 @@ ichorseed:
 		Tick: 80
 		Length: 16
 		Start: 15
+		BlendMode: Additive
+	die: ichorseed
+		Tick: 80
+		Length: 15
 		BlendMode: Additive
 	fade: ichorseed
 		Tick: 80

@@ -49,7 +49,7 @@ namespace OpenRA.Mods.CA.Projectiles
 		public readonly string HitAnim = null;
 
 		[Desc("Sequence of impact animation to use.")]
-		[SequenceReference("HitAnim")]
+		[SequenceReference(nameof(HitAnim), allowNullImage: true)]
 		public readonly string HitAnimSequence = "idle";
 
 		[PaletteReference]
@@ -67,6 +67,7 @@ namespace OpenRA.Mods.CA.Projectiles
 		readonly ProjectileArgs args;
 		readonly RadBeamInfo info;
 		readonly Animation hitanim;
+		readonly Color color;
 		int ticks = 0;
 		bool doneDamage;
 		bool animationComplete;
@@ -77,6 +78,7 @@ namespace OpenRA.Mods.CA.Projectiles
 			this.args = args;
 			this.info = info;
 			target = args.PassiveTarget;
+			this.color = color;
 
 			if (!string.IsNullOrEmpty(info.HitAnim))
 				hitanim = new Animation(args.SourceActor.World, info.HitAnim);
@@ -95,7 +97,13 @@ namespace OpenRA.Mods.CA.Projectiles
 				else
 					animationComplete = true;
 
-				args.Weapon.Impact(Target.FromPos(target), new WarheadArgs(args));
+				var warheadArgs = new WarheadArgs(args)
+				{
+					ImpactOrientation = new WRot(WAngle.Zero, Common.Util.GetVerticalAngle(args.Source, target), args.CurrentMuzzleFacing()),
+					ImpactPosition = target,
+				};
+
+				args.Weapon.Impact(Target.FromPos(target), warheadArgs);
 				doneDamage = true;
 			}
 
@@ -117,7 +125,7 @@ namespace OpenRA.Mods.CA.Projectiles
 				WDist amp = info.ScaleAmplitudeWithDuration
 					? info.Amplitude * ticks / info.BeamDuration
 					: info.Amplitude;
-				yield return new RadBeamRenderable(args.Source, info.ZOffset, target - args.Source, info.Thickness, info.Color, amp, info.WaveLength, info.QuantizationCount);
+				yield return new RadBeamRenderable(args.Source, info.ZOffset, target - args.Source, info.Thickness, color, amp, info.WaveLength, info.QuantizationCount);
 			}
 
 			if (hitanim != null)

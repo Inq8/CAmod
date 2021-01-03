@@ -1,11 +1,10 @@
 ﻿#region Copyright & License Information
 /*
- * Copyright 2007-2018 The OpenRA Developers (see AUTHORS)
- * This file is part of OpenRA, which is free software. It is made
- * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation, either version 3 of
- * the License, or (at your option) any later version. For more
- * information, see COPYING.
+ * Copyright 2015- OpenRA.Mods.AS Developers (see AUTHORS)
+ * This file is a part of a third-party plugin for OpenRA, which is
+ * free software. It is made available to you under the terms of the
+ * GNU General Public License as published by the Free Software
+ * Foundation. For more information, see COPYING.
  */
 #endregion
 
@@ -19,7 +18,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("This actor can spawn actors.")]
-	public class CarrierMasterInfo : BaseSpawnMasterInfo
+	public class CarrierMasterInfo : BaseSpawnerMasterInfo
 	{
 		[Desc("Spawn is a missile that dies and not return.")]
 		public readonly bool SpawnIsMissile = false;
@@ -34,11 +33,8 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("After this many ticks, we remove the condition.")]
 		public readonly int LaunchingTicks = 15;
 
-		[Desc("Pip color for the spawn count.")]
-		public readonly PipType PipType = PipType.Green;
-
-		[Desc("Insta-repair spawners when they return?")]
-		public readonly bool InstaRepair = true;
+		[Desc("Instantly repair spawners when they return?")]
+		public readonly bool InstantRepair = true;
 
 		[GrantedConditionReference]
 		[Desc("The condition to grant to self while spawned units are loaded.",
@@ -55,57 +51,44 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new CarrierMaster(init, this); }
 	}
 
-	public class CarrierMaster : BaseSpawnerMaster, IPips, ITick, INotifyAttack, INotifyBecomingIdle
+	public class CarrierMaster : BaseSpawnerMaster, ITick, IResolveOrder, INotifyAttack
 	{
 		class CarrierSlaveEntry : BaseSpawnerSlaveEntry
 		{
 			public int RearmTicks = 0;
-			public bool IsLaunched = false;
 			public new CarrierSlave SpawnerSlave;
 		}
 
-		public new CarrierMasterInfo Info { get; private set; }
-
-		CarrierSlaveEntry[] slaveEntries;
-		ConditionManager conditionManager;
 		readonly Dictionary<string, Stack<int>> spawnContainTokens = new Dictionary<string, Stack<int>>();
-		Stack<int> loadedTokens = new Stack<int>();
+		readonly Stack<int> loadedTokens = new Stack<int>();
+		public readonly CarrierMasterInfo CarrierMasterInfo;
 
 		int respawnTicks = 0;
 
-		int launchCondition = ConditionManager.InvalidConditionToken;
+		int launchCondition = Actor.InvalidConditionToken;
 		int launchConditionTicks;
 
 		public CarrierMaster(ActorInitializer init, CarrierMasterInfo info)
 			: base(init, info)
 		{
-			Info = info;
+			CarrierMasterInfo = info;
 		}
 
 		protected override void Created(Actor self)
 		{
 			base.Created(self);
-			conditionManager = self.Trait<ConditionManager>();
 
-			if (conditionManager != null)
-			{
-				foreach (var entry in SlaveEntries)
-				{
-					string spawnContainCondition;
-					if (Info.SpawnContainConditions.TryGetValue(entry.Actor.Info.Name, out spawnContainCondition))
-						spawnContainTokens.GetOrAdd(entry.Actor.Info.Name).Push(conditionManager.GrantCondition(self, spawnContainCondition));
-
-					if (!string.IsNullOrEmpty(Info.LoadedCondition))
-						loadedTokens.Push(conditionManager.GrantCondition(self, Info.LoadedCondition));
-				}
-			}
+			// Spawn initial load.
+			var burst = Info.InitialActorCount == -1 ? Info.Actors.Length : Info.InitialActorCount;
+			for (var i = 0; i < burst; i++)
+				Replenish(self, SlaveEntries);
 		}
 
-		public override BaseSpawnerSlaveEntry[] CreateSlaveEntries(BaseSpawnMasterInfo info)
+		public override BaseSpawnerSlaveEntry[] CreateSlaveEntries(BaseSpawnerMasterInfo info)
 		{
-			slaveEntries = new CarrierSlaveEntry[info.Actors.Length]; // For this class to use
+			var slaveEntries = new CarrierSlaveEntry[info.Actors.Length]; // For this class to use
 
-			for (int i = 0; i < slaveEntries.Length; i++)
+			for (var i = 0; i < slaveEntries.Length; i++)
 				slaveEntries[i] = new CarrierSlaveEntry();
 
 			return slaveEntries; // For the base class to use
@@ -113,28 +96,31 @@ namespace OpenRA.Mods.CA.Traits
 
 		public override void InitializeSlaveEntry(Actor slave, BaseSpawnerSlaveEntry entry)
 		{
-			var carrierSlaveEntry = entry as CarrierSlaveEntry;
-			base.InitializeSlaveEntry(slave, carrierSlaveEntry);
+			base.InitializeSlaveEntry(slave, entry);
 
+			var carrierSlaveEntry = entry as CarrierSlaveEntry;
 			carrierSlaveEntry.RearmTicks = 0;
 			carrierSlaveEntry.IsLaunched = false;
 			carrierSlaveEntry.SpawnerSlave = slave.Trait<CarrierSlave>();
 		}
 
-		void INotifyAttack.PreparingAttack(Actor self, Target target, Armament a, Barrel barrel) { }
+		public void ResolveOrder(Actor self, Order order)
+		{
+			if (order.OrderString == "Stop")
+				Recall();
+		}
+
+		void INotifyAttack.PreparingAttack(Actor self, in Target target, Armament a, Barrel barrel) { }
 
 		// The rate of fire of the dummy weapon determines the launch cycle as each shot
 		// invokes Attacking()
-		void INotifyAttack.Attacking(Actor self, Target target, Armament a, Barrel barrel)
+		void INotifyAttack.Attacking(Actor self, in Target target, Armament a, Barrel barrel)
 		{
-			if (IsTraitDisabled)
-				return;
-
-			if (a.Info.Name != Info.SpawnerArmamentName)
+			if (IsTraitDisabled || IsTraitPaused || !Info.ArmamentNames.Contains(a.Info.Name))
 				return;
 
 			// Issue retarget order for already launched ones
-			foreach (var slave in slaveEntries)
+			foreach (var slave in SlaveEntries)
 				if (slave.IsLaunched && slave.IsValid)
 					slave.SpawnerSlave.Attack(slave.Actor, target);
 
@@ -144,23 +130,24 @@ namespace OpenRA.Mods.CA.Traits
 
 			carrierSlaveEntry.IsLaunched = true; // mark as launched
 
-			// Launching condition is timed, so not saving the token.
-			if (Info.LaunchingCondition != null)
+			if (CarrierMasterInfo.LaunchingCondition != null)
 			{
-				if (launchCondition == ConditionManager.InvalidConditionToken)
-					conditionManager.GrantCondition(self, Info.LaunchingCondition);
+				if (launchCondition == Actor.InvalidConditionToken)
+					launchCondition = self.GrantCondition(CarrierMasterInfo.LaunchingCondition);
 
-				launchConditionTicks = Info.LaunchingTicks;
+				launchConditionTicks = CarrierMasterInfo.LaunchingTicks;
 			}
 
 			SpawnIntoWorld(self, carrierSlaveEntry.Actor, self.CenterPosition);
 
-			Stack<int> spawnContainToken;
-			if (spawnContainTokens.TryGetValue(a.Info.Name, out spawnContainToken) && spawnContainToken.Any())
-				conditionManager.RevokeCondition(self, spawnContainToken.Pop());
+			if (spawnContainTokens.TryGetValue(a.Info.Name, out var spawnContainToken) && spawnContainToken.Any())
+				self.RevokeCondition(spawnContainToken.Pop());
 
 			if (loadedTokens.Any())
-				conditionManager.RevokeCondition(self, loadedTokens.Pop());
+				self.RevokeCondition(loadedTokens.Pop());
+
+			// Lambdas can't use 'in' variables, so capture a copy for later
+			var delayedTarget = target;
 
 			// Queue attack order, too.
 			self.World.AddFrameEndTask(w =>
@@ -169,65 +156,47 @@ namespace OpenRA.Mods.CA.Traits
 				// Cancel whatever it was trying to do.
 				carrierSlaveEntry.SpawnerSlave.Stop(carrierSlaveEntry.Actor);
 
-				carrierSlaveEntry.SpawnerSlave.Attack(carrierSlaveEntry.Actor, target);
+				carrierSlaveEntry.SpawnerSlave.Attack(carrierSlaveEntry.Actor, delayedTarget);
 			});
 		}
 
-		public virtual void OnBecomingIdle(Actor self)
-		{
-			Recall(self);
-		}
-
-		void Recall(Actor self)
+		void Recall()
 		{
 			// Tell launched slaves to come back and enter me.
-			foreach (var carrierSlaveEntry in slaveEntries)
-				if (carrierSlaveEntry.IsLaunched && carrierSlaveEntry.IsValid)
-					carrierSlaveEntry.SpawnerSlave.EnterSpawner(carrierSlaveEntry.Actor);
+			foreach (var slaveEntry in SlaveEntries)
+				if (slaveEntry.IsLaunched && slaveEntry.IsValid)
+				{
+					var carrierSlaveEntry = slaveEntry as CarrierSlaveEntry;
+					carrierSlaveEntry.SpawnerSlave.EnterSpawner(slaveEntry.Actor);
+				}
 		}
 
 		public override void OnSlaveKilled(Actor self, Actor slave)
 		{
 			// Set clock so that regen happens.
 			if (respawnTicks <= 0) // Don't interrupt an already running timer!
-				respawnTicks = Util.ApplyPercentageModifiers(Info.RespawnTicks, ReloadModifiers.Select(rm => rm.GetReloadModifier()));
+				respawnTicks = Info.RespawnTicks;
 		}
 
 		CarrierSlaveEntry GetLaunchable()
 		{
-			foreach (var carrierSlaveEntry in slaveEntries)
-				if (carrierSlaveEntry.RearmTicks <= 0 && !carrierSlaveEntry.IsLaunched && carrierSlaveEntry.IsValid)
+			foreach (var slaveEntry in SlaveEntries)
+			{
+				var carrierSlaveEntry = slaveEntry as CarrierSlaveEntry;
+				if (carrierSlaveEntry.RearmTicks <= 0 && !slaveEntry.IsLaunched && slaveEntry.IsValid)
 					return carrierSlaveEntry;
+			}
 
 			return null;
-		}
-
-		public IEnumerable<PipType> GetPips(Actor self)
-		{
-			if (IsTraitDisabled)
-				yield break;
-
-			int inside = 0;
-			foreach (var carrierSlaveEntry in slaveEntries)
-				if (carrierSlaveEntry.IsValid && !carrierSlaveEntry.IsLaunched)
-					inside++;
-
-			for (var i = 0; i < Info.Actors.Length; i++)
-			{
-				if (i < inside)
-					yield return Info.PipType;
-				else
-					yield return PipType.Transparent;
-			}
 		}
 
 		public void PickupSlave(Actor self, Actor a)
 		{
 			CarrierSlaveEntry slaveEntry = null;
-			foreach (var carrierSlaveEntry in slaveEntries)
+			foreach (var carrierSlaveEntry in SlaveEntries)
 				if (carrierSlaveEntry.Actor == a)
 				{
-					slaveEntry = carrierSlaveEntry;
+					slaveEntry = carrierSlaveEntry as CarrierSlaveEntry;
 					break;
 				}
 
@@ -237,33 +206,29 @@ namespace OpenRA.Mods.CA.Traits
 			slaveEntry.IsLaunched = false;
 
 			// setup rearm
-			slaveEntry.RearmTicks = Info.RearmTicks;
+			slaveEntry.RearmTicks = Util.ApplyPercentageModifiers(CarrierMasterInfo.RearmTicks, reloadModifiers.Select(rm => rm.GetReloadModifier()));
 
-			string spawnContainCondition;
-			if (conditionManager != null && Info.SpawnContainConditions.TryGetValue(a.Info.Name, out spawnContainCondition))
-				spawnContainTokens.GetOrAdd(a.Info.Name).Push(conditionManager.GrantCondition(self, spawnContainCondition));
+			if (CarrierMasterInfo.SpawnContainConditions.TryGetValue(a.Info.Name, out var spawnContainCondition))
+				spawnContainTokens.GetOrAdd(a.Info.Name).Push(self.GrantCondition(spawnContainCondition));
 
-			if (conditionManager != null && !string.IsNullOrEmpty(Info.LoadedCondition))
-				loadedTokens.Push(conditionManager.GrantCondition(self, Info.LoadedCondition));
+			loadedTokens.Push(self.GrantCondition(CarrierMasterInfo.LoadedCondition));
 		}
 
 		public override void Replenish(Actor self, BaseSpawnerSlaveEntry entry)
 		{
 			base.Replenish(self, entry);
 
-			string spawnContainCondition;
-			if (conditionManager != null)
-			{
-				if (Info.SpawnContainConditions.TryGetValue(entry.Actor.Info.Name, out spawnContainCondition))
-					spawnContainTokens.GetOrAdd(entry.Actor.Info.Name).Push(conditionManager.GrantCondition(self, spawnContainCondition));
+			if (CarrierMasterInfo.SpawnContainConditions.TryGetValue(entry.Actor.Info.Name, out var spawnContainCondition))
+				spawnContainTokens.GetOrAdd(entry.Actor.Info.Name).Push(self.GrantCondition(spawnContainCondition));
 
-				if (!string.IsNullOrEmpty(Info.LoadedCondition))
-					loadedTokens.Push(conditionManager.GrantCondition(self, Info.LoadedCondition));
-			}
+			loadedTokens.Push(self.GrantCondition(CarrierMasterInfo.LoadedCondition));
 		}
 
-		public void Tick(Actor self)
+		void ITick.Tick(Actor self)
 		{
+			if (launchCondition != Actor.InvalidConditionToken && --launchConditionTicks < 0)
+				launchCondition = self.RevokeCondition(launchCondition);
+
 			if (respawnTicks > 0)
 			{
 				respawnTicks--;
@@ -271,20 +236,26 @@ namespace OpenRA.Mods.CA.Traits
 				// Time to respawn someting.
 				if (respawnTicks <= 0)
 				{
-					Replenish(self, slaveEntries);
+					Replenish(self, SlaveEntries);
 
 					// If there's something left to spawn, restart the timer.
-					if (SelectEntryToSpawn(slaveEntries) != null)
-						respawnTicks = Util.ApplyPercentageModifiers(Info.RespawnTicks, ReloadModifiers.Select(rm => rm.GetReloadModifier()));
+					if (SelectEntryToSpawn(SlaveEntries) != null)
+						respawnTicks = Util.ApplyPercentageModifiers(Info.RespawnTicks, reloadModifiers.Select(rm => rm.GetReloadModifier()));
 				}
 			}
 
 			// Rearm
-			foreach (var carrierSlaveEntry in slaveEntries)
+			foreach (var slaveEntry in SlaveEntries)
 			{
+				var carrierSlaveEntry = slaveEntry as CarrierSlaveEntry;
 				if (carrierSlaveEntry.RearmTicks > 0)
 					carrierSlaveEntry.RearmTicks--;
 			}
+		}
+
+		protected override void TraitPaused(Actor self)
+		{
+			Recall();
 		}
 	}
 }

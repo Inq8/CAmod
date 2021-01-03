@@ -20,7 +20,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Implements the YR OpenTopped logic where transported actors used separate firing offsets, ignoring facing."
-		+ "Compatible with `Cargo`/`Passengers`")]
+		+ "Compatible with both `Cargo`/`Passengers` or `Garrionable`/`Garrisoners` logic.")]
 	public class AttackOpenToppedInfo : AttackFollowInfo, IRulesetLoaded
 	{
 		[FieldLoader.Require]
@@ -43,7 +43,7 @@ namespace OpenRA.Mods.CA.Traits
 		readonly Lazy<BodyOrientation> coords;
 		readonly List<Actor> actors;
 		readonly List<Armament> armaments;
-		readonly HashSet<Pair<AnimationWithOffset, string>> muzzles;
+		readonly HashSet<(AnimationWithOffset MuzzleFlash, string Palette)> muzzles;
 		readonly Dictionary<Actor, IFacing> paxFacing;
 		readonly Dictionary<Actor, IPositionable> paxPos;
 		readonly Dictionary<Actor, RenderSprites> paxRender;
@@ -55,7 +55,7 @@ namespace OpenRA.Mods.CA.Traits
 			coords = Exts.Lazy(() => self.Trait<BodyOrientation>());
 			actors = new List<Actor>();
 			armaments = new List<Armament>();
-			muzzles = new HashSet<Pair<AnimationWithOffset, string>>();
+			muzzles = new HashSet<(AnimationWithOffset, string)>();
 			paxFacing = new Dictionary<Actor, IFacing>();
 			paxPos = new Dictionary<Actor, IPositionable>();
 			paxRender = new Dictionary<Actor, RenderSprites>();
@@ -113,7 +113,7 @@ namespace OpenRA.Mods.CA.Traits
 			return coords.Value.LocalToWorld(offset.Rotate(bodyOrientation));
 		}
 
-		public override void DoAttack(Actor self, Target target)
+		public override void DoAttack(Actor self, in Target target)
 		{
 			if (!CanAttack(self, target))
 				return;
@@ -129,7 +129,7 @@ namespace OpenRA.Mods.CA.Traits
 
 				var port = SelectFirePort(self, a.Actor);
 
-				var muzzleFacing = targetYaw.Angle / 4;
+				var muzzleFacing = targetYaw;
 				paxFacing[a.Actor].Facing = muzzleFacing;
 				paxPos[a.Actor].SetVisualPosition(a.Actor, pos + PortOffset(self, port));
 
@@ -140,19 +140,16 @@ namespace OpenRA.Mods.CA.Traits
 				if (a.Info.MuzzleSequence != null)
 				{
 					// Muzzle facing is fixed once the firing starts
-					var muzzleAnim = new Animation(self.World, paxRender[a.Actor].GetImage(a.Actor), () => muzzleFacing);
+					var muzzleAnim = new Animation(self.World, paxRender[a.Actor].GetImage(a.Actor), () => targetYaw);
 					var sequence = a.Info.MuzzleSequence;
 					var palette = a.Info.MuzzlePalette;
-
-					if (a.Info.MuzzleSplitFacings > 0)
-						sequence += Common.Util.QuantizeFacing(muzzleFacing, a.Info.MuzzleSplitFacings).ToString();
 
 					var muzzleFlash = new AnimationWithOffset(muzzleAnim,
 						() => PortOffset(self, port),
 						() => false,
 						p => RenderUtils.ZOffsetFromCenter(self, p, 1024));
 
-					var pair = Pair.New(muzzleFlash, palette);
+					var pair = (muzzleFlash, palette);
 					muzzles.Add(pair);
 					muzzleAnim.PlayThen(sequence, () => muzzles.Remove(pair));
 				}
@@ -166,7 +163,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			// Display muzzle flashes
 			foreach (var m in muzzles)
-				foreach (var r in m.First.Render(self, wr, wr.Palette(m.Second), 1f))
+				foreach (var r in m.MuzzleFlash.Render(self, wr, wr.Palette(m.Palette), 1f))
 					yield return r;
 		}
 
@@ -182,7 +179,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			// Take a copy so that Tick() can remove animations
 			foreach (var m in muzzles.ToArray())
-				m.First.Animation.Tick();
+				m.MuzzleFlash.Animation.Tick();
 		}
 	}
 }

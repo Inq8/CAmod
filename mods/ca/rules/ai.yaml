@@ -579,7 +579,7 @@ Player:
 					CheckRadius: 7c0
 	HarvesterBotModuleCA:
 		RequiresCondition: enable-brutal-ai || enable-vhard-ai || enable-hard-ai || enable-normal-ai || enable-easy-ai || enable-naval-ai
-		HarvesterTypes: harv,har2,harv.scrin,harv.chrono
+		HarvesterTypes: harv,harv.td,harv.scrin,harv.chrono
 		RefineryTypes: proc,proc.td,proc.scrin
 	CaptureManagerBotModuleCA:
 		RequiresCondition: enable-brutal-ai || enable-vhard-ai || enable-hard-ai || enable-normal-ai || enable-easy-ai
@@ -1523,10 +1523,10 @@ Player:
 			apb.upgrade: 1
 			regen.upgrade: 1
 			shields.upgrade: 1
-	SquadManagerBotModuleCA@brutal-vhard:
+	SquadManagerBotModule@brutal-vhard:
 		RequiresCondition: enable-brutal-ai || enable-vhard-ai
 		SquadSize: 30
-		ExcludeFromSquadsTypes: harv, har2, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6
+		ExcludeFromSquadsTypes: harv, harv.td, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,dd2,pt2,ss2,isub,sb,seas
 		NavalProductionTypes: syrd, spen, syrd.gdi, spen.nod
 		ConstructionYardTypes: fact,afac,sfac
@@ -1697,13 +1697,13 @@ Player:
 			sb: 10
 			seas: 10
 			harv: 8
-			har2: 8
+			harv.td: 8
 			harv.scrin: 8
 			harv.chrono: 8
-	SquadManagerBotModuleCA@hard:
+	SquadManagerBotModule@hard:
 		RequiresCondition: enable-hard-ai
 		SquadSize: 25
-		ExcludeFromSquadsTypes: harv, har2, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6
+		ExcludeFromSquadsTypes: harv, harv.td, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,dd2,pt2,ss2,isub,sb,seas
 		NavalProductionTypes: syrd, spen, syrd.gdi, spen.nod
 		ConstructionYardTypes: fact,afac,sfac
@@ -1867,13 +1867,13 @@ Player:
 			sb: 10
 			seas: 10
 			harv: 8
-			har2: 8
+			harv.td: 8
 			harv.scrin: 8
 			harv.chrono: 8
-	SquadManagerBotModuleCA@normal:
+	SquadManagerBotModule@normal:
 		RequiresCondition: enable-normal-ai
 		SquadSize: 20
-		ExcludeFromSquadsTypes: harv, har2, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6
+		ExcludeFromSquadsTypes: harv, harv.td, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,ss2,dd2,isub,sb,seas
 		ConstructionYardTypes: fact,afac,sfac
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
@@ -2036,13 +2036,13 @@ Player:
 			sb: 10
 			seas: 10
 			harv: 8
-			har2: 8
+			harv.td: 8
 			harv.scrin: 8
 			harv.chrono: 8
-	SquadManagerBotModuleCA@easy:
+	SquadManagerBotModule@easy:
 		RequiresCondition: enable-easy-ai
 		SquadSize: 15
-		ExcludeFromSquadsTypes: harv, har2, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6
+		ExcludeFromSquadsTypes: harv, harv.td, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,ss2,dd2,isub,sb,seas
 		ConstructionYardTypes: fact,afac,sfac
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
@@ -2204,13 +2204,13 @@ Player:
 			sb: 10
 			seas: 10
 			harv: 8
-			har2: 8
+			harv.td: 8
 			harv.scrin: 8
 			harv.chrono: 8
-	SquadManagerBotModuleCA@naval:
+	SquadManagerBotModule@naval:
 		RequiresCondition: enable-naval-ai
 		SquadSize: 1
-		ExcludeFromSquadsTypes: harv, har2, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6
+		ExcludeFromSquadsTypes: harv, harv.td, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,dd2,ss2,isub,sb,seas
 		ConstructionYardTypes: fact,afac,sfac
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi

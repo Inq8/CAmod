@@ -16,7 +16,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits.Render
 {
-	public class WithCargoHatchAnimationInfo : ITraitInfo, Requires<IFacingInfo>, Requires<WithSpriteBodyInfo>
+	public class WithCargoHatchAnimationInfo : TraitInfo, Requires<IFacingInfo>, Requires<WithSpriteBodyInfo>
 	{
 		public readonly int RequiredFacing = 0;
 
@@ -32,7 +32,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 		[Desc("Which sprite body to play the animation on.")]
 		public readonly string Body = "body";
 
-		public object Create(ActorInitializer init) { return new WithCargoHatchAnimation(init, this); }
+		public override object Create(ActorInitializer init) { return new WithCargoHatchAnimation(init, this); }
 	}
 
 	public class WithCargoHatchAnimation : ITick
@@ -56,7 +56,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 			if (self.World.Map.DistanceAboveTerrain(self.CenterPosition).Length > 0)
 				return false;
 
-			return facing.Facing == info.RequiredFacing;
+			return facing.Facing.Angle == info.RequiredFacing;
 		}
 
 		void Open()

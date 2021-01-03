@@ -9,6 +9,7 @@
 #endregion
 
 using System.Collections.Generic;
+using OpenRA.GameRules;
 using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
@@ -19,13 +20,13 @@ namespace OpenRA.Mods.CA.Warheads
 	[Desc("Affects warp value on the actors with Warpable trait.")]
 	public class WarpDamageWarhead : TargetDamageWarhead
 	{
-		protected override void InflictDamage(Actor victim, Actor firedBy, HitShapeInfo hitshapeInfo, IEnumerable<int> damageModifiers)
+		protected override void InflictDamage(Actor victim, Actor firedBy, HitShape hitshape, WarheadArgs args)
 		{
 			var warpable = victim.TraitOrDefault<Warpable>();
 			if (warpable == null)
 				return;
 
-			var damage = Util.ApplyPercentageModifiers(Damage, damageModifiers.Append(DamageVersus(victim, hitshapeInfo)));
+			var damage = Util.ApplyPercentageModifiers(Damage, args.DamageModifiers.Append(DamageVersus(victim, hitshape, args)));
 			warpable.AddDamage(damage, firedBy);
 		}
 	}

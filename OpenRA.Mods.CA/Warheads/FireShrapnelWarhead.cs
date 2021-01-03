@@ -8,7 +8,6 @@
  */
 #endregion
 
-using System.Collections.Generic;
 using System.Linq;
 using OpenRA.GameRules;
 using OpenRA.Mods.Common;
@@ -31,7 +30,7 @@ namespace OpenRA.Mods.CA.Warheads
 		public readonly int AimChance = 0;
 
 		[Desc("What diplomatic stances can be targeted by the shrapnel.")]
-		public readonly Stance AimTargetStances = Stance.Ally | Stance.Neutral | Stance.Enemy;
+		public readonly PlayerRelationship AimTargetStances = PlayerRelationship.Ally | PlayerRelationship.Neutral | PlayerRelationship.Enemy;
 
 		[Desc("Allow this shrapnel to be thrown randomly when no targets found.")]
 		public readonly bool ThrowWithoutTarget = true;
@@ -50,7 +49,7 @@ namespace OpenRA.Mods.CA.Warheads
 				throw new YamlException("Weapons Ruleset does not contain an entry '{0}'".F(Weapon.ToLowerInvariant()));
 		}
 
-		public override void DoImpact(Target target, WarheadArgs args)
+		public override void DoImpact(in Target target, WarheadArgs args)
 		{
 			var firedBy = args.SourceActor;
 			if (!target.IsValidFor(firedBy))
@@ -66,7 +65,7 @@ namespace OpenRA.Mods.CA.Warheads
 				? args.WeaponTarget.CenterPosition
 				: target.CenterPosition;
 
-			var directActors = world.FindActorsOnCircle(target.CenterPosition, WDist.Zero)
+			var directActors = world.FindActorsOnCircle(epicenter, WDist.Zero)
 				.Where(a =>
 				{
 					var activeShapes = a.TraitsImplementing<HitShape>().Where(Exts.IsTraitEnabled);
@@ -81,10 +80,10 @@ namespace OpenRA.Mods.CA.Warheads
 					return true;
 				});
 
-			var availableTargetActors = world.FindActorsOnCircle(target.CenterPosition, weapon.Range)
+			var availableTargetActors = world.FindActorsOnCircle(epicenter, weapon.Range)
 				.Where(x => (AllowDirectHit || !directActors.Contains(x))
 					&& weapon.IsValidAgainst(Target.FromActor(x), firedBy.World, firedBy)
-					&& AimTargetStances.HasStance(firedBy.Owner.Stances[x.Owner]))
+					&& AimTargetStances.HasStance(firedBy.Owner.RelationshipWith(x.Owner)))
 				.Where(x =>
 				{
 					var activeShapes = x.TraitsImplementing<HitShape>().Where(Exts.IsTraitEnabled);
@@ -108,16 +107,16 @@ namespace OpenRA.Mods.CA.Warheads
 
 			for (var i = 0; i < amount; i++)
 			{
-				Target shrapnelTarget = Target.Invalid;
+				var shrapnelTarget = Target.Invalid;
 
 				if (world.SharedRandom.Next(100) < AimChance && targetActor.MoveNext())
 					shrapnelTarget = Target.FromActor(targetActor.Current);
 
 				if (ThrowWithoutTarget && shrapnelTarget.Type == TargetType.Invalid)
 				{
-					var rotation = WRot.FromFacing(world.SharedRandom.Next(1024));
+					var rotation = WRot.FromFacing(world.SharedRandom.Next(256));
 					var range = world.SharedRandom.Next(weapon.MinRange.Length, weapon.Range.Length);
-					var targetpos = target.CenterPosition + new WVec(range, 0, 0).Rotate(rotation);
+					var targetpos = epicenter + new WVec(range, 0, 0).Rotate(rotation);
 					var tpos = Target.FromPos(new WPos(targetpos.X, targetpos.Y, map.CenterOfCell(map.CellContaining(targetpos)).Z));
 					if (weapon.IsValidAgainst(tpos, firedBy.World, firedBy))
 						shrapnelTarget = tpos;
@@ -126,10 +125,16 @@ namespace OpenRA.Mods.CA.Warheads
 				if (shrapnelTarget.Type == TargetType.Invalid)
 					continue;
 
+				var shrapnelFacing = (shrapnelTarget.CenterPosition - epicenter).Yaw;
+
+				// Lambdas can't use 'in' variables, so capture a copy for later
+				var centerPosition = target.CenterPosition;
+
 				var projectileArgs = new ProjectileArgs
 				{
 					Weapon = weapon,
-					Facing = (shrapnelTarget.CenterPosition - target.CenterPosition).Yaw.Facing,
+					Facing = shrapnelFacing,
+					CurrentMuzzleFacing = () => shrapnelFacing,
 
 					DamageModifiers = !firedBy.IsDead ? firedBy.TraitsImplementing<IFirepowerModifier>()
 						.Select(a => a.GetFirepowerModifier()).ToArray() : new int[0],
@@ -141,13 +146,13 @@ namespace OpenRA.Mods.CA.Warheads
 						.Select(a => a.GetRangeModifier()).ToArray() : new int[0],
 
 					Source = target.CenterPosition,
-					CurrentSource = () => target.CenterPosition,
+					CurrentSource = () => centerPosition,
 					SourceActor = firedBy,
 					GuidedTarget = shrapnelTarget,
 					PassiveTarget = shrapnelTarget.CenterPosition
 				};
 
-				if (args.Weapon.Projectile != null)
+				if (projectileArgs.Weapon.Projectile != null)
 				{
 					var projectile = projectileArgs.Weapon.Projectile.Create(projectileArgs);
 					if (projectile != null)

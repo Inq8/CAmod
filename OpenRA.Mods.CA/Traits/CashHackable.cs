@@ -16,12 +16,12 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Tag trait for Cash Hack support power.")]
-	public class CashHackableInfo : ITraitInfo
+	public class CashHackableInfo : TraitInfo
 	{
 		[Desc("Accepted `CashHack` types. Leave empty to accept all types.")]
 		public readonly HashSet<string> ValidTypes = new HashSet<string>() { "Cash-Hack" };
 
-		public object Create(ActorInitializer init) { return new CashHackable(this); }
+		public override object Create(ActorInitializer init) { return new CashHackable(this); }
 	}
 
 	public class CashHackable

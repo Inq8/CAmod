@@ -37,8 +37,7 @@ namespace OpenRA.Mods.CA.Traits
 		bool controlChanging;
 		Actor oldSelf = null;
 
-		ConditionManager conditionManager;
-		int token = ConditionManager.InvalidConditionToken;
+		int token = Actor.InvalidConditionToken;
 
 		public Actor Master { get; private set; }
 
@@ -46,13 +45,6 @@ namespace OpenRA.Mods.CA.Traits
 			: base(info)
 		{
 			this.info = info;
-		}
-
-		protected override void Created(Actor self)
-		{
-			conditionManager = self.TraitOrDefault<ConditionManager>();
-
-			base.Created(self);
 		}
 
 		public void LinkMaster(Actor self, Actor master)
@@ -70,8 +62,8 @@ namespace OpenRA.Mods.CA.Traits
 			UnlinkMaster(self, Master);
 			Master = master;
 
-			if (conditionManager != null && token == ConditionManager.InvalidConditionToken && !string.IsNullOrEmpty(Info.Condition))
-				token = conditionManager.GrantCondition(self, Info.Condition);
+			if (token == Actor.InvalidConditionToken)
+				token = self.GrantCondition(Info.Condition);
 
 			if (master.Owner == creatorOwner)
 				UnlinkMaster(self, master);
@@ -94,8 +86,8 @@ namespace OpenRA.Mods.CA.Traits
 
 			Master = null;
 
-			if (conditionManager != null && token != ConditionManager.InvalidConditionToken)
-				token = conditionManager.RevokeCondition(self, token);
+			if (token != Actor.InvalidConditionToken)
+				token = self.RevokeCondition(token);
 		}
 
 		public void RevokeMindControl(Actor self)

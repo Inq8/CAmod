@@ -66,7 +66,7 @@ namespace OpenRA.Mods.CA
 
 		public static List<Actor> FindEnemiesByCommonName(HashSet<string> commonNames, Player player)
 		{
-			return player.World.Actors.Where(a => !a.IsDead && player.Stances[a.Owner] == Stance.Enemy &&
+			return player.World.Actors.Where(a => !a.IsDead && player.RelationshipWith(a.Owner) == PlayerRelationship.Enemy &&
 				commonNames.Contains(a.Info.Name)).ToList();
 		}
 

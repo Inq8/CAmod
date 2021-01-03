@@ -10,7 +10,6 @@
 
 using System.Linq;
 using OpenRA.GameRules;
-using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
@@ -63,8 +62,8 @@ namespace OpenRA.Mods.CA.Traits
 			var args = new ProjectileArgs
 			{
 				Weapon = weapon,
-				Facing = 0,
-				CurrentMuzzleFacing = () => 0,
+				Facing = WAngle.Zero,
+				CurrentMuzzleFacing = () => WAngle.Zero,
 
 				DamageModifiers = !spawner.IsDead ? spawner.TraitsImplementing<IFirepowerModifier>()
 						.Select(a => a.GetFirepowerModifier()).ToArray() : new int[0],

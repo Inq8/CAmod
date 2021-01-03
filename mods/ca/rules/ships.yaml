@@ -241,6 +241,7 @@ CA:
 
 LST:
 	Inherits: ^Ship
+	Inherits@TRANSPORT: ^Transport
 	Buildable:
 		Queue: Ship
 		BuildPaletteOrder: 10
@@ -274,7 +275,6 @@ LST:
 	Cargo:
 		Types: Infantry, Vehicle
 		MaxWeight: 5
-		PipCount: 5
 		PassengerFacing: 0
 		LoadingCondition: notmobile
 	-ChronoshiftableWithSpriteEffect:
@@ -459,7 +459,7 @@ DD2:
 		LocalOffset: 0,10,90
 		PauseOnCondition: under-bridge
 		RequiresCondition: pointlaser-upgrade
-		ForceTargetStances: enemy
+		ForceTargetRelationships: enemy
 	AttackTurreted:
 		Turrets: primary, secondary
 		Armaments: primary, secondary
@@ -478,7 +478,7 @@ DD2:
 		Armament: secondary
 		PointDefenseTypes: Missile
 		RequiresCondition: pointlaser-upgrade
-		ValidStances: Enemy
+		ValidRelationships: Enemy
 	GrantConditionOnPrerequisite@POINTL:
 		Condition: pointlaser-upgrade
 		Prerequisites: pointlaser.upgrade
@@ -610,7 +610,7 @@ ICBM:
 		Name: ICBM
 	Health:
 		HP: 7500
-	ShootableBallisticMissile:
+	BallisticMissile:
 		LaunchAngle: 155
 		Speed: 140
 	LeavesTrails:

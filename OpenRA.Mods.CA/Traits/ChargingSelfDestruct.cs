@@ -10,10 +10,8 @@
 #endregion
 
 using System.Collections.Generic;
-using System.Linq;
 using OpenRA.Activities;
 using OpenRA.GameRules;
-using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Orders;
 using OpenRA.Mods.Common.Traits;
@@ -23,7 +21,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	class ChargingSelfDestructInfo : ITraitInfo, IRulesetLoaded, Requires<ExplodesInfo>, Requires<WithFacingSpriteBodyInfo>
+	class ChargingSelfDestructInfo : TraitInfo, IRulesetLoaded, Requires<ExplodesInfo>, Requires<WithFacingSpriteBodyInfo>
 	{
 		[SequenceReference]
 		public readonly string ChargingSequence = "charging";
@@ -60,19 +58,17 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Types of damage that this trait causes to self while self-destructing. Leave empty for no damage types.")]
 		public readonly BitSet<DamageType> DamageTypes = default(BitSet<DamageType>);
 
-		public object Create(ActorInitializer init) { return new ChargingSelfDestruct(init.Self, this); }
+		public override object Create(ActorInitializer init) { return new ChargingSelfDestruct(init.Self, this); }
 
 		public void RulesetLoaded(Ruleset rules, ActorInfo ai)
 		{
-			WeaponInfo thumpDamageWeapon;
-			WeaponInfo detonationWeapon;
 			var thumpDamageWeaponToLower = (ChargingDamageWeapon ?? string.Empty).ToLowerInvariant();
 			var detonationWeaponToLower = (DetonationWeapon ?? string.Empty).ToLowerInvariant();
 
-			if (!rules.Weapons.TryGetValue(thumpDamageWeaponToLower, out thumpDamageWeapon))
+			if (!rules.Weapons.TryGetValue(thumpDamageWeaponToLower, out var thumpDamageWeapon))
 				throw new YamlException("Weapons Ruleset does not contain an entry '{0}'".F(thumpDamageWeaponToLower));
 
-			if (!rules.Weapons.TryGetValue(detonationWeaponToLower, out detonationWeapon))
+			if (!rules.Weapons.TryGetValue(detonationWeaponToLower, out var detonationWeapon))
 				throw new YamlException("Weapons Ruleset does not contain an entry '{0}'".F(detonationWeaponToLower));
 
 			ThumpDamageWeaponInfo = thumpDamageWeapon;
@@ -80,20 +76,13 @@ namespace OpenRA.Mods.CA.Traits
 		}
 	}
 
-	class ChargingSelfDestruct : INotifyCreated, IIssueOrder, IResolveOrder, IOrderVoice, IIssueDeployOrder
+	class ChargingSelfDestruct : IIssueOrder, IResolveOrder, IOrderVoice, IIssueDeployOrder
 	{
 		readonly ChargingSelfDestructInfo info;
-
-		ConditionManager conditionManager;
 
 		public ChargingSelfDestruct(Actor self, ChargingSelfDestructInfo info)
 		{
 			this.info = info;
-		}
-
-		void INotifyCreated.Created(Actor self)
-		{
-			conditionManager = self.TraitOrDefault<ConditionManager>();
 		}
 
 		public IEnumerable<IOrderTargeter> Orders
@@ -105,7 +94,7 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		Order IIssueOrder.IssueOrder(Actor self, IOrderTargeter order, Target target, bool queued)
+		Order IIssueOrder.IssueOrder(Actor self, IOrderTargeter order, in Target target, bool queued)
 		{
 			if (order.OrderID != "DetonateAttack" && order.OrderID != "Detonate")
 				return null;
@@ -158,7 +147,7 @@ namespace OpenRA.Mods.CA.Traits
 				assignTargetOnFirstRun = true;
 			}
 
-			public DetonationSequence(Actor self, ChargingSelfDestruct csd, Target target)
+			public DetonationSequence(Actor self, ChargingSelfDestruct csd, in Target target)
 			{
 				this.self = self;
 				this.csd = csd;
@@ -192,8 +181,7 @@ namespace OpenRA.Mods.CA.Traits
 					if (target.Type == TargetType.Invalid)
 						return true;
 
-					if (csd.conditionManager != null && !string.IsNullOrEmpty(csd.info.DeployedCondition))
-						csd.conditionManager.GrantCondition(self, csd.info.DeployedCondition);
+					self.GrantCondition(csd.info.DeployedCondition);
 
 					if (csd.info.ChargingSequence != null)
 						wfsb.PlayCustomAnimationRepeating(self, csd.info.ChargingSequence);

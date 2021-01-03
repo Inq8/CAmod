@@ -60,8 +60,7 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		Actor self;
 		readonly DummyGpsPowerInfo info;
-		ConditionManager conditionManager;
-		int conditionToken = ConditionManager.InvalidConditionToken;
+		int conditionToken = Actor.InvalidConditionToken;
 
 		protected override void Created(Actor self)
 		{
@@ -84,7 +83,6 @@ namespace OpenRA.Mods.CA.Traits
 		public override void Charged(Actor self, string key)
 		{
 			self.Owner.PlayerActor.Trait<SupportPowerManager>().Powers[key].Activate(new Order());
-			conditionManager = self.TraitOrDefault<ConditionManager>();
 		}
 
 		public override void Activate(Actor self, Order order, SupportPowerManager manager)
@@ -97,8 +95,8 @@ namespace OpenRA.Mods.CA.Traits
 
 				w.Add(new SatelliteLaunchCA(self, info));
 
-				if (conditionToken == ConditionManager.InvalidConditionToken)
-					conditionToken = conditionManager.GrantCondition(self, info.Condition);
+				if (conditionToken == Actor.InvalidConditionToken)
+					conditionToken = self.GrantCondition(info.Condition);
 			});
 		}
 

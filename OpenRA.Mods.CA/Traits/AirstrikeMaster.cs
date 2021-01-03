@@ -1,11 +1,10 @@
 ﻿#region Copyright & License Information
 /*
- * Copyright 2007-2018 The OpenRA Developers (see AUTHORS)
- * This file is part of OpenRA, which is free software. It is made
- * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation, either version 3 of
- * the License, or (at your option) any later version. For more
- * information, see COPYING.
+ * Copyright 2015- OpenRA.Mods.AS Developers (see AUTHORS)
+ * This file is a part of a third-party plugin for OpenRA, which is
+ * free software. It is made available to you under the terms of the
+ * GNU General Public License as published by the Free Software
+ * Foundation. For more information, see COPYING.
  */
 #endregion
 
@@ -14,16 +13,15 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
-using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("This actor can spawn actors.")]
-	public class AirstrikeMasterInfo : BaseSpawnMasterInfo
+	[Desc("This actor can send in other actors to deliver an airstrike.")]
+	public class AirstrikeMasterInfo : BaseSpawnerMasterInfo
 	{
-		[Desc("Spawn is a missile that dies and not return.")]
-		public readonly bool SpawnIsMissile = false;
+		[Desc("Just send the spawnee and forget it.")]
+		public readonly bool SendAndForget = false;
 
 		[Desc("Spawn rearm delay, in ticks")]
 		public readonly int RearmTicks = 150;
@@ -35,11 +33,8 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("After this many ticks, we remove the condition.")]
 		public readonly int LaunchingTicks = 15;
 
-		[Desc("Pip color for the spawn count.")]
-		public readonly PipType PipType = PipType.Yellow;
-
-		[Desc("Insta-repair spawners when they return?")]
-		public readonly bool InstaRepair = true;
+		[Desc("Instantly repair spawners when they return?")]
+		public readonly bool InstantRepair = true;
 
 		[GrantedConditionReference]
 		[Desc("The condition to grant to self while spawned units are loaded.",
@@ -49,10 +44,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Conditions to grant when specified actors are contained inside the transport.",
 			"A dictionary of [actor id]: [condition].")]
 		public readonly Dictionary<string, string> SpawnContainConditions = new Dictionary<string, string>();
+
 		[Desc("The sound will be played when mark a target")]
-		public readonly string MarkSound = "Attack";
-		[GrantedConditionReference]
-		public IEnumerable<string> LinterSpawnContainConditions { get { return SpawnContainConditions.Values; } }
+		public readonly string MarkSound = "";
 
 		public readonly int SquadSize = 1;
 		public readonly WVec SquadOffset = new WVec(-1536, 1536, 0);
@@ -60,82 +54,54 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly int QuantizedFacings = 32;
 		public readonly WDist Cordon = new WDist(5120);
 
+		[GrantedConditionReference]
+		public IEnumerable<string> LinterSpawnContainConditions { get { return SpawnContainConditions.Values; } }
+
 		public override object Create(ActorInitializer init) { return new AirstrikeMaster(init, this); }
 	}
 
-	public class AirstrikeMaster : BaseSpawnerMaster, IPips, ITick, INotifyAttack, INotifyBecomingIdle
+	public class AirstrikeMaster : BaseSpawnerMaster, ITick, INotifyAttack, IResolveOrder
 	{
-		private WPos startEdge;
-		private WPos finishEdge;
-		private WVec spawnOffset;
-		private int attackFacing;
 		class AirstrikeSlaveEntry : BaseSpawnerSlaveEntry
 		{
 			public int RearmTicks = 0;
-			public bool IsLaunched = false;
 			public new AirstrikeSlave SpawnerSlave;
 		}
 
 		readonly Dictionary<string, Stack<int>> spawnContainTokens = new Dictionary<string, Stack<int>>();
+		public readonly AirstrikeMasterInfo AirstrikeMasterInfo;
 
-		public new AirstrikeMasterInfo Info { get; private set; }
+		readonly Stack<int> loadedTokens = new Stack<int>();
 
-		AirstrikeSlaveEntry[] slaveEntries;
-		ConditionManager conditionManager;
+		WPos finishEdge;
+		WVec spawnOffset;
 
-		Stack<int> loadedTokens = new Stack<int>();
+		int launchCondition = Actor.InvalidConditionToken;
+		int launchConditionTicks;
 
 		int respawnTicks = 0;
 
 		public AirstrikeMaster(ActorInitializer init, AirstrikeMasterInfo info)
 			: base(init, info)
 		{
-			Info = info;
-		}
-
-		public override void Replenish(Actor self, BaseSpawnerSlaveEntry entry)
-		{
-			if (entry.IsValid)
-				throw new InvalidOperationException("Replenish must not be run on a valid entry!");
-
-			string attacker = entry.ActorName;
-
-			Game.Sound.Play(SoundType.World, Info.MarkSound);
-
-			self.World.AddFrameEndTask(w =>
-			{
-				for (var i = -Info.SquadSize / 2; i <= Info.SquadSize / 2; i++)
-				{
-					// Even-sized squads skip the lead plane
-					if (i == 0 && (Info.SquadSize & 1) == 0)
-						continue;
-
-					// Includes the 90 degree rotation between body and world coordinates
-					var slave = w.CreateActor(attacker, new TypeDictionary()
-					{
-						new CenterPositionInit(startEdge + spawnOffset),
-						new OwnerInit(self.Owner),
-						new FacingInit(attackFacing)
-					});
-
-					// Initialize slave entry
-					InitializeSlaveEntry(slave, entry);
-					entry.SpawnerSlave.LinkMaster(entry.Actor, self, this);
-				}
-			});
+			AirstrikeMasterInfo = info;
 		}
 
 		protected override void Created(Actor self)
 		{
 			base.Created(self);
-			conditionManager = self.Trait<ConditionManager>();
+
+			// Spawn initial load.
+			var burst = Info.InitialActorCount == -1 ? Info.Actors.Length : Info.InitialActorCount;
+			for (var i = 0; i < burst; i++)
+				Replenish(self, SlaveEntries);
 		}
 
-		public override BaseSpawnerSlaveEntry[] CreateSlaveEntries(BaseSpawnMasterInfo info)
+		public override BaseSpawnerSlaveEntry[] CreateSlaveEntries(BaseSpawnerMasterInfo info)
 		{
-			slaveEntries = new AirstrikeSlaveEntry[info.Actors.Length]; // For this class to use
+			var slaveEntries = new AirstrikeSlaveEntry[info.Actors.Length]; // For this class to use
 
-			for (int i = 0; i < slaveEntries.Length; i++)
+			for (var i = 0; i < slaveEntries.Length; i++)
 				slaveEntries[i] = new AirstrikeSlaveEntry();
 
 			return slaveEntries; // For the base class to use
@@ -151,20 +117,17 @@ namespace OpenRA.Mods.CA.Traits
 			se.SpawnerSlave = slave.Trait<AirstrikeSlave>();
 		}
 
-		void INotifyAttack.PreparingAttack(Actor self, Target target, Armament a, Barrel barrel) { }
+		void INotifyAttack.PreparingAttack(Actor self, in Target target, Armament a, Barrel barrel) { }
 
 		// The rate of fire of the dummy weapon determines the launch cycle as each shot
 		// invokes Attacking()
-		void INotifyAttack.Attacking(Actor self, Target target, Armament a, Barrel barrel)
+		void INotifyAttack.Attacking(Actor self, in Target target, Armament a, Barrel barrel)
 		{
-			if (IsTraitDisabled)
-				return;
-
-			if (a.Info.Name != Info.SpawnerArmamentName)
+			if (IsTraitDisabled || IsTraitPaused || !Info.ArmamentNames.Contains(a.Info.Name))
 				return;
 
 			// Issue retarget order for already launched ones
-			foreach (var slave in slaveEntries)
+			foreach (var slave in SlaveEntries)
 				if (slave.IsLaunched && slave.IsValid)
 					slave.SpawnerSlave.Attack(slave.Actor, target);
 
@@ -174,13 +137,20 @@ namespace OpenRA.Mods.CA.Traits
 
 			se.IsLaunched = true; // mark as launched
 
-			// Launching condition is timed, so not saving the token.
-			if (Info.LaunchingCondition != null)
-				conditionManager.GrantCondition(self, Info.LaunchingCondition/*, Info.LaunchingTicks*/);
+			if (AirstrikeMasterInfo.LaunchingCondition != null)
+			{
+				if (launchCondition == Actor.InvalidConditionToken)
+					launchCondition = self.GrantCondition(AirstrikeMasterInfo.LaunchingCondition);
+
+				launchConditionTicks = AirstrikeMasterInfo.LaunchingTicks;
+			}
 
 			SpawnIntoWorld(self, se.Actor, self.CenterPosition);
 
 			se.SpawnerSlave.SetSpawnInfo(finishEdge, spawnOffset);
+
+			// Lambdas can't use 'in' variables, so capture a copy for later
+			var delayedTarget = target;
 
 			// Queue attack order, too.
 			self.World.AddFrameEndTask(w =>
@@ -188,35 +158,37 @@ namespace OpenRA.Mods.CA.Traits
 				// The actor might had been trying to do something before entering the carrier.
 				// Cancel whatever it was trying to do.
 				se.SpawnerSlave.Stop(se.Actor);
-				se.Actor.PlayVoice(Info.MarkSound);
-				se.SpawnerSlave.Attack(se.Actor, target);
+				if (!string.IsNullOrEmpty(AirstrikeMasterInfo.MarkSound))
+					se.Actor.PlayVoice(AirstrikeMasterInfo.MarkSound);
+				se.SpawnerSlave.Attack(se.Actor, delayedTarget);
 			});
+
+			if (AirstrikeMasterInfo.SendAndForget)
+				se.Actor = null;
 		}
 
 		public override void SpawnIntoWorld(Actor self, Actor slave, WPos centerPosition)
 		{
-			World w = self.World;
+			var w = self.World;
 
-			WPos target = centerPosition;
+			var target = centerPosition;
 
-			for (var i = -Info.SquadSize / 2; i <= Info.SquadSize / 2; i++)
+			for (var i = -AirstrikeMasterInfo.SquadSize / 2; i <= AirstrikeMasterInfo.SquadSize / 2; i++)
 			{
-				int attackFacing = 256 * self.World.SharedRandom.Next(Info.QuantizedFacings) / Info.QuantizedFacings;
+				var attackFacing = 256 * self.World.SharedRandom.Next(AirstrikeMasterInfo.QuantizedFacings) / AirstrikeMasterInfo.QuantizedFacings;
 
 				var altitude = self.World.Map.Rules.Actors[slave.Info.Name].TraitInfo<AircraftInfo>().CruiseAltitude.Length;
 				var attackRotation = WRot.FromFacing(attackFacing);
 				var delta = new WVec(0, -1024, 0).Rotate(attackRotation);
-				target = target + new WVec(0, 0, altitude);
-				var startEdge = target - (self.World.Map.DistanceToEdge(target, -delta) + Info.Cordon).Length * delta / 1024;
-				var finishEdge = target + (self.World.Map.DistanceToEdge(target, delta) + Info.Cordon).Length * delta / 1024;
+				target += new WVec(0, 0, altitude);
+				var startEdge = target - (self.World.Map.DistanceToEdge(target, -delta) + AirstrikeMasterInfo.Cordon).Length * delta / 1024;
+				var finishEdge = target + (self.World.Map.DistanceToEdge(target, delta) + AirstrikeMasterInfo.Cordon).Length * delta / 1024;
 
-				var so = Info.SquadOffset;
+				var so = AirstrikeMasterInfo.SquadOffset;
 				var spawnOffset = new WVec(i * so.Y, -Math.Abs(i) * so.X, 0).Rotate(attackRotation);
 				var targetOffset = new WVec(i * so.Y, 0, 0).Rotate(attackRotation);
 
-				this.attackFacing = attackFacing;
 				this.spawnOffset = spawnOffset;
-				this.startEdge = startEdge;
 				this.finishEdge = finishEdge;
 
 				w.AddFrameEndTask(_ =>
@@ -230,82 +202,65 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		public virtual void OnBecomingIdle(Actor self)
-		{
-			Recall(self);
-		}
-
-		void Recall(Actor self)
+		void Recall()
 		{
 			// Tell launched slaves to come back and enter me.
-			foreach (var se in slaveEntries)
+			foreach (var se in SlaveEntries)
+			{
+				var childSlave = se as AirstrikeSlaveEntry;
 				if (se.IsLaunched && se.IsValid)
-					se.SpawnerSlave.EnterSpawner(se.Actor);
+					childSlave.SpawnerSlave.LeaveMap(se.Actor);
+			}
 		}
 
 		public override void OnSlaveKilled(Actor self, Actor slave)
 		{
 			// Set clock so that regen happens.
 			if (respawnTicks <= 0) // Don't interrupt an already running timer!
-				respawnTicks = Util.ApplyPercentageModifiers(Info.RespawnTicks, ReloadModifiers.Select(rm => rm.GetReloadModifier()));
+				respawnTicks = Util.ApplyPercentageModifiers(Info.RespawnTicks, reloadModifiers.Select(rm => rm.GetReloadModifier()));
 		}
 
 		AirstrikeSlaveEntry GetLaunchable()
 		{
-			foreach (var se in slaveEntries)
-				if (se.RearmTicks <= 0 && !se.IsLaunched && se.IsValid)
-					return se;
+			foreach (var se in SlaveEntries)
+			{
+				var childSlave = se as AirstrikeSlaveEntry;
+				if (childSlave.RearmTicks <= 0 && !childSlave.IsLaunched && se.IsValid)
+					return childSlave;
+			}
 
 			return null;
-		}
-
-		public IEnumerable<PipType> GetPips(Actor self)
-		{
-			if (IsTraitDisabled)
-				yield break;
-
-			int inside = 0;
-			foreach (var se in slaveEntries)
-				if (se.IsValid && !se.IsLaunched)
-					inside++;
-
-			for (var i = 0; i < Info.Actors.Length; i++)
-			{
-				if (i < inside)
-					yield return Info.PipType;
-				else
-					yield return PipType.Transparent;
-			}
 		}
 
 		public void PickupSlave(Actor self, Actor a)
 		{
 			AirstrikeSlaveEntry slaveEntry = null;
-			foreach (var se in slaveEntries)
+			foreach (var se in SlaveEntries)
 				if (se.Actor == a)
 				{
-					slaveEntry = se;
+					slaveEntry = se as AirstrikeSlaveEntry;
 					break;
 				}
 
 			if (slaveEntry == null)
-				throw new InvalidOperationException("An actor ({0} {1}) that isn't my slave entered me?".F(a.Info.Name, a.ActorID));
+				throw new InvalidOperationException("An actor that isn't my slave entered me?");
 
 			slaveEntry.IsLaunched = false;
 
 			// setup rearm
-			slaveEntry.RearmTicks = Info.RearmTicks;
+			slaveEntry.RearmTicks = Util.ApplyPercentageModifiers(AirstrikeMasterInfo.RearmTicks, reloadModifiers.Select(rm => rm.GetReloadModifier()));
 
-			string spawnContainCondition;
-			if (conditionManager != null && Info.SpawnContainConditions.TryGetValue(a.Info.Name, out spawnContainCondition))
-				spawnContainTokens.GetOrAdd(a.Info.Name).Push(conditionManager.GrantCondition(self, spawnContainCondition));
+			if (AirstrikeMasterInfo.SpawnContainConditions.TryGetValue(a.Info.Name, out var spawnContainCondition))
+				spawnContainTokens.GetOrAdd(a.Info.Name).Push(self.GrantCondition(spawnContainCondition));
 
-			if (conditionManager != null && !string.IsNullOrEmpty(Info.LoadedCondition))
-				loadedTokens.Push(conditionManager.GrantCondition(self, Info.LoadedCondition));
+			loadedTokens.Push(self.GrantCondition(AirstrikeMasterInfo.LoadedCondition));
 		}
 
-		public void Tick(Actor self)
+		void ITick.Tick(Actor self)
 		{
+			if (launchCondition != Actor.InvalidConditionToken && --launchConditionTicks < 0)
+				launchCondition = self.RevokeCondition(launchCondition);
+
 			if (respawnTicks > 0)
 			{
 				respawnTicks--;
@@ -313,20 +268,32 @@ namespace OpenRA.Mods.CA.Traits
 				// Time to respawn someting.
 				if (respawnTicks <= 0)
 				{
-					Replenish(self, slaveEntries);
+					Replenish(self, SlaveEntries);
 
 					// If there's something left to spawn, restart the timer.
-					if (SelectEntryToSpawn(slaveEntries) != null)
-						respawnTicks = Util.ApplyPercentageModifiers(Info.RespawnTicks, ReloadModifiers.Select(rm => rm.GetReloadModifier()));
+					if (SelectEntryToSpawn(SlaveEntries) != null)
+						respawnTicks = Util.ApplyPercentageModifiers(Info.RespawnTicks, reloadModifiers.Select(rm => rm.GetReloadModifier()));
 				}
 			}
 
 			// Rearm
-			foreach (var se in slaveEntries)
+			foreach (var se in SlaveEntries)
 			{
-				if (se.RearmTicks > 0)
-					se.RearmTicks--;
+				var slaveEntry = se as AirstrikeSlaveEntry;
+				if (slaveEntry.RearmTicks > 0)
+					slaveEntry.RearmTicks--;
 			}
+		}
+
+		protected override void TraitPaused(Actor self)
+		{
+			Recall();
+		}
+
+		public void ResolveOrder(Actor self, Order order)
+		{
+			if (order.OrderString == "Stop")
+				Recall();
 		}
 	}
 }

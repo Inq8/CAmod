@@ -21,7 +21,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	public class AirstrikePowerSquadMember
+	public class ClassicAirstrikePowerSquadMember
 	{
 		public readonly string UnitType;
 
@@ -29,9 +29,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public readonly WVec TargetOffset;
 
-		public readonly int SpawnDelay;
-
-		public AirstrikePowerSquadMember(MiniYamlNode yamlNode)
+		public ClassicAirstrikePowerSquadMember(MiniYamlNode yamlNode)
 		{
 			UnitType = yamlNode.Key;
 			FieldLoader.Load(this, yamlNode.Value);
@@ -41,8 +39,8 @@ namespace OpenRA.Mods.CA.Traits
 	public class ClassicAirstrikePowerInfo : SupportPowerInfo
 	{
 		[FieldLoader.LoadUsing("LoadSquad")]
-		[Desc("A list of aircraft in the squad. Each has configurable UnitType, SpawnOffset, TargetOffset and SpawnDelay.")]
-		public readonly List<AirstrikePowerSquadMember> Squad;
+		[Desc("A list of aircraft in the squad. Each has configurable UnitType, SpawnOffset and TargetOffset.")]
+		public readonly List<ClassicAirstrikePowerSquadMember> Squad;
 
 		public readonly int QuantizedFacings = 32;
 		public readonly WDist Cordon = new WDist(5120);
@@ -74,14 +72,16 @@ namespace OpenRA.Mods.CA.Traits
 
 		static object LoadSquad(MiniYaml yaml)
 		{
-			var ret = new List<AirstrikePowerSquadMember>();
+			var ret = new List<ClassicAirstrikePowerSquadMember>();
 			var squadNode = yaml.Nodes.FirstOrDefault(n => n.Key == "Squad");
 			if (squadNode != null)
 				foreach (var d in squadNode.Value.Nodes)
-					ret.Add(new AirstrikePowerSquadMember(d));
+					ret.Add(new ClassicAirstrikePowerSquadMember(d));
 
 			return ret;
 		}
+
+		public IEnumerable<string> LintSquadActors { get { return Squad.Select(s => s.UnitType); } }
 
 		public override object Create(ActorInitializer init) { return new ClassicAirstrikePower(init.Self, this); }
 	}
@@ -113,13 +113,16 @@ namespace OpenRA.Mods.CA.Traits
 		public override void Activate(Actor self, Order order, SupportPowerManager manager)
 		{
 			base.Activate(self, order, manager);
-			SendAirstrike(self, order.Target.CenterPosition, !info.UseDirectionalTarget || order.ExtraData == uint.MaxValue, (int)order.ExtraData);
+
+			var facing = info.UseDirectionalTarget && order.ExtraData != uint.MaxValue ? (WAngle?)WAngle.FromFacing((int)order.ExtraData) : null;
+			SendAirstrike(self, order.Target.CenterPosition, facing);
 		}
 
-		public void SendAirstrike(Actor self, WPos target, bool randomize = true, int attackFacing = 0)
+		public Actor[] SendAirstrike(Actor self, WPos target, WAngle? facing = null)
 		{
-			if (randomize)
-				attackFacing = 256 * self.World.SharedRandom.Next(info.QuantizedFacings) / info.QuantizedFacings;
+			var aircraft = new List<Actor>();
+			if (!facing.HasValue)
+				facing = new WAngle(1024 * self.World.SharedRandom.Next(info.QuantizedFacings) / info.QuantizedFacings);
 
 			Actor camera = null;
 			Beacon beacon = null;
@@ -159,58 +162,74 @@ namespace OpenRA.Mods.CA.Traits
 				aircraftInRange[a] = false;
 
 				// Checking for attack range is not relevant here because
-				// aircraft may be shot down before entering. Thus we remove
-				// the camera and beacon only if the whole squad is dead.
-				if (aircraftInRange.All(kv => kv.Key.IsDead))
+				// aircraft may be shot down before entering the range.
+				// If at the map's edge, they may be removed from world before leaving.
+				if (aircraftInRange.All(kv => !kv.Key.IsInWorld))
 				{
 					RemoveCamera(camera);
 					RemoveBeacon(beacon);
 				}
 			};
 
+			WPos? startPos = null;
+
+			// Create the actors immediately so they can be returned.
+			foreach (var squadMember in info.Squad)
+			{
+				var a = self.World.CreateActor(false, squadMember.UnitType, new TypeDictionary
+				{
+					new OwnerInit(self.Owner),
+					new FacingInit(facing.Value)
+				});
+
+				aircraft.Add(a);
+				aircraftInRange.Add(a, false);
+			}
+
 			self.World.AddFrameEndTask(w =>
 			{
-				WPos? startPos = null;
-				foreach (var squadMember in info.Squad)
+				PlayLaunchSounds();
+
+				Actor distanceTestActor = null;
+				for (var i = 0; i < aircraft.Count; i++)
 				{
+					var squadMember = info.Squad[i];
+					var actor = aircraft[i];
+
 					var altitude = self.World.Map.Rules.Actors[squadMember.UnitType].TraitInfo<AircraftInfo>().CruiseAltitude.Length;
-					var attackRotation = WRot.FromFacing(attackFacing);
+					var attackRotation = WRot.FromYaw(facing.Value);
 					var delta = new WVec(0, -1024, 0).Rotate(attackRotation);
 					var targetPos = target + new WVec(0, 0, altitude);
-					var startEdge = targetPos - (self.World.Map.DistanceToEdge(targetPos, -delta) + info.Cordon).Length * delta / 1024;
-					var finishEdge = targetPos + (self.World.Map.DistanceToEdge(targetPos, delta) + info.Cordon).Length * delta / 1024;
+					var startEdge = targetPos - (self.World.Map.DistanceToEdge(target, -delta) + info.Cordon).Length * delta / 1024;
+					var finishEdge = targetPos + (self.World.Map.DistanceToEdge(target, delta) + info.Cordon).Length * delta / 1024;
 
 					startPos = startEdge;
 
-					PlayLaunchSounds();
+					// Includes the 90 degree rotation between body and world coordinates
+					var so = squadMember.SpawnOffset;
+					var to = squadMember.TargetOffset;
+					var spawnOffset = new WVec(so.Y, -1 * so.X, 0).Rotate(attackRotation);
+					var targetOffset = new WVec(to.Y, 0, 0).Rotate(attackRotation);
 
-					var spawnOffset = squadMember.SpawnOffset.Rotate(attackRotation);
-					var targetOffset = squadMember.TargetOffset.Rotate(attackRotation);
+					actor.Trait<IPositionable>().SetPosition(actor, startEdge + spawnOffset);
+					w.Add(actor);
 
-					var a = w.CreateActor(squadMember.UnitType, new TypeDictionary
-					{
-						new CenterPositionInit(startEdge + spawnOffset),
-						new OwnerInit(self.Owner),
-						new FacingInit(attackFacing),
-						new CreationActivityDelayInit(squadMember.SpawnDelay)
-					});
-
-					var attack = a.Trait<AttackBomber>();
-					attack.SetTarget(w, targetPos + targetOffset);
+					var attack = actor.Trait<AttackBomber>();
+					attack.SetTarget(self.World, targetPos + targetOffset);
 					attack.OnEnteredAttackRange += onEnterRange;
 					attack.OnExitedAttackRange += onExitRange;
 					attack.OnRemovedFromWorld += onRemovedFromWorld;
 
 					for (var strikes = 0; strikes < info.Strikes; strikes++)
 					{
-						a.QueueActivity(new Fly(a, Target.FromPos(target + spawnOffset)));
+						actor.QueueActivity(new Fly(actor, Target.FromPos(target + spawnOffset)));
 						if (info.Strikes > 1)
-							a.QueueActivity(new FlyTimed(info.CircleDelay, a));
+							actor.QueueActivity(new FlyForward(actor, info.CircleDelay));
 					}
 
-					a.QueueActivity(new Fly(a, Target.FromPos(finishEdge + spawnOffset)));
-					a.QueueActivity(new RemoveSelf());
-					aircraftInRange.Add(a, false);
+					actor.QueueActivity(new Fly(actor, Target.FromPos(finishEdge + spawnOffset)));
+					actor.QueueActivity(new RemoveSelf());
+					distanceTestActor = actor;
 				}
 
 				if (Info.DisplayBeacon && startPos.HasValue)
@@ -229,17 +248,14 @@ namespace OpenRA.Mods.CA.Traits
 						Info.ArrowSequence,
 						Info.CircleSequence,
 						Info.ClockSequence,
-						() =>
-						{
-							// To account for different spawn times and potentially different movement speeds.
-							var closestActor = aircraftInRange.Keys.MinBy(x => (x.CenterPosition - target).HorizontalLengthSquared);
-							return 1 - ((closestActor.CenterPosition - target).HorizontalLength - info.BeaconDistanceOffset.Length) * 1f / distance;
-						},
+						() => 1 - ((distanceTestActor.CenterPosition - target).HorizontalLength - info.BeaconDistanceOffset.Length) * 1f / distance,
 						Info.BeaconDelay);
 
 					w.Add(beacon);
 				}
 			});
+
+			return aircraft.ToArray();
 		}
 
 		void RemoveCamera(Actor camera)

@@ -39,7 +39,7 @@ namespace OpenRA.Mods.CA.Warheads
 				throw new YamlException("Weapons Ruleset does not contain an entry '{0}'".F(Weapon.ToLowerInvariant()));
 		}
 
-		public override void DoImpact(Target target, WarheadArgs args)
+		public override void DoImpact(in Target target, WarheadArgs args)
 		{
 			var firedBy = args.SourceActor;
 			if (!target.IsValidFor(firedBy))
@@ -57,13 +57,13 @@ namespace OpenRA.Mods.CA.Warheads
 					? world.SharedRandom.Next(Amount[0], Amount[1])
 					: Amount[0];
 
-			var offset = 256 / amount;
+			var offset = 1024 / amount;
 
 			for (var i = 0; i < amount; i++)
 			{
 				Target radiusTarget = Target.Invalid;
 
-				var rotation = WRot.FromFacing(i * offset);
+				var rotation = WRot.FromYaw(new WAngle(i * offset));
 				var targetpos = epicenter + new WVec(weapon.Range.Length, 0, 0).Rotate(rotation);
 				var tpos = Target.FromPos(new WPos(targetpos.X, targetpos.Y, map.CenterOfCell(map.CellContaining(targetpos)).Z));
 				if (weapon.IsValidAgainst(tpos, firedBy.World, firedBy))
@@ -72,10 +72,13 @@ namespace OpenRA.Mods.CA.Warheads
 				if (radiusTarget.Type == TargetType.Invalid)
 					continue;
 
+				// Lambdas can't use 'in' variables, so capture a copy for later
+				var centerPosition = target.CenterPosition;
+
 				var projectileArgs = new ProjectileArgs
 				{
 					Weapon = weapon,
-					Facing = (radiusTarget.CenterPosition - target.CenterPosition).Yaw.Facing,
+					Facing = (radiusTarget.CenterPosition - target.CenterPosition).Yaw,
 
 					DamageModifiers = !firedBy.IsDead ? firedBy.TraitsImplementing<IFirepowerModifier>()
 						.Select(a => a.GetFirepowerModifier()).ToArray() : new int[0],
@@ -87,7 +90,7 @@ namespace OpenRA.Mods.CA.Warheads
 						.Select(a => a.GetRangeModifier()).ToArray() : new int[0],
 
 					Source = target.CenterPosition,
-					CurrentSource = () => target.CenterPosition,
+					CurrentSource = () => centerPosition,
 					SourceActor = firedBy,
 					GuidedTarget = radiusTarget,
 					PassiveTarget = radiusTarget.CenterPosition

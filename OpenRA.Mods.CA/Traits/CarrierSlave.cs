@@ -1,11 +1,10 @@
 ﻿#region Copyright & License Information
 /*
- * Copyright 2007-2018 The OpenRA Developers (see AUTHORS)
- * This file is part of OpenRA, which is free software. It is made
- * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation, either version 3 of
- * the License, or (at your option) any later version. For more
- * information, see COPYING.
+ * Copyright 2015- OpenRA.Mods.AS Developers (see AUTHORS)
+ * This file is a part of a third-party plugin for OpenRA, which is
+ * free software. It is made available to you under the terms of the
+ * GNU General Public License as published by the Free Software
+ * Foundation. For more information, see COPYING.
  */
 #endregion
 
@@ -26,11 +25,10 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new CarrierSlave(init, this); }
 	}
 
-	public class CarrierSlave : BaseSpawnerSlave, INotifyBecomingIdle
+	public class CarrierSlave : BaseSpawnerSlave, INotifyIdle
 	{
-		public CarrierSlaveInfo Info { get; private set; }
-
 		readonly AmmoPool[] ammoPools;
+		public readonly CarrierSlaveInfo Info;
 
 		CarrierMaster spawnerMaster;
 
@@ -52,16 +50,8 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			// Cancel whatever else self was doing and return.
-			self.CancelActivity();
-
 			var target = Target.FromActor(Master);
-
-			var aircraft = self.TraitOrDefault<Aircraft>();
-			if (self.TraitOrDefault<AttackAircraft>() != null) // Let attack planes approach me first, before landing.
-				if (aircraft != null)
-					self.QueueActivity(new Fly(self, target, WDist.Zero, Info.LandingDistance));
-
-			self.QueueActivity(new EnterCarrierMaster(self, target, spawnerMaster, EnterBehaviour.Exit));
+			self.QueueActivity(false, new EnterCarrierMaster(self, Master, spawnerMaster));
 		}
 
 		public override void LinkMaster(Actor self, Actor master, BaseSpawnerMaster spawnerMaster)
@@ -76,15 +66,17 @@ namespace OpenRA.Mods.CA.Traits
 			if (ammoPools.Length == 0)
 				return false;
 
-			return ammoPools.All(x => !x.HasFullAmmo);
-			/* AutoReloads seems to be removed and i dunno how exactly to implement this check now.
-			 * Doesn't seem like we actually need it for RA2.
-			 * return ammoPools.All(x => !x.AutoReloads && !x.HasAmmo());
-			 */
+			return ammoPools.All(x => !x.HasAmmo);
 		}
 
-		public virtual void OnBecomingIdle(Actor self)
+		void INotifyIdle.TickIdle(Actor self)
 		{
+			EnterSpawner(self);
+		}
+
+		public override void Stop(Actor self)
+		{
+			base.Stop(self);
 			EnterSpawner(self);
 		}
 	}

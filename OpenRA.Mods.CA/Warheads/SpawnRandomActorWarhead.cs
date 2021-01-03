@@ -20,8 +20,6 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Warheads
 {
-	public enum ASOwnerType { Attacker, InternalName }
-
 	[Desc("Spawn actors upon explosion. Don't use this with buildings.")]
 	public class SpawnRandomActorWarhead : WarheadAS, IRulesetLoaded<WeaponInfo>
 	{
@@ -75,7 +73,7 @@ namespace OpenRA.Mods.CA.Warheads
 			}
 		}
 
-		public override void DoImpact(Target target, WarheadArgs args)
+		public override void DoImpact(in Target target, WarheadArgs args)
 		{
 			var firedBy = args.SourceActor;
 			if (!target.IsValidFor(firedBy))
@@ -101,6 +99,9 @@ namespace OpenRA.Mods.CA.Warheads
 			else
 				td.Add(new OwnerInit(firedBy.World.Players.First(p => p.InternalName == InternalOwner)));
 
+			// Lambdas can't use 'in' variables, so capture a copy for later
+			var delayedTarget = target;
+
 			firedBy.World.AddFrameEndTask(w =>
 				{
 					var unit = firedBy.World.CreateActor(false, actor.ToLowerInvariant(), td);
@@ -117,7 +118,7 @@ namespace OpenRA.Mods.CA.Warheads
 
 							var pos = unit.CenterPosition;
 							if (!ForceGround)
-								pos += new WVec(WDist.Zero, WDist.Zero, firedBy.World.Map.DistanceAboveTerrain(target.CenterPosition));
+								pos += new WVec(WDist.Zero, WDist.Zero, firedBy.World.Map.DistanceAboveTerrain(delayedTarget.CenterPosition));
 
 							positionable.SetVisualPosition(unit, pos);
 							w.Add(unit);
@@ -134,7 +135,7 @@ namespace OpenRA.Mods.CA.Warheads
 							if (Image != null)
 								w.Add(new SpriteEffect(pos, w, Image, Sequence, palette));
 
-							var sound = Sounds.RandomOrDefault(Game.CosmeticRandom);
+							var sound = Sounds.RandomOrDefault(firedBy.World.LocalRandom);
 							if (sound != null)
 								Game.Sound.Play(SoundType.World, sound, pos);
 

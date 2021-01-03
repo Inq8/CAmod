@@ -49,11 +49,10 @@ MSLO:
 		MissileWeapon: atomic
 		MissileDelay: 5
 		SpawnOffset: 1c0,427,0
-		DisplayTimerStances: Ally, Neutral, Enemy
+		DisplayTimerRelationships: Ally, Neutral, Enemy
 		DisplayBeacon: True
 		DisplayRadarPing: True
 		BeaconPoster: atomicon
-		FlashType: Nuke
 		CameraRange: 10c0
 		ArrowSequence: arrow
 		ClockSequence: clock
@@ -66,7 +65,7 @@ MSLO:
 		Amount: -150
 	MustBeDestroyed:
 		RequiredForShortGame: false
-	WithNukeLaunchAnimation:
+	WithSupportPowerActivationAnimation:
 		RequiresCondition: !build-incomplete
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPowerReset:
@@ -122,6 +121,7 @@ GAP:
 
 SPEN:
 	Inherits: ^Building
+	Inherits: ^PrimaryBuilding
 	Selectable:
 		Bounds: 72,48
 	RenderSprites:
@@ -208,9 +208,6 @@ SPEN:
 	Production:
 		Produces: Ship, Submarine
 		PauseOnCondition: forceshield || invulnerability || being-warped
-	PrimaryBuilding:
-		PrimaryCondition: primary
-		SelectionNotification: PrimaryBuildingSelected
 	-SpawnActorsOnSell:
 	RepairsUnits:
 		HpPerStep: 1000
@@ -232,13 +229,6 @@ SPEN:
 	ProvidesPrerequisite@buildingname:
 	MapEditorData:
 		ExcludeTilesets: INTERIOR
-	WithDecoration@primary:
-		RequiresSelection: true
-		Image: pips
-		Sequence: tag-primary
-		ReferencePoint: Top
-		ZOffset: 256
-		RequiresCondition: primary
 	HitShape:
 		Type: Rectangle
 			TopLeft: -1536, -598
@@ -253,6 +243,7 @@ SPEN:
 
 SYRD:
 	Inherits: ^Building
+	Inherits: ^PrimaryBuilding
 	Selectable:
 		Bounds: 72,48
 	RenderSprites:
@@ -315,9 +306,6 @@ SYRD:
 	Production:
 		Produces: Ship, Boat
 		PauseOnCondition: forceshield || invulnerability || being-warped
-	PrimaryBuilding:
-		PrimaryCondition: primary
-		SelectionNotification: PrimaryBuildingSelected
 	-SpawnActorsOnSell:
 	RepairsUnits:
 		HpPerStep: 1000
@@ -339,13 +327,6 @@ SYRD:
 	ProvidesPrerequisite@buildingname:
 	MapEditorData:
 		ExcludeTilesets: INTERIOR
-	WithDecoration@primary:
-		RequiresSelection: true
-		Image: pips
-		Sequence: tag-primary
-		ReferencePoint: Top
-		ZOffset: 256
-		RequiresCondition: primary
 	HitShape:
 		TargetableOffsets: 768,0,0, 768,-1024,0, 768,1024,0
 		Type: Rectangle
@@ -404,7 +385,7 @@ IRON:
 		Description: Iron Curtain
 		Condition: invulnerability
 		Range: 1
-		ValidStances: Ally, Neutral, Enemy
+		ValidRelationships: Ally, Neutral, Enemy
 		Duration: 600
 		ActivationDelay: 0
 		AirburstAltitude: 0c0
@@ -417,7 +398,7 @@ IRON:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayTimerStances: Ally, Neutral, Enemy
+		DisplayTimerRelationships: Ally, Neutral, Enemy
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -475,7 +456,7 @@ PDOX:
 		WarpInSequence: warpin
 		WarpOutSequence: warpout
 		Palette: ra2effect-ignore-lighting-alpha75
-	ChronoshiftPowerCA@chronoshift:
+	ChronoshiftPower@chronoshift:
 		OrderName: Chronoshift
 		Prerequisites: !botplayer
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -491,8 +472,9 @@ PDOX:
 		LaunchSound: chrono2.aud
 		KillCargo: true
 		DisplayRadarPing: True
-		Range: 2
-		DisplayTimerStances: Ally, Neutral, Enemy
+		Dimensions: 3, 3
+		Footprint: _x_ xxx _x_
+		DisplayTimerRelationships: Ally, Neutral, Enemy
 	DetonateWeaponPower@ChronoAI:
 		OrderName: Chronoshiftai
 		Prerequisites: botplayer
@@ -511,7 +493,7 @@ PDOX:
 		InsufficientPowerSpeechNotification: InsufficientPower
 		BeginChargeSpeechNotification: ChronosphereCharging
 		EndChargeSpeechNotification: ChronosphereReady
-		DisplayTimerStances: Ally, Neutral, Enemy
+		DisplayTimerRelationships: Ally, Neutral, Enemy
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayRadarPing: True
 		LaunchSound: chrono2.aud
@@ -534,7 +516,7 @@ PDOX:
 		InsufficientPowerSpeechNotification: InsufficientPower
 		BeginChargeSpeechNotification: ChronosphereCharging
 		EndChargeSpeechNotification: ChronosphereReady
-		DisplayTimerStances: Ally
+		DisplayTimerRelationships: Ally
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayBeacon: True
 		ArrowSequence: arrow
@@ -629,10 +611,9 @@ TSLA:
 		Image: poweroff
 		Sequence: offline
 		Palette: chrome
-		ReferencePoint: Bottom, Left
-		ValidStances: Ally
+		Position: BottomLeft
+		ValidRelationships: Ally
 		RequiresCondition: charged
-		ZOffset: 256
 		BlinkInterval: 64
 		RequiresSelection: true
 	ProvidesPrerequisite@TSLA:
@@ -685,8 +666,7 @@ AGUN:
 	Power:
 		Amount: -50
 		RequiresCondition: !being-warped
-	BodyOrientation:
-		UseClassicFacingFudge: True
+	ClassicFacingBodyOrientation:
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
 
@@ -794,9 +774,12 @@ DOME:
 		InsufficientPowerSpeechNotification: InsufficientPower
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayRadarPing: True
-		DisplayTimerStances: Ally
+		DisplayTimerRelationships: Ally
 		Cursor: ability
 		AllowMultiple: false
+		EffectImage: empty
+		EffectSequence: idle
+		EffectPalette: tseffect-ignore-lighting-alpha75
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -834,7 +817,7 @@ PBOX:
 	Turreted:
 		TurnSpeed: 255
 	-QuantizeFacingsFromSequence:
-	BodyOrientation:
+	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
 	Armament:
 		Weapon: vulcan
@@ -887,7 +870,7 @@ HBOX:
 	Turreted:
 		TurnSpeed: 255
 	-QuantizeFacingsFromSequence:
-	BodyOrientation:
+	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
 	RenderRangeCircle:
 		FallbackRange: 6c0
@@ -947,8 +930,7 @@ GUN:
 	Power:
 		Amount: -40
 		RequiresCondition: !being-warped
-	BodyOrientation:
-		UseClassicFacingFudge: True
+	ClassicFacingBodyOrientation:
 
 FTUR:
 	Inherits: ^Defense
@@ -985,7 +967,7 @@ FTUR:
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !build-incomplete
 	-QuantizeFacingsFromSequence:
-	BodyOrientation:
+	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
 	Power:
 		Amount: -20
@@ -1049,8 +1031,7 @@ SAM:
 	Power:
 		Amount: -40
 		RequiresCondition: !being-warped
-	BodyOrientation:
-		UseClassicFacingFudge: True
+	ClassicFacingBodyOrientation:
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
 
@@ -1093,7 +1074,7 @@ ATEK:
 		LongDesc: Launches GPS Satellite.
 		RevealDelay: 375
 		LaunchSpeechNotification: SatelliteLaunched
-		DisplayTimerStances: Ally
+		DisplayTimerRelationships: Ally
 		Condition: sat-launch
 	ProduceActorPowerCA@SatelliteLaunched:
 		Actors: gps.satellite
@@ -1126,7 +1107,7 @@ ATEK:
 		ChargeInterval: 5250
 		OrderName: SatelliteScanPower
 		AutoFire: True
-		DisplayTimerStances: Ally, Neutral, Enemy
+		DisplayTimerRelationships: Ally, Neutral, Enemy
 	ProduceActorPowerCA@SatelliteScanNoFog:
 		PauseOnCondition: disabled || being-warped
 		Prerequisites: anyradar, ~gps.satellite, ~!fogenabled
@@ -1139,7 +1120,7 @@ ATEK:
 		OneShot: True
 		OrderName: SatelliteScanNoFogPower
 		AutoFire: True
-		DisplayTimerStances: Ally, Neutral, Enemy
+		DisplayTimerRelationships: Ally, Neutral, Enemy
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
 		Icon: forceshield
@@ -1156,7 +1137,7 @@ ATEK:
 		Description: Force Shield
 		LongDesc: Makes selected friendly structures temporarily invulnerable.\n  Warning: Causes power failure.
 		OnFireSound: forceon.aud
-		DisplayTimerStances: Ally
+		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		EndChargeSpeechNotification: ForceShieldReady
@@ -1179,6 +1160,7 @@ ATEK:
 
 WEAP:
 	Inherits: ^Building
+	Inherits: ^PrimaryBuilding
 	Inherits@shape: ^3x2Shape
 	Selectable:
 		Bounds: 72,48
@@ -1265,9 +1247,6 @@ WEAP:
 	ProvidesPrerequisiteValidatedFaction@v3rl:
 		Factions: russia, ukraine, iraq
 		Prerequisite: vehicles.v3rl
-	PrimaryBuilding:
-		PrimaryCondition: primary
-		SelectionNotification: PrimaryBuildingSelected
 	ProductionBar:
 		ProductionType: Vehicle
 	Power:
@@ -1282,13 +1261,6 @@ WEAP:
 	InfiltrateForSupportPower@veh:
 		Types: SabInfiltrate
 		Proxy: veh.soviet.stolen
-	WithDecoration@primary:
-		RequiresSelection: true
-		Image: pips
-		Sequence: tag-primary
-		ReferencePoint: Top
-		ZOffset: 256
-		RequiresCondition: primary
 	-ActorPreviewPlaceBuildingPreview:
 	SequencePlaceBuildingPreview:
 		Sequence: place
@@ -1296,6 +1268,7 @@ WEAP:
 
 FACT:
 	Inherits: ^Building
+	Inherits: ^PrimaryBuilding
 	Inherits@BOTI: ^BotFallbackInsurance
 	Selectable:
 		Bounds: 72,72
@@ -1418,15 +1391,15 @@ FACT:
 
 PROC:
 	Inherits: ^Building
-	Inherits@2: ^BotIncome
+	Inherits@2: ^ConfigurableIncome
+	Inherits@3: ^BotIncome
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 60
 		Prerequisites: anypower, ~structures.ra, ~techlevel.infonly
 		Description: Processes raw Tiberium, Ore and Gems\ninto credits.
-		BuildDuration: 1400
 	Valued:
-		Cost: 1800
+		Cost: 2000
 	Tooltip:
 		Name: Ore Refinery
 	Building:
@@ -1452,10 +1425,15 @@ PROC:
 		DockAngle: 64
 		DockOffset: 1,2
 	StoresResources:
-		PipCount: 17
 		Capacity: 2000
+	WithResourceStoragePipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+		PipCount: 17
+		FullSequence: pip-yellow
 	CustomSellValue:
-		Value: 400
+		Value: 300
 	GrantConditionOnPrerequisite@CHARVUPG:
 		Prerequisites: charv.upgrade
 		Condition: charv-upgraded
@@ -1483,7 +1461,7 @@ PROC:
 	InfiltrateForCash:
 		Percentage: 50
 		Types: ThiefInfiltrate
-		Notification: CreditsStolen
+		InfiltrationNotification: CreditsStolen
 	WithBuildingBib:
 	WithIdleOverlay@TOP:
 		RequiresCondition: !build-incomplete
@@ -1545,8 +1523,13 @@ SILO:
 	WithResourceLevelSpriteBody:
 		Sequence: stages
 	StoresResources:
-		PipCount: 5
 		Capacity: 3000
+	WithResourceStoragePipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+		PipCount: 5
+		FullSequence: pip-yellow
 	-MustBeDestroyed:
 	-SpawnActorsOnSell:
 	Power:
@@ -1558,6 +1541,7 @@ SILO:
 
 HPAD:
 	Inherits: ^Building
+	Inherits: ^PrimaryBuilding
 	Inherits@shape: ^2x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
 	Selectable:
@@ -1603,9 +1587,6 @@ HPAD:
 	Reservable:
 	ProductionBar:
 		ProductionType: Aircraft
-	PrimaryBuilding:
-		PrimaryCondition: primary
-		SelectionNotification: PrimaryBuildingSelected
 	Power:
 		Amount: -10
 		RequiresCondition: !being-warped
@@ -1627,16 +1608,10 @@ HPAD:
 	InfiltrateForSupportPower:
 		Types: SpyInfiltrate
 		Proxy: powerproxy.paratroopers2
-	WithDecoration@primary:
-		RequiresSelection: true
-		Image: pips
-		Sequence: tag-primary
-		ReferencePoint: Top
-		ZOffset: 256
-		RequiresCondition: primary
 
 AFLD:
 	Inherits: ^Building
+	Inherits: ^PrimaryBuilding
 	Inherits@shape: ^3x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
 	HitShape:
@@ -1818,9 +1793,6 @@ AFLD:
 	ProductionBar:
 		ProductionType: Aircraft
 	SupportPowerChargeBar:
-	PrimaryBuilding:
-		PrimaryCondition: primary
-		SelectionNotification: PrimaryBuildingSelected
 	Power:
 		Amount: -20
 		RequiresCondition: !being-warped
@@ -1831,13 +1803,6 @@ AFLD:
 	InfiltrateForSupportPower:
 		Proxy: powerproxy.airstrike
 		Types: SpyInfiltrate
-	WithDecoration@primary:
-		RequiresSelection: true
-		Image: pips
-		Sequence: tag-primary
-		ReferencePoint: Top
-		ZOffset: 256
-		RequiresCondition: primary
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
 
@@ -2043,7 +2008,7 @@ STEK:
 		Description: Force Shield
 		LongDesc: Makes selected friendly structures temporarily invulnerable.\n  Warning: Causes power failure.
 		OnFireSound: forceon.aud
-		DisplayTimerStances: Ally
+		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		EndChargeSpeechNotification: ForceShieldReady
@@ -2064,6 +2029,7 @@ STEK:
 
 BARR:
 	Inherits: ^Building
+	Inherits: ^PrimaryBuilding
 	Inherits@shape: ^2x2Shape
 	Selectable:
 		Bounds: 48,48
@@ -2110,9 +2076,6 @@ BARR:
 		PauseOnCondition: forceshield || invulnerability || being-warped
 	GrantExternalConditionToProduced:
 		Condition: produced
-	PrimaryBuilding:
-		PrimaryCondition: primary
-		SelectionNotification: PrimaryBuildingSelected
 	ProductionBar:
 		ProductionType: Infantry
 	ProvidesPrerequisite@infantryany:
@@ -2142,16 +2105,10 @@ BARR:
 		Proxy: inf.soviet.stolen
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
-	WithDecoration@primary:
-		RequiresSelection: true
-		Image: pips
-		Sequence: tag-primary
-		ReferencePoint: Top
-		ZOffset: 256
-		RequiresCondition: primary
 
 KENN:
 	Inherits: ^Building
+	Inherits: ^PrimaryBuilding
 	Selectable:
 		Bounds: 24,24
 	Buildable:
@@ -2186,9 +2143,6 @@ KENN:
 	Production:
 		Produces: Infantry, Dog
 		PauseOnCondition: forceshield || invulnerability || being-warped
-	PrimaryBuilding:
-		PrimaryCondition: primary
-		SelectionNotification: PrimaryBuildingSelected
 	ProductionBar:
 		ProductionType: Infantry
 	-SpawnActorsOnSell:
@@ -2196,16 +2150,10 @@ KENN:
 		Amount: -10
 		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
-	WithDecoration@primary:
-		RequiresSelection: true
-		Image: pips
-		Sequence: tag-primary
-		ReferencePoint: Top
-		ZOffset: 256
-		RequiresCondition: primary
 
 TENT:
 	Inherits: ^Building
+	Inherits: ^PrimaryBuilding
 	Inherits@shape: ^2x2Shape
 	Selectable:
 		Bounds: 48,48
@@ -2252,9 +2200,6 @@ TENT:
 		PauseOnCondition: forceshield || invulnerability || being-warped
 	GrantExternalConditionToProduced:
 		Condition: produced
-	PrimaryBuilding:
-		PrimaryCondition: primary
-		SelectionNotification: PrimaryBuildingSelected
 	ProductionBar:
 		ProductionType: Infantry
 	ProvidesPrerequisite@infantryra:
@@ -2286,13 +2231,6 @@ TENT:
 		Proxy: inf.allies.stolen
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate, SabInfiltrate
-	WithDecoration@primary:
-		RequiresSelection: true
-		Image: pips
-		Sequence: tag-primary
-		ReferencePoint: Top
-		ZOffset: 256
-		RequiresCondition: primary
 
 FIX:
 	Inherits: ^Building
@@ -2608,6 +2546,7 @@ STRUCTURES.TSLA:
 
 PYLE:
 	Inherits: ^BuildingTD
+	Inherits: ^PrimaryBuilding
 	Inherits@shape: ^2x2Shape
 	Selectable:
 		Bounds: 48,48
@@ -2656,9 +2595,6 @@ PYLE:
 	Production:
 		Produces: Infantry, Soldier
 		PauseOnCondition: forceshield || invulnerability || being-warped
-	PrimaryBuilding:
-		PrimaryCondition: primary
-		SelectionNotification: PrimaryBuildingSelected
 	ProductionBar:
 		ProductionType: Infantry
 	ProvidesPrerequisite@infantryany:
@@ -2685,19 +2621,13 @@ PYLE:
 	InfiltrateForSupportPower@inf:
 		Types: SabInfiltrate
 		Proxy: inf.gdi.stolen
-	WithDecoration@primary:
-		RequiresSelection: true
-		Image: pips
-		Sequence: tag-primary
-		ReferencePoint: Top
-		ZOffset: 256
-		RequiresCondition: primary
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
 		Types: SpyInfiltrate
 
 HAND:
 	Inherits: ^BuildingTD
+	Inherits: ^PrimaryBuilding
 	Inherits@shape: ^2x2Shape
 	HitShape:
 		UseTargetableCellsOffsets: false
@@ -2735,9 +2665,6 @@ HAND:
 	Production:
 		Produces: Infantry, Soldier
 		PauseOnCondition: forceshield || invulnerability || being-warped
-	PrimaryBuilding:
-		PrimaryCondition: primary
-		SelectionNotification: PrimaryBuildingSelected
 	ProductionBar:
 		ProductionType: Infantry
 	Targetable:
@@ -2763,13 +2690,6 @@ HAND:
 	Power:
 		Amount: -20
 		RequiresCondition: !being-warped
-	WithDecoration@primary:
-		RequiresSelection: true
-		Image: pips
-		Sequence: tag-primary
-		ReferencePoint: Top
-		ZOffset: 256
-		RequiresCondition: primary
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
@@ -2777,6 +2697,7 @@ HAND:
 
 WEAP.TD:
 	Inherits: ^BuildingTD
+	Inherits: ^PrimaryBuilding
 	Inherits@shape: ^3x2Shape
 	RenderSprites:
 		Image: awep
@@ -2861,9 +2782,6 @@ WEAP.TD:
 	Production:
 		Produces: Vehicle
 		PauseOnCondition: forceshield || invulnerability || being-warped
-	PrimaryBuilding:
-		PrimaryCondition: primary
-		SelectionNotification: PrimaryBuildingSelected
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
 	ProductionBar:
@@ -2871,13 +2789,6 @@ WEAP.TD:
 	Power:
 		Amount: -30
 		RequiresCondition: !being-warped
-	WithDecoration@primary:
-		RequiresSelection: true
-		Image: pips
-		Sequence: tag-primary
-		ReferencePoint: Top
-		ZOffset: 256
-		RequiresCondition: primary
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPower@spy:
 		Proxy: vehicles.upgraded
@@ -2892,6 +2803,7 @@ WEAP.TD:
 
 AIRS:
 	Inherits: ^BuildingTD
+	Inherits: ^PrimaryBuilding
 	RenderSprites:
 		Image: astrip
 	HitShape:
@@ -2931,13 +2843,10 @@ AIRS:
 	Exit@1:
 		SpawnOffset: -1024,0,0
 		ExitCell: 3,1
-	ProductionAirdropCA:
+	ProductionAirdrop:
 		Produces: Vehicle
 		PauseOnCondition: forceshield || invulnerability || being-warped
 		ActorType: c17.cargo
-		EntryType: DropSiteClosestEdge
-		ExitType: StraightAhead
-		LandingFacing: 64
 		ReadyAudio: ReinforcementsArrived
 	ValidFactions:
 		Factions: blackh, marked
@@ -2986,9 +2895,6 @@ AIRS:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 	WithDeliveryAnimation:
-	PrimaryBuilding:
-		PrimaryCondition: primary
-		SelectionNotification: PrimaryBuildingSelected
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
 	ProductionBar:
@@ -2999,13 +2905,6 @@ AIRS:
 	InfiltrateForSupportPower@veh:
 		Types: SabInfiltrate
 		Proxy: veh.nod.stolen
-	WithDecoration@primary:
-		RequiresSelection: true
-		Image: pips
-		Sequence: tag-primary
-		ReferencePoint: Top
-		ZOffset: 256
-		RequiresCondition: primary
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPower@spy:
 		Proxy: vehicles.upgraded
@@ -3119,6 +3018,7 @@ NUK2:
 
 AFAC:
 	Inherits: ^BuildingTD
+	Inherits: ^PrimaryBuilding
 	Inherits@shape: ^3x2Shape
 	Inherits@BOTI: ^BotFallbackInsurance
 	RenderSprites:
@@ -3294,8 +3194,7 @@ NSAM:
 	Power:
 		Amount: -40
 		RequiresCondition: !being-warped
-	BodyOrientation:
-		UseClassicFacingFudge: True
+	ClassicFacingBodyOrientation:
 	-ActorPreviewPlaceBuildingPreview:
 	SequencePlaceBuildingPreview:
 		Sequence: place
@@ -3337,7 +3236,7 @@ GTWR:
 		RequiresCondition: !build-incomplete
 		PauseOnCondition: empdisable || being-warped
 	AutoTarget:
-	BodyOrientation:
+	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
 	WithMuzzleOverlay:
 	Turreted:
@@ -3382,7 +3281,7 @@ ATWR:
 	AttackTurreted:
 		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled || empdisable || being-warped
-	BodyOrientation:
+	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
 	Power:
 		Amount: -50
@@ -3435,8 +3334,7 @@ STWR:
 	Power:
 		Amount: -80
 		RequiresCondition: !being-warped
-	BodyOrientation:
-		UseClassicFacingFudge: True
+	ClassicFacingBodyOrientation:
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
 	Selectable:
@@ -3567,6 +3465,9 @@ HQ:
 		LaunchSound: hacksat.aud
 		SelectTargetSpeechNotification: SelectTarget
 		PauseOnCondition: disabled || being-warped
+		EffectImage: empty
+		EffectSequence: idle
+		EffectPalette: tseffect-ignore-lighting-alpha75
 	ParatroopersPower@Legionparatroopers:
 		OrderName: LegionParatroopers
 		Prerequisites: ~radar.legion, !cyborg.upgrade, infantry.any, ~techlevel.medium
@@ -3627,16 +3528,14 @@ HQ:
 		Description: Drop Pods
 		LongDesc: Drop Pod reinforcements.\nSmall team of elite soldiers orbital drops\nto target location.
 		EndChargeSpeechNotification: DropPodsAvailable
-		DropPodsArrivedSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
 		DisplayRadarPing: True
 		ChargeInterval: 4500
-		DropPodType: pod2
-		DropPodType2: pod1
-		DropItems: N3R1,N1R1,N1R1,N2R1,N2R1,N3R1,N3R1
+		UnitTypes: POD2
 		PodScatter: 3
-		SpawnSounds: meteor1.aud, meteor2.aud
-		AllowImpassableCells: false
+		EntryEffect: explosion
+		EntryEffectSequence: shock_wave
+		EntryEffectPalette: tseffect-ignore-lighting-alpha75
 	CashHackPower@Legion:
 		OrderName: cashhack
 		Icon: chack
@@ -3649,7 +3548,7 @@ HQ:
 		LongDesc: Steal up to $2000 credits from the enemy.\n\nTarget their Refinery to do so.
 		OnFireSound: scashhac.aud
 		Notification: CreditsStolen
-		DisplayTimerStances: Ally
+		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayRadarPing: True
@@ -3781,7 +3680,7 @@ EYE:
 		IncomingSpeechNotification: IonCannonApproach
 		IncomingSound: nukelaunch.aud
 		LaunchSound: nukelaunch.aud
-		DisplayTimerStances: Ally, Neutral, Enemy
+		DisplayTimerRelationships: Ally, Neutral, Enemy
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayBeacon: False
 		DisplayRadarPing: True
@@ -3807,7 +3706,7 @@ EYE:
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayRadarPing: True
-		DisplayTimerStances: Ally
+		DisplayTimerRelationships: Ally
 		DisplayBeacon: True
 		CameraActor: camera
 		ArrowSequence: arrow
@@ -3896,6 +3795,7 @@ REP:
 
 HPAD.TD:
 	Inherits: ^BuildingTD
+	Inherits: ^PrimaryBuilding
 	Inherits@shape: ^2x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
 	RenderSprites:
@@ -3939,9 +3839,6 @@ HPAD.TD:
 	ProductionBar:
 		ProductionType: Aircraft
 	WithBuildingBib:
-	PrimaryBuilding:
-		PrimaryCondition: primary
-		SelectionNotification: PrimaryBuildingSelected
 	Power:
 		Amount: -10
 		RequiresCondition: !being-warped
@@ -3969,13 +3866,6 @@ HPAD.TD:
 	ProvidesPrerequisite@buildingname:
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate
-	WithDecoration@primary:
-		RequiresSelection: true
-		Image: pips
-		Sequence: tag-primary
-		ReferencePoint: Top
-		ZOffset: 256
-		RequiresCondition: primary
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
 	InfiltrateForSupportPower:
@@ -3994,10 +3884,14 @@ HPAD.TD:
 		EndChargeSpeechNotification: ReinforceAva
 		LaunchSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
+		EffectImage: empty
+		EffectSequence: idle
+		EffectPalette: tseffect-ignore-lighting-alpha75
 
 PROC.TD:
 	Inherits: ^BuildingTD
-	Inherits@2: ^BotIncome
+	Inherits@2: ^ConfigurableIncome
+	Inherits@3: ^BotIncome
 	HitShape:
 		Type: Rectangle
 			TopLeft: -1536, -512
@@ -4014,9 +3908,9 @@ PROC.TD:
 			marked: nodproc
 			legion: nodproc
 	Valued:
-		Cost: 1800
+		Cost: 2000
 	CustomSellValue:
-		Value: 400
+		Value: 300
 	Tooltip:
 		Name: Refinery
 	Buildable:
@@ -4025,7 +3919,6 @@ PROC.TD:
 		Queue: Building
 		IconPalette: chrometd
 		Description: Processes raw Tiberium, Ore and Gems\ninto credits.
-		BuildDuration: 1400
 	Building:
 		Footprint: _x_ xxx === ===
 		Dimensions: 3,4
@@ -4051,22 +3944,25 @@ PROC.TD:
 		DragLength: 12
 		TickRate: 15
 	StoresResources:
-		PipColor: Green
-		PipCount: 17
 		Capacity: 2000
+	WithResourceStoragePipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+		PipCount: 17
 	Selectable:
 		Bounds: 72,56,0,12
 		DecorationBounds: 73,72
 	InfiltrateForCash:
 		Types: ThiefInfiltrate
 		Percentage: 50
-		Notification: CreditsStolen
+		InfiltrationNotification: CreditsStolen
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
 		DeathSequencePalette: overlayplayertd
 	FreeActor:
-		Actor: HAR2
+		Actor: HARV.TD
 		SpawnOffset: 1,2
 		Facing: 64
 	WithResourceLevelOverlay:
@@ -4112,9 +4008,12 @@ SILO.TD:
 	WithResourceLevelSpriteBody:
 		Sequence: stages
 	StoresResources:
-		PipCount: 5
-		PipColor: Green
 		Capacity: 6000
+	WithResourceStoragePipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+		PipCount: 5
 	-MustBeDestroyed:
 	SpawnActorsOnSell:
 		ActorTypes: c1,c7
@@ -4129,6 +4028,7 @@ SILO.TD:
 
 AFLD.GDI:
 	Inherits: ^Building
+	Inherits: ^PrimaryBuilding
 	Inherits@shape: ^3x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
 	RenderSprites:
@@ -4243,22 +4143,12 @@ AFLD.GDI:
 	ProductionBar:
 		ProductionType: Aircraft
 	SupportPowerChargeBar:
-	PrimaryBuilding:
-		PrimaryCondition: primary
-		SelectionNotification: PrimaryBuildingSelected
 	Power:
 		Amount: -20
 		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate
-	WithDecoration@primary:
-		RequiresSelection: true
-		Image: pips
-		Sequence: tag-primary
-		ReferencePoint: Top
-		ZOffset: 256
-		RequiresCondition: primary
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
 	InfiltrateForSupportPower:
@@ -4330,7 +4220,7 @@ GTEK:
 		Description: Force Shield
 		LongDesc: Makes selected friendly structures temporarily invulnerable.\n  Warning: Causes power failure.
 		OnFireSound: forceon.aud
-		DisplayTimerStances: Ally
+		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		EndChargeSpeechNotification: ForceShieldReady
@@ -4353,7 +4243,7 @@ GTEK:
 		CameraRemoveDelay: 375
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
-		DisplayTimerStances: Ally, Neutral
+		DisplayTimerRelationships: Ally, Neutral
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayBeacon: False
 		DisplayRadarPing: False
@@ -4458,7 +4348,7 @@ TMPL:
 		Description: Force Shield
 		LongDesc: Makes selected friendly structures temporarily invulnerable.\n  Warning: Causes power failure.
 		OnFireSound: forceon.aud
-		DisplayTimerStances: Ally
+		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		EndChargeSpeechNotification: ForceShieldReady
@@ -4474,7 +4364,7 @@ TMPL:
 		Description: Frenzy
 		Condition: frenzy
 		Range: 2
-		ValidStances: Ally
+		ValidRelationships: Ally
 		Duration: 500
 		ActivationDelay: 0
 		AirburstAltitude: 0c0
@@ -4487,14 +4377,14 @@ TMPL:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayTimerStances: Ally
+		DisplayTimerRelationships: Ally
 	SupportPowerChargeBar:
 	Power:
 		Amount: -150
 		RequiresCondition: !being-warped
 	MustBeDestroyed:
 		RequiredForShortGame: false
-	WithNukeLaunchAnimation:
+	WithSupportPowerActivationAnimation:
 		RequiresCondition: !build-incomplete
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate
@@ -4571,6 +4461,7 @@ PRIS:
 
 SPEN.nod:
 	Inherits: ^Building
+	Inherits: ^PrimaryBuilding
 	RenderSprites:
 		Image: SPENNOD
 		PlayerPalette: playernavy
@@ -4627,9 +4518,6 @@ SPEN.nod:
 	Production:
 		Produces: Ship, Submarine
 		PauseOnCondition: forceshield || invulnerability || being-warped
-	PrimaryBuilding:
-		PrimaryCondition: primary
-		SelectionNotification: PrimaryBuildingSelected
 	RepairsUnits:
 		HpPerStep: 1000
 		StartRepairingNotification: Repairing
@@ -4645,13 +4533,6 @@ SPEN.nod:
 	ProvidesPrerequisite@buildingname:
 	MapEditorData:
 		ExcludeTilesets: INTERIOR
-	WithDecoration@primary:
-		RequiresSelection: true
-		Image: pips
-		Sequence: tag-primary
-		ReferencePoint: Top
-		ZOffset: 256
-		RequiresCondition: primary
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 10c0
@@ -4672,6 +4553,7 @@ SPEN.nod:
 
 SYRD.gdi:
 	Inherits: ^Building
+	Inherits: ^PrimaryBuilding
 	RenderSprites:
 		Image: GSYRD
 		PlayerPalette: playernavy
@@ -4733,9 +4615,6 @@ SYRD.gdi:
 	Production:
 		Produces: Ship, Boat
 		PauseOnCondition: forceshield || invulnerability || being-warped
-	PrimaryBuilding:
-		PrimaryCondition: primary
-		SelectionNotification: PrimaryBuildingSelected
 	RepairsUnits:
 		HpPerStep: 1000
 		StartRepairingNotification: Repairing
@@ -4751,13 +4630,6 @@ SYRD.gdi:
 	ProvidesPrerequisite@buildingname:
 	MapEditorData:
 		ExcludeTilesets: INTERIOR
-	WithDecoration@primary:
-		RequiresSelection: true
-		Image: pips
-		Sequence: tag-primary
-		ReferencePoint: Top
-		ZOffset: 256
-		RequiresCondition: primary
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 10c0
@@ -4821,8 +4693,7 @@ HTUR:
 	Power:
 		Amount: -100
 		RequiresCondition: !being-warped
-	BodyOrientation:
-		UseClassicFacingFudge: True
+	ClassicFacingBodyOrientation:
 	Explodes:
 		Weapon: BuildingExplode
 		EmptyWeapon: BuildingExplode
@@ -4912,7 +4783,7 @@ TTUR:
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !build-incomplete
 	-QuantizeFacingsFromSequence:
-	BodyOrientation:
+	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
 	Power:
 		Amount: -20
@@ -4965,7 +4836,7 @@ SGEN:
 		Weapon: StealthBubble
 		Description: Tiberium Stealth
 		Condition: invisibility
-		ValidStances: Ally, Neutral, Enemy
+		ValidRelationships: Ally, Neutral, Enemy
 		Range: 5
 		Duration: 900
 		ActivationDelay: 0
@@ -4980,7 +4851,7 @@ SGEN:
 		DisplayRadarPing: True
 		Cursor: chemmissile
 		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayTimerStances: Ally, Neutral, Enemy
+		DisplayTimerRelationships: Ally, Neutral, Enemy
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -5204,13 +5075,12 @@ PATR:
 		EndChargeSpeechNotification: EMMissileReady
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
-		DisplayTimerStances: Ally, Neutral, Enemy
+		DisplayTimerRelationships: Ally, Neutral, Enemy
 	SupportPowerChargeBar:
 	Power:
 		Amount: -150
 		RequiresCondition: !being-warped
-	BodyOrientation:
-		UseClassicFacingFudge: True
+	ClassicFacingBodyOrientation:
 	Explodes:
 		Weapon: BuildingExplode
 		EmptyWeapon: BuildingExplode
@@ -5448,7 +5318,6 @@ UPGC:
 		ExitCell: 1,1
 	Turreted:
 		TurnSpeed: 3
-		InitialFacing: 96
 		RealignDelay: -1
 		Offset: -768,468,0
 	AttackTurreted:
@@ -5652,6 +5521,7 @@ UPGC.DROP:
 		Type: tower.drop
 	Power:
 		Amount: -50
+		InitialFacing: 96
 
 BIO.Nod:
 	Inherits: ^Building
@@ -5775,7 +5645,7 @@ MSLO.Nod:
 		IncomingSound: nukelaunch.aud
 		LaunchSound: nukelaunch.aud
 		MissilePalette: temptd
-		DisplayTimerStances: Ally, Neutral, Enemy
+		DisplayTimerRelationships: Ally, Neutral, Enemy
 		DisplayBeacon: True
 		DisplayRadarPing: True
 		BeaconPoster: cmissile
@@ -5795,7 +5665,7 @@ MSLO.Nod:
 		RequiresCondition: !being-warped
 	MustBeDestroyed:
 		RequiredForShortGame: false
-	WithNukeLaunchAnimation:
+	WithSupportPowerActivationAnimation:
 		RequiresCondition: !build-incomplete
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPowerReset:
@@ -5857,7 +5727,7 @@ WEAT:
 		IncomingSpeechNotification: StormApproach
 		IncomingSound: sweaintr.aud
 		LaunchSound: sweaintr.aud
-		DisplayTimerStances: Ally, Neutral, Enemy
+		DisplayTimerRelationships: Ally, Neutral, Enemy
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayBeacon: True
 		DisplayRadarPing: True

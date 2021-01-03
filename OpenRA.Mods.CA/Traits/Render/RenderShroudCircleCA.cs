@@ -21,7 +21,7 @@ namespace OpenRA.Mods.CA.Traits
 {
 	public enum RangeCircleVisibility { Always, WhenSelected }
 
-	public class RenderShroudCircleCAInfo : ITraitInfo
+	public class RenderShroudCircleCAInfo : TraitInfo
 	{
 		[Desc("Color of the circle.")]
 		public readonly Color Color = Color.FromArgb(128, Color.Cyan);
@@ -32,7 +32,13 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("When to show the range circle. Valid values are `Always`, and `WhenSelected`")]
 		public readonly RangeCircleVisibility Visible = RangeCircleVisibility.WhenSelected;
 
-		public object Create(ActorInitializer init) { return new RenderShroudCircleCA(init.Self, this); }
+		[Desc("Range circle line width.")]
+		public readonly float Width = 1;
+
+		[Desc("Range circle border width.")]
+		public readonly float ContrastColorWidth = 3;
+
+		public override object Create(ActorInitializer init) { return new RenderShroudCircleCA(init.Self, this); }
 	}
 
 	public class RenderShroudCircleCA : INotifyCreated, IRenderAnnotationsWhenSelected, IRenderAnnotations
@@ -64,7 +70,9 @@ namespace OpenRA.Mods.CA.Traits
 					range,
 					0,
 					info.Color,
-					info.ContrastColor);
+					info.Width,
+					info.ContrastColor,
+					info.ContrastColorWidth);
 		}
 
 		IEnumerable<IRenderable> IRenderAnnotationsWhenSelected.RenderAnnotations(Actor self, WorldRenderer wr)

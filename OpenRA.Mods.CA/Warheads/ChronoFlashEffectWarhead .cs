@@ -17,7 +17,7 @@ namespace OpenRA.Mods.CA.Warheads
 	[Desc("This warhead activates the global flash effect when detonated.")]
 	public class ChronoFlashEffectWarhead : WarheadAS
 	{
-		public override void DoImpact(Target target, WarheadArgs args)
+		public override void DoImpact(in Target target, WarheadArgs args)
 		{
 			var firedBy = args.SourceActor;
 			if (!target.IsValidFor(firedBy))

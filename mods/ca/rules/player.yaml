@@ -107,7 +107,7 @@ Player:
 		CashTickUpNotification: CashTickUp
 		CashTickDownNotification: CashTickDown
 	DeveloperMode:
-		CheckboxDisplayOrder: 16
+		CheckboxDisplayOrder: 17
 	Shroud:
 		FogCheckboxEnabled: True
 		FogCheckboxLocked: False
@@ -148,12 +148,19 @@ Player:
 		Enabled: False
 		DisplayOrder: 14
 		Prerequisites: global.revealonfire
+	LobbyPrerequisiteCheckbox@INCREASEDINCOME:
+		ID: increasedincome
+		Label: Increased Income
+		Description: Resources have a higher value
+		Enabled: False
+		DisplayOrder: 15
+		Prerequisites: global.increasedincome
 	LobbyPrerequisiteCheckbox@BALANCEDHARVESTING:
 		ID: balancedharvesting
 		Label: Balanced Harvesting
 		Description: Enables dynamic harvester speed to account for the direction of resources relative to refineries
 		Enabled: True
-		DisplayOrder: 15
+		DisplayOrder: 16
 		Prerequisites: global.balancedharvesting
 	FrozenActorLayer:
 	BaseAttackNotifier:
@@ -186,7 +193,6 @@ Player:
 		Sequence: veteran
 	ResourceStorageWarning:
 	PlayerExperience:
-	ConditionManager:
 	GameSaveViewportManager:
 	PlayerRadarTerrain:
 	GpsRadarWatcher:

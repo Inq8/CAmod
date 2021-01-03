@@ -23,7 +23,7 @@ namespace OpenRA.Mods.CA.Traits
 	}
 
 	[Desc("Has to be attached to world actor. ")]
-	public class TintedCellsLayerInfo : ITraitInfo
+	public class TintedCellsLayerInfo : TraitInfo
 	{
 		[Desc("Color of cells")]
 		public readonly Color Color = Color.FromArgb(0, 255, 0);
@@ -52,7 +52,7 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("How shall level decay, can be Linear or Logarithmic.")]
 		public readonly FadeoutType FadeoutType = FadeoutType.Logarithmic;
 
-		public object Create(ActorInitializer init) { return new TintedCellsLayer(init.Self, this); }
+		public override object Create(ActorInitializer init) { return new TintedCellsLayer(init.Self, this); }
 	}
 
 	public class TintedCellsLayer : INotifyActorDisposing, ITick, ITickRender

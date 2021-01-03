@@ -245,7 +245,7 @@ PortaTeslaCharge:
 		Range: 42
 		Duration: 70
 		Condition: charged
-		ValidStances: Ally
+		ValidRelationships: Ally
 		ValidTargets: TeslaBoost
 	Warhead@highlight: GrantExternalCondition
 		Range: 0c511
@@ -277,7 +277,7 @@ TTankArc1:
 	Range: 2c0
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Infantry, Vehicle, Ship
-		ValidStances: Enemy, Neutral
+		ValidRelationships: Enemy, Neutral
 		Versus:
 			None: 80
 			Light: 30
@@ -316,7 +316,7 @@ Commandeer:
 	Projectile: InstantHit
 	Warhead@1Change: ChangeOwner
 		Range: 0c511
-		ValidStances: Neutral
+		ValidRelationships: Neutral
 		ValidTargets: NoCrew
 
 Heal:
@@ -329,7 +329,7 @@ Heal:
 	Warhead@1Dam: SpreadDamage
 		Spread: 213
 		Damage: -5000
-		ValidStances: Ally
+		ValidRelationships: Ally
 		ValidTargets: Heal
 		DebugOverlayColor: 00FF00
 
@@ -364,13 +364,13 @@ RepairNanite:
 		Range: 4c0
 		Duration: 2
 		Condition: highlight
-		ValidStances: Ally
+		ValidRelationships: Ally
 		ValidTargets: Ground, Vehicle
 	Warhead@repair: GrantExternalCondition
 		Range: 4c0
 		Duration: 750
 		Condition: nrepair
-		ValidStances: Ally
+		ValidRelationships: Ally
 		ValidTargets: Ground, Vehicle
 
 Demolish:
@@ -511,12 +511,14 @@ DefuseKit:
 		Duration: 3
 		Condition: detach
 		ValidTargets: C4Attached, TNTAttached
-		ValidStances: Ally
+		ValidRelationships: Ally
 	Warhead@DetachDelayedWeapon: DetachDelayedWeapon
 		Types: c4, tnt
 		Range: 128
-		ValidStances: Ally
+		ValidRelationships: Ally
 		ValidTargets: C4Attached, TNTAttached
+	Warhead@TargetValidator: SpreadDamage
+		ValidTargets: C4Attached
 
 IFVDefuseKit:
 	Inherits: DefuseKit
@@ -903,7 +905,7 @@ KirovTeslaArc:
 	Warhead@1Dam: SpreadDamage
 		Damage: 3000
 		ValidTargets: Infantry, Vehicle, Ship
-		ValidStances: Enemy, Neutral
+		ValidRelationships: Enemy, Neutral
 	-Warhead@3Eff:
 
 KirovCluster:
@@ -960,7 +962,7 @@ SonicZap:
 		Falloff: 100, 100
 		Damage: 1000
 		AffectsParent: false
-		ValidStances: Neutral, Enemy
+		ValidRelationships: Neutral, Enemy
 		ValidTargets: Ground, Water
 		Versus:
 			Heavy: 65
@@ -973,7 +975,7 @@ SonicZap:
 		Damage: 500
 		InvalidTargets: Disruptor, Air
 		AffectsParent: false
-		ValidStances: Ally
+		ValidRelationships: Ally
 		Versus:
 			Heavy: 65
 			Concrete: 120
@@ -1018,7 +1020,7 @@ SonicZapVisual:
 		Falloff: 100, 100
 		Damage: 10
 		AffectsParent: false
-		ValidStances: Neutral, Enemy
+		ValidRelationships: Neutral, Enemy
 		ValidTargets: Ground, Water
 		Versus:
 			Heavy: 80
@@ -1031,7 +1033,7 @@ SonicZapVisual:
 		Damage: 10
 		InvalidTargets: Disruptor, Air
 		AffectsParent: false
-		ValidStances: Ally
+		ValidRelationships: Ally
 		Versus:
 			Heavy: 80
 			Concrete: 150
@@ -1073,7 +1075,7 @@ Railgun:
 		Spread: 0c64
 		Falloff: 100, 37, 14, 5, 0
 		Damage: 9000
-		ValidStances: Ally, Neutral, Enemy
+		ValidRelationships: Ally, Neutral, Enemy
 		InvalidTargets: Air
 		Versus:
 			None: 100
@@ -1144,7 +1146,7 @@ IonZap:
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
 		Damage: 9300
-		ValidStances: Neutral, Enemy
+		ValidRelationships: Neutral, Enemy
 		InvalidTargets: Air
 		AffectsParent: false
 		Versus:
@@ -1158,7 +1160,7 @@ IonZap:
 	Warhead@2Dam: SpreadDamage
 		Spread: 512
 		Damage: 2350
-		ValidStances: Ally
+		ValidRelationships: Ally
 		InvalidTargets: Air
 		AffectsParent: false
 		Versus:
@@ -1281,7 +1283,7 @@ MicrowaveZap.UPG:
 	Warhead@3: ChangeOwnerToNeutral
 		ValidTargets: DriverKill
 		InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air, DriverKillImmune
-		ValidStances: Ally, Enemy, Neutral
+		ValidRelationships: Ally, Enemy, Neutral
 		Range: 0c511
 	Warhead@highlight: GrantExternalCondition
 		Range: 0c511
@@ -1353,6 +1355,10 @@ Flare:
 		Range: 0c32
 		Duration: 8
 		Condition: flare
+	Warhead@3Sen: SendAirstrike
+		UnitType: U2.Bomber
+		SquadSize: 2
+		SquadOffset: -0c512, 0c512, 0
 
 Cloud:
 	ReloadDelay: 20
@@ -1647,7 +1653,7 @@ SonicPulse:
 		Falloff: 100, 50, 25, 0
 		Damage: 9000
 		ValidTargets: Ground, Water
-		ValidStances: Enemy, Neutral
+		ValidRelationships: Enemy, Neutral
 		Versus:
 			None: 70
 			Wood: 45

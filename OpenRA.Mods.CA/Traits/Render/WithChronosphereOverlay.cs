@@ -16,7 +16,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Renders the chronosphere bubble effects.")]
-	public class WithChronosphereOverlayInfo : ITraitInfo
+	public class WithChronosphereOverlayInfo : TraitInfo
 	{
 		[Desc("Image used for the teleport effects. Defaults to the actor's type.")]
 		public readonly string Image = null;
@@ -33,7 +33,7 @@ namespace OpenRA.Mods.CA.Traits
 		[PaletteReference]
 		public readonly string Palette = "effect";
 
-		public object Create(ActorInitializer init) { return new WithChronosphereOverlay(init, this); }
+		public override object Create(ActorInitializer init) { return new WithChronosphereOverlay(init, this); }
 	}
 
 	public class WithChronosphereOverlay : INotifyChronosphere

@@ -37,6 +37,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Randomize particle turnrate.")]
 		public readonly int TurnRate = 0;
 
+		[Desc("Rate to reset particle movement properties.")]
+		public readonly int RandomRate = 4;
+
 		[Desc("How many particles should spawn.")]
 		public readonly int[] SpawnFrequency = { 100, 150 };
 
@@ -45,12 +48,14 @@ namespace OpenRA.Mods.CA.Traits
 
 		[FieldLoader.Require]
 		[Desc("Which sequence to use.")]
-		[SequenceReference("Image")]
+		[SequenceReference(nameof(Image))]
 		public readonly string[] Sequences = null;
 
 		[Desc("Which palette to use.")]
 		[PaletteReference]
 		public readonly string Palette = null;
+
+		public readonly bool IsPlayerPalette = false;
 
 		[WeaponReference]
 		[Desc("Has to be defined in weapons.yaml, if defined, as well.")]
@@ -58,8 +63,10 @@ namespace OpenRA.Mods.CA.Traits
 
 		public WeaponInfo WeaponInfo { get; private set; }
 
-		void IRulesetLoaded<ActorInfo>.RulesetLoaded(Ruleset rules, ActorInfo info)
+		public override void RulesetLoaded(Ruleset rules, ActorInfo ai)
 		{
+			base.RulesetLoaded(rules, ai);
+
 			if (string.IsNullOrEmpty(Weapon))
 				return;
 
@@ -113,6 +120,11 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			get { return TurnRate; }
 		}
+
+		int ISmokeParticleInfo.RandomRate
+		{
+			get { return RandomRate; }
+		}
 	}
 
 	public class SmokeParticleEmitter : ConditionalTrait<SmokeParticleEmitterInfo>, ITick
@@ -149,7 +161,7 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				ticks = Info.SpawnFrequency.Length == 2 ? random.Next(Info.SpawnFrequency[0], Info.SpawnFrequency[1]) : Info.SpawnFrequency[0];
 
-				var spawnFacing = (!Info.RandomFacing && facing != null) ? facing.Facing : -1;
+				var spawnFacing = (!Info.RandomFacing && facing != null) ? facing.Facing.Facing : -1;
 
 				self.World.AddFrameEndTask(w => w.Add(new SmokeParticle(self, Info, self.CenterPosition + offset, spawnFacing)));
 			}

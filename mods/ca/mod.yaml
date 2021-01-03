@@ -7,16 +7,16 @@ Metadata:
 PackageFormats: Mix
 
 Packages:
-	~^Content/ca/v2/
-	~^Content/ca/v2/expand
-	~^Content/ca/v2/cnc
-	~^Content/ca/v2/ts
-	~^Content/ca/v2/firestorm
-	~^Content/ca/v2/movies
-	~^Content/ca/
-	.
+	~^SupportDir|Content/ca/v2/
+	~^SupportDir|Content/ca/v2/expand
+	~^SupportDir|Content/ca/v2/cnc
+	~^SupportDir|Content/ca/v2/ts
+	~^SupportDir|Content/ca/v2/firestorm
+	~^SupportDir|Content/ca/v2/movies
+	~^SupportDir|Content/ca/
+	^EngineDir
 	$ca: ca
-	./mods/common: common
+	^EngineDir|mods/common: common
 	~main.mix
 	~conquer.mix
 	~lores.mix: lores
@@ -52,7 +52,7 @@ Packages:
 
 MapFolders:
 	ca|maps: System
-	~^maps/ca/prep-CA: User
+	~^SupportDir|maps/ca/prep-CA: User
 
 Rules:
 	ca|rules/misc.yaml
@@ -101,9 +101,9 @@ Chrome:
 	ca|chrome.yaml
 
 Assemblies:
-	common|OpenRA.Mods.Common.dll
-	common|OpenRA.Mods.Cnc.dll
-	ca|OpenRA.Mods.CA.dll
+	^BinDir|OpenRA.Mods.Common.dll
+	^BinDir|OpenRA.Mods.Cnc.dll
+	^BinDir|OpenRA.Mods.CA.dll
 
 ChromeLayout:
 	common|chrome/ingame.yaml
@@ -243,7 +243,7 @@ SoundFormats: Aud, Wav
 
 SpriteFormats: ShpD2, R8, ShpTD, TmpRA, TmpTD, ShpTS
 
-SpriteSequenceFormat: TilesetSpecificSpriteSequence
+SpriteSequenceFormat: ClassicTilesetSpecificSpriteSequence
 	TilesetExtensions:
 		TEMPERAT: .tem
 		SNOW: .sno
@@ -341,3 +341,6 @@ ModContent:
 		ca|installer/ra2yr.yaml
 		ca|installer/firestorm.yaml
 		ca|installer/soviet95.yaml
+		
+DiscordService:
+	ApplicationId: 787647352399200277

@@ -1,14 +1,14 @@
 ﻿#region Copyright & License Information
 /*
- * Copyright 2007-2020 The OpenRA Developers (see AUTHORS)
- * This file is part of OpenRA, which is free software. It is made
- * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation, either version 3 of
- * the License, or (at your option) any later version. For more
- * information, see COPYING.
+ * Copyright 2015- OpenRA.Mods.AS Developers (see AUTHORS)
+ * This file is a part of a third-party plugin for OpenRA, which is
+ * free software. It is made available to you under the terms of the
+ * GNU General Public License as published by the Free Software
+ * Foundation. For more information, see COPYING.
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
 using OpenRA.GameRules;
 using OpenRA.Graphics;
@@ -18,7 +18,7 @@ using OpenRA.Primitives;
 using OpenRA.Support;
 using OpenRA.Traits;
 
-namespace OpenRA.Mods.CA.Projectiles
+namespace OpenRA.Mods.AS.Projectiles
 {
 	[Desc("Not a sprite, but an engine effect.")]
 	public class ElectricBoltInfo : IProjectileInfo
@@ -56,7 +56,7 @@ namespace OpenRA.Mods.CA.Projectiles
 		public readonly string LaunchEffectImage = null;
 
 		[Desc("Launch effect sequence to play.")]
-		[SequenceReference("LaunchEffectImage")]
+		[SequenceReference(nameof(LaunchEffectImage), allowNullImage: true)]
 		public readonly string LaunchEffectSequence = null;
 
 		[Desc("Palette to use for launch effect.")]
@@ -77,7 +77,7 @@ namespace OpenRA.Mods.CA.Projectiles
 		readonly WVec upVector;
 		readonly MersenneTwister random;
 		readonly bool hasLaunchEffect;
-		readonly HashSet<Pair<Color, WPos[]>> zaps;
+		readonly HashSet<(Color Color, WPos[] Positions)> zaps;
 
 		[Sync]
 		readonly WPos target, source;
@@ -90,7 +90,7 @@ namespace OpenRA.Mods.CA.Projectiles
 			this.info = info;
 			var playerColors = args.SourceActor.Owner.Color;
 			var colors = info.Colors;
-			for (var i = 0; i < info.PlayerColorZaps; i++)
+			for (int i = 0; i < info.PlayerColorZaps; i++)
 				colors.Append(playerColors);
 
 			target = args.PassiveTarget;
@@ -117,7 +117,7 @@ namespace OpenRA.Mods.CA.Projectiles
 					upVector = 1024 * upVector / upVector.Length;
 			}
 
-			zaps = new HashSet<Pair<Color, WPos[]>>();
+			zaps = new HashSet<(Color, WPos[])>();
 			foreach (var c in colors)
 			{
 				var numSegments = (direction.Length - 1) / info.SegmentLength.Length + 1;
@@ -130,18 +130,29 @@ namespace OpenRA.Mods.CA.Projectiles
 				for (var i = 1; i < numSegments; i++)
 					offsets[i] = WPos.LerpQuadratic(source, target, angle, i, numSegments);
 
-				zaps.Add(Pair.New(c, offsets));
+				zaps.Add((c, offsets));
 			}
 		}
 
 		public void Tick(World world)
 		{
 			if (hasLaunchEffect && ticks == 0)
-				world.AddFrameEndTask(w => w.Add(new SpriteEffect(args.CurrentSource, args.CurrentMuzzleFacing, world,
+			{
+				Func<WAngle> getMuzzleFacing = () => args.CurrentMuzzleFacing();
+				world.AddFrameEndTask(w => w.Add(new SpriteEffect(args.CurrentSource, getMuzzleFacing, world,
 					info.LaunchEffectImage, info.LaunchEffectSequence, info.LaunchEffectPalette)));
+			}
 
 			if (ticks == 0)
-				args.Weapon.Impact(Target.FromPos(target), new WarheadArgs(args));
+			{
+				var warheadArgs = new WarheadArgs(args)
+				{
+					ImpactOrientation = new WRot(WAngle.Zero, Common.Util.GetVerticalAngle(source, target), args.CurrentMuzzleFacing()),
+					ImpactPosition = target,
+				};
+
+				args.Weapon.Impact(Target.FromPos(target), warheadArgs);
+			}
 
 			if (++ticks >= info.Duration)
 				world.AddFrameEndTask(w => w.Remove(this));
@@ -157,7 +168,7 @@ namespace OpenRA.Mods.CA.Projectiles
 			{
 				foreach (var zap in zaps)
 				{
-					var offsets = zap.Second;
+					var offsets = zap.Positions;
 					for (var i = 1; i < offsets.Length - 1; i++)
 					{
 						var angle = WAngle.FromDegrees(random.Next(360));
@@ -169,7 +180,7 @@ namespace OpenRA.Mods.CA.Projectiles
 						offsets[i] += offset;
 					}
 
-					yield return new ElectricBoltRenderable(offsets, info.ZOffset, info.Width, zap.First);
+					yield return new ElectricBoltRenderable(offsets, info.ZOffset, info.Width, zap.Color);
 				}
 			}
 		}

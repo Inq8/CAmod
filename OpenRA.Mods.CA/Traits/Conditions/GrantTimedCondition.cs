@@ -31,8 +31,7 @@ namespace OpenRA.Mods.CA.Traits
 	public class GrantTimedCondition : PausableConditionalTrait<GrantTimedConditionInfo>, ITick, ISync, INotifyCreated
 	{
 		readonly GrantTimedConditionInfo info;
-		ConditionManager manager;
-		int token = ConditionManager.InvalidConditionToken;
+		int token = Actor.InvalidConditionToken;
 		IConditionTimerWatcher[] watchers;
 
 		[Sync]
@@ -47,39 +46,29 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override void Created(Actor self)
 		{
-			manager = self.TraitOrDefault<ConditionManager>();
 			watchers = self.TraitsImplementing<IConditionTimerWatcher>().Where(Notifies).ToArray();
 
 			base.Created(self);
 		}
 
-		void GrantCondition(Actor self, string cond)
+		void GrantCondition(Actor self, string condition)
 		{
-			if (manager == null)
-				return;
-
-			if (string.IsNullOrEmpty(cond))
-				return;
-
-			if (token == ConditionManager.InvalidConditionToken)
+			if (token == Actor.InvalidConditionToken)
 			{
 				Ticks = info.Duration;
-				token = manager.GrantCondition(self, cond);
+				token = self.GrantCondition(condition);
 			}
 		}
 
 		void RevokeCondition(Actor self)
 		{
-			if (manager == null)
-				return;
-
-			if (token != ConditionManager.InvalidConditionToken)
-				token = manager.RevokeCondition(self, token);
+			if (token != Actor.InvalidConditionToken)
+				token = self.RevokeCondition(token);
 		}
 
 		void ITick.Tick(Actor self)
 		{
-			if (IsTraitDisabled && token != ConditionManager.InvalidConditionToken)
+			if (IsTraitDisabled && token != Actor.InvalidConditionToken)
 				RevokeCondition(self);
 
 			if (IsTraitPaused || IsTraitDisabled)
@@ -88,7 +77,7 @@ namespace OpenRA.Mods.CA.Traits
 			foreach (var w in watchers)
 				w.Update(info.Duration, Ticks);
 
-			if (token == ConditionManager.InvalidConditionToken)
+			if (token == Actor.InvalidConditionToken)
 				return;
 
 			if (--Ticks < 1)

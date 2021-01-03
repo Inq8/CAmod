@@ -8,7 +8,6 @@
  */
 #endregion
 
-using System.Collections.Generic;
 using OpenRA.GameRules;
 using OpenRA.Mods.CA.Effects;
 using OpenRA.Mods.CA.Traits;
@@ -34,11 +33,14 @@ namespace OpenRA.Mods.CA.Warheads
 		[Desc("Randomize particle turnrate.")]
 		public readonly int TurnRate = 0;
 
+		[Desc("Rate to reset particle movement properties.")]
+		public readonly int RandomRate = 4;
+
 		[Desc("Which image to use.")]
 		public readonly string Image = "particles";
 
 		[FieldLoader.Require]
-		[SequenceReference("Image")]
+		[SequenceReference(nameof(Image))]
 		[Desc("Which sequence to use.")]
 		public readonly string[] Sequences = null;
 
@@ -95,6 +97,11 @@ namespace OpenRA.Mods.CA.Warheads
 			get { return TurnRate; }
 		}
 
+		int ISmokeParticleInfo.RandomRate
+		{
+			get { return RandomRate; }
+		}
+
 		public void RulesetLoaded(Ruleset rules, WeaponInfo info)
 		{
 			if (string.IsNullOrEmpty(Weapon))
@@ -104,7 +111,7 @@ namespace OpenRA.Mods.CA.Warheads
 				throw new YamlException("Weapons Ruleset does not contain an entry '{0}'".F(Weapon.ToLowerInvariant()));
 		}
 
-		public override void DoImpact(Target target, WarheadArgs args)
+		public override void DoImpact(in Target target, WarheadArgs args)
 		{
 			var firedBy = args.SourceActor;
 			if (!target.IsValidFor(firedBy))
@@ -117,8 +124,11 @@ namespace OpenRA.Mods.CA.Warheads
 				? firedBy.World.SharedRandom.Next(Count[0], Count[1])
 				: Count[0];
 
-			for (int i = 0; i < count; i++)
-				firedBy.World.AddFrameEndTask(w => w.Add(new SmokeParticle(Neutral || firedBy.IsDead ? firedBy.World.WorldActor : firedBy, this, target.CenterPosition)));
+			// Lambdas can't use 'in' variables, so capture a copy for later
+			var delayedTarget = target;
+
+			for (var i = 0; i < count; i++)
+				firedBy.World.AddFrameEndTask(w => w.Add(new SmokeParticle(Neutral || firedBy.IsDead ? firedBy.World.WorldActor : firedBy, this, delayedTarget.CenterPosition)));
 		}
 	}
 }

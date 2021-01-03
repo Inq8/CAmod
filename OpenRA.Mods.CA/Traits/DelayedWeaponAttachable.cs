@@ -8,7 +8,6 @@
  */
 #endregion
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common.Traits;
@@ -43,28 +42,17 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		public HashSet<DelayedWeaponTrigger> Container { get; private set; }
 
-		private readonly Actor self;
-		private readonly HashSet<Actor> detectors = new HashSet<Actor>();
-		private readonly bool isValidCondition;
+		readonly Actor self;
+		readonly HashSet<Actor> detectors = new HashSet<Actor>();
 
-		private int token = ConditionManager.InvalidConditionToken;
-		private bool IsEnabled { get { return token != ConditionManager.InvalidConditionToken; } }
-
-		private ConditionManager manager;
+		int token = Actor.InvalidConditionToken;
+		bool IsEnabled { get { return token != Actor.InvalidConditionToken; } }
 
 		public DelayedWeaponAttachable(Actor self, DelayedWeaponAttachableInfo info)
 			: base(info)
 		{
 			this.self = self;
 			Container = new HashSet<DelayedWeaponTrigger>();
-			isValidCondition = !string.IsNullOrEmpty(info.Condition);
-		}
-
-		protected override void Created(Actor self)
-		{
-			manager = self.Trait<ConditionManager>();
-
-			base.Created(self);
 		}
 
 		void ITick.Tick(Actor self)
@@ -76,8 +64,8 @@ namespace OpenRA.Mods.CA.Traits
 
 				Container.RemoveWhere(p => !p.IsValid);
 
-				if (isValidCondition && token != ConditionManager.InvalidConditionToken && !Container.Any())
-					token = manager.RevokeCondition(self, token);
+				if (token != Actor.InvalidConditionToken && !Container.Any())
+					token = self.RevokeCondition(token);
 			}
 		}
 
@@ -99,13 +87,13 @@ namespace OpenRA.Mods.CA.Traits
 
 		public bool CanAttach(string type)
 		{
-			return Info.Type == type && Container.Count < Info.AttachLimit;
+			return !IsTraitDisabled && Info.Type == type && Container.Count < Info.AttachLimit;
 		}
 
 		public void Attach(DelayedWeaponTrigger trigger)
 		{
-			if (isValidCondition && token == ConditionManager.InvalidConditionToken)
-				token = manager.GrantCondition(self, Info.Condition);
+			if (token == Actor.InvalidConditionToken)
+				token = self.GrantCondition(Info.Condition);
 
 			Container.Add(trigger);
 		}
@@ -152,8 +140,8 @@ namespace OpenRA.Mods.CA.Traits
 
 				Container.RemoveWhere(p => !p.IsValid);
 
-				if (isValidCondition && token != ConditionManager.InvalidConditionToken && !Container.Any())
-					token = manager.RevokeCondition(self, token);
+				if (token != Actor.InvalidConditionToken && !Container.Any())
+					token = self.RevokeCondition(token);
 			}
 		}
 

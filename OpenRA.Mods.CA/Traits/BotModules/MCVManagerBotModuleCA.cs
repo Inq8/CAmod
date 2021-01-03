@@ -235,7 +235,7 @@ namespace OpenRA.Mods.CA.Traits
 			var newBaseRadius = new WDist(Info.EnemyScanRadius * 1024);
 
 			var enemies = world.FindActorsInCircle(wPos, newBaseRadius)
-				.Where(a => !a.Disposed && player.Stances[a.Owner] == Stance.Enemy && a.Info.HasTraitInfo<BuildingInfo>());
+				.Where(a => !a.Disposed && player.RelationshipWith(a.Owner) == PlayerRelationship.Enemy && a.Info.HasTraitInfo<BuildingInfo>());
 
 			if (enemies.Count() > 0)
 				return null;

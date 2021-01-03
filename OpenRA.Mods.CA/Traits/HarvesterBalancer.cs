@@ -37,8 +37,7 @@ namespace OpenRA.Mods.CA.Traits
 
 	public class HarvesterBalancer : ConditionalTrait<HarvesterBalancerInfo>, INotifyCreated, ITick, INotifyHarvesterAction, INotifyDamage
 	{
-		ConditionManager conditionManager;
-		int conditionToken = ConditionManager.InvalidConditionToken;
+		int conditionToken = Actor.InvalidConditionToken;
 		Actor destinationRefinery;
 		bool movingToRefinery = false;
 		bool movingToResources = false;
@@ -50,30 +49,23 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyCreated.Created(Actor self)
 		{
-			conditionManager = self.Trait<ConditionManager>();
 			movingToResources = true;
 		}
 
 		void GrantCondition(Actor self, string cond)
 		{
-			if (conditionManager == null)
-				return;
-
 			if (string.IsNullOrEmpty(cond))
 				return;
 
-			conditionToken = conditionManager.GrantCondition(self, cond);
+			conditionToken = self.GrantCondition(Info.Condition);
 		}
 
 		void RevokeCondition(Actor self)
 		{
-			if (conditionManager == null)
+			if (conditionToken == Actor.InvalidConditionToken)
 				return;
 
-			if (conditionToken == ConditionManager.InvalidConditionToken)
-				return;
-
-			conditionToken = conditionManager.RevokeCondition(self, conditionToken);
+			conditionToken = self.RevokeCondition(conditionToken);
 		}
 
 		bool SpeedBuffNeeded(Actor self)
@@ -88,8 +80,8 @@ namespace OpenRA.Mods.CA.Traits
 				return false;
 
 			var facing = self.Trait<IFacing>().Facing;
-			var facingUp = (facing >= 0 && facing < 64) || facing > 192;
-			var facingDown = facing > 64 && facing < 192;
+			var facingUp = (facing.Angle >= 0 && facing.Angle < 256) || facing.Angle > 512;
+			var facingDown = facing.Angle > 512 && facing.Angle < 768;
 			var isCloseToRefinery = false;
 
 			if (destinationRefinery != null)
@@ -122,13 +114,13 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				if (SpeedBuffNeeded(self))
 				{
-					if (conditionToken == ConditionManager.InvalidConditionToken)
-						GrantCondition(self, Info.Condition);
+					if (conditionToken == Actor.InvalidConditionToken)
+						self.GrantCondition(Info.Condition);
 				}
 				else
 				{
-					if (conditionToken != ConditionManager.InvalidConditionToken)
-						RevokeCondition(self);
+					if (conditionToken != Actor.InvalidConditionToken)
+						self.RevokeCondition(conditionToken);
 				}
 
 				ticksUntilCheck = Info.CheckInterval;

@@ -4,11 +4,10 @@
 	GivesExperience:
 		PlayerExperienceModifier: 1
 	ScriptTriggers:
-	ConditionManager:
 	RenderDebugState:
 
 ^SpriteActor:
-	BodyOrientation:
+	ClassicFacingBodyOrientation:
 	QuantizeFacingsFromSequence:
 	RenderSprites:
 		PlayerPalette: overlayplayer
@@ -40,6 +39,29 @@
 		Type: Rectangle
 			TopLeft: -1536, -1024
 			BottomRight: 1536, 1024
+			
+^Transport:
+	Cargo:
+	WithCargoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+		CustomPipSequences:
+			gray: pip-gray
+			yellow: pip-yellow
+			red: pip-red
+		
+^PrimaryBuilding:
+	PrimaryBuilding:
+		PrimaryCondition: primary
+		SelectionNotification: PrimaryBuildingSelected
+	WithDecoration@primary:
+		RequiresCondition: primary
+		Position: Top
+		Margin: 0, 4
+		RequiresSelection: true
+		Image: pips
+		Sequence: tag-primary
 
 ^BotBuilding:
 	GrantConditionOnBotOwner@BrutalAI:
@@ -167,7 +189,7 @@
 	Armament@AIHELPER:
 		Weapon: commandeer
 		Name: secondary
-		TargetStances: Neutral
+		TargetRelationships: Neutral
 		RequiresCondition: botowner
 	GrantConditionOnBotOwner@AIHELPER:
 		Condition: botowner
@@ -187,6 +209,14 @@
 		AttackSequences:
 			primary: shoot
 			secondary: stand
+
+^ConfigurableIncome:
+	RefineryResourceMultiplier@INCREASEDINCOME:
+		Modifier: 132
+		RequiresCondition: increased-income
+	GrantConditionOnPrerequisite@INCREASEDINCOME:
+		Condition: increased-income
+		Prerequisites: global.increasedincome
 
 ^GainsExperience:
 	GainsExperience:
@@ -225,36 +255,36 @@
 	ReloadDelayMultiplier@RANK-ELITE:
 		RequiresCondition: rank-elite
 		Modifier: 80
-	SelfHealing@ELITE:
+	ChangesHealth@ELITE:
 		PercentageStep: 5
 		Delay: 100
-		HealIfBelow: 100
+		StartIfBelow: 100
 		DamageCooldown: 125
 		RequiresCondition: rank-elite
 	WithDecoration@RANK-1:
 		Image: rank
 		Sequence: rank-veteran-1
 		Palette: effect
-		ReferencePoint: Bottom, Right
-		ValidStances: Ally, Enemy
+		Position: BottomRight
+		Margin: 5, 6
+		ValidRelationships: Ally, Enemy
 		RequiresCondition: rank-veteran == 1
-		ZOffset: 256
 	WithDecoration@RANK-2:
 		Image: rank
 		Sequence: rank-veteran-2
 		Palette: effect
-		ReferencePoint: Bottom, Right
-		ValidStances: Ally, Enemy
+		Position: BottomRight
+		Margin: 5, 6
+		ValidRelationships: Ally, Enemy
 		RequiresCondition: rank-veteran == 2
-		ZOffset: 256
 	WithDecoration@RANK-ELITE:
 		Image: rank
 		Sequence: rank-elite
 		Palette: effect
-		ReferencePoint: Bottom, Right
-		ValidStances: Ally, Enemy
+		Position: BottomRight
+		Margin: 5, 6
+		ValidRelationships: Ally, Enemy
 		RequiresCondition: rank-elite
-		ZOffset: 256
 
 ^Berserk:
 	SpeedMultiplier@BERSERK:
@@ -349,8 +379,8 @@
 		Sequence: offline
 		Palette: chrome
 		RequiresCondition: powerdrain
-		ReferencePoint: Center
-		ValidStances: Ally, Enemy, Neutral
+		Position: Center
+		ValidRelationships: Ally, Enemy, Neutral
 	DamagedByTerrain@POWERDRAIN:
 		Damage: 750
 		DamageInterval: 15
@@ -426,8 +456,8 @@
 		Image: pips
 		Sequence: pip-armor
 		Palette: effect
-		ReferencePoint: Bottom, Left
-		ValidStances: Ally
+		Position: BottomLeft
+		ValidRelationships: Ally
 		RequiresCondition: hold && !(hold2 || hold3)
 		ZOffset: 256
 		BlinkInterval: 64
@@ -462,8 +492,8 @@
 		Image: pips
 		Sequence: pip-bombard
 		Palette: effect
-		ReferencePoint: Bottom, Left
-		ValidStances: Ally
+		Position: BottomLeft
+		ValidRelationships: Ally
 		RequiresCondition: bombard && !(bombard2 || bombard3)
 		ZOffset: 256
 		BlinkInterval: 64
@@ -498,8 +528,8 @@
 		Image: pips
 		Sequence: pip-seek
 		Palette: effect
-		ReferencePoint: Bottom, Left
-		ValidStances: Ally
+		Position: BottomLeft
+		ValidRelationships: Ally
 		RequiresCondition: seek && !(seek2 || seek3)
 		ZOffset: 256
 		BlinkInterval: 64
@@ -568,8 +598,7 @@
 		Image: pips
 		Sequence: pip-bino
 		Palette: chrome
-		ReferencePoint: Bottom, Left
-		ZOffset: 256
+		Position: BottomLeft
 		RequiresCondition: bino
 		BlinkInterval: 64
 		BlinkPatterns:
@@ -715,10 +744,10 @@
 		Palette: tseffect
 
 ^NaniteRepair:
-	SelfHealing@NREPAIR:
+	ChangesHealth@NREPAIR:
 		PercentageStep: 3
 		Delay: 30
-		HealIfBelow: 100
+		StartIfBelow: 100
 		DamageCooldown: 0
 		RequiresCondition: nrepair
 	WithColoredOverlay@NREPAIR:
@@ -735,12 +764,11 @@
 		Image: pips
 		Palette: chrometd
 		Sequence: pip-repair
-		ReferencePoint: Bottom, Center
-		ZOffset: 256
+		Position: BottomCenter
 		RequiresCondition: nrepair
 		BlinkInterval: 64
 		RequiresSelection: True
-		ValidStances: Ally, Neutral
+		ValidRelationships: Ally, Neutral
 	ExternalCondition@NREPAIR-AI:
 		Condition: nrepair
 
@@ -759,12 +787,11 @@
 		Image: pips
 		Palette: chrometd
 		Sequence: pip-repair
-		ReferencePoint: Bottom, Center
-		ZOffset: 256
+		Position: BottomCenter
 		RequiresCondition: aircraft-repair
 		BlinkInterval: 64
 		RequiresSelection: True
-		ValidStances: Ally, Neutral
+		ValidRelationships: Ally, Neutral
 
 ^AffectedByDriverKill:
 	GrantConditionIfOwnerIsNeutral:
@@ -772,12 +799,12 @@
 	Capturable@DRIVER_DEAD:
 		Types: driverless_vehicle
 		RequiresCondition: driver-dead
-		ValidStances: Neutral
+		ValidRelationships: Neutral
 		CancelActivity: true
-	SelfHealing@DRIVER_DEAD:
+	ChangesHealth@DRIVER_DEAD:
 		PercentageStep: -1
 		Delay: 30
-		HealIfBelow: 101
+		StartIfBelow: 101
 		DamageCooldown: 0
 		RequiresCondition: driver-dead
 	CaptureManager:
@@ -909,14 +936,13 @@
 		Image: pips
 		Sequence: pip-conc
 		Palette: chrome
-		ReferencePoint: Top, Center
-		ZOffset: 256
+		Position: TopCenter
 		RequiresCondition: concussion
 		BlinkInterval: 16
 		BlinkPatterns:
 			concussion: On, On, Off
 		RequiresSelection: False
-		ValidStances: Ally, Neutral, Enemy
+		ValidRelationships: Ally, Neutral, Enemy
 
 ^HarvesterBalancer:
 	GrantConditionOnPrerequisite@HARVBALANCE:
@@ -966,11 +992,10 @@
 	WithDecoration@c4:
 		Image: c4
 		Sequence: c4
-		ReferencePoint: center, center
-		ZOffset: 2047
+		Position: Center
 		RequiresCondition: c4
 		RequiresSelection: False
-		ValidStances: Ally, Neutral, Enemy
+		ValidRelationships: Ally, Neutral, Enemy
 	ExternalCondition@detachable:
 		Condition: detach
 	WithColoredOverlay@detach:
@@ -1237,8 +1262,7 @@
 		OpeningSequence: open
 		Offset: 0,0,200
 		RequiresCondition: parachute
-	BodyOrientation:
-		UseClassicFacingFudge: True
+	ClassicFacingBodyOrientation:
 	HitShape:
 	MapEditorData:
 		Categories: Vehicle
@@ -1348,7 +1372,7 @@
 		Image: pips
 		Sequence: pip-hazmat
 		Palette: chrometd
-		ReferencePoint: Bottom, Left
+		Position: BottomLeft
 		RequiresCondition: hazmatsuits
 	SpawnActorOnDeath:
 		Probability: 35
@@ -1407,6 +1431,31 @@
 	Guardable:
 	Tooltip:
 		GenericName: Soldier
+	ChangesHealth@HOSPITAL:
+		Step: 500
+		Delay: 100
+		StartIfBelow: 100
+		DamageCooldown: 125
+		RequiresCondition: hospitalheal
+	ExternalCondition@MEDIFV:
+		Condition: hospitalheal
+	GrantConditionOnPrerequisite@HOSPITAL:
+		Condition: hospital
+		Prerequisites: hosp
+	GrantConditionOnDamageState@HOSPITAL:
+		Condition: damaged
+		ValidDamageStates: Light, Medium, Heavy, Critical
+	GrantCondition@HOSPITAL:
+		RequiresCondition: hospital && damaged
+		Condition: hospitalheal
+	WithDecoration@REDCROSS:
+		Image: pips
+		Sequence: medic
+		Palette: chrome
+		Position: BottomRight
+		RequiresCondition: hospitalheal
+		BlinkInterval: 32
+		BlinkPattern: Off, On
 	DeathSounds@NORMAL:
 		Voice: Die
 		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath
@@ -1500,7 +1549,6 @@
 		DamageTriggers: TriggerProne
 		PauseOnCondition: being-warped
 	WithInfantryBody:
-		DefaultAttackSequence: shoot
 		IdleSequences: idle1,idle2
 		StandSequences: stand,stand2
 
@@ -1510,11 +1558,11 @@
 	Inherits@SLOWABLE: ^Slowable
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, Cyborg
-	SelfHealing@THEAL:
+	ChangesHealth@THEAL:
 		Step: 0
 		PercentageStep: 1
 		Delay: 15
-		HealIfBelow: 100
+		StartIfBelow: 100
 		DamageCooldown: 150
 		RequiresCondition: tibheal
 		DamageTypes: ToxinDeath
@@ -1522,7 +1570,7 @@
 		Image: pips
 		Sequence: medic
 		Palette: effect
-		ReferencePoint: Bottom, Left
+		Position: BottomLeft
 		RequiresCondition: tibheal
 	GrantConditionOnTerrain@THEAL:
 		Condition: tibheal
@@ -1567,7 +1615,7 @@
 	RevealsShroud:
 		Range: 3c0
 	Passenger:
-		PipType: Gray
+		CustomPipType: gray
 	ProximityCaptor:
 		Types: CivilianInfantry
 	Voiced:
@@ -1914,8 +1962,7 @@
 		RepairActors: fix, rep, srep, hpad, hpad.td
 	Hovers@CRUISING:
 		RequiresCondition: cruising
-	BodyOrientation:
-		UseClassicFacingFudge: True
+	ClassicFacingBodyOrientation:
 	-Contrail@1:
 	-Contrail@2:
 	GpsRadarDot:
@@ -2034,7 +2081,7 @@
 	WithBuildingRepairDecoration:
 		Image: allyrepair
 		Sequence: repair
-		ReferencePoint: Center
+		Position: Center
 		Palette: player
 		IsPlayerPalette: True
 		RequiresCondition: !being-warped
@@ -2223,8 +2270,8 @@
 		Image: pips
 		Palette: chrome
 		Sequence: tag-fake
-		ReferencePoint: Top
-		ZOffset: 256
+		Position: Top
+		Margin: 0, 4
 	-SpawnActorsOnSell:
 	-MustBeDestroyed:
 	MapEditorData:
@@ -2239,14 +2286,12 @@
 		Image: pips
 		Palette: chrome
 		Sequence: tag-fake
-		ReferencePoint: Top
-		ZOffset: 256
+		Position: Top
+		Margin: 0, 4
 
 ^AmmoBox:
 	Inherits: ^TechBuilding
 	-Selectable:
-	SelectionDecorations:
-		RenderSelectionBars: False
 	Health:
 		HP: 1000
 	Explodes:
@@ -2399,7 +2444,7 @@
 		Type: Heavy
 	HiddenUnderFog:
 		Type: CenterPosition
-		AlwaysVisibleStances: None
+		AlwaysVisibleRelationships: None
 	ScriptTriggers:
 	WithFacingSpriteBody:
 	HitShape:
@@ -2410,14 +2455,20 @@
 	Inherits: ^BasicHusk
 	Husk:
 		AllowedTerrain: Clear, Rough, Road, Ore, Gems, Beach, Tiberium, BlueTiberium
-	Burns:
-		Damage: 200
+	WithIdleOverlay@Burns:
+		Image: fire
+		Sequence: 1
+		IsDecoration: true
+	ChangesHealth:
+		Step: -200
+		StartIfBelow: 101
+		Delay: 8
 	OwnerLostAction:
 		Action: ChangeOwner
 	CaptureManager:
 	Capturable:
 		Types: husk
-		ValidStances: Enemy, Neutral
+		ValidRelationships: Enemy, Neutral
 	TransformOnCapture:
 		ForceHealthPercentage: 25
 	InfiltrateForTransform:
@@ -2435,8 +2486,7 @@
 		Palette: ra2effect-ignore-lighting-alpha75
 	Tooltip:
 		GenericName: Destroyed Vehicle
-	BodyOrientation:
-		UseClassicFacingFudge: True
+	ClassicFacingBodyOrientation:
 	Explodes:
 		Weapon: VisualExplodeHusk
 		EmptyWeapon: VisualExplodeHusk
@@ -2448,8 +2498,9 @@
 
 ^HuskTD:
 	Inherits: ^Husk
-	Burns:
-		Anim: 5
+	WithIdleOverlay@Burns:
+		Image: fire
+		Sequence: 5
 
 ^PlaneHusk:
 	Inherits: ^BasicHusk
@@ -2495,8 +2546,7 @@
 		CanSlide: True
 	FallsToEarth:
 		Explosion: UnitExplodeHeli
-	BodyOrientation:
-		UseClassicFacingFudge: True
+	ClassicFacingBodyOrientation:
 	-MapEditorData:
 	RevealOnDeath:
 		Duration: 60
@@ -2511,12 +2561,18 @@
 	Inherits@1: ^BasicBuilding
 	Health:
 		HP: 2800000
-	Burns:
-		Damage: 1000
+	WithIdleOverlay@Burns:
+		Image: fire
+		Sequence: 1
+		IsDecoration: true
+	ChangesHealth:
+		Step: -1000
+		StartIfBelow: 101
+		Delay: 8
 	CaptureManager:
 	Capturable:
 		Types: building
-		ValidStances: Enemy, Neutral, Ally
+		ValidRelationships: Enemy, Neutral, Ally
 	CapturableProgressBar:
 	CapturableProgressBlink:
 	TransformOnCapture:
@@ -2545,7 +2601,7 @@
 	Armor:
 		Type: Concrete
 	ScriptTriggers:
-	BodyOrientation:
+	ClassicFacingBodyOrientation:
 		QuantizedFacings: 1
 	Interactable:
 		Bounds: 96,48
@@ -2616,7 +2672,6 @@
 		ShadowImage: parach-shadow
 		ShadowSequence: idle
 		RequiresCondition: parachute
-	ConditionManager:
 	MapEditorData:
 		Categories: System
 
@@ -2625,7 +2680,6 @@
 	Interactable:
 		Bounds: 24,24
 	WithSpriteBody:
-	ConditionManager:
 	HiddenUnderFog:
 	Mine:
 		CrushClasses: mine
@@ -2684,7 +2738,7 @@
 		Sequence: offline
 		Palette: chrome
 		RequiresCondition: forcedisabled && !forceshield
-		ReferencePoint: Center
+		Position: Center
 
 ^DisableOnLowPowerOrPowerDown:
 	Inherits: ^DisableOnLowPower
@@ -2700,7 +2754,7 @@
 		Sequence: offline
 		Palette: chrome
 		RequiresCondition: powerdown
-		ReferencePoint: Center
+		Position: Center
 	PowerMultiplier@POWERDOWN:
 		RequiresCondition: powerdown
 		Modifier: 0
@@ -2722,7 +2776,7 @@
 		Sequence: offline
 		Palette: chrome
 		RequiresCondition: powerdown || forcedisabled
-		ReferencePoint: Center
+		Position: Center
 	PowerMultiplier@POWERDOWN:
 		RequiresCondition: powerdown
 		Modifier: 0
@@ -2752,7 +2806,7 @@
 		Sequence: offline
 		Palette: chrome
 		RequiresCondition: forcedisabled && !forceshield
-		ReferencePoint: Center
+		Position: Center
 	GrantCondition@IDISABLE:
 		RequiresCondition: power-outage || forcedisabled
 		Condition: disabled
@@ -2840,7 +2894,7 @@
 		MuzzlePalette: tdeffect-ignore-lighting-alpha85
 	AttackFrontal:
 		Voice: Attack
-	BodyOrientation:
+	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
 	WithSpriteBody:
 	WithMuzzleOverlay:
@@ -2865,7 +2919,7 @@
 	Inherits@4: ^SpriteActor
 	Armor:
 		Type: Light
-	ShootableBallisticMissile:
+	BallisticMissile:
 		LaunchAngle: 128
 		Speed: 110
 		AirborneCondition: airborne

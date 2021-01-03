@@ -14,7 +14,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	public class FlickeringPaletteEffectInfo : ITraitInfo
+	public class FlickeringPaletteEffectInfo : TraitInfo
 	{
 		[Desc("The palette to apply this effect to.")]
 		[PaletteReference]
@@ -34,7 +34,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public readonly int QuantizationCount = 16;
 
-		public object Create(ActorInitializer init) { return new FlickeringPaletteEffect(this); }
+		public override object Create(ActorInitializer init) { return new FlickeringPaletteEffect(this); }
 	}
 
 	public class FlickeringPaletteEffect : IPaletteModifier, ITick

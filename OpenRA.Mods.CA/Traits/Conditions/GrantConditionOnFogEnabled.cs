@@ -16,14 +16,14 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Grants a condition to the actor when created if fog is enabled.")]
-	public class GrantConditionOnFogEnabledInfo : ITraitInfo
+	public class GrantConditionOnFogEnabledInfo : TraitInfo
 	{
 		[FieldLoader.Require]
 		[GrantedConditionReference]
 		[Desc("Condition to grant.")]
 		public readonly string Condition = null;
 
-		public object Create(ActorInitializer init) { return new GrantConditionOnFogEnabled(init.Self, this); }
+		public override object Create(ActorInitializer init) { return new GrantConditionOnFogEnabled(init.Self, this); }
 	}
 
 	public class GrantConditionOnFogEnabled : INotifyCreated
@@ -46,8 +46,8 @@ namespace OpenRA.Mods.CA.Traits
 			if (!fogEnabled)
 				return;
 
-			var conditionManager = self.Trait<ConditionManager>();
-			conditionManager.GrantCondition(self, info.Condition);
+			if (!string.IsNullOrEmpty(info.Condition))
+				self.GrantCondition(info.Condition);
 		}
 	}
 }

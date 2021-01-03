@@ -39,7 +39,7 @@ namespace OpenRA.Mods.CA.Warheads
 		[Desc("Defines the image of an optional animation played at the spawning location.")]
 		public readonly string Image = null;
 
-		[SequenceReference("Image")]
+		[SequenceReference(nameof(Image), allowNullImage: true)]
 		[Desc("Defines the sequence of an optional animation played at the spawning location.")]
 		public readonly string Sequence = "idle";
 
@@ -64,7 +64,7 @@ namespace OpenRA.Mods.CA.Warheads
 			}
 		}
 
-		public override void DoImpact(Target target, WarheadArgs args)
+		public override void DoImpact(in Target target, WarheadArgs args)
 		{
 			var firedBy = args.SourceActor;
 			if (!target.IsValidFor(firedBy))

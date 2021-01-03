@@ -8,7 +8,6 @@
  */
 #endregion
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Activities;
@@ -83,11 +82,10 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		readonly Actor self;
 		readonly bool canTurn;
-		int deployedToken = ConditionManager.InvalidConditionToken;
-		int deployingToken = ConditionManager.InvalidConditionToken;
+		int deployedToken = Actor.InvalidConditionToken;
+		int deployingToken = Actor.InvalidConditionToken;
 
 		WithSpriteBody[] wsbs;
-		ConditionManager manager;
 
 		[Sync]
 		int ticks;
@@ -103,7 +101,6 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override void Created(Actor self)
 		{
-			manager = self.Trait<ConditionManager>();
 			wsbs = self.TraitsImplementing<WithSpriteBody>().Where(w => Info.BodyNames.Contains(w.Info.Name)).ToArray();
 
 			if (Info.StartsFullyCharged)
@@ -137,7 +134,7 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		Order IIssueOrder.IssueOrder(Actor self, IOrderTargeter order, Target target, bool queued)
+		Order IIssueOrder.IssueOrder(Actor self, IOrderTargeter order, in Target target, bool queued)
 		{
 			if (order.OrderID == "GrantTimedConditionOnDeploy")
 				return new Order(order.OrderID, self, queued);
@@ -155,7 +152,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			// Turn to the required facing.
 			if (Info.Facing != -1 && canTurn)
-				self.QueueActivity(new Turn(self, Info.Facing));
+				self.QueueActivity(new Turn(self, WAngle.FromFacing(Info.Facing)));
 
 			self.QueueActivity(new CallFunc(Deploy));
 		}
@@ -189,19 +186,19 @@ namespace OpenRA.Mods.CA.Traits
 				OnDeployCompleted();
 			else
 			{
-				if (manager != null && !string.IsNullOrEmpty(Info.DeployingCondition) && deployingToken == ConditionManager.InvalidConditionToken)
-					deployingToken = manager.GrantCondition(self, Info.DeployingCondition);
+				if (deployingToken == Actor.InvalidConditionToken)
+					deployingToken = self.GrantCondition(Info.DeployingCondition);
 				wsb.PlayCustomAnimation(self, Info.DeployAnimation, OnDeployCompleted);
 			}
 		}
 
 		void OnDeployCompleted()
 		{
-			if (manager != null && !string.IsNullOrEmpty(Info.DeployedCondition) && deployedToken == ConditionManager.InvalidConditionToken)
-				deployedToken = manager.GrantCondition(self, Info.DeployedCondition);
+			if (deployedToken == Actor.InvalidConditionToken)
+				deployedToken = self.GrantCondition(Info.DeployedCondition);
 
-			if (deployingToken != ConditionManager.InvalidConditionToken)
-				deployingToken = manager.RevokeCondition(self, deployingToken);
+			if (deployingToken != Actor.InvalidConditionToken)
+				deployingToken = self.RevokeCondition(deployingToken);
 
 			deployState = TimedDeployState.Active;
 		}
@@ -219,19 +216,19 @@ namespace OpenRA.Mods.CA.Traits
 				OnUndeployCompleted();
 			else
 			{
-				if (manager != null && !string.IsNullOrEmpty(Info.DeployingCondition) && deployingToken == ConditionManager.InvalidConditionToken)
-					deployingToken = manager.GrantCondition(self, Info.DeployingCondition);
+				if (deployingToken == Actor.InvalidConditionToken)
+					deployingToken = self.GrantCondition(Info.DeployingCondition);
 				wsb.PlayCustomAnimation(self, Info.UndeployAnimation, OnUndeployCompleted);
 			}
 		}
 
 		void OnUndeployCompleted()
 		{
-			if (deployedToken != ConditionManager.InvalidConditionToken)
-				deployedToken = manager.RevokeCondition(self, deployedToken);
+			if (deployedToken != Actor.InvalidConditionToken)
+				deployedToken = self.RevokeCondition(deployedToken);
 
-			if (deployingToken != ConditionManager.InvalidConditionToken)
-				deployingToken = manager.RevokeCondition(self, deployingToken);
+			if (deployingToken != Actor.InvalidConditionToken)
+				deployingToken = self.RevokeCondition(deployingToken);
 
 			deployState = TimedDeployState.Charging;
 			ticks = Info.CooldownTicks;
@@ -253,9 +250,7 @@ namespace OpenRA.Mods.CA.Traits
 					deployState = TimedDeployState.Ready;
 				}
 				else
-				{
 					RevokeDeploy();
-				}
 			}
 		}
 

@@ -31,7 +31,7 @@ DisintegratorBeamAA:
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air
-		ValidStances: Enemy, Neutral
+		ValidRelationships: Enemy, Neutral
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
 		Damage: 2200
@@ -68,7 +68,7 @@ EnslaveInfantry:
 		ExplosionPalette: scrin
 		Image: mindcontrol
 		ValidTargets: Ground
-		ValidStances: Neutral, Enemy
+		ValidRelationships: Neutral, Enemy
 
 EnslaveVehicle:
 	Range: 5c0
@@ -82,7 +82,7 @@ EnslaveVehicle:
 		ExplosionPalette: scrin
 		Image: mindcontrol
 		ValidTargets: Ground
-		ValidStances: Neutral, Enemy
+		ValidRelationships: Neutral, Enemy
 
 GunWalkerZap:
 	Range: 4c512
@@ -126,7 +126,7 @@ GunWalkerZapAA:
 	Warhead@1Dam: SpreadDamage
 		Damage: 1400
 		ValidTargets: Air
-		ValidStances: Enemy, Neutral
+		ValidRelationships: Enemy, Neutral
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
 		Versus:
@@ -307,7 +307,7 @@ MiniRift:
 			Concrete: 80
 			Brick: 25
 		DamageTypes: BulletDeath
-		ValidStances: Enemy, Neutral, Ally
+		ValidRelationships: Enemy, Neutral
 	Warhead@2Dam: SpreadDamage
 		Spread: 682
 		Damage: 250
@@ -322,19 +322,17 @@ MiniRift:
 			Concrete: 80
 			Brick: 25
 		DamageTypes: BulletDeath
-		ValidStances: Ally
 	Warhead@3Slow: GrantExternalCondition
 		Range: 1c0
 		Duration: 10
 		Condition: slowed
 		ValidTargets: Vehicle, Cyborg
-		ValidStances: Enemy, Neutral, Ally
 	Warhead@4Slow: GrantExternalCondition
 		Range: 2c0
 		Duration: 10
 		Condition: slowed
 		ValidTargets: Vehicle, Cyborg
-		ValidStances: Enemy, Neutral, Ally
+		ValidRelationships: Ally
 
 RuinerCannon:
 	Inherits: 155mm
@@ -472,7 +470,7 @@ StormRiderZapAA:
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
-		ValidStances: Enemy, Neutral
+		ValidRelationships: Enemy, Neutral
 		Versus:
 			Wood: 100
 			Concrete: 100
@@ -554,12 +552,12 @@ InvaderZapAA:
 		Range: 0, 0c64, 0c256, 1c512
 		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
-		ValidStances: Enemy, Neutral
-		Versus:
-			None: 100
-			Wood: 100
-			Concrete: 100
+		ValidRelationships: Enemy, Neutral
 			Light: 100
+			Concrete: 100
+			Wood: 100
+			None: 100
+		Versus:
 
 PlasmaTurretGun:
 	Range: 6c0
@@ -668,7 +666,7 @@ ShardLauncher:
 		RangeLimit: 9c0
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air, ICBM
-		ValidStances: Enemy, Neutral
+		ValidRelationships: Enemy, Neutral
 		Range: 0, 0c64, 0c256, 3c768
 		Falloff: 100, 100, 30, 15
 		Damage: 2650
@@ -700,7 +698,7 @@ RavagerShards:
 		RangeLimit: 7c512
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Ground, Water
-		-ValidStances:
+		-ValidRelationships:
 		-Range:
 		-Falloff:
 		Spread: 256
@@ -830,14 +828,14 @@ BuzzerVortex:
 			Concrete: 40
 			Brick: 0
 		DamageTypes: BulletDeath
-		ValidStances: Enemy, Neutral
+		ValidRelationships: Enemy, Neutral
 	Warhead@2Dam: SpreadDamage
 		Spread: 682
 		Falloff: 100, 55, 20, 0
 		Damage: 750
 		ValidTargets: Cyborg
 		DamageTypes: BulletDeath
-		ValidStances: Enemy, Neutral
+		ValidRelationships: Enemy, Neutral
 
 BuzzerDummyWeapon:
 	ReloadDelay: 50

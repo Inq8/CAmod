@@ -138,7 +138,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public bool IsPreferredEnemyUnit(Actor a)
 		{
-			if (a == null || a.IsDead || Player.Stances[a.Owner] != Stance.Enemy || a.Info.HasTraitInfo<HuskInfo>())
+			if (a == null || a.IsDead || Player.RelationshipWith(a.Owner) != PlayerRelationship.Enemy || a.Info.HasTraitInfo<HuskInfo>())
 				return false;
 
 			var targetTypes = a.GetEnabledTargetTypes();

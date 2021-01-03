@@ -15,13 +15,13 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Lists valid factions for ProvidesPrerequisiteValidatedFaction.")]
-	public class ValidFactionsInfo : ITraitInfo
+	public class ValidFactionsInfo : TraitInfo
 	{
 		[FieldLoader.Require]
 		[Desc("Valid factions.")]
 		public readonly HashSet<string> Factions = new HashSet<string>();
 
-		public object Create(ActorInitializer init) { return new ValidFactions(init, this); }
+		public override object Create(ActorInitializer init) { return new ValidFactions(init, this); }
 	}
 
 	public class ValidFactions

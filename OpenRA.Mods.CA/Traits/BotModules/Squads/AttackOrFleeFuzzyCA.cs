@@ -244,23 +244,23 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			return relative.Clamp(0.0f, 999.0f);
 		}
 
-		static float SumOfValues<TTraitInfo>(IEnumerable<Actor> actors, Func<Actor, int> getValue) where TTraitInfo : ITraitInfo
+		static float SumOfValues<TTraitInfo>(IEnumerable<Actor> actors, Func<Actor, int> getValue) where TTraitInfo : ITraitInfoInterface
 		{
 			var sum = 0;
 			foreach (var a in actors)
-				if (a.Info.HasTraitInfo<TTraitInfo>())
+				if (a.Info.HasTraitInfo<TraitInfo>())
 					sum += getValue(a);
 
 			return sum;
 		}
 
-		static float Average<TTraitInfo>(IEnumerable<Actor> actors, Func<Actor, int> getValue) where TTraitInfo : ITraitInfo
+		static float Average<TTraitInfo>(IEnumerable<Actor> actors, Func<Actor, int> getValue) where TTraitInfo : ITraitInfoInterface
 		{
 			var sum = 0;
 			var countActors = 0;
 			foreach (var a in actors)
 			{
-				if (a.Info.HasTraitInfo<TTraitInfo>())
+				if (a.Info.HasTraitInfo<TraitInfo>())
 				{
 					sum += getValue(a);
 					countActors++;

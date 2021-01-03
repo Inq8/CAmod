@@ -18,7 +18,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Causes aircraft husks that are spawned in the air to crash to the ground.")]
-	public class CrashLandingInfo : ITraitInfo, IRulesetLoaded, Requires<AircraftInfo>
+	public class CrashLandingInfo : TraitInfo, IRulesetLoaded, Requires<AircraftInfo>
 	{
 		[WeaponReference]
 		public readonly string Explosion = "UnitExplode";
@@ -29,7 +29,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public WeaponInfo ExplosionWeapon { get; private set; }
 
-		public object Create(ActorInitializer init) { return new CrashLanding(init, this); }
+		public override object Create(ActorInitializer init) { return new CrashLanding(init, this); }
 		public void RulesetLoaded(Ruleset rules, ActorInfo ai)
 		{
 			if (string.IsNullOrEmpty(Explosion))
@@ -56,7 +56,7 @@ namespace OpenRA.Mods.CA.Traits
 		public CrashLanding(ActorInitializer init, CrashLandingInfo info)
 		{
 			this.info = info;
-			effectiveOwner = init.Contains<EffectiveOwnerInit>() ? init.Get<EffectiveOwnerInit, Player>() : init.Self.Owner;
+			effectiveOwner = init.GetValue<EffectiveOwnerInit, Player>(info, init.Self.Owner);
 		}
 
 		public CrashLanding(Actor a, object podDropCellPos)

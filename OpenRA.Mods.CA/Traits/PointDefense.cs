@@ -27,7 +27,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly BitSet<string> PointDefenseTypes = default(BitSet<string>);
 
 		[Desc("What diplomatic stances are affected.")]
-		public readonly Stance ValidStances = Stance.Neutral | Stance.Enemy;
+		public readonly PlayerRelationship ValidRelationships = PlayerRelationship.Neutral | PlayerRelationship.Enemy;
 
 		public override object Create(ActorInitializer init) { return new PointDefense(init.Self, this); }
 	}
@@ -51,7 +51,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled || armament.IsTraitDisabled || armament.IsTraitPaused)
 				return false;
 
-			if (!info.ValidStances.HasStance(self.Owner.Stances[attacker]))
+			if (!info.ValidRelationships.HasStance(self.Owner.RelationshipWith(attacker)))
 				return false;
 
 			if (armament.IsReloading)

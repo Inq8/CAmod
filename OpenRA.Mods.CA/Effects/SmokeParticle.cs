@@ -51,7 +51,7 @@ namespace OpenRA.Mods.CA.Effects
 				: world.SharedRandom.Next(255);
 
 			turnRate = smoke.TurnRate;
-			anim = new Animation(world, smoke.Image, () => facing);
+			anim = new Animation(world, smoke.Image, () => WAngle.FromFacing(facing));
 			anim.PlayRepeating(smoke.Sequences.Random(world.SharedRandom));
 			world.ScreenMap.Add(this, pos, anim.Image);
 			lifetime = smoke.Duration.Length == 2

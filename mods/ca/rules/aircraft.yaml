@@ -15,8 +15,6 @@ BADR:
 	Cargo:
 		MaxWeight: 10
 	-Selectable:
-	SelectionDecorations:
-		RenderSelectionBars: False
 	-Voiced:
 	Tooltip:
 		Name: Badger
@@ -55,8 +53,6 @@ BADR.Bomber:
 	AmmoPool:
 		Ammo: 7
 	-Selectable:
-	SelectionDecorations:
-		RenderSelectionBars: False
 	-Voiced:
 	Tooltip:
 		Name: Badger
@@ -114,8 +110,6 @@ B2B:
 	AmmoPool:
 		Ammo: 1
 	-Selectable:
-	SelectionDecorations:
-		RenderSelectionBars: False
 	-Voiced:
 	Tooltip:
 		Name: B2 Stealth Bomber
@@ -207,9 +201,12 @@ MIG:
 		InitialStanceAI: AttackAnything
 	AmmoPool:
 		Ammo: 4
-		PipCount: 4
 		ReloadDelay: 60
 		AmmoCondition: ammo
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 	Selectable:
 		Bounds: 36,28,0,2
 		DecorationBounds: 40,29,0,1
@@ -302,9 +299,12 @@ SUK:
 		InitialStanceAI: AttackAnything
 	AmmoPool:
 		Ammo: 4
-		PipCount: 4
 		ReloadDelay: 30
 		AmmoCondition: ammo
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 	Contrail@1:
 		Offset: -598,-683,-40
 	Contrail@2:
@@ -399,9 +399,12 @@ YAK:
 		InitialStanceAI: AttackAnything
 	AmmoPool:
 		Ammo: 30
-		PipCount: 6
 		ReloadDelay: 7
 		AmmoCondition: ammo
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 	WithMuzzleOverlay:
 	SpawnActorOnDeath:
 		Actor: YAK.Husk
@@ -425,6 +428,7 @@ YAK:
 
 TRAN:
 	Inherits: ^Helicopter
+	Inherits@TRANSPORT: ^Transport
 	RenderSprites:
 		Image: tran3
 	Buildable:
@@ -474,7 +478,6 @@ TRAN:
 	Cargo:
 		Types: Infantry
 		MaxWeight: 8
-		PipCount: 8
 	SpawnActorOnDeath:
 		Actor: TRAN.Husk
 		RequiresCondition: !empdisable
@@ -516,7 +519,6 @@ TRAN.paradrop:
 	Cargo:
 		Types: Infantry
 		MaxWeight: 8
-		PipCount: 8
 	-Selectable:
 	-Voiced:
 	RejectsOrders:
@@ -589,9 +591,12 @@ HELI:
 		RequiresCondition: !airborne
 	AmmoPool:
 		Ammo: 8
-		PipCount: 4
 		ReloadCount: 2
 		AmmoCondition: ammo
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 	SpawnActorOnDeath:
 		Actor: HELI.Husk
 		RequiresCondition: ammo && !empdisable
@@ -665,9 +670,13 @@ HIND:
 		RequiresCondition: !airborne
 	AmmoPool:
 		Ammo: 24
-		PipCount: 6
 		ReloadDelay: 8
 		AmmoCondition: ammo
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+		PipCount: 6
 	WithMuzzleOverlay:
 	SpawnActorOnDeath:
 		Actor: HIND.Husk
@@ -707,8 +716,6 @@ U2:
 	Armament:
 		Weapon: U2Camera
 	-Selectable:
-	SelectionDecorations:
-		RenderSelectionBars: False
 	-Voiced:
 	-Targetable@AIRBORNE:
 	Contrail@1:
@@ -784,7 +791,6 @@ U2.Bomber:
 		Weapon: U2Bomb
 	AmmoPool:
 		Ammo: 1
-		PipCount: 1
 	AirstrikeSlave:
 		LandingDistance: 1c0
 	SpawnActorOnDeath:
@@ -849,9 +855,12 @@ A10:
 		InitialStanceAI: AttackAnything
 	AmmoPool:
 		Ammo: 7
-		PipCount: 7
 		ReloadDelay: 35
 		AmmoCondition: ammo
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 	Selectable:
 		Bounds: 36,28,0,2
 		DecorationBounds: 40,29,0,1
@@ -904,8 +913,6 @@ A10.bomber:
 		Ammo: 10
 		AmmoCondition: ammo
 	-Selectable:
-	SelectionDecorations:
-		RenderSelectionBars: False
 	-Voiced:
 	RenderSprites:
 		Image: a10
@@ -959,10 +966,7 @@ C17:
 		IdleBehavior: LeaveMap
 	Cargo:
 		MaxWeight: 10
-		PipCount: 10
 	-Selectable:
-	SelectionDecorations:
-		RenderSelectionBars: False
 	-Voiced:
 	Tooltip:
 		Name: Supply Aircraft
@@ -1064,9 +1068,12 @@ APCH:
 		PauseOnCondition: empdisable || being-warped
 	AmmoPool:
 		Ammo: 12
-		PipCount: 6
 		ReloadDelay: 16
 		AmmoCondition: ammo
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 	WithIdleOverlay@ROTORAIR:
 		Offset: 0,0,85
 		Sequence: rotor
@@ -1146,9 +1153,12 @@ ORCA:
 		PauseOnCondition: empdisable || being-warped
 	AmmoPool:
 		Ammo: 8
-		PipCount: 4
 		ReloadCount: 2
 		AmmoCondition: ammo
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 	SpawnActorOnDeath:
 		Actor: ORCA.Husk
 		RequiresCondition: ammo && !empdisable
@@ -1230,6 +1240,10 @@ ORCB:
 	AmmoPool:
 		Ammo: 4
 		AmmoCondition: ammo
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 	Selectable:
 		Bounds: 36,28,0,2
 		DecorationBounds: 40,29,0,1
@@ -1276,8 +1290,6 @@ UAV:
 	-Voiced:
 	-Targetable@AIRBORNE:
 	-Selectable:
-	SelectionDecorations:
-		RenderSelectionBars: False
 	SpawnActorOnDeath:
 		Actor: UAV.Husk
 		RequiresCondition: !empdisable
@@ -1377,9 +1389,12 @@ RAH:
 		Palette: player
 	AmmoPool:
 		Ammo: 8
-		PipCount: 4
 		AmmoCondition: ammo
 		ReloadCount: 2
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 	SpawnActorOnDeath:
 		Actor: RAH.Husk
 		RequiresCondition: ammo && !empdisable
@@ -1452,8 +1467,11 @@ KIRO:
 		RequiresCondition: iraqbombs
 	AmmoPool:
 		Ammo: 8
-		PipCount: 8
 		AmmoCondition: ammo
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 	ReloadAmmoPoolCA:
 		Delay: 300
 		Count: 8
@@ -1507,10 +1525,10 @@ KIRO:
 	Selectable:
 		Bounds: 36,28,0,2
 		DecorationBounds: 40,40,0,1
-	SelfHealing:
+	ChangesHealth:
 		PercentageStep: 1
 		Delay: 25
-		HealIfBelow: 75
+		StartIfBelow: 75
 		DamageCooldown: 150
 	Voiced:
 		VoiceSet: KirovVoice
@@ -1602,8 +1620,6 @@ OCAR.Reinforce:
 	Aircraft:
 		IdealSeparation: 0c256
 	-Selectable:
-	SelectionDecorations:
-		RenderSelectionBars: False
 	-Voiced:
 	RejectsOrders:
 	Interactable:
@@ -1671,9 +1687,12 @@ HARR:
 		InitialStanceAI: AttackAnything
 	AmmoPool:
 		Ammo: 4
-		PipCount: 4
 		ReloadDelay: 60
 		AmmoCondition: ammo
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 	Contrail@1:
 		Offset: -400,-443,0
 		UsePlayerColor: false
@@ -1767,9 +1786,12 @@ SCRN:
 		InitialStanceAI: AttackAnything
 	AmmoPool:
 		Ammo: 9
-		PipCount: 3
 		ReloadDelay: 25
 		AmmoCondition: ammo
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 	Contrail@1:
 		Offset: -300,-143,0
 		Color: 00FF0080
@@ -1913,8 +1935,6 @@ YF23.Bomber:
 		Count: 2
 		ResetOnFire: true
 	-Selectable:
-	SelectionDecorations:
-		RenderSelectionBars: False
 	-Voiced:
 	RenderSprites:
 		Image: yf23
@@ -1971,8 +1991,7 @@ POD2:
 		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium
 	HiddenUnderFog:
 		Type: CenterPosition
-	BodyOrientation:
-		UseClassicPerspectiveFudge: False
+	ClassicFacingBodyOrientation:
 	RenderSprites:
 		Image: pod
 		PlayerPalette: overlayplayertd
@@ -1983,7 +2002,6 @@ POD2:
 	Cargo:
 		Types: Infantry
 		MaxWeight: 1
-		PipCount: 1
 		UnloadVoice: Move
 		EjectOnDeath: true
 	Interactable:
@@ -1992,8 +2010,8 @@ POD2:
 		MinDamage: Undamaged
 		Sprite: smokey2
 		Palette: tseffect-ignore-lighting-alpha75
-	CrashLanding:
-		Spins: False
+	FallsToEarth:
+		MaximumSpinSpeed: 0
 		Moves: True
 		Velocity: 113
 		Explosion: DropPodVisual
@@ -2053,9 +2071,12 @@ VENM:
 		PauseOnCondition: empdisable || being-warped
 	AmmoPool:
 		Ammo: 12
-		PipCount: 6
 		ReloadDelay: 16
 		AmmoCondition: ammo
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 	SpawnActorOnDeath:
 		Actor: VENM.Husk
 		RequiresCondition: airborne && ammo && !empdisable
@@ -2131,9 +2152,12 @@ AURO:
 		InitialStanceAI: AttackAnything
 	AmmoPool:
 		Ammo: 1
-		PipCount: 1
 		ReloadDelay: 240
 		AmmoCondition: ammo
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 	GrantConditionOnActivity@AFTERBURNER:
 		Condition: afterburner
 		ActiveSound: cjetband.aud

@@ -51,7 +51,7 @@ CRATE:
 	HideMapCrateAction:
 		SelectionShares: 5
 		Sequence: hide-map
-	HealUnitsCrateAction:
+	HealActorsCrateAction:
 		Sound: heal2.aud
 		SelectionShares: 2
 		Sequence: heal
@@ -202,7 +202,7 @@ HEALCRATE:
 	Inherits: ^Crate
 	Tooltip:
 		Name: Heal Crate
-	HealUnitsCrateAction:
+	HealActorsCrateAction:
 		Sound: heal2.aud
 		SelectionShares: 1
 		Sequence: heal
@@ -264,7 +264,6 @@ camera.sathack:
 camera.satscan:
 	Inherits: CAMERA
 	-RevealsShroud:
-	ConditionManager:
 	Buildable:
 		Queue: SpySatellite
 	Tooltip:
@@ -272,7 +271,7 @@ camera.satscan:
 	RevealsMap:
 		RevealGeneratedShroud: false
 		RequiresCondition: uplinkavailable
-		IncludeAllies: true
+		ValidRelationships: Ally
 	KillsSelf:
 		RemoveInstead: true
 		Delay: 375
@@ -302,7 +301,6 @@ gps.satellite:
 
 camera.cloud:
 	Interactable:
-	ConditionManager:
 	EditorOnlyTooltip:
 		Name: (support power)
 	RenderSprites:
@@ -409,7 +407,6 @@ MINE:
 		Categories: Resource spawn
 	RequiresSpecificOwners:
 		ValidOwnerNames: Neutral
-	ConditionManager:
 
 GMINE:
 	Inherits@1: ^SpriteActor
@@ -795,7 +792,6 @@ SPLIT2:
 	SeedsResourceCA:
 		ResourceType: Tiberium
 		Interval: 75
-	ConditionManager:
 	AppearsOnMapPreview:
 		Terrain: Tiberium
 	MapEditorData:
@@ -806,7 +802,6 @@ SPLIT3:
 	SeedsResourceCA:
 		ResourceType: Tiberium
 		Interval: 75
-	ConditionManager:
 	AppearsOnMapPreview:
 		Terrain: Tiberium
 	WithIdleAnimation:
@@ -831,7 +826,7 @@ SPLITBLUE:
 	MapEditorData:
 		Categories: Resource spawn
 
-gps.scrambler
+gps.scrambler:
 	Inherits@1: CAMERA
 	CreatesShroud:
 		Range: 9c512
@@ -847,4 +842,4 @@ gps.scrambler
 	ProximityExternalCondition@GPSSCRAMBLE:
 		Range: 9c512
 		Condition: gpsscramble
-		ValidStances: Enemy, Neutral
+		ValidRelationships: Enemy, Neutral
