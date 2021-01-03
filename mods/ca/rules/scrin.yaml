@@ -1022,6 +1022,7 @@ SMCV:
 		Prerequisites: repair, ~vehicles.scrin, ~techlevel.infonly
 		IconPalette: chrome
 		Description: Deploys into another Colony Platform.\n  Unarmed
+		BuildDurationModifier: 50
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
@@ -1925,8 +1926,7 @@ REA2:
 
 PROC.SCRIN:
 	Inherits: ^ScrinBuilding
-	Inherits@2: ^ConfigurableIncome
-	Inherits@3: ^BotIncome
+	Inherits@2: ^BotIncome
 	HitShape:
 		Type: Rectangle
 			TopLeft: -1536, -512
@@ -1936,9 +1936,9 @@ PROC.SCRIN:
 			TopLeft: -512, -1450
 			BottomRight: 896, -512
 	Valued:
-		Cost: 2000
+		Cost: 1800
 	CustomSellValue:
-		Value: 300
+		Value: 400
 	Tooltip:
 		Name: Refinery
 	Buildable:
@@ -1947,6 +1947,7 @@ PROC.SCRIN:
 		Queue: Building
 		IconPalette: scrin
 		Description: Processes raw Tiberium, Ore and Gems\ninto credits.
+		BuildDuration: 1400
 	Building:
 		Footprint: _x_ xxx === ===
 		Dimensions: 3,4
