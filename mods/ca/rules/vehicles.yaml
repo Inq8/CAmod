@@ -72,7 +72,7 @@ KATY:
 		Type: Light
 	Mobile:
 		Speed: 68
-		TurnSpeed: 4
+		TurnSpeed: 16
 	RevealsShroud:
 		Range: 5c0
 	Armament:
@@ -134,7 +134,7 @@ KATY:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 7
+		TurnSpeed: 28
 	Armament:
 		Weapon: 25mm
 		Recoil: 85
@@ -181,7 +181,7 @@ KATY:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Offset: 0,0,20
 	QuantizeFacingsFromSequence:
 		Sequence: idle
@@ -316,12 +316,12 @@ KATY:
 		RequiresCondition: !scrin
 	Turreted@SCRIN:
 		Turret: secondary
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Offset: 0,0,0
 		RequiresCondition: scrin
 	Turreted@TD:
 		Turret: tertiary
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Offset: 0,0,30
 		RequiresCondition: gdi || nod
 	AttackTurreted:
@@ -432,7 +432,7 @@ KATY:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Offset: 0,0,20
 	Armament:
 		Weapon: 125mm
@@ -497,7 +497,7 @@ KATY:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Offset: 0,0,20
 	Armament:
 		Weapon: 125mm
@@ -559,7 +559,7 @@ KATY:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 2
+		TurnSpeed: 8
 	Armament@PRIMARY:
 		Weapon: 130mm
 		LocalOffset: 900,180,340, 900,-180,340
@@ -641,7 +641,7 @@ KATY:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 2
+		TurnSpeed: 8
 	Armament@PRIMARY:
 		Weapon: 130mm
 		LocalOffset: 900,180,340, 900,-180,340
@@ -697,7 +697,7 @@ ARTY:
 	Armor:
 		Type: Light
 	Mobile:
-		TurnSpeed: 2
+		TurnSpeed: 8
 		Speed: 56
 		Locomotor: lighttracked
 	RevealsShroud:
@@ -746,7 +746,7 @@ HOWI:
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	Turreted:
-		TurnSpeed: 2
+		TurnSpeed: 8
 	Armament:
 		Weapon: 155mmTDM
 	Mobile:
@@ -846,7 +846,7 @@ ISU:
 	Armor:
 		Type: Heavy
 	Mobile:
-		TurnSpeed: 2
+		TurnSpeed: 8
 		Speed: 56
 		Locomotor: heavytracked
 		Voice: Move
@@ -894,7 +894,7 @@ SPEC:
 	Health:
 		HP: 11000
 	Mobile:
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Speed: 100
 	Armament:
 		Weapon: 155mmSpec
@@ -1101,7 +1101,7 @@ JEEP:
 	Armor:
 		Type: Light
 	Mobile:
-		TurnSpeed: 10
+		TurnSpeed: 40
 		Speed: 157
 	RevealsShroud:
 		MinRange: 4c0
@@ -1110,7 +1110,7 @@ JEEP:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 10
+		TurnSpeed: 40
 		Offset: 0,0,128
 	Armament:
 		Weapon: M60mg
@@ -1455,7 +1455,7 @@ DTRK:
 		EmptyWeapon: MiniNuke
 		DamageSource: Killer
 	AttackFrontal:
-		FacingTolerance: 128
+		FacingTolerance: 512
 		Voice: Attack
 	Armament@PRIMARY:
 		Weapon: DemoTruckTargeting
@@ -1631,7 +1631,7 @@ HMMV:
 	Armor:
 		Type: Light
 	Mobile:
-		TurnSpeed: 10
+		TurnSpeed: 40
 		Speed: 157
 	RevealsShroud:
 		MinRange: 4c0
@@ -1640,7 +1640,7 @@ HMMV:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 10
+		TurnSpeed: 40
 		Offset: -85,0,128
 	Armament:
 		Weapon: M60mgTD
@@ -1690,7 +1690,7 @@ BGGY:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 10
+		TurnSpeed: 40
 		Offset: -43,0,128
 	Armament:
 		Weapon: M60mgTD
@@ -1838,7 +1838,7 @@ APC2:
 		Armaments: primary-upg, secondary-upg
 		RequiresCondition: vulcan-upgrade
 	Turreted:
-		TurnSpeed: 7
+		TurnSpeed: 28
 		Offset: 0,0,150
 		RequiresCondition: vulcan-upgrade
 	WithSpriteTurret:
@@ -2011,7 +2011,7 @@ VULC:
 		PauseOnCondition: empdisable || being-warped
 		Armaments: primary, secondary
 	Turreted:
-		TurnSpeed: 7
+		TurnSpeed: 28
 		Offset: 0,0,150
 	WithMuzzleOverlay:
 	WithSpriteTurret:
@@ -2079,7 +2079,7 @@ LTNK:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 7
+		TurnSpeed: 28
 	Armament:
 		Weapon: 30mm
 		Recoil: 85
@@ -2138,12 +2138,12 @@ MTNK:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Offset: 0,0,30
 	Turreted@SECONDARY:
 		Turret: secondary
 		Offset: 0,0,40
-		TurnSpeed: 255
+		TurnSpeed: 512
 	Armament:
 		Weapon: 120mm
 		Recoil: 128
@@ -2242,7 +2242,7 @@ MTNK.Drone:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Offset: 0,0,20
 	Armament:
 		Weapon: 90mm
@@ -2327,7 +2327,7 @@ HTNK:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 2
+		TurnSpeed: 8
 	Armament@PRIMARY:
 		Weapon: 130mmTD
 		LocalOffset: 900,180,340, 900,-180,340
@@ -2396,7 +2396,7 @@ HTNK.Ion:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 2
+		TurnSpeed: 8
 	Armament@PRIMARY:
 		Weapon: IonZap
 		LocalOffset: 870,0,360
@@ -2499,7 +2499,7 @@ MSAM:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Offset: -256,0,128
 	AttackTurreted:
 		TargetFrozenActors: True
@@ -2597,7 +2597,7 @@ MLRS:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 2
+		TurnSpeed: 8
 		Offset: -128,0,128
 		RealignDelay: 0
 	Armament:
@@ -2689,7 +2689,7 @@ STNK.Nod:
 		Weapon: StnkMissileAA
 		LocalOffset: 213,43,128, 213,-43,128
 	Turreted:
-		TurnSpeed: 10
+		TurnSpeed: 40
 		Offset: 0,0,10
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
@@ -2722,7 +2722,7 @@ BIKE:
 		IconPalette: chrometd
 		Description: Fast scout vehicle, armed with\nrockets.\n  Can attack Aircraft.\n  Strong vs Tanks, Buildings\n  Weak vs Infantry
 	Mobile:
-		TurnSpeed: 10
+		TurnSpeed: 40
 		Speed: 180
 	Health:
 		HP: 11000
@@ -2899,7 +2899,7 @@ BTR:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 10
+		TurnSpeed: 40
 		Offset: 5,0,70
 	Armament@1:
 		Weapon: FLAK-23-AG
@@ -2968,7 +2968,7 @@ IFV:
 		Range: 4c0
 		RequiresCondition: spyturr
 	Turreted:
-		TurnSpeed: 10
+		TurnSpeed: 40
 		Offset: 20,0,0
 	Armament@Default:
 		Weapon: IFVRockets
@@ -3220,7 +3220,7 @@ IFV.AI:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 10
+		TurnSpeed: 40
 		Offset: 20,0,0
 	Armament@Default:
 		Weapon: IFVRockets
@@ -3354,7 +3354,7 @@ TITN:
 		Recoil: 43
 		MuzzleSequence: muzzle
 	Turreted:
-		TurnSpeed: 3
+		TurnSpeed: 12
 		Offset: 0,0,0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
@@ -3502,7 +3502,7 @@ DISR:
 	Armor:
 		Type: Heavy
 	Mobile:
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 56
 		Voice: Move
 	Passenger:
@@ -3551,7 +3551,7 @@ DISR:
 		LocalOffset: 0,0,200
 		RequiresCondition: seek && sonic-upgrade
 	Turreted:
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Offset: -300,0,0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
@@ -3618,7 +3618,7 @@ HSAM:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Offset: -200,0,0
 	Hovers:
 		BobDistance: -35
@@ -3745,7 +3745,7 @@ RTNK:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 5
+		TurnSpeed: 20
 	Armament:
 		Weapon: 120mmHEAT
 		Recoil: 128
@@ -3772,7 +3772,7 @@ RTNK:
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Move, Damage, Heal, SelfHeal
 		Palette: player
 		IsPlayerPalette: false
-		RequiresCondition: !cloak-force-disabled && !invisibility && !driver-dead
+		RequiresCondition: !cloak-force-disabled && !invisibility && !driver-dead && !empdisable && !being-warped
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	GrantConditionOnDamageState@UNCLOAK:
@@ -3813,9 +3813,9 @@ V3RL:
 		Type: Light
 	Mobile:
 		Speed: 56
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Voice: Move
-		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead
+		PauseOnCondition: launching || being-captured || empdisable || being-warped || driver-dead
 	Passenger:
 		Voice: Move
 	RevealsShroud:
@@ -3838,14 +3838,15 @@ V3RL:
 		RequiresCondition: !loaded
 		Sequence: empty-idle
 		Name: reloading
-	GrantConditionOnAttack:
-		Condition: aiming
-		RevokeDelay: 50
-		RevokeAll: false
 	MissileSpawnerMaster:
 		Actors: V3
 		RespawnTicks: 250
 		LoadedCondition: loaded
+		LaunchingCondition: launching
+	WithSpawnerMasterPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 	Explodes:
 		Weapon: BarrelExplode
 	ProducibleWithLevel:
@@ -3871,9 +3872,9 @@ V3:
 	Health:
 		HP: 7500
 	BallisticMissile:
-		LaunchAngle: 95
+		LaunchAngle: 128
 		Speed: 165
-	LeavesTrails:
+	LeavesTrailsCA:
 		Image: smokey2
 		Palette: tseffect-ignore-lighting-alpha75
 		MovingInterval: 3
@@ -3911,7 +3912,7 @@ TNKD:
 		Type: Heavy
 	Mobile:
 		Speed: 68
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Voice: Move
 	Passenger:
 		Voice: Move
@@ -3922,7 +3923,7 @@ TNKD:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 2
+		TurnSpeed: 8
 		Offset: -80,0,20
 	Armament:
 		Weapon: 183mm
@@ -4081,7 +4082,7 @@ PTNK:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Offset: 100,0,0
 	Armament:
 		Weapon: PrisTLaser
@@ -4164,7 +4165,7 @@ WTNK:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Offset: 0,0,0
 	Armament@PRIMARY:
 		Weapon: MicrowaveZap
@@ -4229,7 +4230,7 @@ BATF:
 		Speed: 50
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 		Voice: Move
-		TurnSpeed: 2
+		TurnSpeed: 8
 	Passenger:
 		Weight: 2
 		Voice: Move
@@ -4240,7 +4241,7 @@ BATF:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	AttackFrontal:
-		FacingTolerance: 5
+		FacingTolerance: 512
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !(loaded || loaded-air)
 		Voice: Attack
@@ -4455,7 +4456,7 @@ CDRN:
 		EmptyWeapon: VisualExplodeHusk
 		LoadedChance: 50
 	AttackFrontal:
-		FacingTolerance: 128
+		FacingTolerance: 512
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
 	Armament@PRIMARY:
@@ -4536,7 +4537,7 @@ CHPR:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 2
+		TurnSpeed: 8
 		Offset: -156,0,0
 	Armament@PRIMARY:
 		Weapon: NeutronCannon
@@ -4611,7 +4612,7 @@ CRYO:
 		Description: Long-range support artillery that slows enemies\nand makes them take more damage.\n  Strong vs Infantry, Vehicles, Buildings\n  Weak vs Aircraft
 	Mobile:
 		Speed: 82
-		TurnSpeed: 4
+		TurnSpeed: 16
 	Health:
 		HP: 26000
 	Armor:

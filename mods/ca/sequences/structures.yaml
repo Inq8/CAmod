@@ -541,7 +541,10 @@ fix:
 
 gun:
 	Inherits: ^StructureOverlays
-	idle: gun
+	idle: gunmake # Empty first frame. We need WithSpriteBody for the make anim, and WSB needs at least a placeholder default sequence to work
+	make: gunmake
+		Length: *
+	turret:
 		Facings: 32
 		UseClassicFacingFudge: True
 	recoil: gun
@@ -550,7 +553,7 @@ gun:
 		UseClassicFacingFudge: True
 	make: gunmake
 		Length: *
-	damaged-idle: gun
+	damaged-turret: gun
 		Start: 64
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -570,7 +573,11 @@ gun:
 
 agun:
 	Inherits: ^StructureOverlays
-	idle: agun
+	idle: gunmake # Empty first frame (agunmake has no empty frames). We need WithSpriteBody for the make anim, and WSB needs at least a placeholder default sequence to work
+	make: agunmake
+		Length: *
+		Offset: 0,-13
+	turret:
 		Facings: 32
 		UseClassicFacingFudge: True
 		Offset: 0,-13
@@ -582,7 +589,7 @@ agun:
 	make: agunmake
 		Length: *
 		Offset: 0,-13
-	damaged-idle: agun
+	damaged-turret: agun
 		Start: 64
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -1310,6 +1317,9 @@ eye:
 	idle: eye
 		Length: 16
 		Tick: 100
+	active: eye
+		Length: 16
+		Tick: 100
 	damaged-idle: eye
 		Start: 16
 		Length: 16
@@ -1463,14 +1473,15 @@ silo2:
 
 gun2:
 	Inherits: ^StructureOverlays
-	idle: gun2
+	idle: gun2make # Empty first frame. We need WithSpriteBody for the make anim, and WSB needs at least a placeholder default sequence to work
+	turret: gun2
 		Facings: 32
 		UseClassicFacingFudge: True
 	recoil: gun2
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True
-	damaged-idle: gun2
+	damaged-turret: gun2
 		Start: 64
 		Facings: 32
 		UseClassicFacingFudge: True
@@ -1495,16 +1506,17 @@ gun2:
 	
 ltur:
 	Inherits: ^StructureOverlays
-	idle: ltur
-		Facings: 32
-		UseClassicFacingFudge: True
-	damaged-idle: ltur
-		Start: 32
-		Facings: 32
-		UseClassicFacingFudge: True
+	idle: gunmake # Empty first frame (agunmake has no empty frames). We need WithSpriteBody for the make anim, and WSB needs at least a placeholder default sequence to work
 	make: lturmake
 		Length: *
 		Tick: 80
+	turret:
+		Facings: 32
+		UseClassicFacingFudge: True
+	damaged-turret: ltur
+		Start: 32
+		Facings: 32
+		UseClassicFacingFudge: True
 	muzzle: gunfire2
 		Length: *
 	bib: mbGUN
@@ -1892,14 +1904,18 @@ sgen:
 	
 cram:
 	Inherits: ^StructureOverlays
-	idle: cram
+	idle: gunmake # Empty first frame (agunmake has no empty frames). We need WithSpriteBody for the make anim, and WSB needs at least a placeholder default sequence to work
+	make: agunmake
+		Length: *
+		Offset: 0,-13
+	turret:
 		Facings: 32
 		UseClassicFacingFudge: True
 		Offset: 0,-13
 	make: crammake
 		Length: *
 		Offset: 0,-13
-	damaged-idle: cram
+	damaged-turret: cram
 		Start: 32
 		Facings: 32
 		UseClassicFacingFudge: True

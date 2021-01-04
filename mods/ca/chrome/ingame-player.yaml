@@ -460,7 +460,7 @@ Container@PLAYER_WIDGETS:
 							ImageName: background-iconrow
 				Container@PRODUCTION_TYPES:
 					X: 7
-					Y: 2
+					Y: 0 - 2
 					Width: 29
 					Height: 240
 					Children:
@@ -481,7 +481,7 @@ Container@PLAYER_WIDGETS:
 									ImageCollection: production-icons
 						ProductionTypeButton@DEFENSE:
 							Logic: AddFactionSuffixLogic
-							Y: 31
+							Y: 27
 							Width: 28
 							Height: 28
 							VisualHeight: 0
@@ -497,7 +497,7 @@ Container@PLAYER_WIDGETS:
 									ImageCollection: production-icons
 						ProductionTypeButton@INFANTRY:
 							Logic: AddFactionSuffixLogic
-							Y: 62
+							Y: 54
 							Width: 28
 							Height: 28
 							VisualHeight: 0
@@ -513,7 +513,7 @@ Container@PLAYER_WIDGETS:
 									ImageCollection: production-icons
 						ProductionTypeButton@VEHICLE:
 							Logic: AddFactionSuffixLogic
-							Y: 93
+							Y: 81
 							Width: 28
 							Height: 28
 							VisualHeight: 0
@@ -529,7 +529,7 @@ Container@PLAYER_WIDGETS:
 									ImageCollection: production-icons
 						ProductionTypeButton@AIRCRAFT:
 							Logic: AddFactionSuffixLogic
-							Y: 124
+							Y: 108
 							Width: 28
 							Height: 28
 							VisualHeight: 0
@@ -545,7 +545,7 @@ Container@PLAYER_WIDGETS:
 									ImageCollection: production-icons
 						ProductionTypeButton@NAVAL:
 							Logic: AddFactionSuffixLogic
-							Y: 155
+							Y: 135
 							Width: 28
 							Height: 28
 							VisualHeight: 0
@@ -559,9 +559,25 @@ Container@PLAYER_WIDGETS:
 									X: 6
 									Y: 6
 									ImageCollection: production-icons
+						ProductionTypeButton@UPGRADE:
+							Logic: AddFactionSuffixLogic
+							Y: 162
+							Width: 28
+							Height: 28
+							VisualHeight: 0
+							Background: sidebar-button
+							TooltipText: Upgrades
+							TooltipContainer: TOOLTIP_CONTAINER
+							ProductionGroup: Upgrade
+							Key: ProductionTypeUpgrade
+							Children:
+								Image@ICON:
+									X: 6
+									Y: 6
+									ImageCollection: production-icons
 						Button@SCROLL_UP_BUTTON:
 							Logic: AddFactionSuffixLogic
-							Y: 186
+							Y: 189
 							Width: 28
 							Height: 22
 							VisualHeight: 0
@@ -576,7 +592,7 @@ Container@PLAYER_WIDGETS:
 									ImageName: up
 						Button@SCROLL_DOWN_BUTTON:
 							Logic: AddFactionSuffixLogic
-							Y: 211
+							Y: 214
 							Width: 28
 							Height: 22
 							VisualHeight: 0

@@ -380,7 +380,7 @@ GUNW:
 		Type: Light
 	Mobile:
 		Speed: 113
-		TurnSpeed: 8
+		TurnSpeed: 32
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -454,7 +454,7 @@ SEEK:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 10
+		TurnSpeed: 40
 		Offset: -280,0,0
 	Hovers:
 		BobDistance: -25
@@ -506,7 +506,7 @@ LACE:
 		Description: Fast hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles, Buildings\n  Weak vs Aircraft, Infantry
 		IconPalette: chrome
 	Mobile:
-		TurnSpeed: 10
+		TurnSpeed: 40
 		Speed: 135
 	LeavesTrails:
 		Image: twake
@@ -526,7 +526,7 @@ LACE:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 10
+		TurnSpeed: 40
 		Offset: -50,0,0
 	Hovers:
 		BobDistance: -25
@@ -576,7 +576,7 @@ INTL:
 	Mobile:
 		Speed: 118
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
-		TurnSpeed: 4
+		TurnSpeed: 12
 	Health:
 		HP: 44000
 	Armor:
@@ -642,7 +642,7 @@ CORR:
 		IconPalette: chrome
 	Mobile:
 		Speed: 82
-		TurnSpeed: 4
+		TurnSpeed: 16
 	Health:
 		HP: 45000
 	Armor:
@@ -695,7 +695,7 @@ STCR:
 		IconPalette: scrin
 	Mobile:
 		Speed: 68
-		TurnSpeed: 3
+		TurnSpeed: 12
 	Health:
 		HP: 42000
 	Armor:
@@ -787,7 +787,7 @@ DEVO:
 	Armor:
 		Type: Light
 	Mobile:
-		TurnSpeed: 255
+		TurnSpeed: 512
 		Speed: 82
 	Hovers:
 		BobDistance: -25
@@ -804,7 +804,7 @@ DEVO:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Turreted:
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Offset: 0,0,0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
@@ -840,7 +840,7 @@ DARK:
 	Armor:
 		Type: Heavy
 	Mobile:
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 68
 	RevealsShroud:
 		MinRange: 4c0
@@ -857,7 +857,7 @@ DARK:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Turreted:
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Offset: 0,0,0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
@@ -893,7 +893,7 @@ RUIN:
 		IconPalette: chrome
 	Mobile:
 		Speed: 100
-		TurnSpeed: 255
+		TurnSpeed: 512
 	Health:
 		HP: 15000
 	Armor:
@@ -922,7 +922,7 @@ RUIN:
 		Offset: 43, 128, 0
 		ZOffset: -129
 	Turreted:
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Offset: 0,0,0
 	AttackTurreted:
 		ForceFireIgnoresActors: True
@@ -959,7 +959,7 @@ TPOD:
 	Mobile:
 		Locomotor: heavytracked
 		Speed: 56
-		TurnSpeed: 255
+		TurnSpeed: 512
 	Passenger:
 		Weight: 3
 	RevealsShroud:
@@ -991,7 +991,7 @@ TPOD:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Turreted:
-		TurnSpeed: 3
+		TurnSpeed: 12
 		Offset: 0,0,0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
@@ -1061,7 +1061,7 @@ SMCV:
 	Mobile:
 		Speed: 56
 		Locomotor: heavywheeled
-		TurnSpeed: 255
+		TurnSpeed: 512
 	RevealsShroud:
 		Range: 4c0
 	Transforms:
@@ -1135,7 +1135,7 @@ STMR:
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Speed: 180
 		RepulsionSpeed: 40
 		MaximumPitch: 56
@@ -1176,6 +1176,7 @@ STMR:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
+		PipCount: 4
 	ReloadAmmoPool:
 		Delay: 175
 		Count: 4
@@ -1242,7 +1243,7 @@ DEVA:
 	Aircraft:
 		CruiseAltitude: 2c0
 		InitialFacing: 192
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 56
 		AltitudeVelocity: 0c50
 		CanForceLand: False
@@ -1329,7 +1330,7 @@ PAC:
 	Aircraft:
 		CruiseAltitude: 2c0
 		InitialFacing: 192
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 49
 		AltitudeVelocity: 0c50
 		CanForceLand: False
@@ -1360,11 +1361,15 @@ PAC:
 		Actors: inva, inva, inva, inva
 		RearmTicks: 0
 		RespawnTicks: 500
-		InstaRepair: true
+		InstantRepair: true
 		SlaveDisposalOnKill: KillSlaves
 		SpawnAllAtOnce: false
 		LoadedCondition: inva-loaded
 		RequiresCondition: !empdisable && !being-warped
+	WithSpawnerMasterPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 	Exit@0:
 		SpawnOffset: -100,0,0
 		Facing: 60
@@ -1437,14 +1442,14 @@ INVA:
 		Weapon: InvaderZapAA
 		PauseOnCondition: !ammo
 	AttackAircraft:
-		FacingTolerance: 20
+		FacingTolerance: 80
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2c0
 		InitialFacing: 192
-		TurnSpeed: 8
+		TurnSpeed: 32
 		Speed: 220
 		MaximumPitch: 56
 		CanHover: False
@@ -1638,7 +1643,7 @@ STMR.Husk:
 	Tooltip:
 		Name: Stormrider
 	Aircraft:
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 170
 	SmokeTrailWhenDamaged:
 		Offset: -427,0,0
@@ -1665,7 +1670,7 @@ DEVA.Husk:
 	Tooltip:
 		Name: Devastator Warship
 	Aircraft:
-		TurnSpeed: 2
+		TurnSpeed: 8
 		Speed: 30
 	FallsToEarth:
 		MaximumSpinSpeed: 0
@@ -1686,7 +1691,7 @@ PAC.Husk:
 	Tooltip:
 		Name: Planetary Assault Carrier
 	Aircraft:
-		TurnSpeed: 2
+		TurnSpeed: 8
 		Speed: 30
 	FallsToEarth:
 		MaximumSpinSpeed: 0
@@ -1707,7 +1712,7 @@ INVA.Husk:
 	Tooltip:
 		Name: Invader
 	Aircraft:
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 149
 	RevealsShroud:
 		Range: 12c0
@@ -2796,6 +2801,7 @@ RIFT:
 		TargetCircleColor: 0000FF90
 		Duration: 425
 		ActiveCondition: active
+		PaletteEffectType: LightningStorm
 	WithIdleOverlay@ACTIVE:
 		Sequence: active-overlay
 		Palette: scrin
@@ -3081,8 +3087,11 @@ camera.rift:
 		HP: 1
 	PeriodicExplosion:
 		Weapon: Rift
-	Immobile:
-		OccupiesSpace: false
+	Mobile:
+		Locomotor: cloud
+		AlwaysTurnInPlace: true
+		Speed: 7
+	Wanders:
 	AmbientSound:
 		SoundFiles: rift1.aud, rift2.aud, rift3.aud
 		Interval: 50

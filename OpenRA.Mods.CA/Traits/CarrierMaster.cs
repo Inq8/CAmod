@@ -143,7 +143,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (spawnContainTokens.TryGetValue(a.Info.Name, out var spawnContainToken) && spawnContainToken.Any())
 				self.RevokeCondition(spawnContainToken.Pop());
 
-			if (loadedTokens.Any())
+			if (loadedTokens.Any() && CarrierMasterInfo.LoadedCondition != null)
 				self.RevokeCondition(loadedTokens.Pop());
 
 			// Lambdas can't use 'in' variables, so capture a copy for later
@@ -211,7 +211,8 @@ namespace OpenRA.Mods.CA.Traits
 			if (CarrierMasterInfo.SpawnContainConditions.TryGetValue(a.Info.Name, out var spawnContainCondition))
 				spawnContainTokens.GetOrAdd(a.Info.Name).Push(self.GrantCondition(spawnContainCondition));
 
-			loadedTokens.Push(self.GrantCondition(CarrierMasterInfo.LoadedCondition));
+			if (CarrierMasterInfo.LoadedCondition != null)
+				loadedTokens.Push(self.GrantCondition(CarrierMasterInfo.LoadedCondition));
 		}
 
 		public override void Replenish(Actor self, BaseSpawnerSlaveEntry entry)
@@ -221,7 +222,8 @@ namespace OpenRA.Mods.CA.Traits
 			if (CarrierMasterInfo.SpawnContainConditions.TryGetValue(entry.Actor.Info.Name, out var spawnContainCondition))
 				spawnContainTokens.GetOrAdd(entry.Actor.Info.Name).Push(self.GrantCondition(spawnContainCondition));
 
-			loadedTokens.Push(self.GrantCondition(CarrierMasterInfo.LoadedCondition));
+			if (CarrierMasterInfo.LoadedCondition != null)
+				loadedTokens.Push(self.GrantCondition(CarrierMasterInfo.LoadedCondition));
 		}
 
 		void ITick.Tick(Actor self)

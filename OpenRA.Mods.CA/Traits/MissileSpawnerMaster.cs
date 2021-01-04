@@ -145,8 +145,8 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (MissileSpawnerMasterInfo.SpawnContainConditions.TryGetValue(entry.Actor.Info.Name, out spawnContainCondition))
 				spawnContainTokens.GetOrAdd(entry.Actor.Info.Name).Push(self.GrantCondition(spawnContainCondition));
-
-			loadedTokens.Push(self.GrantCondition(MissileSpawnerMasterInfo.LoadedCondition));
+			if (MissileSpawnerMasterInfo.LoadedCondition != null)
+				loadedTokens.Push(self.GrantCondition(MissileSpawnerMasterInfo.LoadedCondition));
 		}
 
 		void ITick.Tick(Actor self)

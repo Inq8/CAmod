@@ -8,7 +8,7 @@ BADR:
 		HP: 40000
 	Aircraft:
 		CruiseAltitude: 2560
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Speed: 180
 		Repulsable: False
 		MaximumPitch: 56
@@ -46,7 +46,7 @@ BADR.Bomber:
 		HP: 40000
 	Aircraft:
 		CruiseAltitude: 2560
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Speed: 180
 		Repulsable: False
 		MaximumPitch: 56
@@ -103,7 +103,7 @@ B2B:
 		HP: 36000
 	Aircraft:
 		CruiseAltitude: 2560
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Speed: 180
 		Repulsable: False
 		MaximumPitch: 56
@@ -184,14 +184,14 @@ MIG:
 		PauseOnCondition: !ammo
 		Name: secondary
 	AttackAircraft:
-		FacingTolerance: 20
+		FacingTolerance: 80
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 225
 		RepulsionSpeed: 40
 		MaximumPitch: 56
@@ -282,14 +282,14 @@ SUK:
 		PauseOnCondition: !ammo
 		RequiresCondition: cluster-upgrade
 	AttackAircraft:
-		FacingTolerance: 20
+		FacingTolerance: 80
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 225
 		RepulsionSpeed: 40
 		MaximumPitch: 56
@@ -383,14 +383,14 @@ YAK:
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
 	AttackAircraft:
-		FacingTolerance: 20
+		FacingTolerance: 80
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 180
 		RepulsionSpeed: 40
 		MaximumPitch: 56
@@ -405,6 +405,7 @@ YAK:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
+		PipCount: 6
 	WithMuzzleOverlay:
 	SpawnActorOnDeath:
 		Actor: YAK.Husk
@@ -454,7 +455,7 @@ TRAN:
 		Range: 6c0
 		Type: GroundPosition
 	Aircraft:
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Speed: 135
 		AltitudeVelocity: 0c58
 		TakeoffSounds: htoff1.aud
@@ -497,7 +498,7 @@ TRAN.paradrop:
 	Health:
 		HP: 36000
 	Aircraft:
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Speed: 135
 		AltitudeVelocity: 0c100
 	WithIdleOverlay@ROTOR1AIR:
@@ -568,13 +569,13 @@ HELI:
 		LocalOffset: 0,213,-85, 0,-213,-85
 		PauseOnCondition: !ammo
 	AttackAircraft:
-		FacingTolerance: 20
+		FacingTolerance: 80
 		AttackType: Hover
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 180
 		TakeoffSounds: htoff1.aud
 		LandingSounds: hland1.aud
@@ -597,6 +598,7 @@ HELI:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
+		PipCount: 4
 	SpawnActorOnDeath:
 		Actor: HELI.Husk
 		RequiresCondition: ammo && !empdisable
@@ -649,13 +651,13 @@ HIND:
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
 	AttackAircraft:
-		FacingTolerance: 20
+		FacingTolerance: 80
 		AttackType: Hover
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 135
 		TakeoffSounds: htoff1.aud
 		LandingSounds: hland1.aud
@@ -708,7 +710,7 @@ U2:
 		Name: Spy Plane
 	Aircraft:
 		CruiseAltitude: 2560
-		TurnSpeed: 7
+		TurnSpeed: 28
 		Speed: 473
 		Repulsable: False
 		MaximumPitch: 56
@@ -760,7 +762,7 @@ U2.Bomber:
 		Type: Heavy
 	Aircraft:
 		CruiseAltitude: 2260
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Speed: 243
 		Repulsable: True
 		MaximumPitch: 56
@@ -784,7 +786,7 @@ U2.Bomber:
 		Color: cc550080
 		TrailLength: 10
 	AttackAircraft:
-		FacingTolerance: 20
+		FacingTolerance: 80
 		PersistentTargeting: false
 		OpportunityFire: false
 	Armament:
@@ -845,7 +847,7 @@ A10:
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 180
 		RepulsionSpeed: 40
 		MaximumPitch: 56
@@ -904,7 +906,7 @@ A10.bomber:
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 180
 		RepulsionSpeed: 40
 		MaximumPitch: 56
@@ -958,7 +960,7 @@ C17:
 		Type: Heavy
 	Aircraft:
 		CruiseAltitude: 2560
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Speed: 236
 		LandingSounds: vc130diva.aud, vc130divb.aud
 		Repulsable: False
@@ -1061,7 +1063,7 @@ APCH:
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
 	AttackAircraft:
-		FacingTolerance: 20
+		FacingTolerance: 80
 		AttackType: Hover
 		PersistentTargeting: false
 		OpportunityFire: false
@@ -1074,6 +1076,7 @@ APCH:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
+		PipCount: 6
 	WithIdleOverlay@ROTORAIR:
 		Offset: 0,0,85
 		Sequence: rotor
@@ -1146,7 +1149,7 @@ ORCA:
 		LocalOffset: 0,213,-85, 0,-213,-85
 		PauseOnCondition: !ammo
 	AttackAircraft:
-		FacingTolerance: 20
+		FacingTolerance: 80
 		AttackType: Hover
 		PersistentTargeting: false
 		OpportunityFire: false
@@ -1159,6 +1162,7 @@ ORCA:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
+		PipCount: 4
 	SpawnActorOnDeath:
 		Actor: ORCA.Husk
 		RequiresCondition: ammo && !empdisable
@@ -1217,7 +1221,7 @@ ORCB:
 		LocalOffset: 2,-256,-43, 2,256,-43
 		PauseOnCondition: !ammo
 	AttackAircraft:
-		FacingTolerance: 20
+		FacingTolerance: 80
 		Voice: Attack
 		PersistentTargeting: false
 		OpportunityFire: false
@@ -1225,7 +1229,7 @@ ORCB:
 	Aircraft:
 		CruiseAltitude: 2560
 		AltitudeVelocity: 0c120
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 180
 		RepulsionSpeed: 40
 		MaximumPitch: 56
@@ -1282,7 +1286,7 @@ UAV:
 		Type: Heavy
 	Aircraft:
 		CruiseAltitude: 2560
-		TurnSpeed: 7
+		TurnSpeed: 28
 		Speed: 113
 		Repulsable: False
 		MaximumPitch: 56
@@ -1350,7 +1354,7 @@ RAH:
 		LocalOffset: 0,-213,-85, 0,213,-85
 		PauseOnCondition: !ammo
 	AttackAircraft:
-		FacingTolerance: 20
+		FacingTolerance: 80
 		AttackType: Hover
 		Voice: Attack
 		PersistentTargeting: false
@@ -1358,7 +1362,7 @@ RAH:
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		AltitudeVelocity: 0c100
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 180
 		TakeoffSounds: htoff1.aud
 		LandingSounds: hland1.aud
@@ -1395,6 +1399,7 @@ RAH:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
+		PipCount: 4
 	SpawnActorOnDeath:
 		Actor: RAH.Husk
 		RequiresCondition: ammo && !empdisable
@@ -1472,6 +1477,7 @@ KIRO:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
+		PipCount: 4
 	ReloadAmmoPoolCA:
 		Delay: 300
 		Count: 8
@@ -1487,7 +1493,7 @@ KIRO:
 	Aircraft:
 		CruiseAltitude: 2c0
 		InitialFacing: 192
-		TurnSpeed: 3
+		TurnSpeed: 12
 		Speed: 56
 		Voice: Move
 		AltitudeVelocity: 0c50
@@ -1571,12 +1577,12 @@ OCAR:
 	Aircraft:
 		AltitudeVelocity: 0c100
 		IdealSeparation: 0c768
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 135
 		TakeoffSounds: dropup1.aud
 		LandingSounds: dropdwn1.aud
 		Repulsable: True
-		IdleTurnSpeed: 1
+		IdleTurnSpeed: 4
 		Voice: Move
 	Carryall:
 		BeforeLoadDelay: 10
@@ -1664,14 +1670,14 @@ HARR:
 		LocalOffset: 0,213,-85, 0,-213,-85
 		PauseOnCondition: !ammo
 	AttackAircraft:
-		FacingTolerance: 20
+		FacingTolerance: 80
 		Voice: Attack
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 201
 		RepulsionSpeed: 40
 		MaximumPitch: 56
@@ -1763,14 +1769,14 @@ SCRN:
 		LocalOffset: 0,213,-85, 0,-213,-85
 		PauseOnCondition: !ammo
 	AttackAircraft:
-		FacingTolerance: 20
+		FacingTolerance: 80
 		Voice: Attack
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Speed: 225
 		RepulsionSpeed: 40
 		MaximumPitch: 56
@@ -1792,6 +1798,7 @@ SCRN:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
+		PipCount: 3
 	Contrail@1:
 		Offset: -300,-143,0
 		Color: 00FF0080
@@ -1848,14 +1855,14 @@ HORN:
 		Weapon: HellfireAG.Horn
 		PauseOnCondition: !ammo
 	AttackAircraft:
-		FacingTolerance: 20
+		FacingTolerance: 80
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 1c513
 		InitialFacing: 192
-		TurnSpeed: 8
+		TurnSpeed: 32
 		Speed: 195
 		MaximumPitch: 56
 		CanHover: False
@@ -1921,8 +1928,8 @@ YF23.Bomber:
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
-		TurnSpeed: 4
-		IdleTurnSpeed: 2
+		TurnSpeed: 16
+		IdleTurnSpeed: 8
 		Speed: 240
 		RepulsionSpeed: 40
 		MaximumPitch: 56
@@ -1982,7 +1989,7 @@ POD2:
 	Armor:
 		Type: Light
 	Aircraft:
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Speed: 300
 		CruiseAltitude: 8000
 		MaximumPitch: 110
@@ -2041,7 +2048,7 @@ VENM:
 		Description: VTOL gunship armed\nwith laser.\n  Strong vs Infantry, Light Armor, Aircraft\n  Weak vs Tanks, Buildings
 	Aircraft:
 		AltitudeVelocity: 0c100
-		TurnSpeed: 5
+		TurnSpeed: 20
 		TakeoffSounds: orcaup1.aud
 		LandingSounds: orcadwn1.aud
 		Speed: 201
@@ -2077,6 +2084,7 @@ VENM:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
+		PipCount: 6
 	SpawnActorOnDeath:
 		Actor: VENM.Husk
 		RequiresCondition: airborne && ammo && !empdisable
@@ -2141,7 +2149,7 @@ AURO:
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 180
 		RepulsionSpeed: 40
 		MaximumPitch: 56

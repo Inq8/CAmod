@@ -19,7 +19,7 @@ SS:
 	Armor:
 		Type: Light
 	Mobile:
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 52
 	RevealsShroud:
 		MinRange: 5c0
@@ -82,7 +82,7 @@ MSUB:
 	Armor:
 		Type: Light
 	Mobile:
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 45
 	RevealsShroud:
 		MinRange: 5c0
@@ -125,7 +125,7 @@ DD:
 	Armor:
 		Type: Heavy
 	Mobile:
-		TurnSpeed: 7
+		TurnSpeed: 28
 		Speed: 52
 	RevealsShroud:
 		MinRange: 5c0
@@ -135,7 +135,7 @@ DD:
 		Range: 5c0
 	Turreted@PRIMARY:
 		Turret: primary
-		TurnSpeed: 7
+		TurnSpeed: 28
 		Offset: 469,0,128
 	Turreted@SECONDARY:
 		Turret: secondary
@@ -192,7 +192,7 @@ CA:
 	Armor:
 		Type: Heavy
 	Mobile:
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 28
 	RevealsShroud:
 		MinRange: 5c0
@@ -203,11 +203,11 @@ CA:
 	Turreted@PRIMARY:
 		Turret: primary
 		Offset: -896,0,128
-		TurnSpeed: 3
+		TurnSpeed: 12
 	Turreted@SECONDARY:
 		Turret: secondary
 		Offset: 768,0,128
-		TurnSpeed: 3
+		TurnSpeed: 12
 	Armament@PRIMARY:
 		Turret: primary
 		Weapon: 8Inch
@@ -302,7 +302,7 @@ PT:
 	Armor:
 		Type: Heavy
 	Mobile:
-		TurnSpeed: 7
+		TurnSpeed: 28
 		Speed: 82
 	RevealsShroud:
 		MinRange: 5c0
@@ -311,7 +311,7 @@ PT:
 	RevealsShroud@GAPGEN:
 		Range: 5c0
 	Turreted:
-		TurnSpeed: 7
+		TurnSpeed: 28
 		Offset: 512,0,0
 	Armament@PRIMARY:
 		Weapon: 2Inch
@@ -356,7 +356,7 @@ PT2:
 	Armor:
 		Type: Heavy
 	Mobile:
-		TurnSpeed: 7
+		TurnSpeed: 28
 		Speed: 68
 	RevealsShroud:
 		MinRange: 5c0
@@ -365,7 +365,7 @@ PT2:
 	RevealsShroud@GAPGEN:
 		Range: 5c0
 	Turreted:
-		TurnSpeed: 7
+		TurnSpeed: 28
 		Offset: 512,0,0
 	Armament@PRIMARY:
 		Weapon: boatmissile
@@ -423,7 +423,7 @@ DD2:
 	Armor:
 		Type: Heavy
 	Mobile:
-		TurnSpeed: 7
+		TurnSpeed: 28
 		Speed: 56
 	RevealsShroud:
 		MinRange: 5c0
@@ -438,12 +438,12 @@ DD2:
 		RequiresCondition: !under-bridge
 	Turreted@PRIMARY:
 		Turret: primary
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Offset: 551,0,158
 	Turreted@SECONDARY:
 		Turret: secondary
 		Offset: 551,0,158
-		TurnSpeed: 255
+		TurnSpeed: 1024
 	Armament@PRIMARY:
 		Turret: primary
 		Weapon: Railgun
@@ -504,7 +504,7 @@ SS2:
 	Armor:
 		Type: Light
 	Mobile:
-		TurnSpeed: 5
+		TurnSpeed: 20
 		Speed: 56
 	RevealsShroud:
 		MinRange: 5c0
@@ -567,9 +567,9 @@ ISUB:
 	Armor:
 		Type: Light
 	Mobile:
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 30
-		PauseOnCondition: aiming || empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || launching
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 8c0
@@ -578,13 +578,15 @@ ISUB:
 		Range: 5c0
 	Armament@primary:
 		Weapon: ICBMLauncher
-	GrantConditionOnAttack:
-		Condition: aiming
-		RevokeDelay: 50
-		RevokeAll: false
 	MissileSpawnerMaster:
 		Actors: ICBM
 		RespawnTicks: 300
+		LaunchingCondition: launching
+		RequiresCondition: !empdisable && !being-warped
+	WithSpawnerMasterPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 	Exit:
 		SpawnOffset: 0,-128,0
 	AttackFrontal:
@@ -595,7 +597,7 @@ ISUB:
 	Selectable:
 		DecorationBounds: 44,44
 	Cloak:
-		PauseOnCondition: aiming || cloak-force-disabled || invisibility || being-warped || crossing-ford
+		PauseOnCondition: launching || cloak-force-disabled || invisibility || being-warped || crossing-ford
 
 ICBM:
 	Inherits: ^ShootableMissile
@@ -613,7 +615,7 @@ ICBM:
 	BallisticMissile:
 		LaunchAngle: 155
 		Speed: 140
-	LeavesTrails:
+	LeavesTrailsCA:
 		Image: smokey2
 		Palette: tseffect-ignore-lighting-alpha75
 		MovingInterval: 2
@@ -654,7 +656,7 @@ CARR:
 	RevealsShroud@GAPGEN:
 		Range: 5c0
 	Mobile:
-		TurnSpeed: 4
+		TurnSpeed: 16
 		Speed: 30
 		Voice: Move
 	WithIdleOverlay@SPINNER:
@@ -669,9 +671,14 @@ CARR:
 		Actors: horn, horn, horn
 		RearmTicks: 150
 		RespawnTicks: 500
-		InstaRepair: true
+		InstantRepair: true
 		SlaveDisposalOnKill: KillSlaves
 		SpawnAllAtOnce: false
+		RequiresCondition: !empdisable && !being-warped
+	WithSpawnerMasterPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
 	Exit@0:
 		SpawnOffset: 0,0,0
 		Facing: 0
@@ -717,7 +724,7 @@ SB:
 	Armor:
 		Type: Light
 	Mobile:
-		TurnSpeed: 10
+		TurnSpeed: 40
 		Speed: 100
 	RevealsShroud:
 		MinRange: 4c0
@@ -766,7 +773,7 @@ SEAS:
 	Armor:
 		Type: Heavy
 	Mobile:
-		TurnSpeed: 9
+		TurnSpeed: 36
 		Speed: 82
 	RevealsShroud:
 		MinRange: 5c0

@@ -160,49 +160,49 @@ SPEN:
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,-213,0
-		Facing: 96
+		Facing: 384
 		ExitCell: -1,2
 		ProductionTypes: Submarine
 	Exit@2:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,-213,0
-		Facing: 160
+		Facing: 640
 		ExitCell: 3,2
 		ProductionTypes: Submarine
 	Exit@3:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,0,0
-		Facing: 32
+		Facing: 128
 		ExitCell: 0,0
 		ProductionTypes: Submarine
 	Exit@4:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,0,0
-		Facing: 224
+		Facing: 896
 		ExitCell: 2,0
 		ProductionTypes: Submarine
 	Exit@b1:
 		RequiresCondition: !being-captured
 		SpawnOffset: -1024,1024,0
-		Facing: 160
+		Facing: 640
 		ExitCell: 0,2
 		ProductionTypes: Ship
 	Exit@b2:
 		RequiresCondition: !being-captured
 		SpawnOffset: 1024,1024,0
-		Facing: 224
+		Facing: 896
 		ExitCell: 2,2
 		ProductionTypes: Ship
 	Exit@b3:
 		RequiresCondition: !being-captured
 		SpawnOffset: -1024,-1024,0
-		Facing: 96
+		Facing: 384
 		ExitCell: 0,0
 		ProductionTypes: Ship
 	Exit@b4:
 		RequiresCondition: !being-captured
 		SpawnOffset: 1024,-1024,0
-		Facing: 32
+		Facing: 128
 		ExitCell: 2,0
 		ProductionTypes: Ship
 	Production:
@@ -282,25 +282,25 @@ SYRD:
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: -1024,1024,0
-		Facing: 160
+		Facing: 640
 		ExitCell: 0,2
 		ProductionTypes: Ship, Boat
 	Exit@2:
 		RequiresCondition: !being-captured
 		SpawnOffset: 1024,1024,0
-		Facing: 224
+		Facing: 896
 		ExitCell: 2,2
 		ProductionTypes: Ship, Boat
 	Exit@3:
 		RequiresCondition: !being-captured
 		SpawnOffset: -1024,-1024,0
-		Facing: 96
+		Facing: 384
 		ExitCell: 0,0
 		ProductionTypes: Ship, Boat
 	Exit@4:
 		RequiresCondition: !being-captured
 		SpawnOffset: 1024,-1024,0
-		Facing: 32
+		Facing: 128
 		ExitCell: 2,0
 		ProductionTypes: Ship, Boat
 	Production:
@@ -648,11 +648,15 @@ AGUN:
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
-		TurnSpeed: 15
-		InitialFacing: 224
-	-WithSpriteBody:
-	WithEmbeddedTurretSpriteBody:
-		PauseOnCondition: disabled || empdisable || being-warped
+		TurnSpeed: 60
+		InitialFacing: 832
+		RealignDelay: -1
+		RequiresCondition: !build-incomplete
+	WithSpriteTurret:
+		RequiresCondition: !build-incomplete
+		Recoils: false
+	WithTurretAttackAnimation:
+		Sequence: recoil
 	Armament:
 		Weapon: ZSU-23
 		LocalOffset: 520,100,450, 520,-150,450
@@ -815,7 +819,7 @@ PBOX:
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
-		TurnSpeed: 255
+		TurnSpeed: 512
 	-QuantizeFacingsFromSequence:
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
@@ -868,7 +872,7 @@ HBOX:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
 	Turreted:
-		TurnSpeed: 255
+		TurnSpeed: 512
 	-QuantizeFacingsFromSequence:
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
@@ -913,12 +917,16 @@ GUN:
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
-		TurnSpeed: 12
-		InitialFacing: 56
+		TurnSpeed: 48
+		InitialFacing: 192
+		RealignDelay: -1
 		PauseOnCondition: empdisable || being-warped
-	-WithSpriteBody:
-	WithEmbeddedTurretSpriteBody:
-		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !build-incomplete
+	WithSpriteTurret:
+		RequiresCondition: !build-incomplete
+		Recoils: false
+	WithTurretAttackAnimation:
+		Sequence: recoil
 	Armament:
 		Weapon: TurretGun
 		LocalOffset: 512,0,112
@@ -958,7 +966,7 @@ FTUR:
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
-		TurnSpeed: 255
+		TurnSpeed: 512
 		Offset: 0,0,112
 	Armament:
 		Weapon: FireballLauncher
@@ -1013,8 +1021,9 @@ SAM:
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
-		TurnSpeed: 30
+		TurnSpeed: 120
 		InitialFacing: 0
+		RealignDelay: -1
 	-WithSpriteBody:
 	WithEmbeddedTurretSpriteBody:
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -1337,7 +1346,7 @@ FACT:
 		PauseOnCondition: chrono-vortex || being-captured || c4 || build-incomplete || being-warped
 		IntoActor: mcv
 		Offset: 1,1
-		Facing: 96
+		Facing: 384
 	TransformsIntoMobile:
 		RequiresCondition: factundeploy
 		Locomotor: heavywheeled
@@ -1451,12 +1460,12 @@ PROC:
 	FreeActor:
 		Actor: HARV
 		SpawnOffset: 1,2
-		Facing: 64
+		Facing: 256
 		RequiresCondition: spawn-harv && !spawn-charv && !build-incomplete
 	FreeActor@CHARV:
 		Actor: HARV.Chrono
 		SpawnOffset: 1,2
-		Facing: 64
+		Facing: 256
 		RequiresCondition: spawn-charv && !spawn-harv && !build-incomplete
 	InfiltrateForCash:
 		Percentage: 50
@@ -1579,7 +1588,7 @@ HPAD:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,-256,0
 		ExitCell: 0,0
-		Facing: 224
+		Facing: 896
 	RallyPoint:
 	Production:
 		Produces: Aircraft, Helicopter
@@ -1645,7 +1654,7 @@ AFLD:
 	Exit@1:
 		RequiresCondition: !being-captured
 		ExitCell: 1,1
-		Facing: 192
+		Facing: 768
 	RallyPoint:
 	Production:
 		Produces: Aircraft, Plane
@@ -2848,6 +2857,7 @@ AIRS:
 		PauseOnCondition: forceshield || invulnerability || being-warped
 		ActorType: c17.cargo
 		ReadyAudio: ReinforcementsArrived
+		BaselineSpawn: true
 	ValidFactions:
 		Factions: blackh, marked
 	ProvidesPrerequisite@any:
@@ -3061,7 +3071,7 @@ AFAC:
 		PauseOnCondition: chrono-vortex || being-captured || c4 || build-incomplete || being-warped
 		IntoActor: amcv
 		Offset: 1,1
-		Facing: 96
+		Facing: 432
 	TransformsIntoMobile:
 		RequiresCondition: factundeploy
 		Locomotor: heavywheeled
@@ -3178,11 +3188,12 @@ NSAM:
 	RevealsShroud@GAPGEN:
 		Range: 5c0
 	Turreted:
-		TurnSpeed: 30
+		TurnSpeed: 120
 		InitialFacing: 0
 		RealignDelay: -1
 	-WithSpriteBody:
 	WithEmbeddedTurretSpriteBody:
+		QuantizedFacings: 32
 		PauseOnCondition: disabled || empdisable || being-warped
 	AttackPopupTurreted:
 		RequiresCondition: !build-incomplete
@@ -3240,7 +3251,7 @@ GTWR:
 		QuantizedFacings: 8
 	WithMuzzleOverlay:
 	Turreted:
-		TurnSpeed: 255
+		TurnSpeed: 512
 	Power:
 		Amount: -20
 		RequiresCondition: !being-warped
@@ -3272,7 +3283,7 @@ ATWR:
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
-		TurnSpeed: 255
+		TurnSpeed: 512
 		Offset: 128,128,384
 	Armament@primary:
 		Weapon: StingerGTWR
@@ -3316,8 +3327,8 @@ STWR:
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
-		TurnSpeed: 5
-		InitialFacing: 48
+		TurnSpeed: 20
+		InitialFacing: 192
 	-WithSpriteBody:
 	WithEmbeddedTurretSpriteBody:
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -3829,8 +3840,7 @@ HPAD.TD:
 		Range: 4c0
 	Exit@1:
 		SpawnOffset: 0,-256,0
-		ExitCell: 0,0
-		Facing: 224
+		Facing: 896
 	RallyPoint:
 	Production:
 		Produces: Aircraft, Helicopter
@@ -3964,7 +3974,7 @@ PROC.TD:
 	FreeActor:
 		Actor: HARV.TD
 		SpawnOffset: 1,2
-		Facing: 64
+		Facing: 256
 	WithResourceLevelOverlay:
 		RequiresCondition: !build-incomplete
 	Power:
@@ -4061,7 +4071,7 @@ AFLD.GDI:
 	Exit@1:
 		RequiresCondition: !being-captured
 		ExitCell: 1,1
-		Facing: 192
+		Facing: 768
 	RallyPoint:
 	Production:
 		Produces: Aircraft, Plane
@@ -4500,13 +4510,13 @@ SPEN.nod:
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,-213,0
-		Facing: 96
+		Facing: 384
 		ExitCell: -1,2
 		ProductionTypes: Submarine, Ship
 	Exit@2:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,-213,0
-		Facing: 160
+		Facing: 640
 		ExitCell: 3,2
 		ProductionTypes: Submarine, Ship
 	Exit@3:
@@ -4591,25 +4601,25 @@ SYRD.gdi:
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: -1024,1024,0
-		Facing: 160
+		Facing: 640
 		ExitCell: 0,2
 		ProductionTypes: Ship, Boat
 	Exit@2:
 		RequiresCondition: !being-captured
 		SpawnOffset: 1024,1024,0
-		Facing: 224
+		Facing: 896
 		ExitCell: 2,2
 		ProductionTypes: Ship, Boat
 	Exit@3:
 		RequiresCondition: !being-captured
 		SpawnOffset: -1024,-1024,0
-		Facing: 96
+		Facing: 384
 		ExitCell: 0,0
 		ProductionTypes: Ship, Boat
 	Exit@4:
 		RequiresCondition: !being-captured
 		SpawnOffset: 1024,-1024,0
-		Facing: 32
+		Facing: 128
 		ExitCell: 2,0
 		ProductionTypes: Ship, Boat
 	Production:
@@ -4677,7 +4687,7 @@ HTUR:
 	RevealsShroud@GAPGEN:
 		Range: 6c0
 	Turreted:
-		TurnSpeed: 2
+		TurnSpeed: 8
 		InitialFacing: 0
 		RealignDelay: -1
 	-WithSpriteBody:
@@ -4731,7 +4741,8 @@ LTUR:
 		Prerequisites: infantry.any, ~structures.nod, ~techlevel.low
 		Description: Anti-infantry base defense.\n  Can detect cloaked units.\n  Strong vs Infantry, Light armor\n  Weak vs Tanks, Aircraft
 	Turreted:
-		InitialFacing: 34
+		InitialFacing: 128
+	-WithTurretAttackAnimation:
 	GrantConditionOnFaction@marked:
 		Condition: marked
 		Factions: marked
@@ -4774,7 +4785,7 @@ TTUR:
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
-		TurnSpeed: 255
+		TurnSpeed: 512
 		Offset: 0,0,112
 	Armament:
 		Weapon: ChemballLauncher
@@ -4875,6 +4886,7 @@ CRAM:
 		IconPalette: chrometd
 		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Aircraft\n  Weak vs Ground Units
 	-Armament:
+	-WithTurretAttackAnimation:
 	Armament@GAT0:
 		Weapon: Gatt.0
 		LocalOffset: 520,0,450
@@ -5046,7 +5058,7 @@ PATR:
 		Range: 5c0
 		RequiresCondition: !disabled
 	Turreted:
-		TurnSpeed: 2
+		TurnSpeed: 8
 		InitialFacing: 0
 		RealignDelay: -1
 	-WithSpriteBody:

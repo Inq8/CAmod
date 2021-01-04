@@ -100,46 +100,6 @@ namespace OpenRA.Mods.CA.Warheads
 				else
 					td.Add(new OwnerInit(firedBy.World.Players.First(p => p.InternalName == InternalOwner)));
 
-				// HACK HACK HACK
-				// Immobile does not offer a check directly if the actor can exist in a position.
-				// It also crashes the game if it's actor's created without a LocationInit.
-				// See AS/Engine#84.
-				if (ai.HasTraitInfo<MobileInfo>())
-				{
-					var immobileInfo = ai.TraitInfo<MobileInfo>();
-
-					while (cell.MoveNext())
-					{
-						if (immobileInfo.ImmovableCondition != null || !firedBy.World.ActorMap.GetActorsAt(cell.Current).Any())
-						{
-							td.Add(new LocationInit(cell.Current));
-							var immobileunit = firedBy.World.CreateActor(false, a.ToLowerInvariant(), td);
-
-							firedBy.World.AddFrameEndTask(w =>
-							{
-								w.Add(immobileunit);
-
-								var palette = Palette;
-								if (UsePlayerPalette)
-									palette += immobileunit.Owner.InternalName;
-
-								var immobilespawnpos = firedBy.World.Map.CenterOfCell(cell.Current);
-
-								if (Image != null)
-									w.Add(new SpriteEffect(immobilespawnpos, w, Image, Sequence, palette));
-
-								var sound = Sounds.RandomOrDefault(firedBy.World.LocalRandom);
-								if (sound != null)
-									Game.Sound.Play(SoundType.World, sound, immobilespawnpos);
-							});
-
-							break;
-						}
-					}
-
-					continue;
-				}
-
 				// Lambdas can't use 'in' variables, so capture a copy for later
 				var delayedTarget = target;
 

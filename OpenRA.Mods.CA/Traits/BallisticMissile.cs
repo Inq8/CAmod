@@ -114,7 +114,6 @@ namespace OpenRA.Mods.CA.Traits
 		void INotifyCreated.Created(Actor self)
 		{
 			speedModifiers = self.TraitsImplementing<ISpeedModifier>().ToArray().Select(sm => sm.GetSpeedModifier());
-			Pitch = Info.LaunchAngle;
 		}
 
 		void INotifyAddedToWorld.AddedToWorld(Actor self)
