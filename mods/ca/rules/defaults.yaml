@@ -542,6 +542,28 @@
 	PowerMultiplier@FSPOWERDOWN:
 		RequiresCondition: forceshield && !invulnerability
 		Modifier: 0
+		
+^GDIShieldable:
+	WithColoredOverlay@GS:
+		Palette: gshield
+		RequiresCondition: gdishield && !invulnerability
+	DamageMultiplier@GS:
+		RequiresCondition: gdishield
+		Modifier: 50
+	TimedConditionBar@GS:
+		Condition: gdishield
+		Color: 2f74e2
+	ExternalCondition@GS:
+		Condition: gdishield
+	WithDecoration@GS:
+		Image: pips
+		Sequence: pip-armor
+		Palette: effect
+		ReferencePoint: Bottom, Left
+		ValidStances: Ally
+		RequiresCondition: gdishield
+		ZOffset: 256
+		RequiresSelection: False
 
 ^EmpDisable:
 	WithColoredOverlay@EMPDISABLE:
@@ -1108,8 +1130,8 @@
 	DetectCloaked@UNDERBRIDGE:
 		CloakTypes: Underbridge
 		Range: 5c0
-	GpsDot:
-		String: Vehicle
+	GpsRadarDot:
+		Sequence: Vehicle
 
 ^VehicleTD:
 	Inherits@1: ^Vehicle
@@ -1316,8 +1338,8 @@
 		Palette: cloak
 	ExternalCondition@CLOAKGENERATOR:
 		Condition: invisibility
-	GpsDot:
-		String: Infantry
+	GpsRadarDot:
+		Sequence: Infantry
 
 ^Soldier:
 	Inherits: ^Infantry
@@ -1548,8 +1570,8 @@
 	Wanders@NOIDLENAVY:
 		WanderMoveRadius: 3
 		RequiresCondition: (botowner && under-bridge)
-	GpsDot:
-		String: Ship
+	GpsRadarDot:
+		Sequence: Ship
 
 ^Submarine:
 	Inherits@1: ^Ship
@@ -1669,8 +1691,8 @@
 		UsePlayerColor: false
 		ZOffset: -512
 		Color: FFFFFF80
-	GpsDot:
-		String: Plane
+	GpsRadarDot:
+		Sequence: Plane
 
 ^Plane:
 	Inherits: ^NeutralPlane
@@ -1749,8 +1771,8 @@
 		UseClassicFacingFudge: True
 	-Contrail@1:
 	-Contrail@2:
-	GpsDot:
-		String: Helicopter
+	GpsRadarDot:
+		Sequence: Helicopter
 
 ^HelicopterTD:
 	Inherits@1: ^Helicopter
@@ -1798,7 +1820,7 @@
 	Guardable:
 		Range: 3c0
 	FrozenUnderFog:
-	FrozenUnderFogUpdatedByGps:
+	FrozenUnderFogUpdatedByGpsRadar:
 	Tooltip:
 		GenericName: Structure
 	MapEditorData:
@@ -1821,6 +1843,7 @@
 	Inherits@6: ^Warpable
 	Inherits@7: ^BotBuilding
 	Inherits@8: ^Chillable
+	Inherits@9: ^GDIShieldable
 	Inherits@wflash: ^WhiteFlash
 	WithColoredOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield
@@ -1874,8 +1897,8 @@
 	Explodes@temporal:
 		Weapon: TemporalExplodeLarge
 		EmptyWeapon: TemporalExplodeLarge
-	GpsDot:
-		String: Structure
+	GpsRadarDot:
+		Sequence: Structure
 
 ^BuildingTD:
 	Inherits@1: ^Building
