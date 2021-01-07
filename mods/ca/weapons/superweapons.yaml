@@ -425,6 +425,62 @@ THLauncher:
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
 		Size: 2,1
 		Delay: 6
+		
+RocketBarrage:
+	ReloadDelay: 150
+	Range: 300c0
+	Burst: 6
+	BurstDelays: 12
+	MinRange: 3c0
+	Report: tomahawk.aud
+	Projectile: Bullet
+		Blockable: false
+		Shadow: true
+		Inaccuracy: 12c0
+		Image: missile
+		Palette: player
+		IsPlayerPalette: true
+		TrailImage: smokey
+		TrailDelay: 3
+		Speed: 220
+		LaunchAngle: 65
+		ContrailLength: 10
+		ContrailColor: cc550080
+	Warhead@2Dam_impact: SpreadDamage
+		Range: 1c0
+		Damage: 4500
+		Falloff: 1000
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		Versus:
+			None: 80
+			Wood: 60
+			Light: 60
+			Heavy: 40
+			Concrete: 60
+			Brick: 50
+	Warhead@1Dam_impact: SpreadDamage
+		Range: 0, 1c1, 2c1, 3c1, 3c512, 4c1, 4c512
+		Damage: 4500
+		Falloff: 1000, 368, 135, 90, 68, 37, 10
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		Versus:
+			None: 20
+			Wood: 20
+			Light: 20
+			Heavy: 20
+			Concrete: 20
+			Brick: 20
+	Warhead@2Eff: CreateEffect
+		Explosions: napalm
+		ImpactSounds: firebl3.aud
+		ValidTargets: Ground, Water, Air, Trees
+	Warhead@2Smu_impact: LeaveSmudge
+		SmudgeType: Crater
+	Warhead@3Smu_area: LeaveSmudge
+		SmudgeType: Scorch
+		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
+		Size: 1
+		Delay: 3
 
 IronCurtain:
 	Projectile: InstantExplode

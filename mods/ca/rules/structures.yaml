@@ -5365,8 +5365,8 @@ OREP:
 		Condition: noupgrade
 		RequiresCondition: noupgrade
 
-MISS.GDI:
-	Inherits: ^Building
+UPGC:
+	Inherits: ^BuildingTD
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@shape: ^3x2Shape
 	HitShape:
@@ -5396,6 +5396,7 @@ MISS.GDI:
 		Prerequisites: ~structures.gdi, gtek, ~techlevel.high
 		Description: Allows the construction of advanced weaponry and upgrades.\n  Maximum 1 can be built.\n  Cannot be captured.
 		BuildLimit: 1
+		IconPalette: chrometd
 	-Capturable:
 	-CaptureNotification:
 	-CapturableProgressBar:
@@ -5404,7 +5405,7 @@ MISS.GDI:
 	Valued:
 		Cost: 2500
 	Tooltip:
-		Name: Research Center
+		Name: Upgrade Center
 	ProvidesPrerequisite@HMLRS:
 		Factions: gdi, zocom, eagle
 		Prerequisite: hmlrs.buildable
@@ -5427,13 +5428,16 @@ MISS.GDI:
 		ProductionType: Upgrade
 	Exit:
 	Turreted:
-		TurnSpeed: 40
-		InitialFacing: 896
+		TurnSpeed: 8
+		InitialFacing: 96
 		RealignDelay: -1
-		Offset: 2,-1,0
+		Offset: 12,-4,1
 	AttackTurreted:
-		RequiresCondition: !build-incomplete && tower.rocket
-		PauseOnCondition: empdisable || disabled
+		RequiresCondition: !build-incomplete && tower.rocket && loaded-rocket > 0
+		PauseOnCondition: disabled || empdisable || being-warped
+		OpportunityFire: False
+		PersistentTargeting: False
+		ForceFireIgnoresActors: True
 	WithSpriteTurret@ROCKET:
 		RequiresCondition: !build-incomplete && tower.rocket
 		Recoils: false
@@ -5441,75 +5445,136 @@ MISS.GDI:
 	WithIdleOverlay@RADAR:
 		RequiresCondition: !build-incomplete && tower.radar
 		Sequence: turret-radar
-		PauseOnCondition: disabled || being-warped && !radar
-	GpsPower:
 		PauseOnCondition: disabled || being-warped
-		Icon: gps
-		OneShot: true
-		StartFullyCharged: true
-		ChargeInterval: 0
-		Description: Advanced Radar
-		LongDesc: Reveals map terrain and provides tactical\ninformation. Requires power and active radar.
-		RevealDelay: 0
-		LaunchSound:
-		IncomingSound:
-		DisplayTimerRelationships: Ally, Neutral, Enemy
-		SupportPowerPaletteOrder: 90
-		RequiresCondition: tower.radar
+	WithIdleOverlay@SHIELD:
+		RequiresCondition: !build-incomplete && tower.shield
+		Sequence: turret-shield
+		PauseOnCondition: disabled || being-warped
+	WithIdleOverlay@SHIELDACTIVE:
+		Sequence: shield-active
+		Palette: effect-ignore-lighting-alpha85
+		RequiresCondition: (tower.shield && shield-active) && !(disabled || being-warped || build-incomplete)
+	GpsRadarProvider: 
+		RequiresCondition: tower.radar && !(disabled || being-warped)
+	GrantPrerequisiteChargeDrainPower@SHIELD:
+		DischargeModifier: 600
+		Prerequisite: shield-active
+		ChargeInterval: 4500
+		Icon: forceshieldicon
+		Description: Shield Generator
+		LongDesc: Provides a defence shield to nearby structures & units.
+		RequiresCondition: !build-incomplete && tower.shield
+		PauseOnCondition: disabled || being-warped
+		LaunchSound: forceon.aud
+		DisplayTimerStances: Ally
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeSpeechNotification: ForceShieldReady
+	ProximityExternalCondition@SHIELD:
+		Condition: gdishield
+		Range: 8c0
+		RequiresCondition: shield-active && !(disabled || being-warped)
+	DrainPrerequisitePowerOnDamage@SHIELD:
+	GrantConditionOnPrerequisite@SHIELD:
+		Prerequisites: shield-active
+		Condition: shield-active
 	Armament@ROCKET:
+		RequiresCondition: tower.rocket && loaded-rocket > 0
+		PauseOnCondition: disabled || empdisable || being-warped
+		Weapon: RocketBarrage
+		LocalOffset: 0,128,0, 0,-128,0
+		ReloadingCondition: reloading
+	AmmoPool:
+		Ammo: 6
+		ReloadCount: 6
+		PipCount: 0
+		AmmoCondition: loaded-rocket
+	ReloadAmmoPool:
+		Delay: 2250
+		Count: 6
+	AttackOrderPower@ROCKET:
+		OrderName: rocketbarrage
+		PauseOnCondition: empdisable || disabled || being-warped
+		Cursor: ability
+		Icon: airstrike
+		ChargeInterval: 2250
+		Description: Rocket Barrage
+		LongDesc: Barrage target area with rockets.
+		BeginChargeSpeechNotification: EMMissilePrepping
+		EndChargeSpeechNotification: EMMissileReady
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		DisplayTimerStances: Ally
 		RequiresCondition: tower.rocket
-		Weapon: StingerGTWR
-		LocalOffset: 256,128,0, 256,-128,0
-		LocalYaw: -100,100
+	RejectsOrders:
+		Except: Sell, PowerDown
 	Pluggable:
 		Conditions:
 			tower.rocket: tower.rocket
 			tower.radar: tower.radar
+			tower.shield: tower.shield
 		Requirements:
-			tower.rocket: !build-incomplete && !tower.rocket && !tower.radar
-			tower.radar: !build-incomplete && !tower.radar && !tower.rocket
+			tower.rocket: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield
+			tower.radar: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield
+			tower.shield: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield
 	ProvidesPrerequisite@pluggable:
-		RequiresCondition: !build-incomplete && !(tower.rocket || tower.radar)
-		Prerequisite: gactwr.socket
-	GrantConditionOnPrerequisite@radar:
-		Prerequisites: anyradar
-		Condition: radar
+		RequiresCondition: !build-incomplete && !(tower.rocket || tower.radar || tower.shield)
+		Prerequisite: upgc.sock
 		
-GACTWR.SOCKET:
+UPGC.SOCK:
 	AlwaysVisible:
 	Interactable:
 	Tooltip:
-		Name: Component Tower (unupgraded)
+		Name: Component Platform
 		
-GAROCK:
-	Inherits: ^BuildingPlug
-	Valued:
-		Cost: 1100
-	Tooltip:
-		Name: RPG Upgrade
-	Buildable:
-		Queue: Defense
-		BuildPaletteOrder: 90
-		Prerequisites: gactwr.socket, upgc, ~structures.gdi, ~techlevel.high
-		Description: GDI Advanced base defense.\nDoes not require power to operate.\n  Strong vs Armored ground units\n  Weak vs Aircraft
-	Plug:
-		Type: tower.rocket
-	Power:
-		Amount: -20
-		
-GARADAR:
+UPGC.BOMB:
 	Inherits: ^BuildingPlug
 	Valued:
 		Cost: 1500
 	Tooltip:
-		Name: Radar Upgrade
+		Name: Bombardment MLRS Upgrade
 	Buildable:
 		Queue: Defense
-		BuildPaletteOrder: 90
-		Prerequisites: gactwr.socket, upgc, ~structures.gdi, ~techlevel.high
-		Description: GDI Advanced Radar System.
+		BuildPaletteOrder: 140
+		Prerequisites: ~upgc.socket, upgc, ~structures.gdi, ~techlevel.high
+		Description: Advanced Rocket Artillery System.
+		IconPalette: chrometd
+	Plug:
+		Type: tower.rocket
+	Power:
+		Amount: -100
+		
+UPGC.SEEK:
+	Inherits: ^BuildingPlug
+	Valued:
+		Cost: 1500
+	Tooltip:
+		Name: Advance GPS Radar Upgrade
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 140
+		Prerequisites: ~upgc.socket, upgc, ~structures.gdi, ~techlevel.high
+		Description: Advanced GPS Radar System.
+		IconPalette: chrometd
 	Plug:
 		Type: tower.radar
+	Power:
+		Amount: -100
+		
+UPGC.HOLD:
+	Inherits: ^BuildingPlug
+	Valued:
+		Cost: 1500
+	Tooltip:
+		Name: Shield Generator Upgrade
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 140
+		Prerequisites: ~upgc.socket, upgc, ~structures.gdi, ~techlevel.high
+		Description: Advanced Shield Defense Generator.
+		IconPalette: chrometd
+	Plug:
+		Type: tower.shield
 	Power:
 		Amount: -100
 

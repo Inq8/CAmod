@@ -862,26 +862,45 @@ upgc:
 		Start: 0
 		Length: *
 		UseTilesetCode: false
+	turret-shield: upgc-plug3
+		Start: 0
+		Length: *
+		UseTilesetCode: false
+		Tick: 300
+	shield-active: gshield
+		BlendMode: Alpha
+		Start: 4
+		Length: 16
+		Tick: 120
+		ZOffset: 512
+		Offset: 0, 15
 	bib: bib2
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	icon: missicon
+	icon: upgcicnh
 	
-garock:
+upgc.bomb:
 	place: upgc-plug1
 		Offset: 0, -12, 12
 		UseTilesetCode: true
-		Start: 28
-	icon: missicon
+		Start: 12
+	icon: strat-bombicnh
 	
-garadar:
+upgc.seek:
 	place: upgc-plug2
 		Offset: 0, -12, 12
 		UseTilesetCode: true
 		Start: 28
-	icon: missicon
+	icon: strat-seekicnh
+	
+upgc.hold:
+	place: upgc-plug3
+		Offset: 0, -12, 12
+		UseTilesetCode: true
+		Start: 28
+	icon: strat-holdicnh
 	
 gtek:
 	Inherits: ^StructureOverlays
