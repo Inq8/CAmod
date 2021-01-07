@@ -520,9 +520,11 @@ SilencedPPKE:
 Colt45:
 	Inherits: ^SnipeWeapon
 	ReloadDelay: 5
+	Burst: 2
+	BurstDelays: 2
 	Range: 7c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 5000
+		Damage: 4700
 	Warhead@2Eff: CreateEffect
 		Explosions: piff
 		ValidTargets: Ground, Ship, Air, Trees
@@ -538,12 +540,10 @@ Colt45E:
 SMG:
 	Inherits: ^SnipeWeapon
 	Report: silppk.aud
-	ReloadDelay: 15
-	Burst: 3
-	BurstDelays: 2
+	ReloadDelay: 10
 	Range: 7c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 5100
+		Damage: 25000
 		ValidTargets: Infantry
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
@@ -559,9 +559,9 @@ SMGE:
 	Range: 9c0
 
 AKM:
-	Report: mg11.aud
-	ReloadDelay: 15
-	Burst: 1
+	StartBurstReport: mg11.aud
+	ReloadDelay: 12
+	Burst: 3
 	BurstDelays: 2
 	Range: 7c0
 	InvalidTargets: Structure, Wall, Husk, Chrono, Air
@@ -569,11 +569,11 @@ AKM:
 		Speed: 1c682
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 15000
+		Damage: 4700
 		Versus:
 			None: 100
 			Wood: 10
-			Light: 35
+			Light: 40
 			Heavy: 15
 			Concrete: 15
 			Brick: 10
