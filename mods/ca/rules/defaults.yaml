@@ -847,7 +847,12 @@
 	AutoTarget:
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Air
+		InvalidTargets: NoAutoTarget, AirLowPriority
+		Priority: 10
+	AutoTargetPriority@DEFAULTLOW:
+		ValidTargets: AirLowPriority
 		InvalidTargets: NoAutoTarget
+		Priority: 0
 
 ^AutoTargetAll:
 	AutoTarget:
@@ -855,7 +860,7 @@
 	AutoTargetPriority@DEFAULT:
 		RequiresCondition: !stance-attackanything
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
-		InvalidTargets: NoAutoTarget, WaterStructure
+		InvalidTargets: NoAutoTarget, WaterStructure, AirLowPriority
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: stance-attackanything
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
@@ -875,13 +880,23 @@
 	AutoTargetPriority@DEFAULTAA:
 		RequiresCondition: !stance-attackanything && !assault-move
 		ValidTargets: Air
-		InvalidTargets: NoAutoTarget
+		InvalidTargets: NoAutoTarget, AirLowPriority
 		Priority: 10
 	AutoTargetPriority@ATTACKANYTHINGAA:
 		RequiresCondition: stance-attackanything || assault-move
 		ValidTargets: Air
-		InvalidTargets: NoAutoTarget
+		InvalidTargets: NoAutoTarget, AirLowPriority
 		Priority: 10
+	AutoTargetPriority@DEFAULTAALOW:
+		RequiresCondition: !stance-attackanything && !assault-move
+		ValidTargets: AirLowPriority
+		InvalidTargets: NoAutoTarget
+		Priority: 0
+	AutoTargetPriority@ATTACKANYTHINGAALOW:
+		RequiresCondition: stance-attackanything || assault-move
+		ValidTargets: AirLowPriority
+		InvalidTargets: NoAutoTarget
+		Priority: 0
 
 ^AutoTargetAllNavalAssaultMove:
 	Inherits: ^AutoTargetAllAssaultMove
