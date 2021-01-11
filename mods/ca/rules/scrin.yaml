@@ -1383,6 +1383,10 @@ PAC:
 		RequiresCondition: regen-upgrade
 	Repairable:
 		RepairActors: fix, rep, srep
+	AutoTargetPriority@DEFAULT:
+		InvalidTargets: NoAutoTarget, WaterStructure, AirLowPriority
+	AutoTargetPriority@ATTACKANYTHING:
+		InvalidTargets: NoAutoTarget, AirLowPriority
 
 INVA:
 	Inherits: ^Plane
@@ -1465,6 +1469,9 @@ INVA:
 	DamageMultiplier@SHIELDS:
 		RequiresCondition: shields-upgrade
 		Modifier: 50
+	Targetable@AIRBORNE:
+		RequiresCondition: airborne
+		TargetTypes: Air, AirLowPriority
 
 #
 # ---- Husks
