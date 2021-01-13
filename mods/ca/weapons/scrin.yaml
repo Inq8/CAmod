@@ -220,17 +220,27 @@ InterloperLaser:
 CorrupterSpew:
 	Inherits: BigFlamer
 	StartBurstReport: corrupter-fire1.aud
-	ReloadDelay: 115
-	Burst: 12
+	ReloadDelay: 100
+	Burst: 30
+	BurstDelays: 3
 	Projectile: Bullet
-		Image: chemall
-		Palette: ra2effect-ignore-lighting-alpha50
-		Speed: 130
+		Speed: 110
+		TrailImage: tibspew1
+		Image: tibspew2
+		LaunchAngle: 62
+		Inaccuracy: 682
+		Palette: scrin
+		TrailPalette: scrin
 	Warhead@1Dam: SpreadDamage
-		Spread: 341
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+		-Falloff:
+		Damage: 950
 		Versus:
 			Light: 80
+	Warhead@3Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: scrin
+		Image: tibexplodesm
 	-Warhead@Flames:
 
 DevourerLaser:
