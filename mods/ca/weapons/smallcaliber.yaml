@@ -309,7 +309,11 @@ GTChainGun:
 
 ChainGun:
 	Inherits: ^HeavyMG
+	-Report:
+	StartBurstReport: gun13.aud
 	ReloadDelay: 10
+	Burst: 2
+	BurstDelays: 0
 	Range: 5c0
 	MinRange: 0c768
 	Projectile: Bullet
@@ -652,5 +656,8 @@ SNIPER.vehicle:
 HeliGunAG:
 	Inherits: ChainGun
 	Report: mgbtr1.aud, mgbtr2.aud, mgbtr3.aud
+	-StartBurstReport:
+	-Burst:
+	-BurstDelays:
 	Warhead@1Dam: SpreadDamage
 		Damage: 5000
