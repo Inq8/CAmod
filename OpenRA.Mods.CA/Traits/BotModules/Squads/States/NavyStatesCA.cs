@@ -99,6 +99,10 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 	class NavyUnitsAttackMoveState : NavyStateBase, IState
 	{
+		int lastUpdatedTick;
+		CPos? lastLeaderLocation;
+		Actor lastTarget;
+
 		public void Activate(SquadCA owner) { }
 
 		public void Tick(SquadCA owner)
@@ -129,6 +133,31 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				}
 			}
 
+			var leader = owner.Units.ClosestTo(owner.TargetActor.CenterPosition);
+			if (leader == null)
+				return;
+
+			if (leader.Location != lastLeaderLocation)
+			{
+				lastLeaderLocation = leader.Location;
+				lastUpdatedTick = owner.World.WorldTick;
+			}
+
+			if (owner.TargetActor != lastTarget)
+			{
+				lastTarget = owner.TargetActor;
+				lastUpdatedTick = owner.World.WorldTick;
+			}
+
+			// HACK: Drop back to the idle state if we haven't moved in 2.5 seconds
+			// This works around the squad being stuck trying to attack-move to a location
+			// that they cannot path to, generating expensive pathfinding calls each tick.
+			if (owner.World.WorldTick > lastUpdatedTick + 63)
+			{
+				owner.FuzzyStateMachine.ChangeState(owner, new NavyUnitsIdleState(), true);
+				return;
+			}
+
 			// Save whether we had an Enemy naval yard this tick.
 			hadNavalYard = navalProductions.Any();
 
@@ -147,6 +176,10 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 	class NavyUnitsAttackState : NavyStateBase, IState
 	{
+		int lastUpdatedTick;
+		CPos? lastLeaderLocation;
+		Actor lastTarget;
+
 		public void Activate(SquadCA owner) { }
 
 		public void Tick(SquadCA owner)
@@ -164,6 +197,28 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 					owner.FuzzyStateMachine.ChangeState(owner, new NavyUnitsFleeState(), false);
 					return;
 				}
+			}
+
+			var leader = owner.Units.ClosestTo(owner.TargetActor.CenterPosition);
+			if (leader.Location != lastLeaderLocation)
+			{
+				lastLeaderLocation = leader.Location;
+				lastUpdatedTick = owner.World.WorldTick;
+			}
+
+			if (owner.TargetActor != lastTarget)
+			{
+				lastTarget = owner.TargetActor;
+				lastUpdatedTick = owner.World.WorldTick;
+			}
+
+			// HACK: Drop back to the idle state if we haven't moved in 2.5 seconds
+			// This works around the squad being stuck trying to attack-move to a location
+			// that they cannot path to, generating expensive pathfinding calls each tick.
+			if (owner.World.WorldTick > lastUpdatedTick + 63)
+			{
+				owner.FuzzyStateMachine.ChangeState(owner, new NavyUnitsIdleState(), true);
+				return;
 			}
 
 			foreach (var a in owner.Units)
@@ -190,6 +245,6 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			owner.FuzzyStateMachine.ChangeState(owner, new NavyUnitsIdleState(), false);
 		}
 
-		public void Deactivate(SquadCA owner) { owner.Units.Clear(); }
+		public void Deactivate(SquadCA owner) { }
 	}
 }

@@ -231,6 +231,16 @@ namespace OpenRA.Mods.CA.Traits
 			return ret;
 		}
 
+		public void DismissSquad(SquadCA squad)
+		{
+			foreach (var unit in squad.Units)
+			{
+				unitsHangingAroundTheBase.Add(unit);
+			}
+
+			squad.Units.Clear();
+		}
+
 		void AssignRolesToIdleUnits(IBot bot)
 		{
 			CleanSquads();
