@@ -13,11 +13,18 @@ ParaBomb:
 		Damage: 40000
 		Versus:
 			None: 30
-			Wood: 30
+			Wood: 55
 			Light: 65
 			Heavy: 80
-			Concrete: 80
+			Concrete: 90
 			Brick: 50
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@1Dam_cyborg: SpreadDamage
+		Spread: 1c0
+		Damage: 10000
+		ValidTargets: Cyborg
+		Versus:
+			Heavy: 0
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
@@ -39,44 +46,51 @@ CarpetBomb:
 	Projectile: GravityBomb
 		Image: BOMBLET
 		Shadow: true
-		Velocity: 25, 0, -45
-		Acceleration: -1, 0, 0
+		Acceleration: 0, 0, -1
 	Warhead@1Dam: SpreadDamage
 		Damage: 30000
 		Versus:
+			Wood: 32
 			Concrete: 60
+			Heavy: 70
+	Warhead@1Dam_cyborg: SpreadDamage
+		Damage: 7500
 
 AtomBomb:
 	Inherits: CarpetBomb
-	Range: 0c768
+	Range: 1c0
 	Projectile: GravityBomb
 		Image: B2BOMB
+		Velocity: 25, 0, -74
+		Acceleration: 0, 0, 0
 	ReloadDelay: 80
-	ValidTargets: Ground, Trees, Water, Air
-	Warhead@1Dam_impact: SpreadDamage
+	ValidTargets: Ground, Water, Air
+	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
-		Damage: 6250
+		Damage: 22000
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
-		ValidTargets: Ground, Trees, Water, Air
+		ValidTargets: Ground, Water, Air
 		Versus:
-			Brick: 25
+			None: 10
+			Light: 55
+			Heavy: 85
+			Concrete: 100
+			Wood: 40
+			Brick: 50
 		AffectsParent: true
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
+	Warhead@1Dam_cyborg: SpreadDamage
+		Spread: 1c0
+		Damage: 70000
+		ValidTargets: Cyborg
+		Versus:
+			Heavy: 0
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@2Res_impact: DestroyResource
 	Warhead@3Eff_impact: CreateEffect
 		Explosions: nuke
 		ImpactSounds: kaboom1.aud
 		ImpactActors: false
-	Warhead@4Dam_areanuke1: SpreadDamage
-		Spread: 1c0
-		Damage: 3000
-		Falloff: 1000, 600, 400, 250, 150, 100, 0
-		Delay: 5
-		ValidTargets: Ground, Water, Air
-		Versus:
-			Brick: 25
-		AffectsParent: true
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@5Res_areanuke1: DestroyResource
 		Size: 4
 		Delay: 5
@@ -110,16 +124,17 @@ AtomBomb:
 
 InfernoBomb:
 	Inherits: CarpetBomb
+	Range: 3c0
 	Projectile: GravityBomb
 		Image: B2BOMB
 	Warhead@1Dam: SpreadDamage
 		Versus:
-			None: 80
+			None: 70
 			Wood: 60
 			Light: 85
-			Heavy: 70
+			Heavy: 40
 			Concrete: 80
-			Brick: 25
+			Brick: 5
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -288,36 +303,44 @@ Atomic:
 
 IonCannon:
 	ValidTargets: Ground, Water, Air
-	Warhead@1Dam_impact: SpreadDamage
+	Warhead@1Dam: SpreadDamage
 		Range: 0, 0c512, 1c512, 2c512
 		Damage: 10500
 		Falloff: 1000, 350, 100, 50
 		ValidTargets: Ground
 		Versus:
-			None: 50
+			None: 25
 			Light: 65
 			Wood: 15
 			Heavy: 70
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
-	Warhead@2Dam_impact: SpreadDamage
+	Warhead@2Dam: SpreadDamage
+		Range: 0, 0c512, 1c512, 2c512
+		Damage: 3000
+		Falloff: 1000, 350, 100, 50
+		ValidTargets: Cyborg
+		Versus:
+			Heavy: 0
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@3Dam: SpreadDamage
 		Range: 0, 0c682, 1c341, 2c682
 		Damage: 34000
 		Falloff: 100, 100, 35, 10
 		ValidTargets: Air
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
-	Warhead@3Eff: CreateEffect
+	Warhead@4Eff: CreateEffect
 		Explosions: ion_ring2
 		ExplosionPalette: tseffect
-	Warhead@4Smu_impact: LeaveSmudge
+	Warhead@5Smu_impact: LeaveSmudge
 		SmudgeType: Scorch
-	Warhead@5Smu_area: LeaveSmudge
+	Warhead@6Smu_area: LeaveSmudge
 		SmudgeType: Scorch
 		Size: 1
 		Delay: 3
-	Warhead@6Res_area2: DestroyResource
+	Warhead@7Res_area2: DestroyResource
 		Size: 2
 		Delay: 6
-	Warhead@7Smu_area2: LeaveSmudge
+	Warhead@8Smu_area2: LeaveSmudge
 		SmudgeType: Scorch
 		Size: 2,1
 		Delay: 6
