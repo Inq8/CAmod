@@ -3864,6 +3864,10 @@ MSAR:
 		UndeploySounds: clicky1.aud
 		UndeployOnMove: true
 		UndeployOnPickup: true
+	DetectCloaked@Undeployed:
+		CloakTypes: Cloak, Thief
+		Range: 5c0
+		RequiresCondition: undeployed && !(empdisable || being-warped)
 	DetectCloaked@Deployed:
 		Range: 10c0
 		CloakTypes: Cloak, Thief
