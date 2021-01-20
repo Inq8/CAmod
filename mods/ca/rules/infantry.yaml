@@ -1550,6 +1550,7 @@ JJET:
 	Inherits@6: ^EmpDisable
 	Inherits@7: ^GDIUpgrade
 	Inherits@8: ^BinoUpgrade
+	Inherits@9: ^AuraHealable
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -1631,30 +1632,6 @@ JJET:
 	DeathSounds@POISONED:
 		Voice: Poisoned
 		DeathTypes: PoisonDeath, ToxinDeath, ToxicDeath
-	SelfHealing@HOSPITAL:
-		Step: 500
-		Delay: 100
-		HealIfBelow: 100
-		DamageCooldown: 125
-		RequiresCondition: hospitalheal
-	ExternalCondition@MEDIFV:
-		Condition: hospitalheal
-	GrantConditionOnPrerequisite@HOSPITAL:
-		Condition: hospital
-		Prerequisites: hosp
-	GrantConditionOnDamageState@HOSPITAL:
-		Condition: damaged
-		ValidDamageStates: Light, Medium, Heavy, Critical
-	GrantCondition@HOSPITAL:
-		RequiresCondition: hospital && damaged
-		Condition: hospitalheal
-	WithDecoration@REDCROSS:
-		Image: pips
-		Sequence: medic
-		ReferencePoint: Bottom, Right
-		RequiresCondition: hospitalheal
-		BlinkInterval: 32
-		BlinkPattern: Off, On
 	Armor:
 		Type: Light
 	Aircraft:
@@ -1760,6 +1737,9 @@ JJET:
 		Priority: 10
 	KillsSelf:
 		RequiresCondition: empdisable && cruising
+	GrantConditionOnDamageState@DAMAGED:
+		Condition: damaged
+		ValidDamageStates: Light, Medium, Heavy, Critical
 
 JJET.Husk:
 	BodyOrientation:

@@ -3073,8 +3073,12 @@ IFV:
 	ProximityExternalCondition@MEDIC:
 		RequiresCondition: medturr
 		EnableSound: heal2.aud
-		Condition: hospitalheal
-		Range: 3c0
+		Condition: ifvheal
+		Range: 3c512
+	WithRangeCircle@MEDIC:
+		Color: 00FF0080
+		Range: 3c512
+		RequiresCondition: medturr
 	Capturable:
 		RequiresCondition: !being-warped && !full
 	Capturable@DRIVER_DEAD:

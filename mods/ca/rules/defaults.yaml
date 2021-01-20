@@ -464,19 +464,51 @@
 			bino && bombard: On, Off
 		RequiresSelection: True
 
-^InfantryExperienceHospitalOverrides:
+^AuraHealable:
+	SelfHealing@HOSPITAL:
+		Step: 200
+		Delay: 25
+		HealIfBelow: 100
+		DamageCooldown: 200
+		RequiresCondition: hospitalheal
+	SelfHealing@MEDIFV:
+		Step: 100
+		Delay: 25
+		HealIfBelow: 100
+		DamageCooldown: 0
+		RequiresCondition: ifvheal
+	SelfHealing@MEDIFV2:
+		Step: 100
+		Delay: 25
+		HealIfBelow: 100
+		DamageCooldown: 200
+		RequiresCondition: ifvheal
+	ExternalCondition@HOSPITAL:
+		Condition: hospitalheal
+	ExternalCondition@MEDIFV:
+		Condition: ifvheal
+	WithDecoration@REDCROSS:
+		Image: pips
+		Sequence: medic
+		Palette: chrome
+		ReferencePoint: Bottom, Right
+		RequiresCondition: (hospitalheal || ifvheal) && damaged
+		BlinkInterval: 32
+		BlinkPattern: On
+		BlinkPatterns:
+			rank-elite || rank-veteran: Off, On
 	WithDecoration@RANK-1:
 		BlinkInterval: 32
 		BlinkPatterns:
-			hospitalheal: On, Off
+			damaged && (hospitalheal || ifvheal): On, Off
 	WithDecoration@RANK-2:
 		BlinkInterval: 32
 		BlinkPatterns:
-			hospitalheal: On, Off
+			damaged && (hospitalheal || ifvheal): On, Off
 	WithDecoration@RANK-ELITE:
 		BlinkInterval: 32
 		BlinkPatterns:
-			hospitalheal: On, Off
+			damaged && (hospitalheal || ifvheal): On, Off
 
 ^IronCurtainable:
 	WithColoredOverlay@IRONCURTAIN:
@@ -564,9 +596,6 @@
 		ValidStances: Ally, Neutral
 	ExternalCondition@NREPAIR-AI:
 		Condition: nrepair
-	GrantConditionOnDamageState@NREPAIR:
-		Condition: damaged
-		ValidDamageStates: Light, Medium, Heavy, Critical
 
 ^RepairsAircraftWithRepairBay:
 	ExternalCondition@AIRCRAFTREPAIR:
@@ -1071,7 +1100,7 @@
 ^Infantry:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^GainsExperience
-	Inherits@3: ^InfantryExperienceHospitalOverrides
+	Inherits@3: ^AuraHealable
 	Inherits@4: ^SpriteActor
 	Inherits@5: ^HazmatUpgrade
 	Inherits@7: ^Warpable
@@ -1174,31 +1203,6 @@
 	Guardable:
 	Tooltip:
 		GenericName: Soldier
-	SelfHealing@HOSPITAL:
-		Step: 500
-		Delay: 100
-		HealIfBelow: 100
-		DamageCooldown: 125
-		RequiresCondition: hospitalheal
-	ExternalCondition@MEDIFV:
-		Condition: hospitalheal
-	GrantConditionOnPrerequisite@HOSPITAL:
-		Condition: hospital
-		Prerequisites: hosp
-	GrantConditionOnDamageState@HOSPITAL:
-		Condition: damaged
-		ValidDamageStates: Light, Medium, Heavy, Critical
-	GrantCondition@HOSPITAL:
-		RequiresCondition: hospital && damaged
-		Condition: hospitalheal
-	WithDecoration@REDCROSS:
-		Image: pips
-		Sequence: medic
-		Palette: chrome
-		ReferencePoint: Bottom, Right
-		RequiresCondition: hospitalheal
-		BlinkInterval: 32
-		BlinkPattern: Off, On
 	DeathSounds@NORMAL:
 		Voice: Die
 		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath
