@@ -1016,6 +1016,39 @@ Railgun:
 			Concrete: 15
 		DamageTypes: Prone100Percent, TriggerProne, ExplosionDeath
 
+TitanRailgun:
+	Inherits: Railgun
+	Report: titanrailgun1.aud, titanrailgun2.aud
+	ReloadDelay: 90
+	Range: 5c768
+	Projectile: Railgun
+		DamageActorsInLine: true
+		BeamColor: EEFFFFBB
+		BeamWidth: 48
+		HelixThickness: 20
+		HelixRadius: 42
+		HelixColor: 66FFEEBB
+		Duration: 22
+		HelixAlphaDeltaPerTick: -8
+		BeamAlphaDeltaPerTick: -8
+		HelixPitch: 682
+	Warhead@1Dam: SpreadDamage
+		Damage: 5000
+		Versus:
+			None: 30
+			Wood: 62
+			Light: 70
+			Heavy: 100
+			Concrete: 30
+			Brick: 50
+
+TitanRailgunImpact
+	Inherits: TitanRailgun
+	-Projectile:
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Damage: 9000
+
 IonZap:
 	ReloadDelay: 70
 	Range: 5c768

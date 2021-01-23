@@ -847,11 +847,10 @@ IFVRocketsAAE:
 	Warhead@1Dam: SpreadDamage
 		Damage: 3900
 
-
 #Artillery Missiles, lock-on but act dumb
 227mm:
 	Inherits: ^AntiGroundMissile
-	ReloadDelay: 120
+	ReloadDelay: 130
 	Burst: 2
 	BurstDelays: 4
 	Range: 8c0
@@ -867,15 +866,15 @@ IFVRocketsAAE:
 		RangeLimit: 13c0
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 1000
+		Damage: 700
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Water, Trees
 		Versus:
-			None: 70
-			Wood: 45
-			Light: 50
-			Heavy: 25
-			Concrete: 50
+			None: 100
+			Wood: 65
+			Light: 72
+			Heavy: 35
+			Concrete: 72
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
@@ -883,38 +882,66 @@ IFVRocketsAAE:
 	Warhead@4EffWater: CreateEffect
 		ImpactSounds: splashl1.aud, splashl2.aud
 
-227mm.upg:
-	Inherits: 227mm
-	Report: vaegattb.aud, vaegatta.aud
-	Range: 9c0
-	Projectile: MissileCA
-		Speed: 366
-		ContrailLength: 15
-		ContrailColor: 00FFFFE6
-		Inaccuracy: 341
-		LockOnInaccuracy: 512
-	Warhead@1Dam: SpreadDamage
-		Damage: 1100
-		Versus:
-			None: 100
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
-
 227mmH:
 	Inherits: 227mm
 	Report: hovrmis1.aud
-	ReloadDelay: 105
-	Warhead@1Dam: SpreadDamage
-		Damage: 1125
-		Versus:
-			Light: 45
 
-227mmH.upg:
-	Inherits: 227mm.upg
-	ReloadDelay: 105
+227mm.upg:
+	Inherits: 227mm
+	Range: 9c0
+	Projectile: MissileCA
+		ContrailLength: 15
 	Warhead@1Dam: SpreadDamage
-		Damage: 1230
-		Versus:
-			Light: 45
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+
+227mm.Hypersonic:
+	Inherits: 227mm.upg
+	Report: vaegattb.aud, vaegatta.aud
+	Projectile: MissileCA
+		Speed: 366
+		Inaccuracy: 341
+		LockOnInaccuracy: 512
+		ContrailColor: 00FFFFE6
+	Warhead@1Dam: SpreadDamage
+		Damage: 830
+
+227mm.Hammerhead:
+	Inherits: 227mm.upg
+	BurstDelays: 12
+	Report: hammerheadmissile1.aud, hammerheadmissile2.aud
+	Projectile: MissileCA
+		ContrailColor: FF0000E6
+	Warhead@1Dam: SpreadDamage
+		Damage: 930
+		Spread: 426
+	Warhead@3Eff:
+		ImpactSounds: xplobig4.aud
+	Warhead@4Eff: CreateEffect
+		Explosions: artillery_explosion
+	Warhead@Concussion: GrantExternalCondition
+		Range: 0c512
+		Duration: 60
+		Condition: concussion
+
+227mm.Hailstorm:
+	Inherits: 227mm.upg
+	Range: 10c0
+	Report: hailstormmissile1.aud, hailstormmissile2.aud
+	-Projectile: MissileCA
+	Burst: 6
+	BurstDelays: 6
+	Projectile: BulletCA
+		Image: DRAGON
+		TrailImage: smokey
+		Shadow: True
+		ContrailLength: 15
+		ContrailColor: FFAA00E6
+		Speed: 266
+		Inaccuracy: 1c0
+		LaunchAngle: 62
+	Warhead@1Dam: SpreadDamage
+		Spread: 426
+		Damage: 370
 
 227mmAA:
 	Inherits: ^AntiAirMissile
@@ -938,21 +965,37 @@ IFVRocketsAAE:
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: xplos.aud
 
+227mmAAH:
+	Inherits: 227mmAA
+	Report: hovrmis1.aud
+
 227mmAA.upg:
 	Inherits: 227mmAA
 	Range: 7c512
-	Report: vaegattb.aud, vaegatta.aud
 	Projectile: MissileCA
 		Speed: 366
 		ContrailLength: 15
-		ContrailColor: 00FFFFE6
 		RangeLimit: 8c512
 	Warhead@1Dam: SpreadDamage
 		Damage: 1900
 
-227mmAAH:
-	Inherits: 227mmAA
-	Report: hovrmis1.aud
+227mmAA.Hypersonic:
+	Inherits: 227mmAA.upg
+	Report: vaegattb.aud, vaegatta.aud
+	Projectile: MissileCA
+		ContrailColor: 00FFFFE6
+
+227mmAA.Hammerhead:
+	Inherits: 227mmAA.upg
+	Report: hammerheadmissile1.aud, hammerheadmissile2.aud
+	Projectile: MissileCA
+		ContrailColor: FF0000E6
+
+227mmAA.Hailstorm:
+	Inherits: 227mmAA.upg
+	Report: hailstormmissile1.aud, hailstormmissile2.aud
+	Projectile: MissileCA
+		ContrailColor: FFAA00E6
 
 StnkMissile:
 	Inherits: ^AntiGroundMissile
