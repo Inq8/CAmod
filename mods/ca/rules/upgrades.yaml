@@ -124,29 +124,43 @@ hypersonic.upgrade:
 		Name: Upgrade: Hypersonic Missiles
 	Buildable:
 		BuildPaletteOrder: 31
-		Prerequisites: ~gtek, ~structures.gdi, ~techlevel.high
+		Prerequisites: ~gtek, ~structures.gdi, ~techlevel.high, ~!hailstorm.upgrade, ~!percussive.upgrade
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Equip the MLRS/HMLRS with Hypersonic Missiles.\n\n  Upgrades: MLRS\n  Upgrades: HMLRS
+		Description: Equip the MLRS/HMLRS with Hypersonic Missiles.\n\n  Only one missile upgrade may be chosen.\n  Upgrades: MLRS/HMLRS\n  + Increased speed and precision
 	Valued:
 		Cost: 1000
 	RenderSprites:
 		Image: hypersonic.upgrade
 
-walker.upgrade:
+hailstorm.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Battle Mechs
+		Name: Upgrade: Hailstorm Missiles
 	Buildable:
-		BuildPaletteOrder: 40
-		Prerequisites: ~miss.gdi, ~structures.talon, ~techlevel.high
+		BuildPaletteOrder: 31
+		Prerequisites: ~gtek, ~structures.gdi, ~techlevel.high, ~!hypersonic.upgrade, ~!percussive.upgrade
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Allows construction the Titan and\nJuggernaut battle mechs.\n\n  Replaces: Mammoth Tank\n  Unlocks: Juggernaut
+		Description: Equip the MLRS/HMLRS with Hailstorm Missiles.\n\n  Only one missile upgrade may be chosen.\n  Upgrades: MLRS/HMLRS\n  + Barrage of unguided missiles
+		Cost: 1000
+	RenderSprites:
+		Image: hailstorm.upgrade
+
+percussive.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Percussive Missiles
+	Buildable:
+		BuildPaletteOrder: 31
+		Prerequisites: ~gtek, ~structures.gdi, ~techlevel.high, ~!hypersonic.upgrade, ~!hailstorm.upgrade
+		BuildDuration: 1500
+		IconPalette: chrometd
+		Description: Equip the MLRS/HMLRS with Percussive Missiles.\n\n  Only one missile upgrade may be chosen.\n  Upgrades: MLRS/HMLRS\n  + Increased area of effect and damage\n  + Briefly slows movement and rate of fire of impacted targets
 	Valued:
 		Cost: 1000
 	RenderSprites:
-		Image: walker.upgrade
+		Image: percussive.upgrade
 
 ionmam.upgrade:
 	Inherits: ^Upgrade
@@ -154,7 +168,7 @@ ionmam.upgrade:
 		Name: Upgrade: Ion Mammoth
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~miss.gdi, ~structures.gdi, ~!structures.talon, ~techlevel.high
+		Prerequisites: ~miss.gdi, ~structures.zocom, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
 		Description: Equips the Mammoth tank with a\nprototype portable ion cannon.\n\n  Upgrades: Mammoth Tank
@@ -162,6 +176,36 @@ ionmam.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: ionmam.upgrade
+
+hovermam.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Hover Mammoth
+	Buildable:
+		BuildPaletteOrder: 40
+		Prerequisites: ~miss.gdi, ~structures.eagle, ~techlevel.high
+		IconPalette: chrometd
+		BuildDuration: 1500
+		Description: Upgrades the Mammoth Tank with a\nprototype hover chassis.\n\n  Upgrades: Mammoth Tank
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: hovermam.upgrade
+
+railgun.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Titan Railgun
+	Buildable:
+		BuildPaletteOrder: 40
+		Prerequisites: ~miss.gdi, ~structures.talon, ~techlevel.high
+		IconPalette: chrometd
+		BuildDuration: 1500
+		Description: Equips the Titan tank with a\nprototype railgun.\n\n  Upgrades: Titan
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: railgun.upgrade
 
 vulcan.upgrade:
 	Inherits: ^Upgrade

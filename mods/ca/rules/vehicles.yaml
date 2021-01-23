@@ -2273,18 +2273,22 @@ HTNK:
 		Queue: Vehicle
 		BuildPaletteOrder: 185
 		IconPalette: chrometd
-		Prerequisites: techcenter, ~vehicles.htnk, ~!ionmam.upgrade, ~!walker.upgrade, ~techlevel.high
+		Prerequisites: techcenter, ~vehicles.htnk, ~!ionmam.upgrade, ~!hovermam.upgrade, ~techlevel.high
 		Description: Big and slow tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
 	Valued:
 		Cost: 1700
 	Tooltip:
 		Name: Mammoth Tank
 		GenericName: Tank
-		RequiresCondition: !ionmam-upgrade
-	Tooltip@UPG:
+		RequiresCondition: !ionmam-upgrade && !hovermam-upgrade
+	Tooltip@ION:
 		Name: Ion Mammoth Tank
 		GenericName: Tank
 		RequiresCondition: ionmam-upgrade
+	Tooltip@HOVER:
+		Name: Hover Mammoth Tank
+		GenericName: Tank
+		RequiresCondition: hovermam-upgrade
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -2330,15 +2334,18 @@ HTNK:
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 		RequiresCondition: !ionmam-upgrade
-	WithSpriteTurret@UPG:
+	WithSpriteTurret@ION:
 		Sequence: turret2
 		RequiresCondition: ionmam-upgrade
 	SpawnActorOnDeath:
 		Actor: HTNK.Husk
-		RequiresCondition: !being-warped && !ionmam-upgrade
-	SpawnActorOnDeath@UPG:
+		RequiresCondition: !being-warped && !ionmam-upgrade && !hovermam-upgrade
+	SpawnActorOnDeath@ION:
 		Actor: HTNK.Husk
-		RequiresCondition: !being-warped && ionmam-upgrade
+		RequiresCondition: !being-warped && ionmam-upgrade && !hovermam-upgrade
+	SpawnActorOnDeath@HOVER:
+		Actor: HTNK.Husk
+		RequiresCondition: !being-warped && !ionmam-upgrade && hovermam-upgrade
 	SelfHealing:
 		PercentageStep: 1
 		Delay: 25
@@ -2354,6 +2361,25 @@ HTNK:
 	GrantConditionOnPrerequisite@ION:
 		Condition: ionmam-upgrade
 		Prerequisites: ionmam.upgrade
+	GrantConditionOnPrerequisite@HOVER:
+		Condition: hovermam-upgrade
+		Prerequisites: hovermam.upgrade
+	WithFacingSpriteBody:
+		RequiresCondition: !hovermam-upgrade
+	WithFacingSpriteBody@EMPTY:
+		RequiresCondition: hovermam-upgrade
+		Sequence: idle-hover
+		Name: hover
+	WithShadow@HOVER:
+		Offset: 43, 128, 0
+		ZOffset: -129
+		RequiresCondition: hovermam-upgrade
+	Hovers@HOVER:
+		BobDistance: -35
+		RequiresCondition: hovermam-upgrade && !empdisable && !being-warped && !driver-dead
+	SpeedMultiplier@HOVER:
+		RequiresCondition: hovermam-upgrade
+		Modifier: 150
 
 HTNK.Ion:
 	Inherits: ^TankTD
@@ -2365,7 +2391,7 @@ HTNK.Ion:
 		Queue: Vehicle
 		BuildPaletteOrder: 190
 		IconPalette: chrometd
-		Prerequisites: ~ionmam.upgrade, ~gtek, ~vehicles.gdi, ~!vehicles.talon, ~miss.gdi, ~techlevel.high
+		Prerequisites: ~ionmam.upgrade, ~gtek, ~vehicles.zocom, ~techlevel.high
 		Description: Big and slow tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
 	Valued:
 		Cost: 1700
@@ -2424,6 +2450,15 @@ HTNK.Ion:
 		LocalOffset: 0,0,500
 	-Crushable:
 
+HTNK.Hover:
+	Inherits: HTNK
+	Tooltip:
+		Name: Hover Mammoth Tank
+		GenericName: Tank
+	Buildable:
+		Prerequisites: ~hovermam.upgrade, ~gtek, ~vehicles.eagle, ~techlevel.high
+		Description: Powerful heavy tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
+
 MSAM:
 	Inherits: ^TankTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
@@ -2443,7 +2478,7 @@ MSAM:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 120
-		Prerequisites: anyradar, ~vehicles.msam, ~vehicles.td, ~techlevel.medium, ~!hmlrs.buildable
+		Prerequisites: anyradar, ~vehicles.msam, ~techlevel.medium
 		Queue: Vehicle
 		IconPalette: chrometd
 		Description: Multiple Launch Rocket System.\nLong-range guided artillery.\n  Can attack Aircraft.\n  Has weak armor.\n  Strong vs Buildings, Defenses, Infantry, Light Armor
@@ -2462,28 +2497,6 @@ MSAM:
 	Turreted:
 		TurnSpeed: 5
 		Offset: -256,0,128
-	Armament@PRIMARY:
-		Weapon: 227mm
-		LocalOffset: 213,128,0, 213,-128,0
-		LocalYaw: 100, -100
-		RequiresCondition: !hypersonic-upgrade
-	Armament@SECONDARY:
-		Name: secondary
-		Weapon: 227mmAA
-		LocalOffset: 213,-128,0, 213,128,0
-		LocalYaw: 100, -100
-		RequiresCondition: !hypersonic-upgrade
-	Armament@PRIMARY-UPG2:
-		Weapon: 227mm.upg
-		LocalOffset: 213,128,0, 213,-128,0
-		LocalYaw: 100, -100
-		RequiresCondition: hypersonic-upgrade
-	Armament@SECONDARY-UPG2:
-		Name: secondary
-		Weapon: 227mmAA.upg
-		LocalOffset: 213,-128,0, 213,128,0
-		LocalYaw: 100, -100
-		RequiresCondition: hypersonic-upgrade
 	AttackTurreted:
 		TargetFrozenActors: True
 		PauseOnCondition: empdisable || being-warped
@@ -2497,6 +2510,56 @@ MSAM:
 	GrantConditionOnPrerequisite@HSONIC:
 		Condition: hypersonic-upgrade
 		Prerequisites: hypersonic.upgrade
+	GrantConditionOnPrerequisite@PERCUS:
+		Condition: percussive-upgrade
+		Prerequisites: percussive.upgrade
+	GrantConditionOnPrerequisite@HAILST:
+		Condition: hailstorm-upgrade
+		Prerequisites: hailstorm.upgrade
+	Armament@PRIMARY:
+		Weapon: 227mm
+		LocalOffset: 213,128,0, 213,-128,0
+		LocalYaw: 100, -100
+		RequiresCondition: !hypersonic-upgrade && !percussive-upgrade && !hailstorm-upgrade
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: 227mmAA
+		LocalOffset: 213,-128,0, 213,128,0
+		LocalYaw: 100, -100
+		RequiresCondition: !hypersonic-upgrade && !percussive-upgrade && !hailstorm-upgrade
+	Armament@PRIMARYUPG1:
+		Weapon: 227mm.Hypersonic
+		LocalOffset: 213,128,0, 213,-128,0
+		LocalYaw: 100, -100
+		RequiresCondition: hypersonic-upgrade
+	Armament@SECONDARYUPG1:
+		Name: secondary
+		Weapon: 227mmAA.Hypersonic
+		LocalOffset: 213,-128,0, 213,128,0
+		LocalYaw: 100, -100
+		RequiresCondition: hypersonic-upgrade
+	Armament@PRIMARYUPG2:
+		Weapon: 227mm.Percussive
+		LocalOffset: 213,128,0, 213,-128,0
+		LocalYaw: 100, -100
+		RequiresCondition: percussive-upgrade
+	Armament@SECONDARYUPG2:
+		Name: secondary
+		Weapon: 227mmAA.Percussive
+		LocalOffset: 213,-128,0, 213,128,0
+		LocalYaw: 100, -100
+		RequiresCondition: percussive-upgrade
+	Armament@PRIMARYUPG3:
+		Weapon: 227mm.Hailstorm
+		LocalOffset: 213,128,0, 213,-128,0
+		LocalYaw: 100, -100
+		RequiresCondition: hailstorm-upgrade
+	Armament@SECONDARYUPG3:
+		Name: secondary
+		Weapon: 227mmAA.Hailstorm
+		LocalOffset: 213,-128,0, 213,128,0
+		LocalYaw: 100, -100
+		RequiresCondition: hailstorm-upgrade
 
 MLRS:
 	Inherits: ^TankTD
@@ -3235,7 +3298,7 @@ TITN:
 		Queue: Vehicle
 		BuildPaletteOrder: 195
 		IconPalette: chrometd
-		Prerequisites: ~walker.upgrade, ~gtek, ~vehicles.gdi, ~vehicles.talon, ~miss.gdi, ~techlevel.high
+		Prerequisites: ~gtek, ~vehicles.talon, ~techlevel.high
 		Description: Tough combat battle-mech.\n  Can attack Aircraft.\n  Strong vs Vehicles, Infantry
 	Valued:
 		Cost: 2000
@@ -3272,10 +3335,22 @@ TITN:
 		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: TitanGun
-		LocalOffset: 830,260,100
+		LocalOffset: 830,290,170
 		Recoil: 171
 		RecoilRecovery: 30
 		MuzzleSequence: muzzle
+		RequiresCondition: !railgun-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: TitanRailgun
+		LocalOffset: 830,290,170
+		Recoil: 171
+		RecoilRecovery: 30
+		MuzzleSequence: muzzle
+		RequiresCondition: railgun-upgrade
+	Armament@PRIMARYUPGDIRECT:
+		Weapon: TitanRailgunImpact
+		LocalOffset: 830,290,170
+		RequiresCondition: railgun-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: TitanTusk
@@ -3305,6 +3380,9 @@ TITN:
 		LocalOffset: 0,0,700
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	GrantConditionOnPrerequisite@HAILST:
+		Condition: railgun-upgrade
+		Prerequisites: railgun.upgrade
 
 JUGG:
 	Inherits: TITN
@@ -3315,6 +3393,9 @@ JUGG:
 	Buildable:
 		BuildPaletteOrder: 200
 		Description: Tough artillery battle-mech.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Aircraft
+		Prerequisites: ~miss.gdi, ~vehicles.talon, ~techlevel.high
+	Mobile:
+		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead
 	Valued:
 		Cost: 1500
 	Armament@PRIMARY:
@@ -3331,6 +3412,10 @@ JUGG:
 		HP: 50000
 	Voiced:
 		VoiceSet: DisrVoice
+	GrantConditionOnAttack:
+		Condition: aiming
+		RevokeDelay: 50
+		RevokeAll: false
 
 TTRK:
 	Inherits: DTRK
@@ -3452,14 +3537,14 @@ HSAM:
 	RenderSprites:
 		Image: hmlrs
 	Valued:
-		Cost: 1150
+		Cost: 950
 	Tooltip:
 		Name: Hover MLRS
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 165
-		Prerequisites: ~miss.gdi, ~vehicles.gdi, ~!vehicles.talon, ~techlevel.medium
+		Prerequisites: anyradar, ~vehicles.eagle, ~techlevel.medium
 		Queue: Vehicle
 		IconPalette: chrometd
 		Description: Prototype Hover Multiple Launch Rocket System.\nLong-range guided artillery.\n  Can attack Aircraft.\n  Has weak armor.\n  Strong vs Buildings, Defenses, Infantry, Light Armor
@@ -3474,7 +3559,7 @@ HSAM:
 		StationaryInterval: 18
 		MovingInterval: 6
 	Health:
-		HP: 16000
+		HP: 14000
 	Armor:
 		Type: Light
 	RevealsShroud:
@@ -3497,28 +3582,6 @@ HSAM:
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
-	Armament@PRIMARY:
-		Weapon: 227mmH
-		LocalOffset: 213,128,0, 213,-128,0
-		LocalYaw: 100, -100
-		RequiresCondition: !hypersonic-upgrade
-	Armament@SECONDARY:
-		Name: secondary
-		Weapon: 227mmAAH
-		LocalOffset: 213,-128,0, 213,128,0
-		LocalYaw: 100, -100
-		RequiresCondition: !hypersonic-upgrade
-	Armament@PRIMARY-UPG2:
-		Weapon: 227mmH.upg
-		LocalOffset: 213,128,0, 213,-128,0
-		LocalYaw: 100, -100
-		RequiresCondition: hypersonic-upgrade
-	Armament@SECONDARY-UPG2:
-		Name: secondary
-		Weapon: 227mmAA.upg
-		LocalOffset: 213,-128,0, 213,128,0
-		LocalYaw: 100, -100
-		RequiresCondition: hypersonic-upgrade
 	AutoTarget:
 		ScanRadius: 10
 	AttackTurreted:
@@ -3534,6 +3597,83 @@ HSAM:
 	GrantConditionOnPrerequisite@HSONIC:
 		Condition: hypersonic-upgrade
 		Prerequisites: hypersonic.upgrade
+	GrantConditionOnPrerequisite@PERCUS:
+		Condition: percussive-upgrade
+		Prerequisites: percussive.upgrade
+	GrantConditionOnPrerequisite@HAILST:
+		Condition: hailstorm-upgrade
+		Prerequisites: hailstorm.upgrade
+	Armament@PRIMARY:
+		Weapon: 227mmH
+		LocalOffset: 213,128,0, 213,-128,0
+		LocalYaw: 100, -100
+		RequiresCondition: !hypersonic-upgrade && !percussive-upgrade && !hailstorm-upgrade
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: 227mmAAH
+		LocalOffset: 213,-128,0, 213,128,0
+		LocalYaw: 100, -100
+		RequiresCondition: !hypersonic-upgrade && !percussive-upgrade && !hailstorm-upgrade
+	Armament@PRIMARYUPG1:
+		Weapon: 227mm.Hypersonic
+		LocalOffset: 213,128,0, 213,-128,0
+		LocalYaw: 100, -100
+		RequiresCondition: hypersonic-upgrade
+	Armament@SECONDARYUPG1:
+		Name: secondary
+		Weapon: 227mmAA.Hypersonic
+		LocalOffset: 213,-128,0, 213,128,0
+		LocalYaw: 100, -100
+		RequiresCondition: hypersonic-upgrade
+	Armament@PRIMARYUPG2:
+		Weapon: 227mm.Percussive
+		LocalOffset: 213,128,0, 213,-128,0
+		LocalYaw: 100, -100
+		RequiresCondition: percussive-upgrade
+	Armament@SECONDARYUPG2:
+		Name: secondary
+		Weapon: 227mmAA.Percussive
+		LocalOffset: 213,-128,0, 213,128,0
+		LocalYaw: 100, -100
+		RequiresCondition: percussive-upgrade
+	Armament@PRIMARYUPG3:
+		Weapon: 227mm.Hailstorm
+		LocalOffset: 213,128,0, 213,-128,0
+		LocalYaw: 100, -100
+		RequiresCondition: hailstorm-upgrade
+	Armament@SECONDARYUPG3:
+		Name: secondary
+		Weapon: 227mmAA.Hailstorm
+		LocalOffset: 213,-128,0, 213,128,0
+		LocalYaw: 100, -100
+		RequiresCondition: hailstorm-upgrade
+
+HSAM1:
+	Inherits: HSAM
+	Armament@PRIMARY:
+		Weapon: 227mm.Hypersonic
+	Armament@SECONDARY:
+		Weapon: 227mmAA.Hypersonic
+	Tooltip:
+		Name: Hover MLRS (Hypersonic)
+
+HSAM2:
+	Inherits: HSAM
+	Armament@PRIMARY:
+		Weapon: 227mm.Percussive
+	Armament@SECONDARY:
+		Weapon: 227mmAA.Percussive
+	Tooltip:
+		Name: Hover MLRS (Percussive)
+
+HSAM3:
+	Inherits: HSAM
+	Armament@PRIMARY:
+		Weapon: 227mm.Hailstorm
+	Armament@SECONDARY:
+		Weapon: 227mmAA.Hailstorm
+	Tooltip:
+		Name: Hover MLRS (Hailstorm)
 
 RTNK:
 	Inherits: ^Tank
