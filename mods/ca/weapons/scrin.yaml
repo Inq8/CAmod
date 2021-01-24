@@ -323,18 +323,20 @@ MiniRift:
 RuinerCannon:
 	Inherits: 155mm
 	Report: ruiner-fire1.aud
-	ReloadDelay: 160
-	Burst: 4
-	BurstDelays: 20
+	ReloadDelay: 175
+	Burst: 5
+	BurstDelays: 15
 	Range: 10c0
 	Projectile: Bullet
+		Speed: 224
 		Image: tibglob
 		Palette: scrin
+		Inaccuracy: 682
 	Warhead@1Dam: SpreadDamage
-		Damage: 6000
+		Damage: 5000
 		Versus:
 			None: 120
-			Wood: 95
+			Wood: 90
 			Concrete: 80
 			Light: 65
 			Heavy: 45
@@ -663,12 +665,12 @@ RavagerShards:
 		-Range:
 		-Falloff:
 		Spread: 256
-		Damage: 1300
+		Damage: 2200
 		Versus:
-			Wood: 50
-			Light: 70
-			Heavy: 15
-			Concrete: 60
+			Wood: 30
+			Light: 40
+			Heavy: 10
+			Concrete: 35
 			Brick: 15
 
 LaceratorShards:
@@ -686,6 +688,7 @@ LaceratorShards:
 		Versus:
 			None: 30
 			Wood: 65
+			Light: 70
 			Heavy: 100
 			Concrete: 50
 			Brick: 50
