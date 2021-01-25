@@ -2511,8 +2511,8 @@ MSAM:
 		Condition: hypersonic-upgrade
 		Prerequisites: hypersonic.upgrade
 	GrantConditionOnPrerequisite@PERCUS:
-		Condition: percussive-upgrade
-		Prerequisites: percussive.upgrade
+		Condition: hammerhead-upgrade
+		Prerequisites: hammerhead.upgrade
 	GrantConditionOnPrerequisite@HAILST:
 		Condition: hailstorm-upgrade
 		Prerequisites: hailstorm.upgrade
@@ -2520,13 +2520,13 @@ MSAM:
 		Weapon: 227mm
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
-		RequiresCondition: !hypersonic-upgrade && !percussive-upgrade && !hailstorm-upgrade
+		RequiresCondition: !hypersonic-upgrade && !hammerhead-upgrade && !hailstorm-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: 227mmAA
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
-		RequiresCondition: !hypersonic-upgrade && !percussive-upgrade && !hailstorm-upgrade
+		RequiresCondition: !hypersonic-upgrade && !hammerhead-upgrade && !hailstorm-upgrade
 	Armament@PRIMARYUPG1:
 		Weapon: 227mm.Hypersonic
 		LocalOffset: 213,128,0, 213,-128,0
@@ -2539,16 +2539,16 @@ MSAM:
 		LocalYaw: 100, -100
 		RequiresCondition: hypersonic-upgrade
 	Armament@PRIMARYUPG2:
-		Weapon: 227mm.Percussive
+		Weapon: 227mm.Hammerhead
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
-		RequiresCondition: percussive-upgrade
+		RequiresCondition: hammerhead-upgrade
 	Armament@SECONDARYUPG2:
 		Name: secondary
-		Weapon: 227mmAA.Percussive
+		Weapon: 227mmAA.Hammerhead
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
-		RequiresCondition: percussive-upgrade
+		RequiresCondition: hammerhead-upgrade
 	Armament@PRIMARYUPG3:
 		Weapon: 227mm.Hailstorm
 		LocalOffset: 213,128,0, 213,-128,0
@@ -3309,7 +3309,7 @@ TITN:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 100000
+		HP: 98000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -3352,9 +3352,6 @@ TITN:
 		LocalOffset: 830,290,170
 		RequiresCondition: railgun-upgrade
 	Armament@SECONDARY:
-		Weapon: TitanRailgunImpact
-		LocalOffset: 830,290,170
-	Armament@TERTIARY:
 		Name: secondary
 		Weapon: TitanTusk
 		LocalOffset: -85,-384,340
@@ -3601,8 +3598,8 @@ HSAM:
 		Condition: hypersonic-upgrade
 		Prerequisites: hypersonic.upgrade
 	GrantConditionOnPrerequisite@PERCUS:
-		Condition: percussive-upgrade
-		Prerequisites: percussive.upgrade
+		Condition: hammerhead-upgrade
+		Prerequisites: hammerhead.upgrade
 	GrantConditionOnPrerequisite@HAILST:
 		Condition: hailstorm-upgrade
 		Prerequisites: hailstorm.upgrade
@@ -3610,13 +3607,13 @@ HSAM:
 		Weapon: 227mmH
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
-		RequiresCondition: !hypersonic-upgrade && !percussive-upgrade && !hailstorm-upgrade
+		RequiresCondition: !hypersonic-upgrade && !hammerhead-upgrade && !hailstorm-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: 227mmAAH
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
-		RequiresCondition: !hypersonic-upgrade && !percussive-upgrade && !hailstorm-upgrade
+		RequiresCondition: !hypersonic-upgrade && !hammerhead-upgrade && !hailstorm-upgrade
 	Armament@PRIMARYUPG1:
 		Weapon: 227mm.Hypersonic
 		LocalOffset: 213,128,0, 213,-128,0
@@ -3629,16 +3626,16 @@ HSAM:
 		LocalYaw: 100, -100
 		RequiresCondition: hypersonic-upgrade
 	Armament@PRIMARYUPG2:
-		Weapon: 227mm.Percussive
+		Weapon: 227mm.Hammerhead
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
-		RequiresCondition: percussive-upgrade
+		RequiresCondition: hammerhead-upgrade
 	Armament@SECONDARYUPG2:
 		Name: secondary
-		Weapon: 227mmAA.Percussive
+		Weapon: 227mmAA.Hammerhead
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
-		RequiresCondition: percussive-upgrade
+		RequiresCondition: hammerhead-upgrade
 	Armament@PRIMARYUPG3:
 		Weapon: 227mm.Hailstorm
 		LocalOffset: 213,128,0, 213,-128,0
@@ -3650,33 +3647,6 @@ HSAM:
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hailstorm-upgrade
-
-HSAM1:
-	Inherits: HSAM
-	Armament@PRIMARY:
-		Weapon: 227mm.Hypersonic
-	Armament@SECONDARY:
-		Weapon: 227mmAA.Hypersonic
-	Tooltip:
-		Name: Hover MLRS (Hypersonic)
-
-HSAM2:
-	Inherits: HSAM
-	Armament@PRIMARY:
-		Weapon: 227mm.Percussive
-	Armament@SECONDARY:
-		Weapon: 227mmAA.Percussive
-	Tooltip:
-		Name: Hover MLRS (Percussive)
-
-HSAM3:
-	Inherits: HSAM
-	Armament@PRIMARY:
-		Weapon: 227mm.Hailstorm
-	Armament@SECONDARY:
-		Weapon: 227mmAA.Hailstorm
-	Tooltip:
-		Name: Hover MLRS (Hailstorm)
 
 RTNK:
 	Inherits: ^Tank

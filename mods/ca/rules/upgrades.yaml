@@ -124,7 +124,7 @@ hypersonic.upgrade:
 		Name: Upgrade: Hypersonic Missiles
 	Buildable:
 		BuildPaletteOrder: 31
-		Prerequisites: ~gtek, ~structures.gdi, ~techlevel.high, ~!hailstorm.upgrade, ~!percussive.upgrade
+		Prerequisites: ~gtek, ~structures.gdi, ~techlevel.high, ~!hailstorm.upgrade, ~!hammerhead.upgrade
 		BuildDuration: 1500
 		IconPalette: chrometd
 		Description: Equip the MLRS/HMLRS with Hypersonic Missiles.\n\n  Only one missile upgrade may be chosen.\n  Upgrades: MLRS/HMLRS\n  + Increased speed and precision
@@ -139,7 +139,7 @@ hailstorm.upgrade:
 		Name: Upgrade: Hailstorm Missiles
 	Buildable:
 		BuildPaletteOrder: 31
-		Prerequisites: ~gtek, ~structures.gdi, ~techlevel.high, ~!hypersonic.upgrade, ~!percussive.upgrade
+		Prerequisites: ~gtek, ~structures.gdi, ~techlevel.high, ~!hypersonic.upgrade, ~!hammerhead.upgrade
 		BuildDuration: 1500
 		IconPalette: chrometd
 		Description: Equip the MLRS/HMLRS with Hailstorm Missiles.\n\n  Only one missile upgrade may be chosen.\n  Upgrades: MLRS/HMLRS\n  + Barrage of unguided missiles
@@ -147,20 +147,20 @@ hailstorm.upgrade:
 	RenderSprites:
 		Image: hailstorm.upgrade
 
-percussive.upgrade:
+hammerhead.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Percussive Missiles
+		Name: Upgrade: Hammerhead Missiles
 	Buildable:
 		BuildPaletteOrder: 31
 		Prerequisites: ~gtek, ~structures.gdi, ~techlevel.high, ~!hypersonic.upgrade, ~!hailstorm.upgrade
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Equip the MLRS/HMLRS with Percussive Missiles.\n\n  Only one missile upgrade may be chosen.\n  Upgrades: MLRS/HMLRS\n  + Increased area of effect and damage\n  + Briefly slows movement and rate of fire of impacted targets
+		Description: Equip the MLRS/HMLRS with Hammerhead Missiles.\n\n  Only one missile upgrade may be chosen.\n  Upgrades: MLRS/HMLRS\n  + Increased area of effect and damage\n  + Briefly slows movement and rate of fire of impacted targets
 	Valued:
 		Cost: 1000
 	RenderSprites:
-		Image: percussive.upgrade
+		Image: hammerhead.upgrade
 
 ionmam.upgrade:
 	Inherits: ^Upgrade

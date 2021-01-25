@@ -75,15 +75,15 @@ Maverick:
 		RangeLimit: 14c410
 		LockOnInaccuracy: 316
 	Warhead@1Dam: SpreadDamage
-		Damage: 12000
+		Damage: 10750
 		Versus:
 			None: 25
 			Wood: 35
-			Concrete: 85
-			Light: 100
+			Concrete: 100
+			Light: 70
 			Heavy: 85
 			Brick: 80
-			
+
 MaverickAA:
 	Inherits: ^AntiAirMissile
 	ReloadDelay: 60
@@ -96,7 +96,7 @@ MaverickAA:
 		HorizontalRateOfTurn: 10
 		RangeLimit: 7c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 3000
+		Damage: 5000
 
 MaverickSU:
 	Inherits: Maverick
@@ -882,7 +882,7 @@ IFVRocketsAAE:
 		RangeLimit: 13c0
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 700
+		Damage: 750
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Water, Trees
 		Versus:
@@ -919,16 +919,16 @@ IFVRocketsAAE:
 		LockOnInaccuracy: 512
 		ContrailColor: 00FFFFE6
 	Warhead@1Dam: SpreadDamage
-		Damage: 830
+		Damage: 840
 
-227mm.Percussive:
+227mm.Hammerhead:
 	Inherits: 227mm.upg
 	BurstDelays: 12
-	Report: percussivemissile1.aud, percussivemissile2.aud
+	Report: hammerheadmissile1.aud, hammerheadmissile2.aud
 	Projectile: MissileCA
 		ContrailColor: FFCC00E6
 	Warhead@1Dam: SpreadDamage
-		Damage: 930
+		Damage: 940
 		Spread: 426
 	Warhead@3Eff:
 		ImpactSounds: xplobig4.aud
@@ -957,7 +957,7 @@ IFVRocketsAAE:
 		LaunchAngle: 62
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
-		Damage: 370
+		Damage: 380
 
 227mmAA:
 	Inherits: ^AntiAirMissile
@@ -1001,9 +1001,9 @@ IFVRocketsAAE:
 	Projectile: MissileCA
 		ContrailColor: 00FFFFE6
 
-227mmAA.Percussive:
+227mmAA.Hammerhead:
 	Inherits: 227mmAA.upg
-	Report: percussivemissile1.aud, percussivemissile2.aud
+	Report: hammerheadmissile1.aud, hammerheadmissile2.aud
 	Projectile: MissileCA
 		ContrailColor: FF0000E6
 
