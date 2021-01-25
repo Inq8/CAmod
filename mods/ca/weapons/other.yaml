@@ -82,7 +82,7 @@ Napalmtd:
 			None: 100
 			Wood: 58
 			Light: 80
-			Heavy: 65
+			Heavy: 55
 			Concrete: 35
 			Brick: 25
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
@@ -427,7 +427,7 @@ C4:
 		RandomClusterCount: 3
 		Dimensions: 3,3
 		Footprint: xxx xxx xxx
-		
+
 Ivanbomb:
 	Inherits: ^Artillery
 	ValidTargets: Ground, TNT, Infantry, Vehicle, Structure
@@ -459,7 +459,7 @@ Ivanbomb:
 	Warhead@3Eff:
 		Explosions: piff
 	-Warhead@4EffWater:
-	
+
 TNT:
 	Projectile: InstantHit
 	Warhead@1Dam: HealthPercentageDamage
@@ -1680,12 +1680,25 @@ JDAM:
 		Falloff: 1000, 368, 135, 50, 0
 		ValidTargets: Ground, Water
 		Versus:
-			None: 80
+			None: 0
 			Wood: 90
-			Light: 80
-			Heavy: 65
+			Light: 100
+			Heavy: 95
 			Concrete: 100
 			Brick: 65
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@2Dam: SpreadDamage
+		Spread: 512
+		Damage: 10000
+		Falloff: 1000, 200, 45, 20, 0
+		ValidTargets: Ground, Water
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 0
+			Heavy: 0
+			Concrete: 0
+			Brick: 0
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
