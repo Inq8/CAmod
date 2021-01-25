@@ -124,7 +124,7 @@ hypersonic.upgrade:
 		Name: Upgrade: Hypersonic Missiles
 	Buildable:
 		BuildPaletteOrder: 31
-		Prerequisites: ~gtek, ~structures.gdi, ~techlevel.high, ~!hailstorm.upgrade, ~!hammerhead.upgrade
+		Prerequisites: ~gtek, ~structures.gdi, ~techlevel.high, ~!hailstorm.upgrade, ~!percussive.upgrade
 		BuildDuration: 1500
 		IconPalette: chrometd
 		Description: Equip the MLRS/HMLRS with Hypersonic Missiles.\n\n  Only one missile upgrade may be chosen.\n  Upgrades: MLRS/HMLRS\n  + Increased speed and precision
@@ -139,7 +139,7 @@ hailstorm.upgrade:
 		Name: Upgrade: Hailstorm Missiles
 	Buildable:
 		BuildPaletteOrder: 31
-		Prerequisites: ~gtek, ~structures.gdi, ~techlevel.high, ~!hypersonic.upgrade, ~!hammerhead.upgrade
+		Prerequisites: ~gtek, ~structures.gdi, ~techlevel.high, ~!hypersonic.upgrade, ~!percussive.upgrade
 		BuildDuration: 1500
 		IconPalette: chrometd
 		Description: Equip the MLRS/HMLRS with Hailstorm Missiles.\n\n  Only one missile upgrade may be chosen.\n  Upgrades: MLRS/HMLRS\n  + Barrage of unguided missiles
@@ -147,20 +147,20 @@ hailstorm.upgrade:
 	RenderSprites:
 		Image: hailstorm.upgrade
 
-hammerhead.upgrade:
+percussive.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Hammerhead Missiles
+		Name: Upgrade: Percussive Missiles
 	Buildable:
 		BuildPaletteOrder: 31
 		Prerequisites: ~gtek, ~structures.gdi, ~techlevel.high, ~!hypersonic.upgrade, ~!hailstorm.upgrade
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Equip the MLRS/HMLRS with Hammerhead Missiles.\n\n  Only one missile upgrade may be chosen.\n  Upgrades: MLRS/HMLRS\n  + Increased area of effect and damage\n  + Briefly slows movement and rate of fire of impacted targets
+		Description: Equip the MLRS/HMLRS with Percussive Missiles.\n\n  Only one missile upgrade may be chosen.\n  Upgrades: MLRS/HMLRS\n  + Increased area of effect and damage\n  + Briefly slows movement and rate of fire of impacted targets
 	Valued:
 		Cost: 1000
 	RenderSprites:
-		Image: hammerhead.upgrade
+		Image: percussive.upgrade
 
 ionmam.upgrade:
 	Inherits: ^Upgrade
@@ -192,7 +192,7 @@ hovermam.upgrade:
 	RenderSprites:
 		Image: hovermam.upgrade
 
-titanrailgun.upgrade:
+railgun.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
 		Name: Upgrade: Titan Railgun
@@ -205,7 +205,7 @@ titanrailgun.upgrade:
 	Valued:
 		Cost: 1000
 	RenderSprites:
-		Image: titanrailgun.upgrade
+		Image: railgun.upgrade
 
 vulcan.upgrade:
 	Inherits: ^Upgrade
