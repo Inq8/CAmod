@@ -75,7 +75,7 @@ Maverick:
 		RangeLimit: 14c410
 		LockOnInaccuracy: 316
 	Warhead@1Dam: SpreadDamage
-		Damage: 14000
+		Damage: 12000
 		Versus:
 			None: 25
 			Wood: 35
@@ -83,6 +83,20 @@ Maverick:
 			Light: 100
 			Heavy: 85
 			Brick: 80
+			
+MaverickAA:
+	Inherits: ^AntiAirMissile
+	ReloadDelay: 60
+	Report: missile7.aud
+	MinRange: 1c256
+	Burst: 2
+	BurstDelays: 10
+	Projectile: MissileCA
+		Speed: 384
+		HorizontalRateOfTurn: 10
+		RangeLimit: 7c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 3000
 
 MaverickSU:
 	Inherits: Maverick

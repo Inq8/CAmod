@@ -391,7 +391,7 @@ PlaceC4:
 	Projectile: InstantHit
 	Report: icolseta.aud
 	ValidTargets: C4, Vehicle, Structure
-	InvalidTargets: C4Attached, C4Immune
+	InvalidTargets: C4Attached, TNTAttached, C4Immune
 	Warhead@AttachDelayedWeapon: AttachDelayedWeapon
 		Weapon: C4
 		Type: c4
@@ -427,33 +427,99 @@ C4:
 		RandomClusterCount: 3
 		Dimensions: 3,3
 		Footprint: xxx xxx xxx
+		
+Ivanbomb:
+	Inherits: ^Artillery
+	ValidTargets: Ground, TNT, Infantry, Vehicle, Structure
+	InvalidTargets: C4Attached, TNTAttached, C4Immune
+	ReloadDelay: 40
+	Range: 3c725
+	Report: grenade1.aud
+	Projectile: Bullet
+		Speed: 166
+		Inaccuracy: 0
+		Image: TNT
+		BounceCount: 2
+		BounceRangeModifier: 40
+		ValidBounceBlockerStances: Ally, Neutral, Enemy
+	Warhead@AttachDelayedWeapon: AttachDelayedWeapon
+		Weapon: TNT
+		Type: tnt
+		TriggerTime: 140
+		DeathTypes: ExplosionDeath
+		Range: 1
+	Warhead@TargetValidator: SpreadDamage
+	Warhead@highlight: GrantExternalCondition
+		Range: 0c256
+		Duration: 2
+		Condition: highlight
+		ValidTargets: Ground, Structure, Vehicle
+	-Warhead@1Dam:
+	-Warhead@2Smu:
+	Warhead@3Eff:
+		Explosions: piff
+	-Warhead@4EffWater:
+	
+TNT:
+	Projectile: InstantHit
+	Warhead@1Dam: HealthPercentageDamage
+		ValidTargets: Structure
+		Spread: 256
+		Damage: 33
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		Versus:
+			Light: 150
+			Heavy: 150
+	Warhead@2Dam: SpreadDamage
+		Spread: 341
+		Damage: 3400
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		ValidTargets: Ground, Water
+		Versus:
+			None: 90
+			Wood: 65
+			Light: 70
+			Heavy: 40
+			Concrete: 50
+			Brick: 45
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: building, building2
+		ImpactSounds: expnew06.aud
+		ValidTargets: Ground, Water, Air
+	Warhead@Smu: LeaveSmudge
+		SmudgeType: Crater
+		InvalidTargets: Structure, Wall, Trees
+	Warhead@Flames: FireCluster
+		Weapon: BurnFx
+		RandomClusterCount: 3
+		Dimensions: 3,3
+		Footprint: xxx xxx xxx
 
 DefuseKit:
 	ReloadDelay: 50
-	Range: 2c0
+	Range: 2c511
 	Report: gdefuse.aud
-	ValidTargets: C4Attached
+	ValidTargets: C4Attached, TNTAttached
 	Projectile: LaserZap
 		Width: 48
 		Duration: 4
 		Color: FFFFFF80
-	Warhead@emp: GrantExternalCondition
+	Warhead@flash: GrantExternalCondition
 		Range: 128
 		Duration: 3
 		Condition: detach
-		ValidTargets: C4Attached
+		ValidTargets: C4Attached, TNTAttached
 		ValidStances: Ally
 	Warhead@DetachDelayedWeapon: DetachDelayedWeapon
-		Types: c4
+		Types: c4, tnt
 		Range: 128
 		ValidStances: Ally
-		ValidTargets: C4Attached
-	Warhead@TargetValidator: SpreadDamage
-		ValidTargets: C4Attached
+		ValidTargets: C4Attached, TNTAttached
 
 IFVDefuseKit:
 	Inherits: DefuseKit
-	Range: 4c512
+	Range: 4c511
 
 DemoTruckTargeting:
 	ValidTargets: DetonateAttack

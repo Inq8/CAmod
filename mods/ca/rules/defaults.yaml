@@ -824,6 +824,38 @@
 		Delay: 5
 		Interval: 5
 		RequiresCondition: c4
+		
+^TNTPlantable:
+	DelayedWeaponAttachable@TNT:
+		Type: tnt
+		Condition: tnt
+		ProgressBarColor: FF000080
+	Targetable@tnt:
+		TargetTypes: TNTAttached
+		RequiresCondition: tnt
+	WithDecoration@tnt:
+		Image: tnt
+		Sequence: tnt
+		ReferencePoint: center, center
+		ZOffset: 2047
+		RequiresCondition: tnt
+		RequiresSelection: False
+		ValidStances: Ally, Neutral, Enemy
+	ExternalCondition@detachable:
+		Condition: detach
+	WithColoredOverlay@detach:
+		Palette: moveflash
+		RequiresCondition: detach
+	AmbientSound@tnt:
+		SoundFiles: icraloop.aud
+		Delay: 6
+		Interval: 6
+		RequiresCondition: tnt
+	AmbientSound@tnt-armed:
+		SoundFiles: icraatta.aud
+		Delay: 0
+		Interval: 160
+		RequiresCondition: tnt
 
 ^MindControllable:
 	ExternalCondition@prevent-mindcontrol:
@@ -969,6 +1001,7 @@
 	Inherits@17: ^Suppressable
 	Inherits@18: ^CrateCloak
 	Inherits@C4: ^C4Plantable
+	Inherits@TNT: ^TNTPlantable
 	Inherits@gflash: ^GreenFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
@@ -987,7 +1020,7 @@
 		Bounds: 24, 24
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Vehicle, C4
+		TargetTypes: Ground, Vehicle, C4, TNT
 	Targetable@REPAIR:
 		RequiresCondition: !parachute && damaged && !being-warped
 		TargetTypes: Repair
@@ -1112,6 +1145,7 @@
 	Inherits@14: ^Concussion
 	Inherits@15: ^Suppressable
 	Inherits@16: ^CrateCloak
+	Inherits@TNT: ^TNTPlantable
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@mind: ^MindControllable
@@ -1158,7 +1192,7 @@
 		DecorationBounds: 12,17,0,-6
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Infantry, Disguise
+		TargetTypes: Ground, Infantry, Disguise, TNT
 	Targetable@HEAL:
 		RequiresCondition: !parachute && damaged && !being-warped
 		TargetTypes: Heal
@@ -1645,6 +1679,7 @@
 	Inherits@wflash: ^WhiteFlash
 	Inherits@production: ^ProductionEfficiencyBoost
 	Inherits@C4: ^C4Plantable
+	Inherits@TNT: ^TNTPlantable
 	Cloak@EXTERNALCLOAK:
 		RequiresCondition: invisibility || crate-cloak && (!cloak-force-disabled && !airborne && !being-warped)
 		CloakDelay: 90
@@ -1658,7 +1693,7 @@
 		RequiresCondition: empdisable && cruising
 	Targetable@GROUND:
 		RequiresCondition: !airborne && !being-warped
-		TargetTypes: Ground, Vehicle, C4
+		TargetTypes: Ground, Vehicle, C4, TNT
 	Targetable@AIRBORNE:
 		RequiresCondition: airborne && !being-warped
 	Targetable@REPAIR:
@@ -1667,6 +1702,8 @@
 		RequiresCondition: !airborne
 	Targetable@c4:
 		RequiresCondition: c4 && !airborne
+	Targetable@tnt:
+		RequiresCondition: tnt && !airborne
 	ProductionCostMultiplier@EagleBonus:
 		Multiplier: 90
 		Prerequisites: structures.eagle
@@ -1716,12 +1753,13 @@
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^IronCurtainable
 	Inherits@3: ^SpriteActor
-	Inherits@4: ^C4Plantable
+	Inherits@C4: ^C4Plantable
+	Inherits@TNT: ^TNTPlantable
 	Inherits@shape: ^1x1Shape
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableBuilding
 	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure
+		TargetTypes: Ground, C4, TNT, DetonateAttack, Structure
 	Building:
 		Dimensions: 1,1
 		Footprint: x
@@ -1761,6 +1799,8 @@
 		RequiresCondition: flare
 	ExternalCondition@FLARE:
 		Condition: flare
+	WithDecoration@tnt:
+		Sequence: tntbig
 
 ^Building:
 	Inherits@1: ^BasicBuilding
@@ -1808,7 +1848,7 @@
 	MustBeDestroyed:
 		RequiredForShortGame: true
 	Sellable:
-		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped
+		RequiresCondition: !build-incomplete && !(c4 || tnt) && !being-captured && !being-warped
 		SellSounds: cashturn.aud
 	WithBuildingRepairDecoration:
 		Image: allyrepair
@@ -1848,7 +1888,7 @@
 	Selectable:
 		Bounds: 24,24
 	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, Defense
+		TargetTypes: Ground, C4, TNT, DetonateAttack, Structure, Defense
 	DetectCloaked:
 		Range: 6c0
 		RequiresCondition: !(empdisable || being-warped)
@@ -1867,7 +1907,7 @@
 	-CapturableProgressBlink:
 	-SpawnActorsOnSell:
 	Sellable:
-		RequiresCondition: !build-incomplete && !c4 && !being-warped
+		RequiresCondition: !build-incomplete && !(c4 || tnt) && !being-warped
 	RenderRangeCircle:
 		Color: C12900
 	Explodes:
@@ -1992,7 +2032,7 @@
 
 ^InfiltratableFake:
 	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate
+		TargetTypes: Ground, Structure, C4, TNT, DetonateAttack, SpyInfiltrate
 	InfiltrateForDecoration:
 		Types: SpyInfiltrate
 		RequiresSelection: true
@@ -2014,7 +2054,7 @@
 	Tooltip:
 		Name: Ammo Box
 	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, NoAutoTarget
+		TargetTypes: Ground, C4, TNT, DetonateAttack, Structure, NoAutoTarget
 	Armor:
 		Type: Light
 	MapEditorData:

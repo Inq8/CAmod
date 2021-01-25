@@ -124,7 +124,7 @@ E2:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 40
-		Prerequisites: ~barr, ~techlevel.infonly
+		Prerequisites: ~barr, ~!infantry.ukraine, ~techlevel.infonly
 		Description: Infantry armed with grenades.\n  Strong vs Buildings, Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
 		Cost: 160
@@ -336,7 +336,7 @@ E6:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 60
 		Prerequisites: ~infantry.ra, ~techlevel.infonly
-		Description: Infiltrates and captures\nenemy structures.\n  Can repair friendly structures & bridges.\n  Special Ability: Repair\n  Unarmed
+		Description: Infiltrates and captures\nenemy structures.\n  Can repair friendly structures & bridges and defuse bombs.\n  Special Ability: Repair\n  Special Ability: Defuse\n  Unarmed
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -353,6 +353,21 @@ E6:
 		CaptureTypes: building
 		PlayerExperience: 25
 		CaptureDelay: 100
+	Armament@defuse:
+		Weapon: DefuseKit
+		Cursor: goldwrench
+		OutsideRangeCursor: goldwrench
+		TargetStances: Ally
+		ForceTargetStances: None
+		Name: secondary
+	AutoTarget:
+	AutoTargetPriority@defuse:
+		ValidTargets: C4Attached, TNTAttached
+		InvalidTargets: NoAutoTarget
+		ValidStances: Ally
+	AttackFrontal:
+		Armaments: primary, secondary
+		PauseOnCondition: being-warped
 	Voiced:
 		VoiceSet: EngineerVoice
 	Targetable:
@@ -558,17 +573,6 @@ MECH:
 		OutsideRangeCursor: repair
 		TargetStances: Ally
 		ForceTargetStances: None
-	Armament@defuse:
-		Weapon: DefuseKit
-		Cursor: goldwrench
-		OutsideRangeCursor: goldwrench
-		TargetStances: Ally
-		ForceTargetStances: None
-		Name: secondary
-	AutoTargetPriority@defuse:
-		ValidTargets: C4Attached
-		InvalidTargets: NoAutoTarget
-		ValidStances: Ally
 	AttackFrontal:
 		Voice: Action
 		PauseOnCondition: being-warped
@@ -1172,13 +1176,28 @@ N6:
 		BuildPaletteOrder: 60
 		Prerequisites: ~infantry.td, ~techlevel.infonly
 		IconPalette: chrometd
-		Description: Infiltrates and captures\nenemy structures.\n  Can repair friendly structures & bridges.\n  Special Ability: Repair\n  Unarmed
+		Description: Infiltrates and captures\nenemy structures.\n  Can repair friendly structures & bridges and defuse bombs\n  Special Ability: Repair\n  Special Ability: Defuse\n  Unarmed
 	Valued:
 		Cost: 500
 	Tooltip:
 		Name: Engineer
 	Passenger:
 		PipType: Yellow
+	Armament@defuse:
+		Weapon: DefuseKit
+		Cursor: goldwrench
+		OutsideRangeCursor: goldwrench
+		TargetStances: Ally
+		ForceTargetStances: None
+		Name: secondary
+	AutoTarget:
+	AutoTargetPriority@defuse:
+		ValidTargets: C4Attached, TNTAttached
+		InvalidTargets: NoAutoTarget
+		ValidStances: Ally
+	AttackFrontal:
+		Armaments: primary, secondary
+		PauseOnCondition: being-warped
 	EngineerRepair:
 	RepairsBridges:
 	CaptureManager:
@@ -2022,3 +2041,56 @@ RMBC:
 		RequiresCondition: being-warped || empdisable
 	DamageMultiplier@CYBORGARMOR:
 		Modifier: 85
+		
+IVAN:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 40
+		Prerequisites: ~infantry.ukraine, weap, ~techlevel.infonly
+		Description: Specialist demolition infantry armed with explosives.\n  Strong vs Buildings\n  Weak vs Aircraft
+	Valued:
+		Cost: 600
+	Tooltip:
+		Name: Crazy Ivan
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 5000
+	Mobile:
+		Speed: 56
+		Voice: Move
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Guard:
+		Voice: Move
+	Armament@PRIMARY:
+		Weapon: Ivanbomb
+		LocalOffset: 0,0,555
+		FireDelay: 15
+	Armament@Garrison:
+		Name: mounted
+		Weapon: Ivanbomb
+		FireDelay: 15
+	TakeCover:
+		ProneOffset: 256,64,-331
+	AttackFrontal:
+		Voice: Attack
+		PauseOnCondition: being-warped
+	WithInfantryBody:
+		DefaultAttackSequence: throw
+	Explodes:
+		Weapon: ArtilleryExplode
+		EmptyWeapon: ArtilleryExplode
+		Chance: 100
+		DamageSource: Killer
+		RequiresCondition: !being-warped
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	Voiced:
+		VoiceSet: CrazyIvanVoice
