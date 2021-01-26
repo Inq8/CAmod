@@ -3970,19 +3970,6 @@ HPAD.TD:
 	InfiltrateForSupportPower:
 		Types: SpyInfiltrate
 		Proxy: powerproxy.paratroopers2
-	SpawnActorPower@GDIDropzone:
-		Actor: FLARE.dropzone
-		Prerequisites: ~aircraft.gdi, ~!aircraft.eagle, anyradar, ~techlevel.low
-		LifeTime: 280
-		OrderName: dropzone
-		Icon: orcaca
-		IconPalette: chrometd
-		ChargeInterval: 9000
-		Description: Reinforcements
-		LongDesc: An Orca Carryall drops reinforcements\nat the target location.
-		EndChargeSpeechNotification: ReinforceAva
-		LaunchSpeechNotification: ReinforcementsArrived
-		SelectTargetSpeechNotification: SelectTarget
 	SpawnActorPower@GDIEagleDropzone:
 		Actor: FLARE.dropzone
 		Prerequisites: ~aircraft.gdi, ~aircraft.eagle, anyradar, ~techlevel.low
@@ -4219,9 +4206,9 @@ AFLD.GDI:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
-	InterceptorPower@EagleAirDef:
+	InterceptorPower@AirDef:
 		OrderName: interceptors
-		Prerequisites: ~aircraft.eagle, techlevel.unrestricted
+		Prerequisites: ~aircraft.gdi, techlevel.unrestricted
 		Icon: airsupport
 		ChargeInterval: 10500
 		Description: Interceptors

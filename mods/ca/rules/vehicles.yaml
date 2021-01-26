@@ -2273,22 +2273,13 @@ HTNK:
 		Queue: Vehicle
 		BuildPaletteOrder: 185
 		IconPalette: chrometd
-		Prerequisites: techcenter, ~vehicles.htnk, ~!ionmam.upgrade, ~!hovermam.upgrade, ~techlevel.high
+		Prerequisites: techcenter, ~vehicles.htnk, ~techlevel.high, ~!ionmam.upgrade, ~!hovermam.upgrade
 		Description: Big and slow tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
 	Valued:
 		Cost: 1700
 	Tooltip:
 		Name: Mammoth Tank
 		GenericName: Tank
-		RequiresCondition: !ionmam-upgrade && !hovermam-upgrade
-	Tooltip@ION:
-		Name: Ion Mammoth Tank
-		GenericName: Tank
-		RequiresCondition: ionmam-upgrade
-	Tooltip@HOVER:
-		Name: Hover Mammoth Tank
-		GenericName: Tank
-		RequiresCondition: hovermam-upgrade
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -2314,14 +2305,6 @@ HTNK:
 		Recoil: 171
 		RecoilRecovery: 30
 		MuzzleSequence: muzzle
-		RequiresCondition: !ionmam-upgrade
-	Armament@PRIMARYUPG:
-		Weapon: IonZap
-		LocalOffset: 870,0,360
-		Recoil: 171
-		RecoilRecovery: 30
-		MuzzleSequence: muzzle
-		RequiresCondition: ionmam-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: MammothTusk
@@ -2333,19 +2316,9 @@ HTNK:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
-		RequiresCondition: !ionmam-upgrade
-	WithSpriteTurret@ION:
-		Sequence: turret2
-		RequiresCondition: ionmam-upgrade
 	SpawnActorOnDeath:
 		Actor: HTNK.Husk
-		RequiresCondition: !being-warped && !ionmam-upgrade && !hovermam-upgrade
-	SpawnActorOnDeath@ION:
-		Actor: HTNK.Husk
-		RequiresCondition: !being-warped && ionmam-upgrade && !hovermam-upgrade
-	SpawnActorOnDeath@HOVER:
-		Actor: HTNK.Husk
-		RequiresCondition: !being-warped && !ionmam-upgrade && hovermam-upgrade
+		RequiresCondition: !being-warped
 	SelfHealing:
 		PercentageStep: 1
 		Delay: 25
@@ -2358,28 +2331,6 @@ HTNK:
 	Carryable:
 		LocalOffset: 0,0,500
 	-Crushable:
-	GrantConditionOnPrerequisite@ION:
-		Condition: ionmam-upgrade
-		Prerequisites: ionmam.upgrade
-	GrantConditionOnPrerequisite@HOVER:
-		Condition: hovermam-upgrade
-		Prerequisites: hovermam.upgrade
-	WithFacingSpriteBody:
-		RequiresCondition: !hovermam-upgrade
-	WithFacingSpriteBody@EMPTY:
-		RequiresCondition: hovermam-upgrade
-		Sequence: idle-hover
-		Name: hover
-	WithShadow@HOVER:
-		Offset: 43, 128, 0
-		ZOffset: -129
-		RequiresCondition: hovermam-upgrade
-	Hovers@HOVER:
-		BobDistance: -35
-		RequiresCondition: hovermam-upgrade && !empdisable && !being-warped && !driver-dead
-	SpeedMultiplier@HOVER:
-		RequiresCondition: hovermam-upgrade
-		Modifier: 150
 
 HTNK.Ion:
 	Inherits: ^TankTD
@@ -2458,6 +2409,30 @@ HTNK.Hover:
 	Buildable:
 		Prerequisites: ~hovermam.upgrade, ~gtek, ~vehicles.eagle, ~techlevel.high
 		Description: Powerful heavy tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
+	Mobile:
+		Speed: 82
+		Locomotor: hover
+	LeavesTrails:
+		Image: twake
+		Palette: effect
+		TerrainTypes: Water
+		TrailWhileStationary: true
+		StationaryInterval: 18
+		MovingInterval: 6
+	Hovers:
+		BobDistance: -35
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
+	GrantConditionOnTerrain:
+		TerrainTypes: Water
+		Condition: onwater
+	KillsSelf@SINK:
+		RequiresCondition: onwater && (empdisable || driver-dead)
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+	SpawnActorOnDeath:
+		Actor: HTNK.Hover.Husk
+		RequiresCondition: !being-warped
 
 MSAM:
 	Inherits: ^TankTD
@@ -3292,13 +3267,11 @@ TITN:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
-	RenderSprites:
-		Image: titan
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 195
 		IconPalette: chrometd
-		Prerequisites: ~gtek, ~vehicles.talon, ~techlevel.high
+		Prerequisites: ~gtek, ~vehicles.talon, ~!railgun.titan, ~techlevel.high
 		Description: Tough combat battle-mech.\n  Can attack Aircraft.\n  Strong vs Vehicles, Infantry
 	Valued:
 		Cost: 2000
@@ -3339,18 +3312,6 @@ TITN:
 		Recoil: 171
 		RecoilRecovery: 30
 		MuzzleSequence: muzzle
-		RequiresCondition: !railgun-upgrade
-	Armament@PRIMARYUPG:
-		Weapon: TitanRailgun
-		LocalOffset: 830,290,170
-		Recoil: 171
-		RecoilRecovery: 30
-		MuzzleSequence: muzzle
-		RequiresCondition: railgun-upgrade
-	Armament@PRIMARYUPGDIRECT:
-		Weapon: TitanRailgunImpact
-		LocalOffset: 830,290,170
-		RequiresCondition: railgun-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: TitanTusk
@@ -3363,7 +3324,7 @@ TITN:
 		Offset: 0,0,0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
-		Armaments: primary, secondary, tertiary
+		Armaments: primary, secondary
 		Voice: Attack
 	WithMuzzleOverlay:
 	Explodes:
@@ -3380,42 +3341,94 @@ TITN:
 		LocalOffset: 0,0,700
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
-	GrantConditionOnPrerequisite@HAILST:
-		Condition: railgun-upgrade
-		Prerequisites: railgun.upgrade
+		
+TITN.RAIL:
+	Inherits: TITN
+	Tooltip:
+		Name: Railgun Titan
+	WithSpriteTurret@UPG:
+		Sequence: turret
+	Armament@PRIMARY:
+		Weapon: TitanRailgun
+		LocalOffset: 830,290,170
+		Recoil: 171
+		RecoilRecovery: 30
+		MuzzleSequence: muzzle
+	Armament@PRIMARYUPGDIRECT:
+		Weapon: TitanRailgunImpact
+		LocalOffset: 830,290,170
 
 JUGG:
-	Inherits: TITN
-	RenderSprites:
-		Image: jugg
+	Inherits: ^TankTD
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@BERSERK: ^Berserk
 	Tooltip:
 		Name: Juggernaut
 	Buildable:
 		BuildPaletteOrder: 200
+		Queue: Vehicle
+		IconPalette: chrometd
 		Description: Tough artillery battle-mech.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Aircraft
 		Prerequisites: ~miss.gdi, ~vehicles.talon, ~techlevel.high
 	Mobile:
+		Locomotor: sheavytracked
+		Speed: 50
+		Voice: Move
 		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Selectable:
+		Bounds: 30,40,0,0
 	Valued:
 		Cost: 1500
+	QuantizeFacingsFromSequence:
+		Sequence: stand
+	WithFacingSpriteBody:
+		Sequence: stand
+	WithMoveAnimation:
+		MoveSequence: run
+	WithSpriteTurret:
 	Armament@PRIMARY:
 		Weapon: JuggernautGun
 		LocalOffset: 830,0,500, 830,100,500, 830,-100,500
+		Recoil: 171
+		RecoilRecovery: 30
+		MuzzleSequence: muzzle
 	AttackTurreted:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
+	WithMuzzleOverlay:
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Explodes:
+		Weapon: ArtilleryExplode
+		LoadedChance: 100
 	Turreted:
 		Offset: -20,0,20
-	-Armament@SECONDARY:
-	-SelfHealing@DEFAULT:
+		TurnSpeed: 3
 	Health:
 		HP: 50000
+	Armor:
+		Type: Heavy
+	Passenger:
+		PipType: Red
+		Weight: 3
+		Voice: Move
 	Voiced:
 		VoiceSet: DisrVoice
 	GrantConditionOnAttack:
 		Condition: aiming
 		RevokeDelay: 50
 		RevokeAll: false
+	Carryable:
+		LocalOffset: 0,0,700
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
 
 TTRK:
 	Inherits: DTRK

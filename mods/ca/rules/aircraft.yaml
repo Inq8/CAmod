@@ -808,7 +808,7 @@ A10:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 50
-		Prerequisites: ~afld.gdi, ~aircraft.gdi, ~!aircraft.eagle, ~techlevel.high
+		Prerequisites: ~afld.gdi, ~aircraft.gdi, ~techlevel.high
 		IconPalette: chrometd
 		Description: Ground attack aircraft with incendiary bombs.\n  Strong vs Buildings, Light Armor, Infantry\n  Weak vs Aircraft
 	Valued:
@@ -1187,7 +1187,7 @@ ORCB:
 		IconPalette: chrometd
 		Description: VTOL bomber armed with EMP bombs.\n  Strong vs Buildings, Vehicles\n  Weak vs Aircraft
 	Valued:
-		Cost: 1750
+		Cost: 1700
 	Tooltip:
 		Name: Orca Bomber
 	UpdatesPlayerStatistics:
@@ -1256,7 +1256,6 @@ ORCB:
 		RearmActors: hpad.td, hpad
 	Voiced:
 		VoiceSet: OrcaVoice
-	-ProductionCostMultiplier@EagleBonus:
 
 UAV:
 	Inherits: ^NeutralPlane
@@ -2079,11 +2078,11 @@ AURO:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 50
-		Prerequisites: ~afld.gdi, ~aircraft.eagle, ~techlevel.high
+		Prerequisites: ~afld.gdi, ~aircraft.eagle, gtek, ~techlevel.high
 		IconPalette: chrometd
 		Description: Supersonic bomber armed with a MOAB bomb.\n  Strong vs Buildings, Light Armor, Infantry\n  Weak vs Aircraft\n  Special Ability: Afterburner
 	Valued:
-		Cost: 2000
+		Cost: 2500
 	Tooltip:
 		Name: Aurora
 	UpdatesPlayerStatistics:
@@ -2129,10 +2128,10 @@ AURO:
 		Condition: afterburner
 		ActiveSound: cjetband.aud
 	SpeedMultiplier@AFTERBURNER:
-		Modifier: 150
+		Modifier: 170
 		RequiresCondition: afterburner && ammo
 	DamageMultiplier@AFTERBURNER:
-		Modifier: 90
+		Modifier: 80
 		RequiresCondition: afterburner && ammo
 	Selectable:
 		Bounds: 36,28,0,2

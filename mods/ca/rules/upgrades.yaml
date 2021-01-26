@@ -35,12 +35,12 @@ bombard.strat:
 		Name: Strategy: Bombardment
 	Buildable:
 		BuildPaletteOrder: 1
-		Prerequisites: ~miss.gdi, !seek.strat, !hold.strat, ~structures.gdi, ~techlevel.high
+		Prerequisites: ~hq, !seek.strat, !hold.strat, ~structures.gdi, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 3000
-		Description: Increase unit firepower by 20%.\n\n  Only one Strategy may be chosen.
+		Description: Increase unit firepower by 10%.\n\n  Only one Strategy may be chosen.
 	Valued:
-		Cost: 2000
+		Cost: 3000
 	RenderSprites:
 		Image: bombard.strat
 
@@ -50,12 +50,12 @@ seek.strat:
 		Name: Strategy: Seek & Destroy
 	Buildable:
 		BuildPaletteOrder: 2
-		Prerequisites: ~miss.gdi, !bombard.strat, !hold.strat, ~structures.gdi, ~techlevel.high
+		Prerequisites: ~hq, !bombard.strat, !hold.strat, ~structures.gdi, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 3000
-		Description: Increase unit speed and weapon range by 20%.\n\n  Only one Strategy may be chosen.
+		Description: Increase weapon range & unit speed by 10%.\n\n  Only one Strategy may be chosen.
 	Valued:
-		Cost: 2000
+		Cost: 3000
 	RenderSprites:
 		Image: seek.strat
 
@@ -65,12 +65,12 @@ hold.strat:
 		Name: Strategy: Hold the Line
 	Buildable:
 		BuildPaletteOrder: 3
-		Prerequisites: ~miss.gdi, !bombard.strat, !seek.strat, ~structures.gdi, ~techlevel.high
+		Prerequisites: ~hq, !bombard.strat, !seek.strat, ~structures.gdi, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 3000
-		Description: Increase unit armor by 20%.\n\n  Only one Strategy may be chosen.
+		Description: Increase unit armor by 10%.\n\n  Only one Strategy may be chosen.
 	Valued:
-		Cost: 2000
+		Cost: 3000
 	RenderSprites:
 		Image: hold.strat
 
@@ -124,10 +124,10 @@ hypersonic.upgrade:
 		Name: Upgrade: Hypersonic Missiles
 	Buildable:
 		BuildPaletteOrder: 31
-		Prerequisites: ~gtek, ~structures.gdi, ~techlevel.high, ~!hailstorm.upgrade, ~!hammerhead.upgrade
+		Prerequisites: ~gtek, ~seek.strat, ~structures.gdi, ~techlevel.high, ~!hailstorm.upgrade, ~!hammerhead.upgrade
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Equip the MLRS/HMLRS with Hypersonic Missiles.\n\n  Only one missile upgrade may be chosen.\n  Upgrades: MLRS/HMLRS\n  + Increased speed and precision
+		Description: Equip the MLRS/HMLRS with Hypersonic Missiles.\n\n  Upgrades: MLRS/HMLRS\n  + Increased speed and precision
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -139,10 +139,10 @@ hailstorm.upgrade:
 		Name: Upgrade: Hailstorm Missiles
 	Buildable:
 		BuildPaletteOrder: 31
-		Prerequisites: ~gtek, ~structures.gdi, ~techlevel.high, ~!hypersonic.upgrade, ~!hammerhead.upgrade
+		Prerequisites: ~gtek, ~bombard.strat, ~structures.gdi, ~techlevel.high, ~!hypersonic.upgrade, ~!hammerhead.upgrade
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Equip the MLRS/HMLRS with Hailstorm Missiles.\n\n  Only one missile upgrade may be chosen.\n  Upgrades: MLRS/HMLRS\n  + Barrage of unguided missiles
+		Description: Equip the MLRS/HMLRS with Hailstorm Missiles.\n\n  Upgrades: MLRS/HMLRS\n  + Barrage of unguided missiles
 		Cost: 1000
 	RenderSprites:
 		Image: hailstorm.upgrade
@@ -153,10 +153,10 @@ hammerhead.upgrade:
 		Name: Upgrade: Hammerhead Missiles
 	Buildable:
 		BuildPaletteOrder: 31
-		Prerequisites: ~gtek, ~structures.gdi, ~techlevel.high, ~!hypersonic.upgrade, ~!hailstorm.upgrade
+		Prerequisites: ~gtek, ~hold.strat, ~structures.gdi, ~techlevel.high, ~!hypersonic.upgrade, ~!hailstorm.upgrade
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Equip the MLRS/HMLRS with Hammerhead Missiles.\n\n  Only one missile upgrade may be chosen.\n  Upgrades: MLRS/HMLRS\n  + Increased area of effect and damage\n  + Briefly slows movement and rate of fire of impacted targets
+		Description: Equip the MLRS/HMLRS with Hammerhead Missiles.\n\n  Upgrades: MLRS/HMLRS\n  + Increased area of effect and damage\n  + Briefly slows movement and rate of fire of impacted targets
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -165,13 +165,13 @@ hammerhead.upgrade:
 ionmam.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Ion Mammoth
+		Name: Research: Ion Mammoth
 	Buildable:
 		BuildPaletteOrder: 40
 		Prerequisites: ~miss.gdi, ~structures.zocom, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
-		Description: Equips the Mammoth tank with a\nprototype portable ion cannon.\n\n  Upgrades: Mammoth Tank
+		Description: Research a prototype Mammoth tank\nequipped with a portable ion cannon.\n\n  Replaces: Mammoth Tank
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -180,13 +180,13 @@ ionmam.upgrade:
 hovermam.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Hover Mammoth
+		Name: Research: Hover Mammoth
 	Buildable:
 		BuildPaletteOrder: 40
 		Prerequisites: ~miss.gdi, ~structures.eagle, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
-		Description: Upgrades the Mammoth Tank with a\nprototype hover chassis.\n\n  Upgrades: Mammoth Tank
+		Description: Research a prototype Mammoth Tank with a\nhover propulsion system.\n\n  Replaces: Mammoth Tank
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -195,13 +195,13 @@ hovermam.upgrade:
 railgun.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Titan Railgun
+		Name: Research: Railgun Titan
 	Buildable:
 		BuildPaletteOrder: 40
 		Prerequisites: ~miss.gdi, ~structures.talon, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
-		Description: Equips the Titan tank with a\nprototype railgun.\n\n  Upgrades: Titan
+		Description: Research a prototype Titan with a\npowerful railgun weapon system.\n\n  Replaces: Titan
 	Valued:
 		Cost: 1000
 	RenderSprites:

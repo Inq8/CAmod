@@ -656,7 +656,7 @@ HTNK.Husk:
 		PlayerPalette: overlayplayertd
 
 HTNK.ION.Husk:
-	Inherits: HTNK.Husk
+	Inherits: ^HuskTD
 	Tooltip:
 		Name: Husk (Ion Mammoth Tank)
 	ThrowsParticle@turret:
@@ -665,6 +665,25 @@ HTNK.ION.Husk:
 		IntoActor: htnk.ion
 	InfiltrateForTransform:
 		IntoActor: htnk.ion
+	RenderSprites:
+		Image: htnk.destroyed
+		PlayerPalette: overlayplayertd
+		
+HTNK.hover.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Husk (Hover Mammoth Tank)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: htnk.ion
+	InfiltrateForTransform:
+		IntoActor: htnk.ion
+	WithSpriteBody:
+		Sequence: idle-hover
+	RenderSprites:
+		Image: htnk.destroyed
+		PlayerPalette: overlayplayertd
 
 FTNK.Husk:
 	Inherits: ^HuskTD
