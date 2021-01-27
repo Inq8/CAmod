@@ -1254,16 +1254,29 @@ MicrowaveZap:
 		HitAnimPalette: tseffect-ignore-lighting-alpha75
 		ZOffset: 2046
 	Warhead@1Dam: SpreadDamage
-		InvalidTargets: Air
+		InvalidTargets: Air, Cyborg
 		Spread: 512
-		Damage: 5000
+		Damage: 30000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
-			None: 200
-			Wood: 45
-			Concrete: 50
-			Light: 70
-			Heavy: 85
+			None: 20
+			Wood: 5
+			Concrete: 40
+			Light: 100
+			Heavy: 65
+	Warhead@2Dam: SpreadDamage
+		ValidTargets: Cyborg
+		InvalidTargets: Air
+		Spread: 341
+		Damage: 30000
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+
+MicrowaveZap.UPG:
+	Inherits: MicrowaveZap
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			Light: 35
+			Heavy: 25
 	Warhead@3: ChangeOwnerToNeutral
 		ValidTargets: DriverKill
 		InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air, DriverKillImmune
@@ -1279,6 +1292,7 @@ MicrowaveZapSound:
 	Inherits: MicrowaveZap
 	Report: coreup1.aud
 	Projectile: InstantHit
+	-Warhead@2Dam:
 	Warhead@1Dam: SpreadDamage
 		Damage: 1
 		Versus:
@@ -1288,8 +1302,6 @@ MicrowaveZapSound:
 			Light: 0
 			Heavy: 0
 			Brick: 0
-	-Warhead@3:
-	-Warhead@highlight:
 
 HornetLauncher:
 	ReloadDelay: 175

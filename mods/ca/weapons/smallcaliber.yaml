@@ -359,7 +359,7 @@ ChainGun.Yak.R:
 		Damage: 3200
 		Versus:
 			None: 200
-			Wood: 25
+			Wood: 35
 			Light: 60
 			Heavy: 25
 			Concrete: 25
@@ -398,17 +398,35 @@ M1Carbine:
 		Versus:
 			Wood: 30
 
-M1CarbineE:
-	Inherits: M1Carbine
-	Range: 7c0
-
 M16Carbine:
 	Inherits: M1Carbine
 	Report: mgun2.aud
 
-M16CarbineE:
-	Inherits: M16Carbine
+M1CarbineE:
+	Inherits: M1Carbine
+	Report: mgbtr1.aud, mgbtr2.aud, mgbtr3.aud
+	ReloadDelay: 10
 	Range: 7c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 1800
+		Versus:
+			None: 100
+			Wood: 15
+			Concrete: 15
+			Light: 25
+			Heavy: 5
+
+M16CarbineE:
+	Inherits: M1CarbineE
+
+BATFGun:
+	Inherits: M1CarbineE
+	Range: 5c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 5400
+		Versus:
+			Wood: 10
+			Concrete: 5
 
 M60mg:
 	Inherits: ^LightMG
