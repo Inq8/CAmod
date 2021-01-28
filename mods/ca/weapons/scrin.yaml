@@ -743,6 +743,40 @@ SuppressionField:
 		Condition: suppression
 		ValidTargets: Ground, Air, Ship
 
+BuzzerSpawner:
+	ReloadDelay: 1
+	Projectile: InstantExplode
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Damage: 7000
+		Versus:
+			None: 100
+			Wood: 10
+			Light: 100
+			Heavy: 30
+			Concrete: 40
+			Brick: 0
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		ValidStances: Enemy, Neutral
+	Warhead@2Dam: SpreadDamage
+		ValidTargets: Cyborg
+		Spread: 341
+		Damage: 17500
+		Versus:
+			Heavy: 0
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		ValidStances: Enemy, Neutral
+	Warhead@Spawn: SpawnActor
+		Actors: buzz
+		Range: 1
+		ForceGround: false
+		ValidTargets: Ground, Water
+
+BuzzerSpawnerAI:
+	Inherits: BuzzerSpawner
+	Warhead@Spawn: SpawnActor
+		Actors: buzz.ai
+
 BuzzerVortex:
 	ReloadDelay: 5
 	Range: 1c0
@@ -751,25 +785,24 @@ BuzzerVortex:
 	Warhead@1Dam: SpreadDamage
 		Spread: 682
 		Falloff: 100, 55, 20, 0
-		Damage: 850
+		Damage: 300
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air, Creep
 		Versus:
 			None: 100
 			Wood: 10
-			Light: 80
+			Light: 100
 			Heavy: 30
 			Concrete: 40
 			Brick: 0
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		DamageTypes: BulletDeath
 		ValidStances: Enemy, Neutral
 	Warhead@2Dam: SpreadDamage
-		Spread: 1c0
-		Falloff: 100, 66, 33, 0
-		Damage: 900
+		Spread: 682
+		Falloff: 100, 55, 20, 0
+		Damage: 750
 		ValidTargets: Cyborg
-		InvalidTargets: Air, Creep
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		DamageTypes: BulletDeath
 		ValidStances: Enemy, Neutral
 
 BuzzerDummyWeapon:

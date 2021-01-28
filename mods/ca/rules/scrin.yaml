@@ -2268,31 +2268,41 @@ NERV:
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		PauseOnCondition: disabled || empdisable || being-warped
-	SpawnActorPower@BUZZERSWARM:
-		Actor: BUZZ
+	DetonateWeaponPower@BUZZERSWARM:
 		OrderName: buzzerswarm
 		Icon: buzzpower
+		IconPalette: scrin
 		Prerequisites: radar.harbinger, !botplayer
+		Cursor: ability
 		ChargeInterval: 6000
-		LifeTime: -1
 		Description: Buzzer Swarm
+		ActivationDelay: 1
 		LongDesc: Spawns controllable buzzer swarm which damages anything nearby.
 		LaunchSound: buzzers-create.aud
+		Weapon: BuzzerSpawner
+		AirburstAltitude: 0c0
 		SelectTargetSpeechNotification: SelectTarget
 		PauseOnCondition: disabled || empdisable || being-warped
+		CameraActor: camera.dummy
+		CameraRemoveDelay: 1
 		DisplayRadarPing: True
-	SpawnActorPower@BUZZERSWARMAI:
-		Actor: BUZZ.AI
+	DetonateWeaponPower@BUZZERSWARMAI:
 		OrderName: buzzerswarmai
 		Icon: buzzpower
+		IconPalette: scrin
 		Prerequisites: radar.harbinger, botplayer
+		Cursor: ability
 		ChargeInterval: 6000
-		LifeTime: -1
 		Description: Buzzer Swarm (AI)
+		ActivationDelay: 1
 		LongDesc: Spawns controllable buzzer swarm which damages anything nearby.
 		LaunchSound: buzzers-create.aud
+		Weapon: BuzzerSpawnerAI
+		AirburstAltitude: 0c0
 		SelectTargetSpeechNotification: SelectTarget
 		PauseOnCondition: disabled || empdisable || being-warped
+		CameraActor: camera.dummy
+		CameraRemoveDelay: 1
 		DisplayRadarPing: True
 	DetonateWeaponPower@STORMSPIKE:
 		OrderName: stormspike
@@ -2309,7 +2319,7 @@ NERV:
 		AirburstAltitude: 0c0
 		SelectTargetSpeechNotification: SelectTarget
 		PauseOnCondition: disabled || empdisable || being-warped
-		CameraActor: camera.paradrop
+		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
 		DisplayRadarPing: True
 	SpawnActorPower@IONSURGE:
