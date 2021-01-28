@@ -1248,6 +1248,24 @@ TRUK:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 	-ProductionCostMultiplier@IndustrialPlantLevel1:
 	-ProductionCostMultiplier@IndustrialPlantLevel2:
+	
+TRUK.DROP:
+	Inherits: TRUK
+	-Buildable:
+	RenderSprites:
+		Image: truk
+	-DeliversCash:
+	CashTrickler:
+		Interval: 50
+		Amount: 500
+	KillsSelf:
+		Delay: 50
+		RemoveInstead: true
+	-Selectable:
+	SelectionDecorations:
+		RenderSelectionBars: False
+	RejectsOrders:
+	Interactable:
 
 MGG:
 	Inherits: ^Vehicle
