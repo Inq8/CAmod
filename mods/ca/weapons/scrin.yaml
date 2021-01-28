@@ -277,6 +277,11 @@ RiftCannon:
 		Damage: 9500
 		Versus:
 			None: 10
+		DamageTypes: BulletDeath
+	Warhead@prone: SpreadDamage
+		Spread: 512
+		Falloff: 100, 100, 0
+		Damage: 1
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@Spawn: SpawnActor
 		Actors: camera.minirift
@@ -296,13 +301,13 @@ MiniRift:
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air, Creep
 		Versus:
-			None: 10
+			None: 3
 			Wood: 30
 			Light: 70
 			Heavy: 100
 			Concrete: 80
 			Brick: 25
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		DamageTypes: BulletDeath
 		ValidStances: Enemy, Neutral
 	Warhead@2Dam: SpreadDamage
 		Spread: 682
@@ -311,13 +316,13 @@ MiniRift:
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air, Creep
 		Versus:
-			None: 10
+			None: 3
 			Wood: 30
 			Light: 70
 			Heavy: 100
 			Concrete: 80
 			Brick: 25
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		DamageTypes: BulletDeath
 		ValidStances: Ally
 
 RuinerCannon:
