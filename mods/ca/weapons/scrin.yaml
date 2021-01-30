@@ -186,7 +186,7 @@ PlasmaDiscs:
 		Damage: 7000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
-			None: 60
+			None: 50
 			Light: 65
 			Wood: 30
 			Heavy: 100
@@ -259,8 +259,6 @@ DevourerLaser:
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		Damage: 1000
-		Versus:
-			Wood: 20
 
 RiftCannon:
 	Inherits: ^ScrinLaser
@@ -274,9 +272,15 @@ RiftCannon:
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
 		Falloff: 100, 37, 23, 10, 0
-		Damage: 9500
+		Damage: 7000
 		Versus:
 			None: 10
+			Light: 75
+		DamageTypes: BulletDeath
+	Warhead@prone: SpreadDamage
+		Spread: 512
+		Falloff: 100, 100, 0
+		Damage: 1
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@Spawn: SpawnActor
 		Actors: camera.minirift
@@ -291,34 +295,46 @@ MiniRift:
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
 		Spread: 682
-		Damage: 1200
+		Damage: 1000
 		Falloff: 100, 70, 0
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air, Creep
 		Versus:
-			None: 10
+			None: 3
 			Wood: 30
-			Light: 70
+			Light: 75
 			Heavy: 100
 			Concrete: 80
 			Brick: 25
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
-		ValidStances: Enemy, Neutral
+		DamageTypes: BulletDeath
+		ValidStances: Enemy, Neutral, Ally
 	Warhead@2Dam: SpreadDamage
 		Spread: 682
-		Damage: 300
+		Damage: 250
 		Falloff: 100, 70, 0
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air, Creep
 		Versus:
-			None: 10
+			None: 3
 			Wood: 30
-			Light: 70
+			Light: 75
 			Heavy: 100
 			Concrete: 80
 			Brick: 25
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		DamageTypes: BulletDeath
 		ValidStances: Ally
+	Warhead@3Slow: GrantExternalCondition
+		Range: 1c0
+		Duration: 10
+		Condition: slowed
+		ValidTargets: Vehicle, Cyborg
+		ValidStances: Enemy, Neutral, Ally
+	Warhead@4Slow: GrantExternalCondition
+		Range: 2c0
+		Duration: 10
+		Condition: slowed
+		ValidTargets: Vehicle, Cyborg
+		ValidStances: Enemy, Neutral, Ally
 
 RuinerCannon:
 	Inherits: 155mm
@@ -338,7 +354,7 @@ RuinerCannon:
 			None: 120
 			Wood: 90
 			Concrete: 80
-			Light: 65
+			Light: 80
 			Heavy: 45
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@3Eff: CreateEffect
@@ -738,6 +754,40 @@ SuppressionField:
 		Condition: suppression
 		ValidTargets: Ground, Air, Ship
 
+BuzzerSpawner:
+	ReloadDelay: 1
+	Projectile: InstantExplode
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Damage: 7000
+		Versus:
+			None: 100
+			Wood: 10
+			Light: 100
+			Heavy: 30
+			Concrete: 40
+			Brick: 0
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		ValidStances: Enemy, Neutral
+	Warhead@2Dam: SpreadDamage
+		ValidTargets: Cyborg
+		Spread: 341
+		Damage: 17500
+		Versus:
+			Heavy: 0
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		ValidStances: Enemy, Neutral
+	Warhead@Spawn: SpawnActor
+		Actors: buzz
+		Range: 1
+		ForceGround: false
+		ValidTargets: Ground, Water
+
+BuzzerSpawnerAI:
+	Inherits: BuzzerSpawner
+	Warhead@Spawn: SpawnActor
+		Actors: buzz.ai
+
 BuzzerVortex:
 	ReloadDelay: 5
 	Range: 1c0
@@ -746,25 +796,24 @@ BuzzerVortex:
 	Warhead@1Dam: SpreadDamage
 		Spread: 682
 		Falloff: 100, 55, 20, 0
-		Damage: 850
+		Damage: 300
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air, Creep
 		Versus:
 			None: 100
 			Wood: 10
-			Light: 80
+			Light: 100
 			Heavy: 30
 			Concrete: 40
 			Brick: 0
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		DamageTypes: BulletDeath
 		ValidStances: Enemy, Neutral
 	Warhead@2Dam: SpreadDamage
-		Spread: 1c0
-		Falloff: 100, 66, 33, 0
-		Damage: 900
+		Spread: 682
+		Falloff: 100, 55, 20, 0
+		Damage: 750
 		ValidTargets: Cyborg
-		InvalidTargets: Air, Creep
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		DamageTypes: BulletDeath
 		ValidStances: Enemy, Neutral
 
 BuzzerDummyWeapon:
