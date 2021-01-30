@@ -2825,7 +2825,7 @@ WEAP.TD:
 		Factions: eagle
 		Prerequisite: vehicles.eagle
 	ProvidesPrerequisiteValidatedFaction@nod:
-		Factions: legion
+		Factions: legion, blackh, legion
 		Prerequisite: vehicles.nod
 	ProvidesPrerequisiteValidatedFaction@legion:
 		Factions: legion
@@ -4212,7 +4212,7 @@ AFLD.GDI:
 		Icon: airsupport
 		ChargeInterval: 10500
 		Description: Interceptors
-		LongDesc: A squadron of Interceptors provides\nair cover on the selected target area.
+		LongDesc: A squadron of Interceptors provides\nair cover over the selected target area.
 		SelectTargetSpeechNotification: SelectTarget
 		CameraActor: camera
 		CameraRemoveDelay: 450
@@ -5468,7 +5468,7 @@ UPGC:
 		Sequence: turret-drop
 		PauseOnCondition: !drop-active || disabled || being-warped
 	GrantPrerequisiteChargeDrainPower@RADAR:
-		OrderName: AdvRadarOrder
+		OrderName: advradarorder
 		DischargeModifier: 600
 		Prerequisite: radar-active
 		ChargeInterval: 4500
@@ -5483,22 +5483,23 @@ UPGC:
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		EndChargeSpeechNotification: ForceShieldReady
+		Prerequisites: ~techlevel.unrestricted
 	DrainPrerequisitePowerOnDamage@RADAR:
-		OrderName: AdvRadarOrder
+		OrderName: advradarorder
 	GrantConditionOnPrerequisite@RADAR:
 		Prerequisites: radar-active
 		Condition: radar-active
 	GpsRadarProvider: 
 		RequiresCondition: tower.radar && radar-active && !(disabled || being-warped)
 	GrantExternalConditionPower@NSHIELD:
-		OrderName: nshieldOrder
+		OrderName: nshieldorder
 		Icon: nshield
 		IconPalette: chrometd
 		ChargeInterval: 3000
 		Condition: nshield
 		Range: 4
 		Duration: 375
-		Prerequisites: techlevel.high
+		Prerequisites: ~techlevel.unrestricted
 		AllowMultiple: false
 		Description: Nanite Shield
 		LongDesc: Selected friendly structures are rapidly repaired when damaged.
@@ -5532,7 +5533,7 @@ UPGC:
 		Cursor: ability
 		Icon: airstrike
 		ChargeInterval: 2250
-		Description: Rocket Barrage
+		Description: Firestorm Rocket Barrage
 		LongDesc: Barrage target area with rockets.
 		BeginChargeSpeechNotification: EMMissilePrepping
 		EndChargeSpeechNotification: EMMissileReady
@@ -5540,6 +5541,7 @@ UPGC:
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayTimerStances: Ally
 		RequiresCondition: tower.rocket
+		Prerequisites: ~techlevel.unrestricted
 	RejectsOrders:
 		Except: Sell, PowerDown
 	Pluggable:
@@ -5554,8 +5556,8 @@ UPGC:
 			tower.shield: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop
 			tower.drop: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop
 	ProvidesPrerequisite@pluggable:
-		RequiresCondition: !build-incomplete && !(tower.rocket || tower.radar || tower.shield || tower.drop || tower.amp)
-		Prerequisite: upgc.sock
+		RequiresCondition: !build-incomplete && !tower.rocket && !tower.radar && !tower.shield && !tower.drop
+		Prerequisite: upgc.socket
 	ProvidesPrerequisite@AMPSEEK:
 		RequiresCondition: !build-incomplete && tower.radar
 		Prerequisite: seek3.strat

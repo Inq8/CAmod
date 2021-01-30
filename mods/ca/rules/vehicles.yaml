@@ -2450,7 +2450,7 @@ HTNK.Hover:
 		ZOffset: -129
 	SpawnActorOnDeath:
 		Actor: HTNK.Hover.Husk
-		RequiresCondition: !being-warped
+		RequiresCondition: !being-warped && !onwater
 
 MSAM:
 	Inherits: ^TankTD
@@ -3289,7 +3289,7 @@ TITN:
 		Queue: Vehicle
 		BuildPaletteOrder: 195
 		IconPalette: chrometd
-		Prerequisites: ~gtek, ~vehicles.talon, ~!railgun.titan, ~techlevel.high
+		Prerequisites: gtek, ~vehicles.talon, ~!railgun.upgrade, ~techlevel.high
 		Description: Tough combat battle-mech.\n  Can attack Aircraft.\n  Strong vs Vehicles, Infantry
 	Valued:
 		Cost: 2000
@@ -3364,6 +3364,8 @@ TITN.RAIL:
 	Inherits: TITN
 	Tooltip:
 		Name: Railgun Titan
+	Buildable:
+		Prerequisites: ~gtek, ~vehicles.talon, ~railgun.upgrade, ~techlevel.high
 	WithSpriteTurret@UPG:
 		Sequence: turret
 	Armament@PRIMARY:
