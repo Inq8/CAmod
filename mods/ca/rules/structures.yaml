@@ -5419,6 +5419,18 @@ UPGC:
 		ExitType: OppositeToEntry
 		LandingFacing: 64
 		ReadyAudio: ReinforcementsArrived
+	WithDeliveryOverlay:
+		Sequence: flare 
+		Palette: effect
+		IsPlayerPalette: false
+		Offset: -1024,768,0
+	PeriodicProducerCA@DROP:
+		DeliveringActor: OCAR.Reinforce
+		Type: Money
+		ChargeDuration: 1500
+		Actors: truk.drop
+		ShowSelectionBar: true
+		RequiresCondition: tower.drop && !(empdisable || disabled || being-warped)
 	ProductionBar:
 		ProductionType: Upgrade
 	Exit:
@@ -5444,13 +5456,17 @@ UPGC:
 		Sequence: turret-radar
 		PauseOnCondition: !radar-active || disabled || being-warped
 	WithIdleOverlay@SHIELD:
-		RequiresCondition: !build-incomplete && tower.shield
+		RequiresCondition: !build-incomplete && tower.shield && !nshield
 		Sequence: turret-shield
 		PauseOnCondition: disabled || being-warped
-	WithIdleOverlay@SHIELDACTIVE:
-		Sequence: shield-active
-		Palette: effect-ignore-lighting-alpha85
-		RequiresCondition: (tower.shield && shield-active) && !(disabled || being-warped || build-incomplete)
+	WithIdleOverlay@SHIELD-ACTIVE:
+		RequiresCondition: !build-incomplete && tower.shield && nshield
+		Sequence: turret-shield-active
+		PauseOnCondition: disabled || being-warped
+	WithIdleOverlay@DZONE:
+		RequiresCondition: !build-incomplete && tower.drop
+		Sequence: turret-drop
+		PauseOnCondition: !drop-active || disabled || being-warped
 	GrantPrerequisiteChargeDrainPower@RADAR:
 		OrderName: AdvRadarOrder
 		DischargeModifier: 600
@@ -5474,36 +5490,34 @@ UPGC:
 		Condition: radar-active
 	GpsRadarProvider: 
 		RequiresCondition: tower.radar && radar-active && !(disabled || being-warped)
-	GrantPrerequisiteChargeDrainPower@SHIELD:
-		OrderName: DefenceShieldOrder
-		DischargeModifier: 600
-		Prerequisite: shield-active
-		ChargeInterval: 4500
-		Icon: forceshield
-		Description: Shield Generator
-		LongDesc: Provides a defence shield to nearby structures & units.
-		RequiresCondition: !build-incomplete && tower.shield
-		PauseOnCondition: disabled || being-warped
-		LaunchSound: forceon.aud
+	GrantExternalConditionPower@NSHIELD:
+		OrderName: nshieldOrder
+		Icon: nshield
+		IconPalette: chrometd
+		ChargeInterval: 3000
+		Condition: nshield
+		Range: 4
+		Duration: 375
+		Prerequisites: techlevel.high
+		AllowMultiple: false
+		Description: Nanite Shield
+		LongDesc: Selected friendly structures are rapidly repaired when damaged.
+		OnFireSound: srepaira.aud
 		DisplayTimerStances: Ally
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		EndChargeSpeechNotification: ForceShieldReady
-	DrainPrerequisitePowerOnDamage@SHIELD:
-		OrderName: DefenceShieldOrder
-	GrantConditionOnPrerequisite@SHIELD:
-		Prerequisites: shield-active
-		Condition: shield-active
-	ProximityExternalCondition@SHIELD:
-		Condition: gdishield
-		Range: 8c0
-		RequiresCondition: shield-active && !(disabled || being-warped)
+		DisplayRadarPing: True
+		Cursor: repair
+		RequiresCondition: tower.shield
+		PauseOnCondition: disabled || empdisable ||  being-warped
 	Armament@ROCKET:
 		RequiresCondition: tower.rocket && loaded-rocket > 0
 		PauseOnCondition: disabled || empdisable || being-warped
 		Weapon: RocketBarrage
 		LocalOffset: 0,128,0, 0,-128,0
 		ReloadingCondition: reloading
+	SupportPowerChargeBar:
 	AmmoPool:
 		Ammo: 6
 		ReloadCount: 6
@@ -5528,39 +5542,30 @@ UPGC:
 		RequiresCondition: tower.rocket
 	RejectsOrders:
 		Except: Sell, PowerDown
-	PeriodicProducerCA@DROP:
-		DeliveringActor: OCAR.Reinforce
-		Type: Money
-		ChargeDuration: 1500
-		Actors: truk.drop
-		ShowSelectionBar: true
-		RequiresCondition: tower.drop
 	Pluggable:
 		Conditions:
 			tower.rocket: tower.rocket
 			tower.radar: tower.radar
 			tower.shield: tower.shield
 			tower.drop: tower.drop
-			tower.amp: tower.amp
 		Requirements:
-			tower.rocket: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop && !tower.amp
-			tower.radar: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop && !tower.amp
-			tower.shield: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop && !tower.amp
-			tower.drop: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop && !tower.amp
-			tower.amp: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop && !tower.amp
+			tower.rocket: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop
+			tower.radar: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop
+			tower.shield: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop
+			tower.drop: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop
 	ProvidesPrerequisite@pluggable:
 		RequiresCondition: !build-incomplete && !(tower.rocket || tower.radar || tower.shield || tower.drop || tower.amp)
 		Prerequisite: upgc.sock
 	ProvidesPrerequisite@AMPSEEK:
-		RequiresCondition: !build-incomplete && tower.amp
+		RequiresCondition: !build-incomplete && tower.radar
 		Prerequisite: seek3.strat
 		RequiresPrerequisites: seek.strat
 	ProvidesPrerequisite@AMPBOMB:
-		RequiresCondition: !build-incomplete && tower.amp
+		RequiresCondition: !build-incomplete && tower.rocket
 		Prerequisite: bombard3.strat
 		RequiresPrerequisites: bombard.strat
 	ProvidesPrerequisite@AMPHOLD:
-		RequiresCondition: !build-incomplete && tower.amp
+		RequiresCondition: !build-incomplete && tower.shield
 		Prerequisite: hold3.strat
 		RequiresPrerequisites: hold.strat
 		
@@ -5575,12 +5580,12 @@ UPGC.BOMB:
 	Valued:
 		Cost: 1500
 	Tooltip:
-		Name: Firestorm MLRS Upgrade
+		Name: Upgrade: Firestorm Missile System
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 140
 		Prerequisites: ~upgc.socket, ~bombard.strat, upgc, ~structures.gdi, ~techlevel.high
-		Description: Advanced Rocket Artillery System.
+		Description: Provides an napalm rocket barrage.\n\n  +Increases the Strategy: Bombardment unit bonus by a further 5%.
 		IconPalette: chrometd
 	Plug:
 		Type: tower.rocket
@@ -5592,12 +5597,12 @@ UPGC.SEEK:
 	Valued:
 		Cost: 1500
 	Tooltip:
-		Name: Advanced Radar Upgrade
+		Name: Upgrade: Advanced Radar System
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 140
 		Prerequisites: ~upgc.socket, ~seek.strat, upgc, ~structures.gdi, ~techlevel.high
-		Description: Advanced Radar System.
+		Description: Provides detailed information on enemy locations.\n\n  +Increases the Strategy: Seek & Destroy unit bonus by a further 5%.
 		IconPalette: chrometd
 	Plug:
 		Type: tower.radar
@@ -5609,12 +5614,12 @@ UPGC.HOLD:
 	Valued:
 		Cost: 1500
 	Tooltip:
-		Name: Shield Generator Upgrade
+		Name: Upgrade: Nanoshield Generator
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 140
 		Prerequisites: ~upgc.socket, ~hold.strat, upgc, ~structures.gdi, ~techlevel.high
-		Description: Advanced Shield Defense Generator.
+		Description: Provides the ability to rapidly repair friendly structures.\n\n  +Increases the Strategy: Hold the Line unit bonus by a further 5%.
 		IconPalette: chrometd
 	Plug:
 		Type: tower.shield
@@ -5626,34 +5631,17 @@ UPGC.DROP:
 	Valued:
 		Cost: 1500
 	Tooltip:
-		Name: Drop Zone Upgrade
+		Name: Upgrade: Supply Drop Zone
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 140
 		Prerequisites: ~upgc.socket, upgc, ~structures.gdi, ~techlevel.high
-		Description: Drop Zone.
+		Description: Provides a dropzone\nfor emergency supplies.
 		IconPalette: chrometd
 	Plug:
 		Type: tower.drop
 	Power:
 		Amount: -50
-		
-UPGC.AMP:
-	Inherits: ^BuildingPlug
-	Valued:
-		Cost: 1500
-	Tooltip:
-		Name: Communication Upgrade
-	Buildable:
-		Queue: Defense
-		BuildPaletteOrder: 140
-		Prerequisites: ~upgc.socket, upgc, ~structures.gdi, ~techlevel.high
-		Description: Communications Amplifier.
-		IconPalette: chrometd
-	Plug:
-		Type: tower.amp
-	Power:
-		Amount: -100
 
 BIO.Nod:
 	Inherits: ^Building
