@@ -736,6 +736,16 @@
 		Palette: cold5
 		RequiresCondition: chilled > 4
 
+^Slowable:
+	ExternalCondition@slowed:
+		Condition: slowed
+	SpeedMultiplier@slowed1:
+		Modifier: 70
+		RequiresCondition: slowed == 1
+	SpeedMultiplier@slowed2:
+		Modifier: 40
+		RequiresCondition: slowed > 1
+
 ^Concussion:
 	TimedConditionBar@concussion:
 		Condition: concussion
@@ -996,10 +1006,11 @@
 	Inherits@12: ^GpsScramble
 	Inherits@13: ^BotGroundProductionBonus
 	Inherits@14: ^Chillable
-	Inherits@15: ^AffectedByDriverKill
-	Inherits@16: ^Concussion
-	Inherits@17: ^Suppressable
-	Inherits@18: ^CrateCloak
+	Inherits@15: ^Slowable
+	Inherits@16: ^AffectedByDriverKill
+	Inherits@17: ^Concussion
+	Inherits@18: ^Suppressable
+	Inherits@19: ^CrateCloak
 	Inherits@C4: ^C4Plantable
 	Inherits@TNT: ^TNTPlantable
 	Inherits@gflash: ^GreenFlash
@@ -1335,6 +1346,7 @@
 ^Cyborg:
 	Inherits: ^Soldier
 	Inherits@CYBORGUPG: ^NodCyborgUpgrade
+	Inherits@SLOWABLE: ^Slowable
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, Cyborg
 	SelfHealing@THEAL:

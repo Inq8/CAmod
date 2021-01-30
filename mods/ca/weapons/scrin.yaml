@@ -186,7 +186,7 @@ PlasmaDiscs:
 		Damage: 7000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
-			None: 60
+			None: 50
 			Light: 65
 			Wood: 30
 			Heavy: 100
@@ -259,8 +259,6 @@ DevourerLaser:
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		Damage: 1000
-		Versus:
-			Wood: 20
 
 RiftCannon:
 	Inherits: ^ScrinLaser
@@ -274,9 +272,10 @@ RiftCannon:
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
 		Falloff: 100, 37, 23, 10, 0
-		Damage: 9500
+		Damage: 7000
 		Versus:
 			None: 10
+			Light: 75
 		DamageTypes: BulletDeath
 	Warhead@prone: SpreadDamage
 		Spread: 512
@@ -296,34 +295,46 @@ MiniRift:
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
 		Spread: 682
-		Damage: 1200
+		Damage: 1000
 		Falloff: 100, 70, 0
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air, Creep
 		Versus:
 			None: 3
 			Wood: 30
-			Light: 70
+			Light: 75
 			Heavy: 100
 			Concrete: 80
 			Brick: 25
 		DamageTypes: BulletDeath
-		ValidStances: Enemy, Neutral
+		ValidStances: Enemy, Neutral, Ally
 	Warhead@2Dam: SpreadDamage
 		Spread: 682
-		Damage: 300
+		Damage: 250
 		Falloff: 100, 70, 0
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air, Creep
 		Versus:
 			None: 3
 			Wood: 30
-			Light: 70
+			Light: 75
 			Heavy: 100
 			Concrete: 80
 			Brick: 25
 		DamageTypes: BulletDeath
 		ValidStances: Ally
+	Warhead@3Slow: GrantExternalCondition
+		Range: 1c0
+		Duration: 10
+		Condition: slowed
+		ValidTargets: Vehicle, Cyborg
+		ValidStances: Enemy, Neutral, Ally
+	Warhead@4Slow: GrantExternalCondition
+		Range: 2c0
+		Duration: 10
+		Condition: slowed
+		ValidTargets: Vehicle, Cyborg
+		ValidStances: Enemy, Neutral, Ally
 
 RuinerCannon:
 	Inherits: 155mm
@@ -343,7 +354,7 @@ RuinerCannon:
 			None: 120
 			Wood: 90
 			Concrete: 80
-			Light: 65
+			Light: 80
 			Heavy: 45
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@3Eff: CreateEffect
