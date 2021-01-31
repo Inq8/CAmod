@@ -1132,7 +1132,6 @@
 	Inherits@3: ^SpriteActor
 	Inherits@4: ^Cloakable
 	Inherits@5: ^EmpDisable
-	Inherits@6: ^GDIUpgrade
 	Inherits@7: ^BinoUpgrade
 	Inherits@9: ^Warpable
 	Inherits@10: ^Frenzy
@@ -1255,7 +1254,7 @@
 	GpsRadarDot:
 		Sequence: Vehicle
 
-^VehicleTD:
+^VehicleTD-NOUPG:
 	Inherits@1: ^Vehicle
 	RenderSprites:
 		PlayerPalette: overlayplayertd
@@ -1263,6 +1262,10 @@
 		Image: smoke_mtd
 	Cloak@CRATE-CLOAK:
 		Palette: cloak
+		
+^VehicleTD:
+	Inherits@1: ^VehicleTD-NOUPG
+	Inherits@GDIUPG: ^GDIUpgrade
 
 ^Tank:
 	Inherits: ^Vehicle
@@ -1270,7 +1273,9 @@
 		Locomotor: tracked
 
 ^TankTD:
-	Inherits: ^Tank
+	Inherits: ^VehicleTD
+	Mobile:
+		Locomotor: tracked
 	RenderSprites:
 		PlayerPalette: overlayplayertd
 	WithDamageOverlay:

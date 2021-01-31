@@ -449,61 +449,69 @@ THLauncher:
 		Size: 2,1
 		Delay: 6
 		
-RocketBarrage:
-	ReloadDelay: 150
+FirestormBarrage:
+	ReloadDelay: 100
 	Range: 300c0
-	Burst: 6
-	BurstDelays: 12
+	Burst: 3
+	BurstDelays: 20
 	MinRange: 3c0
-	Report: tomahawk.aud
+	Report: icbm1.aud
 	Projectile: Bullet
 		Blockable: false
 		Shadow: true
 		Inaccuracy: 12c0
-		Image: missile
+		Image: red-missile
 		Palette: player
 		IsPlayerPalette: true
-		TrailImage: smokey
+		TrailImage: smokey2
+		TrailPalette: tseffect-ignore-lighting-alpha75
 		TrailDelay: 3
 		Speed: 220
 		LaunchAngle: 65
-		ContrailLength: 10
+		ContrailLength: 30
 		ContrailColor: cc550080
-	Warhead@2Dam_impact: SpreadDamage
-		Range: 1c0
-		Damage: 4500
-		Falloff: 1000
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@1Dam: SpreadDamage
+		Spread: 1c0
+		Damage: 30000
 		Versus:
-			None: 80
+			None: 70
 			Wood: 60
-			Light: 60
+			Light: 85
 			Heavy: 40
-			Concrete: 60
-			Brick: 50
-	Warhead@1Dam_impact: SpreadDamage
-		Range: 0, 1c1, 2c1, 3c1, 3c512, 4c1, 4c512
-		Damage: 4500
-		Falloff: 1000, 368, 135, 90, 68, 37, 10
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+			Concrete: 80
+			Brick: 5
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
+	Warhead@1Dam_cyborg: SpreadDamage
+		Spread: 1c0
+		Damage: 7500
+		ValidTargets: Cyborg
 		Versus:
-			None: 20
-			Wood: 20
-			Light: 20
-			Heavy: 20
-			Concrete: 20
-			Brick: 20
+			Heavy: 0
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Eff: CreateEffect
-		Explosions: napalm
-		ImpactSounds: firebl3.aud
+		Explosions: b2bexp, b2bexp2
+		ExplosionPalette: tseffect
+		ImpactSounds: expnew06.aud
 		ValidTargets: Ground, Water, Air, Trees
 	Warhead@2Smu_impact: LeaveSmudge
 		SmudgeType: Crater
 	Warhead@3Smu_area: LeaveSmudge
 		SmudgeType: Scorch
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
-		Size: 1
+		Size: 2
 		Delay: 3
+	Warhead@8Dam_areanuke2: SpreadDamage
+		Spread: 3c0
+		Damage: 6000
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		Delay: 10
+		ValidTargets: Trees
+		DamageTypes: Incendiary
+	Warhead@Flames: FireCluster
+		Weapon: BurnFx
+		RandomClusterCount: 5
+		Dimensions: 3,3
+		Footprint: xxx xxx xxx
 
 IronCurtain:
 	Projectile: InstantExplode

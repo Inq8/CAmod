@@ -231,16 +231,16 @@ MIG:
 		TrailLength: 10
 	SpawnActorOnDeath:
 		Actor: MIG.Husk
-		RequiresCondition: ammo && !empdisable
+		RequiresCondition: airborne && ammo && !empdisable
 	SpawnActorOnDeath@Empty:
 		Actor: MIG.Husk.empty
-		RequiresCondition: !ammo && !empdisable
+		RequiresCondition: airborne && !ammo && !empdisable
 	SpawnActorOnDeath@EMP:
 		Actor: MIG.Husk.EMP
-		RequiresCondition: ammo && empdisable
+		RequiresCondition: airborne && ammo && empdisable
 	SpawnActorOnDeath@EmptyEMP:
 		Actor: MIG.Husk.empty.EMP
-		RequiresCondition: !ammo && empdisable
+		RequiresCondition: airborne && !ammo && empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -853,0,171
 		Interval: 2
@@ -323,16 +323,16 @@ SUK:
 		TrailLength: 10
 	SpawnActorOnDeath:
 		Actor: SUK.Husk
-		RequiresCondition: ammo && !empdisable
+		RequiresCondition: airborne && ammo && !empdisable
 	SpawnActorOnDeath@Empty:
 		Actor: SUK.Husk.empty
-		RequiresCondition: !ammo && !empdisable
+		RequiresCondition: airborne && !ammo && !empdisable
 	SpawnActorOnDeath@EMP:
 		Actor: SUK.Husk.EMP
-		RequiresCondition: ammo && empdisable
+		RequiresCondition: airborne && ammo && empdisable
 	SpawnActorOnDeath@EmptyEMP:
 		Actor: SUK.Husk.empty.EMP
-		RequiresCondition: !ammo && empdisable
+		RequiresCondition: airborne && !ammo && empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -853,0,0
 		Interval: 2
@@ -861,16 +861,16 @@ A10:
 		Offset: -258,823,0
 	SpawnActorOnDeath:
 		Actor: A10.Husk
-		RequiresCondition: ammo && !empdisable
+		RequiresCondition: airborne && ammo && !empdisable
 	SpawnActorOnDeath@Empty:
 		Actor: A10.Husk.empty
-		RequiresCondition: !ammo && !empdisable
+		RequiresCondition: airborne && !ammo && !empdisable
 	SpawnActorOnDeath@EMP:
 		Actor: A10.Husk.EMP
-		RequiresCondition: ammo && empdisable
+		RequiresCondition: airborne && ammo && empdisable
 	SpawnActorOnDeath@EmptyEMP:
 		Actor: A10.Husk.empty.EMP
-		RequiresCondition: !ammo && empdisable
+		RequiresCondition: airborne && !ammo && empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -853,0,171
 		Interval: 2
@@ -919,16 +919,16 @@ A10.bomber:
 		Offset: -258,823,0
 	SpawnActorOnDeath:
 		Actor: A10.Husk
-		RequiresCondition: ammo && !empdisable
+		RequiresCondition: airborne && ammo && !empdisable
 	SpawnActorOnDeath@Empty:
 		Actor: A10.Husk.empty
-		RequiresCondition: !ammo && !empdisable
+		RequiresCondition: airborne && !ammo && !empdisable
 	SpawnActorOnDeath@EMP:
 		Actor: A10.Husk.EMP
-		RequiresCondition: ammo && empdisable
+		RequiresCondition: airborne && ammo && empdisable
 	SpawnActorOnDeath@EmptyEMP:
 		Actor: A10.Husk.empty.EMP
-		RequiresCondition: !ammo && empdisable
+		RequiresCondition: airborne && !ammo && empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -853,0,171
 		Interval: 2
@@ -1676,16 +1676,16 @@ HARR:
 		Color: FFFFFF80
 	SpawnActorOnDeath:
 		Actor: HARR.Husk
-		RequiresCondition: ammo && !empdisable
+		RequiresCondition: airborne && ammo && !empdisable
 	SpawnActorOnDeath@Empty:
 		Actor: HARR.Husk.empty
-		RequiresCondition: !ammo && !empdisable
+		RequiresCondition: airborne && !ammo && !empdisable
 	SpawnActorOnDeath@EMP:
 		Actor: HARR.Husk.EMP
-		RequiresCondition: ammo && empdisable
+		RequiresCondition: airborne && ammo && empdisable
 	SpawnActorOnDeath@EmptyEMP:
 		Actor: HARR.Husk.empty.EMP
-		RequiresCondition: !ammo && empdisable
+		RequiresCondition: airborne && !ammo && empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -427,0,0
 	Selectable:
@@ -1772,16 +1772,16 @@ SCRN:
 		ZOffset: -512
 	SpawnActorOnDeath:
 		Actor: SCRN.Husk
-		RequiresCondition: ammo && !empdisable
+		RequiresCondition: airborne && ammo && !empdisable
 	SpawnActorOnDeath@Empty:
 		Actor: SCRN.Husk.empty
-		RequiresCondition: !ammo && !empdisable
+		RequiresCondition: airborne && !ammo && !empdisable
 	SpawnActorOnDeath@EMP:
 		Actor: SCRN.Husk.EMP
-		RequiresCondition: ammo && empdisable
+		RequiresCondition: airborne && ammo && empdisable
 	SpawnActorOnDeath@EmptyEMP:
 		Actor: SCRN.Husk.empty.EMP
-		RequiresCondition: !ammo && empdisable
+		RequiresCondition: airborne && !ammo && empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -427,0,0
 	Selectable:
@@ -2048,16 +2048,16 @@ VENM:
 		AmmoCondition: ammo
 	SpawnActorOnDeath:
 		Actor: VENM.Husk
-		RequiresCondition: ammo && !empdisable
+		RequiresCondition: airborne && ammo && !empdisable
 	SpawnActorOnDeath@Empty:
 		Actor: VENM.Husk.empty
-		RequiresCondition: !ammo && !empdisable
+		RequiresCondition: airborne && !ammo && !empdisable
 	SpawnActorOnDeath@EMP:
 		Actor: VENM.Husk.EMP
-		RequiresCondition: ammo && empdisable
+		RequiresCondition: airborne && ammo && empdisable
 	SpawnActorOnDeath@EmptyEMP:
 		Actor: VENM.Husk.empty.EMP
-		RequiresCondition: !ammo && empdisable
+		RequiresCondition: airborne && !ammo && empdisable
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
@@ -2154,16 +2154,16 @@ AURO:
 		Offset: -300,800,-50
 	SpawnActorOnDeath:
 		Actor: AURO.Husk
-		RequiresCondition: ammo && !empdisable
+		RequiresCondition: airborne && ammo && !empdisable
 	SpawnActorOnDeath@Empty:
 		Actor: AURO.Husk.empty
-		RequiresCondition: !ammo && !empdisable
+		RequiresCondition: airborne && !ammo && !empdisable
 	SpawnActorOnDeath@EMP:
 		Actor: AURO.Husk.EMP
-		RequiresCondition: ammo && empdisable
+		RequiresCondition: airborne && ammo && empdisable
 	SpawnActorOnDeath@EmptyEMP:
 		Actor: AURO.Husk.empty.EMP
-		RequiresCondition: !ammo && empdisable
+		RequiresCondition: airborne && !ammo && empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -853,0,171
 		Interval: 2

@@ -747,6 +747,9 @@ DOME:
 	ProvidesPrerequisiteValidatedFaction@frarad:
 		Factions: france
 		Prerequisite: radar.france
+	ProvidesPrerequisite@radar-active:
+		Prerequisite: radar-active
+		RequiresCondition: !jammed && !disabled && !being-warped
 	ProvidesPrerequisite@buildingname:
 	ExternalCondition@JAMMED:
 		Condition: jammed
@@ -1715,6 +1718,7 @@ AFLD:
 		DropItems: E1,E1,E2,E3,E3,E1,E1,E1
 		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
+		EndChargeSpeechNotification: ReinforceAva
 		AllowImpassableCells: false
 		QuantizedFacings: 8
 		CameraActor: camera.paradrop
@@ -1737,6 +1741,7 @@ AFLD:
 		DropItems: SHOK,SHOK,SHOK,SHOK,SHOK
 		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
+		EndChargeSpeechNotification: ReinforceAva
 		AllowImpassableCells: false
 		QuantizedFacings: 8
 		CameraActor: camera.paradrop
@@ -3575,6 +3580,7 @@ HQ:
 		DropItems: N1,N1,N4,N3,N3,N1,N1,N4
 		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
+		EndChargeSpeechNotification: ReinforceAva
 		AllowImpassableCells: false
 		QuantizedFacings: 8
 		CameraActor: camera.paradrop
@@ -3598,6 +3604,7 @@ HQ:
 		SquadOffset: 0,1792,0
 		DropItems: N1C,N1C,N5,N3C,N3C,N1C,N1C,N5
 		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
+		EndChargeSpeechNotification: ReinforceAva
 		SelectTargetSpeechNotification: SelectTarget
 		AllowImpassableCells: false
 		QuantizedFacings: 8
@@ -3619,7 +3626,8 @@ HQ:
 		IconPalette: chrometd
 		Description: Drop Pods
 		LongDesc: Drop Pod reinforcements.\nSmall team of elite soldiers orbital drops\nto target location.
-		DropPodsAvailableNotification: DropPodsAvailable
+		EndChargeSpeechNotification: DropPodsAvailable
+		DropPodsArrivedSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
 		DisplayRadarPing: True
 		ChargeInterval: 4500
@@ -3691,6 +3699,9 @@ HQ:
 		Factions: legion
 		Prerequisite: radar.legion
 	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite@radar-active:
+		Prerequisite: radar-active
+		RequiresCondition: !jammed && !disabled && !being-warped
 	ExternalCondition@JAMMED:
 		Condition: jammed
 	InfiltrateForSupportPower@tec:
@@ -5418,7 +5429,7 @@ UPGC:
 		EntryType: DropSiteClosestEdge
 		ExitType: OppositeToEntry
 		LandingFacing: 64
-		ReadyAudio: ReinforcementsArrived
+		ReadyAudio: SuppliesInbound
 	WithDeliveryOverlay:
 		Sequence: flare 
 		Palette: effect
@@ -5437,16 +5448,43 @@ UPGC:
 		SpawnOffset: 511,511,0
 		ExitCell: 1,1
 	Turreted:
-		TurnSpeed: 8
+		TurnSpeed: 3
 		InitialFacing: 96
 		RealignDelay: -1
-		Offset: 12,-4,1
+		Offset: -768,468,0
 	AttackTurreted:
 		RequiresCondition: !build-incomplete && tower.rocket && loaded-rocket > 0
 		PauseOnCondition: disabled || empdisable || being-warped
-		OpportunityFire: False
-		PersistentTargeting: False
-		ForceFireIgnoresActors: True
+	Armament@ROCKET:
+		RequiresCondition: tower.rocket
+		Weapon: FirestormBarrage
+		LocalOffset: 768,64,368, 768,-64,368, 768,64,255, 768,-64,255
+	SupportPowerChargeBar:
+	AttackOrderPower@ROCKET:
+		OrderName: rocketbarrage
+		PauseOnCondition: empdisable || disabled || being-warped
+		Cursor: ability
+		Icon: airstrike
+		ChargeInterval: 2250
+		Description: Firestorm
+		LongDesc: Barrage target area with rockets.
+		BeginChargeSpeechNotification: FireStormOffline
+		EndChargeSpeechNotification: FireStormReady
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		DisplayTimerStances: Ally
+		RequiresCondition: tower.rocket
+		Prerequisites: ~techlevel.unrestricted
+	RejectsOrders:
+		Except: Sell, PowerDown
+	AmmoPool:
+		Ammo: 3
+		ReloadCount: 3
+		PipCount: 0
+		AmmoCondition: loaded-rocket
+	ReloadAmmoPool:
+		Delay: 100
+		Count: 3
 	WithSpriteTurret@ROCKET:
 		RequiresCondition: !build-incomplete && tower.rocket
 		Recoils: false
@@ -5454,7 +5492,7 @@ UPGC:
 	WithIdleOverlay@RADAR:
 		RequiresCondition: !build-incomplete && tower.radar
 		Sequence: turret-radar
-		PauseOnCondition: !radar-active || disabled || being-warped
+		PauseOnCondition: !scan-active || disabled || being-warped
 	WithIdleOverlay@SHIELD:
 		RequiresCondition: !build-incomplete && tower.shield && !nshield
 		Sequence: turret-shield
@@ -5470,27 +5508,30 @@ UPGC:
 	GrantPrerequisiteChargeDrainPower@RADAR:
 		OrderName: advradarorder
 		DischargeModifier: 600
-		Prerequisite: radar-active
+		Prerequisite: scan-active
 		ChargeInterval: 4500
 		Icon: arscan
 		IconPalette: chrometd
 		Description: Advanced Radar Scan
 		LongDesc: Provides information on enemy structures & units positions.
 		RequiresCondition: !build-incomplete && tower.radar
-		PauseOnCondition: disabled || being-warped
-		LaunchSound: sciainte.aud
+		PauseOnCondition: !radar-active || disabled || being-warped
+		LaunchSound: gradarup.aud
+		BeginChargeSound: gradardn.aud
 		DisplayTimerStances: Ally
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
-		EndChargeSpeechNotification: ForceShieldReady
 		Prerequisites: ~techlevel.unrestricted
 	DrainPrerequisitePowerOnDamage@RADAR:
 		OrderName: advradarorder
+	GrantConditionOnPrerequisite@SCAN:
+		Prerequisites: scan-active
+		Condition: scan-active
 	GrantConditionOnPrerequisite@RADAR:
 		Prerequisites: radar-active
 		Condition: radar-active
 	GpsRadarProvider: 
-		RequiresCondition: tower.radar && radar-active && !(disabled || being-warped)
+		RequiresCondition: tower.radar && scan-active && !(disabled || being-warped)
 	GrantExternalConditionPower@NSHIELD:
 		OrderName: nshieldorder
 		Icon: nshield
@@ -5507,43 +5548,10 @@ UPGC:
 		DisplayTimerStances: Ally
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
-		EndChargeSpeechNotification: ForceShieldReady
 		DisplayRadarPing: True
 		Cursor: repair
 		RequiresCondition: tower.shield
 		PauseOnCondition: disabled || empdisable ||  being-warped
-	Armament@ROCKET:
-		RequiresCondition: tower.rocket && loaded-rocket > 0
-		PauseOnCondition: disabled || empdisable || being-warped
-		Weapon: RocketBarrage
-		LocalOffset: 0,128,0, 0,-128,0
-		ReloadingCondition: reloading
-	SupportPowerChargeBar:
-	AmmoPool:
-		Ammo: 6
-		ReloadCount: 6
-		PipCount: 0
-		AmmoCondition: loaded-rocket
-	ReloadAmmoPool:
-		Delay: 2250
-		Count: 6
-	AttackOrderPower@ROCKET:
-		OrderName: rocketbarrage
-		PauseOnCondition: empdisable || disabled || being-warped
-		Cursor: ability
-		Icon: airstrike
-		ChargeInterval: 2250
-		Description: Firestorm Rocket Barrage
-		LongDesc: Barrage target area with rockets.
-		BeginChargeSpeechNotification: EMMissilePrepping
-		EndChargeSpeechNotification: EMMissileReady
-		SelectTargetSpeechNotification: SelectTarget
-		InsufficientPowerSpeechNotification: InsufficientPower
-		DisplayTimerStances: Ally
-		RequiresCondition: tower.rocket
-		Prerequisites: ~techlevel.unrestricted
-	RejectsOrders:
-		Except: Sell, PowerDown
 	Pluggable:
 		Conditions:
 			tower.rocket: tower.rocket
