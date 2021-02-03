@@ -138,21 +138,42 @@ namespace OpenRA.Mods.CA.Traits
 				var type = BuildingType.Building;
 				var placeDefenseTowardsEnemyChance = baseBuilder.Info.PlaceDefenseTowardsEnemyChance;
 
-				// Check if Building is a defense and if we should place it towards the enemy or not.
-				if (world.Map.Rules.Actors[currentBuilding.Item].HasTraitInfo<AttackBaseInfo>())
-				{
-					if (baseBuilder.Info.AntiAirTypes.Contains(world.Map.Rules.Actors[currentBuilding.Item].Name))
-						placeDefenseTowardsEnemyChance = (int)Math.Ceiling(placeDefenseTowardsEnemyChance / 1.5);
+				CPos? location = null;
+				string orderString = "PlaceBuilding";
 
-					if (world.LocalRandom.Next(100) < placeDefenseTowardsEnemyChance)
-						type = BuildingType.Defense;
-				}
-				else if (baseBuilder.Info.RefineryTypes.Contains(world.Map.Rules.Actors[currentBuilding.Item].Name))
+				// Check if Building is a plug for other Building
+				var actorInfo = world.Map.Rules.Actors[currentBuilding.Item];
+				var plugInfo = actorInfo.TraitInfoOrDefault<PlugInfo>();
+				if (plugInfo != null)
 				{
-					type = BuildingType.Refinery;
+					var possibleBuilding = world.ActorsWithTrait<Pluggable>().FirstOrDefault(a =>
+						a.Actor.Owner == player && a.Trait.AcceptsPlug(a.Actor, plugInfo.Type));
+
+					if (possibleBuilding != null)
+					{
+						orderString = "PlacePlug";
+						location = possibleBuilding.Actor.Location + possibleBuilding.Trait.Info.Offset;
+					}
+				}
+				else
+				{
+					// Check if Building is a defense and if we should place it towards the enemy or not.
+					if (world.Map.Rules.Actors[currentBuilding.Item].HasTraitInfo<AttackBaseInfo>())
+					{
+						if (baseBuilder.Info.AntiAirTypes.Contains(world.Map.Rules.Actors[currentBuilding.Item].Name))
+							placeDefenseTowardsEnemyChance = (int)Math.Ceiling(placeDefenseTowardsEnemyChance / 1.5);
+
+						if (world.LocalRandom.Next(100) < placeDefenseTowardsEnemyChance)
+							type = BuildingType.Defense;
+					}
+					else if (baseBuilder.Info.RefineryTypes.Contains(world.Map.Rules.Actors[currentBuilding.Item].Name))
+					{
+						type = BuildingType.Refinery;
+					}
 				}
 
-				var location = ChooseBuildLocation(currentBuilding.Item, true, type);
+				if (orderString != "PlacePlug") { location = ChooseBuildLocation(currentBuilding.Item, true, type); }
+
 				if (location == null)
 				{
 					AIUtils.BotDebug("AI: {0} has nowhere to place {1}".F(player, currentBuilding.Item));
@@ -169,7 +190,7 @@ namespace OpenRA.Mods.CA.Traits
 				else
 				{
 					failCount = 0;
-					bot.QueueOrder(new Order("PlaceBuilding", player.PlayerActor, Target.FromCell(world, location.Value), false)
+					bot.QueueOrder(new Order(orderString, player.PlayerActor, Target.FromCell(world, location.Value), false)
 					{
 						// Building to place
 						TargetString = currentBuilding.Item,

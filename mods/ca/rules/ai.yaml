@@ -404,7 +404,22 @@ Player:
 				MinimumAttractiveness: 3000
 				Consideration@1:
 					Against: Enemy
-					Types: Structure
+					Types: Structure, Vehicle
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 5c0
+				Consideration@2:
+					Against: Ally
+					Types: Air, Ground, Water
+					Attractiveness: -10
+					TargetMetric: Value
+					CheckRadius: 7c0
+			rocketbarragepower:
+				OrderName: rocketbarrage
+				MinimumAttractiveness: 3000
+				Consideration@1:
+					Against: Enemy
+					Types: Structure, Vehicle, Infantry
 					Attractiveness: 1
 					TargetMetric: Value
 					CheckRadius: 5c0
@@ -436,6 +451,16 @@ Player:
 					Attractiveness: -2
 					TargetMetric: Value
 					CheckRadius: 2c0
+			nshieldpower:
+				OrderName: nshieldorder
+				MinimumAttractiveness: 1000
+				FineScanRadius: 2
+				Consideration@3:
+					Against: Ally
+					Types: Structure
+					Attractiveness: 5
+					TargetMetric: Value
+					CheckRadius: 3c0
 			stealthgenpower:
 				OrderName: stealthgen
 				MinimumAttractiveness: 1000
@@ -616,7 +641,7 @@ Player:
 			tmpl: 6375
 			scrt: 6375
 			bio.nod: 8000
-			miss.gdi: 8000
+			upgc: 8000
 			indp: 8000
 			orep: 8000
 			sign: 8000
@@ -720,7 +745,11 @@ Player:
 			rift: 1
 			indp: 1
 			bio.nod: 1
-			miss.gdi: 1
+			upgc: 1
+			upgc.bomb: 1
+			upgc.seek: 1
+			upgc.hold: 1
+			upgc.drop: 1
 			orep: 1
 			sign: 1
 			patr: 1
@@ -731,8 +760,11 @@ Player:
 			spen.nod: 1
 			syrd.gdi: 1
 			bombard.strat: 1
+			bombard2.strat: 1
 			seek.strat: 1
+			seek2.strat: 1
 			hold.strat: 1
+			hold2.strat: 1
 			sonic.upgrade: 1
 			drone.upgrade: 1
 			pointlaser.upgrade: 1
@@ -746,6 +778,7 @@ Player:
 			empgren.upgrade: 1
 			hazmat.upgrade: 1
 			howi.upgrade: 1
+			microwave.upgrade:1
 			cyborg.upgrade: 1
 			cyborgspeed.upgrade: 1
 			cyborgarmor.upgrade: 1
@@ -753,8 +786,10 @@ Player:
 			tarc.upgrade: 1
 			indp.upgrade: 1
 			iraqtank.upgrade: 1
+			v2.upgrade: 1
 			orep.upgrade: 1
 			charv.upgrade: 1
+			pcan.upgrade: 1
 			cryr.upgrade: 1
 			apb.upgrade: 1
 			regen.upgrade: 1
@@ -797,7 +832,7 @@ Player:
 			tmpl: 6375
 			scrt: 6375
 			bio.nod: 8000
-			miss.gdi: 8000
+			upgc: 8000
 			indp: 8000
 			orep: 8000
 			sign: 8000
@@ -901,7 +936,11 @@ Player:
 			rift: 1
 			indp: 1
 			bio.nod: 1
-			miss.gdi: 1
+			upgc: 1
+			upgc.bomb: 1
+			upgc.seek: 1
+			upgc.hold: 1
+			upgc.drop: 1
 			orep: 1
 			sign: 1
 			patr: 1
@@ -912,8 +951,11 @@ Player:
 			spen.nod: 1
 			syrd.gdi: 1
 			bombard.strat: 1
+			bombard2.strat: 1
 			seek.strat: 1
+			seek2.strat: 1
 			hold.strat: 1
+			hold2.strat: 1
 			sonic.upgrade: 1
 			drone.upgrade: 1
 			pointlaser.upgrade: 1
@@ -927,6 +969,7 @@ Player:
 			empgren.upgrade: 1
 			hazmat.upgrade: 1
 			howi.upgrade: 1
+			microwave.upgrade:1
 			cyborg.upgrade: 1
 			cyborgspeed.upgrade: 1
 			cyborgarmor.upgrade: 1
@@ -934,8 +977,10 @@ Player:
 			tarc.upgrade: 1
 			indp.upgrade: 1
 			iraqtank.upgrade: 1
+			v2.upgrade: 1
 			orep.upgrade: 1
 			charv.upgrade: 1
+			pcan.upgrade: 1
 			cryr.upgrade: 1
 			apb.upgrade: 1
 			regen.upgrade: 1
@@ -977,7 +1022,7 @@ Player:
 			tmpl: 6375
 			scrt: 6375
 			bio.nod: 8000
-			miss.gdi: 8000
+			upgc: 8000
 			indp: 8000
 			orep: 8000
 			sign: 8000
@@ -1081,7 +1126,11 @@ Player:
 			rift: 1
 			indp: 1
 			bio.nod: 1
-			miss.gdi: 1
+			upgc: 1
+			upgc.bomb: 1
+			upgc.seek: 1
+			upgc.hold: 1
+			upgc.drop: 1
 			orep: 1
 			sign: 1
 			patr: 1
@@ -1092,8 +1141,11 @@ Player:
 			spen.nod: 1
 			syrd.gdi: 1
 			bombard.strat: 1
+			bombard2.strat: 1
 			seek.strat: 1
+			seek2.strat: 1
 			hold.strat: 1
+			hold2.strat: 1
 			sonic.upgrade: 1
 			drone.upgrade: 1
 			pointlaser.upgrade: 1
@@ -1107,6 +1159,7 @@ Player:
 			empgren.upgrade: 1
 			hazmat.upgrade: 1
 			howi.upgrade: 1
+			microwave.upgrade:1
 			cyborg.upgrade: 1
 			cyborgspeed.upgrade: 1
 			cyborgarmor.upgrade: 1
@@ -1114,8 +1167,10 @@ Player:
 			tarc.upgrade: 1
 			indp.upgrade: 1
 			iraqtank.upgrade: 1
+			v2.upgrade: 1
 			orep.upgrade: 1
 			charv.upgrade: 1
+			pcan.upgrade: 1
 			cryr.upgrade: 1
 			apb.upgrade: 1
 			regen.upgrade: 1
@@ -1157,7 +1212,7 @@ Player:
 			tmpl: 6375
 			scrt: 6375
 			bio.nod: 8000
-			miss.gdi: 8000
+			upgc: 8000
 			indp: 8000
 			orep: 8000
 			sign: 8000
@@ -1261,7 +1316,11 @@ Player:
 			rift: 1
 			indp: 1
 			bio.nod: 1
-			miss.gdi: 1
+			upgc: 1
+			upgc.bomb: 1
+			upgc.seek: 1
+			upgc.hold: 1
+			upgc.drop: 1
 			orep: 1
 			sign: 1
 			patr: 1
@@ -1272,8 +1331,11 @@ Player:
 			spen.nod: 1
 			syrd.gdi: 1
 			bombard.strat: 1
+			bombard2.strat: 1
 			seek.strat: 1
+			seek2.strat: 1
 			hold.strat: 1
+			hold2.strat: 1
 			sonic.upgrade: 1
 			drone.upgrade: 1
 			pointlaser.upgrade: 1
@@ -1287,6 +1349,7 @@ Player:
 			empgren.upgrade: 1
 			hazmat.upgrade: 1
 			howi.upgrade: 1
+			microwave.upgrade:1
 			cyborg.upgrade: 1
 			cyborgspeed.upgrade: 1
 			cyborgarmor.upgrade: 1
@@ -1294,8 +1357,10 @@ Player:
 			tarc.upgrade: 1
 			indp.upgrade: 1
 			iraqtank.upgrade: 1
+			v2.upgrade: 1
 			orep.upgrade: 1
 			charv.upgrade: 1
+			pcan.upgrade: 1
 			cryr.upgrade: 1
 			apb.upgrade: 1
 			regen.upgrade: 1
@@ -1405,7 +1470,11 @@ Player:
 			mani: 1
 			indp: 1
 			bio.nod: 1
-			miss.gdi: 1
+			upgc: 1
+			upgc.bomb: 1
+			upgc.seek: 1
+			upgc.hold: 1
+			upgc.drop: 1
 			orep: 1
 			sign: 1
 			patr: 1
@@ -1420,8 +1489,11 @@ Player:
 			spen.nod: 1
 			syrd.gdi: 1
 			bombard.strat: 1
+			bombard2.strat: 1
 			seek.strat: 1
+			seek2.strat: 1
 			hold.strat: 1
+			hold2.strat: 1
 			sonic.upgrade: 1
 			drone.upgrade: 1
 			pointlaser.upgrade: 1
@@ -1435,6 +1507,7 @@ Player:
 			empgren.upgrade: 1
 			hazmat.upgrade: 1
 			howi.upgrade: 1
+			microwave.upgrade:1
 			cyborg.upgrade: 1
 			cyborgspeed.upgrade: 1
 			cyborgarmor.upgrade: 1
@@ -1442,8 +1515,10 @@ Player:
 			tarc.upgrade: 1
 			indp.upgrade: 1
 			iraqtank.upgrade: 1
+			v2.upgrade: 1
 			orep.upgrade: 1
 			charv.upgrade: 1
+			pcan.upgrade: 1
 			cryr.upgrade: 1
 			apb.upgrade: 1
 			regen.upgrade: 1

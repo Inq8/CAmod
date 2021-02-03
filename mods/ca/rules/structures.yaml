@@ -747,6 +747,9 @@ DOME:
 	ProvidesPrerequisiteValidatedFaction@frarad:
 		Factions: france
 		Prerequisite: radar.france
+	ProvidesPrerequisite@radar-active:
+		Prerequisite: radar-active
+		RequiresCondition: !jammed && !disabled && !being-warped
 	ProvidesPrerequisite@buildingname:
 	ExternalCondition@JAMMED:
 		Condition: jammed
@@ -1139,7 +1142,7 @@ ATEK:
 		DisplayTimerStances: Ally, Neutral, Enemy
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
-		Icon: forceshieldicon
+		Icon: forceshield
 		ChargeInterval: 7500
 		Condition: forceshield
 		Range: 3
@@ -1715,6 +1718,7 @@ AFLD:
 		DropItems: E1,E1,E2,E3,E3,E1,E1,E1
 		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
+		EndChargeSpeechNotification: ReinforceAva
 		AllowImpassableCells: false
 		QuantizedFacings: 8
 		CameraActor: camera.paradrop
@@ -1737,6 +1741,7 @@ AFLD:
 		DropItems: SHOK,SHOK,SHOK,SHOK,SHOK
 		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
+		EndChargeSpeechNotification: ReinforceAva
 		AllowImpassableCells: false
 		QuantizedFacings: 8
 		CameraActor: camera.paradrop
@@ -2025,7 +2030,7 @@ STEK:
 		Prerequisite: techcenter
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
-		Icon: forceshieldicon
+		Icon: forceshield
 		ChargeInterval: 7500
 		Condition: forceshield
 		Range: 3
@@ -2825,7 +2830,7 @@ WEAP.TD:
 		Factions: eagle
 		Prerequisite: vehicles.eagle
 	ProvidesPrerequisiteValidatedFaction@nod:
-		Factions: legion
+		Factions: legion, blackh, legion
 		Prerequisite: vehicles.nod
 	ProvidesPrerequisiteValidatedFaction@legion:
 		Factions: legion
@@ -3575,6 +3580,7 @@ HQ:
 		DropItems: N1,N1,N4,N3,N3,N1,N1,N4
 		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
+		EndChargeSpeechNotification: ReinforceAva
 		AllowImpassableCells: false
 		QuantizedFacings: 8
 		CameraActor: camera.paradrop
@@ -3598,6 +3604,7 @@ HQ:
 		SquadOffset: 0,1792,0
 		DropItems: N1C,N1C,N5,N3C,N3C,N1C,N1C,N5
 		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
+		EndChargeSpeechNotification: ReinforceAva
 		SelectTargetSpeechNotification: SelectTarget
 		AllowImpassableCells: false
 		QuantizedFacings: 8
@@ -3619,7 +3626,8 @@ HQ:
 		IconPalette: chrometd
 		Description: Drop Pods
 		LongDesc: Drop Pod reinforcements.\nSmall team of elite soldiers orbital drops\nto target location.
-		DropPodsAvailableNotification: DropPodsAvailable
+		EndChargeSpeechNotification: DropPodsAvailable
+		DropPodsArrivedSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
 		DisplayRadarPing: True
 		ChargeInterval: 4500
@@ -3691,6 +3699,9 @@ HQ:
 		Factions: legion
 		Prerequisite: radar.legion
 	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite@radar-active:
+		Prerequisite: radar-active
+		RequiresCondition: !jammed && !disabled && !being-warped
 	ExternalCondition@JAMMED:
 		Condition: jammed
 	InfiltrateForSupportPower@tec:
@@ -4212,7 +4223,7 @@ AFLD.GDI:
 		Icon: airsupport
 		ChargeInterval: 10500
 		Description: Interceptors
-		LongDesc: A squadron of Interceptors provides\nair cover on the selected target area.
+		LongDesc: A squadron of Interceptors provides\nair cover over the selected target area.
 		SelectTargetSpeechNotification: SelectTarget
 		CameraActor: camera
 		CameraRemoveDelay: 450
@@ -4306,7 +4317,7 @@ GTEK:
 	ProvidesPrerequisite@buildingname:
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
-		Icon: forceshieldicon
+		Icon: forceshield
 		ChargeInterval: 7500
 		Condition: forceshield
 		Range: 3
@@ -4433,7 +4444,7 @@ TMPL:
 	WithBuildingBib:
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
-		Icon: forceshieldicon
+		Icon: forceshield
 		ChargeInterval: 7500
 		Condition: forceshield
 		Range: 3
@@ -5352,12 +5363,10 @@ OREP:
 		Condition: noupgrade
 		RequiresCondition: noupgrade
 
-MISS.GDI:
-	Inherits: ^Building
+UPGC:
+	Inherits: ^BuildingTD
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@shape: ^3x2Shape
-	RenderSprites:
-		Image: miss
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Selectable:
@@ -5365,7 +5374,7 @@ MISS.GDI:
 	Building:
 		Footprint: xxx xxx ===
 		Dimensions: 3,3
-		LocalCenterOffset: 0,-512,0
+		LocalCenterOffset: 0,-1024,0
 	Health:
 		HP: 80000
 	Armor:
@@ -5377,12 +5386,15 @@ MISS.GDI:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	WithBuildingBib:
+	WithSpriteBody:
+		PauseOnCondition: disabled || being-warped
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.gdi, gtek, ~techlevel.high
 		Description: Allows the construction of advanced weaponry and upgrades.\n  Maximum 1 can be built.\n  Cannot be captured.
 		BuildLimit: 1
+		IconPalette: chrometd
 	-Capturable:
 	-CaptureNotification:
 	-CapturableProgressBar:
@@ -5391,7 +5403,10 @@ MISS.GDI:
 	Valued:
 		Cost: 2500
 	Tooltip:
-		Name: Research Center
+		Name: Upgrade Center
+	ProvidesPrerequisite@HMLRS:
+		Factions: gdi, zocom, eagle
+		Prerequisite: hmlrs.buildable
 	ProvidesPrerequisite@Name:
 	Power:
 		Amount: -150
@@ -5401,14 +5416,243 @@ MISS.GDI:
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
+		DeathSequencePalette: overlayplayertd
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped
+	ProductionAirdropCA:
+		Produces: Money
+		PauseOnCondition: forceshield || invulnerability || being-warped
+		ActorType: ocar.pod
+		EntryType: DropSiteClosestEdge
+		ExitType: OppositeToEntry
+		LandingFacing: 64
+		ReadyAudio: SuppliesInbound
+	WithDeliveryOverlay:
+		Sequence: flare 
+		Palette: effect
+		IsPlayerPalette: false
+		Offset: -1024,768,0
+	PeriodicProducerCA@DROP:
+		DeliveringActor: OCAR.Reinforce
+		Type: Money
+		ChargeDuration: 1500
+		Actors: truk.drop
+		ShowSelectionBar: true
+		RequiresCondition: tower.drop && !(empdisable || disabled || being-warped)
 	ProductionBar:
 		ProductionType: Upgrade
 	Exit:
+		SpawnOffset: 511,511,0
+		ExitCell: 1,1
+	Turreted:
+		TurnSpeed: 3
+		InitialFacing: 96
+		RealignDelay: -1
+		Offset: -768,468,0
+	AttackTurreted:
+		RequiresCondition: !build-incomplete && tower.rocket && loaded-rocket > 0
+		PauseOnCondition: disabled || empdisable || being-warped
+	Armament@ROCKET:
+		RequiresCondition: tower.rocket
+		Weapon: FirestormBarrage
+		LocalOffset: 768,64,368, 768,-64,368, 768,64,255, 768,-64,255
+	SupportPowerChargeBar:
+	AttackOrderPowerCA@ROCKET:
+		OrderName: rocketbarrage
+		PauseOnCondition: empdisable || disabled || being-warped
+		Cursor: ability
+		Icon: fstorm
+		IconPalette: chrometd
+		ChargeInterval: 2250
+		Description: Firestorm
+		LongDesc: Barrage target area with rockets.
+		BeginChargeSpeechNotification: FireStormOffline
+		EndChargeSpeechNotification: FireStormReady
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		DisplayTimerStances: Ally
+		RequiresCondition: tower.rocket
+		Prerequisites: ~techlevel.unrestricted
+	RejectsOrders:
+		Except: Sell, PowerDown
+	AmmoPool:
+		Ammo: 3
+		ReloadCount: 3
+		PipCount: 0
+		AmmoCondition: loaded-rocket
+	ReloadAmmoPool:
+		Delay: 100
+		Count: 3
+	WithSpriteTurret@ROCKET:
+		RequiresCondition: !build-incomplete && tower.rocket
+		Recoils: false
+		Sequence: turret-rocket
+	WithIdleOverlay@RADAR:
+		RequiresCondition: !build-incomplete && tower.radar
+		Sequence: turret-radar
+		PauseOnCondition: !scan-active || disabled || being-warped
+	WithIdleOverlay@SHIELD:
+		RequiresCondition: !build-incomplete && tower.shield && !nshield
+		Sequence: turret-shield
+		PauseOnCondition: disabled || being-warped
+	WithIdleOverlay@SHIELD-ACTIVE:
+		RequiresCondition: !build-incomplete && tower.shield && nshield
+		Sequence: turret-shield-active
+		PauseOnCondition: disabled || being-warped
+	WithIdleOverlay@DZONE:
+		RequiresCondition: !build-incomplete && tower.drop
+		Sequence: turret-drop
+		PauseOnCondition: !drop-active || disabled || being-warped
+	GrantPrerequisiteChargeDrainPower@RADAR:
+		OrderName: advradarorder
+		DischargeModifier: 600
+		Prerequisite: scan-active
+		ChargeInterval: 4500
+		Icon: arscan
+		IconPalette: chrometd
+		Description: Advanced Radar Scan
+		LongDesc: Provides information on enemy structures & units positions.
+		RequiresCondition: !build-incomplete && tower.radar
+		PauseOnCondition: !radar-active || disabled || being-warped
+		LaunchSound: gradarup.aud
+		BeginChargeSound: gradardn.aud
+		DisplayTimerStances: Ally
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		Prerequisites: ~techlevel.unrestricted
+	DrainPrerequisitePowerOnDamage@RADAR:
+		OrderName: advradarorder
+	GrantConditionOnPrerequisite@SCAN:
+		Prerequisites: scan-active
+		Condition: scan-active
+	GrantConditionOnPrerequisite@RADAR:
+		Prerequisites: radar-active
+		Condition: radar-active
+	GpsRadarProvider: 
+		RequiresCondition: tower.radar && scan-active && !(disabled || being-warped)
+	GrantExternalConditionPower@NSHIELD:
+		OrderName: nshieldorder
+		Icon: nshield
+		IconPalette: chrometd
+		ChargeInterval: 3000
+		Condition: nshield
+		Range: 4
+		Duration: 375
+		Prerequisites: ~techlevel.unrestricted
+		AllowMultiple: false
+		Description: Nanite Shield
+		LongDesc: Selected friendly structures are rapidly repaired when damaged.
+		OnFireSound: srepaira.aud
+		DisplayTimerStances: Ally
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		DisplayRadarPing: True
+		Cursor: repair
+		RequiresCondition: tower.shield
+		PauseOnCondition: disabled || empdisable ||  being-warped
+	Pluggable:
+		Conditions:
+			tower.rocket: tower.rocket
+			tower.radar: tower.radar
+			tower.shield: tower.shield
+			tower.drop: tower.drop
+		Requirements:
+			tower.rocket: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop
+			tower.radar: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop
+			tower.shield: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop
+			tower.drop: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop
+	ProvidesPrerequisite@pluggable:
+		RequiresCondition: !build-incomplete && !tower.rocket && !tower.radar && !tower.shield && !tower.drop
+		Prerequisite: upgc.socket
+	ProvidesPrerequisite@AMPSEEK:
+		RequiresCondition: !build-incomplete && tower.radar
+		Prerequisite: seek3.strat
+		RequiresPrerequisites: seek.strat
+	ProvidesPrerequisite@AMPBOMB:
+		RequiresCondition: !build-incomplete && tower.rocket
+		Prerequisite: bombard3.strat
+		RequiresPrerequisites: bombard.strat
+	ProvidesPrerequisite@AMPHOLD:
+		RequiresCondition: !build-incomplete && tower.shield
+		Prerequisite: hold3.strat
+		RequiresPrerequisites: hold.strat
+		
+UPGC.SOCK:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Component Platform
+		
+UPGC.BOMB:
+	Inherits: ^BuildingPlug
+	Valued:
+		Cost: 1500
+	Tooltip:
+		Name: Upgrade: Firestorm Missile System
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 140
+		Prerequisites: ~upgc.socket, ~bombard.strat, upgc, ~structures.gdi, ~techlevel.high
+		Description: Provides an napalm rocket barrage.\n\n  +Increases the Strategy: Bombardment unit bonus by a further 5%.
+		IconPalette: chrometd
+	Plug:
+		Type: tower.rocket
+	Power:
+		Amount: -100
+		
+UPGC.SEEK:
+	Inherits: ^BuildingPlug
+	Valued:
+		Cost: 1500
+	Tooltip:
+		Name: Upgrade: Advanced Radar System
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 140
+		Prerequisites: ~upgc.socket, ~seek.strat, upgc, ~structures.gdi, ~techlevel.high
+		Description: Provides detailed information on enemy locations.\n\n  +Increases the Strategy: Seek & Destroy unit bonus by a further 5%.
+		IconPalette: chrometd
+	Plug:
+		Type: tower.radar
+	Power:
+		Amount: -100
+		
+UPGC.HOLD:
+	Inherits: ^BuildingPlug
+	Valued:
+		Cost: 1500
+	Tooltip:
+		Name: Upgrade: Nanoshield Generator
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 140
+		Prerequisites: ~upgc.socket, ~hold.strat, upgc, ~structures.gdi, ~techlevel.high
+		Description: Provides the ability to rapidly repair friendly structures.\n\n  +Increases the Strategy: Hold the Line unit bonus by a further 5%.
+		IconPalette: chrometd
+	Plug:
+		Type: tower.shield
+	Power:
+		Amount: -100
+		
+UPGC.DROP:
+	Inherits: ^BuildingPlug
+	Valued:
+		Cost: 1500
+	Tooltip:
+		Name: Upgrade: Supply Drop Zone
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 140
+		Prerequisites: ~upgc.socket, upgc, ~structures.gdi, ~techlevel.high
+		Description: Provides a dropzone\nfor emergency supplies.
+		IconPalette: chrometd
+	Plug:
+		Type: tower.drop
+	Power:
+		Amount: -50
 
 BIO.Nod:
 	Inherits: ^Building

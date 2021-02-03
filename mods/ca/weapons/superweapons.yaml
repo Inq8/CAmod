@@ -448,6 +448,70 @@ THLauncher:
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
 		Size: 2,1
 		Delay: 6
+		
+FirestormBarrage:
+	ReloadDelay: 100
+	Range: 300c0
+	Burst: 3
+	BurstDelays: 20
+	MinRange: 3c0
+	Report: icbm1.aud
+	Projectile: Bullet
+		Blockable: false
+		Shadow: true
+		Inaccuracy: 12c0
+		Image: red-missile
+		Palette: playertd
+		IsPlayerPalette: true
+		TrailImage: smokey2
+		TrailPalette: tseffect-ignore-lighting-alpha75
+		TrailDelay: 4
+		Speed: 220
+		LaunchAngle: 65
+		ContrailLength: 30
+		ContrailColor: cc550080
+	Warhead@1Dam: SpreadDamage
+		Spread: 1c0
+		Damage: 30000
+		Versus:
+			None: 70
+			Wood: 60
+			Light: 85
+			Heavy: 40
+			Concrete: 80
+			Brick: 5
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
+	Warhead@1Dam_cyborg: SpreadDamage
+		Spread: 1c0
+		Damage: 7500
+		ValidTargets: Cyborg
+		Versus:
+			Heavy: 0
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: b2bexp, b2bexp2
+		ExplosionPalette: tseffect
+		ImpactSounds: expnew06.aud
+		ValidTargets: Ground, Water, Air, Trees
+	Warhead@2Smu_impact: LeaveSmudge
+		SmudgeType: Crater
+	Warhead@3Smu_area: LeaveSmudge
+		SmudgeType: Scorch
+		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
+		Size: 2
+		Delay: 3
+	Warhead@8Dam_areanuke2: SpreadDamage
+		Spread: 3c0
+		Damage: 6000
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		Delay: 10
+		ValidTargets: Trees
+		DamageTypes: Incendiary
+	Warhead@Flames: FireCluster
+		Weapon: BurnFx
+		RandomClusterCount: 5
+		Dimensions: 3,3
+		Footprint: xxx xxx xxx
 
 IronCurtain:
 	Projectile: InstantExplode

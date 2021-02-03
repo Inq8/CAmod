@@ -32,17 +32,26 @@ hazmat.upgrade:
 bombard.strat:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Strategy: Bombardment
+		Name: Strategy: Bombardment I
 	Buildable:
 		BuildPaletteOrder: 1
-		Prerequisites: ~hq, !seek.strat, !hold.strat, ~structures.gdi, ~techlevel.high
+		Prerequisites: hq, ~!seek.strat, ~!hold.strat, ~structures.gdi, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 3000
-		Description: Increase unit firepower by 10%.\n\n  Only one Strategy may be chosen.
+		Description: Increases unit firepower by 5%.\n\n  Only one Strategy may be chosen.
 	Valued:
-		Cost: 3000
+		Cost: 1500
 	RenderSprites:
 		Image: bombard.strat
+		
+bombard2.strat:
+	Inherits: bombard.strat
+	Tooltip:
+		Name: Strategy: Bombardment II
+	Buildable:
+		BuildPaletteOrder: 1
+		Prerequisites: gtek, ~bombard.strat, ~structures.gdi, ~techlevel.high
+		Description: Increases the Strategy: Bombardment unit bonus by a further 5%.
 
 seek.strat:
 	Inherits: ^Upgrade
@@ -50,14 +59,23 @@ seek.strat:
 		Name: Strategy: Seek & Destroy
 	Buildable:
 		BuildPaletteOrder: 2
-		Prerequisites: ~hq, !bombard.strat, !hold.strat, ~structures.gdi, ~techlevel.high
+		Prerequisites: hq, ~!bombard.strat, ~!hold.strat, ~structures.gdi, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 3000
-		Description: Increase weapon range & unit speed by 10%.\n\n  Only one Strategy may be chosen.
+		Description: Increases unit speed weapon range by 5%.\n\n  Only one Strategy may be chosen.
 	Valued:
-		Cost: 3000
+		Cost: 1500
 	RenderSprites:
 		Image: seek.strat
+		
+seek2.strat:
+	Inherits: seek.strat
+	Tooltip:
+		Name: Strategy: Seek & Destroy II
+	Buildable:
+		BuildPaletteOrder: 2
+		Prerequisites: gtek, ~seek.strat, ~structures.gdi, ~techlevel.high
+		Description: Increases the Strategy: Seek & Destroy unit bonus by a further 5%.
 
 hold.strat:
 	Inherits: ^Upgrade
@@ -65,14 +83,23 @@ hold.strat:
 		Name: Strategy: Hold the Line
 	Buildable:
 		BuildPaletteOrder: 3
-		Prerequisites: ~hq, !bombard.strat, !seek.strat, ~structures.gdi, ~techlevel.high
+		Prerequisites: hq, ~!bombard.strat, ~!seek.strat, ~structures.gdi, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 3000
-		Description: Increase unit armor by 10%.\n\n  Only one Strategy may be chosen.
+		Description: Increases unit armor by 5%.\n\n  Only one Strategy may be chosen.
 	Valued:
-		Cost: 3000
+		Cost: 1500
 	RenderSprites:
 		Image: hold.strat
+		
+hold2.strat:
+	Inherits: hold.strat
+	Tooltip:
+		Name: Strategy: Hold the Line II
+	Buildable:
+		BuildPaletteOrder: 3
+		Prerequisites: gtek, ~hold.strat, ~structures.gdi, ~techlevel.high
+		Description: Increases the Strategy: Hold the Line unit bonus by a further 5%.
 
 sonic.upgrade:
 	Inherits: ^Upgrade
@@ -97,7 +124,7 @@ drone.upgrade:
 		BuildPaletteOrder: 21
 		Prerequisites: ~hq, ~structures.talon, ~techlevel.high
 		BuildDuration: 1500
-		Description: Allows construction of a modified crewless Battle Tank.\n\n  Replaces: Battle Tank\n  + Immunity to snipers, chaos gas and mind control\n  + Reduced cost\n  – Disabled on low power
+		Description: Allows construction of a modified crewless Battle Tank.\n\n  Replaces: Battle Tank\n  + Immunity to crew kill, chaos gas and mind control\n  + Reduced cost\n  – Disabled on low power
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -138,8 +165,8 @@ hailstorm.upgrade:
 	Tooltip:
 		Name: Upgrade: Hailstorm Missiles
 	Buildable:
-		BuildPaletteOrder: 31
 		Prerequisites: ~gtek, ~bombard.strat, ~structures.gdi, ~techlevel.high, ~!hypersonic.upgrade, ~!hammerhead.upgrade
+		BuildPaletteOrder: 31
 		BuildDuration: 1500
 		IconPalette: chrometd
 		Description: Equip the MLRS/HMLRS with Hailstorm Missiles.\n\n  Upgrades: MLRS/HMLRS\n  + Barrage of powerful but unguided missiles
@@ -168,10 +195,10 @@ ionmam.upgrade:
 		Name: Research: Ion Mammoth
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~miss.gdi, ~structures.zocom, ~techlevel.high
+		Prerequisites: ~upgc, ~structures.zocom, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
-		Description: Research a prototype Mammoth tank\nequipped with a portable ion cannon.\n\n  Replaces: Mammoth Tank
+		Description: Allows construction of the Ion Mammoth Tank.\n\n  Replaces: Mammoth Tank\n  + Increased range\n  + Increased area of effect
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -183,10 +210,10 @@ hovermam.upgrade:
 		Name: Research: Hover Mammoth
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~miss.gdi, ~structures.eagle, ~techlevel.high
+		Prerequisites: ~upgc, ~structures.eagle, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
-		Description: Research a prototype Mammoth Tank with a\nhover propulsion system.\n\n  Replaces: Mammoth Tank
+		Description: Allows construction of the Hover Mammoth Tank.\n\n  Replaces: Mammoth Tank\n  + Faster movement speed\n  + Can cross water
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -198,10 +225,10 @@ railgun.upgrade:
 		Name: Research: Railgun Titan
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~miss.gdi, ~structures.talon, ~techlevel.high
+		Prerequisites: ~upgc, ~structures.talon, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
-		Description: Research a prototype Titan with a\npowerful railgun weapon system.\n\n  Replaces: Titan
+		Description: Allows construction of the Railgun Titan.\n\n  Replaces: Titan\n  + Increased range\n  + Damages targets in a line
 	Valued:
 		Cost: 1000
 	RenderSprites:

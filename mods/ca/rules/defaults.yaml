@@ -362,35 +362,101 @@
 	GrantConditionOnPrerequisite@HOLD:
 		Condition: hold
 		Prerequisites: hold.strat
+	GrantConditionOnPrerequisite@HOLD2:
+		Condition: hold2
+		Prerequisites: hold2.strat
+	GrantConditionOnPrerequisite@HOLD3:
+		Condition: hold3
+		Prerequisites: hold3.strat
 	GrantConditionOnPrerequisite@BOMBARD:
 		Condition: bombard
 		Prerequisites: bombard.strat
+	GrantConditionOnPrerequisite@BOMBARD2:
+		Condition: bombard2
+		Prerequisites: bombard2.strat
+	GrantConditionOnPrerequisite@BOMBARD3:
+		Condition: bombard3
+		Prerequisites: bombard3.strat
 	GrantConditionOnPrerequisite@SEEK:
 		Condition: seek
 		Prerequisites: seek.strat
+	GrantConditionOnPrerequisite@SEEK2:
+		Condition: seek2
+		Prerequisites: seek2.strat
+	GrantConditionOnPrerequisite@SEEK3:
+		Condition: seek3
+		Prerequisites: seek3.strat
 	DamageMultiplier@HOLD:
 		RequiresCondition: hold
-		Modifier: 90
+		Modifier: 95
+	DamageMultiplier@HOLD2:
+		RequiresCondition: hold2
+		Modifier: 95
+	DamageMultiplier@HOLD3:
+		RequiresCondition: hold3
+		Modifier: 95
 	FirepowerMultiplier@BOMBARD:
 		RequiresCondition: bombard
-		Modifier: 110
+		Modifier: 105
+	FirepowerMultiplier@BOMBARD2:
+		RequiresCondition: bombard2
+		Modifier: 105
+	FirepowerMultiplier@BOMBARD3:
+		RequiresCondition: bombard3
+		Modifier: 105
 	RangeMultiplier@SEEK:
 		RequiresCondition: seek
-		Modifier: 110
+		Modifier: 105
 	SpeedMultiplier@SEEK:
 		RequiresCondition: seek
-		Modifier: 110
+		Modifier: 105
+	RangeMultiplier@SEEK2:
+		RequiresCondition: seek2
+		Modifier: 105
+	SpeedMultiplier@SEEK2:
+		RequiresCondition: seek2
+		Modifier: 105
+	RangeMultiplier@SEEK3:
+		RequiresCondition: seek3
+		Modifier: 105
+	SpeedMultiplier@SEEK3:
+		RequiresCondition: seek3
+		Modifier: 105
 	WithDecoration@HOLD:
 		Image: pips
 		Sequence: pip-armor
 		Palette: effect
 		ReferencePoint: Bottom, Left
 		ValidStances: Ally
-		RequiresCondition: hold
+		RequiresCondition: hold && !(hold2 || hold3)
 		ZOffset: 256
 		BlinkInterval: 64
 		BlinkPatterns:
 			hold && bino: Off, On
+		RequiresSelection: True
+	WithDecoration@HOLD2:
+		Image: pips
+		Sequence: pip-armor2
+		Palette: effect
+		ReferencePoint: Bottom, Left
+		ValidStances: Ally
+		RequiresCondition: hold2 && !hold3
+		ZOffset: 256
+		BlinkInterval: 64
+		BlinkPatterns:
+			hold2 && bino: Off, On
+		RequiresSelection: True
+	WithDecoration@HOLD3:
+		Image: pips
+		Sequence: pip-armor3
+		Palette: effect
+		ReferencePoint: Bottom, Left
+		ValidStances: Ally
+		RequiresCondition: hold3
+		ZOffset: 256
+		BlinkInterval: 64
+		BlinkPatterns:
+			hold3 && bino: Off, On
 		RequiresSelection: True
 	WithDecoration@BOMBARD:
 		Image: pips
@@ -398,11 +464,35 @@
 		Palette: effect
 		ReferencePoint: Bottom, Left
 		ValidStances: Ally
-		RequiresCondition: bombard
+		RequiresCondition: bombard && !(bombard2 || bombard3)
 		ZOffset: 256
 		BlinkInterval: 64
 		BlinkPatterns:
 			bombard && bino: Off, On
+		RequiresSelection: True
+	WithDecoration@BOMBARD2:
+		Image: pips
+		Sequence: pip-bombard2
+		Palette: effect
+		ReferencePoint: Bottom, Left
+		ValidStances: Ally
+		RequiresCondition: bombard2 && !bombard3
+		ZOffset: 256
+		BlinkInterval: 64
+		BlinkPatterns:
+			bombard2 && bino: Off, On
+		RequiresSelection: True
+	WithDecoration@BOMBARD3:
+		Image: pips
+		Sequence: pip-bombard3
+		Palette: effect
+		ReferencePoint: Bottom, Left
+		ValidStances: Ally
+		RequiresCondition: bombard3
+		ZOffset: 256
+		BlinkInterval: 64
+		BlinkPatterns:
+			bombard3 && bino: Off, On
 		RequiresSelection: True
 	WithDecoration@SEEK:
 		Image: pips
@@ -410,11 +500,35 @@
 		Palette: effect
 		ReferencePoint: Bottom, Left
 		ValidStances: Ally
-		RequiresCondition: seek
+		RequiresCondition: seek && !(seek2 || seek3)
 		ZOffset: 256
 		BlinkInterval: 64
 		BlinkPatterns:
 			seek && bino: Off, On
+		RequiresSelection: True
+	WithDecoration@SEEK2:
+		Image: pips
+		Sequence: pip-seek2
+		Palette: effect
+		ReferencePoint: Bottom, Left
+		ValidStances: Ally
+		RequiresCondition: seek2 && !seek3
+		ZOffset: 256
+		BlinkInterval: 64
+		BlinkPatterns:
+			seek2 && bino: Off, On
+		RequiresSelection: True
+	WithDecoration@SEEK3:
+		Image: pips
+		Sequence: pip-seek3
+		Palette: effect
+		ReferencePoint: Bottom, Left
+		ValidStances: Ally
+		RequiresCondition: seek3
+		ZOffset: 256
+		BlinkInterval: 64
+		BlinkPatterns:
+			seek3 && bino: Off, On
 		RequiresSelection: True
 
 ^HazmatUpgrade:
@@ -542,6 +656,36 @@
 	PowerMultiplier@FSPOWERDOWN:
 		RequiresCondition: forceshield && !invulnerability
 		Modifier: 0
+		
+^NaniteShieldable:
+	WithColoredOverlay@NSHIELD:
+		RequiresCondition: nshield && damaged && !(empdisable || invulnerability || invisibility)
+		Palette: nrepair
+	TimedConditionBar@NSHIELD:
+		Condition: nshield
+		Color: 25cde999
+	ExternalCondition@NSHIELD:
+		Condition: nshield
+	WithIdleOverlay@NSHIELD:
+		Sequence: emp-overlay
+		Palette: tseffect
+		RequiresCondition: nshield && damaged
+	SelfHealing@NSHIELD:
+		PercentageStep: 6
+		Delay: 30
+		HealIfBelow: 100
+		DamageCooldown: 0
+		RequiresCondition: nshield
+	WithDecoration@NSHIELD:
+		Image: pips
+		Palette: chrometd
+		Sequence: pip-repair
+		ReferencePoint: Bottom, Center
+		ZOffset: 256
+		RequiresCondition: nshield
+		BlinkInterval: 64
+		RequiresSelection: True
+		ValidStances: Ally, Neutral
 
 ^EmpDisable:
 	WithColoredOverlay@EMPDISABLE:
@@ -998,7 +1142,6 @@
 	Inherits@3: ^SpriteActor
 	Inherits@4: ^Cloakable
 	Inherits@5: ^EmpDisable
-	Inherits@6: ^GDIUpgrade
 	Inherits@7: ^BinoUpgrade
 	Inherits@9: ^Warpable
 	Inherits@10: ^Frenzy
@@ -1119,8 +1262,10 @@
 	DetectCloaked@UNDERBRIDGE:
 		CloakTypes: Underbridge
 		Range: 5c0
+	GpsRadarDot:
+		Sequence: Vehicle
 
-^VehicleTD:
+^VehicleTD-NOUPG:
 	Inherits@1: ^Vehicle
 	RenderSprites:
 		PlayerPalette: overlayplayertd
@@ -1128,6 +1273,10 @@
 		Image: smoke_mtd
 	Cloak@CRATE-CLOAK:
 		Palette: cloak
+		
+^VehicleTD:
+	Inherits@1: ^VehicleTD-NOUPG
+	Inherits@GDIUPG: ^GDIUpgrade
 
 ^Tank:
 	Inherits: ^Vehicle
@@ -1135,7 +1284,9 @@
 		Locomotor: tracked
 
 ^TankTD:
-	Inherits: ^Tank
+	Inherits: ^VehicleTD
+	Mobile:
+		Locomotor: tracked
 	RenderSprites:
 		PlayerPalette: overlayplayertd
 	WithDamageOverlay:
@@ -1325,6 +1476,8 @@
 		Palette: cloak
 	ExternalCondition@CLOAKGENERATOR:
 		Condition: invisibility
+	GpsRadarDot:
+		Sequence: Infantry
 
 ^Soldier:
 	Inherits: ^Infantry
@@ -1556,6 +1709,8 @@
 	Wanders@NOIDLENAVY:
 		WanderMoveRadius: 3
 		RequiresCondition: (botowner && under-bridge)
+	GpsRadarDot:
+		Sequence: Ship
 
 ^Submarine:
 	Inherits@1: ^Ship
@@ -1675,6 +1830,8 @@
 		UsePlayerColor: false
 		ZOffset: -512
 		Color: FFFFFF80
+	GpsRadarDot:
+		Sequence: Plane
 
 ^Plane:
 	Inherits: ^NeutralPlane
@@ -1753,6 +1910,8 @@
 		UseClassicFacingFudge: True
 	-Contrail@1:
 	-Contrail@2:
+	GpsRadarDot:
+		Sequence: Helicopter
 
 ^HelicopterTD:
 	Inherits@1: ^Helicopter
@@ -1800,6 +1959,7 @@
 	Guardable:
 		Range: 3c0
 	FrozenUnderFog:
+	FrozenUnderFogUpdatedByGpsRadar:
 	Tooltip:
 		GenericName: Structure
 	MapEditorData:
@@ -1822,6 +1982,7 @@
 	Inherits@6: ^Warpable
 	Inherits@7: ^BotBuilding
 	Inherits@8: ^Chillable
+	Inherits@9: ^NaniteShieldable
 	Inherits@wflash: ^WhiteFlash
 	WithColoredOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield
@@ -1875,6 +2036,11 @@
 	Explodes@temporal:
 		Weapon: TemporalExplodeLarge
 		EmptyWeapon: TemporalExplodeLarge
+	GpsRadarDot:
+		Sequence: Structure
+	GrantConditionOnDamageState@DAMAGED:
+		Condition: damaged
+		ValidDamageStates: Light, Medium, Heavy, Critical
 
 ^BuildingTD:
 	Inherits@1: ^Building
@@ -1952,6 +2118,20 @@
 		PlayerPalette: overlayplayertd
 	ActorPreviewPlaceBuildingPreview:
 		OverridePalette: placebuildingtd
+		
+^BuildingPlug:
+	Interactable:
+	AlwaysVisible:
+	Building:
+		BuildSounds: placbldg.aud
+		UndeploySounds: cashturn.aud
+	SequencePlaceBuildingPreview:
+		Sequence: place
+		SequencePalette: placebuildingtd
+		Palette: terrain
+	KillsSelf:
+		RemoveInstead: true
+	RenderSprites:
 
 ^Wall:
 	Inherits@1: ^ExistsInWorld

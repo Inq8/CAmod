@@ -31,7 +31,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly string DropPodType2 = null;
 
 		[Desc("Notification to play when spawning drop pods.")]
-		public readonly string DropPodsAvailableNotification = null;
+		public readonly string DropPodsArrivedSpeechNotification = null;
 
 		[ActorReference(typeof(PassengerInfo))]
 		[Desc("Troops to be delivered.  They will each get their own pod.")]
@@ -60,9 +60,6 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Apply the weapon impact this many ticks into the effect")]
 		public readonly int WeaponDelay = 0;
-
-		[Desc("Sound to instantly play at the targeted area.")]
-		public readonly string OnFireSound = null;
 
 		[Desc("List of sounds that can be played at the spawning location.")]
 		public readonly string[] SpawnSounds = new string[0];
@@ -96,6 +93,11 @@ namespace OpenRA.Mods.CA.Traits
 			var units = new List<Actor>();
 			var info = Info as DropPodsPowerInfo;
 
+			PlayLaunchSounds();
+
+			Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech",
+				info.DropPodsArrivedSpeechNotification, self.Owner.Faction.InternalName);
+
 			var utLower = info.DropPodType.ToLowerInvariant();
 			ActorInfo unitType;
 			if (!self.World.Map.Rules.Actors.TryGetValue(utLower, out unitType))
@@ -116,11 +118,6 @@ namespace OpenRA.Mods.CA.Traits
 
 			self.World.AddFrameEndTask(w =>
 			{
-				PlayLaunchSounds();
-
-				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech",
-					info.DropPodsAvailableNotification, self.Owner.Faction.InternalName);
-
 				var target = order.Target.CenterPosition;
 				var posOffset = new WVec(-altitude, -altitude, altitude);
 				var targetCell = self.World.Map.CellContaining(target);

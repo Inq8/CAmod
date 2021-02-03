@@ -1248,6 +1248,24 @@ TRUK:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 	-ProductionCostMultiplier@IndustrialPlantLevel1:
 	-ProductionCostMultiplier@IndustrialPlantLevel2:
+	
+TRUK.DROP:
+	Inherits: TRUK
+	-Buildable:
+	RenderSprites:
+		Image: truk
+	-DeliversCash:
+	CashTrickler:
+		Interval: 50
+		Amount: 1000
+	KillsSelf:
+		Delay: 50
+		RemoveInstead: true
+	-Selectable:
+	SelectionDecorations:
+		RenderSelectionBars: False
+	RejectsOrders:
+	Interactable:
 
 MGG:
 	Inherits: ^Vehicle
@@ -1535,7 +1553,7 @@ QTNK:
 		Prerequisites: vehicles.ukraine
 
 AMCV:
-	Inherits: ^VehicleTD
+	Inherits: ^VehicleTD-NOUPG
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: Vehicle
@@ -2432,7 +2450,7 @@ HTNK.Hover:
 		ZOffset: -129
 	SpawnActorOnDeath:
 		Actor: HTNK.Hover.Husk
-		RequiresCondition: !being-warped
+		RequiresCondition: !being-warped && !onwater
 
 MSAM:
 	Inherits: ^TankTD
@@ -2769,7 +2787,7 @@ FTNK:
 		Prerequisites: vehicles.blackh
 
 HAR2:
-	Inherits: ^VehicleTD
+	Inherits: ^VehicleTD-NOUPG
 	Inherits@HARVBALANCE: ^HarvesterBalancer
 	Inherits@SELECTION: ^SelectableEconomicUnit
 	RenderSprites:
@@ -3271,7 +3289,7 @@ TITN:
 		Queue: Vehicle
 		BuildPaletteOrder: 195
 		IconPalette: chrometd
-		Prerequisites: ~gtek, ~vehicles.talon, ~!railgun.titan, ~techlevel.high
+		Prerequisites: gtek, ~vehicles.talon, ~!railgun.upgrade, ~techlevel.high
 		Description: Tough combat battle-mech.\n  Can attack Aircraft.\n  Strong vs Vehicles, Infantry
 	Valued:
 		Cost: 2000
@@ -3346,6 +3364,8 @@ TITN.RAIL:
 	Inherits: TITN
 	Tooltip:
 		Name: Railgun Titan
+	Buildable:
+		Prerequisites: ~gtek, ~vehicles.talon, ~railgun.upgrade, ~techlevel.high
 	WithSpriteTurret@UPG:
 		Sequence: turret
 	Armament@PRIMARY:
