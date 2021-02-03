@@ -5704,6 +5704,12 @@ BIO.Nod:
 		UseDeathTypeSuffix: false
 	ProvidesPrerequisite@Name:
 		RequiresCondition: !being-warped
+	ProvidesPrerequisite@CYBORGPRODUCTION:
+		Prerequisite: cyborg.production
+		RequiresCondition: cyborg-production
+	GrantConditionOnPrerequisite@CYBORGPRODUCTION:
+		Condition: cyborg-production
+		Prerequisites: cyborg.upgrade, hand
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	Production:
