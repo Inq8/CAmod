@@ -5436,7 +5436,6 @@ UPGC:
 		IsPlayerPalette: false
 		Offset: -1024,768,0
 	PeriodicProducerCA@DROP:
-		DeliveringActor: OCAR.Reinforce
 		Type: Money
 		ChargeDuration: 1500
 		Actors: truk.drop
@@ -5505,7 +5504,7 @@ UPGC:
 	WithIdleOverlay@DZONE:
 		RequiresCondition: !build-incomplete && tower.drop
 		Sequence: turret-drop
-		PauseOnCondition: !drop-active || disabled || being-warped
+		PauseOnCondition: disabled || being-warped
 	GrantPrerequisiteChargeDrainPower@RADAR:
 		OrderName: advradarorder
 		DischargeModifier: 600
