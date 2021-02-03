@@ -570,7 +570,7 @@ INTL:
 		BuildPaletteOrder: 40
 		Prerequisites: wsph, ~vehicles.scrin, ~techlevel.low
 		Queue: Vehicle
-		Description: Heavily armoured transport craft.\n  Can detect mines.\n  Strong vs Light Vehicles\n  Weak vs Infantry, Aircraft
+		Description: Heavily armoured transport craft.\n  Can detect mines.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
 		IconPalette: chrome
 	Mobile:
 		Speed: 118
@@ -691,7 +691,7 @@ STCR:
 		BuildPaletteOrder: 65
 		Prerequisites: anyradar, ~vehicles.reaper, ~techlevel.medium
 		Queue: Vehicle
-		Description: Slow moving, durable, short-range assault unit.\n  Regenerates rapidly.\n  Strong vs Infantry, Light Armor\n  Weak vs Buildings, Aircraft
+		Description: Slow moving, durable, short-range assault unit.\n  Bolstered by other nearby Stormcrawlers.\n  Strong vs Infantry, Light Armor\n  Weak vs Buildings, Aircraft
 		IconPalette: scrin
 	Mobile:
 		Speed: 68
@@ -706,23 +706,62 @@ STCR:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
-	Armament:
+	Armament@PRIMARY:
 		Weapon: StormcrawlerZap
 		LocalOffset: 0,0,350, -250,0,350, 250,0,350
+		TargetStances: Enemy, Neutral
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: StormcrawlerCharge
+		LocalOffset: 0,0,350, -250,0,350, 250,0,350
+		TargetStances: Ally
+		ForceTargetStances: None
 	AttackFrontal:
-		FacingTolerance: 50
+		FacingTolerance: 128
 		PauseOnCondition: empdisable || being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithShadow:
 		Offset: 80, 80, 0
 		ZOffset: -81
-	SelfHealing:
-		Step: 400
+	Targetable@STORMCRAWLERCHARGE:
+		TargetTypes: Stormcrawler
+		RequiresCondition: stormcrawlercharge < 15
+	ExternalCondition@STORMCRAWLERCHARGE:
+		Condition: stormcrawlercharge
+	ReloadDelayMultiplier@STORMCRAWLERCHARGE1:
+		Modifier: 75
+		RequiresCondition: stormcrawlercharge >= 5
+	ReloadDelayMultiplier@STORMCRAWLERCHARGE2:
+		Modifier: 75
+		RequiresCondition: stormcrawlercharge >= 10
+	RangeMultiplier@STORMCRAWLERCHARGE2:
+		Modifier: 120
+		RequiresCondition: stormcrawlercharge >= 10
+	SelfHealing@STORMCRAWLERCHARGE1:
+		Step: 300
 		Delay: 10
 		HealIfBelow: 100
 		DamageCooldown: 0
-		RequiresCondition: !empdisable && !being-warped
+		RequiresCondition: stormcrawlercharge >= 5 && stormcrawlercharge < 10
+	SelfHealing@STORMCRAWLERCHARGE2:
+		Step: 600
+		Delay: 10
+		HealIfBelow: 100
+		DamageCooldown: 0
+		RequiresCondition: stormcrawlercharge >= 10
+	WithDecoration@STORMCRAWLERCHARGE1:
+		Image: pips
+		Sequence: pip-stcr1
+		Palette: scrin
+		ReferencePoint: Top, Right
+		RequiresCondition: stormcrawlercharge >= 5 && stormcrawlercharge < 10
+	WithDecoration@STORMCRAWLERCHARGE2:
+		Image: pips
+		Sequence: pip-stcr2
+		Palette: scrin
+		ReferencePoint: Top, Right
+		RequiresCondition: stormcrawlercharge >= 10
 
 DEVO:
 	Inherits: ^Tank
@@ -771,10 +810,6 @@ DEVO:
 		PauseOnCondition: empdisable || being-warped
 		Armaments: primary
 	WithSpriteTurret:
-	QuantizeFacingsFromSequence:
-		Sequence: idle
-	WithFacingSpriteBody:
-		Sequence: idle
 	ProductionCostMultiplier@REAPBONUS:
 		Multiplier: 90
 		Prerequisites: vehicles.reaper
@@ -828,10 +863,6 @@ DARK:
 		PauseOnCondition: empdisable || being-warped
 		Armaments: primary
 	WithSpriteTurret:
-	QuantizeFacingsFromSequence:
-		Sequence: idle
-	WithFacingSpriteBody:
-		Sequence: idle
 	Hovers:
 		BobDistance: -25
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
@@ -899,10 +930,6 @@ RUIN:
 		PauseOnCondition: empdisable || being-warped
 		Armaments: primary
 	WithSpriteTurret:
-	QuantizeFacingsFromSequence:
-		Sequence: idle
-	WithFacingSpriteBody:
-		Sequence: idle
 
 TPOD:
 	Inherits: ^Tank
@@ -970,10 +997,6 @@ TPOD:
 		PauseOnCondition: empdisable || being-warped
 		Armaments: primary, secondary, sound
 	WithSpriteTurret:
-	QuantizeFacingsFromSequence:
-		Sequence: idle
-	WithFacingSpriteBody:
-		Sequence: idle
 	WithMoveAnimation:
 	DeathSounds:
 		Voice: Die
