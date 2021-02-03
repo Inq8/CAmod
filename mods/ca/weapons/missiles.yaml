@@ -750,9 +750,9 @@ HonestJohn:
 		Falloff: 500, 368, 135, 50, 18, 7, 0
 		Versus:
 			None: 120
-			Wood: 95
+			Wood: 100
 			Concrete: 85
-			Light: 65
+			Light: 80
 			Heavy: 40
 			Brick: 15
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
@@ -763,9 +763,9 @@ HonestJohn:
 		Delay: 3
 		Versus:
 			None: 120
-			Wood: 95
+			Wood: 100
 			Concrete: 85
-			Light: 65
+			Light: 80
 			Heavy: 40
 			Brick: 15
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
@@ -776,9 +776,9 @@ HonestJohn:
 		Delay: 6
 		Versus:
 			None: 120
-			Wood: 95
+			Wood: 100
 			Concrete: 85
-			Light: 65
+			Light: 80
 			Heavy: 40
 			Brick: 15
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
@@ -789,9 +789,9 @@ HonestJohn:
 		Delay: 9
 		Versus:
 			None: 120
-			Wood: 95
+			Wood: 100
 			Concrete: 85
-			Light: 65
+			Light: 80
 			Heavy: 40
 			Brick: 15
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
@@ -915,13 +915,14 @@ IFVRocketsAAE:
 227mm.Hypersonic:
 	Inherits: 227mm.upg
 	Report: vaegattb.aud, vaegatta.aud
+	ReloadDelay: 120
 	Projectile: MissileCA
 		Speed: 366
 		Inaccuracy: 341
 		LockOnInaccuracy: 512
 		ContrailColor: 00FFFFE6
 	Warhead@1Dam: SpreadDamage
-		Damage: 840
+		Damage: 820
 
 227mm.Hammerhead:
 	Inherits: 227mm.upg
@@ -930,15 +931,15 @@ IFVRocketsAAE:
 	Projectile: MissileCA
 		ContrailColor: FFCC00E6
 	Warhead@1Dam: SpreadDamage
-		Damage: 940
+		Damage: 880
 		Spread: 426
 	Warhead@3Eff:
 		ImpactSounds: xplobig4.aud
 	Warhead@4Eff: CreateEffect
 		Explosions: artillery_explosion
 	Warhead@Concussion: GrantExternalCondition
-		Range: 0c512
-		Duration: 60
+		Range: 0c768
+		Duration: 75
 		Condition: concussion
 
 227mm.Hailstorm:
@@ -1234,7 +1235,7 @@ U2Bomb:
 
 CryoMissile:
 	ReloadDelay: 125
-	Range: 8c0
+	Range: 9c0
 	MinRange: 2c0
 	Report: cryomissile.aud
 	Burst: 2
