@@ -686,6 +686,9 @@
 		BlinkInterval: 64
 		RequiresSelection: True
 		ValidStances: Ally, Neutral
+	DamageMultiplier@NSHIELD:
+		RequiresCondition: nshield
+		Modifier: 66
 
 ^EmpDisable:
 	WithColoredOverlay@EMPDISABLE:
@@ -1134,7 +1137,7 @@
 		Prerequisites: indp, !indp.upgrade, !indplowpower
 	ProductionCostMultiplier@IndustrialPlantLevel2:
 		Multiplier: 90
-		Prerequisites: indp.upgrade, !indplowpower
+		Prerequisites: indp, indp.upgrade, !indplowpower
 
 ^Vehicle:
 	Inherits@1: ^ExistsInWorld

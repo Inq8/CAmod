@@ -209,13 +209,13 @@ InterloperLaser:
 		Duration: 3
 		SecondaryBeamWidth: 55
 	Warhead@1Dam: SpreadDamage
-		Damage: 2600
+		Damage: 2000
 		Versus:
-			None: 30
+			None: 40
 			Light: 100
-			Wood: 40
-			Heavy: 50
-			Concrete: 50
+			Wood: 70
+			Heavy: 80
+			Concrete: 100
 
 CorrupterSpew:
 	Inherits: BigFlamer
@@ -615,7 +615,7 @@ StormColumnZap:
 
 StormcrawlerZap:
 	Inherits: StormColumnZap
-	ReloadDelay: 10
+	ReloadDelay: 20
 	Range: 4c768
 	StartBurstReport: stormcrawler-fire1.aud, stormcrawler-fire2.aud
 	Warhead@1Dam: SpreadDamage
@@ -623,8 +623,30 @@ StormcrawlerZap:
 			None: 100
 			Wood: 15
 			Concrete: 28
-			Light: 25
-			Heavy: 15
+			Light: 35
+			Heavy: 20
+
+StormcrawlerCharge:
+	Inherits: StormcrawlerZap
+	ReloadDelay: 100
+	Range: 4c768
+	StartBurstReport: stormcrawler-charge.aud
+	ValidTargets: Stormcrawler
+	Projectile: ElectricBolt
+		Colors: 8A2BFF88,B961FD88,B5A3E888
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Stormcrawler
+		Damage: 1
+		Versus:
+			Heavy: 0
+		ValidStances: Ally
+	Warhead@2Charge: GrantExternalCondition
+		Range: 0c768
+		Duration: 300
+		Condition: stormcrawlercharge
+		ValidTargets: Stormcrawler
+		ValidStances: Ally
+	-Warhead@3Eff:
 
 ShardLauncher:
 	StartBurstReport: shard-fire1.aud

@@ -3988,7 +3988,7 @@ HPAD.TD:
 		OrderName: dropzoneeagle
 		Icon: orcaca
 		IconPalette: chrometd
-		ChargeInterval: 7200
+		ChargeInterval: 6000
 		Description: Reinforcements
 		LongDesc: An Orca Carryall drops reinforcements\nat the target location.
 		EndChargeSpeechNotification: ReinforceAva
@@ -5465,7 +5465,7 @@ UPGC:
 		Cursor: ability
 		Icon: fstorm
 		IconPalette: chrometd
-		ChargeInterval: 2250
+		ChargeInterval: 7500
 		Description: Firestorm
 		LongDesc: Barrage target area with rockets.
 		BeginChargeSpeechNotification: FireStormOffline
@@ -5536,7 +5536,7 @@ UPGC:
 		OrderName: nshieldorder
 		Icon: nshield
 		IconPalette: chrometd
-		ChargeInterval: 3000
+		ChargeInterval: 6000
 		Condition: nshield
 		Range: 4
 		Duration: 375
@@ -5704,6 +5704,12 @@ BIO.Nod:
 		UseDeathTypeSuffix: false
 	ProvidesPrerequisite@Name:
 		RequiresCondition: !being-warped
+	ProvidesPrerequisite@CYBORGPRODUCTION:
+		Prerequisite: cyborg.production
+		RequiresCondition: cyborg-production
+	GrantConditionOnPrerequisite@CYBORGPRODUCTION:
+		Condition: cyborg-production
+		Prerequisites: cyborg.upgrade, hand
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	Production:
