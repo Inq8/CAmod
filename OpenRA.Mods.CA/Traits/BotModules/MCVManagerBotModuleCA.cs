@@ -44,6 +44,9 @@ namespace OpenRA.Mods.CA.Traits
 			"Only applies if RestrictMCVDeploymentFallbackToBase is enabled and there's at least one construction yard.")]
 		public readonly int MaxBaseRadius = 20;
 
+		[Desc("Distance in cells from center of the base when checking near by enemies for MCV deployment location.")]
+		public readonly int EnemyScanRadius = 8;
+
 		[Desc("Should deployment of additional MCVs be restricted to MaxBaseRadius if explicit deploy locations are missing or occupied?")]
 		public readonly bool RestrictMCVDeploymentFallbackToBase = true;
 
@@ -229,7 +232,7 @@ namespace OpenRA.Mods.CA.Traits
 			baseCenter = bc.Value;
 
 			var wPos = world.Map.CenterOfCell(bc.Value);
-			var newBaseRadius = new WDist(Info.MaxBaseRadius * 1024);
+			var newBaseRadius = new WDist(Info.EnemyScanRadius * 1024);
 
 			var enemies = world.FindActorsInCircle(wPos, newBaseRadius)
 				.Where(a => !a.Disposed && player.Stances[a.Owner] == Stance.Enemy && a.Info.HasTraitInfo<BuildingInfo>());
