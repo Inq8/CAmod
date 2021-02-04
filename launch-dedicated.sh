@@ -66,7 +66,7 @@ fi
 cd "${ENGINE_DIRECTORY}"
 
 while true; do
-     MOD_SEARCH_PATHS="${MOD_SEARCH_PATHS}" mono --debug OpenRA.Server.exe Game.Mod="${LAUNCH_MOD}" \
+     MOD_SEARCH_PATHS="${MOD_SEARCH_PATHS}" mono --debug bin/OpenRA.Server.exe Engine.EngineDir=".." Game.Mod="${LAUNCH_MOD}" \
      Server.Name="${NAME}" Server.ListenPort="${LISTEN_PORT}" \
      Server.AdvertiseOnline="${ADVERTISE_ONLINE}" \
      Server.Password="${PASSWORD}" \

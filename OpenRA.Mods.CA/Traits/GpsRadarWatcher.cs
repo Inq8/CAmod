@@ -16,9 +16,9 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Required for GPS Radar related logic to function. Attach this to the player actor.")]
-	class GpsRadarWatcherInfo : ITraitInfo
+	class GpsRadarWatcherInfo : TraitInfo
 	{
-		public virtual object Create(ActorInitializer init) { return new GpsRadarWatcher(init.Self.Owner); }
+		public override object Create(ActorInitializer init) { return new GpsRadarWatcher(init.Self.Owner); }
 	}
 
 	interface IOnGpsRadarRefreshed { void OnGpsRadarRefresh(Actor self, Player player); }

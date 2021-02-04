@@ -43,11 +43,11 @@ require_variables "MOD_ID" "ENGINE_VERSION" "ENGINE_DIRECTORY"
 LAUNCH_MOD="${Mod:-"${MOD_ID}"}"
 
 cd "${TEMPLATE_ROOT}"
-if [ ! -f "${ENGINE_DIRECTORY}/OpenRA.Game.exe" ] || [ "$(cat "${ENGINE_DIRECTORY}/VERSION")" != "${ENGINE_VERSION}" ]; then
+if [ ! -f "${ENGINE_DIRECTORY}/bin/OpenRA.Utility.exe" ] || [ "$(cat "${ENGINE_DIRECTORY}/VERSION")" != "${ENGINE_VERSION}" ]; then
 	echo "Required engine files not found."
 	echo "Run \`make\` in the mod directory to fetch and build the required files, then try again.";
 	exit 1
 fi
 
 cd "${ENGINE_DIRECTORY}"
-MOD_SEARCH_PATHS="${MOD_SEARCH_PATHS}" mono --debug OpenRA.Utility.exe "${LAUNCH_MOD}" "$@"
+MOD_SEARCH_PATHS="${MOD_SEARCH_PATHS}" ENGINE_DIR=".." mono --debug bin/OpenRA.Utility.exe "${LAUNCH_MOD}" "$@"
