@@ -602,6 +602,7 @@ INTL:
 		MaxWeight: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
+	WithCargoPipsDecoration:
 	Hovers:
 		BobDistance: -25
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
@@ -709,13 +710,13 @@ STCR:
 	Armament@PRIMARY:
 		Weapon: StormcrawlerZap
 		LocalOffset: 0,0,350, -250,0,350, 250,0,350
-		TargetStances: Enemy, Neutral
+		TargetRelationships: Enemy, Neutral
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: StormcrawlerCharge
 		LocalOffset: 0,0,350, -250,0,350, 250,0,350
-		TargetStances: Ally
-		ForceTargetStances: None
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
 	AttackFrontal:
 		FacingTolerance: 128
 		PauseOnCondition: empdisable || being-warped
@@ -738,30 +739,30 @@ STCR:
 	RangeMultiplier@STORMCRAWLERCHARGE2:
 		Modifier: 120
 		RequiresCondition: stormcrawlercharge >= 10
-	ChangesHealth:
+	ChangesHealth@STORMCRAWLERCHARGE1:
 		PercentageStep: 1
 		Delay: 10
 		StartIfBelow: 100
 		DamageCooldown: 0
-		RequiresCondition: stormcrawlercharge >= 5 && stormcrawlercharge < 10
-	SelfHealing@STORMCRAWLERCHARGE2:
+		RequiresCondition: stormcrawlercharge >= 5 && stormcrawlercharge < 10 && !empdisable && !being-warped
+	ChangesHealth@STORMCRAWLERCHARGE2:
 		Step: 600
 		Delay: 10
-		HealIfBelow: 100
+		StartIfBelow: 100
 		DamageCooldown: 0
-		RequiresCondition: stormcrawlercharge >= 10
+		RequiresCondition: stormcrawlercharge >= 10 && !empdisable && !being-warped
 	WithDecoration@STORMCRAWLERCHARGE1:
 		Image: pips
 		Sequence: pip-stcr1
 		Palette: scrin
-		ReferencePoint: Top, Right
-		RequiresCondition: stormcrawlercharge >= 5 && stormcrawlercharge < 10
+		Position: TopRight
+		RequiresCondition: stormcrawlercharge >= 5 && stormcrawlercharge < 10 && !empdisable && !being-warped
 	WithDecoration@STORMCRAWLERCHARGE2:
 		Image: pips
 		Sequence: pip-stcr2
 		Palette: scrin
-		ReferencePoint: Top, Right
-		RequiresCondition: stormcrawlercharge >= 10
+		Position: TopRight
+		RequiresCondition: stormcrawlercharge >= 10 && !empdisable && !being-warped
 
 DEVO:
 	Inherits: ^Tank
@@ -2004,7 +2005,7 @@ PROC.SCRIN:
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack, ThiefInfiltrate
 	Refinery:
-		DockAngle: 112
+		DockAngle: 448
 		DockOffset: 0,2
 		IsDragRequired: True
 		DragOffset: -554,512,0
@@ -2287,6 +2288,9 @@ NERV:
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		PauseOnCondition: disabled || empdisable || being-warped
+		EffectImage: empty
+		EffectSequence: idle
+		EffectPalette: tseffect-ignore-lighting-alpha75
 	DetonateWeaponPower@BUZZERSWARM:
 		OrderName: buzzerswarm
 		Icon: buzzpower
@@ -2323,9 +2327,6 @@ NERV:
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
 		DisplayRadarPing: True
-		EffectImage: empty
-		EffectSequence: idle
-		EffectPalette: tseffect-ignore-lighting-alpha75
 	DetonateWeaponPower@STORMSPIKE:
 		OrderName: stormspike
 		Icon: stormspikepower
@@ -2414,7 +2415,7 @@ SCRT:
 	ProvidesPrerequisite@buildingname:
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
-		Icon: forceshieldicon
+		Icon: forceshield
 		ChargeInterval: 7500
 		Condition: forceshield
 		Range: 3

@@ -1171,6 +1171,7 @@ APC:
 		MaxWeight: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
+	WithCargoPipsDecoration:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Capturable:
@@ -1276,7 +1277,6 @@ TRUK.DROP:
 		RemoveInstead: true
 	-Selectable:
 	SelectionDecorations:
-		RenderSelectionBars: False
 	RejectsOrders:
 	Interactable:
 
@@ -1470,7 +1470,6 @@ DTRK:
 	ChronoshiftableWithSpriteEffect:
 		ExplodeInstead: true
 	Passenger:
-		CustomPipType: red
 		Voice: Move
 	Voiced:
 		VoiceSet: TTruckVoice
@@ -1855,6 +1854,7 @@ APC2:
 		MaxWeight: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
+	WithCargoPipsDecoration:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Capturable:
@@ -2026,6 +2026,7 @@ VULC:
 		MaxWeight: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
+	WithCargoPipsDecoration:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Capturable:
@@ -2798,7 +2799,7 @@ FTNK:
 		Multiplier: 90
 		Prerequisites: vehicles.blackh
 
-HAR2:
+HARV.TD:
 	Inherits: ^VehicleTD-NOUPG
 	Inherits@HARVBALANCE: ^HarvesterBalancer
 	Inherits@SELECTION: ^SelectableEconomicUnit
@@ -2922,6 +2923,7 @@ BTR:
 		MaxWeight: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
+	WithCargoPipsDecoration:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Capturable:
@@ -3137,6 +3139,7 @@ IFV:
 			s6: engturr
 			smedi: medturr
 			mast: commturr
+	WithCargoPipsDecoration:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithIdleOverlay@MEDIC:
@@ -3454,7 +3457,6 @@ JUGG:
 	Armor:
 		Type: Heavy
 	Passenger:
-		PipType: Red
 		Weight: 3
 		Voice: Move
 	Voiced:
@@ -4287,6 +4289,7 @@ BATF:
 			s3: loaded
 			s4: loaded
 			mast: loaded
+	WithCargoPipsDecoration:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:

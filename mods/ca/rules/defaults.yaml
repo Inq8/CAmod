@@ -451,7 +451,6 @@
 		Position: BottomLeft
 		ValidRelationships: Ally
 		RequiresCondition: hold && !(hold2 || hold3)
-		ZOffset: 256
 		BlinkInterval: 64
 		BlinkPatterns:
 			hold && bino: Off, On
@@ -460,10 +459,9 @@
 		Image: pips
 		Sequence: pip-armor2
 		Palette: effect
-		ReferencePoint: Bottom, Left
-		ValidStances: Ally
+		Position: BottomLeft
+		ValidRelationships: Ally
 		RequiresCondition: hold2 && !hold3
-		ZOffset: 256
 		BlinkInterval: 64
 		BlinkPatterns:
 			hold2 && bino: Off, On
@@ -472,10 +470,9 @@
 		Image: pips
 		Sequence: pip-armor3
 		Palette: effect
-		ReferencePoint: Bottom, Left
-		ValidStances: Ally
+		Position: BottomLeft
+		ValidRelationships: Ally
 		RequiresCondition: hold3
-		ZOffset: 256
 		BlinkInterval: 64
 		BlinkPatterns:
 			hold3 && bino: Off, On
@@ -487,7 +484,6 @@
 		Position: BottomLeft
 		ValidRelationships: Ally
 		RequiresCondition: bombard && !(bombard2 || bombard3)
-		ZOffset: 256
 		BlinkInterval: 64
 		BlinkPatterns:
 			bombard && bino: Off, On
@@ -496,10 +492,9 @@
 		Image: pips
 		Sequence: pip-bombard2
 		Palette: effect
-		ReferencePoint: Bottom, Left
-		ValidStances: Ally
+		Position: BottomLeft
+		ValidRelationships: Ally
 		RequiresCondition: bombard2 && !bombard3
-		ZOffset: 256
 		BlinkInterval: 64
 		BlinkPatterns:
 			bombard2 && bino: Off, On
@@ -508,10 +503,9 @@
 		Image: pips
 		Sequence: pip-bombard3
 		Palette: effect
-		ReferencePoint: Bottom, Left
-		ValidStances: Ally
+		Position: BottomLeft
+		ValidRelationships: Ally
 		RequiresCondition: bombard3
-		ZOffset: 256
 		BlinkInterval: 64
 		BlinkPatterns:
 			bombard3 && bino: Off, On
@@ -523,7 +517,6 @@
 		Position: BottomLeft
 		ValidRelationships: Ally
 		RequiresCondition: seek && !(seek2 || seek3)
-		ZOffset: 256
 		BlinkInterval: 64
 		BlinkPatterns:
 			seek && bino: Off, On
@@ -532,10 +525,9 @@
 		Image: pips
 		Sequence: pip-seek2
 		Palette: effect
-		ReferencePoint: Bottom, Left
-		ValidStances: Ally
+		Position: BottomLeft
+		ValidRelationships: Ally
 		RequiresCondition: seek2 && !seek3
-		ZOffset: 256
 		BlinkInterval: 64
 		BlinkPatterns:
 			seek2 && bino: Off, On
@@ -544,10 +536,9 @@
 		Image: pips
 		Sequence: pip-seek3
 		Palette: effect
-		ReferencePoint: Bottom, Left
-		ValidStances: Ally
+		Position: BottomLeft
+		ValidRelationships: Ally
 		RequiresCondition: seek3
-		ZOffset: 256
 		BlinkInterval: 64
 		BlinkPatterns:
 			seek3 && bino: Off, On
@@ -600,22 +591,22 @@
 		RequiresSelection: True
 
 ^AuraHealable:
-	SelfHealing@HOSPITAL:
+	ChangesHealth@HOSPITAL:
 		Step: 200
 		Delay: 25
-		HealIfBelow: 100
+		StartIfBelow: 100
 		DamageCooldown: 200
 		RequiresCondition: hospitalheal
-	SelfHealing@MEDIFV:
+	ChangesHealth@MEDIFV:
 		Step: 100
 		Delay: 25
-		HealIfBelow: 100
+		StartIfBelow: 100
 		DamageCooldown: 0
 		RequiresCondition: ifvheal
-	SelfHealing@MEDIFV2:
+	ChangesHealth@MEDIFV2:
 		Step: 100
 		Delay: 25
-		HealIfBelow: 100
+		StartIfBelow: 100
 		DamageCooldown: 200
 		RequiresCondition: ifvheal
 	ExternalCondition@HOSPITAL:
@@ -626,7 +617,7 @@
 		Image: pips
 		Sequence: medic
 		Palette: chrome
-		ReferencePoint: Bottom, Right
+		Position: BottomRight
 		RequiresCondition: (hospitalheal || ifvheal) && damaged
 		BlinkInterval: 32
 		BlinkPattern: On
@@ -691,22 +682,21 @@
 		Sequence: emp-overlay
 		Palette: tseffect
 		RequiresCondition: nshield && damaged
-	SelfHealing@NSHIELD:
+	ChangesHealth@NSHIELD:
 		PercentageStep: 6
 		Delay: 30
-		HealIfBelow: 100
+		StartIfBelow: 100
 		DamageCooldown: 0
 		RequiresCondition: nshield
 	WithDecoration@NSHIELD:
 		Image: pips
 		Palette: chrometd
 		Sequence: pip-repair
-		ReferencePoint: Bottom, Center
-		ZOffset: 256
+		Position: BottomCenter
 		RequiresCondition: nshield
 		BlinkInterval: 64
 		RequiresSelection: True
-		ValidStances: Ally, Neutral
+		ValidRelationships: Ally, Neutral
 	DamageMultiplier@NSHIELD:
 		RequiresCondition: nshield
 		Modifier: 66
@@ -984,7 +974,7 @@
 	WithDecoration@c4:
 		Image: c4
 		Sequence: c4
-		Position: Center
+		Position: CenterCenter
 		RequiresCondition: c4
 		RequiresSelection: False
 		ValidRelationships: Ally, Neutral, Enemy
@@ -1010,11 +1000,10 @@
 	WithDecoration@tnt:
 		Image: tnt
 		Sequence: tnt
-		ReferencePoint: center, center
-		ZOffset: 2047
+		Position: CenterCenter
 		RequiresCondition: tnt
 		RequiresSelection: False
-		ValidStances: Ally, Neutral, Enemy
+		ValidRelationships: Ally, Neutral, Enemy
 	ExternalCondition@detachable:
 		Condition: detach
 	WithColoredOverlay@detach:
@@ -1429,7 +1418,7 @@
 		StartIfBelow: 100
 		DamageCooldown: 125
 		RequiresCondition: hospitalheal
-	ExternalCondition@MEDIFV:
+	ExternalCondition@HOSPITAL:
 		Condition: hospitalheal
 	GrantConditionOnPrerequisite@HOSPITAL:
 		Condition: hospital

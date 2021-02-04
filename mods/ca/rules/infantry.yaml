@@ -360,14 +360,14 @@ E6:
 		Weapon: DefuseKit
 		Cursor: goldwrench
 		OutsideRangeCursor: goldwrench
-		TargetStances: Ally
-		ForceTargetStances: None
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
 		Name: secondary
 	AutoTarget:
 	AutoTargetPriority@defuse:
 		ValidTargets: C4Attached, TNTAttached
 		InvalidTargets: NoAutoTarget
-		ValidStances: Ally
+		ValidRelationships: Ally
 	AttackFrontal:
 		Armaments: primary, secondary
 		PauseOnCondition: being-warped
@@ -1353,6 +1353,11 @@ BORI:
 		Name: primary
 		Weapon: Flare
 		LocalOffset: 30,0,250
+	AirstrikeMaster:
+		Actors: U2.Bomber, U2.Bomber
+		SquadSize: 2
+		SquadOffset: 0, 3072, 0
+		ArmamentNames: primary
 	Demolition:
 		DetonationDelay: 45
 		Voice: Demolish
@@ -1652,7 +1657,7 @@ JJET:
 		StartIfBelow: 100
 		DamageCooldown: 125
 		RequiresCondition: hospitalheal
-	ExternalCondition@MEDIFV:
+	ExternalCondition@HOSPITAL:
 		Condition: hospitalheal
 	GrantConditionOnPrerequisite@HOSPITAL:
 		Condition: hospital

@@ -3947,7 +3947,7 @@ PROC.TD:
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack, ThiefInfiltrate
 	Refinery:
-		DockAngle: 112
+		DockAngle: 448
 		DockOffset: 0,2
 		IsDragRequired: True
 		DragOffset: -554,512,0
@@ -5308,9 +5308,8 @@ UPGC:
 		Produces: Money
 		PauseOnCondition: forceshield || invulnerability || being-warped
 		ActorType: ocar.pod
-		EntryType: DropSiteClosestEdge
-		ExitType: OppositeToEntry
-		LandingFacing: 64
+		BaselineSpawn: true
+		Facing: 256
 		ReadyAudio: SuppliesInbound
 	WithDeliveryOverlay:
 		Sequence: flare 
@@ -5330,6 +5329,7 @@ UPGC:
 		ExitCell: 1,1
 	Turreted:
 		TurnSpeed: 3
+		InitialFacing: 384
 		RealignDelay: -1
 		Offset: -768,468,0
 	AttackTurreted:
@@ -5353,7 +5353,7 @@ UPGC:
 		EndChargeSpeechNotification: FireStormReady
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
-		DisplayTimerStances: Ally
+		DisplayTimerRelationships: Ally
 		RequiresCondition: tower.rocket
 		Prerequisites: ~techlevel.unrestricted
 	RejectsOrders:
@@ -5361,7 +5361,6 @@ UPGC:
 	AmmoPool:
 		Ammo: 3
 		ReloadCount: 3
-		PipCount: 0
 		AmmoCondition: loaded-rocket
 	ReloadAmmoPool:
 		Delay: 100
@@ -5399,7 +5398,7 @@ UPGC:
 		PauseOnCondition: !radar-active || disabled || being-warped
 		LaunchSound: gradarup.aud
 		BeginChargeSound: gradardn.aud
-		DisplayTimerStances: Ally
+		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		Prerequisites: ~techlevel.unrestricted
@@ -5419,14 +5418,15 @@ UPGC:
 		IconPalette: chrometd
 		ChargeInterval: 6000
 		Condition: nshield
-		Range: 4
+		Dimensions: 5, 5
+		Footprint: _xxx_, xxxxx, xxxxx, xxxxx, _xxx_
 		Duration: 375
 		Prerequisites: ~techlevel.unrestricted
 		AllowMultiple: false
 		Description: Nanite Shield
 		LongDesc: Selected friendly structures are rapidly repaired when damaged.
 		OnFireSound: srepaira.aud
-		DisplayTimerStances: Ally
+		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayRadarPing: True
@@ -5533,7 +5533,6 @@ UPGC.DROP:
 		Type: tower.drop
 	Power:
 		Amount: -50
-		InitialFacing: 96
 
 BIO.Nod:
 	Inherits: ^Building
