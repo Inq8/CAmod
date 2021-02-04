@@ -20,7 +20,7 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Sprite collection for symbols.")]
 		public readonly string Image = "gpsdot";
 
-		[SequenceReference]
+		[SequenceReference(nameof(Image))]
 		[Desc("Sprite used for this actor.")]
 		public readonly string Sequence = "idle";
 
