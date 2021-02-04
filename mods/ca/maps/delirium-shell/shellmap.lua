@@ -110,7 +110,7 @@ ChronoshiftAlliedUnits = function()
 	local cells = Utils.ExpandFootprint({ AlliesOuterBase.Location }, false)
 	local units = { }
 	for i = 1, #cells do
-		local unit = Actor.Create("rtnk", true, { Owner = allies, Facing = 0 })
+		local unit = Actor.Create("rtnk", true, { Owner = allies, Facing = Angle.North })
 		BindActorTriggers(unit)
 		units[unit] = cells[i]
 	end

@@ -47,7 +47,7 @@ namespace OpenRA.Mods.CA.Traits
 		public HarvesterBalancer(HarvesterBalancerInfo info)
 			: base(info) { }
 
-		void INotifyCreated.Created(Actor self)
+		protected override void Created(Actor self)
 		{
 			movingToResources = true;
 		}

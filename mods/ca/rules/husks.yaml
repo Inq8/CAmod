@@ -684,6 +684,48 @@ HTNK.hover.Husk:
 	RenderSprites:
 		Image: htnk.destroyed
 		PlayerPalette: overlayplayertd
+		
+TITN.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Husk (Titan)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: titn
+	InfiltrateForTransform:
+		IntoActor: titn
+	RenderSprites:
+		Image: titn.destroyed
+		PlayerPalette: overlayplayertd
+		
+TITN.RAIL.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Husk (Railgun Titan)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: titn.rail
+	InfiltrateForTransform:
+		IntoActor: titn.rail
+	RenderSprites:
+		Image: titn.rail.destroyed
+		PlayerPalette: overlayplayertd
+		
+JUGG.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Husk (Juggernaut)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: jugg
+	InfiltrateForTransform:
+		IntoActor: jugg
+	RenderSprites:
+		Image: jugg.destroyed
+		PlayerPalette: overlayplayertd
 
 FTNK.Husk:
 	Inherits: ^HuskTD

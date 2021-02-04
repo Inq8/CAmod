@@ -210,6 +210,11 @@
 			primary: shoot
 			secondary: stand
 
+^PlayerHandicaps:
+	HandicapFirepowerMultiplier:
+	HandicapDamageMultiplier:
+	HandicapProductionTimeMultiplier:
+
 ^GainsExperience:
 	GainsExperience:
 		LevelUpNotification: LevelUp
@@ -1175,6 +1180,7 @@
 	Inherits@production: ^ProductionEfficiencyBoost
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@mind: ^MindControllable
+	Inherits@handicaps: ^PlayerHandicaps
 	Huntable:
 	OwnerLostAction:
 		Action: Kill
@@ -1324,6 +1330,7 @@
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@mind: ^MindControllable
+	Inherits@handicaps: ^PlayerHandicaps
 	RenderSprites:
 		PlayerPalette: overlayplayertd
 	Huntable:
@@ -1649,6 +1656,7 @@
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@production: ^ProductionEfficiencyBoost
 	Inherits@mind: ^MindControllable
+	Inherits@handicaps: ^PlayerHandicaps
 	Huntable:
 	RenderSprites:
 		PlayerPalette: playernavy
@@ -1792,6 +1800,7 @@
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@mind: ^MindControllable
+	Inherits@handicaps: ^PlayerHandicaps
 	Huntable:
 	OwnerLostAction:
 		Action: Kill
@@ -1965,6 +1974,7 @@
 	Inherits@shape: ^1x1Shape
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableBuilding
+	Inherits@handicaps: ^PlayerHandicaps
 	Targetable:
 		TargetTypes: Ground, C4, TNT, DetonateAttack, Structure
 	Building:
@@ -2174,6 +2184,7 @@
 	Inherits@2: ^SpriteActor
 	Inherits@shape: ^1x1Shape
 	Inherits@3: ^Cloakable
+	Inherits@handicaps: ^PlayerHandicaps
 	Interactable:
 		Bounds: 24,24
 	OwnerLostAction:

@@ -1069,7 +1069,7 @@ SMCV:
 	Transforms:
 		IntoActor: sfac
 		Offset: -1, 0
-		Facing: 96
+		Facing: 384
 		TransformSounds: placbldg.aud, build5.aud
 		NoTransformNotification: BuildingCannotPlaceAudio
 		PauseOnCondition: empdisable || being-warped
@@ -1294,6 +1294,10 @@ DEVA:
 		RequiresCondition: regen-upgrade
 	Repairable:
 		RepairActors: fix, rep, srep
+	Hovers:
+		BobDistance: -128
+		Ticks: 16
+		FallTicks: 16
 
 PAC:
 	Inherits: ^Helicopter
@@ -1419,6 +1423,10 @@ PAC:
 		InvalidTargets: NoAutoTarget, WaterStructure, AirLowPriority
 	AutoTargetPriority@ATTACKANYTHING:
 		InvalidTargets: NoAutoTarget, AirLowPriority
+	Hovers:
+		BobDistance: -128
+		Ticks: 16
+		FallTicks: 16
 
 INVA:
 	Inherits: ^Plane
