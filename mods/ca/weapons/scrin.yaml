@@ -322,6 +322,7 @@ MiniRift:
 			Concrete: 80
 			Brick: 25
 		DamageTypes: BulletDeath
+		ValidRelationships: Ally
 	Warhead@3Slow: GrantExternalCondition
 		Range: 1c0
 		Duration: 10
@@ -332,7 +333,7 @@ MiniRift:
 		Duration: 10
 		Condition: slowed
 		ValidTargets: Vehicle, Cyborg
-		ValidRelationships: Ally
+		ValidRelationships: Enemy, Neutral
 
 RuinerCannon:
 	Inherits: 155mm
@@ -553,11 +554,11 @@ InvaderZapAA:
 		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
 		ValidRelationships: Enemy, Neutral
+		Versus:
 			Light: 100
 			Concrete: 100
 			Wood: 100
 			None: 100
-		Versus:
 
 PlasmaTurretGun:
 	Range: 6c0

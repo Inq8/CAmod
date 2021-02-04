@@ -400,7 +400,7 @@ GUNW:
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
 	AttackFrontal:
-		FacingTolerance: 10
+		FacingTolerance: 40
 		PauseOnCondition: empdisable || being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -718,7 +718,7 @@ STCR:
 		TargetRelationships: Ally
 		ForceTargetRelationships: None
 	AttackFrontal:
-		FacingTolerance: 128
+		FacingTolerance: 512
 		PauseOnCondition: empdisable || being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -788,7 +788,7 @@ DEVO:
 	Armor:
 		Type: Light
 	Mobile:
-		TurnSpeed: 512
+		TurnSpeed: 16
 		Speed: 82
 	Hovers:
 		BobDistance: -25
@@ -894,7 +894,7 @@ RUIN:
 		IconPalette: chrome
 	Mobile:
 		Speed: 100
-		TurnSpeed: 512
+		TurnSpeed: 16
 	Health:
 		HP: 15000
 	Armor:
@@ -960,7 +960,7 @@ TPOD:
 	Mobile:
 		Locomotor: heavytracked
 		Speed: 56
-		TurnSpeed: 512
+		TurnSpeed: 12
 	Passenger:
 		Weight: 3
 	RevealsShroud:
@@ -1131,7 +1131,7 @@ STMR:
 		LocalOffset: 350,213,-85, 350,-213,-85
 		PauseOnCondition: !ammo
 	AttackAircraft:
-		FacingTolerance: 90
+		FacingTolerance: 360
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
@@ -1237,14 +1237,14 @@ DEVA:
 		Weapon: DevastatorDiscs
 		LocalOffset: 500,0,0
 	AttackAircraft:
-		FacingTolerance: 10
+		FacingTolerance: 40
 		ForceFireIgnoresActors: True
 		TargetFrozenActors: True
 		AttackType: Hover
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2c0
-		InitialFacing: 192
+		InitialFacing: 768
 		TurnSpeed: 16
 		Speed: 56
 		AltitudeVelocity: 0c50
@@ -1294,10 +1294,6 @@ DEVA:
 		RequiresCondition: regen-upgrade
 	Repairable:
 		RepairActors: fix, rep, srep
-	Hovers:
-		BobDistance: -128
-		Ticks: 16
-		FallTicks: 16
 
 PAC:
 	Inherits: ^Helicopter
@@ -1335,7 +1331,7 @@ PAC:
 		LocalOffset: 0,0,0
 	Aircraft:
 		CruiseAltitude: 2c0
-		InitialFacing: 192
+		InitialFacing: 768
 		TurnSpeed: 16
 		Speed: 49
 		AltitudeVelocity: 0c50
@@ -1361,7 +1357,7 @@ PAC:
 		Sequence: half-deployed
 		Name: half-deployed
 	AttackFrontal:
-		FacingTolerance: 96
+		FacingTolerance: 384
 		PauseOnCondition: empdisable || being-warped
 	CarrierMaster@carr1:
 		Actors: inva, inva, inva, inva
@@ -1378,16 +1374,16 @@ PAC:
 		RequiresSelection: true
 	Exit@0:
 		SpawnOffset: -100,0,0
-		Facing: 60
+		Facing: 240
 	Exit@1:
 		SpawnOffset: -100,0,0
-		Facing: -60
+		Facing: -240
 	Exit@2:
 		SpawnOffset: 100,0,0
-		Facing: 60
+		Facing: 240
 	Exit@3:
 		SpawnOffset: 100,0,0
-		Facing: -60
+		Facing: -240
 	DeathSounds:
 		Voice: Die
 	-EjectOnDeath:
@@ -1423,10 +1419,6 @@ PAC:
 		InvalidTargets: NoAutoTarget, WaterStructure, AirLowPriority
 	AutoTargetPriority@ATTACKANYTHING:
 		InvalidTargets: NoAutoTarget, AirLowPriority
-	Hovers:
-		BobDistance: -128
-		Ticks: 16
-		FallTicks: 16
 
 INVA:
 	Inherits: ^Plane
@@ -1458,7 +1450,7 @@ INVA:
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2c0
-		InitialFacing: 192
+		InitialFacing: 768
 		TurnSpeed: 32
 		Speed: 220
 		MaximumPitch: 56
@@ -2485,7 +2477,7 @@ GRAV:
 	Exit@1:
 		RequiresCondition: !being-captured
 		ExitCell: 1,1
-		Facing: 180
+		Facing: 720
 	RallyPoint:
 	Production:
 		Produces: Aircraft, Plane
