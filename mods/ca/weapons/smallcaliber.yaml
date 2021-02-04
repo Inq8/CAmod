@@ -22,10 +22,14 @@
 
 ZSU-23:
 	Inherits: ^AACannon
+	ValidTargets: Air, ICBM
 	ReloadDelay: 8
 	Warhead@1Dam: SpreadDamage
+		ValidTargets: Air, ICBM
 		Damage: 2500
 		Range: 0, 0c64, 0c256, 3c768
+	Warhead@2Eff: CreateEffect
+		ValidTargets: Air, ICBM, Ground, Water, Trees
 
 FLAK-23-AA:
 	Inherits: ^AACannon
@@ -91,11 +95,13 @@ Gatt.0:
 	Inherits: ^AACannon
 	ReloadDelay: 15
 	Report: vgatlo1a.aud
+	ValidTargets: Air, ICBM
 	Warhead@1Dam: SpreadDamage
 		Damage: 900
 		Range: 0, 0c64, 0c256, 3c256
+		ValidTargets: Air, ICBM
 	Warhead@2Eff: CreateEffect
-		ValidTargets: Air
+		ValidTargets: Air, ICBM
 		ImpactSoundChance: 20
 
 Gatt.1:

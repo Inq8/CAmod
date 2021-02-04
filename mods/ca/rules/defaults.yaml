@@ -1071,6 +1071,11 @@
 		ValidTargets: AirLowPriority
 		InvalidTargets: NoAutoTarget
 		Priority: 0
+		
+^AutoTargetAirICBM:
+	Inherits: ^AutoTargetAir
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Air, ICBM
 
 ^AutoTargetAll:
 	AutoTarget:
@@ -2868,7 +2873,7 @@
 		TargetTypes: Ground, Vehicle
 		RequiresCondition: !airborne
 	Targetable@AIRBORNE:
-		TargetTypes: Air
+		TargetTypes: ICBM
 		RequiresCondition: airborne
 	HiddenUnderFog:
 		Type: GroundPosition

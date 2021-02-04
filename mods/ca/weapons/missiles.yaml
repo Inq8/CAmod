@@ -360,6 +360,7 @@ Nike:
 	ReloadDelay: 20
 	Range: 7c512
 	Report: samshot1.aud
+	ValidTargets: Air, ICBM
 	Projectile: MissileCA
 		Arm: 3
 		Inaccuracy: 0
@@ -370,11 +371,15 @@ Nike:
 	Warhead@1Dam: SpreadDamage
 		Damage: 6750
 		Range: 0, 0c64, 0c256, 4c256
+		ValidTargets: Air, ICBM
+	Warhead@3Eff: CreateEffect
+		ValidTargets: Air, ICBM, Ground, Water, Trees
 
 RedEye:
 	Inherits: Nike
 	ReloadDelay: 50
 	Report: missile1.aud
+	ValidTargets: Air
 	Projectile: MissileCA
 		Image: Dragon
 		HorizontalRateOfTurn: 20
@@ -382,6 +387,7 @@ RedEye:
 	Warhead@1Dam: SpreadDamage
 		Damage: 3800
 		Range: 0, 0c64, 0c256, 3c0
+		ValidTargets: Air
 
 RedEye.CYB:
 	Inherits: RedEye
