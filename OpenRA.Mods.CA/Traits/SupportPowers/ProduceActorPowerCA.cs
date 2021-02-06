@@ -74,6 +74,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override void Activate(Actor self, Order order, SupportPowerManager manager)
 		{
 			base.Activate(self, order, manager);
+			PlayLaunchSounds();
 
 			var info = Info as ProduceActorPowerCAInfo;
 			var producers = self.World.ActorsWithTrait<Production>()

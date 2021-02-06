@@ -99,13 +99,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override void SelectTarget(Actor self, string order, SupportPowerManager manager)
 		{
 			if (info.UseDirectionalTarget)
-			{
-				Game.Sound.PlayToPlayer(SoundType.UI, manager.Self.Owner, Info.SelectTargetSound);
-				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech",
-					Info.SelectTargetSpeechNotification, self.Owner.Faction.InternalName);
-
 				self.World.OrderGenerator = new SelectDirectionalTarget(self.World, order, manager, Info.Cursor, info.DirectionArrowAnimation, info.DirectionArrowPalette);
-			}
 			else
 				base.SelectTarget(self, order, manager);
 		}

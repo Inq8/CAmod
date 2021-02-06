@@ -100,6 +100,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override void Activate(Actor self, Order order, SupportPowerManager manager)
 		{
 			base.Activate(self, order, manager);
+			PlayLaunchSounds();
 
 			if (!string.IsNullOrEmpty(Info.ActiveCondition) && activeToken == Actor.InvalidConditionToken)
 				activeToken = self.GrantCondition(Info.ActiveCondition);
@@ -107,8 +108,6 @@ namespace OpenRA.Mods.CA.Traits
 			var wsb = self.TraitOrDefault<WithSpriteBody>();
 			if (wsb != null && wsb.DefaultAnimation.HasSequence(Info.Sequence))
 				wsb.PlayCustomAnimation(self, Info.Sequence);
-
-			PlayLaunchSounds();
 
 			foreach (var launchpad in self.TraitsImplementing<INotifySupportPower>())
 				launchpad.Activated(self);

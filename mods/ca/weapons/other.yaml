@@ -357,21 +357,28 @@ RepairIFV:
 		Image: sparks_overlay
 		Explosions: idle
 		ExplosionPalette: tseffect-ignore-lighting-alpha75
-
-RepairNanite:
-	Report: srepaira.aud
+		
+RepairFlash:
+	Inherits: Heal
+	Range: 1c0
+	Report: fixit1.aud
+	ValidTargets: Repair
+	Warhead@1Dam: SpreadDamage
+		Damage: -1
+		ValidTargets: Repair
 	Warhead@highlight: GrantExternalCondition
-		Range: 4c0
+		Range: 4c511
 		Duration: 2
 		Condition: highlight
-		ValidRelationships: Ally
-		ValidTargets: Ground, Vehicle
-	Warhead@repair: GrantExternalCondition
-		Range: 4c0
-		Duration: 750
-		Condition: nrepair
-		ValidRelationships: Ally
-		ValidTargets: Ground, Vehicle
+		ValidTargets: Vehicle
+		
+ShieldFlash:
+	Inherits: RepairFlash
+	Warhead@highlight: GrantExternalCondition
+		Range: 4c511
+		Duration: 2
+		Condition: highlight
+		ValidTargets: Structure
 
 Demolish:
 	Warhead@1Dam: SpreadDamage

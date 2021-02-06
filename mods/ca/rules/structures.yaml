@@ -384,7 +384,8 @@ IRON:
 		Weapon: IronCurtain
 		Description: Iron Curtain
 		Condition: invulnerability
-		Range: 1
+		Dimensions: 3, 3
+		Footprint: xxx xxx xxx
 		ValidRelationships: Ally, Neutral, Enemy
 		Duration: 600
 		ActivationDelay: 0
@@ -473,7 +474,7 @@ PDOX:
 		KillCargo: true
 		DisplayRadarPing: True
 		Dimensions: 3, 3
-		Footprint: _x_ xxx _x_
+		Footprint: xxx xxx xxx
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 	DetonateWeaponPower@ChronoAI:
 		OrderName: Chronoshiftai
@@ -1135,7 +1136,8 @@ ATEK:
 		Icon: forceshield
 		ChargeInterval: 7500
 		Condition: forceshield
-		Range: 3
+		Dimensions: 5, 5
+		Footprint: __x__ _xxx_ xxxxx _xxx_ __x__
 		Duration: 250
 		Prerequisites: forceshield.enabled, techlevel.high
 		Weapon: ForceShield
@@ -2007,7 +2009,8 @@ STEK:
 		Icon: forceshield
 		ChargeInterval: 7500
 		Condition: forceshield
-		Range: 3
+		Dimensions: 5, 5
+		Footprint: __x__ _xxx_ xxxxx _xxx_ __x__
 		Duration: 250
 		Prerequisites: forceshield.enabled, techlevel.high
 		Weapon: ForceShield
@@ -4222,7 +4225,8 @@ GTEK:
 		Icon: forceshield
 		ChargeInterval: 7500
 		Condition: forceshield
-		Range: 3
+		Dimensions: 5, 5
+		Footprint: __x__ _xxx_ xxxxx _xxx_ __x__
 		Duration: 250
 		Prerequisites: forceshield.enabled, ~techlevel.high
 		Weapon: ForceShield
@@ -4239,32 +4243,28 @@ GTEK:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
-	DetonateWeaponPower@Nrepair:
+	GrantExternalConditionPowerCA@NREPAIR:
 		OrderName: nrepair
-		Prerequisites: ~gtek.talon
 		Icon: nrepair
-		Cursor: repair
 		ChargeInterval: 7500
-		Description: Nanite Repair
-		ActivationDelay: 10
-		LongDesc: Repairs selected damaged vehicles.
-		Weapon: RepairNanite
-		AirburstAltitude: 0
+		Condition: nrepair
+		Dimensions: 5, 5
+		Footprint: _xxx_ xxxxx xxxxx xxxxx _xxx_
+		Duration: 750
+		Prerequisites: ~gtek.talon, ~techlevel.unrestricted
+		Weapon: RepairFlash
+		ActivationDelay: 5
+		AirburstAltitude: 0c0
 		AllowMultiple: false
-		CameraActor: camera
-		CameraRemoveDelay: 375
+		Description: Nanite Repair
+		LongDesc: Repairs selected damaged vehicles.
+		OnFireSound: srepaira.aud
+		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
-		DisplayTimerRelationships: Ally, Neutral
-		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayBeacon: False
-		DisplayRadarPing: False
-		ArrowSequence: arrow
-		ClockSequence: clock
-		CircleSequence: circles
-		TargetCircleRange: 4c0
-		TargetCircleColor: ffffff90
-		LaunchSound: srepaira.aud
+		DisplayRadarPing: True
+		Cursor: repair
+		PauseOnCondition: disabled || empdisable ||  being-warped
 	SupportPowerChargeBar:
 	Production:
 		Produces: Upgrade
@@ -4349,7 +4349,8 @@ TMPL:
 		Icon: forceshield
 		ChargeInterval: 7500
 		Condition: forceshield
-		Range: 3
+		Dimensions: 5, 5
+		Footprint: __x__ _xxx_ xxxxx _xxx_ __x__
 		Duration: 250
 		Prerequisites: ~forceshield.enabled, ~techlevel.high
 		Weapon: ForceShield
@@ -4375,7 +4376,8 @@ TMPL:
 		Weapon: Frenzy
 		Description: Frenzy
 		Condition: frenzy
-		Range: 2
+		Dimensions: 3, 3
+		Footprint: xxx xxx xxx
 		ValidRelationships: Ally
 		Duration: 500
 		ActivationDelay: 0
@@ -4850,7 +4852,8 @@ SGEN:
 		Description: Tiberium Stealth
 		Condition: invisibility
 		ValidRelationships: Ally, Neutral, Enemy
-		Range: 5
+		Dimensions: 5, 5
+		Footprint: __x__ _xxx_ xxxxx _xxx_ __x__
 		Duration: 900
 		ActivationDelay: 0
 		AirburstAltitude: 0c0
@@ -5376,11 +5379,11 @@ UPGC:
 		Sequence: turret-radar
 		PauseOnCondition: !scan-active || disabled || being-warped
 	WithIdleOverlay@SHIELD:
-		RequiresCondition: !build-incomplete && tower.shield && !nshield
+		RequiresCondition: !build-incomplete && tower.shield && !nshield-active
 		Sequence: turret-shield
 		PauseOnCondition: disabled || being-warped
 	WithIdleOverlay@SHIELD-ACTIVE:
-		RequiresCondition: !build-incomplete && tower.shield && nshield
+		RequiresCondition: !build-incomplete && tower.shield && nshield-active
 		Sequence: turret-shield-active
 		PauseOnCondition: disabled || being-warped
 	WithIdleOverlay@DZONE:
@@ -5409,29 +5412,37 @@ UPGC:
 	GrantConditionOnPrerequisite@SCAN:
 		Prerequisites: scan-active
 		Condition: scan-active
+	GrantConditionOnBotOwner@RADAR:
+		Condition: scan-active
+		Bots: brutal, vhard, hard, normal, easy, naval
 	GrantConditionOnPrerequisite@RADAR:
 		Prerequisites: radar-active
 		Condition: radar-active
 	GpsRadarProvider:
 		RequiresCondition: tower.radar && scan-active && !(disabled || being-warped)
-	GrantExternalConditionPower@NSHIELD:
+	ExternalCondition@NSACTIVE
+		Condition: nshield-active
+	GrantExternalConditionPowerCA@NSHIELD:
 		OrderName: nshieldorder
 		Icon: nshield
-		IconPalette: chrometd
 		ChargeInterval: 6000
 		Condition: nshield
 		Dimensions: 5, 5
 		Footprint: _xxx_ xxxxx xxxxx xxxxx _xxx_
 		Duration: 375
 		Prerequisites: ~techlevel.unrestricted
+		Weapon: ShieldFlash
+		ActivationDelay: 5
+		AirburstAltitude: 0c0
 		AllowMultiple: false
 		Description: Nanite Shield
-		LongDesc: Selected friendly structures are rapidly repaired when damaged.
+		LongDesc: Repairs selected damaged structures & reduces damage taken.
 		OnFireSound: srepaira.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayRadarPing: True
+		ActiveCondition: nshield-active
 		Cursor: repair
 		RequiresCondition: tower.shield
 		PauseOnCondition: disabled || empdisable ||  being-warped

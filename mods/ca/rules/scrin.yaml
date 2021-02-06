@@ -1038,7 +1038,7 @@ RPTP:
 		Actor: RPTP.Husk
 
 SMCV:
-	Inherits: ^Vehicle
+	Inherits: ^Vehicle-NOUPG
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: Vehicle
@@ -2418,7 +2418,8 @@ SCRT:
 		Icon: forceshield
 		ChargeInterval: 7500
 		Condition: forceshield
-		Range: 3
+		Dimensions: 5, 5
+		Footprint: __x__ _xxx_ xxxxx _xxx_ __x__
 		Duration: 250
 		Prerequisites: forceshield.enabled, techlevel.high
 		Weapon: ForceShield
@@ -3048,6 +3049,7 @@ BUZZ:
 		CanHover: True
 		Speed: 30
 		CruiseAltitude: 1
+		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,Water,Tree,River
 	AmbientSound:
 		SoundFiles: buzzers-idle1.aud, buzzers-idle2.aud, buzzers-idle3.aud
 		Interval: 10
