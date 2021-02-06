@@ -840,7 +840,7 @@ A10:
 		LocalOffset: 2,-256,-43, 2,256,-43
 		PauseOnCondition: !ammo
 	AttackAircraft:
-		FacingTolerance: 128
+		FacingTolerance: 512
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
@@ -1076,6 +1076,7 @@ APCH:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
+		PipCount: 6
 	WithIdleOverlay@ROTORAIR:
 		Offset: 0,0,85
 		Sequence: rotor
@@ -1485,7 +1486,7 @@ KIRO:
 		ShowSelectionBar: true
 		SelectionBarColor: ff00ff
 	AttackAircraft:
-		FacingTolerance: 128
+		FacingTolerance: 512
 		AttackType: Hover
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
@@ -2022,7 +2023,7 @@ POD2:
 	Inherits: POD
 	SpawnActorOnDeath:
 		Actor: n2r1
-		
+
 POD3:
 	Inherits: POD
 	SpawnActorOnDeath:
@@ -2069,7 +2070,7 @@ VENM:
 		LocalOffset: 600,0,-270
 		PauseOnCondition: !ammo
 	AttackAircraft:
-		FacingTolerance: 10
+		FacingTolerance: 40
 		AttackType: Hover
 		PersistentTargeting: false
 		OpportunityFire: false

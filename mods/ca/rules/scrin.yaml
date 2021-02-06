@@ -578,7 +578,7 @@ INTL:
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 		TurnSpeed: 12
 	Health:
-		HP: 44000
+		HP: 45000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -674,7 +674,7 @@ CORR:
 		Modifier: 115
 
 STCR:
-	Inherits: ^Vehicle
+	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
@@ -2418,8 +2418,8 @@ SCRT:
 		Icon: forceshield
 		ChargeInterval: 7500
 		Condition: forceshield
-		Dimensions: 5, 5
-		Footprint: __x__ _xxx_ xxxxx _xxx_ __x__
+		Dimensions: 7, 7
+		Footprint: ___x___ __xxx__ _xxxxx_ xxxxxxx _xxxxx_ __xxx__ ___x___
 		Duration: 250
 		Prerequisites: forceshield.enabled, techlevel.high
 		Weapon: ForceShield
@@ -3091,11 +3091,8 @@ camera.rift:
 		HP: 1
 	PeriodicExplosion:
 		Weapon: Rift
-	Mobile:
-		Locomotor: cloud
-		AlwaysTurnInPlace: true
-		Speed: 7
-	Wanders:
+	Immobile:
+		OccupiesSpace: false
 	AmbientSound:
 		SoundFiles: rift1.aud, rift2.aud, rift3.aud
 		Interval: 50
@@ -3119,6 +3116,8 @@ camera.minirift:
 	-AmbientSound:
 	-WithDeathAnimation:
 	-RevealsShroud:
+	Targetable@RIFT:
+		TargetTypes: Rift
 
 camera.resourcescan:
 	Inherits: CAMERA
