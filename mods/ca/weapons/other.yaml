@@ -1478,6 +1478,10 @@ ClusterMineSpawner:
 		Explosions: large_explosion
 		ImpactSounds: kaboom15.aud
 		ValidTargets: Air
+	Warhead@4Eff: CreateEffect
+		ImpactSounds: scluster.aud
+		Delay: 15
+		ValidTargets: Air
 	Warhead@Cluster: FireCluster
 		Weapon: MineSpawner
 		RandomClusterCount: 5
@@ -1503,11 +1507,28 @@ MineSpawner:
 		Shadow: true
 		Speed: 50
 		LaunchAngle: 90
+	Warhead@1Dam: SpreadDamage
+		Spread: 426
+		Damage: 5000
+		Versus:
+			None: 90
+			Wood: 75
+			Light: 60
+			Heavy: 25
+			Concrete: 50
+			Brick: 100
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		ValidTargets: Structure
+	Warhead@3Eff: CreateEffect
+		Explosions: large_explosion
+		ImpactSounds: mineblo1.aud
+		ValidTargets: Structure
 	Warhead@1Spa: SpawnActor
-		Actors: minvs
+		Actors: PROXYMINESPAWN
 		Range: 1
 		ForceGround: false
 		ValidTargets: Ground, Air
+		InvalidTargets: Structure
 
 MineSpawnerWater:
 	Range: 5c0
@@ -1521,11 +1542,28 @@ MineSpawnerWater:
 		Blockable: false
 		Speed: 50
 		LaunchAngle: 90
+	Warhead@1Dam: SpreadDamage
+		Spread: 426
+		Damage: 5000
+		Versus:
+			None: 90
+			Wood: 75
+			Light: 60
+			Heavy: 25
+			Concrete: 50
+			Brick: 100
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		ValidTargets: Structure
+	Warhead@3Eff: CreateEffect
+		Explosions: large_explosion
+		ImpactSounds: mineblo1.aud
+		ValidTargets: Structure
 	Warhead@1Spa: SpawnActor
-		Actors: mins
+		Actors: PROXYMINESPAWNWATER
 		Range: 1
 		ForceGround: false
 		ValidTargets: Water, Air
+		InvalidTargets: Structure
 
 ^EnergyBlast:
 	ReloadDelay: 50

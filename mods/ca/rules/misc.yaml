@@ -32,6 +32,36 @@ MINS:
 	Inherits: ^Mine
 	Explodes:
 		Weapon: ATMine
+		
+PROXYMINESPAWN:
+	Inherits: ^SpriteActor
+	RenderSprites:
+		Image: empty
+	Interactable:
+		Bounds: 24,24
+	WithSpriteBody:
+	HiddenUnderFog:
+	Health:
+		HP: 10000
+		NotifyAppliedDamage: false
+	Armor:
+		Type: Light
+	Tooltip:
+		Name: Mine
+	Targetable:
+		TargetTypes: Ground, Water, Mine
+	HitShape:
+	KillsSelf:
+	Mobile:
+		Locomotor: cloud
+		Speed: 1
+	SpawnActorOnDeath:
+		Actor: minvs
+		
+PROXYMINESPAWNWATER:
+	Inherits: PROXYMINESPAWN
+	SpawnActorOnDeath:
+		Actor: mins
 
 CRATE:
 	Inherits: ^Crate

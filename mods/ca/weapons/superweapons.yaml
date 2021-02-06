@@ -1024,7 +1024,7 @@ WeatherBolt:
 
 DropPodVisual:
 	Warhead@1Eff: CreateEffect
-		Explosions: droppod_explosion
+		Explosions: droppod_explosion2
 		ExplosionPalette: tseffect
 		InvalidTargets: Water
 		ImpactSounds: methit1.aud
@@ -1032,20 +1032,16 @@ DropPodVisual:
 		Explosions: ion_ring
 		ExplosionPalette: tseffect-ignore-lighting-alpha75
 		InvalidTargets: Water
-	Warhead@pod: SpawnRandomActor
-		RandomActors: n1r1, n2r1, n3r1
-		Range: 1
-		ValidTargets: Air, Ground, Water
 	Warhead@3EffWater: CreateEffect
 		Explosions: large_splash
 		ImpactSounds: splash9.aud
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
 
-DropPodVisual2:
-	Inherits: DropPodVisual
-	Warhead@1Eff: CreateEffect
-		Explosions: droppod_explosion2
+DropPodArrive:
+	Report: meteor1.aud, meteor2.aud
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
 
 Frenzy:
 	Warhead@2Eff: CreateEffect

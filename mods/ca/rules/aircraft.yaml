@@ -1976,8 +1976,11 @@ YF23.Bomber:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
 
-POD2:
+POD:
 	Inherits@2: ^ExistsInWorld
+	RenderSprites:
+		Image: pod2
+		PlayerPalette: overlayplayertd
 	Valued:
 		Cost: 10
 	Tooltip:
@@ -1993,22 +1996,14 @@ POD2:
 		MaximumPitch: 110
 		VTOL: true
 		Repulsable: False
-		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium
+		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,Water,Trees,River
 	HiddenUnderFog:
 		Type: CenterPosition
 	ClassicFacingBodyOrientation:
-	RenderSprites:
-		Image: pod
-		PlayerPalette: overlayplayertd
 	WithFacingSpriteBody:
 	QuantizeFacingsFromSequence:
 	SelectionDecorations:
 	HitShape:
-	Cargo:
-		Types: Infantry
-		MaxWeight: 1
-		UnloadVoice: Move
-		EjectOnDeath: true
 	Interactable:
 	WithShadow:
 	SmokeTrailWhenDamaged:
@@ -2020,13 +2015,18 @@ POD2:
 		Moves: True
 		Velocity: 113
 		Explosion: DropPodVisual
+	SpawnActorOnDeath:
+		Actor: n1r1
 
-POD1:
-	Inherits: POD2
-	RenderSprites:
-		Image: pod2
-	CrashLanding:
-		Explosion: DropPodVisual2
+POD2:
+	Inherits: POD
+	SpawnActorOnDeath:
+		Actor: n2r1
+		
+POD3:
+	Inherits: POD
+	SpawnActorOnDeath:
+		Actor: n3r1
 
 VENM:
 	Inherits: ^HelicopterTD
