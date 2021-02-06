@@ -21,7 +21,7 @@ namespace OpenRA.Mods.CA.Traits
 
 	public class TurretedFloating : Turreted
 	{
-		WAngle LastBodyFacing;
+		WAngle lastBodyFacing;
 		IFacing facing;
 		bool initialChange = false;
 
@@ -39,14 +39,14 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled)
 				return;
 
-			if (LastBodyFacing != null)
+			if (lastBodyFacing != null)
 			{
-				if (LastBodyFacing != facing.Facing)
+				if (lastBodyFacing != facing.Facing)
 				{
 					if (initialChange)
 					{
-						//Game.Debug("body facing changed from {0} to {1}", LastBodyFacing, facing.Facing);
-						var facingDiff = LastBodyFacing - facing.Facing;
+						// Game.Debug("body facing changed from {0} to {1}", LastBodyFacing, facing.Facing);
+						var facingDiff = lastBodyFacing - facing.Facing;
 						LocalOrientation = LocalOrientation.Rotate(new WRot(WAngle.Zero, WAngle.Zero, facingDiff));
 					}
 					else
@@ -56,7 +56,7 @@ namespace OpenRA.Mods.CA.Traits
 				}
 			}
 
-			LastBodyFacing = facing.Facing;
+			lastBodyFacing = facing.Facing;
 			base.Tick(self);
 		}
 	}
