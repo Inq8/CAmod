@@ -100,6 +100,8 @@ namespace OpenRA.Mods.CA.Warheads
 				else
 					td.Add(new OwnerInit(firedBy.World.Players.First(p => p.InternalName == InternalOwner)));
 
+				td.Add(new LocationInit(targetCell));
+
 				// Lambdas can't use 'in' variables, so capture a copy for later
 				var delayedTarget = target;
 
@@ -109,47 +111,55 @@ namespace OpenRA.Mods.CA.Warheads
 					var positionable = unit.TraitOrDefault<IPositionable>();
 					cell = targetCells.GetEnumerator();
 
-					while (cell.MoveNext() && !placed)
+					if (positionable == null)
 					{
-						var subCell = positionable.GetAvailableSubCell(cell.Current);
-
-						if (ai.HasTraitInfo<AircraftInfo>()
-							&& ai.TraitInfo<AircraftInfo>().CanEnterCell(firedBy.World, unit, cell.Current))
-							subCell = SubCell.FullCell;
-
-						if (subCell != SubCell.Invalid)
-						{
-							positionable.SetPosition(unit, cell.Current, subCell);
-
-							var pos = unit.CenterPosition;
-							if (!ForceGround)
-								pos += new WVec(WDist.Zero, WDist.Zero, firedBy.World.Map.DistanceAboveTerrain(delayedTarget.CenterPosition));
-
-							positionable.SetVisualPosition(unit, pos);
-							w.Add(unit);
-
-							if (Paradrop)
-								unit.QueueActivity(new Parachute(unit));
-							else
-								unit.QueueActivity(new FallDown(unit, pos, FallRate));
-
-							var palette = Palette;
-							if (UsePlayerPalette)
-								palette += unit.Owner.InternalName;
-
-							if (Image != null)
-								w.Add(new SpriteEffect(pos, w, Image, Sequence, palette));
-
-							var sound = Sounds.RandomOrDefault(firedBy.World.LocalRandom);
-							if (sound != null)
-								Game.Sound.Play(SoundType.World, sound, pos);
-
-							placed = true;
-						}
-					}
-
-					if (!placed)
 						unit.Dispose();
+						firedBy.World.CreateActor(a, td);
+					}
+					else
+					{
+						while (cell.MoveNext() && !placed)
+						{
+							var subCell = positionable.GetAvailableSubCell(cell.Current);
+
+							if (ai.HasTraitInfo<AircraftInfo>()
+								&& ai.TraitInfo<AircraftInfo>().CanEnterCell(firedBy.World, unit, cell.Current, SubCell.FullCell, null, BlockedByActor.None))
+								subCell = SubCell.FullCell;
+
+							if (subCell != SubCell.Invalid)
+							{
+								positionable.SetPosition(unit, cell.Current, subCell);
+
+								var pos = unit.CenterPosition;
+								if (!ForceGround)
+									pos += new WVec(WDist.Zero, WDist.Zero, firedBy.World.Map.DistanceAboveTerrain(delayedTarget.CenterPosition));
+
+								positionable.SetVisualPosition(unit, pos);
+								w.Add(unit);
+
+								if (Paradrop)
+									unit.QueueActivity(new Parachute(unit));
+								else
+									unit.QueueActivity(new FallDown(unit, pos, FallRate));
+
+								var palette = Palette;
+								if (UsePlayerPalette)
+									palette += unit.Owner.InternalName;
+
+								if (Image != null)
+									w.Add(new SpriteEffect(pos, w, Image, Sequence, palette));
+
+								var sound = Sounds.RandomOrDefault(firedBy.World.LocalRandom);
+								if (sound != null)
+									Game.Sound.Play(SoundType.World, sound, pos);
+
+								placed = true;
+							}
+						}
+
+						if (!placed)
+							unit.Dispose();
+					}
 				});
 			}
 		}

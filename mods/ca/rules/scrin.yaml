@@ -3091,11 +3091,8 @@ camera.rift:
 		HP: 1
 	PeriodicExplosion:
 		Weapon: Rift
-	Mobile:
-		Locomotor: cloud
-		AlwaysTurnInPlace: true
-		Speed: 7
-	Wanders:
+	Immobile:
+		OccupiesSpace: false
 	AmbientSound:
 		SoundFiles: rift1.aud, rift2.aud, rift3.aud
 		Interval: 50
@@ -3119,6 +3116,8 @@ camera.minirift:
 	-AmbientSound:
 	-WithDeathAnimation:
 	-RevealsShroud:
+	Targetable@RIFT:
+		TargetTypes: Rift
 
 camera.resourcescan:
 	Inherits: CAMERA
