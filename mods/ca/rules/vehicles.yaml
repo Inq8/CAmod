@@ -1261,7 +1261,7 @@ TRUK:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 	-ProductionCostMultiplier@IndustrialPlantLevel1:
 	-ProductionCostMultiplier@IndustrialPlantLevel2:
-	
+
 TRUK.DROP:
 	Inherits: TRUK
 	-Buildable:
@@ -2165,7 +2165,7 @@ MTNK:
 		LocalOffset: 0,10,90
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: pointlaser-upgrade && !drone-upgrade
-		ForceTargetRelationships: enemy
+		ForceTargetRelationships: Enemy
 	AttackTurreted:
 		Turrets: primary, secondary
 		PauseOnCondition: empdisable || being-warped
@@ -3375,7 +3375,7 @@ TITN:
 	SpawnActorOnDeath:
 		Actor: TITN.Husk
 		RequiresCondition: !being-warped
-		
+
 TITN.RAIL:
 	Inherits: TITN
 	Tooltip:

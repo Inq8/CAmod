@@ -39,7 +39,7 @@
 		Type: Rectangle
 			TopLeft: -1536, -1024
 			BottomRight: 1536, 1024
-			
+
 ^Transport:
 	Cargo:
 	WithCargoPipsDecoration:
@@ -50,7 +50,7 @@
 			gray: pip-gray
 			yellow: pip-yellow
 			red: pip-red
-		
+
 ^PrimaryBuilding:
 	PrimaryBuilding:
 		PrimaryCondition: primary
@@ -673,7 +673,7 @@
 	PowerMultiplier@FSPOWERDOWN:
 		RequiresCondition: forceshield && !invulnerability
 		Modifier: 0
-		
+
 ^NaniteShieldable:
 	WithColoredOverlay@NSHIELD:
 		RequiresCondition: nshield && damaged && !(empdisable || invulnerability || invisibility)
@@ -993,7 +993,7 @@
 		Delay: 5
 		Interval: 5
 		RequiresCondition: c4
-		
+
 ^TNTPlantable:
 	DelayedWeaponAttachable@TNT:
 		Type: tnt
@@ -1082,7 +1082,7 @@
 		ValidTargets: AirLowPriority
 		InvalidTargets: NoAutoTarget
 		Priority: 0
-		
+
 ^AutoTargetAirICBM:
 	Inherits: ^AutoTargetAir
 	AutoTargetPriority@DEFAULT:
@@ -1291,7 +1291,7 @@
 		Image: smoke_mtd
 	Cloak@CRATE-CLOAK:
 		Palette: cloak
-		
+
 ^VehicleTD:
 	Inherits@1: ^VehicleTD-NOUPG
 	Inherits@GDIUPG: ^GDIUpgrade
@@ -1944,7 +1944,7 @@
 		CanHover: True
 		WaitDistanceFromResupplyBase: 4c0
 		VTOL: true
-		InitialFacing: 224
+		InitialFacing: 896
 		CanSlide: True
 		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems,Tiberium,BlueTiberium
 		Crushes: crate, mine, infantry
@@ -2164,7 +2164,7 @@
 		PlayerPalette: overlayplayertd
 	ActorPreviewPlaceBuildingPreview:
 		OverridePalette: placebuildingtd
-		
+
 ^BuildingPlug:
 	Interactable:
 	AlwaysVisible:
