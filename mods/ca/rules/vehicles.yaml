@@ -5,7 +5,7 @@ V2RL:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 115
+		BuildPaletteOrder: 170
 		Prerequisites: anyradar, ~vehicles.soviet, ~v2.upgrade, ~techlevel.medium
 		Description: Long-range rocket artillery.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
@@ -56,7 +56,7 @@ KATY:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 115
+		BuildPaletteOrder: 171
 		IconPalette: chrometd
 		Prerequisites: anyradar, ~vehicles.soviet, ~!v2.upgrade, ~techlevel.medium
 		Description: Long-range rocket artillery.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Vehicles, Aircraft
@@ -401,7 +401,7 @@ KATY:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 100
+		BuildPaletteOrder: 90
 		Prerequisites: ~!iraqtank.upgrade, ~vehicles.3tnk, ~techlevel.low
 		Description: Soviet main battle tank with dual cannons.\n  Strong vs Vehicles\n  Weak vs Infantry, Defenses, Aircraft
 	Valued:
@@ -472,7 +472,7 @@ KATY:
 		Image: 3tnki
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 100
+		BuildPaletteOrder: 91
 		Prerequisites: ~iraqtank.upgrade, ~vehicles.3tnk, ~techlevel.low
 		Description: Soviet main battle tank with dual cannons.\n  Strong vs Vehicles\n  Weak vs Infantry, Defenses, Aircraft
 	Valued:
@@ -525,7 +525,7 @@ KATY:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 180
+		BuildPaletteOrder: 290
 		Prerequisites: stek, ~vehicles.soviet, ~!iraqtank.upgrade, ~techlevel.high
 		Description: Big and slow tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
 	Valued:
@@ -613,7 +613,7 @@ KATY:
 		Image: 4tnki
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 180
+		BuildPaletteOrder: 291
 		Prerequisites: stek, ~vehicles.soviet, ~iraqtank.upgrade, ~techlevel.high
 		Description: Big and slow tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry, Aircraft\n  Weak vs Nothing
 	Valued:
@@ -683,7 +683,7 @@ ARTY:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 110
+		BuildPaletteOrder: 100
 		Prerequisites: ~vehicles.allies, ~techlevel.medium
 		Description: Long-range artillery.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
@@ -729,6 +729,7 @@ ARTY.nod:
 	WithDamageOverlay:
 		Image: smoke_mtd
 	Buildable:
+		BuildPaletteOrder: 101
 		IconPalette: chrometd
 		Prerequisites: ~vehicles.nod, ~!howi.upgrade, ~techlevel.medium
 	Armament:
@@ -741,6 +742,7 @@ HOWI:
 	Tooltip:
 		Name: Howitzer
 	Buildable:
+		BuildPaletteOrder: 102
 		Prerequisites: ~vehicles.nod, ~howi.upgrade, ~techlevel.medium
 	-AttackFrontal:
 	AttackTurreted:
@@ -832,7 +834,7 @@ ISU:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 175
+		BuildPaletteOrder: 180
 		Prerequisites: anyradar, ~vehicles.ukraine, ~techlevel.medium
 		Description: Powerful medium-range artillery.\n  Strong vs Defenses, Buildings, Infantry\n  Weak vs Aircraft\n  Special Ability: Concussion Shells
 	Valued:
@@ -884,7 +886,7 @@ SPEC:
 	RenderSprites:
 		Image: spec
 	Buildable:
-		BuildPaletteOrder: 155
+		BuildPaletteOrder: 241
 		Prerequisites: tmpl, ~vehicles.blackh, ~techlevel.medium
 		Description: Long-range stealth artillery.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
@@ -1003,6 +1005,7 @@ HARV:
 HARV.Chrono:
 	Inherits: HARV
 	Buildable:
+		BuildPaletteOrder: 11
 		Prerequisites: anyrefinery, ~charv.upgrade, ~vehicles.allies, ~techlevel.high
 		Description: Collects Ore, Gems and Tiberium for processing.\n  Unarmed\n  Special Ability: Teleport
 	RenderSprites:
@@ -1042,7 +1045,7 @@ MCV:
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 300
+		BuildPaletteOrder: 500
 		Prerequisites: repair, ~vehicles.ra, ~techlevel.medium
 		Description: Deploys into another Construction Yard.\n  Unarmed
 		BuildDurationModifier: 50
@@ -1088,7 +1091,7 @@ JEEP:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 15
+		BuildPaletteOrder: 20
 		Prerequisites: ~vehicles.allies, ~techlevel.low
 		Description: Fast scout & anti-infantry vehicle.\n  Can detect spies and cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Buildings, Defenses, Aircraft
 	Valued:
@@ -1185,7 +1188,7 @@ MNLY:
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 275
+		BuildPaletteOrder: 440
 		Prerequisites: repair, ~techlevel.medium, ~!vehicles.scrin
 		Description: Lays mines to destroy unwary enemy units.\n  Can detect mines.\n  Unarmed
 	Valued:
@@ -1234,7 +1237,7 @@ TRUK:
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 280
+		BuildPaletteOrder: 450
 		Prerequisites: ~techlevel.low, ~!vehicles.scrin
 		Description: Transports cash to other players.\n  Unarmed
 	Valued:
@@ -1284,7 +1287,7 @@ MGG:
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 245
+		BuildPaletteOrder: 380
 		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
 		BuildDurationModifier: 50
 		Description: Regenerates the shroud nearby, obscuring the area.\n  Unarmed
@@ -1332,7 +1335,7 @@ MRJ:
 		AddToArmyValue: true
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 235
+		BuildPaletteOrder: 360
 		Prerequisites: techcenter, ~vehicles.mrj, ~techlevel.high
 		BuildDurationModifier: 50
 		Description: Jams nearby enemy radar systems.\n  Unarmed\n  Special Ability: Jams Missile-Lock Systems
@@ -1371,7 +1374,7 @@ TTNK:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 125
+		BuildPaletteOrder: 200
 		Prerequisites: structures.tsla, anyradar, ~vehicles.russia, ~techlevel.medium
 		Description: Tank with mounted Tesla coil.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft\n  Special Ability: Jams Radar
 	Valued:
@@ -1432,7 +1435,7 @@ DTRK:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 265
+		BuildPaletteOrder: 420
 		Prerequisites: stek, ~vehicles.soviet, ~techlevel.high
 		Description: Truck with actively armed nuclear\nexplosives. Has very weak armor.
 	Valued:
@@ -1480,7 +1483,7 @@ CTNK:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 175
+		BuildPaletteOrder: 260
 		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
 		Description: Advanced tank armed with anti-ground missiles.\n  Strong vs Vehicles, Buildings\n  Weak vs Infantry, Aircraft\n  Special Ability: Teleport
 	Valued:
@@ -1524,7 +1527,7 @@ QTNK:
 	Inherits: ^Tank
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 250
+		BuildPaletteOrder: 390
 		Prerequisites: stek, ~vehicles.soviet, ~techlevel.high
 		Description: Deals seismic damage to nearby vehicles and structures.\n  Strong vs Vehicles, Buildings\n  Weak vs Infantry, Aircraft
 	Valued:
@@ -1568,7 +1571,7 @@ AMCV:
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 300
+		BuildPaletteOrder: 501
 		Prerequisites: repair, ~vehicles.td, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Deploys into another Construction Yard.\n  Unarmed
@@ -1616,7 +1619,7 @@ HMMV:
 	RenderSprites:
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 15
+		BuildPaletteOrder: 22
 		IconPalette: chrometd
 		Prerequisites: ~vehicles.gdi, ~techlevel.low
 		Description: Fast scout & anti-infantry vehicle.\n  Can detect spies and cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Buildings, Defenses, Aircraft
@@ -1667,7 +1670,7 @@ BGGY:
 	RenderSprites:
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 15
+		BuildPaletteOrder: 23
 		IconPalette: chrometd
 		Prerequisites: ~vehicles.nod, ~techlevel.low
 		Description: Fast scout & anti-infantry vehicle.\n  Can detect spies and cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Buildings, Defenses, Aircraft
@@ -1721,7 +1724,7 @@ APC2:
 			marked: apc2.nod
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 40
+		BuildPaletteOrder: 41
 		Prerequisites: ~vehicles.td, ~!vulcan.upgrade, ~vehicles.apc2, infantry.any, ~techlevel.low
 		IconPalette: chrometd
 		Description: Tough infantry transport.\n  Strong vs Infantry\n  Weak vs Tanks, Buildings, Defenses, Aircraft
@@ -1917,7 +1920,7 @@ VULC:
 	Inherits@TRANSPORT: ^Transport
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 40
+		BuildPaletteOrder: 42
 		Prerequisites: ~vehicles.gdi, ~vulcan.upgrade, infantry.any, ~techlevel.high
 		IconPalette: chrometd
 		Description: Tough infantry transport, armed with a powerful chain gun.\n  Strong vs Aircraft, Light Armor, Infantry\n  Weak vs Tanks, Buildings, Defenses
@@ -2041,7 +2044,7 @@ LTNK:
 	RenderSprites:
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 55
+		BuildPaletteOrder: 60
 		IconPalette: chrometd
 		Prerequisites: ~!vehicles.legion, ~vehicles.nod, ~techlevel.low
 		Description: Fast, light tank.\n  Strong vs Light Armor\n  Weak vs Infantry, Defenses, Aircraft\n  Special Ability: Amphibious
@@ -2216,7 +2219,7 @@ MTNK.Drone:
 		Image: drone
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 85
+		BuildPaletteOrder: 81
 		Prerequisites: ~drone.upgrade, ~vehicles.talon, ~techlevel.low
 		IconPalette: chrometd
 		Description: Drone battle tank.\n  Requires power to operate.\n  Strong vs Vehicles\n  Weak vs Infantry, Defenses, Aircraft
@@ -2300,7 +2303,7 @@ HTNK:
 	RenderSprites:
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 185
+		BuildPaletteOrder: 300
 		IconPalette: chrometd
 		Prerequisites: techcenter, ~vehicles.htnk, ~techlevel.high, ~!ionmam.upgrade, ~!hovermam.upgrade
 		Description: Big and slow tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
@@ -2369,7 +2372,7 @@ HTNK.Ion:
 	RenderSprites:
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 190
+		BuildPaletteOrder: 301
 		IconPalette: chrometd
 		Prerequisites: ~ionmam.upgrade, ~gtek, ~vehicles.zocom, ~techlevel.high
 		Description: Big and slow tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
@@ -2436,6 +2439,7 @@ HTNK.Hover:
 		Name: Hover Mammoth Tank
 		GenericName: Tank
 	Buildable:
+		BuildPaletteOrder: 302
 		Prerequisites: ~hovermam.upgrade, ~gtek, ~vehicles.eagle, ~techlevel.high
 		Description: Powerful heavy tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
 	Mobile:
@@ -2481,7 +2485,7 @@ MSAM:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 120
+		BuildPaletteOrder: 190
 		Prerequisites: anyradar, ~vehicles.msam, ~techlevel.medium
 		Queue: Vehicle
 		IconPalette: chrometd
@@ -2578,7 +2582,7 @@ MLRS:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 150
+		BuildPaletteOrder: 240
 		Prerequisites: tmpl, ~vehicles.nod, ~!vehicles.blackh, ~techlevel.high
 		Queue: Vehicle
 		IconPalette: chrometd
@@ -2649,7 +2653,7 @@ STNK.Nod:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 130
+		BuildPaletteOrder: 160
 		Prerequisites: anyradar, ~vehicles.nod, ~techlevel.high
 		Queue: Vehicle
 		IconPalette: chrometd
@@ -2762,7 +2766,7 @@ FTNK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 65
+		BuildPaletteOrder: 130
 		Prerequisites: anyradar, ~vehicles.nod, ~techlevel.low
 		Queue: Vehicle
 		IconPalette: chrometd
@@ -2808,7 +2812,7 @@ HARV.TD:
 		Name: Harvester
 		GenericName: Harvester
 	Buildable:
-		BuildPaletteOrder: 10
+		BuildPaletteOrder: 12
 		Prerequisites: anyrefinery, ~vehicles.td, ~techlevel.infonly
 		Queue: Vehicle
 		IconPalette: chrometd
@@ -2876,7 +2880,7 @@ BTR:
 	Inherits@TRANSPORT: ^Transport
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 45
+		BuildPaletteOrder: 21
 		Prerequisites: infantry.any, ~vehicles.soviet, ~techlevel.low
 		Description: Tough infantry transport.\n  Can attack Aircraft.\n  Strong vs Infantry, Aircraft\n  Weak vs Tanks
 	Valued:
@@ -2936,7 +2940,7 @@ IFV:
 	Inherits@TRANSPORT: ^Transport
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 115
+		BuildPaletteOrder: 120
 		Prerequisites: infantry.any, anyradar, ~vehicles.ifv, ~techlevel.low
 		Description: Adaptable infantry transport.\n  Can attack Aircraft.\n  Strong vs Aircraft, Vehicles\n  Weak vs Infantry\n  Special Ability: Transform
 	Valued:
@@ -3198,7 +3202,7 @@ IFV.AI:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 115
+		BuildPaletteOrder: 120
 		Prerequisites: anyradar, ~vehicles.allies, ~botplayer, ~techlevel.low
 		Description: Adaptable infantry transport.\n  Can attack Aircraft.\n  Strong vs Aircraft, Vehicles\n  Weak vs Infantry\n  Special Ability: Transform
 	Valued:
@@ -3303,7 +3307,7 @@ TITN:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 195
+		BuildPaletteOrder: 303
 		IconPalette: chrometd
 		Prerequisites: gtek, ~vehicles.talon, ~!railgun.upgrade, ~techlevel.high
 		Description: Tough combat battle-mech.\n  Can attack Aircraft.\n  Strong vs Vehicles, Infantry
@@ -3381,6 +3385,7 @@ TITN.RAIL:
 	Tooltip:
 		Name: Railgun Titan
 	Buildable:
+		BuildPaletteOrder: 304
 		Prerequisites: ~gtek, ~vehicles.talon, ~railgun.upgrade, ~techlevel.high
 	WithSpriteTurret@UPG:
 		Sequence: turret
@@ -3404,7 +3409,7 @@ JUGG:
 	Tooltip:
 		Name: Juggernaut
 	Buildable:
-		BuildPaletteOrder: 200
+		BuildPaletteOrder: 350
 		Queue: Vehicle
 		IconPalette: chrometd
 		Description: Tough artillery battle-mech.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Aircraft
@@ -3474,7 +3479,7 @@ TTRK:
 	RenderSprites:
 		PlayerPalette: overlayplayertd
 	Buildable:
-		BuildPaletteOrder: 255
+		BuildPaletteOrder: 400
 		Prerequisites: ~vehicles.ttrk, ~tmpl, ~vehicles.nod, ~techlevel.high
 		Description: Truck actively armed with\n a Tiberium bomb. Has very weak armor.
 	Tooltip:
@@ -3496,7 +3501,7 @@ DISR:
 		AddToArmyValue: true
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 220
+		BuildPaletteOrder: 320
 		IconPalette: chrometd
 		Prerequisites: gtek, ~vehicles.zocom, ~techlevel.high
 		Description: Armored high-tech vehicle with long-range sonic armament.\n  Strong vs Buildings, Defenses, Light Armor, Infantry\n  Weak vs Aircraft
@@ -3595,7 +3600,7 @@ HSAM:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 165
+		BuildPaletteOrder: 191
 		Prerequisites: anyradar, ~vehicles.eagle, ~techlevel.medium
 		Queue: Vehicle
 		IconPalette: chrometd
@@ -3707,7 +3712,7 @@ RTNK:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 75
+		BuildPaletteOrder: 71
 		Prerequisites: ~vehicles.england, ~techlevel.low
 		Description: Advanced battle tank that can disguise when stationary.\n  Strong vs Vehicles\n  Weak vs Defenses, Aircraft\n  Special Ability: Disguise
 	Valued:
@@ -3801,7 +3806,7 @@ V3RL:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 160
+		BuildPaletteOrder: 250
 		Prerequisites: techcenter, ~vehicles.v3rl, ~techlevel.high
 		Description: Extreme long-range rocket artillery.\n  Rockets can be shot down by static anti-air defenses.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Tanks, Aircraft
 	Valued:
@@ -3899,7 +3904,7 @@ TNKD:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 90
+		BuildPaletteOrder: 110
 		Prerequisites: ~vehicles.germany, anyradar, ~techlevel.low
 		Description: German tank destroyer.\n  Strong vs Tanks\n  Weak vs Infantry, Buildings, Defenses, Light Armor, Aircraft
 	Valued:
@@ -3978,7 +3983,7 @@ MSAR:
 		AddToArmyValue: true
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 240
+		BuildPaletteOrder: 370
 		IconPalette: chrometd
 		Prerequisites: anyradar, ~vehicles.gdi, ~techlevel.high
 		BuildDurationModifier: 50
@@ -4059,7 +4064,7 @@ PTNK:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 135
+		BuildPaletteOrder: 230
 		Prerequisites: anyradar, ~vehicles.ptnk, ~!pcan.upgrade, ~techlevel.high
 		Description: Long-range artillery with Prism Tower derived weapon.\n  Strong vs Buildings, Defenses, Infantry, Light Armor\n  Weak vs Tanks, Aircraft
 	Valued:
@@ -4109,6 +4114,7 @@ PTNK:
 PCAN:
 	Inherits: PTNK
 	Buildable:
+		BuildPaletteOrder: 231
 		Prerequisites: anyradar, ~vehicles.ptnk, ~pcan.upgrade, ~techlevel.high
 		Description: A prototype long range artillery that fires highly focused beams of light.\n  Strong vs Buildings, Defenses, Infantry, Light Armor\n  Weak vs Tanks, Aircraft
 	Tooltip:
@@ -4143,7 +4149,7 @@ WTNK:
 		Image: mwtnk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 135
+		BuildPaletteOrder: 210
 		IconPalette: chrometd
 		Prerequisites: anyradar, ~vehicles.legion, ~techlevel.high
 		Description: Prototype MGT-1A microwave gun tank.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
@@ -4217,7 +4223,7 @@ BATF:
 	Inherits@TRANSPORT: ^Transport
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 230
+		BuildPaletteOrder: 340
 		Prerequisites: infantry.any, atek, ~vehicles.france, ~techlevel.high
 		Description: Tough infantry transport\nwith weapon ports for infantry.\n  Special Ability: Can crush enemy vehicles.
 	Valued:
@@ -4338,7 +4344,7 @@ MEMP:
 	Inherits@IDISABLE: ^DisableOnLowPower
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 260
+		BuildPaletteOrder: 410
 		IconPalette: chrometd
 		Prerequisites: gtek, ~vehicles.gdi, ~techlevel.high
 		Description: Self destructs to disable nearby vehicles & structures.\n  Requires power to operate.\n  Strong vs Vehicles, Buildings\n  Weak vs Infantry, Aircraft
@@ -4430,7 +4436,7 @@ CDRN:
 		InvalidTargets: NoAutoTarget, ChaosImmune
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 270
+		BuildPaletteOrder: 430
 		IconPalette: chrometd
 		Prerequisites: tmpl, ~vehicles.nod, ~techlevel.high
 		Description: Drone armed with Chaos Gas which causes units\nto become frenzied and attack indiscriminately.\n  Has weak armor.
@@ -4511,7 +4517,7 @@ CHPR:
 		Image: chpr
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 225
+		BuildPaletteOrder: 330
 		IconPalette: chrometd
 		Prerequisites: atek, ~vehicles.germany, ~techlevel.high
 		Description: Advanced heavy tank that can erase targets from existence.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft, Buildings
@@ -4608,7 +4614,7 @@ CRYO:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 170
+		BuildPaletteOrder: 270
 		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
 		Queue: Vehicle
 		IconPalette: chrometd

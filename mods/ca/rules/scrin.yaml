@@ -54,7 +54,7 @@ S1:
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 10
+		BuildPaletteOrder: 12
 		Prerequisites: ~infantry.scrin, ~techlevel.infonly
 		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
 		IconPalette: chrome
@@ -88,7 +88,7 @@ S2:
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 80
+		BuildPaletteOrder: 160
 		Prerequisites: anyradar, ~infantry.traveler, ~techlevel.infonly
 		Description: Fast assault infantry.\n  Strong vs Light Vehicles, Infantry\n  Weak vs Tanks, Aircraft
 		IconPalette: scrin
@@ -121,7 +121,7 @@ S3:
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 30
+		BuildPaletteOrder: 22
 		Prerequisites: ~infantry.scrin, ~techlevel.infonly
 		Description: Anti-tank/anti-aircraft infantry.\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
 		IconPalette: chrome
@@ -161,7 +161,7 @@ S4:
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 115
+		BuildPaletteOrder: 170
 		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.infonly
 		Description: Heavy assault infantry with high burst damage.\n  Can teleport short distances.\n  Strong vs Buildings, Defenses, Vehicles\n  Weak vs Infantry, Aircraft
 		IconPalette: chrome
@@ -197,7 +197,7 @@ S6:
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 60
+		BuildPaletteOrder: 62
 		Prerequisites: ~infantry.scrin, ~techlevel.infonly
 		Description: Infiltrates and captures\nenemy structures.\n  Can repair friendly structures & bridges.\n  Special Ability: Repair\n  Unarmed
 		IconPalette: chrome
@@ -229,7 +229,7 @@ SMEDI:
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 70
+		BuildPaletteOrder: 240
 		Prerequisites: ~infantry.scrin, ~infantry.smedi, ~techlevel.infonly
 		Description: Heals nearby life forms.\n  Unarmed
 		IconPalette: scrin
@@ -273,7 +273,7 @@ MAST:
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 120
+		BuildPaletteOrder: 220
 		Prerequisites: scrt, ~infantry.scrin, ~techlevel.infonly
 		BuildLimit: 1
 		Description: Elite specialist infantry.\n  Can mind-control enemy units and defenses.\n  Can detect cloaked units.\n  Maximum 1 can be trained.\n  Strong vs Infantry, Vehicles, Defenses\n  Weak vs Aircraft
@@ -344,6 +344,7 @@ HARV.Scrin:
 		Palette: scrin
 		LocalOffset: 400, 0, 0
 	Buildable:
+		BuildPaletteOrder: 13
 		Prerequisites: ~proc.scrin, ~vehicles.scrin, ~techlevel.infonly
 		IconPalette: chrome
 	SpawnActorOnDeath:
@@ -362,7 +363,7 @@ GUNW:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 15
+		BuildPaletteOrder: 24
 		Prerequisites: wsph, ~vehicles.scrin, ~techlevel.low
 		Description: Light assault walker.\n  Strong vs Infantry, Aircraft\n  Weak vs Tanks
 		IconPalette: chrome
@@ -429,7 +430,7 @@ SEEK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 30
+		BuildPaletteOrder: 31
 		Prerequisites: ~vehicles.seek, ~techlevel.low
 		Queue: Vehicle
 		Description: Light hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles, Buildings\n  Weak vs Aircraft, Infantry
@@ -500,7 +501,7 @@ LACE:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 30
+		BuildPaletteOrder: 32
 		Prerequisites: ~vehicles.traveler, ~techlevel.low
 		Queue: Vehicle
 		Description: Fast hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles, Buildings\n  Weak vs Aircraft, Infantry
@@ -568,7 +569,7 @@ INTL:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 40
+		BuildPaletteOrder: 43
 		Prerequisites: wsph, ~vehicles.scrin, ~techlevel.low
 		Queue: Vehicle
 		Description: Heavily armoured transport craft.\n  Can detect mines.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
@@ -636,7 +637,7 @@ CORR:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 65
+		BuildPaletteOrder: 140
 		Prerequisites: anyradar, ~vehicles.scrin, ~techlevel.medium
 		Queue: Vehicle
 		Description: Short-ranged anti-infantry/structure unit.\n  Strong vs Infantry, Buildings\n  Weak vs Tanks, Defenses, Aircraft
@@ -689,7 +690,7 @@ STCR:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 65
+		BuildPaletteOrder: 150
 		Prerequisites: anyradar, ~vehicles.reaper, ~techlevel.medium
 		Queue: Vehicle
 		Description: Slow moving, durable, short-range assault unit.\n  Bolstered by other nearby Stormcrawlers.\n  Strong vs Infantry, Light Armor\n  Weak vs Buildings, Aircraft
@@ -771,7 +772,7 @@ DEVO:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 135
+		BuildPaletteOrder: 220
 		Prerequisites: anyradar, ~vehicles.devo, ~techlevel.medium
 		Description: Medium hover tank.\n  Can move in any direction while firing.\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft
 		IconPalette: chrome
@@ -824,7 +825,7 @@ DARK:
 		PlayerPalette: overlayplayerscrin
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 135
+		BuildPaletteOrder: 221
 		Prerequisites: anyradar, ~vehicles.harbinger, ~techlevel.medium
 		Description: Heavy hover tank with armed with rift cannon.\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft, Infantry
 		IconPalette: scrin
@@ -887,7 +888,7 @@ RUIN:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 150
+		BuildPaletteOrder: 280
 		Prerequisites: scrt, ~vehicles.harbinger, ~techlevel.high
 		Queue: Vehicle
 		Description: Long-range artillery.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Tanks, Aircraft
@@ -939,7 +940,7 @@ TPOD:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 195
+		BuildPaletteOrder: 310
 		Prerequisites: techcenter, ~vehicles.tpod, ~techlevel.high
 		Description: Heavy assault walker with beam weapons.\n  Strong vs Vehicles.\n  Weak vs Aircraft
 		IconPalette: chrome
@@ -1014,6 +1015,7 @@ TPOD:
 RPTP:
 	Inherits: TPOD
 	Buildable:
+		BuildPaletteOrder: 311
 		Prerequisites: scrt, ~vehicles.reaper, ~techlevel.high
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
@@ -1042,7 +1044,7 @@ SMCV:
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 300
+		BuildPaletteOrder: 502
 		Prerequisites: repair, ~vehicles.scrin, ~techlevel.infonly
 		IconPalette: chrome
 		Description: Deploys into another Colony Platform.\n  Unarmed
@@ -1099,7 +1101,7 @@ STMR:
 	Buildable:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
-		BuildPaletteOrder: 40
+		BuildPaletteOrder: 90
 		Prerequisites: anyradar, grav, ~aircraft.scrin, ~techlevel.medium
 		Description: Durable patrol craft.\n  Can detect submarines.\n  Strong vs Infantry, Light Armor, Aircraft\n  Weak vs Tanks, Buildings
 		IconPalette: chrome
@@ -1209,7 +1211,7 @@ DEVA:
 	Buildable:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
-		BuildPaletteOrder: 55
+		BuildPaletteOrder: 170
 		Prerequisites: scrt, grav, ~aircraft.scrin, ~techlevel.high
 		Description: Long-range siege warship.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Aircraft, Tanks
 		IconPalette: chrome
@@ -1302,7 +1304,7 @@ PAC:
 	Buildable:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
-		BuildPaletteOrder: 55
+		BuildPaletteOrder: 180
 		Prerequisites: sign, scrt, grav, ~aircraft.scrin, ~techlevel.high
 		Description: Warship that launches a squadron\nof assault craft.\n  Strong vs Vehicles, Infantry\n  Weak vs Buildings, Defenses
 		IconPalette: chrome
