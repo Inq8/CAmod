@@ -49,9 +49,6 @@ namespace OpenRA.Mods.CA.Traits
 
 		void GrantCondition(Actor self, string cond)
 		{
-			if (!string.IsNullOrEmpty(info.Condition))
-				return;
-
 			if (string.IsNullOrEmpty(cond))
 				return;
 
@@ -63,9 +60,6 @@ namespace OpenRA.Mods.CA.Traits
 
 		void RevokeCondition(Actor self)
 		{
-			if (!string.IsNullOrEmpty(info.Condition))
-				return;
-
 			if (token == Actor.InvalidConditionToken)
 				return;
 

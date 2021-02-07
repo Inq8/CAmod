@@ -172,8 +172,6 @@ namespace OpenRA.Mods.CA.Traits
 
 			self.World.AddFrameEndTask(w =>
 			{
-				PlayLaunchSounds();
-
 				var j = 0;
 				Actor distanceTestActor = null;
 				for (var i = -info.SquadSize / 2; i <= info.SquadSize / 2; i++)

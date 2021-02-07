@@ -754,7 +754,6 @@ DOME:
 		SquadSize: 1
 		DisplayBeacon: true
 		BeaconPoster: cmineicon
-		BeaconPosterPalette: chrome
 		Icon: cmines
 		ArrowSequence: arrow
 		ClockSequence: clock
@@ -4140,13 +4139,13 @@ AFLD.GDI:
 		Description: Interceptors
 		LongDesc: A squadron of Interceptors provides\nair cover over the selected target area.
 		SelectTargetSpeechNotification: SelectTarget
+		EndChargeSpeechNotification: SpyPlaneReady
 		CameraActor: camera
 		CameraRemoveDelay: 450
 		UnitType: yf23.bomber
 		QuantizedFacings: 8
 		DisplayBeacon: true
 		BeaconPoster: airsupport
-		BeaconPosterPalette: chrome
 		SquadSize: 3
 		ArrowSequence: arrow
 		ClockSequence: clock
@@ -4341,7 +4340,7 @@ TMPL:
 		TrailSequences: idle
 		TrailPalette: tseffect-ignore-lighting-alpha75
 		DisplayBeacon: True
-		BeaconPoster: a10airstrike
+		BeaconPoster: clustermissile
 		BeaconPosterPalette: temptd
 	WithBuildingBib:
 	GrantExternalConditionPowerCA@FSHIELD:
@@ -4484,7 +4483,7 @@ PRIS:
 		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	Sellable:
-		RequiresCondition: !build-incomplete && !c4 && !being-warped && !charging
+		RequiresCondition: !build-incomplete && !c4 && !being-warped
 
 SPEN.nod:
 	Inherits: ^Building
@@ -5328,7 +5327,7 @@ UPGC:
 		ActorType: ocar.pod
 		BaselineSpawn: true
 		Facing: 256
-		ReadyAudio: SuppliesInbound
+		IncomingAudio: SuppliesInbound
 	WithDeliveryOverlay:
 		Sequence: flare
 		Palette: effect

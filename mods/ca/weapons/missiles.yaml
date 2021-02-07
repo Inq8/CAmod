@@ -685,12 +685,12 @@ SCUD:
 V3Weapon:
 	Inherits: ^AntiGroundMissile
 	-Report:
-	ValidTargets: Ground, Trees, Water
+	ValidTargets: Ground, Trees, Water, ICBM
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		Damage: 3400
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
-		ValidTargets: Ground, Water, Trees
+		ValidTargets: Ground, Water, Trees, ICBM
 		Versus:
 			None: 90
 			Wood: 65
@@ -701,6 +701,7 @@ V3Weapon:
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: building, building2
+		ValidTargets: Ground, Air, Ship, Trees, ICBM
 	Warhead@4EffWater: CreateEffect
 		Explosions: large_splash
 		ImpactSounds: splashl1.aud, splashl2.aud

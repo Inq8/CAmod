@@ -23,7 +23,10 @@ namespace OpenRA.Mods.CA.Traits
 	public class ProductionAirdropCAInfo : ProductionInfo
 	{
 		[NotificationReference("Speech")]
-		public readonly string ReadyAudio = "Reinforce";
+		public readonly string ReadyAudio = null;
+
+		[NotificationReference("Speech")]
+		public readonly string IncomingAudio = null;
 
 		[FieldLoader.Require]
 		[ActorReference(typeof(AircraftInfo))]
@@ -92,6 +95,9 @@ namespace OpenRA.Mods.CA.Traits
 					return;
 				}
 
+				if (info.IncomingAudio != null)
+					Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", info.IncomingAudio, self.Owner.Faction.InternalName);
+
 				var actor = w.CreateActor(info.ActorType, new TypeDictionary
 				{
 					new CenterPositionInit(w.Map.CenterOfCell(startPos) + new WVec(WDist.Zero, WDist.Zero, aircraftInfo.CruiseAltitude)),
@@ -113,6 +119,7 @@ namespace OpenRA.Mods.CA.Traits
 						cargo.Delivered(self);
 
 					self.World.AddFrameEndTask(ww => DoProduction(self, producee, exit, productionType, inits));
+					if (info.ReadyAudio != null)
 					Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", info.ReadyAudio, self.Owner.Faction.InternalName);
 				}));
 
