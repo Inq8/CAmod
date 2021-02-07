@@ -49,10 +49,10 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			{
 				case SquadTypeCA.Assault:
 				case SquadTypeCA.Rush:
-					FuzzyStateMachine.ChangeState(this, new GroundUnitsIdleState(), true);
+					FuzzyStateMachine.ChangeState(this, new GroundUnitsIdleStateCA(), true);
 					break;
 				case SquadTypeCA.Air:
-					FuzzyStateMachine.ChangeState(this, new AirIdleState(), true);
+					FuzzyStateMachine.ChangeState(this, new AirIdleStateCA(), true);
 					break;
 				case SquadTypeCA.Protection:
 					FuzzyStateMachine.ChangeState(this, new UnitsForProtectionIdleState(), true);
@@ -108,16 +108,16 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			if (Type == SquadTypeCA.Air)
 			{
 				// decide flee or retaliate.
-				if (AirStateBase.NearToPosSafely(this, CenterPosition))
+				if (AirStateBaseCA.NearToPosSafely(this, CenterPosition))
 				{
 					TargetActor = e.Attacker;
-					FuzzyStateMachine.ChangeState(this, new AirAttackState(), true);
+					FuzzyStateMachine.ChangeState(this, new AirAttackStateCA(), true);
 					return;
 				}
 
 				// Flee
 				ReflexAvoidance(e.Attacker);
-				FuzzyStateMachine.ChangeState(this, new AirFleeState(), true);
+				FuzzyStateMachine.ChangeState(this, new AirFleeStateCA(), true);
 			}
 		}
 

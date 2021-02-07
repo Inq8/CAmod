@@ -763,6 +763,23 @@ PrisLaser:
 		RandomClusterCount: 3
 		Dimensions: 3,3
 		Footprint: xxx x_x xxx
+		
+PrisLaserSupport:
+	ValidTargets: Ground, Water
+	ReloadDelay: 40
+	Range: 5c0
+	Report: prisfire.aud
+	Projectile: LaserZap
+		Width: 35
+		Color: 00FFFFC8
+		ZOffset: 2047
+		SecondaryBeam: true
+		SecondaryBeamWidth: 65
+		SecondaryBeamZOffset: 2047
+		SecondaryBeamColor: 75D1FF
+	Warhead@1Dam: SpreadDamage
+		Damage: 0
+	AirThreshold: 1000
 
 PrisTLaser:
 	Inherits: PrisLaser

@@ -15,11 +15,11 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 {
-	abstract class ProtectionStateBase : GroundStateBaseCA
+	abstract class ProtectionStateBaseCA : GroundStateBaseCA
 	{
 	}
 
-	class UnitsForProtectionIdleState : ProtectionStateBase, IState
+	class UnitsForProtectionIdleState : ProtectionStateBaseCA, IState
 	{
 		public void Activate(SquadCA owner) { }
 		public void Tick(SquadCA owner)
@@ -33,18 +33,18 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 				if (owner.TargetActor == null)
 				{
-					Retreat(owner, false, true, true);
+					Retreat(owner, flee: false, rearm: true, repair: true);
 					return;
 				}
 			}
 
-			owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionAttackState(), false);
+			owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionAttackStateCA(), false);
 		}
 
 		public void Deactivate(SquadCA owner) { }
 	}
 
-	class UnitsForProtectionAttackState : ProtectionStateBase, IState
+	class UnitsForProtectionAttackStateCA : ProtectionStateBaseCA, IState
 	{
 		public const int BackoffTicks = 4;
 		internal int Backoff = BackoffTicks;
@@ -62,12 +62,13 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 				if (owner.TargetActor == null)
 				{
-					owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionFleeState(), false);
+					owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionFleeStateCA(), false);
 					return;
 				}
 			}
 
 			// rescan target to prevent being ambushed and die without fight
+			// return to AttackMove state for formation
 			var leader = owner.Units.ClosestTo(owner.TargetActor.CenterPosition);
 			if (leader == null)
 				return;
@@ -82,7 +83,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			{
 				if (Backoff < 0)
 				{
-					owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionFleeState(), false);
+					owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionFleeStateCA(), false);
 					Backoff = BackoffTicks;
 					return;
 				}
@@ -141,13 +142,13 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			}
 
 			if (cannotRetaliate)
-				owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionFleeState(), false);
+				owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionFleeStateCA(), false);
 		}
 
 		public void Deactivate(SquadCA owner) { }
 	}
 
-	class UnitsForProtectionFleeState : ProtectionStateBase, IState
+	class UnitsForProtectionFleeStateCA : ProtectionStateBaseCA, IState
 	{
 		public void Activate(SquadCA owner) { }
 
@@ -156,7 +157,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			if (!owner.IsValid)
 				return;
 
-			Retreat(owner, true, true, true);
+			Retreat(owner, flee: true, rearm: true, repair: true);
 			owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionIdleState(), false);
 		}
 

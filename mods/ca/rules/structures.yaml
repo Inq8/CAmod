@@ -4450,22 +4450,38 @@ PRIS:
 		HasMinibib: true
 	WithSpriteBody:
 		PauseOnCondition: disabled || empdisable || being-warped
-		RequiresCondition: !charging
-	WithChargeSpriteBody:
-		Sequence: active
-		Name: bodyactive
-		RequiresCondition: charging
+	WithPrismChargeAnimation:
+	AttackPrismSupported:
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: disabled
+		ChargeAudio: bpripow.aud
+		MaxCharges: 1
+		ReloadDelay: 120
+		SupportArmament: support
+		ReceiverOffset: 0,0,896
+		BuffCondition: prism-stack
+	FirepowerMultiplier@STACK-1:
+		RequiresCondition: prism-stack == 1
+		Modifier: 200
+	FirepowerMultiplier@STACK-2:
+		RequiresCondition: prism-stack == 2
+		Modifier: 300
+	FirepowerMultiplier@STACK-3:
+		RequiresCondition: prism-stack == 3
+		Modifier: 400
+	FirepowerMultiplier@STACK-4:
+		RequiresCondition: prism-stack == 4
+		Modifier: 500
 	Armament:
 		Weapon: PrisLaser
 		LocalOffset: 0,-85,956
-	AttackCharges:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: disabled || empdisable || being-warped
-		ChargingCondition: charging
-	AmbientSound:
-		RequiresCondition: charging
-		SoundFiles: bpripow.aud
-		Interval: 30, 40
+	Armament@support:
+		# Make sure the weapon's AirThreshold is large enough
+		# than LocalOffset otherwise the weapon will refuse to fire!
+		# (considering the target is in air.)
+		Name: support
+		Weapon: PrisLaserSupport
+		LocalOffset: 0,0,1024
 	Power:
 		Amount: -75
 		RequiresCondition: !being-warped

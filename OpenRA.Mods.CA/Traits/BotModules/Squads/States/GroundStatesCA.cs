@@ -1,6 +1,6 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2019 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2020 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
  * as published by the Free Software Foundation, either version 3 of
@@ -9,7 +9,6 @@
  */
 #endregion
 
-using System;
 using System.Linq;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
@@ -31,17 +30,17 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		protected Actor GetRandomPreferredTarget(SquadCA owner)
 		{
 			var manager = owner.SquadManager;
-			var preferredTargets = manager.World.ActorsHavingTrait<MustBeDestroyed>(t => t.Info.RequiredForShortGame)
+			var mustDestroyedEnemy = manager.World.ActorsHavingTrait<MustBeDestroyed>(t => t.Info.RequiredForShortGame)
 					.Where(a => manager.IsPreferredEnemyUnit(a) && manager.IsNotHiddenUnit(a)).ToArray();
 
-			if (!preferredTargets.Any())
+			if (!mustDestroyedEnemy.Any())
 				return FindClosestEnemy(owner);
 
-			return preferredTargets.Random(owner.World.LocalRandom);
+			return mustDestroyedEnemy.Random(owner.World.LocalRandom);
 		}
 	}
 
-	class GroundUnitsIdleState : GroundStateBaseCA, IState
+	class GroundUnitsIdleStateCA : GroundStateBaseCA, IState
 	{
 		public void Activate(SquadCA owner) { }
 
@@ -64,7 +63,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 			if (enemyUnits.Count == 0)
 			{
-				Retreat(owner, false, true, true);
+				Retreat(owner, flee: false, rearm: true, repair: true);
 				return;
 			}
 
@@ -74,7 +73,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsAttackMoveState(), false);
 			}
 			else
-				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeState(), false);
+				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeStateCA(), false);
 		}
 
 		public void Deactivate(SquadCA owner) { }
@@ -108,7 +107,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 					owner.TargetActor = targetActor;
 				else
 				{
-					owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeState(), false);
+					owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeStateCA(), false);
 					return;
 				}
 			}
@@ -255,14 +254,16 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				}
 			}
 
+			// Because ShouldFlee(owner) cannot retreat units while they cannot even fight
+			// a unit that they cannot target. Therefore, use `cannotRetaliate` here to solve this bug.
 			if (ShouldFlee(owner) || cannotRetaliate)
-				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeState(), false);
+				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeStateCA(), false);
 		}
 
 		public void Deactivate(SquadCA owner) { }
 	}
 
-	class GroundUnitsFleeState : GroundStateBaseCA, IState
+	class GroundUnitsFleeStateCA : GroundStateBaseCA, IState
 	{
 		public void Activate(SquadCA owner) { }
 
@@ -271,8 +272,8 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			if (!owner.IsValid)
 				return;
 
-			Retreat(owner, true, true, true);
-			owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsIdleState(), false);
+			Retreat(owner, flee: true, rearm: true, repair: true);
+			owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsIdleStateCA(), false);
 		}
 
 		public void Deactivate(SquadCA owner) { owner.SquadManager.DismissSquad(owner); }

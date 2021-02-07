@@ -1,6 +1,6 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2019 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2020 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
  * as published by the Free Software Foundation, either version 3 of
@@ -148,17 +148,18 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			foreach (var ap in ammoPools)
 				if (!rearmable.Info.AmmoPools.Contains(ap.Info.Name))
 					return false;
+
 			return true;
 		}
 
 		// Retreat units from combat, or for supply only in idle
 		protected void Retreat(SquadCA squad, bool flee, bool rearm, bool repair)
 		{
-			var loc = CPos.Zero;
+			var loc = new CPos(0, 0, 0);
 
-			// HACK: "alreadyRepair" is to solve repairpad performance
-			// if repairpad logic is better we will only need
-			// this function for all flee states.
+			// HACK: "alreadyRepair" is to solve AI repair orders performance,
+			// which is only allow one goes to repairpad at the same time to avoid queueing too many orders.
+			// if repairpad logic is better we can just drop it.
 			var alreadyRepair = false;
 
 			if (flee)
@@ -196,7 +197,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 							repairBuilding = repairable.FindRepairBuilding(a);
 						else
 						{
-							var repairableNear = a.TraitOrDefault<RepairableNearCA>();
+							var repairableNear = a.TraitOrDefault<RepairableNear>();
 							if (repairableNear != null)
 							{
 								orderId = "RepairNear";
