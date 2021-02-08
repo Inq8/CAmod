@@ -343,8 +343,10 @@ KATY:
 	WithMirageSpriteBody:
 		RequiresCondition: tree && england
 		Name: tree
+	WithFacingSpriteBody:
+		RequiresCondition: !tree
 	WithSpriteTurret:
-		RequiresCondition: !scrin && !(gdi || nod)
+		RequiresCondition: !scrin && !(gdi || nod) && !tree
 	WithSpriteTurret@TD:
 		RequiresCondition: gdi || nod
 		Turret: tertiary
@@ -355,6 +357,21 @@ KATY:
 		RequiresCondition: scrin
 	WithMuzzleOverlay:
 		RequiresCondition: !scrin
+	Cloak@NORMAL:
+		InitialDelay: 100
+		CloakDelay: 100
+		CloakSound: vmirat2a.aud
+		CloakedCondition: hidden
+		UncloakSound: appear1.aud
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Move, Damage, Heal, SelfHeal
+		Palette: player
+		IsPlayerPalette: false
+		RequiresCondition: england && !cloak-force-disabled && !invisibility && !driver-dead && !empdisable && !being-warped
+	Cloak@CRATE-CLOAK:
+		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
+	GrantConditionOnDamageState@UNCLOAK:
+		Condition: cloak-force-disabled
+		ValidDamageStates: Critical, Heavy
 	SpawnActorOnDeath:
 		RequiresCondition: !(being-warped || warpout) && warpin && france
 	SpawnActorOnDeath@England:
