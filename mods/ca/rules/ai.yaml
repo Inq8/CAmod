@@ -511,19 +511,18 @@ Player:
 			gpsscramblerpower:
 				OrderName: gpsscramble
 				MinimumAttractiveness: 1000
-				FineScanRadius: 2
 				Consideration@2:
 					Against: Enemy
 					Types: Infantry, Vehicle
-					Attractiveness: -2
+					Attractiveness: 2
 					TargetMetric: Value
-					CheckRadius: 2c0
+					CheckRadius: 8c0
 				Consideration@3:
 					Against: Ally
 					Types: Infantry, Vehicle
-					Attractiveness: 2
+					Attractiveness: 1
 					TargetMetric: Value
-					CheckRadius: 3c0
+					CheckRadius: 8c0
 			stormspikepower:
 				OrderName: stormspike
 				MinimumAttractiveness: 5
@@ -539,7 +538,7 @@ Player:
 				FineScanRadius: 2
 				Consideration@3:
 					Against: Enemy
-					Types: Infantry, Vehicle
+					Types: Infantry
 					Attractiveness: 2
 					TargetMetric: Value
 					CheckRadius: 2c0
