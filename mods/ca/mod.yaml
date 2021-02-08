@@ -7,19 +7,17 @@ Metadata:
 PackageFormats: Mix
 
 Packages:
-	~^SupportDir|Content/ca/v2/
-	~^SupportDir|Content/ca/v2/expand
+	~^SupportDir|Content/ca
+	~^SupportDir|Content/ca/expand
 	~^SupportDir|Content/ca/ra
 	~^SupportDir|Content/ca/cnc
 	~^SupportDir|Content/ca/ts
 	~^SupportDir|Content/ca/firestorm
 	~^SupportDir|Content/ca/ra2
-	~^SupportDir|Content/ca/yr
-	~^SupportDir|Content/ca/v2/movies
-	~^SupportDir|Content/ca/
+	~^SupportDir|Content/ca/movies
 	^EngineDir
-	$ca: ca
 	^EngineDir|mods/common: common
+	$ca: ca
 	~main.mix
 	~conquer.mix
 	~lores.mix: lores
@@ -33,10 +31,11 @@ Packages:
 	~snow.mix
 	~interior.mix
 	~./ra/scores.mix
-	~./ts/scores.mix
 	~./cnc/scores.mix
+	~./ts/scores.mix
+	~./ts/scores01.mix
 	~./ra2/theme.mix
-	~./yr/thememd.mix
+	~./ra2/thememd.mix
 	~expand2.mix
 	~hires1.mix
 	~desert.mix
@@ -296,12 +295,12 @@ ModContent:
 	HeaderMessage: Game content may be extracted from the original game discs or an\nexisting digital install. OpenRA can also download the base game\nfiles from an online mirror of the 2008 freeware release of RA.
 	Packages:
 		base: Base Game Files
-			TestFiles: ^SupportDir|Content/ca/v2/allies.mix, ^SupportDir|Content/ca/v2/conquer.mix, ^SupportDir|Content/ca/v2/interior.mix, ^SupportDir|Content/ca/v2/hires.mix, ^SupportDir|Content/ca/v2/lores.mix, ^SupportDir|Content/ca/v2/local.mix, ^SupportDir|Content/ca/v2/speech.mix, ^SupportDir|Content/ca/v2/russian.mix, ^SupportDir|Content/ca/v2/snow.mix, ^SupportDir|Content/ca/v2/sounds.mix, ^SupportDir|Content/ca/v2/temperat.mix
+			TestFiles: ^SupportDir|Content/ca/allies.mix, ^SupportDir|Content/ca/conquer.mix, ^SupportDir|Content/ca/interior.mix, ^SupportDir|Content/ca/hires.mix, ^SupportDir|Content/ca/lores.mix, ^SupportDir|Content/ca/local.mix, ^SupportDir|Content/ca/speech.mix, ^SupportDir|Content/ca/russian.mix, ^SupportDir|Content/ca/snow.mix, ^SupportDir|Content/ca/sounds.mix, ^SupportDir|Content/ca/temperat.mix
 			Sources: allied, allied-linux, soviet, soviet-linux, tfd, origin-ra
 			Required: true
 			Download: basefiles
 		aftermathbase: Aftermath Expansion Files
-			TestFiles: ^SupportDir|Content/ca/v2/expand/expand2.mix
+			TestFiles: ^SupportDir|Content/ca/expand/expand2.mix
 			Sources: aftermath, aftermath-linux, tfd, origin-ra
 			Required: true
 			Download: aftermath
@@ -330,7 +329,7 @@ ModContent:
 			TestFiles: ^SupportDir|Content/ca/ra2/theme.mix
 			Sources: ra2, origin-ra2, tfd
 		yrmusic: YR Music
-			TestFiles: ^SupportDir|Content/ca/yr/thememd.mix
+			TestFiles: ^SupportDir|Content/ca/ra2/thememd.mix
 			Sources: ra2yr, origin-yr, tfd
 	Downloads:
 		ca|installer/downloads.yaml
