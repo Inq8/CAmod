@@ -9,9 +9,12 @@ PackageFormats: Mix
 Packages:
 	~^SupportDir|Content/ca/v2/
 	~^SupportDir|Content/ca/v2/expand
-	~^SupportDir|Content/ca/v2/cnc
-	~^SupportDir|Content/ca/v2/ts
-	~^SupportDir|Content/ca/v2/firestorm
+	~^SupportDir|Content/ca/ra
+	~^SupportDir|Content/ca/cnc
+	~^SupportDir|Content/ca/ts
+	~^SupportDir|Content/ca/firestorm
+	~^SupportDir|Content/ca/ra2
+	~^SupportDir|Content/ca/yr
 	~^SupportDir|Content/ca/v2/movies
 	~^SupportDir|Content/ca/
 	^EngineDir
@@ -29,11 +32,11 @@ Packages:
 	~temperat.mix
 	~snow.mix
 	~interior.mix
-	~./v2/scores.mix
-	~./v2/ts/scores.mix
-	~./v2/cnc/scores.mix
-	~./v2/theme.mix
-	~./v2/thememd.mix
+	~./ra/scores.mix
+	~./ts/scores.mix
+	~./cnc/scores.mix
+	~./ra2/theme.mix
+	~./yr/thememd.mix
 	~expand2.mix
 	~hires1.mix
 	~desert.mix
@@ -293,40 +296,41 @@ ModContent:
 	HeaderMessage: Game content may be extracted from the original game discs or an\nexisting digital install. OpenRA can also download the base game\nfiles from an online mirror of the 2008 freeware release of RA.
 	Packages:
 		base: Base Game Files
-			TestFiles: ^Content/ca/v2/allies.mix, ^Content/ca/v2/conquer.mix, ^Content/ca/v2/interior.mix, ^Content/ca/v2/hires.mix, ^Content/ca/v2/lores.mix, ^Content/ca/v2/local.mix, ^Content/ca/v2/speech.mix, ^Content/ca/v2/russian.mix, ^Content/ca/v2/snow.mix, ^Content/ca/v2/sounds.mix, ^Content/ca/v2/temperat.mix
+			TestFiles: ^SupportDir|Content/ca/v2/allies.mix, ^SupportDir|Content/ca/v2/conquer.mix, ^SupportDir|Content/ca/v2/interior.mix, ^SupportDir|Content/ca/v2/hires.mix, ^SupportDir|Content/ca/v2/lores.mix, ^SupportDir|Content/ca/v2/local.mix, ^SupportDir|Content/ca/v2/speech.mix, ^SupportDir|Content/ca/v2/russian.mix, ^SupportDir|Content/ca/v2/snow.mix, ^SupportDir|Content/ca/v2/sounds.mix, ^SupportDir|Content/ca/v2/temperat.mix
 			Sources: allied, allied-linux, soviet, soviet-linux, tfd, origin-ra
 			Required: true
 			Download: basefiles
 		aftermathbase: Aftermath Expansion Files
-			TestFiles: ^Content/ca/v2/expand/expand2.mix, ^Content/ca/v2/expand/hires1.mix, ^Content/ca/v2/expand/lores1.mix, ^Content/ca/v2/expand/chrotnk1.aud, ^Content/ca/v2/expand/fixit1.aud, ^Content/ca/v2/expand/jburn1.aud, ^Content/ca/v2/expand/jchrge1.aud, ^Content/ca/v2/expand/jcrisp1.aud, ^Content/ca/v2/expand/jdance1.aud, ^Content/ca/v2/expand/jjuice1.aud, ^Content/ca/v2/expand/jjump1.aud, ^Content/ca/v2/expand/jlight1.aud, ^Content/ca/v2/expand/jpower1.aud, ^Content/ca/v2/expand/jshock1.aud, ^Content/ca/v2/expand/jyes1.aud, ^Content/ca/v2/expand/madchrg2.aud, ^Content/ca/v2/expand/madexplo.aud, ^Content/ca/v2/expand/mboss1.aud, ^Content/ca/v2/expand/mhear1.aud, ^Content/ca/v2/expand/mhotdig1.aud, ^Content/ca/v2/expand/mhowdy1.aud, ^Content/ca/v2/expand/mhuh1.aud, ^Content/ca/v2/expand/mlaff1.aud, ^Content/ca/v2/expand/mrise1.aud, ^Content/ca/v2/expand/mwrench1.aud, ^Content/ca/v2/expand/myeehaw1.aud, ^Content/ca/v2/expand/myes1.aud
+			TestFiles: ^SupportDir|Content/ca/v2/expand/expand2.mix
 			Sources: aftermath, aftermath-linux, tfd, origin-ra
 			Required: true
 			Download: aftermath
 		cncdesert: C&C Desert Tileset
-			TestFiles: ^Content/ca/v2/cnc/desert.mix
+			TestFiles: ^SupportDir|Content/ca/cnc/desert.mix
 			Sources: tfd, origin-cnc, cnc95, cnc95-linux
 			Required: true
 			Download: cncdesert
 		music: Red Alert Music
-			TestFiles: ^Content/ca/v2/scores.mix
+			TestFiles: ^SupportDir|Content/ca/ra/scores.mix
 			Sources: allied, allied-linux, soviet, soviet-linux, tfd, origin-ra
 			Download: music
-		cncmusic: C&C Game Music
-			TestFiles: ^Content/ca/v2/cnc/scores.mix
+		cncmusic: C&C Music
+			TestFiles: ^SupportDir|Content/ca/cnc/scores.mix
 			Download: cncmusic
-		tsmusic: TibSun Game Music
-			TestFiles: ^Content/ca/v2/ts/scores.mix
+			Sources: origin-cnc, tfd, cnc95
+		tsmusic: TibSun Music
+			TestFiles: ^SupportDir|Content/ca/ts/scores.mix
 			Download: tsmusic
-			Sources: origin-ts
+			Sources: origin-ts, tfd
 		fsmusic: Firestorm Music
-			TestFiles: ^Content/ts/firestorm/dmachine.aud, ^Content/ts/firestorm/elusive.aud, ^Content/ts/firestorm/fsmap.aud, ^Content/ts/firestorm/fsmenu.aud, ^Content/ts/firestorm/hacker.aud, ^Content/ts/firestorm/infiltra.aud, ^Content/ts/firestorm/kmachine.aud, ^Content/ts/firestorm/linkup.aud, ^Content/ts/firestorm/rainnite.aud, ^Content/ts/firestorm/slavesys.aud
+			TestFiles: ^SupportDir|Content/ca/firestorm/linkup.aud, ^SupportDir|Content/ca/firestorm/hacker.aud
 			Download: fsmusic
-			Sources: fstorm
-		ra2music: RA2 Game Music
-			TestFiles: ^Content/ca/v2/theme.mix
+			Sources: tfd, origin-ts, fstorm
+		ra2music: RA2 Music
+			TestFiles: ^SupportDir|Content/ca/ra2/theme.mix
 			Sources: ra2, origin-ra2, tfd
 		yrmusic: YR Music
-			TestFiles: ^Content/ca/v2/thememd.mix
+			TestFiles: ^SupportDir|Content/ca/yr/thememd.mix
 			Sources: ra2yr, origin-yr, tfd
 	Downloads:
 		ca|installer/downloads.yaml
