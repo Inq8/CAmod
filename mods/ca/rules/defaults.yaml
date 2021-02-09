@@ -694,13 +694,14 @@
 		DamageCooldown: 0
 		RequiresCondition: nshield
 	WithDecoration@NSHIELD:
-		Image: pips
-		Palette: chrometd
-		Sequence: pip-repair
-		Position: BottomCenter
+		Image: select
+		Palette: chrome
+		Sequence: repair
+		Position: Center
 		RequiresCondition: nshield
-		BlinkInterval: 64
-		RequiresSelection: True
+		BlinkInterval: 15
+		BlinkPattern: on, off
+		RequiresSelection: False
 		ValidRelationships: Ally, Neutral
 	DamageMultiplier@NSHIELD:
 		RequiresCondition: nshield
@@ -748,12 +749,13 @@
 		Palette: tseffect
 		RequiresCondition: nrepair && damaged
 	WithDecoration@NREPAIR:
-		Image: pips
-		Palette: chrometd
-		Sequence: pip-repair
-		Position: BottomCenter
+		Image: select
+		Palette: chrome
+		Sequence: repair-small
+		Position: Center
 		RequiresCondition: nrepair
-		BlinkInterval: 64
+		BlinkInterval: 15
+		BlinkPattern: on, off
 		RequiresSelection: True
 		ValidRelationships: Ally, Neutral
 	ExternalCondition@NREPAIR-AI:
@@ -771,12 +773,13 @@
 		PlayerExperience: 15
 		RequiresCondition: aircraft-repair && !forceshield && !invulnerability && !being-warped
 	WithDecoration@AIRCRAFTREPAIR:
-		Image: pips
-		Palette: chrometd
-		Sequence: pip-repair
-		Position: BottomCenter
+		Image: select
+		Palette: chrome
+		Sequence: repair-small
+		Position: Bottom
+		BlinkInterval: 15
+		BlinkPattern: on, off
 		RequiresCondition: aircraft-repair
-		BlinkInterval: 64
 		RequiresSelection: True
 		ValidRelationships: Ally, Neutral
 

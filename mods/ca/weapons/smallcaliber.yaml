@@ -410,11 +410,14 @@ M16Carbine:
 
 M1CarbineE:
 	Inherits: M1Carbine
-	Report: mgbtr1.aud, mgbtr2.aud, mgbtr3.aud
+	Burst: 3
+	BurstDelays: 2
+	-Report:
+	StartBurstReport: baocatta.aud, baocattb.aud, baocattc.aud
 	ReloadDelay: 10
 	Range: 7c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 1800
+		Damage: 600
 		Versus:
 			None: 100
 			Wood: 15
@@ -429,7 +432,7 @@ BATFGun:
 	Inherits: M1CarbineE
 	Range: 5c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 5400
+		Damage: 1800
 		Versus:
 			Wood: 10
 			Concrete: 5

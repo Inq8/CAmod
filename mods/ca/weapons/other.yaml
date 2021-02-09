@@ -768,7 +768,7 @@ PrisLaserSupport:
 	ValidTargets: Ground, Water
 	ReloadDelay: 3
 	Range: 5c0
-	Report: bpripow.aud
+	Report: bpriat1a.aud
 	Projectile: LaserZap
 		Width: 35
 		Color: 00FFFFC8
@@ -1140,10 +1140,10 @@ TitanRailgunImpact:
 	-Projectile:
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
-		Damage: 9000
+		Damage: 9500
 
 IonZap:
-	ReloadDelay: 70
+	ReloadDelay: 90
 	Range: 5c768
 	Report: ion1.aud
 	InvalidTargets: Air
@@ -1169,22 +1169,8 @@ IonZap:
 		ZOffset: 2045
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
-		Damage: 9300
-		ValidRelationships: Neutral, Enemy
-		InvalidTargets: Air
-		AffectsParent: false
-		Versus:
-			None: 30
-			Wood: 70
-			Light: 85
-			Heavy: 115
-			Concrete: 35
-			Brick: 45
-		DamageTypes: Prone100Percent, TriggerProne, ExplosionDeath
-	Warhead@2Dam: SpreadDamage
-		Spread: 512
-		Damage: 2350
-		ValidRelationships: Ally
+		Damage: 12500
+		ValidRelationships: Ally, Neutral, Enemy
 		InvalidTargets: Air
 		AffectsParent: false
 		Versus:

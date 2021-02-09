@@ -4458,7 +4458,7 @@ PRIS:
 		PauseOnCondition: disabled
 		ChargeAudio: bpripow.aud
 		MaxCharges: 1
-		ReloadDelay: 120
+		ReloadDelay: 40
 		SupportArmament: support
 		ReceiverOffset: 0,0,896
 		BuffCondition: prism-stack
@@ -5401,6 +5401,12 @@ UPGC:
 		RequiresCondition: !build-incomplete && tower.shield && nshield-active
 		Sequence: turret-shield-active
 		PauseOnCondition: disabled || being-warped
+	WithIdleOverlay@SHIELD-ACTIVE-EFFECT:
+		RequiresCondition: !build-incomplete && tower.shield && nshield-active
+		Sequence: emp-overlay
+		Palette: tseffect
+		PauseOnCondition: disabled || being-warped
+		Offset: -1284,384,0
 	WithIdleOverlay@DZONE:
 		RequiresCondition: !build-incomplete && tower.drop
 		Sequence: turret-drop
@@ -5461,6 +5467,16 @@ UPGC:
 		Cursor: repair
 		RequiresCondition: tower.shield
 		PauseOnCondition: disabled || empdisable ||  being-warped
+	ProximityExternalCondition@NSHIELD-AUDIO:
+		Condition: nshield-audio
+		RequiresCondition: nshield-active
+		AffectsParent: true
+		EnableSound: uscolo1.aud
+	AmbientSound@NSHIELD-AUDIO:
+		SoundFiles: uscolo2a.aud, uscolo2b.aud, uscolo2c.aud
+		Delay: 3
+		Interval: 0
+		RequiresCondition: nshield-audio || nshield-active
 	Pluggable:
 		Conditions:
 			tower.rocket: tower.rocket
@@ -5501,7 +5517,7 @@ UPGC.BOMB:
 	Tooltip:
 		Name: Upgrade: Firestorm Missile System
 	Buildable:
-		Queue: Defense
+		Queue: Upgrade
 		BuildPaletteOrder: 140
 		Prerequisites: ~upgc.socket, ~bombard.strat, upgc, ~structures.gdi, ~techlevel.high
 		Description: Provides an napalm rocket barrage.\n\n  +Increases the Strategy: Bombardment unit bonus by a further 5%.
@@ -5518,7 +5534,7 @@ UPGC.SEEK:
 	Tooltip:
 		Name: Upgrade: Advanced Radar System
 	Buildable:
-		Queue: Defense
+		Queue: Upgrade
 		BuildPaletteOrder: 140
 		Prerequisites: ~upgc.socket, ~seek.strat, upgc, ~structures.gdi, ~techlevel.high
 		Description: Provides detailed information on enemy locations.\n\n  +Increases the Strategy: Seek & Destroy unit bonus by a further 5%.
@@ -5535,7 +5551,7 @@ UPGC.HOLD:
 	Tooltip:
 		Name: Upgrade: Nanoshield Generator
 	Buildable:
-		Queue: Defense
+		Queue: Upgrade
 		BuildPaletteOrder: 140
 		Prerequisites: ~upgc.socket, ~hold.strat, upgc, ~structures.gdi, ~techlevel.high
 		Description: Provides the ability to rapidly repair friendly structures.\n\n  +Increases the Strategy: Hold the Line unit bonus by a further 5%.
@@ -5552,7 +5568,7 @@ UPGC.DROP:
 	Tooltip:
 		Name: Upgrade: Supply Drop Zone
 	Buildable:
-		Queue: Defense
+		Queue: Upgrade
 		BuildPaletteOrder: 140
 		Prerequisites: ~upgc.socket, upgc, ~structures.gdi, ~techlevel.high
 		Description: Provides a dropzone\nfor emergency supplies.
