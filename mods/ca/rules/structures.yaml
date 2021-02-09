@@ -5441,8 +5441,10 @@ UPGC:
 		Condition: radar-active
 	GpsRadarProvider:
 		RequiresCondition: tower.radar && scan-active && !(disabled || being-warped)
-	ExternalCondition@NSACTIVE
+	ExternalCondition@NSACTIVE:
 		Condition: nshield-active
+	ExternalCondition@NSAUDIO:
+		Condition: nshield-audio
 	GrantExternalConditionPowerCA@NSHIELD:
 		OrderName: nshieldorder
 		Icon: nshield
