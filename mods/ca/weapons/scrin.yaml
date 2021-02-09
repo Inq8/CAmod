@@ -41,21 +41,6 @@ DisintegratorBeamAA:
 			Concrete: 100
 			Light: 100
 
-IntruderDiscs:
-	Inherits: PlasmaDiscs
-	ReloadDelay: 100
-	Burst: 3
-	Projectile: Bullet
-		Inaccuracy: 0c128
-	Warhead@1Dam: SpreadDamage
-		Damage: 3250
-		Versus:
-			Wood: 100
-			Light: 65
-			Heavy: 85
-			Concrete: 100
-			Brick: 85
-
 EnslaveInfantry:
 	Range: 7c0
 	ReloadDelay: 50
@@ -141,15 +126,20 @@ PlasmaDiscs:
 	ReloadDelay: 55
 	Burst: 5
 	BurstDelays: 4
-	Projectile: Bullet
+	Projectile: Missile
 		Image: plasdiscsm
 		TrailImage: smokey
 		TrailPalette: scrinplasma
 		TrailDelay: 1
 		Speed: 450
-		LaunchAngle: 50
+		LaunchAngle: 70
 		Inaccuracy: 0c256
 		Blockable: false
+		Jammable: false
+		HorizontalRateOfTurn: 100
+		RangeLimit: 6c512
+		LockOnProbability: 50
+		LockOnInaccuracy: 0
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		Damage: 1900
@@ -166,6 +156,55 @@ PlasmaDiscs:
 	Warhead@3Eff: CreateEffect
 		Explosions: small_explosion
 		ImpactSounds: seeker-hit1.aud, seeker-hit2.aud
+
+IntruderDiscs:
+	Inherits: PlasmaDiscs
+	ReloadDelay: 100
+	Burst: 3
+	Projectile: Bullet
+		Inaccuracy: 0c128
+		LockOnProbability: 33
+	Warhead@1Dam: SpreadDamage
+		Damage: 3250
+		Versus:
+			Wood: 100
+			Light: 65
+			Heavy: 85
+			Concrete: 100
+			Brick: 85
+
+DevastatorDiscs:
+	Inherits: PlasmaDiscs
+	Range: 18c0
+	MinRange: 2c0
+	ReloadDelay: 180
+	Report: devastator-fire1.aud, devastator-fire2.aud, devastator-fire3.aud
+	Burst: 7
+	BurstDelays: 5
+	-Projectile: Missile
+	Projectile: Bullet
+		Image: plasdiscsm
+		TrailImage: smokey
+		TrailPalette: scrinplasma
+		TrailDelay: 1
+		Speed: 450
+		LaunchAngle: 50
+		Inaccuracy: 0c256
+		Blockable: false
+		Image: plasdisclg
+		Inaccuracy: 1c768
+		Speed: 180
+	Warhead@1Dam: SpreadDamage
+		Damage: 4250
+		Versus:
+			None: 100
+			Wood: 80
+			Light: 60
+			Heavy: 30
+			Concrete: 95
+			Brick: 90
+	Warhead@3Eff: CreateEffect
+		Explosions: large_explosion
 
 ^ScrinLaser:
 	ValidTargets: Ground, Water
@@ -478,30 +517,6 @@ StormRiderZapAA:
 			Light: 100
 			Heavy: 100
 
-DevastatorDiscs:
-	Inherits: PlasmaDiscs
-	Range: 18c0
-	MinRange: 2c0
-	ReloadDelay: 180
-	Report: devastator-fire1.aud, devastator-fire2.aud, devastator-fire3.aud
-	Burst: 7
-	BurstDelays: 5
-	Projectile: Bullet
-		Image: plasdisclg
-		Inaccuracy: 1c768
-		Speed: 180
-	Warhead@1Dam: SpreadDamage
-		Damage: 4250
-		Versus:
-			None: 100
-			Wood: 80
-			Light: 60
-			Heavy: 30
-			Concrete: 95
-			Brick: 90
-	Warhead@3Eff: CreateEffect
-		Explosions: large_explosion
-
 InvaderLauncher:
 	ReloadDelay: 10
 	Burst: 4
@@ -661,6 +676,7 @@ ShardLauncher:
 		ContrailLength: 12
 		ContrailColor: 00FF00AA
 		Jammable: false
+		Blockable: false
 		Inaccuracy: 0
 		Image: shard
 		HorizontalRateOfTurn: 140
