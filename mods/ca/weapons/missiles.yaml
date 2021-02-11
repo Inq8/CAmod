@@ -284,8 +284,8 @@ HellfireAA:
 	Inherits: ^AntiAirMissile
 	ReloadDelay: 60
 	MinRange: 1c256
-	Burst: 2
-	BurstDelays: 10
+	Burst: 4
+	BurstDelays: 14
 	Projectile: MissileCA
 		Speed: 384
 		HorizontalRateOfTurn: 40
@@ -296,7 +296,8 @@ HellfireAA:
 HellfireAA.Orca:
 	Inherits: HellfireAA
 	Report: orcamis1.aud
-	BurstDelays: 7
+	ReloadDelay: 70
+	BurstDelays: 11
 
 WidowAA:
 	Inherits: ^AntiAirMissile
@@ -385,7 +386,7 @@ RedEye:
 		HorizontalRateOfTurn: 80
 		Speed: 298
 	Warhead@1Dam: SpreadDamage
-		Damage: 3800
+		Damage: 4000
 		Range: 0, 0c64, 0c256, 3c0
 		ValidTargets: Air
 
@@ -393,7 +394,7 @@ RedEye.CYB:
 	Inherits: RedEye
 	Report: rocket.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 4500
+		Damage: 4600
 
 RedEye.CRYO:
 	Inherits: RedEye
