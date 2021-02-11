@@ -1801,3 +1801,41 @@ U2Camera:
 	Report: cspydram.aud
 	TargetActorCenter: true
 	Projectile: InstantHit
+	
+^Debris:
+	Range: 5c0
+	Projectile: Bullet
+		Speed: 55, 108
+		LaunchAngle: 90, 192
+		Image: dbrissm
+		Palette: tseffect
+		Sequences: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+		Shadow: true
+		Blockable: false
+	Warhead@1Dam: SpreadDamage
+		Spread: 200
+		Falloff: 100, 100, 0
+		Damage: 1000
+		Versus:
+			None: 100
+			Wood: 85
+			Light: 70
+			Heavy: 35
+			Concrete: 28
+		DamageTypes: Prone100Percent, TriggerProne, ExplosionDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: small_explosion_alt1, small_explosion_alt2, small_explosion_alt3
+		ValidTargets: Ground, Air
+		ImpactSounds: kaboom25.aud, kaboom12.aud, xplos.aud
+	Warhead@3EffWater: CreateEffect
+		Explosions: small_splash
+		ExplosionPalette: effect
+		ImpactSounds: splash9.aud
+		ValidTargets: Water
+		InvalidTargets: Vehicle
+	Warhead@4Smu: LeaveSmudge
+		SmudgeType: SmallScorch
+		InvalidTargets: Vehicle, Building, Wall
+
+SmallDebris:
+	Inherits: ^Debris
