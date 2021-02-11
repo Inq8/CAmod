@@ -4902,6 +4902,8 @@ TTUR:
 		Amount: -20
 		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite@ftur:
+		Prerequisite: ftur
 	Explodes:
 		Weapon: BuildingExplode
 		EmptyWeapon: BuildingExplode
@@ -5582,8 +5584,8 @@ UPGC:
 			tower.shield: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop
 			tower.drop: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop
 	ProvidesPrerequisite@pluggable:
-		RequiresCondition: !build-incomplete && !tower.rocket && !tower.radar && !tower.shield && !tower.drop
-		Prerequisite: upgc.socket
+		RequiresCondition: !build-incomplete && (tower.rocket || tower.radar || tower.shield || tower.drop)
+		Prerequisite: upgc.plugged
 	ProvidesPrerequisite@AMPSEEK:
 		RequiresCondition: !build-incomplete && tower.radar
 		Prerequisite: seek3.strat
@@ -5611,9 +5613,9 @@ UPGC.BOMB:
 		Name: Upgrade: Firestorm Missile System
 	Buildable:
 		Queue: Upgrade
-		BuildPaletteOrder: 140
-		Prerequisites: ~upgc.socket, ~bombard2.strat, upgc, ~techlevel.high
-		Description: Provides an napalm rocket barrage.\n\n  +Increases the Strategy: Bombardment unit bonus by a further 5%.
+		BuildPaletteOrder: 3
+		Prerequisites: upgc, !upgc.plugged, bombard2.strat, ~bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
+		Description: Provides an napalm rocket barrage.\n\n  + Increases the Strategy: Bombardment unit bonus by a further 5%.
 		IconPalette: chrometd
 	Plug:
 		Type: tower.rocket
@@ -5628,9 +5630,9 @@ UPGC.SEEK:
 		Name: Upgrade: Advanced Radar System
 	Buildable:
 		Queue: Upgrade
-		BuildPaletteOrder: 140
-		Prerequisites: ~upgc.socket, ~seek2.strat, upgc, ~techlevel.high
-		Description: Provides detailed information on enemy locations.\n\n  +Increases the Strategy: Seek & Destroy unit bonus by a further 5%.
+		BuildPaletteOrder: 6
+		Prerequisites: upgc, !upgc.plugged, seek2.strat, ~seek.strat, ~!bombard.strat, ~!hold.strat, ~techlevel.high
+		Description: Provides detailed information on enemy locations.\n\n  + Increases the Strategy: Seek & Destroy unit bonus by a further 5%.
 		IconPalette: chrometd
 	Plug:
 		Type: tower.radar
@@ -5645,9 +5647,9 @@ UPGC.HOLD:
 		Name: Upgrade: Nanoshield Generator
 	Buildable:
 		Queue: Upgrade
-		BuildPaletteOrder: 140
-		Prerequisites: ~upgc.socket, ~hold2.strat, upgc, ~techlevel.high
-		Description: Provides the ability to rapidly repair friendly structures.\n\n  +Increases the Strategy: Hold the Line unit bonus by a further 5%.
+		BuildPaletteOrder: 9
+		Prerequisites: upgc, !upgc.plugged, hold2.strat, ~hold.strat, ~!bombard.strat, ~!seek.strat, ~techlevel.high
+		Description: Provides the ability to rapidly repair friendly structures.\n\n  + Increases the Strategy: Hold the Line unit bonus by a further 5%.
 		IconPalette: chrometd
 	Plug:
 		Type: tower.shield
@@ -5662,8 +5664,8 @@ UPGC.DROP:
 		Name: Upgrade: Supply Drop Zone
 	Buildable:
 		Queue: Upgrade
-		BuildPaletteOrder: 140
-		Prerequisites: ~upgc.socket, upgc, ~techlevel.high
+		BuildPaletteOrder: 90
+		Prerequisites: ~upgc, ~!upgc.plugged, ~techlevel.high
 		Description: Provides a dropzone\nfor emergency supplies.
 		IconPalette: chrometd
 	Plug:

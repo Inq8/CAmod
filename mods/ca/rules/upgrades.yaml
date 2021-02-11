@@ -35,7 +35,7 @@ bombard.strat:
 		Name: Strategy: Bombardment I
 	Buildable:
 		BuildPaletteOrder: 1
-		Prerequisites: radar.gdi, ~!seek.strat, ~!hold.strat, ~techlevel.high
+		Prerequisites: ~radar.gdi, ~!seek.strat, ~!hold.strat, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 3000
 		Description: Increases unit firepower by 5%.\n\n  Only one Strategy may be chosen.
@@ -49,7 +49,7 @@ bombard2.strat:
 	Tooltip:
 		Name: Strategy: Bombardment II
 	Buildable:
-		BuildPaletteOrder: 1
+		BuildPaletteOrder: 2
 		Prerequisites: gtek, ~bombard.strat, ~techlevel.high
 		Description: Increases the Strategy: Bombardment unit bonus by a further 5%.
 	RenderSprites:
@@ -60,8 +60,8 @@ seek.strat:
 	Tooltip:
 		Name: Strategy: Seek & Destroy
 	Buildable:
-		BuildPaletteOrder: 2
-		Prerequisites: radar.gdi, ~!bombard.strat, ~!hold.strat, ~structures.gdi, ~techlevel.high
+		BuildPaletteOrder: 4
+		Prerequisites: ~radar.gdi, ~!bombard.strat, ~!hold.strat, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 3000
 		Description: Increases unit speed and weapon range by 5%.\n\n  Only one Strategy may be chosen.
@@ -75,7 +75,7 @@ seek2.strat:
 	Tooltip:
 		Name: Strategy: Seek & Destroy II
 	Buildable:
-		BuildPaletteOrder: 2
+		BuildPaletteOrder: 5
 		Prerequisites: gtek, ~seek.strat, ~techlevel.high
 		Description: Increases the Strategy: Seek & Destroy unit bonus by a further 5%.
 	RenderSprites:
@@ -86,8 +86,8 @@ hold.strat:
 	Tooltip:
 		Name: Strategy: Hold the Line
 	Buildable:
-		BuildPaletteOrder: 3
-		Prerequisites: radar.gdi, ~!bombard.strat, ~!seek.strat, ~techlevel.high
+		BuildPaletteOrder: 7
+		Prerequisites: ~radar.gdi, ~!bombard.strat, ~!seek.strat, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 3000
 		Description: Increases unit armor by 5%.\n\n  Only one Strategy may be chosen.
@@ -101,145 +101,11 @@ hold2.strat:
 	Tooltip:
 		Name: Strategy: Hold the Line II
 	Buildable:
-		BuildPaletteOrder: 3
+		BuildPaletteOrder: 8
 		Prerequisites: gtek, ~hold.strat,  ~techlevel.high
 		Description: Increases the Strategy: Hold the Line unit bonus by a further 5%.
 	RenderSprites:
 		Image: hold2.strat
-
-sonic.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Sonic Amplifiers
-	Buildable:
-		BuildPaletteOrder: 32
-		Prerequisites: ~gtek.zocom, ~techlevel.high
-		BuildDuration: 1500
-		IconPalette: chrometd
-		Description: Increases the firepower of Disruptors and Sonic Towers.\n\n  Upgrades: Sonic Tower\n  Upgrades: Disruptor
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: sonic.upgrade
-
-drone.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Battle Drone
-	Buildable:
-		BuildPaletteOrder: 21
-		Prerequisites: ~radar.talon, ~techlevel.high
-		BuildDuration: 1500
-		Description: Allows construction of a modified crewless Battle Tank.\n\n  Replaces: Battle Tank\n  + Immunity to crew kill, chaos gas and mind control\n  + Reduced cost\n  – Disabled on low power
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: drone.upgrade
-
-pointlaser.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Point Defense Lasers
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~upgrades.pointlaser, ~techlevel.high
-		BuildDuration: 1500
-		IconPalette: chrometd
-		Description: Equips Battle Tanks and Frigates with point defense lasers\nwhich can destroy approaching missiles.\n\n  Upgrades: Battle Tank\n  Upgrades: Frigate
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: pointlaser.upgrade
-
-hypersonic.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Hypersonic Missiles
-	Buildable:
-		BuildPaletteOrder: 31
-		Prerequisites: ~gtek, ~seek.strat,~techlevel.high, ~!hailstorm.upgrade, ~!hammerhead.upgrade
-		BuildDuration: 1500
-		IconPalette: chrometd
-		Description: Equip the MLRS/HMLRS with Hypersonic Missiles.\n\n  Upgrades: MLRS/HMLRS\n  + Increased speed, precision and rate of fire
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: hypersonic.upgrade
-
-hailstorm.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Hailstorm Missiles
-	Buildable:
-		Prerequisites: ~gtek, ~bombard.strat, ~techlevel.high, ~!hypersonic.upgrade, ~!hammerhead.upgrade
-		BuildPaletteOrder: 31
-		BuildDuration: 1500
-		IconPalette: chrometd
-		Description: Equip the MLRS/HMLRS with Hailstorm Missiles.\n\n  Upgrades: MLRS/HMLRS\n  + Barrage of powerful but unguided missiles
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: hailstorm.upgrade
-
-hammerhead.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Hammerhead Missiles
-	Buildable:
-		BuildPaletteOrder: 31
-		Prerequisites: ~gtek, ~hold.strat, ~techlevel.high, ~!hypersonic.upgrade, ~!hailstorm.upgrade
-		BuildDuration: 1500
-		IconPalette: chrometd
-		Description: Equip the MLRS/HMLRS with Hammerhead Missiles.\n\n  Upgrades: MLRS/HMLRS\n  + Increased area of effect and damage\n  + Briefly slows movement and rate of fire of impacted targets
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: hammerhead.upgrade
-
-ionmam.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Research: Ion Mammoth
-	Buildable:
-		BuildPaletteOrder: 40
-		Prerequisites: ~upgc.zocom, ~techlevel.high
-		IconPalette: chrometd
-		BuildDuration: 1500
-		Description: Allows construction of the Ion Mammoth Tank.\n\n  Replaces: Mammoth Tank\n  + Increased range\n  + Increased area of effect
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: ionmam.upgrade
-
-hovermam.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Research: Hover Mammoth
-	Buildable:
-		BuildPaletteOrder: 40
-		Prerequisites: ~upgc.eagle, ~techlevel.high
-		IconPalette: chrometd
-		BuildDuration: 1500
-		Description: Allows construction of the Hover Mammoth Tank.\n\n  Replaces: Mammoth Tank\n  + Faster movement speed\n  + Can cross water
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: hovermam.upgrade
-
-railgun.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Research: Railgun Titan
-	Buildable:
-		BuildPaletteOrder: 40
-		Prerequisites: ~upgc.talon, ~techlevel.high
-		IconPalette: chrometd
-		BuildDuration: 1500
-		Description: Allows construction of the Railgun Titan.\n\n  Replaces: Titan\n  + Increased range\n  + Damages targets in a line
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: railgun.upgrade
 
 vulcan.upgrade:
 	Inherits: ^Upgrade
@@ -256,12 +122,26 @@ vulcan.upgrade:
 	RenderSprites:
 		Image: vulcan.upgrade
 
+drone.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Battle Drone
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~radar.talon, ~techlevel.high
+		BuildDuration: 1500
+		Description: Allows construction of a modified crewless Battle Tank.\n\n  Replaces: Battle Tank\n  + Immunity to crew kill, chaos gas and mind control\n  + Reduced cost\n  – Disabled on low power
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: drone.upgrade
+
 empgren.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
 		Name: Upgrade: EMP Grenades
 	Buildable:
-		BuildPaletteOrder: 33
+		BuildPaletteOrder: 40
 		Prerequisites: ~gtek, ~techlevel.high
 		BuildDuration: 1500
 		IconPalette: chrometd
@@ -270,6 +150,126 @@ empgren.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: empgren.upgrade
+
+pointlaser.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Point Defense Lasers
+	Buildable:
+		BuildPaletteOrder: 50
+		Prerequisites: ~upgrades.pointlaser, ~techlevel.high
+		BuildDuration: 1500
+		IconPalette: chrometd
+		Description: Equips Battle Tanks and Frigates with point defense lasers\nwhich can destroy approaching missiles.\n\n  Upgrades: Battle Tank\n  Upgrades: Frigate
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: pointlaser.upgrade
+
+sonic.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Sonic Amplifiers
+	Buildable:
+		BuildPaletteOrder: 60
+		Prerequisites: ~gtek.zocom, ~techlevel.high
+		BuildDuration: 1500
+		IconPalette: chrometd
+		Description: Increases the firepower of Disruptors and Sonic Towers.\n\n  Upgrades: Sonic Tower\n  Upgrades: Disruptor
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: sonic.upgrade
+
+hypersonic.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Hypersonic Missiles
+	Buildable:
+		BuildPaletteOrder: 70
+		Prerequisites: ~gtek, ~seek.strat,~techlevel.high, ~!hailstorm.upgrade, ~!hammerhead.upgrade
+		BuildDuration: 1500
+		IconPalette: chrometd
+		Description: Equip the MLRS/HMLRS with Hypersonic Missiles.\n\n  Upgrades: MLRS/HMLRS\n  + Increased speed, precision and rate of fire
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: hypersonic.upgrade
+
+hailstorm.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Hailstorm Missiles
+	Buildable:
+		Prerequisites: ~gtek, ~bombard.strat, ~techlevel.high, ~!hypersonic.upgrade, ~!hammerhead.upgrade
+		BuildPaletteOrder: 71
+		BuildDuration: 1500
+		IconPalette: chrometd
+		Description: Equip the MLRS/HMLRS with Hailstorm Missiles.\n\n  Upgrades: MLRS/HMLRS\n  + Barrage of powerful but unguided missiles
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: hailstorm.upgrade
+
+hammerhead.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Hammerhead Missiles
+	Buildable:
+		BuildPaletteOrder: 72
+		Prerequisites: ~gtek, ~hold.strat, ~techlevel.high, ~!hypersonic.upgrade, ~!hailstorm.upgrade
+		BuildDuration: 1500
+		IconPalette: chrometd
+		Description: Equip the MLRS/HMLRS with Hammerhead Missiles.\n\n  Upgrades: MLRS/HMLRS\n  + Increased area of effect and damage\n  + Briefly slows movement and rate of fire of impacted targets
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: hammerhead.upgrade
+
+ionmam.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Ion Mammoth
+	Buildable:
+		BuildPaletteOrder: 80
+		Prerequisites: ~upgc.zocom, ~techlevel.high
+		IconPalette: chrometd
+		BuildDuration: 1500
+		Description: Allows construction of the Ion Mammoth Tank.\n\n  Replaces: Mammoth Tank\n  + Increased range\n  + Increased area of effect
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: ionmam.upgrade
+
+hovermam.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Hover Mammoth
+	Buildable:
+		BuildPaletteOrder: 81
+		Prerequisites: ~upgc.eagle, ~techlevel.high
+		IconPalette: chrometd
+		BuildDuration: 1500
+		Description: Allows construction of the Hover Mammoth Tank.\n\n  Replaces: Mammoth Tank\n  + Faster movement speed\n  + Can cross water
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: hovermam.upgrade
+
+railgun.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Railgun Titan
+	Buildable:
+		BuildPaletteOrder: 82
+		Prerequisites: ~upgc.talon, ~techlevel.high
+		IconPalette: chrometd
+		BuildDuration: 1500
+		Description: Allows construction of the Railgun Titan.\n\n  Replaces: Titan\n  + Increased range\n  + Damages targets in a line
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: railgun.upgrade
 
 #########################NOD#########
 ########################################
@@ -294,7 +294,7 @@ microwave.upgrade:
 	Tooltip:
 		Name: Research: Intensified Microwaves
 	Buildable:
-		BuildPaletteOrder: 25
+		BuildPaletteOrder: 30
 		Prerequisites: ~tmpl.legion, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 1500
@@ -352,48 +352,6 @@ cyborgarmor.upgrade:
 #########################SOVIET#########
 ########################################
 
-cluster.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Cluster Bombs
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~stek, ~techlevel.high
-		BuildDuration: 1500
-		Description: Arms the Sukhoi with anti-infantry Cluster Bombs.\n\n  Upgrades: Sukhoi\n  + High area damage vs infantry, structures and light armour\n  – Weak against heavy armour
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: cluster.upgrade
-
-indp.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Rapid Industry
-	Buildable:
-		BuildPaletteOrder: 40
-		Prerequisites: ~indp, ~techlevel.high
-		BuildDuration: 3000
-		Description: Increases Industrial Plant performance.\n\n  Upgrades: Industrial Plant\n  + Additional 5% production speed\n  + Additional 5% cost reduction
-	Valued:
-		Cost: 2000
-	RenderSprites:
-		Image: indp.upgrade
-
-tarc.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Research: Tesla Arcing
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~stek.russia, ~techlevel.medium
-		BuildDuration: 1500
-		Description: Upgrades Tesla Tank weapon so it jumps to up to 2 additional targets.\n\n  Upgrades: Tesla Tank
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: tarc.upgrade
-
 v2.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -413,7 +371,7 @@ iraqtank.upgrade:
 	Tooltip:
 		Name: Upgrade: Atomic Engines
 	Buildable:
-		BuildPaletteOrder: 21
+		BuildPaletteOrder: 30
 		Prerequisites: ~radar.iraq, ~techlevel.high
 		BuildDuration: 1500
 		Description: Upgrades Mammoth and Heavy tanks\nwith volatile atomic engines.\n\n  Replaces: Heavy Tank\n  Replaces: Mammoth Tank\n  + Increased speed\n  – Explode on death
@@ -422,50 +380,65 @@ iraqtank.upgrade:
 	RenderSprites:
 		Image: iraqtank.upgrade
 
-#######################ALLIES############################
-#########################################################
-
-orep.upgrade:
+cluster.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Advanced Ore Processing
+		Name: Upgrade: Cluster Bombs
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~orep, ~techlevel.high
-		BuildDuration: 3000
-		Description: Increases Ore Purifier efficiency (additional 5%).\n\n  Upgrades: Ore Purifier
-	Valued:
-		Cost: 2000
-	RenderSprites:
-		Image: orep.upgrade
-
-charv.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Research: Chrono Miner
-	Buildable:
-		BuildPaletteOrder: 41
-		Prerequisites: ~orep, ~techlevel.high
-		BuildDuration: 3000
-		Description: Allows construction of Chrono Miners which\nteleport back to refineries.\n\n  Replaces: Ore Truck
-	Valued:
-		Cost: 2000
-	RenderSprites:
-		Image: charv.upgrade
-
-pcan.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Research: Prism Cannon
-	Buildable:
-		BuildPaletteOrder: 31
-		Prerequisites: ~atek, ~techlevel.high
+		Prerequisites: ~stek, ~techlevel.high
 		BuildDuration: 1500
-		Description: Allows construction of Prism Cannons.\n\n  Replaces: Prism Tank\n  + Increased range\n  + Increased burst damage\n  – Reduced speed\n  – Reduced rate of fire\n  – Reduced splash damage\n  – No turret
+		Description: Arms the Sukhoi with anti-infantry Cluster Bombs.\n\n  Upgrades: Sukhoi\n  + High area damage vs infantry, structures and light armour\n  – Weak against heavy armour
 	Valued:
 		Cost: 1000
 	RenderSprites:
-		Image: pcan.upgrade
+		Image: cluster.upgrade
+
+tarc.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Tesla Arcing
+	Buildable:
+		BuildPaletteOrder: 50
+		Prerequisites: ~stek.russia, ~techlevel.medium
+		BuildDuration: 1500
+		Description: Upgrades Tesla Tank weapon so it jumps to up to 2 additional targets.\n\n  Upgrades: Tesla Tank
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: tarc.upgrade
+
+indp.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Rapid Industry
+	Buildable:
+		BuildPaletteOrder: 60
+		Prerequisites: ~indp, ~techlevel.high
+		BuildDuration: 3000
+		Description: Increases Industrial Plant performance.\n\n  Upgrades: Industrial Plant\n  + Additional 5% production speed\n  + Additional 5% cost reduction
+	Valued:
+		Cost: 2000
+	RenderSprites:
+		Image: indp.upgrade
+
+
+#######################ALLIES############################
+#########################################################
+
+apb.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Raufoss Ammo
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~radar.england, ~techlevel.high
+		BuildDuration: 1500
+		Description: Upgrades Snipers granting them Raufoss armor piercing rounds, which stun\nand damage armoured targets.\n\n  Upgrades: Sniper
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: apb.upgrade
 
 cryr.upgrade:
 	Inherits: ^Upgrade
@@ -481,19 +454,47 @@ cryr.upgrade:
 	RenderSprites:
 		Image: cryr.upgrade
 
-apb.upgrade:
+pcan.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Raufoss Ammo
+		Name: Research: Prism Cannon
 	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~radar.england, ~techlevel.high
+		BuildPaletteOrder: 40
+		Prerequisites: ~atek, ~techlevel.high
 		BuildDuration: 1500
-		Description: Upgrades Snipers granting them Raufoss armor piercing rounds, which stun\nand damage armoured targets.\n\n  Upgrades: Sniper
+		Description: Allows construction of Prism Cannons.\n\n  Replaces: Prism Tank\n  + Increased range\n  + Increased burst damage\n  – Reduced speed\n  – Reduced rate of fire\n  – Reduced splash damage\n  – No turret
 	Valued:
 		Cost: 1000
 	RenderSprites:
-		Image: apb.upgrade
+		Image: pcan.upgrade
+
+charv.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Chrono Miner
+	Buildable:
+		BuildPaletteOrder: 50
+		Prerequisites: ~orep, ~techlevel.high
+		BuildDuration: 3000
+		Description: Allows construction of Chrono Miners which\nteleport back to refineries.\n\n  Replaces: Ore Truck
+	Valued:
+		Cost: 2000
+	RenderSprites:
+		Image: charv.upgrade
+
+orep.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Advanced Ore Processing
+	Buildable:
+		BuildPaletteOrder: 60
+		Prerequisites: ~orep, ~techlevel.high
+		BuildDuration: 3000
+		Description: Increases Ore Purifier efficiency (additional 5%).\n\n  Upgrades: Ore Purifier
+	Valued:
+		Cost: 2000
+	RenderSprites:
+		Image: orep.upgrade
 
 ################################SCRIN##############################
 ###################################################################
@@ -503,7 +504,7 @@ regen.upgrade:
 	Tooltip:
 		Name: Upgrade: Regenerative Hull
 	Buildable:
-		BuildPaletteOrder: 40
+		BuildPaletteOrder: 20
 		Prerequisites: ~sign, ~techlevel.high
 		BuildDuration: 3000
 		Description: Scrin aircraft will regenerate health over time when not in combat.\n\n  Upgrades: Stormrider\n  Upgrades: Devastator\n  Upgrades: Planetary Assault Carrier
@@ -518,7 +519,7 @@ shields.upgrade:
 	Tooltip:
 		Name: Upgrade: Fleet Shields
 	Buildable:
-		BuildPaletteOrder: 41
+		BuildPaletteOrder: 30
 		Prerequisites: ~sign, ~techlevel.high
 		BuildDuration: 3000
 		Description: Larger Scrin vessels take reduced damage and become resistant to EMP.\n\n  Upgrades: Devastator\n  Upgrades: Planetary Assault Carrier
