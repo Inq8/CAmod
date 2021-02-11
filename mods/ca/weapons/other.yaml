@@ -1829,13 +1829,12 @@ U2Camera:
 		ImpactSounds: kaboom25.aud, kaboom12.aud, xplos.aud
 	Warhead@3EffWater: CreateEffect
 		Explosions: small_splash
-		ExplosionPalette: effect
 		ImpactSounds: splash9.aud
 		ValidTargets: Water
 		InvalidTargets: Vehicle
 	Warhead@4Smu: LeaveSmudge
-		SmudgeType: SmallScorch
-		InvalidTargets: Vehicle, Building, Wall
+		SmudgeType: Crater
+		InvalidTargets: Structure, Wall, Trees
 
 SmallDebris:
 	Inherits: ^Debris
