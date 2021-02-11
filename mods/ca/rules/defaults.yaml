@@ -50,6 +50,7 @@
 			gray: pip-gray
 			yellow: pip-yellow
 			red: pip-red
+			blue: pip-blue
 
 ^PrimaryBuilding:
 	PrimaryBuilding:
@@ -801,6 +802,12 @@
 	Targetable@DRIVERKILL:
 		TargetTypes: DriverKill
 		RequiresCondition: !driver-dead
+	Targetable@DRIVERKILLLOWHP:
+		TargetTypes: DriverKillLow
+		RequiresCondition: !driver-dead && target-lowhp
+	GrantConditionOnDamageState@DRIVERKILLLOWHP:
+		Condition: target-lowhp
+		ValidDamageStates: Heavy, Critical
 	Targetable@AICAPTURE:
 		TargetTypes: NoCrew
 		RequiresCondition: driver-dead

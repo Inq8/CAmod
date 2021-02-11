@@ -526,6 +526,100 @@ MiniNuke:
 		LayerName: radioactivity.strong
 	Warhead@Flash: FlashEffect
 		FlashType: Nuke
+		
+MicroNuke:
+	Inherits: MiniNuke
+	Warhead@1Dam_impact: SpreadDamage
+		Spread: 1c0
+		Damage: 5000
+		Falloff: 1000, 368, 50, 7, 0
+		ValidTargets: Ground, Trees, Water, Air
+		Versus:
+			Wood: 35
+			Concrete: 35
+		AffectsParent: true
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
+	Warhead@2Res_impact: DestroyResource
+		Size: 1
+	Warhead@3Eff_impact: CreateEffect
+		Explosions: nuke
+		ImpactSounds: kaboom1.aud
+		ImpactActors: false
+	Warhead@4Dam_areanuke1: SpreadDamage
+		Spread: 2c0
+		Damage: 1000
+		Falloff: 1000, 368, 50, 7, 0
+		Delay: 5
+		ValidTargets: Ground, Trees, Water, Underwater, Air
+		Versus:
+			Wood: 75
+			Brick: 25
+		AffectsParent: true
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
+	Warhead@5Res_areanuke1: DestroyResource
+		Size: 2
+		Delay: 5
+	Warhead@6Eff_areanuke1: CreateEffect
+		ImpactSounds: kaboom22.aud
+		Delay: 5
+		ImpactActors: false
+	Warhead@7Dam_areanuke2: SpreadDamage
+		Spread: 3c0
+		Damage: 1000
+		Falloff: 1000, 368, 50, 7, 0
+		Delay: 10
+		ValidTargets: Ground, Water, Underwater, Air
+		Versus:
+			Wood: 75
+			Brick: 25
+		AffectsParent: true
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
+	Warhead@8Dam_areanuke2: SpreadDamage
+		Spread: 3c0
+		Damage: 3000
+		Falloff: 1000, 368, 50, 7, 0
+		Delay: 10
+		ValidTargets: Trees
+		DamageTypes: Incendiary
+	Warhead@9Res_areanuke2: DestroyResource
+		Size: 3
+		Delay: 10
+	Warhead@10Dam_areanuke3: SpreadDamage
+		Spread: 4c0
+		Damage: 1500
+		Falloff: 1000, 368, 50, 7, 0
+		Delay: 15
+		ValidTargets: Ground, Water, Underwater
+		Versus:
+			Brick: 25
+		AffectsParent: true
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
+	Warhead@11Dam_areanuke3: SpreadDamage
+		Spread: 4c0
+		Damage: 4500
+		Falloff: 1000, 368, 50, 7, 0
+		Delay: 15
+		ValidTargets: Trees
+		DamageTypes: Incendiary
+	Warhead@12Res_areanuke3: DestroyResource
+		Size: 3
+		Delay: 15
+	Warhead@13Smu_areanuke3: LeaveSmudge
+		SmudgeType: Scorch
+		InvalidTargets: Vehicle, Structure, Wall, Trees
+		Size: 3
+		Delay: 15
+	Warhead@Flames: FireCluster
+		Weapon: BurnFx
+		RandomClusterCount: 6
+		Dimensions: 3,3
+		Footprint: xxx xxx xxx
+	Warhead@18Radio: CreateTintedCells
+		Spread: 1c0
+		Level: 350
+		Falloff: 100, 70, 37, 15, 2
+		MaxLevel: 750
+		LayerName: radioactivity.strong
 
 UnitExplodeVice:
 	Warhead@1Dam: SpreadDamage

@@ -1263,7 +1263,11 @@ SNIP:
 	Armament@APROUND:
 		Name: secondary
 		Weapon: sniper.vehicle
-		RequiresCondition: apb-upgrade
+		RequiresCondition: apb-upgrade && rank-veteran < 3
+	Armament@APROUNDELITE:
+		Name: secondary
+		Weapon: sniper.vehicleElite
+		RequiresCondition: apb-upgrade && rank-veteran >= 3
 	Mobile:
 		Speed: 49
 		Voice: Move

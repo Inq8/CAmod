@@ -2310,6 +2310,8 @@ MTNK.Drone:
 	-GrantConditionIfOwnerIsNeutral:
 	-ChangesHealth@DRIVER_DEAD:
 	-Targetable@DRIVERKILL:
+	-Targetable@DRIVERKILLLOWHP:
+	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
 	-Targetable@AICAPTURE:
 
 HTNK:
@@ -2994,12 +2996,12 @@ IFV:
 	Armament@Default:
 		Weapon: IFVRockets
 		LocalOffset: 192,10,176, 192,-10,176
-		RequiresCondition: !full
+		RequiresCondition: !full || nochange
 	Armament@DefaultAA:
 		Name: secondary
 		Weapon: IFVRocketsAA
 		LocalOffset: 192,10,176, 192,-10,176
-		RequiresCondition: !full
+		RequiresCondition: !full || nochange
 	Armament@E1:
 		Weapon: M60mgIFV
 		MuzzleSequence: muzzle
@@ -3072,6 +3074,9 @@ IFV:
 		Weapon: LaserTur
 		LocalOffset: 385,0,300
 		RequiresCondition: acolturr
+	Armament@IVAN:
+		Weapon: IvanIFVTargeting
+		RequiresCondition: ivanturr
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		PauseOnCondition: empdisable || being-warped
@@ -3086,7 +3091,7 @@ IFV:
 		RequiresCondition: !spyturr
 	WithMuzzleOverlay:
 	WithSpriteTurret@samturr:
-		RequiresCondition: !full
+		RequiresCondition: !full || nochange
 		Sequence: turret
 	WithSpriteTurret@samturr2:
 		RequiresCondition: samturr
@@ -3156,6 +3161,8 @@ IFV:
 			s6: engturr
 			smedi: medturr
 			mast: commturr
+			dog: nochange
+			ivan: ivanturr
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithIdleOverlay@MEDIC:
@@ -3163,6 +3170,23 @@ IFV:
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: medturr
 		Offset: 0,0,40
+	WithIdleOverlay@IVAN:
+		Sequence: nuke
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: ivanturr
+		Offset: 0,0,40
+	Explodes@IVAN:
+		Weapon: MicroNuke
+		EmptyWeapon: MicroNuke
+		DamageSource: Killer
+		RequiresCondition: ivanturr
+	GrantConditionOnAttack@IVAN:
+		Condition: triggered
+		RequiresCondition: ivanturr
+	DamageMultiplier@IRONCURTAIN:
+		RequiresCondition: invulnerability && !ivanturr
+	KillsSelf:
+		RequiresCondition: ivanturr && (invulnerability || triggered || berserk)
 	ProximityExternalCondition@MEDIC:
 		RequiresCondition: medturr
 		EnableSound: heal2.aud
@@ -4438,6 +4462,8 @@ MEMP:
 	-GrantConditionIfOwnerIsNeutral:
 	-ChangesHealth@DRIVER_DEAD:
 	-Targetable@DRIVERKILL:
+	-Targetable@DRIVERKILLLOWHP:
+	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
 	-Targetable@AICAPTURE:
 
 CDRN:
@@ -4524,6 +4550,8 @@ CDRN:
 	-GrantConditionIfOwnerIsNeutral:
 	-ChangesHealth@DRIVER_DEAD:
 	-Targetable@DRIVERKILL:
+	-Targetable@DRIVERKILLLOWHP:
+	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
 	-Targetable@AICAPTURE:
 
 CHPR:
