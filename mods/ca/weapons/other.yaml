@@ -537,7 +537,7 @@ DemoTruckTargeting:
 	Projectile: InstantHit
 	Warhead@1Dam: TargetDamage
 		ValidTargets: DetonateAttack
-		
+
 IvanIFVTargeting:
 	Inherits: DemoTruckTargeting
 	ValidTargets: Ground, DetonateAttack
@@ -767,7 +767,7 @@ PrisLaser:
 		RandomClusterCount: 3
 		Dimensions: 3,3
 		Footprint: xxx x_x xxx
-		
+
 PrisLaserSupport:
 	ValidTargets: Ground, Water
 	ReloadDelay: 3
@@ -999,15 +999,14 @@ SonicZap:
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Dam: SpreadDamage
 		Range: 0, 32
-		Falloff: 50, 50
-		Damage: 500
+		Falloff: 100, 100
+		Damage: 250
 		InvalidTargets: Disruptor, Air
 		AffectsParent: false
 		ValidRelationships: Ally
 		Versus:
 			Heavy: 65
-			Concrete: 120
-			Brick: 150
+			Brick: 400
 			Wood: 180
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 
@@ -1138,6 +1137,17 @@ TitanRailgun:
 			Heavy: 100
 			Concrete: 30
 			Brick: 50
+		ValidRelationships: Enemy, Neutral
+	Warhead@2Dam: SpreadDamage
+		Damage: 1250
+		Versus:
+			None: 30
+			Wood: 62
+			Light: 70
+			Heavy: 100
+			Concrete: 30
+			Brick: 50
+		ValidRelationships: Ally
 
 TitanRailgunImpact:
 	Inherits: TitanRailgun
@@ -1801,7 +1811,7 @@ U2Camera:
 	Report: cspydram.aud
 	TargetActorCenter: true
 	Projectile: InstantHit
-	
+
 ^Debris:
 	Range: 5c0
 	Projectile: Bullet
