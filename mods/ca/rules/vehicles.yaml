@@ -4264,6 +4264,7 @@ BATF:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
+	Inherits@SHRAPNEL: ^ThrowsShrapnel
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 340
@@ -4372,6 +4373,9 @@ BATF:
 		RequiresCondition: driver-dead && !cargo
 	Targetable@DRIVERKILL:
 		RequiresCondition: !driver-dead && !cargo
+	SpawnActorOnDeath:
+		Actor: BATF.Husk
+		RequiresCondition: !being-warped
 
 BATF.AI:
 	Inherits: BATF
