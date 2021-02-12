@@ -732,6 +732,12 @@ DOME:
 	ProvidesPrerequisiteValidatedFaction@frarad:
 		Factions: france
 		Prerequisite: radar.france
+	ProvidesPrerequisiteValidatedFaction@iraqrad:
+		Factions: iraq
+		Prerequisite: radar.iraq
+	ProvidesPrerequisiteValidatedFaction@v2:
+		Factions: ukraine, iraq
+		Prerequisite: upgrades.v2
 	ProvidesPrerequisite@radar-active:
 		Prerequisite: radar-active
 		RequiresCondition: !jammed && !disabled && !being-warped
@@ -800,7 +806,7 @@ PBOX:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 40
-		Prerequisites: infantry.any, ~structures.allies, ~!structures.england, ~techlevel.low
+		Prerequisites: infantry.any, ~structures.pbox, ~techlevel.low
 		Description: Anti-infantry base defense.\n  Can detect cloaked units.\n  Strong vs Infantry, Light Armor\n  Weak vs Tanks, Aircraft
 	Valued:
 		Cost: 600
@@ -946,7 +952,7 @@ FTUR:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 60
-		Prerequisites: infantry.any, ~!structures.iraq, ~structures.soviet, ~techlevel.low
+		Prerequisites: infantry.any, ~structures.ftur, ~techlevel.low
 		Description: Anti-infantry base defense.\n  Can detect cloaked units.\n  Strong vs Infantry, Light Armor\n  Weak vs Tanks, Aircraft
 	Valued:
 		Cost: 600
@@ -1213,6 +1219,8 @@ WEAP:
 		Factions: england, france, germany, russia, ukraine, iraq
 	ProvidesPrerequisite@any:
 		Prerequisite: vehicles.any
+	ProvidesPrerequisite@human:
+		Prerequisite: vehicles.human
 	ProvidesPrerequisiteValidatedFaction@allies:
 		Factions: england, france, germany
 		Prerequisite: vehicles.allies
@@ -1251,6 +1259,9 @@ WEAP:
 	ProvidesPrerequisiteValidatedFaction@v2upgrade:
 		Factions: russia
 		Prerequisite: v2.upgrade
+	ProvidesPrerequisiteValidatedFaction@2tnk:
+		Factions: france, germany
+		Prerequisite: vehicles.2tnk
 	ProvidesPrerequisiteValidatedFaction@3tnk:
 		Factions: russia, ukraine, iraq
 		Prerequisite: vehicles.3tnk
@@ -1324,6 +1335,18 @@ FACT:
 	ProvidesPrerequisiteValidatedFaction@sandbag:
 		Factions: england, france, germany
 		Prerequisite: structures.sandbag
+	ProvidesPrerequisiteValidatedFaction@apwr:
+		Factions: england, france, germany, ukraine, iraq
+		Prerequisite: structures.apwr
+	ProvidesPrerequisiteValidatedFaction@pbox:
+		Factions: france, germany
+		Prerequisite: structures.pbox
+	ProvidesPrerequisiteValidatedFaction@pris:
+		Factions: england, germany
+		Prerequisite: structures.pris
+	ProvidesPrerequisiteValidatedFaction@ftur:
+		Factions: russia, ukraine
+		Prerequisite: structures.ftur
 	Health:
 		HP: 150000
 	Armor:
@@ -1615,6 +1638,9 @@ HPAD:
 		Prerequisite: aircraft.all
 	ProvidesPrerequisite@chinook:
 		Prerequisite: aircraft.chinook
+	ProvidesPrerequisiteValidatedFaction@hind:
+		Factions: russia, ukraine
+		Prerequisite: aircraft.hind
 	ProvidesPrerequisite@buildingname:
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate
@@ -1873,7 +1899,7 @@ APWR:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 110
-		Prerequisites: anyradar, ~techlevel.medium, ~structures.ra, ~!structures.russia
+		Prerequisites: anyradar, ~techlevel.medium, ~structures.apwr
 		Description: Provides double the power of\na standard Power Plant.
 	Valued:
 		Cost: 500
@@ -2006,6 +2032,11 @@ STEK:
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
+	ValidFactions:
+		Factions: russia, ukraine, iraq
+	ProvidesPrerequisiteValidatedFaction@russia:
+		Factions: russia
+		Prerequisite: stek.russia
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
 		Icon: forceshield
@@ -2094,6 +2125,8 @@ BARR:
 		ProductionType: Infantry
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
+	ProvidesPrerequisite@human:
+		Prerequisite: infantry.human
 	ProvidesPrerequisite@infantryra:
 		Prerequisite: infantry.ra
 	ProvidesPrerequisite@russia:
@@ -2105,6 +2138,9 @@ BARR:
 	ProvidesPrerequisite@iraq:
 		Factions: iraq
 		Prerequisite: infantry.iraq
+	ProvidesPrerequisite@e2:
+		Factions: russia, iraq
+		Prerequisite: infantry.e2
 	ProvidesPrerequisite@shok:
 		Prerequisite: infantry.shok
 	Power:
@@ -2216,10 +2252,12 @@ TENT:
 		Condition: produced
 	ProductionBar:
 		ProductionType: Infantry
-	ProvidesPrerequisite@infantryra:
-		Prerequisite: infantry.ra
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
+	ProvidesPrerequisite@human:
+		Prerequisite: infantry.human
+	ProvidesPrerequisite@infantryra:
+		Prerequisite: infantry.ra
 	ProvidesPrerequisite@england:
 		Factions: england
 		Prerequisite: infantry.england
@@ -2613,6 +2651,8 @@ PYLE:
 		ProductionType: Infantry
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
+	ProvidesPrerequisite@human:
+		Prerequisite: infantry.human
 	ProvidesPrerequisite@infantrytd:
 		Prerequisite: infantry.td
 	ProvidesPrerequisite@talon:
@@ -2685,6 +2725,8 @@ HAND:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
+	ProvidesPrerequisite@human:
+		Prerequisite: infantry.human
 	ProvidesPrerequisite@infantrytd:
 		Prerequisite: infantry.td
 	ProvidesPrerequisite@blackh:
@@ -2750,6 +2792,8 @@ WEAP.TD:
 		Factions: talon, zocom, eagle, legion
 	ProvidesPrerequisite@any:
 		Prerequisite: vehicles.any
+	ProvidesPrerequisite@human:
+		Prerequisite: vehicles.human
 	ProvidesPrerequisite@td:
 		Prerequisite: vehicles.td
 	ProvidesPrerequisiteValidatedFaction@gdi:
@@ -2765,7 +2809,7 @@ WEAP.TD:
 		Factions: eagle
 		Prerequisite: vehicles.eagle
 	ProvidesPrerequisiteValidatedFaction@nod:
-		Factions: legion, blackh, legion
+		Factions: legion
 		Prerequisite: vehicles.nod
 	ProvidesPrerequisiteValidatedFaction@legion:
 		Factions: legion
@@ -2784,6 +2828,9 @@ WEAP.TD:
 	ProvidesPrerequisiteValidatedFaction@htnk:
 		Factions: zocom, eagle
 		Prerequisite: vehicles.htnk
+	ProvidesPrerequisiteValidatedFaction@mlrs:
+		Factions: legion
+		Prerequisite: vehicles.mlrs
 	WithBuildingBib:
 	WithProductionDoorOverlay:
 		RequiresCondition: !build-incomplete
@@ -2828,7 +2875,7 @@ AIRS:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 80
-		Prerequisites: anyrefinery, ~structures.nod, ~!structures.legion, ~techlevel.low
+		Prerequisites: anyrefinery, ~structures.airs, ~techlevel.low
 		IconPalette: chrometd
 		Description: Provides a dropzone\nfor vehicle reinforcements
 	Valued:
@@ -2867,10 +2914,14 @@ AIRS:
 		Factions: blackh, marked
 	ProvidesPrerequisite@any:
 		Prerequisite: vehicles.any
+	ProvidesPrerequisite@human:
+		Prerequisite: vehicles.human
 	ProvidesPrerequisite@td:
 		Prerequisite: vehicles.td
 	ProvidesPrerequisite@nod:
 		Prerequisite: vehicles.nod
+	ProvidesPrerequisite@ltnk:
+		Prerequisite: vehicles.ltnk
 	ProvidesPrerequisiteValidatedFaction@blackh:
 		Factions: blackh
 		Prerequisite: vehicles.blackh
@@ -2880,6 +2931,9 @@ AIRS:
 	ProvidesPrerequisiteValidatedFaction@nodarty:
 		Factions: blackh, marked
 		Prerequisite: vehicles.arty
+	ProvidesPrerequisiteValidatedFaction@mlrs:
+		Factions: marked
+		Prerequisite: vehicles.mlrs
 	ProvidesPrerequisite@apc2:
 		Prerequisite: vehicles.apc2
 		RequiresPrerequisites: inf.gdi.stolen
@@ -3127,11 +3181,17 @@ AFAC:
 	ProvidesPrerequisiteValidatedFaction@weap.tdFAC:
 		Factions: talon, zocom, eagle, legion
 		Prerequisite: structures.weap.td
+	ProvidesPrerequisiteValidatedFaction@airs:
+		Factions: blackh, marked
+		Prerequisite: structures.airs
 	ProvidesPrerequisite@wall:
 		Prerequisite: structures.wall
 	ProvidesPrerequisiteValidatedFaction@sandbag:
 		Factions: talon, zocom, eagle
 		Prerequisite: structures.sandbag
+	ProvidesPrerequisiteValidatedFaction@atwr:
+		Factions: talon, eagle
+		Prerequisite: structures.atwr
 	ProductionBar@Building:
 		ProductionType: Building
 	ProductionBar@Defense:
@@ -3268,7 +3328,7 @@ ATWR:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 80
-		Prerequisites: anyradar, ~structures.gdi, ~!structures.zocom, ~techlevel.high
+		Prerequisites: anyradar, ~structures.atwr, ~techlevel.high
 		IconPalette: chrometd
 		Description: Advanced base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
 	Valued:
@@ -3604,6 +3664,12 @@ HQ:
 		Factions: talon, zocom, eagle, blackh, marked, legion
 	ProvidesPrerequisiteValidatedFaction@anyradar:
 		Prerequisite: anyradar
+	ProvidesPrerequisiteValidatedFaction@gdirad:
+		Factions: talon, zocom, eagle
+		Prerequisite: radar.gdi
+	ProvidesPrerequisiteValidatedFaction@talrad:
+		Factions: talon
+		Prerequisite: radar.talon
 	ProvidesPrerequisiteValidatedFaction@zocrad:
 		Factions: zocom
 		Prerequisite: radar.zocom
@@ -3616,6 +3682,9 @@ HQ:
 	ProvidesPrerequisiteValidatedFaction@legrad:
 		Factions: legion
 		Prerequisite: radar.legion
+	ProvidesPrerequisiteValidatedFaction@howi:
+		Factions: marked, legion
+		Prerequisite: upgrades.howi
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@radar-active:
 		Prerequisite: radar-active
@@ -3879,6 +3948,9 @@ HPAD.TD:
 	ProvidesPrerequisiteValidatedFaction@marked:
 		Factions: marked
 		Prerequisite: aircraft.marked
+	ProvidesPrerequisiteValidatedFaction@apch:
+		Factions: blackh, legion
+		Prerequisite: aircraft.apch
 	ProvidesPrerequisite@chinook:
 		Prerequisite: aircraft.chinook
 	ProvidesPrerequisite@buildingname:
@@ -4222,6 +4294,12 @@ GTEK:
 	ProvidesPrerequisiteValidatedFaction@talgtek:
 		Factions: talon
 		Prerequisite: gtek.talon
+	ProvidesPrerequisiteValidatedFaction@zocomgtek:
+		Factions: zocom
+		Prerequisite: gtek.zocom
+	ProvidesPrerequisiteValidatedFaction@pointlaser:
+		Factions: zocom, eagle
+		Prerequisite: upgrades.pointlaser
 	ProvidesPrerequisite@buildingname:
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
@@ -4416,6 +4494,9 @@ TMPL:
 	ProvidesPrerequisiteValidatedFaction@markedtmpl:
 		Factions: marked
 		Prerequisite: tmpl.marked
+	ProvidesPrerequisiteValidatedFaction@legiontmpl:
+		Factions: legion
+		Prerequisite: tmpl.legion
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -4430,7 +4511,7 @@ PRIS:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 90
-		Prerequisites: anyradar, ~structures.allies, ~!structures.france, ~techlevel.high
+		Prerequisites: anyradar, ~structures.pris, ~techlevel.high
 		Description: Advanced experimental base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
 	Valued:
 		Cost: 1300
@@ -4821,6 +4902,8 @@ TTUR:
 		Amount: -20
 		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite@ftur:
+		Prerequisite: ftur
 	Explodes:
 		Weapon: BuildingExplode
 		EmptyWeapon: BuildingExplode
@@ -5308,9 +5391,17 @@ UPGC:
 		Cost: 2500
 	Tooltip:
 		Name: Upgrade Center
-	ProvidesPrerequisite@HMLRS:
-		Factions: gdi, zocom, eagle
-		Prerequisite: hmlrs.buildable
+	ValidFactions:
+		Factions: talon, zocom, eagle
+	ProvidesPrerequisiteValidatedFaction@talonupgc:
+		Factions: talon
+		Prerequisite: upgc.talon
+	ProvidesPrerequisiteValidatedFaction@zocomupgc:
+		Factions: zocom
+		Prerequisite: upgc.zocom
+	ProvidesPrerequisiteValidatedFaction@eagleupgc:
+		Factions: eagle
+		Prerequisite: upgc.eagle
 	ProvidesPrerequisite@Name:
 	Power:
 		Amount: -150
@@ -5493,8 +5584,8 @@ UPGC:
 			tower.shield: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop
 			tower.drop: !build-incomplete && !tower.radar && !tower.rocket && !tower.shield && !tower.drop
 	ProvidesPrerequisite@pluggable:
-		RequiresCondition: !build-incomplete && !tower.rocket && !tower.radar && !tower.shield && !tower.drop
-		Prerequisite: upgc.socket
+		RequiresCondition: !build-incomplete && (tower.rocket || tower.radar || tower.shield || tower.drop)
+		Prerequisite: upgc.plugged
 	ProvidesPrerequisite@AMPSEEK:
 		RequiresCondition: !build-incomplete && tower.radar
 		Prerequisite: seek3.strat
@@ -5522,9 +5613,9 @@ UPGC.BOMB:
 		Name: Upgrade: Firestorm Missile System
 	Buildable:
 		Queue: Upgrade
-		BuildPaletteOrder: 140
-		Prerequisites: ~upgc.socket, ~bombard.strat, upgc, ~structures.gdi, ~techlevel.high
-		Description: Provides an napalm rocket barrage.\n\n  +Increases the Strategy: Bombardment unit bonus by a further 5%.
+		BuildPaletteOrder: 3
+		Prerequisites: upgc, !upgc.plugged, bombard2.strat, ~bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
+		Description: Provides an napalm rocket barrage.\n\n  + Increases the Strategy: Bombardment unit bonus by a further 5%.
 		IconPalette: chrometd
 	Plug:
 		Type: tower.rocket
@@ -5539,9 +5630,9 @@ UPGC.SEEK:
 		Name: Upgrade: Advanced Radar System
 	Buildable:
 		Queue: Upgrade
-		BuildPaletteOrder: 140
-		Prerequisites: ~upgc.socket, ~seek.strat, upgc, ~structures.gdi, ~techlevel.high
-		Description: Provides detailed information on enemy locations.\n\n  +Increases the Strategy: Seek & Destroy unit bonus by a further 5%.
+		BuildPaletteOrder: 6
+		Prerequisites: upgc, !upgc.plugged, seek2.strat, ~seek.strat, ~!bombard.strat, ~!hold.strat, ~techlevel.high
+		Description: Provides detailed information on enemy locations.\n\n  + Increases the Strategy: Seek & Destroy unit bonus by a further 5%.
 		IconPalette: chrometd
 	Plug:
 		Type: tower.radar
@@ -5556,9 +5647,9 @@ UPGC.HOLD:
 		Name: Upgrade: Nanoshield Generator
 	Buildable:
 		Queue: Upgrade
-		BuildPaletteOrder: 140
-		Prerequisites: ~upgc.socket, ~hold.strat, upgc, ~structures.gdi, ~techlevel.high
-		Description: Provides the ability to rapidly repair friendly structures.\n\n  +Increases the Strategy: Hold the Line unit bonus by a further 5%.
+		BuildPaletteOrder: 9
+		Prerequisites: upgc, !upgc.plugged, hold2.strat, ~hold.strat, ~!bombard.strat, ~!seek.strat, ~techlevel.high
+		Description: Provides the ability to rapidly repair friendly structures.\n\n  + Increases the Strategy: Hold the Line unit bonus by a further 5%.
 		IconPalette: chrometd
 	Plug:
 		Type: tower.shield
@@ -5573,8 +5664,8 @@ UPGC.DROP:
 		Name: Upgrade: Supply Drop Zone
 	Buildable:
 		Queue: Upgrade
-		BuildPaletteOrder: 140
-		Prerequisites: ~upgc.socket, upgc, ~structures.gdi, ~techlevel.high
+		BuildPaletteOrder: 90
+		Prerequisites: ~upgc, ~!upgc.plugged, ~techlevel.high
 		Description: Provides a dropzone\nfor emergency supplies.
 		IconPalette: chrometd
 	Plug:

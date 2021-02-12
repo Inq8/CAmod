@@ -641,13 +641,14 @@ StormcrawlerZap:
 			Heavy: 20
 
 StormcrawlerCharge:
-	Inherits: StormcrawlerZap
-	ReloadDelay: 100
+	ReloadDelay: 150
 	Range: 4c768
-	StartBurstReport: stormcrawler-charge.aud
+	Report: stormcrawler-charge.aud
 	ValidTargets: Stormcrawler
 	Projectile: ElectricBolt
 		Colors: 8A2BFF88,B961FD88,B5A3E888
+		Duration: 5
+		Angle: 90
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Stormcrawler
 		Damage: 1
@@ -660,7 +661,23 @@ StormcrawlerCharge:
 		Condition: stormcrawlercharge
 		ValidTargets: Stormcrawler
 		ValidRelationships: Ally
-	-Warhead@3Eff:
+
+StormcrawlerChargeSource:
+	ReloadDelay: 150
+	Range: 0c512
+	ValidTargets: Stormcrawler
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Stormcrawler
+		Damage: 1
+		Versus:
+			Heavy: 0
+		ValidRelationships: Ally
+	Warhead@Charge: FireShrapnel
+		Weapon: StormcrawlerCharge
+		Amount: 1
+		AimChance: 100
+		ThrowWithoutTarget: false
 
 ShardLauncher:
 	StartBurstReport: shard-fire1.aud

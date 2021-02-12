@@ -159,7 +159,7 @@ KATY:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 70
-		Prerequisites: ~vehicles.allies, ~!vehicles.england, ~techlevel.low
+		Prerequisites: ~vehicles.2tnk, ~techlevel.low
 		Description: Allied main battle tank.\n  Strong vs Vehicles\n  Weak vs Infantry, Defenses, Aircraft
 	Valued:
 		Cost: 800
@@ -1206,7 +1206,7 @@ MNLY:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 440
-		Prerequisites: repair, ~techlevel.medium, ~!vehicles.scrin
+		Prerequisites: repair, ~techlevel.medium, ~vehicles.human
 		Description: Lays mines to destroy unwary enemy units.\n  Can detect mines.\n  Unarmed
 	Valued:
 		Cost: 800
@@ -1255,7 +1255,7 @@ TRUK:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 450
-		Prerequisites: ~techlevel.low, ~!vehicles.scrin
+		Prerequisites: ~techlevel.low, ~vehicles.human
 		Description: Transports cash to other players.\n  Unarmed
 	Valued:
 		Cost: 500
@@ -2063,7 +2063,7 @@ LTNK:
 		Queue: Vehicle
 		BuildPaletteOrder: 60
 		IconPalette: chrometd
-		Prerequisites: ~!vehicles.legion, ~vehicles.nod, ~techlevel.low
+		Prerequisites: ~vehicles.ltnk, ~techlevel.low
 		Description: Fast, light tank.\n  Strong vs Light Armor\n  Weak vs Infantry, Defenses, Aircraft\n  Special Ability: Amphibious
 	Valued:
 		Cost: 675
@@ -2393,7 +2393,7 @@ HTNK.Ion:
 		Queue: Vehicle
 		BuildPaletteOrder: 301
 		IconPalette: chrometd
-		Prerequisites: ~ionmam.upgrade, ~gtek, ~vehicles.zocom, ~techlevel.high
+		Prerequisites: ~ionmam.upgrade, ~gtek, ~vehicles.htnk, ~techlevel.high
 		Description: Big and slow tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
 	Valued:
 		Cost: 1700
@@ -2459,7 +2459,7 @@ HTNK.Hover:
 		GenericName: Tank
 	Buildable:
 		BuildPaletteOrder: 302
-		Prerequisites: ~hovermam.upgrade, ~gtek, ~vehicles.eagle, ~techlevel.high
+		Prerequisites: ~hovermam.upgrade, ~gtek, ~vehicles.htnk, ~techlevel.high
 		Description: Powerful heavy tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
 	Mobile:
 		Speed: 82
@@ -2602,7 +2602,7 @@ MLRS:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 240
-		Prerequisites: tmpl, ~vehicles.nod, ~!vehicles.blackh, ~techlevel.high
+		Prerequisites: tmpl, ~vehicles.mlrs, ~techlevel.high
 		Queue: Vehicle
 		IconPalette: chrometd
 		Description: Long-range incendiary rocket artillery.\n  Has weak armor.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Tanks, Aircraft
@@ -3456,7 +3456,7 @@ JUGG:
 		Queue: Vehicle
 		IconPalette: chrometd
 		Description: Tough artillery battle-mech.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Aircraft
-		Prerequisites: ~upgc, ~vehicles.talon, ~techlevel.high
+		Prerequisites: upgc, ~vehicles.talon, ~techlevel.high
 	Mobile:
 		Locomotor: sheavytracked
 		Speed: 50
@@ -4264,6 +4264,7 @@ BATF:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
+	Inherits@SHRAPNEL: ^ThrowsShrapnel
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 340
@@ -4372,6 +4373,9 @@ BATF:
 		RequiresCondition: driver-dead && !cargo
 	Targetable@DRIVERKILL:
 		RequiresCondition: !driver-dead && !cargo
+	SpawnActorOnDeath:
+		Actor: BATF.Husk
+		RequiresCondition: !being-warped
 
 BATF.AI:
 	Inherits: BATF

@@ -364,7 +364,7 @@ GUNW:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 24
-		Prerequisites: wsph, ~vehicles.scrin, ~techlevel.low
+		Prerequisites: ~vehicles.scrin, ~techlevel.low
 		Description: Light assault walker.\n  Strong vs Infantry, Aircraft\n  Weak vs Tanks
 		IconPalette: chrome
 	Valued:
@@ -571,7 +571,7 @@ INTL:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 43
-		Prerequisites: wsph, ~vehicles.scrin, ~techlevel.low
+		Prerequisites: ~vehicles.scrin, ~techlevel.low
 		Queue: Vehicle
 		Description: Heavily armoured transport craft.\n  Can detect mines.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
 		IconPalette: chrome
@@ -713,12 +713,6 @@ STCR:
 		Weapon: StormcrawlerZap
 		LocalOffset: 0,0,350, -250,0,350, 250,0,350
 		TargetRelationships: Enemy, Neutral
-	Armament@SECONDARY:
-		Name: secondary
-		Weapon: StormcrawlerCharge
-		LocalOffset: 0,0,350, -250,0,350, 250,0,350
-		TargetRelationships: Ally
-		ForceTargetRelationships: None
 	AttackFrontal:
 		FacingTolerance: 512
 		PauseOnCondition: empdisable || being-warped
@@ -729,42 +723,44 @@ STCR:
 		ZOffset: -81
 	Targetable@STORMCRAWLERCHARGE:
 		TargetTypes: Stormcrawler
-		RequiresCondition: stormcrawlercharge < 15
+		RequiresCondition: stormcrawlercharge < 3
 	ExternalCondition@STORMCRAWLERCHARGE:
 		Condition: stormcrawlercharge
 	ReloadDelayMultiplier@STORMCRAWLERCHARGE1:
 		Modifier: 75
-		RequiresCondition: stormcrawlercharge >= 5
+		RequiresCondition: stormcrawlercharge >= 1
 	ReloadDelayMultiplier@STORMCRAWLERCHARGE2:
 		Modifier: 75
-		RequiresCondition: stormcrawlercharge >= 10
+		RequiresCondition: stormcrawlercharge >= 2
 	RangeMultiplier@STORMCRAWLERCHARGE2:
 		Modifier: 120
-		RequiresCondition: stormcrawlercharge >= 10
+		RequiresCondition: stormcrawlercharge >= 2
 	ChangesHealth@STORMCRAWLERCHARGE1:
 		PercentageStep: 1
 		Delay: 10
 		StartIfBelow: 100
 		DamageCooldown: 0
-		RequiresCondition: stormcrawlercharge >= 5 && stormcrawlercharge < 10 && !empdisable && !being-warped
+		RequiresCondition: stormcrawlercharge >= 1 && stormcrawlercharge < 2 && !empdisable && !being-warped
 	ChangesHealth@STORMCRAWLERCHARGE2:
 		Step: 600
 		Delay: 10
 		StartIfBelow: 100
 		DamageCooldown: 0
-		RequiresCondition: stormcrawlercharge >= 10 && !empdisable && !being-warped
+		RequiresCondition: stormcrawlercharge >= 2 && !empdisable && !being-warped
 	WithDecoration@STORMCRAWLERCHARGE1:
 		Image: pips
 		Sequence: pip-stcr1
 		Palette: scrin
 		Position: TopRight
-		RequiresCondition: stormcrawlercharge >= 5 && stormcrawlercharge < 10 && !empdisable && !being-warped
+		RequiresCondition: stormcrawlercharge >= 1 && stormcrawlercharge < 2 && !empdisable && !being-warped
 	WithDecoration@STORMCRAWLERCHARGE2:
 		Image: pips
 		Sequence: pip-stcr2
 		Palette: scrin
 		Position: TopRight
-		RequiresCondition: stormcrawlercharge >= 10 && !empdisable && !being-warped
+		RequiresCondition: stormcrawlercharge >= 2 && !empdisable && !being-warped
+	PeriodicExplosion:
+		Weapon: StormcrawlerChargeSource
 
 DEVO:
 	Inherits: ^Tank

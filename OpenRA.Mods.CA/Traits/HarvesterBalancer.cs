@@ -32,6 +32,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Ticks between checking whether the condition should be applied.")]
 		public readonly int CheckInterval = 10;
 
+		[Desc("Ticks to apply boost on creation when not linked to refinery (i.e. produced from factory).")]
+		public readonly int UnlinkedDuration = 150;
+
 		public override object Create(ActorInitializer init) { return new HarvesterBalancer(this); }
 	}
 
@@ -43,6 +46,7 @@ namespace OpenRA.Mods.CA.Traits
 		bool movingToResources = false;
 		int damageWindowTicks = 0;
 		int ticksUntilCheck = 0;
+		int unlinkedBuffTicks = 0;
 
 		public HarvesterBalancer(HarvesterBalancerInfo info)
 			: base(info) { }
@@ -50,6 +54,7 @@ namespace OpenRA.Mods.CA.Traits
 		protected override void Created(Actor self)
 		{
 			movingToResources = true;
+			unlinkedBuffTicks = Info.UnlinkedDuration;
 		}
 
 		void GrantCondition(Actor self, string cond)
@@ -80,8 +85,8 @@ namespace OpenRA.Mods.CA.Traits
 				return false;
 
 			var facing = self.Trait<IFacing>().Facing;
-			var facingUp = (facing.Angle >= 0 && facing.Angle < 256) || facing.Angle > 512;
-			var facingDown = facing.Angle > 512 && facing.Angle < 768;
+			var facingUp = (facing.Angle >= 0 && facing.Angle < 256) || facing.Angle > 768;
+			var facingDown = facing.Angle > 256 && facing.Angle < 768;
 			var isCloseToRefinery = false;
 
 			if (destinationRefinery != null)
@@ -90,12 +95,8 @@ namespace OpenRA.Mods.CA.Traits
 				var refineryTarget = Target.FromActor(destinationRefinery);
 				isCloseToRefinery = refineryTarget.IsInRange(pos, Info.MaxDistanceFromRefinery);
 			}
-			else
-			{
-				isCloseToRefinery = true;
-			}
 
-			if (isCloseToRefinery && movingToResources && facingUp)
+			if ((isCloseToRefinery || unlinkedBuffTicks > 0) && movingToResources && facingUp)
 				return true;
 
 			if (isCloseToRefinery && movingToRefinery && facingDown)
@@ -115,12 +116,12 @@ namespace OpenRA.Mods.CA.Traits
 				if (SpeedBuffNeeded(self))
 				{
 					if (conditionToken == Actor.InvalidConditionToken)
-						self.GrantCondition(Info.Condition);
+						GrantCondition(self, Info.Condition);
 				}
 				else
 				{
 					if (conditionToken != Actor.InvalidConditionToken)
-						self.RevokeCondition(conditionToken);
+						RevokeCondition(self);
 				}
 
 				ticksUntilCheck = Info.CheckInterval;
@@ -128,6 +129,9 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (damageWindowTicks > 0)
 				damageWindowTicks--;
+
+			if (unlinkedBuffTicks > 0)
+				unlinkedBuffTicks--;
 		}
 
 		public void MovingToResources(Actor self, CPos targetCell)
