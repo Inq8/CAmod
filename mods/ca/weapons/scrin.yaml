@@ -268,10 +268,10 @@ CorrupterSpew:
 		Image: tibspew2
 		LaunchAngle: 62
 		Inaccuracy: 682
-		Palette: scrin
-		TrailPalette: scrin
+		Palette: scrin-ignore-lighting-alpha85
+		TrailPalette: scrin-ignore-lighting-alpha85
 	Warhead@1Dam: SpreadDamage
-		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+		DamageTypes: Prone50Percent, TriggerProne, PoisonDeath
 		-Falloff:
 		Damage: 950
 		Versus:
@@ -281,6 +281,20 @@ CorrupterSpew:
 		ExplosionPalette: scrin
 		Image: tibexplodesm
 	-Warhead@Flames:
+	
+CorruptorExplode:
+	Inherits: UnitExplodeIraqTank
+	Warhead@3Eff_impact: CreateEffect
+		Explosions: med_chem
+		ExplosionPalette: tdeffect
+		ImpactSounds: vtoxcona.aud, vtoxconb.aud, vtoxconc.aud
+	-Warhead@6Eff_areanuke1:
+	Warhead@Shrap: FireShrapnel
+		Weapon: ChemDebris
+		Amount: 5
+		AimChance: 0
+		ValidTargets: Ground, Water, Infantry, Vehicle
+		ThrowWithoutTarget: true
 
 DevourerLaser:
 	Inherits: ^ScrinLaser

@@ -1048,6 +1048,7 @@ KIRO.Husk:
 		Speed: 30
 	FallsToEarth:
 		MaximumSpinSpeed: 0
+		Explosion: KirovExplode
 	SmokeTrailWhenDamaged@0:
 		Offset: -432,560,0
 		Interval: 2
@@ -1061,12 +1062,31 @@ KIRO.Husk:
 		Type: CenterPosition
 	RenderSprites:
 		Image: kirov
-	FallsToEarth:
-		Explosion: KirovExplode
+	SpawnActorOnDeath:
+		Actor: KIRO.Husk.Ground
 
 KIRO.Husk.EMP:
 	Inherits: KIRO.Husk
 	Inherits: ^EmpVisualEffect
+
+KIRO.Husk.Ground:
+	Inherits: ^Husk
+	Inherits@SHRAPNEL: ^ThrowsShrapnelBig
+	RenderSprites:
+		Image: kirov
+	Tooltip:
+		Name: Husk (Kirov)
+	KillsSelf:
+		Delay: 1
+	Explodes:
+		Weapon: KirovExplode
+	-OwnerLostAction:
+	-CaptureManager:
+	-Capturable:
+	TransformOnCapture:
+		IntoActor: KIRO.Husk.Ground
+	InfiltrateForTransform:
+		IntoActor: KIRO.Husk.Ground
 
 APC.Husk:
 	Inherits: ^Husk

@@ -107,6 +107,7 @@ UnitExplodeFlameSmall:
 	Inherits: ^Explosion
 	Warhead@1Dam: SpreadDamage
 		Damage: 4000
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: offseted_napalm
 		ImpactSounds: firebl3.aud
@@ -115,6 +116,7 @@ UnitExplodeChemSmall:
 	Inherits: ^Explosion
 	Warhead@1Dam: SpreadDamage
 		Damage: 4000
+		DamageTypes: Prone50Percent, TriggerProne, PoisonDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: small_chem
 		ExplosionPalette: temptd
@@ -257,7 +259,7 @@ BarrelExplode:
 KirovExplode:
 	Inherits: ^Explosion
 	Warhead@1Dam: SpreadDamage
-		Damage: 6000
+		Damage: 3000
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 2
 		ValidTargets: Ground, Trees
@@ -270,11 +272,11 @@ KirovExplode:
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@2Eff: CreateEffect
 		Explosions: large_napalm
-		ImpactSounds: firebl3.aud
+		ImpactSounds: vkircraa.aud
 		Delay: 2
 	Warhead@3EffWater: CreateEffect
 		Explosions: large_napalm
-		ImpactSounds: firebl3.aud
+		ImpactSounds: vkircraa.aud
 	Warhead@Smu: LeaveSmudge
 		SmudgeType: Scorch
 		Size: 2
@@ -644,7 +646,7 @@ UnitExplodeVice:
 	Warhead@3Eff: CreateEffect
 		Explosions: med_chem
 		ExplosionPalette: temptd
-		ImpactSounds: firebl3.aud
+		ImpactSounds: vtoxcona.aud, vtoxconb.aud, vtoxconc.aud
 		Delay: 5
 	Warhead@4Radio: CreateTintedCells
 		Spread: 1c0
@@ -723,6 +725,13 @@ UnitExplodeToxinTruck:
 		Image: Cloud2d
 		Palette: tseffect-ignore-lighting-alpha75
 		ValidTargets: Ground, Water
+	Warhead@Shrap: FireShrapnel
+		Weapon: ChemDebris
+		Amount: 7
+		AimChance: 0
+		ValidTargets: Ground, Water, Infantry, Vehicle
+		ThrowWithoutTarget: true
+
 
 MEMP:
 	ValidTargets: Ground, Water

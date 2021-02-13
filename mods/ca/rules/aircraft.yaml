@@ -976,9 +976,13 @@ C17:
 	Contrail@1:
 		Offset: -261,-650,0
 		TrailLength: 15
+		UsePlayerColor: false
+		Color: FFFFFF80
 	Contrail@2:
 		Offset: -85,-384,0
 		TrailLength: 16
+		UsePlayerColor: false
+		Color: FFFFFF80
 	Contrail@3:
 		Offset: -85,384,0
 		TrailLength: 16
@@ -1224,6 +1228,8 @@ ORCB:
 	AttackAircraft:
 		FacingTolerance: 80
 		Voice: Attack
+		AttackType: Strafe
+		StrafeRunLength: 3c0
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
@@ -1236,8 +1242,8 @@ ORCB:
 		MaximumPitch: 56
 		TakeoffSounds: orcaup1.aud
 		LandingSounds: orcadwn1.aud
-		CanHover: False
-		CanSlide: False
+		CanHover: true
+		CanSlide: false
 		Voice: Move
 	AutoTarget:
 		InitialStance: HoldFire
@@ -1557,6 +1563,11 @@ KIRO:
 	GrantConditionOnFaction@iraq:
 		Condition: iraqbombs
 		Factions: iraq
+	DeathSounds:
+	AmbientSoundCA:
+		SoundFiles: vkirlo2a.aud, vkirlo2b.aud, vkirlo2c.aud
+		Interval: 2
+		VolumeMultiplier: 0.05
 
 OCAR:
 	Inherits: ^HelicopterTD
@@ -1576,10 +1587,11 @@ OCAR:
 		IconPalette: chrometd
 		Description: Fast VTOL Vehicle Transporter.\n  Unarmed
 	Aircraft:
+		CruiseAltitude: 2048
 		AltitudeVelocity: 0c100
 		IdealSeparation: 0c768
-		TurnSpeed: 16
-		Speed: 135
+		TurnSpeed: 20
+		Speed: 236
 		TakeoffSounds: dropup1.aud
 		LandingSounds: dropdwn1.aud
 		Repulsable: True
@@ -1591,6 +1603,10 @@ OCAR:
 		LocalOffset: 0, 0, -128
 		Voice: Action
 		AllowDropOff: True
+		CarryCondition: slowdown
+	SpeedMultiplier@Slowdown:
+		Modifier: 80
+		RequiresCondition: slowdown
 	Health:
 		HP: 30000
 	Armor:
@@ -1618,6 +1634,28 @@ OCAR:
 		VoiceSet: CarryAllVoice
 	WithMoveAnimation:
 		MoveSequence: move
+	Contrail@1:
+		Offset: 30,-600,-20
+		TrailLength: 15
+		UsePlayerColor: false
+		Color: FFFFFF80
+	Contrail@2:
+		Offset: -885,-184,0
+		TrailLength: 16
+		UsePlayerColor: false
+		ZOffset: -512
+		Color: cc550080
+	Contrail@3:
+		Offset: -885,184,0
+		TrailLength: 16
+		UsePlayerColor: false
+		ZOffset: -512
+		Color: cc550080
+	Contrail@4:
+		Offset: 30,600,-20
+		TrailLength: 15
+		UsePlayerColor: false
+		Color: FFFFFF80
 
 OCAR.Reinforce:
 	Inherits: OCAR
@@ -1625,7 +1663,8 @@ OCAR.Reinforce:
 	Carryall:
 		DropRange: 30c0
 	Aircraft:
-		IdealSeparation: 0c256
+		IdleBehavior: LeaveMap
+		Repulsable: False
 	-Selectable:
 	-Voiced:
 	RejectsOrders:
@@ -1635,10 +1674,9 @@ OCAR.Pod:
 	Inherits: OCAR.Reinforce
 	RenderSprites:
 		Image: orcacapod
-	-Carryall:
-	Cargo:
-		Types: Infantry
-		MaxWeight: 8
+	Aircraft:
+	WithMoveAnimation:
+		MoveSequence: move
 
 HARR:
 	Inherits: ^Helicopter
@@ -1912,6 +1950,8 @@ HORN:
 YF23.Bomber:
 	Inherits: ^PlaneTD
 	Inherits@AUTOTARGET: ^AutoTargetAir
+	Valued:
+		Cost: 2000
 	Tooltip:
 		Name: Black Widow
 	Health:
@@ -2119,7 +2159,7 @@ AURO:
 		BuildPaletteOrder: 140
 		Prerequisites: ~afld.gdi, ~aircraft.eagle, gtek, ~techlevel.high
 		IconPalette: chrometd
-		Description: Supersonic bomber armed with a MOAB bomb.\n  Strong vs Buildings, Light Armor, Infantry\n  Weak vs Aircraft\n  Special Ability: Afterburner
+		Description: Supersonic bomber armed with a MOAB.\n  Strong vs Defenses, Vehicles, Infantry\n  Weak vs Aircraft\n  Special Ability: Afterburner
 	Valued:
 		Cost: 2200
 	Tooltip:

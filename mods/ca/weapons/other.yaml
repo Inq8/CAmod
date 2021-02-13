@@ -1777,6 +1777,21 @@ JDAM:
 		RandomClusterCount: 3
 		Dimensions: 3,3
 		Footprint: xxx xxx xxx
+	Warhead@Concussion2: GrantExternalCondition
+		Range: 3c0
+		Duration: 60
+		Condition: concussion
+		ValidTargets: Ground, Infantry, Vehicle, Ship
+	Warhead@5Shake: ShakeScreen
+		Duration: 5
+		Intensity: 1
+		Multiplier: 0.5,0.5
+	Warhead@Shrap: FireShrapnel
+		Weapon: SmallDebris
+		Amount: 5
+		AimChance: 0
+		ValidTargets: Ground, Water, Infantry, Vehicle
+		ThrowWithoutTarget: true
 
 HarvSwap:
 	ReloadDelay: 1
@@ -1803,6 +1818,7 @@ U2Camera:
 	Projectile: InstantHit
 	
 ^Debris:
+	ValidTargets: Ground, Water, Trees, Air
 	Range: 5c0
 	Projectile: Bullet
 		Speed: 55, 108
@@ -1838,3 +1854,74 @@ U2Camera:
 
 SmallDebris:
 	Inherits: ^Debris
+	
+FireDebris:
+	Inherits: ^Debris
+	Range: 3c0
+	Projectile: Bullet
+		Speed: 55, 108
+		LaunchAngle: 90, 192
+		Image: firetrail
+		TrailImage: smokey
+		TrailDelay: 1
+		Palette: effect
+		TrailPalette: effect
+		-Sequences:
+		Shadow: true
+		Blockable: false
+	Warhead@1Dam: SpreadDamage
+		Spread: 200
+		Falloff: 100, 100, 0
+		Damage: 1000
+		Versus:
+			None: 100
+			Wood: 85
+			Light: 70
+			Heavy: 35
+			Concrete: 28
+		DamageTypes: Prone100Percent, TriggerProne, PoisonDeath
+	Warhead@2Eff: CreateEffect
+		ValidTargets: Ground, Air, Water
+		Explosions: small_napalm
+		ExplosionPalette: effect
+		ImpactSounds: firebl3.aud
+	-Warhead@3EffWater:
+	Warhead@4Smu: LeaveSmudge
+		SmudgeType: Scorch
+	
+ChemDebris:
+	Inherits: ^Debris
+	Range: 3c0
+	Projectile: Bullet
+		Speed: 55, 108
+		LaunchAngle: 90, 192
+		Image: tibglob
+		Palette: scrin-ignore-lighting-alpha85
+		TrailImage: tibspew1
+		TrailPalette: scrin-ignore-lighting-alpha85
+		-Sequences:
+		Shadow: true
+		Blockable: false
+	Warhead@1Dam: SpreadDamage
+		Spread: 200
+		Falloff: 100, 100, 0
+		Damage: 1000
+		Versus:
+			None: 100
+			Wood: 85
+			Light: 70
+			Heavy: 35
+			Concrete: 28
+		DamageTypes: Prone100Percent, TriggerProne, PoisonDeath
+	Warhead@2Eff: CreateEffect
+		ValidTargets: Ground, Air, Water
+		Explosions: small_chem
+		ExplosionPalette: tdeffect
+		ImpactSounds: vtoxcona.aud, vtoxconb.aud, vtoxconc.aud
+	-Warhead@3EffWater:
+	Warhead@4Smu: LeaveSmudge
+		SmudgeType: Scorch
+	Warhead@5Radio: CreateTintedCells
+		Level: 300
+		Falloff: 32, 5
+		LayerName: radioactivity.weak
