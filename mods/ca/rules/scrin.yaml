@@ -1238,7 +1238,7 @@ ENRV:
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: EnervatorBolts
-		LocalOffset: -300,0,-150
+		LocalOffset: -300,0,-250
 		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 40
@@ -1808,9 +1808,11 @@ DEVA.Husk:
 		Name: Devastator Warship
 	Aircraft:
 		TurnSpeed: 8
-		Speed: 30
+		Speed: 35
 	FallsToEarth:
 		MaximumSpinSpeed: 0
+		Moves: True
+		Velocity: 30
 	RevealsShroud:
 		Range: 10c0
 		Type: CenterPosition
@@ -1818,10 +1820,31 @@ DEVA.Husk:
 		Image: deva
 	FallsToEarth:
 		Explosion: KirovExplode
+	SpawnActorOnDeath:
+		Actor: DEVA.Husk.Ground
 
 DEVA.Husk.EMP:
 	Inherits: DEVA.Husk
 	Inherits: ^EmpVisualEffect
+
+DEVA.Husk.Ground:
+	Inherits: ^Husk
+	Inherits@SHRAPNEL: ^ThrowsShrapnelBig
+	RenderSprites:
+		Image: deva
+	Tooltip:
+		Name: Husk (Devastator Warship)
+	KillsSelf:
+		Delay: 1
+	Explodes:
+		Weapon: KirovExplode
+	-OwnerLostAction:
+	-CaptureManager:
+	-Capturable:
+	TransformOnCapture:
+		IntoActor: DEVA.Husk.Ground
+	InfiltrateForTransform:
+		IntoActor: DEVA.Husk.Ground
 
 PAC.Husk:
 	Inherits: ^HelicopterHusk
@@ -1832,6 +1855,8 @@ PAC.Husk:
 		Speed: 30
 	FallsToEarth:
 		MaximumSpinSpeed: 0
+		Moves: True
+		Velocity: 35
 	RevealsShroud:
 		Range: 10c0
 		Type: CenterPosition
@@ -1839,10 +1864,31 @@ PAC.Husk:
 		Image: pac
 	FallsToEarth:
 		Explosion: KirovExplode
+	SpawnActorOnDeath:
+		Actor: PAC.Husk.Ground
 
 PAC.Husk.EMP:
 	Inherits: PAC.Husk
 	Inherits: ^EmpVisualEffect
+
+PAC.Husk.Ground:
+	Inherits: ^Husk
+	Inherits@SHRAPNEL: ^ThrowsShrapnelBig
+	RenderSprites:
+		Image: pac
+	Tooltip:
+		Name: Husk (Planetary Assault Carrier)
+	KillsSelf:
+		Delay: 1
+	Explodes:
+		Weapon: KirovExplode
+	-OwnerLostAction:
+	-CaptureManager:
+	-Capturable:
+	TransformOnCapture:
+		IntoActor: PAC.Husk.Ground
+	InfiltrateForTransform:
+		IntoActor: PAC.Husk.Ground
 
 INVA.Husk:
 	Inherits: ^PlaneHusk
