@@ -456,7 +456,7 @@ SEEK:
 		Type: Light
 	RevealsShroud:
 		MinRange: 4c0
-		Range: 8c0
+		Range: 7c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
@@ -529,7 +529,7 @@ LACE:
 		Type: Light
 	RevealsShroud:
 		MinRange: 4c0
-		Range: 8c0
+		Range: 7c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
@@ -711,7 +711,7 @@ STCR:
 		Type: Heavy
 	RevealsShroud:
 		MinRange: 4c0
-		Range: 6c0
+		Range: 5c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
@@ -1119,12 +1119,12 @@ STMR:
 	Health:
 		HP: 26500
 	RevealsShroud:
-		Range: 10c0
-		MinRange: 8c0
+		Range: 11c0
+		MinRange: 9c0
 		Type: GroundPosition
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 10c0
+		Range: 9c0
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: StormriderZap
@@ -1229,12 +1229,12 @@ ENRV:
 	Health:
 		HP: 20000
 	RevealsShroud:
-		Range: 10c0
-		MinRange: 8c0
+		Range: 12c0
+		MinRange: 10c0
 		Type: GroundPosition
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 10c0
+		Range: 12c0
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: EnervatorBolts
@@ -1330,7 +1330,7 @@ DEVA:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 34000
+		HP: 32000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -1765,8 +1765,13 @@ STMR.Husk:
 		Offset: -250,250,100
 		UsePlayerColor: true
 	RevealsShroud:
-		Range: 10c0
-		Type: CenterPosition
+		Range: 11c0
+		MinRange: 9c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 9c0
+		Type: GroundPosition
 	RenderSprites:
 		Image: stmr
 		PlayerPalette: overlayplayerscrin
@@ -1792,8 +1797,13 @@ ENRV.Husk:
 		Offset: -750,200,300
 		UsePlayerColor: true
 	RevealsShroud:
+		Range: 12c0
+		MinRange: 10c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
 		Range: 10c0
-		Type: CenterPosition
+		Type: GroundPosition
 	RenderSprites:
 		Image: enrv
 		PlayerPalette: overlayplayerscrin
@@ -1815,7 +1825,12 @@ DEVA.Husk:
 		Velocity: 30
 	RevealsShroud:
 		Range: 10c0
-		Type: CenterPosition
+		MinRange: 8c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 8c0
+		Type: GroundPosition
 	RenderSprites:
 		Image: deva
 	FallsToEarth:
@@ -1859,7 +1874,12 @@ PAC.Husk:
 		Velocity: 35
 	RevealsShroud:
 		Range: 10c0
-		Type: CenterPosition
+		MinRange: 8c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 8c0
+		Type: GroundPosition
 	RenderSprites:
 		Image: pac
 	FallsToEarth:
@@ -1899,7 +1919,12 @@ INVA.Husk:
 		Speed: 149
 	RevealsShroud:
 		Range: 2c0
-		Type: CenterPosition
+		MinRange: 1c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 1c0
+		Type: GroundPosition
 	RenderSprites:
 		Image: inva
 		PlayerPalette: overlayplayerscrin
@@ -3040,7 +3065,7 @@ PTUR:
 		Type: Concrete
 	RevealsShroud:
 		MinRange: 5c0
-		Range: 7c0
+		Range: 6c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 5c0
