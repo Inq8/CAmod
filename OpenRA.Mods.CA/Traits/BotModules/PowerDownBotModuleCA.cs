@@ -122,18 +122,19 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			var power = playerPower.ExcessPower;
+			List<Actor> togglingBuildings = new List<Actor>();
 
 			// When there is extra power, check if AI can toggle on
 			if (power > 0)
 			{
 				toggledBuildings = toggledBuildings.Where(bpw => isToggledBuildingsValid(bpw.Actor)).OrderByDescending(bpw => bpw.ExpectedPowerChanging).ToList();
-				for (int i = 0;  i < toggledBuildings.Count; i++)
+				for (int i = 0; i < toggledBuildings.Count; i++)
 				{
 					var bpw = toggledBuildings[i];
 					if (power + bpw.ExpectedPowerChanging < 0)
 						continue;
 
-					bot.QueueOrder(new Order(Info.OrderName, bpw.Actor, false));
+					togglingBuildings.Add(bpw.Actor);
 					power += bpw.ExpectedPowerChanging;
 					toggledBuildings.RemoveAt(i);
 				}
@@ -149,10 +150,15 @@ namespace OpenRA.Mods.CA.Traits
 					if (power > 0)
 						break;
 
-					bot.QueueOrder(new Order(Info.OrderName, bpw.Actor, false));
+					togglingBuildings.Add(bpw.Actor);
 					toggledBuildings.Add(new BuildingPowerWrapper(bpw.Actor, -bpw.ExpectedPowerChanging));
 					power += bpw.ExpectedPowerChanging;
 				}
+			}
+
+			if (togglingBuildings.Count > 0)
+			{
+				bot.QueueOrder(new Order(Info.OrderName, null, false, groupedActors: togglingBuildings.ToArray()));
 			}
 
 			toggleTick = Info.Interval;

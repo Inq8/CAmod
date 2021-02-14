@@ -9,6 +9,7 @@
  */
 #endregion
 
+using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
@@ -145,10 +146,8 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				{
 					owner.Bot.QueueOrder(new Order("AttackMove", leader, Target.FromCell(owner.World, owner.TargetActor.Location), false));
 
-					foreach (var a in owner.Units)
-						if (a != leader)
-							owner.Bot.QueueOrder(new Order("Scatter", a, false));
-
+					var others = owner.Units.Where(u => u != leader);
+					owner.Bot.QueueOrder(new Order("Scatter", null, false, groupedActors: others.ToArray()));
 					makeWay--;
 				}
 				else
@@ -199,8 +198,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			else
 				owner.Bot.QueueOrder(new Order("AttackMove", leader, Target.FromCell(owner.World, owner.TargetActor.Location), false));
 
-			foreach (var unit in unitsHurryUp)
-				owner.Bot.QueueOrder(new Order("AttackMove", unit, Target.FromCell(owner.World, leader.Location), false));
+			owner.Bot.QueueOrder(new Order("AttackMove", null, Target.FromCell(owner.World, leader.Location), false, groupedActors: unitsHurryUp.ToArray()));
 		}
 
 		public void Deactivate(SquadCA owner) { }
@@ -212,8 +210,6 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 		public void Tick(SquadCA owner)
 		{
-			var cannotRetaliate = false;
-
 			// Basic check
 			if (!owner.IsValid)
 				return;
@@ -227,6 +223,9 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			var attackScanRadius = WDist.FromCells(owner.SquadManager.Info.AttackScanRadius);
 			var targetActor = owner.SquadManager.FindClosestEnemy(leader.CenterPosition, attackScanRadius);
 
+			var cannotRetaliate = true;
+			List<Actor> followingUnits = new List<Actor>();
+			List<Actor> attackingUnits = new List<Actor>();
 			if (targetActor == null)
 			{
 				owner.FuzzyStateMachine.RevertToPreviousState(owner, true);
@@ -234,7 +233,6 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			}
 			else
 			{
-				cannotRetaliate = true;
 				owner.TargetActor = targetActor;
 
 				foreach (var a in owner.Units)
@@ -243,11 +241,11 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 					{
 						if (CanAttackTarget(a, targetActor))
 						{
-							owner.Bot.QueueOrder(new Order("Attack", a, Target.FromActor(owner.TargetActor), false));
+							attackingUnits.Add(a);
 							cannotRetaliate = false;
 						}
 						else
-							owner.Bot.QueueOrder(new Order("AttackMove", a, Target.FromCell(owner.World, leader.Location), false));
+							followingUnits.Add(a);
 					}
 					else
 						cannotRetaliate = false;
@@ -257,7 +255,13 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			// Because ShouldFlee(owner) cannot retreat units while they cannot even fight
 			// a unit that they cannot target. Therefore, use `cannotRetaliate` here to solve this bug.
 			if (ShouldFlee(owner) || cannotRetaliate)
+			{
 				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeStateCA(), false);
+				return;
+			}
+
+			owner.Bot.QueueOrder(new Order("AttackMove", null, Target.FromCell(owner.World, leader.Location), false, groupedActors: followingUnits.ToArray()));
+			owner.Bot.QueueOrder(new Order("Attack", null, Target.FromActor(owner.TargetActor), false, groupedActors: attackingUnits.ToArray()));
 		}
 
 		public void Deactivate(SquadCA owner) { }

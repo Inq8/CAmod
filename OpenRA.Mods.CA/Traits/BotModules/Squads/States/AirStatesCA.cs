@@ -174,19 +174,25 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 			var unitsAroundPos = owner.World.FindActorsInCircle(leader.CenterPosition, WDist.FromCells(owner.SquadManager.Info.DangerScanRadius))
 				.Where(a => owner.SquadManager.IsPreferredEnemyUnit(a) && owner.SquadManager.IsNotHiddenUnit(a));
-			var ambushed = CountAntiAirUnits(unitsAroundPos) > owner.Units.Count;
 
-			if ((!NearToPosSafely(owner, owner.TargetActor.CenterPosition)) || ambushed)
+			// Check if get ambushed.
+			if (CountAntiAirUnits(unitsAroundPos) > owner.Units.Count)
 			{
 				owner.FuzzyStateMachine.ChangeState(owner, new AirFleeStateCA(), false);
 				return;
 			}
 
-			var ownBuilding = RandomBuildingLocation(owner);
+			var cannotRetaliate = true;
+			List<Actor> resupplyingUnits = new List<Actor>();
+			List<Actor> backingoffUnits = new List<Actor>();
+			List<Actor> attackingUnits = new List<Actor>();
 			foreach (var a in owner.Units)
 			{
 				if (BusyAttack(a))
+				{
+					cannotRetaliate = false;
 					continue;
+				}
 
 				var ammoPools = a.TraitsImplementing<AmmoPool>().ToArray();
 				if (!ReloadsAutomatically(ammoPools, a.TraitOrDefault<Rearmable>()))
@@ -196,16 +202,37 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 					if (!HasAmmo(ammoPools))
 					{
-						owner.Bot.QueueOrder(new Order("ReturnToBase", a, false));
+						resupplyingUnits.Add(a);
 						continue;
 					}
 				}
 
 				if (CanAttackTarget(a, owner.TargetActor))
-					owner.Bot.QueueOrder(new Order("Attack", a, Target.FromActor(owner.TargetActor), false));
+				{
+					cannotRetaliate = false;
+					attackingUnits.Add(a);
+				}
 				else
-					owner.Bot.QueueOrder(new Order("Move", a, Target.FromCell(owner.World, ownBuilding), false));
+				{
+					if (!FullAmmo(ammoPools))
+					{
+						resupplyingUnits.Add(a);
+						continue;
+					}
+
+					backingoffUnits.Add(a);
+				}
 			}
+
+			if (cannotRetaliate)
+			{
+				owner.FuzzyStateMachine.ChangeState(owner, new AirFleeStateCA(), false);
+				return;
+			}
+
+			owner.Bot.QueueOrder(new Order("ReturnToBase", null, false, groupedActors: resupplyingUnits.ToArray()));
+			owner.Bot.QueueOrder(new Order("Attack", null, Target.FromActor(owner.TargetActor), false, groupedActors: attackingUnits.ToArray()));
+			owner.Bot.QueueOrder(new Order("Move", null, Target.FromCell(owner.World, RandomBuildingLocation(owner)), false, groupedActors: backingoffUnits.ToArray()));
 		}
 
 		public void Deactivate(SquadCA owner) { }
