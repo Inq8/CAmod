@@ -37,7 +37,7 @@ VEHICLES.SCRIN:
 	Voiced:
 		VoiceSet: ScrinInfantryVoice
 	Targetable:
-		TargetTypes: Ground, Infantry
+		TargetTypes: Ground, Infantry, TNT
 	WithDeathAnimation:
 		DeathSequencePalette: overlayplayerscrin
 		CrushedSequencePalette: scrin
@@ -144,21 +144,28 @@ S3:
 	Armament@PRIMARY:
 		Weapon: DisintegratorBeamAA
 		LocalOffset: 150,0,400
-		PauseOnCondition: being-warped
+		PauseOnCondition: !ammo
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: DisintegratorBeam
 		LocalOffset: 150,0,400
-		PauseOnCondition: being-warped
+		PauseOnCondition: !ammo
 	Armament@Garrison:
 		Name: mounted
 		Weapon: DisintegratorBeam
+		PauseOnCondition: !ammo
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	AutoTarget:
 		ScanRadius: 5
+	AmmoPool:
+		Ammo: 1
+		AmmoCondition: ammo
+	ReloadAmmoPool:
+		Delay: 30
+		Count: 1
 
 S4:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -193,7 +200,7 @@ S4:
 		Prerequisites: barracks.upgraded
 	-Crushable:
 	PortableChrono:
-		ChargeDelay: 375
+		ChargeDelay: 500
 		ChronoshiftSound: scrinport.aud
 	-TakeCover:
 

@@ -1077,6 +1077,19 @@
 	AttackMove:
 		AssaultMoveCondition: assault-move
 
+^AutoTargetGroundAssaultMovePrioritizeVehicles:
+	Inherits: ^AutoTargetGroundAssaultMove
+	AutoTargetPriority@DEFAULTVEH:
+		RequiresCondition: !stance-attackanything && !assault-move
+		ValidTargets: Vehicle, Ship
+		InvalidTargets: NoAutoTarget
+		Priority: 10
+	AutoTargetPriority@ATTACKANYTHINGVEH:
+		RequiresCondition: stance-attackanything || assault-move
+		ValidTargets: Vehicle, Ship
+		InvalidTargets: NoAutoTarget
+		Priority: 10
+
 ^AutoTargetNavalAssaultMove:
 	Inherits: ^AutoTargetGroundAssaultMove
 	AutoTargetPriority@DEFAULT:
@@ -2968,7 +2981,7 @@
 		Weapons: SmallDebris
 		Pieces: 3, 7
 		Range: 1c511, 3c0
-		
+
 ^ThrowsShrapnelBig:
 	Inherits: ^ThrowsShrapnel
 	ThrowsShrapnel@fire:
