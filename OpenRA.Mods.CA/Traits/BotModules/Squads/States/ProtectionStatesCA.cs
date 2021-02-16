@@ -9,6 +9,7 @@
  */
 #endregion
 
+using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
@@ -75,6 +76,9 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			var protectionScanRadius = WDist.FromCells(owner.SquadManager.Info.ProtectionScanRadius);
 			var targetActor = owner.SquadManager.FindClosestEnemy(leader.CenterPosition, protectionScanRadius);
 			var cannotRetaliate = false;
+			List<Actor> resupplyingUnits = new List<Actor>();
+			List<Actor> followingUnits = new List<Actor>();
+			List<Actor> attackingUnits = new List<Actor>();
 
 			if (targetActor != null)
 				owner.TargetActor = targetActor;
@@ -113,18 +117,18 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 							if (!HasAmmo(ammoPools))
 							{
-								owner.Bot.QueueOrder(new Order("ReturnToBase", a, false));
+								resupplyingUnits.Add(a);
 								continue;
 							}
 						}
 
 						if (CanAttackTarget(a, owner.TargetActor))
 						{
-							owner.Bot.QueueOrder(new Order("Attack", a, Target.FromActor(owner.TargetActor), false));
+							attackingUnits.Add(a);
 							cannotRetaliate = false;
 						}
 						else
-							owner.Bot.QueueOrder(new Order("AttackMove", a, Target.FromCell(owner.World, leader.Location), false));
+							followingUnits.Add(a);
 					}
 
 					// Ground/naval units control:
@@ -132,17 +136,24 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 					{
 						if (CanAttackTarget(a, owner.TargetActor))
 						{
-							owner.Bot.QueueOrder(new Order("Attack", a, Target.FromActor(owner.TargetActor), false));
+							attackingUnits.Add(a);
 							cannotRetaliate = false;
 						}
 						else
-							owner.Bot.QueueOrder(new Order("AttackMove", a, Target.FromCell(owner.World, leader.Location), false));
+							followingUnits.Add(a);
 					}
 				}
 			}
 
 			if (cannotRetaliate)
+			{
 				owner.FuzzyStateMachine.ChangeState(owner, new UnitsForProtectionFleeStateCA(), false);
+				return;
+			}
+
+			owner.Bot.QueueOrder(new Order("ReturnToBase", null, false, groupedActors: resupplyingUnits.ToArray()));
+			owner.Bot.QueueOrder(new Order("AttackMove", null, Target.FromCell(owner.World, leader.Location), false, groupedActors: followingUnits.ToArray()));
+			owner.Bot.QueueOrder(new Order("Attack", null, Target.FromActor(owner.TargetActor), false, groupedActors: attackingUnits.ToArray()));
 		}
 
 		public void Deactivate(SquadCA owner) { }
