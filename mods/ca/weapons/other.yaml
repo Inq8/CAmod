@@ -667,7 +667,7 @@ PortaLaser:
 		Versus:
 			None: 175
 			Wood: 73
-			Heavy: 65
+			Heavy: 60
 			Concrete: 45
 
 PortaLaserE:
@@ -1151,10 +1151,13 @@ TitanRailgun:
 
 TitanRailgunImpact:
 	Inherits: TitanRailgun
+	-Report:
 	-Projectile:
+	-Warhead@2Dam:
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
 		Damage: 9500
+		ValidRelationships: Enemy, Neutral, Ally
 
 IonZap:
 	ReloadDelay: 90
@@ -1864,7 +1867,7 @@ U2Camera:
 
 SmallDebris:
 	Inherits: ^Debris
-	
+
 FireDebris:
 	Inherits: ^Debris
 	Range: 3c0
@@ -1898,7 +1901,7 @@ FireDebris:
 	-Warhead@3EffWater:
 	Warhead@4Smu: LeaveSmudge
 		SmudgeType: Scorch
-	
+
 ChemDebris:
 	Inherits: ^Debris
 	Range: 3c0

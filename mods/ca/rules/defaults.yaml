@@ -924,7 +924,7 @@
 	ExternalCondition@concussion:
 		Condition: concussion
 	SpeedMultiplier@concussion:
-		Modifier: 50
+		Modifier: 55
 		RequiresCondition: concussion
 	ReloadDelayMultiplier@concussion:
 		Modifier: 150
@@ -1076,6 +1076,19 @@
 		RequiresCondition: stance-attackanything || assault-move
 	AttackMove:
 		AssaultMoveCondition: assault-move
+
+^AutoTargetGroundAssaultMovePrioritizeVehicles:
+	Inherits: ^AutoTargetGroundAssaultMove
+	AutoTargetPriority@DEFAULTVEH:
+		RequiresCondition: !stance-attackanything && !assault-move
+		ValidTargets: Vehicle, Ship
+		InvalidTargets: NoAutoTarget
+		Priority: 10
+	AutoTargetPriority@ATTACKANYTHINGVEH:
+		RequiresCondition: stance-attackanything || assault-move
+		ValidTargets: Vehicle, Ship
+		InvalidTargets: NoAutoTarget
+		Priority: 10
 
 ^AutoTargetNavalAssaultMove:
 	Inherits: ^AutoTargetGroundAssaultMove
@@ -2970,7 +2983,7 @@
 		Weapons: SmallDebris
 		Pieces: 3, 7
 		Range: 1c511, 3c0
-		
+
 ^ThrowsShrapnelBig:
 	Inherits: ^ThrowsShrapnel
 	ThrowsShrapnel@fire:

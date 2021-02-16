@@ -36,7 +36,7 @@ FLAK-23-AA:
 	Range: 7c512
 	Report: flak1.aud, flak2.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 1150
+		Damage: 1250
 
 FLAK-23-AG:
 	Inherits: ^AACannon
@@ -573,7 +573,7 @@ AKM:
 	Burst: 3
 	BurstDelays: 2
 	Range: 7c0
-	InvalidTargets: Structure, Wall, Husk, Chrono, Air
+	InvalidTargets: Structure, Wall, Husk, Air
 	Projectile: Bullet
 		Speed: 1c682
 	Warhead@1Dam: SpreadDamage
@@ -603,13 +603,17 @@ SNIPER:
 	ReloadDelay: 110
 	Range: 6c0
 	Report: snipe.aud
-	ValidTargets: Ground, Infantry
-	InvalidTargets: Vehicle, Ship, Water, Structure, Wall, Husk, Chrono
+	ValidTargets: Ground, Water
+	InvalidTargets: Vehicle, Ship
 	Projectile: Bullet
 		Speed: 2c682
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
 		Damage: 23000
+		Versus:
+			Wood: 1
+			Concrete: 1
+			Brick: 1
 		ValidTargets: Barrel, Infantry
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
@@ -654,10 +658,10 @@ SNIPER.vehicle:
 		InvalidTargets: Ship, Structure, Bridge
 	Warhead@Concussion: GrantExternalCondition
 		Range: 0c256
-		Duration: 120
+		Duration: 70
 		Condition: concussion
 		ValidTargets: Vehicle, Ship
-		
+
 SNIPER.vehicleElite:
 	Inherits: SNIPER.vehicle
 	Report: ijarwe2a.aud

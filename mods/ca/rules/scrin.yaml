@@ -37,7 +37,7 @@ VEHICLES.SCRIN:
 	Voiced:
 		VoiceSet: ScrinInfantryVoice
 	Targetable:
-		TargetTypes: Ground, Infantry
+		TargetTypes: Ground, Infantry, TNT
 	WithDeathAnimation:
 		DeathSequencePalette: overlayplayerscrin
 		CrushedSequencePalette: scrin
@@ -45,6 +45,12 @@ VEHICLES.SCRIN:
 	TakeCover:
 		ProneSequencePrefix:
 		ProneOffset: 0,0,0
+	GrantConditionOnPrerequisite@ADVART:
+		Condition: advart-upgrade
+		Prerequisites: advart.upgrade
+	SpeedMultiplier@ADVART:
+		RequiresCondition: advart-upgrade
+		Modifier: 115
 
 S1:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -89,11 +95,11 @@ S2:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 160
-		Prerequisites: anyradar, ~infantry.traveler, ~techlevel.infonly
-		Description: Fast assault infantry.\n  Strong vs Light Vehicles, Infantry\n  Weak vs Tanks, Aircraft
+		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.infonly
+		Description: Fast anti-personnel infantry.\n  Strong vs Infantry, Light Vehicles\n  Weak vs Tanks, Aircraft
 		IconPalette: scrin
 	Valued:
-		Cost: 300
+		Cost: 275
 	Tooltip:
 		Name: Ravager
 	UpdatesPlayerStatistics:
@@ -101,7 +107,7 @@ S2:
 	Health:
 		HP: 8000
 	Mobile:
-		Speed: 90
+		Speed: 80
 	Armament@PRIMARY:
 		Weapon: RavagerShards
 		LocalOffset: 0,-100,250, 0,100,250
@@ -138,21 +144,28 @@ S3:
 	Armament@PRIMARY:
 		Weapon: DisintegratorBeamAA
 		LocalOffset: 150,0,400
-		PauseOnCondition: being-warped
+		PauseOnCondition: !ammo
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: DisintegratorBeam
 		LocalOffset: 150,0,400
-		PauseOnCondition: being-warped
+		PauseOnCondition: !ammo
 	Armament@Garrison:
 		Name: mounted
 		Weapon: DisintegratorBeam
+		PauseOnCondition: !ammo
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	AutoTarget:
 		ScanRadius: 5
+	AmmoPool:
+		Ammo: 1
+		AmmoCondition: ammo
+	ReloadAmmoPool:
+		Delay: 30
+		Count: 1
 
 S4:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -187,7 +200,7 @@ S4:
 		Prerequisites: barracks.upgraded
 	-Crushable:
 	PortableChrono:
-		ChargeDelay: 375
+		ChargeDelay: 500
 		ChronoshiftSound: scrinport.aud
 	-TakeCover:
 
@@ -221,11 +234,10 @@ S6:
 	Voiced:
 		VoiceSet: AssimilatorVoice
 	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+		TargetTypes: Ground, Infantry, ChaosImmune
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
-	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -262,7 +274,7 @@ SMEDI:
 	Voiced:
 		VoiceSet: AssimilatorVoice
 	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+		TargetTypes: Ground, Infantry, ChaosImmune
 
 MAST:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -319,7 +331,7 @@ MAST:
 		CaptureDelay: 100
 		ConsumedByCapture: false
 	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, MindControlImmune
+		TargetTypes: Ground, Infantry, MindControlImmune
 	WithIdleOverlay@mindcontrolling:
 		Sequence: mc
 		Palette: scrin
@@ -450,7 +462,7 @@ SEEK:
 		Type: Light
 	RevealsShroud:
 		MinRange: 4c0
-		Range: 8c0
+		Range: 7c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
@@ -523,7 +535,7 @@ LACE:
 		Type: Light
 	RevealsShroud:
 		MinRange: 4c0
-		Range: 8c0
+		Range: 7c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
@@ -705,7 +717,7 @@ STCR:
 		Type: Heavy
 	RevealsShroud:
 		MinRange: 4c0
-		Range: 6c0
+		Range: 5c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
@@ -1099,7 +1111,7 @@ STMR:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 90
-		Prerequisites: anyradar, grav, ~aircraft.scrin, ~techlevel.medium
+		Prerequisites: anyradar, ~aircraft.scrin, ~techlevel.medium
 		Description: Durable patrol craft.\n  Can detect submarines.\n  Strong vs Infantry, Light Armor, Aircraft\n  Weak vs Tanks, Buildings
 		IconPalette: chrome
 	Valued:
@@ -1113,12 +1125,12 @@ STMR:
 	Health:
 		HP: 26500
 	RevealsShroud:
-		Range: 10c0
-		MinRange: 8c0
+		Range: 11c0
+		MinRange: 9c0
 		Type: GroundPosition
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 10c0
+		Range: 9c0
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: StormriderZap
@@ -1186,13 +1198,13 @@ STMR:
 		Condition: regen-upgrade
 		Prerequisites: regen.upgrade
 	ChangesHealth@REGEN1:
-		Step: 600
+		Step: 500
 		Delay: 25
 		StartIfBelow: 66
 		DamageCooldown: 200
 		RequiresCondition: regen-upgrade
 	ChangesHealth@REGEN2:
-		Step: 300
+		Step: 250
 		Delay: 25
 		StartIfBelow: 100
 		DamageCooldown: 200
@@ -1200,6 +1212,109 @@ STMR:
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 8c0
+
+ENRV:
+	Inherits: ^Helicopter
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Buildable:
+		Queue: Aircraft
+		BuildAtProductionType: Plane
+		BuildPaletteOrder: 170
+		Prerequisites: scrt, ~aircraft.traveler, ~techlevel.high
+		Description: Fast attack craft that creates a focused suppression field.\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft, Infantry
+		IconPalette: scrin
+	Valued:
+		Cost: 1750
+	Voiced:
+		VoiceSet: VehicleVoice
+	Tooltip:
+		Name: Enervator
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 20000
+	RevealsShroud:
+		Range: 12c0
+		MinRange: 10c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 12c0
+		Type: GroundPosition
+	Armament@PRIMARY:
+		Weapon: EnervatorBolts
+		LocalOffset: -300,0,-250
+		PauseOnCondition: !ammo
+	AttackAircraft:
+		FacingTolerance: 40
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
+	Aircraft:
+		TurnSpeed: 18
+		Speed: 180
+		InitialFacing: 768
+		TakeoffSounds: dropup1.aud
+		LandingSounds: dropdwn1.aud
+		RepulsionSpeed: 40
+		MaximumPitch: 56
+		IdealSeparation: 1c256
+		CanSlide: False
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: AttackAnything
+	Contrail@1:
+		Offset: -750,-200,300
+		UsePlayerColor: true
+		ZOffset: -512
+	Contrail@2:
+		Offset: -750,200,300
+		UsePlayerColor: true
+		ZOffset: -512
+	SpawnActorOnDeath:
+		Actor: ENRV.Husk
+		RequiresCondition: !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: ENRV.Husk.EMP
+		RequiresCondition: empdisable
+	SmokeTrailWhenDamaged:
+		Offset: -427,0,0
+	Selectable:
+		DecorationBounds: 36,36
+	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
+	-EjectOnDeath:
+	AmmoPool:
+		Ammo: 4
+		AmmoCondition: ammo
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+		PipCount: 4
+	ReloadAmmoPoolCA:
+		Delay: 750
+		Count: 4
+		DelayOnFire: 750
+		DelayAfterReset: 60
+		ShowSelectionBar: true
+		SelectionBarColor: ff00ff
+	GrantConditionOnPrerequisite@REGEN:
+		Condition: regen-upgrade
+		Prerequisites: regen.upgrade
+	ChangesHealth@REGEN1:
+		Step: 500
+		Delay: 25
+		StartIfBelow: 66
+		DamageCooldown: 200
+		RequiresCondition: regen-upgrade
+	ChangesHealth@REGEN2:
+		Step: 250
+		Delay: 25
+		StartIfBelow: 100
+		DamageCooldown: 200
+		RequiresCondition: regen-upgrade
 
 DEVA:
 	Inherits: ^Helicopter
@@ -1209,7 +1324,7 @@ DEVA:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 170
-		Prerequisites: scrt, grav, ~aircraft.scrin, ~techlevel.high
+		Prerequisites: scrt, ~aircraft.scrin, ~techlevel.high
 		Description: Long-range siege warship.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Aircraft, Tanks
 		IconPalette: chrome
 	Voiced:
@@ -1221,7 +1336,7 @@ DEVA:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 34000
+		HP: 32000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -1280,13 +1395,13 @@ DEVA:
 		Condition: regen-upgrade
 		Prerequisites: regen.upgrade
 	ChangesHealth@REGEN1:
-		Step: 600
+		Step: 500
 		Delay: 25
 		StartIfBelow: 66
 		DamageCooldown: 200
 		RequiresCondition: regen-upgrade
 	ChangesHealth@REGEN2:
-		Step: 300
+		Step: 250
 		Delay: 25
 		StartIfBelow: 100
 		DamageCooldown: 200
@@ -1302,7 +1417,7 @@ PAC:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 180
-		Prerequisites: sign, scrt, grav, ~aircraft.scrin, ~techlevel.high
+		Prerequisites: sign, scrt, ~aircraft.scrin, ~techlevel.high
 		Description: Warship that launches a squadron\nof assault craft.\n  Strong vs Vehicles, Infantry\n  Weak vs Buildings, Defenses
 		IconPalette: chrome
 	Voiced:
@@ -1656,8 +1771,13 @@ STMR.Husk:
 		Offset: -250,250,100
 		UsePlayerColor: true
 	RevealsShroud:
-		Range: 12c0
-		Type: CenterPosition
+		Range: 11c0
+		MinRange: 9c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 9c0
+		Type: GroundPosition
 	RenderSprites:
 		Image: stmr
 		PlayerPalette: overlayplayerscrin
@@ -1666,26 +1786,86 @@ STMR.Husk.EMP:
 	Inherits: STMR.Husk
 	Inherits: ^EmpVisualEffect
 
+ENRV.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Enervator
+	Aircraft:
+		TurnSpeed: 14
+		Speed: 170
+	SmokeTrailWhenDamaged:
+		Offset: -427,0,0
+		MinDamage: Undamaged
+	Contrail@1:
+		Offset: -750,-200,300
+		UsePlayerColor: true
+	Contrail@2:
+		Offset: -750,200,300
+		UsePlayerColor: true
+	RevealsShroud:
+		Range: 12c0
+		MinRange: 10c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 10c0
+		Type: GroundPosition
+	RenderSprites:
+		Image: enrv
+		PlayerPalette: overlayplayerscrin
+
+ENRV.Husk.EMP:
+	Inherits: ENRV.Husk
+	Inherits: ^EmpVisualEffect
+
 DEVA.Husk:
 	Inherits: ^HelicopterHusk
 	Tooltip:
 		Name: Devastator Warship
 	Aircraft:
 		TurnSpeed: 8
-		Speed: 30
+		Speed: 35
 	FallsToEarth:
 		MaximumSpinSpeed: 0
+		Moves: True
+		Velocity: 30
 	RevealsShroud:
 		Range: 10c0
-		Type: CenterPosition
+		MinRange: 8c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 8c0
+		Type: GroundPosition
 	RenderSprites:
 		Image: deva
 	FallsToEarth:
 		Explosion: KirovExplode
+	SpawnActorOnDeath:
+		Actor: DEVA.Husk.Ground
 
 DEVA.Husk.EMP:
 	Inherits: DEVA.Husk
 	Inherits: ^EmpVisualEffect
+
+DEVA.Husk.Ground:
+	Inherits: ^Husk
+	Inherits@SHRAPNEL: ^ThrowsShrapnelBig
+	RenderSprites:
+		Image: deva
+	Tooltip:
+		Name: Husk (Devastator Warship)
+	KillsSelf:
+		Delay: 1
+	Explodes:
+		Weapon: KirovExplode
+	-OwnerLostAction:
+	-CaptureManager:
+	-Capturable:
+	TransformOnCapture:
+		IntoActor: DEVA.Husk.Ground
+	InfiltrateForTransform:
+		IntoActor: DEVA.Husk.Ground
 
 PAC.Husk:
 	Inherits: ^HelicopterHusk
@@ -1696,17 +1876,45 @@ PAC.Husk:
 		Speed: 30
 	FallsToEarth:
 		MaximumSpinSpeed: 0
+		Moves: True
+		Velocity: 35
 	RevealsShroud:
 		Range: 10c0
-		Type: CenterPosition
+		MinRange: 8c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 8c0
+		Type: GroundPosition
 	RenderSprites:
 		Image: pac
 	FallsToEarth:
 		Explosion: KirovExplode
+	SpawnActorOnDeath:
+		Actor: PAC.Husk.Ground
 
 PAC.Husk.EMP:
 	Inherits: PAC.Husk
 	Inherits: ^EmpVisualEffect
+
+PAC.Husk.Ground:
+	Inherits: ^Husk
+	Inherits@SHRAPNEL: ^ThrowsShrapnelBig
+	RenderSprites:
+		Image: pac
+	Tooltip:
+		Name: Husk (Planetary Assault Carrier)
+	KillsSelf:
+		Delay: 1
+	Explodes:
+		Weapon: KirovExplode
+	-OwnerLostAction:
+	-CaptureManager:
+	-Capturable:
+	TransformOnCapture:
+		IntoActor: PAC.Husk.Ground
+	InfiltrateForTransform:
+		IntoActor: PAC.Husk.Ground
 
 INVA.Husk:
 	Inherits: ^PlaneHusk
@@ -1716,8 +1924,13 @@ INVA.Husk:
 		TurnSpeed: 16
 		Speed: 149
 	RevealsShroud:
-		Range: 12c0
-		Type: CenterPosition
+		Range: 2c0
+		MinRange: 1c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 1c0
+		Type: GroundPosition
 	RenderSprites:
 		Image: inva
 		PlayerPalette: overlayplayerscrin
@@ -2274,22 +2487,6 @@ NERV:
 		EffectImage: empty
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
-	SpawnActorPower@ICHORSEED:
-		OrderName: ichorseed
-		Icon: ichorpower
-		Actor: ichor.seeder
-		ChargeInterval: 6000
-		Description: Ichor Seed
-		LifeTime: -1
-		AllowMultiple: false
-		LongDesc: Seeds tiberium at selected location.
-		LaunchSound: ichorseed.aud
-		SelectTargetSpeechNotification: SelectTarget
-		InsufficientPowerSpeechNotification: InsufficientPower
-		PauseOnCondition: disabled || empdisable || being-warped
-		EffectImage: empty
-		EffectSequence: idle
-		EffectPalette: tseffect-ignore-lighting-alpha75
 	DetonateWeaponPower@BUZZERSWARM:
 		OrderName: buzzerswarm
 		Icon: buzzpower
@@ -2409,8 +2606,13 @@ SCRT:
 	Power:
 		Amount: -200
 		RequiresCondition: !being-warped
+	ValidFactions:
+		Factions: reaper, traveler, harbinger
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
+	ProvidesPrerequisiteValidatedFaction@travelerscrt:
+		Factions: traveler
+		Prerequisite: scrt.traveler
 	ProvidesPrerequisite@buildingname:
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
@@ -2435,6 +2637,22 @@ SCRT:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
+	SpawnActorPower@ICHORSEED:
+		OrderName: ichorseed
+		Icon: ichorpower
+		Actor: ichor.seeder
+		ChargeInterval: 6000
+		Description: Ichor Seed
+		LifeTime: -1
+		AllowMultiple: false
+		LongDesc: Seeds tiberium at selected location.
+		LaunchSound: ichorseed.aud
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		PauseOnCondition: disabled || empdisable || being-warped
+		EffectImage: empty
+		EffectSequence: idle
+		EffectPalette: tseffect-ignore-lighting-alpha75
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -2482,6 +2700,11 @@ GRAV:
 	Production:
 		Produces: Aircraft, Plane
 		PauseOnCondition: forceshield || invulnerability || being-warped
+	ValidFactions:
+		Factions: reaper, traveler, harbinger
+	ProvidesPrerequisiteValidatedFaction@traveler:
+		Factions: traveler
+		Prerequisite: aircraft.traveler
 	ProvidesPrerequisite@all:
 		Prerequisite: aircraft.all
 	ProvidesPrerequisite@scrin:
@@ -2848,7 +3071,7 @@ PTUR:
 		Type: Concrete
 	RevealsShroud:
 		MinRange: 5c0
-		Range: 7c0
+		Range: 6c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 5c0

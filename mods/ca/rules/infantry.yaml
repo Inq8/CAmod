@@ -187,46 +187,46 @@ E3:
 	Armament@PRIMARY:
 		Weapon: RedEye
 		LocalOffset: 0,0,555
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 		RequiresCondition: !cryr-upgrade
 	Armament@PRIMARYUPG:
 		Weapon: RedEye.CRYO
 		LocalOffset: 0,0,555
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 		RequiresCondition: cryr-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: Dragon
 		LocalOffset: 0,0,555
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 		RequiresCondition: !cryr-upgrade
 	Armament@SECONDARYUPG:
 		Name: secondary
 		Weapon: Dragon.CRYO
 		LocalOffset: 0,0,555
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 		RequiresCondition: cryr-upgrade
 	Armament@GarrisonAA:
 		Name: mountedaa
 		Weapon: RedEyeE
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 		RequiresCondition: !cryr-upgrade
 	Armament@GarrisonAAUPG:
 		Name: mountedaa
 		Weapon: RedEye.CRYO
 		LocalOffset: 0,0,555
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 		RequiresCondition: cryr-upgrade
 	Armament@Garrison:
 		Name: mounted
 		Weapon: DragonE
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 		RequiresCondition: !cryr-upgrade
 	Armament@GarrisonUPG:
 		Name: mounted
 		Weapon: DragonE.CRYO
 		LocalOffset: 0,0,555
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 		RequiresCondition: cryr-upgrade
 	AmmoPool:
 		Ammo: 1
@@ -1246,7 +1246,7 @@ VICE:
 
 SNIP:
 	Inherits: ^Soldier
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMovePrioritizeVehicles
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
@@ -1269,17 +1269,21 @@ SNIP:
 		Range: 8c0
 	Armament@PRIMARY:
 		Weapon: sniper
+		PauseOnCondition: !ammo
 	Armament@Garrison:
 		Weapon: sniperE
 		Name: mounted
+		PauseOnCondition: !ammo
 	Armament@APROUND:
 		Name: secondary
 		Weapon: sniper.vehicle
 		RequiresCondition: apb-upgrade && rank-veteran < 3
+		PauseOnCondition: !ammo
 	Armament@APROUNDELITE:
 		Name: secondary
 		Weapon: sniper.vehicleElite
 		RequiresCondition: apb-upgrade && rank-veteran >= 3
+		PauseOnCondition: !ammo
 	Mobile:
 		Speed: 49
 		Voice: Move
@@ -1323,6 +1327,12 @@ SNIP:
 		VoiceSet: SniperVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	AmmoPool:
+		Ammo: 1
+		AmmoCondition: ammo
+	ReloadAmmoPool:
+		Delay: 110
+		Count: 1
 
 BORI:
 	Inherits: ^Soldier
@@ -1987,20 +1997,20 @@ N3C:
 	Armament@PRIMARY:
 		Weapon: RedEye.CYB
 		LocalOffset: 0,0,555
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: Dragon.CYB
 		LocalOffset: 0,0,555
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 	Armament@Garrison:
 		Name: mounted
 		Weapon: RedEyeE.CYB
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 	Armament@GarrisonAA:
 		Name: mounted
 		Weapon: DragonE.CYB
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
 	AmmoPool:
 		Ammo: 1
 		AmmoCondition: ammo

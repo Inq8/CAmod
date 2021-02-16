@@ -499,15 +499,30 @@ orep.upgrade:
 ################################SCRIN##############################
 ###################################################################
 
+advart.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Advanced Articulators
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~scrt.traveler, ~techlevel.high
+		BuildDuration: 1500
+		Description: Scrin infantry moves 15% faster.\n\n  Upgrades: Scrin Infantry
+		IconPalette: scrin
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: advart.upgrade
+
 regen.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
 		Name: Upgrade: Regenerative Hull
 	Buildable:
-		BuildPaletteOrder: 20
+		BuildPaletteOrder: 30
 		Prerequisites: ~sign, ~techlevel.high
 		BuildDuration: 3000
-		Description: Scrin aircraft will regenerate health over time when not in combat.\n\n  Upgrades: Stormrider\n  Upgrades: Devastator\n  Upgrades: Planetary Assault Carrier
+		Description: Scrin aircraft will regenerate health over time when not in combat.\n\n  Upgrades: Stormrider\n  Upgrades: Enervator\n  Upgrades: Devastator\n  Upgrades: Planetary Assault Carrier
 		IconPalette: scrin
 	Valued:
 		Cost: 2000
@@ -519,7 +534,7 @@ shields.upgrade:
 	Tooltip:
 		Name: Upgrade: Fleet Shields
 	Buildable:
-		BuildPaletteOrder: 30
+		BuildPaletteOrder: 40
 		Prerequisites: ~sign, ~techlevel.high
 		BuildDuration: 3000
 		Description: Larger Scrin vessels take reduced damage and become resistant to EMP.\n\n  Upgrades: Devastator\n  Upgrades: Planetary Assault Carrier

@@ -1530,7 +1530,7 @@ CTNK:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
 	PortableChrono:
-		ChargeDelay: 250
+		ChargeDelay: 375
 		MaxDistance: 18
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -1769,6 +1769,12 @@ APC2:
 		MinRange: 4c0
 		Range: 5c0
 		RevealGeneratedShroud: False
+		RequiresCondition: !vulcan-upgrade
+	RevealsShroud@UPG:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+		RequiresCondition: vulcan-upgrade
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Armament:
@@ -3664,7 +3670,7 @@ HSAM:
 		Type: Light
 	RevealsShroud:
 		MinRange: 4c0
-		Range: 6c0
+		Range: 5c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
@@ -4303,7 +4309,6 @@ BATF:
 		Weapon: BATFGun
 		LocalOffset: 825,0,271
 		MuzzleSequence: muzzle
-		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	Cargo:
 		Types: Infantry

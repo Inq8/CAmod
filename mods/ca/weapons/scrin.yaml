@@ -109,7 +109,7 @@ GunWalkerZapAA:
 		Inaccuracy: 0
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
-		Damage: 1400
+		Damage: 1500
 		ValidTargets: Air
 		ValidRelationships: Enemy, Neutral
 		Range: 0, 0c64, 0c256, 3c0
@@ -176,7 +176,7 @@ IntruderDiscs:
 DevastatorDiscs:
 	Inherits: PlasmaDiscs
 	Range: 18c0
-	MinRange: 2c0
+	MinRange: 3c0
 	ReloadDelay: 180
 	Report: devastator-fire1.aud, devastator-fire2.aud, devastator-fire3.aud
 	Burst: 7
@@ -200,7 +200,7 @@ DevastatorDiscs:
 			None: 100
 			Wood: 80
 			Light: 60
-			Heavy: 30
+			Heavy: 25
 			Concrete: 95
 			Brick: 90
 	Warhead@3Eff: CreateEffect
@@ -281,7 +281,7 @@ CorrupterSpew:
 		ExplosionPalette: scrin
 		Image: tibexplodesm
 	-Warhead@Flames:
-	
+
 CorruptorExplode:
 	Inherits: UnitExplodeIraqTank
 	Warhead@3Eff_impact: CreateEffect
@@ -531,6 +531,41 @@ StormRiderZapAA:
 			Light: 100
 			Heavy: 100
 
+EnervatorBolts:
+	Inherits: ^AntiGroundMissile
+	Report: enrv-fire1.aud
+	ReloadDelay: 50
+	Range: 5c0
+	Projectile: MissileCA
+		Image: enrvbolt
+		Palette: scrin
+		Inaccuracy: 128
+		ContrailLength: 20
+		ContrailColor: FF00FF77
+		ContrailWidth: 0c48
+		-TrailImage:
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 9250
+		ValidTargets: Ground, Water
+		Versus:
+			None: 30
+			Wood: 55
+			Light: 70
+			Heavy: 100
+			Concrete: 120
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@2Sup: GrantExternalCondition
+		Range: 0c768
+		Duration: 75
+		Condition: suppression
+		ValidTargets: Vehicle, Ship, Structure
+	Warhead@3Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: scrin
+		Image: enrvbolthit
+		ImpactSounds: enrv-hit1.aud
+
 InvaderLauncher:
 	ReloadDelay: 10
 	Burst: 4
@@ -629,13 +664,13 @@ StormColumnZap:
 		Duration: 5
 		Angle: 90
 	Warhead@1Dam: SpreadDamage
-		Damage: 2000
+		Damage: 1900
 		Versus:
-			None: 60
+			None: 55
 			Wood: 60
 			Concrete: 100
-			Light: 100
-			Heavy: 100
+			Light: 85
+			Heavy: 95
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: 1, 3
@@ -651,8 +686,8 @@ StormcrawlerZap:
 			None: 100
 			Wood: 15
 			Concrete: 28
-			Light: 35
-			Heavy: 20
+			Light: 30
+			Heavy: 15
 
 StormcrawlerCharge:
 	ReloadDelay: 150
