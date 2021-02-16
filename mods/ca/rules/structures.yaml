@@ -2717,7 +2717,7 @@ HAND:
 		SpawnOffset: 512,1024,0
 		ExitCell: 1,2
 	Production:
-		Produces: Infantry, Soldier
+		Produces: Infantry, Soldier, Cyborg
 		PauseOnCondition: forceshield || invulnerability || being-warped
 	ProductionBar:
 		ProductionType: Infantry
@@ -2750,6 +2750,14 @@ HAND:
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
 		Types: SpyInfiltrate
+	GrantConditionOnPrerequisite@Cyborgs:
+		Prerequisites: cyborg.upgrade
+		Condition: cyborgs
+	UnitConverter:
+		Type: Cyborg
+		ReadyAudio: UnitReady
+		BlockedAudio: OnHold
+		RequiresCondition: cyborgs
 
 WEAP.TD:
 	Inherits: ^BuildingTD

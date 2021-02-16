@@ -107,6 +107,8 @@ E1:
 		PauseOnCondition: being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	Convertible:
+		SpawnActors: N1C
 
 E1R1:
 	Inherits: E1
@@ -277,6 +279,8 @@ E3:
 			RadiationDeath: 10
 			FrozenDeath: 11
 		CrushedSequence: die-crushed
+	Convertible:
+		SpawnActors: N3C
 
 E3R1:
 	Inherits: E3
@@ -330,6 +334,8 @@ E4:
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	Convertible:
+		SpawnActors: N5
 
 E6:
 	Inherits: ^Soldier
@@ -843,6 +849,8 @@ N1:
 		Prerequisites: barracks.upgraded
 	Selectable:
 		Class: E1
+	Convertible:
+		SpawnActors: N1C
 
 N1R1:
 	Inherits: N1
@@ -983,6 +991,8 @@ N3:
 		Prerequisites: barracks.upgraded
 	Selectable:
 		Class: E3
+	Convertible:
+		SpawnActors: N3C
 
 N3R1:
 	Inherits: N3
@@ -1044,6 +1054,8 @@ N4:
 		Prerequisites: barracks.upgraded
 	Selectable:
 		Class: E4
+	Convertible:
+		SpawnActors: N5
 
 N5:
 	Inherits: ^Cyborg
@@ -1511,7 +1523,7 @@ ACOL:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Buildable:
 		Queue: Infantry
-		BuildAtProductionType: Soldier
+		BuildAtProductionType: Infantry
 		BuildPaletteOrder: 180
 		IconPalette: chrometd
 		Prerequisites: anyradar, obli, ~infantry.marked, ~techlevel.high
