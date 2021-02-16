@@ -299,6 +299,7 @@
 		RequiresCondition: berserkactive
 		Palette: berserk
 	TimedConditionBar@BERSERK:
+		Color: ff0066
 		Condition: berserk
 	RejectsOrders@BERSERK:
 		RequiresCondition: berserkactive
@@ -319,7 +320,19 @@
 		RequiresCondition: frenzy
 		Palette: frenzy
 	TimedConditionBar@FRENZY:
+		Color: ff3300
 		Condition: frenzy
+	WithIdleOverlay@FRENZY:
+		Sequence: vehicle
+		Image: frenzy-overlay
+		Palette: ra2effect-ignore-lighting-alpha50
+		RequiresCondition: frenzy
+
+^FrenzyInfantry:
+	Inherits: ^Frenzy
+	WithIdleOverlay@FRENZY:
+		Sequence: infantry
+		Offset: 0, 0, 200
 
 ^Warpable:
 	Warpable:
@@ -1347,7 +1360,7 @@
 	Inherits@5: ^HazmatUpgrade
 	Inherits@7: ^Warpable
 	Inherits@9: ^IronCurtainable-Kills
-	Inherits@10: ^Frenzy
+	Inherits@10: ^FrenzyInfantry
 	Inherits@11: ^GpsScramble
 	Inherits@12: ^BotGroundProductionBonus
 	Inherits@13: ^Chillable
