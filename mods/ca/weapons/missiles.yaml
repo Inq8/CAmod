@@ -68,7 +68,7 @@ Maverick:
 	Report: missile7.aud
 	Burst: 2
 	BurstDelays: 7
-	Projectile: Missile
+	Projectile: MissileCA
 		Speed: 256
 		Inaccuracy: 316
 		CruiseAltitude: 2c0
@@ -102,7 +102,7 @@ MaverickSU:
 	Inherits: Maverick
 	Range: 10c0
 	Report: vbleatta.aud, vbleattb.aud
-	Projectile: Missile
+	Projectile: MissileCA
 		Inaccuracy: 1c0
 		Speed: 190
 		LockOnInaccuracy: 1024
@@ -715,11 +715,15 @@ KatyushaRockets:
 	Report: katyrocket1.aud, katyrocket2.aud, katyrocket3.aud
 	Burst: 6
 	BurstDelays: 6
+	-Projectile:
 	Projectile: Bullet
 		Inaccuracy: 2c512
 		Image: dragon
 		Speed: 225
 		LaunchAngle: 70
+		TrailImage: smokey
+		Shadow: true
+		Blockable: false
 	ValidTargets: Ground, Trees, Water
 	Warhead@1Dam: SpreadDamage
 		Damage: 5250
@@ -956,7 +960,7 @@ IFVRocketsAAE:
 	Burst: 6
 	BurstDelays: 6
 	-Projectile:
-	Projectile: BulletCA
+	Projectile: Bullet
 		Image: DRAGON
 		TrailImage: smokey
 		Shadow: True
@@ -1191,6 +1195,7 @@ ScrinTorpAA:
 		HorizontalRateOfTurn: 40
 		-TrailImage:
 		RangeLimit: 12c0
+		Jammable: false
 	Warhead@1Dam: SpreadDamage
 		Damage: 3000
 	Warhead@3Eff: CreateEffect
