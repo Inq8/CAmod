@@ -32,11 +32,13 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new PointDefense(init.Self, this); }
 	}
 
-	public class PointDefense : ConditionalTrait<PointDefenseInfo>, IPointDefense
+	public class PointDefense : ConditionalTrait<PointDefenseInfo>, IPointDefense, ITick
 	{
 		readonly Actor self;
 		readonly PointDefenseInfo info;
 		readonly Armament armament;
+
+		bool hasFiredThisTick = false;
 
 		public PointDefense(Actor self, PointDefenseInfo info)
 			: base(info)
@@ -46,9 +48,14 @@ namespace OpenRA.Mods.CA.Traits
 			armament = self.TraitsImplementing<Armament>().First(a => a.Info.Name == info.Armament);
 		}
 
+		void ITick.Tick(Actor self)
+		{
+			hasFiredThisTick = false;
+		}
+
 		bool IPointDefense.Destroy(WPos position, Player attacker, string type)
 		{
-			if (IsTraitDisabled || armament.IsTraitDisabled || armament.IsTraitPaused)
+			if (IsTraitDisabled || armament.IsTraitDisabled || armament.IsTraitPaused || hasFiredThisTick)
 				return false;
 
 			if (!info.ValidRelationships.HasStance(self.Owner.RelationshipWith(attacker)))
@@ -63,6 +70,7 @@ namespace OpenRA.Mods.CA.Traits
 			if ((self.CenterPosition - position).HorizontalLengthSquared > armament.MaxRange().LengthSquared)
 				return false;
 
+			hasFiredThisTick = true;
 			self.World.AddFrameEndTask(w =>
 			{
 				if (!self.IsDead)
