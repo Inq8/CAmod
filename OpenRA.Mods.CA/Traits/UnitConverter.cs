@@ -8,10 +8,12 @@
  * information, see COPYING.
  */
 #endregion
+using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
+using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits.UnitConverter
 {
@@ -34,17 +36,24 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 			"The filename of the audio is defined per faction in notifications.yaml.")]
 		public readonly string BlockedAudio = null;
 
+		[Desc("Ticks between producing actors.")]
+		public readonly int ProductionInterval = 25;
+
 		public override object Create(ActorInitializer init) { return new UnitConverter(init, this); }
 	}
 
-	public class UnitConverter : ConditionalTrait<UnitConverterInfo>
+	public class UnitConverter : ConditionalTrait<UnitConverterInfo>, ITick
 	{
 		readonly UnitConverterInfo info;
+		int produceIntervalTicks;
+		Queue<UnitConverterQueueItem> queue;
 
 		public UnitConverter(ActorInitializer init, UnitConverterInfo info)
 			: base(info)
 		{
 			this.info = info;
+			produceIntervalTicks = Info.ProductionInterval;
+			queue = new Queue<UnitConverterQueueItem>();
 		}
 
 		public void Enter(Actor converting, Actor self)
@@ -57,8 +66,6 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 			var sp = self.TraitsImplementing<Production>()
 			.FirstOrDefault(p => !p.IsTraitDisabled && !p.IsTraitPaused);
 
-			var activated = false;
-
 			if (sp != null && !IsTraitDisabled)
 			{
 				foreach (var name in spawnActors)
@@ -69,14 +76,53 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 							new FactionInit(sp.Faction)
 						};
 
-					activated |= sp.Produce(self, self.World.Map.Rules.Actors[name.ToLowerInvariant()], info.Type, inits, 0);
+					var queueItem = new UnitConverterQueueItem();
+					queueItem.producer = sp;
+					queueItem.actor = self;
+					queueItem.producee = self.World.Map.Rules.Actors[name.ToLowerInvariant()];
+					queueItem.productionType = info.Type;
+					queueItem.inits = inits;
+					queue.Enqueue(queueItem);
 				}
 			}
-
-			if (activated)
-				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.ReadyAudio, self.Owner.Faction.InternalName);
-			else
-				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.BlockedAudio, self.Owner.Faction.InternalName);
 		}
+
+		void ITick.Tick(Actor self)
+		{
+			if (IsTraitDisabled)
+				return false;
+
+			if (produceIntervalTicks > 0)
+			{
+				produceIntervalTicks--;
+				return;
+			}
+
+			produceIntervalTicks = Info.ProductionInterval;
+
+			if (!queue.Any())
+				return;
+
+			var nextItem = queue.Peek();
+
+			if (nextItem.producer.Produce(nextItem.actor, nextItem.producee, nextItem.productionType, nextItem.inits, 0))
+			{
+				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.ReadyAudio, self.Owner.Faction.InternalName);
+				queue.Dequeue();
+			}
+			else
+			{
+				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.BlockedAudio, self.Owner.Faction.InternalName);
+			}
+		}
+	}
+
+	public class UnitConverterQueueItem
+	{
+		public Production producer;
+		public Actor actor;
+		public ActorInfo producee;
+		public string productionType;
+		public TypeDictionary inits;
 	}
 }
