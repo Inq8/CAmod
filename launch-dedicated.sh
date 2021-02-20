@@ -51,6 +51,7 @@ PROFILE_ID_WHITELIST="${ProfileIDWhitelist:-""}"
 
 ENABLE_SINGLE_PLAYER="${EnableSingleplayer:-"False"}"
 ENABLE_SYNC_REPORTS="${EnableSyncReports:-"False"}"
+USE_NEW_NETCODE="${UseNewNetcode:-"False"}"
 ENABLE_GEOIP="${EnableGeoIP:-"True"}"
 SHARE_ANONYMISED_IPS="${ShareAnonymizedIPs:-"True"}"
 
@@ -75,6 +76,7 @@ while true; do
      Server.ProfileIDWhitelist="${PROFILE_ID_WHITELIST}" \
      Server.EnableSingleplayer="${ENABLE_SINGLE_PLAYER}" \
      Server.EnableSyncReports="${ENABLE_SYNC_REPORTS}" \
+	 Server.UseNewNetcode="${USE_NEW_NETCODE}" \
      Server.EnableGeoIP="${ENABLE_GEOIP}" \
      Server.ShareAnonymizedIPs="${SHARE_ANONYMISED_IPS}" \
      Engine.SupportDir="${SUPPORT_DIR}"
