@@ -1,4 +1,4 @@
-﻿#region Copyright & License Information
+#region Copyright & License Information
 /*
  * Copyright 2016-2021 The CA Developers (see AUTHORS)
  * This file is part of CA, which is free software. It is made
@@ -77,11 +77,11 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 						};
 
 					var queueItem = new UnitConverterQueueItem();
-					queueItem.producer = sp;
-					queueItem.actor = self;
-					queueItem.producee = self.World.Map.Rules.Actors[name.ToLowerInvariant()];
-					queueItem.productionType = info.Type;
-					queueItem.inits = inits;
+					queueItem.Producer = sp;
+					queueItem.Actor = self;
+					queueItem.Producee = self.World.Map.Rules.Actors[name.ToLowerInvariant()];
+					queueItem.ProductionType = info.Type;
+					queueItem.Inits = inits;
 					queue.Enqueue(queueItem);
 				}
 			}
@@ -90,7 +90,7 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 		void ITick.Tick(Actor self)
 		{
 			if (IsTraitDisabled)
-				return false;
+				return;
 
 			if (produceIntervalTicks > 0)
 			{
@@ -105,7 +105,7 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 
 			var nextItem = queue.Peek();
 
-			if (nextItem.producer.Produce(nextItem.actor, nextItem.producee, nextItem.productionType, nextItem.inits, 0))
+			if (nextItem.Producer.Produce(nextItem.Actor, nextItem.Producee, nextItem.ProductionType, nextItem.Inits, 0))
 			{
 				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.ReadyAudio, self.Owner.Faction.InternalName);
 				queue.Dequeue();
@@ -119,10 +119,10 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 
 	public class UnitConverterQueueItem
 	{
-		public Production producer;
-		public Actor actor;
-		public ActorInfo producee;
-		public string productionType;
-		public TypeDictionary inits;
+		public Production Producer;
+		public Actor Actor;
+		public ActorInfo Producee;
+		public string ProductionType;
+		public TypeDictionary Inits;
 	}
 }
