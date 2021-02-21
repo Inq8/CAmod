@@ -91,9 +91,16 @@ bio.destroyed:
 oilb:
 	Inherits: ^StructureOverlays
 	idle: oilb
+		Length: 10
+		Tick: 150
 	damaged-idle: oilb
-		Start: 1
-		Length: *
+		Start: 10
+		Length: 10
+		Tick: 150
+	idle-flare: burn-s
+		Start: 12
+		Length: 46
+		ZOffset: 1
 	make: oilb
 	bib: bib3
 		Length: *
@@ -103,8 +110,12 @@ oilb:
 
 oilb.destroyed:
 	idle: oilb
-		Start: 1
+		Start: 20
+		Length: 1
+	idle-flare: flmspt
+		Start: 50
 		Length: *
+		ZOffset: 1
 	bib: bib3
 		Length: *
 		UseTilesetExtension: true
