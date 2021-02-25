@@ -6,7 +6,7 @@ Title: DeliriumShellmap
 
 Author: Darkademic
 
-Tileset: JUNGLE
+Tileset: SNOW
 
 MapSize: 162,162
 
@@ -26,23 +26,30 @@ Players:
 		Name: Creeps
 		NonCombatant: True
 		Faction: england
-		Enemies: Multi0, Multi2, Multi3
+		Enemies: Multi0, Multi2, Multi3, Multi1
 	PlayerReference@Multi0:
 		Name: Multi0
 		Faction: england
 		Color: 9FBAFF
+		Allies: Multi1
+		Enemies: Creeps, Multi2, Multi3
+	PlayerReference@Multi1:
+		Name: Multi1
+		Faction: steelt
+		Color: F5D378
+		Allies: Multi0
 		Enemies: Creeps, Multi2, Multi3
 	PlayerReference@Multi2:
 		Name: Multi2
 		Faction: reaper
 		Color: 7353FF
-		Enemies: Creeps, Multi0, Multi3
+		Enemies: Creeps, Multi0, Multi3, Multi1
 	PlayerReference@Multi3:
 		Name: Multi3
 		Faction: blackh
 		LockColor: True
 		Color: FE0000
-		Enemies: Creeps, Multi0, Multi2
+		Enemies: Creeps, Multi0, Multi2, Multi1
 
 Actors:
 	Actor4: tc05.husk
@@ -114,12 +121,6 @@ Actors:
 	Actor56: split2
 		Owner: Neutral
 		Location: 146,99
-	Actor57: split2
-		Owner: Neutral
-		Location: 129,65
-	Actor58: split2
-		Owner: Neutral
-		Location: 115,63
 	Actor61: split2
 		Owner: Neutral
 		Location: 12,60
@@ -324,30 +325,15 @@ Actors:
 	Actor140: tc02.husk
 		Owner: Neutral
 		Location: 82,53
-	Actor165: split2
-		Owner: Neutral
-		Location: 72,58
-	Actor167: t17.husk
-		Owner: Neutral
-		Location: 77,64
 	Actor168: t10
 		Owner: Neutral
 		Location: 88,64
-	Actor170: tc02.husk
-		Owner: Neutral
-		Location: 77,66
 	Actor171: t07.husk
 		Owner: Neutral
 		Location: 88,69
 	Actor141: t10.husk
 		Owner: Neutral
 		Location: 37,88
-	Actor155: tc04.husk
-		Owner: Neutral
-		Location: 48,90
-	Actor156: t10
-		Owner: Neutral
-		Location: 53,91
 	Actor157: t17.husk
 		Owner: Neutral
 		Location: 26,96
@@ -357,36 +343,18 @@ Actors:
 	Actor160: tc01
 		Owner: Neutral
 		Location: 44,100
-	Actor161: split2
-		Owner: Neutral
-		Location: 38,103
-	Actor162: tc04
-		Owner: Neutral
-		Location: 60,102
-	Actor163: split2
-		Owner: Neutral
-		Location: 53,106
 	Actor147: t05.husk
 		Owner: Neutral
 		Location: 98,81
 	Actor148: t05.husk
 		Owner: Neutral
 		Location: 108,83
-	Actor149: t15.husk
-		Owner: Neutral
-		Location: 102,86
 	Actor150: tc04.husk
 		Owner: Neutral
 		Location: 116,86
 	Actor151: tc02
 		Owner: Neutral
 		Location: 108,88
-	Actor154: split2
-		Owner: Neutral
-		Location: 94,100
-	Actor164: split2
-		Owner: Neutral
-		Location: 112,101
 	Actor169: tc04.husk
 		Owner: Neutral
 		Location: 58,74
@@ -564,14 +532,6 @@ Actors:
 	Actor258: sbag
 		Owner: Multi0
 		Location: 63,83
-	Actor261: gun
-		Owner: Multi0
-		Location: 60,84
-		TurretFacing: 69
-	Actor262: gun
-		Owner: Multi0
-		Location: 58,94
-		TurretFacing: 22
 	Actor263: sbag
 		Owner: Multi0
 		Location: 88,85
@@ -591,59 +551,26 @@ Actors:
 		Owner: Multi0
 		Location: 91,86
 		TurretFacing: 225
-	Actor269: pbox
-		Owner: Multi0
-		TurretFacing: 96
-		Location: 62,82
 	Actor272: pbox
 		Owner: Multi0
 		TurretFacing: 96
 		Location: 81,89
-	Actor273: pbox
-		Owner: Multi0
-		TurretFacing: 96
-		Location: 72,89
-	Actor274: pbox
-		Owner: Multi0
-		TurretFacing: 96
-		Location: 64,89
 	Actor276: pbox
 		Owner: Multi0
 		TurretFacing: 96
 		Location: 80,80
-	AlliedWarFactory1: weap
-		Owner: Multi0
-		Location: 71,93
-	Actor279: apwr
-		Owner: Multi0
-		Location: 75,95
-	Actor280: apwr
-		Owner: Multi0
-		Location: 79,95
 	Actor281: fact
 		Owner: Multi0
 		Location: 75,99
 	HPAD1: hpad
 		Owner: Multi0
 		Location: 71,100
-	HPAD2: hpad
-		Owner: Multi0
-		Location: 68,100
 	Actor284: proc
 		Owner: Multi0
 		Location: 85,97
 	Actor285: proc
 		Owner: Multi0
 		Location: 87,100
-	Actor286: proc
-		Owner: Multi0
-		Location: 63,100
-	Actor287: silo
-		Owner: Multi0
-		Location: 65,100
-	Actor288: silo
-		Owner: Multi0
-		Location: 63,100
 	Actor294: agun
 		Owner: Multi0
 		Location: 80,82
@@ -651,9 +578,6 @@ Actors:
 	Actor296: pris
 		Owner: Multi0
 		Location: 82,91
-	Actor297: pris
-		Owner: Multi0
-		Location: 72,91
 	Actor298: dome
 		Owner: Multi0
 		Location: 80,98
@@ -688,18 +612,10 @@ Actors:
 	Actor238: sbag
 		Owner: Multi0
 		Location: 72,81
-	Actor260: agun
-		Owner: Multi0
-		Location: 63,84
-		TurretFacing: 42
 	Actor270: agun
 		Owner: Multi0
 		Location: 88,86
 		TurretFacing: 210
-	Actor275: agun
-		Owner: Multi0
-		Location: 73,82
-		TurretFacing: 13
 	Actor291: sbag
 		Owner: Multi0
 		Location: 71,81
@@ -820,31 +736,10 @@ Actors:
 	Actor332: apwr
 		Owner: Multi0
 		Location: 83,106
-	Actor333: apwr
-		Owner: Multi0
-		Location: 63,105
-	Actor334: apwr
-		Owner: Multi0
-		Location: 63,109
 	Actor335: agun
 		Owner: Multi0
 		Location: 91,104
 		TurretFacing: 241
-	Actor336: jeep
-		Owner: Multi0
-		Location: 60,87
-		TurretFacing: 45
-		Facing: 45
-	Actor337: 2tnk
-		Owner: Multi0
-		Location: 58,89
-		TurretFacing: 67
-		Facing: 67
-	Actor338: 2tnk
-		Owner: Multi0
-		Location: 64,80
-		Facing: 21
-		TurretFacing: 48
 	Actor339: 1tnk
 		Owner: Multi0
 		Location: 69,81
@@ -855,10 +750,6 @@ Actors:
 		Location: 68,85
 		TurretFacing: 0
 		Facing: 0
-	Actor341: mrj
-		Owner: Multi0
-		Facing: 96
-		Location: 64,85
 	Actor342: mgg
 		Owner: Multi0
 		Location: 80,84
@@ -868,25 +759,11 @@ Actors:
 		Location: 73,77
 		TurretFacing: 61
 		Facing: 61
-	Actor344: 2tnk
-		Owner: Multi0
-		Location: 58,80
-		TurretFacing: 65
-		Facing: 65
-	Actor345: arty
-		Owner: Multi0
-		Location: 63,87
-		Facing: 49
 	Actor346: ptnk
 		Owner: Multi0
 		Location: 67,87
 		Facing: 68
 		TurretFacing: 209
-	Actor347: ptnk
-		Owner: Multi0
-		Location: 66,79
-		TurretFacing: 9
-		Facing: 182
 	Actor348: ptnk
 		Owner: Multi0
 		Location: 85,84
@@ -954,72 +831,12 @@ Actors:
 		TurretFacing: 96
 		SubCell: 3
 		Location: 71,75
-	Actor360: e1
-		Owner: Multi0
-		Facing: 96
-		TurretFacing: 96
-		SubCell: 3
-		Location: 66,80
-	Actor361: e1
-		Owner: Multi0
-		Facing: 96
-		TurretFacing: 96
-		Location: 66,80
-		SubCell: 1
-	Actor362: e1
-		Owner: Multi0
-		Facing: 96
-		TurretFacing: 96
-		SubCell: 3
-		Location: 59,82
-	Actor365: e1
-		Owner: Multi0
-		SubCell: 3
-		Location: 62,79
-		Facing: 96
-		TurretFacing: 96
-	Actor367: e1
-		Owner: Multi0
-		Facing: 96
-		TurretFacing: 96
-		Location: 58,86
-		SubCell: 1
-	Actor368: e1
-		Owner: Multi0
-		Facing: 96
-		TurretFacing: 96
-		Location: 62,89
-		SubCell: 3
-	Actor369: e1
-		Owner: Multi0
-		Facing: 96
-		TurretFacing: 96
-		SubCell: 3
-		Location: 59,91
-	Actor371: e1
-		Owner: Multi0
-		Facing: 96
-		TurretFacing: 96
-		Location: 61,93
-		SubCell: 3
 	Actor372: e1
 		Owner: Multi0
 		Facing: 96
 		TurretFacing: 96
 		SubCell: 3
 		Location: 66,89
-	Actor370: e1
-		Owner: Multi0
-		Facing: 96
-		TurretFacing: 96
-		SubCell: 3
-		Location: 60,90
-	Actor373: e1
-		Owner: Multi0
-		Facing: 96
-		TurretFacing: 96
-		Location: 60,90
-		SubCell: 1
 	Actor374: e1
 		Owner: Multi0
 		Facing: 96
@@ -1115,12 +932,6 @@ Actors:
 		Facing: 96
 		TurretFacing: 96
 		Location: 88,82
-		SubCell: 3
-	Actor392: medi
-		Owner: Multi0
-		Facing: 96
-		TurretFacing: 96
-		Location: 59,86
 		SubCell: 3
 	Actor393: acol
 		Facing: 96
@@ -1381,36 +1192,6 @@ Actors:
 	AlliesOuterBase: waypoint
 		Owner: Neutral
 		Location: 74,86
-	Actor451: e1
-		Owner: Multi0
-		Facing: 96
-		TurretFacing: 96
-		SubCell: 3
-		Location: 56,82
-	Actor452: e1
-		Owner: Multi0
-		Facing: 96
-		TurretFacing: 96
-		Location: 56,81
-		SubCell: 3
-	Actor466: e1
-		Owner: Multi0
-		Facing: 96
-		TurretFacing: 96
-		Location: 58,79
-		SubCell: 1
-	Actor485: e1
-		Owner: Multi0
-		Facing: 96
-		TurretFacing: 96
-		Location: 57,88
-		SubCell: 1
-	Actor487: e1
-		Owner: Multi0
-		Facing: 96
-		TurretFacing: 96
-		Location: 56,85
-		SubCell: 1
 	Actor447: tc05
 		Owner: Neutral
 		Location: 108,78
@@ -1584,10 +1365,6 @@ Actors:
 	Actor535: nuk2
 		Owner: Multi3
 		Location: 36,54
-	Actor536: gun
-		Owner: Multi0
-		Location: 64,82
-		TurretFacing: 41
 	Actor538: scol
 		Owner: Multi2
 		Location: 103,68
@@ -1715,23 +1492,10 @@ Actors:
 		Owner: Multi0
 		TurretFacing: 96
 		Location: 87,84
-	Actor600: ifv.ai
-		Owner: Multi0
-		Location: 60,92
-		TurretFacing: 45
-		Facing: 45
-	Actor601: harv.chrono
-		Owner: Multi0
-		Facing: 0
-		Location: 57,109
 	Actor602: harv.chrono
 		Owner: Multi0
 		Location: 92,100
 		Facing: 0
-	Actor603: harv.chrono
-		Owner: Multi0
-		Facing: 96
-		Location: 56,106
 	Actor604: harv.chrono
 		Owner: Multi0
 		Location: 90,98
@@ -1739,9 +1503,6 @@ Actors:
 	Actor507: syrd
 		Owner: Multi0
 		Location: 92,94
-	Actor562: v19.husk
-		Location: 80,74
-		Owner: Neutral
 	Actor563: brl3
 		Location: 81,73
 		Owner: Neutral
@@ -1760,20 +1521,6 @@ Actors:
 	Actor566: t02
 		Owner: Neutral
 		Location: 94,87
-	Actor573: syrd
-		Owner: Multi0
-		Location: 57,98
-	Actor579: ca
-		Owner: Multi0
-		Location: 52,98
-		Facing: 68
-		TurretFacing@PRIMARY: 0
-		TurretFacing@SECONDARY: 0
-	Actor580: dd
-		Owner: Multi0
-		Location: 47,97
-		Facing: 24
-		TurretFacing: 0
 	DropZone2: waypoint
 		Owner: Neutral
 		Location: 77,88
@@ -1807,9 +1554,6 @@ Actors:
 	Actor610: brik
 		Owner: Multi0
 		Location: 63,96
-	Actor611: pris
-		Owner: Multi0
-		Location: 63,91
 	Actor598: pris
 		Owner: Multi0
 		Location: 85,91
@@ -1817,19 +1561,6 @@ Actors:
 		Owner: Multi0
 		Location: 85,94
 		TurretFacing: 185
-	Actor613: agun
-		Owner: Multi0
-		TurretFacing: 96
-		Location: 63,94
-	Actor614: fix
-		Owner: Multi0
-		Location: 64,97
-	Actor615: apwr
-		Owner: Multi0
-		Location: 66,109
-	Actor616: apwr
-		Owner: Multi0
-		Location: 66,105
 	Chronosphere: pdox
 		Owner: Multi0
 		Location: 71,106
@@ -2274,5 +2005,459 @@ Actors:
 		Owner: Multi3
 		Location: 68,62
 		Facing: 157
+	Actor730: stwr
+		Owner: Multi1
+		Location: 59,94
+		TurretFacing: 192
+	Actor731: cram
+		Owner: Multi1
+		Location: 63,94
+		TurretFacing: 190
+	Actor732: syrd.gdi
+		Owner: Multi1
+		Location: 57,98
+	Actor734: pt2
+		Owner: Multi1
+		Location: 46,94
+		Facing: 745
+	Actor735: carr
+		Owner: Multi1
+		Location: 53,99
+		Facing: 1007
+	Actor736: oilb.husk
+		Location: 79,73
+		Faction: steelt
+		Owner: Neutral
+	Actor737: miss.husk
+		Location: 76,65
+		Faction: steelt
+		Owner: Neutral
+	Actor740: atwr
+		Owner: Multi1
+		Location: 72,91
+	Actor741: atwr
+		Owner: Multi1
+		Location: 63,91
+	Actor742: gtwr
+		Owner: Multi1
+		Location: 65,89
+	Actor743: gtwr
+		Owner: Multi1
+		Location: 70,89
+	Actor746: upgc
+		Owner: Multi1
+		Location: 64,97
+		TurretFacing: 384
+	Actor747: proc.td
+		Owner: Multi1
+		Location: 60,102
+	Actor748: silo.td
+		Owner: Multi1
+		Location: 63,101
+	Actor749: nuk2
+		Owner: Multi1
+		Location: 63,106
+	Actor750: nuk2
+		Owner: Multi1
+		Location: 65,106
+	Actor751: nuk2
+		Owner: Multi1
+		Location: 63,109
+	Actor752: nuk2
+		Owner: Multi1
+		Location: 65,109
+	Actor753: nuk2
+		Owner: Multi1
+		Location: 67,109
+	Actor754: sbag
+		Owner: Multi1
+		Location: 62,112
+	Actor755: sbag
+		Owner: Multi1
+		Location: 63,112
+	Actor756: sbag
+		Owner: Multi1
+		Location: 64,112
+	Actor757: sbag
+		Owner: Multi1
+		Location: 65,112
+	Actor758: sbag
+		Owner: Multi1
+		Location: 66,112
+	Actor759: sbag
+		Owner: Multi1
+		Location: 67,112
+	Actor760: sbag
+		Owner: Multi1
+		Location: 68,112
+	Actor761: sbag
+		Owner: Multi1
+		Location: 68,112
+	Actor762: sbag
+		Owner: Multi1
+		Location: 69,112
+	Actor763: sbag
+		Owner: Multi1
+		Location: 69,111
+	Actor764: sbag
+		Owner: Multi1
+		Location: 69,110
+	Actor765: sbag
+		Owner: Multi1
+		Location: 69,110
+	Actor766: sbag
+		Owner: Multi1
+		Location: 69,109
+	Actor768: sbag
+		Owner: Multi1
+		Location: 67,107
+	Actor769: sbag
+		Owner: Multi1
+		Location: 67,106
+	Actor770: sbag
+		Owner: Multi1
+		Location: 67,105
+	Actor771: sbag
+		Owner: Multi1
+		Location: 66,105
+	Actor772: sbag
+		Owner: Multi1
+		Location: 65,105
+	Actor773: sbag
+		Owner: Multi1
+		Location: 64,105
+	Actor774: sbag
+		Owner: Multi1
+		Location: 63,105
+	Actor775: sbag
+		Owner: Multi1
+		Location: 62,105
+	Actor776: sbag
+		Owner: Multi1
+		Location: 62,106
+	Actor777: sbag
+		Owner: Multi1
+		Location: 62,107
+	Actor778: sbag
+		Owner: Multi1
+		Location: 62,108
+	Actor779: sbag
+		Owner: Multi1
+		Location: 62,109
+	Actor780: sbag
+		Owner: Multi1
+		Location: 62,110
+	Actor781: sbag
+		Owner: Multi1
+		Location: 62,111
+	Actor744: sbag
+		Owner: Multi1
+		Location: 70,109
+	Actor782: sbag
+		Owner: Multi1
+		Location: 69,107
+	Actor783: sbag
+		Owner: Multi1
+		Location: 68,107
+	Actor767: sbag
+		Owner: Multi1
+		Location: 69,106
+	Actor784: rep
+		Owner: Multi1
+		Location: 65,102
+	Actor788: cram
+		Owner: Multi1
+		Location: 63,84
+	Actor790: jjet
+		Owner: Multi1
+		Facing: 384
+		Location: 60,83
+	Actor791: jjet
+		Owner: Multi1
+		Location: 63,81
+		Facing: 111
+	Actor792: afac
+		Owner: Multi1
+		Location: 73,109
+	Actor793: apwr
+		Owner: Multi0
+		Location: 81,111
+	Actor794: apwr
+		Owner: Multi0
+		Location: 84,111
+	Actor795: apwr
+		Owner: Multi0
+		Location: 87,111
+	Actor796: apwr
+		Owner: Multi0
+		Location: 87,106
+	Actor797: stwr
+		Owner: Multi1
+		Location: 60,84
+	Actor798: gtwr
+		Owner: Multi1
+		Location: 62,82
+	Actor799: atwr
+		Owner: Multi1
+		Location: 65,82
+	Actor800: nuk2
+		Owner: Multi1
+		Location: 70,113
+	Actor801: nuk2
+		Owner: Multi1
+		Location: 72,113
+	Actor802: nuk2
+		Owner: Multi1
+		Location: 74,113
+	Actor803: nuk2
+		Owner: Multi1
+		Location: 70,116
+	Actor804: nuk2
+		Owner: Multi1
+		Location: 72,116
+	Actor805: nuk2
+		Owner: Multi1
+		Location: 74,116
+	Actor806: n2
+		Owner: Multi1
+		Facing: 384
+		SubCell: 3
+		Location: 58,89
+	Actor789: n3
+		Owner: Multi1
+		SubCell: 3
+		Facing: 384
+		Location: 59,91
+	Actor807: n3
+		Owner: Multi1
+		SubCell: 3
+		Location: 59,86
+		Facing: 578
+	Actor808: n1
+		Owner: Multi1
+		SubCell: 3
+		Location: 58,87
+		Facing: 384
+	Actor809: n1
+		Owner: Multi1
+		Facing: 384
+		SubCell: 3
+		Location: 58,85
+	Actor811: n1
+		Owner: Multi1
+		Facing: 384
+		SubCell: 3
+		Location: 61,91
+	Actor812: n1
+		Owner: Multi1
+		SubCell: 3
+		Location: 60,92
+		Facing: 166
+	Actor814: n1
+		Owner: Multi1
+		SubCell: 3
+		Location: 60,89
+		Facing: 206
+	Actor815: medi
+		Owner: Multi1
+		Facing: 384
+		SubCell: 3
+		Location: 60,85
+	Actor816: rmbo
+		Owner: Multi1
+		SubCell: 3
+		Location: 61,86
+		Facing: 118
+	Actor817: ammobox2
+		Owner: Multi1
+		Location: 62,84
+	Actor818: ammobox3
+		Owner: Multi1
+		Location: 64,84
+	Actor819: ammobox3
+		Owner: Multi1
+		Location: 63,92
+	Actor821: jugg
+		Owner: Multi1
+		Location: 63,86
+		Facing: 79
+		TurretFacing: 174
+	Actor822: titn.rail
+		Owner: Multi1
+		Location: 58,90
+		Facing: 261
+		TurretFacing: 142
+	Actor823: titn
+		Owner: Multi1
+		Location: 58,86
+		Facing: 134
+		TurretFacing: 229
+	Actor824: mtnk
+		Owner: Multi1
+		Location: 60,82
+		Facing: 134
+		TurretFacing@SECONDARY: 23
+		TurretFacing: 7
+	Actor825: mtnk
+		Owner: Multi1
+		Location: 63,80
+		Facing: 384
+		TurretFacing: 0
+		TurretFacing@SECONDARY: 0
+	Actor826: disr
+		Owner: Multi1
+		Location: 66,79
+		Facing: 261
+		TurretFacing: 682
+	Actor827: msam
+		Owner: Multi1
+		Location: 67,81
+		Facing: 134
+	Actor828: harv.td
+		Owner: Multi1
+		Facing: 384
+		Location: 51,107
+	Actor829: n1
+		Owner: Multi1
+		Facing: 384
+		SubCell: 3
+		Location: 56,84
+	Actor830: n1
+		Owner: Multi1
+		SubCell: 3
+		Location: 58,79
+		Facing: 111
+	Actor831: n1
+		Owner: Multi1
+		Facing: 384
+		SubCell: 3
+		Location: 63,78
+	Actor832: n1
+		Owner: Multi1
+		SubCell: 3
+		Location: 59,80
+		Facing: 237
+	Actor833: n1
+		Owner: Multi1
+		SubCell: 3
+		Location: 56,81
+		Facing: 0
+	HPAD2: hpad.td
+		Owner: Multi1
+		Location: 68,100
+	GDIWarFactory1: weap.td
+		Owner: Multi1
+		Location: 69,93
+	Actor745: n3
+		Owner: Multi1
+		Location: 65,95
+		SubCell: 1
+		Facing: 674
+	Actor785: n1
+		Owner: Multi1
+		SubCell: 3
+		Location: 66,94
+		Facing: 832
+	Actor786: n1
+		Owner: Multi1
+		SubCell: 3
+		Location: 69,92
+		Facing: 380
+	AlliedWarFactory1: weap
+		Owner: Multi0
+		Location: 76,93
+	GDIBarracks1: pyle
+		Owner: Multi1
+		Location: 73,82
+	Actor733: medi
+		Owner: Multi1
+		Facing: 384
+		SubCell: 3
+		Location: 72,83
+	Actor787: n1
+		Owner: Multi1
+		Facing: 384
+		Location: 73,84
+		SubCell: 1
+	Actor810: n1
+		Owner: Multi1
+		Location: 73,85
+		SubCell: 3
+		Facing: 602
+	Actor813: n1
+		Owner: Multi1
+		Location: 74,84
+		SubCell: 1
+		Facing: 515
+	Actor820: gmine
+		Owner: Neutral
+		Location: 94,100
+	Actor834: gmine
+		Owner: Neutral
+		Location: 53,106
+	Actor835: gmine
+		Owner: Neutral
+		Location: 72,58
+	Actor836: gmine
+		Owner: Neutral
+		Location: 115,63
+	Actor738: tc03
+		Owner: Neutral
+		Location: 74,66
+	Actor739: t16
+		Owner: Neutral
+		Location: 80,65
+	Actor837: boxes01
+		Owner: Neutral
+		Location: 72,82
+	Actor838: tanktrap2
+		Owner: Neutral
+		Location: 66,77
+	Actor839: tanktrap2
+		Owner: Neutral
+		Location: 69,75
+	Actor840: tanktrap1
+		Owner: Neutral
+		Location: 90,76
+	Actor841: tanktrap1
+		Owner: Neutral
+		Location: 89,73
+	Actor842: ammobox3
+		Owner: Neutral
+		Location: 76,82
+	Actor843: ammobox2
+		Owner: Neutral
+		Location: 80,83
+	Actor844: brl3
+		Owner: Neutral
+		Location: 72,95
+	Actor845: tc04
+		Owner: Neutral
+		Location: 74,46
+	Actor846: tc05
+		Owner: Neutral
+		Location: 84,45
+	Actor847: tc01
+		Owner: Neutral
+		Location: 85,56
+	Actor848: tc04
+		Owner: Neutral
+		Location: 100,87
+	Actor849: tc05
+		Owner: Neutral
+		Location: 48,90
+	Actor850: t02
+		Owner: Neutral
+		Location: 54,92
+	Actor851: c7
+		Owner: Neutral
+		SubCell: 3
+		Location: 79,67
+		Facing: 666
+	Actor852: c6
+		Owner: Neutral
+		SubCell: 3
+		Location: 76,68
+		Facing: 578
 
 Rules: rules.yaml
