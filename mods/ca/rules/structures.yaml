@@ -5178,22 +5178,21 @@ PATR:
 		RequiresCondition: !disabled
 	Turreted:
 		TurnSpeed: 8
-		InitialFacing: 0
+		InitialFacing: 192
 		RealignDelay: -1
 	-WithSpriteBody:
 	WithEmbeddedTurretSpriteBody:
 		PauseOnCondition: disabled || empdisable || being-warped
+	WithIdleAnimation:
+		Sequences: empty
+		Interval: 0
+		RequiresCondition: !loaded-rocket
 	AttackTurreted:
 		PauseOnCondition: disabled || empdisable || being-warped
-		RequiresCondition: !build-incomplete && !reloading
-		OpportunityFire: False
-		PersistentTargeting: False
-		ForceFireIgnoresActors: True
+		RequiresCondition: !build-incomplete && loaded-rocket > 0
 	Armament:
-		Weapon: THLauncher
-		PauseOnCondition: disabled || empdisable || being-warped
-		LocalOffset: 1000,0,500
-		ReloadingCondition: reloading
+		Weapon: EMPMissileLauncher
+		LocalOffset: 511,396,511
 	AttackOrderPower@EMPMISSILE:
 		OrderName: empmissile
 		PauseOnCondition: empdisable || disabled || being-warped
@@ -5207,6 +5206,13 @@ PATR:
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayTimerRelationships: Ally, Neutral, Enemy
+	AmmoPool:
+		Ammo: 1
+		ReloadCount: 1
+		AmmoCondition: loaded-rocket
+	ReloadAmmoPool:
+		Delay: 100
+		Count: 1
 	SupportPowerChargeBar:
 	Power:
 		Amount: -150
