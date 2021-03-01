@@ -264,8 +264,25 @@ TTankZap:
 			Concrete: 60
 			Light: 85
 
+TTankZapMK2:
+	Inherits: TTankZap
+	Report: vtesatta.aud, vtesattb.aud
+	Range: 6c0
+	Burst: 2
+	BurstDelays: 3
+	Warhead@1Dam: SpreadDamage
+		Damage: 6500
+
 TTankZap.UPG:
 	Inherits: TTankZap
+	Warhead@Arc: FireShrapnel
+		Weapon: TTankArc1
+		Amount: 1
+		AimChance: 95
+		ThrowWithoutTarget: false
+		
+TTankZapMK2.UPG:
+	Inherits: TTankZapMK2
 	Warhead@Arc: FireShrapnel
 		Weapon: TTankArc1
 		Amount: 1
