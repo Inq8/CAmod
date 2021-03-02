@@ -1391,8 +1391,8 @@ TTNK:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 200
-		Prerequisites: structures.tsla, anyradar, ~vehicles.tsla, ~techlevel.medium
+		BuildPaletteOrder: 235
+		Prerequisites: structures.tsla, stek, ~vehicles.ttnk, ~techlevel.medium
 		Description: Tank with mounted Tesla coil.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft\n  Special Ability: Jams Radar
 	Valued:
 		Cost: 1250
@@ -1446,7 +1446,7 @@ TTNK:
 	GrantConditionOnPrerequisite@TARC:
 		Condition: tarc-upgrade
 		Prerequisites: tarc.upgrade
-		
+
 TTNK.RA2:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
@@ -1465,16 +1465,22 @@ TTNK.RA2:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 38000
+		HP: 40000
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 100
+		Speed: 90
 		Voice: Move
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 6c0
 		RevealGeneratedShroud: False
+		RequiresCondition: !tarc-upgrade
+	RevealsShroud@UPG:
+		MinRange: 6c0
+		Range: 7c0
+		RevealGeneratedShroud: False
+		RequiresCondition: tarc-upgrade
 	RevealsShroud@GAPGEN:
 		Range: 6c0
 	Armament@PRIMARY:
