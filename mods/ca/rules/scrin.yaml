@@ -1135,12 +1135,10 @@ STMR:
 	Armament@PRIMARY:
 		Weapon: StormriderZap
 		LocalOffset: 350,213,-85, 350,-213,-85
-		PauseOnCondition: !ammo
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: StormriderZapAA
 		LocalOffset: 350,213,-85, 350,-213,-85
-		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 360
 		PersistentTargeting: false
@@ -1148,7 +1146,7 @@ STMR:
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
-		TurnSpeed: 20
+		TurnSpeed: 22
 		Speed: 180
 		RepulsionSpeed: 40
 		MaximumPitch: 56
@@ -1183,17 +1181,20 @@ STMR:
 		Prerequisites: aircraft.upgraded
 	-EjectOnDeath:
 	AmmoPool:
-		Ammo: 16
+		Ammo: 12
 		AmmoCondition: ammo
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
-		PipCount: 4
-	ReloadAmmoPool:
-		Delay: 175
-		Count: 4
-		ResetOnFire: true
+		PipCount: 3
+	ReloadAmmoPoolCA:
+		Delay: 375
+		Count: 12
+		DelayOnFire: 30
+		DelayAfterReset: 80
+		ShowSelectionBar: true
+		SelectionBarColor: ff00ff
 	GrantConditionOnPrerequisite@REGEN:
 		Condition: regen-upgrade
 		Prerequisites: regen.upgrade
@@ -1212,6 +1213,9 @@ STMR:
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 8c0
+	FirepowerMultiplier@DEPLETED:
+		RequiresCondition: !ammo
+		Modifier: 30
 
 ENRV:
 	Inherits: ^Helicopter

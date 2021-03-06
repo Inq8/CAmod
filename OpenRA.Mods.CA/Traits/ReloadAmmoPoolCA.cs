@@ -41,6 +41,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Play this sound each time ammo is reloaded.")]
 		public readonly string Sound = null;
 
+		[Desc("Only begin reloading when ammo is equal to or less than this number. -1 means reload whenever below full ammo.")]
+		public readonly int ReloadWhenAmmoReaches = -1;
+
 		public readonly bool ShowSelectionBar = true;
 		public readonly Color SelectionBarColor = Color.FromArgb(128, 200, 255);
 
@@ -112,7 +115,10 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected virtual void Reload(Actor self, int reloadDelay, int reloadCount, string sound)
 		{
-			if (--remainingDelay > 0 && ammoPool.HasAmmo)
+			if (--remainingDelay > 0)
+				return;
+
+			if (Info.ReloadWhenAmmoReaches > -1 && ammoPool.CurrentAmmoCount > Info.ReloadWhenAmmoReaches)
 				return;
 
 			if (!ammoPool.HasFullAmmo && --remainingTicks == 0)
