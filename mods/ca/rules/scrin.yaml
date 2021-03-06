@@ -3402,26 +3402,30 @@ ion.surge:
 
 # infiltrator stolen tech
 
-# portal
+# portal - infantry veterancy
 stolentech.port:
 	AlwaysVisible:
 	ProvidesPrerequisite:
-		Prerequisite: stolentech.hand
+		Prerequisite: barracks.upgraded
 
-# warp sphere
+# warp sphere - vehicle veterancy
 stolentech.wsph:
 	AlwaysVisible:
 	ProvidesPrerequisite:
-		Prerequisite: vehicles.seek
+		Prerequisite: vehicles.upgraded
 
-# nerve center devourer
+# nerve center - aircraft veterancy
 stolentech.nerv:
 	AlwaysVisible:
 	ProvidesPrerequisite:
-		Prerequisite: vehicles.devo
+		Prerequisite: aircraft.upgraded
 
-# tech center tripod
+# tech center - veterancy for all
 stolentech.scrt:
 	AlwaysVisible:
-	ProvidesPrerequisite:
-		Prerequisite: vehicles.tpod
+	ProvidesPrerequisite@1:
+		Prerequisite: barracks.upgraded
+	ProvidesPrerequisite@2:
+		Prerequisite: vehicles.upgraded
+	ProvidesPrerequisite@3:
+		Prerequisite: aircraft.upgraded

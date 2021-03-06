@@ -657,7 +657,7 @@ stolentech.tent:
 stolentech.barr:
 	AlwaysVisible:
 	ProvidesPrerequisite:
-		Prerequisite: infantry.shok
+		Prerequisite: infantry.e2
 
 # pyle - medic
 stolentech.pyle:
@@ -690,13 +690,11 @@ stolentech.weap.td:
 	ProvidesPrerequisite@STOLENNOD:
 		Prerequisite: vehicles.ltnk
 
-# airs - vehicle veterancy, ltnk if capturer is legion
+# airs - vehicle veterancy
 stolentech.airs:
 	AlwaysVisible:
 	ProvidesPrerequisite@VET:
 		Prerequisite: vehicles.upgraded
-	ProvidesPrerequisite@STOLENNOD:
-		Prerequisite: vehicles.ltnk
 
 # dome - ifv from allies, v2 from soviets
 stolentech.dome:
@@ -705,10 +703,10 @@ stolentech.dome:
 		Factions: england, france, germany, russia, ukraine, iraq
 	ProvidesPrerequisiteValidatedFaction@STOLENALLIED:
 		Factions: england, france, germany
-		Prerequisite: vehicles.ttrk
+		Prerequisite: vehicles.ifv
 	ProvidesPrerequisiteValidatedFaction@STOLENSOVIET:
 		Factions: russia, ukraine, iraq
-		Prerequisite: vehicles.ttrk
+		Prerequisite: vehicles.v2
 
 # hq - mlrs from allies, aircraft veterancy from nod
 stolentech.hq:
@@ -720,7 +718,7 @@ stolentech.hq:
 		Prerequisite: vehicles.msam
 	ProvidesPrerequisiteValidatedFaction@STOLENNOD:
 		Factions: blackh, marked, legion
-		Prerequisite: vehicles.msam
+		Prerequisite: aircraft.upgraded
 
 # atek - mrj
 stolentech.atek:
@@ -732,13 +730,13 @@ stolentech.atek:
 stolentech.stek:
 	AlwaysVisible:
 	ProvidesPrerequisite:
-		Prerequisite: vehicles.v3rl
+		Prerequisite: vehicles.qtnk
 
 # gtek - memp
 stolentech.gtek:
 	AlwaysVisible:
 	ProvidesPrerequisite:
-		Prerequisite: vehicles.htnk
+		Prerequisite: vehicles.memp
 
 # tmpl - toxin truck
 stolentech.tmpl:
