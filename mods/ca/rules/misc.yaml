@@ -32,7 +32,7 @@ MINS:
 	Inherits: ^Mine
 	Explodes:
 		Weapon: ATMine
-		
+
 PROXYMINESPAWN:
 	Inherits: ^SpriteActor
 	RenderSprites:
@@ -57,7 +57,7 @@ PROXYMINESPAWN:
 		Speed: 1
 	SpawnActorOnDeath:
 		Actor: minvs
-		
+
 PROXYMINESPAWNWATER:
 	Inherits: PROXYMINESPAWN
 	SpawnActorOnDeath:
@@ -647,121 +647,104 @@ aircraft.upgraded:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 
-#Nod shock trooper
-inf.soviet.stolen:
+# tent - medic
+stolentech.tent:
+	AlwaysVisible:
+	ProvidesPrerequisite:
+		Prerequisite: infantry.medi
+
+# barr - shok
+stolentech.barr:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 		Prerequisite: infantry.shok
-		Factions: blackh, marked, legion
-	ProvidesPrerequisite@stolenshok:
-		Prerequisite: structures.tsla
-		Factions: blackh, marked, legion
 
-#weap, 3tnk, even from allies (need to fix later)
-veh.soviet.stolen:
-	AlwaysVisible:
-	ProvidesPrerequisite:
-		Prerequisite: vehicles.3tnk
-		Factions: blackh, marked, legion
-
-#dome, toxin truck
-rad.soviet.stolen:
-	AlwaysVisible:
-	ProvidesPrerequisite:
-		Prerequisite: vehicles.ttrk
-		Factions: blackh, marked, legion
-
-#Soviet tech center, V3
-tec.soviet.stolen:
-	AlwaysVisible:
-	ProvidesPrerequisite:
-		Prerequisite: vehicles.v3rl
-		Factions: blackh, marked, legion
-
-#Tent, Medic
-inf.allies.stolen:
+# pyle - medic
+stolentech.pyle:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 		Prerequisite: infantry.medi
-		Factions: blackh, marked, legion
 
-#Not used
-veh.allies.stolen:
+# hand - chem mortar
+stolentech.hand:
 	AlwaysVisible:
 	ProvidesPrerequisite:
-		Prerequisite: vehicles.ifv
-		Factions: blackh, marked, legion
 
-#Not used
-rad.allies.stolen:
+# ra weap - 2tnk from allies, 3tnk from soviets
+stolentech.weap:
 	AlwaysVisible:
-	ProvidesPrerequisite:
-		Prerequisite: vehicles.ptnk
-		Factions: blackh, marked, legion
+	ValidFactions:
+		Factions: england, france, germany, russia, ukraine, iraq
+	ProvidesPrerequisiteValidatedFaction@STOLENALLIED:
+		Factions: england, france, germany
+		Prerequisite: vehicles.2tnk
+	ProvidesPrerequisiteValidatedFaction@STOLENSOVIET:
+		Factions: russia, ukraine, iraq
+		Prerequisite: vehicles.3tnk
 
-#Allied Tech, MRJ
-tec.allies.stolen:
+# td weap - mtnk from gdi/legion, ltnk if capturer is legion
+stolentech.weap.td:
+	AlwaysVisible:
+	ProvidesPrerequisite@STOLENGDI:
+		Prerequisite: vehicles.mtnk
+	ProvidesPrerequisite@STOLENNOD:
+		Prerequisite: vehicles.ltnk
+
+# airs - vehicle veterancy, ltnk if capturer is legion
+stolentech.airs:
+	AlwaysVisible:
+	ProvidesPrerequisite@VET:
+		Prerequisite: vehicles.upgraded
+	ProvidesPrerequisite@STOLENNOD:
+		Prerequisite: vehicles.ltnk
+
+# dome - ifv from allies, v2 from soviets
+stolentech.dome:
+	AlwaysVisible:
+	ValidFactions:
+		Factions: england, france, germany, russia, ukraine, iraq
+	ProvidesPrerequisiteValidatedFaction@STOLENALLIED:
+		Factions: england, france, germany
+		Prerequisite: vehicles.ttrk
+	ProvidesPrerequisiteValidatedFaction@STOLENSOVIET:
+		Factions: russia, ukraine, iraq
+		Prerequisite: vehicles.ttrk
+
+# hq - mlrs from allies, aircraft veterancy from nod
+stolentech.hq:
+	AlwaysVisible:
+	ValidFactions:
+		Factions: talon, zocom, eagle, blackh, marked, legion
+	ProvidesPrerequisiteValidatedFaction@STOLENGDI:
+		Factions: talon, zocom, eagle
+		Prerequisite: vehicles.msam
+	ProvidesPrerequisiteValidatedFaction@STOLENNOD:
+		Factions: blackh, marked, legion
+		Prerequisite: vehicles.msam
+
+# atek - mrj
+stolentech.atek:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.mrj
-		Factions: blackh, marked, legion
 
-#Pyle, Medic , APC on airstrip
-inf.gdi.stolen:
+# stek - mad tank
+stolentech.stek:
 	AlwaysVisible:
 	ProvidesPrerequisite:
-		Prerequisite: infantry.medi
-		Factions: blackh, marked, legion
+		Prerequisite: vehicles.v3rl
 
-#War factory, Legion has mtnk already so make vet
-veh.gdi.stolen:
-	AlwaysVisible:
-	ProvidesPrerequisite@BHM:
-		Prerequisite: vehicles.mtnk
-		Factions: blackh, marked
-	ProvidesPrerequisite@LEGION:
-		Prerequisite: vehicles.upgraded
-		Factions: legion
-
-#HQ, MSAM for everyone!
-rad.gdi.stolen:
-	AlwaysVisible:
-	ProvidesPrerequisite:
-		Prerequisite: vehicles.msam
-		Factions: blackh, marked, legion
-
-#GDI Tech, Mammoth
-tec.gdi.stolen:
+# gtek - memp
+stolentech.gtek:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.htnk
-		Factions: blackh, marked, legion
 
-#Chem mortar
-inf.nod.stolen:
-	AlwaysVisible:
-	ProvidesPrerequisite:
-
-#Airstrip, Tank Vet
-veh.nod.stolen:
-	AlwaysVisible:
-	ProvidesPrerequisite:
-		Prerequisite: vehicles.upgraded
-		Factions: legion, blackh, marked
-
-#Not used
-rad.nod.stolen:
-	AlwaysVisible:
-	ProvidesPrerequisite:
-		Prerequisite: vehicles.msam
-		Factions: blackh, marked, legion
-
-#Temple, toxin truck
-tec.nod.stolen:
+# tmpl - toxin truck
+stolentech.tmpl:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.ttrk
-		Factions: blackh, marked, legion
 
 mpspawn:
 	Interactable:

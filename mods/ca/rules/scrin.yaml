@@ -2313,9 +2313,9 @@ PORT:
 	ProvidesPrerequisite@buildingname:
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
-	InfiltrateForSupportPower@inf:
+	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
-		Proxy: inf.scrin.stolen
+		Proxy: stolentech.port
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
 		Types: SpyInfiltrate
@@ -2401,9 +2401,9 @@ WSPH:
 	InfiltrateForSupportPower@spy:
 		Proxy: vehicles.upgraded
 		Types: SpyInfiltrate
-	InfiltrateForSupportPower@veh:
+	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
-		Proxy: veh.scrin.stolen
+		Proxy: stolentech.wsph
 	WithIdleOverlay:
 		RequiresCondition: !build-incomplete
 
@@ -2470,9 +2470,9 @@ NERV:
 	ProvidesPrerequisite@buildingname:
 	ExternalCondition@JAMMED:
 		Condition: jammed
-	InfiltrateForSupportPower@tec:
+	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
-		Proxy: rad.scrin.stolen
+		Proxy: stolentech.nerv
 	RevealActorsPower@RESOURCESCAN:
 		CameraActor: camera.resourcescan
 		TargetActors: mine, gmine, split2, split3, splitblue, proc, proc.td, proc.scrin
@@ -2599,9 +2599,9 @@ SCRT:
 	RevealsShroud@GAPGEN:
 		Range: 5c0
 		RequiresCondition: !disabled
-	InfiltrateForSupportPower@tec:
+	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
-		Proxy: tec.scrin.stolen
+		Proxy: stolentech.scrt
 	WithBuildingBib:
 	Power:
 		Amount: -200
@@ -3403,29 +3403,25 @@ ion.surge:
 # infiltrator stolen tech
 
 # portal
-inf.scrin.stolen:
+stolentech.port:
 	AlwaysVisible:
 	ProvidesPrerequisite:
-		Prerequisite: inf.nod.stolen
-		Factions: blackh, marked, legion
+		Prerequisite: stolentech.hand
 
 # warp sphere
-veh.scrin.stolen:
+stolentech.wsph:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.seek
-		Factions: blackh, marked, legion
 
 # nerve center devourer
-rad.scrin.stolen:
+stolentech.nerv:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.devo
-		Factions: blackh, marked, legion
 
 # tech center tripod
-tec.scrin.stolen:
+stolentech.scrt:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.tpod
-		Factions: blackh, marked, legion
