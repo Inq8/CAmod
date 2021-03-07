@@ -958,8 +958,8 @@ HARV:
 		Capacity: 30
 		Resources: Tiberium, BlueTiberium, Ore, Gems
 		BaleUnloadDelay: 1
-		SearchFromProcRadius: 15
-		SearchFromHarvesterRadius: 8
+		SearchFromProcRadius: 30
+		SearchFromHarvesterRadius: 15
 		EmptyCondition: no-ore
 	WithHarvesterPipsDecoration:
 		Position: BottomLeft
@@ -1018,6 +1018,25 @@ HARV:
 	PeriodicExplosion@WARPOUT:
 		Weapon: HarvSwap
 		RequiresCondition: charv-upgrade
+	SpawnRandomActorOnDeath:
+		Actors: c1,c7,c10
+		Probability: 5
+		RequiresCondition: !being-warped
+	-Carryable:
+	AutoCarryable:
+		CarriedCondition: notmobile
+		LockedCondition: notmobile
+		ReservedCondition: carryall-reserved
+		LocalOffset: 0,0,300
+		MinDistance: 10c0
+	WithDecoration@CARRYALL:
+		Image: pips
+		Palette: d2k
+		Margin: 7, 9
+		Sequence: pickup-indicator
+		RequiresCondition: carryall-reserved
+		RequiresSelection: True
+	CarryableHarvester:
 
 HARV.Chrono:
 	Inherits: HARV
@@ -1627,7 +1646,7 @@ QTNK:
 	Armor:
 		Type: Heavy
 	Mobile:
-		PauseOnCondition: deployed || being-captured || empdisable || being-warped || driver-dead
+		PauseOnCondition: deployed || being-captured || empdisable || being-warped || driver-dead || notmobile
 		Speed: 56
 	ChronoshiftableWithSpriteEffect:
 		RequiresCondition: !deployed && !being-captured && !being-warped
@@ -2327,7 +2346,7 @@ MTNK.Drone:
 		Type: Heavy
 	Mobile:
 		Speed: 82
-		PauseOnCondition: disabled || empdisable || being-warped
+		PauseOnCondition: disabled || empdisable || being-warped || notmobile
 		Voice: Move
 	RevealsShroud:
 		MinRange: 4c0
@@ -2682,7 +2701,7 @@ MLRS:
 		Description: Long-range incendiary rocket artillery.\n  Has weak armor.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Tanks, Aircraft
 	Mobile:
 		Speed: 82
-		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead
+		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead || notmobile
 	Health:
 		HP: 15000
 	Armor:
@@ -2917,8 +2936,8 @@ HARV.TD:
 		Capacity: 30
 		Resources: Tiberium, BlueTiberium, Ore, Gems
 		BaleUnloadDelay: 1
-		SearchFromProcRadius: 15
-		SearchFromHarvesterRadius: 8
+		SearchFromProcRadius: 30
+		SearchFromHarvesterRadius: 15
 		EmptyCondition: no-ore
 	WithHarvesterPipsDecoration:
 		Position: BottomLeft
@@ -2964,6 +2983,25 @@ HARV.TD:
 	-Crushable:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	SpawnRandomActorOnDeath:
+		Actors: c1,c7,c10
+		Probability: 5
+		RequiresCondition: !being-warped
+	-Carryable:
+	AutoCarryable:
+		CarriedCondition: notmobile
+		LockedCondition: notmobile
+		ReservedCondition: carryall-reserved
+		LocalOffset: 0,0,300
+		MinDistance: 10c0
+	WithDecoration@CARRYALL:
+		Image: pips
+		Palette: d2k
+		Margin: 7, 9
+		Sequence: pickup-indicator
+		RequiresCondition: carryall-reserved
+		RequiresSelection: True
+	CarryableHarvester:
 
 BTR:
 	Inherits: ^Tank
@@ -3535,7 +3573,7 @@ JUGG:
 		Locomotor: sheavytracked
 		Speed: 50
 		Voice: Move
-		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead
+		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead || notmobile
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Selectable:
@@ -3940,7 +3978,7 @@ V3RL:
 		Speed: 56
 		TurnSpeed: 16
 		Voice: Move
-		PauseOnCondition: launching || being-captured || empdisable || being-warped || driver-dead
+		PauseOnCondition: launching || being-captured || empdisable || being-warped || driver-dead || notmobile
 	Passenger:
 		Voice: Move
 	RevealsShroud:
@@ -4242,7 +4280,7 @@ PCAN:
 		LocalOffset: 420,0,180
 	Mobile:
 		Speed: 68
-		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead
+		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead || notmobile
 	-Turreted:
 	-AttackTurreted:
 	-WithSpriteTurret:
@@ -4480,7 +4518,7 @@ MEMP:
 	Armor:
 		Type: Heavy
 	Mobile:
-		PauseOnCondition: deployed || disabled || empdisable || being-warped
+		PauseOnCondition: deployed || disabled || empdisable || being-warped || notmobile
 		Voice: Move
 		Speed: 135
 	ChargingSelfDestruct:
@@ -4575,7 +4613,7 @@ CDRN:
 	Mobile:
 		Speed: 135
 		Voice: Move
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || notmobile
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0

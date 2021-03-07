@@ -97,7 +97,7 @@ S2:
 		BuildPaletteOrder: 160
 		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.infonly
 		Description: Fast anti-personnel infantry.\n  Strong vs Infantry, Light Vehicles\n  Weak vs Tanks, Aircraft
-		IconPalette: scrin
+		IconPalette: chromes
 	Valued:
 		Cost: 300
 	Tooltip:
@@ -244,7 +244,7 @@ SMEDI:
 		BuildPaletteOrder: 240
 		Prerequisites: ~infantry.scrin, ~infantry.smedi, ~techlevel.infonly
 		Description: Heals nearby life forms.\n  Unarmed
-		IconPalette: scrin
+		IconPalette: chromes
 	Valued:
 		Cost: 200
 	Tooltip:
@@ -707,7 +707,7 @@ STCR:
 		Prerequisites: anyradar, ~vehicles.reaper, ~techlevel.medium
 		Queue: Vehicle
 		Description: Slow moving, durable, short-range assault unit.\n  Bolstered by other nearby Stormcrawlers.\n  Strong vs Infantry, Light Armor\n  Weak vs Buildings, Aircraft
-		IconPalette: scrin
+		IconPalette: chromes
 	Mobile:
 		Speed: 68
 		TurnSpeed: 12
@@ -837,7 +837,7 @@ DARK:
 		BuildPaletteOrder: 221
 		Prerequisites: anyradar, ~vehicles.harbinger, ~techlevel.medium
 		Description: Heavy hover tank with armed with rift cannon.\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft, Infantry
-		IconPalette: scrin
+		IconPalette: chromes
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -1227,7 +1227,7 @@ ENRV:
 		BuildPaletteOrder: 170
 		Prerequisites: scrt, ~aircraft.traveler, ~techlevel.high
 		Description: Fast attack craft that creates a focused suppression field.\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft, Infantry
-		IconPalette: scrin
+		IconPalette: chromes
 	Valued:
 		Cost: 1750
 	Voiced:
@@ -1388,8 +1388,19 @@ DEVA:
 		Condition: shields-upgrade
 		Prerequisites: shields.upgrade
 	DamageMultiplier@SHIELDS:
+		RequiresCondition: shields-upgrade && shields-up
+		Modifier: 80
+	GrantConditionOnHealth@SHIELDS:
+		Condition: shields-up
+		MaxHP: -1
+		MinHP: 16000
+	WithSpriteTurret@SHIELDS:
+		RequiresCondition: shields-upgrade && shields-up
+		Sequence: shield
+		Palette: scrinshield-ignore-lighting-alpha50
+	Turreted@SHIELDS:
+		PauseOnCondition: shields-upgrade
 		RequiresCondition: shields-upgrade
-		Modifier: 90
 	KillsSelf:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
@@ -1470,19 +1481,23 @@ PAC:
 		RequiresCondition: empdisable
 	-Hovers@CRUISING:
 	WithFacingSpriteBody:
-		RequiresCondition: inva-loaded == 4
+		RequiresCondition: inva-loaded == 6
 		Name: idle
 	WithFacingSpriteBody@HALF:
-		RequiresCondition: inva-loaded < 4
+		RequiresCondition: inva-loaded < 6 && inva-loaded > 0
 		Sequence: half-deployed
 		Name: half-deployed
+	WithFacingSpriteBody@EMPTY:
+		RequiresCondition: inva-loaded == 0
+		Sequence: fully-deployed
+		Name: fully-deployed
 	AttackFrontal:
 		FacingTolerance: 384
 		PauseOnCondition: empdisable || being-warped
 	CarrierMaster@carr1:
-		Actors: inva, inva, inva, inva
+		Actors: inva, inva, inva, inva, inva, inva
 		RearmTicks: 0
-		RespawnTicks: 500
+		RespawnTicks: 750
 		InstantRepair: true
 		SlaveDisposalOnKill: KillSlaves
 		SpawnAllAtOnce: false
@@ -1504,6 +1519,12 @@ PAC:
 	Exit@3:
 		SpawnOffset: 100,0,0
 		Facing: -240
+	Exit@4:
+		SpawnOffset: 0,0,0
+		Facing: 384
+	Exit@5:
+		SpawnOffset: 0,0,0
+		Facing: -384
 	DeathSounds:
 		Voice: Die
 	-EjectOnDeath:
@@ -1511,8 +1532,19 @@ PAC:
 		Condition: shields-upgrade
 		Prerequisites: shields.upgrade
 	DamageMultiplier@SHIELDS:
+		RequiresCondition: shields-upgrade && shields-up
+		Modifier: 80
+	GrantConditionOnHealth@SHIELDS:
+		Condition: shields-up
+		MaxHP: -1
+		MinHP: 26000
+	WithSpriteTurret@SHIELDS:
+		RequiresCondition: shields-upgrade && shields-up
+		Sequence: shield
+		Palette: scrinshield-ignore-lighting-alpha50
+	Turreted@SHIELDS:
+		PauseOnCondition: shields-upgrade
 		RequiresCondition: shields-upgrade
-		Modifier: 90
 	KillsSelf:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
@@ -1560,23 +1592,23 @@ INVA:
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: InvaderZap
-		PauseOnCondition: !ammo
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: InvaderZapAA
-		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 80
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
+		AttackType: Strafe
+		StrafeRunLength: 3c0
 	Aircraft:
 		CruiseAltitude: 2c0
 		InitialFacing: 768
 		TurnSpeed: 32
 		Speed: 220
 		MaximumPitch: 56
-		CanHover: False
+		CanHover: True
 		CanSlide: False
 		RepulsionSpeed: 40
 		Repulsable: False
@@ -1584,25 +1616,13 @@ INVA:
 		VTOL: true
 		TakeoffSounds: invader-launch1.aud, invader-launch2.aud
 		LandingSounds: invader-dock.aud
-	Rearmable:
-		RearmActors: pac
-	AmmoPool:
-		Ammo: 12
-		AmmoCondition: ammo
-		ReloadDelay: 0
 	RejectsOrders:
 	SpawnActorOnDeath:
 		Actor: INVA.Husk
-		RequiresCondition: ammo && !empdisable
-	SpawnActorOnDeath@Empty:
-		Actor: INVA.Husk.empty
-		RequiresCondition: !ammo && !empdisable
+		RequiresCondition: !empdisable
 	SpawnActorOnDeath@EMP:
 		Actor: INVA.Husk.EMP
-		RequiresCondition: ammo && empdisable
-	SpawnActorOnDeath@EmptyEMP:
-		Actor: INVA.Husk.empty.EMP
-		RequiresCondition: !ammo && empdisable
+		RequiresCondition: empdisable
 	-EjectOnDeath:
 	-Selectable:
 	-ActorLostNotification:
@@ -1974,7 +1994,7 @@ SWAL:
 		BuildPaletteOrder: 30
 		Prerequisites: anypower, ~structures.scrin, ~techlevel.medium
 		Description: Stops units and blocks enemy fire. Regenerates over time.
-		IconPalette: scrin
+		IconPalette: chromes
 	Valued:
 		Cost: 200
 	CustomSellValue:
@@ -2110,7 +2130,7 @@ REAC:
 		Queue: Building
 		BuildPaletteOrder: 10
 		Prerequisites: ~structures.scrin, ~techlevel.low
-		IconPalette: scrin
+		IconPalette: chromes
 		Description: Provides power for other structures.
 	Valued:
 		Cost: 300
@@ -2204,7 +2224,7 @@ PROC.SCRIN:
 		BuildPaletteOrder: 60
 		Prerequisites: anypower, ~structures.scrin, ~techlevel.low
 		Queue: Building
-		IconPalette: scrin
+		IconPalette: chromes
 		Description: Processes raw Tiberium, Ore and Gems\ninto credits.
 		BuildDuration: 1400
 	Building:
@@ -2273,7 +2293,7 @@ PORT:
 		Queue: Building
 		BuildPaletteOrder: 20
 		Prerequisites: anypower, ~structures.scrin, ~techlevel.low
-		IconPalette: scrin
+		IconPalette: chromes
 		Description: Produces infantry.
 	Valued:
 		Cost: 500
@@ -2345,7 +2365,7 @@ WSPH:
 		Queue: Building
 		BuildPaletteOrder: 80
 		Prerequisites: proc.scrin, ~structures.scrin, ~techlevel.low
-		IconPalette: scrin
+		IconPalette: chromes
 		Description: Produces vehicles.
 	Valued:
 		Cost: 2000
@@ -2426,7 +2446,7 @@ NERV:
 		BuildPaletteOrder: 90
 		Prerequisites: proc.scrin, ~structures.scrin, ~techlevel.medium
 		Description: Provides an overview of the battlefield.\n  Requires power to operate.
-		IconPalette: scrin
+		IconPalette: chromes
 	Valued:
 		Cost: 1800
 	Tooltip:
@@ -2498,7 +2518,7 @@ NERV:
 	DetonateWeaponPower@BUZZERSWARM:
 		OrderName: buzzerswarm
 		Icon: buzzpower
-		IconPalette: scrin
+		IconPalette: chromes
 		Prerequisites: radar.harbinger, !botplayer
 		Cursor: ability
 		ChargeInterval: 6000
@@ -2516,7 +2536,7 @@ NERV:
 	DetonateWeaponPower@BUZZERSWARMAI:
 		OrderName: buzzerswarmai
 		Icon: buzzpower
-		IconPalette: scrin
+		IconPalette: chromes
 		Prerequisites: radar.harbinger, botplayer
 		Cursor: ability
 		ChargeInterval: 6000
@@ -2534,7 +2554,7 @@ NERV:
 	DetonateWeaponPower@STORMSPIKE:
 		OrderName: stormspike
 		Icon: stormspikepower
-		IconPalette: scrin
+		IconPalette: chromes
 		Prerequisites: radar.reaper
 		Cursor: ability
 		ChargeInterval: 6000
@@ -2581,7 +2601,7 @@ SCRT:
 		BuildPaletteOrder: 150
 		Prerequisites: vehicles.any, anyradar, ~structures.scrin, ~techlevel.high
 		Description: Provides Scrin advanced technologies.
-		IconPalette: scrin
+		IconPalette: chromes
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -2679,7 +2699,7 @@ GRAV:
 		BuildPaletteOrder: 130
 		Prerequisites: anyradar, ~structures.scrin, ~techlevel.medium
 		Description: Produces Scrin aircraft.
-		IconPalette: scrin
+		IconPalette: chromes
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2765,7 +2785,7 @@ SIGN:
 		Prerequisites: ~structures.scrin, scrt, ~techlevel.high
 		Description: Provides Scrin tier 4 technologies.\n  Maximum 1 can be built.\n  Cannot be captured.
 		BuildLimit: 1
-		IconPalette: scrin
+		IconPalette: chromes
 	-Capturable:
 	-CaptureNotification:
 	-CapturableProgressBar:
@@ -2805,7 +2825,7 @@ SREP:
 		BuildPaletteOrder: 100
 		Prerequisites: vehicles.scrin, ~structures.scrin, ~techlevel.medium
 		Description: Repairs vehicles for credits.
-		IconPalette: scrin
+		IconPalette: chromes
 	Valued:
 		Cost: 1200
 	Tooltip:
@@ -2863,7 +2883,7 @@ SILO.SCRIN:
 		BuildPaletteOrder: 35
 		Prerequisites: proc.scrin, ~structures.scrin, ~techlevel.infonly
 		Queue: Defense
-		IconPalette: scrin
+		IconPalette: chromes
 		Description: Stores processed Tiberium, Ore and Gems
 	-GivesBuildableArea:
 	Health:
@@ -3199,10 +3219,17 @@ SCOL:
 	Armament:
 		Weapon: StormColumnZap
 		LocalOffset: 0,0,900, 0,0,1100, 0,0,700, 0,0,1300, 0,0,500
-		RequiresCondition: !lowpower
-	AttackOmni:
+	Targetable@StormBoost:
+		TargetTypes: StormBoost
+		RequiresCondition: !(powerdown || charged)
+	ExternalCondition@CHARGED:
+		Condition: charged
+	AttackTesla:
 		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled || empdisable || being-warped
+		MaxCharges: 1
+		InitialChargeDelay: 3
+		ReloadDelay: 57
 	Power:
 		Amount: -100
 		RequiresCondition: !being-warped
@@ -3211,6 +3238,158 @@ SCOL:
 	SpawnActorOnDeath:
 		Actor: s1
 	-SpawnRandomActorOnDeath:
+	LaysMinefield@ACTIVE:
+		Mines: strm
+		Locations: 0,1, 1,0, -1,0
+		RecreationInterval: 150
+		KillOnRemove: False
+		RequiresCondition: storm-active
+	GrantTimedConditionOnDeploy@ACTIVE:
+		DeployedCondition: storm-active
+		DeployedTicks: 1700
+		CooldownTicks: 850
+		RequiresCondition: ioncon-upgrade
+	TimedConditionBar@ACTIVE:
+		Condition: storm-active
+		Color: E400FF
+	RangeMultiplier@ACTIVE:
+		Modifier: 120
+		RequiresCondition: storm-active
+	FirepowerMultiplier@ACTIVE:
+		Modifier: 120
+		RequiresCondition: storm-active
+	AmbientSoundCA@ACTIVE:
+		SoundFiles: ionstorm.aud
+		Delay: 0
+		Interval: 850
+		VolumeMultiplier: 0.4
+		RequiresCondition: storm-active
+	AutoDeployer@AI:
+		DeployChance: 100
+		OrderName: GrantTimedConditionOnDeploy
+	GrantConditionOnPrerequisite@IONCON:
+		Condition: ioncon-upgrade
+		Prerequisites: ioncon.upgrade
+		
+STRM:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^SpriteActor
+	Inherits@AUTOTARGET: ^AutoTargetAll
+	RenderSprites:
+		Palette: ioncloud-ignore-lighting-alpha50
+	HiddenUnderFog:
+		Type: CenterPosition
+	Tooltip:
+		Name: Ion Storm
+	Health:
+		HP: 1
+	HitShape:
+	KillsSelf:
+		RemoveInstead: False
+		Delay: 350, 450
+	Wanders:
+		WanderMoveRadius: 1
+		ReduceMoveRadiusDelay: 3
+	WithSpriteBody:
+		RequiresCondition: strm1
+		StartSequence: make
+	WithDeathAnimation:
+		RequiresCondition: strm1
+		DeathPaletteIsPlayerPalette: False
+		UseDeathTypeSuffix: False
+		CrushedSequence: die
+		FallbackSequence: die
+		DeathSequencePalette: ioncloud-ignore-lighting-alpha50
+	WithSpriteBody@Cloud2:
+		RequiresCondition: strm2
+		StartSequence: make2
+		Sequence: idle2
+		Name: body2
+	WithDeathAnimation@Cloud2:
+		DeathSequence: die2
+		RequiresCondition: strm2
+		DeathPaletteIsPlayerPalette: False
+		UseDeathTypeSuffix: False
+		CrushedSequence: die2
+		FallbackSequence: die2
+		DeathSequencePalette: ioncloud-ignore-lighting-alpha50
+	WithSpriteBody@Cloud3:
+		RequiresCondition: strm3
+		StartSequence: make3
+		Sequence: idle3
+		Name: body3
+	WithDeathAnimation@Cloud3:
+		DeathSequence: die3
+		DeathPaletteIsPlayerPalette: False
+		UseDeathTypeSuffix: False
+		CrushedSequence: die3
+		FallbackSequence: die3
+		RequiresCondition: strm3
+		DeathSequencePalette: ioncloud-ignore-lighting-alpha50
+	WithSpriteBody@Cloud4:
+		RequiresCondition: strm4
+		StartSequence: make4
+		Sequence: idle4
+		Name: body4
+	WithDeathAnimation@Cloud4:
+		DeathSequence: die4
+		DeathPaletteIsPlayerPalette: False
+		UseDeathTypeSuffix: False
+		CrushedSequence: die4
+		FallbackSequence: die4
+		RequiresCondition: strm4
+		DeathSequencePalette: ioncloud-ignore-lighting-alpha50
+	Mobile:
+		Locomotor: cloud
+		Speed: 3
+	Hovers:
+		Ticks: 12
+	Interactable:
+	GrantRandomCondition@CloudShape:
+		Conditions: strm1, strm2, strm3, strm4
+	GrantRandomCondition@LiveCloud:
+		Conditions: live, dead, dead, dead, dead, dead, dead, dead
+	AutoTargetPriority@STORM:
+		ValidTargets: StormBoost
+		Priority: 1
+	AutoTargetPriority@ATTACKANYTHING:
+		Priority: 10
+	AutoTarget:
+		InitialStance: AttackAnything
+	AmbientSoundCA@AMBIENCE:
+		SoundFiles: thunder1.aud, thunder2.aud, thunder3.aud, thunder4.aud, thunder5.aud, thunder.ambient.aud
+		Delay: 20, 200
+		Interval: 250, 1250
+		VolumeMultiplier: 0.3
+		RequiresCondition: live && !dead
+	Armament:
+		Weapon: StormColumnCloudZap
+		LocalOffset: 0,0,0
+	Armament@charge:
+		FireDelay: 15
+		Name: secondary
+		Weapon: StormColumnCloudCharge
+		LocalOffset: 0,0,0
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+	GrantConditionOnAttack@CHARGESFX:
+		ArmamentNames: secondary
+		Condition: charge-fire
+		RevokeDelay: 200
+	AmbientSoundCA@CHARGESFX:
+		SoundFiles: stormcolumn-fire1.aud, stormcolumn-fire2.aud
+		Delay: 0
+		Interval: 250
+		VolumeMultiplier: 0.4
+		RequiresCondition: charge-fire
+	AttackTurreted:
+		RequiresCondition: live
+	Turreted:
+		Offset: 0,0, 3072
+	JamsMissiles@IONSTORM:
+		RequiresCondition: live
+		Chance: 10
+		Range: 5c0
 
 SCOL.Temp:
 	RenderSprites:
@@ -3242,10 +3421,19 @@ SCOL.Temp:
 	Armament:
 		Weapon: StormColumnZap
 		LocalOffset: 0,0,900, 0,0,1100, 0,0,700, 0,0,1300, 0,0,500
-	AttackOmni:
+	AttackTesla:
 		PauseOnCondition: empdisable || being-warped
 	DetectCloaked:
 		RequiresCondition: !(empdisable || being-warped)
+	-GrantTimedConditionOnDeploy@ACTIVE:
+	-TimedConditionBar@ACTIVE:
+	-AutoDeployer@AI:
+	Targetable@StormBoost:
+		TargetTypes: StormBoost
+		RequiresCondition: !charged
+	GrantCondition@ACTIVE:
+		Condition: storm-active
+		RequiresCondition: ioncon-upgrade
 
 #
 # ---- misc
