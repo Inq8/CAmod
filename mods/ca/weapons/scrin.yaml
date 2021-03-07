@@ -56,7 +56,7 @@ EnslaveInfantry:
 		ValidRelationships: Neutral, Enemy
 
 EnslaveVehicle:
-	Range: 5c0
+	Range: 4c0
 	ReloadDelay: 100
 	Projectile: InstantHit
 	ValidTargets: Vehicle, Defense
@@ -147,7 +147,7 @@ PlasmaDiscs:
 		Versus:
 			None: 30
 			Wood: 65
-			Light: 70
+			Light: 85
 			Heavy: 100
 			Concrete: 50
 			Brick: 50
@@ -176,7 +176,7 @@ IntruderDiscs:
 
 DevastatorDiscs:
 	Inherits: PlasmaDiscs
-	Range: 18c0
+	Range: 16c0
 	MinRange: 3c0
 	ReloadDelay: 180
 	Report: devastator-fire1.aud, devastator-fire2.aud, devastator-fire3.aud
@@ -318,6 +318,7 @@ RiftCannon:
 	Inherits: ^ScrinLaser
 	Report: darkener-fire1.aud, darkener-fire2.aud
 	ReloadDelay: 120
+	Range: 6c0
 	Projectile: LaserZap
 		Color: 000000FF
 		Width: 70
@@ -495,7 +496,7 @@ StormriderZap:
 		Damage: 2600
 		Versus:
 			None: 100
-			Wood: 50
+			Wood: 40
 			Concrete: 30
 			Light: 85
 			Heavy: 35
@@ -517,11 +518,13 @@ StormriderZap:
 
 StormRiderZapAA:
 	Inherits: StormriderZap
+	BurstDelays: 6
+	ReloadDelay: 70
 	Projectile: Bullet
 		Image: scrinzap
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
-		Damage: 1250
+		Damage: 1700
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
@@ -573,7 +576,7 @@ InvaderLauncher:
 	ReloadDelay: 10
 	Burst: 4
 	BurstDelays: 5
-	Range: 12c0
+	Range: 10c0
 	ValidTargets: Air, Ground, Water
 	Projectile: InstantHit
 	Warhead@1Dam: TargetDamage
@@ -594,7 +597,7 @@ InvaderZap:
 		Spread: 341
 		Damage: 1200
 		Versus:
-			None: 70
+			None: 60
 			Wood: 10
 			Concrete: 15
 			Light: 70
@@ -845,7 +848,7 @@ LaceratorShards:
 		Versus:
 			None: 30
 			Wood: 65
-			Light: 70
+			Light: 85
 			Heavy: 100
 			Concrete: 50
 			Brick: 50

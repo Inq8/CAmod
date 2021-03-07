@@ -99,13 +99,13 @@ S2:
 		Description: Fast anti-personnel infantry.\n  Strong vs Infantry, Light Vehicles\n  Weak vs Tanks, Aircraft
 		IconPalette: chromes
 	Valued:
-		Cost: 275
+		Cost: 300
 	Tooltip:
 		Name: Ravager
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 8000
+		HP: 7000
 	Mobile:
 		Speed: 80
 	Armament@PRIMARY:
@@ -230,7 +230,7 @@ S6:
 	Captures:
 		CaptureTypes: building
 		PlayerExperience: 25
-		CaptureDelay: 100
+		CaptureDelay: 150
 	Voiced:
 		VoiceSet: AssimilatorVoice
 	Targetable:
@@ -328,7 +328,7 @@ MAST:
 	Captures:
 		CaptureTypes: building
 		PlayerExperience: 25
-		CaptureDelay: 100
+		CaptureDelay: 150
 		ConsumedByCapture: false
 	Targetable:
 		TargetTypes: Ground, Infantry, MindControlImmune
@@ -712,7 +712,7 @@ STCR:
 		Speed: 68
 		TurnSpeed: 12
 	Health:
-		HP: 42000
+		HP: 40000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -748,13 +748,13 @@ STCR:
 		Modifier: 120
 		RequiresCondition: stormcrawlercharge >= 2
 	ChangesHealth@STORMCRAWLERCHARGE1:
-		PercentageStep: 1
+		Step: 400
 		Delay: 10
 		StartIfBelow: 100
 		DamageCooldown: 0
 		RequiresCondition: stormcrawlercharge >= 1 && stormcrawlercharge < 2 && !empdisable && !being-warped
 	ChangesHealth@STORMCRAWLERCHARGE2:
-		Step: 600
+		Step: 400
 		Delay: 10
 		StartIfBelow: 100
 		DamageCooldown: 0
@@ -1135,12 +1135,10 @@ STMR:
 	Armament@PRIMARY:
 		Weapon: StormriderZap
 		LocalOffset: 350,213,-85, 350,-213,-85
-		PauseOnCondition: !ammo
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: StormriderZapAA
 		LocalOffset: 350,213,-85, 350,-213,-85
-		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 360
 		PersistentTargeting: false
@@ -1148,7 +1146,7 @@ STMR:
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
-		TurnSpeed: 20
+		TurnSpeed: 22
 		Speed: 180
 		RepulsionSpeed: 40
 		MaximumPitch: 56
@@ -1183,17 +1181,20 @@ STMR:
 		Prerequisites: aircraft.upgraded
 	-EjectOnDeath:
 	AmmoPool:
-		Ammo: 16
+		Ammo: 12
 		AmmoCondition: ammo
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
-		PipCount: 4
-	ReloadAmmoPool:
-		Delay: 175
-		Count: 4
-		ResetOnFire: true
+		PipCount: 3
+	ReloadAmmoPoolCA:
+		Delay: 375
+		Count: 12
+		DelayOnFire: 30
+		DelayAfterReset: 80
+		ShowSelectionBar: true
+		SelectionBarColor: ff00ff
 	GrantConditionOnPrerequisite@REGEN:
 		Condition: regen-upgrade
 		Prerequisites: regen.upgrade
@@ -1212,6 +1213,9 @@ STMR:
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 8c0
+	FirepowerMultiplier@DEPLETED:
+		RequiresCondition: !ammo
+		Modifier: 30
 
 ENRV:
 	Inherits: ^Helicopter
@@ -1340,12 +1344,12 @@ DEVA:
 	Armor:
 		Type: Heavy
 	RevealsShroud:
-		Range: 10c0
-		MinRange: 8c0
+		Range: 8c0
+		MinRange: 7c0
 		Type: GroundPosition
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 8c0
+		Range: 7c0
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: DevastatorDiscs
@@ -1419,6 +1423,8 @@ DEVA:
 		RequiresCondition: regen-upgrade
 	Repairable:
 		RepairActors: fix, rep, srep
+	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
 
 PAC:
 	Inherits: ^Helicopter
@@ -1565,6 +1571,8 @@ PAC:
 		InvalidTargets: NoAutoTarget, WaterStructure, AirLowPriority
 	AutoTargetPriority@ATTACKANYTHING:
 		InvalidTargets: NoAutoTarget, AirLowPriority
+	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
 
 INVA:
 	Inherits: ^Plane
@@ -2333,9 +2341,9 @@ PORT:
 	ProvidesPrerequisite@buildingname:
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
-	InfiltrateForSupportPower@inf:
+	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
-		Proxy: inf.scrin.stolen
+		Proxy: stolentech.port
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
 		Types: SpyInfiltrate
@@ -2421,9 +2429,9 @@ WSPH:
 	InfiltrateForSupportPower@spy:
 		Proxy: vehicles.upgraded
 		Types: SpyInfiltrate
-	InfiltrateForSupportPower@veh:
+	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
-		Proxy: veh.scrin.stolen
+		Proxy: stolentech.wsph
 	WithIdleOverlay:
 		RequiresCondition: !build-incomplete
 
@@ -2490,9 +2498,9 @@ NERV:
 	ProvidesPrerequisite@buildingname:
 	ExternalCondition@JAMMED:
 		Condition: jammed
-	InfiltrateForSupportPower@tec:
+	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
-		Proxy: rad.scrin.stolen
+		Proxy: stolentech.nerv
 	RevealActorsPower@RESOURCESCAN:
 		CameraActor: camera.resourcescan
 		TargetActors: mine, gmine, split2, split3, splitblue, proc, proc.td, proc.scrin
@@ -2619,9 +2627,9 @@ SCRT:
 	RevealsShroud@GAPGEN:
 		Range: 5c0
 		RequiresCondition: !disabled
-	InfiltrateForSupportPower@tec:
+	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
-		Proxy: tec.scrin.stolen
+		Proxy: stolentech.scrt
 	WithBuildingBib:
 	Power:
 		Amount: -200
@@ -3115,7 +3123,7 @@ PTUR:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	Power:
-		Amount: -25
+		Amount: -20
 		RequiresCondition: !being-warped
 	ClassicFacingBodyOrientation:
 	SpawnActorOnDeath:
@@ -3590,30 +3598,30 @@ ion.surge:
 
 # infiltrator stolen tech
 
-# portal
-inf.scrin.stolen:
+# portal - infantry veterancy
+stolentech.port:
 	AlwaysVisible:
 	ProvidesPrerequisite:
-		Prerequisite: inf.nod.stolen
-		Factions: blackh, marked, legion
+		Prerequisite: barracks.upgraded
 
-# warp sphere
-veh.scrin.stolen:
+# warp sphere - vehicle veterancy
+stolentech.wsph:
 	AlwaysVisible:
 	ProvidesPrerequisite:
-		Prerequisite: vehicles.seek
-		Factions: blackh, marked, legion
+		Prerequisite: vehicles.upgraded
 
-# nerve center devourer
-rad.scrin.stolen:
+# nerve center - aircraft veterancy
+stolentech.nerv:
 	AlwaysVisible:
 	ProvidesPrerequisite:
-		Prerequisite: vehicles.devo
-		Factions: blackh, marked, legion
+		Prerequisite: aircraft.upgraded
 
-# tech center tripod
-tec.scrin.stolen:
+# tech center - veterancy for all
+stolentech.scrt:
 	AlwaysVisible:
-	ProvidesPrerequisite:
-		Prerequisite: vehicles.tpod
-		Factions: blackh, marked, legion
+	ProvidesPrerequisite@1:
+		Prerequisite: barracks.upgraded
+	ProvidesPrerequisite@2:
+		Prerequisite: vehicles.upgraded
+	ProvidesPrerequisite@3:
+		Prerequisite: aircraft.upgraded

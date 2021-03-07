@@ -6,7 +6,7 @@ V2RL:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 170
-		Prerequisites: anyradar, ~vehicles.soviet, ~v2.upgrade, ~techlevel.medium
+		Prerequisites: anyradar, ~vehicles.v2, ~v2.upgrade, ~techlevel.medium
 		Description: Long-range rocket artillery.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
 		Cost: 900
@@ -1410,8 +1410,8 @@ TTNK:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 200
-		Prerequisites: structures.tsla, anyradar, ~vehicles.tsla, ~techlevel.medium
+		BuildPaletteOrder: 235
+		Prerequisites: structures.tsla, stek, ~vehicles.ttnk, ~techlevel.medium
 		Description: Tank with mounted Tesla coil.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft\n  Special Ability: Jams Radar
 	Valued:
 		Cost: 1250
@@ -1465,7 +1465,7 @@ TTNK:
 	GrantConditionOnPrerequisite@TARC:
 		Condition: tarc-upgrade
 		Prerequisites: tarc.upgrade
-		
+
 TTNK.RA2:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
@@ -1484,16 +1484,22 @@ TTNK.RA2:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 38000
+		HP: 40000
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 100
+		Speed: 90
 		Voice: Move
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 6c0
 		RevealGeneratedShroud: False
+		RequiresCondition: !tarc-upgrade
+	RevealsShroud@UPG:
+		MinRange: 6c0
+		Range: 7c0
+		RevealGeneratedShroud: False
+		RequiresCondition: tarc-upgrade
 	RevealsShroud@GAPGEN:
 		Range: 6c0
 	Armament@PRIMARY:
@@ -1626,7 +1632,7 @@ QTNK:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 390
-		Prerequisites: stek, ~vehicles.soviet, ~techlevel.high
+		Prerequisites: techcenter, ~vehicles.qtnk, ~techlevel.high
 		Description: Deals seismic damage to nearby vehicles and structures.\n  Strong vs Vehicles, Buildings\n  Weak vs Infantry, Aircraft
 	Valued:
 		Cost: 1700
@@ -2411,7 +2417,7 @@ HTNK:
 		Queue: Vehicle
 		BuildPaletteOrder: 300
 		IconPalette: chrometd
-		Prerequisites: techcenter, ~vehicles.htnk, ~techlevel.high, ~!ionmam.upgrade, ~!hovermam.upgrade
+		Prerequisites: gtek, ~vehicles.htnk, ~!ionmam.upgrade, ~!hovermam.upgrade, ~techlevel.high
 		Description: Big and slow tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
 	Valued:
 		Cost: 1700
@@ -2480,7 +2486,7 @@ HTNK.Ion:
 		Queue: Vehicle
 		BuildPaletteOrder: 301
 		IconPalette: chrometd
-		Prerequisites: ~ionmam.upgrade, ~gtek, ~vehicles.htnk, ~techlevel.high
+		Prerequisites: gtek, ~vehicles.htnk, ~ionmam.upgrade, ~techlevel.high
 		Description: Big and slow tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
 	Valued:
 		Cost: 1700
@@ -2546,7 +2552,7 @@ HTNK.Hover:
 		GenericName: Tank
 	Buildable:
 		BuildPaletteOrder: 302
-		Prerequisites: ~hovermam.upgrade, ~gtek, ~vehicles.htnk, ~techlevel.high
+		Prerequisites: gtek, ~vehicles.htnk, ~hovermam.upgrade, ~techlevel.high
 		Description: Powerful heavy tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
 	Mobile:
 		Speed: 82
@@ -3629,7 +3635,7 @@ TTRK:
 		PlayerPalette: overlayplayertd
 	Buildable:
 		BuildPaletteOrder: 400
-		Prerequisites: ~vehicles.ttrk, ~tmpl, ~vehicles.nod, ~techlevel.high
+		Prerequisites: techcenter, ~vehicles.ttrk, ~techlevel.high
 		Description: Truck actively armed with\n a Tiberium bomb. Has very weak armor.
 	Tooltip:
 		Name: Toxin Truck
@@ -3956,7 +3962,7 @@ V3RL:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 250
-		Prerequisites: techcenter, ~vehicles.v3rl, ~techlevel.high
+		Prerequisites: stek, ~vehicles.soviet, ~techlevel.high
 		Description: Extreme long-range rocket artillery.\n  Rockets can be shot down by static anti-air defenses.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Tanks, Aircraft
 	Valued:
 		Cost: 1500
@@ -4214,7 +4220,7 @@ PTNK:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 230
-		Prerequisites: anyradar, ~vehicles.ptnk, ~!pcan.upgrade, ~techlevel.high
+		Prerequisites: anyradar, ~vehicles.allies, ~!pcan.upgrade, ~techlevel.high
 		Description: Long-range artillery with Prism Tower derived weapon.\n  Strong vs Buildings, Defenses, Infantry, Light Armor\n  Weak vs Tanks, Aircraft
 	Valued:
 		Cost: 1350
@@ -4264,7 +4270,7 @@ PCAN:
 	Inherits: PTNK
 	Buildable:
 		BuildPaletteOrder: 231
-		Prerequisites: anyradar, ~vehicles.ptnk, ~pcan.upgrade, ~techlevel.high
+		Prerequisites: anyradar, ~vehicles.allies, ~pcan.upgrade, ~techlevel.high
 		Description: A prototype long range artillery that fires highly focused beams of light.\n  Strong vs Buildings, Defenses, Infantry, Light Armor\n  Weak vs Tanks, Aircraft
 	Tooltip:
 		Name: Prism Cannon
@@ -4498,7 +4504,7 @@ MEMP:
 		Queue: Vehicle
 		BuildPaletteOrder: 410
 		IconPalette: chrometd
-		Prerequisites: gtek, ~vehicles.gdi, ~techlevel.high
+		Prerequisites: techcenter, ~vehicles.memp, ~techlevel.high
 		Description: Self destructs to disable nearby vehicles & structures.\n  Requires power to operate.\n  Strong vs Vehicles, Buildings\n  Weak vs Infantry, Aircraft
 	Valued:
 		Cost: 1350
@@ -4799,3 +4805,5 @@ CRYO:
 		Weapon: CryoExplosion
 	Selectable:
 		DecorationBounds: 28,28
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded

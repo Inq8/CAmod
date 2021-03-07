@@ -743,11 +743,11 @@ DOME:
 		Prerequisite: radar-active
 		RequiresCondition: !jammed && !disabled && !being-warped
 	ProvidesPrerequisite@buildingname:
+	InfiltrateForSupportPowerCA@STOLENTECH:
+		Types: SabInfiltrate
+		Proxy: stolentech.dome
 	ExternalCondition@JAMMED:
 		Condition: jammed
-	InfiltrateForSupportPower@tec:
-		Types: SabInfiltrate
-		Proxy: rad.soviet.stolen
 	AirstrikePower@clustermines:
 		ChargeInterval: 6000
 		Prerequisites: ~radar.france, ~techlevel.unrestricted
@@ -1107,9 +1107,9 @@ ATEK:
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
-	InfiltrateForSupportPower@tec:
+	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
-		Proxy: tec.allies.stolen
+		Proxy: stolentech.atek
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate
 	ProduceActorPowerCA@SatelliteScan:
@@ -1254,9 +1254,9 @@ WEAP:
 	ProvidesPrerequisiteValidatedFaction@ifv:
 		Factions: england, france, germany
 		Prerequisite: vehicles.ifv
-	ProvidesPrerequisiteValidatedFaction@ptnk:
-		Factions: england, france, germany
-		Prerequisite: vehicles.ptnk
+	ProvidesPrerequisiteValidatedFaction@v2:
+		Factions: russia, ukraine, iraq
+		Prerequisite: vehicles.v2
 	ProvidesPrerequisiteValidatedFaction@v2upgrade:
 		Factions: russia
 		Prerequisite: v2.upgrade
@@ -1266,12 +1266,12 @@ WEAP:
 	ProvidesPrerequisiteValidatedFaction@3tnk:
 		Factions: russia, ukraine, iraq
 		Prerequisite: vehicles.3tnk
-	ProvidesPrerequisiteValidatedFaction@tsla:
+	ProvidesPrerequisiteValidatedFaction@ttnk:
 		Factions: ukraine, iraq
-		Prerequisite: vehicles.tsla
-	ProvidesPrerequisiteValidatedFaction@v3rl:
+		Prerequisite: vehicles.ttnk
+	ProvidesPrerequisiteValidatedFaction@qtnk:
 		Factions: russia, ukraine, iraq
-		Prerequisite: vehicles.v3rl
+		Prerequisite: vehicles.qtnk
 	ProductionBar:
 		ProductionType: Vehicle
 	Power:
@@ -1283,9 +1283,9 @@ WEAP:
 	InfiltrateForSupportPower:
 		Proxy: vehicles.upgraded
 		Types: SpyInfiltrate
-	InfiltrateForSupportPower@veh:
+	InfiltrateForSupportPowerCA@STOLENTECH:
 		Types: SabInfiltrate
-		Proxy: veh.soviet.stolen
+		Proxy: stolentech.weap
 	-ActorPreviewPlaceBuildingPreview:
 	SequencePlaceBuildingPreview:
 		Sequence: place
@@ -2064,9 +2064,9 @@ STEK:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
-	InfiltrateForSupportPower@tec:
+	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
-		Proxy: tec.soviet.stolen
+		Proxy: stolentech.stek
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate
 	Production:
@@ -2145,8 +2145,6 @@ BARR:
 	ProvidesPrerequisite@e2:
 		Factions: russia, iraq
 		Prerequisite: infantry.e2
-	ProvidesPrerequisite@shok:
-		Prerequisite: infantry.shok
 	Power:
 		Amount: -20
 		RequiresCondition: !being-warped
@@ -2154,9 +2152,9 @@ BARR:
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
 		Types: SpyInfiltrate
-	InfiltrateForSupportPower@sab:
+	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
-		Proxy: inf.soviet.stolen
+		Proxy: stolentech.barr
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
 
@@ -2282,9 +2280,9 @@ TENT:
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
 		Types: SpyInfiltrate
-	InfiltrateForSupportPower@sab:
+	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
-		Proxy: inf.allies.stolen
+		Proxy: stolentech.tent
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate, SabInfiltrate
 
@@ -2676,9 +2674,9 @@ PYLE:
 	ProvidesPrerequisite@buildingname:
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
-	InfiltrateForSupportPower@inf:
+	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
-		Proxy: inf.gdi.stolen
+		Proxy: stolentech.pyle
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
 		Types: SpyInfiltrate
@@ -2749,9 +2747,9 @@ HAND:
 		Prerequisite: infantry.legion
 	ProvidesPrerequisite@mech:
 		Prerequisite: infantry.mech
-	InfiltrateForSupportPower@inf:
+	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
-		Proxy: inf.nod.stolen
+		Proxy: stolentech.hand
 	Power:
 		Amount: -20
 		RequiresCondition: !being-warped
@@ -2839,6 +2837,9 @@ WEAP.TD:
 	ProvidesPrerequisiteValidatedFaction@mtnk:
 		Factions: talon, zocom, eagle, legion
 		Prerequisite: vehicles.mtnk
+	ProvidesPrerequisiteValidatedFaction@memp:
+		Factions: talon, zocom, eagle
+		Prerequisite: vehicles.memp
 	ProvidesPrerequisiteValidatedFaction@msam:
 		Factions: talon, zocom
 		Prerequisite: vehicles.msam
@@ -2871,9 +2872,9 @@ WEAP.TD:
 	InfiltrateForSupportPower@spy:
 		Proxy: vehicles.upgraded
 		Types: SpyInfiltrate
-	InfiltrateForSupportPower@veh:
+	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
-		Proxy: veh.gdi.stolen
+		Proxy: stolentech.weap.td
 	-ActorPreviewPlaceBuildingPreview:
 	SequencePlaceBuildingPreview:
 		Sequence: place
@@ -2988,9 +2989,9 @@ AIRS:
 	Power:
 		Amount: -30
 		RequiresCondition: !being-warped
-	InfiltrateForSupportPower@veh:
+	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
-		Proxy: veh.nod.stolen
+		Proxy: stolentech.airs
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPower@spy:
 		Proxy: vehicles.upgraded
@@ -3711,9 +3712,9 @@ HQ:
 		RequiresCondition: !jammed && !disabled && !being-warped
 	ExternalCondition@JAMMED:
 		Condition: jammed
-	InfiltrateForSupportPower@tec:
+	InfiltrateForSupportPowerCA@STOLENTECH:
 		Types: SabInfiltrate
-		Proxy: rad.gdi.stolen
+		Proxy: stolentech.hq
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -4300,9 +4301,9 @@ GTEK:
 	RevealsShroud@GAPGEN:
 		Range: 5c0
 		RequiresCondition: !disabled
-	InfiltrateForSupportPower@tec:
+	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
-		Proxy: tec.gdi.stolen
+		Proxy: stolentech.gtek
 	WithBuildingBib:
 	Power:
 		Amount: -200
@@ -4503,9 +4504,9 @@ TMPL:
 		RequiresCondition: !build-incomplete
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate
-	InfiltrateForSupportPower@tec:
+	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
-		Proxy: tec.nod.stolen
+		Proxy: stolentech.tmpl
 	ValidFactions:
 		Factions: blackh, marked, legion
 	ProvidesPrerequisite@buildingname:
@@ -4878,7 +4879,7 @@ LTUR:
 		LocalOffset: 512,0,172
 		RequiresCondition: marked
 	Power:
-		Amount: -25
+		Amount: -20
 
 TTUR:
 	Inherits: ^DefenseTD

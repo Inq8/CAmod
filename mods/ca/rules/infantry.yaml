@@ -361,7 +361,7 @@ E6:
 	Captures:
 		CaptureTypes: building
 		PlayerExperience: 25
-		CaptureDelay: 100
+		CaptureDelay: 150
 	Armament@defuse:
 		Weapon: DefuseKit
 		Cursor: goldwrench
@@ -766,10 +766,10 @@ SHOK:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 80
-		Prerequisites: structures.tsla, ~infantry.shok, ~techlevel.high
+		Prerequisites: structures.tsla, ~barr, ~techlevel.high
 		Description: Elite infantry with portable Tesla weapon.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft\n  Special Ability: Can over-charge Tesla Coil
 	Valued:
-		Cost: 350
+		Cost: 400
 	Tooltip:
 		Name: Shock Trooper
 	UpdatesPlayerStatistics:
@@ -1236,7 +1236,7 @@ N6:
 	Captures:
 		CaptureTypes: building
 		PlayerExperience: 25
-		CaptureDelay: 100
+		CaptureDelay: 150
 	Voiced:
 		VoiceSet: EngineerVoice
 	WithDeathAnimation:
@@ -1435,7 +1435,7 @@ MORT:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 250
-		Prerequisites: ~inf.nod.stolen
+		Prerequisites: ~stolentech.hand
 		Description: Infantry armed with a Chemical Mortar.\n  Strong vs Buildings, Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
 		Cost: 250
@@ -1554,7 +1554,7 @@ ACOL:
 		Prerequisites: anyradar, obli, ~infantry.marked, ~techlevel.high
 		Description: Elite infantry with a laser weapon.\n  Strong vs Infantry, Light Armor\n  Weak vs Aircraft\n  Special Ability: Regains health on tiberium
 	Valued:
-		Cost: 400
+		Cost: 450
 	Tooltip:
 		Name: Acolyte
 	UpdatesPlayerStatistics:
@@ -1974,6 +1974,8 @@ N1C:
 		VoiceSet: CyborgVoice
 	Armament:
 		Weapon: Vulcan3
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
 
 N3C:
 	Inherits: ^Cyborg
@@ -2034,6 +2036,8 @@ N3C:
 		Count: 1
 	AutoTarget:
 		ScanRadius: 5
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
 
 RMBC:
 	Inherits: ^Cyborg
@@ -2111,6 +2115,8 @@ RMBC:
 		RequiresCondition: being-warped || empdisable
 	DamageMultiplier@CYBORGARMOR:
 		Modifier: 85
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
 
 IVAN:
 	Inherits: ^Soldier
