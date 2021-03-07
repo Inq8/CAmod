@@ -653,7 +653,7 @@ stolentech.tent:
 	ProvidesPrerequisite:
 		Prerequisite: infantry.medi
 
-# barr - shok
+# barr - grenadier
 stolentech.barr:
 	AlwaysVisible:
 	ProvidesPrerequisite:
@@ -670,7 +670,7 @@ stolentech.hand:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 
-# ra weap - 2tnk from allies, 3tnk from soviets
+# ra weap - med tank from allies, heavy tank from soviets
 stolentech.weap:
 	AlwaysVisible:
 	ValidFactions:
@@ -682,7 +682,7 @@ stolentech.weap:
 		Factions: russia, ukraine, iraq
 		Prerequisite: vehicles.3tnk
 
-# td weap - mtnk from gdi/legion, ltnk if capturer is legion
+# td weap - battle tank from gdi/legion, light tank if capturer is legion
 stolentech.weap.td:
 	AlwaysVisible:
 	ProvidesPrerequisite@STOLENGDI:
@@ -707,6 +707,9 @@ stolentech.dome:
 	ProvidesPrerequisiteValidatedFaction@STOLENSOVIET:
 		Factions: russia, ukraine, iraq
 		Prerequisite: vehicles.v2
+	ProvidesPrerequisiteValidatedFaction@STOLENSOVIET2:
+		Factions: russia, ukraine, iraq
+		Prerequisite: v2.upgrade
 
 # hq - mlrs from allies, aircraft veterancy from nod
 stolentech.hq:
@@ -732,7 +735,7 @@ stolentech.stek:
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.qtnk
 
-# gtek - memp
+# gtek - mobile emp
 stolentech.gtek:
 	AlwaysVisible:
 	ProvidesPrerequisite:

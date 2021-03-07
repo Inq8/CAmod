@@ -743,7 +743,7 @@ DOME:
 		Prerequisite: radar-active
 		RequiresCondition: !jammed && !disabled && !being-warped
 	ProvidesPrerequisite@buildingname:
-	InfiltrateForSupportPower@STOLENTECH:
+	InfiltrateForSupportPowerCA@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.dome
 	ExternalCondition@JAMMED:
@@ -1283,7 +1283,7 @@ WEAP:
 	InfiltrateForSupportPower:
 		Proxy: vehicles.upgraded
 		Types: SpyInfiltrate
-	InfiltrateForSupportPower@STOLENTECH:
+	InfiltrateForSupportPowerCA@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.weap
 	-ActorPreviewPlaceBuildingPreview:
@@ -3709,7 +3709,7 @@ HQ:
 		RequiresCondition: !jammed && !disabled && !being-warped
 	ExternalCondition@JAMMED:
 		Condition: jammed
-	InfiltrateForSupportPower@STOLENTECH:
+	InfiltrateForSupportPowerCA@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.hq
 	Production:
