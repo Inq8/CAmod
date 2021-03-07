@@ -18,13 +18,20 @@
 		Type: Rectangle
 			TopLeft: -512, -512
 			BottomRight: 512, 512
-
-^2x1Shape:
+			
+^1x2Shape:
 	HitShape:
 		UseTargetableCellsOffsets: true
 		Type: Rectangle
 			TopLeft: -1024, -512
 			BottomRight: 1024, 512
+
+^2x1Shape:
+	HitShape:
+		UseTargetableCellsOffsets: true
+		Type: Rectangle
+			TopLeft: -512, -1024
+			BottomRight: 512, 1024
 
 ^2x2Shape:
 	HitShape:
@@ -189,7 +196,7 @@
 ^BotCaptureHelper:
 	Armament@AIHELPER:
 		Weapon: commandeer
-		Name: secondary
+		Name: commandeer
 		TargetRelationships: Neutral
 		RequiresCondition: botowner
 	GrantConditionOnBotOwner@AIHELPER:
@@ -197,7 +204,7 @@
 		Bots: brutal, vhard, hard, normal, easy, naval
 	GrantConditionOnAttack@AIHELPER:
 		Condition: removeunit
-		ArmamentNames: secondary
+		ArmamentNames: commandeer
 		RequiresCondition: botowner
 	KillsSelf@AIHELPER:
 		RemoveInstead: true
@@ -209,7 +216,7 @@
 	WithInfantryBody:
 		AttackSequences:
 			primary: shoot
-			secondary: stand
+			commandeer: stand
 
 ^PlayerHandicaps:
 	HandicapFirepowerMultiplier:
@@ -1221,7 +1228,7 @@
 		Action: Kill
 	UpdatesPlayerStatistics:
 	Mobile:
-		PauseOnCondition: being-captured || empdisable || being-warped || driver-dead
+		PauseOnCondition: being-captured || empdisable || being-warped || driver-dead || notmobile
 		Locomotor: wheeled
 		TurnSpeed: 20
 	Selectable:
@@ -1298,6 +1305,8 @@
 		Duration: 100
 		Radius: 2c512
 	Carryable:
+		CarriedCondition: notmobile
+		LockedCondition: notmobile
 		LocalOffset: 0,0,200
 	Crushable:
 		CrushClasses: tank
@@ -2111,6 +2120,7 @@
 	Sellable:
 		RequiresCondition: !build-incomplete && !(c4 || tnt) && !being-captured && !being-warped
 		SellSounds: cashturn.aud
+		Notification: StructureSold
 	WithBuildingRepairDecoration:
 		Image: allyrepair
 		Sequence: repair
@@ -2671,7 +2681,6 @@
 	RadarColorFromTerrain:
 		Terrain: Tree
 	HiddenUnderShroud:
-	ScriptTriggers:
 	MapEditorData:
 		RequireTilesets: DESERT
 		Categories: Decoration

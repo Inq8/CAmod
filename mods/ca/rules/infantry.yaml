@@ -786,7 +786,7 @@ SHOK:
 	Armament@Garrisoned:
 		Name: mounted
 		Weapon: PortaTeslaE
-	Armament@charge:
+	Armament@CHARGE:
 		Name: secondary
 		Weapon: PortaTeslaCharge
 		LocalOffset: 427,0,341
@@ -794,6 +794,18 @@ SHOK:
 		ForceTargetRelationships: None
 		Cursor: ability
 		OutsideRangeCursor: ability
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+	GrantConditionOnAttack@CHARGESFX:
+		ArmamentNames: secondary
+		Condition: charge-fire
+		RevokeDelay: 70
+	AmbientSoundCA@CHARGESFX:
+		SoundFiles: iteschaa.aud
+		Delay: 0
+		Interval: 70
+		VolumeMultiplier: 0.4
+		RequiresCondition: charge-fire
 	TakeCover:
 		ProneOffset: 227,0,-245
 	AttackFrontal:

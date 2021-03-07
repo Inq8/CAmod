@@ -627,7 +627,7 @@ HIND:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 20
-		Prerequisites: ~hpad, ~aircraft.hind, ~techlevel.medium
+		Prerequisites: ~hpad, ~aircraft.soviet, ~techlevel.medium
 		Description: Helicopter gunship armed\nwith dual chainguns.\n  Strong vs Infantry, Light Armor, Buildings\n  Weak vs Tanks, Defenses, Aircraft
 	Valued:
 		Cost: 1350
@@ -764,7 +764,7 @@ U2.Bomber:
 		CruiseAltitude: 2260
 		TurnSpeed: 20
 		Speed: 343
-		Repulsable: True
+		Repulsable: False
 		MaximumPitch: 56
 	-Selectable:
 	-SelectionDecorations:
@@ -1637,7 +1637,8 @@ OCAR:
 		Offset: -427,0,0
 		Interval: 2
 	Selectable:
-		DecorationBounds: 30,24
+		DecorationBounds: 44,48,0,0
+		Class: OCAR
 	Voiced:
 		VoiceSet: CarryAllVoice
 	WithMoveAnimation:
@@ -1664,6 +1665,43 @@ OCAR:
 		TrailLength: 15
 		UsePlayerColor: false
 		Color: FFFFFF80
+	TransformOnCondition:
+		IntoActor: OCAR.Auto
+		RequiresCondition: stance-attackanything && !slowdown
+	AttackFrontal:
+		FacingTolerance: 30
+		RequiresCondition: !slowdown
+	AutoTarget:
+		AttackAnythingCondition: stance-attackanything
+
+OCAR.Auto:
+	Inherits: OCAR
+	-Buildable:
+	-Carryall:
+	Selectable:
+		Class: OCAR
+	AutoTarget:
+		AttackAnythingCondition: stance-attackanything
+		InitialStance: AttackAnything
+	AutoCarryall:
+		BeforeLoadDelay: 10
+		BeforeUnloadDelay: 15
+		LocalOffset: 0, 0, -128
+		Voice: Action
+		CarryCondition: slowdown
+	TransformOnCondition:
+		IntoActor: OCAR
+		RequiresCondition: !stance-attackanything && !slowdown
+	RejectsOrders:
+		Reject: Move
+	WithDecoration@auto:
+		RequiresCondition: stance-attackanything
+		RequiresSelection: true
+		Image: pips
+		Palette: chrome
+		Sequence: tag-auto
+		Position: Top
+		Margin: 0, 4
 
 OCAR.Reinforce:
 	Inherits: OCAR
