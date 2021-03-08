@@ -712,7 +712,7 @@ STCR:
 		Speed: 68
 		TurnSpeed: 12
 	Health:
-		HP: 40000
+		HP: 42000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -743,9 +743,6 @@ STCR:
 		RequiresCondition: stormcrawlercharge >= 1
 	ReloadDelayMultiplier@STORMCRAWLERCHARGE2:
 		Modifier: 75
-		RequiresCondition: stormcrawlercharge >= 2
-	RangeMultiplier@STORMCRAWLERCHARGE2:
-		Modifier: 120
 		RequiresCondition: stormcrawlercharge >= 2
 	ChangesHealth@STORMCRAWLERCHARGE1:
 		Step: 400
@@ -3224,12 +3221,9 @@ SCOL:
 		RequiresCondition: !(powerdown || charged)
 	ExternalCondition@CHARGED:
 		Condition: charged
-	AttackTesla:
+	AttackOmni:
 		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled || empdisable || being-warped
-		MaxCharges: 1
-		InitialChargeDelay: 3
-		ReloadDelay: 57
 	Power:
 		Amount: -100
 		RequiresCondition: !being-warped
@@ -3270,7 +3264,7 @@ SCOL:
 	GrantConditionOnPrerequisite@IONCON:
 		Condition: ioncon-upgrade
 		Prerequisites: ioncon.upgrade
-		
+
 STRM:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^SpriteActor
