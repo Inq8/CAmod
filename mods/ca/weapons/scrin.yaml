@@ -318,7 +318,7 @@ RiftCannon:
 	Inherits: ^ScrinLaser
 	Report: darkener-fire1.aud, darkener-fire2.aud
 	ReloadDelay: 120
-	Range: 6c0
+	Range: 6c511
 	Projectile: LaserZap
 		Color: 000000FF
 		Width: 70
@@ -595,7 +595,7 @@ InvaderZap:
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 1200
+		Damage: 750
 		Versus:
 			None: 60
 			Wood: 10
@@ -619,7 +619,7 @@ InvaderZapAA:
 		Image: scrinzap
 	ValidTargets: Air
 	Warhead@1Dam: SpreadDamage
-		Damage: 300
+		Damage: 160
 		Range: 0, 0c64, 0c256, 1c512
 		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
@@ -660,20 +660,20 @@ PlasmaTurretGun:
 		InvalidTargets: Ship, Structure, Bridge
 
 StormColumnZap:
-	ReloadDelay: 3
-	Burst: 5
+	ReloadDelay: 35
+	Burst: 8
 	BurstDelays: 3
 	Range: 7c511
 	StartBurstReport: stormcolumn-fire1.aud, stormcolumn-fire2.aud
 	Projectile: ElectricBolt
-		Colors: 6042f5E6,B961FDE6,B5A3E8E6,6D4AD2E6,B289DCE6, FFFFFFE6
-		Duration: 5
+		Colors: 6042f5E6,B961FDE6,B5A3E8E6,6D4AD2E6,B289DCE6,FFFFFFE6
+		Duration: 6
 		Width: 18
 		Angle: 45
 		Distortion: 96
 		ZOffset: 1023
 	Warhead@1Dam: SpreadDamage
-		Damage: 19800
+		Damage: 1700
 		Versus:
 			None: 55
 			Wood: 60
@@ -717,11 +717,12 @@ StormColumnCloudCharge:
 StormcrawlerZap:
 	Inherits: StormColumnZap
 	ReloadDelay: 40
+	Burst: 5
+	BurstDelays: 3
 	Range: 4c768
-	Burst: 3
 	StartBurstReport: stormcrawler-fire1.aud, stormcrawler-fire2.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 19800
+		Damage: 2900
 		Versus:
 			None: 100
 			Wood: 15
