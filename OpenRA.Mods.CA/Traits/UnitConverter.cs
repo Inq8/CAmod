@@ -45,10 +45,16 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 		[Desc("Whether to eject a unit that can't be converted due to insufficient funds.")]
 		public readonly bool EjectOnInsufficientFunds = false;
 
+		[Desc("Whether to show a progress bar.")]
+		public readonly bool ShowSelectionBar = true;
+
+		[Desc("Color of the progress bar.")]
+		public readonly Color SelectionBarColor = Color.Red;
+
 		public override object Create(ActorInitializer init) { return new UnitConverter(init, this); }
 	}
 
-	public class UnitConverter : ConditionalTrait<UnitConverterInfo>, ITick, INotifyOwnerChanged, INotifyKilled, INotifySold, INotifyCreated
+	public class UnitConverter : ConditionalTrait<UnitConverterInfo>, ITick, INotifyOwnerChanged, INotifyKilled, INotifySold, INotifyCreated, ISelectionBar
 	{
 		readonly UnitConverterInfo info;
 		int produceIntervalTicks;
@@ -103,7 +109,7 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 
 		void ITick.Tick(Actor self)
 		{
-			if (IsTraitDisabled)
+			if (IsTraitDisabled || !queue.Any())
 				return;
 
 			if (produceIntervalTicks > 0)
@@ -113,10 +119,6 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 			}
 
 			produceIntervalTicks = Info.ProductionInterval;
-
-			if (!queue.Any())
-				return;
-
 			var nextItem = queue.Peek();
 			var outputActor = nextItem.OutputActor;
 
@@ -179,6 +181,21 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 
 			return valued.Cost;
 		}
+
+		float ISelectionBar.GetValue()
+		{
+			if (!Info.ShowSelectionBar || !queue.Any())
+				return 0;
+			var maxTicks = Info.ProductionInterval;
+			if (produceIntervalTicks == maxTicks)
+				return 0;
+
+			return (float)(maxTicks - produceIntervalTicks) / maxTicks;
+		}
+
+		bool ISelectionBar.DisplayWhenEmpty { get { return false; } }
+
+		Color ISelectionBar.GetColor() { return Info.SelectionBarColor; }
 	}
 
 	public class UnitConverterQueueItem
