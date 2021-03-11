@@ -32,6 +32,10 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 			"The filename of the audio is defined per faction in notifications.yaml.")]
 		public readonly string ReadyAudio = null;
 
+		[Desc("Notification played when production is activated and the player does not have enough cash to convert the unit.",
+			"The filename of the audio is defined per faction in notifications.yaml.")]
+		public readonly string NoCashAudio = null;
+
 		[Desc("Notification played when the exit is jammed.",
 			"The filename of the audio is defined per faction in notifications.yaml.")]
 		public readonly string BlockedAudio = null;
@@ -121,6 +125,7 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 			produceIntervalTicks = Info.ProductionInterval;
 			var nextItem = queue.Peek();
 			var outputActor = nextItem.OutputActor;
+			var exitSound = info.ReadyAudio;
 
 			if (playerResources.Cash < nextItem.ConversionCost)
 			{
@@ -128,12 +133,13 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 					return;
 
 				outputActor = nextItem.InputActor;
+				exitSound = info.NoCashAudio;
 			}
 
 			if (nextItem.Producer.Produce(nextItem.Actor, outputActor, nextItem.ProductionType, nextItem.Inits, 0))
 			{
 				playerResources.TakeCash(nextItem.ConversionCost);
-				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.ReadyAudio, self.Owner.Faction.InternalName);
+				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", exitSound, self.Owner.Faction.InternalName);
 				queue.Dequeue();
 			}
 			else
