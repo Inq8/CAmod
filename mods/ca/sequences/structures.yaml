@@ -2125,3 +2125,24 @@ stwr:
 		Offset: 0, 2
 	icon: stwricon
 		Offset: 0,0
+		
+tmpp:
+	Inherits: ^StructureOverlays
+	idle: tmpp
+		Length: 16
+		Tick: 200
+	damaged-idle: tmpp
+		Start: 16
+		Length: 16
+		Tick: 200
+	dead: tmpp
+		Start: 24
+		Tick: 800
+	bib: bib2
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	make: tmppmake
+		Length: *
+	icon: tmppicnh
