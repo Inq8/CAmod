@@ -3302,7 +3302,7 @@ IFV:
 	ProximityExternalCondition@MEDIC:
 		RequiresCondition: medturr
 		EnableSound: heal2.aud
-		Condition: ifvheal
+		Condition: hospitalheal
 		Range: 3c512
 	WithRangeCircle@MEDIC:
 		Color: 00FF0080
@@ -4127,7 +4127,7 @@ MSAR:
 	Inherits: ^VehicleTD
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Valued:
-		Cost: 1000
+		Cost: 1200
 	Tooltip:
 		Name: Mobile Sensor Array
 		RequiresCondition: !deployed
@@ -4142,7 +4142,7 @@ MSAR:
 		IconPalette: chrometd
 		Prerequisites: anyradar, ~vehicles.gdi, ~techlevel.high
 		BuildDurationModifier: 50
-		Description: When deployed, provides radar and increases nearby vehicle view range.\n  Detects cloaked units.\n  Unarmed
+		Description: When deployed, provides radar and increases nearby ground unit view range.\n  Detects cloaked units.\n  Unarmed
 	Health:
 		HP: 22000
 	Armor:
@@ -4194,7 +4194,7 @@ MSAR:
 		Range: 5c0
 		RequiresCondition: undeployed && !(empdisable || being-warped)
 	DetectCloaked@Deployed:
-		Range: 10c0
+		Range: 12c0
 		CloakTypes: Cloak, Thief
 		RequiresCondition: deployed && !(empdisable || being-warped)
 	RenderDetectionCircle:
@@ -4205,7 +4205,7 @@ MSAR:
 		DecorationBounds: 30,30
 	ProximityExternalCondition@Bino:
 		Condition: bino
-		Range: 10c0
+		Range: 12c0
 		EnableSound: dsaping1.aud
 		AffectsParent: False
 		RequiresCondition: deployed

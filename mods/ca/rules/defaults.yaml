@@ -578,6 +578,16 @@
 		RequiresCondition: hazmat-upgrade
 	ExternalCondition@HAZMAT:
 		Condition: hazmat-upgrade
+	WithDecoration@HAZMAT:
+		Image: pips
+		Sequence: pip-hazmat
+		Palette: chrometd
+		Position: BottomLeft
+		RequiresCondition: hazmatsuits
+		RequiresSelection: True
+		BlinkInterval: 64
+		BlinkPatterns:
+			bino : Off, On
 
 ^NodCyborgUpgrade:
 	GrantConditionOnPrerequisite@CYBORGSPEED:
@@ -597,7 +607,7 @@
 	ExternalCondition@BINO:
 		Condition: bino
 	RevealsShroudMultiplier@BINO:
-		Modifier: 120
+		Modifier: 125
 		RequiresCondition: bino
 	InaccuracyMultiplier@BINO:
 		Modifier: 50
@@ -615,6 +625,19 @@
 			bino && bombard: On, Off
 		RequiresSelection: True
 
+^BinoUpgradeInfantry:
+	Inherits: ^BinoUpgrade
+	WithDecoration@BINO:
+		Image: pips
+		Sequence: pip-bino
+		Palette: chrome
+		Position: BottomLeft
+		RequiresCondition: bino
+		BlinkInterval: 64
+		BlinkPatterns:
+			hazmatsuits: On, Off
+		RequiresSelection: True
+
 ^AuraHealable:
 	ChangesHealth@HOSPITAL:
 		Step: 200
@@ -622,28 +645,14 @@
 		StartIfBelow: 100
 		DamageCooldown: 200
 		RequiresCondition: hospitalheal
-	ChangesHealth@MEDIFV:
-		Step: 100
-		Delay: 25
-		StartIfBelow: 100
-		DamageCooldown: 0
-		RequiresCondition: ifvheal
-	ChangesHealth@MEDIFV2:
-		Step: 100
-		Delay: 25
-		StartIfBelow: 100
-		DamageCooldown: 200
-		RequiresCondition: ifvheal
 	ExternalCondition@HOSPITAL:
 		Condition: hospitalheal
-	ExternalCondition@MEDIFV:
-		Condition: ifvheal
 	WithDecoration@REDCROSS:
 		Image: pips
 		Sequence: medic
 		Palette: chrome
 		Position: BottomRight
-		RequiresCondition: (hospitalheal || ifvheal) && damaged
+		RequiresCondition: hospitalheal && damaged
 		BlinkInterval: 32
 		BlinkPattern: On
 		BlinkPatterns:
@@ -651,15 +660,15 @@
 	WithDecoration@RANK-1:
 		BlinkInterval: 32
 		BlinkPatterns:
-			damaged && (hospitalheal || ifvheal): On, Off
+			damaged && hospitalheal: On, Off
 	WithDecoration@RANK-2:
 		BlinkInterval: 32
 		BlinkPatterns:
-			damaged && (hospitalheal || ifvheal): On, Off
+			damaged && hospitalheal: On, Off
 	WithDecoration@RANK-ELITE:
 		BlinkInterval: 32
 		BlinkPatterns:
-			damaged && (hospitalheal || ifvheal): On, Off
+			damaged && hospitalheal: On, Off
 
 ^IronCurtainable:
 	WithColoredOverlay@IRONCURTAIN:
@@ -1380,6 +1389,7 @@
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@mind: ^MindControllable
 	Inherits@handicaps: ^PlayerHandicaps
+	Inherits@BINOS: ^BinoUpgradeInfantry
 	RenderSprites:
 		PlayerPalette: overlayplayertd
 	Huntable:
@@ -1405,12 +1415,6 @@
 	GrantConditionOnPrerequisite@BIO:
 		Condition: hazmatsuits
 		Prerequisites: bio
-	WithDecoration@HAZMAT:
-		Image: pips
-		Sequence: pip-hazmat
-		Palette: chrometd
-		Position: BottomLeft
-		RequiresCondition: hazmatsuits
 	SpawnActorOnDeath:
 		Probability: 35
 		Actor: vice
@@ -1492,7 +1496,7 @@
 		Position: BottomRight
 		RequiresCondition: hospitalheal
 		BlinkInterval: 32
-		BlinkPattern: Off, On
+		BlinkPattern: on, off
 	DeathSounds@NORMAL:
 		Voice: Die
 		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath
@@ -1936,7 +1940,6 @@
 	Inherits@3: ^Cloakable
 	Inherits@4: ^EmpDisable
 	Inherits@5: ^GDIUpgrade
-	Inherits@6: ^BinoUpgrade
 	Inherits@8: ^Warpable
 	Inherits@9: ^BotAirProductionBonus
 	Inherits@10: ^Chillable

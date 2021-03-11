@@ -58,7 +58,7 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 		public override object Create(ActorInitializer init) { return new UnitConverter(init, this); }
 	}
 
-	public class UnitConverter : ConditionalTrait<UnitConverterInfo>, ITick, INotifyOwnerChanged, INotifyKilled, INotifySold, INotifyCreated, ISelectionBar
+	public class UnitConverter : ConditionalTrait<UnitConverterInfo>, ITick, INotifyOwnerChanged, INotifyKilled, INotifySold, ISelectionBar
 	{
 		readonly UnitConverterInfo info;
 		int produceIntervalTicks;
@@ -73,9 +73,10 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 			queue = new Queue<UnitConverterQueueItem>();
 		}
 
-		void INotifyCreated.Created(Actor self)
+		protected override void Created(Actor self)
 		{
 			playerResources = self.Owner.PlayerActor.Trait<PlayerResources>();
+			base.Created(self);
 		}
 
 		public void Enter(Actor converting, Actor self)
