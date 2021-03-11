@@ -37,16 +37,29 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 		public readonly string BlockedAudio = null;
 
 		[Desc("Ticks between producing actors.")]
-		public readonly int ProductionInterval = 25;
+		public readonly int ProductionInterval = 50;
+
+		[Desc("Whether the player has to pay any difference in cost between the unit being converted and the unit it converts into.")]
+		public readonly bool CostDifferenceRequired = false;
+
+		[Desc("Whether to eject a unit that can't be converted due to insufficient funds.")]
+		public readonly bool EjectOnInsufficientFunds = false;
+
+		[Desc("Whether to show a progress bar.")]
+		public readonly bool ShowSelectionBar = true;
+
+		[Desc("Color of the progress bar.")]
+		public readonly Color SelectionBarColor = Color.Red;
 
 		public override object Create(ActorInitializer init) { return new UnitConverter(init, this); }
 	}
 
-	public class UnitConverter : ConditionalTrait<UnitConverterInfo>, ITick
+	public class UnitConverter : ConditionalTrait<UnitConverterInfo>, ITick, INotifyOwnerChanged, INotifyKilled, INotifySold, INotifyCreated, ISelectionBar
 	{
 		readonly UnitConverterInfo info;
 		int produceIntervalTicks;
 		Queue<UnitConverterQueueItem> queue;
+		protected PlayerResources playerResources;
 
 		public UnitConverter(ActorInitializer init, UnitConverterInfo info)
 			: base(info)
@@ -54,6 +67,11 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 			this.info = info;
 			produceIntervalTicks = Info.ProductionInterval;
 			queue = new Queue<UnitConverterQueueItem>();
+		}
+
+		void INotifyCreated.Created(Actor self)
+		{
+			playerResources = self.Owner.PlayerActor.Trait<PlayerResources>();
 		}
 
 		public void Enter(Actor converting, Actor self)
@@ -79,9 +97,11 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 					var queueItem = new UnitConverterQueueItem();
 					queueItem.Producer = sp;
 					queueItem.Actor = self;
-					queueItem.Producee = self.World.Map.Rules.Actors[name.ToLowerInvariant()];
+					queueItem.InputActor = converting.Info;
+					queueItem.OutputActor = self.World.Map.Rules.Actors[name.ToLowerInvariant()];
 					queueItem.ProductionType = info.Type;
 					queueItem.Inits = inits;
+					queueItem.ConversionCost = GetConversionCost(converting.Info, queueItem.OutputActor);
 					queue.Enqueue(queueItem);
 				}
 			}
@@ -89,7 +109,7 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 
 		void ITick.Tick(Actor self)
 		{
-			if (IsTraitDisabled)
+			if (IsTraitDisabled || !queue.Any())
 				return;
 
 			if (produceIntervalTicks > 0)
@@ -99,14 +119,20 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 			}
 
 			produceIntervalTicks = Info.ProductionInterval;
-
-			if (!queue.Any())
-				return;
-
 			var nextItem = queue.Peek();
+			var outputActor = nextItem.OutputActor;
 
-			if (nextItem.Producer.Produce(nextItem.Actor, nextItem.Producee, nextItem.ProductionType, nextItem.Inits, 0))
+			if (playerResources.Cash < nextItem.ConversionCost)
 			{
+				if (!Info.EjectOnInsufficientFunds)
+					return;
+
+				outputActor = nextItem.InputActor;
+			}
+
+			if (nextItem.Producer.Produce(nextItem.Actor, outputActor, nextItem.ProductionType, nextItem.Inits, 0))
+			{
+				playerResources.TakeCash(nextItem.ConversionCost);
 				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.ReadyAudio, self.Owner.Faction.InternalName);
 				queue.Dequeue();
 			}
@@ -115,14 +141,71 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.BlockedAudio, self.Owner.Faction.InternalName);
 			}
 		}
+
+		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
+		{
+			ClearQueue();
+			playerResources = newOwner.PlayerActor.Trait<PlayerResources>();
+		}
+
+		void INotifyKilled.Killed(Actor self, AttackInfo e) { ClearQueue(); }
+		void INotifySold.Selling(Actor self) { ClearQueue(); }
+		void INotifySold.Sold(Actor self) { }
+
+		protected void ClearQueue()
+		{
+			queue.Clear();
+		}
+
+		public virtual int GetConversionCost(ActorInfo inputUnit, ActorInfo outputUnit)
+		{
+			if (!Info.CostDifferenceRequired)
+				return 0;
+
+			var inputUnitCost = GetUnitCost(inputUnit);
+			var outputUnitCost = GetUnitCost(outputUnit);
+			var conversionCost = outputUnitCost - inputUnitCost;
+
+			if (conversionCost < 0)
+				return 0;
+
+			return conversionCost;
+		}
+
+		public virtual int GetUnitCost(ActorInfo unit)
+		{
+			var valued = unit.TraitInfoOrDefault<ValuedInfo>();
+
+			if (valued == null)
+				return 0;
+
+			return valued.Cost;
+		}
+
+		float ISelectionBar.GetValue()
+		{
+			if (!Info.ShowSelectionBar || !queue.Any())
+				return 0;
+			var maxTicks = Info.ProductionInterval;
+			if (produceIntervalTicks == maxTicks)
+				return 0;
+
+			return (float)(maxTicks - produceIntervalTicks) / maxTicks;
+		}
+
+		bool ISelectionBar.DisplayWhenEmpty { get { return false; } }
+
+		Color ISelectionBar.GetColor() { return Info.SelectionBarColor; }
 	}
 
 	public class UnitConverterQueueItem
 	{
 		public Production Producer;
 		public Actor Actor;
-		public ActorInfo Producee;
+		public ActorInfo InputActor;
+		public ActorInfo OutputActor;
 		public string ProductionType;
 		public TypeDictionary Inits;
+		public int ConversionCost;
 	}
 }
