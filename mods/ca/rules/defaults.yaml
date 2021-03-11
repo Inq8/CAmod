@@ -568,6 +568,45 @@
 		BlinkPatterns:
 			seek3 && bino: Off, On
 		RequiresSelection: True
+		
+^GDIUpgradeAircraft:
+	Inherits: ^GDIUpgrade
+	WithDecoration@HOLD:
+		-BlinkPatterns:
+		BlinkPatterns:
+			hold: Off, On
+	WithDecoration@HOLD2:
+		-BlinkPatterns:
+		BlinkPatterns:
+			hold2: Off, On
+	WithDecoration@HOLD3:
+		-BlinkPatterns:
+		BlinkPatterns:
+			hold3: Off, On
+	WithDecoration@BOMBARD:
+		-BlinkPatterns:
+		BlinkPatterns:
+			bombard: Off, On
+	WithDecoration@BOMBARD2:
+		-BlinkPatterns:
+		BlinkPatterns:
+			bombard2: Off, On
+	WithDecoration@BOMBARD3:
+		-BlinkPatterns:
+		BlinkPatterns:
+			bombard3: Off, On
+	WithDecoration@SEEK:
+		-BlinkPatterns:
+		BlinkPatterns:
+			seek : Off, On
+	WithDecoration@SEEK2:
+		-BlinkPatterns:
+		BlinkPatterns:
+			seek2 : Off, On
+	WithDecoration@SEEK3:
+		-BlinkPatterns:
+		BlinkPatterns:
+			seek3 : Off, On
 
 ^HazmatUpgrade:
 	GrantConditionOnPrerequisite@HAZMAT:
@@ -634,6 +673,7 @@
 		Position: BottomLeft
 		RequiresCondition: bino
 		BlinkInterval: 64
+		-BlinkPatterns:
 		BlinkPatterns:
 			hazmatsuits: On, Off
 		RequiresSelection: True
@@ -1939,7 +1979,7 @@
 	Inherits@2: ^GainsExperience
 	Inherits@3: ^Cloakable
 	Inherits@4: ^EmpDisable
-	Inherits@5: ^GDIUpgrade
+	Inherits@5: ^GDIUpgradeAircraft
 	Inherits@8: ^Warpable
 	Inherits@9: ^BotAirProductionBonus
 	Inherits@10: ^Chillable
