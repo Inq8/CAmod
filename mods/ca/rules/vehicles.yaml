@@ -1218,6 +1218,19 @@ APC:
 		RequiresCondition: driver-dead && !cargo
 	Targetable@DRIVERKILL:
 		RequiresCondition: !driver-dead && !cargo
+		
+APC.AI:
+	Inherits: APC
+	RenderSprites:
+		Image: APC
+	Buildable:
+		Prerequisites: ~botplayer, infantry.any, ~vehicles.allies, ~techlevel.low
+	Cargo:
+		InitialUnits: E1,E1,E1,E3,E3
+	AutoDeployer:
+		DeployChance: 100
+		OrderName: Deploy
+		RequiresCondition: cargo
 
 MNLY:
 	Inherits: ^Tank
@@ -2013,6 +2026,32 @@ APC2:
 		InvalidTargets: NoAutoTarget
 	AttackMove:
 		AssaultMoveCondition: assault-move
+		
+APC2.NODAI:
+	Inherits: APC2
+	Buildable:
+		Prerequisites: ~botplayer, ~vehicles.nod, ~!vulcan.upgrade, ~vehicles.apc2, infantry.any, ~techlevel.low
+	RenderSprites:
+		Image: APC2
+	Cargo:
+		InitialUnits: N4,N4,N4,N4,N4
+	AutoDeployer:
+		DeployChance: 100
+		OrderName: Deploy
+		RequiresCondition: cargo
+		
+APC2.GDIAI:
+	Inherits: APC2
+	Buildable:
+		Prerequisites: ~botplayer, ~vehicles.gdi, ~!vulcan.upgrade, ~vehicles.apc2, infantry.any, ~techlevel.low
+	RenderSprites:
+		Image: APC2
+	Cargo:
+		InitialUnits: N2,N2,N2,N2,N2
+	AutoDeployer:
+		DeployChance: 100
+		OrderName: Deploy
+		RequiresCondition: cargo
 
 APC2.Reinforce:
 	Inherits: APC2
@@ -2020,7 +2059,11 @@ APC2.Reinforce:
 		Image: APC2
 	-Buildable:
 	Cargo:
-		InitialUnits: n1,n1,n2,n3,n3
+		InitialUnits: N1,N1,N2,N3,N3
+	AutoDeployer:
+		DeployChance: 100
+		OrderName: Deploy
+		RequiresCondition: cargo
 
 VULC:
 	Inherits: ^TankTD
@@ -2145,6 +2188,19 @@ VULC:
 		RequiresCondition: driver-dead && !cargo
 	Targetable@DRIVERKILL:
 		RequiresCondition: !driver-dead && !cargo
+		
+VULC.AI:
+	Inherits: VULC
+	RenderSprites:
+		Image: VULC
+	Buildable:
+		Prerequisites: ~botplayer, ~vehicles.gdi, ~vulcan.upgrade, infantry.any, ~techlevel.high
+	Cargo:
+		InitialUnits: N2,N2,N2,N2,N2
+	AutoDeployer:
+		DeployChance: 100
+		OrderName: Deploy
+		RequiresCondition: cargo
 
 LTNK:
 	Inherits: ^TankTD
@@ -3063,6 +3119,19 @@ BTR:
 		RequiresCondition: driver-dead && !cargo
 	Targetable@DRIVERKILL:
 		RequiresCondition: !driver-dead && !cargo
+		
+BTR.AI:
+	Inherits: BTR
+	RenderSprites:
+		Image: BTR
+	Buildable:
+		Prerequisites: ~botplayer, infantry.any, ~vehicles.soviet, ~techlevel.low
+	Cargo:
+		InitialUnits: E4,E4,E4,E4,E4
+	AutoDeployer:
+		DeployChance: 100
+		OrderName: Deploy
+		RequiresCondition: cargo
 
 IFV:
 	Inherits: ^Tank
@@ -3882,7 +3951,7 @@ RTNK:
 		RequiresCondition: tree
 	Mirage:
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
-		RevealOn: Attack, Move
+		RevealOn: Attack, Move, Heal, SelfHeal
 		MirageCondition: tree
 		DefaultTargetTypes: v08, v09, v10, v11, v12, v13, v14, v15, v16, v17, v18
 		InitialDelay: 100

@@ -1477,7 +1477,7 @@ SAB:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 140
 		Prerequisites: anyradar, ~hand, ~techlevel.medium
-		Description: Covert infantry. Infiltrates enemy structures and steals technology.\n  Can detect spies and cloaked units.\n  Special Ability: Infiltrate\n  Special Ability: Stealth
+		Description: Covert infantry. Infiltrates enemy structures and steals technology.\n  Can detect spies and cloaked units.\n  Special Ability: Infiltrate\n  Special Ability: Stealth (Limited)
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -1517,15 +1517,22 @@ SAB:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+	GrantTimedConditionOnDeploy:
+		DeployedCondition: deployed
+		CooldownTicks: 1250
+		DeployedTicks: 375
+	AutoDeployer:
+		DeployChance: 50
+		OrderName: GrantTimedConditionOnDeploy
 	Cloak:
-		InitialDelay: 100
-		CloakDelay: 200
+		InitialDelay: 0
+		CloakDelay: 25
 		CloakedCondition: hidden
 		Palette: cloaktd
 		IsPlayerPalette: true
 		CloakTypes: Cloak
-		RequiresCondition: !cloak-force-disabled
-		UncloakOn: Unload, Infiltrate, Demolish, Dock, Attack
+		RequiresCondition: deployed && !cloak-force-disabled
+		UncloakOn: Unload, Infiltrate, Demolish, Dock, Attack, Damage
 		CloakSound: gstealon.aud
 		UncloakSound: gstealof.aud
 	Cloak@CRATE-CLOAK:
@@ -1936,6 +1943,8 @@ E8:
 	-DamagedByTintedCells@RADWEAK:
 	WithDecoration@HAZMAT:
 		RequiresCondition: biofirepower
+	AutoDeployer:
+		DeployChance: 20
 
 N1C:
 	Inherits: ^Cyborg

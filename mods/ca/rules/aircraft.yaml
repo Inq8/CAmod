@@ -1601,7 +1601,7 @@ OCAR:
 		BuildPaletteOrder: 100
 		Prerequisites: ~hpad.td, rep, ~aircraft.gdi, ~techlevel.high
 		IconPalette: chrometd
-		Description: Fast VTOL Vehicle Transporter.\n  Unarmed
+		Description: Fast VTOL Vehicle Transporter.\n  Unarmed\n  Special Ability: Auto Pilot
 	Aircraft:
 		CruiseAltitude: 2048
 		AltitudeVelocity: 0c100
@@ -1619,10 +1619,10 @@ OCAR:
 		LocalOffset: 0, 0, -128
 		Voice: Action
 		AllowDropOff: True
-		CarryCondition: slowdown
-	SpeedMultiplier@Slowdown:
+		CarryCondition: carrying
+	SpeedMultiplier@carrying:
 		Modifier: 80
-		RequiresCondition: slowdown
+		RequiresCondition: carrying
 	Health:
 		HP: 30000
 	Armor:
@@ -1675,35 +1675,30 @@ OCAR:
 		Color: FFFFFF80
 	TransformOnCondition:
 		IntoActor: OCAR.Auto
-		RequiresCondition: stance-attackanything && !slowdown
-	AttackFrontal:
-		FacingTolerance: 30
-		RequiresCondition: !slowdown
-	AutoTarget:
-		AttackAnythingCondition: stance-attackanything
+		RequiresCondition: transform && !carrying
+	GrantConditionOnDeploy:
+		DeployedCondition: transform
+		PauseOnCondition: carrying
 
 OCAR.Auto:
 	Inherits: OCAR
-	-Buildable:
+	Buildable:
+		Prerequisites: ~botplayer, ~hpad.td, rep, ~aircraft.gdi, ~techlevel.high
 	-Carryall:
 	Selectable:
 		Class: OCAR
-	AutoTarget:
-		AttackAnythingCondition: stance-attackanything
-		InitialStance: AttackAnything
 	AutoCarryall:
 		BeforeLoadDelay: 10
 		BeforeUnloadDelay: 15
 		LocalOffset: 0, 0, -128
 		Voice: Action
-		CarryCondition: slowdown
+		CarryCondition: carrying
 	TransformOnCondition:
 		IntoActor: OCAR
-		RequiresCondition: !stance-attackanything && !slowdown
+		RequiresCondition: transform && !carrying
 	RejectsOrders:
 		Reject: Move
 	WithDecoration@auto:
-		RequiresCondition: stance-attackanything
 		RequiresSelection: true
 		Image: pips
 		Palette: chrome

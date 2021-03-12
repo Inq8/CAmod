@@ -41,7 +41,7 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 		public readonly string BlockedAudio = null;
 
 		[Desc("Ticks between producing actors.")]
-		public readonly int ProductionInterval = 50;
+		public readonly int ProductionInterval = 100;
 
 		[Desc("Whether the player has to pay any difference in cost between the unit being converted and the unit it converts into.")]
 		public readonly bool CostDifferenceRequired = false;
@@ -81,7 +81,11 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 
 		public void Enter(Actor converting, Actor self)
 		{
-			converting.PlayVoice(Info.Voice);
+			var player = self.World.LocalPlayer ?? self.World.RenderPlayer;
+			if (converting.Owner == player && player != null)
+			{
+				converting.PlayVoice(Info.Voice);
+			}
 
 			var sa = converting.Trait<Convertible>();
 			var spawnActors = sa.Info.SpawnActors;

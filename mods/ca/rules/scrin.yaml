@@ -634,6 +634,19 @@ INTL:
 		CloakTypes: Mine
 		RequiresCondition: !(empdisable || being-warped)
 
+INTL.AI:
+	Inherits: INTL
+	RenderSprites:
+		Image: INTL
+	Buildable:
+		Prerequisites: ~botplayer, ~vehicles.scrin, ~techlevel.low
+	Cargo:
+		InitialUnits: S1,S1,S2,S3,S3
+	AutoDeployer:
+		DeployChance: 100
+		OrderName: Deploy
+		RequiresCondition: cargo
+
 CORR:
 	Inherits: ^Vehicle
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
