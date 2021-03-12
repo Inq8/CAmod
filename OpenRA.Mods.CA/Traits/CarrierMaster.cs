@@ -33,6 +33,12 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("After this many ticks, we remove the condition.")]
 		public readonly int LaunchingTicks = 15;
 
+		[Desc("Max distance slaves can travel from master before being recalled.")]
+		public readonly WDist MaxSlaveDistance = WDist.FromCells(18);
+
+		[Desc("Ticks between performing range checks for slave maximum distance.")]
+		public readonly int MaxSlaveDistanceCheckInterval = 50;
+
 		[Desc("Instantly repair spawners when they return?")]
 		public readonly bool InstantRepair = true;
 
@@ -67,6 +73,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		int launchCondition = Actor.InvalidConditionToken;
 		int launchConditionTicks;
+
+		Target currentTarget;
+		int maxDistanceCheckTicks;
 
 		public CarrierMaster(ActorInitializer init, CarrierMasterInfo info)
 			: base(init, info)
@@ -116,6 +125,8 @@ namespace OpenRA.Mods.CA.Traits
 		// invokes Attacking()
 		void INotifyAttack.Attacking(Actor self, in Target target, Armament a, Barrel barrel)
 		{
+			currentTarget = target;
+
 			if (IsTraitDisabled || IsTraitPaused || !Info.ArmamentNames.Contains(a.Info.Name))
 				return;
 
@@ -253,6 +264,22 @@ namespace OpenRA.Mods.CA.Traits
 				if (carrierSlaveEntry.RearmTicks > 0)
 					carrierSlaveEntry.RearmTicks--;
 			}
+
+			// range check
+			RangeCheck(self);
+		}
+
+		protected void RangeCheck(Actor self)
+		{
+			if (--maxDistanceCheckTicks > 0)
+				return;
+
+			maxDistanceCheckTicks = CarrierMasterInfo.MaxSlaveDistanceCheckInterval;
+			var pos = self.CenterPosition;
+			var inRange = currentTarget.IsInRange(pos, CarrierMasterInfo.MaxSlaveDistance);
+
+			if (!inRange)
+				Recall();
 		}
 
 		protected override void TraitPaused(Actor self)
