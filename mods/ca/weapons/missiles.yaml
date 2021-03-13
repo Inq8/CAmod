@@ -61,6 +61,17 @@
 		Explosions: med_explosion_air
 		ImpactActors: false
 
+^AirToAirMissile:
+	Inherits: ^AntiAirMissile
+	MinRange: 1c256
+	Projectile: MissileCA
+		Speed: 384
+		HorizontalRateOfTurn: 40
+		LockOnProbability: 90
+		LockOnInaccuracy: 0
+		RangeLimit: 12c0
+		AllowSnapping: true
+
 Maverick:
 	Inherits: ^AntiGroundMissile
 	Range: 9c0
@@ -85,18 +96,13 @@ Maverick:
 			Brick: 80
 
 MaverickAA:
-	Inherits: ^AntiAirMissile
+	Inherits: ^AirToAirMissile
 	ReloadDelay: 60
 	Report: missile7.aud
-	MinRange: 1c256
 	Burst: 2
 	BurstDelays: 10
-	Projectile: MissileCA
-		Speed: 384
-		HorizontalRateOfTurn: 40
-		RangeLimit: 7c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 5000
+		Damage: 5500
 
 MaverickSU:
 	Inherits: Maverick
@@ -281,15 +287,10 @@ HellfireAG.Horn:
 		Damage: 850
 
 HellfireAA:
-	Inherits: ^AntiAirMissile
+	Inherits: ^AirToAirMissile
 	ReloadDelay: 60
-	MinRange: 1c256
 	Burst: 4
 	BurstDelays: 14
-	Projectile: MissileCA
-		Speed: 384
-		HorizontalRateOfTurn: 40
-		RangeLimit: 7c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 3000
 
@@ -300,17 +301,14 @@ HellfireAA.Orca:
 	BurstDelays: 11
 
 WidowAA:
-	Inherits: ^AntiAirMissile
+	Inherits: ^AirToAirMissile
 	ReloadDelay: 60
 	Report: vbleatta.aud, vbleattb.aud
 	Range: 8c0
-	MinRange: 1c256
 	Burst: 2
 	BurstDelays: 10
 	Projectile: MissileCA
 		Speed: 404
-		HorizontalRateOfTurn: 40
-		RangeLimit: 12c0
 		ContrailLength: 6
 	Warhead@1Dam: SpreadDamage
 		Damage: 6000
@@ -1182,23 +1180,19 @@ ScrinTorp:
 		ValidTargets: Ground, Vehicle
 
 ScrinTorpAA:
-	Inherits: ^AntiAirMissile
+	Inherits: ^AirToAirMissile
 	ReloadDelay: 60
-	MinRange: 1c256
 	Range: 7c0
 	Report: scrin5b.aud
 	Burst: 3
 	BurstDelays: 4
 	Projectile: Missile
-		Speed: 384
 		Image: scrintorp
 		Palette: tseffect-ignore-lighting-alpha90
-		HorizontalRateOfTurn: 40
 		-TrailImage:
-		RangeLimit: 12c0
 		Jammable: false
 	Warhead@1Dam: SpreadDamage
-		Damage: 3000
+		Damage: 3400
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: expnew17.aud
 	Warhead@green: GrantExternalCondition
