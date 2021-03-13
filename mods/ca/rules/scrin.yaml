@@ -1823,7 +1823,7 @@ STMR.Husk:
 
 STMR.Husk.EMP:
 	Inherits: STMR.Husk
-	Inherits: ^EmpVisualEffect
+	Inherits@EMP: ^EmpVisualEffect
 
 ENRV.Husk:
 	Inherits: ^PlaneHusk
@@ -1855,7 +1855,7 @@ ENRV.Husk:
 
 ENRV.Husk.EMP:
 	Inherits: ENRV.Husk
-	Inherits: ^EmpVisualEffect
+	Inherits@EMP: ^EmpVisualEffect
 
 DEVA.Husk:
 	Inherits: ^HelicopterHusk
@@ -1885,7 +1885,7 @@ DEVA.Husk:
 
 DEVA.Husk.EMP:
 	Inherits: DEVA.Husk
-	Inherits: ^EmpVisualEffect
+	Inherits@EMP: ^EmpVisualEffect
 
 DEVA.Husk.Ground:
 	Inherits: ^Husk
@@ -1934,7 +1934,7 @@ PAC.Husk:
 
 PAC.Husk.EMP:
 	Inherits: PAC.Husk
-	Inherits: ^EmpVisualEffect
+	Inherits@EMP: ^EmpVisualEffect
 
 PAC.Husk.Ground:
 	Inherits: ^Husk
@@ -1978,17 +1978,17 @@ INVA.Husk:
 
 INVA.Husk.EMP:
 	Inherits: INVA.Husk
-	Inherits: ^EmpVisualEffect
+	Inherits@EMP: ^EmpVisualEffect
 
 INVA.Husk.Empty:
 	Inherits: ^PlaneHuskEmpty
-	Inherits: INVA.Husk
+	Inherits@INVA: INVA.Husk
 	FallsToEarth:
 		Explosion: UnitExplodeDroneEmpty
 
 INVA.Husk.Empty.EMP:
 	Inherits: INVA.Husk.Empty
-	Inherits: ^EmpVisualEffect
+	Inherits@EMP: ^EmpVisualEffect
 
 #
 # ---- Buildings
@@ -2036,7 +2036,7 @@ SWAL:
 
 SFAC:
 	Inherits: ^ScrinBuilding
-	Inherits@shape: ^3x2Shape
+	Inherits@SHAPE: ^3x2Shape
 	Inherits@BOTI: ^BotFallbackInsurance
 	Building:
 		Footprint: xxx xxx ===
@@ -2131,7 +2131,7 @@ SFAC:
 REAC:
 	Inherits: ^ScrinBuilding
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
-	Inherits@shape: ^2x2Shape
+	Inherits@SHAPE: ^2x2Shape
 	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: 630,299,0
@@ -2175,7 +2175,7 @@ REAC:
 REA2:
 	Inherits: ^ScrinBuilding
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
-	Inherits@shape: ^3x2Shape
+	Inherits@SHAPE: ^3x2Shape
 	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: -355,-1024,0
@@ -2216,7 +2216,7 @@ REA2:
 
 PROC.SCRIN:
 	Inherits: ^ScrinBuilding
-	Inherits@2: ^BotIncome
+	Inherits@BOTINCOME: ^BotIncome
 	HitShape:
 		Type: Rectangle
 			TopLeft: -1536, -512
@@ -2290,8 +2290,8 @@ PROC.SCRIN:
 
 PORT:
 	Inherits: ^ScrinBuilding
-	Inherits: ^PrimaryBuilding
-	Inherits@shape: ^2x2Shape
+	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@SHAPE: ^2x2Shape
 	Selectable:
 		Bounds: 48,48
 	HitShape:
@@ -2363,8 +2363,8 @@ PORT:
 
 WSPH:
 	Inherits: ^ScrinBuilding
-	Inherits: ^PrimaryBuilding
-	Inherits@shape: ^3x2Shape
+	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@SHAPE: ^3x2Shape
 	Selectable:
 		Bounds: 72,48
 	HitShape:
@@ -2606,7 +2606,7 @@ NERV:
 SCRT:
 	Inherits: ^ScrinBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
-	Inherits@shape: ^2x2Shape
+	Inherits@SHAPE: ^2x2Shape
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 150
@@ -2701,8 +2701,8 @@ SCRT:
 
 GRAV:
 	Inherits: ^ScrinBuilding
-	Inherits: ^PrimaryBuilding
-	Inherits@shape: ^3x2Shape
+	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@SHAPE: ^3x2Shape
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Buildable:
@@ -2770,7 +2770,7 @@ GRAV:
 SIGN:
 	Inherits: ^ScrinBuilding
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
-	Inherits@shape: ^3x2Shape
+	Inherits@SHAPE: ^3x2Shape
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Selectable:
@@ -2932,7 +2932,7 @@ SILO.SCRIN:
 MANI:
 	Inherits: ^ScrinBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
-	Inherits@shape: ^2x2Shape
+	Inherits@SHAPE: ^2x2Shape
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 130
@@ -3003,7 +3003,7 @@ MANI:
 RIFT:
 	Inherits: ^ScrinBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
-	Inherits@shape: ^2x2Shape
+	Inherits@SHAPE: ^2x2Shape
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 130
@@ -3034,7 +3034,6 @@ RIFT:
 	RevealsShroud@GAPGEN:
 		Range: 5c0
 		RequiresCondition: !disabled
-	WithBuildingBib:
 	DetonateWeaponPower@RiftGenerator:
 		OrderName: rift
 		Icon: riftpower
@@ -3400,9 +3399,9 @@ STRM:
 		Range: 5c0
 
 SCOL.Temp:
+	Inherits: SCOL
 	RenderSprites:
 		Image: scol
-	Inherits: SCOL
 	-Sellable:
 	-Buildable:
 	Health:

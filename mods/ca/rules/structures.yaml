@@ -1,7 +1,7 @@
 MSLO:
 	Inherits: ^Building
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
-	Inherits@shape: ^2x1Shape
+	Inherits@SHAPE: ^2x1Shape
 	Selectable:
 		Bounds: 48,24
 	Valued:
@@ -121,7 +121,7 @@ GAP:
 
 SPEN:
 	Inherits: ^Building
-	Inherits: ^PrimaryBuilding
+	Inherits@PRIMARY: ^PrimaryBuilding
 	Selectable:
 		Bounds: 72,48
 	RenderSprites:
@@ -243,7 +243,7 @@ SPEN:
 
 SYRD:
 	Inherits: ^Building
-	Inherits: ^PrimaryBuilding
+	Inherits@PRIMARY: ^PrimaryBuilding
 	Selectable:
 		Bounds: 72,48
 	RenderSprites:
@@ -343,7 +343,7 @@ SYRD:
 IRON:
 	Inherits: ^Building
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
-	Inherits@shape: ^2x1Shape
+	Inherits@SHAPE: ^2x1Shape
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 130
@@ -415,7 +415,7 @@ IRON:
 PDOX:
 	Inherits: ^Building
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
-	Inherits@shape: ^2x2Shape
+	Inherits@SHAPE: ^2x2Shape
 	Selectable:
 		Bounds: 48,48
 	Buildable:
@@ -679,7 +679,7 @@ AGUN:
 DOME:
 	Inherits: ^Building
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
-	Inherits@shape: ^2x2Shape
+	Inherits@SHAPE: ^2x2Shape
 	Selectable:
 		Bounds: 48,48
 	HitShape:
@@ -996,7 +996,7 @@ SAM:
 	Inherits: ^Defense
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetAirICBM
-	Inherits@shape: ^2x1Shape
+	Inherits@SHAPE: ^2x1Shape
 	Selectable:
 		Bounds: 48,24
 	HitShape:
@@ -1054,7 +1054,7 @@ SAM:
 ATEK:
 	Inherits: ^Building
 	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
-	Inherits@shape: ^2x2Shape
+	Inherits@SHAPE: ^2x2Shape
 	Selectable:
 		Bounds: 48,48
 	Buildable:
@@ -1177,8 +1177,8 @@ ATEK:
 
 WEAP:
 	Inherits: ^Building
-	Inherits: ^PrimaryBuilding
-	Inherits@shape: ^3x2Shape
+	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@SHAPE: ^3x2Shape
 	Selectable:
 		Bounds: 72,48
 	Buildable:
@@ -1293,7 +1293,7 @@ WEAP:
 
 FACT:
 	Inherits: ^Building
-	Inherits: ^PrimaryBuilding
+	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@BOTI: ^BotFallbackInsurance
 	Selectable:
 		Bounds: 72,72
@@ -1428,7 +1428,7 @@ FACT:
 
 PROC:
 	Inherits: ^Building
-	Inherits@2: ^BotIncome
+	Inherits@BOTINCOME: ^BotIncome
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 60
@@ -1578,8 +1578,8 @@ SILO:
 
 HPAD:
 	Inherits: ^Building
-	Inherits: ^PrimaryBuilding
-	Inherits@shape: ^2x2Shape
+	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@SHAPE: ^2x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
 	Selectable:
 		Bounds: 48,48
@@ -1654,8 +1654,8 @@ HPAD:
 
 AFLD:
 	Inherits: ^Building
-	Inherits: ^PrimaryBuilding
-	Inherits@shape: ^3x2Shape
+	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@SHAPE: ^3x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
 	HitShape:
 		UseTargetableCellsOffsets: false
@@ -1852,7 +1852,7 @@ AFLD:
 POWR:
 	Inherits: ^Building
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
-	Inherits@shape: ^2x2Shape
+	Inherits@SHAPE: ^2x2Shape
 	Inherits@POWERDRAIN: ^PowerDrainable
 	Selectable:
 		Bounds: 48,48
@@ -1896,7 +1896,7 @@ POWR:
 APWR:
 	Inherits: ^Building
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
-	Inherits@shape: ^3x2Shape
+	Inherits@SHAPE: ^3x2Shape
 	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: -355,-1024,0
@@ -1999,7 +1999,7 @@ TPWR:
 STEK:
 	Inherits: ^Building
 	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
-	Inherits@shape: ^3x2Shape
+	Inherits@SHAPE: ^3x2Shape
 	Selectable:
 		Bounds: 72,48
 	HitShape:
@@ -2078,8 +2078,8 @@ STEK:
 
 BARR:
 	Inherits: ^Building
-	Inherits: ^PrimaryBuilding
-	Inherits@shape: ^2x2Shape
+	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@SHAPE: ^2x2Shape
 	Selectable:
 		Bounds: 48,48
 	HitShape:
@@ -2160,7 +2160,7 @@ BARR:
 
 KENN:
 	Inherits: ^Building
-	Inherits: ^PrimaryBuilding
+	Inherits@PRIMARY: ^PrimaryBuilding
 	Selectable:
 		Bounds: 24,24
 	Buildable:
@@ -2205,8 +2205,8 @@ KENN:
 
 TENT:
 	Inherits: ^Building
-	Inherits: ^PrimaryBuilding
-	Inherits@shape: ^2x2Shape
+	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@SHAPE: ^2x2Shape
 	Selectable:
 		Bounds: 48,48
 	HitShape:
@@ -2600,8 +2600,8 @@ STRUCTURES.TSLA:
 
 PYLE:
 	Inherits: ^BuildingTD
-	Inherits: ^PrimaryBuilding
-	Inherits@shape: ^2x2Shape
+	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@SHAPE: ^2x2Shape
 	Selectable:
 		Bounds: 48,48
 	HitShape:
@@ -2683,8 +2683,8 @@ PYLE:
 
 HAND:
 	Inherits: ^BuildingTD
-	Inherits: ^PrimaryBuilding
-	Inherits@shape: ^2x2Shape
+	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@SHAPE: ^2x2Shape
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 630,-512,0, 355,512,0, -281,-512,0, -630,512,0
@@ -2762,8 +2762,8 @@ HAND:
 
 WEAP.TD:
 	Inherits: ^BuildingTD
-	Inherits: ^PrimaryBuilding
-	Inherits@shape: ^3x2Shape
+	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@SHAPE: ^3x2Shape
 	RenderSprites:
 		Image: awep
 	Selectable:
@@ -2876,7 +2876,7 @@ WEAP.TD:
 
 AIRS:
 	Inherits: ^BuildingTD
-	Inherits: ^PrimaryBuilding
+	Inherits@PRIMARY: ^PrimaryBuilding
 	RenderSprites:
 		Image: astrip
 	HitShape:
@@ -2994,7 +2994,7 @@ AIRS:
 NUKE:
 	Inherits: ^BuildingTD
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
-	Inherits@shape: ^2x2Shape
+	Inherits@SHAPE: ^2x2Shape
 	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: 630,299,0
@@ -3048,7 +3048,7 @@ NUKE:
 NUK2:
 	Inherits: ^BuildingTD
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
-	Inherits@shape: ^2x2Shape
+	Inherits@SHAPE: ^2x2Shape
 	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: 630,299,0
@@ -3099,8 +3099,8 @@ NUK2:
 
 AFAC:
 	Inherits: ^BuildingTD
-	Inherits: ^PrimaryBuilding
-	Inherits@shape: ^3x2Shape
+	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@SHAPE: ^3x2Shape
 	Inherits@BOTI: ^BotFallbackInsurance
 	RenderSprites:
 		FactionImages:
@@ -3235,7 +3235,7 @@ NSAM:
 	Inherits: ^DefenseTD
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetAirICBM
-	Inherits@shape: ^2x1Shape
+	Inherits@SHAPE: ^2x1Shape
 	Selectable:
 		Bounds: 48,24
 	HitShape:
@@ -3898,8 +3898,8 @@ REP:
 
 HPAD.TD:
 	Inherits: ^BuildingTD
-	Inherits: ^PrimaryBuilding
-	Inherits@shape: ^2x2Shape
+	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@SHAPE: ^2x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
 	RenderSprites:
 		Image: hpad2
@@ -3995,7 +3995,7 @@ HPAD.TD:
 
 PROC.TD:
 	Inherits: ^BuildingTD
-	Inherits@2: ^BotIncome
+	Inherits@BOTINCOME: ^BotIncome
 	HitShape:
 		Type: Rectangle
 			TopLeft: -1536, -512
@@ -4082,7 +4082,7 @@ PROC.TD:
 
 SILO.TD:
 	Inherits: ^BuildingTD
-	Inherits@shape: ^2x1Shape
+	Inherits@SHAPE: ^2x1Shape
 	RenderSprites:
 		Image: silo2
 	Valued:
@@ -4133,8 +4133,8 @@ SILO.TD:
 
 AFLD.GDI:
 	Inherits: ^Building
-	Inherits: ^PrimaryBuilding
-	Inherits@shape: ^3x2Shape
+	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@SHAPE: ^3x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
 	RenderSprites:
 		Image: afldgdi
@@ -4263,7 +4263,7 @@ AFLD.GDI:
 GTEK:
 	Inherits: ^Building
 	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
-	Inherits@shape: ^3x2Shape
+	Inherits@SHAPE: ^3x2Shape
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 150
@@ -4372,7 +4372,7 @@ GTEK:
 TMPL:
 	Inherits: ^BuildingTD
 	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
-	Inherits@shape: ^3x2Shape
+	Inherits@SHAPE: ^3x2Shape
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 0,-896,0, 0,896,0, 840,0,0, -706,0,0, -706,-768,0, -706,640,0
@@ -4589,7 +4589,7 @@ PRIS:
 
 SPEN.nod:
 	Inherits: ^Building
-	Inherits: ^PrimaryBuilding
+	Inherits@PRIMARY: ^PrimaryBuilding
 	RenderSprites:
 		Image: SPENNOD
 		PlayerPalette: playernavy
@@ -4681,7 +4681,7 @@ SPEN.nod:
 
 SYRD.gdi:
 	Inherits: ^Building
-	Inherits: ^PrimaryBuilding
+	Inherits@PRIMARY: ^PrimaryBuilding
 	RenderSprites:
 		Image: GSYRD
 		PlayerPalette: playernavy
@@ -4781,7 +4781,7 @@ HTUR:
 	Inherits: ^Defense
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
-	Inherits@shape: ^2x2Shape
+	Inherits@SHAPE: ^2x2Shape
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 100
@@ -5146,7 +5146,7 @@ LASF:
 PATR:
 	Inherits: ^DefenseTD
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
-	Inherits@shape: ^2x2Shape
+	Inherits@SHAPE: ^2x2Shape
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 130
@@ -5235,7 +5235,7 @@ PATR:
 INDP:
 	Inherits: ^Building
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
-	Inherits@shape: ^3x2Shape
+	Inherits@SHAPE: ^3x2Shape
 	Selectable:
 		Bounds: 72,56,0,12
 		DecorationBounds: 73,72
@@ -5303,7 +5303,7 @@ INDP:
 OREP:
 	Inherits: ^Building
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
-	Inherits@shape: ^3x2Shape
+	Inherits@SHAPE: ^3x2Shape
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Selectable:
@@ -5373,7 +5373,7 @@ OREP:
 UPGC:
 	Inherits: ^BuildingTD
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
-	Inherits@shape: ^3x2Shape
+	Inherits@SHAPE: ^3x2Shape
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Selectable:
@@ -5695,8 +5695,8 @@ UPGC.DROP:
 TMPP:
 	Inherits: ^BuildingTD
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
-	Inherits@shape: ^3x2Shape
-	Inherits: ^PrimaryBuilding
+	Inherits@SHAPE: ^3x2Shape
+	Inherits@PRIMARY: ^PrimaryBuilding
 	RenderSprites:
 		PlayerPalette: overlayplayertd
 	Selectable:
@@ -5786,7 +5786,7 @@ TMPP:
 MSLO.Nod:
 	Inherits: ^Building
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
-	Inherits@shape: ^2x1Shape
+	Inherits@SHAPE: ^2x1Shape
 	RenderSprites:
 		Image: nmslo
 	Selectable:
@@ -5870,7 +5870,7 @@ MSLO.Nod:
 WEAT:
 	Inherits: ^Building
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
-	Inherits@shape: ^2x2Shape
+	Inherits@SHAPE: ^2x2Shape
 	Selectable:
 		Bounds: 48,48
 	Buildable:
@@ -5901,7 +5901,6 @@ WEAT:
 	RevealsShroud@GAPGEN:
 		Range: 5c0
 		RequiresCondition: !disabled
-	WithBuildingBib:
 	DetonateWeaponPower@LightningStorm:
 		OrderName: storm
 		Icon: storm
