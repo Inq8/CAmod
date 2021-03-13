@@ -1559,7 +1559,7 @@ ACOL:
 		BuildAtProductionType: Infantry
 		BuildPaletteOrder: 180
 		IconPalette: chrometd
-		Prerequisites: anyradar, obli, ~infantry.marked, ~techlevel.high
+		Prerequisites: anyradar, obli, ~infantry.marked, ~!cyborg.production, ~techlevel.high
 		Description: Elite infantry with a laser weapon.\n  Strong vs Infantry, Light Armor\n  Weak vs Aircraft\n  Special Ability: Regains health on tiberium
 	Valued:
 		Cost: 450
@@ -1580,7 +1580,7 @@ ACOL:
 		Weapon: PortaLaserE
 	TakeCover:
 		ProneOffset: 227,0,-245
-		PauseOnCondition: being-warped || cyborg-upgrade
+		PauseOnCondition: being-warped
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
@@ -1597,21 +1597,25 @@ ACOL:
 		VoiceSet: CyborgVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
-	GrantConditionOnPrerequisite@CYBORG:
-		Condition: cyborg-upgrade
-		Prerequisites: cyborg.upgrade
-	ExternalCondition@CYBORG:
-		Condition: cyborg-upgrade
-	SpeedMultiplier@CYBORG:
-		Modifier: 115
-		RequiresCondition: cyborg-upgrade && !cyborgspeed-upgrade
-	DamageMultiplier@CYBORG:
-		Modifier: 32
-		RequiresCondition: cyborg-upgrade && !cyborgarmor-upgrade
-	SpeedMultiplier@CYBORGSPEED:
-		Modifier: 130
-	DamageMultiplier@CYBORGARMOR:
-		Modifier: 25
+	Selectable:
+		Class: ACOL
+	Convertible:
+		SpawnActors: ACOL.UPG
+
+ACOL.UPG:
+	Inherits: ACOL
+	RenderSprites:
+		Image: acol
+	Valued:
+		Cost: 500
+	Health:
+		HP: 22000
+	Mobile:
+		Speed: 56
+	Buildable:
+		Prerequisites: anyradar, obli, ~infantry.marked, ~cyborg.production, ~techlevel.high
+	-TakeCover:
+	-Convertible:
 
 JJET:
 	Inherits@1: ^ExistsInWorld
