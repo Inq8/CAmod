@@ -181,20 +181,17 @@ DevastatorDiscs:
 	ReloadDelay: 180
 	Report: devastator-fire1.aud, devastator-fire2.aud, devastator-fire3.aud
 	Burst: 7
-	BurstDelays: 5
+	BurstDelays: 4
 	-Projectile:
 	Projectile: Bullet
-		Image: plasdiscsm
 		TrailImage: smokey
 		TrailPalette: scrinplasma
 		TrailDelay: 1
-		Speed: 450
 		LaunchAngle: 50
-		Inaccuracy: 0c256
 		Blockable: false
 		Image: plasdisclg
 		Inaccuracy: 1c768
-		Speed: 180
+		Speed: 200
 	Warhead@1Dam: SpreadDamage
 		Damage: 4250
 		Versus:
@@ -239,7 +236,7 @@ DevastatorDiscs:
 
 InterloperLaser:
 	Inherits: ^ScrinLaser
-	Range: 4c0
+	Range: 5c0
 	ReloadDelay: 40
 	Burst: 2
 	BurstDelays: 5
@@ -263,6 +260,7 @@ CorrupterSpew:
 	ReloadDelay: 100
 	Burst: 30
 	BurstDelays: 3
+	Range: 4c768
 	Projectile: Bullet
 		Speed: 110
 		TrailImage: tibspew1
@@ -274,7 +272,7 @@ CorrupterSpew:
 	Warhead@1Dam: SpreadDamage
 		DamageTypes: Prone50Percent, TriggerProne, PoisonDeath
 		-Falloff:
-		Damage: 950
+		Damage: 1000
 		Versus:
 			Light: 80
 	Warhead@3Eff: CreateEffect
@@ -440,7 +438,7 @@ TripodLaser:
 			Light: 70
 			Wood: 58
 			Heavy: 105
-			Concrete: 30
+			Concrete: 40
 
 ReaperLaser:
 	Inherits: TripodLaser
