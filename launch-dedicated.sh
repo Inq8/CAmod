@@ -44,6 +44,7 @@ LAUNCH_MOD="${Mod:-"${MOD_ID}"}"
 LISTEN_PORT="${ListenPort:-"1234"}"
 ADVERTISE_ONLINE="${AdvertiseOnline:-"True"}"
 PASSWORD="${Password:-""}"
+RECORD_REPLAYS="${RecordReplays:-"False"}"
 
 REQUIRE_AUTHENTICATION="${RequireAuthentication:-"False"}"
 PROFILE_ID_BLACKLIST="${ProfileIDBlacklist:-""}"
@@ -70,6 +71,7 @@ while true; do
      Server.Name="${NAME}" Server.ListenPort="${LISTEN_PORT}" \
      Server.AdvertiseOnline="${ADVERTISE_ONLINE}" \
      Server.Password="${PASSWORD}" \
+     Server.RecordReplays="${RECORD_REPLAYS}" \
      Server.RequireAuthentication="${REQUIRE_AUTHENTICATION}" \
      Server.ProfileIDBlacklist="${PROFILE_ID_BLACKLIST}" \
      Server.ProfileIDWhitelist="${PROFILE_ID_WHITELIST}" \
