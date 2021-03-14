@@ -464,12 +464,9 @@ BIO:
 OILB:
 	Inherits: ^TechBuilding
 	Inherits@shape: ^2x2Shape
-	HitShape:
-		UseTargetableCellsOffsets: false
-		TargetableOffsets: 0,0,0, 630,-300,0, 420,512,0, -420,-512,0, -630,300,0
 	Selectable:
 		Priority: 0
-		Bounds: 48,48,0,-6
+		Bounds: 48,48
 	OwnerLostAction:
 		Action: ChangeOwner
 	Building:
@@ -488,6 +485,7 @@ OILB:
 	CashTrickler:
 		Interval: 375
 		Amount: 100
+		RequiresCondition: enabled
 	Tooltip:
 		Name: Oil Derrick
 	TooltipDescription@ally:
@@ -504,9 +502,18 @@ OILB:
 	-Explodes:
 	UpdatesDerrickCount:
 	AppearsOnMapPreview:
-	WithIdleOverlay@Flare:
-		Sequence: idle-flare
-		Offset: 1638,-530,0
+	GrantConditionOnCombatantOwner:
+		Condition: enabled
+	GrantConditionOnDamageState:
+		Condition: damaged
+	WithIdleOverlay@flare:
+		Sequence: flare
+		Offset: 2078,-480,0
+		RequiresCondition: !damaged
+	WithIdleOverlay@damaged-flare:
+		Sequence: damaged-flare
+		Offset: 2500,250,0
+		RequiresCondition: damaged
 	GrantConditionIfOwnerIsNeutral:
 		Condition: is-neutral
 	GivesCashOnCapture@defloration:
