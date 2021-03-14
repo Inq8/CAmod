@@ -1333,6 +1333,7 @@ TRUK.DROP:
 
 MGG:
 	Inherits: ^Vehicle
+	Inherits@AUTOTARGET: ^AutoTargetGround
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: Vehicle
@@ -1373,9 +1374,12 @@ MGG:
 		RequiresCondition: !being-warped
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	AttackOmni:
 
 MRJ:
 	Inherits: ^Vehicle
+	Inherits@AUTOTARGET: ^AutoTargetGround
+	Inherits@SELECTION: ^SelectableSupportUnit
 	Valued:
 		Cost: 1000
 	Tooltip:
@@ -1415,6 +1419,8 @@ MRJ:
 	RenderJammerCircle:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	AttackOmni:
+
 
 TTNK:
 	Inherits: ^Tank
