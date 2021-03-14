@@ -133,7 +133,7 @@ PlasmaDiscs:
 		Speed: 450
 		Inaccuracy: 0c256
 		Blockable: false
-		Jammable: false
+		Jammable: true
 		HorizontalRateOfTurn: 30
 		RangeLimit: 6c512
 		LockOnProbability: 50
@@ -189,6 +189,7 @@ DevastatorDiscs:
 		TrailDelay: 1
 		LaunchAngle: 50
 		Blockable: false
+		Jammable: false
 		Image: plasdisclg
 		Inaccuracy: 1c768
 		Speed: 200
@@ -546,7 +547,7 @@ EnervatorBolts:
 		ContrailLength: 20
 		ContrailColor: FF00FF77
 		ContrailWidth: 0c48
-		Jammable: false
+		Jammable: true
 		-TrailImage:
 		-PointDefenseType:
 	Warhead@1Dam: SpreadDamage
@@ -781,7 +782,7 @@ ShardLauncher:
 		ContrailWidth: 0c48
 		ContrailLength: 12
 		ContrailColor: 00FF00AA
-		Jammable: false
+		Jammable: true
 		Blockable: false
 		Inaccuracy: 0
 		Image: shard
@@ -819,6 +820,7 @@ RavagerShards:
 		ContrailColor: 00FF0044
 		Inaccuracy: 128
 		RangeLimit: 7c512
+		Jammable: false
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Ground, Water
 		-ValidRelationships:
@@ -842,6 +844,7 @@ LaceratorShards:
 	Projectile: Missile
 		Image: bshard
 		ContrailColor: 4499FFAA
+		Jammable: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
 		Damage: 1900
