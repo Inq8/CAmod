@@ -90,34 +90,47 @@ bio.destroyed:
 
 oilb:
 	Inherits: ^StructureOverlays
-	idle: oilb
-		Length: 10
-		Tick: 150
-	damaged-idle: oilb
-		Start: 10
-		Length: 10
-		Tick: 150
-	idle-flare: burn-s
+	Defaults:
+		Offset: 0,-6
+	idle:
+		Length: 14
+		Tick: 100
+	damaged-idle:
+		Start: 14
+		Length: 14
+		Tick: 100
+	flare: burn-s
 		Start: 12
 		Length: 46
-		ZOffset: 1
+		ZOffset: 511
+	damaged-flare: flmspt
+		Start: 50
+		Length: *
+		ZOffset: 511
+	dead:
+		Start: 28
+		Tick: 800
 	make: oilb
 	bib: bib3
 		Length: *
+		Offset: 0,0
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
 
 oilb.destroyed:
+	Defaults:
+		Offset: 0,-6
 	idle: oilb
-		Start: 20
+		Start: 28
 		Length: 1
 	idle-flare: flmspt
 		Start: 50
 		Length: *
-		ZOffset: 1
+		ZOffset: 511
 	bib: bib3
 		Length: *
+		Offset: 0,0
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
