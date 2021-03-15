@@ -496,8 +496,6 @@ OILB:
 		ValidRelationships: Neutral, Enemy
 	Explodes:
 		Weapon: BarrelExplode
-	GivesCashOnCapture:
-		Amount: 100
 	SpawnActorOnDeath:
 		Actor: OILB.Husk
 		OwnerType: InternalName
@@ -516,6 +514,18 @@ OILB:
 		Sequence: damaged-flare
 		Offset: 2500,250,0
 		RequiresCondition: damaged
+	GrantConditionIfOwnerIsNeutral:
+		Condition: is-neutral
+	GivesCashOnCapture@defloration:
+		Amount: 300
+		RequiresCondition: !has-been-captured
+	GivesCashOnCapture@subsequent:
+		Amount: 100
+		RequiresCondition: has-been-captured
+	GrantDelayedCondition:
+		Delay: 1
+		Condition: has-been-captured
+		RequiresCondition: !is-neutral
 
 V20:
 	Inherits: ^DesertCivBuilding
