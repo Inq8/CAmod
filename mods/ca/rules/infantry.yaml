@@ -1240,6 +1240,21 @@ N6:
 		CaptureTypes: building
 		PlayerExperience: 25
 		CaptureDelay: 150
+	Armament@defuse:
+		Weapon: DefuseKit
+		Cursor: goldwrench
+		OutsideRangeCursor: goldwrench
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+		Name: secondary
+	AutoTarget:
+	AutoTargetPriority@defuse:
+		ValidTargets: C4Attached, TNTAttached
+		InvalidTargets: NoAutoTarget
+		ValidRelationships: Ally
+	AttackFrontal:
+		Armaments: primary, secondary
+		PauseOnCondition: being-warped
 	Voiced:
 		VoiceSet: EngineerVoice
 	WithDeathAnimation:

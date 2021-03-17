@@ -231,6 +231,21 @@ S6:
 		CaptureTypes: building
 		PlayerExperience: 25
 		CaptureDelay: 150
+	Armament@defuse:
+		Weapon: DefuseKit
+		Cursor: goldwrench
+		OutsideRangeCursor: goldwrench
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+		Name: secondary
+	AutoTarget:
+	AutoTargetPriority@defuse:
+		ValidTargets: C4Attached, TNTAttached
+		InvalidTargets: NoAutoTarget
+		ValidRelationships: Ally
+	AttackFrontal:
+		Armaments: primary, secondary
+		PauseOnCondition: being-warped
 	Voiced:
 		VoiceSet: AssimilatorVoice
 	Targetable:
@@ -591,7 +606,7 @@ INTL:
 	Mobile:
 		Speed: 118
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
-		TurnSpeed: 12
+		TurnSpeed: 20
 	Health:
 		HP: 45000
 	Armor:
@@ -1182,10 +1197,10 @@ STMR:
 		ZOffset: -512
 	SpawnActorOnDeath:
 		Actor: STMR.Husk
-		RequiresCondition: !empdisable
+		RequiresCondition: !empdisable && !being-warped
 	SpawnActorOnDeath@EMP:
 		Actor: STMR.Husk.EMP
-		RequiresCondition: empdisable
+		RequiresCondition: empdisable && !being-warped
 	SmokeTrailWhenDamaged:
 		Offset: -427,0,0
 	Selectable:
@@ -1291,10 +1306,10 @@ ENRV:
 		ZOffset: -512
 	SpawnActorOnDeath:
 		Actor: ENRV.Husk
-		RequiresCondition: !empdisable
+		RequiresCondition: !empdisable && !being-warped
 	SpawnActorOnDeath@EMP:
 		Actor: ENRV.Husk.EMP
-		RequiresCondition: empdisable
+		RequiresCondition: empdisable && !being-warped
 	SmokeTrailWhenDamaged:
 		Offset: -427,0,0
 	Selectable:
@@ -1388,13 +1403,13 @@ DEVA:
 		RequiresCondition: !airborne
 	SpawnActorOnDeath:
 		Actor: DEVA.Husk
-		RequiresCondition: !empdisable
+		RequiresCondition: !empdisable && !being-warped
 	SpawnActorOnDeath@EMP:
 		Actor: DEVA.Husk.EMP
-		RequiresCondition: empdisable
+		RequiresCondition: empdisable && !being-warped
 	-Hovers@CRUISING:
 	-EjectOnDeath:
-	ProductionCostMultiplier@VANQBONUS:
+	ProductionCostMultiplier@HARBONUS:
 		Multiplier: 90
 		Prerequisites: vehicles.harbinger
 	GrantConditionOnPrerequisite@SHIELDS:
@@ -1402,11 +1417,11 @@ DEVA:
 		Prerequisites: shields.upgrade
 	DamageMultiplier@SHIELDS:
 		RequiresCondition: shields-upgrade && shields-up
-		Modifier: 80
+		Modifier: 25
 	GrantConditionOnHealth@SHIELDS:
 		Condition: shields-up
 		MaxHP: -1
-		MinHP: 16000
+		MinHP: 30400
 	WithSpriteTurret@SHIELDS:
 		RequiresCondition: shields-upgrade && shields-up
 		Sequence: shield
@@ -1488,10 +1503,10 @@ PAC:
 		RequiresCondition: !airborne
 	SpawnActorOnDeath:
 		Actor: PAC.Husk
-		RequiresCondition: !empdisable
+		RequiresCondition: !empdisable && !being-warped
 	SpawnActorOnDeath@EMP:
 		Actor: PAC.Husk.EMP
-		RequiresCondition: empdisable
+		RequiresCondition: empdisable && !being-warped
 	-Hovers@CRUISING:
 	WithFacingSpriteBody:
 		RequiresCondition: inva-loaded == 6
@@ -1547,11 +1562,11 @@ PAC:
 		Prerequisites: shields.upgrade
 	DamageMultiplier@SHIELDS:
 		RequiresCondition: shields-upgrade && shields-up
-		Modifier: 80
+		Modifier: 25
 	GrantConditionOnHealth@SHIELDS:
 		Condition: shields-up
 		MaxHP: -1
-		MinHP: 26000
+		MinHP: 49400
 	WithSpriteTurret@SHIELDS:
 		RequiresCondition: shields-upgrade && shields-up
 		Sequence: shield
@@ -1633,10 +1648,10 @@ INVA:
 	RejectsOrders:
 	SpawnActorOnDeath:
 		Actor: INVA.Husk
-		RequiresCondition: !empdisable
+		RequiresCondition: !empdisable && !being-warped
 	SpawnActorOnDeath@EMP:
 		Actor: INVA.Husk.EMP
-		RequiresCondition: empdisable
+		RequiresCondition: empdisable && !being-warped
 	-EjectOnDeath:
 	-Selectable:
 	-ActorLostNotification:
