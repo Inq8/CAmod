@@ -18,7 +18,7 @@
 		Type: Rectangle
 			TopLeft: -512, -512
 			BottomRight: 512, 512
-			
+
 ^1x2Shape:
 	HitShape:
 		UseTargetableCellsOffsets: true
@@ -568,7 +568,7 @@
 		BlinkPatterns:
 			seek3 && bino: Off, On
 		RequiresSelection: True
-		
+
 ^GDIUpgradeAircraft:
 	Inherits: ^GDIUpgrade
 	WithDecoration@HOLD:
@@ -1997,7 +1997,7 @@
 		RepairActors: fix, rep, srep, afld, afld.gdi
 	Aircraft:
 		CruisingCondition: cruising
-		PauseOnCondition: empdisable && !airborne
+		PauseOnCondition: (empdisable && !airborne) || being-warped
 	KillsSelf:
 		RequiresCondition: empdisable && cruising
 	Targetable@GROUND:
@@ -2007,8 +2007,6 @@
 		RequiresCondition: airborne && !being-warped
 	Targetable@REPAIR:
 		RequiresCondition: !airborne && damaged && !being-warped
-	Targetable@Temporal:
-		RequiresCondition: !airborne
 	Targetable@c4:
 		RequiresCondition: c4 && !airborne
 	Targetable@tnt:

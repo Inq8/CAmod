@@ -2619,6 +2619,8 @@ HTNK.Hover:
 	Mobile:
 		Speed: 82
 		Locomotor: hover
+	Turreted:
+		TurnSpeed: 16
 	LeavesTrails:
 		Image: twake
 		Palette: effect
@@ -4749,6 +4751,7 @@ CDRN:
 
 CHPR:
 	Inherits: ^Tank
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
@@ -4758,7 +4761,7 @@ CHPR:
 		BuildPaletteOrder: 330
 		IconPalette: chrometd
 		Prerequisites: atek, ~vehicles.germany, ~techlevel.high
-		Description: Advanced heavy tank that can erase targets from existence.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft, Buildings
+		Description: Advanced heavy tank that can erase targets from existence.\n  Strong vs Vehicles, Infantry\n  Weak vs Buildings
 	Valued:
 		Cost: 1700
 	Tooltip:
