@@ -461,7 +461,7 @@ SEEK:
 		BuildPaletteOrder: 31
 		Prerequisites: ~vehicles.seek, ~techlevel.low
 		Queue: Vehicle
-		Description: Light hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles, Buildings\n  Weak vs Aircraft, Infantry
+		Description: Light hover tank.\n  Can detect cloaked units and mines.\n  Strong vs Vehicles, Buildings\n  Weak vs Aircraft, Infantry
 		IconPalette: chrome
 	Mobile:
 		Speed: 118
@@ -506,7 +506,7 @@ SEEK:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 5c0
-		CloakTypes: Cloak, Thief
+		CloakTypes: Cloak, Thief, Mine
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -533,11 +533,11 @@ LACE:
 		BuildPaletteOrder: 32
 		Prerequisites: ~vehicles.traveler, ~techlevel.low
 		Queue: Vehicle
-		Description: Fast hover tank.\n  Can detect cloaked units.\n  Strong vs Vehicles, Buildings\n  Weak vs Aircraft, Infantry
+		Description: Fast hover tank.\n  Can detect cloaked units and mines.\n  Strong vs Vehicles, Buildings\n  Weak vs Aircraft, Infantry
 		IconPalette: chrome
 	Mobile:
 		TurnSpeed: 40
-		Speed: 135
+		Speed: 157
 	LeavesTrails:
 		Image: twake
 		Palette: effect
@@ -546,12 +546,12 @@ LACE:
 		StationaryInterval: 18
 		MovingInterval: 6
 	Health:
-		HP: 16000
+		HP: 15000
 	Armor:
 		Type: Light
 	RevealsShroud:
 		MinRange: 4c0
-		Range: 7c0
+		Range: 6c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
@@ -578,7 +578,7 @@ LACE:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		CloakTypes: Cloak, Thief
+		CloakTypes: Cloak, Thief, Mine
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -601,14 +601,14 @@ INTL:
 		BuildPaletteOrder: 43
 		Prerequisites: ~vehicles.scrin, ~techlevel.low
 		Queue: Vehicle
-		Description: Heavily armoured transport craft.\n  Can detect mines.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
+		Description: Heavily armoured front-line assault troop carrier.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
 		IconPalette: chrome
 	Mobile:
-		Speed: 118
+		Speed: 82
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
-		TurnSpeed: 20
+		TurnSpeed: 512
 	Health:
-		HP: 45000
+		HP: 46000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -645,10 +645,13 @@ INTL:
 		RequiresCondition: driver-dead && !cargo
 	Targetable@DRIVERKILL:
 		RequiresCondition: !driver-dead && !cargo
-	DetectCloaked:
-		Range: 5c0
-		CloakTypes: Mine
-		RequiresCondition: !(empdisable || being-warped)
+	TurretedFloating:
+		TurnSpeed: 16
+		Offset: 0,0,0
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
+		Armaments: primary
+	WithSpriteTurret:
 
 INTL.AI:
 	Inherits: INTL
@@ -1166,7 +1169,7 @@ STMR:
 		Weapon: StormriderZapAA
 		LocalOffset: 350,213,-85, 350,-213,-85
 	AttackAircraft:
-		FacingTolerance: 360
+		FacingTolerance: 320
 		PersistentTargeting: false
 		OpportunityFire: true
 		PauseOnCondition: empdisable || being-warped
