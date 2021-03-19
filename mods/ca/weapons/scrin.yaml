@@ -86,7 +86,7 @@ GunWalkerZap:
 			None: 100
 			Wood: 10
 			Concrete: 10
-			Light: 30
+			Light: 35
 			Heavy: 15
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Eff: CreateEffect
@@ -147,7 +147,7 @@ PlasmaDiscs:
 		Versus:
 			None: 30
 			Wood: 65
-			Light: 80
+			Light: 75
 			Heavy: 100
 			Concrete: 50
 			Brick: 50
@@ -236,31 +236,29 @@ DevastatorDiscs:
 
 InterloperLaser:
 	Inherits: ^ScrinLaser
-	Range: 5c0
+	Range: 4c768
 	ReloadDelay: 40
 	Burst: 2
 	BurstDelays: 5
 	Report: interloper-fire1.aud, interloper-fire2.aud
 	Projectile: LaserZap
-		Width: 35
 		Duration: 3
-		SecondaryBeamWidth: 55
 	Warhead@1Dam: SpreadDamage
-		Damage: 2000
+		Damage: 2100
 		Versus:
-			None: 40
+			None: 35
 			Light: 100
 			Wood: 70
 			Heavy: 80
-			Concrete: 100
+			Concrete: 45
 
 CorrupterSpew:
 	Inherits: BigFlamer
 	StartBurstReport: corrupter-fire1.aud
-	ReloadDelay: 85
+	ReloadDelay: 100
 	Burst: 30
 	BurstDelays: 3
-	Range: 4c768
+	Range: 6c0
 	Projectile: Bullet
 		Speed: 110
 		TrailImage: tibspew1
@@ -477,11 +475,11 @@ ReaperLaserSound:
 	Range: 5c0
 
 StormriderZap:
-	Range: 7c0
+	Range: 6c0
 	Report: stormrider-fire1.aud, stormrider-fire2.aud, stormrider-fire3.aud
 	ReloadDelay: 70
 	Burst: 4
-	BurstDelays: 10
+	BurstDelays: 6
 	ValidTargets: Ground, Water, Underwater
 	Projectile: Bullet
 		Image: scrinzapdown
@@ -836,7 +834,7 @@ RavagerShards:
 
 LaceratorShards:
 	Inherits: RavagerShards
-	Range: 5c0
+	Range: 4c512
 	StartBurstReport: lacerator-fire1.aud, lacerator-fire2.aud
 	ReloadDelay: 35
 	Burst: 3
@@ -846,14 +844,14 @@ LaceratorShards:
 		Jammable: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
-		Damage: 1900
+		Damage: 2100
 		Versus:
-			None: 30
-			Wood: 65
-			Light: 80
+			None: 25
+			Wood: 60
+			Light: 55
 			Heavy: 100
-			Concrete: 50
-			Brick: 50
+			Concrete: 45
+			Brick: 25
 	Warhead@3Eff: CreateEffect
 		Image: bshardhit
 
