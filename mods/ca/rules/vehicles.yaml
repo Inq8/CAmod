@@ -4886,3 +4886,79 @@ CRYO:
 		DecorationBounds: 28,28
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+
+APOC:
+	Inherits: ^Tank
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@SHRAPNEL: ^ThrowsShrapnel
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 300
+		Prerequisites: indp, ~vehicles.soviet, ~techlevel.high
+		Description: Enormous slow tank with uranium shells and anti-air capability.\n  Can crush small vehicles.\n  Strong vs Vehicles, Aircraft\n  Weak vs Nothing
+	Valued:
+		Cost: 2500
+	Tooltip:
+		Name: Apocalypse Tank
+		GenericName: Tank
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 110000
+	Armor:
+		Type: Heavy
+	Mobile:
+		Speed: 50
+		TurnSpeed: 8
+		Locomotor: sheavytracked
+		Voice: Move
+	Passenger:
+		Weight: 2
+		Voice: Move
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Turreted:
+		TurnSpeed: 8
+	Armament@PRIMARY:
+		Weapon: 152mm
+		LocalOffset: 1450,150,240, 1450,-150,240
+		Recoil: 171
+		RecoilRecovery: 30
+		MuzzleSequence: muzzle
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: ApocalypseTusk
+		LocalOffset: -85,384,340, -85,-384,340
+		LocalYaw: -100,100
+		Recoil: 43
+		MuzzleSequence: muzzle
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
+		Voice: Attack
+	WithMuzzleOverlay:
+	WithSpriteTurret:
+	SpawnActorOnDeath:
+		Actor: APOC.Husk
+		RequiresCondition: !being-warped
+	ChangesHealth:
+		PercentageStep: 1
+		Delay: 25
+		StartIfBelow: 50
+		DamageCooldown: 150
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	Selectable:
+		DecorationBounds: 44,38,0,-4
+	Carryable:
+		LocalOffset: 0,0,500
+	-Crushable:
+	Voiced:
+		VoiceSet: ApocalypseVoice
+	AttackMove:
+		Voice: Attack

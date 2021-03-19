@@ -1583,3 +1583,16 @@ VENM.Husk.Empty:
 VENM.Husk.Empty.EMP:
 	Inherits: VENM.Husk.Empty
 	Inherits: ^EmpVisualEffect
+
+APOC.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Apocalypse)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: apoc
+	InfiltrateForTransform:
+		IntoActor: apoc
+	RenderSprites:
+		Image: apoc.destroyed
