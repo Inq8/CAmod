@@ -3225,10 +3225,15 @@ IFV:
 		MuzzleSequence: muzzle2
 		RequiresCondition: chemturr
 	Armament@E7:
-		Weapon: smg
+		Weapon: CommandoIFVGun
 		MuzzleSequence: muzzle
 		LocalOffset: 560,0,200
 		RequiresCondition: commturr
+	Armament@SNIP:
+		Weapon: SniperIFVGun
+		MuzzleSequence: muzzle
+		LocalOffset: 560,0,200
+		RequiresCondition: snipturr
 	Armament@Shok:
 		Weapon: TTankZap
 		LocalOffset: 0,0,213
@@ -3305,7 +3310,7 @@ IFV:
 		RequiresCondition: desoturr
 	WithSpriteTurret@com:
 		Sequence: turret9
-		RequiresCondition: commturr
+		RequiresCondition: commturr || snipturr
 	WithSpriteTurret@rep:
 		Sequence: turret10
 		RequiresCondition: engturr
@@ -3336,7 +3341,7 @@ IFV:
 			bori: commturr
 			e7: commturr
 			sab: commturr
-			snip: commturr
+			snip: snipturr
 			spy: spyturr
 			thf: spyturr
 			medi: medturr
