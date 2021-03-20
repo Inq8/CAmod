@@ -1446,6 +1446,23 @@ Cloud:
 			Brick: 10
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 
+IrradiatedUnit:
+	Inherits: Cloud
+	Warhead@18Radio: CreateTintedCells
+		Level: 50
+		Falloff: 100, 40, 10
+		LayerName: radioactivity.weak
+		MaxLevel: 400
+	Warhead@1Dam: SpreadDamage
+		Damage: 800
+		Spread: 341
+		Falloff: 100, 37, 14, 5, 0
+		Versus:
+			Light: 80
+			Wood: 10
+			Concrete: 10
+			Brick: 0
+
 ChaosDroneTargeting:
 	Range: 2c0
 	Projectile: InstantHit
@@ -1474,6 +1491,11 @@ RadBeamWeapon:
 			Concrete: 12
 			Brick: 0
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+	Warhead@2irrad: GrantExternalCondition
+		Range: 0c256
+		Duration: 250
+		Condition: irradiated
+		ValidTargets: Vehicle, Ship
 
 RadBeamWeaponE:
 	Inherits: RadBeamWeapon

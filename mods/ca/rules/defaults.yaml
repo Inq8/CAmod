@@ -727,6 +727,19 @@
 		DamageTypes: FireDeath
 		RequiresCondition: invulnerability
 
+^Irradiatable:
+	WithColoredOverlay@IRRADIATABLE:
+		Palette: irrad
+		RequiresCondition: irradiated
+	TimedConditionBar@IRRADIATABLE:
+		Condition: irradiated
+		Color: 88DD00
+	ExternalCondition@IRRADIATED:
+		Condition: irradiated
+	PeriodicExplosion@IRRADIATED:
+		Weapon: IrradiatedUnit
+		RequiresCondition: irradiated
+
 ^ForceShieldable:
 	WithColoredOverlay@FS:
 		Palette: forces
@@ -1272,6 +1285,7 @@
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@mind: ^MindControllable
 	Inherits@handicaps: ^PlayerHandicaps
+	Inherits@irrad: ^Irradiatable
 	Huntable:
 	OwnerLostAction:
 		Action: Kill
