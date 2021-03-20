@@ -687,6 +687,21 @@ SNIPER.vehicleElite:
 		Condition: highlight
 		ValidTargets: DriverKillLow
 
+SniperIFVGun:
+	Inherits: SNIPER.vehicle
+	ValidTargets: Ground, Water
+	-InvalidTargets:
+	Warhead@1Dam: SpreadDamage
+		-ValidTargets:
+
+CommandoIFVGun:
+	Inherits: SMG
+	ReloadDelay: 15
+	Burst: 3
+	BurstDelays: 2
+	Warhead@1Dam: SpreadDamage
+		Damage: 5100
+
 HeliGunAG:
 	Inherits: ChainGun
 	Report: mgbtr1.aud, mgbtr2.aud, mgbtr3.aud

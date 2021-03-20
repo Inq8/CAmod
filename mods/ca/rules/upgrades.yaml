@@ -37,7 +37,7 @@ bombard.strat:
 		BuildPaletteOrder: 1
 		Prerequisites: ~radar.gdi, ~!seek.strat, ~!hold.strat, ~techlevel.high
 		IconPalette: chrometd
-		BuildDuration: 3000
+		BuildDuration: 2250
 		Description: Increases unit firepower by 5%.\n\n  Only one Strategy may be chosen.
 	Valued:
 		Cost: 1500
@@ -63,7 +63,7 @@ seek.strat:
 		BuildPaletteOrder: 4
 		Prerequisites: ~radar.gdi, ~!bombard.strat, ~!hold.strat, ~techlevel.high
 		IconPalette: chrometd
-		BuildDuration: 3000
+		BuildDuration: 2250
 		Description: Increases unit speed and weapon range by 5%.\n\n  Only one Strategy may be chosen.
 	Valued:
 		Cost: 1500
@@ -89,7 +89,7 @@ hold.strat:
 		BuildPaletteOrder: 7
 		Prerequisites: ~radar.gdi, ~!bombard.strat, ~!seek.strat, ~techlevel.high
 		IconPalette: chrometd
-		BuildDuration: 3000
+		BuildDuration: 2250
 		Description: Increases unit armor by 5%.\n\n  Only one Strategy may be chosen.
 	Valued:
 		Cost: 1500
@@ -521,7 +521,7 @@ ioncon.upgrade:
 	Buildable:
 		BuildPaletteOrder: 25
 		Prerequisites: ~scrt, ~techlevel.high
-		BuildDuration: 1500
+		BuildDuration: 2250
 		Description: Allows Storm Colums to store ion energy and release it into the atmosphere when required,\ncreating a localised Ion Storm.\n\n  Upgrades: Storm Column\n  + Increases range and damage by 20% while storm active.\n  + Ion storm can damage enemy units and structures.
 		IconPalette: scrin
 	Valued:
@@ -535,12 +535,12 @@ regen.upgrade:
 		Name: Upgrade: Regenerative Hull
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: ~sign, ~techlevel.high
-		BuildDuration: 3000
+		Prerequisites: ~scrt, ~techlevel.high
+		BuildDuration: 2250
 		Description: Scrin aircraft will regenerate health over time when not in combat.\n\n  Upgrades: Stormrider\n  Upgrades: Enervator\n  Upgrades: Devastator\n  Upgrades: Planetary Assault Carrier
 		IconPalette: scrin
 	Valued:
-		Cost: 2000
+		Cost: 1500
 	RenderSprites:
 		Image: regen.upgrade
 
@@ -551,10 +551,10 @@ shields.upgrade:
 	Buildable:
 		BuildPaletteOrder: 40
 		Prerequisites: ~sign, ~techlevel.high
-		BuildDuration: 3000
+		BuildDuration: 2250
 		Description: Larger Scrin vessels take reduced damage and become resistant to EMP.\n\n  Upgrades: Devastator\n  Upgrades: Planetary Assault Carrier
 		IconPalette: scrin
 	Valued:
-		Cost: 2000
+		Cost: 1500
 	RenderSprites:
 		Image: shields.upgrade

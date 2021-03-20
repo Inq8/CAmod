@@ -1535,10 +1535,15 @@ SAB:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: ReturnFire
 	GrantTimedConditionOnDeploy:
 		DeployedCondition: deployed
 		CooldownTicks: 1250
 		DeployedTicks: 375
+		StartsFullyCharged: true
+		PauseOnCondition: !moving && deployed
 	AutoDeployer:
 		DeployChance: 50
 		OrderName: GrantTimedConditionOnDeploy
@@ -1553,6 +1558,9 @@ SAB:
 		UncloakOn: Unload, Infiltrate, Demolish, Dock, Attack, Damage
 		CloakSound: gstealon.aud
 		UncloakSound: gstealof.aud
+	GrantConditionOnMovement:
+		Condition: moving
+		ValidMovementTypes: Horizontal, Vertical, Turn
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden)
 	GrantConditionOnDamageState@UNCLOAK:
