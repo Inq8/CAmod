@@ -3242,6 +3242,11 @@ IFV:
 		Weapon: RadBeamWeapon
 		LocalOffset: 400,0,213
 		RequiresCondition: desoturr
+	Armament@RMBC:
+		Weapon: CyCannon
+		MuzzleSequence: muzzle
+		LocalOffset: 560,0,200
+		RequiresCondition: rmbcturr
 	Armament@Repair:
 		Weapon: RepairIFV
 		LocalOffset: 0,0,213
@@ -3304,7 +3309,7 @@ IFV:
 		RequiresCondition: chemturr
 	WithSpriteTurret@las:
 		Sequence: turret7
-		RequiresCondition: acolturr
+		RequiresCondition: acolturr || rmbcturr
 	WithSpriteTurret@des:
 		Sequence: turret8
 		RequiresCondition: desoturr
@@ -3340,14 +3345,14 @@ IFV:
 			rmbo: commturr
 			bori: commturr
 			e7: commturr
-			sab: commturr
+			sab: spyturr
 			snip: snipturr
 			spy: spyturr
 			thf: spyturr
 			medi: medturr
 			acol: acolturr
 			acol.upg: acolturr
-			rmbc: acolturr
+			rmbc: rmbcturr
 			tecn: tecnturr
 			s1: gunturr
 			s2: chemturr
