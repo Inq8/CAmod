@@ -1592,18 +1592,36 @@
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.strong
 		RequiresCondition: !(hazmatsuits || being-warped)
+	DamagedByTintedCells@RADSTRONGHAZMAT:
+		Damage: 375
+		DamageInterval: 16
+		DamageTypes: RadiationDeath
+		LayerName: radioactivity.strong
+		RequiresCondition: hazmatsuits && !being-warped
 	DamagedByTintedCells@RADMED:
 		Damage: 300
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.medium
 		RequiresCondition: !(hazmatsuits || being-warped)
+	DamagedByTintedCells@RADMEDHAZMAT:
+		Damage: 150
+		DamageInterval: 16
+		DamageTypes: RadiationDeath
+		LayerName: radioactivity.medium
+		RequiresCondition: hazmatsuits && !being-warped
 	DamagedByTintedCells@RADWEAK:
 		Damage: 100
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.weak
 		RequiresCondition: !(hazmatsuits || being-warped)
+	DamagedByTintedCells@RADWEAKHAZMAT:
+		Damage: 50
+		DamageInterval: 16
+		DamageTypes: RadiationDeath
+		LayerName: radioactivity.weak
+		RequiresCondition: hazmatsuits && !being-warped
 	DamagedByTintedCells@FROZEN:
 		Damage: 100
 		DamageInterval: 16
@@ -1663,9 +1681,13 @@
 	-ExternalCondition@HAZMAT:
 	-DamagedByTerrain:
 	DamagedByTintedCells@RADSTRONG:
+		Damage: 375
 		RequiresCondition: !being-warped
+	-DamagedByTintedCells@RADSTRONGHAZMAT:
 	-DamagedByTintedCells@RADMED:
+	-DamagedByTintedCells@RADMEDHAZMAT:
 	-DamagedByTintedCells@RADWEAK:
+	-DamagedByTintedCells@RADWEAKHAZMAT:
 	Crushable:
 		WarnProbability: 85
 	RevealsShroud:
