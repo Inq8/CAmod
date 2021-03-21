@@ -407,7 +407,8 @@ CrateNuke:
 		Falloff: 100, 75, 52, 37, 24, 15, 2
 		MaxLevel: 750
 		LayerName: radioactivity.strong
-	Warhead@Flash: FlashEffect
+	Warhead@FlashEffect: FlashPaletteEffect
+		Duration: 20
 		FlashType: Nuke
 
 UnitExplodeIraqTank:
@@ -431,7 +432,7 @@ UnitExplodeIraqTank:
 		Falloff: 100, 55, 32, 5
 		LayerName: radioactivity.weak
 	-Warhead@Flames:
-	-Warhead@Flash:
+	-Warhead@FlashEffect:
 
 MiniNuke:
 	ValidTargets: Ground, Trees, Water, Underwater, Air
@@ -526,7 +527,8 @@ MiniNuke:
 		Falloff: 100, 75, 52, 37, 24, 15, 2
 		MaxLevel: 750
 		LayerName: radioactivity.strong
-	Warhead@Flash: FlashEffect
+	Warhead@FlashEffect: FlashPaletteEffect
+		Duration: 20
 		FlashType: Nuke
 		
 MicroNuke:
@@ -622,6 +624,7 @@ MicroNuke:
 		Falloff: 100, 70, 37, 15, 2
 		MaxLevel: 750
 		LayerName: radioactivity.strong
+	-Warhead@FlashEffect:
 
 UnitExplodeVice:
 	Warhead@1Dam: SpreadDamage

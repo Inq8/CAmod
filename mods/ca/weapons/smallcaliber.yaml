@@ -19,6 +19,7 @@
 		ValidTargets: Air, Ground, Water, Trees
 		ImpactSounds: flakhit1.aud, flakhit2.aud, flakhit3.aud
 		ImpactSoundChance: 100
+		Inaccuracy: 171
 
 ZSU-23:
 	Inherits: ^AACannon
@@ -190,7 +191,12 @@ MGatt.3:
 			Concrete: 10
 			Brick: 10
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
-
+	Warhead@2Eff: CreateEffect
+		Explosions: piff
+		Inaccuracy: 171
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piff
+		Inaccuracy: 171
 
 Vulcan:
 	Inherits: ^HeavyMG
@@ -388,8 +394,10 @@ Pistol:
 			None: 100
 	Warhead@2Eff: CreateEffect
 		Explosions: piff
+		Inaccuracy: 128
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piff
+		Inaccuracy: 128
 
 PistolTD:
 	Inherits: Pistol
@@ -403,6 +411,28 @@ M1Carbine:
 	Warhead@1Dam: SpreadDamage
 		Versus:
 			Wood: 30
+	Warhead@2Eff2: CreateEffect
+		Delay: 2
+		Explosions: piff
+		ValidTargets: Ground, GroundActor, Air, AirborneActor, WaterActor, Trees
+		Inaccuracy: 171
+	Warhead@3EffWater2: CreateEffect
+		Delay: 2
+		ValidTargets: Water, Underwater
+		InvalidTargets: Bridge
+		Explosions: water_piff
+		Inaccuracy: 171
+	Warhead@2Eff3: CreateEffect
+		Delay: 4
+		Explosions: piff
+		ValidTargets: Ground, GroundActor, Air, AirborneActor, WaterActor, Trees
+		Inaccuracy: 171
+	Warhead@3EffWater3: CreateEffect
+		Delay: 4
+		ValidTargets: Water, Underwater
+		InvalidTargets: Bridge
+		Explosions: water_piff
+		Inaccuracy: 171
 
 M16Carbine:
 	Inherits: M1Carbine
@@ -512,6 +542,10 @@ MGatt.2G:
 		Damage: 15000
 		ValidTargets: Barrel, Infantry
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: piff
+		ImpactActors: false
+		ValidTargets: Ground, Water, Air
 
 SilencedPPK:
 	Inherits: ^SnipeWeapon
@@ -520,10 +554,10 @@ SilencedPPK:
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
 	Warhead@2Eff: CreateEffect
-		Explosions: piffs
+		Explosions: piff
 		ValidTargets: Ground, Ship, Air, Trees
 	Warhead@3EffWater: CreateEffect
-		Explosions: water_piffs
+		Explosions: water_piff
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
 
@@ -594,9 +628,11 @@ AKM:
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piff
+		Inaccuracy: 171
 		ValidTargets: Ground, Ship, Air, Trees
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piff
+		Inaccuracy: 171
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
 
