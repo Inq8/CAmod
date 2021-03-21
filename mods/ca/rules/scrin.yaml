@@ -3262,9 +3262,6 @@ SCOL:
 	Armament:
 		Weapon: StormColumnZap
 		LocalOffset: 0,0,900, 0,0,1100, 0,0,700, 0,0,1300, 0,0,500
-	Targetable@StormBoost:
-		TargetTypes: StormBoost
-		RequiresCondition: !(powerdown || charged)
 	ExternalCondition@CHARGED:
 		Condition: charged
 	AttackOmni:
@@ -3278,38 +3275,67 @@ SCOL:
 	SpawnActorOnDeath:
 		Actor: s1
 	-SpawnRandomActorOnDeath:
-	LaysMinefield@ACTIVE:
-		Mines: strm
-		Locations: 0,1, 1,0, -1,0
-		RecreationInterval: 150
-		KillOnRemove: False
-		RequiresCondition: storm-active
-	GrantTimedConditionOnDeploy@ACTIVE:
-		DeployedCondition: storm-active
-		DeployedTicks: 1700
-		CooldownTicks: 850
-		RequiresCondition: ioncon-upgrade
-	TimedConditionBar@ACTIVE:
-		Condition: storm-active
-		Color: E400FF
-	RangeMultiplier@ACTIVE:
-		Modifier: 120
-		RequiresCondition: storm-active
-	FirepowerMultiplier@ACTIVE:
-		Modifier: 120
-		RequiresCondition: storm-active
-	AmbientSoundCA@ACTIVE:
+	GrantConditionOnPrerequisite@IONCON:
+		Condition: ioncon-upgrade
+		Prerequisites: ioncon.upgrade
+	Targetable@StormBoost:
+		TargetTypes: StormBoost
+		RequiresCondition: !(powerdown || charged)
+	AmbientSoundCA@IONSTORM:
 		SoundFiles: ionstorm.aud
 		Delay: 0
 		Interval: 850
 		VolumeMultiplier: 0.4
 		RequiresCondition: storm-active
-	AutoDeployer@AI:
-		DeployChance: 100
-		OrderName: GrantTimedConditionOnDeploy
-	GrantConditionOnPrerequisite@IONCON:
-		Condition: ioncon-upgrade
-		Prerequisites: ioncon.upgrade
+	LaysMinefield@IONSTORM:
+		Mines: strm
+		Locations: 0,1, 1,0, -1,0
+		RecreationInterval: 150
+		KillOnRemove: true
+		RequiresCondition: storm-active
+	GrantConditionOnAttackCA@IONSTORM:
+		RequiresActorTarget: true
+		Condition: storm-active
+		RevokeDelay: 75
+		RevokeAll: true
+		MaximumInstances: 70
+		RequiresCondition: ioncon-upgrade
+	RangeMultiplier@IONSTORM1:
+		Modifier: 105
+		RequiresCondition: storm-active >= 14
+	FirepowerMultiplier@IONSTORM1:
+		Modifier: 105
+		RequiresCondition: storm-active >= 14
+	DamageMultiplier@IONSTORM1:
+		Modifier: 95
+		RequiresCondition: storm-active >= 14
+	RangeMultiplier@IONSTORM2:
+		Modifier: 105
+		RequiresCondition: storm-active >= 28
+	FirepowerMultiplier@IONSTORM2:
+		Modifier: 105
+		RequiresCondition: storm-active >= 28
+	DamageMultiplier@IONSTORM2:
+		Modifier: 95
+		RequiresCondition: storm-active >= 28
+	RangeMultiplier@IONSTORM3:
+		Modifier: 105
+		RequiresCondition: storm-active >= 42
+	FirepowerMultiplier@IONSTORM3:
+		Modifier: 105
+		RequiresCondition: storm-active >= 42
+	DamageMultiplier@IONSTORM3:
+		Modifier: 95
+		RequiresCondition: storm-active >= 42
+	RangeMultiplier@IONSTORM4:
+		Modifier: 105
+		RequiresCondition: storm-active >= 56
+	FirepowerMultiplier@IONSTORM4:
+		Modifier: 105
+		RequiresCondition: storm-active >= 56
+	DamageMultiplier@IONSTORM4:
+		Modifier: 95
+		RequiresCondition: storm-active >= 56
 
 STRM:
 	Inherits@1: ^ExistsInWorld
@@ -3465,15 +3491,8 @@ SCOL.Temp:
 		PauseOnCondition: empdisable || being-warped
 	DetectCloaked:
 		RequiresCondition: !(empdisable || being-warped)
-	-GrantTimedConditionOnDeploy@ACTIVE:
-	-TimedConditionBar@ACTIVE:
-	-AutoDeployer@AI:
 	Targetable@StormBoost:
-		TargetTypes: StormBoost
 		RequiresCondition: !charged
-	GrantCondition@ACTIVE:
-		Condition: storm-active
-		RequiresCondition: ioncon-upgrade
 
 #
 # ---- misc
