@@ -227,7 +227,7 @@ DevastatorDiscs:
 			Light: 65
 			Wood: 30
 			Heavy: 100
-			Concrete: 80
+			Concrete: 85
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
@@ -323,10 +323,23 @@ RiftCannon:
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
 		Falloff: 100, 37, 23, 10, 0
-		Damage: 7000
+		Damage: 2500
 		Versus:
-			None: 10
+			None: 15
 			Light: 75
+		DamageTypes: BulletDeath
+	Warhead@2Dam: HealthPercentageDamage
+		Spread: 512
+		Damage: 10
+		Falloff: 100, 37, 23, 10, 0
+		InvalidTargets: Air
+		Versus:
+			Wood: 10
+			None: 60
+			Concrete: 60
+			Brick: 60
+			Light: 120
+			Heavy: 110
 		DamageTypes: BulletDeath
 	Warhead@prone: SpreadDamage
 		Spread: 512
