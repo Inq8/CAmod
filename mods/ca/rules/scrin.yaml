@@ -1067,6 +1067,7 @@ RPTP:
 	Buildable:
 		BuildPaletteOrder: 311
 		Prerequisites: scrt, ~vehicles.reaper, ~techlevel.high
+		Description: Heavy assault walker with beam weapons.\nGains range and firepower on Tiberium.\n  Strong vs Vehicles.\n  Weak vs Aircraft
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
@@ -1088,6 +1089,21 @@ RPTP:
 		FireDelay: 15
 	SpawnActorOnDeath:
 		Actor: RPTP.Husk
+	GrantConditionOnTerrain@REAPERTIB:
+		Condition: conversion-reserves
+		TerrainTypes: Tiberium, BlueTiberium
+	FirepowerMultiplier@REAPERTIB:
+		Modifier: 120
+		RequiresCondition: conversion-reserves
+	RangeMultiplier@REAPERTIB:
+		Modifier: 130
+		RequiresCondition: conversion-reserves
+	WithDecoration@REAPERTIB:
+		Image: pips
+		Sequence: pip-rptp
+		Palette: scrin
+		Position: BottomLeft
+		RequiresCondition: conversion-reserves
 
 SMCV:
 	Inherits: ^Vehicle-NOUPG
