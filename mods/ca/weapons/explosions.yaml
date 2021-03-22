@@ -22,7 +22,7 @@
 		Explosions: large_splash
 		ImpactSounds: splash9.aud
 		ValidTargets: Water, Underwater
-		InvalidTargets: Ship, Structure, Bridge
+		InvalidTargets: Ground, Ship, Structure, Bridge
 
 CrateNapalm:
 	Inherits: ^Explosion
@@ -111,6 +111,8 @@ UnitExplodeFlameSmall:
 	Warhead@2Eff: CreateEffect
 		Explosions: offseted_napalm
 		ImpactSounds: firebl3.aud
+	Warhead@Smu: LeaveSmudge
+		SmudgeType: Scorch
 
 UnitExplodeChemSmall:
 	Inherits: ^Explosion
@@ -121,6 +123,8 @@ UnitExplodeChemSmall:
 		Explosions: small_chem
 		ExplosionPalette: temptd
 		ImpactSounds: firebl3.aud
+	Warhead@Smu: LeaveSmudge
+		SmudgeType: Scorch-NoFlame
 
 UnitExplodeWarpOut:
 	Inherits: ^Explosion
@@ -204,6 +208,7 @@ V3ExplodeAirborne:
 BuildingExplode:
 	Warhead@2Eff: CreateEffect
 		Explosions: building, building_napalm, large_explosion, self_destruct, large_napalm
+		Inaccuracy: 171
 	Warhead@Smu: LeaveSmudge
 		SmudgeType: Crater
 		InvalidTargets: Wall, Trees
@@ -372,8 +377,9 @@ CrateNuke:
 		Damage: 3000
 		Falloff: 1000, 600, 400, 250, 150, 100, 0
 		Delay: 5
-		ValidTargets: Ground, Water, Air
+		ValidTargets: Ground, Trees, Water, Air
 		Versus:
+			Tree: 200
 			Brick: 25
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
@@ -389,13 +395,6 @@ CrateNuke:
 		InvalidTargets: Vehicle, Structure, Wall, Trees
 		Size: 4
 		Delay: 5
-	Warhead@TREEKILL: SpreadDamage
-		Spread: 1c0
-		Damage: 6000
-		Falloff: 1000, 600, 400, 250, 150, 100, 0
-		Delay: 5
-		ValidTargets: Trees
-		DamageTypes: Incendiary
 	Warhead@Flames: FireCluster
 		Weapon: BurnFx
 		RandomClusterCount: 5
@@ -425,8 +424,6 @@ UnitExplodeIraqTank:
 	-Warhead@5Res_areanuke1:
 	Warhead@6Smu_areanuke1: LeaveSmudge
 		Size: 2
-	Warhead@TREEKILL: SpreadDamage
-		Falloff: 600, 400, 250, 150, 0
 	Warhead@18Radio: CreateTintedCells
 		Level: 300
 		Falloff: 100, 55, 32, 5
@@ -442,6 +439,7 @@ MiniNuke:
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Trees, Water, Air
 		Versus:
+			Tree: 200
 			Wood: 35
 			Concrete: 35
 		AffectsParent: true
@@ -459,6 +457,7 @@ MiniNuke:
 		Delay: 5
 		ValidTargets: Ground, Trees, Water, Underwater, Air
 		Versus:
+			Tree: 200
 			Wood: 75
 			Brick: 25
 		AffectsParent: true
@@ -501,13 +500,6 @@ MiniNuke:
 			Brick: 25
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
-	Warhead@11Dam_areanuke3: SpreadDamage
-		Spread: 4c0
-		Damage: 9000
-		Falloff: 1000, 368, 135, 50, 18, 7, 0
-		Delay: 15
-		ValidTargets: Trees
-		DamageTypes: Incendiary
 	Warhead@12Res_areanuke3: DestroyResource
 		Size: 4
 		Delay: 15
@@ -539,6 +531,7 @@ MicroNuke:
 		Falloff: 1000, 368, 50, 7, 0
 		ValidTargets: Ground, Trees, Water, Air
 		Versus:
+			Tree: 200
 			Wood: 35
 			Concrete: 35
 		AffectsParent: true
@@ -578,13 +571,6 @@ MicroNuke:
 			Brick: 25
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
-	Warhead@8Dam_areanuke2: SpreadDamage
-		Spread: 3c0
-		Damage: 3000
-		Falloff: 1000, 368, 50, 7, 0
-		Delay: 10
-		ValidTargets: Trees
-		DamageTypes: Incendiary
 	Warhead@9Res_areanuke2: DestroyResource
 		Size: 3
 		Delay: 10
@@ -643,7 +629,7 @@ UnitExplodeVice:
 			Brick: 10
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@2Smu: LeaveSmudge
-		SmudgeType: Scorch
+		SmudgeType: Scorch-NoFlame
 		Size: 2
 		Delay: 5
 	Warhead@3Eff: CreateEffect
@@ -697,7 +683,7 @@ UnitExplodeToxinTruck:
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, ToxinDeath
 	Warhead@11Smu_areanuke3: LeaveSmudge
-		SmudgeType: Scorch
+		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Structure, Wall, Trees
 		Size: 3
 		Delay: 5
@@ -844,7 +830,6 @@ TPWRZap:
 		AimChance: 90
 		ValidTargets: Ground, Water, Infantry, Vehicle
 		ThrowWithoutTarget: true
-	-Warhead@3Eff:
 
 TPWRArc1:
 	Inherits: TTankZap

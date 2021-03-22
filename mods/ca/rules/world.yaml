@@ -434,10 +434,24 @@ World:
 	SmudgeLayer@SCORCH:
 		Type: Scorch
 		Sequence: scorches
-		SmokeChance: 50
+		SmokeChance: 35
+		SmokeImage: scorch_flames
+		SmokeSequences: medium_flame, small_flame, smoke
+		MaxSmokeOffsetDistance: 213
+	SmudgeLayer@SCORCHNF:
+		Type: Scorch-NoFlame
+		Sequence: scorches
+		SmokeChance: 35
+		SmokeImage: scorch_flames
+		SmokeSequences: smoke
+		MaxSmokeOffsetDistance: 213
 	SmudgeLayer@CRATER:
 		Type: Crater
 		Sequence: craters
+		SmokeChance: 25
+		SmokeImage: smoke_m
+		SmokeSequences: idle
+		MaxSmokeOffsetDistance: 213
 	ResourceLayer:
 	ResourceClaimLayer:
 	TintedCellsLayer@RADSTRONG:

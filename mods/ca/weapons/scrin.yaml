@@ -229,7 +229,7 @@ DevastatorDiscs:
 			Heavy: 100
 			Concrete: 85
 	Warhead@2Smu: LeaveSmudge
-		SmudgeType: Scorch
+		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
 	Warhead@3Eff: CreateEffect
 		Explosions: small_explosion_alt1, small_explosion_alt2, small_explosion_alt3
@@ -514,6 +514,9 @@ StormriderZap:
 		Spread: 341
 		Damage: 1000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch
+		InvalidTargets: Structure, Wall
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
@@ -543,6 +546,7 @@ StormRiderZapAA:
 			Concrete: 100
 			Light: 100
 			Heavy: 100
+	-Warhead@2Smu:
 
 EnervatorBolts:
 	Inherits: ^AntiGroundMissile
@@ -690,6 +694,9 @@ StormColumnZap:
 			Light: 85
 			Heavy: 95
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch
+		InvalidTargets: Structure, Wall
 	Warhead@3Eff: CreateEffect
 		Explosions: 1, 3
 		Image: fire

@@ -69,8 +69,9 @@ AtomBomb:
 		Spread: 1c0
 		Damage: 22000
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
-		ValidTargets: Ground, Water, Air
+		ValidTargets: Ground, Trees, Water, Air
 		Versus:
+			Tree: 200
 			None: 10
 			Light: 55
 			Heavy: 85
@@ -103,13 +104,6 @@ AtomBomb:
 		InvalidTargets: Vehicle, Structure, Wall, Trees
 		Size: 4
 		Delay: 5
-	Warhead@TREEKILL: SpreadDamage
-		Spread: 1c0
-		Damage: 6000
-		Falloff: 1000, 600, 400, 250, 150, 100, 0
-		Delay: 5
-		ValidTargets: Trees
-		DamageTypes: Incendiary
 	Warhead@Flames: FireCluster
 		Weapon: BurnFx
 		RandomClusterCount: 5
@@ -235,13 +229,6 @@ Atomic:
 			Brick: 25
 			Heavy: 80
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
-	Warhead@10Dam_areanuke2: SpreadDamage
-		Spread: 3c0
-		Damage: 10200
-		Falloff: 1000, 368, 135, 50, 18, 7, 0
-		Delay: 15
-		ValidTargets: Trees
-		DamageTypes: Incendiary
 	Warhead@11Res_areanuke2: DestroyResource
 		Size: 3
 		Delay: 10
@@ -255,17 +242,11 @@ Atomic:
 		Damage: 4200
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 15
-		ValidTargets: Ground, Water, Underwater, Air
+		ValidTargets: Ground, Trees, Water, Underwater, Air
 		Versus:
+			Tree: 200
 			Brick: 25
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
-	Warhead@14Dam_areanuke3: SpreadDamage
-		Spread: 4c0
-		Damage: 10200
-		Falloff: 1000, 368, 135, 50, 18, 7, 0
-		Delay: 15
-		ValidTargets: Trees
-		DamageTypes: Incendiary
 	Warhead@15Res_areanuke3: DestroyResource
 		Size: 4
 		Delay: 15
@@ -279,17 +260,11 @@ Atomic:
 		Damage: 4200
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 20
-		ValidTargets: Ground, Water, Underwater, Air
+		ValidTargets: Ground, Trees, Water, Underwater, Air
 		Versus:
+			Tree: 200
 			Brick: 25
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
-	Warhead@18Dam_areanuke4: SpreadDamage
-		Spread: 5c0
-		Damage: 10200
-		Falloff: 1000, 368, 135, 50, 18, 7, 0
-		Delay: 20
-		ValidTargets: Trees
-		DamageTypes: Incendiary
 	Warhead@19Res_areanuke4: DestroyResource
 		Size: 5
 		Delay: 20
@@ -385,14 +360,14 @@ Empicbm:
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle, Air
 	Warhead@2Smu_impact: LeaveSmudge
-		SmudgeType: Scorch
+		SmudgeType: Scorch-NoFlame
 	Warhead@3Smu_area: LeaveSmudge
-		SmudgeType: Scorch
+		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
 		Size: 1
 		Delay: 3
 	Warhead@4Smu_area2: LeaveSmudge
-		SmudgeType: Scorch
+		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
 		Size: 2,1
 		Delay: 6
@@ -458,12 +433,12 @@ EMPMissileLauncher:
 	Warhead@2Smu_impact: LeaveSmudge
 		SmudgeType: Crater
 	Warhead@3Smu_area: LeaveSmudge
-		SmudgeType: Scorch
+		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
 		Size: 1
 		Delay: 3
 	Warhead@4Smu_area2: LeaveSmudge
-		SmudgeType: Scorch
+		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
 		Size: 2,1
 		Delay: 6
