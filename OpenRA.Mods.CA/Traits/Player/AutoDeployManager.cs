@@ -50,7 +50,7 @@ namespace OpenRA.Mods.CA.Traits
 				if (entry.Actor.IsDead || !entry.Actor.IsInWorld)
 					continue;
 
-				if (world.SharedRandom.Next(100) > entry.Trait.Info.DeployChance)
+				if (world.LocalRandom.Next(100) > entry.Trait.Info.DeployChance)
 					continue;
 
 				var orders = entry.Trait.DeployTraits.Where(d => d.CanIssueDeployOrder(entry.Actor, false)).Select(d => d.IssueDeployOrder(entry.Actor, false));
