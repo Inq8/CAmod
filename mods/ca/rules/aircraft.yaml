@@ -895,6 +895,12 @@ A10:
 	-RangeMultiplier@SEEK:
 	-RangeMultiplier@SEEK2:
 	-RangeMultiplier@SEEK3:
+	RangeMultiplier@BOMBING:
+		Modifier: 600
+		RequiresCondition: bombing-run
+	GrantConditionOnAttack@BOMBING:
+		Condition: bombing-run
+		RevokeDelay: 7
 
 A10.bomber:
 	Inherits: ^NeutralPlane
