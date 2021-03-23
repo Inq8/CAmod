@@ -1465,7 +1465,7 @@
 		Damage: 100
 		DamageInterval: 16
 		DamageTypes: ToxinDeath
-		RequiresCondition: !(hazmatsuits || being-warped)
+		RequiresCondition: !(hazmatsuits || being-warped || parachute)
 	GrantConditionOnPrerequisite@BIO:
 		Condition: hazmatsuits
 		Prerequisites: bio
@@ -1605,43 +1605,43 @@
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.strong
-		RequiresCondition: !(hazmatsuits || being-warped)
+		RequiresCondition: !(hazmatsuits || being-warped || parachute)
 	DamagedByTintedCells@RADSTRONGHAZMAT:
 		Damage: 375
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.strong
-		RequiresCondition: hazmatsuits && !being-warped
+		RequiresCondition: hazmatsuits && !(being-warped || parachute)
 	DamagedByTintedCells@RADMED:
 		Damage: 300
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.medium
-		RequiresCondition: !(hazmatsuits || being-warped)
+		RequiresCondition: !(hazmatsuits || being-warped || parachute)
 	DamagedByTintedCells@RADMEDHAZMAT:
 		Damage: 150
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.medium
-		RequiresCondition: hazmatsuits && !being-warped
+		RequiresCondition: hazmatsuits && !(being-warped || parachute)
 	DamagedByTintedCells@RADWEAK:
 		Damage: 100
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.weak
-		RequiresCondition: !(hazmatsuits || being-warped)
+		RequiresCondition: !(hazmatsuits || being-warped || parachute)
 	DamagedByTintedCells@RADWEAKHAZMAT:
 		Damage: 50
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.weak
-		RequiresCondition: hazmatsuits && !being-warped
+		RequiresCondition: hazmatsuits && !(being-warped || parachute)
 	DamagedByTintedCells@FROZEN:
 		Damage: 100
 		DamageInterval: 16
 		DamageTypes: FrozenDeath
 		LayerName: cryoresidue
-		RequiresCondition: !being-warped
+		RequiresCondition: !(being-warped || parachute)
 	Cloak@CRATE-CLOAK:
 		Palette: cloak
 	ExternalCondition@CLOAKGENERATOR:
