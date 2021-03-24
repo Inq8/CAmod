@@ -4975,3 +4975,15 @@ APOC:
 		VoiceSet: ApocalypseVoice
 	AttackMove:
 		Voice: Attack
+	GrantConditionOnPrerequisite@IRAQ:
+		Condition: iraqtank-upgrade
+		Prerequisites: iraqtank.upgrade
+	SpeedMultiplier@IRAQTANK:
+		Modifier: 125
+		RequiresCondition: iraqtank-upgrade
+	Explodes@IRAQTANK:
+		Weapon: UnitExplodeIraqTank
+		EmptyWeapon: UnitExplodeIraqTank
+		RequiresCondition: !being-warped && iraqtank-upgrade
+	-ProductionTimeMultiplier@IndustrialPlant:
+	-ProductionCostMultiplier@IndustrialPlantLevel1:
