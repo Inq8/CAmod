@@ -416,6 +416,7 @@ KATY:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@SHRAPNEL: ^ThrowsShrapnel
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 90
@@ -472,6 +473,8 @@ KATY:
 		Weapon: UnitExplodeIraqTank
 		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: !being-warped && iraqtank-upgrade
+	ThrowsShrapnel@small:
+		RequiresCondition: iraqtank-upgrade
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -485,6 +488,7 @@ KATY:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@SHRAPNEL: ^ThrowsShrapnel
 	RenderSprites:
 		Image: 3tnki
 	Buildable:
@@ -540,6 +544,7 @@ KATY:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@SHRAPNEL: ^ThrowsShrapnel
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 290
@@ -605,6 +610,8 @@ KATY:
 		Weapon: UnitExplodeIraqTank
 		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: !being-warped && iraqtank-upgrade
+	ThrowsShrapnel@small:
+		RequiresCondition: iraqtank-upgrade
 	ChangesHealth:
 		PercentageStep: 1
 		Delay: 25
@@ -626,6 +633,7 @@ KATY:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@SHRAPNEL: ^ThrowsShrapnel
 	RenderSprites:
 		Image: 4tnki
 	Buildable:
@@ -4909,7 +4917,7 @@ APOC:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 300
-		Prerequisites: indp, ~vehicles.soviet, ~techlevel.high
+		Prerequisites: indp, ~vehicles.soviet, ~!iraqtank.upgrade, ~techlevel.high
 		Description: Enormous slow tank with uranium shells and anti-air capability.\n  Can crush small vehicles.\n  Strong vs Vehicles, Aircraft\n  Weak vs Nothing
 	Valued:
 		Cost: 2600
@@ -4954,11 +4962,16 @@ APOC:
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
+	WithFacingSpriteBody:
+		RequiresCondition: !iraqtank-upgrade
+	WithFacingSpriteBody@IRAQ:
+		Sequence: idle2
+		RequiresCondition: iraqtank-upgrade
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	SpawnActorOnDeath:
 		Actor: APOC.Husk
-		RequiresCondition: !being-warped
+		RequiresCondition: !being-warped && iraqtank-upgrade
 	ChangesHealth:
 		PercentageStep: 1
 		Delay: 25
@@ -4985,5 +4998,21 @@ APOC:
 		Weapon: UnitExplodeIraqTank
 		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: !being-warped && iraqtank-upgrade
-	-ProductionTimeMultiplier@IndustrialPlant:
 	-ProductionCostMultiplier@IndustrialPlantLevel1:
+
+APOC.IRAQ:
+	Inherits: APOC
+	RenderSprites:
+		Image: apoci
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 301
+		Prerequisites: indp, ~vehicles.soviet, ~iraqtank.upgrade, ~techlevel.high
+	WithFacingSpriteBody:
+		-RequiresCondition:
+	-WithFacingSpriteBody@IRAQ:
+	-SpawnActorOnDeath:
+	SpeedMultiplier@IRAQTANK:
+		-RequiresCondition:
+	Explodes@IRAQTANK:
+		RequiresCondition: !being-warped
