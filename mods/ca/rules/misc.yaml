@@ -857,3 +857,37 @@ gps.scrambler:
 		Range: 9c512
 		Condition: gpsscramble
 		ValidRelationships: Enemy, Neutral
+
+PORTAL:
+	Inherits: ^ScrinBuilding
+	Inherits@SHAPE: ^2x2Shape
+	HitShape:
+		UseTargetableCellsOffsets: false
+		TargetableOffsets: 0,0,0, 840,-256,0, 840,512,0, 210,-512,0, -71,512,0
+		Type: Rectangle
+			TopLeft: -1024, -1024
+			BottomRight: 1024, 640
+	Building:
+		Footprint: ++ ++
+		Dimensions: 2,2
+	RenderSprites:
+		Image: port
+		PlayerPalette: overlayplayerscrin
+	Selectable:
+		Bounds: 48,48
+	SelectionDecorations:
+	Health:
+		HP: 10000
+		NotifyAppliedDamage: false
+	Armor:
+		Type: Light
+	Tooltip:
+		Name: Portal
+	Targetable:
+		TargetTypes: Ground, Water
+	TeleportNetwork:
+		Type: Portal
+	TeleportNetworkPrimaryExit:
+	RallyPoint:
+	Sellable:
+	Exit:
