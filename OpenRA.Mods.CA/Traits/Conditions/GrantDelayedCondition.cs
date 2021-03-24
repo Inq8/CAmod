@@ -25,6 +25,12 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Number of ticks to wait before granting the condition.")]
 		public readonly int Delay = 50;
 
+		[Desc("If the trait is disabled, revoke the condition and reset the delay.")]
+		public readonly bool RevokeOnDisabled = false;
+
+		[Desc("If the trait is paused, revoke the condition and reset the delay.")]
+		public readonly bool RevokeOnPaused = false;
+
 		public override object Create(ActorInitializer init) { return new GrantDelayedCondition(this); }
 	}
 
@@ -46,8 +52,30 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitPaused || IsTraitDisabled)
 				return;
 
-			if (--DelayRemaining < 1)
-				self.GrantCondition(info.Condition);
+			if (--DelayRemaining < 1 && token == Actor.InvalidConditionToken)
+				token = self.GrantCondition(info.Condition);
+		}
+
+		protected override void TraitDisabled(Actor self)
+		{
+			if (!info.RevokeOnDisabled)
+				return;
+
+			DelayRemaining = info.Delay;
+
+			if (token != Actor.InvalidConditionToken)
+				token = self.RevokeCondition(token);
+		}
+
+		protected override void TraitPaused(Actor self)
+		{
+			if (!info.RevokeOnPaused)
+				return;
+
+			DelayRemaining = info.Delay;
+
+			if (token != Actor.InvalidConditionToken)
+				token = self.RevokeCondition(token);
 		}
 	}
 }

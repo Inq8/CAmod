@@ -368,6 +368,11 @@
 		DeathTypes: ChronoDeath
 	ExternalCondition@temporal:
 		Condition: being-warped
+	SpeedMultiplier@temporal:
+		Modifier: 0
+		RequiresCondition: being-warped
+	RejectsOrders@temporal:
+		RequiresCondition: being-warped
 
 ^Suppressable:
 	SpeedMultiplier@SUPPRESSION:
@@ -2035,7 +2040,7 @@
 		RepairActors: fix, rep, srep, afld, afld.gdi
 	Aircraft:
 		CruisingCondition: cruising
-		PauseOnCondition: (empdisable && !airborne) || being-warped
+		PauseOnCondition: empdisable && !airborne
 	KillsSelf:
 		RequiresCondition: empdisable && cruising
 	Targetable@GROUND:
@@ -2054,6 +2059,8 @@
 		Prerequisites: structures.eagle
 	Explodes:
 		RequiresCondition: !airborne && !being-warped
+	Targetable@Temporal:
+		TargetTypes: TemporalAir
 	-SpeedMultiplier@chilled2:
 	-SpeedMultiplier@chilled3:
 	-SpeedMultiplier@chilled4:

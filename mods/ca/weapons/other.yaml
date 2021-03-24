@@ -1458,7 +1458,7 @@ IrradiatedUnit:
 		LayerName: radioactivity.weak
 		MaxLevel: 400
 	Warhead@1Dam: SpreadDamage
-		Damage: 800
+		Damage: 2200
 		Spread: 341
 		Falloff: 100, 37, 14, 5, 0
 		Versus:
@@ -1490,11 +1490,16 @@ RadBeamWeapon:
 		Versus:
 			None: 175
 			Light: 50
-			Heavy: 30
+			Heavy: 20
 			Wood: 12
 			Concrete: 12
 			Brick: 0
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+	Warhead@2Dam: SpreadDamage
+		Spread: 128
+		Damage: 4000
+		ValidTargets: Infantry
+		DamageTypes: RadiationDeath
 	Warhead@2irrad: GrantExternalCondition
 		Range: 0c256
 		Duration: 250
@@ -1510,7 +1515,7 @@ RadEruptionWeapon:
 	Report: idesat2a.aud
 	Warhead@1Radiation: CreateTintedCells
 		Spread: 1c0
-		Falloff: 100, 75, 50, 25, 0
+		Falloff: 100, 75, 55, 30, 0
 		Level: 250
 		MaxLevel: 750
 		LayerName: radioactivity.strong
@@ -1719,8 +1724,14 @@ NeutronCannon:
 		ValidTargets: Temporal
 		DamageTypes: ChronoDeath
 
+NeutronCannonAA:
+	Inherits: NeutronCannon
+	ValidTargets: TemporalAir
+	Warhead@Damage: WarpDamage
+		ValidTargets: TemporalAir
+
 NeutronCannonBeam:
-	ValidTargets: Temporal
+	ValidTargets: Temporal, TemporalAir
 	ReloadDelay: 5
 	Range: 5c0
 	TargetActorCenter: true
@@ -1743,7 +1754,7 @@ NeutronCannonBeam:
 			Heavy: 0
 			Concrete: 0
 			Brick: 0
-		ValidTargets: Temporal
+		ValidTargets: Temporal, TemporalAir
 		DamageTypes: ChronoDeath
 
 NeutronCannonPulse:
