@@ -461,7 +461,7 @@ KATY:
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
-	WithSpriteTurret:
+	WithFacingSpriteBody:
 		RequiresCondition: !iraqtank-upgrade
 	WithFacingSpriteBody@IRAQ:
 		Name: iraqbody
@@ -599,6 +599,12 @@ KATY:
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
+	WithFacingSpriteBody:
+		RequiresCondition: !iraqtank-upgrade
+	WithFacingSpriteBody@IRAQ:
+		Name: iraqbody
+		Sequence: idle2
+		RequiresCondition: iraqtank-upgrade
 	WithSpriteTurret:
 		RequiresCondition: !iraqtank-upgrade
 	WithSpriteTurret@UPG:
