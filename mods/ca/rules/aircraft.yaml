@@ -354,8 +354,8 @@ YAK:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 25
-		Prerequisites: ~afld, ~aircraft.iraq, ~techlevel.low
-		Description: Ground attack plane armed with\ndual machine guns.\n  Strong vs Infantry, Light Armor\n  Weak vs Tanks
+		Prerequisites: ~afld, ~aircraft.soviet, ~techlevel.low
+		Description: Ground attack plane armed with\ndual machine guns.\n  Strong vs Infantry, Buildings, Light Armor\n  Weak vs Tanks
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -399,14 +399,14 @@ YAK:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
 	AmmoPool:
-		Ammo: 30
-		ReloadDelay: 7
+		Ammo: 40
+		ReloadDelay: 5
 		AmmoCondition: ammo
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
-		PipCount: 6
+		PipCount: 4
 	WithMuzzleOverlay:
 	SpawnActorOnDeath:
 		Actor: YAK.Husk
