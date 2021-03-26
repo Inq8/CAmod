@@ -451,7 +451,7 @@ KATY:
 		Range: 4c0
 	Turreted:
 		TurnSpeed: 20
-		Offset: 0,0,20
+		Offset: 0,0,60
 	Armament:
 		Weapon: 125mm
 		Recoil: 128
@@ -463,8 +463,9 @@ KATY:
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 		RequiresCondition: !iraqtank-upgrade
-	WithSpriteTurret@UPG:
-		Sequence: turret2
+	WithFacingSpriteBody@IRAQ:
+		Name: iraqbody
+		Sequence: idle2
 		RequiresCondition: iraqtank-upgrade
 	SpawnActorOnDeath:
 		Actor: 3TNK.Husk
