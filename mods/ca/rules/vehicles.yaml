@@ -4963,6 +4963,7 @@ APOC:
 	WithFacingSpriteBody:
 		RequiresCondition: !iraqtank-upgrade
 	WithFacingSpriteBody@IRAQ:
+		Name: iraqbody
 		Sequence: idle2
 		RequiresCondition: iraqtank-upgrade
 	WithMuzzleOverlay:
@@ -5013,6 +5014,7 @@ APOC.IRAQ:
 		-RequiresCondition:
 	-WithFacingSpriteBody@IRAQ:
 	-SpawnActorOnDeath:
+	-GrantConditionOnPrerequisite@IRAQ:
 	SpeedMultiplier@IRAQTANK:
 		-RequiresCondition:
 	Explodes@IRAQTANK:
