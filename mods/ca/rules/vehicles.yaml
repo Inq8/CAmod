@@ -1237,16 +1237,13 @@ APC:
 
 APC.AI:
 	Inherits: APC
+	Inherits: ^AIUNLOAD
 	RenderSprites:
 		Image: APC
 	Buildable:
 		Prerequisites: ~botplayer, infantry.any, ~vehicles.allies, ~techlevel.low
 	Cargo:
 		InitialUnits: E1,E1,E1,E3,E3
-	AutoDeployer:
-		DeployChance: 100
-		OrderName: Deploy
-		RequiresCondition: cargo
 
 MNLY:
 	Inherits: ^Tank
@@ -2051,41 +2048,37 @@ APC2:
 
 APC2.NODAI:
 	Inherits: APC2
+	Inherits: ^AIUNLOAD
 	Buildable:
 		Prerequisites: ~botplayer, ~vehicles.nod, ~!vulcan.upgrade, ~vehicles.apc2, infantry.any, ~techlevel.low
 	RenderSprites:
 		Image: APC2
 	Cargo:
 		InitialUnits: N4,N4,N4,N4,N4
-	AutoDeployer:
-		DeployChance: 100
-		OrderName: Deploy
-		RequiresCondition: cargo
 
 APC2.GDIAI:
 	Inherits: APC2
+	Inherits: ^AIUNLOAD
 	Buildable:
 		Prerequisites: ~botplayer, ~vehicles.gdi, ~!vulcan.upgrade, ~vehicles.apc2, infantry.any, ~techlevel.low
 	RenderSprites:
 		Image: APC2
 	Cargo:
 		InitialUnits: N2,N2,N2,N2,N2
-	AutoDeployer:
-		DeployChance: 100
-		OrderName: Deploy
-		RequiresCondition: cargo
 
 APC2.Reinforce:
 	Inherits: APC2
+	Inherits: ^AIUNLOAD
 	RenderSprites:
 		Image: APC2
 	-Buildable:
 	Cargo:
 		InitialUnits: N1,N1,N2,N3,N3
-	AutoDeployer:
-		DeployChance: 100
-		OrderName: Deploy
-		RequiresCondition: cargo
+	GrantConditionOnDamageState@UNLOAD:
+		Condition: damage
+	UnloadOnCondition@UNLOAD:
+		RequiresCondition: damage
+		BotOnly: False
 
 VULC:
 	Inherits: ^TankTD
@@ -2213,16 +2206,13 @@ VULC:
 
 VULC.AI:
 	Inherits: VULC
+	Inherits: ^AIUNLOAD
 	RenderSprites:
 		Image: VULC
 	Buildable:
 		Prerequisites: ~botplayer, ~vehicles.gdi, ~vulcan.upgrade, infantry.any, ~techlevel.high
 	Cargo:
 		InitialUnits: N2,N2,N2,N2,N2
-	AutoDeployer:
-		DeployChance: 100
-		OrderName: Deploy
-		RequiresCondition: cargo
 
 LTNK:
 	Inherits: ^TankTD
@@ -3148,16 +3138,13 @@ BTR:
 
 BTR.AI:
 	Inherits: BTR
+	Inherits: ^AIUNLOAD
 	RenderSprites:
 		Image: BTR
 	Buildable:
 		Prerequisites: ~botplayer, infantry.any, ~vehicles.soviet, ~techlevel.low
 	Cargo:
 		InitialUnits: E4,E4,E4,E4,E4
-	AutoDeployer:
-		DeployChance: 100
-		OrderName: Deploy
-		RequiresCondition: cargo
 
 IFV:
 	Inherits: ^Tank

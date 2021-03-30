@@ -3099,3 +3099,11 @@
 		Weapons: FireDebris
 		Pieces: 3, 7
 		Range: 1c511, 3c0
+
+^AIUNLOAD:
+	GrantConditionWhileAiming@AIUNLOAD:
+		Condition: aiming
+	GrantConditionOnDamageState@AIUNLOAD:
+		Condition: damage
+	UnloadOnCondition@AIUNLOAD:
+		RequiresCondition: damage || aiming
