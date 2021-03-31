@@ -784,14 +784,14 @@ PrisLaser:
 		SecondaryBeamZOffset: 2047
 		SecondaryBeamColor: 75D1FF
 	Warhead@1Dam: SpreadDamage
-		Spread: 512
+		Spread: 341
 		Damage: 13000
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		Versus:
-			None: 55
+			None: 50
 			Wood: 70
 			Light: 75
-			Heavy: 70
+			Heavy: 75
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
@@ -849,6 +849,8 @@ PrisBurst:
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
 		Damage: 6500
+		Versus:
+			None: 85
 	-Warhead@Burst:
 	Warhead@3Eff: CreateEffect
 		Explosions: small_explosion
@@ -860,6 +862,7 @@ PrisTBurst:
 		Damage: 2100
 		Spread: 160
 		Versus:
+			None: 150
 			Wood: 35
 
 PrisCLaser:
@@ -1789,7 +1792,7 @@ SonicPulse:
 		ValidTargets: Ground, Water
 		ValidRelationships: Enemy, Neutral
 		Versus:
-			None: 70
+			None: 60
 			Wood: 45
 			Light: 90
 			Heavy: 100
