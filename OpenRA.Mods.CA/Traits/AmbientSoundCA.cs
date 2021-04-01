@@ -30,6 +30,9 @@ namespace OpenRA.Mods.CA.Traits.Sound
 			"Two values indicate a random delay range.")]
 		public readonly int[] Interval = { 0 };
 
+		[Desc("Do the sounds play under shroud or fog.")]
+		public readonly bool AudibleThroughFog = false;
+
 		[Desc("Multiply volume with this factor.")]
 		public readonly float VolumeMultiplier = 1f;
 
@@ -83,17 +86,18 @@ namespace OpenRA.Mods.CA.Traits.Sound
 		void StartSound(Actor self)
 		{
 			var sound = Info.SoundFiles.RandomOrDefault(Game.CosmeticRandom);
+			var shouldStart = Info.AudibleThroughFog || (!self.World.ShroudObscures(self.CenterPosition) && !self.World.FogObscures(self.CenterPosition));
 
 			ISound s;
 			if (self.OccupiesSpace != null)
 			{
 				cachedPosition = self.CenterPosition;
-				s = loop ? Game.Sound.Play(SoundType.World, sound, cachedPosition, Info.VolumeMultiplier) :
-					Game.Sound.Play(SoundType.World, sound, self.CenterPosition, Info.VolumeMultiplier);
+				s = loop ? Game.Sound.Play(SoundType.World, sound, cachedPosition, shouldStart ? Info.VolumeMultiplier : 0f) :
+					Game.Sound.Play(SoundType.World, sound, self.CenterPosition, shouldStart ? Info.VolumeMultiplier : 0f);
 			}
 			else
-				s = loop ? Game.Sound.Play(SoundType.World, sound, Info.VolumeMultiplier) :
-					Game.Sound.Play(SoundType.World, sound, Info.VolumeMultiplier);
+				s = loop ? Game.Sound.Play(SoundType.World, sound, shouldStart ? Info.VolumeMultiplier : 0f) :
+					Game.Sound.Play(SoundType.World, sound, shouldStart ? Info.VolumeMultiplier : 0f);
 
 			currentSounds.Add(s);
 		}
