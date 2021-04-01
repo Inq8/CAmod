@@ -32,6 +32,7 @@
 FireballLauncher:
 	Inherits: ^FireWeapon
 	Report: firebl3.aud
+	Range: 6c0
 	Projectile: Bullet
 		Speed: 250
 		TrailImage: fb2
@@ -39,7 +40,7 @@ FireballLauncher:
 	Warhead@1Dam: SpreadDamage
 		Versus:
 			Light: 50
-			Concrete: 18
+			Concrete: 15
 
 ChemballLauncher:
 	Inherits: FireballLauncher
@@ -236,7 +237,7 @@ PortaTesla:
 
 PortaTeslaE:
 	Inherits: PortaTesla
-	Range: 8c0
+	Range: 7c0
 
 PortaTeslaCharge:
 	Inherits: ^TeslaWeapon
@@ -708,7 +709,7 @@ PortaLaser:
 
 PortaLaserE:
 	Inherits: PortaLaser
-	Range: 8c0
+	Range: 7c0
 
 VenomLaser:
 	ReloadDelay: 25
@@ -1511,7 +1512,7 @@ RadBeamWeapon:
 
 RadBeamWeaponE:
 	Inherits: RadBeamWeapon
-	Range: 8c0
+	Range: 7c0
 
 RadEruptionWeapon:
 	ReloadDelay: 60
@@ -1780,15 +1781,15 @@ NeutronCannonSound:
 	Projectile: InstantHit
 
 SonicPulse:
-	ReloadDelay: 110
+	ReloadDelay: 70
 	Range: 7c512
 	Report: sonicpulse1.aud, sonicpulse2.aud
 	Projectile: LinearPulse
 		Speed: 768
 	Warhead@1Dam: SpreadDamage
 		Spread: 0c256
-		Falloff: 100, 50, 25, 0
-		Damage: 9000
+		Falloff: 100, 50, 20, 0
+		Damage: 6600
 		ValidTargets: Ground, Water
 		ValidRelationships: Enemy, Neutral
 		Versus:
@@ -1812,7 +1813,7 @@ SonicPulse.UPG:
 	Inherits: SonicPulse
 	Range: 8c256
 	Warhead@1Dam: SpreadDamage
-		Damage: 9700
+		Damage: 7200
 	Warhead@3Eff: CreateEffect
 		Explosions: sonicpulseupg1, sonicpulseupg2
 	Warhead@2Eff: CreateEffect
