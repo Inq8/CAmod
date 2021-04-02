@@ -72,7 +72,7 @@ EnslaveVehicle:
 GunWalkerZap:
 	Range: 4c512
 	Report: gunwalker-fire1.aud, gunwalker-fire2.aud
-	ReloadDelay: 30
+	ReloadDelay: 28
 	Burst: 5
 	BurstDelays: 8
 	Projectile: Bullet
@@ -81,12 +81,12 @@ GunWalkerZap:
 		Palette: scrin
 		Inaccuracy: 0c64
 	Warhead@1Dam: SpreadDamage
-		Damage: 2700
+		Damage: 2300
 		Versus:
 			None: 100
 			Wood: 10
 			Concrete: 10
-			Light: 35
+			Light: 40
 			Heavy: 15
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Eff: CreateEffect
@@ -693,7 +693,7 @@ StormColumnZap:
 			None: 55
 			Wood: 60
 			Concrete: 100
-			Light: 85
+			Light: 80
 			Heavy: 95
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
 	Warhead@2Smu: LeaveSmudge
@@ -740,7 +740,7 @@ StormcrawlerZap:
 	Range: 4c768
 	StartBurstReport: stormcrawler-fire1.aud, stormcrawler-fire2.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 2900
+		Damage: 2700
 		Versus:
 			None: 100
 			Wood: 15
@@ -750,7 +750,7 @@ StormcrawlerZap:
 
 StormcrawlerCharge:
 	ReloadDelay: 150
-	Range: 4c768
+	Range: 4c512
 	Report: stormcrawler-charge.aud
 	ValidTargets: Stormcrawler
 	Projectile: ElectricBolt
@@ -762,12 +762,6 @@ StormcrawlerCharge:
 		Damage: 1
 		Versus:
 			Heavy: 0
-		ValidRelationships: Ally
-	Warhead@2Charge: GrantExternalCondition
-		Range: 0c768
-		Duration: 300
-		Condition: stormcrawlercharge
-		ValidTargets: Stormcrawler
 		ValidRelationships: Ally
 
 StormcrawlerChargeSource:

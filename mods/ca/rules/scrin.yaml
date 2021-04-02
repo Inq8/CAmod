@@ -41,7 +41,9 @@ VEHICLES.SCRIN:
 	WithDeathAnimation:
 		DeathSequencePalette: overlayplayerscrin
 		CrushedSequencePalette: scrin
-	-DamagedByTerrain:
+	-GrantConditionOnTerrain@ONTIB:
+	-GrantStackingCondition@TIBEXPOSED:
+	-DamagedByTerrain@TIBDAMAGE:
 	TakeCover:
 		ProneSequencePrefix:
 		ProneOffset: 0,0,0
@@ -776,7 +778,6 @@ STCR:
 		ZOffset: -81
 	Targetable@STORMCRAWLERCHARGE:
 		TargetTypes: Stormcrawler
-		RequiresCondition: stormcrawlercharge < 3
 	ExternalCondition@STORMCRAWLERCHARGE:
 		Condition: stormcrawlercharge
 	ReloadDelayMultiplier@STORMCRAWLERCHARGE1:
@@ -790,27 +791,30 @@ STCR:
 		Delay: 10
 		StartIfBelow: 100
 		DamageCooldown: 0
-		RequiresCondition: stormcrawlercharge >= 1 && stormcrawlercharge < 2 && !empdisable && !being-warped
+		RequiresCondition: stormcrawlercharge >= 2 && stormcrawlercharge < 3 && !empdisable && !being-warped
 	ChangesHealth@STORMCRAWLERCHARGE2:
 		Step: 400
 		Delay: 10
 		StartIfBelow: 100
 		DamageCooldown: 0
-		RequiresCondition: stormcrawlercharge >= 2 && !empdisable && !being-warped
+		RequiresCondition: stormcrawlercharge >= 3 && !empdisable && !being-warped
 	WithDecoration@STORMCRAWLERCHARGE1:
 		Image: pips
 		Sequence: pip-stcr1
 		Palette: scrin
 		Position: TopRight
-		RequiresCondition: stormcrawlercharge >= 1 && stormcrawlercharge < 2 && !empdisable && !being-warped
+		RequiresCondition: stormcrawlercharge >= 2 && stormcrawlercharge < 3 && !empdisable && !being-warped
 	WithDecoration@STORMCRAWLERCHARGE2:
 		Image: pips
 		Sequence: pip-stcr2
 		Palette: scrin
 		Position: TopRight
-		RequiresCondition: stormcrawlercharge >= 2 && !empdisable && !being-warped
+		RequiresCondition: stormcrawlercharge >= 3 && !empdisable && !being-warped
 	PeriodicExplosion:
 		Weapon: StormcrawlerChargeSource
+	ProximityExternalCondition@STORMCRAWLERCHARGE:
+		Range: 4c512
+		Condition: stormcrawlercharge
 
 DEVO:
 	Inherits: ^Tank
