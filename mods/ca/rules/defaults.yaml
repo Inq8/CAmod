@@ -1465,12 +1465,20 @@
 		Speed: 43
 		Locomotor: foot
 		PauseOnCondition: being-warped
-	DamagedByTerrain:
+	GrantConditionOnTerrain@ONTIB:
+		Condition: ontib
+		TerrainTypes: Tiberium, BlueTiberium
+	GrantStackingCondition@TIBEXPOSED:
+		Condition: tibexposed
+		RequiresCondition: ontib
+		DelayPerInstance: 250
+		RevokeDelay: 500
+	DamagedByTerrain@TIBDAMAGE:
 		Terrain: Tiberium, BlueTiberium
-		Damage: 100
+		Damage: 125
 		DamageInterval: 16
 		DamageTypes: ToxinDeath
-		RequiresCondition: !(hazmatsuits || being-warped || parachute)
+		RequiresCondition: tibexposed && !(hazmatsuits || being-warped || parachute)
 	GrantConditionOnPrerequisite@BIO:
 		Condition: hazmatsuits
 		Prerequisites: bio
@@ -1682,23 +1690,21 @@
 		Delay: 15
 		StartIfBelow: 100
 		DamageCooldown: 150
-		RequiresCondition: tibheal
+		RequiresCondition: ontib
 		DamageTypes: ToxinDeath
 	WithDecoration@THEAL:
 		Image: pips
 		Sequence: medic
 		Palette: effect
 		Position: BottomLeft
-		RequiresCondition: tibheal
-	GrantConditionOnTerrain@THEAL:
-		Condition: tibheal
-		TerrainTypes: Tiberium, BlueTiberium
+		RequiresCondition: ontib
 	-GrantConditionOnPrerequisite@BIO:
 	-GrantConditionOnPrerequisite@HAZMAT:
 	-WithDecoration@HAZMAT:
 	-GrantCondition@HAZMAT:
 	-ExternalCondition@HAZMAT:
-	-DamagedByTerrain:
+	-DamagedByTerrain@TIBDAMAGE:
+	-GrantStackingCondition@TIBEXPOSED:
 	DamagedByTintedCells@RADSTRONG:
 		Damage: 375
 		RequiresCondition: !being-warped
