@@ -72,7 +72,7 @@ EnslaveVehicle:
 GunWalkerZap:
 	Range: 4c512
 	Report: gunwalker-fire1.aud, gunwalker-fire2.aud
-	ReloadDelay: 28
+	ReloadDelay: 30
 	Burst: 5
 	BurstDelays: 8
 	Projectile: Bullet
@@ -81,12 +81,12 @@ GunWalkerZap:
 		Palette: scrin
 		Inaccuracy: 0c64
 	Warhead@1Dam: SpreadDamage
-		Damage: 2300
+		Damage: 2450
 		Versus:
 			None: 100
 			Wood: 10
 			Concrete: 10
-			Light: 40
+			Light: 32
 			Heavy: 15
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Eff: CreateEffect
@@ -227,7 +227,7 @@ DevastatorDiscs:
 			Light: 65
 			Wood: 30
 			Heavy: 100
-			Concrete: 85
+			Concrete: 90
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
@@ -450,7 +450,7 @@ TripodLaser:
 			Light: 70
 			Wood: 58
 			Heavy: 105
-			Concrete: 40
+			Concrete: 45
 
 ReaperLaser:
 	Inherits: TripodLaser
@@ -662,7 +662,7 @@ PlasmaTurretGun:
 			Wood: 25
 			Concrete: 32
 			Light: 50
-			Heavy: 20
+			Heavy: 10
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
