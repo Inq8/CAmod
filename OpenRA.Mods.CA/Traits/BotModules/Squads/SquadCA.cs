@@ -1,6 +1,6 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2019 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2020 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
  * as published by the Free Software Foundation, either version 3 of
@@ -12,17 +12,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Mods.Common.Traits.BotModules.Squads;
 using OpenRA.Support;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 {
-	public enum SquadTypeCA { Assault, Air, Rush, Protection, Naval }
+	public enum SquadCAType { Assault, Air, Rush, Protection, Naval }
 
 	public class SquadCA
 	{
 		public List<Actor> Units = new List<Actor>();
-		public SquadTypeCA Type;
+		public SquadCAType Type;
 
 		internal IBot Bot;
 		internal World World;
@@ -32,10 +33,10 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		internal Target Target;
 		internal StateMachineCA FuzzyStateMachine;
 
-		public SquadCA(IBot bot, SquadManagerBotModuleCA squadManager, SquadTypeCA type)
+		public SquadCA(IBot bot, SquadManagerBotModuleCA squadManager, SquadCAType type)
 			: this(bot, squadManager, type, null) { }
 
-		public SquadCA(IBot bot, SquadManagerBotModuleCA squadManager, SquadTypeCA type, Actor target)
+		public SquadCA(IBot bot, SquadManagerBotModuleCA squadManager, SquadCAType type, Actor target)
 		{
 			Bot = bot;
 			SquadManager = squadManager;
@@ -47,17 +48,17 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 			switch (type)
 			{
-				case SquadTypeCA.Assault:
-				case SquadTypeCA.Rush:
+				case SquadCAType.Assault:
+				case SquadCAType.Rush:
 					FuzzyStateMachine.ChangeState(this, new GroundUnitsIdleStateCA(), true);
 					break;
-				case SquadTypeCA.Air:
+				case SquadCAType.Air:
 					FuzzyStateMachine.ChangeState(this, new AirIdleStateCA(), true);
 					break;
-				case SquadTypeCA.Protection:
+				case SquadCAType.Protection:
 					FuzzyStateMachine.ChangeState(this, new UnitsForProtectionIdleState(), true);
 					break;
-				case SquadTypeCA.Naval:
+				case SquadCAType.Naval:
 					FuzzyStateMachine.ChangeState(this, new NavyUnitsIdleState(), true);
 					break;
 			}
@@ -89,38 +90,6 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 		public WPos CenterPosition { get { return Units.Select(u => u.CenterPosition).Average(); } }
 
-		public CPos CenterLocation { get { return World.Map.CellContaining(CenterPosition); } }
-
-		void ReflexAvoidance(Actor attacker)
-		{
-			// Like when you retract your finger when it touches hot stuff,
-			// let air untis avoid the attacker very quickly. (faster than flee state's response)
-			WVec vec = CenterPosition - attacker.CenterPosition;
-			WPos dest = CenterPosition + vec;
-			CPos cdest = World.Map.CellContaining(dest);
-
-			foreach (var a in Units)
-				Bot.QueueOrder(new Order("Move", a, Target, false));
-		}
-
-		internal void Damage(AttackInfo e)
-		{
-			if (Type == SquadTypeCA.Air)
-			{
-				// decide flee or retaliate.
-				if (AirStateBaseCA.NearToPosSafely(this, CenterPosition))
-				{
-					TargetActor = e.Attacker;
-					FuzzyStateMachine.ChangeState(this, new AirAttackStateCA(), true);
-					return;
-				}
-
-				// Flee
-				ReflexAvoidance(e.Attacker);
-				FuzzyStateMachine.ChangeState(this, new AirFleeStateCA(), true);
-			}
-		}
-
 		public MiniYaml Serialize()
 		{
 			var nodes = new MiniYaml("", new List<MiniYamlNode>()
@@ -137,12 +106,12 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 		public static SquadCA Deserialize(IBot bot, SquadManagerBotModuleCA squadManager, MiniYaml yaml)
 		{
-			var type = SquadTypeCA.Rush;
+			var type = SquadCAType.Rush;
 			Actor targetActor = null;
 
 			var typeNode = yaml.Nodes.FirstOrDefault(n => n.Key == "Type");
 			if (typeNode != null)
-				type = FieldLoader.GetValue<SquadTypeCA>("Type", typeNode.Value.Value);
+				type = FieldLoader.GetValue<SquadCAType>("Type", typeNode.Value.Value);
 
 			var targetNode = yaml.Nodes.FirstOrDefault(n => n.Key == "Target");
 			if (targetNode != null)

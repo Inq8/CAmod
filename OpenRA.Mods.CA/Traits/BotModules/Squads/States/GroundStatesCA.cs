@@ -9,9 +9,7 @@
  */
 #endregion
 
-using System.Collections.Generic;
 using System.Linq;
-using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits.BotModules.Squads
@@ -26,18 +24,6 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		protected Actor FindClosestEnemy(SquadCA owner)
 		{
 			return owner.SquadManager.FindClosestEnemy(owner.Units.First().CenterPosition);
-		}
-
-		protected Actor GetRandomPreferredTarget(SquadCA owner)
-		{
-			var manager = owner.SquadManager;
-			var mustDestroyedEnemy = manager.World.ActorsHavingTrait<MustBeDestroyed>(t => t.Info.RequiredForShortGame)
-					.Where(a => manager.IsPreferredEnemyUnit(a) && manager.IsNotHiddenUnit(a)).ToArray();
-
-			if (!mustDestroyedEnemy.Any())
-				return FindClosestEnemy(owner);
-
-			return mustDestroyedEnemy.Random(owner.World.LocalRandom);
 		}
 	}
 
@@ -63,142 +49,100 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				.Where(owner.SquadManager.IsPreferredEnemyUnit).ToList();
 
 			if (enemyUnits.Count == 0)
-			{
-				Retreat(owner, flee: false, rearm: true, repair: true);
 				return;
-			}
 
 			if (AttackOrFleeFuzzyCA.Default.CanAttack(owner.Units, enemyUnits))
 			{
+				owner.Bot.QueueOrder(new Order("AttackMove", null, Target.FromCell(owner.World, owner.TargetActor.Location), false, groupedActors: owner.Units.ToArray()));
+
 				// We have gathered sufficient units. Attack the nearest enemy unit.
-				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsAttackMoveState(), false);
+				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsAttackMoveStateCA(), true);
 			}
 			else
-				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeStateCA(), false);
+				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeStateCA(), true);
 		}
 
 		public void Deactivate(SquadCA owner) { }
 	}
 
-	class GroundUnitsAttackMoveState : GroundStateBaseCA, IState
+	class GroundUnitsAttackMoveStateCA : GroundStateBaseCA, IState
 	{
-		const int MaxAttemptsToAdvance = 6;
-		const int MakeWayTicks = 2;
-
-		// Give tolerance for AI grouping team at start
-		int failedAttempts = -(MaxAttemptsToAdvance * 2);
-		int makeWay = MakeWayTicks;
-		WPos lastPos = WPos.Zero;
-
-		// Optimazing state switch
-		bool attackLoop = false;
+		int lastUpdatedTick;
+		CPos? lastLeaderLocation;
+		Actor lastTarget;
 
 		public void Activate(SquadCA owner) { }
 
 		public void Tick(SquadCA owner)
 		{
-			// Basic check
 			if (!owner.IsValid)
 				return;
 
 			if (!owner.IsTargetValid)
 			{
-				var targetActor = GetRandomPreferredTarget(owner);
-				if (targetActor != null)
-					owner.TargetActor = targetActor;
+				var closestEnemy = FindClosestEnemy(owner);
+				if (closestEnemy != null)
+					owner.TargetActor = closestEnemy;
 				else
 				{
-					owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeStateCA(), false);
+					owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeStateCA(), true);
 					return;
 				}
 			}
 
-			// Initialize leader. Optimize pathfinding by using leader.
-			// Drop former "owner.Units.ClosestTo(owner.TargetActor.CenterPosition)",
-			// which is the shortest geometric distance, but it has no relation to pathfinding distance in map.
-			var leader = owner.Units.FirstOrDefault();
+			var leader = owner.Units.ClosestTo(owner.TargetActor.CenterPosition);
 			if (leader == null)
 				return;
 
-			// Switch to "GroundUnitsAttackState" if we encounter enemy units.
-			// This makes sure that the entire squad will stay together and fight, instead of splitting
-			// into two groups based on whether they were close enough for AttackMove to acquire the target.
-			var attackScanRadius = WDist.FromCells(owner.SquadManager.Info.AttackScanRadius);
-
-			var enemyActor = owner.SquadManager.FindClosestEnemy(leader.CenterPosition, attackScanRadius);
-			if (enemyActor != null)
+			if (leader.Location != lastLeaderLocation)
 			{
-				owner.TargetActor = enemyActor;
-				if (!attackLoop)
+				lastLeaderLocation = leader.Location;
+				lastUpdatedTick = owner.World.WorldTick;
+			}
+
+			if (owner.TargetActor != lastTarget)
+			{
+				lastTarget = owner.TargetActor;
+				lastUpdatedTick = owner.World.WorldTick;
+			}
+
+			// HACK: Drop back to the idle state if we haven't moved in 2.5 seconds
+			// This works around the squad being stuck trying to attack-move to a location
+			// that they cannot path to, generating expensive pathfinding calls each tick.
+			if (owner.World.WorldTick > lastUpdatedTick + 63)
+			{
+				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsIdleStateCA(), true);
+				return;
+			}
+
+			var ownUnits = owner.World.FindActorsInCircle(leader.CenterPosition, WDist.FromCells(owner.Units.Count) / 3)
+				.Where(a => a.Owner == owner.Units.First().Owner && owner.Units.Contains(a)).ToHashSet();
+
+			if (ownUnits.Count < owner.Units.Count)
+			{
+				// Since units have different movement speeds, they get separated while approaching the target.
+				// Let them regroup into tighter formation.
+				owner.Bot.QueueOrder(new Order("Stop", leader, false));
+
+				var units = owner.Units.Where(a => !ownUnits.Contains(a)).ToArray();
+				owner.Bot.QueueOrder(new Order("AttackMove", null, Target.FromCell(owner.World, leader.Location), false, groupedActors: units));
+			}
+			else
+			{
+				var enemies = owner.World.FindActorsInCircle(leader.CenterPosition, WDist.FromCells(owner.SquadManager.Info.AttackScanRadius))
+					.Where(owner.SquadManager.IsPreferredEnemyUnit);
+				var target = enemies.ClosestTo(leader.CenterPosition);
+				if (target != null)
 				{
-					attackLoop = true;
+					owner.TargetActor = target;
 					owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsAttackState(), true);
 				}
 				else
-					owner.FuzzyStateMachine.RevertToPreviousState(owner, true);
-				return;
+					owner.Bot.QueueOrder(new Order("AttackMove", null, Target.FromCell(owner.World, owner.TargetActor.Location), false, groupedActors: owner.Units.ToArray()));
 			}
 
-			// Make sure the guide unit has not been blocked by the rest of the squad
-			if (failedAttempts >= MaxAttemptsToAdvance)
-			{
-				if (makeWay > 0)
-				{
-					owner.Bot.QueueOrder(new Order("AttackMove", leader, Target.FromCell(owner.World, owner.TargetActor.Location), false));
-
-					var others = owner.Units.Where(u => u != leader);
-					owner.Bot.QueueOrder(new Order("Scatter", null, false, groupedActors: others.ToArray()));
-					makeWay--;
-				}
-				else
-				{
-					// Give some tolerance for AI regrouping
-					failedAttempts = 0 - MakeWayTicks;
-					makeWay = MakeWayTicks;
-				}
-
-				return;
-			}
-
-			// Check if the squad is stuck due to the map having a very twisted path
-			// or currently bridge and tunnel from TS mod
-			if (leader.CenterPosition == lastPos)
-				failedAttempts++;
-			else
-				failedAttempts = 0;
-
-			lastPos = leader.CenterPosition;
-
-			// Since units have different movement speeds, they get separated while approaching the target.
-			// Let them regroup into tighter formation towards "leader".
-			//
-			// "occupiedArea" means the space the squad units will occupy (if 1 per Cell).
-			// leader only stop when scope of "lookAround" is not covered all units;
-			// units in "unitsHurryUp"  will catch up, which keep the team tight while not stuck.
-			//
-			// Imagining "occupiedArea" takes up a a place shape like square,
-			// we need to draw a circle to cover the the enitire circle.
-			//
-			// "Leader" will check how many squad members are around
-			// to decide if it needs to continue.
-			//
-			// However in practice because of the poor PF, squad tend to PF to a ellipse.
-			// "Leader" will have to check a circle with 5 x "occupiedArea" mentioned before
-			// to get the best regrouping gameplay, which is the "leaderWaitCheck".
-			//
-			// Units that need hurry up ("unitsHurryUp") will try catch up before Leader waiting,
-			// which can make squad members follows relatively tight without stucking "Leader".
-			var occupiedArea = (long)WDist.FromCells(owner.Units.Count).Length * 1024;
-
-			var unitsHurryUp = owner.Units.Where(a => (a.CenterPosition - leader.CenterPosition).LengthSquared >= occupiedArea * 2);
-			var leaderWaitCheck = owner.Units.Any(a => (a.CenterPosition - leader.CenterPosition).LengthSquared > occupiedArea * 5);
-
-			if (leaderWaitCheck)
-				owner.Bot.QueueOrder(new Order("Stop", leader, false));
-			else
-				owner.Bot.QueueOrder(new Order("AttackMove", leader, Target.FromCell(owner.World, owner.TargetActor.Location), false));
-
-			owner.Bot.QueueOrder(new Order("AttackMove", null, Target.FromCell(owner.World, leader.Location), false, groupedActors: unitsHurryUp.ToArray()));
+			if (ShouldFlee(owner))
+				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeStateCA(), true);
 		}
 
 		public void Deactivate(SquadCA owner) { }
@@ -206,62 +150,57 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 	class GroundUnitsAttackState : GroundStateBaseCA, IState
 	{
+		int lastUpdatedTick;
+		CPos? lastLeaderLocation;
+		Actor lastTarget;
+
 		public void Activate(SquadCA owner) { }
 
 		public void Tick(SquadCA owner)
 		{
-			// Basic check
 			if (!owner.IsValid)
 				return;
 
-			var leader = owner.Units.FirstOrDefault();
-			if (leader == null)
-				return;
-
-			// Rescan target to prevent being ambushed and die without fight
-			// If there is no threat around, return to AttackMove state for formation
-			var attackScanRadius = WDist.FromCells(owner.SquadManager.Info.AttackScanRadius);
-			var targetActor = owner.SquadManager.FindClosestEnemy(leader.CenterPosition, attackScanRadius);
-
-			var cannotRetaliate = true;
-			List<Actor> followingUnits = new List<Actor>();
-			List<Actor> attackingUnits = new List<Actor>();
-			if (targetActor == null)
+			if (!owner.IsTargetValid)
 			{
-				owner.FuzzyStateMachine.RevertToPreviousState(owner, true);
-				return;
-			}
-			else
-			{
-				owner.TargetActor = targetActor;
-
-				foreach (var a in owner.Units)
+				var closestEnemy = FindClosestEnemy(owner);
+				if (closestEnemy != null)
+					owner.TargetActor = closestEnemy;
+				else
 				{
-					if (!BusyAttack(a))
-					{
-						if (CanAttackTarget(a, targetActor))
-						{
-							attackingUnits.Add(a);
-							cannotRetaliate = false;
-						}
-						else
-							followingUnits.Add(a);
-					}
-					else
-						cannotRetaliate = false;
+					owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeStateCA(), true);
+					return;
 				}
 			}
 
-			// Because ShouldFlee(owner) cannot retreat units while they cannot even fight
-			// a unit that they cannot target. Therefore, use `cannotRetaliate` here to solve this bug.
-			if (ShouldFlee(owner) || cannotRetaliate)
+			var leader = owner.Units.ClosestTo(owner.TargetActor.CenterPosition);
+			if (leader.Location != lastLeaderLocation)
 			{
-				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeStateCA(), false);
+				lastLeaderLocation = leader.Location;
+				lastUpdatedTick = owner.World.WorldTick;
+			}
+
+			if (owner.TargetActor != lastTarget)
+			{
+				lastTarget = owner.TargetActor;
+				lastUpdatedTick = owner.World.WorldTick;
+			}
+
+			// HACK: Drop back to the idle state if we haven't moved in 2.5 seconds
+			// This works around the squad being stuck trying to attack-move to a location
+			// that they cannot path to, generating expensive pathfinding calls each tick.
+			if (owner.World.WorldTick > lastUpdatedTick + 63)
+			{
+				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsIdleStateCA(), true);
 				return;
 			}
 
-			owner.Bot.QueueOrder(new Order("AttackMove", null, Target.FromCell(owner.World, leader.Location), false, groupedActors: followingUnits.ToArray()));
-			owner.Bot.QueueOrder(new Order("Attack", null, Target.FromActor(owner.TargetActor), false, groupedActors: attackingUnits.ToArray()));
+			foreach (var a in owner.Units)
+				if (!BusyAttack(a))
+					owner.Bot.QueueOrder(new Order("Attack", a, Target.FromActor(owner.TargetActor), false));
+
+			if (ShouldFlee(owner))
+				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeStateCA(), true);
 		}
 
 		public void Deactivate(SquadCA owner) { }
@@ -276,10 +215,10 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			if (!owner.IsValid)
 				return;
 
-			Retreat(owner, flee: true, rearm: true, repair: true);
-			owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsIdleStateCA(), false);
+			GoToRandomOwnBuilding(owner);
+			owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsIdleStateCA(), true);
 		}
 
-		public void Deactivate(SquadCA owner) { owner.SquadManager.DismissSquad(owner); }
+		public void Deactivate(SquadCA owner) { owner.Units.Clear(); }
 	}
 }
