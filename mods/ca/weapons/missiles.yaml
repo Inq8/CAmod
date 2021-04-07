@@ -208,8 +208,9 @@ Dragon.CRYO:
 		ImpactSounds: cryohit.aud
 	Warhead@chill: GrantExternalCondition
 		Condition: chilled
-		Duration: 65
+		Duration: 60
 		Range: 0c341
+		ValidRelationships: Enemy, Neutral
 
 DragonE:
 	Inherits: Dragon
@@ -463,9 +464,10 @@ RedEye.CRYO:
 		ImpactSounds: cryoblast.aud
 	Warhead@chill: GrantExternalCondition
 		Condition: chilled
-		Duration: 65
+		Duration: 60
 		Range: 0c341
 		ValidTargets: Air, AirSmall
+		ValidRelationships: Enemy, Neutral
 
 RedEyeE:
 	Inherits: RedEye
@@ -943,6 +945,23 @@ IFVRocketsE:
 	Warhead@1Dam: SpreadDamage
 		Damage: 3750
 
+IFVRocketsE.CRYO:
+	Inherits: IFVRocketsE
+	Projectile: MissileCA
+		Image: cryomiss
+	Warhead@1Dam: SpreadDamage
+		DamageTypes: Prone50Percent, TriggerProne, FrozenDeath
+		Damage: 2850
+	Warhead@3Eff: CreateEffect
+		Explosions: cryohit
+		ExplosionPalette: ra2effect-ignore-lighting-alpha75
+		ImpactSounds: cryohit.aud
+	Warhead@chill: GrantExternalCondition
+		Condition: chilled
+		Duration: 60
+		Range: 0c341
+		ValidRelationships: Enemy, Neutral
+
 IFVRocketsAAE:
 	Inherits: IFVRocketsAA
 	Report: vifvatta.aud
@@ -955,6 +974,23 @@ IFVRocketsAAE:
 		Range: 0, 0c64, 0c256, 1c256
 		Falloff: 100, 70, 30, 10
 		ValidTargets: AirSmall
+
+IFVRocketsAAE.CRYO:
+	Inherits: IFVRocketsAAE
+	Projectile: MissileCA
+		Image: cryomiss
+	Warhead@1Dam: SpreadDamage
+		Damage: 2950
+	Warhead@3Eff: CreateEffect
+		Explosions: cryohit
+		ExplosionPalette: ra2effect-ignore-lighting-alpha75
+		ImpactSounds: cryoblast.aud
+	Warhead@chill: GrantExternalCondition
+		Condition: chilled
+		Duration: 60
+		Range: 0c341
+		ValidTargets: Air
+		ValidRelationships: Enemy, Neutral
 
 #Artillery Missiles, lock-on but act dumb
 227mm:
@@ -1373,10 +1409,15 @@ CryoMissile:
 		Explosions: cryoblast
 		ExplosionPalette: ra2effect-ignore-lighting-alpha75
 		ImpactSounds: cryoblast.aud
-	Warhead@chill: GrantExternalCondition
+	Warhead@chill1: GrantExternalCondition
+		Condition: chilled
+		Duration: 250
+		Range: 1c0
+		ValidRelationships: Enemy, Neutral
+	Warhead@chill2: GrantExternalCondition
 		Condition: chilled
 		Duration: 200
-		Range: 1c768
+		Range: 2c0
 		ValidRelationships: Enemy, Neutral
 	Warhead@chillally: GrantExternalCondition
 		Condition: chilled

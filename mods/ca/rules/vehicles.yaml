@@ -3193,12 +3193,12 @@ IFV:
 		Offset: 20,0,0
 	Armament@Default:
 		Weapon: IFVRockets
-		LocalOffset: 192,10,176, 192,-10,176
+		LocalOffset: 192,50,176, 192,-50,176
 		RequiresCondition: !full || nochange
 	Armament@DefaultAA:
 		Name: secondary
 		Weapon: IFVRocketsAA
-		LocalOffset: 192,10,176, 192,-10,176
+		LocalOffset: 192,50,176, 192,-50,176
 		RequiresCondition: !full || nochange
 	Armament@E1:
 		Weapon: M60mgIFV
@@ -3212,13 +3212,22 @@ IFV:
 		RequiresCondition: fragturr
 	Armament@E3:
 		Weapon: IFVRocketsE
-		LocalOffset: 192,10,176, 192,-10,176
-		RequiresCondition: samturr
+		LocalOffset: 192,100,176, 192,-100,176
+		RequiresCondition: samturr && !cryr-upgrade
 	Armament@E3AA:
 		Name: secondary
 		Weapon: IFVRocketsAAE
-		LocalOffset: 192,10,176, 192,-10,176
-		RequiresCondition: samturr
+		LocalOffset: 192,100,176, 192,-100,176
+		RequiresCondition: samturr && !cryr-upgrade
+	Armament@E3CRYO:
+		Weapon: IFVRocketsE.CRYO
+		LocalOffset: 192,100,176, 192,-100,176
+		RequiresCondition: samturr && cryr-upgrade
+	Armament@E3CRYOAA:
+		Name: secondary
+		Weapon: IFVRocketsAAE.CRYO
+		LocalOffset: 192,100,176, 192,-100,176
+		RequiresCondition: samturr && cryr-upgrade
 	Armament@E4:
 		Weapon: FireballLauncher
 		Recoil: 85
@@ -3445,6 +3454,14 @@ IFV:
 	AutoTargetPriority@DEFAULTREPAIR:
 		ValidTargets: Vehicle, Ship
 		RequiresCondition: engturr
+	GrantConditionOnPrerequisite@CRYO:
+		Condition: cryr-upgrade
+		Prerequisites: cryr.upgrade
+	GrantCondition@CRYO:
+		Condition: cryr-upgrade
+		RequiresCondition: cryr-upgrade
+	ExternalCondition@CRYO:
+		Condition: cryr-upgrade
 
 IFV.AI:
 	Inherits: ^Tank
@@ -3478,27 +3495,36 @@ IFV.AI:
 		Offset: 20,0,0
 	Armament@Default:
 		Weapon: IFVRockets
-		LocalOffset: 192,10,176, 192,-10,176
+		LocalOffset: 192,50,176, 192,-50,176
 		RequiresCondition: defturr
 	Armament@DefaultAA:
 		Name: secondary
 		Weapon: IFVRocketsAA
-		LocalOffset: 192,10,176, 192,-10,176
+		LocalOffset: 192,50,176, 192,-50,176
 		RequiresCondition: defturr
 	Armament@E1:
-		Weapon: M60mg
+		Weapon: M60mgIFV
 		MuzzleSequence: muzzle
 		LocalOffset: 250,0,150
 		RequiresCondition: gunturr
 	Armament@E3:
 		Weapon: IFVRocketsE
-		LocalOffset: 192,10,176, 192,-10,176
-		RequiresCondition: samturr
+		LocalOffset: 192,100,176, 192,-100,176
+		RequiresCondition: samturr && !cryr-upgrade
 	Armament@E3AA:
 		Name: secondary
 		Weapon: IFVRocketsAAE
-		LocalOffset: 192,10,176, 192,-10,176
-		RequiresCondition: samturr
+		LocalOffset: 192,100,176, 192,-100,176
+		RequiresCondition: samturr && !cryr-upgrade
+	Armament@E3CRYO:
+		Weapon: IFVRocketsE.CRYO
+		LocalOffset: 192,100,176, 192,-100,176
+		RequiresCondition: samturr && cryr-upgrade
+	Armament@E3CRYOAA:
+		Name: secondary
+		Weapon: IFVRocketsAAE.CRYO
+		LocalOffset: 192,100,176, 192,-100,176
+		RequiresCondition: samturr && cryr-upgrade
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
@@ -3549,6 +3575,14 @@ IFV.AI:
 		InvalidTargets: NoAutoTarget
 	AttackMove:
 		AssaultMoveCondition: assault-move
+	GrantConditionOnPrerequisite@CRYO:
+		Condition: cryr-upgrade
+		Prerequisites: cryr.upgrade
+	GrantCondition@CRYO:
+		Condition: cryr-upgrade
+		RequiresCondition: cryr-upgrade
+	ExternalCondition@CRYO:
+		Condition: cryr-upgrade
 
 TITN:
 	Inherits: ^TankTD
