@@ -2,7 +2,7 @@
 	ReloadDelay: 10
 	Range: 8c0
 	Report: aacanon3.aud
-	ValidTargets: Air
+	ValidTargets: Air, AirSmall
 	Projectile: Bullet
 		Speed: 1c682
 		Blockable: false
@@ -14,29 +14,42 @@
 		ValidTargets: Air
 		ValidRelationships: Enemy, Neutral
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
+	Warhead@2Dam: SpreadDamage
+		Range: 0, 0c64, 0c256, 4c256
+		Falloff: 100, 70, 30, 10
+		Damage: 2000
+		ValidTargets: AirSmall
+		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: small_explosion_air
-		ValidTargets: Air, Ground, Water, Trees
+		ValidTargets: Air, AirSmall, Ground, Water, Trees
 		ImpactSounds: flakhit1.aud, flakhit2.aud, flakhit3.aud
 		ImpactSoundChance: 100
 		Inaccuracy: 171
 
 ZSU-23:
 	Inherits: ^AACannon
-	ValidTargets: Air, ICBM
+	ValidTargets: Air, AirSmall, ICBM
 	ReloadDelay: 8
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air, ICBM
 		Damage: 2500
 		Range: 0, 0c64, 0c256, 3c768
+	Warhead@2Dam: SpreadDamage
+		ValidTargets: AirSmall
+		Damage: 2500
+		Range: 0, 0c64, 0c256, 3c256
+		Falloff: 100, 70, 30, 10
 	Warhead@2Eff: CreateEffect
-		ValidTargets: Air, ICBM, Ground, Water, Trees
+		ValidTargets: Air, AirSmall, ICBM, Ground, Water, Trees
 
 FLAK-23-AA:
 	Inherits: ^AACannon
 	Range: 7c512
 	Report: flak1.aud, flak2.aud
 	Warhead@1Dam: SpreadDamage
+		Damage: 1250
+	Warhead@2Dam: SpreadDamage
 		Damage: 1250
 
 FLAK-23-AG:
@@ -77,6 +90,8 @@ FLAK-SEAS-AA:
 	Range: 8c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 2200
+	Warhead@2Dam: SpreadDamage
+		Damage: 2200
 
 FLAK-SEAS-AG:
 	Inherits: FLAK-23-AG
@@ -97,13 +112,18 @@ Gatt.0:
 	Inherits: ^AACannon
 	ReloadDelay: 15
 	Report: vgatlo1a.aud
-	ValidTargets: Air, ICBM
+	ValidTargets: Air, AirSmall, ICBM
 	Warhead@1Dam: SpreadDamage
 		Damage: 1250
 		Range: 0, 0c64, 0c256, 3c256
 		ValidTargets: Air, ICBM
+	Warhead@2Dam: SpreadDamage
+		Damage: 1250
+		Range: 0, 0c64, 0c256, 3c256
+		Falloff: 100, 70, 30, 10
+		ValidTargets: AirSmall
 	Warhead@2Eff: CreateEffect
-		ValidTargets: Air, ICBM
+		ValidTargets: Air, AirSmall, ICBM
 		ImpactSoundChance: 20
 
 Gatt.1:
@@ -132,8 +152,10 @@ MGatt.0:
 	Range: 7c512
 	Warhead@1Dam: SpreadDamage
 		Damage: 400
+	Warhead@2Dam: SpreadDamage
+		Damage: 400
 	Warhead@2Eff: CreateEffect
-		ValidTargets: Air
+		ValidTargets: Air, AirSmall
 		ImpactSoundChance: 20
 
 MGatt.1:
@@ -174,7 +196,7 @@ MGatt.3:
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piffs
-		ValidTargets: Ground, Ship, Air, Trees
+		ValidTargets: Ground, Ship, Air, AirSmall, Trees
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piffs
 		ValidTargets: Water, Underwater
@@ -345,6 +367,9 @@ Vulcan2:
 	Report: tsgun4.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 5000
+	Warhead@2Eff: CreateEffect
+		Explosions: piffs
+		Inaccuracy: 0
 
 Vulcan3:
 	Inherits: ^LightMG
@@ -355,6 +380,9 @@ Vulcan3:
 		Damage: 1650
 		Versus:
 			Wood: 30
+	Warhead@2Eff: CreateEffect
+		Explosions: piffs
+		Inaccuracy: 0
 
 ChainGun.Yak.R:
 	Inherits: ^HeavyMG
@@ -416,7 +444,7 @@ M1Carbine:
 	Warhead@2Eff2: CreateEffect
 		Delay: 2
 		Explosions: piff
-		ValidTargets: Ground, Air, Trees
+		ValidTargets: Ground, Air, AirSmall, Trees
 		Inaccuracy: 171
 	Warhead@3EffWater2: CreateEffect
 		Delay: 2
@@ -427,7 +455,7 @@ M1Carbine:
 	Warhead@2Eff3: CreateEffect
 		Delay: 4
 		Explosions: piff
-		ValidTargets: Ground, Air, Trees
+		ValidTargets: Ground, Air, AirSmall, Trees
 		Inaccuracy: 171
 	Warhead@3EffWater3: CreateEffect
 		Delay: 4
@@ -477,6 +505,9 @@ M60mg:
 	Warhead@1Dam: SpreadDamage
 		Versus:
 			Light: 60
+	Warhead@2Eff: CreateEffect
+		Explosions: piffs
+		Inaccuracy: 0
 
 M60mgTD:
 	Inherits: M60mg
@@ -547,7 +578,7 @@ MGatt.2G:
 	Warhead@2Eff: CreateEffect
 		Explosions: piff
 		ImpactActors: false
-		ValidTargets: Ground, Water, Air
+		ValidTargets: Ground, Water, Air, AirSmall
 
 SilencedPPK:
 	Inherits: ^SnipeWeapon
@@ -557,7 +588,7 @@ SilencedPPK:
 		Spread: 128
 	Warhead@2Eff: CreateEffect
 		Explosions: piff
-		ValidTargets: Ground, Ship, Air, Trees
+		ValidTargets: Ground, Ship, Air, AirSmall, Trees
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piff
 		ValidTargets: Water, Underwater
@@ -577,7 +608,7 @@ Colt45:
 		Damage: 4700
 	Warhead@2Eff: CreateEffect
 		Explosions: piff
-		ValidTargets: Ground, Ship, Air, Trees
+		ValidTargets: Ground, Ship, Air, AirSmall, Trees
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piff
 		ValidTargets: Water, Underwater
@@ -598,7 +629,7 @@ SMG:
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piff
-		ValidTargets: Ground, Ship, Air, Trees
+		ValidTargets: Ground, Ship, Air, AirSmall, Trees
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piff
 		ValidTargets: Water, Underwater
@@ -614,7 +645,7 @@ AKM:
 	Burst: 3
 	BurstDelays: 2
 	Range: 7c0
-	InvalidTargets: Structure, Wall, Husk, Air
+	InvalidTargets: Structure, Wall, Husk, Air, AirSmall
 	Projectile: Bullet
 		Speed: 1c682
 	Warhead@1Dam: SpreadDamage
@@ -631,7 +662,7 @@ AKM:
 	Warhead@2Eff: CreateEffect
 		Explosions: piff
 		Inaccuracy: 171
-		ValidTargets: Ground, Ship, Air, Trees
+		ValidTargets: Ground, Ship, Air, AirSmall, Trees
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piff
 		Inaccuracy: 171
@@ -661,7 +692,7 @@ SNIPER:
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piff
-		ValidTargets: Ground, Ship, Air, Trees
+		ValidTargets: Ground, Ship, Air, AirSmall, Trees
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piff
 		ValidTargets: Water, Underwater
@@ -676,7 +707,7 @@ SNIPER.vehicle:
 	Range: 6c0
 	Report: ijarwe1a.aud
 	ValidTargets: Vehicle, Ship
-	InvalidTargets: Infantry, Structure, Wall, Husk, Air
+	InvalidTargets: Infantry, Structure, Wall, Husk, Air, AirSmall
 	Projectile: Bullet
 		Speed: 2c682
 		Blockable: true
@@ -716,7 +747,7 @@ SNIPER.vehicleElite:
 		InvalidTargets: DriverKillLow
 	Warhead@DriverKill: ChangeOwnerToNeutral
 		ValidTargets: DriverKillLow
-		InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air, DriverKillImmune
+		InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air, AirSmall, DriverKillImmune
 		ValidRelationships: Ally, Enemy, Neutral
 		Range: 0c511
 	Warhead@highlight: GrantExternalCondition

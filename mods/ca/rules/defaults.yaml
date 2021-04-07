@@ -1184,7 +1184,7 @@
 ^AutoTargetAir:
 	AutoTarget:
 	AutoTargetPriority@DEFAULT:
-		ValidTargets: Air
+		ValidTargets: Air, AirSmall
 		InvalidTargets: NoAutoTarget, AirLowPriority
 		Priority: 10
 	AutoTargetPriority@DEFAULTLOW:
@@ -1195,18 +1195,18 @@
 ^AutoTargetAirICBM:
 	Inherits: ^AutoTargetAir
 	AutoTargetPriority@DEFAULT:
-		ValidTargets: Air, ICBM
+		ValidTargets: Air, AirSmall, ICBM
 
 ^AutoTargetAll:
 	AutoTarget:
 		AttackAnythingCondition: stance-attackanything
 	AutoTargetPriority@DEFAULT:
 		RequiresCondition: !stance-attackanything
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Defense
 		InvalidTargets: NoAutoTarget, WaterStructure, AirLowPriority
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: stance-attackanything
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Structure, Defense
 		InvalidTargets: NoAutoTarget
 
 ^AutoTargetAllAssaultMove:
@@ -1222,12 +1222,12 @@
 	Inherits: ^AutoTargetAllAssaultMove
 	AutoTargetPriority@DEFAULTAA:
 		RequiresCondition: !stance-attackanything && !assault-move
-		ValidTargets: Air
+		ValidTargets: Air, AirSmall
 		InvalidTargets: NoAutoTarget, AirLowPriority
 		Priority: 10
 	AutoTargetPriority@ATTACKANYTHINGAA:
 		RequiresCondition: stance-attackanything || assault-move
-		ValidTargets: Air
+		ValidTargets: Air, AirSmall
 		InvalidTargets: NoAutoTarget, AirLowPriority
 		Priority: 10
 	AutoTargetPriority@DEFAULTAALOW:

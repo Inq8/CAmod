@@ -116,12 +116,12 @@
 	Inherits: ^Cannon
 	ReloadDelay: 90
 	Burst: 2
-	InvalidTargets: Air, Infantry
+	InvalidTargets: Air, AirSmall, Infantry
 	Warhead@1Dam: SpreadDamage
 		Damage: 6000
 		Versus:
 			Heavy: 115
-		InvalidTargets: Air
+		InvalidTargets: Air, AirSmall
 
 130mmTD:
 	Inherits: 130mm
@@ -134,7 +134,7 @@
 	Range: 5c0
 	Burst: 2
 	BurstDelays: 8
-	InvalidTargets: Air
+	InvalidTargets: Air, AirSmall
 	Warhead@1Dam: SpreadDamage
 		Damage: 4750
 		Falloff: 368, 184, 80, 18, 0
@@ -143,7 +143,7 @@
 			Tree: 200
 			Heavy: 115
 			Wood: 45
-		InvalidTargets: Air
+		InvalidTargets: Air, AirSmall
 	Warhead@3Eff_impact: CreateEffect
 		Explosions: nuke3
 		ImpactSounds: kaboom1.aud, kaboom22.aud
@@ -174,7 +174,7 @@
 			Light: 35
 			Concrete: 20
 			Brick: 32
-		InvalidTargets: Air
+		InvalidTargets: Air, AirSmall
 
 TurretGun:
 	Inherits: ^Cannon
@@ -544,7 +544,7 @@ DepthCharge.destroyer:
 
 203mm:
 	ReloadDelay: 120
-	InvalidTargets: Air
+	InvalidTargets: Air, AirSmall
 	Range: 9c0
 	MinRange: 2c0
 	Burst: 3
@@ -557,7 +557,7 @@ DepthCharge.destroyer:
 		Inaccuracy: 1c382
 		Image: 120MM
 	Warhead@1Dam: SpreadDamage
-		InvalidTargets: Air
+		InvalidTargets: Air, AirSmall
 		Spread: 626
 		Falloff: 100, 50, 15, 5, 0
 		Damage: 15000
@@ -570,7 +570,7 @@ DepthCharge.destroyer:
 			Brick: 60
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Dam: SpreadDamage
-		InvalidTargets: Air
+		InvalidTargets: Air, AirSmall
 		ValidRelationships: Enemy, Neutral
 		Spread: 626
 		Falloff: 100, 50, 15, 5, 0
@@ -632,6 +632,6 @@ ClusterBomb:
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: kaboom15.aud
-		ValidTargets: Ground, Air, Ship, Trees
+		ValidTargets: Ground, Air, AirSmall, Ship, Trees
 	Warhead@4EffWater: CreateEffect
 		ImpactSounds: splashl1.aud, splashl2.aud

@@ -418,6 +418,7 @@ SPY:
 		DefaultAttackSequence: shoot
 		IdleSequences: idle1,idle2
 		StandSequences: stand,stand2
+		RequiresCondition: !being-warped
 	WithDecoration@disguise:
 		Image: pips
 		Sequence: pip-disguise
@@ -1428,6 +1429,7 @@ BORI:
 		AttackSequences:
 			primary: shoot-laser
 			secondary: shoot
+		RequiresCondition: !being-warped
 	VoiceAnnouncement:
 		Voice: Build
 	AnnounceOnKill:
@@ -1679,6 +1681,8 @@ JJET:
 		Notification: AirUnitLost
 	MustBeDestroyed:
 	HitShape:
+		Type: Circle
+			Radius: 128
 	MapEditorData:
 		Categories: Aircraft
 	GrantConditionOnPrerequisite@ROF:
@@ -1713,7 +1717,7 @@ JJET:
 		TargetTypes: Heal
 	Targetable@AIRBORNE:
 		RequiresCondition: airborne && !being-warped
-		TargetTypes: Air
+		TargetTypes: AirSmall
 	DeathSounds@NORMAL:
 		Voice: Die
 		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath
@@ -1812,7 +1816,7 @@ JJET:
 		Prerequisites: barracks.upgraded
 	WithShadow:
 		Offset: 43, 128, 0
-		ZOffset: -129
+		ZOffset: 512
 		RequiresCondition: airborne
 	Hovers@CRUISING:
 		RequiresCondition: cruising
@@ -2057,6 +2061,8 @@ N3C:
 		Voice: Move
 	Voiced:
 		VoiceSet: ReaperVoice
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
 	Armament@PRIMARY:
 		Weapon: RedEye.CYB
 		LocalOffset: 0,0,555

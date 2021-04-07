@@ -43,7 +43,7 @@
 
 ^AntiAirMissile:
 	Inherits: ^AntiGroundMissile
-	ValidTargets: Air
+	ValidTargets: Air, AirSmall
 	Projectile: MissileCA
 		LockOnProbability: 95
 	Warhead@1Dam: SpreadDamage
@@ -51,6 +51,16 @@
 		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
 		ValidRelationships: Enemy, Neutral
+		Versus:
+			None: 100
+			Wood: 100
+			Light: 100
+			Concrete: 100
+			Brick: 100
+	Warhead@2Dam: SpreadDamage
+		Spread: 0c64
+		Falloff: 100, 30
+		ValidTargets: AirSmall
 		Versus:
 			None: 100
 			Wood: 100
@@ -66,11 +76,16 @@
 	MinRange: 1c256
 	Projectile: MissileCA
 		Speed: 384
+		Arm: 2
 		HorizontalRateOfTurn: 40
 		LockOnProbability: 90
 		LockOnInaccuracy: 0
 		RangeLimit: 12c0
 		AllowSnapping: true
+	Warhead@2Dam: SpreadDamage
+		Range: 0, 0c64, 0c256, 1c256
+		Falloff: 100, 70, 30, 10
+		ValidTargets: AirSmall
 
 Maverick:
 	Inherits: ^AntiGroundMissile
@@ -103,6 +118,8 @@ MaverickAA:
 	Burst: 2
 	BurstDelays: 10
 	Warhead@1Dam: SpreadDamage
+		Damage: 5500
+	Warhead@2Dam: SpreadDamage
 		Damage: 5500
 
 MaverickSU:
@@ -145,7 +162,6 @@ SuClusterMissile:
 		ContrailColor: FFFFFF80
 		Speed: 270
 		LaunchAngle: 10
-		AirburstAltitude: 0c678
 	Warhead@1Dam: SpreadDamage
 		Damage: 1
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
@@ -294,6 +310,8 @@ HellfireAA:
 	BurstDelays: 14
 	Warhead@1Dam: SpreadDamage
 		Damage: 3000
+	Warhead@2Dam: SpreadDamage
+		Damage: 3000
 
 HellfireAA.Orca:
 	Inherits: HellfireAA
@@ -313,13 +331,15 @@ WidowAA:
 		ContrailLength: 6
 	Warhead@1Dam: SpreadDamage
 		Damage: 6000
+	Warhead@2Dam: SpreadDamage
+		Damage: 6000
 
 MammothTusk:
 	Inherits: ^AntiGroundMissile
 	ReloadDelay: 60
 	Range: 6c512
 	Burst: 2
-	ValidTargets: Air, Infantry
+	ValidTargets: Air, AirSmall, Infantry
 	Projectile: MissileCA
 		Speed: 341
 		HorizontalRateOfTurn: 60
@@ -332,24 +352,35 @@ MammothTusk:
 			Light: 35
 			Heavy: 35
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@2Dam: SpreadDamage
+		Damage: 2000
+		Spread: 0c511
+		ValidTargets: AirSmall
+		Versus:
+			None: 100
+			Light: 35
+			Heavy: 35
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: kaboom15.aud
 		ValidTargets: Ground, Trees
 	Warhead@5EffAir: CreateEffect
 		Explosions: med_explosion_air
 		ImpactSounds: kaboom25.aud
-		ValidTargets: Air
+		ValidTargets: Air, AirSmall
 
 ApocalypseTusk:
 	Inherits: MammothTusk
 	Report: vapoat2a.aud, vapoat2b.aud, vapoat2c.aud
-	ValidTargets: Air
+	ValidTargets: Air, AirSmall
 	Burst: 4
 	Range: 8c0
 	Projectile: MissileCA
 		RangeLimit: 10c614
 		Speed: 401
 	Warhead@1Dam: SpreadDamage
+		Damage: 4000
+	Warhead@2Dam: SpreadDamage
 		Damage: 4000
 
 TitanTusk:
@@ -362,17 +393,19 @@ TitanTusk:
 		RangeLimit: 10c614
 	Warhead@1Dam: SpreadDamage
 		Damage: 10000
+	Warhead@2Dam: SpreadDamage
+		Damage: 10000
 
 APCTusk:
 	Inherits: MammothTusk
-	ValidTargets: Air, Ground, Infantry
+	ValidTargets: Air, AirSmall, Ground, Infantry
 
 Nike:
 	Inherits: ^AntiAirMissile
 	ReloadDelay: 20
 	Range: 7c512
 	Report: samshot1.aud
-	ValidTargets: Air, ICBM
+	ValidTargets: Air, AirSmall, ICBM
 	Projectile: MissileCA
 		Arm: 3
 		Inaccuracy: 0
@@ -384,14 +417,19 @@ Nike:
 		Damage: 6750
 		Range: 0, 0c64, 0c256, 4c256
 		ValidTargets: Air, ICBM
+	Warhead@2Dam: SpreadDamage
+		Damage: 6750
+		Range: 0, 0c64, 0c256, 4c256
+		Falloff: 100, 70, 30, 10
+		ValidTargets: AirSmall
 	Warhead@3Eff: CreateEffect
-		ValidTargets: Air, ICBM, Ground, Water, Trees
+		ValidTargets: Air, AirSmall, ICBM, Ground, Water, Trees
 
 RedEye:
 	Inherits: Nike
 	ReloadDelay: 50
 	Report: missile1.aud
-	ValidTargets: Air
+	ValidTargets: Air, AirSmall
 	Projectile: MissileCA
 		Image: Dragon
 		HorizontalRateOfTurn: 80
@@ -400,11 +438,19 @@ RedEye:
 		Damage: 4000
 		Range: 0, 0c64, 0c256, 3c0
 		ValidTargets: Air
+	Warhead@2Dam: SpreadDamage
+		Damage: 4000
+		-Range:
+		Spread: 0c48
+		Falloff: 100, 25
+		ValidTargets: AirSmall
 
 RedEye.CYB:
 	Inherits: RedEye
 	Report: rocket.aud
 	Warhead@1Dam: SpreadDamage
+		Damage: 4600
+	Warhead@2Dam: SpreadDamage
 		Damage: 4600
 
 RedEye.CRYO:
@@ -419,7 +465,7 @@ RedEye.CRYO:
 		Condition: chilled
 		Duration: 65
 		Range: 0c341
-		ValidTargets: Air
+		ValidTargets: Air, AirSmall
 
 RedEyeE:
 	Inherits: RedEye
@@ -460,7 +506,7 @@ Stinger:
 StingerAA:
 	Inherits: Stinger
 	ReloadDelay: 40
-	ValidTargets: Air
+	ValidTargets: Air, AirSmall
 	Projectile: MissileCA
 		Speed: 255
 		CloseEnough: 298
@@ -478,6 +524,11 @@ StingerAA:
 			Light: 100
 			Concrete: 100
 			Brick: 100
+	Warhead@2Dam: SpreadDamage
+		Damage: 3375
+		Range: 0, 0c32, 0c64
+		Falloff: 100, 15, 5
+		ValidTargets: AirSmall
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air
 		ImpactActors: false
@@ -849,6 +900,11 @@ BikeRocketsAA:
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
 		Damage: 2600
+	Warhead@2Dam: SpreadDamage
+		Damage: 2600
+		Range: 0, 0c64, 0c256, 1c256
+		Falloff: 100, 70, 30, 10
+		ValidTargets: AirSmall
 
 SBRockets:
 	Inherits: BikeRockets
@@ -872,6 +928,11 @@ IFVRocketsAA:
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
 		Damage: 2800
+	Warhead@2Dam: SpreadDamage
+		Damage: 2800
+		Range: 0, 0c64, 0c256, 1c256
+		Falloff: 100, 70, 30, 10
+		ValidTargets: AirSmall
 
 IFVRocketsE:
 	Inherits: IFVRockets
@@ -889,6 +950,11 @@ IFVRocketsAAE:
 		ContrailLength: 10
 	Warhead@1Dam: SpreadDamage
 		Damage: 3900
+	Warhead@2Dam: SpreadDamage
+		Damage: 3900
+		Range: 0, 0c64, 0c256, 1c256
+		Falloff: 100, 70, 30, 10
+		ValidTargets: AirSmall
 
 #Artillery Missiles, lock-on but act dumb
 227mm:
@@ -1005,6 +1071,11 @@ IFVRocketsAAE:
 		Falloff: 100, 37, 14, 5, 0
 		Spread: 0c128
 		-Range:
+	Warhead@2Dam: SpreadDamage
+		Damage: 1400
+		Range: 0, 0c64, 0c256, 1c256
+		Falloff: 100, 70, 30, 10
+		ValidTargets: AirSmall
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: xplos.aud
 
@@ -1020,6 +1091,8 @@ IFVRocketsAAE:
 		ContrailLength: 15
 		RangeLimit: 8c512
 	Warhead@1Dam: SpreadDamage
+		Damage: 1700
+	Warhead@2Dam: SpreadDamage
 		Damage: 1700
 
 227mmAA.Hypersonic:
@@ -1077,6 +1150,11 @@ StnkMissileAA:
 		RangeLimit: 9c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 4000
+	Warhead@2Dam: SpreadDamage
+		Damage: 4000
+		Range: 0, 0c64, 0c256, 1c256
+		Falloff: 100, 70, 30, 10
+		ValidTargets: AirSmall
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: xplos.aud
 
@@ -1206,6 +1284,11 @@ ScrinTorpAA:
 		Jammable: false
 	Warhead@1Dam: SpreadDamage
 		Damage: 3400
+	Warhead@2Dam: SpreadDamage
+		Damage: 3400
+		Range: 0, 0c64, 0c256, 1c256
+		Falloff: 100, 70, 30, 10
+		ValidTargets: AirSmall
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: expnew17.aud
 	Warhead@green: GrantExternalCondition

@@ -26,7 +26,7 @@ DisintegratorBeam:
 DisintegratorBeamAA:
 	Inherits: DisintegratorBeam
 	Range: 7c0
-	ValidTargets: Air
+	ValidTargets: Air, AirSmall
 	Projectile: LaserZap
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
@@ -34,6 +34,16 @@ DisintegratorBeamAA:
 		ValidRelationships: Enemy, Neutral
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
+		Damage: 2500
+		Versus:
+			None: 100
+			Wood: 100
+			Concrete: 100
+			Light: 100
+	Warhead@2Dam: SpreadDamage
+		ValidTargets: AirSmall
+		Range: 0, 0c64
+		Falloff: 100, 30
 		Damage: 2500
 		Versus:
 			None: 100
@@ -93,7 +103,7 @@ GunWalkerZap:
 		Explosions: idle
 		ExplosionPalette: scrin
 		Image: scrinzaphit
-		ValidTargets: Ground, Ship, Air, Trees
+		ValidTargets: Ground, Ship, Air, AirSmall, Trees
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piffs
 		ValidTargets: Water, Underwater
@@ -107,13 +117,23 @@ GunWalkerZapAA:
 		Speed: 1c448
 		Blockable: false
 		Inaccuracy: 0
-	ValidTargets: Air
+	ValidTargets: Air, AirSmall
 	Warhead@1Dam: SpreadDamage
 		Damage: 1500
 		ValidTargets: Air
 		ValidRelationships: Enemy, Neutral
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
+		Versus:
+			Wood: 100
+			Concrete: 100
+			Light: 100
+			Heavy: 100
+	Warhead@2Dam: SpreadDamage
+		Damage: 1500
+		ValidTargets: AirSmall
+		Range: 0, 0c64, 0c256, 4c256
+		Falloff: 100, 70, 30, 10
 		Versus:
 			Wood: 100
 			Concrete: 100
@@ -333,7 +353,7 @@ RiftCannon:
 	Warhead@2Dam: HealthPercentageDamage
 		Spread: 512
 		Damage: 10
-		InvalidTargets: Air
+		InvalidTargets: Air, AirSmall
 		Versus:
 			Wood: 10
 			None: 60
@@ -363,7 +383,7 @@ MiniRift:
 		Damage: 1000
 		Falloff: 100, 70, 0
 		ValidTargets: Ground, Trees
-		InvalidTargets: Air, Creep
+		InvalidTargets: Air, AirSmall, Creep
 		Versus:
 			None: 3
 			Wood: 30
@@ -378,7 +398,7 @@ MiniRift:
 		Damage: 250
 		Falloff: 100, 70, 0
 		ValidTargets: Ground, Trees
-		InvalidTargets: Air, Creep
+		InvalidTargets: Air, AirSmall, Creep
 		Versus:
 			None: 3
 			Wood: 30
@@ -523,7 +543,7 @@ StormriderZap:
 		Explosions: idle
 		ExplosionPalette: scrin
 		Image: scrinzaphit
-		ValidTargets: Ground, Ship, Air, Trees
+		ValidTargets: Ground, Ship, Air, AirSmall, Trees
 	Warhead@4EffWater: CreateEffect
 		Explosions: water_piffs
 		ValidTargets: Water, Underwater
@@ -536,13 +556,23 @@ StormRiderZapAA:
 	Projectile: Bullet
 		Image: scrinzap
 		Speed: 1c768
-	ValidTargets: Air
+	ValidTargets: Air, AirSmall
 	Warhead@1Dam: SpreadDamage
 		Damage: 1800
 		Range: 0, 0c64, 0c256, 1c0
 		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
 		ValidRelationships: Enemy, Neutral
+		Versus:
+			Wood: 100
+			Concrete: 100
+			Light: 100
+			Heavy: 100
+	Warhead@2Dam: SpreadDamage
+		Damage: 1800
+		Range: 0, 0c64
+		Falloff: 100, 30
+		ValidTargets: AirSmall
 		Versus:
 			Wood: 100
 			Concrete: 100
@@ -592,10 +622,10 @@ InvaderLauncher:
 	Burst: 4
 	BurstDelays: 5
 	Range: 10c0
-	ValidTargets: Air, Ground, Water
+	ValidTargets: Air, AirSmall, Ground, Water
 	Projectile: InstantHit
 	Warhead@1Dam: TargetDamage
-		ValidTargets: Air, Ground, Water
+		ValidTargets: Air, AirSmall, Ground, Water
 
 InvaderZap:
 	Range: 5c0
@@ -622,7 +652,7 @@ InvaderZap:
 		Explosions: idle
 		ExplosionPalette: scrin
 		Image: scrinzaphitsm
-		ValidTargets: Ground, Ship, Air, Trees
+		ValidTargets: Ground, Ship, Air, AirSmall, Trees
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piffs
 		ValidTargets: Water, Underwater
@@ -632,13 +662,23 @@ InvaderZapAA:
 	Inherits: InvaderZap
 	Projectile: Bullet
 		Image: scrinzap
-	ValidTargets: Air
+	ValidTargets: Air, AirSmall
 	Warhead@1Dam: SpreadDamage
 		Damage: 160
 		Range: 0, 0c64, 0c256, 1c0
 		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
 		ValidRelationships: Enemy, Neutral
+		Versus:
+			Light: 100
+			Concrete: 100
+			Wood: 100
+			None: 100
+	Warhead@2Dam: SpreadDamage
+		Damage: 160
+		Range: 0, 0c64
+		Falloff: 100, 30
+		ValidTargets: AirSmall
 		Versus:
 			Light: 100
 			Concrete: 100
@@ -668,7 +708,7 @@ PlasmaTurretGun:
 		Explosions: idle
 		ExplosionPalette: scrin
 		Image: scrinzaphit
-		ValidTargets: Ground, Ship, Air, Trees
+		ValidTargets: Ground, Ship, Air, AirSmall, Trees
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piffs
 		ValidTargets: Water, Underwater
@@ -787,7 +827,7 @@ ShardLauncher:
 	Burst: 5
 	BurstDelays: 4
 	Range: 7c512
-	ValidTargets: Air, ICBM
+	ValidTargets: Air, AirSmall, ICBM
 	Projectile: Missile
 		Speed: 366
 		Palette: scrin
@@ -813,11 +853,23 @@ ShardLauncher:
 			Light: 100
 			Heavy: 100
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@2Dam: SpreadDamage
+		ValidTargets: AirSmall
+		Range: 0, 0c64
+		Falloff: 100, 30
+		Damage: 2650
+		Versus:
+			None: 100
+			Wood: 100
+			Concrete: 100
+			Light: 100
+			Heavy: 100
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: idle, idle2, idle3, idle4
 		ExplosionPalette: scrin
 		Image: shardhit
-		ValidTargets: Air, ICBM, Ground, Water, Trees
+		ValidTargets: Air, AirSmall, ICBM, Ground, Water, Trees
 
 RavagerShards:
 	Inherits: ShardLauncher
@@ -890,7 +942,7 @@ Rift:
 		Damage: 2300
 		Falloff: 100, 95, 50, 45, 40, 30, 15, 10, 5
 		ValidTargets: Ground, Trees
-		InvalidTargets: Air, Creep
+		InvalidTargets: Air, AirSmall, Creep
 		Versus:
 			None: 30
 			Wood: 100
@@ -903,7 +955,7 @@ Rift:
 SuppressionField:
 	Projectile: InstantExplode
 	ReloadDelay: 1
-	ValidTargets: Ground, Air, Ship
+	ValidTargets: Ground, Air, AirSmall, Ship
 	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
 		Damage: 1
@@ -911,7 +963,7 @@ SuppressionField:
 		Range: 3c512
 		Duration: 600
 		Condition: suppression
-		ValidTargets: Ground, Air, Ship
+		ValidTargets: Ground, Air, AirSmall, Ship
 
 BuzzerSpawner:
 	ReloadDelay: 1
@@ -957,7 +1009,7 @@ BuzzerVortex:
 		Falloff: 100, 70, 20, 0
 		Damage: 300
 		ValidTargets: Ground, Trees
-		InvalidTargets: Air, Creep
+		InvalidTargets: Air, AirSmall, Creep
 		Versus:
 			None: 100
 			Wood: 10
@@ -983,7 +1035,7 @@ BuzzerDummyWeapon:
 	Warhead@1Dam: SpreadDamage
 		Damage: 1
 		ValidTargets: Ground, Trees
-		InvalidTargets: Air
+		InvalidTargets: Air, AirSmall
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 
 StormSpikeSpawner:
@@ -992,4 +1044,4 @@ StormSpikeSpawner:
 	Warhead@spawn: SpawnBuilding
 		Buildings: scol.temp
 		Range: 3
-		ValidTargets: Air, Ground, Water
+		ValidTargets: Air, AirSmall, Ground, Water
