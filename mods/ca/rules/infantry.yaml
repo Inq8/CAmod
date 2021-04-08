@@ -100,6 +100,7 @@ E1:
 	Armament@Garrison:
 		Name: mounted
 		Weapon: M1CarbineE
+		MuzzleSequence: garrison-muzzle
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		IdleSequences: idle1,idle2,idle3,idle4
@@ -466,6 +467,7 @@ E7:
 	Armament@mountedPRIMARY:
 		Weapon: Colt45E
 		Name: mounted
+		MuzzleSequence: garrison-muzzle
 	Armament@sapper:
 		Weapon: PlaceC4
 		Cursor: c4
@@ -855,6 +857,7 @@ N1:
 	Armament@Garrison:
 		Name: mounted
 		Weapon: M16CarbineE
+		MuzzleSequence: garrison-muzzle
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	WithInfantryBody:
@@ -1182,6 +1185,7 @@ RMBO:
 	Armament@garrison:
 		Name: mounted
 		Weapon: smgE
+		MuzzleSequence: garrison-muzzle
 	Armament@sapper:
 		Weapon: PlaceC4
 		Cursor: c4
@@ -1307,6 +1311,7 @@ SNIP:
 		Weapon: sniperE
 		Name: mounted
 		PauseOnCondition: !ammo
+		MuzzleSequence: garrison-muzzle
 	Armament@APROUND:
 		Name: secondary
 		Weapon: sniper.vehicle
@@ -2021,8 +2026,12 @@ N1C:
 		Voice: Move
 	Voiced:
 		VoiceSet: CyborgVoice
-	Armament:
+	Armament@PRIMARY:
 		Weapon: Vulcan3
+	Armament@Garrison:
+		Name: mounted
+		Weapon: Vulcan3
+		MuzzleSequence: garrison-muzzle
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 
