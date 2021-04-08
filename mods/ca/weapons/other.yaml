@@ -1715,23 +1715,22 @@ NeutronCannon:
 	BurstDelays: 5
 	Range: 5c0
 	Projectile: InstantHit
-	Warhead@Damage: WarpDamage
-		Damage: 900
+	Warhead@Damage: WarpPercentDamage
+		Damage: 2
 		Spread: 1
 		Versus:
-			None: 25
-			Wood: 45
-			Light: 50
-			Heavy: 100
-			Concrete: 45
-			Brick: 100
+			Wood: 15
+			Concrete: 50
+			Heavy: 75
+			Light: 75
+			Brick: 10
 		ValidTargets: Temporal
 		DamageTypes: ChronoDeath
 
 NeutronCannonAA:
 	Inherits: NeutronCannon
 	ValidTargets: TemporalAir
-	Warhead@Damage: WarpDamage
+	Warhead@Damage: WarpPercentDamage
 		ValidTargets: TemporalAir
 
 NeutronCannonBeam:
