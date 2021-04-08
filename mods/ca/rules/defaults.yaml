@@ -622,6 +622,10 @@
 		RequiresCondition: hazmat-upgrade
 	ExternalCondition@HAZMAT:
 		Condition: hazmat-upgrade
+	GrantConditionOnFaction@IRAQHAZMAT:
+		Factions: iraq
+		Condition: hazmatsuits-iraq
+		RequiresCondition: hazmatsuits
 	WithDecoration@HAZMAT:
 		Image: pips
 		Sequence: pip-hazmat
@@ -1639,25 +1643,25 @@
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.medium
-		RequiresCondition: !(hazmatsuits || being-warped || parachute)
+		RequiresCondition: !(hazmatsuits || being-warped || parachute || hazmatsuits-iraq)
 	DamagedByTintedCells@RADMEDHAZMAT:
 		Damage: 150
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.medium
-		RequiresCondition: hazmatsuits && !(being-warped || parachute)
+		RequiresCondition: hazmatsuits && !(being-warped || parachute || hazmatsuits-iraq)
 	DamagedByTintedCells@RADWEAK:
 		Damage: 100
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.weak
-		RequiresCondition: !(hazmatsuits || being-warped || parachute)
+		RequiresCondition: !(hazmatsuits || being-warped || parachute || hazmatsuits-iraq)
 	DamagedByTintedCells@RADWEAKHAZMAT:
 		Damage: 50
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.weak
-		RequiresCondition: hazmatsuits && !(being-warped || parachute)
+		RequiresCondition: hazmatsuits && !(being-warped || parachute || hazmatsuits-iraq)
 	DamagedByTintedCells@FROZEN:
 		Damage: 50
 		DamageInterval: 16
