@@ -1371,7 +1371,7 @@ FACT:
 	BaseBuilding:
 	Transforms:
 		RequiresCondition: factundeploy
-		PauseOnCondition: chrono-vortex || being-captured || c4 || build-incomplete || being-warped
+		PauseOnCondition: chrono-vortex || being-captured || c4 || tnt || build-incomplete || being-warped
 		IntoActor: mcv
 		Offset: 1,1
 		Facing: 384
@@ -2271,6 +2271,8 @@ TENT:
 	ProvidesPrerequisite@germany:
 		Factions: germany
 		Prerequisite: infantry.germany
+	ProvidesPrerequisite@hazmat:
+		Prerequisite: infantry.hazmat
 	ProvidesPrerequisite@mech:
 		Prerequisite: infantry.mech
 	ProvidesPrerequisite@medi:
@@ -2659,6 +2661,8 @@ PYLE:
 		Prerequisite: infantry.human
 	ProvidesPrerequisite@infantrytd:
 		Prerequisite: infantry.td
+	ProvidesPrerequisite@hazmat:
+		Prerequisite: infantry.hazmat
 	ProvidesPrerequisite@talon:
 		Factions: talon
 		Prerequisite: infantry.talon
@@ -2738,6 +2742,8 @@ HAND:
 		Prerequisite: infantry.human
 	ProvidesPrerequisite@infantrytd:
 		Prerequisite: infantry.td
+	ProvidesPrerequisite@hazmat:
+		Prerequisite: infantry.hazmat
 	ProvidesPrerequisite@blackh:
 		Factions: blackh
 		Prerequisite: infantry.blackh
@@ -3141,7 +3147,7 @@ AFAC:
 	BaseBuilding:
 	Transforms:
 		RequiresCondition: factundeploy
-		PauseOnCondition: chrono-vortex || being-captured || c4 || build-incomplete || being-warped
+		PauseOnCondition: chrono-vortex || being-captured || c4 || tnt || build-incomplete || being-warped
 		IntoActor: amcv
 		Offset: 1,1
 		Facing: 432

@@ -619,13 +619,12 @@
 		Prerequisites: hazmat.upgrade
 	GrantCondition@HAZMAT:
 		Condition: hazmatsuits
-		RequiresCondition: hazmat-upgrade
+		RequiresCondition: hazmat-upgrade && !hazmats.upgrade
 	ExternalCondition@HAZMAT:
 		Condition: hazmat-upgrade
-	GrantConditionOnFaction@IRAQHAZMAT:
-		Factions: iraq
-		Condition: hazmatsuits-iraq
-		RequiresCondition: hazmatsuits
+	GrantConditionOnPrerequisite@HAZMATSOVIET:
+		Condition: hazmatsuits-soviet
+		Prerequisites: hazmats.upgrade
 	WithDecoration@HAZMAT:
 		Image: pips
 		Sequence: pip-hazmat
@@ -636,6 +635,19 @@
 		BlinkInterval: 64
 		BlinkPatterns:
 			bino : Off, On
+	WithDecoration@HAZMATSOVIET:
+		Image: pips
+		Sequence: pip-hazmats
+		Palette: chrome
+		Position: BottomLeft
+		RequiresCondition: hazmatsuits-soviet
+		RequiresSelection: True
+		BlinkInterval: 64
+		BlinkPatterns:
+			bino : Off, On
+	SpeedMultiplier@HAZMATSOVIET:
+		RequiresCondition: hazmatsuits-soviet
+		Modifier: 90
 
 ^NodCyborgUpgrade:
 	GrantConditionOnPrerequisite@CYBORGSPEED:
@@ -685,6 +697,7 @@
 		-BlinkPatterns:
 		BlinkPatterns:
 			hazmatsuits: On, Off
+			hazmatsuits-soviet: On, Off
 		RequiresSelection: True
 
 ^AuraHealable:
@@ -1491,7 +1504,7 @@
 		Damage: 125
 		DamageInterval: 16
 		DamageTypes: ToxinDeath
-		RequiresCondition: tibexposed && !(hazmatsuits || being-warped || parachute)
+		RequiresCondition: tibexposed && !(hazmatsuits || hazmatsuits-soviet || being-warped || parachute)
 	GrantConditionOnPrerequisite@BIO:
 		Condition: hazmatsuits
 		Prerequisites: bio
@@ -1631,37 +1644,37 @@
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.strong
-		RequiresCondition: !(hazmatsuits || being-warped || parachute)
+		RequiresCondition: !(hazmatsuits || being-warped || parachute || hazmatsuits-soviet)
 	DamagedByTintedCells@RADSTRONGHAZMAT:
 		Damage: 375
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.strong
-		RequiresCondition: hazmatsuits && !(being-warped || parachute)
+		RequiresCondition: hazmatsuits && !(being-warped || parachute || hazmatsuits-soviet)
 	DamagedByTintedCells@RADMED:
 		Damage: 300
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.medium
-		RequiresCondition: !(hazmatsuits || being-warped || parachute || hazmatsuits-iraq)
+		RequiresCondition: !(hazmatsuits || being-warped || parachute || hazmatsuits-soviet)
 	DamagedByTintedCells@RADMEDHAZMAT:
 		Damage: 150
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.medium
-		RequiresCondition: hazmatsuits && !(being-warped || parachute || hazmatsuits-iraq)
+		RequiresCondition: hazmatsuits && !(being-warped || parachute || hazmatsuits-soviet)
 	DamagedByTintedCells@RADWEAK:
 		Damage: 100
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.weak
-		RequiresCondition: !(hazmatsuits || being-warped || parachute || hazmatsuits-iraq)
+		RequiresCondition: !(hazmatsuits || being-warped || parachute || hazmatsuits-soviet)
 	DamagedByTintedCells@RADWEAKHAZMAT:
 		Damage: 50
 		DamageInterval: 16
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.weak
-		RequiresCondition: hazmatsuits && !(being-warped || parachute || hazmatsuits-iraq)
+		RequiresCondition: hazmatsuits && !(being-warped || parachute || hazmatsuits-soviet)
 	DamagedByTintedCells@FROZEN:
 		Damage: 50
 		DamageInterval: 16
