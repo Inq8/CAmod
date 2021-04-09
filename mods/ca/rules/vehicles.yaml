@@ -1540,14 +1540,28 @@ TTNK.RA2:
 		Range: 6c0
 	Armament@PRIMARY:
 		Weapon: TTankZapMK2
-		LocalOffset: 511,200,113, 511,-200,113
+		LocalOffset: 511,200,113
 		RequiresCondition: !tarc-upgrade
 		MuzzleSequence: muzzle
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: TTankZapMK2Secondary
+		LocalOffset: 511,-200,113
+		RequiresCondition: !tarc-upgrade
+		MuzzleSequence: muzzle
+		FireDelay: 3
 	Armament@PRIMARYUPG:
 		Weapon: TTankZapMK2.UPG
-		LocalOffset: 511,200,113, 511,-200,113
+		LocalOffset: 511,200,113
 		RequiresCondition: tarc-upgrade
 		MuzzleSequence: muzzle
+	Armament@SECONDARYUPG:
+		Name: secondary
+		Weapon: TTankZapMK2Secondary.UPG
+		LocalOffset: 511,-200,113
+		RequiresCondition: tarc-upgrade
+		MuzzleSequence: muzzle
+		FireDelay: 3
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack

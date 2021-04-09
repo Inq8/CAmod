@@ -94,7 +94,8 @@ S1:
 	Armament@Garrison:
 		Name: mounted
 		Weapon: WarriorGun
-		MuzzleSequence: muzzle
+		MuzzleSequence: garrison-muzzle
+		MuzzlePalette: scrin
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: being-warped
@@ -2387,7 +2388,13 @@ PORT:
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,512,0
+		ExitCell: 0,2
+		ProductionTypes: Soldier, Infantry
+	Exit@2:
+		RequiresCondition: !being-captured
+		SpawnOffset: 256,512,0
 		ExitCell: 1,2
+		ProductionTypes: Soldier, Infantry
 	Production:
 		Produces: Infantry, Soldier
 		PauseOnCondition: forceshield || invulnerability || being-warped

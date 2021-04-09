@@ -323,17 +323,22 @@ TitanGun:
 			Brick: 100
 			Light: 85
 			Heavy: 38
+	Warhead@2Dam: SpreadDamage
+		Damage: 70000
+		Spread: 341
+		ValidTargets: Infantry
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: large_artillery_explosion
 		ImpactSounds: artyhit.aud, artyhit2.aud, artyhit3.aud
 	Warhead@Concussion1: GrantExternalCondition
 		Range: 1c512
-		Duration: 120
+		Duration: 140
 		Condition: concussion
 		ValidTargets: Ground, Infantry, Vehicle, Ship
 	Warhead@Concussion2: GrantExternalCondition
 		Range: 3c0
-		Duration: 60
+		Duration: 70
 		Condition: concussion
 		ValidTargets: Ground, Infantry, Vehicle, Ship
 	Warhead@5Shake: ShakeScreen
