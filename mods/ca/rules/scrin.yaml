@@ -2395,6 +2395,18 @@ PORT:
 		SpawnOffset: 256,512,0
 		ExitCell: 1,2
 		ProductionTypes: Soldier, Infantry
+	Exit@3:
+		RequiresCondition: !being-captured
+		SpawnOffset: 0,512,0
+		ExitCell: -1,2
+		ProductionTypes: Soldier, Infantry
+		Priority: 0
+	Exit@4:
+		RequiresCondition: !being-captured
+		SpawnOffset: 256,512,0
+		ExitCell: 2,2
+		ProductionTypes: Soldier, Infantry
+		Priority: 0
 	Production:
 		Produces: Infantry, Soldier
 		PauseOnCondition: forceshield || invulnerability || being-warped
