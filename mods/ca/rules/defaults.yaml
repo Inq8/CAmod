@@ -617,14 +617,15 @@
 	GrantConditionOnPrerequisite@HAZMAT:
 		Condition: hazmat-upgrade
 		Prerequisites: hazmat.upgrade
+	GrantConditionOnPrerequisite@HAZMATSOVIET:
+		Condition: hazmatsoviet-upgrade
+		Prerequisites: hazmatsoviet.upgrade
 	GrantCondition@HAZMAT:
 		Condition: hazmatsuits
-		RequiresCondition: hazmat-upgrade && !hazmats.upgrade
-	ExternalCondition@HAZMAT:
-		Condition: hazmat-upgrade
-	GrantConditionOnPrerequisite@HAZMATSOVIET:
+		RequiresCondition: hazmat-upgrade && !hazmatsoviet-upgrade
+	GrantCondition@HAZMATSOVIET:
 		Condition: hazmatsuits-soviet
-		Prerequisites: hazmats.upgrade
+		RequiresCondition: hazmatsoviet-upgrade
 	WithDecoration@HAZMAT:
 		Image: pips
 		Sequence: pip-hazmat
@@ -647,7 +648,7 @@
 			bino : Off, On
 	SpeedMultiplier@HAZMATSOVIET:
 		RequiresCondition: hazmatsuits-soviet
-		Modifier: 90
+		Modifier: 95
 
 ^NodCyborgUpgrade:
 	GrantConditionOnPrerequisite@CYBORGSPEED:
@@ -1651,6 +1652,12 @@
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.strong
 		RequiresCondition: hazmatsuits && !(being-warped || parachute || hazmatsuits-soviet)
+	DamagedByTintedCells@RADSTRONGHAZMATSOVIET:
+		Damage: 25
+		DamageInterval: 16
+		DamageTypes: RadiationDeath
+		LayerName: radioactivity.strong
+		RequiresCondition: hazmatsuits-soviet && !(being-warped || parachute || hazmatsuits)
 	DamagedByTintedCells@RADMED:
 		Damage: 300
 		DamageInterval: 16
@@ -1728,13 +1735,13 @@
 	-GrantConditionOnPrerequisite@HAZMAT:
 	-WithDecoration@HAZMAT:
 	-GrantCondition@HAZMAT:
-	-ExternalCondition@HAZMAT:
 	-DamagedByTerrain@TIBDAMAGE:
 	-GrantStackingCondition@TIBEXPOSED:
 	DamagedByTintedCells@RADSTRONG:
 		Damage: 375
 		RequiresCondition: !being-warped
 	-DamagedByTintedCells@RADSTRONGHAZMAT:
+	-DamagedByTintedCells@RADSTRONGHAZMATSOVIET:
 	-DamagedByTintedCells@RADMED:
 	-DamagedByTintedCells@RADMEDHAZMAT:
 	-DamagedByTintedCells@RADWEAK:

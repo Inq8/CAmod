@@ -1980,15 +1980,18 @@ E8:
 	-DamagedByTerrain@TIBDAMAGE:
 	-DamagedByTintedCells@RADSTRONG:
 	-DamagedByTintedCells@RADSTRONGHAZMAT:
+	-DamagedByTintedCells@RADSTRONGHAZMATSOVIET:
 	-DamagedByTintedCells@RADMED:
 	-DamagedByTintedCells@RADMEDHAZMAT:
 	-DamagedByTintedCells@RADWEAK:
 	-DamagedByTintedCells@RADWEAKHAZMAT:
 	-GrantCondition@HAZMAT:
 	-GrantConditionOnPrerequisite@HAZMAT:
-	-ExternalCondition@HAZMAT:
-	WithDecoration@HAZMAT:
-		RequiresCondition: biofirepower
+	-GrantConditionOnPrerequisite@HAZMATSOVIET:
+	GrantCondition@HAZMATSOVIET:
+		-RequiresCondition:
+	-WithDecoration@HAZMAT:
+	-SpeedMultiplier@HAZMATSOVIET:
 
 N1C:
 	Inherits: ^Cyborg

@@ -17,7 +17,7 @@ hazmat.upgrade:
 		Name: Upgrade: Hazmat Suits
 	Buildable:
 		BuildPaletteOrder: 10
-		Prerequisites: ~anyradar, ~infantry.hazmat, ~techlevel.high, !~upgrade.hazmats
+		Prerequisites: ~anyradar, ~infantry.hazmat, ~techlevel.high, ~!hazmatsoviet.upgrade
 		IconPalette: chrometd
 		BuildDuration: 1125
 		Description: Infantry are equiped with hazmat suits which\nprovides protection against Tiberium and radiation.\n\n  Upgrades: Infantry\n  + Tiberium immunity\n  + 50% resistance to radiation
@@ -366,7 +366,7 @@ v2.upgrade:
 	RenderSprites:
 		Image: v2.upgrade
 
-hazmats.upgrade:
+hazmatsoviet.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
 		Name: Upgrade: Heavy Hazmat Suits
@@ -374,7 +374,7 @@ hazmats.upgrade:
 		BuildPaletteOrder: 10
 		Prerequisites: ~dome, ~barr, ~techlevel.high
 		BuildDuration: 1500
-		Description: Infantry are equiped with Heavy hazmat suits which\nprovides protection against Tiberium and radiation.\n\n  Upgrades: Infantry\n  + Tiberium immunity\n  + Radiation immunity\n  - Reduces movement speed 10%
+		Description: Infantry are equipped with heavy hazmat suits which\nprovides protection against Tiberium and radiation.\n\n  Upgrades: Infantry\n  + Tiberium immunity\n  + High Radiation resistance\n  - Reduces movement speed 5%
 	Valued:
 		Cost: 1000
 	RenderSprites:
