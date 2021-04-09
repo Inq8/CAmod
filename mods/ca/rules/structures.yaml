@@ -2120,6 +2120,18 @@ BARR:
 		SpawnOffset: -725,640,0
 		ExitCell: 0,2
 		ProductionTypes: Soldier, Infantry
+	Exit@3:
+		RequiresCondition: !being-captured
+		SpawnOffset: -170,810,0
+		ExitCell: -1,2
+		ProductionTypes: Soldier, Infantry
+		Priority: 0
+	Exit@4:
+		RequiresCondition: !being-captured
+		SpawnOffset: -725,640,0
+		ExitCell: 2,2
+		ProductionTypes: Soldier, Infantry
+		Priority: 0
 	Production:
 		Produces: Infantry, Soldier
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -2249,6 +2261,18 @@ TENT:
 		SpawnOffset: -725,640,0
 		ExitCell: 0,2
 		ProductionTypes: Soldier, Infantry
+	Exit@3:
+		RequiresCondition: !being-captured
+		SpawnOffset: -42,810,0
+		ExitCell: -1,2
+		ProductionTypes: Soldier, Infantry
+		Priority: 0
+	Exit@4:
+		RequiresCondition: !being-captured
+		SpawnOffset: -725,640,0
+		ExitCell: 2,2
+		ProductionTypes: Soldier, Infantry
+		Priority: 0
 	Production:
 		Produces: Infantry, Soldier
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -2650,6 +2674,18 @@ PYLE:
 		SpawnOffset: -725,640,0
 		ExitCell: 0,2
 		ProductionTypes: Soldier, Infantry
+	Exit@3:
+		RequiresCondition: !being-captured
+		SpawnOffset: -170,810,0
+		ExitCell: -1,2
+		ProductionTypes: Soldier, Infantry
+		Priority: 0
+	Exit@4:
+		RequiresCondition: !being-captured
+		SpawnOffset: -725,640,0
+		ExitCell: 2,2
+		ProductionTypes: Soldier, Infantry
+		Priority: 0
 	Production:
 		Produces: Infantry, Soldier
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -2729,6 +2765,16 @@ HAND:
 		SpawnOffset: -1024,768,0
 		ExitCell: -2,2
 		Facing: 384
+	Exit@3:
+		RequiresCondition: !being-captured
+		SpawnOffset: 512,1024,0
+		ExitCell: 0,2
+		Priority: 0
+	Exit@4:
+		RequiresCondition: !being-captured
+		SpawnOffset: 512,1024,0
+		ExitCell: 2,2
+		Priority: 0
 	Production:
 		Produces: Infantry, Soldier, Cyborg
 		PauseOnCondition: forceshield || invulnerability || being-warped
