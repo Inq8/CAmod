@@ -142,28 +142,23 @@ GunWalkerZapAA:
 
 PlasmaDiscs:
 	Range: 5c0
+	MinRange: 1c512
 	Report: seeker-fire1.aud, seeker-fire2.aud, seeker-fire3.aud
-	ReloadDelay: 55
+	ReloadDelay: 75
 	Burst: 5
 	BurstDelays: 4
-	Projectile: Missile
+	Projectile: Bullet
 		Image: plasdiscsm
 		TrailImage: smokey
 		TrailPalette: scrinplasma
-		Speed: 450
+		TrailDelay: 1
+		Speed: 280
 		Inaccuracy: 0c256
 		Blockable: false
-		Jammable: true
-		HorizontalRateOfTurn: 30
-		RangeLimit: 6c512
-		LockOnProbability: 50
-		LockOnInaccuracy: 0
-		MinimumLaunchAngle: 80
-		MaximumLaunchAngle: 112
-		VerticalRateOfTurn: 60
+		LaunchAngle: 40,60
 	Warhead@1Dam: SpreadDamage
-		Spread: 341
-		Damage: 1900
+		Spread: 256
+		Damage: 2450
 		Versus:
 			None: 30
 			Wood: 65
@@ -180,11 +175,13 @@ PlasmaDiscs:
 
 IntruderDiscs:
 	Inherits: PlasmaDiscs
+	-MinRange:
+	Range: 6c0
 	ReloadDelay: 100
 	Burst: 3
-	Projectile: Missile
+	Projectile: Bullet
 		Inaccuracy: 0c128
-		LockOnProbability: 33
+		LaunchAngle: 60,80
 	Warhead@1Dam: SpreadDamage
 		Damage: 3250
 		Versus:
@@ -204,14 +201,10 @@ DevastatorDiscs:
 	BurstDelays: 4
 	-Projectile:
 	Projectile: Bullet
-		TrailImage: smokey
-		TrailPalette: scrinplasma
-		TrailDelay: 1
-		LaunchAngle: 50
-		Blockable: false
 		Image: plasdisclg
 		Inaccuracy: 1c768
 		Speed: 200
+		LaunchAngle: 50
 	Warhead@1Dam: SpreadDamage
 		Damage: 4250
 		Versus:
@@ -901,21 +894,27 @@ RavagerShards:
 
 LaceratorShards:
 	Inherits: RavagerShards
-	Range: 4c512
+	MinRange: 1c512
+	Range: 5c0
 	StartBurstReport: lacerator-fire1.aud, lacerator-fire2.aud
-	ReloadDelay: 35
-	Burst: 3
-	Projectile: Missile
+	ReloadDelay: 90
+	-Projectile: Missile
+	Projectile: Bullet
+		Speed: 266
 		Image: bshard
-		ContrailColor: 4499FFAA
-		Jammable: true
+		ContrailLength: 9
+		ContrailWidth: 0c32
+		ContrailColor: 4455FFAA
+		Inaccuracy: 0c256
+		Palette: scrin
+		LaunchAngle: 0,30
 	Warhead@1Dam: SpreadDamage
-		Spread: 128
-		Damage: 2100
+		Damage: 3300
+		Spread: 256
 		Versus:
 			None: 25
 			Wood: 60
-			Light: 55
+			Light: 75
 			Heavy: 100
 			Concrete: 45
 			Brick: 25
