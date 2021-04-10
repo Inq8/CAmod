@@ -2190,7 +2190,6 @@ REAC:
 	Inherits: ^ScrinBuilding
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@SHAPE: ^2x2Shape
-	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: 630,299,0
 	WithSpriteBody:
@@ -2234,7 +2233,6 @@ REA2:
 	Inherits: ^ScrinBuilding
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@SHAPE: ^3x2Shape
-	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	WithSpriteBody:
@@ -2656,22 +2654,6 @@ NERV:
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
 		DisplayRadarPing: True
-	SpawnActorPower@IONSURGE:
-		Actor: ion.surge
-		OrderName: ionsurge
-		Icon: ionsurgepower
-		Prerequisites: radar.traveler
-		ChargeInterval: 7500
-		LifeTime: -1
-		Description: Ion Surge
-		LongDesc: Reduces power output of power plants and disables radar within affected area.
-		LaunchSound: ionsurge.aud
-		SelectTargetSpeechNotification: SelectTarget
-		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayRadarPing: True
-		EffectImage: empty
-		EffectSequence: idle
-		EffectPalette: tseffect-ignore-lighting-alpha75
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -2768,6 +2750,26 @@ SCRT:
 		EffectImage: empty
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
+	DetonateWeaponPower@IONSURGE:
+		OrderName: ionsurge
+		Icon: ionsurgepower
+		IconPalette: chromes
+		Prerequisites: scrt.traveler
+		Cursor: ability
+		ChargeInterval: 6000
+		Description: Ion Surge
+		ActivationDelay: 1
+		LongDesc: Increased movement speed of all friendly units in the target area.
+		LaunchSound: ionsurge.aud
+		Weapon: IonSurgeSpawner
+		AirburstAltitude: 0c0
+		SelectTargetSpeechNotification: SelectTarget
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayRadarPing: True
+		CameraActor: camera.dummy
+		CameraRemoveDelay: 1
+		TargetCircleRange: 6c0
+		TargetCircleColor: b070ff90
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -3684,16 +3686,10 @@ ion.surge:
 		OccupiesSpace: false
 	RenderSprites:
 		Image: ionsurge
-	ProximityExternalCondition@JAMMER:
-		Range: 10c0
-		Condition: jammed
-		ValidRelationships: Ally, Enemy, Neutral
-	ProximityExternalCondition@POWERDRAIN:
-		Range: 10c0
-		Condition: powerdrain
-		ValidRelationships: Ally, Enemy, Neutral
+	PeriodicExplosion:
+		Weapon: IonSurge
 	KillsSelf:
-		Delay: 375
+		Delay: 200
 	AmbientSound:
 		SoundFiles: ionsurgeloop.aud
 		Interval: 50

@@ -390,25 +390,31 @@
 		Condition: suppression
 		Color: f454d0
 
-^PowerDrainable:
-	PowerMultiplier@POWERDRAIN:
-		RequiresCondition: powerdrain
-		Modifier: 50
-	ExternalCondition@POWERDRAIN:
-		Condition: powerdrain
-	WithDecoration@POWERDRAIN:
-		Image: poweroff
-		Sequence: offline
-		Palette: chrome
-		RequiresCondition: powerdrain
-		Position: Center
-		ValidRelationships: Ally, Enemy, Neutral
-	DamagedByTerrain@POWERDRAIN:
-		Damage: 750
-		DamageInterval: 15
-		RequiresCondition: powerdrain
-		DamageTypes: DefaultDeath
-		Terrain: Clear, Rough, Road, Beach
+^IonSurgable:
+	TimedConditionBar@IONSURGE:
+		Condition: ionsurge
+		Color: b070ff
+	SpeedMultiplier@IONSURGE:
+		RequiresCondition: ionsurge
+		Modifier: 160
+	ExternalCondition@IONSURGE:
+		Condition: ionsurge
+	WithColoredOverlay@IONSURGE:
+		RequiresCondition: ionsurge
+		Palette: ionsurge
+	WithIdleOverlay@IONSURGE:
+		Sequence: vehicle
+		Image: ionsurge-overlay
+		Palette: ionsurgeoverlay
+		RequiresCondition: ionsurge
+	Targetable@IONSURGE:
+		TargetTypes: IonSurgable
+		RequiresCondition: !ionsurge
+
+^IonSurgableInfantry:
+	Inherits: ^IonSurgable
+	WithIdleOverlay@IONSURGE:
+		Sequence: infantry
 
 ^GDIUpgrade:
 	GrantConditionOnPrerequisite@HOLD:
@@ -1318,6 +1324,7 @@
 	Inherits@mind: ^MindControllable
 	Inherits@handicaps: ^PlayerHandicaps
 	Inherits@irrad: ^Irradiatable
+	Inherits@ionsurge: ^IonSurgable
 	Huntable:
 	OwnerLostAction:
 		Action: Kill
@@ -1476,6 +1483,7 @@
 	Inherits@mind: ^MindControllable
 	Inherits@handicaps: ^PlayerHandicaps
 	Inherits@BINOS: ^BinoUpgradeInfantry
+	Inherits@ionsurge: ^IonSurgableInfantry
 	RenderSprites:
 		PlayerPalette: overlayplayertd
 	Huntable:
@@ -2071,6 +2079,7 @@
 	Inherits@production: ^ProductionEfficiencyBoost
 	Inherits@C4: ^C4Plantable
 	Inherits@TNT: ^TNTPlantable
+	Inherits@ionsurge: ^IonSurgable
 	Cloak@EXTERNALCLOAK:
 		RequiresCondition: invisibility || crate-cloak && (!cloak-force-disabled && !airborne && !being-warped)
 		CloakDelay: 90

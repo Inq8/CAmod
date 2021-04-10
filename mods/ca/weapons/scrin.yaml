@@ -1044,3 +1044,23 @@ StormSpikeSpawner:
 		Buildings: scol.temp
 		Range: 3
 		ValidTargets: Air, AirSmall, Ground, Water
+
+IonSurgeSpawner:
+	ReloadDelay: 1
+	Projectile: InstantExplode
+	Warhead@Spawn: SpawnActor
+		Actors: ion.surge
+		Range: 1
+		ForceGround: false
+		ValidTargets: Ground, Water
+
+IonSurge:
+	ReloadDelay: 20
+	Range: 1c0
+	Projectile: InstantHit
+	Warhead@surge: GrantExternalCondition
+		Range: 6c0
+		Duration: 375
+		Condition: ionsurge
+		ValidTargets: IonSurgable
+		ValidRelationships: Ally
