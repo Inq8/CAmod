@@ -1438,8 +1438,7 @@ MRJ:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 	AttackOmni:
 
-
-TTNK:
+TTRA:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -1447,34 +1446,34 @@ TTNK:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 235
-		Prerequisites: structures.tsla, stek, ~vehicles.ttnk, ~techlevel.medium
-		Description: Tank with mounted Tesla coil.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft\n  Special Ability: Jams Radar
+		Prerequisites: structures.tsla, stek, ~vehicles.soviet, ~techlevel.medium
+		Description: Half-track with mounted Tesla coil.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft\n  Special Ability: Jams Radar
 	Valued:
 		Cost: 1250
 	Tooltip:
-		Name: Tesla Tank
+		Name: Tesla Track
 		GenericName: Tank
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 35000
+		HP: 25000
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 100
+		Speed: 82
 		Voice: Move
 	RevealsShroud:
-		MinRange: 6c0
-		Range: 7c0
+		MinRange: 5c0
+		Range: 6c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 6c0
+		Range: 5c0
 	Armament@PRIMARY:
-		Weapon: TTankZap
+		Weapon: TTrackZap
 		LocalOffset: 0,0,213
 		RequiresCondition: !tarc-upgrade
 	Armament@PRIMARYUPG:
-		Weapon: TTankZap.UPG
+		Weapon: TTrackZap.UPG
 		LocalOffset: 0,0,213
 		RequiresCondition: tarc-upgrade
 	AttackTurreted:
@@ -1496,13 +1495,13 @@ TTNK:
 	Voiced:
 		VoiceSet: TeslaTankVoice
 	SpawnActorOnDeath:
-		Actor: TTNK.Husk
+		Actor: TTRA.Husk
 		RequiresCondition: !being-warped
 	GrantConditionOnPrerequisite@TARC:
 		Condition: tarc-upgrade
 		Prerequisites: tarc.upgrade
 
-TTNK.RA2:
+TTNK:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -1511,53 +1510,47 @@ TTNK.RA2:
 		Queue: Vehicle
 		BuildPaletteOrder: 200
 		Prerequisites: structures.tsla, anyradar, ~vehicles.russia, ~techlevel.medium
-		Description: Tank with twin mounted Tesla coils.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft
+		Description: Tank with twin mounted Tesla coils.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
 	Valued:
 		Cost: 1250
 	Tooltip:
-		Name: Tesla Tank Mk2
+		Name: Tesla Tank
 		GenericName: Tank
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 35000
+		HP: 40000
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 90
+		Speed: 68
 		Voice: Move
 	RevealsShroud:
-		MinRange: 5c0
+		MinRange: 4c0
 		Range: 6c0
 		RevealGeneratedShroud: False
-		RequiresCondition: !tarc-upgrade
-	RevealsShroud@UPG:
-		MinRange: 6c0
-		Range: 7c0
-		RevealGeneratedShroud: False
-		RequiresCondition: tarc-upgrade
 	RevealsShroud@GAPGEN:
-		Range: 6c0
+		Range: 4c0
 	Armament@PRIMARY:
-		Weapon: TTankZapMK2
+		Weapon: TTankZap
 		LocalOffset: 511,200,113
 		RequiresCondition: !tarc-upgrade
 		MuzzleSequence: muzzle
 	Armament@SECONDARY:
 		Name: secondary
-		Weapon: TTankZapMK2Secondary
+		Weapon: TTankZapSecondary
 		LocalOffset: 511,-200,113
 		RequiresCondition: !tarc-upgrade
 		MuzzleSequence: muzzle
 		FireDelay: 3
 	Armament@PRIMARYUPG:
-		Weapon: TTankZapMK2.UPG
+		Weapon: TTankZap.UPG
 		LocalOffset: 511,200,113
 		RequiresCondition: tarc-upgrade
 		MuzzleSequence: muzzle
 	Armament@SECONDARYUPG:
 		Name: secondary
-		Weapon: TTankZapMK2Secondary.UPG
+		Weapon: TTankZapSecondary.UPG
 		LocalOffset: 511,-200,113
 		RequiresCondition: tarc-upgrade
 		MuzzleSequence: muzzle
@@ -1578,7 +1571,7 @@ TTNK.RA2:
 	Voiced:
 		VoiceSet: TeslaTankRA2Voice
 	SpawnActorOnDeath:
-		Actor: TTNK.RA2.Husk
+		Actor: TTNK.Husk
 		RequiresCondition: !being-warped
 	GrantConditionOnPrerequisite@TARC:
 		Condition: tarc-upgrade

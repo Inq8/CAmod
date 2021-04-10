@@ -259,29 +259,37 @@ PortaTeslaCharge:
 		Condition: highlight
 		ValidTargets: Ground, Vehicle
 
-TTankZap:
+TTrackZap:
 	Inherits: ^TeslaWeapon
-	ReloadDelay: 120
-	Range: 7c0
+	ReloadDelay: 140
+	Range: 8c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 10000
 		Versus:
 			Wood: 60
 			Concrete: 60
-			Light: 85
+			Light: 95
 
-TTankZapMK2:
-	Inherits: TTankZap
+TTrackZap.UPG:
+	Inherits: TTrackZap
+	Warhead@Arc: FireShrapnel
+		Weapon: TTankArc1
+		Amount: 1
+		AimChance: 90
+		ThrowWithoutTarget: false
+
+TTankZap:
+	Inherits: TTrackZap
 	Report: vtesatta.aud, vtesattb.aud
-	Range: 6c0
-	ReloadDelay: 118
+	Range: 5c512
+	ReloadDelay: 100
 	Warhead@1Dam: SpreadDamage
-		Damage: 5500
+		Damage: 4500
 		Versus:
 			None: 0
 
-TTankZapMK2Secondary:
-	Inherits: TTankZapMK2
+TTankZapSecondary:
+	Inherits: TTankZap
 	Warhead@1Dam: SpreadDamage
 		Versus:
 			None: 1000
@@ -294,21 +302,15 @@ TTankZap.UPG:
 		AimChance: 90
 		ThrowWithoutTarget: false
 
-TTankZapMK2.UPG:
-	Inherits: TTankZapMK2
-	Range: 7c0
-	Warhead@Arc: FireShrapnel
-		Weapon: TTankArc1
-		Amount: 1
-		AimChance: 90
-		ThrowWithoutTarget: false
-
-TTankZapMK2Secondary.UPG
-	Inherits: TTankZapMK2Secondary
-	Range: 7c0
+TTankZapSecondary.UPG
+	Inherits: TTankZap.UPG
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			None: 1000
+	-Warhead@Arc: FireShrapnel
 
 TTankArc1:
-	Inherits: TTankZap.UPG
+	Inherits: TTrackZap.UPG
 	Range: 2c0
 	ValidTargets: Infantry, Vehicle, Ship
 	Warhead@1Dam: SpreadDamage
@@ -322,7 +324,7 @@ TTankArc1:
 	Warhead@Arc: FireShrapnel
 		Weapon: TTankArc2
 		ValidTargets: Infantry
-		AimChance: 70
+		AimChance: 65
 
 TTankArc2:
 	Inherits: TTankArc1
