@@ -39,6 +39,12 @@ namespace OpenRA.Mods.CA.Warheads
 		[Desc("DeathType(s) that trigger the DelayedWeapon to activate. Leave empty to always trigger the DelayedWeapon on death.")]
 		public readonly BitSet<DamageType> DeathTypes = default(BitSet<DamageType>);
 
+		[Desc("List of sounds that can be played on attaching.")]
+		public readonly string[] AttachSounds = new string[0];
+
+		[Desc("List of sounds that can be played if attaching is not possible.")]
+		public readonly string[] MissSounds = new string[0];
+
 		public WeaponInfo WeaponInfo;
 
 		public void RulesetLoaded(Ruleset rules, WeaponInfo info)
@@ -50,6 +56,7 @@ namespace OpenRA.Mods.CA.Warheads
 		public override void DoImpact(in Target target, WarheadArgs args)
 		{
 			var firedBy = args.SourceActor;
+
 			if (!target.IsValidFor(firedBy))
 				return;
 
@@ -58,6 +65,7 @@ namespace OpenRA.Mods.CA.Warheads
 			if (!IsValidImpact(pos, firedBy))
 				return;
 
+			var world = firedBy.World;
 			var availableActors = firedBy.World.FindActorsOnCircle(pos, Range);
 			foreach (var actor in availableActors)
 			{
@@ -78,7 +86,19 @@ namespace OpenRA.Mods.CA.Warheads
 
 				var attachable = actor.TraitsImplementing<DelayedWeaponAttachable>().FirstOrDefault(a => a.CanAttach(Type));
 				if (attachable != null)
+				{
 					attachable.Attach(new DelayedWeaponTrigger(this, args));
+
+					var attachSound = AttachSounds.RandomOrDefault(world.LocalRandom);
+					if (attachSound != null)
+						Game.Sound.Play(SoundType.World, attachSound, pos);
+				}
+				else
+				{
+					var failSound = MissSounds.RandomOrDefault(world.LocalRandom);
+					if (failSound != null)
+						Game.Sound.Play(SoundType.World, failSound, pos);
+				}
 			}
 		}
 	}

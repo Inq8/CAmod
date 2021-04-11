@@ -478,8 +478,8 @@ C4:
 Ivanbomb:
 	Inherits: ^Artillery
 	ValidTargets: Ground, TNT, Infantry, Vehicle, Structure
-	InvalidTargets: C4Attached, TNTAttached, C4Immune
-	ReloadDelay: 40
+	InvalidTargets: C4Attached, C4Immune
+	ReloadDelay: 80
 	Range: 3c725
 	Report: grenade1.aud
 	Projectile: Bullet
@@ -488,6 +488,7 @@ Ivanbomb:
 		Image: TNT
 		BounceCount: 2
 		BounceRangeModifier: 40
+		BounceSound: dud2.aud
 		ValidBounceBlockerRelationships: Ally, Neutral, Enemy
 	Warhead@AttachDelayedWeapon: AttachDelayedWeapon
 		Weapon: TNT
@@ -495,6 +496,8 @@ Ivanbomb:
 		TriggerTime: 140
 		DeathTypes: ExplosionDeath
 		Range: 1
+		AttachSounds: icraatta.aud
+		MissSounds: dud1.aud
 	Warhead@TargetValidator: SpreadDamage
 	Warhead@highlight: GrantExternalCondition
 		Range: 0c256
@@ -505,31 +508,19 @@ Ivanbomb:
 	-Warhead@2Smu:
 	Warhead@3Eff: CreateEffect
 		Explosions: piff
-		-ImpactSounds:
+		ImpactSounds: dud1.aud
 	-Warhead@4EffWater:
 
 TNT:
 	Projectile: InstantHit
-	Warhead@1Dam: HealthPercentageDamage
-		ValidTargets: Structure
-		Spread: 256
-		Damage: 33
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
-		Versus:
-			Light: 150
-			Heavy: 150
-	Warhead@2Dam: SpreadDamage
+	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 3400
+		Damage: 2800
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Water
 		Versus:
-			None: 90
-			Wood: 65
 			Light: 70
-			Heavy: 40
-			Concrete: 50
-			Brick: 45
+			Heavy: 20
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: building, building2
