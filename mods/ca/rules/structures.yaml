@@ -500,20 +500,22 @@ PDOX:
 		DisplayRadarPing: True
 		LaunchSound: chrono2.aud
 		IncomingSound: chrono2.aud
-	DetonateWeaponPower@TimeWarp:
+	GrantExternalConditionPowerCA@TimeWarp:
 		OrderName: TimeWarp
 		Icon: timewarp
 		Prerequisites: pdox.germany
 		Cursor: ability
 		ChargeInterval: 4500
 		Description: Time Warp
-		ActivationDelay: 25
 		LongDesc: Disrupts time and space at target area,\ncausing units & structures to be frozen in time.
 		Weapon: TimeWarp
-		AirburstAltitude: 0c0
+		Condition: being-warped
+		Duration: 375
+		Dimensions: 3, 3
+		ActivationDelay: 0
+		Footprint: _x_ xxx _x_
+		ValidRelationships: Ally, Enemy, Neutral
 		AllowMultiple: false
-		CameraActor: camera
-		CameraRemoveDelay: 375
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		BeginChargeSpeechNotification: ChronosphereCharging
@@ -526,8 +528,6 @@ PDOX:
 		CircleSequence: circles
 		BeaconPoster: timewarpicon
 		DisplayRadarPing: True
-		TargetCircleRange: 1c512
-		TargetCircleColor: 0000FF90
 		LaunchSound: chrono2.aud
 		IncomingSound: chrono2.aud
 	SupportPowerChargeBar:
