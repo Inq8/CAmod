@@ -1128,6 +1128,7 @@
 		Type: tnt
 		Condition: tnt
 		ProgressBarColor: FF000080
+		AttachLimit: 10
 	Targetable@tnt:
 		TargetTypes: TNTAttached
 		RequiresCondition: tnt
@@ -1148,11 +1149,26 @@
 		Delay: 6
 		Interval: 6
 		RequiresCondition: tnt
-	AmbientSound@tnt-armed:
-		SoundFiles: icraatta.aud
-		Delay: 0
-		Interval: 160
-		RequiresCondition: tnt
+	WithTextDecoration@2tnt:
+		Text: 2
+		RequiresCondition: tnt == 2
+		Position: CenterCenter
+	WithTextDecoration@3tnt:
+		Text: 3
+		RequiresCondition: tnt == 3
+		Position: CenterCenter
+	WithTextDecoration@4tnt:
+		Text: 4
+		RequiresCondition: tnt == 4
+		Position: CenterCenter
+	WithTextDecoration@5tnt:
+		Text: 5
+		RequiresCondition: tnt == 5
+		Position: CenterCenter
+	WithTextDecoration@6tnt:
+		Text: 6+
+		RequiresCondition: tnt >= 6
+		Position: CenterCenter
 
 ^MindControllable:
 	ExternalCondition@prevent-mindcontrol:
@@ -1568,7 +1584,7 @@
 	HiddenUnderFog:
 	ActorLostNotification:
 	Crushable:
-		WarnProbability: 65
+		WarnProbability: 100
 		CrushSound: squishy2.aud
 	Guard:
 	Guardable:
@@ -1754,8 +1770,6 @@
 	-DamagedByTintedCells@RADMEDHAZMAT:
 	-DamagedByTintedCells@RADWEAK:
 	-DamagedByTintedCells@RADWEAKHAZMAT:
-	Crushable:
-		WarnProbability: 85
 	RevealsShroud:
 		Range: 5c0
 
