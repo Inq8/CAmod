@@ -1681,39 +1681,6 @@ OCAR:
 		TrailLength: 15
 		UsePlayerColor: false
 		Color: FFFFFF80
-	TransformOnCondition:
-		IntoActor: OCAR.Auto
-		RequiresCondition: transform && !carrying
-	GrantConditionOnDeploy:
-		DeployedCondition: transform
-		PauseOnCondition: carrying
-
-OCAR.Auto:
-	Inherits: OCAR
-	Buildable:
-		Prerequisites: ~botplayer, ~hpad.td, rep, ~aircraft.gdi, ~techlevel.high
-	-Carryall:
-	Selectable:
-		Class: OCAR
-	Aircraft:
-		Repulsable: False
-	AutoCarryall:
-		BeforeLoadDelay: 10
-		BeforeUnloadDelay: 15
-		LocalOffset: 0, 0, -128
-		Voice: Action
-		CarryCondition: carrying
-	TransformOnCondition:
-		IntoActor: OCAR
-		RequiresCondition: transform && !carrying
-	RejectsOrders:
-		Reject: Move
-	WithDecoration@auto:
-		Image: pips
-		Palette: chrome
-		Sequence: tag-auto
-		Position: Top
-		Margin: 0, 4
 
 OCAR.Reinforce:
 	Inherits: OCAR
@@ -1725,8 +1692,6 @@ OCAR.Reinforce:
 		Repulsable: False
 	-Selectable:
 	-Voiced:
-	-TransformOnCondition:
-	-GrantConditionOnDeploy:
 	RejectsOrders:
 	Interactable:
 	-Targetable@Temporal:
