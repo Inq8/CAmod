@@ -223,11 +223,11 @@ DevastatorDiscs:
 	ReloadDelay: 85
 	Projectile: LaserZap
 		Duration: 20
-		Color: 00FF00AA
 		Width: 45
 		ZOffset: 2047
 		SecondaryBeam: true
-		SecondaryBeamColor: 00FF0040
+		Color: FAFAFFFF
+		SecondaryBeamColor: 382EFFAA
 		SecondaryBeamWidth: 65
 		SecondaryBeamZOffset: 2047
 		Blockable: true
@@ -255,7 +255,7 @@ InterloperLaser:
 	BurstDelays: 5
 	Report: interloper-fire1.aud, interloper-fire2.aud
 	Projectile: LaserZap
-		Duration: 3
+		Duration: 4
 	Warhead@1Dam: SpreadDamage
 		Damage: 2100
 		Versus:
@@ -310,7 +310,7 @@ CorruptorExplode:
 
 DevourerLaser:
 	Inherits: ^ScrinLaser
-	StartBurstReport: devourer-fire1.aud, devourer-fire2.aud, devourer-fire3.aud
+	StartBurstReport: devourer-fire1.aud, devourer-fire2.aud
 	FirstBurstTargetOffset: 0,-600,0
 	FollowingBurstTargetOffset: -0,100,0
 	Burst: 13
@@ -324,6 +324,17 @@ DevourerLaser:
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		Damage: 1000
+
+DevourerLaserCharged:
+	Inherits: DevourerLaser
+	StartBurstReport: devourer-cfire1.aud, devourer-cfire2.aud
+	Projectile: LaserZap
+		Color: 00FF00AA
+		SecondaryBeamColor: 00FF0040
+		SecondaryBeamWidth: 75
+		LaunchEffectSequence: muzzle-charged
+	Warhead@1Dam: SpreadDamage
+		Damage: 1200
 
 RiftCannon:
 	Inherits: ^ScrinLaser
@@ -421,7 +432,7 @@ RuinerCannon:
 	BurstDelays: 15
 	Range: 10c0
 	Projectile: Bullet
-		Speed: 224
+		Speed: 195
 		Image: tibglob
 		Palette: scrin
 		Inaccuracy: 682
@@ -440,6 +451,22 @@ RuinerCannon:
 		ExplosionPalette: scrin
 		Image: tibexplode
 
+RuinerCannonCharged:
+	Inherits: RuinerCannon
+	Report: ruiner-cfire1.aud
+	Projectile: Bullet
+		Image: tibgloblg
+		Speed: 224
+	Warhead@1Dam: SpreadDamage
+		Damage: 5500
+		Spread: 512
+	Warhead@Shrap: FireShrapnel
+		Weapon: ChemDebrisSmall
+		Amount: 2
+		AimChance: 0
+		ValidTargets: Ground, Water, Infantry, Vehicle
+		ThrowWithoutTarget: true
+
 TripodLaser:
 	Inherits: ^ScrinLaser
 	Range: 6c0
@@ -452,8 +479,6 @@ TripodLaser:
 	Projectile: LaserZap
 		TrackTarget: false
 		Duration: 2
-		Color: FAFAFFFF
-		SecondaryBeamColor: 382EFFAA
 		SecondaryBeamWidth: 75
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
@@ -474,6 +499,17 @@ ReaperLaser:
 		Color: 00FF0090
 		SecondaryBeamColor: 00FF0050
 
+ReaperLaserCharged:
+	Inherits: ReaperLaser
+	StartBurstReport: rtripod-cfire1.aud, rtripod-cfire2.aud
+	Projectile: LaserZap
+		Duration: 3
+		Color: CCFFBBD0
+		SecondaryBeamColor: 00FF0090
+		SecondaryBeamWidth: 90
+	Warhead@1Dam: SpreadDamage
+		Damage: 1080
+
 TripodLaserReversed:
 	Inherits: TripodLaser
 	-StartBurstReport:
@@ -482,6 +518,12 @@ TripodLaserReversed:
 
 ReaperLaserReversed:
 	Inherits: ReaperLaser
+	-StartBurstReport:
+	FirstBurstTargetOffset: -150,-300,0
+	FollowingBurstTargetOffset: 50,100,0
+
+ReaperLaserChargedReversed:
+	Inherits: ReaperLaserCharged
 	-StartBurstReport:
 	FirstBurstTargetOffset: -150,-300,0
 	FollowingBurstTargetOffset: 50,100,0
@@ -500,6 +542,10 @@ ReaperLaserSound:
 	ReloadDelay: 56
 	Report: rtripod-fire1.aud, rtripod-fire2.aud, rtripod-fire3.aud
 	Range: 5c0
+
+ReaperLaserChargedSound:
+	Inherits: ReaperLaserSound
+	Report: rtripod-cfire1.aud, rtripod-cfire2.aud
 
 StormriderZap:
 	Range: 6c0
