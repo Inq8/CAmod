@@ -9,7 +9,7 @@ V2RL:
 		Prerequisites: anyradar, ~vehicles.v2, ~v2.upgrade, ~techlevel.medium
 		Description: Long-range rocket artillery.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
-		Cost: 900
+		Cost: 800
 	Tooltip:
 		Name: V2 Rocket Launcher
 	UpdatesPlayerStatistics:
@@ -61,7 +61,7 @@ KATY:
 		Prerequisites: anyradar, ~vehicles.soviet, ~!v2.upgrade, ~techlevel.medium
 		Description: Long-range rocket artillery.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
-		Cost: 900
+		Cost: 800
 	Tooltip:
 		Name: Katyusha
 	UpdatesPlayerStatistics:
@@ -98,7 +98,7 @@ KATY:
 		Queue: Vehicle
 		BuildPaletteOrder: 50
 		Prerequisites: ~vehicles.allies, ~techlevel.low
-		Description: Fast tank, good for scouting.\n  Strong vs Light Armor\n  Weak vs Infantry, Tanks, Defenses, Aircraft\n  Special Ability: Amphibious
+		Description: Fast tank, good for scouting.\n  Strong vs Light Armor\n  Weak vs Infantry, Defenses, Aircraft\n  Special Ability: Amphibious
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -107,7 +107,7 @@ KATY:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 36000
+		HP: 34000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -2866,10 +2866,21 @@ STNK.Nod:
 	Armament@PRIMARY:
 		Weapon: StnkMissile
 		LocalOffset: 213,43,128, 213,-43,128
+		RequiresCondition: !tibcore-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: StnkMissileAA
 		LocalOffset: 213,43,128, 213,-43,128
+		RequiresCondition: !tibcore-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: StnkMissile.UPG
+		LocalOffset: 213,150,128, 213,-150,128
+		RequiresCondition: tibcore-upgrade
+	Armament@SECONDARYUPG:
+		Name: secondary
+		Weapon: StnkMissileAA.UPG
+		LocalOffset: 213,150,128, 213,-150,128
+		RequiresCondition: tibcore-upgrade
 	Turreted:
 		TurnSpeed: 40
 		Offset: 0,0,10
@@ -2884,6 +2895,9 @@ STNK.Nod:
 	ProductionCostMultiplier@BlackhBonus:
 		Multiplier: 90
 		Prerequisites: vehicles.blackh
+	GrantConditionOnPrerequisite@UPG:
+		Condition: tibcore-upgrade
+		Prerequisites: tibcore.upgrade
 
 BIKE:
 	Inherits: ^VehicleTD
@@ -2920,15 +2934,31 @@ BIKE:
 		Weapon: BikeRockets
 		LocalOffset: -128, -170, 170, -128, 170, 170
 		LocalYaw: 100, -100
+		RequiresCondition: !tibcore-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: BikeRocketsAA
 		LocalOffset: -128, -170, 170, -128, 170, 170
 		LocalYaw: 100, -100
+		RequiresCondition: !tibcore-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: BikeRockets.UPG
+		LocalOffset: -128, -170, 170, -128, 170, 170
+		LocalYaw: 100, -100
+		RequiresCondition: tibcore-upgrade
+	Armament@SECONDARYUPG:
+		Name: secondary
+		Weapon: BikeRocketsAA.UPG
+		LocalOffset: -128, -170, 170, -128, 170, 170
+		LocalYaw: 100, -100
+		RequiresCondition: tibcore-upgrade
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	GrantConditionOnPrerequisite@UPG:
+		Condition: tibcore-upgrade
+		Prerequisites: tibcore.upgrade
 
 FTNK:
 	Inherits: ^TankTD

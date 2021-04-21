@@ -304,6 +304,20 @@ microwave.upgrade:
 	RenderSprites:
 		Image: microwave.upgrade
 
+tibcore.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Tib Core Missiles
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~tmpl, ~techlevel.high
+		BuildDuration: 1500
+		Description: Upgrades Recon Bikes and Stealth Tanks with Tib Core missiles.\n\n  Upgrades: Recon Bike\n  Upgrades: Stealth Tank\n  + Increased range\n  + Increased damage
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: tibcore.upgrade
+
 cyborg.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -527,6 +541,21 @@ advart.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: advart.upgrade
+
+tibconv.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Tib Conversion
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~scrt, ~techlevel.high
+		BuildDuration: 1500
+		Description: Weapons of Devourer and Ruiner are empowered by Tiberium.\n\n  Upgrades: Devourer\n  Upgrades: Ruiner\n  + Increased damage when charged
+		IconPalette: scrin
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: tibconv.upgrade
 
 ioncon.upgrade:
 	Inherits: ^Upgrade

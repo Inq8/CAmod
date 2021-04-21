@@ -127,7 +127,10 @@ namespace OpenRA.Mods.CA.Traits
 				if (!string.IsNullOrEmpty(sound))
 					Game.Sound.PlayToPlayer(SoundType.World, self.Owner, sound, self.CenterPosition);
 
-				ammoPool.GiveAmmo(self, reloadCount);
+				if (reloadCount < 0)
+					ammoPool.TakeAmmo(self, -reloadCount);
+				else
+					ammoPool.GiveAmmo(self, reloadCount);
 			}
 		}
 

@@ -1344,7 +1344,7 @@ MicrowaveZap.UPG:
 	Warhead@1Dam: SpreadDamage
 		Versus:
 			Light: 35
-			Heavy: 25
+			Heavy: 40
 	Warhead@3: ChangeOwnerToNeutral
 		ValidTargets: DriverKill
 		InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air, DriverKillImmune
@@ -1869,3 +1869,10 @@ ChemDebris:
 		Level: 300
 		Falloff: 32, 5
 		LayerName: radioactivity.weak
+
+ChemDebrisSmall:
+	Inherits: ChemDebris
+	Range: 2c0
+	-Warhead@5Radio:
+	Warhead@1Dam: SpreadDamage
+		Spread: 10
