@@ -212,16 +212,31 @@ Dragon.CRYO:
 		Range: 0c341
 		ValidRelationships: Enemy, Neutral
 
+Dragon.TibCore:
+	Inherits: Dragon
+	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
+	Projectile: MissileCA
+		Image: tibcoremsl
+		RangeLimit: 8c0
+		ContrailLength: 15
+		ContrailColor: 33aa00aa
+		ContrailWidth: 0c40
+	Warhead@3Eff: CreateEffect
+		ImpactSounds: tibcorehit1.aud, tibcorehit2.aud, tibcorehit3.aud
+	Warhead@tib: CreateEffect
+		Explosions: idle, idle2, idle3, idle4
+		ExplosionPalette: scrin
+		Image: shardhit
+		ValidTargets: Ground, Trees, Water
+
+Dragon.CYB.TibCore:
+	Inherits: Dragon.TibCore
+	Report: rocket.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 7500
+
 DragonE:
 	Inherits: Dragon
-	Range: 6c0
-	Projectile: MissileCA
-		RangeLimit: 7c0
-	Warhead@1Dam: SpreadDamage
-		Damage: 2800
-
-DragonE.CRYO:
-	Inherits: Dragon.CRYO
 	Range: 6c0
 	Projectile: MissileCA
 		RangeLimit: 7c0
@@ -234,6 +249,28 @@ DragonE.TD:
 
 DragonE.CYB:
 	Inherits: DragonE
+	Report: rocket.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 4200
+
+DragonE.CRYO:
+	Inherits: Dragon.CRYO
+	Range: 6c0
+	Projectile: MissileCA
+		RangeLimit: 7c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 2800
+
+DragonE.TibCore:
+	Inherits: Dragon.TibCore
+	Range: 6c0
+	Projectile: MissileCA
+		RangeLimit: 9c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 2800
+
+DragonE.CYB.TibCore:
+	Inherits: DragonE.TibCore
 	Report: rocket.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 4200
@@ -446,8 +483,32 @@ RedEye:
 		Falloff: 100, 25
 		ValidTargets: AirSmall
 
+RedEye.TibCore:
+	Inherits: RedEye
+	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
+	Projectile: MissileCA
+		Image: tibcoremsl
+		ContrailLength: 15
+		ContrailColor: 33aa00aa
+		ContrailWidth: 0c40
+	Warhead@3Eff: CreateEffect
+		ImpactSounds: tibcorehit1.aud, tibcorehit2.aud, tibcorehit3.aud
+	Warhead@tib: CreateEffect
+		Explosions: idle, idle2, idle3, idle4
+		ExplosionPalette: scrin
+		Image: shardhit
+		ValidTargets: Air, AirSmall, ICBM, Ground, Water, Trees
+
 RedEye.CYB:
 	Inherits: RedEye
+	Report: rocket.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 4600
+	Warhead@2Dam: SpreadDamage
+		Damage: 4600
+
+RedEye.CYB.TibCore:
+	Inherits: RedEye.TibCore
 	Report: rocket.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 4600
@@ -473,8 +534,16 @@ RedEyeE:
 	Inherits: RedEye
 	Range: 9c0
 
+RedEyeE.TibCore:
+	Inherits: RedEye.TibCore
+	Range: 9c0
+
 RedEyeE.CYB:
 	Inherits: RedEyeE
+	Report: rocket.aud
+
+RedEyeE.CYB.TibCore:
+	Inherits: RedEyeE.TibCore
 	Report: rocket.aud
 
 Stinger:
@@ -909,14 +978,15 @@ BikeRocketsAA:
 		Falloff: 100, 70, 30, 10
 		ValidTargets: AirSmall
 
-BikeRockets.UPG:
+BikeRockets.TibCore:
 	Inherits: BikeRockets
 	Range: 5c512
 	Projectile: MissileCA
+		Image: tibcoremsl
 		ContrailLength: 15
 		ContrailColor: 33aa00aa
 		ContrailWidth: 0c40
-		RangeLimit: 9c0
+		RangeLimit: 8c0
 	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 4400
@@ -930,10 +1000,11 @@ BikeRockets.UPG:
 		Image: shardhit
 		ValidTargets: Ground, Trees, Water
 
-BikeRocketsAA.UPG:
+BikeRocketsAA.TibCore:
 	Inherits: BikeRocketsAA
 	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
 	Projectile: MissileCA
+		Image: tibcoremsl
 		ContrailLength: 15
 		ContrailColor: 33aa00aa
 		ContrailWidth: 0c40
@@ -1235,17 +1306,18 @@ StnkMissileAA:
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: xplos.aud
 
-StnkMissile.UPG:
+StnkMissile.TibCore:
 	Inherits: StnkMissile
 	ReloadDelay: 80
 	Burst: 4
 	BurstDelays: 4, 13, 4
 	Range: 6c0
 	Projectile: MissileCA
+		Image: tibcoremsl
 		ContrailLength: 15
 		ContrailColor: 33aa00aa
 		ContrailWidth: 0c40
-		RangeLimit: 9c0
+		RangeLimit: 8c0
 	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 3700
@@ -1257,12 +1329,13 @@ StnkMissile.UPG:
 		Image: shardhit
 		ValidTargets: Ground, Trees, Water
 
-StnkMissileAA.UPG:
+StnkMissileAA.TibCore:
 	Inherits: StnkMissileAA
 	ReloadDelay: 80
 	Burst: 4
 	BurstDelays: 4, 13, 4
 	Projectile: MissileCA
+		Image: tibcoremsl
 		ContrailLength: 15
 		ContrailColor: 33aa00aa
 		ContrailWidth: 0c40

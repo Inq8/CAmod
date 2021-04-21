@@ -187,24 +187,24 @@ E3:
 		Speed: 38
 	Armament@PRIMARY:
 		Weapon: RedEye
-		LocalOffset: 0,0,555
+		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
 		RequiresCondition: !cryr-upgrade
 	Armament@PRIMARYUPG:
 		Weapon: RedEye.CRYO
-		LocalOffset: 0,0,555
+		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
 		RequiresCondition: cryr-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: Dragon
-		LocalOffset: 0,0,555
+		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
 		RequiresCondition: !cryr-upgrade
 	Armament@SECONDARYUPG:
 		Name: secondary
 		Weapon: Dragon.CRYO
-		LocalOffset: 0,0,555
+		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
 		RequiresCondition: cryr-upgrade
 	Armament@GarrisonAA:
@@ -215,7 +215,6 @@ E3:
 	Armament@GarrisonAAUPG:
 		Name: mountedaa
 		Weapon: RedEye.CRYO
-		LocalOffset: 0,0,555
 		PauseOnCondition: !ammo
 		RequiresCondition: cryr-upgrade
 	Armament@Garrison:
@@ -226,7 +225,6 @@ E3:
 	Armament@GarrisonUPG:
 		Name: mounted
 		Weapon: DragonE.CRYO
-		LocalOffset: 0,0,555
 		PauseOnCondition: !ammo
 		RequiresCondition: cryr-upgrade
 	AmmoPool:
@@ -246,11 +244,6 @@ E3:
 	GrantConditionOnPrerequisite@CRYO:
 		Condition: cryr-upgrade
 		Prerequisites: cryr.upgrade
-	GrantCondition@CRYO:
-		Condition: cryr-upgrade
-		RequiresCondition: cryr-upgrade
-	ExternalCondition@CRYO:
-		Condition: cryr-upgrade
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		RequiresCondition: !cryr-upgrade
@@ -972,21 +965,49 @@ N3:
 		Speed: 38
 	Armament@PRIMARY:
 		Weapon: RedEye
-		LocalOffset: 0,0,555
-		PauseOnCondition: !ammo || being-warped
+		LocalOffset: 0,0,400
+		PauseOnCondition: !ammo
+		RequiresCondition: !tibcore-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: RedEye.TibCore
+		LocalOffset: 0,0,400
+		PauseOnCondition: !ammo
+		RequiresCondition: tibcore-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: Dragon.TD
-		LocalOffset: 0,0,555
-		PauseOnCondition: !ammo || being-warped
+		LocalOffset: 0,0,400
+		PauseOnCondition: !ammo
+		RequiresCondition: !tibcore-upgrade
+	Armament@SECONDARYUPG:
+		Name: secondary
+		Weapon: Dragon.TibCore
+		LocalOffset: 0,0,400
+		PauseOnCondition: !ammo
+		RequiresCondition: tibcore-upgrade
 	Armament@GarrisonAA:
-		Name: mounted
+		Name: mountedaa
 		Weapon: RedEyeE
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
+		RequiresCondition: !tibcore-upgrade
+	Armament@GarrisonAAUPG:
+		Name: mountedaa
+		Weapon: RedEye.TibCore
+		PauseOnCondition: !ammo
+		RequiresCondition: tibcore-upgrade
 	Armament@Garrison:
 		Name: mounted
 		Weapon: DragonE.TD
-		PauseOnCondition: !ammo || being-warped
+		PauseOnCondition: !ammo
+		RequiresCondition: !tibcore-upgrade
+	Armament@GarrisonUPG:
+		Name: mounted
+		Weapon: DragonE.TibCore
+		PauseOnCondition: !ammo
+		RequiresCondition: tibcore-upgrade
+	GrantConditionOnPrerequisite@TIBCORE:
+		Condition: tibcore-upgrade
+		Prerequisites: tibcore.upgrade
 	AmmoPool:
 		Ammo: 1
 		AmmoCondition: ammo
@@ -2073,21 +2094,49 @@ N3C:
 		DefaultAttackSequence: shoot
 	Armament@PRIMARY:
 		Weapon: RedEye.CYB
-		LocalOffset: 0,0,555
+		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
+		RequiresCondition: !tibcore-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: RedEye.CYB.TibCore
+		LocalOffset: 0,0,400
+		PauseOnCondition: !ammo
+		RequiresCondition: tibcore-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: Dragon.CYB
-		LocalOffset: 0,0,555
+		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
-	Armament@Garrison:
-		Name: mounted
+		RequiresCondition: !tibcore-upgrade
+	Armament@SECONDARYUPG:
+		Name: secondary
+		Weapon: Dragon.CYB.TibCore
+		LocalOffset: 0,0,400
+		PauseOnCondition: !ammo
+		RequiresCondition: tibcore-upgrade
+	Armament@GarrisonAA:
+		Name: mountedaa
 		Weapon: RedEyeE.CYB
 		PauseOnCondition: !ammo
-	Armament@GarrisonAA:
+		RequiresCondition: !tibcore-upgrade
+	Armament@GarrisonAAUPG:
+		Name: mountedaa
+		Weapon: RedEye.CYB.TibCore
+		PauseOnCondition: !ammo
+		RequiresCondition: tibcore-upgrade
+	Armament@Garrison:
 		Name: mounted
 		Weapon: DragonE.CYB
 		PauseOnCondition: !ammo
+		RequiresCondition: !tibcore-upgrade
+	Armament@GarrisonUPG:
+		Name: mounted
+		Weapon: DragonE.CYB.TibCore
+		PauseOnCondition: !ammo
+		RequiresCondition: tibcore-upgrade
+	GrantConditionOnPrerequisite@TIBCORE:
+		Condition: tibcore-upgrade
+		Prerequisites: tibcore.upgrade
 	AmmoPool:
 		Ammo: 1
 		AmmoCondition: ammo
