@@ -26,31 +26,50 @@ VEHICLES.SCRIN:
 	Buildable:
 		Description: Vehicle Production
 
-^TibConversion:
-	AmmoPool:
+^ResourceConversion:
+	AmmoPool@RESCONV:
 		Ammo: 65
 		InitialAmmo: 0
 		AmmoCondition: ammo
 		Armaments: primary-charged
-	ReloadAmmoPool:
+	ReloadAmmoPool@RESCONV:
 		Count: 13
 		Delay: 25
-		RequiresCondition: ontib && tibconv-upgrade
-	ReloadAmmoPoolCA@DRAIN:
+		RequiresCondition: charging-on-resource
+	ReloadAmmoPoolCA@RESCONVDRAIN:
 		Count: -13
 		Delay: 500
-		RequiresCondition: !ontib && tibconv-upgrade
+		RequiresCondition: !charging-on-resource && !charged-fire
 		ShowSelectionBar: false
 		ResetOnFire: true
-	WithAmmoPipsDecoration:
+	WithAmmoPipsDecoration@RESCONV:
 		PipCount: 5
 		RequiresCondition: ammo
 		RequiresSelection: true
-		Position: TopLeft
-		Margin: 4, 1
-	GrantConditionOnTerrain@ONTIB:
-		Condition: ontib
-		TerrainTypes: Tiberium, BlueTiberium
+		Position: BottomLeft
+		Margin: 4, 3
+	GrantConditionOnTerrain@RESCONV:
+		Condition: on-resource
+		TerrainTypes: Tiberium, BlueTiberium, Ore, Gems
+	GrantCondition@RESCONV:
+		Condition: charging-on-resource
+		RequiresCondition: resconv-upgrade && on-resource && (ammo < 65 || charged-fire)
+	GrantConditionOnTerrain@RESCONVTIB:
+		Condition: on-tib
+		TerrainTypes: Tiberium
+		RequiresCondition: charging-on-resource
+	GrantConditionOnTerrain@RESCONVORE:
+		Condition: on-ore
+		TerrainTypes: Ore
+		RequiresCondition: charging-on-resource
+	GrantConditionOnTerrain@RESCONVBLUETIB:
+		Condition: on-bluetib
+		TerrainTypes: BlueTiberium
+		RequiresCondition: charging-on-resource
+	GrantConditionOnTerrain@RESCONVGEMS:
+		Condition: on-gems
+		TerrainTypes: Gems
+		RequiresCondition: charging-on-resource
 	GrantConditionOnAttack@PRIMARY:
 		ArmamentNames: primary
 		Condition: uncharged-fire
@@ -59,14 +78,32 @@ VEHICLES.SCRIN:
 		ArmamentNames: primary-charged
 		Condition: charged-fire
 		RevokeDelay: 85
-	GrantConditionOnPrerequisite@TIBCONV:
-		Condition: tibconv-upgrade
-		Prerequisites: tibconv.upgrade
-	WithIdleOverlay@TIBCONV:
-		Image: tibconv
-		Sequence: idle
+	GrantConditionOnPrerequisite@RESCONV:
+		Condition: resconv-upgrade
+		Prerequisites: resconv.upgrade
+	WithIdleOverlay@RESCONVTIB:
+		Image: resconv
+		Sequence: green
 		Palette: scrin
-		RequiresCondition: ontib && tibconv-upgrade && (ammo < 65 || charged-fire)
+		RequiresCondition: on-tib && charging-on-resource
+		Offset: 0,0,300
+	WithIdleOverlay@RESCONVORE:
+		Image: resconv
+		Sequence: yellow
+		Palette: scrin
+		RequiresCondition: on-ore && charging-on-resource
+		Offset: 0,0,300
+	WithIdleOverlay@RESCONVBLUETIB:
+		Image: resconv
+		Sequence: blue
+		Palette: scrin
+		RequiresCondition: on-bluetib && charging-on-resource
+		Offset: 0,0,300
+	WithIdleOverlay@RESCONVGEMS:
+		Image: resconv
+		Sequence: red
+		Palette: scrin
+		RequiresCondition: on-gems && charging-on-resource
 		Offset: 0,0,300
 
 #
@@ -864,7 +901,7 @@ DEVO:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
-	Inherits@TIBCONV: ^TibConversion
+	Inherits@RESCONV: ^ResourceConversion
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 220
@@ -978,7 +1015,7 @@ RUIN:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
-	Inherits@TIBCONV: ^TibConversion
+	Inherits@RESCONV: ^ResourceConversion
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
@@ -1042,21 +1079,20 @@ RUIN:
 		PauseOnCondition: empdisable || being-warped
 		Armaments: primary, primary-charged
 	WithSpriteTurret:
-	AmmoPool:
+	AmmoPool@RESCONV:
 		Ammo: 15
-	ReloadAmmoPool:
+	ReloadAmmoPool@RESCONV:
 		Count: 5
-		Delay: 25
-	WithAmmoPipsDecoration:
+	ReloadAmmoPoolCA@RESCONVDRAIN:
+		Count: -5
+	WithAmmoPipsDecoration@RESCONV:
 		PipCount: 3
+	GrantCondition@RESCONV:
+		RequiresCondition: resconv-upgrade && on-resource && (ammo < 15 || charged-fire)
 	GrantConditionOnAttack@PRIMARY:
 		RevokeDelay: 175
 	GrantConditionOnAttack@PRIMARYCHARGED
 		RevokeDelay: 175
-	ReloadAmmoPoolCA@DRAIN:
-		Count: -6
-	WithIdleOverlay@TIBCONV:
-		RequiresCondition: ontib && tibconv-upgrade && (ammo < 15 || charged-fire)
 
 TPOD:
 	Inherits: ^Tank
@@ -1138,7 +1174,7 @@ TPOD:
 
 RPTP:
 	Inherits: TPOD
-	Inherits@TIBCONV: ^TibConversion
+	Inherits@RESCONV: ^ResourceConversion
 	Buildable:
 		BuildPaletteOrder: 311
 		Prerequisites: scrt, ~vehicles.reaper, ~techlevel.high
@@ -1188,25 +1224,29 @@ RPTP:
 		Weapon: ReaperLaserChargedSound
 		FireDelay: 15
 		PauseOnCondition: !ammo || uncharged-fire
-	AmmoPool:
+	-GrantConditionOnPrerequisite@RESCONV:
+	AmmoPool@RESCONV:
 		Ammo: 70
 		Armaments: primary-charged, secondary-charged
-	ReloadAmmoPool:
+	ReloadAmmoPool@RESCONV:
 		Count: 14
-		Delay: 25
-		RequiresCondition: ontib
-	ReloadAmmoPoolCA@DRAIN:
+	ReloadAmmoPoolCA@RESCONVDRAIN:
 		Count: -14
-		RequiresCondition: !ontib
-	WithAmmoPipsDecoration:
+	WithAmmoPipsDecoration@RESCONV:
 		PipCount: 5
+	GrantCondition@RESCONV:
+		RequiresCondition: on-resource && (ammo < 70 || charged-fire)
 	GrantConditionOnAttack@PRIMARY:
 		RevokeDelay: 50
 	GrantConditionOnAttack@PRIMARYCHARGED
 		RevokeDelay: 50
-	-GrantConditionOnPrerequisite@TIBCONV:
-	WithIdleOverlay@TIBCONV:
-		RequiresCondition: ontib && (ammo < 70 || charged-fire)
+	WithIdleOverlay@RESCONVTIB:
+		Offset: 0,0,200
+	WithIdleOverlay@RESCONVORE:
+		Offset: 0,0,200
+	WithIdleOverlay@RESCONVBLUETIB:
+		Offset: 0,0,200
+	WithIdleOverlay@RESCONVGEMS:
 		Offset: 0,0,200
 
 SMCV:
