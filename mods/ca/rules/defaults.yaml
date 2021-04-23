@@ -1478,6 +1478,18 @@
 	WithDamageOverlay:
 		Image: smoke_mtd
 
+^SlowedByCrushing:
+	ExternalCondition@CRUSHATTEMPTSLOW:
+		Condition: crush-attempt-slow
+	ExternalCondition@CRUSHSLOW:
+		Condition: crush-slow
+	SpeedMultiplier@CRUSHATTEMPTSLOW:
+		RequiresCondition: crush-attempt-slow && !crush-slow
+		Modifier: 70
+	SpeedMultiplier@CRUSHSLOW:
+		RequiresCondition: crush-slow
+		Modifier: 35
+
 ^Infantry:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^GainsExperience
@@ -1718,6 +1730,11 @@
 		Condition: invisibility
 	GpsRadarDot:
 		Sequence: Infantry
+	GrantExternalConditionToCrusher:
+		WarnCrushCondition: crush-attempt-slow
+		WarnCrushDuration: 80
+		OnCrushCondition: crush-slow
+		OnCrushDuration: 40
 
 ^Soldier:
 	Inherits: ^Infantry
