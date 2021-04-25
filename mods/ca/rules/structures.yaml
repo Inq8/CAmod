@@ -220,7 +220,6 @@ SPEN:
 		ProductionType: Ship
 	Power:
 		Amount: -30
-		RequiresCondition: !being-warped
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 10c0
@@ -318,7 +317,6 @@ SYRD:
 		ProductionType: Ship
 	Power:
 		Amount: -30
-		RequiresCondition: !being-warped
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 10c0
@@ -404,7 +402,6 @@ IRON:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
-		RequiresCondition: !being-warped
 	MustBeDestroyed:
 		RequiredForShortGame: false
 	InfiltrateForSupportPowerReset:
@@ -533,7 +530,6 @@ PDOX:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
-		RequiresCondition: !being-warped
 	MustBeDestroyed:
 		RequiredForShortGame: false
 	ProvidesPrerequisite@buildingname:
@@ -598,7 +594,6 @@ TSLA:
 		ReloadDelay: 120
 	Power:
 		Amount: -100
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
@@ -671,7 +666,6 @@ AGUN:
 		RangeCircleType: aa
 	Power:
 		Amount: -50
-		RequiresCondition: !being-warped
 	ClassicFacingBodyOrientation:
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
@@ -722,7 +716,6 @@ DOME:
 		Types: SpyInfiltrate, SabInfiltrate
 	Power:
 		Amount: -40
-		RequiresCondition: !being-warped
 	ValidFactions:
 		Factions: england, france, germany, russia, ukraine, iraq
 	ProvidesPrerequisite@anyradar:
@@ -841,7 +834,6 @@ PBOX:
 		FallbackRange: 6c0
 	Power:
 		Amount: -20
-		RequiresCondition: !being-warped
 	WithMuzzleOverlay:
 
 HBOX:
@@ -894,7 +886,6 @@ HBOX:
 		PauseOnCondition: empdisable || being-warped
 	Power:
 		Amount: -20
-		RequiresCondition: !being-warped
 	-MustBeDestroyed:
 	WithMuzzleOverlay:
 
@@ -944,7 +935,6 @@ GUN:
 	WithMuzzleOverlay:
 	Power:
 		Amount: -40
-		RequiresCondition: !being-warped
 	ClassicFacingBodyOrientation:
 
 FTUR:
@@ -986,7 +976,6 @@ FTUR:
 		QuantizedFacings: 8
 	Power:
 		Amount: -20
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	Explodes:
 		Weapon: BuildingExplode
@@ -1046,7 +1035,6 @@ SAM:
 		RangeCircleType: aa
 	Power:
 		Amount: -40
-		RequiresCondition: !being-warped
 	ClassicFacingBodyOrientation:
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
@@ -1103,7 +1091,6 @@ ATEK:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
@@ -1273,7 +1260,6 @@ WEAP:
 		ProductionType: Vehicle
 	Power:
 		Amount: -30
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
@@ -1404,7 +1390,6 @@ FACT:
 		RequiresCondition: !build-incomplete && !chrono-vortex
 	Power:
 		Amount: 0
-		RequiresCondition: !being-warped
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
@@ -1502,7 +1487,6 @@ PROC:
 		Sequence: idle-top
 	Power:
 		Amount: -30
-		RequiresCondition: !being-warped
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
@@ -1568,7 +1552,6 @@ SILO:
 	-SpawnActorsOnSell:
 	Power:
 		Amount: -10
-		RequiresCondition: !being-warped
 	Explodes:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
@@ -1623,7 +1606,6 @@ HPAD:
 		ProductionType: Aircraft
 	Power:
 		Amount: -10
-		RequiresCondition: !being-warped
 	ValidFactions:
 		Factions: england, france, germany, russia, ukraine, iraq
 	ProvidesPrerequisiteValidatedFaction@allies:
@@ -1835,7 +1817,6 @@ AFLD:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -20
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: afld
 	Targetable:
@@ -1879,7 +1860,6 @@ POWR:
 	WithBuildingBib:
 	Power:
 		Amount: 100
-		RequiresCondition: !disabled && !forceshield && !being-warped
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, PowerInfiltrate
 	ScalePowerWithHealth:
@@ -1922,7 +1902,6 @@ APWR:
 	WithBuildingBib:
 	Power:
 		Amount: 200
-		RequiresCondition: !disabled && !forceshield && !being-warped
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, PowerInfiltrate
 	ScalePowerWithHealth:
@@ -2027,7 +2006,6 @@ STEK:
 	WithBuildingBib:
 	Power:
 		Amount: -100
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
@@ -2156,7 +2134,6 @@ BARR:
 		Prerequisite: infantry.thf
 	Power:
 		Amount: -20
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
@@ -2209,7 +2186,6 @@ KENN:
 	-SpawnActorsOnSell:
 	Power:
 		Amount: -10
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 
 TENT:
@@ -2298,7 +2274,6 @@ TENT:
 		Prerequisite: infantry.medi
 	Power:
 		Amount: -20
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
@@ -2352,7 +2327,6 @@ FIX:
 		RequiresCondition: !build-incomplete
 	Power:
 		Amount: -30
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair
@@ -2707,7 +2681,6 @@ PYLE:
 		Prerequisite: infantry.medi
 	Power:
 		Amount: -20
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
@@ -2803,7 +2776,6 @@ HAND:
 		Proxy: stolentech.hand
 	Power:
 		Amount: -20
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
@@ -2910,7 +2882,6 @@ WEAP.TD:
 		ProductionType: Vehicle
 	Power:
 		Amount: -30
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPower@spy:
 		Proxy: vehicles.upgraded
@@ -3031,7 +3002,6 @@ AIRS:
 		ProductionType: Vehicle
 	Power:
 		Amount: -30
-		RequiresCondition: !being-warped
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.airs
@@ -3083,7 +3053,6 @@ NUKE:
 		DeathSequencePalette: overlayplayertd
 	Power:
 		Amount: 100
-		RequiresCondition: !disabled && !forceshield && !being-warped
 	ProvidesPrerequisite:
 		Prerequisite: anypower
 	Targetable:
@@ -3136,7 +3105,6 @@ NUK2:
 		DeathSequencePalette: overlayplayertd
 	Power:
 		Amount: 200
-		RequiresCondition: !disabled && !forceshield && !being-warped
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate, PowerInfiltrate
 	ProvidesPrerequisite@buildingname:
@@ -3267,7 +3235,6 @@ AFAC:
 		RequiresCondition: !build-incomplete && !chrono-vortex
 	Power:
 		Amount: 0
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	ConyardChronoReturn:
 		ReturnOriginalActorOnCondition: build-incomplete
@@ -3328,7 +3295,6 @@ NSAM:
 	WithMuzzleOverlay:
 	Power:
 		Amount: -40
-		RequiresCondition: !being-warped
 	ClassicFacingBodyOrientation:
 	-ActorPreviewPlaceBuildingPreview:
 	SequencePlaceBuildingPreview:
@@ -3378,7 +3344,6 @@ GTWR:
 		TurnSpeed: 512
 	Power:
 		Amount: -20
-		RequiresCondition: !being-warped
 
 ATWR:
 	Inherits: ^DefenseTD
@@ -3423,7 +3388,6 @@ ATWR:
 		QuantizedFacings: 8
 	Power:
 		Amount: -50
-		RequiresCondition: !being-warped
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
 
@@ -3472,7 +3436,6 @@ STWR:
 	WithMuzzleOverlay:
 	Power:
 		Amount: -80
-		RequiresCondition: !being-warped
 	ClassicFacingBodyOrientation:
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
@@ -3535,7 +3498,6 @@ OBLI:
 		Interval: 30, 40
 	Power:
 		Amount: -90
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
@@ -3721,7 +3683,6 @@ HQ:
 		PauseOnCondition: disabled || being-warped
 	Power:
 		Amount: -40
-		RequiresCondition: !being-warped
 	ValidFactions:
 		Factions: talon, zocom, eagle, blackh, marked, legion
 	ProvidesPrerequisiteValidatedFaction@anyradar:
@@ -3869,7 +3830,6 @@ EYE:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
-		RequiresCondition: !being-warped
 	ValidFactions:
 		Factions: talon, zocom, eagle
 	ProvidesPrerequisiteValidatedFaction@zoceye:
@@ -3932,7 +3892,6 @@ REP:
 		RequiresCondition: !build-incomplete
 	Power:
 		Amount: -30
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair
@@ -3990,7 +3949,6 @@ HPAD.TD:
 	WithBuildingBib:
 	Power:
 		Amount: -10
-		RequiresCondition: !being-warped
 	ValidFactions:
 		Factions: talon, zocom, eagle, blackh, marked, legion
 	ProvidesPrerequisite@all:
@@ -4121,7 +4079,6 @@ PROC.TD:
 		RequiresCondition: !build-incomplete
 	Power:
 		Amount: -30
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@anyrefinery:
 		Prerequisite: anyrefinery
@@ -4171,7 +4128,6 @@ SILO.TD:
 		ActorTypes: c1,c7
 	Power:
 		Amount: -10
-		RequiresCondition: !being-warped
 	Selectable:
 		DecorationBounds: 49,30
 	Explodes:
@@ -4297,7 +4253,6 @@ AFLD.GDI:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -20
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate
@@ -4348,7 +4303,6 @@ GTEK:
 	WithBuildingBib:
 	Power:
 		Amount: -200
-		RequiresCondition: !being-warped
 	ValidFactions:
 		Factions: talon, zocom, eagle
 	ProvidesPrerequisite:
@@ -4540,7 +4494,6 @@ TMPL:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -150
-		RequiresCondition: !being-warped
 	MustBeDestroyed:
 		RequiredForShortGame: false
 	WithSupportPowerActivationAnimation:
@@ -4629,7 +4582,6 @@ PRIS:
 		LocalOffset: 0,0,1024
 	Power:
 		Amount: -75
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
@@ -4706,7 +4658,6 @@ SPEN.nod:
 		ProductionType: Ship
 	Power:
 		Amount: -30
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	MapEditorData:
 		ExcludeTilesets: INTERIOR
@@ -4803,7 +4754,6 @@ SYRD.gdi:
 		ProductionType: Ship
 	Power:
 		Amount: -30
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	MapEditorData:
 		ExcludeTilesets: INTERIOR
@@ -4870,7 +4820,6 @@ HTUR:
 	WithMuzzleOverlay:
 	Power:
 		Amount: -100
-		RequiresCondition: !being-warped
 	ClassicFacingBodyOrientation:
 	Explodes:
 		Weapon: BuildingExplode
@@ -4966,7 +4915,6 @@ TTUR:
 		QuantizedFacings: 8
 	Power:
 		Amount: -20
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@ftur:
 		Prerequisite: ftur
@@ -5037,7 +4985,6 @@ SGEN:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
-		RequiresCondition: !being-warped
 	MustBeDestroyed:
 		RequiredForShortGame: false
 	HitShape:
@@ -5109,7 +5056,7 @@ LASP:
 	WithIdleAnimation@OFFLINE:
 		Interval: 0
 		Sequences: idle-offline
-		RequiresCondition: disabled
+		RequiresCondition: disabled || empdisable || being-warped 
 	Health:
 		HP: 100000
 	Armor:
@@ -5125,7 +5072,6 @@ LASP:
 		RequiresCondition: !build-incomplete && !(c4 || tnt) && !being-warped
 	Power:
 		Amount: -15
-		RequiresCondition: !being-warped && !disabled && !empdisable
 	RevealsShroud:
 		Range: 3c0
 	LineBuild:
@@ -5136,8 +5082,11 @@ LASP:
 	LineBuildNode:
 		Types: laserfencenode
 	LineBuildSegmentExternalCondition:
-		RequiresCondition: !build-incomplete && !disabled && !empdisable
+		RequiresCondition: !build-incomplete && !disabled && !empdisable && !being-warped
 		Condition: active-posts
+	Explodes@TEMPORAL:
+		Weapon: TemporalExplode
+		EmptyWeapon: TemporalExplode
 
 LASF:
 	Inherits: ^Wall
@@ -5265,7 +5214,6 @@ PATR:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -150
-		RequiresCondition: !being-warped
 	ClassicFacingBodyOrientation:
 	Explodes:
 		Weapon: BuildingExplode
@@ -5325,7 +5273,6 @@ INDP:
 	WithBuildingBib:
 	Power:
 		Amount: -150
-		RequiresCondition: !being-warped
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack
 	WithDeathAnimation:
@@ -5396,7 +5343,6 @@ OREP:
 		RequiresCondition: !disabled && !being-warped && orep-upgrade
 	Power:
 		Amount: -150
-		RequiresCondition: !being-warped
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack
 	WithDeathAnimation:
@@ -5474,7 +5420,6 @@ UPGC:
 	ProvidesPrerequisite@Name:
 	Power:
 		Amount: -150
-		RequiresCondition: !being-warped
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack
 	WithDeathAnimation:
@@ -5788,7 +5733,6 @@ TMPP:
 		Name: Temple Prime
 	Power:
 		Amount: -150
-		RequiresCondition: !being-warped
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack
 	WithDeathAnimation:
@@ -5905,7 +5849,6 @@ MSLO.Nod:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -150
-		RequiresCondition: !being-warped
 	MustBeDestroyed:
 		RequiredForShortGame: false
 	WithSupportPowerActivationAnimation:
@@ -5991,7 +5934,6 @@ WEAT:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	MustBeDestroyed:
 		RequiredForShortGame: false

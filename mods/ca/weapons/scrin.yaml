@@ -311,18 +311,19 @@ CorruptorExplode:
 DevourerLaser:
 	Inherits: ^ScrinLaser
 	StartBurstReport: devourer-fire1.aud, devourer-fire2.aud
-	FirstBurstTargetOffset: 0,-600,0
-	FollowingBurstTargetOffset: -0,100,0
+	FirstBurstTargetOffset: 0,-250,0
+	FollowingBurstTargetOffset: 0,40,0
 	Burst: 13
 	BurstDelays: 1
-	Projectile: LaserZap
-		TrackTarget: false
+	Projectile: KKNDLaser
 		Duration: 2
-		LaunchEffectImage: devo
-		LaunchEffectSequence: muzzle
-		LaunchEffectPalette: scrin
-		Color: 00FF0090
-		SecondaryBeamColor: 00FF0050
+		InnerLightness: 255
+		OuterLightness: 115
+		Color: FF69B4E6, FF44CCE6, FF45B5E6
+		Radius: 3
+		Distortion: 0
+		DistortionAnimation: 128
+		SegmentLength: 0
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		Damage: 1000
@@ -330,11 +331,11 @@ DevourerLaser:
 DevourerLaserCharged:
 	Inherits: DevourerLaser
 	StartBurstReport: devourer-cfire1.aud, devourer-cfire2.aud
-	Projectile: LaserZap
-		Color: CCFFBBD0
-		SecondaryBeamColor: 00FF0090
-		SecondaryBeamWidth: 90
-		Duration: 3
+	Projectile: KKNDLaser
+		Radius: 3
+		Distortion: 15
+		DistortionAnimation: 128
+		SegmentLength: 196
 	Warhead@1Dam: SpreadDamage
 		Damage: 1200
 
@@ -456,11 +457,12 @@ RuinerCannon:
 RuinerCannonCharged:
 	Inherits: RuinerCannon
 	Report: ruiner-cfire1.aud
+	Burst: 3
 	Projectile: Bullet
 		Image: tibgloblg
 		Speed: 224
 	Warhead@1Dam: SpreadDamage
-		Damage: 5500
+		Damage: 9200
 		Spread: 512
 	Warhead@Shrap: FireShrapnel
 		Weapon: ChemDebrisSmall

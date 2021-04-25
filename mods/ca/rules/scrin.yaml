@@ -57,19 +57,15 @@ VEHICLES.SCRIN:
 	GrantConditionOnTerrain@RESCONVTIB:
 		Condition: on-tib
 		TerrainTypes: Tiberium
-		RequiresCondition: charging-on-resource
 	GrantConditionOnTerrain@RESCONVORE:
 		Condition: on-ore
 		TerrainTypes: Ore
-		RequiresCondition: charging-on-resource
 	GrantConditionOnTerrain@RESCONVBLUETIB:
 		Condition: on-bluetib
 		TerrainTypes: BlueTiberium
-		RequiresCondition: charging-on-resource
 	GrantConditionOnTerrain@RESCONVGEMS:
 		Condition: on-gems
 		TerrainTypes: Gems
-		RequiresCondition: charging-on-resource
 	GrantConditionOnAttack@PRIMARY:
 		ArmamentNames: primary
 		Condition: uncharged-fire
@@ -938,11 +934,16 @@ DEVO:
 		Weapon: DevourerLaser
 		PauseOnCondition: (ammo || charged-fire) && !uncharged-fire
 		LocalOffset: 850,0,208
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
 	Armament@PRIMARYCHARGED:
 		Name: primary-charged
 		Weapon: DevourerLaserCharged
 		PauseOnCondition: !ammo || uncharged-fire
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
 		LocalOffset: 850,0,208
+	WithMuzzleOverlay:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	TurretedFloating:
@@ -2321,7 +2322,6 @@ SFAC:
 		RequiresCondition: !build-incomplete && !chrono-vortex
 	Power:
 		Amount: 0
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	ConyardChronoReturn:
 		ReturnOriginalActorOnCondition: build-incomplete
@@ -2365,7 +2365,6 @@ REAC:
 	WithBuildingBib:
 	Power:
 		Amount: 100
-		RequiresCondition: !disabled && !forceshield && !being-warped
 	ProvidesPrerequisite:
 		Prerequisite: anypower
 	Targetable:
@@ -2408,7 +2407,6 @@ REA2:
 	WithBuildingBib:
 	Power:
 		Amount: 200
-		RequiresCondition: !disabled && !forceshield && !being-warped
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate, PowerInfiltrate
 	ProvidesPrerequisite@buildingname:
@@ -2484,7 +2482,6 @@ PROC.SCRIN:
 		Facing: 64
 	Power:
 		Amount: -30
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@anyrefinery:
 		Prerequisite: anyrefinery
@@ -2568,7 +2565,6 @@ PORT:
 		Prerequisite: infantry.harbinger
 	Power:
 		Amount: -20
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
@@ -2655,7 +2651,6 @@ WSPH:
 		ProductionType: Vehicle
 	Power:
 		Amount: -30
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPower@spy:
 		Proxy: vehicles.upgraded
@@ -2710,7 +2705,6 @@ NERV:
 		Types: SpyInfiltrate, SabInfiltrate
 	Power:
 		Amount: -40
-		RequiresCondition: !being-warped
 	ValidFactions:
 		Factions: reaper, traveler, harbinger
 	ProvidesPrerequisite@anyradar:
@@ -2848,7 +2842,6 @@ SCRT:
 	WithBuildingBib:
 	Power:
 		Amount: -200
-		RequiresCondition: !being-warped
 	ValidFactions:
 		Factions: reaper, traveler, harbinger
 	ProvidesPrerequisite:
@@ -2977,7 +2970,6 @@ GRAV:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -20
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate
@@ -3035,7 +3027,6 @@ SIGN:
 		MinRange: 3c0
 	Power:
 		Amount: -150
-		RequiresCondition: !being-warped
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack
 	ProvidesPrerequisite@Name:
@@ -3097,7 +3088,6 @@ SREP:
 		RequiresCondition: !build-incomplete
 	Power:
 		Amount: -30
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair
@@ -3146,7 +3136,6 @@ SILO.SCRIN:
 		ActorTypes: c1,c7
 	Power:
 		Amount: -10
-		RequiresCondition: !being-warped
 	Selectable:
 		Bounds: 24,24
 	Explodes:
@@ -3191,7 +3180,6 @@ MANI:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
-		RequiresCondition: !being-warped
 	MustBeDestroyed:
 		RequiredForShortGame: false
 	HitShape:
@@ -3298,7 +3286,6 @@ RIFT:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
-		RequiresCondition: !being-warped
 	ProvidesPrerequisite@buildingname:
 	MustBeDestroyed:
 		RequiredForShortGame: false
@@ -3358,7 +3345,6 @@ PTUR:
 	WithMuzzleOverlay:
 	Power:
 		Amount: -20
-		RequiresCondition: !being-warped
 	ClassicFacingBodyOrientation:
 	SpawnActorOnDeath:
 		Actor: s1
@@ -3411,7 +3397,6 @@ SHAR:
 		RangeCircleType: aa
 	Power:
 		Amount: -50
-		RequiresCondition: !being-warped
 	ClassicFacingBodyOrientation:
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
@@ -3460,7 +3445,6 @@ SCOL:
 		PauseOnCondition: disabled || empdisable || being-warped
 	Power:
 		Amount: -100
-		RequiresCondition: !being-warped
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
 	SpawnActorOnDeath:
@@ -3671,6 +3655,7 @@ SCOL.Temp:
 	-GrantConditionOnPowerState@LOWPOWER:
 	-WithColoredOverlay@IDISABLE:
 	-GrantCondition@IDISABLE:
+	-PowerMultiplier@TEMPORAL:
 	-PowerMultiplier@POWERDOWN:
 	-WithDecoration@POWERDOWN:
 	-ToggleConditionOnOrder:

@@ -348,31 +348,37 @@
 		ScaleWithCurrentHealthPercentage: true
 		ShowSelectionBar: true
 		SelectionBarColor: 40FFFF
-	Targetable@Temporal:
+	Targetable@TEMPORAL:
 		TargetTypes: Temporal
-	WithColoredOverlay@temporal:
+	WithColoredOverlay@TEMPORALl:
 		RequiresCondition: being-warped
 		Palette: temporal
-	WithColoredOverlay@temporal2:
+	WithColoredOverlay@TEMPORAL2:
 		RequiresCondition: being-warped
 		Palette: lowpower
-	TimedConditionBar@temporal:
+	TimedConditionBar@TEMPORAL:
 		Condition: being-warped
 		Color: 2f74e2
-	WithIdleOverlay@temporal:
+	WithIdleOverlay@TEMPORAL:
 		Sequence: chrono-overlay
 		RequiresCondition: being-warped
-	Explodes@temporal:
+	Explodes@TEMPORAL:
 		Weapon: TemporalExplode
 		EmptyWeapon: TemporalExplode
 		DeathTypes: ChronoDeath
-	ExternalCondition@temporal:
+	ExternalCondition@TEMPORAL:
 		Condition: being-warped
-	SpeedMultiplier@temporal:
+	SpeedMultiplier@TEMPORAL:
 		Modifier: 0
 		RequiresCondition: being-warped
-	RejectsOrders@temporal:
+	RejectsOrders@TEMPORAL:
 		RequiresCondition: being-warped
+
+^WarpableBuilding:
+	Inherits@1: ^Warpable
+	PowerMultiplier@TEMPORAL:
+		RequiresCondition: being-warped
+		Modifier: 0
 
 ^Suppressable:
 	SpeedMultiplier@SUPPRESSION:
@@ -2145,7 +2151,7 @@
 		Prerequisites: structures.eagle
 	Explodes:
 		RequiresCondition: !airborne && !being-warped
-	Targetable@Temporal:
+	Targetable@TEMPORAL:
 		TargetTypes: TemporalAir
 	-SpeedMultiplier@chilled2:
 	-SpeedMultiplier@chilled3:
@@ -2249,7 +2255,7 @@
 	Inherits@2: ^Cloakable
 	Inherits@3: ^ForceShieldable
 	Inherits@4: ^EmpDisable
-	Inherits@6: ^Warpable
+	Inherits@6: ^WarpableBuilding
 	Inherits@7: ^BotBuilding
 	Inherits@8: ^Chillable
 	Inherits@9: ^NaniteShieldable
@@ -2304,7 +2310,7 @@
 	Targetable:
 		RequiresCondition: !being-warped
 	-ExternalCondition@CRATE-CLOAK:
-	Explodes@temporal:
+	Explodes@TEMPORAL:
 		Weapon: TemporalExplodeLarge
 		EmptyWeapon: TemporalExplodeLarge
 	GpsRadarDot:
@@ -2376,7 +2382,7 @@
 	ProductionCostMultiplier@FranceBonus:
 		Multiplier: 90
 		Prerequisites: structures.france
-	Explodes@temporal:
+	Explodes@TEMPORAL:
 		Weapon: TemporalExplode
 		EmptyWeapon: TemporalExplode
 	DetectCloaked@UNDERBRIDGE:

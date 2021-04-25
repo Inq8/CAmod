@@ -26,7 +26,7 @@ namespace OpenRA.Mods.CA.Projectiles
 		public readonly int Duration = 10;
 
 		[Desc("Color of the beam. Default falls back to player color.")]
-		public readonly Color Color = Color.Transparent;
+		public readonly Color[] Color = null;
 
 		[Desc("Inner lightness of the beam.")]
 		public readonly byte InnerLightness = 0xff;
@@ -74,19 +74,20 @@ namespace OpenRA.Mods.CA.Projectiles
 		{
 			this.info = info;
 
+			target = args.PassiveTarget;
+			source = args.Source;
+
 			colors = new Color[info.Radius];
 			for (var i = 0; i < info.Radius; i++)
 			{
-				var color = info.Color == Color.Transparent ? args.SourceActor.Owner.Color : info.Color;
+				var color = info.Color == null ? Color.Red : info.Color.Random(Game.CosmeticRandom);
 				var bw = (float)((info.InnerLightness - info.OuterLightness) * i / (info.Radius - 1) + info.OuterLightness) / 0xff;
+				var alpha = (float)color.A;
 				var dstR = bw > .5 ? 1 - (1 - 2 * (bw - .5)) * (1 - (float)color.R / 0xff) : 2 * bw * ((float)color.R / 0xff);
 				var dstG = bw > .5 ? 1 - (1 - 2 * (bw - .5)) * (1 - (float)color.G / 0xff) : 2 * bw * ((float)color.G / 0xff);
 				var dstB = bw > .5 ? 1 - (1 - 2 * (bw - .5)) * (1 - (float)color.B / 0xff) : 2 * bw * ((float)color.B / 0xff);
-				colors[i] = Color.FromArgb((int)(dstR * 0xff), (int)(dstG * 0xff), (int)(dstB * 0xff));
+				colors[i] = Color.FromArgb((int)(alpha), (int)(dstR * 0xff), (int)(dstG * 0xff), (int)(dstB * 0xff));
 			}
-
-			target = args.PassiveTarget;
-			source = args.Source;
 
 			var direction = target - source;
 
