@@ -934,14 +934,10 @@ DEVO:
 		Weapon: DevourerLaser
 		PauseOnCondition: (ammo || charged-fire) && !uncharged-fire
 		LocalOffset: 850,0,208
-		MuzzleSequence: muzzle
-		MuzzlePalette: scrin
 	Armament@PRIMARYCHARGED:
 		Name: primary-charged
 		Weapon: DevourerLaserCharged
 		PauseOnCondition: !ammo || uncharged-fire
-		MuzzleSequence: muzzle
-		MuzzlePalette: scrin
 		LocalOffset: 850,0,208
 	WithMuzzleOverlay:
 	ProducibleWithLevel:
@@ -2183,15 +2179,6 @@ INVA.Husk:
 
 INVA.Husk.EMP:
 	Inherits: INVA.Husk
-	Inherits@EMP: ^EmpVisualEffect
-
-INVA.Husk.Empty:
-	Inherits: INVA.Husk
-	FallsToEarth:
-		Explosion: UnitExplodeDroneEmpty
-
-INVA.Husk.Empty.EMP:
-	Inherits: INVA.Husk.Empty
 	Inherits@EMP: ^EmpVisualEffect
 
 #

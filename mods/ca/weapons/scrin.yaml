@@ -265,49 +265,6 @@ InterloperLaser:
 			Heavy: 80
 			Concrete: 45
 
-CorrupterSpew:
-	Inherits: BigFlamer
-	StartBurstReport: corrupter-fire1.aud
-	ReloadDelay: 100
-	Burst: 30
-	BurstDelays: 3
-	Range: 6c0
-	Projectile: Bullet
-		Speed: 110
-		TrailImage: tibspew1
-		Image: tibspew2
-		LaunchAngle: 62
-		Inaccuracy: 682
-		Palette: scrin-ignore-lighting-alpha85
-		TrailPalette: scrin-ignore-lighting-alpha85
-	Warhead@1Dam: SpreadDamage
-		DamageTypes: Prone50Percent, TriggerProne, PoisonDeath
-		-Falloff:
-		Damage: 1000
-		Versus:
-			Light: 80
-	Warhead@2Smu: LeaveSmudge
-		SmudgeType: Scorch-NoFlame
-	Warhead@3Eff: CreateEffect
-		Explosions: idle
-		ExplosionPalette: scrin
-		Image: tibexplodesm
-	-Warhead@Flames:
-
-CorruptorExplode:
-	Inherits: UnitExplodeIraqTank
-	Warhead@3Eff_impact: CreateEffect
-		Explosions: med_chem
-		ExplosionPalette: tdeffect
-		ImpactSounds: vtoxcona.aud, vtoxconb.aud, vtoxconc.aud
-	-Warhead@6Eff_areanuke1:
-	Warhead@Shrap: FireShrapnel
-		Weapon: ChemDebris
-		Amount: 5
-		AimChance: 0
-		ValidTargets: Ground, Water, Infantry, Vehicle
-		ThrowWithoutTarget: true
-
 DevourerLaser:
 	Inherits: ^ScrinLaser
 	StartBurstReport: devourer-fire1.aud, devourer-fire2.aud
@@ -315,15 +272,20 @@ DevourerLaser:
 	FollowingBurstTargetOffset: -0,60,0
 	Burst: 13
 	BurstDelays: 1
-	Projectile: KKNDLaser
+	-Projectile:
+	Projectile: PlasmaBeam
 		Duration: 2
+		Colors: 7d44ffE6, eb66ffE6, 6666ffE6
 		InnerLightness: 200
 		OuterLightness: 115
-		Color: AA44FFE6, FF66CCE6
 		Radius: 2
 		Distortion: 0
 		DistortionAnimation: 96
 		SegmentLength: 0
+		Blockable: true
+		LaunchEffectImage: devo
+		LaunchEffectSequence: muzzle
+		LaunchEffectPalette: scrin
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		Damage: 930
@@ -333,11 +295,17 @@ DevourerLaserCharged:
 	StartBurstReport: devourer-cfire1.aud, devourer-cfire2.aud
 	FirstBurstTargetOffset: 0,-180,0
 	FollowingBurstTargetOffset: -0,30,0
-	Projectile: KKNDLaser
-		Radius: 3
+	Projectile: PlasmaBeam
+		Duration: 3
+		Colors: 461fc605, 98177805
+		InnerLightness: 240
+		Radius: 4
 		Distortion: 15
+		DistortionAnimation: 128
 		SegmentLength: 196
-		InnerLightness: 230
+		CenterBeamColor: ffffffff
+		CenterBeam: true
+		CenterBeamWidth: 45
 	Warhead@1Dam: SpreadDamage
 		Damage: 1150
 
@@ -428,6 +396,49 @@ MiniRift:
 		Condition: slowed
 		ValidTargets: Vehicle, Cyborg
 		ValidRelationships: Enemy, Neutral
+
+CorrupterSpew:
+	Inherits: BigFlamer
+	StartBurstReport: corrupter-fire1.aud
+	ReloadDelay: 100
+	Burst: 30
+	BurstDelays: 3
+	Range: 6c0
+	Projectile: Bullet
+		Speed: 110
+		TrailImage: tibspew1
+		Image: tibspew2
+		LaunchAngle: 62
+		Inaccuracy: 682
+		Palette: scrin-ignore-lighting-alpha85
+		TrailPalette: scrin-ignore-lighting-alpha85
+	Warhead@1Dam: SpreadDamage
+		DamageTypes: Prone50Percent, TriggerProne, PoisonDeath
+		-Falloff:
+		Damage: 1000
+		Versus:
+			Light: 80
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch-NoFlame
+	Warhead@3Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: scrin
+		Image: tibexplodesm
+	-Warhead@Flames:
+
+CorruptorExplode:
+	Inherits: UnitExplodeIraqTank
+	Warhead@3Eff_impact: CreateEffect
+		Explosions: med_chem
+		ExplosionPalette: tdeffect
+		ImpactSounds: vtoxcona.aud, vtoxconb.aud, vtoxconc.aud
+	-Warhead@6Eff_areanuke1:
+	Warhead@Shrap: FireShrapnel
+		Weapon: ChemDebris
+		Amount: 5
+		AimChance: 0
+		ValidTargets: Ground, Water, Infantry, Vehicle
+		ThrowWithoutTarget: true
 
 RuinerCannon:
 	Inherits: 155mm
