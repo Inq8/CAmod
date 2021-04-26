@@ -311,33 +311,35 @@ CorruptorExplode:
 DevourerLaser:
 	Inherits: ^ScrinLaser
 	StartBurstReport: devourer-fire1.aud, devourer-fire2.aud
-	FirstBurstTargetOffset: 0,-250,0
-	FollowingBurstTargetOffset: 0,40,0
+	FirstBurstTargetOffset: 0,-360,0
+	FollowingBurstTargetOffset: -0,60,0
 	Burst: 13
 	BurstDelays: 1
 	Projectile: KKNDLaser
 		Duration: 2
-		InnerLightness: 255
+		InnerLightness: 200
 		OuterLightness: 115
-		Color: FF69B4E6, FF44CCE6, FF45B5E6
-		Radius: 3
+		Color: AA44FFE6, FF66CCE6
+		Radius: 2
 		Distortion: 0
-		DistortionAnimation: 128
+		DistortionAnimation: 96
 		SegmentLength: 0
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 1000
+		Damage: 930
 
 DevourerLaserCharged:
 	Inherits: DevourerLaser
 	StartBurstReport: devourer-cfire1.aud, devourer-cfire2.aud
+	FirstBurstTargetOffset: 0,-180,0
+	FollowingBurstTargetOffset: -0,30,0
 	Projectile: KKNDLaser
 		Radius: 3
 		Distortion: 15
-		DistortionAnimation: 128
 		SegmentLength: 196
+		InnerLightness: 230
 	Warhead@1Dam: SpreadDamage
-		Damage: 1200
+		Damage: 1150
 
 RiftCannon:
 	Inherits: ^ScrinLaser
@@ -462,7 +464,7 @@ RuinerCannonCharged:
 		Image: tibgloblg
 		Speed: 224
 	Warhead@1Dam: SpreadDamage
-		Damage: 9200
+		Damage: 8200
 		Spread: 512
 	Warhead@Shrap: FireShrapnel
 		Weapon: ChemDebrisSmall
