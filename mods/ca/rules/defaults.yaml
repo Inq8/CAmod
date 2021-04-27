@@ -701,17 +701,10 @@
 ^BinoUpgradeInfantry:
 	Inherits: ^BinoUpgrade
 	WithDecoration@BINO:
-		Image: pips
-		Sequence: pip-bino
-		Palette: chrome
-		Position: BottomLeft
-		RequiresCondition: bino
-		BlinkInterval: 64
 		-BlinkPatterns:
 		BlinkPatterns:
 			hazmatsuits: On, Off
 			hazmatsuits-soviet: On, Off
-		RequiresSelection: True
 
 ^AuraHealable:
 	ChangesHealth@HOSPITAL:
@@ -1415,7 +1408,6 @@
 		OpeningSequence: open
 		Offset: 0,0,200
 		RequiresCondition: parachute
-	ClassicFacingBodyOrientation:
 	HitShape:
 	MapEditorData:
 		Categories: Vehicle
@@ -1618,11 +1610,7 @@
 	ChangesHealth@HOSPITAL:
 		Step: 500
 		Delay: 100
-		StartIfBelow: 100
 		DamageCooldown: 125
-		RequiresCondition: hospitalheal
-	ExternalCondition@HOSPITAL:
-		Condition: hospitalheal
 	GrantConditionOnPrerequisite@HOSPITAL:
 		Condition: hospital
 		Prerequisites: hosp
@@ -1633,12 +1621,7 @@
 		RequiresCondition: hospital && damaged
 		Condition: hospitalheal
 	WithDecoration@REDCROSS:
-		Image: pips
-		Sequence: medic
-		Palette: chrome
-		Position: BottomRight
 		RequiresCondition: hospitalheal
-		BlinkInterval: 32
 		BlinkPattern: on, off
 	DeathSounds@NORMAL:
 		Voice: Die
@@ -2182,7 +2165,6 @@
 		RepairActors: fix, rep, srep, hpad, hpad.td
 	Hovers@CRUISING:
 		RequiresCondition: cruising
-	ClassicFacingBodyOrientation:
 	-Contrail@1:
 	-Contrail@2:
 	GpsRadarDot:
@@ -2719,7 +2701,6 @@
 		Palette: ra2effect-ignore-lighting-alpha75
 	Tooltip:
 		GenericName: Destroyed Vehicle
-	ClassicFacingBodyOrientation:
 	Explodes:
 		Weapon: VisualExplodeHusk
 		EmptyWeapon: VisualExplodeHusk
@@ -2779,7 +2760,6 @@
 		CanSlide: True
 	FallsToEarth:
 		Explosion: UnitExplodeHeli
-	ClassicFacingBodyOrientation:
 	-MapEditorData:
 	RevealOnDeath:
 		Duration: 60
