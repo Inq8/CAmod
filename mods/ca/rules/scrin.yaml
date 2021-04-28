@@ -710,7 +710,10 @@ INTL:
 		Range: 4c0
 	Armament:
 		Weapon: InterloperLaser
-		LocalOffset: 400,110,30, 400,-110,30
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+		LocalOffset: 400,84,30, 400,-84,30
+	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
 	AutoTarget:
@@ -939,7 +942,6 @@ DEVO:
 		Weapon: DevourerLaserCharged
 		PauseOnCondition: !ammo || uncharged-fire
 		LocalOffset: 850,0,208
-	WithMuzzleOverlay:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	TurretedFloating:
@@ -1080,15 +1082,15 @@ RUIN:
 		Armaments: primary, primary-charged
 	WithSpriteTurret:
 	AmmoPool@RESCONV:
-		Ammo: 15
+		Ammo: 12
 	ReloadAmmoPool@RESCONV:
-		Count: 5
+		Count: 3
 	ReloadAmmoPoolCA@RESCONVDRAIN:
-		Count: -5
+		Count: -3
 	WithAmmoPipsDecoration@RESCONV:
-		PipCount: 3
+		PipCount: 4
 	GrantCondition@RESCONV:
-		RequiresCondition: resconv-upgrade && on-resource && (ammo < 15 || charged-fire)
+		RequiresCondition: resconv-upgrade && on-resource && (ammo < 12 || charged-fire)
 	GrantConditionOnAttack@PRIMARY:
 		RevokeDelay: 175
 	GrantConditionOnAttack@PRIMARYCHARGED

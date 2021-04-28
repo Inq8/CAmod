@@ -222,12 +222,12 @@ DevastatorDiscs:
 	Range: 7c0
 	ReloadDelay: 85
 	Projectile: LaserZap
-		Duration: 20
+		Duration: 4
 		Width: 45
-		ZOffset: 2047
+		ZOffset: 2048
 		SecondaryBeam: true
-		Color: FAFAFFFF
-		SecondaryBeamColor: 382EFFAA
+		Color: AAFFAAFF
+		SecondaryBeamColor: 00FF00BB
 		SecondaryBeamWidth: 65
 		SecondaryBeamZOffset: 2047
 		Blockable: true
@@ -254,8 +254,6 @@ InterloperLaser:
 	Burst: 2
 	BurstDelays: 5
 	Report: interloper-fire1.aud, interloper-fire2.aud
-	Projectile: LaserZap
-		Duration: 4
 	Warhead@1Dam: SpreadDamage
 		Damage: 2100
 		Versus:
@@ -265,17 +263,12 @@ InterloperLaser:
 			Heavy: 80
 			Concrete: 45
 
-DevourerLaser:
+^ScrinPlasmaBeam:
 	Inherits: ^ScrinLaser
-	StartBurstReport: devourer-fire1.aud, devourer-fire2.aud
-	FirstBurstTargetOffset: 0,-360,0
-	FollowingBurstTargetOffset: -0,60,0
-	Burst: 13
-	BurstDelays: 1
 	-Projectile:
 	Projectile: PlasmaBeam
 		Duration: 2
-		Colors: 7d44ffE6, eb66ffE6, 6666ffE6
+		Colors: 7d44ffE6, eb66ffE6, 5763ffE6
 		InnerLightness: 200
 		OuterLightness: 115
 		Radius: 2
@@ -283,6 +276,15 @@ DevourerLaser:
 		DistortionAnimation: 96
 		SegmentLength: 0
 		Blockable: true
+
+DevourerLaser:
+	Inherits: ^ScrinPlasmaBeam
+	StartBurstReport: devourer-fire1.aud, devourer-fire2.aud
+	FirstBurstTargetOffset: 0,-360,0
+	FollowingBurstTargetOffset: -0,60,0
+	Burst: 13
+	BurstDelays: 1
+	Projectile: PlasmaBeam
 		LaunchEffectImage: devo
 		LaunchEffectSequence: muzzle
 		LaunchEffectPalette: scrin
@@ -315,6 +317,7 @@ RiftCannon:
 	ReloadDelay: 120
 	Range: 7c0
 	Projectile: LaserZap
+		Duration: 20
 		Color: 000000FF
 		Width: 70
 		SecondaryBeamColor: 00000099
@@ -485,7 +488,7 @@ RuinerCannonCharged:
 		ThrowWithoutTarget: true
 
 TripodLaser:
-	Inherits: ^ScrinLaser
+	Inherits: ^ScrinPlasmaBeam
 	Range: 6c0
 	StartBurstReport: tripod-fire1.aud, tripod-fire2.aud, tripod-fire3.aud
 	FirstBurstTargetOffset: -150,300,0
@@ -493,10 +496,8 @@ TripodLaser:
 	ReloadDelay: 60
 	Burst: 7
 	BurstDelays: 1
-	Projectile: LaserZap
-		TrackTarget: false
-		Duration: 2
-		SecondaryBeamWidth: 75
+	Projectile: PlasmaBeam
+		Colors: 7d44ffE6, eb66ffE6, 5763ffE6
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		Damage: 900
@@ -512,18 +513,29 @@ ReaperLaser:
 	Range: 5c0
 	ReloadDelay: 50
 	StartBurstReport: rtripod-fire1.aud, rtripod-fire2.aud, rtripod-fire3.aud
-	Projectile: LaserZap
-		Color: 00FF0090
-		SecondaryBeamColor: 00FF0050
+	Projectile: PlasmaBeam
+		Radius: 2
+		InnerLightness: 170
+		OuterLightness: 130
+		Colors: 006600EE, 008800EE
+		CenterBeam: true
+		CenterBeamWidth: 45
+		CenterBeamColor: eeffeeff
 
 ReaperLaserCharged:
 	Inherits: ReaperLaser
 	StartBurstReport: rtripod-cfire1.aud, rtripod-cfire2.aud
-	Projectile: LaserZap
+	FirstBurstTargetOffset: -60,120,0
+	FollowingBurstTargetOffset: 20,-40,0
+	Projectile: PlasmaBeam
+		Colors: 00660005, 00880005
 		Duration: 3
-		Color: CCFFBBD0
-		SecondaryBeamColor: 00FF0090
-		SecondaryBeamWidth: 90
+		InnerLightness: 170
+		OuterLightness: 140
+		Radius: 4
+		Distortion: 15
+		DistortionAnimation: 96
+		SegmentLength: 196
 	Warhead@1Dam: SpreadDamage
 		Damage: 1080
 
@@ -542,8 +554,8 @@ ReaperLaserReversed:
 ReaperLaserChargedReversed:
 	Inherits: ReaperLaserCharged
 	-StartBurstReport:
-	FirstBurstTargetOffset: -150,-300,0
-	FollowingBurstTargetOffset: 50,100,0
+	FirstBurstTargetOffset: -60,-120,0
+	FollowingBurstTargetOffset: 20,40,0
 
 TripodLaserSound:
 	ReloadDelay: 66

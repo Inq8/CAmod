@@ -94,11 +94,11 @@ namespace OpenRA.Mods.CA.Projectiles
 	{
 		private readonly PlasmaBeamInfo info;
 		private readonly Color[] colors;
-		private readonly WPos[] offsets;
+		private WPos[] offsets;
 
 		readonly ProjectileArgs args;
-		readonly WVec leftVector;
-		readonly WVec upVector;
+		private WVec leftVector;
+		private WVec upVector;
 		readonly MersenneTwister random;
 		readonly bool hasLaunchEffect;
 
@@ -107,6 +107,9 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		[Sync]
 		WPos source;
+
+		[Sync]
+		WPos lastSource;
 
 		int ticks;
 
@@ -117,14 +120,13 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			target = args.PassiveTarget;
 			source = args.Source;
+			lastSource = args.Source;
 
 			var world = args.SourceActor.World;
 
 			// Check for blocking actors
 			if (info.Blockable && BlocksProjectiles.AnyBlockingActorsBetween(world, source, target, info.CenterBeamWidth, out var blockedPos))
-			{
 				target = blockedPos;
-			}
 
 			colors = new Color[info.Radius];
 			for (var i = 0; i < info.Radius; i++)
@@ -138,6 +140,27 @@ namespace OpenRA.Mods.CA.Projectiles
 				colors[i] = Color.FromArgb((int)(alpha), (int)(dstR * 0xff), (int)(dstG * 0xff), (int)(dstB * 0xff));
 			}
 
+			if (info.Distortion != 0 || info.DistortionAnimation != 0)
+				random = args.SourceActor.World.SharedRandom;
+
+			CalculateMainBeam();
+
+			if (ticks < 1)
+			{
+				var warheadArgs = new WarheadArgs(args)
+				{
+					ImpactOrientation = new WRot(WAngle.Zero, OpenRA.Mods.Common.Util.GetVerticalAngle(source, target), args.CurrentMuzzleFacing()),
+					ImpactPosition = target,
+				};
+
+				args.Weapon.Impact(Target.FromPos(target), warheadArgs);
+			}
+
+			hasLaunchEffect = !string.IsNullOrEmpty(info.LaunchEffectImage) && !string.IsNullOrEmpty(info.LaunchEffectSequence);
+		}
+
+		private void CalculateMainBeam()
+		{
 			var direction = target - source;
 
 			if (info.Distortion != 0 || info.DistortionAnimation != 0)
@@ -154,11 +177,9 @@ namespace OpenRA.Mods.CA.Projectiles
 					: new WVec(direction.Z, direction.Z, 0);
 				if (upVector.Length != 0)
 					upVector = 1024 * upVector / upVector.Length;
-
-				random = args.SourceActor.World.SharedRandom;
 			}
 
-			if (this.info.SegmentLength == WDist.Zero)
+			if (info.SegmentLength == WDist.Zero)
 				offsets = new[] { source, target };
 			else
 			{
@@ -184,48 +205,44 @@ namespace OpenRA.Mods.CA.Projectiles
 					}
 				}
 			}
-
-			if (ticks < 1)
-			{
-				var warheadArgs = new WarheadArgs(args)
-				{
-					ImpactOrientation = new WRot(WAngle.Zero, OpenRA.Mods.Common.Util.GetVerticalAngle(source, target), args.CurrentMuzzleFacing()),
-					ImpactPosition = target,
-				};
-
-				args.Weapon.Impact(Target.FromPos(target), warheadArgs);
-			}
-
-			hasLaunchEffect = !string.IsNullOrEmpty(info.LaunchEffectImage) && !string.IsNullOrEmpty(info.LaunchEffectSequence);
 		}
 
 		public void Tick(World world)
 		{
+			source = args.CurrentSource();
+
 			if (hasLaunchEffect && ticks == 0)
 				world.AddFrameEndTask(w => w.Add(new SpriteEffect(args.CurrentSource, args.CurrentMuzzleFacing, world,
 					info.LaunchEffectImage, info.LaunchEffectSequence, info.LaunchEffectPalette)));
 
 			// Check for blocking actors
 			if (info.Blockable && BlocksProjectiles.AnyBlockingActorsBetween(world, source, target, info.CenterBeamWidth, out var blockedPos))
-			{
 				target = blockedPos;
-			}
 
 			if (++ticks >= info.Duration)
 				world.AddFrameEndTask(w => w.Remove(this));
 			else if (info.DistortionAnimation != 0)
 			{
-				for (var i = 1; i < offsets.Length - 1; i++)
+				if (source != lastSource)
+					CalculateMainBeam();
+				else
 				{
-					var angle = WAngle.FromDegrees(random.Next(360));
-					var distortion = random.Next(info.DistortionAnimation);
+					offsets[0] = source;
 
-					var offset = distortion * angle.Cos() * leftVector / (1024 * 1024)
-						+ distortion * angle.Sin() * upVector / (1024 * 1024);
+					for (var i = 1; i < offsets.Length - 1; i++)
+					{
+						var angle = WAngle.FromDegrees(random.Next(360));
+						var distortion = random.Next(info.DistortionAnimation);
 
-					offsets[i] += offset;
+						var offset = distortion * angle.Cos() * leftVector / (1024 * 1024)
+							+ distortion * angle.Sin() * upVector / (1024 * 1024);
+
+						offsets[i] += offset;
+					}
 				}
 			}
+
+			lastSource = source;
 		}
 
 		public IEnumerable<IRenderable> Render(WorldRenderer worldRenderer)
