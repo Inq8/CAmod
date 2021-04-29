@@ -273,13 +273,16 @@ SUK:
 	Armament:
 		Weapon: MaverickSU
 		LocalOffset: 0,-640,0, 0,640,0
-		LocalYaw: -40, 24
 		PauseOnCondition: !ammo
 		RequiresCondition: !cluster-upgrade
 	Armament@UPGRADE:
 		Weapon: SuClusterMissile
 		LocalOffset: 0,-640,0, 0,640,0
-		LocalYaw: -40, 24
+		PauseOnCondition: !ammo
+		RequiresCondition: cluster-upgrade
+	Armament@UPGRADEDUMMY:
+		Weapon: SuClusterMissileDummy
+		LocalOffset: 0,-640,0, 0,640,0
 		PauseOnCondition: !ammo
 		RequiresCondition: cluster-upgrade
 	AttackAircraft:
@@ -299,10 +302,11 @@ SUK:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
 	AmmoPool:
-		Ammo: 4
+		Ammo: 8
 		ReloadDelay: 30
 		AmmoCondition: ammo
 	WithAmmoPipsDecoration:
+		PipCount: 4
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true

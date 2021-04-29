@@ -126,14 +126,28 @@ MaverickSU:
 	Inherits: Maverick
 	Range: 10c0
 	Report: vbleatta.aud, vbleattb.aud
-	Projectile: MissileCA
-		Inaccuracy: 1c0
-		Speed: 190
-		LockOnInaccuracy: 1024
+	Burst: 4
+	BurstDelays: 0, 10, 0
+	FirstBurstTargetOffset: -768,0,0
+	FollowingBurstTargetOffset: 768,0,0
+	-Projectile:
+	Projectile: Bullet
+		Spread: 341
+		Inaccuracy: 64
+		Blockable: false
+		Shadow: true
+		Speed: 341
+		LaunchAngle: 0
+		Image: DRAGON
+		TrailImage: smokey
+		ContrailLength: 8
+		ContrailWidth: 48
+		ContrailColor: ff990088
 	Warhead@1Dam: SpreadDamage
-		Damage: 28000
+		Damage: 17000
 		Spread: 341
 		Versus:
+			None: 15
 			Wood: 18
 			Light: 65
 			Concrete: 70
@@ -148,38 +162,65 @@ SuClusterMissile:
 	ReloadDelay: 70
 	Range: 10c0
 	MinRange: 3c0
-	Report: vbleatta.aud, vbleattb.aud
+	Report: rocket1.aud
 	Burst: 2
-	BurstDelays: 7
+	BurstDelays: 0
+	FirstBurstTargetOffset: 0,-341,0
+	FollowingBurstTargetOffset: 768,341,0
+	TargetActorCenter: true
 	Projectile: Bullet
 		Image: MISSILE
 		Blockable: false
 		Shadow: true
-		Inaccuracy: 0c768
+		Inaccuracy: 128
 		TrailImage: smokey
 		TrailDelay: 2
-		ContrailLength: 4
-		ContrailColor: FFFFFF80
-		Speed: 270
-		LaunchAngle: 10
+		ContrailWidth: 64
+		ContrailLength: 8
+		ContrailColor: ff6600aa
+		Speed: 200
+		LaunchAngle: 0
 	Warhead@1Dam: SpreadDamage
 		Damage: 1
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@3Eff: CreateEffect
-		Explosions: med_explosion_air
+		Explosions: artillery_explosion
 		ImpactActors: false
-		ImpactSounds: gexp14a.aud, gexp14b.aud, gexp14c.aud, gexp14d.aud
+		ImpactSounds: xplobig4.aud
 		ValidTargets: Ground, Air, Ship, Trees
 	Warhead@4EffWater: CreateEffect
 		ImpactSounds: splashl1.aud, splashl2.aud
 		Explosions: med_splash
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
-	Warhead@Cluster: FireCluster
+	Warhead@Cluster1: FireCluster
 		Weapon: ClusterBomb
-		RandomClusterCount: 4
+		RandomClusterCount: 2
 		Dimensions: 3,3
-		Footprint: xxx x_x xxx
+		Footprint: xxx xxx xxx
+	Warhead@Cluster2: FireCluster
+		Delay: 4
+		Weapon: ClusterBomb
+		RandomClusterCount: 1
+		Dimensions: 3,3
+		Footprint: xxx xxx xxx
+	Warhead@Cluster3: FireCluster
+		Delay: 8
+		Weapon: ClusterBomb
+		RandomClusterCount: 1
+		Dimensions: 3,3
+		Footprint: xxx xxx xxx
+
+SuClusterMissileDummy:
+	Inherits: SuClusterMissile
+	-Report:
+	-Projectile:
+	Projectile: InstantHit
+	-Warhead@3Eff:
+	-Warhead@4EffWater:
+	-Warhead@Cluster1:
+	-Warhead@Cluster2:
+	-Warhead@Cluster3:
 
 Dragon:
 	Inherits: ^AntiGroundMissile
