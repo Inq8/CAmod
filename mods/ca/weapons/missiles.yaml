@@ -158,18 +158,18 @@ MaverickSU:
 	Warhead@4EffWater: CreateEffect
 		ImpactSounds: splashl1.aud, splashl2.aud
 
-SuClusterMissile:
+SeismicMissile:
 	ReloadDelay: 70
 	Range: 10c0
 	MinRange: 3c0
 	Report: rocket1.aud
 	Burst: 2
-	BurstDelays: 0
+	BurstDelays: 2
 	FirstBurstTargetOffset: 0,-341,0
 	FollowingBurstTargetOffset: 768,341,0
 	TargetActorCenter: true
 	Projectile: Bullet
-		Image: MISSILE
+		Image: seismsl
 		Blockable: false
 		Shadow: true
 		Inaccuracy: 128
@@ -181,46 +181,54 @@ SuClusterMissile:
 		Speed: 200
 		LaunchAngle: 0
 	Warhead@1Dam: SpreadDamage
-		Damage: 1
+		Spread: 1c0
+		Damage: 1300
+		Falloff: 1000, 368, 135, 50, 0
+		ValidTargets: Ground, Water
+		Versus:
+			None: 20
+			Wood: 90
+			Light: 100
+			Heavy: 85
+			Concrete: 100
+			Brick: 100
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@3Eff: CreateEffect
-		Explosions: artillery_explosion
-		ImpactActors: false
-		ImpactSounds: xplobig4.aud
+		Explosions: large_artillery_explosion
+		ImpactSounds: artyhit.aud, artyhit2.aud, artyhit3.aud
 		ValidTargets: Ground, Air, Ship, Trees
 	Warhead@4EffWater: CreateEffect
 		ImpactSounds: splashl1.aud, splashl2.aud
 		Explosions: med_splash
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
-	Warhead@Cluster1: FireCluster
-		Weapon: ClusterBomb
-		RandomClusterCount: 2
-		Dimensions: 3,3
-		Footprint: xxx xxx xxx
-	Warhead@Cluster2: FireCluster
-		Delay: 4
-		Weapon: ClusterBomb
-		RandomClusterCount: 1
-		Dimensions: 3,3
-		Footprint: xxx xxx xxx
-	Warhead@Cluster3: FireCluster
-		Delay: 8
-		Weapon: ClusterBomb
-		RandomClusterCount: 1
-		Dimensions: 3,3
-		Footprint: xxx xxx xxx
+	Warhead@Concussion1: GrantExternalCondition
+		Range: 1c512
+		Duration: 210
+		Condition: concussion
+		ValidTargets: Ground, Infantry, Vehicle, Ship
+	Warhead@Concussion2: GrantExternalCondition
+		Range: 3c0
+		Duration: 140
+		Condition: concussion
+		ValidTargets: Ground, Infantry, Vehicle, Ship
+	Warhead@5Shake: ShakeScreen
+		Duration: 5
+		Intensity: 1
+		Multiplier: 0.5,0.5
 
-SuClusterMissileDummy:
-	Inherits: SuClusterMissile
+SeismicMissileDummy:
+	Inherits: SeismicMissile
 	-Report:
 	-Projectile:
 	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Damage: 1
 	-Warhead@3Eff:
 	-Warhead@4EffWater:
-	-Warhead@Cluster1:
-	-Warhead@Cluster2:
-	-Warhead@Cluster3:
+	-Warhead@Concussion1:
+	-Warhead@Concussion2:
+	-Warhead@5Shake:
 
 Dragon:
 	Inherits: ^AntiGroundMissile

@@ -274,17 +274,17 @@ SUK:
 		Weapon: MaverickSU
 		LocalOffset: 0,-640,0, 0,640,0
 		PauseOnCondition: !ammo
-		RequiresCondition: !cluster-upgrade
+		RequiresCondition: !seismic-upgrade
 	Armament@UPGRADE:
-		Weapon: SuClusterMissile
+		Weapon: SeismicMissile
 		LocalOffset: 0,-640,0, 0,640,0
 		PauseOnCondition: !ammo
-		RequiresCondition: cluster-upgrade
+		RequiresCondition: seismic-upgrade
 	Armament@UPGRADEDUMMY:
-		Weapon: SuClusterMissileDummy
+		Weapon: SeismicMissileDummy
 		LocalOffset: 0,-640,0, 0,640,0
 		PauseOnCondition: !ammo
-		RequiresCondition: cluster-upgrade
+		RequiresCondition: seismic-upgrade
 	AttackAircraft:
 		FacingTolerance: 80
 		PersistentTargeting: false
@@ -347,9 +347,9 @@ SUK:
 		Prerequisites: aircraft.upgraded
 	Rearmable:
 		RearmActors: afld, afld.gdi
-	GrantConditionOnPrerequisite@CLUSTER:
-		Condition: cluster-upgrade
-		Prerequisites: cluster.upgrade
+	GrantConditionOnPrerequisite@SEISMIC:
+		Condition: seismic-upgrade
+		Prerequisites: seismic.upgrade
 
 YAK:
 	Inherits: ^Plane
