@@ -187,12 +187,15 @@ SeismicMissile:
 		ValidTargets: Ground, Water
 		Versus:
 			None: 20
-			Wood: 90
+			Wood: 80
 			Light: 100
 			Heavy: 85
 			Concrete: 100
 			Brick: 100
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
 	Warhead@3Eff: CreateEffect
 		Explosions: large_artillery_explosion
 		ImpactSounds: artyhit.aud, artyhit2.aud, artyhit3.aud
@@ -224,6 +227,7 @@ SeismicMissileDummy:
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
 		Damage: 1
+	-Warhead@2Smu:
 	-Warhead@3Eff:
 	-Warhead@4EffWater:
 	-Warhead@Concussion1:
