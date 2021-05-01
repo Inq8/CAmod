@@ -408,19 +408,19 @@ iraqtank.upgrade:
 	RenderSprites:
 		Image: iraqtank.upgrade
 
-cluster.upgrade:
+seismic.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Cluster Bombs
+		Name: Upgrade: Seismic Missiles
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~stek, ~techlevel.high
+		Prerequisites: ~stek.ukraine, ~techlevel.high
 		BuildDuration: 1500
-		Description: Arms the Sukhoi with anti-infantry Cluster Bombs.\n\n  Upgrades: Sukhoi\n  + High area damage vs infantry, structures and light armour\n  – Weak against heavy armour
+		Description: Arms the Sukhoi with Seismic Missiles.\n\n  Upgrades: Sukhoi\n  + High area damage vs structures and vehicles\n  + Slows movement and rate of fire of impacted targets\n  – Slow moving projectiles
 	Valued:
 		Cost: 1000
 	RenderSprites:
-		Image: cluster.upgrade
+		Image: seismic.upgrade
 
 tarc.upgrade:
 	Inherits: ^Upgrade

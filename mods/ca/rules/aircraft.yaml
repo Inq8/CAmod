@@ -176,12 +176,12 @@ MIG:
 	Armament@AT:
 		Weapon: Maverick
 		LocalOffset: 0,-640,0, 0,640,0
-		LocalYaw: -40, 24
+		LocalYaw: -40, 40
 		PauseOnCondition: !ammo
 	Armament@AA:
 		Weapon: MaverickAA
 		LocalOffset: 0,-640,0, 0,640,0
-		LocalYaw: -40, 24
+		LocalYaw: -40, 40
 		PauseOnCondition: !ammo
 		Name: secondary
 	AttackAircraft:
@@ -273,15 +273,18 @@ SUK:
 	Armament:
 		Weapon: MaverickSU
 		LocalOffset: 0,-640,0, 0,640,0
-		LocalYaw: -40, 24
 		PauseOnCondition: !ammo
-		RequiresCondition: !cluster-upgrade
+		RequiresCondition: !seismic-upgrade
 	Armament@UPGRADE:
-		Weapon: SuClusterMissile
+		Weapon: SeismicMissile
 		LocalOffset: 0,-640,0, 0,640,0
-		LocalYaw: -40, 24
 		PauseOnCondition: !ammo
-		RequiresCondition: cluster-upgrade
+		RequiresCondition: seismic-upgrade
+	Armament@UPGRADEDUMMY:
+		Weapon: SeismicMissileDummy
+		LocalOffset: 0,-640,0, 0,640,0
+		PauseOnCondition: !ammo
+		RequiresCondition: seismic-upgrade
 	AttackAircraft:
 		FacingTolerance: 80
 		PersistentTargeting: false
@@ -299,10 +302,11 @@ SUK:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
 	AmmoPool:
-		Ammo: 4
+		Ammo: 8
 		ReloadDelay: 30
 		AmmoCondition: ammo
 	WithAmmoPipsDecoration:
+		PipCount: 4
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
@@ -343,9 +347,9 @@ SUK:
 		Prerequisites: aircraft.upgraded
 	Rearmable:
 		RearmActors: afld, afld.gdi
-	GrantConditionOnPrerequisite@CLUSTER:
-		Condition: cluster-upgrade
-		Prerequisites: cluster.upgrade
+	GrantConditionOnPrerequisite@SEISMIC:
+		Condition: seismic-upgrade
+		Prerequisites: seismic.upgrade
 
 YAK:
 	Inherits: ^Plane
@@ -2245,6 +2249,12 @@ AURO:
 	DamageMultiplier@AFTERBURNER:
 		Modifier: 80
 		RequiresCondition: afterburner && ammo
+	GrantConditionOnAttack@AFTERBURNERFINAL:
+		Condition: afterburner-final
+		RevokeDelay: 40
+	SpeedMultiplier@AFTERBURNERFINAL:
+		Modifier: 135
+		RequiresCondition: afterburner-final
 	Selectable:
 		Bounds: 36,28,0,2
 		DecorationBounds: 40,29,0,1

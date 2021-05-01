@@ -344,7 +344,6 @@ S6:
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
-	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -2782,6 +2781,26 @@ NERV:
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
 		DisplayRadarPing: True
+	DetonateWeaponPower@IONSURGE:
+		OrderName: ionsurge
+		Icon: ionsurgepower
+		IconPalette: chromes
+		Prerequisites: radar.traveler
+		Cursor: ability
+		ChargeInterval: 6750
+		Description: Ion Surge
+		ActivationDelay: 1
+		LongDesc: Increased movement speed of all friendly units in the target area.
+		LaunchSound: ionsurge.aud
+		Weapon: IonSurgeSpawner
+		AirburstAltitude: 0c0
+		SelectTargetSpeechNotification: SelectTarget
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayRadarPing: True
+		CameraActor: camera.dummy
+		CameraRemoveDelay: 1
+		TargetCircleRange: 6c0
+		TargetCircleColor: b070ff90
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -2877,26 +2896,6 @@ SCRT:
 		EffectImage: empty
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
-	DetonateWeaponPower@IONSURGE:
-		OrderName: ionsurge
-		Icon: ionsurgepower
-		IconPalette: chromes
-		Prerequisites: scrt.traveler
-		Cursor: ability
-		ChargeInterval: 6000
-		Description: Ion Surge
-		ActivationDelay: 1
-		LongDesc: Increased movement speed of all friendly units in the target area.
-		LaunchSound: ionsurge.aud
-		Weapon: IonSurgeSpawner
-		AirburstAltitude: 0c0
-		SelectTargetSpeechNotification: SelectTarget
-		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayRadarPing: True
-		CameraActor: camera.dummy
-		CameraRemoveDelay: 1
-		TargetCircleRange: 6c0
-		TargetCircleColor: b070ff90
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped

@@ -72,6 +72,9 @@ MSLO:
 		Types: SpyInfiltrate, SabInfiltrate
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
+	ProductionCostMultiplier@IRAQBONUS:
+		Multiplier: 90
+		Prerequisites: structures.iraq
 
 GAP:
 	Inherits: ^Building
@@ -2014,6 +2017,9 @@ STEK:
 	ProvidesPrerequisiteValidatedFaction@russia:
 		Factions: russia
 		Prerequisite: stek.russia
+	ProvidesPrerequisiteValidatedFaction@ukraine:
+		Factions: ukraine
+		Prerequisite: stek.ukraine
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
 		Icon: forceshield
@@ -5056,7 +5062,7 @@ LASP:
 	WithIdleAnimation@OFFLINE:
 		Interval: 0
 		Sequences: idle-offline
-		RequiresCondition: disabled || empdisable || being-warped 
+		RequiresCondition: disabled || empdisable || being-warped
 	Health:
 		HP: 100000
 	Armor:

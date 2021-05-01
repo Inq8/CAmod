@@ -1339,7 +1339,6 @@ TRUK.DROP:
 MGG:
 	Inherits: ^Vehicle
 	Inherits@AUTOTARGET: ^AutoTargetGround
-	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 380
@@ -1384,7 +1383,6 @@ MGG:
 MRJ:
 	Inherits: ^Vehicle
 	Inherits@AUTOTARGET: ^AutoTargetGround
-	Inherits@SELECTION: ^SelectableSupportUnit
 	Valued:
 		Cost: 1000
 	Tooltip:
@@ -1611,6 +1609,9 @@ DTRK:
 		Voice: Move
 	Voiced:
 		VoiceSet: TTruckVoice
+	ProductionCostMultiplier@IRAQBONUS:
+		Multiplier: 90
+		Prerequisites: vehicles.iraq
 
 CTNK:
 	Inherits: ^Vehicle
@@ -2408,7 +2409,7 @@ MTNK.Drone:
 		IconPalette: chrometd
 		Description: Drone battle tank.\n  Requires power to operate.\n  Strong vs Vehicles\n  Weak vs Infantry, Defenses, Aircraft
 	Valued:
-		Cost: 720
+		Cost: 775
 	Tooltip:
 		Name: Battle Drone
 		GenericName: Tank

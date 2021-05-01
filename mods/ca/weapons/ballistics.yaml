@@ -612,33 +612,3 @@ BATFGun:
 			Concrete: 15
 			Light: 100
 			Heavy: 50
-
-ClusterBomb:
-	Inherits: ^Artillery
-	-Report:
-	Range: 4c0
-	Projectile: Bullet
-		Speed: 96
-		LaunchAngle: 0, 62
-		Inaccuracy: 0c512
-		BounceCount: 0
-		Image: BOMB
-	Warhead@1Dam: SpreadDamage
-		Spread: 511
-		Damage: 8000
-		Versus:
-			None: 55
-			Wood: 50
-			Light: 65
-			Heavy: 20
-			Concrete: 100
-			Brick: 80
-	Warhead@Smu: LeaveSmudge
-		SmudgeType: Crater
-		InvalidTargets: Structure, Wall, Trees
-	Warhead@3Eff: CreateEffect
-		Explosions: large_explosion
-		ImpactSounds: kaboom15.aud
-		ValidTargets: Ground, Air, AirSmall, Ship, Trees
-	Warhead@4EffWater: CreateEffect
-		ImpactSounds: splashl1.aud, splashl2.aud

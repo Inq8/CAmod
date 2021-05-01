@@ -126,14 +126,28 @@ MaverickSU:
 	Inherits: Maverick
 	Range: 10c0
 	Report: vbleatta.aud, vbleattb.aud
-	Projectile: MissileCA
-		Inaccuracy: 1c0
-		Speed: 190
-		LockOnInaccuracy: 1024
+	Burst: 4
+	BurstDelays: 0, 10, 0
+	FirstBurstTargetOffset: -768,0,0
+	FollowingBurstTargetOffset: 768,0,0
+	-Projectile:
+	Projectile: Bullet
+		Spread: 341
+		Inaccuracy: 64
+		Blockable: false
+		Shadow: true
+		Speed: 341
+		LaunchAngle: 0
+		Image: DRAGON
+		TrailImage: smokey
+		ContrailLength: 8
+		ContrailWidth: 48
+		ContrailColor: ff990088
 	Warhead@1Dam: SpreadDamage
-		Damage: 28000
+		Damage: 17000
 		Spread: 341
 		Versus:
+			None: 15
 			Wood: 18
 			Light: 65
 			Concrete: 70
@@ -144,42 +158,81 @@ MaverickSU:
 	Warhead@4EffWater: CreateEffect
 		ImpactSounds: splashl1.aud, splashl2.aud
 
-SuClusterMissile:
+SeismicMissile:
 	ReloadDelay: 70
 	Range: 10c0
 	MinRange: 3c0
-	Report: vbleatta.aud, vbleattb.aud
+	Report: rocket1.aud
 	Burst: 2
-	BurstDelays: 7
+	BurstDelays: 2
+	FirstBurstTargetOffset: 0,-341,0
+	FollowingBurstTargetOffset: 768,341,0
+	TargetActorCenter: true
 	Projectile: Bullet
-		Image: MISSILE
+		Image: seismsl
 		Blockable: false
 		Shadow: true
-		Inaccuracy: 0c768
+		Inaccuracy: 128
 		TrailImage: smokey
 		TrailDelay: 2
-		ContrailLength: 4
-		ContrailColor: FFFFFF80
-		Speed: 270
-		LaunchAngle: 10
+		ContrailWidth: 64
+		ContrailLength: 8
+		ContrailColor: ff6600aa
+		Speed: 200
+		LaunchAngle: 0
 	Warhead@1Dam: SpreadDamage
-		Damage: 1
+		Spread: 1c0
+		Damage: 1300
+		Falloff: 1000, 368, 135, 50, 0
+		ValidTargets: Ground, Water
+		Versus:
+			None: 20
+			Wood: 80
+			Light: 100
+			Heavy: 85
+			Concrete: 100
+			Brick: 100
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
 	Warhead@3Eff: CreateEffect
-		Explosions: med_explosion_air
-		ImpactActors: false
-		ImpactSounds: gexp14a.aud, gexp14b.aud, gexp14c.aud, gexp14d.aud
+		Explosions: large_artillery_explosion
+		ImpactSounds: artyhit.aud, artyhit2.aud, artyhit3.aud
 		ValidTargets: Ground, Air, Ship, Trees
 	Warhead@4EffWater: CreateEffect
 		ImpactSounds: splashl1.aud, splashl2.aud
 		Explosions: med_splash
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
-	Warhead@Cluster: FireCluster
-		Weapon: ClusterBomb
-		RandomClusterCount: 4
-		Dimensions: 3,3
-		Footprint: xxx x_x xxx
+	Warhead@Concussion1: GrantExternalCondition
+		Range: 1c512
+		Duration: 210
+		Condition: concussion
+		ValidTargets: Ground, Infantry, Vehicle, Ship
+	Warhead@Concussion2: GrantExternalCondition
+		Range: 3c0
+		Duration: 140
+		Condition: concussion
+		ValidTargets: Ground, Infantry, Vehicle, Ship
+	Warhead@5Shake: ShakeScreen
+		Duration: 5
+		Intensity: 1
+		Multiplier: 0.5,0.5
+
+SeismicMissileDummy:
+	Inherits: SeismicMissile
+	-Report:
+	-Projectile:
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Damage: 1
+	-Warhead@2Smu:
+	-Warhead@3Eff:
+	-Warhead@4EffWater:
+	-Warhead@Concussion1:
+	-Warhead@Concussion2:
+	-Warhead@5Shake:
 
 Dragon:
 	Inherits: ^AntiGroundMissile
@@ -306,6 +359,7 @@ HellfireAG.Harrier:
 	Report: migmis.aud, migmis2.aud
 	Burst: 2
 	BurstDelays: 10
+	TargetActorCenter: true
 	Projectile: MissileCA
 		RangeLimit: 12c512
 		ContrailLength: 10
@@ -318,7 +372,7 @@ HellfireAG.Harrier:
 		ValidTargets: Ground, Water, Trees
 		Versus:
 			None: 100
-			Wood: 60
+			Wood: 65
 			Light: 60
 			Heavy: 40
 			Concrete: 40
@@ -885,7 +939,7 @@ HonestJohn:
 		Blockable: false
 		Shadow: true
 		Inaccuracy: 0c511
-		Image: missile
+		Image: ssmmsl
 		TrailImage: smokey
 		TrailDelay: 3
 		Speed: 210
@@ -1392,6 +1446,7 @@ Rah66AG:
 	BurstDelays: 4
 	ValidTargets: Ground, Water
 	InvalidTargets: Air
+	TargetActorCenter: true
 	Projectile: Bullet
 		Blockable: false
 		Shadow: true
