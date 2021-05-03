@@ -272,6 +272,7 @@ TitanGun:
 
 155mmSpec:
 	Inherits: 155mmTD
+	Report: spec-fire1.aud, spec-fire2.aud
 	ReloadDelay: 200
 	MinRange: 3c0
 	Range: 13c0
@@ -303,6 +304,20 @@ TitanGun:
 		RandomClusterCount: 1
 		Dimensions: 1,1
 		Footprint: X
+
+155mmSpecDummy:
+	Inherits: 155mmSpec
+	ReloadDelay: 75
+	-Report:
+	-Burst:
+	-BurstDelays:
+	-Projectile:
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Damage: 0
+	-Warhead@2Smu: LeaveSmudge
+	-Warhead@3Eff: CreateEffect
+	-Warhead@Flames: FireCluster
 
 380mm:
 	Inherits: ^Artillery

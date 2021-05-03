@@ -781,7 +781,7 @@ CORR:
 		Speed: 66
 		TurnSpeed: 16
 	Health:
-		HP: 45000
+		HP: 42000
 	Armor:
 		Type: Light
 	RevealsShroud:
@@ -834,7 +834,7 @@ STCR:
 		Speed: 56
 		TurnSpeed: 12
 	Health:
-		HP: 42000
+		HP: 50000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -865,18 +865,6 @@ STCR:
 	ReloadDelayMultiplier@STORMCRAWLERCHARGE2:
 		Modifier: 75
 		RequiresCondition: stormcrawlercharge >= 2
-	ChangesHealth@STORMCRAWLERCHARGE1:
-		Step: 400
-		Delay: 10
-		StartIfBelow: 100
-		DamageCooldown: 0
-		RequiresCondition: stormcrawlercharge >= 2 && stormcrawlercharge < 3 && !empdisable && !being-warped
-	ChangesHealth@STORMCRAWLERCHARGE2:
-		Step: 400
-		Delay: 10
-		StartIfBelow: 100
-		DamageCooldown: 0
-		RequiresCondition: stormcrawlercharge >= 3 && !empdisable && !being-warped
 	WithDecoration@STORMCRAWLERCHARGE1:
 		Image: pips
 		Sequence: pip-stcr1
@@ -894,6 +882,25 @@ STCR:
 	ProximityExternalCondition@STORMCRAWLERCHARGE:
 		Range: 4c512
 		Condition: stormcrawlercharge
+	DamageMultiplier@STORMCRAWLERCHARGE1:
+		Modifier: 75
+		RequiresCondition: stormcrawlercharge >= 2 && stormcrawlercharge < 3 && !empdisable && !being-warped
+	DamageMultiplier@STORMCRAWLERCHARGE2:
+		Modifier: 60
+		RequiresCondition: stormcrawlercharge >= 3 && !empdisable && !being-warped
+	ReflectsDamage@STORMCRAWLERCHARGE1:
+		ValidRelationships: Ally
+		ValidActors: stcr
+		Range: 4c512
+		DamagePercentage: 33
+		RequiresCondition: stormcrawlercharge >= 2 && stormcrawlercharge < 3 && !empdisable && !being-warped
+	ReflectsDamage@STORMCRAWLERCHARGE2:
+		ValidRelationships: Ally
+		ValidActors: stcr
+		Range: 4c512
+		DamagePercentage: 33
+		MaxUnits: 2
+		RequiresCondition: stormcrawlercharge >= 3 && !empdisable && !being-warped
 
 DEVO:
 	Inherits: ^Tank
