@@ -450,6 +450,9 @@ PDOX:
 		HasMinibib: true
 	ValidFactions:
 		Factions: england, france, germany
+	ProvidesPrerequisiteValidatedFaction@germany:
+		Factions: germany
+		Prerequisite: pdox.germany
 	WithChronosphereOverlay:
 		Image: chronobubble
 		WarpInSequence: warpin
@@ -494,6 +497,36 @@ PDOX:
 		EndChargeSpeechNotification: ChronosphereReady
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayRadarPing: True
+		LaunchSound: chrono2.aud
+		IncomingSound: chrono2.aud
+	GrantExternalConditionPowerCA@TimeWarp:
+		OrderName: TimeWarp
+		Icon: timewarp
+		Prerequisites: pdox.germany
+		Cursor: ability
+		ChargeInterval: 4500
+		Description: Time Warp
+		LongDesc: Disrupts time and space at target area,\ncausing units & structures to be frozen in time.
+		Weapon: TimeWarp
+		Condition: being-warped
+		Duration: 375
+		Dimensions: 3, 3
+		ActivationDelay: 0
+		Footprint: _x_ xxx _x_
+		ValidRelationships: Ally, Enemy, Neutral
+		AllowMultiple: false
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		BeginChargeSpeechNotification: ChronosphereCharging
+		EndChargeSpeechNotification: ChronosphereReady
+		DisplayTimerRelationships: Ally
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayBeacon: True
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		BeaconPoster: timewarpicon
 		DisplayRadarPing: True
 		LaunchSound: chrono2.aud
 		IncomingSound: chrono2.aud
@@ -1064,9 +1097,6 @@ ATEK:
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
-	ProvidesPrerequisiteValidatedFaction@germany:
-		Factions: germany
-		Prerequisite: atek.germany
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.atek
@@ -1121,34 +1151,6 @@ ATEK:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
-	GrantExternalConditionPowerCA@TimeWarp:
-		OrderName: TimeWarp
-		Icon: timewarp
-		Prerequisites: ~atek.germany, ~techlevel.unrestricted
-		Cursor: ability
-		ChargeInterval: 5250
-		Description: Time Warp
-		LongDesc: Disrupts time and space at target area,\ncausing units & structures to be frozen in time.
-		Weapon: TimeWarp
-		Condition: being-warped
-		Duration: 375
-		Dimensions: 3, 3
-		ActivationDelay: 0
-		Footprint: _x_ xxx _x_
-		ValidRelationships: Ally, Enemy, Neutral
-		AllowMultiple: false
-		SelectTargetSpeechNotification: SelectTarget
-		InsufficientPowerSpeechNotification: InsufficientPower
-		DisplayTimerRelationships: Ally
-		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayBeacon: True
-		ArrowSequence: arrow
-		ClockSequence: clock
-		CircleSequence: circles
-		BeaconPoster: timewarpicon
-		DisplayRadarPing: True
-		LaunchSound: chrono2.aud
-		IncomingSound: chrono2.aud
 	GrantConditionOnFogEnabled@FOGENABLED:
 		Condition: fogenabled
 	ExternalCondition@DUMMY:
