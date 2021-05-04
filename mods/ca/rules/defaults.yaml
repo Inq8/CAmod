@@ -658,9 +658,12 @@
 		BlinkInterval: 64
 		BlinkPatterns:
 			bino : Off, On
+	GrantConditionOnTerrain@HAZMATSOVIET
+		TerrainTypes: Rough, Beach, Ford, Ore, Gems, Tiberium, BlueTiberium
+		Condition: onrough
 	SpeedMultiplier@HAZMATSOVIET:
-		RequiresCondition: hazmatsuits-soviet
-		Modifier: 95
+		RequiresCondition: hazmatsuits-soviet && onrough
+		Modifier: 66
 
 ^NodCyborgUpgrade:
 	GrantConditionOnPrerequisite@CYBORGSPEED:
