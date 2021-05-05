@@ -47,6 +47,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Split damage equally amongst actors the damage is reflected to? Otherwise full DamagePercentage will be applied to all.")]
 		public readonly bool SplitDamage = false;
 
+		[Desc("If true, negative damage (repairs/heals) is also reflected.")]
+		public readonly bool ReflectsHealing = false;
+
 		public override object Create(ActorInitializer init) { return new ReflectsDamage(init, this); }
 	}
 
@@ -63,6 +66,9 @@ namespace OpenRA.Mods.CA.Traits
 		void INotifyDamage.Damaged(Actor self, AttackInfo e)
 		{
 			if (IsTraitDisabled || e.Damage.Value == 0)
+				return;
+
+			if (!Info.ReflectsHealing && e.Damage.Value < 0)
 				return;
 
 			if (Info.InvalidAttackerActors.Any() && Info.InvalidAttackerActors.Contains(e.Attacker.Info.Name))
