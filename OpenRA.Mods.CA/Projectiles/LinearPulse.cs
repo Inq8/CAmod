@@ -25,10 +25,19 @@ namespace OpenRA.Mods.CA.Projectiles
 	public class LinearPulseInfo : IProjectileInfo
 	{
 		[Desc("Distance between pulse impacts.")]
-		public readonly WDist Spacing = new WDist(768);
+		public readonly WDist ImpactSpacing = new WDist(768);
 
 		[Desc("Speed the pulse travels.")]
 		public readonly WDist Speed = new WDist(384);
+
+		[Desc("Minimum distance travelled before doing damage.")]
+		public readonly WDist MinimumImpactDistance = WDist.Zero;
+
+		[Desc("Maximum distance travelled after which no more damage occurs. Zero falls back to weapon range.")]
+		public readonly WDist MaximumImpactDistance = WDist.Zero;
+
+		[Desc("Whether to ignore range modifiers, as these can mess up the relationship between ImpactSpacing, Speed and max range.")]
+		public readonly bool IgnoreRangeModifiers = true;
 
 		public IProjectile Create(ProjectileArgs args) { return new LinearPulse(this, args); }
 	}
@@ -38,11 +47,10 @@ namespace OpenRA.Mods.CA.Projectiles
 		readonly LinearPulseInfo info;
 		readonly ProjectileArgs args;
 		readonly WDist speed;
-		readonly int facing;
+		readonly WAngle facing;
 
 		[Sync]
 		WPos pos, target, source;
-		int length;
 		int ticks;
 		int intervalDistanceTravelled;
 		int totalDistanceTravelled;
@@ -62,23 +70,27 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			// initially no distance has been travelled by the pulse
 			totalDistanceTravelled = 0;
+			range = args.Weapon.Range.Length;
+
+			if (!info.IgnoreRangeModifiers)
+				range = Common.Util.ApplyPercentageModifiers(range, args.RangeModifiers);
 
 			// the weapon range (distance to be travelled in cell units)
-			range = Common.Util.ApplyPercentageModifiers(args.Weapon.Range.Length, args.RangeModifiers);
 			target = args.PassiveTarget;
-			facing = (target - pos).Yaw.Facing;
-			length = Math.Max((target - pos).Length / speed.Length, 1);
+			facing = (target - pos).Yaw;
 		}
 
 		public void Tick(World world)
 		{
 			var lastPos = pos;
-			pos = WPos.LerpQuadratic(source, target, WAngle.Zero, ticks, length);
+			var convertedVelocity = new WVec(0, -speed.Length, 0);
+			var velocity = convertedVelocity.Rotate(WRot.FromYaw(facing));
+			pos = pos + velocity;
 
-			if (intervalDistanceTravelled >= info.Spacing.Length)
+			if (intervalDistanceTravelled >= info.ImpactSpacing.Length)
 			{
 				intervalDistanceTravelled = 0;
-				if (totalDistanceTravelled > 512)
+				if (totalDistanceTravelled >= info.MinimumImpactDistance.Length && (info.MaximumImpactDistance == WDist.Zero || totalDistanceTravelled <= info.MaximumImpactDistance.Length))
 					Explode(world);
 			}
 
@@ -95,13 +107,9 @@ namespace OpenRA.Mods.CA.Projectiles
 		void Explode(World world)
 		{
 			if (totalDistanceTravelled >= range)
-			{
 				world.AddFrameEndTask(w => w.Remove(this));
-			}
 			else
-			{
 				args.Weapon.Impact(Target.FromPos(pos), new WarheadArgs(args));
-			}
 		}
 	}
 }
