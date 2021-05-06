@@ -1,0 +1,81 @@
+Player:
+	-ConquestVictoryConditions:
+	LobbyPrerequisiteCheckbox@GLOBALBOUNTY:
+		Enabled: False
+		Locked: True
+
+World:
+	-CrateSpawner:
+	-SpawnMPUnits:
+	-MPStartLocations:
+	MusicPlaylist:
+		BackgroundMusic: target
+		AllowMuteBackgroundMusic: true
+		DisableWorldSounds: true
+	ResourceType@ore:
+		ValuePerUnit: 0
+	LuaScript:
+		Scripts: desert-shellmap.lua
+	-StartGameNotification:
+
+^ExistsInWorld:
+	GivesExperience:
+		ActorExperienceModifier: 0
+	DamageMultiplier@UNKILLABLE:
+		RequiresCondition: unkillable
+		Modifier: 0
+	ExternalCondition@UNKILLABLE:
+		Condition: unkillable
+
+^Bridge:
+	DamageMultiplier:
+		Modifier: 0
+
+^Wall:
+	DamageMultiplier:
+		Modifier: 0
+
+OILB:
+	CashTrickler:
+		ShowTicks: false
+
+TRAN.Husk2:
+	WithIdleOverlay@Burns:
+		Image: fire
+		Sequence: 1
+		IsDecoration: True
+
+MISS:
+	DamageMultiplier@INVULNERABLE:
+		Modifier: 0
+		
+MTNK:
+	GrantCondition:
+		Condition: pointlaser-upgrade
+	
+MSAM:
+	GrantCondition:
+		Condition: hailstorm-upgrade
+
+TSLA:
+	GrantCondition:
+		Condition: tarc-upgrade
+
+MSAR:
+	GrantCondition:
+		Condition: deployed
+	WithSpriteBody@deployed:
+		RequiresCondition: real-actor
+		
+UPGC:
+	GrantCondition:
+		Condition: tower.drop
+	PeriodicProducerCA@DROP:
+		ChargeDuration: 300
+	ProductionAirdropCA:
+		BaselineSpawn: false
+
+powerproxy.paratroopers:
+	ParatroopersPower:
+		DisplayBeacon: false
+		DropItems: SHOK,SHOK,SHOK,SHOK,SHOK
