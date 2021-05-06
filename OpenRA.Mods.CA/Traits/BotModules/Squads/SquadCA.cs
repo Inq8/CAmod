@@ -32,6 +32,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 		internal Target Target;
 		internal StateMachineCA FuzzyStateMachine;
+		internal CPos BaseLocation;
 
 		public SquadCA(IBot bot, SquadManagerBotModuleCA squadManager, SquadCAType type)
 			: this(bot, squadManager, type, null) { }
@@ -49,6 +50,8 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			switch (type)
 			{
 				case SquadCAType.Assault:
+					FuzzyStateMachine.ChangeState(this, new GuerrillaUnitsIdleStateCA(), true);
+					break;
 				case SquadCAType.Rush:
 					FuzzyStateMachine.ChangeState(this, new GroundUnitsIdleStateCA(), true);
 					break;
@@ -59,7 +62,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 					FuzzyStateMachine.ChangeState(this, new UnitsForProtectionIdleState(), true);
 					break;
 				case SquadCAType.Naval:
-					FuzzyStateMachine.ChangeState(this, new NavyUnitsIdleState(), true);
+					FuzzyStateMachine.ChangeState(this, new NavyUnitsIdleStateCA(), true);
 					break;
 			}
 		}
@@ -88,7 +91,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			get { return TargetActor.CanBeViewedByPlayer(Bot.Player); }
 		}
 
-		public WPos CenterPosition { get { return Units.Select(u => u.CenterPosition).Average(); } }
+		public WPos CenterPosition { get { return Units.First().CenterPosition; } }
 
 		public MiniYaml Serialize()
 		{

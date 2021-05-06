@@ -22,8 +22,6 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 	{
 		static readonly BitSet<TargetableType> AirTargetTypes = new BitSet<TargetableType>("Air");
 
-		protected const int MissileUnitMultiplier = 3;
-
 		protected static int CountAntiAirUnits(IEnumerable<Actor> units)
 		{
 			if (!units.Any())
@@ -32,7 +30,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			var missileUnitsCount = 0;
 			foreach (var unit in units)
 			{
-				if (unit == null || unit.Info.HasTraitInfo<AircraftInfo>())
+				if (unit == null)
 					continue;
 
 				foreach (var ab in unit.TraitsImplementing<AttackBase>())
@@ -44,7 +42,10 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 					{
 						if (a.Weapon.IsValidTarget(AirTargetTypes))
 						{
-							missileUnitsCount++;
+							if (unit.Info.HasTraitInfo<AircraftInfo>())
+								missileUnitsCount += 1;
+							else
+								missileUnitsCount += 3;
 							break;
 						}
 					}
@@ -102,7 +103,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			if (!unitsAroundPos.Any())
 				return true;
 
-			if (CountAntiAirUnits(unitsAroundPos) * MissileUnitMultiplier < owner.Units.Count)
+			if (CountAntiAirUnits(unitsAroundPos) < owner.Units.Count)
 			{
 				detectedEnemyTarget = unitsAroundPos.Random(owner.Random);
 				return true;
@@ -114,7 +115,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		// Checks the number of anti air enemies around units
 		protected virtual bool ShouldFlee(SquadCA owner)
 		{
-			return ShouldFlee(owner, enemies => CountAntiAirUnits(enemies) * MissileUnitMultiplier > owner.Units.Count);
+			return ShouldFlee(owner, enemies => CountAntiAirUnits(enemies) > owner.Units.Count);
 		}
 	}
 
@@ -129,16 +130,23 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 			if (ShouldFlee(owner))
 			{
-				owner.FuzzyStateMachine.ChangeState(owner, new AirFleeStateCA(), true);
+				owner.FuzzyStateMachine.ChangeState(owner, new AirFleeStateCA(), false);
 				return;
 			}
 
-			var e = FindDefenselessTarget(owner);
-			if (e == null)
-				return;
+			if (!owner.IsTargetValid)
+			{
+				var e = FindDefenselessTarget(owner);
+				owner.TargetActor = e;
+			}
 
-			owner.TargetActor = e;
-			owner.FuzzyStateMachine.ChangeState(owner, new AirAttackStateCA(), true);
+			if (!owner.IsTargetValid)
+			{
+				Retreat(owner, flee: false, rearm: true, repair: true);
+				return;
+			}
+
+			owner.FuzzyStateMachine.ChangeState(owner, new AirAttackStateCA(), false);
 		}
 
 		public void Deactivate(SquadCA owner) { }
@@ -161,21 +169,34 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 					owner.TargetActor = closestEnemy;
 				else
 				{
-					owner.FuzzyStateMachine.ChangeState(owner, new AirFleeStateCA(), true);
+					owner.FuzzyStateMachine.ChangeState(owner, new AirFleeStateCA(), false);
 					return;
 				}
 			}
 
-			if (!NearToPosSafely(owner, owner.TargetActor.CenterPosition))
+			var leader = owner.Units.ClosestTo(owner.TargetActor.CenterPosition);
+
+			var unitsAroundPos = owner.World.FindActorsInCircle(leader.CenterPosition, WDist.FromCells(owner.SquadManager.Info.DangerScanRadius))
+				.Where(a => owner.SquadManager.IsPreferredEnemyUnit(a) && owner.SquadManager.IsNotHiddenUnit(a));
+
+			// Check if get ambushed.
+			if (CountAntiAirUnits(unitsAroundPos) > owner.Units.Count)
 			{
-				owner.FuzzyStateMachine.ChangeState(owner, new AirFleeStateCA(), true);
+				owner.FuzzyStateMachine.ChangeState(owner, new AirFleeStateCA(), false);
 				return;
 			}
 
+			var cannotRetaliate = true;
+			List<Actor> resupplyingUnits = new List<Actor>();
+			List<Actor> backingoffUnits = new List<Actor>();
+			List<Actor> attackingUnits = new List<Actor>();
 			foreach (var a in owner.Units)
 			{
 				if (BusyAttack(a))
+				{
+					cannotRetaliate = false;
 					continue;
+				}
 
 				var ammoPools = a.TraitsImplementing<AmmoPool>().ToArray();
 				if (!ReloadsAutomatically(ammoPools, a.TraitOrDefault<Rearmable>()))
@@ -185,14 +206,37 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 					if (!HasAmmo(ammoPools))
 					{
-						owner.Bot.QueueOrder(new Order("ReturnToBase", a, false));
+						resupplyingUnits.Add(a);
 						continue;
 					}
 				}
 
 				if (CanAttackTarget(a, owner.TargetActor))
-					owner.Bot.QueueOrder(new Order("Attack", a, Target.FromActor(owner.TargetActor), false));
+				{
+					cannotRetaliate = false;
+					attackingUnits.Add(a);
+				}
+				else
+				{
+					if (!FullAmmo(ammoPools))
+					{
+						resupplyingUnits.Add(a);
+						continue;
+					}
+
+					backingoffUnits.Add(a);
+				}
 			}
+
+			if (cannotRetaliate)
+			{
+				owner.FuzzyStateMachine.ChangeState(owner, new AirFleeStateCA(), false);
+				return;
+			}
+
+			owner.Bot.QueueOrder(new Order("ReturnToBase", null, false, groupedActors: resupplyingUnits.ToArray()));
+			owner.Bot.QueueOrder(new Order("Attack", null, Target.FromActor(owner.TargetActor), false, groupedActors: attackingUnits.ToArray()));
+			owner.Bot.QueueOrder(new Order("Move", null, Target.FromCell(owner.World, RandomBuildingLocation(owner)), false, groupedActors: backingoffUnits.ToArray()));
 		}
 
 		public void Deactivate(SquadCA owner) { }
@@ -204,25 +248,13 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 		public void Tick(SquadCA owner)
 		{
+			owner.TargetActor = null;
+
 			if (!owner.IsValid)
 				return;
 
-			foreach (var a in owner.Units)
-			{
-				var ammoPools = a.TraitsImplementing<AmmoPool>().ToArray();
-				if (!ReloadsAutomatically(ammoPools, a.TraitOrDefault<Rearmable>()) && !FullAmmo(ammoPools))
-				{
-					if (IsRearming(a))
-						continue;
-
-					owner.Bot.QueueOrder(new Order("ReturnToBase", a, false));
-					continue;
-				}
-
-				owner.Bot.QueueOrder(new Order("Move", a, Target.FromCell(owner.World, RandomBuildingLocation(owner)), false));
-			}
-
-			owner.FuzzyStateMachine.ChangeState(owner, new AirIdleStateCA(), true);
+			Retreat(owner, flee: true, rearm: true, repair: true);
+			owner.FuzzyStateMachine.ChangeState(owner, new AirIdleStateCA(), false);
 		}
 
 		public void Deactivate(SquadCA owner) { }
