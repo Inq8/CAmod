@@ -1341,7 +1341,7 @@ TRUK.DROP:
 
 MGG:
 	Inherits: ^Vehicle
-	Inherits@AUTOTARGET: ^AutoTargetGround
+	Inherits@AUTOTARGET: ^AutoTargetSupport
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 380
@@ -1381,11 +1381,16 @@ MGG:
 		RequiresCondition: !being-warped
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
-	AttackOmni:
+	AttackFrontal:
+		FacingTolerance: 512
+	Armament@DUMMY:
+		Weapon: SupportDummyWeapon
+		TargetRelationships: Enemy, Neutral
+	SupportUnitWithDummyWeapon:
 
 MRJ:
 	Inherits: ^Vehicle
-	Inherits@AUTOTARGET: ^AutoTargetGround
+	Inherits@AUTOTARGET: ^AutoTargetSupport
 	Valued:
 		Cost: 1000
 	Tooltip:
@@ -1425,7 +1430,12 @@ MRJ:
 	RenderJammerCircle:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
-	AttackOmni:
+	AttackFrontal:
+		FacingTolerance: 512
+	Armament@DUMMY:
+		Weapon: SupportDummyWeapon
+		TargetRelationships: Enemy, Neutral
+	SupportUnitWithDummyWeapon:
 
 TTRA:
 	Inherits: ^Tank
@@ -3326,9 +3336,13 @@ IFV:
 		Sequence: tesla
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: testurr
+	Armament@DUMMY:
+		Weapon: SupportDummyWeapon
+		TargetRelationships: Enemy, Neutral
+		RequiresCondition: support-ifv
 	AttackTurreted:
+		PersistentTargeting: false
 		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: !spyturr
 	WithMuzzleOverlay:
 	WithSpriteTurret@samturr:
 		RequiresCondition: !full || nochange
@@ -3424,6 +3438,9 @@ IFV:
 	GrantConditionOnAttack@IVAN:
 		Condition: triggered
 		RequiresCondition: ivanturr
+	GrantCondition:
+		RequiresCondition: engturr || spyturr || medturr
+		Condition: support-ifv
 	DamageMultiplier@IRONCURTAIN:
 		RequiresCondition: invulnerability && !ivanturr
 	KillsSelf:
@@ -3453,23 +3470,23 @@ IFV:
 	AutoTargetPriority@ATTACKANYTHINGAA:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
 		InvalidTargets: NoAutoTarget
-		RequiresCondition: (stance-attackanything || assault-move) && (!full || samturr)
+		RequiresCondition: !support-ifv && (stance-attackanything || assault-move) && (!full || samturr)
 	AutoTargetPriority@DEFAULTAAPRIO:
 		RequiresCondition: (!stance-attackanything && !assault-move) && (!full || samturr)
 		ValidTargets: Air
 		InvalidTargets: NoAutoTarget
 		Priority: 10
 	AutoTargetPriority@ATTACKANYTHINGAAPRIO:
-		RequiresCondition: (!stance-attackanything && !assault-move) && (!full || samturr)
+		RequiresCondition: !support-ifv && (!stance-attackanything && !assault-move) && (!full || samturr)
 		ValidTargets: Air
 		InvalidTargets: NoAutoTarget
 		Priority: 10
 	AutoTargetPriority@DEFAULTG:
-		RequiresCondition: !stance-attackanything && !assault-move && full && !samturr
+		RequiresCondition: !stance-attackanything && !assault-move && full && !samturr && !support-ifv
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
 		InvalidTargets: NoAutoTarget
 	AutoTargetPriority@ATTACKANYTHINGG:
-		RequiresCondition: (stance-attackanything || assault-move) && full && !samturr
+		RequiresCondition: (stance-attackanything || assault-move) && full && !samturrr && !support-ifv
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense, Mine
 		InvalidTargets: NoAutoTarget
 	AttackMove:
@@ -3477,6 +3494,7 @@ IFV:
 	AutoTargetPriority@DEFAULTREPAIR:
 		ValidTargets: Vehicle, Ship
 		RequiresCondition: engturr
+		ValidRelationships: Ally
 	GrantConditionOnPrerequisite@CRYO:
 		Condition: cryr-upgrade
 		Prerequisites: cryr.upgrade
@@ -3485,6 +3503,8 @@ IFV:
 		RequiresCondition: cryr-upgrade
 	ExternalCondition@CRYO:
 		Condition: cryr-upgrade
+	SupportUnitWithDummyWeapon:
+		RequiresCondition: support-ifv
 
 IFV.AI:
 	Inherits: ^Tank
@@ -4281,6 +4301,7 @@ TNKD:
 
 MSAR:
 	Inherits: ^VehicleTD
+	Inherits@AUTOTARGET: ^AutoTargetSupport
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Valued:
 		Cost: 1200
@@ -4367,6 +4388,12 @@ MSAR:
 		RequiresCondition: deployed
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	AttackFrontal:
+		FacingTolerance: 512
+	Armament@DUMMY:
+		Weapon: SupportDummyWeapon
+		TargetRelationships: Enemy, Neutral
+	SupportUnitWithDummyWeapon:
 
 PTNK:
 	Inherits: ^Tank

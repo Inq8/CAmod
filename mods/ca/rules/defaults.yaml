@@ -1297,6 +1297,13 @@
 	AutoTargetPriority@DEFAULT:
 		InvalidTargets: NoAutoTarget
 
+^AutoTargetSupport:
+	Inherits: ^AutoTargetGround
+	AutoTargetPriority@DEFAULT:
+		ValidRelationships: Ally
+	AutoTargetPriority@ATTACKANYTHING:
+		ValidRelationships: Ally
+
 ^GlobalBounty:
 	GrantConditionOnPrerequisite@GLOBALBOUNTY:
 		Condition: global-bounty

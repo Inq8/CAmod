@@ -528,17 +528,25 @@ MEDI:
 		OutsideRangeCursor: heal
 		TargetRelationships: Ally
 		ForceTargetRelationships: None
+	Armament@DUMMY:
+		Name: dummy
+		Weapon: MedicDummyWeapon
+		TargetRelationships: Enemy, Neutral
 	AttackFrontal:
+		Armaments: primary, secondary, dummy
 		PauseOnCondition: being-warped
 	WithInfantryBody:
 		IdleSequences: idle
 		StandSequences: stand
 		DefaultAttackSequence: heal
+		AttackSequences:
+			dummy: stand
 	Voiced:
 		VoiceSet: MedicVoice
 	AutoTarget:
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Infantry
+		ValidRelationships: Ally
 	Mobile:
 		Voice: Move
 		PauseOnCondition: being-warped
@@ -546,6 +554,7 @@ MEDI:
 		Prerequisites: barracks.upgraded
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+	SupportUnitWithDummyWeapon:
 
 MECH:
 	Inherits: ^Soldier
@@ -586,11 +595,16 @@ MECH:
 		TargetRelationships: Ally
 		ForceTargetRelationships: None
 		Name: secondary
+	Armament@DUMMY:
+		Name: dummy
+		Weapon: MechanicDummyWeapon
+		TargetRelationships: Enemy, Neutral
 	AutoTargetPriority@defuse:
 		ValidTargets: C4Attached
 		InvalidTargets: NoAutoTarget
 		ValidRelationships: Ally
 	AttackFrontal:
+		Armaments: primary, secondary, dummy
 		Voice: Action
 		PauseOnCondition: being-warped
 	CaptureManager:
@@ -606,15 +620,19 @@ MECH:
 		IdleSequences: idle
 		DefaultAttackSequence: repair
 		StandSequences: stand
+		AttackSequences:
+			dummy: stand
 	Voiced:
 		VoiceSet: MechanicVoice
 	AutoTarget:
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Vehicle, Ship
+		ValidRelationships: Ally
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+	SupportUnitWithDummyWeapon:
 
 EINSTEIN:
 	Inherits: ^CivInfantry
