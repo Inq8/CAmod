@@ -365,17 +365,10 @@ SMEDI:
 		OutsideRangeCursor: heal
 		TargetRelationships: Ally
 		ForceTargetRelationships: None
-	Armament@DUMMY:
-		Name: dummy
-		Weapon: MedicDummyWeapon
-		TargetRelationships: Enemy, Neutral
 	AttackFrontal:
-		Armaments: primary, secondary, dummy
 		PauseOnCondition: being-warped
 	WithInfantryBody:
 		DefaultAttackSequence: heal
-		AttackSequences:
-			dummy: stand
 	Passenger:
 		CustomPipType: blue
 		Voice: Move
@@ -389,7 +382,8 @@ SMEDI:
 		VoiceSet: AssimilatorVoice
 	Targetable:
 		TargetTypes: Ground, Infantry, ChaosImmune
-	SupportUnitWithDummyWeapon:
+	GuardsSelection:
+		ValidTargets: Vehicle, Ship
 
 MAST:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
