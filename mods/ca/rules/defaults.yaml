@@ -1729,11 +1729,14 @@
 		Condition: invisibility
 	GpsRadarDot:
 		Sequence: Infantry
-	GrantExternalConditionToCrusher:
+	GrantExternalConditionToCrusher@CRUSHATTEMPTSLOW:
 		WarnCrushCondition: crush-attempt-slow
-		WarnCrushDuration: 80
+		WarnCrushDuration: 50
+		OnCrushCondition: crush-attempt-slow
+		OnCrushDuration: 100
+	GrantExternalConditionToCrusher@CRUSHSLOW:
 		OnCrushCondition: crush-slow
-		OnCrushDuration: 40
+		OnCrushDuration: 50
 
 ^Soldier:
 	Inherits: ^Infantry
@@ -2446,11 +2449,14 @@
 	ProductionCostMultiplier@FranceBonus:
 		Multiplier: 90
 		Prerequisites: structures.france
-	GrantExternalConditionToCrusher:
+	GrantExternalConditionToCrusher@CRUSHATTEMPTSLOW:
 		WarnCrushCondition: crush-attempt-slow
-		WarnCrushDuration: 80
+		WarnCrushDuration: 50
+		OnCrushCondition: crush-attempt-slow
+		OnCrushDuration: 100
+	GrantExternalConditionToCrusher@CRUSHSLOW:
 		OnCrushCondition: crush-slow
-		OnCrushDuration: 40
+		OnCrushDuration: 50
 
 ^TechBuilding:
 	Inherits: ^BasicBuilding
