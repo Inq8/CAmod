@@ -478,10 +478,11 @@ HARV.Scrin:
 		Palette: chrometd
 
 GUNW:
-	Inherits: ^Vehicle
+	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@BERSERK: ^Berserk
+	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 24
@@ -566,7 +567,7 @@ SEEK:
 		StationaryInterval: 18
 		MovingInterval: 6
 	Health:
-		HP: 26000
+		HP: 22000
 	Armor:
 		Type: Light
 	RevealsShroud:
@@ -614,7 +615,7 @@ LACE:
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
-		Cost: 650
+		Cost: 600
 	Tooltip:
 		Name: Lacerator
 	Selectable:
@@ -638,7 +639,7 @@ LACE:
 		StationaryInterval: 18
 		MovingInterval: 6
 	Health:
-		HP: 14000
+		HP: 13000
 	Armor:
 		Type: Light
 	RevealsShroud:
@@ -676,16 +677,15 @@ LACE:
 		Prerequisites: vehicles.upgraded
 
 INTL:
-	Inherits: ^Tank
+	Inherits: ^Vehicle
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
-	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
-		Cost: 725
+		Cost: 750
 	Tooltip:
 		Name: Interloper
 	UpdatesPlayerStatistics:
@@ -697,11 +697,11 @@ INTL:
 		Description: Heavily armoured front-line assault troop carrier.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
 		IconPalette: chrome
 	Mobile:
-		Speed: 62
+		Speed: 56
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 		TurnSpeed: 512
 	Health:
-		HP: 43000
+		HP: 44000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -714,7 +714,7 @@ INTL:
 		Weapon: InterloperLaser
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
-		LocalOffset: 400,84,30, 400,-84,30
+		LocalOffset: 470,84,30, 470,-84,30
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
@@ -760,10 +760,11 @@ INTL.AI:
 		InitialUnits: S1,S1,S2,S3,S3
 
 CORR:
-	Inherits: ^Vehicle
+	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
@@ -906,12 +907,11 @@ STCR:
 		RequiresCondition: stormcrawlercharge >= 3 && !empdisable && !being-warped
 
 DEVO:
-	Inherits: ^Tank
+	Inherits: ^Vehicle
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@RESCONV: ^ResourceConversion
-	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 220
@@ -965,11 +965,10 @@ DEVO:
 		Prerequisites: vehicles.reaper
 
 DARK:
-	Inherits: ^Tank
+	Inherits: ^Vehicle
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
-	Inherits@SLOWCRUSH: ^SlightlySlowedByCrushing
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Buildable:
