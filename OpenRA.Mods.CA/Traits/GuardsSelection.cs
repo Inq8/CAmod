@@ -37,6 +37,9 @@ namespace OpenRA.Mods.CA.Traits
 			if (order.OrderString != "Attack" && order.OrderString != "ForceAttack" && order.OrderString != "Move")
 				return;
 
+			if (self.Owner.IsBot)
+				return;
+
 			var at = self.TraitOrDefault<AutoTarget>();
 			if (at != null && at.Stance == UnitStance.AttackAnything)
 				return;
