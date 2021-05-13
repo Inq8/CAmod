@@ -1382,6 +1382,7 @@ MGG:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 	AttackOmni:
+	GuardsSelection:
 
 MRJ:
 	Inherits: ^Vehicle
@@ -1426,6 +1427,7 @@ MRJ:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 	AttackOmni:
+	GuardsSelection:
 
 TTRA:
 	Inherits: ^Tank
@@ -3477,6 +3479,7 @@ IFV:
 	AutoTargetPriority@DEFAULTREPAIR:
 		ValidTargets: Vehicle, Ship
 		RequiresCondition: engturr
+		ValidRelationships: Ally
 	GrantConditionOnPrerequisite@CRYO:
 		Condition: cryr-upgrade
 		Prerequisites: cryr.upgrade
@@ -3485,6 +3488,14 @@ IFV:
 		RequiresCondition: cryr-upgrade
 	ExternalCondition@CRYO:
 		Condition: cryr-upgrade
+	GuardsSelection@REPAIR:
+		ValidTargets: Vehicle
+		RequiresCondition: engturr
+	GuardsSelection@MEDIC:
+		ValidTargets: Infantry
+		RequiresCondition: medturr
+	GuardsSelection@SPY:
+		RequiresCondition: spyturr
 
 IFV.AI:
 	Inherits: ^Tank

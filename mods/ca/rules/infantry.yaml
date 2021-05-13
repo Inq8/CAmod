@@ -539,6 +539,7 @@ MEDI:
 	AutoTarget:
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Infantry
+		ValidRelationships: Ally
 	Mobile:
 		Voice: Move
 		PauseOnCondition: being-warped
@@ -546,6 +547,8 @@ MEDI:
 		Prerequisites: barracks.upgraded
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+	GuardsSelection:
+		ValidTargets: Infantry
 
 MECH:
 	Inherits: ^Soldier
@@ -611,10 +614,13 @@ MECH:
 	AutoTarget:
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Vehicle, Ship
+		ValidRelationships: Ally
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+	GuardsSelection:
+		ValidTargets: Vehicle, Ship
 
 EINSTEIN:
 	Inherits: ^CivInfantry
