@@ -147,22 +147,28 @@ PlasmaDiscs:
 	ReloadDelay: 75
 	Burst: 5
 	BurstDelays: 4
-	Projectile: Bullet
+	Projectile: Missile
 		Image: plasdiscsm
 		TrailImage: smokey
 		TrailPalette: scrinplasma
-		TrailDelay: 1
-		Speed: 280
+		Speed: 450
 		Inaccuracy: 0c256
 		Blockable: false
-		LaunchAngle: 40,60
+		Jammable: true
+		HorizontalRateOfTurn: 30
+		RangeLimit: 6c512
+		LockOnProbability: 50
+		LockOnInaccuracy: 0
+		MinimumLaunchAngle: 80
+		MaximumLaunchAngle: 112
+		VerticalRateOfTurn: 60
 	Warhead@1Dam: SpreadDamage
-		Spread: 256
-		Damage: 2350
+		Spread: 341
+		Damage: 2200
 		Versus:
-			None: 30
+			None: 35
 			Wood: 55
-			Light: 75
+			Light: 65
 			Heavy: 100
 			Concrete: 35
 			Brick: 50
@@ -179,9 +185,9 @@ IntruderDiscs:
 	Range: 6c0
 	ReloadDelay: 100
 	Burst: 3
-	Projectile: Bullet
+	Projectile: Missile
 		Inaccuracy: 0c128
-		LaunchAngle: 60,80
+		LockOnProbability: 33
 	Warhead@1Dam: SpreadDamage
 		Damage: 3250
 		Versus:
@@ -202,6 +208,9 @@ DevastatorDiscs:
 	TargetActorCenter: true
 	-Projectile:
 	Projectile: Bullet
+		TrailImage: smokey
+		TrailPalette: scrinplasma
+		Blockable: false
 		Image: plasdisclg
 		Inaccuracy: 1c768
 		Speed: 200
@@ -223,12 +232,12 @@ DevastatorDiscs:
 	Range: 7c0
 	ReloadDelay: 85
 	Projectile: LaserZap
-		Duration: 4
+		Duration: 3
 		Width: 45
 		ZOffset: 2048
 		SecondaryBeam: true
-		Color: AAFFAAFF
-		SecondaryBeamColor: 00FF00BB
+		Color: 66ff66FF
+		SecondaryBeamColor: 00AA00CC
 		SecondaryBeamWidth: 65
 		SecondaryBeamZOffset: 2047
 		Blockable: true
@@ -261,7 +270,7 @@ InterloperLaser:
 			None: 35
 			Light: 100
 			Wood: 70
-			Heavy: 80
+			Heavy: 85
 			Concrete: 45
 
 ^ScrinPlasmaBeam:
@@ -663,6 +672,9 @@ EnervatorBolts:
 		ContrailColor: FF00FF77
 		ContrailWidth: 0c48
 		Jammable: true
+		LockOnProbability: 100
+		LockOnInaccuracy: 64
+		RangeLimit: 8c0
 		-TrailImage:
 		-PointDefenseType:
 	Warhead@1Dam: SpreadDamage
@@ -971,27 +983,22 @@ RavagerShards:
 
 LaceratorShards:
 	Inherits: RavagerShards
-	MinRange: 1c512
 	Range: 5c0
 	StartBurstReport: lacerator-fire1.aud, lacerator-fire2.aud
 	ReloadDelay: 90
-	-Projectile:
-	Projectile: Bullet
-		Speed: 266
+	Projectile: Missile
 		Image: bshard
 		ContrailLength: 9
 		ContrailWidth: 0c32
 		ContrailColor: 4455FFAA
-		Inaccuracy: 0c256
-		Palette: scrin
-		LaunchAngle: 0,30
+		Jammable: true
 	Warhead@1Dam: SpreadDamage
-		Damage: 3300
-		Spread: 256
+		Damage: 3200
+		Spread: 128
 		Versus:
 			None: 25
 			Wood: 55
-			Light: 75
+			Light: 60
 			Heavy: 100
 			Concrete: 35
 			Brick: 25

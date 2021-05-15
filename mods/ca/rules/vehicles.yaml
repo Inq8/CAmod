@@ -99,7 +99,7 @@ KATY:
 		Queue: Vehicle
 		BuildPaletteOrder: 50
 		Prerequisites: ~vehicles.allies, ~techlevel.low
-		Description: Fast tank, good for scouting.\n  Strong vs Light Armor\n  Weak vs Infantry, Defenses, Aircraft\n  Special Ability: Amphibious
+		Description: Fast tank, good for scouting.\n  Strong vs Vehicles\n  Weak vs Infantry, Defenses, Aircraft\n  Special Ability: Amphibious
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -108,7 +108,7 @@ KATY:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 30000
+		HP: 28000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -437,7 +437,7 @@ KATY:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 60000
+		HP: 63000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -508,7 +508,7 @@ KATY:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 60000
+		HP: 63000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -1890,7 +1890,7 @@ APC2:
 		Speed: 108
 		PauseOnCondition: being-captured || empdisable || being-warped || notmobile || driver-dead
 	SpeedMultiplier@UPG:
-		Modifier: 74
+		Modifier: 90
 		RequiresCondition: vulcan-upgrade
 	RevealsShroud:
 		MinRange: 4c0
@@ -2112,7 +2112,7 @@ VULC:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 80
+		Speed: 90
 		PauseOnCondition: being-captured || empdisable || being-warped || notmobile
 	RevealsShroud:
 		MinRange: 4c0
@@ -2237,7 +2237,7 @@ LTNK:
 		Prerequisites: ~vehicles.ltnk, ~techlevel.low
 		Description: Fast, light tank.\n  Strong vs Light Armor\n  Weak vs Infantry, Defenses, Aircraft\n  Special Ability: Amphibious
 	Valued:
-		Cost: 675
+		Cost: 700
 	Tooltip:
 		Name: Light Tank
 	UpdatesPlayerStatistics:
@@ -3192,7 +3192,7 @@ IFV:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 30000
+		HP: 28000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -3514,7 +3514,7 @@ IFV.AI:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 30000
+		HP: 28000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -4038,7 +4038,7 @@ RTNK:
 		Prerequisites: ~vehicles.england, ~techlevel.low
 		Description: Advanced battle tank that can disguise when stationary.\n  Strong vs Vehicles\n  Weak vs Defenses, Aircraft\n  Special Ability: Disguise
 	Valued:
-		Cost: 850
+		Cost: 825
 	Tooltip:
 		Name: Mirage Tank
 		RequiresCondition: !tree
@@ -4474,9 +4474,9 @@ WTNK:
 		BuildPaletteOrder: 210
 		IconPalette: chrometd
 		Prerequisites: anyradar, ~vehicles.legion, ~techlevel.high
-		Description: Prototype MGT-1A microwave gun tank.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
+		Description: Prototype MGT-1A microwave gun tank.\n  Strong vs Vehicles\n  Weak vs Aircraft, Buildings
 	Valued:
-		Cost: 1650
+		Cost: 1500
 	Tooltip:
 		Name: Microwave Tank
 		GenericName: Tank
