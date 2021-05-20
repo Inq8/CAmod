@@ -40,28 +40,30 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly bool ShowSelectionBar = true;
 		public readonly Color SelectionBarColor = Color.FromArgb(128, 200, 255);
 
-		public override object Create(ActorInitializer init) { return new Shielded(this); }
+		public override object Create(ActorInitializer init) { return new Shielded(init, this); }
 	}
 
 	public class Shielded : ConditionalTrait<ShieldedInfo>, ITick, ISync, ISelectionBar, IDamageModifier, INotifyDamage
 	{
 		int conditionToken = Actor.InvalidConditionToken;
-		Actor Self;
+		Actor self;
 
 		[Sync]
 		int strength;
 		int intervalTicks;
 		int delayTicks;
 
-		public Shielded(ShieldedInfo info)
-			: base(info) { }
+		public Shielded(ActorInitializer init, ShieldedInfo info)
+			: base(info)
+		{
+			self = init.Self;
+		}
 
 		protected override void Created(Actor self)
 		{
 			base.Created(self);
 			strength = Info.MaxStrength;
 			ResetRegen();
-			Self = self;
 		}
 
 		void ITick.Tick(Actor self)
@@ -140,9 +142,9 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled || !Info.ShowSelectionBar || strength == 0 || (strength == Info.MaxStrength && Info.HideBarWhenFull))
 				return 0;
 
-			var selected = Self.World.Selection.Contains(Self);
-			var rollover = Self.World.Selection.RolloverContains(Self);
-			var regularWorld = Self.World.Type == WorldType.Regular;
+			var selected = self.World.Selection.Contains(self);
+			var rollover = self.World.Selection.RolloverContains(self);
+			var regularWorld = self.World.Type == WorldType.Regular;
 			var statusBars = Game.Settings.Game.StatusBars;
 
 			var displayHealth = selected || rollover || (regularWorld && statusBars == StatusBarsType.AlwaysShow)

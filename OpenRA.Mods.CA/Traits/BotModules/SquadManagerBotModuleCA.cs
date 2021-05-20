@@ -77,6 +77,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Radius in cells that protecting squads should scan for enemies around their position.")]
 		public readonly int ProtectionScanRadius = 8;
 
+		[Desc("Percent change for air squads (that can attack aircraft) to prioritise enemy aircraft.")]
+		public readonly int AirToAirPriority = 65;
+
 		[Desc("Enemy target types to never target.")]
 		public readonly BitSet<TargetableType> IgnoredEnemyTargetTypes = default(BitSet<TargetableType>);
 
@@ -137,6 +140,15 @@ namespace OpenRA.Mods.CA.Traits
 		public bool IsPreferredEnemyUnit(Actor a)
 		{
 			if (a == null || a.IsDead || Player.RelationshipWith(a.Owner) != PlayerRelationship.Enemy || a.Info.HasTraitInfo<HuskInfo>() || a.Info.HasTraitInfo<AircraftInfo>())
+				return false;
+
+			var targetTypes = a.GetEnabledTargetTypes();
+			return !targetTypes.IsEmpty && !targetTypes.Overlaps(Info.IgnoredEnemyTargetTypes);
+		}
+
+		public bool IsPreferredEnemyAircraft(Actor a)
+		{
+			if (a == null || a.IsDead || Player.RelationshipWith(a.Owner) != PlayerRelationship.Enemy || a.Info.HasTraitInfo<HuskInfo>() || !a.Info.HasTraitInfo<AircraftInfo>() || !a.Info.HasTraitInfo<AttackBaseInfo>() || a.Info.HasTraitInfo<CarrierSlaveInfo>())
 				return false;
 
 			var targetTypes = a.GetEnabledTargetTypes();
@@ -263,11 +275,24 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				if (a.Info.HasTraitInfo<AircraftInfo>() && a.Info.HasTraitInfo<AttackBaseInfo>() && !Info.ExcludeFromAirSquadsTypes.Contains(a.Info.Name))
 				{
-					var air = GetSquadOfType(SquadCAType.Air);
-					if (air == null)
-						air = RegisterNewSquad(bot, SquadCAType.Air);
+					var airSquads = Squads.Where(s => s.Type == SquadCAType.Air);
+					var matchingSquadFound = false;
 
-					air.Units.Add(a);
+					foreach (var airSquad in airSquads)
+					{
+						if (airSquad.Units.Any(u => u.Info.Name == a.Info.Name))
+						{
+							airSquad.Units.Add(a);
+							matchingSquadFound = true;
+							break;
+						}
+					}
+
+					if (!matchingSquadFound)
+					{
+						var newAirSquad = RegisterNewSquad(bot, SquadCAType.Air);
+						newAirSquad.Units.Add(a);
+					}
 				}
 				else if (Info.NavalUnitsTypes.Contains(a.Info.Name))
 				{
