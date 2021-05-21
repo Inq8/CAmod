@@ -54,9 +54,51 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			return missileUnitsCount;
 		}
 
+		protected static Actor FindAirTarget(SquadCA owner)
+		{
+			Actor target = null;
+			var airPriorityChance = owner.World.LocalRandom.Next(0, 100);
+
+			if (airPriorityChance > owner.SquadManager.Info.AirToAirPriority)
+				return target;
+
+			var leader = owner.Units.FirstOrDefault();
+			if (leader == null)
+				return target;
+
+			var canAttackAir = false;
+			foreach (var ab in leader.TraitsImplementing<AttackBase>())
+			{
+				foreach (var a in ab.Armaments)
+				{
+					if (a.Weapon.IsValidTarget(AirTargetTypes))
+					{
+						canAttackAir = true;
+						break;
+					}
+				}
+			}
+
+			if (canAttackAir)
+			{
+				var pos = leader.CenterPosition;
+				target = owner.World.Actors.Where(a => owner.SquadManager.IsPreferredEnemyAircraft(a) &&
+					owner.SquadManager.IsNotHiddenUnit(a) &&
+					a.IsTargetableBy(leader))
+					.ClosestTo(pos);
+			}
+
+			return target;
+		}
+
 		protected static Actor FindDefenselessTarget(SquadCA owner)
 		{
 			Actor target = null;
+
+			target = FindAirTarget(owner);
+			if (target != null)
+				return target;
+
 			FindSafePlace(owner, out target, true);
 			return target;
 		}
@@ -155,8 +197,14 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 			if (!owner.IsTargetValid)
 			{
-				var a = owner.Units.Random(owner.Random);
-				var closestEnemy = owner.SquadManager.FindClosestEnemy(a.CenterPosition);
+				var closestEnemy = FindAirTarget(owner);
+
+				if (closestEnemy == null)
+				{
+					var a = owner.Units.Random(owner.Random);
+					closestEnemy = owner.SquadManager.FindClosestEnemy(a.CenterPosition);
+				}
+
 				if (closestEnemy != null)
 					owner.TargetActor = closestEnemy;
 				else

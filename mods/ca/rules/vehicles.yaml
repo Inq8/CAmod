@@ -3209,10 +3209,15 @@ IFV:
 	RevealsShroud@SPY:
 		Range: 10c0
 		MinRange: 4c0
+		RevealGeneratedShroud: False
 		RequiresCondition: spyturr
 	RevealsShroud@SPYGAPGEN:
 		Range: 4c0
 		RequiresCondition: spyturr
+	DetectCloaked@SPY:
+		Range: 6c0
+		CloakTypes: Cloak, Thief
+		RequiresCondition: spyturr && !(empdisable || being-warped)
 	Turreted:
 		TurnSpeed: 40
 		Offset: 20,0,0
@@ -4572,6 +4577,10 @@ BATF:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
+	DetectCloaked@SPY:
+		Range: 6c0
+		CloakTypes: Cloak, Thief
+		RequiresCondition: loaded-spy && !(empdisable || being-warped)
 	AttackFrontal:
 		FacingTolerance: 24
 		PauseOnCondition: empdisable || being-warped
@@ -4593,6 +4602,7 @@ BATF:
 			e2: loaded
 			e3: loaded-air
 			e4: loaded
+			e6: loaded-repair
 			e7: loaded
 			e8: loaded
 			n1: loaded
@@ -4600,14 +4610,18 @@ BATF:
 			n3: loaded-air
 			n4: loaded
 			n5: loaded
+			n6: loaded-repair
+			mech: loaded-repair
 			rmbo: loaded
 			bori: loaded
 			acol: loaded
 			acol.upg: loaded
 			mort: loaded
+			spy: loaded-spy
 			snip: loaded
 			shok: loaded
-			sab: loaded
+			sab: loaded-spy
+			thf: loaded-spy
 			n1c: loaded
 			n3c: loaded-air
 			tecn: loaded
@@ -4616,6 +4630,7 @@ BATF:
 			s2: loaded
 			s3: loaded
 			s4: loaded
+			s6: loaded-repair
 			mast: loaded
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -4655,6 +4670,12 @@ BATF:
 	SpawnActorOnDeath:
 		Actor: BATF.Husk
 		RequiresCondition: !being-warped
+	ChangesHealth@REPAIR:
+		PercentageStep: 1
+		Delay: 25
+		StartIfBelow: 50
+		DamageCooldown: 150
+		RequiresCondition: loaded-repair
 
 BATF.AI:
 	Inherits: BATF

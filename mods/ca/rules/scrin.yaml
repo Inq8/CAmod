@@ -1526,13 +1526,13 @@ ENRV:
 		Step: 500
 		Delay: 25
 		StartIfBelow: 66
-		DamageCooldown: 200
+		DamageCooldown: 250
 		RequiresCondition: regen-upgrade
 	ChangesHealth@REGEN2:
 		Step: 250
 		Delay: 25
 		StartIfBelow: 100
-		DamageCooldown: 200
+		DamageCooldown: 250
 		RequiresCondition: regen-upgrade
 	Rearmable:
 		RearmActors: srep
@@ -1604,13 +1604,6 @@ DEVA:
 	GrantConditionOnPrerequisite@SHIELDS:
 		Condition: shields-upgrade
 		Prerequisites: shields.upgrade
-	DamageMultiplier@SHIELDS:
-		RequiresCondition: shields-upgrade && shields-up
-		Modifier: 25
-	GrantConditionOnHealth@SHIELDS:
-		Condition: shields-up
-		MaxHP: -1
-		MinHP: 30400
 	WithSpriteTurret@SHIELDS:
 		RequiresCondition: shields-upgrade && shields-up
 		Sequence: shield
@@ -1630,18 +1623,26 @@ DEVA:
 		Step: 500
 		Delay: 25
 		StartIfBelow: 66
-		DamageCooldown: 200
+		DamageCooldown: 250
 		RequiresCondition: regen-upgrade
 	ChangesHealth@REGEN2:
 		Step: 250
 		Delay: 25
 		StartIfBelow: 100
-		DamageCooldown: 200
+		DamageCooldown: 250
 		RequiresCondition: regen-upgrade
 	Repairable:
 		RepairActors: fix, rep, srep
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
+	Shielded:
+		MaxStrength: 5000
+		RegenDelay: 250
+		RegenAmount: 250
+		RegenInterval: 10
+		ShieldsUpCondition: shields-up
+		RequiresCondition: shields-upgrade && !empdisable
+		SelectionBarColor: ead6ff
 
 PAC:
 	Inherits: ^Helicopter
@@ -1749,13 +1750,6 @@ PAC:
 	GrantConditionOnPrerequisite@SHIELDS:
 		Condition: shields-upgrade
 		Prerequisites: shields.upgrade
-	DamageMultiplier@SHIELDS:
-		RequiresCondition: shields-upgrade && shields-up
-		Modifier: 25
-	GrantConditionOnHealth@SHIELDS:
-		Condition: shields-up
-		MaxHP: -1
-		MinHP: 49400
 	WithSpriteTurret@SHIELDS:
 		RequiresCondition: shields-upgrade && shields-up
 		Sequence: shield
@@ -1775,13 +1769,13 @@ PAC:
 		Step: 500
 		Delay: 25
 		StartIfBelow: 66
-		DamageCooldown: 200
+		DamageCooldown: 250
 		RequiresCondition: regen-upgrade
 	ChangesHealth@REGEN2:
 		Step: 250
 		Delay: 25
 		StartIfBelow: 100
-		DamageCooldown: 200
+		DamageCooldown: 250
 		RequiresCondition: regen-upgrade
 	Repairable:
 		RepairActors: fix, rep, srep
@@ -1791,6 +1785,14 @@ PAC:
 		InvalidTargets: NoAutoTarget, AirLowPriority
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
+	Shielded:
+		MaxStrength: 10000
+		RegenDelay: 250
+		RegenAmount: 250
+		RegenInterval: 10
+		ShieldsUpCondition: shields-up
+		RequiresCondition: shields-upgrade && !empdisable
+		SelectionBarColor: ead6ff
 
 INVA:
 	Inherits: ^Plane
