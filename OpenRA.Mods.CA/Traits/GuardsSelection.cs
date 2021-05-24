@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
@@ -34,7 +35,9 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled)
 				return;
 
-			if (order.OrderString != "Attack" && order.OrderString != "ForceAttack" && order.OrderString != "Move")
+			var validOrders = new HashSet<string> { "AttackMove", "AssaultMove", "Attack", "ForceAttack", "Move" };
+
+			if (!validOrders.Contains(order.OrderString))
 				return;
 
 			if (self.Owner.IsBot)
