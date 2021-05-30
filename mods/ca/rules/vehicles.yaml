@@ -3012,13 +3012,34 @@ FTNK:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
-	Armament:
+	Armament@PRIMARY:
 		Weapon: BigFlamerTD
 		MuzzleSequence: muzzle
 		MuzzlePalette: tdeffect
 		LocalOffset: 512,128,42, 512,-128,42
+		RequiresCondition: !puri-upgrade
 	Armament@CLOSE:
 		Weapon: BigFlamerTDClose
+		RequiresCondition: !puri-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: BlackHandBigFlamer
+		LocalOffset: 512,48,0, 512,-48,0
+		RequiresCondition: puri-upgrade
+	Armament@CLOSEUPG:
+		Weapon: BlackHandBigFlamerClose
+		RequiresCondition: puri-upgrade
+	AmbientSoundCA:
+		SoundFiles: bigflamer-loop1.aud
+		InitialSound: bigflamer-start1.aud
+		FinalSound: bigflamer-end1.aud
+		RequiresCondition: puri-upgrade && attacking
+		InitialSoundLength: 24
+	GrantConditionOnAttackCA:
+		Condition: attacking
+		RequiresCondition: puri-upgrade
+	GrantConditionOnPrerequisite@UPG:
+		Condition: puri-upgrade
+		Prerequisites: puri.upgrade
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped

@@ -262,6 +262,70 @@ ChemsprayTDClose:
 ChemsprayTDDummy:
 	Inherits: FlamerTDDummy
 
+BlackHandBigFlamer:
+	ReloadDelay: 60
+	Burst: 50
+	BurstDelays: 4
+	Range: 4c512
+	MinRange: 0c512
+	Projectile: LinearPulse
+		Speed: 90
+		Image: flameall
+		Palette: tseffect-ignore-lighting-alpha90
+		ImpactSpacing: 630
+		Inaccuracy: 484
+		MinimumImpactDistance: 2c472
+		MaximumImpactDistance: 0
+	Warhead@1Dam: SpreadDamage
+		Spread: 426
+		Falloff: 100, 70, 40, 0
+		Damage: 130
+		Versus:
+			None: 300
+			Wood: 160
+			Tree: 120
+			Light: 110
+			Heavy: 50
+			Concrete: 50
+			Brick: 2
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch
+		InvalidTargets: Vehicle, Building, Wall
+		Chance: 50
+
+BlackHandBigFlamerClose:
+	Inherits: BlackHandBigFlamer
+	Projectile: LinearPulse
+		-Image:
+		-Palette:
+		MinimumImpactDistance: 0
+		MaximumImpactDistance: 1c866
+	Warhead@1Dam: SpreadDamage
+		ValidRelationships: Enemy, Neutral
+
+BlackHandFlamer:
+	Inherits: BlackHandBigFlamer
+	ReloadDelay: 50
+	Burst: 25
+	BurstDelays: 1
+	Range: 5c0
+	-Projectile:
+	Projectile: Bullet
+		Speed: 130
+		TrailImage: fb4
+		Image: fb3
+		LaunchAngle: 62
+		Inaccuracy: 341
+	Warhead@1Dam: SpreadDamage
+		Falloff: 100, 60, 25, 0
+		Damage: 220
+		Versus:
+			Wood: 200
+	Warhead@2Smu: LeaveSmudge
+		Chance: 75
+		-InvalidTargets:
+
 Napalm:
 	Inherits: ^FireWeapon
 	ReloadDelay: 20

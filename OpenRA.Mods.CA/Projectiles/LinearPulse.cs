@@ -14,6 +14,7 @@ using System.Linq;
 using OpenRA.GameRules;
 using OpenRA.Graphics;
 using OpenRA.Mods.CA.Traits;
+using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Effects;
 using OpenRA.Mods.Common.Graphics;
 using OpenRA.Mods.Common.Traits;
@@ -39,6 +40,29 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("Whether to ignore range modifiers, as these can mess up the relationship between ImpactSpacing, Speed and max range.")]
 		public readonly bool IgnoreRangeModifiers = true;
 
+		[Desc("The maximum/constant/incremental inaccuracy used in conjunction with the InaccuracyType property.")]
+		public readonly WDist Inaccuracy = WDist.Zero;
+
+		[Desc("Controls the way inaccuracy is calculated. Possible values are 'Maximum' - scale from 0 to max with range, 'PerCellIncrement' - scale from 0 with range and 'Absolute' - use set value regardless of range.")]
+		public readonly InaccuracyType InaccuracyType = InaccuracyType.Maximum;
+
+		[Desc("Image to display.")]
+		public readonly string Image = null;
+
+		[SequenceReference(nameof(Image), allowNullImage: true)]
+		[Desc("Loop a randomly chosen sequence of Image from this list while this projectile is moving.")]
+		public readonly string[] Sequences = { "idle" };
+
+		[Desc("The palette used to draw this projectile.")]
+		public readonly string Palette = "effect";
+
+		[Desc("Does this projectile have a shadow?")]
+		public readonly bool Shadow = false;
+
+		[PaletteReference]
+		[Desc("Palette to use for this projectile's shadow if Shadow is true.")]
+		public readonly string ShadowPalette = "shadow";
+
 		public IProjectile Create(ProjectileArgs args) { return new LinearPulse(this, args); }
 	}
 
@@ -48,6 +72,7 @@ namespace OpenRA.Mods.CA.Projectiles
 		readonly ProjectileArgs args;
 		readonly WDist speed;
 		readonly WAngle facing;
+		readonly Animation anim;
 
 		[Sync]
 		WPos pos, target, source;
@@ -65,6 +90,8 @@ namespace OpenRA.Mods.CA.Projectiles
 			speed = info.Speed;
 			source = args.Source;
 
+			var world = args.SourceActor.World;
+
 			// projectile starts at the source position
 			pos = args.Source;
 
@@ -73,15 +100,30 @@ namespace OpenRA.Mods.CA.Projectiles
 			range = args.Weapon.Range.Length;
 
 			if (!info.IgnoreRangeModifiers)
-				range = Common.Util.ApplyPercentageModifiers(range, args.RangeModifiers);
+				range = OpenRA.Mods.Common.Util.ApplyPercentageModifiers(range, args.RangeModifiers);
 
 			// the weapon range (distance to be travelled in cell units)
 			target = args.PassiveTarget;
+
+			if (info.Inaccuracy.Length > 0)
+			{
+				var maxInaccuracyOffset = OpenRA.Mods.Common.Util.GetProjectileInaccuracy(info.Inaccuracy.Length, info.InaccuracyType, args);
+				target += WVec.FromPDF(world.SharedRandom, 2) * maxInaccuracyOffset / 1024;
+			}
+
 			facing = (target - pos).Yaw;
+
+			if (!string.IsNullOrEmpty(info.Image))
+			{
+				anim = new Animation(world, info.Image, new Func<WAngle>(GetEffectiveFacing));
+				anim.PlayRepeating(info.Sequences.Random(world.SharedRandom));
+			}
 		}
 
 		public void Tick(World world)
 		{
+			anim?.Tick();
+
 			var lastPos = pos;
 			var convertedVelocity = new WVec(0, -speed.Length, 0);
 			var velocity = convertedVelocity.Rotate(WRot.FromYaw(facing));
@@ -99,9 +141,42 @@ namespace OpenRA.Mods.CA.Projectiles
 			ticks++;
 		}
 
+		WAngle GetEffectiveFacing()
+		{
+			var angle = WAngle.Zero;
+			var at = (float)ticks / (speed.Length - 1);
+			var attitude = angle.Tan() * (1 - 2 * at) / (4 * 1024);
+
+			var u = (facing.Angle % 512) / 512f;
+			var scale = 2048 * u * (1 - u);
+
+			var effective = (int)(facing.Angle < 512
+				? facing.Angle - scale * attitude
+				: facing.Angle + scale * attitude);
+
+			return new WAngle(effective);
+		}
+
 		public IEnumerable<IRenderable> Render(WorldRenderer wr)
 		{
-			return Enumerable.Empty<IRenderable>();
+			if (anim == null || ticks >= speed.Length)
+				yield break;
+
+			var world = args.SourceActor.World;
+			if (!world.FogObscures(pos))
+			{
+				if (info.Shadow)
+				{
+					var dat = world.Map.DistanceAboveTerrain(pos);
+					var shadowPos = pos - new WVec(0, 0, dat.Length);
+					foreach (var r in anim.Render(shadowPos, wr.Palette(info.ShadowPalette)))
+						yield return r;
+				}
+
+				var palette = wr.Palette(info.Palette);
+				foreach (var r in anim.Render(pos, palette))
+					yield return r;
+			}
 		}
 
 		void Explode(World world)

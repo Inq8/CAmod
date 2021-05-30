@@ -10,17 +10,21 @@
 #endregion
 
 using System.Collections.Generic;
-using OpenRA.Mods.Common;
-using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
-namespace OpenRA.Mods.CA.Traits.Sound
+namespace OpenRA.Mods.Common.Traits.Sound
 {
 	[Desc("Plays a looping audio file at the actor position. Attach this to the `World` actor to cover the whole map.")]
 	class AmbientSoundCAInfo : ConditionalTraitInfo
 	{
 		[FieldLoader.Require]
 		public readonly string[] SoundFiles = null;
+
+		[Desc("Initial sound.")]
+		public readonly string InitialSound = null;
+
+		[Desc("Final sound.")]
+		public readonly string FinalSound = null;
 
 		[Desc("Initial delay (in ticks) before playing the sound for the first time.",
 			"Two values indicate a random delay range.")]
@@ -29,6 +33,9 @@ namespace OpenRA.Mods.CA.Traits.Sound
 		[Desc("Interval between playing the sound (in ticks).",
 			"Two values indicate a random delay range.")]
 		public readonly int[] Interval = { 0 };
+
+		[Desc("Ticks before main loop starts. Set to null to base on sound completion.")]
+		public readonly int InitialSoundLength = 0;
 
 		[Desc("Do the sounds play under shroud or fog.")]
 		public readonly bool AudibleThroughFog = false;
@@ -41,6 +48,8 @@ namespace OpenRA.Mods.CA.Traits.Sound
 
 	class AmbientSoundCA : ConditionalTrait<AmbientSoundCAInfo>, ITick, INotifyRemovedFromWorld
 	{
+		bool initialSoundComplete = false;
+		int initialSoundTicks = 0;
 		readonly bool loop;
 		HashSet<ISound> currentSounds = new HashSet<ISound>();
 		WPos cachedPosition;
@@ -57,6 +66,23 @@ namespace OpenRA.Mods.CA.Traits.Sound
 		{
 			if (IsTraitDisabled)
 				return;
+
+			if (Info.InitialSound != null && !initialSoundComplete)
+			{
+				if (Info.InitialSoundLength > 0 && ++initialSoundTicks == Info.InitialSoundLength)
+				{
+					StopSounds(self, false);
+					initialSoundComplete = true;
+				}
+				else
+				{
+					foreach (var s in currentSounds)
+					{
+						if (s != null && s.Complete)
+							initialSoundComplete = true;
+					}
+				}
+			}
 
 			currentSounds.RemoveWhere(s => s == null || s.Complete);
 
@@ -75,6 +101,14 @@ namespace OpenRA.Mods.CA.Traits.Sound
 			if (delay < 0)
 				return;
 
+			if (delay == 0 && Info.InitialSound != null && !initialSoundComplete)
+			{
+				if (currentSounds.Count == 0)
+					PlaySound(Info.InitialSound, self, false, true);
+
+				return;
+			}
+
 			if (--delay < 0)
 			{
 				StartSound(self);
@@ -86,33 +120,47 @@ namespace OpenRA.Mods.CA.Traits.Sound
 		void StartSound(Actor self)
 		{
 			var sound = Info.SoundFiles.RandomOrDefault(Game.CosmeticRandom);
-			var shouldStart = Info.AudibleThroughFog || (!self.World.ShroudObscures(self.CenterPosition) && !self.World.FogObscures(self.CenterPosition));
-
-			ISound s;
-			if (self.OccupiesSpace != null)
-			{
-				cachedPosition = self.CenterPosition;
-				s = loop ? Game.Sound.Play(SoundType.World, sound, cachedPosition, shouldStart ? Info.VolumeMultiplier : 0f) :
-					Game.Sound.Play(SoundType.World, sound, self.CenterPosition, shouldStart ? Info.VolumeMultiplier : 0f);
-			}
-			else
-				s = loop ? Game.Sound.Play(SoundType.World, sound, shouldStart ? Info.VolumeMultiplier : 0f) :
-					Game.Sound.Play(SoundType.World, sound, shouldStart ? Info.VolumeMultiplier : 0f);
-
-			currentSounds.Add(s);
+			PlaySound(sound, self, loop, true);
 		}
 
-		void StopSound()
+		void StopSounds(Actor self, bool playFinalSound)
 		{
 			foreach (var s in currentSounds)
 				Game.Sound.StopSound(s);
 
 			currentSounds.Clear();
+			initialSoundComplete = false;
+			initialSoundTicks = 0;
+
+			if (Info.FinalSound != null && playFinalSound)
+				PlaySound(Info.FinalSound, self, false, false);
+		}
+
+		void PlaySound(string sound, Actor self, bool looped, bool addToCurrentSounds)
+		{
+			var shouldStart = Info.AudibleThroughFog || (!self.World.ShroudObscures(self.CenterPosition) && !self.World.FogObscures(self.CenterPosition));
+
+			if (!shouldStart)
+				return;
+
+			ISound s;
+			if (self.OccupiesSpace != null)
+			{
+				cachedPosition = self.CenterPosition;
+				s = looped ? Game.Sound.PlayLooped(SoundType.World, sound, cachedPosition) :
+					Game.Sound.Play(SoundType.World, sound, self.CenterPosition, Info.VolumeMultiplier);
+			}
+			else
+				s = looped ? Game.Sound.PlayLooped(SoundType.World, sound) :
+					Game.Sound.Play(SoundType.World, sound, Info.VolumeMultiplier);
+
+			if (addToCurrentSounds)
+				currentSounds.Add(s);
 		}
 
 		protected override void TraitEnabled(Actor self) { delay = Util.RandomDelay(self.World, Info.Delay); }
-		protected override void TraitDisabled(Actor self) { StopSound(); }
+		protected override void TraitDisabled(Actor self) { StopSounds(self, true); }
 
-		void INotifyRemovedFromWorld.RemovedFromWorld(Actor self) { StopSound(); }
+		void INotifyRemovedFromWorld.RemovedFromWorld(Actor self) { StopSounds(self, false); }
 	}
 }
