@@ -1116,7 +1116,7 @@ N5:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 20000
+		HP: 17000
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
 	WithInfantryBody:
@@ -1130,7 +1130,7 @@ N5:
 		Name: mounted
 		Weapon: ChemsprayE
 	Mobile:
-		Speed: 56
+		Speed: 49
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
@@ -1622,6 +1622,8 @@ ACOL:
 	Mobile:
 		Speed: 49
 		Voice: Move
+	RevealsShroud:
+		Range: 5c0
 	Armament@PRIMARY:
 		Weapon: PortaLaser
 		LocalOffset: 427,0,341
@@ -1659,9 +1661,7 @@ ACOL.UPG:
 	Valued:
 		Cost: 500
 	Health:
-		HP: 20000
-	Mobile:
-		Speed: 56
+		HP: 17000
 	Buildable:
 		Prerequisites: anyradar, obli, ~infantry.marked, ~cyborg.production, ~techlevel.high
 	-TakeCover:
@@ -2038,9 +2038,9 @@ N1C:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 25000
+		HP: 21000
 	Mobile:
-		Speed: 56
+		Speed: 43
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
@@ -2082,9 +2082,9 @@ N3C:
 		AddToArmyValue: true
 	-TakeCover:
 	Health:
-		HP:  16000
+		HP:  14000
 	Mobile:
-		Speed: 49
+		Speed: 43
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
@@ -2183,9 +2183,11 @@ RMBC:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 56
+		Speed: 49
 		Voice: Move
 		PauseOnCondition: being-warped || empdisable
+	RevealsShroud:
+		Range: 5c0
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped || empdisable
