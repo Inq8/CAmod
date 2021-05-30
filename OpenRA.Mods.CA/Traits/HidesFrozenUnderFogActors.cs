@@ -11,8 +11,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using OpenRA.Traits;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
@@ -66,7 +66,6 @@ namespace OpenRA.Mods.CA.Traits
 				isMoving = true;
 				if (lastMovementType == MovementType.None)
 					movingUpdateTicks = Info.MovingUpdateInterval;
-
 			}
 
 			lastMovementType = movementType;
