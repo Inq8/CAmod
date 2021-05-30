@@ -700,6 +700,22 @@ EnervatorBolts:
 		Image: enrvbolthit
 		ImpactSounds: enrv-hit1.aud
 
+EnervatorBoltsAA:
+	Inherits: EnervatorBolts
+	ValidTargets: Air, AirSmall
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Air
+		ValidRelationships: Enemy, Neutral
+		Damage: 6000
+		Versus:
+			None: 100
+			Wood: 100
+			Light: 100
+			Concrete: 100
+			Brick: 100
+	Warhead@2Sup: GrantExternalCondition
+		ValidTargets: Air
+
 InvaderLauncher:
 	ReloadDelay: 10
 	Burst: 4

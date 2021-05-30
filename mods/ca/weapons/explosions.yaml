@@ -153,6 +153,13 @@ VisualUnitExplodeWater:
 		Explosions: small_splash
 		ImpactSounds: splash9.aud
 
+VisualExplodeInvader:
+	Inherits: VisualExplodeHusk
+	-Warhead@Smu:
+	Warhead@2Eff: CreateEffect
+		Explosions: self_destruct
+		ImpactSounds: invader-die1.aud, invader-die2.aud
+
 UnitExplodeShip:
 	Inherits: ^Explosion
 	-Warhead@Smu:
