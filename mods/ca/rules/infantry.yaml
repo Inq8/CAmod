@@ -1069,10 +1069,14 @@ N4:
 	Mobile:
 		Speed: 49
 	Armament:
-		Weapon: Flamer
+		Weapon: FlamerTDDummy
 		LocalOffset: 341,0,254
 		MuzzleSequence: muzzle
-		MuzzlePalette: tseffect-ignore-lighting-alpha75
+		MuzzlePalette: tdeffect
+	Armament@PRIMARY:
+		Weapon: FlamerTD
+	Armament@CLOSE:
+		Weapon: FlamerTDClose
 	Armament@Garrison:
 		Name: mounted
 		Weapon: FlamerE
@@ -1122,10 +1126,14 @@ N5:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 	Armament:
-		Weapon: Chemspray
+		Weapon: ChemsprayTDDummy
 		LocalOffset: 341,0,254
 		MuzzleSequence: muzzle
-		MuzzlePalette: tdeffect-ignore-lighting-alpha85
+		MuzzlePalette: tdeffect
+	Armament@PRIMARY:
+		Weapon: ChemsprayTD
+	Armament@CLOSE:
+		Weapon: ChemsprayTDClose
 	Armament@Garrison:
 		Name: mounted
 		Weapon: ChemsprayE

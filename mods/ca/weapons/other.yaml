@@ -102,10 +102,10 @@ Napalmtd:
 		Dimensions: 3,3
 		Footprint: xxx xxx xxx
 
-BigFlamer:
+Flamer:
 	ReloadDelay: 50
-	Range: 4c256
-	StartBurstReport: flamer3.aud
+	Range: 3c769
+	StartBurstReport: flamer2.aud
 	Projectile: Bullet
 		Speed: 90
 		Inaccuracy: 484
@@ -117,10 +117,10 @@ BigFlamer:
 	Warhead@1Dam: SpreadDamage
 		Spread: 288
 		Falloff: 100, 50, 25, 12, 6, 3, 0
-		Damage: 2200
+		Damage: 1300
 		Versus:
 			None: 300
-			Wood: 120
+			Wood: 135
 			Tree: 120
 			Light: 59
 			Heavy: 30
@@ -136,20 +136,21 @@ BigFlamer:
 		Dimensions: 1,1
 		Footprint: x
 
-Flamer:
-	Inherits: BigFlamer
-	Projectile: Bullet
-	Range: 3c769
-	StartBurstReport: flamer2.aud
+# --- old version
+BigFlamer:
+	Inherits: Flamer
+	Range: 4c256
+	StartBurstReport: flamer3.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 1300
+		Damage: 2200
 		Versus:
-			Wood: 135
+			Wood: 120
 
 FlamerE:
 	Inherits: Flamer
 	Range: 5c0
 
+# --- old version
 Chemspray:
 	Inherits: Flamer
 	Projectile: Bullet
@@ -169,6 +170,97 @@ Chemspray:
 ChemsprayE:
 	Inherits: Chemspray
 	Range: 5c0
+
+FlamerTD:
+	ReloadDelay: 60
+	Range: 2c512
+	MinRange: 0c512
+	Report: flamer2.aud
+	TargetActorCenter: true
+	Projectile: LinearPulse
+		ImpactSpacing: 256
+		Speed: 256
+		MinimumImpactDistance: 1c768
+		MaximumImpactDistance: 1c768
+	Warhead@1Dam: SpreadDamage
+		Spread: 426
+		Falloff: 100, 50, 25, 0
+		Damage: 1700
+		Versus:
+			None: 300
+			Wood: 100
+			Tree: 100
+			Light: 70
+			Heavy: 30
+			Concrete: 30
+			Brick: 2
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		Delay: 5
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch
+		InvalidTargets: Vehicle, Building, Wall
+
+FlamerTDClose:
+	Inherits: FlamerTD
+	Projectile: LinearPulse
+		MinimumImpactDistance: 0c768
+		MaximumImpactDistance: 1c512
+	Warhead@1Dam: SpreadDamage
+		ValidRelationships: Enemy, Neutral
+
+FlamerTDDummy:
+	Inherits: FlamerTD
+	-Projectile:
+	-Report:
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Damage: 0
+	-Warhead@2Smu:
+
+BigFlamerTD:
+	Inherits: FlamerTD
+	Burst: 2
+	BurstDelays: 5
+	Projectile: LinearPulse
+		MinimumImpactDistance: 1c512
+		MaximumImpactDistance: 1c768
+	Warhead@1Dam: SpreadDamage
+		Damage: 1250
+		Falloff: 100, 70, 40, 0
+
+BigFlamerTDClose:
+	Inherits: BigFlamerTD
+	Projectile: LinearPulse
+		MinimumImpactDistance: 0c768
+		MaximumImpactDistance: 1c256
+	Warhead@1Dam: SpreadDamage
+		ValidRelationships: Enemy, Neutral
+
+ChemsprayTD:
+	Inherits: FlamerTD
+	Warhead@1Dam: SpreadDamage
+		Damage: 2000
+		Versus:
+			Concrete: 50
+			Heavy: 50
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch-NoFlame
+
+ChemsprayTDClose:
+	Inherits: FlamerTDClose
+	Warhead@1Dam: SpreadDamage
+		Damage: 2000
+		Versus:
+			Concrete: 50
+			Heavy: 50
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+		ValidRelationships: Enemy, Neutral
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch-NoFlame
+
+ChemsprayTDDummy:
+	Inherits: FlamerTDDummy
 
 Napalm:
 	Inherits: ^FireWeapon
