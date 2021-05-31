@@ -5529,7 +5529,7 @@ UPGC:
 		RequiresCondition: !build-incomplete && tower.drop
 		Sequence: turret-drop
 		PauseOnCondition: disabled || being-warped
-	GrantPrerequisiteChargeDrainPower@RADAR:
+	GrantPrerequisiteChargeDrainPowerCA@RADAR:
 		OrderName: advradarorder
 		DischargeModifier: 600
 		Prerequisite: scan-active
@@ -5546,6 +5546,7 @@ UPGC:
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		Prerequisites: ~techlevel.unrestricted
+		EarlyDeactivationPenalty: 1500
 	DrainPrerequisitePowerOnDamage@RADAR:
 		OrderName: advradarorder
 	GrantConditionOnPrerequisite@SCAN:
