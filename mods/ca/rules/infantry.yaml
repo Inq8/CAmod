@@ -1055,7 +1055,7 @@ N4:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 71
-		Prerequisites: ~hand, ~!cyborg.production, ~techlevel.infonly
+		Prerequisites: ~hand, ~!cyborg.production, ~!puri.upgrade, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Anti-infantry/anti-structure unit.\n  Strong vs Infantry, Buildings\n  Weak vs Vehicles, Aircraft
 	Valued:
@@ -1069,10 +1069,14 @@ N4:
 	Mobile:
 		Speed: 49
 	Armament:
-		Weapon: Flamer
+		Weapon: FlamerTDDummy
 		LocalOffset: 341,0,254
 		MuzzleSequence: muzzle
-		MuzzlePalette: tseffect-ignore-lighting-alpha75
+		MuzzlePalette: tdeffect
+	Armament@PRIMARY:
+		Weapon: FlamerTD
+	Armament@CLOSE:
+		Weapon: FlamerTDClose
 	Armament@Garrison:
 		Name: mounted
 		Weapon: FlamerE
@@ -1106,7 +1110,7 @@ N5:
 		Queue: Infantry
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 72
-		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.infonly
+		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~!puri.upgrade, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Advanced general-purpose infantry.\n  Strong vs all Ground Units
 	Valued:
@@ -1116,21 +1120,25 @@ N5:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 20000
+		HP: 17000
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 	Armament:
-		Weapon: Chemspray
+		Weapon: ChemsprayTDDummy
 		LocalOffset: 341,0,254
 		MuzzleSequence: muzzle
-		MuzzlePalette: tdeffect-ignore-lighting-alpha85
+		MuzzlePalette: tdeffect
+	Armament@PRIMARY:
+		Weapon: ChemsprayTD
+	Armament@CLOSE:
+		Weapon: ChemsprayTDClose
 	Armament@Garrison:
 		Name: mounted
 		Weapon: ChemsprayE
 	Mobile:
-		Speed: 56
+		Speed: 49
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
@@ -1622,6 +1630,8 @@ ACOL:
 	Mobile:
 		Speed: 49
 		Voice: Move
+	RevealsShroud:
+		Range: 5c0
 	Armament@PRIMARY:
 		Weapon: PortaLaser
 		LocalOffset: 427,0,341
@@ -1659,9 +1669,7 @@ ACOL.UPG:
 	Valued:
 		Cost: 500
 	Health:
-		HP: 20000
-	Mobile:
-		Speed: 56
+		HP: 17000
 	Buildable:
 		Prerequisites: anyradar, obli, ~infantry.marked, ~cyborg.production, ~techlevel.high
 	-TakeCover:
@@ -2038,9 +2046,9 @@ N1C:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 25000
+		HP: 21000
 	Mobile:
-		Speed: 56
+		Speed: 43
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
@@ -2082,9 +2090,9 @@ N3C:
 		AddToArmyValue: true
 	-TakeCover:
 	Health:
-		HP:  16000
+		HP:  14000
 	Mobile:
-		Speed: 49
+		Speed: 43
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
@@ -2183,9 +2191,11 @@ RMBC:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 56
+		Speed: 49
 		Voice: Move
 		PauseOnCondition: being-warped || empdisable
+	RevealsShroud:
+		Range: 5c0
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped || empdisable
@@ -2287,3 +2297,58 @@ IVAN:
 		Prerequisites: barracks.upgraded
 	Voiced:
 		VoiceSet: CrazyIvanVoice
+
+BH:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@CYBORGUPG: ^NodCyborgUpgrade
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 70
+		Prerequisites: ~hand, ~infantry.blackh, ~puri.upgrade, ~techlevel.infonly
+		Description: Elite anti-infantry/anti-structure unit.\n  Strong vs Infantry, Buildings\n  Weak vs Vehicles, Aircraft
+	Valued:
+		Cost: 325
+	Tooltip:
+		Name: Black Hand Trooper
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 17000
+	Mobile:
+		Speed: 49
+		Voice: Move
+	Armament:
+		Weapon: BlackHandFlamer
+		LocalOffset: 450,0,350
+	Armament@Garrison:
+		Name: mounted
+		Weapon: FlamerE
+	TakeCover:
+		ProneOffset: 160,0,-256
+	WithMuzzleOverlay:
+	AttackFrontal:
+		PauseOnCondition: being-warped
+		Voice: Attack
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+	Explodes:
+		Weapon: UnitExplodeFlameSmall
+		EmptyWeapon: UnitExplodeFlameSmall
+		Chance: 33
+		DamageSource: Killer
+		RequiresCondition: !being-warped
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	AmbientSoundCA:
+		SoundFiles: flamer-loop1.aud
+		InitialSound: flamer-start1.aud
+		FinalSound: flamer-end1.aud
+		RequiresCondition: attacking
+		InitialSoundLength: 20
+	GrantConditionOnAttackCA:
+		Condition: attacking
+	Voiced:
+		VoiceSet: BlackHandVoice

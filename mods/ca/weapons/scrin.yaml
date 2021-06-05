@@ -166,7 +166,7 @@ PlasmaDiscs:
 		Spread: 341
 		Damage: 2200
 		Versus:
-			None: 35
+			None: 30
 			Wood: 55
 			Light: 65
 			Heavy: 100
@@ -407,11 +407,11 @@ MiniRift:
 		Range: 2c0
 		Duration: 10
 		Condition: slowed
-		ValidTargets: Vehicle, Cyborg
+		ValidTargets: Vehicle
 		ValidRelationships: Enemy, Neutral
 
 CorrupterSpew:
-	Inherits: BigFlamer
+	Inherits: Flamer
 	StartBurstReport: corrupter-fire1.aud
 	ReloadDelay: 100
 	Burst: 30
@@ -431,6 +431,7 @@ CorrupterSpew:
 		Damage: 1000
 		Versus:
 			Light: 80
+			Wood: 120
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 	Warhead@3Eff: CreateEffect
@@ -698,6 +699,22 @@ EnervatorBolts:
 		ExplosionPalette: scrin
 		Image: enrvbolthit
 		ImpactSounds: enrv-hit1.aud
+
+EnervatorBoltsAA:
+	Inherits: EnervatorBolts
+	ValidTargets: Air, AirSmall
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Air
+		ValidRelationships: Enemy, Neutral
+		Damage: 6000
+		Versus:
+			None: 100
+			Wood: 100
+			Light: 100
+			Concrete: 100
+			Brick: 100
+	Warhead@2Sup: GrantExternalCondition
+		ValidTargets: Air
 
 InvaderLauncher:
 	ReloadDelay: 10
@@ -996,7 +1013,7 @@ LaceratorShards:
 		Damage: 3200
 		Spread: 128
 		Versus:
-			None: 25
+			None: 15
 			Wood: 55
 			Light: 60
 			Heavy: 100
@@ -1066,7 +1083,7 @@ BuzzerSpawner:
 	Warhead@2Dam: SpreadDamage
 		ValidTargets: Cyborg
 		Spread: 341
-		Damage: 15000
+		Damage: 12000
 		Versus:
 			Heavy: 0
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
@@ -1105,7 +1122,7 @@ BuzzerVortex:
 	Warhead@2Dam: SpreadDamage
 		Spread: 682
 		Falloff: 100, 70, 20, 0
-		Damage: 750
+		Damage: 600
 		ValidTargets: Cyborg
 		DamageTypes: BulletDeath
 		ValidRelationships: Enemy, Neutral

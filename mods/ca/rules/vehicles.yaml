@@ -1375,6 +1375,10 @@ MGG:
 		Range: 4c0
 	CreatesShroud:
 		Range: 7c0
+		RequiresCondition: !empdisable && !being-warped
+	HidesFrozenUnderFogActors:
+		Range: 7c0
+		RequiresCondition: !empdisable && !being-warped
 	RenderShroudCircle:
 	SpawnActorOnDeath:
 		Actor: MGG.Husk
@@ -1829,6 +1833,7 @@ BGGY:
 		Type: Light
 	Mobile:
 		Speed: 126
+		TurnSpeed: 40
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 8c0
@@ -3007,11 +3012,34 @@ FTNK:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
-	Armament:
-		Weapon: BigFlamer
+	Armament@PRIMARY:
+		Weapon: BigFlamerTD
 		MuzzleSequence: muzzle
 		MuzzlePalette: tdeffect
 		LocalOffset: 512,128,42, 512,-128,42
+		RequiresCondition: !puri-upgrade
+	Armament@CLOSE:
+		Weapon: BigFlamerTDClose
+		RequiresCondition: !puri-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: BlackHandBigFlamer
+		LocalOffset: 512,48,0, 512,-48,0
+		RequiresCondition: puri-upgrade
+	Armament@CLOSEUPG:
+		Weapon: BlackHandBigFlamerClose
+		RequiresCondition: puri-upgrade
+	AmbientSoundCA:
+		SoundFiles: bigflamer-loop1.aud
+		InitialSound: bigflamer-start1.aud
+		FinalSound: bigflamer-end1.aud
+		RequiresCondition: puri-upgrade && attacking
+		InitialSoundLength: 24
+	GrantConditionOnAttackCA:
+		Condition: attacking
+		RequiresCondition: puri-upgrade
+	GrantConditionOnPrerequisite@UPG:
+		Condition: puri-upgrade
+		Prerequisites: puri.upgrade
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
