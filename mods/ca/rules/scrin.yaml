@@ -102,6 +102,23 @@ VEHICLES.SCRIN:
 		RequiresCondition: on-gems && charging-on-resource
 		Offset: 0,0,300
 
+^HullRegen:
+	GrantConditionOnPrerequisite@REGEN:
+		Condition: regen-upgrade
+		Prerequisites: regen.upgrade
+	ChangesHealth@REGEN1:
+		Step: 400
+		Delay: 25
+		StartIfBelow: 66
+		DamageCooldown: 250
+		RequiresCondition: regen-upgrade
+	ChangesHealth@REGEN2:
+		Step: 200
+		Delay: 25
+		StartIfBelow: 100
+		DamageCooldown: 250
+		RequiresCondition: regen-upgrade
+
 #
 # ---- Infantry
 #
@@ -1318,6 +1335,7 @@ STMR:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@HULLREGEN: ^HullRegen
 	Buildable:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
@@ -1345,11 +1363,13 @@ STMR:
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: StormriderZap
-		LocalOffset: 350,213,-85, 350,-213,-85
+		LocalOffset: 350,300,-85, 350,-300,-85
+		PauseOnCondition: !ammo
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: StormriderZapAA
-		LocalOffset: 350,213,-85, 350,-213,-85
+		LocalOffset: 350,300,-85, 350,-300,-85
+		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 320
 		PersistentTargeting: false
@@ -1394,7 +1414,7 @@ STMR:
 		Prerequisites: aircraft.upgraded
 	-EjectOnDeath:
 	AmmoPool:
-		Ammo: 12
+		Ammo: 15
 		AmmoCondition: ammo
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
@@ -1402,27 +1422,13 @@ STMR:
 		RequiresSelection: true
 		PipCount: 3
 	ReloadAmmoPoolCA:
-		Delay: 375
-		Count: 12
-		DelayOnFire: 30
-		DelayAfterReset: 80
+		Delay: 750
+		Count: 15
+		DelayOnFire: 750
+		DelayAfterReset: 60
 		ShowSelectionBar: true
 		SelectionBarColor: ff00ff
-	GrantConditionOnPrerequisite@REGEN:
-		Condition: regen-upgrade
-		Prerequisites: regen.upgrade
-	ChangesHealth@REGEN1:
-		Step: 500
-		Delay: 25
-		StartIfBelow: 66
-		DamageCooldown: 200
-		RequiresCondition: regen-upgrade
-	ChangesHealth@REGEN2:
-		Step: 250
-		Delay: 25
-		StartIfBelow: 100
-		DamageCooldown: 200
-		RequiresCondition: regen-upgrade
+
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 8c0
@@ -1434,6 +1440,7 @@ ENRV:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@HULLREGEN: ^HullRegen
 	Buildable:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
@@ -1523,21 +1530,6 @@ ENRV:
 		DelayAfterReset: 60
 		ShowSelectionBar: true
 		SelectionBarColor: ff00ff
-	GrantConditionOnPrerequisite@REGEN:
-		Condition: regen-upgrade
-		Prerequisites: regen.upgrade
-	ChangesHealth@REGEN1:
-		Step: 500
-		Delay: 25
-		StartIfBelow: 66
-		DamageCooldown: 250
-		RequiresCondition: regen-upgrade
-	ChangesHealth@REGEN2:
-		Step: 250
-		Delay: 25
-		StartIfBelow: 100
-		DamageCooldown: 250
-		RequiresCondition: regen-upgrade
 	Rearmable:
 		RearmActors: srep
 
@@ -1545,6 +1537,7 @@ DEVA:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@HULLREGEN: ^HullRegen
 	Buildable:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
@@ -1620,30 +1613,15 @@ DEVA:
 	SpeedMultiplier@EMPDISABLE:
 		Modifier: 0
 		RequiresCondition: empdisable
-	GrantConditionOnPrerequisite@REGEN:
-		Condition: regen-upgrade
-		Prerequisites: regen.upgrade
-	ChangesHealth@REGEN1:
-		Step: 500
-		Delay: 25
-		StartIfBelow: 66
-		DamageCooldown: 250
-		RequiresCondition: regen-upgrade
-	ChangesHealth@REGEN2:
-		Step: 250
-		Delay: 25
-		StartIfBelow: 100
-		DamageCooldown: 250
-		RequiresCondition: regen-upgrade
 	Repairable:
 		RepairActors: fix, rep, srep
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
 	Shielded:
-		MaxStrength: 5000
-		RegenDelay: 250
+		MaxStrength: 7500
+		RegenDelay: 350
 		RegenAmount: 250
-		RegenInterval: 10
+		RegenInterval: 5
 		ShieldsUpCondition: shields-up
 		RequiresCondition: shields-upgrade && !empdisable
 		SelectionBarColor: ead6ff
@@ -1654,6 +1632,7 @@ PAC:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@HULLREGEN: ^HullRegen
 	Buildable:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
@@ -1768,21 +1747,6 @@ PAC:
 	SpeedMultiplier@EMPDISABLE:
 		Modifier: 0
 		RequiresCondition: empdisable
-	GrantConditionOnPrerequisite@REGEN:
-		Condition: regen-upgrade
-		Prerequisites: regen.upgrade
-	ChangesHealth@REGEN1:
-		Step: 500
-		Delay: 25
-		StartIfBelow: 66
-		DamageCooldown: 250
-		RequiresCondition: regen-upgrade
-	ChangesHealth@REGEN2:
-		Step: 250
-		Delay: 25
-		StartIfBelow: 100
-		DamageCooldown: 250
-		RequiresCondition: regen-upgrade
 	Repairable:
 		RepairActors: fix, rep, srep
 	AutoTargetPriority@DEFAULT:
@@ -1793,9 +1757,9 @@ PAC:
 		Prerequisites: aircraft.upgraded
 	Shielded:
 		MaxStrength: 10000
-		RegenDelay: 250
+		RegenDelay: 350
 		RegenAmount: 250
-		RegenInterval: 10
+		RegenInterval: 5
 		ShieldsUpCondition: shields-up
 		RequiresCondition: shields-upgrade && !empdisable
 		SelectionBarColor: ead6ff

@@ -591,28 +591,29 @@ StormriderZap:
 	Range: 6c0
 	Report: stormrider-fire1.aud, stormrider-fire2.aud, stormrider-fire3.aud
 	ReloadDelay: 70
-	Burst: 4
-	BurstDelays: 6
+	Burst: 5
+	BurstDelays: 4
 	ValidTargets: Ground, Water, Underwater
 	Projectile: Bullet
 		Image: scrinzapdown
+		Inaccuracy: 42
 		Speed: 1c128
 		Palette: scrin
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Ground, Water, Underwater
-		Spread: 341
-		Damage: 2800
+		Spread: 128
+		Damage: 4800
 		Versus:
 			None: 100
-			Wood: 40
+			Wood: 45
 			Concrete: 30
-			Light: 85
-			Heavy: 35
+			Light: 75
+			Heavy: 25
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Dam: SpreadDamage
 		ValidTargets: Water
-		Spread: 341
+		Spread: 128
 		Damage: 1000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Smu: LeaveSmudge
@@ -630,7 +631,6 @@ StormriderZap:
 
 StormRiderZapAA:
 	Inherits: StormriderZap
-	BurstDelays: 6
 	ReloadDelay: 70
 	Projectile: Bullet
 		Image: scrinzap
