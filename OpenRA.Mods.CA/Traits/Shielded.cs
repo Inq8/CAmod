@@ -101,6 +101,9 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled)
 				return;
 
+			if (e.Damage.Value < 0)
+				return;
+
 			ResetRegen();
 
 			if (strength == 0 || e.Damage.Value == 0 || e.Attacker == self)
