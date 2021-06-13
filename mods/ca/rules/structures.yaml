@@ -452,7 +452,7 @@ PDOX:
 	WithBuildingBib:
 		HasMinibib: true
 	ValidFactions:
-		Factions: england, france, germany
+		Factions: england, france, germany, usa
 	ProvidesPrerequisiteValidatedFaction@germany:
 		Factions: germany
 		Prerequisite: pdox.germany
@@ -723,7 +723,7 @@ DOME:
 	Power:
 		Amount: -40
 	ValidFactions:
-		Factions: england, france, germany, russia, ukraine, iraq
+		Factions: england, france, germany, usa, russia, ukraine, iraq
 	ProvidesPrerequisite@anyradar:
 		Prerequisite: anyradar
 	ProvidesPrerequisiteValidatedFaction@engrad:
@@ -1210,13 +1210,13 @@ WEAP:
 		Produces: Vehicle
 		PauseOnCondition: forceshield || invulnerability || being-warped
 	ValidFactions:
-		Factions: england, france, germany, russia, ukraine, iraq
+		Factions: england, france, germany, usa, russia, ukraine, iraq
 	ProvidesPrerequisite@any:
 		Prerequisite: vehicles.any
 	ProvidesPrerequisite@human:
 		Prerequisite: vehicles.human
 	ProvidesPrerequisiteValidatedFaction@allies:
-		Factions: england, france, germany
+		Factions: england, france, germany, usa
 		Prerequisite: vehicles.allies
 	ProvidesPrerequisite@ra:
 		Prerequisite: vehicles.ra
@@ -1229,6 +1229,9 @@ WEAP:
 	ProvidesPrerequisiteValidatedFaction@germany:
 		Factions: germany
 		Prerequisite: vehicles.germany
+	ProvidesPrerequisiteValidatedFaction@usa:
+		Factions: usa
+		Prerequisite: vehicles.usa
 	ProvidesPrerequisiteValidatedFaction@soviet:
 		Factions: russia, ukraine, iraq
 		Prerequisite: vehicles.soviet
@@ -1242,10 +1245,10 @@ WEAP:
 		Factions: iraq
 		Prerequisite: vehicles.iraq
 	ProvidesPrerequisiteValidatedFaction@mrj:
-		Factions: england, france, germany
+		Factions: england, france, germany, usa
 		Prerequisite: vehicles.mrj
 	ProvidesPrerequisiteValidatedFaction@ifv:
-		Factions: england, france, germany
+		Factions: england, france, germany, usa
 		Prerequisite: vehicles.ifv
 	ProvidesPrerequisiteValidatedFaction@v2:
 		Factions: russia, ukraine, iraq
@@ -1254,7 +1257,7 @@ WEAP:
 		Factions: russia
 		Prerequisite: v2.upgrade
 	ProvidesPrerequisiteValidatedFaction@2tnk:
-		Factions: france, germany
+		Factions: france, germany, usa
 		Prerequisite: vehicles.2tnk
 	ProvidesPrerequisiteValidatedFaction@3tnk:
 		Factions: russia, ukraine, iraq
@@ -1296,11 +1299,11 @@ FACT:
 		Prerequisites: ~disabled
 		Description: Produces structures.
 	ValidFactions:
-		Factions: england, france, germany, russia, ukraine, iraq
+		Factions: england, france, germany, usa, russia, ukraine, iraq
 	ProvidesPrerequisite@ra:
 		Prerequisite: structures.ra
 	ProvidesPrerequisiteValidatedFaction@allies:
-		Factions: england, france, germany
+		Factions: england, france, germany, usa
 		Prerequisite: structures.allies
 	ProvidesPrerequisiteValidatedFaction@england:
 		Factions: england
@@ -1311,6 +1314,9 @@ FACT:
 	ProvidesPrerequisiteValidatedFaction@germany:
 		Factions: germany
 		Prerequisite: structures.germany
+	ProvidesPrerequisiteValidatedFaction@usa:
+		Factions: usa
+		Prerequisite: structures.usa
 	ProvidesPrerequisiteValidatedFaction@soviet:
 		Factions: russia, ukraine, iraq
 		Prerequisite: structures.soviet
@@ -1326,16 +1332,16 @@ FACT:
 	ProvidesPrerequisite@wall:
 		Prerequisite: structures.wall
 	ProvidesPrerequisiteValidatedFaction@sandbag:
-		Factions: england, france, germany
+		Factions: england, france, germany, usa
 		Prerequisite: structures.sandbag
 	ProvidesPrerequisiteValidatedFaction@apwr:
-		Factions: england, france, germany, ukraine, iraq
+		Factions: england, france, germany, usa, ukraine, iraq
 		Prerequisite: structures.apwr
 	ProvidesPrerequisiteValidatedFaction@pbox:
-		Factions: france, germany
+		Factions: france, germany, usa
 		Prerequisite: structures.pbox
 	ProvidesPrerequisiteValidatedFaction@pris:
-		Factions: england, germany
+		Factions: england, germany, usa
 		Prerequisite: structures.pris
 	ProvidesPrerequisiteValidatedFaction@ftur:
 		Factions: russia, ukraine
@@ -1613,9 +1619,9 @@ HPAD:
 	Power:
 		Amount: -10
 	ValidFactions:
-		Factions: england, france, germany, russia, ukraine, iraq
+		Factions: england, france, germany, usa, russia, ukraine, iraq
 	ProvidesPrerequisiteValidatedFaction@allies:
-		Factions: england, france, germany
+		Factions: england, france, germany, usa
 		Prerequisite: aircraft.allies
 	ProvidesPrerequisiteValidatedFaction@soviets:
 		Factions: russia, ukraine, iraq
@@ -2275,6 +2281,9 @@ TENT:
 	ProvidesPrerequisite@germany:
 		Factions: germany
 		Prerequisite: infantry.germany
+	ProvidesPrerequisite@usa:
+		Factions: usa
+		Prerequisite: infantry.usa
 	ProvidesPrerequisite@hazmat:
 		Prerequisite: infantry.hazmat
 	ProvidesPrerequisite@mech:
