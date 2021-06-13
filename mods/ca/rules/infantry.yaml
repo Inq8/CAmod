@@ -118,6 +118,30 @@ E1R1:
 		InitialLevels: 1
 	-Buildable:
 
+E1.squad:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesPrerequisite@squadname:
+	Tooltip:
+		Name: Squad: G.I.
+	Buildable:
+		Queue: Aircraft
+		BuildPaletteOrder: 10
+		Prerequisites: ~anyradar, ~infantry.usa, ~techlevel.high
+		Description: Airdrop 8 General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: squad.gi
+	ProduceActorPowerCA:
+		Actors: powerproxy.paratroopers.us
+		Type: Infantry
+		OneShot: true
+		AutoFire: true
+		AllowMultiple: true
+		OrderName: spawnpara1
+
 E2:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -271,6 +295,30 @@ E3:
 		CrushedSequence: die-crushed
 	Convertible:
 		SpawnActors: N3C
+
+E3.squad:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesPrerequisite@squadname:
+	Tooltip:
+		Name: Squad: Guardian G.I.
+	Buildable:
+		Queue: Aircraft
+		BuildPaletteOrder: 20
+		Prerequisites: ~anyradar, ~infantry.usa, ~techlevel.high
+		Description: Airdrop 5 Anti-tank/anti-aircraft infantry.\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
+	Valued:
+		Cost: 1800
+	RenderSprites:
+		Image: squad.guardian
+	ProduceActorPowerCA:
+		Actors: powerproxy.paratroopers.us2
+		Type: Infantry
+		OneShot: true
+		AutoFire: true
+		AllowMultiple: true
+		OrderName: spawnpara2
 
 E3R1:
 	Inherits: E3

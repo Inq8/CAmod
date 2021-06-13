@@ -258,7 +258,11 @@
 		Name: Germany
 		InternalName: germany
 		Side: Allies
-		Description: Germany: Innovation & Time Technology\n Units:\n  - Chrono Prison\n  - Tank Destroyer\n\n Powers:\n  - Time Freeze\n\n Upgrades:\n  - Temporal Flux\n\n Bonuses:\n  - Chrono Tank (10% Discount)
+	Faction@USA:
+		Name: USA
+		InternalName: usa
+		Side: Allies
+		Description: USA: Infantry\n Faction Unit: Seal\n Special Units: G.I, Guardian G.I\n Special Ability: Airborne\n Faction Bonus: Faster Infantry Veterancy
 	Faction@4:
 		Name: Soviet
 		InternalName: soviet
@@ -370,7 +374,7 @@
 	Faction@randomallies:
 		Name: Allies
 		InternalName: RandomAllies
-		RandomFactionMembers: england, france, germany
+		RandomFactionMembers: england, france, germany, usa
 		Side: Random
 		Description: Random Allied Faction\nA random Allied faction will be chosen when the game starts.
 	Faction@randomsoviet:
@@ -529,12 +533,12 @@ World:
 	MPStartUnits@mcvonly:
 		Class: none
 		ClassName: MCV Only
-		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq
+		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq
 		BaseActor: mcv
 	MPStartUnits@lightallies:
 		Class: light
 		ClassName: Light Support
-		Factions: allies, england, france, germany
+		Factions: allies, england, france, germany, usa
 		BaseActor: mcv
 		SupportActors: e1,e1,e1,e3,e3
 		InnerSupportRadius: 3
@@ -550,7 +554,7 @@ World:
 	MPStartUnits@heavyallies:
 		Class: heavy
 		ClassName: Heavy Support
-		Factions: allies, england, france, germany
+		Factions: allies, england, france, germany, usa
 		BaseActor: mcv
 		SupportActors: e1,e1,e1,e3,e3,e3,2tnk,2tnk
 		InnerSupportRadius: 3
