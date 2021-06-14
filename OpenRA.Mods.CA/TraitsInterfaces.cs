@@ -61,4 +61,8 @@ namespace OpenRA.Mods.CA.Traits
 	public interface ILoadsOverlayPlayerPalettes { void LoadOverlayPlayerPalettes(WorldRenderer wr, string playerName, Color playerColor, bool replaceExisting); }
 
 	public interface INotifyPrismCharging { void Charging(Actor self, in Target target); }
+
+	[RequireExplicitImplementation]
+	public interface INotifyEnterTeleporter { void Charging(Actor self, Actor teleporter); }
+	public interface INotifyExitTeleporter { void Arrived(Actor self); }
 }

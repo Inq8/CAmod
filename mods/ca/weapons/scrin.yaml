@@ -1165,3 +1165,72 @@ IonSurge:
 		Condition: ionsurge
 		ValidTargets: IonSurgable
 		ValidRelationships: Ally
+
+WormholeOpener:
+	Report: darkener-fire1.aud, darkener-fire2.aud
+	ReloadDelay: 150
+	Range: 0c256
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Damage: 100000
+		ValidTargets: Wormhole
+	Warhead@Spawn: SpawnActor
+		Actors: wormhole
+		Delay: 14
+		Range: 1
+		ForceGround: true
+	Warhead@3Eff: CreateEffect
+		ImpactSounds: wormhole-open.aud
+
+MothershipChargeBeam:
+	ReloadDelay: 3
+	Range: 0c341
+	Projectile: PlasmaBeam
+		ForceVertical: true
+		Duration: 3
+		Colors: ffffff44
+		InnerLightness: 200
+		OuterLightness: 100
+		Radius: 2
+		Distortion: 0
+		DistortionAnimation: 96
+		SegmentLength: 0
+		ZOffset: 1024
+	Warhead@1Dam: SpreadDamage
+		Damage: 0
+
+MothershipDummy:
+	Inherits: MothershipChargeBeam
+	-Projectile:
+	Projectile: InstantHit
+
+MothershipBeam:
+	ReloadDelay: 1
+	BurstDelays: 1
+	Range: 0c341
+	Projectile: PlasmaBeam
+		ForceVertical: true
+		Duration: 3
+		Colors: 461fc605, 98177805
+		InnerLightness: 240
+		Radius: 6
+		Distortion: 20
+		DistortionAnimation: 128
+		SegmentLength: 196
+		CenterBeamColor: ffffffff
+		CenterBeam: true
+		CenterBeamWidth: 45
+		SecondaryCenterBeam: true
+		SecondaryCenterBeamColor: ffffff44
+		ZOffset: 1024
+	Warhead@1Dam: SpreadDamage
+		Spread: 512
+		Falloff: 100, 50, 25, 15, 0
+		Damage: 1000
+	Warhead@3Eff: CreateEffect
+		Explosions: large_explosion
+		Inaccuracy: 171
+	Warhead@5Shake: ShakeScreen
+		Duration: 5
+		Intensity: 1
+		Multiplier: 0.1,0.1

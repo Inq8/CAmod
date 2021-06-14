@@ -754,6 +754,23 @@ inva:
 		UseClassicFacings: True
 	icon: wipicon
 
+mshp:
+	Inherits: ^VehicleOverlays
+	idle: mshp
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: 1023
+	ring: mshpring
+		Length: *
+		Tick: 200
+		ZOffset: 1027
+	wormholebeam: wormholebeam
+		Length: *
+		Tick: 40
+		Offset: 0, 40, 0
+		BlendMode: Additive
+	icon: mshpicon
+
 #
 # ---- buildings
 #
@@ -1493,3 +1510,17 @@ strm:
 		ZOffset: 1023
 		BlendMode: Screen
 		FlipX: True
+
+wormhole:
+	idle: wormhole
+		Length: *
+		ZOffset: 1023
+		BlendMode: Additive
+
+wormholeblast:
+	idle: wormholeblast
+		Length: *
+		Tick: 40
+		Offset: 0, 40, 0
+		ZOffset: -512
+		BlendMode: Additive

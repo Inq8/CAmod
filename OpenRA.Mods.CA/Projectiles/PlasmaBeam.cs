@@ -28,6 +28,9 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("The maximum duration (in ticks) of the beam's existence.")]
 		public readonly int Duration = 10;
 
+		[Desc("Beam only fires directly down.")]
+		public readonly bool ForceVertical = false;
+
 		[Desc("Color of the beam.")]
 		public readonly Color[] Colors = null;
 
@@ -118,9 +121,13 @@ namespace OpenRA.Mods.CA.Projectiles
 			this.args = args;
 			this.info = info;
 
-			target = args.PassiveTarget;
 			source = args.Source;
 			lastSource = args.Source;
+
+			if (info.ForceVertical)
+				target = new WPos(source.X, source.Y, 0);
+			else
+				target = args.PassiveTarget;
 
 			var world = args.SourceActor.World;
 
