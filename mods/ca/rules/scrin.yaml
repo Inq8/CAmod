@@ -1875,16 +1875,12 @@ MSHP:
 	Armament@PRIMARY:
 		Weapon: MothershipBeam
 		LocalOffset: 0,0,-940
-		RequiresCondition: ammo
+		PauseOnCondition: !ammo
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: MothershipChargeBeam
 		LocalOffset: 0,0,-940
-		RequiresCondition: !attacking && !ammo && !cooldown
-	Armament@DUMMY:
-		Name: tertiary
-		Weapon: MothershipDummy
-		LocalOffset: 0,0,-940
+		PauseOnCondition: attacking || ammo || cooldown
 	Aircraft:
 		CruiseAltitude: 3c512
 		InitialFacing: 768
