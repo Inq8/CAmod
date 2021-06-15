@@ -1874,17 +1874,17 @@ MSHP:
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: MothershipBeam
-		LocalOffset: 0,0,-960
+		LocalOffset: 0,0,-940
 		RequiresCondition: ammo
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: MothershipChargeBeam
-		LocalOffset: 0,0,-960
+		LocalOffset: 0,0,-940
 		RequiresCondition: !attacking && !ammo && !cooldown
 	Armament@DUMMY:
 		Name: tertiary
 		Weapon: MothershipDummy
-		LocalOffset: 0,0,-960
+		LocalOffset: 0,0,-940
 	Aircraft:
 		CruiseAltitude: 3c512
 		InitialFacing: 768
@@ -1958,18 +1958,18 @@ MSHP:
 	RejectsOrders:
 		RequiresCondition: attacking
 	AmmoPool:
-		Ammo: 200
+		Ammo: 100
 		InitialAmmo: 0
 		AmmoCondition: ammo
 		Armaments: primary
 	ReloadAmmoPoolCA@CHARGE:
 		Delay: 150
-		Count: 200
+		Count: 100
 		RequiresCondition: charging && !attacking
 		Sound: mshp-fire1.aud
 		ShowSelectionBar: false
 	ReloadAmmoPoolCA@DRAIN:
-		Count: -200
+		Count: -100
 		Delay: 1
 		RequiresCondition: !charging && !attacking
 		ShowSelectionBar: false

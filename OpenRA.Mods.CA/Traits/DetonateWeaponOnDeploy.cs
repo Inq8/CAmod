@@ -20,6 +20,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	[Desc("Detonate weapon on deploy command.")]
 	public class DetonateWeaponOnDeployInfo : PausableConditionalTraitInfo
 	{
 		[WeaponReference]

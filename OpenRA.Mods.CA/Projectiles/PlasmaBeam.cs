@@ -34,19 +34,19 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("Color of the beam.")]
 		public readonly Color[] Colors = null;
 
-		[Desc("Inner lightness of the distortion beam.")]
+		[Desc("Inner lightness of the distortion beam. 0xff = 255")]
 		public readonly byte InnerLightness = 0xff;
 
-		[Desc("Outer lightness of the distortion beam.")]
+		[Desc("Outer lightness of the distortion beam. 0x80 = 128")]
 		public readonly byte OuterLightness = 0x80;
 
 		[Desc("The radius of the distortion beam.")]
 		public readonly int Radius = 3;
 
-		[Desc("Distortion offset.")]
+		[Desc("Initial distortion offset.")]
 		public readonly int Distortion = 0;
 
-		[Desc("Distortion animation offset.")]
+		[Desc("Distortion added per tick for duration of beam.")]
 		public readonly int DistortionAnimation = 0;
 
 		[Desc("Maximum length per segment of distortion beam.")]

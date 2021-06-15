@@ -312,8 +312,8 @@ DevourerLaserCharged:
 		Colors: 461fc605, 98177805
 		InnerLightness: 240
 		Radius: 4
-		Distortion: 15
-		DistortionAnimation: 128
+		Distortion: 128
+		DistortionAnimation: 16
 		SegmentLength: 196
 		CenterBeamColor: ffffffff
 		CenterBeam: true
@@ -544,8 +544,8 @@ ReaperLaserCharged:
 		InnerLightness: 170
 		OuterLightness: 140
 		Radius: 4
-		Distortion: 15
-		DistortionAnimation: 96
+		Distortion: 128
+		DistortionAnimation: 16
 		SegmentLength: 196
 	Warhead@1Dam: SpreadDamage
 		Damage: 1080
@@ -1193,9 +1193,9 @@ MothershipChargeBeam:
 		OuterLightness: 100
 		Radius: 2
 		Distortion: 0
-		DistortionAnimation: 96
+		DistortionAnimation: 0
 		SegmentLength: 0
-		ZOffset: 1024
+		ZOffset: 2047
 	Warhead@1Dam: SpreadDamage
 		Damage: 0
 
@@ -1205,28 +1205,27 @@ MothershipDummy:
 	Projectile: InstantHit
 
 MothershipBeam:
-	ReloadDelay: 1
-	BurstDelays: 1
+	ReloadDelay: 3
 	Range: 0c341
 	Projectile: PlasmaBeam
 		ForceVertical: true
-		Duration: 3
-		Colors: 461fc605, 98177805
+		Duration: 4
+		Colors: 461fc609, 98177809
 		InnerLightness: 240
-		Radius: 6
-		Distortion: 20
-		DistortionAnimation: 128
-		SegmentLength: 196
+		Radius: 7
+		Distortion: 128
+		DistortionAnimation: 96
+		SegmentLength: 160
 		CenterBeamColor: ffffffff
 		CenterBeam: true
-		CenterBeamWidth: 45
+		CenterBeamWidth: 42
 		SecondaryCenterBeam: true
 		SecondaryCenterBeamColor: ffffff44
-		ZOffset: 1024
+		ZOffset: 2048
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
 		Falloff: 100, 50, 25, 15, 0
-		Damage: 1000
+		Damage: 3000
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 		Inaccuracy: 171

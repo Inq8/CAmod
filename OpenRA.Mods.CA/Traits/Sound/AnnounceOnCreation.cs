@@ -14,7 +14,7 @@ using OpenRA.Mods.Common.Traits;
 
 namespace OpenRA.Mods.CA.Traits.Sound
 {
-	[Desc("Play the Kill voice of this actor when eliminating enemies.")]
+	[Desc("Play announcement when actor is created.")]
 	public class AnnounceOnCreationInfo : TraitInfo
 	{
 		[NotificationReference("Speech")]
