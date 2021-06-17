@@ -61,12 +61,10 @@ namespace OpenRA.Mods.HV.Traits
 			if (teleportNetwork == null)
 				return false;
 
-			var manager = order.Target.Actor.Owner.PlayerActor.TraitsImplementing<TeleportNetworkManager>().Where(x => x.Type == teleportNetwork.Info.Type).First();
-			if (manager == null)
-				return false;
+			var manager = teleportNetwork.teleportNetworkManager;
 
-			if (manager.RandomExit && manager.Count > 1)
-				return true;
+			if (manager.Count < 2)
+				return false;
 
 			return !order.Target.Actor.IsPrimaryTeleportNetworkExit();
 		}
