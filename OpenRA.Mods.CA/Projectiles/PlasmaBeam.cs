@@ -28,22 +28,25 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("The maximum duration (in ticks) of the beam's existence.")]
 		public readonly int Duration = 10;
 
+		[Desc("Beam only fires directly down.")]
+		public readonly bool ForceVertical = false;
+
 		[Desc("Color of the beam.")]
 		public readonly Color[] Colors = null;
 
-		[Desc("Inner lightness of the distortion beam.")]
+		[Desc("Inner lightness of the distortion beam. 0xff = 255")]
 		public readonly byte InnerLightness = 0xff;
 
-		[Desc("Outer lightness of the distortion beam.")]
+		[Desc("Outer lightness of the distortion beam. 0x80 = 128")]
 		public readonly byte OuterLightness = 0x80;
 
 		[Desc("The radius of the distortion beam.")]
 		public readonly int Radius = 3;
 
-		[Desc("Distortion offset.")]
+		[Desc("Initial distortion offset.")]
 		public readonly int Distortion = 0;
 
-		[Desc("Distortion animation offset.")]
+		[Desc("Distortion added per tick for duration of beam.")]
 		public readonly int DistortionAnimation = 0;
 
 		[Desc("Maximum length per segment of distortion beam.")]
@@ -118,9 +121,13 @@ namespace OpenRA.Mods.CA.Projectiles
 			this.args = args;
 			this.info = info;
 
-			target = args.PassiveTarget;
 			source = args.Source;
 			lastSource = args.Source;
+
+			if (info.ForceVertical)
+				target = new WPos(source.X, source.Y, 0);
+			else
+				target = args.PassiveTarget;
 
 			var world = args.SourceActor.World;
 

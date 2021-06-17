@@ -523,7 +523,7 @@ GUNW:
 		TurnSpeed: 38
 	RevealsShroud:
 		MinRange: 4c0
-		Range: 5c0
+		Range: 6c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
@@ -1575,7 +1575,7 @@ DEVA:
 		AttackType: Hover
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
-		CruiseAltitude: 2c0
+		CruiseAltitude: 2560
 		InitialFacing: 768
 		TurnSpeed: 16
 		Speed: 56
@@ -1664,7 +1664,7 @@ PAC:
 		Weapon: InvaderLauncher
 		LocalOffset: 0,0,0
 	Aircraft:
-		CruiseAltitude: 2c0
+		CruiseAltitude: 2560
 		InitialFacing: 768
 		TurnSpeed: 16
 		Speed: 49
@@ -1795,7 +1795,7 @@ INVA:
 		AttackType: Strafe
 		StrafeRunLength: 3c0
 	Aircraft:
-		CruiseAltitude: 2c0
+		CruiseAltitude: 2560
 		InitialFacing: 768
 		TurnSpeed: 32
 		Speed: 220
@@ -1836,6 +1836,139 @@ INVA:
 	Targetable@AIRBORNE:
 		RequiresCondition: airborne
 		TargetTypes: AirSmall, AirLowPriority
+
+MSHP:
+	Inherits: ^Helicopter
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@HULLREGEN: ^HullRegen
+	Buildable:
+		Queue: Aircraft
+		BuildAtProductionType: Plane
+		BuildPaletteOrder: 180
+		Prerequisites: sign, scrt, ~aircraft.scrin, ~techlevel.high
+		Description: Huge craft with powerful beam weapon.\n  Can create wormholes.\n  Maximum 1 can be built.\n  Strong vs Buildings, Defenses\n  Weak vs Aircraft
+		IconPalette: chromes
+		BuildLimit: 1
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Voiced:
+		VoiceSet: MothershipVoice
+	Valued:
+		Cost: 3000
+	Tooltip:
+		Name: Mothership
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 130000
+	Armor:
+		Type: Heavy
+	RevealsShroud:
+		Range: 10c0
+		MinRange: 8c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 8c0
+		Type: GroundPosition
+	Armament@PRIMARY:
+		Weapon: MothershipBeam
+		LocalOffset: 0,0,-940
+		PauseOnCondition: !ammo
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: MothershipChargeBeam
+		LocalOffset: 0,0,-940
+		PauseOnCondition: attacking || ammo || cooldown
+	Aircraft:
+		CruiseAltitude: 3c512
+		InitialFacing: 768
+		TurnSpeed: 16
+		Speed: 38
+		AltitudeVelocity: 0c50
+		CanForceLand: False
+		Voice: Move
+	Selectable:
+		Bounds: 36,36,0,2
+		DecorationBounds: 48,48,0,1
+	Explodes:
+		Weapon: KirovExplode
+		RequiresCondition: !airborne
+	SpawnActorOnDeath:
+		Actor: MSHP.Husk
+		RequiresCondition: !being-warped
+	-Hovers@CRUISING:
+	WithFacingSpriteBody:
+	AttackFrontal:
+		Armaments: primary, secondary, tertiary
+		FacingTolerance: 512
+		Voice: Attack
+		PauseOnCondition: being-warped
+		ForceFireIgnoresActors: true
+	-EjectOnDeath:
+	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
+	WithIdleOverlay@RING:
+		Image: mshp
+		Sequence: ring
+		Offset: 0,0,0
+	DetonateWeaponOnDeploy:
+		Weapon: WormholeOpener
+		ForceGround: true
+		CooldownTicks: 200
+		DeployedTicks: 40
+		PauseOnCondition: being-warped
+		OverlaySequence: wormholebeam
+		OverlayPalette: overlayplayerscrin
+		ShowSelectionBar: false
+		IsPlayerPalette: true
+	ExternalCondition@PRODUCED:
+		Condition: produced
+	VoiceAnnouncement:
+		RequiresCondition: produced
+		Voice: Build
+	DeathSounds:
+		Voice: Die
+	AnnounceOnCreation:
+		Notification: MothershipDeployed
+		Delay: 30
+	AmbientSoundCA:
+		SoundFiles: mshp-beamloop.aud
+		FinalSound: mshp-beamend.aud
+		RequiresCondition: attacking
+	GrantConditionOnAttack@ATTACKING:
+		Condition: attacking
+		ArmamentNames: primary
+	GrantConditionOnAttack@COOLDOWN:
+		Condition: cooldown
+		ArmamentNames: primary
+		RevokeDelay: 100
+	AmbientSoundCA@CHARGING:
+		SoundFiles: mshp-charge.aud
+		RequiresCondition: charging
+	GrantConditionOnAttack@CHARGING:
+		Condition: charging
+		ArmamentNames: secondary
+		RevokeDelay: 5
+	RejectsOrders:
+		RequiresCondition: attacking
+	AmmoPool:
+		Ammo: 100
+		InitialAmmo: 0
+		AmmoCondition: ammo
+		Armaments: primary
+	ReloadAmmoPoolCA@CHARGE:
+		Delay: 150
+		Count: 100
+		RequiresCondition: charging && !attacking
+		Sound: mshp-fire1.aud
+		ShowSelectionBar: false
+	ReloadAmmoPoolCA@DRAIN:
+		Count: -100
+		Delay: 1
+		RequiresCondition: !charging && !attacking
+		ShowSelectionBar: false
 
 #
 # ---- Husks
@@ -2084,10 +2217,8 @@ DEVA.Husk.Ground:
 	-OwnerLostAction:
 	-CaptureManager:
 	-Capturable:
-	TransformOnCapture:
-		IntoActor: DEVA.Husk.Ground
-	InfiltrateForTransform:
-		IntoActor: DEVA.Husk.Ground
+	-TransformOnCapture:
+	-InfiltrateForTransform:
 
 PAC.Husk:
 	Inherits: ^HelicopterHusk
@@ -2133,10 +2264,60 @@ PAC.Husk.Ground:
 	-OwnerLostAction:
 	-CaptureManager:
 	-Capturable:
-	TransformOnCapture:
-		IntoActor: PAC.Husk.Ground
-	InfiltrateForTransform:
-		IntoActor: PAC.Husk.Ground
+	-TransformOnCapture:
+	-InfiltrateForTransform:
+
+MSHP.Husk:
+	Inherits: ^HelicopterHusk
+	Tooltip:
+		Name: Mothership
+	Aircraft:
+		TurnSpeed: 8
+		Speed: 30
+	FallsToEarth:
+		MaximumSpinSpeed: 0
+		Velocity: 35
+	RevealsShroud:
+		Range: 10c0
+		MinRange: 8c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 8c0
+		Type: GroundPosition
+	RenderSprites:
+		Image: mshp
+		PlayerPalette: overlayplayerscrin
+	FallsToEarth:
+		Explosion: KirovExplode
+	SpawnActorOnDeath:
+		Actor: MSHP.Husk.Ground
+	WithIdleOverlay@RING:
+		Image: mshp
+		Sequence: ring
+		Offset: 0,0,0
+
+MSHP.Husk.Ground:
+	Inherits: ^Husk
+	Inherits@SHRAPNEL: ^ThrowsShrapnelBig
+	RenderSprites:
+		Image: mshp
+		PlayerPalette: overlayplayerscrin
+	Tooltip:
+		Name: Husk (Mothership)
+	KillsSelf:
+		Delay: 1
+	Explodes:
+		Weapon: KirovExplode
+	WithIdleOverlay@RING:
+		Image: mshp
+		Sequence: ring
+		Offset: 0,0,0
+	-OwnerLostAction:
+	-CaptureManager:
+	-Capturable:
+	-TransformOnCapture:
+	-InfiltrateForTransform:
 
 #
 # ---- Buildings
@@ -3750,7 +3931,6 @@ ichor.seeder:
 		Delay: 225
 
 ion.surge:
-	Interactable:
 	WithSpriteBody:
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 1
@@ -3768,6 +3948,42 @@ ion.surge:
 	AmbientSound:
 		SoundFiles: ionsurgeloop.aud
 		Interval: 50
+
+WORMHOLE:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^SpriteActor
+	Inherits@3: ^Selectable
+	Inherits@shape: ^1x1Shape
+	Tooltip:
+		Name: Wormhole
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	WithSpriteBody:
+	ClassicFacingBodyOrientation:
+		QuantizedFacings: 1
+	Selectable:
+		Bounds: 32,32
+	HiddenUnderFog:
+	HitShape:
+	RevealsShroud:
+		Range: 6c0
+		Type: CenterPosition
+	Immobile:
+		OccupiesSpace: false
+	Targetable:
+		TargetTypes: Ground, Structure, Wormhole
+	Health:
+		HP: 100000
+	Armor:
+		Type: Concrete
+	TeleportNetwork:
+		Type: Wormhole
+		Delay: 0
+	RallyPoint:
+	Sellable:
+	Exit:
+	PopControlled:
+		Limit: 2
 
 # infiltrator stolen tech
 
