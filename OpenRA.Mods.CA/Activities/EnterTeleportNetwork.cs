@@ -54,9 +54,14 @@ namespace OpenRA.Mods.CA.Activities
 
 			// Find the primary teleport network exit.
 			var manager = target.Owner.PlayerActor.TraitsImplementing<TeleportNetworkManager>().First(x => x.Type == type);
+
+			// if there are fewer than 2 nodes, you can't teleport anywhere
+			if (manager.Count < 2)
+				return;
+
 			var primary = manager.PrimaryActor;
 
-			if (primary == null || (manager.RandomExit && manager.Count > 1))
+			if (primary == null || manager.RandomExit)
 			{
 				var nodes = self.World.ActorsWithTrait<TeleportNetwork>().Where(p => p.Trait.Info.Type == type && p.Actor.Owner == self.Owner && p.Actor != target).ToList();
 				var node = nodes.ElementAt(self.World.SharedRandom.Next(0, nodes.Count - 1));

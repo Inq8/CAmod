@@ -31,11 +31,8 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Detonate the weapon on the ground.")]
 		public readonly bool ForceGround = false;
 
-		[Desc("Cooldown in ticks until the unit can deploy.")]
-		public readonly int CooldownTicks;
-
-		[Desc("The deployed state's length in ticks.")]
-		public readonly int DeployedTicks;
+		[Desc("Ticks between deployments.")]
+		public readonly int ChargeTicks;
 
 		[Desc("Cursor to display when able to (un)deploy the actor.")]
 		public readonly string DeployCursor = "deploy";
@@ -66,8 +63,8 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly string Voice = "Action";
 
 		public readonly bool ShowSelectionBar = true;
-		public readonly Color ChargingColor = Color.DarkRed;
-		public readonly Color DischargingColor = Color.DarkMagenta;
+		public readonly bool ShowSelectionBarWhenEmpty = true;
+		public readonly Color SelectionBarColor = Color.White;
 
 		public WeaponInfo WeaponInfo { get; private set; }
 
@@ -85,7 +82,7 @@ namespace OpenRA.Mods.CA.Traits
 		}
 	}
 
-	public enum DetonateWeaponOnDeployState { Charging, Ready, Active, Deploying, Undeploying }
+	public enum DetonateWeaponOnDeployState { Charging, Ready }
 
 	public class DetonateWeaponOnDeploy : PausableConditionalTrait<DetonateWeaponOnDeployInfo>,
 		IResolveOrder, IIssueOrder, ISelectionBar, IOrderVoice, ISync, ITick, IIssueDeployOrder
@@ -93,7 +90,7 @@ namespace OpenRA.Mods.CA.Traits
 		readonly Actor self;
 
 		[Sync]
-		int ticks;
+		int ticksUntilCharged;
 
 		DetonateWeaponOnDeployState deployState;
 
@@ -107,12 +104,12 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			if (Info.StartsFullyCharged)
 			{
-				ticks = Info.DeployedTicks;
+				ticksUntilCharged = 0;
 				deployState = DetonateWeaponOnDeployState.Ready;
 			}
 			else
 			{
-				ticks = Info.CooldownTicks;
+				ticksUntilCharged = Info.ChargeTicks;
 				deployState = DetonateWeaponOnDeployState.Charging;
 			}
 
@@ -171,16 +168,12 @@ namespace OpenRA.Mods.CA.Traits
 			if (deployState != DetonateWeaponOnDeployState.Ready)
 				return;
 
-			deployState = DetonateWeaponOnDeployState.Deploying;
+			deployState = DetonateWeaponOnDeployState.Charging;
+			ticksUntilCharged = Info.ChargeTicks;
 
 			if (!string.IsNullOrEmpty(Info.DeploySound))
 				Game.Sound.Play(SoundType.World, Info.DeploySound, self.CenterPosition);
 
-			OnDeployCompleted();
-		}
-
-		void OnDeployCompleted()
-		{
 			var target = Target.FromPos(self.CenterPosition);
 
 			if (Info.ForceGround)
@@ -189,21 +182,7 @@ namespace OpenRA.Mods.CA.Traits
 			var weapon = Info.WeaponInfo;
 			weapon.Impact(target, self);
 
-			deployState = DetonateWeaponOnDeployState.Active;
-
 			PlayOverlayAnimation();
-		}
-
-		void RevokeDeploy()
-		{
-			deployState = DetonateWeaponOnDeployState.Undeploying;
-			OnUndeployCompleted();
-		}
-
-		void OnUndeployCompleted()
-		{
-			deployState = DetonateWeaponOnDeployState.Charging;
-			ticks = Info.CooldownTicks;
 		}
 
 		void PlayOverlayAnimation()
@@ -231,36 +210,26 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitPaused || IsTraitDisabled)
 				return;
 
-			if (deployState == DetonateWeaponOnDeployState.Ready || deployState == DetonateWeaponOnDeployState.Deploying || deployState == DetonateWeaponOnDeployState.Undeploying)
+			if (deployState == DetonateWeaponOnDeployState.Ready)
 				return;
 
-			if (--ticks < 0)
-			{
-				if (deployState == DetonateWeaponOnDeployState.Charging)
-				{
-					ticks = Info.DeployedTicks;
-					deployState = DetonateWeaponOnDeployState.Ready;
-				}
-				else
-					RevokeDeploy();
-			}
+			if (--ticksUntilCharged < 0)
+				deployState = DetonateWeaponOnDeployState.Ready;
 		}
 
 		float ISelectionBar.GetValue()
 		{
-			if (IsTraitDisabled || !Info.ShowSelectionBar || deployState == DetonateWeaponOnDeployState.Undeploying)
+			if (IsTraitDisabled || !Info.ShowSelectionBar)
 				return 0f;
 
-			if (deployState == DetonateWeaponOnDeployState.Deploying || deployState == DetonateWeaponOnDeployState.Ready)
-				return 1f;
+			if (deployState == DetonateWeaponOnDeployState.Ready)
+				return 0f;
 
-			return deployState == DetonateWeaponOnDeployState.Charging
-				? (float)(Info.CooldownTicks - ticks) / Info.CooldownTicks
-				: (float)ticks / Info.DeployedTicks;
+			return (float)(Info.ChargeTicks - ticksUntilCharged) / Info.ChargeTicks;
 		}
 
-		bool ISelectionBar.DisplayWhenEmpty { get { return !IsTraitDisabled && Info.ShowSelectionBar; } }
+		bool ISelectionBar.DisplayWhenEmpty { get { return !IsTraitDisabled && Info.ShowSelectionBar && Info.ShowSelectionBarWhenEmpty; } }
 
-		Color ISelectionBar.GetColor() { return deployState == DetonateWeaponOnDeployState.Charging ? Info.ChargingColor : Info.DischargingColor; }
+		Color ISelectionBar.GetColor() { return Info.SelectionBarColor; }
 	}
 }

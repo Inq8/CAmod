@@ -1845,7 +1845,7 @@ MSHP:
 	Buildable:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
-		BuildPaletteOrder: 180
+		BuildPaletteOrder: 190
 		Prerequisites: sign, scrt, ~aircraft.scrin, ~techlevel.high
 		Description: Huge craft with powerful beam weapon.\n  Can create wormholes.\n  Maximum 1 can be built.\n  Strong vs Buildings, Defenses\n  Weak vs Aircraft
 		IconPalette: chromes
@@ -1890,8 +1890,8 @@ MSHP:
 		CanForceLand: False
 		Voice: Move
 	Selectable:
-		Bounds: 36,36,0,2
-		DecorationBounds: 48,48,0,1
+		Bounds: 42,42,0,2
+		DecorationBounds: 48,52,0,1
 	Explodes:
 		Weapon: KirovExplode
 		RequiresCondition: !airborne
@@ -1916,13 +1916,12 @@ MSHP:
 	DetonateWeaponOnDeploy:
 		Weapon: WormholeOpener
 		ForceGround: true
-		CooldownTicks: 200
-		DeployedTicks: 40
+		ChargeTicks: 200
 		PauseOnCondition: being-warped
 		OverlaySequence: wormholebeam
 		OverlayPalette: overlayplayerscrin
-		ShowSelectionBar: false
 		IsPlayerPalette: true
+		ShowSelectionBarWhenEmpty: false
 	ExternalCondition@PRODUCED:
 		Condition: produced
 	VoiceAnnouncement:
@@ -1963,7 +1962,8 @@ MSHP:
 		Count: 100
 		RequiresCondition: charging && !attacking
 		Sound: mshp-fire1.aud
-		ShowSelectionBar: false
+		ShowSelectionBar: true
+		SelectionBarColor: ff00ff
 	ReloadAmmoPoolCA@DRAIN:
 		Count: -100
 		Delay: 1
@@ -3985,6 +3985,11 @@ WORMHOLE:
 	Exit:
 	PopControlled:
 		Limit: 2
+	WithDeathAnimation:
+		UseDeathTypeSuffix: false
+		CrushedSequence: die
+		FallbackSequence: die
+	WithMakeAnimation:
 
 # infiltrator stolen tech
 

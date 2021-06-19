@@ -14,6 +14,25 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	static class TeleportNetworkExts
+	{
+		public static bool IsValidTeleportNetworkUser(this Actor network, Actor user)
+		{
+			var trait = network.TraitOrDefault<TeleportNetwork>();
+			if (trait == null)
+				return false;
+
+			if (trait.teleportNetworkManager.Count < 2)
+				return false;
+
+			var exit = network.TraitOrDefault<TeleportNetworkPrimaryExit>();
+			if (exit != null && exit.IsPrimary)
+				return false;
+
+			return network.Owner.RelationshipWith(user.Owner).HasFlag(trait.Info.ValidStances);
+		}
+	}
+
 	[Desc("This actor can teleport actors to another actor with the same trait.")]
 	public class TeleportNetworkInfo : TraitInfo, IRulesetLoaded
 	{
@@ -40,7 +59,7 @@ namespace OpenRA.Mods.CA.Traits
 	public class TeleportNetwork : INotifyAddedToWorld, INotifyRemovedFromWorld, INotifyOwnerChanged
 	{
 		public TeleportNetworkInfo Info;
-		TeleportNetworkManager teleportNetworkManager;
+		public TeleportNetworkManager teleportNetworkManager { get; private set; }
 
 		public TeleportNetwork(TeleportNetworkInfo info)
 		{
@@ -53,10 +72,8 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				var primary = self.TraitOrDefault<TeleportNetworkPrimaryExit>();
 
-				if (primary == null)
-					return;
-
-				primary.SetPrimary(self);
+				if (primary != null)
+					primary.SetPrimary(self);
 			}
 
 			teleportNetworkManager.Count++;

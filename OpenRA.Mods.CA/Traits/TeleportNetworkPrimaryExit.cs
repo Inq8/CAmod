@@ -19,19 +19,6 @@ namespace OpenRA.Mods.CA.Traits
 {
 	static class TeleportNetworkPrimaryExitExts
 	{
-		public static bool IsValidTeleportNetworkUser(this Actor network, Actor user)
-		{
-			var trait = network.TraitOrDefault<TeleportNetwork>();
-			if (trait == null)
-				return false;
-
-			var exit = network.TraitOrDefault<TeleportNetworkPrimaryExit>();
-			if (exit != null && exit.IsPrimary)
-				return false;
-
-			return network.Owner.RelationshipWith(user.Owner).HasFlag(trait.Info.ValidStances);
-		}
-
 		public static bool IsPrimaryTeleportNetworkExit(this Actor network)
 		{
 			var exit = network.TraitOrDefault<TeleportNetworkPrimaryExit>();
