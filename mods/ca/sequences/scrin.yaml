@@ -570,6 +570,26 @@ corr.destroyed:
 		UseClassicFacings: True
 		ZOffset: -512
 
+lchr:
+	Inherits: ^VehicleOverlays
+	idle: lchr
+		Facings: 32
+		UseClassicFacings: True
+	move: lchr
+		Start: 32
+		Facings: 32
+		Length: 2
+		Tick: 80
+		UseClassicFacings: True
+	icon: lchricon
+
+lchr.destroyed:
+	Inherits: ^VehicleOverlays
+	idle: lchr
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512
+
 stcr:
 	Inherits: ^VehicleOverlays
 	idle: stcr
@@ -630,6 +650,17 @@ ruin.destroyed:
 		Facings: 32
 		UseClassicFacings: True
 		ZOffset: -512
+
+atmz:
+	Inherits: ^VehicleOverlays
+	idle: atmz
+		Facings: 32
+		UseClassicFacings: True
+	turret: atmz
+		Facings: 32
+		Start: 32
+		UseClassicFacings: True
+	icon: atmzicon
 
 tpod:
 	Inherits: ^VehicleOverlays
@@ -1206,12 +1237,31 @@ tibgloblg:
 		ZOffset: 1023
 		Tick: 40
 
-enrvbolt:
-	idle: enrvbolt
+atmzbolt:
+	idle: atmzbolt
 		BlendMode: Additive
 		Length: *
 		ZOffset: 1023
 		Tick: 40
+
+atmzbolttrail:
+	idle: atmzbolttrail
+		BlendMode: Additive
+		Length: *
+		ZOffset: 2047
+
+atmzbolthit:
+	idle: atmzbolthit
+		BlendMode: Additive
+		Length: *
+		ZOffset: 2047
+
+enrvbolt
+	idle: enrvbolt
+		BlendMode: Additive
+		Length: *
+		ZOffset: 1023
+		Tick: 50
 
 enrvbolthit:
 	idle: enrvbolthit
@@ -1308,6 +1358,12 @@ bshard:
 		Facings: 32
 		ZOffset: 1023
 
+leechhit:
+	idle: leechhit
+		BlendMode: Additive
+		Length: *
+		ZOffset: 2047
+
 mindcontrol:
 	idle: mindcontrol
 		Tick: 40
@@ -1371,6 +1427,29 @@ ionsurge-overlay:
 		Offset: 0, -5
 		UseTilesetCode: false
 		ZOffset: 512
+
+atomize-overlay:
+	idle: atomizeoverlay
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+
+energytransfer-overlay:
+	vehicle: leechhitlg
+		Frames: 0,1,2,3,4,5,6,7,8,8,8
+		BlendMode: Additive
+		Length: *
+		ZOffset: 2047
+		Tick: 80
+	infantry: leechhit
+		Frames: 0,1,2,3,4,5,6,7,7,7
+		BlendMode: Additive
+		Length: *
+		ZOffset: 2047
+		Offset: 0, -5
+		Tick: 80
 
 scrinwipicon:
 	icon: wipicon

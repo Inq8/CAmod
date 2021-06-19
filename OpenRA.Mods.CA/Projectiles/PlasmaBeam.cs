@@ -58,6 +58,12 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("Beam can be blocked.")]
 		public readonly bool Blockable = false;
 
+		[Desc("The maximum/constant/incremental inaccuracy used in conjunction with the InaccuracyType property.")]
+		public readonly WDist Inaccuracy = WDist.Zero;
+
+		[Desc("Controls the way inaccuracy is calculated. Possible values are 'Maximum' - scale from 0 to max with range, 'PerCellIncrement' - scale from 0 with range and 'Absolute' - use set value regardless of range.")]
+		public readonly InaccuracyType InaccuracyType = InaccuracyType.Maximum;
+
 		[Desc("Draw primary center beam.")]
 		public readonly bool CenterBeam = false;
 
@@ -130,6 +136,12 @@ namespace OpenRA.Mods.CA.Projectiles
 				target = args.PassiveTarget;
 
 			var world = args.SourceActor.World;
+
+			if (info.Inaccuracy.Length > 0)
+			{
+				var maxInaccuracyOffset = OpenRA.Mods.Common.Util.GetProjectileInaccuracy(info.Inaccuracy.Length, info.InaccuracyType, args);
+				target += WVec.FromPDF(args.SourceActor.World.SharedRandom, 2) * maxInaccuracyOffset / 1024;
+			}
 
 			// Check for blocking actors
 			if (info.Blockable && BlocksProjectiles.AnyBlockingActorsBetween(world, source, target, info.CenterBeamWidth, out var blockedPos))

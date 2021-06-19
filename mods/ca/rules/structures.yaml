@@ -680,6 +680,7 @@ DOME:
 	Inherits: ^Building
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
 	Selectable:
 		Bounds: 48,48
 	HitShape:
@@ -722,6 +723,7 @@ DOME:
 		Types: SpyInfiltrate, SabInfiltrate
 	Power:
 		Amount: -40
+	-PowerMultiplier@POWERDRAIN:
 	ValidFactions:
 		Factions: england, france, germany, russia, ukraine, iraq
 	ProvidesPrerequisite@anyradar:
@@ -1836,6 +1838,7 @@ POWR:
 	Inherits: ^Building
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
 	Selectable:
 		Bounds: 48,48
 	HitShape:
@@ -1878,6 +1881,7 @@ APWR:
 	Inherits: ^Building
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@SHAPE: ^3x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Buildable:
@@ -3022,6 +3026,7 @@ NUKE:
 	Inherits: ^BuildingTD
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: 630,299,0
 	RenderSprites:
@@ -3074,6 +3079,7 @@ NUK2:
 	Inherits: ^BuildingTD
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: 630,299,0
 	RenderSprites:
@@ -3513,6 +3519,7 @@ OBLI:
 HQ:
 	Inherits: ^BuildingTD
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
+	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: 0,0,0, 0,512,0, 420,-598,256
 		Type: Rectangle
@@ -3691,6 +3698,7 @@ HQ:
 		PauseOnCondition: disabled || being-warped
 	Power:
 		Amount: -40
+	-PowerMultiplier@POWERDRAIN:
 	ValidFactions:
 		Factions: talon, zocom, eagle, blackh, marked, legion
 	ProvidesPrerequisiteValidatedFaction@anyradar:
@@ -3735,6 +3743,7 @@ HQ:
 EYE:
 	Inherits: ^BuildingTD
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
+	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: 0,0,0, 0,512,128, 420,-598,213
 		Type: Rectangle
@@ -3838,6 +3847,7 @@ EYE:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
+	-PowerMultiplier@POWERDRAIN:
 	ValidFactions:
 		Factions: talon, zocom, eagle
 	ProvidesPrerequisiteValidatedFaction@zoceye:
