@@ -3952,7 +3952,7 @@ ion.surge:
 WORMHOLE:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^SpriteActor
-	Inherits@3: ^Selectable
+	Inherits@3: ^SelectableBuilding
 	Inherits@shape: ^1x1Shape
 	Tooltip:
 		Name: Wormhole
@@ -3970,7 +3970,7 @@ WORMHOLE:
 		Range: 6c0
 		Type: CenterPosition
 	Immobile:
-		OccupiesSpace: false
+		OccupiesSpace: true
 	Targetable:
 		TargetTypes: Ground, Structure, Wormhole
 	Health:
@@ -3981,6 +3981,7 @@ WORMHOLE:
 		Type: Wormhole
 		Delay: 0
 	RallyPoint:
+		Path: 1,1
 	Sellable:
 	Exit:
 	PopControlled:

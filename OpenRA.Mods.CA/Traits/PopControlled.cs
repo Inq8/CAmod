@@ -35,12 +35,12 @@ namespace OpenRA.Mods.CA.Traits
 
 	public class PopControlled : INotifyCreated
 	{
-		readonly PopControlledInfo Info;
+		readonly PopControlledInfo i;
 		Actor self;
 
 		public PopControlled(ActorInitializer init, PopControlledInfo info)
 		{
-			Info = info;
+			i = info;
 			self = init.Self;
 		}
 
@@ -49,10 +49,10 @@ namespace OpenRA.Mods.CA.Traits
 			var instances = self.World.Actors.Where(a => !a.IsDead && a.Owner == self.Owner &&
 				a.Info.Name == self.Info.Name).ToList();
 
-			if (instances.Count < Info.Limit)
+			if (instances.Count < i.Limit)
 				return;
 
-			var numToRemove = (instances.Count + 1) - Info.Limit;
+			var numToRemove = (instances.Count + 1) - i.Limit;
 
 			for (var i = 0; i < numToRemove; i++)
 			{
@@ -71,10 +71,10 @@ namespace OpenRA.Mods.CA.Traits
 			if (self.IsDead)
 				return;
 
-			if (Info.RemoveInstead || !self.Info.HasTraitInfo<IHealthInfo>())
+			if (i.RemoveInstead || !self.Info.HasTraitInfo<IHealthInfo>())
 				self.Dispose();
 			else
-				self.Kill(self, Info.DamageTypes);
+				self.Kill(self, i.DamageTypes);
 		}
 	}
 }

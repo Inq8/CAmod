@@ -22,7 +22,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (trait == null)
 				return false;
 
-			if (trait.teleportNetworkManager.Count < 2)
+			if (trait.Tnm.Count < 2)
 				return false;
 
 			var exit = network.TraitOrDefault<TeleportNetworkPrimaryExit>();
@@ -59,7 +59,7 @@ namespace OpenRA.Mods.CA.Traits
 	public class TeleportNetwork : INotifyAddedToWorld, INotifyRemovedFromWorld, INotifyOwnerChanged
 	{
 		public TeleportNetworkInfo Info;
-		public TeleportNetworkManager teleportNetworkManager { get; private set; }
+		public TeleportNetworkManager Tnm { get; private set; }
 
 		public TeleportNetwork(TeleportNetworkInfo info)
 		{
@@ -68,7 +68,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		void IncreaseTeleportNetworkCount(Actor self)
 		{
-			if (teleportNetworkManager.Count == 0)
+			if (Tnm.Count == 0)
 			{
 				var primary = self.TraitOrDefault<TeleportNetworkPrimaryExit>();
 
@@ -76,12 +76,12 @@ namespace OpenRA.Mods.CA.Traits
 					primary.SetPrimary(self);
 			}
 
-			teleportNetworkManager.Count++;
+			Tnm.Count++;
 		}
 
 		void DecreaseTeleportNetworkCount(Actor self)
 		{
-			teleportNetworkManager.Count--;
+			Tnm.Count--;
 
 			if (self.IsPrimaryTeleportNetworkExit())
 			{
@@ -89,7 +89,7 @@ namespace OpenRA.Mods.CA.Traits
 				.Where(a => a.Actor.Owner == self.Owner && a.Actor != self);
 
 				if (!actors.Any())
-					teleportNetworkManager.PrimaryActor = null;
+					Tnm.PrimaryActor = null;
 				else
 				{
 					var primary = actors.First().Actor;
@@ -100,7 +100,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyAddedToWorld.AddedToWorld(Actor self)
 		{
-			teleportNetworkManager = self.Owner.PlayerActor.TraitsImplementing<TeleportNetworkManager>().First(x => x.Type == Info.Type);
+			Tnm = self.Owner.PlayerActor.TraitsImplementing<TeleportNetworkManager>().First(x => x.Type == Info.Type);
 			IncreaseTeleportNetworkCount(self);
 		}
 

@@ -61,7 +61,7 @@ namespace OpenRA.Mods.HV.Traits
 			if (teleportNetwork == null)
 				return false;
 
-			var manager = teleportNetwork.teleportNetworkManager;
+			var manager = teleportNetwork.Tnm;
 
 			if (manager.Count < 2)
 				return false;
