@@ -107,6 +107,9 @@ namespace OpenRA.Mods.CA.Activities
 			// TODO: avoid DelayedAction and use ITick instead.
 			self.World.AddFrameEndTask(w => w.Add(new DelayedAction(teleporter.Info.Delay, () =>
 			{
+				if (self.IsDead)
+					return;
+
 				// Teleport myself to primary actor.
 				self.Trait<IPositionable>().SetPosition(self, exit);
 
