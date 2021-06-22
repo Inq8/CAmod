@@ -305,26 +305,37 @@ BlackHandBigFlamerClose:
 		ValidRelationships: Enemy, Neutral
 
 BlackHandFlamer:
-	Inherits: BlackHandBigFlamer
 	ReloadDelay: 50
 	Burst: 25
-	BurstDelays: 1
+	BurstDelays: 2
 	Range: 5c0
-	-Projectile:
+	MinRange: 0c512
 	Projectile: Bullet
 		Speed: 130
 		TrailImage: fb4
 		Image: fb3
 		LaunchAngle: 62
-		Inaccuracy: 341
+		Inaccuracy: 256
 	Warhead@1Dam: SpreadDamage
+		Spread: 341
 		Falloff: 100, 60, 25, 0
-		Damage: 220
+		Damage: 800
 		Versus:
-			Wood: 200
+			None: 100
+			Wood: 35
+			Light: 40
+			Heavy: 20
+			Concrete: 20
+			Brick: 2
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Smu: LeaveSmudge
-		Chance: 75
-		-InvalidTargets:
+		SmudgeType: Scorch
+		Chance: 50
+	Warhead@melt: GrantExternalCondition
+		Condition: melted
+		ValidTargets: Vehicle, Structure
+		Duration: 250
+		Range: 0c341
 
 Napalm:
 	Inherits: ^FireWeapon

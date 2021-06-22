@@ -2300,32 +2300,34 @@ BH:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
-	Inherits@CYBORGUPG: ^NodCyborgUpgrade
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 70
-		Prerequisites: ~hand, ~infantry.blackh, ~puri.upgrade, ~techlevel.infonly
-		Description: Elite anti-infantry/anti-structure unit.\n  Strong vs Infantry, Buildings\n  Weak vs Vehicles, Aircraft
+		BuildPaletteOrder: 150
+		Prerequisites: anyradar, ~infantry.blackh, ~techlevel.infonly
+		Description: Elite flamethrower unit.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft
 	Valued:
-		Cost: 325
+		Cost: 500
 	Tooltip:
 		Name: Black Hand Trooper
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 17000
+		HP: 15000
 	Mobile:
 		Speed: 49
 		Voice: Move
+	RevealsShroud:
+		Range: 5c0
 	Armament:
 		Weapon: BlackHandFlamer
 		LocalOffset: 450,0,350
 	Armament@Garrison:
 		Name: mounted
-		Weapon: FlamerE
+		Weapon: BlackHandFlamer
 	TakeCover:
 		ProneOffset: 160,0,-256
+		SpeedModifier: 70
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: being-warped
