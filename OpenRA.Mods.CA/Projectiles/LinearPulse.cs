@@ -97,13 +97,18 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			// initially no distance has been travelled by the pulse
 			totalDistanceTravelled = 0;
+
+			// the weapon range (total distance to be travelled)
 			range = args.Weapon.Range.Length;
 
 			if (!info.IgnoreRangeModifiers)
 				range = OpenRA.Mods.Common.Util.ApplyPercentageModifiers(range, args.RangeModifiers);
 
-			// the weapon range (distance to be travelled in cell units)
 			target = args.PassiveTarget;
+
+			// get the offset of the source compared to source actor's center and apply the same offset to the target (so the linear pulse always travels parallel to the source actor's facing)
+			var offsetFromCenter = source - args.SourceActor.CenterPosition;
+			target = target + offsetFromCenter;
 
 			if (info.Inaccuracy.Length > 0)
 			{
