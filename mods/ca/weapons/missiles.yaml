@@ -1452,31 +1452,49 @@ Rah66AG:
 		Image: dragon
 		TrailImage: smokey
 		TrailDelay: 3
-		Speed: 250
+		Speed: 200
 		LaunchAngle: 10
 	Warhead@1Dam: SpreadDamage
-		Spread: 512
+		Spread: 341
 		Damage: 800
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Versus:
-			None: 85
-			Wood: 60
+			None: 75
+			Wood: 50
 			Concrete: 30
 			Light: 55
 			Heavy: 15
 			Brick: 15
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
-	Warhead@2Smu: LeaveSmudge
-		SmudgeType: Scorch
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
-		Explosions: small_napalm
-		ImpactSounds: firebl3.aud
+		Explosions: large_explosion
+		ImpactSounds: kaboom15.aud
 		ValidTargets: Ground, Air, Ship
 	Warhead@4EffWater: CreateEffect
 		Explosions: med_splash
 		ImpactSounds: splashm1.aud, splashm2.aud, splashm3.aud
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
+
+Rah66AG.TibCore:
+	Inherits: Rah66AG
+	Projectile: Bullet
+		Speed: 250
+		Image: tibcoremsl
+		ContrailLength: 15
+		ContrailColor: 33aa00aa
+		ContrailWidth: 0c40
+	Warhead@1Dam: SpreadDamage
+		Spread: 512
+		Versus:
+			None: 85
+			Wood: 60
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+	Warhead@3Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: scrin
+		Image: tibexplodesm
+		ImpactSounds: firebl3.aud
 
 ScrinTorp:
 	ValidTargets: Ground, Water, Trees

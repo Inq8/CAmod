@@ -966,6 +966,20 @@
 	WithColoredOverlay@STEALTHGEN:
 		RequiresCondition: invisibility
 		Palette: cloakgreen
+	WithRangeCircle@STEALTHEMITTER:
+		Visible: Always
+		RequiresCondition: stealth-emitter
+		Range: 5c0
+		Color: 33ff33
+	TimedConditionBar@STEALTHEMITTER:
+		Condition: stealth-emitter
+		Color: 33ff33
+	ProximityExternalCondition@STEALTHEMITTER:
+		Range: 5c0
+		Condition: invisibility
+		RequiresCondition: stealth-emitter
+	ExternalCondition@STEALTHEMITTER:
+		Condition: stealth-emitter
 
 ^Chillable:
 	TimedConditionBar@chilled:
@@ -1832,7 +1846,7 @@
 	Valued:
 		Cost: 10
 	GrantConditionOnFaction@FACTION:
-		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq, gdi, zocom, eagle, talon, nod, blackh, legion, marked
+		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq, gdi, zocom, eagle, talon, nod, blackh, legion, marked, shadow
 		Condition: owned-by-faction
 	Tooltip:
 		Name: Civilian
@@ -1865,7 +1879,7 @@
 		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq
 		Condition: ra-faction
 	GrantConditionOnFaction@TD:
-		Factions: gdi, zocom, eagle, talon, nod, blackh, legion, marked
+		Factions: gdi, zocom, eagle, talon, nod, blackh, legion, marked, shadow
 		Condition: td-faction
 	Armament@RA:
 		Weapon: Pistol

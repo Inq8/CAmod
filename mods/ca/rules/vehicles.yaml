@@ -220,6 +220,7 @@ KATY:
 			blackh: mtnk.nod.chrono
 			marked: mtnk.nod.chrono
 			legion: mtnk.nod.chrono
+			shadow: mtnk.nod.chrono
 			eagle: mtnk.gdi.chrono
 			zocom: mtnk.gdi.chrono
 			talon: mtnk.gdi.chrono
@@ -240,7 +241,7 @@ KATY:
 		Factions: talon, zocom, eagle
 		Condition: gdi
 	GrantConditionOnFaction@NOD:
-		Factions: blackh, marked, legion
+		Factions: blackh, marked, legion, shadow
 		Condition: nod
 	GrantConditionOnFaction@SOVIET:
 		Factions: russia, ukraine, iraq
@@ -813,7 +814,7 @@ ARTY.Chrono:
 		Factions: reaper, traveler, harbinger
 		Condition: scrin
 	GrantConditionOnFaction@TD:
-		Factions: eagle, zocom, talon, blackh, marked, legion
+		Factions: eagle, zocom, talon, blackh, marked, legion, shadow
 		Condition: td
 	-Buildable:
 	GrantTimedCondition@warpin:
@@ -1876,6 +1877,7 @@ APC2:
 			blackh: apc2.nod
 			legion: apc2.nod
 			marked: apc2.nod
+			shadow: apc2.nod
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 41
@@ -2313,6 +2315,7 @@ MTNK:
 			blackh: mtnk.nod
 			legion: mtnk.nod
 			marked: mtnk.nod
+			shadow: mtnk.nod
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 80
@@ -2686,6 +2689,7 @@ MSAM:
 			blackh: msam.nod
 			legion: msam.nod
 			marked: msam.nod
+			shadow: msam.nod
 	Valued:
 		Cost: 1000
 	Tooltip:
@@ -2925,7 +2929,7 @@ STNK.Nod:
 		InitialStanceAI: ReturnFire
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
-	ProductionCostMultiplier@BlackhBonus:
+	ProductionCostMultiplier@ShadowBonus:
 		Multiplier: 90
 		Prerequisites: vehicles.shadow
 	GrantConditionOnPrerequisite@UPG:
