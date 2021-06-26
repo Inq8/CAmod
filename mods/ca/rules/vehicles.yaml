@@ -542,6 +542,7 @@ KATY:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 28,28
+		Class: 3tnk
 
 4TNK:
 	Inherits: ^Tank
@@ -707,6 +708,7 @@ KATY:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 44,38,0,-4
+		Class: 4tnk
 	Carryable:
 		LocalOffset: 0,0,500
 	-Crushable:
@@ -769,6 +771,9 @@ ARTY.nod:
 		Prerequisites: ~vehicles.nod, ~!howi.upgrade, ~techlevel.medium
 	Armament:
 		Weapon: 155mmTD
+	Selectable:
+		DecorationBounds: 44,38,0,-4
+		Class: arty
 
 HOWI:
 	Inherits: ARTY.nod
@@ -1452,7 +1457,7 @@ TTRA:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 25000
+		HP: 20000
 	Armor:
 		Type: Light
 	Mobile:
@@ -2058,6 +2063,8 @@ APC2:
 		InvalidTargets: NoAutoTarget
 	AttackMove:
 		AssaultMoveCondition: assault-move
+	Selectable:
+		Class: apc
 
 APC2.NODAI:
 	Inherits: APC2
@@ -2217,6 +2224,8 @@ VULC:
 		RequiresCondition: driver-dead && !cargo
 	Targetable@DRIVERKILL:
 		RequiresCondition: !driver-dead && !cargo
+	Selectable:
+		Class: apc
 
 VULC.AI:
 	Inherits: VULC

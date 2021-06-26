@@ -85,8 +85,6 @@ E1:
 		BuildPaletteOrder: 10
 		Prerequisites: ~infantry.ra, ~techlevel.infonly
 		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
-	Selectable:
-		Class: E1
 	Valued:
 		Cost: 100
 	Tooltip:
@@ -173,8 +171,6 @@ E3:
 		BuildPaletteOrder: 20
 		Prerequisites: ~infantry.ra, ~techlevel.infonly
 		Description: Anti-tank/anti-aircraft infantry.\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
-	Selectable:
-		Class: E3
 	Valued:
 		Cost: 300
 	Tooltip:
@@ -652,7 +648,7 @@ CHAN:
 	WithDeathAnimation:
 		DeathSequencePalette: player
 	Selectable:
-		Class: CHAN
+		Class: chan
 	Tooltip:
 		Name: Scientist
 
@@ -675,7 +671,7 @@ GNRL:
 	Tooltip:
 		Name: General
 	Selectable:
-		Class: GNRL
+		Class: gnrl
 	Mobile:
 		Voice: Move
 	AttackFrontal:
@@ -861,7 +857,7 @@ N1:
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	Selectable:
-		Class: E1
+		Class: e1
 	Convertible:
 		SpawnActors: N1C
 
@@ -927,7 +923,7 @@ N2:
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	Selectable:
-		Class: E2
+		Class: e2
 	GrantConditionOnPrerequisite@EMPUPG:
 		Condition: empgren-upgrade
 		Prerequisites: empgren.upgrade
@@ -1031,7 +1027,7 @@ N3:
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	Selectable:
-		Class: E3
+		Class: e3
 	Convertible:
 		SpawnActors: N3C
 
@@ -1098,7 +1094,7 @@ N4:
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	Selectable:
-		Class: E4
+		Class: e4
 	Convertible:
 		SpawnActors: N5
 
@@ -1658,7 +1654,7 @@ ACOL:
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	Selectable:
-		Class: ACOL
+		Class: acol
 	Convertible:
 		SpawnActors: ACOL.UPG
 
@@ -2272,6 +2268,8 @@ IVAN:
 		Voice: Move
 	Guard:
 		Voice: Move
+	RevealsShroud:
+		Range: 5c0
 	Armament@PRIMARY:
 		Weapon: Ivanbomb
 		LocalOffset: 0,0,555
