@@ -126,7 +126,7 @@ E1.squad:
 	Tooltip:
 		Name: Squad: G.I.
 	Buildable:
-		Queue: Aircraft
+		Queue: Infantry
 		BuildPaletteOrder: 10
 		Prerequisites: ~anyradar, ~infantry.usa, ~techlevel.high
 		Description: Airdrop 8 General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
@@ -193,7 +193,7 @@ E3:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 20
-		Prerequisites: ~infantry.ra, ~techlevel.infonly
+		Prerequisites: ~infantry.ra, ~!structure.usa, ~techlevel.infonly
 		Description: Anti-tank/anti-aircraft infantry.\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
 	Valued:
 		Cost: 300
@@ -296,6 +296,132 @@ E3:
 	Convertible:
 		SpawnActors: N3C
 
+U3:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 20
+		Prerequisites: ~infantry.ra, ~structure.usa, ~techlevel.infonly
+		Description: Anti-tank/anti-aircraft infantry.\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
+	Selectable:
+		Class: E3
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Guardian G.I
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 4000
+	Mobile:
+		Speed: 38
+	Armament@PRIMARY:
+		Weapon: RedEye
+		LocalOffset: 0,0,400
+		PauseOnCondition: !ammo
+		RequiresCondition: !cryr-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: RedEye.CRYO
+		LocalOffset: 0,0,400
+		PauseOnCondition: !ammo
+		RequiresCondition: cryr-upgrade
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: Dragon
+		LocalOffset: 0,0,400
+		PauseOnCondition: !ammo
+		RequiresCondition: !cryr-upgrade
+	Armament@SECONDARYUPG:
+		Name: secondary
+		Weapon: Dragon.CRYO
+		LocalOffset: 0,0,400
+		PauseOnCondition: !ammo
+		RequiresCondition: cryr-upgrade
+	Armament@GarrisonAA:
+		Name: mountedaa
+		Weapon: RedEyeE
+		PauseOnCondition: !ammo
+		RequiresCondition: !cryr-upgrade
+	Armament@GarrisonAAUPG:
+		Name: mountedaa
+		Weapon: RedEye.CRYO
+		PauseOnCondition: !ammo
+		RequiresCondition: cryr-upgrade
+	Armament@Garrison:
+		Name: mounted
+		Weapon: DragonE
+		PauseOnCondition: !ammo
+		RequiresCondition: !cryr-upgrade
+	Armament@GarrisonUPG:
+		Name: mounted
+		Weapon: DragonE.CRYO
+		PauseOnCondition: !ammo
+		RequiresCondition: cryr-upgrade
+	AmmoPool:
+		Ammo: 1
+		AmmoCondition: ammo
+	ReloadAmmoPool:
+		Delay: 50
+		Count: 1
+	TakeCover:
+		ProneOffset: 384,0,-395
+	AttackFrontal:
+		PauseOnCondition: being-warped
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	AutoTarget:
+		ScanRadius: 5
+	GrantConditionOnPrerequisite@CRYO:
+		Condition: cryr-upgrade
+		Prerequisites: cryr.upgrade
+	GrantConditionOnDeploy:
+		DeployedCondition: deployed
+		UndeployedCondition: undeployed
+		UndeployOnMove: True
+		Voice: Action
+		PauseOnCondition: being-warped
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+		RequiresCondition: !cryr-upgrade && !deployed
+	WithInfantryBody@CRYO:
+		IdleSequences: idle-cryo1, idle-cryo2
+		StandSequences: stand-cryo, stand-cryo2
+		AttackSequences: shoot-cryo
+		DefaultAttackSequence: shoot-cryo
+		MoveSequence: run-cryo
+		RequiresCondition: cryr-upgrade && !deployed
+	WithInfantryBody@Deployed:
+		-IdleSequences:
+		StandSequences: deployed
+		AttackSequences: deploy-shoot
+		DefaultAttackSequence: deploy-shoot
+		-MoveSequence:
+		RequiresCondition: deployed
+	WithDeathAnimation:
+		RequiresCondition: !cryr-upgrade
+	WithDeathAnimation@CRYO:
+		RequiresCondition: cryr-upgrade
+		DeathSequence: die-cryo
+		DeathSequencePalette: overlayplayertd
+		DeathTypes:
+			DefaultDeath: 1
+			BulletDeath: 2
+			SmallExplosionDeath: 3
+			ExplosionDeath: 4
+			FireDeath: 5
+			ElectricityDeath: 6
+			PoisonDeath: 7
+			ChronoDeath: 8
+			ToxinDeath: 9
+			RadiationDeath: 10
+			FrozenDeath: 11
+		CrushedSequence: die-crushed
+	Convertible:
+		SpawnActors: N3C
+
 E3.squad:
 	AlwaysVisible:
 	Interactable:
@@ -304,7 +430,7 @@ E3.squad:
 	Tooltip:
 		Name: Squad: Guardian G.I.
 	Buildable:
-		Queue: Aircraft
+		Queue: Infantry
 		BuildPaletteOrder: 20
 		Prerequisites: ~anyradar, ~infantry.usa, ~techlevel.high
 		Description: Airdrop 5 Anti-tank/anti-aircraft infantry.\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
