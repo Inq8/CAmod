@@ -3035,6 +3035,7 @@ FTNK:
 		LocalOffset: 512,128,42, 512,-128,42
 	Armament@CLOSE:
 		Weapon: BigFlamerTDClose
+		LocalOffset: 512,128,42, 512,-128,42
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
@@ -3045,7 +3046,7 @@ FTNK:
 		Prerequisites: vehicles.upgraded
 
 HFTK:
-	Inherits: ^Tank
+	Inherits: ^TankTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
@@ -3083,13 +3084,17 @@ HFTK:
 		TurnSpeed: 20
 	Armament@PRIMARY:
 		Weapon: HeavyFlameTankFlamer
+		MuzzleSequence: muzzle
+		MuzzlePalette: tdeffect
 		LocalOffset: 750,200,150, 750,-200,150
 	Armament@CLOSE:
 		Weapon: HeavyFlameTankFlamerClose
+		LocalOffset: 750,200,150, 750,-200,150
 	AttackTurreted:
 		Voice: Attack
 		PauseOnCondition: empdisable || being-warped
 	WithSpriteTurret:
+	WithMuzzleOverlay:
 	Voiced:
 		VoiceSet: FlameTankVoice
 	Explodes:

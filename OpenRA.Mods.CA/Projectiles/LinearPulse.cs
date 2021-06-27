@@ -134,6 +134,9 @@ namespace OpenRA.Mods.CA.Projectiles
 			var velocity = convertedVelocity.Rotate(WRot.FromYaw(facing));
 			pos = pos + velocity;
 
+			totalDistanceTravelled += speed.Length;
+			intervalDistanceTravelled += speed.Length;
+
 			if (intervalDistanceTravelled >= info.ImpactSpacing.Length)
 			{
 				intervalDistanceTravelled = 0;
@@ -141,8 +144,6 @@ namespace OpenRA.Mods.CA.Projectiles
 					Explode(world);
 			}
 
-			totalDistanceTravelled += speed.Length;
-			intervalDistanceTravelled += speed.Length;
 			ticks++;
 		}
 
@@ -164,7 +165,7 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		public IEnumerable<IRenderable> Render(WorldRenderer wr)
 		{
-			if (anim == null || ticks >= speed.Length)
+			if (anim == null || totalDistanceTravelled >= range)
 				yield break;
 
 			var world = args.SourceActor.World;
