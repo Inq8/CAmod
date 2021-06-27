@@ -335,6 +335,65 @@ s6:
 		Tick: 80
 	icon: s6icon
 
+feed:
+	Inherits: ^ScrinCommonDeaths
+	idle: feed
+		Facings: 8
+	move: feed
+		Start: 8
+		Length: 4
+		Facings: 8
+		Tick: 120
+	harvest: feed
+		Start: 40
+		Length: 4
+		Facings: 8
+		Tick: 80
+	idle1: feed
+		Start: 1
+		Length: 1
+		Tick: 120
+	idle2: feed
+		Start: 3
+		Length: 1
+		Tick: 120
+	idle3: feed
+		Start: 5
+		Length: 1
+		Tick: 120
+	idle4: feed
+		Start: 7
+		Length: 1
+		Tick: 120
+	die1: feed
+		Start: 72
+		Length: 8
+		Tick: 80
+	die2: feed
+		Start: 80
+		Length: 8
+		Tick: 80
+	die3: feed
+		Start: 88
+		Length: 8
+		Tick: 80
+	die4: feed
+		Start: 88
+		Length: 8
+		Tick: 80
+	die7: feed
+		Start: 72
+		Length: 8
+		Tick: 80
+	chrono-overlay: chronofade_small
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+		Tick: 80
+	icon: s2icon
+
 smedi:
 	Inherits: ^ScrinCommonDeaths
 	stand: smedi
@@ -1441,14 +1500,8 @@ atomize-overlay:
 		UseTilesetCode: false
 		ZOffset: 512
 
-energytransfer-overlay:
-	vehicle: leechhitlg
-		Frames: 0,1,2,3,4,5,6,7,8,8,8
-		BlendMode: Additive
-		Length: *
-		ZOffset: 2047
-		Tick: 80
-	infantry: leechhit
+feederfull-overlay:
+	idle: leechhit
 		Frames: 0,1,2,3,4,5,6,7,7,7
 		BlendMode: Additive
 		Length: *

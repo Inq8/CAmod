@@ -438,26 +438,6 @@
 			Light: 85
 			Heavy: 100
 
-^EnergyTransferrable:
-	ExternalCondition@ENERGYTRANSFER:
-		Condition: energytransfer
-	TimedConditionBar@ENERGYTRANSFER:
-		Condition: energytransfer
-		Color: ee0000
-	WithIdleOverlay@ENERGYTRANSFER:
-		Sequence: vehicle
-		Image: energytransfer-overlay
-		Palette: scrin-ignore-lighting-alpha30
-		RequiresCondition: energytransfer && !tree && !hidden
-	ConvertsDamageToHealth@ENERGYTRANSFER:
-		DamagePercentConverted: 10
-		RequiresCondition: energytransfer
-
-^EnergyTransferrableInfantry:
-	Inherits: ^EnergyTransferrable
-	WithIdleOverlay@ENERGYTRANSFER:
-		Sequence: infantry
-
 ^IonSurgable:
 	TimedConditionBar@IONSURGE:
 		Condition: ionsurge
@@ -1435,7 +1415,6 @@
 	Inherits@irrad: ^Irradiatable
 	Inherits@ionsurge: ^IonSurgable
 	Inherits@atomize: ^Atomizable
-	Inherits@energytransfer: ^EnergyTransferrable
 	Huntable:
 	OwnerLostAction:
 		Action: Kill
@@ -1614,7 +1593,6 @@
 	Inherits@handicaps: ^PlayerHandicaps
 	Inherits@BINOS: ^BinoUpgradeInfantry
 	Inherits@ionsurge: ^IonSurgableInfantry
-	Inherits@energytransfer: ^EnergyTransferrableInfantry
 	RenderSprites:
 		PlayerPalette: overlayplayertd
 	Huntable:
@@ -1975,7 +1953,6 @@
 	Inherits@mind: ^MindControllable
 	Inherits@handicaps: ^PlayerHandicaps
 	Inherits@atomize: ^Atomizable
-	Inherits@energytransfer: ^EnergyTransferrable
 	Huntable:
 	RenderSprites:
 		PlayerPalette: playernavy
