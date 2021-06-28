@@ -180,7 +180,7 @@ FlamerTD:
 	Projectile: LinearPulse
 		Speed: 256
 		ImpactSpacing: 256
-		MinimumImpactDistance: 1c768
+		MinimumImpactDistance: 0c768
 		MaximumImpactDistance: 1c768
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
@@ -195,19 +195,22 @@ FlamerTD:
 			Concrete: 30
 			Brick: 2
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		ValidRelationships: Enemy, Neutral
+		DebugOverlayColor: ffaa00
 		Delay: 5
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 		InvalidTargets: Vehicle, Building, Wall
 
-FlamerTDClose:
+FlamerTDFF:
 	Inherits: FlamerTD
 	Projectile: LinearPulse
-		MinimumImpactDistance: 0c768
-		MaximumImpactDistance: 1c512
+		MinimumImpactDistance: 1c768
+		MaximumImpactDistance: 1c768
 	Warhead@1Dam: SpreadDamage
-		ValidRelationships: Enemy, Neutral
-		DebugOverlayColor: ffaa00
+		Falloff: 100, 50, 0
+		ValidRelationships: Ally
+		-DebugOverlayColor:
 
 FlamerTDDummy:
 	Inherits: FlamerTD
@@ -216,6 +219,7 @@ FlamerTDDummy:
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
 		Damage: 0
+		-ValidRelationships:
 	-Warhead@2Smu:
 
 BigFlamerTD:
@@ -228,22 +232,22 @@ BigFlamerTD:
 		Image: flameallfast
 		Inaccuracy: 484
 		Palette: tseffect-ignore-lighting-alpha90
-		MinimumImpactDistance: 1440
+		MinimumImpactDistance: 288
 		MaximumImpactDistance: 2304
 	Warhead@1Dam: SpreadDamage
 		Damage: 925
 		-Delay:
 
-BigFlamerTDClose:
+BigFlamerTDFF:
 	Inherits: BigFlamerTD
 	Projectile: LinearPulse
 		-Image:
 		-Palette:
-		MinimumImpactDistance: 288
-		MaximumImpactDistance: 1152
+		MinimumImpactDistance: 1440
 	Warhead@1Dam: SpreadDamage
-		ValidRelationships: Enemy, Neutral
-		DebugOverlayColor: ffaa00
+		Falloff: 100, 50, 0
+		ValidRelationships: Ally
+		-DebugOverlayColor:
 
 ChemsprayTD:
 	Inherits: FlamerTD
@@ -256,15 +260,14 @@ ChemsprayTD:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 
-ChemsprayTDClose:
-	Inherits: FlamerTDClose
+ChemsprayTDFF:
+	Inherits: FlamerTDFF
 	Warhead@1Dam: SpreadDamage
 		Damage: 2000
 		Versus:
 			Concrete: 50
 			Heavy: 50
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
-		ValidRelationships: Enemy, Neutral
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 
@@ -287,16 +290,16 @@ HeavyFlameTankFlamer:
 		InvalidTargets: Vehicle, Building, Wall
 		Chance: 50
 
-HeavyFlameTankFlamerClose:
+HeavyFlameTankFlamerFF:
 	Inherits: HeavyFlameTankFlamer
 	Projectile: LinearPulse
 		-Image:
 		-Palette:
-		MinimumImpactDistance: 288
-		MaximumImpactDistance: 1152
+		MinimumImpactDistance: 1440
 	Warhead@1Dam: SpreadDamage
-		ValidRelationships: Enemy, Neutral
-		DebugOverlayColor: ffaa00
+		Falloff: 100, 50, 0
+		ValidRelationships: Ally
+		-DebugOverlayColor:
 
 BlackHandFlamer:
 	ReloadDelay: 50
