@@ -288,7 +288,8 @@ HeavyFlameTankFlamer:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 		InvalidTargets: Vehicle, Building, Wall
-		Chance: 50
+		AirThreshold: 256
+		Chance: 10
 
 HeavyFlameTankFlamerFF:
 	Inherits: HeavyFlameTankFlamer
@@ -302,37 +303,31 @@ HeavyFlameTankFlamerFF:
 		-DebugOverlayColor:
 
 BlackHandFlamer:
-	ReloadDelay: 50
-	Burst: 25
-	BurstDelays: 2
-	Range: 5c0
-	MinRange: 0c512
-	Projectile: Bullet
-		Speed: 130
-		TrailImage: fb4
-		Image: fb3
-		LaunchAngle: 62
-		Inaccuracy: 256
+	Inherits: HeavyFlameTankFlamer
+	BurstDelays: 1
+	Burst: 60
+	Range: 3c512
+	Projectile: LinearPulse
+		Speed: 160
+		Inaccuracy: 160
+		Image: thinblueflame
+		Palette: effect-ignore-lighting-alpha85
+		ImpactSpacing: 320
+		MinimumImpactDistance: 320
+		MaximumImpactDistance: 3c512
 	Warhead@1Dam: SpreadDamage
-		Spread: 341
-		Falloff: 100, 60, 25, 0
-		Damage: 800
+		Range: 0, 320
+		Falloff: 100, 0
+		Damage: 300
 		Versus:
-			None: 100
-			Wood: 35
-			Light: 40
-			Heavy: 20
-			Concrete: 20
+			None: 200
+			Wood: 5
+			Light: 25
+			Heavy: 25
+			Concrete: 10
 			Brick: 2
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Smu: LeaveSmudge
-		SmudgeType: Scorch
-		Chance: 50
-	Warhead@melt: GrantExternalCondition
-		Condition: melted
-		ValidTargets: Vehicle, Structure
-		Duration: 250
-		Range: 0c341
+		Chance: 5
 
 Napalm:
 	Inherits: ^FireWeapon
