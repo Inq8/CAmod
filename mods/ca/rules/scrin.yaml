@@ -369,18 +369,20 @@ S6:
 FEED:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Valued:
-		Cost: 100
+		Cost: 200
 	Tooltip:
 		Name: Feeder
+	Health:
+		HP: 7500
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
 		Speed: 49
 	Harvester:
-		Capacity: 20
+		Capacity: 10
 		Resources: Tiberium, BlueTiberium, Ore, Gems
 		HarvestFacings: 8
-		BaleLoadDelay: 12
+		BaleLoadDelay: 18
 		DeliveryBuildings: none
 		FullyLoadedSpeed: 100
 		SearchFromProcRadius: 5
@@ -420,7 +422,7 @@ FEED:
 		RequiresCondition: full && (triggered || berserk)
 	SpeedMultiplier@FULL:
 		RequiresCondition: full
-		Modifier: 200
+		Modifier: 150
 	-TakeCover:
 
 SMEDI:
@@ -1240,7 +1242,7 @@ ATMZ:
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
-		Cost: 1200
+		Cost: 1250
 	Tooltip:
 		Name: Atomizer
 	Selectable:
