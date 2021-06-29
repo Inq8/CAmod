@@ -1042,32 +1042,6 @@
 		Palette: cold6
 		RequiresCondition: chilled > 5
 
-^Meltable:
-	TimedConditionBar@melted:
-		Condition: melted
-		Color: ff6600
-	ExternalCondition@melted:
-		Condition: melted
-		SourceCap: 1
-	DamageMultiplier@melted1:
-		Modifier: 115
-		RequiresCondition: melted == 1
-	WithColoredOverlay@melted1:
-		Palette: hot1
-		RequiresCondition: melted == 1
-	DamageMultiplier@melted2:
-		Modifier: 130
-		RequiresCondition: melted == 2
-	WithColoredOverlay@melted2:
-		Palette: hot2
-		RequiresCondition: melted == 2
-	DamageMultiplier@melted3:
-		Modifier: 145
-		RequiresCondition: melted >= 3
-	WithColoredOverlay@melted3:
-		Palette: hot3
-		RequiresCondition: melted >= 3
-
 ^Slowable:
 	ExternalCondition@slowed:
 		Condition: slowed
@@ -1382,7 +1356,6 @@
 	Inherits@mind: ^MindControllable
 	Inherits@handicaps: ^PlayerHandicaps
 	Inherits@irrad: ^Irradiatable
-	Inherits@meltable: ^Meltable
 	Inherits@ionsurge: ^IonSurgable
 	Huntable:
 	OwnerLostAction:
@@ -2365,7 +2338,6 @@
 	Inherits@Concussion: ^Concussion
 	Inherits@selection: ^SelectableCombatBuilding
 	Inherits@mind: ^MindControllable
-	Inherits@meltable: ^Meltable
 	Inherits@gpsscramble: ^GpsScramble
 	-SpeedMultiplier@concussion:
 	WithColoredOverlay@IRONCURTAIN:
