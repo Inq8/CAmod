@@ -3491,21 +3491,21 @@ IFV:
 		AttackAnythingCondition: stance-attackanything
 		ScanRadius: 6
 	AutoTargetPriority@DEFAULTAA:
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Defense
 		InvalidTargets: NoAutoTarget
 		RequiresCondition: (!stance-attackanything && !assault-move) && (!full || samturr)
 	AutoTargetPriority@ATTACKANYTHINGAA:
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Structure, Defense
 		InvalidTargets: NoAutoTarget
 		RequiresCondition: (stance-attackanything || assault-move) && (!full || samturr)
 	AutoTargetPriority@DEFAULTAAPRIO:
 		RequiresCondition: (!stance-attackanything && !assault-move) && (!full || samturr)
-		ValidTargets: Air
+		ValidTargets: Air, AirSmall
 		InvalidTargets: NoAutoTarget
 		Priority: 10
 	AutoTargetPriority@ATTACKANYTHINGAAPRIO:
 		RequiresCondition: (!stance-attackanything && !assault-move) && (!full || samturr)
-		ValidTargets: Air
+		ValidTargets: Air, AirSmall
 		InvalidTargets: NoAutoTarget
 		Priority: 10
 	AutoTargetPriority@DEFAULTG:
