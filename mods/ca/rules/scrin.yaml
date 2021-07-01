@@ -914,7 +914,7 @@ LCHR:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 141
-		Prerequisites: anyradar, ~vehicles.despoiler, ~techlevel.medium
+		Prerequisites: anyradar, ~vehicles.collector, ~techlevel.medium
 		Queue: Vehicle
 		Description: Medium-ranged anti-infantry/structure unit.\n  Regenerates health while dealing damage\n  Disables power plants and radars\n  Strong vs Infantry, Buildings\n  Weak vs Tanks, Defenses, Aircraft
 		IconPalette: chromes
@@ -1252,7 +1252,7 @@ ATMZ:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 285
-		Prerequisites: scrt, ~vehicles.despoiler, ~techlevel.medium
+		Prerequisites: scrt, ~vehicles.collector, ~techlevel.medium
 		Description: Lightly armored long-range support unit.\nTargets take damage over time\n  Strong vs Vehicles, Aircraft\n  Weak vs Infantry, Buildings
 		IconPalette: chrome
 	Mobile:
@@ -2590,7 +2590,7 @@ SFAC:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
 	ValidFactions:
-		Factions: reaper, traveler, harbinger, despoiler
+		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite@scrin:
 		Prerequisite: structures.scrin
 	ProvidesPrerequisiteValidatedFaction@reaper:
@@ -2602,9 +2602,9 @@ SFAC:
 	ProvidesPrerequisiteValidatedFaction@harbinger:
 		Factions: harbinger
 		Prerequisite: structures.harbinger
-	ProvidesPrerequisiteValidatedFaction@despoiler:
-		Factions: despoiler
-		Prerequisite: structures.despoiler
+	ProvidesPrerequisiteValidatedFaction@collector:
+		Factions: collector
+		Prerequisite: structures.collector
 	ProductionBar@Building:
 		ProductionType: Building
 	ProductionBar@Defense:
@@ -2860,9 +2860,9 @@ PORT:
 	ProvidesPrerequisite@harbinger:
 		Factions: harbinger
 		Prerequisite: infantry.harbinger
-	ProvidesPrerequisite@despoiler:
-		Factions: despoiler
-		Prerequisite: infantry.despoiler
+	ProvidesPrerequisite@collector:
+		Factions: collector
+		Prerequisite: infantry.collector
 	Power:
 		Amount: -20
 	ProvidesPrerequisite@buildingname:
@@ -2913,7 +2913,7 @@ WSPH:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	ValidFactions:
-		Factions: reaper, traveler, harbinger, despoiler
+		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite@any:
 		Prerequisite: vehicles.any
 	ProvidesPrerequisite@scrin:
@@ -2927,20 +2927,20 @@ WSPH:
 	ProvidesPrerequisiteValidatedFaction@harbinger:
 		Factions: harbinger
 		Prerequisite: vehicles.harbinger
-	ProvidesPrerequisiteValidatedFaction@despoiler:
-		Factions: despoiler
-		Prerequisite: vehicles.despoiler
+	ProvidesPrerequisiteValidatedFaction@collector:
+		Factions: collector
+		Prerequisite: vehicles.collector
 	ProvidesPrerequisiteValidatedFaction@seek:
-		Factions: reaper, harbinger, despoiler
+		Factions: reaper, harbinger, collector
 		Prerequisite: vehicles.seek
 	ProvidesPrerequisiteValidatedFaction@corr:
 		Factions: reaper, traveler, harbinger
 		Prerequisite: vehicles.corr
 	ProvidesPrerequisiteValidatedFaction@devo:
-		Factions: reaper, traveler, despoiler
+		Factions: reaper, traveler, collector
 		Prerequisite: vehicles.devo
 	ProvidesPrerequisiteValidatedFaction@tpod:
-		Factions: traveler, harbinger, despoiler
+		Factions: traveler, harbinger, collector
 		Prerequisite: vehicles.tpod
 	WithBuildingBib:
 	RallyPoint:
@@ -3014,7 +3014,7 @@ NERV:
 		Amount: -40
 	-PowerMultiplier@POWERDRAIN:
 	ValidFactions:
-		Factions: reaper, traveler, harbinger, despoiler
+		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite@anyradar:
 		Prerequisite: anyradar
 	ProvidesPrerequisite@scrinrad:
@@ -3029,8 +3029,8 @@ NERV:
 		Factions: harbinger
 		Prerequisite: radar.harbinger
 	ProvidesPrerequisiteValidatedFaction@desprad:
-		Factions: despoiler
-		Prerequisite: radar.despoiler
+		Factions: collector
+		Prerequisite: radar.collector
 	ProvidesPrerequisite@buildingname:
 	ExternalCondition@JAMMED:
 		Condition: jammed
@@ -3174,15 +3174,15 @@ SCRT:
 	Power:
 		Amount: -200
 	ValidFactions:
-		Factions: reaper, traveler, harbinger, despoiler
+		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
 	ProvidesPrerequisiteValidatedFaction@travelerscrt:
 		Factions: traveler
 		Prerequisite: scrt.traveler
-	ProvidesPrerequisiteValidatedFaction@despoilerscrt:
-		Factions: despoiler
-		Prerequisite: scrt.despoiler
+	ProvidesPrerequisiteValidatedFaction@collectorscrt:
+		Factions: collector
+		Prerequisite: scrt.collector
 	ProvidesPrerequisite@buildingname:
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
@@ -3226,7 +3226,7 @@ SCRT:
 	GrantExternalConditionPower@FEEDERMUTATION:
 		OrderName: feedermutation
 		Icon: feedermutation
-		Prerequisites: ~scrt.despoiler, ~techlevel.high
+		Prerequisites: ~scrt.collector, ~techlevel.high
 		ChargeInterval: 7500
 		Description: Feeder Mutation
 		Condition: feedermutation
@@ -3294,7 +3294,7 @@ GRAV:
 		Produces: Aircraft, Plane
 		PauseOnCondition: forceshield || invulnerability || being-warped
 	ValidFactions:
-		Factions: reaper, traveler, harbinger, despoiler
+		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisiteValidatedFaction@traveler:
 		Factions: traveler
 		Prerequisite: aircraft.traveler
@@ -3548,9 +3548,9 @@ MANI:
 		Weapon: SuppressionField
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
-	ProductionCostMultiplier@DESPOILER:
+	ProductionCostMultiplier@COLLECTOR:
 		Multiplier: 90
-		Prerequisites: structures.despoiler
+		Prerequisites: structures.collector
 
 RIFT:
 	Inherits: ^ScrinBuilding
