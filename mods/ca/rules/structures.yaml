@@ -3708,29 +3708,6 @@ HQ:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		PauseOnCondition: disabled || being-warped
-	GrantExternalConditionPower@STEALTHEMITTER:
-		OrderName: stealthemitter
-		Prerequisites: ~radar.shadow, techlevel.unrestricted
-		Icon: stealthemitter
-		IconPalette: chrometd
-		ChargeInterval: 6000
-		Description: Stealth Emitter
-		Condition: stealth-emitter
-		Dimensions: 1, 1
-		Footprint: x
-		ValidRelationships: Ally
-		Duration: 750
-		ActivationDelay: 0
-		AirburstAltitude: 0c0
-		AllowMultiple: false
-		LongDesc: Temporarily turns the selected unit, defense or structure into a\nstealth emitter, cloaking nearby vehicles and structures.
-		OnFireSound: cloak6.aud
-		SelectTargetSpeechNotification: SelectTarget
-		InsufficientPowerSpeechNotification: InsufficientPower
-		DisplayRadarPing: True
-		Cursor: ability
-		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayTimerRelationships: Ally
 	Power:
 		Amount: -40
 	ValidFactions:

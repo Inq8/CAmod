@@ -1439,6 +1439,71 @@ MRJ:
 	AttackOmni:
 	GuardsSelection:
 
+MSG:
+	Inherits: ^Vehicle
+	Inherits@SELECTION: ^SelectableSupportUnit
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 225
+		Prerequisites: anyradar, ~vehicles.shadow, ~techlevel.high
+		Description: Cloaks nearby units and buildings.\n  Unarmed
+	Valued:
+		Cost: 1500
+	Tooltip:
+		Name: Mobile Stealth Generator
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 25000
+	Armor:
+		Type: Light
+	Mobile:
+		Speed: 56
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	SpawnActorOnDeath:
+		Actor: MSG.Husk
+		RequiresCondition: !being-warped
+	Targetable:
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	GrantCondition@PREVIEWWORKAROUND:
+		Condition: real-actor
+	WithMakeAnimation:
+		BodyNames: deployedbody
+	Carryable:
+		LocalOffset: 0,0,150
+	WithSpriteBody@deployed:
+		Sequence: idle-deployed
+		RequiresCondition: !undeployed && real-actor
+		Name: deployedbody
+	WithFacingSpriteBody:
+		RequiresCondition: undeployed
+	GrantConditionOnDeploy:
+		PauseOnCondition: empdisable || being-warped || being-captured
+		DeployedCondition: deployed
+		UndeployedCondition: undeployed
+		Facing: 368
+		AllowedTerrainTypes: Clear, Road, Rough
+		DeploySounds: placbldg.aud
+		UndeploySounds: clicky1.aud
+		UndeployOnMove: true
+		UndeployOnPickup: true
+	ProximityExternalCondition@MSG:
+		Condition: invisibility
+	WithRangeCircle@MSG:
+		RequiresCondition: deployed
+		Range: 5c0
+		Color: 33ff33
+	ProximityExternalCondition@MSG:
+		Range: 5c0
+		Condition: invisibility
+		RequiresCondition: deployed
+		MaximumVerticalOffset: 512
+
 TTRA:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
