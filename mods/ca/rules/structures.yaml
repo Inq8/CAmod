@@ -2779,6 +2779,9 @@ HAND:
 	ProvidesPrerequisite@legion:
 		Factions: legion
 		Prerequisite: infantry.legion
+	ProvidesPrerequisite@shadow:
+		Factions: shadow
+		Prerequisite: infantry.shadow
 	ProvidesPrerequisite@mech:
 		Prerequisite: infantry.mech
 	ProvidesPrerequisite@cyborg:
@@ -2859,6 +2862,9 @@ WEAP.TD:
 	ProvidesPrerequisiteValidatedFaction@nodarty:
 		Factions: legion
 		Prerequisite: vehicles.arty
+	ProvidesPrerequisiteValidatedFaction@ftnk:
+		Factions: legion
+		Prerequisite: vehicles.ftnk
 	ProvidesPrerequisite@apc2:
 		Prerequisite: vehicles.apc2
 	ProvidesPrerequisiteValidatedFaction@mtnk:
@@ -2955,7 +2961,7 @@ AIRS:
 		ReadyAudio: ReinforcementsArrived
 		BaselineSpawn: true
 	ValidFactions:
-		Factions: blackh, marked
+		Factions: blackh, marked, shadow
 	ProvidesPrerequisite@any:
 		Prerequisite: vehicles.any
 	ProvidesPrerequisite@human:
@@ -2972,11 +2978,17 @@ AIRS:
 	ProvidesPrerequisiteValidatedFaction@marked:
 		Factions: marked
 		Prerequisite: vehicles.marked
+	ProvidesPrerequisiteValidatedFaction@shadow:
+		Factions: shadow
+		Prerequisite: vehicles.shadow
 	ProvidesPrerequisiteValidatedFaction@nodarty:
-		Factions: blackh, marked
+		Factions: blackh, marked, shadow
 		Prerequisite: vehicles.arty
+	ProvidesPrerequisiteValidatedFaction@ftnk:
+		Factions: marked, legion, shadow
+		Prerequisite: vehicles.ftnk
 	ProvidesPrerequisiteValidatedFaction@mlrs:
-		Factions: marked
+		Factions: blackh, marked
 		Prerequisite: vehicles.mlrs
 	ProvidesPrerequisite@apc2:
 		Prerequisite: vehicles.apc2
@@ -3035,6 +3047,7 @@ NUKE:
 			blackh: nodnuke
 			marked: nodnuke
 			legion: nodnuke
+			shadow: nodnuke
 	WithSpriteBody:
 		PauseOnCondition: disabled
 	Buildable:
@@ -3088,6 +3101,7 @@ NUK2:
 			blackh: nodnuk2
 			marked: nodnuk2
 			legion: nodnuk2
+			shadow: nodnuk2
 	WithSpriteBody:
 		PauseOnCondition: disabled
 	Buildable:
@@ -3137,6 +3151,7 @@ AFAC:
 			blackh: nodfact
 			marked: nodfact
 			legion: nodfact
+			shadow: nodfact
 	Building:
 		Footprint: xxx xxx ===
 		Dimensions: 3,3
@@ -3192,7 +3207,7 @@ AFAC:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
 	ValidFactions:
-		Factions: talon, zocom, eagle, blackh, marked, legion
+		Factions: talon, zocom, eagle, blackh, marked, legion, shadow
 	ProvidesPrerequisite@td:
 		Prerequisite: structures.td
 	ProvidesPrerequisiteValidatedFaction@gdi:
@@ -3208,7 +3223,7 @@ AFAC:
 		Factions: eagle
 		Prerequisite: structures.eagle
 	ProvidesPrerequisiteValidatedFaction@nod:
-		Factions: blackh, marked, legion
+		Factions: blackh, marked, legion, shadow
 		Prerequisite: structures.nod
 	ProvidesPrerequisiteValidatedFaction@blackh:
 		Factions: blackh
@@ -3219,11 +3234,14 @@ AFAC:
 	ProvidesPrerequisiteValidatedFaction@legion:
 		Factions: legion
 		Prerequisite: structures.legion
+	ProvidesPrerequisiteValidatedFaction@shadow:
+		Factions: shadow
+		Prerequisite: structures.shadow
 	ProvidesPrerequisiteValidatedFaction@weap.tdFAC:
 		Factions: talon, zocom, eagle, legion
 		Prerequisite: structures.weap.td
 	ProvidesPrerequisiteValidatedFaction@airs:
-		Factions: blackh, marked
+		Factions: blackh, marked, shadow
 		Prerequisite: structures.airs
 	ProvidesPrerequisite@wall:
 		Prerequisite: structures.wall
@@ -3531,6 +3549,7 @@ HQ:
 			blackh: nodhq
 			marked: nodhq
 			legion: nodhq
+			shadow: nodhq
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 90
@@ -3700,7 +3719,7 @@ HQ:
 		Amount: -40
 	-PowerMultiplier@POWERDRAIN:
 	ValidFactions:
-		Factions: talon, zocom, eagle, blackh, marked, legion
+		Factions: talon, zocom, eagle, blackh, marked, legion, shadow
 	ProvidesPrerequisiteValidatedFaction@anyradar:
 		Prerequisite: anyradar
 	ProvidesPrerequisiteValidatedFaction@gdirad:
@@ -3721,8 +3740,11 @@ HQ:
 	ProvidesPrerequisiteValidatedFaction@legrad:
 		Factions: legion
 		Prerequisite: radar.legion
+	ProvidesPrerequisiteValidatedFaction@shadrad:
+		Factions: shadow
+		Prerequisite: radar.shadow
 	ProvidesPrerequisiteValidatedFaction@howi:
-		Factions: marked, legion
+		Factions: marked, legion, shadow
 		Prerequisite: upgrades.howi
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@radar-active:
@@ -3968,7 +3990,7 @@ HPAD.TD:
 	Power:
 		Amount: -10
 	ValidFactions:
-		Factions: talon, zocom, eagle, blackh, marked, legion
+		Factions: talon, zocom, eagle, blackh, marked, legion, shadow
 	ProvidesPrerequisite@all:
 		Prerequisite: aircraft.all
 	ProvidesPrerequisiteValidatedFaction@gdi:
@@ -3978,16 +4000,16 @@ HPAD.TD:
 		Factions: eagle
 		Prerequisite: aircraft.eagle
 	ProvidesPrerequisiteValidatedFaction@nod:
-		Factions: blackh, marked, legion
+		Factions: blackh, marked, legion, shadow
 		Prerequisite: aircraft.nod
-	ProvidesPrerequisiteValidatedFaction@blackh:
-		Factions: blackh
-		Prerequisite: aircraft.blackh
 	ProvidesPrerequisiteValidatedFaction@marked:
 		Factions: marked
 		Prerequisite: aircraft.marked
+	ProvidesPrerequisiteValidatedFaction@shadow:
+		Factions: shadow
+		Prerequisite: aircraft.shadow
 	ProvidesPrerequisiteValidatedFaction@apch:
-		Factions: blackh, legion
+		Factions: blackh, legion, shadow
 		Prerequisite: aircraft.apch
 	ProvidesPrerequisite@chinook:
 		Prerequisite: aircraft.chinook
@@ -4034,6 +4056,7 @@ PROC.TD:
 			blackh: nodproc
 			marked: nodproc
 			legion: nodproc
+			shadow: nodproc
 	Valued:
 		Cost: 1800
 	CustomSellValue:
@@ -4522,7 +4545,7 @@ TMPL:
 		Types: SabInfiltrate
 		Proxy: stolentech.tmpl
 	ValidFactions:
-		Factions: blackh, marked, legion
+		Factions: blackh, marked, legion, shadow
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
@@ -4535,6 +4558,9 @@ TMPL:
 	ProvidesPrerequisiteValidatedFaction@legiontmpl:
 		Factions: legion
 		Prerequisite: tmpl.legion
+	ProvidesPrerequisiteValidatedFaction@shadowtmpl:
+		Factions: shadow
+		Prerequisite: tmpl.shadow
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped

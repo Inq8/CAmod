@@ -1051,7 +1051,7 @@ N4:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 71
-		Prerequisites: ~hand, ~!cyborg.production, ~!puri.upgrade, ~techlevel.infonly
+		Prerequisites: ~hand, ~!cyborg.production, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Anti-infantry/anti-structure unit.\n  Strong vs Infantry, Buildings\n  Weak vs Vehicles, Aircraft
 	Valued:
@@ -1071,8 +1071,8 @@ N4:
 		MuzzlePalette: tdeffect
 	Armament@PRIMARY:
 		Weapon: FlamerTD
-	Armament@CLOSE:
-		Weapon: FlamerTDClose
+	Armament@FF:
+		Weapon: FlamerTDFF
 	Armament@Garrison:
 		Name: mounted
 		Weapon: FlamerE
@@ -1106,7 +1106,7 @@ N5:
 		Queue: Infantry
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 72
-		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~!puri.upgrade, ~techlevel.infonly
+		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Advanced general-purpose infantry.\n  Strong vs all Ground Units
 	Valued:
@@ -1128,8 +1128,8 @@ N5:
 		MuzzlePalette: tdeffect
 	Armament@PRIMARY:
 		Weapon: ChemsprayTD
-	Armament@CLOSE:
-		Weapon: ChemsprayTDClose
+	Armament@FF:
+		Weapon: ChemsprayTDFF
 	Armament@Garrison:
 		Name: mounted
 		Weapon: ChemsprayE
@@ -2303,32 +2303,34 @@ BH:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
-	Inherits@CYBORGUPG: ^NodCyborgUpgrade
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 70
-		Prerequisites: ~hand, ~infantry.blackh, ~puri.upgrade, ~techlevel.infonly
-		Description: Elite anti-infantry/anti-structure unit.\n  Strong vs Infantry, Buildings\n  Weak vs Vehicles, Aircraft
+		BuildPaletteOrder: 150
+		Prerequisites: anyradar, ~infantry.blackh, ~techlevel.infonly
+		Description: Elite precision flamethrower unit.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
 	Valued:
-		Cost: 325
+		Cost: 500
 	Tooltip:
 		Name: Black Hand Trooper
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 17000
+		HP: 15000
 	Mobile:
 		Speed: 49
 		Voice: Move
+	RevealsShroud:
+		Range: 5c0
 	Armament:
 		Weapon: BlackHandFlamer
-		LocalOffset: 450,0,350
+		LocalOffset: 200,0,250
 	Armament@Garrison:
 		Name: mounted
-		Weapon: FlamerE
+		Weapon: BlackHandFlamer
 	TakeCover:
 		ProneOffset: 160,0,-256
+		SpeedModifier: 70
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: being-warped

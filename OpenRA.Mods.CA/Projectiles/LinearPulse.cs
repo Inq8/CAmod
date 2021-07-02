@@ -10,15 +10,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using OpenRA.GameRules;
 using OpenRA.Graphics;
-using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common;
-using OpenRA.Mods.Common.Effects;
-using OpenRA.Mods.Common.Graphics;
-using OpenRA.Mods.Common.Traits;
-using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Projectiles
@@ -97,13 +91,18 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			// initially no distance has been travelled by the pulse
 			totalDistanceTravelled = 0;
+
+			// the weapon range (total distance to be travelled)
 			range = args.Weapon.Range.Length;
 
 			if (!info.IgnoreRangeModifiers)
 				range = OpenRA.Mods.Common.Util.ApplyPercentageModifiers(range, args.RangeModifiers);
 
-			// the weapon range (distance to be travelled in cell units)
 			target = args.PassiveTarget;
+
+			// get the offset of the source compared to source actor's center and apply the same offset to the target (so the linear pulse always travels parallel to the source actor's facing)
+			var offsetFromCenter = source - args.SourceActor.CenterPosition;
+			target = target + offsetFromCenter;
 
 			if (info.Inaccuracy.Length > 0)
 			{
@@ -129,6 +128,9 @@ namespace OpenRA.Mods.CA.Projectiles
 			var velocity = convertedVelocity.Rotate(WRot.FromYaw(facing));
 			pos = pos + velocity;
 
+			totalDistanceTravelled += speed.Length;
+			intervalDistanceTravelled += speed.Length;
+
 			if (intervalDistanceTravelled >= info.ImpactSpacing.Length)
 			{
 				intervalDistanceTravelled = 0;
@@ -136,8 +138,6 @@ namespace OpenRA.Mods.CA.Projectiles
 					Explode(world);
 			}
 
-			totalDistanceTravelled += speed.Length;
-			intervalDistanceTravelled += speed.Length;
 			ticks++;
 		}
 
@@ -159,7 +159,7 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		public IEnumerable<IRenderable> Render(WorldRenderer wr)
 		{
-			if (anim == null || ticks >= speed.Length)
+			if (anim == null || totalDistanceTravelled >= range)
 				yield break;
 
 			var world = args.SourceActor.World;
