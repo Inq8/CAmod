@@ -773,7 +773,6 @@ ARTY.nod:
 	Armament:
 		Weapon: 155mmTD
 	Selectable:
-		DecorationBounds: 44,38,0,-4
 		Class: arty
 
 HOWI:
@@ -1444,13 +1443,21 @@ MSG:
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 225
+		BuildPaletteOrder: 385
 		Prerequisites: anyradar, ~vehicles.shadow, ~techlevel.high
 		Description: Cloaks nearby units and buildings.\n  Unarmed
 	Valued:
-		Cost: 1500
+		Cost: 1400
+	Tooltip:
+		Name:
 	Tooltip:
 		Name: Mobile Stealth Generator
+		RequiresCondition: !deployed
+	Tooltip@DEPLOYED:
+		Name: Mobile Stealth Generator (deployed)
+		RequiresCondition: deployed
+	Selectable:
+		DecorationBounds: 38,36,0,-1
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -1481,7 +1488,7 @@ MSG:
 		RequiresCondition: !undeployed && real-actor
 		Name: deployedbody
 	WithFacingSpriteBody:
-		RequiresCondition: undeployed
+		RequiresCondition: undeployed || !real-actor
 	GrantConditionOnDeploy:
 		PauseOnCondition: empdisable || being-warped || being-captured
 		DeployedCondition: deployed
@@ -1496,13 +1503,14 @@ MSG:
 		Condition: invisibility
 	WithRangeCircle@MSG:
 		RequiresCondition: deployed
-		Range: 5c0
+		Range: 3c512
 		Color: 33ff33
 	ProximityExternalCondition@MSG:
-		Range: 5c0
+		Range: 3c512
 		Condition: invisibility
 		RequiresCondition: deployed
 		MaximumVerticalOffset: 512
+		AffectsParent: true
 
 TTRA:
 	Inherits: ^Tank
