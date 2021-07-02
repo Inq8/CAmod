@@ -184,7 +184,7 @@ FlamerTD:
 		MaximumImpactDistance: 1c768
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
-		Falloff: 100, 50, 25, 0
+		Falloff: 100, 50, 20, 0
 		Damage: 1850
 		Versus:
 			None: 300
@@ -206,7 +206,6 @@ FlamerTDFF:
 	Inherits: FlamerTD
 	Projectile: LinearPulse
 		MinimumImpactDistance: 1c768
-		MaximumImpactDistance: 1c768
 	Warhead@1Dam: SpreadDamage
 		Falloff: 100, 50, 0
 		ValidRelationships: Ally
@@ -236,7 +235,6 @@ BigFlamerTD:
 		MaximumImpactDistance: 2304
 	Warhead@1Dam: SpreadDamage
 		Damage: 925
-		-Delay:
 
 BigFlamerTDFF:
 	Inherits: BigFlamerTD
@@ -280,14 +278,11 @@ HeavyFlameTankFlamer:
 	ReloadDelay: 80
 	Burst: 30
 	BurstDelays: 2
-	MinRange: 0c512
 	Warhead@1Dam: SpreadDamage
 		Damage: 130
 		Versus:
 			None: 230
 	Warhead@2Smu: LeaveSmudge
-		SmudgeType: Scorch
-		InvalidTargets: Vehicle, Building, Wall
 		AirThreshold: 256
 		Chance: 10
 
@@ -320,10 +315,10 @@ BlackHandFlamer:
 		Falloff: 100, 0
 		Damage: 300
 		Versus:
-			None: 200
+			None: 100
 			Wood: 5
-			Light: 25
-			Heavy: 25
+			Light: 20
+			Heavy: 15
 			Concrete: 10
 			Brick: 2
 	Warhead@2Smu: LeaveSmudge

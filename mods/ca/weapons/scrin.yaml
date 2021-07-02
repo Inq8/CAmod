@@ -12,7 +12,7 @@ DisintegratorBeam:
 		Width: 30
 		Duration: 3
 		SecondaryBeamWidth: 50
-		SecondaryBeamColor:00FFCC30
+		SecondaryBeamColor: 00FFCC30
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
 		Damage: 3000
@@ -411,7 +411,6 @@ MiniRift:
 		ValidRelationships: Enemy, Neutral
 
 CorrupterSpew:
-	Inherits: Flamer
 	StartBurstReport: corrupter-fire1.aud
 	ReloadDelay: 100
 	Burst: 30
@@ -427,18 +426,23 @@ CorrupterSpew:
 		TrailPalette: scrin-ignore-lighting-alpha85
 	Warhead@1Dam: SpreadDamage
 		DamageTypes: Prone50Percent, TriggerProne, PoisonDeath
-		-Falloff:
+		Spread: 288
 		Damage: 1000
 		Versus:
-			Light: 80
+			None: 300
 			Wood: 120
+			Tree: 120
+			Light: 80
+			Heavy: 30
+			Concrete: 30
+			Brick: 2
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
+		InvalidTargets: Vehicle, Building, Wall
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
 		Image: tibexplodesm
-	-Warhead@Flames:
 
 CorruptorExplode:
 	Inherits: UnitExplodeIraqTank
