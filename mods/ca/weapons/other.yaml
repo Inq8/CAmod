@@ -252,8 +252,8 @@ ChemsprayTD:
 	Warhead@1Dam: SpreadDamage
 		Damage: 2000
 		Versus:
-			Concrete: 50
-			Heavy: 50
+			Concrete: 40
+			Heavy: 40
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
@@ -263,8 +263,8 @@ ChemsprayTDFF:
 	Warhead@1Dam: SpreadDamage
 		Damage: 2000
 		Versus:
-			Concrete: 50
-			Heavy: 50
+			Concrete: 40
+			Heavy: 40
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
@@ -299,8 +299,9 @@ HeavyFlameTankFlamerFF:
 
 BlackHandFlamer:
 	Inherits: HeavyFlameTankFlamer
+	ReloadDelay: 110
 	BurstDelays: 1
-	Burst: 60
+	Burst: 55
 	Range: 3c512
 	Projectile: LinearPulse
 		Speed: 160
@@ -313,12 +314,12 @@ BlackHandFlamer:
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 320
 		Falloff: 100, 0
-		Damage: 300
+		Damage: 340
 		Versus:
 			None: 100
 			Wood: 5
 			Light: 20
-			Heavy: 15
+			Heavy: 20
 			Concrete: 10
 			Brick: 2
 	Warhead@2Smu: LeaveSmudge
