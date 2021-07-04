@@ -109,6 +109,54 @@ E1:
 	Convertible:
 		SpawnActors: N1C
 
+U1:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@BOTHELPER: ^BotCaptureHelper
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 10
+		Prerequisites: ~infantry.usa, ~techlevel.infonly
+		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+	Selectable:
+		Class: E1
+	Valued:
+		Cost: 100
+	Tooltip:
+		Name: G.I
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 5000
+	Armament@PRIMARY:
+		Weapon: M1Carbine
+	Armament@Garrison:
+		Name: mounted
+		Weapon: M1CarbineE
+		MuzzleSequence: garrison-muzzle
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+		IdleSequences: idle1,idle2,idle3,idle4
+	AttackFrontal:
+		PauseOnCondition: being-warped
+		Voice: Attack
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	Convertible:
+		SpawnActors: N1C
+	Mobile:
+		Voice: Move
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Guard:
+		Voice: Move
+	Voiced:
+		VoiceSet: GIVoice
+
 E1R1:
 	Inherits: E1
 	RenderSprites:
@@ -304,7 +352,7 @@ U3:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 20
-		Prerequisites: ~infantry.ra, ~structure.usa, ~techlevel.infonly
+		Prerequisites: ~infantry.usa, ~structure.usa, ~techlevel.infonly
 		Description: Anti-tank/anti-aircraft infantry.\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
 	Selectable:
 		Class: E3
@@ -318,6 +366,7 @@ U3:
 		HP: 4000
 	Mobile:
 		Speed: 38
+		Voice: Move
 	Armament@PRIMARY:
 		Weapon: RedEye
 		LocalOffset: 0,0,400
@@ -370,6 +419,7 @@ U3:
 		ProneOffset: 384,0,-395
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		Voice: Attack
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	AutoTarget:
@@ -421,6 +471,14 @@ U3:
 		CrushedSequence: die-crushed
 	Convertible:
 		SpawnActors: N3C
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Guard:
+		Voice: Move
+	Voiced:
+		VoiceSet: GGIVoice
 
 E3.squad:
 	AlwaysVisible:
@@ -2931,3 +2989,21 @@ BH:
 		Condition: attacking
 	Voiced:
 		VoiceSet: BlackHandVoice
+
+SEAL:
+	Inherits: RMBO
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Navy Seal
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 210
+		Prerequisites: ~infantry.usa, techcenter, ~techlevel.high
+		Queue: Infantry
+		IconPalette: chrome
+		BuildLimit: -1
+		Description: Elite infantry unit. Armed with\na SMG and C4.\n  Can detect cloaked units.\n  Strong vs Infantry, Buildings\n  Weak vs Aircraft\n  Special Ability: C4 Explosives
+	Voiced:
+		VoiceSet: SealVoice
