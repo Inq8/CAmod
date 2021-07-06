@@ -70,7 +70,7 @@ VEHICLES.SCRIN:
 		ArmamentNames: primary
 		Condition: uncharged-fire
 		RevokeDelay: 85
-	GrantConditionOnAttack@PRIMARYCHARGED
+	GrantConditionOnAttack@PRIMARYCHARGED:
 		ArmamentNames: primary-charged
 		Condition: charged-fire
 		RevokeDelay: 85
@@ -368,6 +368,7 @@ S6:
 
 FEED:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@BERSERK: ^Berserk
 	Valued:
 		Cost: 200
 	Tooltip:
@@ -2970,7 +2971,7 @@ WSPH:
 NERV:
 	Inherits: ^ScrinBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
-	Inherits@POWERDRAIN: ^PowerDrainable
+	Inherits@POWERDRAIN: ^PowerDrainableRadar
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 630,-384,0, 630,384,0, -700,-512,0, -700,512,0
@@ -3234,9 +3235,6 @@ SCRT:
 		Footprint: _x_ xxx _x_
 		ValidRelationships: Ally
 		Duration: 25
-		ActivationDelay: 0
-		AirburstAltitude: 0c0
-		Sequence: false-active
 		AllowMultiple: false
 		LongDesc: Transforms Scrin infantry into Feeders which consume resources\nuntil becoming volatile enough to explode.
 		OnFireSound: feedermutation.aud

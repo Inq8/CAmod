@@ -1756,13 +1756,10 @@ JJET:
 		DeathTypes: FireDeath
 	DeathSounds@ZAPPED:
 		Voice: Zapped
-		DeathTypes: ElectricityDeath, ChronoDeath
+		DeathTypes: ElectricityDeath, ChronoDeath, AtomizedDeath
 	DeathSounds@POISONED:
 		Voice: Poisoned
 		DeathTypes: PoisonDeath, ToxinDeath, ToxicDeath
-	DeathSounds@ATOMIZED:
-		Voice: Atomized
-		DeathTypes: AtomizedDeath
 	ChangesHealth@HOSPITAL:
 		Step: 500
 		Delay: 100
@@ -2352,7 +2349,9 @@ SHAD:
 		CloakSound: gstealon.aud
 		UncloakSound: gstealof.aud
 	Cloak@CRATE-CLOAK:
-		RequiresCondition: crate-cloak && !(invisibility || hidden)
+		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden)
+	GrantConditionOnDamageState@UNCLOAK:
+		ValidDamageStates: Critical
 	IgnoresDisguise:
 	DetectCloaked:
 		CloakTypes: Cloak, Thief
@@ -2360,7 +2359,6 @@ SHAD:
 	-WithParachute:
 	AmmoPool:
 		Ammo: 1
-		AmmoCondition: ammo
 		Armaments: none
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
@@ -2370,7 +2368,13 @@ SHAD:
 		Mine: SHAB
 		TileUnknownName: build-valid
 	Rearmable:
-		RearmActors: none
+		RearmActors: shad.rearm
+
+# ---- dummy actor because RearmableActors is required
+SHAD.REARM:
+	Inherits: ^Infantry
+	RenderSprites:
+		Image: shad
 
 SGLI:
 	Inherits: ^Plane
