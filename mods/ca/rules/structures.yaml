@@ -3715,6 +3715,24 @@ HQ:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		PauseOnCondition: disabled || being-warped
+	AirReinforcementsPower@ShadowTeam:
+		OrderName: shadowteam
+		Prerequisites: ~radar.shadow, techlevel.unrestricted
+		Icon: shadteam
+		ChargeInterval: 9000
+		Description: Shadow Team
+		LongDesc: Calls for a Shadow Team, five stealth infantry that arrive via glider.
+		SelectTargetSpeechNotification: SelectTarget
+		UnitType: sgli
+		QuantizedFacings: 8
+		DisplayBeacon: false
+		SquadSize: 5
+		SquadOffset: -1024,1024,0
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+		PauseOnCondition: disabled || being-warped
+		LaunchSpeechNotification: ReinforcementsArrived
+		EndChargeSpeechNotification: Reinforce
 	Power:
 		Amount: -40
 	-PowerMultiplier@POWERDRAIN:

@@ -1518,6 +1518,9 @@
 	GpsRadarDot:
 		Sequence: Vehicle
 	TeleportNetworkTransportable:
+	Targetable@SHADOWBEACON:
+		TargetTypes: ShadowBeacon
+	AttachableCameraTarget:
 
 ^Vehicle:
 	Inherits@1: ^Vehicle-NOUPG
@@ -2383,6 +2386,9 @@
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
+	Targetable@SHADOWBEACON:
+		TargetTypes: ShadowBeacon
+	AttachableCameraTarget:
 
 ^BuildingTD:
 	Inherits@1: ^Building
@@ -3005,7 +3011,13 @@
 	Tooltip:
 		Name: Mine
 	Targetable:
-		TargetTypes: Ground, Water, Mine
+		TargetTypes: Ground, Mine
+	Targetable@ONWATER:
+		TargetTypes: Water
+		RequiresCondition: onwater
+	GrantConditionOnTerrain@ONWATER:
+		TerrainTypes: Water
+		Condition: onwater
 	Immobile:
 		OccupiesSpace: true
 	HitShape:

@@ -1916,6 +1916,21 @@ U2Camera:
 	TargetActorCenter: true
 	Projectile: InstantHit
 
+AttachShadowBeacon:
+	Warhead@AttachCamera: AttachCamera
+		Range: 341
+		CameraActor: shadow.beacon.camera
+		AttachSounds: shad-beacontrigger1.aud
+		MissSounds: dud1.aud
+		ValidTargets: ShadowBeacon
+	Warhead@TargetValidator: SpreadDamage
+		ValidTargets: ShadowBeacon
+	Warhead@highlight: GrantExternalCondition
+		Range: 341
+		Duration: 2
+		Condition: redhighlight
+		ValidTargets: ShadowBeacon
+
 ^Debris:
 	ValidTargets: Ground, Water, Trees, Air
 	Range: 5c0

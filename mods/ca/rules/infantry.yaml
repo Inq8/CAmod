@@ -2299,6 +2299,193 @@ IVAN:
 	Voiced:
 		VoiceSet: CrazyIvanVoice
 
+SHAD:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@BERSERK: ^Berserk
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Shadow Operative
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	RevealsShroud:
+		Range: 6c0
+	Passenger:
+		CustomPipType: red
+		Voice: Move
+	Guard:
+		Voice: Move
+	Voiced:
+		VoiceSet: ShadowOperativeVoice
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+		StandSequences: stand, stand2
+		IdleSequences: idle1, idle2
+		MinIdleDelay: 80
+		MaxIdleDelay: 250
+	Health:
+		HP: 5000
+	Mobile:
+		Speed: 56
+		Voice: Move
+	Armament:
+		Weapon: ShadowOperativeGun
+	Armament@Garrison:
+		Name: mounted
+		Weapon: ShadowOperativeGun
+	AttackFrontal:
+		Voice: Attack
+		PauseOnCondition: being-warped
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: ReturnFire
+	Cloak:
+		InitialDelay: 1
+		CloakDelay: 75
+		CloakedCondition: hidden
+		Palette: cloaktd
+		IsPlayerPalette: true
+		CloakTypes: Cloak
+		UncloakOn: Unload, Demolish, Dock, Attack, Damage
+		CloakSound: gstealon.aud
+		UncloakSound: gstealof.aud
+	Cloak@CRATE-CLOAK:
+		RequiresCondition: crate-cloak && !(invisibility || hidden)
+	IgnoresDisguise:
+	DetectCloaked:
+		CloakTypes: Cloak, Thief
+		Range: 4c0
+	-WithParachute:
+	AmmoPool:
+		Ammo: 1
+		AmmoCondition: ammo
+		Armaments: none
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+	Minelayer:
+		Mine: SHAB
+		TileUnknownName: build-valid
+	Rearmable:
+		RearmActors: none
+
+SGLI:
+	Inherits: ^Plane
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Shadow Glider
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 9000
+	RevealsShroud:
+		Range: 10c0
+		MinRange: 8c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 8c0
+		Type: GroundPosition
+	Voiced:
+		VoiceSet: ShadowOperativeVoice
+	Aircraft:
+		CruiseAltitude: 1c512
+		InitialFacing: 192
+		TurnSpeed: 16
+		Speed: 115
+		RepulsionSpeed: 40
+		MaximumPitch: 56
+		Voice: Move
+	SpawnActorOnDeath:
+		Actor: sgli.crashing
+		RequiresCondition: !being-warped
+	Selectable:
+		DecorationBounds: 30,28,0,2
+	TransformOnCondition:
+		IntoActor: sgli.deployed
+		RequiresCondition: deployed
+	GrantConditionOnDeploy:
+		DeployedCondition: deployed
+		DeploySounds: chute1.aud
+	Targetable@AIRBORNE:
+		RequiresCondition: airborne && !being-warped
+		TargetTypes: AirSmall
+	-EjectOnDeath:
+	-Explodes:
+	-Contrail@1:
+	-Contrail@2:
+	-ActorLostNotification:
+
+SGLI.crashing:
+	Inherits: SGLI
+	FallsToEarth:
+		Moves: true
+		MaximumSpinSpeed: 0
+		Explosion:
+		Velocity: 60
+	RenderSprites:
+		Image: sgli
+	Aircraft:
+		Speed: 80
+	ActorLostNotification:
+		Notification: AirUnitLost
+	-SpawnActorOnDeath:
+	-GrantConditionOnDeploy:
+	-TransformOnCondition:
+	SpawnActorOnDeath@gliderdiscarded:
+		Actor: sgli.discarded
+		RequiresCondition: !being-warped
+	RejectsOrders:
+
+SGLI.deployed:
+	Inherits: SGLI
+	FallsToEarth:
+		Moves: true
+		MaximumSpinSpeed: 0
+		Explosion:
+		Velocity: 60
+	RenderSprites:
+		Image: sgli
+	SpawnActorOnDeath:
+		Actor: shad
+		RequiresCondition: !being-warped
+	SpawnActorOnDeath@gliderdiscarded:
+		Actor: sgli.discarded
+		RequiresCondition: !being-warped
+	Aircraft:
+		Speed: 80
+	-GrantConditionOnDeploy:
+	-TransformOnCondition:
+	RejectsOrders:
+
+SGLI.discarded:
+	Inherits@1: ^SpriteActor
+	RenderSprites:
+		Image: sgli.destroyed
+	ImmobileWithFacing:
+		OccupiesSpace: false
+	HiddenUnderFog:
+		Type: CenterPosition
+		AlwaysVisibleRelationships: None
+	WithFacingSpriteBody:
+	HitShape:
+	MapEditorData:
+		Categories: Husk
+	WithColoredOverlay@IDISABLE:
+		Palette: disabled
+	ChangesHealth:
+		Step: -100
+		StartIfBelow: 101
+		Delay: 25
+	Health:
+		HP: 1000
+	Armor:
+		Type: None
+
 BH:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
