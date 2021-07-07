@@ -3075,6 +3075,7 @@ FTNK:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	RenderSprites:
 	Valued:
 		Cost: 800
@@ -3088,7 +3089,7 @@ FTNK:
 		Prerequisites: anyradar, ~vehicles.ftnk, ~techlevel.low
 		Queue: Vehicle
 		IconPalette: chrometd
-		Description: Tank armed with dual short-ranged flamethrowers.\n  Strong vs Infantry, Buildings, Light Armor\n  Weak vs Tanks, Defenses, Aircraft
+		Description: Tank armed with dual short-range flamethrowers.\n  Strong vs Infantry, Buildings, Light Armor\n  Weak vs Tanks, Defenses, Aircraft
 	Mobile:
 		Speed: 66
 	Health:
@@ -3123,22 +3124,22 @@ HFTK:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
-	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	Inherits@SLOWCRUSH: ^SlightlySlowedByCrushing
 	RenderSprites:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 131
 		Prerequisites: anyradar, ~vehicles.blackh, ~techlevel.low
-		Description: Heavy tank armed with dual\nmedium-ranged flamethrowers.\n  Strong vs Infantry, Buildings, Light Armor\n  Weak vs Tanks, Defenses, Aircraft
+		Description: Heavy tank armed with dual short-range flamethrowers.\n  Strong vs Infantry, Buildings, Light Armor\n  Weak vs Tanks, Defenses, Aircraft
 	Valued:
-		Cost: 1000
+		Cost: 1100
 	Tooltip:
 		Name: Heavy Flame Tank
 		GenericName: Tank
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 40000
+		HP: 46000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -3165,6 +3166,7 @@ HFTK:
 		LocalOffset: 750,200,150, 750,-200,150
 	AttackTurreted:
 		Voice: Attack
+		RangeMargin: 0
 		PauseOnCondition: empdisable || being-warped
 	WithSpriteTurret:
 	WithMuzzleOverlay:

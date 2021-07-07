@@ -31,6 +31,9 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("Maximum distance travelled after which no more damage occurs. Zero falls back to weapon range.")]
 		public readonly WDist MaximumImpactDistance = WDist.Zero;
 
+		[Desc("Maximum distance travelled by projectile visual (if present). Zero falls back to weapon range.")]
+		public readonly WDist ProjectileVisualRange = WDist.Zero;
+
 		[Desc("Whether to ignore range modifiers, as these can mess up the relationship between ImpactSpacing, Speed and max range.")]
 		public readonly bool IgnoreRangeModifiers = true;
 
@@ -74,6 +77,7 @@ namespace OpenRA.Mods.CA.Projectiles
 		int intervalDistanceTravelled;
 		int totalDistanceTravelled;
 		int range;
+		int projectileRange;
 
 		public Actor SourceActor { get { return args.SourceActor; } }
 
@@ -94,6 +98,7 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			// the weapon range (total distance to be travelled)
 			range = args.Weapon.Range.Length;
+			projectileRange = info.ProjectileVisualRange == WDist.Zero ? range : info.ProjectileVisualRange.Length;
 
 			if (!info.IgnoreRangeModifiers)
 				range = OpenRA.Mods.Common.Util.ApplyPercentageModifiers(range, args.RangeModifiers);
@@ -159,7 +164,7 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		public IEnumerable<IRenderable> Render(WorldRenderer wr)
 		{
-			if (anim == null || totalDistanceTravelled >= range)
+			if (anim == null || totalDistanceTravelled >= projectileRange)
 				yield break;
 
 			var world = args.SourceActor.World;

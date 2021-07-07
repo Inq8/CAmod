@@ -2996,11 +2996,10 @@ AIRS:
 	ProvidesPrerequisiteValidatedFaction@howiupgrade:
 		Factions: blackh
 		Prerequisite: howi.upgrade
-	ParatroopersPower@airdrop:
-		OrderName: nodairdrop
+	ParatroopersPower@markedairdrop:
+		OrderName: markedairdrop
 		SquadSize: 3
 		UnitType: c17
-		Prerequisites: airs
 		Icon: airdropicon
 		ChargeInterval: 13500
 		Description: Air Drop
@@ -3019,6 +3018,53 @@ AIRS:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		Prerequisites: vehicles.marked
+	ParatroopersPower@blackhairdrop:
+		OrderName: blackhairdrop
+		SquadSize: 2
+		UnitType: c17
+		Icon: airdropicon
+		ChargeInterval: 13500
+		Description: Air Drop
+		LongDesc: Cargo Planes air drop flame tanks anywhere on the map.
+		DropItems: hftk, hftk
+		SelectTargetSpeechNotification: SelectTarget
+		AllowImpassableCells: false
+		EndChargeSpeechNotification: Reinforce
+		LaunchSpeechNotification: ReinforcementsArrived
+		IncomingSpeechNotification: EnemyUnitsApproaching
+		CameraActor: camera.paradrop
+		DisplayBeacon: true
+		BeaconPoster: lrairdropicon
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+		Prerequisites: vehicles.blackh
+	ParatroopersPower@shadowairdrop:
+		OrderName: shadowairdrop
+		SquadSize: 2
+		UnitType: c17
+		Icon: airdropicon
+		ChargeInterval: 13500
+		Description: Air Drop
+		LongDesc: Cargo Planes air drop stealth tanks anywhere on the map.
+		DropItems: stnk.nod, stnk.nod
+		SelectTargetSpeechNotification: SelectTarget
+		AllowImpassableCells: false
+		EndChargeSpeechNotification: Reinforce
+		LaunchSpeechNotification: ReinforcementsArrived
+		IncomingSpeechNotification: EnemyUnitsApproaching
+		CameraActor: camera.paradrop
+		DisplayBeacon: true
+		BeaconPoster: lrairdropicon
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+		Prerequisites: vehicles.shadow
 	WithDeliveryAnimation:
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
