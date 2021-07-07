@@ -20,7 +20,7 @@ namespace OpenRA.Mods.Common.Traits
 		public readonly bool OccupiesSpace = true;
 		public override object Create(ActorInitializer init) { return new ImmobileWithFacing(init, this); }
 
-        public WAngle GetInitialFacing() { return new WAngle(512); }
+		public WAngle GetInitialFacing() { return new WAngle(512); }
 
 		public IReadOnlyDictionary<CPos, SubCell> OccupiedCells(ActorInfo info, CPos location, SubCell subCell = SubCell.Any)
 		{
@@ -66,7 +66,7 @@ namespace OpenRA.Mods.Common.Traits
 			else
 				occupied = new (CPos, SubCell)[0];
 
-            Facing = init.GetValue<FacingInit, WAngle>(info.GetInitialFacing());
+			Facing = init.GetValue<FacingInit, WAngle>(info.GetInitialFacing());
 		}
 
 		public CPos TopLeft { get { return location; } }

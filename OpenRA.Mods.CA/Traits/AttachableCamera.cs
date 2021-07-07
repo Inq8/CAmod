@@ -8,8 +8,8 @@
  */
 #endregion
 
-using OpenRA.Traits;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
@@ -21,39 +21,37 @@ namespace OpenRA.Mods.CA.Traits
 
 	public class AttachableCamera : INotifyKilled, INotifyActorDisposing
 	{
-        AttachableCameraTarget target;
-		readonly AttachableCameraInfo info;
-        readonly Actor self;
+		AttachableCameraTarget target;
+		readonly Actor self;
 
 		public AttachableCamera(ActorInitializer init, AttachableCameraInfo info)
 		{
-			this.info = info;
-            this.self = init.Self;
+			self = init.Self;
 		}
 
-        public bool IsValid { get { return self != null && !self.IsDead; } }
+		public bool IsValid { get { return self != null && !self.IsDead; } }
 
-        public void SetTarget(AttachableCameraTarget target)
-        {
-            this.target = target;
-        }
+		public void SetTarget(AttachableCameraTarget target)
+		{
+			this.target = target;
+		}
 
-        public void OnTargetLost()
-        {
-            self.Dispose();
-        }
+		public void OnTargetLost()
+		{
+			self.Dispose();
+		}
 
-        public void OnTargetMoved(CPos pos)
-        {
-            var positionable = self.TraitOrDefault<IPositionable>();
-            if (positionable == null)
-                return;
+		public void OnTargetMoved(CPos pos)
+		{
+			var positionable = self.TraitOrDefault<IPositionable>();
+			if (positionable == null)
+				return;
 
 			self.World.AddFrameEndTask(w =>
 			{
-                positionable.SetPosition(self, pos);
-            });
-        }
+				positionable.SetPosition(self, pos);
+			});
+		}
 
 		void INotifyActorDisposing.Disposing(Actor self)
 		{
@@ -65,9 +63,9 @@ namespace OpenRA.Mods.CA.Traits
 			Killed();
 		}
 
-        void Killed()
-        {
-            target.DetachCamera(self);
-        }
+		void Killed()
+		{
+			target.DetachCamera(self);
+		}
 	}
 }

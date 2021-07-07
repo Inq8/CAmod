@@ -271,9 +271,8 @@ namespace OpenRA.Mods.CA.Projectiles
 		{
 			var range = direction.Length;
 			var alphaIncreaser = 5120 - range;
-			if (alphaIncreaser > 0) {
+			if (alphaIncreaser > 0)
 				return alphaIncreaser / 200;
-			}
 
 			return 0;
 		}

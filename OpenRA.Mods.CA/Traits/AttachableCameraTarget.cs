@@ -35,14 +35,14 @@ namespace OpenRA.Mods.CA.Traits
 			if (!self.IsInWorld)
 				return;
 
-            var pos = self.Location;
+			var pos = self.Location;
 
-            foreach (var cameraActor in cameraActors)
-            {
-                var cameraTrait = cameraActor.TraitOrDefault<AttachableCamera>();
-                if (cameraTrait != null && cameraTrait.IsValid)
-                    cameraTrait.OnTargetMoved(pos);
-            }
+			foreach (var cameraActor in cameraActors)
+			{
+				var cameraTrait = cameraActor.TraitOrDefault<AttachableCamera>();
+				if (cameraTrait != null && cameraTrait.IsValid)
+					cameraTrait.OnTargetMoved(pos);
+			}
 		}
 
 		void INotifyActorDisposing.Disposing(Actor self)
@@ -59,28 +59,28 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			foreach (var cameraActor in cameraActors)
 			{
-                if (cameraActor == null || cameraActor.IsDead)
-                    continue;
+				if (cameraActor == null || cameraActor.IsDead)
+					continue;
 
-                var cameraTrait = cameraActor.TraitOrDefault<AttachableCamera>();
-                if (cameraTrait != null && cameraTrait.IsValid)
-                    cameraTrait.OnTargetLost();
+				var cameraTrait = cameraActor.TraitOrDefault<AttachableCamera>();
+				if (cameraTrait != null && cameraTrait.IsValid)
+					cameraTrait.OnTargetLost();
 			}
 		}
 
-        public void AttachCamera(Actor cameraActor)
-        {
-            var cameraTrait = cameraActor.TraitOrDefault<AttachableCamera>();
-            if (cameraTrait != null && cameraTrait.IsValid)
-            {
-                cameraActors.Add(cameraActor);
-                cameraTrait.SetTarget(this);
-            }
-        }
+		public void AttachCamera(Actor cameraActor)
+		{
+			var cameraTrait = cameraActor.TraitOrDefault<AttachableCamera>();
+			if (cameraTrait != null && cameraTrait.IsValid)
+			{
+				cameraActors.Add(cameraActor);
+				cameraTrait.SetTarget(this);
+			}
+		}
 
-        public void DetachCamera(Actor cameraActor)
-        {
-            cameraActors.Remove(cameraActor);
-        }
+		public void DetachCamera(Actor cameraActor)
+		{
+			cameraActors.Remove(cameraActor);
+		}
 	}
 }

@@ -9,8 +9,8 @@
  */
 #endregion
 
-using OpenRA.Traits;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
@@ -44,9 +44,9 @@ namespace OpenRA.Mods.CA.Traits
 				token = self.GrantCondition(conditionToGrant);
 		}
 
-		void INotifyHarvesterAction.MovingToResources(Actor self, CPos targetCell) {}
-		void INotifyHarvesterAction.MovingToRefinery(Actor self, Actor refineryActor) {}
-		void INotifyHarvesterAction.MovementCancelled(Actor self) {}
+		void INotifyHarvesterAction.MovingToResources(Actor self, CPos targetCell) { }
+		void INotifyHarvesterAction.MovingToRefinery(Actor self, Actor refineryActor) { }
+		void INotifyHarvesterAction.MovementCancelled(Actor self) { }
 
 		void INotifyHarvesterAction.Docked()
 		{

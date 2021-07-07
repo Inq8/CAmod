@@ -54,15 +54,15 @@ namespace OpenRA.Mods.CA.Traits
 			if (!info.Types.Overlaps(types))
 				return;
 
-            var targetTrait = self.TraitsImplementing<AttachableCameraTarget>().FirstOrDefault();
+			var targetTrait = self.TraitsImplementing<AttachableCameraTarget>().FirstOrDefault();
 
-            if (targetTrait == null)
-                return;
+			if (targetTrait == null)
+				return;
 
 			AttachCamera(self, infiltrator, targetTrait);
 
-            if (info.InfiltratedSound != null)
-                Game.Sound.Play(SoundType.World, info.InfiltratedSound, self.CenterPosition);
+			if (info.InfiltratedSound != null)
+				Game.Sound.Play(SoundType.World, info.InfiltratedSound, self.CenterPosition);
 
 			if (info.InfiltratedNotification != null)
 				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", info.InfiltratedNotification, self.Owner.Faction.InternalName);

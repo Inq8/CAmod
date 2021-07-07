@@ -13,8 +13,8 @@ using OpenRA.GameRules;
 using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
-using OpenRA.Traits;
 using OpenRA.Primitives;
+using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Warheads
 {
@@ -71,11 +71,11 @@ namespace OpenRA.Mods.CA.Warheads
 				if (distance > Range)
 					continue;
 
-                var targetTrait = actor.TraitsImplementing<AttachableCameraTarget>().FirstOrDefault();
+				var targetTrait = actor.TraitsImplementing<AttachableCameraTarget>().FirstOrDefault();
 
-                if (targetTrait != null)
-                {
-                    AttachCamera(actor, firedBy, targetTrait);
+				if (targetTrait != null)
+				{
+					AttachCamera(actor, firedBy, targetTrait);
 					numAttached++;
 
 					var attachSound = AttachSounds.RandomOrDefault(world.LocalRandom);
