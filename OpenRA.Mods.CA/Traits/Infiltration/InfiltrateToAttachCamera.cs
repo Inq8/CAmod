@@ -16,12 +16,12 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	class InfiltrateToAttachCameraInfo : TraitInfo
+	class InfiltrateToAttachActorInfo : TraitInfo
 	{
-		[ActorReference(typeof(AttachableCameraInfo))]
+		[ActorReference(typeof(AttachableInfo))]
 		[FieldLoader.Require]
-		[Desc("Camera actor.")]
-		public readonly string CameraActor = null;
+		[Desc("Actor to attach.")]
+		public readonly string Actor = null;
 
 		[Desc("The `TargetTypes` from `Targetable` that are allowed to enter.")]
 		public readonly BitSet<TargetableType> Types = default(BitSet<TargetableType>);
@@ -37,14 +37,14 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Sound the perpetrator will hear after successful infiltration.")]
 		public readonly string InfiltrationNotification = null;
 
-		public override object Create(ActorInitializer init) { return new InfiltrateToAttachCamera(this); }
+		public override object Create(ActorInitializer init) { return new InfiltrateToAttachActor(this); }
 	}
 
-	class InfiltrateToAttachCamera : INotifyInfiltrated
+	class InfiltrateToAttachActor : INotifyInfiltrated
 	{
-		readonly InfiltrateToAttachCameraInfo info;
+		readonly InfiltrateToAttachActorInfo info;
 
-		public InfiltrateToAttachCamera(InfiltrateToAttachCameraInfo info)
+		public InfiltrateToAttachActor(InfiltrateToAttachActorInfo info)
 		{
 			this.info = info;
 		}
@@ -54,12 +54,12 @@ namespace OpenRA.Mods.CA.Traits
 			if (!info.Types.Overlaps(types))
 				return;
 
-			var targetTrait = self.TraitsImplementing<AttachableCameraTarget>().FirstOrDefault();
+			var targetTrait = self.TraitsImplementing<AttachableTo>().FirstOrDefault();
 
 			if (targetTrait == null)
 				return;
 
-			AttachCamera(self, infiltrator, targetTrait);
+			Attach(self, infiltrator, targetTrait);
 
 			if (info.InfiltratedSound != null)
 				Game.Sound.Play(SoundType.World, info.InfiltratedSound, self.CenterPosition);
@@ -71,20 +71,20 @@ namespace OpenRA.Mods.CA.Traits
 				Game.Sound.PlayNotification(self.World.Map.Rules, infiltrator.Owner, "Speech", info.InfiltrationNotification, infiltrator.Owner.Faction.InternalName);
 		}
 
-		void AttachCamera(Actor self, Actor infiltrator, AttachableCameraTarget targetTrait)
+		void Attach(Actor self, Actor infiltrator, AttachableTo targetTrait)
 		{
 			var map = self.World.Map;
 			var targetCell = map.CellContaining(self.CenterPosition);
 
 			self.World.AddFrameEndTask(w =>
 			{
-				var cameraActor = self.World.CreateActor(info.CameraActor.ToLowerInvariant(), new TypeDictionary
+				var attachedActor = self.World.CreateActor(info.Actor.ToLowerInvariant(), new TypeDictionary
 				{
 					new LocationInit(targetCell),
 					new OwnerInit(infiltrator.Owner),
 				});
 
-				targetTrait.AttachCamera(cameraActor);
+				targetTrait.Attach(attachedActor);
 			});
 		}
 	}

@@ -18,18 +18,18 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Warheads
 {
-	[Desc("This warhead can attach a camera to the target.")]
-	public class AttachCameraWarhead : WarheadAS
+	[Desc("This warhead can attach an actor to the target.")]
+	public class AttachActorWarhead : WarheadAS
 	{
-		[ActorReference(typeof(AttachableCameraInfo))]
+		[ActorReference(typeof(AttachableInfo))]
 		[FieldLoader.Require]
-		[Desc("Camera actor.")]
-		public readonly string CameraActor = null;
+		[Desc("Actor.")]
+		public readonly string Actor = null;
 
 		[Desc("Range of targets to be attached.")]
 		public readonly WDist Range = WDist.FromCells(1);
 
-		[Desc("Maximum number of targets to attach cameras to.")]
+		[Desc("Maximum number of targets to attach actors to.")]
 		public readonly int MaxTargets = 1;
 
 		[Desc("List of sounds that can be played on attaching.")]
@@ -71,11 +71,11 @@ namespace OpenRA.Mods.CA.Warheads
 				if (distance > Range)
 					continue;
 
-				var targetTrait = actor.TraitsImplementing<AttachableCameraTarget>().FirstOrDefault();
+				var targetTrait = actor.TraitsImplementing<AttachableTo>().FirstOrDefault();
 
 				if (targetTrait != null)
 				{
-					AttachCamera(actor, firedBy, targetTrait);
+					Attach(actor, firedBy, targetTrait);
 					numAttached++;
 
 					var attachSound = AttachSounds.RandomOrDefault(world.LocalRandom);
@@ -94,20 +94,20 @@ namespace OpenRA.Mods.CA.Warheads
 			}
 		}
 
-		void AttachCamera(Actor targetActor, Actor firedBy, AttachableCameraTarget targetTrait)
+		void Attach(Actor targetActor, Actor firedBy, AttachableTo targetTrait)
 		{
 			var map = targetActor.World.Map;
 			var targetCell = map.CellContaining(targetActor.CenterPosition);
 
 			targetActor.World.AddFrameEndTask(w =>
 			{
-				var cameraActor = targetActor.World.CreateActor(CameraActor.ToLowerInvariant(), new TypeDictionary
+				var attachedActor = targetActor.World.CreateActor(Actor.ToLowerInvariant(), new TypeDictionary
 				{
 					new LocationInit(targetCell),
 					new OwnerInit(firedBy.Owner),
 				});
 
-				targetTrait.AttachCamera(cameraActor);
+				targetTrait.Attach(attachedActor);
 			});
 		}
 	}

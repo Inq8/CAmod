@@ -2443,6 +2443,8 @@ SGLI:
 	GrantCondition@AUTODEPLOY:
 		Condition: deployed
 		RequiresCondition: !gliding
+	RejectsOrders:
+		RequiresCondition: !gliding
 	-EjectOnDeath:
 	-Explodes:
 	-Contrail@1:
@@ -2475,6 +2477,7 @@ SGLI.crashing:
 		Actor: sgli.discarded
 		RequiresCondition: !being-warped
 	RejectsOrders:
+		-RequiresCondition:
 
 SGLI.deployed:
 	Inherits: SGLI
@@ -2502,6 +2505,7 @@ SGLI.deployed:
 	-TimedConditionBar@GLIDING:
 	-GrantCondition@AUTODEPLOY:
 	RejectsOrders:
+		-RequiresCondition:
 
 SGLI.discarded:
 	Inherits@1: ^SpriteActor
