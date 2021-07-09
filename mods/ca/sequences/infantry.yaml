@@ -19,6 +19,10 @@
 	die11: frozen
 		Length: *
 		Tick: 80
+	die12: atomized
+		Length: *
+		Tick: 80
+		BlendMode: Additive
 	die-crushed: corpse1
 		Length: 6
 		Tick: 1600
@@ -813,6 +817,9 @@ dog:
 		Start: 236
 		Length: 6
 	die11: dog
+		Start: 236
+		Length: 6
+	die12: dog
 		Start: 236
 		Length: 6
 	die-crushed: corpse1
@@ -2362,6 +2369,8 @@ sniper:
 		UseTilesetExtension: false
 	die11: frozen
 		UseTilesetExtension: false
+	die12: atomized
+		UseTilesetExtension: false
 	die-crushed: corpse1
 		Length: *
 		Tick: 1600
@@ -3121,6 +3130,11 @@ cycom:
 	die11: frozen
 		AddExtension: True
 		Length: *
+	die12: atomized
+		AddExtension: True
+		Length: *
+		Tick: 80
+		BlendMode: Additive
 	die-crushed:
 		Frames: 1110, 1117, 1124, 1131, 1138, 1145, 1152, 1159
 		Length: 8
@@ -3351,3 +3365,91 @@ bh:
 		ZOffset: 512
 		Tick: 80
 	icon: bhicon
+
+shad:
+	Inherits: ^CommonDeaths
+	stand: shad
+		Facings: 8
+	stand2: shad
+		Start: 8
+		Facings: 8
+	run: shad
+		Start: 16
+		Length: 6
+		Facings: 8
+		Tick: 100
+	shoot: shad
+		Start: 64
+		Length: 8
+		Facings: 8
+	idle1: shad
+		Start: 256
+		Length: 14
+		Tick: 120
+	idle2: shad
+		Start: 271
+		Length: 16
+		Tick: 120
+	die1: shad
+		Start: 288
+		Length: 8
+	die2: shad
+		Start: 296
+		Length: 8
+	die3: shad
+		Start: 304
+		Length: 8
+	die4: shad
+		Start: 312
+		Length: 12
+	die5: shad
+		Start: 324
+		Length: 18
+	die7: shad
+		Start: 288
+		Length: 8
+	prone-stand: shad
+		Start: 144
+		Stride: 4
+		Facings: 8
+	prone-stand2: shad
+		Start: 144
+		Stride: 4
+		Facings: 8
+	prone-run: shad
+		Start: 144
+		Length: 4
+		Facings: 8
+		Tick: 100
+	prone-shoot: shad
+		Start: 192
+		Length: 8
+		Facings: 8
+	chrono-overlay: chronofade_small
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+		Tick: 80
+	mind-overlay: mindanim
+		Length: *
+		Tick: 200
+		BlendMode: Alpha
+		Offset: 0, 0
+	icon: spyicon
+
+sgli:
+	Inherits: ^VehicleOverlays
+	idle: sgli
+		UseClassicFacings: true
+		Facings: 32
+	icon: yakicon
+
+sgli.destroyed:
+	Inherits: ^VehicleOverlays
+	idle: sgli
+		Facings: 32
+		Start: 32
+		UseClassicFacings: true
+		ZOffset: -1024

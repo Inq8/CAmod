@@ -774,6 +774,22 @@ CommandoIFVGun:
 	Warhead@1Dam: SpreadDamage
 		Damage: 5100
 
+ShadowOperativeGun:
+	Inherits: ^HeavyMG
+	ReloadDelay: 40
+	Burst: 2
+	BurstDelays: 3
+	Report: shad-fire1.aud, shad-fire2.aud, shad-fire3.aud
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Damage: 2800
+		Versus:
+			None: 100
+			Wood: 40
+			Concrete: 20
+			Light: 60
+			Heavy: 20
+
 HeliGunAG:
 	Inherits: ChainGun
 	Report: mgbtr1.aud, mgbtr2.aud, mgbtr3.aud

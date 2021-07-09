@@ -12,6 +12,7 @@ GenericVoice:
 		blackh: .c01,.c03
 		marked: .c01,.c03
 		legion: .c01,.c03
+		shadow: .c01,.c03
 		gdi: .c01,.c03
 		talon: .c01,.c03
 		zocom: .c01,.c03
@@ -20,6 +21,7 @@ GenericVoice:
 		reaper: .s01,.s03
 		traveler: .s01,.s03
 		harbinger: .s01,.s03
+		collector: .s01,.s03
 	Voices:
 		Select: await1,ready,report1,yessir1
 		Action: ackno,affirm1,noprob,overout,ritaway,roger,ugotit
@@ -43,6 +45,7 @@ VehicleVoice:
 		blackh: .c00,.c02
 		marked: .c00,.c02
 		legion: .c00,.c02
+		shadow: .c00,.c02
 		gdi: .c00,.c02
 		zocom: .c00,.c02
 		talon: .c00,.c02
@@ -51,6 +54,7 @@ VehicleVoice:
 		reaper: .s00,.s02
 		traveler: .s00,.s02
 		harbinger: .s00,.s02
+		collector: .s00,.s02
 	Voices:
 		Select: vehic1,yessir1,report1,await1,unit1
 		Action: ackno,affirm1,movout1
@@ -589,6 +593,25 @@ ApocalypseVoice:
 		Move: vapomoa, vapomob, vapomoc, vapomod, vapomoe
 		Action: vapomoa, vapomob, vapomoc, vapomod, vapomoe
 		Attack: vapoata, vapoatb, vapoatc, vapoatd, vapoate, vapoatf
+
+ShadowOperativeVoice:
+	Voices:
+		Build: shad-create1
+		Select: shad-select1, shad-select2, shad-select3
+		Move: shad-move1, shad-move2, shad-move3
+		Action: shad-move2, shad-move3
+		Attack: shad-attack1, shad-attack2, shad-attack3
+		Die: shad-die1, shad-die2
+		Burned: shad-die1, shad-die2
+		Zapped: shad-die1, shad-die2
+		Poisoned: shad-die1, shad-die2
+
+FlameTankVoice:
+	Voices:
+		Select: hftk-select1, hftk-select2, hftk-select3, hftk-select4
+		Move: hftk-move1, hftk-move2, hftk-move3, hftk-move4
+		Action: hftk-attack1, hftk-attack2, hftk-attack3
+		Attack: hftk-attack1, hftk-attack2, hftk-attack3
 
 BlackHandVoice:
 	Voices:

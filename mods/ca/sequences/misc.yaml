@@ -1056,6 +1056,7 @@ icon:
 	airdropicon: airdropicon
 	forceshield: forceshieldicon
 	orcaca: orcacarein
+	stealthemitter: semiticnh
 	invis: invisicon
 	infbomb: b2bicnh
 	carpetbomb: cbombicon
@@ -1069,11 +1070,13 @@ icon:
 	chack: chackicon
 	nrepair: nrepairicon
 	frenzy: frenzyicon
+	shadteam: shadteamicon
 	gpsscram: gpssicnh
 	abombair: abombicon
 	stormtroopers: stroopicon
 	rescanpower: rescanpowericon
 	ichorpower: ichorpowericon
+	feedermutation: feedermutationicon
 	spresspower: spresspowericon
 	riftpower: riftpowericon
 	buzzpower: buzzicon
@@ -1120,6 +1123,13 @@ mins:
 
 minsf:
 	idle: minsf
+		ZOffset: -512
+	icon: jmin
+
+shab:
+	idle: shab
+		Length: *
+		Tick: 80
 		ZOffset: -512
 	icon: jmin
 
@@ -1663,9 +1673,30 @@ flameall:
 	idle: flameall
 		Length: 19
 		Facings: -8
-		Tick: 140
+		Tick: 80
 		ZOffset: 1023
 		Offset: 0, 0, 6
+
+flameallfast:
+	Defaults:
+		IgnoreWorldTint: true
+	idle: flameall
+		Length: 19
+		Facings: -8
+		Tick: 60
+		ZOffset: 1023
+		Offset: 0, 0, 6
+
+thinblueflame:
+	Defaults:
+		IgnoreWorldTint: true
+	idle: thinblueflame
+		Length: 19
+		Facings: -8
+		Tick: 60
+		ZOffset: 1023
+		Offset: 0, 0, 6
+		BlendMode: Additive
 
 chemall:
 	idle: chemall

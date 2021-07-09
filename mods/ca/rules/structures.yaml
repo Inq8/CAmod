@@ -680,6 +680,7 @@ DOME:
 	Inherits: ^Building
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainableRadar
 	Selectable:
 		Bounds: 48,48
 	HitShape:
@@ -722,6 +723,7 @@ DOME:
 		Types: SpyInfiltrate, SabInfiltrate
 	Power:
 		Amount: -40
+	-PowerMultiplier@POWERDRAIN:
 	ValidFactions:
 		Factions: england, france, germany, russia, ukraine, iraq
 	ProvidesPrerequisite@anyradar:
@@ -1836,6 +1838,7 @@ POWR:
 	Inherits: ^Building
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
 	Selectable:
 		Bounds: 48,48
 	HitShape:
@@ -1878,6 +1881,7 @@ APWR:
 	Inherits: ^Building
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@SHAPE: ^3x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Buildable:
@@ -2775,6 +2779,9 @@ HAND:
 	ProvidesPrerequisite@legion:
 		Factions: legion
 		Prerequisite: infantry.legion
+	ProvidesPrerequisite@shadow:
+		Factions: shadow
+		Prerequisite: infantry.shadow
 	ProvidesPrerequisite@mech:
 		Prerequisite: infantry.mech
 	ProvidesPrerequisite@cyborg:
@@ -2855,6 +2862,9 @@ WEAP.TD:
 	ProvidesPrerequisiteValidatedFaction@nodarty:
 		Factions: legion
 		Prerequisite: vehicles.arty
+	ProvidesPrerequisiteValidatedFaction@ftnk:
+		Factions: legion
+		Prerequisite: vehicles.ftnk
 	ProvidesPrerequisite@apc2:
 		Prerequisite: vehicles.apc2
 	ProvidesPrerequisiteValidatedFaction@mtnk:
@@ -2951,7 +2961,7 @@ AIRS:
 		ReadyAudio: ReinforcementsArrived
 		BaselineSpawn: true
 	ValidFactions:
-		Factions: blackh, marked
+		Factions: blackh, marked, shadow
 	ProvidesPrerequisite@any:
 		Prerequisite: vehicles.any
 	ProvidesPrerequisite@human:
@@ -2968,11 +2978,17 @@ AIRS:
 	ProvidesPrerequisiteValidatedFaction@marked:
 		Factions: marked
 		Prerequisite: vehicles.marked
+	ProvidesPrerequisiteValidatedFaction@shadow:
+		Factions: shadow
+		Prerequisite: vehicles.shadow
 	ProvidesPrerequisiteValidatedFaction@nodarty:
-		Factions: blackh, marked
+		Factions: blackh, marked, shadow
 		Prerequisite: vehicles.arty
+	ProvidesPrerequisiteValidatedFaction@ftnk:
+		Factions: marked, legion, shadow
+		Prerequisite: vehicles.ftnk
 	ProvidesPrerequisiteValidatedFaction@mlrs:
-		Factions: marked
+		Factions: blackh, marked
 		Prerequisite: vehicles.mlrs
 	ProvidesPrerequisite@apc2:
 		Prerequisite: vehicles.apc2
@@ -2980,11 +2996,10 @@ AIRS:
 	ProvidesPrerequisiteValidatedFaction@howiupgrade:
 		Factions: blackh
 		Prerequisite: howi.upgrade
-	ParatroopersPower@airdrop:
-		OrderName: nodairdrop
+	ParatroopersPower@markedairdrop:
+		OrderName: markedairdrop
 		SquadSize: 3
 		UnitType: c17
-		Prerequisites: airs
 		Icon: airdropicon
 		ChargeInterval: 13500
 		Description: Air Drop
@@ -3003,6 +3018,53 @@ AIRS:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		Prerequisites: vehicles.marked
+	ParatroopersPower@blackhairdrop:
+		OrderName: blackhairdrop
+		SquadSize: 2
+		UnitType: c17
+		Icon: airdropicon
+		ChargeInterval: 13500
+		Description: Air Drop
+		LongDesc: Cargo Planes air drop flame tanks anywhere on the map.
+		DropItems: hftk, hftk
+		SelectTargetSpeechNotification: SelectTarget
+		AllowImpassableCells: false
+		EndChargeSpeechNotification: Reinforce
+		LaunchSpeechNotification: ReinforcementsArrived
+		IncomingSpeechNotification: EnemyUnitsApproaching
+		CameraActor: camera.paradrop
+		DisplayBeacon: true
+		BeaconPoster: lrairdropicon
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+		Prerequisites: vehicles.blackh
+	ParatroopersPower@shadowairdrop:
+		OrderName: shadowairdrop
+		SquadSize: 2
+		UnitType: c17
+		Icon: airdropicon
+		ChargeInterval: 13500
+		Description: Air Drop
+		LongDesc: Cargo Planes air drop stealth tanks anywhere on the map.
+		DropItems: stnk.nod, stnk.nod
+		SelectTargetSpeechNotification: SelectTarget
+		AllowImpassableCells: false
+		EndChargeSpeechNotification: Reinforce
+		LaunchSpeechNotification: ReinforcementsArrived
+		IncomingSpeechNotification: EnemyUnitsApproaching
+		CameraActor: camera.paradrop
+		DisplayBeacon: true
+		BeaconPoster: lrairdropicon
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+		Prerequisites: vehicles.shadow
 	WithDeliveryAnimation:
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
@@ -3022,6 +3084,7 @@ NUKE:
 	Inherits: ^BuildingTD
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: 630,299,0
 	RenderSprites:
@@ -3030,6 +3093,7 @@ NUKE:
 			blackh: nodnuke
 			marked: nodnuke
 			legion: nodnuke
+			shadow: nodnuke
 	WithSpriteBody:
 		PauseOnCondition: disabled
 	Buildable:
@@ -3074,6 +3138,7 @@ NUK2:
 	Inherits: ^BuildingTD
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: 630,299,0
 	RenderSprites:
@@ -3082,6 +3147,7 @@ NUK2:
 			blackh: nodnuk2
 			marked: nodnuk2
 			legion: nodnuk2
+			shadow: nodnuk2
 	WithSpriteBody:
 		PauseOnCondition: disabled
 	Buildable:
@@ -3131,6 +3197,7 @@ AFAC:
 			blackh: nodfact
 			marked: nodfact
 			legion: nodfact
+			shadow: nodfact
 	Building:
 		Footprint: xxx xxx ===
 		Dimensions: 3,3
@@ -3186,7 +3253,7 @@ AFAC:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
 	ValidFactions:
-		Factions: talon, zocom, eagle, blackh, marked, legion
+		Factions: talon, zocom, eagle, blackh, marked, legion, shadow
 	ProvidesPrerequisite@td:
 		Prerequisite: structures.td
 	ProvidesPrerequisiteValidatedFaction@gdi:
@@ -3202,7 +3269,7 @@ AFAC:
 		Factions: eagle
 		Prerequisite: structures.eagle
 	ProvidesPrerequisiteValidatedFaction@nod:
-		Factions: blackh, marked, legion
+		Factions: blackh, marked, legion, shadow
 		Prerequisite: structures.nod
 	ProvidesPrerequisiteValidatedFaction@blackh:
 		Factions: blackh
@@ -3213,11 +3280,14 @@ AFAC:
 	ProvidesPrerequisiteValidatedFaction@legion:
 		Factions: legion
 		Prerequisite: structures.legion
+	ProvidesPrerequisiteValidatedFaction@shadow:
+		Factions: shadow
+		Prerequisite: structures.shadow
 	ProvidesPrerequisiteValidatedFaction@weap.tdFAC:
 		Factions: talon, zocom, eagle, legion
 		Prerequisite: structures.weap.td
 	ProvidesPrerequisiteValidatedFaction@airs:
-		Factions: blackh, marked
+		Factions: blackh, marked, shadow
 		Prerequisite: structures.airs
 	ProvidesPrerequisite@wall:
 		Prerequisite: structures.wall
@@ -3513,6 +3583,7 @@ OBLI:
 HQ:
 	Inherits: ^BuildingTD
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
+	Inherits@POWERDRAIN: ^PowerDrainableRadar
 	HitShape:
 		TargetableOffsets: 0,0,0, 0,512,0, 420,-598,256
 		Type: Rectangle
@@ -3524,6 +3595,7 @@ HQ:
 			blackh: nodhq
 			marked: nodhq
 			legion: nodhq
+			shadow: nodhq
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 90
@@ -3689,10 +3761,29 @@ HQ:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		PauseOnCondition: disabled || being-warped
+	AirReinforcementsPower@ShadowTeam:
+		OrderName: shadowteam
+		Prerequisites: ~radar.shadow, techlevel.unrestricted
+		Icon: shadteam
+		ChargeInterval: 9000
+		Description: Shadow Team
+		LongDesc: Calls for a Shadow Team, five stealth infantry that arrive via glider.
+		SelectTargetSpeechNotification: SelectTarget
+		UnitType: sgli
+		QuantizedFacings: 8
+		DisplayBeacon: false
+		SquadSize: 5
+		SquadOffset: -1024,1024,0
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+		PauseOnCondition: disabled || being-warped
+		LaunchSpeechNotification: ReinforcementsArrived
+		EndChargeSpeechNotification: Reinforce
 	Power:
 		Amount: -40
+	-PowerMultiplier@POWERDRAIN:
 	ValidFactions:
-		Factions: talon, zocom, eagle, blackh, marked, legion
+		Factions: talon, zocom, eagle, blackh, marked, legion, shadow
 	ProvidesPrerequisiteValidatedFaction@anyradar:
 		Prerequisite: anyradar
 	ProvidesPrerequisiteValidatedFaction@gdirad:
@@ -3713,8 +3804,11 @@ HQ:
 	ProvidesPrerequisiteValidatedFaction@legrad:
 		Factions: legion
 		Prerequisite: radar.legion
+	ProvidesPrerequisiteValidatedFaction@shadrad:
+		Factions: shadow
+		Prerequisite: radar.shadow
 	ProvidesPrerequisiteValidatedFaction@howi:
-		Factions: marked, legion
+		Factions: marked, legion, shadow
 		Prerequisite: upgrades.howi
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@radar-active:
@@ -3735,6 +3829,7 @@ HQ:
 EYE:
 	Inherits: ^BuildingTD
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
+	Inherits@POWERDRAIN: ^PowerDrainableRadar
 	HitShape:
 		TargetableOffsets: 0,0,0, 0,512,128, 420,-598,213
 		Type: Rectangle
@@ -3838,6 +3933,7 @@ EYE:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
+	-PowerMultiplier@POWERDRAIN:
 	ValidFactions:
 		Factions: talon, zocom, eagle
 	ProvidesPrerequisiteValidatedFaction@zoceye:
@@ -3958,7 +4054,7 @@ HPAD.TD:
 	Power:
 		Amount: -10
 	ValidFactions:
-		Factions: talon, zocom, eagle, blackh, marked, legion
+		Factions: talon, zocom, eagle, blackh, marked, legion, shadow
 	ProvidesPrerequisite@all:
 		Prerequisite: aircraft.all
 	ProvidesPrerequisiteValidatedFaction@gdi:
@@ -3968,16 +4064,16 @@ HPAD.TD:
 		Factions: eagle
 		Prerequisite: aircraft.eagle
 	ProvidesPrerequisiteValidatedFaction@nod:
-		Factions: blackh, marked, legion
+		Factions: blackh, marked, legion, shadow
 		Prerequisite: aircraft.nod
-	ProvidesPrerequisiteValidatedFaction@blackh:
-		Factions: blackh
-		Prerequisite: aircraft.blackh
 	ProvidesPrerequisiteValidatedFaction@marked:
 		Factions: marked
 		Prerequisite: aircraft.marked
+	ProvidesPrerequisiteValidatedFaction@shadow:
+		Factions: shadow
+		Prerequisite: aircraft.shadow
 	ProvidesPrerequisiteValidatedFaction@apch:
-		Factions: blackh, legion
+		Factions: blackh, legion, shadow
 		Prerequisite: aircraft.apch
 	ProvidesPrerequisite@chinook:
 		Prerequisite: aircraft.chinook
@@ -4024,6 +4120,7 @@ PROC.TD:
 			blackh: nodproc
 			marked: nodproc
 			legion: nodproc
+			shadow: nodproc
 	Valued:
 		Cost: 1800
 	CustomSellValue:
@@ -4512,7 +4609,7 @@ TMPL:
 		Types: SabInfiltrate
 		Proxy: stolentech.tmpl
 	ValidFactions:
-		Factions: blackh, marked, legion
+		Factions: blackh, marked, legion, shadow
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
@@ -4525,6 +4622,9 @@ TMPL:
 	ProvidesPrerequisiteValidatedFaction@legiontmpl:
 		Factions: legion
 		Prerequisite: tmpl.legion
+	ProvidesPrerequisiteValidatedFaction@shadowtmpl:
+		Factions: shadow
+		Prerequisite: tmpl.shadow
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped

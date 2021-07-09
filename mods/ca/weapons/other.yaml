@@ -172,20 +172,20 @@ ChemsprayE:
 	Range: 5c0
 
 FlamerTD:
-	ReloadDelay: 60
+	ReloadDelay: 65
 	Range: 2c512
 	MinRange: 0c512
 	Report: flamer2.aud
 	TargetActorCenter: true
 	Projectile: LinearPulse
-		ImpactSpacing: 256
 		Speed: 256
-		MinimumImpactDistance: 1c768
+		ImpactSpacing: 256
+		MinimumImpactDistance: 0c768
 		MaximumImpactDistance: 1c768
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
-		Falloff: 100, 50, 25, 0
-		Damage: 1700
+		Falloff: 100, 50, 20, 0
+		Damage: 1850
 		Versus:
 			None: 300
 			Wood: 100
@@ -195,18 +195,21 @@ FlamerTD:
 			Concrete: 30
 			Brick: 2
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		ValidRelationships: Enemy, Neutral
+		DebugOverlayColor: ffaa00
 		Delay: 5
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 		InvalidTargets: Vehicle, Building, Wall
 
-FlamerTDClose:
+FlamerTDFF:
 	Inherits: FlamerTD
 	Projectile: LinearPulse
-		MinimumImpactDistance: 0c768
-		MaximumImpactDistance: 1c512
+		MinimumImpactDistance: 1c768
 	Warhead@1Dam: SpreadDamage
-		ValidRelationships: Enemy, Neutral
+		Falloff: 100, 50, 0
+		ValidRelationships: Ally
+		-DebugOverlayColor:
 
 FlamerTDDummy:
 	Inherits: FlamerTD
@@ -215,6 +218,7 @@ FlamerTDDummy:
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
 		Damage: 0
+		-ValidRelationships:
 	-Warhead@2Smu:
 
 BigFlamerTD:
@@ -222,109 +226,104 @@ BigFlamerTD:
 	Burst: 2
 	BurstDelays: 5
 	Projectile: LinearPulse
-		MinimumImpactDistance: 1c512
-		MaximumImpactDistance: 1c768
+		Speed: 96
+		ImpactSpacing: 288
+		Image: flameallfast
+		Inaccuracy: 484
+		Palette: tseffect-ignore-lighting-alpha90
+		MinimumImpactDistance: 288
+		MaximumImpactDistance: 2304
 	Warhead@1Dam: SpreadDamage
-		Damage: 1250
-		Falloff: 100, 70, 40, 0
+		Damage: 925
 
-BigFlamerTDClose:
+BigFlamerTDFF:
 	Inherits: BigFlamerTD
 	Projectile: LinearPulse
-		MinimumImpactDistance: 0c768
-		MaximumImpactDistance: 1c256
+		-Image:
+		-Palette:
+		MinimumImpactDistance: 1440
 	Warhead@1Dam: SpreadDamage
-		ValidRelationships: Enemy, Neutral
+		Falloff: 100, 50, 0
+		ValidRelationships: Ally
+		-DebugOverlayColor:
 
 ChemsprayTD:
 	Inherits: FlamerTD
 	Warhead@1Dam: SpreadDamage
 		Damage: 2000
 		Versus:
-			Concrete: 50
-			Heavy: 50
+			Concrete: 40
+			Heavy: 40
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 
-ChemsprayTDClose:
-	Inherits: FlamerTDClose
+ChemsprayTDFF:
+	Inherits: FlamerTDFF
 	Warhead@1Dam: SpreadDamage
 		Damage: 2000
 		Versus:
-			Concrete: 50
-			Heavy: 50
+			Concrete: 40
+			Heavy: 40
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
-		ValidRelationships: Enemy, Neutral
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 
 ChemsprayTDDummy:
 	Inherits: FlamerTDDummy
 
-BlackHandBigFlamer:
-	ReloadDelay: 60
-	Burst: 50
-	BurstDelays: 4
-	Range: 4c512
-	MinRange: 0c512
-	Projectile: LinearPulse
-		Speed: 90
-		Image: flameall
-		Palette: tseffect-ignore-lighting-alpha90
-		ImpactSpacing: 630
-		Inaccuracy: 484
-		MinimumImpactDistance: 2c472
-		MaximumImpactDistance: 0
+HeavyFlameTankFlamer:
+	Inherits: BigFlamerTD
+	-Report:
+	ReloadDelay: 75
+	Burst: 30
+	BurstDelays: 2
 	Warhead@1Dam: SpreadDamage
-		Spread: 426
-		Falloff: 100, 70, 40, 0
 		Damage: 130
 		Versus:
-			None: 300
-			Wood: 160
-			Tree: 120
-			Light: 110
-			Heavy: 50
-			Concrete: 50
-			Brick: 2
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+			None: 230
 	Warhead@2Smu: LeaveSmudge
-		SmudgeType: Scorch
-		InvalidTargets: Vehicle, Building, Wall
-		Chance: 50
+		AirThreshold: 256
+		Chance: 10
 
-BlackHandBigFlamerClose:
-	Inherits: BlackHandBigFlamer
+HeavyFlameTankFlamerFF:
+	Inherits: HeavyFlameTankFlamer
 	Projectile: LinearPulse
 		-Image:
 		-Palette:
-		MinimumImpactDistance: 0
-		MaximumImpactDistance: 1c866
+		MinimumImpactDistance: 1440
 	Warhead@1Dam: SpreadDamage
-		ValidRelationships: Enemy, Neutral
+		Falloff: 100, 50, 0
+		ValidRelationships: Ally
+		-DebugOverlayColor:
 
 BlackHandFlamer:
-	Inherits: BlackHandBigFlamer
-	ReloadDelay: 50
-	Burst: 25
+	Inherits: HeavyFlameTankFlamer
+	ReloadDelay: 110
 	BurstDelays: 1
-	Range: 5c0
-	-Projectile:
-	Projectile: Bullet
-		Speed: 130
-		TrailImage: fb4
-		Image: fb3
-		LaunchAngle: 62
-		Inaccuracy: 341
+	Burst: 55
+	Range: 3c512
+	Projectile: LinearPulse
+		Speed: 160
+		Inaccuracy: 160
+		Image: thinblueflame
+		Palette: effect-ignore-lighting-alpha85
+		ImpactSpacing: 320
+		MinimumImpactDistance: 320
+		MaximumImpactDistance: 3c512
 	Warhead@1Dam: SpreadDamage
-		Falloff: 100, 60, 25, 0
-		Damage: 220
+		Range: 0, 320
+		Falloff: 100, 0
+		Damage: 340
 		Versus:
-			Wood: 200
+			None: 100
+			Wood: 5
+			Light: 20
+			Heavy: 20
+			Concrete: 10
+			Brick: 2
 	Warhead@2Smu: LeaveSmudge
-		Chance: 75
-		-InvalidTargets:
+		Chance: 5
 
 Napalm:
 	Inherits: ^FireWeapon
@@ -1795,7 +1794,7 @@ SonicPulse:
 	Projectile: LinearPulse
 		Speed: 768
 		ImpactSpacing: 768
-		MinimumImpactDistance: 512
+		MinimumImpactDistance: 768
 	Warhead@1Dam: SpreadDamage
 		Spread: 0c256
 		Falloff: 100, 50, 20, 0
@@ -1916,6 +1915,21 @@ U2Camera:
 	Report: cspydram.aud
 	TargetActorCenter: true
 	Projectile: InstantHit
+
+AttachShadowBeacon:
+	Warhead@AttachCamera: AttachCamera
+		Range: 341
+		CameraActor: shadow.beacon.camera
+		AttachSounds: shad-beacontrigger1.aud
+		MissSounds: dud1.aud
+		ValidTargets: ShadowBeacon
+	Warhead@TargetValidator: SpreadDamage
+		ValidTargets: ShadowBeacon
+	Warhead@highlight: GrantExternalCondition
+		Range: 341
+		Duration: 2
+		Condition: redhighlight
+		ValidTargets: ShadowBeacon
 
 ^Debris:
 	ValidTargets: Ground, Water, Trees, Air

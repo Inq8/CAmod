@@ -70,7 +70,7 @@ VEHICLES.SCRIN:
 		ArmamentNames: primary
 		Condition: uncharged-fire
 		RevokeDelay: 85
-	GrantConditionOnAttack@PRIMARYCHARGED
+	GrantConditionOnAttack@PRIMARYCHARGED:
 		ArmamentNames: primary-charged
 		Condition: charged-fire
 		RevokeDelay: 85
@@ -158,6 +158,11 @@ VEHICLES.SCRIN:
 	DamagedByTintedCells@RADWEAK:
 		Damage: 50
 		RequiresCondition: !being-warped
+	TransformOnCondition@FEEDER:
+		RequiresCondition: feedermutation
+		IntoActor: feed
+	ExternalCondition@FEEDER:
+		Condition: feedermutation
 
 S1:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -360,6 +365,66 @@ S6:
 		VoiceSet: AssimilatorVoice
 	Targetable:
 		TargetTypes: Ground, Infantry, ChaosImmune
+
+FEED:
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@BERSERK: ^Berserk
+	Valued:
+		Cost: 200
+	Tooltip:
+		Name: Feeder
+	Health:
+		HP: 7500
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Mobile:
+		Speed: 49
+	Harvester:
+		Capacity: 10
+		Resources: Tiberium, BlueTiberium, Ore, Gems
+		HarvestFacings: 8
+		BaleLoadDelay: 18
+		DeliveryBuildings: none
+		FullyLoadedSpeed: 100
+		SearchFromProcRadius: 5
+		SearchFromHarvesterRadius: 5
+	WithHarvestAnimation:
+	WithMoveAnimation:
+	WithFacingSpriteBody:
+	QuantizeFacingsFromSequence:
+		-Sequence:
+	-WithInfantryBody:
+	-WithInfantryBody@Warped:
+	GrantConditionOnFullHarvester@FULL:
+		Condition: full
+	WithIdleOverlay@FULL:
+		Sequence: idle
+		Image: feederfull-overlay
+		Palette: scrin-ignore-lighting-alpha30
+		RequiresCondition: full
+	Explodes:
+		Weapon: FeederExplode
+		EmptyWeapon: FeederExplode
+		DamageSource: Killer
+		RequiresCondition: full
+	AttackFrontal:
+		FacingTolerance: 512
+		PauseOnCondition: !full
+	Armament@PRIMARY:
+		Weapon: FeederTargeting
+		RequiresCondition: full
+	GrantConditionOnAttack:
+		Condition: triggered
+		RequiresCondition: full
+	GrantConditionOnDeploy:
+		DeployedCondition: triggered
+		RequiresCondition: full
+	KillsSelf:
+		RequiresCondition: full && (triggered || berserk)
+	SpeedMultiplier@FULL:
+		RequiresCondition: full
+		Modifier: 150
+	-TakeCover:
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -796,9 +861,9 @@ CORR:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 140
-		Prerequisites: anyradar, ~vehicles.scrin, ~techlevel.medium
+		Prerequisites: anyradar, ~vehicles.corr, ~techlevel.medium
 		Queue: Vehicle
-		Description: Short-ranged anti-infantry/structure unit.\n  Strong vs Infantry, Buildings\n  Weak vs Tanks, Defenses, Aircraft
+		Description: Medium-ranged anti-infantry/structure unit.\n  Strong vs Infantry, Buildings\n  Weak vs Tanks, Defenses, Aircraft
 		IconPalette: chrome
 	Mobile:
 		Speed: 66
@@ -831,6 +896,53 @@ CORR:
 	SpeedMultiplier@TRAVELERSPEED:
 		RequiresCondition: travelerspeed
 		Modifier: 115
+
+LCHR:
+	Inherits: ^Tank
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Valued:
+		Cost: 900
+	Tooltip:
+		Name: Leecher
+	Selectable:
+		DecorationBounds: 36,36,0,-3
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 141
+		Prerequisites: anyradar, ~vehicles.collector, ~techlevel.medium
+		Queue: Vehicle
+		Description: Medium-ranged anti-infantry/structure unit.\n  Regenerates health while dealing damage\n  Disables power plants and radars\n  Strong vs Infantry, Buildings\n  Weak vs Tanks, Defenses, Aircraft
+		IconPalette: chromes
+	Mobile:
+		Speed: 90
+		TurnSpeed: 30
+	Health:
+		HP: 30000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Armament@PRIMARY:
+		Weapon: LeecherBeam
+		LocalOffset: 700,0,300, 700,-500,100, 700,500,100
+	AttackFrontal:
+		PauseOnCondition: empdisable || being-warped
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithMoveAnimation:
+		ValidMovementTypes: Horizontal, Vertical, Turn
+	ConvertsDamageToHealth:
+		DamagePercentConverted: 10
 
 STCR:
 	Inherits: ^Tank
@@ -1123,6 +1235,60 @@ RUIN:
 	GrantConditionOnAttack@PRIMARYCHARGED
 		RevokeDelay: 175
 
+ATMZ:
+	Inherits: ^Vehicle
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+		PlayerPalette: overlayplayerscrin
+	Valued:
+		Cost: 1250
+	Tooltip:
+		Name: Atomizer
+	Selectable:
+		DecorationBounds: 28,28
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 285
+		Prerequisites: scrt, ~vehicles.collector, ~techlevel.medium
+		Description: Lightly armored long-range support unit.\nTargets take damage over time\n  Strong vs Vehicles, Aircraft\n  Weak vs Infantry, Buildings
+		IconPalette: chrome
+	Mobile:
+		Speed: 66
+	Health:
+		HP: 15000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Turreted:
+		TurnSpeed: 32
+	Hovers:
+		BobDistance: -25
+		RequiresCondition: !empdisable && !being-warped && !driver-dead
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+	Armament:
+		Weapon: AtomizerBolts
+		LocalOffset: 350,0,450
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: AtomizerBoltsAA
+		LocalOffset: 350,0,450
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
+	WithSpriteTurret:
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+
 TPOD:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
@@ -1342,7 +1508,7 @@ STMR:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 90
-		Prerequisites: anyradar, ~aircraft.scrin, ~techlevel.medium
+		Prerequisites: ~aircraft.scrin, ~techlevel.medium
 		Description: Durable patrol craft.\n  Can detect submarines.\n  Strong vs Infantry, Light Armor, Aircraft\n  Weak vs Tanks, Buildings
 		IconPalette: chrome
 	Valued:
@@ -1430,13 +1596,14 @@ STMR:
 		DelayAfterReset: 60
 		ShowSelectionBar: true
 		SelectionBarColor: ff00ff
-
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 8c0
 	FirepowerMultiplier@DEPLETED:
 		RequiresCondition: !ammo
 		Modifier: 30
+	Rearmable:
+		RearmActors: srep, hpad, hpad.td
 
 ENRV:
 	Inherits: ^Helicopter
@@ -1451,7 +1618,7 @@ ENRV:
 		Description: Fast attack craft that creates a focused suppression field.\n  Strong vs Vehicles, Defenses, Aircraft\n  Weak vs Infantry
 		IconPalette: chromes
 	Valued:
-		Cost: 1750
+		Cost: 1900
 	Voiced:
 		VoiceSet: VehicleVoice
 	Tooltip:
@@ -1483,7 +1650,7 @@ ENRV:
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		TurnSpeed: 18
-		Speed: 180
+		Speed: 225
 		InitialFacing: 768
 		TakeoffSounds: dropup1.aud
 		LandingSounds: dropdwn1.aud
@@ -1533,7 +1700,7 @@ ENRV:
 		ShowSelectionBar: true
 		SelectionBarColor: ff00ff
 	Rearmable:
-		RearmActors: srep
+		RearmActors: srep, hpad, hpad.td
 
 DEVA:
 	Inherits: ^Helicopter
@@ -2424,7 +2591,7 @@ SFAC:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
 	ValidFactions:
-		Factions: reaper, traveler, harbinger
+		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite@scrin:
 		Prerequisite: structures.scrin
 	ProvidesPrerequisiteValidatedFaction@reaper:
@@ -2436,6 +2603,9 @@ SFAC:
 	ProvidesPrerequisiteValidatedFaction@harbinger:
 		Factions: harbinger
 		Prerequisite: structures.harbinger
+	ProvidesPrerequisiteValidatedFaction@collector:
+		Factions: collector
+		Prerequisite: structures.collector
 	ProductionBar@Building:
 		ProductionType: Building
 	ProductionBar@Defense:
@@ -2462,6 +2632,7 @@ REAC:
 	Inherits: ^ScrinBuilding
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: 630,299,0
 	WithSpriteBody:
@@ -2504,6 +2675,7 @@ REA2:
 	Inherits: ^ScrinBuilding
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@SHAPE: ^3x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	WithSpriteBody:
@@ -2689,6 +2861,9 @@ PORT:
 	ProvidesPrerequisite@harbinger:
 		Factions: harbinger
 		Prerequisite: infantry.harbinger
+	ProvidesPrerequisite@collector:
+		Factions: collector
+		Prerequisite: infantry.collector
 	Power:
 		Amount: -20
 	ProvidesPrerequisite@buildingname:
@@ -2739,7 +2914,7 @@ WSPH:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	ValidFactions:
-		Factions: reaper, traveler, harbinger
+		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite@any:
 		Prerequisite: vehicles.any
 	ProvidesPrerequisite@scrin:
@@ -2753,14 +2928,20 @@ WSPH:
 	ProvidesPrerequisiteValidatedFaction@harbinger:
 		Factions: harbinger
 		Prerequisite: vehicles.harbinger
+	ProvidesPrerequisiteValidatedFaction@collector:
+		Factions: collector
+		Prerequisite: vehicles.collector
 	ProvidesPrerequisiteValidatedFaction@seek:
-		Factions: reaper, harbinger
+		Factions: reaper, harbinger, collector
 		Prerequisite: vehicles.seek
+	ProvidesPrerequisiteValidatedFaction@corr:
+		Factions: reaper, traveler, harbinger
+		Prerequisite: vehicles.corr
 	ProvidesPrerequisiteValidatedFaction@devo:
-		Factions: reaper, traveler
+		Factions: reaper, traveler, collector
 		Prerequisite: vehicles.devo
 	ProvidesPrerequisiteValidatedFaction@tpod:
-		Factions: traveler, harbinger
+		Factions: traveler, harbinger, collector
 		Prerequisite: vehicles.tpod
 	WithBuildingBib:
 	RallyPoint:
@@ -2790,6 +2971,7 @@ WSPH:
 NERV:
 	Inherits: ^ScrinBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
+	Inherits@POWERDRAIN: ^PowerDrainableRadar
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 630,-384,0, 630,384,0, -700,-512,0, -700,512,0
@@ -2831,8 +3013,9 @@ NERV:
 		Types: SpyInfiltrate, SabInfiltrate
 	Power:
 		Amount: -40
+	-PowerMultiplier@POWERDRAIN:
 	ValidFactions:
-		Factions: reaper, traveler, harbinger
+		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite@anyradar:
 		Prerequisite: anyradar
 	ProvidesPrerequisite@scrinrad:
@@ -2846,6 +3029,9 @@ NERV:
 	ProvidesPrerequisiteValidatedFaction@harbrad:
 		Factions: harbinger
 		Prerequisite: radar.harbinger
+	ProvidesPrerequisiteValidatedFaction@desprad:
+		Factions: collector
+		Prerequisite: radar.collector
 	ProvidesPrerequisite@buildingname:
 	ExternalCondition@JAMMED:
 		Condition: jammed
@@ -2989,12 +3175,15 @@ SCRT:
 	Power:
 		Amount: -200
 	ValidFactions:
-		Factions: reaper, traveler, harbinger
+		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
 	ProvidesPrerequisiteValidatedFaction@travelerscrt:
 		Factions: traveler
 		Prerequisite: scrt.traveler
+	ProvidesPrerequisiteValidatedFaction@collectorscrt:
+		Factions: collector
+		Prerequisite: scrt.collector
 	ProvidesPrerequisite@buildingname:
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
@@ -3035,6 +3224,26 @@ SCRT:
 		EffectImage: empty
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
+	GrantExternalConditionPower@FEEDERMUTATION:
+		OrderName: feedermutation
+		Icon: feedermutation
+		Prerequisites: ~scrt.collector, ~techlevel.high
+		ChargeInterval: 7500
+		Description: Feeder Mutation
+		Condition: feedermutation
+		Dimensions: 3, 3
+		Footprint: _x_ xxx _x_
+		ValidRelationships: Ally
+		Duration: 25
+		AllowMultiple: false
+		LongDesc: Transforms Scrin infantry into Feeders which consume resources\nuntil becoming volatile enough to explode.
+		OnFireSound: feedermutation.aud
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		DisplayRadarPing: True
+		Cursor: ability
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayTimerRelationships: Ally
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -3083,7 +3292,7 @@ GRAV:
 		Produces: Aircraft, Plane
 		PauseOnCondition: forceshield || invulnerability || being-warped
 	ValidFactions:
-		Factions: reaper, traveler, harbinger
+		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisiteValidatedFaction@traveler:
 		Factions: traveler
 		Prerequisite: aircraft.traveler
@@ -3337,6 +3546,9 @@ MANI:
 		Weapon: SuppressionField
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
+	ProductionCostMultiplier@COLLECTOR:
+		Multiplier: 90
+		Prerequisites: structures.collector
 
 RIFT:
 	Inherits: ^ScrinBuilding

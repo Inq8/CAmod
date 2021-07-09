@@ -1449,11 +1449,14 @@ Rah66AG:
 		Blockable: false
 		Shadow: true
 		Inaccuracy: 1c0
-		Image: dragon
+		Image: tibcoremsl
 		TrailImage: smokey
 		TrailDelay: 3
 		Speed: 250
 		LaunchAngle: 10
+		ContrailLength: 15
+		ContrailColor: 33aa00aa
+		ContrailWidth: 0c40
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
 		Damage: 800
@@ -1465,11 +1468,11 @@ Rah66AG:
 			Light: 55
 			Heavy: 15
 			Brick: 15
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
-	Warhead@2Smu: LeaveSmudge
-		SmudgeType: Scorch
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
-		Explosions: small_napalm
+		Explosions: idle
+		ExplosionPalette: scrin
+		Image: tibexplodesm
 		ImpactSounds: firebl3.aud
 		ValidTargets: Ground, Air, Ship
 	Warhead@4EffWater: CreateEffect

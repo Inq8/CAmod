@@ -12,7 +12,7 @@ DisintegratorBeam:
 		Width: 30
 		Duration: 3
 		SecondaryBeamWidth: 50
-		SecondaryBeamColor:00FFCC30
+		SecondaryBeamColor: 00FFCC30
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
 		Damage: 3000
@@ -411,7 +411,6 @@ MiniRift:
 		ValidRelationships: Enemy, Neutral
 
 CorrupterSpew:
-	Inherits: Flamer
 	StartBurstReport: corrupter-fire1.aud
 	ReloadDelay: 100
 	Burst: 30
@@ -427,18 +426,23 @@ CorrupterSpew:
 		TrailPalette: scrin-ignore-lighting-alpha85
 	Warhead@1Dam: SpreadDamage
 		DamageTypes: Prone50Percent, TriggerProne, PoisonDeath
-		-Falloff:
+		Spread: 288
 		Damage: 1000
 		Versus:
-			Light: 80
+			None: 300
 			Wood: 120
+			Tree: 120
+			Light: 80
+			Heavy: 30
+			Concrete: 30
+			Brick: 2
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
+		InvalidTargets: Vehicle, Building, Wall
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
 		Image: tibexplodesm
-	-Warhead@Flames:
 
 CorruptorExplode:
 	Inherits: UnitExplodeIraqTank
@@ -661,22 +665,24 @@ StormRiderZapAA:
 
 EnervatorBolts:
 	Inherits: ^AntiGroundMissile
-	Report: enrv-fire1.aud
+	Report: enervator-fire1.aud
 	ReloadDelay: 50
 	Range: 5c0
 	TargetActorCenter: true
 	Projectile: MissileCA
+		Speed: 341
 		Image: enrvbolt
 		Palette: scrin
 		Inaccuracy: 128
 		ContrailLength: 20
 		ContrailColor: FF00FF77
-		ContrailWidth: 0c48
+		ContrailWidth: 32
 		Jammable: true
 		LockOnProbability: 100
 		LockOnInaccuracy: 64
 		RangeLimit: 8c0
-		-TrailImage:
+		TrailImage: smokey
+		TrailPalette: scrinplasma
 		-PointDefenseType:
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
@@ -698,13 +704,15 @@ EnervatorBolts:
 		Explosions: idle
 		ExplosionPalette: scrin
 		Image: enrvbolthit
-		ImpactSounds: enrv-hit1.aud
+		ImpactSounds: enervator-hit1.aud
 
 EnervatorBoltsAA:
 	Inherits: EnervatorBolts
 	ValidTargets: Air, AirSmall
+	Projectile: MissileCA
+		CloseEnough: 341
 	Warhead@1Dam: SpreadDamage
-		ValidTargets: Air
+		ValidTargets: Air, AirSmall
 		ValidRelationships: Enemy, Neutral
 		Damage: 6000
 		Versus:
@@ -714,7 +722,7 @@ EnervatorBoltsAA:
 			Concrete: 100
 			Brick: 100
 	Warhead@2Sup: GrantExternalCondition
-		ValidTargets: Air
+		ValidTargets: Air, AirSmall
 
 InvaderLauncher:
 	ReloadDelay: 10
@@ -1229,3 +1237,165 @@ MothershipBeam:
 		Duration: 5
 		Intensity: 1
 		Multiplier: 0.1,0.1
+
+LeecherBeam:
+	ValidTargets: Ground, Water
+	StartBurstReport: leecher-fire1.aud
+	Range: 6c0
+	ReloadDelay: 60
+	Burst: 9
+	BurstDelays: 3
+	Projectile: PlasmaBeam
+		Duration: 6
+		Colors: ff000008
+		InnerLightness: 200
+		OuterLightness: 100
+		Radius: 2
+		Distortion: 150
+		DistortionAnimation: 150
+		SegmentLength: 350
+		ZOffset: 1027
+		Inaccuracy: 128
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 1500
+		DamageTypes: Prone50Percent, TriggerProne, AtomizedDeath
+		Versus:
+			None: 100
+			Light: 55
+			Wood: 80
+			Heavy: 5
+			Concrete: 25
+	Warhead@ARC: FireShrapnel
+		Weapon: LeecherArc
+		AimChance: 100
+		Amount: 1
+		AimTargetStances: Enemy, Neutral
+	Warhead@DRAIN: GrantExternalCondition
+		Range: 1c512
+		Duration: 100
+		Condition: powerdrain
+		ValidTargets: PowerDrainable
+	Warhead@3Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: scrin
+		Image: leechhit
+		Inaccuracy: 256
+
+LeecherArc:
+	Inherits: LeecherBeam
+	Range: 2c0
+	ValidTargets: Infantry, Vehicle, Structure
+	Projectile: PlasmaBeam
+		Colors: ff000002
+	Warhead@1Dam: SpreadDamage
+		Spread: 64
+		Damage: 1500
+	-Warhead@ARC:
+
+AtomizerBolts:
+	Report: atomizer-fire1.aud
+	ReloadDelay: 150
+	Range: 7c0
+	TargetActorCenter: true
+	MinRange: 1c512
+	Projectile: Missile
+		Speed: 160
+		Image: atmzbolt
+		Palette: scrin
+		Inaccuracy: 128
+		Jammable: true
+		LockOnProbability: 100
+		LockOnInaccuracy: 64
+		RangeLimit: 12c0
+		CruiseAltitude: 1c512
+		TrailImage: atmzbolttrail
+		TrailPalette: scrin
+		TrailInterval: 1
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 4200
+		ValidTargets: Ground, Water
+		Versus:
+			None: 70
+			Wood: 70
+			Light: 85
+			Heavy: 100
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, AtomizedDeath
+	Warhead@2Sup: GrantExternalCondition
+		Range: 0c768
+		Duration: 225
+		Condition: atomized
+		ValidTargets: Vehicle, Ship
+	Warhead@3Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: scrin
+		Image: atmzbolthit
+		ImpactSounds: atomizer-hit1.aud
+	Warhead@red: GrantExternalCondition
+		Range: 0c768
+		Duration: 2
+		Condition: redhighlight
+		ValidTargets: Vehicle, Ship
+
+AtomizerBoltsAA:
+	Inherits: AtomizerBolts
+	ValidTargets: Air, AirSmall
+	Projectile: Missile
+		Speed: 225
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Air, AirSmall
+		Versus:
+			None: 100
+			Wood: 100
+			Light: 100
+			Concrete: 100
+			Brick: 100
+	Warhead@2Sup: GrantExternalCondition
+		ValidTargets: Air, AirSmall
+		Range: 1c512
+	Warhead@3Eff: CreateEffect
+		ValidTargets: Air, AirSmall
+	Warhead@red: GrantExternalCondition
+		ValidTargets: Air, AirSmall
+
+FeederTargeting:
+	ValidTargets: Vehicle, Infantry, Structure
+	Range: 1c512
+	Projectile: InstantHit
+	Warhead@1Dam: TargetDamage
+
+FeederExplode:
+	ValidTargets: Ground, Water
+	Warhead@1Dam: SpreadDamage
+		Spread: 768
+		Damage: 8000
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		ValidTargets: Ground, Water
+		InvalidTargets: Air, Creep
+		Versus:
+			None: 90
+			Heavy: 90
+			Brick: 10
+		AffectsParent: true
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch-NoFlame
+		InvalidTargets: Structure, Wall, Trees
+		Size: 3
+		Delay: 5
+	Warhead@3Eff: CreateEffect
+		Explosions: large_chem
+		ExplosionPalette: tdeffect-ignore-lighting-alpha85
+		ImpactSounds: vdemdiea.aud
+	Warhead@18Radio: CreateTintedCells
+		Level: 300
+		Falloff: 100, 55, 32, 5
+		LayerName: radioactivity.weak
+	Warhead@Shrap: FireShrapnel
+		Weapon: ChemDebris
+		Amount: 7
+		AimChance: 0
+		ValidTargets: Ground, Water, Infantry, Vehicle
+		ThrowWithoutTarget: true
