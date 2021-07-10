@@ -1238,6 +1238,18 @@ MothershipBeam:
 		Intensity: 1
 		Multiplier: 0.1,0.1
 
+MothershipChargeBeamAI:
+	Inherits: MothershipChargeBeam
+	ValidTargets: Structure
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Structure
+
+MothershipBeamAI:
+	Inherits: MothershipBeam
+	ValidTargets: Structure
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Structure
+
 LeecherBeam:
 	ValidTargets: Ground, Water
 	StartBurstReport: leecher-fire1.aud
