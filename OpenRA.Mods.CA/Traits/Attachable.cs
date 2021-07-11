@@ -13,25 +13,25 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Use on a camera trait to make it attachable to actors with the AttachableCameraTarget trait.")]
-	public class AttachableCameraInfo : TraitInfo, Requires<MobileInfo>
+	[Desc("Use on an actor to make it attachable to other actors with the AttachableTo trait.")]
+	public class AttachableInfo : TraitInfo, Requires<IPositionableInfo>
 	{
-		public override object Create(ActorInitializer init) { return new AttachableCamera(init, this); }
+		public override object Create(ActorInitializer init) { return new Attachable(init, this); }
 	}
 
-	public class AttachableCamera : INotifyKilled, INotifyActorDisposing
+	public class Attachable : INotifyKilled, INotifyActorDisposing
 	{
-		AttachableCameraTarget target;
+		AttachableTo target;
 		readonly Actor self;
 
-		public AttachableCamera(ActorInitializer init, AttachableCameraInfo info)
+		public Attachable(ActorInitializer init, AttachableInfo info)
 		{
 			self = init.Self;
 		}
 
 		public bool IsValid { get { return self != null && !self.IsDead; } }
 
-		public void SetTarget(AttachableCameraTarget target)
+		public void SetTarget(AttachableTo target)
 		{
 			this.target = target;
 		}
@@ -65,7 +65,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		void Killed()
 		{
-			target.DetachCamera(self);
+			target.Detach(self);
 		}
 	}
 }

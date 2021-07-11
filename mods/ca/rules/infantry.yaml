@@ -2207,7 +2207,7 @@ RMBC:
 		DefaultAttackSequence: shoot
 	Armament@PRIMARY:
 		Weapon: CyCannon
-		LocalOffset: 0,0,555
+		LocalOffset: 0,0,300
 	Armament@Garrison:
 		Name: mounted
 		Weapon: cycannon
@@ -2320,6 +2320,9 @@ SHAD:
 		DefaultAttackSequence: shoot
 		StandSequences: stand, stand2
 		IdleSequences: idle1, idle2
+		AttackSequences:
+			primary: shoot
+			secondary: throw
 		MinIdleDelay: 80
 		MaxIdleDelay: 250
 	Health:
@@ -2327,8 +2330,13 @@ SHAD:
 	Mobile:
 		Speed: 56
 		Voice: Move
-	Armament:
+	Armament@PRIMARY:
 		Weapon: ShadowOperativeGun
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: ShadowOperativeGrenade
+		LocalOffset: 0,0,555
+		FireDelay: 15
 	Armament@Garrison:
 		Name: mounted
 		Weapon: ShadowOperativeGun
@@ -2340,7 +2348,7 @@ SHAD:
 		InitialStanceAI: ReturnFire
 	Cloak:
 		InitialDelay: 1
-		CloakDelay: 75
+		CloakDelay: 90
 		CloakedCondition: hidden
 		Palette: cloaktd
 		IsPlayerPalette: true
@@ -2378,6 +2386,7 @@ SHAD.REARM:
 
 SGLI:
 	Inherits: ^Plane
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2404,6 +2413,14 @@ SGLI:
 		RepulsionSpeed: 40
 		MaximumPitch: 56
 		Voice: Move
+	Armament:
+		Weapon: ShadowGliderGrenade
+		LocalOffset: 0,0,-85
+	AttackAircraft:
+		FacingTolerance: 128
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: being-warped
 	SpawnActorOnDeath:
 		Actor: sgli.crashing
 		RequiresCondition: !being-warped
@@ -2414,10 +2431,20 @@ SGLI:
 		RequiresCondition: deployed
 	GrantConditionOnDeploy:
 		DeployedCondition: deployed
-		DeploySounds: chute1.aud
 	Targetable@AIRBORNE:
 		RequiresCondition: airborne && !being-warped
 		TargetTypes: AirSmall
+	GrantTimedCondition@GLIDING:
+		Condition: gliding
+		Duration: 750
+	TimedConditionBar@GLIDING:
+		Condition: gliding
+		Color: 8A8A8A
+	GrantCondition@AUTODEPLOY:
+		Condition: deployed
+		RequiresCondition: !gliding
+	RejectsOrders:
+		RequiresCondition: !gliding
 	-EjectOnDeath:
 	-Explodes:
 	-Contrail@1:
@@ -2440,10 +2467,17 @@ SGLI.crashing:
 	-SpawnActorOnDeath:
 	-GrantConditionOnDeploy:
 	-TransformOnCondition:
+	-GrantTimedCondition@GLIDING:
+	-TimedConditionBar@GLIDING:
+	-GrantCondition@AUTODEPLOY:
+	AmbientSoundCA:
+		SoundFiles: chute1.aud
+		Interval: 6000
 	SpawnActorOnDeath@gliderdiscarded:
 		Actor: sgli.discarded
 		RequiresCondition: !being-warped
 	RejectsOrders:
+		-RequiresCondition:
 
 SGLI.deployed:
 	Inherits: SGLI
@@ -2462,9 +2496,16 @@ SGLI.deployed:
 		RequiresCondition: !being-warped
 	Aircraft:
 		Speed: 80
+	AmbientSoundCA:
+		SoundFiles: chute1.aud
+		Interval: 6000
 	-GrantConditionOnDeploy:
 	-TransformOnCondition:
+	-GrantTimedCondition@GLIDING:
+	-TimedConditionBar@GLIDING:
+	-GrantCondition@AUTODEPLOY:
 	RejectsOrders:
+		-RequiresCondition:
 
 SGLI.discarded:
 	Inherits@1: ^SpriteActor

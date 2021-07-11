@@ -231,6 +231,8 @@ S2:
 		PauseOnCondition: being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
 	-TakeCover:
 
 S3:
@@ -279,6 +281,8 @@ S3:
 	ReloadAmmoPool:
 		Delay: 30
 		Count: 1
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
 
 S4:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -317,6 +321,8 @@ S4:
 	PortableChrono:
 		ChargeDelay: 500
 		ChronoshiftSound: scrinport.aud
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
 	-TakeCover:
 
 S6:
@@ -2008,7 +2014,6 @@ INVA:
 
 MSHP:
 	Inherits: ^Helicopter
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
 	Buildable:
@@ -2070,7 +2075,7 @@ MSHP:
 	-Hovers@CRUISING:
 	WithFacingSpriteBody:
 	AttackFrontal:
-		Armaments: primary, secondary, tertiary
+		Armaments: primary, secondary
 		FacingTolerance: 512
 		Voice: Attack
 		PauseOnCondition: being-warped
@@ -2138,6 +2143,19 @@ MSHP:
 		Delay: 1
 		RequiresCondition: !charging && !attacking
 		ShowSelectionBar: false
+
+MSHP.AI:
+	Inherits: MSHP
+	Buildable:
+		Prerequisites: sign, scrt, ~aircraft.scrin, ~techlevel.high, ~botplayer
+	RenderSprites:
+		Image: mshp
+	RejectsOrders:
+		RequiresCondition: attacking || charging
+	Armament@PRIMARY:
+		Weapon: MothershipBeamAI
+	Armament@SECONDARY:
+		Weapon: MothershipChargeBeamAI
 
 #
 # ---- Husks

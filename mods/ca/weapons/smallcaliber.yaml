@@ -776,12 +776,15 @@ CommandoIFVGun:
 
 ShadowOperativeGun:
 	Inherits: ^HeavyMG
+	Range: 5c0
 	ReloadDelay: 40
 	Burst: 2
 	BurstDelays: 3
 	Report: shad-fire1.aud, shad-fire2.aud, shad-fire3.aud
 	Projectile: InstantHit
+	InvalidTargets: Structure, Vehicle, Ship
 	Warhead@1Dam: SpreadDamage
+		InvalidTargets: Structure, Vehicle, Ship
 		Damage: 2800
 		Versus:
 			None: 100
@@ -789,6 +792,8 @@ ShadowOperativeGun:
 			Concrete: 20
 			Light: 60
 			Heavy: 20
+	Warhead@2Eff: CreateEffect
+		Explosions: piff
 
 HeliGunAG:
 	Inherits: ChainGun
