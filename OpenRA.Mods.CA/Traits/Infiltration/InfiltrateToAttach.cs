@@ -16,7 +16,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	class InfiltrateToAttachActorInfo : TraitInfo
+	class InfiltrateToAttachInfo : TraitInfo, Requires<AttachableToInfo>
 	{
 		[ActorReference(typeof(AttachableInfo))]
 		[FieldLoader.Require]
@@ -37,14 +37,14 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Sound the perpetrator will hear after successful infiltration.")]
 		public readonly string InfiltrationNotification = null;
 
-		public override object Create(ActorInitializer init) { return new InfiltrateToAttachActor(this); }
+		public override object Create(ActorInitializer init) { return new InfiltrateToAttach(this); }
 	}
 
-	class InfiltrateToAttachActor : INotifyInfiltrated
+	class InfiltrateToAttach : INotifyInfiltrated
 	{
-		readonly InfiltrateToAttachActorInfo info;
+		readonly InfiltrateToAttachInfo info;
 
-		public InfiltrateToAttachActor(InfiltrateToAttachActorInfo info)
+		public InfiltrateToAttach(InfiltrateToAttachInfo info)
 		{
 			this.info = info;
 		}
@@ -78,13 +78,13 @@ namespace OpenRA.Mods.CA.Traits
 
 			self.World.AddFrameEndTask(w =>
 			{
-				var attachedActor = self.World.CreateActor(info.Actor.ToLowerInvariant(), new TypeDictionary
+				var actorToAttach = self.World.CreateActor(info.Actor.ToLowerInvariant(), new TypeDictionary
 				{
 					new LocationInit(targetCell),
 					new OwnerInit(infiltrator.Owner),
 				});
 
-				targetTrait.Attach(attachedActor);
+				targetTrait.Attach(actorToAttach.Trait<Attachable>());
 			});
 		}
 	}

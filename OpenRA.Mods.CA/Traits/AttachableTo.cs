@@ -23,7 +23,7 @@ namespace OpenRA.Mods.CA.Traits
 	public class AttachableTo : INotifyKilled, INotifyActorDisposing, INotifyVisualPositionChanged
 	{
 		readonly Actor self;
-		readonly HashSet<Actor> attachedActors = new HashSet<Actor>();
+		readonly HashSet<Attachable> attached = new HashSet<Attachable>();
 
 		public AttachableTo(ActorInitializer init, AttachableToInfo info)
 		{
@@ -35,52 +35,46 @@ namespace OpenRA.Mods.CA.Traits
 			if (!self.IsInWorld)
 				return;
 
-			var pos = self.Location;
+			var pos = self.CenterPosition;
 
-			foreach (var actor in attachedActors)
+			foreach (var attachable in attached)
 			{
-				var attachableTrait = actor.TraitOrDefault<Attachable>();
-				if (attachableTrait != null && attachableTrait.IsValid)
-					attachableTrait.OnTargetMoved(pos);
+				if (attachable.IsValid)
+					attachable.SetPosition(pos);
 			}
 		}
 
 		void INotifyActorDisposing.Disposing(Actor self)
 		{
-			KillAttached();
+			Terminate();
 		}
 
 		void INotifyKilled.Killed(Actor self, AttackInfo e)
 		{
-			KillAttached();
+			Terminate();
 		}
 
-		void KillAttached()
+		void Terminate()
 		{
-			foreach (var actor in attachedActors)
+			foreach (var attachable in attached)
 			{
-				if (actor == null || actor.IsDead)
-					continue;
-
-				var attachableTrait = actor.TraitOrDefault<Attachable>();
-				if (attachableTrait != null && attachableTrait.IsValid)
-					attachableTrait.OnTargetLost();
+				if (attachable.IsValid)
+					attachable.TargetLost();
 			}
 		}
 
-		public void Attach(Actor actor)
+		public void Attach(Attachable attachable)
 		{
-			var attachableTrait = actor.TraitOrDefault<Attachable>();
-			if (attachableTrait != null && attachableTrait.IsValid)
+			if (attachable.IsValid)
 			{
-				attachedActors.Add(actor);
-				attachableTrait.SetTarget(this);
+				attached.Add(attachable);
+				attachable.AttachTo(this);
 			}
 		}
 
-		public void Detach(Actor actor)
+		public void Detach(Attachable attachable)
 		{
-			attachedActors.Remove(actor);
+			attached.Remove(attachable);
 		}
 	}
 }
