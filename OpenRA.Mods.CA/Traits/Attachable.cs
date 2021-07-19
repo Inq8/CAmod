@@ -22,31 +22,30 @@ namespace OpenRA.Mods.CA.Traits
 	public class Attachable : INotifyKilled, INotifyActorDisposing
 	{
 		AttachableTo target;
+		readonly IPositionable positionable;
 		readonly Actor self;
 
 		public Attachable(ActorInitializer init, AttachableInfo info)
 		{
 			self = init.Self;
+			positionable = self.TraitOrDefault<IPositionable>();
 		}
 
 		public bool IsValid { get { return self != null && !self.IsDead; } }
 
-		public void SetTarget(AttachableTo target)
+		public void AttachTo(AttachableTo attachableTo)
 		{
-			this.target = target;
+			Detach();
+			target = attachableTo;
 		}
 
-		public void OnTargetLost()
+		public void TargetLost()
 		{
 			self.Dispose();
 		}
 
-		public void OnTargetMoved(CPos pos)
+		public void SetPosition(WPos pos)
 		{
-			var positionable = self.TraitOrDefault<IPositionable>();
-			if (positionable == null)
-				return;
-
 			self.World.AddFrameEndTask(w =>
 			{
 				positionable.SetPosition(self, pos);
@@ -55,17 +54,18 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyActorDisposing.Disposing(Actor self)
 		{
-			Killed();
+			Detach();
 		}
 
 		void INotifyKilled.Killed(Actor self, AttackInfo e)
 		{
-			Killed();
+			Detach();
 		}
 
-		void Killed()
+		void Detach()
 		{
-			target.Detach(self);
+			if (target != null)
+				target.Detach(this);
 		}
 	}
 }

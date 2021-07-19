@@ -76,6 +76,9 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("Use the Player Palette to render the trail sequence.")]
 		public readonly bool TrailUsePlayerPalette = false;
 
+		[Desc("Fixed distance between Trail animations. Overrides the distance calculated using projectile speed.")]
+		public readonly WDist TrailSpacing = WDist.Zero;
+
 		[Desc("Is this blocked by actors with BlocksProjectiles trait.")]
 		public readonly bool Blockable = true;
 
@@ -135,6 +138,7 @@ namespace OpenRA.Mods.CA.Projectiles
 		int length;
 		int ticks, smokeTicks;
 		int remainingBounces;
+		List<Animation> trailItems = new List<Animation>();
 
 		public BulletCA(BulletCAInfo info, ProjectileArgs args)
 		{
@@ -207,6 +211,9 @@ namespace OpenRA.Mods.CA.Projectiles
 		{
 			anim?.Tick();
 
+			foreach (var t in trailItems)
+				t.Tick();
+
 			lastPos = pos;
 			pos = WPos.LerpQuadratic(source, target, angle, ticks, length);
 
@@ -225,9 +232,19 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			if (!string.IsNullOrEmpty(info.TrailImage) && --smokeTicks < 0)
 			{
-				var delayedPos = WPos.LerpQuadratic(source, target, angle, ticks - info.TrailDelay, length);
-				world.AddFrameEndTask(w => w.Add(new SpriteEffect(delayedPos, GetEffectiveFacing(), w,
-					info.TrailImage, info.TrailSequences.Random(world.SharedRandom), trailPalette)));
+				if (info.TrailSpacing != WDist.Zero)
+				{
+					var trailAnim = new Animation(world, info.TrailImage, new Func<WAngle>(GetEffectiveFacing));
+					trailItems.Add(trailAnim);
+					trailAnim.PlayThen(info.TrailSequences.Random(world.SharedRandom), () => world.AddFrameEndTask(w => { trailItems.Remove(trailAnim); }));
+				}
+				else
+				{
+					var delayedPos = WPos.LerpQuadratic(source, target, angle, ticks - info.TrailDelay, length);
+
+					world.AddFrameEndTask(w => w.Add(new SpriteEffect(delayedPos, GetEffectiveFacing(), w,
+						info.TrailImage, info.TrailSequences.Random(world.SharedRandom), trailPalette)));
+				}
 
 				smokeTicks = info.TrailInterval;
 			}
@@ -301,6 +318,21 @@ namespace OpenRA.Mods.CA.Projectiles
 				var palette = wr.Palette(info.Palette + (info.IsPlayerPalette ? args.SourceActor.Owner.InternalName : ""));
 				foreach (var r in anim.Render(pos, palette))
 					yield return r;
+
+				var trailPalette = wr.Palette(info.TrailPalette + (info.TrailUsePlayerPalette ? args.SourceActor.Owner.InternalName : ""));
+				var trailMult = 1;
+
+				for (var i = trailItems.Count - 1; i >= 0; i--)
+				{
+					var trailOffset = new WVec(0, info.TrailSpacing.Length, 0);
+					trailOffset = trailOffset.Rotate(WRot.FromYaw(facing));
+					var trailPos = pos + (trailOffset * trailMult);
+
+					foreach (var r in trailItems[i].Render(trailPos, trailPalette))
+						yield return r;
+
+					trailMult++;
+				}
 			}
 		}
 

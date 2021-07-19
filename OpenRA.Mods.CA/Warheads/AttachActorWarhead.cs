@@ -101,13 +101,13 @@ namespace OpenRA.Mods.CA.Warheads
 
 			targetActor.World.AddFrameEndTask(w =>
 			{
-				var attachedActor = targetActor.World.CreateActor(Actor.ToLowerInvariant(), new TypeDictionary
+				var actorToAttach = targetActor.World.CreateActor(Actor.ToLowerInvariant(), new TypeDictionary
 				{
 					new LocationInit(targetCell),
 					new OwnerInit(firedBy.Owner),
 				});
 
-				targetTrait.Attach(attachedActor);
+				targetTrait.Attach(actorToAttach.Trait<Attachable>());
 			});
 		}
 	}
