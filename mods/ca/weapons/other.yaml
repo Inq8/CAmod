@@ -85,6 +85,7 @@ FireballGun:
 			Heavy: 10
 	Warhead@3Eff: CreateEffect
 		Explosions: small_napalm
+	-Warhead@Flames: FireCluster
 
 Napalmtd:
 	ValidTargets: Ground, Water, Trees
@@ -322,8 +323,8 @@ HeavyFlameTankFlamerFF:
 BlackHandFlamer:
 	Inherits: HeavyFlameTankFlamer
 	ReloadDelay: 110
-	BurstDelays: 1
-	Burst: 55
+	BurstDelays: 2
+	Burst: 28
 	Range: 3c512
 	Projectile: LinearPulse
 		Speed: 160
@@ -336,7 +337,7 @@ BlackHandFlamer:
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 320
 		Falloff: 100, 0
-		Damage: 340
+		Damage: 670
 		Versus:
 			None: 100
 			Wood: 5
