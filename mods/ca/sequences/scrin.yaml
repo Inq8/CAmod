@@ -20,6 +20,11 @@
 		Start: 48
 		Length: 13
 		Tick: 80
+	die12: scrininfdeaths
+		Length: 12
+		Start: 67
+		Tick: 80
+		BlendMode: Additive
 	die-crushed: scrininfdeaths
 		Start: 61
 		Length: 6
@@ -330,6 +335,65 @@ s6:
 		Tick: 80
 	icon: s6icon
 
+feed:
+	Inherits: ^ScrinCommonDeaths
+	idle: feed
+		Facings: 8
+	move: feed
+		Start: 8
+		Length: 4
+		Facings: 8
+		Tick: 120
+	harvest: feed
+		Start: 40
+		Length: 4
+		Facings: 8
+		Tick: 80
+	idle1: feed
+		Start: 1
+		Length: 1
+		Tick: 120
+	idle2: feed
+		Start: 3
+		Length: 1
+		Tick: 120
+	idle3: feed
+		Start: 5
+		Length: 1
+		Tick: 120
+	idle4: feed
+		Start: 7
+		Length: 1
+		Tick: 120
+	die1: feed
+		Start: 72
+		Length: 8
+		Tick: 80
+	die2: feed
+		Start: 80
+		Length: 8
+		Tick: 80
+	die3: feed
+		Start: 88
+		Length: 8
+		Tick: 80
+	die4: feed
+		Start: 88
+		Length: 8
+		Tick: 80
+	die7: feed
+		Start: 72
+		Length: 8
+		Tick: 80
+	chrono-overlay: chronofade_small
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+		Tick: 80
+	icon: s2icon
+
 smedi:
 	Inherits: ^ScrinCommonDeaths
 	stand: smedi
@@ -570,6 +634,26 @@ corr.destroyed:
 		UseClassicFacings: True
 		ZOffset: -512
 
+lchr:
+	Inherits: ^VehicleOverlays
+	idle: lchr
+		Facings: 32
+		UseClassicFacings: True
+	move: lchr
+		Start: 32
+		Facings: 32
+		Length: 2
+		Tick: 80
+		UseClassicFacings: True
+	icon: lchricon
+
+lchr.destroyed:
+	Inherits: ^VehicleOverlays
+	idle: lchr
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512
+
 stcr:
 	Inherits: ^VehicleOverlays
 	idle: stcr
@@ -630,6 +714,17 @@ ruin.destroyed:
 		Facings: 32
 		UseClassicFacings: True
 		ZOffset: -512
+
+atmz:
+	Inherits: ^VehicleOverlays
+	idle: atmz
+		Facings: 32
+		UseClassicFacings: True
+	turret: atmz
+		Facings: 32
+		Start: 32
+		UseClassicFacings: True
+	icon: atmzicon
 
 tpod:
 	Inherits: ^VehicleOverlays
@@ -1206,12 +1301,31 @@ tibgloblg:
 		ZOffset: 1023
 		Tick: 40
 
-enrvbolt:
-	idle: enrvbolt
+atmzbolt:
+	idle: atmzbolt
 		BlendMode: Additive
 		Length: *
 		ZOffset: 1023
 		Tick: 40
+
+atmzbolttrail:
+	idle: atmzbolttrail
+		BlendMode: Additive
+		Length: *
+		ZOffset: 2047
+
+atmzbolthit:
+	idle: atmzbolthit
+		BlendMode: Additive
+		Length: *
+		ZOffset: 2047
+
+enrvbolt
+	idle: enrvbolt
+		BlendMode: Additive
+		Length: *
+		ZOffset: 1023
+		Tick: 50
 
 enrvbolthit:
 	idle: enrvbolthit
@@ -1308,6 +1422,12 @@ bshard:
 		Facings: 32
 		ZOffset: 1023
 
+leechhit:
+	idle: leechhit
+		BlendMode: Additive
+		Length: *
+		ZOffset: 2047
+
 mindcontrol:
 	idle: mindcontrol
 		Tick: 40
@@ -1371,6 +1491,23 @@ ionsurge-overlay:
 		Offset: 0, -5
 		UseTilesetCode: false
 		ZOffset: 512
+
+atomize-overlay:
+	idle: atomizeoverlay
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+
+feederfull-overlay:
+	idle: leechhit
+		Frames: 0,1,2,3,4,5,6,7,7,7
+		BlendMode: Additive
+		Length: *
+		ZOffset: 2047
+		Offset: 0, -5
+		Tick: 80
 
 scrinwipicon:
 	icon: wipicon

@@ -101,8 +101,38 @@ Player:
 					Attractiveness: 1
 					TargetMetric: None
 					CheckRadius: 8c0
-			nodairdrop:
-				OrderName: nodairdrop
+			markedairdrop:
+				OrderName: markedairdrop
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
+				Consideration@2:
+					Against: Enemy
+					Types: Water
+					Attractiveness: -5
+					TargetMetric: None
+					CheckRadius: 8c0
+			blackhairdrop:
+				OrderName: blackhairdrop
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
+				Consideration@2:
+					Against: Enemy
+					Types: Water
+					Attractiveness: -5
+					TargetMetric: None
+					CheckRadius: 8c0
+			shadowairdrop:
+				OrderName: shadowairdrop
 				MinimumAttractiveness: 5
 				Consideration@1:
 					Against: Enemy
@@ -1602,6 +1632,7 @@ Player:
 			jjet: 15
 			acol: 15
 			acol.upg: 15
+			bh: 15
 			ivan: 15
 			rmbo: 15
 			e7: 15
@@ -1628,6 +1659,7 @@ Player:
 			spec: 20
 			hsam: 25
 			ruin: 20
+			atmz: 20
 			1tnk: 70
 			ifv.ai: 70
 			2tnk: 45
@@ -1667,7 +1699,9 @@ Player:
 			isu: 20
 			stnk.nod: 15
 			ftnk: 15
+			hftk: 15
 			corr: 15
+			lchr: 15
 			stcr: 25
 			hind: 5
 			heli: 5
@@ -1701,6 +1735,7 @@ Player:
 			enrv: 3
 			deva: 3
 			pac: 3
+			mshp.ai: 1
 		UnitLimits:
 			dog: 2
 			sab: 2
@@ -1780,6 +1815,7 @@ Player:
 			jjet: 15
 			acol: 15
 			acol.upg: 15
+			bh: 15
 			ivan: 15
 			rmbo: 15
 			e7: 15
@@ -1806,6 +1842,7 @@ Player:
 			spec: 20
 			hsam: 25
 			ruin: 20
+			atmz: 20
 			1tnk: 70
 			ifv.ai: 70
 			2tnk: 45
@@ -1845,7 +1882,9 @@ Player:
 			isu: 20
 			stnk.nod: 15
 			ftnk: 15
+			hftk: 15
 			corr: 15
+			lchr: 15
 			stcr: 25
 			hind: 5
 			heli: 5
@@ -1879,6 +1918,7 @@ Player:
 			enrv: 3
 			deva: 3
 			pac: 3
+			mshp.ai: 1
 		UnitLimits:
 			dog: 2
 			sab: 2
@@ -1958,6 +1998,7 @@ Player:
 			jjet: 15
 			acol: 15
 			acol.upg: 15
+			bh: 15
 			ivan: 15
 			rmbo: 15
 			e7: 15
@@ -1983,6 +2024,7 @@ Player:
 			spec: 20
 			hsam: 25
 			ruin: 20
+			atmz: 20
 			1tnk: 70
 			ifv.ai: 70
 			2tnk: 45
@@ -2022,7 +2064,9 @@ Player:
 			isu: 20
 			stnk.nod: 15
 			ftnk: 15
+			hftk: 15
 			corr: 15
+			lchr: 15
 			stcr: 25
 			hind: 5
 			heli: 5
@@ -2056,6 +2100,7 @@ Player:
 			enrv: 3
 			deva: 3
 			pac: 3
+			mshp.ai: 1
 		UnitLimits:
 			dog: 2
 			sab: 2
@@ -2134,6 +2179,7 @@ Player:
 			jjet: 15
 			acol: 15
 			acol.upg: 15
+			bh: 15
 			ivan: 15
 			rmbo: 15
 			e7: 15
@@ -2159,6 +2205,7 @@ Player:
 			spec: 20
 			hsam: 25
 			ruin: 20
+			atmz: 20
 			1tnk: 70
 			ifv.ai: 70
 			2tnk: 45
@@ -2198,7 +2245,9 @@ Player:
 			isu: 20
 			stnk.nod: 15
 			ftnk: 15
+			hftk: 15
 			corr: 15
+			lchr: 15
 			stcr: 25
 			hind: 5
 			heli: 5
@@ -2232,6 +2281,7 @@ Player:
 			enrv: 3
 			deva: 3
 			pac: 3
+			mshp.ai: 1
 		UnitLimits:
 			dog: 2
 			sab: 2
@@ -2333,3 +2383,4 @@ Player:
 			enrv: 3
 			deva: 3
 			pac: 3
+			mshp.ai: 1

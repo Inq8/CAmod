@@ -396,6 +396,48 @@
 		Condition: suppression
 		Color: f454d0
 
+^Atomizable:
+	ExternalCondition@ATOMIZED:
+		Condition: atomized
+	TimedConditionBar@ATOMIZED:
+		Condition: atomized
+		Color: ff0000
+	WithIdleOverlay@ATOMIZED:
+		Sequence: idle
+		Image: atomize-overlay
+		Palette: scrin
+		RequiresCondition: atomized
+	ChangesHealthVersus@ATOMIZED1:
+		RequiresCondition: atomized == 1
+		Step: -1300
+		Delay: 25
+		Versus:
+			None: 0
+			Wood: 0
+			Concrete: 0
+			Light: 85
+			Heavy: 100
+	ChangesHealthVersus@ATOMIZED2:
+		RequiresCondition: atomized == 2
+		Step: -2600
+		Delay: 25
+		Versus:
+			None: 0
+			Wood: 0
+			Concrete: 0
+			Light: 85
+			Heavy: 100
+	ChangesHealthVersus@ATOMIZED3:
+		RequiresCondition: atomized >= 3
+		Step: -3900
+		Delay: 25
+		Versus:
+			None: 0
+			Wood: 0
+			Concrete: 0
+			Light: 85
+			Heavy: 100
+
 ^IonSurgable:
 	TimedConditionBar@IONSURGE:
 		Condition: ionsurge
@@ -421,6 +463,30 @@
 	Inherits: ^IonSurgable
 	WithIdleOverlay@IONSURGE:
 		Sequence: infantry
+
+^PowerDrainable:
+	Targetable@POWERDRAIN:
+		TargetTypes: PowerDrainable
+	ExternalCondition@POWERDRAIN:
+		Condition: powerdrain
+	PowerMultiplier@POWERDRAIN:
+		Modifier: 0
+		RequiresCondition: powerdrain
+	WithColoredOverlay@POWERDRAIN:
+		RequiresCondition: powerdrain
+		Palette: disabled
+	WithDecoration@POWERDRAIN:
+		Image: poweroff
+		Sequence: offline
+		Palette: chrome
+		RequiresCondition: powerdrain
+		Position: Center
+
+^PowerDrainableRadar:
+	Inherits: ^PowerDrainable
+	GrantCondition@POWERDRAINJAMMED:
+		Condition: jammed
+		RequiresCondition: powerdrain
 
 ^GDIUpgrade:
 	GrantConditionOnPrerequisite@HOLD:
@@ -936,6 +1002,13 @@
 		RequiresCondition: greenhighlight
 		Palette: greenhighlight
 
+^RedFlash:
+	ExternalCondition@RHIGH:
+		Condition: redhighlight
+	WithColoredOverlay@RHIGH:
+		RequiresCondition: redhighlight
+		Palette: redhighlight
+
 ^WhiteFlash:
 	ExternalCondition@HIGH:
 		Condition: highlight
@@ -1335,6 +1408,7 @@
 	Inherits@C4: ^C4Plantable
 	Inherits@TNT: ^TNTPlantable
 	Inherits@gflash: ^GreenFlash
+	Inherits@rflash: ^RedFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
 	Inherits@production: ^ProductionEfficiencyBoost
@@ -1343,6 +1417,7 @@
 	Inherits@handicaps: ^PlayerHandicaps
 	Inherits@irrad: ^Irradiatable
 	Inherits@ionsurge: ^IonSurgable
+	Inherits@atomize: ^Atomizable
 	Huntable:
 	OwnerLostAction:
 		Action: Kill
@@ -1446,6 +1521,9 @@
 	GpsRadarDot:
 		Sequence: Vehicle
 	TeleportNetworkTransportable:
+	Targetable@SHADOWBEACON:
+		TargetTypes: ShadowBeacon
+	AttachableTo:
 
 ^Vehicle:
 	Inherits@1: ^Vehicle-NOUPG
@@ -1594,6 +1672,7 @@
 			ToxinDeath: 9
 			RadiationDeath: 10
 			FrozenDeath: 11
+			AtomizedDeath: 12
 		CrushedSequence: die-crushed
 	AttackMove:
 	Passenger:
@@ -1635,7 +1714,7 @@
 		DeathTypes: FireDeath
 	DeathSounds@ZAPPED:
 		Voice: Zapped
-		DeathTypes: ElectricityDeath, ChronoDeath
+		DeathTypes: ElectricityDeath, ChronoDeath, AtomizedDeath
 	DeathSounds@POISONED:
 		Voice: Poisoned
 		DeathTypes: PoisonDeath, ToxinDeath, RadiationDeath
@@ -1805,7 +1884,7 @@
 	Valued:
 		Cost: 10
 	GrantConditionOnFaction@FACTION:
-		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq, gdi, zocom, eagle, talon, nod, blackh, legion, marked
+		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq, gdi, zocom, eagle, talon, nod, blackh, legion, marked, shadow
 		Condition: owned-by-faction
 	Tooltip:
 		Name: Civilian
@@ -1838,7 +1917,7 @@
 		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq
 		Condition: ra-faction
 	GrantConditionOnFaction@TD:
-		Factions: gdi, zocom, eagle, talon, nod, blackh, legion, marked
+		Factions: gdi, zocom, eagle, talon, nod, blackh, legion, marked, shadow
 		Condition: td-faction
 	Armament@RA:
 		Weapon: Pistol
@@ -1869,12 +1948,14 @@
 	Inherits@17: ^Suppressable
 	Inherits@18: ^CrateCloak
 	Inherits@gflash: ^GreenFlash
+	Inherits@rflash: ^RedFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@production: ^ProductionEfficiencyBoost
 	Inherits@mind: ^MindControllable
 	Inherits@handicaps: ^PlayerHandicaps
+	Inherits@atomize: ^Atomizable
 	Huntable:
 	RenderSprites:
 		PlayerPalette: playernavy
@@ -2108,11 +2189,13 @@
 	Inherits@10: ^Chillable
 	Inherits@11: ^Suppressable
 	Inherits@gflash: ^GreenFlash
+	Inherits@rflash: ^RedFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@production: ^ProductionEfficiencyBoost
 	Inherits@C4: ^C4Plantable
 	Inherits@TNT: ^TNTPlantable
 	Inherits@ionsurge: ^IonSurgable
+	Inherits@atomize: ^Atomizable
 	Cloak@EXTERNALCLOAK:
 		RequiresCondition: invisibility || crate-cloak && (!cloak-force-disabled && !airborne && !being-warped)
 		CloakDelay: 90
@@ -2306,6 +2389,9 @@
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
+	Targetable@SHADOWBEACON:
+		TargetTypes: ShadowBeacon
+	AttachableTo:
 
 ^BuildingTD:
 	Inherits@1: ^Building
@@ -2928,7 +3014,13 @@
 	Tooltip:
 		Name: Mine
 	Targetable:
-		TargetTypes: Ground, Water, Mine
+		TargetTypes: Ground, Mine
+	Targetable@ONWATER:
+		TargetTypes: Water
+		RequiresCondition: onwater
+	GrantConditionOnTerrain@ONWATER:
+		TerrainTypes: Water
+		Condition: onwater
 	Immobile:
 		OccupiesSpace: true
 	HitShape:

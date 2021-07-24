@@ -116,6 +116,17 @@ MGG.Husk:
 	RenderSprites:
 		Image: mgg.destroyed
 
+MSG.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Mobile Stealth Generator)
+	TransformOnCapture:
+		IntoActor: msg
+	InfiltrateForTransform:
+		IntoActor: msg
+	RenderSprites:
+		Image: msg.destroyed
+
 TRAN.Husk:
 	Inherits: ^HelicopterHusk
 	Tooltip:
@@ -753,6 +764,19 @@ FTNK.Husk:
 	RenderSprites:
 		Image: ftnk.destroyed
 		PlayerPalette: overlayplayertd
+
+HFTK.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Heavy Flame Tank)
+	ThrowsParticle@turret:
+		Anim: turret
+	TransformOnCapture:
+		IntoActor: hftk
+	InfiltrateForTransform:
+		IntoActor: hftk
+	RenderSprites:
+		Image: hftk.destroyed
 
 BIKE.Husk:
 	Inherits: ^HuskTD

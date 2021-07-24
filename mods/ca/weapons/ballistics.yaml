@@ -204,7 +204,6 @@ TitanGun:
 	Report: vtadatta.aud, vtadattb.aud, vtadattc.aud
 	Range: 5c0
 	Warhead@1Dam: SpreadDamage
-		Spread: 128
 		Damage: 14000
 		Versus:
 			None: 50
@@ -488,6 +487,23 @@ EMPGrenade:
 		Explosions: idle
 		ExplosionPalette: tseffect-ignore-lighting-alpha75
 		ImpactSounds: expnew16.aud
+
+ShadowOperativeGrenade:
+	Inherits: Grenade
+	ValidTargets: Structure, Vehicle, Ship
+	Projectile: Bullet
+		Image: shadgren
+	Warhead@2Dam: SpreadDamage
+		Versus:
+			Light: 100
+			Heavy: 100
+
+ShadowGliderGrenade:
+	Range: 1c0
+	Inherits: ShadowOperativeGrenade
+	-ValidTargets:
+	Projectile:
+		LaunchAngle: 0
 
 Mortar:
 	Inherits: ^Artillery

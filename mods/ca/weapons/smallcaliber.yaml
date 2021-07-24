@@ -182,7 +182,7 @@ MGatt.3:
 	Range: 6c0
 	Report: gun13.aud
 	Projectile: Bullet
-		Speed: 1c682
+		Speed: 2c341
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
 		Damage: 2500
@@ -773,6 +773,27 @@ CommandoIFVGun:
 	BurstDelays: 2
 	Warhead@1Dam: SpreadDamage
 		Damage: 5100
+
+ShadowOperativeGun:
+	Inherits: ^HeavyMG
+	Range: 5c0
+	ReloadDelay: 40
+	Burst: 2
+	BurstDelays: 3
+	Report: shad-fire1.aud, shad-fire2.aud, shad-fire3.aud
+	Projectile: InstantHit
+	InvalidTargets: Structure, Vehicle, Ship
+	Warhead@1Dam: SpreadDamage
+		InvalidTargets: Structure, Vehicle, Ship
+		Damage: 2800
+		Versus:
+			None: 100
+			Wood: 40
+			Concrete: 20
+			Light: 60
+			Heavy: 20
+	Warhead@2Eff: CreateEffect
+		Explosions: piff
 
 HeliGunAG:
 	Inherits: ChainGun

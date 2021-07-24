@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
 using OpenRA.GameRules;
 using OpenRA.Graphics;
@@ -57,6 +58,12 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		[Desc("Beam can be blocked.")]
 		public readonly bool Blockable = false;
+
+		[Desc("The maximum/constant/incremental inaccuracy used in conjunction with the InaccuracyType property.")]
+		public readonly WDist Inaccuracy = WDist.Zero;
+
+		[Desc("Controls the way inaccuracy is calculated. Possible values are 'Maximum' - scale from 0 to max with range, 'PerCellIncrement' - scale from 0 with range and 'Absolute' - use set value regardless of range.")]
+		public readonly InaccuracyType InaccuracyType = InaccuracyType.Maximum;
 
 		[Desc("Draw primary center beam.")]
 		public readonly bool CenterBeam = false;
@@ -131,16 +138,25 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			var world = args.SourceActor.World;
 
+			if (info.Inaccuracy.Length > 0)
+			{
+				var maxInaccuracyOffset = OpenRA.Mods.Common.Util.GetProjectileInaccuracy(info.Inaccuracy.Length, info.InaccuracyType, args);
+				target += WVec.FromPDF(args.SourceActor.World.SharedRandom, 2) * maxInaccuracyOffset / 1024;
+			}
+
 			// Check for blocking actors
 			if (info.Blockable && BlocksProjectiles.AnyBlockingActorsBetween(world, source, target, info.CenterBeamWidth, out var blockedPos))
 				target = blockedPos;
+
+			var direction = target - source;
+			var rangeBonusAlpha = GetRangeBonusAlpha(direction);
 
 			colors = new Color[info.Radius];
 			for (var i = 0; i < info.Radius; i++)
 			{
 				var color = info.Colors == null ? Color.Red : info.Colors.Random(Game.CosmeticRandom);
-				var bw = (float)((info.InnerLightness - info.OuterLightness) * i / (info.Radius - 1) + info.OuterLightness) / 0xff;
-				var alpha = (float)color.A;
+				var bw = (float)((info.InnerLightness - info.OuterLightness) * i / (Math.Max(info.Radius - 1, 1)) + info.OuterLightness) / 0xff;
+				var alpha = (float)color.A + rangeBonusAlpha;
 				var dstR = bw > .5 ? 1 - (1 - 2 * (bw - .5)) * (1 - (float)color.R / 0xff) : 2 * bw * ((float)color.R / 0xff);
 				var dstG = bw > .5 ? 1 - (1 - 2 * (bw - .5)) * (1 - (float)color.G / 0xff) : 2 * bw * ((float)color.G / 0xff);
 				var dstB = bw > .5 ? 1 - (1 - 2 * (bw - .5)) * (1 - (float)color.B / 0xff) : 2 * bw * ((float)color.B / 0xff);
@@ -150,7 +166,7 @@ namespace OpenRA.Mods.CA.Projectiles
 			if (info.Distortion != 0 || info.DistortionAnimation != 0)
 				random = args.SourceActor.World.SharedRandom;
 
-			CalculateMainBeam();
+			CalculateMainBeam(direction);
 
 			if (ticks < 1)
 			{
@@ -166,10 +182,8 @@ namespace OpenRA.Mods.CA.Projectiles
 			hasLaunchEffect = !string.IsNullOrEmpty(info.LaunchEffectImage) && !string.IsNullOrEmpty(info.LaunchEffectSequence);
 		}
 
-		private void CalculateMainBeam()
+		private void CalculateMainBeam(WVec direction)
 		{
-			var direction = target - source;
-
 			if (info.Distortion != 0 || info.DistortionAnimation != 0)
 			{
 				leftVector = new WVec(direction.Y, -direction.X, 0);
@@ -231,7 +245,7 @@ namespace OpenRA.Mods.CA.Projectiles
 			else if (info.DistortionAnimation != 0)
 			{
 				if (source != lastSource)
-					CalculateMainBeam();
+					CalculateMainBeam(target - source);
 				else
 				{
 					offsets[0] = source;
@@ -250,6 +264,17 @@ namespace OpenRA.Mods.CA.Projectiles
 			}
 
 			lastSource = source;
+		}
+
+		// workaround to stop closer targets resulting in beam with lower alpha
+		private int GetRangeBonusAlpha(WVec direction)
+		{
+			var range = direction.Length;
+			var alphaIncreaser = 5120 - range;
+			if (alphaIncreaser > 0)
+				return alphaIncreaser / 200;
+
+			return 0;
 		}
 
 		public IEnumerable<IRenderable> Render(WorldRenderer worldRenderer)
