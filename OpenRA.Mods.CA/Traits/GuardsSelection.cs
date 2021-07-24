@@ -49,6 +49,9 @@ namespace OpenRA.Mods.CA.Traits
 
 			var world = self.World;
 
+			if (order.Target.Type == TargetType.Actor && order.Target.Actor.Owner == world.LocalPlayer)
+				return;
+
 			var guardActors = world.Selection.Actors
 				.Where(a => a.Owner == world.LocalPlayer && a.IsInWorld && !a.IsDead && a.Info.HasTraitInfo<AttackBaseInfo>()
 					&& IsValidGuardTarget(a))
@@ -65,8 +68,17 @@ namespace OpenRA.Mods.CA.Traits
 
 			world.IssueOrder(new Order("Guard", self, mainGuardTarget, false, null, null));
 
+			var maxGuardTargets = 50;
+			var guardTargets = 0;
+
 			foreach (var guardActor in guardActors)
+			{
+				guardTargets++;
 				world.IssueOrder(new Order("Guard", self, Target.FromActor(guardActor), true, null, null));
+
+				if (guardTargets >= maxGuardTargets)
+					break;
+			}
 		}
 
 		bool IsValidGuardTarget(Actor targetActor)

@@ -56,6 +56,9 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("Does this projectile have a shadow?")]
 		public readonly bool Shadow = false;
 
+		[Desc("Should the projectile animation repeat?")]
+		public readonly bool RepeatAnimation = true;
+
 		[PaletteReference]
 		[Desc("Palette to use for this projectile's shadow if Shadow is true.")]
 		public readonly string ShadowPalette = "shadow";
@@ -120,7 +123,11 @@ namespace OpenRA.Mods.CA.Projectiles
 			if (!string.IsNullOrEmpty(info.Image))
 			{
 				anim = new Animation(world, info.Image, new Func<WAngle>(GetEffectiveFacing));
-				anim.PlayRepeating(info.Sequences.Random(world.SharedRandom));
+
+				if (info.RepeatAnimation)
+					anim.PlayRepeating(info.Sequences.Random(world.SharedRandom));
+				else
+					anim.Play(info.Sequences.Random(world.SharedRandom));
 			}
 		}
 

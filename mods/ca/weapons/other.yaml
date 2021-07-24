@@ -327,24 +327,26 @@ BlackHandFlamer:
 	Burst: 28
 	Range: 3c512
 	Projectile: LinearPulse
-		Speed: 160
+		Speed: 220
 		Inaccuracy: 160
 		Image: thinblueflame
 		Palette: effect-ignore-lighting-alpha85
 		ImpactSpacing: 320
 		MinimumImpactDistance: 320
 		MaximumImpactDistance: 3c512
+		RepeatAnimation: false
 	Warhead@1Dam: SpreadDamage
-		Range: 0, 320
-		Falloff: 100, 0
-		Damage: 670
+		Range: 0, 256, 512
+		Falloff: 100, 100, 0
+		Damage: 300
 		Versus:
 			None: 100
-			Wood: 5
-			Light: 20
-			Heavy: 20
-			Concrete: 10
+			Wood: 10
+			Light: 50
+			Heavy: 60
+			Concrete: 30
 			Brick: 2
+		-Delay:
 	Warhead@2Smu: LeaveSmudge
 		Chance: 5
 
