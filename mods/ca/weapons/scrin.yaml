@@ -458,6 +458,13 @@ CorruptorExplode:
 		ValidTargets: Ground, Water, Infantry, Vehicle
 		ThrowWithoutTarget: true
 
+LeecherExplode:
+	Inherits: UnitExplodeSmall
+	Warhead@3Eff_impact: CreateEffect
+		Explosions: lchrexplode
+		ExplosionPalette: effect
+		ImpactSounds: vtoxcona.aud, vtoxconb.aud, vtoxconc.aud
+
 RuinerCannon:
 	Inherits: 155mm
 	Report: ruiner-fire1.aud
@@ -1186,8 +1193,9 @@ WormholeOpener:
 	Warhead@Spawn: SpawnActor
 		Actors: wormhole
 		Delay: 14
-		Range: 1
+		Range: 2
 		ForceGround: true
+		AvoidActors: true
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: wormhole-open.aud
 
