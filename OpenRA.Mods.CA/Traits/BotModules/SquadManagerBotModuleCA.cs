@@ -78,7 +78,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly int ProtectionScanRadius = 8;
 
 		[Desc("Percent change for air squads (that can attack aircraft) to prioritise enemy aircraft.")]
-		public readonly int AirToAirPriority = 65;
+		public readonly int AirToAirPriority = 80;
 
 		[Desc("Enemy target types to never target.")]
 		public readonly BitSet<TargetableType> IgnoredEnemyTargetTypes = default(BitSet<TargetableType>);

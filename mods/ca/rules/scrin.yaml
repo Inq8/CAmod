@@ -408,17 +408,24 @@ FEED:
 		Image: feederfull-overlay
 		Palette: scrin-ignore-lighting-alpha30
 		RequiresCondition: full
+	WithAttackAnimation:
+		Sequence: harvest
+		Armament: secondary
 	Explodes:
 		Weapon: FeederExplode
 		EmptyWeapon: FeederExplode
 		DamageSource: Killer
 		RequiresCondition: full
 	AttackFrontal:
-		FacingTolerance: 512
-		PauseOnCondition: !full
+		FacingTolerance: 64
 	Armament@PRIMARY:
 		Weapon: FeederTargeting
 		RequiresCondition: full
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: FeederBeam
+		LocalOffset: 150,0,200
+		RequiresCondition: !full
 	GrantConditionOnAttack:
 		Condition: triggered
 		RequiresCondition: full
@@ -431,6 +438,11 @@ FEED:
 		RequiresCondition: full
 		Modifier: 150
 	-TakeCover:
+	WithHarvesterCapacityBar:
+		SelectionBarColor: cc0000
+		DisplayWhenFull: false
+	ConvertsDamageToHealth:
+		DamagePercentConverted: 20
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -473,7 +485,7 @@ SMEDI:
 	Targetable:
 		TargetTypes: Ground, Infantry, ChaosImmune
 	GuardsSelection:
-		ValidTargets: Vehicle, Ship
+		ValidTargets: Infantry
 
 MAST:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -926,10 +938,10 @@ LCHR:
 		Description: Medium-ranged anti-infantry/structure unit.\n  Regenerates health while dealing damage\n  Disables power plants and radars\n  Strong vs Infantry, Buildings\n  Weak vs Tanks, Defenses, Aircraft
 		IconPalette: chromes
 	Mobile:
-		Speed: 90
-		TurnSpeed: 30
+		Speed: 80
+		TurnSpeed: 24
 	Health:
-		HP: 30000
+		HP: 24000
 	Armor:
 		Type: Light
 	RevealsShroud:
@@ -948,7 +960,10 @@ LCHR:
 	WithMoveAnimation:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 	ConvertsDamageToHealth:
-		DamagePercentConverted: 10
+		DamagePercentConverted: 20
+	Explodes:
+		Weapon: LeecherExplode
+		EmptyWeapon: LeecherExplode
 
 STCR:
 	Inherits: ^Tank
@@ -1260,7 +1275,7 @@ ATMZ:
 		Queue: Vehicle
 		BuildPaletteOrder: 285
 		Prerequisites: scrt, ~vehicles.collector, ~techlevel.medium
-		Description: Lightly armored long-range support unit.\nTargets take damage over time\n  Strong vs Vehicles, Aircraft\n  Weak vs Infantry, Buildings
+		Description: Lightly armored long-range support unit.\n  Targets take damage over time\n  Targets have reduced rate of fire\n  Strong vs Vehicles, Aircraft\n  Weak vs Infantry, Buildings
 		IconPalette: chrome
 	Mobile:
 		Speed: 66

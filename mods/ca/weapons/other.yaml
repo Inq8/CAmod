@@ -205,6 +205,7 @@ FlamerTD:
 		ImpactSpacing: 256
 		MinimumImpactDistance: 0c768
 		MaximumImpactDistance: 1c768
+		ForceGround: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
 		Falloff: 100, 50, 20, 0
@@ -224,6 +225,7 @@ FlamerTD:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 		InvalidTargets: Vehicle, Building, Wall
+	Warhead@Dummy: Dummy
 
 FlamerTDFF:
 	Inherits: FlamerTD
@@ -233,16 +235,6 @@ FlamerTDFF:
 		Falloff: 100, 50, 0
 		ValidRelationships: Ally
 		-DebugOverlayColor:
-
-FlamerTDDummy:
-	Inherits: FlamerTD
-	-Projectile:
-	-Report:
-	Projectile: InstantHit
-	Warhead@1Dam: SpreadDamage
-		Damage: 0
-		-ValidRelationships:
-	-Warhead@2Smu:
 
 BigFlamerTD:
 	Inherits: FlamerTD
@@ -256,6 +248,7 @@ BigFlamerTD:
 		Palette: tseffect-ignore-lighting-alpha90
 		MinimumImpactDistance: 288
 		MaximumImpactDistance: 2304
+		-ForceGround:
 	Warhead@1Dam: SpreadDamage
 		Damage: 925
 
@@ -292,9 +285,6 @@ ChemsprayTDFF:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 
-ChemsprayTDDummy:
-	Inherits: FlamerTDDummy
-
 HeavyFlameTankFlamer:
 	Inherits: BigFlamerTD
 	-Report:
@@ -327,24 +317,26 @@ BlackHandFlamer:
 	Burst: 28
 	Range: 3c512
 	Projectile: LinearPulse
-		Speed: 160
+		Speed: 220
 		Inaccuracy: 160
 		Image: thinblueflame
 		Palette: effect-ignore-lighting-alpha85
 		ImpactSpacing: 320
 		MinimumImpactDistance: 320
 		MaximumImpactDistance: 3c512
+		RepeatAnimation: false
 	Warhead@1Dam: SpreadDamage
-		Range: 0, 320
-		Falloff: 100, 0
-		Damage: 670
+		Range: 0, 256, 512
+		Falloff: 100, 100, 0
+		Damage: 300
 		Versus:
 			None: 100
-			Wood: 5
-			Light: 20
-			Heavy: 20
-			Concrete: 10
+			Wood: 10
+			Light: 50
+			Heavy: 60
+			Concrete: 30
 			Brick: 2
+		-Delay:
 	Warhead@2Smu: LeaveSmudge
 		Chance: 5
 
@@ -991,8 +983,7 @@ PrisLaserSupport:
 		SecondaryBeamWidth: 65
 		SecondaryBeamZOffset: 2047
 		SecondaryBeamColor: 75D1FF
-	Warhead@1Dam: SpreadDamage
-		Damage: 0
+	Warhead@1Dum: Dummy
 	AirThreshold: 1000
 
 PrisTLaser:

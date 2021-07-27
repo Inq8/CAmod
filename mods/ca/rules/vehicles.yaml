@@ -1383,9 +1383,6 @@ MGG:
 	CreatesShroud:
 		Range: 7c0
 		RequiresCondition: !empdisable && !being-warped
-	HidesFrozenUnderFogActors:
-		Range: 7c0
-		RequiresCondition: !empdisable && !being-warped
 	RenderShroudCircle:
 	SpawnActorOnDeath:
 		Actor: MGG.Husk
@@ -1449,7 +1446,7 @@ MSG:
 		Prerequisites: anyradar, ~vehicles.shadow, ~techlevel.high
 		Description: Cloaks nearby units and buildings.\n  Unarmed
 	Valued:
-		Cost: 1400
+		Cost: 1250
 	Tooltip:
 		Name:
 	Tooltip:
@@ -3108,10 +3105,10 @@ FTNK:
 		Weapon: BigFlamerTD
 		MuzzleSequence: muzzle
 		MuzzlePalette: tdeffect
-		LocalOffset: 512,128,42, 512,-128,42
+		LocalOffset: 682,128,42, 682,-128,42
 	Armament@FF:
 		Weapon: BigFlamerTDFF
-		LocalOffset: 512,128,42, 512,-128,42
+		LocalOffset: 682,128,42, 682,-128,42
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
@@ -3364,8 +3361,8 @@ IFV:
 		Speed: 90
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 	RevealsShroud:
-		MinRange: 4c0
-		Range: 5c0
+		MinRange: 5c0
+		Range: 6c0
 		RevealGeneratedShroud: False
 		RequiresCondition: !spyturr
 	RevealsShroud@GAPGEN:
@@ -3569,13 +3566,16 @@ IFV:
 			tecn: tecnturr
 			s1: gunturr
 			s2: chemturr
-			s3: acolturr
-			s4: flamturr
+			s3: samturr
+			s4: acolturr
 			s6: engturr
 			smedi: medturr
 			mast: commturr
+			feed: ivanturr
 			dog: nochange
 			ivan: ivanturr
+			bh: flamturr
+			shad: spyturr
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithIdleOverlay@MEDIC:
@@ -5063,7 +5063,7 @@ CHPR:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 8
+		TurnSpeed: 12
 		Offset: -156,0,0
 	Armament@PRIMARY:
 		Weapon: NeutronCannon

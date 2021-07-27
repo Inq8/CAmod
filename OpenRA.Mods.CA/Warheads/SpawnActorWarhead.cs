@@ -60,6 +60,9 @@ namespace OpenRA.Mods.CA.Warheads
 		[Desc("List of sounds that can be played at the spawning location.")]
 		public readonly string[] Sounds = new string[0];
 
+		[Desc("For non-positionable actors only, whether to avoid spawning on top of existing actors.")]
+		public readonly bool AvoidActors = false;
+
 		public readonly bool UsePlayerPalette = false;
 
 		public void RulesetLoaded(Ruleset rules, WeaponInfo info)
@@ -92,15 +95,8 @@ namespace OpenRA.Mods.CA.Warheads
 			foreach (var a in Actors)
 			{
 				var placed = false;
-				var td = new TypeDictionary();
 				var ai = map.Rules.Actors[a.ToLowerInvariant()];
-
-				if (OwnerType == ASOwnerType.Attacker)
-					td.Add(new OwnerInit(firedBy.Owner));
-				else
-					td.Add(new OwnerInit(firedBy.World.Players.First(p => p.InternalName == InternalOwner)));
-
-				td.Add(new LocationInit(targetCell));
+				var td = CreateTypeDictionary(firedBy, targetCell);
 
 				// Lambdas can't use 'in' variables, so capture a copy for later
 				var delayedTarget = target;
@@ -114,7 +110,25 @@ namespace OpenRA.Mods.CA.Warheads
 					if (positionable == null)
 					{
 						unit.Dispose();
-						firedBy.World.CreateActor(a, td);
+
+						if (AvoidActors)
+						{
+							while (cell.MoveNext() && !placed)
+							{
+								var actorsInCell = firedBy.World.ActorMap.GetActorsAt(cell.Current);
+
+								if (actorsInCell.Any())
+									continue;
+
+								placed = true;
+								td = CreateTypeDictionary(firedBy, cell.Current);
+							}
+						}
+						else
+							placed = true;
+
+						if (placed)
+							firedBy.World.CreateActor(a, td);
 					}
 					else
 					{
@@ -162,6 +176,20 @@ namespace OpenRA.Mods.CA.Warheads
 					}
 				});
 			}
+		}
+
+		TypeDictionary CreateTypeDictionary(Actor firedBy, CPos targetCell)
+		{
+			var td = new TypeDictionary();
+
+			if (OwnerType == ASOwnerType.Attacker)
+				td.Add(new OwnerInit(firedBy.Owner));
+			else
+				td.Add(new OwnerInit(firedBy.World.Players.First(p => p.InternalName == InternalOwner)));
+
+			td.Add(new LocationInit(targetCell));
+
+			return td;
 		}
 	}
 }
