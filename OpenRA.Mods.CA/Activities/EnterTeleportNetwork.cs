@@ -114,8 +114,13 @@ namespace OpenRA.Mods.CA.Activities
 				if (self.IsDead)
 					return;
 
+				var positionable = self.Trait<IPositionable>();
+
+				if (!positionable.CanEnterCell(primary.Location, null, BlockedByActor.None))
+					return;
+
 				// Teleport myself to primary actor.
-				self.Trait<IPositionable>().SetPosition(self, exit);
+				positionable.SetPosition(self, exit);
 
 				foreach (var notify in self.TraitsImplementing<INotifyExitTeleporter>())
 					notify.Arrived(self);
