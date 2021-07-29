@@ -16,14 +16,14 @@ Container@MAINMENU:
 			Width: WINDOW_RIGHT + 30
 			Height: WINDOW_BOTTOM + 30
 		Image@LOGO:
-			X: WINDOW_RIGHT - 296
+			X: (WINDOW_RIGHT - 512) / 2
 			Y: 30
 			ImageCollection: logos
 			ImageName: logo
 		Label@VERSION_LABEL:
-			X: WINDOW_RIGHT - 296
-			Y: 296 - 20
-			Width: 296 - 20
+			X: (WINDOW_RIGHT - 512) / 2
+			Y: 266
+			Width: 512
 			Height: 25
 			Align: Center
 			Font: Regular
@@ -43,9 +43,10 @@ Container@MAINMENU:
 							Y: 22
 							Width: 200
 							Height: 30
-							Text: OpenRA
+							Text: Combined Arms
 							Align: Center
 							Font: Bold
+							TextColor: cccccc
 						Button@SINGLEPLAYER_BUTTON:
 							X: PARENT_RIGHT / 2 - WIDTH / 2
 							Y: 60
@@ -241,7 +242,7 @@ Container@MAINMENU:
 							Width: 200
 							Height: 200
 		Background@NEWS_BG:
-			X: (WINDOW_RIGHT - WIDTH) / 2
+			X: (WINDOW_RIGHT - WIDTH) - 35
 			Y: 35
 			Width: 430
 			Height: 55

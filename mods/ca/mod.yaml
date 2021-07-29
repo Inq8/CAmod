@@ -116,14 +116,14 @@ ChromeLayout:
 	common|chrome/ingame-infobriefing.yaml
 	common|chrome/ingame-infoobjectives.yaml
 	common|chrome/ingame-infostats.yaml
-	common|chrome/ingame-menu.yaml
+	ca|chrome/ingame-menu.yaml
 	ca|chrome/ingame-observer.yaml
 	ca|chrome/ingame-player.yaml
 	common|chrome/ingame-perf.yaml
 	common|chrome/ingame-debug.yaml
 	common|chrome/ingame-debuginfo.yaml
 	common|chrome/ingame-infochat.yaml
-	common|chrome/mainmenu.yaml
+	ca|chrome/mainmenu.yaml
 	common|chrome/settings.yaml
 	common|chrome/settings-display.yaml
 	common|chrome/settings-audio.yaml
@@ -187,10 +187,12 @@ Hotkeys:
 	common|hotkeys/viewport.yaml
 	ca|hotkeys.yaml
 
-LoadScreen: LogoStripeLoadScreen
-	Image: ca|uibits/loadscreen.png
-	Image2x: ca|uibits/loadscreen-2x.png
-	Image3x: ca|uibits/loadscreen-3x.png
+LoadScreen: ImageLoadScreen
+	Image: ca|uibits/ca-loading-artwork.png
+	Image2x: ca|uibits/ca-loading-artwork.png
+	Image3x: ca|uibits/ca-loading-artwork.png
+	Width: 1024
+	Height: 256
 	Text: Loading...
 
 ServerTraits:
@@ -349,6 +351,6 @@ ModContent:
 		ca|installer/ra2yr.yaml
 		ca|installer/firestorm.yaml
 		ca|installer/soviet95.yaml
-		
+
 DiscordService:
 	ApplicationId: 787647352399200277
