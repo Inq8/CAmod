@@ -1381,6 +1381,12 @@ RAH:
 		Weapon: Rah66AG
 		LocalOffset: 0,-213,-85, 0,213,-85
 		PauseOnCondition: !ammo
+		RequiresCondition: !napalm-missiles
+	Armament@PRIMARYBH:
+		Weapon: Rah66AG.BlackHand
+		LocalOffset: 0,-213,-85, 0,213,-85
+		PauseOnCondition: !ammo
+		RequiresCondition: napalm-missiles
 	AttackAircraft:
 		FacingTolerance: 80
 		AttackType: Hover
@@ -1450,6 +1456,9 @@ RAH:
 		VoiceSet: OxannaVoice
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
+	GrantConditionOnFaction@blackh:
+		Factions: blackh
+		Condition: napalm-missiles
 
 KIRO:
 	Inherits: ^Helicopter

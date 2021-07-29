@@ -1481,6 +1481,22 @@ Rah66AG:
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
 
+Rah66AG.BlackHand:
+	Inherits: Rah66AG
+	Projectile: Bullet
+		Image: dragon
+		-ContrailLength:
+		-ContrailColor:
+		-ContrailWidth:
+	Warhead@1Dam: SpreadDamage
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch
+	Warhead@3Eff: CreateEffect
+		Explosions: small_napalm
+		-ExplosionPalette:
+		-Image:
+
 ScrinTorp:
 	ValidTargets: Ground, Water, Trees
 	ReloadDelay: 50
