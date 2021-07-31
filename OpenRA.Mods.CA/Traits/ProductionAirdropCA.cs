@@ -9,6 +9,7 @@
  */
 #endregion
 
+using System;
 using System.Linq;
 using OpenRA.Activities;
 using OpenRA.Mods.Common;
@@ -33,11 +34,26 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Cargo aircraft used for delivery. Must have the `Aircraft` trait.")]
 		public readonly string ActorType = null;
 
-		[Desc("The cargo aircraft will spawn at the player baseline (map edge closest to the player spawn)")]
-		public readonly bool BaselineSpawn = false;
+		[Desc("How the spawn location/direction is calculated for the delivering actor.",
+			"Standard: Spawn 1/2 map distance east, in line with the destination.",
+			"ClosestEdgeToHome: Spawn from direction of map edge closest to the player spawn at a distance proportional to map size.",
+			"ClosestEdgeToDestination: Spawn 1/2 map distance in the direction of closest map edge to the destination.")]
+		public readonly string SpawnType = "Standard";
 
 		[Desc("Direction the aircraft should face to land.")]
 		public readonly WAngle Facing = new WAngle(256);
+
+		[Desc("If true, the actor's speed will be adjusted based on the distance it needs to travel to deliver its cargo.")]
+		public readonly bool ProportionalSpeed = false;
+
+		[Desc("Distance to base the proportional speed multiplier around.")]
+		public readonly WDist ProportionalSpeedBaseDistance = WDist.FromCells(50);
+
+		[Desc("Minimum speed modifier.")]
+		public readonly int ProportionalSpeedMinimum = 80;
+
+		[Desc("Maximum speed modifier.")]
+		public readonly int ProportionalSpeedMaximum = 200;
 
 		public override object Create(ActorInitializer init) { return new ProductionAirdropCA(init, this); }
 	}
@@ -57,17 +73,54 @@ namespace OpenRA.Mods.CA.Traits
 			var map = owner.World.Map;
 			var aircraftInfo = self.World.Map.Rules.Actors[info.ActorType].TraitInfo<AircraftInfo>();
 
+			CPos unadjustedStartPos;
 			CPos startPos;
 			CPos endPos;
 			WAngle spawnFacing;
 
-			if (info.BaselineSpawn)
+			if (info.SpawnType == "ClosestEdgeToHome" || info.SpawnType == "ClosestEdgeToDestination")
 			{
 				var bounds = map.Bounds;
 				var center = new MPos(bounds.Left + bounds.Width / 2, bounds.Top + bounds.Height / 2).ToCPos(map);
 				var spawnVec = owner.HomeLocation - center;
-				startPos = owner.HomeLocation + spawnVec * (Exts.ISqrt((bounds.Height * bounds.Height + bounds.Width * bounds.Width) / (4 * spawnVec.LengthSquared)));
+
+				if (info.SpawnType == "ClosestEdgeToDestination")
+				{
+					var distFromTopEdge = self.Location.Y;
+					var distFromLeftEdge = self.Location.X;
+					var distFromBottomEdge = bounds.Height - self.Location.Y;
+					var distFromRightEdge = bounds.Width - self.Location.X;
+					var halfMapHeight = bounds.Height / 2;
+					var halfMapWidth = bounds.Width / 2;
+
+					if (distFromTopEdge <= distFromLeftEdge && distFromTopEdge <= distFromBottomEdge && distFromTopEdge <= distFromRightEdge)
+					{
+						unadjustedStartPos = new CPos(self.Location.X, self.Location.Y - halfMapHeight);
+						startPos = new CPos(unadjustedStartPos.X, unadjustedStartPos.Y - 10);
+					}
+					else if (distFromRightEdge <= distFromBottomEdge && distFromRightEdge <= distFromLeftEdge)
+					{
+						unadjustedStartPos = new CPos(self.Location.X + halfMapWidth, self.Location.Y);
+						startPos = new CPos(unadjustedStartPos.X + 29, unadjustedStartPos.Y);
+					}
+					else if (distFromBottomEdge <= distFromLeftEdge)
+					{
+						unadjustedStartPos = new CPos(self.Location.X, self.Location.Y + halfMapHeight);
+						startPos = new CPos(unadjustedStartPos.X, unadjustedStartPos.Y + 10);
+					}
+					else
+					{
+						unadjustedStartPos = new CPos(self.Location.X - halfMapWidth, self.Location.Y);
+						startPos = new CPos(unadjustedStartPos.X, unadjustedStartPos.Y);
+					}
+				}
+				else
+				{
+					unadjustedStartPos = startPos = owner.HomeLocation + spawnVec * (Exts.ISqrt((bounds.Height * bounds.Height + bounds.Width * bounds.Width) / (4 * spawnVec.LengthSquared)));
+				}
+
 				endPos = startPos;
+
 				var spawnDirection = new WVec((self.Location - startPos).X, (self.Location - startPos).Y, 0);
 				spawnFacing = spawnDirection.Yaw;
 			}
@@ -76,7 +129,7 @@ namespace OpenRA.Mods.CA.Traits
 				// Start a fixed distance away: the width of the map.
 				// This makes the production timing independent of spawnpoint
 				var loc = self.Location.ToMPos(map);
-				startPos = new MPos(loc.U + map.Bounds.Width, loc.V).ToCPos(map);
+				unadjustedStartPos = startPos = new MPos(loc.U + map.Bounds.Width, loc.V).ToCPos(map);
 				endPos = new MPos(map.Bounds.Left, loc.V).ToCPos(map);
 				spawnFacing = info.Facing;
 			}
@@ -104,6 +157,23 @@ namespace OpenRA.Mods.CA.Traits
 					new OwnerInit(owner),
 					new FacingInit(spawnFacing)
 				});
+
+				var dynamicSpeedMultiplier = actor.TraitOrDefault<DynamicSpeedMultiplier>();
+
+				if (info.ProportionalSpeed && info.ProportionalSpeedBaseDistance.Length > 0 && dynamicSpeedMultiplier != null)
+				{
+					var travelDistance = (float)((w.Map.CenterOfCell(unadjustedStartPos) - self.CenterPosition).Length);
+
+					var baseDistance = (float)info.ProportionalSpeedBaseDistance.Length;
+					var multiplier = (int)Math.Round(travelDistance / baseDistance * 100);
+
+					if (multiplier > info.ProportionalSpeedMaximum)
+						multiplier = info.ProportionalSpeedMaximum;
+					else if (multiplier < info.ProportionalSpeedMinimum)
+						multiplier = info.ProportionalSpeedMinimum;
+
+					dynamicSpeedMultiplier.SetModifier(multiplier);
+				}
 
 				var exitCell = self.Location + exit.ExitCell;
 				actor.QueueActivity(new Land(actor, Target.FromActor(self), WDist.Zero, WVec.Zero, info.Facing, clearCells: new CPos[1] { exitCell }));

@@ -2956,12 +2956,13 @@ AIRS:
 	Exit@1:
 		SpawnOffset: -1024,0,0
 		ExitCell: 3,1
-	ProductionAirdrop:
+	ProductionAirdropCA:
 		Produces: Vehicle
 		PauseOnCondition: forceshield || invulnerability || being-warped
 		ActorType: c17.cargo
 		ReadyAudio: ReinforcementsArrived
-		BaselineSpawn: true
+		SpawnType: ClosestEdgeToDestination
+		ProportionalSpeed: true
 	ValidFactions:
 		Factions: blackh, marked, shadow
 	ProvidesPrerequisite@any:
@@ -3081,6 +3082,9 @@ AIRS:
 	InfiltrateForSupportPower@spy:
 		Proxy: vehicles.upgraded
 		Types: SpyInfiltrate
+	ProductionCostMultiplier@First:
+		Multiplier: 90
+		Prerequisites: !vehicles.any
 
 NUKE:
 	Inherits: ^BuildingTD
@@ -5556,8 +5560,9 @@ UPGC:
 		Produces: Money
 		PauseOnCondition: forceshield || invulnerability || being-warped
 		ActorType: ocar.pod
-		BaselineSpawn: true
 		IncomingAudio: SuppliesInbound
+		SpawnType: ClosestEdgeToDestination
+		ProportionalSpeed: true
 	WithDeliveryOverlay:
 		Sequence: flare
 		Palette: effect
