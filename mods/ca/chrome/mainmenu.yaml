@@ -15,17 +15,24 @@ Container@MAINMENU:
 			Y: 0 - 15
 			Width: WINDOW_RIGHT + 30
 			Height: WINDOW_BOTTOM + 30
-		Image@LOGO:
+		ImageCA@LOGO:
 			X: (WINDOW_RIGHT - 512) / 2
 			Y: 30
 			ImageCollection: logos
 			ImageName: logo
+			MinXResolution: 1680
+		ImageCA@LOWRESLOGO:
+			X: (WINDOW_RIGHT - 512)
+			Y: 30
+			ImageCollection: logos
+			ImageName: logo
+			MaxXResolution: 1679
 		Label@VERSION_LABEL:
-			X: (WINDOW_RIGHT - 512) / 2
-			Y: 276
+			X: (WINDOW_RIGHT) - 512 - 35
+			Y: 25
 			Width: 512
 			Height: 25
-			Align: Center
+			Align: Right
 			Font: Regular
 			Shadow: true
 		Container@MENUS:
@@ -241,20 +248,6 @@ Container@MAINMENU:
 							Y: 5
 							Width: 200
 							Height: 200
-		Background@NEWS_BG:
-			X: (WINDOW_RIGHT - WIDTH) - 35
-			Y: 35
-			Width: 430
-			Height: 55
-			Children:
-				DropDownButton@NEWS_BUTTON:
-					Background: newsbutton
-					X: 15
-					Y: 15
-					Width: 400
-					Height: 25
-					Text: Battlefield News
-					Font: Bold
 		Container@UPDATE_NOTICE:
 			X: (WINDOW_RIGHT - WIDTH) / 2
 			Y: 95
