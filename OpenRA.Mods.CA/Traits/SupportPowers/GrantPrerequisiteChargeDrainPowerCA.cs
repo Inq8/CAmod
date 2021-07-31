@@ -123,6 +123,9 @@ namespace OpenRA.Mods.CA.Traits
 				var orig = remainingSubTicks;
 				remainingSubTicks = orig + (((GrantPrerequisiteChargeDrainPowerCAInfo)Info).EarlyDeactivationPenalty * 100);
 
+				if (remainingSubTicks > TotalTicks * 100)
+					remainingSubTicks = TotalTicks * 100;
+
 				// Fully depleting the charge disables the power until it is again fully charged
 				if (!Active || remainingSubTicks >= TotalTicks * 100)
 					available = false;

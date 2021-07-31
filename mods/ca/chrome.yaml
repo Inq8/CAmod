@@ -17,8 +17,8 @@
 
 ^LoadScreen:
 	Image: ca-menu-logo.png
-	Image2x: ca-menu-logo.png
-	Image3x: ca-menu-logo.png
+	Image2x: ca-menu-logo-2x.png
+	Image3x: ca-menu-logo-3x.png
 
 sidebar-allies:
 	Inherits: ^Sidebar
@@ -743,6 +743,11 @@ logos:
 	Inherits: ^LoadScreen
 	Regions:
 		logo: 0, 0, 512, 256
+
+loadscreen-stripe:
+	Inherits: ^LoadScreen
+	PanelRegion: 258, 0, 0, 0, 253, 256, 0, 0
+	PanelSides: Center
 
 mainmenu-border:
 	Inherits: ^Dialog
