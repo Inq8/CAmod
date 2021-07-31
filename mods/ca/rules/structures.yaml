@@ -60,6 +60,9 @@ MSLO:
 		TrailImage: smokey2
 		TrailSequences: idle
 		TrailPalette: tseffect-ignore-lighting-alpha75
+		CircleRanges: 6c512
+		CircleColor: BB0000AA
+		CircleBorderColor: 770000AA
 	SupportPowerChargeBar:
 	Power:
 		Amount: -150
@@ -768,7 +771,7 @@ DOME:
 		SelectTargetSpeechNotification: SelectTarget
 		PauseOnCondition: disabled || being-warped
 		RequiresCondition: !build-incomplete
-	SpawnActorPower@GpsScramble:
+	SpawnActorPowerCA@GpsScramble:
 		Actor: gps.scrambler
 		OrderName: gpsscramble
 		Icon: gpsscram
@@ -789,6 +792,8 @@ DOME:
 		EffectImage: empty
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
+		TargetCircleRange: 9c512
+		TargetCircleColor: 999999AA
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -3631,7 +3636,7 @@ HQ:
 	WithBuildingBib:
 	InfiltrateForExploration:
 		Types: SpyInfiltrate, SabInfiltrate
-	SpawnActorPower@sathack:
+	SpawnActorPowerCA@sathack:
 		Actor: camera.sathack
 		Prerequisites: ~radar.nod
 		LifeTime: 120
@@ -3646,6 +3651,8 @@ HQ:
 		EffectImage: empty
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
+		TargetCircleRange: 9c512
+		TargetCircleColor: 999999AA
 	ParatroopersPower@Legionparatroopers:
 		OrderName: LegionParatroopers
 		Prerequisites: ~radar.legion, !cyborg.upgrade, infantry.any, ~techlevel.medium
@@ -3899,7 +3906,7 @@ EYE:
 		ClockSequence: clock
 		CircleSequence: circles
 		BeaconPoster: atomicon
-		TargetCircleRange: 5c0
+		TargetCircleRange: 6c512
 		TargetCircleColor: 4fff3390
 	IonCannonPower@surgicals:
 		OrderName: surgicalstrike
@@ -4544,6 +4551,9 @@ TMPL:
 		DisplayBeacon: True
 		BeaconPoster: clustermissile
 		BeaconPosterPalette: temptd
+		CircleRanges: 3c0
+		CircleColor: BB0000AA
+		CircleBorderColor: 770000AA
 	WithBuildingBib:
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
@@ -5663,30 +5673,29 @@ UPGC:
 		Condition: nshield-active
 	ExternalCondition@NSAUDIO:
 		Condition: nshield-audio
-	GrantExternalConditionPowerCA@NSHIELD:
+	SpawnActorPowerCA@NSHIELD:
+		Actor: nshield
 		OrderName: nshieldorder
 		Icon: nshield
-		ChargeInterval: 6000
-		Condition: nshield
-		Dimensions: 5, 5
-		Footprint: _xxx_ xxxxx xxxxx xxxxx _xxx_
-		Duration: 375
 		Prerequisites: ~techlevel.unrestricted
-		Weapon: ShieldFlash
-		ActivationDelay: 5
-		AirburstAltitude: 0c0
-		AllowMultiple: false
+		ChargeInterval: 6000
+		LifeTime: 375
 		Description: Nanite Shield
-		LongDesc: Repairs selected damaged structures & reduces damage taken.
-		OnFireSound: srepaira.aud
-		DisplayTimerRelationships: Ally
+		LongDesc: Reduces incoming damage for all vehicles in target area.
+		LaunchSound: srepaira.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
+		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayRadarPing: True
-		ActiveCondition: nshield-active
-		Cursor: repair
+		DisplayTimerRelationships: Ally
+		Cursor: ability
+		AllowMultiple: false
+		EffectImage: empty
+		EffectSequence: idle
+		EffectPalette: tseffect-ignore-lighting-alpha75
 		RequiresCondition: tower.shield
-		PauseOnCondition: disabled || empdisable ||  being-warped
+		TargetCircleRange: 6c0
+		TargetCircleColor: 64a5dcbb
 	ProximityExternalCondition@NSHIELD-AUDIO:
 		Condition: nshield-audio
 		RequiresCondition: nshield-active
@@ -5723,6 +5732,9 @@ UPGC:
 		RequiresCondition: !build-incomplete && tower.shield
 		Prerequisite: hold3.strat
 		RequiresPrerequisites: hold.strat
+	GrantConditionOnPrerequisite:
+		Prerequisites: nshield
+		Condition: nshield-active
 
 UPGC.SOCK:
 	AlwaysVisible:
@@ -5958,6 +5970,9 @@ MSLO.Nod:
 		TrailSequences: idle
 		TrailPalette: tseffect-ignore-lighting-alpha75
 		DetonationAltitude: 0
+		CircleRanges: 6c512
+		CircleColor: 00BB00AA
+		CircleBorderColor: 007700AA
 	SupportPowerChargeBar:
 	Power:
 		Amount: -150
