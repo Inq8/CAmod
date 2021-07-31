@@ -174,6 +174,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		float ISelectionBar.GetValue()
 		{
+			if (IsTraitDisabled)
+				return 0;
+
 			return (float)(Info.ChargeDelay - chargeTick) / Info.ChargeDelay;
 		}
 
