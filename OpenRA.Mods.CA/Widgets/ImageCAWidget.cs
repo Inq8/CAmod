@@ -25,10 +25,7 @@ namespace OpenRA.Mods.CA.Widgets
 			var resolution = Game.Renderer.Resolution;
 			var resolutionWidth = resolution.Width;
 
-			if (
-				(MinXResolution > 0 && resolutionWidth < MinXResolution)
-				|| (MaxXResolution > 0 && resolutionWidth > MaxXResolution)
-			)
+			if ((MinXResolution > 0 && resolutionWidth < MinXResolution) || (MaxXResolution > 0 && resolutionWidth > MaxXResolution))
 				return;
 
 			base.Draw();

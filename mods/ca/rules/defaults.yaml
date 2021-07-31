@@ -856,39 +856,6 @@
 		RequiresCondition: forceshield && !invulnerability
 		Modifier: 0
 
-^NaniteShieldable:
-	WithColoredOverlay@NSHIELD:
-		RequiresCondition: nshield && damaged && !(empdisable || invulnerability || invisibility)
-		Palette: nrepair
-	TimedConditionBar@NSHIELD:
-		Condition: nshield
-		Color: 25cde999
-	ExternalCondition@NSHIELD:
-		Condition: nshield
-	WithIdleOverlay@NSHIELD:
-		Sequence: emp-overlay
-		Palette: tseffect
-		RequiresCondition: nshield && damaged
-	ChangesHealth@NSHIELD:
-		PercentageStep: 6
-		Delay: 30
-		StartIfBelow: 100
-		DamageCooldown: 0
-		RequiresCondition: nshield
-	WithDecoration@NSHIELD:
-		Image: select
-		Palette: chrome
-		Sequence: repair
-		Position: Center
-		RequiresCondition: nshield
-		BlinkInterval: 15
-		BlinkPattern: on, off
-		RequiresSelection: False
-		ValidRelationships: Ally, Neutral
-	DamageMultiplier@NSHIELD:
-		RequiresCondition: nshield
-		Modifier: 66
-
 ^EmpDisable:
 	WithColoredOverlay@EMPDISABLE:
 		RequiresCondition: empdisable
@@ -942,6 +909,16 @@
 		ValidRelationships: Ally, Neutral
 	ExternalCondition@NREPAIR-AI:
 		Condition: nrepair
+	WithIdleOverlay@NSHIELD:
+		Sequence: idle
+		Image: nshield-overlay
+		Palette: effect
+		RequiresCondition: nshield && !(empdisable || invulnerability || invisibility)
+	ExternalCondition@NSHIELD:
+		Condition: nshield
+	DamageMultiplier@NSHIELD:
+		RequiresCondition: nshield
+		Modifier: 50
 
 ^RepairsAircraftWithRepairBay:
 	ExternalCondition@AIRCRAFTREPAIR:
@@ -2332,7 +2309,6 @@
 	Inherits@6: ^WarpableBuilding
 	Inherits@7: ^BotBuilding
 	Inherits@8: ^Chillable
-	Inherits@9: ^NaniteShieldable
 	Inherits@wflash: ^WhiteFlash
 	WithColoredOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield

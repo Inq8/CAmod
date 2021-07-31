@@ -858,6 +858,19 @@ gps.scrambler:
 		Condition: gpsscramble
 		ValidRelationships: Enemy, Neutral
 
+nshield:
+	Inherits@1: CAMERA
+	-RevealsShroud:
+	WithRangeCircle:
+		Visible: Always
+		Color: 64a5dcbb
+		Range: 6c0
+	ProximityExternalCondition@NSHIELD:
+		Range: 6c0
+		Condition: nshield
+		ValidRelationships: Ally
+	ProvidesPrerequisite@NSHIELD:
+
 shadow.beacon.camera:
 	Inherits@1: CAMERA
 	-Immobile:
