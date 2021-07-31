@@ -38,27 +38,27 @@ namespace OpenRA.Mods.CA.LoadScreens
 
 		public override void DisplayInner(Renderer r, Sheet s, int density)
 		{
-            var imageHeight = Int32.Parse(Info["Height"]);
-            var imageWidth = Int32.Parse(Info["Width"]);
+            var imageHeight = int.Parse(Info["Height"]);
+            var imageWidth = int.Parse(Info["Width"]);
             var textColor = Color.Red;
 
-			if (s != lastSheet || density != lastDensity)
+            if (s != lastSheet || density != lastDensity)
 			{
 				lastSheet = s;
 				lastDensity = density;
 				logo = CreateSprite(s, density, new Rectangle(0, 0, imageWidth, imageHeight));
 			}
 
-			if (r.Resolution != lastResolution)
+            if (r.Resolution != lastResolution)
 			{
 				lastResolution = r.Resolution;
 				logoPos = new float2(lastResolution.Width / 2 - (imageWidth / 2), lastResolution.Height / 2 - (imageHeight / 2));
 			}
 
-			if (logo != null)
+            if (logo != null)
 				r.RgbaSpriteRenderer.DrawSprite(logo, logoPos);
 
-			if (r.Fonts != null)
+            if (r.Fonts != null)
 			{
 				var text = messages.Random(Game.CosmeticRandom);
 				var textSize = r.Fonts["Bold"].Measure(text);

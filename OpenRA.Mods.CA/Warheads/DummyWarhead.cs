@@ -23,7 +23,7 @@ namespace OpenRA.Mods.CA.Warheads
             // do nothing
 		}
 
-        public override bool IsValidAgainst(Actor victim, Actor firedBy)
+		public override bool IsValidAgainst(Actor victim, Actor firedBy)
 		{
             return true;
         }

@@ -20,7 +20,7 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		public readonly Color SelectionBarColor = Color.FromArgb(128, 200, 255);
 
-        public readonly bool DisplayWhenFull = true;
+		public readonly bool DisplayWhenFull = true;
 
 		public override object Create(ActorInitializer init) { return new WithHarvesterCapacityBar(init, this); }
 	}
@@ -28,26 +28,26 @@ namespace OpenRA.Mods.CA.Traits
 	public class WithHarvesterCapacityBar : ISelectionBar
 	{
         public readonly WithHarvesterCapacityBarInfo Info;
-		readonly Harvester harv;
+        readonly Harvester harv;
 
-		public WithHarvesterCapacityBar(ActorInitializer init, WithHarvesterCapacityBarInfo info)
+        public WithHarvesterCapacityBar(ActorInitializer init, WithHarvesterCapacityBarInfo info)
 		{
             Info = info;
-			harv = init.Self.Trait<Harvester>();
+            harv = init.Self.Trait<Harvester>();
         }
 
-		float ISelectionBar.GetValue()
+        float ISelectionBar.GetValue()
 		{
             var fullness = harv.Fullness;
 
             if (fullness == 100 && !Info.DisplayWhenFull)
                 return 0;
 
-			return (float)fullness / 100;
+            return (float)fullness / 100;
 		}
 
-		bool ISelectionBar.DisplayWhenEmpty { get { return false; } }
+        bool ISelectionBar.DisplayWhenEmpty { get { return false; } }
 
-		Color ISelectionBar.GetColor() { return Info.SelectionBarColor; }
+        Color ISelectionBar.GetColor() { return Info.SelectionBarColor; }
 	}
 }

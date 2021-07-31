@@ -1737,9 +1737,10 @@ CTNK:
 		LocalYaw: 60, -60
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
-	PortableChrono:
+	PortableChronoCA:
 		ChargeDelay: 375
 		MaxDistance: 18
+		RequiresCondition: !empdisable && !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -5118,7 +5119,13 @@ CHPR:
 	SpawnActorOnDeath:
 		Actor: CHPR.Husk
 		RequiresCondition: !being-warped
-
+	PortableChronoCA:
+		ChargeDelay: 375
+		MaxDistance: 18
+		RequiresCondition: !(empdisable && being-warped) && tflx-upgrade
+	GrantConditionOnPrerequisite@TEMPORALFLUX:
+		Condition: tflx-upgrade
+		Prerequisites: tflx.upgrade
 CRYO:
 	Inherits: ^TankTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
