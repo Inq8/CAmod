@@ -131,13 +131,13 @@
 		Multiplier: 50
 		Prerequisites: is-brutal-ai
 	ProductionTimeMultiplier@vhardbonus:
-		Multiplier: 60
+		Multiplier: 65
 		Prerequisites: is-vhard-ai
 	ProductionTimeMultiplier@hardbonus:
-		Multiplier: 70
+		Multiplier: 80
 		Prerequisites: is-hard-ai
 	ProductionTimeMultiplier@normalbonus:
-		Multiplier: 85
+		Multiplier: 90
 		Prerequisites: is-normal-ai
 
 ^BotAirProductionBonus:
@@ -157,22 +157,22 @@
 		Condition: noinsurance
 		Threshold: 2500
 	CashTrickler@brutalinsurance:
-		Interval: 375
+		Interval: 450
 		Amount: 1000
 		ShowTicks: False
 		RequiresCondition: owned-by-brutal-ai && !noinsurance
 	CashTrickler@vhardinsurance:
-		Interval: 375
+		Interval: 450
 		Amount: 750
 		ShowTicks: False
 		RequiresCondition: owned-by-vhard-ai && !noinsurance
 	CashTrickler@hardinsurance:
-		Interval: 375
+		Interval: 450
 		Amount: 500
 		ShowTicks: False
 		RequiresCondition: owned-by-hard-ai && !noinsurance
 	CashTrickler@normalinsurance:
-		Interval: 375
+		Interval: 450
 		Amount: 250
 		ShowTicks: False
 		RequiresCondition: owned-by-normal-ai && !noinsurance
@@ -180,16 +180,16 @@
 # RefineryResourceMultiplier on Proc's so AI income is still tied to harvesters, so eco sniping AI is possible.
 ^BotIncome:
 	RefineryResourceMultiplier@brutalincome:
-		Modifier: 140
+		Modifier: 135
 		RequiresCondition: owned-by-brutal-ai
 	RefineryResourceMultiplier@vhardincome:
-		Modifier: 130
+		Modifier: 125
 		RequiresCondition: owned-by-vhard-ai
 	RefineryResourceMultiplier@hardincome:
-		Modifier: 120
+		Modifier: 115
 		RequiresCondition: owned-by-hard-ai
 	RefineryResourceMultiplier@normalincome:
-		Modifier: 110
+		Modifier: 105
 		RequiresCondition: owned-by-normal-ai
 
 #Hacky but helps Bots deal with abandoned vehicles due to snipers
