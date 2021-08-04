@@ -374,6 +374,7 @@ S6:
 
 FEED:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Valued:
 		Cost: 200
@@ -443,6 +444,8 @@ FEED:
 		DisplayWhenFull: false
 	ConvertsDamageToHealth:
 		DamagePercentConverted: 20
+	AutoTargetPriority@DEFAULT:
+		RequiresCondition: !stance-attackanything && !assault-move && !full
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
