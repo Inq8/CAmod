@@ -1502,13 +1502,18 @@ MicrowaveZap:
 			Wood: 5
 			Concrete: 40
 			Light: 100
-			Heavy: 65
+			Heavy: 60
 	Warhead@2Dam: SpreadDamage
 		ValidTargets: Cyborg
 		InvalidTargets: Air
 		Spread: 341
 		Damage: 30000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@emp: GrantExternalCondition
+		Range: 0c511
+		Duration: 50
+		Condition: empdisable
+		ValidTargets: Defense, Vehicle
 
 MicrowaveZap.UPG:
 	Inherits: MicrowaveZap
@@ -1517,6 +1522,9 @@ MicrowaveZap.UPG:
 		InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air, DriverKillImmune
 		ValidRelationships: Ally, Enemy, Neutral
 		Range: 0c511
+	Warhead@emp: GrantExternalCondition
+		Duration: 200
+		ValidTargets: Defense
 	Warhead@highlight: GrantExternalCondition
 		Range: 0c511
 		Duration: 2
