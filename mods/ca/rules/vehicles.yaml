@@ -1439,7 +1439,6 @@ MRJ:
 
 MSG:
 	Inherits: ^Vehicle
-	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 385
@@ -1465,6 +1464,7 @@ MSG:
 		Type: Light
 	Mobile:
 		Speed: 56
+		RequireForceMoveCondition: !undeployed
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -4457,7 +4457,6 @@ TNKD:
 
 MSAR:
 	Inherits: ^VehicleTD
-	Inherits@SELECTION: ^SelectableSupportUnit
 	Valued:
 		Cost: 1200
 	Tooltip:
@@ -4486,13 +4485,8 @@ MSAR:
 		MinRange: 4c0
 		Range: 6c0
 		RevealGeneratedShroud: False
-		RequiresCondition: undeployed
 	RevealsShroud@GAPGEN:
 		Range: 4c0
-		RequiresCondition: undeployed
-	RevealsShroud@DEPLOYED:
-		RequiresCondition: !undeployed
-		Range: 10c0
 	RenderSprites:
 		Image: msar
 	Repairable:
@@ -4521,18 +4515,16 @@ MSAR:
 		UndeploySounds: clicky1.aud
 		UndeployOnMove: true
 		UndeployOnPickup: true
-	DetectCloaked@Undeployed:
-		CloakTypes: Cloak, Thief
-		Range: 5c0
-		RequiresCondition: undeployed && !(empdisable || being-warped)
 	DetectCloaked@Deployed:
 		Range: 12c0
 		CloakTypes: Cloak, Thief
 		RequiresCondition: deployed && !(empdisable || being-warped)
-	RenderDetectionCircle:
-		TrailCount: 3
+	WithRangeCircle@Deployed:
+		Range: 12c0
+		Color: 999999AA
+		RequiresCondition: deployed && !(empdisable || being-warped)
 	ProvidesRadar:
-		RequiresCondition: deployed
+		RequiresCondition: deployed && !(empdisable || being-warped)
 	Selectable:
 		DecorationBounds: 30,30
 	ProximityExternalCondition@Bino:
@@ -4540,9 +4532,16 @@ MSAR:
 		Range: 12c0
 		EnableSound: dsaping1.aud
 		AffectsParent: False
-		RequiresCondition: deployed
+		RequiresCondition: deployed && !(empdisable || being-warped)
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	RangedGpsRadarProvider:
+		Range: 18c0
+		RequiresCondition: deployed && !(empdisable || being-warped)
+	WithDetectionCircle:
+		Range: 18c0
+		RequiresCondition: deployed && !(empdisable || being-warped)
+		TrailCount: 3
 
 PTNK:
 	Inherits: ^Tank

@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System.Collections.Generic;
 using OpenRA.Mods.CA.Effects;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
@@ -36,6 +37,8 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		GpsRadarDotEffect effect;
 
+		List<Actor> rangedObservers = new List<Actor>();
+
 		public GpsRadarDot(GpsRadarDotInfo info)
 			: base(info) { }
 
@@ -54,6 +57,36 @@ namespace OpenRA.Mods.CA.Traits
 		void INotifyRemovedFromWorld.RemovedFromWorld(Actor self)
 		{
 			self.World.AddFrameEndTask(w => w.Remove(effect));
+		}
+
+		public void AddRangedObserver(Actor a)
+		{
+			if (rangedObservers.Contains(a))
+				return;
+
+			rangedObservers.Add(a);
+		}
+
+		public void RemoveRangedObserver(Actor a)
+		{
+			if (!rangedObservers.Contains(a))
+				return;
+
+			rangedObservers.Remove(a);
+		}
+
+		public bool HasRangedObserver(Player p)
+		{
+			foreach (var rangedObserver in rangedObservers)
+			{
+				if (rangedObserver.Disposed || rangedObserver.IsDead)
+					rangedObservers.Remove(rangedObserver);
+
+				if (rangedObserver.Owner == p || p.IsAlliedWith(rangedObserver.Owner))
+					return true;
+			}
+
+			return false;
 		}
 	}
 }
