@@ -71,11 +71,11 @@ namespace OpenRA.Mods.CA.Warheads
 				if (distance > Range)
 					continue;
 
-				var targetTrait = actor.TraitsImplementing<AttachableTo>().FirstOrDefault();
+				var attachableToTrait = actor.TraitsImplementing<AttachableTo>().FirstOrDefault();
 
-				if (targetTrait != null)
+				if (attachableToTrait != null)
 				{
-					Attach(actor, firedBy, targetTrait);
+					Attach(actor, firedBy, attachableToTrait);
 					numAttached++;
 
 					var attachSound = AttachSounds.RandomOrDefault(world.LocalRandom);

@@ -1821,6 +1821,8 @@ DEVA:
 		SelectionBarColor: ead6ff
 	ExternalCondition@Shield:
 		Condition: shields-up
+	Targetable@TEMPORAL:
+		RequiresCondition: !shields-up
 
 PAC:
 	Inherits: ^Helicopter
@@ -1959,6 +1961,8 @@ PAC:
 		SelectionBarColor: ead6ff
 	ExternalCondition@Shield:
 		Condition: shields-up
+	Targetable@TEMPORAL:
+		RequiresCondition: !shields-up
 
 INVA:
 	Inherits: ^Plane
@@ -2026,7 +2030,7 @@ INVA:
 		Prerequisites: shields.upgrade
 	DamageMultiplier@SHIELDS:
 		RequiresCondition: shields-upgrade
-		Modifier: 50
+		Modifier: 75
 	Targetable@AIRBORNE:
 		RequiresCondition: airborne
 		TargetTypes: AirSmall, AirLowPriority
@@ -2162,6 +2166,8 @@ MSHP:
 		Delay: 1
 		RequiresCondition: !charging && !attacking
 		ShowSelectionBar: false
+	-SpeedMultiplier@TEMPORAL:
+	-RejectsOrders@TEMPORAL:
 
 MSHP.AI:
 	Inherits: MSHP

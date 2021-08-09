@@ -54,12 +54,12 @@ namespace OpenRA.Mods.CA.Traits
 			if (!info.Types.Overlaps(types))
 				return;
 
-			var targetTrait = self.TraitsImplementing<AttachableTo>().FirstOrDefault();
+			var attachableToTrait = self.TraitsImplementing<AttachableTo>().FirstOrDefault();
 
-			if (targetTrait == null)
+			if (attachableToTrait == null)
 				return;
 
-			Attach(self, infiltrator, targetTrait);
+			Attach(self, infiltrator, attachableToTrait);
 
 			if (info.InfiltratedSound != null)
 				Game.Sound.Play(SoundType.World, info.InfiltratedSound, self.CenterPosition);
@@ -71,7 +71,7 @@ namespace OpenRA.Mods.CA.Traits
 				Game.Sound.PlayNotification(self.World.Map.Rules, infiltrator.Owner, "Speech", info.InfiltrationNotification, infiltrator.Owner.Faction.InternalName);
 		}
 
-		void Attach(Actor self, Actor infiltrator, AttachableTo targetTrait)
+		void Attach(Actor self, Actor infiltrator, AttachableTo attachableToTrait)
 		{
 			var map = self.World.Map;
 			var targetCell = map.CellContaining(self.CenterPosition);
@@ -84,7 +84,7 @@ namespace OpenRA.Mods.CA.Traits
 					new OwnerInit(infiltrator.Owner),
 				});
 
-				targetTrait.Attach(actorToAttach.Trait<Attachable>());
+				attachableToTrait.Attach(actorToAttach.Trait<Attachable>());
 			});
 		}
 	}

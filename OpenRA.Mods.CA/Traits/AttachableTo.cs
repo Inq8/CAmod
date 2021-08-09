@@ -59,7 +59,7 @@ namespace OpenRA.Mods.CA.Traits
 			foreach (var attachable in attached)
 			{
 				if (attachable.IsValid)
-					attachable.TargetLost();
+					attachable.AttachedToLost();
 			}
 		}
 
@@ -68,7 +68,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (attachable.IsValid)
 			{
 				attached.Add(attachable);
-				attachable.AttachTo(this);
+				attachable.AttachTo(this, self.CenterPosition);
 			}
 		}
 
