@@ -37,6 +37,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Enemy building types around which to scan for targets for naval squads.")]
 		public readonly HashSet<string> NavalProductionTypes = new HashSet<string>();
 
+		[Desc("Limit target types for specific air unit squads.")]
+		public readonly Dictionary<string, BitSet<TargetableType>> AirSquadTargetTypes = null;
+
 		[Desc("Minimum number of units AI must have before attacking.")]
 		public readonly int SquadSize = 8;
 
@@ -153,6 +156,20 @@ namespace OpenRA.Mods.CA.Traits
 
 			var targetTypes = a.GetEnabledTargetTypes();
 			return !targetTypes.IsEmpty && !targetTypes.Overlaps(Info.IgnoredEnemyTargetTypes);
+		}
+
+		public bool IsAirSquadTargetType(Actor a, SquadCA owner)
+		{
+			var airSquadUnitType = owner.Units.First().Info.Name;
+			if (owner.SquadManager.Info.AirSquadTargetTypes.ContainsKey(airSquadUnitType))
+			{
+				var targetTypes = a.GetEnabledTargetTypes();
+
+				if (targetTypes.IsEmpty || !targetTypes.Overlaps(owner.SquadManager.Info.AirSquadTargetTypes[airSquadUnitType]))
+					return false;
+			}
+
+			return true;
 		}
 
 		public bool IsNotHiddenUnit(Actor a)

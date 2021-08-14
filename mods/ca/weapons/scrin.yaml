@@ -1241,22 +1241,13 @@ MothershipBeam:
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 		Inaccuracy: 171
+	Warhead@4Eff: CreateEffect
+		Explosions: large_explosion
+		Inaccuracy: 1024
 	Warhead@5Shake: ShakeScreen
 		Duration: 5
 		Intensity: 1
 		Multiplier: 0.1,0.1
-
-MothershipChargeBeamAI:
-	Inherits: MothershipChargeBeam
-	ValidTargets: Structure
-	Warhead@1Dam: SpreadDamage
-		ValidTargets: Structure
-
-MothershipBeamAI:
-	Inherits: MothershipBeam
-	ValidTargets: Structure
-	Warhead@1Dam: SpreadDamage
-		ValidTargets: Structure
 
 LeecherBeam:
 	ValidTargets: Ground, Water

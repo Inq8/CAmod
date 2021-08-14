@@ -2109,7 +2109,7 @@ MSHP:
 	WithIdleOverlay@RING:
 		Image: mshp
 		Sequence: ring
-		Offset: 0,0,0
+		Offset: 0,0,72
 	DetonateWeaponOnDeploy:
 		Weapon: WormholeOpener
 		ForceGround: true
@@ -2150,37 +2150,25 @@ MSHP:
 	RejectsOrders:
 		RequiresCondition: attacking
 	AmmoPool:
-		Ammo: 100
+		Ammo: 80
 		InitialAmmo: 0
 		AmmoCondition: ammo
 		Armaments: primary
 	ReloadAmmoPoolCA@CHARGE:
 		Delay: 150
-		Count: 100
+		Count: 80
 		RequiresCondition: charging && !attacking
 		Sound: mshp-fire1.aud
 		ShowSelectionBar: true
 		SelectionBarColor: ff00ff
 	ReloadAmmoPoolCA@DRAIN:
-		Count: -100
+		Count: -80
 		Delay: 1
 		RequiresCondition: !charging && !attacking
 		ShowSelectionBar: false
 	-SpeedMultiplier@TEMPORAL:
 	-RejectsOrders@TEMPORAL:
-
-MSHP.AI:
-	Inherits: MSHP
-	Buildable:
-		Prerequisites: sign, scrt, ~aircraft.scrin, ~techlevel.high, ~botplayer
-	RenderSprites:
-		Image: mshp
-	RejectsOrders:
-		RequiresCondition: attacking || charging
-	Armament@PRIMARY:
-		Weapon: MothershipBeamAI
-	Armament@SECONDARY:
-		Weapon: MothershipChargeBeamAI
+	MothershipAttackBehaviour:
 
 #
 # ---- Husks
