@@ -921,10 +921,11 @@ VenomLaserAA:
 PointLaser:
 	Inherits: Laser
 	ReloadDelay: 100
-	ValidTargets: Ground, Missile
-	InvalidTargets: Infantry, Vehicle, Structure, Wall
+	ValidTargets: Ground, Water, Missile
+	InvalidTargets: Infantry, Vehicle, Structure, Wall, Ship, Submarine
 	Range: 1c768
 	Report: vpalwe2d.aud
+	AirThreshold: 1c0
 	Projectile: LaserZap
 		Width: 30
 		Duration: 3
