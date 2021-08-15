@@ -9,7 +9,6 @@
  */
 #endregion
 
-using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common.Traits;
 
@@ -25,14 +24,14 @@ namespace OpenRA.Mods.CA.Traits
 
 	public class ClassicProductionQueueCA : ClassicProductionQueue
 	{
-		readonly ClassicProductionQueueCAInfo info;
+		public readonly new ClassicProductionQueueCAInfo Info;
 		readonly Actor self;
 
 		public ClassicProductionQueueCA(ActorInitializer init, ClassicProductionQueueCAInfo info)
 			: base(init, info)
 		{
-			this.self = init.Self;
-			this.info = info;
+			self = init.Self;
+			Info = info;
 		}
 
 		public override int GetBuildTime(ActorInfo unit, BuildableInfo bi)
@@ -42,15 +41,15 @@ namespace OpenRA.Mods.CA.Traits
 
 			var time = base.GetBuildTime(unit, bi);
 
-			if (info.SpeedUp)
+			if (Info.SpeedUp)
 			{
-				var type = info.Type; // difference with ClassicProductionQueue is this line, so BuildAtProductionType no longer overrides the type
+				var type = Info.Type; // difference with ClassicProductionQueue is this line, so BuildAtProductionType no longer overrides the type
 
 				var selfsameProductionsCount = self.World.ActorsWithTrait<Production>()
 					.Count(p => !p.Trait.IsTraitDisabled && !p.Trait.IsTraitPaused && p.Actor.Owner == self.Owner && p.Trait.Info.Produces.Contains(type));
 
-				var speedModifier = selfsameProductionsCount.Clamp(1, info.BuildTimeSpeedReduction.Length) - 1;
-				time = (time * info.BuildTimeSpeedReduction[speedModifier]) / 100;
+				var speedModifier = selfsameProductionsCount.Clamp(1, Info.BuildTimeSpeedReduction.Length) - 1;
+				time = (time * Info.BuildTimeSpeedReduction[speedModifier]) / 100;
 			}
 
 			return time;

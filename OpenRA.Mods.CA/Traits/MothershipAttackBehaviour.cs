@@ -66,7 +66,8 @@ namespace OpenRA.Mods.CA.Traits
 					}
 				}
 
-				if (!rejectsOrders) {
+				if (!rejectsOrders)
+				{
 					self.World.IssueOrder(new Order("Stop", self, false));
 					issueStopOrder = false;
 				}
