@@ -1246,6 +1246,20 @@
 		RequiresCondition: controlled
 		Offset: 0,0,300
 
+^MiniDroneAttachable:
+	InfiltrateToAttach@MINIDRONE:
+		Actor: mdrn.attached
+		Types: MiniDroneAttachable
+	Targetable@MINIDRONE:
+		TargetTypes: MiniDroneAttachable
+		RequiresCondition: !mdrn-attached
+	ChangesHealth@MINIDRONE:
+		PercentageStep: 1
+		Delay: 25
+		StartIfBelow: 100
+		DamageCooldown: 200
+		RequiresCondition: mdrn-attached
+
 ^AutoTargetGround:
 	AutoTarget:
 		AttackAnythingCondition: stance-attackanything
@@ -1398,6 +1412,7 @@
 	Inherits@irrad: ^Irradiatable
 	Inherits@ionsurge: ^IonSurgable
 	Inherits@atomize: ^Atomizable
+	Inherits@minidrone: ^MiniDroneAttachable
 	Huntable:
 	OwnerLostAction:
 		Action: Kill
@@ -1504,6 +1519,10 @@
 	Targetable@SHADOWBEACON:
 		TargetTypes: ShadowBeacon
 	AttachableTo:
+		Limits:
+			mdrn: 1
+		LimitConditions:
+			mdrn: mdrn-attached
 
 ^Vehicle:
 	Inherits@1: ^Vehicle-NOUPG

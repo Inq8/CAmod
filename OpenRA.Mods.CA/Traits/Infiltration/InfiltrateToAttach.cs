@@ -9,7 +9,9 @@
  */
 #endregion
 
+using System.Collections.Generic;
 using System.Linq;
+using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
 using OpenRA.Traits;
@@ -19,11 +21,10 @@ namespace OpenRA.Mods.CA.Traits
 	class InfiltrateToAttachInfo : TraitInfo, Requires<AttachableToInfo>
 	{
 		[ActorReference(typeof(AttachableInfo))]
-		[FieldLoader.Require]
 		[Desc("Actor to attach.")]
 		public readonly string Actor = null;
 
-		[Desc("The `TargetTypes` from `Targetable` that are allowed to enter.")]
+		[Desc("The `TargetTypes` from `Infiltrates.Types` that are allowed to enter.")]
 		public readonly BitSet<TargetableType> Types = default(BitSet<TargetableType>);
 
 		[Desc("List of sounds that can be played on successful infiltration.")]
@@ -42,16 +43,16 @@ namespace OpenRA.Mods.CA.Traits
 
 	class InfiltrateToAttach : INotifyInfiltrated
 	{
-		readonly InfiltrateToAttachInfo info;
+		public readonly InfiltrateToAttachInfo Info;
 
 		public InfiltrateToAttach(InfiltrateToAttachInfo info)
 		{
-			this.info = info;
+			Info = info;
 		}
 
 		void INotifyInfiltrated.Infiltrated(Actor self, Actor infiltrator, BitSet<TargetableType> types)
 		{
-			if (!info.Types.Overlaps(types))
+			if (!Info.Types.Overlaps(types))
 				return;
 
 			var attachableToTrait = self.TraitsImplementing<AttachableTo>().FirstOrDefault();
@@ -61,14 +62,14 @@ namespace OpenRA.Mods.CA.Traits
 
 			Attach(self, infiltrator, attachableToTrait);
 
-			if (info.InfiltratedSound != null)
-				Game.Sound.Play(SoundType.World, info.InfiltratedSound, self.CenterPosition);
+			if (Info.InfiltratedSound != null)
+				Game.Sound.Play(SoundType.World, Info.InfiltratedSound, self.CenterPosition);
 
-			if (info.InfiltratedNotification != null)
-				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", info.InfiltratedNotification, self.Owner.Faction.InternalName);
+			if (Info.InfiltratedNotification != null)
+				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.InfiltratedNotification, self.Owner.Faction.InternalName);
 
-			if (info.InfiltrationNotification != null)
-				Game.Sound.PlayNotification(self.World.Map.Rules, infiltrator.Owner, "Speech", info.InfiltrationNotification, infiltrator.Owner.Faction.InternalName);
+			if (Info.InfiltrationNotification != null)
+				Game.Sound.PlayNotification(self.World.Map.Rules, infiltrator.Owner, "Speech", Info.InfiltrationNotification, infiltrator.Owner.Faction.InternalName);
 		}
 
 		void Attach(Actor self, Actor infiltrator, AttachableTo attachableToTrait)
@@ -78,13 +79,31 @@ namespace OpenRA.Mods.CA.Traits
 
 			self.World.AddFrameEndTask(w =>
 			{
-				var actorToAttach = self.World.CreateActor(info.Actor.ToLowerInvariant(), new TypeDictionary
-				{
-					new LocationInit(targetCell),
-					new OwnerInit(infiltrator.Owner),
-				});
+				var actorToAttach = infiltrator;
 
-				attachableToTrait.Attach(actorToAttach.Trait<Attachable>());
+				if (Info.Actor != null)
+				{
+					var initialFacing = WAngle.Zero;
+					var mobile = actorToAttach.TraitOrDefault<Mobile>();
+					if (mobile != null)
+						initialFacing = mobile.Facing;
+
+					actorToAttach = self.World.CreateActor(Info.Actor.ToLowerInvariant(), new TypeDictionary
+					{
+						new LocationInit(targetCell),
+						new OwnerInit(infiltrator.Owner),
+						new FacingInit(initialFacing)
+					});
+				}
+
+				var attachable = actorToAttach.TraitOrDefault<Attachable>();
+				if (attachable == null)
+					return;
+
+				var attached = attachableToTrait.Attach(attachable);
+
+				if (!attached && actorToAttach != infiltrator)
+					actorToAttach.Dispose();
 			});
 		}
 	}

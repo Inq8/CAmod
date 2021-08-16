@@ -107,7 +107,9 @@ namespace OpenRA.Mods.CA.Warheads
 					new OwnerInit(firedBy.Owner),
 				});
 
-				targetTrait.Attach(actorToAttach.Trait<Attachable>());
+				var attached = targetTrait.Attach(actorToAttach.Trait<Attachable>());
+				if (!attached)
+					actorToAttach.Dispose();
 			});
 		}
 	}

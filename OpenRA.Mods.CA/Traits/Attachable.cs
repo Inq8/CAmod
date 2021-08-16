@@ -16,6 +16,17 @@ namespace OpenRA.Mods.CA.Traits
 	[Desc("Use on an actor to make it attachable to other actors with the AttachableTo trait.")]
 	public class AttachableInfo : TraitInfo, Requires<IPositionableInfo>
 	{
+		[GrantedConditionReference]
+		[Desc("The condition to grant when attached.")]
+		public readonly string AttachedCondition = null;
+
+		[GrantedConditionReference]
+		[Desc("The condition to grant when detached.")]
+		public readonly string DetachedCondition = null;
+
+		[Desc("Attachable type to use to check for limits.")]
+		public readonly string AttachableType = null;
+
 		public override object Create(ActorInitializer init) { return new Attachable(init, this); }
 	}
 
@@ -23,6 +34,8 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		public readonly AttachableInfo Info;
 		AttachableTo attachedTo;
+		int attachedConditionToken;
+		int detachedConditionToken;
 		readonly IPositionable positionable;
 		readonly Actor self;
 
@@ -31,6 +44,8 @@ namespace OpenRA.Mods.CA.Traits
 			self = init.Self;
 			Info = info;
 			positionable = self.TraitOrDefault<IPositionable>();
+			attachedConditionToken = Actor.InvalidConditionToken;
+			detachedConditionToken = Actor.InvalidConditionToken;
 		}
 
 		public bool IsValid { get { return self != null && !self.IsDead; } }
@@ -40,6 +55,12 @@ namespace OpenRA.Mods.CA.Traits
 			Detach();
 			attachedTo = attachableTo;
 			SetPosition(pos);
+
+			if (Info.AttachedCondition != null && attachedConditionToken == Actor.InvalidConditionToken)
+				attachedConditionToken = self.GrantCondition(Info.AttachedCondition);
+
+			if (detachedConditionToken != Actor.InvalidConditionToken)
+				detachedConditionToken = self.RevokeCondition(detachedConditionToken);
 		}
 
 		public void AttachedToLost()
@@ -66,7 +87,16 @@ namespace OpenRA.Mods.CA.Traits
 		void Detach()
 		{
 			if (attachedTo != null)
+			{
 				attachedTo.Detach(this);
+				attachedTo = null;
+			}
+
+			if (attachedConditionToken != Actor.InvalidConditionToken)
+				attachedConditionToken = self.RevokeCondition(attachedConditionToken);
+
+			if (Info.DetachedCondition != null && detachedConditionToken == Actor.InvalidConditionToken)
+				detachedConditionToken = self.GrantCondition(Info.DetachedCondition);
 		}
 	}
 }

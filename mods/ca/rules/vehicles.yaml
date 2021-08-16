@@ -2577,6 +2577,142 @@ MTNK.Drone:
 	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
 	-Targetable@AICAPTURE:
 
+MDRN:
+	Inherits: ^Vehicle
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@IDISABLE: ^DisableOnLowPower
+	Tooltip:
+		Name: Mini Drone
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 105
+		Prerequisites: anyradar, ~vehicles.arc, ~techlevel.low
+		Description: Drone with machine gun and point-defense laser.\n  Attaches to certain vehicles to provide support and repairs.\n  Strong vs Infantry\n  Weak vs Vehicles, Buildings, Aircraft
+	Valued:
+		Cost: 300
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Selectable:
+		DecorationBounds: 16, 16, 0, -8
+	Health:
+		HP: 10000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Mobile:
+		Speed: 80
+		TurnSpeed: 255
+		Locomotor: foot
+		Voice: Move
+		PauseOnCondition: disabled || empdisable || being-warped || notmobile
+	Voiced:
+		VoiceSet: RobotTankVoice
+	Armament@PRIMARY:
+		Weapon: M60mgMD
+		LocalOffset: 72,0,72
+		MuzzleSequence: muzzle
+		PauseOnCondition: disabled || empdisable || being-warped
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: PointLaser
+		Turret: secondary
+		LocalOffset: 72,0,72
+		PauseOnCondition: disabled || empdisable || being-warped
+	PointDefense:
+		Armament: secondary
+		PointDefenseTypes: Missile
+		ValidRelationships: Enemy
+	WithMuzzleOverlay:
+	Hovers:
+		BobDistance: -35
+		RequiresCondition: !empdisable && !being-warped
+	WithShadow:
+		Offset: 43, 128, -250
+		ZOffset: -129
+	TurretedFloating:
+		TurnSpeed: 18
+	Turreted@SECONDARY:
+		Turret: secondary
+		Offset: 0,0,72
+		TurnSpeed: 512
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
+		Turrets: primary, secondary
+		Voice: Attack
+	WithSpriteTurret:
+	Targetable:
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
+	Power:
+		Amount: -1
+		RequiresCondition: !being-warped
+	WithDecoration@DISABLED:
+		Image: poweroff
+		Sequence: offline
+		Palette: chrome
+		RequiresCondition: disabled
+		Position: Center
+	ProximityExternalCondition@POWERSOUND:
+		Condition: disablesound
+		RequiresCondition: disabled || empdisable
+		AffectsParent: True
+		Range: 1c0
+		EnableSound: vrobon
+		DisableSound: vroboff
+	-WithDamageOverlay:
+	-CaptureManager:
+	-Capturable:
+	-CaptureNotification:
+	-Capturable@DRIVER_DEAD:
+	-GrantConditionIfOwnerIsNeutral:
+	-ChangesHealth@DRIVER_DEAD:
+	-Targetable@DRIVERKILL:
+	-Targetable@DRIVERKILLLOWHP:
+	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
+	-Targetable@AICAPTURE:
+	-InfiltrateToAttach@MINIDRONE:
+	-Targetable@MINIDRONE:
+	-ChangesHealth@MINIDRONE:
+	Attachable:
+		AttachedCondition: attached
+		AttachableType: mdrn
+	Infiltrates:
+		Types: MiniDroneAttachable
+		ValidRelationships: Ally
+
+MDRN.Attached:
+	Inherits: MDRN
+	-Buildable:
+	-Infiltrates:
+	-Selectable:
+	-Tooltip:
+	Interactable:
+	RenderSprites:
+		Image: mdrn
+	Mobile:
+		Locomotor: cloud
+		ImmovableCondition: attached
+	GrantCondition:
+		Condition: attached
+	WithSpriteTurret:
+		Sequence: turret-attached
+	TurnOnIdle:
+		MinDelay: 25
+		MaxDelay: 75
+	Armament@PRIMARY:
+		Weapon: M60mgTD
+		LocalOffset: -500,0,72
+	Armament@SECONDARY:
+		LocalOffset: -500,0,72
+	TransformOnCondition:
+		IntoActor: mdrn
+		RequiresCondition: detached
+	-WithDecoration@DISABLED:
+
 HTNK:
 	Inherits: ^TankTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
