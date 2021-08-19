@@ -1847,7 +1847,7 @@ HMMV:
 		Queue: Vehicle
 		BuildPaletteOrder: 22
 		IconPalette: chrometd
-		Prerequisites: ~vehicles.gdi, ~techlevel.low
+		Prerequisites: ~vehicles.hmmv, ~techlevel.low
 		Description: Fast scout & anti-infantry vehicle.\n  Can detect spies and cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Buildings, Defenses, Aircraft
 	Valued:
 		Cost: 400
@@ -1879,6 +1879,60 @@ HMMV:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
+	IgnoresDisguise:
+	DetectCloaked:
+		Range: 6c0
+		CloakTypes: Cloak, Thief
+		RequiresCondition: !(empdisable || being-warped)
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+
+GDRN:
+	Inherits: ^Vehicle
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 22
+		IconPalette: chrome
+		Prerequisites: ~vehicles.arc, ~techlevel.low
+		Description: Fast scout & anti-tank vehicle.\n  Can detect spies and cloaked units.\n  Strong vs Vehicles\n  Weak vs Infantry, Buildings, Defenses, Aircraft
+	Valued:
+		Cost: 400
+	Tooltip:
+		Name: Guardian Drone
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 15000
+	Armor:
+		Type: Light
+	Mobile:
+		TurnSpeed: 40
+		Speed: 108
+		Voice: Move
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 7c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Turreted:
+		TurnSpeed: 40
+		Offset: 0,0,0
+	Armament:
+		Weapon: GuardianDroneGun
+		LocalOffset: 500,0,200
+		MuzzleSequence: muzzle
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
+		Voice: Attack
+	WithMuzzleOverlay:
+	WithSpriteTurret:
+	Voiced:
+		VoiceSet: RobotTankVoice
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0

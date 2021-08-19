@@ -636,6 +636,15 @@ DepthCharge.destroyer:
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
 
+GuardianDroneGun:
+	Inherits: 25mm
+	Report: gdrn-fire1.aud, gdrn-fire2.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 2000
+		Versus:
+			Light: 85
+			Heavy: 100
+
 BATFGun:
 	Inherits: 25mm
 	Warhead@1Dam: SpreadDamage
