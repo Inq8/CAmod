@@ -2730,8 +2730,11 @@ MDRN:
 	-InfiltrateToAttach@MINIDRONE:
 	-Targetable@MINIDRONE:
 	-ChangesHealth@MINIDRONE:
+	-ExternalCondition@MINIDRONE:
+	AttachableTo:
+		-Limits:
+		-LimitConditions:
 	Attachable:
-		AttachedCondition: attached
 		AttachableType: mdrn
 	Infiltrates:
 		Types: MiniDroneAttachable
@@ -2761,10 +2764,9 @@ MDRN.Attached:
 		LocalOffset: -500,0,72
 	Armament@SECONDARY:
 		LocalOffset: -500,0,72
-	TransformOnCondition:
-		IntoActor: mdrn
-		RequiresCondition: detached
 	-WithDecoration@DISABLED:
+	Attachable:
+		AttachedCondition: attached
 
 HTNK:
 	Inherits: ^TankTD
