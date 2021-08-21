@@ -87,8 +87,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (
 				attachedCounts.ContainsKey(attachable.Info.AttachableType)
 				&& Info.LimitConditions.ContainsKey(attachable.Info.AttachableType)
-				&& attachedCounts[attachable.Info.AttachableType] >= Info.Limits[attachable.Info.AttachableType]
-			)
+				&& attachedCounts[attachable.Info.AttachableType] >= Info.Limits[attachable.Info.AttachableType])
 				return false;
 
 			attached.Add(attachable);
@@ -101,8 +100,7 @@ namespace OpenRA.Mods.CA.Traits
 				if (
 					Info.LimitConditions.ContainsKey(attachable.Info.AttachableType)
 					&& attachedCounts[attachable.Info.AttachableType] >= Info.Limits[attachable.Info.AttachableType]
-					&& limitTokens[attachable.Info.AttachableType] == Actor.InvalidConditionToken
-				)
+					&& limitTokens[attachable.Info.AttachableType] == Actor.InvalidConditionToken)
 					limitTokens[attachable.Info.AttachableType] = self.GrantCondition(Info.LimitConditions[attachable.Info.AttachableType]);
 			}
 
@@ -114,14 +112,15 @@ namespace OpenRA.Mods.CA.Traits
 			attached.Remove(attachable);
 
 			if (attachedCounts.ContainsKey(attachable.Info.AttachableType))
+			{
 				attachedCounts[attachable.Info.AttachableType]--;
 
 				if (
 					Info.LimitConditions.ContainsKey(attachable.Info.AttachableType)
 					&& attachedCounts[attachable.Info.AttachableType] < Info.Limits[attachable.Info.AttachableType]
-					&& limitTokens[attachable.Info.AttachableType] != Actor.InvalidConditionToken
-				)
+					&& limitTokens[attachable.Info.AttachableType] != Actor.InvalidConditionToken)
 					limitTokens[attachable.Info.AttachableType] = self.RevokeCondition(limitTokens[attachable.Info.AttachableType]);
+			}
 		}
 	}
 }
