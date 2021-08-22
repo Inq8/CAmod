@@ -974,7 +974,7 @@ STCR:
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
-		Cost: 1150
+		Cost: 1350
 	Tooltip:
 		Name: Stormcrawler
 	Selectable:
@@ -985,13 +985,13 @@ STCR:
 		BuildPaletteOrder: 150
 		Prerequisites: anyradar, ~vehicles.reaper, ~techlevel.medium
 		Queue: Vehicle
-		Description: Slow moving, durable, short-range assault unit.\n  Bolstered by other nearby Stormcrawlers.\n  Strong vs Infantry, Light Armor\n  Weak vs Buildings, Aircraft
+		Description: Slow moving, durable, short-range assault unit.\n  Splits incoming damage with other nearby Stormcrawlers.\n  Strong vs Defenses, Vehicles\n  Weak vs Infantry, Aircraft
 		IconPalette: chromes
 	Mobile:
-		Speed: 56
-		TurnSpeed: 12
+		Speed: 43
+		TurnSpeed: 16
 	Health:
-		HP: 50000
+		HP: 74000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -1016,12 +1016,6 @@ STCR:
 		TargetTypes: Stormcrawler
 	ExternalCondition@STORMCRAWLERCHARGE:
 		Condition: stormcrawlercharge
-	ReloadDelayMultiplier@STORMCRAWLERCHARGE1:
-		Modifier: 75
-		RequiresCondition: stormcrawlercharge >= 1
-	ReloadDelayMultiplier@STORMCRAWLERCHARGE2:
-		Modifier: 75
-		RequiresCondition: stormcrawlercharge >= 2
 	WithDecoration@STORMCRAWLERCHARGE1:
 		Image: pips
 		Sequence: pip-stcr1
