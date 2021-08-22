@@ -3724,6 +3724,11 @@ IFV:
 		MuzzleSequence: muzzle
 		LocalOffset: 560,0,200
 		RequiresCondition: commturr
+	Armament@SEAL:
+		Weapon: SealIFVGun
+		MuzzleSequence: muzzle
+		LocalOffset: 560,0,200
+		RequiresCondition: sealturr
 	Armament@SNIP:
 		Weapon: SniperIFVGun
 		MuzzleSequence: muzzle
@@ -3817,7 +3822,7 @@ IFV:
 		RequiresCondition: desoturr
 	WithSpriteTurret@com:
 		Sequence: turret9
-		RequiresCondition: commturr || snipturr
+		RequiresCondition: commturr || snipturr || sealturr
 	WithSpriteTurret@rep:
 		Sequence: turret10
 		RequiresCondition: engturr
@@ -3847,6 +3852,7 @@ IFV:
 			rmbo: commturr
 			bori: commturr
 			e7: commturr
+			seal: sealturr
 			sab: spyturr
 			snip: snipturr
 			spy: spyturr

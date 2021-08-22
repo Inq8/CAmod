@@ -549,6 +549,120 @@ TRAN.paradrop:
 		Experience: 1000
 	-Targetable@TEMPORAL:
 
+NHAW:
+	Inherits: ^Helicopter
+	Inherits@TRANSPORT: ^Transport
+	RenderSprites:
+		Image: nhaw
+	Buildable:
+		Queue: Aircraft
+		BuildAtProductionType: Helicopter
+		BuildPaletteOrder: 10
+		Prerequisites: ~aircraft.nhaw, ~techlevel.infonly
+		Description: Fast infantry transport helicopter.\n  Unarmed
+	Valued:
+		Cost: 900
+	Tooltip:
+		Name: Nighthawk
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 44000
+	RevealsShroud:
+		Range: 8c0
+		MinRange: 6c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 6c0
+		Type: GroundPosition
+	Aircraft:
+		TurnSpeed: 20
+		Speed: 155
+		AltitudeVelocity: 0c58
+		TakeoffSounds: htoff1.aud
+		LandingSounds: hland1.aud
+		Voice: Move
+	WithIdleOverlay@ROTOR1AIR:
+		Offset: 237,0,263
+		Sequence: rotor
+		RequiresCondition: airborne
+	WithIdleOverlay@ROTOR1GROUND:
+		Offset: 237,0,263
+		Sequence: slow-rotor
+		RequiresCondition: !airborne
+	WithIdleOverlay@ROTOR2AIR:
+		Offset: -997,0,341
+		Sequence: rotor2
+		RequiresCondition: airborne
+	WithIdleOverlay@ROTOR2GROUND:
+		Offset: -997,0,341
+		Sequence: slow-rotor2
+		RequiresCondition: !airborne
+	Cargo:
+		Types: Infantry
+		MaxWeight: 8
+	SpawnActorOnDeath:
+		Actor: NHAW.Husk
+		RequiresCondition: !empdisable && !being-warped
+	SpawnActorOnDeath@EMP:
+		Actor: NHAW.Husk.EMP
+		RequiresCondition: empdisable && !being-warped
+	Selectable:
+		DecorationBounds: 40,36
+	WithCargoHatchAnimation:
+	Voiced:
+		VoiceSet: CarryAllVoice
+	AppearsOnRadar:
+		ValidRelationships: Ally
+
+NHAW.paradrop:
+	Inherits: ^Helicopter
+	Tooltip:
+		Name: Nighthawk
+	ParaDrop:
+		DropRange: 4c0
+	Health:
+		HP: 46000
+	Aircraft:
+		TurnSpeed: 20
+		Speed: 155
+		AltitudeVelocity: 0c100
+	WithIdleOverlay@ROTOR1AIR:
+		Offset: 597,0,85
+		Sequence: rotor
+		RequiresCondition: airborne
+	WithIdleOverlay@ROTOR1GROUND:
+		Offset: 597,0,85
+		Sequence: slow-rotor
+		RequiresCondition: !airborne
+	WithIdleOverlay@ROTOR2AIR:
+		Offset: -597,0,171
+		Sequence: rotor2
+		RequiresCondition: airborne
+	WithIdleOverlay@ROTOR2GROUND:
+		Offset: -597,0,171
+		Sequence: slow-rotor2
+		RequiresCondition: !airborne
+	Cargo:
+		Types: Infantry
+		MaxWeight: 8
+	-Selectable:
+	-Voiced:
+	RejectsOrders:
+	RenderSprites:
+		Image: tran3
+	SpawnActorOnDeath:
+		Actor: TRAN.Husk
+		RequiresCondition: !empdisable && !being-warped
+	SpawnActorOnDeath@EMP:
+		Actor: TRAN.Husk.EMP
+		RequiresCondition: empdisable && !being-warped
+	Interactable:
+	GivesExperience:
+		Experience: 1000
+	-Targetable@TEMPORAL:
+
 HELI:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
