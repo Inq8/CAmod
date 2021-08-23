@@ -19,8 +19,8 @@ namespace OpenRA.Mods.CA.Projectiles
 {
 	public class LinearPulseInfo : IProjectileInfo
 	{
-		[Desc("Distance between pulse impacts.")]
-		public readonly WDist ImpactSpacing = new WDist(768);
+		[Desc("Ticks between pulse impacts.")]
+		public readonly int ImpactInterval = 2;
 
 		[Desc("Speed the pulse travels.")]
 		public readonly WDist Speed = new WDist(384);
@@ -80,7 +80,7 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Sync]
 		WPos pos, target, source;
 		int ticks;
-		int intervalDistanceTravelled;
+		int intervalTicks;
 		int totalDistanceTravelled;
 		int range;
 		int projectileRange;
@@ -147,14 +147,17 @@ namespace OpenRA.Mods.CA.Projectiles
 			pos = pos + velocity;
 
 			totalDistanceTravelled += speed.Length;
-			intervalDistanceTravelled += speed.Length;
+			intervalTicks++;
 
-			if (intervalDistanceTravelled >= info.ImpactSpacing.Length)
+			if (intervalTicks >= info.ImpactInterval)
 			{
-				intervalDistanceTravelled = 0;
+				intervalTicks = 0;
 				if (totalDistanceTravelled >= info.MinimumImpactDistance.Length && (info.MaximumImpactDistance == WDist.Zero || totalDistanceTravelled <= info.MaximumImpactDistance.Length))
 					Explode(world);
 			}
+
+			if (totalDistanceTravelled >= range)
+				world.AddFrameEndTask(w => w.Remove(this));
 
 			ticks++;
 		}
@@ -199,10 +202,7 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		void Explode(World world)
 		{
-			if (totalDistanceTravelled >= range)
-				world.AddFrameEndTask(w => w.Remove(this));
-			else
-				args.Weapon.Impact(Target.FromPos(pos), new WarheadArgs(args));
+			args.Weapon.Impact(Target.FromPos(pos), new WarheadArgs(args));
 		}
 	}
 }

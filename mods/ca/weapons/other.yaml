@@ -219,7 +219,7 @@ FlamerTD:
 	TargetActorCenter: true
 	Projectile: LinearPulse
 		Speed: 256
-		ImpactSpacing: 256
+		ImpactInterval: 1
 		MinimumImpactDistance: 0c768
 		MaximumImpactDistance: 1c768
 		ForceGround: true
@@ -259,7 +259,7 @@ BigFlamerTD:
 	BurstDelays: 5
 	Projectile: LinearPulse
 		Speed: 96
-		ImpactSpacing: 288
+		ImpactInterval: 3
 		Image: flameallfast
 		Inaccuracy: 484
 		Palette: tseffect-ignore-lighting-alpha90
@@ -335,11 +335,11 @@ BlackHandFlamer:
 	Range: 3c512
 	Projectile: LinearPulse
 		Speed: 220
+		ImpactInterval: 2
 		Inaccuracy: 160
 		Image: thinblueflame
 		Palette: effect-ignore-lighting-alpha85
-		ImpactSpacing: 320
-		MinimumImpactDistance: 320
+		MinimumImpactDistance: 440
 		MaximumImpactDistance: 3c512
 		RepeatAnimation: false
 	Warhead@1Dam: SpreadDamage
@@ -1834,7 +1834,7 @@ SonicPulse:
 	Report: sonicpulse1.aud, sonicpulse2.aud
 	Projectile: LinearPulse
 		Speed: 768
-		ImpactSpacing: 768
+		ImpactInterval: 1
 		MinimumImpactDistance: 768
 	Warhead@1Dam: SpreadDamage
 		Spread: 0c256
