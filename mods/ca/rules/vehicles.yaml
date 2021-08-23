@@ -2908,6 +2908,7 @@ HTNK.Ion:
 
 HTNK.Hover:
 	Inherits: HTNK
+	Inherits@HOVERTRAIL: ^HoverTrail
 	Tooltip:
 		Name: Hover Mammoth Tank
 		GenericName: Tank
@@ -2920,13 +2921,6 @@ HTNK.Hover:
 		Locomotor: hover
 	Turreted:
 		TurnSpeed: 16
-	LeavesTrails:
-		Image: twake
-		Palette: effect
-		TerrainTypes: Water
-		TrailWhileStationary: true
-		StationaryInterval: 18
-		MovingInterval: 6
 	Hovers:
 		BobDistance: -35
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
@@ -2947,6 +2941,7 @@ MSAM:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	RenderSprites:
 		FactionImages:
 			nod: msam.nod
@@ -3050,6 +3045,7 @@ MLRS:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	RenderSprites:
 	Valued:
 		Cost: 1350
@@ -4267,6 +4263,8 @@ HSAM:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	Inherits@HOVERTRAIL: ^HoverTrail
 	RenderSprites:
 		Image: hmlrs
 	Valued:
@@ -4284,13 +4282,6 @@ HSAM:
 	Mobile:
 		Speed: 90
 		Locomotor: hover
-	LeavesTrails:
-		Image: twake
-		Palette: effect
-		TerrainTypes: Water
-		TrailWhileStationary: true
-		StationaryInterval: 18
-		MovingInterval: 6
 	Health:
 		HP: 14000
 	Armor:
@@ -4738,6 +4729,7 @@ PTNK:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 230

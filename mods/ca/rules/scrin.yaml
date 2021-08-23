@@ -646,6 +646,7 @@ SEEK:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@HOVERTRAIL: ^HoverTrail
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
@@ -664,13 +665,7 @@ SEEK:
 		IconPalette: chrome
 	Mobile:
 		Speed: 95
-	LeavesTrails:
-		Image: twake
-		Palette: effect
-		TerrainTypes: Water
-		TrailWhileStationary: true
-		StationaryInterval: 18
-		MovingInterval: 6
+		Locomotor: lighthover
 	Health:
 		HP: 22000
 	Armor:
@@ -717,6 +712,7 @@ LACE:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@HOVERTRAIL: ^HoverTrail
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
@@ -736,13 +732,7 @@ LACE:
 	Mobile:
 		TurnSpeed: 40
 		Speed: 126
-	LeavesTrails:
-		Image: twake
-		Palette: effect
-		TerrainTypes: Water
-		TrailWhileStationary: true
-		StationaryInterval: 18
-		MovingInterval: 6
+		Locomotor: lighthover
 	Health:
 		HP: 13000
 	Armor:
@@ -787,6 +777,7 @@ INTL:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
+	Inherits@HOVERTRAIL: ^HoverTrail
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
@@ -805,6 +796,7 @@ INTL:
 		Speed: 56
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 		TurnSpeed: 512
+		Locomotor: lighthover
 	Health:
 		HP: 44000
 	Armor:
@@ -1059,6 +1051,7 @@ DEVO:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@RESCONV: ^ResourceConversion
+	Inherits@HOVERTRAIL: ^HoverTrail
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 220
@@ -1080,6 +1073,7 @@ DEVO:
 	Mobile:
 		TurnSpeed: 512
 		Speed: 66
+		Locomotor: lighthover
 	Hovers:
 		BobDistance: -25
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
@@ -1117,6 +1111,7 @@ DARK:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@HOVERTRAIL: ^HoverTrail
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Buildable:
@@ -1140,6 +1135,7 @@ DARK:
 	Mobile:
 		TurnSpeed: 16
 		Speed: 56
+		Locomotor: lighthover
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -1174,6 +1170,7 @@ RUIN:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@RESCONV: ^ResourceConversion
+	Inherits@HOVERTRAIL: ^HoverTrail
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
@@ -1193,6 +1190,7 @@ RUIN:
 	Mobile:
 		Speed: 80
 		TurnSpeed: 512
+		Locomotor: lighthover
 	Health:
 		HP: 15000
 	Armor:
@@ -1217,7 +1215,6 @@ RUIN:
 		MuzzlePalette: scrin
 		PauseOnCondition: !ammo || uncharged-fire
 	WithMuzzleOverlay:
-	AutoTarget:
 	Explodes:
 		Weapon: BarrelExplode
 	ProducibleWithLevel:
@@ -1250,7 +1247,7 @@ RUIN:
 		RequiresCondition: resconv-upgrade && on-resource && (ammo < 12 || charged-fire)
 	GrantConditionOnAttack@PRIMARY:
 		RevokeDelay: 175
-	GrantConditionOnAttack@PRIMARYCHARGED
+	GrantConditionOnAttack@PRIMARYCHARGED:
 		RevokeDelay: 175
 
 ATMZ:
@@ -1258,6 +1255,7 @@ ATMZ:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@BERSERK: ^Berserk
+	Inherits@HOVERTRAIL: ^HoverTrail
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
@@ -1276,6 +1274,7 @@ ATMZ:
 		IconPalette: chrome
 	Mobile:
 		Speed: 66
+		Locomotor: lighthover
 	Health:
 		HP: 15000
 	Armor:
@@ -1465,6 +1464,7 @@ RPTP:
 SMCV:
 	Inherits: ^Vehicle-NOUPG
 	Inherits@SELECTION: ^SelectableSupportUnit
+	Inherits@HOVERTRAIL: ^HoverTrail
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 502
@@ -1487,7 +1487,7 @@ SMCV:
 		Type: Heavy
 	Mobile:
 		Speed: 51
-		Locomotor: heavywheeled
+		Locomotor: lighthover
 		TurnSpeed: 512
 	RevealsShroud:
 		Range: 4c0
