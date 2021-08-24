@@ -651,7 +651,7 @@ SMGE:
 
 AKM:
 	StartBurstReport: mg11.aud
-	ReloadDelay: 12
+	ReloadDelay: 8
 	Burst: 3
 	BurstDelays: 2
 	Range: 7c0
@@ -659,14 +659,14 @@ AKM:
 	Projectile: Bullet
 		Speed: 1c682
 	Warhead@1Dam: SpreadDamage
-		Spread: 42
+		Spread: 128
 		Damage: 4700
 		Versus:
 			None: 100
 			Wood: 10
-			Light: 40
-			Heavy: 15
-			Concrete: 15
+			Light: 30
+			Heavy: 10
+			Concrete: 10
 			Brick: 10
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
@@ -784,7 +784,7 @@ CommandoIFVGun:
 ShadowOperativeGun:
 	Inherits: ^HeavyMG
 	Range: 6c0
-	ReloadDelay: 40
+	ReloadDelay: 30
 	Burst: 2
 	BurstDelays: 3
 	Report: shad-fire1.aud, shad-fire2.aud, shad-fire3.aud
@@ -792,6 +792,7 @@ ShadowOperativeGun:
 	InvalidTargets: Structure, Vehicle, Ship
 	Warhead@1Dam: SpreadDamage
 		InvalidTargets: Structure, Vehicle, Ship
+		Spread: 42
 		Damage: 2800
 		Versus:
 			None: 100
