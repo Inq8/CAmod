@@ -1391,6 +1391,7 @@ MGG:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 	AttackOmni:
 	GuardsSelection:
+		RequiresCondition: !stance-attackanything
 
 MRJ:
 	Inherits: ^Vehicle
@@ -1436,6 +1437,7 @@ MRJ:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 	AttackOmni:
 	GuardsSelection:
+		RequiresCondition: !stance-attackanything
 
 MSG:
 	Inherits: ^Vehicle
@@ -3841,12 +3843,12 @@ IFV:
 		Condition: cryr-upgrade
 	GuardsSelection@REPAIR:
 		ValidTargets: Vehicle
-		RequiresCondition: engturr
+		RequiresCondition: engturr && !stance-attackanything
 	GuardsSelection@MEDIC:
 		ValidTargets: Infantry
-		RequiresCondition: medturr
+		RequiresCondition: medturr && !stance-attackanything
 	GuardsSelection@SPY:
-		RequiresCondition: spyturr
+		RequiresCondition: spyturr && !stance-attackanything
 
 IFV.AI:
 	Inherits: ^Tank

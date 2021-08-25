@@ -22,6 +22,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Will only guard units with these target types.")]
 		public readonly BitSet<TargetableType> ValidTargets = new BitSet<TargetableType>("Ground", "Water");
 
+		[Desc("Maximum number of guard orders to chain together.")]
+		public readonly int MaxTargets = 12;
+
 		public override object Create(ActorInitializer init) { return new GuardsSelection(init, this); }
 	}
 
@@ -35,16 +38,15 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled)
 				return;
 
+			if (order.Queued)
+				return;
+
 			var validOrders = new HashSet<string> { "AttackMove", "AssaultMove", "Attack", "ForceAttack", "Move" };
 
 			if (!validOrders.Contains(order.OrderString))
 				return;
 
 			if (self.Owner.IsBot)
-				return;
-
-			var at = self.TraitOrDefault<AutoTarget>();
-			if (at != null && at.Stance == UnitStance.AttackAnything)
 				return;
 
 			var world = self.World;
@@ -68,7 +70,6 @@ namespace OpenRA.Mods.CA.Traits
 
 			world.IssueOrder(new Order("Guard", self, mainGuardTarget, false, null, null));
 
-			var maxGuardTargets = 50;
 			var guardTargets = 0;
 
 			foreach (var guardActor in guardActors)
@@ -76,7 +77,7 @@ namespace OpenRA.Mods.CA.Traits
 				guardTargets++;
 				world.IssueOrder(new Order("Guard", self, Target.FromActor(guardActor), true, null, null));
 
-				if (guardTargets >= maxGuardTargets)
+				if (guardTargets >= Info.MaxTargets)
 					break;
 			}
 		}
@@ -87,12 +88,8 @@ namespace OpenRA.Mods.CA.Traits
 				return false;
 
 			var guardsSelection = targetActor.Info.HasTraitInfo<GuardsSelectionInfo>();
-
-			foreach (var t in targetActor.TraitsImplementing<GuardsSelection>())
-			{
-  				if (!t.IsTraitDisabled)
-  					return false;
-  			}
+			if (guardsSelection)
+				return false;
 
 			return true;
 		}
