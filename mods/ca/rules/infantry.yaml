@@ -2291,6 +2291,73 @@ IVAN:
 	Voiced:
 		VoiceSet: CrazyIvanVoice
 
+BRUT:
+	Inherits: ^Soldier
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 85
+		Prerequisites: ~infantry.yuri, ~techlevel.infonly
+		Description: Genetically engineered hulk.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft, Buildings
+	RenderSprites:
+	Valued:
+		Cost: 200
+	Tooltip:
+		Name: Brute
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 25000
+	Mobile:
+		Speed: 49
+		Voice: Move
+	RevealsShroud:
+		Range: 4c0
+	Targetable:
+		RequiresCondition: !being-warped
+		TargetTypes: Ground, Infantry, ChaosImmune, MindControlImmune
+	Voiced:
+		VoiceSet: BruteVoice
+	WithInfantryBody:
+		MoveSequence: run
+		StandSequences: stand
+		DefaultAttackSequence: bash
+		IdleSequences: idle1, idle2
+	AttackSounds:
+		Sounds: ibruatta.aud, ibruattb.aud
+	WithDeathAnimation:
+		DeathSequencePalette: overlayplayertd
+		DeathSequence: die
+		UseDeathTypeSuffix: true
+		DeathTypes:
+			DefaultDeath: 1
+			BulletDeath: 1
+			SmallExplosionDeath: 2
+			ExplosionDeath: 2
+			FireDeath: 5
+			ElectricityDeath: 6
+			PoisonDeath: 1
+			ChronoDeath: 1
+			ToxinDeath: 10
+			RadiationDeath: 10
+			FrozenDeath: 1
+			AtomizedDeath: 2
+		-CrushedSequence:
+	Armament@PRIMARY:
+		Weapon: BruteAttack
+		FireDelay: 10
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: BruteBuildingAttack
+		FireDelay: 10
+	AttackFrontal:
+		PauseOnCondition: being-warped
+		Voice: Attack
+	-TakeCover:
+	-Captures@DRIVER_KILL:
+	-CaptureManager:
+	-WithIdleOverlay@mindcontrol:
+
 SHAD:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
