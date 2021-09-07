@@ -424,6 +424,7 @@ SPY:
 E7:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -432,7 +433,7 @@ E7:
 		BuildLimit: 1
 		Description: Elite commando infantry. Armed with\ndual pistols and C4.\n  Can detect cloaked units.\n  Maximum 1 can be trained.\n  Strong vs Infantry, Buildings\n  Weak vs Aircraft\n  Special Ability: C4 Explosives
 	Valued:
-		Cost: 1200
+		Cost: 1350
 	Tooltip:
 		Name: Tanya
 	UpdatesPlayerStatistics:
@@ -440,7 +441,7 @@ E7:
 	Health:
 		HP: 11000
 	Mobile:
-		Speed: 49
+		Speed: 56
 		Voice: Move
 	Guard:
 		Voice: Move
@@ -1174,8 +1175,9 @@ RMBO:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Valued:
-		Cost: 1200
+		Cost: 1350
 	Tooltip:
 		Name: Commando
 	UpdatesPlayerStatistics:
@@ -1188,7 +1190,7 @@ RMBO:
 		BuildLimit: 1
 		Description: Elite infantry unit. Armed with\na SMG and C4.\n  Can detect cloaked units.\n  Maximum 1 can be trained.\n  Strong vs Infantry, Buildings\n  Weak vs Aircraft\n  Special Ability: C4 Explosives
 	Mobile:
-		Speed: 49
+		Speed: 56
 		Voice: Move
 	Guard:
 		Voice: Move
@@ -1395,6 +1397,7 @@ BORI:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@COMMANDOSKULL: ^CommandoSkull
 	RenderSprites:
 		Image: boris
 	Buildable:
@@ -1405,7 +1408,7 @@ BORI:
 		BuildLimit: 1
 		Description: Elite commando infantry. Armed with C4.\n  Can detect cloaked units.\n  Maximum 1 can be trained.\n  Strong vs Infantry, Buildings, Defenses\n  Weak vs Aircraft\n  Special Ability: Can call an Airstrike on Structures
 	Valued:
-		Cost: 1200
+		Cost: 1350
 	Tooltip:
 		Name: Boris
 	UpdatesPlayerStatistics:
@@ -1413,7 +1416,7 @@ BORI:
 	Health:
 		HP: 11000
 	Mobile:
-		Speed: 49
+		Speed: 56
 		Voice: Move
 	-Crushable:
 	Guard:
@@ -2313,6 +2316,8 @@ BRUT:
 		Voice: Move
 	RevealsShroud:
 		Range: 4c0
+	Selectable:
+		DecorationBounds: 14,19,-1,-8
 	Targetable:
 		RequiresCondition: !being-warped
 		TargetTypes: Ground, Infantry, ChaosImmune, MindControlImmune
