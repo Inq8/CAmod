@@ -3529,6 +3529,7 @@ IFV:
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 120
@@ -3849,6 +3850,8 @@ IFV:
 		RequiresCondition: medturr && !stance-attackanything
 	GuardsSelection@SPY:
 		RequiresCondition: spyturr && !stance-attackanything
+	WithDecoration@COMMANDOSKULL:
+		RequiresCondition: commturr
 
 IFV.AI:
 	Inherits: ^Tank
@@ -4892,6 +4895,7 @@ BATF:
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
 	Inherits@SHRAPNEL: ^ThrowsShrapnel
+	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 340
@@ -4927,7 +4931,7 @@ BATF:
 	AttackFrontal:
 		FacingTolerance: 24
 		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: !(loaded || loaded-air)
+		RequiresCondition: !(loaded || loaded-cmdo || loaded-air)
 		Voice: Attack
 	Armament@DEFAULT:
 		Name: primary
@@ -4946,7 +4950,7 @@ BATF:
 			e3: loaded-air
 			e4: loaded
 			e6: loaded-repair
-			e7: loaded
+			e7: loaded-cmdo
 			e8: loaded
 			n1: loaded
 			n2: loaded
@@ -4955,8 +4959,8 @@ BATF:
 			n5: loaded
 			n6: loaded-repair
 			mech: loaded-repair
-			rmbo: loaded
-			bori: loaded
+			rmbo: loaded-cmdo
+			bori: loaded-cmdo
 			acol: loaded
 			acol.upg: loaded
 			mort: loaded
@@ -4974,7 +4978,7 @@ BATF:
 			s3: loaded
 			s4: loaded
 			s6: loaded-repair
-			mast: loaded
+			mast: loaded-cmdo
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
@@ -5003,7 +5007,7 @@ BATF:
 		Armaments: mounted
 		PortOffsets: 825,0,256, 348,-482,256, -348,-482,256, -448,482,256, 448,482,256
 		PauseOnCondition: being-warped || empdisable
-		RequiresCondition: loaded || loaded-air
+		RequiresCondition: loaded || loaded-cmdo || loaded-air
 	Capturable:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
@@ -5019,6 +5023,8 @@ BATF:
 		StartIfBelow: 50
 		DamageCooldown: 150
 		RequiresCondition: loaded-repair
+	WithDecoration@COMMANDOSKULL:
+		RequiresCondition: loaded-cmdo
 
 BATF.AI:
 	Inherits: BATF
