@@ -3715,7 +3715,7 @@ HQ:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		PauseOnCondition: disabled || being-warped
-	DropPodsPower@Zocom:
+	DropPodsPowerCA@Zocom:
 		OrderName: droppods
 		Cursor: ability
 		Prerequisites: ~radar.zocom, techlevel.high
@@ -3729,8 +3729,8 @@ HQ:
 		DisplayRadarPing: True
 		ChargeInterval: 4500
 		Weapon: DropPodArrive
-		Drops: 5, 8
-		UnitTypes: POD, POD2, POD3
+		UnitTypes: POD, POD, POD, POD, POD2, POD2, POD3
+		ExactUnits: true
 		PodScatter: 3
 		EntryEffect: explosion
 		EntryEffectSequence: shock_wave
