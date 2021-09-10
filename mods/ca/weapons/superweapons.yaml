@@ -650,8 +650,8 @@ Chemicbm:
 		Spread: 1c0
 		Damage: 6500
 		Falloff: 1000, 368, 135, 50, 18
-		ValidTargets: Ground, Water
-		InvalidTargets: Air
+		ValidTargets: Ground, Underwater, Air
+		InvalidTargets: Creep
 		Versus:
 			None: 36
 			Wood: 20
@@ -669,8 +669,8 @@ Chemicbm:
 		Damage: 6000
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 20
-		ValidTargets: Ground, Water
-		InvalidTargets: Air, Creep
+		ValidTargets: Ground, Underwater, Air
+		InvalidTargets: Creep
 		Versus:
 			None: 36
 			Wood: 45
@@ -685,8 +685,8 @@ Chemicbm:
 		Damage: 3250
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 40
-		ValidTargets: Ground, Water
-		InvalidTargets: Air, Creep
+		ValidTargets: Ground, Underwater, Air
+		InvalidTargets: Creep
 		Versus:
 			None: 36
 			Wood: 140
@@ -701,8 +701,8 @@ Chemicbm:
 		Damage: 2750
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 65
-		ValidTargets: Ground, Water
-		InvalidTargets: Air, Creep
+		ValidTargets: Ground, Underwater, Air
+		InvalidTargets: Creep
 		Versus:
 			None: 36
 			Wood: 170
@@ -806,7 +806,7 @@ IonBolt:
 		Delay: 1
 		Damage: 2650
 		Falloff: 1000, 1000, 250, 100, 75
-		ValidTargets: Ground, Water, Air
+		ValidTargets: Ground, Water, Underwater, Air
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		Versus:
 			None: 30
@@ -1014,7 +1014,7 @@ WeatherBolt:
 		Falloff: 1000, 700, 450, 0
 		Damage: 1000
 		AffectsParent: true
-		ValidTargets: Ground, Air, Water
+		ValidTargets: Ground, Air, Underwater, Water
 		DamageTypes: TriggerProne, ElectricityDeath
 		Versus:
 			None: 20
