@@ -3715,6 +3715,30 @@ HQ:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		PauseOnCondition: disabled || being-warped
+	ParatroopersPower@xodrop:
+		OrderName: xodrop
+		Prerequisites: ~radar.talon, ~techlevel.low
+		Icon: xodrop
+		ChargeInterval: 9000
+		Description: X-O Drop
+		UnitType: c17.xo
+		LongDesc: A Cargo Plane drops a squad of X-O Powersuits\nanywhere on the map.
+		SquadSize: 1
+		SquadOffset: 0,1792,0
+		DropItems: XO,XO,XO
+		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
+		SelectTargetSpeechNotification: SelectTarget
+		EndChargeSpeechNotification: Reinforce
+		AllowImpassableCells: false
+		QuantizedFacings: 8
+		CameraActor: camera.paradrop
+		DisplayBeacon: true
+		BeaconPoster: pinficon
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
 	DropPodsPowerCA@Zocom:
 		OrderName: droppods
 		Cursor: ability
@@ -4428,9 +4452,9 @@ GTEK:
 		Factions: talon, zocom, eagle
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
-	ProvidesPrerequisiteValidatedFaction@talgtek:
-		Factions: talon
-		Prerequisite: gtek.talon
+	ProvidesPrerequisiteValidatedFaction@arcgtek:
+		Factions: arc
+		Prerequisite: gtek.arc
 	ProvidesPrerequisiteValidatedFaction@zocomgtek:
 		Factions: zocom
 		Prerequisite: gtek.zocom
@@ -4469,7 +4493,7 @@ GTEK:
 		Dimensions: 5, 5
 		Footprint: _xxx_ xxxxx xxxxx xxxxx _xxx_
 		Duration: 750
-		Prerequisites: ~gtek.talon, ~techlevel.unrestricted
+		Prerequisites: ~gtek.arc, ~techlevel.unrestricted
 		Weapon: RepairFlash
 		ActivationDelay: 5
 		AirburstAltitude: 0c0

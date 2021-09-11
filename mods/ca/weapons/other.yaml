@@ -894,6 +894,26 @@ LaserTur.Adv:
 	Projectile: LaserZap
 		SecondaryBeamColor: FF00FF30
 
+XOLaser:
+	Inherits: Laser
+	Report: xo-laser.aud
+	ReloadDelay: 120
+	Projectile: LaserZap
+		Width: 56
+		HitAnim: laserfire
+		Color: 9eff1480
+		ZOffset: 2047
+		SecondaryBeam: true
+		SecondaryBeamWidth: 90
+		SecondaryBeamZOffset: 2047
+		SecondaryBeamColor: 79cd0040
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 10000
+		Versus:
+			Wood: 45
+			Concrete: 80
+
 PortaLaser:
 	Inherits: Laser
 	ReloadDelay: 35
