@@ -2694,6 +2694,9 @@ PYLE:
 	ProvidesPrerequisite@eagle:
 		Factions: eagle
 		Prerequisite: infantry.eagle
+	ProvidesPrerequisite@arc:
+		Factions: arc
+		Prerequisite: infantry.arc
 	ProvidesPrerequisite@medi:
 		Prerequisite: infantry.medi
 	Power:
@@ -2839,7 +2842,7 @@ WEAP.TD:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	ValidFactions:
-		Factions: talon, zocom, eagle, legion
+		Factions: talon, zocom, eagle, arc, legion
 	ProvidesPrerequisite@any:
 		Prerequisite: vehicles.any
 	ProvidesPrerequisite@human:
@@ -2847,7 +2850,7 @@ WEAP.TD:
 	ProvidesPrerequisite@td:
 		Prerequisite: vehicles.td
 	ProvidesPrerequisiteValidatedFaction@gdi:
-		Factions: talon, zocom, eagle
+		Factions: talon, zocom, eagle, arc
 		Prerequisite: vehicles.gdi
 	ProvidesPrerequisiteValidatedFaction@talon:
 		Factions: talon
@@ -2879,16 +2882,16 @@ WEAP.TD:
 	ProvidesPrerequisite@apc2:
 		Prerequisite: vehicles.apc2
 	ProvidesPrerequisiteValidatedFaction@mtnk:
-		Factions: talon, zocom, eagle, legion
+		Factions: talon, zocom, eagle, arc, legion
 		Prerequisite: vehicles.mtnk
 	ProvidesPrerequisiteValidatedFaction@memp:
-		Factions: talon, zocom, eagle
+		Factions: talon, zocom, eagle, arc
 		Prerequisite: vehicles.memp
 	ProvidesPrerequisiteValidatedFaction@msam:
-		Factions: talon, zocom
+		Factions: talon, zocom, arc
 		Prerequisite: vehicles.msam
 	ProvidesPrerequisiteValidatedFaction@htnk:
-		Factions: zocom, eagle
+		Factions: zocom, eagle, arc
 		Prerequisite: vehicles.htnk
 	ProvidesPrerequisiteValidatedFaction@mlrs:
 		Factions: legion
@@ -3268,11 +3271,11 @@ AFAC:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
 	ValidFactions:
-		Factions: talon, zocom, eagle, blackh, marked, legion, shadow
+		Factions: talon, zocom, eagle, arc, blackh, marked, legion, shadow
 	ProvidesPrerequisite@td:
 		Prerequisite: structures.td
 	ProvidesPrerequisiteValidatedFaction@gdi:
-		Factions: talon, zocom, eagle
+		Factions: talon, zocom, eagle, arc
 		Prerequisite: structures.gdi
 	ProvidesPrerequisiteValidatedFaction@talon:
 		Factions: talon
@@ -3283,6 +3286,9 @@ AFAC:
 	ProvidesPrerequisiteValidatedFaction@eagle:
 		Factions: eagle
 		Prerequisite: structures.eagle
+	ProvidesPrerequisiteValidatedFaction@arc:
+		Factions: arc
+		Prerequisite: structures.arc
 	ProvidesPrerequisiteValidatedFaction@nod:
 		Factions: blackh, marked, legion, shadow
 		Prerequisite: structures.nod
@@ -3299,7 +3305,7 @@ AFAC:
 		Factions: shadow
 		Prerequisite: structures.shadow
 	ProvidesPrerequisiteValidatedFaction@weap.tdFAC:
-		Factions: talon, zocom, eagle, legion
+		Factions: talon, zocom, eagle, arc, legion
 		Prerequisite: structures.weap.td
 	ProvidesPrerequisiteValidatedFaction@airs:
 		Factions: blackh, marked, shadow
@@ -3307,10 +3313,10 @@ AFAC:
 	ProvidesPrerequisite@wall:
 		Prerequisite: structures.wall
 	ProvidesPrerequisiteValidatedFaction@sandbag:
-		Factions: talon, zocom, eagle
+		Factions: talon, zocom, eagle, arc
 		Prerequisite: structures.sandbag
 	ProvidesPrerequisiteValidatedFaction@atwr:
-		Factions: talon, eagle
+		Factions: talon, eagle, arc
 		Prerequisite: structures.atwr
 	ProductionBar@Building:
 		ProductionType: Building
@@ -3835,6 +3841,9 @@ HQ:
 	ProvidesPrerequisiteValidatedFaction@zocrad:
 		Factions: zocom
 		Prerequisite: radar.zocom
+	ProvidesPrerequisiteValidatedFaction@arcrad:
+		Factions: arc
+		Prerequisite: radar.arc
 	ProvidesPrerequisiteValidatedFaction@nodrad:
 		Factions: blackh, marked, legion
 		Prerequisite: radar.nod
@@ -3975,7 +3984,7 @@ EYE:
 		Amount: -200
 	-PowerMultiplier@POWERDRAIN:
 	ValidFactions:
-		Factions: talon, zocom, eagle
+		Factions: talon, zocom, eagle, arc
 	ProvidesPrerequisiteValidatedFaction@zoceye:
 		Factions: zocom
 		Prerequisite: eye.zocom
@@ -4094,11 +4103,11 @@ HPAD.TD:
 	Power:
 		Amount: -10
 	ValidFactions:
-		Factions: talon, zocom, eagle, blackh, marked, legion, shadow
+		Factions: talon, zocom, eagle, arc, blackh, marked, legion, shadow
 	ProvidesPrerequisite@all:
 		Prerequisite: aircraft.all
 	ProvidesPrerequisiteValidatedFaction@gdi:
-		Factions: talon, zocom, eagle
+		Factions: talon, zocom, eagle, arc
 		Prerequisite: aircraft.gdi
 	ProvidesPrerequisiteValidatedFaction@eagle:
 		Factions: eagle
@@ -4321,18 +4330,18 @@ AFLD.GDI:
 		PauseOnCondition: forceshield || invulnerability || being-warped
 	Reservable:
 	ValidFactions:
-		Factions: talon, zocom, eagle
+		Factions: talon, zocom, eagle, arc
 	ProvidesPrerequisiteValidatedFaction@gdi:
 		Prerequisite: aircraft.gdi
-	ProvidesPrerequisiteValidatedFaction@talon:
-		Factions: talon
-		Prerequisite: aircraft.talon
 	ProvidesPrerequisiteValidatedFaction@eagle:
 		Factions: eagle
 		Prerequisite: aircraft.eagle
+	ProvidesPrerequisiteValidatedFaction@arc:
+		Factions: arc
+		Prerequisite: aircraft.arc
 	AirstrikePower@uav:
 		OrderName: gdiuav
-		Prerequisites: ~!aircraft.talon
+		Prerequisites: ~!aircraft.arc
 		Icon: uavicon
 		ChargeInterval: 3750
 		Description: Recon Drone
@@ -4351,8 +4360,8 @@ AFLD.GDI:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@uavST:
-		OrderName: gdiuavtalon
-		Prerequisites: ~aircraft.talon
+		OrderName: gdiuavarc
+		Prerequisites: ~aircraft.arc
 		Icon: uavicon
 		ChargeInterval: 3000
 		Description: Recon Drone
@@ -5564,7 +5573,7 @@ UPGC:
 	Tooltip:
 		Name: Upgrade Center
 	ValidFactions:
-		Factions: talon, zocom, eagle
+		Factions: talon, zocom, eagle, arc
 	ProvidesPrerequisiteValidatedFaction@talonupgc:
 		Factions: talon
 		Prerequisite: upgc.talon
@@ -5574,6 +5583,9 @@ UPGC:
 	ProvidesPrerequisiteValidatedFaction@eagleupgc:
 		Factions: eagle
 		Prerequisite: upgc.eagle
+	ProvidesPrerequisiteValidatedFaction@arcupgc:
+		Factions: arc
+		Prerequisite: upgc.arc
 	ProvidesPrerequisite@Name:
 	Power:
 		Amount: -150
@@ -5772,6 +5784,9 @@ UPGC:
 	GrantConditionOnPrerequisite:
 		Prerequisites: nshield
 		Condition: nshield-active
+	ProductionCostMultiplier@TALONBONUS:
+		Multiplier: 90
+		Prerequisites: structures.talon
 
 UPGC.SOCK:
 	AlwaysVisible:

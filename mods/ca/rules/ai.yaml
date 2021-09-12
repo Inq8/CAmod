@@ -83,8 +83,8 @@ Player:
 					Attractiveness: 1
 					TargetMetric: None
 					CheckRadius: 5c0
-			gdiuavtalon:
-				OrderName: gdiuavtalon
+			gdiuavarc:
+				OrderName: gdiuavarc
 				MinimumAttractiveness: 1
 				Consideration@1:
 					Against: Enemy
@@ -223,6 +223,21 @@ Player:
 					CheckRadius: 8c0
 			droppods:
 				OrderName: droppods
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
+				Consideration@2:
+					Against: Enemy
+					Types: Water
+					Attractiveness: -5
+					TargetMetric: None
+					CheckRadius: 8c0
+			xodrop:
+				OrderName: xodrop
 				MinimumAttractiveness: 5
 				Consideration@1:
 					Against: Enemy

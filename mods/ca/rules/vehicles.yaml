@@ -224,6 +224,7 @@ KATY:
 			eagle: mtnk.gdi.chrono
 			zocom: mtnk.gdi.chrono
 			talon: mtnk.gdi.chrono
+			arc: mtnk.gdi.chrono
 			reaper: devo
 			traveler: devo
 			harbinger: devo
@@ -238,7 +239,7 @@ KATY:
 		Factions: germany
 		Condition: germany
 	GrantConditionOnFaction@GDI:
-		Factions: talon, zocom, eagle
+		Factions: talon, zocom, eagle, arc
 		Condition: gdi
 	GrantConditionOnFaction@NOD:
 		Factions: blackh, marked, legion, shadow
@@ -2555,7 +2556,7 @@ MTNK.Drone:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 81
-		Prerequisites: ~drone.upgrade, ~vehicles.talon, ~techlevel.low
+		Prerequisites: ~drone.upgrade, ~vehicles.arc, ~techlevel.low
 		IconPalette: chrometd
 		Description: Drone battle tank.\n  Requires power to operate.\n  Strong vs Vehicles\n  Weak vs Infantry, Defenses, Aircraft
 	Valued:
@@ -2642,7 +2643,7 @@ MDRN:
 		Queue: Vehicle
 		BuildPaletteOrder: 105
 		Prerequisites: anyradar, ~vehicles.arc, ~techlevel.low
-		Description: Drone with machine gun and point-defense laser.\n  Attaches to certain vehicles to provide support and repairs.\n  Strong vs Infantry\n  Weak vs Vehicles, Buildings, Aircraft
+		Description: Hovering drone with machine gun.\n  Attaches to certain vehicles to provide support and repairs.\n  Strong vs Infantry\n  Weak vs Vehicles, Buildings, Aircraft
 	Valued:
 		Cost: 300
 	UpdatesPlayerStatistics:
@@ -2672,16 +2673,6 @@ MDRN:
 		LocalOffset: 72,0,72
 		MuzzleSequence: muzzle
 		PauseOnCondition: disabled || empdisable || being-warped
-	Armament@SECONDARY:
-		Name: secondary
-		Weapon: PointLaser
-		Turret: secondary
-		LocalOffset: 72,0,72
-		PauseOnCondition: disabled || empdisable || being-warped
-	PointDefense:
-		Armament: secondary
-		PointDefenseTypes: Missile
-		ValidRelationships: Enemy
 	WithMuzzleOverlay:
 	Hovers:
 		BobDistance: -35
@@ -2763,8 +2754,6 @@ MDRN.Attached:
 		MaxDelay: 75
 	Armament@PRIMARY:
 		Weapon: M60mgTD
-		LocalOffset: -500,0,72
-	Armament@SECONDARY:
 		LocalOffset: -500,0,72
 	-WithDecoration@DISABLED:
 	Attachable:
