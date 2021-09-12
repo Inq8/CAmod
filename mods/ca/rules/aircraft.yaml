@@ -1504,7 +1504,7 @@ KIRO:
 		Weapon: KirovBomb
 		LocalOffset: -20,0,0
 		PauseOnCondition: !ammo
-		RequiresCondition: !russiabombs && !ukrainebombs && !iraqbombs
+		RequiresCondition: !russiabombs && !ukrainebombs && !iraqbombs && !yuribombs
 	Armament@PRIMARY-RUSSIA:
 		Weapon: KirovTeslaBomb
 		LocalOffset: -20,0,0
@@ -1520,6 +1520,11 @@ KIRO:
 		LocalOffset: -20,0,0
 		PauseOnCondition: !ammo
 		RequiresCondition: iraqbombs
+	Armament@PRIMARY-YURI:
+		Weapon: KirovChaosBomb
+		LocalOffset: -20,0,0
+		PauseOnCondition: !ammo
+		RequiresCondition: yuribombs
 	AmmoPool:
 		Ammo: 8
 		AmmoCondition: ammo
@@ -1606,6 +1611,9 @@ KIRO:
 	GrantConditionOnFaction@iraq:
 		Condition: iraqbombs
 		Factions: iraq
+	GrantConditionOnFaction@yuri:
+		Condition: yuribombs
+		Factions: yuri
 	DeathSounds:
 	AmbientSoundCA:
 		SoundFiles: vkirlo2a.aud, vkirlo2b.aud, vkirlo2c.aud

@@ -130,6 +130,8 @@ explosion:
 		BlendMode: Alpha
 		Tick: 70
 		ZOffset: 512
+	chaosexplosion: chaosexplode
+		BlendMode: Alpha
 	ironcurtain_effect: ironcureffect
 		BlendMode: Additive
 		Tick: 85
@@ -1623,6 +1625,54 @@ cloud2d:
 	idle: cloud2d
 		Length: *
 		ZOffset: 1023
+
+chaoscloud1:
+	idle: chaoscloud1
+		BlendMode: Additive
+		Length: *
+		ZOffset: 1023
+	start: chaoscloud1d
+		BlendMode: Additive
+		Length: 12
+		ZOffset: 1023
+	loop: chaoscloud1
+		BlendMode: Additive
+		Length: 28
+		ZOffset: 1023
+	die: chaoscloud1d
+		BlendMode: Additive
+		Length: *
+		ZOffset: 1023
+
+chaoscloud1d:
+	idle: chaoscloud1d
+		Length: *
+		BlendMode: Additive
+		ZOffset: 1023
+
+chaoscloud2:
+	idle: chaoscloud2
+		BlendMode: Additive
+		Length: *
+		ZOffset: 1023
+	start: chaoscloud2d
+		BlendMode: Additive
+		Length: 12
+		ZOffset: 1023
+	loop: chaoscloud2
+		BlendMode: Additive
+		Length: 28
+		ZOffset: 1023
+	die: chaoscloud2d
+		BlendMode: Additive
+		Length: *
+		ZOffset: 1023
+
+chaoscloud2d:
+	idle: chaoscloud2d
+		Length: *
+		ZOffset: 1023
+		BlendMode: Additive
 
 mindanim:
 	idle: mindanim

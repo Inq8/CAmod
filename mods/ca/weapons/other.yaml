@@ -1199,6 +1199,19 @@ KirovNukeBomb:
 		MaxLevel: 750
 		LayerName: radioactivity.medium
 
+KirovChaosBomb:
+	Inherits: KirovBomb
+	Warhead@Cloud1: SpawnActor
+		Actors: chaos.cloud1, chaos.cloud2
+		Range: 5
+		ValidTargets: Ground, Water
+	Warhead@3Eff: CreateEffect
+		Explosions: chaosexplosion
+		ExplosionPalette: caneon
+		ImpactSounds: firebl3.aud
+		ValidTargets: Ground, Trees
+		ImpactActors: false
+
 KirovTeslaArc:
 	Inherits: TTankZap
 	Range: 4c0
@@ -1686,6 +1699,17 @@ Cloud:
 			Concrete: 100
 			Brick: 10
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+
+ChaosCloud:
+	ReloadDelay: 25
+	Range: 1c0
+	ValidTargets: Ground, Water
+	Projectile: InstantHit
+	Warhead@1Cond: GrantExternalCondition
+		ValidTargets: Ground, Vehicle
+		Range: 1c512
+		Duration: 50
+		Condition: berserk
 
 IrradiatedUnit:
 	Inherits: Cloud

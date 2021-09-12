@@ -372,6 +372,23 @@ camera.cloud2:
 	DamagedByTerrain:
 		Damage: 300
 
+chaos.cloud1:
+	Inherits: camera.cloud
+	RenderSprites:
+		Image: chaoscloud1
+		Palette: caneon-ignore-lighting-alpha75
+	WithDeathAnimation:
+		DeathSequencePalette: caneon
+	PeriodicExplosion:
+		Weapon: ChaosCloud
+	Mobile:
+		Speed: 10
+
+chaos.cloud2:
+	Inherits: chaos.cloud1
+	RenderSprites:
+		Image: chaoscloud2
+
 SONAR:
 	Inherits: camera.spyplane
 	-RevealsShroud:
