@@ -788,6 +788,33 @@ IvanIFVTargeting:
 	Inherits: DemoTruckTargeting
 	ValidTargets: Ground, DetonateAttack
 
+Hack:
+	Range: 12c0
+	ReloadDelay: 50
+	ValidTargets: Hackable
+	TargetActorCenter: true
+	Projectile: ArcLaserZap
+		Color: 1ce31270
+		Angle: 60
+		Width: 86
+		Duration: 20
+		HitAnim: empty
+	Warhead@1Dam: TargetDamage
+	Warhead@CAMERA: SpawnActor
+		Actors: camera.hacker
+		Range: 1
+	Warhead@green: GrantExternalCondition
+		Range: 0c511
+		Duration: 2
+		Condition: greenhighlight
+		ValidTargets: Structure
+
+PrepareHack:
+	Inherits: Hack
+	-Projectile:
+	Projectile: InstantHit
+	-Warhead@green:
+
 MADTankThump:
 	InvalidTargets: MADTank, Infantry
 	Warhead@1Dam: HealthPercentageDamage

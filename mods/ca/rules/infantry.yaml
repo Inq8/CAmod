@@ -617,6 +617,70 @@ MECH:
 	GuardsSelection:
 		ValidTargets: Vehicle, Ship
 
+HACK:
+	Inherits: ^Soldier
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Hacker
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 5000
+	Mobile:
+		Voice: Move
+		PauseOnCondition: !undeployed && being-warped
+	RevealsShroud:
+		Range: 5c0
+	Passenger:
+		CustomPipType: blue
+		Voice: Move
+	Armament@PRIMARY:
+		Weapon: PrepareHack
+		PauseOnCondition: !undeployed
+	Armament@PRIMARYDEPLOYED:
+		Weapon: Hack
+		RequiresCondition: deployed
+	AttackFrontal:
+		Voice: Action
+		FacingTolerance: 512
+		TargetFrozenActors: true
+	WithInfantryBody:
+		IdleSequences: idle
+		StandSequences: stand
+		RequiresCondition: undeployed
+	WithSpriteBody@DEPLOYED:
+		Name: deployed
+		Sequence: hack
+		RequiresCondition: !undeployed
+	WithMakeAnimation:
+		BodyNames: deployed
+	Voiced:
+		VoiceSet: MechanicVoice
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	Targetable:
+		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+	GrantConditionOnDeploy@HACK:
+		DeployedCondition: deployed
+		UndeployedCondition: undeployed
+		UndeployOnMove: true
+		UndeployOnPickup: true
+	DeployOnAttack:
+		RequiresCondition: undeployed
+	MindController:
+		ArmamentNames: primary
+		Capacity: 1
+		TicksToControl: 250
+		RequiresCondition: deployed
+	WithMindControlArc@HACK:
+		Color: 1ce312
+		Transparency: 65
+		Angle: 60
+		Width: 86
+	RenderRangeCircle:
+		Color: 33ff33
+
 EINSTEIN:
 	Inherits: ^CivInfantry
 	RenderSprites:
@@ -2361,7 +2425,7 @@ BRUT:
 	-TakeCover:
 	-Captures@DRIVER_KILL:
 	-CaptureManager:
-	-WithIdleOverlay@mindcontrol:
+	-WithIdleOverlay@MINDCONTROL:
 
 SHAD:
 	Inherits: ^Soldier

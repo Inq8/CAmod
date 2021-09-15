@@ -20,8 +20,12 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Limit how many specific actors can be attached.")]
 		public readonly Dictionary<string, int> Limits = new Dictionary<string, int>();
 
-		[Desc("Limit how many specific actors can be attached.")]
+		[ActorReference(dictionaryReference: LintDictionaryReference.Keys)]
+		[Desc("Conditions to apply when reaching limits.")]
 		public readonly Dictionary<string, string> LimitConditions = new Dictionary<string, string>();
+
+		[GrantedConditionReference]
+		public IEnumerable<string> LinterLimitConditions { get { return LimitConditions.Values; } }
 
 		public override object Create(ActorInitializer init) { return new AttachableTo(init, this); }
 	}

@@ -55,8 +55,8 @@ EnslaveInfantry:
 	Range: 7c0
 	ReloadDelay: 25
 	Projectile: InstantHit
-	ValidTargets: Infantry
-	InvalidTargets: MindControlImmune
+	ValidTargets: MindControllable
+	InvalidTargets: Vehicle, Defense, MindControlImmune
 	Warhead@1Dam: TargetDamage
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
@@ -69,8 +69,8 @@ EnslaveVehicle:
 	Range: 4c0
 	ReloadDelay: 100
 	Projectile: InstantHit
-	ValidTargets: Vehicle, Defense
-	InvalidTargets: MindControlImmune, ICBM
+	ValidTargets: MindControllable
+	InvalidTargets: Infantry, MindControlImmune
 	Warhead@1Dam: TargetDamage
 	Warhead@2Eff: CreateEffect
 		Explosions: idle

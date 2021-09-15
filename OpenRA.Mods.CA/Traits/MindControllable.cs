@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
@@ -17,15 +18,19 @@ namespace OpenRA.Mods.CA.Traits
 	[Desc("This actor can be mind controlled by other actors.")]
 	public class MindControllableInfo : PausableConditionalTraitInfo
 	{
-		[Desc("Condition to grant when under mindcontrol.")]
-		[GrantedConditionReference]
-		public readonly string Condition = null;
-
 		[Desc("The sound played when the mindcontrol is revoked.")]
 		public readonly string[] RevokeControlSounds = { };
 
 		[Desc("Map player to transfer this actor to if the owner lost the game.")]
 		public readonly string FallbackOwner = "Creeps";
+
+		[ActorReference(dictionaryReference: LintDictionaryReference.Keys)]
+		[Desc("Condition to grant when under mindcontrol.",
+			"A dictionary of [actor id]: [condition].")]
+		public readonly Dictionary<string, string> ControlledConditions = new Dictionary<string, string>();
+
+		[GrantedConditionReference]
+		public IEnumerable<string> LinterControlledConditions { get { return ControlledConditions.Values; } }
 
 		public override object Create(ActorInitializer init) { return new MindControllable(init.Self, this); }
 	}
@@ -62,8 +67,10 @@ namespace OpenRA.Mods.CA.Traits
 			UnlinkMaster(self, Master);
 			Master = master;
 
-			if (token == Actor.InvalidConditionToken)
-				token = self.GrantCondition(Info.Condition);
+			var mindController = Master.Trait<MindController>();
+
+			if (token == Actor.InvalidConditionToken && Info.ControlledConditions.ContainsKey(Master.Info.Name))
+				token = self.GrantCondition(Info.ControlledConditions[Master.Info.Name]);
 
 			if (master.Owner == creatorOwner)
 				UnlinkMaster(self, master);

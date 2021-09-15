@@ -1225,26 +1225,38 @@
 		RequiresCondition: tnt >= 6
 		Position: CenterCenter
 
-^MindControllable:
-	ExternalCondition@prevent-mindcontrol:
-		Condition: prevent-mindcontrol
+^MindControllableBase:
 	MindControllable:
-		Condition: controlled
-		PauseOnCondition: prevent-mindcontrol
-	WithMindControlArc:
-		Color: c71585
-		Transparency: 55
-		Offset: 0,0,511
-		Angle: 32
-		Width: 116
-	Targetable@MC:
-		TargetTypes: MindControl
-		RequiresCondition: !controlled && !prevent-mindcontrol
-	WithIdleOverlay@mindcontrol:
+		ControlledConditions:
+			mast: mindcontrolled
+			hack: hacked
+
+^MindControllable:
+	Inherits: ^MindControllableBase
+	Targetable@MINDCONTROL:
+		TargetTypes: MindControllable
+		RequiresCondition: !mindcontrolled && !hacked
+	WithIdleOverlay@MINDCONTROL:
 		Sequence: mind-overlay
 		Palette: scrin
-		RequiresCondition: controlled
+		RequiresCondition: mindcontrolled
 		Offset: 0,0,300
+
+^Hackable:
+	Inherits: ^MindControllableBase
+	Targetable@HACKABLE:
+		TargetTypes: Hackable
+		RequiresCondition: !mindcontrolled && !hacked
+	MindControllableProgressBar:
+		Color: 1ce312
+		RequiresCondition: !hacked
+	WithDecoration@HACKED:
+		Image: hacked
+		Sequence: hacked
+		RequiresCondition: hacked
+		Position: Center
+		Palette: effect
+		ValidRelationships: Ally, Enemy
 
 ^MiniDroneAttachable:
 	InfiltrateToAttach@MINIDRONE:
@@ -2339,7 +2351,9 @@
 	Inherits@6: ^WarpableBuilding
 	Inherits@7: ^BotBuilding
 	Inherits@8: ^Chillable
-	Inherits@wflash: ^WhiteFlash
+	Inherits@gflash: ^WhiteFlash
+	Inherits@wflash: ^GreenFlash
+	Inherits@HACKABLE: ^Hackable
 	WithColoredOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield
 	Huntable:
