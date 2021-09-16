@@ -101,7 +101,7 @@ CRATE:
 	GiveMcvCrateAction@TD:
 		SelectionShares: 0
 		NoBaseSelectionShares: 100
-		ValidFactions: gdi, talon, zocom, eagle, nod, blackh, marked, legion, shadow
+		ValidFactions: gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow
 		Units: amcv
 	GiveUnitCrateAction@jeep:
 		SelectionShares: 7
@@ -111,7 +111,7 @@ CRATE:
 	GiveUnitCrateAction@hmmv:
 		SelectionShares: 7
 		Units: hmmv
-		ValidFactions: gdi, talon, zocom, eagle
+		ValidFactions: gdi, talon, zocom, eagle, arc
 		Prerequisites: techlevel.low
 	GiveUnitCrateAction@bggy:
 		SelectionShares: 7
@@ -131,12 +131,12 @@ CRATE:
 	GiveUnitCrateAction@msam:
 		SelectionShares: 6
 		Units: msam
-		ValidFactions: gdi, talon, zocom, eagle
+		ValidFactions: gdi, talon, zocom, eagle, arc
 		Prerequisites: techlevel.medium, radar
 	GiveUnitCrateAction@mtnk:
 		SelectionShares: 5
 		Units: mtnk
-		ValidFactions: gdi, talon, zocom, eagle, nod, blackh, marked, legion, shadow
+		ValidFactions: gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow
 		Prerequisites: techlevel.medium
 	GiveUnitCrateAction@2tnk:
 		SelectionShares: 4
@@ -156,7 +156,7 @@ CRATE:
 	GiveUnitCrateAction@htnk:
 		SelectionShares: 3
 		Units: htnk
-		ValidFactions: gdi, talon, zocom, eagle
+		ValidFactions: gdi, talon, zocom, eagle, arc
 		Prerequisites: techlevel.high, techcenter
 	GiveUnitCrateAction@stnk:
 		SelectionShares: 3
@@ -170,7 +170,7 @@ CRATE:
 	GiveUnitCrateAction@squadlightTD:
 		SelectionShares: 7
 		Units: n1,n1,n1,n3,n3
-		ValidFactions: gdi, talon, zocom, eagle, nod, blackh, marked, legion, shadow
+		ValidFactions: gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow
 	GiveUnitCrateAction@squadheavyallies:
 		SelectionShares: 7
 		Units: e1,e1,e1,e1,e3,e3,e3,e6,medi
@@ -189,7 +189,7 @@ CRATE:
 	GiveUnitCrateAction@squadheavygdi:
 		SelectionShares: 7
 		Units: n1,n1,n1,n1,n3,n3,n2,n2
-		ValidFactions: gdi, talon, zocom, eagle
+		ValidFactions: gdi, talon, zocom, eagle, arc
 		TimeDelay: 4500
 	GrantExternalConditionCrateAction@invuln:
 		SelectionShares: 5
@@ -739,9 +739,9 @@ stolentech.dome:
 stolentech.hq:
 	AlwaysVisible:
 	ValidFactions:
-		Factions: talon, zocom, eagle, blackh, marked, legion, shadow
+		Factions: talon, zocom, eagle, arc, blackh, marked, legion, shadow
 	ProvidesPrerequisiteValidatedFaction@STOLENGDI:
-		Factions: talon, zocom, eagle
+		Factions: talon, zocom, eagle, arc
 		Prerequisite: vehicles.msam
 	ProvidesPrerequisiteValidatedFaction@STOLENNOD:
 		Factions: blackh, marked, legion, shadow
