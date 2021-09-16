@@ -34,7 +34,7 @@ namespace OpenRA.Mods.CA.Traits
 		[GrantedConditionReference]
 		public readonly string ControllingCondition;
 
-		[Desc("The sound played when the unit is mindcontrolled.")]
+		[Desc("The sound played when target is mind controlled.")]
 		public readonly string[] Sounds = { };
 
 		[Desc("Ticks attacking taken to mind control something.")]
@@ -63,6 +63,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		void StackControllingCondition(Actor self, string condition)
 		{
+			if (string.IsNullOrEmpty(condition))
+				return;
+
 			controllingTokens.Push(self.GrantCondition(condition));
 		}
 
@@ -115,25 +118,25 @@ namespace OpenRA.Mods.CA.Traits
 
 		void ResetProgress(Actor self)
 		{
+			if (Info.TicksToControl == 0)
+				return;
+
 			controlTicks = 0;
 
-			if (Info.TicksToControl > 0)
+			if (lastTarget.Type == TargetType.Actor)
 			{
-				if (lastTarget.Type == TargetType.Actor)
-				{
-					var lastTargetWatchers = lastTarget.Actor.TraitsImplementing<IMindControlProgressWatcher>().ToArray();
+				var lastTargetWatchers = lastTarget.Actor.TraitsImplementing<IMindControlProgressWatcher>().ToArray();
 
-					foreach (var w in lastTargetWatchers)
-						w.Update(lastTarget.Actor, self, lastTarget.Actor, 0, Info.TicksToControl);
-				}
+				foreach (var w in lastTargetWatchers)
+					w.Update(lastTarget.Actor, self, lastTarget.Actor, 0, Info.TicksToControl);
+			}
 
-				if (currentTarget.Type == TargetType.Actor)
-				{
-					var currentTargetWatchers = currentTarget.Actor.TraitsImplementing<IMindControlProgressWatcher>().ToArray();
+			if (currentTarget.Type == TargetType.Actor)
+			{
+				var currentTargetWatchers = currentTarget.Actor.TraitsImplementing<IMindControlProgressWatcher>().ToArray();
 
-					foreach (var w in currentTargetWatchers)
-						w.Update(currentTarget.Actor, self, currentTarget.Actor, 0, Info.TicksToControl);
-				}
+				foreach (var w in currentTargetWatchers)
+					w.Update(currentTarget.Actor, self, currentTarget.Actor, 0, Info.TicksToControl);
 			}
 		}
 
@@ -167,10 +170,10 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled || IsTraitPaused)
 				return;
 
-			if (self.Owner.RelationshipWith(currentTarget.Actor.Owner) == PlayerRelationship.Ally)
+			if (controlTicks < Info.TicksToControl)
 				return;
 
-			if (controlTicks < Info.TicksToControl)
+			if (self.Owner.RelationshipWith(currentTarget.Actor.Owner) == PlayerRelationship.Ally)
 				return;
 
 			var mindControllable = currentTarget.Actor.TraitOrDefault<MindControllable>();

@@ -800,14 +800,17 @@ Hack:
 		Duration: 20
 		HitAnim: empty
 	Warhead@1Dam: TargetDamage
+		ValidRelationships: Enemy, Neutral
 	Warhead@CAMERA: SpawnActor
 		Actors: camera.hacker
 		Range: 1
+		ValidRelationships: Neutral, Enemy
 	Warhead@green: GrantExternalCondition
 		Range: 0c511
 		Duration: 2
 		Condition: greenhighlight
 		ValidTargets: Structure
+		ValidRelationships: Neutral, Enemy
 
 PrepareHack:
 	Inherits: Hack

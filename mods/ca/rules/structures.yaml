@@ -3671,45 +3671,20 @@ HQ:
 		EffectPalette: tseffect-ignore-lighting-alpha75
 		TargetCircleRange: 9c512
 		TargetCircleColor: 999999AA
-	ParatroopersPower@Legionparatroopers:
-		OrderName: LegionParatroopers
-		Prerequisites: ~radar.legion, !cyborg.upgrade, infantry.any, ~techlevel.medium
-		Icon: paratroopers
+	ParatroopersPower@hackerdrop:
+		OrderName: hackerdrop
+		Prerequisites: ~radar.legion, infantry.any, ~techlevel.medium
+		Icon: hackerdrop
 		UnitType: c17
 		ChargeInterval: 7500
-		Description: Paratroopers
-		LongDesc: A Cargo Plane drops a squad of infantry\nanywhere on the map.
+		Description: Hacker Drop
+		LongDesc: A Cargo Plane drops a squad of hackers\nanywhere on the map.
 		SquadSize: 1
 		SquadOffset: 0,1792,0
-		DropItems: N1,N1,N4,N3,N3,N1,N1,N4
+		DropItems: HACK, HACK, HACK
 		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
 		EndChargeSpeechNotification: Reinforce
-		AllowImpassableCells: false
-		QuantizedFacings: 8
-		CameraActor: camera.paradrop
-		DisplayBeacon: true
-		BeaconPoster: pinficon
-		ArrowSequence: arrow
-		ClockSequence: clock
-		CircleSequence: circles
-		UseDirectionalTarget: True
-		DirectionArrowAnimation: paradirection
-		PauseOnCondition: disabled || being-warped
-	ParatroopersPower@LegionparatroopersUPG:
-		OrderName: LegionParatroopersUPG
-		Prerequisites: ~radar.legion, cyborg.upgrade, infantry.any, ~techlevel.medium
-		Icon: paratroopers
-		UnitType: c17
-		ChargeInterval: 7500
-		Description: Paratroopers
-		LongDesc: A Cargo Plane drops a squad of infantry\nanywhere on the map.
-		SquadSize: 1
-		SquadOffset: 0,1792,0
-		DropItems: N1C,N1C,N5,N3C,N3C,N1C,N1C,N5
-		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
-		EndChargeSpeechNotification: Reinforce
-		SelectTargetSpeechNotification: SelectTarget
 		AllowImpassableCells: false
 		QuantizedFacings: 8
 		CameraActor: camera.paradrop

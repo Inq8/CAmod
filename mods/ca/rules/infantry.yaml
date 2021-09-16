@@ -637,7 +637,7 @@ HACK:
 		Voice: Move
 	Armament@PRIMARY:
 		Weapon: PrepareHack
-		PauseOnCondition: !undeployed
+		PauseOnCondition: deployed
 	Armament@PRIMARYDEPLOYED:
 		Weapon: Hack
 		RequiresCondition: deployed
@@ -656,7 +656,7 @@ HACK:
 	WithMakeAnimation:
 		BodyNames: deployed
 	Voiced:
-		VoiceSet: MechanicVoice
+		VoiceSet: HackerVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	Targetable:
@@ -673,13 +673,22 @@ HACK:
 		Capacity: 1
 		TicksToControl: 250
 		RequiresCondition: deployed
+		Sounds: hacker-hack1.aud
+		ControllingCondition: hacked-in
+	WithDecoration@HACKEDIN:
+		Image: hacking
+		Sequence: hacking
+		RequiresCondition: hacked-in
+		Position: BottomRight
+		Palette: effect
+		ValidRelationships: Ally, Neutral, Enemy
 	WithMindControlArc@HACK:
 		Color: 1ce312
 		Transparency: 65
 		Angle: 60
 		Width: 86
 	RenderRangeCircle:
-		Color: 33ff33
+		Color: 00cc00
 
 EINSTEIN:
 	Inherits: ^CivInfantry
