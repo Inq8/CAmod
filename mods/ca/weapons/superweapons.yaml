@@ -172,6 +172,52 @@ InfernoBomb:
 		ValidTargets: Ground, Water, Infantry, Vehicle
 		ThrowWithoutTarget: true
 
+GeneticMutationBomb:
+	ReloadDelay: 25
+	Range: 1c0
+	Report: bwhis.aud
+	Projectile: GravityBomb
+		Image: B2BOMB
+		Velocity: 15, 0, -35
+		Acceleration: 0, 0, 0
+		Shadow: true
+	Warhead@COND: GrantExternalCondition
+		Range: 3c0
+		Duration: 15
+		Condition: geneticmutation
+		ValidTargets: Infantry
+		InvalidTargets: MindControlImmune
+	Warhead@MUT: FireShrapnel
+		Weapon: GeneticMutation
+		AimChance: 100
+		Amount: 10
+		Delay: 10
+	Warhead@3Eff: CreateEffect
+		Explosions: gmutation
+		ExplosionPalette: caneon
+		ImpactSounds: gmutation.aud
+
+GeneticMutation:
+	Range: 2c512
+	Projectile: PlasmaBeam
+		Duration: 7
+		Colors: ff509a08
+		InnerLightness: 200
+		OuterLightness: 100
+		Radius: 2
+		Distortion: 150
+		DistortionAnimation: 150
+		SegmentLength: 350
+		ZOffset: 1027
+	ValidTargets: Infantry
+	InvalidTargets: MindControlImmune
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 50000
+		DamageTypes: ElectricityDeath
+		ValidTargets: Infantry
+		InvalidTargets: MindControlImmune
+
 Atomic:
 	ValidTargets: Ground, Trees, Water, Underwater, Air
 	Warhead@1Dam_impact: SpreadDamage

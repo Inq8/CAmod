@@ -1703,6 +1703,12 @@ AFLD:
 	ProvidesPrerequisite@yuri:
 		Factions: yuri
 		Prerequisite: aircraft.yuri
+	ProvidesPrerequisite@paratroopers:
+		Factions: ukraine, iraq
+		Prerequisite: support.paratroopers
+	ProvidesPrerequisite@parabombs:
+		Factions: russia, yuri
+		Prerequisite: support.parabombs
 	AirstrikePower@spyplane:
 		OrderName: spyplane
 		Icon: spyplane
@@ -1723,7 +1729,7 @@ AFLD:
 		CircleSequence: circles
 	ParatroopersPower@paratroopers:
 		OrderName: paratroopers
-		Prerequisites: ~!aircraft.russia, ~techlevel.low
+		Prerequisites: ~support.paratroopers, ~techlevel.low
 		Icon: paratroopers
 		ChargeInterval: 7500
 		Description: Paratroopers
@@ -1746,7 +1752,7 @@ AFLD:
 		DirectionArrowAnimation: paradirection
 	ParatroopersPower@Russianparatroopers:
 		OrderName: stormtroopers
-		Prerequisites: aircraft.russia, ~techlevel.high
+		Prerequisites: ~aircraft.russia, ~techlevel.high
 		Icon: stormtroopers
 		ChargeInterval: 9000
 		Description: Storm-troopers
@@ -1767,30 +1773,9 @@ AFLD:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
-	AirstrikePower@CarpetBomb:
-		OrderName: carpetbomb
-		Prerequisites: aircraft.ukraine, techlevel.unrestricted
-		Icon: carpetbomb
-		ChargeInterval: 10500
-		Description: Carpet Bomb
-		LongDesc: A squad of Badgers drop\nbombs on your target.
-		SelectTargetSpeechNotification: SelectTarget
-		CameraActor: camera
-		CameraRemoveDelay: 150
-		UnitType: badr.cbomber
-		QuantizedFacings: 8
-		DisplayBeacon: true
-		BeaconPoster: a10airstrike
-		BeaconPosterPalette: temptd
-		SquadSize: 3
-		ArrowSequence: arrow
-		ClockSequence: clockTD
-		CircleSequence: circles
-		UseDirectionalTarget: True
-		DirectionArrowAnimation: paradirection
 	AirstrikePower@Russianparabombs:
 		OrderName: parabombs
-		Prerequisites: aircraft.russia, techlevel.unrestricted
+		Prerequisites: ~support.parabombs, ~techlevel.unrestricted
 		Icon: parabombs
 		ChargeInterval: 7500
 		Description: Parabombs
@@ -1809,9 +1794,30 @@ AFLD:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+	AirstrikePower@CarpetBomb:
+		OrderName: carpetbomb
+		Prerequisites: ~aircraft.ukraine, ~techlevel.unrestricted
+		Icon: carpetbomb
+		ChargeInterval: 10500
+		Description: Carpet Bomb
+		LongDesc: A squad of Badgers drop\nbombs on your target.
+		SelectTargetSpeechNotification: SelectTarget
+		CameraActor: camera
+		CameraRemoveDelay: 150
+		UnitType: badr.cbomber
+		QuantizedFacings: 8
+		DisplayBeacon: true
+		BeaconPoster: a10airstrike
+		BeaconPosterPalette: temptd
+		SquadSize: 3
+		ArrowSequence: arrow
+		ClockSequence: clockTD
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
 	AirstrikePower@Iraqiparabombs:
 		OrderName: atombomb
-		Prerequisites: aircraft.iraq, techlevel.unrestricted
+		Prerequisites: ~aircraft.iraq, ~techlevel.unrestricted
 		Icon: abombair
 		ChargeInterval: 10500
 		Description: Atomic Bomb
@@ -1823,6 +1829,28 @@ AFLD:
 		QuantizedFacings: 8
 		DisplayBeacon: true
 		BeaconPoster: nukeicon
+		SquadSize: 1
+		SquadOffset: 0,1792,0
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+	AirstrikePower@MutaBomb:
+		OrderName: mutabomb
+		Prerequisites: ~aircraft.yuri, ~techlevel.unrestricted
+		Icon: mutabomb
+		IconPalette: scrin
+		ChargeInterval: 10500
+		Description: Genetic Mutation Bomb
+		LongDesc: A Badger bomber drops a\ngenetic mutation on your target.\nTransforms infantry into Brutes.
+		SelectTargetSpeechNotification: SelectTarget
+		CameraActor: camera
+		CameraRemoveDelay: 150
+		UnitType: badr.mbomber
+		QuantizedFacings: 8
+		DisplayBeacon: true
+		BeaconPoster: pbmbicon
 		SquadSize: 1
 		SquadOffset: 0,1792,0
 		ArrowSequence: arrow
