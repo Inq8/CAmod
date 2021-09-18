@@ -619,7 +619,7 @@ StormriderZap:
 			Wood: 35
 			Concrete: 30
 			Light: 65
-			Heavy: 25
+			Heavy: 20
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Dam: SpreadDamage
 		ValidTargets: Water
@@ -1141,7 +1141,7 @@ BuzzerVortex:
 		DamageTypes: BulletDeath
 		ValidRelationships: Enemy, Neutral
 
-BuzzerDummyWeapon:
+BuzzerTargeting:
 	ReloadDelay: 50
 	Range: 1c0
 	ValidTargets: Ground, Water
@@ -1385,6 +1385,7 @@ AtomizerBoltsAA:
 	Warhead@2Sup: GrantExternalCondition
 		ValidTargets: Air, AirSmall
 		Range: 1c512
+		ValidRelationships: Enemy, Neutral
 	Warhead@3Eff: CreateEffect
 		ValidTargets: Air, AirSmall
 	Warhead@red: GrantExternalCondition

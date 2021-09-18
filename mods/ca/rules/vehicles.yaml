@@ -101,14 +101,14 @@ KATY:
 		Prerequisites: ~vehicles.allies, ~techlevel.low
 		Description: Fast tank, good for scouting.\n  Strong vs Vehicles\n  Weak vs Infantry, Defenses, Aircraft\n  Special Ability: Amphibious
 	Valued:
-		Cost: 600
+		Cost: 650
 	Tooltip:
 		Name: Scout Tank
 		GenericName: Tank
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 28000
+		HP: 27000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -217,6 +217,7 @@ KATY:
 			russia: 3tnk
 			ukraine: 3tnk
 			iraq: 3tnk
+			yuri: 3tnk
 			blackh: mtnk.nod.chrono
 			marked: mtnk.nod.chrono
 			legion: mtnk.nod.chrono
@@ -245,7 +246,7 @@ KATY:
 		Factions: blackh, marked, legion, shadow
 		Condition: nod
 	GrantConditionOnFaction@SOVIET:
-		Factions: russia, ukraine, iraq
+		Factions: russia, ukraine, iraq, yuri
 		Condition: soviet
 	GrantConditionOnFaction@SCRIN:
 		Factions: reaper, traveler, harbinger
@@ -804,11 +805,12 @@ ARTY.Chrono:
 			russia: katy
 			ukraine: katy
 			iraq: katy
+			yuri: katy
 			reaper: gunw
 			traveler: gunw
 			harbinger: gunw
 	GrantConditionOnFaction@SOVIET:
-		Factions: russia, ukraine, iraq
+		Factions: russia, ukraine, iraq, yuri
 		Condition: soviet
 	GrantConditionOnFaction@SCRIN:
 		Factions: reaper, traveler, harbinger
@@ -946,7 +948,7 @@ SPEC:
 		LocalOffset: 624,0,408
 		FireDelay: 25
 	Armament@TARGETTER:
-		Weapon: 155mmSpecDummy
+		Weapon: 155mmSpecTargeting
 	Cloak@NORMAL:
 		InitialDelay: 90
 		CloakDelay: 90
@@ -5174,10 +5176,10 @@ CDRN:
 		Queue: Vehicle
 		BuildPaletteOrder: 430
 		IconPalette: chrometd
-		Prerequisites: tmpl, ~vehicles.nod, ~techlevel.high
+		Prerequisites: stek, ~vehicles.yuri, ~techlevel.high
 		Description: Drone armed with Chaos Gas which causes units\nto become frenzied and attack indiscriminately.\n  Has weak armor.
 	Valued:
-		Cost: 800
+		Cost: 850
 	Tooltip:
 		Name: Chaos Drone
 	UpdatesPlayerStatistics:
@@ -5198,7 +5200,7 @@ CDRN:
 		Range: 4c0
 	Explodes:
 		Weapon: ChaosDroneExplode
-		EmptyWeapon: VisualExplodeHusk
+		EmptyWeapon: ChaosDroneExplodeSmall
 		LoadedChance: 50
 	AttackFrontal:
 		FacingTolerance: 512

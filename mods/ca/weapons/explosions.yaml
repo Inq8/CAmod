@@ -776,7 +776,7 @@ ChaosGas:
 		Explosions: gasring2
 		ExplosionPalette: caneon-ignore-lighting-alpha75
 		ImpactSounds: vchaatta.aud
-	Warhead@emp: GrantExternalCondition
+	Warhead@chaos: GrantExternalCondition
 		Range: 3c0
 		Duration: 200
 		Condition: berserk
@@ -785,6 +785,17 @@ ChaosGas:
 ChaosDroneExplode:
 	Inherits: ChaosGas
 	Report: vchadiea.aud
+
+ChaosDroneExplodeSmall:
+	Inherits: ChaosGas
+	Warhead@3Eff_impact: CreateEffect
+		Explosions: chaosexplosion
+		ExplosionPalette: caneon
+		ImpactSounds: firebl3.aud
+		ImpactActors: false
+	Warhead@chaos: GrantExternalCondition
+		Range: 1c512
+		Duration: 150
 
 CryoExplosion:
 	Warhead@2Eff: CreateEffect

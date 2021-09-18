@@ -1759,6 +1759,19 @@ IrradiatedUnit:
 			Concrete: 10
 			Brick: 0
 
+Lasher:
+	ReloadDelay: 5
+	Range: 1c0
+	ValidTargets: Ground, Water
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Range: 0, 341, 682
+		Falloff: 100, 100, 0
+		Damage: 1000
+		ValidTargets: Infantry
+		DamageTypes: BulletDeath
+		ValidRelationships: Enemy, Neutral, Ally
+
 ChaosDroneTargeting:
 	Range: 2c0
 	Projectile: InstantHit
