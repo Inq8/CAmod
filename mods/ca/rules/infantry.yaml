@@ -372,6 +372,7 @@ E6:
 
 SPY:
 	Inherits: ^Soldier
+	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -397,6 +398,10 @@ SPY:
 		Voice: Move
 	Disguise:
 		DisguisedCondition: disguise
+		DisguisedAsConditions:
+			rmbo: cmdo-disguise
+			e7: cmdo-disguise
+			bori: cmdo-disguise
 	Infiltrates:
 		Types: SpyInfiltrate
 		Notification: BuildingInfiltrated
@@ -414,6 +419,8 @@ SPY:
 		Position: TopRight
 		RequiresCondition: disguise
 	IgnoresDisguise:
+	WithDecoration@COMMANDOSKULL:
+		RequiresCondition: cmdo-disguise
 	AttackMove:
 		Voice: Move
 	Voiced:
