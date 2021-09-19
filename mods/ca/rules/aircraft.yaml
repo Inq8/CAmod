@@ -1734,6 +1734,84 @@ OCAR.Reinforce:
 	Interactable:
 	-Targetable@TEMPORAL:
 
+OCAR.XO:
+	Inherits: C17
+	RenderSprites:
+		Image: orcaca
+	Health:
+		HP: 40000
+	ParaDrop:
+		ChuteSound: xo-descent.aud
+	Cargo:
+		LoadedCondition: cargo
+	Contrail@1:
+		Offset: 30,-600,-20
+	Contrail@2:
+		Offset: -885,-184,0
+		ZOffset: -512
+		Color: cc550080
+	Contrail@3:
+		Offset: -885,184,0
+		ZOffset: -512
+		Color: cc550080
+	Contrail@4:
+		Offset: 30,600,-20
+	Aircraft:
+		CruiseAltitude: 4c0
+		AltitudeVelocity: 0c100
+		IdealSeparation: 0c768
+		TurnSpeed: 20
+		Speed: 236
+		TakeoffSounds: dropup1.aud
+		LandingSounds: dropdwn1.aud
+		Repulsable: True
+		IdleTurnSpeed: 4
+	SpawnActorOnDeath:
+		Actor: OCAR.Husk
+		RequiresCondition: !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: OCAR.Husk.EMP
+		RequiresCondition: empdisable
+	-SmokeTrailWhenDamaged@0:
+	-SmokeTrailWhenDamaged@1:
+	SmokeTrailWhenDamaged:
+		Offset: -427,0,0
+		Interval: 2
+	WithMoveAnimation:
+		MoveSequence: move
+	WithSpriteTurret@XO1:
+		RequiresCondition: cargo >= 1
+		Sequence: xo
+		Turret: xo1
+	Turreted@XO1:
+		PauseOnCondition: cargo >= 1
+		RequiresCondition: cargo >= 1
+		Offset: 256,0,-512
+		Turret: xo1
+	WithSpriteTurret@XO2:
+		RequiresCondition: cargo >= 2
+		Sequence: xo
+		Turret: xo2
+	Turreted@XO2:
+		PauseOnCondition: cargo >= 2
+		RequiresCondition: cargo >= 2
+		Offset: -85,0,-512
+		Turret: xo2
+	WithSpriteTurret@XO3:
+		RequiresCondition: cargo >= 3
+		Sequence: xo
+		Turret: xo3
+	Turreted@XO3:
+		PauseOnCondition: cargo >= 3
+		RequiresCondition: cargo >= 3
+		Offset: -426,0,-512
+		Turret: xo3
+	Armament:
+		Weapon: DummyWeapon
+	AttackTurreted:
+		FacingTolerance: 512
+		PauseOnCondition: airborne
+
 OCAR.Pod:
 	Inherits: OCAR.Reinforce
 	RenderSprites:
