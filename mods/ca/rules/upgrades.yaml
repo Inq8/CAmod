@@ -130,7 +130,7 @@ drone.upgrade:
 		BuildPaletteOrder: 30
 		Prerequisites: ~radar.arc, ~techlevel.high
 		BuildDuration: 1500
-		Description: Allows construction of a modified crewless Battle Tank.\n\n  Replaces: Battle Tank\n  + Immunity to crew kill, chaos gas and mind control\n  + Reduced cost\n  - Reduced damage \n  – Disabled on low power
+		Description: Allows construction of a modified crewless Battle Tank.\n\n  Replaces: Battle Tank\n  + Immunity to crew kill, chaos gas and mind control\n  + Reduced cost\n  – Reduced damage \n  – Disabled on low power
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -406,6 +406,20 @@ iraqtank.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: iraqtank.upgrade
+
+lasher.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Lasher Tank
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~radar.yuri, ~techlevel.high
+		BuildDuration: 1500
+		Description: Upgrades Heavy tanks with infantry crushing attachment.\n\n  Replaces: Heavy Tank\n  + 20% faster movement\n  + Damages infantry it moves through\n  + Not slowed by infantry\n  – Reduced hit points\n  – Reduced firepower
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: lasher.upgrade
 
 seismic.upgrade:
 	Inherits: ^Upgrade

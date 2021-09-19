@@ -2073,6 +2073,19 @@ U2Camera:
 DummyWeapon:
 	Warhead@Dummy: Dummy
 
+Lasher:
+	ReloadDelay: 5
+	Range: 1c0
+	ValidTargets: Ground, Water
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Range: 0, 341, 682
+		Falloff: 100, 100, 0
+		Damage: 350
+		ValidTargets: Infantry
+		DamageTypes: BulletDeath
+		ValidRelationships: Enemy, Neutral
+
 AttachShadowBeacon:
 	Warhead@AttachCamera: AttachActor
 		Range: 341

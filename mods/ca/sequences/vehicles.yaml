@@ -185,7 +185,14 @@ mtnk.nod.chrono:
 	idle2: 3tnki
 		Facings: 32
 		UseClassicFacings: True
+	idle3: 3tnky
+		Facings: 32
+		UseClassicFacings: True
 	turret: 3tnk
+		Start: 32
+		Facings: 32
+		UseClassicFacings: True
+	turret2: 3tnky
 		Start: 32
 		Facings: 32
 		UseClassicFacings: True
@@ -206,6 +213,22 @@ mtnk.nod.chrono:
 		Length: 5
 	icon: 3tnkiicon
 
+3tnky:
+	Inherits: ^VehicleOverlays
+	idle: 3tnky
+		Facings: 32
+		UseClassicFacings: True
+	idle2: 3tnky
+		Facings: 32
+		UseClassicFacings: True
+	turret: 3tnky
+		Start: 32
+		Facings: 32
+		UseClassicFacings: True
+	muzzle: gunfire2
+		Length: 5
+	icon: 3tnkyicon
+
 3tnk.destroyed:
 	Inherits: ^VehicleOverlays
 	idle: 3tnk
@@ -216,6 +239,13 @@ mtnk.nod.chrono:
 		Start: 32
 		Facings: 32
 		UseClassicFacings: True
+		ZOffset: -512
+
+3tnky.destroyed:
+	Inherits: 3tnky
+	idle: 3tnky
+		ZOffset: -512
+	turret: 3tnky
 		ZOffset: -512
 
 4tnk:
