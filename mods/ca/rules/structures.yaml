@@ -3711,7 +3711,7 @@ HQ:
 		TargetCircleColor: 999999AA
 	ParatroopersPower@hackerdrop:
 		OrderName: hackerdrop
-		Prerequisites: ~radar.legion, infantry.any, ~techlevel.medium
+		Prerequisites: ~radar.legion, ~techlevel.medium
 		Icon: hackerdrop
 		UnitType: c17
 		ChargeInterval: 7500
@@ -3734,30 +3734,6 @@ HQ:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		PauseOnCondition: disabled || being-warped
-	ParatroopersPower@xodrop:
-		OrderName: xodrop
-		Prerequisites: ~radar.talon, ~techlevel.low
-		Icon: xodrop
-		ChargeInterval: 9000
-		Description: X-O Drop
-		UnitType: ocar.xo
-		LongDesc: An Orca transport drops a squad of X-O Powersuits\nanywhere on the map.
-		SquadSize: 1
-		SquadOffset: 0,1792,0
-		DropItems: XO,XO,XO
-		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
-		SelectTargetSpeechNotification: SelectTarget
-		EndChargeSpeechNotification: Reinforce
-		AllowImpassableCells: false
-		QuantizedFacings: 8
-		CameraActor: camera.paradrop
-		DisplayBeacon: true
-		BeaconPoster: xodrop
-		ArrowSequence: arrow
-		ClockSequence: clock
-		CircleSequence: circles
-		UseDirectionalTarget: True
-		DirectionArrowAnimation: paradirection
 	DropPodsPowerCA@Zocom:
 		OrderName: droppods
 		Cursor: ability
@@ -4122,6 +4098,9 @@ HPAD.TD:
 	ProvidesPrerequisiteValidatedFaction@gdi:
 		Factions: talon, zocom, eagle, arc
 		Prerequisite: aircraft.gdi
+	ProvidesPrerequisiteValidatedFaction@talon:
+		Factions: talon
+		Prerequisite: aircraft.talon
 	ProvidesPrerequisiteValidatedFaction@eagle:
 		Factions: eagle
 		Prerequisite: aircraft.eagle
@@ -4149,7 +4128,7 @@ HPAD.TD:
 		Proxy: powerproxy.paratroopers2
 	SpawnActorPower@GDIEagleDropzone:
 		Actor: FLARE.dropzone
-		Prerequisites: ~aircraft.gdi, ~aircraft.eagle, anyradar, ~techlevel.low
+		Prerequisites: ~aircraft.eagle, anyradar, ~techlevel.low
 		LifeTime: 280
 		OrderName: dropzoneeagle
 		Icon: orcaca
@@ -4163,6 +4142,30 @@ HPAD.TD:
 		EffectImage: empty
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
+	ParatroopersPower@xodrop:
+		OrderName: xodrop
+		Prerequisites: ~aircraft.talon, ~techlevel.medium
+		Icon: xodrop
+		ChargeInterval: 8250
+		Description: X-O Drop
+		UnitType: ocar.xo
+		LongDesc: An Orca transport drops a squad of X-O Powersuits\nanywhere on the map.
+		SquadSize: 1
+		SquadOffset: 0,1792,0
+		DropItems: XO,XO,XO
+		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
+		SelectTargetSpeechNotification: SelectTarget
+		EndChargeSpeechNotification: Reinforce
+		AllowImpassableCells: false
+		QuantizedFacings: 8
+		CameraActor: camera.paradrop
+		DisplayBeacon: true
+		BeaconPoster: xodrop
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
 
 PROC.TD:
 	Inherits: ^BuildingTD
