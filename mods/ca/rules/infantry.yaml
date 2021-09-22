@@ -2377,6 +2377,9 @@ IVAN:
 BRUT:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	AutoTarget:
+		ScanRadius: 4
+		InitialStance: AttackAnything
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -2393,7 +2396,7 @@ BRUT:
 	Health:
 		HP: 25000
 	Mobile:
-		Speed: 49
+		Speed: 56
 		Voice: Move
 	RevealsShroud:
 		Range: 4c0
@@ -2443,6 +2446,7 @@ BRUT:
 	-Captures@DRIVER_KILL:
 	-CaptureManager:
 	-WithIdleOverlay@MINDCONTROL:
+	-Crushable:
 
 SHAD:
 	Inherits: ^Soldier
