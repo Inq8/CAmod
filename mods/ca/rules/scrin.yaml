@@ -2603,7 +2603,7 @@ SFAC:
 	BaseBuilding:
 	Transforms:
 		RequiresCondition: factundeploy
-		PauseOnCondition: chrono-vortex || being-captured || c4 || tnt || build-incomplete || being-warped
+		PauseOnCondition: chrono-vortex || being-captured || c4 || tnt || build-incomplete || being-warped || hacked
 		IntoActor: smcv
 		Offset: 1,0
 		Facing: 96
@@ -2622,7 +2622,7 @@ SFAC:
 	TransformsIntoTransforms:
 		RequiresCondition: factundeploy && build-incomplete
 	Sellable:
-		RequiresCondition: !build-incomplete && !chrono-vortex && !being-captured && !c4 && !being-warped
+		RequiresCondition: !build-incomplete && !chrono-vortex && !being-captured && !c4 && !being-warped && !hacked
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
@@ -3381,7 +3381,7 @@ SIGN:
 		Queue: Building
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.scrin, scrt, ~techlevel.high
-		Description: Provides Scrin tier 4 technologies.\n  Maximum 1 can be built.\n  Cannot be captured.
+		Description: Provides Scrin tier 4 technologies.\n  Maximum 1 can be built.\n  Cannot be captured or hacked.
 		BuildLimit: 1
 		IconPalette: chromes
 	-Capturable:
@@ -3398,18 +3398,18 @@ SIGN:
 		MinRange: 3c0
 	Power:
 		Amount: -150
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack
 	ProvidesPrerequisite@Name:
 		RequiresCondition: !being-warped
-	Sellable:
-		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped
 	ProductionBar:
 		ProductionType: Upgrade
 	Exit:
+	-MindControllable:
+	-Targetable@HACKABLE:
+	-MindControllableProgressBar@HACKABLE:
+	-WithDecoration@HACKED:
 
 SREP:
 	Inherits: ^ScrinBuilding
@@ -4232,7 +4232,6 @@ WORMHOLE:
 		Delay: 0
 	RallyPoint:
 		Path: 1,1
-	Sellable:
 	Exit:
 	PopControlled:
 		Limit: 2

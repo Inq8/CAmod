@@ -1370,7 +1370,7 @@ FACT:
 	BaseBuilding:
 	Transforms:
 		RequiresCondition: factundeploy
-		PauseOnCondition: chrono-vortex || being-captured || c4 || tnt || build-incomplete || being-warped
+		PauseOnCondition: chrono-vortex || being-captured || c4 || tnt || build-incomplete || being-warped || hacked
 		IntoActor: mcv
 		Offset: 1,1
 		Facing: 384
@@ -1389,7 +1389,7 @@ FACT:
 	TransformsIntoTransforms:
 		RequiresCondition: factundeploy && build-incomplete
 	Sellable:
-		RequiresCondition: !build-incomplete && !chrono-vortex && !being-captured && !c4 && !being-warped
+		RequiresCondition: !build-incomplete && !chrono-vortex && !being-captured && !c4 && !being-warped && !hacked
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
@@ -3285,7 +3285,7 @@ AFAC:
 	BaseBuilding:
 	Transforms:
 		RequiresCondition: factundeploy
-		PauseOnCondition: chrono-vortex || being-captured || c4 || tnt || build-incomplete || being-warped
+		PauseOnCondition: chrono-vortex || being-captured || c4 || tnt || build-incomplete || being-warped || hacked
 		IntoActor: amcv
 		Offset: 1,1
 		Facing: 432
@@ -3304,7 +3304,7 @@ AFAC:
 	TransformsIntoTransforms:
 		RequiresCondition: factundeploy && build-incomplete
 	Sellable:
-		RequiresCondition: !build-incomplete && !chrono-vortex && !being-captured && !c4 && !being-warped
+		RequiresCondition: !build-incomplete && !chrono-vortex && !being-captured && !c4 && !being-warped && !hacked
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
@@ -4759,8 +4759,6 @@ PRIS:
 	Power:
 		Amount: -75
 	ProvidesPrerequisite@buildingname:
-	Sellable:
-		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	WithRangeCircle@SUPPORT:
 		Range: 5c0
 
@@ -5244,8 +5242,6 @@ LASP:
 	-CapturableProgressBar:
 	-CapturableProgressBlink:
 	-MustBeDestroyed:
-	Sellable:
-		RequiresCondition: !build-incomplete && !(c4 || tnt) && !being-warped
 	Power:
 		Amount: -15
 	RevealsShroud:
@@ -5404,6 +5400,16 @@ PATR:
 		Types: SpyInfiltrate, SabInfiltrate
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
+	Sellable:
+		RequiresCondition: !build-incomplete && !(c4 || tnt) && !being-captured && !being-warped && !hacked
+	CaptureManager:
+		BeingCapturedCondition: being-captured
+	Capturable:
+		RequiresCondition: !build-incomplete && !being-warped
+		Types: building
+	CapturableProgressBar:
+	CapturableProgressBlink:
+	-Targetable@MINDCONTROL:
 
 INDP:
 	Inherits: ^Building
@@ -5421,7 +5427,7 @@ INDP:
 		Queue: Building
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.soviet, stek, ~techlevel.high
-		Description: Vehicles & aircraft are produced 15% faster and cost 5% less.\n  Maximum 1 can be built.\n  Cannot be captured.
+		Description: Vehicles & aircraft are produced 15% faster and cost 5% less.\n  Maximum 1 can be built.\n  Cannot be captured or hacked.
 		BuildLimit: 1
 	Valued:
 		Cost: 2500
@@ -5449,8 +5455,6 @@ INDP:
 	WithBuildingBib:
 	Power:
 		Amount: -150
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
@@ -5458,8 +5462,6 @@ INDP:
 	ProvidesPrerequisite@disabled:
 		Prerequisite: indplowpower
 		RequiresCondition: disabled || empdisable || being-warped
-	Sellable:
-		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	GrantConditionOnPrerequisite@Bot:
 		Condition: owned-by-ai
 		Prerequisites: botplayer
@@ -5471,6 +5473,10 @@ INDP:
 	GrantCondition@DUMMY:
 		Condition: noupgrade
 		RequiresCondition: noupgrade
+	-MindControllable:
+	-Targetable@HACKABLE:
+	-MindControllableProgressBar@HACKABLE:
+	-WithDecoration@HACKED:
 
 OREP:
 	Inherits: ^Building
@@ -5499,7 +5505,7 @@ OREP:
 		Queue: Building
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.allies, atek, ~techlevel.high
-		Description: Refines income from ore, gems & tiberium by 5%.\nProvides access to advanced chrono harvester technology.\n  Maximum 1 can be built.\n  Cannot be captured.
+		Description: Refines income from ore, gems & tiberium by 5%.\nProvides access to advanced chrono harvester technology.\n  Maximum 1 can be built.\n  Cannot be captured or hacked.
 		BuildLimit: 1
 	-Capturable:
 	-CaptureNotification:
@@ -5519,13 +5525,9 @@ OREP:
 		RequiresCondition: !disabled && !being-warped && orep-upgrade
 	Power:
 		Amount: -150
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
-	Sellable:
-		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	GrantConditionOnPrerequisite@Bot:
 		Condition: owned-by-ai
 		Prerequisites: botplayer
@@ -5543,6 +5545,10 @@ OREP:
 	ProvidesPrerequisiteValidatedFaction@germanyorep:
 		Factions: germany
 		Prerequisite: orep.germany
+	-MindControllable:
+	-Targetable@HACKABLE:
+	-MindControllableProgressBar@HACKABLE:
+	-WithDecoration@HACKED:
 
 UPGC:
 	Inherits: ^BuildingTD
@@ -5573,7 +5579,7 @@ UPGC:
 		Queue: Building
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.gdi, gtek, ~techlevel.high
-		Description: Allows the construction of advanced weaponry and upgrades.\n  Maximum 1 can be built.\n  Cannot be captured.
+		Description: Allows the construction of advanced weaponry and upgrades.\n  Maximum 1 can be built.\n  Cannot be captured or hacked.
 		BuildLimit: 1
 		IconPalette: chrometd
 	-Capturable:
@@ -5602,14 +5608,10 @@ UPGC:
 	ProvidesPrerequisite@Name:
 	Power:
 		Amount: -150
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
 		DeathSequencePalette: overlayplayertd
-	Sellable:
-		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -5800,6 +5802,10 @@ UPGC:
 	ProductionCostMultiplier@TALONBONUS:
 		Multiplier: 90
 		Prerequisites: structures.talon
+	-MindControllable:
+	-Targetable@HACKABLE:
+	-MindControllableProgressBar@HACKABLE:
+	-WithDecoration@HACKED:
 
 UPGC.SOCK:
 	AlwaysVisible:
@@ -5909,7 +5915,7 @@ TMPP:
 		BuildPaletteOrder: 200
 		IconPalette: chrometd
 		Prerequisites: ~structures.nod, tmpl, ~techlevel.high
-		Description: Provides access to cybernetic upgrades.\n  Maximum 1 can be built.\n  Cannot be captured.\n  Special Ability: Cyborg Converter (Requires Upgrade)
+		Description: Provides access to cybernetic upgrades.\n  Maximum 1 can be built.\n  Cannot be captured or hacked.\n  Special Ability: Cyborg Converter (Requires Upgrade)
 		BuildLimit: 1
 	-Capturable:
 	-CaptureNotification:
@@ -5922,8 +5928,6 @@ TMPP:
 		Name: Temple Prime
 	Power:
 		Amount: -150
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack
 	WithDeathAnimation:
 		DeathSequence: dead
 		DeathSequencePalette: overlayplayertd
@@ -5941,8 +5945,6 @@ TMPP:
 	GrantConditionOnPrerequisite@CYBORGPRODUCTION:
 		Condition: cyborg-production
 		Prerequisites: cyborg.upgrade, hand
-	Sellable:
-		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	Production:
 		Produces: Upgrade, Infantry, Cyborg
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -5964,6 +5966,10 @@ TMPP:
 		RequiresCondition: cyborgs
 		CostDifferenceRequired: true
 		EjectOnInsufficientFunds: true
+	-MindControllable:
+	-Targetable@HACKABLE:
+	-MindControllableProgressBar@HACKABLE:
+	-WithDecoration@HACKED:
 
 MSLO.Nod:
 	Inherits: ^Building

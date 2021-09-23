@@ -1247,7 +1247,7 @@
 	Targetable@HACKABLE:
 		TargetTypes: Hackable
 		RequiresCondition: !mindcontrolled && !hacked
-	MindControllableProgressBar:
+	MindControllableProgressBar@HACKABLE:
 		Color: 1ce312
 		RequiresCondition: !hacked
 	WithDecoration@HACKED:
@@ -2402,7 +2402,7 @@
 	MustBeDestroyed:
 		RequiredForShortGame: true
 	Sellable:
-		RequiresCondition: !build-incomplete && !(c4 || tnt) && !being-captured && !being-warped
+		RequiresCondition: !build-incomplete && !(c4 || tnt) && !being-captured && !being-warped && !hacked
 		SellSounds: cashturn.aud
 		Notification: StructureSold
 	WithBuildingRepairDecoration:
@@ -2464,7 +2464,7 @@
 	-CapturableProgressBlink:
 	-SpawnActorsOnSell:
 	Sellable:
-		RequiresCondition: !build-incomplete && !(c4 || tnt) && !being-warped
+		RequiresCondition: !build-incomplete && !(c4 || tnt) && !being-warped && !hacked
 	RenderRangeCircle:
 		Color: C12900
 	Explodes:
