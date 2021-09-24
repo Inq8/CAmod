@@ -183,24 +183,24 @@ E3:
 		Speed: 38
 	Armament@PRIMARY:
 		Weapon: RedEye
-		LocalOffset: 0,0,400
+		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
 		RequiresCondition: !cryr-upgrade
 	Armament@PRIMARYUPG:
 		Weapon: RedEye.CRYO
-		LocalOffset: 0,0,400
+		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
 		RequiresCondition: cryr-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: Dragon
-		LocalOffset: 0,0,400
+		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
 		RequiresCondition: !cryr-upgrade
 	Armament@SECONDARYUPG:
 		Name: secondary
 		Weapon: Dragon.CRYO
-		LocalOffset: 0,0,400
+		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
 		RequiresCondition: cryr-upgrade
 	Armament@GarrisonAA:
@@ -680,7 +680,7 @@ HACK:
 		Capacity: 1
 		TicksToControl: 250
 		RequiresCondition: deployed
-		Sounds: hacker-hack1.aud
+		ControlSounds: hacker-hack1.aud
 		ControllingCondition: hacked-in
 	WithDecoration@HACKEDIN:
 		Image: hacking
@@ -1044,24 +1044,24 @@ N3:
 		Speed: 38
 	Armament@PRIMARY:
 		Weapon: RedEye
-		LocalOffset: 0,0,400
+		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
 		RequiresCondition: !tibcore-upgrade
 	Armament@PRIMARYUPG:
 		Weapon: RedEye.TibCore
-		LocalOffset: 0,0,400
+		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
 		RequiresCondition: tibcore-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: Dragon.TD
-		LocalOffset: 0,0,400
+		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
 		RequiresCondition: !tibcore-upgrade
 	Armament@SECONDARYUPG:
 		Name: secondary
 		Weapon: Dragon.TibCore
-		LocalOffset: 0,0,400
+		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
 		RequiresCondition: tibcore-upgrade
 	Armament@GarrisonAA:
@@ -1838,30 +1838,6 @@ JJET:
 	DeathSounds@POISONED:
 		Voice: Poisoned
 		DeathTypes: PoisonDeath, ToxinDeath, ToxicDeath
-	ChangesHealth@HOSPITAL:
-		Step: 500
-		Delay: 100
-		StartIfBelow: 100
-		DamageCooldown: 125
-		RequiresCondition: hospitalheal
-	ExternalCondition@HOSPITAL:
-		Condition: hospitalheal
-	GrantConditionOnPrerequisite@HOSPITAL:
-		Condition: hospital
-		Prerequisites: hosp
-	GrantConditionOnDamageState@HOSPITAL:
-		Condition: damaged
-		ValidDamageStates: Light, Medium, Heavy, Critical
-	GrantCondition@HOSPITAL:
-		RequiresCondition: hospital && damaged
-		Condition: hospitalheal
-	WithDecoration@REDCROSS:
-		Image: pips
-		Sequence: medic
-		Position: BottomRight
-		RequiresCondition: hospitalheal
-		BlinkInterval: 32
-		BlinkPattern: Off, On
 	Armor:
 		Type: Light
 	Aircraft:
@@ -2183,24 +2159,24 @@ N3C:
 		DefaultAttackSequence: shoot
 	Armament@PRIMARY:
 		Weapon: RedEye.CYB
-		LocalOffset: 0,0,400
+		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
 		RequiresCondition: !tibcore-upgrade
 	Armament@PRIMARYUPG:
 		Weapon: RedEye.CYB.TibCore
-		LocalOffset: 0,0,400
+		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
 		RequiresCondition: tibcore-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: Dragon.CYB
-		LocalOffset: 0,0,400
+		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
 		RequiresCondition: !tibcore-upgrade
 	Armament@SECONDARYUPG:
 		Name: secondary
 		Weapon: Dragon.CYB.TibCore
-		LocalOffset: 0,0,400
+		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
 		RequiresCondition: tibcore-upgrade
 	Armament@GarrisonAA:

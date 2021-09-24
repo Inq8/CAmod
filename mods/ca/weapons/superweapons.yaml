@@ -219,12 +219,12 @@ GeneticMutation:
 		InvalidTargets: MindControlImmune
 
 Atomic:
-	ValidTargets: Ground, Trees, Water, Underwater, Air
+	ValidTargets: Ground, Trees, Water, Underwater, Air, AirSmall
 	Warhead@1Dam_impact: SpreadDamage
 		Spread: 1c0
 		Damage: 12200
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
-		ValidTargets: Ground, Trees, Water, Underwater, Air
+		ValidTargets: Ground, Trees, Water, Underwater, Air, AirSmall
 		Versus:
 			Wood: 25
 			Brick: 25
@@ -246,7 +246,7 @@ Atomic:
 		Damage: 4200
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 5
-		ValidTargets: Ground, Trees, Water, Underwater, Air
+		ValidTargets: Ground, Trees, Water, Underwater, Air, AirSmall
 		Versus:
 			Wood: 25
 			Brick: 25
@@ -269,7 +269,7 @@ Atomic:
 		Damage: 4200
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 10
-		ValidTargets: Ground, Water, Underwater, Air
+		ValidTargets: Ground, Water, Underwater, Air, AirSmall
 		Versus:
 			Wood: 50
 			Brick: 25
@@ -288,7 +288,7 @@ Atomic:
 		Damage: 4200
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 15
-		ValidTargets: Ground, Trees, Water, Underwater, Air
+		ValidTargets: Ground, Trees, Water, Underwater, Air, AirSmall
 		Versus:
 			Tree: 200
 			Brick: 25
@@ -306,7 +306,7 @@ Atomic:
 		Damage: 4200
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 20
-		ValidTargets: Ground, Trees, Water, Underwater, Air
+		ValidTargets: Ground, Trees, Water, Underwater, Air, AirSmall
 		Versus:
 			Tree: 200
 			Brick: 25
@@ -363,7 +363,7 @@ IonCannon:
 		Range: 0, 0c682, 1c341, 2c682
 		Damage: 34000
 		Falloff: 100, 100, 35, 10
-		ValidTargets: Air
+		ValidTargets: Air, AirSmall
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@4Eff: CreateEffect
 		Explosions: ion_ring2
@@ -696,7 +696,7 @@ Chemicbm:
 		Spread: 1c0
 		Damage: 6500
 		Falloff: 1000, 368, 135, 50, 18
-		ValidTargets: Ground, Underwater, Air
+		ValidTargets: Ground, Underwater, Air, AirSmall
 		InvalidTargets: Creep
 		Versus:
 			None: 36
@@ -715,7 +715,7 @@ Chemicbm:
 		Damage: 6000
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 20
-		ValidTargets: Ground, Underwater, Air
+		ValidTargets: Ground, Underwater, Air, AirSmall
 		InvalidTargets: Creep
 		Versus:
 			None: 36
@@ -731,7 +731,7 @@ Chemicbm:
 		Damage: 3250
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 40
-		ValidTargets: Ground, Underwater, Air
+		ValidTargets: Ground, Underwater, Air, AirSmall
 		InvalidTargets: Creep
 		Versus:
 			None: 36
@@ -747,7 +747,7 @@ Chemicbm:
 		Damage: 2750
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 65
-		ValidTargets: Ground, Underwater, Air
+		ValidTargets: Ground, Underwater, Air, AirSmall
 		InvalidTargets: Creep
 		Versus:
 			None: 36
@@ -846,13 +846,13 @@ IonCloud:
 IonBolt:
 	Projectile: InstantHit
 	Range: 512
-	ValidTargets: Ground, Water, Air
+	ValidTargets: Ground, Water, Air, AirSmall
 	Warhead@1Dam_impact: SpreadDamage
 		Range: 0, 1c1, 2c1, 3c1, 4c1
 		Delay: 1
 		Damage: 2650
 		Falloff: 1000, 1000, 250, 100, 75
-		ValidTargets: Ground, Water, Underwater, Air
+		ValidTargets: Ground, Water, Underwater, Air, AirSmall
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		Versus:
 			None: 30
@@ -1001,7 +1001,7 @@ WeatherCloudDirectInit:
 		Falloff: 1000, 660, 330, 0
 		Damage: 500
 		AffectsParent: true
-		ValidTargets: Air
+		ValidTargets: Air, AirSmall
 		Delay: 28
 		DamageTypes: TriggerProne, ElectritcyDeath
 		Versus:
@@ -1021,7 +1021,7 @@ WeatherCloudRandomInit:
 		Falloff: 100, 66, 33, 0
 		Damage: 180
 		AffectsParent: true
-		ValidTargets: Air
+		ValidTargets: Air, AirSmall
 		Delay: 28
 		DamageTypes: TriggerProne, ElectricityDeath
 		Versus:
@@ -1054,13 +1054,13 @@ WeatherCloud:
 WeatherBolt:
 	Projectile: InstantHit
 	Range: 512
-	ValidTargets: Ground, Water, Air
+	ValidTargets: Ground, Water, Air, AirSmall
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 1c1, 2c1, 3c1
 		Falloff: 1000, 700, 450, 0
 		Damage: 1000
 		AffectsParent: true
-		ValidTargets: Ground, Air, Underwater, Water
+		ValidTargets: Ground, Air, AirSmall, Underwater, Water
 		DamageTypes: TriggerProne, ElectricityDeath
 		Versus:
 			None: 20

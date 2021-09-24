@@ -35,10 +35,22 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly string ControllingCondition;
 
 		[Desc("The sound played when target is mind controlled.")]
-		public readonly string[] Sounds = { };
+		public readonly string[] ControlSounds = { };
+
+		[Desc("If true, mind control start sound is only played to the controlling player.")]
+		public readonly bool ControlSoundControllerOnly = false;
+
+		[Desc("The sound played (to the controlling player only) when beginning mind control process.")]
+		public readonly string[] InitSounds = { };
+
+		[Desc("If true, mind control start sound is only played to the controlling player.")]
+		public readonly bool InitSoundControllerOnly = false;
 
 		[Desc("Ticks attacking taken to mind control something.")]
 		public readonly int TicksToControl = 0;
+
+		[Desc("Ticks attacking taken for mind control to wear off after controller dies.")]
+		public readonly int TicksToRevoke = 0;
 
 		public override object Create(ActorInitializer init) { return new MindController(init.Self, this); }
 	}
@@ -96,6 +108,14 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (controlTicks < Info.TicksToControl)
 				controlTicks++;
+
+			if (controlTicks == 1 && Info.InitSounds.Any())
+			{
+				if (Info.InitSoundControllerOnly)
+					Game.Sound.PlayToPlayer(SoundType.World, self.Owner, Info.InitSounds.Random(self.World.SharedRandom), self.CenterPosition);
+				else
+					Game.Sound.Play(SoundType.World, Info.InitSounds.Random(self.World.SharedRandom), self.CenterPosition);
+			}
 
 			var currentTargetWatchers = currentTarget.Actor.TraitsImplementing<IMindControlProgressWatcher>().ToArray();
 
@@ -201,11 +221,16 @@ namespace OpenRA.Mods.CA.Traits
 			StackControllingCondition(self, Info.ControllingCondition);
 			mindControllable.LinkMaster(currentTarget.Actor, self);
 
-			if (Info.Sounds.Any())
-				Game.Sound.Play(SoundType.World, Info.Sounds.Random(self.World.SharedRandom), self.CenterPosition);
+			if (Info.ControlSounds.Any())
+			{
+				if (Info.ControlSoundControllerOnly)
+					Game.Sound.PlayToPlayer(SoundType.World, self.Owner, Info.ControlSounds.Random(self.World.SharedRandom), self.CenterPosition);
+				else
+					Game.Sound.Play(SoundType.World, Info.ControlSounds.Random(self.World.SharedRandom), self.CenterPosition);
+			}
 
 			if (Info.Capacity > 0 && Info.DiscardOldest && slaves.Count() > Info.Capacity)
-				slaves[0].Trait<MindControllable>().RevokeMindControl(slaves[0]);
+				slaves[0].Trait<MindControllable>().RevokeMindControl(slaves[0], 0);
 
 			var currentTargetWatchers = currentTarget.Actor.TraitsImplementing<IMindControlProgressWatcher>().ToArray();
 
@@ -215,14 +240,14 @@ namespace OpenRA.Mods.CA.Traits
 			currentTarget = Target.Invalid;
 		}
 
-		void ReleaseSlaves(Actor self)
+		void ReleaseSlaves(Actor self, int ticks)
 		{
 			foreach (var s in slaves)
 			{
 				if (s.IsDead || s.Disposed)
 					continue;
 
-				s.Trait<MindControllable>().RevokeMindControl(s);
+				s.Trait<MindControllable>().RevokeMindControl(s, ticks);
 			}
 
 			slaves.Clear();
@@ -238,17 +263,17 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyKilled.Killed(Actor self, AttackInfo e)
 		{
-			ReleaseSlaves(self);
+			ReleaseSlaves(self, Info.TicksToRevoke);
 		}
 
 		void INotifyActorDisposing.Disposing(Actor self)
 		{
-			ReleaseSlaves(self);
+			ReleaseSlaves(self, Info.TicksToRevoke);
 		}
 
 		protected override void TraitDisabled(Actor self)
 		{
-			ReleaseSlaves(self);
+			ReleaseSlaves(self, 0);
 		}
 
 		bool TargetChanged()

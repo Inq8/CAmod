@@ -780,8 +780,8 @@
 
 ^AuraHealable:
 	ChangesHealth@HOSPITAL:
-		Step: 200
-		Delay: 25
+		Step: 500
+		Delay: 75
 		StartIfBelow: 100
 		DamageCooldown: 200
 		RequiresCondition: hospitalheal
@@ -794,7 +794,8 @@
 		Position: BottomRight
 		RequiresCondition: hospitalheal && damaged
 		BlinkInterval: 32
-		BlinkPattern: On
+		Margin: -1, 7
+		BlinkPattern: Off, On
 		BlinkPatterns:
 			rank-elite || rank-veteran: Off, On
 	WithDecoration@RANK-1:
@@ -1723,22 +1724,6 @@
 	Guardable:
 	Tooltip:
 		GenericName: Soldier
-	ChangesHealth@HOSPITAL:
-		Step: 500
-		Delay: 100
-		DamageCooldown: 125
-	GrantConditionOnPrerequisite@HOSPITAL:
-		Condition: hospital
-		Prerequisites: hosp
-	GrantConditionOnDamageState@HOSPITAL:
-		Condition: damaged
-		ValidDamageStates: Light, Medium, Heavy, Critical
-	GrantCondition@HOSPITAL:
-		RequiresCondition: hospital && damaged
-		Condition: hospitalheal
-	WithDecoration@REDCROSS:
-		RequiresCondition: hospitalheal
-		BlinkPattern: on, off
 	DeathSounds@NORMAL:
 		Voice: Die
 		DeathTypes: DefaultDeath, BulletDeath, SmallExplosionDeath, ExplosionDeath
@@ -2402,7 +2387,7 @@
 	MustBeDestroyed:
 		RequiredForShortGame: true
 	Sellable:
-		RequiresCondition: !build-incomplete && !(c4 || tnt) && !being-captured && !being-warped && !hacked
+		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped && !hacked
 		SellSounds: cashturn.aud
 		Notification: StructureSold
 	WithBuildingRepairDecoration:
@@ -2464,7 +2449,7 @@
 	-CapturableProgressBlink:
 	-SpawnActorsOnSell:
 	Sellable:
-		RequiresCondition: !build-incomplete && !(c4 || tnt) && !being-warped && !hacked
+		RequiresCondition: !build-incomplete && !c4 && !being-warped && !hacked
 	RenderRangeCircle:
 		Color: C12900
 	Explodes:

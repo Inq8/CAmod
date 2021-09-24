@@ -549,8 +549,11 @@ KATY:
 	Tooltip:
 		Name: Atomic Heavy Tank
 		GenericName: Tank
+		-RequiresCondition:
 	Turreted:
 		Offset: 0,0,20
+	Armament:
+		-RequiresCondition:
 	Explodes@IRAQTANK:
 		RequiresCondition: !being-warped
 	Selectable:
@@ -565,6 +568,8 @@ KATY:
 		RequiresCondition: !being-warped
 	ThrowsShrapnel@small:
 		-RequiresCondition:
+	-Tooltip@IRAQ:
+	-Tooltip@LASHER:
 	-SpawnActorOnDeath:
 	-SpawnActorOnDeath@LASHER:
 	-Armament@LASHER:
@@ -577,6 +582,10 @@ KATY:
 	-GrantConditionOnMovement@LASHER:
 	-GrantConditionOnPrerequisite@IRAQ:
 	-GrantConditionOnPrerequisite@LASHER:
+	SpeedMultiplier@CRUSHATTEMPTSLOW:
+		RequiresCondition: crush-attempt-slow && !crush-slow
+	SpeedMultiplier@CRUSHSLOW:
+		RequiresCondition: crush-slow
 
 3TNK.YURI:
 	Inherits: 3TNK
@@ -589,6 +598,7 @@ KATY:
 		Description: Heavy tank with infantry crushing improvements.\n  Strong vs Vehicles\n  Weak vs Defenses, Aircraft
 	Tooltip:
 		Name: Lasher Tank
+		-RequiresCondition:
 	Health:
 		HP: 57000
 	Selectable:
@@ -605,19 +615,25 @@ KATY:
 		-RequiresCondition:
 	PeriodicExplosion@LASHER:
 		RequiresCondition: lasher-move
-	-Armament:
-	-SpawnActorOnDeath:
 	SpawnActorOnDeath@LASHER:
 		RequiresCondition: !being-warped
+	-Tooltip@IRAQ:
+	-Tooltip@LASHER:
+	-Armament:
+	-SpawnActorOnDeath:
 	-SpeedMultiplier@CRUSHATTEMPTSLOW:
 	-SpeedMultiplier@CRUSHSLOW:
+	-ExternalCondition@CRUSHATTEMPTSLOW:
+	-ExternalCondition@CRUSHSLOW:
 	-SpeedMultiplier@IRAQTANK:
 	-WithFacingSpriteBody@IRAQ:
 	-WithFacingSpriteBody@LASHER:
 	-WithSpriteTurret@LASHER:
 	-DamageMultiplier@LASHER:
+	-Explodes@IRAQTANK:
 	-GrantConditionOnPrerequisite@IRAQ:
 	-GrantConditionOnPrerequisite@LASHER:
+	-ThrowsShrapnel@small:
 
 4TNK:
 	Inherits: ^Tank
@@ -3704,6 +3720,13 @@ IFV:
 		MuzzleSequence: muzzle
 		LocalOffset: 560,0,200
 		RequiresCondition: rmbcturr
+	Armament@Heal:
+		Weapon: Heal
+		Cursor: heal
+		OutsideRangeCursor: heal
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+		RequiresCondition: medturr
 	Armament@Repair:
 		Weapon: RepairIFV
 		LocalOffset: 0,0,213

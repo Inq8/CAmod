@@ -530,7 +530,7 @@ MAST:
 	MindController:
 		ArmamentNames: primary, secondary
 		Capacity: 3
-		Sounds: mastermind-fire.aud
+		ControlSounds: mastermind-fire.aud
 		ControllingCondition: mindcontrolling
 	WithMindControlArc@MC:
 		Color: c71585
@@ -3400,6 +3400,8 @@ SIGN:
 		Amount: -150
 	ProvidesPrerequisite@Name:
 		RequiresCondition: !being-warped
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped

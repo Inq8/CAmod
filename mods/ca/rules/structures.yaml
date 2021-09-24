@@ -737,6 +737,9 @@ DOME:
 	ProvidesPrerequisiteValidatedFaction@iraqrad:
 		Factions: iraq
 		Prerequisite: radar.iraq
+	ProvidesPrerequisiteValidatedFaction@yurirad:
+		Factions: yuri
+		Prerequisite: radar.yuri
 	ProvidesPrerequisiteValidatedFaction@v2:
 		Factions: ukraine, iraq, yuri
 		Prerequisite: upgrades.v2
@@ -5235,6 +5238,8 @@ LASP:
 		HP: 100000
 	Armor:
 		Type: Concrete
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-warped && !hacked
 	-Capturable:
 	-CaptureNotification:
 	-ProximityCaptor:
@@ -5254,7 +5259,7 @@ LASP:
 	LineBuildNode:
 		Types: laserfencenode
 	LineBuildSegmentExternalCondition:
-		RequiresCondition: !build-incomplete && !disabled && !empdisable && !being-warped
+		RequiresCondition: !build-incomplete && !disabled && !empdisable && !being-warped && !hacked
 		Condition: active-posts
 	Explodes@TEMPORAL:
 		Weapon: TemporalExplode
@@ -5462,6 +5467,8 @@ INDP:
 	ProvidesPrerequisite@disabled:
 		Prerequisite: indplowpower
 		RequiresCondition: disabled || empdisable || being-warped
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	GrantConditionOnPrerequisite@Bot:
 		Condition: owned-by-ai
 		Prerequisites: botplayer
@@ -5528,6 +5535,8 @@ OREP:
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	GrantConditionOnPrerequisite@Bot:
 		Condition: owned-by-ai
 		Prerequisites: botplayer
@@ -5612,6 +5621,8 @@ UPGC:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
 		DeathSequencePalette: overlayplayertd
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -5945,6 +5956,8 @@ TMPP:
 	GrantConditionOnPrerequisite@CYBORGPRODUCTION:
 		Condition: cyborg-production
 		Prerequisites: cyborg.upgrade, hand
+	Sellable:
+		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	Production:
 		Produces: Upgrade, Infantry, Cyborg
 		PauseOnCondition: forceshield || invulnerability || being-warped

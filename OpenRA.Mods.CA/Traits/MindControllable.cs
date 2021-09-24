@@ -35,7 +35,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new MindControllable(init.Self, this); }
 	}
 
-	public class MindControllable : PausableConditionalTrait<MindControllableInfo>, INotifyKilled, INotifyActorDisposing, INotifyOwnerChanged, INotifyTransform
+	public class MindControllable : PausableConditionalTrait<MindControllableInfo>, INotifyKilled, INotifyActorDisposing, INotifyOwnerChanged, INotifyTransform, ITick
 	{
 		readonly MindControllableInfo info;
 		Player creatorOwner;
@@ -43,6 +43,7 @@ namespace OpenRA.Mods.CA.Traits
 		Actor oldSelf = null;
 
 		int token = Actor.InvalidConditionToken;
+		int revokeTicks;
 
 		public Actor Master { get; private set; }
 
@@ -92,28 +93,49 @@ namespace OpenRA.Mods.CA.Traits
 			});
 
 			Master = null;
-
-			if (token != Actor.InvalidConditionToken)
-				token = self.RevokeCondition(token);
 		}
 
-		public void RevokeMindControl(Actor self)
+		public void RevokeMindControl(Actor self, int ticks)
+		{
+			controlChanging = true;
+			UnlinkMaster(self, Master);
+
+			if (ticks == 0)
+				RevokeComplete(self);
+			else
+				revokeTicks = ticks;
+		}
+
+		void RevokeComplete(Actor self)
 		{
 			self.CancelActivity();
-
-			controlChanging = true;
 
 			if (creatorOwner.WinState == WinState.Lost)
 				self.ChangeOwner(self.World.Players.First(p => p.InternalName == info.FallbackOwner));
 			else
 				self.ChangeOwner(creatorOwner);
 
-			UnlinkMaster(self, Master);
+			if (token != Actor.InvalidConditionToken)
+				token = self.RevokeCondition(token);
 
 			if (info.RevokeControlSounds.Any())
 				Game.Sound.Play(SoundType.World, info.RevokeControlSounds.Random(self.World.SharedRandom), self.CenterPosition);
 
 			self.World.AddFrameEndTask(_ => controlChanging = false);
+		}
+
+		void ITick.Tick(Actor self)
+		{
+			if (IsTraitPaused || IsTraitDisabled)
+				return;
+
+			if (!controlChanging)
+				return;
+
+			if (--revokeTicks > 0)
+				return;
+
+			RevokeComplete(self);
 		}
 
 		void INotifyKilled.Killed(Actor self, AttackInfo e)
@@ -135,7 +157,7 @@ namespace OpenRA.Mods.CA.Traits
 		protected override void TraitDisabled(Actor self)
 		{
 			if (Master != null)
-				RevokeMindControl(self);
+				RevokeMindControl(self, 0);
 		}
 
 		void TransferMindControl(MindControllable mc)

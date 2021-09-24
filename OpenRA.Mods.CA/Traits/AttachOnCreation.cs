@@ -37,7 +37,7 @@ namespace OpenRA.Mods.CA.Traits
 			Info = info;
 		}
 
-		void INotifyCreated.Created(Actor self)
+		protected override void Created(Actor self)
 		{
 			if (IsTraitDisabled)
 				return;
