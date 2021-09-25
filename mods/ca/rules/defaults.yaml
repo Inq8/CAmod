@@ -1231,12 +1231,14 @@
 		ControlledConditions:
 			mast: mindcontrolled
 			hack: hacked
+		RevokingConditions:
+			hack: restoring
 
 ^MindControllable:
 	Inherits: ^MindControllableBase
 	Targetable@MINDCONTROL:
 		TargetTypes: MindControllable
-		RequiresCondition: !mindcontrolled && !hacked
+		RequiresCondition: !mindcontrolled && !hacked && !restoring
 	WithIdleOverlay@MINDCONTROL:
 		Sequence: mind-overlay
 		Palette: scrin
@@ -1254,10 +1256,27 @@
 	WithDecoration@HACKED:
 		Image: hacked
 		Sequence: hacked
-		RequiresCondition: hacked
+		RequiresCondition: hacked && !restoring
 		Position: Center
 		Palette: effect
 		ValidRelationships: Ally, Neutral, Enemy
+	WithDecoration@RESTORING:
+		Image: hacked
+		Sequence: restoring
+		RequiresCondition: restoring
+		Position: Center
+		Palette: effect
+		ValidRelationships: Ally, Neutral, Enemy
+
+^HackableOverloadable:
+	Inherits: ^Hackable
+	WithDecoration@HACKED:
+		Sequence: overloading
+	ChangesHealth@HACKED:
+		Step: -2000
+		StartIfBelow: 101
+		Delay: 25
+		RequiresCondition: hacked
 
 ^GeneticallyMutatable:
 	ExternalCondition@GMUT:

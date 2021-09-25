@@ -1882,6 +1882,7 @@ POWR:
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@POWERDRAIN: ^PowerDrainable
+	Inherits@OVERLOAD: ^HackableOverloadable
 	Selectable:
 		Bounds: 48,48
 	HitShape:
@@ -1925,6 +1926,7 @@ APWR:
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@POWERDRAIN: ^PowerDrainable
+	Inherits@OVERLOAD: ^HackableOverloadable
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Buildable:
@@ -3144,6 +3146,7 @@ NUKE:
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@POWERDRAIN: ^PowerDrainable
+	Inherits@OVERLOAD: ^HackableOverloadable
 	HitShape:
 		TargetableOffsets: 630,299,0
 	RenderSprites:
@@ -3198,6 +3201,7 @@ NUK2:
 	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@POWERDRAIN: ^PowerDrainable
+	Inherits@OVERLOAD: ^HackableOverloadable
 	HitShape:
 		TargetableOffsets: 630,299,0
 	RenderSprites:
@@ -3712,30 +3716,18 @@ HQ:
 		EffectPalette: tseffect-ignore-lighting-alpha75
 		TargetCircleRange: 9c512
 		TargetCircleColor: 999999AA
-	ParatroopersPower@hackerdrop:
-		OrderName: hackerdrop
-		Prerequisites: ~radar.legion, ~techlevel.medium
-		Icon: hackerdrop
-		UnitType: c17
+	ProduceActorPower@hackercell:
+		OrderName: hackercell
+		Prerequisites: infantry.any, ~radar.legion, ~techlevel.medium
+		Icon: hackercell
+		Type: Infantry
 		ChargeInterval: 7500
-		Description: Hacker Drop
-		LongDesc: A Cargo Plane drops a squad of hackers\nanywhere on the map.
-		SquadSize: 1
-		SquadOffset: 0,1792,0
-		DropItems: HACK, HACK, HACK
-		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
+		Description: Hacker Cell
+		LongDesc: Deploy a squad of hackers.
+		Actors: hack, hack, hack
+		LaunchSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
 		EndChargeSpeechNotification: Reinforce
-		AllowImpassableCells: false
-		QuantizedFacings: 8
-		CameraActor: camera.paradrop
-		DisplayBeacon: true
-		BeaconPoster: pinficon
-		ArrowSequence: arrow
-		ClockSequence: clock
-		CircleSequence: circles
-		UseDirectionalTarget: True
-		DirectionArrowAnimation: paradirection
 		PauseOnCondition: disabled || being-warped
 	DropPodsPowerCA@Zocom:
 		OrderName: droppods
@@ -5484,6 +5476,7 @@ INDP:
 	-Targetable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
 	-WithDecoration@HACKED:
+	-WithDecoration@RESTORING:
 
 OREP:
 	Inherits: ^Building
@@ -5558,6 +5551,7 @@ OREP:
 	-Targetable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
 	-WithDecoration@HACKED:
+	-WithDecoration@RESTORING:
 
 UPGC:
 	Inherits: ^BuildingTD
@@ -5817,6 +5811,7 @@ UPGC:
 	-Targetable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
 	-WithDecoration@HACKED:
+	-WithDecoration@RESTORING:
 
 UPGC.SOCK:
 	AlwaysVisible:
@@ -5983,6 +5978,7 @@ TMPP:
 	-Targetable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
 	-WithDecoration@HACKED:
+	-WithDecoration@RESTORING:
 
 MSLO.Nod:
 	Inherits: ^Building

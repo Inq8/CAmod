@@ -635,6 +635,7 @@ HACK:
 	Health:
 		HP: 5000
 	Mobile:
+		Speed: 56
 		Voice: Move
 		PauseOnCondition: !undeployed && being-warped
 	RevealsShroud:
@@ -679,8 +680,11 @@ HACK:
 		ArmamentNames: primary
 		Capacity: 1
 		TicksToControl: 250
+		TicksToRevoke: 100
 		RequiresCondition: deployed
-		ControlSounds: hacker-hack1.aud
+		InitSounds: hacker-init.aud
+		InitSoundControllerOnly: true
+		ControlSounds: hacker-hacked.aud
 		ControllingCondition: hacked-in
 	WithDecoration@HACKEDIN:
 		Image: hacking

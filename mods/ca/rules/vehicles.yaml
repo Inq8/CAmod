@@ -1985,6 +1985,7 @@ GDRN:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
+	Inherits@HACKABLE: ^Hackable
 	RenderSprites:
 	Buildable:
 		Queue: Vehicle
@@ -2026,6 +2027,8 @@ GDRN:
 	WithSpriteTurret:
 	Voiced:
 		VoiceSet: RobotTankVoice
+	Targetable:
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
@@ -2641,6 +2644,7 @@ MTNK.Drone:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@IDISABLE: ^DisableOnLowPower
 	Inherits@SLOWCRUSH: ^SlightlySlowedByCrushing
+	Inherits@HACKABLE: ^Hackable
 	RenderSprites:
 		Image: drone
 	Buildable:
@@ -2727,6 +2731,7 @@ MDRN:
 	Inherits: ^Vehicle
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@IDISABLE: ^DisableOnLowPower
+	Inherits@HACKABLE: ^Hackable
 	Tooltip:
 		Name: Mini Drone
 	Buildable:
@@ -5173,6 +5178,7 @@ BATF.AI:
 MEMP:
 	Inherits: ^TankTD
 	Inherits@IDISABLE: ^DisableOnLowPower
+	Inherits@HACKABLE: ^Hackable
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 410
@@ -5259,6 +5265,7 @@ MEMP:
 CDRN:
 	Inherits: ^VehicleTD
 	Inherits@AUTOTARGET: ^AutoTargetGround
+	Inherits@HACKABLE: ^Hackable
 	RenderSprites:
 		Image: cdrone
 	AutoTargetPriority@DEFAULT:

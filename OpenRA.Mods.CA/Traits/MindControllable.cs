@@ -29,8 +29,16 @@ namespace OpenRA.Mods.CA.Traits
 			"A dictionary of [actor id]: [condition].")]
 		public readonly Dictionary<string, string> ControlledConditions = new Dictionary<string, string>();
 
+		[ActorReference(dictionaryReference: LintDictionaryReference.Keys)]
+		[Desc("Condition to grant when revoking mindcontrol.",
+			"A dictionary of [actor id]: [condition].")]
+		public readonly Dictionary<string, string> RevokingConditions = new Dictionary<string, string>();
+
 		[GrantedConditionReference]
 		public IEnumerable<string> LinterControlledConditions { get { return ControlledConditions.Values; } }
+
+		[GrantedConditionReference]
+		public IEnumerable<string> LinterRevokingConditions { get { return RevokingConditions.Values; } }
 
 		public override object Create(ActorInitializer init) { return new MindControllable(init.Self, this); }
 	}
@@ -42,7 +50,8 @@ namespace OpenRA.Mods.CA.Traits
 		bool controlChanging;
 		Actor oldSelf = null;
 
-		int token = Actor.InvalidConditionToken;
+		int controlledToken = Actor.InvalidConditionToken;
+		int revokingToken = Actor.InvalidConditionToken;
 		int revokeTicks;
 
 		public Actor Master { get; private set; }
@@ -70,8 +79,8 @@ namespace OpenRA.Mods.CA.Traits
 
 			var mindController = Master.Trait<MindController>();
 
-			if (token == Actor.InvalidConditionToken && Info.ControlledConditions.ContainsKey(Master.Info.Name))
-				token = self.GrantCondition(Info.ControlledConditions[Master.Info.Name]);
+			if (controlledToken == Actor.InvalidConditionToken && Info.ControlledConditions.ContainsKey(Master.Info.Name))
+				controlledToken = self.GrantCondition(Info.ControlledConditions[Master.Info.Name]);
 
 			if (master.Owner == creatorOwner)
 				UnlinkMaster(self, master);
@@ -98,12 +107,18 @@ namespace OpenRA.Mods.CA.Traits
 		public void RevokeMindControl(Actor self, int ticks)
 		{
 			controlChanging = true;
+			var masterName = Master.Info.Name;
 			UnlinkMaster(self, Master);
 
 			if (ticks == 0)
 				RevokeComplete(self);
 			else
+			{
 				revokeTicks = ticks;
+
+				if (revokingToken == Actor.InvalidConditionToken && Info.RevokingConditions.ContainsKey(masterName))
+					revokingToken = self.GrantCondition(Info.RevokingConditions[masterName]);
+			}
 		}
 
 		void RevokeComplete(Actor self)
@@ -115,8 +130,11 @@ namespace OpenRA.Mods.CA.Traits
 			else
 				self.ChangeOwner(creatorOwner);
 
-			if (token != Actor.InvalidConditionToken)
-				token = self.RevokeCondition(token);
+			if (controlledToken != Actor.InvalidConditionToken)
+				controlledToken = self.RevokeCondition(controlledToken);
+
+			if (revokingToken != Actor.InvalidConditionToken)
+				revokingToken = self.RevokeCondition(revokingToken);
 
 			if (info.RevokeControlSounds.Any())
 				Game.Sound.Play(SoundType.World, info.RevokeControlSounds.Random(self.World.SharedRandom), self.CenterPosition);
