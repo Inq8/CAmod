@@ -1837,7 +1837,7 @@ JJET:
 		DeathTypes: ElectricityDeath, ChronoDeath, AtomizedDeath
 	DeathSounds@POISONED:
 		Voice: Poisoned
-		DeathTypes: PoisonDeath, ToxinDeath, ToxicDeath
+		DeathTypes: PoisonDeath, ToxinDeath, ToxicDeath, MutatedDeath
 	Armor:
 		Type: Light
 	Aircraft:
@@ -2423,6 +2423,39 @@ BRUT:
 	-CaptureManager:
 	-WithIdleOverlay@MINDCONTROL:
 	-Crushable:
+	-ExternalCondition@GMUT:
+	-SpawnActorOnDeath@GMUT:
+
+BRUT.Mutating:
+	Inherits: BRUT
+	RenderSprites:
+		Image: brut
+	RejectsOrders:
+	Interactable:
+	WithFacingSpriteBody:
+		Sequence: stand
+	WithMakeAnimation:
+		Condition: mutating
+	KillsSelf:
+		RequiresCondition: !mutating
+		Delay: 10
+	SpawnActorOnDeath@GMUT:
+		Actor: brut
+		OwnerType: Victim
+		SpawnAfterDefeat: false
+	-UpdatesPlayerStatistics:
+	-AutoTarget:
+	-AutoTargetPriority@DEFAULT:
+	-AutoTargetPriority@ATTACKANYTHING:
+	-AttackMove:
+	-Buildable:
+	-Selectable:
+	-Armament@PRIMARY:
+	-Armament@SECONDARY:
+	-AttackFrontal:
+	-AttackSounds:
+	-WithInfantryBody:
+	-WithDeathAnimation:
 
 SHAD:
 	Inherits: ^Soldier

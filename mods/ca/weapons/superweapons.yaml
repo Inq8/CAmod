@@ -199,6 +199,8 @@ GeneticMutationBomb:
 
 GeneticMutation:
 	Range: 2c512
+	ValidTargets: Infantry
+	InvalidTargets: MindControlImmune
 	Projectile: PlasmaBeam
 		Duration: 7
 		Colors: ff509a08
@@ -209,12 +211,10 @@ GeneticMutation:
 		DistortionAnimation: 150
 		SegmentLength: 350
 		ZOffset: 1027
-	ValidTargets: Infantry
-	InvalidTargets: MindControlImmune
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
 		Damage: 50000
-		DamageTypes: ElectricityDeath
+		DamageTypes: MutatedDeath
 		ValidTargets: Infantry
 		InvalidTargets: MindControlImmune
 

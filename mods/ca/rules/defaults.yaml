@@ -1263,10 +1263,11 @@
 	ExternalCondition@GMUT:
 		Condition: geneticmutation
 	SpawnActorOnDeath@GMUT:
-		Actor: brut
+		Actor: brut.mutating
 		OwnerType: Killer
-		DeathType: ElectricityDeath
+		DeathType: MutatedDeath
 		SpawnAfterDefeat: false
+		SkipMakeAnimations: false
 		RequiresCondition: geneticmutation
 
 ^MiniDroneAttachable:
@@ -1735,7 +1736,7 @@
 		DeathTypes: ElectricityDeath, ChronoDeath, AtomizedDeath
 	DeathSounds@POISONED:
 		Voice: Poisoned
-		DeathTypes: PoisonDeath, ToxinDeath, RadiationDeath
+		DeathTypes: PoisonDeath, ToxinDeath, RadiationDeath, MutatedDeath
 	Parachutable:
 		FallRate: 26
 		KilledOnImpassableTerrain: true
