@@ -3009,6 +3009,7 @@ HTNK.Drone:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@IDISABLE: ^DisabledByRadarLoss
+	Inherits@HACKABLE: ^Hackable
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 	Buildable:
@@ -3031,6 +3032,7 @@ HTNK.Drone:
 	Mobile:
 		Speed: 42
 		Locomotor: heavytracked
+		PauseOnCondition: !radarenabled || empdisable || being-warped || notmobile
 	Passenger:
 		Weight: 2
 	RevealsShroud:
@@ -3055,7 +3057,7 @@ HTNK.Drone:
 		Recoil: 43
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: !radarenabled || empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	SpawnActorOnDeath:
@@ -3075,6 +3077,18 @@ HTNK.Drone:
 	-Crushable:
 	Voiced:
 		VoiceSet: DroneVoice
+	Targetable:
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
+	-CaptureManager:
+	-Capturable:
+	-CaptureNotification:
+	-Capturable@DRIVER_DEAD:
+	-GrantConditionIfOwnerIsNeutral:
+	-ChangesHealth@DRIVER_DEAD:
+	-Targetable@DRIVERKILL:
+	-Targetable@DRIVERKILLLOWHP:
+	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
+	-Targetable@AICAPTURE:
 
 MSAM:
 	Inherits: ^TankTD
@@ -5263,7 +5277,7 @@ MEMP:
 	Armor:
 		Type: Heavy
 	Mobile:
-		PauseOnCondition: deployed || disabled || empdisable || being-warped || notmobile
+		PauseOnCondition: deployed || !radarenabled || empdisable || being-warped || notmobile
 		Speed: 108
 	ChargingSelfDestruct:
 		DeployedCondition: deployed
@@ -5299,19 +5313,6 @@ MEMP:
 		Range: 5c0
 	Voiced:
 		VoiceSet: DroneVoice
-	WithDecoration@DISABLED:
-		Image: poweroff
-		Sequence: offline
-		Palette: chrome
-		RequiresCondition: disabled
-		Position: Center
-	ProximityExternalCondition@POWERSOUND:
-		Condition: disablesound
-		RequiresCondition: disabled || empdisable
-		AffectsParent: True
-		Range: 1c0
-		EnableSound: vrobon
-		DisableSound: vroboff
 	-CaptureManager:
 	-Capturable:
 	-CaptureNotification:
@@ -5322,6 +5323,11 @@ MEMP:
 	-Targetable@DRIVERKILLLOWHP:
 	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
 	-Targetable@AICAPTURE:
+	WithColoredOverlay@DRONEDISABLE:
+		RequiresCondition: (!radarenabled || empdisable) && !deployed
+	WithDecoration@DRONEDISABLE:
+		RequiresCondition: (!radarenabled || empdisable) && !deployed
+
 
 CDRN:
 	Inherits: ^VehicleTD
