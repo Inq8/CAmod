@@ -2642,7 +2642,7 @@ MTNK.Drone:
 	Inherits: ^TankTD
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@IDISABLE: ^DisableByRadarLoss
+	Inherits@IDISABLE: ^DisabledByRadarLoss
 	Inherits@SLOWCRUSH: ^SlightlySlowedByCrushing
 	Inherits@HACKABLE: ^Hackable
 	RenderSprites:
@@ -3008,7 +3008,7 @@ HTNK.Drone:
 	Inherits: ^TankTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
-	Inherits@IDISABLE: ^DisableByRadarLoss
+	Inherits@IDISABLE: ^DisabledByRadarLoss
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 	Buildable:
@@ -5243,14 +5243,14 @@ BATF.AI:
 
 MEMP:
 	Inherits: ^TankTD
-	Inherits@IDISABLE: ^DisableByRadarLoss
+	Inherits@IDISABLE: ^DisabledByRadarLoss
 	Inherits@HACKABLE: ^Hackable
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 410
 		IconPalette: chrometd
 		Prerequisites: techcenter, ~vehicles.memp, ~techlevel.high
-		Description: Self destructs to disable nearby vehicles & structures.\n  Requires power to operate.\n  Strong vs Vehicles, Buildings\n  Weak vs Infantry, Aircraft
+		Description: Remotely piloted vehicle, Self destructs to disable nearby vehicles & structures.\n  Requires active radar communication.\n  Strong vs Vehicles, Buildings\n  Weak vs Infantry, Aircraft
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -5298,10 +5298,7 @@ MEMP:
 		Color: 0000FF80
 		Range: 5c0
 	Voiced:
-		VoiceSet: RobotTankVoice
-	Power:
-		Amount: -1
-		RequiresCondition: !being-warped
+		VoiceSet: DroneVoice
 	WithDecoration@DISABLED:
 		Image: poweroff
 		Sequence: offline
