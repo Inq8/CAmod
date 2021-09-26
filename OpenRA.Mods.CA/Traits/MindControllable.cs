@@ -86,7 +86,8 @@ namespace OpenRA.Mods.CA.Traits
 			if (master.Owner == creatorOwner)
 				UnlinkMaster(self, master);
 
-			self.World.AddFrameEndTask(w => {
+			self.World.AddFrameEndTask(w =>
+			{
 				controlChanging = false;
 				revoking = false;
 			});
