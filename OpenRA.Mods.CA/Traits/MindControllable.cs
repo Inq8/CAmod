@@ -53,6 +53,7 @@ namespace OpenRA.Mods.CA.Traits
 		int controlledToken = Actor.InvalidConditionToken;
 		int revokingToken = Actor.InvalidConditionToken;
 		int revokeTicks;
+		bool revoking = false;
 
 		public Actor Master { get; private set; }
 
@@ -85,7 +86,10 @@ namespace OpenRA.Mods.CA.Traits
 			if (master.Owner == creatorOwner)
 				UnlinkMaster(self, master);
 
-			self.World.AddFrameEndTask(_ => controlChanging = false);
+			self.World.AddFrameEndTask(w => {
+				controlChanging = false;
+				revoking = false;
+			});
 		}
 
 		public void UnlinkMaster(Actor self, Actor master)
@@ -115,6 +119,7 @@ namespace OpenRA.Mods.CA.Traits
 			else
 			{
 				revokeTicks = ticks;
+				revoking = true;
 
 				if (revokingToken == Actor.InvalidConditionToken && Info.RevokingConditions.ContainsKey(masterName))
 					revokingToken = self.GrantCondition(Info.RevokingConditions[masterName]);
@@ -147,7 +152,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitPaused || IsTraitDisabled)
 				return;
 
-			if (!controlChanging)
+			if (!controlChanging || !revoking)
 				return;
 
 			if (--revokeTicks > 0)
