@@ -803,6 +803,10 @@ DOME:
 	ProductionBar:
 		ProductionType: Upgrade
 	Exit:
+	ProximityExternalCondition@DRONECONTROL:
+		Condition: radarenabled
+		Range: 300c0
+		RequiresCondition: !jammed && !disabled && !being-warped
 
 PBOX:
 	Inherits: ^Defense
@@ -3857,6 +3861,10 @@ HQ:
 	ProductionBar:
 		ProductionType: Upgrade
 	Exit:
+	ProximityExternalCondition@DRONECONTROL:
+		Condition: radarenabled
+		Range: 300c0
+		RequiresCondition: !jammed && !disabled && !being-warped
 
 EYE:
 	Inherits: ^BuildingTD
@@ -3979,6 +3987,10 @@ EYE:
 	ProductionCostMultiplier@ZocomBonus:
 		Multiplier: 90
 		Prerequisites: structures.zocom
+	ProximityExternalCondition@DRONECONTROL:
+		Condition: radarenabled
+		Range: 300c0
+		RequiresCondition: !jammed && !disabled && !being-warped
 
 REP:
 	Inherits: ^BuildingTD

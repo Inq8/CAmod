@@ -617,6 +617,12 @@ KATY:
 		RequiresCondition: lasher-move
 	SpawnActorOnDeath@LASHER:
 		RequiresCondition: !being-warped
+	AttackTurreted:
+		Voice: Attack
+	Mobile:
+		Voice: Move
+	Passenger:
+		Voice: Move
 	-Tooltip@IRAQ:
 	-Tooltip@LASHER:
 	-Armament:
@@ -634,6 +640,8 @@ KATY:
 	-GrantConditionOnPrerequisite@IRAQ:
 	-GrantConditionOnPrerequisite@LASHER:
 	-ThrowsShrapnel@small:
+	Voiced:
+		VoiceSet: LasherTankVoice
 
 4TNK:
 	Inherits: ^Tank
@@ -2581,14 +2589,6 @@ MTNK:
 		RecoilRecovery: 26
 		LocalOffset: 768,0,90
 		MuzzleSequence: muzzle
-		RequiresCondition: !drone-upgrade
-	Armament@UPG:
-		Weapon: 90mm
-		Recoil: 128
-		RecoilRecovery: 26
-		LocalOffset: 768,0,90
-		MuzzleSequence: muzzle
-		RequiresCondition: drone-upgrade
 	Armament@SECONDARY:
 		Name: secondary
 		Turret: secondary
@@ -2642,7 +2642,7 @@ MTNK.Drone:
 	Inherits: ^TankTD
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@IDISABLE: ^DisableOnLowPower
+	Inherits@IDISABLE: ^DisableByRadarLoss
 	Inherits@SLOWCRUSH: ^SlightlySlowedByCrushing
 	Inherits@HACKABLE: ^Hackable
 	RenderSprites:
@@ -2652,7 +2652,7 @@ MTNK.Drone:
 		BuildPaletteOrder: 81
 		Prerequisites: ~drone.upgrade, ~vehicles.arc, ~techlevel.low
 		IconPalette: chrometd
-		Description: Drone battle tank.\n  Requires power to operate.\n  Strong vs Vehicles\n  Weak vs Infantry, Defenses, Aircraft
+		Description: Remotely piloted battle tank.\n  Requires active radar communication.\n  Strong vs Vehicles\n  Weak vs Infantry, Defenses, Aircraft
 	Valued:
 		Cost: 775
 	Tooltip:
@@ -2666,8 +2666,7 @@ MTNK.Drone:
 		Type: Heavy
 	Mobile:
 		Speed: 66
-		PauseOnCondition: disabled || empdisable || being-warped || notmobile
-		Voice: Move
+		PauseOnCondition: !radarenabled || empdisable || being-warped || notmobile
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -2678,15 +2677,14 @@ MTNK.Drone:
 		TurnSpeed: 20
 		Offset: 0,0,20
 	Armament:
-		Weapon: 90mm
+		Weapon: 120mm
 		Recoil: 128
 		RecoilRecovery: 26
 		LocalOffset: 768,0,90
 		MuzzleSequence: muzzle
 	AttackTurreted:
 		Turrets: primary
-		PauseOnCondition: disabled || empdisable || being-warped
-		Voice: Attack
+		PauseOnCondition: !radarenabled || empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	SpawnActorOnDeath:
@@ -2697,23 +2695,7 @@ MTNK.Drone:
 	Selectable:
 		DecorationBounds: 28,28
 	Voiced:
-		VoiceSet: RobotTankVoice
-	Power:
-		Amount: -1
-		RequiresCondition: !being-warped
-	WithDecoration@DISABLED:
-		Image: poweroff
-		Sequence: offline
-		Palette: chrome
-		RequiresCondition: disabled
-		Position: Center
-	ProximityExternalCondition@POWERSOUND:
-		Condition: disablesound
-		RequiresCondition: disabled || empdisable
-		AffectsParent: True
-		Range: 1c0
-		EnableSound: vrobon
-		DisableSound: vroboff
+		VoiceSet: DroneVoice
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
 	-CaptureManager:
@@ -3021,6 +3003,78 @@ HTNK.Hover:
 	SpawnActorOnDeath:
 		Actor: HTNK.Hover.Husk
 		RequiresCondition: !being-warped && !onwater
+
+HTNK.Drone:
+	Inherits: ^TankTD
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@IDISABLE: ^DisableByRadarLoss
+	Inherits@BERSERK: ^Berserk
+	RenderSprites:
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 300
+		IconPalette: chrometd
+		Prerequisites: ~disabled, gtek, ~vehicles.htnk, ~!ionmam.upgrade, ~!hovermam.upgrade, ~techlevel.high
+		Description: Remotely piloted heavy tank with anti-air capability.\n  Requires active radar communication.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
+	Valued:
+		Cost: 1275
+	Tooltip:
+		Name: Mammoth Drone
+		GenericName: Tank
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 82000
+	Armor:
+		Type: Heavy
+	Mobile:
+		Speed: 42
+		Locomotor: heavytracked
+	Passenger:
+		Weight: 2
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Turreted:
+		TurnSpeed: 8
+	Armament@PRIMARY:
+		Weapon: 130mmTD
+		LocalOffset: 900,180,340, 900,-180,340
+		Recoil: 171
+		RecoilRecovery: 30
+		MuzzleSequence: muzzle
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: MammothTusk
+		LocalOffset: -85,384,340, -85,-384,340
+		LocalYaw: -100,100
+		Recoil: 43
+		MuzzleSequence: muzzle
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
+	WithMuzzleOverlay:
+	WithSpriteTurret:
+	SpawnActorOnDeath:
+		Actor: HTNK.Husk
+		RequiresCondition: !being-warped
+	ChangesHealth:
+		PercentageStep: 1
+		Delay: 25
+		StartIfBelow: 50
+		DamageCooldown: 150
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	Selectable:
+		DecorationBounds: 44,38,0,-4
+	Carryable:
+		LocalOffset: 0,0,500
+	-Crushable:
+	Voiced:
+		VoiceSet: DroneVoice
 
 MSAM:
 	Inherits: ^TankTD
@@ -4085,6 +4139,11 @@ XO:
 	Mobile:
 		TurnSpeed: 40
 		Speed: 49
+		Voice: Move
+	Passenger:
+		CustomPipType: red
+		Weight: 2
+		Voice: Move
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -4092,7 +4151,7 @@ XO:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Voiced:
-		VoiceSet: GenericVoice
+		VoiceSet: GhostVoice
 	WithMoveAnimation:
 	WithAttackAnimation:
 		Sequence: shoot
@@ -4106,6 +4165,7 @@ XO:
 		LocalOffset: 400,220,180
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		Voice: Attack
 	WithMuzzleOverlay:
 	Parachutable:
 		FallRate: 130
@@ -4868,6 +4928,12 @@ MSAR:
 		Range: 18c0
 		RequiresCondition: deployed && !(empdisable || being-warped)
 		TrailCount: 3
+	ExternalCondition@JAMMED:
+		Condition: jammed
+	ProximityExternalCondition@DRONECONTROL:
+		Condition: radarenabled
+		Range: 300c0
+		RequiresCondition: deployed && !(jammed || empdisable || being-warped)
 
 PTNK:
 	Inherits: ^Tank
@@ -5177,7 +5243,7 @@ BATF.AI:
 
 MEMP:
 	Inherits: ^TankTD
-	Inherits@IDISABLE: ^DisableOnLowPower
+	Inherits@IDISABLE: ^DisableByRadarLoss
 	Inherits@HACKABLE: ^Hackable
 	Buildable:
 		Queue: Vehicle
@@ -5198,7 +5264,6 @@ MEMP:
 		Type: Heavy
 	Mobile:
 		PauseOnCondition: deployed || disabled || empdisable || being-warped || notmobile
-		Voice: Move
 		Speed: 108
 	ChargingSelfDestruct:
 		DeployedCondition: deployed
@@ -5209,7 +5274,6 @@ MEMP:
 		DetonationWeapon: MEMP
 		ChargeSound: mobempcharge1.aud
 		DetonationSound: mobemp1.aud
-		Voice: Attack
 	ChronoshiftableWithSpriteEffect:
 		RequiresCondition: !being-warped && !deployed
 	RevealsShroud:

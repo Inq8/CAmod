@@ -3185,6 +3185,19 @@
 		Modifier: 0
 	Power:
 		RequiresCondition: !disabled
+		
+^DisabledByRadarLoss:
+	ExternalCondition@DRONECONTROL:
+		Condition: radarenabled
+	WithColoredOverlay@DRONEDISABLE:
+		RequiresCondition: !radarenabled || empdisable
+		Palette: disabled
+	WithDecoration@DRONEDISABLE:
+		Image: poweroff
+		Sequence: offline
+		Palette: chrome
+		RequiresCondition: !radarenabled || empdisable
+		Position: Center
 
 ^Selectable:
 	Selectable:

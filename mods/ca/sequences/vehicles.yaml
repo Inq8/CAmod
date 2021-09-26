@@ -246,6 +246,7 @@ mtnk.nod.chrono:
 	idle: 3tnky
 		ZOffset: -512
 	turret: 3tnky
+		Start: 32
 		ZOffset: -512
 
 4tnk:
@@ -842,6 +843,18 @@ htnk.hover:
 		Length: 5
 	icon: htnkhovericnh
 
+htnk.drone:
+	Inherits: ^VehicleOverlays
+	idle: htnk
+		Facings: 32
+		UseClassicFacings: True
+	turret: mdrone
+		Facings: 32
+		UseClassicFacings: True
+	muzzle: gunfire2
+		Length: 5
+	icon: mdroneicnh
+
 htnk.destroyed:
 	Inherits: ^VehicleOverlays
 	idle: htnk
@@ -857,6 +870,10 @@ htnk.destroyed:
 		UseClassicFacings: True
 		ZOffset: -512
 	turret-ion: htnktion
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512
+	turret-drone: mdrone
 		Facings: 32
 		UseClassicFacings: True
 		ZOffset: -512

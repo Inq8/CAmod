@@ -708,7 +708,7 @@ HTNK.ION.Husk:
 		Image: htnk.destroyed
 		PlayerPalette: overlayplayertd
 
-HTNK.hover.Husk:
+HTNK.HOVER.Husk:
 	Inherits: ^HuskTD
 	Tooltip:
 		Name: Husk (Hover Mammoth Tank)
@@ -720,6 +720,20 @@ HTNK.hover.Husk:
 		IntoActor: htnk.hover
 	WithFacingSpriteBody:
 		Sequence: idle-hover
+	RenderSprites:
+		Image: htnk.destroyed
+		PlayerPalette: overlayplayertd
+
+HTNK.DRONE.Husk:
+	Inherits: ^HuskTD
+	Tooltip:
+		Name: Husk (Mammoth Drone)
+	ThrowsParticle@turret:
+		Anim: turret-drone
+	TransformOnCapture:
+		IntoActor: htnk.drone
+	InfiltrateForTransform:
+		IntoActor: htnk.drone
 	RenderSprites:
 		Image: htnk.destroyed
 		PlayerPalette: overlayplayertd
