@@ -615,6 +615,20 @@ NHAW:
 		VoiceSet: CarryAllVoice
 	AppearsOnRadar:
 		ValidRelationships: Ally
+	Armament@PRIMARY:
+		Weapon: M60mgJJ
+		LocalOffset: 1000,0,-100
+		MuzzleSequence: muzzle
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: AttackAnything
+	AttackAircraft:
+		FacingTolerance: 80
+		AttackType: Hover
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
+	WithMuzzleOverlay:
 
 NHAW.paradrop:
 	Inherits: ^Helicopter

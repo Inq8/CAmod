@@ -506,190 +506,97 @@ e3:
 
 u3:
 	Inherits: ^CommonDeaths
-	stand: n3
+	stand: u3
 		Facings: 8
-	stand2: n3
+	stand2: u3
 		Start: 8
 		Facings: 8
-	run: n3
+	run: u3
 		Start: 16
 		Length: 6
 		Facings: 8
 		Tick: 100
-	shoot: n3
+	shoot: u3
 		Start: 64
 		Length: 8
 		Facings: 8
-	liedown: n3
+	liedown: u3
 		Start: 128
 		Length: 2
 		Facings: 8
-	standup: n3
+	standup: u3
 		Start: 176
 		Length: 2
 		Facings: 8
-	prone-stand: n3
+	prone-stand: u3
 		Start: 144
 		Stride: 4
 		Facings: 8
-	prone-stand2: n3
+	prone-stand2: u3
 		Start: 144
 		Stride: 4
 		Facings: 8
-	prone-run: n3
+	prone-run: u3
 		Start: 144
 		Length: 4
 		Facings: 8
 		Tick: 100
-	prone-shoot: n3
+	prone-shoot: u3
 		Start: 192
-		Length: 10
+		Length: 8
 		Facings: 8
+	idle1: u3
+		Start: 256
+		Length: 16
+		Tick: 120
+	idle2: u3
+		Start: 272
+		Length: 16
+		Tick: 120
+	cheer: u3
+		Start: 436
+		Length: 3
+		Facings: 8
+		Tick: 120
+	die1: u3
+		Start: 381
+		Length: 9
+		Tick: 80
+	die2: u3
+		Start: 390
+		Length: 8
+		Tick: 80
+	die3: u3
+		Start: 398
+		Length: 8
+		Tick: 80
+	die4: u3
+		Start: 406
+		Length: 12
+		Tick: 80
+	die5: u3
+		Start: 418
+		Length: 18
+		Tick: 80
+	die7: u3
+		Start: 367
+		Length: 10
+		Tick: 80
 	deployed: u3bunker
 		Frames: 0, 9, 16, 24, 32, 40, 48, 56
 		Facings: 8
 	deploy-shoot: u3bunker
 		Length: 8
 		Facings: 8
-	idle1: n3
-		Start: 274
-		Length: 12
-		Tick: 120
-	idle2: n3
-		Start: 289
-		Length: 14
-		Tick: 120
-	cheer: n3
-		Start: 476
-		Length: 3
-		Facings: 8
-		Tick: 120
-	die1: n3
-		Start: 397
-		Length: 9
-		Tick: 80
-	die2: n3
-		Start: 406
-		Length: 8
-		Tick: 80
-	die3: n3
-		Start: 414
-		Length: 8
-		Tick: 80
-	die4: n3
-		Start: 422
-		Length: 12
-		Tick: 80
-	die5: n3
-		Start: 434
-		Length: 18
-		Tick: 80
-	die7: n3
-		Start: 382
-		Length: 11
-		Tick: 80
+	deploy: u3make
+		Length: *
+	empty: empty
 	chrono-overlay: chronofade_small
 		Length: *
 		BlendMode: Additive
 		Offset: 0, 0
 		UseTilesetCode: false
 		ZOffset: 512
-		Tick: 80
-	stand-cryo: e3cr
-		Facings: 8
-	stand-cryo2: e3cr
-		Start: 8
-		Facings: 8
-	run-cryo: e3cr
-		Start: 16
-		Length: 6
-		Facings: 8
-		Tick: 100
-	shoot-cryo: e3cr
-		Start: 64
-		Length: 8
-		Facings: 8
-	liedown-cryo: e3cr
-		Start: 128
-		Length: 2
-		Facings: 8
-	standup-cryo: e3cr
-		Start: 176
-		Length: 2
-		Facings: 8
-	prone-stand-cryo: e3cr
-		Start: 144
-		Stride: 4
-		Facings: 8
-	prone-stand-cryo2: e3cr
-		Start: 144
-		Stride: 4
-		Facings: 8
-	prone-run-cryo: e3cr
-		Start: 144
-		Length: 4
-		Facings: 8
-		Tick: 100
-	prone-shoot-cryo: e3cr
-		Start: 192
-		Length: 10
-		Facings: 8
-	idle-cryo1: e3cr
-		Start: 274
-		Length: 12
-		Tick: 120
-	idle-cryo2: e3cr
-		Start: 289
-		Length: 14
-		Tick: 120
-	cheer-cryo: e3cr
-		Start: 476
-		Length: 3
-		Facings: 8
-		Tick: 120
-	die-cryo1: e3cr
-		Start: 397
-		Length: 9
-		Tick: 80
-	die-cryo2: e3cr
-		Start: 406
-		Length: 8
-		Tick: 80
-	die-cryo3: e3cr
-		Start: 414
-		Length: 8
-		Tick: 80
-	die-cryo4: e3cr
-		Start: 422
-		Length: 12
-		Tick: 80
-	die-cryo5: e3cr
-		Start: 434
-		Length: 18
-		Tick: 80
-	die-cryo7: e3cr
-		Start: 382
-		Length: 11
-		Tick: 80
-	die-cryo6: electroTD
-		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			DESERT: TEMPERAT
-			INTERIOR: TEMPERAT
-			SNOW: TEMPERAT
-			JUNGLE: TEMPERAT
-			WINTER: TEMPERAT
-			DUNE: TEMPERAT
-	die-cryo8: chronozapTD
-		Length: *
-		BlendMode: Alpha
-	die-cryo9: poisonTD
-		Length: *
-	die-cryo10: poisonTD
-		Length: *
-	die-cryo11: frozen
-		Length: *
 		Tick: 80
 	icon: u3icon
 

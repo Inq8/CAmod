@@ -83,7 +83,7 @@ E1:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 10
-		Prerequisites: ~infantry.ra, ~techlevel.infonly
+		Prerequisites: ~infantry.ra, ~!infantry.usa, ~techlevel.infonly
 		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
 		Cost: 100
@@ -166,30 +166,6 @@ E1R1:
 		InitialLevels: 1
 	-Buildable:
 
-E1.squad:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
-	ProvidesPrerequisite@squadname:
-	Tooltip:
-		Name: Squad: G.I.
-	Buildable:
-		Queue: Infantry
-		BuildPaletteOrder: 10
-		Prerequisites: ~anyradar, ~infantry.usa, ~techlevel.high
-		Description: Airdrop 8 General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: squad.gi
-	ProduceActorPowerCA:
-		Actors: powerproxy.paratroopers.us
-		Type: Infantry
-		OneShot: true
-		AutoFire: true
-		AllowMultiple: true
-		OrderName: spawnpara1
-
 E2:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -241,7 +217,7 @@ E3:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 20
-		Prerequisites: ~infantry.ra, ~!structure.usa, ~techlevel.infonly
+		Prerequisites: ~infantry.ra, ~!infantry.usa, ~techlevel.infonly
 		Description: Anti-tank/anti-aircraft infantry.\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
 	Valued:
 		Cost: 300
@@ -348,67 +324,55 @@ U3:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@BERSERK: ^Berserk
+	Inherits@BOTHELPER: ^BotCaptureHelper
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 20
-		Prerequisites: ~infantry.usa, ~structure.usa, ~techlevel.infonly
-		Description: Anti-tank/anti-aircraft infantry.\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
+		Prerequisites: ~infantry.usa, ~techlevel.infonly
+		Description: Veteran General-purpose infantry.\n  Can deploy into Anti-tank/anti-aircraft bunker\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
 	Selectable:
 		Class: E3
 	Valued:
-		Cost: 300
+		Cost: 350
 	Tooltip:
 		Name: Guardian G.I
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 4000
+		HP: 6500
 	Mobile:
 		Speed: 38
 		Voice: Move
+		PauseOnCondition: deploying && !undeployed
 	Armament@PRIMARY:
-		Weapon: RedEye
+		Weapon: M14
 		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade
-	Armament@PRIMARYUPG:
-		Weapon: RedEye.CRYO
+		RequiresCondition: !deployed
+	Armament@PRIMARYDEP:
+		Weapon: RedEyeGI
 		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade
-	Armament@SECONDARY:
+		RequiresCondition: deployed
+	Armament@SECONDARYDEP:
 		Name: secondary
-		Weapon: Dragon
+		Weapon: DragonGI
 		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade
-	Armament@SECONDARYUPG:
-		Name: secondary
-		Weapon: Dragon.CRYO
-		LocalOffset: 0,0,400
-		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade
+		RequiresCondition: deployed
 	Armament@GarrisonAA:
 		Name: mountedaa
-		Weapon: RedEyeE
+		Weapon: RedEyeGI
 		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade
-	Armament@GarrisonAAUPG:
-		Name: mountedaa
-		Weapon: RedEye.CRYO
-		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade
 	Armament@Garrison:
 		Name: mounted
-		Weapon: DragonE
+		Weapon: DragonGI
 		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade
-	Armament@GarrisonUPG:
-		Name: mounted
-		Weapon: DragonE.CRYO
-		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade
+	Armament@AIDummyAiming: ## Hack: Make AI deploy to attack air
+		PauseOnCondition: being-warped
+		RequiresCondition: botowner && !deployed
+		Weapon: AirDummyAim
 	AmmoPool:
 		Ammo: 1
 		AmmoCondition: ammo
@@ -418,7 +382,7 @@ U3:
 	TakeCover:
 		ProneOffset: 384,0,-395
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped && !undeployed
 		Voice: Attack
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -432,17 +396,13 @@ U3:
 		UndeployedCondition: undeployed
 		UndeployOnMove: True
 		Voice: Action
+		DeploySounds: igidepa.aud, igidepb.aud
+		UndeploySounds: igidepa.aud, igidepb.aud
 		PauseOnCondition: being-warped
+		SmartDeploy: True
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-		RequiresCondition: !cryr-upgrade && !deployed
-	WithInfantryBody@CRYO:
-		IdleSequences: idle-cryo1, idle-cryo2
-		StandSequences: stand-cryo, stand-cryo2
-		AttackSequences: shoot-cryo
-		DefaultAttackSequence: shoot-cryo
-		MoveSequence: run-cryo
-		RequiresCondition: cryr-upgrade && !deployed
+		RequiresCondition: !cryr-upgrade && undeployed
 	WithInfantryBody@Deployed:
 		-IdleSequences:
 		StandSequences: deployed
@@ -450,25 +410,16 @@ U3:
 		DefaultAttackSequence: deploy-shoot
 		-MoveSequence:
 		RequiresCondition: deployed
-	WithDeathAnimation:
-		RequiresCondition: !cryr-upgrade
-	WithDeathAnimation@CRYO:
-		RequiresCondition: cryr-upgrade
-		DeathSequence: die-cryo
-		DeathSequencePalette: overlayplayertd
-		DeathTypes:
-			DefaultDeath: 1
-			BulletDeath: 2
-			SmallExplosionDeath: 3
-			ExplosionDeath: 4
-			FireDeath: 5
-			ElectricityDeath: 6
-			PoisonDeath: 7
-			ChronoDeath: 8
-			ToxinDeath: 9
-			RadiationDeath: 10
-			FrozenDeath: 11
-		CrushedSequence: die-crushed
+	WithSpriteBody@deployed:
+		Sequence: empty
+		RequiresCondition: !undeployed
+		Name: deployedbody
+	WithMakeAnimation:
+		BodyNames: deployedbody
+		Sequence: deploy
+	RejectsOrders@deployment:
+		Reject: AttackMove, AssaultMove
+		RequiresCondition: !botowner && deployed && !berserk
 	Convertible:
 		SpawnActors: N3C
 	AttackMove:
@@ -479,8 +430,16 @@ U3:
 		Voice: Move
 	Voiced:
 		VoiceSet: GGIVoice
+	Crushable:
+		RequiresCondition: undeployed
+	AutoDeployer@AI:
+		RequiresCondition: botowner && !deployed && !parachute
+		DeployChance: 100
+		DeployTrigger: Attack
+		DeployTicks: 5
+		UndeployTicks: 50
 
-E3.squad:
+U3.squad:
 	AlwaysVisible:
 	Interactable:
 	ScriptTriggers:
@@ -497,7 +456,7 @@ E3.squad:
 	RenderSprites:
 		Image: squad.guardian
 	ProduceActorPowerCA:
-		Actors: powerproxy.paratroopers.us2
+		Actors: powerproxy.paratroopers.us
 		Type: Infantry
 		OneShot: true
 		AutoFire: true
@@ -2235,6 +2194,7 @@ E8:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@BOTHELPER: ^BotCaptureHelper
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -2323,6 +2283,13 @@ E8:
 		-RequiresCondition:
 	-WithDecoration@HAZMAT:
 	-SpeedMultiplier@HAZMATSOVIET:
+	AutoDeployer@AI:
+		RequiresCondition: botowner && !deployed && !parachute
+		DeployChance: 20
+		DeployTrigger: Attack
+		DeployTicks: 5
+		UndeployTicks: 50
+		SmartDeploy: True
 
 N1C:
 	Inherits: ^Cyborg
@@ -3026,3 +2993,4 @@ SEAL:
 		Cursor: c4
 		OutsideRangeCursor: c4
 		Name: secondary
+	-VoiceAnnouncement:

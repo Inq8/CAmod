@@ -626,34 +626,11 @@ powerproxy.paratroopers2:
 		ArrowSequence: arrow
 		ClockSequence: clock
 		CircleSequence: circles
-
+		
 powerproxy.paratroopers.us:
 	AlwaysVisible:
 	ParatroopersPower:
-		Icon: airborne
-		SquadSize: 1
-		UnitType: c17
-		Description: G.I Paratroopers (Single Use)
-		LongDesc: A Cargo Plane drops a squad of G.I's\nanywhere on the map.
-		OneShot: true
-		AllowMultiple: true
-		DropItems: E1,E1,E1,E1,E1,E1,E1,E1
-		SelectTargetSpeechNotification: SelectTarget
-		EndChargeSpeechNotification: Reinforce
-		LaunchSpeechNotification: ReinforcementsArrived
-		IncomingSpeechNotification: EnemyPlanesApproaching
-		AllowImpassableCells: false
-		QuantizedFacings: 8
-		CameraActor: camera.paradrop
-		DisplayBeacon: true
-		BeaconPoster: pinficon
-		ArrowSequence: arrow
-		ClockSequence: clock
-		CircleSequence: circles
-		
-powerproxy.paratroopers.us2:
-	AlwaysVisible:
-	ParatroopersPower:
+		OrderName: airborne
 		Icon: airborne
 		SquadSize: 1
 		UnitType: c17
@@ -661,7 +638,7 @@ powerproxy.paratroopers.us2:
 		LongDesc: A Cargo Plane drops a squad of Guardian G.I's\nanywhere on the map.
 		OneShot: true
 		AllowMultiple: true
-		DropItems: E3,E3,E3,E3,E3
+		DropItems: U3,U3,U3,U3,U3,U3
 		SelectTargetSpeechNotification: SelectTarget
 		EndChargeSpeechNotification: Reinforce
 		LaunchSpeechNotification: ReinforcementsArrived
@@ -674,6 +651,8 @@ powerproxy.paratroopers.us2:
 		ArrowSequence: arrow
 		ClockSequence: clock
 		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
 
 powerproxy.airstrike:
 	AlwaysVisible:
