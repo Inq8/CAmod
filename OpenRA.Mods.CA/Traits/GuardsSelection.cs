@@ -41,7 +41,6 @@ namespace OpenRA.Mods.CA.Traits
 			if (order.Queued)
 				return;
 
-			var targetPosition = order.Target.CenterPosition;
 			var validOrders = new HashSet<string> { "AttackMove", "AssaultMove", "Attack", "ForceAttack", "Move" };
 
 			if (!validOrders.Contains(order.OrderString))
@@ -52,7 +51,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			var world = self.World;
 
-			if (order.Target.Type == TargetType.Actor && order.Target.Actor.Owner == world.LocalPlayer)
+			if (order.Target.Type == TargetType.Actor && (order.Target.Actor.Owner == world.LocalPlayer || !order.Target.Actor.IsInWorld || order.Target.Actor.IsDead))
 				return;
 
 			var guardActors = world.Selection.Actors
@@ -63,7 +62,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (!guardActors.Any())
 				return;
 
-			var mainGuardActor = guardActors.ClosestTo(targetPosition);
+			var mainGuardActor = guardActors.ClosestTo(order.Target.CenterPosition);
 			if (mainGuardActor == null)
 				return;
 
