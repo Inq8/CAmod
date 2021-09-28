@@ -639,6 +639,7 @@ HACK:
 		Speed: 56
 		Voice: Move
 		PauseOnCondition: !undeployed && being-warped
+		RequireForceMoveCondition: !undeployed
 	RevealsShroud:
 		Range: 5c0
 	Passenger:
@@ -2652,7 +2653,7 @@ SGLI.deployed:
 		Moves: true
 		MaximumSpinSpeed: 0
 		Explosion:
-		Velocity: 60
+		Velocity: 90
 	RenderSprites:
 		Image: sgli
 	SpawnActorOnDeath:
@@ -2662,7 +2663,7 @@ SGLI.deployed:
 		Actor: sgli.discarded
 		RequiresCondition: !being-warped
 	Aircraft:
-		Speed: 80
+		Speed: 45
 	AmbientSoundCA:
 		SoundFiles: chute1.aud
 		Interval: 6000

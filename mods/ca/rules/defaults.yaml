@@ -796,8 +796,6 @@
 		BlinkInterval: 32
 		Margin: -1, 7
 		BlinkPattern: Off, On
-		BlinkPatterns:
-			rank-elite || rank-veteran: Off, On
 	WithDecoration@RANK-1:
 		BlinkInterval: 32
 		BlinkPatterns:
@@ -1887,12 +1885,17 @@
 		DamageCooldown: 150
 		RequiresCondition: ontib
 		DamageTypes: ToxinDeath
-	WithDecoration@THEAL:
-		Image: pips
-		Sequence: medic
-		Palette: effect
-		Position: BottomLeft
-		RequiresCondition: ontib
+	WithDecoration@REDCROSS:
+		RequiresCondition: ontib || (hospitalheal && damaged)
+	WithDecoration@RANK-1:
+		BlinkPatterns:
+			ontib || (damaged && hospitalheal): On, Off
+	WithDecoration@RANK-2:
+		BlinkPatterns:
+			ontib || (damaged && hospitalheal): On, Off
+	WithDecoration@RANK-ELITE:
+		BlinkPatterns:
+			ontib || (damaged && hospitalheal): On, Off
 	-GrantConditionOnPrerequisite@BIO:
 	-GrantConditionOnPrerequisite@HAZMAT:
 	-WithDecoration@HAZMAT:
@@ -3185,7 +3188,7 @@
 		Modifier: 0
 	Power:
 		RequiresCondition: !disabled
-		
+
 ^DisabledByRadarLoss:
 	ExternalCondition@DRONECONTROL:
 		Condition: radarenabled
