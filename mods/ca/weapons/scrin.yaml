@@ -1309,13 +1309,12 @@ FeederBeam:
 	Inherits: LeecherBeam
 	-StartBurstReport:
 	Report: feeder-fire1.aud
-	Range: 5c0
 	ReloadDelay: 25
 	-Burst:
 	Projectile: PlasmaBeam
 		Colors: 99000008
 	Warhead@1Dam: SpreadDamage
-		Damage: 1875
+		Damage: 2500
 		Spread: 128
 		Versus:
 			Light: 40
@@ -1396,6 +1395,7 @@ FeederTargeting:
 	Range: 1c512
 	Projectile: InstantHit
 	Warhead@1Dam: TargetDamage
+		ValidRelationships: Enemy, Neutral
 
 FeederExplode:
 	ValidTargets: Ground, Water
