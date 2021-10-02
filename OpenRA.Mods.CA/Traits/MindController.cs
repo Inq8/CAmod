@@ -49,8 +49,11 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Ticks attacking taken to mind control something.")]
 		public readonly int TicksToControl = 0;
 
-		[Desc("Ticks attacking taken for mind control to wear off after controller dies.")]
+		[Desc("Ticks taken for mind control to wear off after controller loses control.")]
 		public readonly int TicksToRevoke = 0;
+
+		[Desc("Ticks taken for mind control to wear off after controller dies. Use -1 to use TicksToRevoke value.")]
+		public readonly int TicksToRevokeOnDeath = -1;
 
 		public override object Create(ActorInitializer init) { return new MindController(init.Self, this); }
 	}
@@ -179,6 +182,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (TargetChanged() && Info.TicksToControl > 0)
 			{
 				ResetProgress(self);
+				ReleaseSlaves(self, Info.TicksToRevoke);
 				return;
 			}
 
@@ -263,17 +267,19 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyKilled.Killed(Actor self, AttackInfo e)
 		{
-			ReleaseSlaves(self, Info.TicksToRevoke);
+			var ticksToRevoke = Info.TicksToRevokeOnDeath > -1 ? Info.TicksToRevokeOnDeath : Info.TicksToRevoke;
+			ReleaseSlaves(self, ticksToRevoke);
 		}
 
 		void INotifyActorDisposing.Disposing(Actor self)
 		{
-			ReleaseSlaves(self, Info.TicksToRevoke);
+			var ticksToRevoke = Info.TicksToRevokeOnDeath > -1 ? Info.TicksToRevokeOnDeath : Info.TicksToRevoke;
+			ReleaseSlaves(self, ticksToRevoke);
 		}
 
 		protected override void TraitDisabled(Actor self)
 		{
-			ReleaseSlaves(self, 0);
+			ReleaseSlaves(self, Info.TicksToRevoke);
 		}
 
 		bool TargetChanged()

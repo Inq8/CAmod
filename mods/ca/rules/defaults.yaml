@@ -1273,8 +1273,8 @@
 	ChangesHealth@HACKED:
 		Step: -2000
 		StartIfBelow: 101
-		Delay: 25
-		RequiresCondition: hacked
+		Delay: 20
+		RequiresCondition: hacked && !restoring
 
 ^GeneticallyMutatable:
 	ExternalCondition@GMUT:
@@ -1298,7 +1298,7 @@
 		PercentageStep: 1
 		Delay: 25
 		StartIfBelow: 100
-		DamageCooldown: 200
+		DamageCooldown: 75
 		RequiresCondition: mdrn-attached
 	ExternalCondition@MINIDRONE:
 		Condition: mdrn-attached
