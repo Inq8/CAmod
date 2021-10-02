@@ -58,15 +58,17 @@
 			Concrete: 100
 			Brick: 100
 	Warhead@2Dam: SpreadDamage
-		Spread: 0c64
-		Falloff: 100, 30
+		Spread: 128
+		Falloff: 100, 50, 14, 0
 		ValidTargets: AirSmall
+		ValidRelationships: Enemy, Neutral
 		Versus:
 			None: 100
 			Wood: 100
 			Light: 100
 			Concrete: 100
 			Brick: 100
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air
 		ImpactActors: false
@@ -81,10 +83,6 @@
 		LockOnInaccuracy: 0
 		RangeLimit: 12c0
 		AllowSnapping: true
-	Warhead@2Dam: SpreadDamage
-		Range: 0, 0c64, 0c256, 1c256
-		Falloff: 100, 70, 30, 10
-		ValidTargets: AirSmall
 
 Maverick:
 	Inherits: ^AntiGroundMissile
@@ -442,12 +440,10 @@ MammothTusk:
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Dam: SpreadDamage
 		Damage: 2000
-		Spread: 0c511
+		Spread: 128
+		Falloff: 100, 50, 14, 0
 		ValidTargets: AirSmall
-		Versus:
-			None: 100
-			Light: 35
-			Heavy: 35
+		ValidRelationships: Enemy, Neutral
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: kaboom15.aud
@@ -506,7 +502,7 @@ Nike:
 		ValidTargets: Air, ICBM
 	Warhead@2Dam: SpreadDamage
 		Damage: 6750
-		Range: 0, 0c64, 0c256, 4c256
+		Range: 0, 0c64, 0c256, 2c256
 		Falloff: 100, 70, 30, 10
 		ValidTargets: AirSmall
 	Warhead@3Eff: CreateEffect
@@ -528,9 +524,8 @@ RedEye:
 	Warhead@2Dam: SpreadDamage
 		Damage: 4000
 		-Range:
-		Spread: 0c48
-		Falloff: 100, 25
-		ValidTargets: AirSmall
+		Spread: 128
+		Falloff: 100, 50, 14, 0
 
 RedEye.TibCore:
 	Inherits: RedEye
@@ -646,9 +641,11 @@ StingerAA:
 			Brick: 100
 	Warhead@2Dam: SpreadDamage
 		Damage: 3375
-		Range: 0, 0c32, 0c64
-		Falloff: 100, 15, 5
+		Spread: 128
+		Falloff: 100, 50, 14, 0
 		ValidTargets: AirSmall
+		ValidRelationships: Enemy, Neutral
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion_air
 		ImpactActors: false
@@ -1023,9 +1020,6 @@ BikeRocketsAA:
 		Damage: 3000
 	Warhead@2Dam: SpreadDamage
 		Damage: 3000
-		Range: 0, 0c64, 0c256, 1c256
-		Falloff: 100, 70, 30, 10
-		ValidTargets: AirSmall
 
 BikeRockets.TibCore:
 	Inherits: BikeRockets
@@ -1093,9 +1087,6 @@ IFVRocketsAA:
 		Damage: 2800
 	Warhead@2Dam: SpreadDamage
 		Damage: 2800
-		Range: 0, 0c64, 0c256, 1c256
-		Falloff: 100, 70, 30, 10
-		ValidTargets: AirSmall
 
 IFVRocketsE:
 	Inherits: IFVRockets
@@ -1132,15 +1123,14 @@ IFVRocketsAAE:
 		Damage: 3900
 	Warhead@2Dam: SpreadDamage
 		Damage: 3900
-		Range: 0, 0c64, 0c256, 1c256
-		Falloff: 100, 70, 30, 10
-		ValidTargets: AirSmall
 
 IFVRocketsAAE.CRYO:
 	Inherits: IFVRocketsAAE
 	Projectile: MissileCA
 		Image: cryomiss
 	Warhead@1Dam: SpreadDamage
+		Damage: 2950
+	Warhead@2Dam: SpreadDamage
 		Damage: 2950
 	Warhead@3Eff: CreateEffect
 		Explosions: cryohit
@@ -1270,9 +1260,6 @@ IFVRocketsAAE.CRYO:
 		-Range:
 	Warhead@2Dam: SpreadDamage
 		Damage: 1400
-		Range: 0, 0c64, 0c256, 1c256
-		Falloff: 100, 70, 30, 10
-		ValidTargets: AirSmall
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: xplos.aud
 
@@ -1349,9 +1336,6 @@ StnkMissileAA:
 		Damage: 4000
 	Warhead@2Dam: SpreadDamage
 		Damage: 4000
-		Range: 0, 0c64, 0c256, 1c256
-		Falloff: 100, 70, 30, 10
-		ValidTargets: AirSmall
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: xplos.aud
 
@@ -1550,9 +1534,6 @@ ScrinTorpAA:
 		Damage: 3550
 	Warhead@2Dam: SpreadDamage
 		Damage: 3550
-		Range: 0, 0c64, 0c256, 1c256
-		Falloff: 100, 70, 30, 10
-		ValidTargets: AirSmall
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: expnew17.aud
 	Warhead@green: GrantExternalCondition
