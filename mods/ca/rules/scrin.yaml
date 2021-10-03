@@ -163,6 +163,8 @@ VEHICLES.SCRIN:
 		IntoActor: feed
 	ExternalCondition@FEEDER:
 		Condition: feedermutation
+	SpawnActorOnDeath@GMUT:
+		Actor: gscr.mutating
 
 S1:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -496,6 +498,41 @@ SMEDI:
 		TargetTypes: Ground, Infantry, ChaosImmune
 	GuardsSelection:
 		ValidTargets: Infantry
+
+GSCR:
+	Inherits: BRUT
+	RenderSprites:
+		Image: gscr
+		PlayerPalette: overlayplayerscrin
+	Voiced:
+		VoiceSet: GiantScrinVoice
+	WithDeathAnimation:
+		DeathSequencePalette: overlayplayerscrin
+	-Buildable:
+	Tooltip:
+		Name: Giant Scrin
+	-GrantConditionOnTerrain@ONTIB:
+	-GrantStackingCondition@TIBEXPOSED:
+	-DamagedByTerrain@TIBDAMAGE:
+	WithInfantryBody:
+		MoveSequence: run
+		StandSequences: stand
+		DefaultAttackSequence: bash
+		IdleSequences: idle1, idle2, idle3, idle4
+	AttackSounds:
+		Sounds: gscr-attack1.aud, gscr-attack2.aud
+
+GSCR.Mutating:
+	Inherits: BRUT.Mutating
+	SpawnActorOnDeath@GMUT:
+		Actor: gscr
+	RenderSprites:
+		Image: gscr
+		PlayerPalette: overlayplayerscrin
+	WithDeathAnimation:
+		DeathSequencePalette: overlayplayerscrin
+	Tooltip:
+		Name: Giant Scrin
 
 MAST:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
