@@ -1624,18 +1624,22 @@ STMR:
 	ReloadAmmoPoolCA:
 		Delay: 750
 		Count: 15
-		DelayOnFire: 750
-		DelayAfterReset: 60
+		DelayOnFire: 75
+		DelayAfterReset: 90
 		ShowSelectionBar: true
 		SelectionBarColor: ff00ff
+		RequiresCondition: !srep-rearm || airborne
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 8c0
-	FirepowerMultiplier@DEPLETED:
-		RequiresCondition: !ammo
-		Modifier: 30
 	Rearmable:
-		RearmActors: srep, hpad, hpad.td
+		RearmActors: srep
+	ExternalCondition@SREPREARM:
+		Condition: srep-rearm
+	ReloadAmmoPool@SREPREARM:
+		Delay: 250
+		Count: 15
+		RequiresCondition: srep-rearm && !airborne
 
 ENRV:
 	Inherits: ^Helicopter
@@ -1728,12 +1732,19 @@ ENRV:
 	ReloadAmmoPoolCA:
 		Delay: 750
 		Count: 4
-		DelayOnFire: 750
+		DelayOnFire: 375
 		DelayAfterReset: 60
 		ShowSelectionBar: true
 		SelectionBarColor: ff00ff
+		RequiresCondition: !srep-rearm || airborne
 	Rearmable:
-		RearmActors: srep, hpad, hpad.td
+		RearmActors: srep
+	ExternalCondition@SREPREARM:
+		Condition: srep-rearm
+	ReloadAmmoPool@SREPREARM:
+		Delay: 250
+		Count: 4
+		RequiresCondition: srep-rearm && !airborne
 
 DEVA:
 	Inherits: ^Helicopter
@@ -3471,6 +3482,10 @@ SREP:
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair
+	ProximityExternalCondition@SREPREARM:
+		Condition: srep-rearm
+		ValidRelationships: Ally
+		Range: 2c0
 	ProximityExternalCondition@AIRCRAFTREPAIR:
 		Condition: aircraft-repair
 		Range: 10c0
