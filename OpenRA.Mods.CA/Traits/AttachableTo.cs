@@ -30,7 +30,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new AttachableTo(init, this); }
 	}
 
-	public class AttachableTo : INotifyKilled, INotifyActorDisposing, INotifyVisualPositionChanged
+	public class AttachableTo : INotifyKilled, INotifyOwnerChanged, INotifyActorDisposing, IResolveOrder, INotifyStanceChanged
 	{
 		public readonly AttachableToInfo Info;
 		readonly Actor self;
@@ -50,17 +50,33 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		void INotifyVisualPositionChanged.VisualPositionChanged(Actor self, byte oldLayer, byte newLayer)
+		public WPos CenterPosition { get { return self.CenterPosition; } }
+
+		void IResolveOrder.ResolveOrder(Actor self, Order order)
 		{
-			if (!self.IsInWorld)
+			if (attached.Count == 0)
 				return;
 
-			var pos = self.CenterPosition;
+			var attackOrders = new HashSet<string> { "Attack", "ForceAttack" };
+
+			if (attackOrders.Contains(order.OrderString))
+			{
+				foreach (var attachable in attached)
+				{
+					if (attachable.IsValid)
+						attachable.Attack(order.Target, order.OrderString == "ForceAttack");
+				}
+			}
+
+			var otherOrders = new HashSet<string> { "Stop" };
+
+			if (!otherOrders.Contains(order.OrderString))
+				return;
 
 			foreach (var attachable in attached)
 			{
 				if (attachable.IsValid)
-					attachable.SetPosition(pos);
+					attachable.Stop();
 			}
 		}
 
@@ -70,6 +86,11 @@ namespace OpenRA.Mods.CA.Traits
 		}
 
 		void INotifyKilled.Killed(Actor self, AttackInfo e)
+		{
+			Terminate();
+		}
+
+		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
 		{
 			Terminate();
 		}
@@ -124,6 +145,15 @@ namespace OpenRA.Mods.CA.Traits
 					&& attachedCounts[attachable.Info.AttachableType] < Info.Limits[attachable.Info.AttachableType]
 					&& limitTokens[attachable.Info.AttachableType] != Actor.InvalidConditionToken)
 					limitTokens[attachable.Info.AttachableType] = self.RevokeCondition(limitTokens[attachable.Info.AttachableType]);
+			}
+		}
+
+		void INotifyStanceChanged.StanceChanged(Actor self, AutoTarget autoTarget, UnitStance oldStance, UnitStance newStance)
+		{
+			foreach (var attachable in attached)
+			{
+				if (attachable.IsValid)
+					attachable.SetStance(newStance);
 			}
 		}
 	}

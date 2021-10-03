@@ -2820,19 +2820,22 @@ MDRN.Attached:
 	RenderSprites:
 		Image: mdrn
 	Mobile:
+		Speed: 0
 		Locomotor: cloud
 		ImmovableCondition: attached
-	GrantCondition:
-		Condition: attached
+		PauseOnCondition: attached || disabled || empdisable || being-warped || notmobile
 	WithSpriteTurret:
 		Sequence: turret-attached
-	TurnOnIdle:
+	TurnOnIdleCA:
 		MinDelay: 25
 		MaxDelay: 75
+		TurnWhileMobilePaused: true
 	Armament@PRIMARY:
 		Weapon: M60mgTD
 		LocalOffset: -500,0,72
 	-WithDecoration@DISABLED:
+	DamageMultiplier@ATTACHED:
+		Modifier: 50
 	Attachable:
 		AttachedCondition: attached
 
