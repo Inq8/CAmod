@@ -1274,7 +1274,7 @@ JEEP:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		CloakTypes: Cloak, Thief
+		CloakTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
 
 APC:
@@ -1980,7 +1980,7 @@ HMMV:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		CloakTypes: Cloak, Thief
+		CloakTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -2037,7 +2037,7 @@ GDRN:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		CloakTypes: Cloak, Thief
+		CloakTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -2087,7 +2087,7 @@ BGGY:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		CloakTypes: Cloak, Thief
+		CloakTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -3714,7 +3714,7 @@ IFV:
 		RequiresCondition: spyturr
 	DetectCloaked@SPY:
 		Range: 6c0
-		CloakTypes: Cloak, Thief
+		CloakTypes: Cloak, Thief, AirCloak
 		RequiresCondition: spyturr && !(empdisable || being-warped)
 	Turreted:
 		TurnSpeed: 40
@@ -4914,7 +4914,7 @@ MSAR:
 		UndeployOnPickup: true
 	DetectCloaked@Deployed:
 		Range: 12c0
-		CloakTypes: Cloak, Thief
+		CloakTypes: Cloak, Thief, AirCloak
 		RequiresCondition: deployed && !(empdisable || being-warped)
 	WithRangeCircle@Deployed:
 		Range: 12c0
@@ -5143,7 +5143,7 @@ BATF:
 		Range: 4c0
 	DetectCloaked@SPY:
 		Range: 6c0
-		CloakTypes: Cloak, Thief
+		CloakTypes: Cloak, Thief, AirCloak
 		RequiresCondition: loaded-spy && !(empdisable || being-warped)
 	AttackFrontal:
 		FacingTolerance: 24

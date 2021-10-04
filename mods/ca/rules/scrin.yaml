@@ -750,7 +750,7 @@ SEEK:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 5c0
-		CloakTypes: Cloak, Thief, Mine
+		CloakTypes: Cloak, Thief, AirCloak, Mine
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -817,7 +817,7 @@ LACE:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		CloakTypes: Cloak, Thief, Mine
+		CloakTypes: Cloak, Thief, AirCloak, Mine
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -3784,6 +3784,8 @@ PTUR:
 	SpawnActorOnDeath:
 		Actor: s1
 	-SpawnRandomActorOnDeath:
+	DetectCloaked:
+		Range: 5c0
 
 SHAR:
 	Inherits: ^Defense
@@ -3795,7 +3797,7 @@ SHAR:
 		Queue: Defense
 		BuildPaletteOrder: 90
 		Prerequisites: anyradar, ~structures.scrin, ~techlevel.medium
-		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Strong vs Aircraft\n  Weak vs Ground Units
+		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Can detect cloaked aircraft.\n  Strong vs Aircraft\n  Weak vs Ground Units
 		IconPalette: chrome
 	Valued:
 		Cost: 800
@@ -3834,6 +3836,7 @@ SHAR:
 		Amount: -50
 	ClassicFacingBodyOrientation:
 	DetectCloaked:
+		CloakTypes: AirCloak
 		RequiresCondition: !(disabled || empdisable || being-warped)
 	SpawnActorOnDeath:
 		Actor: s1

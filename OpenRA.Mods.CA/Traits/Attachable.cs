@@ -31,7 +31,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new Attachable(init, this); }
 	}
 
-	public class Attachable : INotifyCreated, INotifyKilled, INotifyActorDisposing, ITick
+	public class Attachable : INotifyCreated, INotifyKilled, INotifyActorDisposing, INotifyOwnerChanged, ITick
 	{
 		public readonly AttachableInfo Info;
 		AttachableTo attachedTo;
@@ -101,6 +101,11 @@ namespace OpenRA.Mods.CA.Traits
 		}
 
 		void INotifyKilled.Killed(Actor self, AttackInfo e)
+		{
+			Detach();
+		}
+
+		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
 		{
 			Detach();
 		}
