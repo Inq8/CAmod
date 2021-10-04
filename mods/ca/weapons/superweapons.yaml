@@ -637,59 +637,6 @@ ForceShield:
 		ValidTargets: Ground, Structure
 		ValidRelationships: Ally
 
-StealthBubble:
-	Projectile: InstantExplode
-	ReloadDelay: 1
-	ValidTargets: Ground, Infantry, Water
-	Warhead@1Dam_impact: SpreadDamage
-		Range: 0, 1c1, 2c1, 2c512
-		Damage: 300
-		Delay: 5
-		Falloff: 1000, 1000, 250, 100
-		ValidTargets: Ground, Infantry, Water
-		InvalidTargets: Air, Creep, Cyborg
-		DamageTypes: Prone50Percent, TriggerProne, ToxinDeath
-		Versus:
-			None: 100
-			Wood: 0
-			Light: 0
-			Heavy: 0
-			Concrete: 0
-			Brick: 0
-	Warhead@2Dam_impact: SpreadDamage
-		Range: 0, 1c1, 2c1, 4c0
-		Damage: 250
-		Delay: 10
-		Falloff: 1000, 1000, 250, 100
-		ValidTargets: Ground, Infantry, Water
-		InvalidTargets: Air, Creep, Cyborg
-		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
-		Versus:
-			None: 100
-			Wood: 0
-			Light: 0
-			Heavy: 0
-			Concrete: 0
-			Brick: 0
-	Warhead@3Dam_impact: SpreadDamage
-		Range: 0, 1c1, 2c1, 5c512
-		Damage: 250
-		Delay: 15
-		Falloff: 1000, 1000, 250, 100
-		ValidTargets: Ground, Infantry, Water
-		InvalidTargets: Air, Creep, Cyborg
-		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
-		Versus:
-			None: 100
-			Wood: 0
-			Light: 0
-			Heavy: 0
-			Concrete: 0
-			Brick: 0
-	Warhead@4Eff: CreateEffect
-		ExplosionPalette: tseffect
-		Explosions: stealthbub
-
 Chemicbm:
 	ValidTargets: Ground, Water
 	Warhead@1Dam: SpreadDamage

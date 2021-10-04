@@ -5136,31 +5136,42 @@ SGEN:
 		Range: 5c0
 		RequiresCondition: !disabled
 	WithBuildingBib:
-	GrantExternalConditionPowerCA@STEALTHGEN:
-		Prerequisites: techlevel.unrestricted
+	ProvidesPrerequisiteValidatedFaction@shadow:
+		Factions: shadow
+		Prerequisite: sgen.shadow
+	GrantPrerequisiteChargeDrainPowerCA@SGEN:
 		OrderName: stealthgen
+		DischargeModifier: 700
+		Prerequisite: sgen.active
+		ChargeInterval: 4500
 		Icon: invis
 		IconPalette: chrometd
-		ChargeInterval: 4500
-		Weapon: StealthBubble
 		Description: Tiberium Stealth
-		Condition: invisibility
-		ValidRelationships: Ally, Neutral, Enemy
-		Dimensions: 11, 11
-		Footprint: _____x_____ ___xxxxx___ __xxxxxxx__ _xxxxxxxxx_ _xxxxxxxxx_ xxxxxxxxxxx _xxxxxxxxx_ _xxxxxxxxx_ __xxxxxxx__ ___xxxxx___ _____x_____
-		Duration: 900
-		ActivationDelay: 0
-		AirburstAltitude: 0c0
-		AllowMultiple: false
-		LongDesc: Makes vehicles and structures temporarily invisible.\n  Warning: Harmful to Infantry.
-		OnFireSound: cloak6.aud
-		SelectTargetSpeechNotification: SelectTarget
+		LongDesc: Cloaks all owned buildings and defenses for a limited time. Can be toggled on/off.
+		PauseOnCondition: disabled || empdisable || being-warped
+		LaunchSound: cloak6.aud
 		InsufficientPowerSpeechNotification: InsufficientPower
 		BeginChargeSpeechNotification: ChemStealthCharging
 		EndChargeSpeechNotification: ChemStealthReady
-		DisplayRadarPing: True
-		Cursor: chemmissile
+		Prerequisites: ~!sgen.shadow, ~techlevel.unrestricted
+		EarlyDeactivationPenalty: 1500
+		DisplayTimerRelationships: Ally, Neutral, Enemy
+	GrantPrerequisiteChargeDrainPowerCA@SGENSHADOW:
+		OrderName: stealthgenshadow
+		DischargeModifier: 580
+		Prerequisite: sgen.active
+		ChargeInterval: 4500
+		Icon: invis
+		IconPalette: chrometd
+		Description: Tiberium Stealth
+		LongDesc: Cloaks all owned buildings and defenses for a limited time. Can be toggled on/off.
 		PauseOnCondition: disabled || empdisable || being-warped
+		LaunchSound: cloak6.aud
+		InsufficientPowerSpeechNotification: InsufficientPower
+		BeginChargeSpeechNotification: ChemStealthCharging
+		EndChargeSpeechNotification: ChemStealthReady
+		Prerequisites: ~sgen.shadow, ~techlevel.unrestricted
+		EarlyDeactivationPenalty: 1250
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 	SupportPowerChargeBar:
 	Power:

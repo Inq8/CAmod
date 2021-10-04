@@ -374,9 +374,6 @@ KATY:
 		RequiresCondition: england && !cloak-force-disabled && !invisibility && !driver-dead && !empdisable && !being-warped
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
-	GrantConditionOnDamageState@UNCLOAK:
-		Condition: cloak-force-disabled
-		ValidDamageStates: Critical, Heavy
 	SpawnActorOnDeath:
 		RequiresCondition: !(being-warped || warpout) && warpin && france
 	SpawnActorOnDeath@England:
@@ -4673,9 +4670,6 @@ RTNK:
 		RequiresCondition: !cloak-force-disabled && !invisibility && !driver-dead && !empdisable && !being-warped
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
-	GrantConditionOnDamageState@UNCLOAK:
-		Condition: cloak-force-disabled
-		ValidDamageStates: Critical, Heavy
 	Selectable:
 		DecorationBounds: 28,28
 	ProducibleWithLevel:
