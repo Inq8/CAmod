@@ -332,6 +332,38 @@ YAK.Husk.EMP:
 	Inherits: YAK.Husk
 	Inherits: ^EmpVisualEffect
 
+P51.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: P51 Attack Plane
+	Aircraft:
+		TurnSpeed: 5
+		Speed: 149
+	SmokeTrailWhenDamaged:
+		Offset: -853,0,0
+		Interval: 2
+		MinDamage: Undamaged
+	Contrail@1:
+		Offset: -98,-683,-10
+	Contrail@2:
+		Offset: -98,683,-10
+	RevealsShroud:
+		Range: 11c0
+		MinRange: 9c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 9c0
+		Type: GroundPosition
+	RenderSprites:
+		Image: p51
+	FallsToEarth:
+		Explosion: UnitExplodePlaneLight
+
+P51.Husk.EMP:
+	Inherits: P51.Husk
+	Inherits: ^EmpVisualEffect
+
 HELI.Husk:
 	Inherits: ^HelicopterHusk
 	Tooltip:

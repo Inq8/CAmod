@@ -440,6 +440,66 @@ YAK:
 	Contrail@2:
 		Offset: -98,683,-10
 
+P51:
+	Inherits: ^NeutralPlane
+	Inherits@EMP: ^EmpDisable
+	Tooltip:
+		Name: P51 Attack Plane
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 28000
+	RevealsShroud@GAPGEN:
+		Range: 9c0
+		Type: GroundPosition
+	Armament@PRIMARY:
+		Name: gunr
+		Weapon: ChainGun.P51.R
+		LocalOffset: 256,-213,0
+		MuzzleSequence: muzzle
+	Armament@SECONDARY:
+		Name: gunl
+		Weapon: ChainGun.P51.L
+		LocalOffset: 256,213,0
+		MuzzleSequence: muzzle
+	Armament@TERTIARY:
+		Name: rocketr
+		Weapon: Rocket.P51.R
+		LocalOffset: 0,-613,0
+	Armament@QUATERNARY:
+		Name: rocketl
+		FireDelay: 2
+		Weapon: Rocket.P51.L
+		LocalOffset: 0,613,0
+	AttackBomber:
+		Armaments: gunr, gunl, rocketr, rocketl
+	Aircraft:
+		CruiseAltitude: 2560
+		InitialFacing: 192
+		TurnSpeed: 16
+		Speed: 180
+		RepulsionSpeed: 40
+		MaximumPitch: 56
+	WithMuzzleOverlay:
+	SpawnActorOnDeath:
+		Actor: P51.Husk
+		RequiresCondition: !empdisable && !being-warped
+	SpawnActorOnDeath@EMP:
+		Actor: P51.Husk.EMP
+		RequiresCondition: empdisable && !being-warped
+	SmokeTrailWhenDamaged:
+		Offset: -853,0,0
+		Interval: 2
+	RejectsOrders:
+	Contrail@1:
+		Offset: -98,-683,-10
+	Contrail@2:
+		Offset: -98,683,-10
+	-Selectable:
+	Interactable:
+	GivesExperience:
+		Experience: 1000
+
 TRAN:
 	Inherits: ^Helicopter
 	Inherits@TRANSPORT: ^Transport

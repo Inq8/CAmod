@@ -1652,14 +1652,14 @@ HPAD:
 	ProvidesPrerequisiteValidatedFaction@iraq:
 		Factions: iraq
 		Prerequisite: aircraft.iraq
+	ProvidesPrerequisiteValidatedFaction@usa:
+		Factions: usa
+		Prerequisite: aircraft.usa
 	ProvidesPrerequisite@all:
 		Prerequisite: aircraft.all
 	ProvidesPrerequisiteValidatedFaction@chinook:
 		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq, gdi, zocom, eagle, talon, nod, blackh, legion, marked, shadow
 		Prerequisite: aircraft.chinook
-	ProvidesPrerequisiteValidatedFaction@nhaw:
-		Factions: usa
-		Prerequisite: aircraft.nhaw
 	ProvidesPrerequisiteValidatedFaction@hind:
 		Factions: russia, ukraine, yuri
 		Prerequisite: aircraft.hind
@@ -1669,6 +1669,39 @@ HPAD:
 	InfiltrateForSupportPower:
 		Types: SpyInfiltrate
 		Proxy: powerproxy.paratroopers2
+	ClassicAirstrikePower@Strafe:
+		OrderName: strafe
+		Squad:
+			p51:
+				SpawnDelay: 20
+				SpawnOffset: -1536,1024,0
+				TargetOffset: -536,0,0
+			p51:
+				SpawnDelay: 0
+				SpawnOffset: 0,0,0
+				TargetOffset: 0,0,0
+			p51:
+				SpawnDelay: 20
+				SpawnOffset: -1536,-1024,0
+				TargetOffset: 536,0,0
+		Prerequisites: ~aircraft.usa, ~techlevel.unrestricted
+		Icon: strafe
+		ChargeInterval: 7500
+		Description: Strafing Run
+		LongDesc: P51 ground attack planes strafe\nyour target.
+		SelectTargetSpeechNotification: SelectTarget
+		CameraActor: camera
+		CameraRemoveDelay: 150
+		QuantizedFacings: 8
+		DisplayBeacon: true
+		BeaconPoster: strafe
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+		Strikes: 3
+		CircleDelay: 30
 
 AFLD:
 	Inherits: ^Building
