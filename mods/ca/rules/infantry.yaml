@@ -681,8 +681,9 @@ HACK:
 	MindController:
 		ArmamentNames: primary
 		Capacity: 1
-		TicksToControl: 250
-		TicksToRevoke: 100
+		TicksToControl: 200
+		TicksToRevoke: 200
+		TicksToRevokeOnDeath: 150
 		RequiresCondition: deployed
 		InitSounds: hacker-init.aud
 		InitSoundControllerOnly: true
@@ -1825,7 +1826,7 @@ JJET:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 9000
+		HP: 8000
 	Targetable:
 		RequiresCondition: !airborne && !being-warped
 		TargetTypes: Ground, Infantry

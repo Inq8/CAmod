@@ -42,14 +42,10 @@ DisintegratorBeamAA:
 			Light: 100
 	Warhead@2Dam: SpreadDamage
 		ValidTargets: AirSmall
-		Range: 0, 0c64
-		Falloff: 100, 30
+		ValidRelationships: Enemy, Neutral
+		Spread: 128
+		Falloff: 100, 50, 14, 0
 		Damage: 2500
-		Versus:
-			None: 100
-			Wood: 100
-			Concrete: 100
-			Light: 100
 
 EnslaveInfantry:
 	Range: 7c0
@@ -132,13 +128,9 @@ GunWalkerZapAA:
 	Warhead@2Dam: SpreadDamage
 		Damage: 1500
 		ValidTargets: AirSmall
-		Range: 0, 0c64, 0c256, 4c256
-		Falloff: 100, 70, 30, 10
-		Versus:
-			Wood: 100
-			Concrete: 100
-			Light: 100
-			Heavy: 100
+		ValidRelationships: Enemy, Neutral
+		Spread: 128
+		Falloff: 100, 50, 14, 0
 
 PlasmaDiscs:
 	Range: 5c0
@@ -659,14 +651,10 @@ StormRiderZapAA:
 			Heavy: 100
 	Warhead@2Dam: SpreadDamage
 		Damage: 1800
-		Range: 0, 0c64
-		Falloff: 100, 30
+		Spread: 128
+		Falloff: 100, 50, 14, 0
 		ValidTargets: AirSmall
-		Versus:
-			Wood: 100
-			Concrete: 100
-			Light: 100
-			Heavy: 100
+		ValidRelationships: Enemy, Neutral
 	-Warhead@2Smu:
 
 EnervatorBolts:
@@ -790,14 +778,10 @@ InvaderZapAA:
 			None: 100
 	Warhead@2Dam: SpreadDamage
 		Damage: 160
-		Range: 0, 0c64
-		Falloff: 100, 30
+		Spread: 128
+		Falloff: 100, 50, 14, 0
 		ValidTargets: AirSmall
-		Versus:
-			Light: 100
-			Concrete: 100
-			Wood: 100
-			None: 100
+		ValidRelationships: Enemy, Neutral
 
 PlasmaTurretGun:
 	Range: 6c0
@@ -960,24 +944,13 @@ ShardLauncher:
 		Range: 0, 0c64, 0c256, 3c768
 		Falloff: 100, 100, 30, 15
 		Damage: 2650
-		Versus:
-			None: 100
-			Wood: 100
-			Concrete: 100
-			Light: 100
-			Heavy: 100
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Dam: SpreadDamage
 		ValidTargets: AirSmall
-		Range: 0, 0c64
-		Falloff: 100, 30
+		ValidRelationships: Enemy, Neutral
+		Range: 0, 0c64, 0c256, 1c768
+		Falloff: 100, 70, 30, 10
 		Damage: 2650
-		Versus:
-			None: 100
-			Wood: 100
-			Concrete: 100
-			Light: 100
-			Heavy: 100
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: idle, idle2, idle3, idle4
@@ -1309,13 +1282,12 @@ FeederBeam:
 	Inherits: LeecherBeam
 	-StartBurstReport:
 	Report: feeder-fire1.aud
-	Range: 5c0
 	ReloadDelay: 25
 	-Burst:
 	Projectile: PlasmaBeam
 		Colors: 99000008
 	Warhead@1Dam: SpreadDamage
-		Damage: 1875
+		Damage: 2500
 		Spread: 128
 		Versus:
 			Light: 40
@@ -1396,6 +1368,7 @@ FeederTargeting:
 	Range: 1c512
 	Projectile: InstantHit
 	Warhead@1Dam: TargetDamage
+		ValidRelationships: Enemy, Neutral
 
 FeederExplode:
 	ValidTargets: Ground, Water

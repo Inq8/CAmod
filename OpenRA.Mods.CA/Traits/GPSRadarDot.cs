@@ -75,13 +75,26 @@ namespace OpenRA.Mods.CA.Traits
 			rangedObservers.Remove(a);
 		}
 
-		public bool HasRangedObserver(Player p)
+		void CleanRangedObservers()
 		{
+			var rangedObserversToRemove = new List<Actor>();
+
 			foreach (var rangedObserver in rangedObservers)
 			{
 				if (rangedObserver.Disposed || rangedObserver.IsDead)
-					rangedObservers.Remove(rangedObserver);
+					rangedObserversToRemove.Add(rangedObserver);
+			}
 
+			foreach (var rangedObserver in rangedObserversToRemove)
+				rangedObservers.Remove(rangedObserver);
+		}
+
+		public bool HasRangedObserver(Player p)
+		{
+			CleanRangedObservers();
+
+			foreach (var rangedObserver in rangedObservers)
+			{
 				if (rangedObserver.Owner == p || p.IsAlliedWith(rangedObserver.Owner))
 					return true;
 			}

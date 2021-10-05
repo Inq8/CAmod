@@ -374,9 +374,6 @@ KATY:
 		RequiresCondition: england && !cloak-force-disabled && !invisibility && !driver-dead && !empdisable && !being-warped
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
-	GrantConditionOnDamageState@UNCLOAK:
-		Condition: cloak-force-disabled
-		ValidDamageStates: Critical, Heavy
 	SpawnActorOnDeath:
 		RequiresCondition: !(being-warped || warpout) && warpin && france
 	SpawnActorOnDeath@England:
@@ -1277,7 +1274,7 @@ JEEP:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		CloakTypes: Cloak, Thief
+		CloakTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
 
 APC:
@@ -1983,7 +1980,7 @@ HMMV:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		CloakTypes: Cloak, Thief
+		CloakTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -2040,7 +2037,7 @@ GDRN:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		CloakTypes: Cloak, Thief
+		CloakTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -2090,7 +2087,7 @@ BGGY:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		CloakTypes: Cloak, Thief
+		CloakTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -2820,19 +2817,22 @@ MDRN.Attached:
 	RenderSprites:
 		Image: mdrn
 	Mobile:
+		Speed: 0
 		Locomotor: cloud
 		ImmovableCondition: attached
-	GrantCondition:
-		Condition: attached
+		PauseOnCondition: attached || disabled || empdisable || being-warped || notmobile
 	WithSpriteTurret:
 		Sequence: turret-attached
-	TurnOnIdle:
+	TurnOnIdleCA:
 		MinDelay: 25
 		MaxDelay: 75
+		TurnWhileMobilePaused: true
 	Armament@PRIMARY:
 		Weapon: M60mgTD
 		LocalOffset: -500,0,72
 	-WithDecoration@DISABLED:
+	DamageMultiplier@ATTACHED:
+		Modifier: 50
 	Attachable:
 		AttachedCondition: attached
 
@@ -3714,7 +3714,7 @@ IFV:
 		RequiresCondition: spyturr
 	DetectCloaked@SPY:
 		Range: 6c0
-		CloakTypes: Cloak, Thief
+		CloakTypes: Cloak, Thief, AirCloak
 		RequiresCondition: spyturr && !(empdisable || being-warped)
 	Turreted:
 		TurnSpeed: 40
@@ -4670,9 +4670,6 @@ RTNK:
 		RequiresCondition: !cloak-force-disabled && !invisibility && !driver-dead && !empdisable && !being-warped
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
-	GrantConditionOnDamageState@UNCLOAK:
-		Condition: cloak-force-disabled
-		ValidDamageStates: Critical, Heavy
 	Selectable:
 		DecorationBounds: 28,28
 	ProducibleWithLevel:
@@ -4917,7 +4914,7 @@ MSAR:
 		UndeployOnPickup: true
 	DetectCloaked@Deployed:
 		Range: 12c0
-		CloakTypes: Cloak, Thief
+		CloakTypes: Cloak, Thief, AirCloak
 		RequiresCondition: deployed && !(empdisable || being-warped)
 	WithRangeCircle@Deployed:
 		Range: 12c0
@@ -5146,7 +5143,7 @@ BATF:
 		Range: 4c0
 	DetectCloaked@SPY:
 		Range: 6c0
-		CloakTypes: Cloak, Thief
+		CloakTypes: Cloak, Thief, AirCloak
 		RequiresCondition: loaded-spy && !(empdisable || being-warped)
 	AttackFrontal:
 		FacingTolerance: 24
@@ -5240,8 +5237,8 @@ BATF:
 	ChangesHealth@REPAIR:
 		PercentageStep: 1
 		Delay: 25
-		StartIfBelow: 50
-		DamageCooldown: 150
+		StartIfBelow: 100
+		DamageCooldown: 75
 		RequiresCondition: loaded-repair
 	WithDecoration@COMMANDOSKULL:
 		RequiresCondition: loaded-cmdo

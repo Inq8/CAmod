@@ -674,6 +674,7 @@ AGUN:
 		Amount: -50
 	ClassicFacingBodyOrientation:
 	DetectCloaked:
+		CloakTypes: AirCloak
 		RequiresCondition: !(disabled || empdisable || being-warped)
 
 DOME:
@@ -852,6 +853,8 @@ PBOX:
 	Power:
 		Amount: -20
 	WithMuzzleOverlay:
+	DetectCloaked:
+		Range: 5c0
 
 HBOX:
 	Inherits: ^Defense
@@ -905,6 +908,8 @@ HBOX:
 		Amount: -20
 	-MustBeDestroyed:
 	WithMuzzleOverlay:
+	DetectCloaked:
+		Range: 5c0
 
 GUN:
 	Inherits: ^Defense
@@ -953,6 +958,8 @@ GUN:
 	Power:
 		Amount: -40
 	ClassicFacingBodyOrientation:
+	DetectCloaked:
+		Range: 5c0
 
 FTUR:
 	Inherits: ^Defense
@@ -997,6 +1004,8 @@ FTUR:
 	Explodes:
 		Weapon: BuildingExplode
 		EmptyWeapon: BuildingExplode
+	DetectCloaked:
+		Range: 5c0
 
 SAM:
 	Inherits: ^Defense
@@ -1013,7 +1022,7 @@ SAM:
 		Queue: Defense
 		BuildPaletteOrder: 100
 		Prerequisites: anyradar, ~structures.soviet, ~techlevel.medium
-		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Aircraft\n  Weak vs Ground Units
+		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Can detect cloaked aircraft.\n  Strong vs Aircraft\n  Weak vs Ground Units
 	Valued:
 		Cost: 700
 	Tooltip:
@@ -1054,6 +1063,7 @@ SAM:
 		Amount: -40
 	ClassicFacingBodyOrientation:
 	DetectCloaked:
+		CloakTypes: AirCloak
 		RequiresCondition: !(disabled || empdisable || being-warped)
 
 ATEK:
@@ -3408,7 +3418,7 @@ NSAM:
 		Queue: Defense
 		BuildPaletteOrder: 100
 		Prerequisites: anyradar, ~structures.nod, ~techlevel.medium
-		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Aircraft\n  Cannot target Ground Units.
+		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Can detect cloaked aircraft.\n  Strong vs Aircraft\n  Cannot target Ground Units.
 	Valued:
 		Cost: 700
 	Tooltip:
@@ -3449,6 +3459,7 @@ NSAM:
 		Sequence: place
 		SequencePalette: placebuildingtd
 	DetectCloaked:
+		CloakTypes: AirCloak
 		RequiresCondition: !(disabled || empdisable || being-warped)
 
 GTWR:
@@ -3491,6 +3502,8 @@ GTWR:
 		TurnSpeed: 512
 	Power:
 		Amount: -20
+	DetectCloaked:
+		Range: 5c0
 
 ATWR:
 	Inherits: ^DefenseTD
@@ -3832,7 +3845,7 @@ HQ:
 		Factions: arc
 		Prerequisite: radar.arc
 	ProvidesPrerequisiteValidatedFaction@nodrad:
-		Factions: blackh, marked, legion
+		Factions: blackh, marked, legion, shadow
 		Prerequisite: radar.nod
 	ProvidesPrerequisiteValidatedFaction@bhrad:
 		Factions: blackh
@@ -5054,6 +5067,8 @@ LTUR:
 		RequiresCondition: marked
 	Power:
 		Amount: -20
+	DetectCloaked:
+		Range: 5c0
 
 TTUR:
 	Inherits: ^DefenseTD
@@ -5101,6 +5116,8 @@ TTUR:
 	Explodes:
 		Weapon: BuildingExplode
 		EmptyWeapon: BuildingExplode
+	DetectCloaked:
+		Range: 5c0
 
 SGEN:
 	Inherits: ^Building
@@ -5136,31 +5153,42 @@ SGEN:
 		Range: 5c0
 		RequiresCondition: !disabled
 	WithBuildingBib:
-	GrantExternalConditionPowerCA@STEALTHGEN:
-		Prerequisites: techlevel.unrestricted
+	ProvidesPrerequisiteValidatedFaction@shadow:
+		Factions: shadow
+		Prerequisite: sgen.shadow
+	GrantPrerequisiteChargeDrainPowerCA@SGEN:
 		OrderName: stealthgen
+		DischargeModifier: 700
+		Prerequisite: sgen.active
+		ChargeInterval: 4500
 		Icon: invis
 		IconPalette: chrometd
-		ChargeInterval: 4500
-		Weapon: StealthBubble
 		Description: Tiberium Stealth
-		Condition: invisibility
-		ValidRelationships: Ally, Neutral, Enemy
-		Dimensions: 11, 11
-		Footprint: _____x_____ ___xxxxx___ __xxxxxxx__ _xxxxxxxxx_ _xxxxxxxxx_ xxxxxxxxxxx _xxxxxxxxx_ _xxxxxxxxx_ __xxxxxxx__ ___xxxxx___ _____x_____
-		Duration: 900
-		ActivationDelay: 0
-		AirburstAltitude: 0c0
-		AllowMultiple: false
-		LongDesc: Makes vehicles and structures temporarily invisible.\n  Warning: Harmful to Infantry.
-		OnFireSound: cloak6.aud
-		SelectTargetSpeechNotification: SelectTarget
+		LongDesc: Cloaks all owned buildings and defenses for a limited time. Can be toggled on/off.
+		PauseOnCondition: disabled || empdisable || being-warped
+		LaunchSound: cloak6.aud
 		InsufficientPowerSpeechNotification: InsufficientPower
 		BeginChargeSpeechNotification: ChemStealthCharging
 		EndChargeSpeechNotification: ChemStealthReady
-		DisplayRadarPing: True
-		Cursor: chemmissile
+		Prerequisites: ~!sgen.shadow, ~techlevel.unrestricted
+		EarlyDeactivationPenalty: 1500
+		DisplayTimerRelationships: Ally, Neutral, Enemy
+	GrantPrerequisiteChargeDrainPowerCA@SGENSHADOW:
+		OrderName: stealthgenshadow
+		DischargeModifier: 580
+		Prerequisite: sgen.active
+		ChargeInterval: 4500
+		Icon: invis
+		IconPalette: chrometd
+		Description: Tiberium Stealth
+		LongDesc: Cloaks all owned buildings and defenses for a limited time. Can be toggled on/off.
 		PauseOnCondition: disabled || empdisable || being-warped
+		LaunchSound: cloak6.aud
+		InsufficientPowerSpeechNotification: InsufficientPower
+		BeginChargeSpeechNotification: ChemStealthCharging
+		EndChargeSpeechNotification: ChemStealthReady
+		Prerequisites: ~sgen.shadow, ~techlevel.unrestricted
+		EarlyDeactivationPenalty: 1250
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 	SupportPowerChargeBar:
 	Power:
@@ -5182,7 +5210,7 @@ CRAM:
 	Buildable:
 		Prerequisites: anyradar, ~structures.gdi, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Aircraft\n  Weak vs Ground Units
+		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Can detect cloaked aircraft.\n  Strong vs Aircraft\n  Weak vs Ground Units
 	-Armament:
 	-WithTurretAttackAnimation:
 	Armament@GAT0:

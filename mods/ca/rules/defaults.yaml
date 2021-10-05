@@ -996,7 +996,7 @@
 		Palette: highlight
 
 ^Cloakable:
-	Cloak@EXTERNALCLOAK:
+	Cloak@SGENCLOAK:
 		RequiresCondition: invisibility && !cloak-force-disabled
 		InitialDelay: 0
 		CloakDelay: 150
@@ -1005,19 +1005,39 @@
 		CloakSound: cloak5.aud
 		UncloakSound: appear1.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
-	TimedConditionBar@STEALTHGEN:
+	ExternalCondition@SGENCLOAK:
 		Condition: invisibility
-		Color: 33ff33
-	ExternalCondition@CLOAKGENERATOR:
+	WithColoredOverlay@SGENCLOAK:
+		RequiresCondition: invisibility
+		Palette: cloakgreen
+	GrantConditionOnDamageState@UNCLOAK:
+		Condition: cloak-force-disabled
+		ValidDamageStates: Heavy, Critical
+
+^CloakableBuilding:
+	Inherits: ^Cloakable
+	GrantConditionOnPrerequisite@SGEN:
 		Condition: invisibility
+		Prerequisites: sgen.active
+
+^CrateCloak:
+	Cloak@CRATE-CLOAK:
+		InitialDelay: 90
+		CloakDelay: 90
+		CloakSound: trans1.aud
+		UncloakSound: appear1.aud
+		Palette: cloak
+		IsPlayerPalette: false
+		RequiresCondition: (crate-cloak) && !(cloak-force-disabled || invisibility)
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
+	TimedConditionBar@CRATE-CLOAK:
+		Condition: crate-cloak
+		Color: 606060
 	ExternalCondition@CRATE-CLOAK:
 		Condition: crate-cloak
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Heavy, Critical
-	WithColoredOverlay@STEALTHGEN:
-		RequiresCondition: invisibility
-		Palette: cloakgreen
 
 ^Chillable:
 	TimedConditionBar@chilled:
@@ -1124,25 +1144,6 @@
 	HarvesterBalancer:
 		Condition: harv-balance
 		RequiresCondition: global-balancedharvesting
-
-^CrateCloak:
-	Cloak@CRATE-CLOAK:
-		InitialDelay: 90
-		CloakDelay: 90
-		CloakSound: trans1.aud
-		UncloakSound: appear1.aud
-		Palette: cloak
-		IsPlayerPalette: false
-		RequiresCondition: (crate-cloak) && !(cloak-force-disabled || invisibility)
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
-	TimedConditionBar@CRATE-CLOAK:
-		Condition: crate-cloak
-		Color: 606060
-	ExternalCondition@CRATE-CLOAK:
-		Condition: crate-cloak
-	GrantConditionOnDamageState@UNCLOAK:
-		Condition: cloak-force-disabled
-		ValidDamageStates: Heavy, Critical
 
 ^GpsScramble:
 	RangeMultiplier@GPSSCRAMBLE:
@@ -1273,8 +1274,8 @@
 	ChangesHealth@HACKED:
 		Step: -2000
 		StartIfBelow: 101
-		Delay: 25
-		RequiresCondition: hacked
+		Delay: 20
+		RequiresCondition: hacked && !restoring
 
 ^GeneticallyMutatable:
 	ExternalCondition@GMUT:
@@ -1298,7 +1299,7 @@
 		PercentageStep: 1
 		Delay: 25
 		StartIfBelow: 100
-		DamageCooldown: 200
+		DamageCooldown: 75
 		RequiresCondition: mdrn-attached
 	ExternalCondition@MINIDRONE:
 		Condition: mdrn-attached
@@ -1643,6 +1644,7 @@
 	Inherits@14: ^Concussion
 	Inherits@15: ^Suppressable
 	Inherits@16: ^CrateCloak
+	Inherits@CLOAK: ^Cloakable
 	Inherits@TNT: ^TNTPlantable
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
@@ -1839,10 +1841,6 @@
 		DamageTypes: FrozenDeath
 		LayerName: cryoresidue
 		RequiresCondition: !(being-warped || parachute)
-	Cloak@CRATE-CLOAK:
-		Palette: cloak
-	ExternalCondition@CLOAKGENERATOR:
-		Condition: invisibility
 	GpsRadarDot:
 		Sequence: Infantry
 	GrantExternalConditionToCrusher@CRUSHATTEMPTSLOW:
@@ -2229,6 +2227,7 @@
 	Inherits@9: ^BotAirProductionBonus
 	Inherits@10: ^Chillable
 	Inherits@11: ^Suppressable
+	Inherits@CRATE-CLOAK: ^CrateCloak
 	Inherits@gflash: ^GreenFlash
 	Inherits@rflash: ^RedFlash
 	Inherits@wflash: ^WhiteFlash
@@ -2237,7 +2236,7 @@
 	Inherits@TNT: ^TNTPlantable
 	Inherits@ionsurge: ^IonSurgable
 	Inherits@atomize: ^Atomizable
-	Cloak@EXTERNALCLOAK:
+	Cloak@SGENCLOAK:
 		RequiresCondition: invisibility || crate-cloak && (!cloak-force-disabled && !airborne && !being-warped)
 		CloakDelay: 90
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Damage, Heal
@@ -2364,7 +2363,7 @@
 
 ^Building:
 	Inherits@1: ^BasicBuilding
-	Inherits@2: ^Cloakable
+	Inherits@2: ^CloakableBuilding
 	Inherits@3: ^ForceShieldable
 	Inherits@4: ^EmpDisable
 	Inherits@6: ^WarpableBuilding
@@ -2422,7 +2421,6 @@
 		RequiresCondition: !being-warped
 	Targetable:
 		RequiresCondition: !being-warped
-	-ExternalCondition@CRATE-CLOAK:
 	Explodes@TEMPORAL:
 		Weapon: TemporalExplodeLarge
 		EmptyWeapon: TemporalExplodeLarge
@@ -2455,6 +2453,7 @@
 	Targetable:
 		TargetTypes: Ground, C4, TNT, DetonateAttack, Structure, Defense
 	DetectCloaked:
+		CloakTypes: Cloak, AirCloak
 		Range: 6c0
 		RequiresCondition: !(empdisable || being-warped)
 	MustBeDestroyed:
@@ -2567,7 +2566,6 @@
 		Terrain: Wall
 	MapEditorData:
 		Categories: Wall
-	-ExternalCondition@CRATE-CLOAK:
 	ProductionCostMultiplier@FranceBonus:
 		Multiplier: 90
 		Prerequisites: structures.france

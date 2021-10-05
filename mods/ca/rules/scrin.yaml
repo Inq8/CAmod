@@ -163,6 +163,8 @@ VEHICLES.SCRIN:
 		IntoActor: feed
 	ExternalCondition@FEEDER:
 		Condition: feedermutation
+	SpawnActorOnDeath@GMUT:
+		Actor: gscr.mutating
 
 S1:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -386,6 +388,8 @@ FEED:
 		AddToArmyValue: true
 	Mobile:
 		Speed: 49
+	RevealsShroud:
+		Range: 5c0
 	Harvester:
 		Capacity: 10
 		Resources: Tiberium, BlueTiberium, Ore, Gems
@@ -444,6 +448,8 @@ FEED:
 		DisplayWhenFull: false
 	ConvertsDamageToHealth:
 		DamagePercentConverted: 20
+	HarvestsByDealingDamage:
+		DivideDamageBy: 2000
 	AutoTargetPriority@DEFAULT:
 		RequiresCondition: !stance-attackanything && !assault-move && !full
 	Targetable@FEEDER:
@@ -492,6 +498,41 @@ SMEDI:
 		TargetTypes: Ground, Infantry, ChaosImmune
 	GuardsSelection:
 		ValidTargets: Infantry
+
+GSCR:
+	Inherits: BRUT
+	RenderSprites:
+		Image: gscr
+		PlayerPalette: overlayplayerscrin
+	Voiced:
+		VoiceSet: GiantScrinVoice
+	WithDeathAnimation:
+		DeathSequencePalette: overlayplayerscrin
+	-Buildable:
+	Tooltip:
+		Name: Giant Scrin
+	-GrantConditionOnTerrain@ONTIB:
+	-GrantStackingCondition@TIBEXPOSED:
+	-DamagedByTerrain@TIBDAMAGE:
+	WithInfantryBody:
+		MoveSequence: run
+		StandSequences: stand
+		DefaultAttackSequence: bash
+		IdleSequences: idle1, idle2, idle3, idle4
+	AttackSounds:
+		Sounds: gscr-attack1.aud, gscr-attack2.aud
+
+GSCR.Mutating:
+	Inherits: BRUT.Mutating
+	SpawnActorOnDeath@GMUT:
+		Actor: gscr
+	RenderSprites:
+		Image: gscr
+		PlayerPalette: overlayplayerscrin
+	WithDeathAnimation:
+		DeathSequencePalette: overlayplayerscrin
+	Tooltip:
+		Name: Giant Scrin
 
 MAST:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -709,7 +750,7 @@ SEEK:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 5c0
-		CloakTypes: Cloak, Thief, Mine
+		CloakTypes: Cloak, Thief, AirCloak, Mine
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -776,7 +817,7 @@ LACE:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		CloakTypes: Cloak, Thief, Mine
+		CloakTypes: Cloak, Thief, AirCloak, Mine
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -1567,7 +1608,7 @@ STMR:
 		LocalOffset: 350,300,-85, 350,-300,-85
 		PauseOnCondition: !ammo
 	AttackAircraft:
-		FacingTolerance: 320
+		FacingTolerance: 160
 		PersistentTargeting: false
 		OpportunityFire: true
 		PauseOnCondition: empdisable || being-warped
@@ -1620,18 +1661,22 @@ STMR:
 	ReloadAmmoPoolCA:
 		Delay: 750
 		Count: 15
-		DelayOnFire: 750
-		DelayAfterReset: 60
+		DelayOnFire: 75
+		DelayAfterReset: 90
 		ShowSelectionBar: true
 		SelectionBarColor: ff00ff
+		RequiresCondition: !srep-rearm || airborne
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 8c0
-	FirepowerMultiplier@DEPLETED:
-		RequiresCondition: !ammo
-		Modifier: 30
 	Rearmable:
-		RearmActors: srep, hpad, hpad.td
+		RearmActors: srep
+	ExternalCondition@SREPREARM:
+		Condition: srep-rearm
+	ReloadAmmoPool@SREPREARM:
+		Delay: 250
+		Count: 15
+		RequiresCondition: srep-rearm && !airborne
 
 ENRV:
 	Inherits: ^Helicopter
@@ -1724,12 +1769,19 @@ ENRV:
 	ReloadAmmoPoolCA:
 		Delay: 750
 		Count: 4
-		DelayOnFire: 750
+		DelayOnFire: 375
 		DelayAfterReset: 60
 		ShowSelectionBar: true
 		SelectionBarColor: ff00ff
+		RequiresCondition: !srep-rearm || airborne
 	Rearmable:
-		RearmActors: srep, hpad, hpad.td
+		RearmActors: srep
+	ExternalCondition@SREPREARM:
+		Condition: srep-rearm
+	ReloadAmmoPool@SREPREARM:
+		Delay: 250
+		Count: 4
+		RequiresCondition: srep-rearm && !airborne
 
 DEVA:
 	Inherits: ^Helicopter
@@ -3467,6 +3519,10 @@ SREP:
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair
+	ProximityExternalCondition@SREPREARM:
+		Condition: srep-rearm
+		ValidRelationships: Ally
+		Range: 2c0
 	ProximityExternalCondition@AIRCRAFTREPAIR:
 		Condition: aircraft-repair
 		Range: 10c0
@@ -3728,6 +3784,8 @@ PTUR:
 	SpawnActorOnDeath:
 		Actor: s1
 	-SpawnRandomActorOnDeath:
+	DetectCloaked:
+		Range: 5c0
 
 SHAR:
 	Inherits: ^Defense
@@ -3739,7 +3797,7 @@ SHAR:
 		Queue: Defense
 		BuildPaletteOrder: 90
 		Prerequisites: anyradar, ~structures.scrin, ~techlevel.medium
-		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Strong vs Aircraft\n  Weak vs Ground Units
+		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Can detect cloaked aircraft.\n  Strong vs Aircraft\n  Weak vs Ground Units
 		IconPalette: chrome
 	Valued:
 		Cost: 800
@@ -3778,6 +3836,7 @@ SHAR:
 		Amount: -50
 	ClassicFacingBodyOrientation:
 	DetectCloaked:
+		CloakTypes: AirCloak
 		RequiresCondition: !(disabled || empdisable || being-warped)
 	SpawnActorOnDeath:
 		Actor: s1

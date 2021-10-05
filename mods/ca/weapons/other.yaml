@@ -305,11 +305,11 @@ ChemsprayTDFF:
 HeavyFlameTankFlamer:
 	Inherits: BigFlamerTD
 	-Report:
-	ReloadDelay: 75
+	ReloadDelay: 80
 	Burst: 30
 	BurstDelays: 2
 	Warhead@1Dam: SpreadDamage
-		Damage: 130
+		Damage: 155
 		Versus:
 			None: 230
 	Warhead@2Smu: LeaveSmudge
@@ -537,7 +537,7 @@ DogJaw:
 
 BruteAttack:
 	ReloadDelay: 60
-	Range: 1c0
+	Range: 1c512
 	Report: brutehit.aud
 	Projectile: InstantHit
 	InvalidTargets: Structure
@@ -1132,7 +1132,7 @@ PrisCLaser:
 	Inherits: PrisTLaser
 	Report: pcanfire.aud
 	ReloadDelay: 140
-	Range: 11c0
+	Range: 12c0
 	Projectile: LaserZap
 		Width: 70
 		Duration: 15
@@ -1633,7 +1633,11 @@ MicrowaveZap.UPG:
 		ValidRelationships: Ally, Enemy, Neutral
 		Range: 0c511
 	Warhead@emp: GrantExternalCondition
+		ValidTargets: Vehicle
+	Warhead@emp2: GrantExternalCondition
+		Range: 0c511
 		Duration: 200
+		Condition: empdisable
 		ValidTargets: Defense
 	Warhead@highlight: GrantExternalCondition
 		Range: 0c511

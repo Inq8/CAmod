@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System.Linq;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
@@ -30,12 +31,15 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new Attachable(init, this); }
 	}
 
-	public class Attachable : INotifyKilled, INotifyActorDisposing
+	public class Attachable : INotifyCreated, INotifyKilled, INotifyActorDisposing, INotifyOwnerChanged, ITick
 	{
 		public readonly AttachableInfo Info;
 		AttachableTo attachedTo;
+		AutoTarget autoTarget;
+		AttackBase[] attackBases;
 		int attachedConditionToken;
 		int detachedConditionToken;
+		Target lastTarget;
 		readonly IPositionable positionable;
 		readonly Actor self;
 
@@ -43,9 +47,15 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			self = init.Self;
 			Info = info;
-			positionable = self.TraitOrDefault<IPositionable>();
+			positionable = self.Trait<IPositionable>();
 			attachedConditionToken = Actor.InvalidConditionToken;
 			detachedConditionToken = Actor.InvalidConditionToken;
+		}
+
+		void INotifyCreated.Created(Actor self)
+		{
+			autoTarget = self.TraitOrDefault<AutoTarget>();
+			attackBases = self.TraitsImplementing<AttackBase>().ToArray();
 		}
 
 		public bool IsValid { get { return self != null && !self.IsDead; } }
@@ -68,8 +78,19 @@ namespace OpenRA.Mods.CA.Traits
 			self.Dispose();
 		}
 
+		void ITick.Tick(Actor self)
+		{
+			if (!IsValid || attachedTo == null)
+				return;
+
+			SetPosition(attachedTo.CenterPosition);
+		}
+
 		public void SetPosition(WPos pos)
 		{
+			if (attachedTo.CenterPosition == self.CenterPosition)
+				return;
+
 			positionable.SetPosition(self, pos);
 			positionable.SetVisualPosition(self, pos);
 		}
@@ -80,6 +101,11 @@ namespace OpenRA.Mods.CA.Traits
 		}
 
 		void INotifyKilled.Killed(Actor self, AttackInfo e)
+		{
+			Detach();
+		}
+
+		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
 		{
 			Detach();
 		}
@@ -97,6 +123,51 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (Info.DetachedCondition != null && detachedConditionToken == Actor.InvalidConditionToken)
 				detachedConditionToken = self.GrantCondition(Info.DetachedCondition);
+		}
+
+		public void Stop()
+		{
+			if (attackBases.Count() == 0)
+				return;
+
+			self.CancelActivity();
+			self.World.IssueOrder(new Order("Stop", self, false));
+		}
+
+		public void Attack(Target target, bool force)
+		{
+			if (attackBases.Count() == 0)
+				return;
+
+			if (!TargetSwitched(lastTarget, target))
+				return;
+
+			lastTarget = target;
+			self.World.AddFrameEndTask(w =>
+			{
+				var orderString = force ? "ForceAttack" : "Attack";
+				self.World.IssueOrder(new Order(orderString, self, target, false, null, null));
+			});
+		}
+
+		public void SetStance(UnitStance value)
+		{
+			if (autoTarget != null)
+				autoTarget.SetStance(self, value);
+		}
+
+		bool TargetSwitched(Target lastTarget, Target newTarget)
+		{
+			if (newTarget.Type != lastTarget.Type)
+				return true;
+
+			if (newTarget.Type == TargetType.Terrain)
+				return newTarget.CenterPosition != lastTarget.CenterPosition;
+
+			if (newTarget.Type == TargetType.Actor)
+				return lastTarget.Actor != newTarget.Actor;
+
+			return false;
 		}
 	}
 }
