@@ -2986,15 +2986,63 @@ SEAL:
 		VoiceSet: SealVoice
 	Mobile:
 		Speed: 49
+		Locomotor: seal
 	Armament:
 		Weapon: mp5
+		PauseOnCondition: onwater
 	Armament@garrison:
 		Name: mounted
 		Weapon: mp5e
 		MuzzleSequence: garrison-muzzle
+		PauseOnCondition: onwater
 	Armament@sapper:
 		Weapon: PlaceC4seal
 		Cursor: c4
 		OutsideRangeCursor: c4
 		Name: secondary
 	-VoiceAnnouncement:
+	GrantConditionOnTerrain:
+		TerrainTypes: Water
+		Condition: onwater
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+		RequiresCondition: !being-warped && !onwater
+	WithInfantryBody@Swim:
+		-IdleSequences:
+		StandSequences: swimidle
+		-AttackSequences:
+		DefaultAttackSequence: swim
+		MoveSequence: swim
+		RequiresCondition: !being-warped && onwater
+	WithDeathAnimation:
+		RequiresCondition: !onwater
+	WithDeathAnimation@Water:
+		RequiresCondition: onwater
+		UseDeathTypeSuffix: False
+		FallbackSequence: splash
+		CrushedSequence: die-crushed
+		DeathSequence: splash
+
+SEAL.squad:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesPrerequisite@squadname:
+	Tooltip:
+		Name: Squad: Seal Team
+	Buildable:
+		Queue: Infantry
+		BuildPaletteOrder: 20
+		Prerequisites: ~anyradar, ~infantry.usa, ~techlevel.high
+		Description: Airdrop 3 Special forces infantry.\n  Strong vs Infantry, Structures\n  Weak vs Tanks
+	Valued:
+		Cost: 1800
+	RenderSprites:
+		Image: squad.seal
+	ProduceActorPowerCA:
+		Actors: powerproxy.sealteam
+		Type: Infantry
+		OneShot: true
+		AutoFire: true
+		AllowMultiple: true
+		OrderName: sealteam
