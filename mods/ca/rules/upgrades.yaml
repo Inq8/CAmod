@@ -122,20 +122,6 @@ vulcan.upgrade:
 	RenderSprites:
 		Image: vulcan.upgrade
 
-drone.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Battle Drone
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~radar.arc, ~techlevel.high
-		BuildDuration: 1500
-		Description: Allows construction of a modified crewless Battle Tank.\n\n  Replaces: Battle Tank\n  + Immunity to crew kill, chaos gas and mind control\n  + Reduced cost\n  – Reduced damage \n  – Disabled on low power
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: drone.upgrade
-
 empgren.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -270,6 +256,20 @@ railgun.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: railgun.upgrade
+
+drone.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Drone Tanks
+	Buildable:
+		BuildPaletteOrder: 83
+		Prerequisites: ~upgc.arc, ~techlevel.high
+		BuildDuration: 1500
+		Description: Allows construction of remotely piloted tanks.\n\n  Replaces: Battle Tank\n  Replaces: Mammoth Tank\n  + Immunity to crew kill, chaos gas and mind control\n  + Reduced cost\n  + Increased rate of fire\n  – Disabled if radar is down\n  – Can be hacked
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: drone.upgrade
 
 #########################NOD#########
 ########################################
