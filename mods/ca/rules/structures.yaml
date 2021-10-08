@@ -655,6 +655,7 @@ AGUN:
 		InitialFacing: 832
 		RealignDelay: -1
 		RequiresCondition: !build-incomplete
+		PauseOnCondition: disabled || empdisable || being-warped
 	WithSpriteTurret:
 		RequiresCondition: !build-incomplete
 		Recoils: false
@@ -1042,6 +1043,8 @@ SAM:
 		TurnSpeed: 120
 		InitialFacing: 0
 		RealignDelay: -1
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: disabled || empdisable || being-warped
 	-WithSpriteBody:
 	WithEmbeddedTurretSpriteBody:
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -3442,6 +3445,8 @@ NSAM:
 		TurnSpeed: 120
 		InitialFacing: 0
 		RealignDelay: -1
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: disabled || empdisable || being-warped
 	-WithSpriteBody:
 	WithEmbeddedTurretSpriteBody:
 		QuantizedFacings: 32
@@ -3583,6 +3588,8 @@ STWR:
 		TurnSpeed: 20
 		InitialFacing: 192
 		RealignDelay: -1
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: disabled || empdisable || being-warped
 	-WithSpriteBody:
 	WithEmbeddedTurretSpriteBody:
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -5000,6 +5007,8 @@ HTUR:
 		TurnSpeed: 8
 		InitialFacing: 0
 		RealignDelay: -1
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: disabled || empdisable || being-warped
 	-WithSpriteBody:
 	WithEmbeddedTurretSpriteBody:
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -5386,6 +5395,8 @@ PATR:
 		TurnSpeed: 8
 		InitialFacing: 192
 		RealignDelay: -1
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: disabled || empdisable || being-warped
 	-WithSpriteBody:
 	WithEmbeddedTurretSpriteBody:
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -5687,6 +5698,8 @@ UPGC:
 		InitialFacing: 384
 		RealignDelay: -1
 		Offset: -768,468,0
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: disabled || empdisable || being-warped
 	AttackTurreted:
 		RequiresCondition: !build-incomplete && tower.rocket && loaded-rocket > 0
 		PauseOnCondition: disabled || empdisable || being-warped

@@ -3774,6 +3774,7 @@ PTUR:
 		InitialFacing: 192
 		RealignDelay: -1
 		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !build-incomplete
 	-WithSpriteBody:
 	WithEmbeddedTurretSpriteBody:
 		PauseOnCondition: empdisable || being-warped
@@ -3829,6 +3830,8 @@ SHAR:
 		TurnSpeed: 60
 		InitialFacing: 192
 		RealignDelay: -1
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: disabled || empdisable || being-warped
 	-WithSpriteBody:
 	WithEmbeddedTurretSpriteBody:
 		PauseOnCondition: disabled || empdisable || being-warped
