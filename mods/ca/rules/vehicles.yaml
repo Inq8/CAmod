@@ -4813,9 +4813,8 @@ MSAR:
 		TrailCount: 3
 	ExternalCondition@JAMMED:
 		Condition: jammed
-	ProximityExternalCondition@DRONECONTROL:
-		Condition: radarenabled
-		Range: 300c0
+	ProvidesPrerequisite@radar-active:
+		Prerequisite: radar-active
 		RequiresCondition: deployed && !(jammed || empdisable || being-warped)
 
 PTNK:

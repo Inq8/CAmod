@@ -804,10 +804,6 @@ DOME:
 	ProductionBar:
 		ProductionType: Upgrade
 	Exit:
-	ProximityExternalCondition@DRONECONTROL:
-		Condition: radarenabled
-		Range: 300c0
-		RequiresCondition: !jammed && !disabled && !being-warped
 
 PBOX:
 	Inherits: ^Defense
@@ -1303,6 +1299,9 @@ WEAP:
 	SequencePlaceBuildingPreview:
 		Sequence: place
 		SequencePalette: placebuilding
+	GrantExternalConditionToProduced@DRONEEXIT:
+		Condition: radarenabled
+		Duration: 100
 
 FACT:
 	Inherits: ^Building
@@ -2982,6 +2981,9 @@ WEAP.TD:
 	SequencePlaceBuildingPreview:
 		Sequence: place
 		SequencePalette: placebuildingtd
+	GrantExternalConditionToProduced@DRONEEXIT:
+		Condition: radarenabled
+		Duration: 100
 
 AIRS:
 	Inherits: ^BuildingTD
@@ -3874,10 +3876,6 @@ HQ:
 	ProductionBar:
 		ProductionType: Upgrade
 	Exit:
-	ProximityExternalCondition@DRONECONTROL:
-		Condition: radarenabled
-		Range: 300c0
-		RequiresCondition: !jammed && !disabled && !being-warped
 	ProductionCostMultiplier@ARCDISCOUNT:
 		Multiplier: 50
 		Prerequisites: radar.arc
@@ -3998,15 +3996,14 @@ EYE:
 	ProvidesPrerequisite@buildingname:
 	ExternalCondition@JAMMED:
 		Condition: jammed
+	ProvidesPrerequisite@radar-active:
+		Prerequisite: radar-active
+		RequiresCondition: !jammed && !disabled && !being-warped
 	MustBeDestroyed:
 		RequiredForShortGame: false
 	ProductionCostMultiplier@ZocomBonus:
 		Multiplier: 90
 		Prerequisites: structures.zocom
-	ProximityExternalCondition@DRONECONTROL:
-		Condition: radarenabled
-		Range: 300c0
-		RequiresCondition: !jammed && !disabled && !being-warped
 
 REP:
 	Inherits: ^BuildingTD

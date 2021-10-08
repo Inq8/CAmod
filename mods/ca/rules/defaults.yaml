@@ -3191,6 +3191,9 @@
 ^DisabledByRadarLoss:
 	ExternalCondition@DRONECONTROL:
 		Condition: radarenabled
+	GrantConditionOnPrerequisite@DRONECONTROL:
+		Condition: radarenabled
+		Prerequisites: radar-active
 	WithColoredOverlay@DRONEDISABLE:
 		RequiresCondition: !radarenabled || empdisable
 		Palette: disabled

@@ -602,6 +602,8 @@ MAST:
 		Palette: scrin
 		RequiresCondition: mindcontrolling
 		Offset: 0,0,400
+	Passenger:
+		CustomPipType: red
 
 #
 # ---- Vehicles
@@ -3057,6 +3059,9 @@ WSPH:
 		Proxy: stolentech.wsph
 	WithIdleOverlay:
 		RequiresCondition: !build-incomplete
+	GrantExternalConditionToProduced@DRONEEXIT:
+		Condition: radarenabled
+		Duration: 100
 
 NERV:
 	Inherits: ^ScrinBuilding
@@ -3125,6 +3130,9 @@ NERV:
 	ProvidesPrerequisite@buildingname:
 	ExternalCondition@JAMMED:
 		Condition: jammed
+	ProvidesPrerequisite@radar-active:
+		Prerequisite: radar-active
+		RequiresCondition: !jammed && !disabled && !being-warped
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.nerv
