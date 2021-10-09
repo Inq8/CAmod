@@ -3784,8 +3784,7 @@ PTUR:
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: build-incomplete || empdisable || being-warped
 	WithMuzzleOverlay:
 	Power:
 		Amount: -20
@@ -3839,8 +3838,7 @@ SHAR:
 		Weapon: ShardLauncher
 		LocalOffset: 0,0,1050
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: disabled || empdisable || being-warped
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	RenderRangeCircle:
 		RangeCircleType: aa
 	Power:

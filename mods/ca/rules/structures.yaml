@@ -666,8 +666,7 @@ AGUN:
 		LocalOffset: 520,100,450, 520,-150,450
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: disabled || empdisable || being-warped
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	WithMuzzleOverlay:
 	RenderRangeCircle:
 		RangeCircleType: aa
@@ -843,8 +842,7 @@ PBOX:
 		LocalOffset: 341,0,86
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: build-incomplete || empdisable || being-warped
 	RenderRangeCircle:
 		FallbackRange: 6c0
 	Power:
@@ -899,8 +897,7 @@ HBOX:
 		LocalOffset: 341,0,86
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: build-incomplete || empdisable || being-warped
 	Power:
 		Amount: -20
 	-MustBeDestroyed:
@@ -949,8 +946,7 @@ GUN:
 		LocalOffset: 512,0,112
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: build-incomplete || empdisable || being-warped
 	WithMuzzleOverlay:
 	Power:
 		Amount: -40
@@ -990,8 +986,7 @@ FTUR:
 		Weapon: FireballLauncher
 		LocalOffset: 512,0,0
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: !build-incomplete
+		PauseOnCondition: build-incomplete || empdisable || being-warped
 	-QuantizeFacingsFromSequence:
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
@@ -1053,8 +1048,7 @@ SAM:
 		LocalOffset: 0,0,320
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: disabled || empdisable || being-warped
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	WithMuzzleOverlay:
 	RenderRangeCircle:
 		RangeCircleType: aa
@@ -3500,8 +3494,7 @@ GTWR:
 		LocalOffset: 341,0,128
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: build-incomplete || empdisable || being-warped
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
 	WithMuzzleOverlay:
@@ -3549,8 +3542,7 @@ ATWR:
 		LocalOffset: 256,128,0, 256,-128,0
 		LocalYaw: -100,100
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: disabled || empdisable || being-warped
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
 	Power:
@@ -3600,8 +3592,7 @@ STWR:
 		Weapon: SonicPulse.UPG
 		RequiresCondition: sonic-upgrade
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: disabled || empdisable || being-warped
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	WithMuzzleOverlay:
 	Power:
 		Amount: -80
@@ -5013,8 +5004,7 @@ HTUR:
 	WithEmbeddedTurretSpriteBody:
 		PauseOnCondition: disabled || empdisable || being-warped
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: disabled || empdisable || being-warped
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	Armament:
 		Weapon: 203mm
 		MuzzleSequence: muzzle
@@ -5112,8 +5102,7 @@ TTUR:
 		Weapon: ChemballLauncher
 		LocalOffset: 512,0,0
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: !build-incomplete
+		PauseOnCondition: build-incomplete || empdisable || being-warped
 	-QuantizeFacingsFromSequence:
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
@@ -5405,8 +5394,8 @@ PATR:
 		Interval: 0
 		RequiresCondition: !loaded-rocket
 	AttackTurreted:
-		PauseOnCondition: disabled || empdisable || being-warped
-		RequiresCondition: !build-incomplete && loaded-rocket > 0
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
+		RequiresCondition: loaded-rocket > 0
 	Armament:
 		Weapon: EMPMissileLauncher
 		LocalOffset: 511,396,511
@@ -5701,8 +5690,8 @@ UPGC:
 		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled || empdisable || being-warped
 	AttackTurreted:
-		RequiresCondition: !build-incomplete && tower.rocket && loaded-rocket > 0
-		PauseOnCondition: disabled || empdisable || being-warped
+		RequiresCondition: tower.rocket && loaded-rocket > 0
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	Armament@ROCKET:
 		RequiresCondition: tower.rocket
 		Weapon: FirestormBarrage
