@@ -927,6 +927,19 @@ LaserTur.Adv:
 	Projectile: LaserZap
 		SecondaryBeamColor: FF00FF30
 
+StealthAPCLaser:
+	Inherits: LaserTur
+	ReloadDelay: 30
+	Report: sapc-fire1.aud, sapc-fire2.aud
+	Warhead@1Dam: SpreadDamage
+		Damage: 3400
+		Versus:
+			None: 100
+			Wood: 20
+			Light: 45
+			Heavy: 20
+			Concrete: 20
+
 XOLaser:
 	Inherits: Laser
 	Report: xo-laser.aud
