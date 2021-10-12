@@ -3631,6 +3631,9 @@ MANI:
 		Types: SpyInfiltrate, SabInfiltrate
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
+	ProvidesPrerequisiteValidatedFaction@collector:
+		Factions: collector
+		Prerequisite: mani.collector
 	DetonateWeaponPower@SUPPRESSION:
 		PauseOnCondition: disabled || empdisable || being-warped
 		OrderName: suppression
@@ -3651,6 +3654,28 @@ MANI:
 		Weapon: SuppressionField
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
+		Prerequisites: ~!mani.collector
+	DetonateWeaponPower@SUPPRESSIONSIPHON:
+		PauseOnCondition: disabled || empdisable || being-warped
+		OrderName: suppressionsiphon
+		Icon: spresspower
+		ChargeInterval: 4500
+		Description: Suppression Field
+		LongDesc: Applies a suppression field to the target area, slowing units.\nDamage dealt to affected units restores attacker's health.
+		Duration: 600
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		DisplayRadarPing: True
+		ActivationDelay: 0
+		SupportPowerPaletteOrder: 10
+		TargetCircleRange: 3c512
+		TargetCircleColor: ff55ffcc
+		LaunchSound: suppression.aud
+		DisplayTimerRelationships: Ally, Neutral, Enemy
+		Weapon: SuppressionSiphonField
+		CameraActor: camera.dummy
+		CameraRemoveDelay: 1
+		Prerequisites: ~mani.collector
 	ProductionCostMultiplier@COLLECTOR:
 		Multiplier: 90
 		Prerequisites: structures.collector

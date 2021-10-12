@@ -1052,6 +1052,14 @@ SuppressionField:
 		Condition: suppression
 		ValidTargets: Ground, Air, AirSmall, Ship
 
+SuppressionSiphonField:
+	Inherits: SuppressionField
+	Warhead@3siphon: GrantExternalCondition
+		Range: 3c512
+		Duration: 600
+		Condition: suppression-siphon
+		ValidTargets: Ground, Air, AirSmall, Ship
+
 BuzzerSpawner:
 	ReloadDelay: 1
 	Projectile: InstantExplode
