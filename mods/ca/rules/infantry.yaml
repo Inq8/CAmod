@@ -443,30 +443,6 @@ U3:
 		DeployTicks: 5
 		UndeployTicks: 50
 
-U3.squad:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
-	ProvidesPrerequisite@squadname:
-	Tooltip:
-		Name: Squad: Guardian G.I.
-	Buildable:
-		Queue: Infantry
-		BuildPaletteOrder: 20
-		Prerequisites: ~anyradar, ~infantry.usa, ~techlevel.high
-		Description: Airdrop 5 Anti-tank/anti-aircraft infantry.\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
-	Valued:
-		Cost: 1800
-	RenderSprites:
-		Image: squad.guardian
-	ProduceActorPowerCA:
-		Actors: powerproxy.paratroopers.us
-		Type: Infantry
-		OneShot: true
-		AutoFire: true
-		AllowMultiple: true
-		OrderName: spawnpara2
-
 E3R1:
 	Inherits: E3
 	RenderSprites:
@@ -1694,7 +1670,7 @@ BORI:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 200
-		Prerequisites: ~barr, stek, ~techlevel.high
+		Prerequisites: ~barr, stek, infantry.boris, ~techlevel.high
 		BuildLimit: 1
 		Description: Elite commando infantry. Armed with C4.\n  Can detect cloaked units.\n  Maximum 1 can be trained.\n  Strong vs Infantry, Buildings, Defenses\n  Weak vs Aircraft\n  Special Ability: Can call an Airstrike on Structures
 	Valued:
@@ -2967,6 +2943,95 @@ BH:
 	Voiced:
 		VoiceSet: BlackHandVoice
 
+YURI:
+	Inherits: ^Soldier
+	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 190
+		Prerequisites: ~barr, stek, ~infantry.yuri, ~techlevel.infonly
+		BuildLimit: 1
+		Description: Elite specialist infantry.\n  Can mind-control enemy units and defenses.\n  Can detect cloaked units.\n  Maximum 1 can be trained.\n  Strong vs Infantry, Vehicles, Defenses\n  Weak vs Aircraft\n  Special Ability: Mind Blast
+	Valued:
+		Cost: 1350
+	Tooltip:
+		Name: Yuri
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 11000
+	Mobile:
+		Speed: 56
+		Voice: Move
+	Armament@PRIMARY:
+		Weapon: EnslaveInfantry
+		LocalOffset: 150,0,400
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: EnslaveVehicle
+		LocalOffset: 150,0,400
+	MindController:
+		ArmamentNames: primary, secondary
+		Capacity: 3
+		ControlSounds: iyurat1a.aud
+		ControllingCondition: mindcontrolling
+	WithMindControlArc@MC:
+		Color: c71585
+		Transparency: 55
+		Offset: 0,0,511
+		Angle: 32
+		Width: 116
+	WithIdleOverlay@mindcontrolling:
+		Sequence: mc
+		Palette: scrin
+		RequiresCondition: mindcontrolling
+		Offset: 0,0,400
+	PeriodicExplosion:
+		Weapon: Mindblast
+		LocalOffset: 0,0,128
+		InitialDelay: 18
+		RequiresCondition: deployed && !being-warped
+	GrantTimedConditionOnDeploy:
+		DeployedTicks: 35
+		CooldownTicks: 100
+		Facing: 96
+		DeployedCondition: deployed
+		DeployingCondition: deploying
+		DeployAnimation: deploy
+		ShowSelectionBar: true
+		Voice:
+		PauseOnCondition: being-warped
+	AttackFrontal:
+		PauseOnCondition: being-warped
+	RevealsShroud:
+		Range: 6c0
+	Passenger:
+		CustomPipType: red
+		Voice: Move
+	Voiced:
+		VoiceSet: YuriVoice
+	-Crushable:
+	WithInfantryBody:
+		IdleSequences: idle
+		StandSequences: stand
+		DefaultAttackSequence: shoot
+		RequiresCondition: !deployed && !deploying && !being-warped
+	WithSpriteBody@DEPLOYED:
+		Sequence: deployed
+		RequiresCondition: (deployed || deploying) && !being-warped
+	ExternalCondition@PRODUCED:
+		Condition: produced
+	VoiceAnnouncement:
+		RequiresCondition: produced
+		Voice: Build
+	AnnounceOnKill:
+	IgnoresDisguise:
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	Targetable:
+		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, MindControlImmune
+
 SEAL:
 	Inherits: RMBO
 	Valued:
@@ -3022,27 +3087,3 @@ SEAL:
 		FallbackSequence: splash
 		CrushedSequence: die-crushed
 		DeathSequence: splash
-
-SEAL.squad:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
-	ProvidesPrerequisite@squadname:
-	Tooltip:
-		Name: Squad: Seal Team
-	Buildable:
-		Queue: Infantry
-		BuildPaletteOrder: 20
-		Prerequisites: ~anyradar, ~infantry.usa, ~techlevel.high
-		Description: Airdrop 3 Special forces infantry.\n  Strong vs Infantry, Structures\n  Weak vs Tanks
-	Valued:
-		Cost: 1800
-	RenderSprites:
-		Image: squad.seal
-	ProduceActorPowerCA:
-		Actors: powerproxy.sealteam
-		Type: Infantry
-		OneShot: true
-		AutoFire: true
-		AllowMultiple: true
-		OrderName: sealteam
