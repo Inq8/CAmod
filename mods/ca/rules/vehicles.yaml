@@ -909,7 +909,7 @@ ARTY.Chrono:
 		Factions: reaper, traveler, harbinger
 		Condition: scrin
 	GrantConditionOnFaction@TD:
-		Factions: eagle, zocom, talon, blackh, marked, legion, shadow
+		Factions: eagle, zocom, talon, arc, blackh, marked, legion, shadow
 		Condition: td
 	-Buildable:
 	GrantTimedCondition@warpin:
@@ -2888,7 +2888,7 @@ HTNK:
 		Queue: Vehicle
 		BuildPaletteOrder: 300
 		IconPalette: chrometd
-		Prerequisites: gtek, ~vehicles.htnk, ~!ionmam.upgrade, ~!hovermam.upgrade, ~techlevel.high
+		Prerequisites: ~!drone.upgrade, gtek, ~vehicles.htnk, ~!ionmam.upgrade, ~!hovermam.upgrade, ~techlevel.high
 		Description: Big and slow tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
 	Valued:
 		Cost: 1700
@@ -3002,7 +3002,7 @@ HTNK.Drone:
 		Queue: Vehicle
 		BuildPaletteOrder: 300
 		IconPalette: chrometd
-		Prerequisites: ~disabled, gtek, ~vehicles.htnk, ~!ionmam.upgrade, ~!hovermam.upgrade, ~techlevel.high
+		Prerequisites: ~drone.upgrade, gtek, ~vehicles.htnk, ~techlevel.high
 		Description: Remotely piloted heavy tank with anti-air capability.\n  Requires active radar communication.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
 	Valued:
 		Cost: 1500
@@ -3015,7 +3015,7 @@ HTNK.Drone:
 	AttackTurreted:
 		PauseOnCondition: !radarenabled || empdisable || being-warped
 	SpawnActorOnDeath:
-		Actor: HTNK.Husk
+		Actor: HTNK.DRONE.Husk
 	Voiced:
 		VoiceSet: DroneVoice
 	Targetable:

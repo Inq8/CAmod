@@ -284,7 +284,6 @@
 		InternalName: yuri
 		Side: Soviet
 		Description: Yuri: Mind Control & Genetics\n Units:\n  - Brute\n  - Chaos Drone (replaces MAD Tank)\n  - Yuri (replaces Boris)\n\n Powers:\n  - Genetic Mutation Bomb\n  - Parabombs\n\n Upgrades:\n  - Lasher Tank\n\n Bonuses:\n  - Kirov Chaos Bombs
-		Selectable: false
 	Faction@8:
 		Name: GDI
 		InternalName: gdi
@@ -310,7 +309,6 @@
 		InternalName: arc
 		Side: GDI
 		Description: Advanced Robotics Command: Robotics\n Units:\n  - Mini Drone\n  - Guardian Drone (replaces Hum-Vee)\n\n Powers:\n  - Nanite Repair\n\n Upgrades:\n  - Drone Tanks (replaces Mammoth & Battle Tanks)\n\n Bonuses:\n  - Recon Drone (-20% Cooldown)\n  - Drone Carrier (10% Discount)
-		Selectable: false
 	Faction@12:
 		Name: Nod
 		InternalName: nod
@@ -376,13 +374,13 @@
 	Faction@randomsoviet:
 		Name: Soviet
 		InternalName: RandomSoviet
-		RandomFactionMembers: russia, ukraine, iraq
+		RandomFactionMembers: russia, ukraine, iraq, yuri
 		Side: Random
 		Description: Random Soviet Faction\nA random Soviet faction will be chosen when the game starts.
 	Faction@randomgdi:
 		Name: GDI
 		InternalName: RandomGDI
-		RandomFactionMembers: talon, zocom, eagle
+		RandomFactionMembers: talon, zocom, eagle, arc
 		Side: Random
 		Description: Random GDI Faction\nA random GDI faction will be chosen when the game starts.
 	Faction@randomnod:
@@ -529,7 +527,7 @@ World:
 	MPStartUnits@mcvonly:
 		Class: none
 		ClassName: MCV Only
-		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq
+		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq, yuri
 		BaseActor: mcv
 	MPStartUnits@lightallies:
 		Class: light
@@ -542,7 +540,7 @@ World:
 	MPStartUnits@lightsoviet:
 		Class: light
 		ClassName: Light Support
-		Factions: soviet, russia, ukraine, iraq
+		Factions: soviet, russia, ukraine, iraq, yuri
 		BaseActor: mcv
 		SupportActors: e1,e1,e1,e3,e3
 		InnerSupportRadius: 3
@@ -558,7 +556,7 @@ World:
 	MPStartUnits@heavysoviet:
 		Class: heavy
 		ClassName: Heavy Support
-		Factions: soviet, russia, ukraine, iraq
+		Factions: soviet, russia, ukraine, iraq, yuri
 		BaseActor: mcv
 		SupportActors: e1,e1,e1,e3,e3,3tnk,3tnk
 		InnerSupportRadius: 3
