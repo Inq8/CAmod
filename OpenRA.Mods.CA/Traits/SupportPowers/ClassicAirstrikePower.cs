@@ -208,7 +208,8 @@ namespace OpenRA.Mods.CA.Traits
 					actor.Trait<IPositionable>().SetPosition(actor, startEdge + spawnOffset);
 					w.Add(actor);
 
-					var attack = actor.Trait<AttackBomber>();
+					var attack = actor.Trait<AttackBomberCA>();
+
 					attack.SetTarget(self.World, targetPos + targetOffset);
 					attack.OnEnteredAttackRange += onEnterRange;
 					attack.OnExitedAttackRange += onExitRange;

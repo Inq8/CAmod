@@ -53,10 +53,7 @@ namespace OpenRA.Mods.CA.Traits
 		void ITick.Tick(Actor self)
 		{
 			var wasInAttackRange = inAttackRange;
-
 			inAttackRange = false;
-
-			facingTarget = TargetInFiringArc(self, target, info.FacingTolerance);
 
 			if (self.IsInWorld)
 			{
@@ -72,7 +69,9 @@ namespace OpenRA.Mods.CA.Traits
 						continue;
 
 					inAttackRange = true;
-					a.CheckFire(self, facing, target);
+
+					if (facingTarget)
+						a.CheckFire(self, facing, target);
 				}
 
 				// Actors without armaments may want to trigger an action when it passes the target
