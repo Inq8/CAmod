@@ -865,42 +865,21 @@ Mindblast:
 	ReloadDelay: 200
 	ValidTargets: Ground, Water, Underwater
 	Report: iyurat2a.aud
-	Warhead@Eff_impact: CreateEffect
+	Warhead@Eff: CreateEffect
 		Explosions: mindblast
 		ExplosionPalette: ra2effect-ignore-lighting-alpha75
-	ValidTargets: Ground, Trees, Water, Underwater, Air, AirSmall
-	Warhead@1Dam_impact: SpreadDamage
+		ValidTargets: Ground, Trees, Water, Underwater, Air, AirSmall
+	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
-		Damage: 12200
-		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		Damage: 9000
+		Falloff: 1000, 700, 420, 210, 84, 25, 5
 		ValidTargets: Infantry, Vehicle, Structure, Ship
 		ValidRelationships: Enemy, Neutral
 		Versus:
-			Wood: 25
-			Brick: 25
-			Heavy: 80
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
-	Warhead@5Dam_areanuke1: SpreadDamage
-		Spread: 2c0
-		Damage: 4200
-		Falloff: 1000, 368, 135, 50, 18, 7, 0
-		Delay: 3
-		ValidTargets: Infantry, Vehicle, Structure, Ship
-		ValidRelationships: Enemy, Neutral
-		Versus:
-			Wood: 25
-			Brick: 25
-			Heavy: 80
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
-	Warhead@9Dam_areanuke2: SpreadDamage
-		Spread: 3c0
-		Damage: 4200
-		Falloff: 1000, 368, 135, 50, 18, 7, 0
-		Delay: 5
-		ValidTargets: Infantry, Vehicle, Structure, Ship
-		ValidRelationships: Enemy, Neutral
-		Versus:
-			Wood: 50
-			Brick: 25
-			Heavy: 80
+			None: 15
+			Wood: 95
+			Concrete: 100
+			Brick: 100
+			Heavy: 90
+			Light: 75
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
