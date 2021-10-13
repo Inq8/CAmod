@@ -414,11 +414,18 @@ ChainGun.Yak.L:
 
 ChainGun.P51.R:
 	Inherits: ChainGun.Yak.R
-	ReloadDelay: 550
+	ReloadDelay: 80
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			Wood: 15
 
 ChainGun.P51.L:
+	ReloadDelay: 80
 	Inherits: ChainGun.Yak.L
-	
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			Wood: 15
+
 Pistol:
 	Inherits: ^LightMG
 	Burst: 10
@@ -672,10 +679,11 @@ SMGE:
 MP5:
 	Inherits: ^SnipeWeapon
 	Report: iseaatta.aud, iseaattb.aud
-	ReloadDelay: 20
+	ReloadDelay: 12
 	Range: 6c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 25000
+		Spread: 128
+		Damage: 4700
 		ValidTargets: Infantry
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
@@ -830,6 +838,7 @@ SealIFVGun:
 	Burst: 3
 	BurstDelays: 2
 	Warhead@1Dam: SpreadDamage
+		-Spread:
 		Damage: 5100
 	Warhead@2Eff: CreateEffect
 		Explosions: piff

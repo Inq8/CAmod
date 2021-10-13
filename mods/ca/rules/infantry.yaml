@@ -3068,6 +3068,7 @@ SEAL:
 		Cursor: c4
 		OutsideRangeCursor: c4
 		Name: secondary
+		PauseOnCondition: !ammo
 	-VoiceAnnouncement:
 	GrantConditionOnTerrain:
 		TerrainTypes: Water
@@ -3090,3 +3091,12 @@ SEAL:
 		FallbackSequence: splash
 		CrushedSequence: die-crushed
 		DeathSequence: splash
+	AmmoPool:
+		Armaments: secondary
+		Ammo: 1
+		AmmoCondition: ammo
+	ReloadAmmoPoolCA:
+		Delay: 50
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: dd0000
