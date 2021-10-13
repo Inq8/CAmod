@@ -2760,7 +2760,10 @@ BH:
 
 YURI:
 	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@COMMANDOSKULL: ^CommandoSkull
+	AutoTargetPriority@DEFAULT:
+		RequiresCondition: mindcontrolling < 3 && !stance-attackanything && !assault-move
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
