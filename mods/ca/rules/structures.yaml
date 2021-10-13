@@ -655,6 +655,7 @@ AGUN:
 		InitialFacing: 832
 		RealignDelay: -1
 		RequiresCondition: !build-incomplete
+		PauseOnCondition: disabled || empdisable || being-warped
 	WithSpriteTurret:
 		RequiresCondition: !build-incomplete
 		Recoils: false
@@ -665,8 +666,7 @@ AGUN:
 		LocalOffset: 520,100,450, 520,-150,450
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: disabled || empdisable || being-warped
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	WithMuzzleOverlay:
 	RenderRangeCircle:
 		RangeCircleType: aa
@@ -804,10 +804,6 @@ DOME:
 	ProductionBar:
 		ProductionType: Upgrade
 	Exit:
-	ProximityExternalCondition@DRONECONTROL:
-		Condition: radarenabled
-		Range: 300c0
-		RequiresCondition: !jammed && !disabled && !being-warped
 
 PBOX:
 	Inherits: ^Defense
@@ -846,8 +842,7 @@ PBOX:
 		LocalOffset: 341,0,86
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: build-incomplete || empdisable || being-warped
 	RenderRangeCircle:
 		FallbackRange: 6c0
 	Power:
@@ -902,8 +897,7 @@ HBOX:
 		LocalOffset: 341,0,86
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: build-incomplete || empdisable || being-warped
 	Power:
 		Amount: -20
 	-MustBeDestroyed:
@@ -952,8 +946,7 @@ GUN:
 		LocalOffset: 512,0,112
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: build-incomplete || empdisable || being-warped
 	WithMuzzleOverlay:
 	Power:
 		Amount: -40
@@ -993,8 +986,7 @@ FTUR:
 		Weapon: FireballLauncher
 		LocalOffset: 512,0,0
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: !build-incomplete
+		PauseOnCondition: build-incomplete || empdisable || being-warped
 	-QuantizeFacingsFromSequence:
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
@@ -1046,6 +1038,8 @@ SAM:
 		TurnSpeed: 120
 		InitialFacing: 0
 		RealignDelay: -1
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: disabled || empdisable || being-warped
 	-WithSpriteBody:
 	WithEmbeddedTurretSpriteBody:
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -1054,8 +1048,7 @@ SAM:
 		LocalOffset: 0,0,320
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: disabled || empdisable || being-warped
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	WithMuzzleOverlay:
 	RenderRangeCircle:
 		RangeCircleType: aa
@@ -1303,6 +1296,9 @@ WEAP:
 	SequencePlaceBuildingPreview:
 		Sequence: place
 		SequencePalette: placebuilding
+	GrantExternalConditionToProduced@DRONEEXIT:
+		Condition: radarenabled
+		Duration: 100
 
 FACT:
 	Inherits: ^Building
@@ -2982,6 +2978,9 @@ WEAP.TD:
 	SequencePlaceBuildingPreview:
 		Sequence: place
 		SequencePalette: placebuildingtd
+	GrantExternalConditionToProduced@DRONEEXIT:
+		Condition: radarenabled
+		Duration: 100
 
 AIRS:
 	Inherits: ^BuildingTD
@@ -3440,6 +3439,8 @@ NSAM:
 		TurnSpeed: 120
 		InitialFacing: 0
 		RealignDelay: -1
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: disabled || empdisable || being-warped
 	-WithSpriteBody:
 	WithEmbeddedTurretSpriteBody:
 		QuantizedFacings: 32
@@ -3493,8 +3494,7 @@ GTWR:
 		LocalOffset: 341,0,128
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: build-incomplete || empdisable || being-warped
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
 	WithMuzzleOverlay:
@@ -3542,8 +3542,7 @@ ATWR:
 		LocalOffset: 256,128,0, 256,-128,0
 		LocalYaw: -100,100
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: disabled || empdisable || being-warped
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
 	Power:
@@ -3581,6 +3580,8 @@ STWR:
 		TurnSpeed: 20
 		InitialFacing: 192
 		RealignDelay: -1
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: disabled || empdisable || being-warped
 	-WithSpriteBody:
 	WithEmbeddedTurretSpriteBody:
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -3591,8 +3592,7 @@ STWR:
 		Weapon: SonicPulse.UPG
 		RequiresCondition: sonic-upgrade
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: disabled || empdisable || being-warped
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	WithMuzzleOverlay:
 	Power:
 		Amount: -80
@@ -3874,10 +3874,9 @@ HQ:
 	ProductionBar:
 		ProductionType: Upgrade
 	Exit:
-	ProximityExternalCondition@DRONECONTROL:
-		Condition: radarenabled
-		Range: 300c0
-		RequiresCondition: !jammed && !disabled && !being-warped
+	ProductionCostMultiplier@ARCDISCOUNT:
+		Multiplier: 50
+		Prerequisites: radar.arc
 
 EYE:
 	Inherits: ^BuildingTD
@@ -3995,15 +3994,14 @@ EYE:
 	ProvidesPrerequisite@buildingname:
 	ExternalCondition@JAMMED:
 		Condition: jammed
+	ProvidesPrerequisite@radar-active:
+		Prerequisite: radar-active
+		RequiresCondition: !jammed && !disabled && !being-warped
 	MustBeDestroyed:
 		RequiredForShortGame: false
 	ProductionCostMultiplier@ZocomBonus:
 		Multiplier: 90
 		Prerequisites: structures.zocom
-	ProximityExternalCondition@DRONECONTROL:
-		Condition: radarenabled
-		Range: 300c0
-		RequiresCondition: !jammed && !disabled && !being-warped
 
 REP:
 	Inherits: ^BuildingTD
@@ -5000,12 +4998,13 @@ HTUR:
 		TurnSpeed: 8
 		InitialFacing: 0
 		RealignDelay: -1
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: disabled || empdisable || being-warped
 	-WithSpriteBody:
 	WithEmbeddedTurretSpriteBody:
 		PauseOnCondition: disabled || empdisable || being-warped
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: disabled || empdisable || being-warped
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	Armament:
 		Weapon: 203mm
 		MuzzleSequence: muzzle
@@ -5103,8 +5102,7 @@ TTUR:
 		Weapon: ChemballLauncher
 		LocalOffset: 512,0,0
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: !build-incomplete
+		PauseOnCondition: build-incomplete || empdisable || being-warped
 	-QuantizeFacingsFromSequence:
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
@@ -5158,7 +5156,7 @@ SGEN:
 		Prerequisite: sgen.shadow
 	GrantPrerequisiteChargeDrainPowerCA@SGEN:
 		OrderName: stealthgen
-		DischargeModifier: 700
+		DischargeModifier: 750
 		Prerequisite: sgen.active
 		ChargeInterval: 4500
 		Icon: invis
@@ -5175,7 +5173,7 @@ SGEN:
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 	GrantPrerequisiteChargeDrainPowerCA@SGENSHADOW:
 		OrderName: stealthgenshadow
-		DischargeModifier: 580
+		DischargeModifier: 600
 		Prerequisite: sgen.active
 		ChargeInterval: 4500
 		Icon: invis
@@ -5386,6 +5384,8 @@ PATR:
 		TurnSpeed: 8
 		InitialFacing: 192
 		RealignDelay: -1
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: disabled || empdisable || being-warped
 	-WithSpriteBody:
 	WithEmbeddedTurretSpriteBody:
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -5394,8 +5394,8 @@ PATR:
 		Interval: 0
 		RequiresCondition: !loaded-rocket
 	AttackTurreted:
-		PauseOnCondition: disabled || empdisable || being-warped
-		RequiresCondition: !build-incomplete && loaded-rocket > 0
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
+		RequiresCondition: loaded-rocket > 0
 	Armament:
 		Weapon: EMPMissileLauncher
 		LocalOffset: 511,396,511
@@ -5687,9 +5687,11 @@ UPGC:
 		InitialFacing: 384
 		RealignDelay: -1
 		Offset: -768,468,0
-	AttackTurreted:
-		RequiresCondition: !build-incomplete && tower.rocket && loaded-rocket > 0
+		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled || empdisable || being-warped
+	AttackTurreted:
+		RequiresCondition: tower.rocket && loaded-rocket > 0
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	Armament@ROCKET:
 		RequiresCondition: tower.rocket
 		Weapon: FirestormBarrage

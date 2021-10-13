@@ -314,13 +314,13 @@ Player:
 					Types: Structure
 					Attractiveness: 1
 					TargetMetric: Value
-					CheckRadius: 5c0
+					CheckRadius: 3c0
 				Consideration@2:
 					Against: Ally
 					Types: Air, Ground, Water
 					Attractiveness: -10
 					TargetMetric: Value
-					CheckRadius: 7c0
+					CheckRadius: 5c0
 			ioncannonpower:
 				OrderName: ioncannon
 				MinimumAttractiveness: 3000
@@ -559,6 +559,16 @@ Player:
 					Attractiveness: 2
 					TargetMetric: Value
 					CheckRadius: 3c0
+			suppressionsiphonpower:
+				OrderName: suppressionsiphon
+				MinimumAttractiveness: 1000
+				FineScanRadius: 2
+				Consideration@3:
+					Against: Enemy
+					Types: Vehicle, Infantry
+					Attractiveness: 2
+					TargetMetric: Value
+					CheckRadius: 3c0
 			riftpower:
 				OrderName: rift
 				MinimumAttractiveness: 3000
@@ -779,6 +789,7 @@ Player:
 			vulcan.upgrade: 1
 			empgren.upgrade: 1
 			hazmat.upgrade: 1
+			hazmatsoviet.upgrade: 1
 			howi.upgrade: 1
 			microwave.upgrade: 1
 			tibcore.upgrade: 1
@@ -789,6 +800,7 @@ Player:
 			tarc.upgrade: 1
 			indp.upgrade: 1
 			iraqtank.upgrade: 1
+			lasher.upgrade: 1
 			v2.upgrade: 1
 			orep.upgrade: 1
 			charv.upgrade: 1
@@ -974,6 +986,7 @@ Player:
 			vulcan.upgrade: 1
 			empgren.upgrade: 1
 			hazmat.upgrade: 1
+			hazmatsoviet.upgrade: 1
 			howi.upgrade: 1
 			microwave.upgrade: 1
 			tibcore.upgrade: 1
@@ -984,6 +997,7 @@ Player:
 			tarc.upgrade: 1
 			indp.upgrade: 1
 			iraqtank.upgrade: 1
+			lasher.upgrade: 1
 			v2.upgrade: 1
 			orep.upgrade: 1
 			charv.upgrade: 1
@@ -1168,6 +1182,7 @@ Player:
 			vulcan.upgrade: 1
 			empgren.upgrade: 1
 			hazmat.upgrade: 1
+			hazmatsoviet.upgrade: 1
 			howi.upgrade: 1
 			microwave.upgrade: 1
 			tibcore.upgrade: 1
@@ -1178,6 +1193,7 @@ Player:
 			tarc.upgrade: 1
 			indp.upgrade: 1
 			iraqtank.upgrade: 1
+			lasher.upgrade: 1
 			v2.upgrade: 1
 			orep.upgrade: 1
 			charv.upgrade: 1
@@ -1362,6 +1378,7 @@ Player:
 			vulcan.upgrade: 1
 			empgren.upgrade: 1
 			hazmat.upgrade: 1
+			hazmatsoviet.upgrade: 1
 			howi.upgrade: 1
 			microwave.upgrade: 1
 			tibcore.upgrade: 1
@@ -1372,6 +1389,7 @@ Player:
 			tarc.upgrade: 1
 			indp.upgrade: 1
 			iraqtank.upgrade: 1
+			lasher.upgrade: 1
 			v2.upgrade: 1
 			orep.upgrade: 1
 			charv.upgrade: 1
@@ -1524,6 +1542,7 @@ Player:
 			vulcan.upgrade: 1
 			empgren.upgrade: 1
 			hazmat.upgrade: 1
+			hazmatsoviet.upgrade: 1
 			howi.upgrade: 1
 			microwave.upgrade: 1
 			tibcore.upgrade: 1
@@ -1534,6 +1553,7 @@ Player:
 			tarc.upgrade: 1
 			indp.upgrade: 1
 			iraqtank.upgrade: 1
+			lasher.upgrade: 1
 			v2.upgrade: 1
 			orep.upgrade: 1
 			charv.upgrade: 1
@@ -1597,6 +1617,7 @@ Player:
 			dog: 2
 			sab: 2
 			shok: 15
+			brut: 15
 			e8: 15
 			snip: 15
 			jjet: 15
@@ -1609,12 +1630,14 @@ Player:
 			bori: 15
 			mast: 15
 			apc.ai: 20
+			sapc.ai: 10
 			intl.ai: 10
 			jeep: 30
 			apc2.nodai: 20
 			apc2.gdiai: 20
 			vulc.ai: 10
 			hmmv: 30
+			gdrn: 30
 			btr.ai: 20
 			gunw: 20
 			bggy: 30
@@ -1637,6 +1660,7 @@ Player:
 			rtnk: 45
 			3tnk: 70
 			3tnk.iraq: 70
+			3tnk.yuri: 70
 			4tnk: 40
 			4tnk.iraq: 40
 			apoc: 30
@@ -1654,6 +1678,7 @@ Player:
 			htnk: 40
 			htnk.ion: 40
 			htnk.hover: 40
+			htnk.drone: 40
 			v3rl: 3
 			titn: 40
 			titn.rail: 40
@@ -1783,6 +1808,7 @@ Player:
 			dog: 2
 			sab: 2
 			shok: 15
+			brut: 15
 			e8: 15
 			snip: 15
 			jjet: 15
@@ -1795,12 +1821,14 @@ Player:
 			bori: 15
 			mast: 15
 			apc.ai: 20
+			sapc.ai: 10
 			intl.ai: 10
 			jeep: 30
 			apc2.nodai: 20
 			apc2.gdiai: 20
 			vulc.ai: 10
 			hmmv: 30
+			gdrn: 30
 			btr.ai: 20
 			gunw: 20
 			bggy: 30
@@ -1823,6 +1851,7 @@ Player:
 			rtnk: 45
 			3tnk: 70
 			3tnk.iraq: 70
+			3tnk.yuri: 70
 			4tnk: 40
 			4tnk.iraq: 40
 			apoc: 30
@@ -1840,6 +1869,7 @@ Player:
 			htnk: 40
 			htnk.ion: 40
 			htnk.hover: 40
+			htnk.drone: 40
 			v3rl: 3
 			titn: 40
 			titn.rail: 40
@@ -1968,6 +1998,7 @@ Player:
 			dog: 2
 			sab: 2
 			shok: 15
+			brut: 15
 			e8: 15
 			snip: 15
 			jjet: 15
@@ -1980,11 +2011,13 @@ Player:
 			bori: 15
 			mast: 15
 			apc: 20
+			sapc: 10
 			intl: 10
 			jeep: 30
 			apc2: 20
 			vulc: 10
 			hmmv: 30
+			gdrn: 30
 			btr: 20
 			gunw: 20
 			bggy: 30
@@ -2007,6 +2040,7 @@ Player:
 			rtnk: 45
 			3tnk: 70
 			3tnk.iraq: 70
+			3tnk.yuri: 70
 			4tnk: 40
 			4tnk.iraq: 40
 			apoc: 30
@@ -2024,6 +2058,7 @@ Player:
 			htnk: 40
 			htnk.ion: 40
 			htnk.hover: 40
+			htnk.drone: 40
 			v3rl: 3
 			titn: 40
 			titn.rail: 40
@@ -2151,6 +2186,7 @@ Player:
 			dog: 2
 			sab: 2
 			shok: 15
+			brut: 15
 			e8: 15
 			snip: 15
 			jjet: 15
@@ -2163,11 +2199,13 @@ Player:
 			bori: 15
 			mast: 15
 			apc: 20
+			sapc: 10
 			intl: 10
 			jeep: 30
 			apc2: 20
 			vulc: 10
 			hmmv: 30
+			gdrn: 30
 			btr: 20
 			gunw: 20
 			bggy: 30
@@ -2190,6 +2228,7 @@ Player:
 			rtnk: 45
 			3tnk: 70
 			3tnk.iraq: 70
+			3tnk.yuri: 70
 			4tnk: 40
 			4tnk.iraq: 40
 			apoc: 30
@@ -2207,6 +2246,7 @@ Player:
 			htnk: 40
 			htnk.ion: 40
 			htnk.hover: 40
+			htnk.drone: 40
 			v3rl: 3
 			titn: 40
 			titn.rail: 40

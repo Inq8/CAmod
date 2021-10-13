@@ -602,6 +602,8 @@ MAST:
 		Palette: scrin
 		RequiresCondition: mindcontrolling
 		Offset: 0,0,400
+	Passenger:
+		CustomPipType: red
 
 #
 # ---- Vehicles
@@ -979,7 +981,7 @@ LCHR:
 		BuildPaletteOrder: 141
 		Prerequisites: anyradar, ~vehicles.collector, ~techlevel.medium
 		Queue: Vehicle
-		Description: Medium-ranged anti-infantry/structure unit.\n  Regenerates health while dealing damage\n  Disables power plants and radars\n  Strong vs Infantry, Buildings\n  Weak vs Tanks, Defenses, Aircraft
+		Description: Medium-ranged anti-infantry/structure unit.\n  Regenerates health while dealing damage\n  Disables power plants and radars\n  Slows vehicles & cyborgs\n  Strong vs Infantry, Buildings\n  Weak vs Tanks, Defenses, Aircraft
 		IconPalette: chromes
 	Mobile:
 		Speed: 80
@@ -1321,13 +1323,13 @@ ATMZ:
 		Queue: Vehicle
 		BuildPaletteOrder: 285
 		Prerequisites: scrt, ~vehicles.collector, ~techlevel.medium
-		Description: Lightly armored long-range support unit.\n  Targets take damage over time\n  Targets have reduced rate of fire\n  Strong vs Vehicles, Aircraft\n  Weak vs Infantry, Buildings
+		Description: Lightly armored long-range support unit.\n  Targets take damage over time\n  Targets have reduced rate of fire\n  Strong vs Vehicles, Aircraft, Defenses\n  Weak vs Infantry, Buildings
 		IconPalette: chrome
 	Mobile:
 		Speed: 66
 		Locomotor: lighthover
 	Health:
-		HP: 15000
+		HP: 20000
 	Armor:
 		Type: Light
 	RevealsShroud:
@@ -3057,6 +3059,9 @@ WSPH:
 		Proxy: stolentech.wsph
 	WithIdleOverlay:
 		RequiresCondition: !build-incomplete
+	GrantExternalConditionToProduced@DRONEEXIT:
+		Condition: radarenabled
+		Duration: 100
 
 NERV:
 	Inherits: ^ScrinBuilding
@@ -3125,6 +3130,9 @@ NERV:
 	ProvidesPrerequisite@buildingname:
 	ExternalCondition@JAMMED:
 		Condition: jammed
+	ProvidesPrerequisite@radar-active:
+		Prerequisite: radar-active
+		RequiresCondition: !jammed && !disabled && !being-warped
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.nerv
@@ -3623,6 +3631,9 @@ MANI:
 		Types: SpyInfiltrate, SabInfiltrate
 	Targetable:
 		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
+	ProvidesPrerequisiteValidatedFaction@collector:
+		Factions: collector
+		Prerequisite: mani.collector
 	DetonateWeaponPower@SUPPRESSION:
 		PauseOnCondition: disabled || empdisable || being-warped
 		OrderName: suppression
@@ -3643,6 +3654,28 @@ MANI:
 		Weapon: SuppressionField
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
+		Prerequisites: ~!mani.collector
+	DetonateWeaponPower@SUPPRESSIONSIPHON:
+		PauseOnCondition: disabled || empdisable || being-warped
+		OrderName: suppressionsiphon
+		Icon: spresspower
+		ChargeInterval: 4500
+		Description: Suppression Field
+		LongDesc: Applies a suppression field to the target area, slowing units.\nDamage dealt to affected units restores attacker's health.
+		Duration: 600
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		DisplayRadarPing: True
+		ActivationDelay: 0
+		SupportPowerPaletteOrder: 10
+		TargetCircleRange: 3c512
+		TargetCircleColor: ff55ffcc
+		LaunchSound: suppression.aud
+		DisplayTimerRelationships: Ally, Neutral, Enemy
+		Weapon: SuppressionSiphonField
+		CameraActor: camera.dummy
+		CameraRemoveDelay: 1
+		Prerequisites: ~mani.collector
 	ProductionCostMultiplier@COLLECTOR:
 		Multiplier: 90
 		Prerequisites: structures.collector
@@ -3766,6 +3799,7 @@ PTUR:
 		InitialFacing: 192
 		RealignDelay: -1
 		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !build-incomplete
 	-WithSpriteBody:
 	WithEmbeddedTurretSpriteBody:
 		PauseOnCondition: empdisable || being-warped
@@ -3775,8 +3809,7 @@ PTUR:
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: build-incomplete || empdisable || being-warped
 	WithMuzzleOverlay:
 	Power:
 		Amount: -20
@@ -3821,6 +3854,8 @@ SHAR:
 		TurnSpeed: 60
 		InitialFacing: 192
 		RealignDelay: -1
+		RequiresCondition: !build-incomplete
+		PauseOnCondition: disabled || empdisable || being-warped
 	-WithSpriteBody:
 	WithEmbeddedTurretSpriteBody:
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -3828,8 +3863,7 @@ SHAR:
 		Weapon: ShardLauncher
 		LocalOffset: 0,0,1050
 	AttackTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: disabled || empdisable || being-warped
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	RenderRangeCircle:
 		RangeCircleType: aa
 	Power:

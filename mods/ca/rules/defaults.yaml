@@ -395,6 +395,19 @@
 	TimedConditionBar@SUPPRESSION:
 		Condition: suppression
 		Color: f454d0
+	ExternalCondition@SUPPRESSIONSIPHON:
+		Condition: suppression-siphon
+	ReflectsDamage@SUPPRESSIONSIPHON:
+		DamagePercentage: -30
+		ReflectToAttacker: true
+		ValidRelationships: Enemy
+		RequiresCondition: suppression-siphon
+	WithIdleOverlay@SUPPRESSIONSIPHON:
+		Sequence: idle
+		Image: siphon-overlay-lg
+		Palette: scrin-ignore-lighting-alpha15
+		RequiresCondition: suppression-siphon
+		IsDecoration: true
 
 ^Atomizable:
 	ExternalCondition@ATOMIZED:
@@ -417,7 +430,7 @@
 		Versus:
 			None: 0
 			Wood: 0
-			Concrete: 0
+			Concrete: 85
 			Light: 85
 			Heavy: 100
 	ChangesHealthVersus@ATOMIZED2:
@@ -427,7 +440,7 @@
 		Versus:
 			None: 0
 			Wood: 0
-			Concrete: 0
+			Concrete: 85
 			Light: 85
 			Heavy: 100
 	ChangesHealthVersus@ATOMIZED3:
@@ -437,7 +450,7 @@
 		Versus:
 			None: 0
 			Wood: 0
-			Concrete: 0
+			Concrete: 85
 			Light: 85
 			Heavy: 100
 
@@ -1852,6 +1865,8 @@
 		OnCrushCondition: crush-slow
 		OnCrushDuration: 50
 	TeleportNetworkTransportable:
+	WithIdleOverlay@SUPPRESSIONSIPHON:
+		Image: siphon-overlay-sm
 
 ^Soldier:
 	Inherits: ^Infantry
@@ -2445,6 +2460,7 @@
 	Inherits@selection: ^SelectableCombatBuilding
 	Inherits@mind: ^MindControllable
 	Inherits@gpsscramble: ^GpsScramble
+	Inherits@atomize: ^Atomizable
 	-SpeedMultiplier@concussion:
 	WithColoredOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability
@@ -3190,6 +3206,9 @@
 ^DisabledByRadarLoss:
 	ExternalCondition@DRONECONTROL:
 		Condition: radarenabled
+	GrantConditionOnPrerequisite@DRONECONTROL:
+		Condition: radarenabled
+		Prerequisites: radar-active
 	WithColoredOverlay@DRONEDISABLE:
 		RequiresCondition: !radarenabled || empdisable
 		Palette: disabled
