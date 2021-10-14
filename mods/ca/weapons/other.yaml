@@ -668,6 +668,12 @@ PlaceC4:
 		Condition: highlight
 		ValidTargets: Ground, Structure, Vehicle
 
+PlaceC4Seal:
+	Inherits: PlaceC4
+	ReloadDelay: 50
+	ValidTargets: C4, Vehicle, Ship, Submarine, Structure
+	Range: 1c255
+
 C4:
 	Projectile: InstantHit
 	Warhead@1Dam: HealthPercentageDamage
@@ -2236,3 +2242,11 @@ ChemDebrisSmall:
 	-Warhead@5Radio:
 	Warhead@1Dam: SpreadDamage
 		Spread: 10
+
+AirDummyAim:
+	Range: 7c0
+	ReloadDelay: 20
+	ValidTargets: Air
+	Projectile: InstantHit
+	Warhead@1Dam: TargetDamage
+		ValidTargets: Air

@@ -282,6 +282,16 @@ Dragon.CYB.TibCore:
 	Warhead@1Dam: SpreadDamage
 		Damage: 7000
 
+DragonGI:
+	Inherits: Dragon
+	Range: 6c0
+	Report: iggiat2a.aud, iggiat2b.aud
+	ReloadDelay: 40
+	Projectile: MissileCA
+		RangeLimit: 7c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 2800
+
 DragonE:
 	Inherits: Dragon
 	Range: 6c0
@@ -576,6 +586,12 @@ RedEye.CRYO:
 
 RedEyeE:
 	Inherits: RedEye
+	Range: 9c0
+
+RedEyeGI:
+	Inherits: RedEye
+	Report: iggiat2a.aud, iggiat2b.aud
+	ReloadDelay: 40
 	Range: 9c0
 
 RedEyeE.TibCore:
@@ -1649,3 +1665,55 @@ BATFRockets:
 		Versus:
 			Concrete: 55
 			Light: 25
+
+Rocket.P51.R:
+	ReloadDelay: 200
+	Range: 8c0
+	MinRange: 0c768
+	Report: rocket2.aud
+	Burst: 4
+	BurstDelays: 4
+	FirstBurstTargetOffset: -758,-613,0
+	FollowingBurstTargetOffset: 758,0,0
+	ValidTargets: Ground, Water
+	InvalidTargets: Air
+	TargetActorCenter: true
+	Projectile: Bullet
+		Blockable: false
+		Shadow: true
+		Inaccuracy: 0c256
+		Image: dragon
+		TrailImage: smokey
+		TrailDelay: 3
+		Speed: 250
+		LaunchAngle: -10
+		ContrailLength: 8
+		ContrailWidth: 48
+	Warhead@1Dam: SpreadDamage
+		Spread: 512
+		Damage: 400
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		Versus:
+			None: 100
+			Wood: 40
+			Concrete: 60
+			Light: 60
+			Heavy: 100
+			Brick: 60
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
+	Warhead@3Eff: CreateEffect
+		Explosions: med_explosion
+		ImpactSounds: kaboom25.aud
+		ValidTargets: Ground, Air, Ship, Trees
+	Warhead@4EffWater: CreateEffect
+		Explosions: med_splash
+		ImpactSounds: splash9.aud
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+
+Rocket.P51.L:
+	Inherits: Rocket.P51.R
+	FirstBurstTargetOffset: -758,613,0

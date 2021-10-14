@@ -188,6 +188,34 @@ TRAN.Husk2:
 	-TransformOnCapture:
 	-InfiltrateForTransform:
 
+NHAW.Husk:
+	Inherits: ^HelicopterHusk
+	Tooltip:
+		Name: Nighthawk
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 149
+	WithIdleOverlay@PRIMARY:
+		Offset: 237,0,263
+		Sequence: rotor
+	WithIdleOverlay@SECONDARY:
+		Offset: -997,0,341
+		Sequence: rotor2
+	RevealsShroud:
+		Range: 8c0
+		MinRange: 6c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 6c0
+		Type: GroundPosition
+	RenderSprites:
+		Image: nhaw
+
+NHAW.Husk.EMP:
+	Inherits: NHAW.Husk
+	Inherits: ^EmpVisualEffect
+
 BADR.Husk:
 	Inherits: ^PlaneHusk
 	Tooltip:
@@ -302,6 +330,38 @@ YAK.Husk:
 
 YAK.Husk.EMP:
 	Inherits: YAK.Husk
+	Inherits: ^EmpVisualEffect
+
+P51.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: P51 Attack Plane
+	Aircraft:
+		TurnSpeed: 5
+		Speed: 149
+	SmokeTrailWhenDamaged:
+		Offset: -853,0,0
+		Interval: 2
+		MinDamage: Undamaged
+	Contrail@1:
+		Offset: -98,-683,-10
+	Contrail@2:
+		Offset: -98,683,-10
+	RevealsShroud:
+		Range: 11c0
+		MinRange: 9c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 9c0
+		Type: GroundPosition
+	RenderSprites:
+		Image: p51
+	FallsToEarth:
+		Explosion: UnitExplodePlaneLight
+
+P51.Husk.EMP:
+	Inherits: P51.Husk
 	Inherits: ^EmpVisualEffect
 
 HELI.Husk:

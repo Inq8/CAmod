@@ -83,7 +83,7 @@ E1:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 10
-		Prerequisites: ~infantry.ra, ~techlevel.infonly
+		Prerequisites: ~infantry.ra, ~!infantry.usa, ~techlevel.infonly
 		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
 		Cost: 100
@@ -108,6 +108,54 @@ E1:
 		Prerequisites: barracks.upgraded
 	Convertible:
 		SpawnActors: N1C
+
+U1:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@BOTHELPER: ^BotCaptureHelper
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 10
+		Prerequisites: ~infantry.usa, ~techlevel.infonly
+		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+	Selectable:
+		Class: E1
+	Valued:
+		Cost: 100
+	Tooltip:
+		Name: G.I
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 5000
+	Armament@PRIMARY:
+		Weapon: M1Carbine
+	Armament@Garrison:
+		Name: mounted
+		Weapon: M1CarbineE
+		MuzzleSequence: garrison-muzzle
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+		IdleSequences: idle1,idle2,idle3,idle4
+	AttackFrontal:
+		PauseOnCondition: being-warped
+		Voice: Attack
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	Convertible:
+		SpawnActors: N1C
+	Mobile:
+		Voice: Move
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Guard:
+		Voice: Move
+	Voiced:
+		VoiceSet: GIVoice
 
 E1R1:
 	Inherits: E1
@@ -169,7 +217,7 @@ E3:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 20
-		Prerequisites: ~infantry.ra, ~techlevel.infonly
+		Prerequisites: ~infantry.ra, ~!infantry.usa, ~techlevel.infonly
 		Description: Anti-tank/anti-aircraft infantry.\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
 	Valued:
 		Cost: 300
@@ -271,6 +319,129 @@ E3:
 		CrushedSequence: die-crushed
 	Convertible:
 		SpawnActors: N3C
+
+U3:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@BERSERK: ^Berserk
+	Inherits@BOTHELPER: ^BotCaptureHelper
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 20
+		Prerequisites: ~infantry.usa, ~techlevel.infonly
+		Description: Veteran General-purpose infantry.\n  Can deploy into Anti-tank/anti-aircraft bunker\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
+	Selectable:
+		Class: E3
+	Valued:
+		Cost: 350
+	Tooltip:
+		Name: Guardian G.I
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 6500
+	Mobile:
+		Speed: 38
+		Voice: Move
+		PauseOnCondition: deploying && !undeployed
+	Armament@PRIMARY:
+		Weapon: M14
+		LocalOffset: 0,0,400
+		PauseOnCondition: !ammo
+		RequiresCondition: !deployed
+	Armament@PRIMARYDEP:
+		Weapon: RedEyeGI
+		LocalOffset: 0,0,400
+		PauseOnCondition: !ammo
+		RequiresCondition: deployed
+	Armament@SECONDARYDEP:
+		Name: secondary
+		Weapon: DragonGI
+		LocalOffset: 0,0,400
+		PauseOnCondition: !ammo
+		RequiresCondition: deployed
+	Armament@GarrisonAA:
+		Name: mountedaa
+		Weapon: RedEyeGI
+		PauseOnCondition: !ammo
+	Armament@Garrison:
+		Name: mounted
+		Weapon: DragonGI
+		PauseOnCondition: !ammo
+	Armament@AIDummyAiming: ## Hack: Make AI deploy to attack air
+		PauseOnCondition: being-warped
+		RequiresCondition: botowner && !deployed
+		Weapon: AirDummyAim
+	AmmoPool:
+		Ammo: 1
+		AmmoCondition: ammo
+	ReloadAmmoPool:
+		Delay: 50
+		Count: 1
+	TakeCover:
+		ProneOffset: 384,0,-395
+		RequiresCondition: !deployed
+	DamageMultiplier:
+		Modifier: 50
+		RequiresCondition: deployed
+	AttackFrontal:
+		PauseOnCondition: being-warped && !undeployed
+		Voice: Attack
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	AutoTarget:
+		ScanRadius: 5
+	GrantConditionOnPrerequisite@CRYO:
+		Condition: cryr-upgrade
+		Prerequisites: cryr.upgrade
+	GrantConditionOnDeploy:
+		DeployedCondition: deployed
+		UndeployedCondition: undeployed
+		UndeployOnMove: True
+		Voice: Action
+		DeploySounds: igidepa.aud, igidepb.aud
+		UndeploySounds: igidepa.aud, igidepb.aud
+		PauseOnCondition: being-warped
+		SmartDeploy: True
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+		RequiresCondition: !cryr-upgrade && undeployed
+	WithInfantryBody@Deployed:
+		-IdleSequences:
+		StandSequences: deployed
+		AttackSequences: deploy-shoot
+		DefaultAttackSequence: deploy-shoot
+		-MoveSequence:
+		RequiresCondition: deployed
+	WithSpriteBody@deployed:
+		Sequence: empty
+		RequiresCondition: !undeployed
+		Name: deployedbody
+	WithMakeAnimation:
+		BodyNames: deployedbody
+		Sequence: deploy
+	RejectsOrders@deployment:
+		Reject: AttackMove, AssaultMove
+		RequiresCondition: !botowner && deployed && !berserk
+	Convertible:
+		SpawnActors: N3C
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Guard:
+		Voice: Move
+	Voiced:
+		VoiceSet: GGIVoice
+	Crushable:
+		RequiresCondition: undeployed
+	AutoDeployer@AI:
+		RequiresCondition: botowner && !deployed && !parachute
+		DeployChance: 100
+		DeployTrigger: Attack
+		DeployTicks: 5
+		UndeployTicks: 50
 
 E3R1:
 	Inherits: E3
@@ -451,6 +622,8 @@ E7:
 		Speed: 56
 		Voice: Move
 	Guard:
+		Voice: Move
+	AttackMove:
 		Voice: Move
 	RevealsShroud:
 		Range: 6c0
@@ -1290,6 +1463,8 @@ RMBO:
 	Passenger:
 		CustomPipType: red
 		Voice: Move
+	AttackMove:
+		Voice: Move
 	RevealsShroud:
 		Range: 6c0
 	Armament:
@@ -1520,6 +1695,8 @@ BORI:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+	AttackMove:
+		Voice: Move
 	Armament@PRIMARY:
 		Name: secondary
 		Weapon: akm
@@ -1997,6 +2174,7 @@ E8:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@BOTHELPER: ^BotCaptureHelper
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -2085,6 +2263,13 @@ E8:
 		-RequiresCondition:
 	-WithDecoration@HAZMAT:
 	-SpeedMultiplier@HAZMATSOVIET:
+	AutoDeployer@AI:
+		RequiresCondition: botowner && !deployed && !parachute
+		DeployChance: 20
+		DeployTrigger: Attack
+		DeployTicks: 5
+		UndeployTicks: 50
+		SmartDeploy: True
 
 N1C:
 	Inherits: ^Cyborg
@@ -2852,3 +3037,68 @@ YURI:
 		Prerequisites: barracks.upgraded
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, MindControlImmune
+SEAL:
+	Inherits: RMBO
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Navy SEAL
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 185
+		Prerequisites: ~infantry.usa, techcenter, ~techlevel.high
+		Queue: Infantry
+		IconPalette: chrome
+		BuildLimit: -1
+		Description: Elite infantry unit. Armed with\na SMG and C4.\n  Can detect cloaked units.\n  Strong vs Infantry, Buildings\n  Weak vs Aircraft\n  Special Ability: C4 Explosives
+	Voiced:
+		VoiceSet: SealVoice
+	Mobile:
+		Speed: 49
+		Locomotor: seal
+	Armament:
+		Weapon: mp5
+		PauseOnCondition: onwater
+	Armament@garrison:
+		Name: mounted
+		Weapon: mp5e
+		MuzzleSequence: garrison-muzzle
+		PauseOnCondition: onwater
+	Armament@sapper:
+		Weapon: PlaceC4seal
+		Cursor: c4
+		OutsideRangeCursor: c4
+		Name: secondary
+		PauseOnCondition: !ammo
+	-VoiceAnnouncement:
+	GrantConditionOnTerrain:
+		TerrainTypes: Water
+		Condition: onwater
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+		RequiresCondition: !being-warped && !onwater
+	WithInfantryBody@Swim:
+		-IdleSequences:
+		StandSequences: swimidle
+		-AttackSequences:
+		DefaultAttackSequence: swim
+		MoveSequence: swim
+		RequiresCondition: !being-warped && onwater
+	WithDeathAnimation:
+		RequiresCondition: !onwater
+	WithDeathAnimation@Water:
+		RequiresCondition: onwater
+		UseDeathTypeSuffix: False
+		FallbackSequence: splash
+		CrushedSequence: die-crushed
+		DeathSequence: splash
+	AmmoPool:
+		Armaments: secondary
+		Ammo: 1
+		AmmoCondition: ammo
+	ReloadAmmoPoolCA:
+		Delay: 50
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: dd0000

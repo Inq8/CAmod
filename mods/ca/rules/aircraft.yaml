@@ -440,6 +440,67 @@ YAK:
 	Contrail@2:
 		Offset: -98,683,-10
 
+P51:
+	Inherits: ^NeutralPlane
+	Inherits@EMP: ^EmpDisable
+	Tooltip:
+		Name: P51 Attack Plane
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 28000
+	RevealsShroud@GAPGEN:
+		Range: 9c0
+		Type: GroundPosition
+	Armament@PRIMARY:
+		Name: gunr
+		Weapon: ChainGun.P51.R
+		LocalOffset: 256,-213,0
+		MuzzleSequence: muzzle
+	Armament@SECONDARY:
+		Name: gunl
+		Weapon: ChainGun.P51.L
+		LocalOffset: 256,213,0
+		MuzzleSequence: muzzle
+	Armament@TERTIARY:
+		Name: rocketr
+		Weapon: Rocket.P51.R
+		LocalOffset: 0,-613,0
+	Armament@QUATERNARY:
+		Name: rocketl
+		FireDelay: 2
+		Weapon: Rocket.P51.L
+		LocalOffset: 0,613,0
+	AttackBomberCA:
+		Armaments: gunr, gunl, rocketr, rocketl
+		FacingTolerance: 80
+	Aircraft:
+		CruiseAltitude: 2560
+		InitialFacing: 192
+		TurnSpeed: 16
+		Speed: 180
+		RepulsionSpeed: 40
+		MaximumPitch: 56
+	WithMuzzleOverlay:
+	SpawnActorOnDeath:
+		Actor: P51.Husk
+		RequiresCondition: !empdisable && !being-warped
+	SpawnActorOnDeath@EMP:
+		Actor: P51.Husk.EMP
+		RequiresCondition: empdisable && !being-warped
+	SmokeTrailWhenDamaged:
+		Offset: -853,0,0
+		Interval: 2
+	RejectsOrders:
+	Contrail@1:
+		Offset: -98,-683,-10
+	Contrail@2:
+		Offset: -98,683,-10
+	-Selectable:
+	Interactable:
+	GivesExperience:
+		Experience: 1000
+
 TRAN:
 	Inherits: ^Helicopter
 	Inherits@TRANSPORT: ^Transport
@@ -513,6 +574,133 @@ TRAN.paradrop:
 	Aircraft:
 		TurnSpeed: 20
 		Speed: 135
+		AltitudeVelocity: 0c100
+	WithIdleOverlay@ROTOR1AIR:
+		Offset: 597,0,85
+		Sequence: rotor
+		RequiresCondition: airborne
+	WithIdleOverlay@ROTOR1GROUND:
+		Offset: 597,0,85
+		Sequence: slow-rotor
+		RequiresCondition: !airborne
+	WithIdleOverlay@ROTOR2AIR:
+		Offset: -597,0,171
+		Sequence: rotor2
+		RequiresCondition: airborne
+	WithIdleOverlay@ROTOR2GROUND:
+		Offset: -597,0,171
+		Sequence: slow-rotor2
+		RequiresCondition: !airborne
+	Cargo:
+		Types: Infantry
+		MaxWeight: 8
+	-Selectable:
+	-Voiced:
+	RejectsOrders:
+	RenderSprites:
+		Image: tran3
+	SpawnActorOnDeath:
+		Actor: TRAN.Husk
+		RequiresCondition: !empdisable && !being-warped
+	SpawnActorOnDeath@EMP:
+		Actor: TRAN.Husk.EMP
+		RequiresCondition: empdisable && !being-warped
+	Interactable:
+	GivesExperience:
+		Experience: 1000
+	-Targetable@TEMPORAL:
+
+NHAW:
+	Inherits: ^Helicopter
+	Inherits@TRANSPORT: ^Transport
+	RenderSprites:
+		Image: nhaw
+	Buildable:
+		Queue: Aircraft
+		BuildAtProductionType: Helicopter
+		BuildPaletteOrder: 10
+		Prerequisites: ~aircraft.nhaw, ~techlevel.infonly
+		Description: Fast infantry transport helicopter.\n  Unarmed
+	Valued:
+		Cost: 900
+	Tooltip:
+		Name: Nighthawk
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 44000
+	RevealsShroud:
+		Range: 8c0
+		MinRange: 6c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 6c0
+		Type: GroundPosition
+	Aircraft:
+		TurnSpeed: 20
+		Speed: 155
+		AltitudeVelocity: 0c58
+		TakeoffSounds: htoff1.aud
+		LandingSounds: hland1.aud
+		Voice: Move
+	WithIdleOverlay@ROTOR1AIR:
+		Offset: 237,0,263
+		Sequence: rotor
+		RequiresCondition: airborne
+	WithIdleOverlay@ROTOR1GROUND:
+		Offset: 237,0,263
+		Sequence: slow-rotor
+		RequiresCondition: !airborne
+	WithIdleOverlay@ROTOR2AIR:
+		Offset: -997,0,341
+		Sequence: rotor2
+		RequiresCondition: airborne
+	WithIdleOverlay@ROTOR2GROUND:
+		Offset: -997,0,341
+		Sequence: slow-rotor2
+		RequiresCondition: !airborne
+	Cargo:
+		Types: Infantry
+		MaxWeight: 8
+	SpawnActorOnDeath:
+		Actor: NHAW.Husk
+		RequiresCondition: !empdisable && !being-warped
+	SpawnActorOnDeath@EMP:
+		Actor: NHAW.Husk.EMP
+		RequiresCondition: empdisable && !being-warped
+	Selectable:
+		DecorationBounds: 40,36
+	Voiced:
+		VoiceSet: CarryAllVoice
+	AppearsOnRadar:
+		ValidRelationships: Ally
+	Armament@PRIMARY:
+		Weapon: M60mgJJ
+		LocalOffset: 1000,0,-100
+		MuzzleSequence: muzzle
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: AttackAnything
+	AttackAircraft:
+		FacingTolerance: 80
+		AttackType: Hover
+		PersistentTargeting: false
+		OpportunityFire: false
+		PauseOnCondition: empdisable || being-warped
+	WithMuzzleOverlay:
+
+NHAW.paradrop:
+	Inherits: ^Helicopter
+	Tooltip:
+		Name: Nighthawk
+	ParaDrop:
+		DropRange: 4c0
+	Health:
+		HP: 46000
+	Aircraft:
+		TurnSpeed: 20
+		Speed: 155
 		AltitudeVelocity: 0c100
 	WithIdleOverlay@ROTOR1AIR:
 		Offset: 597,0,85

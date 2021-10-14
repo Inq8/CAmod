@@ -96,7 +96,7 @@ CRATE:
 	GiveMcvCrateAction@RA:
 		SelectionShares: 0
 		NoBaseSelectionShares: 100
-		ValidFactions: allies, england, france, germany, soviet, russia, ukraine, iraq
+		ValidFactions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq
 		Units: mcv
 	GiveMcvCrateAction@TD:
 		SelectionShares: 0
@@ -106,7 +106,7 @@ CRATE:
 	GiveUnitCrateAction@jeep:
 		SelectionShares: 7
 		Units: jeep
-		ValidFactions: allies, england, france, germany
+		ValidFactions: allies, england, france, germany, usa
 		Prerequisites: techlevel.low
 	GiveUnitCrateAction@hmmv:
 		SelectionShares: 7
@@ -141,7 +141,7 @@ CRATE:
 	GiveUnitCrateAction@2tnk:
 		SelectionShares: 4
 		Units: 2tnk
-		ValidFactions: allies, england, france, germany
+		ValidFactions: allies, england, france, germany, usa
 		Prerequisites: techlevel.medium
 	GiveUnitCrateAction@3tnk:
 		SelectionShares: 4
@@ -166,7 +166,7 @@ CRATE:
 	GiveUnitCrateAction@squadlight:
 		SelectionShares: 7
 		Units: e1,e1,e1,e3,e3
-		ValidFactions: allies, england, france, germany, soviet, russia, ukraine, iraq
+		ValidFactions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq
 	GiveUnitCrateAction@squadlightTD:
 		SelectionShares: 7
 		Units: n1,n1,n1,n3,n3
@@ -174,7 +174,7 @@ CRATE:
 	GiveUnitCrateAction@squadheavyallies:
 		SelectionShares: 7
 		Units: e1,e1,e1,e1,e3,e3,e3,e6,medi
-		ValidFactions: allies, england, france, germany
+		ValidFactions: allies, england, france, germany, usa
 		TimeDelay: 4500
 	GiveUnitCrateAction@squadheavysoviet:
 		SelectionShares: 7
@@ -626,6 +626,60 @@ powerproxy.paratroopers2:
 		ArrowSequence: arrow
 		ClockSequence: clock
 		CircleSequence: circles
+		
+powerproxy.paratroopers.us:
+	AlwaysVisible:
+	ParatroopersPower:
+		OrderName: airborne
+		Icon: airborne
+		SquadSize: 1
+		UnitType: c17
+		Description: Guardian G.I Paratroopers (Single Use)
+		LongDesc: A Cargo Plane drops a squad of Guardian G.I's\nanywhere on the map.
+		OneShot: true
+		AllowMultiple: true
+		DropItems: U3,U3,U3,U3,U3,U3
+		SelectTargetSpeechNotification: SelectTarget
+		EndChargeSpeechNotification: Reinforce
+		LaunchSpeechNotification: ReinforcementsArrived
+		IncomingSpeechNotification: EnemyPlanesApproaching
+		AllowImpassableCells: false
+		QuantizedFacings: 8
+		CameraActor: camera.paradrop
+		DisplayBeacon: true
+		BeaconPoster: pinficon
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+
+powerproxy.sealteam:
+	AlwaysVisible:
+	ParatroopersPower:
+		OrderName: sealteam
+		Icon: airborne
+		SquadSize: 1
+		UnitType: nhaw.paradrop
+		Description: Seal Team (Single Use)
+		LongDesc: A Cargo Plane drops a squad of Guardian G.I's\nanywhere on the map.
+		OneShot: true
+		AllowMultiple: true
+		DropItems: SEAL,SEAL,SEAL
+		SelectTargetSpeechNotification: SelectTarget
+		EndChargeSpeechNotification: Reinforce
+		LaunchSpeechNotification: ReinforcementsArrived
+		IncomingSpeechNotification: EnemyPlanesApproaching
+		AllowImpassableCells: false
+		QuantizedFacings: 8
+		CameraActor: camera.paradrop
+		DisplayBeacon: true
+		BeaconPoster: pinficon
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
 
 powerproxy.airstrike:
 	AlwaysVisible:
@@ -698,9 +752,9 @@ stolentech.hand:
 stolentech.weap:
 	AlwaysVisible:
 	ValidFactions:
-		Factions: england, france, germany, russia, ukraine, iraq
+		Factions: england, france, germany, usa, russia, ukraine, iraq
 	ProvidesPrerequisiteValidatedFaction@STOLENALLIED:
-		Factions: england, france, germany
+		Factions: england, france, germany, usa
 		Prerequisite: vehicles.2tnk
 	ProvidesPrerequisiteValidatedFaction@STOLENSOVIET:
 		Factions: russia, ukraine, iraq, yuri
@@ -724,9 +778,9 @@ stolentech.airs:
 stolentech.dome:
 	AlwaysVisible:
 	ValidFactions:
-		Factions: england, france, germany, russia, ukraine, iraq
+		Factions: england, france, germany, usa, russia, ukraine, iraq
 	ProvidesPrerequisiteValidatedFaction@STOLENALLIED:
-		Factions: england, france, germany
+		Factions: england, france, germany, usa
 		Prerequisite: vehicles.ifv
 	ProvidesPrerequisiteValidatedFaction@STOLENSOVIET:
 		Factions: russia, ukraine, iraq, yuri

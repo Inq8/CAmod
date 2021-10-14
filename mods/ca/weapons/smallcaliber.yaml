@@ -412,6 +412,20 @@ ChainGun.Yak.L:
 	Inherits: ChainGun.Yak.R
 	FirstBurstTargetOffset: -512,-213,0
 
+ChainGun.P51.R:
+	Inherits: ChainGun.Yak.R
+	ReloadDelay: 80
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			Wood: 15
+
+ChainGun.P51.L:
+	ReloadDelay: 80
+	Inherits: ChainGun.Yak.L
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			Wood: 15
+
 Pistol:
 	Inherits: ^LightMG
 	Burst: 10
@@ -464,6 +478,10 @@ M1Carbine:
 		InvalidTargets: Bridge
 		Explosions: water_piff
 		Inaccuracy: 171
+
+M14:
+	Inherits: M1Carbine
+	Report: islyat1a.aud, islyat1b.aud
 
 M16Carbine:
 	Inherits: M1Carbine
@@ -658,6 +676,28 @@ SMGE:
 	Inherits: SMG
 	Range: 6c0
 
+MP5:
+	Inherits: ^SnipeWeapon
+	Report: iseaatta.aud, iseaattb.aud
+	ReloadDelay: 12
+	Range: 6c0
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 4700
+		ValidTargets: Infantry
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: piffs
+		ValidTargets: Ground, Ship, Air, AirSmall, Trees
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piffs
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+
+MP5E:
+	Inherits: MP5
+	Range: 5c511
+
 AKM:
 	StartBurstReport: mg11.aud
 	ReloadDelay: 8
@@ -789,6 +829,21 @@ CommandoIFVGun:
 	BurstDelays: 2
 	Warhead@1Dam: SpreadDamage
 		Damage: 5100
+
+SealIFVGun:
+	Inherits: MP5
+	-Report:
+	StartBurstReport: iseaatta.aud, iseaattb.aud
+	ReloadDelay: 15
+	Burst: 3
+	BurstDelays: 2
+	Warhead@1Dam: SpreadDamage
+		-Spread:
+		Damage: 5100
+	Warhead@2Eff: CreateEffect
+		Explosions: piff
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piff
 
 ShadowOperativeGun:
 	Inherits: ^HeavyMG

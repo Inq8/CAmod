@@ -234,6 +234,22 @@
 	Locomotor@IMMOBILE:
 		Name: immobile
 		TerrainSpeeds:
+	Locomotor@SEAL:
+		Name: seal
+		Crushes: mine, crate
+		SharesCell: true
+		TerrainSpeeds:
+			Clear: 100
+			Rough: 90
+			Road: 110
+			Bridge: 100
+			Ford: 90
+			Ore: 80
+			Gems: 80
+			Tiberium: 70
+			BlueTiberium: 70
+			Beach: 80
+			Water: 50
 	TerrainRenderer:
 	ShroudRenderer:
 		FogVariants: shroud
@@ -258,7 +274,12 @@
 		Name: Germany
 		InternalName: germany
 		Side: Allies
-		Description: Germany: Innovation & Time Technology\n Units:\n  - Chrono Prison\n  - Tank Destroyer\n\n Powers:\n  - Time Freeze\n\n Upgrades:\n  - Temporal Flux\n\n Bonuses:\n  - Chrono Tank (10% Discount)
+		Description: Germany: Innovation\n Units:\n  - Chrono Prison\n  - Tank Destroyer (replaces Medium Tank)\n\n Powers:\n  - Time Warp\n\n Upgrades:\n  - Temporal Flux\n\n Bonuses:\n  - Chrono Tanks (10% Discount)
+	Faction@USA:
+		Name: USA
+		InternalName: usa
+		Side: Allies
+		Description: USA: Special Infantry Tactics\n Units:\n  - SEAL\n  - Nighthawk (replaces Chinook)\n\n Powers:\n  - Airborne\n\n Bonuses:\n  - Faster Infantry Veterancy
 	Faction@4:
 		Name: Soviet
 		InternalName: soviet
@@ -368,7 +389,7 @@
 	Faction@randomallies:
 		Name: Allies
 		InternalName: RandomAllies
-		RandomFactionMembers: england, france, germany
+		RandomFactionMembers: england, france, germany, usa
 		Side: Random
 		Description: Random Allied Faction\nA random Allied faction will be chosen when the game starts.
 	Faction@randomsoviet:
@@ -532,7 +553,7 @@ World:
 	MPStartUnits@lightallies:
 		Class: light
 		ClassName: Light Support
-		Factions: allies, england, france, germany
+		Factions: allies, england, france, germany, usa
 		BaseActor: mcv
 		SupportActors: e1,e1,e1,e3,e3
 		InnerSupportRadius: 3
@@ -548,7 +569,7 @@ World:
 	MPStartUnits@heavyallies:
 		Class: heavy
 		ClassName: Heavy Support
-		Factions: allies, england, france, germany
+		Factions: allies, england, france, germany, usa
 		BaseActor: mcv
 		SupportActors: e1,e1,e1,e3,e3,e3,2tnk,2tnk
 		InnerSupportRadius: 3
