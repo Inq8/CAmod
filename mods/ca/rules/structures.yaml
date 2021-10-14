@@ -1319,7 +1319,7 @@ FACT:
 		Prerequisites: ~disabled
 		Description: Produces structures.
 	ValidFactions:
-		Factions: england, france, germany, usa, russia, ukraine, iraq
+		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
 	ProvidesPrerequisite@ra:
 		Prerequisite: structures.ra
 	ProvidesPrerequisiteValidatedFaction@allies:
@@ -1338,7 +1338,7 @@ FACT:
 		Factions: usa
 		Prerequisite: structures.usa
 	ProvidesPrerequisiteValidatedFaction@soviet:
-		Factions: russia, ukraine, iraq
+		Factions: russia, ukraine, iraq, yuri
 		Prerequisite: structures.soviet
 	ProvidesPrerequisiteValidatedFaction@russia:
 		Factions: russia
@@ -1358,7 +1358,7 @@ FACT:
 		Factions: england, france, germany, usa
 		Prerequisite: structures.sandbag
 	ProvidesPrerequisiteValidatedFaction@apwr:
-		Factions: england, france, germany, usa, ukraine, iraq
+		Factions: england, france, germany, usa, ukraine, iraq, yuri
 		Prerequisite: structures.apwr
 	ProvidesPrerequisiteValidatedFaction@pbox:
 		Factions: france, germany, usa
@@ -1367,7 +1367,7 @@ FACT:
 		Factions: england, germany, usa
 		Prerequisite: structures.pris
 	ProvidesPrerequisiteValidatedFaction@ftur:
-		Factions: russia, ukraine
+		Factions: russia, ukraine, yuri
 		Prerequisite: structures.ftur
 	Health:
 		HP: 150000
@@ -1642,7 +1642,7 @@ HPAD:
 	Power:
 		Amount: -10
 	ValidFactions:
-		Factions: england, france, germany, usa, russia, ukraine, iraq
+		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
 	ProvidesPrerequisiteValidatedFaction@allies:
 		Factions: england, france, germany, usa
 		Prerequisite: aircraft.allies
@@ -1658,8 +1658,11 @@ HPAD:
 	ProvidesPrerequisite@all:
 		Prerequisite: aircraft.all
 	ProvidesPrerequisiteValidatedFaction@chinook:
-		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq, gdi, zocom, eagle, talon, nod, blackh, legion, marked, shadow
+		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq, yuri, gdi, zocom, eagle, talon, nod, blackh, legion, marked, shadow
 		Prerequisite: aircraft.chinook
+	ProvidesPrerequisiteValidatedFaction@nhaw:
+		Factions: usa
+		Prerequisite: aircraft.nhaw
 	ProvidesPrerequisiteValidatedFaction@hind:
 		Factions: russia, ukraine, yuri
 		Prerequisite: aircraft.hind
@@ -2241,7 +2244,7 @@ BARR:
 		Factions: yuri
 		Prerequisite: infantry.yuri
 	ProvidesPrerequisite@e2:
-		Factions: russia, iraq
+		Factions: russia, iraq, yuri
 		Prerequisite: infantry.e2
 	ProvidesPrerequisite@thf:
 		Prerequisite: infantry.thf
@@ -4182,12 +4185,8 @@ HPAD.TD:
 	ProvidesPrerequisiteValidatedFaction@apch:
 		Factions: blackh, legion, shadow
 		Prerequisite: aircraft.apch
-	ProvidesPrerequisiteValidatedFaction@chinook:
-		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq, gdi, zocom, eagle, talon, nod, blackh, legion, marked, shadow
+	ProvidesPrerequisite@chinook:
 		Prerequisite: aircraft.chinook
-	ProvidesPrerequisiteValidatedFaction@nhaw:
-		Factions: usa
-		Prerequisite: aircraft.nhaw
 	ProvidesPrerequisite@buildingname:
 	Targetable:
 		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate

@@ -1,0 +1,300 @@
+World:
+	MPStartUnits@mastonly:
+		Class: none
+		ClassName: Mastermind
+		BaseActor: mast
+		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri, gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow, scrin, reaper, traveler, harbinger, collector
+	-MPStartUnits@mcvonly:
+	-MPStartUnits@lightallies:
+	-MPStartUnits@lightsoviet:
+	-MPStartUnits@heavyallies:
+	-MPStartUnits@heavysoviet:
+	-MPStartUnits@mcvonly2:
+	-MPStartUnits@defaultgdia:
+	-MPStartUnits@defaultnoda:
+	-MPStartUnits@heavynoda:
+	-MPStartUnits@heavygdia:
+	-MPStartUnits@mcvonlyscrin:
+	-MPStartUnits@lightscrin:
+	-MPStartUnits@heavyscrin:
+	SpawnMPUnits:
+		DropdownLocked: True
+	MapBuildRadius:
+		AllyBuildRadiusCheckboxLocked: True
+		BuildRadiusCheckboxLocked: True
+		AllyBuildRadiusCheckboxEnabled: True
+		BuildRadiusCheckboxEnabled: True
+	MapOptions:
+		TechLevelDropdownLocked: True
+		TechLevelDropdownVisible: False
+		ShortGameCheckboxLocked: True
+	MissionData:
+		Briefing: ================\n\n- Each player starts with a single Mastermind (mind control unit that can control up to 3 units at a time).\n-------------------------\n- Random neutral units are spawned across the map (indestructible until controlled).\n-------------------------\n- Force fire required to mind control neutral units.\n-------------------------\n- Deploy (F) Mastermind for limited duration cloak.\n-------------------------\n- Objective is to kill all enemy Masterminds.\n\n================\n
+
+Player:
+	PlayerResources:
+		SelectableCash: 0
+		DefaultCash: 0
+		DefaultCashDropdownLocked: True
+	LobbyPrerequisiteCheckbox@GLOBALBOUNTY:
+		Enabled: False
+		Locked: True
+	LobbyPrerequisiteCheckbox@FORCESHIELD:
+		Enabled: True
+		Locked: True
+	DeveloperMode:
+		CheckboxLocked: True
+	LobbyPrerequisiteCheckbox@GLOBALFACTUNDEPLOY:
+		Enabled: True
+		Locked: True
+	LobbyPrerequisiteCheckbox@NAVY:
+		Enabled: True
+		Locked: True
+	LobbyPrerequisiteCheckbox@BALANCEDHARVESTING:
+		Enabled: True
+		Locked: True
+
+^IndestructibleWhenNeutral:
+	GrantConditionIfOwnerIsNeutral@NEUTRAL:
+		Condition: is-neutral
+	DamageMultiplier@NEUTRALINDESTRUCTIBLE:
+		Modifier: 0
+		RequiresCondition: is-neutral
+	SpeedMultiplier@NEUTRALIMMOBILE:
+		Modifier: 0
+		RequiresCondition: is-neutral
+	GrantCondition@NEUTRALDISABLE:
+		Condition: being-warped
+		RequiresCondition: is-neutral
+	Targetable:
+		RequiresCondition: !being-warped || is-neutral
+	WithColoredOverlay@TEMPORALl:
+		RequiresCondition: being-warped && !is-neutral
+	WithColoredOverlay@TEMPORAL2:
+		RequiresCondition: being-warped && !is-neutral
+	WithIdleOverlay@TEMPORAL:
+		RequiresCondition: being-warped && !is-neutral
+
+^Infantry:
+	Inherits@INDESTRUCTIBLE: ^IndestructibleWhenNeutral
+	Crushable:
+		RequiresCondition: !is-neutral
+
+^Vehicle-NOUPG:
+	Inherits@INDESTRUCTIBLE: ^IndestructibleWhenNeutral
+	Capturable:
+		RequiresCondition: !is-neutral
+
+^AffectedByDriverKill:
+	GrantConditionIfOwnerIsNeutral:
+		Condition: is-neutral
+	GrantCondition@HACK:
+		Condition: driver-dead
+		RequiresCondition: driver-dead
+
+MAST:
+	Health:
+		HP: 120000
+	MustBeDestroyed:
+		RequiredForShortGame: true
+	SpawnActorPowerCA@sathack:
+		Actor: camera.sathack
+		LifeTime: 120
+		OrderName: sathack
+		Icon: hacksat
+		ChargeInterval: 2250
+		Description: Hack Satellite Uplink
+		LongDesc: Reveals map terrain and provides tactical\ninformation.
+		LaunchSound: hacksat.aud
+		SelectTargetSpeechNotification: SelectTarget
+		EffectImage: empty
+		EffectSequence: idle
+		EffectPalette: tseffect-ignore-lighting-alpha75
+		TargetCircleRange: 9c512
+		TargetCircleColor: 999999AA
+	NukePower@Cluster:
+		OrderName: clustermissile
+		Icon: clustermissile
+		IconPalette: chrometd
+		Cursor: ability
+		ChargeInterval: 10500
+		Description: Cluster Missile
+		LongDesc: Launches an Cluster Missile,\nCauses damage over a large area.
+		EndChargeSpeechNotification: ClusMissileReady
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		IncomingSpeechNotification: MissileLaunchDetected
+		MissileWeapon: deathhand
+		MissilePalette: temptd
+		LaunchSound: icbm1.aud
+		IncomingSound: icbm1.aud
+		SpawnOffset: 1024,80,0
+		DetonationAltitude: 3c0
+		RemoveMissileOnDetonation: True
+		FlightDelay: 225
+		FlightVelocity: 0c624
+		DisplayRadarPing: True
+		CameraRange: 10c0
+		ArrowSequence: arrow
+		ClockSequence: clockTD
+		CircleSequence: circles
+		TrailImage: smokey2
+		TrailSequences: idle
+		TrailPalette: tseffect-ignore-lighting-alpha75
+		DisplayBeacon: True
+		BeaconPoster: clustermissile
+		BeaconPosterPalette: temptd
+		CircleRanges: 3c0
+		CircleColor: BB0000AA
+		CircleBorderColor: 770000AA
+	GrantTimedConditionOnDeploy:
+		DeployedCondition: deployed
+		CooldownTicks: 1250
+		DeployedTicks: 375
+		StartsFullyCharged: true
+	Cloak:
+		InitialDelay: 0
+		CloakDelay: 25
+		CloakedCondition: hidden
+		Palette: cloaktd
+		IsPlayerPalette: true
+		CloakTypes: SuperCloak
+		RequiresCondition: deployed && !cloak-force-disabled
+		UncloakOn: Unload, Infiltrate, Demolish, Dock, Attack, Damage
+		CloakSound: gstealon.aud
+		UncloakSound: gstealof.aud
+	Cloak@CRATE-CLOAK:
+		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden)
+	-Passenger:
+	-GainsExperienceMultiplier:
+	-TakeCover:
+
+RNDV:
+	Inherits@1: ^1x1Shape
+	Interactable:
+	EditorOnlyTooltip:
+		Name: (random vehicle)
+	AlwaysVisible:
+	Mobile:
+		Locomotor: wheeled
+		TurnSpeed: 20
+	WithFacingSpriteBody:
+	RenderSpritesEditorOnly:
+		Image: mnly
+	MapEditorData:
+		Categories: System
+	RequiresSpecificOwners:
+		ValidOwnerNames: Neutral
+	Health:
+		HP: 120000
+	KillsSelf:
+		Delay: 5
+	SpawnRandomActorOnDeath@RANDOM:
+		Actors: btr, bggy, hmmv, jeep, gdrn, gunw, bike, arty, arty.nod, howi, apc, vulc, ifv, ttnk, ttra, msam, hsam, mlrs, spec, v2rl, katy, ftnk, hftk, corr, 1tnk, 2tnk, 3tnk, mtnk, mtnk.drone, ltnk, wtnk, stnk.nod, rtnk, ptnk, pcan, ctnk, cryo, mgg, msg, mrj, mnly, msar, devo, stcr, ruin, atmz, lace, seek, intl, dark, tnkd, v3rl, isu, memp, cdrn, dtrk, qtnk, lchr, sapc
+		OwnerType: InternalName
+	ClassicFacingBodyOrientation:
+	QuantizeFacingsFromSequence:
+
+RNDB:
+	Inherits: RNDV
+	RenderSpritesEditorOnly:
+		Image: amcv
+	SpawnRandomActorOnDeath@RANDOM:
+		Actors: 4tnk, htnk, titn, 4tnk.iraq, apoc, htnk.ion, titn.rail, htnk.hover, htnk.drone, batf, chpr, tpod, rptp, disr
+
+OBLI:
+	Power:
+		Amount: 0
+
+GUN:
+	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
+	Power:
+		Amount: 0
+
+ATWR:
+	Power:
+		Amount: 0
+
+FTUR:
+	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
+	Power:
+		Amount: 0
+
+DOG:
+	Targetable:
+		RequiresCondition: !being-warped || is-neutral
+
+1TNK:
+	Targetable:
+		RequiresCondition: !onwater && !parachute && (!being-warped || is-neutral)
+
+LTNK:
+	Targetable:
+		RequiresCondition: !onwater && !parachute && (!being-warped || is-neutral)
+
+DISR:
+	Targetable:
+		RequiresCondition: !being-warped || is-neutral
+
+MTNK.Drone:
+	Targetable:
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune
+	Power:
+		Amount: 0
+
+MEMP:
+	Targetable:
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune
+	Power:
+		Amount: 0
+
+CDRN:
+	Targetable:
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune
+	Power:
+		Amount: 0
+
+GDRN:
+	Targetable:
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune
+	Power:
+		Amount: 0
+
+MDRN:
+	Targetable:
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune
+	Power:
+		Amount: 0
+
+CRATE:
+	-GiveCashCrateAction:
+	-GiveMcvCrateAction@TD:
+	-GiveMcvCrateAction@RA:
+	-GiveUnitCrateAction@squadheavyallies:
+	-GiveUnitCrateAction@squadheavysoviet:
+	-GiveUnitCrateAction@squadheavynod:
+	-GiveUnitCrateAction@squadheavygdi:
+	HealActorsCrateAction:
+		SelectionShares: 40
+	LevelUpCrateAction:
+		SelectionShares: 50
+	DuplicateUnitCrateAction:
+		SelectionShares: 6
+		MaxAmount: 2
+		MinAmount: 1
+
+APOC:
+	Mobile:
+		Locomotor: heavytracked
+
+BATF:
+	Mobile:
+		Locomotor: heavytracked
+
+TITN:
+	Mobile:
+		Locomotor: heavytracked
+
+JUGG:
+	Mobile:
+		Locomotor: heavytracked

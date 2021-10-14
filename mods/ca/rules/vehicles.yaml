@@ -2752,7 +2752,6 @@ MTNK.Drone:
 MDRN:
 	Inherits: ^Vehicle
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@IDISABLE: ^DisableOnLowPower
 	Inherits@HACKABLE: ^Hackable
 	Tooltip:
 		Name: Mini Drone
@@ -2782,14 +2781,14 @@ MDRN:
 		TurnSpeed: 255
 		Locomotor: foot
 		Voice: Move
-		PauseOnCondition: disabled || empdisable || being-warped || notmobile
+		PauseOnCondition: empdisable || being-warped || notmobile
 	Voiced:
 		VoiceSet: RobotTankVoice
 	Armament@PRIMARY:
 		Weapon: M60mgMD
 		LocalOffset: 72,0,72
 		MuzzleSequence: muzzle
-		PauseOnCondition: disabled || empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	Hovers:
 		BobDistance: -35
@@ -2810,22 +2809,6 @@ MDRN:
 	WithSpriteTurret:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
-	Power:
-		Amount: -1
-		RequiresCondition: !being-warped
-	WithDecoration@DISABLED:
-		Image: poweroff
-		Sequence: offline
-		Palette: chrome
-		RequiresCondition: disabled
-		Position: Center
-	ProximityExternalCondition@POWERSOUND:
-		Condition: disablesound
-		RequiresCondition: disabled || empdisable
-		AffectsParent: True
-		Range: 1c0
-		EnableSound: vrobon
-		DisableSound: vroboff
 	-WithDamageOverlay:
 	-CaptureManager:
 	-Capturable:
@@ -2863,7 +2846,7 @@ MDRN.Attached:
 		Speed: 0
 		Locomotor: cloud
 		ImmovableCondition: attached
-		PauseOnCondition: attached || disabled || empdisable || being-warped || notmobile
+		PauseOnCondition: attached || empdisable || being-warped || notmobile
 	WithSpriteTurret:
 		Sequence: turret-attached
 	TurnOnIdleCA:
@@ -2873,7 +2856,6 @@ MDRN.Attached:
 	Armament@PRIMARY:
 		Weapon: M60mgTD
 		LocalOffset: -500,0,72
-	-WithDecoration@DISABLED:
 	DamageMultiplier@ATTACHED:
 		Modifier: 50
 	Attachable:
