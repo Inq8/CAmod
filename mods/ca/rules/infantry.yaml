@@ -83,7 +83,7 @@ E1:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 10
-		Prerequisites: ~infantry.ra, ~!infantry.usa, ~techlevel.infonly
+		Prerequisites: ~infantry.ra, ~techlevel.infonly
 		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
 		Cost: 100
@@ -108,54 +108,6 @@ E1:
 		Prerequisites: barracks.upgraded
 	Convertible:
 		SpawnActors: N1C
-
-U1:
-	Inherits: ^Soldier
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
-	Inherits@BOTHELPER: ^BotCaptureHelper
-	Buildable:
-		Queue: Infantry
-		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 10
-		Prerequisites: ~infantry.usa, ~techlevel.infonly
-		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
-	Selectable:
-		Class: E1
-	Valued:
-		Cost: 100
-	Tooltip:
-		Name: G.I
-	UpdatesPlayerStatistics:
-		AddToArmyValue: true
-	Health:
-		HP: 5000
-	Armament@PRIMARY:
-		Weapon: M1Carbine
-	Armament@Garrison:
-		Name: mounted
-		Weapon: M1CarbineE
-		MuzzleSequence: garrison-muzzle
-	WithInfantryBody:
-		DefaultAttackSequence: shoot
-		IdleSequences: idle1,idle2,idle3,idle4
-	AttackFrontal:
-		PauseOnCondition: being-warped
-		Voice: Attack
-	ProducibleWithLevel:
-		Prerequisites: barracks.upgraded
-	Convertible:
-		SpawnActors: N1C
-	Mobile:
-		Voice: Move
-	AttackMove:
-		Voice: Move
-	Passenger:
-		Voice: Move
-	Guard:
-		Voice: Move
-	Voiced:
-		VoiceSet: GIVoice
 
 E1R1:
 	Inherits: E1
@@ -217,7 +169,7 @@ E3:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 20
-		Prerequisites: ~infantry.ra, ~!infantry.usa, ~techlevel.infonly
+		Prerequisites: ~infantry.ra, ~techlevel.infonly
 		Description: Anti-tank/anti-aircraft infantry.\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
 	Valued:
 		Cost: 300
@@ -325,12 +277,6 @@ U3:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
-	Buildable:
-		Queue: Infantry
-		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 20
-		Prerequisites: ~infantry.usa, ~techlevel.infonly
-		Description: Veteran General-purpose infantry.\n  Can deploy into Anti-tank/anti-aircraft bunker\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
 	Selectable:
 		Class: E3
 	Valued:
@@ -344,20 +290,22 @@ U3:
 	Mobile:
 		Speed: 38
 		Voice: Move
-		PauseOnCondition: deploying && !undeployed
+		PauseOnCondition: !undeployed
 	Armament@PRIMARY:
 		Weapon: M14
 		LocalOffset: 0,0,400
-		PauseOnCondition: !ammo
 		RequiresCondition: !deployed
 	Armament@PRIMARYDEP:
 		Weapon: RedEyeGI
+		Name: deployed
+		Turret: deploy
 		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
 		RequiresCondition: deployed
 	Armament@SECONDARYDEP:
-		Name: secondary
+		Name: deployed
 		Weapon: DragonGI
+		Turret: deploy
 		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
 		RequiresCondition: deployed
@@ -377,7 +325,7 @@ U3:
 		Ammo: 1
 		AmmoCondition: ammo
 	ReloadAmmoPool:
-		Delay: 50
+		Delay: 25
 		Count: 1
 	TakeCover:
 		ProneOffset: 384,0,-395
@@ -385,9 +333,6 @@ U3:
 	DamageMultiplier:
 		Modifier: 50
 		RequiresCondition: deployed
-	AttackFrontal:
-		PauseOnCondition: being-warped && !undeployed
-		Voice: Attack
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	AutoTarget:
@@ -404,23 +349,50 @@ U3:
 		UndeploySounds: igidepa.aud, igidepb.aud
 		PauseOnCondition: being-warped
 		SmartDeploy: True
+		RequiresCondition: !parachute
+		Facing: 332
+	GrantCondition:
+		Condition: editorhack
+	WithInfantryBody@Editor: # HACK: negative conditions don't count in EnabledByDefault, we can use this duplicate WIB to render it on map editor
+		DefaultAttackSequence: shoot
+		RequiresCondition: !editorhack
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		RequiresCondition: !cryr-upgrade && undeployed
-	WithInfantryBody@Deployed:
-		-IdleSequences:
-		StandSequences: deployed
-		AttackSequences: deploy-shoot
-		DefaultAttackSequence: deploy-shoot
-		-MoveSequence:
-		RequiresCondition: deployed
-	WithSpriteBody@deployed:
-		Sequence: empty
-		RequiresCondition: !undeployed
-		Name: deployedbody
 	WithMakeAnimation:
-		BodyNames: deployedbody
 		Sequence: deploy
+		BodyNames: dot
+	Turreted:
+		Turret: deploy
+		RealignDelay: -1
+		TurnSpeed: 1023
+		InitialFacing: 332
+	WithSpriteTurret@idle:
+		Turret: deploy
+		Sequence: deployed
+		RequiresCondition: deployed && !animate-turret && !parachute
+	WithSpriteTurret@animated:
+		Turret: deploy
+		Sequence: deploy-shoot
+		RequiresCondition: deployed && animate-turret && !parachute
+	WithSpriteBody:
+		Sequence: empty
+		Name: dot
+		RequiresCondition: !undeployed
+	AttackFrontal:
+		PauseOnCondition: being-warped
+		RequiresCondition: undeployed
+		Voice: Attack
+	AttackTurreted@deployed:
+		Armaments: deployed
+		Turrets: deploy
+		Voice: Attack
+		RequiresCondition: deployed
+		OutsideRangeRequiresForceFire: True
+	GrantConditionOnAttack:
+		Condition: animate-turret
+		RevokeDelay: 5
+		ArmamentNames: deployed
 	RejectsOrders@deployment:
 		Reject: AttackMove, AssaultMove
 		RequiresCondition: !botowner && deployed && !berserk
@@ -442,6 +414,30 @@ U3:
 		DeployTrigger: Attack
 		DeployTicks: 5
 		UndeployTicks: 50
+
+U3.squad:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesPrerequisite@squadname:
+	Tooltip:
+		Name: Airborne Infantry
+	Buildable:
+		Queue: Infantry
+		BuildPaletteOrder: 20
+		Prerequisites: dome, ~infantry.usa, ~techlevel.infonly
+		Description: Prepare an airdrop of 5 Guardian GI's.
+		BuildDuration: 900
+	Valued:
+		Cost: 1750
+	RenderSprites:
+		Image: squad.airborne
+	ProduceActorPowerCA:
+		Actors: powerproxy.airborne
+		Type: Infantry
+		OneShot: true
+		AutoFire: true
+		AllowMultiple: true
 
 E3R1:
 	Inherits: E3
@@ -850,6 +846,7 @@ HACK:
 		UndeployedCondition: undeployed
 		UndeployOnMove: true
 		UndeployOnPickup: true
+		SmartDeploy: True
 	DeployOnAttack:
 		RequiresCondition: undeployed
 	MindController:
@@ -2230,6 +2227,7 @@ E8:
 		Facing: 92
 		Voice: Attack
 		PauseOnCondition: being-warped
+		SmartDeploy: True
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		RequiresCondition: !being-warped && undeployed
@@ -2269,7 +2267,6 @@ E8:
 		DeployTrigger: Attack
 		DeployTicks: 5
 		UndeployTicks: 50
-		SmartDeploy: True
 
 N1C:
 	Inherits: ^Cyborg
@@ -2960,7 +2957,6 @@ YURI:
 		Description: Elite specialist infantry.\n  Can mind-control enemy units and defenses.\n  Can detect cloaked units.\n  Maximum 1 can be trained.\n  Strong vs Infantry, Vehicles, Defenses\n  Weak vs Aircraft\n  Special Ability: Mind Blast
 	Valued:
 		Cost: 1350
-		Name: Yuri
 	Tooltip:
 		Name: Yuri
 	UpdatesPlayerStatistics:
@@ -3004,7 +3000,7 @@ YURI:
 		Facing: 96
 		DeployedCondition: deployed
 		DeployingCondition: deploying
-		DeployAnimation: deploy
+		DeployAnimation: deployed
 		ShowSelectionBar: true
 		Voice: Demolish
 		PauseOnCondition: being-warped
@@ -3037,6 +3033,7 @@ YURI:
 		Prerequisites: barracks.upgraded
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, MindControlImmune
+	
 SEAL:
 	Inherits: RMBO
 	Valued:
