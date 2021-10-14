@@ -239,6 +239,9 @@ KATY:
 	GrantConditionOnFaction@Germany:
 		Factions: germany
 		Condition: germany
+	GrantConditionOnFaction@USA:
+		Factions: usa
+		Condition: usa
 	GrantConditionOnFaction@GDI:
 		Factions: talon, zocom, eagle, arc
 		Condition: gdi
@@ -261,7 +264,7 @@ KATY:
 		BobDistance: -25
 		RequiresCondition: !empdisable && !being-warped && !driver-dead && scrin
 	Armament:
-		RequiresCondition: france
+		RequiresCondition: france || usa
 	Armament@Germany:
 		Weapon: 183mm
 		Recoil: 85
@@ -296,7 +299,7 @@ KATY:
 		Turret: secondary
 		RequiresCondition: scrin
 	Tooltip:
-		RequiresCondition: france
+		RequiresCondition: france || usa
 	Tooltip@TD:
 		Name: Tank Destroyer
 		GenericName: Tank
@@ -375,7 +378,7 @@ KATY:
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	SpawnActorOnDeath:
-		RequiresCondition: !(being-warped || warpout) && warpin && france
+		RequiresCondition: !(being-warped || warpout) && warpin && (france || usa)
 	SpawnActorOnDeath@England:
 		Actor: RTNK.Husk
 		RequiresCondition: warpin && england && !(being-warped || warpout)
