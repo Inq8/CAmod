@@ -277,8 +277,6 @@ U3:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
-	Selectable:
-		Class: E3
 	Valued:
 		Cost: 350
 	Tooltip:
@@ -301,26 +299,54 @@ U3:
 		Turret: deploy
 		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
-		RequiresCondition: deployed
+		RequiresCondition: !cryr-upgrade && deployed
+	Armament@PRIMARYDEPUPG:
+		Weapon: RedEyeGI.CRYO
+		Name: deployed
+		Turret: deploy
+		LocalOffset: 0,0,400
+		PauseOnCondition: !ammo
+		RequiresCondition: cryr-upgrade && deployed
 	Armament@SECONDARYDEP:
 		Name: deployed
 		Weapon: DragonGI
 		Turret: deploy
 		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
-		RequiresCondition: deployed
+		RequiresCondition: !cryr-upgrade && deployed
+	Armament@SECONDARYDEPUPG:
+		Weapon: DragonGI.CRYO
+		Name: deployed
+		Turret: deploy
+		LocalOffset: 0,0,400
+		PauseOnCondition: !ammo
+		RequiresCondition: cryr-upgrade && deployed
 	Armament@GarrisonAA:
 		Name: mountedaa
 		Weapon: RedEyeGI
 		PauseOnCondition: !ammo
+		RequiresCondition: !cryr-upgrade
+	Armament@GarrisonAAUPG:
+		Name: mountedaa
+		Weapon: RedEyeGI.CRYO
+		PauseOnCondition: !ammo
+		RequiresCondition: cryr-upgrade
 	Armament@Garrison:
 		Name: mounted
 		Weapon: DragonGI
 		PauseOnCondition: !ammo
+		RequiresCondition: !cryr-upgrade
+	Armament@GarrisonUPG:
+		Name: mounted
+		Weapon: DragonGI.CRYO
+		PauseOnCondition: !ammo
+		RequiresCondition: cryr-upgrade
 	Armament@AIDummyAiming: ## Hack: Make AI deploy to attack air
 		PauseOnCondition: being-warped
 		RequiresCondition: botowner && !deployed
 		Weapon: AirDummyAim
+	AutoTarget:
+		ScanRadius: 8
 	AmmoPool:
 		Ammo: 1
 		AmmoCondition: ammo
@@ -358,7 +384,7 @@ U3:
 		RequiresCondition: !editorhack
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-		RequiresCondition: !cryr-upgrade && undeployed
+		RequiresCondition: undeployed
 	WithMakeAnimation:
 		Sequence: deploy
 		BodyNames: dot
@@ -370,11 +396,19 @@ U3:
 	WithSpriteTurret@idle:
 		Turret: deploy
 		Sequence: deployed
-		RequiresCondition: deployed && !animate-turret && !parachute
+		RequiresCondition: deployed && !cryr-upgrade && !animate-turret && !parachute
 	WithSpriteTurret@animated:
 		Turret: deploy
 		Sequence: deploy-shoot
-		RequiresCondition: deployed && animate-turret && !parachute
+		RequiresCondition: deployed && !cryr-upgrade && animate-turret && !parachute
+	WithSpriteTurret@idleupg:
+		Turret: deploy
+		Sequence: deployedcr
+		RequiresCondition: deployed && cryr-upgrade && !animate-turret && !parachute
+	WithSpriteTurret@animatedupg:
+		Turret: deploy
+		Sequence: deploy-shootcr
+		RequiresCondition: deployed && cryr-upgrade && animate-turret && !parachute
 	WithSpriteBody:
 		Sequence: empty
 		Name: dot
@@ -427,7 +461,7 @@ U3.squad:
 		BuildPaletteOrder: 95
 		Prerequisites: dome, ~infantry.usa, ~techlevel.infonly
 		Description: Prepare an airdrop of 5 Guardian GI's.
-		BuildDuration: 900
+		BuildDuration: 1200
 	Valued:
 		Cost: 1750
 	RenderSprites:
@@ -3099,3 +3133,10 @@ SEAL:
 		Count: 1
 		ShowSelectionBar: true
 		SelectionBarColor: dd0000
+	-WithDecoration@COMMANDOSKULL:
+	WithDecoration@COMMANDOSKULL:
+		Image: pips
+		Sequence: pip-seal
+		Palette: effect
+		Position: TopLeft
+		ValidRelationships: Ally, Enemy, Neutral

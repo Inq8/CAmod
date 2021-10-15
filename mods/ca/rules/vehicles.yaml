@@ -2383,7 +2383,7 @@ APC2.NODAI:
 	RenderSprites:
 		Image: APC2
 	Cargo:
-		InitialUnits: N4,N4,N4,N4,N4
+		InitialUnits: N1,N3,N4,N4,N4
 
 APC2.GDIAI:
 	Inherits: APC2
@@ -2393,7 +2393,7 @@ APC2.GDIAI:
 	RenderSprites:
 		Image: APC2
 	Cargo:
-		InitialUnits: N2,N2,N2,N2,N2
+		InitialUnits: N1,N3,N2,N2,N2
 
 APC2.Reinforce:
 	Inherits: APC2
@@ -2544,7 +2544,7 @@ VULC.AI:
 	Buildable:
 		Prerequisites: ~botplayer, ~vehicles.gdi, ~vulcan.upgrade, infantry.any, ~techlevel.high
 	Cargo:
-		InitialUnits: N2,N2,N2,N2,N2
+		InitialUnits: N1,N3,N2,N2,N2
 
 LTNK:
 	Inherits: ^TankTD
@@ -3607,7 +3607,7 @@ BTR.AI:
 	Buildable:
 		Prerequisites: ~botplayer, infantry.any, ~vehicles.soviet, ~techlevel.low
 	Cargo:
-		InitialUnits: E4,E4,E4,E4,E4
+		InitialUnits: E1,E3,E4,E4,E4
 
 IFV:
 	Inherits: ^Tank
@@ -3953,6 +3953,13 @@ IFV:
 		RequiresCondition: spyturr && !stance-attackanything
 	WithDecoration@COMMANDOSKULL:
 		RequiresCondition: commturr
+	WithDecoration@SEALSKULL:
+		RequiresCondition: sealturr
+		Image: pips
+		Sequence: pip-seal
+		Palette: effect
+		Position: TopLeft
+		ValidRelationships: Ally, Enemy, Neutral
 
 IFV.AI:
 	Inherits: ^Tank
@@ -5089,7 +5096,7 @@ BATF:
 	AttackFrontal:
 		FacingTolerance: 24
 		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: !(loaded || loaded-cmdo || loaded-air)
+		RequiresCondition: !(loaded || loaded-cmdo || loaded-seal || loaded-air)
 		Voice: Attack
 	Armament@DEFAULT:
 		Name: primary
@@ -5110,6 +5117,7 @@ BATF:
 			e6: loaded-repair
 			e7: loaded-cmdo
 			e8: loaded
+			u3: loaded-air
 			n1: loaded
 			n2: loaded
 			n3: loaded-air
@@ -5117,6 +5125,7 @@ BATF:
 			n5: loaded
 			n6: loaded-repair
 			mech: loaded-repair
+			seal: loaded-seal
 			rmbo: loaded-cmdo
 			bori: loaded-cmdo
 			acol: loaded
@@ -5165,7 +5174,7 @@ BATF:
 		Armaments: mounted
 		PortOffsets: 825,0,256, 348,-482,256, -348,-482,256, -448,482,256, 448,482,256
 		PauseOnCondition: being-warped || empdisable
-		RequiresCondition: loaded || loaded-cmdo || loaded-air
+		RequiresCondition: loaded || loaded-cmdo || loaded-seal || loaded-air
 	Capturable:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
@@ -5183,6 +5192,19 @@ BATF:
 		RequiresCondition: loaded-repair
 	WithDecoration@COMMANDOSKULL:
 		RequiresCondition: loaded-cmdo
+		BlinkInterval: 64
+		BlinkPatterns:
+			loaded-cmdo: Off, On
+	WithDecoration@SEALSKULL:
+		RequiresCondition: loaded-seal
+		Image: pips
+		Sequence: pip-seal
+		Palette: effect
+		Position: TopLeft
+		ValidRelationships: Ally, Enemy, Neutral
+		BlinkInterval: 64
+		BlinkPatterns:
+			loaded-seal: On, Off
 
 BATF.AI:
 	Inherits: BATF
@@ -5191,7 +5213,7 @@ BATF.AI:
 	Buildable:
 		Prerequisites: infantry.any, atek, ~vehicles.france, ~botplayer, ~techlevel.high
 	Cargo:
-		InitialUnits: e1,e1,e3,e3,e3
+		InitialUnits: E1,E1,E3,E3,E3
 
 MEMP:
 	Inherits: ^TankTD
