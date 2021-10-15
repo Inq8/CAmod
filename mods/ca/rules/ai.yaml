@@ -255,6 +255,15 @@ Player:
 					Attractiveness: -5
 					TargetMetric: None
 					CheckRadius: 8c0
+			strafe:
+				OrderName: strafe
+				MinimumAttractiveness: 1
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 4c0
 			carpetbomb:
 				OrderName: carpetbomb
 				MinimumAttractiveness: 1
@@ -264,6 +273,15 @@ Player:
 					Attractiveness: 1
 					TargetMetric: None
 					CheckRadius: 5c0
+			gmutation:
+				OrderName: mutabomb
+				MinimumAttractiveness: 1500
+				Consideration@1:
+					Against: Enemy
+					Types: Infantry
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 4c0
 			parabombs:
 				OrderName: parabombs
 				MinimumAttractiveness: 1
