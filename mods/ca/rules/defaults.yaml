@@ -1317,6 +1317,11 @@
 		RequiresCondition: mdrn-attached
 	ExternalCondition@MINIDRONE:
 		Condition: mdrn-attached
+	AttachableTo:
+		Limits:
+			mdrn: 1
+		LimitConditions:
+			mdrn: mdrn-attached
 
 ^HoverTrail:
 	LeavesTrails:
@@ -1585,11 +1590,6 @@
 	TeleportNetworkTransportable:
 	Targetable@SHADOWBEACON:
 		TargetTypes: ShadowBeacon
-	AttachableTo:
-		Limits:
-			mdrn: 1
-		LimitConditions:
-			mdrn: mdrn-attached
 
 ^Vehicle:
 	Inherits@1: ^Vehicle-NOUPG
@@ -2012,6 +2012,7 @@
 	Inherits@handicaps: ^PlayerHandicaps
 	Inherits@atomize: ^Atomizable
 	Inherits@C4: ^C4Plantable
+	Inherits@minidrone: ^MiniDroneAttachable
 	Huntable:
 	RenderSprites:
 		PlayerPalette: playernavy
@@ -2147,6 +2148,10 @@
 	-MustBeDestroyed:
 	Wanders@NOIDLENAVY:
 		RequiresCondition: (botowner && crossing-ford) ||  (botowner && under-bridge)
+	-InfiltrateToAttach@MINIDRONE:
+	-Targetable@MINIDRONE:
+	-ChangesHealth@MINIDRONE:
+	-ExternalCondition@MINIDRONE:
 
 ^NeutralPlane:
 	Inherits@1: ^ExistsInWorld
