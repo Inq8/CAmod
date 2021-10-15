@@ -8,7 +8,7 @@ MINV:
 			ukraine: minp
 			iraq: minp
 	GrantConditionOnFaction@Soviets:
-		Factions: russia, ukraine, iraq
+		Factions: russia, ukraine, iraq, yuri
 		Condition: soviet
 	Explodes@Allies:
 		Weapon: ATMine
@@ -96,7 +96,7 @@ CRATE:
 	GiveMcvCrateAction@RA:
 		SelectionShares: 0
 		NoBaseSelectionShares: 100
-		ValidFactions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq
+		ValidFactions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri
 		Units: mcv
 	GiveMcvCrateAction@TD:
 		SelectionShares: 0
@@ -121,7 +121,7 @@ CRATE:
 	GiveUnitCrateAction@arty:
 		SelectionShares: 6
 		Units: arty
-		ValidFactions: allies, england, france, germany, nod, blackh, marked, legion, shadow
+		ValidFactions: allies, england, france, germany, usa, nod, blackh, marked, legion, shadow
 		Prerequisites: techlevel.medium, radar
 	GiveUnitCrateAction@v2rl:
 		SelectionShares: 6
@@ -166,7 +166,7 @@ CRATE:
 	GiveUnitCrateAction@squadlight:
 		SelectionShares: 7
 		Units: e1,e1,e1,e3,e3
-		ValidFactions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq
+		ValidFactions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri
 	GiveUnitCrateAction@squadlightTD:
 		SelectionShares: 7
 		Units: n1,n1,n1,n3,n3
@@ -626,7 +626,7 @@ powerproxy.paratroopers2:
 		ArrowSequence: arrow
 		ClockSequence: clock
 		CircleSequence: circles
-		
+
 powerproxy.airborne:
 	AlwaysVisible:
 	ParatroopersPower:
@@ -725,7 +725,7 @@ stolentech.hand:
 stolentech.weap:
 	AlwaysVisible:
 	ValidFactions:
-		Factions: england, france, germany, usa, russia, ukraine, iraq
+		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
 	ProvidesPrerequisiteValidatedFaction@STOLENALLIED:
 		Factions: england, france, germany, usa
 		Prerequisite: vehicles.2tnk
@@ -751,7 +751,7 @@ stolentech.airs:
 stolentech.dome:
 	AlwaysVisible:
 	ValidFactions:
-		Factions: england, france, germany, usa, russia, ukraine, iraq
+		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
 	ProvidesPrerequisiteValidatedFaction@STOLENALLIED:
 		Factions: england, france, germany, usa
 		Prerequisite: vehicles.ifv
