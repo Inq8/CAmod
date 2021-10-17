@@ -24,6 +24,10 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Amount of ticks required to pass without being damaged to revoke effects of the temporal weapon.")]
 		public readonly int RevokeDelay = 1;
 
+		[Desc("Amount of warp damage revoked each tick after RevokeDelay has passed. Use -1 for all damage to be revoked.",
+			"Zero means damage will never be revoked.")]
+		public readonly int RevokeRate = -1;
+
 		[Desc("Amount required to be taken for the unit to be killed.",
 			"Use -1 to be calculated from the actor health.")]
 		public readonly int EraseDamage = -1;
@@ -86,11 +90,17 @@ namespace OpenRA.Mods.CA.Traits
 
 		void ITick.Tick(Actor self)
 		{
-			if (--tick < 0)
+			if (recievedDamage > 0 && --tick < 0)
 			{
-				recievedDamage = 0;
+				if (info.RevokeRate == -1)
+					recievedDamage = 0;
+				else
+					recievedDamage -= info.RevokeRate;
 
-				if (token != Actor.InvalidConditionToken)
+				if (recievedDamage < 0)
+					recievedDamage = 0;
+
+				if (recievedDamage == 0 && token != Actor.InvalidConditionToken)
 					token = self.RevokeCondition(token);
 			}
 		}
