@@ -31,7 +31,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new Attachable(init, this); }
 	}
 
-	public class Attachable : INotifyCreated, INotifyKilled, INotifyActorDisposing, INotifyOwnerChanged, ITick
+	public class Attachable : INotifyCreated, INotifyKilled, INotifyActorDisposing, INotifyOwnerChanged, ITick, INotifyBlockingMove
 	{
 		public readonly AttachableInfo Info;
 		AttachableTo attachedTo;
@@ -42,6 +42,7 @@ namespace OpenRA.Mods.CA.Traits
 		Target lastTarget;
 		readonly IPositionable positionable;
 		readonly Actor self;
+		bool beingCarried;
 
 		public Attachable(ActorInitializer init, AttachableInfo info)
 		{
@@ -50,6 +51,7 @@ namespace OpenRA.Mods.CA.Traits
 			positionable = self.Trait<IPositionable>();
 			attachedConditionToken = Actor.InvalidConditionToken;
 			detachedConditionToken = Actor.InvalidConditionToken;
+			beingCarried = false;
 		}
 
 		void INotifyCreated.Created(Actor self)
@@ -59,6 +61,14 @@ namespace OpenRA.Mods.CA.Traits
 		}
 
 		public bool IsValid { get { return self != null && !self.IsDead; } }
+
+		void INotifyBlockingMove.OnNotifyBlockingMove(Actor self, Actor blocking)
+		{
+			var carryall = blocking.TraitOrDefault<Carryall>();
+			beingCarried = true;
+			if (carryall != null)
+				ParentEnteredCargo();
+		}
 
 		public void AttachTo(AttachableTo attachableTo, WPos pos)
 		{
@@ -81,6 +91,16 @@ namespace OpenRA.Mods.CA.Traits
 		void ITick.Tick(Actor self)
 		{
 			if (!IsValid || attachedTo == null)
+				return;
+
+			if (!self.IsInWorld && attachedTo.IsInWorld && beingCarried && !attachedTo.Carryable.Reserved)
+			{
+				beingCarried = false;
+				ParentExitedCargo();
+				return;
+			}
+
+			if (!self.IsInWorld)
 				return;
 
 			SetPosition(attachedTo.CenterPosition);
@@ -168,6 +188,23 @@ namespace OpenRA.Mods.CA.Traits
 				return lastTarget.Actor != newTarget.Actor;
 
 			return false;
+		}
+
+		public void ParentEnteredCargo()
+		{
+			self.World.AddFrameEndTask(w =>
+			{
+				w.Remove(self);
+			});
+		}
+
+		public void ParentExitedCargo()
+		{
+			self.World.AddFrameEndTask(w =>
+			{
+				SetPosition(attachedTo.CenterPosition);
+				w.Add(self);
+			});
 		}
 	}
 }
