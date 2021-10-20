@@ -30,9 +30,10 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new AttachableTo(init, this); }
 	}
 
-	public class AttachableTo : INotifyKilled, INotifyOwnerChanged, INotifyActorDisposing, IResolveOrder, INotifyStanceChanged
+	public class AttachableTo : INotifyKilled, INotifyOwnerChanged, INotifyActorDisposing, IResolveOrder, INotifyStanceChanged, INotifyEnteredCargo, INotifyExitedCargo, INotifyCreated
 	{
 		public readonly AttachableToInfo Info;
+		public Carryable Carryable { get; private set; }
 		readonly Actor self;
 		readonly HashSet<Attachable> attached = new HashSet<Attachable>();
 		Dictionary<string, int> attachedCounts = new Dictionary<string, int>();
@@ -51,6 +52,12 @@ namespace OpenRA.Mods.CA.Traits
 		}
 
 		public WPos CenterPosition { get { return self.CenterPosition; } }
+		public bool IsInWorld { get { return self.IsInWorld; } }
+
+		void INotifyCreated.Created(Actor self)
+		{
+			Carryable = self.TraitOrDefault<Carryable>();
+		}
 
 		void IResolveOrder.ResolveOrder(Actor self, Order order)
 		{
@@ -155,6 +162,21 @@ namespace OpenRA.Mods.CA.Traits
 				if (attachable.IsValid)
 					attachable.SetStance(newStance);
 			}
+		}
+
+		void INotifyEnteredCargo.OnEnteredCargo(Actor self, Actor cargo)
+		{
+			foreach (var attachable in attached)
+				attachable.ParentEnteredCargo();
+		}
+
+		void INotifyExitedCargo.OnExitedCargo(Actor self, Actor cargo)
+		{
+			self.World.AddFrameEndTask(w =>
+			{
+				foreach (var attachable in attached)
+					attachable.ParentExitedCargo();
+			});
 		}
 	}
 }

@@ -2784,7 +2784,7 @@ MDRN:
 		TurnSpeed: 255
 		Locomotor: seal
 		Voice: Move
-		PauseOnCondition: empdisable || being-warped || notmobile
+		PauseOnCondition: empdisable || being-warped
 	Voiced:
 		VoiceSet: RobotTankVoice
 	Armament@PRIMARY:
@@ -2801,13 +2801,9 @@ MDRN:
 		ZOffset: -129
 	TurretedFloating:
 		TurnSpeed: 18
-	Turreted@SECONDARY:
-		Turret: secondary
-		Offset: 0,0,72
-		TurnSpeed: 512
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
-		Turrets: primary, secondary
+		Turrets: primary
 		Voice: Attack
 	WithSpriteTurret:
 	Targetable:
@@ -2835,6 +2831,7 @@ MDRN:
 	Infiltrates:
 		Types: MiniDroneAttachable
 		ValidRelationships: Ally
+	-Carryable:
 
 MDRN.Attached:
 	Inherits: MDRN
@@ -2849,7 +2846,7 @@ MDRN.Attached:
 		Speed: 0
 		Locomotor: cloud
 		ImmovableCondition: attached
-		PauseOnCondition: attached || empdisable || being-warped || notmobile
+		PauseOnCondition: attached || empdisable || being-warped
 	WithSpriteTurret:
 		Sequence: turret-attached
 	TurnOnIdleCA:
@@ -3666,7 +3663,7 @@ IFV:
 		Weapon: M60mgIFV
 		MuzzleSequence: muzzle
 		LocalOffset: 250,0,150
-		RequiresCondition: gunturr || tecnturr
+		RequiresCondition: gunturr
 	Armament@E2:
 		Weapon: 25mmFRAG
 		MuzzleSequence: muzzle
@@ -3788,7 +3785,7 @@ IFV:
 		RequiresCondition: samturr
 		Sequence: turret2
 	WithSpriteTurret@gun:
-		RequiresCondition: gunturr || tecnturr
+		RequiresCondition: gunturr
 		Sequence: turret3
 	WithSpriteTurret@frg:
 		Sequence: turret4
@@ -3847,7 +3844,7 @@ IFV:
 			acol: acolturr
 			acol.upg: acolturr
 			rmbc: rmbcturr
-			tecn: tecnturr
+			tecn: gunturr
 			s1: gunturr
 			s2: chemturr
 			s3: samturr
