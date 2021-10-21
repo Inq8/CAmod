@@ -1221,8 +1221,6 @@ N2:
 	GrantConditionOnPrerequisite@EMPUPG:
 		Condition: empgren-upgrade
 		Prerequisites: empgren.upgrade
-	ExternalCondition@EMPUPG:
-		Condition: empgren-upgrade
 
 N2R1:
 	Inherits: N2
@@ -2076,7 +2074,10 @@ JJET:
 		Voice: Attack
 	Armament@AIRBORNE:
 		Weapon: M60mgJJ
-		RequiresCondition: airborne
+		RequiresCondition: airborne && !jjgren-upgrade
+	Armament@AIRBORNEGREN:
+		Weapon: GrenadeJJ
+		RequiresCondition: airborne && jjgren-upgrade
 	Armament@GROUND:
 		Weapon: M60mgJJ.Ground
 		RequiresCondition: !airborne
@@ -2165,6 +2166,12 @@ JJET:
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
+	GrantConditionOnPrerequisite@JJGRENUPG:
+		Condition: jjgren-upgrade
+		Prerequisites: jjgren.upgrade
+	ProductionCostMultiplier@JJGRENUPG:
+		Multiplier: 150
+		Prerequisites: jjgren.upgrade
 
 JJET.Husk:
 	ClassicFacingBodyOrientation:
