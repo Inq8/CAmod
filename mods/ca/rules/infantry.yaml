@@ -886,14 +886,16 @@ HACK:
 	MindController:
 		ArmamentNames: primary
 		Capacity: 1
-		TicksToControl: 200
-		TicksToRevoke: 200
-		TicksToRevokeOnDeath: 150
+		TicksToControl: 150
+		TicksToCapture: 300
+		TicksToRevoke: 150
+		TicksToRevokeOnDeath: 75
 		RequiresCondition: deployed
 		InitSounds: hacker-init.aud
 		InitSoundControllerOnly: true
 		ControlSounds: hacker-hacked.aud
 		ControllingCondition: hacked-in
+		CaptureTypes: HackCapturable
 	WithDecoration@HACKEDIN:
 		Image: hacking
 		Sequence: hacking
