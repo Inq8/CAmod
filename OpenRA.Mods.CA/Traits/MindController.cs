@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
+using OpenRA.Primitives;
 
 namespace OpenRA.Mods.CA.Traits
 {
@@ -52,8 +53,14 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Ticks taken for mind control to wear off after controller loses control.")]
 		public readonly int TicksToRevoke = 0;
 
+		[Desc("Ticks attacking taken to capture.")]
+		public readonly int TicksToCapture = 0;
+
 		[Desc("Ticks taken for mind control to wear off after controller dies. Use -1 to use TicksToRevoke value.")]
 		public readonly int TicksToRevokeOnDeath = -1;
+
+		[Desc("Types which become permanently captured rather than mind controlled.")]
+		public readonly BitSet<TargetableType> CaptureTypes = default(BitSet<TargetableType>);
 
 		public override object Create(ActorInitializer init) { return new MindController(init.Self, this); }
 	}
@@ -64,6 +71,9 @@ namespace OpenRA.Mods.CA.Traits
 		readonly Stack<int> controllingTokens = new Stack<int>();
 
 		public IEnumerable<Actor> Slaves { get { return slaves; } }
+
+		int TicksToControl { get { return Info.TicksToCapture > 0 || Info.TicksToControl > 0 ? CaptureCurrentTarget ? Info.TicksToCapture : Info.TicksToControl : 0; } }
+		bool CaptureCurrentTarget { get { return !Info.CaptureTypes.IsEmpty && currentTarget.Type == TargetType.Actor && Info.CaptureTypes.Overlaps(currentTarget.Actor.GetEnabledTargetTypes()); } }
 
 		// Only tracked when TicksToControl greater than zero
 		Target lastTarget = Target.Invalid;
@@ -103,13 +113,13 @@ namespace OpenRA.Mods.CA.Traits
 
 		void ITick.Tick(Actor self)
 		{
-			if (Info.TicksToControl == 0)
+			if (TicksToControl == 0)
 				return;
 
 			if (currentTarget.Type != TargetType.Actor)
 				return;
 
-			if (controlTicks < Info.TicksToControl)
+			if (controlTicks < TicksToControl)
 				controlTicks++;
 
 			if (controlTicks == 1 && Info.InitSounds.Any())
@@ -120,12 +130,9 @@ namespace OpenRA.Mods.CA.Traits
 					Game.Sound.Play(SoundType.World, Info.InitSounds.Random(self.World.SharedRandom), self.CenterPosition);
 			}
 
-			var currentTargetWatchers = currentTarget.Actor.TraitsImplementing<IMindControlProgressWatcher>().ToArray();
+			UpdateProgressBar(self, currentTarget);
 
-			foreach (var w in currentTargetWatchers)
-				w.Update(currentTarget.Actor, self, currentTarget.Actor, controlTicks, Info.TicksToControl);
-
-			if (controlTicks == Info.TicksToControl)
+			if (controlTicks == TicksToControl)
 				AddSlave(self);
 		}
 
@@ -141,26 +148,23 @@ namespace OpenRA.Mods.CA.Traits
 
 		void ResetProgress(Actor self)
 		{
-			if (Info.TicksToControl == 0)
+			if (TicksToControl == 0)
 				return;
 
 			controlTicks = 0;
+			UpdateProgressBar(self, lastTarget);
+			UpdateProgressBar(self, currentTarget);
+		}
 
-			if (lastTarget.Type == TargetType.Actor)
-			{
-				var lastTargetWatchers = lastTarget.Actor.TraitsImplementing<IMindControlProgressWatcher>().ToArray();
+		void UpdateProgressBar(Actor self, Target target)
+		{
+			if (target.Type != TargetType.Actor)
+				return;
 
-				foreach (var w in lastTargetWatchers)
-					w.Update(lastTarget.Actor, self, lastTarget.Actor, 0, Info.TicksToControl);
-			}
+			var targetWatchers = target.Actor.TraitsImplementing<IMindControlProgressWatcher>().ToArray();
 
-			if (currentTarget.Type == TargetType.Actor)
-			{
-				var currentTargetWatchers = currentTarget.Actor.TraitsImplementing<IMindControlProgressWatcher>().ToArray();
-
-				foreach (var w in currentTargetWatchers)
-					w.Update(currentTarget.Actor, self, currentTarget.Actor, 0, Info.TicksToControl);
-			}
+			foreach (var w in targetWatchers)
+				w.Update(target.Actor, self, target.Actor, controlTicks, TicksToControl);
 		}
 
 		void INotifyAttack.PreparingAttack(Actor self, in Target target, Armament a, Barrel barrel) { }
@@ -179,7 +183,7 @@ namespace OpenRA.Mods.CA.Traits
 			lastTarget = currentTarget;
 			currentTarget = target;
 
-			if (TargetChanged() && Info.TicksToControl > 0)
+			if (TargetChanged() && TicksToControl > 0)
 			{
 				ResetProgress(self);
 				ReleaseSlaves(self, Info.TicksToRevoke);
@@ -194,11 +198,18 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled || IsTraitPaused)
 				return;
 
-			if (controlTicks < Info.TicksToControl)
+			if (controlTicks < TicksToControl)
 				return;
 
 			if (self.Owner.RelationshipWith(currentTarget.Actor.Owner) == PlayerRelationship.Ally)
 				return;
+
+			if (CaptureCurrentTarget)
+			{
+				currentTarget.Actor.ChangeOwner(self.Owner);
+				ControlComplete(self);
+				return;
+			}
 
 			var mindControllable = currentTarget.Actor.TraitOrDefault<MindControllable>();
 
@@ -225,6 +236,14 @@ namespace OpenRA.Mods.CA.Traits
 			StackControllingCondition(self, Info.ControllingCondition);
 			mindControllable.LinkMaster(currentTarget.Actor, self);
 
+			if (Info.Capacity > 0 && Info.DiscardOldest && slaves.Count() > Info.Capacity)
+				slaves[0].Trait<MindControllable>().RevokeMindControl(slaves[0], 0);
+
+			ControlComplete(self);
+		}
+
+		void ControlComplete(Actor self)
+		{
 			if (Info.ControlSounds.Any())
 			{
 				if (Info.ControlSoundControllerOnly)
@@ -233,14 +252,7 @@ namespace OpenRA.Mods.CA.Traits
 					Game.Sound.Play(SoundType.World, Info.ControlSounds.Random(self.World.SharedRandom), self.CenterPosition);
 			}
 
-			if (Info.Capacity > 0 && Info.DiscardOldest && slaves.Count() > Info.Capacity)
-				slaves[0].Trait<MindControllable>().RevokeMindControl(slaves[0], 0);
-
-			var currentTargetWatchers = currentTarget.Actor.TraitsImplementing<IMindControlProgressWatcher>().ToArray();
-
-			foreach (var w in currentTargetWatchers)
-				w.Update(currentTarget.Actor, self, currentTarget.Actor, 0, Info.TicksToControl);
-
+			UpdateProgressBar(self, currentTarget);
 			currentTarget = Target.Invalid;
 		}
 

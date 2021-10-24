@@ -3792,7 +3792,7 @@ HQ:
 		Type: Infantry
 		ChargeInterval: 7500
 		Description: Hacker Cell
-		LongDesc: Deploy a squad of hackers.
+		LongDesc: Deploy a squad of hackers that can remotely\ncapture buildings and take control of defenses.
 		Actors: hack, hack, hack
 		LaunchSpeechNotification: ReinforcementsArrived
 		EndChargeSpeechNotification: Reinforce
@@ -4552,6 +4552,9 @@ GTEK:
 	ProvidesPrerequisiteValidatedFaction@zocomgtek:
 		Factions: zocom
 		Prerequisite: gtek.zocom
+	ProvidesPrerequisiteValidatedFaction@eaglegtek:
+		Factions: eagle
+		Prerequisite: gtek.eagle
 	ProvidesPrerequisite@buildingname:
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
