@@ -1252,6 +1252,25 @@ C17.XO:
 	ParaDrop:
 		ChuteSound: xo-descent.aud
 
+GALX:
+	Inherits: C17
+	RenderSprites:
+		Image: galx
+	Tooltip:
+		Name: Transport Aircraft
+	Health:
+		HP: 90000
+	Aircraft:
+		Speed: 266
+		TurnSpeed: 26
+	DynamicSpeedMultiplier:
+	SpawnActorOnDeath:
+		Actor: GALX.Husk
+		RequiresCondition: !empdisable
+	SpawnActorOnDeath@EMP:
+		Actor: GALX.Husk.EMP
+		RequiresCondition: empdisable
+
 APCH:
 	Inherits: ^HelicopterTD
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove

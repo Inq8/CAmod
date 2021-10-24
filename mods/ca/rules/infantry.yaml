@@ -2032,6 +2032,10 @@ JJET:
 		Cost: 350
 	Tooltip:
 		Name: Jump-Jet Trooper
+		RequiresCondition: !jjgren-upgrade
+	Tooltip@UPG:
+		Name: Jump-Jet Grenadier
+		RequiresCondition: jjgren-upgrade
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -2082,26 +2086,44 @@ JJET:
 		RequiresCondition: airborne && jjgren-upgrade
 	Armament@GROUND:
 		Weapon: M60mgJJ.Ground
-		RequiresCondition: !airborne
+		RequiresCondition: !airborne && !jjgren-upgrade
+	Armament@GROUNDGREN:
+		Weapon: GrenadeJJ
+		RequiresCondition: !airborne && jjgren-upgrade
 	AttackFrontal:
 		PauseOnCondition: being-warped
 		Voice: Attack
 	WithInfantryBody:
 		IdleSequences: idle1,idle2
 		DefaultAttackSequence: attack
-		RequiresCondition: !airborne
+		RequiresCondition: !airborne && !jjgren-upgrade
+	WithInfantryBody@UPG:
+		IdleSequences: idle1-upg,idle2-upg
+		DefaultAttackSequence: attack-upg
+		RequiresCondition: !airborne && jjgren-upgrade
 	WithInfantryBody@AIRBORNE:
 		DefaultAttackSequence: flying-attack
 		StandSequences: hover
 		MinIdleDelay: 0
 		MaxIdleDelay: 1
 		MoveSequence: flying
-		RequiresCondition: airborne
+		RequiresCondition: airborne && !jjgren-upgrade
+	WithInfantryBody@AIRBORNEUPG:
+		DefaultAttackSequence: flying-attack-upg
+		StandSequences: hover-upg
+		IdleSequences: idle-upg
+		MinIdleDelay: 0
+		MaxIdleDelay: 1
+		MoveSequence: flying-upg
+		RequiresCondition: airborne && jjgren-upgrade
 	DeathSounds@airborne:
 		RequiresCondition: airborne
 	SpawnActorOnDeath@airborne:
 		Actor: JJET.Husk
-		RequiresCondition: airborne
+		RequiresCondition: airborne && !jjgren-upgrade
+	SpawnActorOnDeath@airborneupg:
+		Actor: JJET.UPG.Husk
+		RequiresCondition: airborne && jjgren-upgrade
 	WithDeathAnimation:
 		DeathSequencePalette: overlayplayertd
 		DeathTypes:
@@ -2209,6 +2231,11 @@ JJET.Husk:
 		RequiresCondition: water-death
 		FallbackSequence: die-splash
 	Interactable:
+
+JJET.UPG.Husk:
+	Inherits: JJET.Husk
+	WithSpriteBody:
+		Sequence: die-falling-upg
 
 E8:
 	Inherits: ^Soldier
