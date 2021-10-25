@@ -2718,7 +2718,6 @@ MTNK.Drone:
 	Armament:
 		Weapon: 120mm.Drone
 	AttackTurreted:
-		-Turrets:
 		PauseOnCondition: !radarenabled || empdisable || being-warped
 	SpawnActorOnDeath:
 		Actor: MTNK.Drone.Husk
@@ -2726,13 +2725,6 @@ MTNK.Drone:
 		VoiceSet: DroneVoice
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
-	WithSpriteTurret@default:
-		-RequiresCondition:
-	-Turreted@SECONDARY:
-	-Armament@SECONDARY:
-	-WithSpriteTurret@pointlaser:
-	-PointDefense:
-	-GrantConditionOnPrerequisite@POINTL:
 	-CaptureManager:
 	-Capturable:
 	-CaptureNotification:
