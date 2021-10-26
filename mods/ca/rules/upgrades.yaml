@@ -122,6 +122,20 @@ vulcan.upgrade:
 	RenderSprites:
 		Image: vulcan.upgrade
 
+xo.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: X-O Powersuit
+	Buildable:
+		BuildPaletteOrder: 25
+		Prerequisites: ~radar.talon, ~techlevel.high
+		BuildDuration: 1500
+		Description: Enables production and deployment of X-O Powersuits.\n\n  Unlocks: X-O Powersuit\n  Unlocks: X-O Drop (with Helipad)
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: xo.upgrade
+
 empgren.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -274,7 +288,7 @@ railgun.upgrade:
 drone.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Drone Tanks
+		Name: Research: Drone Tanks
 	Buildable:
 		BuildPaletteOrder: 83
 		Prerequisites: ~upgc.arc, ~techlevel.high
@@ -425,7 +439,7 @@ iraqtank.upgrade:
 lasher.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Lasher Tank
+		Name: Research: Lasher Tank
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~radar.yuri, ~techlevel.high
@@ -527,7 +541,7 @@ pcan.upgrade:
 charv.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Chrono Miner
+		Name: Upgrade: Chrono Miner
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~orep, ~techlevel.high

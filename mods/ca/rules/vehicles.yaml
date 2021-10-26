@@ -2718,7 +2718,6 @@ MTNK.Drone:
 	Armament:
 		Weapon: 120mm.Drone
 	AttackTurreted:
-		-Turrets:
 		PauseOnCondition: !radarenabled || empdisable || being-warped
 	SpawnActorOnDeath:
 		Actor: MTNK.Drone.Husk
@@ -2726,13 +2725,6 @@ MTNK.Drone:
 		VoiceSet: DroneVoice
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
-	WithSpriteTurret@default:
-		-RequiresCondition:
-	-Turreted@SECONDARY:
-	-Armament@SECONDARY:
-	-WithSpriteTurret@pointlaser:
-	-PointDefense:
-	-GrantConditionOnPrerequisite@POINTL:
 	-CaptureManager:
 	-Capturable:
 	-CaptureNotification:
@@ -4088,15 +4080,19 @@ XO:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
-	RenderSprites:
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 195
+		Prerequisites: anyradar, ~vehicles.talon, xo.upgrade, ~techlevel.high
+		Description: Light battle-mech with short-range laser.\n  Strong vs Vehicles, Infantry
 	Valued:
-		Cost: 650
+		Cost: 900
 	Tooltip:
 		Name: X-O Powersuit
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 22000
+		HP: 25000
 	Armor:
 		Type: Light
 	Mobile:
