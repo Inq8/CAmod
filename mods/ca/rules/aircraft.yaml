@@ -1257,7 +1257,7 @@ GALX:
 	RenderSprites:
 		Image: galx
 	Tooltip:
-		Name: Transport Aircraft
+		Name: Heavy Transport Aircraft
 	Health:
 		HP: 90000
 	Aircraft:
@@ -2625,3 +2625,53 @@ AURO:
 	-RangeMultiplier@SEEK:
 	-RangeMultiplier@SEEK2:
 	-RangeMultiplier@SEEK3:
+
+####USAPARA####
+
+U3.squad:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesPrerequisite@squadname:
+	Tooltip:
+		Name: Airdrop: Guardian GI's
+	Buildable:
+		Queue: Aircraft
+		BuildAtProductionType: Paradrop
+		BuildPaletteOrder: 111
+		Prerequisites: dome, ~infantry.usa, ~techlevel.infonly
+		Description: Prepare five Guardian GI's for airdrop.
+	Valued:
+		Cost: 1750
+	RenderSprites:
+		Image: squad.airborne
+	ProduceActorPowerCA:
+		Actors: powerproxy.airborne
+		Type: Aircraft
+		OneShot: true
+		AutoFire: true
+		AllowMultiple: true
+
+GTNK.squad:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesPrerequisite@squadname:
+	Tooltip:
+		Name: Airdrop: Grizzly Tank's
+	Buildable:
+		Queue: Aircraft
+		BuildAtProductionType: Paradrop
+		BuildPaletteOrder: 112
+		Prerequisites: dome, ~vehicles.usa, ~techlevel.low
+		Description: Prepare a pair of  Grizzly tank's for airdrop.
+	Valued:
+		Cost: 1750
+	RenderSprites:
+		Image: squad.airbornetank
+	ProduceActorPowerCA:
+		Actors: powerproxy.airbornetank
+		Type: Aircraft
+		OneShot: true
+		AutoFire: true
+		AllowMultiple: true

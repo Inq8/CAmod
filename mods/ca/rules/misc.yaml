@@ -634,8 +634,8 @@ powerproxy.airborne:
 		Icon: airborne
 		SquadSize: 1
 		UnitType: galx
-		Description: Guardian G.I Paratroopers (Single Use)
-		LongDesc: A Transport Plane drops a squad of Guardian G.I's\nanywhere on the map.
+		Description: Airdrop: Guardian G.I's (Single Use)
+		LongDesc: A Heavy Transport Plane drops a squad of Guardian G.I's\nanywhere on the map.
 		OneShot: true
 		AllowMultiple: true
 		DropItems: U3,U3,U3,U3,U3
@@ -648,6 +648,33 @@ powerproxy.airborne:
 		CameraActor: camera.paradrop
 		DisplayBeacon: true
 		BeaconPoster: pinficon
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+
+powerproxy.airbornetank:
+	AlwaysVisible:
+	ParatroopersPower:
+		OrderName: airbornetank
+		Icon: airdropicon
+		SquadSize: 1
+		UnitType: galx
+		Description: Airdrop: Grizzly Tank's (Single Use)
+		LongDesc: A Heavy Transport Plane drops a pair of Grizzly tank's\nanywhere on the map.
+		OneShot: true
+		AllowMultiple: true
+		DropItems: GTNK,GTNK
+		SelectTargetSpeechNotification: SelectTarget
+		EndChargeSpeechNotification: Reinforce
+		LaunchSpeechNotification: ReinforcementsArrived
+		IncomingSpeechNotification: EnemyPlanesApproaching
+		AllowImpassableCells: false
+		QuantizedFacings: 8
+		CameraActor: camera.paradrop
+		DisplayBeacon: true
+		BeaconPoster: lrairdropicon
 		ArrowSequence: arrow
 		ClockSequence: clock
 		CircleSequence: circles

@@ -139,6 +139,19 @@ charv.destroyed:
 		Length: 5
 	icon: 2tnkicon
 
+gtnk:
+	Inherits: ^VehicleOverlays
+	idle: gtnk
+		Facings: 32
+		UseClassicFacings: True
+	turret: 2tnk
+		Start: 32
+		Facings: 32
+		UseClassicFacings: True
+	muzzle: gunfire2
+		Length: 5
+	icon: gtnkicon
+
 mtnk.gdi.chrono:
 	Inherits: ^VehicleOverlays
 	idle: 2tnk
@@ -168,6 +181,18 @@ mtnk.nod.chrono:
 2tnk.destroyed:
 	Inherits: ^VehicleOverlays
 	idle: 2tnk
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512
+	turret: 2tnk
+		Start: 32
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512
+
+gtnk.destroyed:
+	Inherits: ^VehicleOverlays
+	idle: gtnk
 		Facings: 32
 		UseClassicFacings: True
 		ZOffset: -512
