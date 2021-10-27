@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common.Traits;
-using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
@@ -53,14 +52,14 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Ticks taken for mind control to wear off after controller loses control.")]
 		public readonly int TicksToRevoke = 0;
 
-		[Desc("Ticks attacking taken to capture.")]
-		public readonly int TicksToCapture = 0;
-
 		[Desc("Ticks taken for mind control to wear off after controller dies. Use -1 to use TicksToRevoke value.")]
 		public readonly int TicksToRevokeOnDeath = -1;
 
-		[Desc("Types which become permanently captured rather than mind controlled.")]
-		public readonly BitSet<TargetableType> CaptureTypes = default(BitSet<TargetableType>);
+		[Desc("If true, undeploy when control is gained of target.")]
+		public readonly bool UndeployOnControl = false;
+
+		[Desc("If true, slave will be released when attacking a new target.")]
+		public readonly bool ReleaseOnNewTarget = false;
 
 		public override object Create(ActorInitializer init) { return new MindController(init.Self, this); }
 	}
@@ -71,9 +70,6 @@ namespace OpenRA.Mods.CA.Traits
 		readonly Stack<int> controllingTokens = new Stack<int>();
 
 		public IEnumerable<Actor> Slaves { get { return slaves; } }
-
-		int TicksToControl { get { return Info.TicksToCapture > 0 || Info.TicksToControl > 0 ? CaptureCurrentTarget ? Info.TicksToCapture : Info.TicksToControl : 0; } }
-		bool CaptureCurrentTarget { get { return !Info.CaptureTypes.IsEmpty && currentTarget.Type == TargetType.Actor && Info.CaptureTypes.Overlaps(currentTarget.Actor.GetEnabledTargetTypes()); } }
 
 		// Only tracked when TicksToControl greater than zero
 		Target lastTarget = Target.Invalid;
@@ -113,13 +109,13 @@ namespace OpenRA.Mods.CA.Traits
 
 		void ITick.Tick(Actor self)
 		{
-			if (TicksToControl == 0)
+			if (Info.TicksToControl == 0)
 				return;
 
 			if (currentTarget.Type != TargetType.Actor)
 				return;
 
-			if (controlTicks < TicksToControl)
+			if (controlTicks < Info.TicksToControl)
 				controlTicks++;
 
 			if (controlTicks == 1 && Info.InitSounds.Any())
@@ -132,7 +128,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			UpdateProgressBar(self, currentTarget);
 
-			if (controlTicks == TicksToControl)
+			if (controlTicks == Info.TicksToControl)
 				AddSlave(self);
 		}
 
@@ -148,7 +144,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		void ResetProgress(Actor self)
 		{
-			if (TicksToControl == 0)
+			if (Info.TicksToControl == 0)
 				return;
 
 			controlTicks = 0;
@@ -164,7 +160,7 @@ namespace OpenRA.Mods.CA.Traits
 			var targetWatchers = target.Actor.TraitsImplementing<IMindControlProgressWatcher>().ToArray();
 
 			foreach (var w in targetWatchers)
-				w.Update(target.Actor, self, target.Actor, controlTicks, TicksToControl);
+				w.Update(target.Actor, self, target.Actor, controlTicks, Info.TicksToControl);
 		}
 
 		void INotifyAttack.PreparingAttack(Actor self, in Target target, Armament a, Barrel barrel) { }
@@ -183,10 +179,13 @@ namespace OpenRA.Mods.CA.Traits
 			lastTarget = currentTarget;
 			currentTarget = target;
 
-			if (TargetChanged() && TicksToControl > 0)
+			if (TargetChanged() && Info.TicksToControl > 0)
 			{
 				ResetProgress(self);
-				ReleaseSlaves(self, Info.TicksToRevoke);
+
+				if (Info.ReleaseOnNewTarget)
+					ReleaseSlaves(self, Info.TicksToRevoke);
+
 				return;
 			}
 
@@ -198,18 +197,11 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled || IsTraitPaused)
 				return;
 
-			if (controlTicks < TicksToControl)
+			if (controlTicks < Info.TicksToControl)
 				return;
 
 			if (self.Owner.RelationshipWith(currentTarget.Actor.Owner) == PlayerRelationship.Ally)
 				return;
-
-			if (CaptureCurrentTarget)
-			{
-				currentTarget.Actor.ChangeOwner(self.Owner);
-				ControlComplete(self);
-				return;
-			}
 
 			var mindControllable = currentTarget.Actor.TraitOrDefault<MindControllable>();
 
@@ -250,6 +242,13 @@ namespace OpenRA.Mods.CA.Traits
 					Game.Sound.PlayToPlayer(SoundType.World, self.Owner, Info.ControlSounds.Random(self.World.SharedRandom), self.CenterPosition);
 				else
 					Game.Sound.Play(SoundType.World, Info.ControlSounds.Random(self.World.SharedRandom), self.CenterPosition);
+			}
+
+			if (Info.UndeployOnControl)
+			{
+				var deployTrait = self.TraitOrDefault<GrantConditionOnDeploy>();
+				if (deployTrait != null && deployTrait.DeployState == DeployState.Deployed)
+					deployTrait.Undeploy();
 			}
 
 			UpdateProgressBar(self, currentTarget);

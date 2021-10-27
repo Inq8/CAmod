@@ -830,6 +830,7 @@ HACK:
 	Armament@PRIMARYDEPLOYED:
 		Weapon: Hack
 		RequiresCondition: deployed
+		LocalOffset: 0,0,50
 	AttackFrontal:
 		Voice: Action
 		FacingTolerance: 512
@@ -861,17 +862,15 @@ HACK:
 		RequiresCondition: undeployed
 	MindController:
 		ArmamentNames: primary
-		Capacity: 1
-		TicksToControl: 150
-		TicksToCapture: 300
-		TicksToRevoke: 150
-		TicksToRevokeOnDeath: 75
-		RequiresCondition: deployed
+		Capacity: -1
+		TicksToControl: 300
+		TicksToRevoke: 25
 		InitSounds: hacker-init.aud
 		InitSoundControllerOnly: true
 		ControlSounds: hacker-hacked.aud
 		ControllingCondition: hacked-in
 		CaptureTypes: HackCapturable
+		UndeployOnControl: true
 	WithDecoration@HACKEDIN:
 		Image: hacking
 		Sequence: hacking
@@ -884,6 +883,7 @@ HACK:
 		Transparency: 65
 		Angle: 60
 		Width: 86
+		Offset: 0,0,50
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
