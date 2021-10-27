@@ -2080,10 +2080,16 @@ HMMV:
 		Weapon: M60mgTD
 		LocalOffset: 171,0,85
 		MuzzleSequence: muzzle
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: TOW
+		LocalOffset: 250,100,150
+		RequiresCondition: tow-upgrade
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
+		RequiresCondition: !tow-upgrade
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
@@ -2091,6 +2097,12 @@ HMMV:
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithSpriteTurret@TOW:
+		Sequence: turrettow
+		RequiresCondition: tow-upgrade
+	GrantConditionOnPrerequisite@TOW:
+		Condition: tow-upgrade
+		Prerequisites: tow.upgrade
 
 GDRN:
 	Inherits: ^Vehicle
@@ -2132,11 +2144,17 @@ GDRN:
 		Weapon: GuardianDroneGun
 		LocalOffset: 500,0,200
 		MuzzleSequence: muzzle
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: TOW
+		LocalOffset: 200,-150,250
+		RequiresCondition: tow-upgrade
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
 	WithMuzzleOverlay:
 	WithSpriteTurret:
+		RequiresCondition: !tow-upgrade
 	Voiced:
 		VoiceSet: RobotTankVoice
 	Targetable:
@@ -2148,6 +2166,12 @@ GDRN:
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithSpriteTurret@TOW:
+		Sequence: turrettow
+		RequiresCondition: tow-upgrade
+	GrantConditionOnPrerequisite@TOW:
+		Condition: tow-upgrade
+		Prerequisites: tow.upgrade
 
 BGGY:
 	Inherits: ^VehicleTD

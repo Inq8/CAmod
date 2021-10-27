@@ -157,7 +157,7 @@ jjgren.upgrade:
 		Name: Upgrade: JumpJet Grenades
 	Buildable:
 		BuildPaletteOrder: 45
-		Prerequisites: ~gtek.eagle, ~techlevel.high
+		Prerequisites: ~gtek, ~bombard.strat, ~techlevel.high
 		BuildDuration: 1500
 		Description: Upgrades JumpJet Troopers to use Grenade Launchers.\n\n  Upgrades: JumpJet Trooper\n  + Increased damage\n  – Reduced range\n  – Slow projectiles\n  – Increased cost
 	Valued:
@@ -165,16 +165,31 @@ jjgren.upgrade:
 	RenderSprites:
 		Image: jjgren.upgrade
 
+tow.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: TOW Launcher
+	Buildable:
+		BuildPaletteOrder: 45
+		Prerequisites: ~gtek, ~seek.strat, ~techlevel.high
+		BuildDuration: 1500
+		IconPalette: chrometd
+		Description: Upgrades Hum-Vees and Guardian Drones with TOW missile launchers.\n\n  Upgrades: Hum-Vee\n  Upgrades: Guardian Drone
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: tow.upgrade
+
 pointlaser.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
 		Name: Upgrade: Point Defense Lasers
 	Buildable:
 		BuildPaletteOrder: 50
-		Prerequisites: ~gtek.zocom, ~techlevel.high
+		Prerequisites: ~gtek, ~hold.strat, ~techlevel.high
 		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Equips Battle Tanks and Frigates with point defense lasers\nwhich can destroy approaching missiles.\n\n  Upgrades: Battle Tank\n  Upgrades: Frigate
+		Description: Equips Battle Tanks, Battle Drones and Frigates with point defense lasers\nwhich can destroy approaching missiles.\n\n  Upgrades: Battle Tank\n  Upgrades: Battle Drone\n  Upgrades: Frigate
 	Valued:
 		Cost: 1000
 	RenderSprites:
