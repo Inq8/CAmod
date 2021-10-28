@@ -731,6 +731,30 @@ APTusk:
 			Heavy: 65
 			Concrete: 80
 
+TOW:
+	Inherits: ^AntiGroundMissile
+	Range: 7c0
+	ValidTargets: Vehicle, Structure
+	Report: tow1.aud, tow2.aud
+	ReloadDelay: 180
+	Projectile: MissileCA
+		Inaccuracy: 0
+		HorizontalRateOfTurn: 20
+		RangeLimit: 16c0
+		PointDefenseType: Missile
+		LockOnProbability: 100
+		LockOnInaccuracy: 0
+		ContrailLength: 17
+		ContrailColor: ccccccaa
+		ContrailWidth: 0c48
+		MinimumLaunchAngle: 0
+		MaximumLaunchAngle: 48
+	Warhead@1Dam: SpreadDamage
+		Damage: 10000
+		Versus:
+			Wood: 30
+			Light: 75
+
 TorpTube:
 	ReloadDelay: 100
 	Range: 9c0
