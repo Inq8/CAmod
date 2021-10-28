@@ -39,19 +39,29 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override void Created(Actor self)
 		{
-			if (IsTraitDisabled)
-				return;
+			Attach(self);
+		}
 
+		void Attach(Actor self)
+		{
 			var map = self.World.Map;
 			var targetCell = map.CellContaining(self.CenterPosition);
 
+			var facing = self.TraitOrDefault<IFacing>();
+			var attachedFacing = WAngle.Zero;
+			if (facing != null)
+				attachedFacing = facing.Facing;
+
 			self.World.AddFrameEndTask(w =>
 			{
+				if (IsTraitDisabled)
+					return;
+
 				var actorToAttach = self.World.CreateActor(Info.Actor.ToLowerInvariant(), new TypeDictionary
 				{
 					new LocationInit(targetCell),
 					new OwnerInit(self.Owner),
-					new FacingInit(WAngle.Zero)
+					new FacingInit(attachedFacing)
 				});
 
 				var attachable = actorToAttach.TraitOrDefault<Attachable>();

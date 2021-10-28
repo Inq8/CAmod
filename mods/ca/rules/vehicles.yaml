@@ -2744,6 +2744,12 @@ MTNK:
 	GrantConditionOnPrerequisite@POINTL:
 		Condition: pointlaser-upgrade
 		Prerequisites: pointlaser.upgrade
+	GrantConditionOnPrerequisite@DRONEPAIR:
+		Condition: dronepair-upgrade
+		Prerequisites: dronepair.upgrade
+	AttachOnCreation@DRONEPAIR:
+		Actor: mdrn.attached
+		RequiresCondition: dronepair-upgrade
 
 MTNK.Drone:
 	Inherits: MTNK
@@ -2903,6 +2909,10 @@ MDRN.Attached:
 		Modifier: 50
 	Attachable:
 		AttachedCondition: attached
+	-Targetable@HACKABLE:
+	-MindControllableProgressBar@HACKABLE:
+	-WithDecoration@HACKED:
+	-WithDecoration@RESTORING:
 
 HTNK:
 	Inherits: ^TankTD
@@ -2971,6 +2981,12 @@ HTNK:
 	Carryable:
 		LocalOffset: 0,0,500
 	-Crushable:
+	GrantConditionOnPrerequisite@DRONEPAIR:
+		Condition: dronepair-upgrade
+		Prerequisites: dronepair.upgrade
+	AttachOnCreation@DRONEPAIR:
+		Actor: mdrn.attached
+		RequiresCondition: dronepair-upgrade
 
 HTNK.Ion:
 	Inherits: HTNK
