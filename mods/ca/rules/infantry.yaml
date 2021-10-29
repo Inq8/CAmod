@@ -2150,13 +2150,15 @@ BJET:
 	Buildable:
 		Prerequisites: anyradar, ~pyle, ~bjet.upgrade, ~techlevel.infonly
 		IconPalette: chrometd
-		Description: Flying general-purpose infantry.\n Can detect cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+		Description: Flying infantry with a grenade launcher.\n Can detect cloaked units.\n  Strong vs Buildings\n  Weak vs Vehicles, Aircraft
 	Tooltip:
 		Name: Bombardier
 	Armament@AIRBORNE:
 		Weapon: GrenadeJJ
+		LocalOffset: 0,0,180
 	Armament@GROUND:
 		Weapon: GrenadeJJ
+		LocalOffset: 0,0,180
 	SpawnActorOnDeath@airborne:
 		Actor: JJET.UPG.Husk
 		RequiresCondition: airborne
