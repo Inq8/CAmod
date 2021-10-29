@@ -2001,17 +2001,13 @@ JJET:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 150
-		Prerequisites: anyradar, ~pyle, ~techlevel.infonly
+		Prerequisites: anyradar, ~pyle, ~!bjet.upgrade, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Flying general-purpose infantry.\n Can detect cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
 	Valued:
 		Cost: 350
 	Tooltip:
 		Name: Jump-Jet Trooper
-		RequiresCondition: !jjgren-upgrade
-	Tooltip@UPG:
-		Name: Jump-Jet Grenadier
-		RequiresCondition: jjgren-upgrade
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -2056,50 +2052,29 @@ JJET:
 		Voice: Attack
 	Armament@AIRBORNE:
 		Weapon: M60mgJJ
-		RequiresCondition: airborne && !jjgren-upgrade
-	Armament@AIRBORNEGREN:
-		Weapon: GrenadeJJ
-		RequiresCondition: airborne && jjgren-upgrade
+		RequiresCondition: airborne
 	Armament@GROUND:
 		Weapon: M60mgJJ.Ground
-		RequiresCondition: !airborne && !jjgren-upgrade
-	Armament@GROUNDGREN:
-		Weapon: GrenadeJJ
-		RequiresCondition: !airborne && jjgren-upgrade
+		RequiresCondition: !airborne
 	AttackFrontal:
 		PauseOnCondition: being-warped
 		Voice: Attack
 	WithInfantryBody:
 		IdleSequences: idle1,idle2
 		DefaultAttackSequence: attack
-		RequiresCondition: !airborne && !jjgren-upgrade
-	WithInfantryBody@UPG:
-		IdleSequences: idle1-upg,idle2-upg
-		DefaultAttackSequence: attack-upg
-		RequiresCondition: !airborne && jjgren-upgrade
+		RequiresCondition: !airborne
 	WithInfantryBody@AIRBORNE:
 		DefaultAttackSequence: flying-attack
 		StandSequences: hover
 		MinIdleDelay: 0
 		MaxIdleDelay: 1
 		MoveSequence: flying
-		RequiresCondition: airborne && !jjgren-upgrade
-	WithInfantryBody@AIRBORNEUPG:
-		DefaultAttackSequence: flying-attack-upg
-		StandSequences: hover-upg
-		IdleSequences: idle-upg
-		MinIdleDelay: 0
-		MaxIdleDelay: 1
-		MoveSequence: flying-upg
-		RequiresCondition: airborne && jjgren-upgrade
+		RequiresCondition: airborne
 	DeathSounds@airborne:
 		RequiresCondition: airborne
 	SpawnActorOnDeath@airborne:
 		Actor: JJET.Husk
-		RequiresCondition: airborne && !jjgren-upgrade
-	SpawnActorOnDeath@airborneupg:
-		Actor: JJET.UPG.Husk
-		RequiresCondition: airborne && jjgren-upgrade
+		RequiresCondition: airborne
 	WithDeathAnimation:
 		DeathSequencePalette: overlayplayertd
 		DeathTypes:
@@ -2166,12 +2141,38 @@ JJET:
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
-	GrantConditionOnPrerequisite@JJGRENUPG:
-		Condition: jjgren-upgrade
-		Prerequisites: jjgren.upgrade
-	ProductionCostMultiplier@JJGRENUPG:
-		Multiplier: 150
-		Prerequisites: jjgren.upgrade
+
+BJET:
+	Inherits: JJET
+	RenderSprites:
+		Image: bjet
+	Valued:
+		Cost: 525
+	Buildable:
+		Prerequisites: anyradar, ~pyle, ~bjet.upgrade, ~techlevel.infonly
+		IconPalette: chrometd
+		Description: Flying general-purpose infantry.\n Can detect cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+	Tooltip:
+		Name: Bombardier
+	Armament@AIRBORNE:
+		Weapon: GrenadeJJ
+	Armament@GROUND:
+		Weapon: GrenadeJJ
+	SpawnActorOnDeath@airborne:
+		Actor: JJET.UPG.Husk
+		RequiresCondition: airborne
+	WithInfantryBody@AIRBORNE:
+		DefaultAttackSequence: flying-attack-upg
+		StandSequences: hover-upg
+		IdleSequences: idle-upg
+		MinIdleDelay: 0
+		MaxIdleDelay: 1
+		MoveSequence: flying-upg
+		RequiresCondition: airborne
+	WithInfantryBody:
+		IdleSequences: idle1-upg,idle2-upg
+		DefaultAttackSequence: attack-upg
+		RequiresCondition: !airborne
 
 JJET.Husk:
 	ClassicFacingBodyOrientation:
