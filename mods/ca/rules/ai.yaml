@@ -197,15 +197,42 @@ Player:
 				Consideration@1:
 					Against: Enemy
 					Types: Structure
-					Attractiveness: 1
-					TargetMetric: None
+					Attractiveness: 2
+					TargetMetric: Value
 					CheckRadius: 8c0
 				Consideration@2:
+					Against: Ally
+					Types: Infantry, Vehicle
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 8c0
+				Consideration@3:
 					Against: Enemy
 					Types: Water
 					Attractiveness: -5
 					TargetMetric: None
+					CheckRadius: 5c0
+			airbornetank:
+				OrderName: airbornetank
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 2
+					TargetMetric: Value
 					CheckRadius: 8c0
+				Consideration@2:
+					Against: Ally
+					Types: Infantry, Vehicle
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 8c0
+				Consideration@3:
+					Against: Enemy
+					Types: Water
+					Attractiveness: -5
+					TargetMetric: None
+					CheckRadius: 5c0
 			hackercell:
 				OrderName: hackercell
 				Consideration@1:
@@ -812,6 +839,7 @@ Player:
 			hold2.strat: 1
 			sonic.upgrade: 1
 			drone.upgrade: 1
+			abur.upgrade: 1
 			pointlaser.upgrade: 1
 			hypersonic.upgrade: 1
 			hailstorm.upgrade: 1
@@ -1009,6 +1037,7 @@ Player:
 			hold2.strat: 1
 			sonic.upgrade: 1
 			drone.upgrade: 1
+			abur.upgrade: 1
 			pointlaser.upgrade: 1
 			hypersonic.upgrade: 1
 			hailstorm.upgrade: 1
@@ -1205,6 +1234,7 @@ Player:
 			hold2.strat: 1
 			sonic.upgrade: 1
 			drone.upgrade: 1
+			abur.upgrade: 1
 			pointlaser.upgrade: 1
 			hypersonic.upgrade: 1
 			hailstorm.upgrade: 1
@@ -1401,6 +1431,7 @@ Player:
 			hold2.strat: 1
 			sonic.upgrade: 1
 			drone.upgrade: 1
+			abur.upgrade: 1
 			pointlaser.upgrade: 1
 			hypersonic.upgrade: 1
 			hailstorm.upgrade: 1
@@ -1565,6 +1596,7 @@ Player:
 			hold2.strat: 1
 			sonic.upgrade: 1
 			drone.upgrade: 1
+			abur.upgrade: 1
 			pointlaser.upgrade: 1
 			hypersonic.upgrade: 1
 			hailstorm.upgrade: 1
@@ -1602,7 +1634,7 @@ Player:
 		RequiresCondition: enable-brutal-ai || enable-vhard-ai
 		SquadSize: 30
 		ExcludeFromSquadsTypes: harv, harv.td, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6
-		ExcludeFromAirSquadsTypes: deva, pac, jjet
+		ExcludeFromAirSquadsTypes: deva, pac, jjet, bjet
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,dd2,pt2,ss2,isub,sb,seas
 		NavalProductionTypes: syrd, spen, syrd.gdi, spen.nod
 		ConstructionYardTypes: fact,afac,sfac
@@ -1655,6 +1687,7 @@ Player:
 			e8: 15
 			snip: 15
 			jjet: 15
+			bjet: 15
 			acol: 15
 			acol.upg: 15
 			bh: 15
@@ -1693,6 +1726,7 @@ Player:
 			1tnk: 70
 			ifv.ai: 70
 			2tnk: 45
+			gtnk.squad: 20
 			tnkd: 45
 			rtnk: 45
 			3tnk: 70
@@ -1722,6 +1756,7 @@ Player:
 			jugg: 10
 			cryo: 10
 			cdrn: 3
+			memp: 1
 			ctnk: 3
 			chpr: 3
 			batf.ai: 10
@@ -1772,6 +1807,7 @@ Player:
 			dog: 2
 			sab: 2
 			cdrn: 1
+			memp: 1
 			apc: 2
 			apc2: 2
 			vulc: 5
@@ -1791,6 +1827,7 @@ Player:
 			isub: 4
 			carr: 4
 			jjet: 8
+			bjet: 8
 			kiro: 3
 			deva: 3
 			pac: 3
@@ -1806,7 +1843,7 @@ Player:
 		RequiresCondition: enable-hard-ai
 		SquadSize: 25
 		ExcludeFromSquadsTypes: harv, harv.td, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6
-		ExcludeFromAirSquadsTypes: deva, pac, jjet
+		ExcludeFromAirSquadsTypes: deva, pac, jjet, bjet
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,dd2,pt2,ss2,isub,sb,seas
 		NavalProductionTypes: syrd, spen, syrd.gdi, spen.nod
 		ConstructionYardTypes: fact,afac,sfac
@@ -1852,6 +1889,7 @@ Player:
 			e8: 15
 			snip: 15
 			jjet: 15
+			bjet: 15
 			acol: 15
 			acol.upg: 15
 			bh: 15
@@ -1890,6 +1928,7 @@ Player:
 			1tnk: 70
 			ifv.ai: 70
 			2tnk: 45
+			gtnk.squad: 20
 			tnkd: 45
 			rtnk: 45
 			3tnk: 70
@@ -1919,6 +1958,7 @@ Player:
 			jugg: 10
 			cryo: 10
 			cdrn: 3
+			memp: 1
 			ctnk: 3
 			chpr: 3
 			batf.ai: 10
@@ -1969,6 +2009,7 @@ Player:
 			dog: 2
 			sab: 2
 			cdrn: 1
+			memp: 1
 			apc: 2
 			apc2: 2
 			vulc: 5
@@ -1988,6 +2029,7 @@ Player:
 			isub: 4
 			carr: 4
 			jjet: 8
+			bjet: 8
 			kiro: 3
 			deva: 3
 			pac: 3
@@ -2003,7 +2045,7 @@ Player:
 		RequiresCondition: enable-normal-ai
 		SquadSize: 20
 		ExcludeFromSquadsTypes: harv, harv.td, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6
-		ExcludeFromAirSquadsTypes: deva, pac, jjet
+		ExcludeFromAirSquadsTypes: deva, pac, jjet, bjet
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,ss2,dd2,isub,sb,seas
 		ConstructionYardTypes: fact,afac,sfac
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
@@ -2048,6 +2090,7 @@ Player:
 			e8: 15
 			snip: 15
 			jjet: 15
+			bjet: 15
 			acol: 15
 			acol.upg: 15
 			bh: 15
@@ -2085,6 +2128,7 @@ Player:
 			1tnk: 70
 			ifv.ai: 70
 			2tnk: 45
+			gtnk.squad: 20
 			tnkd: 45
 			rtnk: 45
 			3tnk: 70
@@ -2114,6 +2158,7 @@ Player:
 			jugg: 10
 			cryo: 10
 			cdrn: 3
+			memp: 1
 			ctnk: 3
 			chpr: 3
 			batf.ai: 10
@@ -2164,6 +2209,7 @@ Player:
 			dog: 2
 			sab: 2
 			cdrn: 1
+			memp: 1
 			apc: 2
 			apc2: 2
 			vulc: 5
@@ -2183,6 +2229,7 @@ Player:
 			isub: 4
 			carr: 4
 			jjet: 8
+			bjet: 8
 			kiro: 2
 			deva: 2
 			pac: 2
@@ -2198,7 +2245,7 @@ Player:
 		RequiresCondition: enable-easy-ai
 		SquadSize: 15
 		ExcludeFromSquadsTypes: harv, harv.td, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6
-		ExcludeFromAirSquadsTypes: deva, pac, jjet
+		ExcludeFromAirSquadsTypes: deva, pac, jjet, bjet
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,ss2,dd2,isub,sb,seas
 		ConstructionYardTypes: fact,afac,sfac
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
@@ -2242,6 +2289,7 @@ Player:
 			e8: 15
 			snip: 15
 			jjet: 15
+			bjet: 15
 			acol: 15
 			acol.upg: 15
 			bh: 15
@@ -2279,6 +2327,7 @@ Player:
 			1tnk: 70
 			ifv.ai: 70
 			2tnk: 45
+			gtnk.squad: 20
 			tnkd: 45
 			rtnk: 45
 			3tnk: 70
@@ -2308,6 +2357,7 @@ Player:
 			jugg: 10
 			cryo: 10
 			cdrn: 3
+			memp: 1
 			ctnk: 3
 			chpr: 3
 			batf.ai: 10
@@ -2358,6 +2408,7 @@ Player:
 			dog: 2
 			sab: 2
 			cdrn: 1
+			memp: 1
 			apc: 2
 			apc2: 2
 			vulc: 5
@@ -2377,6 +2428,7 @@ Player:
 			isub: 4
 			carr: 4
 			jjet: 8
+			bjet: 8
 			kiro: 1
 			deva: 1
 			pac: 1
@@ -2392,7 +2444,7 @@ Player:
 		RequiresCondition: enable-naval-ai
 		SquadSize: 1
 		ExcludeFromSquadsTypes: harv, harv.td, harv.scrin, harv.chrono, mcv, amcv, smcv, dog, e6, n6, s6
-		ExcludeFromAirSquadsTypes: deva, pac, jjet
+		ExcludeFromAirSquadsTypes: deva, pac, jjet, bjet
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,dd2,ss2,isub,sb,seas
 		ConstructionYardTypes: fact,afac,sfac
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi

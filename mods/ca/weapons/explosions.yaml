@@ -729,6 +729,7 @@ UnitExplodeToxinTruck:
 		ThrowWithoutTarget: true
 
 MEMP:
+	Report: mobemp1.aud
 	ValidTargets: Ground, Water
 	Warhead@1Dam_impact: SpreadDamage
 		Range: 0, 1c1, 2c1, 3c1, 3c512, 4c1, 4c512
@@ -747,7 +748,7 @@ MEMP:
 		Explosions: pulse_explosion3
 	Warhead@emp: GrantExternalCondition
 		Range: 5c0
-		Duration: 600
+		Duration: 300
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle, Air
 	Warhead@2Smu_impact: LeaveSmudge
@@ -762,12 +763,6 @@ MEMP:
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
 		Size: 2,1
 		Delay: 6
-
-EMPExplode:
-	Inherits: ^Explosion
-	-Warhead@1Dam:
-	-Warhead@2Eff:
-	-Warhead@Smu:
 
 ChaosGas:
 	ReloadDelay: 200

@@ -5287,9 +5287,9 @@ MEMP:
 		BuildPaletteOrder: 410
 		IconPalette: chrometd
 		Prerequisites: techcenter, ~vehicles.memp, ~techlevel.high
-		Description: Remotely piloted vehicle, Self destructs to disable nearby vehicles & structures.\n  Requires active radar communication.\n  Strong vs Vehicles, Buildings\n  Weak vs Infantry, Aircraft
+		Description: Remotely piloted vehicle, deploys to disable nearby vehicles & structures.\n  Requires active radar communication.\n  Strong vs Vehicles, Buildings\n  Weak vs Infantry, Aircraft
 	Valued:
-		Cost: 1350
+		Cost: 1150
 	Tooltip:
 		Name: Mobile E.M.P
 		GenericName: Tank
@@ -5300,19 +5300,51 @@ MEMP:
 	Armor:
 		Type: Heavy
 	Mobile:
-		PauseOnCondition: deployed || !radarenabled || empdisable || being-warped || notmobile
+		PauseOnCondition: triggered || !radarenabled || empdisable || being-warped || notmobile
 		Speed: 108
-	ChargingSelfDestruct:
-		DeployedCondition: deployed
-		ChargingDamageWeapon: EMPExplode
-		ChargingSequence: charging
-		ChargeDelay: 24
-		DetonationDelay: 48
-		DetonationWeapon: MEMP
-		ChargeSound: mobempcharge1.aud
-		DetonationSound: mobemp1.aud
+	GrantTimedConditionOnDeploy:
+		DeploySound: mobempcharge1.aud
+		DeployedCondition: triggered
+		CooldownTicks: 450
+		DeployedTicks: 72
+		RequiresCondition: !(empdisable || being-warped)
+	PeriodicExplosion:
+		Weapon: MEMP
+		RequiresCondition: triggered && ammo
+		AmmoPoolName: explosion
+		InitialDelay: 48
+	AttackFrontal:
+		FacingTolerance: 512
+		PauseOnCondition: empdisable || being-warped
+		Voice: Attack
+	Armament@PRIMARY:
+		Weapon: MempTargeting
+	GrantConditionOnAttack@AI:
+		Condition: attack
+		ArmamentNames: primary
+		RevokeDelay: 60
+	AutoDeployer@AI:
+		RequiresCondition: attack && !triggered
+		DeployChance: 100
+		DeployTrigger: Attack
+		DeployTicks: 100
+	AmmoPool:
+		Name: explosion
+		Armaments: explosion
+		ReloadDelay: 0
+		InitialAmmo: 0
+		AmmoCondition: ammo
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+		FullSequence: pip-red
+	ReloadAmmoPool:
+		AmmoPool: explosion
+		Delay: 450
+		Count: 1
 	ChronoshiftableWithSpriteEffect:
-		RequiresCondition: !being-warped && !deployed
+		RequiresCondition: !being-warped && !triggered
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -5320,12 +5352,12 @@ MEMP:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	WithIdleOverlay@charging:
-		RequiresCondition: deployed
+		RequiresCondition: triggered
 		Palette: tseffect
 		Offset: 160, 120, 100
 		Sequence: idle-overlay
 	WithIdleOverlay@chargingpower:
-		RequiresCondition: deployed
+		RequiresCondition: triggered
 		Palette: tseffect-ignore-lighting-alpha75
 		Offset: 0, 0, 0
 		Sequence: emp-overlay
@@ -5350,7 +5382,6 @@ MEMP:
 		RequiresCondition: (!radarenabled || empdisable) && !deployed
 	WithDecoration@DRONEDISABLE:
 		RequiresCondition: (!radarenabled || empdisable) && !deployed
-
 
 CDRN:
 	Inherits: ^VehicleTD
@@ -5421,7 +5452,7 @@ CDRN:
 		DeployedCondition: triggered
 		CooldownTicks: 100
 		DeployedTicks: 10
-		RequiresCondition: empdisable || being-warped
+		RequiresCondition: !(empdisable || being-warped)
 	PeriodicExplosion:
 		Weapon: ChaosGas
 		RequiresCondition: triggered && ammo
