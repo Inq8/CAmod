@@ -92,6 +92,8 @@ namespace OpenRA.Mods.CA.Traits
 
 		TimedDeployState deployState;
 
+		public TimedDeployState DeployState { get { return deployState; } }
+
 		public GrantTimedConditionOnDeploy(Actor self, GrantTimedConditionOnDeployInfo info)
 			: base(info)
 		{
@@ -167,7 +169,7 @@ namespace OpenRA.Mods.CA.Traits
 			return order.OrderString == "GrantTimedConditionOnDeploy" && deployState == TimedDeployState.Ready ? Info.Voice : null;
 		}
 
-		void Deploy()
+		public void Deploy()
 		{
 			// Something went wrong, most likely due to deploy order spam and the fact that this is a delayed action.
 			if (deployState != TimedDeployState.Ready)
