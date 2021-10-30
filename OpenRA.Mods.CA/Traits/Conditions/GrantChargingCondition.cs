@@ -17,7 +17,7 @@ namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Gives a condition to the actor that charges when enabled,",
 		"drains gradually when paused, and is revoked when fully drained or disabled.")]
-	public class GrantDischargingConditionInfo : PausableConditionalTraitInfo
+	public class GrantChargingConditionInfo : PausableConditionalTraitInfo
 	{
 		[FieldLoader.Require]
 		[GrantedConditionReference]
@@ -39,8 +39,8 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Delay in ticks before charging after being enabled.")]
 		public readonly int ChargeDelay = 0;
 
-		[Desc("Delay in ticks before stopping discharging after being paused.")]
-		public readonly int DischargeDelay = 0;
+		[Desc("Minimum charge before reactivating after being disabled.")]
+		public readonly int MinReactivationCharge = 0;
 
 		public readonly bool ShowSelectionBar = true;
 		public readonly bool ShowSelectionBarWhenFull = true;
@@ -48,26 +48,28 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly Color ChargingColor = Color.DarkRed;
 		public readonly Color DischargingColor = Color.DarkMagenta;
 
-		public override object Create(ActorInitializer init) { return new GrantDischargingCondition(init, this); }
+		public override object Create(ActorInitializer init) { return new GrantChargingCondition(init, this); }
 	}
 
-	public class GrantDischargingCondition : PausableConditionalTrait<GrantDischargingConditionInfo>, INotifyCreated, ITick, ISelectionBar
+	public class GrantChargingCondition : PausableConditionalTrait<GrantChargingConditionInfo>, INotifyCreated, ITick, ISelectionBar
 	{
 		int token = Actor.InvalidConditionToken;
 		int chargeDelay;
-		int dischargeDelay;
+		bool forceCharging = false;
 
 		[Sync]
 		int charge;
 
-		public GrantDischargingCondition(ActorInitializer init, GrantDischargingConditionInfo info)
+		public GrantChargingCondition(ActorInitializer init, GrantChargingConditionInfo info)
 			: base(info) { }
 
 		protected override void Created(Actor self)
 		{
 			charge = Info.InitialCharge;
 			chargeDelay = Info.ChargeDelay;
-			dischargeDelay = Info.DischargeDelay;
+
+			if (charge == Info.MaxCharge)
+				GrantCondition(self);
 		}
 
 		void ITick.Tick(Actor self)
@@ -75,10 +77,28 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled)
 				return;
 
-			if (dischargeDelay > 0)
-				dischargeDelay--;
+			if (!IsTraitPaused || (forceCharging && charge < Info.MinReactivationCharge))
+			{
+				if (charge == Info.MaxCharge)
+					return;
 
-			if (IsTraitPaused || dischargeDelay > 0)
+				if (chargeDelay > 0 && --chargeDelay > 0)
+					return;
+
+				charge += Info.ChargeRate;
+
+				if (charge > Info.MaxCharge)
+					charge = Info.MaxCharge;
+
+				if (forceCharging && charge < Info.MinReactivationCharge)
+				{
+					RevokeCondition(self);
+					return;
+				}
+
+				GrantCondition(self);
+			}
+			else
 			{
 				if (charge == 0)
 					return;
@@ -91,32 +111,20 @@ namespace OpenRA.Mods.CA.Traits
 					RevokeCondition(self);
 				}
 			}
-			else
-			{
-				if (charge == Info.MaxCharge)
-					return;
-
-				if (chargeDelay > 0 && --chargeDelay > 0)
-					return;
-
-				charge += Info.ChargeRate;
-
-				if (charge > Info.MaxCharge)
-					charge = Info.MaxCharge;
-			}
-
-			if (charge > 0)
-				GrantCondition(self);
 		}
 
 		void GrantCondition(Actor self)
 		{
+			forceCharging = false;
+
 			if (token == Actor.InvalidConditionToken)
 				token = self.GrantCondition(Info.Condition);
 		}
 
 		void RevokeCondition(Actor self)
 		{
+			forceCharging = true;
+
 			if (token == Actor.InvalidConditionToken)
 				return;
 
@@ -133,7 +141,7 @@ namespace OpenRA.Mods.CA.Traits
 		protected override void TraitPaused(Actor self)
 		{
 			chargeDelay = Info.ChargeDelay;
-			dischargeDelay = Info.DischargeDelay;
+			forceCharging = true;
 		}
 
 		float ISelectionBar.GetValue()
@@ -149,6 +157,6 @@ namespace OpenRA.Mods.CA.Traits
 
 		bool ISelectionBar.DisplayWhenEmpty { get { return charge == Info.MaxCharge ? Info.ShowSelectionBarWhenFull : Info.ShowSelectionBarWhenEmpty; } }
 
-		Color ISelectionBar.GetColor() { return IsTraitPaused || dischargeDelay > 0 ? Info.DischargingColor : Info.ChargingColor; }
+		Color ISelectionBar.GetColor() { return IsTraitPaused ? Info.DischargingColor : Info.ChargingColor; }
 	}
 }
