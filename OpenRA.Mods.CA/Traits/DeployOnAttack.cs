@@ -14,7 +14,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	public class DeployOnAttackInfo : PausableConditionalTraitInfo, Requires<GrantConditionOnDeployInfo>
+	public class DeployOnAttackInfo : PausableConditionalTraitInfo
 	{
 		public override object Create(ActorInitializer init) { return new DeployOnAttack(init, this); }
 	}
@@ -29,9 +29,19 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled || IsTraitPaused)
 				return;
 
-			var trait = self.Trait<GrantConditionOnDeploy>();
-			if (trait.DeployState == DeployState.Undeployed)
+			var trait = self.TraitOrDefault<GrantConditionOnDeploy>();
+			if (trait != null && trait.DeployState == DeployState.Undeployed)
+			{
 				trait.Deploy();
+				return;
+			}
+
+			var timedTrait = self.TraitOrDefault<GrantTimedConditionOnDeploy>();
+			if (timedTrait != null && timedTrait.DeployState == TimedDeployState.Ready)
+			{
+				timedTrait.Deploy();
+				return;
+			}
 		}
 
 		void INotifyAttack.PreparingAttack(Actor self, in Target target, Armament a, Barrel barrel) { }
