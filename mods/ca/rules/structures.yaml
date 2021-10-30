@@ -3246,10 +3246,6 @@ NUKE:
 	RevealsShroud:
 		Range: 4c0
 	WithBuildingBib:
-	WithDeathAnimation:
-		DeathSequence: dead
-		UseDeathTypeSuffix: false
-		DeathSequencePalette: overlayplayertd
 	Power:
 		Amount: 100
 	ProvidesPrerequisite:
@@ -3301,10 +3297,6 @@ NUK2:
 	RevealsShroud:
 		Range: 5c0
 	WithBuildingBib:
-	WithDeathAnimation:
-		DeathSequence: dead
-		UseDeathTypeSuffix: false
-		DeathSequencePalette: overlayplayertd
 	Power:
 		Amount: 200
 	Targetable:
@@ -3433,10 +3425,6 @@ AFAC:
 	ProductionBar@Defense:
 		ProductionType: Defense
 		Color: 8A8A8A
-	WithDeathAnimation:
-		DeathSequence: dead
-		UseDeathTypeSuffix: false
-		DeathSequencePalette: overlayplayertd
 	BaseProvider:
 		PauseOnCondition: being-captured
 		Range: 16c0
@@ -3730,6 +3718,7 @@ HQ:
 			marked: nodhq
 			legion: nodhq
 			shadow: nodhq
+			arc: hqr
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 90
@@ -3740,6 +3729,10 @@ HQ:
 		Cost: 1800
 	Tooltip:
 		Name: Comm. Center
+		RequiresCondition: !arc-built
+	Tooltip@ARC:
+		Name: Drone Comm. Center
+		RequiresCondition: arc-built
 	Building:
 		Footprint: X_ xx ==
 		Dimensions: 2,3
@@ -3929,6 +3922,9 @@ HQ:
 	ProductionCostMultiplier@ARCDISCOUNT:
 		Multiplier: 50
 		Prerequisites: radar.arc
+	GrantConditionOnFaction@ARC:
+		Factions: arc
+		Condition: arc-built
 
 EYE:
 	Inherits: ^BuildingTD
@@ -4306,10 +4302,6 @@ PROC.TD:
 		Types: ThiefInfiltrate
 		Percentage: 50
 		InfiltrationNotification: CreditsStolen
-	WithDeathAnimation:
-		DeathSequence: dead
-		UseDeathTypeSuffix: false
-		DeathSequencePalette: overlayplayertd
 	FreeActor:
 		Actor: HARV.TD
 		SpawnOffset: 1,2
@@ -5705,10 +5697,6 @@ UPGC:
 	ProvidesPrerequisite@Name:
 	Power:
 		Amount: -150
-	WithDeathAnimation:
-		DeathSequence: dead
-		UseDeathTypeSuffix: false
-		DeathSequencePalette: overlayplayertd
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	Production:
@@ -6030,10 +6018,6 @@ TMPP:
 		Name: Temple Prime
 	Power:
 		Amount: -150
-	WithDeathAnimation:
-		DeathSequence: dead
-		DeathSequencePalette: overlayplayertd
-		UseDeathTypeSuffix: false
 	ProvidesPrerequisite@Name:
 		RequiresCondition: !being-warped
 	ProvidesPrerequisite@CYBORGPRODUCTION:

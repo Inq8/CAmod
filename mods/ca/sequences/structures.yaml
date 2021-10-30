@@ -1045,7 +1045,7 @@ pyle:
 		Tick: 100
 	dead: pyle
 		Start: 20
-		Tick: 100
+		Tick: 800
 	make: pylemake
 		Length: *
 		Tick: 80
@@ -1066,6 +1066,7 @@ hand:
 		Start: 1
 	dead: hand
 		Start: 2
+		Tick: 800
 	make: handmake
 		Length: *
 		Tick: 80
@@ -1102,6 +1103,7 @@ afac:
 		Tick: 160
 	dead: afac
 		Start: 48
+		Tick: 800
 	make: afacmake
 		Length: *
 		Tick: 80
@@ -1148,6 +1150,7 @@ nuk2:
 		Tick: 1000
 	dead: nuk2
 		Start: 8
+		Tick: 800
 	make: nuk2make
 		Length: *
 		Tick: 80
@@ -1165,6 +1168,7 @@ awep:
 		Start: 1
 	dead: awep
 		Start: 2
+		Tick: 800
 	make: awepmake
 		Length: *
 		Tick: 80
@@ -1219,6 +1223,7 @@ astrip:
 	dead: astrip
 		Start: 32
 		ZOffset: -1023
+		Tick: 800
 	make: astripmake
 		Length: *
 		Tick: 80
@@ -1328,7 +1333,30 @@ hq:
 		Tick: 100
 	dead: hq
 		Start: 32
+		Tick: 800
 	make: hqmake
+		Length: *
+		Tick: 80
+	bib: bib3
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: hqicnh
+
+hqr:
+	Inherits: ^StructureOverlays
+	idle: hqr
+		Length: 16
+		Tick: 100
+	damaged-idle: hqr
+		Start: 16
+		Length: 16
+		Tick: 100
+	dead: hqr
+		Start: 32
+		Tick: 800
+	make: hqrmake
 		Length: *
 		Tick: 80
 	bib: bib3
@@ -1352,6 +1380,7 @@ eye:
 		Tick: 100
 	dead: eye
 		Start: 32
+		Tick: 800
 	make: eyemake
 		Length: *
 		Tick: 80
@@ -1378,6 +1407,7 @@ obli:
 		Tick: 680
 	dead: obli
 		Start: 8
+		Tick: 800
 	make: oblimake
 		Length: 13
 		Tick: 80
@@ -1404,6 +1434,7 @@ gtwr:
 		Start: 1
 	dead: gtwrmake
 		Start: 2
+		Tick: 800
 	bib: mbFTUR
 		Length: *
 		UseTilesetExtension: true
@@ -1420,6 +1451,7 @@ atwr:
 		Start: 1
 	dead: atwr
 		Start: 2
+		Tick: 800
 	make: atwrmake
 		Length: *
 		Tick: 80
@@ -1459,6 +1491,11 @@ rep:
 	make: repmake
 		Length: *
 		Offset: 0,1
+	dead: rep
+		Start: 14
+		Offset: 0,1
+		ZOffset: -1c511
+		Tick: 800
 	bib: mbFIX
 		Length: *
 		ZOffset: -1c511
@@ -1665,7 +1702,8 @@ nodhq:
 		Tick: 100
 	dead: nodhq
 		Start: 32
-	make: hqmake
+		Tick: 800
+	make: nodhqmake
 		Length: *
 		Tick: 80
 	bib: bib3
@@ -1686,7 +1724,7 @@ nodnuke:
 		Tick: 1000
 	dead: nodnuke
 		Start: 8
-		Tick: 1000
+		Tick: 800
 	make: nodnukemake
 		Length: *
 		Tick: 80
@@ -1708,6 +1746,7 @@ nodnuk2:
 		Tick: 1000
 	dead: nodnuk2
 		Start: 8
+		Tick: 800
 	make: nodnuk2make
 		Length: *
 		Tick: 80
@@ -1744,6 +1783,7 @@ nodfact:
 		Tick: 160
 	dead: nodfact
 		Start: 48
+		Tick: 800
 	make: nodfactmake
 		Length: *
 		Tick: 80
