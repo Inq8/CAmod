@@ -1431,12 +1431,53 @@ ORCA:
 		Interval: 2
 	WithMoveAnimation:
 		MoveSequence: move
+		RequiresCondition: (abur-upgrade && !attacking && moving) || (!abur-upgrade && moving)
+	WithMoveAnimation@AFTERBURNER:
+		MoveSequence: move-afterburner
+		RequiresCondition: abur-upgrade && attacking && moving
+	WithMoveAnimation:
+		MoveSequence: move
 	Selectable:
 		DecorationBounds: 30,24
 	Rearmable:
 		RearmActors: hpad, hpad.td
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
+	GrantConditionOnOrders@ATTACKING:
+		Condition: attacking
+		OrderNames: Attack, ForceAttack, AttackMove
+	GrantConditionOnMovement@MOVING:
+		ValidMovementTypes: Vertical, Horizontal
+		Condition: moving
+	SpeedMultiplier@AFTERBURNER:
+		Modifier: 133
+		RequiresCondition: abur-upgrade && afterburner && attacking && moving
+	ContrailCA@AB1:
+		Offset: -300,-150,-70
+		UsePlayerColor: false
+		ZOffset: -512
+		Color: cc550080
+		TrailLength: 10
+		RequiresCondition: abur-upgrade && afterburner && attacking && moving
+	ContrailCA@AB2:
+		Offset: -300,150,-70
+		UsePlayerColor: false
+		ZOffset: -512
+		Color: cc550080
+		TrailLength: 10
+		RequiresCondition: abur-upgrade && afterburner && attacking && moving
+	GrantThermalCondition@AFTERBURNER:
+		Condition: afterburner
+		PauseOnCondition: (!attacking || !moving)
+		RequiresCondition: abur-upgrade
+		MaxTemp: 360
+		MaxReactivationTemp: 360
+		HeatingRate: 2
+		CoolingRate: 1
+		ShowSelectionBarWhenEmpty: false
+	GrantConditionOnPrerequisite@AFTERBURNER:
+		Condition: abur-upgrade
+		Prerequisites: abur.upgrade
 
 ORCB:
 	Inherits: ^HelicopterTD
@@ -1529,6 +1570,41 @@ ORCB:
 	-RangeMultiplier@SEEK:
 	-RangeMultiplier@SEEK2:
 	-RangeMultiplier@SEEK3:
+	GrantConditionOnOrders@ATTACKING:
+		Condition: attacking
+		OrderNames: Attack, ForceAttack, AttackMove
+	GrantConditionOnMovement@MOVING:
+		ValidMovementTypes: Vertical, Horizontal
+		Condition: moving
+	SpeedMultiplier@AFTERBURNER:
+		Modifier: 133
+		RequiresCondition: abur-upgrade && afterburner && attacking && moving
+	ContrailCA@AB1:
+		Offset: -300,-350,-70
+		UsePlayerColor: false
+		ZOffset: -512
+		Color: cc550080
+		TrailLength: 10
+		RequiresCondition: abur-upgrade && afterburner && attacking && moving
+	ContrailCA@AB2:
+		Offset: -300,350,-70
+		UsePlayerColor: false
+		ZOffset: -512
+		Color: cc550080
+		TrailLength: 10
+		RequiresCondition: abur-upgrade && afterburner && attacking && moving
+	GrantThermalCondition@AFTERBURNER:
+		Condition: afterburner
+		PauseOnCondition: (!attacking || !moving)
+		RequiresCondition: abur-upgrade
+		MaxTemp: 360
+		MaxReactivationTemp: 360
+		HeatingRate: 2
+		CoolingRate: 1
+		ShowSelectionBarWhenEmpty: false
+	GrantConditionOnPrerequisite@AFTERBURNER:
+		Condition: abur-upgrade
+		Prerequisites: abur.upgrade
 
 UAV:
 	Inherits: ^NeutralPlane
