@@ -183,7 +183,7 @@ GeneticMutationBomb:
 		Shadow: true
 	Warhead@COND: GrantExternalCondition
 		Range: 3c0
-		Duration: 15
+		Duration: 16
 		Condition: geneticmutation
 		ValidTargets: Infantry
 		InvalidTargets: MindControlImmune
@@ -191,16 +191,15 @@ GeneticMutationBomb:
 		Weapon: GeneticMutation
 		AimChance: 100
 		Amount: 6
-		Delay: 10
+		Delay: 8
 	Warhead@3Eff: CreateEffect
 		Explosions: mutablast
 		ExplosionPalette: mutablast
 		ImpactSounds: gmutation.aud
 
 GeneticMutation:
-	Range: 2c512
-	ValidTargets: Infantry
-	InvalidTargets: MindControlImmune
+	Range: 3c0
+	ValidTargets: GeneticallyMutatable
 	Projectile: PlasmaBeam
 		Duration: 7
 		Colors: ff509a08
@@ -215,8 +214,7 @@ GeneticMutation:
 		Spread: 42
 		Damage: 50000
 		DamageTypes: MutatedDeath
-		ValidTargets: Infantry
-		InvalidTargets: MindControlImmune
+		ValidTargets: GeneticallyMutatable
 
 Atomic:
 	ValidTargets: Ground, Trees, Water, Underwater, Air, AirSmall
