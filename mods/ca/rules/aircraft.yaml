@@ -684,12 +684,15 @@ NHAW:
 	WithFacingSpriteBody:
 		RequiresCondition: !upg-crym
 	WithFacingSpriteBody@UPG:
+		Name: body-upg
 		RequiresCondition: upg-crym && ammo > 1
 		Sequence: idle-upg
 	WithFacingSpriteBody@oneshot:
+		Name: body-oneshot
 		RequiresCondition: upg-crym && ammo == 1
 		Sequence: oneshot
 	WithFacingSpriteBody@empty:
+		Name: body-empty
 		RequiresCondition: upg-crym && !ammo
 		Sequence: empty
 	Armament@PRIMARY:
@@ -706,7 +709,6 @@ NHAW:
 		Armaments: cryo
 		Ammo: 2
 		AmmoCondition: ammo
-		RequiresCondition: upg-crym
 	ReloadAmmoPool@CRYOMISSILE:
 		AmmoPool: cryo
 		Delay: 550
