@@ -1696,101 +1696,25 @@ CryoMissile:
 		Falloff: 100, 75, 52, 15, 2
 		MaxLevel: 600
 
-CryoMissile:
-	ReloadDelay: 125
-	Range: 9c0
-	MinRange: 2c0
-	Report: cryomissile.aud
-	Burst: 2
-	BurstDelays: 6
-	Projectile: Bullet
-		Blockable: false
-		Shadow: true
-		Inaccuracy: 1c341
-		Image: dragon
-		TrailImage: smokey
-		TrailPalette: cold1
-		TrailInterval: 1
-		TrailDelay: 1
-		Speed: 300
-		LaunchAngle: 65
-		ContrailLength: 17
-		ContrailColor: 8fc6ffaa
-		ContrailWidth: 0c48
-	ValidTargets: Ground, Trees, Water, Underwater, Air
-	Warhead@1Dam: SpreadDamage
-		Spread: 341
-		Damage: 2500
-		Falloff: 100, 50, 25, 0
-		Versus:
-			None: 50
-			Wood: 20
-			Light: 100
-			Heavy: 70
-			Concrete: 75
-			Brick: 1
-		DamageTypes: FrozenDeath
-	Warhead@2Eff: CreateEffect
-		Explosions: cryoblast
-		ExplosionPalette: ra2effect-ignore-lighting-alpha75
-		ImpactSounds: cryoblast.aud
-	Warhead@chill1: GrantExternalCondition
-		Condition: chilled
-		Duration: 250
-		Range: 1c0
-		ValidRelationships: Enemy, Neutral
-	Warhead@chill2: GrantExternalCondition
-		Condition: chilled
-		Duration: 200
-		Range: 2c0
-		ValidRelationships: Enemy, Neutral
-	Warhead@chillally: GrantExternalCondition
-		Condition: chilled
-		Duration: 50
-		Range: 0c682
-		ValidRelationships: Ally
-	Warhead@cryoresidue: CreateTintedCells
-		LayerName: cryoresidue
-		Spread: 1c0
-		Level: 100
-		Falloff: 100, 75, 52, 15, 2
-		MaxLevel: 600
-
 CryoMissileNHAW:
 	Inherits: CryoMissile
 	ReloadDelay: 250
 	BurstDelays: 50
-	Range: 10c0
+	Range: 7c0
 	Projectile: Bullet
-		Blockable: false
-		Shadow: true
-		Inaccuracy: 1c341
 		Image: cmiss
-		TrailImage: smokey
-		TrailPalette: cold1
-		TrailInterval: 1
-		TrailDelay: 1
-		Speed: 300
+		Speed: 230
 		LaunchAngle: 3
 	Warhead@1Dam: SpreadDamage
-		Damage: 5500
-	Warhead@cryoresidue: CreateTintedCells
-		Level: 600
+		Damage: 1000
 	Warhead@chill1: GrantExternalCondition
-		Condition: chilled
-		Duration: 250
-		Range: 2c0
-		ValidRelationships: Enemy, Neutral
+		Range: 1c512
 	Warhead@chill2: GrantExternalCondition
-		Condition: chilled
-		Duration: 200
 		Range: 3c0
-		ValidRelationships: Enemy, Neutral
 	Warhead@chillally: GrantExternalCondition
-		Condition: chilled
-		Duration: 50
-		Range: 1c682
-		ValidRelationships: Ally
+		Range: 1c341
+	Warhead@cryoresidue: CreateTintedCells
+		Level: 200
 
 BATFRockets:
 	Inherits: Dragon
