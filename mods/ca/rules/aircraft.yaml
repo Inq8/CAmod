@@ -620,9 +620,9 @@ NHAW:
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 10
 		Prerequisites: ~aircraft.nhaw, ~techlevel.infonly
-		Description: Fast infantry transport helicopter armed with\na light machine gun.
+		Description: Fast infantry transport helicopter armed with\na light machine gun.\n  Strong vs None\n  Weak vs Tanks, Aircraft
 	Valued:
-		Cost: 900
+		Cost: 1150
 	Tooltip:
 		Name: Nighthawk
 	UpdatesPlayerStatistics:
@@ -665,30 +665,67 @@ NHAW:
 		MaxWeight: 8
 	SpawnActorOnDeath:
 		Actor: NHAW.Husk
-		RequiresCondition: !empdisable && !being-warped
+		RequiresCondition: !upg-crym && !empdisable && !being-warped
 	SpawnActorOnDeath@EMP:
 		Actor: NHAW.Husk.EMP
-		RequiresCondition: empdisable && !being-warped
+		RequiresCondition: !upg-crym && empdisable && !being-warped
+	SpawnActorOnDeath@UPG:
+		Actor: NHAW.UPG.Husk
+		RequiresCondition: upg-crym && !empdisable && !being-warped
+	SpawnActorOnDeath@UPGEMP:
+		Actor: NHAW.UPG.Husk.EMP
+		RequiresCondition: upg-crym && empdisable && !being-warped
 	Selectable:
 		DecorationBounds: 40,36
 	Voiced:
 		VoiceSet: CarryAllVoice
 	AppearsOnRadar:
 		ValidRelationships: Ally
+	WithFacingSpriteBody:
+		RequiresCondition: !upg-crym
+	WithFacingSpriteBody@UPG:
+		RequiresCondition: upg-crym && ammo > 1
+		Sequence: idle-upg
+	WithFacingSpriteBody@oneshot:
+		RequiresCondition: upg-crym && ammo == 1
+		Sequence: oneshot
+	WithFacingSpriteBody@empty:
+		RequiresCondition: upg-crym && !ammo
+		Sequence: empty
 	Armament@PRIMARY:
 		Weapon: M60mgJJ
 		LocalOffset: 1000,0,-100
 		MuzzleSequence: muzzle
+	Armament@CRYOMISSILE:
+		Name: cryo
+		Weapon: cryomissilenhaw
+		LocalOffset: 200,300,0, 200,-300,0
+		RequiresCondition: upg-crym
+	AmmoPool@CRYOMISSILE:
+		Name: cryo
+		Armaments: cryo
+		Ammo: 2
+		AmmoCondition: ammo
+		RequiresCondition: upg-crym
+	ReloadAmmoPool@CRYOMISSILE:
+		AmmoPool: cryo
+		Delay: 550
+		Count: 2
+		RequiresCondition: upg-crym
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
 	AttackAircraft:
-		FacingTolerance: 80
+		Armaments: primary, cryo
+		FacingTolerance: 20
 		AttackType: Hover
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
+	GrantConditionOnPrerequisite@CRYM:
+		Condition: upg-crym
+		Prerequisites: crym.upgrade
 
 NHAW.paradrop:
 	Inherits: ^Helicopter
