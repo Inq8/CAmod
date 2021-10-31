@@ -234,6 +234,30 @@ GTNK:
 	Voiced:
 		VoiceSet: GrizzlyVoice
 
+GTNK.squad:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesPrerequisite@squadname:
+	Tooltip:
+		Name: Airdrop: Grizzly Tank's
+	Buildable:
+		Queue: Vehicle
+		BuildAtProductionType: Paradrop
+		BuildPaletteOrder: 1000
+		Prerequisites: dome, ~vehicles.usa, ~techlevel.low
+		Description: Prepare a pair of  Grizzly tank's for airdrop.
+	Valued:
+		Cost: 1750
+	RenderSprites:
+		Image: squad.airbornetank
+	ProduceActorPowerCA:
+		Actors: powerproxy.airbornetank
+		Type: Vehicle
+		OneShot: true
+		AutoFire: true
+		AllowMultiple: true
+
 2TNK.Chrono:
 	Inherits: 2TNK
 	RenderSprites:
@@ -5308,6 +5332,8 @@ MEMP:
 		CooldownTicks: 450
 		DeployedTicks: 72
 		RequiresCondition: !(empdisable || being-warped)
+		ChargingColor: 0277bd 
+		DischargingColor: 03a9f4
 	PeriodicExplosion:
 		Weapon: MEMP
 		RequiresCondition: triggered && ammo
@@ -5315,21 +5341,12 @@ MEMP:
 		InitialDelay: 48
 	AttackFrontal:
 		FacingTolerance: 512
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: !ammo || empdisable || being-warped
 		Voice: Attack
 	Armament@PRIMARY:
 		Weapon: MempTargeting
-	GrantConditionOnAttack@AI:
-		Condition: attack
-		ArmamentNames: primary
-		RevokeDelay: 60
 	DeployOnAttack:
 		RequiresCondition: !triggered
-	AutoDeployer@AI:
-		RequiresCondition: attack && !triggered
-		DeployChance: 100
-		DeployTrigger: Attack
-		DeployTicks: 100
 	AmmoPool:
 		Name: explosion
 		Armaments: explosion
