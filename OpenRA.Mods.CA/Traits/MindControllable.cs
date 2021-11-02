@@ -112,6 +112,10 @@ namespace OpenRA.Mods.CA.Traits
 		public void RevokeMindControl(Actor self, int ticks)
 		{
 			controlChanging = true;
+
+			if (Master == null)
+				return;
+
 			var masterName = Master.Info.Name;
 			UnlinkMaster(self, Master);
 

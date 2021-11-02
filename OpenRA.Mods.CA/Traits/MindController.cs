@@ -278,12 +278,14 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyKilled.Killed(Actor self, AttackInfo e)
 		{
+			ResetProgress(self);
 			var ticksToRevoke = Info.TicksToRevokeOnDeath > -1 ? Info.TicksToRevokeOnDeath : Info.TicksToRevoke;
 			ReleaseSlaves(self, ticksToRevoke);
 		}
 
 		void INotifyActorDisposing.Disposing(Actor self)
 		{
+			ResetProgress(self);
 			var ticksToRevoke = Info.TicksToRevokeOnDeath > -1 ? Info.TicksToRevokeOnDeath : Info.TicksToRevoke;
 			ReleaseSlaves(self, ticksToRevoke);
 		}

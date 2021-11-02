@@ -1376,6 +1376,24 @@ AtomizerBoltsAA:
 	Warhead@red: GrantExternalCondition
 		ValidTargets: Air, AirSmall
 
+AtomizeSpreadInit:
+	Projectile: InstantHit
+	Warhead@Arc: FireShrapnel
+		Weapon: AtomizeSpread
+		Amount: 2
+		AimChance: 100
+		ThrowWithoutTarget: false
+
+AtomizeSpread:
+	Range: 1c512
+	Projectile: InstantHit
+	Warhead@cond: GrantExternalCondition
+		Range: 0c512
+		Duration: 175
+		Condition: atomized
+		ValidTargets: Vehicle, Ship, Defense, Air
+		ValidRelationships: Ally
+
 FeederTargeting:
 	ValidTargets: Vehicle, Infantry, Structure
 	Range: 1c512

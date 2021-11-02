@@ -1517,6 +1517,11 @@ ORCA:
 	GrantConditionOnPrerequisite@AFTERBURNER:
 		Condition: abur-upgrade
 		Prerequisites: abur.upgrade
+	AmbientSoundCA:
+		SoundFiles: vb3blo2a.aud, vb3blo2b.aud, vb3blo2c.aud
+		Interval: 2
+		VolumeMultiplier: 0.1
+		RequiresCondition: abur-upgrade && afterburner && attacking && moving
 
 ORCB:
 	Inherits: ^HelicopterTD
@@ -1644,6 +1649,11 @@ ORCB:
 	GrantConditionOnPrerequisite@AFTERBURNER:
 		Condition: abur-upgrade
 		Prerequisites: abur.upgrade
+	AmbientSoundCA:
+		SoundFiles: vb3blo2a.aud, vb3blo2b.aud, vb3blo2c.aud
+		Interval: 2
+		VolumeMultiplier: 0.1
+		RequiresCondition: abur-upgrade && afterburner && attacking && moving
 
 UAV:
 	Inherits: ^NeutralPlane

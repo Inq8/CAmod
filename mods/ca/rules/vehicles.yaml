@@ -227,12 +227,15 @@ GTNK:
 		Offset: 80,0,0
 	AttackTurreted:
 		Voice: Attack
+		PauseOnCondition: parachute
 	AttackMove:
 		Voice: Attack
 	SpawnActorOnDeath:
 		Actor: GTNK.Husk
 	Voiced:
 		VoiceSet: GrizzlyVoice
+	WithShadow:
+		RequiresCondition: parachute
 
 GTNK.squad:
 	AlwaysVisible:
@@ -253,7 +256,7 @@ GTNK.squad:
 		Image: squad.airbornetank
 	ProduceActorPowerCA:
 		Actors: powerproxy.airbornetank
-		Type: Vehicle
+		Type: Paradrop
 		OneShot: true
 		AutoFire: true
 		AllowMultiple: true
@@ -2684,6 +2687,8 @@ LTNK:
 		RequiresCondition: !onwater && !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithShadow:
+		RequiresCondition: parachute
 
 MTNK:
 	Inherits: ^TankTD
@@ -2859,7 +2864,7 @@ MDRN:
 		Voice: Move
 		PauseOnCondition: empdisable || being-warped
 	Voiced:
-		VoiceSet: RobotTankVoice
+		VoiceSet: MiniDroneVoice
 	Armament@PRIMARY:
 		Weapon: M60mgMD
 		LocalOffset: 72,0,72
@@ -2933,6 +2938,11 @@ MDRN.Attached:
 		Modifier: 40
 	Attachable:
 		AttachedCondition: attached
+	ChangesHealth:
+		PercentageStep: 2
+		Delay: 25
+		StartIfBelow: 100
+		DamageCooldown: 75
 	-Targetable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
 	-WithDecoration@HACKED:
@@ -3321,7 +3331,7 @@ STNK.Nod:
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
-		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver-dead
+		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver-dead && !parachute
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	GrantConditionOnDamageState@UNCLOAK:
@@ -3349,7 +3359,7 @@ STNK.Nod:
 		TurnSpeed: 40
 		Offset: 0,0,10
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || parachute
 	WithSpriteTurret:
 	AutoTarget:
 		InitialStance: HoldFire
@@ -3362,6 +3372,8 @@ STNK.Nod:
 	GrantConditionOnPrerequisite@UPG:
 		Condition: tibcore-upgrade
 		Prerequisites: tibcore.upgrade
+	WithShadow:
+		RequiresCondition: parachute
 
 BIKE:
 	Inherits: ^VehicleTD
@@ -3466,12 +3478,14 @@ FTNK:
 		LocalOffset: 682,128,42, 682,-128,42
 	WithMuzzleOverlay:
 	AttackFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || parachute
 	Explodes:
 		Weapon: BarrelExplode
 		EmptyWeapon: BarrelExplode
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithShadow:
+		RequiresCondition: parachute
 
 HFTK:
 	Inherits: ^TankTD
@@ -3520,7 +3534,7 @@ HFTK:
 	AttackTurreted:
 		Voice: Attack
 		RangeMargin: 0
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || parachute
 	WithSpriteTurret:
 	WithMuzzleOverlay:
 	Voiced:
@@ -3538,6 +3552,8 @@ HFTK:
 		InitialSoundLength: 24
 	GrantConditionOnAttackCA:
 		Condition: attacking
+	WithShadow:
+		RequiresCondition: parachute
 
 HARV.TD:
 	Inherits: ^VehicleTD-NOUPG
