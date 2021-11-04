@@ -1602,7 +1602,7 @@ MGG:
 	WithIdleOverlay@SPINNER:
 		Offset: -299,0,171
 		Sequence: spinner
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || mgg-disabled
 		RequiresCondition: !pickedup
 	RevealsShroud:
 		MinRange: 4c0
@@ -1612,8 +1612,10 @@ MGG:
 		Range: 4c0
 	CreatesShroud:
 		Range: 7c0
-		RequiresCondition: !empdisable && !being-warped
-	RenderShroudCircle:
+		RequiresCondition: !empdisable && !being-warped && !mgg-disabled
+	RenderShroudCircleCA:
+		Color: 999999AA
+		RequiresCondition: !empdisable && !being-warped && !mgg-disabled
 	SpawnActorOnDeath:
 		Actor: MGG.Husk
 		RequiresCondition: !being-warped
@@ -1622,6 +1624,8 @@ MGG:
 	AttackOmni:
 	GuardsSelection:
 		RequiresCondition: !stance-attackanything
+	GrantConditionOnDeploy:
+		DeployedCondition: mgg-disabled
 
 MRJ:
 	Inherits: ^Vehicle
