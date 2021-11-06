@@ -830,6 +830,11 @@ GTNK.squad:
 		Queue: Vehicle
 		BuildPaletteOrder: 291
 		Prerequisites: stek, ~vehicles.soviet, ~iraqtank.upgrade, ~techlevel.high
+		Description: Big and slow tank with anti-air capability.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Weak vs Defenses
+		Attributes: • Can crush concrete walls
 	Valued:
 		Cost: 1700
 	Tooltip:
@@ -1587,11 +1592,11 @@ TRUK:
 		BuildPaletteOrder: 450
 		Prerequisites: ~techlevel.low, ~vehicles.human
 		Description: Transports cash to other players.
+		BuildDurationModifier: 30
 	TooltipExtras:
 		Weaknesses: • Unarmed
 	Valued:
 		Cost: 500
-		BuildDurationModifier: 30
 	Tooltip:
 		Name: Supply Truck
 	Selectable:
@@ -1824,7 +1829,7 @@ TTRA:
 		Prerequisites: structures.tsla, stek, ~vehicles.soviet, ~techlevel.medium
 		Description: Half-track with mounted Tesla Coil.
 	TooltipExtras:
-		Strengths: Strong vs Infantry, Heavy Armor, Light Armor
+		Strengths: • Strong vs Infantry, Heavy Armor, Light Armor
 		Weaknesses: • Cannot attack Aircraft
 		Attributes: • Jams nearby enemy radar
 	Valued:
@@ -2023,7 +2028,7 @@ CTNK:
 		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
 		Description: Teleporting tank armed with anti-ground missiles.
 	TooltipExtras:
-		Strengths: Strong vs Heavy Armor, Light Armor, Defenses, Buildings
+		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses, Buildings
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
 		Attributes: • Special Ability: Teleport
 	Valued:
@@ -2072,7 +2077,7 @@ QTNK:
 		Prerequisites: techcenter, ~vehicles.qtnk, ~techlevel.high
 		Description: Deals seismic damage to nearby vehicles and structures.
 	TooltipExtras:
-		Strengths: Strong vs Heavy Armor, Light Armor, Defenses, Buildings
+		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses, Buildings
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
 		Attributes: • Special Ability: Seismic Shockwave
 	Valued:
@@ -3169,6 +3174,7 @@ HTNK.Hover:
 	Buildable:
 		BuildPaletteOrder: 302
 		Prerequisites: gtek, ~vehicles.htnk, ~hovermam.upgrade, ~techlevel.high
+		Description: Big and fairly mobile tank with anti-air capability.
 	TooltipExtras:
 		Attributes: • Can traverse water
 	Mobile:
@@ -4347,7 +4353,7 @@ XO:
 		Queue: Vehicle
 		BuildPaletteOrder: 195
 		Prerequisites: anyradar, ~vehicles.talon, xo.upgrade, ~techlevel.high
-		Description: Light battle-mech with short-range laser\n  and machine gun.
+		Description: Light battle-mech with a short-range laser\n  and a machine gun.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor, Heavy Armor
 		Weaknesses: • Cannot attack Aircraft
@@ -4411,7 +4417,7 @@ TITN:
 		BuildPaletteOrder: 303
 		IconPalette: chrometd
 		Prerequisites: gtek, ~vehicles.talon, ~!railgun.upgrade, ~techlevel.high
-		Description: Tough combat battle-mech.
+		Description: Tough, slow combat battle-mech.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
 		Attributes: • Can crush concrete walls
@@ -5249,7 +5255,7 @@ PCAN:
 	Buildable:
 		BuildPaletteOrder: 231
 		Prerequisites: anyradar, ~vehicles.allies, ~pcan.upgrade, ~techlevel.high
-		Description: A prototype long range artillery that fires highly focused beams of light.
+		Description: A prototype long-range artillery that fires highly focused beams of light.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Light Armor, Infantry
 	Tooltip:
@@ -5529,7 +5535,7 @@ MEMP:
 		Prerequisites: techcenter, ~vehicles.memp, ~techlevel.high
 		Description: Remotely piloted vehicle, deploys to disable nearby vehicles & structures.
 	TooltipExtras:
-		Strengths: Strong vs Heavy Armor, Light Armor, Defenses, Buildings
+		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses, Buildings
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
 		Attributes: • Requires active radar communication.\n• Special Ability: EMP Shockwave
 	Valued:
@@ -5641,9 +5647,9 @@ CDRN:
 		Prerequisites: stek, ~vehicles.yuri, ~techlevel.high
 		Description: Drone armed with Chaos Gas which causes units\n  to become frenzied and attack indiscriminately.
 	TooltipExtras:
-		Strengths: Strong vs Heavy Armor, Light Armor, Infantry
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
 		Weaknesses: • Cannot attack Aircraft, Buildings, Defenses
-		Attributes: Special Ability: Expel Chaos Gas
+		Attributes: • Special Ability: Expel Chaos Gas
 	Valued:
 		Cost: 850
 	Tooltip:
@@ -5731,6 +5737,7 @@ CHPR:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Defenses, Aircraft
 		Weaknesses: • Weak vs Buildings
+		Attributes: • Target is disabled while being erased
 	Valued:
 		Cost: 1700
 	Tooltip:

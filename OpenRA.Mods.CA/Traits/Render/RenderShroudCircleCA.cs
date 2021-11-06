@@ -46,7 +46,6 @@ namespace OpenRA.Mods.CA.Traits
 		readonly RenderShroudCircleCAInfo info;
 		WDist range;
 
-
 		public RenderShroudCircleCA(Actor self, RenderShroudCircleCAInfo info)
 			: base(info)
 		{

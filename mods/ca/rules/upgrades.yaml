@@ -20,7 +20,7 @@ hazmat.upgrade:
 		Prerequisites: ~anyradar, ~infantry.hazmat, ~techlevel.high, ~!hazmatsoviet.upgrade
 		IconPalette: chrometd
 		BuildDuration: 1125
-		Description: Infantry are equiped with hazmat suits which\n  provides protection against Tiberium and radiation.\n\nUpgrades: Infantry
+		Description: Infantry are equiped with hazmat suits which provides\n  protection against Tiberium and radiation.\n\nUpgrades: Infantry
 	TooltipExtras:
 		Strengths: + Tiberium immunity\n+ 50% resistance to radiation
 	Valued:
@@ -40,9 +40,10 @@ bombard.strat:
 		Prerequisites: ~radar.gdi, ~!seek.strat, ~!hold.strat, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 2250
-		Description: Firepower focused strategy.\n\nOnly one Strategy may be chosen.
+		Description: Firepower focused strategy.
 	TooltipExtras:
 		Strengths: + Increases unit firepower by 5%
+		Attributes: • Only one Strategy may be chosen.
 	Valued:
 		Cost: 1500
 	RenderSprites:
@@ -70,9 +71,10 @@ seek.strat:
 		Prerequisites: ~radar.gdi, ~!bombard.strat, ~!hold.strat, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 2250
-		Description: Speed and weapon range focused strategy.\n\nOnly one Strategy may be chosen.
+		Description: Speed and weapon range focused strategy.
 	TooltipExtras:
 		Strengths: + Increases unit speed and weapon range by 5%
+		Attributes: • Only one Strategy may be chosen.
 	Valued:
 		Cost: 1500
 	RenderSprites:
@@ -100,9 +102,10 @@ hold.strat:
 		Prerequisites: ~radar.gdi, ~!bombard.strat, ~!seek.strat, ~techlevel.high
 		IconPalette: chrometd
 		BuildDuration: 2250
-		Description: Defensive strategy.\n\nOnly one Strategy may be chosen.
+		Description: Defensive strategy.
 	TooltipExtras:
 		Strengths: + Increases unit armor by 5%
+		Attributes: • Only one Strategy may be chosen.
 	Valued:
 		Cost: 1500
 	RenderSprites:
@@ -523,7 +526,7 @@ hazmatsoviet.upgrade:
 		BuildPaletteOrder: 10
 		Prerequisites: ~dome, ~barr, ~techlevel.high
 		BuildDuration: 1500
-		Description: Infantry are equipped with heavy hazmat suits which\nprovides protection against Tiberium and radiation.\n\nUpgrades: Infantry
+		Description: Infantry are equipped with heavy hazmat suits which provides\n  protection against Tiberium and radiation.\n\nUpgrades: Infantry
 	TooltipExtras:
 		Strengths: + Tiberium immunity\n+ High radiation resistance
 		Weaknesses: – 33% slower movement across resources and rough terrain
@@ -540,7 +543,7 @@ iraqtank.upgrade:
 		BuildPaletteOrder: 30
 		Prerequisites: ~radar.iraq, ~techlevel.high
 		BuildDuration: 1500
-		Description: Upgrades Mammoth and Heavy tanks\nwith volatile atomic engines.\n\nReplaces: Heavy Tank\nReplaces: Mammoth Tank
+		Description: Upgrades Mammoth and Heavy tanks\n  with volatile atomic engines.\n\nReplaces: Heavy Tank\nReplaces: Mammoth Tank
 	TooltipExtras:
 		Strengths: + 25% faster movement
 		Weaknesses: – Explodes on death
@@ -630,7 +633,7 @@ apb.upgrade:
 		BuildDuration: 1500
 		Description: Upgrades Snipers granting them Raufoss armor piercing rounds,\n  which stun and damage armoured targets.\n\nUpgrades: Sniper
 	TooltipExtras:
-		Strengths: + Can damage vehicles with concussive shots (slows movement and rate of fire)
+		Strengths: + Can damage vehicles with AP rounds which slow movement and rate of fire
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -646,7 +649,7 @@ cryr.upgrade:
 		BuildDuration: 1500
 		Description: Arms rocket equipped soldiers with Cryo warheads which cause\n  targets to move more slowly and take increased damage.\n\nUpgrades: Rocket Soldier\nUpgrades: Guardian GI
 	TooltipExtras:
-		Strengths: + Equip with Cryo Rockets (slow movement and increase damage taken)
+		Strengths: + Equip with Cryo Rockets which slow movement and increase damage taken
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -679,7 +682,7 @@ crym.upgrade:
 		BuildDuration: 1500
 		Description: Equips Nighthawks with large Cryo missiles which reduce\n  target movement speed and increase damage taken.\n\nUpgrades: Nighthawk
 	TooltipExtras:
-		Strengths: + Equip with Cryo Missiles (slow movement and increase damage taken)
+		Strengths: + Equip with Cryo Missiles which slow movement and increase damage taken
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -778,7 +781,7 @@ ioncon.upgrade:
 		BuildPaletteOrder: 25
 		Prerequisites: ~scrt, ~techlevel.high
 		BuildDuration: 2250
-		Description: Allows Storm Colums to store ion energy and release it into the atmosphere,\n  creating a localised Ion Storm.\n\nUpgrades: Storm Column
+		Description: Allows Storm Colums to store ion energy and release it into the\n  atmosphere, creating a localised Ion Storm.\n\nUpgrades: Storm Column
 		IconPalette: scrin
 	TooltipExtras:
 		Strengths: + Increases damage and range over time when active\n+ Reduces incoming damage over time when active\n+ Ion storm can damage enemy units and structures
@@ -795,7 +798,7 @@ regen.upgrade:
 		BuildPaletteOrder: 30
 		Prerequisites: ~scrt, ~techlevel.high
 		BuildDuration: 2250
-		Description: Scrin aircraft will regenerate health over time when not in combat.\n\nUpgrades: Stormrider\nUpgrades: Enervator\nUpgrades: Devastator\nUpgrades: Planetary Assault Carrier
+		Description: Scrin aircraft will regenerate health over time when not in combat.\n\nUpgrades: Stormrider\nUpgrades: Enervator\nUpgrades: Devastator\nUpgrades: Planetary Assault Carrier\nUpgrades: Mothership
 		IconPalette: scrin
 	TooltipExtras:
 		Strengths: + Out-of-combat health regeneration

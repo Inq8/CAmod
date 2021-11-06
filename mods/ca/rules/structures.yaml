@@ -92,7 +92,9 @@ GAP:
 		Queue: Defense
 		BuildPaletteOrder: 110
 		Prerequisites: atek, ~structures.allies, ~techlevel.high
-		Description: Obscures the enemy's view with shroud.\n  Requires power to operate.
+		Description: Obscures the enemy's view with shroud.
+	TooltipExtras:
+		Attributes: • Requires power to operate
 	Selectable:
 		Bounds: 24,24
 		DecorationBounds: 24,48,0,-12
@@ -355,7 +357,7 @@ IRON:
 		BuildPaletteOrder: 130
 		Prerequisites: stek, ~structures.soviet, ~techlevel.unrestricted
 		BuildLimit: 1
-		Description: Makes a group of units invulnerable\nfor a short time.
+		Description: Makes a group of units invulnerable\n  for a short time.
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Iron Curtain
 	Valued:
@@ -430,7 +432,7 @@ PDOX:
 		BuildPaletteOrder: 120
 		Prerequisites: atek, ~structures.allies, ~techlevel.unrestricted
 		BuildLimit: 1
-		Description: Teleports a group of units across the\nmap for a short time.
+		Description: Teleports a group of units across the\n  map for a short time.
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Chronoshift
 	Valued:
@@ -1491,7 +1493,7 @@ PROC:
 		Queue: Building
 		BuildPaletteOrder: 60
 		Prerequisites: anypower, ~structures.ra, ~techlevel.infonly
-		Description: Processes raw Tiberium, Ore and Gems\ninto credits.
+		Description: Processes raw Tiberium, Ore\n  and Gems into credits.
 		BuildDuration: 1400
 	Valued:
 		Cost: 1800
@@ -2515,7 +2517,7 @@ SBAG:
 		Queue: Defense
 		BuildPaletteOrder: 10
 		Prerequisites: ~structures.sandbag, ~techlevel.low
-		Description: Stops infantry and light vehicles.\n  Can be crushed by tanks.
+		Description: • Stops infantry and light vehicles\n• Can be crushed by tanks
 	Valued:
 		Cost: 30
 	CustomSellValue:
@@ -2539,7 +2541,7 @@ FENC:
 		Queue: Defense
 		BuildPaletteOrder: 20
 		Prerequisites: ~structures.soviet, ~techlevel.low
-		Description: Stops infantry and light vehicles.\n  Can be crushed by tanks.
+		Description: • Stops infantry and light vehicles\n• Can be crushed by tanks
 	Valued:
 		Cost: 30
 	CustomSellValue:
@@ -2563,7 +2565,7 @@ BRIK:
 		Queue: Defense
 		BuildPaletteOrder: 30
 		Prerequisites: anypower, ~structures.wall, ~techlevel.medium
-		Description: Stops units and blocks enemy fire.
+		Description: • Stops units\n• Blocks enemy fire
 	Valued:
 		Cost: 200
 	CustomSellValue:
@@ -2593,7 +2595,7 @@ CHAIN:
 		Queue: Defense
 		BuildPaletteOrder: 20
 		Prerequisites: ~structures.nod, ~techlevel.low
-		Description: Stops infantry and light vehicles.\n  Can be crushed by tanks.
+		Description: • Stops infantry and light vehicles\n• Can be crushed by tanks
 	Valued:
 		Cost: 30
 	CustomSellValue:
@@ -3095,7 +3097,7 @@ AIRS:
 		BuildPaletteOrder: 80
 		Prerequisites: anyrefinery, ~structures.airs, ~techlevel.low
 		IconPalette: chrometd
-		Description: Provides a dropzone\nfor vehicle reinforcements
+		Description: Provides a dropzone for\n  vehicle reinforcements
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -4332,7 +4334,7 @@ PROC.TD:
 		Prerequisites: anypower, ~structures.td, ~techlevel.low
 		Queue: Building
 		IconPalette: chrometd
-		Description: Processes raw Tiberium, Ore and Gems\ninto credits.
+		Description: Processes raw Tiberium, Ore\n  and Gems into credits.
 		BuildDuration: 1400
 	Building:
 		Footprint: _x_ xxx +++ ===
@@ -4451,7 +4453,7 @@ AFLD.GDI:
 		Prerequisites: anyradar, ~structures.gdi, ~techlevel.high
 		Description: Produces and reloads aircraft.
 	TooltipExtras:
-		Attributes: • Special Ability: Recon Drone\n• Interceptors
+		Attributes: • Special Ability: Recon Drone\n• Special Ability: Interceptors
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -5263,7 +5265,7 @@ SGEN:
 		Prerequisites: tmpl, ~structures.nod, ~techlevel.unrestricted
 		BuildLimit: 1
 		IconPalette: chrometd
-		Description: Makes a group of units/structures invisible for a short time.
+		Description: Makes a group of units/structures invisible\n  for a short time.
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Tiberium Stealth
 	Valued:
@@ -5385,7 +5387,7 @@ LASP:
 		BuildPaletteOrder: 30
 		Prerequisites: ~structures.nod, nuk2, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Stops infantry and blocks enemy fire.\n   Cannot be crushed by tanks.
+		Description: • Stops infantry\n• Blocks enemy fire\n• Cannot be crushed by tanks
 	Valued:
 		Cost: 200
 	CustomSellValue:
@@ -5495,7 +5497,7 @@ PATR:
 		Prerequisites: gtek, ~structures.gdi, ~techlevel.unrestricted
 		BuildLimit: 1
 		IconPalette: chrometd
-		Description: Launches E.M. Pulse Missiles that disable vehicles & structures.
+		Description: Launches E.M. Pulse Missiles that\n  disable vehicles & structures.
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: E.M. Pulse Missile
 	Valued:
@@ -6069,8 +6071,10 @@ UPGC.DROP:
 		Queue: Upgrade
 		BuildPaletteOrder: 90
 		Prerequisites: ~upgc, ~!upgc.plugged, ~techlevel.high
-		Description: Provides a dropzone\nfor emergency supplies.
+		Description: Provides a dropzone\n  for emergency supplies.
 		IconPalette: chrometd
+	TooltipExtras:
+		Strengths: + $750 delivered every 60 seconds (normal speed)
 	Plug:
 		Type: tower.drop
 	Power:
