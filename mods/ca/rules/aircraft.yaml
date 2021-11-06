@@ -164,7 +164,10 @@ MIG:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 70
 		Prerequisites: ~afld, ~techlevel.high
-		Description: Multi purpose strike aircraft.\n  Strong vs Vehicles, Aircraft, Defenses\n  Weak vs Infantry
+		Description: Multi purpose strike aircraft.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Defenses, Aircraft
+		Weaknesses: • Weak vs Infantry
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -263,7 +266,10 @@ SUK:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 120
 		Prerequisites: ~afld, stek, ~techlevel.high
-		Description: Fast ground attack aircraft armed\nwith powerful explosive munitions.\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft
+		Description: Fast ground attack aircraft armed\n  with powerful explosive munitions.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Defenses, Light Armor
+		Weaknesses: • Weak vs Infantry, Buildings\n• Cannot attack Aircraft
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -367,7 +373,10 @@ YAK:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 25
 		Prerequisites: ~afld, ~aircraft.soviet, ~techlevel.low
-		Description: Ground attack plane armed with\ndual machine guns.\n  Strong vs Infantry, Buildings, Light Armor\n  Weak vs Tanks
+		Description: Ground attack plane armed with\n  dual machine guns
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor, Buildings
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -511,7 +520,9 @@ TRAN:
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 10
 		Prerequisites: ~aircraft.chinook, ~techlevel.infonly
-		Description: Fast infantry transport helicopter.\n  Unarmed
+		Description: Fast infantry transport helicopter.
+	TooltipExtras:
+		Weaknesses: • Unarmed
 	Valued:
 		Cost: 900
 	Tooltip:
@@ -620,7 +631,10 @@ NHAW:
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 10
 		Prerequisites: ~aircraft.nhaw, ~techlevel.infonly
-		Description: Fast infantry transport helicopter armed with\na light machine gun.\n  Strong vs None\n  Weak vs Tanks, Aircraft
+		Description: Fast infantry transport helicopter armed with\n  a light machine gun.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry
+		Weaknesses: • Weak vs Heavy Armor, Defenses, Buildings\n• Cannot attack Aircraft
 	Valued:
 		Cost: 1150
 	Tooltip:
@@ -784,7 +798,10 @@ HELI:
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 50
 		Prerequisites: ~hpad, ~aircraft.allies, ~techlevel.medium
-		Description: Helicopter gunship armed\nwith multi-purpose missiles.\n  Strong vs Vehicles, Aircraft\n  Weak vs Infantry
+		Description: Helicopter gunship armed\n  with multi-purpose missiles.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Defenses, Aircraft
+		Weaknesses: • Weak vs Infantry
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -869,7 +886,10 @@ HIND:
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 20
 		Prerequisites: ~hpad, ~aircraft.soviet, ~techlevel.medium
-		Description: Helicopter gunship armed\nwith dual chainguns.\n  Strong vs Infantry, Light Armor, Buildings\n  Weak vs Tanks, Defenses, Aircraft
+		Description: Helicopter gunship armed\n  with dual chainguns.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor, Buildings
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 1400
 	Tooltip:
@@ -1060,7 +1080,10 @@ A10:
 		BuildPaletteOrder: 80
 		Prerequisites: ~afld.gdi, ~aircraft.gdi, ~techlevel.high
 		IconPalette: chrometd
-		Description: Ground attack aircraft with incendiary bombs.\n  Strong vs Buildings, Light Armor, Infantry\n  Weak vs Aircraft
+		Description: Ground attack aircraft with incendiary bombs.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -1325,7 +1348,10 @@ APCH:
 		BuildPaletteOrder: 30
 		Prerequisites: ~hpad.td, ~aircraft.apch, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Helicopter gunship with a chaingun.\n  Strong vs Infantry, Light Armor, Buildings\n  Weak vs Tanks, Defenses, Aircraft
+		Description: Helicopter gunship with a chaingun.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor, Buildings
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Aircraft:
 		AltitudeVelocity: 0c100
 		TurnSpeed: 16
@@ -1410,7 +1436,10 @@ ORCA:
 		BuildPaletteOrder: 50
 		Prerequisites: ~hpad.td, ~aircraft.gdi, ~techlevel.high
 		IconPalette: chrometd
-		Description: VTOL gunship armed\nwith multi-purpose missiles.\n  Strong vs Vehicles, Aircraft\n  Weak vs Infantry
+		Description: VTOL gunship armed\nwith multi-purpose missiles.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Defenses, Aircraft
+		Weaknesses: • Weak vs Infantry
 	Aircraft:
 		AltitudeVelocity: 0c100
 		TurnSpeed: 20
@@ -1534,7 +1563,10 @@ ORCB:
 		BuildPaletteOrder: 130
 		Prerequisites: ~hpad.td, ~aircraft.gdi, gtek, ~techlevel.high
 		IconPalette: chrometd
-		Description: VTOL bomber armed with EMP bombs.\n  Strong vs Buildings, Vehicles\n  Weak vs Aircraft
+		Description: VTOL bomber armed with EMP bombs.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
+		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
 	Valued:
 		Cost: 1700
 	Tooltip:
@@ -1712,7 +1744,10 @@ RAH:
 		BuildPaletteOrder: 60
 		IconPalette: chrometd
 		Prerequisites: tmpl, ~hpad.td, ~aircraft.nod, ~techlevel.high
-		Description: Stealth attack helicopter.\n  Strong vs Buildings, Light Armor, Infantry.\n  Weak vs Aircraft
+		Description: Stealth attack helicopter.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor, Buildings
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 1900
 	Tooltip:
@@ -1823,7 +1858,10 @@ KIRO:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 160
 		Prerequisites: ~afld, stek, ~aircraft.soviet, ~techlevel.high
-		Description: Heavily armoured airship equipped with specialised bombs.\n  Vulnerable when dropping bombs.\n  Strong vs Buildings, Infantry, Slow Vehicles\n  Weak vs Aircraft
+		Description: Heavily armoured airship equipped with specialised bombs.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
+		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets\n• Vulnerable when dropping bombs
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -1983,7 +2021,9 @@ OCAR:
 		BuildPaletteOrder: 100
 		Prerequisites: ~hpad.td, rep, ~aircraft.gdi, ~techlevel.high
 		IconPalette: chrometd
-		Description: Fast VTOL Vehicle Transporter.\n  Unarmed\n  Special Ability: Auto Pilot
+		Description: Fast VTOL Vehicle Transporter.
+	TooltipExtras:
+		Weaknesses: • Unarmed
 	Aircraft:
 		CruiseAltitude: 2048
 		AltitudeVelocity: 0c100
@@ -2166,7 +2206,10 @@ HARR:
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 110
 		Prerequisites: atek, ~hpad, ~aircraft.allies, ~techlevel.high
-		Description: Fast VTOL ground attack aircraft armed\nwith powerful explosive missiles.\n  Strong vs Buildings, Infantry\n  Weak vs Aircraft
+		Description: Fast VTOL ground attack aircraft armed\n  with powerful explosive missiles.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Infantry, Light Armor
+		Weaknesses: • Cannot attack Aircraft
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -2261,7 +2304,10 @@ SCRN:
 		BuildPaletteOrder: 150
 		IconPalette: chrometd
 		Prerequisites: tmpl, ~hpad.td, ~aircraft.nod, ~techlevel.high
-		Description: Fast VTOL attack craft armed\nwith powerful plasma cannons.\n  Strong vs Heavy Armor, Defenses, Aircraft\n  Weak vs Infantry
+		Description: Fast VTOL attack craft armed\n  with powerful plasma cannons.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Defenses, Aircraft
+		Weaknesses: • Weak vs Infantry
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -2568,7 +2614,10 @@ VENM:
 		BuildPaletteOrder: 31
 		Prerequisites: ~hpad.td, ~aircraft.marked, ~techlevel.medium
 		IconPalette: chrometd
-		Description: VTOL gunship armed\nwith laser.\n  Strong vs Infantry, Light Armor, Aircraft\n  Weak vs Tanks, Buildings
+		Description: VTOL gunship armed with laser.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor, Aircraft
+		Weaknesses: • Weak vs Heavy Armor, Buildings
 	Aircraft:
 		AltitudeVelocity: 0c100
 		TurnSpeed: 22
@@ -2644,7 +2693,11 @@ AURO:
 		BuildPaletteOrder: 140
 		Prerequisites: ~afld.gdi, ~aircraft.eagle, gtek, ~techlevel.high
 		IconPalette: chrometd
-		Description: Supersonic bomber armed with a MOAB.\n  Strong vs Defenses, Vehicles, Infantry\n  Weak vs Aircraft\n  Special Ability: Afterburner
+		Description: Supersonic bomber armed with a MOAB.
+	TooltipExtras:
+		Strengths: • Strong vs Defenses, Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Uses afterburner on approach to target
 	Valued:
 		Cost: 2200
 	Tooltip:

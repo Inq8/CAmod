@@ -176,8 +176,11 @@ S1:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 12
 		Prerequisites: ~infantry.scrin, ~techlevel.infonly
-		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+		Description: General-purpose infantry.
 		IconPalette: chrome
+	TooltipExtras:
+		Strengths: • Strong vs Infantry
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 100
 	Tooltip:
@@ -211,8 +214,11 @@ S2:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 160
 		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.infonly
-		Description: Fast anti-personnel infantry.\n  Strong vs Infantry, Light Vehicles\n  Weak vs Tanks, Aircraft
 		IconPalette: chromes
+		Description: Fast anti-personnel infantry.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 275
 	Tooltip:
@@ -246,8 +252,11 @@ S3:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 22
 		Prerequisites: ~infantry.scrin, ~techlevel.infonly
-		Description: Anti-tank/anti-aircraft infantry.\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
+		Description: Anti-tank/anti-aircraft infantry.
 		IconPalette: chrome
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Aircraft, Buildings, Defenses
+		Weaknesses: • Weak vs Infantry, Light Armor
 	Valued:
 		Cost: 300
 	Tooltip:
@@ -295,8 +304,12 @@ S4:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 170
 		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.infonly
-		Description: Heavy assault infantry with high burst damage.\n  Can teleport short distances.\n  Strong vs Buildings, Defenses, Vehicles\n  Weak vs Infantry, Aircraft
 		IconPalette: chrome
+		Description: Heavy assault infantry with high burst damage.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
+		Attributes: • Special Ability: Teleport
 	Mobile:
 		Speed: 49
 	Valued:
@@ -335,8 +348,11 @@ S6:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 62
 		Prerequisites: ~infantry.scrin, ~techlevel.infonly
-		Description: Infiltrates and captures\nenemy structures.\n  Can repair friendly structures & bridges.\n  Special Ability: Repair\n  Unarmed
 		IconPalette: chrome
+		Description: Utility infantry used for capturing/repairing structures.
+	TooltipExtras:
+		Weaknesses: • Unarmed
+		Attributes: • Captures enemy buildings\n• Repairs friendly structures & bridges\n• Defuses bombs
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -463,8 +479,10 @@ SMEDI:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 240
 		Prerequisites: ~infantry.scrin, ~infantry.smedi, ~techlevel.infonly
-		Description: Heals nearby life forms.\n  Unarmed
 		IconPalette: chromes
+		Description: Heals nearby life-forms.
+	TooltipExtras:
+		Weaknesses: • Unarmed
 	Valued:
 		Cost: 200
 	Tooltip:
@@ -547,8 +565,12 @@ MAST:
 		BuildPaletteOrder: 220
 		Prerequisites: scrt, ~infantry.scrin, ~techlevel.infonly
 		BuildLimit: 1
-		Description: Elite specialist infantry.\n  Can mind-control enemy units and defenses.\n  Can detect cloaked units.\n  Maximum 1 can be trained.\n  Strong vs Infantry, Vehicles, Defenses\n  Weak vs Aircraft
 		IconPalette: chrome
+		Description: Elite specialist infantry able to.\n  mind-control enemy units and defenses.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Vehicles, Defenses, Buildings
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Can capture enemy buildings
 	Voiced:
 		VoiceSet: MastermindVoice
 	Valued:
@@ -645,8 +667,11 @@ GUNW:
 		Queue: Vehicle
 		BuildPaletteOrder: 24
 		Prerequisites: ~vehicles.scrin, ~techlevel.low
-		Description: Light assault walker.\n  Strong vs Infantry, Aircraft\n  Weak vs Tanks
+		Description: Durable light assault walker.
 		IconPalette: chrome
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor, Aircraft
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -714,8 +739,12 @@ SEEK:
 		BuildPaletteOrder: 31
 		Prerequisites: ~vehicles.seek, ~techlevel.low
 		Queue: Vehicle
-		Description: Light hover tank.\n  Can detect cloaked units and mines.\n  Strong vs Vehicles, Buildings\n  Weak vs Aircraft, Infantry
+		Description: Light hover tank.
 		IconPalette: chrome
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Buildings
+		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
+		Attributes: • Can detect cloaked units and mines.\n• Can traverse water
 	Mobile:
 		Speed: 95
 		Locomotor: lighthover
@@ -780,8 +809,12 @@ LACE:
 		BuildPaletteOrder: 32
 		Prerequisites: ~vehicles.traveler, ~techlevel.low
 		Queue: Vehicle
-		Description: Fast hover tank.\n  Can detect cloaked units and mines.\n  Strong vs Vehicles, Buildings\n  Weak vs Aircraft, Infantry
+		Description: Fast hover tank.
 		IconPalette: chrome
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Buildings
+		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
+		Attributes: • Can detect cloaked units and mines.\n• Can traverse water
 	Mobile:
 		TurnSpeed: 40
 		Speed: 126
@@ -843,8 +876,12 @@ INTL:
 		BuildPaletteOrder: 43
 		Prerequisites: ~vehicles.scrin, ~techlevel.low
 		Queue: Vehicle
-		Description: Heavily armoured front-line assault troop carrier.\n  Strong vs Vehicles\n  Weak vs Infantry, Aircraft
+		Description: Heavily armoured front-line assault troop carrier.
 		IconPalette: chrome
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
+		Attributes: • Can traverse water
 	Mobile:
 		Speed: 56
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
@@ -927,8 +964,11 @@ CORR:
 		BuildPaletteOrder: 140
 		Prerequisites: anyradar, ~vehicles.corr, ~techlevel.medium
 		Queue: Vehicle
-		Description: Medium-ranged anti-infantry/structure unit.\n  Strong vs Infantry, Buildings\n  Weak vs Tanks, Defenses, Aircraft
+		Description: Medium-ranged anti-infantry/structure unit.
 		IconPalette: chrome
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Buildings, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Mobile:
 		Speed: 66
 		TurnSpeed: 16
@@ -981,8 +1021,12 @@ LCHR:
 		BuildPaletteOrder: 141
 		Prerequisites: anyradar, ~vehicles.collector, ~techlevel.medium
 		Queue: Vehicle
-		Description: Medium-ranged anti-infantry/structure unit.\n  Regenerates health while dealing damage\n  Disables power plants and radars\n  Slows vehicles & cyborgs\n  Strong vs Infantry, Buildings\n  Weak vs Tanks, Defenses, Aircraft
+		Description: Medium-ranged anti-infantry/structure unit.
 		IconPalette: chromes
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Buildings, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
+		Attributes: • Regenerates health while dealing damage\n• Disables power plants and radars\n• Slows vehicles & cyborgs
 	Mobile:
 		Speed: 80
 		TurnSpeed: 24
@@ -1030,8 +1074,12 @@ STCR:
 		BuildPaletteOrder: 150
 		Prerequisites: anyradar, ~vehicles.reaper, ~techlevel.medium
 		Queue: Vehicle
-		Description: Slow moving, durable, short-range assault unit.\n  Splits incoming damage with other nearby Stormcrawlers.\n  Strong vs Defenses, Vehicles\n  Weak vs Infantry, Aircraft
+		Description: Slow moving, durable, short-range assault unit.
 		IconPalette: chromes
+	TooltipExtras:
+		Strengths: • Strong vs Defenses, Heavy Armor
+		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
+		Attributes: • Splits incoming damage with other nearby Stormcrawlers
 	Mobile:
 		Speed: 43
 		TurnSpeed: 16
@@ -1109,8 +1157,11 @@ DEVO:
 		Queue: Vehicle
 		BuildPaletteOrder: 220
 		Prerequisites: anyradar, ~vehicles.devo, ~techlevel.medium
-		Description: Medium hover tank.\n  Can move in any direction while firing.\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft
+		Description: Medium hover tank.
 		IconPalette: chrome
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
+		Weaknesses: • Weak vs Buildings, Infantry\n• Cannot attack Aircraft
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -1171,8 +1222,11 @@ DARK:
 		Queue: Vehicle
 		BuildPaletteOrder: 221
 		Prerequisites: anyradar, ~vehicles.harbinger, ~techlevel.medium
-		Description: Heavy hover tank with armed with rift cannon.\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft, Infantry
+		Description: Heavy hover tank with armed with rift cannon.
 		IconPalette: chromes
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
+		Weaknesses: • Weak vs Buildings, Infantry\n• Cannot attack Aircraft
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -1238,8 +1292,12 @@ RUIN:
 		BuildPaletteOrder: 280
 		Prerequisites: scrt, ~vehicles.harbinger, ~techlevel.high
 		Queue: Vehicle
-		Description: Long-range artillery.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Tanks, Aircraft
+		Description: Long-range hover artillery.
 		IconPalette: chrome
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
+		Attributes: • Can traverse water
 	Mobile:
 		Speed: 80
 		TurnSpeed: 512
@@ -1323,8 +1381,12 @@ ATMZ:
 		Queue: Vehicle
 		BuildPaletteOrder: 285
 		Prerequisites: scrt, ~vehicles.collector, ~techlevel.medium
-		Description: Lightly armored long-range support unit.\n  Targets take damage over time\n  Targets have reduced rate of fire\n  Effect spreads when affected targets die\n  Strong vs Vehicles, Aircraft, Defenses\n  Weak vs Infantry, Buildings
+		Description: Lightly armored long-range support unit.
 		IconPalette: chrome
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Aircraft, Defenses
+		Weaknesses: • Weak vs Infantry, Buildings
+		Attributes: • Targets take damage over time\n• Targets have reduced rate of fire\n• Effect spreads when affected targets die\n• Can traverse water
 	Mobile:
 		Speed: 66
 		Locomotor: lighthover
@@ -1368,8 +1430,11 @@ TPOD:
 		Queue: Vehicle
 		BuildPaletteOrder: 310
 		Prerequisites: techcenter, ~vehicles.tpod, ~techlevel.high
-		Description: Heavy assault walker with beam weapons.\n  Strong vs Vehicles.\n  Weak vs Aircraft
+		Description: Heavy assault walker with beam weapons.
 		IconPalette: chrome
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
 	Voiced:
 		VoiceSet: TripodVoice
 	Valued:
@@ -1443,7 +1508,8 @@ RPTP:
 	Buildable:
 		BuildPaletteOrder: 311
 		Prerequisites: scrt, ~vehicles.reaper, ~techlevel.high
-		Description: Heavy assault walker with beam weapons.\nWeapons empowered by Tiberium.\n  Strong vs Vehicles.\n  Weak vs Aircraft
+	TooltipExtras:
+		Attributes: • Weapons empowered by Tiberium
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
@@ -1523,8 +1589,10 @@ SMCV:
 		BuildPaletteOrder: 502
 		Prerequisites: repair, ~vehicles.scrin, ~techlevel.infonly
 		IconPalette: chrome
-		Description: Deploys into another Colony Platform.\n  Unarmed
+		Description: Deploys into another Colony Platform.
 		BuildDurationModifier: 50
+	TooltipExtras:
+		Weaknesses: • Unarmed
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
@@ -1580,8 +1648,12 @@ STMR:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 90
 		Prerequisites: ~aircraft.scrin, ~techlevel.medium
-		Description: Durable patrol craft.\n  Can detect submarines.\n  Strong vs Infantry, Light Armor, Aircraft\n  Weak vs Tanks, Buildings
+		Description: Durable patrol craft.
 		IconPalette: chrome
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor, Aircraft
+		Weaknesses: • Weak vs Heavy Armor, Defenses
+		Attributes: • Can detect submarines
 	Valued:
 		Cost: 1650
 	Voiced:
@@ -1690,8 +1762,12 @@ ENRV:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 170
 		Prerequisites: scrt, ~aircraft.traveler, ~techlevel.high
-		Description: Fast attack craft that creates a focused suppression field.\n  Strong vs Vehicles, Defenses, Aircraft\n  Weak vs Infantry
+		Description: Fast attack craft that creates a focused suppression field.
 		IconPalette: chromes
+	TooltipExtras:
+		Strengths: • Strong vs Vehicles, Defenses, Aircraft
+		Weaknesses: • Weak vs Infantry
+		Attributes: • Slows targets
 	Valued:
 		Cost: 1900
 	Voiced:
@@ -1795,8 +1871,11 @@ DEVA:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 170
 		Prerequisites: scrt, ~aircraft.scrin, ~techlevel.high
-		Description: Long-range siege warship.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Aircraft, Tanks
+		Description: Long-range siege warship.
 		IconPalette: chrome
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Infantry
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Voiced:
 		VoiceSet: DevastatorVoice
 	Valued:
@@ -1892,8 +1971,11 @@ PAC:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 180
 		Prerequisites: sign, scrt, ~aircraft.scrin, ~techlevel.high
-		Description: Warship that launches a squadron\nof assault craft.\n  Strong vs Vehicles, Infantry\n  Weak vs Buildings, Defenses
+		Description: Warship that launches a squadron\n  of assault craft.
 		IconPalette: chrome
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Weak vs Buildings, Defenses
 	Voiced:
 		VoiceSet: PlanetaryAssaultCarrierVoice
 	Valued:
@@ -2102,9 +2184,13 @@ MSHP:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 190
 		Prerequisites: sign, scrt, ~aircraft.scrin, ~techlevel.high
-		Description: Huge craft with powerful beam weapon.\n  Can create wormholes.\n  Maximum 1 can be built.\n  Strong vs Buildings, Defenses\n  Weak vs Aircraft
+		Description: Huge craft with powerful beam weapon.
 		IconPalette: chromes
 		BuildLimit: 1
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses
+		Weaknesses: • Cannot attack Aircraft\n• Long charge time before firing\n• Cannot move while firing
+		Attributes: • Maximum 1 can be built\n• Can create wormholes\n• Repairs friendly structures & bridges\n• Defuses bombs
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Voiced:
@@ -3074,8 +3160,10 @@ NERV:
 		Queue: Building
 		BuildPaletteOrder: 90
 		Prerequisites: proc.scrin, ~structures.scrin, ~techlevel.medium
-		Description: Provides an overview of the battlefield.\n  Requires power to operate.
+		Description: Provides an overview of the battlefield.
 		IconPalette: chromes
+	TooltipExtras:
+		Attributes: • Requires power to operate
 	Valued:
 		Cost: 1800
 	Tooltip:
@@ -3443,9 +3531,11 @@ SIGN:
 		Queue: Building
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.scrin, scrt, ~techlevel.high
-		Description: Provides Scrin tier 4 technologies.\n  Maximum 1 can be built.\n  Cannot be captured or hacked.
+		Description: Provides access to the most powerful\n  Scrin units and technology.
 		BuildLimit: 1
 		IconPalette: chromes
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
 	-Capturable:
 	-CaptureNotification:
 	-CapturableProgressBar:
@@ -3592,7 +3682,9 @@ MANI:
 		Prerequisites: scrt, ~structures.scrin, ~techlevel.unrestricted
 		BuildLimit: 1
 		IconPalette: chrome
-		Description: Slows enemy unit movement and rate of fire.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Suppression Field
+		Description: Slows enemy unit movement and rate of fire.
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Suppression Field
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -3689,8 +3781,10 @@ RIFT:
 		BuildPaletteOrder: 130
 		Prerequisites: scrt, ~structures.scrin, ~techlevel.unrestricted
 		BuildLimit: 1
-		Description: Provides Rift support power.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Rift
+		Description: Provides Rift support power.
 		IconPalette: chrome
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Rift
 	Valued:
 		Cost: 2500
 	Tooltip:
@@ -3773,8 +3867,12 @@ PTUR:
 		Queue: Defense
 		BuildPaletteOrder: 60
 		Prerequisites: port, ~structures.scrin, ~techlevel.low
-		Description: Anti-infantry base defense.\n  Can detect cloaked units.\n  Strong vs Infantry, Light Armor\n  Weak vs Tanks, Aircraft
+		Description: Anti-infantry base defense.
 		IconPalette: chrome
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+		Attributes: • Can detect cloaked units
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -3830,8 +3928,12 @@ SHAR:
 		Queue: Defense
 		BuildPaletteOrder: 90
 		Prerequisites: anyradar, ~structures.scrin, ~techlevel.medium
-		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Can detect cloaked aircraft.\n  Strong vs Aircraft\n  Weak vs Ground Units
+		Description: Anti-aircraft base defense.
 		IconPalette: chrome
+	TooltipExtras:
+		Strengths: • Strong vs Aircraft
+		Weaknesses: • Cannot attack ground units
+		Attributes: • Requires power to operate\n• Can detect cloaked aircraft
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -3887,8 +3989,12 @@ SCOL:
 		Queue: Defense
 		BuildPaletteOrder: 80
 		Prerequisites: anyradar, ~structures.scrin, ~techlevel.high
-		Description: Advanced base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft
+		Description: Advanced base defense.
 		IconPalette: chrome
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Requires power to operate\n• Can detect cloaked units
 	Valued:
 		Cost: 1400
 	Tooltip:

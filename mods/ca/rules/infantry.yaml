@@ -5,7 +5,11 @@ DOG:
 		BuildAtProductionType: Dog
 		BuildPaletteOrder: 50
 		Prerequisites: ~kenn, ~techlevel.infonly
-		Description: Anti-infantry unit.\n  Can detect spies, mines and cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+		Description: Melee anti-infantry scout unit.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry
+		Weaknesses: • Can only attack Infantry
+		Attributes: • Can detect spies, mines and cloaked units
 	RenderSprites:
 		Scale: 0.7
 		PlayerPalette: player
@@ -84,7 +88,10 @@ E1:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 10
 		Prerequisites: ~infantry.ra, ~techlevel.infonly
-		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+		Description: General-purpose infantry.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 100
 	Tooltip:
@@ -127,7 +134,10 @@ E2:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 30
 		Prerequisites: ~infantry.e2, ~techlevel.infonly
-		Description: Infantry armed with grenades.\n  Strong vs Buildings, Infantry\n  Weak vs Vehicles, Aircraft
+		Description: Infantry armed with grenades.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Light Armor
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Valued:
 		Cost: 160
 	Tooltip:
@@ -170,7 +180,10 @@ E3:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 20
 		Prerequisites: ~infantry.ra, ~techlevel.infonly
-		Description: Anti-tank/anti-aircraft infantry.\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
+		Description: Anti-tank/anti-aircraft infantry.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Aircraft, Buildings, Defenses
+		Weaknesses: • Weak vs Infantry, Light Armor
 	Valued:
 		Cost: 300
 	Tooltip:
@@ -460,6 +473,10 @@ U3.squad:
 		BuildPaletteOrder: 1000
 		Prerequisites: dome, ~infantry.usa, ~techlevel.infonly
 		Description: Prepare five Guardian GIs for airdrop.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Aircraft, Buildings, Defenses
+		Weaknesses: • Weak vs Infantry, Light Armor
+		Attributes: • Deploys for personal anti-tank fortification\n• Uncrushable when deployed
 	Valued:
 		Cost: 1750
 	RenderSprites:
@@ -470,6 +487,8 @@ U3.squad:
 		OneShot: true
 		AutoFire: true
 		AllowMultiple: true
+	Armor:
+		Type: None
 
 E3R1:
 	Inherits: E3
@@ -489,7 +508,10 @@ E4:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 70
 		Prerequisites: ~barr, ftur, ~techlevel.infonly
-		Description: Anti-infantry/anti-structure unit.\n  Strong vs Infantry, Buildings\n  Weak vs Vehicles, Aircraft
+		Description: Short-range anti-infantry/anti-structure infantry.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Buildings
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 200
 	Tooltip:
@@ -532,7 +554,10 @@ E6:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 60
 		Prerequisites: ~infantry.ra, ~techlevel.infonly
-		Description: Infiltrates and captures\nenemy structures.\n  Can repair friendly structures & bridges and defuse bombs.\n  Special Ability: Repair\n  Special Ability: Defuse\n  Unarmed
+		Description: Utility infantry used for capturing/repairing structures.
+	TooltipExtras:
+		Weaknesses: • Unarmed
+		Attributes: • Captures enemy buildings\n• Repairs friendly structures & bridges\n• Defuses bombs
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -577,7 +602,10 @@ SPY:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 100
 		Prerequisites: ~tent, anyradar, ~techlevel.medium
-		Description: Infiltrates enemy structures for intel or\nsabotage. Exact effect depends on the\nbuilding infiltrated.\n  Unarmed\n  Special Ability: Disguise
+		Description: Infiltrates enemy structures for intel or sabotage\n  Effects depend on the building infiltrated.
+	TooltipExtras:
+		Weaknesses: • Unarmed
+		Attributes: • Disguise as enemy infantry by right-clicking them
 	Valued:
 		Cost: 500
 	-Tooltip:
@@ -637,7 +665,11 @@ E7:
 		BuildPaletteOrder: 190
 		Prerequisites: ~tent, atek, ~techlevel.infonly
 		BuildLimit: 1
-		Description: Elite commando infantry. Armed with\ndual pistols and C4.\n  Can detect cloaked units.\n  Maximum 1 can be trained.\n  Strong vs Infantry, Buildings\n  Weak vs Aircraft\n  Special Ability: C4 Explosives
+		Description: Elite commando infantry armed with dual pistols and C4.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Buildings
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Plants C4 to destroy structures and vehicles
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -709,7 +741,9 @@ MEDI:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 40
 		Prerequisites: ~infantry.medi, ~techlevel.infonly
-		Description: Heals nearby infantry.\n  Unarmed
+		Description: Heals nearby infantry.
+	TooltipExtras:
+		Weaknesses: • Unarmed
 	Valued:
 		Cost: 200
 	Tooltip:
@@ -760,7 +794,9 @@ MECH:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 90
 		Prerequisites: repair, ~infantry.mech, ~techlevel.medium
-		Description: Repairs nearby vehicles and restores\nhusks to working condition by capturing them.\n  Unarmed
+		Description: Repairs nearby vehicles and restores\n  husks to working condition by capturing them.
+	TooltipExtras:
+		Weaknesses: • Unarmed
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -992,7 +1028,10 @@ THF:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 120
 		Prerequisites: anyradar, ~infantry.thf, ~techlevel.medium
-		Description: Steals enemy credits and hijacks enemy vehicles.\n  Unarmed
+		Description: Steals enemy credits and hijacks enemy vehicles.
+	TooltipExtras:
+		Weaknesses: • Unarmed
+		Attributes: • Cloaked when not moving
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -1056,7 +1095,11 @@ SHOK:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 80
 		Prerequisites: structures.tsla, anyradar, ~barr, ~techlevel.high
-		Description: Elite infantry with portable Tesla weapon.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft\n  Special Ability: Can over-charge Tesla Coil
+		Description: Elite infantry with portable Tesla weapon.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Can overcharge nearby Tesla Coils
 	Valued:
 		Cost: 425
 	Tooltip:
@@ -1125,7 +1168,10 @@ N1:
 		BuildPaletteOrder: 11
 		Prerequisites: ~!cyborg.production, ~infantry.td, ~techlevel.infonly
 		IconPalette: chrometd
-		Description: General-purpose infantry.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+		Description: General-purpose infantry.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 100
 	Tooltip:
@@ -1175,7 +1221,10 @@ N2:
 		BuildPaletteOrder: 31
 		Prerequisites: ~pyle, ~techlevel.infonly
 		IconPalette: chrometd
-		Description: Infantry armed with grenades.\n  Strong vs Buildings, Infantry\n  Weak vs Vehicles, Aircraft
+		Description: Infantry armed with grenades.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Light Armor
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Valued:
 		Cost: 160
 	Tooltip:
@@ -1243,7 +1292,10 @@ N3:
 		BuildPaletteOrder: 21
 		Prerequisites: ~!cyborg.production, ~infantry.td, ~techlevel.infonly
 		IconPalette: chrometd
-		Description: Anti-tank/anti-aircraft infantry.\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry
+		Description: Anti-tank/anti-aircraft infantry.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Aircraft, Buildings, Defenses
+		Weaknesses: • Weak vs Infantry, Light Armor
 	Valued:
 		Cost: 300
 	Tooltip:
@@ -1344,7 +1396,10 @@ N4:
 		BuildPaletteOrder: 71
 		Prerequisites: ~hand, ~!cyborg.production, ~techlevel.infonly
 		IconPalette: chrometd
-		Description: Anti-infantry/anti-structure unit.\n  Strong vs Infantry, Buildings\n  Weak vs Vehicles, Aircraft
+		Description: Short-range anti-infantry/anti-structure infantry.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Buildings
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 200
 	Tooltip:
@@ -1397,7 +1452,10 @@ N5:
 		BuildPaletteOrder: 72
 		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.infonly
 		IconPalette: chrometd
-		Description: Advanced general-purpose infantry.\n  Strong vs all Ground Units
+		Description: Short-range anti-infantry/anti-structure cyborg infantry.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Buildings
+		Weaknesses: • Cannot attack Aircraft
 	Valued:
 		Cost: 325
 	Tooltip:
@@ -1480,7 +1538,11 @@ RMBO:
 		Queue: Infantry
 		IconPalette: chrometd
 		BuildLimit: 1
-		Description: Elite infantry unit. Armed with\na SMG and C4.\n  Can detect cloaked units.\n  Maximum 1 can be trained.\n  Strong vs Infantry, Buildings\n  Weak vs Aircraft\n  Special Ability: C4 Explosives
+		Description: Elite infantry armed with an SMG and C4.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Buildings
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Plants C4 to destroy structures and vehicles
 	Mobile:
 		Speed: 56
 		Voice: Move
@@ -1546,7 +1608,10 @@ N6:
 		BuildPaletteOrder: 61
 		Prerequisites: ~infantry.td, ~techlevel.infonly
 		IconPalette: chrometd
-		Description: Infiltrates and captures\nenemy structures.\n  Can repair friendly structures & bridges and defuse bombs\n  Special Ability: Repair\n  Special Ability: Defuse\n  Unarmed
+		Description: Utility infantry used for capturing/repairing structures.
+	TooltipExtras:
+		Weaknesses: • Unarmed
+		Attributes: • Captures enemy buildings\n• Repairs friendly structures & bridges\n• Defuses bombs
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -1608,7 +1673,11 @@ SNIP:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 110
 		Prerequisites: ~infantry.england, anyradar, ~techlevel.medium
-		Description: Elite marksman infantry.\n Armed with a powerful sniper rifle.\n\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft, Buildings, Defenses\n  Special Ability: Camouflage
+		Description: Elite marksman infantry armed with\n  a powerful sniper rifle.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Vehicles (with upgrade)
+		Weaknesses: • Weak vs Buildings, Defenses\n• Cannot attack aircraft
+		Attributes: • Camouflaged when not moving
 	Valued:
 		Cost: 550
 	Tooltip:
@@ -1700,7 +1769,11 @@ BORI:
 		BuildPaletteOrder: 200
 		Prerequisites: ~barr, stek, ~infantry.boris, ~techlevel.high
 		BuildLimit: 1
-		Description: Elite commando infantry. Armed with C4.\n  Can detect cloaked units.\n  Maximum 1 can be trained.\n  Strong vs Infantry, Buildings, Defenses\n  Weak vs Aircraft\n  Special Ability: Can call an Airstrike on Structures
+		Description: Elite commando infantry armed with a\n  high-powered assault rifle.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Buildings, Defenses
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Calls airstrike on targeted structures
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -1779,7 +1852,10 @@ MORT:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 250
 		Prerequisites: ~stolentech.hand
-		Description: Infantry armed with a Chemical Mortar.\n  Strong vs Buildings, Infantry\n  Weak vs Vehicles, Aircraft
+		Description: Infantry armed with a Chemical Mortar.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Infantry
+		Weaknesses: • Weak vs Vehicles\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Valued:
 		Cost: 250
 	Tooltip:
@@ -1820,7 +1896,11 @@ SAB:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 140
 		Prerequisites: anyradar, ~hand, ~techlevel.medium
-		Description: Covert infantry. Infiltrates enemy structures and steals technology.\n  Can detect spies and cloaked units.\n  Special Ability: Infiltrate\n  Special Ability: Stealth (Limited)
+		Description: Covert infantry.\n  Infiltrates enemy structures and steals technology.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry
+		Weaknesses: • Can only attack Infantry
+		Attributes: • Can detect spies and cloaked units\n• Special Ability: Stealth (Timed)
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -1907,7 +1987,11 @@ ACOL:
 		BuildPaletteOrder: 180
 		IconPalette: chrometd
 		Prerequisites: anyradar, obli, ~infantry.marked, ~!cyborg.production, ~techlevel.high
-		Description: Elite infantry with a laser weapon.\n  Strong vs Infantry, Light Armor\n  Weak vs Aircraft\n  Special Ability: Regains health on tiberium
+		Description: Cyborg infantry with a laser weapon.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Heals on Tiberium
 	Valued:
 		Cost: 450
 	Tooltip:
@@ -2024,7 +2108,11 @@ JJET:
 		BuildPaletteOrder: 150
 		Prerequisites: anyradar, ~pyle, ~!bjet.upgrade, ~techlevel.infonly
 		IconPalette: chrometd
-		Description: Flying general-purpose infantry.\n Can detect cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Aircraft
+		Description: Flying general-purpose infantry.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
+		Attributes: • Can detect cloaked units
 	Valued:
 		Cost: 350
 	Tooltip:
@@ -2172,7 +2260,11 @@ BJET:
 	Buildable:
 		Prerequisites: anyradar, ~pyle, ~bjet.upgrade, ~techlevel.infonly
 		IconPalette: chrometd
-		Description: Flying infantry with a grenade launcher.\n Can detect cloaked units.\n  Strong vs Buildings, Defenses\n  Weak vs Vehicles, Aircraft
+		Description: Flying infantry with a grenade launcher.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Light Armor
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
+		Attributes: • Can detect cloaked units
 	Tooltip:
 		Name: Bombardier
 	Armament@AIRBORNE:
@@ -2247,7 +2339,11 @@ E8:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 130
 		Prerequisites: ~infantry.iraq, ttur, anyradar, ~techlevel.infonly
-		Description: Anti-infantry unit.\n  Strong vs Infantry, Light Armor\n  Weak vs Tanks, Aircraft\n  Special Ability: Desolate Ground\n  Special Ability: Irradiates Vehicles
+		Description: Anti-infantry unit with radiation based weaponry.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
+		Attributes: • Irradiates vehicles causing them to damage nearby units\n• Special Ability: Desolate Ground
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -2350,7 +2446,11 @@ N1C:
 		BuildPaletteOrder: 13
 		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.medium
 		IconPalette: chrometd
-		Description: General-purpose cyborg infantry\n  Strong vs Infantry\n  Weak vs Vehicles, Artillery
+		Description: General-purpose cyborg infantry.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
+		Attributes: • Heals on Tiberium
 	Valued:
 		Cost: 250
 	Tooltip:
@@ -2394,7 +2494,11 @@ N3C:
 		BuildPaletteOrder: 23
 		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Anti-tank cyborg infantry\n  Strong vs Tanks, Aircraft\n  Weak vs Infantry, Artillery
+		Description: Anti-tank/anti-aircraft cyborg infantry.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Aircraft, Buildings, Defenses
+		Weaknesses: • Weak vs Infantry, Light Armor
+		Attributes: • Heals on Tiberium
 	Valued:
 		Cost: 400
 	Tooltip:
@@ -2492,7 +2596,11 @@ RMBC:
 		BuildPaletteOrder: 230
 		Prerequisites: tmpp, ~infantry.cyborg, ~techlevel.high
 		IconPalette: chrometd
-		Description: Elite cyborg infantry unit armed with\na plasma cannon.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft
+		Description: Elite cyborg infantry unit armed with\n  a plasma cannon.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Heals on Tiberium
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -2567,7 +2675,10 @@ IVAN:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 32
 		Prerequisites: ~infantry.ukraine, weap, ~techlevel.infonly
-		Description: Specialist demolition infantry armed with explosives.\n  Strong vs Buildings\n  Weak vs Aircraft
+		Description: Specialist demolition infantry armed with explosives.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Light Armor
+		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -2624,7 +2735,11 @@ BRUT:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 85
 		Prerequisites: anyradar, ~infantry.yuri, ~techlevel.infonly
-		Description: Genetically engineered hulk.\n  Strong vs Vehicles\n  Weak vs Aircraft, Defenses
+		Description: Melee range genetically engineered hulk.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Immune to mind control
 	RenderSprites:
 	Valued:
 		Cost: 500
@@ -2965,7 +3080,10 @@ BH:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 150
 		Prerequisites: anyradar, ~infantry.blackh, ~techlevel.infonly
-		Description: Elite precision flamethrower unit.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
+		Description: Elite precision anti-tank flamethrower unit.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Buildings, Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -3026,7 +3144,11 @@ YURI:
 		BuildPaletteOrder: 190
 		Prerequisites: ~barr, stek, ~infantry.yuri, ~techlevel.infonly
 		BuildLimit: 1
-		Description: Elite specialist infantry.\n  Can mind-control enemy units and defenses.\n  Can detect cloaked units.\n  Maximum 1 can be trained.\n  Strong vs Infantry, Vehicles, Defenses\n  Weak vs Aircraft\n  Special Ability: Mind Blast
+		Description: Elite specialist infantry able to.\n  mind-control enemy units and defenses.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Vehicles, Defenses, Buildings
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Special Ability: Mind Blast
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -3136,7 +3258,11 @@ SEAL:
 		Queue: Infantry
 		IconPalette: chrome
 		BuildLimit: -1
-		Description: Elite infantry unit. Armed with\na SMG and C4.\n  Can detect cloaked units.\n  Strong vs Infantry, Buildings\n  Weak vs Aircraft\n  Special Ability: C4 Explosives
+		Description: Elite infantry armed with an SMG and C4.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Buildings
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Can detect cloaked units\n• Plants C4 to destroy structures and vehicles
 	Voiced:
 		VoiceSet: SealVoice
 	Mobile:

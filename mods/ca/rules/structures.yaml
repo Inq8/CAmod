@@ -13,7 +13,9 @@ MSLO:
 		BuildPaletteOrder: 140
 		Prerequisites: stek, ~techlevel.unrestricted, ~structures.soviet
 		BuildLimit: 1
-		Description: Provides an atomic bomb.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Atom Bomb
+		Description: Provides an atomic bomb.
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Atom Bomb
 	Building:
 		Footprint: xx
 		Dimensions: 2,1
@@ -353,7 +355,9 @@ IRON:
 		BuildPaletteOrder: 130
 		Prerequisites: stek, ~structures.soviet, ~techlevel.unrestricted
 		BuildLimit: 1
-		Description: Makes a group of units invulnerable\nfor a short time.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Iron Curtain
+		Description: Makes a group of units invulnerable\nfor a short time.
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Iron Curtain
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -426,7 +430,9 @@ PDOX:
 		BuildPaletteOrder: 120
 		Prerequisites: atek, ~structures.allies, ~techlevel.unrestricted
 		BuildLimit: 1
-		Description: Teleports a group of units across the\nmap for a short time.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Chronoshift
+		Description: Teleports a group of units across the\nmap for a short time.
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Chronoshift
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -553,7 +559,11 @@ TSLA:
 		Queue: Defense
 		BuildPaletteOrder: 80
 		Prerequisites: vehicles.any, ~structures.soviet, ~techlevel.high
-		Description: Advanced base defense.\n  Can be buffed or made work during low power by Shock Troopers.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft
+		Description: Advanced base defense.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Requires power to operate\n• Can detect cloaked units\n• Can be buffed or made work during low power by Shock Troopers
 	Valued:
 		Cost: 1200
 	Tooltip:
@@ -631,7 +641,11 @@ AGUN:
 		Queue: Defense
 		BuildPaletteOrder: 90
 		Prerequisites: anyradar, ~structures.allies, ~techlevel.medium
-		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Strong vs Aircraft\n  Weak vs Ground Units
+		Description: Anti-aircraft base defense.
+	TooltipExtras:
+		Strengths: • Strong vs Aircraft
+		Weaknesses: • Cannot attack ground units
+		Attributes: • Requires power to operate\n• Can detect cloaked aircraft
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -691,7 +705,9 @@ DOME:
 		Queue: Building
 		BuildPaletteOrder: 90
 		Prerequisites: anyrefinery, ~structures.ra, ~techlevel.medium
-		Description: Provides an overview of the battlefield.\n  Requires power to operate.
+		Description: Provides an overview of the battlefield.
+	TooltipExtras:
+		Attributes: • Requires power to operate
 	Valued:
 		Cost: 1800
 	Tooltip:
@@ -815,7 +831,11 @@ PBOX:
 		Queue: Defense
 		BuildPaletteOrder: 40
 		Prerequisites: infantry.any, ~structures.pbox, ~techlevel.low
-		Description: Anti-infantry base defense.\n  Can detect cloaked units.\n  Strong vs Infantry, Light Armor\n  Weak vs Tanks, Aircraft
+		Description: Anti-infantry base defense.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+		Attributes: • Can detect cloaked units
 	Valued:
 		Cost: 600
 	CustomSellValue:
@@ -861,7 +881,11 @@ HBOX:
 		Queue: Defense
 		BuildPaletteOrder: 50
 		Prerequisites: infantry.any, ~structures.england, ~techlevel.low
-		Description: Anti-infantry base defense.\n  Can detect cloaked units.\n  Strong vs Infantry, Light Armor\n  Weak vs Tanks, Aircraft
+		Description: Anti-infantry base defense.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+		Attributes: • Can detect cloaked units\n• Camouflaged when idle
 	Valued:
 		Cost: 700
 	CustomSellValue:
@@ -912,7 +936,11 @@ GUN:
 		Queue: Defense
 		BuildPaletteOrder: 70
 		Prerequisites: infantry.any, ~structures.allies, ~techlevel.medium
-		Description: Basic anti-tank base defense.\n  Can detect cloaked units.\n  Strong vs Tanks, Vehicles\n  Weak vs Infantry
+		Description: Basic anti-tank base defense.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor
+		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
+		Attributes: • Can detect cloaked units
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -961,7 +989,11 @@ FTUR:
 		Queue: Defense
 		BuildPaletteOrder: 60
 		Prerequisites: infantry.any, ~structures.ftur, ~techlevel.low
-		Description: Anti-infantry base defense.\n  Can detect cloaked units.\n  Strong vs Infantry, Light Armor\n  Weak vs Tanks, Aircraft
+		Description: Anti-infantry base defense.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
+		Attributes: • Can detect cloaked units
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -1014,7 +1046,11 @@ SAM:
 		Queue: Defense
 		BuildPaletteOrder: 100
 		Prerequisites: anyradar, ~structures.soviet, ~techlevel.medium
-		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Can detect cloaked aircraft.\n  Strong vs Aircraft\n  Weak vs Ground Units
+		Description: Anti-aircraft base defense.
+	TooltipExtras:
+		Strengths: • Strong vs Aircraft
+		Weaknesses: • Cannot attack ground units
+		Attributes: • Requires power to operate\n• Can detect cloaked aircraft
 	Valued:
 		Cost: 700
 	Tooltip:
@@ -1069,7 +1105,9 @@ ATEK:
 		Queue: Building
 		BuildPaletteOrder: 140
 		Prerequisites: vehicles.any, anyradar, ~structures.allies, ~techlevel.high
-		Description: Provides Allied advanced technologies.\n  Special Ability: GPS Satellite
+		Description: Provides Allied advanced technologies.
+	TooltipExtras:
+		Attributes: • Requires power to operate\n• Special Ability: GPS Satellite
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -1721,7 +1759,9 @@ AFLD:
 		Queue: Building
 		BuildPaletteOrder: 130
 		Prerequisites: anyradar, ~structures.soviet, ~techlevel.low
-		Description: Produces and reloads aircraft.\n  Special Ability: Spy Plane\n  Special Ability: Paratroopers
+		Description: Produces and reloads aircraft.
+	TooltipExtras:
+		Attributes: • Special Ability: Spy Plane
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -1992,7 +2032,7 @@ APWR:
 		Queue: Building
 		BuildPaletteOrder: 110
 		Prerequisites: anyradar, ~techlevel.medium, ~structures.apwr
-		Description: Provides double the power of\na standard Power Plant.
+		Description: Provides double the power of\n  a standard Power Plant.
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2028,7 +2068,10 @@ TPWR:
 	Inherits: APWR
 	Buildable:
 		Prerequisites: anyradar, ~techlevel.medium, ~structures.russia
-		Description: Provides double the power of\na standard Power Plant.\n  Special Ability: Overload (Toggle)\n  Warning: Unstable when damaged and overloaded.
+		Description: Provides double the power of\n  a standard Power Plant.
+	TooltipExtras:
+		Weaknesses: • Unstable when damaged and overloaded.
+		Attributes: • Special Ability: Overload (toggled)
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -3282,7 +3325,7 @@ NUK2:
 		BuildPaletteOrder: 110
 		Prerequisites: anyradar, ~structures.td, ~techlevel.low
 		IconPalette: chrometd
-		Description: Provides double the power of\na standard Nuclear Power Plant.
+		Description: Provides double the power of\n  a standard Nuclear Power Plant.
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -3460,7 +3503,11 @@ NSAM:
 		Queue: Defense
 		BuildPaletteOrder: 100
 		Prerequisites: anyradar, ~structures.nod, ~techlevel.medium
-		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Can detect cloaked aircraft.\n  Strong vs Aircraft\n  Cannot target Ground Units.
+		Description: Anti-aircraft base defense.
+	TooltipExtras:
+		Strengths: • Strong vs Aircraft
+		Weaknesses: • Cannot attack ground units
+		Attributes: • Requires power to operate\n• Can detect cloaked aircraft
 	Valued:
 		Cost: 700
 	Tooltip:
@@ -3514,7 +3561,11 @@ GTWR:
 		BuildPaletteOrder: 50
 		Prerequisites: infantry.any, ~structures.gdi, ~techlevel.low
 		IconPalette: chrometd
-		Description: Anti-infantry base defense.\n  Can detect cloaked units.\n  Strong vs Infantry, Light Armor\n  Weak vs Tanks
+		Description: Anti-infantry base defense.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+		Attributes: • Can detect cloaked units
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -3557,7 +3608,11 @@ ATWR:
 		BuildPaletteOrder: 80
 		Prerequisites: anyradar, ~structures.atwr, ~techlevel.high
 		IconPalette: chrometd
-		Description: Advanced base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
+		Description: Advanced base defense.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Requires power to operate\n• Can detect cloaked units
 	Valued:
 		Cost: 1000
 	Tooltip:
@@ -3601,7 +3656,11 @@ STWR:
 		Queue: Defense
 		BuildPaletteOrder: 80
 		Prerequisites: anyradar, ~structures.zocom, ~techlevel.high
-		Description: Advanced base defense that emits devastating sonic shockwaves.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
+		Description: Advanced base defense that emits devastating sonic shockwaves.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Requires power to operate\n• Can detect cloaked units
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -3657,7 +3716,11 @@ OBLI:
 		BuildPaletteOrder: 80
 		Prerequisites: anyradar, ~structures.nod, ~techlevel.high
 		IconPalette: chrometd
-		Description: Advanced experimental base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
+		Description: Advanced experimental base defense.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Requires power to operate\n• Can detect cloaked units
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -3727,7 +3790,9 @@ HQ:
 		BuildPaletteOrder: 90
 		Prerequisites: anyrefinery, ~structures.td, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Provides an overview of the battlefield.\n  Requires power to operate.
+		Description: Provides an overview of the battlefield.
+	TooltipExtras:
+		Attributes: • Requires power to operate
 	Valued:
 		Cost: 1800
 	Tooltip:
@@ -3944,7 +4009,9 @@ EYE:
 		Prerequisites: gtek, ~structures.gdi, ~techlevel.unrestricted
 		IconPalette: chrometd
 		BuildLimit: 1
-		Description: Provides radar and Orbital Ion Cannon support power.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Ion Cannon
+		Description: Provides radar and Orbital Ion Cannon support power.
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Ion Cannon
 	Valued:
 		Cost: 2500
 	Tooltip:
@@ -4382,7 +4449,9 @@ AFLD.GDI:
 		Queue: Building
 		BuildPaletteOrder: 130
 		Prerequisites: anyradar, ~structures.gdi, ~techlevel.high
-		Description: Produces and reloads aircraft.\n  Special Ability: Recon Drone
+		Description: Produces and reloads aircraft.
+	TooltipExtras:
+		Attributes: • Special Ability: Recon Drone\n• Interceptors
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -4620,7 +4689,9 @@ TMPL:
 		BuildPaletteOrder: 140
 		Prerequisites: vehicles.any, anyradar, ~structures.nod, ~techlevel.high
 		IconPalette: chrometd
-		Description: Provides Nod advanced technologies.\n  Requires power to operate.\n  Special Ability: Cluster Missile
+		Description: Provides Nod advanced technologies.
+	TooltipExtras:
+		Attributes: • Requires power to operate\n• Special Ability: Cluster Missile
 	Building:
 		Footprint: xxx xxx ===
 		Dimensions: 3,3
@@ -4772,7 +4843,11 @@ PRIS:
 		Queue: Defense
 		BuildPaletteOrder: 90
 		Prerequisites: anyradar, ~structures.pris, ~techlevel.high
-		Description: Advanced experimental base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
+		Description: Advanced experimental base defense.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Requires power to operate\n• Can detect cloaked units\n• Beam can chain with nearby Prism Towers
 	Valued:
 		Cost: 1300
 	Tooltip:
@@ -5026,7 +5101,11 @@ HTUR:
 		Queue: Defense
 		BuildPaletteOrder: 100
 		Prerequisites: anyradar, ~structures.france, ~techlevel.high
-		Description: Artillery base defense.\n  Requires power to operate.\n  Can detect cloaked units.\n  Strong vs Ground Units\n  Weak vs Aircraft
+		Description: Artillery base defense.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Cannot attack Aircraft\n• Cannot hit targets at point-blank range
+		Attributes: • Requires power to operate\n• Can detect cloaked units
 	Valued:
 		Cost: 1650
 	Tooltip:
@@ -5098,7 +5177,11 @@ LTUR:
 	Buildable:
 		BuildPaletteOrder: 60
 		Prerequisites: infantry.any, ~structures.nod, ~techlevel.low
-		Description: Anti-infantry base defense.\n  Can detect cloaked units.\n  Strong vs Infantry, Light armor\n  Weak vs Tanks, Aircraft
+		Description: Anti-infantry base defense.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+		Attributes: • Can detect cloaked units
 	Turreted:
 		InitialFacing: 128
 	-WithTurretAttackAnimation:
@@ -5127,7 +5210,11 @@ TTUR:
 		BuildPaletteOrder: 60
 		Prerequisites: infantry.any, ~structures.iraq, ~techlevel.low
 		IconPalette: chrometd
-		Description: Anti-infantry base defense.\n  Can detect cloaked units.\n  Strong vs Infantry, Light armor\n  Weak vs Tanks, Aircraft
+		Description: Anti-infantry base defense.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
+		Attributes: • Can detect cloaked units
 	Valued:
 		Cost: 650
 	Tooltip:
@@ -5176,7 +5263,9 @@ SGEN:
 		Prerequisites: tmpl, ~structures.nod, ~techlevel.unrestricted
 		BuildLimit: 1
 		IconPalette: chrometd
-		Description: Makes a group of units/structures invisible for a short time.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Tiberium Stealth
+		Description: Makes a group of units/structures invisible for a short time.
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Tiberium Stealth
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -5258,7 +5347,6 @@ CRAM:
 	Buildable:
 		Prerequisites: anyradar, ~structures.gdi, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Anti-aircraft base defense.\n  Requires power to operate.\n  Can detect cloaked aircraft.\n  Strong vs Aircraft\n  Weak vs Ground Units
 	-Armament:
 	-WithTurretAttackAnimation:
 	Armament@GAT0:
@@ -5407,7 +5495,9 @@ PATR:
 		Prerequisites: gtek, ~structures.gdi, ~techlevel.unrestricted
 		BuildLimit: 1
 		IconPalette: chrometd
-		Description: Launches E.M. Pulse Missiles that disable vehicles & structures.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: E.M. Pulse Missile
+		Description: Launches E.M. Pulse Missiles that disable vehicles & structures.
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: E.M. Pulse Missile
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -5513,8 +5603,10 @@ INDP:
 		Queue: Building
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.soviet, stek, ~techlevel.high
-		Description: Vehicles & aircraft are produced 15% faster and cost 5% less.\n  Maximum 1 can be built.\n  Cannot be captured or hacked.
+		Description: Vehicles & aircraft are produced 15% faster and cost 5% less.
 		BuildLimit: 1
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
 	Valued:
 		Cost: 2500
 	-Capturable:
@@ -5594,8 +5686,10 @@ OREP:
 		Queue: Building
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.allies, atek, ~techlevel.high
-		Description: Refines income from ore, gems & tiberium by 5%.\nProvides access to advanced chrono harvester technology.\n  Maximum 1 can be built.\n  Cannot be captured or hacked.
+		Description: Refines ore, gems & Tiberium, increasing income by 5%.\n  Provides access to advanced chrono harvester technology.
 		BuildLimit: 1
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
 	-Capturable:
 	-CaptureNotification:
 	-CapturableProgressBar:
@@ -5671,9 +5765,11 @@ UPGC:
 		Queue: Building
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.gdi, gtek, ~techlevel.high
-		Description: Allows the construction of advanced weaponry and upgrades.\n  Maximum 1 can be built.\n  Cannot be captured or hacked.
+		Description: Allows the construction of advanced weaponry and upgrades.
 		BuildLimit: 1
 		IconPalette: chrometd
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
 	-Capturable:
 	-CaptureNotification:
 	-CapturableProgressBar:
@@ -5916,8 +6012,10 @@ UPGC.BOMB:
 		Queue: Upgrade
 		BuildPaletteOrder: 3
 		Prerequisites: upgc, !upgc.plugged, bombard2.strat, ~bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
-		Description: Provides an napalm rocket barrage.\n\n  + Increases the Strategy: Bombardment unit bonus by a further 5%.
+		Description: Provides an napalm rocket barrage.
 		IconPalette: chrometd
+	TooltipExtras:
+		Strengths: + Increases unit firepower by a further 5%\n+ Unlocks Firestorm Missile Barrage power
 	Plug:
 		Type: tower.rocket
 	Power:
@@ -5933,8 +6031,10 @@ UPGC.SEEK:
 		Queue: Upgrade
 		BuildPaletteOrder: 6
 		Prerequisites: upgc, !upgc.plugged, seek2.strat, ~seek.strat, ~!bombard.strat, ~!hold.strat, ~techlevel.high
-		Description: Provides detailed information on enemy locations.\n\n  + Increases the Strategy: Seek & Destroy unit bonus by a further 5%.
+		Description: Provides detailed information on enemy locations.
 		IconPalette: chrometd
+	TooltipExtras:
+		Strengths: + Increases unit speed and weapon range by a further 5%\n+ Unlocks Advanced Radar Scan power
 	Plug:
 		Type: tower.radar
 	Power:
@@ -5950,8 +6050,10 @@ UPGC.HOLD:
 		Queue: Upgrade
 		BuildPaletteOrder: 9
 		Prerequisites: upgc, !upgc.plugged, hold2.strat, ~hold.strat, ~!bombard.strat, ~!seek.strat, ~techlevel.high
-		Description: Provides the ability to rapidly repair friendly structures.\n\n  + Increases the Strategy: Hold the Line unit bonus by a further 5%.
+		Description: Provides the ability to shield units in an area
 		IconPalette: chrometd
+	TooltipExtras:
+		Strengths: + Increases unit armor by a further 5%\n+ Unlocks Nanite Shield power
 	Plug:
 		Type: tower.shield
 	Power:
@@ -6008,8 +6110,10 @@ TMPP:
 		BuildPaletteOrder: 200
 		IconPalette: chrometd
 		Prerequisites: ~structures.nod, tmpl, ~techlevel.high
-		Description: Provides access to cybernetic upgrades.\n  Maximum 1 can be built.\n  Cannot be captured or hacked.\n  Special Ability: Cyborg Converter (Requires Upgrade)
+		Description: Provides access to cybernetic upgrades.
 		BuildLimit: 1
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked\n• Special Ability: Cyborg Converter (with upgrade)
 	-Capturable:
 	-CaptureNotification:
 	-CapturableProgressBar:
@@ -6081,7 +6185,9 @@ MSLO.Nod:
 		IconPalette: chrometd
 		Prerequisites: tmpl, ~techlevel.unrestricted, ~structures.nod
 		BuildLimit: 1
-		Description: Provides a chemical missile.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Chemical Missile
+		Description: Provides a chemical missile.
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Chemical Missile
 	Building:
 		Footprint: xx
 		Dimensions: 2,1
@@ -6160,7 +6266,9 @@ WEAT:
 		BuildPaletteOrder: 130
 		Prerequisites: atek, ~structures.allies, ~techlevel.unrestricted
 		BuildLimit: 1
-		Description: Provides Lightning Storm support power.\n  Requires power to operate.\n  Maximum 1 can be built.\n  Special Ability: Lightning Storm
+		Description: Provides Lightning Storm support power.
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Lightning Storm
 	Valued:
 		Cost: 2500
 	Tooltip:
