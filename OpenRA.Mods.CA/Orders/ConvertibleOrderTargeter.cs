@@ -11,7 +11,6 @@
 
 using OpenRA.Mods.CA.Traits.UnitConverter;
 using OpenRA.Mods.Common.Orders;
-using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Orders
@@ -36,9 +35,6 @@ namespace OpenRA.Mods.CA.Orders
 				return false;
 
 			if (target.Trait<UnitConverter>().IsTraitDisabled)
-				return false;
-
-			if (self.Owner.PlayerActor.Trait<PlayerResources>().Cash <= 0)
 				return false;
 
 			if (self.Owner != target.Owner)

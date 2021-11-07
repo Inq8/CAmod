@@ -7,7 +7,10 @@ V2RL:
 		Queue: Vehicle
 		BuildPaletteOrder: 170
 		Prerequisites: anyradar, ~vehicles.v2, ~v2.upgrade, ~techlevel.medium
-		Description: Long-range rocket artillery.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Vehicles, Aircraft
+		Description: Long-range rocket artillery.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
+		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Valued:
 		Cost: 900
 	Tooltip:
@@ -59,7 +62,10 @@ KATY:
 		BuildPaletteOrder: 171
 		IconPalette: chrometd
 		Prerequisites: anyradar, ~vehicles.soviet, ~!v2.upgrade, ~techlevel.medium
-		Description: Long-range rocket artillery.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Vehicles, Aircraft
+		Description: Long-range rocket artillery.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
+		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -99,7 +105,11 @@ KATY:
 		Queue: Vehicle
 		BuildPaletteOrder: 50
 		Prerequisites: ~vehicles.allies, ~techlevel.low
-		Description: Fast tank, good for scouting.\n  Strong vs Vehicles\n  Weak vs Infantry, Defenses, Aircraft\n  Special Ability: Amphibious
+		Description: Fast tank, good for scouting.
+	TooltipExtras:
+		Strengths: • Strong vs Light Armor
+		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
+		Attributes: • Amphibious
 	Valued:
 		Cost: 650
 	Tooltip:
@@ -162,7 +172,10 @@ KATY:
 		Queue: Vehicle
 		BuildPaletteOrder: 70
 		Prerequisites: ~vehicles.2tnk, ~techlevel.low
-		Description: Allied main battle tank.\n  Strong vs Vehicles\n  Weak vs Infantry, Defenses, Aircraft
+		Description: Allied main battle tank.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -250,6 +263,9 @@ GTNK.squad:
 		BuildPaletteOrder: 1000
 		Prerequisites: dome, ~vehicles.usa, ~techlevel.low
 		Description: Prepare a pair of  Grizzly Tanks for airdrop.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 1750
 	RenderSprites:
@@ -260,6 +276,8 @@ GTNK.squad:
 		OneShot: true
 		AutoFire: true
 		AllowMultiple: true
+	Armor:
+		Type: Heavy
 
 2TNK.Chrono:
 	Inherits: 2TNK
@@ -481,7 +499,10 @@ GTNK.squad:
 		Queue: Vehicle
 		BuildPaletteOrder: 90
 		Prerequisites: ~!iraqtank.upgrade, ~!lasher.upgrade, ~vehicles.3tnk, ~techlevel.low
-		Description: Soviet main battle tank with dual cannons.\n  Strong vs Vehicles\n  Weak vs Infantry, Defenses, Aircraft
+		Description: Soviet main battle tank with dual cannons.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 1150
 	Tooltip:
@@ -597,7 +618,6 @@ GTNK.squad:
 		Queue: Vehicle
 		BuildPaletteOrder: 91
 		Prerequisites: ~iraqtank.upgrade, ~vehicles.3tnk, ~techlevel.low
-		Description: Soviet main battle tank with dual cannons.\n  Strong vs Vehicles\n  Weak vs Infantry, Defenses, Aircraft
 	Valued:
 		Cost: 1150
 	Tooltip:
@@ -649,7 +669,9 @@ GTNK.squad:
 		Queue: Vehicle
 		BuildPaletteOrder: 91
 		Prerequisites: ~lasher.upgrade, ~vehicles.3tnk, ~techlevel.low
-		Description: Heavy tank with infantry crushing improvements.\n  Strong vs Vehicles\n  Weak vs Defenses, Aircraft
+		Description: Heavy tank with infantry crushing improvements.
+	TooltipExtras:
+		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
 	Tooltip:
 		Name: Lasher Tank
 		-RequiresCondition:
@@ -707,7 +729,11 @@ GTNK.squad:
 		Queue: Vehicle
 		BuildPaletteOrder: 290
 		Prerequisites: stek, ~vehicles.soviet, ~!iraqtank.upgrade, ~techlevel.high
-		Description: Big and slow tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
+		Description: Big and slow tank with anti-air capability.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Weak vs Defenses
+		Attributes: • Can crush concrete walls
 	Valued:
 		Cost: 1700
 	Tooltip:
@@ -804,7 +830,11 @@ GTNK.squad:
 		Queue: Vehicle
 		BuildPaletteOrder: 291
 		Prerequisites: stek, ~vehicles.soviet, ~iraqtank.upgrade, ~techlevel.high
-		Description: Big and slow tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry, Aircraft\n  Weak vs Nothing
+		Description: Big and slow tank with anti-air capability.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Weak vs Defenses
+		Attributes: • Can crush concrete walls
 	Valued:
 		Cost: 1700
 	Tooltip:
@@ -875,7 +905,10 @@ ARTY:
 		Queue: Vehicle
 		BuildPaletteOrder: 100
 		Prerequisites: ~vehicles.allies, ~techlevel.medium
-		Description: Long-range artillery.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Vehicles, Aircraft
+		Description: Long-range artillery.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
+		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Valued:
 		Cost: 550
 	Tooltip:
@@ -1029,7 +1062,11 @@ ISU:
 		Queue: Vehicle
 		BuildPaletteOrder: 180
 		Prerequisites: anyradar, ~vehicles.ukraine, ~techlevel.medium
-		Description: Powerful medium-range artillery.\n  Strong vs Defenses, Buildings, Infantry\n  Weak vs Aircraft\n  Special Ability: Concussion Shells
+		Description: Powerful medium-range artillery.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
+		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
+		Attributes: • Concussion shells slow enemy movement and rate of fire
 	Valued:
 		Cost: 1250
 	Tooltip:
@@ -1081,7 +1118,10 @@ SPEC:
 	Buildable:
 		BuildPaletteOrder: 241
 		Prerequisites: tmpl, ~vehicles.shadow, ~techlevel.medium
-		Description: Long-range stealth artillery.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Vehicles, Aircraft
+		Description: Long-range stealth artillery.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Valued:
 		Cost: 1200
 	Tooltip:
@@ -1128,7 +1168,10 @@ SAPC:
 		Queue: Vehicle
 		BuildPaletteOrder: 255
 		Prerequisites: tmpl, infantry.any, ~vehicles.nod, ~techlevel.high
-		Description: Stealth infantry transport.\n  Strong vs Infantry\n  Weak vs Tanks, Buildings, Defenses, Aircraft
+		Description: Stealth infantry transport.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 1100
 	Tooltip:
@@ -1203,7 +1246,9 @@ HARV:
 		Queue: Vehicle
 		BuildPaletteOrder: 10
 		Prerequisites: anyrefinery, ~vehicles.ra, ~!charv.upgrade, ~techlevel.infonly
-		Description: Collects Ore, Gems and Tiberium for processing.\n  Unarmed
+		Description: Collects Ore, Gems and Tiberium for processing.
+	TooltipExtras:
+		Weaknesses: • Unarmed
 	Valued:
 		Cost: 1400
 	Tooltip:
@@ -1288,7 +1333,8 @@ HARV.Chrono:
 	Buildable:
 		BuildPaletteOrder: 11
 		Prerequisites: anyrefinery, ~charv.upgrade, ~vehicles.allies, ~techlevel.high
-		Description: Collects Ore, Gems and Tiberium for processing.\n  Unarmed\n  Special Ability: Teleport
+	TooltipExtras:
+		Attributes: • Teleports back to refinery
 	RenderSprites:
 		Image: charv
 	Tooltip:
@@ -1326,8 +1372,10 @@ MCV:
 		Queue: Vehicle
 		BuildPaletteOrder: 500
 		Prerequisites: repair, ~vehicles.ra, ~techlevel.medium
-		Description: Deploys into another Construction Yard.\n  Unarmed
+		Description: Deploys into another Construction Yard.
 		BuildDurationModifier: 50
+	TooltipExtras:
+		Weaknesses: • Unarmed
 	Valued:
 		Cost: 3000
 	Tooltip:
@@ -1372,7 +1420,11 @@ JEEP:
 		Queue: Vehicle
 		BuildPaletteOrder: 20
 		Prerequisites: ~vehicles.allies, ~techlevel.low
-		Description: Fast scout & anti-infantry vehicle.\n  Can detect spies and cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Buildings, Defenses, Aircraft
+		Description: Fast scout & anti-infantry vehicle.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
+		Attributes: • Can detect spies and cloaked units.
 	Valued:
 		Cost: 400
 	Tooltip:
@@ -1422,7 +1474,10 @@ APC:
 		Queue: Vehicle
 		BuildPaletteOrder: 40
 		Prerequisites: infantry.any, ~vehicles.allies, ~techlevel.low
-		Description: Tough infantry transport.\n  Strong vs Infantry\n  Weak vs Tanks, Buildings, Defenses, Aircraft
+		Description: Tough infantry transport.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -1480,7 +1535,10 @@ MNLY:
 		Queue: Vehicle
 		BuildPaletteOrder: 440
 		Prerequisites: repair, ~techlevel.medium, ~vehicles.human
-		Description: Lays mines to destroy unwary enemy units.\n  Can detect mines.\n  Unarmed
+		Description: Lays mines to destroy unwary enemy units.
+	TooltipExtras:
+		Weaknesses: • Unarmed
+		Attributes: • Can detect mines.
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -1533,7 +1591,10 @@ TRUK:
 		Queue: Vehicle
 		BuildPaletteOrder: 450
 		Prerequisites: ~techlevel.low, ~vehicles.human
-		Description: Transports cash to other players.\n  Unarmed
+		Description: Transports cash to other players.
+		BuildDurationModifier: 30
+	TooltipExtras:
+		Weaknesses: • Unarmed
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -1584,7 +1645,10 @@ MGG:
 		BuildPaletteOrder: 380
 		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
 		BuildDurationModifier: 50
-		Description: Regenerates the shroud nearby, obscuring the area.\n  Unarmed
+		Description: Regenerates the shroud nearby, obscuring the area.
+	TooltipExtras:
+		Weaknesses: • Unarmed
+		Attributes: • Special Ability: Toggle Gap Generator
 	Valued:
 		Cost: 1000
 	Tooltip:
@@ -1602,7 +1666,7 @@ MGG:
 	WithIdleOverlay@SPINNER:
 		Offset: -299,0,171
 		Sequence: spinner
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || mgg-disabled
 		RequiresCondition: !pickedup
 	RevealsShroud:
 		MinRange: 4c0
@@ -1612,8 +1676,10 @@ MGG:
 		Range: 4c0
 	CreatesShroud:
 		Range: 7c0
-		RequiresCondition: !empdisable && !being-warped
-	RenderShroudCircle:
+		RequiresCondition: !empdisable && !being-warped && !mgg-disabled
+	RenderShroudCircleCA:
+		Color: 999999AA
+		RequiresCondition: !empdisable && !being-warped && !mgg-disabled
 	SpawnActorOnDeath:
 		Actor: MGG.Husk
 		RequiresCondition: !being-warped
@@ -1622,6 +1688,8 @@ MGG:
 	AttackOmni:
 	GuardsSelection:
 		RequiresCondition: !stance-attackanything
+	GrantConditionOnDeploy:
+		DeployedCondition: mgg-disabled
 
 MRJ:
 	Inherits: ^Vehicle
@@ -1637,7 +1705,10 @@ MRJ:
 		BuildPaletteOrder: 360
 		Prerequisites: techcenter, ~vehicles.mrj, ~techlevel.high
 		BuildDurationModifier: 50
-		Description: Jams nearby enemy radar systems.\n  Unarmed\n  Special Ability: Jams Missile-Lock Systems
+		Description: Support vehicle that jams enemy radar and guided missiles.
+	TooltipExtras:
+		Weaknesses: • Unarmed
+		Attributes: • Jams incoming guided missiles\n• Jams nearby enemy radar
 	Health:
 		HP: 22000
 	Armor:
@@ -1675,7 +1746,10 @@ MSG:
 		Queue: Vehicle
 		BuildPaletteOrder: 385
 		Prerequisites: anyradar, ~vehicles.shadow, ~techlevel.high
-		Description: Cloaks nearby units and buildings.\n  Unarmed
+		Description: Support unit that projects a cloaking field.
+	TooltipExtras:
+		Weaknesses: • Unarmed
+		Attributes: • Special Ability: Deploys to cloak nearby units and structures
 	Valued:
 		Cost: 1250
 	Tooltip:
@@ -1753,7 +1827,11 @@ TTRA:
 		Queue: Vehicle
 		BuildPaletteOrder: 235
 		Prerequisites: structures.tsla, stek, ~vehicles.soviet, ~techlevel.medium
-		Description: Half-track with mounted Tesla coil.\n  Strong vs Infantry, Vehicles\n  Weak vs Aircraft\n  Special Ability: Jams Radar
+		Description: Half-track with mounted Tesla Coil.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Heavy Armor, Light Armor
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Jams nearby enemy radar
 	Valued:
 		Cost: 1250
 	Tooltip:
@@ -1816,7 +1894,10 @@ TTNK:
 		Queue: Vehicle
 		BuildPaletteOrder: 200
 		Prerequisites: structures.tsla, anyradar, ~vehicles.russia, ~techlevel.medium
-		Description: Tank with twin mounted Tesla coils.\n  Strong vs Vehicles, Infantry\n  Weak vs Aircraft
+		Description: Tank with twin mounted Tesla Coils.
+	TooltipExtras:
+		Strengths: Strong vs Infantry, Heavy Armor, Light Armor
+		Weaknesses: • Cannot attack Aircraft
 	Valued:
 		Cost: 1250
 	Tooltip:
@@ -1890,7 +1971,10 @@ DTRK:
 		Queue: Vehicle
 		BuildPaletteOrder: 420
 		Prerequisites: stek, ~vehicles.soviet, ~techlevel.high
-		Description: Truck with actively armed nuclear\nexplosives. Has very weak armor.
+		Description: Truck carrying nuclear explosives.
+	TooltipExtras:
+		Weaknesses: • Very weak armor
+		Attributes: • Special Ability: Detonate
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -1942,7 +2026,11 @@ CTNK:
 		Queue: Vehicle
 		BuildPaletteOrder: 260
 		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
-		Description: Advanced tank armed with anti-ground missiles.\n  Strong vs Vehicles, Buildings\n  Weak vs Infantry, Aircraft\n  Special Ability: Teleport
+		Description: Teleporting tank armed with anti-ground missiles.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses, Buildings
+		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
+		Attributes: • Special Ability: Teleport
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -1987,7 +2075,11 @@ QTNK:
 		Queue: Vehicle
 		BuildPaletteOrder: 390
 		Prerequisites: techcenter, ~vehicles.qtnk, ~techlevel.high
-		Description: Deals seismic damage to nearby vehicles and structures.\n  Strong vs Vehicles, Buildings\n  Weak vs Infantry, Aircraft
+		Description: Deals seismic damage to nearby vehicles and structures.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses, Buildings
+		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
+		Attributes: • Special Ability: Seismic Shockwave
 	Valued:
 		Cost: 1700
 	Tooltip:
@@ -2032,8 +2124,10 @@ AMCV:
 		BuildPaletteOrder: 501
 		Prerequisites: repair, ~vehicles.td, ~techlevel.infonly
 		IconPalette: chrometd
-		Description: Deploys into another Construction Yard.\n  Unarmed
+		Description: Deploys into another Construction Yard.
 		BuildDurationModifier: 50
+	TooltipExtras:
+		Weaknesses: • Unarmed
 	Valued:
 		Cost: 3000
 	Tooltip:
@@ -2080,7 +2174,11 @@ HMMV:
 		BuildPaletteOrder: 22
 		IconPalette: chrometd
 		Prerequisites: ~vehicles.hmmv, ~techlevel.low
-		Description: Fast scout & anti-infantry vehicle.\n  Can detect spies and cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Buildings, Defenses, Aircraft
+		Description: Fast scout & anti-infantry vehicle.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
+		Attributes: • Can detect spies and cloaked units.
 	Valued:
 		Cost: 400
 	Tooltip:
@@ -2143,7 +2241,11 @@ GDRN:
 		BuildPaletteOrder: 22
 		IconPalette: chrome
 		Prerequisites: ~vehicles.arc, ~techlevel.low
-		Description: Fast scout & anti-tank vehicle.\n  Can detect spies and cloaked units.\n  Strong vs Vehicles\n  Weak vs Infantry, Buildings, Defenses, Aircraft
+		Description: Fast scout & anti-tank drone.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Buildings
+		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
+		Attributes: • Can detect spies and cloaked units.
 	Valued:
 		Cost: 400
 	Tooltip:
@@ -2211,7 +2313,11 @@ BGGY:
 		BuildPaletteOrder: 23
 		IconPalette: chrometd
 		Prerequisites: ~vehicles.nod, ~techlevel.low
-		Description: Fast scout & anti-infantry vehicle.\n  Can detect spies and cloaked units.\n  Strong vs Infantry\n  Weak vs Vehicles, Buildings, Defenses, Aircraft
+		Description: Fast scout & anti-infantry vehicle.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
+		Attributes: • Can detect spies and cloaked units.
 	Valued:
 		Cost: 350
 	Tooltip:
@@ -2268,7 +2374,10 @@ APC2:
 		BuildPaletteOrder: 41
 		Prerequisites: ~vehicles.td, ~!vulcan.upgrade, ~vehicles.apc2, infantry.any, ~techlevel.low
 		IconPalette: chrometd
-		Description: Tough infantry transport.\n  Strong vs Infantry\n  Weak vs Tanks, Buildings, Defenses, Aircraft
+		Description: Tough infantry transport.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -2499,7 +2608,10 @@ VULC:
 		BuildPaletteOrder: 42
 		Prerequisites: ~vehicles.gdi, ~vulcan.upgrade, infantry.any, ~techlevel.high
 		IconPalette: chrometd
-		Description: Tough infantry transport, armed with a powerful chain gun.\n  Strong vs Aircraft, Light Armor, Infantry\n  Weak vs Tanks, Buildings, Defenses
+		Description: Tough infantry transport, armed with a powerful chaingun.
+	TooltipExtras:
+		Strengths: • Strong vs Aircraft, Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -2636,7 +2748,11 @@ LTNK:
 		BuildPaletteOrder: 60
 		IconPalette: chrometd
 		Prerequisites: ~vehicles.ltnk, ~techlevel.low
-		Description: Fast, light tank.\n  Strong vs Light Armor\n  Weak vs Infantry, Defenses, Aircraft\n  Special Ability: Amphibious
+		Description: Fast, light tank.
+	TooltipExtras:
+		Strengths: • Strong vs Light Armor
+		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
+		Attributes: • Amphibious
 	Valued:
 		Cost: 700
 	Tooltip:
@@ -2708,7 +2824,10 @@ MTNK:
 		BuildPaletteOrder: 80
 		Prerequisites: ~!drone.upgrade, ~vehicles.mtnk, ~techlevel.low
 		IconPalette: chrometd
-		Description: Main battle tank.\n  Strong vs Vehicles\n  Weak vs Infantry, Defenses, Aircraft
+		Description: Main battle tank.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 900
 	Tooltip:
@@ -2792,7 +2911,9 @@ MTNK.Drone:
 		BuildPaletteOrder: 81
 		Prerequisites: ~drone.upgrade, ~vehicles.mtnk, ~techlevel.low
 		IconPalette: chrometd
-		Description: Remotely piloted battle tank.\n  Requires active radar communication.\n  Strong vs Vehicles\n  Weak vs Infantry, Defenses, Aircraft
+		Description: Remotely piloted battle tank.
+	TooltipExtras:
+		Attributes: • Requires active radar communication
 	Valued:
 		Cost: 775
 	Tooltip:
@@ -2840,7 +2961,11 @@ MDRN:
 		Queue: Vehicle
 		BuildPaletteOrder: 105
 		Prerequisites: anyradar, ~vehicles.arc, ~techlevel.low
-		Description: Hovering drone with machine gun.\n  Attaches to certain vehicles to provide support and repairs.\n  Strong vs Infantry\n  Weak vs Vehicles, Buildings, Aircraft
+		Description: Hovering drone with machine gun.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
+		Attributes: • Attaches to vehicles to provide support and repairs
 	Valued:
 		Cost: 300
 	UpdatesPlayerStatistics:
@@ -2958,7 +3083,11 @@ HTNK:
 		BuildPaletteOrder: 300
 		IconPalette: chrometd
 		Prerequisites: ~!drone.upgrade, gtek, ~vehicles.htnk, ~!ionmam.upgrade, ~!hovermam.upgrade, ~techlevel.high
-		Description: Big and slow tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
+		Description: Big and slow tank with anti-air capability.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Weak vs Defenses
+		Attributes: • Can crush concrete walls
 	Valued:
 		Cost: 1700
 	Tooltip:
@@ -3025,11 +3154,8 @@ HTNK:
 HTNK.Ion:
 	Inherits: HTNK
 	Buildable:
-		Queue: Vehicle
 		BuildPaletteOrder: 301
-		IconPalette: chrometd
 		Prerequisites: gtek, ~vehicles.htnk, ~ionmam.upgrade, ~techlevel.high
-		Description: Big and slow tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
 	Tooltip:
 		Name: Ion Mammoth Tank
 		GenericName: Tank
@@ -3048,7 +3174,9 @@ HTNK.Hover:
 	Buildable:
 		BuildPaletteOrder: 302
 		Prerequisites: gtek, ~vehicles.htnk, ~hovermam.upgrade, ~techlevel.high
-		Description: Powerful heavy tank with anti-air capability.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
+		Description: Big and fairly mobile tank with anti-air capability.
+	TooltipExtras:
+		Attributes: • Can traverse water
 	Mobile:
 		Speed: 66
 		Locomotor: hover
@@ -3078,7 +3206,9 @@ HTNK.Drone:
 		BuildPaletteOrder: 300
 		IconPalette: chrometd
 		Prerequisites: ~drone.upgrade, gtek, ~vehicles.htnk, ~techlevel.high
-		Description: Remotely piloted heavy tank with anti-air capability.\n  Requires active radar communication.\n  Can crush concrete walls.\n  Strong vs Vehicles, Infantry\n  Weak vs Nothing
+		Description: Remotely piloted heavy tank with anti-air capability.
+	TooltipExtras:
+		Attributes: • Can crush concrete walls\n• Requires active radar communication
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -3138,7 +3268,10 @@ MSAM:
 		Prerequisites: anyradar, ~vehicles.msam, ~techlevel.medium
 		Queue: Vehicle
 		IconPalette: chrometd
-		Description: Multiple Launch Rocket System.\nLong-range guided artillery.\n  Can attack Aircraft.\n  Has weak armor.\n  Strong vs Buildings, Defenses, Infantry, Light Armor
+		Description: Multiple Launch Rocket System.\n  Long-range guided artillery with anti-air capability.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor
 	Mobile:
 		Speed: 66
 	Health:
@@ -3236,7 +3369,10 @@ MLRS:
 		Prerequisites: tmpl, ~vehicles.mlrs, ~techlevel.high
 		Queue: Vehicle
 		IconPalette: chrometd
-		Description: Long-range incendiary rocket artillery.\n  Has weak armor.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Tanks, Aircraft
+		Description: Long-range incendiary missile artillery.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Mobile:
 		Speed: 66
 		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead || notmobile
@@ -3309,7 +3445,11 @@ STNK.Nod:
 		Prerequisites: anyradar, ~vehicles.nod, ~techlevel.high
 		Queue: Vehicle
 		IconPalette: chrometd
-		Description: Medium-range missile tank that can cloak.\n  Can attack Aircraft.\n  Has weak armor.\n  Can be spotted by infantry and defense structures.\n  Strong vs Vehicles, Tanks\n  Weak vs Infantry
+		Description: Medium-range missile tank that can cloak.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Heavy Armor, Light Armor, Aircraft
+		Weaknesses: • Weak vs Infantry
+		Attributes: • Can be spotted by nearby infantry and defense structures
 	Mobile:
 		Speed: 108
 	Health:
@@ -3392,7 +3532,10 @@ BIKE:
 		Prerequisites: ~vehicles.nod, ~techlevel.low
 		Queue: Vehicle
 		IconPalette: chrometd
-		Description: Fast scout vehicle, armed with\nrockets.\n  Can attack Aircraft.\n  Strong vs Tanks, Buildings\n  Weak vs Infantry
+		Description: Fast scout vehicle armed with rockets.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Buildings
+		Weaknesses: • Weak vs Infantry, Light Armor
 	Mobile:
 		TurnSpeed: 40
 		Speed: 144
@@ -3455,7 +3598,10 @@ FTNK:
 		Prerequisites: anyradar, ~vehicles.ftnk, ~techlevel.low
 		Queue: Vehicle
 		IconPalette: chrometd
-		Description: Tank armed with dual short-range flamethrowers.\n  Strong vs Infantry, Buildings, Light Armor\n  Weak vs Tanks, Defenses, Aircraft
+		Description: Tank armed with dual short-range flamethrowers.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Buildings, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Mobile:
 		Speed: 66
 	Health:
@@ -3499,7 +3645,10 @@ HFTK:
 		BuildPaletteOrder: 131
 		IconPalette: chrometd
 		Prerequisites: anyradar, ~vehicles.blackh, ~techlevel.low
-		Description: Heavy tank armed with dual short-range flamethrowers.\n  Strong vs Infantry, Buildings, Light Armor\n  Weak vs Tanks, Defenses, Aircraft
+		Description: Heavy tank armed with dual short-range flamethrowers.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Buildings, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 1100
 	Tooltip:
@@ -3571,7 +3720,9 @@ HARV.TD:
 		Prerequisites: anyrefinery, ~vehicles.td, ~techlevel.infonly
 		Queue: Vehicle
 		IconPalette: chrometd
-		Description: Collects Tiberium, Ore and Gems for processing.\n  Unarmed
+		Description: Collects Ore, Gems and Tiberium for processing.
+	TooltipExtras:
+		Weaknesses: • Unarmed
 	Selectable:
 		Priority: 7
 		DecorationBounds: 36,36
@@ -3644,7 +3795,10 @@ BTR:
 		Queue: Vehicle
 		BuildPaletteOrder: 21
 		Prerequisites: infantry.any, ~vehicles.soviet, ~techlevel.low
-		Description: Tough infantry transport.\n  Can attack Aircraft.\n  Strong vs Infantry, Aircraft\n  Weak vs Tanks
+		Description: Tough infantry transport.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor, Aircraft
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses
 	Valued:
 		Cost: 675
 	Tooltip:
@@ -3716,7 +3870,11 @@ IFV:
 		Queue: Vehicle
 		BuildPaletteOrder: 120
 		Prerequisites: infantry.any, anyradar, ~vehicles.ifv, ~techlevel.low
-		Description: Adaptable infantry transport.\n  Can attack Aircraft.\n  Strong vs Aircraft, Vehicles\n  Weak vs Infantry\n  Special Ability: Transform
+		Description: Adaptable infantry transport.
+	TooltipExtras:
+		Strengths: • Strong vs Aircraft, Heavy Armor
+		Weaknesses: • Weak vs Infantry
+		Attributes: • Weapon changes depending on infantry passenger
 	Valued:
 		Cost: 750
 	Tooltip:
@@ -4069,7 +4227,11 @@ IFV.AI:
 		Queue: Vehicle
 		BuildPaletteOrder: 120
 		Prerequisites: anyradar, ~vehicles.allies, ~botplayer, ~techlevel.low
-		Description: Adaptable infantry transport.\n  Can attack Aircraft.\n  Strong vs Aircraft, Vehicles\n  Weak vs Infantry\n  Special Ability: Transform
+		Description: Adaptable infantry transport.
+	TooltipExtras:
+		Strengths: • Strong vs Aircraft, Heavy Armor
+		Weaknesses: • Weak vs Infantry
+		Attributes: • Weapon changes depending on infantry passenger
 	Valued:
 		Cost: 650
 	Tooltip:
@@ -4191,7 +4353,10 @@ XO:
 		Queue: Vehicle
 		BuildPaletteOrder: 195
 		Prerequisites: anyradar, ~vehicles.talon, xo.upgrade, ~techlevel.high
-		Description: Light battle-mech with short-range laser.\n  Strong vs Vehicles, Infantry
+		Description: Light battle-mech with a short-range laser\n  and a machine gun.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor, Heavy Armor
+		Weaknesses: • Cannot attack Aircraft
 	Valued:
 		Cost: 900
 	Tooltip:
@@ -4252,7 +4417,10 @@ TITN:
 		BuildPaletteOrder: 303
 		IconPalette: chrometd
 		Prerequisites: gtek, ~vehicles.talon, ~!railgun.upgrade, ~techlevel.high
-		Description: Tough combat battle-mech.\n  Can attack Aircraft.\n  Strong vs Vehicles, Infantry
+		Description: Tough, slow combat battle-mech.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Attributes: • Can crush concrete walls
 	Valued:
 		Cost: 2000
 	Selectable:
@@ -4355,8 +4523,11 @@ JUGG:
 		BuildPaletteOrder: 350
 		Queue: Vehicle
 		IconPalette: chrometd
-		Description: Tough artillery battle-mech.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Aircraft
+		Description: Tough artillery battle-mech.
 		Prerequisites: upgc, ~vehicles.talon, ~techlevel.high
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
+		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Mobile:
 		Locomotor: sheavytracked
 		Speed: 40
@@ -4424,7 +4595,10 @@ TTRK:
 	Buildable:
 		BuildPaletteOrder: 400
 		Prerequisites: techcenter, ~vehicles.ttrk, ~techlevel.high
-		Description: Truck actively armed with\n a Tiberium bomb. Has very weak armor.
+		Description: Truck carrying a Tiberium bomb.
+	TooltipExtras:
+		Weaknesses: • Very weak armor
+		Attributes: • Special Ability: Detonate
 	Tooltip:
 		Name: Toxin Truck
 	Explodes:
@@ -4447,7 +4621,10 @@ DISR:
 		BuildPaletteOrder: 320
 		IconPalette: chrometd
 		Prerequisites: gtek, ~vehicles.zocom, ~techlevel.high
-		Description: Armored high-tech vehicle with long-range sonic armament.\n  Strong vs Buildings, Defenses, Light Armor, Infantry\n  Weak vs Aircraft
+		Description: Armored high-tech vehicle with medium-range sonic armament.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Light Armor, Infantry
+		Weaknesses: • Cannot attack Aircraft
 	Health:
 		HP: 70000
 	Armor:
@@ -4549,7 +4726,11 @@ HSAM:
 		Prerequisites: anyradar, ~vehicles.eagle, ~techlevel.medium
 		Queue: Vehicle
 		IconPalette: chrometd
-		Description: Prototype Hover Multiple Launch Rocket System.\nLong-range guided artillery.\n  Can attack Aircraft.\n  Has weak armor.\n  Strong vs Buildings, Defenses, Infantry, Light Armor
+		Description: Prototype Hover Multiple Launch Rocket System.\n  Long-range guided artillery with anti-air capability.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor
+		Attributes: • Can traverse water
 	Mobile:
 		Speed: 90
 		Locomotor: hover
@@ -4653,7 +4834,11 @@ RTNK:
 		Queue: Vehicle
 		BuildPaletteOrder: 71
 		Prerequisites: ~vehicles.england, ~techlevel.low
-		Description: Advanced battle tank that can disguise when stationary.\n  Strong vs Vehicles\n  Weak vs Defenses, Aircraft\n  Special Ability: Disguise
+		Description: Advanced battle tank that can disguise when stationary.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Defenses, Infantry\n• Cannot attack Aircraft
+		Attributes: • Disguised when not moving
 	Valued:
 		Cost: 825
 	Tooltip:
@@ -4729,11 +4914,12 @@ RTNK:
 	Voiced:
 		VoiceSet: MirageVoice
 	WithDecoration@disguise:
-		Image: pips
-		Sequence: pip-disguise
-		Palette: effect
-		Position: TopRight
 		RequiresCondition: hidden
+		Image: gpsdot
+		Sequence: Vehicle
+		Palette: player
+		IsPlayerPalette: true
+		Position: Center
 
 V3RL:
 	Inherits: ^Vehicle
@@ -4744,7 +4930,10 @@ V3RL:
 		Queue: Vehicle
 		BuildPaletteOrder: 250
 		Prerequisites: stek, ~vehicles.soviet, ~techlevel.high
-		Description: Extreme long-range rocket artillery.\n  Rockets can be shot down by static anti-air defenses.\n  Strong vs Buildings, Defenses, Infantry\n  Weak vs Tanks, Aircraft
+		Description: Extreme long-range rocket artillery.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
+		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets\n• Rockets can be shot down by static anti-air defenses
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -4842,7 +5031,10 @@ TNKD:
 		Queue: Vehicle
 		BuildPaletteOrder: 110
 		Prerequisites: ~vehicles.germany, anyradar, ~techlevel.low
-		Description: German tank destroyer.\n  Strong vs Tanks\n  Weak vs Infantry, Buildings, Defenses, Light Armor, Aircraft
+		Description: German tank destroyer.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor
+		Weaknesses: • Weak vs Infantry, Buildings, Defenses, Light Armor\n• Cannot attack Aircraft
 	Valued:
 		Cost: 1150
 	Tooltip:
@@ -4922,7 +5114,10 @@ MSAR:
 		IconPalette: chrometd
 		Prerequisites: anyradar, ~vehicles.gdi, ~techlevel.high
 		BuildDurationModifier: 50
-		Description: When deployed, provides radar and increases nearby ground unit view range.\n  Detects cloaked units.\n  Unarmed
+		Description: When deployed, detects enemies within a large radius.
+	TooltipExtras:
+		Weaknesses: • Unarmed
+		Attributes: • Can detect cloaked units (when deployed)\n• Increases nearby ground unit vision range (when deployed)\n• Special Ability: Activate Sensor Array
 	Health:
 		HP: 22000
 	Armor:
@@ -5007,7 +5202,10 @@ PTNK:
 		Queue: Vehicle
 		BuildPaletteOrder: 230
 		Prerequisites: anyradar, ~vehicles.allies, ~!pcan.upgrade, ~techlevel.high
-		Description: Long-range artillery with Prism Tower derived weapon.\n  Strong vs Buildings, Defenses, Infantry, Light Armor\n  Weak vs Tanks, Aircraft
+		Description: Long-range artillery with Prism Tower derived weapon.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Buildings, Defenses, Light Armor
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -5057,7 +5255,9 @@ PCAN:
 	Buildable:
 		BuildPaletteOrder: 231
 		Prerequisites: anyradar, ~vehicles.allies, ~pcan.upgrade, ~techlevel.high
-		Description: A prototype long range artillery that fires highly focused beams of light.\n  Strong vs Buildings, Defenses, Infantry, Light Armor\n  Weak vs Tanks, Aircraft
+		Description: A prototype long-range artillery that fires highly focused beams of light.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Light Armor, Infantry
 	Tooltip:
 		Name: Prism Cannon
 	Armament:
@@ -5093,7 +5293,11 @@ WTNK:
 		BuildPaletteOrder: 210
 		IconPalette: chrometd
 		Prerequisites: anyradar, ~vehicles.legion, ~techlevel.high
-		Description: Prototype MGT-1A microwave gun tank.\n  Briefly disables vehicles/defenses\n  Strong vs Vehicles, Defenses\n  Weak vs Aircraft, Buildings
+		Description: Prototype MGT-1A microwave gun tank.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses, Infantry
+		Weaknesses: • Weak vs Buildings\n• Cannot attack Aircraft
+		Attributes: • Briefly disables vehicles/defenses\n• Kills vehicle crews (with upgrade)
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -5168,7 +5372,9 @@ BATF:
 		Queue: Vehicle
 		BuildPaletteOrder: 340
 		Prerequisites: infantry.any, atek, ~vehicles.france, ~techlevel.high
-		Description: Tough infantry transport\nwith weapon ports for infantry.\n  Special Ability: Can crush enemy vehicles.
+		Description: Tough infantry transport with weapon ports\n  for infantry to fire from.
+	TooltipExtras:
+		Attributes: • Can crush concrete walls and vehicles
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -5327,7 +5533,11 @@ MEMP:
 		BuildPaletteOrder: 410
 		IconPalette: chrometd
 		Prerequisites: techcenter, ~vehicles.memp, ~techlevel.high
-		Description: Remotely piloted vehicle, deploys to disable nearby vehicles & structures.\n  Requires active radar communication.\n  Strong vs Vehicles, Buildings\n  Weak vs Infantry, Aircraft
+		Description: Remotely piloted vehicle, deploys to disable nearby vehicles & structures.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses, Buildings
+		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
+		Attributes: • Requires active radar communication.\n• Special Ability: EMP Shockwave
 	Valued:
 		Cost: 1150
 	Tooltip:
@@ -5435,7 +5645,11 @@ CDRN:
 		BuildPaletteOrder: 430
 		IconPalette: chrometd
 		Prerequisites: stek, ~vehicles.yuri, ~techlevel.high
-		Description: Drone armed with Chaos Gas which causes units\nto become frenzied and attack indiscriminately.\n  Has weak armor.
+		Description: Drone armed with Chaos Gas which causes units\n  to become frenzied and attack indiscriminately.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Cannot attack Aircraft, Buildings, Defenses
+		Attributes: • Special Ability: Expel Chaos Gas
 	Valued:
 		Cost: 850
 	Tooltip:
@@ -5519,7 +5733,11 @@ CHPR:
 		BuildPaletteOrder: 330
 		IconPalette: chrometd
 		Prerequisites: atek, ~vehicles.germany, ~techlevel.high
-		Description: Advanced heavy tank that can erase targets from existence.\n  Strong vs Vehicles, Infantry\n  Weak vs Buildings
+		Description: Advanced heavy tank that can erase targets from existence.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Defenses, Aircraft
+		Weaknesses: • Weak vs Buildings
+		Attributes: • Target is disabled while being erased
 	Valued:
 		Cost: 1700
 	Tooltip:
@@ -5627,7 +5845,11 @@ CRYO:
 		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
 		Queue: Vehicle
 		IconPalette: chrometd
-		Description: Long-range support artillery that slows enemies\nand makes them take more damage.\n  Strong vs Infantry, Vehicles, Buildings\n  Weak vs Aircraft
+		Description: Long-range support artillery that slows enemies\n  and makes them take more damage.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Slows enemy movement and increases damage taken
 	Mobile:
 		Speed: 66
 		TurnSpeed: 16
@@ -5665,7 +5887,11 @@ APOC:
 		Queue: Vehicle
 		BuildPaletteOrder: 300
 		Prerequisites: indp, ~vehicles.soviet, ~!iraqtank.upgrade, ~techlevel.high
-		Description: Enormous slow tank with uranium shells and anti-air capability.\n  Can crush small vehicles.\n  Strong vs Vehicles, Aircraft\n  Weak vs Nothing
+		Description: Enormous slow tank with uranium shells and anti-air capability.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Buildings
+		Attributes: • Can crush vehicles
 	Valued:
 		Cost: 2600
 	Tooltip:
