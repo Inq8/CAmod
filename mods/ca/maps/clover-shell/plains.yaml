@@ -1,0 +1,87 @@
+World:
+	GlobalLightingPaletteEffect:
+		Red: 1.22
+		Green: 1.27
+		Blue: 1.15
+		Ambient: 0.55
+	-SpawnMPUnits:
+	-MPStartLocations:
+	-CrateSpawner:
+	-StartGameNotification:
+	FlashPaletteEffect@LIGHTNINGSTRIKE:
+		Type: LightningStrike
+	MusicPlaylist:
+		BackgroundMusic: moi
+		AllowMuteBackgroundMusic: true
+		DisableWorldSounds: true
+	LuaScript:
+		Scripts: shellmap.lua
+	ResourceType@ore:
+		ValuePerUnit: 0
+	ResourceType@green-tib:
+		ValuePerUnit: 0
+	WeatherOverlay@RAIN:
+		WindTick: 150, 550
+		UseSquares: false
+		ScatterDirection: 0, 0
+		Gravity: 2.00, 4.00
+		SwingOffset: 0, 0
+		SwingSpeed: 0, 0
+		SwingAmplitude: 0, 0
+		ParticleColors: 72aaae, 72aea6, 5caea3, 6da69f
+		LineTailAlphaValue: 150
+		ParticleSize: 1, 1
+	TerrainLighting:
+		GreenTint: 1.01
+
+EditorWorld:
+	TerrainLighting:
+		GreenTint: 1.01
+		
+^Palettes:
+	PaletteFromFile@terrain-temperat:
+		Name: terrain
+		Tileset: TEMPERAT
+		Filename: plains.pal
+		ShadowIndex: 3, 4
+	PaletteFromFile@player:
+		Name: player
+		Filename: temperat.pal
+		ShadowIndex: 4
+	PaletteFromFile@chrome:
+		Name: chrome
+		Filename: temperat.pal
+		ShadowIndex: 3
+		AllowModifiers: false
+	PaletteFromFile@cursor:
+		Name: cursor
+		Filename: temperat.pal
+		AllowModifiers: false
+		CursorPalette: true
+	PaletteFromFile@effect:
+		Name: effect
+		Filename: temperat.pal
+		ShadowIndex: 4
+	PaletteFromFile@colorpicker:
+		Name: colorpicker
+		Filename: temperat.pal
+		ShadowIndex: 4
+		AllowModifiers: false
+
+SPLIT2:
+	TerrainLightSource:
+		Range: 6c0
+		Intensity: 0.5
+		GreenTint: 1
+
+SPLIT3:
+	TerrainLightSource:
+		Range: 6c0
+		Intensity: 0.5
+		GreenTint: 1
+		
+SPLITBLUE:
+	TerrainLightSource:
+		Range: 6c0
+		Intensity: 0.5
+		BlueTint: 1

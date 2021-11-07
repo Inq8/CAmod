@@ -253,6 +253,11 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 					armorTypeLabel.TextColor = Color.Peru;
 					break;
 
+				case "Brick":
+					armorTypeLabel.Text = "Wall";
+					armorTypeLabel.TextColor = Color.RosyBrown;
+					break;
+
 				case "Aircraft":
 					armorTypeLabel.TextColor = Color.SkyBlue;
 					break;
