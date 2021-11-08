@@ -94,6 +94,7 @@ GunWalkerZap:
 			Concrete: 10
 			Light: 32
 			Heavy: 15
+			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
@@ -163,7 +164,7 @@ PlasmaDiscs:
 			Light: 65
 			Heavy: 100
 			Concrete: 35
-			Brick: 50
+			Brick: 75
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -187,7 +188,6 @@ IntruderDiscs:
 			Light: 65
 			Heavy: 85
 			Concrete: 100
-			Brick: 85
 
 DevastatorDiscs:
 	Inherits: PlasmaDiscs
@@ -215,7 +215,7 @@ DevastatorDiscs:
 			Light: 60
 			Heavy: 25
 			Concrete: 95
-			Brick: 90
+			Brick: 100
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 
@@ -243,6 +243,7 @@ DevastatorDiscs:
 			Wood: 30
 			Heavy: 100
 			Concrete: 90
+			Brick: 50
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
@@ -331,6 +332,7 @@ RiftCannon:
 		Versus:
 			None: 15
 			Light: 75
+			Brick: 75
 		DamageTypes: BulletDeath
 	Warhead@2Dam: HealthPercentageDamage
 		Spread: 512
@@ -340,7 +342,7 @@ RiftCannon:
 			Wood: 10
 			None: 60
 			Concrete: 60
-			Brick: 60
+			Brick: 75
 			Light: 120
 			Heavy: 110
 		DamageTypes: BulletDeath
@@ -372,7 +374,7 @@ MiniRift:
 			Light: 75
 			Heavy: 100
 			Concrete: 80
-			Brick: 25
+			Brick: 20
 		DamageTypes: BulletDeath
 		ValidRelationships: Enemy, Neutral
 	Warhead@2Dam: SpreadDamage
@@ -387,7 +389,7 @@ MiniRift:
 			Light: 75
 			Heavy: 100
 			Concrete: 80
-			Brick: 25
+			Brick: 20
 		DamageTypes: BulletDeath
 		ValidRelationships: Ally
 	Warhead@3Slow: GrantExternalCondition
@@ -427,7 +429,7 @@ CorrupterSpew:
 			Light: 80
 			Heavy: 30
 			Concrete: 30
-			Brick: 2
+			Brick: 5
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Vehicle, Building, Wall
@@ -477,6 +479,7 @@ RuinerCannon:
 			Concrete: 80
 			Light: 80
 			Heavy: 45
+			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: ruiner-hit1.aud
@@ -612,6 +615,7 @@ StormriderZap:
 			Concrete: 30
 			Light: 65
 			Heavy: 20
+			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Dam: SpreadDamage
 		ValidTargets: Water
@@ -748,6 +752,7 @@ InvaderZap:
 			Concrete: 15
 			Light: 70
 			Heavy: 100
+			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
@@ -802,6 +807,7 @@ PlasmaTurretGun:
 			Concrete: 32
 			Light: 50
 			Heavy: 10
+			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
@@ -984,7 +990,7 @@ RavagerShards:
 			Light: 40
 			Heavy: 10
 			Concrete: 35
-			Brick: 15
+			Brick: 5
 
 LaceratorShards:
 	Inherits: RavagerShards
@@ -1006,7 +1012,7 @@ LaceratorShards:
 			Light: 60
 			Heavy: 100
 			Concrete: 35
-			Brick: 25
+			Brick: 50
 	Warhead@3Eff: CreateEffect
 		Image: bshardhit
 
@@ -1036,7 +1042,7 @@ Rift:
 			Light: 70
 			Heavy: 90
 			Concrete: 120
-			Brick: 25
+			Brick: 75
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 
 SuppressionField:
@@ -1256,6 +1262,7 @@ LeecherBeam:
 			Wood: 100
 			Heavy: 15
 			Concrete: 25
+			Brick: 5
 	Warhead@ARC: FireShrapnel
 		Weapon: LeecherArc
 		AimChance: 100
@@ -1412,7 +1419,7 @@ FeederExplode:
 		Versus:
 			None: 90
 			Heavy: 90
-			Brick: 10
+			Brick: 5
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@2Smu: LeaveSmudge

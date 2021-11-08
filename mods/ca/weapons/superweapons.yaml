@@ -17,7 +17,6 @@ ParaBomb:
 			Light: 65
 			Heavy: 80
 			Concrete: 90
-			Brick: 50
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@1Dam_cyborg: SpreadDamage
 		Spread: 1c0
@@ -77,7 +76,6 @@ AtomBomb:
 			Heavy: 85
 			Concrete: 100
 			Wood: 40
-			Brick: 50
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@1Dam_cyborg: SpreadDamage
@@ -225,7 +223,6 @@ Atomic:
 		ValidTargets: Ground, Trees, Water, Underwater, Air, AirSmall
 		Versus:
 			Wood: 25
-			Brick: 25
 			Heavy: 80
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@2Res_impact: DestroyResource
@@ -247,7 +244,6 @@ Atomic:
 		ValidTargets: Ground, Trees, Water, Underwater, Air, AirSmall
 		Versus:
 			Wood: 25
-			Brick: 25
 			Heavy: 80
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@6Res_areanuke1: DestroyResource
@@ -270,7 +266,6 @@ Atomic:
 		ValidTargets: Ground, Water, Underwater, Air, AirSmall
 		Versus:
 			Wood: 50
-			Brick: 25
 			Heavy: 80
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@11Res_areanuke2: DestroyResource
@@ -289,7 +284,6 @@ Atomic:
 		ValidTargets: Ground, Trees, Water, Underwater, Air, AirSmall
 		Versus:
 			Tree: 200
-			Brick: 25
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@15Res_areanuke3: DestroyResource
 		Size: 4
@@ -307,7 +301,6 @@ Atomic:
 		ValidTargets: Ground, Trees, Water, Underwater, Air, AirSmall
 		Versus:
 			Tree: 200
-			Brick: 25
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@19Res_areanuke4: DestroyResource
 		Size: 5
@@ -447,7 +440,7 @@ EMPMissileLauncher:
 			Light: 60
 			Heavy: 40
 			Concrete: 60
-			Brick: 50
+			Brick: 5
 	Warhead@1Dam_impact: SpreadDamage
 		Range: 0, 1c1, 2c1, 3c1, 3c512, 4c1, 4c512
 		Damage: 4500
@@ -459,7 +452,7 @@ EMPMissileLauncher:
 			Light: 20
 			Heavy: 20
 			Concrete: 20
-			Brick: 20
+			Brick: 5
 	Warhead@2Eff: CreateEffect
 		ExplosionPalette: tseffect-ignore-lighting-alpha75
 		Explosions: pulse_explosion
@@ -890,7 +883,7 @@ DeathHandCluster:
 		Versus:
 			None: 90
 			Concrete: 50
-			Brick: 20
+			Brick: 75
 			Wood: 30
 			Light: 60
 			Heavy: 60
@@ -953,7 +946,7 @@ WeatherCloudDirectInit:
 			Wood: 85
 			Heavy: 75
 			Concrete: 45
-			Brick: 55
+			Brick: 5
 	Warhead@barrage3: FireFragment
 		Weapon: WeatherCloud
 		ValidTargets: Air, Ground, Water
@@ -973,7 +966,7 @@ WeatherCloudRandomInit:
 			Wood: 85
 			Heavy: 75
 			Concrete: 15
-			Brick: 15
+			Brick: 5
 	Warhead@barrage3: FireShrapnel
 		Weapon: WeatherCloud
 		Amount: 2
@@ -1011,7 +1004,7 @@ WeatherBolt:
 			None: 20
 			Wood: 70
 			Concrete: 150
-			Brick: 55
+			Brick: 5
 			Heavy: 65
 			Light: 35
 	Warhead@4: CreateEffect
