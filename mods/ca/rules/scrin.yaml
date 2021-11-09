@@ -2190,7 +2190,7 @@ MSHP:
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses
 		Weaknesses: • Cannot attack Aircraft\n• Long charge time before firing\n• Cannot move while firing
-		Attributes: • Maximum 1 can be built\n• Can create wormholes\n• Repairs friendly structures & bridges\n• Defuses bombs
+		Attributes: • Maximum 1 can be built\n• Can create wormholes
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Voiced:
@@ -2622,6 +2622,7 @@ MSHP.Husk:
 	FallsToEarth:
 		MaximumSpinSpeed: 0
 		Velocity: 35
+		Explosion: KirovExplode
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -2633,8 +2634,6 @@ MSHP.Husk:
 	RenderSprites:
 		Image: mshp
 		PlayerPalette: overlayplayerscrin
-	FallsToEarth:
-		Explosion: KirovExplode
 	SpawnActorOnDeath:
 		Actor: MSHP.Husk.Ground
 	WithIdleOverlay@RING:

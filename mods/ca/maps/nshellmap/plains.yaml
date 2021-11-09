@@ -1,9 +1,4 @@
 World:
-	GlobalLightingPaletteEffect:
-		Red: 1.22
-		Green: 1.27
-		Blue: 1.15
-		Ambient: 0.55
 	-SpawnMPUnits:
 	-MPStartLocations:
 	-CrateSpawner:
@@ -12,7 +7,6 @@ World:
 		Type: LightningStrike
 	MusicPlaylist:
 		BackgroundMusic: moi
-		AllowMuteBackgroundMusic: true
 		DisableWorldSounds: true
 	LuaScript:
 		Scripts: shellmap.lua
@@ -33,6 +27,11 @@ World:
 		ParticleSize: 1, 1
 	TerrainLighting:
 		GreenTint: 1.01
+	GlobalLightingPaletteEffect:
+		Red: 1.22
+		Green: 1.27
+		Blue: 1.15
+		Ambient: 0.55
 
 EditorWorld:
 	TerrainLighting:
@@ -68,6 +67,42 @@ EditorWorld:
 		ShadowIndex: 4
 		AllowModifiers: false
 
+^GlobalBounty:
+	GivesBounty:
+		ShowBounty: false
+
+^GainsExperience:
+	GrantCondition@Shell:
+		Condition: shellmap
+	WithDecoration@RANK-1:
+		RequiresCondition: rank-veteran == 1 && !shellmap
+	WithDecoration@RANK-2:
+		RequiresCondition: rank-veteran == 2 && !shellmap
+	WithDecoration@RANK-ELITE:
+		RequiresCondition: rank-elite && !shellmap
+
+^AutoTargetGround:
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense
+		InvalidTargets: NoAutoTarget
+
+^AutoTargetAll:
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense
+		InvalidTargets: NoAutoTarget
+
+^Building:
+	DamageMultiplier@UNKILLABLE:
+		Modifier: 5
+		
+^Defense:
+	DamageMultiplier@UNKILLABLE:
+		Modifier: 5
+
+^Wall:
+	DamageMultiplier@UNKILLABLE:
+		Modifier: 5
+
 SPLIT2:
 	TerrainLightSource:
 		Range: 6c0
@@ -85,3 +120,28 @@ SPLITBLUE:
 		Range: 6c0
 		Intensity: 0.5
 		BlueTint: 1
+
+MSHP.Husk:
+	TerrainLightSource:
+		Range: 6c0
+		Intensity: 0.3
+		BlueTint: 1
+		RedTint: 1
+	-FallsToEarth:
+	Aircraft:
+		AltitudeVelocity: 10c0
+
+powerproxy.airborne:
+	ParatroopersPower:
+		DisplayBeacon: false
+		SquadOffset -1536,0,0
+		SquadSize: 2
+		DropItems: U3,U3,U3,U3,U3,GTNK,U3,U3,U3,U3,U3,GTNK
+		
+U3:
+	AutoDeployer@AI:
+		RequiresCondition: !botowner && !deployed && !parachute
+	-AttackTurreted@deployed:
+
+SEAL:
+	-WithDecoration@COMMANDOSKULL:

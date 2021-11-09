@@ -2,15 +2,15 @@ MapFormat: 11
 
 RequiresMod: ca
 
-Title: Clover CA Shellmap
+Title: Shellmap
 
-Author: Lad & Inq
+Author: Inq
 
 Tileset: TEMPERAT
 
-MapSize: 93,93
+MapSize: 146,146
 
-Bounds: 1,1,91,91
+Bounds: 1,1,144,144
 
 Visibility: Shellmap
 
@@ -21,45 +21,36 @@ Players:
 		Name: Neutral
 		OwnsWorld: True
 		NonCombatant: True
-		Faction: allies
+		Faction: england
 	PlayerReference@Creeps:
 		Name: Creeps
 		NonCombatant: True
-		Faction: allies
-		Enemies: Scrin, GDI, Allies
-	PlayerReference@SCRIN:
-		Name: Scrin
-		Playable: True
-		Faction: scrin
-		Enemies: Creeps, GDI, Allies
-	PlayerReference@GDI:
-		Name: GDI
-		Playable: True
-		Faction: gdi
-		Enemies: Creeps, Scrin
-	PlayerReference@ALLIES:
-		Name: Allies
-		Playable: True
-		Faction: allies
+		Faction: england
+		Enemies: Multi0, Multi2, Multi3
+	PlayerReference@Multi0:
+		Name: Multi0
+		Faction: england
+		Color: 9FBAFF
+		Enemies: Creeps, Multi2, Multi3
+	PlayerReference@Multi2:
+		Name: Multi2
+		Faction: reaper
+		Color: 7353FF
+		Enemies: Creeps, Multi0, Multi3
+	PlayerReference@Multi3:
+		Name: Multi3
+		Faction: arc
+		LockColor: True
 		Color: F5D378
-		Enemies: Creeps, Scrin
+		Enemies: Creeps, Multi0, Multi2
 
 Actors:
-	Actor0: tc05
-		Owner: Neutral
-		Location: 50,49
 	Actor1: tc02
 		Owner: Neutral
 		Location: 56,53
 	Actor2: t14
 		Owner: Neutral
 		Location: 49,53
-	Actor3: t17
-		Owner: Neutral
-		Location: 52,52
-	Actor4: t08
-		Owner: Neutral
-		Location: 54,52
 	Actor5: tc04
 		Owner: Neutral
 		Location: 40,37
@@ -72,12 +63,6 @@ Actors:
 	Actor8: tc02
 		Owner: Neutral
 		Location: 35,37
-	Actor9: t11
-		Owner: Neutral
-		Location: 38,41
-	Actor10: tc05
-		Owner: Neutral
-		Location: 38,39
 	Actor11: t16
 		Owner: Neutral
 		Location: 42,42
@@ -141,9 +126,6 @@ Actors:
 	Actor35: mpspawn
 		Owner: Neutral
 		Location: 21,45
-	Actor36: mpspawn
-		Owner: Neutral
-		Location: 71,47
 	Actor43: split2
 		Owner: Neutral
 		Location: 22,73
@@ -258,21 +240,12 @@ Actors:
 	Actor79: t08
 		Owner: Neutral
 		Location: 92,67
-	Actor80: tc04
-		Owner: Neutral
-		Location: 0,24
 	Actor81: t10
 		Owner: Neutral
 		Location: 1,25
 	Actor82: t12
 		Owner: Neutral
 		Location: 1,27
-	Actor83: tc02
-		Owner: Neutral
-		Location: 87,0
-	Actor84: t02
-		Owner: Neutral
-		Location: 89,0
 	Actor85: t06
 		Owner: Neutral
 		Location: 92,6
@@ -282,27 +255,9 @@ Actors:
 	Actor87: t08
 		Owner: Neutral
 		Location: 92,1
-	Actor88: tc02
-		Owner: Neutral
-		Location: 0,85
-	Actor89: t17
-		Owner: Neutral
-		Location: 0,90
 	Actor90: tc05
 		Owner: Neutral
 		Location: 1,1
-	Actor91: tc01
-		Owner: Neutral
-		Location: 0,3
-	Actor92: t13
-		Owner: Neutral
-		Location: 0,2
-	Actor93: t05
-		Owner: Neutral
-		Location: 2,-1
-	Actor94: t01
-		Owner: Neutral
-		Location: 1,-1
 	Actor95: tc05
 		Owner: Neutral
 		Location: 81,34
@@ -360,12 +315,6 @@ Actors:
 	Actor113: t13
 		Owner: Neutral
 		Location: 40,1
-	Actor114: tc02
-		Owner: Neutral
-		Location: 40,0
-	Actor115: t06
-		Owner: Neutral
-		Location: 38,-1
 	Actor116: t11
 		Owner: Neutral
 		Location: 29,84
@@ -375,9 +324,6 @@ Actors:
 	Actor118: tc02
 		Owner: Neutral
 		Location: 91,30
-	Actor119: t03
-		Owner: Neutral
-		Location: 0,60
 	Actor120: t02
 		Owner: Neutral
 		Location: 82,56
@@ -414,9 +360,6 @@ Actors:
 	Actor131: t01
 		Owner: Neutral
 		Location: 9,90
-	Actor132: t17
-		Owner: Neutral
-		Location: 83,0
 	Actor133: tc05
 		Owner: Neutral
 		Location: 63,9
@@ -510,9 +453,6 @@ Actors:
 	Actor163: t16
 		Owner: Neutral
 		Location: 28,17
-	Actor164: tc02
-		Owner: Neutral
-		Location: 68,0
 	Actor165: tc01
 		Owner: Neutral
 		Location: 44,83
