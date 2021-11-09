@@ -1,0 +1,67 @@
+SMG:
+	ReloadDelay: 25
+	ValidTargets: Ground
+	-InvalidTargets:
+	Projectile: Bullet
+		Speed: 2c512
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Ground
+		Versus:
+			Wood: 5
+			Light: 4
+			Heavy: 3
+			Brick: 5
+			Concrete: 5
+
+RavagerShards:
+	Range: 6c0
+	Projectile: Missile
+		Speed: 175
+		LockOnProbability: 0
+		LockOnInaccuracy: 128
+		Inaccuracy: 128
+		MinimumLaunchAngle: 80
+		MaximumLaunchAngle: 112
+
+WarriorGun:
+	Range: 4c0
+
+DisintegratorBeam:
+	Range: 4c0
+
+IntruderDiscs:
+	Range: 7c0
+	Projectile: Missile
+		Speed: 200
+		LockOnProbability: 0
+		RangeLimit: 7c512
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			None: 75
+
+FeederBeam:
+	Range: 3c512
+
+LeecherBeam:
+	Range: 3c512
+
+RuinerCannon:
+	Projectile: Bullet
+		Speed: 150
+
+RiftCannon:
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			None: 0
+	Warhead@2Dam: HealthPercentageDamage
+		Versus:
+			None: 0
+
+MiniRift:
+	Warhead@3Slow: GrantExternalCondition
+		ValidTargets: Vehicle, Cyborg, Infantry
+	Warhead@4Slow: GrantExternalCondition
+		ValidTargets: Vehicle, Cyborg, Infantry
+
+GunWalkerZap:
+	Range: 3c512
