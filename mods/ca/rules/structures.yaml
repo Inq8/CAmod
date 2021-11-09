@@ -889,9 +889,9 @@ HBOX:
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
 		Attributes: • Can detect cloaked units\n• Camouflaged when idle
 	Valued:
-		Cost: 700
+		Cost: 650
 	CustomSellValue:
-		Value: 500
+		Value: 450
 	Health:
 		HP: 34000
 	Armor:
@@ -2527,7 +2527,7 @@ SBAG:
 	Health:
 		HP: 15000
 	Armor:
-		Type: Wood
+		Type: Brick
 	LineBuild:
 		NodeTypes: sandbag
 	LineBuildNode:
@@ -2551,13 +2551,37 @@ FENC:
 	Health:
 		HP: 15000
 	Armor:
-		Type: Wood
+		Type: Brick
 	LineBuild:
 		NodeTypes: fence
 	LineBuildNode:
 		Types: fence
 	WithWallSpriteBody:
 		Type: fence
+
+CHAIN:
+	Inherits: ^Wall
+	Buildable:
+		Queue: Defense
+		BuildPaletteOrder: 20
+		Prerequisites: ~structures.nod, ~techlevel.low
+		Description: • Stops infantry and light vehicles\n• Can be crushed by tanks
+	Valued:
+		Cost: 30
+	CustomSellValue:
+		Value: 0
+	Tooltip:
+		Name: Chain-link Fence
+	Health:
+		HP: 15000
+	Armor:
+		Type: Brick
+	LineBuild:
+		NodeTypes: chain
+	LineBuildNode:
+		Types: chain
+	WithWallSpriteBody:
+		Type: chain
 
 BRIK:
 	Inherits: ^Wall
@@ -2588,30 +2612,6 @@ BRIK:
 		Types: concrete
 	WithWallSpriteBody:
 		Type: concrete
-
-CHAIN:
-	Inherits: ^Wall
-	Buildable:
-		Queue: Defense
-		BuildPaletteOrder: 20
-		Prerequisites: ~structures.nod, ~techlevel.low
-		Description: • Stops infantry and light vehicles\n• Can be crushed by tanks
-	Valued:
-		Cost: 30
-	CustomSellValue:
-		Value: 0
-	Tooltip:
-		Name: Chain-link Fence
-	Health:
-		HP: 30000
-	Armor:
-		Type: Wood
-	LineBuild:
-		NodeTypes: chain
-	LineBuildNode:
-		Types: chain
-	WithWallSpriteBody:
-		Type: chain
 
 CYCL:
 	Inherits: ^Wall

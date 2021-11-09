@@ -14,7 +14,7 @@
 			Light: 60
 			Heavy: 25
 			Concrete: 25
-			Brick: 20
+			Brick: 5
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -129,7 +129,7 @@ Napalmtd:
 			Light: 80
 			Heavy: 55
 			Concrete: 35
-			Brick: 25
+			Brick: 5
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -165,7 +165,7 @@ Flamer:
 			Light: 59
 			Heavy: 30
 			Concrete: 30
-			Brick: 2
+			Brick: 5
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -234,7 +234,7 @@ FlamerTD:
 			Light: 70
 			Heavy: 30
 			Concrete: 30
-			Brick: 2
+			Brick: 5
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		ValidRelationships: Enemy, Neutral
 		DebugOverlayColor: ffaa00
@@ -352,7 +352,7 @@ BlackHandFlamer:
 			Light: 75
 			Heavy: 100
 			Concrete: 45
-			Brick: 2
+			Brick: 5
 		-Delay:
 	Warhead@2Smu: LeaveSmudge
 		Chance: 5
@@ -371,7 +371,6 @@ Napalm:
 		Versus:
 			Wood: 100
 			Concrete: 50
-			Brick: 50
 
 ^TeslaWeapon:
 	ReloadDelay: 3
@@ -383,6 +382,7 @@ Napalm:
 		Damage: 10000
 		Versus:
 			None: 1000
+			Brick: 5
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -894,6 +894,7 @@ Laser:
 			Wood: 60
 			Heavy: 101
 			Concrete: 90
+			Brick: 50
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
@@ -1017,6 +1018,7 @@ VenomLaser:
 			Concrete: 10
 			Light: 90
 			Heavy: 10
+			Brick: 50
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
@@ -1076,6 +1078,7 @@ PrisLaser:
 			Wood: 70
 			Light: 75
 			Heavy: 75
+			Brick: 50
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
@@ -1194,7 +1197,6 @@ KirovBomb:
 			Light: 85
 			Heavy: 75
 			Concrete: 55
-			Brick: 50
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
@@ -1292,7 +1294,6 @@ KirovCluster:
 			Light: 65
 			Heavy: 40
 			Concrete: 60
-			Brick: 50
 	Warhead@Smu: LeaveSmudge
 		SmudgeType: Crater
 		InvalidTargets: Structure, Wall, Trees
@@ -1448,6 +1449,7 @@ Railgun:
 			Light: 100
 			Heavy: 85
 			Concrete: 15
+			Brick: 75
 		DamageTypes: Prone100Percent, TriggerProne, ExplosionDeath
 
 TitanRailgun:
@@ -1474,7 +1476,6 @@ TitanRailgun:
 			Light: 70
 			Heavy: 100
 			Concrete: 30
-			Brick: 50
 		ValidRelationships: Enemy, Neutral
 	Warhead@2Dam: SpreadDamage
 		Damage: 1250
@@ -1484,7 +1485,7 @@ TitanRailgun:
 			Light: 70
 			Heavy: 100
 			Concrete: 30
-			Brick: 50
+			Brick: 75
 		ValidRelationships: Ally
 
 TitanRailgunImpact:
@@ -1534,7 +1535,7 @@ IonZap:
 			Light: 85
 			Heavy: 115
 			Concrete: 35
-			Brick: 45
+			Brick: 75
 		DamageTypes: Prone100Percent, TriggerProne, ExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: shock_wave
@@ -1588,7 +1589,7 @@ OrcaBomb:
 			Light: 20
 			Heavy: 20
 			Concrete: 20
-			Brick: 20
+			Brick: 5
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -1633,6 +1634,7 @@ MicrowaveZap:
 			Concrete: 40
 			Light: 100
 			Heavy: 60
+			Brick: 5
 	Warhead@2Dam: SpreadDamage
 		ValidTargets: Cyborg
 		InvalidTargets: Air
@@ -1754,7 +1756,7 @@ Cloud:
 			Light: 50
 			Heavy: 25
 			Concrete: 100
-			Brick: 10
+			Brick: 5
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 
 ChaosCloud:
@@ -1901,7 +1903,7 @@ CyCannon:
 			Light: 100
 			Heavy: 75
 			Concrete: 25
-			Brick: 70
+			Brick: 75
 		DamageTypes: Prone350Percent, TriggerProne, ExplosionDeath
 
 NeutronCannon:
@@ -1919,7 +1921,7 @@ NeutronCannon:
 			Concrete: 50
 			Heavy: 75
 			Light: 75
-			Brick: 10
+			Brick: 5
 		ValidTargets: Temporal
 		DamageTypes: ChronoDeath
 
@@ -1995,7 +1997,6 @@ SonicPulse:
 			Light: 90
 			Heavy: 100
 			Concrete: 35
-			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: sonicpulse1, sonicpulse2
@@ -2039,7 +2040,6 @@ JDAM:
 			Light: 100
 			Heavy: 95
 			Concrete: 100
-			Brick: 65
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Dam: SpreadDamage
 		Spread: 512

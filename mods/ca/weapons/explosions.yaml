@@ -206,7 +206,6 @@ V3ExplodeAirborne:
 			Light: 30
 			Heavy: 20
 			Concrete: 100
-			Brick: 55
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: artillery_explosion
@@ -251,7 +250,7 @@ BarrelExplode:
 			None: 120
 			Wood: 100
 			Light: 50
-			Brick: 10
+			Brick: 50
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, Incendiary
 	Warhead@2Eff: CreateEffect
 		Explosions: napalm
@@ -280,7 +279,7 @@ KirovExplode:
 			Wood: 100
 			Heavy: 35
 			Concrete: 35
-			Brick: 10
+			Brick: 50
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@2Eff: CreateEffect
 		Explosions: large_napalm
@@ -370,8 +369,6 @@ CrateNuke:
 		Damage: 5000
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Trees, Water, Air
-		Versus:
-			Brick: 25
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@2Res_impact: DestroyResource
@@ -387,7 +384,6 @@ CrateNuke:
 		ValidTargets: Ground, Trees, Water, Air
 		Versus:
 			Tree: 200
-			Brick: 25
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@5Res_areanuke1: DestroyResource
@@ -466,7 +462,6 @@ MiniNuke:
 		Versus:
 			Tree: 200
 			Wood: 75
-			Brick: 25
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@5Res_areanuke1: DestroyResource
@@ -484,7 +479,6 @@ MiniNuke:
 		ValidTargets: Ground, Water, Underwater, Air
 		Versus:
 			Wood: 75
-			Brick: 25
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@8Dam_areanuke2: SpreadDamage
@@ -503,8 +497,6 @@ MiniNuke:
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Delay: 15
 		ValidTargets: Ground, Water, Underwater
-		Versus:
-			Brick: 25
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@12Res_areanuke3: DestroyResource
@@ -557,7 +549,6 @@ MicroNuke:
 		ValidTargets: Ground, Trees, Water, Underwater, Air
 		Versus:
 			Wood: 75
-			Brick: 25
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@5Res_areanuke1: DestroyResource
@@ -575,7 +566,6 @@ MicroNuke:
 		ValidTargets: Ground, Water, Underwater, Air
 		Versus:
 			Wood: 75
-			Brick: 25
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@9Res_areanuke2: DestroyResource
@@ -587,8 +577,6 @@ MicroNuke:
 		Falloff: 1000, 368, 50, 7, 0
 		Delay: 15
 		ValidTargets: Ground, Water, Underwater
-		Versus:
-			Brick: 25
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
 	Warhead@11Dam_areanuke3: SpreadDamage
@@ -633,7 +621,7 @@ UnitExplodeVice:
 			Light: 50
 			Heavy: 25
 			Concrete: 25
-			Brick: 10
+			Brick: 5
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
@@ -660,7 +648,7 @@ UnitExplodeToxinTruck:
 		ValidTargets: Ground, Water
 		InvalidTargets: Air, Creep
 		Versus:
-			Brick: 25
+			Brick: 5
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, ToxinDeath
 	Warhead@3Eff_impact: CreateEffect
@@ -675,7 +663,7 @@ UnitExplodeToxinTruck:
 		ValidTargets: Ground, Water
 		InvalidTargets: Air, Creep
 		Versus:
-			Brick: 25
+			Brick: 5
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, ToxinDeath
 	Warhead@7Dam_areanuke2: SpreadDamage
@@ -686,7 +674,7 @@ UnitExplodeToxinTruck:
 		ValidTargets: Ground, Water
 		InvalidTargets: Air, Creep
 		Versus:
-			Brick: 25
+			Brick: 5
 		AffectsParent: true
 		DamageTypes: Prone50Percent, TriggerProne, ToxinDeath
 	Warhead@11Smu_areanuke3: LeaveSmudge
@@ -742,7 +730,7 @@ MEMP:
 			Light: 20
 			Heavy: 20
 			Concrete: 25
-			Brick: 25
+			Brick: 5
 	Warhead@2Eff: CreateEffect
 		ExplosionPalette: tsunit-ignore-lighting-alpha75
 		Explosions: pulse_explosion3
