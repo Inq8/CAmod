@@ -80,10 +80,17 @@ end
 
 WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
+    local initialPlayers = GetCommandosAlive()
 
 	SendScrinUnits(AttackPaths[1][1], AttackPaths[1])
-    SendScrinUnits(AttackPaths[2][1], AttackPaths[2])
-    SendScrinUnits(AttackPaths[3][1], AttackPaths[3])
+
+    if initialPlayers > 1 then
+        SendScrinUnits(AttackPaths[2][1], AttackPaths[2])
+    end
+
+    if initialPlayers > 2 then
+        SendScrinUnits(AttackPaths[3][1], AttackPaths[3])
+    end
 
     Trigger.OnAllKilledOrCaptured(Wormholes, function()
         local actors = Scrin.GetActors()
