@@ -3,9 +3,10 @@ SMG:
 	ValidTargets: Ground
 	-InvalidTargets:
 	Projectile: Bullet
-		Speed: 2c512
+		Speed: 3c0
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Ground
+		ValidRelationships: Enemy, Neutral
 		Versus:
 			Wood: 5
 			Light: 4
@@ -16,12 +17,15 @@ SMG:
 RavagerShards:
 	Range: 6c0
 	Projectile: Missile
-		Speed: 175
+		Speed: 170
 		LockOnProbability: 0
 		LockOnInaccuracy: 128
 		Inaccuracy: 128
 		MinimumLaunchAngle: 80
 		MaximumLaunchAngle: 112
+		Blockable: true
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
 
 WarriorGun:
 	Range: 4c0
@@ -32,22 +36,29 @@ DisintegratorBeam:
 IntruderDiscs:
 	Range: 7c0
 	Projectile: Missile
-		Speed: 200
+		Speed: 190
 		LockOnProbability: 0
 		RangeLimit: 7c512
+		Blockable: true
 	Warhead@1Dam: SpreadDamage
 		Versus:
 			None: 75
 
-FeederBeam:
+LeecherBeam:
+	Range: 3c512
+	Projectile: PlasmaBeam
+		Blockable: true
+
+FeederTargeting:
 	Range: 3c512
 
-LeecherBeam:
+FeederBeam:
 	Range: 3c512
 
 RuinerCannon:
 	Projectile: Bullet
 		Speed: 150
+		Blockable: true
 
 RiftCannon:
 	Warhead@1Dam: SpreadDamage
@@ -58,6 +69,10 @@ RiftCannon:
 			None: 0
 
 MiniRift:
+	Warhead@1Dam: SpreadDamage
+		Delay: 75
+		Versus:
+			None: 10
 	Warhead@3Slow: GrantExternalCondition
 		ValidTargets: Vehicle, Cyborg, Infantry
 	Warhead@4Slow: GrantExternalCondition
@@ -65,3 +80,19 @@ MiniRift:
 
 GunWalkerZap:
 	Range: 3c512
+
+CorrupterSpew:
+	Projectile: Bullet
+		Blockable: true
+
+TurretDiscs:
+	Inherits: DevastatorDiscs
+	Range: 7c0
+	-MinRange:
+	ReloadDelay: 120
+	Report: devastator-fire1.aud, devastator-fire2.aud, devastator-fire3.aud
+	BurstDelays: 6
+	Projectile: Bullet
+		Inaccuracy: 64
+		Blockable: true
+		Speed: 115

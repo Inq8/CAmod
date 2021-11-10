@@ -76,7 +76,8 @@ RMBO:
 		Cost: 0
 	Buildable:
 		Prerequisites: ~rmbospawn
-		BuildDuration: 1500
+		BuildDuration: 2500
+		BuildDurationModifier: 100
 	Health:
 		HP: 25000
 	MustBeDestroyed:
@@ -150,6 +151,8 @@ FEED:
 		ScanRadius: 7
 	RevealsShroud:
 		Range: 7c0
+	ConvertsDamageToHealth:
+		DamagePercentConverted: 300
 
 GSCR:
 	AutoTarget:
@@ -178,7 +181,7 @@ GUNW:
 
 RUIN:
 	AutoTarget:
-		ScanRadius: 7
+		ScanRadius: 8
 
 LCHR:
 	AutoTarget:
@@ -186,6 +189,8 @@ LCHR:
 	Mobile:
 		Speed: 50
 		TurnSpeed: 16
+	ConvertsDamageToHealth:
+		DamagePercentConverted: 300
 
 camera.minirift:
 	KillsSelf:
@@ -198,14 +203,18 @@ WORMHOLE:
 		RequiredForShortGame: true
 	PopControlled:
 		Limit: 3
+	Health:
+		HP: 50000
 
 RMBOSPAWN:
 	Inherits: CAMERA
+	Tooltip:
+		Name: Spawn Point
 	MustBeDestroyed:
 		RequiredForShortGame: true
 	Exit:
 	Health:
-		HP: 1000
+		HP: 5000
 	Armor:
 		Type: Wood
 	HitShape:
@@ -214,6 +223,30 @@ RMBOSPAWN:
 	ProvidesPrerequisite:
 	Targetable:
 		TargetTypes: Ground, Structure
+	WithSpriteBody:
+	-RenderSpritesEditorOnly:
+	RenderSprites:
+		Image: shab
+	WithIdleAnimation:
+		Sequences: idle
+		Interval: 25
+	Explodes:
+		Weapon: UnitExplodeSmall
+		EmptyWeapon: UnitExplodeSmall
 
 MEDI:
 	-RevealsShroud:
+
+BRIK:
+	-RenderSprites:
+	RenderSpritesEditorOnly:
+	DamageMultiplier@INVULN:
+		Modifier: 0
+
+PTUR:
+	Health:
+		HP: 60000
+	Turreted:
+		TurnSpeed: 28
+	Armament:
+		Weapon: TurretDiscs
