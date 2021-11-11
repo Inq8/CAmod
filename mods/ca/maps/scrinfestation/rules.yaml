@@ -1,0 +1,252 @@
+^Palettes:
+	GlobalLightingPaletteEffect:
+		Red: 0.80
+		Green: 0.85
+		Blue: 1.00
+		Ambient: 0.9
+
+World:
+	MPStartUnits@rmboonly:
+		Class: none
+		ClassName: Commando Only
+		BaseActor: rmbo
+		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri, gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow, scrin, reaper, traveler, harbinger, collector
+	-MPStartUnits@mcvonly:
+	-MPStartUnits@lightallies:
+	-MPStartUnits@lightsoviet:
+	-MPStartUnits@heavyallies:
+	-MPStartUnits@heavysoviet:
+	-MPStartUnits@mcvonly2:
+	-MPStartUnits@defaultgdia:
+	-MPStartUnits@defaultnoda:
+	-MPStartUnits@heavynoda:
+	-MPStartUnits@heavygdia:
+	-MPStartUnits@mcvonlyscrin:
+	-MPStartUnits@lightscrin:
+	-MPStartUnits@heavyscrin:
+	SpawnMPUnits:
+		DropdownLocked: True
+	MapBuildRadius:
+		AllyBuildRadiusCheckboxLocked: True
+		BuildRadiusCheckboxLocked: True
+		AllyBuildRadiusCheckboxEnabled: True
+		BuildRadiusCheckboxEnabled: True
+	MapOptions:
+		TechLevelDropdownLocked: True
+		TechLevelDropdownVisible: False
+		ShortGameCheckboxLocked: True
+	MissionData:
+		Briefing: ================\n\n- Each player starts with a single Commando.\n-------------------------\n- If your Commando dies you can build a new one.\n-------------------------\n- Fight your way through the Scrin forces.\n-------------------------\n- Objective is to find and destroy the Scrin portals.\n-------------------------\n- Mission failed if you lose the spawn area.\n\n================\n
+	CrateSpawner:
+		CheckboxLocked: True
+		CheckboxEnabled: False
+	LuaScript:
+		Scripts: scrinfestation.lua
+
+Player:
+	PlayerResources:
+		SelectableCash: 0
+		DefaultCash: 0
+		DefaultCashDropdownLocked: True
+	LobbyPrerequisiteCheckbox@GLOBALBOUNTY:
+		Enabled: False
+		Locked: True
+	LobbyPrerequisiteCheckbox@FORCESHIELD:
+		Enabled: True
+		Locked: True
+	DeveloperMode:
+		CheckboxLocked: True
+	LobbyPrerequisiteCheckbox@GLOBALFACTUNDEPLOY:
+		Enabled: True
+		Locked: True
+	LobbyPrerequisiteCheckbox@NAVY:
+		Enabled: True
+		Locked: True
+	LobbyPrerequisiteCheckbox@BALANCEDHARVESTING:
+		Enabled: True
+		Locked: True
+	Shroud:
+		ExploredMapCheckboxLocked: True
+		ExploredMapCheckboxEnabled: False
+		FogCheckboxLocked: True
+		FogCheckboxEnabled: False
+
+RMBO:
+	Valued:
+		Cost: 0
+	Buildable:
+		Prerequisites: ~rmbospawn
+		BuildDuration: 2500
+		BuildDurationModifier: 100
+	Health:
+		HP: 25000
+	MustBeDestroyed:
+		RequiredForShortGame: true
+	Mobile:
+		Speed: 80
+	-AutoTarget:
+	-AutoTargetPriority@DEFAULT:
+	-AutoTargetPriority@ATTACKANYTHING:
+	-Armament@sapper:
+	TakeCover:
+		SpeedModifier: 85
+	ExternalCondition@slowed:
+		Condition: slowed
+	SpeedMultiplier@slowed1:
+		Modifier: 70
+		RequiresCondition: slowed == 1
+	SpeedMultiplier@slowed2:
+		Modifier: 40
+		RequiresCondition: slowed > 1
+	WithDecoration@COMMANDOSKULL:
+		RequiresCondition: chilled
+	-GrantCondition@RANK-ELITE:
+	-DamageMultiplier@RANK-1:
+	-DamageMultiplier@RANK-2:
+	-DamageMultiplier@RANK-ELITE:
+	-FirepowerMultiplier@RANK-1:
+	-FirepowerMultiplier@RANK-2:
+	-FirepowerMultiplier@RANK-ELITE:
+	-ReloadDelayMultiplier@RANK-1:
+	-ReloadDelayMultiplier@RANK-2:
+	-ReloadDelayMultiplier@RANK-ELITE:
+	-ChangesHealth@ELITE:
+	-WithDecoration@RANK-1:
+	-WithDecoration@RANK-2:
+	-WithDecoration@RANK-ELITE:
+	SpeedMultiplier@WARNINGSUPPRESSION:
+		Modifier: 100
+		RequiresCondition: rank-veteran && assault-move
+
+S1:
+	AutoTarget:
+		ScanRadius: 7
+	RevealsShroud:
+		Range: 7c0
+
+S2:
+	AutoTarget:
+		ScanRadius: 7
+	RevealsShroud:
+		Range: 7c0
+
+S3:
+	AutoTarget:
+		ScanRadius: 7
+	RevealsShroud:
+		Range: 7c0
+	Mobile:
+		Speed: 43
+
+S4:
+	AutoTarget:
+		ScanRadius: 7
+	RevealsShroud:
+		Range: 7c0
+	Mobile:
+		Speed: 43
+
+FEED:
+	AutoTarget:
+		ScanRadius: 7
+	RevealsShroud:
+		Range: 7c0
+	ConvertsDamageToHealth:
+		DamagePercentConverted: 300
+
+GSCR:
+	AutoTarget:
+		ScanRadius: 7
+	RevealsShroud:
+		Range: 7c0
+
+CORR:
+	AutoTarget:
+		ScanRadius: 7
+	RevealsShroud:
+		Range: 7c0
+
+DARK:
+	AutoTarget:
+		ScanRadius: 7
+	Armament:
+		FireDelay: 20
+
+GUNW:
+	AutoTarget:
+		ScanRadius: 7
+	Mobile:
+		Speed: 50
+		TurnSpeed: 16
+
+RUIN:
+	AutoTarget:
+		ScanRadius: 8
+
+LCHR:
+	AutoTarget:
+		ScanRadius: 7
+	Mobile:
+		Speed: 50
+		TurnSpeed: 16
+	ConvertsDamageToHealth:
+		DamagePercentConverted: 300
+
+camera.minirift:
+	KillsSelf:
+		Delay: 875
+
+WORMHOLE:
+	MapEditorData:
+		Categories: System
+	MustBeDestroyed:
+		RequiredForShortGame: true
+	PopControlled:
+		Limit: 3
+	Health:
+		HP: 50000
+
+RMBOSPAWN:
+	Inherits: CAMERA
+	Tooltip:
+		Name: Spawn Point
+	MustBeDestroyed:
+		RequiredForShortGame: true
+	Exit:
+	Health:
+		HP: 5000
+	Armor:
+		Type: Wood
+	HitShape:
+	Production:
+		Produces: Infantry, Soldier
+	ProvidesPrerequisite:
+	Targetable:
+		TargetTypes: Ground, Structure
+	WithSpriteBody:
+	-RenderSpritesEditorOnly:
+	RenderSprites:
+		Image: shab
+	WithIdleAnimation:
+		Sequences: idle
+		Interval: 25
+	Explodes:
+		Weapon: UnitExplodeSmall
+		EmptyWeapon: UnitExplodeSmall
+
+MEDI:
+	-RevealsShroud:
+
+BRIK:
+	-RenderSprites:
+	RenderSpritesEditorOnly:
+	DamageMultiplier@INVULN:
+		Modifier: 0
+
+PTUR:
+	Health:
+		HP: 60000
+	Turreted:
+		TurnSpeed: 28
+	Armament:
+		Weapon: TurretDiscs
