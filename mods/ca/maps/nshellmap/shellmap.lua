@@ -4,7 +4,7 @@ NodCyborgUnitTypes = { "n1c", "n1c", "n1c", "n1c", "n3c", "n3c", "rmbc", "rmbc" 
 AlliedUnitTypes = { "jeep", "1tnk", "apc.ai", "1tnk", "gtnk", "ifv.ai", "ptnk", "e1", "e1", "e1", "e1", "e3", "e3", "e3", "seal" }
 ScrinUnitTypes = { "seek", "atmz", "lchr", "devo", "tpod", "s1", "s1", "s1", "s1", "s3", "s3" }
 ProxyType = "powerproxy.airborne"
-ParadropWaypoints = { Helidrop1, Helidrop2}
+ParadropWaypoints = { Airdrop1, Airdrop2, Airdrop3}
 HelicopterUnitTypes = { "e1", "e1", "e1", "e1", "e3", "e3" };
 ProducedUnitTypes =
 {
@@ -87,7 +87,7 @@ ParadropUSAUnits = function()
 		end)
 	end)
 
-	Trigger.AfterDelay(DateTime.Seconds(335), ParadropUSAUnits)
+	Trigger.AfterDelay(DateTime.Seconds(135), ParadropUSAUnits)
 end
 
 InsertAlliedChinookReinforcements = function(entry, hpad)
@@ -99,6 +99,18 @@ InsertAlliedChinookReinforcements = function(entry, hpad)
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(120), function() InsertAlliedChinookReinforcements(entry, hpad) end)
+end
+
+ChronoshiftAlliedUnits = function()
+	local cells = Utils.ExpandFootprint({ helispawn2.Location }, false)
+	local units = { }
+	for i = 1, #cells do
+		local unit = Actor.Create("gtnk", true, { Owner = usa, Facing = Angle.North })
+		BindActorTriggers(unit)
+		units[unit] = cells[i]
+	end
+	Chronosphere.Chronoshift(units)
+	Trigger.AfterDelay(DateTime.Seconds(60), ChronoshiftAlliedUnits)
 end
 
 SetupFactories = function()
@@ -136,14 +148,21 @@ WorldLoaded = function()
 	
 	SetupFactories()
 	InsertAlliedChinookReinforcements(Helispawn1, Helidrop1)
+	InsertAlliedChinookReinforcements(helispawn2, Airdrop3)
 	powerproxy = Actor.Create(ProxyType, false, { Owner = usa })
 	ParadropUSAUnits()
+	
+	Trigger.AfterDelay(DateTime.Seconds(5), ChronoshiftAlliedUnits)
+	Utils.Do(ProducedUnitTypes, ProduceUnits)
 
 	SendNodUnits(Nodspawn.Location, NodLightUnitTypes, 50)
 	SendNodUnits(Nodspawn2.Location, NodHeavyUnitTypes, 40)
-	SendNodUnits(Nodspawn3.Location, NodCyborgUnitTypes, 300)
+	SendNodUnits(Nodspawn3.Location, NodCyborgUnitTypes, 70)
+	SendNodUnits(Nodspawn3.Location, NodLightUnitTypes, 50)
 	SendAlliedUnits(Usaspawn.Location, AlliedUnitTypes, 50)
 	SendAlliedUnits(Helispawn1.Location, AlliedUnitTypes, 40)
 	SendScrinUnits(Scrinspawn.Location, ScrinUnitTypes, 50)
 	SendScrinUnits(Scrinspawn2.Location, ScrinUnitTypes, 40)
+	SendScrinUnits(wormhole1.Location, ScrinUnitTypes, 50)
+	SendScrinUnits(wormhole2.Location, ScrinUnitTypes, 50)
 end
