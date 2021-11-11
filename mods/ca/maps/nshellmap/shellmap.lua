@@ -3,6 +3,7 @@ NodHeavyUnitTypes = { "ltnk", "ltnk", "sapc.ai", "hftk", "mlrs" }
 NodCyborgUnitTypes = { "n1c", "n1c", "n1c", "n1c", "n3c", "n3c", "rmbc", "rmbc" }
 AlliedUnitTypes = { "jeep", "1tnk", "apc.ai", "1tnk", "gtnk", "ifv.ai", "ptnk", "e1", "e1", "e1", "e1", "e3", "e3", "e3", "seal" }
 ScrinUnitTypes = { "seek", "atmz", "lchr", "devo", "tpod", "s1", "s1", "s1", "s1", "s3", "s3" }
+ScrinHeavyUnitTypes = { "rptp", "atmz", "ruin", "devo", "tpod", "s1", "s1", "s1", "s1", "s3", "s3" }
 ProxyType = "powerproxy.airborne"
 ParadropWaypoints = { Airdrop1, Airdrop2, Airdrop3}
 HelicopterUnitTypes = { "e1", "e1", "e1", "e1", "e3", "e3" };
@@ -169,7 +170,8 @@ WorldLoaded = function()
 	SendAlliedUnits(Helispawn1.Location, AlliedUnitTypes, 40)
 	SendAlliedUnits(Usaspawn2.Location, AlliedUnitTypes, 40)
 	SendScrinUnits(Scrinspawn.Location, ScrinUnitTypes, 50)
-	SendScrinUnits(Scrinspawn2.Location, ScrinUnitTypes, 40)
+	SendScrinUnits(Scrinspawn2.Location, ScrinHeavyUnitTypes, 40)
 	SendScrinUnits(wormhole1.Location, ScrinUnitTypes, 50)
 	SendScrinUnits(wormhole2.Location, ScrinUnitTypes, 50)
+	SendScrinUnits(wormhole3.Location, ScrinHeavyUnitTypes, 50)
 end
