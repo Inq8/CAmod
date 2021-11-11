@@ -9,11 +9,15 @@ HelicopterUnitTypes = { "e1", "e1", "e1", "e1", "e3", "e3" };
 ProducedUnitTypes =
 {
 	{ factory = Usainf, types = { "e1", "e3" } },
+	{ factory = Usainf2, types = { "e1", "e3" } },
 	{ factory = Scrininf, types = { "s1", "s3" } },
 	{ factory = Nodinf, types = { "n1", "n3", "n4" } },
+	{ factory = Nodinf2, types = { "n1", "n3", "n4" } },
 	{ factory = Usaveh, types = { "1tnk", "2tnk", "ptnk", "jeep", "ifv.ai", "cryo", "2tnk" } },
+	{ factory = Usaveh2, types = { "1tnk", "2tnk", "ptnk", "jeep", "ifv.ai", "cryo", "2tnk" } },
 	{ factory = Scrinveh, types = { "seek", "lchr", "atmz", "devo", "corr" } },
-	{ factory = Nodveh, types = { "ltnk", "hftk", "stnk.nod", "howi" } }
+	{ factory = Nodveh, types = { "ltnk", "hftk", "stnk.nod", "howi" } },
+	{ factory = Nodveh2, types = { "ltnk", "hftk", "stnk.nod", "howi" } }
 }
 
 BindActorTriggers = function(a)
@@ -159,8 +163,11 @@ WorldLoaded = function()
 	SendNodUnits(Nodspawn2.Location, NodHeavyUnitTypes, 40)
 	SendNodUnits(Nodspawn3.Location, NodCyborgUnitTypes, 70)
 	SendNodUnits(Nodspawn3.Location, NodLightUnitTypes, 50)
+	SendNodUnits(Nodspawn4.Location, NodHeavyUnitTypes, 40)
+	SendNodUnits(Nodspawn4.Location, NodCyborgUnitTypes, 70)
 	SendAlliedUnits(Usaspawn.Location, AlliedUnitTypes, 50)
 	SendAlliedUnits(Helispawn1.Location, AlliedUnitTypes, 40)
+	SendAlliedUnits(Usaspawn2.Location, AlliedUnitTypes, 40)
 	SendScrinUnits(Scrinspawn.Location, ScrinUnitTypes, 50)
 	SendScrinUnits(Scrinspawn2.Location, ScrinUnitTypes, 40)
 	SendScrinUnits(wormhole1.Location, ScrinUnitTypes, 50)
