@@ -4,6 +4,7 @@ AttackPaths =
 {
 	{
         { NW2.Location, NW3.Location, NW4.Location, NW5.Location, NW6.Location, NW7.Location, NW8.Location, NW9.Location },
+        { NE4.Location, NE5.Location, NE6.Location, NE7.Location },
     },
 	{
 	    { NE2.Location, NE3.Location, NE4.Location, NE5.Location, NE6.Location, NE7.Location },
@@ -11,6 +12,7 @@ AttackPaths =
 	},
 	{
         { SE2.Location, NE3.Location, NE4.Location, NE5.Location, NE6.Location, NE7.Location },
+        { SE2.Location, NE3.Location, NE4.Location, NW4.Location, NW5.Location, NW6.Location, NW7.Location, NW8.Location, NW9.Location },
     },
 }
 
@@ -40,6 +42,19 @@ GetCommandosAlive = function()
 	return num
 end
 
+GetNumPlayers = function()
+    local num = 0
+
+    for i,player in pairs(Players) do
+        local spawns = player.GetActorsByType("rmbospawn")
+        for j,spawn in pairs(spawns) do
+            num = num + 1
+        end
+    end
+
+    return num
+end
+
 IdleHunt = function(actor)
 	if actor.HasProperty("Hunt") and not actor.IsDead then
 		Trigger.OnIdle(actor, actor.Hunt)
@@ -65,10 +80,14 @@ SendScrinUnits = function(wormhole, attackPaths)
 		return
 	end
 
-	local interval = math.floor((150 / GetCommandosAlive()) + 0.5) + Utils.RandomInteger(-3,3)
+	local interval = math.floor((150 / GetNumPlayers()) + 0.5) + Utils.RandomInteger(-3,3)
 	local unitTypes = Utils.Random(ScrinSquads);
 	local units = Reinforcements.Reinforce(Scrin, unitTypes, { wormhole.Location }, 15)
-    local attackPath = Utils.Random(attackPaths);
+    local attackPath = attackPaths[1]
+
+    if GetNumPlayers() > 2 then
+        attackPath = Utils.Random(attackPaths)
+    end
 
 	Utils.Do(units, function(unit)
 		unit.Patrol(attackPath, true, 50)
@@ -92,7 +111,7 @@ end
 
 WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
-	local initialPlayers = GetCommandosAlive()
+	local initialPlayers = GetNumPlayers()
 
 	SendScrinUnits(WormholeNE, AttackPaths[2])
 
@@ -104,11 +123,27 @@ WorldLoaded = function()
 		SendScrinUnits(WormholeSE, AttackPaths[3])
 	end
 
+    local scrinUnits = Scrin.GetActorsByTypes({"gunw", "corr", "ruin", "lchr", "dark", "ptur"})
+
+    Utils.Do(scrinUnits, function(unit)
+        Trigger.OnDamaged(unit, function(self, attacker, damage)
+            if attacker.EffectiveOwner == Scrin then
+                return
+            end
+            local rand = Utils.RandomInteger(1,100)
+            if rand > 90 then
+                if unit.HasProperty("Attack") and not unit.IsDead then
+                    unit.Stop()
+                    unit.Attack(attacker)
+                end
+            end
+        end)
+    end)
+
 	Trigger.OnAllKilledOrCaptured(Wormholes, function()
 		local actors = Scrin.GetActors()
 		Utils.Do(actors, function(actor)
 			if actor.HasProperty("Kill") and not actor.IsDead then actor.Kill() end
 		end)
 	end)
-
 end
