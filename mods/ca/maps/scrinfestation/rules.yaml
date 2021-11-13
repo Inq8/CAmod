@@ -29,7 +29,7 @@ World:
 	MapBuildRadius:
 		AllyBuildRadiusCheckboxLocked: True
 		BuildRadiusCheckboxLocked: True
-		AllyBuildRadiusCheckboxEnabled: True
+		AllyBuildRadiusCheckboxEnabled: False
 		BuildRadiusCheckboxEnabled: True
 	MapOptions:
 		TechLevelDropdownLocked: True
@@ -42,6 +42,9 @@ World:
 		CheckboxEnabled: False
 	LuaScript:
 		Scripts: scrinfestation.lua
+	MPStartLocations:
+		SeparateTeamSpawnsCheckboxEnabled: False
+		SeparateTeamSpawnsCheckboxLocked: True
 
 Player:
 	PlayerResources:
@@ -52,18 +55,18 @@ Player:
 		Enabled: False
 		Locked: True
 	LobbyPrerequisiteCheckbox@FORCESHIELD:
-		Enabled: True
+		Enabled: False
 		Locked: True
 	DeveloperMode:
 		CheckboxLocked: True
 	LobbyPrerequisiteCheckbox@GLOBALFACTUNDEPLOY:
-		Enabled: True
+		Enabled: False
 		Locked: True
 	LobbyPrerequisiteCheckbox@NAVY:
-		Enabled: True
+		Enabled: False
 		Locked: True
 	LobbyPrerequisiteCheckbox@BALANCEDHARVESTING:
-		Enabled: True
+		Enabled: False
 		Locked: True
 	Shroud:
 		ExploredMapCheckboxLocked: True
@@ -76,7 +79,7 @@ RMBO:
 		Cost: 0
 	Buildable:
 		Prerequisites: ~rmbospawn
-		BuildDuration: 2000
+		BuildDuration: 1500
 		BuildDurationModifier: 100
 	Health:
 		HP: 25000
@@ -236,6 +239,10 @@ RMBOSPAWN:
 
 MEDI:
 	-RevealsShroud:
+	Cloak:
+		InitialDelay: 0
+		Palette: playertd
+		IsPlayerPalette: true
 
 BRIK:
 	-RenderSprites:

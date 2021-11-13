@@ -80,7 +80,7 @@ SendScrinUnits = function(wormhole, attackPaths)
 		return
 	end
 
-	local interval = math.floor((150 / GetNumPlayers()) + 0.5) + Utils.RandomInteger(-3,3)
+	local interval = math.floor((120 / GetNumPlayers()) + 0.5) + Utils.RandomInteger(-3,3)
 	local unitTypes = Utils.Random(ScrinSquads);
 	local units = Reinforcements.Reinforce(Scrin, unitTypes, { wormhole.Location }, 15)
     local attackPath = attackPaths[1]

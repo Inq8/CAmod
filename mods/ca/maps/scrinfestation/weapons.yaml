@@ -72,7 +72,7 @@ MiniRift:
 	Warhead@1Dam: SpreadDamage
 		Delay: 75
 		Versus:
-			None: 10
+			None: 25
 	Warhead@3Slow: GrantExternalCondition
 		ValidTargets: Vehicle, Cyborg, Infantry
 	Warhead@4Slow: GrantExternalCondition
@@ -84,6 +84,9 @@ GunWalkerZap:
 CorrupterSpew:
 	Projectile: Bullet
 		Blockable: true
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			None: 450
 
 TurretDiscs:
 	Inherits: DevastatorDiscs
@@ -96,3 +99,6 @@ TurretDiscs:
 		Inaccuracy: 64
 		Blockable: true
 		Speed: 115
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			None: 150
