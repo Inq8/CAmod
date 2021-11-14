@@ -605,8 +605,7 @@ TSLA:
 		LocalOffset: 0,0,896
 		RequiresCondition: !lowpower && charged >= 3
 	AttackTesla:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: disabled || empdisable || being-warped
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 		ChargeAudio: tslachg2.aud
 		MaxCharges: 3
 		ReloadDelay: 120
@@ -3538,8 +3537,7 @@ NSAM:
 		QuantizedFacings: 32
 		PauseOnCondition: disabled || empdisable || being-warped
 	AttackPopupTurreted:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: disabled || empdisable || being-warped
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	Armament:
 		Weapon: Nike
 		MuzzleSequence: muzzle
@@ -3756,8 +3754,7 @@ OBLI:
 		LocalOffset: 0,-85,1280
 		RequiresCondition: marked
 	AttackCharges:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: disabled || empdisable || being-warped
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 		ChargeLevel: 50
 		ChargingCondition: charging
 	AmbientSound:
@@ -4873,8 +4870,7 @@ PRIS:
 		PauseOnCondition: disabled || empdisable || being-warped
 	WithPrismChargeAnimation:
 	AttackPrismSupported:
-		RequiresCondition: !build-incomplete
-		PauseOnCondition: disabled
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 		ChargeAudio: bpripow.aud
 		MaxCharges: 1
 		ReloadDelay: 40
