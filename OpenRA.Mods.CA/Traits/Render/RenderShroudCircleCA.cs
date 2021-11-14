@@ -52,8 +52,10 @@ namespace OpenRA.Mods.CA.Traits
 			this.info = info;
 		}
 
-		void INotifyCreated.Created(Actor self)
+		protected override void Created(Actor self)
 		{
+			base.Created(self);
+
 			range = self.TraitsImplementing<CreatesShroud>()
 				.Select(cs => cs.Info.Range)
 				.DefaultIfEmpty(WDist.Zero)
