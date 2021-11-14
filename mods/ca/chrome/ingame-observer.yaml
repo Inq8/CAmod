@@ -1,5 +1,56 @@
 Container@OBSERVER_WIDGETS:
 	Children:
+		Background@SELECTION_TOOLTIP:
+			Logic: SelectionTooltipLogic
+			Background: dialog4
+			X: WINDOW_RIGHT
+			Y: WINDOW_BOTTOM
+			Width: 200
+			Height: 65
+			Children:
+				Label@NAME:
+					X: 7
+					Y: 3
+					Height: 23
+					Font: Bold
+				Label@DESC:
+					X: 7
+					Y: 27
+					Height: 2
+					Font: TinyBold
+					VAlign: Top
+				Label@STRENGTHS:
+					X: 7
+					Y: 29
+					Height: 2
+					Font: TinyBold
+					VAlign: Top
+					TextColor: 33DD33
+				Label@WEAKNESSES:
+					X: 7
+					Y: 30
+					Height: 2
+					Font: TinyBold
+					VAlign: Top
+					TextColor: EE5555
+				Label@ATTRIBUTES:
+					X: 7
+					Y: 31
+					Height: 2
+					Font: TinyBold
+					VAlign: Top
+					TextColor: FFFF00
+				Image@ARMORTYPE_ICON:
+					X: 3
+					Y: 7
+					Width: 16
+					Height: 16
+					ImageCollection: sidebar-bits
+					ImageName: production-tooltip-armor
+				Label@ARMORTYPE:
+					Y: 42
+					Height: 16
+					Font: Bold
 		Container@MUTE_INDICATOR:
 			Logic: MuteIndicatorLogic
 			X: WINDOW_RIGHT - WIDTH - 260
