@@ -265,8 +265,8 @@ SUK:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 120
-		Prerequisites: ~afld, stek, ~techlevel.high
-		Description: Fast ground attack aircraft armed\n  with powerful explosive munitions.
+		Prerequisites: ~afld, stek, ~!seismic.upgrade, ~techlevel.high
+		Description: Fast ground attack aircraft armed\n  with powerful armor-piercing munitions.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Defenses, Light Armor
 		Weaknesses: • Weak vs Infantry, Buildings\n• Cannot attack Aircraft
@@ -364,6 +364,25 @@ SUK:
 	GrantConditionOnPrerequisite@SEISMIC:
 		Condition: seismic-upgrade
 		Prerequisites: seismic.upgrade
+
+SUK.UPG:
+	Inherits: SUK
+	RenderSprites:
+		Image: suk
+	Buildable:
+		Prerequisites: ~afld, stek, ~seismic.upgrade, ~techlevel.high
+		Description: Fast ground attack aircraft armed\n  with powerful explosive munitions.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Infantry\n• Cannot attack Aircraft
+	-GrantConditionOnPrerequisite@SEISMIC:
+	-Armament:
+	Armament@UPGRADE:
+		-RequiresCondition:
+	Armament@UPGRADEDUMMY:
+		-RequiresCondition:
+	Selectable:
+		Class: suk
 
 YAK:
 	Inherits: ^Plane
