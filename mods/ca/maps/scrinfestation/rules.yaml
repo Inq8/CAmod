@@ -36,14 +36,14 @@ World:
 		TechLevelDropdownVisible: False
 		ShortGameCheckboxLocked: True
 	MissionData:
-		Briefing: ================\n\n- Each player starts with a single Commando.\n-------------------------\n- If your Commando dies you can build a new one.\n-------------------------\n- Fight your way through the Scrin forces.\n-------------------------\n- Objective is to find and destroy the Scrin portals.\n-------------------------\n- Mission failed if you lose the spawn area.\n\n================\n
+		Briefing: ================\n\n- Each player starts with a single Commando. Auto-attack is disabled.\n-------------------------\n- If your Commando dies you can build a new one (takes longer for each death).\n-------------------------\n- Fight your way through the Scrin forces.\n-------------------------\n- Objective is to find and destroy the Scrin portals.\n-------------------------\n- Mission failed if all spawn points are lost and all Commandos are dead.\n\n================\n
 	CrateSpawner:
 		CheckboxLocked: True
 		CheckboxEnabled: False
 	LuaScript:
 		Scripts: scrinfestation.lua
 	MPStartLocations:
-		SeparateTeamSpawnsCheckboxEnabled: False
+		SeparateTeamSpawnsCheckboxEnabled: True
 		SeparateTeamSpawnsCheckboxLocked: True
 
 Player:
@@ -79,8 +79,12 @@ RMBO:
 		Cost: 0
 	Buildable:
 		Prerequisites: ~rmbospawn
-		BuildDuration: 1500
+		BuildDuration: 1000
 		BuildDurationModifier: 100
+	TooltipExtras:
+		Strengths: • Strong vs Infantry
+		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Voiced by Frank Klepacki
 	Health:
 		HP: 25000
 	MustBeDestroyed:
@@ -103,23 +107,62 @@ RMBO:
 		RequiresCondition: slowed > 1
 	WithDecoration@COMMANDOSKULL:
 		RequiresCondition: chilled
-	-GrantCondition@RANK-ELITE:
+	GainsExperience:
+		ExperienceModifier: 5000
 	-DamageMultiplier@RANK-1:
 	-DamageMultiplier@RANK-2:
-	-DamageMultiplier@RANK-ELITE:
 	-FirepowerMultiplier@RANK-1:
 	-FirepowerMultiplier@RANK-2:
 	-FirepowerMultiplier@RANK-ELITE:
-	-ReloadDelayMultiplier@RANK-1:
-	-ReloadDelayMultiplier@RANK-2:
-	-ReloadDelayMultiplier@RANK-ELITE:
+	ReloadDelayMultiplier@RANK-1:
+	ReloadDelayMultiplier@RANK-2:
+	ReloadDelayMultiplier@RANK-ELITE:
 	-ChangesHealth@ELITE:
-	-WithDecoration@RANK-1:
-	-WithDecoration@RANK-2:
-	-WithDecoration@RANK-ELITE:
 	SpeedMultiplier@WARNINGSUPPRESSION:
 		Modifier: 100
 		RequiresCondition: rank-veteran && assault-move
+	SpawnActorOnDeath@ONEDEATH:
+		Actor: death.first
+		RequiresCondition: !one-death
+	SpawnActorOnDeath@TWODEATHS:
+		Actor: death.second
+		RequiresCondition: one-death && !two-deaths
+	SpawnActorOnDeath@THREEDEATHS:
+		Actor: death.third
+		RequiresCondition: two-deaths && !three-deaths
+	SpawnActorOnDeath@FOURDEATHS:
+		Actor: death.fourth
+		RequiresCondition: three-deaths && !four-deaths
+	SpawnActorOnDeath@FIVEDEATHS:
+		Actor: death.fifth
+		RequiresCondition: five-deaths && !five-deaths
+	GrantConditionOnPrerequisite@ONEDEATH:
+		Condition: one-death
+		Prerequisites: death.first
+	GrantConditionOnPrerequisite@TWODEATHS:
+		Condition: two-deaths
+		Prerequisites: death.second
+	GrantConditionOnPrerequisite@THREEDEATHS:
+		Condition: three-deaths
+		Prerequisites: death.third
+	GrantConditionOnPrerequisite@FOURDEATHS:
+		Condition: four-deaths
+		Prerequisites: death.fourth
+	GrantConditionOnPrerequisite@FIVEDEATHS:
+		Condition: five-deaths
+		Prerequisites: death.fifth
+	ProductionTimeMultiplier@TWODEATHS:
+		Multiplier: 175
+		Prerequisites: death.second, !death.third
+	ProductionTimeMultiplier@THREEDEATHS:
+		Multiplier: 250
+		Prerequisites: death.third, !death.fourth
+	ProductionTimeMultiplier@FOURDEATHS:
+		Multiplier: 325
+		Prerequisites: death.fourth, !death.fifth
+	ProductionTimeMultiplier@FIVEDEATHS:
+		Multiplier: 400
+		Prerequisites: death.fifth
 
 S1:
 	AutoTarget:
@@ -257,3 +300,24 @@ PTUR:
 		TurnSpeed: 28
 	Armament:
 		Weapon: TurretDiscs
+
+^DeathToken:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesPrerequisite@DEATH:
+
+DEATH.FIRST:
+	Inherits: ^DeathToken
+
+DEATH.SECOND:
+	Inherits: ^DeathToken
+
+DEATH.THIRD:
+	Inherits: ^DeathToken
+
+DEATH.FOURTH:
+	Inherits: ^DeathToken
+
+DEATH.FIFTH:
+	Inherits: ^DeathToken
