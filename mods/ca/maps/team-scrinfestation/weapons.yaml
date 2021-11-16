@@ -1,0 +1,105 @@
+SMG:
+	ReloadDelay: 25
+	ValidTargets: Ground
+	-InvalidTargets:
+	Projectile: Bullet
+		Speed: 3c0
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Ground
+		ValidRelationships: Enemy, Neutral
+		Versus:
+			Wood: 5
+			Light: 4
+			Heavy: 3
+			Brick: 5
+			Concrete: 5
+
+RavagerShards:
+	Range: 6c0
+	Projectile: Missile
+		Speed: 170
+		LockOnProbability: 0
+		LockOnInaccuracy: 128
+		Inaccuracy: 128
+		MinimumLaunchAngle: 80
+		MaximumLaunchAngle: 112
+		Blockable: true
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+
+WarriorGun:
+	Range: 4c0
+
+DisintegratorBeam:
+	Range: 4c0
+
+IntruderDiscs:
+	Range: 7c0
+	Projectile: Missile
+		Speed: 190
+		LockOnProbability: 0
+		RangeLimit: 7c512
+		Blockable: false
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			None: 75
+
+LeecherBeam:
+	Range: 3c512
+	Projectile: PlasmaBeam
+		Blockable: true
+
+FeederTargeting:
+	Range: 3c512
+
+FeederBeam:
+	Range: 3c512
+
+RuinerCannon:
+	Projectile: Bullet
+		Speed: 150
+		Blockable: true
+
+RiftCannon:
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			None: 0
+	Warhead@2Dam: HealthPercentageDamage
+		Versus:
+			None: 0
+
+MiniRift:
+	Warhead@1Dam: SpreadDamage
+		Spread: 512
+		Delay: 75
+		Versus:
+			None: 35
+	Warhead@3Slow: GrantExternalCondition
+		ValidTargets: Vehicle, Cyborg, Infantry
+	Warhead@4Slow: GrantExternalCondition
+		ValidTargets: Vehicle, Cyborg, Infantry
+
+GunWalkerZap:
+	Range: 3c512
+
+CorrupterSpew:
+	Projectile: Bullet
+		Blockable: true
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			None: 450
+
+TurretDiscs:
+	Inherits: DevastatorDiscs
+	Range: 7c0
+	-MinRange:
+	ReloadDelay: 120
+	Report: devastator-fire1.aud, devastator-fire2.aud, devastator-fire3.aud
+	BurstDelays: 6
+	Projectile: Bullet
+		Inaccuracy: 64
+		Blockable: true
+		Speed: 115
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			None: 170
