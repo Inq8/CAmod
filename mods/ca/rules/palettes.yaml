@@ -72,7 +72,7 @@
 	PaletteFromFile@tiberium-snow:
 		Name: tiberiumpalette
 		Tileset: SNOW
-		Filename: temperattd.pal
+		Filename: temptdsnow.pal
 		ShadowIndex: 3, 4
 	PaletteFromFile@tiberium-temperat:
 		Name: tiberiumpalette
@@ -472,20 +472,21 @@
 	RotationPaletteEffect@defaultwater:
 		Palettes: terrain
 		ExcludeTilesets: DESERT
+		ExcludePalettes: tiberiumpalette
 	RotationPaletteEffect@actorswater:
 		Palettes: player, overlayplayer, effect, playernavy
-		ExcludePalettes: playerd2k, d2k
+		ExcludePalettes: playerd2k, d2k, tiberiumpalette
 	RotationPaletteEffect@desertwater:
-		Palettes: terrain, temptd, playertd, overlayplayertd
+		Palettes: terrain, temptd, playertd, overlayplayertd, tiberiumpalette
 		Tilesets: DESERT
 		RotationBase: 32
-		ExcludePalettes: cursor, chrome, chrometd, chromes, colorpicker, playerd2k, d2k
+		ExcludePalettes: cursor, chrome, chrometd, chromes, tiberiumpalette, colorpicker, playerd2k, d2k
 	RotationPaletteEffect@desertwater-actor:
 		Palettes: desert, temptd, playertd, overlayplayertd, tdeffect
 		RotationBase: 32
-		ExcludePalettes: cursor, chrome, chrometd, chromes, colorpicker, playerd2k, d2k
+		ExcludePalettes: cursor, chrome, chrometd, tiberiumpalette, chromes, colorpicker, playerd2k, d2k
 	LightPaletteRotator:
-		ExcludePalettes: playerd2k, d2k, terrain, effect, tdeffect, desert, tseffect, ra2effect, tsunit, ra2unit, ra2unit-ignore-lighting-alpha75, tsunit-ignore-lighting-alpha75, tseffect-ignore-lighting-alpha75, tseffect-ignore-lighting-alpha90, effect-ignore-lighting-alpha85, ioncloud
+		ExcludePalettes: playerd2k, d2k, terrain, tiberiumpalette, effect, tdeffect, desert, tseffect, ra2effect, tsunit, ra2unit, ra2unit-ignore-lighting-alpha75, tsunit-ignore-lighting-alpha75, tseffect-ignore-lighting-alpha75, tseffect-ignore-lighting-alpha90, effect-ignore-lighting-alpha85, ioncloud
 	ChronoshiftPaletteEffect:
 	CloakPaletteEffect:
 	FlashPaletteEffect@NUKE:
