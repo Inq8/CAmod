@@ -890,33 +890,20 @@ SPLIT2:
 		Categories: Resource spawn
 
 SPLIT3:
-	Inherits: ^TibTree
-	SeedsResourceCA:
-		ResourceType: Tiberium
-		Interval: 75
-	AppearsOnMapPreview:
-		Terrain: Tiberium
-	WithIdleAnimation:
-		Interval: 175
-	MapEditorData:
-		Categories: Resource spawn
+	Inherits: SPLIT2
 
 SPLITBLUE:
-	Inherits: ^TibTree
+	Inherits: SPLIT2
 	RenderSprites:
 		Image: split3
 	SeedsResourceCA:
 		ResourceType: BlueTiberium
 	AppearsOnMapPreview:
 		Terrain: BlueTiberium
-	WithIdleAnimation:
-		Interval: 210
 	Tooltip:
 		Name: Blossom Tree (blue)
 	RadarColorFromTerrain:
 		Terrain: BlueTiberium
-	MapEditorData:
-		Categories: Resource spawn
 
 gps.scrambler:
 	Inherits@1: CAMERA
