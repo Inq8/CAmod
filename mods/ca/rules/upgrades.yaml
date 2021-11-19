@@ -535,23 +535,6 @@ hazmatsoviet.upgrade:
 	RenderSprites:
 		Image: hazmats.upgrade
 
-iraqtank.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Atomic Engines
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~radar.iraq, ~techlevel.high
-		BuildDuration: 1500
-		Description: Upgrades Mammoth and Heavy tanks\n  with volatile atomic engines.\n\nReplaces: Heavy Tank\nReplaces: Mammoth Tank
-	TooltipExtras:
-		Strengths: + 25% faster movement
-		Weaknesses: – Explodes on death
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: iraqtank.upgrade
-
 lasher.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -586,6 +569,23 @@ seismic.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: seismic.upgrade
+
+iraqtank.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Atomic Engines
+	Buildable:
+		BuildPaletteOrder: 40
+		Prerequisites: ~stek.iraq, ~techlevel.high
+		BuildDuration: 1500
+		Description: Upgrades Mammoth and Heavy tanks\n  with volatile atomic engines.\n\nReplaces: Heavy Tank\nReplaces: Mammoth Tank
+	TooltipExtras:
+		Strengths: + 25% faster movement
+		Weaknesses: – Explodes on death
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: iraqtank.upgrade
 
 tarc.upgrade:
 	Inherits: ^Upgrade
