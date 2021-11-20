@@ -238,17 +238,45 @@ DISR:
 	Targetable:
 		RequiresCondition: !being-warped || is-neutral
 
+HTNK.Drone:
+	Targetable:
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune
+	-ExternalCondition@DRONECONTROL:
+	-GrantConditionOnPrerequisite@DRONECONTROL:
+	-WithDecoration@DRONEDISABLE:
+	-WithColoredOverlay@DRONEDISABLE:
+	Mobile:
+		PauseOnCondition: empdisable || being-warped || notmobile
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
+
 MTNK.Drone:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune
 	Power:
 		Amount: 0
+	-ExternalCondition@DRONECONTROL:
+	-GrantConditionOnPrerequisite@DRONECONTROL:
+	-WithDecoration@DRONEDISABLE:
+	-WithColoredOverlay@DRONEDISABLE:
+	Mobile:
+		PauseOnCondition: empdisable || being-warped || notmobile
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
 
 MEMP:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune
 	Power:
 		Amount: 0
+	-ExternalCondition@DRONECONTROL:
+	-GrantConditionOnPrerequisite@DRONECONTROL:
+	-WithDecoration@DRONEDISABLE:
+	-WithColoredOverlay@DRONEDISABLE:
+	Mobile:
+		PauseOnCondition: triggered || empdisable || being-warped || notmobile
+	GrantTimedConditionOnDeploy:
+		RequiresCondition: empdisable || being-warped
 
 CDRN:
 	Targetable:
