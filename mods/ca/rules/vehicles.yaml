@@ -2267,6 +2267,7 @@ GDRN:
 		TurnSpeed: 40
 		Speed: 108
 		Voice: Move
+		PauseOnCondition: gshield || being-captured || empdisable || being-warped || driver-dead || notmobile
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 7c0
@@ -2308,6 +2309,37 @@ GDRN:
 	GrantConditionOnPrerequisite@TOW:
 		Condition: tow-upgrade
 		Prerequisites: tow.upgrade
+	GrantConditionOnDeploy@GSHIELD:
+		DeployedCondition: gshield
+		RequiresCondition: gshield-upgrade && (ammo || gshield)
+		SmartDeploy: True
+		DeploySounds: gshieldup.aud
+		UndeploySounds: gshielddown.aud
+	GrantConditionOnPrerequisite@GSHIELD:
+		Condition: gshield-upgrade
+		Prerequisites: gshield.upgrade
+	WithIdleOverlay@NSHIELD:
+		Image: nshield-overlay-sm
+		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
+	DamageMultiplier@NSHIELD:
+		RequiresCondition: nshield || gshield
+		Modifier: 50
+	PeriodicExplosion@GSHIELD:
+		Weapon: GuardianShieldUse
+		RequiresCondition: gshield && ammo
+		AmmoPoolName: gshield
+	AmmoPool@GSHIELD:
+		Name: gshield
+		Armaments: gshield
+		InitialAmmo: 1
+		AmmoCondition: ammo
+	ReloadAmmoPoolCA@GSHIELD:
+		AmmoPool: gshield
+		Delay: 125
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: 00ffff
+		RequiresCondition: !gshield
 
 BGGY:
 	Inherits: ^VehicleTD
@@ -2899,12 +2931,6 @@ MTNK:
 	GrantConditionOnPrerequisite@POINTL:
 		Condition: pointlaser-upgrade
 		Prerequisites: pointlaser.upgrade
-	GrantConditionOnPrerequisite@DRONEPAIR:
-		Condition: dronepair-upgrade
-		Prerequisites: dronepair.upgrade
-	AttachOnCreation@DRONEPAIR:
-		Actor: mdrn.attached
-		RequiresCondition: dronepair-upgrade
 
 MTNK.Drone:
 	Inherits: MTNK
@@ -2939,6 +2965,8 @@ MTNK.Drone:
 		VoiceSet: DroneVoice
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
+	AttachOnCreation@DRONEPAIR:
+		Actor: mdrn.attached
 	-CaptureManager:
 	-Capturable:
 	-CaptureNotification:
@@ -3042,6 +3070,8 @@ MDRN:
 		Types: MiniDroneAttachable
 		ValidRelationships: Ally
 	-Carryable:
+	WithIdleOverlay@NSHIELD:
+		Image: nshield-overlay-sm
 
 MDRN.Attached:
 	Inherits: MDRN
@@ -3151,12 +3181,6 @@ HTNK:
 	Carryable:
 		LocalOffset: 0,0,500
 	-Crushable:
-	GrantConditionOnPrerequisite@DRONEPAIR:
-		Condition: dronepair-upgrade
-		Prerequisites: dronepair.upgrade
-	AttachOnCreation@DRONEPAIR:
-		Actor: mdrn.attached
-		RequiresCondition: dronepair-upgrade
 
 HTNK.Ion:
 	Inherits: HTNK
@@ -3232,6 +3256,8 @@ HTNK.Drone:
 		VoiceSet: DroneVoice
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
+	AttachOnCreation@DRONEPAIR:
+		Actor: mdrn.attached
 	-CaptureManager:
 	-Capturable:
 	-CaptureNotification:

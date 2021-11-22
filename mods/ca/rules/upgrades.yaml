@@ -155,6 +155,23 @@ xo.upgrade:
 	RenderSprites:
 		Image: xo.upgrade
 
+gshield.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Guardian Shield
+	Buildable:
+		BuildPaletteOrder: 25
+		Prerequisites: ~radar.arc, ~techlevel.high
+		BuildDuration: 1500
+		IconPalette: chrometd
+		Description: Equips Guardian Drones with portable nanite shield generator.\n\nUpgrades: Guardian Drone
+	TooltipExtras:
+		Strengths: + Can activate nanite shield (immobile while active)
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: gshield.upgrade
+
 empgren.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -256,22 +273,6 @@ abur.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: abur.upgrade
-
-dronepair.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Drone Pairing
-	Buildable:
-		BuildPaletteOrder: 25
-		Prerequisites: ~gtek.arc, ~techlevel.high
-		BuildDuration: 1500
-		Description: New tanks are produced with a Mini Drone attached.\n\nUpgrades: Battle Tank\nUpgrades: Battle Drone\nUpgrades: Mammoth Tank\nUpgrades: Mammoth Drone
-	TooltipExtras:
-		Strengths: + Attached Mini Drone on creation
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: dronepair.upgrade
 
 hypersonic.upgrade:
 	Inherits: ^Upgrade
@@ -386,7 +387,7 @@ drone.upgrade:
 		BuildDuration: 1500
 		Description: Allows construction of remotely piloted tanks.\n\nReplaces: Battle Tank\nReplaces: Mammoth Tank
 	TooltipExtras:
-		Strengths: + Immunity to crew kill, chaos gas and mind control\n+ Reduced cost\n+ Increased rate of fire
+		Strengths: + Immunity to crew kill, chaos gas and mind control\n+ Reduced cost\n+ Increased rate of fire\n+ Mini Drone attached when produced
 		Weaknesses: – Disabled if radar is down\n– Can be hacked
 	Valued:
 		Cost: 1000
