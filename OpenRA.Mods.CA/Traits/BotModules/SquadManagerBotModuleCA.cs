@@ -288,19 +288,19 @@ namespace OpenRA.Mods.CA.Traits
 				if (a.Info.HasTraitInfo<AircraftInfo>() && a.Info.HasTraitInfo<AttackBaseInfo>() && !Info.ExcludeFromAirSquadsTypes.Contains(a.Info.Name))
 				{
 					var airSquads = Squads.Where(s => s.Type == SquadCAType.Air);
-					var matchingSquadFound = false;
+					var matchingAirSquadFound = false;
 
 					foreach (var airSquad in airSquads)
 					{
 						if (airSquad.Units.Any(u => u.Info.Name == a.Info.Name))
 						{
 							airSquad.Units.Add(a);
-							matchingSquadFound = true;
+							matchingAirSquadFound = true;
 							break;
 						}
 					}
 
-					if (!matchingSquadFound)
+					if (!matchingAirSquadFound)
 					{
 						var newAirSquad = RegisterNewSquad(bot, SquadCAType.Air);
 						newAirSquad.Units.Add(a);
@@ -308,11 +308,24 @@ namespace OpenRA.Mods.CA.Traits
 				}
 				else if (Info.NavalUnitsTypes.Contains(a.Info.Name))
 				{
-					var ships = GetSquadOfType(SquadCAType.Naval);
-					if (ships == null)
-						ships = RegisterNewSquad(bot, SquadCAType.Naval);
+					var navalSquads = Squads.Where(s => s.Type == SquadCAType.Naval);
+					var matchingNavalSquadFound = false;
 
-					ships.Units.Add(a);
+					foreach (var navalSquad in navalSquads)
+					{
+						if (navalSquad.Units.Any(u => u.Info.Name == a.Info.Name))
+						{
+							navalSquad.Units.Add(a);
+							matchingNavalSquadFound = true;
+							break;
+						}
+					}
+
+					if (!matchingNavalSquadFound)
+					{
+						var newNavalSquad = RegisterNewSquad(bot, SquadCAType.Naval);
+						newNavalSquad.Units.Add(a);
+					}
 				}
 				else
 					unitsHangingAroundTheBase.Add(a);
@@ -360,7 +373,7 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				// Don't rush enemy aircraft!
 				var enemies = World.FindActorsInCircle(b.CenterPosition, WDist.FromCells(Info.RushAttackScanRadius))
-					.Where(unit => IsPreferredEnemyUnit(unit) && unit.Info.HasTraitInfo<AttackBaseInfo>() && !unit.Info.HasTraitInfo<AircraftInfo>() && !Info.NavalUnitsTypes.Contains(unit.Info.Name)).ToList();
+					.Where(unit => IsPreferredEnemyUnit(unit) && unit.Info.HasTraitInfo<AttackBaseInfo>() && !(unit.Info.HasTraitInfo<AircraftInfo>() && !Info.ExcludeFromAirSquadsTypes.Contains(unit.Info.Name)) && !Info.NavalUnitsTypes.Contains(unit.Info.Name)).ToList();
 
 				if (AttackOrFleeFuzzyCA.Rush.CanAttack(ownUnits, enemies))
 				{
