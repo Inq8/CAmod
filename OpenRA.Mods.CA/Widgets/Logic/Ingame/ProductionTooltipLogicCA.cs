@@ -95,8 +95,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				hotkeyLabel.Visible = hotkey.IsValid();
 
 				armorTypeLabel = GetArmorTypeLabel(armorTypeLabel, actor);
+				var tooltipExtras = actor.TraitInfos<TooltipExtrasInfo>().FirstOrDefault(info => info.IsStandard);
 
-				var tooltipExtras = actor.TraitInfoOrDefault<TooltipExtrasInfo>();
 				if (tooltipExtras != null)
 				{
 					strengthsLabel.Text = tooltipExtras.Strengths.Replace("\\n", "\n");

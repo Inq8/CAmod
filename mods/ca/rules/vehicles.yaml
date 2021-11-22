@@ -508,6 +508,19 @@ GTNK.squad:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
+		RequiresCondition: !iraqtank-upgrade && !lasher-upgrade
+	TooltipExtras@IRAQ:
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
+		Attributes: • Explodes and leaves radiation on death
+		IsStandard: false
+		RequiresCondition: iraqtank-upgrade
+	TooltipExtras@LASHER:
+		Description: Heavy tank with infantry crushing improvements.
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
+		IsStandard: false
+		RequiresCondition: lasher-upgrade
 	Valued:
 		Cost: 1150
 	Tooltip:
@@ -623,6 +636,11 @@ GTNK.squad:
 		Queue: Vehicle
 		BuildPaletteOrder: 91
 		Prerequisites: ~iraqtank.upgrade, ~vehicles.3tnk, ~techlevel.low
+	-TooltipExtras:
+	-TooltipExtras@LASHER:
+	TooltipExtras@IRAQ:
+		IsStandard: true
+		-RequiresCondition:
 	Valued:
 		Cost: 1150
 	Tooltip:
@@ -675,8 +693,11 @@ GTNK.squad:
 		BuildPaletteOrder: 91
 		Prerequisites: ~lasher.upgrade, ~vehicles.3tnk, ~techlevel.low
 		Description: Heavy tank with infantry crushing improvements.
-	TooltipExtras:
-		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
+	-TooltipExtras:
+	-TooltipExtras@IRAQ:
+	TooltipExtras@LASHER:
+		IsStandard: true
+		-RequiresCondition:
 	Tooltip:
 		Name: Lasher Tank
 		-RequiresCondition:
@@ -739,6 +760,13 @@ GTNK.squad:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
 		Weaknesses: • Weak vs Defenses
 		Attributes: • Can crush concrete walls
+		RequiresCondition: !iraqtank-upgrade
+	TooltipExtras@IRAQ:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Weak vs Defenses
+		Attributes: • Can crush concrete walls\n• Explodes and leaves radiation on death
+		IsStandard: false
+		RequiresCondition: iraqtank-upgrade
 	Valued:
 		Cost: 1700
 	Tooltip:
@@ -824,82 +852,36 @@ GTNK.squad:
 		Prerequisites: iraqtank.upgrade
 
 4TNK.IRAQ:
-	Inherits: ^Tank
-	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
-	Inherits@BERSERK: ^Berserk
-	Inherits@SHRAPNEL: ^ThrowsShrapnel
+	Inherits: 4TNK
 	RenderSprites:
 		Image: 4tnki
 	Buildable:
-		Queue: Vehicle
 		BuildPaletteOrder: 291
 		Prerequisites: stek, ~vehicles.soviet, ~iraqtank.upgrade, ~techlevel.high
-		Description: Big and slow tank with anti-air capability.
-	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
-		Weaknesses: • Weak vs Defenses
-		Attributes: • Can crush concrete walls
-	Valued:
-		Cost: 1700
+	-TooltipExtras:
+	TooltipExtras@IRAQ:
+		IsStandard: true
+		-RequiresCondition:
 	Tooltip:
 		Name: Atomic Mammoth Tank
-		GenericName: Tank
-	UpdatesPlayerStatistics:
-		AddToArmyValue: true
-	Health:
-		HP: 82000
-	Armor:
-		Type: Heavy
-	Mobile:
-		Speed: 42
-		Locomotor: heavytracked
-	SpeedMultiplier@IRAQTANK:
-		Modifier: 125
-	Passenger:
-		Weight: 2
-	RevealsShroud:
-		MinRange: 4c0
-		Range: 6c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
-	Turreted:
-		TurnSpeed: 8
-	Armament@PRIMARY:
-		Weapon: 130mm
-		LocalOffset: 900,180,340, 900,-180,340
-		Recoil: 171
-		RecoilRecovery: 30
-		MuzzleSequence: muzzle
-	Armament@SECONDARY:
-		Name: secondary
-		Weapon: MammothTusk
-		LocalOffset: -85,384,340, -85,-384,340
-		LocalYaw: -100,100
-		Recoil: 43
-		MuzzleSequence: muzzle
-	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
-	WithMuzzleOverlay:
+		-RequiresCondition:
+	-Tooltip@UPG:
+	WithFacingSpriteBody:
+		-RequiresCondition:
 	WithSpriteTurret:
+		-RequiresCondition:
 	Explodes@IRAQTANK:
-		Weapon: UnitExplodeIraqTank
-		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: !being-warped
-	ChangesHealth:
-		PercentageStep: 1
-		Delay: 25
-		StartIfBelow: 50
-		DamageCooldown: 150
-	ProducibleWithLevel:
-		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 44,38,0,-4
 		Class: 4tnk
-	Carryable:
-		LocalOffset: 0,0,500
-	-Crushable:
+	SpeedMultiplier@IRAQTANK:
+		-RequiresCondition:
+	ThrowsShrapnel@small:
+		-RequiresCondition:
+	-SpawnActorOnDeath:
+	-WithFacingSpriteBody@IRAQ:
+	-WithSpriteTurret@UPG:
+	-GrantConditionOnPrerequisite@IRAQ:
 
 ARTY:
 	Inherits: ^Vehicle
@@ -2417,6 +2399,13 @@ APC2:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
+		RequiresCondition: !vulcan-upgrade
+	TooltipExtras@UPG:
+		Description: Tough infantry transport, armed with a powerful chaingun.
+		Strengths: • Strong vs Aircraft, Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses
+		RequiresCondition: vulcan-upgrade
+		IsStandard: false
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -2435,7 +2424,7 @@ APC2:
 		Speed: 108
 		PauseOnCondition: being-captured || empdisable || being-warped || notmobile || driver-dead
 	SpeedMultiplier@UPG:
-		Modifier: 90
+		Modifier: 84
 		RequiresCondition: vulcan-upgrade
 	RevealsShroud:
 		MinRange: 4c0
@@ -5935,13 +5924,23 @@ APOC:
 		Description: Enormous slow tank with uranium shells and anti-air capability.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
-		Weaknesses: • Weak vs Buildings
-		Attributes: • Can crush vehicles
+		Attributes: • Can crush vehicles and concrete walls
+		RequiresCondition: !iraqtank-upgrade
+	TooltipExtras@IRAQ:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Attributes: • Can crush vehicles and concrete walls\n• Explodes and leaves radiation on death
+		IsStandard: false
+		RequiresCondition: iraqtank-upgrade
 	Valued:
 		Cost: 2600
 	Tooltip:
 		Name: Apocalypse Tank
 		GenericName: Tank
+		RequiresCondition: !iraqtank-upgrade
+	Tooltip@UPG:
+		Name: Atomic Apocalypse Tank
+		GenericName: Tank
+		RequiresCondition: iraqtank-upgrade
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -6026,10 +6025,16 @@ APOC.IRAQ:
 	Tooltip:
 		Name: Atomic Apocalypse Tank
 		GenericName: Tank
+		-RequiresCondition:
+	-Tooltip@UPG:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 301
 		Prerequisites: indp, ~vehicles.soviet, ~iraqtank.upgrade, ~techlevel.high
+	-TooltipExtras:
+	TooltipExtras@IRAQ:
+		IsStandard: true
+		-RequiresCondition:
 	WithFacingSpriteBody:
 		-RequiresCondition:
 	-WithFacingSpriteBody@IRAQ:
