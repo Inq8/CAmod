@@ -178,8 +178,13 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
 		{
-			if (!controlChanging)
-				UnlinkMaster(self, Master);
+			if (controlChanging)
+				return;
+
+			UnlinkMaster(self, Master);
+
+			if (controlledToken != Actor.InvalidConditionToken)
+				controlledToken = self.RevokeCondition(controlledToken);
 		}
 
 		protected override void TraitDisabled(Actor self)

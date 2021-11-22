@@ -1374,6 +1374,19 @@
 		InvalidTargets: NoAutoTarget
 		Priority: 10
 
+^AutoTargetGroundAssaultMovePrioritizeInfantry:
+	Inherits: ^AutoTargetGroundAssaultMove
+	AutoTargetPriority@DEFAULTINF:
+		RequiresCondition: !stance-attackanything && !assault-move
+		ValidTargets: Infantry
+		InvalidTargets: NoAutoTarget
+		Priority: 10
+	AutoTargetPriority@ATTACKANYTHINGINF:
+		RequiresCondition: stance-attackanything || assault-move
+		ValidTargets: Infantry
+		InvalidTargets: NoAutoTarget
+		Priority: 10
+
 ^AutoTargetNavalAssaultMove:
 	Inherits: ^AutoTargetGroundAssaultMove
 	AutoTargetPriority@DEFAULT:
