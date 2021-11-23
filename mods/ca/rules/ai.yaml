@@ -1643,20 +1643,40 @@ Player:
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,dd2,pt2,ss2,isub,sb,seas
 		NavalProductionTypes: syrd, spen, syrd.gdi, spen.nod
 		ConstructionYardTypes: fact,afac,sfac
+		StaticAntiAirTypes: agun, sam, nsam, cram, shar
 		IdleScanRadius: 18
 		AttackScanRadius: 9
 		MaxBaseRadius: 16
 		RushAttackScanRadius: 25
 		ProtectUnitScanRadius: 28
 		ProtectionScanRadius: 16
-		DangerScanRadius: 8
 		AirSquadTargetTypes:
 			mshp: Structure
+			hind: Infantry, Structure
+			heli: Aircraft, Vehicle
+			orca: Aircraft, Vehicle
+			mig: Aircraft, Vehicle, Defense
+			yak: Structure
+			enrv: Aircraft, Vehicle, Defense
+			stmr: Aircraft, Infantry, Structure
+			suk: Vehicle, Structure
+			venm: Infantry, Aircraft
+			kiro: Structure
+			apch: Infantry, Structure
+			rah: Infantry, Structure
+			nhaw: Infantry
+			scrn: Aircraft, Vehicle, Defense
+			orcb: Vehicle, Defense
+			a10: Infantry, Structure
 	UnitBuilderBotModuleCA@brutal-vhard:
 		RequiresCondition: enable-brutal-ai || enable-vhard-ai
 		IdleBaseUnitsMaximum: 50
+		MaxAircraft: 6
+		MaintainAirSuperiority: true
+		AirToAirUnits: heli, mig, orca, scrn, venm, stmr, enrv
+		AirThreatUnits: heli, mig, orca, scrn, venm, stmr, enrv, pac, deva, kiro, mshp
 		UnitBuilderMinCredits: 1800
-		MaxAircraft: 8
+		UnitBuilderInterval: 2
 		UnitDelays:
 			mcv: 6750
 			amcv: 6750
@@ -1852,13 +1872,18 @@ Player:
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,dd2,pt2,ss2,isub,sb,seas
 		NavalProductionTypes: syrd, spen, syrd.gdi, spen.nod
 		ConstructionYardTypes: fact,afac,sfac
+		StaticAntiAirTypes: agun, sam, nsam, cram, shar
 		ProtectionScanRadius: 12
 		AirSquadTargetTypes:
 			mshp: Structure
 	UnitBuilderBotModuleCA@hard:
 		RequiresCondition: enable-hard-ai
 		IdleBaseUnitsMaximum: 50
-		MaxAircraft: 6
+		MaxAircraft: 4
+		MaintainAirSuperiority: true
+		AirToAirUnits: heli, mig, orca, scrn, venm, stmr, enrv
+		AirThreatUnits: heli, mig, orca, scrn, venm, stmr, enrv, pac, deva, kiro, mshp
+		UnitBuilderInterval: 2
 		UnitDelays:
 			mcv: 6750
 			amcv: 6750
@@ -2053,6 +2078,7 @@ Player:
 		ExcludeFromAirSquadsTypes: deva, pac, jjet, bjet
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,ss2,dd2,isub,sb,seas
 		ConstructionYardTypes: fact,afac,sfac
+		StaticAntiAirTypes: agun, sam, nsam, cram, shar
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
 		AirSquadTargetTypes:
 			mshp: Structure
@@ -2060,6 +2086,7 @@ Player:
 		RequiresCondition: enable-normal-ai
 		IdleBaseUnitsMaximum: 50
 		MaxAircraft: 4
+		UnitBuilderInterval: 2
 		UnitDelays:
 			mcv: 6750
 			amcv: 6750
@@ -2253,12 +2280,14 @@ Player:
 		ExcludeFromAirSquadsTypes: deva, pac, jjet, bjet
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,ss2,dd2,isub,sb,seas
 		ConstructionYardTypes: fact,afac,sfac
+		StaticAntiAirTypes: agun, sam, nsam, cram, shar
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
 		AirSquadTargetTypes:
 			mshp: Structure
 	UnitBuilderBotModuleCA@easy:
 		RequiresCondition: enable-easy-ai
 		MaxAircraft: 2
+		UnitBuilderInterval: 2
 		UnitDelays:
 			mcv: 6750
 			amcv: 6750
@@ -2452,12 +2481,14 @@ Player:
 		ExcludeFromAirSquadsTypes: deva, pac, jjet, bjet
 		NavalUnitsTypes: ss,msub,dd,ca,lst,pt,pt2,dd2,ss2,isub,sb,seas
 		ConstructionYardTypes: fact,afac,sfac
+		StaticAntiAirTypes: agun, sam, nsam, cram, shar
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
 		AirSquadTargetTypes:
 			mshp: Structure
 	UnitBuilderBotModuleCA@naval:
 		RequiresCondition: enable-naval-ai
 		MaxAircraft: 4
+		UnitBuilderInterval: 2
 		UnitDelays:
 			mcv: 6750
 			amcv: 6750

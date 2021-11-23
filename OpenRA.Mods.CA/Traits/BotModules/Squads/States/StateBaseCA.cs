@@ -109,14 +109,17 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				return false;
 
 			var activity = a.CurrentActivity;
-			if (activity.GetType() == typeof(Resupply))
+			var activityType = activity.GetType();
+			if (activityType == typeof(Resupply) || activityType == typeof(ReturnToBase))
 				return true;
 
 			var next = activity.NextActivity;
 			if (next == null)
 				return false;
 
-			if (next.GetType() == typeof(Resupply))
+			var nextType = next.GetType();
+
+			if (nextType == typeof(Resupply) || nextType == typeof(ReturnToBase))
 				return true;
 
 			return false;
@@ -134,10 +137,10 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		protected static bool HasAmmo(IEnumerable<AmmoPool> ammoPools)
 		{
 			foreach (var ap in ammoPools)
-				if (!ap.HasAmmo)
-					return false;
+				if (ap.HasAmmo)
+					return true;
 
-			return true;
+			return false;
 		}
 
 		protected static bool ReloadsAutomatically(IEnumerable<AmmoPool> ammoPools, Rearmable rearmable)
@@ -146,7 +149,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				return true;
 
 			foreach (var ap in ammoPools)
-				if (!rearmable.Info.AmmoPools.Contains(ap.Info.Name))
+				if (rearmable.Info.AmmoPools.Contains(ap.Info.Name))
 					return false;
 
 			return true;
