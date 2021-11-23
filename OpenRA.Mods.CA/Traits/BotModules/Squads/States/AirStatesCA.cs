@@ -12,7 +12,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common;
-using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
 using OpenRA.Traits;
@@ -23,14 +22,36 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 	{
 		static readonly BitSet<TargetableType> AirTargetTypes = new BitSet<TargetableType>("Air");
 
-		protected const int StaticAntiAirMultiplier = 4;
+		protected const int MissileUnitMultiplier = 3;
 
-		protected static int CountStaticAntiAir(IEnumerable<Actor> units, SquadCA owner)
+		protected static int CountAntiAirUnits(IEnumerable<Actor> units)
 		{
 			if (!units.Any())
 				return 0;
 
-			return units.Count(a => owner.SquadManager.Info.StaticAntiAirTypes.Contains(a.Info.Name)) * StaticAntiAirMultiplier;
+			var missileUnitsCount = 0;
+			foreach (var unit in units)
+			{
+				if (unit == null || unit.Info.HasTraitInfo<AircraftInfo>())
+					continue;
+
+				foreach (var ab in unit.TraitsImplementing<AttackBase>())
+				{
+					if (ab.IsTraitDisabled || ab.IsTraitPaused)
+						continue;
+
+					foreach (var a in ab.Armaments)
+					{
+						if (a.Weapon.IsValidTarget(AirTargetTypes))
+						{
+							missileUnitsCount++;
+							break;
+						}
+					}
+				}
+			}
+
+			return missileUnitsCount;
 		}
 
 		protected static Actor FindAirTarget(SquadCA owner)
@@ -118,19 +139,14 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			detectedEnemyTarget = null;
 			var dangerRadius = owner.SquadManager.Info.DangerScanRadius;
 			var unitsAroundPos = owner.World.FindActorsInCircle(loc, WDist.FromCells(dangerRadius))
-				.Where(a => owner.SquadManager.IsPreferredEnemyUnit(a));
+				.Where(a => owner.SquadManager.IsPreferredEnemyUnit(a) && owner.SquadManager.IsAirSquadTargetType(a, owner)).ToList();
 
 			if (!unitsAroundPos.Any())
 				return true;
 
-			var possibleTargets = unitsAroundPos.Where(a => owner.SquadManager.IsAirSquadTargetType(a, owner)).ToList();
-			var possibleAntiAir = unitsAroundPos.ToList();
-
-			if (CountStaticAntiAir(possibleAntiAir, owner) < owner.Units.Count)
+			if (CountAntiAirUnits(unitsAroundPos) * MissileUnitMultiplier < owner.Units.Count)
 			{
-				if (possibleTargets.Any())
-					detectedEnemyTarget = possibleTargets.Random(owner.Random);
-
+				detectedEnemyTarget = unitsAroundPos.Random(owner.Random);
 				return true;
 			}
 
@@ -140,7 +156,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		// Checks the number of anti air enemies around units
 		protected virtual bool ShouldFlee(SquadCA owner)
 		{
-			return ShouldFlee(owner, enemies => CountStaticAntiAir(enemies, owner) > owner.Units.Count);
+			return ShouldFlee(owner, enemies => CountAntiAirUnits(enemies) * MissileUnitMultiplier > owner.Units.Count);
 		}
 	}
 
@@ -176,15 +192,13 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 		public void Tick(SquadCA owner)
 		{
-			var newTarget = false;
-
 			if (!owner.IsValid)
 				return;
 
 			if (!owner.IsTargetValid)
 			{
-				//Game.Debug("target no longer valid, find new target");
 				var closestEnemy = FindAirTarget(owner);
+
 				if (closestEnemy == null)
 				{
 					var a = owner.Units.Random(owner.Random);
@@ -195,13 +209,9 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				}
 
 				if (closestEnemy != null)
-				{
 					owner.TargetActor = closestEnemy;
-					newTarget = true;
-				}
 				else
 				{
-					//Game.Debug("no targets, flee");
 					owner.FuzzyStateMachine.ChangeState(owner, new AirFleeStateCA(), true);
 					return;
 				}
@@ -209,73 +219,31 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 			if (!NearToPosSafely(owner, owner.TargetActor.CenterPosition))
 			{
-				// Game.Debug("no neartopossafely, flee");
 				owner.FuzzyStateMachine.ChangeState(owner, new AirFleeStateCA(), true);
 				return;
 			}
 
 			foreach (var a in owner.Units)
 			{
-				var currentActivity = a.CurrentActivity;
-				var activityType = currentActivity.GetType();
-				var nextActivity = currentActivity.NextActivity;
+				if (BusyAttack(a))
+					continue;
 
 				var ammoPools = a.TraitsImplementing<AmmoPool>().ToArray();
 				if (!ReloadsAutomatically(ammoPools, a.TraitOrDefault<Rearmable>()))
 				{
-					if (owner.WaitingUnits.Contains(a))
-					{
-						//Game.Debug("waiting");
+					if (IsRearming(a))
 						continue;
-					}
 
-					if (!HasAmmo(ammoPools) && !owner.RearmingUnits.Contains(a))
+					if (!HasAmmo(ammoPools))
 					{
-						//Game.Debug("needs to rearm");
-						owner.RearmingUnits.Add(a);
 						owner.Bot.QueueOrder(new Order("ReturnToBase", a, false));
 						continue;
 					}
-
-					if (owner.RearmingUnits.Contains(a) || owner.NewUnits.Contains(a))
-					{
-						if (FullAmmo(ammoPools))
-						{
-							//Game.Debug("finished rearming, moved to waiting");
-							owner.RearmingUnits.Remove(a);
-							owner.NewUnits.Remove(a);
-							owner.WaitingUnits.Add(a);
-							owner.Bot.QueueOrder(new Order("AttackMove", a, Target.FromCell(owner.World, RandomBuildingLocation(owner)), false));
-						}
-
-						continue;
-					}
-
-					if (CanAttackTarget(a, owner.TargetActor) && (newTarget || activityType != typeof(FlyAttack)))
-					{
-						owner.Bot.QueueOrder(new Order("Attack", a, Target.FromActor(owner.TargetActor), false));
-						continue;
-					}
-					else if (activityType == typeof(FlyIdle))
-						owner.Bot.QueueOrder(new Order("AttackMove", a, Target.FromCell(owner.World, RandomBuildingLocation(owner)), false));
-				}
-				else
-					owner.WaitingUnits.Add(a);
-			}
-
-			if (!owner.RearmingUnits.Any() && owner.WaitingUnits.Any())
-			{
-				//Game.Debug("no rearming units, all waiting, so attack");
-				foreach (var a in owner.Units)
-				{
-					if (CanAttackTarget(a, owner.TargetActor))
-						owner.Bot.QueueOrder(new Order("Attack", a, Target.FromActor(owner.TargetActor), false));
 				}
 
-				owner.WaitingUnits.Clear();
+				if (CanAttackTarget(a, owner.TargetActor))
+					owner.Bot.QueueOrder(new Order("Attack", a, Target.FromActor(owner.TargetActor), false));
 			}
-
-			//Game.Debug("------ end tick ({0} new, {1} rearming, {2} waiting, {3} total", owner.NewUnits.Count(), owner.RearmingUnits.Count(), owner.WaitingUnits.Count(), owner.Units.Count);
 		}
 
 		public void Deactivate(SquadCA owner) { }
