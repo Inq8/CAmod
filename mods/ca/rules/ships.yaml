@@ -636,6 +636,7 @@ ISUB:
 		SpawnOffset: 0,-128,0
 	AttackFrontal:
 		TargetFrozenActors: True
+		ForceFireIgnoresActors: True
 		PauseOnCondition: under-bridge || empdisable || being-warped
 	AutoTarget:
 		InitialStance: HoldFire
@@ -717,6 +718,7 @@ CARR:
 		RequiresCondition: !under-bridge
 	AttackOmni:
 		Voice: Attack
+		TargetFrozenActors: True
 		PauseOnCondition: empdisable || being-warped
 	CarrierMaster:
 		Actors: horn, horn, horn
