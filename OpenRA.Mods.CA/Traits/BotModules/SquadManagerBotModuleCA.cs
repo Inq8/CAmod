@@ -40,6 +40,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Limit target types for specific air unit squads.")]
 		public readonly Dictionary<string, BitSet<TargetableType>> AirSquadTargetTypes = null;
 
+		[Desc("Enemy building types around which to scan for targets for naval squads.")]
+		public readonly HashSet<string> StaticAntiAirTypes = new HashSet<string>();
+
 		[Desc("Minimum number of units AI must have before attacking.")]
 		public readonly int SquadSize = 8;
 
@@ -142,7 +145,7 @@ namespace OpenRA.Mods.CA.Traits
 		// Use for proactive targeting.
 		public bool IsPreferredEnemyUnit(Actor a)
 		{
-			if (a == null || a.IsDead || Player.RelationshipWith(a.Owner) != PlayerRelationship.Enemy || a.Info.HasTraitInfo<HuskInfo>() || a.Info.HasTraitInfo<AircraftInfo>())
+			if (a == null || a.IsDead || Player.RelationshipWith(a.Owner) != PlayerRelationship.Enemy || a.Info.HasTraitInfo<HuskInfo>() || a.Info.HasTraitInfo<AircraftInfo>() || a.Info.HasTraitInfo<CarrierSlaveInfo>())
 				return false;
 
 			var targetTypes = a.GetEnabledTargetTypes();
@@ -225,7 +228,16 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			Squads.RemoveAll(s => !s.IsValid);
 			foreach (var s in Squads)
+			{
 				s.Units.RemoveAll(unitCannotBeOrdered);
+
+				if (s.Type == SquadCAType.Air)
+				{
+					s.NewUnits.RemoveWhere(unitCannotBeOrdered);
+					s.RearmingUnits.RemoveWhere(unitCannotBeOrdered);
+					s.WaitingUnits.RemoveWhere(unitCannotBeOrdered);
+				}
+			}
 		}
 
 		// HACK: Use of this function requires that there is one squad of this type.
@@ -295,6 +307,7 @@ namespace OpenRA.Mods.CA.Traits
 						if (airSquad.Units.Any(u => u.Info.Name == a.Info.Name))
 						{
 							airSquad.Units.Add(a);
+							airSquad.NewUnits.Add(a);
 							matchingAirSquadFound = true;
 							break;
 						}

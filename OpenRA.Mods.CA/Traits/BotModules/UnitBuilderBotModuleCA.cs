@@ -9,6 +9,7 @@
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common;
@@ -46,6 +47,16 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Maximum number of aircraft AI can build.")]
 		public readonly int MaxAircraft = 4;
+
+		[Desc("If true, will always attempt to match the number of enemy air threats.",
+			"MaxAircraft will then only apply to units not listed in AirToAirUnits.")]
+		public readonly bool MaintainAirSuperiority = false;
+
+		[Desc("List of actor types to be used for air superiority.")]
+		public readonly HashSet<string> AirToAirUnits = new HashSet<string>();
+
+		[Desc("List of actor types to measure against for air superiority.")]
+		public readonly HashSet<string> AirThreatUnits = new HashSet<string>();
 
 		public override object Create(ActorInitializer init) { return new UnitBuilderBotModuleCA(init.Self, this); }
 	}
@@ -207,11 +218,31 @@ namespace OpenRA.Mods.CA.Traits
 
 		bool CanBuildMoreOfAircraft(ActorInfo actorInfo)
 		{
-			var attackAircraftInfo = actorInfo.TraitInfoOrDefault<AttackAircraftInfo>();
+			var attackAircraftInfo = actorInfo.TraitInfoOrDefault<AircraftInfo>();
 			if (attackAircraftInfo == null)
 				return true;
-			var numAirUnits = AIUtils.GetActorsWithTrait<AttackAircraft>(player.World).Count(a => a.Owner == player);
-			return numAirUnits < Info.MaxAircraft;
+
+			var limit = Info.MaxAircraft;
+			var currentCount = 0;
+
+			if (Info.MaintainAirSuperiority)
+			{
+				var numAirToAirUnits = AIUtils.GetActorsWithTrait<Aircraft>(player.World).Count(a => a.Owner == player && Info.AirToAirUnits.Contains(a.Info.Name));
+
+				if (Info.AirToAirUnits.Contains(actorInfo.Name))
+				{
+					currentCount = numAirToAirUnits;
+					var numFriendlyAirToAirUnits = player.World.Actors.Count(a => a.Owner.RelationshipWith(player) == PlayerRelationship.Ally && Info.AirToAirUnits.Contains(a.Info.Name));
+					var numEnemyAirThreatUnits = player.World.Actors.Count(a => a.Owner.RelationshipWith(player) == PlayerRelationship.Enemy && Info.AirThreatUnits.Contains(a.Info.Name));
+					limit = Math.Max(numEnemyAirThreatUnits - numFriendlyAirToAirUnits + 1, limit);
+				}
+				else
+					currentCount = AIUtils.GetActorsWithTrait<Aircraft>(player.World).Count(a => a.Owner == player && a.Info.HasTraitInfo<BuildableInfo>()) - numAirToAirUnits;
+			}
+			else
+				currentCount = AIUtils.GetActorsWithTrait<Aircraft>(player.World).Count(a => a.Owner == player && a.Info.HasTraitInfo<BuildableInfo>());
+
+			return currentCount < limit;
 		}
 
 		List<MiniYamlNode> IGameSaveTraitData.IssueTraitData(Actor self)
