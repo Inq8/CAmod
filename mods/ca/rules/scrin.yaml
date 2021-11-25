@@ -936,11 +936,18 @@ INTL:
 
 INTL.AI:
 	Inherits: INTL
+	RenderSprites:
+		Image: INTL
+	Buildable:
+		Prerequisites: ~botplayer, ~vehicles.scrin, ~!scrt, ~techlevel.low
+
+INTL.AI2:
+	Inherits: INTL.AI
 	Inherits: ^AIUNLOAD
 	RenderSprites:
 		Image: INTL
 	Buildable:
-		Prerequisites: ~botplayer, ~vehicles.scrin, ~techlevel.low
+		Prerequisites: ~botplayer, ~vehicles.scrin, ~scrt, ~techlevel.low
 	Cargo:
 		InitialUnits: S1,S1,S2,S3,S3
 

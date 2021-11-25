@@ -1221,9 +1221,19 @@ SAPC.AI:
 	RenderSprites:
 		Image: sapc
 	Buildable:
-		Prerequisites: ~botplayer, tmpl, infantry.any, ~vehicles.nod, ~techlevel.high
+		Prerequisites: ~botplayer, ~!cyborg.production, tmpl, infantry.any, ~vehicles.nod, ~techlevel.high
 	Cargo:
 		InitialUnits: N1,N1,N4,N3,N3
+
+SAPC.AI2:
+	Inherits: SAPC
+	Inherits: ^AIUNLOAD
+	RenderSprites:
+		Image: sapc
+	Buildable:
+		Prerequisites: ~botplayer, ~cyborg.production, tmpl, infantry.any, ~vehicles.nod, ~techlevel.high
+	Cargo:
+		InitialUnits: N1C,N1C,N5,N3C,N3C
 
 HARV:
 	Inherits: ^Vehicle-NOUPG
@@ -2598,7 +2608,7 @@ APC2.NODAI:
 	RenderSprites:
 		Image: APC2
 	Cargo:
-		InitialUnits: N1,N3,N4,N4,N4
+		InitialUnits: N1,N1,N1,N3,N4
 
 APC2.GDIAI:
 	Inherits: APC2
@@ -2608,7 +2618,7 @@ APC2.GDIAI:
 	RenderSprites:
 		Image: APC2
 	Cargo:
-		InitialUnits: N1,N3,N2,N2,N2
+		InitialUnits: N1,N1,N1,N2,N3
 
 APC2.Reinforce:
 	Inherits: APC2
@@ -2762,7 +2772,7 @@ VULC.AI:
 	Buildable:
 		Prerequisites: ~botplayer, ~vehicles.gdi, ~vulcan.upgrade, infantry.any, ~techlevel.high
 	Cargo:
-		InitialUnits: N1,N3,N2,N2,N2
+		InitialUnits: N1,N1,N1,N2,N3
 
 LTNK:
 	Inherits: ^TankTD
@@ -3880,7 +3890,7 @@ BTR.AI:
 	Buildable:
 		Prerequisites: ~botplayer, infantry.any, ~vehicles.soviet, ~techlevel.low
 	Cargo:
-		InitialUnits: E1,E3,E4,E4,E4
+		InitialUnits: E1,E1,E1,E3,E4
 
 IFV:
 	Inherits: ^Tank

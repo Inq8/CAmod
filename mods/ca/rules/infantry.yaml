@@ -954,6 +954,14 @@ HACK:
 		InitialStanceAI: AttackAnything
 	RenderRangeCircle:
 		Color: 00cc00
+	RejectsOrders@AIHACKER:
+		RequiresCondition: hacking && botowner
+	GrantConditionOnAttack@AIHACKER:
+		Condition: hacking
+		ArmamentNames: primary
+	GrantConditionOnBotOwner@AIHACKER:
+		Condition: botowner
+		Bots: brutal, vhard, hard, normal, easy, naval
 
 EINSTEIN:
 	Inherits: ^CivInfantry
