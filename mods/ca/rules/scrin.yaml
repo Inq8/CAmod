@@ -925,6 +925,8 @@ INTL:
 		RequiresCondition: driver-dead && !cargo
 	Targetable@DRIVERKILL:
 		RequiresCondition: !driver-dead && !cargo
+	Targetable@MINDCONTROL:
+		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
 	TurretedFloating:
 		TurnSpeed: 16
 		Offset: 0,0,0
