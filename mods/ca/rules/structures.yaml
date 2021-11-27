@@ -5377,7 +5377,7 @@ CRAM:
 
 LASP:
 	Inherits: ^Building
-	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
+	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 30
@@ -5404,7 +5404,7 @@ LASP:
 	Armor:
 		Type: Concrete
 	Sellable:
-		RequiresCondition: !build-incomplete && !c4 && !being-warped && !hacked
+		RequiresCondition: !disabled && !empdisable && !build-incomplete && !c4 && !being-warped && !hacked
 	-Capturable:
 	-CaptureNotification:
 	-ProximityCaptor:
