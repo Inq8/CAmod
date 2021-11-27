@@ -794,7 +794,7 @@ TorpTube:
 
 ^SubMissileDefault:
 	Inherits: ^AntiGroundMissile
-	ReloadDelay: 180
+	ReloadDelay: 90
 	Range: 8c0
 	Burst: 2
 	Projectile: MissileCA
@@ -805,7 +805,7 @@ TorpTube:
 		LockOnInaccuracy: 1024
 	Warhead@1Dam: SpreadDamage
 		Spread: 511
-		Damage: 2500
+		Damage: 1250
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Versus:
 			None: 60
@@ -818,11 +818,13 @@ TorpTube:
 
 SubMissile:
 	Inherits: ^SubMissileDefault
-	Range: 17c0
+	Range: 14c0
 	Projectile: MissileCA
 		Inaccuracy: 0c614
+		Speed: 294
 		RangeLimit: 20c0
 		Image: dragon
+		CruiseAltitude: 0c128
 
 #Used by ICBM, Missile but just Explosion
 HonestJohnSub:
