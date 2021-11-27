@@ -1221,9 +1221,19 @@ SAPC.AI:
 	RenderSprites:
 		Image: sapc
 	Buildable:
-		Prerequisites: ~botplayer, tmpl, infantry.any, ~vehicles.nod, ~techlevel.high
+		Prerequisites: ~botplayer, ~!cyborg.production, tmpl, infantry.any, ~vehicles.nod, ~techlevel.high
 	Cargo:
 		InitialUnits: N1,N1,N4,N3,N3
+
+SAPC.AI2:
+	Inherits: SAPC
+	Inherits: ^AIUNLOAD
+	RenderSprites:
+		Image: sapc
+	Buildable:
+		Prerequisites: ~botplayer, ~cyborg.production, tmpl, infantry.any, ~vehicles.nod, ~techlevel.high
+	Cargo:
+		InitialUnits: N1C,N1C,N5,N3C,N3C
 
 HARV:
 	Inherits: ^Vehicle-NOUPG
@@ -2598,7 +2608,7 @@ APC2.NODAI:
 	RenderSprites:
 		Image: APC2
 	Cargo:
-		InitialUnits: N1,N3,N4,N4,N4
+		InitialUnits: N1,N1,N1,N3,N4
 
 APC2.GDIAI:
 	Inherits: APC2
@@ -2608,7 +2618,7 @@ APC2.GDIAI:
 	RenderSprites:
 		Image: APC2
 	Cargo:
-		InitialUnits: N1,N3,N2,N2,N2
+		InitialUnits: N1,N1,N1,N2,N3
 
 APC2.Reinforce:
 	Inherits: APC2
@@ -2762,7 +2772,7 @@ VULC.AI:
 	Buildable:
 		Prerequisites: ~botplayer, ~vehicles.gdi, ~vulcan.upgrade, infantry.any, ~techlevel.high
 	Cargo:
-		InitialUnits: N1,N3,N2,N2,N2
+		InitialUnits: N1,N1,N1,N2,N3
 
 LTNK:
 	Inherits: ^TankTD
@@ -3880,7 +3890,7 @@ BTR.AI:
 	Buildable:
 		Prerequisites: ~botplayer, infantry.any, ~vehicles.soviet, ~techlevel.low
 	Cargo:
-		InitialUnits: E1,E3,E4,E4,E4
+		InitialUnits: E1,E1,E1,E3,E4
 
 IFV:
 	Inherits: ^Tank
@@ -3894,14 +3904,124 @@ IFV:
 		BuildPaletteOrder: 120
 		Prerequisites: infantry.any, anyradar, ~vehicles.ifv, ~techlevel.low
 		Description: Adaptable infantry transport.
+	Tooltip:
+		Name: Infantry Fighting Vehicle
+		RequiresCondition: !full || nochange
+	Tooltip@gunturr:
+		Name: MG IFV
+		RequiresCondition: gunturr
+	Tooltip@fragturr:
+		Name: Grenade IFV
+		RequiresCondition: fragturr
+	Tooltip@samturr:
+		Name: Missile IFV
+		RequiresCondition: samturr
+	Tooltip@engturr:
+		Name: Repair IFV
+		RequiresCondition: engturr
+	Tooltip@commturr:
+		Name: Commando IFV
+		RequiresCondition: commturr
+	Tooltip@chemturr:
+		Name: Chemical IFV
+		RequiresCondition: chemturr
+	Tooltip@medturr:
+		Name: Medical IFV
+		RequiresCondition: medturr
+	Tooltip@ivanturr:
+		Name: Explosive IFV
+		RequiresCondition: ivanturr
+	Tooltip@flamturr:
+		Name: Flamethrower IFV
+		RequiresCondition: flamturr
+	Tooltip@spyturr:
+		Name: Spy IFV
+		RequiresCondition: spyturr
+	Tooltip@sealturr:
+		Name: SEAL IFV
+		RequiresCondition: sealturr
+	Tooltip@acolturr:
+		Name: Laser IFV
+		RequiresCondition: acolturr
+	Tooltip@rmbcturr:
+		Name: Cyborg Elite IFV
+		RequiresCondition: rmbcturr
+	Tooltip@snipturr:
+		Name: Sniper IFV
+		RequiresCondition: snipturr
+	Tooltip@desoturr:
+		Name: Desolator IFV
+		RequiresCondition: desoturr
+	Tooltip@testurr:
+		Name: Tesla IFV
+		RequiresCondition: testurr
 	TooltipExtras:
 		Strengths: • Strong vs Aircraft, Heavy Armor
 		Weaknesses: • Weak vs Infantry
-		Attributes: • Weapon changes depending on infantry passenger
+		Attributes: • Weapon/function changes depending on infantry passenger
+		RequiresCondition: !full || samturr || nochange
+	TooltipExtras@gunturr:
+		Strengths: • Strong vs Infantry, Light Armor, Buildings
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
+		IsStandard: false
+		RequiresCondition: gunturr
+	TooltipExtras@fragturr:
+		Strengths: • Strong vs Buildings, Defenses, Light Armor
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+		IsStandard: false
+		RequiresCondition: fragturr
+	TooltipExtras@engturr:
+		Weaknesses: • Unarmed
+		Attributes: • Repairs friendly vehicles
+		IsStandard: false
+		RequiresCondition: engturr
+	TooltipExtras@commturr:
+		Strengths: • Strong vs Infantry
+		Weaknesses: • Cannot attack Aircraft, Vehicles, Buildings
+		IsStandard: false
+		RequiresCondition: commturr || sealturr
+	TooltipExtras@medturr:
+		Weaknesses: • Unarmed
+		Attributes: • Heals friendly infantry
+		IsStandard: false
+		RequiresCondition: medturr
+	TooltipExtras@ivanturr:
+		Strengths: • Strong vs Everything
+		Weaknesses: • Self-destructs
+		IsStandard: false
+		RequiresCondition: ivanturr
+	TooltipExtras@flamturr:
+		Strengths: • Strong vs Infantry, Light Armor, Buildings
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+		IsStandard: false
+		RequiresCondition: flamturr || chemturr || acolturr
+	TooltipExtras@spyturr:
+		Weaknesses: • Unarmed
+		Attributes: • Long vision range\n• Can detect cloaked units
+		IsStandard: false
+		RequiresCondition: spyturr
+	TooltipExtras@rmbcturr:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Cannot attack Aircraft
+		IsStandard: false
+		RequiresCondition: rmbcturr
+	TooltipExtras@snipturr:
+		Strengths: • Strong vs Infantry, Light Armor, Heavy Armor
+		Weaknesses: • Weak vs Defenses, Buildings\n• Cannot attack Aircraft
+		IsStandard: false
+		RequiresCondition: snipturr
+	TooltipExtras@desoturr:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Defenses, Buildings\n• Cannot attack Aircraft
+		IsStandard: false
+		RequiresCondition: desoturr
+	TooltipExtras@testurr:
+		Strengths: Strong vs Infantry, Heavy Armor, Light Armor
+		Weaknesses: • Cannot attack Aircraft
+		IsStandard: false
+		RequiresCondition: testurr
 	Valued:
 		Cost: 750
-	Tooltip:
-		Name: Infantry Fighting Vehicle
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -4261,14 +4381,27 @@ IFV.AI:
 		BuildPaletteOrder: 120
 		Prerequisites: anyradar, ~vehicles.allies, ~botplayer, ~techlevel.low
 		Description: Adaptable infantry transport.
+	Tooltip:
+		Name: Infantry Fighting Vehicle
+		RequiresCondition: defturr
+	Tooltip@gunturr:
+		Name: MG IFV
+		RequiresCondition: gunturr
+	Tooltip@samturr:
+		Name: Missile IFV
+		RequiresCondition: samturr
 	TooltipExtras:
 		Strengths: • Strong vs Aircraft, Heavy Armor
 		Weaknesses: • Weak vs Infantry
-		Attributes: • Weapon changes depending on infantry passenger
+		Attributes: • Weapon/function changes depending on infantry passenger
+		RequiresCondition: defturr || samturr
+	TooltipExtras@gunturr:
+		Strengths: • Strong vs Infantry, Light Armor, Buildings
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
+		IsStandard: false
+		RequiresCondition: gunturr
 	Valued:
-		Cost: 650
-	Tooltip:
-		Name: Infantry Fighting Vehicle
+		Cost: 750
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
