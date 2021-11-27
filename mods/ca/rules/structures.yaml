@@ -75,8 +75,9 @@ MSLO:
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	ProductionCostMultiplier@IRAQBONUS:
 		Multiplier: 90
 		Prerequisites: structures.iraq
@@ -131,6 +132,7 @@ GAP:
 
 SPEN:
 	Inherits: ^Building
+	Inherits@WATERSTRUCTURE: ^WaterStructure
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Selectable:
 		Bounds: 72,48
@@ -148,8 +150,9 @@ SPEN:
 		BuildPaletteOrder: 50
 		Prerequisites: anypower, ~structures.soviet, ~techlevel.navy, ~techlevel.low
 		Description: Produces and repairs\nsubmarines and transports.
-	Targetable:
-		TargetTypes: Ground, Water, Structure, WaterStructure, C4, DetonateAttack, SpyInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate
 	Building:
 		Footprint: XXX xxx XXX
 		Dimensions: 3,3
@@ -252,6 +255,7 @@ SPEN:
 
 SYRD:
 	Inherits: ^Building
+	Inherits@WATERSTRUCTURE: ^WaterStructure
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Selectable:
 		Bounds: 72,48
@@ -269,8 +273,9 @@ SYRD:
 		Cost: 1000
 	Tooltip:
 		Name: Naval Yard
-	Targetable:
-		TargetTypes: Ground, Water, Structure, WaterStructure, C4, DetonateAttack, SpyInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate
 	Building:
 		Footprint: XXX xxx XXX
 		Dimensions: 3,3
@@ -418,8 +423,9 @@ IRON:
 		RequiredForShortGame: false
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 
 PDOX:
 	Inherits: ^Building
@@ -549,8 +555,9 @@ PDOX:
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 
 TSLA:
 	Inherits: ^Defense
@@ -717,8 +724,9 @@ DOME:
 		Footprint: xx xx ==
 		Dimensions: 2,3
 		LocalCenterOffset: 0,-512,0
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	Health:
 		HP: 100000
 	Armor:
@@ -1153,8 +1161,9 @@ ATEK:
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.atek
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SabInfiltrate
 	ProduceActorPowerCA@SatelliteScan:
 		PauseOnCondition: disabled || being-warped
 		Prerequisites: anyradar, ~gps.satellite, ~fogenabled
@@ -1326,8 +1335,9 @@ WEAP:
 	Power:
 		Amount: -30
 	ProvidesPrerequisite@buildingname:
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	InfiltrateForSupportPower:
 		Proxy: vehicles.upgraded
 		Types: SpyInfiltrate
@@ -1502,8 +1512,9 @@ PROC:
 	Selectable:
 		Bounds: 72,50,0,4
 		DecorationBounds: 72,70,0,-2
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack, ThiefInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: ThiefInfiltrate
 	Health:
 		HP: 90000
 	Armor:
@@ -1598,8 +1609,6 @@ SILO:
 		Description: Stores excess refined\nTiberium, Ore and Gems.
 	Valued:
 		Cost: 150
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack
 	Tooltip:
 		Name: Silo
 	-GivesBuildableArea:
@@ -1706,8 +1715,9 @@ HPAD:
 		Factions: russia, ukraine, yuri
 		Prerequisite: aircraft.hind
 	ProvidesPrerequisite@buildingname:
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate
 	InfiltrateForSupportPower:
 		Types: SpyInfiltrate
 		Proxy: powerproxy.paratroopers2
@@ -1966,8 +1976,9 @@ AFLD:
 		Amount: -20
 	ProvidesPrerequisite@buildingname:
 		Prerequisite: afld
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate
 	InfiltrateForSupportPower:
 		Proxy: powerproxy.airstrike
 		Types: SpyInfiltrate
@@ -2009,8 +2020,9 @@ POWR:
 	WithBuildingBib:
 	Power:
 		Amount: 100
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, PowerInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, PowerInfiltrate
 	ScalePowerWithHealth:
 	WithDeathAnimation:
 		DeathSequence: dead
@@ -2053,8 +2065,9 @@ APWR:
 	WithBuildingBib:
 	Power:
 		Amount: 200
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, PowerInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, PowerInfiltrate
 	ScalePowerWithHealth:
 	WithDeathAnimation:
 		DeathSequence: dead
@@ -2200,8 +2213,9 @@ STEK:
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.stek
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SabInfiltrate
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -2307,8 +2321,9 @@ BARR:
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.barr
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 
 KENN:
 	Inherits: ^Building
@@ -2450,8 +2465,9 @@ TENT:
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.tent
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate, SabInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 
 FIX:
 	Inherits: ^Building
@@ -2854,8 +2870,9 @@ PYLE:
 	Power:
 		Amount: -20
 	ProvidesPrerequisite@buildingname:
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.pyle
@@ -2920,8 +2937,9 @@ HAND:
 		PauseOnCondition: forceshield || invulnerability || being-warped
 	ProductionBar:
 		ProductionType: Infantry
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@human:
@@ -3060,8 +3078,9 @@ WEAP.TD:
 	Production:
 		Produces: Vehicle, Paradrop
 		PauseOnCondition: forceshield || invulnerability || being-warped
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	ProductionBar:
 		ProductionType: Vehicle
 	Power:
@@ -3236,8 +3255,9 @@ AIRS:
 		DirectionArrowAnimation: paradirection
 		Prerequisites: vehicles.shadow
 	WithDeliveryAnimation:
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	ProductionBar:
 		ProductionType: Vehicle
 	Power:
@@ -3296,9 +3316,10 @@ NUKE:
 	Power:
 		Amount: 100
 	ProvidesPrerequisite:
-		Prerequisite: anypower
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate, PowerInfiltrate
+		Prerequisite: anypowere
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, PowerInfiltrate
 	ScalePowerWithHealth:
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForPowerOutage:
@@ -3346,8 +3367,9 @@ NUK2:
 	WithBuildingBib:
 	Power:
 		Amount: 200
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate, PowerInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, PowerInfiltrate
 	ProvidesPrerequisite@buildingname:
 	ScalePowerWithHealth:
 	InfiltrateForPowerOutage:
@@ -3806,8 +3828,9 @@ HQ:
 		LocalCenterOffset: 0,-512,0
 	WithSpriteBody:
 		PauseOnCondition: disabled || being-warped
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate,  SabInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	Health:
 		HP: 100000
 	Armor:
@@ -4019,8 +4042,9 @@ EYE:
 		Footprint: xx xx ==
 		Dimensions: 2,3
 		LocalCenterOffset: 0,-512,0
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate, SabInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	WithSpriteBody:
 		PauseOnCondition: disabled || being-warped
 	Health:
@@ -4253,8 +4277,9 @@ HPAD.TD:
 	ProvidesPrerequisite@chinook:
 		Prerequisite: aircraft.chinook
 	ProvidesPrerequisite@buildingname:
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
 	InfiltrateForSupportPower:
@@ -4348,8 +4373,9 @@ PROC.TD:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	WithBuildingBib:
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack, ThiefInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: ThiefInfiltrate
 	Refinery:
 		DockAngle: 448
 		DockOffset: 0,2
@@ -4411,8 +4437,6 @@ SILO.TD:
 		Range: 4c0
 	WithBuildingBib:
 		HasMinibib: true
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack
 	-WithSpriteBody:
 	WithResourceLevelSpriteBody:
 		Sequence: stages
@@ -4556,8 +4580,9 @@ AFLD.GDI:
 	Power:
 		Amount: -20
 	ProvidesPrerequisite@buildingname:
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
 	InfiltrateForSupportPower:
@@ -4584,8 +4609,9 @@ GTEK:
 		LocalCenterOffset: 0,-512,0
 	Health:
 		HP: 100000
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SabInfiltrate
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -4805,8 +4831,9 @@ TMPL:
 		RequiredForShortGame: false
 	WithSupportPowerActivationAnimation:
 		RequiresCondition: !build-incomplete
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SabInfiltrate
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.tmpl
@@ -4904,6 +4931,7 @@ PRIS:
 
 SPEN.nod:
 	Inherits: ^Building
+	Inherits@WATERSTRUCTURE: ^WaterStructure
 	Inherits@PRIMARY: ^PrimaryBuilding
 	RenderSprites:
 		Image: SPENNOD
@@ -4921,8 +4949,9 @@ SPEN.nod:
 		IconPalette: chrometd
 		Prerequisites: anypower, ~structures.nod, ~techlevel.navy, ~techlevel.low
 		Description: Produces and repairs\nsubmarines and transports.
-	Targetable:
-		TargetTypes: Ground, Water, WaterStructure, Structure, C4, DetonateAttack, SpyInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate
 	Building:
 		Footprint: XXX xxx XXX
 		Dimensions: 3,3
@@ -4995,6 +5024,7 @@ SPEN.nod:
 
 SYRD.gdi:
 	Inherits: ^Building
+	Inherits@WATERSTRUCTURE: ^WaterStructure
 	Inherits@PRIMARY: ^PrimaryBuilding
 	RenderSprites:
 		Image: GSYRD
@@ -5011,8 +5041,9 @@ SYRD.gdi:
 		Cost: 1000
 	Tooltip:
 		Name: Naval Yard
-	Targetable:
-		TargetTypes: Ground, Water, WaterStructure, Structure, C4, DetonateAttack, SpyInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate
 	Building:
 		Footprint: XXX xxx XXX
 		Dimensions: 3,3
@@ -5337,8 +5368,9 @@ SGEN:
 			BottomRight: 1024, 1024
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 
 CRAM:
 	Inherits: AGUN
@@ -5572,8 +5604,9 @@ PATR:
 		Except: Sell, PowerDown
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	Sellable:
 		RequiresCondition: !build-incomplete && !(c4 || tnt) && !being-captured && !being-warped && !hacked
 	CaptureManager:
@@ -6252,8 +6285,9 @@ MSLO.Nod:
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 
 WEAT:
 	Inherits: ^Building
@@ -6337,7 +6371,8 @@ WEAT:
 		RequiredForShortGame: false
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	WithBuildingBib:
 		HasMinibib: true

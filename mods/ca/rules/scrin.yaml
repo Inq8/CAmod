@@ -2849,8 +2849,9 @@ REAC:
 		Amount: 100
 	ProvidesPrerequisite:
 		Prerequisite: anypower
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate, PowerInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, PowerInfiltrate
 	ScalePowerWithHealth:
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForPowerOutage:
@@ -2891,8 +2892,9 @@ REA2:
 	WithBuildingBib:
 	Power:
 		Amount: 200
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate, PowerInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, PowerInfiltrate
 	ProvidesPrerequisite@buildingname:
 	ScalePowerWithHealth:
 	InfiltrateForPowerOutage:
@@ -2937,8 +2939,9 @@ PROC.SCRIN:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	WithBuildingBib:
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack, ThiefInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: ThiefInfiltrate
 	Refinery:
 		DockAngle: 448
 		DockOffset: 0,2
@@ -3053,8 +3056,9 @@ PORT:
 	Power:
 		Amount: -20
 	ProvidesPrerequisite@buildingname:
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.port
@@ -3138,8 +3142,9 @@ WSPH:
 	Production:
 		Produces: Vehicle
 		PauseOnCondition: forceshield || invulnerability || being-warped
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate, SpyInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	ProductionBar:
 		ProductionType: Vehicle
 	Power:
@@ -3180,8 +3185,9 @@ NERV:
 		Footprint: xx xx ==
 		Dimensions: 2,3
 		LocalCenterOffset: 0,-768,0
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate,  SabInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	Health:
 		HP: 100000
 	Armor:
@@ -3347,8 +3353,9 @@ SCRT:
 		LocalCenterOffset: 0,-512,0
 	Health:
 		HP: 100000
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SabInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SabInfiltrate
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -3500,8 +3507,6 @@ GRAV:
 	Power:
 		Amount: -20
 	ProvidesPrerequisite@buildingname:
-	Targetable:
-		TargetTypes: Ground, C4, DetonateAttack, Structure, SpyInfiltrate
 	WithBuildingBib:
 	WithIdleOverlay@orb:
 		RequiresCondition: !build-incomplete
@@ -3657,8 +3662,6 @@ SILO.SCRIN:
 		Range: 4c0
 	WithBuildingBib:
 		HasMinibib: true
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack
 	-WithSpriteBody:
 	WithResourceLevelSpriteBody:
 		Sequence: stages
@@ -3729,8 +3732,9 @@ MANI:
 			BottomRight: 1024, 1024
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	ProvidesPrerequisiteValidatedFaction@collector:
 		Factions: collector
 		Prerequisite: mani.collector
@@ -3861,8 +3865,9 @@ RIFT:
 		RequiredForShortGame: false
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
-	Targetable:
-		TargetTypes: Ground, Structure, C4, DetonateAttack, SpyInfiltrate, SabInfiltrate
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	WithBuildingBib:
 		HasMinibib: true
 
