@@ -2996,6 +2996,7 @@ MTNK.Drone:
 MDRN:
 	Inherits: ^Vehicle
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HACKABLE: ^Hackable
 	Tooltip:
 		Name: Mini Drone
@@ -3044,6 +3045,8 @@ MDRN:
 	WithShadow:
 		Offset: 43, 128, -250
 		ZOffset: -129
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
 	TurretedFloating:
 		TurnSpeed: 18
 	AttackTurreted:
@@ -4573,6 +4576,8 @@ XO:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
 	WithMuzzleOverlay:
 	Parachutable:
 		FallRate: 130
