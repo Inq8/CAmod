@@ -40,11 +40,23 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Limit target types for specific air unit squads.")]
 		public readonly Dictionary<string, BitSet<TargetableType>> AirSquadTargetTypes = null;
 
+		[Desc("Enemy building types around which to scan for targets for naval squads.")]
+		public readonly HashSet<string> StaticAntiAirTypes = new HashSet<string>();
+
+		[Desc("Air threats to prioritise no matter where they are on the map.")]
+		public readonly HashSet<string> BigAirThreats = new HashSet<string>();
+
 		[Desc("Minimum number of units AI must have before attacking.")]
 		public readonly int SquadSize = 8;
 
 		[Desc("Random number of up to this many units is added to squad size when creating an attack squad.")]
 		public readonly int SquadSizeRandomBonus = 30;
+
+		[Desc("Minimum value of units AI must have before attacking.")]
+		public readonly int SquadValue = 0;
+
+		[Desc("Random number of up to this value units is added to squad valuee when creating an attack squad.")]
+		public readonly int SquadValueRandomBonus = 0;
 
 		[Desc("Delay (in ticks) between giving out orders to units.")]
 		public readonly int AssignRolesInterval = 50;
@@ -81,7 +93,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly int ProtectionScanRadius = 8;
 
 		[Desc("Percent change for air squads (that can attack aircraft) to prioritise enemy aircraft.")]
-		public readonly int AirToAirPriority = 80;
+		public readonly int AirToAirPriority = 85;
 
 		[Desc("Enemy target types to never target.")]
 		public readonly BitSet<TargetableType> IgnoredEnemyTargetTypes = default(BitSet<TargetableType>);
@@ -122,6 +134,7 @@ namespace OpenRA.Mods.CA.Traits
 		IBot bot;
 		IBotPositionsUpdated[] notifyPositionsUpdated;
 		IBotNotifyIdleBaseUnits[] notifyIdleBaseUnits;
+		IBotAircraftBuilder[] aircraftBuilders;
 
 		CPos initialBaseCenter;
 
@@ -142,7 +155,7 @@ namespace OpenRA.Mods.CA.Traits
 		// Use for proactive targeting.
 		public bool IsPreferredEnemyUnit(Actor a)
 		{
-			if (a == null || a.IsDead || Player.RelationshipWith(a.Owner) != PlayerRelationship.Enemy || a.Info.HasTraitInfo<HuskInfo>() || a.Info.HasTraitInfo<AircraftInfo>())
+			if (a == null || a.IsDead || Player.RelationshipWith(a.Owner) != PlayerRelationship.Enemy || a.Info.HasTraitInfo<HuskInfo>() || a.Info.HasTraitInfo<AircraftInfo>() || a.Info.HasTraitInfo<CarrierSlaveInfo>())
 				return false;
 
 			var targetTypes = a.GetEnabledTargetTypes();
@@ -186,6 +199,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			notifyPositionsUpdated = self.Owner.PlayerActor.TraitsImplementing<IBotPositionsUpdated>().ToArray();
 			notifyIdleBaseUnits = self.Owner.PlayerActor.TraitsImplementing<IBotNotifyIdleBaseUnits>().ToArray();
+			aircraftBuilders = self.Owner.PlayerActor.TraitsImplementing<IBotAircraftBuilder>().ToArray();
 		}
 
 		protected override void TraitEnabled(Actor self)
@@ -225,7 +239,16 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			Squads.RemoveAll(s => !s.IsValid);
 			foreach (var s in Squads)
+			{
 				s.Units.RemoveAll(unitCannotBeOrdered);
+
+				if (s.Type == SquadCAType.Air)
+				{
+					s.NewUnits.RemoveWhere(unitCannotBeOrdered);
+					s.RearmingUnits.RemoveWhere(unitCannotBeOrdered);
+					s.WaitingUnits.RemoveWhere(unitCannotBeOrdered);
+				}
+			}
 		}
 
 		// HACK: Use of this function requires that there is one squad of this type.
@@ -295,6 +318,7 @@ namespace OpenRA.Mods.CA.Traits
 						if (airSquad.Units.Any(u => u.Info.Name == a.Info.Name))
 						{
 							airSquad.Units.Add(a);
+							airSquad.NewUnits.Add(a);
 							matchingAirSquadFound = true;
 							break;
 						}
@@ -304,6 +328,7 @@ namespace OpenRA.Mods.CA.Traits
 					{
 						var newAirSquad = RegisterNewSquad(bot, SquadCAType.Air);
 						newAirSquad.Units.Add(a);
+						newAirSquad.NewUnits.Add(a);
 					}
 				}
 				else if (Info.NavalUnitsTypes.Contains(a.Info.Name))
@@ -343,8 +368,22 @@ namespace OpenRA.Mods.CA.Traits
 			// Create an attack force when we have enough units around our base.
 			// (don't bother leaving any behind for defense)
 			var randomizedSquadSize = Info.SquadSize + World.LocalRandom.Next(Info.SquadSizeRandomBonus);
+			var randomizedSquadValue = 0;
+			var idleUnitsValue = 0;
 
-			if (unitsHangingAroundTheBase.Count >= randomizedSquadSize)
+			if (Info.SquadValue > 0)
+			{
+				foreach (var a in unitsHangingAroundTheBase)
+				{
+					var valued = a.Info.TraitInfoOrDefault<ValuedInfo>();
+					if (valued != null)
+						idleUnitsValue += valued.Cost;
+				}
+
+				randomizedSquadValue = Info.SquadValue + World.LocalRandom.Next(Info.SquadSizeRandomBonus);
+			}
+
+			if (idleUnitsValue >= randomizedSquadValue && unitsHangingAroundTheBase.Count >= randomizedSquadSize)
 			{
 				var attackForce = RegisterNewSquad(bot, SquadCAType.Assault);
 
@@ -403,7 +442,7 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				var ownUnits = World.FindActorsInCircle(World.Map.CenterOfCell(GetRandomBaseCenter()), WDist.FromCells(Info.ProtectUnitScanRadius))
 					.Where(unit => unit.Owner == Player && !unit.Info.HasTraitInfo<BuildingInfo>() && !unit.Info.HasTraitInfo<HarvesterInfo>()
-						&& unit.Info.HasTraitInfo<AttackBaseInfo>());
+						&& !unit.Info.HasTraitInfo<AircraftInfo>() && unit.Info.HasTraitInfo<AttackBaseInfo>());
 
 				foreach (var a in ownUnits)
 					protectSq.Units.Add(a);
@@ -505,6 +544,17 @@ namespace OpenRA.Mods.CA.Traits
 				foreach (var n in squadsNode.Value.Nodes)
 					Squads.Add(SquadCA.Deserialize(bot, this, n.Value));
 			}
+		}
+
+		public bool CanBuildMoreOfAircraft(ActorInfo actorInfo)
+		{
+			foreach (var aircraftBuilder in aircraftBuilders)
+			{
+				if (aircraftBuilder.CanBuildMoreOfAircraft(actorInfo))
+					return true;
+			}
+
+			return false;
 		}
 	}
 }

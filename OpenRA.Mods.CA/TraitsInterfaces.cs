@@ -9,13 +9,8 @@
  */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using OpenRA.Activities;
 using OpenRA.GameRules;
 using OpenRA.Graphics;
-using OpenRA.Mods.Common.Activities;
-using OpenRA.Mods.Common.Graphics;
 using OpenRA.Primitives;
 using OpenRA.Traits;
 
@@ -65,4 +60,7 @@ namespace OpenRA.Mods.CA.Traits
 	[RequireExplicitImplementation]
 	public interface INotifyEnterTeleporter { void Charging(Actor self, Actor teleporter); }
 	public interface INotifyExitTeleporter { void Arrived(Actor self); }
+
+	[RequireExplicitImplementation]
+	public interface IBotAircraftBuilder { bool CanBuildMoreOfAircraft(ActorInfo actorInfo); }
 }

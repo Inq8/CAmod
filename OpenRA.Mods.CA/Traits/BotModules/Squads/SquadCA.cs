@@ -23,6 +23,12 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 	public class SquadCA
 	{
 		public List<Actor> Units = new List<Actor>();
+
+		// lists used for air squads to determine what members should be doing
+		public HashSet<Actor> NewUnits = new HashSet<Actor>();
+		public HashSet<Actor> WaitingUnits = new HashSet<Actor>();
+		public HashSet<Actor> RearmingUnits = new HashSet<Actor>();
+
 		public SquadCAType Type;
 
 		internal IBot Bot;
