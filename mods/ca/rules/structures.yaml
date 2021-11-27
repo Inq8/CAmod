@@ -3300,8 +3300,6 @@ NUKE:
 		Cost: 300
 	Tooltip:
 		Name: Nuclear Power Plant
-	ProvidesPrerequisite:
-		Prerequisite: anypower
 	Building:
 		Footprint: xX xx ==
 		Dimensions: 2,3
@@ -3315,13 +3313,13 @@ NUKE:
 	WithBuildingBib:
 	Power:
 		Amount: 100
-	ProvidesPrerequisite:
-		Prerequisite: anypowere
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, PowerInfiltrate
 	ScalePowerWithHealth:
 	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite:
+		Prerequisite: anypower
 	InfiltrateForPowerOutage:
 		Types: SpyInfiltrate, PowerInfiltrate
 
