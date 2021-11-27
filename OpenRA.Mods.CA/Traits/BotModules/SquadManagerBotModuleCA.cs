@@ -550,6 +550,9 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			foreach (var aircraftBuilder in aircraftBuilders)
 			{
+				if (!aircraftBuilder.IsTraitEnabled())
+					continue;
+
 				if (aircraftBuilder.CanBuildMoreOfAircraft(actorInfo))
 					return true;
 			}

@@ -61,15 +61,19 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			if (canAttackAir)
 			{
 				var pos = leader.CenterPosition;
-				var regularTargetPriority = owner.World.LocalRandom.Next(0, 100);
 
-				if (owner.SquadManager.Info.AirToAirPriority > regularTargetPriority)
+				if (owner.SquadManager.Info.BigAirThreats.Any())
 				{
-					target = owner.World.Actors.Where(a => owner.SquadManager.IsPreferredEnemyAircraft(a) &&
-						owner.SquadManager.IsNotHiddenUnit(a) &&
-						a.IsTargetableBy(leader) &&
-						owner.SquadManager.Info.BigAirThreats.Contains(a.Info.Name))
-						.ClosestTo(pos);
+					var regularTargetPriority = owner.World.LocalRandom.Next(0, 100);
+
+					if (owner.SquadManager.Info.AirToAirPriority > regularTargetPriority)
+					{
+						target = owner.World.Actors.Where(a => owner.SquadManager.IsPreferredEnemyAircraft(a) &&
+							owner.SquadManager.IsNotHiddenUnit(a) &&
+							a.IsTargetableBy(leader) &&
+							owner.SquadManager.Info.BigAirThreats.Contains(a.Info.Name))
+							.ClosestTo(pos);
+					}
 				}
 
 				if (target != null)

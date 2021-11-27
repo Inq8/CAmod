@@ -1196,6 +1196,8 @@ SAPC:
 		RequiresCondition: driver-dead && !cargo
 	Targetable@DRIVERKILL:
 		RequiresCondition: !driver-dead && !cargo
+	Targetable@MINDCONTROL:
+		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
 	Cloak@NORMAL:
 		InitialDelay: 90
 		CloakDelay: 90
@@ -1515,6 +1517,8 @@ APC:
 		RequiresCondition: driver-dead && !cargo
 	Targetable@DRIVERKILL:
 		RequiresCondition: !driver-dead && !cargo
+	Targetable@MINDCONTROL:
+		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
 
 APC.AI:
 	Inherits: APC
@@ -2558,6 +2562,8 @@ APC2:
 		RequiresCondition: driver-dead && !cargo
 	Targetable@DRIVERKILL:
 		RequiresCondition: !driver-dead && !cargo
+	Targetable@MINDCONTROL:
+		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
 	GrantConditionOnPrerequisite@VULCAN:
 		Condition: vulcan-upgrade
 		Prerequisites: vulcan.upgrade
@@ -2761,6 +2767,8 @@ VULC:
 		RequiresCondition: driver-dead && !cargo
 	Targetable@DRIVERKILL:
 		RequiresCondition: !driver-dead && !cargo
+	Targetable@MINDCONTROL:
+		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
 	Selectable:
 		Class: apc
 
@@ -4310,6 +4318,8 @@ IFV:
 		RequiresCondition: driver-dead && !full
 	Targetable@DRIVERKILL:
 		RequiresCondition: !driver-dead && !full
+	Targetable@MINDCONTROL:
+		RequiresCondition: !full && !mindcontrolled && !hacked && !restoring
 	AutoTarget:
 		AttackAnythingCondition: stance-attackanything
 		ScanRadius: 6
@@ -5657,6 +5667,8 @@ BATF:
 		RequiresCondition: driver-dead && !cargo
 	Targetable@DRIVERKILL:
 		RequiresCondition: !driver-dead && !cargo
+	Targetable@MINDCONTROL:
+		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
 	SpawnActorOnDeath:
 		Actor: BATF.Husk
 		RequiresCondition: !being-warped
