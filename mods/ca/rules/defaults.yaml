@@ -2359,7 +2359,9 @@
 	Inherits@selection: ^SelectableBuilding
 	Inherits@handicaps: ^PlayerHandicaps
 	Targetable:
-		TargetTypes: Ground, C4, TNT, DetonateAttack, Structure
+		TargetTypes: Ground, Structure, Building
+	Targetable@EXPLOSIVES:
+		TargetTypes: C4, TNT, DetonateAttack
 	Building:
 		Dimensions: 1,1
 		Footprint: x
@@ -2463,8 +2465,11 @@
 		RequiresCondition: !being-warped
 	Targetable:
 		RequiresCondition: !being-warped
+	Targetable@EXPLOSIVES:
+		RequiresCondition: !being-warped
 	Targetable@HACKCAPTURABLE:
 		TargetTypes: HackCapturable
+		RequiresCondition: !build-incomplete && !being-warped
 	Explodes@TEMPORAL:
 		Weapon: TemporalExplodeLarge
 		EmptyWeapon: TemporalExplodeLarge
@@ -2486,6 +2491,10 @@
 		UseDeathTypeSuffix: false
 		DeathSequencePalette: overlayplayertd
 
+^WaterStructure:
+	Targetable@WATER:
+		TargetTypes: Water, WaterStructure
+
 ^Defense:
 	Inherits: ^Building
 	Inherits@botbonus: ^BotDefenseProductionBonus
@@ -2500,7 +2509,9 @@
 	Selectable:
 		Bounds: 24,24
 	Targetable:
-		TargetTypes: Ground, C4, TNT, DetonateAttack, Structure, Defense
+		TargetTypes: Ground, Structure, Defense
+	Targetable@EXPLOSIVES:
+		TargetTypes: C4, TNT, DetonateAttack
 	DetectCloaked:
 		CloakTypes: Cloak, AirCloak
 		Range: 6c0
