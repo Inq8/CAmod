@@ -84,11 +84,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			var tooltip = actor.TraitsImplementing<Tooltip>().FirstOrDefault(Exts.IsTraitEnabled);
 			var name = tooltip != null ? tooltip.Info.Name : actor.Info.Name;
 
-			var cost = 0;
-			var valued = actor.Info.TraitInfoOrDefault<ValuedInfo>();
-			if (valued != null)
-				cost = valued.Cost;
-
 			nameLabel.Text = name;
 
 			var nameSize = font.Measure(name);
@@ -109,6 +104,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				strengthsLabel.Text = "";
 				weaknessesLabel.Text = "";
 				attributesLabel.Text = "";
+				descLabel.Text = "";
 			}
 
 			var armorTypeSize = armorTypeLabel.Text != "" ? font.Measure(armorTypeLabel.Text) : new int2(0, 0);
