@@ -892,7 +892,7 @@ HACK:
 		Voice: Move
 	Armament@PRIMARY:
 		Weapon: PrepareHack
-		PauseOnCondition: deployed
+		PauseOnCondition: deployed || bothacking
 	Armament@PRIMARYDEPLOYED:
 		Weapon: Hack
 		RequiresCondition: deployed
@@ -955,10 +955,12 @@ HACK:
 	RenderRangeCircle:
 		Color: 00cc00
 	RejectsOrders@AIHACKER:
-		RequiresCondition: hacking && botowner
+		RequiresCondition: bothacking
 	GrantConditionOnAttack@AIHACKER:
-		Condition: hacking
+		Condition: bothacking
 		ArmamentNames: primary
+		RevokeDelay: 75
+		RequiresCondition: botowner
 	GrantConditionOnBotOwner@AIHACKER:
 		Condition: botowner
 		Bots: brutal, vhard, hard, normal, easy, naval

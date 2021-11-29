@@ -2235,7 +2235,6 @@ HMMV:
 GDRN:
 	Inherits: ^Vehicle
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
 	Inherits@HACKABLE: ^Hackable
 	RenderSprites:
@@ -2297,8 +2296,6 @@ GDRN:
 		Range: 6c0
 		CloakTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
-	ProducibleWithLevel:
-		Prerequisites: vehicles.upgraded
 	WithSpriteTurret@TOW:
 		Sequence: turrettow
 		RequiresCondition: tow-upgrade
@@ -2996,7 +2993,6 @@ MTNK.Drone:
 MDRN:
 	Inherits: ^Vehicle
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HACKABLE: ^Hackable
 	Tooltip:
 		Name: Mini Drone
@@ -3045,8 +3041,6 @@ MDRN:
 	WithShadow:
 		Offset: 43, 128, -250
 		ZOffset: -129
-	ProducibleWithLevel:
-		Prerequisites: vehicles.upgraded
 	TurretedFloating:
 		TurnSpeed: 18
 	AttackTurreted:

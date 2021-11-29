@@ -143,6 +143,9 @@ namespace OpenRA.Mods.CA.Traits
 		int attackForceTicks;
 		int minAttackForceDelayTicks;
 
+		int desiredAttackForceValue;
+		int desiredAttackForceSize;
+
 		public SquadManagerBotModuleCA(Actor self, SquadManagerBotModuleCAInfo info)
 			: base(info)
 		{
@@ -367,8 +370,6 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			// Create an attack force when we have enough units around our base.
 			// (don't bother leaving any behind for defense)
-			var randomizedSquadSize = Info.SquadSize + World.LocalRandom.Next(Info.SquadSizeRandomBonus);
-			var randomizedSquadValue = 0;
 			var idleUnitsValue = 0;
 
 			if (Info.SquadValue > 0)
@@ -379,11 +380,9 @@ namespace OpenRA.Mods.CA.Traits
 					if (valued != null)
 						idleUnitsValue += valued.Cost;
 				}
-
-				randomizedSquadValue = Info.SquadValue + World.LocalRandom.Next(Info.SquadSizeRandomBonus);
 			}
 
-			if (idleUnitsValue >= randomizedSquadValue && unitsHangingAroundTheBase.Count >= randomizedSquadSize)
+			if (idleUnitsValue >= desiredAttackForceValue && unitsHangingAroundTheBase.Count >= desiredAttackForceSize)
 			{
 				var attackForce = RegisterNewSquad(bot, SquadCAType.Assault);
 
@@ -393,7 +392,18 @@ namespace OpenRA.Mods.CA.Traits
 				unitsHangingAroundTheBase.Clear();
 				foreach (var n in notifyIdleBaseUnits)
 					n.UpdatedIdleBaseUnits(unitsHangingAroundTheBase);
+
+				SetNextDesiredAttackForce();
 			}
+		}
+
+		void SetNextDesiredAttackForce()
+		{
+			desiredAttackForceSize = Info.SquadSize + World.LocalRandom.Next(Info.SquadSizeRandomBonus);
+			desiredAttackForceValue = 0;
+
+			if (Info.SquadValue > 0)
+				desiredAttackForceValue = Info.SquadValue + World.LocalRandom.Next(Info.SquadValueRandomBonus);
 		}
 
 		void TryToRushAttack(IBot bot)
