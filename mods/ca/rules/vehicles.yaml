@@ -1154,7 +1154,7 @@ SAPC:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 255
-		Prerequisites: tmpl, infantry.any, ~vehicles.nod, ~techlevel.high
+		Prerequisites: tmpl, ~vehicles.nod, ~techlevel.high
 		Description: Stealth infantry transport.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -1223,7 +1223,7 @@ SAPC.AI:
 	RenderSprites:
 		Image: sapc
 	Buildable:
-		Prerequisites: ~botplayer, ~!cyborg.production, tmpl, infantry.any, ~vehicles.nod, ~techlevel.high
+		Prerequisites: ~botplayer, ~!cyborg.production, tmpl, ~vehicles.nod, ~techlevel.high
 	Cargo:
 		InitialUnits: N1,N1,N4,N3,N3
 
@@ -1233,7 +1233,7 @@ SAPC.AI2:
 	RenderSprites:
 		Image: sapc
 	Buildable:
-		Prerequisites: ~botplayer, ~cyborg.production, tmpl, infantry.any, ~vehicles.nod, ~techlevel.high
+		Prerequisites: ~botplayer, ~cyborg.production, tmpl, ~vehicles.nod, ~techlevel.high
 	Cargo:
 		InitialUnits: N1C,N1C,N5,N3C,N3C
 
@@ -1473,7 +1473,7 @@ APC:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 40
-		Prerequisites: infantry.any, ~vehicles.allies, ~techlevel.low
+		Prerequisites: ~vehicles.allies, ~techlevel.low
 		Description: Tough infantry transport.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -1526,7 +1526,7 @@ APC.AI:
 	RenderSprites:
 		Image: APC
 	Buildable:
-		Prerequisites: ~botplayer, infantry.any, ~vehicles.allies, ~techlevel.low
+		Prerequisites: ~botplayer, ~vehicles.allies, ~techlevel.low
 	Cargo:
 		InitialUnits: E1,E1,E1,E3,E3
 
@@ -2404,7 +2404,7 @@ APC2:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 41
-		Prerequisites: ~vehicles.td, ~!vulcan.upgrade, ~vehicles.apc2, infantry.any, ~techlevel.low
+		Prerequisites: ~vehicles.td, ~!vulcan.upgrade, ~vehicles.apc2, ~techlevel.low
 		IconPalette: chrometd
 		Description: Tough infantry transport.
 	TooltipExtras:
@@ -2607,7 +2607,7 @@ APC2.NODAI:
 	Inherits: APC2
 	Inherits: ^AIUNLOAD
 	Buildable:
-		Prerequisites: ~botplayer, ~vehicles.nod, ~!vulcan.upgrade, ~vehicles.apc2, infantry.any, ~techlevel.low
+		Prerequisites: ~botplayer, ~vehicles.nod, ~!vulcan.upgrade, ~vehicles.apc2, ~techlevel.low
 	RenderSprites:
 		Image: APC2
 	Cargo:
@@ -2617,7 +2617,7 @@ APC2.GDIAI:
 	Inherits: APC2
 	Inherits: ^AIUNLOAD
 	Buildable:
-		Prerequisites: ~botplayer, ~vehicles.gdi, ~!vulcan.upgrade, ~vehicles.apc2, infantry.any, ~techlevel.low
+		Prerequisites: ~botplayer, ~vehicles.gdi, ~!vulcan.upgrade, ~vehicles.apc2, ~techlevel.low
 	RenderSprites:
 		Image: APC2
 	Cargo:
@@ -2647,7 +2647,7 @@ VULC:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 42
-		Prerequisites: ~vehicles.gdi, ~vulcan.upgrade, infantry.any, ~techlevel.high
+		Prerequisites: ~vehicles.gdi, ~vulcan.upgrade, ~techlevel.high
 		IconPalette: chrometd
 		Description: Tough infantry transport, armed with a powerful chaingun.
 	TooltipExtras:
@@ -2775,7 +2775,7 @@ VULC.AI:
 	RenderSprites:
 		Image: VULC
 	Buildable:
-		Prerequisites: ~botplayer, ~vehicles.gdi, ~vulcan.upgrade, infantry.any, ~techlevel.high
+		Prerequisites: ~botplayer, ~vehicles.gdi, ~vulcan.upgrade, ~techlevel.high
 	Cargo:
 		InitialUnits: N1,N1,N1,N2,N3
 
@@ -3832,7 +3832,7 @@ BTR:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 21
-		Prerequisites: infantry.any, ~vehicles.soviet, ~techlevel.low
+		Prerequisites: ~vehicles.soviet, ~techlevel.low
 		Description: Tough infantry transport.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor, Aircraft
@@ -3893,7 +3893,7 @@ BTR.AI:
 	RenderSprites:
 		Image: BTR
 	Buildable:
-		Prerequisites: ~botplayer, infantry.any, ~vehicles.soviet, ~techlevel.low
+		Prerequisites: ~botplayer, ~vehicles.soviet, ~techlevel.low
 	Cargo:
 		InitialUnits: E1,E1,E1,E3,E4
 
@@ -5547,7 +5547,7 @@ BATF:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 340
-		Prerequisites: infantry.any, atek, ~vehicles.france, ~techlevel.high
+		Prerequisites: atek, ~vehicles.france, ~techlevel.high
 		Description: Tough infantry transport with weapon ports\n  for infantry to fire from.
 	TooltipExtras:
 		Attributes: • Can crush concrete walls and vehicles
@@ -5698,7 +5698,7 @@ BATF.AI:
 	RenderSprites:
 		Image: batf
 	Buildable:
-		Prerequisites: infantry.any, atek, ~vehicles.france, ~botplayer, ~techlevel.high
+		Prerequisites: atek, ~vehicles.france, ~botplayer, ~techlevel.high
 	Cargo:
 		InitialUnits: E1,E1,E3,E3,E3
 
