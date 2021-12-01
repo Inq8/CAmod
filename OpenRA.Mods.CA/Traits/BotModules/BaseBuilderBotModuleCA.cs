@@ -14,6 +14,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
@@ -38,6 +39,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Tells the AI what building types are considered anti-air defenses.")]
 		public readonly HashSet<string> AntiAirTypes = new HashSet<string>();
+
+		[Desc("Tells the AI what building types are considered defenses.")]
+		public readonly HashSet<string> DefenseTypes = new HashSet<string>();
 
 		[Desc("Tells the AI what building types are considered production facilities.")]
 		public readonly HashSet<string> ProductionTypes = new HashSet<string>();
@@ -131,6 +135,15 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("When should the AI start building specific buildings.")]
 		public readonly Dictionary<string, int> BuildingDelays = null;
 
+		[Desc("Enemy building target types I can ignore construction distance from.")]
+		public readonly BitSet<TargetableType> IgnoredEnemyBuildingTargetTypes = default(BitSet<TargetableType>);
+
+		[Desc("Unit target types I should not count when scanning for sell condition .")]
+		public readonly BitSet<TargetableType> IgnoredUnitTargetTypes = default(BitSet<TargetableType>);
+
+		[Desc("Radius in cells around building being considered for sale to scan for units")]
+		public readonly int SellScanRadius = 8;
+
 		public override object Create(ActorInitializer init) { return new BaseBuilderBotModuleCA(init.Self, this); }
 	}
 
@@ -147,6 +160,7 @@ namespace OpenRA.Mods.CA.Traits
 		}
 
 		public CPos DefenseCenter { get { return defenseCenter; } }
+		public List<Actor> Units = new List<Actor>();
 
 		readonly World world;
 		readonly Player player;
@@ -164,6 +178,34 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			world = self.World;
 			player = self.Owner;
+		}
+
+		// Use for proactive targeting.
+		public bool IsEnemyBuildingClose(Actor a)
+		{
+			if (a == null || a.IsDead || player.RelationshipWith(a.Owner) != PlayerRelationship.Enemy || !a.Info.HasTraitInfo<BuildingInfo>())
+				return false;
+
+			var targetTypes = a.GetEnabledTargetTypes();
+			return !targetTypes.IsEmpty && !targetTypes.Overlaps(Info.IgnoredEnemyBuildingTargetTypes);
+		}
+
+		public bool IsEnemyGroundUnit(Actor a)
+		{
+			if (a == null || a.IsDead || player.RelationshipWith(a.Owner) != PlayerRelationship.Enemy || a.Info.HasTraitInfo<HuskInfo>() || a.Info.HasTraitInfo<AircraftInfo>() || a.Info.HasTraitInfo<CarrierSlaveInfo>())
+				return false;
+
+			var targetTypes = a.GetEnabledTargetTypes();
+			return !targetTypes.IsEmpty && !targetTypes.Overlaps(Info.IgnoredUnitTargetTypes);
+		}
+
+		public bool IsAllyGroundUnit(Actor a)
+		{
+			if (a == null || a.IsDead || player.RelationshipWith(a.Owner) != PlayerRelationship.Ally || a.Info.HasTraitInfo<HuskInfo>() || a.Info.HasTraitInfo<AircraftInfo>() || a.Info.HasTraitInfo<CarrierSlaveInfo>())
+				return false;
+
+			var targetTypes = a.GetEnabledTargetTypes();
+			return !targetTypes.IsEmpty && !targetTypes.Overlaps(Info.IgnoredUnitTargetTypes);
 		}
 
 		protected override void Created(Actor self)
@@ -213,8 +255,23 @@ namespace OpenRA.Mods.CA.Traits
 				b.Tick(bot);
 		}
 
+		internal Actor FindClosestEnemyBuilding(WPos pos)
+		{
+			var units = world.Actors.Where(IsEnemyBuildingClose);
+			return units.ClosestTo(pos);
+		}
+
+		internal Actor FindClosestEnemyBuilding(WPos pos, WDist radius)
+		{
+			return world.FindActorsInCircle(pos, radius).Where(a => IsEnemyBuildingClose(a)).ClosestTo(pos);
+		}
+
 		void IBotRespondToAttack.RespondToAttack(IBot bot, Actor self, AttackInfo e)
 		{
+			var nearest = FindClosestEnemyBuilding(self.CenterPosition);
+			var enemyUnits = self.World.FindActorsInCircle(self.CenterPosition, WDist.FromCells(Info.SellScanRadius)).Where(IsEnemyGroundUnit).ToList();
+			var allyUnits = self.World.FindActorsInCircle(self.CenterPosition, WDist.FromCells(Info.SellScanRadius)).Where(IsAllyGroundUnit).ToList();
+
 			if (e.Attacker == null || e.Attacker.Disposed)
 				return;
 
@@ -224,8 +281,19 @@ namespace OpenRA.Mods.CA.Traits
 			if (!e.Attacker.Info.HasTraitInfo<ITargetableInfo>())
 				return;
 
-			// Protect buildings
-			if (self.Info.HasTraitInfo<BuildingInfo>())
+			// Sell if too close to enemy structurese & enemies outnumber ally ground units
+			if (self.Info.HasTraitInfo<BuildingInfo>() && self.Info.HasTraitInfo<SellableInfo>() && !Info.DefenseTypes.Contains(self.Info.Name) && ((nearest.Location - self.Location).LengthSquared < (Info.MaxBaseRadius * Info.MaxBaseRadius / 2)) && (enemyUnits.Count >= allyUnits.Count * 2))
+			{
+				bot.QueueOrder(new Order("Sell", self, Target.FromActor(self), false)
+				{
+					SuppressVisualFeedback = true
+				});
+				AIUtils.BotDebug("AI ({0}): Decided to sell {1}", player.ClientIndex, self);
+			}
+			else
+
+				// Else Protect buildings
+				if (self.Info.HasTraitInfo<BuildingInfo>())
 				foreach (var n in positionsUpdatedModules)
 					n.UpdatedDefenseCenter(e.Attacker.Location);
 		}
