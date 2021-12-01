@@ -160,7 +160,6 @@ namespace OpenRA.Mods.CA.Traits
 		}
 
 		public CPos DefenseCenter { get { return defenseCenter; } }
-		public List<Actor> Units = new List<Actor>();
 
 		readonly World world;
 		readonly Player player;
@@ -268,10 +267,6 @@ namespace OpenRA.Mods.CA.Traits
 
 		void IBotRespondToAttack.RespondToAttack(IBot bot, Actor self, AttackInfo e)
 		{
-			var nearest = FindClosestEnemyBuilding(self.CenterPosition);
-			var enemyUnits = self.World.FindActorsInCircle(self.CenterPosition, WDist.FromCells(Info.SellScanRadius)).Where(IsEnemyGroundUnit).ToList();
-			var allyUnits = self.World.FindActorsInCircle(self.CenterPosition, WDist.FromCells(Info.SellScanRadius)).Where(IsAllyGroundUnit).ToList();
-
 			if (e.Attacker == null || e.Attacker.Disposed)
 				return;
 
@@ -281,21 +276,34 @@ namespace OpenRA.Mods.CA.Traits
 			if (!e.Attacker.Info.HasTraitInfo<ITargetableInfo>())
 				return;
 
-			// Sell if too close to enemy structurese & enemies outnumber ally ground units
-			if (self.Info.HasTraitInfo<BuildingInfo>() && self.Info.HasTraitInfo<SellableInfo>() && !Info.DefenseTypes.Contains(self.Info.Name) && ((nearest.Location - self.Location).LengthSquared < (Info.MaxBaseRadius * Info.MaxBaseRadius / 2)) && (enemyUnits.Count >= allyUnits.Count * 2))
-			{
-				bot.QueueOrder(new Order("Sell", self, Target.FromActor(self), false)
-				{
-					SuppressVisualFeedback = true
-				});
-				AIUtils.BotDebug("AI ({0}): Decided to sell {1}", player.ClientIndex, self);
-			}
-			else
+			if (!self.Info.HasTraitInfo<BuildingInfo>())
+				return;
 
-				// Else Protect buildings
-				if (self.Info.HasTraitInfo<BuildingInfo>())
-				foreach (var n in positionsUpdatedModules)
-					n.UpdatedDefenseCenter(e.Attacker.Location);
+			if (self.Info.HasTraitInfo<SellableInfo>() && !Info.DefenseTypes.Contains(self.Info.Name))
+			{
+				var nearest = FindClosestEnemyBuilding(self.CenterPosition);
+
+				// Sell if too close to enemy structures & enemies outnumber ally ground units
+				if ((nearest.Location - self.Location).LengthSquared < (Info.MaxBaseRadius * Info.MaxBaseRadius / 2))
+				{
+					var enemyUnits = self.World.FindActorsInCircle(self.CenterPosition, WDist.FromCells(Info.SellScanRadius)).Where(IsEnemyGroundUnit).ToList();
+					var allyUnits = self.World.FindActorsInCircle(self.CenterPosition, WDist.FromCells(Info.SellScanRadius)).Where(IsAllyGroundUnit).ToList();
+
+					if (enemyUnits.Count >= allyUnits.Count * 2)
+					{
+						bot.QueueOrder(new Order("Sell", self, Target.FromActor(self), false)
+						{
+							SuppressVisualFeedback = true
+						});
+						AIUtils.BotDebug("AI ({0}): Decided to sell {1}", player.ClientIndex, self);
+						return;
+					}
+				}
+			}
+
+			// Protect buildings not suitable for selling
+			foreach (var n in positionsUpdatedModules)
+				n.UpdatedDefenseCenter(e.Attacker.Location);
 		}
 
 		void SetRallyPointsForNewProductionBuildings(IBot bot)
