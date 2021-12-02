@@ -41,6 +41,11 @@
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
 
+^AirToGroundMissile:
+	Inherits: ^AntiGroundMissile
+	Projectile: MissileCA
+		LockOnProbability: 95
+
 ^AntiAirMissile:
 	Inherits: ^AntiGroundMissile
 	ValidTargets: Air, AirSmall
@@ -85,7 +90,7 @@
 		AllowSnapping: true
 
 Maverick:
-	Inherits: ^AntiGroundMissile
+	Inherits: ^AirToGroundMissile
 	Range: 6c0
 	MinRange: 2c0
 	Report: missile7.aud
@@ -343,7 +348,7 @@ DragonE.CYB.TibCore:
 		Damage: 4200
 
 HellfireAG:
-	Inherits: ^AntiGroundMissile
+	Inherits: ^AirToGroundMissile
 	ReloadDelay: 100
 	MinRange: 1c256
 	Burst: 4
@@ -378,6 +383,7 @@ HellfireAG.Harrier:
 		ContrailLength: 10
 		Inaccuracy: 512
 		LockOnInaccuracy: 512
+		LockOnProbability: 90
 	Warhead@1Dam: SpreadDamage
 		Spread: 448
 		Damage: 1600
@@ -731,7 +737,7 @@ APTusk:
 
 TOW:
 	Inherits: ^AntiGroundMissile
-	Range: 6c0
+	Range: 5c512
 	ValidTargets: Vehicle, Structure
 	Report: tow1.aud, tow2.aud
 	ReloadDelay: 150
@@ -751,7 +757,8 @@ TOW:
 		Damage: 7500
 		Versus:
 			Wood: 30
-			Light: 75
+			Concrete: 55
+			Light: 55
 
 TorpTube:
 	ReloadDelay: 100
