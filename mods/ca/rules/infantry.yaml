@@ -1746,6 +1746,10 @@ SNIP:
 	GrantConditionOnPrerequisite@APB:
 		Condition: apb-upgrade
 		Prerequisites: apb.upgrade
+	GrantCondition@APB:
+		Condition: apb-upgrade
+		RequiresCondition: apb-upgrade
+		GrantPermanently: true
 	WithDecoration@hidden:
 		Image: pips
 		Sequence: pip-hidden

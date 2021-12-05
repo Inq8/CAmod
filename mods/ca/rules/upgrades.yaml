@@ -43,7 +43,7 @@ bombard.strat:
 		Description: Firepower focused strategy.
 	TooltipExtras:
 		Strengths: + Increases unit firepower by 5%
-		Attributes: • Only one Strategy may be chosen.
+		Attributes: \n(!) Only ONE Strategy may be chosen.
 	Valued:
 		Cost: 1500
 	RenderSprites:
@@ -59,6 +59,7 @@ bombard2.strat:
 		Description: Increase Bombardment strategy bonuses.
 	TooltipExtras:
 		Strengths: + Increases unit firepower by a further 5%
+		-Attributes:
 	RenderSprites:
 		Image: bombard2.strat
 
@@ -74,7 +75,7 @@ seek.strat:
 		Description: Speed and weapon range focused strategy.
 	TooltipExtras:
 		Strengths: + Increases unit speed and weapon range by 5%
-		Attributes: • Only one Strategy may be chosen.
+		Attributes: \n(!) Only ONE Strategy may be chosen.
 	Valued:
 		Cost: 1500
 	RenderSprites:
@@ -90,6 +91,7 @@ seek2.strat:
 		Description: Increase Seek & Destroy strategy bonuses.
 	TooltipExtras:
 		Strengths: + Increases unit speed and weapon range by a further 5%
+		-Attributes:
 	RenderSprites:
 		Image: seek2.strat
 
@@ -105,7 +107,7 @@ hold.strat:
 		Description: Defensive strategy.
 	TooltipExtras:
 		Strengths: + Increases unit armor by 5%
-		Attributes: • Only one Strategy may be chosen.
+		Attributes: \n(!) Only ONE Strategy may be chosen.
 	Valued:
 		Cost: 1500
 	RenderSprites:
@@ -121,6 +123,7 @@ hold2.strat:
 		Description: Increase Hold the Line strategy bonuses.
 	TooltipExtras:
 		Strengths: + Increases unit armor by a further 5%
+		-Attributes:
 	RenderSprites:
 		Image: hold2.strat
 
@@ -214,10 +217,10 @@ tow.upgrade:
 		BuildPaletteOrder: 45
 		Prerequisites: ~gtek, ~seek.strat, ~techlevel.high
 		BuildDuration: 1500
-		IconPalette: chrometd
-		Description: Upgrades Hum-Vees and Guardian Drones with TOW missile launchers.\n\nUpgrades: Hum-Vee\nUpgrades: Guardian Drone
+		Description: Hum-Vees and Guardian Drones will be produced\n  with TOW missile launchers.\n\nReplaces: Hum-Vee\nReplaces: Guardian Drone
 	TooltipExtras:
-		Strengths: + Added TOW missile launcher
+		Strengths: + Added TOW missile launcher (strong vs Heavy Armor)
+		Weaknesses: – Increased cost
 	Valued:
 		Cost: 1000
 	RenderSprites:
