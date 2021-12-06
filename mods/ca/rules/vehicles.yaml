@@ -124,13 +124,11 @@ KATY:
 	Mobile:
 		Locomotor: Amphibious
 		Speed: 95
-	GrantConditionOnTerrain:
+	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
-	Targetable:
-		RequiresCondition: !onwater && !parachute && !being-warped
 	Targetable@WATER:
-		TargetTypes: Ground, Vehicle, Water, Ship
+		TargetTypes: Water, Ship
 		RequiresCondition: onwater && (!parachute && !being-warped)
 	WithFacingSpriteBody:
 		RequiresCondition: !onwater
@@ -2848,13 +2846,11 @@ LTNK:
 	Mobile:
 		Locomotor: Amphibious
 		Speed: 90
-	GrantConditionOnTerrain:
+	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
-	Targetable:
-		RequiresCondition: !onwater && !parachute && !being-warped
 	Targetable@WATER:
-		TargetTypes: Ground, Vehicle, Water, Ship
+		TargetTypes: Water, Ship
 		RequiresCondition: onwater && (!parachute && !being-warped)
 	WithFacingSpriteBody:
 		RequiresCondition: !onwater || parachute
@@ -3259,11 +3255,14 @@ HTNK.Hover:
 	Hovers:
 		BobDistance: -35
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
-	GrantConditionOnTerrain:
+	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
 	KillsSelf@SINK:
 		RequiresCondition: onwater && (empdisable || driver-dead)
+	Targetable@ONWATER:
+		TargetTypes: Water, Ship
+		RequiresCondition: onwater
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
@@ -4965,11 +4964,6 @@ HSAM:
 	Hovers:
 		BobDistance: -35
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
-	GrantConditionOnTerrain:
-		TerrainTypes: Water
-		Condition: onwater
-	KillsSelf@SINK:
-		RequiresCondition: onwater && (empdisable || driver-dead)
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
@@ -5038,6 +5032,14 @@ HSAM:
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hailstorm-upgrade
+	GrantConditionOnTerrain@ONWATER:
+		TerrainTypes: Water
+		Condition: onwater
+	KillsSelf@SINK:
+		RequiresCondition: onwater && (empdisable || driver-dead)
+	Targetable@ONWATER:
+		TargetTypes: Water, Ship
+		RequiresCondition: onwater
 
 RTNK:
 	Inherits: ^Tank
