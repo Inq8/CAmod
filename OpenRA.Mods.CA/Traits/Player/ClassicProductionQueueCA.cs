@@ -10,6 +10,7 @@
 #endregion
 
 using System.Linq;
+using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
 
 namespace OpenRA.Mods.CA.Traits
@@ -39,7 +40,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (developerMode.FastBuild)
 				return 0;
 
-			var time = base.GetBuildTime(unit, bi);
+			var time = GetBaseBuildTime(unit, bi);
 
 			if (Info.SpeedUp)
 			{
@@ -53,6 +54,24 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			return time;
+		}
+
+		// copied from ProductionQueue to bypass ClassicProductionQueue.GetBuildTime()
+		public virtual int GetBaseBuildTime(ActorInfo unit, BuildableInfo bi)
+		{
+			if (developerMode.FastBuild)
+				return 0;
+
+			var time = bi.BuildDuration;
+			if (time == -1)
+				time = GetProductionCost(unit);
+
+			var modifiers = unit.TraitInfos<IProductionTimeModifierInfo>()
+				.Select(t => t.GetProductionTimeModifier(techTree, Info.Type))
+				.Append(bi.BuildDurationModifier)
+				.Append(Info.BuildDurationModifier);
+
+			return Util.ApplyPercentageModifiers(time, modifiers);
 		}
 	}
 }

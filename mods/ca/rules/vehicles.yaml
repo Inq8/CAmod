@@ -615,6 +615,14 @@ GTNK.squad:
 	GrantConditionOnPrerequisite@LASHER:
 		Condition: lasher-upgrade
 		Prerequisites: lasher.upgrade
+	GrantCondition@IRAQ:
+		Condition: iraqtank-upgrade
+		RequiresCondition: iraqtank-upgrade
+		GrantPermanently: true
+	GrantCondition@LASHER:
+		Condition: lasher-upgrade
+		RequiresCondition: lasher-upgrade
+		GrantPermanently: true
 	SpeedMultiplier@CRUSHATTEMPTSLOW:
 		RequiresCondition: crush-attempt-slow && !crush-slow && !lasher-upgrade
 	SpeedMultiplier@CRUSHSLOW:
@@ -679,6 +687,8 @@ GTNK.squad:
 	-GrantConditionOnMovement@LASHER:
 	-GrantConditionOnPrerequisite@IRAQ:
 	-GrantConditionOnPrerequisite@LASHER:
+	-GrantCondition@IRAQ:
+	-GrantCondition@LASHER:
 	SpeedMultiplier@CRUSHATTEMPTSLOW:
 		RequiresCondition: crush-attempt-slow && !crush-slow
 	SpeedMultiplier@CRUSHSLOW:
@@ -741,6 +751,8 @@ GTNK.squad:
 	-Explodes@IRAQTANK:
 	-GrantConditionOnPrerequisite@IRAQ:
 	-GrantConditionOnPrerequisite@LASHER:
+	-GrantCondition@IRAQ:
+	-GrantCondition@LASHER:
 	-ThrowsShrapnel@small:
 	Voiced:
 		VoiceSet: LasherTankVoice
@@ -850,6 +862,10 @@ GTNK.squad:
 	GrantConditionOnPrerequisite@IRAQ:
 		Condition: iraqtank-upgrade
 		Prerequisites: iraqtank.upgrade
+	GrantCondition@IRAQ:
+		Condition: iraqtank-upgrade
+		RequiresCondition: iraqtank-upgrade
+		GrantPermanently: true
 
 4TNK.IRAQ:
 	Inherits: 4TNK
@@ -882,6 +898,7 @@ GTNK.squad:
 	-WithFacingSpriteBody@IRAQ:
 	-WithSpriteTurret@UPG:
 	-GrantConditionOnPrerequisite@IRAQ:
+	-GrantCondition@IRAQ:
 
 ARTY:
 	Inherits: ^Vehicle
@@ -2176,7 +2193,7 @@ HMMV:
 		Queue: Vehicle
 		BuildPaletteOrder: 22
 		IconPalette: chrometd
-		Prerequisites: ~vehicles.hmmv, ~techlevel.low
+		Prerequisites: ~vehicles.hmmv, ~!tow.upgrade, ~techlevel.low
 		Description: Fast scout & anti-infantry vehicle.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -2208,16 +2225,10 @@ HMMV:
 		Weapon: M60mgTD
 		LocalOffset: 171,0,85
 		MuzzleSequence: muzzle
-	Armament@SECONDARY:
-		Name: secondary
-		Weapon: TOW
-		LocalOffset: 250,100,150
-		RequiresCondition: tow-upgrade
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
-		RequiresCondition: !tow-upgrade
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
@@ -2225,12 +2236,29 @@ HMMV:
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
-	WithSpriteTurret@TOW:
+
+HMMV.TOW:
+	Inherits: HMMV
+	RenderSprites:
+		Image: hmmv
+	Buildable:
+		Description: Fast scout & anti-infantry vehicle\n  with anti-tank missile launcher.
+		Prerequisites: ~vehicles.hmmv, ~tow.upgrade, ~techlevel.low
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: TOW Hum-Vee
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor, Heavy Armor
+		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
+	Selectable:
+		Class: hmmv
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: TOW
+		LocalOffset: 250,100,150
+	WithSpriteTurret:
 		Sequence: turrettow
-		RequiresCondition: tow-upgrade
-	GrantConditionOnPrerequisite@TOW:
-		Condition: tow-upgrade
-		Prerequisites: tow.upgrade
 
 GDRN:
 	Inherits: ^Vehicle
@@ -2242,7 +2270,7 @@ GDRN:
 		Queue: Vehicle
 		BuildPaletteOrder: 22
 		IconPalette: chrome
-		Prerequisites: ~vehicles.arc, ~techlevel.low
+		Prerequisites: ~vehicles.arc, ~!tow.upgrade, ~techlevel.low
 		Description: Fast scout & anti-tank drone.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Buildings
@@ -2276,17 +2304,11 @@ GDRN:
 		Weapon: GuardianDroneGun
 		LocalOffset: 500,0,200
 		MuzzleSequence: muzzle
-	Armament@SECONDARY:
-		Name: secondary
-		Weapon: TOW
-		LocalOffset: 200,-150,250
-		RequiresCondition: tow-upgrade
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
 	WithMuzzleOverlay:
 	WithSpriteTurret:
-		RequiresCondition: !tow-upgrade
 	Voiced:
 		VoiceSet: RobotTankVoice
 	Targetable:
@@ -2296,12 +2318,6 @@ GDRN:
 		Range: 6c0
 		CloakTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
-	WithSpriteTurret@TOW:
-		Sequence: turrettow
-		RequiresCondition: tow-upgrade
-	GrantConditionOnPrerequisite@TOW:
-		Condition: tow-upgrade
-		Prerequisites: tow.upgrade
 	GrantConditionOnDeploy@GSHIELD:
 		DeployedCondition: gshield
 		RequiresCondition: gshield-upgrade && (ammo || gshield)
@@ -2333,6 +2349,25 @@ GDRN:
 		ShowSelectionBar: true
 		SelectionBarColor: 00ffff
 		RequiresCondition: !gshield
+
+GDRN.TOW:
+	Inherits: GDRN
+	RenderSprites:
+		Image: gdrn
+	Buildable:
+		Prerequisites: ~vehicles.arc, ~tow.upgrade, ~techlevel.low
+	Valued:
+		Cost: 550
+	Tooltip:
+		Name: TOW Guardian Drone
+	Selectable:
+		Class: gdrn
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: TOW
+		LocalOffset: 200,-150,250
+	WithSpriteTurret:
+		Sequence: turrettow
 
 BGGY:
 	Inherits: ^VehicleTD
@@ -2564,6 +2599,10 @@ APC2:
 	GrantConditionOnPrerequisite@VULCAN:
 		Condition: vulcan-upgrade
 		Prerequisites: vulcan.upgrade
+	GrantCondition@VULCAN:
+		Condition: vulcan-upgrade
+		RequiresCondition: vulcan-upgrade
+		GrantPermanently: true
 	Berserkable@UPGRADING:
 		RequiresCondition: upgrading
 	GrantTimedCondition@UPGRADING:
@@ -4537,7 +4576,7 @@ XO:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 25000
+		HP: 30000
 	Armor:
 		Type: Light
 	Mobile:
@@ -6153,6 +6192,10 @@ APOC:
 	GrantConditionOnPrerequisite@IRAQ:
 		Condition: iraqtank-upgrade
 		Prerequisites: iraqtank.upgrade
+	GrantCondition@IRAQ:
+		Condition: iraqtank-upgrade
+		RequiresCondition: iraqtank-upgrade
+		GrantPermanently: true
 	SpeedMultiplier@IRAQTANK:
 		Modifier: 125
 		RequiresCondition: iraqtank-upgrade
@@ -6184,6 +6227,7 @@ APOC.IRAQ:
 	-WithFacingSpriteBody@IRAQ:
 	-SpawnActorOnDeath:
 	-GrantConditionOnPrerequisite@IRAQ:
+	-GrantCondition@IRAQ:
 	SpeedMultiplier@IRAQTANK:
 		-RequiresCondition:
 	Explodes@IRAQTANK:
