@@ -1084,6 +1084,7 @@ BikeRockets.TibCore:
 	Inherits: BikeRockets
 	Range: 5c512
 	Projectile: MissileCA
+		Speed: 266
 		Image: tibcoremsl
 		ContrailLength: 15
 		ContrailColor: 33aa00aa
@@ -1106,6 +1107,7 @@ BikeRocketsAA.TibCore:
 	Inherits: BikeRocketsAA
 	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
 	Projectile: MissileCA
+		Speed: 357
 		Image: tibcoremsl
 		ContrailLength: 15
 		ContrailColor: 33aa00aa
@@ -1381,7 +1383,7 @@ StnkMissile:
 StnkMissileAA:
 	Inherits: ^AntiAirMissile
 	ReloadDelay: 70
-	Range: 7c0
+	Range: 7c512
 	Report: rocket1.aud
 	Burst: 2
 	BurstDelays: 4
@@ -1389,7 +1391,7 @@ StnkMissileAA:
 		Arm: 0
 		Inaccuracy: 213
 		HorizontalRateOfTurn: 40
-		Speed: 283
+		Speed: 298
 		RangeLimit: 9c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 4000
@@ -1405,6 +1407,7 @@ StnkMissile.TibCore:
 	BurstDelays: 4, 7, 4
 	Range: 6c0
 	Projectile: MissileCA
+		Speed: 266
 		Image: tibcoremsl
 		ContrailLength: 15
 		ContrailColor: 33aa00aa
@@ -1412,7 +1415,7 @@ StnkMissile.TibCore:
 		RangeLimit: 8c0
 	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 3700
+		Damage: 3850
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: tibcorehit1.aud, tibcorehit2.aud, tibcorehit3.aud
 	Warhead@tib: CreateEffect
@@ -1427,16 +1430,16 @@ StnkMissileAA.TibCore:
 	Burst: 4
 	BurstDelays: 4, 7, 4
 	Projectile: MissileCA
+		Speed: 357
 		Image: tibcoremsl
 		ContrailLength: 15
 		ContrailColor: 33aa00aa
 		ContrailWidth: 0c40
-		Speed: 316
 	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 2700
+		Damage: 2800
 	Warhead@2Dam: SpreadDamage
-		Damage: 2700
+		Damage: 2800
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: tibcorehit1.aud, tibcorehit2.aud, tibcorehit3.aud
 	Warhead@tib: CreateEffect
@@ -1499,7 +1502,7 @@ Rah66AG:
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
 		Damage: 800
-		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		Falloff: 1000, 384, 256, 128, 32, 8, 0
 		Versus:
 			None: 85
 			Wood: 60
