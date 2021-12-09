@@ -2288,7 +2288,6 @@ GDRN:
 		TurnSpeed: 40
 		Speed: 108
 		Voice: Move
-		PauseOnCondition: gshield || being-captured || empdisable || being-warped || driver-dead || notmobile
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 7c0
@@ -2303,7 +2302,7 @@ GDRN:
 		LocalOffset: 500,0,200
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: gshield || empdisable || being-warped
 		Voice: Attack
 	WithMuzzleOverlay:
 	WithSpriteTurret:
@@ -2330,7 +2329,7 @@ GDRN:
 		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
 	DamageMultiplier@NSHIELD:
 		RequiresCondition: nshield || gshield
-		Modifier: 50
+		Modifier: 60
 	PeriodicExplosion@GSHIELD:
 		Weapon: GuardianShieldUse
 		RequiresCondition: gshield && ammo
@@ -2342,7 +2341,7 @@ GDRN:
 		AmmoCondition: ammo
 	ReloadAmmoPoolCA@GSHIELD:
 		AmmoPool: gshield
-		Delay: 200
+		Delay: 250
 		Count: 1
 		ShowSelectionBar: true
 		SelectionBarColor: 00ffff
