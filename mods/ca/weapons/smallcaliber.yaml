@@ -678,7 +678,7 @@ SMGE:
 MP5:
 	Inherits: ^SnipeWeapon
 	Report: iseaatta.aud, iseaattb.aud
-	ReloadDelay: 12
+	ReloadDelay: 10
 	Range: 6c0
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
@@ -823,26 +823,15 @@ SniperIFVGun:
 
 CommandoIFVGun:
 	Inherits: SMG
-	ReloadDelay: 15
+	ReloadDelay: 10
 	Burst: 3
 	BurstDelays: 2
 	Warhead@1Dam: SpreadDamage
-		Damage: 5100
+		Damage: 4700
 
 SealIFVGun:
 	Inherits: MP5
-	-Report:
-	StartBurstReport: iseaatta.aud, iseaattb.aud
-	ReloadDelay: 15
-	Burst: 3
-	BurstDelays: 2
-	Warhead@1Dam: SpreadDamage
-		-Spread:
-		Damage: 5100
-	Warhead@2Eff: CreateEffect
-		Explosions: piff
-	Warhead@3EffWater: CreateEffect
-		Explosions: water_piff
+	ReloadDelay: 8
 
 ShadowOperativeGun:
 	Inherits: ^HeavyMG
