@@ -22,11 +22,13 @@ ScrinSquads = {
 	{"s1", "s1", "s1", "s2", "gscr"},
 	{"s1", "s1", "s1", "s3", "gscr"},
 	{"s1", "s1", "s1", "s4", "gscr"},
+    {"s1", "s1", "s1", "feed2", "gscr"},
 	{"gscr", "gscr", "gscr"},
 	{"s4", "s4", "s4"},
 	{"s1", "s1", "s1", "s1", "s1"},
 	{"s2", "s2", "s2"},
 	{"s3", "s3", "s1", "s1"},
+    {"feed2", "feed2", "s1", "s1"},
 }
 
 GetCommandosAlive = function()
