@@ -180,15 +180,6 @@ namespace OpenRA.Mods.CA.Traits
 		}
 
 		// Use for proactive targeting.
-		public bool IsEnemyBuildingClose(Actor a)
-		{
-			if (a == null || a.IsDead || player.RelationshipWith(a.Owner) != PlayerRelationship.Enemy || !a.Info.HasTraitInfo<BuildingInfo>())
-				return false;
-
-			var targetTypes = a.GetEnabledTargetTypes();
-			return !targetTypes.IsEmpty && !targetTypes.Overlaps(Info.IgnoredEnemyBuildingTargetTypes);
-		}
-
 		public bool IsEnemyGroundUnit(Actor a)
 		{
 			if (a == null || a.IsDead || player.RelationshipWith(a.Owner) != PlayerRelationship.Enemy || a.Info.HasTraitInfo<HuskInfo>() || a.Info.HasTraitInfo<AircraftInfo>() || a.Info.HasTraitInfo<CarrierSlaveInfo>())
@@ -254,17 +245,6 @@ namespace OpenRA.Mods.CA.Traits
 				b.Tick(bot);
 		}
 
-		internal Actor FindClosestEnemyBuilding(WPos pos)
-		{
-			var units = world.Actors.Where(IsEnemyBuildingClose);
-			return units.ClosestTo(pos);
-		}
-
-		internal Actor FindClosestEnemyBuilding(WPos pos, WDist radius)
-		{
-			return world.FindActorsInCircle(pos, radius).Where(a => IsEnemyBuildingClose(a)).ClosestTo(pos);
-		}
-
 		void IBotRespondToAttack.RespondToAttack(IBot bot, Actor self, AttackInfo e)
 		{
 			if (e.Attacker == null || e.Attacker.Disposed)
@@ -279,24 +259,47 @@ namespace OpenRA.Mods.CA.Traits
 			if (!self.Info.HasTraitInfo<BuildingInfo>())
 				return;
 
-			if (self.Info.HasTraitInfo<SellableInfo>() && !Info.DefenseTypes.Contains(self.Info.Name))
-			{
-				var nearest = FindClosestEnemyBuilding(self.CenterPosition);
+			var health = self.TraitOrDefault<Health>();
 
-				// Sell if too close to enemy structures & enemies outnumber ally ground units
-				if ((nearest.Location - self.Location).LengthSquared < (Info.MaxBaseRadius * Info.MaxBaseRadius / 2))
-				{
+			if ((self.Info.HasTraitInfo<SellableInfo>() && !Info.DefenseTypes.Contains(self.Info.Name)) && (health.DamageState == DamageState.Medium || health.DamageState == DamageState.Heavy || health.DamageState == DamageState.Critical))
+			{
 					var enemyUnits = self.World.FindActorsInCircle(self.CenterPosition, WDist.FromCells(Info.SellScanRadius)).Where(IsEnemyGroundUnit).ToList();
 					var allyUnits = self.World.FindActorsInCircle(self.CenterPosition, WDist.FromCells(Info.SellScanRadius)).Where(IsAllyGroundUnit).ToList();
 
-					if (enemyUnits.Count >= allyUnits.Count * 2)
+					if (enemyUnits.Count > 5 && enemyUnits.Count >= allyUnits.Count * 2)
 					{
-						bot.QueueOrder(new Order("Sell", self, Target.FromActor(self), false)
-						{
-							SuppressVisualFeedback = true
-						});
-						AIUtils.BotDebug("AI ({0}): Decided to sell {1}", player.ClientIndex, self);
-						return;
+						if (Info.ConstructionYardTypes.Contains(self.Info.Name) && AIUtils.CountBuildingByCommonName(Info.ConstructionYardTypes, player) <= 1)
+							{
+							foreach (var n in positionsUpdatedModules)
+							n.UpdatedDefenseCenter(e.Attacker.Location);
+							return;
+							}
+							else
+							{
+							if (Info.BarracksTypes.Contains(self.Info.Name) && AIUtils.CountBuildingByCommonName(Info.BarracksTypes, player) <= 1)
+							{
+							foreach (var n in positionsUpdatedModules)
+								n.UpdatedDefenseCenter(e.Attacker.Location);
+							return;
+							}
+							else
+							{
+							if (Info.VehiclesFactoryTypes.Contains(self.Info.Name) && AIUtils.CountBuildingByCommonName(Info.VehiclesFactoryTypes, player) <= 1)
+							{
+							foreach (var n in positionsUpdatedModules)
+									n.UpdatedDefenseCenter(e.Attacker.Location);
+							return;
+							}
+							else
+							{
+								bot.QueueOrder(new Order("Sell", self, Target.FromActor(self), false)
+								{
+									SuppressVisualFeedback = true
+								});
+								AIUtils.BotDebug("AI ({0}): Decided to sell {1}", player.ClientIndex, self);
+								return;
+							}
+						}
 					}
 				}
 			}
