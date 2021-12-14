@@ -681,12 +681,10 @@ ICBM:
 		Weapon: V3ExplodeAirborne
 		RequiresCondition: airborne
 
-CARR:
+CV:
 	Inherits: ^Ship
 	Inherits@AUTOTARGET: ^AutoTargetNavalAssaultMove
 	Inherits@BERSERK: ^Berserk
-	RenderSprites:
-		Image: cv
 	Buildable:
 		Queue: Ship
 		BuildPaletteOrder: 60
@@ -730,7 +728,7 @@ CARR:
 		RespawnTicks: 500
 		InstantRepair: true
 		SlaveDisposalOnKill: KillSlaves
-		SpawnAllAtOnce: false
+		SpawnAllAtOnce: true
 		RequiresCondition: !empdisable && !being-warped
 	WithSpawnerMasterPipsDecoration:
 		Position: BottomLeft

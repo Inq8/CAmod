@@ -2468,7 +2468,7 @@ HORN:
 		TakeoffSounds: mtoff1.aud, mtoff2.aud
 		LandingSounds: mland1.aud, mland2.aud
 	Rearmable:
-		RearmActors: carr
+		RearmActors: cv
 	AmmoPool:
 		Ammo: 6
 		AmmoCondition: ammo
@@ -2502,6 +2502,9 @@ HORN:
 	DetectCloaked:
 		CloakTypes: Underwater
 		Range: 6c0
+	Targetable@AIRBORNE:
+		RequiresCondition: airborne
+		TargetTypes: ICBM
 
 YF23.Bomber:
 	Inherits: ^PlaneTD
