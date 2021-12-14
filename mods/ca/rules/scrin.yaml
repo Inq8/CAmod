@@ -555,7 +555,6 @@ GSCR.Mutating:
 MAST:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	AutoTargetPriority@DEFAULT:
 		RequiresCondition: mindcontrolling < 3 && !stance-attackanything && !assault-move
@@ -764,11 +763,6 @@ SEEK:
 	Hovers:
 		BobDistance: -25
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
-	GrantConditionOnTerrain:
-		TerrainTypes: Water
-		Condition: onwater
-	KillsSelf@SINK:
-		RequiresCondition: onwater && (empdisable || driver-dead)
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
@@ -787,7 +781,15 @@ SEEK:
 		Prerequisites: vehicles.upgraded
 	SpawnActorOnDeath:
 		Actor: SEEK.Husk
-		RequiresCondition: !being-warped
+		RequiresCondition: !onwater && !being-warped
+	GrantConditionOnTerrain@ONWATER:
+		TerrainTypes: Water
+		Condition: onwater
+	KillsSelf@SINK:
+		RequiresCondition: onwater && (empdisable || driver-dead)
+	Targetable@ONWATER:
+		TargetTypes: Water, Ship
+		RequiresCondition: onwater
 
 LACE:
 	Inherits: ^Vehicle
@@ -856,6 +858,14 @@ LACE:
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	GrantConditionOnTerrain@ONWATER:
+		TerrainTypes: Water
+		Condition: onwater
+	KillsSelf@SINK:
+		RequiresCondition: onwater && (empdisable || driver-dead)
+	Targetable@ONWATER:
+		TargetTypes: Water, Ship
+		RequiresCondition: onwater
 
 INTL:
 	Inherits: ^Vehicle
@@ -935,6 +945,14 @@ INTL:
 		PauseOnCondition: empdisable || being-warped
 		Armaments: primary
 	WithSpriteTurret:
+	GrantConditionOnTerrain@ONWATER:
+		TerrainTypes: Water
+		Condition: onwater
+	KillsSelf@SINK:
+		RequiresCondition: onwater && (empdisable || driver-dead)
+	Targetable@ONWATER:
+		TargetTypes: Water, Ship
+		RequiresCondition: onwater
 
 INTL.AI:
 	Inherits: INTL
@@ -1059,7 +1077,7 @@ LCHR:
 	WithMoveAnimation:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 	ConvertsDamageToHealth:
-		DamagePercentConverted: 20
+		DamagePercentConverted: 25
 	Explodes:
 		Weapon: LeecherExplode
 		EmptyWeapon: LeecherExplode
@@ -1217,6 +1235,14 @@ DEVO:
 	ProductionCostMultiplier@REAPBONUS:
 		Multiplier: 90
 		Prerequisites: vehicles.reaper
+	GrantConditionOnTerrain@ONWATER:
+		TerrainTypes: Water
+		Condition: onwater
+	KillsSelf@SINK:
+		RequiresCondition: onwater && (empdisable || driver-dead)
+	Targetable@ONWATER:
+		TargetTypes: Water, Ship
+		RequiresCondition: onwater
 
 DARK:
 	Inherits: ^Vehicle
@@ -1278,6 +1304,14 @@ DARK:
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
+	GrantConditionOnTerrain@ONWATER:
+		TerrainTypes: Water
+		Condition: onwater
+	KillsSelf@SINK:
+		RequiresCondition: onwater && (empdisable || driver-dead)
+	Targetable@ONWATER:
+		TargetTypes: Water, Ship
+		RequiresCondition: onwater
 
 RUIN:
 	Inherits: ^Vehicle
@@ -1368,6 +1402,14 @@ RUIN:
 		RevokeDelay: 175
 	GrantConditionOnAttack@PRIMARYCHARGED:
 		RevokeDelay: 175
+	GrantConditionOnTerrain@ONWATER:
+		TerrainTypes: Water
+		Condition: onwater
+	KillsSelf@SINK:
+		RequiresCondition: onwater && (empdisable || driver-dead)
+	Targetable@ONWATER:
+		TargetTypes: Water, Ship
+		RequiresCondition: onwater
 
 ATMZ:
 	Inherits: ^Vehicle
@@ -1428,6 +1470,14 @@ ATMZ:
 	WithSpriteTurret:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	GrantConditionOnTerrain@ONWATER:
+		TerrainTypes: Water
+		Condition: onwater
+	KillsSelf@SINK:
+		RequiresCondition: onwater && (empdisable || driver-dead)
+	Targetable@ONWATER:
+		TargetTypes: Water, Ship
+		RequiresCondition: onwater
 
 TPOD:
 	Inherits: ^Tank

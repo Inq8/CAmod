@@ -204,13 +204,27 @@ S4:
 	Mobile:
 		Speed: 43
 
-FEED:
-	AutoTarget:
-		ScanRadius: 7
-	RevealsShroud:
-		Range: 7c0
+FEED2:
+	Inherits: S1
+	RenderSprites:
+		Image: feed
 	ConvertsDamageToHealth:
 		DamagePercentConverted: 300
+	WithInfantryBody:
+		DefaultAttackSequence: harvest
+	Armament@PRIMARY:
+		Weapon: LeecherBeam
+		LocalOffset: 150,0,200
+		-MuzzleSequence:
+	-Armament@Garrison:
+	QuantizeFacingsFromSequence:
+		Sequence: idle
+	WithInfantryBody:
+		MoveSequence: move
+		StandSequences: idle
+	WithInfantryBody@Warped:
+		MoveSequence: move
+		StandSequences: idle
 
 GSCR:
 	AutoTarget:

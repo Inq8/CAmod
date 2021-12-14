@@ -124,13 +124,11 @@ KATY:
 	Mobile:
 		Locomotor: Amphibious
 		Speed: 95
-	GrantConditionOnTerrain:
+	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
-	Targetable:
-		RequiresCondition: !onwater && !parachute && !being-warped
 	Targetable@WATER:
-		TargetTypes: Ground, Vehicle, Water, Ship
+		TargetTypes: Water, Ship
 		RequiresCondition: onwater && (!parachute && !being-warped)
 	WithFacingSpriteBody:
 		RequiresCondition: !onwater
@@ -2290,7 +2288,6 @@ GDRN:
 		TurnSpeed: 40
 		Speed: 108
 		Voice: Move
-		PauseOnCondition: gshield || being-captured || empdisable || being-warped || driver-dead || notmobile
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 7c0
@@ -2305,7 +2302,7 @@ GDRN:
 		LocalOffset: 500,0,200
 		MuzzleSequence: muzzle
 	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: gshield || empdisable || being-warped
 		Voice: Attack
 	WithMuzzleOverlay:
 	WithSpriteTurret:
@@ -2332,7 +2329,7 @@ GDRN:
 		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
 	DamageMultiplier@NSHIELD:
 		RequiresCondition: nshield || gshield
-		Modifier: 50
+		Modifier: 60
 	PeriodicExplosion@GSHIELD:
 		Weapon: GuardianShieldUse
 		RequiresCondition: gshield && ammo
@@ -2344,7 +2341,7 @@ GDRN:
 		AmmoCondition: ammo
 	ReloadAmmoPoolCA@GSHIELD:
 		AmmoPool: gshield
-		Delay: 200
+		Delay: 250
 		Count: 1
 		ShowSelectionBar: true
 		SelectionBarColor: 00ffff
@@ -2848,13 +2845,11 @@ LTNK:
 	Mobile:
 		Locomotor: Amphibious
 		Speed: 90
-	GrantConditionOnTerrain:
+	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
-	Targetable:
-		RequiresCondition: !onwater && !parachute && !being-warped
 	Targetable@WATER:
-		TargetTypes: Ground, Vehicle, Water, Ship
+		TargetTypes: Water, Ship
 		RequiresCondition: onwater && (!parachute && !being-warped)
 	WithFacingSpriteBody:
 		RequiresCondition: !onwater || parachute
@@ -3045,7 +3040,7 @@ MDRN:
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
 		Attributes: • Attaches to vehicles to provide support and repairs
 	Valued:
-		Cost: 300
+		Cost: 200
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Selectable:
@@ -3259,11 +3254,14 @@ HTNK.Hover:
 	Hovers:
 		BobDistance: -35
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
-	GrantConditionOnTerrain:
+	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
 	KillsSelf@SINK:
 		RequiresCondition: onwater && (empdisable || driver-dead)
+	Targetable@ONWATER:
+		TargetTypes: Water, Ship
+		RequiresCondition: onwater
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
@@ -3539,8 +3537,8 @@ STNK.Nod:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Cloak@NORMAL:
-		InitialDelay: 90
-		CloakDelay: 90
+		InitialDelay: 75
+		CloakDelay: 75
 		CloakSound: trans1.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1.aud
@@ -4965,11 +4963,6 @@ HSAM:
 	Hovers:
 		BobDistance: -35
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
-	GrantConditionOnTerrain:
-		TerrainTypes: Water
-		Condition: onwater
-	KillsSelf@SINK:
-		RequiresCondition: onwater && (empdisable || driver-dead)
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
@@ -5038,6 +5031,14 @@ HSAM:
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hailstorm-upgrade
+	GrantConditionOnTerrain@ONWATER:
+		TerrainTypes: Water
+		Condition: onwater
+	KillsSelf@SINK:
+		RequiresCondition: onwater && (empdisable || driver-dead)
+	Targetable@ONWATER:
+		TargetTypes: Water, Ship
+		RequiresCondition: onwater
 
 RTNK:
 	Inherits: ^Tank
