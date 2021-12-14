@@ -1185,7 +1185,7 @@ SAPC:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 108
+		Speed: 90
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 	RevealsShroud:
 		MinRange: 4c0
@@ -1231,6 +1231,10 @@ SAPC:
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: ReturnFire
+	GrantTimedConditionOnCargoAction:
+		Condition: cloak-force-disabled
+		Actions: Load
+		Duration: 30
 
 SAPC.AI:
 	Inherits: SAPC
@@ -2839,7 +2843,7 @@ LTNK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 41250
+		HP: 39000
 	Armor:
 		Type: Heavy
 	Mobile:
