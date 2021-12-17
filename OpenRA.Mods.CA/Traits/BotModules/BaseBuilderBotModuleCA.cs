@@ -169,6 +169,7 @@ namespace OpenRA.Mods.CA.Traits
 		BitArray resourceTypeIndices;
 		CPos initialBaseCenter;
 		CPos defenseCenter;
+		int attacksUntilResponse;
 
 		List<BaseBuilderQueueManagerCA> builders = new List<BaseBuilderQueueManagerCA>();
 
@@ -207,6 +208,7 @@ namespace OpenRA.Mods.CA.Traits
 			playerPower = self.TraitOrDefault<PowerManager>();
 			playerResources = self.Trait<PlayerResources>();
 			positionsUpdatedModules = self.TraitsImplementing<IBotPositionsUpdated>().ToArray();
+			attacksUntilResponse = 0;
 		}
 
 		protected override void TraitEnabled(Actor self)
@@ -259,54 +261,59 @@ namespace OpenRA.Mods.CA.Traits
 			if (!self.Info.HasTraitInfo<BuildingInfo>())
 				return;
 
-			var health = self.TraitOrDefault<Health>();
+			if (--attacksUntilResponse > 0)
+				return;
 
-			if ((self.Info.HasTraitInfo<SellableInfo>() && !Info.DefenseTypes.Contains(self.Info.Name)) && (health.DamageState == DamageState.Medium || health.DamageState == DamageState.Heavy || health.DamageState == DamageState.Critical))
+			attacksUntilResponse = 10;
+
+			if (ShouldSell(self))
 			{
-					var enemyUnits = self.World.FindActorsInCircle(self.CenterPosition, WDist.FromCells(Info.SellScanRadius)).Where(IsEnemyGroundUnit).ToList();
-					var allyUnits = self.World.FindActorsInCircle(self.CenterPosition, WDist.FromCells(Info.SellScanRadius)).Where(IsAllyGroundUnit).ToList();
-
-					if (enemyUnits.Count > 5 && enemyUnits.Count >= allyUnits.Count * 2)
-					{
-						if (Info.ConstructionYardTypes.Contains(self.Info.Name) && AIUtils.CountBuildingByCommonName(Info.ConstructionYardTypes, player) <= 1)
-							{
-							foreach (var n in positionsUpdatedModules)
-							n.UpdatedDefenseCenter(e.Attacker.Location);
-							return;
-							}
-							else
-							{
-							if (Info.BarracksTypes.Contains(self.Info.Name) && AIUtils.CountBuildingByCommonName(Info.BarracksTypes, player) <= 1)
-							{
-							foreach (var n in positionsUpdatedModules)
-								n.UpdatedDefenseCenter(e.Attacker.Location);
-							return;
-							}
-							else
-							{
-							if (Info.VehiclesFactoryTypes.Contains(self.Info.Name) && AIUtils.CountBuildingByCommonName(Info.VehiclesFactoryTypes, player) <= 1)
-							{
-							foreach (var n in positionsUpdatedModules)
-									n.UpdatedDefenseCenter(e.Attacker.Location);
-							return;
-							}
-							else
-							{
-								bot.QueueOrder(new Order("Sell", self, Target.FromActor(self), false)
-								{
-									SuppressVisualFeedback = true
-								});
-								AIUtils.BotDebug("AI ({0}): Decided to sell {1}", player.ClientIndex, self);
-								return;
-							}
-						}
-					}
-				}
+				bot.QueueOrder(new Order("Sell", self, Target.FromActor(self), false)
+				{
+					SuppressVisualFeedback = true
+				});
+				AIUtils.BotDebug("AI ({0}): Decided to sell {1}", player.ClientIndex, self);
+				return;
 			}
 
 			// Protect buildings not suitable for selling
 			foreach (var n in positionsUpdatedModules)
 				n.UpdatedDefenseCenter(e.Attacker.Location);
+		}
+
+		bool ShouldSell(Actor self)
+		{
+			if (!self.Info.HasTraitInfo<SellableInfo>())
+				return false;
+
+			if (Info.DefenseTypes.Contains(self.Info.Name))
+				return false;
+
+			var health = self.TraitOrDefault<Health>();
+
+			if (health == null || health.DamageState < DamageState.Medium)
+				return false;
+
+			if (Info.ConstructionYardTypes.Contains(self.Info.Name) && AIUtils.CountBuildingByCommonName(Info.ConstructionYardTypes, player) <= 1)
+				return false;
+
+			if (Info.BarracksTypes.Contains(self.Info.Name) && AIUtils.CountBuildingByCommonName(Info.BarracksTypes, player) <= 1)
+				return false;
+
+			if (Info.VehiclesFactoryTypes.Contains(self.Info.Name) && AIUtils.CountBuildingByCommonName(Info.VehiclesFactoryTypes, player) <= 1)
+				return false;
+
+			var enemyUnits = self.World.FindActorsInCircle(self.CenterPosition, WDist.FromCells(Info.SellScanRadius)).Where(IsEnemyGroundUnit).ToList();
+
+			if (enemyUnits.Count > 5)
+			{
+				var allyUnits = self.World.FindActorsInCircle(self.CenterPosition, WDist.FromCells(Info.SellScanRadius)).Where(IsAllyGroundUnit).ToList();
+
+				if (enemyUnits.Count >= allyUnits.Count * 2)
+					return true;
+			}
+
+			return false;
 		}
 
 		void SetRallyPointsForNewProductionBuildings(IBot bot)
