@@ -779,7 +779,7 @@ MEDI:
 		VoiceSet: MedicVoice
 	AutoTarget:
 	AutoTargetPriority@DEFAULT:
-		ValidTargets: Infantry
+		ValidTargets: Heal
 		ValidRelationships: Ally
 	Mobile:
 		Voice: Move
@@ -789,7 +789,7 @@ MEDI:
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	GuardsSelection:
-		ValidTargets: Infantry
+		ValidTargets: Heal
 
 MECH:
 	Inherits: ^Soldier
@@ -856,14 +856,14 @@ MECH:
 		VoiceSet: MechanicVoice
 	AutoTarget:
 	AutoTargetPriority@DEFAULT:
-		ValidTargets: Vehicle, Ship
+		ValidTargets: Repair
 		ValidRelationships: Ally
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	GuardsSelection:
-		ValidTargets: Vehicle, Ship
+		ValidTargets: Repair
 
 HACK:
 	Inherits: ^Soldier

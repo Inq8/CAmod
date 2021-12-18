@@ -4389,9 +4389,13 @@ IFV:
 		InvalidTargets: NoAutoTarget
 	AttackMove:
 		AssaultMoveCondition: assault-move
-	AutoTargetPriority@DEFAULTREPAIR:
-		ValidTargets: Vehicle, Ship
+	AutoTargetPriority@REPAIR:
+		ValidTargets: Repair
 		RequiresCondition: engturr
+		ValidRelationships: Ally
+	AutoTargetPriority@HEAL:
+		ValidTargets: Heal
+		RequiresCondition: medturr
 		ValidRelationships: Ally
 	GrantConditionOnPrerequisite@CRYO:
 		Condition: cryr-upgrade
@@ -4402,10 +4406,10 @@ IFV:
 	ExternalCondition@CRYO:
 		Condition: cryr-upgrade
 	GuardsSelection@REPAIR:
-		ValidTargets: Vehicle
+		ValidTargets: Repair
 		RequiresCondition: engturr && !stance-attackanything
 	GuardsSelection@MEDIC:
-		ValidTargets: Infantry
+		ValidTargets: Heal
 		RequiresCondition: medturr && !stance-attackanything
 	GuardsSelection@SPY:
 		RequiresCondition: spyturr && !stance-attackanything
