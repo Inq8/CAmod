@@ -406,16 +406,19 @@ howi.upgrade:
 		Name: Research: Howitzer
 	Buildable:
 		BuildPaletteOrder: 20
-		Prerequisites: ~upgrades.howi, ~techlevel.high
+		Prerequisites: ~radar.nod, ~techlevel.high
 		BuildDuration: 1500
 		Description: Allows construction of Howitzers.\n\nReplaces: Artillery
 	TooltipExtras:
 		Strengths: + Increased speed\n+ Has turret
-		Weaknesses: – Reduced rate of fire
+		Weaknesses: – Reduced rate of fire\n– Reduced range
 	Valued:
 		Cost: 1000
 	RenderSprites:
 		Image: howi.upgrade
+	ProductionCostMultiplier@blackh:
+		Multiplier: 0
+		Prerequisites: radar.blackh
 
 microwave.upgrade:
 	Inherits: ^Upgrade
@@ -511,16 +514,19 @@ v2.upgrade:
 		Name: Research: V2 Launcher
 	Buildable:
 		BuildPaletteOrder: 20
-		Prerequisites: ~upgrades.v2, ~techlevel.medium
+		Prerequisites: ~radar.soviet, ~techlevel.medium
 		BuildDuration: 1500
 		Description: Allows construction of the V2 Launcher.\n\nReplaces: Katyusha
 	TooltipExtras:
-		Strengths: + Improved accuracy\n+ Increased range\n+ Increased burst damage
+		Strengths: + Improved accuracy\n+ Increased range\n+ Increased burst damage\n+ Increased mobility
 		Weaknesses: – Reduced area of effect\n– Slower projectiles\n– Increased cost
 	Valued:
 		Cost: 1000
 	RenderSprites:
 		Image: v2.upgrade
+	ProductionCostMultiplier@russia:
+		Multiplier: 0
+		Prerequisites: radar.russia
 
 hazmatsoviet.upgrade:
 	Inherits: ^Upgrade
@@ -528,7 +534,7 @@ hazmatsoviet.upgrade:
 		Name: Upgrade: Heavy Hazmat Suits
 	Buildable:
 		BuildPaletteOrder: 10
-		Prerequisites: ~dome, ~barr, ~techlevel.high
+		Prerequisites: ~radar.soviet, ~barr, ~techlevel.high
 		BuildDuration: 1500
 		Description: Infantry are equipped with heavy hazmat suits which provides\n  protection against Tiberium and radiation.\n\nUpgrades: Infantry
 	TooltipExtras:

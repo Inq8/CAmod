@@ -760,12 +760,15 @@ DOME:
 	ProvidesPrerequisiteValidatedFaction@frarad:
 		Factions: france
 		Prerequisite: radar.france
+	ProvidesPrerequisiteValidatedFaction@sovrad:
+		Factions: russia, ukraine, iraq, yuri
+		Prerequisite: radar.soviet
+	ProvidesPrerequisiteValidatedFaction@rusrad:
+		Factions: russia
+		Prerequisite: radar.russia
 	ProvidesPrerequisiteValidatedFaction@yurirad:
 		Factions: yuri
 		Prerequisite: radar.yuri
-	ProvidesPrerequisiteValidatedFaction@v2:
-		Factions: ukraine, iraq, yuri
-		Prerequisite: upgrades.v2
 	ProvidesPrerequisite@radar-active:
 		Prerequisite: radar-active
 		RequiresCondition: !jammed && !disabled && !being-warped
@@ -1322,9 +1325,6 @@ WEAP:
 	ProvidesPrerequisiteValidatedFaction@v2:
 		Factions: russia, ukraine, iraq, yuri
 		Prerequisite: vehicles.v2
-	ProvidesPrerequisiteValidatedFaction@v2upgrade:
-		Factions: russia
-		Prerequisite: v2.upgrade
 	ProvidesPrerequisiteValidatedFaction@2tnk:
 		Factions: france, germany, usa
 		Prerequisite: vehicles.2tnk
@@ -3186,9 +3186,6 @@ AIRS:
 	ProvidesPrerequisite@apc2:
 		Prerequisite: vehicles.apc2
 		RequiresPrerequisites: inf.gdi.stolen
-	ProvidesPrerequisiteValidatedFaction@howiupgrade:
-		Factions: blackh
-		Prerequisite: howi.upgrade
 	ParatroopersPower@markedairdrop:
 		OrderName: markedairdrop
 		SquadSize: 3
@@ -3995,9 +3992,6 @@ HQ:
 	ProvidesPrerequisiteValidatedFaction@shadrad:
 		Factions: shadow
 		Prerequisite: radar.shadow
-	ProvidesPrerequisiteValidatedFaction@howi:
-		Factions: marked, legion, shadow
-		Prerequisite: upgrades.howi
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@radar-active:
 		Prerequisite: radar-active
