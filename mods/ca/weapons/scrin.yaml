@@ -710,15 +710,23 @@ EnervatorBoltsAA:
 	Projectile: MissileCA
 		CloseEnough: 341
 	Warhead@1Dam: SpreadDamage
-		ValidTargets: Air, AirSmall
+		ValidTargets: Air
+		Range: 0, 0c64, 0c256, 1c0
+		Falloff: 100, 100, 30, 15
 		ValidRelationships: Enemy, Neutral
-		Damage: 6000
+		Damage: 7000
 		Versus:
 			None: 100
 			Wood: 100
 			Light: 100
 			Concrete: 100
 			Brick: 100
+	Warhead@2Dam: SpreadDamage
+		Damage: 7000
+		Spread: 128
+		Falloff: 100, 50, 14, 0
+		ValidTargets: AirSmall
+		ValidRelationships: Enemy, Neutral
 	Warhead@2Sup: GrantExternalCondition
 		ValidTargets: Air, AirSmall
 
@@ -984,7 +992,7 @@ RavagerShards:
 		ContrailLength: 9
 		ContrailColor: 00FF0044
 		Inaccuracy: 128
-		RangeLimit: 7c512
+		RangeLimit: 7c0
 		Jammable: false
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Ground, Water
@@ -1004,7 +1012,7 @@ LaceratorShards:
 	Inherits: RavagerShards
 	Range: 5c0
 	StartBurstReport: lacerator-fire1.aud, lacerator-fire2.aud
-	ReloadDelay: 90
+	ReloadDelay: 80
 	Projectile: Missile
 		Image: bshard
 		ContrailLength: 9
@@ -1012,7 +1020,7 @@ LaceratorShards:
 		ContrailColor: 4455FFAA
 		Jammable: true
 	Warhead@1Dam: SpreadDamage
-		Damage: 3200
+		Damage: 2900
 		Spread: 128
 		Versus:
 			None: 15
