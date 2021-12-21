@@ -39,17 +39,25 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Duration between productions.")]
 		public readonly int ChargeDuration = 1000;
 
+		[Desc("Immediately produces before initial charge.")]
+		public readonly bool Immediate = false;
+
 		public readonly bool ResetTraitOnEnable = false;
+		public readonly bool ResetTraitOnOwnerChange = false;
 
 		public readonly bool ShowSelectionBar = false;
 		public readonly Color ChargeColor = Color.DarkOrange;
 
+		[Desc("Defines to which players the bar is to be shown.")]
+		public readonly PlayerRelationship SelectionBarDisplayRelationships = PlayerRelationship.Ally;
+
 		public override object Create(ActorInitializer init) { return new PeriodicProducerCA(init, this); }
 	}
 
-	public class PeriodicProducerCA : PausableConditionalTrait<PeriodicProducerCAInfo>, ISelectionBar, ITick, ISync
+	public class PeriodicProducerCA : PausableConditionalTrait<PeriodicProducerCAInfo>, ISelectionBar, ITick, ISync, INotifyOwnerChanged
 	{
 		readonly PeriodicProducerCAInfo info;
+		Actor self;
 
 		[Sync]
 		int ticks;
@@ -58,17 +66,18 @@ namespace OpenRA.Mods.CA.Traits
 			: base(info)
 		{
 			this.info = info;
-			ticks = info.ChargeDuration;
+			self = init.Self;
+			ticks = info.Immediate ? 0 : info.ChargeDuration;
 		}
 
 		void ITick.Tick(Actor self)
 		{
-			if (IsTraitPaused)
+			if (IsTraitDisabled || IsTraitPaused)
 				return;
 
-			if (!IsTraitDisabled && --ticks < 0)
+			if (--ticks < 0)
 			{
-				var sp = self.TraitsImplementing<ProductionAirdropCA>()
+				var sp = self.TraitsImplementing<Production>()
 				.FirstOrDefault(p => !p.IsTraitDisabled && !p.IsTraitPaused && p.Info.Produces.Contains(info.Type));
 
 				var activated = false;
@@ -102,9 +111,18 @@ namespace OpenRA.Mods.CA.Traits
 				ticks = info.ChargeDuration;
 		}
 
+		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
+		{
+			ticks = info.Immediate ? 0 : info.ChargeDuration;
+		}
+
 		float ISelectionBar.GetValue()
 		{
 			if (!info.ShowSelectionBar || IsTraitDisabled)
+				return 0f;
+
+			var viewer = self.World.RenderPlayer ?? self.World.LocalPlayer;
+			if (viewer != null && !Info.SelectionBarDisplayRelationships.HasStance(self.Owner.RelationshipWith(viewer)))
 				return 0f;
 
 			return (float)(info.ChargeDuration - ticks) / info.ChargeDuration;
@@ -117,7 +135,17 @@ namespace OpenRA.Mods.CA.Traits
 
 		bool ISelectionBar.DisplayWhenEmpty
 		{
-			get { return info.ShowSelectionBar && !IsTraitDisabled; }
+			get
+			{
+				if (!info.ShowSelectionBar || IsTraitDisabled)
+					return false;
+
+				var viewer = self.World.RenderPlayer ?? self.World.LocalPlayer;
+				if (viewer != null && !Info.SelectionBarDisplayRelationships.HasStance(self.Owner.RelationshipWith(viewer)))
+					return false;
+
+				return true;
+			}
 		}
 	}
 }

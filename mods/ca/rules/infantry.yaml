@@ -2662,7 +2662,7 @@ RMBC:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4Immune, ChaosImmune, DriverKillImmune, Cyborg
 	Targetable@REPAIR:
-		RequiresCondition: !parachute && damaged && !being-warped
+		RequiresCondition: !parachute && damaged && !being-warped && !repair-cooldown
 		TargetTypes: Repair
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
@@ -2675,6 +2675,13 @@ RMBC:
 		Modifier: 85
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
+		Condition: repair-cooldown
+		RequiredStacks: 10
+		StackDuration: 750
+		MinimumHealing: 2500
+		DamageTypes: DirectRepair
+		ShowSelectionBar: true
 
 IVAN:
 	Inherits: ^Soldier
