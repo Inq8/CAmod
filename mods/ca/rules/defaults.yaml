@@ -1527,7 +1527,7 @@
 		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Vehicle, C4, TNT
 	Targetable@REPAIR:
-		RequiresCondition: !parachute && damaged && !being-warped
+		RequiresCondition: !parachute && damaged && !being-warped && !repair-cooldown
 		TargetTypes: Repair
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
@@ -1617,6 +1617,13 @@
 	TeleportNetworkTransportable:
 	Targetable@SHADOWBEACON:
 		TargetTypes: ShadowBeacon
+	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
+		Condition: repair-cooldown
+		RequiresStacksHPDivisor: 3750
+		StackDuration: 750
+		MinimumHealing: 2500
+		DamageTypes: DirectRepair
+		ShowSelectionBar: true
 
 ^Vehicle:
 	Inherits@1: ^Vehicle-NOUPG

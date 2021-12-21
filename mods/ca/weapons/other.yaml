@@ -595,6 +595,7 @@ Repair:
 	Warhead@1Dam: SpreadDamage
 		Damage: -3000
 		ValidTargets: Repair
+		DamageTypes: DirectRepair
 	Warhead@highlight: GrantExternalCondition
 		Range: 0c511
 		Duration: 2
@@ -603,9 +604,7 @@ Repair:
 
 RepairIFV:
 	Inherits: Repair
-	ReloadDelay: 125
-	Burst: 10
-	BurstDelays: 30
+	ReloadDelay: 30
 	Report: repair11.aud
 	Warhead@3Eff: CreateEffect
 		Image: sparks_overlay
