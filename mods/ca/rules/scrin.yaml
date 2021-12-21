@@ -2164,7 +2164,11 @@ PAC:
 		RequiresCondition: !shields-up
 
 INVA:
-	Inherits: ^Plane
+	Inherits: ^NeutralPlane
+	Inherits@3: ^Cloakable
+	Inherits@4: ^EmpDisable
+	Inherits@5: ^GDIUpgradeAircraft
+	Inherits@ionsurge: ^IonSurgable
 	Valued:
 		Cost: 50
 	Tooltip:
@@ -2188,7 +2192,7 @@ INVA:
 		FacingTolerance: 80
 		PersistentTargeting: false
 		OpportunityFire: false
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable
 		AttackType: Strafe
 		StrafeRunLength: 3c0
 	Aircraft:
@@ -2210,7 +2214,6 @@ INVA:
 	Explodes:
 		Weapon: VisualExplodeInvader
 		-RequiresCondition:
-	-EjectOnDeath:
 	-Selectable:
 	-ActorLostNotification:
 	SmokeTrailWhenDamaged:
@@ -2232,7 +2235,7 @@ INVA:
 		Modifier: 75
 	Targetable@AIRBORNE:
 		RequiresCondition: airborne
-		TargetTypes: AirSmall, AirLowPriority
+		TargetTypes: ICBM
 
 MSHP:
 	Inherits: ^Helicopter

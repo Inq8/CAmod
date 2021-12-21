@@ -2231,13 +2231,6 @@
 		Notification: AirUnitLost
 	ProximityCaptor:
 		Types: Plane
-	EjectOnDeath:
-		PilotActor: E1
-		SuccessRate: 50
-		EjectOnGround: false
-		EjectInAir: true
-		AllowUnsuitableCell: true
-		ChuteSound: chute1.aud
 	Tooltip:
 		GenericName: Plane
 	WithShadow:
@@ -2294,6 +2287,13 @@
 	Inherits@TNT: ^TNTPlantable
 	Inherits@ionsurge: ^IonSurgable
 	Inherits@atomize: ^Atomizable
+	EjectOnDeath:
+		PilotActor: E1
+		SuccessRate: 50
+		EjectOnGround: false
+		EjectInAir: true
+		AllowUnsuitableCell: true
+		ChuteSound: chute1.aud
 	Cloak@SGENCLOAK:
 		RequiresCondition: invisibility || crate-cloak && (!cloak-force-disabled && !airborne && !being-warped)
 		CloakDelay: 90

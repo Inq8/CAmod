@@ -31,7 +31,6 @@ BADR:
 	SmokeTrailWhenDamaged@1:
 		Offset: -432,-560,0
 		Interval: 2
-	-EjectOnDeath:
 	RejectsOrders:
 	GivesExperience:
 		Experience: 1000
@@ -73,7 +72,6 @@ BADR.Bomber:
 	SmokeTrailWhenDamaged@1:
 		Offset: -432,-560,0
 		Interval: 2
-	-EjectOnDeath:
 	-MapEditorData:
 	RejectsOrders:
 	RenderSprites:
@@ -137,7 +135,6 @@ B2B:
 	SmokeTrailWhenDamaged@1:
 		Offset: -432,-560,0
 		Interval: 2
-	-EjectOnDeath:
 	-MapEditorData:
 	RejectsOrders:
 	GivesExperience:
@@ -1251,7 +1248,6 @@ C17:
 	Inherits@EMP: ^EmpDisable
 	RenderSprites:
 		PlayerPalette: overlayplayertd
-	-EjectOnDeath:
 	ParaDrop:
 		DropRange: 4c0
 		ChuteSound: chute1.aud
@@ -1758,7 +1754,6 @@ UAV:
 		Experience: 1000
 	RenderSprites:
 		PlayerPalette: overlayplayertd
-	-EjectOnDeath:
 
 RAH:
 	Inherits: ^HelicopterTD
@@ -2430,20 +2425,26 @@ SCRN:
 		Prerequisites: structures.marked
 
 HORN:
-	Inherits: ^PlaneTD
+	Inherits: ^NeutralPlane
+	Inherits@3: ^Cloakable
+	Inherits@4: ^EmpDisable
+	Inherits@5: ^GDIUpgradeAircraft
+	Inherits@ionsurge: ^IonSurgable
+	RenderSprites:
+		PlayerPalette: overlayplayertd
 	Valued:
 		Cost: 50
 	Tooltip:
 		Name: Hornet
 	Health:
-		HP: 7200
+		HP: 22000
 	RevealsShroud:
-		Range: 2c0
-		MinRange: 1c0
+		Range: 4c0
+		MinRange: 3c0
 		Type: GroundPosition
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 1c0
+		Range: 3c0
 		Type: GroundPosition
 	Armament:
 		Weapon: HellfireAG.Horn
@@ -2452,7 +2453,7 @@ HORN:
 		FacingTolerance: 80
 		PersistentTargeting: false
 		OpportunityFire: false
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable
 	Aircraft:
 		CruiseAltitude: 1c513
 		InitialFacing: 192
@@ -2473,19 +2474,9 @@ HORN:
 		Ammo: 6
 		AmmoCondition: ammo
 	RejectsOrders:
-	SpawnActorOnDeath:
-		Actor: HORN.Husk
-		RequiresCondition: ammo && !empdisable && !being-warped
-	SpawnActorOnDeath@Empty:
-		Actor: HORN.Husk.empty
-		RequiresCondition: !ammo && !empdisable && !being-warped
-	SpawnActorOnDeath@EMP:
-		Actor: HORN.Husk.EMP
-		RequiresCondition: ammo && empdisable && !being-warped
-	SpawnActorOnDeath@EmptyEMP:
-		Actor: HORN.Husk.empty.EMP
-		RequiresCondition: !ammo && empdisable && !being-warped
-	-EjectOnDeath:
+	-SpawnActorOnDeath:
+	Explodes:
+		-RequiresCondition:
 	-Selectable:
 	-ActorLostNotification:
 	SmokeTrailWhenDamaged:
