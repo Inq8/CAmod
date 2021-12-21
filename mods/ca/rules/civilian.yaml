@@ -126,12 +126,6 @@ HOSP:
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
-	ProvidesPrerequisite@medi:
-		Prerequisite: infantry.medi
-		RequiresPrerequisites: infantry.any
-	ProvidesPrerequisite@smedi:
-		Prerequisite: infantry.smedi
-		RequiresPrerequisites: infantry.scrin
 	SpawnActorOnDeath:
 		Actor: HOSP.Husk
 		OwnerType: InternalName
@@ -143,6 +137,41 @@ HOSP:
 	WithRangeCircle@HOSPITAL:
 		Range: 9c0
 		Color: 00FF0080
+	PeriodicProducerCA@MEDIC:
+		Type: Hospital
+		ChargeDuration: 3000
+		Actors: medi
+		ShowSelectionBar: true
+		RequiresCondition: !is-neutral && !infantry-scrin && !being-warped
+		ResetTraitOnOwnerChange: true
+		Immediate: true
+		ReadyAudio: UnitReady
+		ChargeColor: ffffff
+	PeriodicProducerCA@REJUVENATOR:
+		Type: Hospital
+		ChargeDuration: 3000
+		Actors: smedi
+		ShowSelectionBar: true
+		RequiresCondition: !is-neutral && infantry-scrin && !being-warped
+		ResetTraitOnOwnerChange: true
+		Immediate: true
+		ReadyAudio: UnitReady
+		ChargeColor: ffffff
+	Exit:
+		SpawnOffset: -190,880,0
+		ExitCell: 1,2
+		ProductionTypes: Hospital
+	Production:
+		Produces: Hospital
+		PauseOnCondition: being-warped
+	GrantConditionIfOwnerIsNeutral:
+		Condition: is-neutral
+	GrantConditionOnPrerequisite@SCRININF:
+		Condition: infantry-scrin
+		Prerequisites: infantry.scrin
+	GrantConditionOnPrerequisite@SCRINSTR:
+		Condition: infantry-scrin
+		Prerequisites: structures.scrin
 
 V01:
 	Inherits: ^CivBuilding
