@@ -828,6 +828,17 @@
 		BlinkPatterns:
 			damaged && hospitalheal: On, Off
 
+^HealingCooldown:
+	GrantConditionOnHealingReceived@HEALINGCOOLDOWN:
+		Condition: heal-cooldown
+		RequiredStacks: 20
+		StackDuration: 500
+		MinimumHealing: 2500
+		DamageTypes: DirectHeal
+		ShowSelectionBar: true
+	Targetable@HEAL:
+		RequiresCondition: !parachute && damaged && !being-warped && !heal-cooldown
+
 ^IronCurtainable:
 	WithColoredOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability
