@@ -670,8 +670,14 @@ PlaceC4:
 PlaceC4Seal:
 	Inherits: PlaceC4
 	ReloadDelay: 50
-	ValidTargets: C4, Vehicle, Ship, Submarine, Structure
+	ValidTargets: C4, Ship, Submarine, Structure
+	InvalidTargets: Vehicle, C4Attached, TNTAttached, C4Immune
 	Range: 1c255
+	Warhead@AttachDelayedWeapon: AttachDelayedWeapon
+		TriggerTime: 40
+		ScaleTriggerTimeWithValue: true
+	Warhead@highlight: GrantExternalCondition
+		ValidTargets: Ground, Structure
 
 C4:
 	Projectile: InstantHit

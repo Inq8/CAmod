@@ -678,22 +678,16 @@ SMGE:
 	Range: 6c0
 
 MP5:
-	Inherits: ^SnipeWeapon
+	Inherits: AKM
 	Report: iseaatta.aud, iseaattb.aud
 	ReloadDelay: 10
+	-Burst:
 	Range: 6c0
 	Warhead@1Dam: SpreadDamage
-		Spread: 128
-		Damage: 4700
-		ValidTargets: Infantry
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piffs
-		ValidTargets: Ground, Ship, Air, AirSmall, Trees
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piffs
-		ValidTargets: Water, Underwater
-		InvalidTargets: Ship, Structure, Bridge
 
 MP5E:
 	Inherits: MP5

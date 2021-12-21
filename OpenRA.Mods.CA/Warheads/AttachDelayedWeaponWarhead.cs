@@ -36,6 +36,9 @@ namespace OpenRA.Mods.CA.Warheads
 		[Desc("Trigger the DelayedWeapon after these amount of ticks.")]
 		public readonly int TriggerTime = 30;
 
+		[Desc("If true, trigger time is added for every 100 value of the target.")]
+		public readonly bool ScaleTriggerTimeWithValue = false;
+
 		[Desc("DeathType(s) that trigger the DelayedWeapon to activate. Leave empty to always trigger the DelayedWeapon on death.")]
 		public readonly BitSet<DamageType> DeathTypes = default(BitSet<DamageType>);
 
@@ -52,6 +55,8 @@ namespace OpenRA.Mods.CA.Warheads
 			if (!rules.Weapons.TryGetValue(Weapon.ToLowerInvariant(), out WeaponInfo))
 				throw new YamlException("Weapons Ruleset does not contain an entry '{0}'".F(Weapon.ToLowerInvariant()));
 		}
+
+		public int CalculatedTriggerTime { get; private set; }
 
 		public override void DoImpact(in Target target, WarheadArgs args)
 		{
@@ -87,6 +92,15 @@ namespace OpenRA.Mods.CA.Warheads
 				var attachable = actor.TraitsImplementing<DelayedWeaponAttachable>().FirstOrDefault(a => a.CanAttach(Type));
 				if (attachable != null)
 				{
+					CalculatedTriggerTime = TriggerTime;
+
+					if (ScaleTriggerTimeWithValue)
+					{
+						var valued = actor.Info.TraitInfoOrDefault<ValuedInfo>();
+						if (valued != null)
+							CalculatedTriggerTime = (valued.Cost / 100) * TriggerTime;
+					}
+
 					attachable.Attach(new DelayedWeaponTrigger(this, args));
 
 					var attachSound = AttachSounds.RandomOrDefault(world.LocalRandom);

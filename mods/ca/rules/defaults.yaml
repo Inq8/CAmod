@@ -1182,6 +1182,7 @@
 		Type: c4
 		Condition: c4
 		ProgressBarColor: FF000080
+		RequiresCondition: !invulnerability
 	Targetable@c4:
 		TargetTypes: C4Attached
 		RequiresCondition: c4
@@ -2490,6 +2491,10 @@
 		EmptyWeapon: TemporalExplodeLarge
 	GpsRadarDot:
 		Sequence: Structure
+	DelayedWeaponAttachable@C4:
+		RequiresCondition: !invulnerability && !forceshield
+	DelayedWeaponAttachable@TNT:
+		RequiresCondition: !invulnerability && !forceshield
 
 ^BuildingTD:
 	Inherits@1: ^Building
@@ -2573,6 +2578,10 @@
 		CloakTypes: Underbridge
 		Range: 6c0
 	-Targetable@HACKCAPTURABLE:
+	DelayedWeaponAttachable@C4:
+		RequiresCondition: !invulnerability
+	DelayedWeaponAttachable@TNT:
+		RequiresCondition: !invulnerability
 
 ^DefenseTD:
 	Inherits@1: ^Defense
