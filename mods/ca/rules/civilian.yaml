@@ -142,7 +142,7 @@ HOSP:
 		ChargeDuration: 3000
 		Actors: medi
 		ShowSelectionBar: true
-		RequiresCondition: !is-neutral && !infantry-scrin && !being-warped
+		RequiresCondition: !is-neutral && !infantry-scrin
 		ResetTraitOnOwnerChange: true
 		Immediate: true
 		ReadyAudio: UnitReady
@@ -152,7 +152,7 @@ HOSP:
 		ChargeDuration: 3000
 		Actors: smedi
 		ShowSelectionBar: true
-		RequiresCondition: !is-neutral && infantry-scrin && !being-warped
+		RequiresCondition: !is-neutral && infantry-scrin
 		ResetTraitOnOwnerChange: true
 		Immediate: true
 		ReadyAudio: UnitReady
@@ -163,7 +163,6 @@ HOSP:
 		ProductionTypes: Hospital
 	Production:
 		Produces: Hospital
-		PauseOnCondition: being-warped
 	GrantConditionIfOwnerIsNeutral:
 		Condition: is-neutral
 	GrantConditionOnPrerequisite@SCRININF:

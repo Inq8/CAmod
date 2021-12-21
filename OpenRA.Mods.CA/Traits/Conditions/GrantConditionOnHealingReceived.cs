@@ -32,7 +32,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly int RequiredStacks = 1;
 
 		[Desc("If a positive number, ignore RequiredStacks and divide HP by this number to get the required stacks.")]
-		public readonly int RequiresStacksHPDivisor = 0;
+		public readonly int RequiredStacksHPDivisor = 0;
 
 		[Desc("Minimum amount of healing that applies a stack.")]
 		public readonly int MinimumHealing = 1000;
@@ -62,10 +62,10 @@ namespace OpenRA.Mods.CA.Traits
 			stacks = new List<int>();
 			initialDuration = Info.StackDuration;
 
-			if (Info.RequiresStacksHPDivisor > 0)
+			if (Info.RequiredStacksHPDivisor > 0)
 			{
 				var healthInfo = self.Info.TraitInfo<HealthInfo>();
-				requiredStacks = healthInfo.HP / Info.RequiresStacksHPDivisor;
+				requiredStacks = healthInfo.HP / Info.RequiredStacksHPDivisor;
 			}
 			else
 				requiredStacks = Info.RequiredStacks;
