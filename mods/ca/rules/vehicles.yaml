@@ -411,11 +411,6 @@ GTNK.squad:
 		Turrets: primary, secondary, tertiary
 		TargetFrozenActors: True
 		Armaments: primary
-	MirageTooltip@Tree:
-		Name: Mirage Tank
-		GenericName: Civilian building
-		GenericVisibility: Enemy, Neutral
-		RequiresCondition: tree && england
 	Mirage:
 		RequiresCondition: england && !empdisable && !being-warped && !driver-dead
 		RevealOn: Attack, Move
@@ -5063,12 +5058,6 @@ RTNK:
 		Cost: 825
 	Tooltip:
 		Name: Mirage Tank
-		RequiresCondition: !tree
-	MirageTooltip@Tree:
-		Name: Mirage Tank
-		GenericName: Civilian building
-		GenericVisibility: Enemy, Neutral
-		RequiresCondition: tree
 	Mirage:
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
 		RevealOn: Attack, Move, Heal, SelfHeal
