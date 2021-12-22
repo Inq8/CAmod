@@ -828,6 +828,17 @@
 		BlinkPatterns:
 			damaged && hospitalheal: On, Off
 
+^HealingCooldown:
+	GrantConditionOnHealingReceived@HEALINGCOOLDOWN:
+		Condition: heal-cooldown
+		RequiredStacks: 20
+		StackDuration: 625
+		MinimumHealing: 2500
+		DamageTypes: DirectHeal
+		ShowSelectionBar: true
+	Targetable@HEAL:
+		RequiresCondition: !parachute && damaged && !being-warped && !heal-cooldown
+
 ^IronCurtainable:
 	WithColoredOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability
@@ -1182,14 +1193,20 @@
 		Type: c4
 		Condition: c4
 		ProgressBarColor: FF000080
+		RequiresCondition: !invulnerability
+	DelayedWeaponAttachable@C4Seal:
+		Type: c4seal
+		Condition: c4seal
+		ProgressBarColor: FF000080
+		RequiresCondition: !invulnerability
 	Targetable@c4:
 		TargetTypes: C4Attached
-		RequiresCondition: c4
+		RequiresCondition: c4 || c4seal
 	WithDecoration@c4:
 		Image: c4
 		Sequence: c4
 		Position: CenterCenter
-		RequiresCondition: c4
+		RequiresCondition: c4 || c4seal
 		RequiresSelection: False
 		ValidRelationships: Ally, Neutral, Enemy
 	ExternalCondition@detachable:
@@ -1202,6 +1219,11 @@
 		Delay: 5
 		Interval: 5
 		RequiresCondition: c4
+	AmbientSound@c4seal:
+		SoundFiles: sealc4tick1.aud, sealc4tick2.aud
+		Delay: 9
+		Interval: 9
+		RequiresCondition: c4seal
 
 ^TNTPlantable:
 	DelayedWeaponAttachable@TNT:
@@ -1913,7 +1935,6 @@
 	TakeCover:
 		DamageModifiers:
 			Prone50Percent: 50
-			Prone33Percent: 33
 		DamageTriggers: TriggerProne
 		PauseOnCondition: being-warped
 	WithInfantryBody:
@@ -2491,6 +2512,12 @@
 		EmptyWeapon: TemporalExplodeLarge
 	GpsRadarDot:
 		Sequence: Structure
+	DelayedWeaponAttachable@C4:
+		RequiresCondition: !invulnerability && !forceshield
+	DelayedWeaponAttachable@C4Seal:
+		RequiresCondition: !invulnerability && !forceshield
+	DelayedWeaponAttachable@TNT:
+		RequiresCondition: !invulnerability && !forceshield
 
 ^BuildingTD:
 	Inherits@1: ^Building
@@ -2574,6 +2601,12 @@
 		CloakTypes: Underbridge
 		Range: 6c0
 	-Targetable@HACKCAPTURABLE:
+	DelayedWeaponAttachable@C4:
+		RequiresCondition: !invulnerability
+	DelayedWeaponAttachable@C4Seal:
+		RequiresCondition: !invulnerability
+	DelayedWeaponAttachable@TNT:
+		RequiresCondition: !invulnerability
 
 ^DefenseTD:
 	Inherits@1: ^Defense

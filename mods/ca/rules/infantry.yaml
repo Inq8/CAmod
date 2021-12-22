@@ -663,6 +663,7 @@ E7:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -1540,6 +1541,7 @@ RMBO:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -1777,6 +1779,7 @@ BORI:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMovePrioritizeInfantry
 	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	RenderSprites:
 		Image: boris
 	Buildable:
@@ -2347,7 +2350,6 @@ E8:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
-	Inherits@BOTHELPER: ^BotCaptureHelper
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
@@ -2446,6 +2448,9 @@ E8:
 		DeployTrigger: Attack
 		DeployTicks: 5
 		UndeployTicks: 50
+	GrantConditionOnBotOwner@IAMBOT:
+		Condition: botowner
+		Bots: brutal, vhard, hard, normal, easy, naval
 
 N1C:
 	Inherits: ^Cyborg
@@ -2659,6 +2664,7 @@ RMBC:
 	-KillsSelf@Immolate:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4Immune, ChaosImmune, DriverKillImmune, Cyborg
+	-Targetable@HEAL:
 	Targetable@REPAIR:
 		RequiresCondition: !parachute && damaged && !being-warped && !repair-cooldown
 		TargetTypes: Repair
@@ -2675,8 +2681,8 @@ RMBC:
 		Prerequisites: barracks.upgraded
 	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 		Condition: repair-cooldown
-		RequiredStacks: 10
-		StackDuration: 750
+		RequiredStacks: 20
+		StackDuration: 625
 		MinimumHealing: 2500
 		DamageTypes: DirectRepair
 		ShowSelectionBar: true
@@ -3156,7 +3162,7 @@ YURI:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@COMMANDOSKULL: ^CommandoSkull
-	Inherits@BOTHELPER: ^BotCaptureHelper
+	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	AutoTargetPriority@DEFAULT:
 		RequiresCondition: mindcontrolling < 3 && !stance-attackanything && !assault-move
 	Buildable:
@@ -3264,6 +3270,9 @@ YURI:
 		DeployChance: 100
 		DeployTrigger: Attack
 		DeployTicks: 100
+	GrantConditionOnBotOwner@IAMBOT:
+		Condition: botowner
+		Bots: brutal, vhard, hard, normal, easy, naval
 
 SEAL:
 	Inherits: RMBO
@@ -3302,7 +3311,7 @@ SEAL:
 		Cursor: c4
 		OutsideRangeCursor: c4
 		Name: secondary
-		PauseOnCondition: !ammo
+		RequiresCondition: ammo
 	-VoiceAnnouncement:
 	GrantConditionOnTerrain:
 		TerrainTypes: Water
@@ -3330,7 +3339,7 @@ SEAL:
 		Ammo: 1
 		AmmoCondition: ammo
 	ReloadAmmoPoolCA:
-		Delay: 125
+		Delay: 875
 		Count: 1
 		ShowSelectionBar: true
 		SelectionBarColor: dd0000

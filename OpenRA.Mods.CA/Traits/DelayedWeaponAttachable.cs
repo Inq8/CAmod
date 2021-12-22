@@ -107,6 +107,13 @@ namespace OpenRA.Mods.CA.Traits
 				detectors.Remove(detector);
 		}
 
+		protected override void TraitDisabled(Actor self)
+		{
+			Container.Clear();
+			while (tokens.Count > Container.Count)
+				self.RevokeCondition(tokens.Pop());
+		}
+
 		bool ISelectionBar.DisplayWhenEmpty { get { return false; } }
 
 		float ISelectionBar.GetValue()

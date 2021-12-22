@@ -586,6 +586,7 @@ Heal:
 		ValidRelationships: Ally
 		ValidTargets: Heal
 		DebugOverlayColor: 00FF00
+		DamageTypes: DirectHeal
 
 Repair:
 	Inherits: Heal
@@ -619,6 +620,7 @@ RepairFlash:
 	Warhead@1Dam: SpreadDamage
 		Damage: -1
 		ValidTargets: Repair
+		-DamageTypes:
 	Warhead@highlight: GrantExternalCondition
 		Range: 2c511
 		Duration: 2
@@ -670,8 +672,15 @@ PlaceC4:
 PlaceC4Seal:
 	Inherits: PlaceC4
 	ReloadDelay: 50
-	ValidTargets: C4, Vehicle, Ship, Submarine, Structure
+	ValidTargets: C4, Ship, Submarine, Structure
+	InvalidTargets: Vehicle, C4Attached, TNTAttached, C4Immune
 	Range: 1c255
+	Warhead@AttachDelayedWeapon: AttachDelayedWeapon
+		TriggerTime: 40
+		Type: c4seal
+		ScaleTriggerTimeWithValue: true
+	Warhead@highlight: GrantExternalCondition
+		ValidTargets: Ground, Structure
 
 C4:
 	Projectile: InstantHit
@@ -772,7 +781,7 @@ DefuseKit:
 		ValidTargets: C4Attached, TNTAttached
 		ValidRelationships: Ally
 	Warhead@DetachDelayedWeapon: DetachDelayedWeapon
-		Types: c4, tnt
+		Types: c4, tnt, c4seal
 		Range: 128
 		ValidRelationships: Ally
 		ValidTargets: C4Attached, TNTAttached
