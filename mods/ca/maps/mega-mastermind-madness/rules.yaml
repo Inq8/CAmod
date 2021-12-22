@@ -93,6 +93,14 @@ Player:
 		RequiresCondition: driver-dead
 
 MAST:
+	-Passenger:
+	-GainsExperienceMultiplier:
+	-TakeCover:
+	-Armament@TERTIARY:
+	-PeriodicExplosion:
+	-PeriodicExplosionOnSlaves:
+	AttackFrontal:
+		-Armaments:
 	Health:
 		HP: 120000
 	Mobile:
@@ -154,6 +162,10 @@ MAST:
 		CooldownTicks: 1250
 		DeployedTicks: 375
 		StartsFullyCharged: true
+		-DeployingCondition:
+		-ShowSelectionBar:
+		-Voice:
+		-PauseOnCondition:
 	Cloak:
 		InitialDelay: 0
 		CloakDelay: 25
@@ -167,9 +179,6 @@ MAST:
 		UncloakSound: gstealof.aud
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden)
-	-Passenger:
-	-GainsExperienceMultiplier:
-	-TakeCover:
 
 RNDV:
 	Inherits@1: ^1x1Shape

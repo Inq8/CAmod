@@ -255,7 +255,7 @@ namespace OpenRA.Mods.CA.Traits
 			currentTarget = Target.Invalid;
 		}
 
-		void ReleaseSlaves(Actor self, int ticks)
+		public void ReleaseSlaves(Actor self, int ticks)
 		{
 			foreach (var s in slaves)
 			{
