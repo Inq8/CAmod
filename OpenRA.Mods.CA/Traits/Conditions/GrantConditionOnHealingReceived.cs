@@ -100,7 +100,8 @@ namespace OpenRA.Mods.CA.Traits
 
 			var stacksToRemove = 0;
 
-			for (int i = 0; i < stacks.Count; i++) {
+			for (int i = 0; i < stacks.Count; i++)
+			{
 				stacks[i]--;
 
 				if (stacks[i] <= 0)
