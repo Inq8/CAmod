@@ -677,6 +677,7 @@ PlaceC4Seal:
 	Range: 1c255
 	Warhead@AttachDelayedWeapon: AttachDelayedWeapon
 		TriggerTime: 40
+		Type: c4seal
 		ScaleTriggerTimeWithValue: true
 	Warhead@highlight: GrantExternalCondition
 		ValidTargets: Ground, Structure
@@ -780,7 +781,7 @@ DefuseKit:
 		ValidTargets: C4Attached, TNTAttached
 		ValidRelationships: Ally
 	Warhead@DetachDelayedWeapon: DetachDelayedWeapon
-		Types: c4, tnt
+		Types: c4, tnt, c4seal
 		Range: 128
 		ValidRelationships: Ally
 		ValidTargets: C4Attached, TNTAttached
