@@ -26,7 +26,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		[FieldLoader.Require]
 		[Desc("Damage types that count for healing purposes.")]
-		public readonly BitSet<DamageType> DamageTypes = default(BitSet<DamageType>);
+		public readonly BitSet<DamageType> DamageTypes = default;
 
 		[Desc("Number of stacks required for condition to apply.")]
 		public readonly int RequiredStacks = 1;
@@ -53,7 +53,8 @@ namespace OpenRA.Mods.CA.Traits
 		int initialDuration;
 		List<int> stacks;
 		bool worthShowingBar;
-		int requiredStacks;
+
+		readonly int requiredStacks;
 
 		public GrantConditionOnHealingReceived(Actor self, GrantConditionOnHealingReceivedInfo info)
 			: base(info)
@@ -136,11 +137,6 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			if (token != Actor.InvalidConditionToken)
 				token = self.RevokeCondition(token);
-		}
-
-		int ConditionTicksRemaining()
-		{
-			return 0;
 		}
 
 		float ISelectionBar.GetValue()
