@@ -46,12 +46,24 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			selectionHash = world.Selection.Hash;
 		}
 
+		void HideTooltip()
+		{
+			widget.Bounds.X = Game.Renderer.Resolution.Width;
+			widget.Bounds.Y = Game.Renderer.Resolution.Height;
+		}
+
 		void UpdateTooltip()
 		{
 			if (world.Selection.Actors.Count() != 1)
 			{
-				widget.Bounds.X = Game.Renderer.Resolution.Width;
-				widget.Bounds.Y = Game.Renderer.Resolution.Height;
+				HideTooltip();
+				return;
+			}
+
+			var actor = world.Selection.Actors.First();
+			if (actor == null || actor.Info == null || actor.IsDead || !actor.IsInWorld || actor.Disposed)
+			{
+				HideTooltip();
 				return;
 			}
 
@@ -76,10 +88,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			descLabel.Bounds.Height = originalDescLabelHeight;
 
 			var descLabelPadding = descLabel.Bounds.Height;
-
-			var actor = world.Selection.Actors.First();
-			if (actor == null || actor.Info == null)
-				return;
 
 			var tooltip = actor.TraitsImplementing<Tooltip>().FirstOrDefault(Exts.IsTraitEnabled);
 			var name = tooltip != null ? tooltip.Info.Name : actor.Info.Name;
