@@ -38,6 +38,9 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled)
 				return;
 
+			if (order.Target.Type == TargetType.Invalid)
+				return;
+
 			if (order.Queued)
 				return;
 
