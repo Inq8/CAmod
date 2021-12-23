@@ -83,7 +83,7 @@ KATY:
 		Range: 5c0
 	Armament:
 		Weapon: KatyushaRockets
-		LocalOffset: 268,0,440
+		LocalOffset: 268,-100,440, 268,100,440
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
@@ -4398,10 +4398,10 @@ IFV:
 	ExternalCondition@CRYO:
 		Condition: cryr-upgrade
 	GuardsSelection@REPAIR:
-		ValidTargets: Repair
+		ValidTargets: Vehicle
 		RequiresCondition: engturr && !stance-attackanything
 	GuardsSelection@MEDIC:
-		ValidTargets: Heal
+		ValidTargets: Infantry
 		RequiresCondition: medturr && !stance-attackanything
 	GuardsSelection@SPY:
 		RequiresCondition: spyturr && !stance-attackanything

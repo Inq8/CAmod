@@ -38,6 +38,9 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled)
 				return;
 
+			if (order.Target.Type == TargetType.Invalid)
+				return;
+
 			if (order.Queued)
 				return;
 
@@ -51,7 +54,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			var world = self.World;
 
-			if (order.Target.Type == TargetType.Actor && (order.Target.Actor.Owner == world.LocalPlayer || !order.Target.Actor.IsInWorld || order.Target.Actor.IsDead))
+			if (order.Target.Type == TargetType.Actor && (order.Target.Actor.Disposed || order.Target.Actor.Owner == world.LocalPlayer || !order.Target.Actor.IsInWorld || order.Target.Actor.IsDead))
 				return;
 
 			var guardActors = world.Selection.Actors
@@ -74,7 +77,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			foreach (var guardActor in guardActors)
 			{
-				if (guardActor.IsDead || !guardActor.IsInWorld)
+				if (guardActor.Disposed || guardActor.IsDead || !guardActor.IsInWorld)
 					continue;
 
 				guardTargets++;

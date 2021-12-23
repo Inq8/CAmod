@@ -11,6 +11,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common;
+using OpenRA.Mods.Common.Orders;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
 using OpenRA.Traits;
@@ -49,21 +50,31 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 		[Desc("Whether to eject a unit that can't be converted due to insufficient funds.")]
 		public readonly bool EjectOnInsufficientFunds = false;
 
+		[Desc("Whether to eject all units on deploy command.")]
+		public readonly bool EjectOnDeploy = false;
+
 		[Desc("Whether to show a progress bar.")]
 		public readonly bool ShowSelectionBar = true;
 
 		[Desc("Color of the progress bar.")]
 		public readonly Color SelectionBarColor = Color.Red;
 
+		[GrantedConditionReference]
+		[Desc("Converting condition.")]
+		public readonly string ConvertingCondition = null;
+
 		public override object Create(ActorInitializer init) { return new UnitConverter(init, this); }
 	}
 
-	public class UnitConverter : ConditionalTrait<UnitConverterInfo>, ITick, INotifyOwnerChanged, INotifyKilled, INotifySold, ISelectionBar
+	public class UnitConverter : ConditionalTrait<UnitConverterInfo>, ITick, INotifyOwnerChanged, INotifyKilled, INotifySold, ISelectionBar, IIssueOrder, IResolveOrder
 	{
+		const string OrderID = "EjectUnitConverter";
 		readonly UnitConverterInfo info;
 		int produceIntervalTicks;
 		Queue<UnitConverterQueueItem> queue;
 		protected PlayerResources playerResources;
+		int conditionToken = Actor.InvalidConditionToken;
+		bool ejectAll = false;
 
 		public UnitConverter(ActorInitializer init, UnitConverterInfo info)
 			: base(info)
@@ -112,6 +123,7 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 					queueItem.Inits = inits;
 					queueItem.ConversionCost = GetConversionCost(converting.Info, queueItem.OutputActor);
 					queue.Enqueue(queueItem);
+					GrantCondition(self);
 				}
 			}
 		}
@@ -121,7 +133,7 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 			if (IsTraitDisabled || !queue.Any())
 				return;
 
-			if (produceIntervalTicks > 0)
+			if (!ejectAll && produceIntervalTicks > 0)
 			{
 				produceIntervalTicks--;
 				return;
@@ -132,9 +144,9 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 			var outputActor = nextItem.OutputActor;
 			var exitSound = info.ReadyAudio;
 
-			if (playerResources.Cash < nextItem.ConversionCost)
+			if (ejectAll || playerResources.Cash < nextItem.ConversionCost)
 			{
-				if (!Info.EjectOnInsufficientFunds)
+				if (!ejectAll && !Info.EjectOnInsufficientFunds)
 					return;
 
 				outputActor = nextItem.InputActor;
@@ -143,11 +155,21 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 
 			if (nextItem.Producer.Produce(nextItem.Actor, outputActor, nextItem.ProductionType, nextItem.Inits, 0))
 			{
-				playerResources.TakeCash(nextItem.ConversionCost);
-				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", exitSound, self.Owner.Faction.InternalName);
+				if (!ejectAll)
+				{
+					playerResources.TakeCash(nextItem.ConversionCost);
+					Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", exitSound, self.Owner.Faction.InternalName);
+				}
+
 				queue.Dequeue();
+
+				if (!queue.Any())
+				{
+					ejectAll = false;
+					RevokeCondition(self);
+				}
 			}
-			else
+			else if (!ejectAll)
 			{
 				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.BlockedAudio, self.Owner.Faction.InternalName);
 			}
@@ -155,17 +177,19 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 
 		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
 		{
-			ClearQueue();
+			ClearQueue(self);
 			playerResources = newOwner.PlayerActor.Trait<PlayerResources>();
 		}
 
-		void INotifyKilled.Killed(Actor self, AttackInfo e) { ClearQueue(); }
-		void INotifySold.Selling(Actor self) { ClearQueue(); }
+		void INotifyKilled.Killed(Actor self, AttackInfo e) { ClearQueue(self); }
+		void INotifySold.Selling(Actor self) { ClearQueue(self); }
 		void INotifySold.Sold(Actor self) { }
 
-		protected void ClearQueue()
+		protected void ClearQueue(Actor self)
 		{
 			queue.Clear();
+			ejectAll = false;
+			RevokeCondition(self);
 		}
 
 		public virtual int GetConversionCost(ActorInfo inputUnit, ActorInfo outputUnit)
@@ -191,6 +215,49 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 				return 0;
 
 			return valued.Cost;
+		}
+
+		void GrantCondition(Actor self)
+		{
+			if (string.IsNullOrEmpty(Info.ConvertingCondition) || conditionToken != Actor.InvalidConditionToken)
+				return;
+
+			conditionToken = self.GrantCondition(Info.ConvertingCondition);
+		}
+
+		void RevokeCondition(Actor self)
+		{
+			if (conditionToken == Actor.InvalidConditionToken)
+				return;
+
+			conditionToken = self.RevokeCondition(conditionToken);
+		}
+
+		IEnumerable<IOrderTargeter> IIssueOrder.Orders
+		{
+			get
+			{
+				if (IsTraitDisabled || !Info.EjectOnDeploy || !queue.Any())
+					yield break;
+
+				yield return new DeployOrderTargeter(OrderID, 1);
+			}
+		}
+
+		Order IIssueOrder.IssueOrder(Actor self, IOrderTargeter order, in Target target, bool queued)
+		{
+			if (order.OrderID == OrderID)
+				return new Order(order.OrderID, self, false);
+
+			return null;
+		}
+
+		void IResolveOrder.ResolveOrder(Actor self, Order order)
+		{
+			if (order.OrderString != OrderID)
+				return;
+
+			ejectAll = true;
 		}
 
 		float ISelectionBar.GetValue()
