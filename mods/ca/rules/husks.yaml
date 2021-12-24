@@ -994,12 +994,15 @@ ORCA.Husk.Empty.EMP:
 	Inherits: ^EmpVisualEffect
 
 OCAR.Husk:
-	Inherits: ^PlaneHusk
+	Inherits: ^HelicopterHusk
 	Tooltip:
 		Name: Orca Carryall
 	Aircraft:
 		TurnSpeed: 4
 		Speed: 46
+	FallsToEarth:
+		Velocity: 86
+		MaximumSpinSpeed: 20
 	SmokeTrailWhenDamaged:
 		Offset: -427,0,0
 		MinDamage: Undamaged
@@ -1576,12 +1579,14 @@ SCRN.Husk.Empty.EMP:
 	Inherits: ^EmpVisualEffect
 
 ORCB.Husk:
-	Inherits: ^PlaneHusk
+	Inherits: ^HelicopterHusk
 	Tooltip:
 		Name: Orca Bomber
 	Aircraft:
 		TurnSpeed: 4
 		Speed: 155
+	FallsToEarth:
+		Velocity: 86
 	SmokeTrailWhenDamaged:
 		Offset: -427,0,0
 		MinDamage: Undamaged

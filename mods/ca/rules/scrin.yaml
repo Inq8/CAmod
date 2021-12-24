@@ -2550,12 +2550,15 @@ STMR.Husk.EMP:
 	Inherits@EMP: ^EmpVisualEffect
 
 ENRV.Husk:
-	Inherits: ^PlaneHusk
+	Inherits: ^HelicopterHusk
 	Tooltip:
 		Name: Enervator
 	Aircraft:
 		TurnSpeed: 14
 		Speed: 170
+	FallsToEarth:
+		MaximumSpinSpeed: 20
+		Velocity: 86
 	SmokeTrailWhenDamaged:
 		Offset: -427,0,0
 		MinDamage: Undamaged
@@ -2590,8 +2593,6 @@ DEVA.Husk:
 		Speed: 35
 	FallsToEarth:
 		MaximumSpinSpeed: 0
-		Moves: True
-		Velocity: 30
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -2637,8 +2638,6 @@ PAC.Husk:
 		Speed: 30
 	FallsToEarth:
 		MaximumSpinSpeed: 0
-		Moves: True
-		Velocity: 35
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -3643,7 +3642,7 @@ SREP:
 		Description: Repairs vehicles for credits.
 		IconPalette: chromes
 	Valued:
-		Cost: 1200
+		Cost: 1000
 	Tooltip:
 		Name: Repair Bay
 	Building:
