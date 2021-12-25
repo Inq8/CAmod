@@ -6039,6 +6039,16 @@ CHPR:
 	GrantConditionOnPrerequisite@TEMPORALFLUX:
 		Condition: tflx-upgrade
 		Prerequisites: tflx.upgrade
+	RejectsOrders@AICHPR:
+		RequiresCondition: botwarping
+	GrantConditionOnAttack@AICHPR:
+		Condition: botwarping
+		ArmamentNames: primary
+		RevokeDelay: 75
+		RequiresCondition: botowner
+	GrantConditionOnBotOwner@AICHPR:
+		Condition: botowner
+		Bots: brutal, vhard, hard, normal, easy, naval
 
 CRYO:
 	Inherits: ^TankTD
