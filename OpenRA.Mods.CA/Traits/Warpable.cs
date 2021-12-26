@@ -50,7 +50,7 @@ namespace OpenRA.Mods.CA.Traits
 		readonly WarpableInfo info;
 		readonly Health health;
 		readonly int requiredDamage;
-		int scalingRequiredDamage { get { return 100 * health.HP / health.MaxHP * requiredDamage / 100; } }
+		int ScalingRequiredDamage { get { return 100 * health.HP / health.MaxHP * requiredDamage / 100; } }
 
 		int token = Actor.InvalidConditionToken;
 
@@ -74,7 +74,7 @@ namespace OpenRA.Mods.CA.Traits
 			tick = info.RevokeDelay;
 
 			if (info.ScaleWithCurrentHealthPercentage)
-				if (recievedDamage >= scalingRequiredDamage)
+				if (recievedDamage >= ScalingRequiredDamage)
 					self.Kill(damager, info.DamageTypes);
 			else
 				if (recievedDamage >= requiredDamage)
@@ -107,7 +107,7 @@ namespace OpenRA.Mods.CA.Traits
 				return 0;
 
 			if (info.ScaleWithCurrentHealthPercentage)
-				return (float)recievedDamage / scalingRequiredDamage;
+				return (float)recievedDamage / ScalingRequiredDamage;
 
 			return (float)recievedDamage / requiredDamage;
 		}
