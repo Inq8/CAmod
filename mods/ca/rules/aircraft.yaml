@@ -988,7 +988,6 @@ HIND:
 
 U2:
 	Inherits: ^NeutralPlane
-	Inherits@EMP: ^EmpDisable
 	Health:
 		HP: 200000
 	Tooltip:
@@ -1021,34 +1020,29 @@ U2:
 		ZOffset: -512
 		Color: cc550080
 		TrailLength: 10
-	SpawnActorOnDeath:
-		Actor: U2.Husk
-		RequiresCondition: !empdisable
-	SpawnActorOnDeath@EMP:
-		Actor: U2.Husk.EMP
-		RequiresCondition: empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -1c43,0,0
 		Interval: 2
 	RejectsOrders:
 	Interactable:
+	-SpawnActorOnDeath:
 	-MapEditorData:
 
-U2.Bomber:
+SMIG:
 	Inherits: ^NeutralPlane
 	Inherits@EMP: ^EmpDisable
 	RenderSprites:
-		Image: U2
+		Image: SMIG
 	Health:
-		HP: 30000
+		HP: 40000
 	Tooltip:
 		Name: Supersonic Bomber
 	Armor:
 		Type: Heavy
 	Aircraft:
 		CruiseAltitude: 2260
-		TurnSpeed: 20
-		Speed: 343
+		TurnSpeed: 12
+		Speed: 473
 		Repulsable: False
 		MaximumPitch: 56
 	-Selectable:
@@ -1075,16 +1069,16 @@ U2.Bomber:
 		PersistentTargeting: false
 		OpportunityFire: false
 	Armament:
-		Weapon: U2Bomb
+		Weapon: SMIGBomb
 	AmmoPool:
 		Ammo: 1
 	AirstrikeSlave:
 		LandingDistance: 1c0
 	SpawnActorOnDeath:
-		Actor: U2.Husk
+		Actor: SMIG.Husk
 		RequiresCondition: !empdisable
 	SpawnActorOnDeath@EMP:
-		Actor: U2.Husk.EMP
+		Actor: SMIG.Husk.EMP
 		RequiresCondition: empdisable
 	SmokeTrailWhenDamaged:
 		Offset: -1c43,0,0
@@ -1094,6 +1088,7 @@ U2.Bomber:
 	Rearmable:
 		RearmActors: bori
 	-ActorLostNotification:
+	-MapEditorData:
 
 A10:
 	Inherits: ^PlaneTD
