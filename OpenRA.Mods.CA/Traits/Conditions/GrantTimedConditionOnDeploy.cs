@@ -31,6 +31,10 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("The condition granted after deploying.")]
 		public readonly string DeployedCondition = null;
 
+		[GrantedConditionReference]
+		[Desc("The condition granted after deploying.")]
+		public readonly string ChargingCondition = null;
+
 		[Desc("Cooldown in ticks until the unit can deploy.")]
 		public readonly int CooldownTicks;
 
@@ -84,6 +88,7 @@ namespace OpenRA.Mods.CA.Traits
 		readonly bool canTurn;
 		int deployedToken = Actor.InvalidConditionToken;
 		int deployingToken = Actor.InvalidConditionToken;
+		int chargingToken = Actor.InvalidConditionToken;
 
 		WithSpriteBody[] wsbs;
 
@@ -114,6 +119,7 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				ticks = Info.CooldownTicks;
 				deployState = TimedDeployState.Charging;
+				chargingToken = self.GrantCondition(Info.ChargingCondition);
 			}
 
 			base.Created(self);
@@ -234,6 +240,9 @@ namespace OpenRA.Mods.CA.Traits
 
 			deployState = TimedDeployState.Charging;
 			ticks = Info.CooldownTicks;
+
+			if (chargingToken == Actor.InvalidConditionToken)
+				chargingToken = self.GrantCondition(Info.ChargingCondition);
 		}
 
 		void ITick.Tick(Actor self)
@@ -250,6 +259,8 @@ namespace OpenRA.Mods.CA.Traits
 				{
 					ticks = Info.DeployedTicks;
 					deployState = TimedDeployState.Ready;
+					if (chargingToken != Actor.InvalidConditionToken)
+						chargingToken = self.RevokeCondition(chargingToken);
 				}
 				else
 					RevokeDeploy();

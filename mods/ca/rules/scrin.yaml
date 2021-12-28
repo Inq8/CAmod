@@ -583,13 +583,17 @@ MAST:
 		HP: 11000
 	Mobile:
 		Speed: 56
+	RevealsShroud:
+		Range: 6c0
 	Armament@PRIMARY:
 		Weapon: EnslaveInfantry
 		LocalOffset: 150,0,400
+		PauseOnCondition: !ammo || charging || deployed
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: EnslaveVehicle
 		LocalOffset: 150,0,400
+		PauseOnCondition: !ammo || charging || deployed
 	MindController:
 		ArmamentNames: primary, secondary
 		Capacity: 3
@@ -601,6 +605,27 @@ MAST:
 		Offset: 0,0,511
 		Angle: 32
 		Width: 116
+	PeriodicExplosion:
+		Weapon: MindSparkVisual
+		LocalOffset: 0,0,128
+		InitialDelay: 10
+		RequiresCondition: deployed && !being-warped
+	PeriodicExplosionOnSlaves:
+		Weapon: MindSparkSpawner
+		InitialDelay: 18
+		RequiresCondition: deployed && !being-warped
+		KillSlaveTypes: Infantry
+		KillSlavesDamageTypes: BulletDeath
+		PostExplosionAction: Neutralize
+	GrantTimedConditionOnDeploy:
+		DeployedTicks: 35
+		CooldownTicks: 175
+		DeployedCondition: deployed
+		ChargingCondition: charging
+		ShowSelectionBar: true
+		StartsFullyCharged: true
+		Voice: Action
+		PauseOnCondition: being-warped
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	ProducibleWithLevel:
@@ -626,6 +651,12 @@ MAST:
 		Offset: 0,0,400
 	Passenger:
 		CustomPipType: red
+	AmmoPool:
+		Ammo: 1
+		AmmoCondition: ammo
+	ReloadAmmoPool:
+		Delay: 35
+		Count: 1
 
 #
 # ---- Vehicles
@@ -4366,6 +4397,45 @@ BUZZ.AI:
 	Mobile:
 		Speed: 33
 		Locomotor: cloud
+
+MSPK:
+	Interactable:
+	Tooltip:
+		Name: Mind Spark
+	RenderSprites:
+		Image: mindsparkanim
+		Palette: caneon
+	WithSpriteBody:
+	ClassicFacingBodyOrientation:
+		QuantizedFacings: 1
+	HiddenUnderFog:
+		Type: CenterPosition
+	HitShape:
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+	Health:
+		HP: 1
+	PeriodicExplosion@1:
+		Weapon: MindSparkZapper
+	PeriodicExplosion@2:
+		Weapon: MindSparkHeroZapper
+	Aircraft:
+		CanHover: True
+		Speed: 15
+		CruiseAltitude: 1
+		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,Water,Tree,River
+	KillsSelf:
+		Delay: 325
+	Wanders:
+		WanderMoveRadius: 1
+		ReduceMoveRadiusDelay: 3
+	WithDeathAnimation:
+		UseDeathTypeSuffix: false
+		CrushedSequence: die
+		FallbackSequence: die
+		DeathSequencePalette: caneon
+		DeathPaletteIsPlayerPalette: false
 
 camera.rift:
 	Interactable:

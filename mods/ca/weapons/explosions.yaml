@@ -875,9 +875,26 @@ Mindblast:
 		ValidRelationships: Enemy, Neutral
 		Versus:
 			None: 15
-			Wood: 95
+			Wood: 100
 			Concrete: 100
 			Brick: 100
-			Heavy: 90
-			Light: 75
+			Heavy: 85
+			Light: 70
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+
+MindblastSlave:
+	Inherits: Mindblast
+	Warhead@Eff: CreateEffect
+		Explosions: mindblastsm
+	Warhead@1Dam: SpreadDamage
+		Spread: 0c512
+		Damage: 40000
+		Falloff: 100, 50, 25, 7, 0
+		Versus:
+			None: 30
+	Warhead@2Dam: SpreadDamage
+		Damage: 50000
+		Range: 0, 1c0, 1c512, 2c512
+		Falloff: 100, 100, 80, 10
+		ValidTargets: Hero
+		ValidRelationships: Enemy, Neutral

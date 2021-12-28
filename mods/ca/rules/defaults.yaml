@@ -1924,6 +1924,9 @@
 	TeleportNetworkTransportable:
 	WithIdleOverlay@SUPPRESSIONSIPHON:
 		Image: siphon-overlay-sm
+	DamageMultiplier@MINDCONTROL:
+		Modifier: 70
+		RequiresCondition: mindcontrolled
 
 ^Soldier:
 	Inherits: ^Infantry
@@ -2706,6 +2709,8 @@
 		Palette: effect
 		Position: TopLeft
 		ValidRelationships: Ally, Enemy, Neutral
+	Targetable@HERO:
+		TargetTypes: Hero
 
 ^FakeBuilding:
 	Inherits: ^Building

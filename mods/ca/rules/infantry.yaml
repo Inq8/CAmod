@@ -658,6 +658,7 @@ SPY:
 		VoiceSet: SpyVoice
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+	-Targetable@HERO:
 
 E7:
 	Inherits: ^Soldier
@@ -2858,6 +2859,7 @@ BRUT.Mutating:
 	-AttackSounds:
 	-WithInfantryBody:
 	-WithDeathAnimation:
+	-MapEditorData:
 
 SHAD:
 	Inherits: ^Soldier
@@ -3045,6 +3047,7 @@ SGLI.crashing:
 		RequiresCondition: !being-warped
 	RejectsOrders:
 		-RequiresCondition:
+	-MapEditorData:
 
 SGLI.deployed:
 	Inherits: SGLI
@@ -3073,6 +3076,7 @@ SGLI.deployed:
 	-GrantCondition@AUTODEPLOY:
 	RejectsOrders:
 		-RequiresCondition:
+	-MapEditorData:
 
 SGLI.discarded:
 	Inherits@1: ^SpriteActor
@@ -3097,6 +3101,8 @@ SGLI.discarded:
 		HP: 1000
 	Armor:
 		Type: None
+	MapEditorData:
+		Categories: Husk
 
 BH:
 	Inherits: ^Soldier
@@ -3190,10 +3196,12 @@ YURI:
 	Armament@PRIMARY:
 		Weapon: EnslaveInfantry
 		LocalOffset: 150,0,400
+		PauseOnCondition: !ammo || charging || deployed
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: EnslaveVehicle
 		LocalOffset: 150,0,400
+		PauseOnCondition: !ammo || charging || deployed
 	Armament@AIDummyAiming: ## Hack: Make AI deploy to attack structures
 		PauseOnCondition: being-warped
 		Name: aidummy
@@ -3220,14 +3228,22 @@ YURI:
 		LocalOffset: 0,0,128
 		InitialDelay: 18
 		RequiresCondition: deployed && !being-warped
+	PeriodicExplosionOnSlaves:
+		Weapon: MindblastSlave
+		InitialDelay: 18
+		RequiresCondition: deployed && !being-warped
+		KillSlaveTypes: Infantry
+		KillSlavesDamageTypes: BulletDeath
+		PostExplosionAction: Neutralize
 	GrantTimedConditionOnDeploy:
 		DeployedTicks: 35
-		CooldownTicks: 100
-		Facing: 96
+		CooldownTicks: 200
 		DeployedCondition: deployed
 		DeployingCondition: deploying
 		DeployAnimation: deployed
+		ChargingCondition: charging
 		ShowSelectionBar: true
+		StartsFullyCharged: true
 		Voice: Demolish
 		PauseOnCondition: being-warped
 	AttackFrontal:
@@ -3273,6 +3289,12 @@ YURI:
 	GrantConditionOnBotOwner@IAMBOT:
 		Condition: botowner
 		Bots: brutal, vhard, hard, normal, easy, naval
+	AmmoPool:
+		Ammo: 1
+		AmmoCondition: ammo
+	ReloadAmmoPool:
+		Delay: 35
+		Count: 1
 
 SEAL:
 	Inherits: RMBO
@@ -3345,3 +3367,4 @@ SEAL:
 		SelectionBarColor: dd0000
 	WithDecoration@COMMANDOSKULL:
 		Sequence: pip-seal
+	-Targetable@HERO:

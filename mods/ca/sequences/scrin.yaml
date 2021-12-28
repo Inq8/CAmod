@@ -1510,7 +1510,13 @@ mindcontrol:
 		Tick: 40
 		ZOffset: 2048
 		Length: *
-		Offset: 0,-4
+		Offset: 0,-8
+	reverse: mindcontrol
+		Frames: 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0
+		Tick: 40
+		ZOffset: 2048
+		Length: *
+		Offset: 0,-8
 
 riftanim:
 	idle: riftloop
@@ -1540,6 +1546,18 @@ miniriftanim:
 		Length: *
 		ZOffset: 2048
 		BlendMode: Subtractive
+
+mindsparkanim:
+	idle: mindspark
+		Tick: 40
+		Length: 15
+		ZOffset: 2048
+		BlendMode: Additive
+	die: mindspark
+		Start: 15
+		Length: 7
+		ZOffset: 2048
+		BlendMode: Additive
 
 buzz:
 	idle: buzz

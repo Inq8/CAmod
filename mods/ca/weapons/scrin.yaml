@@ -49,10 +49,10 @@ DisintegratorBeamAA:
 
 EnslaveInfantry:
 	Range: 7c0
-	ReloadDelay: 25
+	ReloadDelay: 35
 	Projectile: InstantHit
 	ValidTargets: MindControllable
-	InvalidTargets: Vehicle, Defense, MindControlImmune
+	InvalidTargets: Vehicle, Ship, Defense, MindControlImmune
 	Warhead@1Dam: TargetDamage
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
@@ -66,7 +66,7 @@ EnslaveVehicle:
 	ReloadDelay: 100
 	Projectile: InstantHit
 	ValidTargets: MindControllable
-	InvalidTargets: Infantry, MindControlImmune
+	InvalidTargets: Infantry, Defense, MindControlImmune
 	Warhead@1Dam: TargetDamage
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
@@ -1459,3 +1459,72 @@ FeederExplode:
 		AimChance: 0
 		ValidTargets: Ground, Water, Infantry, Vehicle
 		ThrowWithoutTarget: true
+
+MindSparkVisual:
+	ReloadDelay: 100
+	Warhead@2Eff: CreateEffect
+		Explosions: reverse
+		ExplosionPalette: scrin
+		Image: mindcontrol
+		ValidTargets: Ground
+		ImpactSounds: mastermind-shatter.aud
+
+MindSparkSpawner:
+	ReloadDelay: 1
+	Projectile: InstantExplode
+	Warhead@Spawn: SpawnActor
+		Actors: mspk
+		Range: 1
+		ForceGround: false
+		ValidTargets: Ground, Water
+	Warhead@Suppress: GrantExternalCondition
+		Range: 2c0
+		Duration: 325
+		Condition: suppression
+		ValidRelationships: Enemy, Neutral
+
+MindSparkZapper:
+	ReloadDelay: 50
+	Range: 1c0
+	Projectile: InstantHit
+	Warhead@ARC: FireShrapnel
+		Weapon: MindSparkArc
+		AimChance: 100
+		Amount: 1
+
+MindSparkHeroZapper:
+	ReloadDelay: 400
+	Inherits: MindSparkZapper
+	Warhead@ARC: FireShrapnel
+		Weapon: MindSparkHeroArc
+
+MindSparkArc:
+	Range: 2c0
+	ValidTargets: Infantry, Vehicle, Ship, Defense
+	Report: mindspark-zap1.aud, mindspark-zap2.aud
+	Projectile: PlasmaBeam
+		Duration: 7
+		Colors: ba00ff66
+		InnerLightness: 200
+		OuterLightness: 100
+		Radius: 1
+		Distortion: 250
+		DistortionAnimation: 150
+		SegmentLength: 350
+		ZOffset: 1027
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 25000
+		Versus:
+			Light: 25
+			Heavy: 25
+			Concrete: 10
+		DamageTypes: ElectricityDeath
+		ValidTargets: Infantry, Vehicle, Ship, Defense
+		ValidRelationships: Enemy
+
+MindSparkHeroArc:
+	Inherits: MindSparkArc
+	ValidTargets: Hero
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Hero
