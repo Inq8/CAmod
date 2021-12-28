@@ -1521,40 +1521,10 @@ MindSparkArc:
 			Concrete: 10
 		DamageTypes: ElectricityDeath
 		ValidTargets: Infantry, Vehicle, Ship, Defense
-		ValidRelationships: Enemy, Neutral
+		ValidRelationships: Enemy
 
 MindSparkHeroArc:
 	Inherits: MindSparkArc
 	ValidTargets: Hero
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Hero
-
-MastermindDemolish:
-	Inherits: ^ScrinLaser
-	ReloadDelay: 25
-	ValidTargets: Structure
-	Report: mastermind-demolish1.aud, mastermind-demolish2.aud
-	Range: 2c512
-	-Projectile:
-	Projectile: PlasmaBeam
-		Duration: 6
-		Colors: 7519c315, c319a515
-		InnerLightness: 240
-		Radius: 2
-		Distortion: 128
-		DistortionAnimation: 64
-		SegmentLength: 160
-		CenterBeamColor: ffffffff
-		CenterBeam: true
-		CenterBeamWidth: 42
-		SecondaryCenterBeam: true
-		SecondaryCenterBeamColor: fcdbff44
-		ZOffset: 2048
-	Warhead@1Dam: SpreadDamage
-		Spread: 42
-		Damage: 15000
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
-		ValidTargets: Structure
-		Versus:
-			Wood: 100
-			Concrete: 100

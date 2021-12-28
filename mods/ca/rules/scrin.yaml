@@ -594,11 +594,6 @@ MAST:
 		Weapon: EnslaveVehicle
 		LocalOffset: 150,0,400
 		PauseOnCondition: !ammo || charging || deployed
-	Armament@TERTIARY:
-		Name: tertiary
-		Weapon: MastermindDemolish
-		LocalOffset: 150,0,400
-		PauseOnCondition: charging || deploying
 	MindController:
 		ArmamentNames: primary, secondary
 		Capacity: 3
@@ -621,7 +616,7 @@ MAST:
 		RequiresCondition: deployed && !being-warped
 		KillSlaveTypes: Infantry
 		KillSlavesDamageTypes: BulletDeath
-		Unlink: true
+		PostExplosionAction: Neutralize
 	GrantTimedConditionOnDeploy:
 		DeployedTicks: 35
 		CooldownTicks: 175
@@ -633,7 +628,6 @@ MAST:
 		PauseOnCondition: being-warped
 	AttackFrontal:
 		PauseOnCondition: being-warped
-		Armaments: primary, secondary, tertiary
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	-Crushable:
@@ -642,6 +636,12 @@ MAST:
 	VoiceAnnouncement:
 		RequiresCondition: produced
 		Voice: Build
+	CaptureManager:
+	Captures:
+		CaptureTypes: building
+		PlayerExperience: 25
+		CaptureDelay: 150
+		ConsumedByCapture: false
 	Targetable:
 		TargetTypes: Ground, Infantry, MindControlImmune
 	WithIdleOverlay@mindcontrolling:
@@ -4430,6 +4430,12 @@ MSPK:
 	Wanders:
 		WanderMoveRadius: 1
 		ReduceMoveRadiusDelay: 3
+	WithDeathAnimation:
+		UseDeathTypeSuffix: false
+		CrushedSequence: die
+		FallbackSequence: die
+		DeathSequencePalette: caneon
+		DeathPaletteIsPlayerPalette: false
 
 camera.rift:
 	Interactable:

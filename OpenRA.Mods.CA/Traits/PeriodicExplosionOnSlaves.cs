@@ -20,6 +20,13 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	public enum ExplodedSlaveAction
+	{
+		DoNothing,
+		Neutralize,
+		Unlink
+	}
+
 	[Desc("Explodes a weapon at the actor's position when enabled."
 		+ "Reload/BurstDelays are used as explosion intervals.")]
 	public class PeriodicExplosionOnSlavesInfo : ConditionalTraitInfo, IRulesetLoaded, Requires<MindControllerInfo>
@@ -48,8 +55,8 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If true, slave dies when explosion is triggered.")]
 		public readonly BitSet<DamageType> KillSlavesDamageTypes = default(BitSet<DamageType>);
 
-		[Desc("Unlink slaves when explosion is triggered.")]
-		public readonly bool Unlink = false;
+		[Desc("What happens to surviving slaves after the explosion?")]
+		public readonly ExplodedSlaveAction PostExplosionAction = ExplodedSlaveAction.DoNothing;
 
 		public override object Create(ActorInitializer init) { return new PeriodicExplosionOnSlaves(init.Self, this); }
 
@@ -182,8 +189,16 @@ namespace OpenRA.Mods.CA.Traits
 						slaves[i].Kill(slaves[i], Info.KillSlavesDamageTypes);
 				}
 
-				if (Info.Unlink)
+				if (Info.PostExplosionAction == ExplodedSlaveAction.Unlink || Info.PostExplosionAction == ExplodedSlaveAction.Neutralize)
 					mc.ReleaseSlaves(self, 0);
+
+				if (Info.PostExplosionAction == ExplodedSlaveAction.Neutralize)
+				{
+					for (int i = 0; i < slaves.Count; i++) {
+						slaves[i].ChangeOwner(self.World.Players.First(p => p.InternalName == "Neutral"));
+						slaves[i].CancelActivity();
+					}
+				}
 			}
 		}
 
