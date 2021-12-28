@@ -9,6 +9,7 @@
 #endregion
 
 using OpenRA.Mods.CA.Activities;
+using OpenRA.Mods.Common.Activities.Air;
 using OpenRA.Mods.Common.Traits;
 
 namespace OpenRA.Mods.CA.Traits
@@ -33,7 +34,7 @@ namespace OpenRA.Mods.CA.Traits
 			int unloadRange = 5;
 
 			self.CancelActivity();
-			self.QueueActivity(new ParadropCargo(self, WDist.FromCells(unloadRange), true));
+			self.QueueActivity(new Activities.ParaDropCargo(self, WDist.FromCells(unloadRange), true));
 		}
 	}
 }
