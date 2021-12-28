@@ -569,6 +569,23 @@ TRAN:
 		AltitudeVelocity: 0c58
 		TakeoffSounds: htoff1.aud
 		LandingSounds: hland1.aud
+	ParaDrop:
+		ChuteSound: chute1.aud
+	AmmoPool:
+		Ammo: 1
+		PipCount: 0
+	ReloadAmmoPool:
+		Delay: 60
+		Count: 1
+		RequiresCondition: cargo
+	AttackAircraft:
+		FacingTolerance: 20
+		AttackType: Strafe
+		StrafeRunLength: 5c0
+	Armament:
+		Weapon: DropDummy
+	Rearmable:
+		RearmActors: hpad, hpad.td
 	WithIdleOverlay@ROTOR1AIR:
 		Offset: 597,0,213
 		Sequence: rotor
@@ -588,6 +605,7 @@ TRAN:
 	Cargo:
 		Types: Infantry
 		MaxWeight: 8
+		LoadedCondition: cargo
 	SpawnActorOnDeath:
 		Actor: TRAN.Husk
 		RequiresCondition: !empdisable && !being-warped
@@ -597,6 +615,10 @@ TRAN:
 	Selectable:
 		DecorationBounds: 40,36
 	WithCargoHatchAnimation:
+	ParachuteCargoOnCondition:
+		RequiresCondition: dropcargo
+	GrantConditionOnAttack:
+		Condition: dropcargo
 
 TRAN.paradrop:
 	Inherits: TRAN
@@ -610,8 +632,11 @@ TRAN.paradrop:
 		Speed: 180
 		AltitudeVelocity: 0c100
 		Repulsable: False
+<<<<<<< Updated upstream
 	ParaDrop:
 		ChuteSound: chute1.aud
+=======
+>>>>>>> Stashed changes
 	RejectsOrders:
 	Interactable:
 	GivesExperience:
@@ -620,15 +645,24 @@ TRAN.paradrop:
 	-Selectable:
 	-Voiced:
 	-Targetable@TEMPORAL:
+<<<<<<< Updated upstream
 	-RevealsShroud:
 	-RevealsShroud@GAPGEN:
+=======
+	-AttackAircraft:
+	-Armament:
+>>>>>>> Stashed changes
 
 HALO:
 	Inherits: TRAN
 	RenderSprites:
 		Image: halo
 	Tooltip:
+<<<<<<< Updated upstream
 		Name: Halo
+=======
+		Name: Heavy Transport
+>>>>>>> Stashed changes
 	Valued:
 		Cost: 1000
 	Cargo:
@@ -652,6 +686,13 @@ HALO:
 	SpawnActorOnDeath@EMP:
 		Actor: HALO.Husk.EMP
 		RequiresCondition: empdisable && !being-warped
+<<<<<<< Updated upstream
+=======
+	ParachuteCargoOnCondition:
+		RequiresCondition: dropcargo
+	GrantConditionOnAttack:
+		Condition: dropcargo
+>>>>>>> Stashed changes
 
 HALO.paradrop:
 	Inherits: HALO
@@ -662,15 +703,25 @@ HALO.paradrop:
 	GivesExperience:
 		Experience: 1000
 	RejectsOrders:
+<<<<<<< Updated upstream
 	Interactable:
 	ParaDrop:
 		ChuteSound: chute1.aud
+=======
+	ParaDrop:
+		DropRange: 4c0
+>>>>>>> Stashed changes
 	-Buildable:
 	-Targetable@TEMPORAL:
 	-Selectable:
 	-Voiced:
+<<<<<<< Updated upstream
 	-RevealsShroud:
 	-RevealsShroud@GAPGEN:
+=======
+	-AttackAircraft:
+	-Armament:
+>>>>>>> Stashed changes
 
 NHAW:
 	Inherits: ^Helicopter
