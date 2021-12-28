@@ -129,7 +129,8 @@ namespace OpenRA.Mods.CA.Traits
 
 				var slaves = mc.Slaves.ToList();
 
-				for (int i = 0; i < slaves.Count; i++) {
+				for (int i = 0; i < slaves.Count; i++)
+				{
 					var slave = slaves[i];
 					var initialBurst = burst;
 					var initialFireDelay = fireDelay;
@@ -194,7 +195,8 @@ namespace OpenRA.Mods.CA.Traits
 
 				if (Info.PostExplosionAction == ExplodedSlaveAction.Neutralize)
 				{
-					for (int i = 0; i < slaves.Count; i++) {
+					for (int i = 0; i < slaves.Count; i++)
+					{
 						slaves[i].ChangeOwner(self.World.Players.First(p => p.InternalName == "Neutral"));
 						slaves[i].CancelActivity();
 					}
