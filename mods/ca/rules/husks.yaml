@@ -158,7 +158,7 @@ TRAN.Husk:
 	Tooltip:
 		Name: Chinook
 	Aircraft:
-		TurnSpeed: 4
+		TurnSpeed: 1
 		Speed: 149
 	WithIdleOverlay@PRIMARY:
 		Offset: -597,0,341
@@ -201,12 +201,37 @@ TRAN.Husk2:
 	-TransformOnCapture:
 	-InfiltrateForTransform:
 
+HALO.Husk:
+	Inherits: ^HelicopterHusk
+	Tooltip:
+		Name: Heavy Transport
+	Aircraft:
+		TurnSpeed: 1
+		Speed: 149
+	WithIdleOverlay@PRIMARY:
+		Offset: 260,0,343
+		Sequence: rotor
+	RevealsShroud:
+		Range: 8c0
+		MinRange: 6c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 6c0
+		Type: GroundPosition
+	RenderSprites:
+		Image: halo
+
+HALO.Husk.EMP:
+	Inherits: HALO.Husk
+	Inherits: ^EmpVisualEffect
+
 NHAW.Husk:
 	Inherits: ^HelicopterHusk
 	Tooltip:
 		Name: Nighthawk
 	Aircraft:
-		TurnSpeed: 4
+		TurnSpeed: 1
 		Speed: 149
 	WithIdleOverlay@PRIMARY:
 		Offset: 237,0,263

@@ -1710,7 +1710,7 @@ HPAD:
 	ProvidesPrerequisite@all:
 		Prerequisite: aircraft.all
 	ProvidesPrerequisiteValidatedFaction@chinook:
-		Factions: allies, england, france, germany, soviet, russia, ukraine, iraq, yuri, gdi, zocom, eagle, talon, arc, nod, blackh, legion, marked, shadow
+		Factions: allies, england, france, germany, gdi, zocom, eagle, talon, arc, nod, blackh, legion, marked, shadow
 		Prerequisite: aircraft.chinook
 	ProvidesPrerequisiteValidatedFaction@nhaw:
 		Factions: usa
@@ -1718,6 +1718,12 @@ HPAD:
 	ProvidesPrerequisiteValidatedFaction@hind:
 		Factions: russia, ukraine, yuri
 		Prerequisite: aircraft.hind
+	ProvidesPrerequisite@paratroopers:
+		Factions: ukraine, iraq
+		Prerequisite: support.paratroopers
+	ProvidesPrerequisite@stormtroopers:
+		Factions: russia
+		Prerequisite: russia.paratroopers
 	ProvidesPrerequisite@buildingname:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
@@ -1725,6 +1731,54 @@ HPAD:
 	InfiltrateForSupportPower:
 		Types: SpyInfiltrate
 		Proxy: powerproxy.paratroopers2
+	ParatroopersPower@paratroopers:
+		OrderName: paratroopers
+		UnitType: halo.paradrop
+		Prerequisites: ~support.paratroopers, ~techlevel.low
+		Icon: paratroopers
+		ChargeInterval: 7500
+		Description: Paratroopers
+		LongDesc: A Halo Transport drops a squad of infantry\nanywhere on the map.
+		SquadSize: 1
+		SquadOffset: 0,1792,0
+		DropItems: E1,E1,E2,E3,E3,E1,E1,E1
+		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
+		SelectTargetSpeechNotification: SelectTarget
+		EndChargeSpeechNotification: Reinforce
+		AllowImpassableCells: false
+		QuantizedFacings: 8
+		CameraActor: camera.paradrop
+		DisplayBeacon: true
+		BeaconPoster: pinficon
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+	ParatroopersPower@Russianparatroopers:
+		OrderName: stormtroopers
+		UnitType: halo.paradrop
+		Prerequisites: ~russia.paratroopers, ~techlevel.high
+		Icon: stormtroopers
+		ChargeInterval: 9000
+		Description: Storm-troopers
+		LongDesc: A Halo Transport drops a squad of shock troops\nanywhere on the map.
+		SquadSize: 1
+		SquadOffset: 0,1792,0
+		DropItems: SHOK,SHOK,SHOK,SHOK,SHOK
+		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
+		SelectTargetSpeechNotification: SelectTarget
+		EndChargeSpeechNotification: Reinforce
+		AllowImpassableCells: false
+		QuantizedFacings: 8
+		CameraActor: camera.paradrop
+		DisplayBeacon: true
+		BeaconPoster: pinficon
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
 	ClassicAirstrikePower@Strafe:
 		OrderName: strafe
 		Squad:
@@ -1817,9 +1871,6 @@ AFLD:
 	ProvidesPrerequisite@yuri:
 		Factions: yuri
 		Prerequisite: aircraft.yuri
-	ProvidesPrerequisite@paratroopers:
-		Factions: ukraine, iraq
-		Prerequisite: support.paratroopers
 	ProvidesPrerequisite@parabombs:
 		Factions: russia, yuri
 		Prerequisite: support.parabombs
@@ -1842,52 +1893,6 @@ AFLD:
 		ClockSequence: clock
 		CircleSequence: circles
 		UseDirectionalTarget: true
-		DirectionArrowAnimation: paradirection
-	ParatroopersPower@paratroopers:
-		OrderName: paratroopers
-		Prerequisites: ~support.paratroopers, ~techlevel.low
-		Icon: paratroopers
-		ChargeInterval: 7500
-		Description: Paratroopers
-		LongDesc: A Badger drops a squad of infantry\nanywhere on the map.
-		SquadSize: 1
-		SquadOffset: 0,1792,0
-		DropItems: E1,E1,E2,E3,E3,E1,E1,E1
-		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
-		SelectTargetSpeechNotification: SelectTarget
-		EndChargeSpeechNotification: Reinforce
-		AllowImpassableCells: false
-		QuantizedFacings: 8
-		CameraActor: camera.paradrop
-		DisplayBeacon: true
-		BeaconPoster: pinficon
-		ArrowSequence: arrow
-		ClockSequence: clock
-		CircleSequence: circles
-		UseDirectionalTarget: True
-		DirectionArrowAnimation: paradirection
-	ParatroopersPower@Russianparatroopers:
-		OrderName: stormtroopers
-		Prerequisites: ~aircraft.russia, ~techlevel.high
-		Icon: stormtroopers
-		ChargeInterval: 9000
-		Description: Storm-troopers
-		LongDesc: A Badger drops a squad of shock troops\nanywhere on the map.
-		SquadSize: 1
-		SquadOffset: 0,1792,0
-		DropItems: SHOK,SHOK,SHOK,SHOK,SHOK
-		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
-		SelectTargetSpeechNotification: SelectTarget
-		EndChargeSpeechNotification: Reinforce
-		AllowImpassableCells: false
-		QuantizedFacings: 8
-		CameraActor: camera.paradrop
-		DisplayBeacon: true
-		BeaconPoster: pinficon
-		ArrowSequence: arrow
-		ClockSequence: clock
-		CircleSequence: circles
-		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@Russianparabombs:
 		OrderName: parabombs
