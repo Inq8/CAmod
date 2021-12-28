@@ -9,6 +9,8 @@
  */
 #endregion
 
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
@@ -20,6 +22,12 @@ namespace OpenRA.Mods.CA.Traits
 		"You will also want to add PrimaryBuildings: to let the user choose where new units should exit.")]
 	public class ClassicProductionQueueCAInfo : ClassicProductionQueueInfo
 	{
+		[Desc("If true, ignore BuildAtProductionType when calculating build duration, so all structures for this queue are counted.")]
+		public readonly bool CombinedBuildSpeedReduction = false;
+
+		[Desc("If true, any units being produced that have been replaced by an upgrade will be completed.")]
+		public readonly bool CompleteUpgradedInProgress = false;
+
 		public override object Create(ActorInitializer init) { return new ClassicProductionQueueCA(init, this); }
 	}
 
@@ -44,7 +52,11 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (Info.SpeedUp)
 			{
-				var type = Info.Type; // difference with ClassicProductionQueue is this line, so BuildAtProductionType no longer overrides the type
+				var type = bi.BuildAtProductionType ?? Info.Type;
+
+				// difference with ClassicProductionQueue, prevents BuildAtProductionType from overriding the type
+				if (Info.CombinedBuildSpeedReduction)
+					type = Info.Type;
 
 				var selfsameProductionsCount = self.World.ActorsWithTrait<Production>()
 					.Count(p => !p.Trait.IsTraitDisabled && !p.Trait.IsTraitPaused && p.Actor.Owner == self.Owner && p.Trait.Info.Produces.Contains(type));
@@ -73,5 +85,116 @@ namespace OpenRA.Mods.CA.Traits
 
 			return Util.ApplyPercentageModifiers(time, modifiers);
 		}
+
+		// overrides ProductionQueue.TickInner() so that the new ReplaceOrCancelUnbuildableItems() is called
+		protected override void TickInner(Actor self, bool allProductionPaused)
+		{
+			ReplaceOrCancelUnbuildableItems();
+
+			if (Queue.Count > 0 && !allProductionPaused)
+				Queue[0].Tick(playerResources);
+		}
+
+		// copied from ProductionQueue.CancelUnbuildableItems(), amended to allow in-place replacements due to upgrades
+		protected void ReplaceOrCancelUnbuildableItems()
+		{
+			if (Queue.Count == 0)
+				return;
+
+			var buildableNames = BuildableItems().Select(b => b.Name).ToHashSet();
+
+			var rules = self.World.Map.Rules;
+			var playerPower = self.Owner.PlayerActor.TraitOrDefault<PowerManager>();
+			var replacements = new Dictionary<string, ReplacementDetails>();
+
+			// EndProduction removes the item from the queue, so we enumerate
+			// by index in reverse to avoid issues with index reassignment
+			for (var i = Queue.Count - 1; i >= 0; i--)
+			{
+				if (buildableNames.Contains(Queue[i].Item))
+					continue;
+
+				var replaced = false;
+				Queue[i] = GetReplacement(Queue[i], replacements, buildableNames, rules, playerPower, out replaced);
+				if (replaced)
+					continue;
+
+				// Refund what's been paid so far
+				playerResources.GiveCash(Queue[i].TotalCost - Queue[i].RemainingCost);
+				EndProduction(Queue[i]);
+			}
+		}
+
+		ProductionItem GetReplacement(ProductionItem queueItem, Dictionary<string, ReplacementDetails> replacements, HashSet<string> buildableNames, Ruleset rules, PowerManager playerPower, out bool replaced)
+		{
+			replaced = false;
+
+			// if started already, and not set to complete any in progress, don't replace (will be cancelled and refunded)
+			if (queueItem.Started && !Info.CompleteUpgradedInProgress)
+				return queueItem;
+
+			if (!replacements.ContainsKey(queueItem.Item))
+			{
+				var upgradeableTo = rules.Actors[queueItem.Item].TraitInfoOrDefault<UpgradeableToInfo>();
+				var replacement = new ReplacementDetails();
+
+				if (upgradeableTo != null)
+				{
+					var replacementName = upgradeableTo.Actors.Where(a => buildableNames.Contains(a)).FirstOrDefault();
+					replacement.Info = rules.Actors[replacementName];
+					var valued = replacement.Info.TraitInfoOrDefault<ValuedInfo>();
+					replacement.Cost = valued != null ? valued.Cost : 0;
+				}
+
+				replacements[queueItem.Item] = replacement;
+			}
+
+			if (replacements[queueItem.Item].Info != null)
+			{
+				// if a replacement is buildable, but we've already started producing, we should be able to finish production
+				if (queueItem.Started)
+				{
+					replaced = true;
+					return queueItem;
+				}
+
+				var replacement = replacements[queueItem.Item];
+				var amountSpent = queueItem.TotalCost - queueItem.RemainingCost;
+
+				// if part-produced, deduct anything already spent from the new cost
+				if (amountSpent > 0)
+				{
+					if (amountSpent > replacement.Cost)
+						playerResources.GiveCash(amountSpent - replacement.Cost);
+
+					replacement.Cost = Math.Max(0, replacement.Cost - amountSpent);
+				}
+
+				var replacementItem = new ProductionItem(this, replacement.Info.Name, replacement.Cost, playerPower, () => self.World.AddFrameEndTask(_ =>
+				{
+					// Make sure the item hasn't been invalidated between the ProductionItem ticking and this FrameEndTask running
+					if (!Queue.Any(j => j.Done && j.Item == replacement.Info.Name))
+						return;
+
+					var isBuilding = replacement.Info.HasTraitInfo<BuildingInfo>();
+					if (isBuilding)
+						return;
+
+					if (BuildUnit(replacement.Info))
+						Game.Sound.PlayNotification(rules, self.Owner, "Speech", Info.ReadyAudio, self.Owner.Faction.InternalName);
+				}));
+
+				replaced = true;
+				return replacementItem;
+			}
+
+			return queueItem;
+		}
+	}
+
+	public class ReplacementDetails
+	{
+		public ActorInfo Info;
+		public int Cost;
 	}
 }
