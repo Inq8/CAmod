@@ -584,10 +584,13 @@ TRAN:
 		StrafeRunLength: 5c0
 		OpportunityFire: False
 		PersistentTargeting: False
-		Cursor: Ability
+		Cursor: ability
 		ForceFireIgnoresActors: True
+		RequiresCondition: cargo
 	Armament:
 		Weapon: DropDummy
+		Cursor: ability
+		OutsideRangeCursor: ability
 	Rearmable:
 		RearmActors: hpad, hpad.td
 	WithIdleOverlay@ROTOR1AIR:
@@ -623,6 +626,7 @@ TRAN:
 		RequiresCondition: dropcargo
 	GrantConditionOnAttack:
 		Condition: dropcargo
+		RevokeDelay: 15
 
 TRAN.paradrop:
 	Inherits: TRAN

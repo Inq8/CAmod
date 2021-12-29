@@ -9,7 +9,6 @@
 #endregion
 
 using OpenRA.Mods.CA.Activities;
-using OpenRA.Mods.Common.Activities.Air;
 using OpenRA.Mods.Common.Traits;
 
 namespace OpenRA.Mods.CA.Traits
@@ -17,6 +16,9 @@ namespace OpenRA.Mods.CA.Traits
 	public class ParachuteCargoOnConditionInfo : ConditionalTraitInfo
 	{
 		public override object Create(ActorInitializer init) { return new ParachuteCargoOnCondition(init, this); }
+
+		[Desc("Wait at least this many ticks between each drop.")]
+		public readonly int DropInterval = 5;
 	}
 
 	public class ParachuteCargoOnCondition : ConditionalTrait<ParachuteCargoOnConditionInfo>
@@ -31,10 +33,8 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override void TraitEnabled(Actor self)
 		{
-			int unloadRange = 5;
-
 			self.CancelActivity();
-			self.QueueActivity(new Activities.ParaDropCargo(self, WDist.FromCells(unloadRange), true));
+			self.QueueActivity(new Activities.ParadropCargo(self, info.DropInterval));
 		}
 	}
 }

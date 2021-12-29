@@ -19,84 +19,80 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Activities
 {
-	public class ParaDropCargo : Activity
+	public class ParadropCargo : Activity
 	{
 		readonly Actor self;
 		readonly Cargo cargo;
 		readonly INotifyUnload[] notifiers;
-		readonly bool unloadAll;
+		readonly int dropInterval;
 		readonly Aircraft aircraft;
 		readonly Mobile mobile;
-		readonly bool assignTargetOnFirstRun;
-		readonly WDist unloadRange;
 
 		Target destination;
-		bool flying;
+		int dropDelay;
 
-		public ParaDropCargo(Actor self, WDist unloadRange, bool unloadAll = true)
-			: this(self, Target.Invalid, unloadRange, unloadAll)
+		public ParadropCargo(Actor self, int dropInterval)
+			: this(self, Target.Invalid, dropInterval)
 		{
-			assignTargetOnFirstRun = true;
 		}
 
-		public ParaDropCargo(Actor self, in Target destination, WDist unloadRange, bool unloadAll = true)
+		public ParadropCargo(Actor self, in Target destination, int dropInterval)
 		{
 			this.self = self;
 			cargo = self.Trait<Cargo>();
 			notifiers = self.TraitsImplementing<INotifyUnload>().ToArray();
-			this.unloadAll = unloadAll;
 			aircraft = self.TraitOrDefault<Aircraft>();
 			mobile = self.TraitOrDefault<Mobile>();
 			this.destination = destination;
-			this.unloadRange = unloadRange;
+			this.dropInterval = dropInterval;
 		}
 
 		protected override void OnFirstRun(Actor self)
 		{
-			if (assignTargetOnFirstRun)
-				destination = Target.FromCell(self.World, self.Location);
-
-			// Move to the target destination
-			QueueChild(new FlyAttackRun(self, destination, unloadRange));
-			flying = !aircraft.AtLandAltitude;
 		}
 
 		public override bool Tick(Actor self)
 		{
+			if (dropDelay > 0)
+			{
+				dropDelay--;
+				return false;
+			}
+
 			if (IsCanceling || cargo.IsEmpty(self))
 				return true;
 
 			if (cargo.CanUnload())
 			{
+				QueueChild(new FlyForward(self, dropInterval));
 				foreach (var inu in notifiers)
 					inu.Unloading(self);
 
-				var actor = cargo.Peek(self);
 				var spawn = self.CenterPosition;
+				var dropActor = cargo.Peek(self);
+				var dropCell = self.Location;
+				var dropPositionable = dropActor.Trait<IPositionable>();
+				var dropSubCell = dropPositionable.GetAvailableSubCell(dropCell);
 
 				cargo.Unload(self);
 				self.World.AddFrameEndTask(w =>
 				{
-					if (actor.Disposed)
+					if (dropActor.Disposed)
 						return;
 
-					var move = actor.Trait<IMove>();
-					var pos = actor.Trait<IPositionable>();
+					dropPositionable.SetPosition(dropActor, dropCell, dropSubCell);
 
-					pos.SetVisualPosition(actor, spawn);
-
-					actor.CancelActivity();
-					actor.QueueActivity(new Parachute(actor));
-					w.Add(actor);
+					var dropPosition = dropActor.CenterPosition + new WVec(0, 0, self.CenterPosition.Z - dropActor.CenterPosition.Z);
+					dropPositionable.SetPosition(dropActor, dropPosition);
+					w.Add(dropActor);
 				});
 				Game.Sound.Play(SoundType.World, self.Info.TraitInfo<ParaDropInfo>().ChuteSound, spawn);
+				dropDelay = dropInterval;
 			}
 
-			if (flying && !cargo.CanUnload())
+			if (!cargo.CanUnload())
 			{
-				if (cargo.Info.AfterUnloadDelay > 0)
-					QueueChild(new FlyForward(self, cargo.Info.AfterUnloadDelay));
-
+				QueueChild(new FlyForward(self, dropInterval));
 				if (cargo.IsEmpty(self))
 					QueueChild(new ReturnToBase(self));
 
