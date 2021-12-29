@@ -419,6 +419,9 @@ howi.upgrade:
 	ProductionCostMultiplier@blackh:
 		Multiplier: 0
 		Prerequisites: radar.blackh
+	ProductionTimeMultiplier@blackh:
+		Multiplier: 0
+		Prerequisites: radar.blackh
 
 microwave.upgrade:
 	Inherits: ^Upgrade
@@ -519,12 +522,15 @@ v2.upgrade:
 		Description: Allows construction of the V2 Launcher.\n\nReplaces: Katyusha
 	TooltipExtras:
 		Strengths: + Improved accuracy\n+ Increased range\n+ Increased burst damage\n+ Increased mobility
-		Weaknesses: – Reduced area of effect\n– Slower projectiles\n– Increased cost
+		Weaknesses: – Reduced area of effect\n– Increased cost
 	Valued:
 		Cost: 1000
 	RenderSprites:
 		Image: v2.upgrade
 	ProductionCostMultiplier@russia:
+		Multiplier: 0
+		Prerequisites: radar.russia
+	ProductionTimeMultiplier@russia:
 		Multiplier: 0
 		Prerequisites: radar.russia
 

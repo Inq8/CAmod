@@ -67,7 +67,7 @@ KATY:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Valued:
-		Cost: 800
+		Cost: 700
 	Tooltip:
 		Name: Katyusha
 	UpdatesPlayerStatistics:
@@ -81,9 +81,13 @@ KATY:
 		TurnSpeed: 14
 	RevealsShroud:
 		Range: 5c0
-	Armament:
+	Armament@PRIMARY:
 		Weapon: KatyushaRockets
-		LocalOffset: 268,-100,440, 268,100,440
+		LocalOffset: 268,-100,440
+	Armament@SECONDARY:
+		Weapon: KatyushaRocketsWide
+		LocalOffset: 268,100,440
+		FireDelay: 6
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True

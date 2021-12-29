@@ -948,25 +948,25 @@ V3Weapon:
 
 KatyushaRockets:
 	Inherits: ^AntiGroundMissile
-	ReloadDelay: 260
-	Range: 9c0
+	ReloadDelay: 240
+	Range: 8c768
 	MinRange: 3c0
 	Report: katyrocket1.aud, katyrocket2.aud, katyrocket3.aud
-	Burst: 6
-	BurstDelays: 6
+	Burst: 3
+	BurstDelays: 12
 	-Projectile:
 	Projectile: Bullet
-		Inaccuracy: 2c512
+		Inaccuracy: 1c512
 		Image: dragon
-		Speed: 225
+		Speed: 200
 		LaunchAngle: 70
 		TrailImage: smokey
 		Shadow: true
 		Blockable: false
 	ValidTargets: Ground, Trees, Water
 	Warhead@1Dam: SpreadDamage
-		Damage: 5250
-		Spread: 384
+		Damage: 5000
+		Spread: 512
 		Versus:
 			None: 100
 			Wood: 80
@@ -978,6 +978,11 @@ KatyushaRockets:
 		ExplosionPalette: temptd
 		ImpactSounds: kaboom15.aud
 		ValidTargets: Ground, Ship, Trees
+
+KatyushaRocketsWide:
+	Inherits: KatyushaRockets
+	Projectile: Bullet
+		Inaccuracy: 2c512
 
 HonestJohn:
 	ReloadDelay: 130
