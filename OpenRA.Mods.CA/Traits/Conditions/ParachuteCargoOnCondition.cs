@@ -19,6 +19,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Wait at least this many ticks between each drop.")]
 		public readonly int DropInterval = 5;
+
+		[Desc("Radius to search for a load/unload location if the ordered cell is blocked.")]
+		public readonly WDist ExitRange = WDist.FromCells(5);
 	}
 
 	public class ParachuteCargoOnCondition : ConditionalTrait<ParachuteCargoOnConditionInfo>
@@ -34,7 +37,7 @@ namespace OpenRA.Mods.CA.Traits
 		protected override void TraitEnabled(Actor self)
 		{
 			self.CancelActivity();
-			self.QueueActivity(new Activities.ParadropCargo(self, info.DropInterval));
+			self.QueueActivity(new Activities.ParadropCargo(self, info.DropInterval, info.ExitRange));
 		}
 	}
 }
