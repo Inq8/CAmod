@@ -1682,7 +1682,7 @@ Player:
 		AirSquadTargetTypes:
 			heli: Aircraft, Vehicle
 			nhaw: Infantry
-			hind: Infantry, Building
+			hind: Infantry, Building, Aircraft
 			yak: Building, Infantry
 			mig: Aircraft, Vehicle, Defense
 			suk: Vehicle, Defense
@@ -1690,10 +1690,11 @@ Player:
 			kiro: Building
 			orca: Aircraft, Vehicle
 			orcb: Vehicle, Defense
-			a10: Infantry, Building
+			a10: Infantry, Building, Aircraft
 			apch: Infantry, Building
 			venm: Infantry, Aircraft
-			rah: Infantry, Building
+			rah: Infantry, Building, Aircraft
+			harr: Infantry, Building, Aircraft
 			scrn: Aircraft, Vehicle, Defense
 			stmr: Aircraft, Infantry, Building
 			enrv: Aircraft, Vehicle, Defense
@@ -1701,10 +1702,10 @@ Player:
 	UnitBuilderBotModuleCA@brutal-vhard:
 		RequiresCondition: enable-brutal-ai || enable-vhard-ai
 		IdleBaseUnitsMaximum: 50
-		MaxAircraft: 5
+		MaxAircraft: 3
 		MaintainAirSuperiority: true
-		AirToAirUnits: heli, mig, orca, scrn, venm, stmr, enrv
-		AirThreatUnits: heli, mig, orca, scrn, venm, stmr, enrv, pac, deva, kiro, mshp
+		AirToAirUnits: heli, mig, orca, scrn, venm, stmr, enrv, a10, harr, rah, hind
+		AirThreatUnits: heli, mig, orca, scrn, venm, stmr, enrv, a10, harr, rah, hind, pac, deva, kiro, mshp
 		UnitBuilderMinCredits: 1800
 		UnitDelays:
 			mcv: 6750
@@ -1919,7 +1920,7 @@ Player:
 		AirSquadTargetTypes:
 			heli: Aircraft, Vehicle
 			nhaw: Infantry
-			hind: Infantry, Building
+			hind: Infantry, Building, Aircraft
 			yak: Building, Infantry
 			mig: Aircraft, Vehicle, Defense
 			suk: Vehicle, Defense
@@ -1927,10 +1928,11 @@ Player:
 			kiro: Building
 			orca: Aircraft, Vehicle
 			orcb: Vehicle, Defense
-			a10: Infantry, Building
+			a10: Infantry, Building, Aircraft
 			apch: Infantry, Building
 			venm: Infantry, Aircraft
-			rah: Infantry, Building
+			rah: Infantry, Building, Aircraft
+			harr: Infantry, Building, Aircraft
 			scrn: Aircraft, Vehicle, Defense
 			stmr: Aircraft, Infantry, Building
 			enrv: Aircraft, Vehicle, Defense
@@ -1938,11 +1940,11 @@ Player:
 	UnitBuilderBotModuleCA@hard:
 		RequiresCondition: enable-hard-ai
 		IdleBaseUnitsMaximum: 50
-		MaxAircraft: 3
+		MaxAircraft: 2
 		MaintainAirSuperiority: true
 		MaxAirSuperiority: 8
-		AirToAirUnits: heli, mig, orca, scrn, venm, stmr, enrv
-		AirThreatUnits: heli, mig, orca, scrn, venm, stmr, enrv, pac, deva, kiro, mshp
+		AirToAirUnits: heli, mig, orca, scrn, venm, stmr, enrv, a10, harr, rah, hind
+		AirThreatUnits: heli, mig, orca, scrn, venm, stmr, enrv, a10, harr, rah, hind, pac, deva, kiro, mshp
 		UnitDelays:
 			mcv: 6750
 			amcv: 6750

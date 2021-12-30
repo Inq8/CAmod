@@ -346,7 +346,7 @@ ChainGun:
 	Inherits: ^HeavyMG
 	-Report:
 	StartBurstReport: gun13.aud
-	ReloadDelay: 10
+	ReloadDelay: 12
 	Burst: 2
 	BurstDelays: 0
 	Range: 5c0
@@ -359,6 +359,23 @@ ChainGun:
 			Wood: 50
 			Light: 54
 			Heavy: 20
+
+ChainGunAA:
+	Inherits: ^AACannon
+	ReloadDelay: 14
+	Burst: 2
+	BurstDelays: 0
+	-Report:
+	StartBurstReport: gun13.aud
+	Range: 5c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 1000
+		Range: 0, 0c64, 0c256, 1c0
+	Warhead@2Dam: SpreadDamage
+		Damage: 1000
+	Warhead@2Eff: CreateEffect
+		-ImpactSounds: flakhit1.aud, flakhit2.aud, flakhit3.aud
+		-ImpactSoundChance: 100
 
 Vulcan2:
 	Inherits: ^LightMG

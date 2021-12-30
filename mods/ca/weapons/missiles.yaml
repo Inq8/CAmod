@@ -121,6 +121,14 @@ MaverickAA:
 	Warhead@2Dam: SpreadDamage
 		Damage: 6000
 
+Sidewinder:
+	Inherits: MaverickAA
+	Report: sidewinder.aud
+	Range: 7c0
+	Projectile: MissileCA
+		ContrailLength: 10
+		ContrailWidth: 42
+
 MaverickSU:
 	Inherits: Maverick
 	Range: 10c0
@@ -372,7 +380,7 @@ HellfireAG.Orca:
 
 HellfireAG.Harrier:
 	Inherits: HellfireAG
-	Range: 12c0
+	Range: 8c0
 	MinRange: 2c0
 	Report: migmis.aud, migmis2.aud
 	Burst: 2
@@ -393,8 +401,8 @@ HellfireAG.Harrier:
 			None: 100
 			Wood: 65
 			Light: 60
-			Heavy: 40
-			Concrete: 40
+			Heavy: 30
+			Concrete: 30
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
@@ -429,6 +437,20 @@ HellfireAA.Orca:
 	Report: orcamis1.aud
 	ReloadDelay: 70
 	BurstDelays: 11
+
+HellfireAA.Harrier:
+	Inherits: HellfireAA
+	Report: migmis.aud, migmis2.aud
+	Burst: 2
+	BurstDelays: 10
+	Range: 9c0
+	Projectile: MissileCA
+		RangeLimit: 12c512
+		ContrailLength: 10
+	Warhead@1Dam: SpreadDamage
+		Damage: 6750
+	Warhead@2Dam: SpreadDamage
+		Damage: 6750
 
 WidowAA:
 	Inherits: ^AirToAirMissile
@@ -1507,7 +1529,7 @@ Rah66AG:
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
 		Damage: 800
-		Falloff: 1000, 384, 256, 128, 32, 8, 0
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		Versus:
 			None: 85
 			Wood: 60
@@ -1518,7 +1540,7 @@ Rah66AG:
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
-		ExplosionPalette: scrin
+		ExplosionPalette: caneon
 		Image: tibexplodesm
 		ImpactSounds: firebl3.aud
 		ValidTargets: Ground, Air, Ship
@@ -1544,6 +1566,37 @@ Rah66AG.BlackHand:
 		-ExplosionPalette:
 		-Image:
 
+Rah66AA:
+	Inherits: HellfireAA
+	ReloadDelay: 35
+	Burst: 4
+	BurstDelays: 4
+	Report: rocket2.aud
+	Projectile: MissileCA
+		Speed: 250
+		Image: tibcoremsl
+		ContrailLength: 15
+		ContrailColor: 33aa00aa
+		ContrailWidth: 0c40
+	Warhead@3Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: caneon
+		Image: tibexplodeairsm
+		ImpactSounds: firebl3.aud
+		ValidTargets: Air
+		Inaccuracy: 682
+
+Rah66AA.BlackHand:
+	Inherits: Rah66AA
+	Projectile: MissileCA
+		Image: dragon
+		-ContrailLength:
+		-ContrailColor:
+		-ContrailWidth:
+	Warhead@3Eff: CreateEffect
+		-Image:
+		Explosions: small_napalm_air
+
 ScrinTorp:
 	ValidTargets: Ground, Water, Trees
 	ReloadDelay: 50
@@ -1562,7 +1615,7 @@ ScrinTorp:
 		LaunchAngle: 10
 	Warhead@1Dam: SpreadDamage
 		Spread: 768
-		Damage: 1000
+		Damage: 950
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Water
 		Versus:
@@ -1586,8 +1639,9 @@ ScrinTorp:
 
 ScrinTorpAA:
 	Inherits: ^AirToAirMissile
-	ReloadDelay: 60
+	ReloadDelay: 40
 	Range: 7c0
+	MinRange: 1c256
 	Report: scrin5b.aud
 	Burst: 3
 	BurstDelays: 4
