@@ -725,7 +725,7 @@ NHAW:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Weak vs Heavy Armor, Defenses, Buildings\n• Cannot attack Aircraft
-		Attributes: • Can carry infantry
+		Attributes: • Can carry infantry\n• Use Hold Fire stance to disable weapons\n     and enable paradropping
 	Valued:
 		Cost: 1150
 	Tooltip:
@@ -768,6 +768,7 @@ NHAW:
 	Cargo:
 		Types: Infantry
 		MaxWeight: 8
+		LoadedCondition: cargo
 	SpawnActorOnDeath:
 		Actor: NHAW.Husk
 		RequiresCondition: !upg-crym && !empdisable && !being-warped
@@ -804,11 +805,12 @@ NHAW:
 		Weapon: M60mgJJ
 		LocalOffset: 1000,0,-100
 		MuzzleSequence: muzzle
+		RequiresCondition: !stance-holdfire
 	Armament@CRYOMISSILE:
 		Name: cryo
 		Weapon: cryomissilenhaw
 		LocalOffset: 200,300,0, 200,-300,0
-		RequiresCondition: upg-crym
+		RequiresCondition: upg-crym && !stance-holdfire
 	AmmoPool@CRYOMISSILE:
 		Name: cryo
 		Armaments: cryo
@@ -820,19 +822,34 @@ NHAW:
 		Count: 2
 		RequiresCondition: upg-crym
 	AutoTarget:
-		InitialStance: HoldFire
+		InitialStance: ReturnFire
 		InitialStanceAI: AttackAnything
+		HoldFireCondition: stance-holdfire
 	AttackAircraft:
-		Armaments: primary, cryo
+		Armaments: primary, cryo, drop
 		FacingTolerance: 20
 		AttackType: Hover
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
+		ForceFireIgnoresActors: True
 	WithMuzzleOverlay:
 	GrantConditionOnPrerequisite@CRYM:
 		Condition: upg-crym
 		Prerequisites: crym.upgrade
+	ParaDrop:
+		ChuteSound: chute1.aud
+	Armament@DROP:
+		Name: drop
+		Weapon: DropDummy
+		Cursor: ability
+		OutsideRangeCursor: ability
+		RequiresCondition: cargo && stance-holdfire
+	ParachuteCargoOnCondition:
+		RequiresCondition: dropcargo
+	GrantConditionOnAttack:
+		Condition: dropcargo
+		ArmamentNames: drop
 
 NHAW.paradrop:
 	Inherits: ^Helicopter
