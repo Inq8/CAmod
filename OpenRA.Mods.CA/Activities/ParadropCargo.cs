@@ -29,6 +29,7 @@ namespace OpenRA.Mods.CA.Activities
 		Target destination;
 		WPos targetPosition;
 		int dropDelay;
+		bool returningToBase;
 
 		public ParadropCargo(Actor self, int dropInterval, WDist exitRange)
 			: this(self, Target.Invalid, dropInterval, exitRange)
@@ -43,6 +44,7 @@ namespace OpenRA.Mods.CA.Activities
 			this.destination = destination;
 			this.dropInterval = dropInterval;
 			this.exitRange = exitRange;
+			ChildHasPriority = false;
 		}
 
 		protected override void OnFirstRun(Actor self)
@@ -50,18 +52,32 @@ namespace OpenRA.Mods.CA.Activities
 			if (assignTargetOnFirstRun)
 				destination = Target.FromCell(self.World, self.Location);
 			targetPosition = destination.CenterPosition;
+
+			QueueChild(new FlyForward(self, -1));
 		}
 
 		public override bool Tick(Actor self)
 		{
+			TickChild(self);
+
 			if (dropDelay > 0)
 			{
 				dropDelay--;
 				return false;
 			}
 
-			if (IsCanceling || cargo.IsEmpty(self))
+			if (IsCanceling)
 				return true;
+
+			if (cargo.IsEmpty(self))
+			{
+				if (returningToBase)
+					return ChildActivity == null;
+
+				ChildActivity?.Cancel(self);
+				QueueChild(new ReturnToBase(self));
+				returningToBase = true;
+			}
 
 			if (cargo.CanUnload())
 			{
@@ -90,17 +106,6 @@ namespace OpenRA.Mods.CA.Activities
 					});
 				Game.Sound.Play(SoundType.World, self.Info.TraitInfo<ParaDropInfo>().ChuteSound, spawn);
 				dropDelay = dropInterval;
-			}
-
-			if (!cargo.CanUnload())
-			{
-				QueueChild(new FlyForward(self, 1));
-				QueueChild(new ParadropCargo(self, dropInterval, exitRange));
-
-				if (cargo.IsEmpty(self))
-					QueueChild(new ReturnToBase(self));
-
-				return true;
 			}
 
 			return false;
