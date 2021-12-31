@@ -632,6 +632,8 @@ GTNK.squad:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		Condition: lasher-move
 		RequiresCondition: lasher-upgrade
+	UpgradeableTo:
+		Actors: 3tnk.iraq, 3tnk.yuri
 
 3TNK.IRAQ:
 	Inherits: 3TNK
@@ -861,6 +863,8 @@ GTNK.squad:
 		Condition: iraqtank-upgrade
 		RequiresCondition: iraqtank-upgrade
 		GrantPermanently: true
+	UpgradeableTo:
+		Actors: 4tnk.iraq
 
 4TNK.IRAQ:
 	Inherits: 4TNK
@@ -2235,6 +2239,8 @@ HMMV:
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	UpgradeableTo:
+		Actors: hmmv.tow
 
 HMMV.TOW:
 	Inherits: HMMV
@@ -2347,6 +2353,8 @@ GDRN:
 		ShowSelectionBar: true
 		SelectionBarColor: 00ffff
 		RequiresCondition: !gshield
+	UpgradeableTo:
+		Actors: gdrn.tow
 
 GDRN.TOW:
 	Inherits: GDRN
@@ -2639,6 +2647,8 @@ APC2:
 		AssaultMoveCondition: assault-move
 	Selectable:
 		Class: apc
+	UpgradeableTo:
+		Actors: vulc
 
 APC2.NODAI:
 	Inherits: APC2
@@ -3219,6 +3229,8 @@ HTNK:
 	Carryable:
 		LocalOffset: 0,0,500
 	-Crushable:
+	UpgradeableTo:
+		Actors: htnk.drone, htnk.ion, htnk.hover
 
 HTNK.Ion:
 	Inherits: HTNK
@@ -4706,6 +4718,8 @@ TITN:
 	SpawnActorOnDeath:
 		Actor: TITN.Husk
 		RequiresCondition: !being-warped
+	UpgradeableTo:
+		Actors: titn.rail
 
 TITN.RAIL:
 	Inherits: TITN
@@ -6215,6 +6229,8 @@ APOC:
 		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: !being-warped && iraqtank-upgrade
 	-ProductionCostMultiplier@IndustrialPlantLevel1:
+	UpgradeableTo:
+		Actors: apoc.iraq
 
 APOC.IRAQ:
 	Inherits: APOC
