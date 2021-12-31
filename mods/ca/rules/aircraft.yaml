@@ -573,7 +573,6 @@ TRAN:
 		ChuteSound: chute1.aud
 	AmmoPool:
 		Ammo: 1
-		PipCount: 0
 	ReloadAmmoPool:
 		Delay: 60
 		Count: 1
@@ -640,8 +639,6 @@ TRAN.paradrop:
 		Speed: 180
 		AltitudeVelocity: 0c100
 		Repulsable: False
-	ParaDrop:
-		ChuteSound: chute1.aud
 	RejectsOrders:
 	Interactable:
 	GivesExperience:
@@ -701,8 +698,6 @@ HALO.paradrop:
 		Experience: 1000
 	RejectsOrders:
 	Interactable:
-	ParaDrop:
-		ChuteSound: chute1.aud
 	-Buildable:
 	-Targetable@TEMPORAL:
 	-Selectable:
@@ -856,12 +851,9 @@ NHAW:
 		ArmamentNames: drop
 
 NHAW.paradrop:
-	Inherits: ^Helicopter
-	Tooltip:
-		Name: Nighthawk
-	ParaDrop:
-		DropRange: 4c0
-		ChuteSound: chute1.aud
+	Inherits: NHAW
+	RenderSprites:
+		Image: NHAW
 	Health:
 		HP: 46000
 	Aircraft:
@@ -869,40 +861,33 @@ NHAW.paradrop:
 		TurnSpeed: 20
 		Speed: 180
 		AltitudeVelocity: 0c100
-	WithIdleOverlay@ROTOR1AIR:
-		Offset: 597,0,85
-		Sequence: rotor
-		RequiresCondition: airborne
-	WithIdleOverlay@ROTOR1GROUND:
-		Offset: 597,0,85
-		Sequence: slow-rotor
-		RequiresCondition: !airborne
-	WithIdleOverlay@ROTOR2AIR:
-		Offset: -597,0,171
-		Sequence: rotor2
-		RequiresCondition: airborne
-	WithIdleOverlay@ROTOR2GROUND:
-		Offset: -597,0,171
-		Sequence: slow-rotor2
-		RequiresCondition: !airborne
-	Cargo:
-		Types: Infantry
-		MaxWeight: 8
-	-Selectable:
-	-Voiced:
+		Repulsable: False
 	RejectsOrders:
-	RenderSprites:
-		Image: tran3
-	SpawnActorOnDeath:
-		Actor: TRAN.Husk
-		RequiresCondition: !empdisable && !being-warped
-	SpawnActorOnDeath@EMP:
-		Actor: TRAN.Husk.EMP
-		RequiresCondition: empdisable && !being-warped
 	Interactable:
 	GivesExperience:
 		Experience: 1000
+	Cargo:
+		-LoadedCondition:
+	-Buildable:
+	-Selectable:
+	-Voiced:
 	-Targetable@TEMPORAL:
+	-RevealsShroud:
+	-RevealsShroud@GAPGEN:
+	-WithFacingSpriteBody@UPG:
+	-WithFacingSpriteBody@oneshot:
+	-WithFacingSpriteBody@empty:
+	-AttackAircraft:
+	-Armament@PRIMARY:
+	-Armament@CRYOMISSILE:
+	-Armament@DROP:
+	-AmmoPool@CRYOMISSILE:
+	-ReloadAmmoPool@CRYOMISSILE:
+	-AutoTarget:
+	-AutoTargetPriority@DEFAULT:
+	-AutoTargetPriority@ATTACKANYTHING:
+	-AttackMove:
+	-WithMuzzleOverlay:
 	-ParachuteCargoOnCondition:
 	-GrantConditionOnAttack:
 
