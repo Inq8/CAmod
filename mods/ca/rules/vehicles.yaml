@@ -865,6 +865,8 @@ GTNK.squad:
 		GrantPermanently: true
 	UpgradeableTo:
 		Actors: 4tnk.iraq
+	WithIdleOverlay@MINDCONTROL:
+		Offset: 0,0,512
 
 4TNK.IRAQ:
 	Inherits: 4TNK
@@ -3231,6 +3233,8 @@ HTNK:
 	-Crushable:
 	UpgradeableTo:
 		Actors: htnk.drone, htnk.ion, htnk.hover
+	WithIdleOverlay@MINDCONTROL:
+		Offset: 0,0,512
 
 HTNK.Ion:
 	Inherits: HTNK
@@ -4720,6 +4724,8 @@ TITN:
 		RequiresCondition: !being-warped
 	UpgradeableTo:
 		Actors: titn.rail
+	WithIdleOverlay@MINDCONTROL:
+		Offset: 0,0,512
 
 TITN.RAIL:
 	Inherits: TITN
@@ -4819,6 +4825,8 @@ JUGG:
 		LoadedChance: 75
 	SpawnActorOnDeath:
 		Actor: JUGG.Husk
+	WithIdleOverlay@MINDCONTROL:
+		Offset: 0,0,512
 
 TTRK:
 	Inherits: DTRK
@@ -6070,6 +6078,8 @@ CHPR:
 	GrantConditionOnBotOwner@AICHPR:
 		Condition: botowner
 		Bots: brutal, vhard, hard, normal, easy, naval
+	WithIdleOverlay@MINDCONTROL:
+		Offset: -200,0,768
 
 CRYO:
 	Inherits: ^TankTD
