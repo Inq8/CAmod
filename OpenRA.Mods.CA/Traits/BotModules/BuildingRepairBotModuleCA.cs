@@ -36,7 +36,7 @@ namespace OpenRA.Mods.CA.Traits
 			var rb = self.TraitOrDefault<RepairableBuilding>();
 			if (rb != null)
 			{
-				if (e.DamageState > DamageState.Undamaged && e.PreviousDamageState <= DamageState.Medium && !rb.RepairActive)
+				if (e.DamageState > DamageState.Undamaged && e.PreviousDamageState < e.DamageState && !rb.RepairActive)
 				{
 					AIUtils.BotDebug("{0} noticed damage {1} {2}->{3}, repairing.",
 						self.Owner, self, e.PreviousDamageState, e.DamageState);

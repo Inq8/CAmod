@@ -159,16 +159,6 @@ namespace OpenRA.Mods.CA.Traits
 				}
 
 				var replacement = replacements[queueItem.Item];
-				var amountSpent = queueItem.TotalCost - queueItem.RemainingCost;
-
-				// if part-produced, deduct anything already spent from the new cost
-				if (amountSpent > 0)
-				{
-					if (amountSpent > replacement.Cost)
-						playerResources.GiveCash(amountSpent - replacement.Cost);
-
-					replacement.Cost = Math.Max(0, replacement.Cost - amountSpent);
-				}
 
 				var replacementItem = new ProductionItem(this, replacement.Info.Name, replacement.Cost, playerPower, () => self.World.AddFrameEndTask(_ =>
 				{
