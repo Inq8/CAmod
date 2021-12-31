@@ -548,7 +548,7 @@ TRAN:
 		Description: Fast infantry transport helicopter.
 	TooltipExtras:
 		Weaknesses: • Unarmed
-		Attributes: • Can carry infantry
+		Attributes: • Can carry infantry\n• Can Paradrop infantry (Force Fire)
 	Valued:
 		Cost: 900
 	Tooltip:
@@ -727,7 +727,7 @@ NHAW:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Weak vs Heavy Armor, Defenses, Buildings\n• Cannot attack Aircraft
-		Attributes: • Can carry infantry\n• Use Hold Fire stance to disable weapons\n     and enable paradropping
+		Attributes: • Can carry infantry\n• Can Paradrop Infantry (HoldFire Stance + Force Fire)
 	Valued:
 		Cost: 1150
 	Tooltip:
@@ -1135,9 +1135,9 @@ SMIG:
 	-SelectionDecorations:
 	-Voiced:
 	Contrail@1:
-		Offset: -725,683,0
+		Offset: -700,683,-100
 	Contrail@2:
-		Offset: -725,-683,0
+		Offset: -700,-683,-100
 	Contrail@AB1:
 		Offset: -400,-70,-20
 		UsePlayerColor: false
@@ -1417,6 +1417,7 @@ C17.Cargo:
 	Aircraft:
 		Speed: 266
 		TurnSpeed: 26
+		IdleTurnSpeed: 6
 	-Targetable@AIRBORNE:
 	DynamicSpeedMultiplier:
 
@@ -1993,9 +1994,9 @@ KIRO:
 		Image: kirov
 	Buildable:
 		Queue: Aircraft
-		BuildAtProductionType: Plane
+		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 160
-		Prerequisites: ~afld, stek, ~aircraft.soviet, ~techlevel.high
+		Prerequisites: ~hpad, stek, ~aircraft.soviet, ~techlevel.high
 		Description: Heavily armoured airship equipped with specialised bombs.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
