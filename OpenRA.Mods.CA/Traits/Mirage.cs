@@ -113,8 +113,10 @@ namespace OpenRA.Mods.CA.Traits
 		public bool Disguised { get { return IsMirage; } }
 
 		public ActorInfo ActorType { get; private set; }
-		public Player Owner {
-			get {
+		public Player Owner
+		{
+			get
+			{
 				if (Info.EffectiveOwner == "Self")
 					return self.Owner;
 
