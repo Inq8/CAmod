@@ -569,6 +569,30 @@ TRAN:
 		AltitudeVelocity: 0c58
 		TakeoffSounds: htoff1.aud
 		LandingSounds: hland1.aud
+	ParaDrop:
+		ChuteSound: chute1.aud
+	AmmoPool:
+		Ammo: 1
+	ReloadAmmoPool:
+		Delay: 60
+		Count: 1
+		RequiresCondition: cargo
+	AttackAircraft:
+		FacingTolerance: 20
+		AttackType: Strafe
+		StrafeRunLength: 5c0
+		OpportunityFire: False
+		PersistentTargeting: False
+		ForceFireIgnoresActors: True
+		RequiresCondition: cargo
+	Armament:
+		Weapon: DropDummy
+		Cursor: ability
+		OutsideRangeCursor: ability
+		TargetRelationships: None
+		ForceTargetRelationships: None
+	Rearmable:
+		RearmActors: hpad, hpad.td
 	WithIdleOverlay@ROTOR1AIR:
 		Offset: 597,0,213
 		Sequence: rotor
@@ -588,6 +612,7 @@ TRAN:
 	Cargo:
 		Types: Infantry
 		MaxWeight: 8
+		LoadedCondition: cargo
 	SpawnActorOnDeath:
 		Actor: TRAN.Husk
 		RequiresCondition: !empdisable && !being-warped
@@ -597,6 +622,11 @@ TRAN:
 	Selectable:
 		DecorationBounds: 40,36
 	WithCargoHatchAnimation:
+	ParachuteCargoOnCondition:
+		RequiresCondition: dropcargo
+	GrantConditionOnAttack:
+		Condition: dropcargo
+		RevokeDelay: 15
 
 TRAN.paradrop:
 	Inherits: TRAN
@@ -610,8 +640,6 @@ TRAN.paradrop:
 		Speed: 180
 		AltitudeVelocity: 0c100
 		Repulsable: False
-	ParaDrop:
-		ChuteSound: chute1.aud
 	RejectsOrders:
 	Interactable:
 	GivesExperience:
@@ -622,6 +650,10 @@ TRAN.paradrop:
 	-Targetable@TEMPORAL:
 	-RevealsShroud:
 	-RevealsShroud@GAPGEN:
+	-AttackAircraft:
+	-Armament:
+	-ParachuteCargoOnCondition:
+	-GrantConditionOnAttack:
 
 HALO:
 	Inherits: TRAN
@@ -652,6 +684,10 @@ HALO:
 	SpawnActorOnDeath@EMP:
 		Actor: HALO.Husk.EMP
 		RequiresCondition: empdisable && !being-warped
+	ParachuteCargoOnCondition:
+		RequiresCondition: dropcargo
+	GrantConditionOnAttack:
+		Condition: dropcargo
 
 HALO.paradrop:
 	Inherits: HALO
@@ -663,14 +699,16 @@ HALO.paradrop:
 		Experience: 1000
 	RejectsOrders:
 	Interactable:
-	ParaDrop:
-		ChuteSound: chute1.aud
 	-Buildable:
 	-Targetable@TEMPORAL:
 	-Selectable:
 	-Voiced:
 	-RevealsShroud:
 	-RevealsShroud@GAPGEN:
+	-AttackAircraft:
+	-Armament:
+	-ParachuteCargoOnCondition:
+	-GrantConditionOnAttack:
 
 NHAW:
 	Inherits: ^Helicopter
@@ -687,7 +725,7 @@ NHAW:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Weak vs Heavy Armor, Defenses, Buildings\n• Cannot attack Aircraft
-		Attributes: • Can carry infantry
+		Attributes: • Can carry infantry\n• Use Hold Fire stance to disable weapons\n     and enable paradropping
 	Valued:
 		Cost: 1150
 	Tooltip:
@@ -730,6 +768,7 @@ NHAW:
 	Cargo:
 		Types: Infantry
 		MaxWeight: 8
+		LoadedCondition: cargo
 	SpawnActorOnDeath:
 		Actor: NHAW.Husk
 		RequiresCondition: !upg-crym && !empdisable && !being-warped
@@ -766,11 +805,12 @@ NHAW:
 		Weapon: M60mgJJ
 		LocalOffset: 1000,0,-100
 		MuzzleSequence: muzzle
+		RequiresCondition: !stance-holdfire
 	Armament@CRYOMISSILE:
 		Name: cryo
 		Weapon: cryomissilenhaw
 		LocalOffset: 200,300,0, 200,-300,0
-		RequiresCondition: upg-crym
+		RequiresCondition: upg-crym && !stance-holdfire
 	AmmoPool@CRYOMISSILE:
 		Name: cryo
 		Armaments: cryo
@@ -782,27 +822,40 @@ NHAW:
 		Count: 2
 		RequiresCondition: upg-crym
 	AutoTarget:
-		InitialStance: HoldFire
+		InitialStance: ReturnFire
 		InitialStanceAI: AttackAnything
+		HoldFireCondition: stance-holdfire
 	AttackAircraft:
-		Armaments: primary, cryo
+		Armaments: primary, cryo, drop
 		FacingTolerance: 20
 		AttackType: Hover
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
+		ForceFireIgnoresActors: True
 	WithMuzzleOverlay:
 	GrantConditionOnPrerequisite@CRYM:
 		Condition: upg-crym
 		Prerequisites: crym.upgrade
+	ParaDrop:
+		ChuteSound: chute1.aud
+	Armament@DROP:
+		Name: drop
+		Weapon: DropDummy
+		Cursor: ability
+		OutsideRangeCursor: ability
+		RequiresCondition: cargo && stance-holdfire
+	ParachuteCargoOnCondition:
+		RequiresCondition: dropcargo
+		ReturnToBase: false
+	GrantConditionOnAttack:
+		Condition: dropcargo
+		ArmamentNames: drop
 
 NHAW.paradrop:
-	Inherits: ^Helicopter
-	Tooltip:
-		Name: Nighthawk
-	ParaDrop:
-		DropRange: 4c0
-		ChuteSound: chute1.aud
+	Inherits: NHAW
+	RenderSprites:
+		Image: NHAW
 	Health:
 		HP: 46000
 	Aircraft:
@@ -810,40 +863,35 @@ NHAW.paradrop:
 		TurnSpeed: 20
 		Speed: 180
 		AltitudeVelocity: 0c100
-	WithIdleOverlay@ROTOR1AIR:
-		Offset: 597,0,85
-		Sequence: rotor
-		RequiresCondition: airborne
-	WithIdleOverlay@ROTOR1GROUND:
-		Offset: 597,0,85
-		Sequence: slow-rotor
-		RequiresCondition: !airborne
-	WithIdleOverlay@ROTOR2AIR:
-		Offset: -597,0,171
-		Sequence: rotor2
-		RequiresCondition: airborne
-	WithIdleOverlay@ROTOR2GROUND:
-		Offset: -597,0,171
-		Sequence: slow-rotor2
-		RequiresCondition: !airborne
-	Cargo:
-		Types: Infantry
-		MaxWeight: 8
-	-Selectable:
-	-Voiced:
+		Repulsable: False
 	RejectsOrders:
-	RenderSprites:
-		Image: tran3
-	SpawnActorOnDeath:
-		Actor: TRAN.Husk
-		RequiresCondition: !empdisable && !being-warped
-	SpawnActorOnDeath@EMP:
-		Actor: TRAN.Husk.EMP
-		RequiresCondition: empdisable && !being-warped
 	Interactable:
 	GivesExperience:
 		Experience: 1000
+	Cargo:
+		-LoadedCondition:
+	-Buildable:
+	-Selectable:
+	-Voiced:
 	-Targetable@TEMPORAL:
+	-RevealsShroud:
+	-RevealsShroud@GAPGEN:
+	-WithFacingSpriteBody@UPG:
+	-WithFacingSpriteBody@oneshot:
+	-WithFacingSpriteBody@empty:
+	-AttackAircraft:
+	-Armament@PRIMARY:
+	-Armament@CRYOMISSILE:
+	-Armament@DROP:
+	-AmmoPool@CRYOMISSILE:
+	-ReloadAmmoPool@CRYOMISSILE:
+	-AutoTarget:
+	-AutoTargetPriority@DEFAULT:
+	-AutoTargetPriority@ATTACKANYTHING:
+	-AttackMove:
+	-WithMuzzleOverlay:
+	-ParachuteCargoOnCondition:
+	-GrantConditionOnAttack:
 
 HELI:
 	Inherits: ^Helicopter

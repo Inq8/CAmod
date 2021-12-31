@@ -584,9 +584,10 @@ powerproxy.paratroopers:
 	AlwaysVisible:
 	ParatroopersPower:
 		Icon: paratroopers
-		SquadSize: 2
+		SquadSize: 1
+		UnitType: halo.paradrop
 		Description: Paratroopers (Single Use)
-		LongDesc: A Badger drops a squad of infantry\nanywhere on the map.
+		LongDesc: A Halo transport drops a squad of infantry\nanywhere on the map.
 		OneShot: true
 		AllowMultiple: true
 		DropItems: E1,E1,E1,E3,E3,E1,E1,E1,E2,E2
@@ -603,7 +604,7 @@ powerproxy.paratroopers:
 		ClockSequence: clock
 		CircleSequence: circles
 
-powerproxy.paratroopers2:
+powerproxy.paratroopers.allies:
 	AlwaysVisible:
 	ParatroopersPower:
 		Icon: paratroopers
@@ -613,7 +614,7 @@ powerproxy.paratroopers2:
 		LongDesc: A Chinook drops a squad of infantry\nanywhere on the map.
 		OneShot: true
 		AllowMultiple: true
-		DropItems: E1,E1,SNIP,E3,E3
+		DropItems: E1,E1,E1,E1,E3,E3,E3,MEDI
 		SelectTargetSpeechNotification: SelectTarget
 		EndChargeSpeechNotification: Reinforce
 		LaunchSpeechNotification: ReinforcementsArrived
@@ -654,7 +655,7 @@ powerproxy.airborne:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 
-powerproxy.airbornetank:
+powerproxy.airborne.tank:
 	AlwaysVisible:
 	ParatroopersPower:
 		OrderName: airbornetank
@@ -698,8 +699,9 @@ powerproxy.airstrike:
 		LongDesc: A10 strike planes drop napalm\nbombs on your target.
 		OneShot: true
 		AllowMultiple: true
-		EndChargeSpeechNotification: Reinforce
 		SelectTargetSpeechNotification: SelectTarget
+		EndChargeSpeechNotification: Reinforce
+		LaunchSpeechNotification: ReinforcementsArrived
 		IncomingSpeechNotification: EnemyPlanesApproaching
 		QuantizedFacings: 8
 		DisplayBeacon: True
