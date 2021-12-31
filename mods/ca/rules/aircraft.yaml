@@ -1626,10 +1626,10 @@ ORCA:
 		Interval: 2
 	WithMoveAnimation:
 		MoveSequence: move
-		RequiresCondition: (abur-upgrade && !attacking && moving) || (!abur-upgrade && moving)
+		RequiresCondition: (!abur-upgrade || !afterburner || !attacking) && moving
 	WithMoveAnimation@AFTERBURNER:
 		MoveSequence: move-afterburner
-		RequiresCondition: abur-upgrade && attacking && moving
+		RequiresCondition: abur-upgrade && afterburner && attacking && moving
 	WithMoveAnimation:
 		MoveSequence: move
 	Selectable:
