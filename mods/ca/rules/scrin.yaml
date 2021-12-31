@@ -3146,9 +3146,13 @@ PORT:
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.port
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
 		Types: SpyInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	WithIdleOverlay:
 		RequiresCondition: !build-incomplete
 
@@ -3237,9 +3241,13 @@ WSPH:
 	InfiltrateForSupportPower@spy:
 		Proxy: vehicles.upgraded
 		Types: SpyInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.wsph
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	WithIdleOverlay:
 		RequiresCondition: !build-incomplete
 	GrantExternalConditionToProduced@DRONEEXIT:
@@ -3322,6 +3330,8 @@ NERV:
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.nerv
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	RevealActorsPower@RESOURCESCAN:
 		CameraActor: camera.resourcescan
 		TargetActors: mine, gmine, split2, split3, splitblue, proc, proc.td, proc.scrin
@@ -3456,6 +3466,8 @@ SCRT:
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.scrt
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	WithBuildingBib:
 	Power:
 		Amount: -200
@@ -3812,6 +3824,8 @@ MANI:
 			BottomRight: 1024, 1024
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
@@ -3945,6 +3959,8 @@ RIFT:
 		RequiredForShortGame: false
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate

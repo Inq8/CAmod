@@ -75,6 +75,8 @@ MSLO:
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
@@ -141,6 +143,8 @@ SPEN:
 	InfiltrateForSupportPower:
 		Proxy: powerproxy.sonarpulse
 		Types: SpyInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -264,6 +268,8 @@ SYRD:
 	InfiltrateForSupportPower:
 		Proxy: powerproxy.sonarpulse
 		Types: SpyInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 40
@@ -423,6 +429,8 @@ IRON:
 		RequiredForShortGame: false
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
@@ -555,6 +563,8 @@ PDOX:
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
@@ -776,6 +786,8 @@ DOME:
 	InfiltrateForSupportPowerCA@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.dome
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	ExternalCondition@JAMMED:
 		Condition: jammed
 	AirstrikePower@clustermines:
@@ -1168,6 +1180,8 @@ ATEK:
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.atek
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SabInfiltrate
@@ -1345,9 +1359,13 @@ WEAP:
 	InfiltrateForSupportPower:
 		Proxy: vehicles.upgraded
 		Types: SpyInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	InfiltrateForSupportPowerCA@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.weap
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	-ActorPreviewPlaceBuildingPreview:
 	SequencePlaceBuildingPreview:
 		Sequence: place
@@ -1730,7 +1748,9 @@ HPAD:
 		TargetTypes: SpyInfiltrate
 	InfiltrateForSupportPower:
 		Types: SpyInfiltrate
-		Proxy: powerproxy.paratroopers2
+		Proxy: powerproxy.paratroopers.allies
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	ParatroopersPower@paratroopers:
 		OrderName: paratroopers
 		UnitType: halo.paradrop
@@ -1993,6 +2013,8 @@ AFLD:
 	InfiltrateForSupportPower:
 		Proxy: powerproxy.airstrike
 		Types: SpyInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
 
@@ -2222,6 +2244,8 @@ STEK:
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.stek
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SabInfiltrate
@@ -2327,9 +2351,13 @@ BARR:
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
 		Types: SpyInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.barr
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
@@ -2471,9 +2499,13 @@ TENT:
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
 		Types: SpyInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.tent
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
@@ -2885,9 +2917,13 @@ PYLE:
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.pyle
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
 		Types: SpyInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 
 HAND:
 	Inherits: ^BuildingTD
@@ -2976,12 +3012,16 @@ HAND:
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.hand
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	Power:
 		Amount: -20
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPower@spy:
 		Proxy: barracks.upgraded
 		Types: SpyInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 
 WEAP.TD:
 	Inherits: ^BuildingTD
@@ -3098,9 +3138,13 @@ WEAP.TD:
 	InfiltrateForSupportPower@spy:
 		Proxy: vehicles.upgraded
 		Types: SpyInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.weap.td
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	-ActorPreviewPlaceBuildingPreview:
 	SequencePlaceBuildingPreview:
 		Sequence: place
@@ -3271,10 +3315,14 @@ AIRS:
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.airs
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPower@spy:
 		Proxy: vehicles.upgraded
 		Types: SpyInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	ProductionCostMultiplier@First:
 		Multiplier: 90
 		Prerequisites: !vehicles.any
@@ -4006,6 +4054,8 @@ HQ:
 	InfiltrateForSupportPowerCA@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.hq
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -4126,6 +4176,8 @@ EYE:
 		PauseOnCondition: disabled || empdisable || being-warped
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -4287,7 +4339,9 @@ HPAD.TD:
 		RequiresCondition: !build-incomplete
 	InfiltrateForSupportPower:
 		Types: SpyInfiltrate
-		Proxy: powerproxy.paratroopers2
+		Proxy: powerproxy.paratroopers.allies
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	SpawnActorPower@GDIEagleDropzone:
 		Actor: FLARE.dropzone
 		Prerequisites: ~aircraft.eagle, anyradar, ~techlevel.low
@@ -4591,6 +4645,8 @@ AFLD.GDI:
 	InfiltrateForSupportPower:
 		Types: SpyInfiltrate
 		Proxy: powerproxy.airstrike
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 
 GTEK:
 	Inherits: ^Building
@@ -4631,6 +4687,8 @@ GTEK:
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.gtek
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	WithBuildingBib:
 	Power:
 		Amount: -200
@@ -4840,6 +4898,8 @@ TMPL:
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.tmpl
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	ValidFactions:
 		Factions: blackh, marked, legion, shadow
 	ProvidesPrerequisite@buildingname:
@@ -4942,6 +5002,8 @@ SPEN.nod:
 	InfiltrateForSupportPower:
 		Types: SpyInfiltrate
 		Proxy: powerproxy.sonarpulse
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -5035,6 +5097,8 @@ SYRD.gdi:
 	InfiltrateForSupportPower:
 		Types: SpyInfiltrate
 		Proxy: powerproxy.sonarpulse
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 40
@@ -5375,6 +5439,8 @@ SGEN:
 			BottomRight: 1024, 1024
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
@@ -5611,6 +5677,8 @@ PATR:
 		Except: Sell, PowerDown
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
@@ -6295,6 +6363,8 @@ MSLO.Nod:
 	ProvidesPrerequisite@buildingname:
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
@@ -6381,6 +6451,8 @@ WEAT:
 		RequiredForShortGame: false
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
