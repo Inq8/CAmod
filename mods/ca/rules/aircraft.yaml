@@ -985,7 +985,7 @@ HELI:
 
 HIND:
 	Inherits: ^Helicopter
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Buildable:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
@@ -993,16 +993,16 @@ HIND:
 		Prerequisites: ~hpad, ~aircraft.soviet, ~techlevel.medium
 		Description: Helicopter gunship armed\n  with dual chainguns.
 	TooltipExtras:
-		Strengths: • Strong vs Infantry, Light Armor, Buildings
-		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
+		Strengths: • Strong vs Infantry, Aircraft, Light Armor, Buildings
+		Weaknesses: • Weak vs Heavy Armor, Defenses
 	Valued:
-		Cost: 1400
+		Cost: 1500
 	Tooltip:
 		Name: Hind
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 25000
+		HP: 24000
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -1012,6 +1012,11 @@ HIND:
 		Range: 8c0
 		Type: GroundPosition
 	Armament@PRIMARY:
+		Weapon: ChainGunAA
+		LocalOffset: 85,-213,-185, 85,213,-185
+		MuzzleSequence: muzzle
+		PauseOnCondition: !ammo
+	Armament@SECONDARY:
 		Weapon: ChainGun
 		LocalOffset: 85,-213,-185, 85,213,-185
 		MuzzleSequence: muzzle
@@ -1173,17 +1178,17 @@ SMIG:
 
 A10:
 	Inherits: ^PlaneTD
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Buildable:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 80
 		Prerequisites: ~afld.gdi, ~aircraft.gdi, ~techlevel.high
 		IconPalette: chrometd
-		Description: Ground attack aircraft with incendiary bombs.
+		Description: Attack aircraft with incendiary bombs\n  and air-to-air missiles.
 	TooltipExtras:
-		Strengths: • Strong vs Buildings, Infantry, Light Armor
-		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
+		Strengths: • Strong vs Buildings, Infantry, Light Armor, Aircraft
+		Weaknesses: • Weak vs Heavy Armor, Defenses
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -1200,15 +1205,21 @@ A10:
 	RevealsShroud@GAPGEN:
 		Range: 8c0
 		Type: GroundPosition
-	Armament:
+	Armament@PRIMARY:
 		Weapon: NapalmTD
 		LocalOffset: 2,-256,-43, 2,256,-43
 		PauseOnCondition: !ammo
-	AttackAircraft:
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: Sidewinder
+		LocalOffset: 0,500,-85, 0,-500,-85
+		PauseOnCondition: !ammo2 || bombing-run
+	AttackAircraftCA:
 		FacingTolerance: 512
 		PersistentTargeting: false
 		OpportunityFire: true
 		PauseOnCondition: empdisable || being-warped
+		AirFacingTolerance: 80
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
@@ -1220,14 +1231,29 @@ A10:
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
-	AmmoPool:
+	AmmoPool@PRIMARY:
+		Name: primary
 		Ammo: 7
 		ReloadDelay: 35
 		AmmoCondition: ammo
-	WithAmmoPipsDecoration:
+		Armaments: primary
+	AmmoPool@SECONDARY:
+		Name: secondary
+		Ammo: 4
+		ReloadDelay: 60
+		AmmoCondition: ammo2
+		Armaments: secondary
+	WithAmmoPipsDecorationCA@PRIMARY:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
+		AmmoPools: primary
+	WithAmmoPipsDecorationCA@SECONDARY:
+		Position: BottomLeft
+		Margin: 4, 7
+		RequiresSelection: true
+		AmmoPools: secondary
+		FullSequence: pip-red
 	Selectable:
 		Bounds: 36,28,0,2
 		DecorationBounds: 40,29,0,1
@@ -1254,6 +1280,7 @@ A10:
 		Prerequisites: aircraft.upgraded
 	Rearmable:
 		RearmActors: afld, afld.gdi
+		AmmoPools: primary, secondary
 	-RangeMultiplier@SEEK:
 	-RangeMultiplier@SEEK2:
 	-RangeMultiplier@SEEK3:
@@ -1445,7 +1472,7 @@ APCH:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 30
-		Prerequisites: ~hpad.td, ~aircraft.apch, ~techlevel.medium
+		Prerequisites: ~aircraft.apch, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Helicopter gunship with a chaingun.
 	TooltipExtras:
@@ -1469,7 +1496,7 @@ APCH:
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: HeliGunAG
-		LocalOffset: 228,0,-85
+		LocalOffset: 350,0,-150
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
 	AttackAircraft:
@@ -1833,7 +1860,7 @@ UAV:
 
 RAH:
 	Inherits: ^HelicopterTD
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	RenderSprites:
 		Image: rah66
 	Buildable:
@@ -1841,11 +1868,11 @@ RAH:
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 60
 		IconPalette: chrometd
-		Prerequisites: tmpl, ~hpad.td, ~aircraft.nod, ~techlevel.high
-		Description: Stealth attack helicopter.
+		Prerequisites: hq, ~aircraft.nod, ~techlevel.high
+		Description: Attack helicopter that can be upgraded\n  with cloaking capability.
 	TooltipExtras:
-		Strengths: • Strong vs Infantry, Light Armor, Buildings
-		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
+		Strengths: • Strong vs Aircraft, Infantry, Light Armor, Buildings
+		Weaknesses: • Weak vs Heavy Armor, Defenses
 	Valued:
 		Cost: 1900
 	Tooltip:
@@ -1863,11 +1890,21 @@ RAH:
 		Range: 8c0
 		Type: GroundPosition
 	Armament@PRIMARY:
-		Weapon: Rah66AG
+		Weapon: Rah66AA
 		LocalOffset: 0,-213,-85, 0,213,-85
 		PauseOnCondition: !ammo
 		RequiresCondition: !napalm-missiles
 	Armament@PRIMARYBH:
+		Weapon: Rah66AA.BlackHand
+		LocalOffset: 0,-213,-85, 0,213,-85
+		PauseOnCondition: !ammo
+		RequiresCondition: napalm-missiles
+	Armament@SECONDARY:
+		Weapon: Rah66AG
+		LocalOffset: 0,-213,-85, 0,213,-85
+		PauseOnCondition: !ammo
+		RequiresCondition: !napalm-missiles
+	Armament@SECONDARYBH:
 		Weapon: Rah66AG.BlackHand
 		LocalOffset: 0,-213,-85, 0,213,-85
 		PauseOnCondition: !ammo
@@ -1881,7 +1918,7 @@ RAH:
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		AltitudeVelocity: 0c100
-		TurnSpeed: 16
+		TurnSpeed: 18
 		Speed: 157
 		TakeoffSounds: htoff1.aud
 		LandingSounds: hland1.aud
@@ -1894,7 +1931,7 @@ RAH:
 		UncloakSound: appear1.aud
 		Palette: cloak
 		IsPlayerPalette: false
-		RequiresCondition: !cloak-force-disabled && airborne && !invisibility
+		RequiresCondition: !cloak-force-disabled && airborne && !invisibility && rahstealth-upgrade
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
@@ -1945,6 +1982,9 @@ RAH:
 	GrantConditionOnFaction@blackh:
 		Factions: blackh
 		Condition: napalm-missiles
+	GrantConditionOnPrerequisite@RAHSTEALTH:
+		Condition: rahstealth-upgrade
+		Prerequisites: rahstealth.upgrade
 
 KIRO:
 	Inherits: ^Helicopter
@@ -2299,7 +2339,7 @@ OCAR.Pod:
 
 HARR:
 	Inherits: ^Helicopter
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Buildable:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
@@ -2307,8 +2347,8 @@ HARR:
 		Prerequisites: atek, ~hpad, ~aircraft.allies, ~techlevel.high
 		Description: Fast VTOL ground attack aircraft armed\n  with powerful explosive missiles.
 	TooltipExtras:
-		Strengths: • Strong vs Buildings, Infantry, Light Armor
-		Weaknesses: • Cannot attack Aircraft
+		Strengths: • Strong vs Aircraft, Buildings, Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Defenses
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -2325,9 +2365,13 @@ HARR:
 	RevealsShroud@GAPGEN:
 		Range: 10c0
 		Type: GroundPosition
-	Armament:
+	Armament@PRIMARY:
+		Weapon: HellfireAA.Harrier
+		LocalOffset: 0,500,-85, 0,-500,-85
+		PauseOnCondition: !ammo
+	Armament@SECONDARY:
 		Weapon: HellfireAG.Harrier
-		LocalOffset: 0,213,-85, 0,-213,-85
+		LocalOffset: 0,500,-85, 0,-500,-85
 		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 80
@@ -2344,7 +2388,6 @@ HARR:
 		CanHover: False
 		TakeoffSounds: mtoff1.aud, mtoff2.aud
 		LandingSounds: mland1.aud, mland2.aud
-		IdealSeparation: 1c682
 		Voice: Move
 		CanSlide: False
 		AltitudeVelocity: 0c200
@@ -2402,7 +2445,7 @@ SCRN:
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 150
 		IconPalette: chrometd
-		Prerequisites: tmpl, ~hpad.td, ~aircraft.nod, ~techlevel.high
+		Prerequisites: tmpl, ~aircraft.nod, ~techlevel.high
 		Description: Fast VTOL attack craft armed\n  with powerful plasma cannons.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Defenses, Aircraft
@@ -2448,7 +2491,6 @@ SCRN:
 		CanHover: False
 		TakeoffSounds: dropup1.aud
 		LandingSounds: dropdwn1.aud
-		IdealSeparation: 1c682
 		Voice: Move
 		CanSlide: False
 		AltitudeVelocity: 0c200
@@ -2711,7 +2753,7 @@ VENM:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 31
-		Prerequisites: ~hpad.td, ~aircraft.marked, ~techlevel.medium
+		Prerequisites: ~aircraft.marked, ~techlevel.medium
 		IconPalette: chrometd
 		Description: VTOL gunship armed with laser.
 	TooltipExtras:

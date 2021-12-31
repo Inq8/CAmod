@@ -435,7 +435,7 @@ CorrupterSpew:
 		InvalidTargets: Vehicle, Building, Wall
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
-		ExplosionPalette: scrin
+		ExplosionPalette: caneon
 		Image: tibexplodesm
 
 CorruptorExplode:
@@ -484,7 +484,7 @@ RuinerCannon:
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: ruiner-hit1.aud
 		Explosions: idle
-		ExplosionPalette: scrin
+		ExplosionPalette: caneon
 		Image: tibexplode
 
 RuinerCannonCharged:
@@ -638,6 +638,7 @@ StormriderZap:
 StormRiderZapAA:
 	Inherits: StormriderZap
 	ReloadDelay: 70
+	MinRange: 1c256
 	Projectile: Bullet
 		Image: scrinzap
 		Speed: 1c768
@@ -706,12 +707,13 @@ EnervatorBolts:
 
 EnervatorBoltsAA:
 	Inherits: EnervatorBolts
+	MinRange: 1c256
 	ValidTargets: Air, AirSmall
 	Projectile: MissileCA
 		CloseEnough: 341
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air
-		Range: 0, 0c64, 0c256, 1c0
+		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
 		ValidRelationships: Enemy, Neutral
 		Damage: 7000
@@ -783,6 +785,7 @@ InvaderZap:
 
 InvaderZapAA:
 	Inherits: InvaderZap
+	MinRange: 0c512
 	Projectile: Bullet
 		Image: scrinzap
 	ValidTargets: Air, AirSmall
