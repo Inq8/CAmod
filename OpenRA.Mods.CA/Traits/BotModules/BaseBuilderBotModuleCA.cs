@@ -169,7 +169,6 @@ namespace OpenRA.Mods.CA.Traits
 		BitArray resourceTypeIndices;
 		CPos initialBaseCenter;
 		CPos defenseCenter;
-		int attacksUntilResponse;
 
 		List<BaseBuilderQueueManagerCA> builders = new List<BaseBuilderQueueManagerCA>();
 
@@ -208,7 +207,6 @@ namespace OpenRA.Mods.CA.Traits
 			playerPower = self.TraitOrDefault<PowerManager>();
 			playerResources = self.Trait<PlayerResources>();
 			positionsUpdatedModules = self.TraitsImplementing<IBotPositionsUpdated>().ToArray();
-			attacksUntilResponse = 0;
 		}
 
 		protected override void TraitEnabled(Actor self)
@@ -261,12 +259,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (!self.Info.HasTraitInfo<BuildingInfo>())
 				return;
 
-			if (--attacksUntilResponse > 0)
-				return;
-
-			attacksUntilResponse = 10;
-
-			if (ShouldSell(self))
+			if (ShouldSell(self, e))
 			{
 				bot.QueueOrder(new Order("Sell", self, Target.FromActor(self), false)
 				{
@@ -281,7 +274,7 @@ namespace OpenRA.Mods.CA.Traits
 				n.UpdatedDefenseCenter(e.Attacker.Location);
 		}
 
-		bool ShouldSell(Actor self)
+		bool ShouldSell(Actor self, AttackInfo e)
 		{
 			if (!self.Info.HasTraitInfo<SellableInfo>())
 				return false;
@@ -289,9 +282,13 @@ namespace OpenRA.Mods.CA.Traits
 			if (Info.DefenseTypes.Contains(self.Info.Name))
 				return false;
 
-			var health = self.TraitOrDefault<Health>();
+			if (e.DamageState == DamageState.Dead || e.DamageState < DamageState.Medium || e.DamageState == e.PreviousDamageState)
+				return false;
 
-			if (health == null || health.DamageState < DamageState.Medium)
+			var inMainBase = (self.CenterPosition - self.World.Map.CenterOfCell(initialBaseCenter)).Length < WDist.FromCells(28).Length;
+			var chanceThreshold = inMainBase ? 95 : 70;
+
+			if (self.World.LocalRandom.Next(100) < chanceThreshold)
 				return false;
 
 			if (Info.ConstructionYardTypes.Contains(self.Info.Name) && AIUtils.CountBuildingByCommonName(Info.ConstructionYardTypes, player) <= 1)
