@@ -1,6 +1,6 @@
 ﻿#region Copyright & License Information
 /*
- * Copyright 2007-2020 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2022 The CA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
  * as published by the Free Software Foundation, either version 3 of
@@ -9,9 +9,9 @@
  */
 #endregion
 
-using System;
 using System.Linq;
 using OpenRA.Activities;
+using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
@@ -20,38 +20,43 @@ namespace OpenRA.Mods.CA.Activities
 {
 	public class ParadropCargo : Activity
 	{
+		readonly Aircraft aircraft;
+		readonly AttackAircraft attackAircraft;
 		readonly Cargo cargo;
 		readonly INotifyUnload[] notifiers;
 		readonly bool assignTargetOnFirstRun;
+		readonly bool returnToBase;
 		readonly int dropInterval;
-		readonly WDist exitRange;
+		readonly WDist dropRange;
 
 		Target destination;
-		WPos targetPosition;
 		int dropDelay;
-		bool returningToBase;
+		bool exitParadrop;
+		bool inDropRange;
 
-		public ParadropCargo(Actor self, int dropInterval, WDist exitRange)
-			: this(self, Target.Invalid, dropInterval, exitRange)
+		public ParadropCargo(Actor self, int dropInterval, WDist dropRange, bool returnToBase)
+			: this(self, Target.Invalid, dropInterval, dropRange, returnToBase)
 		{
 			assignTargetOnFirstRun = true;
 		}
 
-		public ParadropCargo(Actor self, in Target destination, int dropInterval, WDist exitRange)
+		public ParadropCargo(Actor self, in Target destination, int dropInterval, WDist dropRange, bool returnToBase)
 		{
 			cargo = self.Trait<Cargo>();
 			notifiers = self.TraitsImplementing<INotifyUnload>().ToArray();
 			this.destination = destination;
 			this.dropInterval = dropInterval;
-			this.exitRange = exitRange;
+			this.dropRange = dropRange;
+			this.returnToBase = returnToBase;
 			ChildHasPriority = false;
+			aircraft = self.Trait<Aircraft>();
+			attackAircraft = self.Trait<AttackAircraft>();
 		}
 
 		protected override void OnFirstRun(Actor self)
 		{
 			if (assignTargetOnFirstRun)
 				destination = Target.FromCell(self.World, self.Location);
-			targetPosition = destination.CenterPosition;
 
 			QueueChild(new FlyForward(self, -1));
 		}
@@ -69,16 +74,39 @@ namespace OpenRA.Mods.CA.Activities
 			if (IsCanceling)
 				return true;
 
+			var wasInDropRange = inDropRange;
+			inDropRange = destination.IsInRange(self.CenterPosition, dropRange);
+
+			// We have troops, we are not near the DZ & the troops can't get out; Turn around
+			if (!cargo.IsEmpty(self) && !inDropRange && !cargo.CanUnload())
+			{
+				var pos = self.CenterPosition;
+				var delta = attackAircraft.GetTargetPosition(pos, destination) - pos;
+				var desiredFacing = delta.HorizontalLengthSquared != 0 ? delta.Yaw : aircraft.Facing;
+				aircraft.Facing = Util.TickFacing(aircraft.Facing, desiredFacing, aircraft.TurnSpeed);
+			}
+
+			// Empty; lets go home
 			if (cargo.IsEmpty(self))
 			{
-				if (returningToBase)
+				if (exitParadrop)
 					return ChildActivity == null;
 
 				ChildActivity?.Cancel(self);
-				QueueChild(new ReturnToBase(self));
-				returningToBase = true;
+
+				if (returnToBase)
+				{
+					QueueChild(new ReturnToBase(self));
+				}
+				else
+				{
+					QueueChild(new FlyIdle(self));
+				}
+
+				exitParadrop = true;
 			}
 
+			// Else; everybody out
 			if (cargo.CanUnload())
 			{
 				foreach (var inu in notifiers)
@@ -89,8 +117,6 @@ namespace OpenRA.Mods.CA.Activities
 				var dropCell = self.Location;
 				var dropPositionable = dropActor.Trait<IPositionable>();
 				var dropSubCell = dropPositionable.GetAvailableSubCell(dropCell);
-
-				targetPosition = destination.CenterPosition;
 
 				cargo.Unload(self);
 				self.World.AddFrameEndTask(w =>
