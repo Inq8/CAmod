@@ -109,6 +109,10 @@ E1:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		IdleSequences: idle1,idle2,idle3,idle4
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	ProducibleWithLevel:
@@ -162,6 +166,10 @@ E2:
 		PauseOnCondition: being-warped
 	WithInfantryBody:
 		DefaultAttackSequence: throw
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	Explodes:
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall
@@ -255,14 +263,17 @@ E3:
 		Prerequisites: cryr.upgrade
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-		RequiresCondition: !cryr-upgrade
+		RequiresCondition: !parachute && !cryr-upgrade && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	WithInfantryBody@CRYO:
 		IdleSequences: idle-cryo1, idle-cryo2
 		StandSequences: stand-cryo, stand-cryo2
 		AttackSequences: shoot-cryo
 		DefaultAttackSequence: shoot-cryo
 		MoveSequence: run-cryo
-		RequiresCondition: cryr-upgrade
+		RequiresCondition: cryr-upgrade && !being-warped
 	WithDeathAnimation:
 		RequiresCondition: !cryr-upgrade
 	WithDeathAnimation@CRYO:
@@ -399,7 +410,10 @@ U3:
 		RequiresCondition: !editorhack
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-		RequiresCondition: undeployed
+		RequiresCondition: undeployed && !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	WithMakeAnimation:
 		Sequence: deploy
 		BodyNames: dot
@@ -539,6 +553,10 @@ E4:
 		PauseOnCondition: being-warped
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	Explodes:
 		Weapon: UnitExplodeFlameSmall
 		EmptyWeapon: UnitExplodeFlameSmall
@@ -569,6 +587,10 @@ E6:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	WithInfantryBody:
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	Passenger:
 		CustomPipType: yellow
 	EngineerRepair:
@@ -716,6 +738,10 @@ E7:
 		AttackSequences:
 			primary: shoot
 			secondary: stand
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	Demolition:
 		DetonationDelay: 45
 		Voice: Demolish
@@ -777,6 +803,10 @@ MEDI:
 		IdleSequences: idle
 		StandSequences: stand
 		DefaultAttackSequence: heal
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	Voiced:
 		VoiceSet: MedicVoice
 	AutoTarget:
@@ -854,6 +884,10 @@ MECH:
 		IdleSequences: idle
 		DefaultAttackSequence: repair
 		StandSequences: stand
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	Voiced:
 		VoiceSet: MechanicVoice
 	AutoTarget:
@@ -907,7 +941,10 @@ HACK:
 	WithInfantryBody:
 		IdleSequences: idle
 		StandSequences: stand
-		RequiresCondition: undeployed
+		RequiresCondition: !parachute && !being-warped && undeployed
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	WithSpriteBody@DEPLOYED:
 		Name: deployed
 		Sequence: hack
@@ -1078,6 +1115,10 @@ THF:
 	WithInfantryBody:
 		IdleSequences: idle
 		StandSequences: stand
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	Cloak@NORMAL:
 		InitialDelay: 250
 		CloakDelay: 120
@@ -1148,6 +1189,10 @@ SHOK:
 		OutsideRangeCursor: ability
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	GrantConditionOnAttack@CHARGESFX:
 		ArmamentNames: secondary
 		Condition: charge-fire
@@ -1211,6 +1256,10 @@ N1:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		IdleSequences: idle1,idle2,idle3,idle4
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
 	ProducibleWithLevel:
@@ -1276,6 +1325,10 @@ N2:
 	WithInfantryBody:
 		StandSequences: stand
 		DefaultAttackSequence: throw
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
 	Explodes:
@@ -1386,6 +1439,10 @@ N3:
 		DeathSequencePalette: playertd
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	AutoTarget:
 		ScanRadius: 5
 	ProducibleWithLevel:
@@ -1446,6 +1503,10 @@ N4:
 		ProneOffset: 160,0,-254
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	AttackFrontal:
 		PauseOnCondition: being-warped
 	WithDeathAnimation:
@@ -1491,6 +1552,10 @@ N5:
 		DeathSequencePalette: playertd
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	Armament@PRIMARY:
 		Weapon: ChemsprayTD
 		LocalOffset: 341,0,254
@@ -1601,6 +1666,10 @@ RMBO:
 		AttackSequences:
 			primary: shoot
 			secondary: stand
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	Demolition:
 		DetonationDelay: 45
 		Voice: Demolish
@@ -1669,6 +1738,11 @@ N6:
 		DeathSequencePalette: playertd
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+	WithInfantryBody:
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 
 VICE:
 	Inherits: ^Viceroid
@@ -1766,6 +1840,10 @@ SNIP:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		StandSequences: stand, stand2
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	Passenger:
 		CustomPipType: red
 		Voice: Move
@@ -1851,7 +1929,10 @@ BORI:
 		AttackSequences:
 			primary: shoot-laser
 			secondary: shoot
-		RequiresCondition: !being-warped
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	VoiceAnnouncement:
 		Voice: Build
 	AnnounceOnKill:
@@ -1901,6 +1982,10 @@ MORT:
 		PauseOnCondition: being-warped
 	WithInfantryBody:
 		DefaultAttackSequence: throw
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	Explodes:
 		Weapon: UnitExplodeChemSmall
 		EmptyWeapon: UnitExplodeChemSmall
@@ -1951,6 +2036,10 @@ SAB:
 		DefaultAttackSequence: shoot
 		StandSequences: stand
 		IdleSequences: idle1
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	Health:
 		HP: 5000
 	Mobile:
@@ -2045,6 +2134,10 @@ ACOL:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		IdleSequences: idle3
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -2422,7 +2515,10 @@ E8:
 		SmartDeploy: True
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-		RequiresCondition: !being-warped && undeployed
+		RequiresCondition: !being-warped && undeployed && !parachute
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	WithSpriteBody@DEPLOYED:
 		Sequence: deployed
 		RequiresCondition: !undeployed
@@ -2510,6 +2606,11 @@ N1C:
 		MuzzleSequence: garrison-muzzle
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithInfantryBody:
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 
 N3C:
 	Inherits: ^Cyborg
@@ -2551,6 +2652,10 @@ N3C:
 		VoiceSet: ReaperVoice
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	Armament@PRIMARY:
 		Weapon: RedEye.CYB
 		LocalOffset: 0,0,500
@@ -2683,7 +2788,10 @@ RMBC:
 		DefaultAttackSequence: shoot
 		StandSequences: stand
 		IdleSequences: idle1, idle2
-		RequiresCondition: !being-warped || !empdisable
+		RequiresCondition: !being-warped && !empdisable && !parachute
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	WithInfantryBody@Warped:
 		RequiresCondition: being-warped || empdisable
 	DamageMultiplier@CYBORGARMOR:
@@ -2745,6 +2853,10 @@ IVAN:
 		PauseOnCondition: being-warped
 	WithInfantryBody:
 		DefaultAttackSequence: throw
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	Explodes:
 		Weapon: ArtilleryExplode
 		EmptyWeapon: ArtilleryExplode
@@ -2903,6 +3015,10 @@ SHAD:
 			secondary: throw
 		MinIdleDelay: 80
 		MaxIdleDelay: 250
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	Health:
 		HP: 5000
 	Mobile:
@@ -3155,6 +3271,10 @@ BH:
 		Voice: Attack
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	Explodes:
 		Weapon: UnitExplodeFlameSmall
 		EmptyWeapon: UnitExplodeFlameSmall
@@ -3255,9 +3375,9 @@ YURI:
 		ShowSelectionBar: true
 		StartsFullyCharged: true
 		Voice: Demolish
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped && parachute
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped && parachute
 		Armaments: primary, secondary, aidummy
 	RevealsShroud:
 		Range: 6c0
@@ -3271,7 +3391,10 @@ YURI:
 		IdleSequences: idle
 		StandSequences: stand
 		DefaultAttackSequence: shoot
-		RequiresCondition: !deployed && !deploying && !being-warped
+		RequiresCondition: !deployed && !deploying && !being-warped && !parachute
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	WithSpriteBody@DEPLOYED:
 		Sequence: deployed
 		RequiresCondition: (deployed || deploying) && !being-warped
@@ -3350,7 +3473,10 @@ SEAL:
 		Condition: onwater
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-		RequiresCondition: !being-warped && !onwater
+		RequiresCondition: !being-warped && !onwater && !parachute
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
 	WithInfantryBody@Swim:
 		-IdleSequences:
 		StandSequences: swimidle
