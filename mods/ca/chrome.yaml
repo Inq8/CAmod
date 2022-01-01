@@ -20,291 +20,991 @@
 	Image2x: ca-menu-logo-2x.png
 	Image3x: ca-menu-logo-3x.png
 
+^Chrome:
+	Image: chrome.png
+
+^ChromeRA:
+	Image: chromera.png
+
+^ChromeS:
+	Image: chromes.png
+
+# ----------------------------------------------------------------------
+# Allies
+# ----------------------------------------------------------------------
+
 sidebar-allies:
-	Inherits: ^Sidebar
+	Inherits: ^ChromeRA
 	Regions:
-		radar: 290, 67, 222, 222
-		background-top: 0, 185, 238, 262
-		background-moneybin: 0, 85, 238, 28
-		background-iconbg: 12, 227, 190, 47
-		background-iconrow: 0, 116, 238, 47
-		background-bottom: 0, 480, 238, 31
-		background-supportoverlay: 12, 324, 64, 48
+		background-top: 0, 0, 235, 260
+		background-iconrow: 0, 260, 235, 52
+		background-bottom: 0, 312, 235, 26
+		background-commandbar: 87, 461, 425, 51
 
 sidebar-button-allies:
-	Inherits: ^Sidebar
-	PanelRegion: 260, 281, 5, 5, 18, 18, 5, 5
+	Inherits: ^ChromeRA
+	PanelRegion: 235, 119, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-allies-hover:
-	Inherits: ^Sidebar
-	PanelRegion: 260, 252, 5, 5, 18, 18, 5, 5
+	Inherits: ^ChromeRA
+	PanelRegion: 235, 150, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-allies-pressed:
-	Inherits: sidebar-button-allies
+	Inherits: ^ChromeRA
+	PanelRegion: 235, 181, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-allies-highlighted:
-	Inherits: ^Sidebar
-	PanelRegion: 260, 339, 5, 5, 18, 18, 5, 5
+	Inherits: ^ChromeRA
+	PanelRegion: 235, 212, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-allies-highlighted-hover:
-	Inherits: ^Sidebar
-	PanelRegion: 260, 310, 5, 5, 18, 18, 5, 5
+	Inherits: ^ChromeRA
+	PanelRegion: 235, 243, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-allies-highlighted-pressed:
-	Inherits: sidebar-button-allies-highlighted
-sidebar-button-allies-disabled:
-	Inherits: ^Sidebar
-	PanelRegion: 260, 484, 5, 5, 18, 18, 5, 5
+	Inherits: ^ChromeRA
+	PanelRegion: 235, 274, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-allies-highlighted-disabled:
 	Inherits: sidebar-button-allies-disabled
+sidebar-button-allies-disabled:
+	Inherits: ^ChromeRA
+	PanelRegion: 235, 305, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 
-command-button-allies:
-	Inherits: ^Sidebar
-	PanelRegion: 260, 281, 3, 3, 22, 22, 3, 3
+scrollup-buttons-allies:
+	Inherits: ^ChromeRA
+	PanelRegion: 0, 339, 0, 0, 34, 27, 0, 0
 	PanelSides: Center
-command-button-allies-hover:
-	Inherits: ^Sidebar
-	PanelRegion: 260, 252, 3, 3, 22, 22, 3, 3
+scrollup-buttons-allies-hover:
+	Inherits: ^ChromeRA
+	PanelRegion: 34, 339, 0, 0, 34, 27, 0, 0
 	PanelSides: Center
-command-button-allies-pressed:
-	Inherits: command-button-allies
-command-button-allies-highlighted:
-	Inherits: ^Sidebar
-	PanelRegion: 260, 339, 3, 3, 22, 22, 3, 3
+scrollup-buttons-allies-pressed:
+	Inherits: ^ChromeRA
+	PanelRegion: 66, 339, 0, 0, 34, 27, 0, 0
 	PanelSides: Center
-command-button-allies-highlighted-hover:
-	Inherits: ^Sidebar
-	PanelRegion: 260, 310, 3, 3, 22, 22, 3, 3
+scrollup-buttons-allies-highlighted:
+	Inherits: scrollup-buttons-allies-hover
+scrollup-buttons-allies-highlighted-hover:
+	Inherits: scrollup-buttons-allies-hover
+scrollup-buttons-allies-highlighted-pressed:
+	Inherits: scrollup-buttons-allies-pressed
+scrollup-button-allies-highlighted-disabled:
+	Inherits: scrollup-buttons-allies-disabled
+scrollup-buttons-allies-disabled:
+	Inherits: ^ChromeRA
+	PanelRegion: 0, 339, 0, 0, 34, 27, 0, 0
 	PanelSides: Center
-command-button-allies-highlighted-pressed:
-	Inherits: command-button-allies-highlighted
-command-button-allies-disabled:
-	Inherits: command-button-allies
-command-button-allies-highlighted-disabled:
-	Inherits: command-button-allies-highlighted
+
+scrolldown-buttons-allies:
+	Inherits: ^ChromeRA
+	PanelRegion: 102, 339, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrolldown-buttons-allies-hover:
+	Inherits: ^ChromeRA
+	PanelRegion: 136, 339, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrolldown-buttons-allies-pressed:
+	Inherits: ^ChromeRA
+	PanelRegion: 170, 339, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrolldown-buttons-allies-highlighted:
+	Inherits: ^ChromeRA
+	PanelRegion: 136, 339, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrolldown-buttons-allies-highlighted-hover:
+	Inherits: ^ChromeRA
+	PanelRegion: 136, 339, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrolldown-buttons-allies-highlighted-pressed:
+	Inherits: ^ChromeRA
+	PanelRegion: 170, 339, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrolldown-button-allies-highlighted-disabled:
+	Inherits: scrolldown-buttons-allies-disabled
+scrolldown-buttons-allies-disabled:
+	Inherits: ^ChromeRA
+	PanelRegion: 102, 339, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+
+radar-allies:
+	Inherits: ^ChromeRA
+	Regions:
+		insignia: 235, 0, 164, 119
+
+order-icons-allies:
+	Inherits: ^ChromeRA
+	Regions:
+		debug: 265, 119, 30, 31
+		debug-disabled: 295, 119, 30, 31
+		debug-active: 265, 119, 30, 31
+		repair: 265, 150, 30, 31
+		repair-disabled: 295, 150, 30, 31
+		repair-active: 265, 150, 30, 31
+		sell: 265, 181, 30, 31
+		sell-disabled: 295, 181, 30, 31
+		sell-active: 265, 181, 30, 31
+		options: 265, 212, 30, 31
+		options-disabled: 295, 212, 30, 31
+		options-active: 265, 212, 30, 31
+		beacon: 265, 243, 30, 31
+		beacon-disabled: 295, 243, 30, 31
+		beacon-active: 265, 243, 30, 31
+		power: 265, 274, 30, 31
+		power-disabled: 295, 274, 30, 31
+		power-active: 265, 274, 30, 31
+
+command-icons-allies:
+	Inherits: ^ChromeRA
+	Regions:
+		attack-move: 304, 331, 26, 26
+		attack-move-disabled: 304, 357, 26, 26
+		attack-move-active: 304, 383, 26, 26
+		attack-move-hover: 304, 409, 26, 26
+		attack-move-active-hover: 304, 435, 26, 26
+		force-move: 330, 331, 24, 24
+		force-move-disabled: 330, 357, 26, 26
+		force-move-active: 330, 383, 26, 26
+		force-move-hover: 330, 409, 26, 26
+		force-move-active-hover: 330, 435, 26, 26
+		force-attack: 356, 331, 26, 26
+		force-attack-disabled: 356, 357, 26, 26
+		force-attack-active: 356, 383, 26, 26
+		force-attack-hover: 356, 409, 26, 26
+		force-attack-active-hover: 356, 435, 26, 26
+		guard: 382, 331, 24, 24
+		guard-disabled: 382, 357, 26, 26
+		guard-active: 382, 383, 26, 26
+		guard-hover: 382, 409, 26, 26
+		guard-active-hover: 382, 435, 26, 26
+		deploy: 408, 331, 24, 24
+		deploy-disabled: 408, 357, 26, 26
+		deploy-active: 408, 383, 26, 26
+		deploy-hover: 408, 409, 26, 26
+		deploy-active-hover: 408, 435, 26, 26
+		scatter: 434, 331, 26, 26
+		scatter-disabled: 434, 357, 26, 26
+		scatter-active: 434, 383, 26, 26
+		scatter-hover: 434, 409, 26, 26
+		scatter-active-hover: 434, 435, 26, 26
+		stop: 460, 331, 26, 26
+		stop-disabled: 460, 357, 26, 26
+		stop-active: 460, 383, 26, 26
+		stop-hover: 460, 409, 26, 26
+		stop-active-hover: 460, 435, 26, 26
+		queue-orders: 486, 331, 26, 26
+		queue-orders-disabled: 486, 357, 26, 26
+		queue-orders-active: 486, 383, 26, 26
+		queue-orders-hover: 486, 409, 26, 26
+		queue-orders-active-hover: 486, 435, 26, 26
+
+stance-icons-allies:
+	Inherits: ^ChromeRA
+	Regions:
+		attack-anything: 424, 176, 22, 22
+		attack-anything-disabled: 424, 198, 22, 22
+		attack-anything-active: 424, 220, 22, 22
+		attack-anything-hover: 424, 242, 22, 22
+		attack-anything-active-hover: 424, 264, 22, 22
+		defend: 446, 176, 22, 22
+		defend-disabled: 446, 198, 22, 22
+		defend-active: 446, 220, 22, 22
+		defend-hover: 446, 242, 22, 22
+		defend-active-hover: 446, 264, 22, 22
+		return-fire: 468, 176, 22, 22
+		return-fire-disabled: 468, 198, 22, 22
+		return-fire-active: 468, 220, 22, 22
+		return-fire-hover: 468, 242, 22, 22
+		return-fire-active-hover: 468, 264, 22, 22
+		hold-fire: 490, 176, 22, 22
+		hold-fire-disabled: 490, 198, 22, 22
+		hold-fire-active: 490, 220, 22, 22
+		hold-fire-hover: 490, 242, 22, 22
+		hold-fire-active-hover: 490, 264, 22, 22
+
+# ----------------------------------------------------------------------
+# Soviets
+# ----------------------------------------------------------------------
 
 sidebar-soviet:
-	Inherits: ^Sidebar
+	Inherits: ^ChromeRA
 	Regions:
-		radar: 290, 290, 222, 222
-		background-top: 0, 185, 238, 262
-		background-moneybin: 0, 54, 238, 28
-		background-iconbg: 12, 275, 190, 47
-		background-iconrow: 0, 116, 238, 47
-		background-bottom: 0, 166, 238, 8
-		background-supportoverlay: 77, 324, 64, 48
+		background-top: 512, 0, 235, 260
+		background-iconrow: 512, 260, 235, 52
+		background-bottom: 512, 312, 235, 26
+		background-commandbar: 599, 461, 425, 51
 
 sidebar-button-soviet:
-	Inherits: ^Sidebar
-	PanelRegion: 260, 165, 5, 5, 18, 18, 5, 5
+	Inherits: ^ChromeRA
+	PanelRegion: 747, 119, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-soviet-hover:
-	Inherits: ^Sidebar
-	PanelRegion: 260, 136, 5, 5, 18, 18, 5, 5
+	Inherits: ^ChromeRA
+	PanelRegion: 747, 150, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-soviet-pressed:
-	Inherits: sidebar-button-soviet
+	Inherits: ^ChromeRA
+	PanelRegion: 747, 181, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-soviet-highlighted:
-	Inherits: ^Sidebar
-	PanelRegion: 260, 223, 5, 5, 18, 18, 5, 5
+	Inherits: ^ChromeRA
+	PanelRegion: 747, 212, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-soviet-highlighted-hover:
-	Inherits: ^Sidebar
-	PanelRegion: 260, 194, 5, 5, 18, 18, 5, 5
+	Inherits: ^ChromeRA
+	PanelRegion: 747, 243, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-soviet-highlighted-pressed:
-	Inherits: sidebar-button-soviet-highlighted
-sidebar-button-soviet-disabled:
-	Inherits: sidebar-button-allies-disabled
+	Inherits: ^ChromeRA
+	PanelRegion: 747, 274, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-soviet-highlighted-disabled:
-	Inherits: sidebar-button-allies-disabled
+	Inherits: sidebar-button-soviet-disabled
+sidebar-button-soviet-disabled:
+	Inherits: ^ChromeRA
+	PanelRegion: 747, 305, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 
-command-button-soviet:
-	Inherits: ^Sidebar
-	PanelRegion: 260, 165, 3, 3, 22, 22, 3, 3
+scrollup-buttons-soviet:
+	Inherits: ^ChromeRA
+	PanelRegion: 512, 338, 0, 0, 34, 27, 0, 0
 	PanelSides: Center
-command-button-soviet-hover:
-	Inherits: ^Sidebar
-	PanelRegion: 260, 136, 3, 3, 22, 22, 3, 3
+scrollup-buttons-soviet-hover:
+	Inherits: ^ChromeRA
+	PanelRegion: 546, 338, 0, 0, 34, 27, 0, 0
 	PanelSides: Center
-command-button-soviet-pressed:
-	Inherits: command-button-soviet
-command-button-soviet-highlighted:
-	Inherits: ^Sidebar
-	PanelRegion: 260, 223, 3, 3, 22, 22, 3, 3
+scrollup-buttons-soviet-pressed:
+	Inherits: ^ChromeRA
+	PanelRegion: 580, 338, 0, 0, 34, 27, 0, 0
 	PanelSides: Center
-command-button-soviet-highlighted-hover:
-	Inherits: ^Sidebar
-	PanelRegion: 260, 194, 3, 3, 22, 22, 3, 3
+scrollup-buttons-soviet-highlighted:
+	Inherits: scrollup-buttons-soviet-hover
+scrollup-buttons-soviet-highlighted-hover:
+	Inherits: ^ChromeRA
+	PanelRegion: 546, 338, 0, 0, 34, 27, 0, 0
 	PanelSides: Center
-command-button-soviet-highlighted-pressed:
-	Inherits: command-button-soviet-highlighted
-command-button-soviet-disabled:
-	Inherits: command-button-soviet
-command-button-soviet-highlighted-disabled:
-	Inherits: command-button-soviet-highlighted
+scrollup-buttons-soviet-highlighted-pressed:
+	Inherits: ^ChromeRA
+	PanelRegion: 580, 338, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrollup-button-soviet-highlighted-disabled:
+	Inherits: scrollup-buttons-soviet-disabled
+scrollup-buttons-soviet-disabled:
+	Inherits: ^ChromeRA
+	PanelRegion: 512, 338, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+
+scrolldown-buttons-soviet:
+	Inherits: ^ChromeRA
+	PanelRegion: 614, 338, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrolldown-buttons-soviet-hover:
+	Inherits: ^ChromeRA
+	PanelRegion: 648, 338, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrolldown-buttons-soviet-pressed:
+	Inherits: ^ChromeRA
+	PanelRegion: 682, 338, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrolldown-buttons-soviet-highlighted:
+	Inherits: scrolldown-buttons-soviet-hover
+scrolldown-buttons-soviet-highlighted-hover:
+	Inherits: scrolldown-buttons-soviet-hover
+scrolldown-buttons-soviet-highlighted-pressed:
+	Inherits: scrolldown-buttons-soviet-pressed
+scrolldown-button-soviet-highlighted-disabled:
+	Inherits: scrolldown-buttons-soviet-disabled
+scrolldown-buttons-soviet-disabled:
+	Inherits: ^ChromeRA
+	PanelRegion: 614, 338, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+
+radar-soviet:
+	Inherits: ^ChromeRA
+	Regions:
+		insignia: 747, 0, 164, 119
+
+order-icons-soviet:
+	Inherits: ^ChromeRA
+	Regions:
+		debug: 777, 119, 30, 31
+		debug-disabled: 807, 119, 30, 31
+		debug-active: 777, 119, 30, 31
+		repair: 777, 150, 30, 31
+		repair-disabled: 807, 150, 30, 31
+		repair-active: 777, 150, 30, 31
+		sell: 777, 181, 30, 31
+		sell-disabled: 807, 181, 30, 31
+		sell-active: 777, 181, 30, 31
+		options: 777, 212, 30, 31
+		options-disabled: 807, 212, 30, 31
+		options-active: 777, 212, 30, 31
+		beacon: 777, 243, 30, 31
+		beacon-disabled: 807, 243, 30, 31
+		beacon-active: 777, 243, 30, 31
+		power: 777, 274, 30, 31
+		power-disabled: 807, 274, 30, 31
+		power-active: 777, 274, 30, 31
+		diplomacy: 777, 305, 30, 31
+		diplomacy-disabled: 807, 305, 30, 31
+		diplomacy-active: 777, 305, 30, 31
+
+command-icons-soviet:
+	Inherits: ^ChromeRA
+	Regions:
+		attack-move: 816, 331, 26, 26
+		attack-move-disabled: 816, 357, 26, 26
+		attack-move-active: 816, 383, 26, 26
+		attack-move-hover: 816, 409, 26, 26
+		attack-move-active-hover: 816, 435, 26, 26
+		force-move: 842, 331, 24, 24
+		force-move-disabled: 842, 357, 26, 26
+		force-move-active: 842, 383, 26, 26
+		force-move-hover: 842, 409, 26, 26
+		force-move-active-hover: 842, 435, 26, 26
+		force-attack: 868, 331, 26, 26
+		force-attack-disabled: 868, 357, 26, 26
+		force-attack-active: 868, 383, 26, 26
+		force-attack-hover: 868, 409, 26, 26
+		force-attack-active-hover: 868, 435, 26, 26
+		guard: 894, 331, 24, 24
+		guard-disabled: 894, 357, 26, 26
+		guard-active: 894, 383, 26, 26
+		guard-hover: 894, 409, 26, 26
+		guard-active-hover: 894, 435, 26, 26
+		deploy: 920, 331, 24, 24
+		deploy-disabled: 920, 357, 26, 26
+		deploy-active: 920, 383, 26, 26
+		deploy-hover: 920, 409, 26, 26
+		deploy-active-hover: 920, 435, 26, 26
+		scatter: 946, 331, 26, 26
+		scatter-disabled: 946, 357, 26, 26
+		scatter-active: 946, 383, 26, 26
+		scatter-hover: 946, 409, 26, 26
+		scatter-active-hover: 946, 435, 26, 26
+		stop: 972, 331, 26, 26
+		stop-disabled: 972, 357, 26, 26
+		stop-active: 972, 383, 26, 26
+		stop-hover: 972, 409, 26, 26
+		stop-active-hover: 972, 435, 26, 26
+		queue-orders: 998, 331, 26, 26
+		queue-orders-disabled: 998, 357, 26, 26
+		queue-orders-active: 998, 383, 26, 26
+		queue-orders-hover: 998, 409, 26, 26
+		queue-orders-active-hover: 998, 435, 26, 26
+
+stance-icons-soviet:
+	Inherits: ^ChromeRA
+	Regions:
+		attack-anything: 936, 176, 22, 22
+		attack-anything-disabled: 936, 198, 22, 22
+		attack-anything-active: 936, 220, 22, 22
+		attack-anything-hover: 936, 242, 22, 22
+		attack-anything-active-hover: 936, 264, 22, 22
+		defend: 958, 176, 22, 22
+		defend-disabled: 958, 198, 22, 22
+		defend-active: 958, 220, 22, 22
+		defend-hover: 958, 242, 22, 22
+		defend-active-hover: 958, 264, 22, 22
+		return-fire: 980, 176, 22, 22
+		return-fire-disabled: 980, 198, 22, 22
+		return-fire-active: 980, 220, 22, 22
+		return-fire-hover: 980, 242, 22, 22
+		return-fire-active-hover: 980, 264, 22, 22
+		hold-fire: 1002, 176, 22, 22
+		hold-fire-disabled: 1002, 198, 22, 22
+		hold-fire-active: 1002, 220, 22, 22
+		hold-fire-hover: 1002, 242, 22, 22
+		hold-fire-active-hover: 1002, 264, 22, 22
+
+# ----------------------------------------------------------------------
+# GDI
+# ----------------------------------------------------------------------
 
 sidebar-gdi:
-	Inherits: ^Sidebar2
+	Inherits: ^Chrome
 	Regions:
-		radar: 290, 67, 222, 222
-		background-top: 0, 185, 238, 262
-		background-moneybin: 0, 85, 238, 28
-		background-iconbg: 12, 227, 190, 47
-		background-iconrow: 0, 116, 238, 47
-		background-bottom: 0, 166, 238, 8
-		background-supportoverlay: 12, 324, 64, 48
+		background-top: 0, 0, 235, 260
+		background-iconrow: 0, 260, 235, 52
+		background-bottom: 0, 312, 235, 26
+		background-commandbar: 87, 461, 425, 51
 
 sidebar-button-gdi:
-	Inherits: ^Sidebar2
-	PanelRegion: 260, 281, 5, 5, 18, 18, 5, 5
+	Inherits: ^Chrome
+	PanelRegion: 235, 119, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-gdi-hover:
-	Inherits: ^Sidebar2
-	PanelRegion: 260, 252, 5, 5, 18, 18, 5, 5
+	Inherits: ^Chrome
+	PanelRegion: 235, 150, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-gdi-pressed:
-	Inherits: sidebar-button-gdi
+	Inherits: ^Chrome
+	PanelRegion: 235, 181, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-gdi-highlighted:
-	Inherits: ^Sidebar2
-	PanelRegion: 260, 339, 5, 5, 18, 18, 5, 5
+	Inherits: ^Chrome
+	PanelRegion: 235, 212, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-gdi-highlighted-hover:
-	Inherits: ^Sidebar2
-	PanelRegion: 260, 310, 5, 5, 18, 18, 5, 5
+	Inherits: ^Chrome
+	PanelRegion: 235, 243, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-gdi-highlighted-pressed:
-	Inherits: sidebar-button-gdi-highlighted
-sidebar-button-gdi-disabled:
-	Inherits: sidebar-button-allies-disabled
+	Inherits: ^Chrome
+	PanelRegion: 235, 274, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-gdi-highlighted-disabled:
-	Inherits: sidebar-button-allies-disabled
+	Inherits: sidebar-button-gdi-disabled
+sidebar-button-gdi-disabled:
+	Inherits: ^Chrome
+	PanelRegion: 235, 305, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 
-command-button-gdi:
-	Inherits: ^Sidebar2
-	PanelRegion: 260, 281, 3, 3, 22, 22, 3, 3
+scrollup-buttons-gdi:
+	Inherits: ^Chrome
+	PanelRegion: 0, 339, 0, 0, 34, 27, 0, 0
 	PanelSides: Center
-command-button-gdi-hover:
-	Inherits: ^Sidebar2
-	PanelRegion: 260, 252, 3, 3, 22, 22, 3, 3
+scrollup-buttons-gdi-hover:
+	Inherits: ^Chrome
+	PanelRegion: 34, 339, 0, 0, 34, 27, 0, 0
 	PanelSides: Center
-command-button-gdi-pressed:
-	Inherits: command-button-gdi
-command-button-gdi-highlighted:
-	Inherits: ^Sidebar2
-	PanelRegion: 260, 339, 3, 3, 22, 22, 3, 3
+scrollup-buttons-gdi-pressed:
+	Inherits: ^Chrome
+	PanelRegion: 66, 339, 0, 0, 34, 27, 0, 0
 	PanelSides: Center
-command-button-gdi-highlighted-hover:
-	Inherits: ^Sidebar2
-	PanelRegion: 260, 310, 3, 3, 22, 22, 3, 3
+scrollup-buttons-gdi-highlighted:
+	Inherits: scrollup-buttons-gdi-hover
+scrollup-buttons-gdi-highlighted-hover:
+	Inherits: scrollup-buttons-gdi-hover
+scrollup-buttons-gdi-highlighted-pressed:
+	Inherits: scrollup-buttons-gdi-pressed
+scrollup-button-gdi-highlighted-disabled:
+	Inherits: scrollup-buttons-gdi-disabled
+scrollup-buttons-gdi-disabled:
+	Inherits: ^Chrome
+	PanelRegion: 0, 339, 0, 0, 34, 27, 0, 0
 	PanelSides: Center
-command-button-gdi-highlighted-pressed:
-	Inherits: command-button-gdi-highlighted
-command-button-gdi-disabled:
-	Inherits: command-button-gdi
-command-button-gdi-highlighted-disabled:
-	Inherits: command-button-gdi-highlighted
+
+scrolldown-buttons-gdi:
+	Inherits: ^Chrome
+	PanelRegion: 102, 339, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrolldown-buttons-gdi-hover:
+	Inherits: ^Chrome
+	PanelRegion: 136, 339, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrolldown-buttons-gdi-pressed:
+	Inherits: ^Chrome
+	PanelRegion: 170, 339, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrolldown-buttons-gdi-highlighted:
+	Inherits: ^Chrome
+	PanelRegion: 136, 339, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrolldown-buttons-gdi-highlighted-hover:
+	Inherits: ^Chrome
+	PanelRegion: 136, 339, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrolldown-buttons-gdi-highlighted-pressed:
+	Inherits: ^Chrome
+	PanelRegion: 170, 339, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrolldown-button-gdi-highlighted-disabled:
+	Inherits: scrolldown-buttons-gdi-disabled
+scrolldown-buttons-gdi-disabled:
+	Inherits: ^Chrome
+	PanelRegion: 102, 339, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+
+radar-gdi:
+	Inherits: ^Chrome
+	Regions:
+		insignia: 235, 0, 164, 119
+
+order-icons-gdi:
+	Inherits: ^Chrome
+	Regions:
+		debug: 265, 119, 30, 31
+		debug-disabled: 295, 119, 30, 31
+		debug-active: 265, 119, 30, 31
+		repair: 265, 150, 30, 31
+		repair-disabled: 295, 150, 30, 31
+		repair-active: 265, 150, 30, 31
+		sell: 265, 181, 30, 31
+		sell-disabled: 295, 181, 30, 31
+		sell-active: 265, 181, 30, 31
+		options: 265, 212, 30, 31
+		options-disabled: 295, 212, 30, 31
+		options-active: 265, 212, 30, 31
+		beacon: 265, 243, 30, 31
+		beacon-disabled: 295, 243, 30, 31
+		beacon-active: 265, 243, 30, 31
+		power: 265, 274, 30, 31
+		power-disabled: 295, 274, 30, 31
+		power-active: 265, 274, 30, 31
+
+command-icons-gdi:
+	Inherits: ^Chrome
+	Regions:
+		attack-move: 304, 331, 26, 26
+		attack-move-disabled: 304, 357, 26, 26
+		attack-move-active: 304, 383, 26, 26
+		attack-move-hover: 304, 409, 26, 26
+		attack-move-active-hover: 304, 435, 26, 26
+		force-move: 330, 331, 24, 24
+		force-move-disabled: 330, 357, 26, 26
+		force-move-active: 330, 383, 26, 26
+		force-move-hover: 330, 409, 26, 26
+		force-move-active-hover: 330, 435, 26, 26
+		force-attack: 356, 331, 26, 26
+		force-attack-disabled: 356, 357, 26, 26
+		force-attack-active: 356, 383, 26, 26
+		force-attack-hover: 356, 409, 26, 26
+		force-attack-active-hover: 356, 435, 26, 26
+		guard: 382, 331, 24, 24
+		guard-disabled: 382, 357, 26, 26
+		guard-active: 382, 383, 26, 26
+		guard-hover: 382, 409, 26, 26
+		guard-active-hover: 382, 435, 26, 26
+		deploy: 408, 331, 24, 24
+		deploy-disabled: 408, 357, 26, 26
+		deploy-active: 408, 383, 26, 26
+		deploy-hover: 408, 409, 26, 26
+		deploy-active-hover: 408, 435, 26, 26
+		scatter: 434, 331, 26, 26
+		scatter-disabled: 434, 357, 26, 26
+		scatter-active: 434, 383, 26, 26
+		scatter-hover: 434, 409, 26, 26
+		scatter-active-hover: 434, 435, 26, 26
+		stop: 460, 331, 26, 26
+		stop-disabled: 460, 357, 26, 26
+		stop-active: 460, 383, 26, 26
+		stop-hover: 460, 409, 26, 26
+		stop-active-hover: 460, 435, 26, 26
+		queue-orders: 486, 331, 26, 26
+		queue-orders-disabled: 486, 357, 26, 26
+		queue-orders-active: 486, 383, 26, 26
+		queue-orders-hover: 486, 409, 26, 26
+		queue-orders-active-hover: 486, 435, 26, 26
+
+stance-icons-gdi:
+	Inherits: ^Chrome
+	Regions:
+		attack-anything: 424, 176, 22, 22
+		attack-anything-disabled: 424, 198, 22, 22
+		attack-anything-active: 424, 220, 22, 22
+		attack-anything-hover: 424, 242, 22, 22
+		attack-anything-active-hover: 424, 264, 22, 22
+		defend: 446, 176, 22, 22
+		defend-disabled: 446, 198, 22, 22
+		defend-active: 446, 220, 22, 22
+		defend-hover: 446, 242, 22, 22
+		defend-active-hover: 446, 264, 22, 22
+		return-fire: 468, 176, 22, 22
+		return-fire-disabled: 468, 198, 22, 22
+		return-fire-active: 468, 220, 22, 22
+		return-fire-hover: 468, 242, 22, 22
+		return-fire-active-hover: 468, 264, 22, 22
+		hold-fire: 490, 176, 22, 22
+		hold-fire-disabled: 490, 198, 22, 22
+		hold-fire-active: 490, 220, 22, 22
+		hold-fire-hover: 490, 242, 22, 22
+		hold-fire-active-hover: 490, 264, 22, 22
+
+# ----------------------------------------------------------------------
+# NOD
+# ----------------------------------------------------------------------
 
 sidebar-nod:
-	Inherits: ^Sidebar2
+	Inherits: ^Chrome
 	Regions:
-		radar: 290, 290, 222, 222
-		background-top: 0, 185, 238, 262
-		background-moneybin: 0, 54, 238, 28
-		background-iconbg: 12, 275, 190, 47
-		background-iconrow: 0, 116, 238, 47
-		background-bottom: 0, 166, 238, 8
-		background-supportoverlay: 77, 324, 64, 48
+		background-top: 512, 0, 235, 260
+		background-iconrow: 512, 260, 235, 52
+		background-bottom: 512, 312, 235, 26
+		background-commandbar: 599, 461, 425, 51
 
 sidebar-button-nod:
-	Inherits: ^Sidebar2
-	PanelRegion: 260, 165, 5, 5, 18, 18, 5, 5
+	Inherits: ^Chrome
+	PanelRegion: 747, 119, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-nod-hover:
-	Inherits: ^Sidebar2
-	PanelRegion: 260, 136, 5, 5, 18, 18, 5, 5
+	Inherits: ^Chrome
+	PanelRegion: 747, 150, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-nod-pressed:
-	Inherits: sidebar-button-nod
+	Inherits: ^Chrome
+	PanelRegion: 747, 181, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-nod-highlighted:
-	Inherits: ^Sidebar2
-	PanelRegion: 260, 223, 5, 5, 18, 18, 5, 5
+	Inherits: ^Chrome
+	PanelRegion: 747, 212, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-nod-highlighted-hover:
-	Inherits: ^Sidebar2
-	PanelRegion: 260, 194, 5, 5, 18, 18, 5, 5
+	Inherits: ^Chrome
+	PanelRegion: 747, 243, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-nod-highlighted-pressed:
-	Inherits: sidebar-button-nod-highlighted
-sidebar-button-nod-disabled:
-	Inherits: sidebar-button-allies-disabled
+	Inherits: ^Chrome
+	PanelRegion: 747, 274, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-nod-highlighted-disabled:
-	Inherits: sidebar-button-allies-disabled
+	Inherits: sidebar-button-nod-disabled
+sidebar-button-nod-disabled:
+	Inherits: ^Chrome
+	PanelRegion: 747, 305, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 
-command-button-nod:
-	Inherits: ^Sidebar2
-	PanelRegion: 260, 165, 3, 3, 22, 22, 3, 3
+scrollup-buttons-nod:
+	Inherits: ^Chrome
+	PanelRegion: 512, 338, 0, 0, 34, 27, 0, 0
 	PanelSides: Center
-command-button-nod-hover:
-	Inherits: ^Sidebar2
-	PanelRegion: 260, 136, 3, 3, 22, 22, 3, 3
+scrollup-buttons-nod-hover:
+	Inherits: ^Chrome
+	PanelRegion: 546, 338, 0, 0, 34, 27, 0, 0
 	PanelSides: Center
-command-button-nod-pressed:
-	Inherits: command-button-nod
-command-button-nod-highlighted:
-	Inherits: ^Sidebar2
-	PanelRegion: 260, 223, 3, 3, 22, 22, 3, 3
+scrollup-buttons-nod-pressed:
+	Inherits: ^Chrome
+	PanelRegion: 580, 338, 0, 0, 34, 27, 0, 0
 	PanelSides: Center
-command-button-nod-highlighted-hover:
-	Inherits: ^Sidebar2
-	PanelRegion: 260, 194, 3, 3, 22, 22, 3, 3
+scrollup-buttons-nod-highlighted:
+	Inherits: scrollup-buttons-nod-hover
+scrollup-buttons-nod-highlighted-hover:
+	Inherits: ^Chrome
+	PanelRegion: 546, 338, 0, 0, 34, 27, 0, 0
 	PanelSides: Center
-command-button-nod-highlighted-pressed:
-	Inherits: command-button-nod-highlighted
-command-button-nod-disabled:
-	Inherits: command-button-nod
-command-button-nod-highlighted-disabled:
-	Inherits: command-button-nod-highlighted
+scrollup-buttons-nod-highlighted-pressed:
+	Inherits: ^Chrome
+	PanelRegion: 580, 338, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrollup-button-nod-highlighted-disabled:
+	Inherits: scrollup-buttons-nod-disabled
+scrollup-buttons-nod-disabled:
+	Inherits: ^Chrome
+	PanelRegion: 512, 338, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+
+scrolldown-buttons-nod:
+	Inherits: ^Chrome
+	PanelRegion: 614, 338, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrolldown-buttons-nod-hover:
+	Inherits: ^Chrome
+	PanelRegion: 648, 338, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrolldown-buttons-nod-pressed:
+	Inherits: ^Chrome
+	PanelRegion: 682, 338, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrolldown-buttons-nod-highlighted:
+	Inherits: scrolldown-buttons-nod-hover
+scrolldown-buttons-nod-highlighted-hover:
+	Inherits: scrolldown-buttons-nod-hover
+scrolldown-buttons-nod-highlighted-pressed:
+	Inherits: scrolldown-buttons-nod-pressed
+scrolldown-button-nod-highlighted-disabled:
+	Inherits: scrolldown-buttons-nod-disabled
+scrolldown-buttons-nod-disabled:
+	Inherits: ^Chrome
+	PanelRegion: 614, 338, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+
+radar-nod:
+	Inherits: ^Chrome
+	Regions:
+		insignia: 747, 0, 164, 119
+
+order-icons-nod:
+	Inherits: ^Chrome
+	Regions:
+		debug: 777, 119, 30, 31
+		debug-disabled: 807, 119, 30, 31
+		debug-active: 777, 119, 30, 31
+		repair: 777, 150, 30, 31
+		repair-disabled: 807, 150, 30, 31
+		repair-active: 777, 150, 30, 31
+		sell: 777, 181, 30, 31
+		sell-disabled: 807, 181, 30, 31
+		sell-active: 777, 181, 30, 31
+		options: 777, 212, 30, 31
+		options-disabled: 807, 212, 30, 31
+		options-active: 777, 212, 30, 31
+		beacon: 777, 243, 30, 31
+		beacon-disabled: 807, 243, 30, 31
+		beacon-active: 777, 243, 30, 31
+		power: 777, 274, 30, 31
+		power-disabled: 807, 274, 30, 31
+		power-active: 777, 274, 30, 31
+		diplomacy: 777, 305, 30, 31
+		diplomacy-disabled: 807, 305, 30, 31
+		diplomacy-active: 777, 305, 30, 31
+
+command-icons-nod:
+	Inherits: ^Chrome
+	Regions:
+		attack-move: 816, 331, 26, 26
+		attack-move-disabled: 816, 357, 26, 26
+		attack-move-active: 816, 383, 26, 26
+		attack-move-hover: 816, 409, 26, 26
+		attack-move-active-hover: 816, 435, 26, 26
+		force-move: 842, 331, 24, 24
+		force-move-disabled: 842, 357, 26, 26
+		force-move-active: 842, 383, 26, 26
+		force-move-hover: 842, 409, 26, 26
+		force-move-active-hover: 842, 435, 26, 26
+		force-attack: 868, 331, 26, 26
+		force-attack-disabled: 868, 357, 26, 26
+		force-attack-active: 868, 383, 26, 26
+		force-attack-hover: 868, 409, 26, 26
+		force-attack-active-hover: 868, 435, 26, 26
+		guard: 894, 331, 24, 24
+		guard-disabled: 894, 357, 26, 26
+		guard-active: 894, 383, 26, 26
+		guard-hover: 894, 409, 26, 26
+		guard-active-hover: 894, 435, 26, 26
+		deploy: 920, 331, 24, 24
+		deploy-disabled: 920, 357, 26, 26
+		deploy-active: 920, 383, 26, 26
+		deploy-hover: 920, 409, 26, 26
+		deploy-active-hover: 920, 435, 26, 26
+		scatter: 946, 331, 26, 26
+		scatter-disabled: 946, 357, 26, 26
+		scatter-active: 946, 383, 26, 26
+		scatter-hover: 946, 409, 26, 26
+		scatter-active-hover: 946, 435, 26, 26
+		stop: 972, 331, 26, 26
+		stop-disabled: 972, 357, 26, 26
+		stop-active: 972, 383, 26, 26
+		stop-hover: 972, 409, 26, 26
+		stop-active-hover: 972, 435, 26, 26
+		queue-orders: 998, 331, 26, 26
+		queue-orders-disabled: 998, 357, 26, 26
+		queue-orders-active: 998, 383, 26, 26
+		queue-orders-hover: 998, 409, 26, 26
+		queue-orders-active-hover: 998, 435, 26, 26
+
+stance-icons-nod:
+	Inherits: ^Chrome
+	Regions:
+		attack-anything: 936, 176, 22, 22
+		attack-anything-disabled: 936, 198, 22, 22
+		attack-anything-active: 936, 220, 22, 22
+		attack-anything-hover: 936, 242, 22, 22
+		attack-anything-active-hover: 936, 264, 22, 22
+		defend: 958, 176, 22, 22
+		defend-disabled: 958, 198, 22, 22
+		defend-active: 958, 220, 22, 22
+		defend-hover: 958, 242, 22, 22
+		defend-active-hover: 958, 264, 22, 22
+		return-fire: 980, 176, 22, 22
+		return-fire-disabled: 980, 198, 22, 22
+		return-fire-active: 980, 220, 22, 22
+		return-fire-hover: 980, 242, 22, 22
+		return-fire-active-hover: 980, 264, 22, 22
+		hold-fire: 1002, 176, 22, 22
+		hold-fire-disabled: 1002, 198, 22, 22
+		hold-fire-active: 1002, 220, 22, 22
+		hold-fire-hover: 1002, 242, 22, 22
+		hold-fire-active-hover: 1002, 264, 22, 22
+
+# ----------------------------------------------------------------------
+# SCRIN
+# ----------------------------------------------------------------------
 
 sidebar-scrin:
-	Inherits: ^Sidebar3
+	Inherits: ^ChromeS
 	Regions:
-		radar: 290, 290, 222, 222
-		background-top: 0, 185, 238, 262
-		background-moneybin: 0, 54, 238, 28
-		background-iconbg: 12, 275, 190, 47
-		background-iconrow: 0, 116, 238, 47
-		background-bottom: 0, 166, 238, 8
-		background-supportoverlay: 77, 324, 64, 48
+		background-top: 512, 0, 235, 260
+		background-iconrow: 512, 260, 235, 52
+		background-bottom: 512, 312, 235, 26
+		background-commandbar: 599, 461, 425, 51
 
 sidebar-button-scrin:
-	Inherits: ^Sidebar3
-	PanelRegion: 260, 165, 5, 5, 18, 18, 5, 5
+	Inherits: ^ChromeS
+	PanelRegion: 747, 119, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-scrin-hover:
-	Inherits: ^Sidebar3
-	PanelRegion: 260, 136, 5, 5, 18, 18, 5, 5
+	Inherits: ^ChromeS
+	PanelRegion: 747, 150, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-scrin-pressed:
-	Inherits: sidebar-button-scrin
+	Inherits: ^ChromeS
+	PanelRegion: 747, 181, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-scrin-highlighted:
-	Inherits: ^Sidebar3
-	PanelRegion: 260, 223, 5, 5, 18, 18, 5, 5
+	Inherits: ^ChromeS
+	PanelRegion: 747, 212, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-scrin-highlighted-hover:
-	Inherits: ^Sidebar3
-	PanelRegion: 260, 194, 5, 5, 18, 18, 5, 5
+	Inherits: ^ChromeS
+	PanelRegion: 747, 243, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-scrin-highlighted-pressed:
-	Inherits: sidebar-button-scrin-highlighted
-sidebar-button-scrin-disabled:
-	Inherits: sidebar-button-allies-disabled
+	Inherits: ^ChromeS
+	PanelRegion: 747, 274, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 sidebar-button-scrin-highlighted-disabled:
-	Inherits: sidebar-button-allies-disabled
+	Inherits: sidebar-button-scrin-disabled
+sidebar-button-scrin-disabled:
+	Inherits: ^ChromeS
+	PanelRegion: 747, 305, 0, 0, 30, 31, 0, 0
+	PanelSides: Center
 
-command-button-scrin:
-	Inherits: ^Sidebar3
-	PanelRegion: 260, 165, 3, 3, 22, 22, 3, 3
+scrollup-buttons-scrin:
+	Inherits: ^ChromeS
+	PanelRegion: 512, 338, 0, 0, 34, 27, 0, 0
 	PanelSides: Center
-command-button-scrin-hover:
-	Inherits: ^Sidebar3
-	PanelRegion: 260, 136, 3, 3, 22, 22, 3, 3
+scrollup-buttons-scrin-hover:
+	Inherits: ^ChromeS
+	PanelRegion: 546, 338, 0, 0, 34, 27, 0, 0
 	PanelSides: Center
-command-button-scrin-pressed:
-	Inherits: command-button-scrin
-command-button-scrin-highlighted:
-	Inherits: ^Sidebar3
-	PanelRegion: 260, 223, 3, 3, 22, 22, 3, 3
+scrollup-buttons-scrin-pressed:
+	Inherits: ^ChromeS
+	PanelRegion: 580, 338, 0, 0, 34, 27, 0, 0
 	PanelSides: Center
-command-button-scrin-highlighted-hover:
-	Inherits: ^Sidebar3
-	PanelRegion: 260, 194, 3, 3, 22, 22, 3, 3
+scrollup-buttons-scrin-highlighted:
+	Inherits: scrollup-buttons-scrin-hover
+scrollup-buttons-scrin-highlighted-hover:
+	Inherits: ^ChromeS
+	PanelRegion: 546, 338, 0, 0, 34, 27, 0, 0
 	PanelSides: Center
-command-button-scrin-highlighted-pressed:
-	Inherits: command-button-scrin-highlighted
-command-button-scrin-disabled:
-	Inherits: command-button-scrin
-command-button-scrin-highlighted-disabled:
-	Inherits: command-button-scrin-highlighted
+scrollup-buttons-scrin-highlighted-pressed:
+	Inherits: ^ChromeS
+	PanelRegion: 580, 338, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrollup-button-scrin-highlighted-disabled:
+	Inherits: scrollup-buttons-scrin-disabled
+scrollup-buttons-scrin-disabled:
+	Inherits: ^ChromeS
+	PanelRegion: 512, 338, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+
+scrolldown-buttons-scrin:
+	Inherits: ^ChromeS
+	PanelRegion: 614, 338, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrolldown-buttons-scrin-hover:
+	Inherits: ^ChromeS
+	PanelRegion: 648, 338, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrolldown-buttons-scrin-pressed:
+	Inherits: ^ChromeS
+	PanelRegion: 682, 338, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+scrolldown-buttons-scrin-highlighted:
+	Inherits: scrolldown-buttons-scrin-hover
+scrolldown-buttons-scrin-highlighted-hover:
+	Inherits: scrolldown-buttons-scrin-hover
+scrolldown-buttons-scrin-highlighted-pressed:
+	Inherits: scrolldown-buttons-scrin-pressed
+scrolldown-button-scrin-highlighted-disabled:
+	Inherits: scrolldown-buttons-scrin-disabled
+scrolldown-buttons-scrin-disabled:
+	Inherits: ^ChromeS
+	PanelRegion: 614, 338, 0, 0, 34, 27, 0, 0
+	PanelSides: Center
+
+radar-scrin:
+	Inherits: ^ChromeS
+	Regions:
+		insignia: 747, 0, 164, 119
+
+order-icons-scrin:
+	Inherits: ^ChromeS
+	Regions:
+		debug: 777, 119, 30, 31
+		debug-disabled: 807, 119, 30, 31
+		debug-active: 777, 119, 30, 31
+		repair: 777, 150, 30, 31
+		repair-disabled: 807, 150, 30, 31
+		repair-active: 777, 150, 30, 31
+		sell: 777, 181, 30, 31
+		sell-disabled: 807, 181, 30, 31
+		sell-active: 777, 181, 30, 31
+		options: 777, 212, 30, 31
+		options-disabled: 807, 212, 30, 31
+		options-active: 777, 212, 30, 31
+		beacon: 777, 243, 30, 31
+		beacon-disabled: 807, 243, 30, 31
+		beacon-active: 777, 243, 30, 31
+		power: 777, 274, 30, 31
+		power-disabled: 807, 274, 30, 31
+		power-active: 777, 274, 30, 31
+		diplomacy: 777, 305, 30, 31
+		diplomacy-disabled: 807, 305, 30, 31
+		diplomacy-active: 777, 305, 30, 31
+
+command-icons-scrin:
+	Inherits: ^ChromeS
+	Regions:
+		attack-move: 816, 331, 26, 26
+		attack-move-disabled: 816, 357, 26, 26
+		attack-move-active: 816, 383, 26, 26
+		attack-move-hover: 816, 409, 26, 26
+		attack-move-active-hover: 816, 435, 26, 26
+		force-move: 842, 331, 24, 24
+		force-move-disabled: 842, 357, 26, 26
+		force-move-active: 842, 383, 26, 26
+		force-move-hover: 842, 409, 26, 26
+		force-move-active-hover: 842, 435, 26, 26
+		force-attack: 868, 331, 26, 26
+		force-attack-disabled: 868, 357, 26, 26
+		force-attack-active: 868, 383, 26, 26
+		force-attack-hover: 868, 409, 26, 26
+		force-attack-active-hover: 868, 435, 26, 26
+		guard: 894, 331, 24, 24
+		guard-disabled: 894, 357, 26, 26
+		guard-active: 894, 383, 26, 26
+		guard-hover: 894, 409, 26, 26
+		guard-active-hover: 894, 435, 26, 26
+		deploy: 920, 331, 24, 24
+		deploy-disabled: 920, 357, 26, 26
+		deploy-active: 920, 383, 26, 26
+		deploy-hover: 920, 409, 26, 26
+		deploy-active-hover: 920, 435, 26, 26
+		scatter: 946, 331, 26, 26
+		scatter-disabled: 946, 357, 26, 26
+		scatter-active: 946, 383, 26, 26
+		scatter-hover: 946, 409, 26, 26
+		scatter-active-hover: 946, 435, 26, 26
+		stop: 972, 331, 26, 26
+		stop-disabled: 972, 357, 26, 26
+		stop-active: 972, 383, 26, 26
+		stop-hover: 972, 409, 26, 26
+		stop-active-hover: 972, 435, 26, 26
+		queue-orders: 998, 331, 26, 26
+		queue-orders-disabled: 998, 357, 26, 26
+		queue-orders-active: 998, 383, 26, 26
+		queue-orders-hover: 998, 409, 26, 26
+		queue-orders-active-hover: 998, 435, 26, 26
+
+stance-icons-scrin:
+	Inherits: ^ChromeS
+	Regions:
+		attack-anything: 936, 176, 22, 22
+		attack-anything-disabled: 936, 198, 22, 22
+		attack-anything-active: 936, 220, 22, 22
+		attack-anything-hover: 936, 242, 22, 22
+		attack-anything-active-hover: 936, 264, 22, 22
+		defend: 958, 176, 22, 22
+		defend-disabled: 958, 198, 22, 22
+		defend-active: 958, 220, 22, 22
+		defend-hover: 958, 242, 22, 22
+		defend-active-hover: 958, 264, 22, 22
+		return-fire: 980, 176, 22, 22
+		return-fire-disabled: 980, 198, 22, 22
+		return-fire-active: 980, 220, 22, 22
+		return-fire-hover: 980, 242, 22, 22
+		return-fire-active-hover: 980, 264, 22, 22
+		hold-fire: 1002, 176, 22, 22
+		hold-fire-disabled: 1002, 198, 22, 22
+		hold-fire-active: 1002, 220, 22, 22
+		hold-fire-hover: 1002, 242, 22, 22
+		hold-fire-active-hover: 1002, 264, 22, 22
+
+# ---------------------------------------------------------
+# GENERIC
+# ---------------------------------------------------------
 
 sidebar-bits:
 	Inherits: ^Glyphs
@@ -335,9 +1035,9 @@ production-icons:
 		vehicle: 51, 68, 16, 16
 		vehicle-disabled: 51, 85, 16, 16
 		vehicle-alert: 51, 102, 16, 16
-		aircraft: 68, 68, 16, 16
-		aircraft-disabled: 68, 85, 16, 16
-		aircraft-alert: 68, 102, 16, 16
+		air: 68, 68, 16, 16
+		air-disabled: 68, 85, 16, 16
+		air-alert: 68, 102, 16, 16
 		ship: 187, 68, 16, 16
 		ship-disabled: 187, 85, 16, 16
 		ship-alert: 187, 102, 16, 16
@@ -372,6 +1072,15 @@ power-icons:
 	Regions:
 		power-normal: 102, 51, 16, 16
 		power-critical: 119, 51, 16, 16
+
+power-meter:
+	Inherits: ^Chrome
+	Regions:
+		none: 401,6,10,2
+		available: 401,0,10,2
+		used: 401,3,10,2
+		danger: 401,3,10,2
+		disabled: 401,6,10,2
 
 cash-icons:
 	Inherits: ^Glyphs
