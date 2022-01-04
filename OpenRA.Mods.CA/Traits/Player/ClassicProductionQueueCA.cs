@@ -133,7 +133,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (queueItem.Started && !Info.CompleteUpgradedInProgress)
 				return queueItem;
 
-			if (!replacements.ContainsKey(queueItem.Item))
+			if (queueItem.Item != null && !replacements.ContainsKey(queueItem.Item))
 			{
 				var upgradeableTo = rules.Actors[queueItem.Item].TraitInfoOrDefault<UpgradeableToInfo>();
 				var replacement = new ReplacementDetails();
