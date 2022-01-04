@@ -63,7 +63,7 @@ namespace OpenRA.Mods.CA.Activities
 
 			if (primary == null || manager.RandomExit)
 			{
-				var nodes = self.World.ActorsWithTrait<TeleportNetwork>().Where(p => p.Trait.Info.Type == type && p.Actor.Owner == self.Owner && p.Actor != target).ToList();
+				var nodes = self.World.ActorsWithTrait<TeleportNetwork>().Where(p => p.Trait.Info.Type == type && p.Actor.Owner == target.Owner && p.Actor != target).ToList();
 
 				if (nodes.Count == 0)
 					return;
