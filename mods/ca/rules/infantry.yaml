@@ -3505,3 +3505,66 @@ SEAL:
 	WithDecoration@COMMANDOSKULL:
 		Sequence: pip-seal
 	-Targetable@HERO:
+
+XO:
+	Inherits: ^VehicleTD
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: Infantry
+		BuildAtProductionType: Powersuit
+		BuildPaletteOrder: 160
+		Prerequisites: gtek, ~infantry.any, vehicles.any, ~techlevel.high
+		Description: Light battle-mech with a short-range laser\n  and a machine gun.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
+		Weaknesses: • Cannot attack Aircraft
+	Valued:
+		Cost: 900
+	Tooltip:
+		Name: X-O Powersuit
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 27500
+	Armor:
+		Type: Light
+	Mobile:
+		TurnSpeed: 40
+		Speed: 49
+		Voice: Move
+	Passenger:
+		Voice: Move
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Voiced:
+		VoiceSet: GhostVoice
+	WithMoveAnimation:
+	WithAttackAnimation:
+		Sequence: shoot
+	Armament@PRIMARY:
+		Weapon: M60mgXO
+		LocalOffset: 400,-220,180
+		MuzzleSequence: muzzle
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: XOLaser
+		LocalOffset: 400,220,180
+	AttackFrontal:
+		PauseOnCondition: empdisable || being-warped
+		Voice: Attack
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithMuzzleOverlay:
+	Parachutable:
+		FallRate: 130
+	WithIdleAnimation@DESCENDING:
+		RequiresCondition: parachute
+		Interval: 3
+		Sequences: descend
+	-WithParachute:
