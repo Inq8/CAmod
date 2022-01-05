@@ -149,7 +149,7 @@ namespace OpenRA.Mods.CA.Traits
 				replacements[queueItem.Item] = replacement;
 			}
 
-			if (replacements[queueItem.Item].Info != null)
+			if (queueItem.Item != null && replacements[queueItem.Item].Info != null)
 			{
 				// if a replacement is buildable, but we've already started producing, we should be able to finish production
 				if (queueItem.Started)
