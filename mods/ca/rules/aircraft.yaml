@@ -103,8 +103,12 @@ B2B:
 	Inherits: ^NeutralPlane
 	Inherits@EMP: ^EmpDisable
 	AttackBomber:
+		Armaments: primary, decloak
 	Armament:
 		Weapon: InfernoBomb
+	Armament@DECLOAK:
+		Name: decloak
+		Weapon: InfernoBombTargeter
 	Health:
 		HP: 36000
 	Aircraft:
@@ -403,7 +407,7 @@ YAK:
 		Strengths: • Strong vs Infantry, Light Armor, Buildings
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Valued:
-		Cost: 1350
+		Cost: 1250
 	Tooltip:
 		Name: Yak Attack Plane
 	UpdatesPlayerStatistics:

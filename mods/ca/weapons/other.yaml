@@ -46,6 +46,7 @@ FireballLauncher:
 			Light: 0
 			Heavy: 10
 			Concrete: 15
+			Wood: 24
 	Warhead@2Dam: SpreadDamage
 		Spread: 512
 		Range: 0, 0c512, 2c512
@@ -932,7 +933,7 @@ LaserTur:
 	Warhead@1Dam: SpreadDamage
 		Damage: 5500
 		Versus:
-			Wood: 73
+			Wood: 75
 			Heavy: 30
 			Concrete: 48
 
@@ -958,7 +959,7 @@ StealthAPCLaser:
 XOLaser:
 	Inherits: Laser
 	Report: xo-laser.aud
-	ReloadDelay: 120
+	ReloadDelay: 110
 	Range: 5c0
 	Projectile: LaserZap
 		Width: 56
@@ -971,8 +972,9 @@ XOLaser:
 		SecondaryBeamColor: 79cd0040
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 10000
+		Damage: 9000
 		Versus:
+			None: 100
 			Wood: 45
 			Concrete: 80
 
@@ -1611,6 +1613,12 @@ OrcaBomb:
 		Duration: 300
 		Condition: empdisable
 		ValidTargets: Ground, Structure, Vehicle
+		InvalidTargets: Defense
+	Warhead@empdef: GrantExternalCondition
+		Range: 1c512
+		Duration: 600
+		Condition: empdisable
+		ValidTargets: Defense
 
 MicrowaveZap:
 	ValidTargets: Ground, Water

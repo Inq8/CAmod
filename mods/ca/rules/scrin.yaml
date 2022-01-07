@@ -872,8 +872,6 @@ LACE:
 	GrantConditionOnTerrain:
 		TerrainTypes: Water
 		Condition: onwater
-	KillsSelf@SINK:
-		RequiresCondition: onwater && (empdisable || driver-dead)
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
@@ -1869,7 +1867,7 @@ ENRV:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 20000
+		HP: 22500
 	RevealsShroud:
 		Range: 12c0
 		MinRange: 10c0
@@ -1892,7 +1890,7 @@ ENRV:
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
-		TurnSpeed: 18
+		TurnSpeed: 24
 		Speed: 225
 		InitialFacing: 768
 		TakeoffSounds: dropup1.aud
@@ -3229,7 +3227,7 @@ WSPH:
 		SpawnOffset: 0,0,0
 		ExitCell: 0,2
 	Production:
-		Produces: Vehicle
+		Produces: Vehicle, Paradrop, Powersuit
 		PauseOnCondition: forceshield || invulnerability || being-warped
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
@@ -3993,7 +3991,7 @@ PTUR:
 		DecorationBounds: 24,28,0,-6
 	Building:
 	Health:
-		HP: 40000
+		HP: 34000
 	Armor:
 		Type: Concrete
 	RevealsShroud:

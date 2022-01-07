@@ -133,7 +133,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (queueItem.Started && !Info.CompleteUpgradedInProgress)
 				return queueItem;
 
-			if (!replacements.ContainsKey(queueItem.Item))
+			if (queueItem.Item != null && !replacements.ContainsKey(queueItem.Item))
 			{
 				var upgradeableTo = rules.Actors[queueItem.Item].TraitInfoOrDefault<UpgradeableToInfo>();
 				var replacement = new ReplacementDetails();
@@ -149,7 +149,7 @@ namespace OpenRA.Mods.CA.Traits
 				replacements[queueItem.Item] = replacement;
 			}
 
-			if (replacements[queueItem.Item].Info != null)
+			if (queueItem.Item != null && replacements[queueItem.Item].Info != null)
 			{
 				// if a replacement is buildable, but we've already started producing, we should be able to finish production
 				if (queueItem.Started)
