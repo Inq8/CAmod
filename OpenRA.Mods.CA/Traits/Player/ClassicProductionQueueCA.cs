@@ -114,8 +114,7 @@ namespace OpenRA.Mods.CA.Traits
 				if (buildableNames.Contains(Queue[i].Item))
 					continue;
 
-				var replaced = false;
-				Queue[i] = GetReplacement(Queue[i], replacements, buildableNames, rules, playerPower, out replaced);
+				Queue[i] = GetReplacement(Queue[i], replacements, buildableNames, rules, playerPower, out bool replaced);
 				if (replaced)
 					continue;
 
