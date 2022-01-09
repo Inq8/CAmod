@@ -1725,8 +1725,9 @@ HPAD:
 	ProvidesPrerequisiteValidatedFaction@usa:
 		Factions: usa
 		Prerequisite: aircraft.usa
-	ProvidesPrerequisite@all:
-		Prerequisite: aircraft.all
+	ProvidesPrerequisiteValidatedFaction@chinookvisible:
+		Factions: allies, england, france, germany, gdi, zocom, eagle, talon, arc, nod, blackh, legion, marked, shadow
+		Prerequisite: aircraft.chinookvisible
 	ProvidesPrerequisiteValidatedFaction@chinook:
 		Factions: allies, england, france, germany, gdi, zocom, eagle, talon, arc, nod, blackh, legion, marked, shadow
 		Prerequisite: aircraft.chinook
@@ -2760,6 +2761,14 @@ VEHICLES.NOD:
 		Name: Vehicle Production
 	Buildable:
 		Description: Vehicle Production
+
+AIRCRAFT.CHINOOK:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Helipad
+	Buildable:
+		Description: Helipad
 
 TECHCENTER:
 	AlwaysVisible:
@@ -4313,8 +4322,6 @@ HPAD.TD:
 		Amount: -10
 	ValidFactions:
 		Factions: talon, zocom, eagle, arc, blackh, marked, legion, shadow
-	ProvidesPrerequisite@all:
-		Prerequisite: aircraft.all
 	ProvidesPrerequisiteValidatedFaction@gdi:
 		Factions: talon, zocom, eagle, arc
 		Prerequisite: aircraft.gdi
@@ -4336,6 +4343,8 @@ HPAD.TD:
 	ProvidesPrerequisiteValidatedFaction@apch:
 		Factions: blackh, legion, shadow
 		Prerequisite: aircraft.apch
+	ProvidesPrerequisite@chinookvisible:
+		Prerequisite: aircraft.chinookvisible
 	ProvidesPrerequisite@chinook:
 		Prerequisite: aircraft.chinook
 	ProvidesPrerequisite@buildingname:
@@ -4575,6 +4584,8 @@ AFLD.GDI:
 	ProvidesPrerequisiteValidatedFaction@arc:
 		Factions: arc
 		Prerequisite: aircraft.arc
+	ProvidesPrerequisite@chinookvisible:
+		Prerequisite: aircraft.chinookvisible
 	AirstrikePower@uav:
 		OrderName: gdiuav
 		Prerequisites: ~!aircraft.arc
