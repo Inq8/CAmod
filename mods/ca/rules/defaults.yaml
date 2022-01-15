@@ -118,6 +118,15 @@
 		Multiplier: 95
 		Prerequisites: is-vhard-ai
 
+# Refineries have an explicit BuildDuration so build time is unaffected by ProductionCostMultiplier
+^BotRefinery:
+	ProductionTimeMultiplier@brutalbonus:
+		Multiplier: 90
+		Prerequisites: is-brutal-ai
+	ProductionTimeMultiplier@vhardbonus:
+		Multiplier: 95
+		Prerequisites: is-vhard-ai
+
 ^BotDefenseProductionBonus:
 	ProductionCostMultiplier@brutalbonus:
 		Multiplier: 85
