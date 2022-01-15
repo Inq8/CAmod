@@ -39,6 +39,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("When should the AI start train specific units.")]
 		public readonly Dictionary<string, int> UnitDelays = null;
 
+		[Desc("Minimum duration between building a specific unit.")]
+		public readonly Dictionary<string, int> UnitIntervals = null;
+
 		[Desc("How often should the unit builder check to build more units")]
 		public readonly int UnitBuilderInterval = 0;
 
@@ -73,6 +76,7 @@ namespace OpenRA.Mods.CA.Traits
 		readonly Player player;
 
 		readonly List<string> queuedBuildRequests = new List<string>();
+		readonly Dictionary<string, int> activeUnitIntervals = new Dictionary<string, int>();
 
 		IBotRequestPauseUnitProduction[] requestPause;
 		int idleUnitCount;
@@ -104,6 +108,13 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			if (requestPause.Any(rp => rp.PauseUnitProduction))
 				return;
+
+			foreach (KeyValuePair<string, int> i in activeUnitIntervals.ToList())
+			{
+				activeUnitIntervals[i.Key]--;
+				if (activeUnitIntervals[i.Key] <= 0)
+					activeUnitIntervals.Remove(i.Key);
+			}
 
 			ticks++;
 
@@ -148,19 +159,10 @@ namespace OpenRA.Mods.CA.Traits
 
 			var name = unit.Name;
 
-			if (Info.UnitsToBuild != null && !Info.UnitsToBuild.ContainsKey(name))
+			if (!ShouldBuild(name, false))
 				return;
 
-			if (Info.UnitDelays != null &&
-				Info.UnitDelays.ContainsKey(name) &&
-				Info.UnitDelays[name] > world.WorldTick)
-				return;
-
-			if (Info.UnitLimits != null &&
-				Info.UnitLimits.ContainsKey(name) &&
-				world.Actors.Count(a => a.Owner == player && a.Info.Name == name) >= Info.UnitLimits[name])
-				return;
-
+			SetUnitInterval(name);
 			bot.QueueOrder(Order.StartProduction(queue.Actor, name, 1));
 		}
 
@@ -175,6 +177,9 @@ namespace OpenRA.Mods.CA.Traits
 			if (buildableInfo == null)
 				return;
 
+			if (!ShouldBuild(name, true))
+				return;
+
 			ProductionQueue queue = null;
 			foreach (var pq in buildableInfo.Queue)
 			{
@@ -185,9 +190,41 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (queue != null)
 			{
+				SetUnitInterval(name);
 				bot.QueueOrder(Order.StartProduction(queue.Actor, name, 1));
 				AIUtils.BotDebug("AI: {0} decided to build {1} (external request)", queue.Actor.Owner, name);
 			}
+		}
+
+		void SetUnitInterval(string name)
+		{
+			if (!Info.UnitIntervals.ContainsKey(name))
+				return;
+
+			activeUnitIntervals[name] = Info.UnitIntervals[name];
+		}
+
+		bool ShouldBuild(string name, bool ignoreUnitsToBuild)
+		{
+			if (!ignoreUnitsToBuild && Info.UnitsToBuild != null && !Info.UnitsToBuild.ContainsKey(name))
+				return false;
+
+			if (Info.UnitDelays != null &&
+				Info.UnitDelays.ContainsKey(name) &&
+				Info.UnitDelays[name] > world.WorldTick)
+				return false;
+
+			if (Info.UnitIntervals != null &&
+				Info.UnitIntervals.ContainsKey(name) &&
+				activeUnitIntervals.ContainsKey(name))
+				return false;
+
+			if (Info.UnitLimits != null &&
+				Info.UnitLimits.ContainsKey(name) &&
+				world.Actors.Count(a => !a.IsDead && a.Owner == player && a.Info.Name == name) >= Info.UnitLimits[name])
+				return false;
+
+			return true;
 		}
 
 		ActorInfo ChooseRandomUnitToBuild(ProductionQueue queue)
