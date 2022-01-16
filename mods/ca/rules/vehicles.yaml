@@ -692,6 +692,7 @@ GTNK.squad:
 		RequiresCondition: crush-attempt-slow && !crush-slow
 	SpeedMultiplier@CRUSHSLOW:
 		RequiresCondition: crush-slow
+	-UpgradeableTo:
 
 3TNK.YURI:
 	Inherits: 3TNK
@@ -755,6 +756,7 @@ GTNK.squad:
 	-ThrowsShrapnel@small:
 	Voiced:
 		VoiceSet: LasherTankVoice
+	-UpgradeableTo:
 
 4TNK:
 	Inherits: ^Tank
@@ -900,6 +902,7 @@ GTNK.squad:
 	-WithSpriteTurret@UPG:
 	-GrantConditionOnPrerequisite@IRAQ:
 	-GrantCondition@IRAQ:
+	-UpgradeableTo:
 
 ARTY:
 	Inherits: ^Vehicle
@@ -2266,6 +2269,7 @@ HMMV.TOW:
 		LocalOffset: 250,100,150
 	WithSpriteTurret:
 		Sequence: turrettow
+	-UpgradeableTo:
 
 GDRN:
 	Inherits: ^Vehicle
@@ -2376,6 +2380,7 @@ GDRN.TOW:
 		LocalOffset: 200,-150,250
 	WithSpriteTurret:
 		Sequence: turrettow
+	-UpgradeableTo:
 
 BGGY:
 	Inherits: ^VehicleTD
@@ -2682,6 +2687,7 @@ APC2.Reinforce:
 	UnloadOnCondition@UNLOAD:
 		RequiresCondition: damage
 		BotOnly: False
+	-UpgradeableTo:
 
 VULC:
 	Inherits: ^TankTD
@@ -3249,6 +3255,7 @@ HTNK.Ion:
 		LocalOffset: 870,0,360
 	SpawnActorOnDeath:
 		Actor: HTNK.Ion.Husk
+	-UpgradeableTo:
 
 HTNK.Hover:
 	Inherits: HTNK
@@ -3284,6 +3291,7 @@ HTNK.Hover:
 	SpawnActorOnDeath:
 		Actor: HTNK.Hover.Husk
 		RequiresCondition: !being-warped && !onwater
+	-UpgradeableTo:
 
 HTNK.Drone:
 	Inherits: HTNK
@@ -3333,6 +3341,7 @@ HTNK.Drone:
 	-TimedConditionBar@BERSERK:
 	-RejectsOrders@BERSERK:
 	-GrantCondition@BERSERK:
+	-UpgradeableTo:
 
 MSAM:
 	Inherits: ^TankTD
@@ -4683,6 +4692,7 @@ TITN.RAIL:
 		LocalOffset: 830,290,170
 	SpawnActorOnDeath:
 		Actor: TITN.RAIL.Husk
+	-UpgradeableTo:
 
 JUGG:
 	Inherits: ^TankTD
@@ -6206,3 +6216,4 @@ APOC.IRAQ:
 		-RequiresCondition:
 	Explodes@IRAQTANK:
 		RequiresCondition: !being-warped
+	-UpgradeableTo:
