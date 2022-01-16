@@ -157,19 +157,19 @@ namespace OpenRA.Mods.CA.Traits
 					return queueItem;
 				}
 
-				var replacement = replacements[queueItem.Item];
+				var r = replacements[queueItem.Item];
 
-				var replacementItem = new ProductionItem(this, replacement.Info.Name, replacement.Cost, playerPower, () => self.World.AddFrameEndTask(_ =>
+				var replacementItem = new ProductionItem(this, r.Info.Name, r.Cost, playerPower, () => self.World.AddFrameEndTask(_ =>
 				{
 					// Make sure the item hasn't been invalidated between the ProductionItem ticking and this FrameEndTask running
-					if (!Queue.Any(j => j.Done && j.Item == replacement.Info.Name))
+					if (!Queue.Any(j => j.Done && j.Item == r.Info.Name))
 						return;
 
-					var isBuilding = replacement.Info.HasTraitInfo<BuildingInfo>();
+					var isBuilding = r.Info.HasTraitInfo<BuildingInfo>();
 					if (isBuilding)
 						return;
 
-					if (BuildUnit(replacement.Info))
+					if (BuildUnit(r.Info))
 						Game.Sound.PlayNotification(rules, self.Owner, "Speech", Info.ReadyAudio, self.Owner.Faction.InternalName);
 				}));
 
