@@ -2985,7 +2985,7 @@ REA2:
 
 PROC.SCRIN:
 	Inherits: ^ScrinBuilding
-	Inherits@BOTINCOME: ^BotIncome
+	Inherits@BOTREF: ^BotRefinery
 	HitShape:
 		Type: Rectangle
 			TopLeft: -1536, -512
@@ -3592,8 +3592,6 @@ GRAV:
 	ProvidesPrerequisiteValidatedFaction@traveler:
 		Factions: traveler
 		Prerequisite: aircraft.traveler
-	ProvidesPrerequisite@all:
-		Prerequisite: aircraft.all
 	ProvidesPrerequisite@scrin:
 		Prerequisite: aircraft.scrin
 	ProductionBar:

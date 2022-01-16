@@ -164,7 +164,7 @@ MIG:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 70
-		Prerequisites: ~afld, ~techlevel.high
+		Prerequisites: afld, ~aircraft.soviet, ~techlevel.high
 		Description: Multi purpose strike aircraft.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Defenses, Aircraft
@@ -266,7 +266,7 @@ SUK:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 120
-		Prerequisites: ~afld, stek, ~!seismic.upgrade, ~techlevel.high
+		Prerequisites: afld, stek, ~aircraft.soviet, ~!seismic.upgrade, ~techlevel.high
 		Description: Fast ground attack aircraft armed\n  with powerful armor-piercing munitions.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Defenses, Light Armor
@@ -379,7 +379,7 @@ SUK.UPG:
 	RenderSprites:
 		Image: suk
 	Buildable:
-		Prerequisites: ~afld, stek, ~seismic.upgrade, ~techlevel.high
+		Prerequisites: afld, stek, ~aircraft.soviet, ~seismic.upgrade, ~techlevel.high
 		Description: Fast ground attack aircraft armed\n  with powerful explosive munitions.
 	-TooltipExtras:
 	TooltipExtras@SEISMIC:
@@ -401,7 +401,7 @@ YAK:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 25
-		Prerequisites: ~afld, ~aircraft.soviet, ~techlevel.low
+		Prerequisites: afld, ~aircraft.soviet, ~techlevel.low
 		Description: Ground attack plane armed with\n  dual machine guns
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor, Buildings
@@ -548,7 +548,7 @@ TRAN:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 10
-		Prerequisites: ~aircraft.chinook, ~techlevel.infonly
+		Prerequisites: aircraft.chinook, ~aircraft.chinookvisible, ~techlevel.infonly
 		Description: Fast infantry transport helicopter.
 	TooltipExtras:
 		Weaknesses: • Unarmed
@@ -676,7 +676,7 @@ HALO:
 	Health:
 		HP: 44000
 	Buildable:
-		Prerequisites: ~aircraft.soviet, ~techlevel.infonly
+		Prerequisites: hpad, ~aircraft.soviet, ~techlevel.infonly
 	-WithCargoHatchAnimation:
 	-WithIdleOverlay@ROTOR2AIR:
 	-WithIdleOverlay@ROTOR2GROUND:
@@ -906,7 +906,7 @@ HELI:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 50
-		Prerequisites: ~hpad, ~aircraft.allies, ~techlevel.medium
+		Prerequisites: ~aircraft.allies, ~techlevel.medium
 		Description: Helicopter gunship armed with\n  multi-purpose missiles.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Defenses, Aircraft
@@ -994,7 +994,7 @@ HIND:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 20
-		Prerequisites: ~hpad, ~aircraft.soviet, ~techlevel.medium
+		Prerequisites: hpad, ~aircraft.soviet, ~techlevel.medium
 		Description: Helicopter gunship armed\n  with dual chainguns.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Aircraft, Light Armor, Buildings
@@ -1187,7 +1187,7 @@ A10:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 80
-		Prerequisites: ~afld.gdi, ~aircraft.gdi, ~techlevel.high
+		Prerequisites: afld.gdi, ~aircraft.gdi, ~techlevel.high
 		IconPalette: chrometd
 		Description: Attack aircraft with incendiary bombs\n  and air-to-air missiles.
 	TooltipExtras:
@@ -1565,7 +1565,7 @@ ORCA:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 50
-		Prerequisites: ~hpad.td, ~aircraft.gdi, ~techlevel.high
+		Prerequisites: hpad.td, ~aircraft.gdi, ~techlevel.high
 		IconPalette: chrometd
 		Description: VTOL gunship armed with\n  multi-purpose missiles.
 	TooltipExtras:
@@ -1692,7 +1692,7 @@ ORCB:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 130
-		Prerequisites: ~hpad.td, ~aircraft.gdi, gtek, ~techlevel.high
+		Prerequisites: hpad.td, ~aircraft.gdi, gtek, ~techlevel.high
 		IconPalette: chrometd
 		Description: VTOL bomber armed with EMP bombs.
 	TooltipExtras:
@@ -2000,7 +2000,7 @@ KIRO:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 160
-		Prerequisites: ~hpad, stek, ~aircraft.soviet, ~techlevel.high
+		Prerequisites: hpad, stek, ~aircraft.soviet, ~techlevel.high
 		Description: Heavily armoured airship equipped with specialised bombs.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
@@ -2163,7 +2163,7 @@ OCAR:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 100
-		Prerequisites: ~hpad.td, rep, ~aircraft.gdi, ~techlevel.high
+		Prerequisites: hpad.td, rep, ~aircraft.gdi, ~techlevel.high
 		IconPalette: chrometd
 		Description: Fast VTOL Vehicle Transporter.
 	TooltipExtras:
@@ -2349,7 +2349,7 @@ HARR:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 110
-		Prerequisites: atek, ~hpad, ~aircraft.allies, ~techlevel.high
+		Prerequisites: atek, ~aircraft.allies, ~techlevel.high
 		Description: Fast VTOL ground attack aircraft armed\n  with powerful explosive missiles.
 	TooltipExtras:
 		Strengths: • Strong vs Aircraft, Buildings, Infantry, Light Armor
@@ -2837,7 +2837,7 @@ AURO:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 140
-		Prerequisites: ~afld.gdi, ~aircraft.eagle, gtek, ~techlevel.high
+		Prerequisites: afld.gdi, ~aircraft.eagle, gtek, ~techlevel.high
 		IconPalette: chrometd
 		Description: Supersonic bomber armed with a MOAB.
 	TooltipExtras:

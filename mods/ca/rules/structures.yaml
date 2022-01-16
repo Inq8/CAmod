@@ -1077,7 +1077,7 @@ SAM:
 		Weaknesses: • Cannot attack ground units
 		Attributes: • Requires power to operate\n• Can detect cloaked aircraft
 	Valued:
-		Cost: 700
+		Cost: 750
 	Tooltip:
 		Name: SAM Site
 	Building:
@@ -1516,7 +1516,7 @@ FACT:
 
 PROC:
 	Inherits: ^Building
-	Inherits@BOTINCOME: ^BotIncome
+	Inherits@BOTREF: ^BotRefinery
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 60
@@ -1725,8 +1725,9 @@ HPAD:
 	ProvidesPrerequisiteValidatedFaction@usa:
 		Factions: usa
 		Prerequisite: aircraft.usa
-	ProvidesPrerequisite@all:
-		Prerequisite: aircraft.all
+	ProvidesPrerequisiteValidatedFaction@chinookvisible:
+		Factions: allies, england, france, germany, gdi, zocom, eagle, talon, arc, nod, blackh, legion, marked, shadow
+		Prerequisite: aircraft.chinookvisible
 	ProvidesPrerequisiteValidatedFaction@chinook:
 		Factions: allies, england, france, germany, gdi, zocom, eagle, talon, arc, nod, blackh, legion, marked, shadow
 		Prerequisite: aircraft.chinook
@@ -2761,6 +2762,14 @@ VEHICLES.NOD:
 	Buildable:
 		Description: Vehicle Production
 
+AIRCRAFT.CHINOOK:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Helipad
+	Buildable:
+		Description: Helipad
+
 TECHCENTER:
 	AlwaysVisible:
 	Interactable:
@@ -3589,7 +3598,7 @@ NSAM:
 		Weaknesses: • Cannot attack ground units
 		Attributes: • Requires power to operate\n• Can detect cloaked aircraft
 	Valued:
-		Cost: 700
+		Cost: 750
 	Tooltip:
 		Name: SAM Site
 	Building:
@@ -4313,8 +4322,6 @@ HPAD.TD:
 		Amount: -10
 	ValidFactions:
 		Factions: talon, zocom, eagle, arc, blackh, marked, legion, shadow
-	ProvidesPrerequisite@all:
-		Prerequisite: aircraft.all
 	ProvidesPrerequisiteValidatedFaction@gdi:
 		Factions: talon, zocom, eagle, arc
 		Prerequisite: aircraft.gdi
@@ -4336,6 +4343,8 @@ HPAD.TD:
 	ProvidesPrerequisiteValidatedFaction@apch:
 		Factions: blackh, legion, shadow
 		Prerequisite: aircraft.apch
+	ProvidesPrerequisite@chinookvisible:
+		Prerequisite: aircraft.chinookvisible
 	ProvidesPrerequisite@chinook:
 		Prerequisite: aircraft.chinook
 	ProvidesPrerequisite@buildingname:
@@ -4392,7 +4401,7 @@ HPAD.TD:
 
 PROC.TD:
 	Inherits: ^BuildingTD
-	Inherits@BOTINCOME: ^BotIncome
+	Inherits@BOTREF: ^BotRefinery
 	HitShape:
 		Type: Rectangle
 			TopLeft: -1536, -512
@@ -4575,6 +4584,8 @@ AFLD.GDI:
 	ProvidesPrerequisiteValidatedFaction@arc:
 		Factions: arc
 		Prerequisite: aircraft.arc
+	ProvidesPrerequisite@chinookvisible:
+		Prerequisite: aircraft.chinookvisible
 	AirstrikePower@uav:
 		OrderName: gdiuav
 		Prerequisites: ~!aircraft.arc

@@ -1683,6 +1683,7 @@ Player:
 		RushAttackScanRadius: 25
 		ProtectUnitScanRadius: 28
 		ProtectionScanRadius: 16
+		AirToAirPriority: 85
 		BigAirThreats: pac, deva, kiro, mshp
 		AirSquadTargetTypes:
 			heli: Aircraft, Vehicle
@@ -1712,11 +1713,20 @@ Player:
 		AirToAirUnits: heli, mig, orca, scrn, venm, stmr, enrv, a10, harr, rah, hind
 		AirThreatUnits: heli, mig, orca, scrn, venm, stmr, enrv, a10, harr, rah, hind, pac, deva, kiro, mshp
 		UnitBuilderMinCredits: 1800
-		UnitDelays:
-			mcv: 6750
-			amcv: 6750
-			smcv: 6750
-			mshp: 27000
+		UnitIntervals:
+			mshp: 7500
+			mcv: 3000
+			amcv: 3000
+			smcv: 3000
+			harv: 2250
+			harv.td: 2250
+			harv.scrin: 2250
+			harv.chrono: 2250
+			rmbo: 2250
+			e7: 2250
+			mast: 2250
+			yuri: 2250
+			bori: 2250
 		UnitsToBuild:
 			e1: 65
 			e2: 25
@@ -1896,9 +1906,9 @@ Player:
 			cv: 4
 			jjet: 8
 			bjet: 8
-			kiro: 3
-			deva: 3
-			pac: 3
+			kiro: 4
+			deva: 4
+			pac: 4
 			ss: 10
 			ss2: 10
 			sb: 10
@@ -1921,6 +1931,7 @@ Player:
 		ConstructionYardTypes: fact,afac,sfac
 		StaticAntiAirTypes: agun, sam, nsam, cram, shar
 		ProtectionScanRadius: 12
+		AirToAirPriority: 75
 		BigAirThreats: pac, deva, kiro, mshp
 		AirSquadTargetTypes:
 			heli: Aircraft, Vehicle
@@ -1950,11 +1961,20 @@ Player:
 		MaxAirSuperiority: 8
 		AirToAirUnits: heli, mig, orca, scrn, venm, stmr, enrv, a10, harr, rah, hind
 		AirThreatUnits: heli, mig, orca, scrn, venm, stmr, enrv, a10, harr, rah, hind, pac, deva, kiro, mshp
-		UnitDelays:
-			mcv: 6750
-			amcv: 6750
-			smcv: 6750
-			mshp: 27000
+		UnitIntervals:
+			mshp: 7500
+			mcv: 3750
+			amcv: 3750
+			smcv: 3750
+			harv: 2250
+			harv.td: 2250
+			harv.scrin: 2250
+			harv.chrono: 2250
+			rmbo: 3000
+			e7: 3000
+			mast: 3000
+			yuri: 3000
+			bori: 3000
 		UnitsToBuild:
 			e1: 65
 			e2: 25
@@ -2158,17 +2178,24 @@ Player:
 		ConstructionYardTypes: fact,afac,sfac
 		StaticAntiAirTypes: agun, sam, nsam, cram, shar
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
+		AirToAirPriority: 65
 		AirSquadTargetTypes:
 			mshp: Building
 	UnitBuilderBotModuleCA@normal:
 		RequiresCondition: enable-normal-ai
 		IdleBaseUnitsMaximum: 50
 		MaxAircraft: 4
-		UnitDelays:
-			mcv: 6750
-			amcv: 6750
-			smcv: 6750
-			mshp: 27000
+		UnitIntervals:
+			mshp: 7500
+			harv: 2250
+			harv.td: 2250
+			harv.scrin: 2250
+			harv.chrono: 2250
+			rmbo: 3750
+			e7: 3750
+			mast: 3750
+			yuri: 3750
+			bori: 3750
 		UnitsToBuild:
 			e1: 65
 			e2: 25
@@ -2369,16 +2396,23 @@ Player:
 		ConstructionYardTypes: fact,afac,sfac
 		StaticAntiAirTypes: agun, sam, nsam, cram, shar
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
+		AirToAirPriority: 55
 		AirSquadTargetTypes:
 			mshp: Building
 	UnitBuilderBotModuleCA@easy:
 		RequiresCondition: enable-easy-ai
 		MaxAircraft: 2
-		UnitDelays:
-			mcv: 6750
-			amcv: 6750
-			smcv: 6750
-			mshp: 27000
+		UnitIntervals:
+			mshp: 7500
+			harv: 2250
+			harv.td: 2250
+			harv.scrin: 2250
+			harv.chrono: 2250
+			rmbo: 4500
+			e7: 4500
+			mast: 4500
+			yuri: 4500
+			bori: 4500
 		UnitsToBuild:
 			e1: 65
 			e2: 25
@@ -2581,11 +2615,12 @@ Player:
 	UnitBuilderBotModuleCA@naval:
 		RequiresCondition: enable-naval-ai
 		MaxAircraft: 4
-		UnitDelays:
-			mcv: 6750
-			amcv: 6750
-			smcv: 6750
-			mshp: 27000
+		UnitIntervals:
+			mshp: 7500
+			harv: 2250
+			harv.td: 2250
+			harv.scrin: 2250
+			harv.chrono: 2250
 		UnitsToBuild:
 			e1: 65
 			e2: 25

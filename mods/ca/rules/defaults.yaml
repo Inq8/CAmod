@@ -111,6 +111,15 @@
 	ProvidesPrerequisite@AI:
 		Prerequisite: botplayer
 		RequiresCondition: owned-by-brutal-ai || owned-by-vhard-ai || owned-by-hard-ai || owned-by-normal-ai || owned-by-easy-ai || owned-by-naval-ai
+	ProductionCostMultiplier@brutalbonus:
+		Multiplier: 90
+		Prerequisites: is-brutal-ai
+	ProductionCostMultiplier@vhardbonus:
+		Multiplier: 95
+		Prerequisites: is-vhard-ai
+
+# Refineries have an explicit BuildDuration so build time is unaffected by ProductionCostMultiplier
+^BotRefinery:
 	ProductionTimeMultiplier@brutalbonus:
 		Multiplier: 90
 		Prerequisites: is-brutal-ai
@@ -119,35 +128,35 @@
 		Prerequisites: is-vhard-ai
 
 ^BotDefenseProductionBonus:
-	ProductionTimeMultiplier@brutalbonus:
+	ProductionCostMultiplier@brutalbonus:
 		Multiplier: 85
-	ProductionTimeMultiplier@vhardbonus:
+		Prerequisites: is-brutal-ai
+	ProductionCostMultiplier@vhardbonus:
 		Multiplier: 90
-	ProductionTimeMultiplier@hardbonus:
+		Prerequisites: is-vhard-ai
+	ProductionCostMultiplier@hardbonus:
 		Multiplier: 95
+		Prerequisites: is-hard-ai
 
 ^BotGroundProductionBonus:
-	ProductionTimeMultiplier@brutalbonus:
-		Multiplier: 50
+	ProductionCostMultiplier@brutalbonus:
+		Multiplier: 52
 		Prerequisites: is-brutal-ai
-	ProductionTimeMultiplier@vhardbonus:
-		Multiplier: 65
+	ProductionCostMultiplier@vhardbonus:
+		Multiplier: 68
 		Prerequisites: is-vhard-ai
-	ProductionTimeMultiplier@hardbonus:
-		Multiplier: 80
+	ProductionCostMultiplier@hardbonus:
+		Multiplier: 84
 		Prerequisites: is-hard-ai
-	ProductionTimeMultiplier@normalbonus:
-		Multiplier: 90
-		Prerequisites: is-normal-ai
 
 ^BotAirProductionBonus:
-	ProductionTimeMultiplier@brutalbonus:
+	ProductionCostMultiplier@brutalbonus:
 		Multiplier: 85
 		Prerequisites: is-brutal-ai
-	ProductionTimeMultiplier@vhardbonus:
+	ProductionCostMultiplier@vhardbonus:
 		Multiplier: 90
 		Prerequisites: is-vhard-ai
-	ProductionTimeMultiplier@hardbonus:
+	ProductionCostMultiplier@hardbonus:
 		Multiplier: 95
 		Prerequisites: is-hard-ai
 
@@ -176,21 +185,6 @@
 		Amount: 500
 		ShowTicks: False
 		RequiresCondition: owned-by-normal-ai && !noinsurance
-
-# RefineryResourceMultiplier on Proc's so AI income is still tied to harvesters, so eco sniping AI is possible.
-^BotIncome:
-	RefineryResourceMultiplier@brutalincome:
-		Modifier: 140
-		RequiresCondition: owned-by-brutal-ai
-	RefineryResourceMultiplier@vhardincome:
-		Modifier: 130
-		RequiresCondition: owned-by-vhard-ai
-	RefineryResourceMultiplier@hardincome:
-		Modifier: 120
-		RequiresCondition: owned-by-hard-ai
-	RefineryResourceMultiplier@normalincome:
-		Modifier: 110
-		RequiresCondition: owned-by-normal-ai
 
 #Hacky but helps Bots deal with abandoned vehicles due to snipers
 ^BotCaptureHelper:
@@ -221,7 +215,6 @@
 ^PlayerHandicaps:
 	HandicapFirepowerMultiplier:
 	HandicapDamageMultiplier:
-	HandicapProductionTimeMultiplier:
 
 ^GainsExperience:
 	GainsExperience:
@@ -1936,6 +1929,7 @@
 	ProximityCaptor:
 		Types: Infantry
 	TakeCover:
+		Duration: 75
 		DamageModifiers:
 			Prone50Percent: 50
 		DamageTriggers: TriggerProne
