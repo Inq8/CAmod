@@ -129,10 +129,10 @@ namespace OpenRA.Mods.CA.Traits
 			replaced = false;
 
 			// if started already, and not set to complete any in progress, don't replace (will be cancelled and refunded)
-			if (queueItem.Started && !Info.CompleteUpgradedInProgress)
+			if (queueItem.Item == null || (queueItem.Started && !Info.CompleteUpgradedInProgress))
 				return queueItem;
 
-			if (queueItem.Item != null && !replacements.ContainsKey(queueItem.Item))
+			if (!replacements.ContainsKey(queueItem.Item))
 			{
 				var upgradeableTo = rules.Actors[queueItem.Item].TraitInfoOrDefault<UpgradeableToInfo>();
 				var replacement = new ReplacementDetails();
@@ -140,36 +140,39 @@ namespace OpenRA.Mods.CA.Traits
 				if (upgradeableTo != null)
 				{
 					var replacementName = upgradeableTo.Actors.Where(a => buildableNames.Contains(a)).FirstOrDefault();
-					replacement.Info = rules.Actors[replacementName];
-					var valued = replacement.Info.TraitInfoOrDefault<ValuedInfo>();
-					replacement.Cost = valued != null ? valued.Cost : 0;
+					if (replacementName != null)
+					{
+						replacement.Info = rules.Actors[replacementName];
+						var valued = replacement.Info.TraitInfoOrDefault<ValuedInfo>();
+						replacement.Cost = valued != null ? valued.Cost : 0;
+					}
 				}
 
 				replacements[queueItem.Item] = replacement;
 			}
 
-			if (queueItem.Item != null && replacements[queueItem.Item].Info != null)
+			if (replacements[queueItem.Item].Info != null)
 			{
-				// if a replacement is buildable, but we've already started producing, we should be able to finish production
+				// if a replacement is buildable, but we've already started producing, we should be able to finish production (as CompleteUpgradedInProgress is true)
 				if (queueItem.Started)
 				{
 					replaced = true;
 					return queueItem;
 				}
 
-				var replacement = replacements[queueItem.Item];
+				var r = replacements[queueItem.Item];
 
-				var replacementItem = new ProductionItem(this, replacement.Info.Name, replacement.Cost, playerPower, () => self.World.AddFrameEndTask(_ =>
+				var replacementItem = new ProductionItem(this, r.Info.Name, r.Cost, playerPower, () => self.World.AddFrameEndTask(_ =>
 				{
 					// Make sure the item hasn't been invalidated between the ProductionItem ticking and this FrameEndTask running
-					if (!Queue.Any(j => j.Done && j.Item == replacement.Info.Name))
+					if (!Queue.Any(j => j.Done && j.Item == r.Info.Name))
 						return;
 
-					var isBuilding = replacement.Info.HasTraitInfo<BuildingInfo>();
+					var isBuilding = r.Info.HasTraitInfo<BuildingInfo>();
 					if (isBuilding)
 						return;
 
-					if (BuildUnit(replacement.Info))
+					if (BuildUnit(r.Info))
 						Game.Sound.PlayNotification(rules, self.Owner, "Speech", Info.ReadyAudio, self.Owner.Faction.InternalName);
 				}));
 

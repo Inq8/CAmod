@@ -2168,6 +2168,7 @@ ACOL.UPG:
 		Prerequisites: anyradar, obli, ~infantry.marked, ~cyborg.production, ~techlevel.high
 	-TakeCover:
 	-Convertible:
+	-UpgradeableTo:
 
 JJET:
 	Inherits@1: ^ExistsInWorld
@@ -2410,6 +2411,7 @@ BJET:
 		IdleSequences: idle1-upg,idle2-upg
 		DefaultAttackSequence: attack-upg
 		RequiresCondition: !airborne
+	-UpgradeableTo:
 
 JJET.Husk:
 	ClassicFacingBodyOrientation:
@@ -2887,7 +2889,7 @@ BRUT:
 		Attributes: • Immune to mind control
 	RenderSprites:
 	Valued:
-		Cost: 500
+		Cost: 450
 	Tooltip:
 		Name: Brute
 	UpdatesPlayerStatistics:
@@ -3515,7 +3517,7 @@ XO:
 		Queue: Infantry
 		BuildAtProductionType: Powersuit
 		BuildPaletteOrder: 160
-		Prerequisites: gtek, ~infantry.any, vehicles.any, ~techlevel.high
+		Prerequisites: gtek, infantry.any, vehicles.any, ~pyle, ~techlevel.high
 		Description: Light battle-mech with a short-range laser\n  and a machine gun.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
