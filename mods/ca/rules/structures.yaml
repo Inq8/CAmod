@@ -6140,6 +6140,7 @@ UPGC.BOMB:
 		IconPalette: chrometd
 	TooltipExtras:
 		Strengths: + Increases unit firepower by a further 5%\n+ Unlocks Firestorm Missile Barrage power
+		Attributes: \n(!) Mutually exclusive with Supply Drop Zone
 	Plug:
 		Type: tower.rocket
 	Power:
@@ -6159,6 +6160,7 @@ UPGC.SEEK:
 		IconPalette: chrometd
 	TooltipExtras:
 		Strengths: + Increases unit speed and weapon range by a further 5%\n+ Unlocks Advanced Radar Scan power
+		Attributes: \n(!) Mutually exclusive with Supply Drop Zone
 	Plug:
 		Type: tower.radar
 	Power:
@@ -6178,6 +6180,7 @@ UPGC.HOLD:
 		IconPalette: chrometd
 	TooltipExtras:
 		Strengths: + Increases unit armor by a further 5%\n+ Unlocks Nanite Shield power
+		Attributes: \n(!) Mutually exclusive with Supply Drop Zone
 	Plug:
 		Type: tower.shield
 	Power:
@@ -6193,10 +6196,11 @@ UPGC.DROP:
 		Queue: Upgrade
 		BuildPaletteOrder: 90
 		Prerequisites: ~upgc, ~!upgc.plugged, ~techlevel.high
-		Description: Provides a dropzone\n  for emergency supplies.
+		Description: Provides a dropzone for emergency supplies.
 		IconPalette: chrometd
 	TooltipExtras:
 		Strengths: + $750 delivered every 60 seconds (normal speed)
+		Attributes: \n(!) Mutually exclusive with Firestorm Missile System,\n       Advanced Radar System and Nanoshield Generator
 	Plug:
 		Type: tower.drop
 	Power:
