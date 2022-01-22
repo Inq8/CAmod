@@ -1931,7 +1931,7 @@ Player:
 		ConstructionYardTypes: fact,afac,sfac
 		StaticAntiAirTypes: agun, sam, nsam, cram, shar
 		ProtectionScanRadius: 12
-		AirToAirPriority: 75
+		AirToAirPriority: 65
 		BigAirThreats: pac, deva, kiro, mshp
 		AirSquadTargetTypes:
 			heli: Aircraft, Vehicle
@@ -1961,6 +1961,10 @@ Player:
 		MaxAirSuperiority: 8
 		AirToAirUnits: heli, mig, orca, scrn, venm, stmr, enrv, a10, harr, rah, hind
 		AirThreatUnits: heli, mig, orca, scrn, venm, stmr, enrv, a10, harr, rah, hind, pac, deva, kiro, mshp
+		UnitDelays:
+			arty: 4500
+			arty.nod: 4500
+			katy: 4500
 		UnitIntervals:
 			mshp: 7500
 			mcv: 3750
@@ -2178,13 +2182,17 @@ Player:
 		ConstructionYardTypes: fact,afac,sfac
 		StaticAntiAirTypes: agun, sam, nsam, cram, shar
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
-		AirToAirPriority: 65
+		AirToAirPriority: 55
 		AirSquadTargetTypes:
 			mshp: Building
 	UnitBuilderBotModuleCA@normal:
 		RequiresCondition: enable-normal-ai
 		IdleBaseUnitsMaximum: 50
 		MaxAircraft: 4
+		UnitDelays:
+			arty: 5250
+			arty.nod: 5250
+			katy: 5250
 		UnitIntervals:
 			mshp: 7500
 			harv: 2250
@@ -2396,12 +2404,16 @@ Player:
 		ConstructionYardTypes: fact,afac,sfac
 		StaticAntiAirTypes: agun, sam, nsam, cram, shar
 		NavalProductionTypes: spen,syrd,spen.nod,syrd.gdi
-		AirToAirPriority: 55
+		AirToAirPriority: 45
 		AirSquadTargetTypes:
 			mshp: Building
 	UnitBuilderBotModuleCA@easy:
 		RequiresCondition: enable-easy-ai
 		MaxAircraft: 2
+		UnitDelays:
+			arty: 5250
+			arty.nod: 5250
+			katy: 5250
 		UnitIntervals:
 			mshp: 7500
 			harv: 2250

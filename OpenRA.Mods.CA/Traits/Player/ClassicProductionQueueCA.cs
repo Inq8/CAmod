@@ -35,6 +35,8 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		public readonly new ClassicProductionQueueCAInfo Info;
 		readonly Actor self;
+		PowerManager playerPower;
+		HashSet<string> lastBuildableNames = new HashSet<string>();
 
 		public ClassicProductionQueueCA(ActorInitializer init, ClassicProductionQueueCAInfo info)
 			: base(init, info)
@@ -99,13 +101,23 @@ namespace OpenRA.Mods.CA.Traits
 		protected void ReplaceOrCancelUnbuildableItems()
 		{
 			if (Queue.Count == 0)
+			{
+				// reset lastBuildableNames to ensure checks will be done immediately when queue is populated again
+				lastBuildableNames = new HashSet<string>();
 				return;
+			}
 
 			var buildableNames = BuildableItems().Select(b => b.Name).ToHashSet();
 
+			// if buildables haven't changed since last tick we don't need to do anything else
+			if (lastBuildableNames == buildableNames)
+				return;
+
 			var rules = self.World.Map.Rules;
-			var playerPower = self.Owner.PlayerActor.TraitOrDefault<PowerManager>();
 			var replacements = new Dictionary<string, ReplacementDetails>();
+
+			if (playerPower == null)
+				playerPower = self.Owner.PlayerActor.TraitOrDefault<PowerManager>();
 
 			// EndProduction removes the item from the queue, so we enumerate
 			// by index in reverse to avoid issues with index reassignment
@@ -114,7 +126,7 @@ namespace OpenRA.Mods.CA.Traits
 				if (buildableNames.Contains(Queue[i].Item))
 					continue;
 
-				Queue[i] = GetReplacement(Queue[i], replacements, buildableNames, rules, playerPower, out bool replaced);
+				Queue[i] = GetReplacement(Queue[i], replacements, buildableNames, rules, out bool replaced);
 				if (replaced)
 					continue;
 
@@ -122,9 +134,11 @@ namespace OpenRA.Mods.CA.Traits
 				playerResources.GiveCash(Queue[i].TotalCost - Queue[i].RemainingCost);
 				EndProduction(Queue[i]);
 			}
+
+			lastBuildableNames = buildableNames;
 		}
 
-		ProductionItem GetReplacement(ProductionItem queueItem, Dictionary<string, ReplacementDetails> replacements, HashSet<string> buildableNames, Ruleset rules, PowerManager playerPower, out bool replaced)
+		ProductionItem GetReplacement(ProductionItem queueItem, Dictionary<string, ReplacementDetails> replacements, HashSet<string> buildableNames, Ruleset rules, out bool replaced)
 		{
 			replaced = false;
 

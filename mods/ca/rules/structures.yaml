@@ -40,7 +40,7 @@ MSLO:
 		Icon: abomb
 		ChargeInterval: 13500
 		Description: Atom Bomb
-		LongDesc: Launches a devastating atomic bomb\nat a target location.
+		LongDesc: \nLaunches a devastating atomic bomb at the target location,\n    dealing heavy damage over a large area.
 		BeginChargeSpeechNotification: AbombPrepping
 		EndChargeSpeechNotification: AbombReady
 		SelectTargetSpeechNotification: SelectTarget
@@ -412,7 +412,7 @@ IRON:
 		ActivationDelay: 0
 		AirburstAltitude: 0c0
 		AllowMultiple: false
-		LongDesc: Makes selected vehicles and structures temporarily invulnerable\n  Warning: Harmful to Infantry.
+		LongDesc: \nMakes selected vehicles and structures\n    temporarily invulnerable\n\nWarning: Harmful to Infantry.
 		OnFireSound: ironcur9.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -446,7 +446,7 @@ PDOX:
 		BuildPaletteOrder: 120
 		Prerequisites: atek, ~structures.allies, ~techlevel.unrestricted
 		BuildLimit: 1
-		Description: Teleports a group of units across the\n  map for a short time.
+		Description: Can be used to teleports units anywhere on the map.
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Chronoshift
 	Valued:
@@ -491,7 +491,7 @@ PDOX:
 		Icon: chrono
 		ChargeInterval: 4500
 		Description: Chronoshift
-		LongDesc: Teleports a group of units across the map.
+		LongDesc: \nTeleports selected units to a targeted location,\n    returning to their original location\n    after a short time.
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		BeginChargeSpeechNotification: ChronosphereCharging
@@ -510,7 +510,7 @@ PDOX:
 		ChargeInterval: 7000
 		Description: Chronoshift
 		ActivationDelay: 25
-		LongDesc: Teleports a group of units across the map.
+		LongDesc: \nTeleports selected units to a targeted location,\n    returning to their original location\n    after a short time.
 		Weapon: ChronoAI
 		AirburstAltitude: 0c0
 		AllowMultiple: false
@@ -532,7 +532,7 @@ PDOX:
 		Cursor: ability
 		ChargeInterval: 4500
 		Description: Time Warp
-		LongDesc: Disrupts time and space at target area,\ncausing units & structures to be frozen in time.
+		LongDesc: \nDisrupts time and space at the target location.\n    Affected units & structures are frozen in time,\n    unable to act, but immune to damage.
 		Weapon: TimeWarp
 		Condition: being-warped
 		Duration: 375
@@ -794,7 +794,7 @@ DOME:
 		ChargeInterval: 6000
 		Prerequisites: ~radar.france, ~techlevel.unrestricted
 		Description: Cluster Mines
-		LongDesc: Send a cargo plane\nto deploy a minefield.
+		LongDesc: \nSends a cargo plane to drop a minefield\n    at the target location.
 		OrderName: clustermine
 		UnitType: c17.clustermines
 		CameraActor: camera
@@ -821,7 +821,7 @@ DOME:
 		ChargeInterval: 4500
 		LifeTime: 375
 		Description: GPS Scrambler
-		LongDesc: Shrouds the target area. Reduces range of enemy units\nand defenses in area while active.
+		LongDesc: \nShrouds the target area for a short time, reducing the vision\n    and weapon range of enemy units and defenses.
 		LaunchSound: sscrambl.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -1158,7 +1158,7 @@ ATEK:
 		OneShot: true
 		ChargeInterval: 4500
 		Description: Satellite Launch
-		LongDesc: Launches GPS Satellite.
+		LongDesc: \nLaunches GPS Satellite.
 		RevealDelay: 375
 		LaunchSpeechNotification: SatelliteLaunched
 		DisplayTimerRelationships: Ally
@@ -1189,7 +1189,7 @@ ATEK:
 		PauseOnCondition: disabled || being-warped
 		Prerequisites: anyradar, ~gps.satellite, ~fogenabled
 		Description: Spy Satellite
-		LongDesc: Periodically reveals the entire map for a short time.\nActivated automatically.
+		LongDesc: \nPeriodically reveals the entire map\n    for a short time (activated automatically).
 		Icon: gps
 		Actors: camera.satscan
 		Type: SpySatellite
@@ -1201,7 +1201,7 @@ ATEK:
 		PauseOnCondition: disabled || being-warped
 		Prerequisites: anyradar, ~gps.satellite, ~!fogenabled
 		Description: Spy Satellite
-		LongDesc: Permanently reveals the entire map.\nActivated automatically.
+		LongDesc: \nPermanently reveals the entire map (activated automatically).
 		Icon: gps
 		Actors: camera.satscan.oneshot
 		Type: SpySatellite
@@ -1225,7 +1225,7 @@ ATEK:
 		AllowMultiple: false
 		Sequence: false-active
 		Description: Force Shield
-		LongDesc: Makes selected friendly structures temporarily invulnerable.\n  Warning: Causes power failure.
+		LongDesc: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
 		OnFireSound: forceon.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
@@ -1759,7 +1759,7 @@ HPAD:
 		Icon: paratroopers
 		ChargeInterval: 7500
 		Description: Paratroopers
-		LongDesc: A Halo Transport drops a squad of infantry\nanywhere on the map.
+		LongDesc: \nDispatches a Halo transport to drop a squad of infantry\n    anywhere on the map.
 		SquadSize: 1
 		SquadOffset: 0,1792,0
 		DropItems: E1,E1,E2,E3,E3,E1,E1,E1
@@ -1783,7 +1783,7 @@ HPAD:
 		Icon: stormtroopers
 		ChargeInterval: 9000
 		Description: Storm-troopers
-		LongDesc: A Halo Transport drops a squad of shock troops\nanywhere on the map.
+		LongDesc: \nDispatches a Halo transport to drop a squad of Shock Troopers\n    anywhere on the map.
 		SquadSize: 1
 		SquadOffset: 0,1792,0
 		DropItems: SHOK,SHOK,SHOK,SHOK,SHOK
@@ -1819,7 +1819,7 @@ HPAD:
 		Icon: strafe
 		ChargeInterval: 7500
 		Description: Strafing Run
-		LongDesc: P51 ground attack planes strafe\nyour target.
+		LongDesc: \nCalls in P51 ground attack planes to perform\n    strafing runs on the target.
 		SelectTargetSpeechNotification: SelectTarget
 		CameraActor: camera
 		CameraRemoveDelay: 150
@@ -1900,7 +1900,7 @@ AFLD:
 		Icon: spyplane
 		ChargeInterval: 3000
 		Description: Spy Plane
-		LongDesc: Reveals an area of the map.
+		LongDesc: \nDispatches a spy plane that reveals the target location\n    for a limited time.
 		SelectTargetSpeechNotification: SelectTarget
 		EndChargeSpeechNotification: SpyPlaneReady
 		LaunchSound: spyplane.aud
@@ -1921,7 +1921,7 @@ AFLD:
 		Icon: parabombs
 		ChargeInterval: 7500
 		Description: Parabombs
-		LongDesc: A Badger bomber drops parachuted\nbombs on your target.
+		LongDesc: \nCalls in a Badger bomber which drops parachuted\n    bombs on your target.
 		SelectTargetSpeechNotification: SelectTarget
 		CameraActor: camera
 		CameraRemoveDelay: 150
@@ -1942,7 +1942,7 @@ AFLD:
 		Icon: carpetbomb
 		ChargeInterval: 10500
 		Description: Carpet Bomb
-		LongDesc: A squad of Badgers drop\nbombs on your target.
+		LongDesc: \nCalls in a squad of Badgers which drop\n    bombs on your target.
 		SelectTargetSpeechNotification: SelectTarget
 		CameraActor: camera
 		CameraRemoveDelay: 150
@@ -1963,7 +1963,7 @@ AFLD:
 		Icon: abombair
 		ChargeInterval: 10500
 		Description: Atomic Bomb
-		LongDesc: A Badger bomber drops an \natom bomb on your target.
+		LongDesc: \nCalls in a a Badger bomber which drops an\n    atom bomb on your target.
 		SelectTargetSpeechNotification: SelectTarget
 		CameraActor: camera
 		CameraRemoveDelay: 150
@@ -1985,7 +1985,7 @@ AFLD:
 		IconPalette: scrin
 		ChargeInterval: 10500
 		Description: Genetic Mutation Bomb
-		LongDesc: A Badger bomber drops a genetic mutation bomb\non your target which transforms infantry\ninto Brutes.
+		LongDesc: \nCalls in a Badger bomber which drops a genetic\n    mutation bomb on your target, transforming\n    infantry into Brutes under your control.
 		SelectTargetSpeechNotification: SelectTarget
 		CameraActor: camera
 		CameraRemoveDelay: 150
@@ -2233,7 +2233,7 @@ STEK:
 		AirburstAltitude: 0c0
 		AllowMultiple: false
 		Description: Force Shield
-		LongDesc: Makes selected friendly structures temporarily invulnerable.\n  Warning: Causes power failure.
+		LongDesc: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
 		OnFireSound: forceon.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
@@ -3256,7 +3256,7 @@ AIRS:
 		Icon: airdropicon
 		ChargeInterval: 13500
 		Description: Air Drop
-		LongDesc: Cargo Planes air drop tanks anywhere on the map.
+		LongDesc: \nDispatches cargo planes to air drop tanks\n    at the target location.
 		DropItems: ltnk, ftnk, ltnk
 		SelectTargetSpeechNotification: SelectTarget
 		AllowImpassableCells: false
@@ -3279,7 +3279,7 @@ AIRS:
 		Icon: airdropicon
 		ChargeInterval: 13500
 		Description: Air Drop
-		LongDesc: Cargo Planes air drop flame tanks anywhere on the map.
+		LongDesc: \nDispatches cargo planes to air drop flame tanks\n    at the target location.
 		DropItems: hftk, hftk
 		SelectTargetSpeechNotification: SelectTarget
 		AllowImpassableCells: false
@@ -3302,7 +3302,7 @@ AIRS:
 		Icon: airdropicon
 		ChargeInterval: 13500
 		Description: Air Drop
-		LongDesc: Cargo Planes air drop stealth tanks anywhere on the map.
+		LongDesc: \nDispatches cargo planes to air drop stealth tanks\n    at the target location.
 		DropItems: stnk.nod, stnk.nod
 		SelectTargetSpeechNotification: SelectTarget
 		AllowImpassableCells: false
@@ -3927,7 +3927,7 @@ HQ:
 		Icon: hacksat
 		ChargeInterval: 4500
 		Description: Hack Satellite Uplink
-		LongDesc: Reveals map terrain and provides tactical\ninformation.
+		LongDesc: \nReveals the targeted area for a short time.
 		LaunchSound: hacksat.aud
 		SelectTargetSpeechNotification: SelectTarget
 		PauseOnCondition: disabled || being-warped
@@ -3943,7 +3943,7 @@ HQ:
 		Type: Infantry
 		ChargeInterval: 7500
 		Description: Hacker Cell
-		LongDesc: Deploy a squad of hackers that can remotely\ncapture buildings and take control of defenses.
+		LongDesc: \nDeploy a squad of hackers that can remotely\n    capture buildings and take control of defenses.\n\nDeploys from primary infantry production structure.
 		Actors: hack, hack, hack
 		LaunchSpeechNotification: ReinforcementsArrived
 		EndChargeSpeechNotification: Reinforce
@@ -3956,7 +3956,7 @@ HQ:
 		Icon: droppods
 		IconPalette: chrometd
 		Description: Drop Pods
-		LongDesc: Drop Pod reinforcements.\nSmall team of elite soldiers orbital drops\nto target location.
+		LongDesc: \nInstantly deploys a small team of elite soldiers\n    at the target location via orbital drop pods.
 		EndChargeSpeechNotification: DropPodsAvailable
 		SelectTargetSpeechNotification: SelectTarget
 		DisplayRadarPing: True
@@ -3977,7 +3977,7 @@ HQ:
 		Prerequisites: ~radar.legion, techlevel.high
 		AllowMultiple: false
 		Description: Cash Hack
-		LongDesc: Steal up to $2000 credits from the enemy.\n\nTarget their Refinery to do so.
+		LongDesc: \nSteal up to $2000 credits from a targeted enemy Refinery.
 		OnFireSound: scashhac.aud
 		Notification: CreditsStolen
 		DisplayTimerRelationships: Ally
@@ -3993,7 +3993,7 @@ HQ:
 		IconPalette: chrometd
 		ChargeInterval: 9000
 		Description: Inferno Bomb
-		LongDesc: A B2 bomber drops\ninferno bombs on your target.
+		LongDesc: \nA B2 Stealth Bomber drops inferno bombs on your target.
 		SelectTargetSpeechNotification: SelectTarget
 		CameraActor: camera
 		CameraRemoveDelay: 150
@@ -4016,7 +4016,7 @@ HQ:
 		Icon: shadteam
 		ChargeInterval: 6750
 		Description: Shadow Team
-		LongDesc: Calls for a Shadow Team; three stealth infantry that arrive via glider.
+		LongDesc: \nCalls for a Shadow Team; three stealth infantry\n    that arrive via glider armed with grenades\n    and a machine pistol.\n\nOperatives can be ordered to land\n    via the deploy command.
 		SelectTargetSpeechNotification: SelectTarget
 		UnitType: sgli
 		QuantizedFacings: 8
@@ -4141,7 +4141,7 @@ EYE:
 		ChargeInterval: 13500
 		Description: Ion Cannon
 		ActivationDelay: 50
-		LongDesc: Initiate an Ion Cannon strike.\nApplies heavy damage over a large area.
+		LongDesc: \nInitiate an Ion Cannon strike which deals\n    heavy damage over a large area.
 		Weapon: IonStormInit
 		AirburstAltitude: 4c512
 		AllowMultiple: false
@@ -4173,7 +4173,7 @@ EYE:
 		WeaponDelay: 3
 		Description: Surgical Strike
 		EffectPalette: tdeffect-ignore-lighting-alpha85
-		LongDesc: Initiate an precision Ion Cannon strike.\nApplies instant damage to a small area.
+		LongDesc: \nInitiate an precision Ion Cannon strike which instantly\n    deals instant damage to a small area.
 		BeginChargeSpeechNotification: IonCannonCharging
 		EndChargeSpeechNotification: IonCannonReady
 		LaunchSound: ion2.aud
@@ -4367,7 +4367,7 @@ HPAD.TD:
 		IconPalette: chrometd
 		ChargeInterval: 6000
 		Description: Reinforcements
-		LongDesc: An Orca Carryall drops reinforcements\nat the target location.
+		LongDesc: \nAn Orca Carryall drops an APC containing\n    an infantry squad at the target location.
 		EndChargeSpeechNotification: Reinforce
 		LaunchSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
@@ -4381,7 +4381,7 @@ HPAD.TD:
 		ChargeInterval: 8250
 		Description: X-O Drop
 		UnitType: ocar.xo
-		LongDesc: An Orca transport drops a squad of X-O Powersuits\nanywhere on the map.
+		LongDesc: \nAn Orca transport drops a squad of X-O Powersuits\n    at the target location.
 		SquadSize: 1
 		SquadOffset: 0,1792,0
 		DropItems: XO,XO,XO
@@ -4592,7 +4592,7 @@ AFLD.GDI:
 		Icon: uavicon
 		ChargeInterval: 3750
 		Description: Recon Drone
-		LongDesc: Reveals a strip of the map\nand cloaked enemy units.
+		LongDesc: \nA drone flies across the map, revealing the area as it passes.\n\nDetects cloaked units.
 		SelectTargetSpeechNotification: SelectTarget
 		EndChargeSpeechNotification: SpyPlaneReady
 		CameraActor: camera.spyplane
@@ -4612,7 +4612,7 @@ AFLD.GDI:
 		Icon: uavicon
 		ChargeInterval: 3000
 		Description: Recon Drone
-		LongDesc: Reveals a strip of the map\nand cloaked enemy units.
+		LongDesc: \nA drone flies across the map, revealing the area as it passes.\n\nDetects cloaked units.
 		SelectTargetSpeechNotification: SelectTarget
 		EndChargeSpeechNotification: SpyPlaneReady
 		CameraActor: camera.spyplane
@@ -4632,7 +4632,7 @@ AFLD.GDI:
 		Icon: airsupport
 		ChargeInterval: 10500
 		Description: Interceptors
-		LongDesc: A squadron of Interceptors provides\nair cover over the selected target area.
+		LongDesc: \nA squadron of Interceptors provides\n    air cover over the target area,\n    engaging any enemy aircraft within range.
 		SelectTargetSpeechNotification: SelectTarget
 		EndChargeSpeechNotification: SpyPlaneReady
 		CameraActor: camera
@@ -4738,7 +4738,7 @@ GTEK:
 		AirburstAltitude: 0c0
 		AllowMultiple: false
 		Description: Force Shield
-		LongDesc: Makes selected friendly structures temporarily invulnerable.\n  Warning: Causes power failure.
+		LongDesc: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
 		OnFireSound: forceon.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
@@ -4761,7 +4761,7 @@ GTEK:
 		AirburstAltitude: 0c0
 		AllowMultiple: false
 		Description: Nanite Repair
-		LongDesc: Repairs selected damaged vehicles.
+		LongDesc: \nRepairs selected damaged vehicles over time.
 		OnFireSound: srepaira.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
@@ -4825,7 +4825,7 @@ TMPL:
 		Cursor: ability
 		ChargeInterval: 10500
 		Description: Cluster Missile
-		LongDesc: Launches an Cluster Missile,\nCauses damage over a large area.
+		LongDesc: \nLaunches an Cluster Missile which deals heavy\n    damage at the target location.
 		EndChargeSpeechNotification: ClusMissileReady
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -4870,7 +4870,7 @@ TMPL:
 		AllowMultiple: false
 		Sequence: false-active
 		Description: Force Shield
-		LongDesc: Makes selected friendly structures temporarily invulnerable.\n  Warning: Causes power failure.
+		LongDesc: \nMakes selected friendly structures temporarily invulnerable.\n  Warning: Causes power failure.
 		OnFireSound: forceon.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
@@ -4895,7 +4895,7 @@ TMPL:
 		AirburstAltitude: 0c0
 		Sequence: false-active
 		AllowMultiple: false
-		LongDesc: Temporarily increases ground unit movement and attack speed.
+		LongDesc: \nIncreases the movement speed and rate of fire of\n    targeted units for a limited time.
 		OnFireSound: nodfrenzy.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -5419,7 +5419,7 @@ SGEN:
 		Icon: invis
 		IconPalette: chrometd
 		Description: Tiberium Stealth
-		LongDesc: Cloaks all owned buildings and defenses for a limited time. Can be toggled on/off.
+		LongDesc: \nCloaks all owned buildings and defenses\n    for a limited time. Can be toggled on/off.
 		PauseOnCondition: disabled || empdisable || being-warped
 		LaunchSound: cloak6.aud
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -5436,7 +5436,7 @@ SGEN:
 		Icon: invis
 		IconPalette: chrometd
 		Description: Tiberium Stealth
-		LongDesc: Cloaks all owned buildings and defenses for a limited time. Can be toggled on/off.
+		LongDesc: \nCloaks all owned buildings and defenses\n    for a limited time. Can be toggled on/off.
 		PauseOnCondition: disabled || empdisable || being-warped
 		LaunchSound: cloak6.aud
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -5667,7 +5667,7 @@ PATR:
 		Icon: empmissile
 		ChargeInterval: 4500
 		Description: E.M. Missile
-		LongDesc: Fires a Tomahawk missile which disables\nall mechanical units in the area.
+		LongDesc: \nFires a Tomahawk missile which disables all mechanical units\n    and structures on impact.
 		BeginChargeSpeechNotification: EMMissilePrepping
 		EndChargeSpeechNotification: EMMissileReady
 		SelectTargetSpeechNotification: SelectTarget
@@ -5971,7 +5971,7 @@ UPGC:
 		IconPalette: chrometd
 		ChargeInterval: 7500
 		Description: Firestorm
-		LongDesc: Barrage target area with rockets.
+		LongDesc: \nFires a barrage of rockets at the target area.
 		BeginChargeSpeechNotification: FireStormOffline
 		EndChargeSpeechNotification: FireStormReady
 		SelectTargetSpeechNotification: SelectTarget
@@ -6022,7 +6022,7 @@ UPGC:
 		Icon: arscan
 		IconPalette: chrometd
 		Description: Advanced Radar Scan
-		LongDesc: Provides information on enemy structures & units positions.
+		LongDesc: \nReveals the location of enemy structures & units\n    through the fog of war.
 		RequiresCondition: !build-incomplete && tower.radar
 		PauseOnCondition: !radar-active || disabled || being-warped
 		LaunchSound: gradarup.aud
@@ -6057,7 +6057,7 @@ UPGC:
 		ChargeInterval: 6000
 		LifeTime: 375
 		Description: Nanite Shield
-		LongDesc: Reduces incoming damage for all vehicles in target area.
+		LongDesc: \nReduces the damage taken by all vehicles in the target area.
 		LaunchSound: srepaira.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -6140,6 +6140,7 @@ UPGC.BOMB:
 		IconPalette: chrometd
 	TooltipExtras:
 		Strengths: + Increases unit firepower by a further 5%\n+ Unlocks Firestorm Missile Barrage power
+		Attributes: \n(!) Mutually exclusive with Supply Drop Zone
 	Plug:
 		Type: tower.rocket
 	Power:
@@ -6159,6 +6160,7 @@ UPGC.SEEK:
 		IconPalette: chrometd
 	TooltipExtras:
 		Strengths: + Increases unit speed and weapon range by a further 5%\n+ Unlocks Advanced Radar Scan power
+		Attributes: \n(!) Mutually exclusive with Supply Drop Zone
 	Plug:
 		Type: tower.radar
 	Power:
@@ -6178,6 +6180,7 @@ UPGC.HOLD:
 		IconPalette: chrometd
 	TooltipExtras:
 		Strengths: + Increases unit armor by a further 5%\n+ Unlocks Nanite Shield power
+		Attributes: \n(!) Mutually exclusive with Supply Drop Zone
 	Plug:
 		Type: tower.shield
 	Power:
@@ -6193,10 +6196,11 @@ UPGC.DROP:
 		Queue: Upgrade
 		BuildPaletteOrder: 90
 		Prerequisites: ~upgc, ~!upgc.plugged, ~techlevel.high
-		Description: Provides a dropzone\n  for emergency supplies.
+		Description: Provides a dropzone for emergency supplies.
 		IconPalette: chrometd
 	TooltipExtras:
 		Strengths: + $750 delivered every 60 seconds (normal speed)
+		Attributes: \n(!) Mutually exclusive with Firestorm Missile System,\n       Advanced Radar System and Nanoshield Generator
 	Plug:
 		Type: tower.drop
 	Power:
@@ -6344,7 +6348,7 @@ MSLO.Nod:
 		Cursor: chemmissile
 		ChargeInterval: 13500
 		Description: Chemical Missile
-		LongDesc: Launches an deadly Chemical Missile,\nCauses a large blast and a large toxic cloud.\nExtremely toxic to infantry.
+		LongDesc: \nLaunches an deadly Chemical Missile. Deals heavy damage\n    and creates toxic clouds which are extremely harmful to infantry.\n
 		EndChargeSpeechNotification: CMissileReady
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -6430,7 +6434,7 @@ WEAT:
 		ChargeInterval: 13500
 		Description: Lightning Storm
 		ActivationDelay: 50
-		LongDesc: Initiate a Lightning Storm.\nApplies heavy damage over a large area.
+		LongDesc: \nInitiate a Lightning Storm which deals\n    heavy damage over a large area.
 		Weapon: WeatherStormInit
 		AirburstAltitude: 4c512
 		AllowMultiple: false
