@@ -1923,6 +1923,7 @@ BORI:
 		Voice: Demolish
 		DamageTypes: ExplosionDeath
 	AutoTarget:
+		InitialStanceAI: AttackAnything
 	-WithInfantryBody:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
@@ -1949,6 +1950,8 @@ BORI:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, MindControlImmune
 	TakeCover:
 		SpeedModifier: 70
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Infantry, Vehicle, Water, Underwater
 
 MORT:
 	Inherits: ^Soldier
