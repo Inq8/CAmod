@@ -297,7 +297,6 @@
 		RequiresCondition: berserkactive
 	WithColoredOverlay@BERSERK:
 		RequiresCondition: berserkactive
-		Palette: berserk
 	TimedConditionBar@BERSERK:
 		Color: ff0066
 		Condition: berserk
@@ -318,7 +317,6 @@
 		Condition: frenzy
 	WithColoredOverlay@FRENZY:
 		RequiresCondition: frenzy
-		Palette: frenzy
 	TimedConditionBar@FRENZY:
 		Color: ff3300
 		Condition: frenzy
@@ -347,10 +345,8 @@
 		RequiresCondition: !invulnerability
 	WithColoredOverlay@TEMPORALl:
 		RequiresCondition: being-warped
-		Palette: temporal
 	WithColoredOverlay@TEMPORAL2:
 		RequiresCondition: being-warped
-		Palette: lowpower
 	TimedConditionBar@TEMPORAL:
 		Condition: being-warped
 		Color: 2f74e2
@@ -386,7 +382,6 @@
 		Condition: suppression
 	WithColoredOverlay@SUPPRESSION:
 		RequiresCondition: suppression
-		Palette: suppression
 	TimedConditionBar@SUPPRESSION:
 		Condition: suppression
 		Color: f454d0
@@ -464,7 +459,6 @@
 		Condition: ionsurge
 	WithColoredOverlay@IONSURGE:
 		RequiresCondition: ionsurge
-		Palette: ionsurge
 	WithIdleOverlay@IONSURGE:
 		Sequence: vehicle
 		Image: ionsurge-overlay
@@ -489,7 +483,6 @@
 		RequiresCondition: powerdrain
 	WithColoredOverlay@POWERDRAIN:
 		RequiresCondition: powerdrain
-		Palette: disabled
 	WithDecoration@POWERDRAIN:
 		Image: poweroff
 		Sequence: offline
@@ -696,15 +689,15 @@
 	WithDecoration@SEEK:
 		-BlinkPatterns:
 		BlinkPatterns:
-			seek : Off, On
+			seek: Off, On
 	WithDecoration@SEEK2:
 		-BlinkPatterns:
 		BlinkPatterns:
-			seek2 : Off, On
+			seek2: Off, On
 	WithDecoration@SEEK3:
 		-BlinkPatterns:
 		BlinkPatterns:
-			seek3 : Off, On
+			seek3: Off, On
 
 ^HazmatUpgrade:
 	GrantConditionOnPrerequisite@HAZMAT:
@@ -728,7 +721,7 @@
 		RequiresSelection: True
 		BlinkInterval: 64
 		BlinkPatterns:
-			bino : Off, On
+			bino: Off, On
 	WithDecoration@HAZMATSOVIET:
 		Image: pips
 		Sequence: pip-hazmats
@@ -738,7 +731,7 @@
 		RequiresSelection: True
 		BlinkInterval: 64
 		BlinkPatterns:
-			bino : Off, On
+			bino: Off, On
 	GrantConditionOnTerrain@HAZMATSOVIET:
 		TerrainTypes: Rough, Beach, Ford, Ore, Gems, Tiberium, BlueTiberium
 		Condition: onrough
@@ -854,7 +847,6 @@
 
 ^Irradiatable:
 	WithColoredOverlay@IRRADIATABLE:
-		Palette: irrad
 		RequiresCondition: irradiated
 	TimedConditionBar@IRRADIATABLE:
 		Condition: irradiated
@@ -873,7 +865,6 @@
 
 ^ForceShieldable:
 	WithColoredOverlay@FS:
-		Palette: forces
 		RequiresCondition: forceshield && !invulnerability
 	DamageMultiplier@FS:
 		RequiresCondition: forceshield
@@ -890,7 +881,6 @@
 ^EmpDisable:
 	WithColoredOverlay@EMPDISABLE:
 		RequiresCondition: empdisable
-		Palette: disabled
 	TimedConditionBar@EMPDISABLE:
 		Condition: empdisable
 		Color: FFFFFF
@@ -906,7 +896,6 @@
 
 ^EmpVisualEffect:
 	WithColoredOverlay@EMPDISABLE:
-		Palette: disabled
 	WithIdleOverlay@EMPDISABLE:
 		Sequence: emp-overlay
 		Palette: tseffect
@@ -920,7 +909,6 @@
 		RequiresCondition: nrepair
 	WithColoredOverlay@NREPAIR:
 		RequiresCondition: nrepair && damaged && !(empdisable || invulnerability || invisibility)
-		Palette: nrepair
 	TimedConditionBar@NREPAIR:
 		Condition: nrepair
 		Color: 25cde999
@@ -1011,21 +999,18 @@
 		Condition: greenhighlight
 	WithColoredOverlay@GHIGH:
 		RequiresCondition: greenhighlight
-		Palette: greenhighlight
 
 ^RedFlash:
 	ExternalCondition@RHIGH:
 		Condition: redhighlight
 	WithColoredOverlay@RHIGH:
 		RequiresCondition: redhighlight
-		Palette: redhighlight
 
 ^WhiteFlash:
 	ExternalCondition@HIGH:
 		Condition: highlight
 	WithColoredOverlay@HIGH:
 		RequiresCondition: highlight
-		Palette: highlight
 
 ^Cloakable:
 	ExternalCondition@INVIS:
@@ -1046,7 +1031,6 @@
 		Condition: sgen-invis
 	WithColoredOverlay@SGENCLOAK:
 		RequiresCondition: invisibility
-		Palette: cloakgreen
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Heavy, Critical
@@ -1094,7 +1078,6 @@
 		Modifier: 115
 		RequiresCondition: chilled == 1
 	WithColoredOverlay@chilled1:
-		Palette: cold1
 		RequiresCondition: chilled == 1
 	SpeedMultiplier@chilled2:
 		Modifier: 58
@@ -1103,7 +1086,6 @@
 		Modifier: 130
 		RequiresCondition: chilled == 2
 	WithColoredOverlay@chilled2:
-		Palette: cold2
 		RequiresCondition: chilled == 2
 	SpeedMultiplier@chilled3:
 		Modifier: 47
@@ -1112,7 +1094,6 @@
 		Modifier: 145
 		RequiresCondition: chilled == 3
 	WithColoredOverlay@chilled3:
-		Palette: cold3
 		RequiresCondition: chilled == 3
 	SpeedMultiplier@chilled4:
 		Modifier: 40
@@ -1121,7 +1102,6 @@
 		Modifier: 160
 		RequiresCondition: chilled == 4
 	WithColoredOverlay@chilled4:
-		Palette: cold4
 		RequiresCondition: chilled == 4
 	SpeedMultiplier@chilled5:
 		Modifier: 35
@@ -1130,7 +1110,6 @@
 		Modifier: 175
 		RequiresCondition: chilled == 5
 	WithColoredOverlay@chilled5:
-		Palette: cold5
 		RequiresCondition: chilled == 5
 	SpeedMultiplier@chilled6:
 		Modifier: 30
@@ -1139,7 +1118,6 @@
 		Modifier: 200
 		RequiresCondition: chilled > 5
 	WithColoredOverlay@chilled6:
-		Palette: cold6
 		RequiresCondition: chilled > 5
 
 ^Slowable:
@@ -1218,7 +1196,6 @@
 	ExternalCondition@detachable:
 		Condition: detach
 	WithColoredOverlay@detach:
-		Palette: moveflash
 		RequiresCondition: detach
 	AmbientSound@c4:
 		SoundFiles: icoltima.aud, icoltimb.aud, icoltimc.aud
@@ -1250,7 +1227,6 @@
 	ExternalCondition@detachable:
 		Condition: detach
 	WithColoredOverlay@detach:
-		Palette: moveflash
 		RequiresCondition: detach
 	AmbientSound@tnt:
 		SoundFiles: icraloop.aud
@@ -1550,7 +1526,7 @@
 		Locomotor: wheeled
 		TurnSpeed: 20
 	Selectable:
-		Bounds: 24, 24
+		Bounds: 1024, 1024
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Vehicle, C4, TNT
@@ -1699,7 +1675,7 @@
 		Modifier: 35
 
 ^SlightlySlowedByCrushing:
-	Inherits@CRUSHSLOW:	^SlowedByCrushing
+	Inherits@CRUSHSLOW: ^SlowedByCrushing
 	SpeedMultiplier@CRUSHATTEMPTSLOW:
 		Modifier: 80
 	SpeedMultiplier@CRUSHSLOW:
@@ -1770,8 +1746,8 @@
 		DeathType: ToxinDeath
 		RequiresLobbyCreeps: false
 	Selectable:
-		Bounds: 18,18,0,-6
-		DecorationBounds: 12,17,0,-6
+		Bounds: 768, 768, 0, -256
+		DecorationBounds: 512, 725, 0, -256
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Infantry, Disguise, TNT
@@ -2095,7 +2071,7 @@
 		Locomotor: naval
 		PauseOnCondition: empdisable || being-warped
 	Selectable:
-		Bounds: 24,24
+		Bounds: 1024, 1024
 	Targetable:
 		TargetTypes: Ground, Water, Ship
 		RequiresCondition: !being-warped
@@ -2242,7 +2218,7 @@
 	AppearsOnRadar:
 		UseLocation: true
 	Selectable:
-		Bounds: 24,24
+		Bounds: 1024, 1024
 	Aircraft:
 		AirborneCondition: airborne
 		TakeOffOnResupply: true
@@ -2419,7 +2395,6 @@
 		BuildSounds: placbldg.aud, build5.aud
 		UndeploySounds: cashturn.aud
 	ActorPreviewPlaceBuildingPreview:
-		OverridePalette: placebuilding
 	RequiresBuildableArea:
 		AreaTypes: building
 		Adjacent: 4
@@ -2446,7 +2421,6 @@
 		Categories: Building
 	CommandBarBlacklist:
 	WithColoredOverlay@FLARE:
-		Palette: flare
 		RequiresCondition: flare
 	ExternalCondition@FLARE:
 		Condition: flare
@@ -2539,7 +2513,6 @@
 	SpawnActorsOnSell:
 		ActorTypes: n1,n1,n1,n1,n1,n1,n1,n1,n1,n1,c1,c1,c1,c1,c7,c7,c7,c7,c10,c10
 	ActorPreviewPlaceBuildingPreview:
-		OverridePalette: placebuildingtd
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
@@ -2561,7 +2534,7 @@
 	WithColoredOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability
 	Selectable:
-		Bounds: 24,24
+		Bounds: 1024, 1024
 	Targetable:
 		TargetTypes: Ground, Structure, Defense
 	Targetable@EXPLOSIVES:
@@ -2624,7 +2597,6 @@
 	RenderSprites:
 		PlayerPalette: overlayplayertd
 	ActorPreviewPlaceBuildingPreview:
-		OverridePalette: placebuildingtd
 
 ^BuildingPlug:
 	Interactable:
@@ -2634,7 +2606,6 @@
 		UndeploySounds: cashturn.aud
 	SequencePlaceBuildingPreview:
 		Sequence: place
-		SequencePalette: placebuildingtd
 		Palette: terrain
 	KillsSelf:
 		RemoveInstead: true
@@ -2647,7 +2618,7 @@
 	Inherits@3: ^Cloakable
 	Inherits@handicaps: ^PlayerHandicaps
 	Interactable:
-		Bounds: 24,24
+		Bounds: 1024, 1024
 	OwnerLostAction:
 		Action: ChangeOwner
 	Building:
@@ -2657,7 +2628,6 @@
 		TerrainTypes: Clear,Road
 		UndeploySounds: cashturn.aud
 	FootprintPlaceBuildingPreview:
-		LineBuildSegmentPalette: placelinesegment
 	RequiresBuildableArea:
 		AreaTypes: building
 		Adjacent: 7
@@ -2773,7 +2743,7 @@
 	MapEditorData:
 		Categories: Decoration
 	Interactable:
-		Bounds: 24,24
+		Bounds: 1024, 1024
 
 ^CivBuilding:
 	Inherits: ^TechBuilding
@@ -2956,7 +2926,6 @@
 		Types: Husk
 		ForceHealthPercentage: 25
 	WithColoredOverlay@IDISABLE:
-		Palette: disabled
 	Targetable:
 		TargetTypes: Ground, Husk, NoAutoTarget
 		RequiresForceFire: true
@@ -3086,7 +3055,7 @@
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 1
 	Interactable:
-		Bounds: 96,48
+		Bounds: 4096, 2048
 	ShakeOnDeath:
 		Duration: 15
 		Intensity: 6
@@ -3127,14 +3096,14 @@
 ^Crate:
 	Inherits@1: ^SpriteActor
 	Interactable:
-		Bounds: 24,24
+		Bounds: 1024, 1024
 	HiddenUnderFog:
 	Tooltip:
 		Name: Crate
 		GenericName: Crate
 		ShowOwnerRow: false
 	Crate:
-		Lifetime: 180
+		Duration: 4500
 		TerrainTypes: Clear, Rough, Road, Ore, Beach, Tiberium, BlueTiberium, Water
 	RenderSprites:
 		Palette: effect
@@ -3161,7 +3130,7 @@
 ^Mine:
 	Inherits: ^SpriteActor
 	Interactable:
-		Bounds: 24,24
+		Bounds: 1024, 1024
 	WithSpriteBody:
 	HiddenUnderFog:
 	Mine:
@@ -3204,7 +3173,6 @@
 ^DisableOnLowPower:
 	WithColoredOverlay@IDISABLE:
 		RequiresCondition: disabled && !(invulnerability || empdisable || being-warped)
-		Palette: disabled
 	GrantConditionOnPowerState@LOWPOWER:
 		Condition: lowpower
 		ValidPowerStates: Low, Critical
@@ -3215,7 +3183,6 @@
 ^DisableOnLowPowerOrForceDisabled:
 	WithColoredOverlay@IDISABLE:
 		RequiresCondition: disabled && !(invulnerability || empdisable || forceshield || being-warped)
-		Palette: disabled
 	GrantConditionOnPowerState@LOWPOWER:
 		Condition: lowpower
 		ValidPowerStates: Low, Critical
@@ -3289,7 +3256,6 @@
 ^DisabledByPowerOutage:
 	WithColoredOverlay@IDISABLE:
 		RequiresCondition: disabled && !forceshield && !invulnerability && !empdisable
-		Palette: disabled
 	ExternalCondition:
 		Condition: forcedisabled
 	TimedConditionBar@FSDISABLE:
@@ -3322,7 +3288,6 @@
 		Prerequisites: radar-active
 	WithColoredOverlay@DRONEDISABLE:
 		RequiresCondition: !radarenabled || empdisable
-		Palette: disabled
 	WithDecoration@DRONEDISABLE:
 		Image: nosignal
 		Sequence: offline
@@ -3384,7 +3349,7 @@
 	SelectionDecorations:
 	WithSpriteControlGroupDecoration:
 	Selectable:
-		Bounds: 24,24
+		Bounds: 1024, 1024
 	Targetable:
 		TargetTypes: Ground, Infantry, Creep
 	AutoTarget:
