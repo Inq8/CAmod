@@ -128,7 +128,7 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			var randomPlayer = world.Players.Where(p => !p.Spectating
-				&& Info.CapturableStances.HasStance(player.RelationshipWith(p))).Random(world.LocalRandom);
+				&& Info.CapturableStances.HasRelationship(player.RelationshipWith(p))).Random(world.LocalRandom);
 
 			var targetOptions = Info.CheckCaptureTargetsForVisibility
 				? GetVisibleActorsBelongingToPlayer(randomPlayer)
@@ -173,17 +173,24 @@ namespace OpenRA.Mods.CA.Traits
 
 		Target SafePath(Actor capturer, Actor target)
 		{
-			var locomotor = capturer.Trait<Mobile>().Locomotor;
+			var mobile = capturer.Trait<Mobile>();
+			var locomotor = mobile.Locomotor;
 
 			if (!domainIndex.IsPassable(capturer.Location, target.Location, locomotor))
 				return Target.Invalid;
 
-			var path = pathfinder.FindPath(
-				PathSearch.FromPoint(world, locomotor, capturer, capturer.Location, target.Location, BlockedByActor.None)
-					.WithCustomCost(loc => world.FindActorsInCircle(world.Map.CenterOfCell(loc), Info.EnemyAvoidanceRadius)
+			// Start a search from each refinery's delivery location:
+			List<CPos> path;
+
+			using (var search = PathSearch.ToTargetCell(
+				world, locomotor, capturer, capturer.Location, target.Location, BlockedByActor.None,
+				location =>
+				{
+					return world.FindActorsInCircle(world.Map.CenterOfCell(location), Info.EnemyAvoidanceRadius)
 						.Where(u => !u.IsDead && capturer.Owner.RelationshipWith(u.Owner) == PlayerRelationship.Enemy && capturer.IsTargetableBy(u))
-						.Sum(u => Math.Max(WDist.Zero.Length, Info.EnemyAvoidanceRadius.Length - (world.Map.CenterOfCell(loc) - u.CenterPosition).Length)))
-					.FromPoint(capturer.Location));
+						.Sum(u => Math.Max(WDist.Zero.Length, Info.EnemyAvoidanceRadius.Length - (world.Map.CenterOfCell(location) - u.CenterPosition).Length));
+				}))
+				path = mobile.Pathfinder.FindPath(search);
 
 			if (path.Count == 0)
 				return Target.Invalid;

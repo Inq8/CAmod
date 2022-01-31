@@ -32,6 +32,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			base.Created(self);
 			facing = self.TraitOrDefault<IFacing>();
+			lastBodyFacing = facing.Facing;
 		}
 
 		protected override void Tick(Actor self)
@@ -39,20 +40,16 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled)
 				return;
 
-			if (lastBodyFacing != null)
+			if (lastBodyFacing != facing.Facing)
 			{
-				if (lastBodyFacing != facing.Facing)
+				if (initialChange)
 				{
-					if (initialChange)
-					{
-						// Game.Debug("body facing changed from {0} to {1}", LastBodyFacing, facing.Facing);
-						var facingDiff = lastBodyFacing - facing.Facing;
-						LocalOrientation = LocalOrientation.Rotate(new WRot(WAngle.Zero, WAngle.Zero, facingDiff));
-					}
-					else
-					{
-						initialChange = true;
-					}
+					var facingDiff = lastBodyFacing - facing.Facing;
+					LocalOrientation = LocalOrientation.Rotate(new WRot(WAngle.Zero, WAngle.Zero, facingDiff));
+				}
+				else
+				{
+					initialChange = true;
 				}
 			}
 

@@ -26,15 +26,12 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("The prerequisite type that this provides.")]
 		public readonly string Prerequisite = null;
 
-		[Translate]
 		[Desc("Label to display over the support power icon and in its tooltip while the power is active.")]
 		public readonly string ActiveText = "ACTIVE";
 
-		[Translate]
 		[Desc("Label to display over the support power icon and in its tooltip while the power is available but not active.")]
 		public readonly string AvailableText = "READY";
 
-		[Translate]
 		[Desc("If deactivating the power prior to full discharge, discharge by this additional amount to prevent frequent activation/deactivation with no penalty.")]
 		public readonly int EarlyDeactivationPenalty = 0;
 

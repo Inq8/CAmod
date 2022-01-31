@@ -145,7 +145,7 @@ namespace OpenRA.Mods.CA.Projectiles
 			}
 
 			// Check for blocking actors
-			if (info.Blockable && BlocksProjectiles.AnyBlockingActorsBetween(world, source, target, info.CenterBeamWidth, out var blockedPos))
+			if (info.Blockable && BlocksProjectiles.AnyBlockingActorsBetween(world, args.SourceActor.Owner, source, target, info.CenterBeamWidth, out var blockedPos))
 				target = blockedPos;
 
 			var direction = target - source;
@@ -237,7 +237,7 @@ namespace OpenRA.Mods.CA.Projectiles
 					info.LaunchEffectImage, info.LaunchEffectSequence, info.LaunchEffectPalette)));
 
 			// Check for blocking actors
-			if (info.Blockable && BlocksProjectiles.AnyBlockingActorsBetween(world, source, target, info.CenterBeamWidth, out var blockedPos))
+			if (info.Blockable && BlocksProjectiles.AnyBlockingActorsBetween(world, args.SourceActor.Owner, source, target, info.CenterBeamWidth, out var blockedPos))
 				target = blockedPos;
 
 			if (++ticks >= info.Duration)

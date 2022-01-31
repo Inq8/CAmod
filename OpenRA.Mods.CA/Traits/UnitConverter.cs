@@ -53,6 +53,9 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 		[Desc("Whether to eject all units on deploy command.")]
 		public readonly bool EjectOnDeploy = false;
 
+		[Desc("Cursor to display for ejecting.")]
+		public readonly string EjectCursor = "deploy";
+
 		[Desc("Whether to show a progress bar.")]
 		public readonly bool ShowSelectionBar = true;
 
@@ -240,7 +243,7 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 				if (IsTraitDisabled || !Info.EjectOnDeploy || !queue.Any())
 					yield break;
 
-				yield return new DeployOrderTargeter(OrderID, 1);
+				yield return new DeployOrderTargeter(OrderID, 1, () => Info.EjectCursor);
 			}
 		}
 
