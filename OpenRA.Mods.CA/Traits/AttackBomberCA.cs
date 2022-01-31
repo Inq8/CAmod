@@ -21,9 +21,6 @@ namespace OpenRA.Mods.CA.Traits
 {
 	public class AttackBomberCAInfo : AttackBaseInfo
 	{
-		[Desc("Tolerance for attack angle. Range [0, 512], 512 covers 360 degrees.")]
-		public readonly new WAngle FacingTolerance = new WAngle(8);
-
 		public override object Create(ActorInitializer init) { return new AttackBomberCA(init.Self, this); }
 	}
 

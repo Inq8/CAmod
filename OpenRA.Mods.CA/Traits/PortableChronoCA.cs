@@ -34,15 +34,19 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Sound to play when teleporting.")]
 		public readonly string ChronoshiftSound = "chrotnk1.aud";
 
+		[CursorReference]
 		[Desc("Cursor to display when able to deploy the actor.")]
 		public readonly string DeployCursor = "deploy";
 
+		[CursorReference]
 		[Desc("Cursor to display when unable to deploy the actor.")]
 		public readonly string DeployBlockedCursor = "deploy-blocked";
 
+		[CursorReference]
 		[Desc("Cursor to display when targeting a teleport location.")]
 		public readonly string TargetCursor = "chrono-target";
 
+		[CursorReference]
 		[Desc("Cursor to display when the targeted location is blocked.")]
 		public readonly string TargetBlockedCursor = "move-blocked";
 
@@ -167,10 +171,7 @@ namespace OpenRA.Mods.CA.Traits
 			chargeTick = Info.ChargeDelay;
 		}
 
-		public bool CanTeleport
-		{
-			get { return chargeTick <= 0; }
-		}
+		public bool CanTeleport => chargeTick <= 0;
 
 		float ISelectionBar.GetValue()
 		{
@@ -181,7 +182,7 @@ namespace OpenRA.Mods.CA.Traits
 		}
 
 		Color ISelectionBar.GetColor() { return Color.Magenta; }
-		bool ISelectionBar.DisplayWhenEmpty { get { return false; } }
+		bool ISelectionBar.DisplayWhenEmpty => false;
 	}
 
 	class PortableChronoOrderTargeter : IOrderTargeter
@@ -193,8 +194,8 @@ namespace OpenRA.Mods.CA.Traits
 			this.targetCursor = targetCursor;
 		}
 
-		public string OrderID { get { return "PortableChronoTeleport"; } }
-		public int OrderPriority { get { return 5; } }
+		public string OrderID => "PortableChronoTeleport";
+		public int OrderPriority => 5;
 		public bool IsQueued { get; protected set; }
 		public bool TargetOverridesSelection(Actor self, in Target target, List<Actor> actorsAt, CPos xy, TargetModifiers modifiers) { return true; }
 

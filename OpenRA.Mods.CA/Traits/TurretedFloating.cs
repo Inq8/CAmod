@@ -32,7 +32,6 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			base.Created(self);
 			facing = self.TraitOrDefault<IFacing>();
-			lastBodyFacing = facing.Facing;
 		}
 
 		protected override void Tick(Actor self)

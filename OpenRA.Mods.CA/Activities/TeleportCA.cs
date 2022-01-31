@@ -28,9 +28,9 @@ namespace OpenRA.Mods.CA.Activities
 		readonly bool killOnFailure;
 		readonly BitSet<DamageType> killDamageTypes;
 		CPos destination;
-		bool killCargo;
-		bool screenFlash;
-		string sound;
+		readonly bool killCargo;
+		readonly bool screenFlash;
+		readonly string sound;
 
 		public TeleportCA(Actor teleporter, CPos destination, int? maximumDistance,
 			bool killCargo, bool screenFlash, string sound, bool interruptable = true,

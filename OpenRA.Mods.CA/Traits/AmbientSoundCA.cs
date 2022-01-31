@@ -51,7 +51,7 @@ namespace OpenRA.Mods.Common.Traits.Sound
 		bool initialSoundComplete = false;
 		int initialSoundTicks = 0;
 		readonly bool loop;
-		HashSet<ISound> currentSounds = new HashSet<ISound>();
+		readonly HashSet<ISound> currentSounds = new HashSet<ISound>();
 		WPos cachedPosition;
 		int delay;
 
