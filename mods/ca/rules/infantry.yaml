@@ -11,7 +11,6 @@ DOG:
 		Weaknesses: • Can only attack Infantry
 		Attributes: • Can detect spies, mines and cloaked units
 	RenderSprites:
-		Scale: 0.7
 		PlayerPalette: player
 	WithDeathAnimation:
 		DeathSequencePalette: player
@@ -23,8 +22,8 @@ DOG:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Selectable:
-		Bounds: 12,17,-1,-4
-		DecorationBounds: 12,17,-1,-4
+		Bounds: 512, 725, -42, -170
+		DecorationBounds: 512, 725, -42, -170
 	Health:
 		HP: 1800
 	Mobile:
@@ -2343,8 +2342,8 @@ JJET:
 		Range: 3c0
 	ActorLostNotification:
 	Selectable:
-		Bounds: 18,18,0,-6
-		DecorationBounds: 12,17,0,-6
+		Bounds: 768, 768, 0, -256
+		DecorationBounds: 512, 725, 0, -256
 	AttackMove:
 		Voice: Move
 	Guard:
@@ -2735,7 +2734,6 @@ RMBC:
 	RenderSprites:
 		PlayerPalette: playerd2k
 		Image: cycom
-		Scale: 1
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Cyborg
@@ -2788,8 +2786,8 @@ RMBC:
 	WithDeathAnimation:
 		DeathSequencePalette: playerd2k
 	Selectable:
-		Bounds: 24,24,0,-4
-		DecorationBounds: 12,20,0,-4
+		Bounds: 1024, 1024, 0, -170
+		DecorationBounds: 512, 853, 0, -170
 	-TakeCover:
 	-Crushable:
 	-KillsSelf@Immolate:
@@ -2916,7 +2914,7 @@ BRUT:
 	RevealsShroud:
 		Range: 4c0
 	Selectable:
-		DecorationBounds: 14,19,-1,-8
+		DecorationBounds: 597, 810, -42, -341
 	Targetable:
 		RequiresCondition: !being-warped
 		TargetTypes: Ground, Infantry, MindControlImmune, DogImmune
@@ -3137,7 +3135,7 @@ SGLI:
 		Actor: sgli.crashing
 		RequiresCondition: !being-warped
 	Selectable:
-		DecorationBounds: 30,28,0,2
+		DecorationBounds: 1280, 1194, 0, 85
 	TransformOnCondition:
 		IntoActor: sgli.deployed
 		RequiresCondition: deployed
@@ -3235,7 +3233,6 @@ SGLI.discarded:
 	MapEditorData:
 		Categories: Husk
 	WithColoredOverlay@IDISABLE:
-		Palette: disabled
 	ChangesHealth:
 		Step: -100
 		StartIfBelow: 101

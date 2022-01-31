@@ -678,7 +678,7 @@ MAST:
 HARV.Scrin:
 	Inherits: HARV.TD
 	Selectable:
-		DecorationBounds: 42,42
+		DecorationBounds: 1792, 1792
 	RenderSprites:
 		Image: harv.scrin
 		PlayerPalette: overlayplayer
@@ -721,7 +721,7 @@ GUNW:
 	Tooltip:
 		Name: Gun Walker
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -776,7 +776,7 @@ SEEK:
 	Tooltip:
 		Name: Seeker
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
@@ -849,7 +849,7 @@ LACE:
 	Tooltip:
 		Name: Lacerator
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
@@ -959,7 +959,7 @@ INTL:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5
@@ -1027,7 +1027,7 @@ CORR:
 	Tooltip:
 		Name: Corrupter
 	Selectable:
-		DecorationBounds: 36,36,0,-3
+		DecorationBounds: 1536, 1536, 0, -128
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
@@ -1084,7 +1084,7 @@ LCHR:
 	Tooltip:
 		Name: Leecher
 	Selectable:
-		DecorationBounds: 36,36,0,-3
+		DecorationBounds: 1536, 1536, 0, -128
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
@@ -1137,7 +1137,7 @@ STCR:
 	Tooltip:
 		Name: Stormcrawler
 	Selectable:
-		DecorationBounds: 36,36,0,-3
+		DecorationBounds: 1536, 1536, 0, -128
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
@@ -1236,7 +1236,7 @@ DEVO:
 	Tooltip:
 		Name: Devourer Tank
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -1309,7 +1309,7 @@ DARK:
 	Tooltip:
 		Name: Darkener Tank
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -1370,7 +1370,7 @@ RUIN:
 	Tooltip:
 		Name: Ruiner
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
@@ -1467,7 +1467,7 @@ ATMZ:
 	Tooltip:
 		Name: Atomizer
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
@@ -1541,7 +1541,7 @@ TPOD:
 	Valued:
 		Cost: 1800
 	Selectable:
-		Bounds: 30,52,0,-10
+		Bounds: 1280, 2218, 0, -426
 	Tooltip:
 		Name: Annihilator Tripod
 	UpdatesPlayerStatistics:
@@ -1672,7 +1672,7 @@ RPTP:
 		RequiresCondition: on-resource && (ammo < 70 || charged-fire)
 	GrantConditionOnAttack@PRIMARY:
 		RevokeDelay: 50
-	GrantConditionOnAttack@PRIMARYCHARGED
+	GrantConditionOnAttack@PRIMARYCHARGED:
 		RevokeDelay: 50
 	WithIdleOverlay@RESCONVTIB:
 		Offset: 0,0,200
@@ -1705,7 +1705,7 @@ SMCV:
 		Name: Colony Ship
 	Selectable:
 		Priority: 4
-		Bounds: 42,42
+		Bounds: 1792, 1792
 	Health:
 		HP: 75000
 	Armor:
@@ -1820,10 +1820,17 @@ STMR:
 	SpawnActorOnDeath@EMP:
 		Actor: STMR.Husk.EMP
 		RequiresCondition: empdisable && !being-warped
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+		RequiresCondition: enable-smoke
 	Selectable:
-		DecorationBounds: 36,28
+		DecorationBounds: 1536, 1194
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
 	-EjectOnDeath:
@@ -1854,6 +1861,8 @@ STMR:
 		Delay: 200
 		Count: 15
 		RequiresCondition: srep-rearm && !airborne
+	GrantConditionOnDamageState@SmokeTrail:
+		Condition: enable-smoke
 
 ENRV:
 	Inherits: ^Helicopter
@@ -1930,10 +1939,17 @@ ENRV:
 	SpawnActorOnDeath@EMP:
 		Actor: ENRV.Husk.EMP
 		RequiresCondition: empdisable && !being-warped
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+		RequiresCondition: enable-smoke
 	Selectable:
-		DecorationBounds: 36,36
+		DecorationBounds: 1536, 1536
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
 	-EjectOnDeath:
@@ -1963,6 +1979,8 @@ ENRV:
 		Delay: 250
 		Count: 4
 		RequiresCondition: srep-rearm && !airborne
+	GrantConditionOnDamageState@SmokeTrail:
+		Condition: enable-smoke
 
 DEVA:
 	Inherits: ^Helicopter
@@ -2016,8 +2034,8 @@ DEVA:
 		AltitudeVelocity: 0c50
 		CanForceLand: False
 	Selectable:
-		Bounds: 36,28,0,2
-		DecorationBounds: 40,40,0,1
+		Bounds: 1536, 1194, 0, 85
+		DecorationBounds: 1706, 1706, 0, 42
 	Explodes:
 		Weapon: KirovExplode
 		RequiresCondition: !airborne
@@ -2110,8 +2128,8 @@ PAC:
 		AltitudeVelocity: 0c50
 		CanForceLand: False
 	Selectable:
-		Bounds: 36,28,0,2
-		DecorationBounds: 40,40,0,1
+		Bounds: 1536, 1194, 0, 85
+		DecorationBounds: 1706, 1706, 0, 42
 	Explodes:
 		Weapon: KirovExplode
 		RequiresCondition: !airborne
@@ -2260,9 +2278,15 @@ INVA:
 		-RequiresCondition:
 	-Selectable:
 	-ActorLostNotification:
-	SmokeTrailWhenDamaged:
-		Offset: -253,0,171
-		Interval: 2
+	LeavesTrails:
+		Offsets: -253,0,171
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+		RequiresCondition: enable-smoke
 	CarrierSlave:
 		LandingDistance: 8c0
 	Contrail@1:
@@ -2280,6 +2304,8 @@ INVA:
 	Targetable@AIRBORNE:
 		RequiresCondition: airborne
 		TargetTypes: ICBM
+	GrantConditionOnDamageState@SmokeTrail:
+		Condition: enable-smoke
 
 MSHP:
 	Inherits: ^Helicopter
@@ -2345,8 +2371,8 @@ MSHP:
 		CanForceLand: False
 		Voice: Move
 	Selectable:
-		Bounds: 42,42,0,2
-		DecorationBounds: 48,52,0,1
+		Bounds: 1792, 1792, 0, 85
+		DecorationBounds: 2048, 2218, 0, 42
 	Explodes:
 		Weapon: KirovExplode
 		RequiresCondition: !airborne
@@ -2575,9 +2601,14 @@ STMR.Husk:
 	Aircraft:
 		TurnSpeed: 16
 		Speed: 157
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	Contrail@1:
 		Offset: -250,-250,100
 		UsePlayerColor: true
@@ -2610,9 +2641,14 @@ ENRV.Husk:
 	FallsToEarth:
 		MaximumSpinSpeed: 20
 		Velocity: 86
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	Contrail@1:
 		Offset: -750,-200,300
 		UsePlayerColor: true
@@ -3061,8 +3097,8 @@ PROC.SCRIN:
 		RequiresSelection: true
 		PipCount: 17
 	Selectable:
-		Bounds: 72,56,0,12
-		DecorationBounds: 73,72
+		Bounds: 3072, 2389, 0, 512
+		DecorationBounds: 3114, 3072
 	InfiltrateForCash:
 		Types: ThiefInfiltrate
 		Percentage: 50
@@ -3083,7 +3119,7 @@ PORT:
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^2x2Shape
 	Selectable:
-		Bounds: 48,48
+		Bounds: 2048, 2048
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 840,-256,0, 840,512,0, 210,-512,0, -71,512,0
@@ -3183,7 +3219,7 @@ WSPH:
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^3x2Shape
 	Selectable:
-		Bounds: 72,48
+		Bounds: 3072, 2048
 	HitShape:
 		TargetableOffsets: 0,0,0, 0,1024,0, 0,-1024,0
 		Type: Rectangle
@@ -3361,8 +3397,8 @@ NERV:
 		OrderName: resourcescan
 		Icon: rescanpower
 		ChargeInterval: 7500
-		Description: Resource Scan
-		LongDesc: \nReveals the area surrounding all resources\n    on the map.
+		Name: Resource Scan
+		Description: \nReveals the area surrounding all resources\n    on the map.
 		LaunchSound: tibscan.aud
 		PauseOnCondition: disabled || empdisable || being-warped
 		EffectImage: empty
@@ -3375,9 +3411,9 @@ NERV:
 		Prerequisites: radar.harbinger, !botplayer
 		Cursor: ability
 		ChargeInterval: 7500
-		Description: Buzzer Swarm
+		Name: Buzzer Swarm
 		ActivationDelay: 1
-		LongDesc: \nSpawns a controllable swarm which damages anything nearby;\n    particularly harmful to infantry.
+		Description: \nSpawns a controllable swarm which damages anything nearby;\n    particularly harmful to infantry.
 		LaunchSound: buzzers-create.aud
 		Weapon: BuzzerSpawner
 		AirburstAltitude: 0c0
@@ -3393,9 +3429,9 @@ NERV:
 		Prerequisites: radar.harbinger, botplayer
 		Cursor: ability
 		ChargeInterval: 7500
-		Description: Buzzer Swarm (AI)
+		Name: Buzzer Swarm (AI)
 		ActivationDelay: 1
-		LongDesc: \nSpawns a controllable swarm which damages anything nearby;\n    particularly harmful to infantry.
+		Description: \nSpawns a controllable swarm which damages anything nearby;\n    particularly harmful to infantry.
 		LaunchSound: buzzers-create.aud
 		Weapon: BuzzerSpawnerAI
 		AirburstAltitude: 0c0
@@ -3411,9 +3447,9 @@ NERV:
 		Prerequisites: radar.reaper
 		Cursor: ability
 		ChargeInterval: 7500
-		Description: Storm Spike
+		Name: Storm Spike
 		ActivationDelay: 1
-		LongDesc: \nCreates a temporary Storm Column defensive structure\n    at the target location.
+		Description: \nCreates a temporary Storm Column defensive structure\n    at the target location.
 		LaunchSound: scrinbuild.aud
 		Weapon: StormSpikeSpawner
 		AirburstAltitude: 0c0
@@ -3429,9 +3465,9 @@ NERV:
 		Prerequisites: radar.traveler
 		Cursor: ability
 		ChargeInterval: 6750
-		Description: Ion Surge
+		Name: Ion Surge
 		ActivationDelay: 1
-		LongDesc: \nIncreases the movement speed of all friendly units\n    passing through the target area.
+		Description: \nIncreases the movement speed of all friendly units\n    passing through the target area.
 		LaunchSound: ionsurge.aud
 		Weapon: IonSurgeSpawner
 		AirburstAltitude: 0c0
@@ -3517,8 +3553,8 @@ SCRT:
 		ActivationDelay: 5
 		AirburstAltitude: 0c0
 		AllowMultiple: false
-		Description: Force Shield
-		LongDesc: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
+		Name: Force Shield
+		Description: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
 		OnFireSound: forceon.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
@@ -3532,10 +3568,10 @@ SCRT:
 		Icon: ichorpower
 		Actor: ichor.seeder
 		ChargeInterval: 6000
-		Description: Ichor Seed
+		Name: Ichor Seed
 		LifeTime: -1
 		AllowMultiple: false
-		LongDesc: \nGrows tiberium at selected location.
+		Description: \nGrows tiberium at selected location.
 		LaunchSound: ichorseed.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -3548,14 +3584,14 @@ SCRT:
 		Icon: feedermutation
 		Prerequisites: ~scrt.collector, ~techlevel.high
 		ChargeInterval: 6750
-		Description: Feeder Mutation
+		Name: Feeder Mutation
 		Condition: feedermutation
 		Dimensions: 3, 3
 		Footprint: _x_ xxx _x_
 		ValidRelationships: Ally
 		Duration: 25
 		AllowMultiple: false
-		LongDesc: \nTransforms Scrin infantry into Feeders which consume resources\n    until becoming volatile enough to explode.
+		Description: \nTransforms Scrin infantry into Feeders which consume resources\n    until becoming volatile enough to explode.
 		OnFireSound: feedermutation.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -3587,7 +3623,7 @@ GRAV:
 	Tooltip:
 		Name: Gravity Stabilizer
 	Selectable:
-		Bounds: 72,48
+		Bounds: 3072, 2048
 	Building:
 		Footprint: xxx xxx ===
 		Dimensions: 3,3
@@ -3640,7 +3676,7 @@ SIGN:
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Selectable:
-		Bounds: 72,48
+		Bounds: 3072, 2048
 	Building:
 		Footprint: xxx xxx ===
 		Dimensions: 3,3
@@ -3712,8 +3748,8 @@ SREP:
 		Footprint: _+_ +++ _+_
 		Dimensions: 3,3
 	Selectable:
-		Bounds: 68,34,0,3
-		DecorationBounds: 72,48
+		Bounds: 2901, 1450, 0, 128
+		DecorationBounds: 3072, 2048
 	Health:
 		HP: 80000
 	Armor:
@@ -3790,7 +3826,7 @@ SILO.SCRIN:
 	Power:
 		Amount: -10
 	Selectable:
-		Bounds: 24,24
+		Bounds: 1024, 1024
 	Explodes:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
@@ -3857,8 +3893,8 @@ MANI:
 		OrderName: suppression
 		Icon: spresspower
 		ChargeInterval: 4500
-		Description: Suppression Field
-		LongDesc: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.
+		Name: Suppression Field
+		Description: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.
 		Duration: 600
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -3878,8 +3914,8 @@ MANI:
 		OrderName: suppressionsiphon
 		Icon: spresspower
 		ChargeInterval: 4500
-		Description: Suppression Field
-		LongDesc: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.\n\nDamage dealt to affected units restores\n    the attacker's health.
+		Name: Suppression Field
+		Description: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.\n\nDamage dealt to affected units restores\n    the attacker's health.
 		Duration: 600
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -3939,9 +3975,9 @@ RIFT:
 		Icon: riftpower
 		Cursor: ability
 		ChargeInterval: 13500
-		Description: Rift
+		Name: Rift
 		ActivationDelay: 50
-		LongDesc: \nInitiate a Rift which deals heavy damage\n    over time to a large area.
+		Description: \nInitiate a Rift which deals heavy damage\n    over time to a large area.
 		Weapon: RiftInit
 		AllowMultiple: false
 		CameraActor: camera
@@ -4009,7 +4045,7 @@ PTUR:
 	Tooltip:
 		Name: Plasma Cannon
 	Selectable:
-		DecorationBounds: 24,28,0,-6
+		DecorationBounds: 1024, 1194, 0, -256
 	Building:
 	Health:
 		HP: 34000
@@ -4070,7 +4106,7 @@ SHAR:
 	Tooltip:
 		Name: Shard Launcher
 	Selectable:
-		DecorationBounds: 24,44,0,-11
+		DecorationBounds: 1024, 1877, 0, -469
 	Health:
 		HP: 50000
 	Armor:
@@ -4131,7 +4167,7 @@ SCOL:
 	Tooltip:
 		Name: Storm Column
 	Selectable:
-		DecorationBounds: 24,48,0,-14
+		DecorationBounds: 1024, 2048, 0, -597
 	Health:
 		HP: 45000
 	Armor:
@@ -4585,7 +4621,7 @@ WORMHOLE:
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 1
 	Selectable:
-		Bounds: 32,32
+		Bounds: 1365, 1365
 	HiddenUnderFog:
 		Type: CenterPosition
 	HitShape:
