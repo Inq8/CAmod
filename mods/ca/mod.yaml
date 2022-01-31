@@ -264,37 +264,40 @@ SpriteSequenceFormat: ClassicTilesetSpecificSpriteSequence
 
 ModelSequenceFormat: PlaceholderModelSequence
 
+VideoFormats: Vqa, Wsa
+
+TerrainFormat: DefaultTerrain
+
 AssetBrowser:
 	SupportedExtensions: .r8, .shp, .tmp, .tem, .des, .sno, .int, .vqa
 
 GameSpeeds:
-	slowest:
-		Name: Slowest
-		Timestep: 80
-		OrderLatency: 2
-	slower:
-		Name: Slower
-		Timestep: 50
-		OrderLatency: 3
-	default:
-		Name: Normal
-		Timestep: 40
-		OrderLatency: 3
-	fast:
-		Name: Fast
-		Timestep: 35
-		OrderLatency: 4
-	faster:
-		Name: Faster
-		Timestep: 30
-		OrderLatency: 4
-	fastest:
-		Name: Fastest
-		Timestep: 20
-		OrderLatency: 6
-
-ColorValidator:
-	TeamColorPresets: FE1100, 800d0d, f57606, f5d378, ffe610, ffafe2, db39d5, 72079a, 03ef35, 008c00, 9d8c01, 00b3a8, 2244d4, 23aaff, 41eefd, abb7e4
+	DefaultSpeed: default
+	Speeds:
+		slowest:
+			Name: Slowest
+			Timestep: 80
+			OrderLatency: 2
+		slower:
+			Name: Slower
+			Timestep: 50
+			OrderLatency: 3
+		default:
+			Name: Normal
+			Timestep: 40
+			OrderLatency: 3
+		fast:
+			Name: Fast
+			Timestep: 35
+			OrderLatency: 4
+		faster:
+			Name: Faster
+			Timestep: 30
+			OrderLatency: 4
+		fastest:
+			Name: Fastest
+			Timestep: 20
+			OrderLatency: 6
 
 ModContent:
 	InstallPromptMessage: Combined Arms requires artwork and audio from the original games.\n\nQuick Install will automatically download this content (without music\nor videos) from a mirror of the 2008 Command & Conquer/Red Alert freeware release.\n\nAdvanced Install includes options for downloading the music and for\ncopying the videos and other content from an original game disc.
