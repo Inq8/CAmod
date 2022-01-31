@@ -224,7 +224,7 @@ namespace OpenRA.Mods.CA.Traits
 					return;
 
 				var spawnOffset = exit == null ? WVec.Zero : exit.Info.SpawnOffset;
-				slave.Trait<IPositionable>().SetVisualPosition(slave, centerPosition + spawnOffset);
+				slave.Trait<IPositionable>().SetCenterPosition(slave, centerPosition + spawnOffset);
 
 				var location = self.World.Map.CellContaining(centerPosition + spawnOffset);
 

@@ -38,7 +38,7 @@ namespace OpenRA.Mods.CA.Traits
 			harvester = init.Self.Trait<Harvester>();
 		}
 
-		void INotifyHarvesterAction.Harvested(Actor self, ResourceType resource)
+		void INotifyHarvesterAction.Harvested(Actor self, string resourceType)
 		{
 			if (harvester.IsFull)
 				token = self.GrantCondition(conditionToGrant);

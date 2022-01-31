@@ -122,7 +122,7 @@ namespace OpenRA.Mods.CA.Traits
 				return 0f;
 
 			var viewer = self.World.RenderPlayer ?? self.World.LocalPlayer;
-			if (viewer != null && !Info.SelectionBarDisplayRelationships.HasStance(self.Owner.RelationshipWith(viewer)))
+			if (viewer != null && !Info.SelectionBarDisplayRelationships.HasRelationship(self.Owner.RelationshipWith(viewer)))
 				return 0f;
 
 			return (float)(info.ChargeDuration - ticks) / info.ChargeDuration;
@@ -141,7 +141,7 @@ namespace OpenRA.Mods.CA.Traits
 					return false;
 
 				var viewer = self.World.RenderPlayer ?? self.World.LocalPlayer;
-				if (viewer != null && !Info.SelectionBarDisplayRelationships.HasStance(self.Owner.RelationshipWith(viewer)))
+				if (viewer != null && !Info.SelectionBarDisplayRelationships.HasRelationship(self.Owner.RelationshipWith(viewer)))
 					return false;
 
 				return true;

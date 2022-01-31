@@ -39,7 +39,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected void AddCellsToPlayerShroud(Actor self, Player p, PPos[] uv)
 		{
-			if (!Info.ValidRelationships.HasStance(self.Owner.RelationshipWith(p)))
+			if (!Info.ValidRelationships.HasRelationship(self.Owner.RelationshipWith(p)))
 				return;
 
 			p.Shroud.AddSource(this, type, uv);
@@ -47,7 +47,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected void RemoveCellsFromPlayerShroud(Actor self, Player p)
 			{
-			if (!Info.ValidRelationships.HasStance(self.Owner.RelationshipWith(p)))
+			if (!Info.ValidRelationships.HasRelationship(self.Owner.RelationshipWith(p)))
 				return;
 
 			p.Shroud.RemoveSource(this);

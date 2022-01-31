@@ -66,12 +66,12 @@ namespace OpenRA.Mods.CA.Traits
 			base.Created(self);
 		}
 
-		void INotifyResourceAccepted.OnResourceAccepted(Actor self, Actor refinery, int amount)
+		void INotifyResourceAccepted.OnResourceAccepted(Actor self, Actor refinery, string resourceType, int count, int value)
 		{
 			if (IsTraitDisabled)
 				return;
 
-			amtAwaitingPurification += amount;
+			amtAwaitingPurification += value;
 		}
 
 		void ITick.Tick(Actor self)

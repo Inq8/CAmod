@@ -58,7 +58,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled || armament.IsTraitDisabled || armament.IsTraitPaused || hasFiredThisTick)
 				return false;
 
-			if (!info.ValidRelationships.HasStance(self.Owner.RelationshipWith(attacker)))
+			if (!info.ValidRelationships.HasRelationship(self.Owner.RelationshipWith(attacker)))
 				return false;
 
 			if (armament.IsReloading)

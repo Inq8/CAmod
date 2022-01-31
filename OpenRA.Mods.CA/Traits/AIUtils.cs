@@ -19,7 +19,7 @@ namespace OpenRA.Mods.CA
 {
 	public enum BuildingType { Building, Defense, Refinery, Fragile }
 
-	public enum WaterCheck { NotChecked, EnoughWater, NotEnoughWater }
+	public enum WaterCheck { NotChecked, EnoughWater, NotEnoughWater, DontCheck }
 
 	public static class AIUtils
 	{
@@ -78,7 +78,7 @@ namespace OpenRA.Mods.CA
 		public static void BotDebug(string s, params object[] args)
 		{
 			if (Game.Settings.Debug.BotDebug)
-				Game.Debug(s, args);
+				TextNotificationsManager.Debug(s, args);
 		}
 	}
 }

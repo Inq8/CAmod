@@ -60,11 +60,12 @@ namespace OpenRA.Mods.CA.Traits
 			if (distanceToBaseIsImportant == false)
 				return initialBaseCenter;
 
-			var tileset = world.Map.Rules.TileSet;
-			var resourceTypeIndices = new BitArray(tileset.TerrainInfo.Length);
+			var ti = world.Map.Rules.TerrainInfo;
+			var resourceTypeIndices = new BitArray(ti.TerrainTypes.Length);
 
-			foreach (var t in world.Map.Rules.Actors["world"].TraitInfos<ResourceTypeInfo>())
-				resourceTypeIndices.Set(tileset.GetTerrainIndex(t.TerrainType), true);
+			foreach (var i in world.Map.Rules.Actors["world"].TraitInfos<ResourceLayerInfo>())
+				foreach (var t in i.ResourceTypes)
+					resourceTypeIndices.Set(ti.GetTerrainIndex(t.Value.TerrainType), true);
 
 			var randomConstructionYard = world.Actors.Where(a => a.Owner == player &&
 				Info.ConstructionYardTypes.Contains(a.Info.Name))

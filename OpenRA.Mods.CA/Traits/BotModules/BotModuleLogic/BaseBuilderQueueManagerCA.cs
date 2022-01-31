@@ -1,6 +1,6 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2020 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2021 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
  * as published by the Free Software Foundation, either version 3 of
@@ -28,6 +28,7 @@ namespace OpenRA.Mods.CA.Traits
 		readonly Player player;
 		readonly PowerManager playerPower;
 		readonly PlayerResources playerResources;
+		readonly IResourceLayer resourceLayer;
 
 		int waitTicks;
 		Actor[] playerBuildings;
@@ -37,22 +38,23 @@ namespace OpenRA.Mods.CA.Traits
 		int cachedBases;
 		int cachedBuildings;
 		int minimumExcessPower;
-		BitArray resourceTypeIndices;
 
 		WaterCheck waterState = WaterCheck.NotChecked;
 
 		public BaseBuilderQueueManagerCA(BaseBuilderBotModuleCA baseBuilder, string category, Player p, PowerManager pm,
-			PlayerResources pr, BitArray resourceTypeIndices)
+			PlayerResources pr, IResourceLayer rl)
 		{
 			this.baseBuilder = baseBuilder;
 			world = p.World;
 			player = p;
 			playerPower = pm;
 			playerResources = pr;
+			resourceLayer = rl;
 			this.category = category;
 			failRetryTicks = baseBuilder.Info.StructureProductionResumeDelay;
 			minimumExcessPower = baseBuilder.Info.MinimumExcessPower;
-			this.resourceTypeIndices = resourceTypeIndices;
+			if (!baseBuilder.Info.NavalProductionTypes.Any())
+				waterState = WaterCheck.DontCheck;
 		}
 
 		public void Tick(IBot bot)
@@ -111,8 +113,7 @@ namespace OpenRA.Mods.CA.Traits
 			// Minimum should not be negative as delays in HackyAI could be zero.
 			var randomFactor = world.LocalRandom.Next(0, baseBuilder.Info.StructureProductionRandomBonusDelay);
 
-			// Needs to be at least 4 * OrderLatency because otherwise the AI frequently duplicates build orders (i.e. makes the same build decision twice)
-			waitTicks = active ? 4 * world.LobbyInfo.GlobalSettings.OrderLatency + baseBuilder.Info.StructureProductionActiveDelay + randomFactor
+			waitTicks = active ? baseBuilder.Info.StructureProductionActiveDelay + randomFactor
 				: baseBuilder.Info.StructureProductionInactiveDelay + randomFactor;
 		}
 
@@ -149,7 +150,7 @@ namespace OpenRA.Mods.CA.Traits
 					var possibleBuilding = world.ActorsWithTrait<Pluggable>().FirstOrDefault(a =>
 						a.Actor.Owner == player && a.Trait.AcceptsPlug(a.Actor, plugInfo.Type));
 
-					if (possibleBuilding != null)
+					if (possibleBuilding.Actor != null)
 					{
 						orderString = "PlacePlug";
 						location = possibleBuilding.Actor.Location + possibleBuilding.Trait.Info.Offset;
@@ -176,7 +177,7 @@ namespace OpenRA.Mods.CA.Traits
 
 				if (location == null)
 				{
-					AIUtils.BotDebug("AI: {0} has nowhere to place {1}".F(player, currentBuilding.Item));
+					AIUtils.BotDebug($"{player} has nowhere to place {currentBuilding.Item}");
 					bot.QueueOrder(Order.CancelProduction(queue.Actor, currentBuilding.Item, 1));
 					failCount += failCount;
 
@@ -190,6 +191,7 @@ namespace OpenRA.Mods.CA.Traits
 				else
 				{
 					failCount = 0;
+
 					bot.QueueOrder(new Order(orderString, player.PlayerActor, Target.FromCell(world, location.Value), false)
 					{
 						// Building to place
@@ -246,7 +248,7 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				if (power != null && power.TraitInfos<PowerInfo>().Where(i => i.EnabledByDefault).Sum(p => p.Amount) > 0)
 				{
-					AIUtils.BotDebug("AI: {0} decided to build {1}: Priority override (low power)", queue.Actor.Owner, power.Name);
+					AIUtils.BotDebug("{0} decided to build {1}: Priority override (low power)", queue.Actor.Owner, power.Name);
 					return power;
 				}
 			}
@@ -257,7 +259,7 @@ namespace OpenRA.Mods.CA.Traits
 				var refinery = GetProducibleBuilding(baseBuilder.Info.RefineryTypes, buildableThings);
 				if (refinery != null && HasSufficientPowerForActor(refinery))
 				{
-					AIUtils.BotDebug("AI: {0} decided to build {1}: Priority override (refinery)", queue.Actor.Owner, refinery.Name);
+					AIUtils.BotDebug("{0} decided to build {1}: Priority override (refinery)", queue.Actor.Owner, refinery.Name);
 					return refinery;
 				}
 
@@ -308,7 +310,7 @@ namespace OpenRA.Mods.CA.Traits
 				var production = GetProducibleBuilding(baseBuilder.Info.ProductionTypes, buildableThings);
 				if (production != null && HasSufficientPowerForActor(production))
 				{
-					AIUtils.BotDebug("AI: {0} decided to build {1}: Priority override (production)", queue.Actor.Owner, production.Name);
+					AIUtils.BotDebug("{0} decided to build {1}: Priority override (production)", queue.Actor.Owner, production.Name);
 					return production;
 				}
 
@@ -327,7 +329,7 @@ namespace OpenRA.Mods.CA.Traits
 				var navalproduction = GetProducibleBuilding(baseBuilder.Info.NavalProductionTypes, buildableThings);
 				if (navalproduction != null && HasSufficientPowerForActor(navalproduction))
 				{
-					AIUtils.BotDebug("AI: {0} decided to build {1}: Priority override (navalproduction)", queue.Actor.Owner, navalproduction.Name);
+					AIUtils.BotDebug("{0} decided to build {1}: Priority override (navalproduction)", queue.Actor.Owner, navalproduction.Name);
 					return navalproduction;
 				}
 
@@ -344,7 +346,7 @@ namespace OpenRA.Mods.CA.Traits
 				var silo = GetProducibleBuilding(baseBuilder.Info.SiloTypes, buildableThings);
 				if (silo != null && HasSufficientPowerForActor(silo))
 				{
-					AIUtils.BotDebug("AI: {0} decided to build {1}: Priority override (silo)", queue.Actor.Owner, silo.Name);
+					AIUtils.BotDebug("{0} decided to build {1}: Priority override (silo)", queue.Actor.Owner, silo.Name);
 					return silo;
 				}
 
@@ -464,15 +466,18 @@ namespace OpenRA.Mods.CA.Traits
 				case BuildingType.Refinery:
 
 					// Try and place the refinery near a resource field
-					var nearbyResources = world.Map.FindTilesInAnnulus(baseCenter, baseBuilder.Info.MinBaseRadius, baseBuilder.Info.MaxBaseRadius)
-						.Where(a => resourceTypeIndices.Get(world.Map.GetTerrainIndex(a)))
-						.Shuffle(world.LocalRandom).Take(baseBuilder.Info.MaxResourceCellsToCheck);
-
-					foreach (var r in nearbyResources)
+					if (resourceLayer != null)
 					{
-						var found = findPos(baseCenter, r, baseBuilder.Info.MinBaseRadius, baseBuilder.Info.MaxBaseRadius);
-						if (found != null)
-							return found;
+						var nearbyResources = world.Map.FindTilesInAnnulus(baseCenter, baseBuilder.Info.MinBaseRadius, baseBuilder.Info.MaxBaseRadius)
+							.Where(a => resourceLayer.GetResource(a).Type != null)
+							.Shuffle(world.LocalRandom).Take(baseBuilder.Info.MaxResourceCellsToCheck);
+
+						foreach (var r in nearbyResources)
+						{
+							var found = findPos(baseCenter, r, baseBuilder.Info.MinBaseRadius, baseBuilder.Info.MaxBaseRadius);
+							if (found != null)
+								return found;
+						}
 					}
 
 					// Try and find a free spot somewhere else in the base

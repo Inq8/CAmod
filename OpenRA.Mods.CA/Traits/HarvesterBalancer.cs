@@ -151,7 +151,7 @@ namespace OpenRA.Mods.CA.Traits
 			movingToResources = false;
 		}
 
-		public void Harvested(Actor self, ResourceType resource)
+		public void Harvested(Actor self, string resourceType)
 		{
 			movingToRefinery = false;
 			movingToResources = false;

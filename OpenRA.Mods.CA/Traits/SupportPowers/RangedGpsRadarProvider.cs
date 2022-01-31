@@ -27,7 +27,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new RangedGpsRadarProvider(init, this); }
 	}
 
-	public class RangedGpsRadarProvider : ConditionalTrait<RangedGpsRadarProviderInfo>, INotifyVisualPositionChanged, INotifyAddedToWorld, INotifyRemovedFromWorld, INotifyOtherProduction
+	public class RangedGpsRadarProvider : ConditionalTrait<RangedGpsRadarProviderInfo>, INotifyCenterPositionChanged, INotifyAddedToWorld, INotifyRemovedFromWorld, INotifyOtherProduction
 	{
 		readonly Actor self;
 
@@ -71,7 +71,7 @@ namespace OpenRA.Mods.CA.Traits
 			Update();
 		}
 
-		void INotifyVisualPositionChanged.VisualPositionChanged(Actor self, byte oldLayer, byte newLayer)
+		void INotifyCenterPositionChanged.CenterPositionChanged(Actor self, byte oldLayer, byte newLayer)
 		{
 			if (!self.IsInWorld && !IsTraitDisabled)
 				return;

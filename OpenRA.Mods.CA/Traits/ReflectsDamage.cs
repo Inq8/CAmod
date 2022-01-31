@@ -120,7 +120,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (a == null || a.IsDead)
 				return false;
 
-			if (!Info.ValidRelationships.HasStance(a.Owner.RelationshipWith(Player)))
+			if (!Info.ValidRelationships.HasRelationship(a.Owner.RelationshipWith(Player)))
 				return false;
 
 			if (Info.ValidActors.Any() && !Info.ValidActors.Contains(a.Info.Name))

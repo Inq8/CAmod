@@ -112,7 +112,7 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			positionable.SetPosition(self, pos);
-			positionable.SetVisualPosition(self, pos);
+			positionable.SetCenterPosition(self, pos);
 		}
 
 		void INotifyActorDisposing.Disposing(Actor self)
