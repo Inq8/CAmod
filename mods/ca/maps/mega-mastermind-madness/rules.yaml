@@ -1,23 +1,23 @@
 World:
-	MPStartUnits@mastonly:
+	StartingUnits@mastonly:
 		Class: none
 		ClassName: Mastermind
 		BaseActor: mast
 		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri, gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow, scrin, reaper, traveler, harbinger, collector
-	-MPStartUnits@mcvonly:
-	-MPStartUnits@lightallies:
-	-MPStartUnits@lightsoviet:
-	-MPStartUnits@heavyallies:
-	-MPStartUnits@heavysoviet:
-	-MPStartUnits@mcvonly2:
-	-MPStartUnits@defaultgdia:
-	-MPStartUnits@defaultnoda:
-	-MPStartUnits@heavynoda:
-	-MPStartUnits@heavygdia:
-	-MPStartUnits@mcvonlyscrin:
-	-MPStartUnits@lightscrin:
-	-MPStartUnits@heavyscrin:
-	SpawnMPUnits:
+	-StartingUnits@mcvonly:
+	-StartingUnits@lightallies:
+	-StartingUnits@lightsoviet:
+	-StartingUnits@heavyallies:
+	-StartingUnits@heavysoviet:
+	-StartingUnits@mcvonly2:
+	-StartingUnits@defaultgdia:
+	-StartingUnits@defaultnoda:
+	-StartingUnits@heavynoda:
+	-StartingUnits@heavygdia:
+	-StartingUnits@mcvonlyscrin:
+	-StartingUnits@lightscrin:
+	-StartingUnits@heavyscrin:
+	SpawnStartingUnits:
 		DropdownLocked: True
 	MapBuildRadius:
 		AllyBuildRadiusCheckboxLocked: True
@@ -112,8 +112,8 @@ MAST:
 		OrderName: sathack
 		Icon: hacksat
 		ChargeInterval: 2250
-		Description: Hack Satellite Uplink
-		LongDesc: Reveals map terrain and provides tactical\ninformation.
+		Name: Hack Satellite Uplink
+		Description: Reveals map terrain and provides tactical\ninformation.
 		LaunchSound: hacksat.aud
 		SelectTargetSpeechNotification: SelectTarget
 		EffectImage: empty
@@ -127,8 +127,8 @@ MAST:
 		IconPalette: chrometd
 		Cursor: ability
 		ChargeInterval: 10500
-		Description: Cluster Missile
-		LongDesc: Launches an Cluster Missile,\nCauses damage over a large area.
+		Name: Cluster Missile
+		Description: Launches an Cluster Missile,\nCauses damage over a large area.
 		EndChargeSpeechNotification: ClusMissileReady
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
