@@ -4,6 +4,7 @@
 	ActorMap:
 	ScreenMap:
 	Selection:
+	ControlGroups:
 	MusicPlaylist:
 		VictoryMusic: slavesys
 		DefeatMusic: fsmenu
@@ -417,6 +418,23 @@
 		Side: Random
 		Description: Random Scrin Faction\nA random Scrin faction will be chosen when the game starts.
 	ResourceRenderer:
+		ResourceTypes:
+			Ore:
+				Sequences: gold01, gold02, gold03, gold04
+				Palette: player
+				Name: Valuable Minerals
+			Gems:
+				Sequences: gem01, gem02, gem03, gem04
+				Palette: player
+				Name: Valuable Minerals
+			Tiberium:
+				Sequences: ti1,ti2,ti3,ti4,ti5,ti6,ti7,ti8,ti9,ti10,ti11,ti12
+				Palette: tiberiumpalette
+				Name: Tiberium
+			BlueTiberium:
+				Sequences: bti1,bti2,bti3,bti4,bti5,bti6,bti7,bti8,bti9,bti10,bti11,bti12
+				Palette: bluetiberium
+				Name: Azure Tiberium
 
 World:
 	Inherits: ^BaseWorld
@@ -465,6 +483,28 @@ World:
 		SmokeSequences: idle
 		MaxSmokeOffsetDistance: 213
 	ResourceLayer:
+		RecalculateResourceDensity: true
+		ResourceTypes:
+			Ore:
+				ResourceIndex: 1
+				TerrainType: Ore
+				AllowedTerrainTypes: Clear, Road
+				MaxDensity: 12
+			Gems:
+				ResourceIndex: 2
+				TerrainType: Gems
+				AllowedTerrainTypes: Clear, Road
+				MaxDensity: 3
+			Tiberium:
+				ResourceIndex: 3
+				TerrainType: Tiberium
+				AllowedTerrainTypes: Clear, Road
+				MaxDensity: 12
+			BlueTiberium:
+				ResourceIndex: 4
+				TerrainType: BlueTiberium
+				AllowedTerrainTypes: Clear, Road
+				MaxDensity: 12
 	ResourceClaimLayer:
 	TintedCellsLayer@RADSTRONG:
 		Color: 00FF00
