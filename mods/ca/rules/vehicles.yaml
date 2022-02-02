@@ -3123,17 +3123,20 @@ MDRN.Attached:
 	Interactable:
 	RenderSprites:
 		Image: mdrn
-	Mobile:
+	-Mobile:
+	AttachedAircraft:
+		TurnSpeed: 18
 		Speed: 0
-		Locomotor: cloud
-		ImmovableCondition: attached
-		PauseOnCondition: attached || empdisable || being-warped
+		CanHover: true
+		Repulsable: false
+		CruiseAltitude: 1
+		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,Water,Tree,River
 	WithSpriteTurret:
 		Sequence: turret-attached
 	TurnOnIdleCA:
 		MinDelay: 25
 		MaxDelay: 75
-		TurnWhileMobilePaused: true
+		TurnWhileAircraftPaused: true
 	Armament@PRIMARY:
 		Weapon: M60mgTD
 		LocalOffset: -500,0,72
@@ -3150,6 +3153,7 @@ MDRN.Attached:
 	-MindControllableProgressBar@HACKABLE:
 	-WithDecoration@HACKED:
 	-WithDecoration@RESTORING:
+	-ChronoshiftableWithSpriteEffect:
 
 HTNK:
 	Inherits: ^TankTD

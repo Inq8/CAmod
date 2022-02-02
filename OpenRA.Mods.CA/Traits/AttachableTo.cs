@@ -30,7 +30,8 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new AttachableTo(init, this); }
 	}
 
-	public class AttachableTo : INotifyKilled, INotifyOwnerChanged, INotifyActorDisposing, IResolveOrder, INotifyStanceChanged, INotifyEnteredCargo, INotifyExitedCargo, INotifyCreated
+	public class AttachableTo : INotifyKilled, INotifyOwnerChanged, INotifyActorDisposing, IResolveOrder, INotifyStanceChanged,
+		INotifyAddedToWorld, INotifyRemovedFromWorld, INotifyCreated
 	{
 		public readonly AttachableToInfo Info;
 		public Carryable Carryable { get; private set; }
@@ -164,13 +165,13 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		void INotifyEnteredCargo.OnEnteredCargo(Actor self, Actor cargo)
+		void INotifyRemovedFromWorld.RemovedFromWorld(Actor self)
 		{
 			foreach (var attachable in attached)
 				attachable.ParentEnteredCargo();
 		}
 
-		void INotifyExitedCargo.OnExitedCargo(Actor self, Actor cargo)
+		void INotifyAddedToWorld.AddedToWorld(Actor self)
 		{
 			self.World.AddFrameEndTask(w =>
 			{
