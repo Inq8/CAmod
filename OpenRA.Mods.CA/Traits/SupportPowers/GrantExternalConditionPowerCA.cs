@@ -23,6 +23,8 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	[Desc("Grants a condition to actors in the target footprint.",
+		"CA version allows for a weapon detonation and a condition applied to the actor that activated the support power.")]
 	public class GrantExternalConditionPowerCAInfo : SupportPowerInfo
 	{
 		[FieldLoader.Require]

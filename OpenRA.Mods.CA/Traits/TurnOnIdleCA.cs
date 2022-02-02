@@ -15,7 +15,8 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Turns actor randomly when idle. CA version just allows turning when mobile trait is paused.")]
+	[Desc("Turns actor randomly when idle.",
+		"CA version just allows turning when mobile trait is paused.")]
 	class TurnOnIdleCAInfo : ConditionalTraitInfo, Requires<MobileInfo>
 	{
 		[Desc("Minimum amount of ticks the actor will wait before the turn.")]

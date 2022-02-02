@@ -14,7 +14,8 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits.Sound
 {
-	[Desc("Plays a looping audio file at the actor position. Attach this to the `World` actor to cover the whole map.")]
+	[Desc("Plays a looping audio file at the actor position. Attach this to the `World` actor to cover the whole map.",
+		"CA version can be made to be non-audible through fog and adds inital and final sounds that play when the sound starts/stops.")]
 	class AmbientSoundCAInfo : ConditionalTraitInfo
 	{
 		[FieldLoader.Require]

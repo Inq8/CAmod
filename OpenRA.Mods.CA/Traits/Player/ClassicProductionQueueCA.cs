@@ -19,7 +19,8 @@ namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Attach this to the player actor (not a building!) to define a new shared build queue.",
 		"Will only work together with the Production: trait on the actor that actually does the production.",
-		"You will also want to add PrimaryBuildings: to let the user choose where new units should exit.")]
+		"You will also want to add PrimaryBuildings: to let the user choose where new units should exit.",
+		"CA version replaces upgraded units in the queue by referencing the UpgradeableTo trait.")]
 	public class ClassicProductionQueueCAInfo : ClassicProductionQueueInfo
 	{
 		[Desc("If true, ignore BuildAtProductionType when calculating build duration, so all structures for this queue are counted.")]

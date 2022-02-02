@@ -14,6 +14,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits.Render
 {
+	[Desc("CA version fixes jerky turning caused by fewer harvest facings than normal facings.")]
 	public class WithHarvestAnimationCAInfo : TraitInfo, Requires<WithSpriteBodyInfo>, Requires<HarvesterInfo>
 	{
 		[SequenceReference]

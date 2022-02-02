@@ -15,6 +15,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	[Desc("CA version can require the target to be an actor.")]
 	public class GrantConditionOnAttackCAInfo : PausableConditionalTraitInfo
 	{
 		[FieldLoader.Require]
