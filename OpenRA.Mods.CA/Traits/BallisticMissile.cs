@@ -233,11 +233,6 @@ namespace OpenRA.Mods.CA.Traits
 			return null;
 		}
 
-		public Activity VisualMove(Actor self, WPos fromPos, WPos toPos)
-		{
-			return new BallisticMissileFly(self, Target.FromPos(toPos), this);
-		}
-
 		public int EstimatedMoveDuration(Actor self, WPos fromPos, WPos toPos)
 		{
 			var speed = MovementSpeed;
