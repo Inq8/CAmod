@@ -19,7 +19,8 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Spawns an actor that stays for a limited amount of time.")]
+	[Desc("Spawns an actor that stays for a limited amount of time.",
+		"CA version extends the base version, adding a target circle.")]
 	public class SpawnActorPowerCAInfo : SpawnActorPowerInfo
 	{
 		public readonly WDist TargetCircleRange = WDist.Zero;

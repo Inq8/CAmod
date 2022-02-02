@@ -10,6 +10,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using OpenRA.Graphics;
 using OpenRA.Mods.CA.Activities;
 using OpenRA.Mods.Common.Graphics;
@@ -20,7 +21,8 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	class PortableChronoCAInfo : ConditionalTraitInfo
+	[Desc("CA version makes trait conditional and allows for a condition applied upon teleporting.")]
+	class PortableChronoCAInfo : ConditionalTraitInfo, Requires<IMoveInfo>
 	{
 		[Desc("Cooldown in ticks until the unit can teleport.")]
 		public readonly int ChargeDelay = 500;
@@ -78,11 +80,17 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Range circle border width.")]
 		public readonly float CircleBorderWidth = 3;
 
-		public override object Create(ActorInitializer init) { return new PortableChronoCA(this); }
+		[Desc("Color to use for the target line.")]
+		public readonly Color TargetLineColor = Color.LawnGreen;
+
+		public override object Create(ActorInitializer init) { return new PortableChronoCA(init.Self, this); }
 	}
 
 	class PortableChronoCA : ConditionalTrait<PortableChronoCAInfo>, IIssueOrder, IResolveOrder, ITick, ISelectionBar, IOrderVoice, ISync
 	{
+		public readonly new PortableChronoCAInfo Info;
+		readonly IMove move;
+
 		[Sync]
 		int chargeTick = 0;
 
@@ -91,8 +99,12 @@ namespace OpenRA.Mods.CA.Traits
 
 		int token = Actor.InvalidConditionToken;
 
-		public PortableChronoCA(PortableChronoCAInfo info)
-			: base(info) { }
+		public PortableChronoCA(Actor self, PortableChronoCAInfo info)
+			: base(info)
+		{
+			Info = info;
+			move = self.Trait<IMove>();
+		}
 
 		void ITick.Tick(Actor self)
 		{
@@ -142,10 +154,16 @@ namespace OpenRA.Mods.CA.Traits
 			if (order.OrderString == "PortableChronoTeleport" && CanTeleport && order.Target.Type != TargetType.Invalid)
 			{
 				var maxDistance = Info.HasDistanceLimit ? Info.MaxDistance : (int?)null;
-				self.CancelActivity();
+				if (!order.Queued)
+					self.CancelActivity();
 
 				var cell = self.World.Map.CellContaining(order.Target.CenterPosition);
+				if (maxDistance != null)
+					self.QueueActivity(move.MoveWithinRange(order.Target, WDist.FromCells(maxDistance.Value), targetLineColor: Info.TargetLineColor));
+
 				self.QueueActivity(new TeleportCA(self, cell, maxDistance, Info.KillCargo, Info.FlashScreen, Info.ChronoshiftSound));
+				self.QueueActivity(move.MoveTo(cell, 5, targetLineColor: Info.TargetLineColor));
+				self.ShowTargetLines();
 			}
 		}
 
@@ -247,9 +265,9 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		protected override void Tick(World world)
+		protected override void SelectionChanged(World world, IEnumerable<Actor> selected)
 		{
-			if (!self.IsInWorld || self.IsDead)
+			if (!selected.Contains(self))
 				world.CancelInputMode();
 		}
 

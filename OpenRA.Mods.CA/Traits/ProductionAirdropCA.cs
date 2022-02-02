@@ -31,7 +31,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		[FieldLoader.Require]
 		[ActorReference(typeof(AircraftInfo))]
-		[Desc("Cargo aircraft used for delivery. Must have the `Aircraft` trait.")]
+		[Desc("Cargo aircraft used for delivery. Must have the `" + nameof(Aircraft) + "` trait.")]
 		public readonly string ActorType = null;
 
 		[Desc("How the spawn location/direction is calculated for the delivering actor.",

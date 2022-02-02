@@ -24,6 +24,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new AttackBomberCA(init.Self, this); }
 	}
 
+	[Desc("CA version makes FacingTolerance take effect and allows AttackMove activity to be used.")]
 	public class AttackBomberCA : AttackBase, ITick, ISync, INotifyRemovedFromWorld
 	{
 		readonly AttackBomberCAInfo info;

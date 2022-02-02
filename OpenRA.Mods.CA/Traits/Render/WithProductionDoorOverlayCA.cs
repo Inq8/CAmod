@@ -18,7 +18,8 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits.Render
 {
-	[Desc("Play an animation when a unit exits or blocks the exit after production finished.")]
+	[Desc("Play an animation when a unit exits or blocks the exit after production finished.",
+		"CA version prevents trait being triggered by actors that don't occupy space and don't move.")]
 	class WithProductionDoorOverlayCAInfo : ConditionalTraitInfo, IRenderActorPreviewSpritesInfo, Requires<RenderSpritesInfo>, Requires<BodyOrientationInfo>, Requires<BuildingInfo>
 	{
 		[SequenceReference]

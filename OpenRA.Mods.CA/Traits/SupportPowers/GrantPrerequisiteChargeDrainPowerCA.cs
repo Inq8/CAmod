@@ -16,7 +16,8 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Grants a prerequisite while discharging at a configurable rate.")]
+	[Desc("Grants a prerequisite while discharging at a configurable rate.",
+		"CA version adds early deactivation penalty to prevent frequent toggling.")]
 	public class GrantPrerequisiteChargeDrainPowerCAInfo : SupportPowerInfo, ITechTreePrerequisiteInfo
 	{
 		[Desc("Rate at which the power discharges compared to charging")]
@@ -192,19 +193,19 @@ namespace OpenRA.Mods.CA.Traits
 
 			public override string IconOverlayTextOverride()
 			{
-				var info = Info as GrantPrerequisiteChargeDrainPowerCAInfo;
-				if (info == null || !Active)
+				if (!Active)
 					return null;
 
+				var info = (GrantPrerequisiteChargeDrainPowerCAInfo)Info;
 				return active ? info.ActiveText : available ? info.AvailableText : null;
 			}
 
 			public override string TooltipTimeTextOverride()
 			{
-				var info = Info as GrantPrerequisiteChargeDrainPowerCAInfo;
-				if (info == null || !Active)
+				if (!Active)
 					return null;
 
+				var info = (GrantPrerequisiteChargeDrainPowerCAInfo)Info;
 				return active ? info.ActiveText : available ? info.AvailableText : null;
 			}
 		}

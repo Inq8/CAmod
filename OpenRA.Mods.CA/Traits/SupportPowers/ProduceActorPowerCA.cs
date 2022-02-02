@@ -17,10 +17,22 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Produces an actor without using the standard production queue.")]
+	// copied from PrimaryBuilding trait so its accessible here
+	static class PrimaryExts
+	{
+		public static bool IsPrimaryBuilding(this Actor a)
+		{
+			var pb = a.TraitOrDefault<PrimaryBuilding>();
+			return pb != null && pb.IsPrimary;
+		}
+	}
+
+	[Desc("Produces an actor without using the standard production queue.",
+		"CA version allows actors to be produced immediately when charged.")]
 	public class ProduceActorPowerCAInfo : SupportPowerInfo
 	{
 		[ActorReference]
+		[FieldLoader.Require]
 		[Desc("Actors to produce.")]
 		public readonly string[] Actors = null;
 
@@ -80,7 +92,9 @@ namespace OpenRA.Mods.CA.Traits
 			var producers = self.World.ActorsWithTrait<Production>()
 				.Where(x => x.Actor.Owner == self.Owner
 					&& !x.Trait.IsTraitDisabled
-					&& x.Trait.Info.Produces.Contains(info.Type));
+					&& x.Trait.Info.Produces.Contains(info.Type))
+					.OrderByDescending(x => x.Actor.IsPrimaryBuilding())
+					.ThenByDescending(x => x.Actor.ActorID);
 
 			// TODO: The power should not reset if the production fails.
 			// Fixing this will require a larger rework of the support power code
