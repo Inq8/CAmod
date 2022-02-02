@@ -15,6 +15,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits
 {
+	[Desc("Extends Aircraft. Primarily for attached actors so they don't trigger TakeOff or AssociateWithAirfield activities.")]
 	public class AttachedAircraftInfo : AircraftInfo
 	{
 		public override object Create(ActorInitializer init) { return new AttachedAircraft(init, this); }
