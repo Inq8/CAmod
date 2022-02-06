@@ -194,7 +194,7 @@ namespace OpenRA.Mods.CA.Projectiles
 			remainingBounces = info.BounceCount;
 
 			shadowColor = new float3(info.ShadowColor.R, info.ShadowColor.G, info.ShadowColor.B) / 255f;
-			shadowAlpha = info.ShadowColor.A;
+			shadowAlpha = info.ShadowColor.A / 255f;
 		}
 
 		WAngle GetEffectiveFacing()
@@ -312,7 +312,11 @@ namespace OpenRA.Mods.CA.Projectiles
 			var world = args.SourceActor.World;
 			if (!world.FogObscures(pos))
 			{
-				var palette = wr.Palette(info.Palette + (info.IsPlayerPalette ? args.SourceActor.Owner.InternalName : ""));
+				var paletteName = info.Palette;
+				if (paletteName != null && info.IsPlayerPalette)
+					paletteName += args.SourceActor.Owner.InternalName;
+
+				var palette = wr.Palette(paletteName);
 
 				if (info.Shadow)
 				{

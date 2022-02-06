@@ -83,7 +83,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 		{
 			body = self.Trait<BodyOrientation>();
 			facing = self.TraitOrDefault<IFacing>();
-			cachedFacing = facing != null ? facing.Facing : WAngle.Zero;
+			cachedFacing = facing?.Facing ?? WAngle.Zero;
 			cachedPosition = self.CenterPosition;
 
 			base.Created(self);
@@ -114,6 +114,10 @@ namespace OpenRA.Mods.CA.Traits.Render
 			{
 				var spawnCell = Info.SpawnAtLastPosition ? self.World.Map.CellContaining(cachedPosition) : self.World.Map.CellContaining(self.CenterPosition);
 
+				// ---- removed for CA version for V3/ICBM
+				//if (!self.World.Map.Contains(spawnCell))
+				//	return;
+
 				var type = self.World.Map.GetTerrainInfo(spawnCell).Type;
 
 				if (++offset >= Info.Offsets.Length)
@@ -132,7 +136,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 						Info.Sequences.Random(Game.CosmeticRandom), Info.Palette, Info.VisibleThroughFog)));
 
 				cachedPosition = self.CenterPosition;
-				cachedFacing = facing != null ? facing.Facing : WAngle.Zero;
+				cachedFacing = facing?.Facing ?? WAngle.Zero;
 				ticks = 0;
 
 				cachedInterval = isMoving ? Info.MovingInterval : Info.StationaryInterval;
