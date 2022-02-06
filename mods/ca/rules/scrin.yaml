@@ -606,12 +606,12 @@ MAST:
 		Angle: 32
 		Width: 116
 	PeriodicExplosion:
-		Weapon: MindSparkVisual
+		Weapon: MindSparkSpawnerMaster
 		LocalOffset: 0,0,128
 		InitialDelay: 10
 		RequiresCondition: deployed && !being-warped
 	PeriodicExplosionOnSlaves:
-		Weapon: MindSparkSpawner
+		Weapon: MindSparkSpawnerSlave
 		InitialDelay: 18
 		RequiresCondition: deployed && !being-warped
 		KillSlaveTypes: Infantry
@@ -2299,12 +2299,12 @@ MSHP:
 	Armor:
 		Type: Heavy
 	RevealsShroud:
-		Range: 10c0
+		Range: 13c0
 		MinRange: 8c0
 		Type: GroundPosition
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 8c0
+		Range: 11c0
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: MothershipBeam
