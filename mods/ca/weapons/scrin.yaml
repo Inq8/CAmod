@@ -645,7 +645,7 @@ StormRiderZapAA:
 	ValidTargets: Air, AirSmall
 	Warhead@1Dam: SpreadDamage
 		Damage: 1800
-		Range: 0, 0c64, 0c256, 1c0
+		Range: 0, 0c64, 0c256, 1c768
 		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
 		ValidRelationships: Enemy, Neutral
@@ -1463,28 +1463,35 @@ FeederExplode:
 		ValidTargets: Ground, Water, Infantry, Vehicle
 		ThrowWithoutTarget: true
 
-MindSparkVisual:
+MindSparkSpawnerMaster:
 	ReloadDelay: 100
+	Projectile: InstantExplode
 	Warhead@2Eff: CreateEffect
 		Explosions: reverse
 		ExplosionPalette: scrin
 		Image: mindcontrol
 		ValidTargets: Ground
 		ImpactSounds: mastermind-shatter.aud
-
-MindSparkSpawner:
-	ReloadDelay: 1
-	Projectile: InstantExplode
 	Warhead@Spawn: SpawnActor
 		Actors: mspk
 		Range: 1
 		ForceGround: false
 		ValidTargets: Ground, Water
+		Delay: 8
 	Warhead@Suppress: GrantExternalCondition
 		Range: 2c0
 		Duration: 325
 		Condition: suppression
 		ValidRelationships: Enemy, Neutral
+		Delay: 8
+
+MindSparkSpawnerSlave:
+	Inherits: MindSparkSpawnerMaster
+	-Warhead@2Eff:
+	Warhead@Spawn: SpawnActor
+		-Delay:
+	Warhead@Suppress: GrantExternalCondition
+		-Delay:
 
 MindSparkZapper:
 	ReloadDelay: 50
