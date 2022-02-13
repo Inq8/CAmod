@@ -1675,7 +1675,10 @@ RMBO:
 		DetonationDelay: 45
 		Voice: Demolish
 		DamageTypes: ExplosionDeath
+	ExternalCondition@PRODUCED:
+		Condition: produced
 	VoiceAnnouncement:
+		RequiresCondition: produced
 		Voice: Build
 	AnnounceOnKill:
 	Voiced:
@@ -1935,7 +1938,10 @@ BORI:
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
+	ExternalCondition@PRODUCED:
+		Condition: produced
 	VoiceAnnouncement:
+		RequiresCondition: produced
 		Voice: Build
 	AnnounceOnKill:
 	IgnoresDisguise:
@@ -3473,6 +3479,7 @@ SEAL:
 		OutsideRangeCursor: c4
 		Name: secondary
 		RequiresCondition: ammo
+	-ExternalCondition@PRODUCED:
 	-VoiceAnnouncement:
 	GrantConditionOnTerrain:
 		TerrainTypes: Water
