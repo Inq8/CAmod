@@ -7,6 +7,7 @@
 		Actor: s1
 	SpawnActorsOnSell:
 		ActorTypes: s1
+	-SpawnRandomActorOnDeath:
 	Building:
 		BuildSounds: scrinbuild.aud
 
@@ -3120,6 +3121,8 @@ PORT:
 	Production:
 		Produces: Infantry, Soldier
 		PauseOnCondition: forceshield || invulnerability || being-warped
+	GrantExternalConditionToProduced:
+		Condition: produced
 	ProductionBar:
 		ProductionType: Infantry
 	ProvidesPrerequisite@scrin:
