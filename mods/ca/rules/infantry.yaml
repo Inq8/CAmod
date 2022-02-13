@@ -69,7 +69,7 @@ DOG:
 		RequiresCondition: run
 	IgnoresDisguise:
 	DetectCloaked:
-		CloakTypes: Cloak, Thief, Mine
+		DetectionTypes: Cloak, Thief, Mine
 		Range: 4c0
 	Voiced:
 		VoiceSet: DogVoice
@@ -753,7 +753,7 @@ E7:
 	AnnounceOnKill:
 	IgnoresDisguise:
 	DetectCloaked:
-		CloakTypes: Cloak, Thief
+		DetectionTypes: Cloak, Thief
 		Range: 5c0
 	Voiced:
 		VoiceSet: TanyaVoice
@@ -1122,7 +1122,7 @@ THF:
 		InitialDelay: 250
 		CloakDelay: 120
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Move
-		CloakTypes: Cloak
+		DetectionTypes: Cloak
 		IsPlayerPalette: false
 		RequiresCondition: !cloak-force-disabled
 	GrantConditionOnDamageState@UNCLOAK:
@@ -1686,7 +1686,7 @@ RMBO:
 		Prerequisites: barracks.upgraded
 	IgnoresDisguise:
 	DetectCloaked:
-		CloakTypes: Cloak, Thief
+		DetectionTypes: Cloak, Thief
 		Range: 5c0
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, MindControlImmune
@@ -1816,7 +1816,7 @@ SNIP:
 		CloakSound: gstealon.aud
 		UncloakSound: gstealof.aud
 		IsPlayerPalette: true
-		CloakTypes: Cloak
+		DetectionTypes: Cloak
 		RequiresCondition: !cloak-force-disabled
 		UncloakOn: Move, Unload, Infiltrate, Demolish, Dock, Attack
 	Cloak@CRATE-CLOAK:
@@ -1945,7 +1945,7 @@ BORI:
 	AnnounceOnKill:
 	IgnoresDisguise:
 	DetectCloaked:
-		CloakTypes: Cloak, Thief
+		DetectionTypes: Cloak, Thief
 		Range: 5c0
 	Voiced:
 		VoiceSet: BorisVoice
@@ -2077,7 +2077,7 @@ SAB:
 		CloakedCondition: hidden
 		Palette: cloaktd
 		IsPlayerPalette: true
-		CloakTypes: Cloak
+		DetectionTypes: Cloak
 		RequiresCondition: deployed && !cloak-force-disabled
 		UncloakOn: Unload, Infiltrate, Demolish, Dock, Attack, Damage
 		CloakSound: gstealon.aud
@@ -2092,7 +2092,7 @@ SAB:
 		ValidDamageStates: Heavy, Critical
 	IgnoresDisguise:
 	DetectCloaked:
-		CloakTypes: Cloak, Thief
+		DetectionTypes: Cloak, Thief
 		Range: 4c0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -2338,7 +2338,7 @@ JJET:
 	Hovers@CRUISING:
 		RequiresCondition: cruising
 	DetectCloaked:
-		CloakTypes: Cloak, Thief
+		DetectionTypes: Cloak, Thief
 		Range: 3c0
 	ActorLostNotification:
 	Selectable:
@@ -3059,7 +3059,7 @@ SHAD:
 		CloakedCondition: hidden
 		Palette: cloaktd
 		IsPlayerPalette: true
-		CloakTypes: Cloak
+		DetectionTypes: Cloak
 		UncloakOn: Unload, Demolish, Dock, Attack, Damage
 		CloakSound: gstealon.aud
 		UncloakSound: gstealof.aud
@@ -3069,7 +3069,7 @@ SHAD:
 		ValidDamageStates: Critical
 	IgnoresDisguise:
 	DetectCloaked:
-		CloakTypes: Cloak, Thief
+		DetectionTypes: Cloak, Thief
 		Range: 4c0
 	-WithParachute:
 	AmmoPool:

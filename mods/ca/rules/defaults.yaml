@@ -1637,7 +1637,7 @@
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.medium
 	DetectCloaked@UNDERBRIDGE:
-		CloakTypes: Underbridge
+		DetectionTypes: Underbridge
 		Range: 5c0
 	GpsRadarDot:
 		Sequence: Vehicle
@@ -1866,7 +1866,7 @@
 	RevealOnDeath:
 		Duration: 100
 	DetectCloaked:
-		CloakTypes: Cloak
+		DetectionTypes: Cloak
 		Range: 1c0
 	DamagedByTintedCells@RADSTRONG:
 		Damage: 750
@@ -2151,7 +2151,7 @@
 		Condition: under-bridge
 		TerrainTypes: Bridge, Tunnel
 	Cloak@UNDERBRIDGE:
-		CloakTypes: Underbridge
+		DetectionTypes: Underbridge
 		UncloakOn: Unload
 		InitialDelay: 0
 		CloakDelay: 0
@@ -2164,7 +2164,7 @@
 		RequiresCondition: under-bridge
 		TargetTypes: Underbridge
 	DetectCloaked@UNDERBRIDGE:
-		CloakTypes: Underbridge
+		DetectionTypes: Underbridge
 		Range: 5c0
 	GrantConditionOnBotOwner@IAMBOT:
 		Condition: botowner
@@ -2187,7 +2187,7 @@
 		Condition: crossing-ford
 		TerrainTypes: Ford
 	Cloak:
-		CloakTypes: Underwater
+		DetectionTypes: Underwater
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Heal
 		InitialDelay: 0
 		CloakDelay: 50
@@ -2200,7 +2200,7 @@
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
 	DetectCloaked:
-		CloakTypes: Underwater
+		DetectionTypes: Underwater
 		Range: 4c0
 	RenderDetectionCircle:
 	Explodes:
@@ -2553,7 +2553,7 @@
 	Targetable@EXPLOSIVES:
 		TargetTypes: C4, TNT, DetonateAttack
 	DetectCloaked:
-		CloakTypes: Cloak, AirCloak
+		DetectionTypes: Cloak, AirCloak
 		Range: 6c0
 		RequiresCondition: !(empdisable || being-warped)
 	MustBeDestroyed:
@@ -2595,7 +2595,7 @@
 		Weapon: TemporalExplode
 		EmptyWeapon: TemporalExplode
 	DetectCloaked@UNDERBRIDGE:
-		CloakTypes: Underbridge
+		DetectionTypes: Underbridge
 		Range: 6c0
 	-Targetable@HACKCAPTURABLE:
 	DelayedWeaponAttachable@C4:
@@ -3161,7 +3161,7 @@
 		CloakSound:
 		UncloakSound:
 		Palette:
-		CloakTypes: Mine
+		DetectionTypes: Mine
 		InitialDelay: 0
 	Tooltip:
 		Name: Mine

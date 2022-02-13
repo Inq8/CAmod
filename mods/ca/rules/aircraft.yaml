@@ -187,7 +187,7 @@ B2B:
 		Experience: 1000
 	Interactable:
 	Cloak@NORMAL:
-		CloakTypes: AirCloak
+		DetectionTypes: AirCloak
 		InitialDelay: 0
 		CloakDelay: 200
 		UncloakSound: appear1.aud
@@ -1431,7 +1431,7 @@ A10:
 		Condition: bombing-run
 		RevokeDelay: 7
 	GrantConditionOnDamageState@SmokeTrail:
-		Condition: enable-smoke		
+		Condition: enable-smoke
 	AutoTargetPriority@DEFAULT:
 		RequiresCondition: !stance-attackanything && !assault-move && ammo && ammo2
 	AutoTargetPriority@ATTACKANYTHING:
@@ -2063,7 +2063,7 @@ UAV:
 		RequiresCondition: enable-smoke
 	RejectsOrders:
 	DetectCloaked:
-		CloakTypes: Cloak, Thief
+		DetectionTypes: Cloak, Thief
 	RevealsShroud:
 		Range: 14c0
 		MinRange: 12c0
@@ -2146,7 +2146,7 @@ RAH:
 		LandingSounds: hland1.aud
 		Voice: Move
 	Cloak@NORMAL:
-		CloakTypes: AirCloak
+		DetectionTypes: AirCloak
 		InitialDelay: 100
 		CloakDelay: 200
 		CloakSound: trans1.aud
@@ -2904,7 +2904,7 @@ HORN:
 	-Contrail@2:
 	Interactable:
 	DetectCloaked:
-		CloakTypes: Underwater
+		DetectionTypes: Underwater
 		Range: 6c0
 	Targetable@AIRBORNE:
 		RequiresCondition: airborne

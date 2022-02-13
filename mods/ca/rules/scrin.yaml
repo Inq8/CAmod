@@ -820,7 +820,7 @@ SEEK:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 5c0
-		CloakTypes: Cloak, Thief, AirCloak, Mine
+		DetectionTypes: Cloak, Thief, AirCloak, Mine
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -897,7 +897,7 @@ LACE:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		CloakTypes: Cloak, Thief, AirCloak, Mine
+		DetectionTypes: Cloak, Thief, AirCloak, Mine
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -1851,7 +1851,7 @@ STMR:
 		SelectionBarColor: ff00ff
 		RequiresCondition: !srep-rearm || airborne
 	DetectCloaked:
-		CloakTypes: Underwater
+		DetectionTypes: Underwater
 		Range: 8c0
 	Rearmable:
 		RearmActors: srep
@@ -4139,7 +4139,7 @@ SHAR:
 		Amount: -50
 	ClassicFacingBodyOrientation:
 	DetectCloaked:
-		CloakTypes: AirCloak
+		DetectionTypes: AirCloak
 		RequiresCondition: !(disabled || empdisable || being-warped)
 	SpawnActorOnDeath:
 		Actor: s1
