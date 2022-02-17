@@ -2278,12 +2278,12 @@ MSHP:
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 190
 		Prerequisites: sign, scrt, ~aircraft.scrin, ~techlevel.high
-		Description: Huge craft with powerful beam weapon.
+		Description: Huge craft with powerful anti-structure beam weapon\n  and secondary beam weapons.
 		IconPalette: chromes
 		BuildLimit: 1
 	TooltipExtras:
-		Strengths: • Strong vs Buildings, Defenses
-		Weaknesses: • Cannot attack Aircraft\n• Long charge time before firing\n• Cannot move while firing
+		Strengths: • Strong vs Buildings, Defenses, Vehicles
+		Weaknesses: • Cannot attack Aircraft\n• Long charge time before firing anti-structure weapon\n• Cannot move while firing
 		Attributes: • Maximum 1 can be built\n• Can create wormholes
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
@@ -2316,6 +2316,13 @@ MSHP:
 		Weapon: MothershipChargeBeam
 		LocalOffset: 0,0,-940
 		PauseOnCondition: attacking || ammo || cooldown
+	Armament@TERTIARY:
+		Name: tertiary
+		Weapon: MothershipLaser
+		LocalOffset: 400,0,50, 400,0,-200, 400,0,300
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	WithMuzzleOverlay:
 	Aircraft:
 		CruiseAltitude: 3c512
 		InitialFacing: 768
@@ -2336,8 +2343,8 @@ MSHP:
 	-Hovers@CRUISING:
 	WithFacingSpriteBody:
 	AttackFrontal:
-		Armaments: primary, secondary
-		FacingTolerance: 512
+		Armaments: primary, secondary, tertiary
+		FacingTolerance: 32
 		Voice: Attack
 		PauseOnCondition: being-warped
 		ForceFireIgnoresActors: true

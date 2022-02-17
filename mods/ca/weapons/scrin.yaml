@@ -1207,6 +1207,8 @@ MothershipChargeBeam:
 	ReloadDelay: 3
 	Range: 0c480
 	TargetActorCenter: true
+	ValidTargets: Ground, Water
+	InvalidTargets: Infantry, Vehicle, Ship
 	Projectile: PlasmaBeam
 		ForceVertical: true
 		Duration: 3
@@ -1224,6 +1226,8 @@ MothershipBeam:
 	ReloadDelay: 3
 	Range: 0c480
 	TargetActorCenter: true
+	ValidTargets: Ground, Water
+	InvalidTargets: Infantry, Vehicle, Ship
 	Projectile: PlasmaBeam
 		ForceVertical: true
 		Duration: 4
@@ -1254,6 +1258,34 @@ MothershipBeam:
 		Duration: 5
 		Intensity: 1
 		Multiplier: 0.1,0.1
+
+MothershipLaser:
+	Inherits: ReaperLaser
+	ReloadDelay:
+	Report: mshp-zap1.aud, mshp-zap2.aud
+	-StartBurstReport:
+	Range: 6c0
+	MinRange: 1c0
+	ReloadDelay: 80
+	Burst: 7
+	BurstDelays: 5
+	FirstBurstTargetOffset: -768,0,0
+	FollowingBurstTargetOffset: 256,0,0
+	ValidTargets: Infantry, Vehicle, Ship
+	Projectile: PlasmaBeam
+		Radius: 2
+		InnerLightness: 170
+		OuterLightness: 130
+		CenterBeam: true
+		CenterBeamWidth: 45
+		CenterBeamColor: eeffeeff
+		ZOffset: 2048
+		Blockable: false
+	Warhead@1Dam: SpreadDamage
+		Damage: 3000
+	Warhead@3Eff: CreateEffect
+		Explosions: small_explosion_alt1, small_explosion_alt2, small_explosion_alt3
+		ImpactSounds: kaboom15.aud
 
 LeecherBeam:
 	ValidTargets: Ground, Water
