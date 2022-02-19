@@ -1295,6 +1295,26 @@ A10:
 	GrantConditionOnAttack@BOMBING:
 		Condition: bombing-run
 		RevokeDelay: 7
+	AutoTargetPriority@DEFAULT:
+		RequiresCondition: !stance-attackanything && !assault-move && ammo && ammo2
+	AutoTargetPriority@ATTACKANYTHING:
+		RequiresCondition: (stance-attackanything || assault-move) && ammo && ammo2
+	AutoTargetPriority@DEFAULTGROUND:
+		RequiresCondition: !stance-attackanything && !assault-move && ammo && !ammo2
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
+		InvalidTargets: NoAutoTarget, WaterStructure
+	AutoTargetPriority@ATTACKANYTHINGGROUND:
+		RequiresCondition: (stance-attackanything || assault-move) && ammo && !ammo2
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense
+		InvalidTargets: NoAutoTarget
+	AutoTargetPriority@DEFAULTAIR:
+		RequiresCondition: !stance-attackanything && !assault-move && !ammo && ammo2
+		ValidTargets: Air, AirSmall
+		InvalidTargets: NoAutoTarget, AirLowPriority
+	AutoTargetPriority@ATTACKANYTHINGAIR:
+		RequiresCondition: (stance-attackanything || assault-move) && !ammo && ammo2
+		ValidTargets: Air, AirSmall
+		InvalidTargets: NoAutoTarget
 
 A10.bomber:
 	Inherits: ^NeutralPlane
