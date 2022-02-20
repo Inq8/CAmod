@@ -2,7 +2,7 @@
 ^ScrinBuilding:
 	Inherits@1: ^Building
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	SpawnActorOnDeath:
 		Actor: s1
 	SpawnActorsOnSell:
@@ -127,13 +127,13 @@ VEHICLES.SCRIN:
 ^ScrinInfantry:
 	Inherits: ^Soldier
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Voiced:
 		VoiceSet: ScrinInfantryVoice
 	Targetable:
 		TargetTypes: Ground, Infantry, TNT
 	WithDeathAnimation:
-		DeathSequencePalette: overlayplayerscrin
+		DeathSequencePalette: playerscrin
 		CrushedSequencePalette: scrin
 	-GrantConditionOnTerrain@ONTIB:
 	-GrantStackingCondition@TIBEXPOSED:
@@ -534,11 +534,11 @@ GSCR:
 	Inherits: BRUT
 	RenderSprites:
 		Image: gscr
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Voiced:
 		VoiceSet: GiantScrinVoice
 	WithDeathAnimation:
-		DeathSequencePalette: overlayplayerscrin
+		DeathSequencePalette: playerscrin
 	-Buildable:
 	Tooltip:
 		Name: Brutalizer
@@ -559,9 +559,9 @@ GSCR.Mutating:
 		Actor: gscr
 	RenderSprites:
 		Image: gscr
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	WithDeathAnimation:
-		DeathSequencePalette: overlayplayerscrin
+		DeathSequencePalette: playerscrin
 	Tooltip:
 		Name: Brutalizer
 
@@ -681,7 +681,7 @@ HARV.Scrin:
 		DecorationBounds: 1792, 1792
 	RenderSprites:
 		Image: harv.scrin
-		PlayerPalette: overlayplayer
+		PlayerPalette: player
 	WithShadow:
 		Offset: 43, 255, 0
 		ZOffset: -256
@@ -770,7 +770,7 @@ SEEK:
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Valued:
 		Cost: 750
 	Tooltip:
@@ -843,7 +843,7 @@ LACE:
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -918,7 +918,7 @@ INTL:
 	Inherits@TRANSPORT: ^Transport
 	Inherits@HOVERTRAIL: ^HoverTrail
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Valued:
 		Cost: 750
 	Tooltip:
@@ -1021,7 +1021,7 @@ CORR:
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Valued:
 		Cost: 1000
 	Tooltip:
@@ -1078,7 +1078,7 @@ LCHR:
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Valued:
 		Cost: 900
 	Tooltip:
@@ -1131,7 +1131,7 @@ STCR:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -1294,7 +1294,7 @@ DARK:
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 221
@@ -1364,7 +1364,7 @@ RUIN:
 	Inherits@RESCONV: ^ResourceConversion
 	Inherits@HOVERTRAIL: ^HoverTrail
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Valued:
 		Cost: 1250
 	Tooltip:
@@ -1461,7 +1461,7 @@ ATMZ:
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Valued:
 		Cost: 1250
 	Tooltip:
@@ -1609,7 +1609,7 @@ RPTP:
 	TooltipExtras:
 		Attributes: • Weapons empowered by Tiberium
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Valued:
 		Cost: 2200
 	Tooltip:
@@ -1684,7 +1684,7 @@ SMCV:
 		Weaknesses: • Unarmed
 		Attributes: • Special Ability: Deploy into Colony Platform
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Valued:
 		Cost: 3000
 	Tooltip:
@@ -2311,7 +2311,7 @@ MSHP:
 		Weaknesses: • Cannot attack Aircraft\n• Long charge time before firing anti-structure weapon\n• Cannot move while firing
 		Attributes: • Maximum 1 can be built\n• Can create wormholes
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Voiced:
 		VoiceSet: MothershipVoice
 	Valued:
@@ -2386,7 +2386,7 @@ MSHP:
 		ChargeTicks: 200
 		PauseOnCondition: being-warped
 		OverlaySequence: wormholebeam
-		OverlayPalette: overlayplayerscrin
+		OverlayPalette: playerscrin
 		IsPlayerPalette: true
 		ShowSelectionBarWhenEmpty: false
 	ExternalCondition@PRODUCED:
@@ -2454,7 +2454,7 @@ SMCV.Husk:
 	InfiltrateForTransform:
 		IntoActor: smcv
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 		Image: smcv.destroyed
 	Crushable:
 		CrushedByFriendlies: False
@@ -2485,7 +2485,7 @@ GUNW.Husk:
 		IntoActor: gunw
 	RenderSprites:
 		Image: gunw.destroyed
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 
 SEEK.Husk:
 	Inherits: ^Husk
@@ -2499,7 +2499,7 @@ SEEK.Husk:
 		IntoActor: seek
 	RenderSprites:
 		Image: seek.destroyed
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
@@ -2514,7 +2514,7 @@ INTL.Husk:
 		IntoActor: intl
 	RenderSprites:
 		Image: intl.destroyed
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 
 CORR.Husk:
 	Inherits: ^Husk
@@ -2526,7 +2526,7 @@ CORR.Husk:
 		IntoActor: corr
 	RenderSprites:
 		Image: corr.destroyed
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 
 DEVO.Husk:
 	Inherits: ^Husk
@@ -2538,7 +2538,7 @@ DEVO.Husk:
 		IntoActor: devo
 	RenderSprites:
 		Image: devo.destroyed
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 
 RUIN.Husk:
 	Inherits: ^Husk
@@ -2550,7 +2550,7 @@ RUIN.Husk:
 		IntoActor: ruin
 	RenderSprites:
 		Image: ruin.destroyed
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 
 TPOD.Husk:
 	Inherits: ^Husk
@@ -2564,7 +2564,7 @@ TPOD.Husk:
 		IntoActor: tpod
 	RenderSprites:
 		Image: tpod.destroyed
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 
 RPTP.Husk:
 	Inherits: ^Husk
@@ -2578,7 +2578,7 @@ RPTP.Husk:
 		IntoActor: rptp
 	RenderSprites:
 		Image: rptp.destroyed
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 
 STMR.Husk:
 	Inherits: ^PlaneHusk
@@ -2611,7 +2611,7 @@ STMR.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: stmr
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 
 STMR.Husk.EMP:
 	Inherits: STMR.Husk
@@ -2651,7 +2651,7 @@ ENRV.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: enrv
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 
 ENRV.Husk.EMP:
 	Inherits: ENRV.Husk
@@ -2768,7 +2768,7 @@ MSHP.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: mshp
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	SpawnActorOnDeath:
 		Actor: MSHP.Husk.Ground
 	WithIdleOverlay@RING:
@@ -2781,7 +2781,7 @@ MSHP.Husk.Ground:
 	Inherits@SHRAPNEL: ^ThrowsShrapnelBig
 	RenderSprites:
 		Image: mshp
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Tooltip:
 		Name: Husk (Mothership)
 	KillsSelf:
@@ -4013,7 +4013,7 @@ PTUR:
 	Inherits: ^Defense
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 60
@@ -4076,7 +4076,7 @@ SHAR:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetAirICBM
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 90
@@ -4137,7 +4137,7 @@ SCOL:
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Inherits@Flash: ^WhiteFlash
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 80
@@ -4571,7 +4571,7 @@ ichor.seeder:
 		UseDeathTypeSuffix: False
 		CrushedSequence: fade
 		FallbackSequence: fade
-		DeathSequencePalette: overlayplayerscrin
+		DeathSequencePalette: playerscrin
 	KillsSelf:
 		Delay: 225
 
@@ -4602,7 +4602,7 @@ WORMHOLE:
 	Tooltip:
 		Name: Wormhole
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	WithSpriteBody:
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 1

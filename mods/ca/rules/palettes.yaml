@@ -108,6 +108,14 @@
 		Name: player
 		Filename: temperat.pal
 		ShadowIndex: 4
+	PaletteFromFile@playertd:
+		Name: playertd
+		Filename: temperattd.pal
+		ShadowIndex: 4
+	PaletteFromFile@playerscrin:
+		Name: playerscrin
+		Filename: scrin.pal
+		ShadowIndex: 4		
 	PaletteFromFile@d2k:
 		Name: d2k
 		Filename: PALETTE.BIN
@@ -160,18 +168,23 @@
 		BasePalette: temptd
 		BaseName: playertd
 		RemapIndex: 176, 178, 180, 182, 184, 186, 189, 191, 177, 179, 181, 183, 185, 187, 188, 190
-	OverlayPlayerColorPalette@TD:
-		BasePalette: temptd
-		Ramp: 0.14
-		BaseName: overlayplayertd
-		RemapIndex: 176, 178, 180, 182, 184, 186, 189, 191, 177, 179, 181, 183, 185, 187, 188, 190
 	PlayerColorPalette@D2K:
 		BasePalette: d2k
 		BaseName: playerd2k
 		RemapIndex: 255, 254, 253, 252, 251, 250, 249, 248, 247, 246, 245, 244, 243, 242, 241, 240
 	ColorPickerPalette@colorpicker:
 		Name: colorpicker
-		BasePalette: temptd
+		BasePalette: player
+		RemapIndex: 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95
+		AllowModifiers: false
+	ColorPickerPalette@colorpickerscrin:
+		Name: colorpickerscrin
+		BasePalette: playerscrin
+		RemapIndex: 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95
+		AllowModifiers: false
+	ColorPickerPalette@colorpickertd:
+		Name: colorpickertd
+		BasePalette: playertd
 		RemapIndex: 176, 178, 180, 182, 184, 186, 189, 191, 177, 179, 181, 183, 185, 187, 188, 190
 		AllowModifiers: false
 	PaletteFromFile@tseffect:
@@ -287,14 +300,8 @@
 	PlayerColorPalette@RA:
 		BasePalette: player
 		RemapIndex: 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95
-	OverlayPlayerColorPalette@RA:
-		BasePalette: player
-		Ramp: 0.13
-		BaseName: overlayplayer
-		RemapIndex: 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95
-	OverlayPlayerColorPalette@navy:
+	PlayerColorPalette@navy:
 		BasePalette: navy
-		Ramp: 0.13
 		BaseName: playernavy
 		RemapIndex: 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95
 	FixedColorPalette@BlueTiberium:
@@ -304,15 +311,15 @@
 		RemapIndex: 176, 178, 180, 182, 184, 186, 189, 191, 177, 179, 181, 183, 185, 187, 188, 190
 	PaletteFromPlayerPaletteWithAlpha@cloak:
 		BaseName: cloakra
-		BasePalette: overlayplayer
+		BasePalette: player
 		Alpha: 0.55
 	PaletteFromPlayerPaletteWithAlpha@cloakTD:
 		BaseName: cloaktd
-		BasePalette: overlayplayertd
+		BasePalette: playertd
 		Alpha: 0.55
 	PaletteFromPlayerPaletteWithAlpha@cloakgreen:
 		BaseName: cloakgreen
-		BasePalette: overlayplayer
+		BasePalette: player
 		Alpha: 0.25
 	PaletteFromPlayerPaletteWithAlpha@cloakblack:
 		BaseName: cloakblack
@@ -320,11 +327,11 @@
 		Alpha: 0.20
 	PaletteFromPlayerPaletteWithAlpha@cloakgreenTD:
 		BaseName: cloakgreenTD
-		BasePalette: overlayplayertd
+		BasePalette: playertd
 		Alpha: 0.25
 	PaletteFromPlayerPaletteWithAlpha@cloakTDV:
 		BaseName: cloak
-		BasePalette: overlayplayertd
+		BasePalette: playertd
 		Alpha: 0.65
 	PaletteFromRGBA@cloak:
 		Name: cloak
@@ -363,35 +370,35 @@
 		ExcludeTilesets: DESERT
 		ExcludePalettes: tiberiumpalette, bluetiberium
 	RotationPaletteEffect@actorswater:
-		Palettes: player, overlayplayer, effect, playernavy
+		Palettes: player, effect, playernavy
 		ExcludePalettes: playerd2k, d2k, tiberiumpalette, bluetiberium
 	RotationPaletteEffect@desertwater:
-		Palettes: terrain, temptd, playertd, overlayplayertd, tiberiumpalette, bluetiberium
+		Palettes: terrain, temptd, playertd, tiberiumpalette, bluetiberium
 		Tilesets: DESERT
 		RotationBase: 32
-		ExcludePalettes: cursor, chrome, chrometd, chromes, tiberiumpalette, colorpicker, playerd2k, d2k
+		ExcludePalettes: cursor, chrome, chrometd, chromes, tiberiumpalette, colorpicker, colorpickertd, colorpickerscrin, playerd2k, d2k
 	RotationPaletteEffect@desertwater-actor:
-		Palettes: desert, temptd, playertd, overlayplayertd, tdeffect, bluetiberium
+		Palettes: desert, temptd, playertd, tdeffect, bluetiberium
 		RotationBase: 32
-		ExcludePalettes: cursor, chrome, chrometd, tiberiumpalette, bluetiberium, chromes, colorpicker, playerd2k, d2k
+		ExcludePalettes: cursor, chrome, chrometd, tiberiumpalette, bluetiberium, chromes, colorpicker, colorpickertd, colorpickerscrin, playerd2k, d2k
 	LightPaletteRotator:
 		ExcludePalettes: playerd2k, d2k, terrain, tiberiumpalette, bluetiberium, effect, tdeffect, desert, tseffect, ra2effect, tsunit, ra2unit, ra2unit-ignore-lighting-alpha75, tsunit-ignore-lighting-alpha75, tseffect-ignore-lighting-alpha75, tseffect-ignore-lighting-alpha90, effect-ignore-lighting-alpha85, ioncloud
 	ChronoshiftPaletteEffect:
 	CloakPaletteEffect:
 	FlashPaletteEffect@NUKE:
 		Type: Nuke
-		ExcludePalettes: cursor, chrome, chrometd, chromes, colorpicker, fog, shroud, effect-ignore-lighting
+		ExcludePalettes: cursor, chrome, chrometd, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud, effect-ignore-lighting
 	PaletteFromPaletteWithAlpha@placelinesegment:
 		Name: placelinesegment
 		BasePalette: terrain
 		Alpha: 0.65
 	PaletteFromPlayerPaletteWithAlpha@placebuilding:
 		BaseName: placebuilding
-		BasePalette: overlayplayer
+		BasePalette: player
 		Alpha: 0.65
 	PaletteFromPlayerPaletteWithAlpha@placebuildingTD:
 		BaseName: placebuildingtd
-		BasePalette: overlayplayertd
+		BasePalette: playertd
 		Alpha: 0.65
 	PaletteFromRGBA@invuln:
 		Name: invuln
@@ -489,7 +496,7 @@
 		Color: 08112E03
 		Length: 350
 		Ratio: 0.3
-		ExcludePalette: cursor, chrome, chrometd, chromes, colorpicker, fog, shroud, tseffect, ra2effect, ra2unit, tdeffect, effect,  effect-ignore-lighting, tdeffect-ignore-lighting-alpha85, d2keffect-ignore-lighting-alpha75, d2keffect-ignore-lighting-alpha50, ra2effect-ignore-lighting-alpha90, ra2effect-ignore-lighting-alpha75, ra2effect-ignore-lighting-alpha50, tseffect-ignore-lighting-alpha75, tsunit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha90, tseffect-ignore-lighting-alpha90
+		ExcludePalette: cursor, chrome, chrometd, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud, tseffect, ra2effect, ra2unit, tdeffect, effect,  effect-ignore-lighting, tdeffect-ignore-lighting-alpha85, d2keffect-ignore-lighting-alpha75, d2keffect-ignore-lighting-alpha50, ra2effect-ignore-lighting-alpha90, ra2effect-ignore-lighting-alpha75, ra2effect-ignore-lighting-alpha50, tseffect-ignore-lighting-alpha75, tsunit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha90, tseffect-ignore-lighting-alpha90
 	PaletteFromFile@caneon:
 		Name: caneon
 		Filename: caneon.pal
@@ -517,11 +524,6 @@
 	PlayerColorPalette@scrin:
 		BasePalette: scrin
 		BaseName: playerscrin
-		RemapIndex: 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95
-	OverlayPlayerColorPalette@scrin:
-		BasePalette: scrin
-		Ramp: 0.14
-		BaseName: overlayplayerscrin
 		RemapIndex: 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95
 	PaletteFromFile@chromescrin:
 		Name: chromes
