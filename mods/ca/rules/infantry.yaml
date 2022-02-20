@@ -278,7 +278,7 @@ E3:
 	WithDeathAnimation@CRYO:
 		RequiresCondition: cryr-upgrade
 		DeathSequence: die-cryo
-		DeathSequencePalette: overlayplayertd
+		DeathSequencePalette: playertd
 		DeathTypes:
 			DefaultDeath: 1
 			BulletDeath: 2
@@ -2196,7 +2196,7 @@ JJET:
 		QuantizedFacings: 8
 	RenderSprites:
 		Image: jjet
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 	OwnerLostAction:
 		Action: Kill
 	AppearsOnRadar:
@@ -2314,7 +2314,7 @@ JJET:
 		Actor: JJET.Husk
 		RequiresCondition: airborne
 	WithDeathAnimation:
-		DeathSequencePalette: overlayplayertd
+		DeathSequencePalette: playertd
 		DeathTypes:
 			DefaultDeath: 1
 			BulletDeath: 2
@@ -2439,7 +2439,7 @@ JJET.Husk:
 		VTOL: true
 	RenderSprites:
 		Image: jjet
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 	WithSpriteBody:
 		Sequence: die-falling
 	Health:
@@ -2450,7 +2450,7 @@ JJET.Husk:
 	WithDeathAnimation:
 		RequiresCondition: !water-death
 		FallbackSequence: die-flying
-		DeathSequencePalette: overlayplayertd
+		DeathSequencePalette: playertd
 	WithDeathAnimation@SPLASH:
 		RequiresCondition: water-death
 		FallbackSequence: die-splash
@@ -2928,7 +2928,7 @@ BRUT:
 	AttackSounds:
 		Sounds: ibruatta.aud, ibruattb.aud
 	WithDeathAnimation:
-		DeathSequencePalette: overlayplayertd
+		DeathSequencePalette: playertd
 		DeathSequence: die
 		UseDeathTypeSuffix: true
 		DeathTypes:
