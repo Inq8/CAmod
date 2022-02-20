@@ -658,8 +658,6 @@ GTNK.squad:
 		Offset: 0,0,20
 	Armament:
 		-RequiresCondition:
-	Explodes@IRAQTANK:
-		RequiresCondition: !being-warped
 	Selectable:
 		Class: 3tnk
 	SpeedMultiplier@IRAQTANK:
@@ -1244,7 +1242,7 @@ SAPC:
 
 SAPC.AI:
 	Inherits: SAPC
-	Inherits: ^AIUNLOAD
+	Inherits@AIUNLOAD: ^AIUNLOAD
 	RenderSprites:
 		Image: sapc
 	Buildable:
@@ -1254,7 +1252,7 @@ SAPC.AI:
 
 SAPC.AI2:
 	Inherits: SAPC
-	Inherits: ^AIUNLOAD
+	Inherits@AIUNLOAD: ^AIUNLOAD
 	RenderSprites:
 		Image: sapc
 	Buildable:
@@ -1547,7 +1545,7 @@ APC:
 
 APC.AI:
 	Inherits: APC
-	Inherits: ^AIUNLOAD
+	Inherits@AIUNLOAD: ^AIUNLOAD
 	RenderSprites:
 		Image: APC
 	Buildable:
@@ -1780,8 +1778,6 @@ MSG:
 	Valued:
 		Cost: 1250
 	Tooltip:
-		Name:
-	Tooltip:
 		Name: Mobile Stealth Generator
 		RequiresCondition: !deployed
 	Tooltip@DEPLOYED:
@@ -1831,8 +1827,6 @@ MSG:
 		UndeploySounds: clicky1.aud
 		UndeployOnMove: true
 		UndeployOnPickup: true
-	ProximityExternalCondition@MSG:
-		Condition: invisibility
 	WithRangeCircle@MSG:
 		RequiresCondition: deployed
 		Range: 4c512
@@ -2656,7 +2650,7 @@ APC2:
 
 APC2.NODAI:
 	Inherits: APC2
-	Inherits: ^AIUNLOAD
+	Inherits@AIUNLOAD: ^AIUNLOAD
 	Buildable:
 		Prerequisites: ~botplayer, ~vehicles.nod, ~!vulcan.upgrade, ~vehicles.apc2, ~techlevel.low
 	RenderSprites:
@@ -2666,7 +2660,7 @@ APC2.NODAI:
 
 APC2.GDIAI:
 	Inherits: APC2
-	Inherits: ^AIUNLOAD
+	Inherits@AIUNLOAD: ^AIUNLOAD
 	Buildable:
 		Prerequisites: ~botplayer, ~vehicles.gdi, ~!vulcan.upgrade, ~vehicles.apc2, ~techlevel.low
 	RenderSprites:
@@ -2676,7 +2670,7 @@ APC2.GDIAI:
 
 APC2.Reinforce:
 	Inherits: APC2
-	Inherits: ^AIUNLOAD
+	Inherits@AIUNLOAD: ^AIUNLOAD
 	RenderSprites:
 		Image: APC2
 	-Buildable:
@@ -2823,7 +2817,7 @@ VULC:
 
 VULC.AI:
 	Inherits: VULC
-	Inherits: ^AIUNLOAD
+	Inherits@AIUNLOAD: ^AIUNLOAD
 	RenderSprites:
 		Image: VULC
 	Buildable:
@@ -3951,7 +3945,7 @@ BTR:
 
 BTR.AI:
 	Inherits: BTR
-	Inherits: ^AIUNLOAD
+	Inherits@AIUNLOAD: ^AIUNLOAD
 	RenderSprites:
 		Image: BTR
 	Buildable:
@@ -5980,9 +5974,6 @@ CHPR:
 	WithSpriteTurret@activeturret:
 		RequiresCondition: aiming
 		Sequence: turretactive
-	SpawnActorOnDeath:
-		Actor: CHPR.Husk
-		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
