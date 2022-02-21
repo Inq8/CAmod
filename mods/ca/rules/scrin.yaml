@@ -138,6 +138,17 @@ VEHICLES.SCRIN:
 	-GrantConditionOnTerrain@ONTIB:
 	-GrantStackingCondition@TIBEXPOSED:
 	-DamagedByTerrain@TIBDAMAGE:
+	-GrantConditionOnPrerequisite@BIO:
+	-GrantConditionOnPrerequisite@HAZMAT:
+	-GrantConditionOnPrerequisite@HAZMATSOVIET:
+	-GrantCondition@HAZMAT:
+	-GrantCondition@HAZMATSOVIET:
+	-WithDecoration@HAZMAT:
+	-WithDecoration@HAZMATSOVIET:
+	-GrantConditionOnTerrain@HAZMATSOVIET:
+	-SpeedMultiplier@HAZMATSOVIET:
+	Targetable@HAZMAT:
+		-RequiresCondition:
 	TakeCover:
 		ProneSequencePrefix:
 		ProneOffset: 0,0,0
@@ -148,6 +159,7 @@ VEHICLES.SCRIN:
 		RequiresCondition: advart-upgrade
 		Modifier: 115
 	-DamagedByTintedCells@RADSTRONGHAZMAT:
+	-DamagedByTintedCells@RADSTRONGHAZMATSOVIET:
 	-DamagedByTintedCells@RADMEDHAZMAT:
 	-DamagedByTintedCells@RADWEAKHAZMAT:
 	DamagedByTintedCells@RADSTRONG:

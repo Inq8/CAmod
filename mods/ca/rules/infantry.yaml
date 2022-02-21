@@ -2553,14 +2553,17 @@ E8:
 	-DamagedByTintedCells@RADMEDHAZMAT:
 	-DamagedByTintedCells@RADWEAK:
 	-DamagedByTintedCells@RADWEAKHAZMAT:
-	-GrantCondition@HAZMAT:
 	-GrantConditionOnPrerequisite@HAZMAT:
 	-GrantConditionOnPrerequisite@HAZMATSOVIET:
-	-GrantConditionOnTerrain@HAZMATSOVIET:
-	GrantCondition@HAZMATSOVIET:
-		-RequiresCondition:
+	-GrantCondition@HAZMAT:
+	-GrantCondition@HAZMATSOVIET:
 	-WithDecoration@HAZMAT:
+	WithDecoration@HAZMATSOVIET:
+		-RequiresCondition:
+	-GrantConditionOnTerrain@HAZMATSOVIET:
 	-SpeedMultiplier@HAZMATSOVIET:
+	Targetable@HAZMAT:
+		-RequiresCondition:
 	AutoDeployer@AI:
 		RequiresCondition: botowner && !deployed && !parachute
 		DeployChance: 20
@@ -3083,6 +3086,8 @@ SHAD:
 		TileUnknownName: build-valid
 	Rearmable:
 		RearmActors: shad.rearm
+	Targetable@STEALTHBUBBLEIMMUNE:
+		TargetTypes: StealthBubbleImmune
 
 # ---- dummy actor because RearmableActors is required
 SHAD.REARM:
@@ -3305,6 +3310,8 @@ BH:
 		Condition: attacking
 	Voiced:
 		VoiceSet: BlackHandVoice
+	Targetable@STEALTHBUBBLEIMMUNE:
+		TargetTypes: StealthBubbleImmune
 
 YURI:
 	Inherits: ^Soldier

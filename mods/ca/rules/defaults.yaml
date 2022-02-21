@@ -745,6 +745,9 @@
 	SpeedMultiplier@HAZMATSOVIET:
 		RequiresCondition: hazmatsuits-soviet && onrough
 		Modifier: 66
+	Targetable@HAZMAT:
+		TargetTypes: Hazmat
+		RequiresCondition: hazmatsuits-soviet || hazmatsuits
 
 ^NodCyborgUpgrade:
 	GrantConditionOnPrerequisite@CYBORGSPEED:
@@ -1025,8 +1028,30 @@
 		Palette: highlight
 
 ^Cloakable:
+	ExternalCondition@INVIS:
+		Condition: invisibility
+	GrantCondition@INVIS:
+		Condition: invisibility
+		RequiresCondition: sgen-invis || msg-invis
 	Cloak@SGENCLOAK:
-		RequiresCondition: invisibility && !cloak-force-disabled
+		RequiresCondition: sgen-invis
+		InitialDelay: 0
+		CloakDelay: 25
+		IsPlayerPalette: true
+		Palette: cloakgreen
+		CloakSound: cloak5.aud
+		UncloakSound: appear1.aud
+		UncloakOn: Attack, Unload, Infiltrate, Demolish
+	ExternalCondition@SGENCLOAK:
+		Condition: sgen-invis
+	WithColoredOverlay@SGENCLOAK:
+		RequiresCondition: invisibility
+		Palette: cloakgreen
+	GrantConditionOnDamageState@UNCLOAK:
+		Condition: cloak-force-disabled
+		ValidDamageStates: Heavy, Critical
+	Cloak@MSGCLOAK:
+		RequiresCondition: msg-invis && !sgen-invis && !cloak-force-disabled
 		InitialDelay: 0
 		CloakDelay: 150
 		IsPlayerPalette: true
@@ -1034,20 +1059,8 @@
 		CloakSound: cloak5.aud
 		UncloakSound: appear1.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
-	ExternalCondition@SGENCLOAK:
-		Condition: invisibility
-	WithColoredOverlay@SGENCLOAK:
-		RequiresCondition: invisibility
-		Palette: cloakgreen
-	GrantConditionOnDamageState@UNCLOAK:
-		Condition: cloak-force-disabled
-		ValidDamageStates: Heavy, Critical
-
-^CloakableBuilding:
-	Inherits: ^Cloakable
-	GrantConditionOnPrerequisite@SGEN:
-		Condition: invisibility
-		Prerequisites: sgen.active
+	ExternalCondition@MSGCLOAK:
+		Condition: msg-invis
 
 ^CrateCloak:
 	Cloak@CRATE-CLOAK:
@@ -1965,8 +1978,14 @@
 			ontib || (damaged && hospitalheal): On, Off
 	-GrantConditionOnPrerequisite@BIO:
 	-GrantConditionOnPrerequisite@HAZMAT:
-	-WithDecoration@HAZMAT:
+	-GrantConditionOnPrerequisite@HAZMATSOVIET:
 	-GrantCondition@HAZMAT:
+	-GrantCondition@HAZMATSOVIET:
+	-WithDecoration@HAZMAT:
+	-WithDecoration@HAZMATSOVIET:
+	-GrantConditionOnTerrain@HAZMATSOVIET:
+	-SpeedMultiplier@HAZMATSOVIET:
+	-Targetable@HAZMAT:
 	-DamagedByTerrain@TIBDAMAGE:
 	-GrantStackingCondition@TIBEXPOSED:
 	DamagedByTintedCells@RADSTRONG:
@@ -2436,7 +2455,7 @@
 
 ^Building:
 	Inherits@1: ^BasicBuilding
-	Inherits@2: ^CloakableBuilding
+	Inherits@2: ^Cloakable
 	Inherits@3: ^ForceShieldable
 	Inherits@4: ^EmpDisable
 	Inherits@6: ^WarpableBuilding
