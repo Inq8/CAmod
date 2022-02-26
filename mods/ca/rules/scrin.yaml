@@ -1574,10 +1574,6 @@ TPOD:
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
 		FireDelay: 20
-	Armament@SOUND:
-		Name: sound
-		Weapon: TripodLaserSound
-		FireDelay: 20
 	WithMuzzleOverlay:
 	Carryable:
 		LocalOffset: 0,0,700
@@ -1588,7 +1584,6 @@ TPOD:
 		Offset: 0,0,0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
-		Armaments: primary, secondary, sound
 	WithSpriteTurret:
 	WithMoveAnimation:
 	DeathSounds:
@@ -1624,7 +1619,7 @@ RPTP:
 	SpawnActorOnDeath:
 		Actor: RPTP.Husk
 	AttackTurreted:
-		Armaments: primary, secondary, primary-charged, secondary-charged, sound, sound-charged
+		Armaments: primary, secondary, primary-charged, secondary-charged
 	Armament@PRIMARY:
 		Weapon: ReaperLaser
 		LocalOffset: 700,550,1000
@@ -1632,10 +1627,6 @@ RPTP:
 	Armament@SECONDARY:
 		Weapon: ReaperLaserReversed
 		LocalOffset: 700,-550,1000
-		FireDelay: 15
-		PauseOnCondition: (ammo || charged-fire) && !uncharged-fire
-	Armament@SOUND:
-		Weapon: ReaperLaserSound
 		FireDelay: 15
 		PauseOnCondition: (ammo || charged-fire) && !uncharged-fire
 	Armament@PRIMARYCHARGED:
@@ -1653,11 +1644,6 @@ RPTP:
 		PauseOnCondition: !ammo || uncharged-fire
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
-	Armament@SOUNDCHARGED:
-		Name: sound-charged
-		Weapon: ReaperLaserChargedSound
-		FireDelay: 15
-		PauseOnCondition: !ammo || uncharged-fire
 	-GrantConditionOnPrerequisite@RESCONV:
 	AmmoPool@RESCONV:
 		Ammo: 70
