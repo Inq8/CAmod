@@ -1829,11 +1829,11 @@ MSG:
 		UndeployOnPickup: true
 	WithRangeCircle@MSG:
 		RequiresCondition: deployed
-		Range: 4c512
+		Range: 6c512
 		Color: 00aa00
 	ProximityExternalCondition@MSG:
-		Range: 4c512
-		Condition: invisibility
+		Range: 6c512
+		Condition: msg-invis
 		RequiresCondition: deployed
 		MaximumVerticalOffset: 512
 		AffectsParent: true
@@ -3148,14 +3148,14 @@ MDRN.Attached:
 		Weapon: M60mgTD
 		LocalOffset: -500,0,72
 	DamageMultiplier@ATTACHED:
-		Modifier: 40
+		Modifier: 25
 	Attachable:
 		AttachedCondition: attached
 	ChangesHealth:
 		PercentageStep: 2
 		Delay: 25
 		StartIfBelow: 100
-		DamageCooldown: 75
+		DamageCooldown: 50
 	-Targetable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
 	-WithDecoration@HACKED:

@@ -541,12 +541,60 @@ Player:
 					CheckRadius: 4c0
 			stealthgenpower:
 				OrderName: stealthgen
+				MinimumAttractiveness: 1000
+				FineScanRadius: 2
 				Consideration@1:
+					Against: Enemy
+					Types: Structure, Vehicle
+					Attractiveness: -10
+					TargetMetric: Value
+					CheckRadius: 3c0
+				Consideration@2:
+					Against: Enemy
+					Types: Infantry
+					Attractiveness: 2
+					TargetMetric: Value
+					CheckRadius: 2c0
+				Consideration@3:
 					Against: Ally
+					Types: Vehicle
+					Attractiveness: 3
+					TargetMetric: Value
+					CheckRadius: 3c0
+				Consideration@4:
+					Against: Ally
+					Types: Infantry
+					Attractiveness: -2
+					TargetMetric: Value
+					CheckRadius: 2c0
 			stealthgenshadowpower:
 				OrderName: stealthgenshadow
+				MinimumAttractiveness: 1000
+				FineScanRadius: 2
 				Consideration@1:
+					Against: Enemy
+					Types: Structure, Vehicle
+					Attractiveness: -10
+					TargetMetric: Value
+					CheckRadius: 3c0
+				Consideration@2:
+					Against: Enemy
+					Types: Infantry
+					Attractiveness: 2
+					TargetMetric: Value
+					CheckRadius: 2c0
+				Consideration@3:
 					Against: Ally
+					Types: Vehicle
+					Attractiveness: 3
+					TargetMetric: Value
+					CheckRadius: 3c0
+				Consideration@4:
+					Against: Ally
+					Types: Infantry
+					Attractiveness: -2
+					TargetMetric: Value
+					CheckRadius: 2c0
 			frenzypower:
 				OrderName: frenzy
 				MinimumAttractiveness: 1000
