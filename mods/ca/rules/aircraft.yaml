@@ -603,18 +603,22 @@ TRAN:
 	WithIdleOverlay@ROTOR1AIR:
 		Offset: 597,0,213
 		Sequence: rotor
+		PauseOnCondition: being-warped
 		RequiresCondition: airborne
 	WithIdleOverlay@ROTOR1GROUND:
 		Offset: 597,0,213
 		Sequence: slow-rotor
+		PauseOnCondition: being-warped
 		RequiresCondition: !airborne
 	WithIdleOverlay@ROTOR2AIR:
 		Offset: -597,0,341
 		Sequence: rotor2
+		PauseOnCondition: being-warped
 		RequiresCondition: airborne
 	WithIdleOverlay@ROTOR2GROUND:
 		Offset: -597,0,341
 		Sequence: slow-rotor2
+		PauseOnCondition: being-warped
 		RequiresCondition: !airborne
 	Cargo:
 		Types: Infantry
@@ -647,6 +651,8 @@ TRAN.paradrop:
 		Speed: 180
 		AltitudeVelocity: 0c100
 		Repulsable: False
+	Hovers@CRUISING:
+		RequiresCondition: cruising
 	RejectsOrders:
 	Interactable:
 	GivesExperience:
@@ -702,6 +708,8 @@ HALO.paradrop:
 		CruiseAltitude: 2560
 		Speed: 180
 		Repulsable: False
+	Hovers@CRUISING:
+		RequiresCondition: cruising
 	GivesExperience:
 		Experience: 1000
 	RejectsOrders:
@@ -759,18 +767,22 @@ NHAW:
 	WithIdleOverlay@ROTOR1AIR:
 		Offset: 237,0,263
 		Sequence: rotor
+		PauseOnCondition: being-warped
 		RequiresCondition: airborne
 	WithIdleOverlay@ROTOR1GROUND:
 		Offset: 237,0,263
 		Sequence: slow-rotor
+		PauseOnCondition: being-warped
 		RequiresCondition: !airborne
 	WithIdleOverlay@ROTOR2AIR:
 		Offset: -997,0,341
 		Sequence: rotor2
+		PauseOnCondition: being-warped
 		RequiresCondition: airborne
 	WithIdleOverlay@ROTOR2GROUND:
 		Offset: -997,0,341
 		Sequence: slow-rotor2
+		PauseOnCondition: being-warped
 		RequiresCondition: !airborne
 	Cargo:
 		Types: Infantry
@@ -871,6 +883,8 @@ NHAW.paradrop:
 		Speed: 180
 		AltitudeVelocity: 0c100
 		Repulsable: False
+	Hovers@CRUISING:
+		RequiresCondition: cruising
 	RejectsOrders:
 	Interactable:
 	GivesExperience:
@@ -953,10 +967,12 @@ HELI:
 	WithIdleOverlay@ROTORAIR:
 		Offset: 0,0,85
 		Sequence: rotor
+		PauseOnCondition: being-warped
 		RequiresCondition: airborne
 	WithIdleOverlay@ROTORGROUND:
 		Offset: 0,0,85
 		Sequence: slow-rotor
+		PauseOnCondition: being-warped
 		RequiresCondition: !airborne
 	AmmoPool:
 		Ammo: 8
@@ -1042,9 +1058,11 @@ HIND:
 		InitialStanceAI: AttackAnything
 	WithIdleOverlay@ROTORAIR:
 		Sequence: rotor
+		PauseOnCondition: being-warped
 		RequiresCondition: airborne
 	WithIdleOverlay@ROTORGROUND:
 		Sequence: slow-rotor
+		PauseOnCondition: being-warped
 		RequiresCondition: !airborne
 	AmmoPool:
 		Ammo: 24
@@ -1543,10 +1561,12 @@ APCH:
 	WithIdleOverlay@ROTORAIR:
 		Offset: 0,0,85
 		Sequence: rotor
+		PauseOnCondition: being-warped
 		RequiresCondition: airborne
 	WithIdleOverlay@ROTORGROUND:
 		Offset: 0,0,85
 		Sequence: slow-rotor
+		PauseOnCondition: being-warped
 		RequiresCondition: !airborne
 	WithMuzzleOverlay:
 	AutoTarget:
@@ -1967,11 +1987,13 @@ RAH:
 	WithIdleOverlay@ROTORAIR:
 		Offset: 10,0,80
 		Sequence: rotor
+		PauseOnCondition: being-warped
 		RequiresCondition: airborne
 		Palette: player
 	WithIdleOverlay@ROTORGROUND:
 		Offset: 10,0,80
 		Sequence: slow-rotor
+		PauseOnCondition: being-warped
 		RequiresCondition: !airborne
 		Palette: player
 	AmmoPool:
@@ -2111,18 +2133,22 @@ KIRO:
 	WithIdleOverlay@ROTOR1AIR:
 		Offset: -180,597,250
 		Sequence: rotor
+		PauseOnCondition: being-warped
 		RequiresCondition: airborne
 	WithIdleOverlay@ROTOR1GROUND:
 		Offset: -180,597,250
 		Sequence: slow-rotor
+		PauseOnCondition: being-warped
 		RequiresCondition: !airborne
 	WithIdleOverlay@ROTOR2AIR:
 		Offset: -180,-597,250
 		Sequence: rotor
+		PauseOnCondition: being-warped
 		RequiresCondition: airborne
 	WithIdleOverlay@ROTOR2GROUND:
 		Offset: -180,-597,250
 		Sequence: slow-rotor
+		PauseOnCondition: being-warped
 		RequiresCondition: !airborne
 	SmokeTrailWhenDamaged@1:
 		Offset: -100,500,100
@@ -2265,6 +2291,8 @@ OCAR.Reinforce:
 	-Buildable:
 	Carryall:
 		DropRange: 30c0
+	Hovers@CRUISING:
+		RequiresCondition: cruising
 	Aircraft:
 		IdleBehavior: LeaveMap
 		Repulsable: False
