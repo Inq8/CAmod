@@ -2494,78 +2494,68 @@ APC2:
 		MuzzleSequence: muzzle
 		RequiresCondition: !vulcan-upgrade
 		Turret: null
-	Armament@GAT0:
+	Armament@GAT:
 		Name: primary-upg
-		Weapon: MGatt.0
+		Weapon: MGatt
 		LocalOffset: 220,0,350
 		MuzzleSequence: muzzle
-		RequiresCondition: gattling == 0 && vulcan-upgrade
+		RequiresCondition: vulcan-upgrade
 		PauseOnCondition: engage-ground
 		ReloadingCondition: engage-air
-	Armament@GAT1:
-		Name: primary-upg
-		Weapon: MGatt.1
-		LocalOffset: 220,0,350
-		MuzzleSequence: muzzle
-		RequiresCondition: gattling == 1 && vulcan-upgrade
-		PauseOnCondition: engage-ground
-		ReloadingCondition: engage-air
-	Armament@GAT2:
-		Name: primary-upg
-		Weapon: MGatt.2
-		LocalOffset: 220,0,350
-		MuzzleSequence: muzzle
-		RequiresCondition: gattling == 2 && vulcan-upgrade
-		PauseOnCondition: engage-ground
-		ReloadingCondition: engage-air
-	Armament@GAT3:
-		Name: primary-upg
-		Weapon: MGatt.3
-		LocalOffset: 220,0,350
-		MuzzleSequence: muzzle
-		RequiresCondition: gattling == 3 && vulcan-upgrade
-		PauseOnCondition: engage-ground
-		ReloadingCondition: engage-air
-	Armament@GAT0G:
+	Armament@GATG:
 		Name: secondary-upg
-		Weapon: MGatt.0G
+		Weapon: MGattG
 		LocalOffset: 321,0,85
 		MuzzleSequence: muzzle
-		RequiresCondition: gattling-ground == 0 && vulcan-upgrade
+		RequiresCondition: vulcan-upgrade
 		PauseOnCondition: engage-air
 		ReloadingCondition: engage-ground
-	Armament@GAT1G:
-		Name: secondary-upg
-		Weapon: MGatt.1G
-		LocalOffset: 321,0,85
-		MuzzleSequence: muzzle
-		RequiresCondition: gattling-ground == 1 && vulcan-upgrade
-		PauseOnCondition: engage-air
-		ReloadingCondition: engage-ground
-	Armament@GAT2G:
-		Name: secondary-upg
-		Weapon: MGatt.2G
-		LocalOffset: 321,0,85
-		MuzzleSequence: muzzle
-		RequiresCondition: gattling-ground == 2 && vulcan-upgrade
-		ReloadingCondition: engage-ground
-		PauseOnCondition: engage-air
+	FirepowerMultiplier@GAT1:
+		Modifier: 115
+		RequiresCondition: (attacking-air && gattling == 1) || (attacking-ground && gattling-ground == 1)
+	FirepowerMultiplier@GAT2:
+		Modifier: 130
+		RequiresCondition: (attacking-air && gattling == 2) || (attacking-ground && gattling-ground >= 2)
+	FirepowerMultiplier@GAT3:
+		Modifier: 145
+		RequiresCondition: attacking-air && gattling >= 3
+	AmbientSoundCA@ATTACKSOUND1:
+		SoundFiles: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
+		RequiresCondition: (attacking-air && gattling == 1) || (attacking-ground && gattling-ground == 1)
+	AmbientSoundCA@ATTACKSOUND2:
+		InitialSound: vgatlo4a.aud
+		SoundFiles: vgatlo5a.aud, vgatlo5b.aud
+		RequiresCondition: (attacking-air && gattling == 2) || (attacking-ground && gattling-ground >= 2)
+	AmbientSoundCA@ATTACKSOUND3:
+		InitialSound: vgatlo7a.aud
+		SoundFiles: vgatlo8a.aud, vgatlo8b.aud
+		RequiresCondition: attacking-air && gattling >= 3
+	GrantConditionOnAttackCA@ATTACKING-AIR:
+		ArmamentNames: primary-upg
+		Condition: attacking-air
+		RevokeDelay: 6
+	GrantConditionOnAttackCA@ATTACKING-GROUND:
+		ArmamentNames: secondary-upg
+		Condition: attacking-ground
+		RevokeDelay: 6
 	GrantConditionOnAttack:
 		ArmamentNames: primary-upg
 		Condition: gattling
-		RequiredShotsPerInstance: 1,6,12
+		RequiredShotsPerInstance: 1,2,4
 		MaximumInstances: 3
 		RevokeDelay: 40
 		RevokeOnNewTarget: False
 		RevokeAll: True
+		RequiresCondition: !attacking-ground
 	GrantConditionOnAttack@GROUND:
 		ArmamentNames: secondary-upg
 		Condition: gattling-ground
-		RequiredShotsPerInstance: 1,6
+		RequiredShotsPerInstance: 1,4
 		MaximumInstances: 2
 		RevokeDelay: 40
 		RevokeOnNewTarget: False
 		RevokeAll: True
+		RequiresCondition: !attacking-air
 	AttackFrontal:
 		Armaments: primary
 		PauseOnCondition: empdisable || being-warped
@@ -2718,73 +2708,64 @@ VULC:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
-	Armament@GAT0:
-		Weapon: MGatt.0
+	Armament@GAT:
+		Weapon: MGatt
 		LocalOffset: 220,0,350
 		MuzzleSequence: muzzle
-		RequiresCondition: gattling == 0
 		PauseOnCondition: engage-ground
 		ReloadingCondition: engage-air
-	Armament@GAT1:
-		Weapon: MGatt.1
-		LocalOffset: 220,0,350
-		MuzzleSequence: muzzle
-		RequiresCondition: gattling == 1
-		PauseOnCondition: engage-ground
-		ReloadingCondition: engage-air
-	Armament@GAT2:
-		Weapon: MGatt.2
-		LocalOffset: 220,0,350
-		MuzzleSequence: muzzle
-		RequiresCondition: gattling == 2
-		PauseOnCondition: engage-ground
-		ReloadingCondition: engage-air
-	Armament@GAT3:
-		Weapon: MGatt.3
-		LocalOffset: 220,0,350
-		MuzzleSequence: muzzle
-		RequiresCondition: gattling == 3
-		PauseOnCondition: engage-ground
-		ReloadingCondition: engage-air
-	Armament@GAT0G:
+	Armament@GATG:
 		Name: secondary
-		Weapon: MGatt.0G
+		Weapon: MGattG
 		LocalOffset: 321,0,85
 		MuzzleSequence: muzzle
-		RequiresCondition: gattling-ground == 0
 		PauseOnCondition: engage-air
 		ReloadingCondition: engage-ground
-	Armament@GAT1G:
-		Name: secondary
-		Weapon: MGatt.1G
-		LocalOffset: 321,0,85
-		MuzzleSequence: muzzle
-		RequiresCondition: gattling-ground == 1
-		PauseOnCondition: engage-air
-		ReloadingCondition: engage-ground
-	Armament@GAT2G:
-		Name: secondary
-		Weapon: MGatt.2G
-		LocalOffset: 321,0,85
-		MuzzleSequence: muzzle
-		RequiresCondition: gattling-ground == 2
-		ReloadingCondition: engage-ground
-		PauseOnCondition: engage-air
+	FirepowerMultiplier@GAT1:
+		Modifier: 115
+		RequiresCondition: (attacking-air && gattling == 1) || (attacking-ground && gattling-ground == 1)
+	FirepowerMultiplier@GAT2:
+		Modifier: 130
+		RequiresCondition: (attacking-air && gattling == 2) || (attacking-ground && gattling-ground >= 2)
+	FirepowerMultiplier@GAT3:
+		Modifier: 145
+		RequiresCondition: attacking-air && gattling >= 3
+	AmbientSoundCA@ATTACKSOUND1:
+		SoundFiles: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
+		RequiresCondition: (attacking-air && gattling == 1) || (attacking-ground && gattling-ground == 1)
+	AmbientSoundCA@ATTACKSOUND2:
+		InitialSound: vgatlo4a.aud
+		SoundFiles: vgatlo5a.aud, vgatlo5b.aud
+		RequiresCondition: (attacking-air && gattling == 2) || (attacking-ground && gattling-ground >= 2)
+	AmbientSoundCA@ATTACKSOUND3:
+		InitialSound: vgatlo7a.aud
+		SoundFiles: vgatlo8a.aud, vgatlo8b.aud
+		RequiresCondition: attacking-air && gattling >= 3
+	GrantConditionOnAttackCA@ATTACKING-AIR:
+		ArmamentNames: primary
+		Condition: attacking-air
+		RevokeDelay: 6
+	GrantConditionOnAttackCA@ATTACKING-GROUND:
+		ArmamentNames: secondary
+		Condition: attacking-ground
+		RevokeDelay: 6
 	GrantConditionOnAttack:
 		Condition: gattling
-		RequiredShotsPerInstance: 1,6,12
+		RequiredShotsPerInstance: 1,2,4
 		MaximumInstances: 3
 		RevokeDelay: 40
 		RevokeOnNewTarget: False
 		RevokeAll: True
+		RequiresCondition: !attacking-ground
 	GrantConditionOnAttack@GROUND:
 		ArmamentNames: secondary
 		Condition: gattling-ground
-		RequiredShotsPerInstance: 1,6
+		RequiredShotsPerInstance: 1,4
 		MaximumInstances: 2
 		RevokeDelay: 40
 		RevokeOnNewTarget: False
 		RevokeAll: True
+		RequiresCondition: !attacking-air
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 		Armaments: primary, secondary
@@ -3794,6 +3775,7 @@ HFTK:
 		InitialSoundLength: 24
 	GrantConditionOnAttackCA:
 		Condition: attacking
+		RevokeDelay: 3
 	WithShadow:
 		RequiresCondition: parachute
 

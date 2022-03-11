@@ -146,10 +146,10 @@ Gatt.3:
 	Warhead@1Dam: SpreadDamage
 		Damage: 1900
 
-MGatt.0:
+MGatt:
 	Inherits: ^AACannon
-	ReloadDelay: 15
-	Report: vgatlo1a.aud
+	ReloadDelay: 5
+	-Report:
 	Range: 7c512
 	Warhead@1Dam: SpreadDamage
 		Damage: 560
@@ -158,25 +158,6 @@ MGatt.0:
 	Warhead@2Eff: CreateEffect
 		ValidTargets: Air, AirSmall
 		ImpactSoundChance: 20
-
-MGatt.1:
-	Inherits: MGatt.0
-	ReloadDelay: 5
-	Report: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: 560
-
-MGatt.2:
-	Inherits: MGatt.1
-	Report: vgatlo5a.aud, vgatlo5b.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: 680
-
-MGatt.3:
-	Inherits: MGatt.2
-	Report: vgatlo8a.aud, vgatlo8b.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: 800
 
 ^HeavyMG:
 	ReloadDelay: 30
@@ -591,33 +572,20 @@ M60mgMD:
 	Inherits: M60mgTD
 	Range: 4c768
 
-MGatt.0G:
+MGattG:
 	Inherits: ^HeavyMG
 	Range: 4c768
-	ReloadDelay: 15
-	Report: vgatlo1a.aud
+	ReloadDelay: 5
+	-Report:
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
-		Damage: 225
+		Damage: 300
 		Versus:
 			None: 250
 			Wood: 35
 			Concrete: 35
 			Light: 140
 			Heavy: 35
-
-MGatt.1G:
-	Inherits: MGatt.0G
-	ReloadDelay: 5
-	Report: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: 325
-
-MGatt.2G:
-	Inherits: MGatt.1G
-	Report: vgatlo5a.aud, vgatlo5b.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: 425
 
 ^SnipeWeapon:
 	ReloadDelay: 80
