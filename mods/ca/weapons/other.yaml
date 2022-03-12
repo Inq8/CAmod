@@ -841,25 +841,27 @@ PrepareHack:
 	Projectile: InstantHit
 	-Warhead@green:
 
-MADTankThump:
-	InvalidTargets: MADTank, Infantry
-	Warhead@1Dam: HealthPercentageDamage
-		Spread: 7c0
-		Damage: 1
-		InvalidTargets: MADTank, Infantry
-	Warhead@Concussion: GrantExternalCondition
-		Range: 7c0
-		Duration: 100
-		Condition: concussion
-		ValidTargets: Ground, Infantry, Vehicle, Ship
-
 MADTankDetonate:
-	InvalidTargets: MADTank, Infantry
+	InvalidTargets: Infantry
 	Warhead@1Dam: HealthPercentageDamage
 		Spread: 7c0
 		Damage: 19
 		InvalidTargets: MADTank, Infantry
-	Warhead@2Smu: LeaveSmudge
+	Warhead@2Dam: HealthPercentageDamage
+		Spread: 5c0
+		AffectsParent: true
+		Damage: 10
+		ValidTargets: MADTank
+		Delay: 5
+	Warhead@2Smu1: LeaveSmudge
+		SmudgeType: Crater
+		Size: 4
+		Chance: 10
+	Warhead@2Smu2: LeaveSmudge
+		SmudgeType: Crater
+		Size: 6,5
+		Chance: 20
+	Warhead@2Smu3: LeaveSmudge
 		SmudgeType: Crater
 		Size: 7,6
 	Warhead@3Eff: CreateEffect
@@ -880,7 +882,7 @@ MADTankDetonate:
 			Brick: 100
 	Warhead@Concussion: GrantExternalCondition
 		Range: 7c0
-		Duration: 600
+		Duration: 150
 		Condition: concussion
 		ValidTargets: Ground, Infantry, Vehicle, Ship
 

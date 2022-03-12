@@ -4874,7 +4874,7 @@ TMPL:
 		AllowMultiple: false
 		Sequence: false-active
 		Description: Force Shield
-		LongDesc: \nMakes selected friendly structures temporarily invulnerable.\n  Warning: Causes power failure.
+		LongDesc: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
 		OnFireSound: forceon.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
@@ -4899,7 +4899,7 @@ TMPL:
 		AirburstAltitude: 0c0
 		Sequence: false-active
 		AllowMultiple: false
-		LongDesc: \nIncreases the movement speed and rate of fire of\n    targeted units for a limited time.
+		LongDesc: \nIncreases the movement speed and rate of fire of\n    targeted units for a limited time.\n\nWarning: Affected units take increased damage.
 		OnFireSound: nodfrenzy.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -5469,8 +5469,6 @@ SGEN:
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 		ActiveCondition: active
-	ExternalCondition@ACTIVE:
-		Condition: active
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
