@@ -2123,8 +2123,18 @@ QTNK:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
-	MadTank:
+	MadTankCA:
 		DeployedCondition: deployed
+		KillsSelf: false
+		DriverActor: e1
+		ChargeDelay: 60
+		DetonationDelay: 40
+		DetonationSequence: piston
+		DetonationWeapon: MADTankDetonate
+		FirstDetonationImmediate: true
+		PauseOnCondition: invulnerability
+	Explodes:
+		Weapon: ArtilleryExplode
 	Selectable:
 		DecorationBounds: 44,38,0,-4
 	WithRangeCircle:
@@ -2500,16 +2510,14 @@ APC2:
 		LocalOffset: 220,0,350
 		MuzzleSequence: muzzle
 		RequiresCondition: vulcan-upgrade
-		PauseOnCondition: engage-ground
-		ReloadingCondition: engage-air
+		PauseOnCondition: attacking-ground
 	Armament@GATG:
 		Name: secondary-upg
 		Weapon: MGattG
 		LocalOffset: 321,0,85
 		MuzzleSequence: muzzle
 		RequiresCondition: vulcan-upgrade
-		PauseOnCondition: engage-air
-		ReloadingCondition: engage-ground
+		PauseOnCondition: attacking-air
 	FirepowerMultiplier@GAT1:
 		Modifier: 115
 		RequiresCondition: (attacking-air && gattling == 1) || (attacking-ground && gattling-ground == 1)
@@ -2712,15 +2720,13 @@ VULC:
 		Weapon: MGatt
 		LocalOffset: 220,0,350
 		MuzzleSequence: muzzle
-		PauseOnCondition: engage-ground
-		ReloadingCondition: engage-air
+		PauseOnCondition: attacking-ground
 	Armament@GATG:
 		Name: secondary
 		Weapon: MGattG
 		LocalOffset: 321,0,85
 		MuzzleSequence: muzzle
-		PauseOnCondition: engage-air
-		ReloadingCondition: engage-ground
+		PauseOnCondition: attacking-air
 	FirepowerMultiplier@GAT1:
 		Modifier: 115
 		RequiresCondition: (attacking-air && gattling == 1) || (attacking-ground && gattling-ground == 1)
