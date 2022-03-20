@@ -1661,97 +1661,7 @@ SILO:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
 
-HPAD:
-	Inherits: ^Building
-	Inherits@PRIMARY: ^PrimaryBuilding
-	Inherits@SHAPE: ^2x2Shape
-	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
-	Selectable:
-		Bounds: 48,48
-	HitShape:
-		UseTargetableCellsOffsets: false
-		TargetableOffsets: 0,0,0, 768,-512,0, 768,512,0, -281,-512,0, -630,512,0
-	Buildable:
-		Queue: Building
-		BuildPaletteOrder: 120
-		Prerequisites: anyradar, ~structures.ra, ~techlevel.infonly
-		Description: Produces and reloads helicopters.
-	Valued:
-		Cost: 500
-	Tooltip:
-		Name: Helipad
-	Building:
-		Footprint: xx xx ==
-		Dimensions: 2,3
-		LocalCenterOffset: 0,-512,0
-	Health:
-		HP: 80000
-	Armor:
-		Type: Wood
-	RevealsShroud:
-		MinRange: 4c0
-		Range: 5c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
-	WithBuildingBib:
-	WithResupplyAnimation:
-		RequiresCondition: !build-incomplete
-	Exit@1:
-		RequiresCondition: !being-captured
-		SpawnOffset: 0,-256,0
-		ExitCell: 0,0
-		Facing: 896
-	RallyPoint:
-	Production:
-		Produces: Aircraft, Helicopter
-		PauseOnCondition: forceshield || invulnerability || being-warped
-	Reservable:
-	ProductionBar:
-		ProductionType: Aircraft
-	Power:
-		Amount: -10
-	ValidFactions:
-		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
-	ProvidesPrerequisiteValidatedFaction@allies:
-		Factions: england, france, germany, usa
-		Prerequisite: aircraft.allies
-	ProvidesPrerequisiteValidatedFaction@soviets:
-		Factions: russia, ukraine, iraq, yuri
-		Prerequisite: aircraft.soviet
-	ProvidesPrerequisiteValidatedFaction@iraq:
-		Factions: iraq
-		Prerequisite: aircraft.iraq
-	ProvidesPrerequisiteValidatedFaction@usa:
-		Factions: usa
-		Prerequisite: aircraft.usa
-	ProvidesPrerequisiteValidatedFaction@chinookvisible:
-		Factions: allies, england, france, germany, gdi, zocom, eagle, talon, arc, nod, blackh, legion, marked, shadow
-		Prerequisite: aircraft.chinookvisible
-	ProvidesPrerequisiteValidatedFaction@chinook:
-		Factions: allies, england, france, germany, gdi, zocom, eagle, talon, arc, nod, blackh, legion, marked, shadow
-		Prerequisite: aircraft.chinook
-	ProvidesPrerequisiteValidatedFaction@nhaw:
-		Factions: usa
-		Prerequisite: aircraft.nhaw
-	ProvidesPrerequisiteValidatedFaction@hind:
-		Factions: russia, ukraine, yuri
-		Prerequisite: aircraft.hind
-	ProvidesPrerequisite@paratroopers:
-		Factions: ukraine, iraq
-		Prerequisite: support.paratroopers
-	ProvidesPrerequisite@stormtroopers:
-		Factions: russia
-		Prerequisite: russia.paratroopers
-	ProvidesPrerequisite@buildingname:
-	Targetable@INFILTRATION:
-		RequiresCondition: !being-warped
-		TargetTypes: SpyInfiltrate
-	InfiltrateForSupportPower:
-		Types: SpyInfiltrate
-		Proxy: powerproxy.paratroopers.allies
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
+^SovietAirPowers:
 	ParatroopersPower@paratroopers:
 		OrderName: paratroopers
 		UnitType: halo.paradrop
@@ -1800,101 +1710,6 @@ HPAD:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
-	ClassicAirstrikePower@Strafe:
-		OrderName: strafe
-		Squad:
-			p51:
-				SpawnDelay: 20
-				SpawnOffset: -1536,1024,0
-				TargetOffset: -536,0,0
-			p51:
-				SpawnDelay: 0
-				SpawnOffset: 0,0,0
-				TargetOffset: 0,0,0
-			p51:
-				SpawnDelay: 20
-				SpawnOffset: -1536,-1024,0
-				TargetOffset: 536,0,0
-		Prerequisites: ~aircraft.usa, ~techlevel.unrestricted
-		Icon: strafe
-		ChargeInterval: 7500
-		Description: Strafing Run
-		LongDesc: \nCalls in P51 ground attack planes to perform\n    strafing runs on the target.
-		SelectTargetSpeechNotification: SelectTarget
-		CameraActor: camera
-		CameraRemoveDelay: 150
-		QuantizedFacings: 8
-		DisplayBeacon: true
-		BeaconPoster: strafe
-		ArrowSequence: arrow
-		ClockSequence: clock
-		CircleSequence: circles
-		UseDirectionalTarget: True
-		DirectionArrowAnimation: paradirection
-		Strikes: 3
-		CircleDelay: 40
-
-AFLD:
-	Inherits: ^Building
-	Inherits@PRIMARY: ^PrimaryBuilding
-	Inherits@SHAPE: ^3x2Shape
-	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
-	HitShape:
-		UseTargetableCellsOffsets: false
-		TargetableOffsets: 0,0,0, 420,0,0, 420,-1024,0, 420,1024,0, -777,0,0, -777,-1024,0, -777,1024,0
-	Buildable:
-		Queue: Building
-		BuildPaletteOrder: 130
-		Prerequisites: anyradar, ~structures.soviet, ~techlevel.low
-		Description: Produces and reloads aircraft.
-	TooltipExtras:
-		Attributes: • Special Ability: Spy Plane
-	Valued:
-		Cost: 500
-	Tooltip:
-		Name: Airfield
-	Selectable:
-		Bounds: 72,48
-	Building:
-		Footprint: xxx xxx
-		Dimensions: 3,2
-	Health:
-		HP: 100000
-	Armor:
-		Type: Wood
-	RevealsShroud:
-		MinRange: 4c0
-		Range: 5c0
-		RevealGeneratedShroud: False
-	RevealsShroud@GAPGEN:
-		Range: 4c0
-	Exit@1:
-		RequiresCondition: !being-captured
-		ExitCell: 1,1
-		Facing: 768
-	RallyPoint:
-	Production:
-		Produces: Aircraft, Plane
-		PauseOnCondition: forceshield || invulnerability || being-warped
-	Reservable:
-	ProvidesPrerequisite@soviet:
-		Factions: russia, ukraine, iraq, yuri
-		Prerequisite: aircraft.soviet
-	ProvidesPrerequisite@russia:
-		Factions: russia
-		Prerequisite: aircraft.russia
-	ProvidesPrerequisite@ukraine:
-		Factions: ukraine
-		Prerequisite: aircraft.ukraine
-	ProvidesPrerequisite@iraq:
-		Factions: iraq
-		Prerequisite: aircraft.iraq
-	ProvidesPrerequisite@yuri:
-		Factions: yuri
-		Prerequisite: aircraft.yuri
-	ProvidesPrerequisite@parabombs:
-		Factions: russia, yuri
-		Prerequisite: support.parabombs
 	AirstrikePower@spyplane:
 		OrderName: spyplane
 		Icon: spyplane
@@ -2001,6 +1816,211 @@ AFLD:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+
+HPAD:
+	Inherits: ^Building
+	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@SHAPE: ^2x2Shape
+	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
+	Selectable:
+		Bounds: 48,48
+	HitShape:
+		UseTargetableCellsOffsets: false
+		TargetableOffsets: 0,0,0, 768,-512,0, 768,512,0, -281,-512,0, -630,512,0
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 120
+		Prerequisites: anyradar, ~structures.ra, ~techlevel.infonly
+		Description: Produces and reloads helicopters.
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Helipad
+	Building:
+		Footprint: xx xx ==
+		Dimensions: 2,3
+		LocalCenterOffset: 0,-512,0
+	Health:
+		HP: 80000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	WithBuildingBib:
+	WithResupplyAnimation:
+		RequiresCondition: !build-incomplete
+	Exit@1:
+		RequiresCondition: !being-captured
+		SpawnOffset: 0,-256,0
+		ExitCell: 0,0
+		Facing: 896
+	RallyPoint:
+	Production:
+		Produces: Aircraft, Helicopter
+		PauseOnCondition: forceshield || invulnerability || being-warped
+	Reservable:
+	ProductionBar:
+		ProductionType: Aircraft
+	Power:
+		Amount: -10
+	ValidFactions:
+		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
+	ProvidesPrerequisiteValidatedFaction@allies:
+		Factions: england, france, germany, usa
+		Prerequisite: aircraft.allies
+	ProvidesPrerequisiteValidatedFaction@usa:
+		Factions: usa
+		Prerequisite: aircraft.usa
+	ProvidesPrerequisiteValidatedFaction@soviets:
+		Factions: russia, ukraine, iraq, yuri
+		Prerequisite: aircraft.soviet
+	ProvidesPrerequisiteValidatedFaction@russia:
+		Factions: russia
+		Prerequisite: aircraft.russia
+	ProvidesPrerequisiteValidatedFaction@ukraine:
+		Factions: ukraine
+		Prerequisite: aircraft.ukraine
+	ProvidesPrerequisiteValidatedFaction@iraq:
+		Factions: iraq
+		Prerequisite: aircraft.iraq
+	ProvidesPrerequisiteValidatedFaction@yuri:
+		Factions: yuri
+		Prerequisite: aircraft.yuri
+	ProvidesPrerequisiteValidatedFaction@parabombs:
+		Factions: russia, yuri
+		Prerequisite: support.parabombs
+	ProvidesPrerequisiteValidatedFaction@chinookvisible:
+		Factions: allies, england, france, germany, gdi, zocom, eagle, talon, arc, nod, blackh, legion, marked, shadow
+		Prerequisite: aircraft.chinookvisible
+	ProvidesPrerequisiteValidatedFaction@chinook:
+		Factions: allies, england, france, germany, gdi, zocom, eagle, talon, arc, nod, blackh, legion, marked, shadow
+		Prerequisite: aircraft.chinook
+	ProvidesPrerequisiteValidatedFaction@nhaw:
+		Factions: usa
+		Prerequisite: aircraft.nhaw
+	ProvidesPrerequisiteValidatedFaction@hind:
+		Factions: russia, ukraine, yuri
+		Prerequisite: aircraft.hind
+	ProvidesPrerequisiteValidatedFaction@paratroopers:
+		Factions: ukraine, iraq
+		Prerequisite: support.paratroopers
+	ProvidesPrerequisiteValidatedFaction@stormtroopers:
+		Factions: russia
+		Prerequisite: russia.paratroopers
+	ProvidesPrerequisite@buildingname:
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate
+	InfiltrateForSupportPower:
+		Types: SpyInfiltrate
+		Proxy: powerproxy.paratroopers.allies
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
+	ClassicAirstrikePower@Strafe:
+		OrderName: strafe
+		Squad:
+			p51:
+				SpawnDelay: 20
+				SpawnOffset: -1536,1024,0
+				TargetOffset: -536,0,0
+			p51:
+				SpawnDelay: 0
+				SpawnOffset: 0,0,0
+				TargetOffset: 0,0,0
+			p51:
+				SpawnDelay: 20
+				SpawnOffset: -1536,-1024,0
+				TargetOffset: 536,0,0
+		Prerequisites: ~aircraft.usa, ~techlevel.unrestricted
+		Icon: strafe
+		ChargeInterval: 7500
+		Description: Strafing Run
+		LongDesc: \nCalls in P51 ground attack planes to perform\n    strafing runs on the target.
+		SelectTargetSpeechNotification: SelectTarget
+		CameraActor: camera
+		CameraRemoveDelay: 150
+		QuantizedFacings: 8
+		DisplayBeacon: true
+		BeaconPoster: strafe
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+		Strikes: 3
+		CircleDelay: 40
+
+AFLD:
+	Inherits: ^Building
+	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@SHAPE: ^3x2Shape
+	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
+	HitShape:
+		UseTargetableCellsOffsets: false
+		TargetableOffsets: 0,0,0, 420,0,0, 420,-1024,0, 420,1024,0, -777,0,0, -777,-1024,0, -777,1024,0
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 130
+		Prerequisites: anyradar, ~structures.soviet, ~techlevel.low
+		Description: Produces and reloads aircraft.
+	TooltipExtras:
+		Attributes: • Special Ability: Spy Plane
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Airfield
+	Selectable:
+		Bounds: 72,48
+	Building:
+		Footprint: xxx xxx
+		Dimensions: 3,2
+	Health:
+		HP: 100000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Exit@1:
+		RequiresCondition: !being-captured
+		ExitCell: 1,1
+		Facing: 768
+	RallyPoint:
+	Production:
+		Produces: Aircraft, Plane
+		PauseOnCondition: forceshield || invulnerability || being-warped
+	Reservable:
+	ProvidesPrerequisite@soviet:
+		Factions: russia, ukraine, iraq, yuri
+		Prerequisite: aircraft.soviet
+	ProvidesPrerequisite@russia:
+		Factions: russia
+		Prerequisite: aircraft.russia
+	ProvidesPrerequisite@ukraine:
+		Factions: ukraine
+		Prerequisite: aircraft.ukraine
+	ProvidesPrerequisite@iraq:
+		Factions: iraq
+		Prerequisite: aircraft.iraq
+	ProvidesPrerequisite@yuri:
+		Factions: yuri
+		Prerequisite: aircraft.yuri
+	ProvidesPrerequisite@parabombs:
+		Factions: russia, yuri
+		Prerequisite: support.parabombs
+	ProvidesPrerequisite@paratroopers:
+		Factions: ukraine, iraq
+		Prerequisite: support.paratroopers
+	ProvidesPrerequisite@stormtroopers:
+		Factions: russia
+		Prerequisite: russia.paratroopers
 	ProductionBar:
 		ProductionType: Aircraft
 	SupportPowerChargeBar:
@@ -4277,11 +4297,117 @@ REP:
 		Color: 888899AA
 		Range: 10c0
 
+^GDIAirPowers:
+	SpawnActorPower@GDIEagleDropzone:
+		Actor: FLARE.dropzone
+		Prerequisites: ~aircraft.eagle, anyradar, ~techlevel.low
+		LifeTime: 280
+		OrderName: dropzoneeagle
+		Icon: orcaca
+		IconPalette: chrometd
+		ChargeInterval: 6000
+		Description: Reinforcements
+		LongDesc: \nAn Orca Carryall drops an APC containing\n    an infantry squad at the target location.
+		EndChargeSpeechNotification: Reinforce
+		LaunchSpeechNotification: ReinforcementsArrived
+		SelectTargetSpeechNotification: SelectTarget
+		EffectImage: empty
+		EffectSequence: idle
+		EffectPalette: tseffect-ignore-lighting-alpha75
+	ParatroopersPower@xodrop:
+		OrderName: xodrop
+		Prerequisites: ~aircraft.talon, ~techlevel.medium
+		Icon: xodrop
+		ChargeInterval: 8250
+		Description: X-O Drop
+		UnitType: ocar.xo
+		LongDesc: \nAn Orca transport drops a squad of X-O Powersuits\n    at the target location.
+		SquadSize: 1
+		SquadOffset: 0,1792,0
+		DropItems: XO,XO,XO
+		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
+		SelectTargetSpeechNotification: SelectTarget
+		EndChargeSpeechNotification: Reinforce
+		AllowImpassableCells: false
+		QuantizedFacings: 8
+		CameraActor: camera.paradrop
+		DisplayBeacon: true
+		BeaconPoster: xodrop
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+	AirstrikePower@uav:
+		OrderName: gdiuav
+		Prerequisites: ~!aircraft.arc
+		Icon: uavicon
+		ChargeInterval: 3750
+		Description: Recon Drone
+		LongDesc: \nA drone flies across the map, revealing the area as it passes.\n\nDetects cloaked units.
+		SelectTargetSpeechNotification: SelectTarget
+		EndChargeSpeechNotification: SpyPlaneReady
+		CameraActor: camera.spyplane
+		CameraRemoveDelay: 0
+		UnitType: uav
+		QuantizedFacings: 32
+		DisplayBeacon: true
+		BeaconPoster: lruavicon
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+	AirstrikePower@uavST:
+		OrderName: gdiuavarc
+		Prerequisites: ~aircraft.arc
+		Icon: uavicon
+		ChargeInterval: 3000
+		Description: Recon Drone
+		LongDesc: \nA drone flies across the map, revealing the area as it passes.\n\nDetects cloaked units.
+		SelectTargetSpeechNotification: SelectTarget
+		EndChargeSpeechNotification: SpyPlaneReady
+		CameraActor: camera.spyplane
+		CameraRemoveDelay: 0
+		UnitType: uav
+		QuantizedFacings: 32
+		DisplayBeacon: true
+		BeaconPoster: lruavicon
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+	InterceptorPower@AirDef:
+		OrderName: interceptors
+		Prerequisites: ~aircraft.gdi, techlevel.unrestricted
+		Icon: airsupport
+		ChargeInterval: 10500
+		Description: Interceptors
+		LongDesc: \nA squadron of Interceptors provides\n    air cover over the target area,\n    engaging any enemy aircraft within range.
+		SelectTargetSpeechNotification: SelectTarget
+		EndChargeSpeechNotification: SpyPlaneReady
+		CameraActor: camera
+		CameraRemoveDelay: 450
+		UnitType: yf23.bomber
+		QuantizedFacings: 8
+		DisplayBeacon: true
+		BeaconPoster: airsupport
+		SquadSize: 3
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+		GuardDuration: 500
+		Cordon: 5c0
+
 HPAD.TD:
 	Inherits: ^BuildingTD
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
+	Inherits@GDIAIRPOWERS: ^GDIAirPowers
 	RenderSprites:
 		Image: hpad2
 	HitShape:
@@ -4335,6 +4461,9 @@ HPAD.TD:
 	ProvidesPrerequisiteValidatedFaction@eagle:
 		Factions: eagle
 		Prerequisite: aircraft.eagle
+	ProvidesPrerequisiteValidatedFaction@arc:
+		Factions: arc
+		Prerequisite: aircraft.arc
 	ProvidesPrerequisiteValidatedFaction@nod:
 		Factions: blackh, marked, legion, shadow
 		Prerequisite: aircraft.nod
@@ -4362,46 +4491,6 @@ HPAD.TD:
 		Proxy: powerproxy.paratroopers.allies
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
-	SpawnActorPower@GDIEagleDropzone:
-		Actor: FLARE.dropzone
-		Prerequisites: ~aircraft.eagle, anyradar, ~techlevel.low
-		LifeTime: 280
-		OrderName: dropzoneeagle
-		Icon: orcaca
-		IconPalette: chrometd
-		ChargeInterval: 6000
-		Description: Reinforcements
-		LongDesc: \nAn Orca Carryall drops an APC containing\n    an infantry squad at the target location.
-		EndChargeSpeechNotification: Reinforce
-		LaunchSpeechNotification: ReinforcementsArrived
-		SelectTargetSpeechNotification: SelectTarget
-		EffectImage: empty
-		EffectSequence: idle
-		EffectPalette: tseffect-ignore-lighting-alpha75
-	ParatroopersPower@xodrop:
-		OrderName: xodrop
-		Prerequisites: ~aircraft.talon, ~techlevel.medium
-		Icon: xodrop
-		ChargeInterval: 8250
-		Description: X-O Drop
-		UnitType: ocar.xo
-		LongDesc: \nAn Orca transport drops a squad of X-O Powersuits\n    at the target location.
-		SquadSize: 1
-		SquadOffset: 0,1792,0
-		DropItems: XO,XO,XO
-		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
-		SelectTargetSpeechNotification: SelectTarget
-		EndChargeSpeechNotification: Reinforce
-		AllowImpassableCells: false
-		QuantizedFacings: 8
-		CameraActor: camera.paradrop
-		DisplayBeacon: true
-		BeaconPoster: xodrop
-		ArrowSequence: arrow
-		ClockSequence: clock
-		CircleSequence: circles
-		UseDirectionalTarget: True
-		DirectionArrowAnimation: paradirection
 
 PROC.TD:
 	Inherits: ^BuildingTD
@@ -4540,6 +4629,7 @@ AFLD.GDI:
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
+	Inherits@GDIAIRPOWERS: ^GDIAirPowers
 	RenderSprites:
 		Image: afldgdi
 	HitShape:
@@ -4585,74 +4675,14 @@ AFLD.GDI:
 	ProvidesPrerequisiteValidatedFaction@eagle:
 		Factions: eagle
 		Prerequisite: aircraft.eagle
+	ProvidesPrerequisiteValidatedFaction@eagle:
+		Factions: eagle
+		Prerequisite: aircraft.eagle
 	ProvidesPrerequisiteValidatedFaction@arc:
 		Factions: arc
 		Prerequisite: aircraft.arc
 	ProvidesPrerequisite@chinookvisible:
 		Prerequisite: aircraft.chinookvisible
-	AirstrikePower@uav:
-		OrderName: gdiuav
-		Prerequisites: ~!aircraft.arc
-		Icon: uavicon
-		ChargeInterval: 3750
-		Description: Recon Drone
-		LongDesc: \nA drone flies across the map, revealing the area as it passes.\n\nDetects cloaked units.
-		SelectTargetSpeechNotification: SelectTarget
-		EndChargeSpeechNotification: SpyPlaneReady
-		CameraActor: camera.spyplane
-		CameraRemoveDelay: 0
-		UnitType: uav
-		QuantizedFacings: 32
-		DisplayBeacon: true
-		BeaconPoster: lruavicon
-		ArrowSequence: arrow
-		ClockSequence: clock
-		CircleSequence: circles
-		UseDirectionalTarget: True
-		DirectionArrowAnimation: paradirection
-	AirstrikePower@uavST:
-		OrderName: gdiuavarc
-		Prerequisites: ~aircraft.arc
-		Icon: uavicon
-		ChargeInterval: 3000
-		Description: Recon Drone
-		LongDesc: \nA drone flies across the map, revealing the area as it passes.\n\nDetects cloaked units.
-		SelectTargetSpeechNotification: SelectTarget
-		EndChargeSpeechNotification: SpyPlaneReady
-		CameraActor: camera.spyplane
-		CameraRemoveDelay: 0
-		UnitType: uav
-		QuantizedFacings: 32
-		DisplayBeacon: true
-		BeaconPoster: lruavicon
-		ArrowSequence: arrow
-		ClockSequence: clock
-		CircleSequence: circles
-		UseDirectionalTarget: True
-		DirectionArrowAnimation: paradirection
-	InterceptorPower@AirDef:
-		OrderName: interceptors
-		Prerequisites: ~aircraft.gdi, techlevel.unrestricted
-		Icon: airsupport
-		ChargeInterval: 10500
-		Description: Interceptors
-		LongDesc: \nA squadron of Interceptors provides\n    air cover over the target area,\n    engaging any enemy aircraft within range.
-		SelectTargetSpeechNotification: SelectTarget
-		EndChargeSpeechNotification: SpyPlaneReady
-		CameraActor: camera
-		CameraRemoveDelay: 450
-		UnitType: yf23.bomber
-		QuantizedFacings: 8
-		DisplayBeacon: true
-		BeaconPoster: airsupport
-		SquadSize: 3
-		ArrowSequence: arrow
-		ClockSequence: clock
-		CircleSequence: circles
-		UseDirectionalTarget: True
-		DirectionArrowAnimation: paradirection
-		GuardDuration: 500
-		Cordon: 5c0
 	ProductionBar:
 		ProductionType: Aircraft
 	SupportPowerChargeBar:

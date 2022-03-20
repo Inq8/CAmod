@@ -161,6 +161,23 @@ gshield.upgrade:
 	RenderSprites:
 		Image: gshield.upgrade
 
+sidewinders.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Sidewinders
+	Buildable:
+		BuildPaletteOrder: 35
+		Prerequisites: ~gtek, ~techlevel.high
+		BuildDuration: 1500
+		IconPalette: chrometd
+		Description: Equips Warthogs with air-to-air missiles.\n\nUpgrades: Warthog
+	TooltipExtras:
+		Strengths: + Added air-to-air missiles
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: sidewinders.upgrade
+
 empgren.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -441,22 +458,6 @@ tibcore.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: tibcore.upgrade
-
-rahstealth.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Research: Comanche Stealth
-	Buildable:
-		BuildPaletteOrder: 35
-		Prerequisites: ~tmpl, ~techlevel.high
-		BuildDuration: 1500
-		Description: Upgrades: Comanche
-	TooltipExtras:
-		Strengths: + Gains ability to cloak
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: rahstealth.upgrade
 
 cyborg.upgrade:
 	Inherits: ^Upgrade

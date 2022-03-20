@@ -378,6 +378,24 @@ HellfireAG.Orca:
 	Report: orcamis1.aud
 	BurstDelays: 11
 
+HindRockets:
+	Inherits: HellfireAG
+	Report: hind-rocket1.aud, hind-rocket2.aud
+	ValidTargets: Ground
+	InvalidTargets: Infantry
+	BurstDelays: 8
+	Burst: 6
+	Warhead@1Dam: SpreadDamage
+		Damage: 2000
+		Versus:
+			Light: 80
+			Wood: 60
+			Concrete: 60
+
+HindRockets.AnyTarget:
+	Inherits: HindRockets
+	-InvalidTargets:
+
 HellfireAG.Harrier:
 	Inherits: HellfireAG
 	Range: 8c0
@@ -435,7 +453,7 @@ HellfireAA:
 HellfireAA.Orca:
 	Inherits: HellfireAA
 	Report: orcamis1.aud
-	ReloadDelay: 70
+	ReloadDelay: 68
 	BurstDelays: 11
 
 HellfireAA.Harrier:
@@ -768,7 +786,7 @@ TOW:
 		Speed: 180
 		Inaccuracy: 0
 		HorizontalRateOfTurn: 20
-		RangeLimit: 20c0
+		RangeLimit: 16c0
 		PointDefenseType: Missile
 		LockOnProbability: 100
 		LockOnInaccuracy: 0

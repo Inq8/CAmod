@@ -58,6 +58,9 @@ namespace OpenRA.Mods.Common.Traits.Render
 
 		protected override IEnumerable<IRenderable> RenderDecoration(Actor self, WorldRenderer wr, int2 screenPos)
 		{
+			if (IsTraitDisabled)
+				yield break;
+
 			pips.PlayRepeating(Info.EmptySequence);
 
 			var palette = wr.Palette(Info.Palette);

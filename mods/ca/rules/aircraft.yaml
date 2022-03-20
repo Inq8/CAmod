@@ -397,16 +397,16 @@ SUK.UPG:
 
 YAK:
 	Inherits: ^Plane
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Buildable:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 25
 		Prerequisites: afld, ~aircraft.soviet, ~techlevel.low
-		Description: Ground attack plane armed with\n  dual machine guns
+		Description: Fighter plane armed with\n  dual machine guns
 	TooltipExtras:
-		Strengths: • Strong vs Infantry, Light Armor, Buildings
-		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
+		Strengths: • Strong vs Infantry, Light Armor, Buildings, Aircraft
+		Weaknesses: • Weak vs Heavy Armor, Defenses
 	Valued:
 		Cost: 1250
 	Tooltip:
@@ -424,13 +424,24 @@ YAK:
 		Range: 9c0
 		Type: GroundPosition
 	Armament@PRIMARY:
-		Weapon: ChainGun.Yak.R
+		Weapon: ChainGun.Yak.L
 		LocalOffset: 256,-213,0
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
 	Armament@SECONDARY:
 		Name: secondary
-		Weapon: ChainGun.Yak.L
+		Weapon: ChainGun.Yak.R
+		LocalOffset: 256,213,0
+		MuzzleSequence: muzzle
+		PauseOnCondition: !ammo
+	Armament@PRIMARYAA:
+		Weapon: ChainGun.Yak.AA
+		LocalOffset: 256,-213,0
+		MuzzleSequence: muzzle
+		PauseOnCondition: !ammo
+	Armament@SECONDARYAA:
+		Name: secondary
+		Weapon: ChainGun.Yak.AA
 		LocalOffset: 256,213,0
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
@@ -450,8 +461,8 @@ YAK:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
 	AmmoPool:
-		Ammo: 40
-		ReloadDelay: 5
+		Ammo: 16
+		ReloadDelay: 11
 		AmmoCondition: ammo
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
@@ -1006,24 +1017,24 @@ HELI:
 
 HIND:
 	Inherits: ^Helicopter
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Buildable:
 		Queue: Aircraft
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 20
 		Prerequisites: hpad, ~aircraft.soviet, ~techlevel.medium
-		Description: Helicopter gunship armed\n  with dual chainguns.
+		Description: Helicopter gunship armed with\n  a chaingun and anti-tank rockets.
 	TooltipExtras:
-		Strengths: • Strong vs Infantry, Aircraft, Light Armor, Buildings
-		Weaknesses: • Weak vs Heavy Armor, Defenses
+		Strengths: • Strong vs Infantry, Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Buildings, Defenses\n• Cannot attack Aircraft
 	Valued:
-		Cost: 1500
+		Cost: 1600
 	Tooltip:
 		Name: Hind
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 24000
+		HP: 30000
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -1033,15 +1044,29 @@ HIND:
 		Range: 8c0
 		Type: GroundPosition
 	Armament@PRIMARY:
-		Weapon: ChainGunAA
-		LocalOffset: 85,-213,-185, 85,213,-185
-		MuzzleSequence: muzzle
-		PauseOnCondition: !ammo
-	Armament@SECONDARY:
 		Weapon: ChainGun
-		LocalOffset: 85,-213,-185, 85,213,-185
+		LocalOffset: 500,0,-250
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
+		RequiresCondition: ammo2
+	Armament@PRIMARYANYTARGET:
+		Weapon: ChainGun.AnyTarget
+		LocalOffset: 500,0,-250
+		MuzzleSequence: muzzle
+		PauseOnCondition: !ammo
+		RequiresCondition: !ammo2
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: HindRockets
+		LocalOffset: 85,-213,-185, 85,213,-185
+		PauseOnCondition: !ammo2
+		RequiresCondition: ammo
+	Armament@SECONDARYANYTARGET:
+		Name: secondary
+		Weapon: HindRockets.AnyTarget
+		LocalOffset: 85,-213,-185, 85,213,-185
+		PauseOnCondition: !ammo2
+		RequiresCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 80
 		AttackType: Hover
@@ -1064,14 +1089,30 @@ HIND:
 		Sequence: slow-rotor
 		PauseOnCondition: being-warped
 		RequiresCondition: !airborne
-	AmmoPool:
-		Ammo: 24
-		ReloadDelay: 8
+	AmmoPool@PRIMARY:
+		Name: primary
+		Ammo: 18
+		ReloadDelay: 13
 		AmmoCondition: ammo
-	WithAmmoPipsDecoration:
+		Armaments: primary
+	AmmoPool@SECONDARY:
+		Name: secondary
+		Ammo: 18
+		ReloadDelay: 13
+		AmmoCondition: ammo2
+		Armaments: secondary
+	WithAmmoPipsDecorationCA@PRIMARY:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
+		AmmoPools: primary
+		PipCount: 6
+	WithAmmoPipsDecorationCA@SECONDARY:
+		Position: BottomLeft
+		Margin: 4, 7
+		RequiresSelection: true
+		AmmoPools: secondary
+		FullSequence: pip-red
 		PipCount: 6
 	WithMuzzleOverlay:
 	SpawnActorOnDeath:
@@ -1093,6 +1134,7 @@ HIND:
 	Selectable:
 		DecorationBounds: 38,32
 	Rearmable:
+		AmmoPools: primary, secondary
 		RearmActors: hpad, hpad.td
 
 U2:
@@ -1206,12 +1248,18 @@ A10:
 		Queue: Aircraft
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 80
-		Prerequisites: afld.gdi, ~aircraft.gdi, ~techlevel.high
+		Prerequisites: afld.gdi, ~aircraft.gdi, ~!sidewinders.upgrade, ~techlevel.high
 		IconPalette: chrometd
-		Description: Attack aircraft with incendiary bombs\n  and air-to-air missiles.
+		Description: Attack aircraft with incendiary bombs.
 	TooltipExtras:
+		Strengths: • Strong vs Buildings, Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
+		RequiresCondition: !sidewinders-upgrade
+	TooltipExtras@UPG:
+		Description: Attack aircraft with incendiary bombs\n  and air-to-air missiles.
 		Strengths: • Strong vs Buildings, Infantry, Light Armor, Aircraft
 		Weaknesses: • Weak vs Heavy Armor, Defenses
+		RequiresCondition: sidewinders-upgrade
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -1237,6 +1285,7 @@ A10:
 		Weapon: Sidewinder
 		LocalOffset: 0,500,-85, 0,-500,-85
 		PauseOnCondition: !ammo2 || bombing-run
+		RequiresCondition: sidewinders-upgrade
 	AttackAircraftCA:
 		FacingTolerance: 512
 		PersistentTargeting: false
@@ -1277,6 +1326,7 @@ A10:
 		RequiresSelection: true
 		AmmoPools: secondary
 		FullSequence: pip-red
+		RequiresCondition: sidewinders-upgrade
 	Selectable:
 		Bounds: 36,28,0,2
 		DecorationBounds: 40,29,0,1
@@ -1304,6 +1354,9 @@ A10:
 	Rearmable:
 		RearmActors: afld, afld.gdi
 		AmmoPools: primary, secondary
+	GrantConditionOnPrerequisite@SIDEWINDERS:
+		Condition: sidewinders-upgrade
+		Prerequisites: sidewinders.upgrade
 	-RangeMultiplier@SEEK:
 	-RangeMultiplier@SEEK2:
 	-RangeMultiplier@SEEK3:
@@ -1333,6 +1386,28 @@ A10:
 		RequiresCondition: (stance-attackanything || assault-move) && !ammo && ammo2
 		ValidTargets: Air, AirSmall
 		InvalidTargets: NoAutoTarget
+	UpgradeableTo:
+		Actors: a10.upg
+
+A10.UPG:
+	Inherits: A10
+	RenderSprites:
+		Image: a10
+	Buildable:
+		Prerequisites: afld.gdi, ~aircraft.gdi, ~sidewinders.upgrade, ~techlevel.high
+		Description: Attack aircraft with incendiary bombs\n  and air-to-air missiles.
+	-TooltipExtras:
+	TooltipExtras@UPG:
+		IsStandard: true
+		-RequiresCondition:
+	-GrantConditionOnPrerequisite@SIDEWINDERS:
+	Armament@SECONDARY:
+		-RequiresCondition:
+	Selectable:
+		Class: a10
+	-UpgradeableTo:
+	WithAmmoPipsDecorationCA@SECONDARY:
+		-RequiresCondition:
 
 A10.bomber:
 	Inherits: ^NeutralPlane
@@ -1505,9 +1580,9 @@ GALX:
 
 APCH:
 	Inherits: ^HelicopterTD
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Valued:
-		Cost: 1400
+		Cost: 1350
 	Tooltip:
 		Name: Apache
 	UpdatesPlayerStatistics:
@@ -1520,8 +1595,8 @@ APCH:
 		IconPalette: chrometd
 		Description: Helicopter gunship with a chaingun.
 	TooltipExtras:
-		Strengths: • Strong vs Infantry, Light Armor, Buildings
-		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
+		Strengths: • Strong vs Infantry, Light Armor, Aircraft
+		Weaknesses: • Weak vs Heavy Armor, Defenses
 	Aircraft:
 		AltitudeVelocity: 0c100
 		TurnSpeed: 16
@@ -1529,7 +1604,7 @@ APCH:
 		TakeoffSounds: htoff1.aud
 		LandingSounds: hland1.aud
 	Health:
-		HP: 20000
+		HP: 15000
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -1540,6 +1615,11 @@ APCH:
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: HeliGunAG
+		LocalOffset: 350,0,-150
+		MuzzleSequence: muzzle
+		PauseOnCondition: !ammo
+	Armament@SECONDARY:
+		Weapon: HeliGunAA
 		LocalOffset: 350,0,-150
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
@@ -1906,7 +1986,7 @@ UAV:
 
 RAH:
 	Inherits: ^HelicopterTD
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	RenderSprites:
 		Image: rah66
 	Buildable:
@@ -1914,11 +1994,11 @@ RAH:
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 60
 		IconPalette: chrometd
-		Prerequisites: hq, ~aircraft.nod, ~techlevel.high
-		Description: Attack helicopter that can be upgraded\n  with cloaking capability.
+		Prerequisites: tmpl, ~aircraft.nod, ~techlevel.high
+		Description: Stealth attack helicopter with powerful\n  anti-personnel rockets.
 	TooltipExtras:
 		Strengths: • Strong vs Aircraft, Infantry, Light Armor, Buildings
-		Weaknesses: • Weak vs Heavy Armor, Defenses
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 1900
 	Tooltip:
@@ -1936,21 +2016,11 @@ RAH:
 		Range: 8c0
 		Type: GroundPosition
 	Armament@PRIMARY:
-		Weapon: Rah66AA
-		LocalOffset: 0,-213,-85, 0,213,-85
-		PauseOnCondition: !ammo
-		RequiresCondition: !napalm-missiles
-	Armament@PRIMARYBH:
-		Weapon: Rah66AA.BlackHand
-		LocalOffset: 0,-213,-85, 0,213,-85
-		PauseOnCondition: !ammo
-		RequiresCondition: napalm-missiles
-	Armament@SECONDARY:
 		Weapon: Rah66AG
 		LocalOffset: 0,-213,-85, 0,213,-85
 		PauseOnCondition: !ammo
 		RequiresCondition: !napalm-missiles
-	Armament@SECONDARYBH:
+	Armament@PRIMARYBH:
 		Weapon: Rah66AG.BlackHand
 		LocalOffset: 0,-213,-85, 0,213,-85
 		PauseOnCondition: !ammo
@@ -1977,7 +2047,7 @@ RAH:
 		UncloakSound: appear1.aud
 		Palette: cloak
 		IsPlayerPalette: false
-		RequiresCondition: !cloak-force-disabled && airborne && !invisibility && rahstealth-upgrade
+		RequiresCondition: !cloak-force-disabled && airborne && !invisibility
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
@@ -2030,9 +2100,6 @@ RAH:
 	GrantConditionOnFaction@blackh:
 		Factions: blackh
 		Condition: napalm-missiles
-	GrantConditionOnPrerequisite@RAHSTEALTH:
-		Condition: rahstealth-upgrade
-		Prerequisites: rahstealth.upgrade
 	AppearsOnRadar:
 		ValidRelationships: Ally
 
@@ -2814,7 +2881,7 @@ VENM:
 		Description: VTOL gunship armed with laser.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor, Aircraft
-		Weaknesses: • Weak vs Heavy Armor, Buildings
+		Weaknesses: • Weak vs Buildings, Defenses
 	Aircraft:
 		AltitudeVelocity: 0c100
 		TurnSpeed: 22
@@ -2822,7 +2889,7 @@ VENM:
 		LandingSounds: orcadwn1.aud
 		Speed: 180
 	Health:
-		HP: 19000
+		HP: 18000
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -2846,14 +2913,14 @@ VENM:
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
 	AmmoPool:
-		Ammo: 10
-		ReloadDelay: 18
+		Ammo: 8
+		ReloadDelay: 25
 		AmmoCondition: ammo
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
-		PipCount: 6
+		PipCount: 4
 	SpawnActorOnDeath:
 		Actor: VENM.Husk
 		RequiresCondition: airborne && ammo && !empdisable && !being-warped

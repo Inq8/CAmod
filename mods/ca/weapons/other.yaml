@@ -1013,7 +1013,7 @@ PortaLaserE:
 	Range: 7c0
 
 VenomLaser:
-	ReloadDelay: 25
+	ReloadDelay: 30
 	ValidTargets: Ground, Water
 	Range: 5c0
 	Report: venmfire1.aud, venmfire2.aud
@@ -1035,7 +1035,7 @@ VenomLaser:
 			Wood: 20
 			Concrete: 10
 			Light: 90
-			Heavy: 10
+			Heavy: 45
 			Brick: 50
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
@@ -1043,11 +1043,10 @@ VenomLaser:
 
 VenomLaserAA:
 	Inherits: VenomLaser
-	ReloadDelay: 18
 	ValidTargets: Air, AirSmall
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air, AirSmall
-		Damage: 2600
+		Damage: 4000
 		Versus:
 			Wood: 100
 			Concrete: 100
