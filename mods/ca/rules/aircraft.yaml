@@ -1285,7 +1285,7 @@ A10:
 		Weapon: Sidewinder
 		LocalOffset: 0,500,-85, 0,-500,-85
 		PauseOnCondition: !ammo2 || bombing-run
-		RequiresCondition: sidewinders-upgrade
+		RequiresCondition: sidewinders-upgrade && resupplied-with-sidewinders
 	AttackAircraftCA:
 		FacingTolerance: 512
 		PersistentTargeting: false
@@ -1313,6 +1313,7 @@ A10:
 		Name: secondary
 		Ammo: 4
 		ReloadDelay: 60
+		InitialAmmo: 0
 		AmmoCondition: ammo2
 		Armaments: secondary
 	WithAmmoPipsDecorationCA@PRIMARY:
@@ -1326,7 +1327,7 @@ A10:
 		RequiresSelection: true
 		AmmoPools: secondary
 		FullSequence: pip-red
-		RequiresCondition: sidewinders-upgrade
+		RequiresCondition: sidewinders-upgrade && resupplied-with-sidewinders
 	Selectable:
 		Bounds: 36,28,0,2
 		DecorationBounds: 40,29,0,1
@@ -1388,6 +1389,15 @@ A10:
 		InvalidTargets: NoAutoTarget
 	UpgradeableTo:
 		Actors: a10.upg
+	ReloadAmmoPool@NOSIDEWINDERS:
+		Delay: 25
+		Count: -4
+		AmmoPool: secondary
+		RequiresCondition: !resupplied-with-sidewinders && ammo2
+	GrantConditionOnResupply:
+		Condition: resupplied-with-sidewinders
+		GrantPermanently: true
+		RequiresCondition: sidewinders-upgrade
 
 A10.UPG:
 	Inherits: A10
@@ -1403,11 +1413,15 @@ A10.UPG:
 	-GrantConditionOnPrerequisite@SIDEWINDERS:
 	Armament@SECONDARY:
 		-RequiresCondition:
+	AmmoPool@SECONDARY:
+		-InitialAmmo:
 	Selectable:
 		Class: a10
 	-UpgradeableTo:
 	WithAmmoPipsDecorationCA@SECONDARY:
 		-RequiresCondition:
+	-ReloadAmmoPool@NOSIDEWINDERS:
+	-GrantConditionOnResupply:
 
 A10.bomber:
 	Inherits: ^NeutralPlane
