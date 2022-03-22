@@ -274,8 +274,8 @@ SUK:
 		RequiresCondition: !seismic-upgrade
 	TooltipExtras@SEISMIC:
 		Description: Fast ground attack aircraft armed\n  with powerful explosive munitions.
-		Strengths: • Strong vs Buildings, Defenses, Light Armor
-		Weaknesses: • Weak vs Heavy Armor, Infantry\n• Cannot attack Aircraft
+		Strengths: • Strong vs Buildings, Heavy Armor, Defenses, Light Armor
+		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
 		RequiresCondition: seismic-upgrade
 	Valued:
 		Cost: 2000
@@ -380,7 +380,7 @@ SUK.UPG:
 		Image: suk
 	Buildable:
 		Prerequisites: afld, stek, ~aircraft.soviet, ~seismic.upgrade, ~techlevel.high
-		Description: Fast ground attack aircraft armed\n  with powerful explosive munitions.
+		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	-TooltipExtras:
 	TooltipExtras@SEISMIC:
 		IsStandard: true
