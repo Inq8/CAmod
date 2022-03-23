@@ -110,41 +110,22 @@ FLAK-SEAS-AG:
 			Heavy: 25
 			Concrete: 20
 
-Gatt.0:
+Gatt:
 	Inherits: ^AACannon
-	ReloadDelay: 15
-	Report: vgatlo1a.aud
+	ReloadDelay: 5
+	-Report:
 	ValidTargets: Air, AirSmall, ICBM
 	Warhead@1Dam: SpreadDamage
-		Damage: 1250
+		Damage: 1300
 		Range: 0, 0c64, 0c256, 3c768
 		ValidTargets: Air, ICBM
 	Warhead@2Dam: SpreadDamage
-		Damage: 1250
+		Damage: 1300
 		Range: 0, 0c64, 0c256, 1c768
 		Falloff: 100, 70, 30, 10
 	Warhead@2Eff: CreateEffect
 		ValidTargets: Air, AirSmall, ICBM
 		ImpactSoundChance: 20
-
-Gatt.1:
-	Inherits: Gatt.0
-	ReloadDelay: 5
-	Report: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: 1250
-
-Gatt.2:
-	Inherits: Gatt.1
-	Report: vgatlo5a.aud, vgatlo5b.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: 1700
-
-Gatt.3:
-	Inherits: Gatt.2
-	Report: vgatlo8a.aud, vgatlo8b.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: 1900
 
 MGatt:
 	Inherits: ^AACannon

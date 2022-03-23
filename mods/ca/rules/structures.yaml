@@ -5535,29 +5535,37 @@ CRAM:
 		IconPalette: chrometd
 	-Armament:
 	-WithTurretAttackAnimation:
-	Armament@GAT0:
-		Weapon: Gatt.0
+	Armament@GAT:
+		Weapon: Gatt
 		LocalOffset: 520,0,450
 		MuzzleSequence: muzzle
-		RequiresCondition: gattling == 0
-	Armament@GAT1:
-		Weapon: Gatt.1
-		LocalOffset: 520,0,450
-		MuzzleSequence: muzzle
-		RequiresCondition: gattling == 1
-	Armament@GAT2:
-		Weapon: Gatt.2
-		LocalOffset: 520,0,450
-		MuzzleSequence: muzzle
-		RequiresCondition: gattling == 2
-	Armament@GAT3:
-		Weapon: Gatt.3
-		LocalOffset: 520,0,450
-		MuzzleSequence: muzzle
-		RequiresCondition: gattling == 3
+	FirepowerMultiplier@GAT1:
+		Modifier: 115
+		RequiresCondition: firing && gatling == 1
+	FirepowerMultiplier@GAT2:
+		Modifier: 130
+		RequiresCondition: firing && gatling == 2
+	FirepowerMultiplier@GAT3:
+		Modifier: 145
+		RequiresCondition: firing && gatling >= 3
+	AmbientSoundCA@ATTACKSOUND1:
+		SoundFiles: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
+		RequiresCondition: firing && gatling == 1
+	AmbientSoundCA@ATTACKSOUND2:
+		InitialSound: vgatlo4a.aud
+		SoundFiles: vgatlo5a.aud, vgatlo5b.aud
+		RequiresCondition: firing && gatling == 2
+	AmbientSoundCA@ATTACKSOUND3:
+		InitialSound: vgatlo7a.aud
+		SoundFiles: vgatlo8a.aud, vgatlo8b.aud
+		RequiresCondition: firing && gatling >= 3
+	GrantConditionOnAttackCA@FIRING:
+		ArmamentNames: primary
+		Condition: firing
+		RevokeDelay: 6
 	GrantConditionOnAttack:
-		Condition: gattling
-		RequiredShotsPerInstance: 1,7,12
+		Condition: gatling
+		RequiredShotsPerInstance: 1,2,4
 		MaximumInstances: 3
 		RevokeDelay: 55
 		RevokeOnNewTarget: False
