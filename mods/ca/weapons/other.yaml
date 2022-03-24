@@ -1013,7 +1013,7 @@ PortaLaserE:
 	Range: 7c0
 
 VenomLaser:
-	ReloadDelay: 25
+	ReloadDelay: 30
 	ValidTargets: Ground, Water
 	Range: 5c0
 	Report: venmfire1.aud, venmfire2.aud
@@ -1035,7 +1035,7 @@ VenomLaser:
 			Wood: 20
 			Concrete: 10
 			Light: 90
-			Heavy: 10
+			Heavy: 45
 			Brick: 50
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
@@ -1043,11 +1043,10 @@ VenomLaser:
 
 VenomLaserAA:
 	Inherits: VenomLaser
-	ReloadDelay: 18
 	ValidTargets: Air, AirSmall
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air, AirSmall
-		Damage: 2600
+		Damage: 4000
 		Versus:
 			Wood: 100
 			Concrete: 100
@@ -1868,7 +1867,7 @@ RadBeamWeapon:
 	ValidTargets: Ground, Water
 	InvalidTargets: Air
 	Range: 6c0
-	ReloadDelay: 100
+	ReloadDelay: 110
 	Report: idesat1a.aud
 	Projectile: RadBeam
 		Amplitude: 176
@@ -1880,7 +1879,7 @@ RadBeamWeapon:
 		Versus:
 			None: 175
 			Light: 50
-			Heavy: 20
+			Heavy: 10
 			Wood: 12
 			Concrete: 12
 			Brick: 0
@@ -2080,7 +2079,7 @@ JDAM:
 		Shadow: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
-		Damage: 3800
+		Damage: 4200
 		Falloff: 1000, 368, 135, 50, 0
 		ValidTargets: Ground, Water
 		Versus:

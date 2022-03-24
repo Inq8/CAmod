@@ -1736,18 +1736,19 @@ Player:
 		AirSquadTargetTypes:
 			heli: Aircraft, Vehicle
 			nhaw: Infantry
-			hind: Infantry, Building, Aircraft
-			yak: Building, Infantry
+			hind: Infantry, Vehicle
+			yak: Building, Infantry, Aircraft
 			mig: Aircraft, Vehicle, Defense
 			suk: Vehicle, Defense
-			suk.upg: Building
+			suk.upg: Vehicle, Building
 			kiro: Building
 			orca: Aircraft, Vehicle
 			orcb: Vehicle, Defense
-			a10: Infantry, Building, Aircraft
-			apch: Infantry, Building
+			a10: Infantry, Building
+			a10.upg: Infantry, Building, Aircraft
+			apch: Infantry, Building, Aircraft
 			venm: Infantry, Aircraft
-			rah: Infantry, Building, Aircraft
+			rah: Infantry, Building
 			harr: Infantry, Building, Aircraft
 			scrn: Aircraft, Vehicle, Defense
 			stmr: Aircraft, Infantry, Building
@@ -1758,8 +1759,8 @@ Player:
 		IdleBaseUnitsMaximum: 50
 		MaxAircraft: 3
 		MaintainAirSuperiority: true
-		AirToAirUnits: heli, mig, orca, scrn, venm, stmr, enrv, a10, harr, rah, hind
-		AirThreatUnits: heli, mig, orca, scrn, venm, stmr, enrv, a10, harr, rah, hind, pac, deva, kiro, mshp
+		AirToAirUnits: heli, yak, mig, orca, apch, scrn, venm, stmr, enrv, a10.upg, harr
+		AirThreatUnits: heli, yak, mig, orca, apch, scrn, venm, stmr, enrv, a10.upg, harr, pac, deva, kiro, mshp
 		UnitBuilderMinCredits: 1800
 		UnitIntervals:
 			mshp: 7500
@@ -1907,6 +1908,7 @@ Player:
 			disr: 10
 			kiro: 2
 			a10: 5
+			a10.upg: 5
 			auro: 5
 			ss: 1
 			msub: 1
@@ -1984,18 +1986,19 @@ Player:
 		AirSquadTargetTypes:
 			heli: Aircraft, Vehicle
 			nhaw: Infantry
-			hind: Infantry, Building, Aircraft
-			yak: Building, Infantry
+			hind: Infantry, Vehicle
+			yak: Building, Infantry, Aircraft
 			mig: Aircraft, Vehicle, Defense
 			suk: Vehicle, Defense
-			suk.upg: Building
+			suk.upg: Vehicle, Building
 			kiro: Building
 			orca: Aircraft, Vehicle
 			orcb: Vehicle, Defense
-			a10: Infantry, Building, Aircraft
-			apch: Infantry, Building
+			a10: Infantry, Building
+			a10.upg: Infantry, Building, Aircraft
+			apch: Infantry, Building, Aircraft
 			venm: Infantry, Aircraft
-			rah: Infantry, Building, Aircraft
+			rah: Infantry, Building
 			harr: Infantry, Building, Aircraft
 			scrn: Aircraft, Vehicle, Defense
 			stmr: Aircraft, Infantry, Building
@@ -2007,8 +2010,8 @@ Player:
 		MaxAircraft: 2
 		MaintainAirSuperiority: true
 		MaxAirSuperiority: 8
-		AirToAirUnits: heli, mig, orca, scrn, venm, stmr, enrv, a10, harr, rah, hind
-		AirThreatUnits: heli, mig, orca, scrn, venm, stmr, enrv, a10, harr, rah, hind, pac, deva, kiro, mshp
+		AirToAirUnits: heli, yak, mig, orca, apch, scrn, venm, stmr, enrv, a10.upg, harr
+		AirThreatUnits: heli, yak, mig, orca, apch, scrn, venm, stmr, enrv, a10.upg, harr, pac, deva, kiro, mshp
 		UnitDelays:
 			arty: 4500
 			arty.nod: 4500
@@ -2159,6 +2162,7 @@ Player:
 			disr: 10
 			kiro: 2
 			a10: 5
+			a10.upg: 5
 			auro: 5
 			ss: 1
 			msub: 1
@@ -2381,6 +2385,7 @@ Player:
 			disr: 10
 			kiro: 2
 			a10: 5
+			a10.upg: 5
 			auro: 5
 			ss: 1
 			msub: 1
@@ -2602,6 +2607,7 @@ Player:
 			disr: 10
 			kiro: 2
 			a10: 5
+			a10.upg: 5
 			auro: 5
 			ss: 1
 			msub: 1
@@ -2726,6 +2732,7 @@ Player:
 			disr: 10
 			kiro: 2
 			a10: 5
+			a10.upg: 5
 			auro: 5
 			ss: 20
 			msub: 10
