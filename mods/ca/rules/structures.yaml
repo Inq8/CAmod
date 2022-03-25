@@ -1713,6 +1713,7 @@ SILO:
 	AirstrikePower@spyplane:
 		OrderName: spyplane
 		Icon: spyplane
+		Prerequisites: ~aircraft.soviet
 		ChargeInterval: 3000
 		Description: Spy Plane
 		LongDesc: \nDispatches a spy plane that reveals the target location\n    for a limited time.
@@ -4342,7 +4343,7 @@ REP:
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@uav:
 		OrderName: gdiuav
-		Prerequisites: ~!aircraft.arc
+		Prerequisites: aircraft.gdi, ~!aircraft.arc
 		Icon: uavicon
 		ChargeInterval: 3750
 		Description: Recon Drone
