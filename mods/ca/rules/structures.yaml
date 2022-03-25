@@ -4303,8 +4303,8 @@ REP:
 		Icon: orcaca
 		IconPalette: chrometd
 		ChargeInterval: 6000
-		Description: Reinforcements
-		LongDesc: \nAn Orca Carryall drops an APC containing\n    an infantry squad at the target location.
+		Name: Reinforcements
+		Description: \nAn Orca Carryall drops an APC containing\n    an infantry squad at the target location.
 		EndChargeSpeechNotification: Reinforce
 		LaunchSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
@@ -4316,9 +4316,9 @@ REP:
 		Prerequisites: ~aircraft.talon, ~techlevel.medium
 		Icon: xodrop
 		ChargeInterval: 8250
-		Description: X-O Drop
+		Name: X-O Drop
 		UnitType: ocar.xo
-		LongDesc: \nAn Orca transport drops a squad of X-O Powersuits\n    at the target location.
+		Description: \nAn Orca transport drops a squad of X-O Powersuits\n    at the target location.
 		SquadSize: 1
 		SquadOffset: 0,1792,0
 		DropItems: XO,XO,XO
@@ -4340,8 +4340,8 @@ REP:
 		Prerequisites: ~!aircraft.arc
 		Icon: uavicon
 		ChargeInterval: 3750
-		Description: Recon Drone
-		LongDesc: \nA drone flies across the map, revealing the area as it passes.\n\nDetects cloaked units.
+		Name: Recon Drone
+		Description: \nA drone flies across the map, revealing the area as it passes.\n\nDetects cloaked units.
 		SelectTargetSpeechNotification: SelectTarget
 		EndChargeSpeechNotification: SpyPlaneReady
 		CameraActor: camera.spyplane
@@ -4360,8 +4360,8 @@ REP:
 		Prerequisites: ~aircraft.arc
 		Icon: uavicon
 		ChargeInterval: 3000
-		Description: Recon Drone
-		LongDesc: \nA drone flies across the map, revealing the area as it passes.\n\nDetects cloaked units.
+		Name: Recon Drone
+		Description: \nA drone flies across the map, revealing the area as it passes.\n\nDetects cloaked units.
 		SelectTargetSpeechNotification: SelectTarget
 		EndChargeSpeechNotification: SpyPlaneReady
 		CameraActor: camera.spyplane
@@ -4380,8 +4380,8 @@ REP:
 		Prerequisites: ~aircraft.gdi, techlevel.unrestricted
 		Icon: airsupport
 		ChargeInterval: 10500
-		Description: Interceptors
-		LongDesc: \nA squadron of Interceptors provides\n    air cover over the target area,\n    engaging any enemy aircraft within range.
+		Name: Interceptors
+		Description: \nA squadron of Interceptors provides\n    air cover over the target area,\n    engaging any enemy aircraft within range.
 		SelectTargetSpeechNotification: SelectTarget
 		EndChargeSpeechNotification: SpyPlaneReady
 		CameraActor: camera
@@ -4901,7 +4901,7 @@ TMPL:
 		AllowMultiple: false
 		Sequence: false-active
 		Name: Force Shield
-		LongDesc: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
+		Description: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
 		OnFireSound: forceon.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
@@ -4926,7 +4926,7 @@ TMPL:
 		AirburstAltitude: 0c0
 		Sequence: false-active
 		AllowMultiple: false
-		LongDesc: \nIncreases the movement speed and rate of fire of\n    targeted units for a limited time.\n\nWarning: Affected units take increased damage.
+		Description: \nIncreases the movement speed and rate of fire of\n    targeted units for a limited time.\n\nWarning: Affected units take increased damage.
 		OnFireSound: nodfrenzy.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
