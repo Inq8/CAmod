@@ -3476,6 +3476,7 @@ MLRS:
 	Armament:
 		Weapon: honestjohn
 		LocalOffset: 0,171,0, 0,-171,0
+		PauseOnCondition: moving
 	AmmoPool:
 		Ammo: 2
 		AmmoCondition: ammo
@@ -3492,10 +3493,13 @@ MLRS:
 	WithSpriteTurret@NoMissiles:
 		RequiresCondition: !ammo
 		Sequence: turret0
-	GrantConditionOnAttack:
+	GrantConditionOnAttack@AIMING:
 		Condition: aiming
-		RevokeDelay: 50
+		RevokeDelay: 15
 		RevokeAll: false
+	GrantConditionOnMovement@MOVING:
+		ValidMovementTypes: Horizontal, Vertical, Turn
+		Condition: moving
 	Explodes:
 		Weapon: BarrelExplode
 	ReloadAmmoPool@1:
@@ -4720,6 +4724,7 @@ JUGG:
 		Recoil: 171
 		RecoilRecovery: 30
 		MuzzleSequence: muzzle
+		PauseOnCondition: moving
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 		TargetFrozenActors: True
@@ -4743,10 +4748,13 @@ JUGG:
 		Voice: Move
 	Voiced:
 		VoiceSet: DisrVoice
-	GrantConditionOnAttack:
+	GrantConditionOnAttack@AIMING:
 		Condition: aiming
-		RevokeDelay: 50
+		RevokeDelay: 15
 		RevokeAll: false
+	GrantConditionOnMovement@MOVING:
+		ValidMovementTypes: Horizontal, Vertical, Turn
+		Condition: moving
 	Carryable:
 		LocalOffset: 0,0,700
 	ProducibleWithLevel:
