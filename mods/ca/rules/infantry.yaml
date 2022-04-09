@@ -114,6 +114,7 @@ E1:
 		RequiresCondition: parachute
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	Convertible:
@@ -163,6 +164,7 @@ E2:
 		ProneOffset: 256,64,-331
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: throw
 		RequiresCondition: !parachute && !being-warped
@@ -253,6 +255,7 @@ E3:
 		ProneOffset: 384,0,-395
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	AutoTarget:
@@ -445,6 +448,7 @@ U3:
 		PauseOnCondition: being-warped
 		RequiresCondition: undeployed
 		Voice: Attack
+		FacingTolerance: 0
 	AttackTurreted@deployed:
 		Armaments: deployed
 		Turrets: deploy
@@ -550,6 +554,7 @@ E4:
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		RequiresCondition: !parachute && !being-warped
@@ -614,6 +619,7 @@ E6:
 	AttackFrontal:
 		Armaments: primary, secondary
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	Voiced:
 		VoiceSet: EngineerVoice
 	Targetable:
@@ -731,6 +737,7 @@ E7:
 	AttackFrontal:
 		PauseOnCondition: being-warped
 		Armaments: primary, secondary
+		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		StandSequences: stand
@@ -798,6 +805,7 @@ MEDI:
 		ForceTargetRelationships: None
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithInfantryBody:
 		IdleSequences: idle
 		StandSequences: stand
@@ -870,6 +878,7 @@ MECH:
 	AttackFrontal:
 		Voice: Action
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	CaptureManager:
 	Captures:
 		CaptureTypes: husk
@@ -1062,6 +1071,7 @@ GNRL:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -1207,6 +1217,7 @@ SHOK:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -1252,6 +1263,7 @@ N1:
 		MuzzleSequence: garrison-muzzle
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		IdleSequences: idle1,idle2,idle3,idle4
@@ -1321,6 +1333,7 @@ N2:
 		FireDelay: 15
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithInfantryBody:
 		StandSequences: stand
 		DefaultAttackSequence: throw
@@ -1434,6 +1447,7 @@ N3:
 		ProneOffset: 384,0,-395
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
 	WithInfantryBody:
@@ -1509,6 +1523,7 @@ N4:
 		RequiresCondition: parachute
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
 	WithMuzzleOverlay:
@@ -1572,6 +1587,7 @@ N5:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -1660,6 +1676,7 @@ RMBO:
 		Voice: Attack
 		Armaments: primary, secondary
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		IdleSequences: idle1,idle2,idle3
@@ -1735,6 +1752,7 @@ N6:
 	AttackFrontal:
 		Armaments: primary, secondary
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	Voiced:
 		VoiceSet: EngineerVoice
 	WithDeathAnimation:
@@ -1840,6 +1858,7 @@ SNIP:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		StandSequences: stand, stand2
@@ -1903,6 +1922,7 @@ BORI:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
 	Armament@PRIMARY:
@@ -1989,6 +2009,7 @@ MORT:
 		FireDelay: 15
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: throw
 		RequiresCondition: !parachute && !being-warped
@@ -2062,6 +2083,7 @@ SAB:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: ReturnFire
@@ -2140,6 +2162,7 @@ ACOL:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		IdleSequences: idle3
@@ -2297,6 +2320,7 @@ JJET:
 	AttackFrontal:
 		PauseOnCondition: being-warped
 		Voice: Attack
+		FacingTolerance: 0
 	WithInfantryBody:
 		IdleSequences: idle1,idle2
 		DefaultAttackSequence: attack
@@ -2499,6 +2523,7 @@ E8:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped || !undeployed
+		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -2604,6 +2629,7 @@ N1C:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -2649,13 +2675,14 @@ N3C:
 		AddToArmyValue: true
 	-TakeCover:
 	Health:
-		HP:  9000
+		HP: 9000
 	Mobile:
 		Speed: 46
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -2764,6 +2791,7 @@ RMBC:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped || empdisable
+		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -2864,6 +2892,7 @@ IVAN:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: throw
 		RequiresCondition: !parachute && !being-warped
@@ -2957,6 +2986,7 @@ BRUT:
 	AttackFrontal:
 		PauseOnCondition: being-warped
 		Voice: Attack
+		FacingTolerance: 0
 	-TakeCover:
 	-Captures@DRIVER_KILL:
 	-CaptureManager:
@@ -3052,6 +3082,7 @@ SHAD:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: ReturnFire
@@ -3286,6 +3317,7 @@ BH:
 	AttackFrontal:
 		PauseOnCondition: being-warped
 		Voice: Attack
+		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		RequiresCondition: !parachute && !being-warped
@@ -3399,6 +3431,7 @@ YURI:
 	AttackFrontal:
 		PauseOnCondition: being-warped && parachute
 		Armaments: primary, secondary, aidummy
+		FacingTolerance: 0
 	RevealsShroud:
 		Range: 6c0
 	Passenger:
@@ -3578,6 +3611,7 @@ XO:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
+		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithMuzzleOverlay:

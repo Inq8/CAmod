@@ -38,6 +38,7 @@ V2RL:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
 	WithFacingSpriteBody:
 		RequiresCondition: !reloading
 		Name: loaded
@@ -92,6 +93,7 @@ KATY:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
 	Explodes:
 		Weapon: BarrelExplode
 	ProducibleWithLevel:
@@ -943,6 +945,7 @@ ARTY:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
 	WithMuzzleOverlay:
 	Explodes:
 		Weapon: ArtilleryExplode
@@ -1103,6 +1106,7 @@ ISU:
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
+		FacingTolerance: 0
 	WithMuzzleOverlay:
 	Explodes:
 		Weapon: ArtilleryExplode
@@ -1202,6 +1206,7 @@ SAPC:
 		LocalOffset: 85,0,171
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5
@@ -1527,6 +1532,7 @@ APC:
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5
@@ -2078,6 +2084,7 @@ CTNK:
 		LocalYaw: 60, -60
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
 	PortableChronoCA:
 		ChargeDelay: 375
 		MaxDistance: 18
@@ -2568,6 +2575,7 @@ APC2:
 		Armaments: primary
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !vulcan-upgrade
+		FacingTolerance: 0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 		Armaments: primary-upg, secondary-upg
@@ -3669,6 +3677,7 @@ BIKE:
 		RequiresCondition: tibcore-upgrade
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	GrantConditionOnPrerequisite@UPG:
@@ -3721,6 +3730,7 @@ FTNK:
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped || parachute
+		FacingTolerance: 0
 	Explodes:
 		Weapon: BarrelExplode
 		EmptyWeapon: BarrelExplode
@@ -5150,6 +5160,7 @@ V3RL:
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
+		FacingTolerance: 0
 	WithFacingSpriteBody:
 		RequiresCondition: loaded
 		Name: loaded
@@ -5460,6 +5471,7 @@ PCAN:
 		TargetFrozenActors: True
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
+		FacingTolerance: 0
 	SpawnActorOnDeath:
 		Actor: PCAN.Husk
 	GrantConditionOnAttack:
@@ -6071,6 +6083,7 @@ CRYO:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
 	Explodes:
 		Weapon: CryoExplosion
 	Selectable:
