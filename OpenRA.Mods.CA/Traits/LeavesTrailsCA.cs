@@ -123,7 +123,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 				if (++offset >= Info.Offsets.Length)
 					offset = 0;
 
-				var offsetRotation = Info.Offsets[offset].Rotate(body.QuantizeOrientation(self, self.Orientation));
+				var offsetRotation = Info.Offsets[offset].Rotate(body.QuantizeOrientation(self.Orientation));
 				var spawnPosition = Info.SpawnAtLastPosition ? cachedPosition : self.CenterPosition;
 
 				var pos = Info.Type == TrailType.CenterPosition ? spawnPosition + body.LocalToWorld(offsetRotation) :
