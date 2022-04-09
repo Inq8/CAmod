@@ -10,6 +10,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using OpenRA.Mods.Common.Effects;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
@@ -94,6 +95,10 @@ namespace OpenRA.Mods.CA.Traits.Render
 		bool wasStationary;
 		bool isMoving;
 
+		bool previouslySpawned;
+		CPos previousSpawnCell;
+		WAngle previousSpawnFacing;
+
 		void ITick.Tick(Actor self)
 		{
 			if (IsTraitDisabled)
@@ -123,17 +128,25 @@ namespace OpenRA.Mods.CA.Traits.Render
 				if (++offset >= Info.Offsets.Length)
 					offset = 0;
 
-				var offsetRotation = Info.Offsets[offset].Rotate(body.QuantizeOrientation(self.Orientation));
-				var spawnPosition = Info.SpawnAtLastPosition ? cachedPosition : self.CenterPosition;
+				if (!Info.TerrainTypes.Any() || Info.TerrainTypes.Contains(type))
+				{
+					var spawnFacing = Info.SpawnAtLastPosition ? cachedFacing : facing?.Facing ?? WAngle.Zero;
 
-				var pos = Info.Type == TrailType.CenterPosition ? spawnPosition + body.LocalToWorld(offsetRotation) :
-					self.World.Map.CenterOfCell(spawnCell);
+					if (previouslySpawned && previousSpawnCell == spawnCell)
+						spawnFacing = previousSpawnFacing;
 
-				var spawnFacing = Info.SpawnAtLastPosition ? cachedFacing : (facing != null ? facing.Facing : WAngle.Zero);
+					var offsetRotation = Info.Offsets[offset].Rotate(body.QuantizeOrientation(self.Orientation));
+					var spawnPosition = Info.SpawnAtLastPosition ? cachedPosition : self.CenterPosition;
+					var pos = Info.Type == TrailType.CenterPosition ? spawnPosition + body.LocalToWorld(offsetRotation) :
+						self.World.Map.CenterOfCell(spawnCell);
 
-				if ((Info.TerrainTypes.Count == 0 || Info.TerrainTypes.Contains(type)) && !string.IsNullOrEmpty(Info.Image))
 					self.World.AddFrameEndTask(w => w.Add(new SpriteEffect(pos, spawnFacing, self.World, Info.Image,
 						Info.Sequences.Random(Game.CosmeticRandom), Info.Palette, Info.VisibleThroughFog)));
+
+					previouslySpawned = true;
+					previousSpawnCell = spawnCell;
+					previousSpawnFacing = spawnFacing;
+				}
 
 				cachedPosition = self.CenterPosition;
 				cachedFacing = facing?.Facing ?? WAngle.Zero;
