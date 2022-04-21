@@ -179,18 +179,11 @@ namespace OpenRA.Mods.CA.Traits
 			if (!domainIndex.IsPassable(capturer.Location, target.Location, locomotor))
 				return Target.Invalid;
 
-			// Start a search from each refinery's delivery location:
-			List<CPos> path;
-
-			using (var search = PathSearch.ToTargetCell(
-				world, locomotor, capturer, capturer.Location, target.Location, BlockedByActor.None,
-				location =>
-				{
-					return world.FindActorsInCircle(world.Map.CenterOfCell(location), Info.EnemyAvoidanceRadius)
-						.Where(u => !u.IsDead && capturer.Owner.RelationshipWith(u.Owner) == PlayerRelationship.Enemy && capturer.IsTargetableBy(u))
-						.Sum(u => Math.Max(WDist.Zero.Length, Info.EnemyAvoidanceRadius.Length - (world.Map.CenterOfCell(location) - u.CenterPosition).Length));
-				}))
-				path = mobile.Pathfinder.FindPath(search);
+			var path = mobile.PathFinder.FindUnitPathToTargetCellByPredicate(
+				capturer, new[] { capturer.Location }, loc => loc == target.Location, BlockedByActor.Stationary,
+				loc => world.FindActorsInCircle(world.Map.CenterOfCell(loc), Info.EnemyAvoidanceRadius)
+					.Where(u => !u.IsDead && capturer.Owner.RelationshipWith(u.Owner) == PlayerRelationship.Enemy)
+					.Sum(u => Math.Max(WDist.Zero.Length, Info.EnemyAvoidanceRadius.Length - (world.Map.CenterOfCell(loc) - u.CenterPosition).Length)));
 
 			if (path.Count == 0)
 				return Target.Invalid;
