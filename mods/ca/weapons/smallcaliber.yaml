@@ -110,46 +110,27 @@ FLAK-SEAS-AG:
 			Heavy: 25
 			Concrete: 20
 
-Gatt.0:
+Gatt:
 	Inherits: ^AACannon
-	ReloadDelay: 15
-	Report: vgatlo1a.aud
+	ReloadDelay: 5
+	-Report:
 	ValidTargets: Air, AirSmall, ICBM
 	Warhead@1Dam: SpreadDamage
-		Damage: 1250
+		Damage: 1300
 		Range: 0, 0c64, 0c256, 3c768
 		ValidTargets: Air, ICBM
 	Warhead@2Dam: SpreadDamage
-		Damage: 1250
+		Damage: 1300
 		Range: 0, 0c64, 0c256, 1c768
 		Falloff: 100, 70, 30, 10
 	Warhead@2Eff: CreateEffect
 		ValidTargets: Air, AirSmall, ICBM
 		ImpactSoundChance: 20
 
-Gatt.1:
-	Inherits: Gatt.0
-	ReloadDelay: 5
-	Report: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: 1250
-
-Gatt.2:
-	Inherits: Gatt.1
-	Report: vgatlo5a.aud, vgatlo5b.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: 1700
-
-Gatt.3:
-	Inherits: Gatt.2
-	Report: vgatlo8a.aud, vgatlo8b.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: 1900
-
-MGatt.0:
+MGatt:
 	Inherits: ^AACannon
-	ReloadDelay: 15
-	Report: vgatlo1a.aud
+	ReloadDelay: 5
+	-Report:
 	Range: 7c512
 	Warhead@1Dam: SpreadDamage
 		Damage: 560
@@ -158,25 +139,6 @@ MGatt.0:
 	Warhead@2Eff: CreateEffect
 		ValidTargets: Air, AirSmall
 		ImpactSoundChance: 20
-
-MGatt.1:
-	Inherits: MGatt.0
-	ReloadDelay: 5
-	Report: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: 560
-
-MGatt.2:
-	Inherits: MGatt.1
-	Report: vgatlo5a.aud, vgatlo5b.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: 680
-
-MGatt.3:
-	Inherits: MGatt.2
-	Report: vgatlo8a.aud, vgatlo8b.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: 800
 
 ^HeavyMG:
 	ReloadDelay: 30
@@ -344,38 +306,28 @@ GTChainGun:
 
 ChainGun:
 	Inherits: ^HeavyMG
-	-Report:
-	StartBurstReport: gun13.aud
+	Report: gun13.aud
 	ReloadDelay: 12
-	Burst: 2
-	BurstDelays: 0
 	Range: 5c0
 	MinRange: 0c768
+	ValidTargets: Infantry
 	Projectile: Bullet
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
+		ValidTargets: Infantry
+		Damage: 3400
 		Versus:
-			None: 144
-			Wood: 50
-			Light: 54
-			Heavy: 20
+			None: 100
+			Wood: 10
+			Light: 5
+			Heavy: 5
+			Concrete: 5
 
-ChainGunAA:
-	Inherits: ^AACannon
-	ReloadDelay: 12
-	Burst: 2
-	BurstDelays: 0
-	-Report:
-	StartBurstReport: gun13.aud
-	Range: 5c0
+ChainGun.AnyTarget:
+	Inherits: ChainGun
+	-ValidTargets:
 	Warhead@1Dam: SpreadDamage
-		Damage: 1000
-		Range: 0, 0c64, 0c256, 1c768
-	Warhead@2Dam: SpreadDamage
-		Damage: 1000
-	Warhead@2Eff: CreateEffect
-		-ImpactSounds: flakhit1.aud, flakhit2.aud, flakhit3.aud
-		-ImpactSoundChance: 100
+		-ValidTargets: Infantry
 
 Vulcan2:
 	Inherits: ^LightMG
@@ -402,11 +354,56 @@ Vulcan3:
 		Explosions: piffs
 		Inaccuracy: 0
 
+
 ChainGun.Yak.R:
+	Inherits: ^HeavyMG
+	ReloadDelay: 60
+	Burst: 4
+	BurstDelays: 5
+	Range: 6c0
+	MinRange: 2c0
+	Projectile: InstantHit
+		Blockable: false
+	Warhead@1Dam: SpreadDamage
+		Damage: 4000
+		Versus:
+			None: 100
+			Wood: 40
+			Light: 55
+			Heavy: 25
+			Concrete: 25
+
+ChainGun.Yak.L:
+	Inherits: ChainGun.Yak.R
+	-Report:
+
+ChainGun.Yak.AA:
+	Inherits: ChainGun.Yak.R
+	ValidTargets: Air
+	MinRange: 1c256
+	Warhead@1Dam: SpreadDamage
+		Range: 0, 0c64, 0c256, 1c768
+		Falloff: 100, 100, 30, 15
+		ValidTargets: Air
+		ValidRelationships: Enemy, Neutral
+		Damage: 1500
+		Versus:
+			None: 100
+			Wood: 100
+			Light: 100
+			Heavy: 100
+			Concrete: 100
+			Brick: 100
+	Warhead@2Eff: CreateEffect
+		Explosions: small_explosion_air
+		ValidTargets: Air
+		Inaccuracy: 0c341
+
+ChainGun.P51.R:
 	Inherits: ^HeavyMG
 	Burst: 10
 	Range: 6c0
-	ReloadDelay: 50
+	ReloadDelay: 80
 	BurstDelays: 2
 	-Report:
 	StartBurstReport: gun13ext.aud
@@ -419,28 +416,14 @@ ChainGun.Yak.R:
 		Damage: 2800
 		Versus:
 			None: 200
-			Wood: 35
+			Wood: 15
 			Light: 80
 			Heavy: 25
 			Concrete: 25
 
-ChainGun.Yak.L:
-	Inherits: ChainGun.Yak.R
-	FirstBurstTargetOffset: -512,-213,0
-
-ChainGun.P51.R:
-	Inherits: ChainGun.Yak.R
-	ReloadDelay: 80
-	Warhead@1Dam: SpreadDamage
-		Versus:
-			Wood: 15
-
 ChainGun.P51.L:
-	ReloadDelay: 80
-	Inherits: ChainGun.Yak.L
-	Warhead@1Dam: SpreadDamage
-		Versus:
-			Wood: 15
+	Inherits: ChainGun.P51.R
+	FirstBurstTargetOffset: -512,-213,0
 
 Pistol:
 	Inherits: ^LightMG
@@ -591,33 +574,20 @@ M60mgMD:
 	Inherits: M60mgTD
 	Range: 4c768
 
-MGatt.0G:
+MGattG:
 	Inherits: ^HeavyMG
 	Range: 4c768
-	ReloadDelay: 15
-	Report: vgatlo1a.aud
+	ReloadDelay: 5
+	-Report:
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
-		Damage: 225
+		Damage: 300
 		Versus:
 			None: 250
 			Wood: 35
 			Concrete: 35
 			Light: 140
 			Heavy: 35
-
-MGatt.1G:
-	Inherits: MGatt.0G
-	ReloadDelay: 5
-	Report: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: 325
-
-MGatt.2G:
-	Inherits: MGatt.1G
-	Report: vgatlo5a.aud, vgatlo5b.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: 425
 
 ^SnipeWeapon:
 	ReloadDelay: 80
@@ -630,6 +600,8 @@ MGatt.2G:
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
 		Damage: 15000
+		Versus:
+			Light: 15
 		ValidTargets: Barrel, Infantry
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Eff: CreateEffect
@@ -663,6 +635,8 @@ Colt45:
 	Range: 7c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 4700
+		Versus:
+			Light: 25
 	Warhead@2Eff: CreateEffect
 		Explosions: piff
 		ValidTargets: Ground, Ship, Air, AirSmall, Trees
@@ -874,10 +848,33 @@ ShadowOperativeGun:
 		Explosions: piff
 
 HeliGunAG:
-	Inherits: ChainGun
+	Inherits: ^HeavyMG
 	Report: mgbtr1.aud, mgbtr2.aud, mgbtr3.aud
-	-StartBurstReport:
-	-Burst:
-	-BurstDelays:
+	ReloadDelay: 12
+	Range: 5c0
+	MinRange: 0c768
+	Projectile: Bullet
+		Blockable: false
 	Warhead@1Dam: SpreadDamage
 		Damage: 5000
+		Versus:
+			None: 144
+			Wood: 50
+			Light: 54
+			Heavy: 20
+
+HeliGunAA:
+	Inherits: ^AACannon
+	ReloadDelay: 12
+	Burst: 1
+	Report: mgbtr1.aud, mgbtr2.aud, mgbtr3.aud
+	Range: 5c0
+	MinRange: 1c256
+	Warhead@1Dam: SpreadDamage
+		Damage: 2000
+		Range: 0, 0c64, 0c256, 1c768
+	Warhead@2Dam: SpreadDamage
+		Damage: 2000
+	Warhead@2Eff: CreateEffect
+		-ImpactSounds: flakhit1.aud, flakhit2.aud, flakhit3.aud
+		-ImpactSoundChance: 100

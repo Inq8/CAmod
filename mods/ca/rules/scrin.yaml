@@ -215,6 +215,7 @@ S1:
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 
@@ -250,6 +251,7 @@ S2:
 		Weapon: RavagerShards
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	WithInfantryBody:
@@ -295,6 +297,7 @@ S3:
 		PauseOnCondition: !ammo
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	AutoTarget:
@@ -343,6 +346,7 @@ S4:
 		Weapon: IntruderDiscs
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	-Crushable:
@@ -367,7 +371,7 @@ S6:
 		Weaknesses: • Unarmed
 		Attributes: • Captures enemy buildings\n• Repairs friendly structures & bridges\n• Defuses bombs
 	Valued:
-		Cost: 500
+		Cost: 400
 	Tooltip:
 		Name: Assimilator
 	UpdatesPlayerStatistics:
@@ -398,6 +402,7 @@ S6:
 	AttackFrontal:
 		Armaments: primary, secondary
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	Voiced:
 		VoiceSet: AssimilatorVoice
 	Targetable:
@@ -512,6 +517,7 @@ SMEDI:
 		ForceTargetRelationships: None
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: heal
 	Passenger:
@@ -641,6 +647,7 @@ MAST:
 		PauseOnCondition: being-warped
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	-Crushable:
@@ -1057,6 +1064,7 @@ CORR:
 		LocalOffset: 750,0,100
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
 	Explodes:
 		Weapon: CorruptorExplode
 		EmptyWeapon: CorruptorExplode
@@ -1115,6 +1123,7 @@ LCHR:
 		LocalOffset: 700,0,300, 700,-500,100, 700,500,100
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithMoveAnimation:
@@ -1829,7 +1838,7 @@ STMR:
 		RequiresSelection: true
 		PipCount: 3
 	ReloadAmmoPoolCA:
-		Delay: 750
+		Delay: 625
 		Count: 15
 		DelayOnFire: 75
 		DelayAfterReset: 90
@@ -1844,7 +1853,7 @@ STMR:
 	ExternalCondition@SREPREARM:
 		Condition: srep-rearm
 	ReloadAmmoPool@SREPREARM:
-		Delay: 250
+		Delay: 200
 		Count: 15
 		RequiresCondition: srep-rearm && !airborne
 	GrantConditionOnDamageState@SmokeTrail:
@@ -4443,6 +4452,7 @@ BUZZ:
 	Armament@PRIMARY:
 		Weapon: BuzzerTargeting
 	AttackFrontal:
+		FacingTolerance: 0
 
 BUZZ.AI:
 	Inherits: BUZZ

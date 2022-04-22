@@ -147,7 +147,7 @@ namespace OpenRA.Mods.CA.Traits
 				if (plugInfo != null)
 				{
 					var possibleBuilding = world.ActorsWithTrait<Pluggable>().FirstOrDefault(a =>
-						a.Actor.Owner == player && a.Trait.AcceptsPlug(a.Actor, plugInfo.Type));
+						a.Actor.Owner == player && a.Trait.AcceptsPlug(plugInfo.Type));
 
 					if (possibleBuilding.Actor != null)
 					{
