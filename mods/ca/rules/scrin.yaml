@@ -1101,7 +1101,7 @@ LCHR:
 		Speed: 80
 		TurnSpeed: 24
 	Health:
-		HP: 24000
+		HP: 26000
 	Armor:
 		Type: Light
 	RevealsShroud:
@@ -2092,7 +2092,7 @@ PAC:
 	Armor:
 		Type: Heavy
 	RevealsShroud:
-		Range: 10c0
+		Range: 11c0
 		MinRange: 8c0
 		Type: GroundPosition
 		RevealGeneratedShroud: False
@@ -3442,6 +3442,26 @@ NERV:
 		CameraRemoveDelay: 1
 		TargetCircleRange: 6c0
 		TargetCircleColor: b070ff90
+	GrantExternalConditionPower@FEEDERMUTATION:
+		OrderName: feedermutation
+		Icon: feedermutation
+		Prerequisites: radar.collector
+		ChargeInterval: 6750
+		Description: Feeder Mutation
+		Condition: feedermutation
+		Dimensions: 3, 3
+		Footprint: _x_ xxx _x_
+		ValidRelationships: Ally
+		Duration: 25
+		AllowMultiple: false
+		LongDesc: \nTransforms Scrin infantry into Feeders which consume resources\n    until becoming volatile enough to explode.
+		OnFireSound: feedermutation.aud
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		DisplayRadarPing: True
+		Cursor: ability
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayTimerRelationships: Ally		
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -3500,9 +3520,6 @@ SCRT:
 	ProvidesPrerequisiteValidatedFaction@travelerscrt:
 		Factions: traveler
 		Prerequisite: scrt.traveler
-	ProvidesPrerequisiteValidatedFaction@collectorscrt:
-		Factions: collector
-		Prerequisite: scrt.collector
 	ProvidesPrerequisite@buildingname:
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
@@ -3543,26 +3560,6 @@ SCRT:
 		EffectImage: empty
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
-	GrantExternalConditionPower@FEEDERMUTATION:
-		OrderName: feedermutation
-		Icon: feedermutation
-		Prerequisites: ~scrt.collector, ~techlevel.high
-		ChargeInterval: 6750
-		Description: Feeder Mutation
-		Condition: feedermutation
-		Dimensions: 3, 3
-		Footprint: _x_ xxx _x_
-		ValidRelationships: Ally
-		Duration: 25
-		AllowMultiple: false
-		LongDesc: \nTransforms Scrin infantry into Feeders which consume resources\n    until becoming volatile enough to explode.
-		OnFireSound: feedermutation.aud
-		SelectTargetSpeechNotification: SelectTarget
-		InsufficientPowerSpeechNotification: InsufficientPower
-		DisplayRadarPing: True
-		Cursor: ability
-		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayTimerRelationships: Ally
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -3646,9 +3643,9 @@ SIGN:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Health:
-		HP: 80000
+		HP: 100000
 	Armor:
-		Type: Concrete
+		Type: Wood
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -4395,7 +4392,7 @@ BUZZ:
 		HP: 1
 	RevealsShroud:
 		MinRange: 1c0
-		Range: 3c0
+		Range: 6c0
 		RevealGeneratedShroud: False
 		Type: CenterPosition
 	RevealsShroud@GAPGEN:
