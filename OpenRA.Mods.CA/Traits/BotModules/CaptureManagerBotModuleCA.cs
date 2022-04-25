@@ -12,7 +12,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenRA.Mods.Common.Pathfinder;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
@@ -180,9 +179,9 @@ namespace OpenRA.Mods.CA.Traits
 				return Target.Invalid;
 
 			var path = mobile.PathFinder.FindUnitPathToTargetCellByPredicate(
-				capturer, new[] { capturer.Location }, loc => loc == target.Location, BlockedByActor.Stationary,
+				capturer, new[] { capturer.Location }, loc => true, BlockedByActor.Stationary,
 				loc => world.FindActorsInCircle(world.Map.CenterOfCell(loc), Info.EnemyAvoidanceRadius)
-					.Where(u => !u.IsDead && capturer.Owner.RelationshipWith(u.Owner) == PlayerRelationship.Enemy)
+					.Where(u => !u.IsDead && capturer.Owner.RelationshipWith(u.Owner) == PlayerRelationship.Enemy && capturer.IsTargetableBy(u))
 					.Sum(u => Math.Max(WDist.Zero.Length, Info.EnemyAvoidanceRadius.Length - (world.Map.CenterOfCell(loc) - u.CenterPosition).Length)));
 
 			if (path.Count == 0)
