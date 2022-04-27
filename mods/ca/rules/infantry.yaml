@@ -1755,7 +1755,7 @@ VICE:
 
 SNIP:
 	Inherits: ^Soldier
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMovePrioritizeVehicles
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMovePrioritizeInfantry
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 		Image: sniper
@@ -1779,24 +1779,35 @@ SNIP:
 		HP: 4500
 	RevealsShroud:
 		Range: 7c0
+	AutoTargetPriority@DEFAULTINF:
+		RequiresCondition: !apb-upgrade && !stance-attackanything && !assault-move
+	AutoTargetPriority@ATTACKANYTHINGINF:
+		RequiresCondition: !apb-upgrade && (stance-attackanything || assault-move)
+	AutoTargetPriority@DEFAULTVEH:
+		RequiresCondition: apb-upgrade && !stance-attackanything && !assault-move
+		ValidTargets: Vehicle, Ship
+		InvalidTargets: NoAutoTarget
+		Priority: 10
+	AutoTargetPriority@ATTACKANYTHINGVEH:
+		RequiresCondition: apb-upgrade && (stance-attackanything || assault-move)
+		ValidTargets: Vehicle, Ship
+		InvalidTargets: NoAutoTarget
+		Priority: 10
 	Armament@PRIMARY:
 		Weapon: sniper
-		PauseOnCondition: !ammo
+		RequiresCondition: !apb-upgrade
 	Armament@Garrison:
 		Weapon: sniperE
 		Name: mounted
-		PauseOnCondition: !ammo
 		MuzzleSequence: garrison-muzzle
 	Armament@APROUND:
 		Name: secondary
 		Weapon: sniper.vehicle
 		RequiresCondition: apb-upgrade && rank-veteran < 3
-		PauseOnCondition: !ammo
 	Armament@APROUNDELITE:
 		Name: secondary
 		Weapon: sniper.vehicleElite
 		RequiresCondition: apb-upgrade && rank-veteran >= 3
-		PauseOnCondition: !ammo
 	Mobile:
 		Speed: 43
 		Voice: Move
@@ -1848,12 +1859,6 @@ SNIP:
 		VoiceSet: SniperVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
-	AmmoPool:
-		Ammo: 1
-		AmmoCondition: ammo
-	ReloadAmmoPool:
-		Delay: 120
-		Count: 1
 
 BORI:
 	Inherits: ^Soldier
