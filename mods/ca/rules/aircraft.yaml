@@ -835,12 +835,12 @@ NHAW:
 		Weapon: M60mgJJ
 		LocalOffset: 1000,0,-100
 		MuzzleSequence: muzzle
-		RequiresCondition: !stance-holdfire
+		RequiresCondition: !(cargo && stance-holdfire)
 	Armament@CRYOMISSILE:
 		Name: cryo
 		Weapon: cryomissilenhaw
 		LocalOffset: 200,300,0, 200,-300,0
-		RequiresCondition: upg-crym && !stance-holdfire
+		RequiresCondition: upg-crym && !(cargo && stance-holdfire) && ammo
 	AmmoPool@CRYOMISSILE:
 		Name: cryo
 		Armaments: cryo
