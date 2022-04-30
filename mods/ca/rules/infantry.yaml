@@ -840,8 +840,9 @@ MECH:
 		Description: Repairs nearby vehicles.
 	TooltipExtras:
 		Weaknesses: • Unarmed
+		Attributes: • Can salvage destroyed vehicles for credits
 	Valued:
-		Cost: 300
+		Cost: 400
 	Tooltip:
 		Name: Mechanic
 	UpdatesPlayerStatistics:
@@ -879,14 +880,27 @@ MECH:
 		Voice: Action
 		PauseOnCondition: being-warped
 		FacingTolerance: 0
+	CaptureManager:
+		CapturingCondition: salvaging
+	Captures:
+		CaptureTypes: husk
+		PlayerExperience: 25
+		ConsumedByCapture: False
+		CaptureDelay: 150
+		PlayerExperienceRelationships: Neutral, Enemy
+		EnterCursor: sell2
+		EnterBlockedCursor: move-blocked
 	WithInfantryBody:
 		IdleSequences: idle
 		DefaultAttackSequence: repair
 		StandSequences: stand
-		RequiresCondition: !parachute && !being-warped
+		RequiresCondition: !parachute && !being-warped && !salvaging
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
+	WithInfantryBody@SALVAGE:
+		StandSequences: repair
+		RequiresCondition: salvaging
 	Voiced:
 		VoiceSet: MechanicVoice
 	AutoTarget:
@@ -1772,7 +1786,7 @@ VICE:
 
 SNIP:
 	Inherits: ^Soldier
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMovePrioritizeVehicles
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMovePrioritizeInfantry
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 		Image: sniper
@@ -1796,14 +1810,32 @@ SNIP:
 		HP: 4500
 	RevealsShroud:
 		Range: 7c0
+	AutoTargetPriority@DEFAULTINF:
+		RequiresCondition: !apb-upgrade && !stance-attackanything && !assault-move
+	AutoTargetPriority@ATTACKANYTHINGINF:
+		RequiresCondition: !apb-upgrade && (stance-attackanything || assault-move)
+	AutoTargetPriority@DEFAULTVEH:
+		RequiresCondition: apb-upgrade && !stance-attackanything && !assault-move
+		ValidTargets: Vehicle, Ship
+		InvalidTargets: NoAutoTarget
+		Priority: 10
+	AutoTargetPriority@ATTACKANYTHINGVEH:
+		RequiresCondition: apb-upgrade && (stance-attackanything || assault-move)
+		ValidTargets: Vehicle, Ship
+		InvalidTargets: NoAutoTarget
+		Priority: 10
 	Armament@PRIMARY:
 		Weapon: sniper
 		PauseOnCondition: !ammo
+	Armament@DUMMY:
+		Name: tertiary
+		Weapon: sniper.dummy
+		PauseOnCondition: ammo
 	Armament@Garrison:
 		Weapon: sniperE
 		Name: mounted
-		PauseOnCondition: !ammo
 		MuzzleSequence: garrison-muzzle
+		PauseOnCondition: !ammo
 	Armament@APROUND:
 		Name: secondary
 		Weapon: sniper.vehicle
@@ -1850,8 +1882,13 @@ SNIP:
 		Voice: Attack
 		PauseOnCondition: being-warped
 		FacingTolerance: 0
+		Armaments: primary, secondary, tertiary
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+		AttackSequences:
+			primary: shoot
+			secondary: shoot
+			tertiary: stand
 		StandSequences: stand, stand2
 		RequiresCondition: !parachute && !being-warped
 	WithInfantryBody@PARACHUTE:
@@ -3034,7 +3071,7 @@ SHAD:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	RevealsShroud:
-		Range: 6c0
+		Range: 8c0
 	Passenger:
 		CustomPipType: red
 		Voice: Move
@@ -3079,7 +3116,7 @@ SHAD:
 		InitialStanceAI: ReturnFire
 	Cloak:
 		InitialDelay: 1
-		CloakDelay: 90
+		CloakDelay: 70
 		CloakedCondition: hidden
 		Palette: cloaktd
 		IsPlayerPalette: true

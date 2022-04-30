@@ -1940,6 +1940,10 @@
 	Inherits@DRIVER: ^CanCaptureDriverlessVehicles
 	UpdatesPlayerStatistics:
 	MustBeDestroyed:
+	ProximityCaptor:
+		Types: Infantry
+	RevealsShroud:
+		Range: 5c0
 	TakeCover:
 		Duration: 75
 		DamageModifiers:
@@ -2927,21 +2931,28 @@
 		Sequence: 1
 		IsDecoration: true
 		Palette: effect
+		RequiresCondition: !being-captured
 	ChangesHealth:
-		PercentageStep: -34
+		PercentageStep: -10
 		StartIfBelow: 101
-		Delay: 25
+		Delay: 150
+		RequiresCondition: !being-captured
 	OwnerLostAction:
 		Action: ChangeOwner
 	CaptureManager:
+		BeingCapturedCondition: being-captured
 	Capturable:
 		Types: husk
-		ValidRelationships: Enemy, Neutral
-	TransformOnCapture:
-		ForceHealthPercentage: 25
-	InfiltrateForTransform:
-		Types: Husk
-		ForceHealthPercentage: 25
+		ValidRelationships: Ally, Enemy, Neutral
+	CapturableProgressBar:
+	CapturableProgressBlink:
+	GivesCashOnCapture:
+		Amount: 100
+	GrantConditionOnCapture:
+		Condition: salvaged
+	KillsSelf:
+		RemoveInstead: True
+		RequiresCondition: salvaged
 	WithColoredOverlay@IDISABLE:
 		Color: 000000b4
 	Targetable:
@@ -2959,7 +2970,7 @@
 		EmptyWeapon: VisualExplodeHusk
 		DamageSource: Killer
 	Crushable:
-		CrushClasses: crate
+		CrushClasses: wall
 		CrushSound: destw.aud
 		CrushedByFriendlies: True
 

@@ -37,12 +37,6 @@ VEHICLES.SCRIN:
 		Count: 13
 		Delay: 25
 		RequiresCondition: charging-on-resource
-	ReloadAmmoPoolCA@RESCONVDRAIN:
-		Count: -13
-		Delay: 500
-		RequiresCondition: !charging-on-resource && !charged-fire
-		ShowSelectionBar: false
-		ResetOnFire: true
 	WithAmmoPipsDecoration@RESCONV:
 		PipCount: 5
 		RequiresCondition: ammo
@@ -325,17 +319,17 @@ S4:
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Special Ability: Teleport
+		Attributes: • Special Ability: Teleport (with upgrade)
 	Mobile:
 		Speed: 54
 	Valued:
-		Cost: 450
+		Cost: 375
 	Tooltip:
 		Name: Intruder
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 14000
+		HP: 8000
 	RevealsShroud:
 		Range: 5c0
 	Armament@PRIMARY:
@@ -349,13 +343,20 @@ S4:
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
-	-Crushable:
-	PortableChrono:
+	PortableChronoCA:
 		ChargeDelay: 500
 		ChronoshiftSound: scrinport.aud
+		RequiresCondition: blink-upgrade
+		TeleportCondition: blink
+		ConditionDuration: 3
+	GrantConditionOnPrerequisite@BLINKPACKS:
+		Condition: blink-upgrade
+		Prerequisites: blink.upgrade
+	WithColoredOverlay@BLINKFLASH:
+		RequiresCondition: blink
+		Palette: highlight
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-	-TakeCover:
 
 S6:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -1109,7 +1110,7 @@ LCHR:
 		Speed: 92
 		TurnSpeed: 24
 	Health:
-		HP: 26000
+		HP: 28000
 	Armor:
 		Type: Light
 	RevealsShroud:
@@ -1444,8 +1445,6 @@ RUIN:
 		Ammo: 12
 	ReloadAmmoPool@RESCONV:
 		Count: 3
-	ReloadAmmoPoolCA@RESCONVDRAIN:
-		Count: -3
 	WithAmmoPipsDecoration@RESCONV:
 		PipCount: 4
 	GrantCondition@RESCONV:
@@ -1655,16 +1654,14 @@ RPTP:
 		MuzzlePalette: scrin
 	-GrantConditionOnPrerequisite@RESCONV:
 	AmmoPool@RESCONV:
-		Ammo: 70
+		Ammo: 140
 		Armaments: primary-charged, secondary-charged
 	ReloadAmmoPool@RESCONV:
-		Count: 14
-	ReloadAmmoPoolCA@RESCONVDRAIN:
-		Count: -14
+		Count: 28
 	WithAmmoPipsDecoration@RESCONV:
 		PipCount: 5
 	GrantCondition@RESCONV:
-		RequiresCondition: on-resource && (ammo < 70 || charged-fire)
+		RequiresCondition: on-resource && (ammo < 140 || charged-fire)
 	GrantConditionOnAttack@PRIMARY:
 		RevokeDelay: 50
 	GrantConditionOnAttack@PRIMARYCHARGED:
@@ -2458,10 +2455,6 @@ SMCV.Husk:
 	Inherits: ^Husk
 	Tooltip:
 		Name: Husk (Colony Ship)
-	TransformOnCapture:
-		IntoActor: smcv
-	InfiltrateForTransform:
-		IntoActor: smcv
 	RenderSprites:
 		PlayerPalette: playerscrin
 		Image: smcv.destroyed
@@ -2470,10 +2463,6 @@ HARV.Scrin.Husk:
 	Inherits: ^Husk
 	Tooltip:
 		Name: Husk (Harvester)
-	TransformOnCapture:
-		IntoActor: harv.scrin
-	InfiltrateForTransform:
-		IntoActor: harv.scrin
 	RenderSprites:
 		Image: harv.scrin.destroyed
 	WithShadow:
@@ -2484,10 +2473,6 @@ GUNW.Husk:
 	Inherits: ^Husk
 	Tooltip:
 		Name: Husk (Gun Walker)
-	TransformOnCapture:
-		IntoActor: gunw
-	InfiltrateForTransform:
-		IntoActor: gunw
 	RenderSprites:
 		Image: gunw.destroyed
 		PlayerPalette: playerscrin
@@ -2498,10 +2483,6 @@ SEEK.Husk:
 		Name: Husk (Seeker)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: seek
-	InfiltrateForTransform:
-		IntoActor: seek
 	RenderSprites:
 		Image: seek.destroyed
 		PlayerPalette: playerscrin
@@ -2513,10 +2494,6 @@ INTL.Husk:
 	Inherits: ^Husk
 	Tooltip:
 		Name: Husk (Interloper)
-	TransformOnCapture:
-		IntoActor: intl
-	InfiltrateForTransform:
-		IntoActor: intl
 	RenderSprites:
 		Image: intl.destroyed
 		PlayerPalette: playerscrin
@@ -2525,10 +2502,6 @@ CORR.Husk:
 	Inherits: ^Husk
 	Tooltip:
 		Name: Husk (Corrupter)
-	TransformOnCapture:
-		IntoActor: corr
-	InfiltrateForTransform:
-		IntoActor: corr
 	RenderSprites:
 		Image: corr.destroyed
 		PlayerPalette: playerscrin
@@ -2537,10 +2510,6 @@ DEVO.Husk:
 	Inherits: ^Husk
 	Tooltip:
 		Name: Husk (Devourer)
-	TransformOnCapture:
-		IntoActor: devo
-	InfiltrateForTransform:
-		IntoActor: devo
 	RenderSprites:
 		Image: devo.destroyed
 		PlayerPalette: playerscrin
@@ -2549,10 +2518,6 @@ RUIN.Husk:
 	Inherits: ^Husk
 	Tooltip:
 		Name: Husk (Ruiner)
-	TransformOnCapture:
-		IntoActor: ruin
-	InfiltrateForTransform:
-		IntoActor: ruin
 	RenderSprites:
 		Image: ruin.destroyed
 		PlayerPalette: playerscrin
@@ -2563,10 +2528,6 @@ TPOD.Husk:
 		Name: Husk (Annihilator Tripod)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: tpod
-	InfiltrateForTransform:
-		IntoActor: tpod
 	RenderSprites:
 		Image: tpod.destroyed
 		PlayerPalette: playerscrin
@@ -2577,10 +2538,6 @@ RPTP.Husk:
 		Name: Husk (Reaper Tripod)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: rptp
-	InfiltrateForTransform:
-		IntoActor: rptp
 	RenderSprites:
 		Image: rptp.destroyed
 		PlayerPalette: playerscrin
@@ -2699,13 +2656,20 @@ DEVA.Husk.Ground:
 		Name: Husk (Devastator Warship)
 	KillsSelf:
 		Delay: 1
+		-RequiresCondition:
 	Explodes:
 		Weapon: KirovExplode
 	-OwnerLostAction:
 	-CaptureManager:
 	-Capturable:
-	-TransformOnCapture:
-	-InfiltrateForTransform:
+	-CapturableProgressBar:
+	-CapturableProgressBlink:
+	-GivesCashOnCapture:
+	-GrantConditionOnCapture:
+	WithIdleOverlay@Burns:
+		-RequiresCondition:
+	ChangesHealth:
+		-RequiresCondition:
 
 PAC.Husk:
 	Inherits: ^HelicopterHusk
@@ -2744,13 +2708,20 @@ PAC.Husk.Ground:
 		Name: Husk (Planetary Assault Carrier)
 	KillsSelf:
 		Delay: 1
+		-RequiresCondition:
 	Explodes:
 		Weapon: KirovExplode
 	-OwnerLostAction:
 	-CaptureManager:
 	-Capturable:
-	-TransformOnCapture:
-	-InfiltrateForTransform:
+	-CapturableProgressBar:
+	-CapturableProgressBlink:
+	-GivesCashOnCapture:
+	-GrantConditionOnCapture:
+	WithIdleOverlay@Burns:
+		-RequiresCondition:
+	ChangesHealth:
+		-RequiresCondition:
 
 MSHP.Husk:
 	Inherits: ^HelicopterHusk
@@ -2791,6 +2762,7 @@ MSHP.Husk.Ground:
 		Name: Husk (Mothership)
 	KillsSelf:
 		Delay: 1
+		-RequiresCondition:
 	Explodes:
 		Weapon: KirovExplode
 	WithIdleOverlay@RING:
@@ -2800,8 +2772,14 @@ MSHP.Husk.Ground:
 	-OwnerLostAction:
 	-CaptureManager:
 	-Capturable:
-	-TransformOnCapture:
-	-InfiltrateForTransform:
+	-CapturableProgressBar:
+	-CapturableProgressBlink:
+	-GivesCashOnCapture:
+	-GrantConditionOnCapture:
+	WithIdleOverlay@Burns:
+		-RequiresCondition:
+	ChangesHealth:
+		-RequiresCondition:
 
 #
 # ---- Buildings
@@ -3507,7 +3485,7 @@ SCRT:
 		Description: Provides Scrin advanced technologies.
 		IconPalette: chromes
 	Valued:
-		Cost: 1500
+		Cost: 1800
 	Tooltip:
 		Name: Scrin Tech Center
 	Building:
@@ -3544,9 +3522,6 @@ SCRT:
 		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
-	ProvidesPrerequisiteValidatedFaction@travelerscrt:
-		Factions: traveler
-		Prerequisite: scrt.traveler
 	ProvidesPrerequisite@buildingname:
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield

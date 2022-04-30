@@ -4,10 +4,6 @@
 		Name: Husk (Scout Tank)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: 1tnk
-	InfiltrateForTransform:
-		IntoActor: 1tnk
 	RenderSprites:
 		Image: 1tnk.destroyed
 
@@ -17,10 +13,6 @@
 		Name: Husk (Medium Tank)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: 2tnk
-	InfiltrateForTransform:
-		IntoActor: 2tnk
 	RenderSprites:
 		Image: 2tnk.destroyed
 
@@ -30,10 +22,6 @@ GTNK.Husk:
 		Name: Husk (Grizzly Tank)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: gtnk
-	InfiltrateForTransform:
-		IntoActor: gtnk
 	RenderSprites:
 		Image: gtnk.destroyed
 
@@ -43,10 +31,6 @@ GTNK.Husk:
 		Name: Husk (Heavy Tank)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: 3tnk
-	InfiltrateForTransform:
-		IntoActor: 3tnk
 	RenderSprites:
 		Image: 3tnk.destroyed
 
@@ -56,10 +40,6 @@ GTNK.Husk:
 		Name: Husk (Lasher Tank)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: 3tnk.yuri
-	InfiltrateForTransform:
-		IntoActor: 3tnk.yuri
 	RenderSprites:
 		Image: 3tnky.destroyed
 
@@ -69,10 +49,6 @@ GTNK.Husk:
 		Name: Husk (Mammoth Tank)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: 4tnk
-	InfiltrateForTransform:
-		IntoActor: 4tnk
 	RenderSprites:
 		Image: 4tnk.destroyed
 
@@ -80,10 +56,6 @@ HARV.FullHusk:
 	Inherits: ^Husk
 	Tooltip:
 		Name: Husk (Ore Truck)
-	TransformOnCapture:
-		IntoActor: harv
-	InfiltrateForTransform:
-		IntoActor: harv
 	RenderSprites:
 		Image: hhusk
 
@@ -91,10 +63,6 @@ HARV.EmptyHusk:
 	Inherits: ^Husk
 	Tooltip:
 		Name: Husk (Ore Truck)
-	TransformOnCapture:
-		IntoActor: harv
-	InfiltrateForTransform:
-		IntoActor: harv
 	RenderSprites:
 		Image: hhusk2
 
@@ -102,10 +70,6 @@ HARV.Chrono.EmptyHusk:
 	Inherits: ^Husk
 	Tooltip:
 		Name: Husk (Chrono Miner)
-	TransformOnCapture:
-		IntoActor: harv.chrono
-	InfiltrateForTransform:
-		IntoActor: harv.chrono
 	RenderSprites:
 		Image: charv.destroyed
 
@@ -113,10 +77,6 @@ MCV.Husk:
 	Inherits: ^Husk
 	Tooltip:
 		Name: Husk (Mobile Construction Vehicle)
-	TransformOnCapture:
-		IntoActor: mcv
-	InfiltrateForTransform:
-		IntoActor: mcv
 	RenderSprites:
 		Image: mcvhusk
 
@@ -127,10 +87,6 @@ MGG.Husk:
 	ThrowsParticle@spinner:
 		Anim: spinner-idle
 		Offset: -299,0,171
-	TransformOnCapture:
-		IntoActor: mgg
-	InfiltrateForTransform:
-		IntoActor: mgg
 	RenderSprites:
 		Image: mgg.destroyed
 
@@ -138,10 +94,6 @@ MSG.Husk:
 	Inherits: ^Husk
 	Tooltip:
 		Name: Husk (Mobile Stealth Generator)
-	TransformOnCapture:
-		IntoActor: msg
-	InfiltrateForTransform:
-		IntoActor: msg
 	RenderSprites:
 		Image: msg.destroyed
 
@@ -180,8 +132,11 @@ TRAN.Husk1:
 	RenderSprites:
 		Image: tran1husk
 	-Capturable:
-	-TransformOnCapture:
-	-InfiltrateForTransform:
+	-CapturableProgressBar:
+	-CapturableProgressBlink:
+	-GivesCashOnCapture:
+	-GrantConditionOnCapture:
+	-KillsSelf:
 
 TRAN.Husk2:
 	Inherits: ^Husk
@@ -190,8 +145,11 @@ TRAN.Husk2:
 	RenderSprites:
 		Image: tran2husk
 	-Capturable:
-	-TransformOnCapture:
-	-InfiltrateForTransform:
+	-CapturableProgressBar:
+	-CapturableProgressBlink:
+	-GivesCashOnCapture:
+	-GrantConditionOnCapture:
+	-KillsSelf:
 
 HALO.Husk:
 	Inherits: ^HelicopterHusk
@@ -721,10 +679,6 @@ AMCV.Husk:
 	Inherits: ^HuskTD
 	Tooltip:
 		Name: Husk (Mobile Construction Vehicle)
-	TransformOnCapture:
-		IntoActor: amcv
-	InfiltrateForTransform:
-		IntoActor: amcv
 	RenderSprites:
 		PlayerPalette: playertd
 		Image: amcv.destroyed
@@ -735,10 +689,6 @@ RTNK.Husk:
 		Name: Husk (Mirage Tank)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: rtnk
-	InfiltrateForTransform:
-		IntoActor: rtnk
 	RenderSprites:
 		Image: rtnk.destroyed
 
@@ -748,10 +698,6 @@ TNKD.Husk:
 		Name: Husk (Tank Destroyer)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: tnkd
-	InfiltrateForTransform:
-		IntoActor: tnkd
 	RenderSprites:
 		Image: tnkd.destroyed
 
@@ -759,10 +705,6 @@ APC2.Husk:
 	Inherits: ^HuskTD
 	Tooltip:
 		Name: Husk (APC)
-	TransformOnCapture:
-		IntoActor: apc2
-	InfiltrateForTransform:
-		IntoActor: apc2
 	RenderSprites:
 		Image: apc2.destroyed
 		PlayerPalette: playertd
@@ -771,10 +713,6 @@ HMMV.Husk:
 	Inherits: ^HuskTD
 	Tooltip:
 		Name: Husk (Hum-Vee)
-	TransformOnCapture:
-		IntoActor: hmmv
-	InfiltrateForTransform:
-		IntoActor: hmmv
 	RenderSprites:
 		Image: hmmv.destroyed
 		PlayerPalette: playertd
@@ -783,10 +721,6 @@ BGGY.Husk:
 	Inherits: ^HuskTD
 	Tooltip:
 		Name: Husk (Fast Attack Buggy)
-	TransformOnCapture:
-		IntoActor: bggy
-	InfiltrateForTransform:
-		IntoActor: bggy
 	RenderSprites:
 		Image: bggy.destroyed
 		PlayerPalette: playertd
@@ -797,10 +731,6 @@ MTNK.Husk:
 		Name: Husk (Battle Tank)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: mtnk
-	InfiltrateForTransform:
-		IntoActor: mtnk
 	RenderSprites:
 		Image: mtnk.destroyed
 		PlayerPalette: playertd
@@ -811,10 +741,6 @@ MTNK.DRONE.Husk:
 		Name: Husk (Battle Drone)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: mtnk.drone
-	InfiltrateForTransform:
-		IntoActor: mtnk.drone
 	RenderSprites:
 		Image: drone.destroyed
 		PlayerPalette: playertd
@@ -825,10 +751,6 @@ HTNK.Husk:
 		Name: Husk (Mammoth Tank)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: htnk
-	InfiltrateForTransform:
-		IntoActor: htnk
 	RenderSprites:
 		Image: htnk.destroyed
 		PlayerPalette: playertd
@@ -839,10 +761,6 @@ HTNK.ION.Husk:
 		Name: Husk (Ion Mammoth Tank)
 	ThrowsParticle@turret:
 		Anim: turret-ion
-	TransformOnCapture:
-		IntoActor: htnk.ion
-	InfiltrateForTransform:
-		IntoActor: htnk.ion
 	RenderSprites:
 		Image: htnk.destroyed
 		PlayerPalette: playertd
@@ -853,10 +771,6 @@ HTNK.HOVER.Husk:
 		Name: Husk (Hover Mammoth Tank)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: htnk.hover
-	InfiltrateForTransform:
-		IntoActor: htnk.hover
 	WithFacingSpriteBody:
 		Sequence: idle-hover
 	RenderSprites:
@@ -869,10 +783,6 @@ HTNK.DRONE.Husk:
 		Name: Husk (Mammoth Drone)
 	ThrowsParticle@turret:
 		Anim: turret-drone
-	TransformOnCapture:
-		IntoActor: htnk.drone
-	InfiltrateForTransform:
-		IntoActor: htnk.drone
 	RenderSprites:
 		Image: htnk.destroyed
 		PlayerPalette: playertd
@@ -883,10 +793,6 @@ TITN.Husk:
 		Name: Husk (Titan)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: titn
-	InfiltrateForTransform:
-		IntoActor: titn
 	RenderSprites:
 		Image: titn.destroyed
 		PlayerPalette: playertd
@@ -897,10 +803,6 @@ TITN.RAIL.Husk:
 		Name: Husk (Railgun Titan)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: titn.rail
-	InfiltrateForTransform:
-		IntoActor: titn.rail
 	RenderSprites:
 		Image: titn.rail.destroyed
 		PlayerPalette: playertd
@@ -911,10 +813,6 @@ JUGG.Husk:
 		Name: Husk (Juggernaut)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: jugg
-	InfiltrateForTransform:
-		IntoActor: jugg
 	RenderSprites:
 		Image: jugg.destroyed
 		PlayerPalette: playertd
@@ -923,10 +821,6 @@ FTNK.Husk:
 	Inherits: ^HuskTD
 	Tooltip:
 		Name: Husk (Flame Tank)
-	TransformOnCapture:
-		IntoActor: ftnk
-	InfiltrateForTransform:
-		IntoActor: ftnk
 	RenderSprites:
 		Image: ftnk.destroyed
 		PlayerPalette: playertd
@@ -937,10 +831,6 @@ HFTK.Husk:
 		Name: Husk (Heavy Flame Tank)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: hftk
-	InfiltrateForTransform:
-		IntoActor: hftk
 	RenderSprites:
 		Image: hftk.destroyed
 
@@ -948,10 +838,6 @@ BIKE.Husk:
 	Inherits: ^HuskTD
 	Tooltip:
 		Name: Husk (Recon Bike)
-	TransformOnCapture:
-		IntoActor: bike
-	InfiltrateForTransform:
-		IntoActor: bike
 	RenderSprites:
 		Image: bike.destroyed
 		PlayerPalette: playertd
@@ -962,10 +848,6 @@ MSAM.Husk:
 		Name: Husk (MLRS)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: msam
-	InfiltrateForTransform:
-		IntoActor: msam
 	RenderSprites:
 		Image: msam.destroyed
 		PlayerPalette: playertd
@@ -974,10 +856,6 @@ STNK.NOD.Husk:
 	Inherits: ^HuskTD
 	Tooltip:
 		Name: Husk (Stealth Tank)
-	TransformOnCapture:
-		IntoActor: stnk.nod
-	InfiltrateForTransform:
-		IntoActor: stnk.nod
 	RenderSprites:
 		Image: stnknod.destroyed
 		PlayerPalette: playertd
@@ -1125,10 +1003,6 @@ HARV.TD.Husk:
 	Inherits: ^HuskTD
 	Tooltip:
 		Name: Harvester (Destroyed)
-	TransformOnCapture:
-		IntoActor: harv.td
-	InfiltrateForTransform:
-		IntoActor: harv.td
 	RenderSprites:
 		Image: harv2.destroyed
 		PlayerPalette: playertd
@@ -1296,10 +1170,6 @@ BTR.Husk:
 	Inherits: ^Husk
 	Tooltip:
 		Name: Husk (APC)
-	TransformOnCapture:
-		IntoActor: btr
-	InfiltrateForTransform:
-		IntoActor: btr
 	RenderSprites:
 		Image: BTR.destroyed
 
@@ -1394,24 +1264,25 @@ KIRO.Husk.Ground:
 		Name: Husk (Kirov)
 	KillsSelf:
 		Delay: 1
+		-RequiresCondition:
 	Explodes:
 		Weapon: KirovExplode
 	-OwnerLostAction:
 	-CaptureManager:
 	-Capturable:
-	TransformOnCapture:
-		IntoActor: KIRO.Husk.Ground
-	InfiltrateForTransform:
-		IntoActor: KIRO.Husk.Ground
+	-CapturableProgressBar:
+	-CapturableProgressBlink:
+	-GivesCashOnCapture:
+	-GrantConditionOnCapture:
+	WithIdleOverlay@Burns:
+		-RequiresCondition:
+	ChangesHealth:
+		-RequiresCondition:
 
 APC.Husk:
 	Inherits: ^Husk
 	Tooltip:
 		Name: Husk (APC)
-	TransformOnCapture:
-		IntoActor: apc
-	InfiltrateForTransform:
-		IntoActor: apc
 	RenderSprites:
 		Image: apc.destroyed
 
@@ -1419,10 +1290,6 @@ TTRA.Husk:
 	Inherits: ^Husk
 	Tooltip:
 		Name: Husk (Tesla Track)
-	TransformOnCapture:
-		IntoActor: ttra
-	InfiltrateForTransform:
-		IntoActor: ttra
 	RenderSprites:
 		Image: ttra.destroyed
 
@@ -1432,10 +1299,6 @@ TTNK.Husk:
 		Name: Husk (Tesla Tank)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: ttnk
-	InfiltrateForTransform:
-		IntoActor: ttnk
 	RenderSprites:
 		Image: ttnk.destroyed
 
@@ -1443,10 +1306,6 @@ ISU.Husk:
 	Inherits: ^Husk
 	Tooltip:
 		Name: Husk (Siege Tank)
-	TransformOnCapture:
-		IntoActor: isu
-	InfiltrateForTransform:
-		IntoActor: isu
 	RenderSprites:
 		Image: isu.destroyed
 
@@ -1456,10 +1315,6 @@ DISR.Husk:
 		Name: Husk (Disruptor)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: disr
-	InfiltrateForTransform:
-		IntoActor: disr
 	RenderSprites:
 		Image: disr.destroyed
 		PlayerPalette: playertd
@@ -1470,10 +1325,6 @@ WTNK.Husk:
 		Name: Husk (Microwave Tank)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: wtnk
-	InfiltrateForTransform:
-		IntoActor: wtnk
 	RenderSprites:
 		Image: wtnk.destroyed
 		PlayerPalette: playertd
@@ -1482,10 +1333,6 @@ BATF.Husk:
 	Inherits: ^Husk
 	Tooltip:
 		Name: Husk (Battle Fortress)
-	TransformOnCapture:
-		IntoActor: batf
-	InfiltrateForTransform:
-		IntoActor: batf
 	RenderSprites:
 		Image: batf.destroyed
 
@@ -1495,10 +1342,6 @@ CHPR.Husk:
 		Name: Husk (Chrono Prison)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: chpr
-	InfiltrateForTransform:
-		IntoActor: chpr
 	RenderSprites:
 		Image: chpr.destroyed
 
@@ -1800,10 +1643,6 @@ PTNK.Husk:
 		Name: Husk (Prism Tank)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: ptnk
-	InfiltrateForTransform:
-		IntoActor: ptnk
 	RenderSprites:
 		Image: ptnk.destroyed
 
@@ -1811,10 +1650,6 @@ PCAN.Husk:
 	Inherits: ^Husk
 	Tooltip:
 		Name: Husk (Prism Cannon)
-	TransformOnCapture:
-		IntoActor: pcan
-	InfiltrateForTransform:
-		IntoActor: pcan
 	RenderSprites:
 		Image: pcan.destroyed
 
@@ -1824,10 +1659,6 @@ WTNK.Husk:
 		Name: Husk (Microwave Tank)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: wtnk
-	InfiltrateForTransform:
-		IntoActor: wtnk
 	RenderSprites:
 		Image: mwtnk.destroyed
 		PlayerPalette: playertd
@@ -1838,10 +1669,6 @@ LTNK.Husk:
 		Name: Husk (Light Tank)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: ltnk
-	InfiltrateForTransform:
-		IntoActor: ltnk
 	RenderSprites:
 		Image: ltnk.destroyed
 		PlayerPalette: playertd
@@ -1852,10 +1679,6 @@ CHPR.Husk:
 		Name: Husk (Chrono Prison)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: chpr
-	InfiltrateForTransform:
-		IntoActor: chpr
 	RenderSprites:
 		Image: chpr.destroyed
 
@@ -1906,9 +1729,5 @@ APOC.Husk:
 		Name: Husk (Apocalypse)
 	ThrowsParticle@turret:
 		Anim: turret
-	TransformOnCapture:
-		IntoActor: apoc
-	InfiltrateForTransform:
-		IntoActor: apoc
 	RenderSprites:
 		Image: apoc.destroyed

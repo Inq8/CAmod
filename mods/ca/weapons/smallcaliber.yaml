@@ -59,7 +59,7 @@ FLAK-23-AG:
 	ValidTargets: Ground, Water
 	Projectile: Bullet
 		LaunchAngle: 62
-		Speed: 520
+		Speed: 682
 		Image: FLAKBALL
 		Blockable: True
 		Inaccuracy: 0c682
@@ -563,11 +563,12 @@ M60mgIFV:
 	Report: ifvmg1.aud, ifvmg2.aud, ifvmg3.aud
 	BurstDelays: 2
 	Burst: 6
+	ReloadDelay: 40
 	Warhead@1Dam: SpreadDamage
 		Damage: 1200
 		Versus:
-			Wood: 55
-			Light: 70
+			Wood: 68
+			Light: 85
 			None: 180
 
 M60mgMD:
@@ -727,10 +728,10 @@ SNIPER:
 	ReloadDelay: 120
 	Range: 7c0
 	Report: snipe.aud
-	ValidTargets: Ground, Water
-	InvalidTargets: Vehicle, Ship
-	Projectile: Bullet
-		Speed: 2c682
+	ValidTargets: Ground, Infantry, Barrel
+	InvalidTargets: Structure, Vehicle, Ship
+	Projectile: InstantHit
+		Blockable: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
 		Damage: 25000
@@ -748,6 +749,13 @@ SNIPER:
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
 
+SNIPER.dummy:
+	Inherits: SNIPER
+	-Report:
+	-Warhead@1Dam:
+	-Warhead@2Eff:
+	-Warhead@3EffWater:
+
 SNIPERE:
 	Inherits: SNIPER
 	Range: 6c0
@@ -757,12 +765,9 @@ SNIPER.vehicle:
 	Range: 7c0
 	Report: ijarwe1a.aud
 	ValidTargets: Vehicle, Ship
-	InvalidTargets: Infantry, Structure, Wall, Husk, Air, AirSmall
-	Projectile: Bullet
-		Speed: 2c682
+	InvalidTargets: Structure, Infantry
+	Projectile: InstantHit
 		Blockable: true
-		Image: 50CAL
-		Shadow: True
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
 		Damage: 7000
@@ -771,10 +776,12 @@ SNIPER.vehicle:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
+	Warhead@2Eff: CreateEffect
+		Explosions: piff
 	Warhead@3Eff: CreateEffect
 		Explosions: small_explosion
 		ImpactSounds: kaboom12.aud
-		ValidTargets: Ground, Ship, Trees
+		ValidTargets: Vehicle, Ship, Trees
 	Warhead@4EffWater: CreateEffect
 		Explosions: small_splash
 		ImpactSounds: splash9.aud
@@ -808,10 +815,6 @@ SNIPER.vehicleElite:
 
 SniperIFVGun:
 	Inherits: SNIPER.vehicle
-	ValidTargets: Ground, Water
-	-InvalidTargets:
-	Warhead@1Dam: SpreadDamage
-		-ValidTargets:
 
 CommandoIFVGun:
 	Inherits: SMG

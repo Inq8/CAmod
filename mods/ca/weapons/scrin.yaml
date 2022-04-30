@@ -176,17 +176,18 @@ IntruderDiscs:
 	Inherits: PlasmaDiscs
 	-MinRange:
 	Range: 6c0
-	ReloadDelay: 100
+	ReloadDelay: 90
 	Burst: 3
 	Projectile: Missile
 		Inaccuracy: 0c128
 		LockOnProbability: 33
 	Warhead@1Dam: SpreadDamage
-		Damage: 3250
+		Damage: 3000
 		Versus:
+			None: 25
 			Wood: 100
-			Light: 65
-			Heavy: 85
+			Light: 55
+			Heavy: 70
 			Concrete: 100
 
 DevastatorDiscs:
@@ -294,6 +295,8 @@ DevourerLaser:
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		Damage: 930
+		Versus:
+			None: 40
 
 DevourerLaserCharged:
 	Inherits: DevourerLaser
@@ -992,7 +995,7 @@ LaceratorShards:
 	Inherits: RavagerShards
 	Range: 5c0
 	StartBurstReport: lacerator-fire1.aud, lacerator-fire2.aud
-	ReloadDelay: 90
+	ReloadDelay: 100
 	Projectile: Missile
 		Image: bshard
 		ContrailLength: 9
