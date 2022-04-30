@@ -353,8 +353,8 @@ S4:
 		Condition: blink-upgrade
 		Prerequisites: blink.upgrade
 	WithColoredOverlay@BLINKFLASH:
-		RequiresCondition: blink
-		Palette: highlight
+		Color: ffffff80
+		RequiresCondition: highlight
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 
@@ -1644,6 +1644,8 @@ RPTP:
 		PauseOnCondition: !ammo || uncharged-fire
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
+		AmmoUsage: 2
+		RequiresCondition: !resconv-upgrade
 	Armament@SECONDARYCHARGED:
 		Name: secondary-charged
 		Weapon: ReaperLaserChargedReversed
@@ -1652,7 +1654,25 @@ RPTP:
 		PauseOnCondition: !ammo || uncharged-fire
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
-	-GrantConditionOnPrerequisite@RESCONV:
+		AmmoUsage: 2
+		RequiresCondition: !resconv-upgrade
+	Armament@PRIMARYCHARGEDUPG:
+		Name: primary-charged
+		Weapon: ReaperLaserCharged
+		LocalOffset: 700,550,1000
+		PauseOnCondition: !ammo || uncharged-fire
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+		RequiresCondition: resconv-upgrade
+	Armament@SECONDARYCHARGEDUPG:
+		Name: secondary-charged
+		Weapon: ReaperLaserChargedReversed
+		LocalOffset: 700,-550,1000
+		FireDelay: 15
+		PauseOnCondition: !ammo || uncharged-fire
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+		RequiresCondition: resconv-upgrade
 	AmmoPool@RESCONV:
 		Ammo: 140
 		Armaments: primary-charged, secondary-charged
