@@ -37,12 +37,6 @@ VEHICLES.SCRIN:
 		Count: 13
 		Delay: 25
 		RequiresCondition: charging-on-resource
-	ReloadAmmoPoolCA@RESCONVDRAIN:
-		Count: -13
-		Delay: 500
-		RequiresCondition: !charging-on-resource && !charged-fire
-		ShowSelectionBar: false
-		ResetOnFire: true
 	WithAmmoPipsDecoration@RESCONV:
 		PipCount: 5
 		RequiresCondition: ammo
@@ -1101,7 +1095,7 @@ LCHR:
 		Speed: 80
 		TurnSpeed: 24
 	Health:
-		HP: 26000
+		HP: 28000
 	Armor:
 		Type: Light
 	RevealsShroud:
@@ -1435,8 +1429,6 @@ RUIN:
 		Ammo: 12
 	ReloadAmmoPool@RESCONV:
 		Count: 3
-	ReloadAmmoPoolCA@RESCONVDRAIN:
-		Count: -3
 	WithAmmoPipsDecoration@RESCONV:
 		PipCount: 4
 	GrantCondition@RESCONV:
@@ -1658,18 +1650,28 @@ RPTP:
 		Weapon: ReaperLaserChargedSound
 		FireDelay: 15
 		PauseOnCondition: !ammo || uncharged-fire
-	-GrantConditionOnPrerequisite@RESCONV:
+	Armament@PRIMARYCHARGEDEXTAMMO:
+		Name: primary-charged
+		Weapon: ReaperLaserChargedDummy
+		LocalOffset: 700,550,1000
+		PauseOnCondition: !ammo || uncharged-fire
+		RequiresCondition: !resconv-upgrade
+	Armament@SECONDARYCHARGEDEXTAMMO:
+		Name: secondary-charged
+		Weapon: ReaperLaserChargedDummy
+		LocalOffset: 700,-550,1000
+		FireDelay: 15
+		PauseOnCondition: !ammo || uncharged-fire
+		RequiresCondition: !resconv-upgrade
 	AmmoPool@RESCONV:
-		Ammo: 70
+		Ammo: 140
 		Armaments: primary-charged, secondary-charged
 	ReloadAmmoPool@RESCONV:
-		Count: 14
-	ReloadAmmoPoolCA@RESCONVDRAIN:
-		Count: -14
+		Count: 28
 	WithAmmoPipsDecoration@RESCONV:
 		PipCount: 5
 	GrantCondition@RESCONV:
-		RequiresCondition: on-resource && (ammo < 70 || charged-fire)
+		RequiresCondition: on-resource && (ammo < 140 || charged-fire)
 	GrantConditionOnAttack@PRIMARY:
 		RevokeDelay: 50
 	GrantConditionOnAttack@PRIMARYCHARGED
@@ -3476,7 +3478,7 @@ SCRT:
 		Description: Provides Scrin advanced technologies.
 		IconPalette: chromes
 	Valued:
-		Cost: 1500
+		Cost: 1800
 	Tooltip:
 		Name: Scrin Tech Center
 	Building:

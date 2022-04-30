@@ -59,7 +59,7 @@ FLAK-23-AG:
 	ValidTargets: Ground, Water
 	Projectile: Bullet
 		LaunchAngle: 62
-		Speed: 520
+		Speed: 682
 		Image: FLAKBALL
 		Blockable: True
 		Inaccuracy: 0c682
@@ -728,8 +728,6 @@ SNIPER:
 	ReloadDelay: 120
 	Range: 7c0
 	Report: snipe.aud
-	ValidTargets: Ground, Water
-	InvalidTargets: Vehicle, Ship
 	Projectile: Bullet
 		Speed: 2c682
 	Warhead@1Dam: SpreadDamage
@@ -739,7 +737,8 @@ SNIPER:
 			Wood: 1
 			Concrete: 1
 			Brick: 1
-		ValidTargets: Barrel, Infantry
+			Light: 2
+			Heavy: 2
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piff
@@ -754,28 +753,21 @@ SNIPERE:
 	Range: 6c0
 
 SNIPER.vehicle:
-	ReloadDelay: 120
-	Range: 7c0
+	Inherits: SNIPER
 	Report: ijarwe1a.aud
-	ValidTargets: Vehicle, Ship
-	InvalidTargets: Infantry, Structure, Wall, Husk, Air, AirSmall
 	Projectile: Bullet
-		Speed: 2c682
-		Blockable: true
 		Image: 50CAL
 		Shadow: True
 	Warhead@1Dam: SpreadDamage
-		Spread: 42
-		Damage: 7000
-		ValidTargets: Vehicle, Ship
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
-	Warhead@2Smu: LeaveSmudge
-		SmudgeType: Crater
-		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
+		Versus:
+			Heavy: 28
+			Light: 28
+	Warhead@2Eff: CreateEffect
+		Explosions: piff
 	Warhead@3Eff: CreateEffect
 		Explosions: small_explosion
 		ImpactSounds: kaboom12.aud
-		ValidTargets: Ground, Ship, Trees
+		ValidTargets: Vehicle, Ship, Trees
 	Warhead@4EffWater: CreateEffect
 		Explosions: small_splash
 		ImpactSounds: splash9.aud
@@ -809,10 +801,6 @@ SNIPER.vehicleElite:
 
 SniperIFVGun:
 	Inherits: SNIPER.vehicle
-	ValidTargets: Ground, Water
-	-InvalidTargets:
-	Warhead@1Dam: SpreadDamage
-		-ValidTargets:
 
 CommandoIFVGun:
 	Inherits: SMG
