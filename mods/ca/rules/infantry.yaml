@@ -833,6 +833,7 @@ MECH:
 		Description: Repairs nearby vehicles.
 	TooltipExtras:
 		Weaknesses: • Unarmed
+		Attributes: • Can salvage destroyed vehicles for credits
 	Valued:
 		Cost: 300
 	Tooltip:
@@ -871,14 +872,27 @@ MECH:
 	AttackFrontal:
 		Voice: Action
 		PauseOnCondition: being-warped
+	CaptureManager:
+		CapturingCondition: salvaging
+	Captures:
+		CaptureTypes: husk
+		PlayerExperience: 25
+		ConsumedByCapture: False
+		CaptureDelay: 150
+		PlayerExperienceRelationships: Neutral, Enemy
+		EnterCursor: sell2
+		EnterBlockedCursor: move-blocked
 	WithInfantryBody:
 		IdleSequences: idle
 		DefaultAttackSequence: repair
 		StandSequences: stand
-		RequiresCondition: !parachute && !being-warped
+		RequiresCondition: !parachute && !being-warped && !salvaging
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
+	WithInfantryBody@SALVAGE:
+		StandSequences: repair
+		RequiresCondition: salvaging
 	Voiced:
 		VoiceSet: MechanicVoice
 	AutoTarget:

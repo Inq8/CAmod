@@ -4367,6 +4367,8 @@ IFV:
 		RequiresCondition: driver-dead && !full
 	Targetable@DRIVERKILL:
 		RequiresCondition: !driver-dead && !full
+	Targetable@MINDCONTROL:
+		RequiresCondition: !full && !mindcontrolled && !hacked && !restoring
 	AutoTarget:
 		AttackAnythingCondition: stance-attackanything
 		ScanRadius: 6
