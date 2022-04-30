@@ -1809,19 +1809,26 @@ SNIP:
 		Priority: 10
 	Armament@PRIMARY:
 		Weapon: sniper
-		RequiresCondition: !apb-upgrade
+		PauseOnCondition: !ammo
+	Armament@DUMMY:
+		Name: tertiary
+		Weapon: sniper.dummy
+		PauseOnCondition: ammo
 	Armament@Garrison:
 		Weapon: sniperE
 		Name: mounted
 		MuzzleSequence: garrison-muzzle
+		PauseOnCondition: !ammo
 	Armament@APROUND:
 		Name: secondary
 		Weapon: sniper.vehicle
 		RequiresCondition: apb-upgrade && rank-veteran < 3
+		PauseOnCondition: !ammo
 	Armament@APROUNDELITE:
 		Name: secondary
 		Weapon: sniper.vehicleElite
 		RequiresCondition: apb-upgrade && rank-veteran >= 3
+		PauseOnCondition: !ammo
 	Mobile:
 		Speed: 43
 		Voice: Move
@@ -1857,8 +1864,13 @@ SNIP:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		Armaments: primary, secondary, tertiary
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+		AttackSequences:
+			primary: shoot
+			secondary: shoot
+			tertiary: stand
 		StandSequences: stand, stand2
 		RequiresCondition: !parachute && !being-warped
 	WithInfantryBody@PARACHUTE:
@@ -1873,6 +1885,12 @@ SNIP:
 		VoiceSet: SniperVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	AmmoPool:
+		Ammo: 1
+		AmmoCondition: ammo
+	ReloadAmmoPool:
+		Delay: 120
+		Count: 1
 
 BORI:
 	Inherits: ^Soldier

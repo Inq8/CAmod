@@ -728,8 +728,10 @@ SNIPER:
 	ReloadDelay: 120
 	Range: 7c0
 	Report: snipe.aud
-	Projectile: Bullet
-		Speed: 2c682
+	ValidTargets: Ground, Infantry, Barrel
+	InvalidTargets: Structure, Vehicle, Ship
+	Projectile: InstantHit
+		Blockable: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
 		Damage: 25000
@@ -737,8 +739,7 @@ SNIPER:
 			Wood: 1
 			Concrete: 1
 			Brick: 1
-			Light: 2
-			Heavy: 2
+		ValidTargets: Barrel, Infantry
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piff
@@ -748,20 +749,33 @@ SNIPER:
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
 
+SNIPER.dummy:
+	Inherits: SNIPER
+	-Report:
+	-Warhead@1Dam:
+	-Warhead@2Eff:
+	-Warhead@3EffWater:
+
 SNIPERE:
 	Inherits: SNIPER
 	Range: 6c0
 
 SNIPER.vehicle:
-	Inherits: SNIPER
+	ReloadDelay: 120
+	Range: 7c0
 	Report: ijarwe1a.aud
-	Projectile: Bullet
-		Image: 50CAL
-		Shadow: True
+	ValidTargets: Vehicle, Ship
+	InvalidTargets: Structure, Infantry
+	Projectile: InstantHit
+		Blockable: true
 	Warhead@1Dam: SpreadDamage
-		Versus:
-			Heavy: 28
-			Light: 28
+		Spread: 42
+		Damage: 7000
+		ValidTargets: Vehicle, Ship
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
 	Warhead@2Eff: CreateEffect
 		Explosions: piff
 	Warhead@3Eff: CreateEffect
