@@ -132,6 +132,11 @@ TRAN.Husk1:
 	RenderSprites:
 		Image: tran1husk
 	-Capturable:
+	-CapturableProgressBar:
+	-CapturableProgressBlink:
+	-GivesCashOnCapture:
+	-GrantConditionOnCapture:
+	-KillsSelf:
 
 TRAN.Husk2:
 	Inherits: ^Husk
@@ -140,6 +145,11 @@ TRAN.Husk2:
 	RenderSprites:
 		Image: tran2husk
 	-Capturable:
+	-CapturableProgressBar:
+	-CapturableProgressBlink:
+	-GivesCashOnCapture:
+	-GrantConditionOnCapture:
+	-KillsSelf:
 
 HALO.Husk:
 	Inherits: ^HelicopterHusk
@@ -1152,11 +1162,20 @@ KIRO.Husk.Ground:
 		Name: Husk (Kirov)
 	KillsSelf:
 		Delay: 1
+		-RequiresCondition:
 	Explodes:
 		Weapon: KirovExplode
 	-OwnerLostAction:
 	-CaptureManager:
 	-Capturable:
+	-CapturableProgressBar:
+	-CapturableProgressBlink:
+	-GivesCashOnCapture:
+	-GrantConditionOnCapture:
+	WithIdleOverlay@Burns:
+		-RequiresCondition:
+	ChangesHealth:
+		-RequiresCondition:
 
 APC.Husk:
 	Inherits: ^Husk
