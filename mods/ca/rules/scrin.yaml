@@ -316,17 +316,17 @@ S4:
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Special Ability: Teleport
+		Attributes: • Special Ability: Teleport (with upgrade)
 	Mobile:
 		Speed: 49
 	Valued:
-		Cost: 450
+		Cost: 375
 	Tooltip:
 		Name: Intruder
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 14000
+		HP: 8000
 	RevealsShroud:
 		Range: 5c0
 	Armament@PRIMARY:
@@ -339,13 +339,20 @@ S4:
 		PauseOnCondition: being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
-	-Crushable:
-	PortableChrono:
+	PortableChronoCA:
 		ChargeDelay: 500
 		ChronoshiftSound: scrinport.aud
+		RequiresCondition: blink-upgrade
+		TeleportCondition: blink
+		ConditionDuration: 3
+	GrantConditionOnPrerequisite@BLINKPACKS:
+		Condition: blink-upgrade
+		Prerequisites: blink.upgrade
+	WithColoredOverlay@BLINKFLASH:
+		RequiresCondition: blink
+		Palette: highlight
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-	-TakeCover:
 
 S6:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -3469,9 +3476,6 @@ SCRT:
 		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
-	ProvidesPrerequisiteValidatedFaction@travelerscrt:
-		Factions: traveler
-		Prerequisite: scrt.traveler
 	ProvidesPrerequisite@buildingname:
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
