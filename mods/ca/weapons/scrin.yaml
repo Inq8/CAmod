@@ -593,6 +593,18 @@ ReaperLaserChargedSound:
 	Inherits: ReaperLaserSound
 	Report: rtripod-cfire1.aud, rtripod-cfire2.aud
 
+ReaperLaserChargedDummy:
+	Inherits: ReaperLaserCharged	
+	-StartBurstReport:
+	-FirstBurstTargetOffset:
+	-FollowingBurstTargetOffset:
+	-Projectile:
+	-Warhead@2Smu:
+	-Warhead@3Eff:
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Damage: 0
+
 StormriderZap:
 	Range: 6c0
 	Report: stormrider-fire1.aud, stormrider-fire2.aud, stormrider-fire3.aud
