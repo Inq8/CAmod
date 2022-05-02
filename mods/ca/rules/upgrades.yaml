@@ -758,12 +758,29 @@ orep.upgrade:
 ################################SCRIN##############################
 ###################################################################
 
+blink.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Blink Packs
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~nerv, ~techlevel.high
+		BuildDuration: 3000
+		Description: Equips Intruders with blink packs allowing\n  them to teleport.\n\nUpgrades: Intruder
+		IconPalette: scrin
+	TooltipExtras:
+		Strengths: + Teleport ability
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: blink.upgrade
+
 advart.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
 		Name: Upgrade: Advanced Articulators
 	Buildable:
-		BuildPaletteOrder: 20
+		BuildPaletteOrder: 21
 		Prerequisites: ~radar.traveler, ~techlevel.high
 		BuildDuration: 3000
 		Description: Enable Scrin infantry to move faster.\n\nUpgrades: Scrin Infantry
@@ -774,23 +791,6 @@ advart.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: advart.upgrade
-
-blink.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Blink Packs
-	Buildable:
-		BuildPaletteOrder: 21
-		Prerequisites: ~scrt, ~techlevel.high
-		BuildDuration: 1500
-		Description: Equips Intruders with blink packs allowing\n  them to teleport.\n\nUpgrades: Intruder
-		IconPalette: scrin
-	TooltipExtras:
-		Strengths: + Teleport ability
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: blink.upgrade
 
 resconv.upgrade:
 	Inherits: ^Upgrade

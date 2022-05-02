@@ -1394,7 +1394,7 @@ MCV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 500
-		Prerequisites: repair, ~vehicles.ra, ~techlevel.medium
+		Prerequisites: ~vehicles.ra, ~techlevel.medium
 		Description: Deploys into another Construction Yard.
 		BuildDurationModifier: 50
 	TooltipExtras:
@@ -1830,10 +1830,10 @@ MSG:
 		UndeployOnPickup: true
 	WithRangeCircle@MSG:
 		RequiresCondition: deployed
-		Range: 6c512
+		Range: 5c512
 		Color: 00aa00
 	ProximityExternalCondition@MSG:
-		Range: 6c512
+		Range: 5c512
 		Condition: msg-invis
 		RequiresCondition: deployed
 		MaximumVerticalOffset: 512
@@ -2133,7 +2133,6 @@ QTNK:
 		DetonationSequence: piston
 		DetonationWeapon: MADTankDetonate
 		FirstDetonationImmediate: true
-		PauseOnCondition: invulnerability
 	Explodes:
 		Weapon: ArtilleryExplode
 	Selectable:
@@ -2147,6 +2146,9 @@ QTNK:
 	ProductionCostMultiplier@UkraineBonus:
 		Multiplier: 90
 		Prerequisites: vehicles.ukraine
+	FirepowerMultiplier@MADIC:
+		Modifier: 40
+		RequiresCondition: invulnerability
 
 AMCV:
 	Inherits: ^VehicleTD-NOUPG
@@ -2154,7 +2156,7 @@ AMCV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 501
-		Prerequisites: repair, ~vehicles.td, ~techlevel.infonly
+		Prerequisites: ~vehicles.td, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Deploys into another Construction Yard.
 		BuildDurationModifier: 50

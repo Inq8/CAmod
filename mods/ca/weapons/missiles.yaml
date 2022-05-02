@@ -380,6 +380,7 @@ HellfireAG.Orca:
 
 HindRockets:
 	Inherits: HellfireAG
+	ReloadDelay: 70
 	Report: hind-rocket1.aud, hind-rocket2.aud
 	ValidTargets: Ground
 	InvalidTargets: Infantry
@@ -388,9 +389,10 @@ HindRockets:
 	Warhead@1Dam: SpreadDamage
 		Damage: 1825
 		Versus:
-			Light: 80
-			Wood: 60
-			Concrete: 60
+			Light: 34
+			Wood: 40
+			Concrete: 34
+			Heavy: 70
 
 HindRockets.AnyTarget:
 	Inherits: HindRockets
@@ -778,7 +780,7 @@ APTusk:
 
 TOW:
 	Inherits: ^AntiGroundMissile
-	Range: 5c512
+	Range: 5c0
 	ValidTargets: Vehicle, Structure
 	Report: tow1.aud, tow2.aud
 	ReloadDelay: 150

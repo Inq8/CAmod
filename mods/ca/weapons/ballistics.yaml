@@ -498,15 +498,17 @@ GrenadeJJ:
 	Report: jjgren1.aud, jjgren2.aud
 	Projectile: Bullet
 		ContrailLength: 30
-		Speed: 150
+		Speed: 180
 	Warhead@1Dam: SpreadDamage
+		Damage: 6000
+		Spread: 341
+		Falloff: 100, 20, 8, 5, 0
 		Versus:
-			Wood: 60
+			None: 200
+			Wood: 65
 			Heavy: 15
-	Warhead@2Dam: SpreadDamage
-		Versus:
-			Wood: 60
-			Heavy: 15
+	-Warhead@2Dam:
+
 
 EMPGrenade:
 	Inherits: Grenade
