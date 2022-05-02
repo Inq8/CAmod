@@ -399,6 +399,7 @@ TeslaZap:
 	Warhead@1Dam: SpreadDamage
 		Versus:
 			Wood: 60
+			Concrete: 75
 
 TeslaZapBoost1:
 	Inherits: TeslaZap
@@ -1094,7 +1095,8 @@ PrisLaser:
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		Versus:
 			None: 50
-			Wood: 70
+			Wood: 40
+			Concrete: 80
 			Light: 75
 			Heavy: 75
 			Brick: 50
@@ -1156,6 +1158,8 @@ PrisBurst:
 		Damage: 6500
 		Versus:
 			None: 85
+			Wood: 40
+			Concrete: 25
 	-Warhead@Burst:
 	Warhead@3Eff: CreateEffect
 		Explosions: small_explosion
@@ -1169,6 +1173,7 @@ PrisTBurst:
 		Versus:
 			None: 150
 			Wood: 35
+			Concrete: 100
 
 PrisCLaser:
 	Inherits: PrisTLaser
@@ -1330,16 +1335,15 @@ SonicZap:
 	ReloadDelay: 120
 	Range: 6c0
 	TargetActorCenter: false
-	InvalidTargets: Air
 	Report: sonic4.aud
-	Projectile: AreaBeam
+	Projectile: AreaBeamCA
 		Speed: 0c428
 		Duration: 65
 		DamageInterval: 3
 		Width: 420
 		Shape: Flat
 		ZOffset: 4096
-		BeyondTargetRange: 0c256
+		BeyondTargetRange: 0c341
 		Blockable: true
 		TrackTarget: true
 		Color: 00c3ff25
@@ -1347,7 +1351,6 @@ SonicZap:
 		Range: 0, 32
 		Falloff: 100, 100
 		Damage: 1000
-		AffectsParent: false
 		ValidRelationships: Neutral, Enemy
 		ValidTargets: Ground, Water
 		Versus:
@@ -1359,8 +1362,7 @@ SonicZap:
 		Range: 0, 32
 		Falloff: 100, 100
 		Damage: 250
-		InvalidTargets: Disruptor, Air
-		AffectsParent: false
+		InvalidTargets: Disruptor
 		ValidRelationships: Ally
 		Versus:
 			Heavy: 65
@@ -1368,77 +1370,36 @@ SonicZap:
 			Wood: 180
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 
-SonicZap.Seek:
-	Inherits: SonicZap
-	Range: 6c511
-
 SonicZap.UPG:
 	Inherits: SonicZap
-	Range: 7c0
-	Projectile: AreaBeam
+	Range: 6c768
+	Projectile: AreaBeamCA
 		Color: 00ffcc25
 	Warhead@1Dam: SpreadDamage
 		Damage: 1300
-
-SonicZap.Seek.UPG:
-	Inherits: SonicZap.UPG
-	Range: 7c768
 
 SonicZapVisual:
 	ReloadDelay: 120
 	Range: 6c0
 	TargetActorCenter: false
-	InvalidTargets: Air
-	Projectile: AreaBeam
+	Projectile: AreaBeamCA
 		Speed: 0c428
 		Duration: 65
 		DamageInterval: 3
 		Width: 180
 		Shape: Flat
 		ZOffset: 4096
-		BeyondTargetRange: 0c256
+		BeyondTargetRange: 0c341
 		Blockable: true
 		TrackTarget: true
 		Color: 00fffb35
-	Warhead@1Dam: SpreadDamage
-		Range: 0, 32
-		Falloff: 100, 100
-		Damage: 10
-		AffectsParent: false
-		ValidRelationships: Neutral, Enemy
-		ValidTargets: Ground, Water
-		Versus:
-			Heavy: 80
-			Concrete: 100
-			Wood: 200
-		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
-	Warhead@2Dam: SpreadDamage
-		Range: 0, 32
-		Falloff: 50, 50
-		Damage: 10
-		InvalidTargets: Disruptor, Air
-		AffectsParent: false
-		ValidRelationships: Ally
-		Versus:
-			Heavy: 80
-			Concrete: 150
-			Brick: 150
-			Wood: 200
-		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
-
-SonicZapVisual.Seek:
-	Inherits: SonicZapVisual
-	Range: 6c511
+	Warhead@1Dam: Dummy
 
 SonicZapVisual.UPG:
 	Inherits: SonicZapVisual
-	Range: 7c0
-	Projectile: AreaBeam
-		Color: 00ffc435
-
-SonicZapVisual.Seek.UPG:
-	Inherits: SonicZapVisual.UPG
-	Range: 7c768
+	Range: 6c768	
+	Projectile: AreaBeamCA
+		Color: 00ffa845
 
 Railgun:
 	ReloadDelay: 70
@@ -2045,7 +2006,7 @@ SonicPulse:
 			Wood: 45
 			Light: 90
 			Heavy: 100
-			Concrete: 35
+			Concrete: 65
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: sonicpulse1, sonicpulse2

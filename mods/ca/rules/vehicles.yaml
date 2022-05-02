@@ -4827,45 +4827,26 @@ DISR:
 	Armament@PRIMARY:
 		Weapon: SonicZap
 		LocalOffset: 0,0,200
-		RequiresCondition: !sonic-upgrade && !seek
+		RequiresCondition: !sonic-upgrade
 	Armament@SECONDARY:
 		Weapon: SonicZapVisual
 		Name: secondary
 		LocalOffset: 0,0,200
-		RequiresCondition: !sonic-upgrade && !seek
-	Armament@PRIMARYSEEK:
-		Weapon: SonicZap.Seek
-		LocalOffset: 0,0,200
-		RequiresCondition: !sonic-upgrade && seek
-	Armament@SECONDARYSEEK:
-		Weapon: SonicZapVisual.Seek
-		Name: secondary
-		LocalOffset: 0,0,200
-		RequiresCondition: !sonic-upgrade && seek
+		RequiresCondition: !sonic-upgrade
 	Armament@PRIMARYUPG:
 		Weapon: SonicZap.UPG
 		LocalOffset: 0,0,200
-		RequiresCondition: sonic-upgrade && !seek
+		RequiresCondition: sonic-upgrade
 	Armament@SECONDARYUPG:
 		Weapon: SonicZapVisual.UPG
 		Name: secondary
 		LocalOffset: 0,0,200
-		RequiresCondition: sonic-upgrade && !seek
-	Armament@PRIMARYSEEKUPG:
-		Weapon: SonicZap.Seek.UPG
-		LocalOffset: 0,0,200
-		RequiresCondition: seek && sonic-upgrade
-	Armament@SECONDARYSEEKUPG:
-		Weapon: SonicZapVisual.Seek.UPG
-		Name: secondary
-		LocalOffset: 0,0,200
-		RequiresCondition: seek && sonic-upgrade
+		RequiresCondition: sonic-upgrade
 	Turreted:
 		TurnSpeed: 20
 		Offset: -300,0,0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
-		OpportunityFire: False
 		Voice: Attack
 	WithSpriteTurret:
 	Selectable:
@@ -4886,7 +4867,6 @@ DISR:
 	GrantConditionOnPrerequisite@SONIC:
 		Condition: sonic-upgrade
 		Prerequisites: sonic.upgrade
-	-RangeMultiplier@SEEK:
 
 HSAM:
 	Inherits: ^VehicleTD
