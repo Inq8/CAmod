@@ -1255,6 +1255,7 @@ WEAP:
 	Inherits: ^Building
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^3x2Shape
+	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
 	Selectable:
 		Bounds: 72,48
 	Buildable:
@@ -1440,6 +1441,8 @@ FACT:
 	ProvidesPrerequisiteValidatedFaction@ftur:
 		Factions: russia, ukraine, yuri
 		Prerequisite: structures.ftur
+	ProvidesPrerequisite@anyconyard:
+		Prerequisite: anyconyard
 	Health:
 		HP: 150000
 	Armor:
@@ -2544,7 +2547,7 @@ FIX:
 	TooltipExtras:
 		Attributes: • Nearby helipads/airfields will repair landed aircraft
 	Valued:
-		Cost: 600
+		Cost: 1000
 	Tooltip:
 		Name: Service Depot
 	Building:
@@ -2582,6 +2585,8 @@ FIX:
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair
+	ProvidesPrerequisite@allowsmcv:
+		Prerequisite: vehicles.mcv
 	HitShape:
 		TargetableOffsets: 840,0,0, 598,-640,0, 598,640,0, -1060,0,0, -768,-640,0, -768,640,0
 		Type: Polygon
@@ -2833,6 +2838,14 @@ REPAIR:
 	Buildable:
 		Description: Service Depot/Repair Facility
 
+VEHICLES.MCV:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Service Depot/Repair Facility OR no MCV/Conyard
+	Buildable:
+		Description: Service Depot/Repair Facility OR no MCV/Conyard
+
 INFANTRY.MEDI:
 	AlwaysVisible:
 	Interactable:
@@ -3068,6 +3081,7 @@ WEAP.TD:
 	Inherits: ^BuildingTD
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^3x2Shape
+	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
 	RenderSprites:
 		Image: awep
 	Selectable:
@@ -3197,6 +3211,7 @@ WEAP.TD:
 AIRS:
 	Inherits: ^BuildingTD
 	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
 	RenderSprites:
 		Image: astrip
 	HitShape:
@@ -3582,6 +3597,8 @@ AFAC:
 	ProvidesPrerequisiteValidatedFaction@atwr:
 		Factions: talon, eagle, arc
 		Prerequisite: structures.atwr
+	ProvidesPrerequisite@anyconyard:
+		Prerequisite: anyconyard
 	ProductionBar@Building:
 		ProductionType: Building
 	ProductionBar@Defense:
@@ -4255,7 +4272,7 @@ REP:
 	TooltipExtras:
 		Attributes: • Nearby helipads/airfields will repair landed aircraft
 	Valued:
-		Cost: 600
+		Cost: 1000
 	Tooltip:
 		Name: Repair Facility
 	Building:
@@ -4293,6 +4310,8 @@ REP:
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair
+	ProvidesPrerequisite@allowsmcv:
+		Prerequisite: vehicles.mcv
 	ProximityExternalCondition@AIRCRAFTREPAIR:
 		Condition: aircraft-repair
 		Range: 10c0

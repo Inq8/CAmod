@@ -1699,7 +1699,7 @@ SMCV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 502
-		Prerequisites: ~vehicles.scrin, ~techlevel.infonly
+		Prerequisites: vehicles.mcv, ~vehicles.scrin, ~techlevel.infonly
 		IconPalette: chrome
 		Description: Deploys into another Colony Platform.
 		BuildDurationModifier: 50
@@ -1735,6 +1735,8 @@ SMCV:
 	MustBeDestroyed:
 		RequiredForShortGame: true
 	BaseBuilding:
+	ProvidesPrerequisite@anymcv:
+		Prerequisite: anymcv
 	SpawnActorOnDeath:
 		Actor: SMCV.Husk
 		RequiresCondition: !being-warped
@@ -2880,6 +2882,8 @@ SFAC:
 	ProvidesPrerequisiteValidatedFaction@collector:
 		Factions: collector
 		Prerequisite: structures.collector
+	ProvidesPrerequisite@anyconyard:
+		Prerequisite: anyconyard
 	ProductionBar@Building:
 		ProductionType: Building
 	ProductionBar@Defense:
@@ -3168,6 +3172,7 @@ WSPH:
 	Inherits: ^ScrinBuilding
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^3x2Shape
+	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
 	Selectable:
 		Bounds: 72,48
 	HitShape:
@@ -3685,7 +3690,7 @@ SREP:
 		Description: Repairs vehicles for credits.
 		IconPalette: chromes
 	Valued:
-		Cost: 600
+		Cost: 1000
 	Tooltip:
 		Name: Repair Bay
 	Building:
@@ -3723,6 +3728,8 @@ SREP:
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair
+	ProvidesPrerequisite@allowsmcv:
+		Prerequisite: vehicles.mcv
 	ProximityExternalCondition@SREPREARM:
 		Condition: srep-rearm
 		ValidRelationships: Ally

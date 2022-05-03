@@ -3477,6 +3477,17 @@
 		Pieces: 3, 7
 		Range: 1c511, 3c0
 
+^UnlocksMcvIfNoneOwned:
+	ProvidesPrerequisite@allowsmcv:
+		Prerequisite: vehicles.mcv
+		RequiresCondition: !has-mcv && !has-conyard
+	GrantConditionOnPrerequisiteCA@has-conyard:
+		Condition: has-conyard
+		Prerequisites: anyconyard
+	GrantConditionOnPrerequisiteCA@has-mcv:
+		Condition: has-mcv
+		Prerequisites: anymcv
+
 ^AIUNLOAD:
 	GrantConditionWhileAiming@AIUNLOAD:
 		Condition: aiming

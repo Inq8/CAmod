@@ -1394,7 +1394,7 @@ MCV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 500
-		Prerequisites: ~vehicles.ra, ~techlevel.medium
+		Prerequisites: vehicles.mcv, ~vehicles.ra, ~techlevel.medium
 		Description: Deploys into another Construction Yard.
 		BuildDurationModifier: 50
 	TooltipExtras:
@@ -1426,6 +1426,8 @@ MCV:
 	MustBeDestroyed:
 		RequiredForShortGame: true
 	BaseBuilding:
+	ProvidesPrerequisite@anymcv:
+		Prerequisite: anymcv
 	SpawnActorOnDeath:
 		Actor: MCV.Husk
 		RequiresCondition: !being-warped
@@ -2156,7 +2158,7 @@ AMCV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 501
-		Prerequisites: ~vehicles.td, ~techlevel.infonly
+		Prerequisites: vehicles.mcv, ~vehicles.td, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Deploys into another Construction Yard.
 		BuildDurationModifier: 50
@@ -2189,6 +2191,8 @@ AMCV:
 	MustBeDestroyed:
 		RequiredForShortGame: true
 	BaseBuilding:
+	ProvidesPrerequisite@anymcv:
+		Prerequisite: anymcv
 	SpawnActorOnDeath:
 		Actor: AMCV.Husk
 		RequiresCondition: !being-warped
