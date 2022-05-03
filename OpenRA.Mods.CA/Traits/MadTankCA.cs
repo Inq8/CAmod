@@ -248,7 +248,8 @@ namespace OpenRA.Mods.CA.Traits
 				{
 					if (mad.info.DetonationWeapon != null)
 					{
-						var args = new WarheadArgs {
+						var args = new WarheadArgs
+						{
 							Weapon = mad.info.DetonationWeaponInfo,
 							SourceActor = self,
 							WeaponTarget = target,
