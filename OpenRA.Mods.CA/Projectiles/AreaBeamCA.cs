@@ -86,6 +86,7 @@ namespace OpenRA.Mods.CA.Projectiles
 		readonly AttackBase actorAttackBase;
 		readonly Color color;
 		readonly WDist speed;
+		readonly WDist weaponRange;
 
 		[Sync]
 		WPos headPos;
@@ -98,7 +99,6 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		int length;
 		WAngle towardsTargetFacing;
-		WDist weaponRange;
 		int headTicks;
 		int tailTicks;
 		bool isHeadTravelling = true;
@@ -146,7 +146,7 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			length = Math.Max((target - headPos).Length / speed.Length, 1);
 
-			var rangeModifiers = args.SourceActor.TraitsImplementing<IRangeModifier>().Select(a => a.GetRangeModifier()).ToArray();
+			var rangeModifiers = args.SourceActor.TraitsImplementing<IRangeModifier>().Select(a => a.GetRangeModifier());
 			weaponRange = new WDist(OpenRA.Mods.Common.Util.ApplyPercentageModifiers(args.Weapon.Range.Length, rangeModifiers));
 		}
 
