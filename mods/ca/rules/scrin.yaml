@@ -1145,17 +1145,16 @@ STCR:
 		BuildPaletteOrder: 150
 		Prerequisites: anyradar, ~vehicles.reaper, ~techlevel.medium
 		Queue: Vehicle
-		Description: Slow moving, durable, short-range assault unit.
+		Description: Slow moving, very durable, short-range assault unit.
 		IconPalette: chromes
 	TooltipExtras:
-		Strengths: • Strong vs Defenses, Heavy Armor
+		Strengths: • Strong vs Defenses, Buildings
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Splits incoming damage with other nearby Stormcrawlers
 	Mobile:
 		Speed: 43
 		TurnSpeed: 16
 	Health:
-		HP: 74000
+		HP: 94000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -1166,7 +1165,7 @@ STCR:
 		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: StormcrawlerZap
-		LocalOffset: 0,0,350, -250,0,350, 250,0,350
+		LocalOffset: 0,200,350, -250,-200,350, 250,200,350, 0,-200,350, -250,200,350, 250,-200,350
 	AttackFrontal:
 		FacingTolerance: 512
 		PauseOnCondition: empdisable || being-warped
@@ -1175,46 +1174,6 @@ STCR:
 	WithShadow:
 		Offset: 80, 80, 0
 		ZOffset: -81
-	Targetable@STORMCRAWLERCHARGE:
-		TargetTypes: Stormcrawler
-	ExternalCondition@STORMCRAWLERCHARGE:
-		Condition: stormcrawlercharge
-	WithDecoration@STORMCRAWLERCHARGE1:
-		Image: pips
-		Sequence: pip-stcr1
-		Palette: scrin
-		Position: TopRight
-		RequiresCondition: stormcrawlercharge >= 2 && stormcrawlercharge < 3 && !empdisable && !being-warped
-	WithDecoration@STORMCRAWLERCHARGE2:
-		Image: pips
-		Sequence: pip-stcr2
-		Palette: scrin
-		Position: TopRight
-		RequiresCondition: stormcrawlercharge >= 3 && !empdisable && !being-warped
-	PeriodicExplosion:
-		Weapon: StormcrawlerChargeSource
-	ProximityExternalCondition@STORMCRAWLERCHARGE:
-		Range: 4c512
-		Condition: stormcrawlercharge
-	DamageMultiplier@STORMCRAWLERCHARGE1:
-		Modifier: 75
-		RequiresCondition: stormcrawlercharge >= 2 && stormcrawlercharge < 3 && !empdisable && !being-warped
-	DamageMultiplier@STORMCRAWLERCHARGE2:
-		Modifier: 60
-		RequiresCondition: stormcrawlercharge >= 3 && !empdisable && !being-warped
-	ReflectsDamage@STORMCRAWLERCHARGE1:
-		ValidRelationships: Ally
-		ValidActors: stcr
-		Range: 4c512
-		DamagePercentage: 33
-		RequiresCondition: stormcrawlercharge >= 2 && stormcrawlercharge < 3 && !empdisable && !being-warped
-	ReflectsDamage@STORMCRAWLERCHARGE2:
-		ValidRelationships: Ally
-		ValidActors: stcr
-		Range: 4c512
-		DamagePercentage: 33
-		MaxUnits: 2
-		RequiresCondition: stormcrawlercharge >= 3 && !empdisable && !being-warped
 
 DEVO:
 	Inherits: ^Vehicle

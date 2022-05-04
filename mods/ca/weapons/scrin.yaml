@@ -912,52 +912,19 @@ StormColumnCloudCharge:
 
 StormcrawlerZap:
 	Inherits: StormColumnZap
-	ReloadDelay: 35
-	Burst: 5
+	ReloadDelay: 50
+	Burst: 6
 	BurstDelays: 3
 	Range: 4c512
-	StartBurstReport: stormcrawler-fire1.aud, stormcrawler-fire2.aud
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 1500
+		Damage: 3000
 		Versus:
 			None: 30
-			Light: 50
-			Heavy: 55
+			Wood: 70
+			Light: 30
+			Heavy: 30
 			Concrete: 100
-
-StormcrawlerCharge:
-	ReloadDelay: 150
-	Range: 4c512
-	Report: stormcrawler-charge.aud
-	ValidTargets: Stormcrawler
-	Projectile: ElectricBolt
-		Colors: 8A2BFF88,B961FD88,B5A3E888
-		Duration: 5
-		Angle: 90
-	Warhead@1Dam: SpreadDamage
-		ValidTargets: Stormcrawler
-		Damage: 1
-		Versus:
-			Heavy: 0
-		ValidRelationships: Ally
-
-StormcrawlerChargeSource:
-	ReloadDelay: 150
-	Range: 0c512
-	ValidTargets: Stormcrawler
-	Projectile: InstantHit
-	Warhead@1Dam: SpreadDamage
-		ValidTargets: Stormcrawler
-		Damage: 1
-		Versus:
-			Heavy: 0
-		ValidRelationships: Ally
-	Warhead@Charge: FireShrapnel
-		Weapon: StormcrawlerCharge
-		Amount: 1
-		AimChance: 100
-		ThrowWithoutTarget: false
 
 ShardLauncher:
 	StartBurstReport: shard-fire1.aud
