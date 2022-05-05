@@ -145,9 +145,7 @@ namespace OpenRA.Mods.CA.Projectiles
 			target += dir * info.BeyondTargetRange.Length / 1024;
 
 			length = Math.Max((target - headPos).Length / speed.Length, 1);
-
-			var rangeModifiers = args.SourceActor.TraitsImplementing<IRangeModifier>().Select(a => a.GetRangeModifier());
-			weaponRange = new WDist(OpenRA.Mods.Common.Util.ApplyPercentageModifiers(args.Weapon.Range.Length, rangeModifiers));
+			weaponRange = new WDist(OpenRA.Mods.Common.Util.ApplyPercentageModifiers(args.Weapon.Range.Length, args.RangeModifiers));
 		}
 
 		void TrackTarget()
