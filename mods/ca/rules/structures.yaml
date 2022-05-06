@@ -82,7 +82,7 @@ MSLO:
 		TargetTypes: SpyInfiltrate, SabInfiltrate
 	ProductionCostMultiplier@IRAQBONUS:
 		Multiplier: 90
-		Prerequisites: structures.iraq
+		Prerequisites: player.iraq
 
 GAP:
 	Inherits: ^Building
@@ -633,7 +633,7 @@ TSLA:
 		RequiresCondition: !(disabled || empdisable || being-warped)
 	ProductionCostMultiplier@RussiaBonus:
 		Multiplier: 90
-		Prerequisites: structures.russia
+		Prerequisites: player.russia
 	GrantConditionOnPowerState@LOWPOWER:
 		RequiresCondition: !charged
 	ExternalCondition@CHARGED:
@@ -4122,7 +4122,7 @@ HQ:
 	Exit:
 	ProductionCostMultiplier@ARCDISCOUNT:
 		Multiplier: 50
-		Prerequisites: radar.arc
+		Prerequisites: anyradar, player.arc
 	GrantConditionOnFaction@ARC:
 		Factions: arc
 		Condition: arc-built
@@ -4255,7 +4255,7 @@ EYE:
 		RequiredForShortGame: false
 	ProductionCostMultiplier@ZocomBonus:
 		Multiplier: 90
-		Prerequisites: structures.zocom
+		Prerequisites: player.zocom
 
 REP:
 	Inherits: ^BuildingTD
@@ -6207,7 +6207,7 @@ UPGC:
 		Condition: nshield-active
 	ProductionCostMultiplier@TALONBONUS:
 		Multiplier: 90
-		Prerequisites: structures.talon
+		Prerequisites: player.talon
 	-MindControllable:
 	-Targetable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
