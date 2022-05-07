@@ -1,7 +1,7 @@
 General:
 	Name: Interior
 	Id: INTERIOR
-	EditorTemplateOrder: Floor, Wall
+	EditorTemplateOrder: Floor, Wall, Canal
 	HeightDebugColors: 880000
 
 Terrain:
@@ -47,6 +47,19 @@ Terrain:
 		AcceptsSmudgeType: Crater, Scorch
 		Color: A1E21C
 		RestrictPlayerColor: true
+	TerrainType@Water:
+		Type: Water
+		TargetTypes: Water
+		Color: 5C74A4
+		RestrictPlayerColor: true
+	TerrainType@Beach:
+		Type: Beach
+		TargetTypes: Ground
+		Color: B09C78
+	TerrainType@Ford:
+		Type: Ford
+		TargetTypes: Ground
+		Color: B09C78
 
 Templates:
 	Template@255:
@@ -1403,3 +1416,337 @@ Templates:
 		Categories: Wall
 		Tiles:
 			0: Wall
+
+	Template@500:
+		Id: 500
+		Images: w1.int
+		Size: 1,1
+		Categories: Canal
+		Tiles:
+			0: Water
+	Template@501:
+		Id: 501
+		Images: interiorwatergreygrid.int
+		Size: 1,1
+		Categories: Canal
+		Tiles:
+			0: Ford
+	Template@502:
+		Id: 502
+		Images: interiorwaterdarkgrid.int
+		Size: 1,1
+		Categories: Canal
+		Tiles:
+			0: Ford
+    Template@503:
+        Id: 503
+        Images: interiorwatergreyn1.int
+        Size: 2,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+            1: Beach
+    Template@504:
+        Id: 504
+        Images: interiorwatergreyn2.int
+        Size: 2,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+            1: Beach
+    Template@505:
+        Id: 505
+        Images: interiorwatergreye1.int
+        Size: 1,2
+        Categories: Canal
+        Tiles:
+            0: Beach
+            1: Beach
+    Template@506:
+        Id: 506
+        Images: interiorwatergreye2.int
+        Size: 1,2
+        Categories: Canal
+        Tiles:
+            0: Beach
+            1: Beach
+    Template@507:
+        Id: 507
+        Images: interiorwatergreys1.int
+        Size: 2,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+            1: Beach
+    Template@508:
+        Id: 508
+        Images: interiorwatergreys2.int
+        Size: 2,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+            1: Beach
+    Template@509:
+        Id: 509
+        Images: interiorwatergreyw1.int
+        Size: 1,2
+        Categories: Canal
+        Tiles:
+            0: Beach
+            1: Beach
+    Template@510:
+        Id: 510
+        Images: interiorwatergreyw2.int
+        Size: 1,2
+        Categories: Canal
+        Tiles:
+            0: Beach
+            1: Beach
+    Template@511:
+        Id: 511
+        Images: interiorwatergreycornerinnersw.int
+        Size: 1,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+    Template@512:
+        Id: 512
+        Images: interiorwatergreycornerinnernw.int
+        Size: 1,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+    Template@513:
+        Id: 513
+        Images: interiorwatergreycornerinnerne.int
+        Size: 1,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+    Template@514:
+        Id: 514
+        Images: interiorwatergreycornerinnerse.int
+        Size: 1,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+    Template@515:
+        Id: 515
+        Images: interiorwatergreycornersw.int
+        Size: 1,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+    Template@516:
+        Id: 516
+        Images: interiorwatergreycornernw.int
+        Size: 1,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+    Template@517:
+        Id: 517
+        Images: interiorwatergreycornerne.int
+        Size: 1,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+    Template@518:
+        Id: 518
+        Images: interiorwatergreycornerse.int
+        Size: 1,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+    Template@519:
+        Id: 519
+        Images: interiorwatergreycornersetsw.int
+        Size: 2,2
+        Categories: Canal
+        Tiles:
+            0: Beach
+            2: Beach
+            3: Beach
+    Template@520:
+        Id: 520
+        Images: interiorwatergreycornersetnw.int
+        Size: 2,2
+        Categories: Canal
+        Tiles:
+            0: Beach
+            1: Beach
+            2: Beach
+    Template@521:
+        Id: 521
+        Images: interiorwatergreycornersetne.int
+        Size: 2,2
+        Categories: Canal
+        Tiles:
+            0: Beach
+            1: Beach
+            3: Beach
+    Template@522:
+        Id: 522
+        Images: interiorwatergreycornersetse.int
+        Size: 2,2
+        Categories: Canal
+        Tiles:
+            1: Beach
+            2: Beach
+            3: Beach
+    Template@523:
+        Id: 523
+        Images: interiorwaterdarkn1.int
+        Size: 2,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+            1: Beach
+    Template@524:
+        Id: 524
+        Images: interiorwaterdarkn2.int
+        Size: 2,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+            1: Beach
+    Template@525:
+        Id: 525
+        Images: interiorwaterdarke1.int
+        Size: 1,2
+        Categories: Canal
+        Tiles:
+            0: Beach
+            1: Beach
+    Template@526:
+        Id: 526
+        Images: interiorwaterdarke2.int
+        Size: 1,2
+        Categories: Canal
+        Tiles:
+            0: Beach
+            1: Beach
+    Template@527:
+        Id: 527
+        Images: interiorwaterdarks1.int
+        Size: 2,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+            1: Beach
+    Template@528:
+        Id: 528
+        Images: interiorwaterdarks2.int
+        Size: 2,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+            1: Beach
+    Template@529:
+        Id: 529
+        Images: interiorwaterdarkw1.int
+        Size: 1,2
+        Categories: Canal
+        Tiles:
+            0: Beach
+            1: Beach
+    Template@530:
+        Id: 530
+        Images: interiorwaterdarkw2.int
+        Size: 1,2
+        Categories: Canal
+        Tiles:
+            0: Beach
+            1: Beach
+    Template@531:
+        Id: 531
+        Images: interiorwaterdarkcornerinnersw.int
+        Size: 1,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+    Template@532:
+        Id: 532
+        Images: interiorwaterdarkcornerinnernw.int
+        Size: 1,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+    Template@533:
+        Id: 533
+        Images: interiorwaterdarkcornerinnerne.int
+        Size: 1,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+    Template@534:
+        Id: 534
+        Images: interiorwaterdarkcornerinnerse.int
+        Size: 1,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+    Template@535:
+        Id: 535
+        Images: interiorwaterdarkcornersw.int
+        Size: 1,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+    Template@536:
+        Id: 536
+        Images: interiorwaterdarkcornernw.int
+        Size: 1,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+    Template@537:
+        Id: 537
+        Images: interiorwaterdarkcornerne.int
+        Size: 1,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+    Template@538:
+        Id: 538
+        Images: interiorwaterdarkcornerse.int
+        Size: 1,1
+        Categories: Canal
+        Tiles:
+            0: Beach
+    Template@539:
+        Id: 539
+        Images: interiorwaterdarkcornersetsw.int
+        Size: 2,2
+        Categories: Canal
+        Tiles:
+            0: Beach
+            2: Beach
+            3: Beach
+    Template@540:
+        Id: 540
+        Images: interiorwaterdarkcornersetnw.int
+        Size: 2,2
+        Categories: Canal
+        Tiles:
+            0: Beach
+            1: Beach
+            2: Beach
+    Template@541:
+        Id: 541
+        Images: interiorwaterdarkcornersetne.int
+        Size: 2,2
+        Categories: Canal
+        Tiles:
+            0: Beach
+            1: Beach
+            3: Beach
+    Template@542:
+        Id: 542
+        Images: interiorwaterdarkcornersetse.int
+        Size: 2,2
+        Categories: Canal
+        Tiles:
+            1: Beach
+            2: Beach
+            3: Beach
