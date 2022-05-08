@@ -1101,9 +1101,9 @@ SAM:
 		RealignDelay: -1
 		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled || empdisable || being-warped
-	-WithSpriteBody:
-	WithEmbeddedTurretSpriteBody:
+	WithSpriteTurret:
 		PauseOnCondition: disabled || empdisable || being-warped
+		RequiresCondition: !build-incomplete
 	Armament:
 		Weapon: Nike
 		LocalOffset: 0,0,320
@@ -3818,9 +3818,9 @@ STWR:
 		RealignDelay: -1
 		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled || empdisable || being-warped
-	-WithSpriteBody:
-	WithEmbeddedTurretSpriteBody:
+	WithSpriteTurret:
 		PauseOnCondition: disabled || empdisable || being-warped
+		RequiresCondition: !build-incomplete
 	Armament:
 		Weapon: SonicPulse
 		RequiresCondition: !sonic-upgrade
@@ -5300,9 +5300,9 @@ HTUR:
 		RealignDelay: -1
 		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled || empdisable || being-warped
-	-WithSpriteBody:
-	WithEmbeddedTurretSpriteBody:
+	WithSpriteTurret:
 		PauseOnCondition: disabled || empdisable || being-warped
+		RequiresCondition: !build-incomplete
 	AttackTurreted:
 		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	Armament:

@@ -3975,13 +3975,13 @@ PTUR:
 		HasMinibib: true
 	Turreted:
 		TurnSpeed: 48
-		InitialFacing: 192
+		InitialFacing: 176
 		RealignDelay: -1
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !build-incomplete
-	-WithSpriteBody:
-	WithEmbeddedTurretSpriteBody:
+	WithSpriteTurret:
 		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !build-incomplete
 	Armament:
 		Weapon: PlasmaTurretGun
 		LocalOffset: 450,70,500, 450,-70,500
@@ -4039,9 +4039,9 @@ SHAR:
 		RealignDelay: -1
 		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled || empdisable || being-warped
-	-WithSpriteBody:
-	WithEmbeddedTurretSpriteBody:
+	WithSpriteTurret:
 		PauseOnCondition: disabled || empdisable || being-warped
+		RequiresCondition: !build-incomplete
 	Armament@PRIMARY:
 		Weapon: ShardLauncher
 		LocalOffset: 0,0,1050
