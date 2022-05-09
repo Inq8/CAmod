@@ -380,6 +380,7 @@ HellfireAG.Orca:
 
 HindRockets:
 	Inherits: HellfireAG
+	ReloadDelay: 70
 	Report: hind-rocket1.aud, hind-rocket2.aud
 	ValidTargets: Ground
 	InvalidTargets: Infantry
@@ -388,9 +389,10 @@ HindRockets:
 	Warhead@1Dam: SpreadDamage
 		Damage: 1825
 		Versus:
-			Light: 80
-			Wood: 60
-			Concrete: 60
+			Light: 34
+			Wood: 40
+			Concrete: 34
+			Heavy: 70
 
 HindRockets.AnyTarget:
 	Inherits: HindRockets
@@ -756,7 +758,7 @@ StingerGTWR:
 
 APTusk:
 	Inherits: ^AntiGroundMissile
-	ReloadDelay: 70
+	ReloadDelay: 80
 	Range: 6c0
 	Burst: 2
 	BurstDelays: 0
@@ -768,17 +770,17 @@ APTusk:
 		RangeLimit: 7c204
 		LockOnInaccuracy: 256
 	Warhead@1Dam: SpreadDamage
-		Damage: 7000
+		Damage: 8000
 		Versus:
 			None: 35
 			Wood: 60
 			Light: 60
-			Heavy: 75
+			Heavy: 85
 			Concrete: 85
 
 TOW:
 	Inherits: ^AntiGroundMissile
-	Range: 5c512
+	Range: 5c0
 	ValidTargets: Vehicle, Structure
 	Report: tow1.aud, tow2.aud
 	ReloadDelay: 150
@@ -1191,9 +1193,9 @@ IFVRocketsAA:
 	Burst: 2
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
-		Damage: 3300
+		Damage: 3500
 	Warhead@2Dam: SpreadDamage
-		Damage: 3300
+		Damage: 3500
 
 IFVRocketsE:
 	Inherits: IFVRockets

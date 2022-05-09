@@ -1399,7 +1399,7 @@ MCV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 500
-		Prerequisites: repair, ~vehicles.ra, ~techlevel.medium
+		Prerequisites: vehicles.mcv, ~vehicles.ra, ~techlevel.medium
 		Description: Deploys into another Construction Yard.
 		BuildDurationModifier: 50
 	TooltipExtras:
@@ -1431,6 +1431,8 @@ MCV:
 	MustBeDestroyed:
 		RequiredForShortGame: true
 	BaseBuilding:
+	ProvidesPrerequisite@anymcv:
+		Prerequisite: anymcv
 	SpawnActorOnDeath:
 		Actor: MCV.Husk
 		RequiresCondition: !being-warped
@@ -1836,10 +1838,10 @@ MSG:
 		UndeployOnPickup: true
 	WithRangeCircle@MSG:
 		RequiresCondition: deployed
-		Range: 6c512
+		Range: 5c512
 		Color: 00aa00
 	ProximityExternalCondition@MSG:
-		Range: 6c512
+		Range: 5c512
 		Condition: msg-invis
 		RequiresCondition: deployed
 		MaximumVerticalOffset: 512
@@ -2140,7 +2142,6 @@ QTNK:
 		DetonationSequence: piston
 		DetonationWeapon: MADTankDetonate
 		FirstDetonationImmediate: true
-		PauseOnCondition: invulnerability
 	Explodes:
 		Weapon: ArtilleryExplode
 	Selectable:
@@ -2154,6 +2155,9 @@ QTNK:
 	ProductionCostMultiplier@UkraineBonus:
 		Multiplier: 90
 		Prerequisites: vehicles.ukraine
+	FirepowerMultiplier@MADIC:
+		Modifier: 40
+		RequiresCondition: invulnerability
 
 AMCV:
 	Inherits: ^VehicleTD-NOUPG
@@ -2161,7 +2165,7 @@ AMCV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 501
-		Prerequisites: repair, ~vehicles.td, ~techlevel.infonly
+		Prerequisites: vehicles.mcv, ~vehicles.td, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Deploys into another Construction Yard.
 		BuildDurationModifier: 50
@@ -2194,6 +2198,8 @@ AMCV:
 	MustBeDestroyed:
 		RequiredForShortGame: true
 	BaseBuilding:
+	ProvidesPrerequisite@anymcv:
+		Prerequisite: anymcv
 	SpawnActorOnDeath:
 		Actor: AMCV.Husk
 		RequiresCondition: !being-warped
@@ -4844,45 +4850,26 @@ DISR:
 	Armament@PRIMARY:
 		Weapon: SonicZap
 		LocalOffset: 0,0,200
-		RequiresCondition: !sonic-upgrade && !seek
+		RequiresCondition: !sonic-upgrade
 	Armament@SECONDARY:
 		Weapon: SonicZapVisual
 		Name: secondary
 		LocalOffset: 0,0,200
-		RequiresCondition: !sonic-upgrade && !seek
-	Armament@PRIMARYSEEK:
-		Weapon: SonicZap.Seek
-		LocalOffset: 0,0,200
-		RequiresCondition: !sonic-upgrade && seek
-	Armament@SECONDARYSEEK:
-		Weapon: SonicZapVisual.Seek
-		Name: secondary
-		LocalOffset: 0,0,200
-		RequiresCondition: !sonic-upgrade && seek
+		RequiresCondition: !sonic-upgrade
 	Armament@PRIMARYUPG:
 		Weapon: SonicZap.UPG
 		LocalOffset: 0,0,200
-		RequiresCondition: sonic-upgrade && !seek
+		RequiresCondition: sonic-upgrade
 	Armament@SECONDARYUPG:
 		Weapon: SonicZapVisual.UPG
 		Name: secondary
 		LocalOffset: 0,0,200
-		RequiresCondition: sonic-upgrade && !seek
-	Armament@PRIMARYSEEKUPG:
-		Weapon: SonicZap.Seek.UPG
-		LocalOffset: 0,0,200
-		RequiresCondition: seek && sonic-upgrade
-	Armament@SECONDARYSEEKUPG:
-		Weapon: SonicZapVisual.Seek.UPG
-		Name: secondary
-		LocalOffset: 0,0,200
-		RequiresCondition: seek && sonic-upgrade
+		RequiresCondition: sonic-upgrade
 	Turreted:
 		TurnSpeed: 20
 		Offset: -300,0,0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
-		OpportunityFire: False
 		Voice: Attack
 	WithSpriteTurret:
 	Selectable:
@@ -4903,7 +4890,6 @@ DISR:
 	GrantConditionOnPrerequisite@SONIC:
 		Condition: sonic-upgrade
 		Prerequisites: sonic.upgrade
-	-RangeMultiplier@SEEK:
 
 HSAM:
 	Inherits: ^VehicleTD

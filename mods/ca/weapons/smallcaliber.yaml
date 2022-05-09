@@ -310,24 +310,16 @@ ChainGun:
 	ReloadDelay: 12
 	Range: 5c0
 	MinRange: 0c768
-	ValidTargets: Infantry
 	Projectile: Bullet
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
-		ValidTargets: Infantry
 		Damage: 3400
 		Versus:
 			None: 100
-			Wood: 10
-			Light: 5
-			Heavy: 5
-			Concrete: 5
-
-ChainGun.AnyTarget:
-	Inherits: ChainGun
-	-ValidTargets:
-	Warhead@1Dam: SpreadDamage
-		-ValidTargets: Infantry
+			Wood: 22
+			Light: 34
+			Heavy: 20
+			Concrete: 18
 
 Vulcan2:
 	Inherits: ^LightMG
@@ -550,7 +542,7 @@ M60mgJJ:
 	Burst: 3
 	Warhead@1Dam: SpreadDamage
 		Versus:
-			Light: 30
+			Light: 40
 
 M60mgJJ.ground:
 	Inherits: M60mgJJ
@@ -587,7 +579,7 @@ MGattG:
 			None: 250
 			Wood: 35
 			Concrete: 35
-			Light: 140
+			Light: 155
 			Heavy: 35
 
 ^SnipeWeapon:

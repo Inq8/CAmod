@@ -323,13 +323,13 @@ S4:
 	Mobile:
 		Speed: 54
 	Valued:
-		Cost: 375
+		Cost: 425
 	Tooltip:
 		Name: Intruder
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 8000
+		HP: 11000
 	RevealsShroud:
 		Range: 5c0
 	Armament@PRIMARY:
@@ -417,6 +417,10 @@ FEED:
 		Cost: 200
 	Tooltip:
 		Name: Feeder
+	TooltipExtras:
+		Description: Charges up by harvesting or dealing damage.\n  When charged, explodes on death, or on reaching the enemy.
+		Strengths: • Strong vs Infantry, Buildings, Light Armor
+		Weaknesses: • Cannot attack Aircraft
 	Health:
 		HP: 7500
 	UpdatesPlayerStatistics:
@@ -1031,7 +1035,7 @@ CORR:
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
-		Cost: 1000
+		Cost: 1100
 	Tooltip:
 		Name: Corrupter
 	Selectable:
@@ -1154,17 +1158,16 @@ STCR:
 		BuildPaletteOrder: 150
 		Prerequisites: anyradar, ~vehicles.reaper, ~techlevel.medium
 		Queue: Vehicle
-		Description: Slow moving, durable, short-range assault unit.
+		Description: Slow moving, very durable, short-range assault unit.
 		IconPalette: chromes
 	TooltipExtras:
-		Strengths: • Strong vs Defenses, Heavy Armor
+		Strengths: • Strong vs Defenses, Buildings
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Splits incoming damage with other nearby Stormcrawlers
 	Mobile:
 		Speed: 46
 		TurnSpeed: 16
 	Health:
-		HP: 74000
+		HP: 94000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -1175,7 +1178,7 @@ STCR:
 		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: StormcrawlerZap
-		LocalOffset: 0,0,350, -250,0,350, 250,0,350
+		LocalOffset: 0,200,350, -250,-200,350, 250,200,350, 0,-200,350, -250,200,350, 250,-200,350
 	AttackFrontal:
 		FacingTolerance: 512
 		PauseOnCondition: empdisable || being-warped
@@ -1184,46 +1187,6 @@ STCR:
 	WithShadow:
 		Offset: 80, 80, 0
 		ZOffset: -81
-	Targetable@STORMCRAWLERCHARGE:
-		TargetTypes: Stormcrawler
-	ExternalCondition@STORMCRAWLERCHARGE:
-		Condition: stormcrawlercharge
-	WithDecoration@STORMCRAWLERCHARGE1:
-		Image: pips
-		Sequence: pip-stcr1
-		Palette: scrin
-		Position: TopRight
-		RequiresCondition: stormcrawlercharge >= 2 && stormcrawlercharge < 3 && !empdisable && !being-warped
-	WithDecoration@STORMCRAWLERCHARGE2:
-		Image: pips
-		Sequence: pip-stcr2
-		Palette: scrin
-		Position: TopRight
-		RequiresCondition: stormcrawlercharge >= 3 && !empdisable && !being-warped
-	PeriodicExplosion:
-		Weapon: StormcrawlerChargeSource
-	ProximityExternalCondition@STORMCRAWLERCHARGE:
-		Range: 4c512
-		Condition: stormcrawlercharge
-	DamageMultiplier@STORMCRAWLERCHARGE1:
-		Modifier: 75
-		RequiresCondition: stormcrawlercharge >= 2 && stormcrawlercharge < 3 && !empdisable && !being-warped
-	DamageMultiplier@STORMCRAWLERCHARGE2:
-		Modifier: 60
-		RequiresCondition: stormcrawlercharge >= 3 && !empdisable && !being-warped
-	ReflectsDamage@STORMCRAWLERCHARGE1:
-		ValidRelationships: Ally
-		ValidActors: stcr
-		Range: 4c512
-		DamagePercentage: 33
-		RequiresCondition: stormcrawlercharge >= 2 && stormcrawlercharge < 3 && !empdisable && !being-warped
-	ReflectsDamage@STORMCRAWLERCHARGE2:
-		ValidRelationships: Ally
-		ValidActors: stcr
-		Range: 4c512
-		DamagePercentage: 33
-		MaxUnits: 2
-		RequiresCondition: stormcrawlercharge >= 3 && !empdisable && !being-warped
 
 DEVO:
 	Inherits: ^Vehicle
@@ -1309,7 +1272,7 @@ DARK:
 		Queue: Vehicle
 		BuildPaletteOrder: 221
 		Prerequisites: anyradar, ~vehicles.harbinger, ~techlevel.medium
-		Description: Heavy hover tank with armed with a rift cannon.
+		Description: Heavy hover tank armed with a rift cannon.
 		IconPalette: chromes
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
@@ -1702,7 +1665,7 @@ SMCV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 502
-		Prerequisites: repair, ~vehicles.scrin, ~techlevel.infonly
+		Prerequisites: vehicles.mcv, ~vehicles.scrin, ~techlevel.infonly
 		IconPalette: chrome
 		Description: Deploys into another Colony Platform.
 		BuildDurationModifier: 50
@@ -1738,6 +1701,8 @@ SMCV:
 	MustBeDestroyed:
 		RequiredForShortGame: true
 	BaseBuilding:
+	ProvidesPrerequisite@anymcv:
+		Prerequisite: anymcv
 	SpawnActorOnDeath:
 		Actor: SMCV.Husk
 		RequiresCondition: !being-warped
@@ -2919,6 +2884,8 @@ SFAC:
 	ProvidesPrerequisiteValidatedFaction@collector:
 		Factions: collector
 		Prerequisite: structures.collector
+	ProvidesPrerequisite@anyconyard:
+		Prerequisite: anyconyard
 	ProductionBar@Building:
 		ProductionType: Building
 	ProductionBar@Defense:
@@ -3207,6 +3174,7 @@ WSPH:
 	Inherits: ^ScrinBuilding
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^3x2Shape
+	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
 	Selectable:
 		Bounds: 3072, 2048
 	HitShape:
@@ -3537,7 +3505,7 @@ SCRT:
 		InfiltratedNotification: BaseAttack
 	WithBuildingBib:
 	Power:
-		Amount: -200
+		Amount: -150
 	ValidFactions:
 		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite:
@@ -3762,6 +3730,8 @@ SREP:
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair
+	ProvidesPrerequisite@allowsmcv:
+		Prerequisite: vehicles.mcv
 	ProximityExternalCondition@SREPREARM:
 		Condition: srep-rearm
 		ValidRelationships: Ally
@@ -3915,7 +3885,7 @@ MANI:
 		Prerequisites: ~mani.collector
 	ProductionCostMultiplier@COLLECTOR:
 		Multiplier: 90
-		Prerequisites: structures.collector
+		Prerequisites: player.collector
 
 RIFT:
 	Inherits: ^ScrinBuilding
@@ -4044,13 +4014,12 @@ PTUR:
 		HasMinibib: true
 	Turreted:
 		TurnSpeed: 48
-		InitialFacing: 192
+		InitialFacing: 176
 		RealignDelay: -1
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !build-incomplete
-	-WithSpriteBody:
-	WithEmbeddedTurretSpriteBody:
-		PauseOnCondition: empdisable || being-warped
+	WithSpriteTurret:
+		RequiresCondition: !build-incomplete
 	Armament:
 		Weapon: PlasmaTurretGun
 		LocalOffset: 450,70,500, 450,-70,500
@@ -4108,9 +4077,8 @@ SHAR:
 		RealignDelay: -1
 		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled || empdisable || being-warped
-	-WithSpriteBody:
-	WithEmbeddedTurretSpriteBody:
-		PauseOnCondition: disabled || empdisable || being-warped
+	WithSpriteTurret:
+		RequiresCondition: !build-incomplete
 	Armament@PRIMARY:
 		Weapon: ShardLauncher
 		LocalOffset: 0,0,1050

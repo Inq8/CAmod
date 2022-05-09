@@ -318,11 +318,17 @@ camera.satscan:
 
 camera.satscan.oneshot:
 	Inherits: camera.satscan
-	-VoiceAnnouncement@Die:
-	-KillsSelf:
+	-VoiceAnnouncement:
+	VoiceAnnouncement@Die:
+		Voice: Build
 	KillsSelf:
-		RemoveInstead: true
+		Delay: 380
+	RevealsMapCA:
+		RequiresCondition: animation-complete
+	GrantDelayedCondition:
 		Delay: 375
+		Condition: animation-complete
+	-GrantConditionOnPrerequisite@UPLINK:
 
 camera.hacker:
 	Inherits: CAMERA
@@ -333,6 +339,10 @@ camera.hacker:
 		Delay: 50
 
 gps.satellite:
+	AlwaysVisible:
+	ProvidesPrerequisite:
+
+gps.satellite.firstscan:
 	AlwaysVisible:
 	ProvidesPrerequisite:
 

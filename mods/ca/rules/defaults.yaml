@@ -2345,7 +2345,7 @@
 		RequiresCondition: tnt && !airborne
 	ProductionCostMultiplier@EagleBonus:
 		Multiplier: 90
-		Prerequisites: structures.eagle
+		Prerequisites: player.eagle
 	Explodes:
 		RequiresCondition: !airborne && !being-warped
 	Targetable@TEMPORAL:
@@ -2596,7 +2596,7 @@
 		RequiresCondition: revealonfire
 	ProductionCostMultiplier@FranceBonus:
 		Multiplier: 90
-		Prerequisites: structures.france
+		Prerequisites: player.france
 	Explodes@TEMPORAL:
 		Weapon: TemporalExplode
 		EmptyWeapon: TemporalExplode
@@ -2676,7 +2676,7 @@
 		Categories: Wall
 	ProductionCostMultiplier@FranceBonus:
 		Multiplier: 90
-		Prerequisites: structures.france
+		Prerequisites: player.france
 	GrantExternalConditionToCrusher@CRUSHATTEMPTSLOW:
 		WarnCrushCondition: crush-attempt-slow
 		WarnCrushDuration: 50
@@ -3460,6 +3460,17 @@
 		Weapons: FireDebris
 		Pieces: 3, 7
 		Range: 1c511, 3c0
+
+^UnlocksMcvIfNoneOwned:
+	ProvidesPrerequisite@allowsmcv:
+		Prerequisite: vehicles.mcv
+		RequiresCondition: !has-mcv && !has-conyard
+	GrantConditionOnPrerequisiteCA@has-conyard:
+		Condition: has-conyard
+		Prerequisites: anyconyard
+	GrantConditionOnPrerequisiteCA@has-mcv:
+		Condition: has-mcv
+		Prerequisites: anymcv
 
 ^AIUNLOAD:
 	GrantConditionWhileAiming@AIUNLOAD:

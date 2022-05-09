@@ -21,16 +21,16 @@ namespace OpenRA.Mods.CA.Effects
 		readonly Player launcher;
 		readonly Animation anim;
 		readonly string palette;
-		readonly int revealDelay;
+		readonly int animationDuration;
 		WPos pos;
 		int tick;
 
-		public GpsSatelliteCA(World world, WPos pos, string image, string sequence, string palette, int revealDelay, Player launcher)
+		public GpsSatelliteCA(World world, WPos pos, string image, string sequence, string palette, int animationDuration, Player launcher)
 		{
 			this.palette = palette;
 			this.pos = pos;
 			this.launcher = launcher;
-			this.revealDelay = revealDelay;
+			this.animationDuration = animationDuration;
 
 			anim = new Animation(world, image);
 			anim.PlayRepeating(sequence);
@@ -42,7 +42,7 @@ namespace OpenRA.Mods.CA.Effects
 			anim.Tick();
 			pos += new WVec(0, 0, 427);
 
-			if (++tick > revealDelay)
+			if (++tick > animationDuration)
 			{
 				world.AddFrameEndTask(w => { w.Remove(this); w.ScreenMap.Remove(this); });
 			}
