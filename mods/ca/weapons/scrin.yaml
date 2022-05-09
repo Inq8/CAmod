@@ -176,18 +176,18 @@ IntruderDiscs:
 	Inherits: PlasmaDiscs
 	-MinRange:
 	Range: 6c0
-	ReloadDelay: 90
+	ReloadDelay: 70
 	Burst: 3
 	Projectile: Missile
 		Inaccuracy: 0c128
 		LockOnProbability: 33
 	Warhead@1Dam: SpreadDamage
-		Damage: 3000
+		Damage: 2850
 		Versus:
 			None: 25
 			Wood: 100
-			Light: 55
-			Heavy: 70
+			Light: 65
+			Heavy: 100
 			Concrete: 100
 
 DevastatorDiscs:
@@ -261,7 +261,7 @@ InterloperLaser:
 	Warhead@1Dam: SpreadDamage
 		Damage: 2100
 		Versus:
-			None: 35
+			None: 30
 			Light: 100
 			Wood: 70
 			Heavy: 85
@@ -296,7 +296,7 @@ DevourerLaser:
 		Spread: 341
 		Damage: 930
 		Versus:
-			None: 40
+			None: 28
 
 DevourerLaserCharged:
 	Inherits: DevourerLaser
@@ -367,31 +367,31 @@ MiniRift:
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
 		Spread: 682
-		Damage: 1000
+		Damage: 840
 		Falloff: 100, 70, 0
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air, AirSmall, Creep
 		Versus:
 			None: 3
 			Wood: 30
-			Light: 75
+			Light: 90
 			Heavy: 100
-			Concrete: 80
+			Concrete: 95
 			Brick: 20
 		DamageTypes: BulletDeath
 		ValidRelationships: Enemy, Neutral
 	Warhead@2Dam: SpreadDamage
 		Spread: 682
-		Damage: 250
+		Damage: 210
 		Falloff: 100, 70, 0
 		ValidTargets: Ground, Trees
 		InvalidTargets: Air, AirSmall, Creep
 		Versus:
 			None: 3
 			Wood: 30
-			Light: 75
+			Light: 90
 			Heavy: 100
-			Concrete: 80
+			Concrete: 95
 			Brick: 20
 		DamageTypes: BulletDeath
 		ValidRelationships: Ally
@@ -405,7 +405,7 @@ MiniRift:
 		Duration: 10
 		Condition: slowed
 		ValidTargets: Vehicle
-		ValidRelationships: Enemy, Neutral
+		ValidRelationships: Enemy, Neutral, Ally
 
 CorrupterSpew:
 	StartBurstReport: corrupter-fire1.aud
@@ -870,7 +870,7 @@ StormColumnZap:
 		Versus:
 			None: 55
 			Wood: 60
-			Concrete: 100
+			Concrete: 90
 			Light: 80
 			Heavy: 95
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
@@ -912,51 +912,19 @@ StormColumnCloudCharge:
 
 StormcrawlerZap:
 	Inherits: StormColumnZap
-	ReloadDelay: 35
-	Burst: 5
+	ReloadDelay: 50
+	Burst: 6
 	BurstDelays: 3
 	Range: 4c512
-	StartBurstReport: stormcrawler-fire1.aud, stormcrawler-fire2.aud
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 1500
+		Damage: 3000
 		Versus:
 			None: 30
-			Light: 50
-			Heavy: 55
-
-StormcrawlerCharge:
-	ReloadDelay: 150
-	Range: 4c512
-	Report: stormcrawler-charge.aud
-	ValidTargets: Stormcrawler
-	Projectile: ElectricBolt
-		Colors: 8A2BFF88,B961FD88,B5A3E888
-		Duration: 5
-		Angle: 90
-	Warhead@1Dam: SpreadDamage
-		ValidTargets: Stormcrawler
-		Damage: 1
-		Versus:
-			Heavy: 0
-		ValidRelationships: Ally
-
-StormcrawlerChargeSource:
-	ReloadDelay: 150
-	Range: 0c512
-	ValidTargets: Stormcrawler
-	Projectile: InstantHit
-	Warhead@1Dam: SpreadDamage
-		ValidTargets: Stormcrawler
-		Damage: 1
-		Versus:
-			Heavy: 0
-		ValidRelationships: Ally
-	Warhead@Charge: FireShrapnel
-		Weapon: StormcrawlerCharge
-		Amount: 1
-		AimChance: 100
-		ThrowWithoutTarget: false
+			Wood: 70
+			Light: 30
+			Heavy: 30
+			Concrete: 100
 
 ShardLauncher:
 	StartBurstReport: shard-fire1.aud
@@ -1421,6 +1389,7 @@ AtomizerBolts:
 		Duration: 180
 		Condition: atomized
 		ValidTargets: Vehicle, Ship, Defense
+		ValidRelationships: Enemy, Neutral
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
@@ -1448,7 +1417,6 @@ AtomizerBoltsAA:
 	Warhead@2Sup: GrantExternalCondition
 		ValidTargets: Air, AirSmall
 		Range: 1c512
-		ValidRelationships: Enemy, Neutral
 	Warhead@3Eff: CreateEffect
 		ValidTargets: Air, AirSmall
 	Warhead@red: GrantExternalCondition

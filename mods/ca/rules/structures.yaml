@@ -67,7 +67,7 @@ MSLO:
 		CircleBorderColor: 770000AA
 	SupportPowerChargeBar:
 	Power:
-		Amount: -150
+		Amount: -200
 	MustBeDestroyed:
 		RequiredForShortGame: false
 	WithSupportPowerActivationAnimation:
@@ -82,7 +82,7 @@ MSLO:
 		TargetTypes: SpyInfiltrate, SabInfiltrate
 	ProductionCostMultiplier@IRAQBONUS:
 		Multiplier: 90
-		Prerequisites: structures.iraq
+		Prerequisites: player.iraq
 
 GAP:
 	Inherits: ^Building
@@ -633,7 +633,7 @@ TSLA:
 		RequiresCondition: !(disabled || empdisable || being-warped)
 	ProductionCostMultiplier@RussiaBonus:
 		Multiplier: 90
-		Prerequisites: structures.russia
+		Prerequisites: player.russia
 	GrantConditionOnPowerState@LOWPOWER:
 		RequiresCondition: !charged
 	ExternalCondition@CHARGED:
@@ -1101,9 +1101,9 @@ SAM:
 		RealignDelay: -1
 		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled || empdisable || being-warped
-	-WithSpriteBody:
-	WithEmbeddedTurretSpriteBody:
+	WithSpriteTurret:
 		PauseOnCondition: disabled || empdisable || being-warped
+		RequiresCondition: !build-incomplete
 	Armament:
 		Weapon: Nike
 		LocalOffset: 0,0,320
@@ -1173,7 +1173,7 @@ ATEK:
 		RequiresCondition: sat-launch
 	SupportPowerChargeBar:
 	Power:
-		Amount: -200
+		Amount: -150
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
@@ -1255,6 +1255,7 @@ WEAP:
 	Inherits: ^Building
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^3x2Shape
+	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
 	Selectable:
 		Bounds: 72,48
 	Buildable:
@@ -1440,6 +1441,8 @@ FACT:
 	ProvidesPrerequisiteValidatedFaction@ftur:
 		Factions: russia, ukraine, yuri
 		Prerequisite: structures.ftur
+	ProvidesPrerequisite@anyconyard:
+		Prerequisite: anyconyard
 	Health:
 		HP: 150000
 	Armor:
@@ -1868,7 +1871,7 @@ HPAD:
 	ProductionBar:
 		ProductionType: Aircraft
 	Power:
-		Amount: -10
+		Amount: -20
 	ValidFactions:
 		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
 	ProvidesPrerequisiteValidatedFaction@allies:
@@ -2216,7 +2219,7 @@ STEK:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Health:
-		HP: 80000
+		HP: 100000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -2227,7 +2230,7 @@ STEK:
 		Range: 4c0
 	WithBuildingBib:
 	Power:
-		Amount: -100
+		Amount: -150
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
@@ -2582,6 +2585,8 @@ FIX:
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair
+	ProvidesPrerequisite@allowsmcv:
+		Prerequisite: vehicles.mcv
 	HitShape:
 		TargetableOffsets: 840,0,0, 598,-640,0, 598,640,0, -1060,0,0, -768,-640,0, -768,640,0
 		Type: Polygon
@@ -2833,6 +2838,14 @@ REPAIR:
 	Buildable:
 		Description: Service Depot/Repair Facility
 
+VEHICLES.MCV:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Service Depot/Repair Facility OR no MCV/Conyard
+	Buildable:
+		Description: Service Depot/Repair Facility OR no MCV/Conyard
+
 INFANTRY.MEDI:
 	AlwaysVisible:
 	Interactable:
@@ -3068,6 +3081,7 @@ WEAP.TD:
 	Inherits: ^BuildingTD
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^3x2Shape
+	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
 	RenderSprites:
 		Image: awep
 	Selectable:
@@ -3197,6 +3211,7 @@ WEAP.TD:
 AIRS:
 	Inherits: ^BuildingTD
 	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
 	RenderSprites:
 		Image: astrip
 	HitShape:
@@ -3582,6 +3597,8 @@ AFAC:
 	ProvidesPrerequisiteValidatedFaction@atwr:
 		Factions: talon, eagle, arc
 		Prerequisite: structures.atwr
+	ProvidesPrerequisite@anyconyard:
+		Prerequisite: anyconyard
 	ProductionBar@Building:
 		ProductionType: Building
 	ProductionBar@Defense:
@@ -3801,9 +3818,9 @@ STWR:
 		RealignDelay: -1
 		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled || empdisable || being-warped
-	-WithSpriteBody:
-	WithEmbeddedTurretSpriteBody:
+	WithSpriteTurret:
 		PauseOnCondition: disabled || empdisable || being-warped
+		RequiresCondition: !build-incomplete
 	Armament:
 		Weapon: SonicPulse
 		RequiresCondition: !sonic-upgrade
@@ -4041,7 +4058,7 @@ HQ:
 		OrderName: shadowteam
 		Prerequisites: ~radar.shadow, techlevel.unrestricted
 		Icon: shadteam
-		ChargeInterval: 6000
+		ChargeInterval: 6750
 		Description: Shadow Team
 		LongDesc: \nCalls for a Shadow Team; three stealth infantry\n    that arrive via glider armed with grenades\n    and a machine pistol.\n\nOperatives can be ordered to land\n    via the deploy command.
 		SelectTargetSpeechNotification: SelectTarget
@@ -4105,7 +4122,7 @@ HQ:
 	Exit:
 	ProductionCostMultiplier@ARCDISCOUNT:
 		Multiplier: 50
-		Prerequisites: radar.arc
+		Prerequisites: anyradar, player.arc
 	GrantConditionOnFaction@ARC:
 		Factions: arc
 		Condition: arc-built
@@ -4238,7 +4255,7 @@ EYE:
 		RequiredForShortGame: false
 	ProductionCostMultiplier@ZocomBonus:
 		Multiplier: 90
-		Prerequisites: structures.zocom
+		Prerequisites: player.zocom
 
 REP:
 	Inherits: ^BuildingTD
@@ -4293,6 +4310,8 @@ REP:
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair
+	ProvidesPrerequisite@allowsmcv:
+		Prerequisite: vehicles.mcv
 	ProximityExternalCondition@AIRCRAFTREPAIR:
 		Condition: aircraft-repair
 		Range: 10c0
@@ -4321,7 +4340,7 @@ REP:
 		OrderName: xodrop
 		Prerequisites: ~aircraft.talon, ~techlevel.medium
 		Icon: xodrop
-		ChargeInterval: 8250
+		ChargeInterval: 9750
 		Description: X-O Drop
 		UnitType: ocar.xo
 		LongDesc: \nAn Orca transport drops a squad of X-O Powersuits\n    at the target location.
@@ -4452,7 +4471,7 @@ HPAD.TD:
 		ProductionType: Aircraft
 	WithBuildingBib:
 	Power:
-		Amount: -10
+		Amount: -20
 	ValidFactions:
 		Factions: talon, zocom, eagle, arc, blackh, marked, legion, shadow
 	ProvidesPrerequisiteValidatedFaction@gdi:
@@ -4746,7 +4765,7 @@ GTEK:
 		InfiltratedNotification: BaseAttack
 	WithBuildingBib:
 	Power:
-		Amount: -200
+		Amount: -150
 	ValidFactions:
 		Factions: talon, zocom, eagle, arc
 	ProvidesPrerequisite:
@@ -5281,9 +5300,9 @@ HTUR:
 		RealignDelay: -1
 		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled || empdisable || being-warped
-	-WithSpriteBody:
-	WithEmbeddedTurretSpriteBody:
+	WithSpriteTurret:
 		PauseOnCondition: disabled || empdisable || being-warped
+		RequiresCondition: !build-incomplete
 	AttackTurreted:
 		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	Armament:
@@ -5757,7 +5776,7 @@ PATR:
 		Count: 1
 	SupportPowerChargeBar:
 	Power:
-		Amount: -150
+		Amount: -200
 	ClassicFacingBodyOrientation:
 	Explodes:
 		Weapon: BuildingExplode
@@ -6188,7 +6207,7 @@ UPGC:
 		Condition: nshield-active
 	ProductionCostMultiplier@TALONBONUS:
 		Multiplier: 90
-		Prerequisites: structures.talon
+		Prerequisites: player.talon
 	-MindControllable:
 	-Targetable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
@@ -6459,7 +6478,7 @@ MSLO.Nod:
 		CircleBorderColor: 007700AA
 	SupportPowerChargeBar:
 	Power:
-		Amount: -150
+		Amount: -200
 	MustBeDestroyed:
 		RequiredForShortGame: false
 	WithSupportPowerActivationAnimation:

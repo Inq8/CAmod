@@ -639,11 +639,13 @@ agun:
 
 sam:
 	Inherits: ^StructureOverlays
-	idle: sam2
+	idle: empty
+	damaged-idle: empty	
+	turret: sam2
 		Facings: 32
 		UseClassicFacings: True
 		Offset: -2,-2
-	damaged-idle: sam2
+	damaged-turret: sam2
 		Start: 34
 		Facings: 32
 		UseClassicFacings: True
@@ -1899,11 +1901,13 @@ spennod:
 
 htur:
 	Inherits: ^StructureOverlays
-	idle: htur
+	idle: empty
+	damaged-idle: empty
+	turret: htur
 		Facings: 32
 		UseClassicFacings: True
 		Offset: 0,0
-	damaged-idle: htur
+	damaged-turret: htur
 		Start: 32
 		Facings: 32
 		UseClassicFacings: True
@@ -2159,12 +2163,14 @@ stwr:
 	Inherits: ^StructureOverlays
 	Defaults:
 		Offset: 0,-13
-	idle: stwr
+	idle: empty
+	damaged-idle: empty
+	turret: stwr
 		Facings: 32
 		UseClassicFacings: True
 	make: stwrmake
 		Length: *
-	damaged-idle: stwr
+	damaged-turret: stwr
 		Start: 32
 		Facings: 32
 		UseClassicFacings: True

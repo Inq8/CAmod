@@ -139,7 +139,7 @@ HOSP:
 		ChargeDuration: 3000
 		Actors: medi
 		ShowSelectionBar: true
-		RequiresCondition: !is-neutral && !infantry-scrin
+		RequiresCondition: !is-neutral && !scrinplayer
 		ResetTraitOnOwnerChange: true
 		Immediate: true
 		ReadyAudio: UnitReady
@@ -149,7 +149,7 @@ HOSP:
 		ChargeDuration: 3000
 		Actors: smedi
 		ShowSelectionBar: true
-		RequiresCondition: !is-neutral && infantry-scrin
+		RequiresCondition: !is-neutral && scrinplayer
 		ResetTraitOnOwnerChange: true
 		Immediate: true
 		ReadyAudio: UnitReady
@@ -166,12 +166,9 @@ HOSP:
 		Produces: Hospital
 	GrantConditionIfOwnerIsNeutral:
 		Condition: is-neutral
-	GrantConditionOnPrerequisite@SCRININF:
-		Condition: infantry-scrin
-		Prerequisites: infantry.scrin
-	GrantConditionOnPrerequisite@SCRINSTR:
-		Condition: infantry-scrin
-		Prerequisites: structures.scrin
+	GrantConditionOnPrerequisite@SCRIN:
+		Condition: scrinplayer
+		Prerequisites: player.scrin
 
 V01:
 	Inherits: ^CivBuilding

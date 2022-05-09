@@ -10,6 +10,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using OpenRA.Activities;
 using OpenRA.GameRules;
 using OpenRA.Mods.Common.Activities;
@@ -247,8 +248,17 @@ namespace OpenRA.Mods.CA.Traits
 				{
 					if (mad.info.DetonationWeapon != null)
 					{
+						var args = new WarheadArgs
+						{
+							Weapon = mad.info.DetonationWeaponInfo,
+							SourceActor = self,
+							WeaponTarget = target,
+							DamageModifiers = self.TraitsImplementing<IFirepowerModifier>()
+								.Select(a => a.GetFirepowerModifier()).ToArray()
+						};
+
 						// Use .FromPos since this actor is killed. Cannot use Target.FromActor
-						mad.info.DetonationWeaponInfo.Impact(Target.FromPos(self.CenterPosition), self);
+						mad.info.DetonationWeaponInfo.Impact(Target.FromPos(self.CenterPosition), args);
 					}
 
 					if (mad.info.DetonationSequence != null)

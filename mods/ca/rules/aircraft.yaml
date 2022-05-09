@@ -1026,7 +1026,7 @@ HIND:
 		Description: Helicopter gunship armed with\n  a chaingun and anti-tank rockets.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Heavy Armor, Light Armor
-		Weaknesses: • Weak vs Buildings, Defenses\n• Cannot attack Aircraft
+		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 1600
 	Tooltip:
@@ -1048,13 +1048,6 @@ HIND:
 		LocalOffset: 500,0,-250
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
-		RequiresCondition: ammo2
-	Armament@PRIMARYANYTARGET:
-		Weapon: ChainGun.AnyTarget
-		LocalOffset: 500,0,-250
-		MuzzleSequence: muzzle
-		PauseOnCondition: !ammo
-		RequiresCondition: !ammo2
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: HindRockets
@@ -1840,7 +1833,7 @@ ORCB:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 22500
+		HP: 26500
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -2175,7 +2168,7 @@ KIRO:
 		PauseOnCondition: !ammo
 		RequiresCondition: yuribombs
 	AmmoPool:
-		Ammo: 8
+		Ammo: 10
 		AmmoCondition: ammo
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
@@ -2184,7 +2177,7 @@ KIRO:
 		PipCount: 4
 	ReloadAmmoPoolCA:
 		Delay: 125
-		Count: 8
+		Count: 10
 		DelayOnFire: 50
 		DelayAfterReset: 50
 		ShowSelectionBar: true
@@ -2677,7 +2670,7 @@ SCRN:
 		RearmActors: hpad, hpad.td
 	ProductionCostMultiplier@markedBonus:
 		Multiplier: 90
-		Prerequisites: structures.marked
+		Prerequisites: player.marked
 
 HORN:
 	Inherits: ^NeutralPlane
