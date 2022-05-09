@@ -1152,17 +1152,20 @@ ATEK:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	WithBuildingBib:
-	DummyGpsPower:
+	DummyGpsPower@NOFOG:
 		PauseOnCondition: disabled || being-warped
-		Icon: gps
-		OneShot: true
-		ChargeInterval: 4500
-		Description: Satellite Launch
-		LongDesc: \nLaunches GPS Satellite.
-		RevealDelay: 375
+		RequiresCondition: !gps-launched && !fogenabled
+		Delay: 12000
+		AnimationDuration: 375
 		LaunchSpeechNotification: SatelliteLaunched
-		DisplayTimerRelationships: Ally
-		Condition: sat-launch
+		Condition: gps-launched
+	DummyGpsPower@FOG:
+		PauseOnCondition: disabled || being-warped
+		RequiresCondition: !gps-launched && fogenabled
+		Delay: 4500
+		AnimationDuration: 375
+		LaunchSpeechNotification: SatelliteLaunched
+		Condition: gps-launched
 	ProduceActorPowerCA@SatelliteLaunched:
 		Actors: gps.satellite
 		Type: SpySatellite
@@ -1170,7 +1173,7 @@ ATEK:
 		OneShot: true
 		OrderName: ProduceActorSat
 		AutoFire: True
-		RequiresCondition: sat-launch
+		RequiresCondition: gps-launched && fogenabled
 	SupportPowerChargeBar:
 	Power:
 		Amount: -150
@@ -1185,9 +1188,21 @@ ATEK:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SabInfiltrate
+	ProduceActorPowerCA@InitialSatelliteScan:
+		PauseOnCondition: disabled || being-warped
+		Prerequisites: anyradar, ~!gps.satellite.firstscan, ~fogenabled
+		Description: Spy Satellite
+		LongDesc: \nPeriodically reveals the entire map\n    for a short time (activated automatically).
+		Icon: gps
+		Actors: camera.satscan, gps.satellite.firstscan
+		Type: SpySatellite
+		ChargeInterval: 9750
+		OrderName: InitialSatelliteScanPower
+		AutoFire: True
+		DisplayTimerRelationships: Ally
 	ProduceActorPowerCA@SatelliteScan:
 		PauseOnCondition: disabled || being-warped
-		Prerequisites: anyradar, ~gps.satellite, ~fogenabled
+		Prerequisites: anyradar, ~gps.satellite, ~gps.satellite.firstscan, ~fogenabled
 		Description: Spy Satellite
 		LongDesc: \nPeriodically reveals the entire map\n    for a short time (activated automatically).
 		Icon: gps
@@ -1199,13 +1214,13 @@ ATEK:
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 	ProduceActorPowerCA@SatelliteScanNoFog:
 		PauseOnCondition: disabled || being-warped
-		Prerequisites: anyradar, ~gps.satellite, ~!fogenabled
+		Prerequisites: anyradar, ~!fogenabled
 		Description: Spy Satellite
 		LongDesc: \nPermanently reveals the entire map (activated automatically).
 		Icon: gps
 		Actors: camera.satscan.oneshot
 		Type: SpySatellite
-		ChargeInterval: 7500
+		ChargeInterval: 12000
 		OneShot: True
 		OrderName: SatelliteScanNoFogPower
 		AutoFire: True
@@ -1237,7 +1252,20 @@ ATEK:
 	GrantConditionOnFogEnabled@FOGENABLED:
 		Condition: fogenabled
 	ExternalCondition@DUMMY:
-		Condition: sat-launch
+		Condition: gps-launched
+	GrantConditionOnPrerequisite@PREVGPS:
+		Condition: gps-launched
+		Prerequisites: gps.satellite
+	GrantConditionOnPrerequisite@PREVGPSSCAN:
+		Condition: gps-firstscan
+		Prerequisites: gps.satellite.firstscan
+	SpawnActorOnDeath@GPS:
+		Actor: gps.satellite.firstscan
+		SpawnAfterDefeat: false
+		RequiresCondition: gps-launched && !gps-firstscan && fogenabled
+	SpawnActorOnSell@GPS:
+		Actor: gps.satellite.firstscan
+		RequiresCondition: gps-launched && !gps-firstscan && fogenabled
 	ProvidesPrerequisite@FOGENABLED:
 		Prerequisite: fogenabled
 		RequiresCondition: fogenabled
