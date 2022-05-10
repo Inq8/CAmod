@@ -150,15 +150,25 @@ MaverickSU:
 		ContrailWidth: 48
 		ContrailColor: ff990088
 	Warhead@1Dam: SpreadDamage
-		Damage: 17000
+		Damage: 16000
 		Spread: 448
 		Falloff: 100, 50, 33, 5, 0
 		Versus:
-			None: 15
+			None: 0
 			Wood: 18
 			Light: 65
-			Concrete: 70
+			Concrete: 65
 			Heavy: 85
+	Warhead@2Dam: SpreadDamage
+		Damage: 1600
+		Spread: 128
+		Versus:
+			None: 100
+			Wood: 0
+			Light: 0
+			Concrete: 0
+			Heavy: 0
+			Brick: 0
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: gexp14a.aud, gexp14b.aud, gexp14c.aud, gexp14d.aud
@@ -185,19 +195,19 @@ SeismicMissile:
 		ContrailWidth: 64
 		ContrailLength: 8
 		ContrailColor: ff6600aa
-		Speed: 200
+		Speed: 180
 		LaunchAngle: 0
 	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
-		Damage: 1300
+		Damage: 1850
 		Falloff: 1000, 368, 135, 50, 0
 		ValidTargets: Ground, Water
 		Versus:
-			None: 20
-			Wood: 80
-			Light: 100
+			None: 10
+			Wood: 55
+			Light: 75
 			Heavy: 100
-			Concrete: 100
+			Concrete: 75
 			Brick: 100
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge

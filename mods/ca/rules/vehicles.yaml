@@ -1072,7 +1072,7 @@ ISU:
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
-		Attributes: • Concussion shells slow enemy movement and rate of fire
+		Attributes: • Concussion shells slow enemy movement and rate of fire\n• Can crush concrete walls
 	Valued:
 		Cost: 1250
 	Tooltip:
@@ -3491,7 +3491,6 @@ MLRS:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
-		OpportunityFire: False
 	WithSpriteTurret:
 		RequiresCondition: ammo > 1
 	WithSpriteTurret@OneMissile:
@@ -3755,7 +3754,6 @@ HFTK:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Locomotor: heavytracked
 		Speed: 56
 		Voice: Move
 	RevealsShroud:
@@ -3764,6 +3762,8 @@ HFTK:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
+	AutoTarget:
+		ScanRadius: 4
 	Turreted:
 		TurnSpeed: 20
 	Armament@PRIMARY:
@@ -4594,7 +4594,7 @@ TITN:
 		Description: Tough, slow combat battle-mech.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
-		Attributes: • Can crush concrete walls
+		Attributes: • Can crush smaller vehicles and concrete walls
 	Valued:
 		Cost: 2000
 	Selectable:
@@ -4658,6 +4658,7 @@ TITN:
 		DamageCooldown: 150
 	Carryable:
 		LocalOffset: 0,0,700
+	-Crushable:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	SpawnActorOnDeath:
@@ -4707,6 +4708,7 @@ JUGG:
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
+		Attributes: • Can crush smaller vehicles and concrete walls		
 	Mobile:
 		Locomotor: sheavytracked
 		Speed: 40
@@ -4764,6 +4766,7 @@ JUGG:
 		Condition: moving
 	Carryable:
 		LocalOffset: 0,0,700
+	-Crushable:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Explodes:
@@ -5400,7 +5403,6 @@ PTNK:
 		LocalOffset: 100,0,180
 	AttackTurreted:
 		TargetFrozenActors: True
-		OpportunityFire: False
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
 	WithSpriteTurret:
@@ -5502,8 +5504,6 @@ WTNK:
 	Armament@PRIMARYSOUND:
 		Weapon: MicrowaveZapSound
 	AttackTurreted:
-		TargetFrozenActors: True
-		OpportunityFire: False
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
 	WithMuzzleOverlay:
@@ -5538,7 +5538,7 @@ BATF:
 		Prerequisites: atek, ~vehicles.france, ~techlevel.high
 		Description: Tough infantry transport with weapon ports\n  for infantry to fire from.
 	TooltipExtras:
-		Attributes: • Can crush concrete walls and vehicles
+		Attributes: • Can crush smaller vehicles and concrete walls
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -5907,7 +5907,7 @@ CHPR:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Defenses, Aircraft
 		Weaknesses: • Weak vs Buildings
-		Attributes: • Target is disabled while being erased
+		Attributes: • Target is disabled while being erased\n• Can crush concrete walls
 	Valued:
 		Cost: 1700
 	Tooltip:
@@ -6069,11 +6069,11 @@ APOC:
 		Description: Enormous slow tank with uranium shells and anti-air capability.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
-		Attributes: • Can crush vehicles and concrete walls
+		Attributes: • Can crush smaller vehicles and concrete walls
 		RequiresCondition: !iraqtank-upgrade
 	TooltipExtras@IRAQ:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
-		Attributes: • Can crush vehicles and concrete walls\n• Explodes and leaves radiation on death
+		Attributes: • Can crush smaller vehicles and concrete walls\n• Explodes and leaves radiation on death
 		IsStandard: false
 		RequiresCondition: iraqtank-upgrade
 	Valued:
