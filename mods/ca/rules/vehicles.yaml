@@ -3462,10 +3462,11 @@ MLRS:
 		Description: Long-range incendiary missile artillery.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
-		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets\n• Cannot fire while moving
 	Mobile:
 		Speed: 66
 		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead || notmobile
+		BlockedCursor: move
 	Health:
 		HP: 15000
 	Armor:
@@ -3480,14 +3481,23 @@ MLRS:
 		TurnSpeed: 8
 		Offset: -128,0,128
 		RealignDelay: 0
+	AttackMove:
+		AttackMoveCondition: attack-move
 	Armament:
-		Weapon: honestjohn
+		Weapon: HonestJohn
 		LocalOffset: 0,171,0, 0,-171,0
 		PauseOnCondition: moving
+		ReloadingCondition: reloading
+	Armament@TARGETTER:
+		Name: targetter
+		Weapon: HonestJohnTargeting
+		PauseOnCondition: reloading
+		RequiresCondition: attack-move || assault-move
 	AmmoPool:
 		Ammo: 2
 		AmmoCondition: ammo
 	AttackTurreted:
+		Armaments: primary, targetter
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
@@ -3500,6 +3510,7 @@ MLRS:
 		RequiresCondition: !ammo
 		Sequence: turret0
 	GrantConditionOnAttack@AIMING:
+		ArmamentNames: primary, targetter
 		Condition: aiming
 		RevokeDelay: 15
 		RevokeAll: false
@@ -4707,13 +4718,14 @@ JUGG:
 		Prerequisites: upgc, ~vehicles.talon, ~techlevel.high
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
-		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
+		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets\n• Cannot fire while moving
 		Attributes: • Can crush smaller vehicles and concrete walls		
 	Mobile:
 		Locomotor: sheavytracked
 		Speed: 40
 		Voice: Move
 		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead || notmobile
+		BlockedCursor: move		
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Selectable:
@@ -4727,6 +4739,8 @@ JUGG:
 	WithMoveAnimation:
 		MoveSequence: run
 	WithSpriteTurret:
+	AttackMove:
+		AttackMoveCondition: attack-move	
 	Armament@PRIMARY:
 		Weapon: JuggernautGun
 		LocalOffset: 830,0,500, 830,100,500, 830,-100,500
@@ -4734,7 +4748,14 @@ JUGG:
 		RecoilRecovery: 30
 		MuzzleSequence: muzzle
 		PauseOnCondition: moving
+		ReloadingCondition: reloading		
+	Armament@TARGETTER:
+		Name: targetter
+		Weapon: JuggernautGunTargeting
+		PauseOnCondition: reloading
+		RequiresCondition: attack-move || assault-move
 	AttackTurreted:
+		Armaments: primary, targetter	
 		PauseOnCondition: empdisable || being-warped
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
@@ -4758,6 +4779,7 @@ JUGG:
 	Voiced:
 		VoiceSet: DisrVoice
 	GrantConditionOnAttack@AIMING:
+		ArmamentNames: primary, targetter	
 		Condition: aiming
 		RevokeDelay: 15
 		RevokeAll: false
