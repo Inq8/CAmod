@@ -5452,9 +5452,6 @@ PCAN:
 		Weapon: PrisCLaser
 		FireDelay: 10
 		LocalOffset: 420,0,180
-	Mobile:
-		Speed: 56
-		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead || notmobile
 	-Turreted:
 	-AttackTurreted:
 	-WithSpriteTurret:
@@ -5464,10 +5461,6 @@ PCAN:
 		Voice: Attack
 	SpawnActorOnDeath:
 		Actor: PCAN.Husk
-	GrantConditionOnAttack:
-		Condition: aiming
-		RevokeDelay: 20
-		RevokeAll: false
 
 WTNK:
 	Inherits: ^TankTD
