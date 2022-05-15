@@ -413,7 +413,7 @@ FEED:
 	Tooltip:
 		Name: Feeder
 	TooltipExtras:
-		Description: Charges up by harvesting or dealing damage.\n  When charged, explodes on death, or on reaching the enemy.
+		Description: Explodes on death or when triggered.\n  Increased damage after harvesting resources.
 		Strengths: • Strong vs Infantry, Buildings, Light Armor
 		Weaknesses: • Cannot attack Aircraft
 	Health:
@@ -421,7 +421,7 @@ FEED:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
-		Speed: 49
+		Speed: 66
 	RevealsShroud:
 		Range: 5c0
 	Harvester:
@@ -430,7 +430,7 @@ FEED:
 		HarvestFacings: 8
 		BaleLoadDelay: 18
 		DeliveryBuildings: none
-		FullyLoadedSpeed: 100
+		FullyLoadedSpeed: 130
 		SearchFromProcRadius: 5
 		SearchFromHarvesterRadius: 5
 	WithHarvestAnimation:
@@ -447,11 +447,13 @@ FEED:
 		Image: feederfull-overlay
 		Palette: scrin-ignore-lighting-alpha30
 		RequiresCondition: full
-	WithAttackAnimation:
-		Sequence: harvest
-		Armament: secondary
-	Explodes:
+	Explodes@EMPTY:
 		Weapon: FeederExplode
+		EmptyWeapon: FeederExplode
+		DamageSource: Killer
+		RequiresCondition: !full
+	Explodes@FULL:
+		Weapon: FeederExplodeFull
 		EmptyWeapon: FeederExplode
 		DamageSource: Killer
 		RequiresCondition: full
@@ -459,36 +461,19 @@ FEED:
 		FacingTolerance: 64
 	Armament@PRIMARY:
 		Weapon: FeederTargeting
-		RequiresCondition: full
-	Armament@SECONDARY:
-		Name: secondary
-		Weapon: FeederBeam
-		LocalOffset: 150,0,200
-		RequiresCondition: !full
 	GrantConditionOnAttack:
 		Condition: triggered
-		RequiresCondition: full
 	GrantConditionOnDeploy:
 		DeployedCondition: triggered
-		RequiresCondition: full
 	KillsSelf:
-		RequiresCondition: full && (triggered || berserk)
-	SpeedMultiplier@FULL:
-		RequiresCondition: full
-		Modifier: 150
+		RequiresCondition: triggered || berserk
 	-TakeCover:
 	WithHarvesterCapacityBar:
 		SelectionBarColor: cc0000
 		DisplayWhenFull: false
-	ConvertsDamageToHealth:
-		DamagePercentConverted: 20
-	HarvestsByDealingDamage:
-		DivideDamageBy: 2000
-	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !stance-attackanything && !assault-move && !full
-	Targetable@FEEDER:
-		TargetTypes: Feeder
-		RequiresCondition: full
+	WithIdleOverlay:
+		StartSequence: spawn-overlay
+		Palette: scrin
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -1117,7 +1102,10 @@ LCHR:
 		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: LeecherBeam
-		LocalOffset: 700,0,300, 700,-500,100, 700,500,100
+		LocalOffset: 720,0,200, 720,-500,0, 720,500,0
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
 	ProducibleWithLevel:
@@ -3405,12 +3393,12 @@ NERV:
 		ChargeInterval: 6750
 		Description: Feeder Mutation
 		Condition: feedermutation
-		Dimensions: 3, 3
-		Footprint: _x_ xxx _x_
+		Dimensions: 1, 1
+		Footprint: x
 		ValidRelationships: Ally
 		Duration: 25
 		AllowMultiple: false
-		LongDesc: \nTransforms Scrin infantry into Feeders which consume resources\n    until becoming volatile enough to explode.
+		LongDesc: \nTransforms Scrin infantry into Feeders; exploding infantry able to consume\n    resources for additional damage.
 		OnFireSound: feedermutation.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
