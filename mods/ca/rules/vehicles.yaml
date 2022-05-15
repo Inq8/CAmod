@@ -1075,7 +1075,7 @@ ISU:
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
-		Attributes: • Concussion shells slow enemy movement and rate of fire
+		Attributes: • Concussion shells slow enemy movement and rate of fire\n• Can crush concrete walls
 	Valued:
 		Cost: 1250
 	Tooltip:
@@ -3479,10 +3479,11 @@ MLRS:
 		Description: Long-range incendiary missile artillery.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
-		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets\n• Cannot fire while moving
 	Mobile:
 		Speed: 72
 		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead || notmobile
+		BlockedCursor: move
 	Health:
 		HP: 15000
 	Armor:
@@ -3497,18 +3498,26 @@ MLRS:
 		TurnSpeed: 8
 		Offset: -128,0,128
 		RealignDelay: 0
+	AttackMove:
+		AttackMoveCondition: attack-move
 	Armament:
-		Weapon: honestjohn
+		Weapon: HonestJohn
 		LocalOffset: 0,171,0, 0,-171,0
 		PauseOnCondition: moving
+		ReloadingCondition: reloading
+	Armament@TARGETTER:
+		Name: targetter
+		Weapon: HonestJohnTargeting
+		PauseOnCondition: reloading
+		RequiresCondition: attack-move || assault-move
 	AmmoPool:
 		Ammo: 2
 		AmmoCondition: ammo
 	AttackTurreted:
+		Armaments: primary, targetter
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
-		OpportunityFire: False
 	WithSpriteTurret:
 		RequiresCondition: ammo > 1
 	WithSpriteTurret@OneMissile:
@@ -3518,6 +3527,7 @@ MLRS:
 		RequiresCondition: !ammo
 		Sequence: turret0
 	GrantConditionOnAttack@AIMING:
+		ArmamentNames: primary, targetter
 		Condition: aiming
 		RevokeDelay: 15
 		RevokeAll: false
@@ -3783,6 +3793,8 @@ HFTK:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
+	AutoTarget:
+		ScanRadius: 4
 	Turreted:
 		TurnSpeed: 20
 	Armament@PRIMARY:
@@ -4613,7 +4625,7 @@ TITN:
 		Description: Tough, slow combat battle-mech.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
-		Attributes: • Can crush concrete walls
+		Attributes: • Can crush smaller vehicles and concrete walls
 	Valued:
 		Cost: 2000
 	Selectable:
@@ -4677,6 +4689,7 @@ TITN:
 		DamageCooldown: 150
 	Carryable:
 		LocalOffset: 0,0,700
+	-Crushable:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	SpawnActorOnDeath:
@@ -4725,12 +4738,14 @@ JUGG:
 		Prerequisites: upgc, ~vehicles.talon, ~techlevel.high
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
-		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
+		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets\n• Cannot fire while moving
+		Attributes: • Can crush smaller vehicles and concrete walls		
 	Mobile:
 		Locomotor: sheavytracked
 		Speed: 43
 		Voice: Move
 		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead || notmobile
+		BlockedCursor: move		
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Selectable:
@@ -4744,6 +4759,8 @@ JUGG:
 	WithMoveAnimation:
 		MoveSequence: run
 	WithSpriteTurret:
+	AttackMove:
+		AttackMoveCondition: attack-move	
 	Armament@PRIMARY:
 		Weapon: JuggernautGun
 		LocalOffset: 830,0,500, 830,100,500, 830,-100,500
@@ -4751,7 +4768,14 @@ JUGG:
 		RecoilRecovery: 30
 		MuzzleSequence: muzzle
 		PauseOnCondition: moving
+		ReloadingCondition: reloading		
+	Armament@TARGETTER:
+		Name: targetter
+		Weapon: JuggernautGunTargeting
+		PauseOnCondition: reloading
+		RequiresCondition: attack-move || assault-move
 	AttackTurreted:
+		Armaments: primary, targetter	
 		PauseOnCondition: empdisable || being-warped
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
@@ -4775,6 +4799,7 @@ JUGG:
 	Voiced:
 		VoiceSet: DisrVoice
 	GrantConditionOnAttack@AIMING:
+		ArmamentNames: primary, targetter	
 		Condition: aiming
 		RevokeDelay: 15
 		RevokeAll: false
@@ -4783,6 +4808,7 @@ JUGG:
 		Condition: moving
 	Carryable:
 		LocalOffset: 0,0,700
+	-Crushable:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Explodes:
@@ -4843,7 +4869,7 @@ DISR:
 		Voice: Move
 	RevealsShroud:
 		MinRange: 4c0
-		Range: 7c0
+		Range: 6c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
@@ -5420,7 +5446,6 @@ PTNK:
 		LocalOffset: 100,0,180
 	AttackTurreted:
 		TargetFrozenActors: True
-		OpportunityFire: False
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
 	WithSpriteTurret:
@@ -5448,9 +5473,6 @@ PCAN:
 		Weapon: PrisCLaser
 		FireDelay: 10
 		LocalOffset: 420,0,180
-	Mobile:
-		Speed: 60
-		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead || notmobile
 	-Turreted:
 	-AttackTurreted:
 	-WithSpriteTurret:
@@ -5461,10 +5483,6 @@ PCAN:
 		FacingTolerance: 0
 	SpawnActorOnDeath:
 		Actor: PCAN.Husk
-	GrantConditionOnAttack:
-		Condition: aiming
-		RevokeDelay: 20
-		RevokeAll: false
 
 WTNK:
 	Inherits: ^TankTD
@@ -5523,8 +5541,6 @@ WTNK:
 	Armament@PRIMARYSOUND:
 		Weapon: MicrowaveZapSound
 	AttackTurreted:
-		TargetFrozenActors: True
-		OpportunityFire: False
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
 	WithMuzzleOverlay:
@@ -5559,7 +5575,7 @@ BATF:
 		Prerequisites: atek, ~vehicles.france, ~techlevel.high
 		Description: Tough infantry transport with weapon ports\n  for infantry to fire from.
 	TooltipExtras:
-		Attributes: • Can crush concrete walls and vehicles
+		Attributes: • Can crush smaller vehicles and concrete walls
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -5928,7 +5944,7 @@ CHPR:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Defenses, Aircraft
 		Weaknesses: • Weak vs Buildings
-		Attributes: • Target is disabled while being erased
+		Attributes: • Target is disabled while being erased\n• Can crush concrete walls
 	Valued:
 		Cost: 1700
 	Tooltip:
@@ -6091,11 +6107,11 @@ APOC:
 		Description: Enormous slow tank with uranium shells and anti-air capability.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
-		Attributes: • Can crush vehicles and concrete walls
+		Attributes: • Can crush smaller vehicles and concrete walls
 		RequiresCondition: !iraqtank-upgrade
 	TooltipExtras@IRAQ:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
-		Attributes: • Can crush vehicles and concrete walls\n• Explodes and leaves radiation on death
+		Attributes: • Can crush smaller vehicles and concrete walls\n• Explodes and leaves radiation on death
 		IsStandard: false
 		RequiresCondition: iraqtank-upgrade
 	Valued:

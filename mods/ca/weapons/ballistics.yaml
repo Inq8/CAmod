@@ -441,6 +441,20 @@ JuggernautGun:
 	Warhead@4EffWater: CreateEffect
 		Explosions: large_splash
 
+JuggernautGunTargeting:
+	Inherits: JuggernautGun
+	ReloadDelay: 25
+	-Report:
+	-Burst:
+	-StartBurstReport:
+	-Projectile:
+	-Warhead@1Dam:
+	-Warhead@2Smu:
+	-Warhead@3Eff:
+	-Warhead@4EffWater:
+	Projectile: InstantHit
+	Warhead@1Dum: Dummy
+
 2Inch:
 	Inherits: ^Cannon
 	ReloadDelay: 40
