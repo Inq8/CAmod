@@ -121,7 +121,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (Info.ReloadWhenAmmoReaches > -1 && ammoPool.CurrentAmmoCount > Info.ReloadWhenAmmoReaches)
 				return;
 
-			if (!ammoPool.HasFullAmmo && --remainingTicks == 0)
+			if (((reloadCount > 0 && !ammoPool.HasFullAmmo) || (reloadCount < 0 && ammoPool.HasAmmo)) && --remainingTicks == 0)
 			{
 				remainingTicks = Util.ApplyPercentageModifiers(reloadDelay, modifiers.Select(m => m.GetReloadAmmoModifier()));
 				if (!string.IsNullOrEmpty(sound))

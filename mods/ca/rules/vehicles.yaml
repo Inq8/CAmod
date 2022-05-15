@@ -3071,7 +3071,7 @@ MDRN:
 	Voiced:
 		VoiceSet: MiniDroneVoice
 	Armament@PRIMARY:
-		Weapon: M60mgMD
+		Weapon: M60mgTD
 		LocalOffset: 72,0,72
 		MuzzleSequence: muzzle
 		PauseOnCondition: empdisable || being-warped
@@ -3142,7 +3142,7 @@ MDRN.Attached:
 		MaxDelay: 75
 		TurnWhileMobilePaused: true
 	Armament@PRIMARY:
-		Weapon: M60mgTD
+		Weapon: M60mgMD
 		LocalOffset: -500,0,72
 	DamageMultiplier@ATTACHED:
 		Modifier: 25
@@ -3232,6 +3232,38 @@ HTNK:
 		Actors: htnk.drone, htnk.ion, htnk.hover
 	WithIdleOverlay@MINDCONTROL:
 		Offset: 0,0,512
+	# For upgrading on Repair Facility
+	Rearmable@UPGRADE:
+		RearmActors: fix, rep, srep
+		AmmoPools: upgrade
+	AmmoPool@UPGRADE:
+		Name: upgrade
+		Armaments: none
+		ReloadDelay: 5000
+	RearmsToUpgrade@IONUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: htnk.ion
+		RequiresCondition: ionmam-upgrade
+	RearmsToUpgrade@HOVERUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: htnk.hover
+		RequiresCondition: hovermam-upgrade
+	RearmsToUpgrade@DRONEUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: htnk.drone
+		RequiresCondition: drone-upgrade
+	GrantConditionOnPrerequisite@IONUPGRADE:
+		Condition: ionmam-upgrade
+		Prerequisites: ionmam.upgrade
+	GrantConditionOnPrerequisite@HOVERUPGRADE:
+		Condition: hovermam-upgrade
+		Prerequisites: hovermam.upgrade
+	GrantConditionOnPrerequisite@DRONEUPGRADE:
+		Condition: drone-upgrade
+		Prerequisites: drone.upgrade
 
 HTNK.Ion:
 	Inherits: HTNK
@@ -3247,6 +3279,14 @@ HTNK.Ion:
 	SpawnActorOnDeath:
 		Actor: HTNK.Ion.Husk
 	-UpgradeableTo:
+	-Rearmable@UPGRADE:
+	-AmmoPool@UPGRADE:
+	-RearmsToUpgrade@IONUPGRADE:
+	-RearmsToUpgrade@HOVERUPGRADE:
+	-RearmsToUpgrade@DRONEUPGRADE:
+	-GrantConditionOnPrerequisite@IONUPGRADE:
+	-GrantConditionOnPrerequisite@HOVERUPGRADE:
+	-GrantConditionOnPrerequisite@DRONEUPGRADE:
 
 HTNK.Hover:
 	Inherits: HTNK
@@ -3283,6 +3323,14 @@ HTNK.Hover:
 		Actor: HTNK.Hover.Husk
 		RequiresCondition: !being-warped && !onwater
 	-UpgradeableTo:
+	-Rearmable@UPGRADE:
+	-AmmoPool@UPGRADE:
+	-RearmsToUpgrade@IONUPGRADE:
+	-RearmsToUpgrade@HOVERUPGRADE:
+	-RearmsToUpgrade@DRONEUPGRADE:
+	-GrantConditionOnPrerequisite@IONUPGRADE:
+	-GrantConditionOnPrerequisite@HOVERUPGRADE:
+	-GrantConditionOnPrerequisite@DRONEUPGRADE:
 
 HTNK.Drone:
 	Inherits: HTNK
@@ -3333,6 +3381,14 @@ HTNK.Drone:
 	-RejectsOrders@BERSERK:
 	-GrantCondition@BERSERK:
 	-UpgradeableTo:
+	-Rearmable@UPGRADE:
+	-AmmoPool@UPGRADE:
+	-RearmsToUpgrade@IONUPGRADE:
+	-RearmsToUpgrade@HOVERUPGRADE:
+	-RearmsToUpgrade@DRONEUPGRADE:
+	-GrantConditionOnPrerequisite@IONUPGRADE:
+	-GrantConditionOnPrerequisite@HOVERUPGRADE:
+	-GrantConditionOnPrerequisite@DRONEUPGRADE:
 
 MSAM:
 	Inherits: ^TankTD
@@ -4679,6 +4735,22 @@ TITN:
 		Actors: titn.rail
 	WithIdleOverlay@MINDCONTROL:
 		Offset: 0,0,512
+	# For upgrading on Repair Facility
+	Rearmable@UPGRADE:
+		RearmActors: fix, rep, srep
+		AmmoPools: upgrade
+	AmmoPool@UPGRADE:
+		Name: upgrade
+		Armaments: none
+		ReloadDelay: 5000
+	RearmsToUpgrade@UPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: titn.rail
+		RequiresCondition: railgun-upgrade
+	GrantConditionOnPrerequisite@RAILUPGRADE:
+		Condition: railgun-upgrade
+		Prerequisites: railgun.upgrade
 
 TITN.RAIL:
 	Inherits: TITN
@@ -4701,6 +4773,10 @@ TITN.RAIL:
 	SpawnActorOnDeath:
 		Actor: TITN.RAIL.Husk
 	-UpgradeableTo:
+	-Rearmable@UPGRADE:
+	-AmmoPool@UPGRADE:
+	-RearmsToUpgrade@UPGRADE:
+	-GrantConditionOnPrerequisite@RAILUPGRADE:
 
 JUGG:
 	Inherits: ^TankTD
