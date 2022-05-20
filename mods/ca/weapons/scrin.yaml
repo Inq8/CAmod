@@ -296,7 +296,7 @@ DevourerLaser:
 		Spread: 341
 		Damage: 930
 		Versus:
-			None: 28
+			None: 20
 
 DevourerLaserCharged:
 	Inherits: DevourerLaser
@@ -595,7 +595,7 @@ ReaperLaserChargedSound:
 	Report: rtripod-cfire1.aud, rtripod-cfire2.aud
 
 ReaperLaserChargedDummy:
-	Inherits: ReaperLaserCharged	
+	Inherits: ReaperLaserCharged
 	-StartBurstReport:
 	-FirstBurstTargetOffset:
 	-FollowingBurstTargetOffset:
@@ -802,6 +802,7 @@ InvaderZapAA:
 	MinRange: 0c512
 	Projectile: Bullet
 		Image: scrinzap
+		Speed: 1c768
 	ValidTargets: Air, AirSmall
 	Warhead@1Dam: SpreadDamage
 		Damage: 160
@@ -1070,31 +1071,22 @@ SuppressionSiphonField:
 BuzzerSpawner:
 	ReloadDelay: 1
 	Projectile: InstantExplode
-	Warhead@1Dam: SpreadDamage
+	Warhead@1Dam: HealthPercentageDamage
 		Spread: 341
-		Damage: 6000
+		Damage: 75
 		Versus:
 			None: 100
-			Wood: 10
-			Light: 100
-			Heavy: 30
-			Concrete: 40
+			Wood: 1
+			Light: 25
+			Heavy: 1
+			Concrete: 1
 			Brick: 0
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
-		ValidRelationships: Enemy, Neutral
-	Warhead@2Dam: SpreadDamage
-		ValidTargets: Cyborg
-		Spread: 341
-		Damage: 12000
-		Versus:
-			Heavy: 0
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 		ValidRelationships: Enemy, Neutral
 	Warhead@Spawn: SpawnActor
 		Actors: buzz
 		Range: 1
 		ForceGround: false
-		ValidTargets: Ground, Water
 
 BuzzerSpawnerAI:
 	Inherits: BuzzerSpawner
@@ -1108,10 +1100,8 @@ BuzzerVortex:
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
 		Spread: 682
-		Falloff: 100, 70, 20, 0
-		Damage: 300
-		ValidTargets: Ground, Trees
-		InvalidTargets: Air, AirSmall, Creep
+		Falloff: 100, 70, 30, 0
+		Damage: 150
 		Versus:
 			None: 100
 			Wood: 10
@@ -1121,11 +1111,16 @@ BuzzerVortex:
 			Brick: 0
 		DamageTypes: BulletDeath
 		ValidRelationships: Enemy, Neutral
-	Warhead@2Dam: SpreadDamage
-		Spread: 682
-		Falloff: 100, 70, 20, 0
-		Damage: 600
-		ValidTargets: Cyborg
+	Warhead@2Dam: HealthPercentageDamage
+		Spread: 1c0
+		Damage: 3
+		Versus:
+			None: 100
+			Wood: 3
+			Light: 25
+			Heavy: 3
+			Concrete: 3
+			Brick: 0
 		DamageTypes: BulletDeath
 		ValidRelationships: Enemy, Neutral
 
@@ -1447,7 +1442,7 @@ FeederExplodeFull:
 		Damage: 6750
 	Warhead@3Eff: CreateEffect
 		Explosions: large_chem
-		ExplosionPalette: tdeffect-ignore-lighting-alpha85		
+		ExplosionPalette: tdeffect-ignore-lighting-alpha85
 	Warhead@18Radio: CreateTintedCells
 		Level: 300
 		Falloff: 100, 55, 32, 5

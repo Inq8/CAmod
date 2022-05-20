@@ -2007,11 +2007,11 @@ SonicPulse:
 			Heavy: 100
 			Concrete: 65
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
-	Warhead@3Eff: CreateEffect
+	Warhead@2Eff: CreateEffect
 		Explosions: sonicpulse1, sonicpulse2
 		ExplosionPalette: effect-ignore-lighting-alpha40
 		ValidTargets: Ground, Air, Ship, Trees
-	Warhead@2Eff: CreateEffect
+	Warhead@3Eff: CreateEffect
 		Explosions: sonicblast1, sonicblast2
 		ExplosionPalette: effect-ignore-lighting-alpha40
 		ValidTargets: Ground, Air, Ship, Trees
@@ -2021,10 +2021,16 @@ SonicPulse.UPG:
 	Range: 8c256
 	Warhead@1Dam: SpreadDamage
 		Damage: 7200
-	Warhead@3Eff: CreateEffect
-		Explosions: sonicpulseupg1, sonicpulseupg2
 	Warhead@2Eff: CreateEffect
+		Explosions: sonicpulseupg1, sonicpulseupg2
+	Warhead@3Eff: CreateEffect
 		Explosions: sonicblastupg1, sonicblastupg2
+	Warhead@4Conc: GrantExternalCondition
+		Range: 1c0
+		Duration: 100
+		Condition: concussion
+		ValidTargets: Ground, Infantry, Vehicle, Ship
+		ValidRelationships: Enemy, Neutral
 
 JDAM:
 	ValidTargets: Ground, Water, Trees

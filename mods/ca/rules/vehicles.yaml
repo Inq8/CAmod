@@ -3047,13 +3047,13 @@ MDRN:
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
 		Attributes: • Attaches to vehicles to provide support and repairs
 	Valued:
-		Cost: 200
+		Cost: 225
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Selectable:
 		DecorationBounds: 16, 16, 0, -8
 	Health:
-		HP: 15000
+		HP: 13000
 	Armor:
 		Type: Light
 	RevealsShroud:
@@ -3071,7 +3071,7 @@ MDRN:
 	Voiced:
 		VoiceSet: MiniDroneVoice
 	Armament@PRIMARY:
-		Weapon: M60mgTD
+		Weapon: M60mgMD
 		LocalOffset: 72,0,72
 		MuzzleSequence: muzzle
 		PauseOnCondition: empdisable || being-warped
@@ -3142,7 +3142,7 @@ MDRN.Attached:
 		MaxDelay: 75
 		TurnWhileMobilePaused: true
 	Armament@PRIMARY:
-		Weapon: M60mgMD
+		Weapon: M60mgMD.Attached
 		LocalOffset: -500,0,72
 	DamageMultiplier@ATTACHED:
 		Modifier: 25
@@ -4795,13 +4795,13 @@ JUGG:
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets\n• Cannot fire while moving
-		Attributes: • Can crush smaller vehicles and concrete walls		
+		Attributes: • Can crush smaller vehicles and concrete walls
 	Mobile:
 		Locomotor: sheavytracked
 		Speed: 40
 		Voice: Move
 		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead || notmobile
-		BlockedCursor: move		
+		BlockedCursor: move
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Selectable:
@@ -4816,7 +4816,7 @@ JUGG:
 		MoveSequence: run
 	WithSpriteTurret:
 	AttackMove:
-		AttackMoveCondition: attack-move	
+		AttackMoveCondition: attack-move
 	Armament@PRIMARY:
 		Weapon: JuggernautGun
 		LocalOffset: 830,0,500, 830,100,500, 830,-100,500
@@ -4824,14 +4824,14 @@ JUGG:
 		RecoilRecovery: 30
 		MuzzleSequence: muzzle
 		PauseOnCondition: moving
-		ReloadingCondition: reloading		
+		ReloadingCondition: reloading
 	Armament@TARGETTER:
 		Name: targetter
 		Weapon: JuggernautGunTargeting
 		PauseOnCondition: reloading
 		RequiresCondition: attack-move || assault-move
 	AttackTurreted:
-		Armaments: primary, targetter	
+		Armaments: primary, targetter
 		PauseOnCondition: empdisable || being-warped
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
@@ -4855,7 +4855,7 @@ JUGG:
 	Voiced:
 		VoiceSet: DisrVoice
 	GrantConditionOnAttack@AIMING:
-		ArmamentNames: primary, targetter	
+		ArmamentNames: primary, targetter
 		Condition: aiming
 		RevokeDelay: 15
 		RevokeAll: false

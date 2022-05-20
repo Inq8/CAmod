@@ -16,14 +16,15 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Grants a condition when being resupplied.")]
+	[Desc("Use in conjunction with Rearmable and an AmmoPool with large reload delay.",
+		"Replaces with specified unit after a delay (optionally if the unit is also undamaged).")]
 	public class RearmsToUpgradeInfo : PausableConditionalTraitInfo
 	{
 		[Desc("Ammo pool to use to trigger upgrade.")]
 		public readonly string AmmoPool = "primary";
 
 		[ActorReference]
-		[Desc("Ammo pool to use to trigger upgrade.")]
+		[Desc("Actor to upgrade into.")]
 		public readonly string Actor = null;
 
 		[Desc("Ticks taken to upgrade.")]
@@ -32,9 +33,18 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Voice to use on upgrade completion.")]
 		public readonly string UpgradeAudio = null;
 
+		[Desc("If true, the unit must be at full health before triggering the upgrade process.")]
 		public readonly bool MustBeUndamaged = true;
 
 		public readonly bool SkipMakeAnims = true;
+
+		public override void RulesetLoaded(Ruleset rules, ActorInfo ai)
+		{
+			if (ai.TraitInfos<AmmoPoolInfo>().Count(ap => ap.Name == AmmoPool) != 1)
+				throw new YamlException("ReloadsAmmoPool.AmmoPool requires exactly one AmmoPool with matching Name!");
+
+			base.RulesetLoaded(rules, ai);
+		}
 
 		public override object Create(ActorInitializer init) { return new RearmsToUpgrade(init.Self, this); }
 	}

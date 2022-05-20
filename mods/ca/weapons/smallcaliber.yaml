@@ -565,7 +565,11 @@ M60mgIFV:
 
 M60mgMD:
 	Inherits: M60mgTD
+	ReloadDelay: 40
+
+M60mgMD.Attached:
 	Range: 4c768
+	Inherits: M60mgMD
 
 MGattG:
 	Inherits: ^HeavyMG
@@ -807,6 +811,10 @@ SNIPER.vehicleElite:
 
 SniperIFVGun:
 	Inherits: SNIPER.vehicle
+	-ValidTargets:
+	-InvalidTargets:
+	Warhead@1Dam: SpreadDamage
+		-ValidTargets:
 
 CommandoIFVGun:
 	Inherits: SMG
