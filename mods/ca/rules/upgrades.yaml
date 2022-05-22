@@ -139,22 +139,6 @@ vulcan.upgrade:
 	RenderSprites:
 		Image: vulcan.upgrade
 
-gshield.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Guardian Shield
-	Buildable:
-		BuildPaletteOrder: 25
-		Prerequisites: ~radar.arc, ~techlevel.high
-		IconPalette: chrometd
-		Description: Equips Guardian Drones with portable nanite shield generator.\n\nUpgrades: Guardian Drone
-	TooltipExtras:
-		Strengths: + Can activate nanite shield (cannot fire while active)
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: gshield.upgrade
-
 sidewinders.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -219,21 +203,21 @@ tow.upgrade:
 	RenderSprites:
 		Image: tow.upgrade
 
-pointlaser.upgrade:
+pointdef.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Point Defense Lasers
+		Name: Upgrade: Point Defense Systems
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~gtek, ~hold.strat, ~techlevel.high
 		IconPalette: chrometd
-		Description: Equips Battle Tanks, Battle Drones and Frigates with point defense lasers\n  which can destroy approaching missiles.\n\nUpgrades: Battle Tank\nUpgrades: Battle Drone\nUpgrades: Frigate
+		Description: Equips several units with point defense shields and/or point defense lasers\n  which protect against enemy fire.\n\nUpgrades: Battle Tank (Shield and Laser)\nUpgrades: Battle Drone (Shield and Laser)\nUpgrades: Hum-Vee(Shield)\nUpgrades: Guardian Drone(Shield)\nUpgrades: Harvester(Shield)\nUpgrades: Frigate (Laser)
 	TooltipExtras:
-		Strengths: + Added Point Defense Laser
+		Strengths: + Added Point Defense Shield\n+ Added Point Defense Laser
 	Valued:
-		Cost: 1000
+		Cost: 1500
 	RenderSprites:
-		Image: pointlaser.upgrade
+		Image: pointdef.upgrade
 
 sonic.upgrade:
 	Inherits: ^Upgrade
@@ -256,7 +240,7 @@ abur.upgrade:
 	Tooltip:
 		Name: Upgrade: Afterburner
 	Buildable:
-		BuildPaletteOrder: 45
+		BuildPaletteOrder: 65
 		Prerequisites: ~gtek.eagle, ~techlevel.high
 		IconPalette: chrometd
 		Description: Equips Orcas and Orca Bombers with afterburners.\n\nUpgrades: Orca\nUpgrades: Orca Bomber
@@ -266,6 +250,23 @@ abur.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: abur.upgrade
+
+bdrone.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Battle Drone
+	Buildable:
+		BuildPaletteOrder: 65
+		Prerequisites: ~gtek.arc, ~techlevel.high
+		IconPalette: chrometd
+		Description: Allows construction of remotely piloted Battle Tanks.\n\nReplaces: Battle Tank
+	TooltipExtras:
+		Strengths: + Immunity to crew kill, chaos gas and mind control\n+ Reduced cost\n+ Increased rate of fire\n+ Mini Drone attached when produced
+		Weaknesses: – Disabled if radar is down\n– Can be hacked
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: bdrone.upgrade
 
 hypersonic.upgrade:
 	Inherits: ^Upgrade
@@ -363,22 +364,22 @@ railgun.upgrade:
 	RenderSprites:
 		Image: railgun.upgrade
 
-drone.upgrade:
+mdrone.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Drone Tanks
+		Name: Research: Mammoth Drone
 	Buildable:
 		BuildPaletteOrder: 83
 		Prerequisites: ~upgc.arc, ~techlevel.high
 		IconPalette: chrometd
-		Description: Allows construction of remotely piloted tanks.\n\nReplaces: Battle Tank\nReplaces: Mammoth Tank
+		Description: Allows construction of remotely piloted Mammoth Tanks.\n\nReplaces: Mammoth Tank
 	TooltipExtras:
 		Strengths: + Immunity to crew kill, chaos gas and mind control\n+ Reduced cost\n+ Increased rate of fire\n+ Mini Drone attached when produced
 		Weaknesses: – Disabled if radar is down\n– Can be hacked
 	Valued:
 		Cost: 1000
 	RenderSprites:
-		Image: drone.upgrade
+		Image: mdrone.upgrade
 
 #########################NOD#########
 ########################################

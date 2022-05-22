@@ -1350,6 +1350,21 @@ HARV:
 		Actors: c1,c7,c10
 		Probability: 5
 		RequiresCondition: !being-warped
+	GrantConditionOnPrerequisite@GSHIELD:
+		Condition: pointdef-upgrade
+		Prerequisites: pointdef.upgrade
+	TimedDamageMultiplierOnDamage@GSHIELD:
+		ActiveCondition: gshield
+		ChargingColor: 008888
+		DrainingColor: 00ffff
+		Modifier: 25
+		Duration: 75
+		ChargeTime: 375
+		ActivateSound: gshieldup.aud
+		DeactivateSound: gshielddown.aud
+		RequiresCondition: pointdef-upgrade
+	WithIdleOverlay@NSHIELD:
+		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
 
 HARV.Chrono:
 	Inherits: HARV
@@ -2255,6 +2270,22 @@ HMMV:
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	GrantConditionOnPrerequisite@GSHIELD:
+		Condition: pointdef-upgrade
+		Prerequisites: pointdef.upgrade
+	TimedDamageMultiplierOnDamage@GSHIELD:
+		ActiveCondition: gshield
+		ChargingColor: 008888
+		DrainingColor: 00ffff
+		Modifier: 25
+		Duration: 75
+		ChargeTime: 375
+		ActivateSound: gshieldup.aud
+		DeactivateSound: gshielddown.aud
+		RequiresCondition: pointdef-upgrade
+	WithIdleOverlay@NSHIELD:
+		Image: nshield-overlay-sm
+		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
 	UpgradeableTo:
 		Actors: hmmv.tow
 
@@ -2339,37 +2370,22 @@ GDRN:
 		Range: 6c0
 		CloakTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
-	GrantConditionOnDeploy@GSHIELD:
-		DeployedCondition: gshield
-		RequiresCondition: gshield-upgrade && (ammo || gshield)
-		SmartDeploy: True
-		DeploySounds: gshieldup.aud
-		UndeploySounds: gshielddown.aud
 	GrantConditionOnPrerequisite@GSHIELD:
-		Condition: gshield-upgrade
-		Prerequisites: gshield.upgrade
+		Condition: pointdef-upgrade
+		Prerequisites: pointdef.upgrade
+	TimedDamageMultiplierOnDamage@GSHIELD:
+		ActiveCondition: gshield
+		ChargingColor: 008888
+		DrainingColor: 00FFFF61
+		Modifier: 25
+		Duration: 75
+		ChargeTime: 375
+		ActivateSound: gshieldup.aud
+		DeactivateSound: gshielddown.aud
+		RequiresCondition: pointdef-upgrade
 	WithIdleOverlay@NSHIELD:
 		Image: nshield-overlay-sm
 		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
-	DamageMultiplier@NSHIELD:
-		RequiresCondition: nshield || gshield
-		Modifier: 60
-	PeriodicExplosion@GSHIELD:
-		Weapon: GuardianShieldUse
-		RequiresCondition: gshield && ammo
-		AmmoPoolName: gshield
-	AmmoPool@GSHIELD:
-		Name: gshield
-		Armaments: gshield
-		InitialAmmo: 1
-		AmmoCondition: ammo
-	ReloadAmmoPoolCA@GSHIELD:
-		AmmoPool: gshield
-		Delay: 250
-		Count: 1
-		ShowSelectionBar: true
-		SelectionBarColor: 00ffff
-		RequiresCondition: !gshield
 	UpgradeableTo:
 		Actors: gdrn.tow
 
@@ -2906,7 +2922,7 @@ MTNK:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 80
-		Prerequisites: ~!drone.upgrade, ~vehicles.mtnk, ~techlevel.low
+		Prerequisites: ~!bdrone.upgrade, ~vehicles.mtnk, ~techlevel.low
 		IconPalette: chrometd
 		Description: Main battle tank.
 	TooltipExtras:
@@ -2950,17 +2966,18 @@ MTNK:
 		Weapon: PointLaser
 		LocalOffset: 0,10,90
 		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: pointlaser-upgrade
+		RequiresCondition: pointdef-upgrade
+		ReloadingCondition: pointlaser-charging
 		ForceTargetRelationships: Enemy
 	AttackTurreted:
 		Turrets: primary, secondary
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret@default:
-		RequiresCondition: !pointlaser-upgrade
+		RequiresCondition: !pointdef-upgrade
 	WithSpriteTurret@pointlaser:
 		Sequence: turretpd
-		RequiresCondition: pointlaser-upgrade
+		RequiresCondition: pointdef-upgrade
 	SpawnActorOnDeath:
 		Actor: MTNK.Husk
 		RequiresCondition: !being-warped
@@ -2971,11 +2988,21 @@ MTNK:
 	PointDefense:
 		Armament: secondary
 		PointDefenseTypes: Missile
-		RequiresCondition: pointlaser-upgrade
+		RequiresCondition: pointdef-upgrade && !gshield && !gshield-charging
 		ValidRelationships: Enemy
-	GrantConditionOnPrerequisite@POINTL:
-		Condition: pointlaser-upgrade
-		Prerequisites: pointlaser.upgrade
+	GrantConditionOnPrerequisite@POINTDEF:
+		Condition: pointdef-upgrade
+		Prerequisites: pointdef.upgrade
+	TimedDamageMultiplierOnDamage@GSHIELD:
+		ActiveCondition: gshield
+		ChargingCondition: gshield-charging
+		ShowSelectionBar: false
+		Modifier: 25
+		Duration: 2
+		ChargeTime: 100
+		RequiresCondition: pointdef-upgrade && !pointlaser-charging
+	WithIdleOverlay@NSHIELD:
+		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
 
 MTNK.Drone:
 	Inherits: MTNK
@@ -2987,7 +3014,7 @@ MTNK.Drone:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 81
-		Prerequisites: ~drone.upgrade, ~vehicles.mtnk, ~techlevel.low
+		Prerequisites: ~bdrone.upgrade, ~vehicles.mtnk, ~techlevel.low
 		IconPalette: chrometd
 		Description: Remotely piloted battle tank.
 	TooltipExtras:
@@ -3167,7 +3194,7 @@ HTNK:
 		Queue: Vehicle
 		BuildPaletteOrder: 300
 		IconPalette: chrometd
-		Prerequisites: ~!drone.upgrade, gtek, ~vehicles.htnk, ~!ionmam.upgrade, ~!hovermam.upgrade, ~techlevel.high
+		Prerequisites: ~!mdrone.upgrade, gtek, ~vehicles.htnk, ~!ionmam.upgrade, ~!hovermam.upgrade, ~techlevel.high
 		Description: Big and slow tank with anti-air capability.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -3254,7 +3281,7 @@ HTNK:
 		AmmoPool: upgrade
 		UpgradeAudio: UnitUpgraded
 		Actor: htnk.drone
-		RequiresCondition: drone-upgrade
+		RequiresCondition: mdrone-upgrade
 	GrantConditionOnPrerequisite@IONUPGRADE:
 		Condition: ionmam-upgrade
 		Prerequisites: ionmam.upgrade
@@ -3262,8 +3289,8 @@ HTNK:
 		Condition: hovermam-upgrade
 		Prerequisites: hovermam.upgrade
 	GrantConditionOnPrerequisite@DRONEUPGRADE:
-		Condition: drone-upgrade
-		Prerequisites: drone.upgrade
+		Condition: mdrone-upgrade
+		Prerequisites: mdrone.upgrade
 
 HTNK.Ion:
 	Inherits: HTNK
@@ -3340,7 +3367,7 @@ HTNK.Drone:
 		Queue: Vehicle
 		BuildPaletteOrder: 300
 		IconPalette: chrometd
-		Prerequisites: ~drone.upgrade, gtek, ~vehicles.htnk, ~techlevel.high
+		Prerequisites: ~mdrone.upgrade, gtek, ~vehicles.htnk, ~techlevel.high
 		Description: Remotely piloted heavy tank with anti-air capability.
 	TooltipExtras:
 		Attributes: • Can crush concrete walls\n• Requires active radar communication
@@ -3946,6 +3973,21 @@ HARV.TD:
 		Actors: c1,c7,c10
 		Probability: 5
 		RequiresCondition: !being-warped
+	GrantConditionOnPrerequisite@GSHIELD:
+		Condition: pointdef-upgrade
+		Prerequisites: pointdef.upgrade
+	TimedDamageMultiplierOnDamage@GSHIELD:
+		ActiveCondition: gshield
+		ChargingColor: 008888
+		DrainingColor: 00ffff
+		Modifier: 25
+		Duration: 75
+		ChargeTime: 375
+		ActivateSound: gshieldup.aud
+		DeactivateSound: gshielddown.aud
+		RequiresCondition: pointdef-upgrade
+	WithIdleOverlay@NSHIELD:
+		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
 
 BTR:
 	Inherits: ^Tank
