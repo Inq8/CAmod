@@ -479,7 +479,7 @@ RuinerCannon:
 			None: 120
 			Wood: 90
 			Concrete: 80
-			Light: 80
+			Light: 90
 			Heavy: 45
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
@@ -725,6 +725,7 @@ EnervatorBoltsAA:
 	ValidTargets: Air, AirSmall
 	Projectile: MissileCA
 		CloseEnough: 341
+		RangeLimit: 13c0
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air
 		Range: 0, 0c64, 0c256, 3c0
@@ -805,7 +806,7 @@ InvaderZapAA:
 		Speed: 1c768
 	ValidTargets: Air, AirSmall
 	Warhead@1Dam: SpreadDamage
-		Damage: 160
+		Damage: 200
 		Range: 0, 0c64, 0c256, 1c0
 		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
@@ -816,7 +817,7 @@ InvaderZapAA:
 			Wood: 100
 			None: 100
 	Warhead@2Dam: SpreadDamage
-		Damage: 160
+		Damage: 200
 		Spread: 128
 		Falloff: 100, 50, 14, 0
 		ValidTargets: AirSmall
@@ -988,7 +989,7 @@ RavagerShards:
 		Spread: 256
 		Damage: 2200
 		Versus:
-			Wood: 20
+			Wood: 15
 			Light: 40
 			Heavy: 10
 			Concrete: 30
@@ -1366,6 +1367,7 @@ AtomizerBoltsAA:
 	Projectile: Missile
 		Speed: 225
 	Warhead@1Dam: SpreadDamage
+		Damage: 5000
 		ValidTargets: Air, AirSmall
 		Versus:
 			None: 100

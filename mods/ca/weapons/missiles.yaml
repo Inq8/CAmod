@@ -12,9 +12,8 @@
 		TrailImage: smokey
 		Shadow: True
 		HorizontalRateOfTurn: 20
-		RangeLimit: 6c0
+		RangeLimit: 7c0
 		PointDefenseType: Missile
-		LockOnProbability: 80
 		LockOnInaccuracy: 128
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
@@ -44,13 +43,10 @@
 ^AirToGroundMissile:
 	Inherits: ^AntiGroundMissile
 	Projectile: MissileCA
-		LockOnProbability: 95
 
 ^AntiAirMissile:
 	Inherits: ^AntiGroundMissile
 	ValidTargets: Air, AirSmall
-	Projectile: MissileCA
-		LockOnProbability: 95
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
@@ -86,7 +82,7 @@
 		Speed: 384
 		HorizontalRateOfTurn: 40
 		LockOnInaccuracy: 0
-		RangeLimit: 12c0
+		RangeLimit: 13c0
 		AllowSnapping: true
 
 Maverick:
@@ -124,7 +120,6 @@ MaverickAA:
 Sidewinder:
 	Inherits: MaverickAA
 	Report: sidewinder.aud
-	Range: 7c0
 	Projectile: MissileCA
 		ContrailLength: 10
 		ContrailWidth: 42
@@ -253,8 +248,6 @@ SeismicMissileDummy:
 
 Dragon:
 	Inherits: ^AntiGroundMissile
-	Projectile: MissileCA
-		LockOnProbability: 95
 
 Dragon.TD:
 	Inherits: Dragon
@@ -287,7 +280,7 @@ Dragon.TibCore:
 	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
 	Projectile: MissileCA
 		Image: tibcoremsl
-		RangeLimit: 8c0
+		RangeLimit: 9c0
 		ContrailLength: 15
 		ContrailColor: 33aa00aa
 		ContrailWidth: 0c40
@@ -311,7 +304,7 @@ DragonGI:
 	Report: iggiat2a.aud, iggiat2b.aud
 	ReloadDelay: 40
 	Projectile: MissileCA
-		RangeLimit: 7c0
+		RangeLimit: 8c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 4500
 
@@ -321,7 +314,7 @@ DragonGI.CRYO:
 	Report: iggiat2a.aud, iggiat2b.aud
 	ReloadDelay: 40
 	Projectile: MissileCA
-		RangeLimit: 7c0
+		RangeLimit: 8c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 4500
 
@@ -374,7 +367,7 @@ HellfireAG:
 	Projectile: MissileCA
 		Speed: 256
 		HorizontalRateOfTurn: 40
-		RangeLimit: 8c512
+		RangeLimit: 10c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 4500
 		Versus:
@@ -421,7 +414,6 @@ HellfireAG.Harrier:
 		ContrailLength: 10
 		Inaccuracy: 512
 		LockOnInaccuracy: 512
-		LockOnProbability: 90
 	Warhead@1Dam: SpreadDamage
 		Spread: 448
 		Damage: 1600
@@ -777,7 +769,7 @@ APTusk:
 	Projectile: MissileCA
 		Speed: 298
 		HorizontalRateOfTurn: 40
-		RangeLimit: 7c204
+		RangeLimit: 8c0
 		LockOnInaccuracy: 256
 	Warhead@1Dam: SpreadDamage
 		Damage: 8000
@@ -800,7 +792,6 @@ TOW:
 		HorizontalRateOfTurn: 20
 		RangeLimit: 16c0
 		PointDefenseType: Missile
-		LockOnProbability: 100
 		LockOnInaccuracy: 0
 		ContrailLength: 17
 		ContrailColor: ccccccaa
@@ -1164,7 +1155,7 @@ BikeRockets.TibCore:
 		ContrailLength: 15
 		ContrailColor: 33aa00aa
 		ContrailWidth: 0c40
-		RangeLimit: 8c0
+		RangeLimit: 9c0
 	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 4400
@@ -1487,7 +1478,7 @@ StnkMissile.TibCore:
 		ContrailLength: 15
 		ContrailColor: 33aa00aa
 		ContrailWidth: 0c40
-		RangeLimit: 8c0
+		RangeLimit: 9c0
 	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 3850
@@ -1583,7 +1574,7 @@ Rah66AG:
 			Wood: 60
 			Concrete: 30
 			Light: 55
-			Heavy: 15
+			Heavy: 20
 			Brick: 5
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect

@@ -993,10 +993,10 @@
 	CaptureManager:
 	Targetable@DRIVERKILL:
 		TargetTypes: DriverKill
-		RequiresCondition: !driver-dead
+		RequiresCondition: !driver-dead && !invulnerability
 	Targetable@DRIVERKILLLOWHP:
 		TargetTypes: DriverKillLow
-		RequiresCondition: !driver-dead && target-lowhp
+		RequiresCondition: !driver-dead && target-lowhp && !invulnerability
 	GrantConditionOnDamageState@DRIVERKILLLOWHP:
 		Condition: target-lowhp
 		ValidDamageStates: Heavy, Critical
@@ -1648,6 +1648,8 @@
 	TeleportNetworkTransportable:
 	Targetable@SHADOWBEACON:
 		TargetTypes: ShadowBeacon
+	Targetable@MINDCONTROL:
+		RequiresCondition: !mindcontrolled && !hacked && !restoring && !invulnerability
 	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 		Condition: repair-cooldown
 		RequiredStacksHPDivisor: 3750
