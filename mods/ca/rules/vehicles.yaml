@@ -5156,8 +5156,8 @@ RTNK:
 	Tooltip:
 		Name: Mirage Tank
 	Mirage:
-		RequiresCondition: !empdisable && !being-warped && !driver-dead
-		RevealOn: Attack, Move, Heal, SelfHeal
+		RequiresCondition: !cloak-force-disabled && !invisibility && !driver-dead && !empdisable && !being-warped
+		RevealOn: Attack, Dock, Move, Damage, Heal, SelfHeal
 		MirageCondition: tree
 		DefaultTargetTypes: v08, v09, v10, v11, v12, v13, v14, v15, v16, v17, v18
 		InitialDelay: 100
@@ -5208,12 +5208,14 @@ RTNK:
 		CloakSound: vmirat2a.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1.aud
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Move, Damage, Heal, SelfHeal
+		UncloakOn: Attack, Dock, Move, Damage, Heal, SelfHeal
 		Palette: player
 		IsPlayerPalette: false
 		RequiresCondition: !cloak-force-disabled && !invisibility && !driver-dead && !empdisable && !being-warped
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
+	GrantConditionOnDamageState@UNCLOAK:
+		ValidDamageStates: Critical
 	Selectable:
 		DecorationBounds: 28,28
 	ProducibleWithLevel:
