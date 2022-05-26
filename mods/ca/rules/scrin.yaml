@@ -291,6 +291,8 @@ S3:
 		PauseOnCondition: being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	AutoTarget:
+		ScanRadius: 6
 	AmmoPool:
 		Ammo: 1
 		AmmoCondition: ammo
@@ -929,7 +931,7 @@ INTL:
 		TurnSpeed: 512
 		Locomotor: lighthover
 	Health:
-		HP: 43500
+		HP: 42000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -1192,7 +1194,7 @@ DEVO:
 	Health:
 		HP: 27500
 	Armor:
-		Type: Heavy
+		Type: Light
 	Mobile:
 		TurnSpeed: 512
 		Speed: 66
@@ -1220,7 +1222,7 @@ DEVO:
 	TurretedFloating:
 		TurnSpeed: 16
 		Offset: 0,0,0
-		RealignDelay: 75
+		RealignDelay: 100
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 		Armaments: primary, primary-charged
