@@ -319,6 +319,8 @@ U3:
 		Speed: 38
 		Voice: Move
 		PauseOnCondition: !undeployed
+		RequireForceMoveCondition: !undeployed
+		BlockedCursor: move
 	Armament@PRIMARY:
 		Weapon: M14
 		LocalOffset: 0,0,400
@@ -454,6 +456,7 @@ U3:
 		Voice: Attack
 		RequiresCondition: deployed
 		OutsideRangeRequiresForceFire: True
+		RangeMargin: 0
 	GrantConditionOnAttack:
 		Condition: animate-turret
 		RevokeDelay: 5
