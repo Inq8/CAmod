@@ -640,6 +640,8 @@ MAST:
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	-Crushable:
+	TakeCover:
+		SpeedModifier: 70
 	ExternalCondition@PRODUCED:
 		Condition: produced
 	VoiceAnnouncement:
@@ -3260,17 +3262,24 @@ NERV:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		MinRange: 6c0
-		Range: 10c0
+		MinRange: 5c0
+		Range: 6c0
 		RequiresCondition: !disabled
 		RevealGeneratedShroud: False
 	RevealsShroud@Offline:
 		Range: 5c0
 		RequiresCondition: disabled
 	RevealsShroud@GAPGEN:
-		Range: 6c0
+		Range: 5c0
 		RequiresCondition: !disabled
 	ProvidesRadar:
+		RequiresCondition: !jammed && !disabled && !being-warped
+	RangedGpsRadarProvider:
+		Range: 12c0
+		TargetTypes: Vehicle, Aircraft, Structure
+		RequiresCondition: !jammed && !disabled && !being-warped
+	WithRangeCircle:
+		Range: 12c0
 		RequiresCondition: !jammed && !disabled && !being-warped
 	WithBuildingBib:
 	InfiltrateForExploration:
@@ -3526,7 +3535,7 @@ GRAV:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 130
-		Prerequisites: anyradar, ~structures.scrin, ~techlevel.medium
+		Prerequisites: anyradar, repair, ~structures.scrin, ~techlevel.medium
 		Description: Produces Scrin aircraft.
 		IconPalette: chromes
 	Valued:

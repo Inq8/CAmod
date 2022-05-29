@@ -9,7 +9,7 @@ DOG:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Can only attack Infantry
-		Attributes: • Can detect spies, mines and cloaked units\n• Detects the scent of enemies beyond vision range
+		Attributes: • Can detect spies, mines and cloaked units\n• Detects the scent of enemy infantry beyond vision range
 	RenderSprites:
 		Scale: 0.7
 		PlayerPalette: player
@@ -73,9 +73,10 @@ DOG:
 		CloakTypes: Cloak, Thief, Mine
 		Range: 4c0
 	RangedGpsRadarProvider:
-		Range: 8c0
+		Range: 12c0
+		TargetTypes: Infantry
 	WithRangeCircle:
-		Range: 8c0
+		Range: 12c0
 	Voiced:
 		VoiceSet: DogVoice
 	-TakeCover:
@@ -3312,7 +3313,6 @@ BH:
 		Weapon: BlackHandFlamerWithSound
 	TakeCover:
 		ProneOffset: 160,0,-256
-		SpeedModifier: 60
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: being-warped
@@ -3438,6 +3438,8 @@ YURI:
 	Voiced:
 		VoiceSet: YuriVoice
 	-Crushable:
+	TakeCover:
+		SpeedModifier: 70
 	WithInfantryBody:
 		IdleSequences: idle
 		StandSequences: stand
