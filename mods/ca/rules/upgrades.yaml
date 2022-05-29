@@ -17,7 +17,7 @@ hazmat.upgrade:
 		Name: Upgrade: Hazmat Suits
 	Buildable:
 		BuildPaletteOrder: 10
-		Prerequisites: ~anyradar, ~infantry.hazmat, ~techlevel.high, ~!hazmatsoviet.upgrade
+		Prerequisites: ~anyradar, ~infantry.any, ~!player.soviet, ~!player.scrin, ~techlevel.high
 		IconPalette: chrometd
 		Description: Infantry are equiped with hazmat suits which provides\n  protection against Tiberium and radiation.\n\nUpgrades: Infantry
 	TooltipExtras:
@@ -26,6 +26,21 @@ hazmat.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: hazmat.upgrade
+
+flakarmor.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Advanced Flak Armor
+	Buildable:
+		BuildPaletteOrder: 21
+		Prerequisites: ~techcenter, ~infantry.any, ~!player.nod, ~!player.scrin, ~techlevel.high
+		Description: Infantry are equiped with advanced flak armor which\n  provides protection against explosives.\n\nUpgrades: Infantry
+	TooltipExtras:
+		Strengths: + 40% reduced damage from explosives
+	Valued:
+		Cost: 1500
+	RenderSprites:
+		Image: flakarmor.upgrade
 
 #########################GDI#########
 ########################################
@@ -480,7 +495,7 @@ cyborgarmor.upgrade:
 		IconPalette: chrometd
 		Description: Improves cyborg armor.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Reaper\nUpgrades: Chemical Warrior\nUpgrades: Acolyte\nUpgrades: Cyborg Elite
 	TooltipExtras:
-		Strengths: + 20% reduced damage taken
+		Strengths: + 20% reduced damage taken\n+ Additional 10% reduced damage from explosives
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -517,7 +532,7 @@ hazmatsoviet.upgrade:
 		Name: Upgrade: Heavy Hazmat Suits
 	Buildable:
 		BuildPaletteOrder: 10
-		Prerequisites: ~radar.soviet, ~barr, ~techlevel.high
+		Prerequisites: ~anyradar, ~infantry.any, ~player.soviet, ~techlevel.high
 		Description: Infantry are equipped with heavy hazmat suits which provides\n  protection against Tiberium and radiation.\n\nUpgrades: Infantry
 	TooltipExtras:
 		Strengths: + Tiberium immunity\n+ High radiation resistance
@@ -749,6 +764,22 @@ advart.upgrade:
 		Cost: 1500
 	RenderSprites:
 		Image: advart.upgrade
+
+carapace.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Hardened Carapace
+	Buildable:
+		BuildPaletteOrder: 21
+		Prerequisites: ~scrt, ~infantry.any, ~player.scrin, ~techlevel.high
+		Description: Infantry gain a hardened carapace which\n  provides protection against explosives.\n\nUpgrades: Infantry
+		IconPalette: scrin
+	TooltipExtras:
+		Strengths: + 40% reduced damage from explosives
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: carapace.upgrade
 
 resconv.upgrade:
 	Inherits: ^Upgrade

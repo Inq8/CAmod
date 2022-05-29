@@ -765,6 +765,10 @@
 	DamageMultiplier@CYBORGARMOR:
 		RequiresCondition: cyborgarmor-upgrade
 		Modifier: 80
+	DamageTypeDamageMultiplier@CYBORGFLAKARMOR:
+		RequiresCondition: cyborgarmor-upgrade
+		DamageTypes: FlakVestMitigated
+		Modifier: 90
 
 ^BinoUpgrade:
 	ExternalCondition@BINO:
@@ -1957,6 +1961,13 @@
 	WithInfantryBody:
 		IdleSequences: idle1,idle2
 		StandSequences: stand,stand2
+	DamageTypeDamageMultiplier@FLAKARMOR:
+		DamageTypes: FlakVestMitigated
+		Modifier: 60
+		RequiresCondition: flakarmor-upgrade
+	GrantConditionOnPrerequisite@FLAKARMOR:
+		Condition: flakarmor-upgrade
+		Prerequisites: flakarmor.upgrade
 
 ^Cyborg:
 	Inherits: ^Soldier
@@ -2004,6 +2015,8 @@
 	-DamagedByTintedCells@RADMEDHAZMAT:
 	-DamagedByTintedCells@RADWEAK:
 	-DamagedByTintedCells@RADWEAKHAZMAT:
+	-DamageTypeDamageMultiplier@FLAKARMOR:
+	-GrantConditionOnPrerequisite@FLAKARMOR:
 
 ^CivInfantry:
 	Inherits: ^Infantry

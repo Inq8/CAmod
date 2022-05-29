@@ -165,6 +165,12 @@ VEHICLES.SCRIN:
 	DamagedByTintedCells@RADWEAK:
 		Damage: 50
 		RequiresCondition: !being-warped
+	DamageTypeDamageMultiplier@FLAKARMOR:
+		RequiresCondition: carapace-upgrade
+	-GrantConditionOnPrerequisite@FLAKARMOR:
+	GrantConditionOnPrerequisite@CARAPACE:
+		Condition: carapace-upgrade
+		Prerequisites: carapace.upgrade
 	TransformOnCondition@FEEDER:
 		RequiresCondition: feedermutation
 		IntoActor: feed
@@ -3089,6 +3095,8 @@ PORT:
 		Condition: produced
 	ProductionBar:
 		ProductionType: Infantry
+	ProvidesPrerequisite@infantryany:
+		Prerequisite: infantry.any
 	ProvidesPrerequisite@scrin:
 		Prerequisite: infantry.scrin
 	ProvidesPrerequisite@reaper:

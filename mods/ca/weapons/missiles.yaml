@@ -425,7 +425,7 @@ HellfireAG.Harrier:
 			Light: 60
 			Heavy: 30
 			Concrete: 30
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: kaboom15.aud
@@ -506,14 +506,14 @@ MammothTusk:
 			None: 100
 			Light: 50
 			Heavy: 50
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@2Dam: SpreadDamage
 		Damage: 2000
 		Spread: 128
 		Falloff: 100, 50, 14, 0
 		ValidTargets: AirSmall
 		ValidRelationships: Enemy, Neutral
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: kaboom15.aud
 		ValidTargets: Ground, Trees
@@ -753,6 +753,7 @@ StingerGTWR:
 			Light: 70
 			Heavy: 60
 			Concrete: 70
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
 		Explosions: frag_3
 		ExplosionPalette: temptd
@@ -960,7 +961,7 @@ SCUD:
 			Light: 70
 			Heavy: 40
 			Concrete: 50
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
 		Explosions: building, building2
 	Warhead@4EffWater: CreateEffect
@@ -982,7 +983,7 @@ V3Weapon:
 			Light: 70
 			Heavy: 40
 			Concrete: 60
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
 		Explosions: building, building2
 		ValidTargets: Ground, Air, Ship, Trees, ICBM
@@ -1017,6 +1018,7 @@ KatyushaRockets:
 			Concrete: 65
 			Light: 80
 			Heavy: 45
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
 		Explosions: frag_3
 		ExplosionPalette: temptd
@@ -1055,7 +1057,7 @@ HonestJohn:
 			Light: 80
 			Heavy: 40
 			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigated
 	Warhead@2Dam: SpreadDamage
 		Spread: 512
 		Damage: 500
@@ -1068,7 +1070,7 @@ HonestJohn:
 			Light: 80
 			Heavy: 40
 			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigated
 	Warhead@3Dam: SpreadDamage
 		Spread: 512
 		Damage: 500
@@ -1081,7 +1083,7 @@ HonestJohn:
 			Light: 80
 			Heavy: 40
 			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigated
 	Warhead@4Dam: SpreadDamage
 		Spread: 512
 		Damage: 500
@@ -1094,7 +1096,7 @@ HonestJohn:
 			Light: 80
 			Heavy: 40
 			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigated
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Eff: CreateEffect
@@ -1298,7 +1300,7 @@ IFVRocketsAAE.CRYO:
 			Light: 72
 			Heavy: 35
 			Concrete: 72
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: kaboom15.aud
@@ -1315,7 +1317,7 @@ IFVRocketsAAE.CRYO:
 	Projectile: MissileCA
 		ContrailLength: 15
 	Warhead@1Dam: SpreadDamage
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated
 
 227mm.Hypersonic:
 	Inherits: 227mm.upg
@@ -1576,7 +1578,7 @@ Rah66AG:
 			Light: 55
 			Heavy: 20
 			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: caneon

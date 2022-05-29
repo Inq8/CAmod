@@ -15,15 +15,15 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	public enum TimedDamageMultiplierOnDamageState
+	public enum TimedDamageMultiplierState
 	{
 		Ready,
 		Draining,
 		Charging
 	}
 
-	[Desc("Gives a condition to the actor for a limited time.")]
-	public class TimedDamageMultiplierOnDamageInfo : ConditionalTraitInfo
+	[Desc("On taking damage, gives damage reduction to the actor for a limited time.")]
+	public class TimedDamageMultiplierInfo : ConditionalTraitInfo
 	{
 		[GrantedConditionReference]
 		[Desc("The condition to grant.")]
@@ -51,40 +51,59 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Play a randomly selected sound from this list when undeploying.")]
 		public readonly string DeactivateSound = null;
 
+		[Desc("If true, charging will be reset on taking any damage.")]
+		public readonly bool ResetChargingOnDamage = false;
+
+		[Desc("Damage type(s) that trigger and are affected by the damage multiplier.")]
+		public readonly BitSet<DamageType> DamageTypes = default(BitSet<DamageType>);
+
 		public readonly bool GrantConditionWhenReady = false;
 		public readonly bool ShowSelectionBar = true;
 		public readonly bool ShowSelectionBarWhenReady = false;
 		public readonly Color DrainingColor = Color.LightCyan;
 		public readonly Color ChargingColor = Color.Cyan;
 
-		public override object Create(ActorInitializer init) { return new TimedDamageMultiplierOnDamage(this); }
+		public override object Create(ActorInitializer init) { return new TimedDamageMultiplier(this); }
 	}
 
-	public class TimedDamageMultiplierOnDamage : ConditionalTrait<TimedDamageMultiplierOnDamageInfo>, ITick, IDamageModifier, INotifyDamage, ISelectionBar
+	public class TimedDamageMultiplier : ConditionalTrait<TimedDamageMultiplierInfo>, ITick, IDamageModifier, INotifyDamage, ISelectionBar
 	{
-		public new readonly TimedDamageMultiplierOnDamageInfo Info;
+		public new readonly TimedDamageMultiplierInfo Info;
 		public int Ticks { get; private set; }
 		int token = Actor.InvalidConditionToken;
-		TimedDamageMultiplierOnDamageState state;
+		TimedDamageMultiplierState state;
 
-		public TimedDamageMultiplierOnDamage(TimedDamageMultiplierOnDamageInfo info)
+		public TimedDamageMultiplier(TimedDamageMultiplierInfo info)
 			: base(info)
 		{
 			Info = info;
-			state = TimedDamageMultiplierOnDamageState.Ready;
+			state = TimedDamageMultiplierState.Ready;
 		}
 
 		int IDamageModifier.GetDamageModifier(Actor attacker, Damage damage)
 		{
-			return IsTraitDisabled || state == TimedDamageMultiplierOnDamageState.Charging || damage.Value < Info.MinimumDamage ? 100 : Info.Modifier;
+			if (IsTraitDisabled || state == TimedDamageMultiplierState.Charging || damage.Value < Info.MinimumDamage)
+				return 100;
+
+			var validDamageType = Info.DamageTypes.IsEmpty || damage.DamageTypes.Overlaps(Info.DamageTypes);
+			return validDamageType ? Info.Modifier : 100;
 		}
 
 		void INotifyDamage.Damaged(Actor self, AttackInfo e)
 		{
-			if (IsTraitDisabled || state != TimedDamageMultiplierOnDamageState.Ready || e.Damage.Value < Info.MinimumDamage)
+			if (IsTraitDisabled)
 				return;
 
-			state = TimedDamageMultiplierOnDamageState.Draining;
+			if (Info.ResetChargingOnDamage && state == TimedDamageMultiplierState.Charging && e.Damage.Value > 0)
+				Ticks = Info.ChargeTime;
+
+			if (state != TimedDamageMultiplierState.Ready || e.Damage.Value < Info.MinimumDamage)
+				return;
+
+			if (!Info.DamageTypes.IsEmpty && !e.Damage.DamageTypes.Overlaps(Info.DamageTypes))
+				return;
+
+			state = TimedDamageMultiplierState.Draining;
 			Ticks = Info.Duration;
 			GrantActiveCondition(self);
 
@@ -115,7 +134,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled)
 				return;
 
-			if (state == TimedDamageMultiplierOnDamageState.Ready)
+			if (state == TimedDamageMultiplierState.Ready)
 			{
 				if (Info.GrantConditionWhenReady)
 					GrantActiveCondition(self);
@@ -126,9 +145,9 @@ namespace OpenRA.Mods.CA.Traits
 			if (--Ticks > 0)
 				return;
 
-			if (state == TimedDamageMultiplierOnDamageState.Draining)
+			if (state == TimedDamageMultiplierState.Draining)
 			{
-				state = TimedDamageMultiplierOnDamageState.Charging;
+				state = TimedDamageMultiplierState.Charging;
 				Ticks = Info.ChargeTime;
 				RevokeCondition(self);
 				GrantChargingCondition(self);
@@ -136,9 +155,9 @@ namespace OpenRA.Mods.CA.Traits
 				if (Info.DeactivateSound != null)
 					Game.Sound.Play(SoundType.World, Info.DeactivateSound, self.CenterPosition);
 			}
-			else if (state == TimedDamageMultiplierOnDamageState.Charging)
+			else if (state == TimedDamageMultiplierState.Charging)
 			{
-				state = TimedDamageMultiplierOnDamageState.Ready;
+				state = TimedDamageMultiplierState.Ready;
 				Ticks = Info.Duration;
 				RevokeCondition(self);
 
@@ -149,7 +168,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override void TraitDisabled(Actor self)
 		{
-			state = TimedDamageMultiplierOnDamageState.Ready;
+			state = TimedDamageMultiplierState.Ready;
 			Ticks = Info.Duration;
 			RevokeCondition(self);
 		}
@@ -159,16 +178,16 @@ namespace OpenRA.Mods.CA.Traits
 			if (!Info.ShowSelectionBar || IsTraitDisabled)
 				return 0f;
 
-			if (!Info.ShowSelectionBarWhenReady && state == TimedDamageMultiplierOnDamageState.Ready)
+			if (!Info.ShowSelectionBarWhenReady && state == TimedDamageMultiplierState.Ready)
 				return 0f;
 
-			if (state == TimedDamageMultiplierOnDamageState.Ready)
+			if (state == TimedDamageMultiplierState.Ready)
 				return 1f;
 
-			if (state == TimedDamageMultiplierOnDamageState.Draining)
+			if (state == TimedDamageMultiplierState.Draining)
 				return (float)Ticks / Info.Duration;
 
-			if (state == TimedDamageMultiplierOnDamageState.Charging)
+			if (state == TimedDamageMultiplierState.Charging)
 				return (float)(Info.ChargeTime - Ticks) / Info.ChargeTime;
 
 			return 0f;
@@ -176,6 +195,6 @@ namespace OpenRA.Mods.CA.Traits
 
 		bool ISelectionBar.DisplayWhenEmpty { get { return false; } }
 
-		Color ISelectionBar.GetColor() { return state == TimedDamageMultiplierOnDamageState.Draining ? Info.DrainingColor : Info.ChargingColor; }
+		Color ISelectionBar.GetColor() { return state == TimedDamageMultiplierState.Draining ? Info.DrainingColor : Info.ChargingColor; }
 	}
 }
