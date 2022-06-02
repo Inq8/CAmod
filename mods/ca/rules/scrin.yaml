@@ -3245,7 +3245,7 @@ NERV:
 		Description: Provides an overview of the battlefield.
 		IconPalette: chromes
 	TooltipExtras:
-		Attributes: • Requires power to operate
+		Attributes: • Requires power to operate\n• Detects nearby enemy vehicles, aircraft and structures in fog of war
 	Valued:
 		Cost: 1800
 	Tooltip:
@@ -4487,6 +4487,8 @@ camera.resourcescan:
 camera.dummy:
 	Inherits: CAMERA
 	-RevealsShroud:
+	KillsSelf:
+		Delay: 25
 
 ichor.seeder:
 	Inherits: CAMERA

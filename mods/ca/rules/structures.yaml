@@ -726,7 +726,7 @@ DOME:
 		Prerequisites: anyrefinery, ~structures.ra, ~techlevel.medium
 		Description: Provides an overview of the battlefield.
 	TooltipExtras:
-		Attributes: • Requires power to operate
+		Attributes: • Requires power to operate\n• Detects nearby enemy vehicles, aircraft and structures in fog of war
 	Valued:
 		Cost: 1800
 	Tooltip:
@@ -3949,7 +3949,7 @@ HQ:
 		IconPalette: chrometd
 		Description: Provides an overview of the battlefield.
 	TooltipExtras:
-		Attributes: • Requires power to operate
+		Attributes: • Requires power to operate\n• Detects nearby enemy vehicles, aircraft and structures in fog of war
 	Valued:
 		Cost: 1800
 	Tooltip:
@@ -4175,7 +4175,7 @@ EYE:
 		BuildLimit: 1
 		Description: Provides radar and Orbital Ion Cannon support power.
 	TooltipExtras:
-		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Ion Cannon
+		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Ion Cannon\n• Detects nearby enemy vehicles, aircraft and structures in fog of war
 	Valued:
 		Cost: 2500
 	Tooltip:
@@ -4194,18 +4194,25 @@ EYE:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		MinRange: 6c0
-		Range: 10c0
+		MinRange: 5c0
+		Range: 6c0
 		RequiresCondition: !disabled
 		RevealGeneratedShroud: False
 	RevealsShroud@Offline:
 		Range: 5c0
 		RequiresCondition: disabled
 	RevealsShroud@GAPGEN:
-		Range: 6c0
+		Range: 5c0
 		RequiresCondition: !disabled
 	WithBuildingBib:
 	ProvidesRadar:
+		RequiresCondition: !jammed && !disabled && !being-warped
+	RangedGpsRadarProvider:
+		Range: 12c0
+		TargetTypes: Vehicle, Aircraft, Structure
+		RequiresCondition: !jammed && !disabled && !being-warped
+	WithRangeCircle:
+		Range: 12c0
 		RequiresCondition: !jammed && !disabled && !being-warped
 	InfiltrateForExploration:
 		Types: SpyInfiltrate, SabInfiltrate

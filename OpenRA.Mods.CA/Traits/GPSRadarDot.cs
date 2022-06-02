@@ -37,7 +37,7 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		GpsRadarDotEffect effect;
 
-		List<Actor> rangedObservers = new List<Actor>();
+		HashSet<Actor> rangedObservers = new HashSet<Actor>();
 
 		public GpsRadarDot(GpsRadarDotInfo info)
 			: base(info) { }
