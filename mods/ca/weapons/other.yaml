@@ -1401,6 +1401,91 @@ SonicZapVisual.UPG:
 	Projectile: AreaBeamCA
 		Color: 00ffa845
 
+GapBeam:
+	ReloadDelay: 15
+	Range: 8c0
+	Report: gaploop1.aud, gaploop2.aud, gaploop3.aud
+	Projectile: ElectricBolt
+		Colors: 111111CC,223333CC,11222299,222233CC,44444466,436a6666
+		Duration: 15
+		Angle: 45
+		ZOffset: 1023
+		Width: 42
+		Distortion: 32
+	Warhead@1Dum: Dummy
+	Warhead@Debuff: GrantExternalCondition
+		Range: 0c512
+		Duration: 15
+		Condition: veiled
+		ValidRelationships: Enemy, Neutral
+	Warhead@3Eff: CreateEffect
+		Explosions: veilcloudsm, veilcloudsmf
+		ExplosionPalette: effect-ignore-lighting-alpha40
+		ValidTargets: Ground, Air, Water
+		Inaccuracy: 1c512
+
+MobileGapBeam:
+	Inherits: GapBeam
+	Range: 7c0
+
+VeilSpawner:
+	Range: 8c0
+	ReloadDelay: 75
+	Report: gapshot.aud
+	Projectile: InstantHit
+	Warhead@1Dum: Dummy
+	Warhead@2Spawn: SpawnActor
+		Actors: veil.minor
+		Range: 1
+		ForceGround: false
+		ValidTargets: Ground, Water, Veil
+
+MobileVeilSpawner:
+	Inherits: VeilSpawner
+	Range: 7c0
+
+VeilSmall:
+	ReloadDelay: 10
+	Range: 1c0
+	Projectile: InstantHit
+	Warhead@Debuff: GrantExternalCondition
+		Range: 2c512
+		Duration: 15
+		Condition: veiled
+		ValidRelationships: Enemy, Neutral
+	Warhead@Cloud: CreateEffect
+		Explosions: veilcloud, veilcloudf
+		ExplosionPalette: effect-ignore-lighting-alpha60
+		Inaccuracy: 2c0
+		ValidTargets: Ground, Water, Veil
+
+VeilMedium:
+	Inherits: VeilSmall
+	Warhead@Debuff: GrantExternalCondition
+		Range: 4c768
+	Warhead@Cloud: CreateEffect
+		Inaccuracy: 3c768
+
+VeilLarge:
+	Inherits: VeilSmall
+	Warhead@Debuff: GrantExternalCondition
+		Range: 7c0
+	Warhead@Cloud: CreateEffect
+		Inaccuracy: 6c0
+
+VeilFull:
+	Inherits: VeilSmall
+	Warhead@Debuff: GrantExternalCondition
+		Range: 9c256
+	Warhead@Cloud: CreateEffect
+		Inaccuracy: 7c512
+	Warhead@Cloud2: CreateEffect
+		Explosions: veilcloud, veilcloudf
+		ExplosionPalette: effect-ignore-lighting-alpha60
+		Inaccuracy: 7c512
+		ValidTargets: Ground, Water, Veil
+		Delay: 5
+
 Railgun:
 	ReloadDelay: 70
 	Range: 8c0

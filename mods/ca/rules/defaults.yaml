@@ -1194,12 +1194,22 @@
 		Condition: harv-balance
 		RequiresCondition: global-balancedharvesting
 
-^GpsScramble:
-	RangeMultiplier@GPSSCRAMBLE:
-		Modifier: 60
-		RequiresCondition: gpsscramble
-	ExternalCondition@GPSSCRAMBLE:
-		Condition: gpsscramble
+^Veilable:
+	RangeMultiplier@VEILED:
+		Modifier: 50
+		RequiresCondition: veiled
+	ExternalCondition@VEILED:
+		Condition: veiled
+	WithIdleOverlay@VEILED:
+		Sequence: vehicle
+		Image: veildebuff
+		Palette: effect
+		RequiresCondition: veiled
+
+^VeilableInfantry:
+	Inherits: ^Veilable
+	WithIdleOverlay@VEILED:
+		Sequence: infantry
 
 ^C4Plantable:
 	DelayedWeaponAttachable@C4:
@@ -1526,7 +1536,7 @@
 	Inherits@9: ^Warpable
 	Inherits@10: ^Frenzy
 	Inherits@11: ^NaniteRepair
-	Inherits@12: ^GpsScramble
+	Inherits@12: ^Veilable
 	Inherits@13: ^BotGroundProductionBonus
 	Inherits@14: ^Chillable
 	Inherits@15: ^Slowable
@@ -1724,7 +1734,7 @@
 	Inherits@7: ^Warpable
 	Inherits@9: ^IronCurtainable-Kills
 	Inherits@10: ^FrenzyInfantry
-	Inherits@11: ^GpsScramble
+	Inherits@11: ^VeilableInfantry
 	Inherits@12: ^BotGroundProductionBonus
 	Inherits@13: ^Chillable
 	Inherits@14: ^Concussion
@@ -2090,7 +2100,7 @@
 	Inherits@10: ^Warpable
 	Inherits@11: ^Frenzy
 	Inherits@12: ^NaniteRepair
-	Inherits@13: ^GpsScramble
+	Inherits@13: ^Veilable
 	Inherits@14: ^Chillable
 	Inherits@15: ^BotGroundProductionBonus
 	Inherits@16: ^Concussion
@@ -2578,7 +2588,7 @@
 	Inherits@Concussion: ^Concussion
 	Inherits@selection: ^SelectableCombatBuilding
 	Inherits@mind: ^MindControllable
-	Inherits@gpsscramble: ^GpsScramble
+	Inherits@veilable: ^Veilable
 	Inherits@atomize: ^Atomizable
 	-SpeedMultiplier@concussion:
 	WithColoredOverlay@IRONCURTAIN:
