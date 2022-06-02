@@ -765,6 +765,10 @@
 	DamageMultiplier@CYBORGARMOR:
 		RequiresCondition: cyborgarmor-upgrade
 		Modifier: 80
+	DamageTypeDamageMultiplier@CYBORGFLAKARMOR:
+		RequiresCondition: cyborgarmor-upgrade
+		DamageTypes: FlakVestMitigated
+		Modifier: 90
 
 ^BinoUpgrade:
 	ExternalCondition@BINO:
@@ -993,10 +997,10 @@
 	CaptureManager:
 	Targetable@DRIVERKILL:
 		TargetTypes: DriverKill
-		RequiresCondition: !driver-dead
+		RequiresCondition: !driver-dead && !invulnerability
 	Targetable@DRIVERKILLLOWHP:
 		TargetTypes: DriverKillLow
-		RequiresCondition: !driver-dead && target-lowhp
+		RequiresCondition: !driver-dead && target-lowhp && !invulnerability
 	GrantConditionOnDamageState@DRIVERKILLLOWHP:
 		Condition: target-lowhp
 		ValidDamageStates: Heavy, Critical
@@ -1359,7 +1363,7 @@
 		Step: 1000
 		Delay: 25
 		StartIfBelow: 100
-		DamageCooldown: 50
+		DamageCooldown: 100
 		RequiresCondition: mdrn-attached
 	ExternalCondition@MINIDRONE:
 		Condition: mdrn-attached
@@ -1648,6 +1652,8 @@
 	TeleportNetworkTransportable:
 	Targetable@SHADOWBEACON:
 		TargetTypes: ShadowBeacon
+	Targetable@MINDCONTROL:
+		RequiresCondition: !mindcontrolled && !hacked && !restoring && !invulnerability
 	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 		Condition: repair-cooldown
 		RequiredStacksHPDivisor: 3750
@@ -1947,6 +1953,7 @@
 	RevealsShroud:
 		Range: 5c0
 	TakeCover:
+		SpeedModifier: 60
 		Duration: 75
 		DamageModifiers:
 			Prone50Percent: 50
@@ -1955,6 +1962,13 @@
 	WithInfantryBody:
 		IdleSequences: idle1,idle2
 		StandSequences: stand,stand2
+	DamageTypeDamageMultiplier@FLAKARMOR:
+		DamageTypes: FlakVestMitigated
+		Modifier: 60
+		RequiresCondition: flakarmor-upgrade
+	GrantConditionOnPrerequisite@FLAKARMOR:
+		Condition: flakarmor-upgrade
+		Prerequisites: flakarmor.upgrade
 
 ^Cyborg:
 	Inherits: ^Soldier
@@ -2002,6 +2016,8 @@
 	-DamagedByTintedCells@RADMEDHAZMAT:
 	-DamagedByTintedCells@RADWEAK:
 	-DamagedByTintedCells@RADWEAKHAZMAT:
+	-DamageTypeDamageMultiplier@FLAKARMOR:
+	-GrantConditionOnPrerequisite@FLAKARMOR:
 
 ^CivInfantry:
 	Inherits: ^Infantry

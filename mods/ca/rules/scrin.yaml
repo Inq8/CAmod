@@ -165,6 +165,12 @@ VEHICLES.SCRIN:
 	DamagedByTintedCells@RADWEAK:
 		Damage: 50
 		RequiresCondition: !being-warped
+	DamageTypeDamageMultiplier@FLAKARMOR:
+		RequiresCondition: carapace-upgrade
+	-GrantConditionOnPrerequisite@FLAKARMOR:
+	GrantConditionOnPrerequisite@CARAPACE:
+		Condition: carapace-upgrade
+		Prerequisites: carapace.upgrade
 	TransformOnCondition@FEEDER:
 		RequiresCondition: feedermutation
 		IntoActor: feed
@@ -292,7 +298,7 @@ S3:
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	AutoTarget:
-		ScanRadius: 5
+		ScanRadius: 6
 	AmmoPool:
 		Ammo: 1
 		AmmoCondition: ammo
@@ -320,7 +326,7 @@ S4:
 	Mobile:
 		Speed: 49
 	Valued:
-		Cost: 425
+		Cost: 500
 	Tooltip:
 		Name: Intruder
 	UpdatesPlayerStatistics:
@@ -360,7 +366,7 @@ S6:
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 62
+		BuildPaletteOrder: 32
 		Prerequisites: ~infantry.scrin, ~techlevel.infonly
 		IconPalette: chrome
 		Description: Utility infantry used for capturing/repairing structures.
@@ -413,7 +419,7 @@ FEED:
 	Tooltip:
 		Name: Feeder
 	TooltipExtras:
-		Description: Charges up by harvesting or dealing damage.\n  When charged, explodes on death, or on reaching the enemy.
+		Description: Explodes on death or when triggered.\n  Increased damage after harvesting resources.
 		Strengths: • Strong vs Infantry, Buildings, Light Armor
 		Weaknesses: • Cannot attack Aircraft
 	Health:
@@ -421,7 +427,7 @@ FEED:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
-		Speed: 49
+		Speed: 66
 	RevealsShroud:
 		Range: 5c0
 	Harvester:
@@ -430,7 +436,7 @@ FEED:
 		HarvestFacings: 8
 		BaleLoadDelay: 18
 		DeliveryBuildings: none
-		FullyLoadedSpeed: 100
+		FullyLoadedSpeed: 130
 		SearchFromProcRadius: 5
 		SearchFromHarvesterRadius: 5
 	WithHarvestAnimation:
@@ -447,11 +453,13 @@ FEED:
 		Image: feederfull-overlay
 		Palette: scrin-ignore-lighting-alpha30
 		RequiresCondition: full
-	WithAttackAnimation:
-		Sequence: harvest
-		Armament: secondary
-	Explodes:
+	Explodes@EMPTY:
 		Weapon: FeederExplode
+		EmptyWeapon: FeederExplode
+		DamageSource: Killer
+		RequiresCondition: !full
+	Explodes@FULL:
+		Weapon: FeederExplodeFull
 		EmptyWeapon: FeederExplode
 		DamageSource: Killer
 		RequiresCondition: full
@@ -459,36 +467,19 @@ FEED:
 		FacingTolerance: 64
 	Armament@PRIMARY:
 		Weapon: FeederTargeting
-		RequiresCondition: full
-	Armament@SECONDARY:
-		Name: secondary
-		Weapon: FeederBeam
-		LocalOffset: 150,0,200
-		RequiresCondition: !full
 	GrantConditionOnAttack:
 		Condition: triggered
-		RequiresCondition: full
 	GrantConditionOnDeploy:
 		DeployedCondition: triggered
-		RequiresCondition: full
 	KillsSelf:
-		RequiresCondition: full && (triggered || berserk)
-	SpeedMultiplier@FULL:
-		RequiresCondition: full
-		Modifier: 150
+		RequiresCondition: triggered || berserk
 	-TakeCover:
 	WithHarvesterCapacityBar:
 		SelectionBarColor: cc0000
 		DisplayWhenFull: false
-	ConvertsDamageToHealth:
-		DamagePercentConverted: 20
-	HarvestsByDealingDamage:
-		DivideDamageBy: 2000
-	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !stance-attackanything && !assault-move && !full
-	Targetable@FEEDER:
-		TargetTypes: Feeder
-		RequiresCondition: full
+	WithIdleOverlay:
+		StartSequence: spawn-overlay
+		Palette: scrin
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -649,6 +640,8 @@ MAST:
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	-Crushable:
+	TakeCover:
+		SpeedModifier: 70
 	ExternalCondition@PRODUCED:
 		Condition: produced
 	VoiceAnnouncement:
@@ -785,7 +778,7 @@ SEEK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 31
+		BuildPaletteOrder: 42
 		Prerequisites: ~vehicles.seek, ~techlevel.low
 		Queue: Vehicle
 		Description: Light hover tank.
@@ -858,7 +851,7 @@ LACE:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 32
+		BuildPaletteOrder: 43
 		Prerequisites: ~vehicles.traveler, ~techlevel.low
 		Queue: Vehicle
 		Description: Fast hover tank.
@@ -925,13 +918,13 @@ INTL:
 	RenderSprites:
 		PlayerPalette: overlayplayerscrin
 	Valued:
-		Cost: 750
+		Cost: 800
 	Tooltip:
 		Name: Interloper
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 43
+		BuildPaletteOrder: 38
 		Prerequisites: ~vehicles.scrin, ~techlevel.low
 		Queue: Vehicle
 		Description: Heavily armoured front-line assault vehicle and troop carrier.
@@ -1063,8 +1056,8 @@ CORR:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
 	Explodes:
-		Weapon: CorruptorExplode
-		EmptyWeapon: CorruptorExplode
+		Weapon: CorrupterExplode
+		EmptyWeapon: CorrupterExplode
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithMoveAnimation:
@@ -1117,7 +1110,10 @@ LCHR:
 		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: LeecherBeam
-		LocalOffset: 700,0,300, 700,-500,100, 700,500,100
+		LocalOffset: 720,0,200, 720,-500,0, 720,500,0
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
 	ProducibleWithLevel:
@@ -1206,7 +1202,7 @@ DEVO:
 	Health:
 		HP: 27500
 	Armor:
-		Type: Heavy
+		Type: Light
 	Mobile:
 		TurnSpeed: 512
 		Speed: 66
@@ -1234,7 +1230,7 @@ DEVO:
 	TurretedFloating:
 		TurnSpeed: 16
 		Offset: 0,0,0
-		RealignDelay: 75
+		RealignDelay: 100
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 		Armaments: primary, primary-charged
@@ -1376,7 +1372,8 @@ RUIN:
 		PauseOnCondition: !ammo || uncharged-fire
 	WithMuzzleOverlay:
 	Explodes:
-		Weapon: BarrelExplode
+		Weapon: ArtilleryExplode
+		LoadedChance: 75
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Hovers:
@@ -1735,7 +1732,7 @@ STMR:
 		Weaknesses: • Weak vs Heavy Armor, Defenses
 		Attributes: • Can detect submarines
 	Valued:
-		Cost: 1650
+		Cost: 1750
 	Voiced:
 		VoiceSet: VehicleVoice
 	Tooltip:
@@ -1743,14 +1740,14 @@ STMR:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 26500
+		HP: 25000
 	RevealsShroud:
-		Range: 11c0
-		MinRange: 9c0
+		Range: 10c0
+		MinRange: 8c0
 		Type: GroundPosition
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 9c0
+		Range: 8c0
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: StormriderZap
@@ -1769,7 +1766,7 @@ STMR:
 	Aircraft:
 		CruiseAltitude: 2560
 		TurnSpeed: 22
-		Speed: 157
+		Speed: 135
 		IdleSpeed: 135
 		IdleTurnSpeed: 15
 		RepulsionSpeed: 40
@@ -3100,6 +3097,8 @@ PORT:
 		Condition: produced
 	ProductionBar:
 		ProductionType: Infantry
+	ProvidesPrerequisite@infantryany:
+		Prerequisite: infantry.any
 	ProvidesPrerequisite@scrin:
 		Prerequisite: infantry.scrin
 	ProvidesPrerequisite@reaper:
@@ -3263,17 +3262,24 @@ NERV:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		MinRange: 6c0
-		Range: 10c0
+		MinRange: 5c0
+		Range: 6c0
 		RequiresCondition: !disabled
 		RevealGeneratedShroud: False
 	RevealsShroud@Offline:
 		Range: 5c0
 		RequiresCondition: disabled
 	RevealsShroud@GAPGEN:
-		Range: 6c0
+		Range: 5c0
 		RequiresCondition: !disabled
 	ProvidesRadar:
+		RequiresCondition: !jammed && !disabled && !being-warped
+	RangedGpsRadarProvider:
+		Range: 12c0
+		TargetTypes: Vehicle, Aircraft, Structure
+		RequiresCondition: !jammed && !disabled && !being-warped
+	WithRangeCircle:
+		Range: 12c0
 		RequiresCondition: !jammed && !disabled && !being-warped
 	WithBuildingBib:
 	InfiltrateForExploration:
@@ -3405,19 +3411,19 @@ NERV:
 		ChargeInterval: 6750
 		Description: Feeder Mutation
 		Condition: feedermutation
-		Dimensions: 3, 3
-		Footprint: _x_ xxx _x_
+		Dimensions: 1, 1
+		Footprint: x
 		ValidRelationships: Ally
 		Duration: 25
 		AllowMultiple: false
-		LongDesc: \nTransforms Scrin infantry into Feeders which consume resources\n    until becoming volatile enough to explode.
+		LongDesc: \nTransforms Scrin infantry into Feeders; exploding infantry able to consume\n    resources for additional damage.
 		OnFireSound: feedermutation.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayTimerRelationships: Ally		
+		DisplayTimerRelationships: Ally
 	Production:
 		Produces: Upgrade
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -3529,7 +3535,7 @@ GRAV:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 130
-		Prerequisites: anyradar, ~structures.scrin, ~techlevel.medium
+		Prerequisites: anyradar, repair, ~structures.scrin, ~techlevel.medium
 		Description: Produces Scrin aircraft.
 		IconPalette: chromes
 	Valued:

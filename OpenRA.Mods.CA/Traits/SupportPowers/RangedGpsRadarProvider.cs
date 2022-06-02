@@ -17,6 +17,9 @@ namespace OpenRA.Mods.CA.Traits
 	[Desc("This actor provides Radar GPS.")]
 	public class RangedGpsRadarProviderInfo : ConditionalTraitInfo
 	{
+		[Desc("Target types that can be detected. Leave empty to accept all types.")]
+		public readonly BitSet<TargetableType> TargetTypes = new BitSet<TargetableType>();
+
 		[Desc("Reveals within this range. Use zero for whole map.")]
 		public readonly WDist Range = WDist.Zero;
 
@@ -97,7 +100,7 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			var dotTrait = a.TraitOrDefault<GpsRadarDot>();
-			if (dotTrait != null)
+			if (dotTrait != null && (Info.TargetTypes.IsEmpty || a.GetEnabledTargetTypes().Overlaps(Info.TargetTypes)))
 				dotTrait.AddRangedObserver(self);
 		}
 
@@ -114,7 +117,7 @@ namespace OpenRA.Mods.CA.Traits
 					return;
 
 				var dotTrait = produced.TraitOrDefault<GpsRadarDot>();
-				if (dotTrait != null)
+				if (dotTrait != null && (Info.TargetTypes.IsEmpty || produced.GetEnabledTargetTypes().Overlaps(Info.TargetTypes)))
 					dotTrait.AddRangedObserver(self);
 			}
 		}

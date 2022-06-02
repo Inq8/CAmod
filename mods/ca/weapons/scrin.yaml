@@ -116,7 +116,7 @@ GunWalkerZapAA:
 		Inaccuracy: 0
 	ValidTargets: Air, AirSmall
 	Warhead@1Dam: SpreadDamage
-		Damage: 1500
+		Damage: 1800
 		ValidTargets: Air
 		ValidRelationships: Enemy, Neutral
 		Range: 0, 0c64, 0c256, 3c0
@@ -127,7 +127,7 @@ GunWalkerZapAA:
 			Light: 100
 			Heavy: 100
 	Warhead@2Dam: SpreadDamage
-		Damage: 1500
+		Damage: 1800
 		ValidTargets: AirSmall
 		ValidRelationships: Enemy, Neutral
 		Spread: 128
@@ -165,7 +165,7 @@ PlasmaDiscs:
 			Heavy: 100
 			Concrete: 35
 			Brick: 75
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Eff: CreateEffect
@@ -296,7 +296,7 @@ DevourerLaser:
 		Spread: 341
 		Damage: 930
 		Versus:
-			None: 28
+			None: 20
 
 DevourerLaserCharged:
 	Inherits: DevourerLaser
@@ -405,7 +405,7 @@ MiniRift:
 		Duration: 10
 		Condition: slowed
 		ValidTargets: Vehicle
-		ValidRelationships: Enemy, Neutral, Ally
+		ValidRelationships: Enemy, Neutral
 
 CorrupterSpew:
 	StartBurstReport: corrupter-fire1.aud
@@ -422,7 +422,7 @@ CorrupterSpew:
 		Palette: scrin-ignore-lighting-alpha85
 		TrailPalette: scrin-ignore-lighting-alpha85
 	Warhead@1Dam: SpreadDamage
-		DamageTypes: Prone50Percent, TriggerProne, PoisonDeath
+		DamageTypes: Prone50Percent, TriggerProne, PoisonDeath, FlakVestMitigated
 		Spread: 288
 		Damage: 1000
 		Versus:
@@ -440,7 +440,7 @@ CorrupterSpew:
 		ExplosionPalette: caneon
 		Image: tibexplodesm
 
-CorruptorExplode:
+CorrupterExplode:
 	Inherits: UnitExplodeIraqTank
 	Warhead@3Eff_impact: CreateEffect
 		Explosions: med_chem
@@ -479,10 +479,10 @@ RuinerCannon:
 			None: 120
 			Wood: 90
 			Concrete: 80
-			Light: 80
+			Light: 90
 			Heavy: 45
 			Brick: 20
-		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: ruiner-hit1.aud
 		Explosions: idle
@@ -595,7 +595,7 @@ ReaperLaserChargedSound:
 	Report: rtripod-cfire1.aud, rtripod-cfire2.aud
 
 ReaperLaserChargedDummy:
-	Inherits: ReaperLaserCharged	
+	Inherits: ReaperLaserCharged
 	-StartBurstReport:
 	-FirstBurstTargetOffset:
 	-FollowingBurstTargetOffset:
@@ -627,7 +627,7 @@ StormriderZap:
 			None: 105
 			Wood: 35
 			Concrete: 30
-			Light: 65
+			Light: 55
 			Heavy: 20
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
@@ -725,6 +725,7 @@ EnervatorBoltsAA:
 	ValidTargets: Air, AirSmall
 	Projectile: MissileCA
 		CloseEnough: 341
+		RangeLimit: 13c0
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air
 		Range: 0, 0c64, 0c256, 3c0
@@ -802,9 +803,10 @@ InvaderZapAA:
 	MinRange: 0c512
 	Projectile: Bullet
 		Image: scrinzap
+		Speed: 1c768
 	ValidTargets: Air, AirSmall
 	Warhead@1Dam: SpreadDamage
-		Damage: 160
+		Damage: 200
 		Range: 0, 0c64, 0c256, 1c0
 		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
@@ -815,7 +817,7 @@ InvaderZapAA:
 			Wood: 100
 			None: 100
 	Warhead@2Dam: SpreadDamage
-		Damage: 160
+		Damage: 200
 		Spread: 128
 		Falloff: 100, 50, 14, 0
 		ValidTargets: AirSmall
@@ -920,7 +922,7 @@ StormcrawlerZap:
 		Spread: 42
 		Damage: 3000
 		Versus:
-			None: 30
+			None: 15
 			Wood: 70
 			Light: 30
 			Heavy: 30
@@ -987,7 +989,7 @@ RavagerShards:
 		Spread: 256
 		Damage: 2200
 		Versus:
-			Wood: 20
+			Wood: 15
 			Light: 40
 			Heavy: 10
 			Concrete: 30
@@ -1070,31 +1072,22 @@ SuppressionSiphonField:
 BuzzerSpawner:
 	ReloadDelay: 1
 	Projectile: InstantExplode
-	Warhead@1Dam: SpreadDamage
+	Warhead@1Dam: HealthPercentageDamage
 		Spread: 341
-		Damage: 6000
+		Damage: 75
 		Versus:
 			None: 100
-			Wood: 10
-			Light: 100
-			Heavy: 30
-			Concrete: 40
+			Wood: 1
+			Light: 25
+			Heavy: 1
+			Concrete: 1
 			Brick: 0
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
-		ValidRelationships: Enemy, Neutral
-	Warhead@2Dam: SpreadDamage
-		ValidTargets: Cyborg
-		Spread: 341
-		Damage: 12000
-		Versus:
-			Heavy: 0
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 		ValidRelationships: Enemy, Neutral
 	Warhead@Spawn: SpawnActor
 		Actors: buzz
 		Range: 1
 		ForceGround: false
-		ValidTargets: Ground, Water
 
 BuzzerSpawnerAI:
 	Inherits: BuzzerSpawner
@@ -1108,10 +1101,8 @@ BuzzerVortex:
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
 		Spread: 682
-		Falloff: 100, 70, 20, 0
-		Damage: 300
-		ValidTargets: Ground, Trees
-		InvalidTargets: Air, AirSmall, Creep
+		Falloff: 100, 70, 30, 0
+		Damage: 150
 		Versus:
 			None: 100
 			Wood: 10
@@ -1121,11 +1112,16 @@ BuzzerVortex:
 			Brick: 0
 		DamageTypes: BulletDeath
 		ValidRelationships: Enemy, Neutral
-	Warhead@2Dam: SpreadDamage
-		Spread: 682
-		Falloff: 100, 70, 20, 0
-		Damage: 600
-		ValidTargets: Cyborg
+	Warhead@2Dam: HealthPercentageDamage
+		Spread: 1c0
+		Damage: 3
+		Versus:
+			None: 100
+			Wood: 3
+			Light: 25
+			Heavy: 3
+			Concrete: 3
+			Brick: 0
 		DamageTypes: BulletDeath
 		ValidRelationships: Enemy, Neutral
 
@@ -1292,23 +1288,16 @@ LeecherBeam:
 		ZOffset: 1027
 		Inaccuracy: 128
 	Warhead@1Dam: SpreadDamage
-		Spread: 256
-		Damage: 1700
-		DamageTypes: Prone50Percent, TriggerProne, AtomizedDeath
+		Spread: 288
+		Damage: 2500
+		DamageTypes: Prone50Percent, TriggerProne, AtomizedDeath, FlakVestMitigated
 		Versus:
 			None: 100
 			Light: 45
-			Wood: 105
+			Wood: 70
 			Heavy: 15
-			Concrete: 25
+			Concrete: 15
 			Brick: 5
-	Warhead@ARC: FireShrapnel
-		Weapon: LeecherArc
-		AimChance: 100
-		Amount: 1
-		Delay: 2
-		AimTargetStances: Enemy, Neutral
-		InvalidTargets: Vehicle, Structure
 	Warhead@DRAIN: GrantExternalCondition
 		Range: 1c512
 		Duration: 100
@@ -1322,37 +1311,8 @@ LeecherBeam:
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
-		Image: leechhit
+		Image: leechhitlg
 		Inaccuracy: 256
-
-LeecherArc:
-	Inherits: LeecherBeam
-	Range: 2c0
-	-Burst:
-	ValidTargets: Infantry, Vehicle, Structure
-	Projectile: PlasmaBeam
-		Colors: ff000002
-	Warhead@1Dam: SpreadDamage
-		Spread: 128
-		Damage: 850
-	-Warhead@ARC:
-
-FeederBeam:
-	Inherits: LeecherBeam
-	-StartBurstReport:
-	Report: feeder-fire1.aud
-	ReloadDelay: 25
-	-Burst:
-	Projectile: PlasmaBeam
-		Colors: 99000008
-	Warhead@1Dam: SpreadDamage
-		Damage: 2500
-		Spread: 128
-		Versus:
-			Light: 40
-			Wood: 40
-	-Warhead@DRAIN:
-	-Warhead@ARC:
 
 AtomizerBolts:
 	Report: atomizer-fire1.aud
@@ -1407,6 +1367,7 @@ AtomizerBoltsAA:
 	Projectile: Missile
 		Speed: 225
 	Warhead@1Dam: SpreadDamage
+		Damage: 5000
 		ValidTargets: Air, AirSmall
 		Versus:
 			None: 100
@@ -1445,31 +1406,45 @@ FeederTargeting:
 	Range: 1c512
 	Projectile: InstantHit
 	Warhead@1Dam: TargetDamage
-		ValidRelationships: Enemy, Neutral
 
 FeederExplode:
 	ValidTargets: Ground, Water
 	Warhead@1Dam: SpreadDamage
+		Damage: 12000
 		Spread: 768
-		Damage: 8000
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
-		ValidTargets: Ground, Water
-		InvalidTargets: Air, Creep, Feeder
+		InvalidTargets: Structure
 		Versus:
-			None: 90
-			Heavy: 90
-			Brick: 5
-		AffectsParent: true
-		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+			None: 40
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@SDam: SpreadDamage
+		Damage: 4500
+		Spread: 1c0
+		Falloff: 1000, 1000, 0
+		ValidTargets: Structure
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Structure, Wall, Trees
 		Size: 3
 		Delay: 5
 	Warhead@3Eff: CreateEffect
+		Explosions: lchr_explode
+		ExplosionPalette: effect
+		ImpactSounds: vdemdiea.aud
+		Delay: 1
+	Warhead@4Eff: CreateEffect
+		Explosions: artillery_explosion
+
+FeederExplodeFull:
+	Inherits: FeederExplode
+	Warhead@1Dam: SpreadDamage
+		Damage: 18000
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+	Warhead@SDam: SpreadDamage
+		Damage: 6750
+	Warhead@3Eff: CreateEffect
 		Explosions: large_chem
 		ExplosionPalette: tdeffect-ignore-lighting-alpha85
-		ImpactSounds: vdemdiea.aud
 	Warhead@18Radio: CreateTintedCells
 		Level: 300
 		Falloff: 100, 55, 32, 5

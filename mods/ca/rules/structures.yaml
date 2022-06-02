@@ -151,7 +151,7 @@ SPEN:
 		Name: Sub Pen
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 50
+		BuildPaletteOrder: 220
 		Prerequisites: anypower, ~structures.soviet, ~techlevel.navy, ~techlevel.low
 		Description: Produces and repairs\nsubmarines and transports.
 	Targetable@INFILTRATION:
@@ -272,7 +272,7 @@ SYRD:
 		InfiltratedNotification: BaseAttack
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 40
+		BuildPaletteOrder: 210
 		Prerequisites: anypower, ~structures.allies, ~techlevel.navy, ~techlevel.low
 		Description: Produces and repairs\nships and transports.
 	Valued:
@@ -714,6 +714,7 @@ DOME:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@POWERDRAIN: ^PowerDrainableRadar
+	Inherits@SOVIETAIRPOWERS: ^SovietAirPowers
 	Selectable:
 		Bounds: 48,48
 	HitShape:
@@ -742,18 +743,25 @@ DOME:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		MinRange: 6c0
-		Range: 10c0
+		MinRange: 5c0
+		Range: 6c0
 		RequiresCondition: !disabled
 		RevealGeneratedShroud: False
 	RevealsShroud@Offline:
 		Range: 5c0
 		RequiresCondition: disabled
 	RevealsShroud@GAPGEN:
-		Range: 6c0
+		Range: 5c0
 		RequiresCondition: !disabled
 	WithBuildingBib:
 	ProvidesRadar:
+		RequiresCondition: !jammed && !disabled && !being-warped
+	RangedGpsRadarProvider:
+		Range: 12c0
+		TargetTypes: Vehicle, Aircraft, Structure
+		RequiresCondition: !jammed && !disabled && !being-warped
+	WithRangeCircle:
+		Range: 12c0
 		RequiresCondition: !jammed && !disabled && !being-warped
 	InfiltrateForExploration:
 		Types: SpyInfiltrate, SabInfiltrate
@@ -776,6 +784,12 @@ DOME:
 	ProvidesPrerequisiteValidatedFaction@rusrad:
 		Factions: russia
 		Prerequisite: radar.russia
+	ProvidesPrerequisiteValidatedFaction@ukrrad:
+		Factions: ukraine
+		Prerequisite: radar.ukraine
+	ProvidesPrerequisiteValidatedFaction@irarad:
+		Factions: iraq
+		Prerequisite: radar.iraq
 	ProvidesPrerequisiteValidatedFaction@yurirad:
 		Factions: yuri
 		Prerequisite: radar.yuri
@@ -1161,7 +1175,7 @@ ATEK:
 	DummyGpsPower@FOG:
 		PauseOnCondition: disabled || being-warped
 		RequiresCondition: !gps-launched && fogenabled
-		Delay: 4500
+		Delay: 3000
 		AnimationDuration: 375
 		LaunchSpeechNotification: SatelliteLaunched
 		Condition: gps-launched
@@ -1195,7 +1209,7 @@ ATEK:
 		Icon: gps
 		Actors: camera.satscan, gps.satellite.firstscan
 		Type: SpySatellite
-		ChargeInterval: 9750
+		ChargeInterval: 8250
 		OrderName: InitialSatelliteScanPower
 		AutoFire: True
 		DisplayTimerRelationships: Ally
@@ -1692,6 +1706,15 @@ SILO:
 		EmptyWeapon: SmallBuildingExplode
 
 ^SovietAirPowers:
+	ProvidesPrerequisiteValidatedFaction@parabombs:
+		Factions: russia, yuri
+		Prerequisite: support.parabombs
+	ProvidesPrerequisiteValidatedFaction@paratroopers:
+		Factions: ukraine, iraq
+		Prerequisite: support.paratroopers
+	ProvidesPrerequisiteValidatedFaction@stormtroopers:
+		Factions: russia
+		Prerequisite: support.stormtroopers
 	ParatroopersPower@paratroopers:
 		OrderName: paratroopers
 		UnitType: halo.paradrop
@@ -1719,7 +1742,7 @@ SILO:
 	ParatroopersPower@Russianparatroopers:
 		OrderName: stormtroopers
 		UnitType: halo.paradrop
-		Prerequisites: ~russia.paratroopers, ~techlevel.high
+		Prerequisites: ~radar.russia, ~techlevel.high
 		Icon: stormtroopers
 		ChargeInterval: 9000
 		Description: Storm-troopers
@@ -1743,7 +1766,7 @@ SILO:
 	AirstrikePower@spyplane:
 		OrderName: spyplane
 		Icon: spyplane
-		Prerequisites: ~aircraft.soviet
+		Prerequisites: ~radar.soviet
 		ChargeInterval: 3000
 		Description: Spy Plane
 		LongDesc: \nDispatches a spy plane that reveals the target location\n    for a limited time.
@@ -1784,7 +1807,7 @@ SILO:
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@CarpetBomb:
 		OrderName: carpetbomb
-		Prerequisites: ~aircraft.ukraine, ~techlevel.unrestricted
+		Prerequisites: ~radar.ukraine, ~techlevel.unrestricted
 		Icon: carpetbomb
 		ChargeInterval: 10500
 		Description: Carpet Bomb
@@ -1805,7 +1828,7 @@ SILO:
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@Iraqiparabombs:
 		OrderName: atombomb
-		Prerequisites: ~aircraft.iraq, ~techlevel.unrestricted
+		Prerequisites: ~radar.iraq, ~techlevel.unrestricted
 		Icon: abombair
 		ChargeInterval: 10500
 		Description: Atomic Bomb
@@ -1826,7 +1849,7 @@ SILO:
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@MutaBomb:
 		OrderName: mutabomb
-		Prerequisites: ~aircraft.yuri, ~techlevel.unrestricted
+		Prerequisites: ~radar.yuri, ~techlevel.unrestricted
 		Icon: mutabomb
 		IconPalette: scrin
 		ChargeInterval: 10500
@@ -1853,7 +1876,6 @@ HPAD:
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
-	Inherits@SOVIETAIRPOWERS: ^SovietAirPowers
 	Selectable:
 		Bounds: 48,48
 	HitShape:
@@ -1862,7 +1884,7 @@ HPAD:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 120
-		Prerequisites: anyradar, ~structures.ra, ~techlevel.infonly
+		Prerequisites: anyradar, repair, ~structures.ra, ~techlevel.infonly
 		Description: Produces and reloads helicopters.
 	Valued:
 		Cost: 500
@@ -1922,9 +1944,6 @@ HPAD:
 	ProvidesPrerequisiteValidatedFaction@yuri:
 		Factions: yuri
 		Prerequisite: aircraft.yuri
-	ProvidesPrerequisiteValidatedFaction@parabombs:
-		Factions: russia, yuri
-		Prerequisite: support.parabombs
 	ProvidesPrerequisiteValidatedFaction@chinookvisible:
 		Factions: allies, england, france, germany, gdi, zocom, eagle, talon, arc, nod, blackh, legion, marked, shadow
 		Prerequisite: aircraft.chinookvisible
@@ -1937,12 +1956,6 @@ HPAD:
 	ProvidesPrerequisiteValidatedFaction@hind:
 		Factions: russia, ukraine, yuri
 		Prerequisite: aircraft.hind
-	ProvidesPrerequisiteValidatedFaction@paratroopers:
-		Factions: ukraine, iraq
-		Prerequisite: support.paratroopers
-	ProvidesPrerequisiteValidatedFaction@stormtroopers:
-		Factions: russia
-		Prerequisite: russia.paratroopers
 	ProvidesPrerequisite@buildingname:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
@@ -1991,14 +2004,13 @@ AFLD:
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
-	Inherits@SOVIETAIRPOWERS: ^SovietAirPowers
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 420,0,0, 420,-1024,0, 420,1024,0, -777,0,0, -777,-1024,0, -777,1024,0
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 130
-		Prerequisites: anyradar, ~structures.soviet, ~techlevel.low
+		Prerequisites: anyradar, repair, ~structures.soviet, ~techlevel.low
 		Description: Produces and reloads aircraft.
 	TooltipExtras:
 		Attributes: • Special Ability: Spy Plane
@@ -2045,15 +2057,6 @@ AFLD:
 	ProvidesPrerequisite@yuri:
 		Factions: yuri
 		Prerequisite: aircraft.yuri
-	ProvidesPrerequisite@parabombs:
-		Factions: russia, yuri
-		Prerequisite: support.parabombs
-	ProvidesPrerequisite@paratroopers:
-		Factions: ukraine, iraq
-		Prerequisite: support.paratroopers
-	ProvidesPrerequisite@stormtroopers:
-		Factions: russia
-		Prerequisite: russia.paratroopers
 	ProductionBar:
 		ProductionType: Aircraft
 	SupportPowerChargeBar:
@@ -2423,7 +2426,7 @@ KENN:
 		Bounds: 24,24
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 175
+		BuildPaletteOrder: 205
 		Prerequisites: anypower, ~structures.soviet, ~techlevel.infonly
 		Description: Trains Attack Dogs.
 	Valued:
@@ -2541,8 +2544,6 @@ TENT:
 	ProvidesPrerequisite@usa:
 		Factions: usa
 		Prerequisite: infantry.usa
-	ProvidesPrerequisite@hazmat:
-		Prerequisite: infantry.hazmat
 	ProvidesPrerequisite@mech:
 		Prerequisite: infantry.mech
 	ProvidesPrerequisite@medi:
@@ -2971,8 +2972,6 @@ PYLE:
 		Prerequisite: infantry.human
 	ProvidesPrerequisite@infantrytd:
 		Prerequisite: infantry.td
-	ProvidesPrerequisite@hazmat:
-		Prerequisite: infantry.hazmat
 	ProvidesPrerequisite@talon:
 		Factions: talon
 		Prerequisite: infantry.talon
@@ -3072,8 +3071,6 @@ HAND:
 		Prerequisite: infantry.human
 	ProvidesPrerequisite@infantrytd:
 		Prerequisite: infantry.td
-	ProvidesPrerequisite@hazmat:
-		Prerequisite: infantry.hazmat
 	ProvidesPrerequisite@blackh:
 		Factions: blackh
 		Prerequisite: infantry.blackh
@@ -3931,6 +3928,7 @@ HQ:
 	Inherits: ^BuildingTD
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@POWERDRAIN: ^PowerDrainableRadar
+	Inherits@GDIAIRPOWERS: ^GDIAirPowers
 	HitShape:
 		TargetableOffsets: 0,0,0, 0,512,0, 420,-598,256
 		Type: Rectangle
@@ -3974,17 +3972,24 @@ HQ:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		MinRange: 6c0
-		Range: 10c0
+		MinRange: 5c0
+		Range: 6c0
 		RequiresCondition: !disabled
 		RevealGeneratedShroud: False
 	RevealsShroud@Offline:
 		Range: 5c0
 		RequiresCondition: disabled
 	RevealsShroud@GAPGEN:
-		Range: 6c0
+		Range: 5c0
 		RequiresCondition: !disabled
 	ProvidesRadar:
+		RequiresCondition: !jammed && !disabled && !being-warped
+	RangedGpsRadarProvider:
+		Range: 12c0
+		TargetTypes: Vehicle, Aircraft, Structure
+		RequiresCondition: !jammed && !disabled && !being-warped
+	WithRangeCircle:
+		Range: 12c0
 		RequiresCondition: !jammed && !disabled && !being-warped
 	WithBuildingBib:
 	InfiltrateForExploration:
@@ -4348,7 +4353,7 @@ REP:
 ^GDIAirPowers:
 	SpawnActorPower@GDIEagleDropzone:
 		Actor: FLARE.dropzone
-		Prerequisites: ~aircraft.eagle, anyradar, ~techlevel.low
+		Prerequisites: ~radar.eagle, ~techlevel.low
 		LifeTime: 280
 		OrderName: dropzoneeagle
 		Icon: orcaca
@@ -4364,7 +4369,7 @@ REP:
 		EffectPalette: tseffect-ignore-lighting-alpha75
 	ParatroopersPower@xodrop:
 		OrderName: xodrop
-		Prerequisites: ~aircraft.talon, ~techlevel.medium
+		Prerequisites: ~radar.talon, ~techlevel.medium
 		Icon: xodrop
 		ChargeInterval: 9750
 		Description: X-O Drop
@@ -4388,7 +4393,7 @@ REP:
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@uav:
 		OrderName: gdiuav
-		Prerequisites: aircraft.gdi, ~!aircraft.arc
+		Prerequisites: radar.gdi, ~!radar.arc
 		Icon: uavicon
 		ChargeInterval: 3750
 		Description: Recon Drone
@@ -4408,7 +4413,7 @@ REP:
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@uavST:
 		OrderName: gdiuavarc
-		Prerequisites: ~aircraft.arc
+		Prerequisites: ~radar.arc
 		Icon: uavicon
 		ChargeInterval: 3000
 		Description: Recon Drone
@@ -4428,7 +4433,7 @@ REP:
 		DirectionArrowAnimation: paradirection
 	InterceptorPower@AirDef:
 		OrderName: interceptors
-		Prerequisites: ~aircraft.gdi, techlevel.unrestricted
+		Prerequisites: ~radar.gdi, techlevel.unrestricted
 		Icon: airsupport
 		ChargeInterval: 10500
 		Description: Interceptors
@@ -4455,7 +4460,6 @@ HPAD.TD:
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
-	Inherits@GDIAIRPOWERS: ^GDIAirPowers
 	RenderSprites:
 		Image: hpad2
 	HitShape:
@@ -4464,7 +4468,7 @@ HPAD.TD:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 120
-		Prerequisites: anyradar, ~structures.td, ~techlevel.infonly
+		Prerequisites: anyradar, repair, ~structures.td, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Produces and reloads helicopters.
 	Valued:
@@ -4677,7 +4681,6 @@ AFLD.GDI:
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
-	Inherits@GDIAIRPOWERS: ^GDIAirPowers
 	RenderSprites:
 		Image: afldgdi
 	HitShape:
@@ -4686,7 +4689,7 @@ AFLD.GDI:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 130
-		Prerequisites: anyradar, ~structures.gdi, ~techlevel.high
+		Prerequisites: anyradar, repair, ~structures.gdi, ~techlevel.high
 		Description: Produces and reloads aircraft.
 	TooltipExtras:
 		Attributes: • Special Ability: Recon Drone\n• Special Ability: Interceptors
@@ -5111,7 +5114,7 @@ SPEN.nod:
 		Name: Sub Pen
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 50
+		BuildPaletteOrder: 240
 		IconPalette: chrometd
 		Prerequisites: anypower, ~structures.nod, ~techlevel.navy, ~techlevel.low
 		Description: Produces and repairs\nsubmarines and transports.
@@ -5202,7 +5205,7 @@ SYRD.gdi:
 		InfiltratedNotification: BaseAttack
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 40
+		BuildPaletteOrder: 230
 		Prerequisites: anypower, ~structures.gdi, ~techlevel.navy, ~techlevel.low
 		Description: Produces and repairs ships\nand transports.
 	Valued:

@@ -17,9 +17,8 @@ hazmat.upgrade:
 		Name: Upgrade: Hazmat Suits
 	Buildable:
 		BuildPaletteOrder: 10
-		Prerequisites: ~anyradar, ~infantry.hazmat, ~techlevel.high, ~!hazmatsoviet.upgrade
+		Prerequisites: ~anyradar, ~infantry.any, ~!player.soviet, ~!player.scrin, ~techlevel.high
 		IconPalette: chrometd
-		BuildDuration: 1125
 		Description: Infantry are equiped with hazmat suits which provides\n  protection against Tiberium and radiation.\n\nUpgrades: Infantry
 	TooltipExtras:
 		Strengths: + Tiberium immunity\n+ 50% resistance to radiation
@@ -27,6 +26,21 @@ hazmat.upgrade:
 		Cost: 750
 	RenderSprites:
 		Image: hazmat.upgrade
+
+flakarmor.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Advanced Flak Armor
+	Buildable:
+		BuildPaletteOrder: 21
+		Prerequisites: ~techcenter, ~infantry.any, ~!player.nod, ~!player.scrin, ~techlevel.high
+		Description: Infantry are equiped with advanced flak armor which\n  provides protection against explosives.\n\nUpgrades: Infantry
+	TooltipExtras:
+		Strengths: + 40% reduced damage from explosives
+	Valued:
+		Cost: 1500
+	RenderSprites:
+		Image: flakarmor.upgrade
 
 #########################GDI#########
 ########################################
@@ -39,7 +53,6 @@ bombard.strat:
 		BuildPaletteOrder: 1
 		Prerequisites: ~radar.gdi, ~!seek.strat, ~!hold.strat, ~techlevel.high
 		IconPalette: chrometd
-		BuildDuration: 2250
 		Description: Firepower focused strategy.
 	TooltipExtras:
 		Strengths: + Increases unit firepower by 5%
@@ -71,7 +84,6 @@ seek.strat:
 		BuildPaletteOrder: 4
 		Prerequisites: ~radar.gdi, ~!bombard.strat, ~!hold.strat, ~techlevel.high
 		IconPalette: chrometd
-		BuildDuration: 2250
 		Description: Speed and weapon range focused strategy.
 	TooltipExtras:
 		Strengths: + Increases unit speed and weapon range by 5%
@@ -103,7 +115,6 @@ hold.strat:
 		BuildPaletteOrder: 7
 		Prerequisites: ~radar.gdi, ~!bombard.strat, ~!seek.strat, ~techlevel.high
 		IconPalette: chrometd
-		BuildDuration: 2250
 		Description: Defensive strategy.
 	TooltipExtras:
 		Strengths: + Increases unit armor by 5%
@@ -134,32 +145,14 @@ vulcan.upgrade:
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~radar.gdi, ~techlevel.high
-		BuildDuration: 750
 		Description: Upgrades: APC
 	TooltipExtras:
 		Strengths: + Adds anti-air capability\n+ Increased damage against ground targets
 		Weaknesses: – Increased cost\n– Reduced speed
 	Valued:
-		Cost: 500
+		Cost: 750
 	RenderSprites:
 		Image: vulcan.upgrade
-
-gshield.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Guardian Shield
-	Buildable:
-		BuildPaletteOrder: 25
-		Prerequisites: ~radar.arc, ~techlevel.high
-		BuildDuration: 1500
-		IconPalette: chrometd
-		Description: Equips Guardian Drones with portable nanite shield generator.\n\nUpgrades: Guardian Drone
-	TooltipExtras:
-		Strengths: + Can activate nanite shield (cannot fire while active)
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: gshield.upgrade
 
 sidewinders.upgrade:
 	Inherits: ^Upgrade
@@ -168,7 +161,6 @@ sidewinders.upgrade:
 	Buildable:
 		BuildPaletteOrder: 35
 		Prerequisites: ~gtek, ~techlevel.high
-		BuildDuration: 1125
 		IconPalette: chrometd
 		Description: Equips Warthogs with air-to-air missiles.\n\nUpgrades: Warthog
 	TooltipExtras:
@@ -185,7 +177,6 @@ empgren.upgrade:
 	Buildable:
 		BuildPaletteOrder: 40
 		Prerequisites: ~gtek, ~techlevel.high
-		BuildDuration: 1500
 		IconPalette: chrometd
 		Description: Upgrades Grenadier to use EMP Grenades.\n\nUpgrades: Grenadier
 	TooltipExtras:
@@ -202,7 +193,6 @@ bjet.upgrade:
 	Buildable:
 		BuildPaletteOrder: 45
 		Prerequisites: ~gtek, ~bombard.strat, ~techlevel.high
-		BuildDuration: 1500
 		Description: Allows construction of Bombardiers.\n\nReplaces: JumpJet Trooper
 	TooltipExtras:
 		Strengths: + Strong vs Buildings
@@ -219,7 +209,6 @@ tow.upgrade:
 	Buildable:
 		BuildPaletteOrder: 45
 		Prerequisites: ~gtek, ~seek.strat, ~techlevel.high
-		BuildDuration: 1500
 		Description: Hum-Vees and Guardian Drones will be produced\n  with TOW missile launchers.\n\nReplaces: Hum-Vee\nReplaces: Guardian Drone
 	TooltipExtras:
 		Strengths: + Added TOW missile launcher (strong vs Heavy Armor)
@@ -229,22 +218,21 @@ tow.upgrade:
 	RenderSprites:
 		Image: tow.upgrade
 
-pointlaser.upgrade:
+pointdef.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Point Defense Lasers
+		Name: Upgrade: Point Defense Systems
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~gtek, ~hold.strat, ~techlevel.high
-		BuildDuration: 1500
 		IconPalette: chrometd
-		Description: Equips Battle Tanks, Battle Drones and Frigates with point defense lasers\n  which can destroy approaching missiles.\n\nUpgrades: Battle Tank\nUpgrades: Battle Drone\nUpgrades: Frigate
+		Description: Equips several units with point defense shields and/or point defense lasers\n  which protect against enemy fire.\n\nUpgrades: Battle Tank (Shield and Laser)\nUpgrades: Battle Drone (Shield and Laser)\nUpgrades: Hum-Vee(Shield)\nUpgrades: Guardian Drone(Shield)\nUpgrades: Harvester(Shield)\nUpgrades: Frigate (Laser)
 	TooltipExtras:
-		Strengths: + Added Point Defense Laser
+		Strengths: + Added Point Defense Shield\n+ Added Point Defense Laser
 	Valued:
-		Cost: 1000
+		Cost: 1500
 	RenderSprites:
-		Image: pointlaser.upgrade
+		Image: pointdef.upgrade
 
 sonic.upgrade:
 	Inherits: ^Upgrade
@@ -253,11 +241,10 @@ sonic.upgrade:
 	Buildable:
 		BuildPaletteOrder: 60
 		Prerequisites: ~gtek.zocom, ~techlevel.high
-		BuildDuration: 1500
 		IconPalette: chrometd
 		Description: Improve the weapons of Disruptors and Sonic Towers.\n\nUpgrades: Sonic Tower\nUpgrades: Disruptor
 	TooltipExtras:
-		Strengths: + Increased damage\n+ Increased range
+		Strengths: + Increased damage\n+ Increased range\n+ Slows enemy movement and rate of fire (Sonic Tower only)
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -268,9 +255,8 @@ abur.upgrade:
 	Tooltip:
 		Name: Upgrade: Afterburner
 	Buildable:
-		BuildPaletteOrder: 45
+		BuildPaletteOrder: 65
 		Prerequisites: ~gtek.eagle, ~techlevel.high
-		BuildDuration: 1500
 		IconPalette: chrometd
 		Description: Equips Orcas and Orca Bombers with afterburners.\n\nUpgrades: Orca\nUpgrades: Orca Bomber
 	TooltipExtras:
@@ -280,6 +266,23 @@ abur.upgrade:
 	RenderSprites:
 		Image: abur.upgrade
 
+bdrone.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Battle Drone
+	Buildable:
+		BuildPaletteOrder: 65
+		Prerequisites: ~gtek.arc, ~techlevel.high
+		IconPalette: chrometd
+		Description: Allows construction of remotely piloted Battle Tanks.\n\nReplaces: Battle Tank
+	TooltipExtras:
+		Strengths: + Immunity to crew kill, chaos gas and mind control\n+ Reduced cost\n+ Increased rate of fire\n+ Mini Drone attached when produced
+		Weaknesses: – Disabled if radar is down\n– Can be hacked
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: bdrone.upgrade
+
 hypersonic.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -287,7 +290,6 @@ hypersonic.upgrade:
 	Buildable:
 		BuildPaletteOrder: 70
 		Prerequisites: ~gtek, ~seek.strat,~techlevel.high, ~!hailstorm.upgrade, ~!hammerhead.upgrade
-		BuildDuration: 1500
 		IconPalette: chrometd
 		Description: Equip the MLRS/HMLRS with Hypersonic Missiles.\n\nUpgrades: MLRS/HMLRS
 	TooltipExtras:
@@ -304,7 +306,6 @@ hailstorm.upgrade:
 	Buildable:
 		Prerequisites: ~gtek, ~bombard.strat, ~techlevel.high, ~!hypersonic.upgrade, ~!hammerhead.upgrade
 		BuildPaletteOrder: 71
-		BuildDuration: 1500
 		IconPalette: chrometd
 		Description: Equip the MLRS/HMLRS with Hailstorm Missiles.\n\nUpgrades: MLRS/HMLRS
 	TooltipExtras:
@@ -321,7 +322,6 @@ hammerhead.upgrade:
 	Buildable:
 		BuildPaletteOrder: 72
 		Prerequisites: ~gtek, ~hold.strat, ~techlevel.high, ~!hypersonic.upgrade, ~!hailstorm.upgrade
-		BuildDuration: 1500
 		IconPalette: chrometd
 		Description: Equip the MLRS/HMLRS with Hammerhead Missiles.\n\nUpgrades: MLRS/HMLRS
 	TooltipExtras:
@@ -339,7 +339,6 @@ ionmam.upgrade:
 		BuildPaletteOrder: 80
 		Prerequisites: ~upgc.zocom, ~techlevel.high
 		IconPalette: chrometd
-		BuildDuration: 1500
 		Description: Allows construction of the Ion Mammoth Tank.\n\nReplaces: Mammoth Tank
 	TooltipExtras:
 		Strengths: + Increased range\n+ Increased area of effect
@@ -356,7 +355,6 @@ hovermam.upgrade:
 		BuildPaletteOrder: 81
 		Prerequisites: ~upgc.eagle, ~techlevel.high
 		IconPalette: chrometd
-		BuildDuration: 1500
 		Description: Allows construction of the Hover Mammoth Tank.\n\nReplaces: Mammoth Tank
 	TooltipExtras:
 		Strengths: + Faster movement speed\n+ Can traverse water
@@ -373,7 +371,6 @@ railgun.upgrade:
 		BuildPaletteOrder: 82
 		Prerequisites: ~upgc.talon, ~techlevel.high
 		IconPalette: chrometd
-		BuildDuration: 1500
 		Description: Allows construction of the Railgun Titan.\n\nReplaces: Titan
 	TooltipExtras:
 		Strengths: + Increased range\n+ Damages targets in a line
@@ -382,23 +379,22 @@ railgun.upgrade:
 	RenderSprites:
 		Image: railgun.upgrade
 
-drone.upgrade:
+mdrone.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Drone Tanks
+		Name: Research: Mammoth Drone
 	Buildable:
 		BuildPaletteOrder: 83
 		Prerequisites: ~upgc.arc, ~techlevel.high
 		IconPalette: chrometd
-		BuildDuration: 1500
-		Description: Allows construction of remotely piloted tanks.\n\nReplaces: Battle Tank\nReplaces: Mammoth Tank
+		Description: Allows construction of remotely piloted Mammoth Tanks.\n\nReplaces: Mammoth Tank
 	TooltipExtras:
 		Strengths: + Immunity to crew kill, chaos gas and mind control\n+ Reduced cost\n+ Increased rate of fire\n+ Mini Drone attached when produced
 		Weaknesses: – Disabled if radar is down\n– Can be hacked
 	Valued:
 		Cost: 1000
 	RenderSprites:
-		Image: drone.upgrade
+		Image: mdrone.upgrade
 
 #########################NOD#########
 ########################################
@@ -410,7 +406,6 @@ howi.upgrade:
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~radar.nod, ~techlevel.high
-		BuildDuration: 1500
 		Description: Allows construction of Howitzers.\n\nReplaces: Artillery
 	TooltipExtras:
 		Strengths: + Increased speed\n+ Has turret
@@ -434,7 +429,6 @@ microwave.upgrade:
 		BuildPaletteOrder: 30
 		Prerequisites: ~tmpl.legion, ~techlevel.high
 		IconPalette: chrometd
-		BuildDuration: 1500
 		Description: Upgrades: Microwave Tank
 	TooltipExtras:
 		Strengths: + Kills vehicle crews and disables defenses for longer
@@ -450,7 +444,6 @@ tibcore.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~tmpl, ~techlevel.high
-		BuildDuration: 1500
 		Description: Upgrade to Tib Core missiles.\n\nUpgrades: Recon Bike\nUpgrades: Stealth Tank
 	TooltipExtras:
 		Strengths: + Increased range\n+ Increased damage\n+ Increased projectile speed
@@ -466,7 +459,6 @@ cyborg.upgrade:
 	Buildable:
 		BuildPaletteOrder: 40
 		Prerequisites: ~tmpp, ~techlevel.high
-		BuildDuration: 1500
 		IconPalette: chrometd
 		Description: Basic infantry are superseded by more\n  powerful cyborg equivalents.\n\nReplaces: Mini-Gunner\nReplaces: Rocket Soldier\nReplaces: Flamethrower\nUpgrades: Acolyte
 	TooltipExtras:
@@ -484,7 +476,6 @@ cyborgspeed.upgrade:
 	Buildable:
 		BuildPaletteOrder: 41
 		Prerequisites: cyborg.upgrade, ~tmpp, ~techlevel.high
-		BuildDuration: 1500
 		IconPalette: chrometd
 		Description: Improves cyborg movement speed.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Reaper\nUpgrades: Chemical Warrior\nUpgrades: Acolyte\nUpgrades: Cyborg Elite
 	TooltipExtras:
@@ -501,11 +492,10 @@ cyborgarmor.upgrade:
 	Buildable:
 		BuildPaletteOrder: 42
 		Prerequisites: cyborg.upgrade, ~tmpp, ~techlevel.high
-		BuildDuration: 1500
 		IconPalette: chrometd
 		Description: Improves cyborg armor.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Reaper\nUpgrades: Chemical Warrior\nUpgrades: Acolyte\nUpgrades: Cyborg Elite
 	TooltipExtras:
-		Strengths: + 20% reduced damage taken
+		Strengths: + 20% reduced damage taken\n+ Additional 10% reduced damage from explosives
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -521,7 +511,6 @@ v2.upgrade:
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~radar.soviet, ~techlevel.medium
-		BuildDuration: 1500
 		Description: Allows construction of the V2 Launcher.\n\nReplaces: Katyusha
 	TooltipExtras:
 		Strengths: + Improved accuracy\n+ Increased range\n+ Increased burst damage\n+ Increased mobility
@@ -543,8 +532,7 @@ hazmatsoviet.upgrade:
 		Name: Upgrade: Heavy Hazmat Suits
 	Buildable:
 		BuildPaletteOrder: 10
-		Prerequisites: ~radar.soviet, ~barr, ~techlevel.high
-		BuildDuration: 1500
+		Prerequisites: ~anyradar, ~infantry.any, ~player.soviet, ~techlevel.high
 		Description: Infantry are equipped with heavy hazmat suits which provides\n  protection against Tiberium and radiation.\n\nUpgrades: Infantry
 	TooltipExtras:
 		Strengths: + Tiberium immunity\n+ High radiation resistance
@@ -561,12 +549,10 @@ lasher.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~radar.yuri, ~techlevel.high
-		BuildDuration: 1500
 		Description: Upgrades Heavy tanks with infantry crushing attachment\n  at the cost of some armor and firepower.\n\nUpgrades: Heavy Tank
 	TooltipExtras:
 		Strengths: + 20% faster movement\n + Damages infantry it moves through\n+ Not slowed by infantry
 		Weaknesses: – Reduced hit points\n– Reduced firepower
-
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -579,7 +565,6 @@ seismic.upgrade:
 	Buildable:
 		BuildPaletteOrder: 40
 		Prerequisites: ~stek.ukraine, ~techlevel.high
-		BuildDuration: 1500
 		Description: Arms the Sukhoi with Seismic Missiles.\n\nUpgrades: Sukhoi
 	TooltipExtras:
 		Strengths: + High area damage vs structures and vehicles\n+ Slows movement and rate of fire of impacted targets
@@ -596,7 +581,6 @@ iraqtank.upgrade:
 	Buildable:
 		BuildPaletteOrder: 40
 		Prerequisites: ~stek.iraq, ~techlevel.high
-		BuildDuration: 1500
 		Description: Upgrades Mammoth and Heavy tanks\n  with volatile atomic engines.\n\nReplaces: Heavy Tank\nReplaces: Mammoth Tank
 	TooltipExtras:
 		Strengths: + 25% faster movement
@@ -613,7 +597,6 @@ tarc.upgrade:
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~stek.russia, ~techlevel.medium
-		BuildDuration: 1500
 		Description: Upgrades Tesla Tank and Tesla Track weapons.\n\nUpgrades: Tesla Tank\nUpgrades: Tesla Track
 	TooltipExtras:
 		Strengths: + Shots jump to up to 2 additional targets
@@ -629,12 +612,11 @@ indp.upgrade:
 	Buildable:
 		BuildPaletteOrder: 60
 		Prerequisites: ~indp, ~techlevel.high
-		BuildDuration: 3000
 		Description: Increases Industrial Plant performance.\n\nUpgrades: Industrial Plant
 	TooltipExtras:
 		Strengths: + Additional 5% production speed\n+ Additional 5% cost reduction
 	Valued:
-		Cost: 2000
+		Cost: 1000
 	RenderSprites:
 		Image: indp.upgrade
 
@@ -649,7 +631,6 @@ apb.upgrade:
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~radar.england, ~techlevel.high
-		BuildDuration: 1500
 		Description: Upgrades Snipers granting them Raufoss armor piercing rounds,\n  which stun and damage armoured targets.\n\nUpgrades: Sniper
 	TooltipExtras:
 		Strengths: + Can damage vehicles with AP rounds which slow movement and rate of fire
@@ -665,7 +646,6 @@ cryr.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~atek, ~techlevel.high
-		BuildDuration: 1500
 		Description: Arms rocket equipped soldiers with Cryo warheads which cause\n  targets to move more slowly and take increased damage.\n\nUpgrades: Rocket Soldier\nUpgrades: Guardian GI
 	TooltipExtras:
 		Strengths: + Equip with Cryo Rockets which slow movement and increase damage taken
@@ -681,7 +661,6 @@ pcan.upgrade:
 	Buildable:
 		BuildPaletteOrder: 40
 		Prerequisites: ~atek, ~techlevel.high
-		BuildDuration: 1500
 		Description: Allows construction of Prism Cannons.\n\nReplaces: Prism Tank
 	TooltipExtras:
 		Strengths: + Increased range\n+ Increased burst damage
@@ -698,7 +677,6 @@ crym.upgrade:
 	Buildable:
 		BuildPaletteOrder: 41
 		Prerequisites: ~atek.usa, ~techlevel.high
-		BuildDuration: 1500
 		Description: Equips Nighthawks with large Cryo missiles which reduce\n  target movement speed and increase damage taken.\n\nUpgrades: Nighthawk
 	TooltipExtras:
 		Strengths: + Equip with Cryo Missiles which slow movement and increase damage taken
@@ -714,12 +692,11 @@ charv.upgrade:
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~orep, ~techlevel.high
-		BuildDuration: 3000
 		Description: Allows construction of Chrono Miners which\nteleport back to refineries.\n\nReplaces: Ore Truck
 	TooltipExtras:
 		Strengths: + Teleport back to refinery
 	Valued:
-		Cost: 2000
+		Cost: 1500
 	RenderSprites:
 		Image: charv.upgrade
 
@@ -730,7 +707,6 @@ tflx.upgrade:
 	Buildable:
 		BuildPaletteOrder: 55
 		Prerequisites: ~orep.germany, ~techlevel.high
-		BuildDuration: 1500
 		Description: Upgrades Chrono Prisons granting them the ability to teleport through time.\n\nUpgrades: Chrono Prison
 	TooltipExtras:
 		Strengths: + Add ability to teleport
@@ -746,12 +722,11 @@ orep.upgrade:
 	Buildable:
 		BuildPaletteOrder: 60
 		Prerequisites: ~orep, ~techlevel.high
-		BuildDuration: 3000
 		Description: Increases Ore Purifier efficiency.\n\nUpgrades: Ore Purifier
 	TooltipExtras:
 		Strengths: + Increase income by a further 5%
 	Valued:
-		Cost: 2000
+		Cost: 1000
 	RenderSprites:
 		Image: orep.upgrade
 
@@ -765,7 +740,6 @@ blink.upgrade:
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~nerv, ~techlevel.high
-		BuildDuration: 3000
 		Description: Equips Intruders with blink packs allowing\n  them to teleport.\n\nUpgrades: Intruder
 		IconPalette: scrin
 	TooltipExtras:
@@ -782,15 +756,30 @@ advart.upgrade:
 	Buildable:
 		BuildPaletteOrder: 21
 		Prerequisites: ~radar.traveler, ~techlevel.high
-		BuildDuration: 3000
 		Description: Enable Scrin infantry to move faster.\n\nUpgrades: Scrin Infantry
 		IconPalette: scrin
 	TooltipExtras:
 		Strengths: + 15% faster movement
 	Valued:
-		Cost: 1000
+		Cost: 1500
 	RenderSprites:
 		Image: advart.upgrade
+
+carapace.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Hardened Carapace
+	Buildable:
+		BuildPaletteOrder: 21
+		Prerequisites: ~scrt, ~infantry.any, ~player.scrin, ~techlevel.high
+		Description: Infantry gain a hardened carapace which\n  provides protection against explosives.\n\nUpgrades: Infantry
+		IconPalette: scrin
+	TooltipExtras:
+		Strengths: + 40% reduced damage from explosives
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: carapace.upgrade
 
 resconv.upgrade:
 	Inherits: ^Upgrade
@@ -799,7 +788,6 @@ resconv.upgrade:
 	Buildable:
 		BuildPaletteOrder: 22
 		Prerequisites: ~scrt, ~techlevel.high
-		BuildDuration: 1500
 		Description: Weapons of Devourer and Ruiner are empowered by\n  Tiberium and other resources. Reaper Tripod gains\n  additional charges\n\nUpgrades: Devourer\nUpgrades: Ruiner\nUpgrades: Reaper Tripod
 		IconPalette: scrin
 	TooltipExtras:
@@ -816,7 +804,6 @@ ioncon.upgrade:
 	Buildable:
 		BuildPaletteOrder: 25
 		Prerequisites: ~scrt, ~techlevel.high
-		BuildDuration: 2250
 		Description: Allows Storm Colums to store ion energy and release it into the\n  atmosphere, creating a localised Ion Storm.\n\nUpgrades: Storm Column
 		IconPalette: scrin
 	TooltipExtras:
@@ -833,7 +820,6 @@ regen.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~scrt, ~techlevel.high
-		BuildDuration: 2250
 		Description: Scrin aircraft will regenerate health over time when not in combat.\n\nUpgrades: Stormrider\nUpgrades: Enervator\nUpgrades: Devastator\nUpgrades: Planetary Assault Carrier\nUpgrades: Mothership
 		IconPalette: scrin
 	TooltipExtras:
@@ -850,12 +836,11 @@ shields.upgrade:
 	Buildable:
 		BuildPaletteOrder: 40
 		Prerequisites: ~scrt, ~techlevel.high
-		BuildDuration: 3000
 		Description: Equip larger Scrin vessels with shields.\n\nUpgrades: Devastator\nUpgrades: Planetary Assault Carrier
 		IconPalette: scrin
 	TooltipExtras:
 		Strengths: + Grants an additonal health pool\n+ Resistance to EMP
 	Valued:
-		Cost: 2000
+		Cost: 1500
 	RenderSprites:
 		Image: shields.upgrade

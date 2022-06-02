@@ -11,7 +11,7 @@ Player:
 	ClassicProductionQueue@Building:
 		Type: Building
 		DisplayOrder: 0
-		LowPowerModifier: 300
+		LowPowerModifier: 250
 		ReadyAudio: ConstructionComplete
 		BlockedAudio: NoBuild
 		LimitedAudio: BuildingInProgress
@@ -22,7 +22,7 @@ Player:
 	ClassicProductionQueue@Defense:
 		Type: Defense
 		DisplayOrder: 1
-		LowPowerModifier: 300
+		LowPowerModifier: 250
 		ReadyAudio: ConstructionComplete
 		BlockedAudio: NoBuild
 		LimitedAudio: BuildingInProgress
@@ -33,7 +33,7 @@ Player:
 	ClassicProductionQueueCA@Vehicle:
 		Type: Vehicle
 		DisplayOrder: 3
-		LowPowerModifier: 300
+		LowPowerModifier: 250
 		ReadyAudio: UnitReady
 		BlockedAudio: NoBuild
 		LimitedAudio: BuildingInProgress
@@ -45,7 +45,7 @@ Player:
 	ClassicProductionQueueCA@Infantry:
 		Type: Infantry
 		DisplayOrder: 2
-		LowPowerModifier: 300
+		LowPowerModifier: 250
 		ReadyAudio: UnitReady
 		BlockedAudio: NoBuild
 		LimitedAudio: BuildingInProgress
@@ -57,7 +57,7 @@ Player:
 	ClassicProductionQueue@Ship:
 		Type: Ship
 		DisplayOrder: 5
-		LowPowerModifier: 300
+		LowPowerModifier: 250
 		ReadyAudio: UnitReady
 		BlockedAudio: NoBuild
 		LimitedAudio: BuildingInProgress
@@ -69,7 +69,7 @@ Player:
 	ClassicProductionQueueCA@Aircraft:
 		Type: Aircraft
 		DisplayOrder: 4
-		LowPowerModifier: 300
+		LowPowerModifier: 250
 		ReadyAudio: UnitReady
 		BlockedAudio: NoBuild
 		LimitedAudio: BuildingInProgress
@@ -82,7 +82,7 @@ Player:
 	ClassicProductionQueue@Upgrade:
 		Type: Upgrade
 		DisplayOrder: 6
-		LowPowerModifier: 300
+		LowPowerModifier: 250
 		ReadyAudio: UpgradeComplete
 		BlockedAudio: NoBuild
 		LimitedAudio: BuildingInProgress
@@ -182,6 +182,9 @@ Player:
 		Name: Super Weapons
 		Prerequisites: techlevel.infonly, techlevel.low, techlevel.medium, techlevel.high, techlevel.unrestricted
 		Id: unrestricted
+	ProvidesPrerequisite@allies:
+		Prerequisite: player.allies
+		Factions: england, france, germany, usa
 	ProvidesPrerequisite@england:
 		Prerequisite: player.england
 		Factions: england
@@ -194,6 +197,9 @@ Player:
 	ProvidesPrerequisite@usa:
 		Prerequisite: player.usa
 		Factions: usa
+	ProvidesPrerequisite@soviet:
+		Prerequisite: player.soviet
+		Factions: russia, ukraine, iraq, yuri
 	ProvidesPrerequisite@russia:
 		Prerequisite: player.russia
 		Factions: russia
@@ -206,6 +212,9 @@ Player:
 	ProvidesPrerequisite@yuri:
 		Prerequisite: player.yuri
 		Factions: yuri
+	ProvidesPrerequisite@gdi:
+		Prerequisite: player.gdi
+		Factions: talon, zocom, eagle, arc
 	ProvidesPrerequisite@talon:
 		Prerequisite: player.talon
 		Factions: talon
@@ -218,6 +227,9 @@ Player:
 	ProvidesPrerequisite@arc:
 		Prerequisite: player.arc
 		Factions: arc
+	ProvidesPrerequisite@nod:
+		Prerequisite: player.nod
+		Factions: blackh, marked, legion, shadow
 	ProvidesPrerequisite@blackh:
 		Prerequisite: player.blackh
 		Factions: blackh
@@ -230,6 +242,9 @@ Player:
 	ProvidesPrerequisite@shadow:
 		Prerequisite: player.shadow
 		Factions: shadow
+	ProvidesPrerequisite@scrin:
+		Prerequisite: player.scrin
+		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite@reaper:
 		Prerequisite: player.reaper
 		Factions: reaper
@@ -238,7 +253,7 @@ Player:
 		Factions: traveler
 	ProvidesPrerequisite@harbinger:
 		Prerequisite: player.harbinger
-		Factions: harbinger		
+		Factions: harbinger
 	ProvidesPrerequisite@collector:
 		Prerequisite: player.collector
 		Factions: collector

@@ -497,6 +497,48 @@ SBRIDGE5:
 		Duration: 15
 		Intensity: 6
 
+SBRIDGE6:
+	Inherits: ^Bridge
+	Bridge:
+		Template: 620
+		DamagedTemplate: 621
+		DestroyedTemplate: 622
+	FreeActor@north:
+		Actor: bridgehut
+		SpawnOffset: 2,-1
+	FreeActor@south:
+		Actor: bridgehut
+		SpawnOffset: 0,1
+	HitShape:
+		Type: Rectangle
+			TopLeft: -1024, -1024
+			BottomRight: 2048, 0
+	HitShape@2:
+		Type: Rectangle
+			TopLeft: -2048, 0
+			BottomRight: 1536, 1024
+
+SBRIDGE7:
+	Inherits: ^Bridge
+	Bridge:
+		Template: 624
+		DamagedTemplate: 625
+		DestroyedTemplate: 626
+	FreeActor@north:
+		Actor: bridgehut
+		SpawnOffset: 0,-1
+	FreeActor@south:
+		Actor: bridgehut
+		SpawnOffset: 2,1
+	HitShape:
+		Type: Rectangle
+			TopLeft: -2048, -1024
+			BottomRight: 1024, 0
+	HitShape@2:
+		Type: Rectangle
+			TopLeft: -1536, 0
+			BottomRight: 2048, 1024
+
 BRIDGEHUT:
 	AlwaysVisible:
 	BodyOrientation:

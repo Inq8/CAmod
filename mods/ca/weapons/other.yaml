@@ -132,7 +132,7 @@ Napalmtd:
 			Heavy: 50
 			Concrete: 35
 			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigated
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Eff: CreateEffect
@@ -1034,7 +1034,7 @@ VenomLaser:
 		Versus:
 			None: 250
 			Wood: 50
-			Concrete: 10
+			Concrete: 40
 			Light: 95
 			Heavy: 50
 			Brick: 50
@@ -1142,7 +1142,7 @@ PrisTLaser:
 			Wood: 85
 			Concrete: 100
 			Light: 100
-			Heavy: 55
+			Heavy: 50
 	Warhead@Burst: FireCluster
 		Weapon: PrisTBurst
 
@@ -1159,6 +1159,7 @@ PrisBurst:
 			None: 85
 			Wood: 40
 			Concrete: 25
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated
 	-Warhead@Burst:
 	Warhead@3Eff: CreateEffect
 		Explosions: small_explosion
@@ -1448,7 +1449,7 @@ TitanRailgun:
 		BeamAlphaDeltaPerTick: -8
 		HelixPitch: 682
 	Warhead@1Dam: SpreadDamage
-		Damage: 5000
+		Damage: 6500
 		Versus:
 			None: 30
 			Wood: 70
@@ -2007,11 +2008,11 @@ SonicPulse:
 			Heavy: 100
 			Concrete: 65
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
-	Warhead@3Eff: CreateEffect
+	Warhead@2Eff: CreateEffect
 		Explosions: sonicpulse1, sonicpulse2
 		ExplosionPalette: effect-ignore-lighting-alpha40
 		ValidTargets: Ground, Air, Ship, Trees
-	Warhead@2Eff: CreateEffect
+	Warhead@3Eff: CreateEffect
 		Explosions: sonicblast1, sonicblast2
 		ExplosionPalette: effect-ignore-lighting-alpha40
 		ValidTargets: Ground, Air, Ship, Trees
@@ -2021,10 +2022,16 @@ SonicPulse.UPG:
 	Range: 8c256
 	Warhead@1Dam: SpreadDamage
 		Damage: 7200
-	Warhead@3Eff: CreateEffect
-		Explosions: sonicpulseupg1, sonicpulseupg2
 	Warhead@2Eff: CreateEffect
+		Explosions: sonicpulseupg1, sonicpulseupg2
+	Warhead@3Eff: CreateEffect
 		Explosions: sonicblastupg1, sonicblastupg2
+	Warhead@4Conc: GrantExternalCondition
+		Range: 1c0
+		Duration: 100
+		Condition: concussion
+		ValidTargets: Ground, Infantry, Vehicle, Ship
+		ValidRelationships: Enemy, Neutral
 
 JDAM:
 	ValidTargets: Ground, Water, Trees
@@ -2062,7 +2069,7 @@ JDAM:
 			Heavy: 0
 			Concrete: 0
 			Brick: 0
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Eff: CreateEffect
