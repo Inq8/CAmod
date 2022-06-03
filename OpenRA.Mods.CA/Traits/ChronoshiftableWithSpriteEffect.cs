@@ -48,6 +48,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Sound to apply when returning on would-be-death.")]
 		public readonly string ReturnToAvoidDeathSound = null;
 
+		[Desc("Relationships that benefit from returning to avoid death.")]
+		public readonly PlayerRelationship ReturnToAvoidDeathRelationships = PlayerRelationship.Ally;
+
 		[Desc("If ReturnToAvoidDeath is true the amount of HP restored on return.")]
 		public readonly int ReturnToAvoidDeathHealthPercent = 20;
 
@@ -142,7 +145,11 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyKilled.Killed(Actor self, AttackInfo e)
 		{
-			if (!IsTraitDisabled && Info.ReturnToOrigin && info.ReturnToAvoidDeath && ReturnTicks > 0)
+			if (!IsTraitDisabled
+				&& Info.ReturnToOrigin
+				&& info.ReturnToAvoidDeath
+				&& ReturnTicks > 0
+				&& (chronosphere == null || info.ReturnToAvoidDeathRelationships.HasStance(self.Owner.RelationshipWith(chronosphere.Owner))))
 			{
 				returnToAvoidDeath = true;
 				self.World.Remove(self);
