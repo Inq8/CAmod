@@ -75,7 +75,7 @@ namespace OpenRA.Mods.CA.Traits
 			: base(init, info)
 		{
 			this.info = info;
-			this.self = init.Self;
+			self = init.Self;
 
 			if (info.ReturnToAvoidDeath)
 			{

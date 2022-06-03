@@ -18,7 +18,7 @@ namespace OpenRA.Mods.CA.Traits
 	public class RangedGpsRadarProviderInfo : ConditionalTraitInfo
 	{
 		[Desc("Target types that can be detected. Leave empty to accept all types.")]
-		public readonly BitSet<TargetableType> TargetTypes = new BitSet<TargetableType>();
+		public readonly BitSet<TargetableType> TargetTypes = default(BitSet<TargetableType>);
 
 		[Desc("Reveals within this range. Use zero for whole map.")]
 		public readonly WDist Range = WDist.Zero;
