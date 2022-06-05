@@ -3291,6 +3291,8 @@ NERV:
 		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite@anyradar:
 		Prerequisite: anyradar
+	ProvidesPrerequisite@radarorrepair:
+		Prerequisite: radarorrepair
 	ProvidesPrerequisite@scrinrad:
 		Prerequisite: radar.scrin
 	ProvidesPrerequisiteValidatedFaction@reaprad:
@@ -3535,7 +3537,7 @@ GRAV:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 130
-		Prerequisites: anyradar, repair, ~structures.scrin, ~techlevel.medium
+		Prerequisites: radarorrepair, ~structures.scrin, ~techlevel.medium
 		Description: Produces Scrin aircraft.
 		IconPalette: chromes
 	Valued:
@@ -3699,6 +3701,8 @@ SREP:
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair
+	ProvidesPrerequisite@radarorrepair:
+		Prerequisite: radarorrepair
 	ProvidesPrerequisite@allowsmcv:
 		Prerequisite: vehicles.mcv
 	ProximityExternalCondition@SREPREARM:
