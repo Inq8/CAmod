@@ -126,8 +126,13 @@ namespace OpenRA.Mods.CA.Traits
 				// the actor. It is therefore safe to force-erase the Move activity to
 				// work around the cancellation bug.
 				// HACK: this is manipulating private internal actor state
-				if (self.CurrentActivity is Move)
-					typeof(Actor).GetProperty("CurrentActivity").SetValue(self, null);
+				if (self.CurrentActivity != null
+					&& (self.CurrentActivity is Move
+					|| self.CurrentActivity is Attack
+					|| self.CurrentActivity is AttackMoveActivity
+					|| self.CurrentActivity.ToString() == "OpenRA.Mods.Common.Traits.AttackFollow+AttackActivity"))
+					typeof(Actor).GetProperty(nameof(Actor.CurrentActivity)).SetValue(self, null);
+
 
 				if (conditionToken != Actor.InvalidConditionToken)
 					conditionToken = self.RevokeCondition(conditionToken);

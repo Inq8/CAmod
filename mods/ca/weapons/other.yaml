@@ -1407,11 +1407,13 @@ GapBeam:
 	Report: gaploop1.aud, gaploop2.aud, gaploop3.aud
 	Projectile: ElectricBolt
 		Colors: 111111CC,223333CC,11222299,222233CC,44444466,436a6666
-		Duration: 15
+		Duration: 16
 		Angle: 45
 		ZOffset: 1023
 		Width: 42
 		Distortion: 32
+		DistortionAnimation: 64
+		TrackTarget: true
 	Warhead@1Dum: Dummy
 	Warhead@Debuff: GrantExternalCondition
 		Range: 0c512
@@ -1421,7 +1423,6 @@ GapBeam:
 	Warhead@3Eff: CreateEffect
 		Explosions: veilcloudsm, veilcloudsmf
 		ExplosionPalette: effect-ignore-lighting-alpha40
-		ValidTargets: Ground, Air, Water
 		Inaccuracy: 1c512
 
 MobileGapBeam:
@@ -1455,7 +1456,7 @@ VeilSmall:
 		ValidRelationships: Enemy, Neutral
 	Warhead@Cloud: CreateEffect
 		Explosions: veilcloud, veilcloudf
-		ExplosionPalette: effect-ignore-lighting-alpha60
+		ExplosionPalette: effect-ignore-lighting-alpha50
 		Inaccuracy: 2c0
 		ValidTargets: Ground, Water, Veil
 
@@ -1481,7 +1482,7 @@ VeilFull:
 		Inaccuracy: 7c512
 	Warhead@Cloud2: CreateEffect
 		Explosions: veilcloud, veilcloudf
-		ExplosionPalette: effect-ignore-lighting-alpha60
+		ExplosionPalette: effect-ignore-lighting-alpha50
 		Inaccuracy: 7c512
 		ValidTargets: Ground, Water, Veil
 		Delay: 5
