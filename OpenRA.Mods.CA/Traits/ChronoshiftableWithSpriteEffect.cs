@@ -133,7 +133,6 @@ namespace OpenRA.Mods.CA.Traits
 					|| self.CurrentActivity.ToString() == "OpenRA.Mods.Common.Traits.AttackFollow+AttackActivity"))
 					typeof(Actor).GetProperty(nameof(Actor.CurrentActivity)).SetValue(self, null);
 
-
 				if (conditionToken != Actor.InvalidConditionToken)
 					conditionToken = self.RevokeCondition(conditionToken);
 

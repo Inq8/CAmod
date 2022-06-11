@@ -204,7 +204,7 @@ namespace OpenRA.Mods.AS.Projectiles
 
 		void CalculateBeam(WVec direction)
 		{
-			var shouldDistort = ticks == 0 && info.Distortion != 0 || ticks > 0 && info.DistortionAnimation != 0;
+			var shouldDistort = (ticks == 0 && info.Distortion != 0) || (ticks > 0 && info.DistortionAnimation != 0);
 
 			foreach (var zap in zaps)
 			{
