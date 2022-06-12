@@ -2116,7 +2116,7 @@ CTNK:
 		PauseOnCondition: empdisable || being-warped
 	PortableChronoCA:
 		ChargeDelay: 375
-		MaxDistance: 18
+		MaxDistance: 16
 		RequiresCondition: !empdisable && !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -2125,6 +2125,13 @@ CTNK:
 	ProductionCostMultiplier@GermanyBonus:
 		Multiplier: 90
 		Prerequisites: vehicles.germany
+	PortableChronoMultiplier@TEMPORALFLUX:
+		RangeModifier: 125
+		CooldownModifier: 80
+		RequiresCondition: tflx-upgrade
+	GrantConditionOnPrerequisite@TEMPORALFLUX:
+		Condition: tflx-upgrade
+		Prerequisites: tflx.upgrade
 
 QTNK:
 	Inherits: ^Tank
