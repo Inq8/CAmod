@@ -1814,6 +1814,11 @@ SNIP:
 	Armament@PRIMARY:
 		Weapon: sniper
 		PauseOnCondition: !ammo
+		RequiresCondition: !apb-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: sniper.nonvehicle
+		PauseOnCondition: !ammo
+		RequiresCondition: apb-upgrade
 	Armament@DUMMY:
 		Name: tertiary
 		Weapon: sniper.dummy
@@ -1870,7 +1875,9 @@ SNIP:
 		PauseOnCondition: being-warped
 		Armaments: primary, secondary, tertiary
 	WithInfantryBody:
-		DefaultAttackSequence: shoot
+		AttackSequences:
+			primary: shoot
+			secondary: shoot
 		StandSequences: stand, stand2
 		RequiresCondition: !parachute && !being-warped
 	WithInfantryBody@PARACHUTE:
