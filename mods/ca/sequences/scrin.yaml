@@ -392,6 +392,12 @@ feed:
 		UseTilesetCode: false
 		ZOffset: 512
 		Tick: 80
+	idle-overlay: empty
+	spawn-overlay: leechhitlg
+		Frames: 7,8,9,10,11,12,13,14,15,16,17,18
+		BlendMode: Additive
+		Tick: 60
+		Length: *
 	icon: s2icon
 
 smedi:
@@ -722,6 +728,11 @@ lchr:
 		Length: 2
 		Tick: 120
 		UseClassicFacings: True
+	muzzle: leechhit
+		Frames: 14,15,16,17,18
+		BlendMode: Additive
+		Length: *
+		Tick: 80
 	icon: lchricon
 
 lchr.destroyed:
@@ -1521,6 +1532,12 @@ leechhit:
 		Length: *
 		ZOffset: 2047
 
+leechhitlg:
+	idle: leechhitlg
+		BlendMode: Additive
+		Length: *
+		ZOffset: 2047
+
 mindcontrol:
 	idle: mindcontrol
 		Tick: 40
@@ -1612,30 +1629,27 @@ atomize-overlay:
 		ZOffset: 512
 
 feederfull-overlay:
-	idle: leechhit
-		Frames: 0,1,2,3,4,5,6,7,7,7
+	idle: leechhitlg
+		Frames: 4,5,6,7,8,9,10,11,12,13,12,11,10,9,8,7,6,5,4
 		BlendMode: Additive
 		Length: *
 		ZOffset: 2047
 		Offset: 0, -5
-		Tick: 80
 
 siphon-overlay-sm:
 	idle: leechhit
-		Frames: 0,1,2,3,4,5,6,7,6,5,4,3,2,1,0
+		Frames: 4,5,6,7,8,9,10,11,12,13,14,15,14,13,12,11,10,9,8,7,6,5,4
 		BlendMode: Alpha
 		Length: *
 		ZOffset: 2047
 		Offset: 0, -5
-		Tick: 80
 
 siphon-overlay-lg:
 	idle: leechhitlg
-		Frames: 0,1,2,3,4,5,6,7,6,5,4,3,2,1,0
+		Frames: 4,5,6,7,8,9,10,11,12,13,14,15,14,13,12,11,10,9,8,7,6,5,4
 		BlendMode: Alpha
 		Length: *
 		ZOffset: 2047
-		Tick: 80
 
 scrinwipicon:
 	icon: wipicon

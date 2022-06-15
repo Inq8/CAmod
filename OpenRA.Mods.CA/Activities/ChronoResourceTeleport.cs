@@ -19,15 +19,17 @@ namespace OpenRA.Mods.CA.Activities
 {
 	public class ChronoResourceTeleport : Activity
 	{
+		readonly Actor refinery;
 		readonly CPos destination;
 		readonly ChronoResourceDeliveryInfo info;
 		readonly CPos harvestedField;
 
-		public ChronoResourceTeleport(CPos destination, ChronoResourceDeliveryInfo info, CPos harvestedField)
+		public ChronoResourceTeleport(CPos destination, ChronoResourceDeliveryInfo info, CPos harvestedField, Actor refinery)
 		{
 			this.destination = destination;
 			this.info = info;
 			this.harvestedField = harvestedField;
+			this.refinery = refinery;
 		}
 
 		public override bool Tick(Actor self)
@@ -53,6 +55,7 @@ namespace OpenRA.Mods.CA.Activities
 			if (info.WarpOutSound != null && (info.AudibleThroughFog || !self.World.FogObscures(sourcepos)))
 				Game.Sound.Play(SoundType.World, info.WarpOutSound, self.CenterPosition, info.SoundVolume);
 
+			self.QueueActivity(new DeliverResources(self, refinery));
 			self.QueueActivity(new FindAndDeliverResources(self, harvestedField));
 
 			return true;

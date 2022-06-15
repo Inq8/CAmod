@@ -500,7 +500,7 @@ DD2:
 		Weapon: PointLaser
 		LocalOffset: 0,10,90
 		PauseOnCondition: under-bridge
-		RequiresCondition: pointlaser-upgrade
+		RequiresCondition: pointdef-upgrade
 		ForceTargetRelationships: enemy
 	AttackTurreted:
 		Turrets: primary, secondary
@@ -519,11 +519,11 @@ DD2:
 	PointDefense:
 		Armament: secondary
 		PointDefenseTypes: Missile
-		RequiresCondition: pointlaser-upgrade
+		RequiresCondition: pointdef-upgrade
 		ValidRelationships: Enemy
-	GrantConditionOnPrerequisite@POINTL:
-		Condition: pointlaser-upgrade
-		Prerequisites: pointlaser.upgrade
+	GrantConditionOnPrerequisite@POINTDEF:
+		Condition: pointdef-upgrade
+		Prerequisites: pointdef.upgrade
 
 SS2:
 	Inherits: ^Submarine

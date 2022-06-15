@@ -466,7 +466,7 @@ MINE:
 	AppearsOnMapPreview:
 		Terrain: Ore
 	SeedsResource:
-		Interval: 75
+		Interval: 70
 	MapEditorData:
 		Categories: Resource spawn
 	RequiresSpecificOwners:
@@ -911,7 +911,7 @@ SPLIT2:
 	Inherits: ^TibTree
 	SeedsResource:
 		ResourceType: Tiberium
-		Interval: 75
+		Interval: 70
 	AppearsOnMapPreview:
 		Terrain: Tiberium
 	MapEditorData:
@@ -933,10 +933,13 @@ SPLITBLUE:
 	RadarColorFromTerrain:
 		Terrain: BlueTiberium
 
-gps.scrambler:
+veil:
 	Inherits@1: CAMERA
+	Health:
+		HP: 1
+	HitShape:
 	CreatesShroud:
-		Range: 9c512
+		Range: 2c512
 		Type: CenterPosition
 	-RevealsShroud:
 	RenderShroudCircleCA:
@@ -945,11 +948,54 @@ gps.scrambler:
 	-RenderSpritesEditorOnly:
 	RenderSprites:
 		Image: gpsscrambler
+	PeriodicExplosion:
+		Weapon: VeilSmall
+	Targetable@VEIL:
+		TargetTypes: Veil
+
+veil.minor:
+	Inherits: veil
+	KillsSelf:
+		Delay: 250
+
+veilofwar1:
+	Inherits: veil
+	KillsSelf:
+		Delay: 50
 	WithMakeAnimation:
-	ProximityExternalCondition@GPSSCRAMBLE:
-		Range: 9c512
-		Condition: gpsscramble
-		ValidRelationships: Enemy, Neutral
+	SpawnActorOnDeath:
+		Actor: veilofwar2
+
+veilofwar2:
+	Inherits: veil
+	CreatesShroud:
+		Range: 4c768
+	PeriodicExplosion:
+		Weapon: VeilMedium
+	KillsSelf:
+		Delay: 50
+	SpawnActorOnDeath:
+		Actor: veilofwar3
+
+veilofwar3:
+	Inherits: veil
+	CreatesShroud:
+		Range: 7c0
+	PeriodicExplosion:
+		Weapon: VeilLarge
+	KillsSelf:
+		Delay: 50
+	SpawnActorOnDeath:
+		Actor: veilofwar4
+
+veilofwar4:
+	Inherits: veil
+	CreatesShroud:
+		Range: 9c256
+	PeriodicExplosion:
+		Weapon: VeilFull
+	KillsSelf:
+		Delay: 300
 
 nshield:
 	Inherits@1: CAMERA

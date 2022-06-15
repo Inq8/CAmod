@@ -86,17 +86,18 @@ MSLO:
 		Prerequisites: player.iraq
 
 GAP:
-	Inherits: ^Building
+	Inherits: ^Defense
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
+	Inherits@AUTOTARGET: ^AutoTargetGround
 	Valued:
-		Cost: 800
+		Cost: 1000
 	Tooltip:
 		Name: Gap Generator
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 110
 		Prerequisites: atek, ~structures.allies, ~techlevel.high
-		Description: Obscures the enemy's view with shroud.
+		Description: Regenerates the shroud nearby, obscuring enemy vision.\n  Can channel the effect to reduce enemy weapon range\n  and create persisting areas that do the same.
 	TooltipExtras:
 		Attributes: • Requires power to operate
 	Selectable:
@@ -109,22 +110,45 @@ GAP:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
-		MinRange: 4c0
-		Range: 5c0
+		MinRange: 6c0
+		Range: 8c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 4c0
+		Range: 6c0
+	Armament:
+		Weapon: GapBeam
+		LocalOffset: 0,0,1150
+		MuzzleSequence: muzzle
+		PauseOnCondition: cooldown
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: VeilSpawner
+		LocalOffset: 0,0,1150
+		PauseOnCondition: charged < 7
+		ReloadingCondition: cooldown
+	GrantConditionOnAttack@charge:
+		Condition: charged
+		IsCyclic: true
+		RevokeDelay: 25
+		MaximumInstances: 7
+		RevokeOnNewTarget: true
+		RevokeAll: true
+	WithMuzzleOverlay:
+	AttackTurreted:
+		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
+	Turreted:
+		TurnSpeed: 512
 	WithBuildingBib:
 		HasMinibib: true
 	CreatesShroud:
 		Range: 8c0
 		RequiresCondition: !disabled && !empdisable && !being-warped
 	RenderShroudCircle:
+	-RenderRangeCircle:
 	Power:
 		Amount: -60
 	MustBeDestroyed:
 		RequiredForShortGame: false
-	-AcceptsDeliveredCash:
 	Explodes:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
@@ -152,7 +176,7 @@ SPEN:
 		Name: Sub Pen
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 50
+		BuildPaletteOrder: 220
 		Prerequisites: anypower, ~structures.soviet, ~techlevel.navy, ~techlevel.low
 		Description: Produces and repairs\nsubmarines and transports.
 	Targetable@INFILTRATION:
@@ -273,7 +297,7 @@ SYRD:
 		InfiltratedNotification: BaseAttack
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 40
+		BuildPaletteOrder: 210
 		Prerequisites: anypower, ~structures.allies, ~techlevel.navy, ~techlevel.low
 		Description: Produces and repairs\nships and transports.
 	Valued:
@@ -715,6 +739,7 @@ DOME:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@POWERDRAIN: ^PowerDrainableRadar
+	Inherits@SOVIETRADARPOWERS: ^SovietRadarPowers
 	Selectable:
 		Bounds: 2048, 2048
 	HitShape:
@@ -726,7 +751,7 @@ DOME:
 		Prerequisites: anyrefinery, ~structures.ra, ~techlevel.medium
 		Description: Provides an overview of the battlefield.
 	TooltipExtras:
-		Attributes: • Requires power to operate
+		Attributes: • Requires power to operate\n• Detects nearby enemy vehicles, aircraft and structures in fog of war
 	Valued:
 		Cost: 1800
 	Tooltip:
@@ -743,18 +768,25 @@ DOME:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		MinRange: 6c0
-		Range: 10c0
+		MinRange: 5c0
+		Range: 6c0
 		RequiresCondition: !disabled
 		RevealGeneratedShroud: False
 	RevealsShroud@Offline:
 		Range: 5c0
 		RequiresCondition: disabled
 	RevealsShroud@GAPGEN:
-		Range: 6c0
+		Range: 5c0
 		RequiresCondition: !disabled
 	WithBuildingBib:
 	ProvidesRadar:
+		RequiresCondition: !jammed && !disabled && !being-warped
+	RangedGpsRadarProvider:
+		Range: 12c0
+		TargetTypes: Vehicle, Aircraft, Structure
+		RequiresCondition: !jammed && !disabled && !being-warped
+	WithRangeCircle:
+		Range: 12c0
 		RequiresCondition: !jammed && !disabled && !being-warped
 	InfiltrateForExploration:
 		Types: SpyInfiltrate, SabInfiltrate
@@ -765,6 +797,8 @@ DOME:
 		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
 	ProvidesPrerequisite@anyradar:
 		Prerequisite: anyradar
+	ProvidesPrerequisite@radarorrepair:
+		Prerequisite: radarorrepair
 	ProvidesPrerequisiteValidatedFaction@engrad:
 		Factions: england
 		Prerequisite: radar.england
@@ -777,6 +811,12 @@ DOME:
 	ProvidesPrerequisiteValidatedFaction@rusrad:
 		Factions: russia
 		Prerequisite: radar.russia
+	ProvidesPrerequisiteValidatedFaction@ukrrad:
+		Factions: ukraine
+		Prerequisite: radar.ukraine
+	ProvidesPrerequisiteValidatedFaction@irarad:
+		Factions: iraq
+		Prerequisite: radar.iraq
 	ProvidesPrerequisiteValidatedFaction@yurirad:
 		Factions: yuri
 		Prerequisite: radar.yuri
@@ -811,18 +851,18 @@ DOME:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		SelectTargetSpeechNotification: SelectTarget
-		PauseOnCondition: disabled || being-warped
+		PauseOnCondition: disabled || empdisable || being-warped
 		RequiresCondition: !build-incomplete
-	SpawnActorPowerCA@GpsScramble:
-		Actor: gps.scrambler
-		OrderName: gpsscramble
-		Icon: gpsscram
+	SpawnActorPowerCA@VeilOfWar:
+		Actor: veilofwar1
+		OrderName: veilofwar
+		Icon: veilofwar
 		IconPalette: chrometd
 		Prerequisites: ~radar.england, ~techlevel.unrestricted
 		ChargeInterval: 4500
-		LifeTime: 375
-		Name: GPS Scrambler
-		Description: \nShrouds the target area for a short time, reducing the vision\n    and weapon range of enemy units and defenses.
+		LifeTime: -1
+		Name: Veil of War
+		Description: \nCreates an expanding area of shroud, reducing the vision\n    and weapon range of enemy units and defenses.
 		LaunchSound: sscrambl.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -1162,7 +1202,7 @@ ATEK:
 	DummyGpsPower@FOG:
 		PauseOnCondition: disabled || being-warped
 		RequiresCondition: !gps-launched && fogenabled
-		Delay: 4500
+		Delay: 3000
 		AnimationDuration: 375
 		LaunchSpeechNotification: SatelliteLaunched
 		Condition: gps-launched
@@ -1189,19 +1229,19 @@ ATEK:
 		RequiresCondition: !being-warped
 		TargetTypes: SabInfiltrate
 	ProduceActorPowerCA@InitialSatelliteScan:
-		PauseOnCondition: disabled || being-warped
+		PauseOnCondition: disabled || empdisable || being-warped
 		Prerequisites: anyradar, ~!gps.satellite.firstscan, ~fogenabled
 		Name: Spy Satellite
 		Description: \nPeriodically reveals the entire map\n    for a short time (activated automatically).
 		Icon: gps
 		Actors: camera.satscan, gps.satellite.firstscan
 		Type: SpySatellite
-		ChargeInterval: 9750
+		ChargeInterval: 8250
 		OrderName: InitialSatelliteScanPower
 		AutoFire: True
 		DisplayTimerRelationships: Ally
 	ProduceActorPowerCA@SatelliteScan:
-		PauseOnCondition: disabled || being-warped
+		PauseOnCondition: disabled || empdisable || being-warped
 		Prerequisites: anyradar, ~gps.satellite, ~gps.satellite.firstscan, ~fogenabled
 		Name: Spy Satellite
 		Description: \nPeriodically reveals the entire map\n    for a short time (activated automatically).
@@ -1213,7 +1253,7 @@ ATEK:
 		AutoFire: True
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 	ProduceActorPowerCA@SatelliteScanNoFog:
-		PauseOnCondition: disabled || being-warped
+		PauseOnCondition: disabled || empdisable || being-warped
 		Prerequisites: anyradar, ~!fogenabled
 		Name: Spy Satellite
 		Description: \nPermanently reveals the entire map (activated automatically).
@@ -1690,11 +1730,18 @@ SILO:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
 
-^SovietAirPowers:
+^SovietRadarPowers:
+	ProvidesPrerequisiteValidatedFaction@paratroopers:
+		Factions: ukraine, iraq
+		Prerequisite: support.paratroopers
+	ProvidesPrerequisiteValidatedFaction@stormtroopers:
+		Factions: russia
+		Prerequisite: support.stormtroopers
 	ParatroopersPower@paratroopers:
 		OrderName: paratroopers
 		UnitType: halo.paradrop
 		Prerequisites: ~support.paratroopers, ~techlevel.low
+		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: paratroopers
 		ChargeInterval: 7500
 		Name: Paratroopers
@@ -1718,7 +1765,8 @@ SILO:
 	ParatroopersPower@Russianparatroopers:
 		OrderName: stormtroopers
 		UnitType: halo.paradrop
-		Prerequisites: ~russia.paratroopers, ~techlevel.high
+		Prerequisites: ~radar.russia, ~techlevel.high
+		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: stormtroopers
 		ChargeInterval: 9000
 		Name: Storm-troopers
@@ -1742,7 +1790,8 @@ SILO:
 	AirstrikePower@spyplane:
 		OrderName: spyplane
 		Icon: spyplane
-		Prerequisites: ~aircraft.soviet
+		Prerequisites: ~radar.soviet
+		PauseOnCondition: disabled || empdisable || being-warped
 		ChargeInterval: 3000
 		Name: Spy Plane
 		Description: \nDispatches a spy plane that reveals the target location\n    for a limited time.
@@ -1760,9 +1809,15 @@ SILO:
 		CircleSequence: circles
 		UseDirectionalTarget: true
 		DirectionArrowAnimation: paradirection
+
+^SovietBombingPowers:
+	ProvidesPrerequisiteValidatedFaction@parabombs:
+		Factions: russia, yuri
+		Prerequisite: support.parabombs
 	AirstrikePower@Russianparabombs:
 		OrderName: parabombs
 		Prerequisites: ~support.parabombs, ~techlevel.unrestricted
+		PauseOnCondition: empdisable || being-warped
 		Icon: parabombs
 		ChargeInterval: 7500
 		Name: Parabombs
@@ -1783,7 +1838,8 @@ SILO:
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@CarpetBomb:
 		OrderName: carpetbomb
-		Prerequisites: ~aircraft.ukraine, ~techlevel.unrestricted
+		Prerequisites: ~radar.ukraine, ~techlevel.unrestricted
+		PauseOnCondition: empdisable || being-warped
 		Icon: carpetbomb
 		ChargeInterval: 10500
 		Name: Carpet Bomb
@@ -1804,7 +1860,8 @@ SILO:
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@Iraqiparabombs:
 		OrderName: atombomb
-		Prerequisites: ~aircraft.iraq, ~techlevel.unrestricted
+		Prerequisites: ~radar.iraq, ~techlevel.unrestricted
+		PauseOnCondition: empdisable || being-warped
 		Icon: abombair
 		ChargeInterval: 10500
 		Name: Atomic Bomb
@@ -1825,10 +1882,11 @@ SILO:
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@MutaBomb:
 		OrderName: mutabomb
-		Prerequisites: ~aircraft.yuri, ~techlevel.unrestricted
+		Prerequisites: ~radar.yuri, ~techlevel.unrestricted
+		PauseOnCondition: empdisable || being-warped
 		Icon: mutabomb
 		IconPalette: scrin
-		ChargeInterval: 10500
+		ChargeInterval: 6750
 		Name: Genetic Mutation Bomb
 		Description: \nCalls in a Badger bomber which drops a genetic\n    mutation bomb on your target, transforming\n    infantry into Brutes under your control.
 		SelectTargetSpeechNotification: SelectTarget
@@ -1852,7 +1910,7 @@ HPAD:
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
-	Inherits@SOVIETAIRPOWERS: ^SovietAirPowers
+	Inherits@SOVIETBOMBINGPOWERS: ^SovietBombingPowers
 	Selectable:
 		Bounds: 48,48
 	HitShape:
@@ -1861,7 +1919,7 @@ HPAD:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 120
-		Prerequisites: anyradar, ~structures.ra, ~techlevel.infonly
+		Prerequisites: radarorrepair, ~structures.ra, ~techlevel.infonly
 		Description: Produces and reloads helicopters.
 	Valued:
 		Cost: 500
@@ -1921,9 +1979,6 @@ HPAD:
 	ProvidesPrerequisiteValidatedFaction@yuri:
 		Factions: yuri
 		Prerequisite: aircraft.yuri
-	ProvidesPrerequisiteValidatedFaction@parabombs:
-		Factions: russia, yuri
-		Prerequisite: support.parabombs
 	ProvidesPrerequisiteValidatedFaction@chinookvisible:
 		Factions: allies, england, france, germany, gdi, zocom, eagle, talon, arc, nod, blackh, legion, marked, shadow
 		Prerequisite: aircraft.chinookvisible
@@ -1936,12 +1991,6 @@ HPAD:
 	ProvidesPrerequisiteValidatedFaction@hind:
 		Factions: russia, ukraine, yuri
 		Prerequisite: aircraft.hind
-	ProvidesPrerequisiteValidatedFaction@paratroopers:
-		Factions: ukraine, iraq
-		Prerequisite: support.paratroopers
-	ProvidesPrerequisiteValidatedFaction@stormtroopers:
-		Factions: russia
-		Prerequisite: russia.paratroopers
 	ProvidesPrerequisite@buildingname:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
@@ -1990,17 +2039,15 @@ AFLD:
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
-	Inherits@SOVIETAIRPOWERS: ^SovietAirPowers
+	Inherits@SOVIETBOMBINGPOWERS: ^SovietBombingPowers
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 420,0,0, 420,-1024,0, 420,1024,0, -777,0,0, -777,-1024,0, -777,1024,0
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 130
-		Prerequisites: anyradar, ~structures.soviet, ~techlevel.low
+		Prerequisites: radarorrepair, ~structures.soviet, ~techlevel.low
 		Description: Produces and reloads aircraft.
-	TooltipExtras:
-		Attributes: • Special Ability: Spy Plane
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2044,15 +2091,6 @@ AFLD:
 	ProvidesPrerequisite@yuri:
 		Factions: yuri
 		Prerequisite: aircraft.yuri
-	ProvidesPrerequisite@parabombs:
-		Factions: russia, yuri
-		Prerequisite: support.parabombs
-	ProvidesPrerequisite@paratroopers:
-		Factions: ukraine, iraq
-		Prerequisite: support.paratroopers
-	ProvidesPrerequisite@stormtroopers:
-		Factions: russia
-		Prerequisite: russia.paratroopers
 	ProductionBar:
 		ProductionType: Aircraft
 	SupportPowerChargeBar:
@@ -2422,7 +2460,7 @@ KENN:
 		Bounds: 1024, 1024
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 175
+		BuildPaletteOrder: 205
 		Prerequisites: anypower, ~structures.soviet, ~techlevel.infonly
 		Description: Trains Attack Dogs.
 	Valued:
@@ -2540,8 +2578,6 @@ TENT:
 	ProvidesPrerequisite@usa:
 		Factions: usa
 		Prerequisite: infantry.usa
-	ProvidesPrerequisite@hazmat:
-		Prerequisite: infantry.hazmat
 	ProvidesPrerequisite@mech:
 		Prerequisite: infantry.mech
 	ProvidesPrerequisite@medi:
@@ -2611,6 +2647,8 @@ FIX:
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair
+	ProvidesPrerequisite@radarorrepair:
+		Prerequisite: radarorrepair
 	ProvidesPrerequisite@allowsmcv:
 		Prerequisite: vehicles.mcv
 	HitShape:
@@ -2863,6 +2901,14 @@ REPAIR:
 	Buildable:
 		Description: Service Depot/Repair Facility
 
+RADARORREPAIR:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Radar or Service Depot/Repair Facility
+	Buildable:
+		Description: Radar or Service Depot/Repair Facility
+
 VEHICLES.MCV:
 	AlwaysVisible:
 	Interactable:
@@ -2969,8 +3015,6 @@ PYLE:
 		Prerequisite: infantry.human
 	ProvidesPrerequisite@infantrytd:
 		Prerequisite: infantry.td
-	ProvidesPrerequisite@hazmat:
-		Prerequisite: infantry.hazmat
 	ProvidesPrerequisite@talon:
 		Factions: talon
 		Prerequisite: infantry.talon
@@ -3070,8 +3114,6 @@ HAND:
 		Prerequisite: infantry.human
 	ProvidesPrerequisite@infantrytd:
 		Prerequisite: infantry.td
-	ProvidesPrerequisite@hazmat:
-		Prerequisite: infantry.hazmat
 	ProvidesPrerequisite@blackh:
 		Factions: blackh
 		Prerequisite: infantry.blackh
@@ -3927,6 +3969,7 @@ HQ:
 	Inherits: ^BuildingTD
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@POWERDRAIN: ^PowerDrainableRadar
+	Inherits@GDIAIRPOWERS: ^GDIAirPowers
 	HitShape:
 		TargetableOffsets: 0,0,0, 0,512,0, 420,-598,256
 		Type: Rectangle
@@ -3947,7 +3990,7 @@ HQ:
 		IconPalette: chrometd
 		Description: Provides an overview of the battlefield.
 	TooltipExtras:
-		Attributes: • Requires power to operate
+		Attributes: • Requires power to operate\n• Detects nearby enemy vehicles, aircraft and structures in fog of war
 	Valued:
 		Cost: 1800
 	Tooltip:
@@ -3970,17 +4013,24 @@ HQ:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		MinRange: 6c0
-		Range: 10c0
+		MinRange: 5c0
+		Range: 6c0
 		RequiresCondition: !disabled
 		RevealGeneratedShroud: False
 	RevealsShroud@Offline:
 		Range: 5c0
 		RequiresCondition: disabled
 	RevealsShroud@GAPGEN:
-		Range: 6c0
+		Range: 5c0
 		RequiresCondition: !disabled
 	ProvidesRadar:
+		RequiresCondition: !jammed && !disabled && !being-warped
+	RangedGpsRadarProvider:
+		Range: 12c0
+		TargetTypes: Vehicle, Aircraft, Structure
+		RequiresCondition: !jammed && !disabled && !being-warped
+	WithRangeCircle:
+		Range: 12c0
 		RequiresCondition: !jammed && !disabled && !being-warped
 	WithBuildingBib:
 	InfiltrateForExploration:
@@ -3996,7 +4046,7 @@ HQ:
 		Description: \nReveals the targeted area for a short time.
 		LaunchSound: hacksat.aud
 		SelectTargetSpeechNotification: SelectTarget
-		PauseOnCondition: disabled || being-warped
+		PauseOnCondition: disabled || empdisable || being-warped
 		EffectImage: empty
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
@@ -4013,12 +4063,12 @@ HQ:
 		Actors: hack, hack, hack
 		LaunchSpeechNotification: ReinforcementsArrived
 		EndChargeSpeechNotification: Reinforce
-		PauseOnCondition: disabled || being-warped
+		PauseOnCondition: disabled || empdisable || being-warped
 	DropPodsPowerCA@Zocom:
 		OrderName: droppods
 		Cursor: ability
 		Prerequisites: ~radar.zocom, techlevel.high
-		PauseOnCondition: disabled || being-warped
+		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: droppods
 		IconPalette: chrometd
 		Name: Drop Pods
@@ -4075,7 +4125,7 @@ HQ:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
-		PauseOnCondition: disabled || being-warped
+		PauseOnCondition: disabled || empdisable || being-warped
 	AirReinforcementsPower@ShadowTeam:
 		OrderName: shadowteam
 		Prerequisites: ~radar.shadow, techlevel.unrestricted
@@ -4091,7 +4141,7 @@ HQ:
 		SquadOffset: -1024,1024,0
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
-		PauseOnCondition: disabled || being-warped
+		PauseOnCondition: disabled || empdisable || being-warped
 		LaunchSpeechNotification: ReinforcementsArrived
 		EndChargeSpeechNotification: Reinforce
 	Power:
@@ -4099,8 +4149,10 @@ HQ:
 	-PowerMultiplier@POWERDRAIN:
 	ValidFactions:
 		Factions: talon, zocom, eagle, arc, blackh, marked, legion, shadow
-	ProvidesPrerequisiteValidatedFaction@anyradar:
+	ProvidesPrerequisite@anyradar:
 		Prerequisite: anyradar
+	ProvidesPrerequisite@radarorrepair:
+		Prerequisite: radarorrepair
 	ProvidesPrerequisiteValidatedFaction@gdirad:
 		Factions: talon, zocom, eagle, arc
 		Prerequisite: radar.gdi
@@ -4166,7 +4218,7 @@ EYE:
 		BuildLimit: 1
 		Description: Provides radar and Orbital Ion Cannon support power.
 	TooltipExtras:
-		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Ion Cannon
+		Attributes: • Maximum 1 can be built\n• Requires power to operate\n• Special Ability: Ion Cannon\n• Detects nearby enemy vehicles, aircraft and structures in fog of war
 	Valued:
 		Cost: 2500
 	Tooltip:
@@ -4185,18 +4237,25 @@ EYE:
 	Armor:
 		Type: Wood
 	RevealsShroud:
-		MinRange: 6c0
-		Range: 10c0
+		MinRange: 5c0
+		Range: 6c0
 		RequiresCondition: !disabled
 		RevealGeneratedShroud: False
 	RevealsShroud@Offline:
 		Range: 5c0
 		RequiresCondition: disabled
 	RevealsShroud@GAPGEN:
-		Range: 6c0
+		Range: 5c0
 		RequiresCondition: !disabled
 	WithBuildingBib:
 	ProvidesRadar:
+		RequiresCondition: !jammed && !disabled && !being-warped
+	RangedGpsRadarProvider:
+		Range: 12c0
+		TargetTypes: Vehicle, Aircraft, Structure
+		RequiresCondition: !jammed && !disabled && !being-warped
+	WithRangeCircle:
+		Range: 12c0
 		RequiresCondition: !jammed && !disabled && !being-warped
 	InfiltrateForExploration:
 		Types: SpyInfiltrate, SabInfiltrate
@@ -4332,6 +4391,8 @@ REP:
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair
+	ProvidesPrerequisite@radarorrepair:
+		Prerequisite: radarorrepair
 	ProvidesPrerequisite@allowsmcv:
 		Prerequisite: vehicles.mcv
 	ProximityExternalCondition@AIRCRAFTREPAIR:
@@ -4344,7 +4405,8 @@ REP:
 ^GDIAirPowers:
 	SpawnActorPower@GDIEagleDropzone:
 		Actor: FLARE.dropzone
-		Prerequisites: ~aircraft.eagle, anyradar, ~techlevel.low
+		Prerequisites: ~radar.eagle, ~techlevel.low
+		PauseOnCondition: disabled || empdisable || being-warped
 		LifeTime: 280
 		OrderName: dropzoneeagle
 		Icon: orcaca
@@ -4360,7 +4422,8 @@ REP:
 		EffectPalette: tseffect-ignore-lighting-alpha75
 	ParatroopersPower@xodrop:
 		OrderName: xodrop
-		Prerequisites: ~aircraft.talon, ~techlevel.medium
+		Prerequisites: ~radar.talon, ~techlevel.medium
+		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: xodrop
 		ChargeInterval: 9750
 		Name: X-O Drop
@@ -4384,7 +4447,8 @@ REP:
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@uav:
 		OrderName: gdiuav
-		Prerequisites: aircraft.gdi, ~!aircraft.arc
+		Prerequisites: radar.gdi, ~!radar.arc
+		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: uavicon
 		ChargeInterval: 3750
 		Name: Recon Drone
@@ -4404,7 +4468,8 @@ REP:
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@uavST:
 		OrderName: gdiuavarc
-		Prerequisites: ~aircraft.arc
+		Prerequisites: ~radar.arc
+		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: uavicon
 		ChargeInterval: 3000
 		Name: Recon Drone
@@ -4422,9 +4487,12 @@ REP:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+
+^InterceptorsPower:
 	InterceptorPower@AirDef:
 		OrderName: interceptors
 		Prerequisites: ~aircraft.gdi, techlevel.unrestricted
+		PauseOnCondition: empdisable || being-warped
 		Icon: airsupport
 		ChargeInterval: 10500
 		Name: Interceptors
@@ -4451,7 +4519,7 @@ HPAD.TD:
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
-	Inherits@GDIAIRPOWERS: ^GDIAirPowers
+	Inherits@INTERCEPTORS: ^InterceptorsPower
 	RenderSprites:
 		Image: hpad2
 	HitShape:
@@ -4460,7 +4528,7 @@ HPAD.TD:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 120
-		Prerequisites: anyradar, ~structures.td, ~techlevel.infonly
+		Prerequisites: radarorrepair, ~structures.td, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Produces and reloads helicopters.
 	Valued:
@@ -4673,7 +4741,7 @@ AFLD.GDI:
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
-	Inherits@GDIAIRPOWERS: ^GDIAirPowers
+	Inherits@INTERCEPTORS: ^InterceptorsPower
 	RenderSprites:
 		Image: afldgdi
 	HitShape:
@@ -4682,10 +4750,8 @@ AFLD.GDI:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 130
-		Prerequisites: anyradar, ~structures.gdi, ~techlevel.high
+		Prerequisites: radarorrepair, ~structures.gdi, ~techlevel.high
 		Description: Produces and reloads aircraft.
-	TooltipExtras:
-		Attributes: • Special Ability: Recon Drone\n• Special Ability: Interceptors
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -5108,7 +5174,7 @@ SPEN.nod:
 		Name: Sub Pen
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 50
+		BuildPaletteOrder: 240
 		IconPalette: chrometd
 		Prerequisites: anypower, ~structures.nod, ~techlevel.navy, ~techlevel.low
 		Description: Produces and repairs\nsubmarines and transports.
@@ -5199,7 +5265,7 @@ SYRD.gdi:
 		InfiltratedNotification: BaseAttack
 	Buildable:
 		Queue: Building
-		BuildPaletteOrder: 40
+		BuildPaletteOrder: 230
 		Prerequisites: anypower, ~structures.gdi, ~techlevel.navy, ~techlevel.low
 		Description: Produces and repairs ships\nand transports.
 	Valued:

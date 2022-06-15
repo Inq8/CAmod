@@ -12,9 +12,8 @@
 		TrailImage: smokey
 		Shadow: True
 		HorizontalRateOfTurn: 20
-		RangeLimit: 6c0
+		RangeLimit: 7c0
 		PointDefenseType: Missile
-		LockOnProbability: 80
 		LockOnInaccuracy: 128
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
@@ -44,13 +43,10 @@
 ^AirToGroundMissile:
 	Inherits: ^AntiGroundMissile
 	Projectile: MissileCA
-		LockOnProbability: 95
 
 ^AntiAirMissile:
 	Inherits: ^AntiGroundMissile
 	ValidTargets: Air, AirSmall
-	Projectile: MissileCA
-		LockOnProbability: 95
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
@@ -86,7 +82,7 @@
 		Speed: 384
 		HorizontalRateOfTurn: 40
 		LockOnInaccuracy: 0
-		RangeLimit: 12c0
+		RangeLimit: 13c0
 		AllowSnapping: true
 
 Maverick:
@@ -124,7 +120,6 @@ MaverickAA:
 Sidewinder:
 	Inherits: MaverickAA
 	Report: sidewinder.aud
-	Range: 7c0
 	Projectile: MissileCA
 		ContrailLength: 10
 		ContrailWidth: 42
@@ -253,8 +248,6 @@ SeismicMissileDummy:
 
 Dragon:
 	Inherits: ^AntiGroundMissile
-	Projectile: MissileCA
-		LockOnProbability: 95
 
 Dragon.TD:
 	Inherits: Dragon
@@ -287,7 +280,7 @@ Dragon.TibCore:
 	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
 	Projectile: MissileCA
 		Image: tibcoremsl
-		RangeLimit: 8c0
+		RangeLimit: 9c0
 		ContrailLength: 15
 		ContrailColor: 33aa00aa
 		ContrailWidth: 0c40
@@ -311,7 +304,7 @@ DragonGI:
 	Report: iggiat2a.aud, iggiat2b.aud
 	ReloadDelay: 40
 	Projectile: MissileCA
-		RangeLimit: 7c0
+		RangeLimit: 8c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 4500
 
@@ -321,7 +314,7 @@ DragonGI.CRYO:
 	Report: iggiat2a.aud, iggiat2b.aud
 	ReloadDelay: 40
 	Projectile: MissileCA
-		RangeLimit: 7c0
+		RangeLimit: 8c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 4500
 
@@ -374,7 +367,7 @@ HellfireAG:
 	Projectile: MissileCA
 		Speed: 256
 		HorizontalRateOfTurn: 40
-		RangeLimit: 8c512
+		RangeLimit: 10c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 4500
 		Versus:
@@ -421,7 +414,6 @@ HellfireAG.Harrier:
 		ContrailLength: 10
 		Inaccuracy: 512
 		LockOnInaccuracy: 512
-		LockOnProbability: 90
 	Warhead@1Dam: SpreadDamage
 		Spread: 448
 		Damage: 1600
@@ -433,7 +425,7 @@ HellfireAG.Harrier:
 			Light: 60
 			Heavy: 30
 			Concrete: 30
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: kaboom15.aud
@@ -512,16 +504,16 @@ MammothTusk:
 		Spread: 256
 		Versus:
 			None: 100
-			Light: 45
-			Heavy: 45
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+			Light: 50
+			Heavy: 50
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@2Dam: SpreadDamage
 		Damage: 2000
 		Spread: 128
 		Falloff: 100, 50, 14, 0
 		ValidTargets: AirSmall
 		ValidRelationships: Enemy, Neutral
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: kaboom15.aud
 		ValidTargets: Ground, Trees
@@ -761,6 +753,7 @@ StingerGTWR:
 			Light: 70
 			Heavy: 60
 			Concrete: 70
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
 		Explosions: frag_3
 		ExplosionPalette: temptd
@@ -777,7 +770,7 @@ APTusk:
 	Projectile: MissileCA
 		Speed: 298
 		HorizontalRateOfTurn: 40
-		RangeLimit: 7c204
+		RangeLimit: 8c0
 		LockOnInaccuracy: 256
 	Warhead@1Dam: SpreadDamage
 		Damage: 8000
@@ -800,7 +793,6 @@ TOW:
 		HorizontalRateOfTurn: 20
 		RangeLimit: 16c0
 		PointDefenseType: Missile
-		LockOnProbability: 100
 		LockOnInaccuracy: 0
 		ContrailLength: 17
 		ContrailColor: ccccccaa
@@ -969,7 +961,7 @@ SCUD:
 			Light: 70
 			Heavy: 40
 			Concrete: 50
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
 		Explosions: building, building2
 	Warhead@4EffWater: CreateEffect
@@ -991,7 +983,7 @@ V3Weapon:
 			Light: 70
 			Heavy: 40
 			Concrete: 60
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
 		Explosions: building, building2
 		ValidTargets: Ground, Air, Ship, Trees, ICBM
@@ -1026,6 +1018,7 @@ KatyushaRockets:
 			Concrete: 65
 			Light: 80
 			Heavy: 45
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
 		Explosions: frag_3
 		ExplosionPalette: temptd
@@ -1064,7 +1057,7 @@ HonestJohn:
 			Light: 80
 			Heavy: 40
 			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigated
 	Warhead@2Dam: SpreadDamage
 		Spread: 512
 		Damage: 500
@@ -1077,7 +1070,7 @@ HonestJohn:
 			Light: 80
 			Heavy: 40
 			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigated
 	Warhead@3Dam: SpreadDamage
 		Spread: 512
 		Damage: 500
@@ -1090,7 +1083,7 @@ HonestJohn:
 			Light: 80
 			Heavy: 40
 			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigated
 	Warhead@4Dam: SpreadDamage
 		Spread: 512
 		Damage: 500
@@ -1103,7 +1096,7 @@ HonestJohn:
 			Light: 80
 			Heavy: 40
 			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigated
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Eff: CreateEffect
@@ -1151,9 +1144,9 @@ BikeRocketsAA:
 	Burst: 2
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
-		Damage: 3000
+		Damage: 3600
 	Warhead@2Dam: SpreadDamage
-		Damage: 3000
+		Damage: 3600
 
 BikeRockets.TibCore:
 	Inherits: BikeRockets
@@ -1164,7 +1157,7 @@ BikeRockets.TibCore:
 		ContrailLength: 15
 		ContrailColor: 33aa00aa
 		ContrailWidth: 0c40
-		RangeLimit: 8c0
+		RangeLimit: 9c0
 	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 4400
@@ -1188,9 +1181,9 @@ BikeRocketsAA.TibCore:
 		ContrailColor: 33aa00aa
 		ContrailWidth: 0c40
 	Warhead@1Dam: SpreadDamage
-		Damage: 3300
+		Damage: 3960
 	Warhead@2Dam: SpreadDamage
-		Damage: 3300
+		Damage: 3960
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: tibcorehit1.aud, tibcorehit2.aud, tibcorehit3.aud
 	Warhead@tib: CreateEffect
@@ -1220,9 +1213,9 @@ IFVRocketsAA:
 	Burst: 2
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
-		Damage: 3500
+		Damage: 4200
 	Warhead@2Dam: SpreadDamage
-		Damage: 3500
+		Damage: 4200
 
 IFVRocketsE:
 	Inherits: IFVRockets
@@ -1256,18 +1249,18 @@ IFVRocketsAAE:
 	Projectile: MissileCA
 		ContrailLength: 10
 	Warhead@1Dam: SpreadDamage
-		Damage: 4000
+		Damage: 4800
 	Warhead@2Dam: SpreadDamage
-		Damage: 4000
+		Damage: 4800
 
 IFVRocketsAAE.CRYO:
 	Inherits: IFVRocketsAAE
 	Projectile: MissileCA
 		Image: cryomiss
 	Warhead@1Dam: SpreadDamage
-		Damage: 3400
+		Damage: 4100
 	Warhead@2Dam: SpreadDamage
-		Damage: 3400
+		Damage: 4100
 	Warhead@3Eff: CreateEffect
 		Explosions: cryohit
 		ExplosionPalette: ra2effect-ignore-lighting-alpha75
@@ -1307,7 +1300,7 @@ IFVRocketsAAE.CRYO:
 			Light: 72
 			Heavy: 35
 			Concrete: 72
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: kaboom15.aud
@@ -1324,7 +1317,7 @@ IFVRocketsAAE.CRYO:
 	Projectile: MissileCA
 		ContrailLength: 15
 	Warhead@1Dam: SpreadDamage
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated
 
 227mm.Hypersonic:
 	Inherits: 227mm.upg
@@ -1357,7 +1350,7 @@ IFVRocketsAAE.CRYO:
 
 227mm.Hailstorm:
 	Inherits: 227mm.upg
-	Range: 9c0
+	Range: 10c0
 	Report: hailstormmissile1.aud, hailstormmissile2.aud
 	Burst: 6
 	BurstDelays: 6
@@ -1390,12 +1383,12 @@ IFVRocketsAAE.CRYO:
 		CruiseAltitude: 2c0
 		RangeLimit: 7c512
 	Warhead@1Dam: SpreadDamage
-		Damage: 1400
+		Damage: 2200
 		Falloff: 100, 37, 14, 5, 0
 		Spread: 0c128
 		-Range:
 	Warhead@2Dam: SpreadDamage
-		Damage: 1400
+		Damage: 2200
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: xplos.aud
 
@@ -1411,9 +1404,9 @@ IFVRocketsAAE.CRYO:
 		ContrailLength: 15
 		RangeLimit: 8c512
 	Warhead@1Dam: SpreadDamage
-		Damage: 1700
+		Damage: 2650
 	Warhead@2Dam: SpreadDamage
-		Damage: 1700
+		Damage: 2650
 
 227mmAA.Hypersonic:
 	Inherits: 227mmAA.upg
@@ -1469,9 +1462,9 @@ StnkMissileAA:
 		Speed: 298
 		RangeLimit: 9c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 4000
+		Damage: 4800
 	Warhead@2Dam: SpreadDamage
-		Damage: 4000
+		Damage: 4800
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: xplos.aud
 
@@ -1487,7 +1480,7 @@ StnkMissile.TibCore:
 		ContrailLength: 15
 		ContrailColor: 33aa00aa
 		ContrailWidth: 0c40
-		RangeLimit: 8c0
+		RangeLimit: 9c0
 	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 3850
@@ -1512,9 +1505,9 @@ StnkMissileAA.TibCore:
 		ContrailWidth: 0c40
 	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 2800
+		Damage: 3360
 	Warhead@2Dam: SpreadDamage
-		Damage: 2800
+		Damage: 3360
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: tibcorehit1.aud, tibcorehit2.aud, tibcorehit3.aud
 	Warhead@tib: CreateEffect
@@ -1583,9 +1576,9 @@ Rah66AG:
 			Wood: 60
 			Concrete: 30
 			Light: 55
-			Heavy: 15
+			Heavy: 20
 			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: caneon

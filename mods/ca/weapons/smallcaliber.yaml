@@ -48,9 +48,9 @@ FLAK-23-AA:
 	Range: 7c512
 	Report: flak1.aud, flak2.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 1250
+		Damage: 1500
 	Warhead@2Dam: SpreadDamage
-		Damage: 1250
+		Damage: 1500
 
 FLAK-23-AG:
 	Inherits: ^AACannon
@@ -133,9 +133,9 @@ MGatt:
 	-Report:
 	Range: 7c512
 	Warhead@1Dam: SpreadDamage
-		Damage: 560
+		Damage: 665
 	Warhead@2Dam: SpreadDamage
-		Damage: 560
+		Damage: 665
 	Warhead@2Eff: CreateEffect
 		ValidTargets: Air, AirSmall
 		ImpactSoundChance: 20
@@ -528,7 +528,7 @@ M60mgXO:
 	Inherits: M60mgTD
 	Range: 5c0
 	Burst: 2
-	ReloadDelay: 35
+	ReloadDelay: 40
 	Warhead@1Dam: SpreadDamage
 		Damage: 2500
 	-Report:
@@ -565,7 +565,11 @@ M60mgIFV:
 
 M60mgMD:
 	Inherits: M60mgTD
+	ReloadDelay: 40
+
+M60mgMD.Attached:
 	Range: 4c768
+	Inherits: M60mgMD
 
 MGattG:
 	Inherits: ^HeavyMG
@@ -671,6 +675,8 @@ MP5:
 	Range: 6c0
 	Warhead@1Dam: SpreadDamage
 		Versus:
+			Light: 35
+			Heavy: 15
 			Wood: 5
 			Concrete: 5
 	Warhead@2Eff: CreateEffect
@@ -720,8 +726,6 @@ SNIPER:
 	ReloadDelay: 120
 	Range: 7c0
 	Report: snipe.aud
-	ValidTargets: Ground, Infantry, Barrel
-	InvalidTargets: Structure, Vehicle, Ship
 	Projectile: InstantHit
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
@@ -731,7 +735,8 @@ SNIPER:
 			Wood: 1
 			Concrete: 1
 			Brick: 1
-		ValidTargets: Barrel, Infantry
+			Heavy: 2
+			Light: 2
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piff
@@ -741,12 +746,19 @@ SNIPER:
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
 
+SNIPER.nonvehicle:
+	Inherits: SNIPER
+	InvalidTargets: Vehicle, Ship
+	Warhead@1Dam: SpreadDamage
+		InvalidTargets: Vehicle, Ship
+
 SNIPER.dummy:
 	Inherits: SNIPER
 	-Report:
 	-Warhead@1Dam:
 	-Warhead@2Eff:
 	-Warhead@3EffWater:
+	Warhead@1Dum: Dummy
 
 SNIPERE:
 	Inherits: SNIPER
@@ -757,7 +769,6 @@ SNIPER.vehicle:
 	Range: 7c0
 	Report: ijarwe1a.aud
 	ValidTargets: Vehicle, Ship
-	InvalidTargets: Structure, Infantry
 	Projectile: InstantHit
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
@@ -807,6 +818,9 @@ SNIPER.vehicleElite:
 
 SniperIFVGun:
 	Inherits: SNIPER.vehicle
+	-ValidTargets:
+	Warhead@1Dam: SpreadDamage
+		-ValidTargets:
 
 CommandoIFVGun:
 	Inherits: SMG

@@ -98,12 +98,23 @@ namespace OpenRA.Mods.CA.Traits
 		int conditionTicks = 0;
 
 		int token = Actor.InvalidConditionToken;
+		IPortableChronoModifier[] modifiers;
 
-		public PortableChronoCA(Actor self, PortableChronoCAInfo info)
+		public int ChargeDelay { get; private set; }
+		public int MaxDistance { get; private set; }
+
+		public PortableChronoCA(PortableChronoCAInfo info)
 			: base(info)
 		{
 			Info = info;
-			move = self.Trait<IMove>();
+			move = self.Trait<IMove>();		
+			ChargeDelay = Info.ChargeDelay;
+			MaxDistance = Info.MaxDistance;
+		}
+
+		protected override void Created(Actor self)
+		{
+			modifiers = self.TraitsImplementing<IPortableChronoModifier>().ToArray();
 		}
 
 		void ITick.Tick(Actor self)
@@ -153,7 +164,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			if (order.OrderString == "PortableChronoTeleport" && CanTeleport && order.Target.Type != TargetType.Invalid)
 			{
-				var maxDistance = Info.HasDistanceLimit ? Info.MaxDistance : (int?)null;
+				var maxDistance = Info.HasDistanceLimit ? MaxDistance : (int?)null;
 				if (!order.Queued)
 					self.CancelActivity();
 
@@ -186,7 +197,15 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void ResetChargeTime()
 		{
-			chargeTick = Info.ChargeDelay;
+			chargeTick = ChargeDelay;
+		}
+
+		public void UpdateModifiers()
+		{
+			MaxDistance = OpenRA.Mods.Common.Util.ApplyPercentageModifiers(Info.MaxDistance, modifiers.Select(m => m.GetRangeModifier()));
+			var chargePerc = Info.ChargeDelay > 0 ? (float)chargeTick / ChargeDelay : 1;
+			ChargeDelay = OpenRA.Mods.Common.Util.ApplyPercentageModifiers(Info.ChargeDelay, modifiers.Select(m => m.GetCooldownModifier()));
+			chargeTick = chargeTick > 0 ? (int)(ChargeDelay * chargePerc) : 0;
 		}
 
 		public bool CanTeleport => !IsTraitDisabled && !IsTraitPaused && chargeTick <= 0;
@@ -196,7 +215,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled)
 				return 0f;
 
-			return (float)(Info.ChargeDelay - chargeTick) / Info.ChargeDelay;
+			return (float)(ChargeDelay - chargeTick) / ChargeDelay;
 		}
 
 		Color ISelectionBar.GetColor() { return Color.Magenta; }

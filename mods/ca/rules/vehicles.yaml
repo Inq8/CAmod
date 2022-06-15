@@ -60,7 +60,7 @@ KATY:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 171
+		BuildPaletteOrder: 61
 		IconPalette: chrometd
 		Prerequisites: ~vehicles.soviet, ~!v2.upgrade, ~techlevel.medium
 		Description: Long-range rocket artillery.
@@ -109,7 +109,7 @@ KATY:
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 50
+		BuildPaletteOrder: 40
 		Prerequisites: ~vehicles.allies, ~techlevel.low
 		Description: Fast tank, good for scouting.
 	TooltipExtras:
@@ -174,7 +174,7 @@ KATY:
 	Inherits@SLOWCRUSH: ^SlightlySlowedByCrushing
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 70
+		BuildPaletteOrder: 30
 		Prerequisites: ~vehicles.2tnk, ~techlevel.low
 		Description: Allied main battle tank.
 	TooltipExtras:
@@ -501,7 +501,7 @@ GTNK.squad:
 	Inherits@SLOWCRUSH: ^SlightlySlowedByCrushing
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 90
+		BuildPaletteOrder: 32
 		Prerequisites: ~!iraqtank.upgrade, ~!lasher.upgrade, ~vehicles.3tnk, ~techlevel.low
 		Description: Soviet main battle tank with dual cannons.
 	TooltipExtras:
@@ -643,7 +643,7 @@ GTNK.squad:
 		Image: 3tnki
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 91
+		BuildPaletteOrder: 33
 		Prerequisites: ~iraqtank.upgrade, ~vehicles.3tnk, ~techlevel.low
 	-TooltipExtras:
 	-TooltipExtras@LASHER:
@@ -700,7 +700,7 @@ GTNK.squad:
 		Image: 3tnky
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 91
+		BuildPaletteOrder: 34
 		Prerequisites: ~lasher.upgrade, ~vehicles.3tnk, ~techlevel.low
 		Description: Heavy tank with infantry crushing improvements.
 	-TooltipExtras:
@@ -911,7 +911,7 @@ ARTY:
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 100
+		BuildPaletteOrder: 60
 		Prerequisites: ~vehicles.allies, ~techlevel.medium
 		Description: Long-range artillery.
 	TooltipExtras:
@@ -961,7 +961,7 @@ ARTY.nod:
 	WithDamageOverlay:
 		Image: smoke_mtd
 	Buildable:
-		BuildPaletteOrder: 101
+		BuildPaletteOrder: 62
 		IconPalette: chrometd
 		Prerequisites: ~vehicles.nod, ~!howi.upgrade, ~techlevel.medium
 	Armament:
@@ -976,7 +976,7 @@ HOWI:
 	Tooltip:
 		Name: Howitzer
 	Buildable:
-		BuildPaletteOrder: 102
+		BuildPaletteOrder: 63
 		Prerequisites: ~vehicles.nod, ~howi.upgrade, ~techlevel.medium
 	-AttackFrontal:
 	AttackTurreted:
@@ -1355,6 +1355,21 @@ HARV:
 		Actors: c1,c7,c10
 		Probability: 5
 		RequiresCondition: !being-warped
+	GrantConditionOnPrerequisite@GSHIELD:
+		Condition: pointdef-upgrade
+		Prerequisites: pointdef.upgrade
+	TimedDamageMultiplier@GSHIELD:
+		ActiveCondition: gshield
+		ChargingColor: 008888
+		DrainingColor: 00ffff
+		Modifier: 25
+		Duration: 75
+		ChargeTime: 375
+		ActivateSound: gshieldup.aud
+		DeactivateSound: gshielddown.aud
+		RequiresCondition: pointdef-upgrade
+	WithIdleOverlay@NSHIELD:
+		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
 
 HARV.Chrono:
 	Inherits: HARV
@@ -1503,7 +1518,7 @@ APC:
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 40
+		BuildPaletteOrder: 50
 		Prerequisites: ~vehicles.allies, ~techlevel.low
 		Description: Tough infantry transport.
 	TooltipExtras:
@@ -1679,9 +1694,8 @@ MGG:
 		BuildPaletteOrder: 380
 		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
 		BuildDurationModifier: 50
-		Description: Regenerates the shroud nearby, obscuring the area.
+		Description: Regenerates the shroud nearby, obscuring enemy vision.\n  Can channel the effect to reduce enemy weapon range\n  and create persisting areas that do the same.
 	TooltipExtras:
-		Weaknesses: • Unarmed
 		Attributes: • Special Ability: Toggle Gap Generator
 	Valued:
 		Cost: 1000
@@ -1719,11 +1733,30 @@ MGG:
 		RequiresCondition: !being-warped
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
-	AttackOmni:
-	GuardsSelection:
-		RequiresCondition: !stance-attackanything
 	GrantConditionOnDeploy:
 		DeployedCondition: mgg-disabled
+	Armament@PRIMARY:
+		Weapon: MobileGapBeam
+		LocalOffset: 0, 0, 200
+		MuzzleSequence: muzzle
+		PauseOnCondition: cooldown
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: MobileVeilSpawner
+		LocalOffset: 0, 0, 200
+		PauseOnCondition: charged < 7
+		ReloadingCondition: cooldown
+	WithMuzzleOverlay:
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
+	GrantConditionOnAttack@charge:
+		Condition: charged
+		IsCyclic: true
+		RevokeDelay: 25
+		MaximumInstances: 7
+		RevokeAll: true
+	Turreted:
+		Offset: -299,0,171
 
 MRJ:
 	Inherits: ^Vehicle
@@ -1831,7 +1864,7 @@ MSG:
 		DeployedCondition: deployed
 		UndeployedCondition: undeployed
 		Facing: 368
-		AllowedTerrainTypes: Clear, Road, Rough
+		AllowedTerrainTypes: Clear, Road, Rough, Ore, Gems, Tiberium, BlueTiberium
 		DeploySounds: placbldg.aud
 		UndeploySounds: clicky1.aud
 		UndeployOnMove: true
@@ -2090,7 +2123,7 @@ CTNK:
 		FacingTolerance: 0
 	PortableChronoCA:
 		ChargeDelay: 375
-		MaxDistance: 18
+		MaxDistance: 16
 		RequiresCondition: !empdisable && !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -2099,6 +2132,13 @@ CTNK:
 	ProductionCostMultiplier@GermanyBonus:
 		Multiplier: 90
 		Prerequisites: vehicles.germany
+	PortableChronoMultiplier@TEMPORALFLUX:
+		RangeModifier: 125
+		CooldownModifier: 80
+		RequiresCondition: tflx-upgrade
+	GrantConditionOnPrerequisite@TEMPORALFLUX:
+		Condition: tflx-upgrade
+		Prerequisites: tflx.upgrade
 
 QTNK:
 	Inherits: ^Tank
@@ -2262,6 +2302,22 @@ HMMV:
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	GrantConditionOnPrerequisite@GSHIELD:
+		Condition: pointdef-upgrade
+		Prerequisites: pointdef.upgrade
+	TimedDamageMultiplier@GSHIELD:
+		ActiveCondition: gshield
+		ChargingColor: 008888
+		DrainingColor: 00ffff
+		Modifier: 25
+		Duration: 75
+		ChargeTime: 375
+		ActivateSound: gshieldup.aud
+		DeactivateSound: gshielddown.aud
+		RequiresCondition: pointdef-upgrade
+	WithIdleOverlay@NSHIELD:
+		Image: nshield-overlay-sm
+		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
 	UpgradeableTo:
 		Actors: hmmv.tow
 
@@ -2346,37 +2402,22 @@ GDRN:
 		Range: 6c0
 		DetectionTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
-	GrantConditionOnDeploy@GSHIELD:
-		DeployedCondition: gshield
-		RequiresCondition: gshield-upgrade && (ammo || gshield)
-		SmartDeploy: True
-		DeploySounds: gshieldup.aud
-		UndeploySounds: gshielddown.aud
 	GrantConditionOnPrerequisite@GSHIELD:
-		Condition: gshield-upgrade
-		Prerequisites: gshield.upgrade
+		Condition: pointdef-upgrade
+		Prerequisites: pointdef.upgrade
+	TimedDamageMultiplier@GSHIELD:
+		ActiveCondition: gshield
+		ChargingColor: 008888
+		DrainingColor: 00FFFF61
+		Modifier: 25
+		Duration: 75
+		ChargeTime: 375
+		ActivateSound: gshieldup.aud
+		DeactivateSound: gshielddown.aud
+		RequiresCondition: pointdef-upgrade
 	WithIdleOverlay@NSHIELD:
 		Image: nshield-overlay-sm
 		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
-	DamageMultiplier@NSHIELD:
-		RequiresCondition: nshield || gshield
-		Modifier: 60
-	PeriodicExplosion@GSHIELD:
-		Weapon: GuardianShieldUse
-		RequiresCondition: gshield && ammo
-		AmmoPoolName: gshield
-	AmmoPool@GSHIELD:
-		Name: gshield
-		Armaments: gshield
-		InitialAmmo: 1
-		AmmoCondition: ammo
-	ReloadAmmoPoolCA@GSHIELD:
-		AmmoPool: gshield
-		Delay: 250
-		Count: 1
-		ShowSelectionBar: true
-		SelectionBarColor: 00ffff
-		RequiresCondition: !gshield
 	UpgradeableTo:
 		Actors: gdrn.tow
 
@@ -2469,7 +2510,7 @@ APC2:
 			shadow: apc2.nod
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 41
+		BuildPaletteOrder: 51
 		Prerequisites: ~vehicles.td, ~!vulcan.upgrade, ~vehicles.apc2, ~techlevel.low
 		IconPalette: chrometd
 		Description: Tough infantry transport.
@@ -2708,7 +2749,7 @@ VULC:
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 42
+		BuildPaletteOrder: 52
 		Prerequisites: ~vehicles.gdi, ~vulcan.upgrade, ~techlevel.high
 		IconPalette: chrometd
 		Description: Tough infantry transport, armed with a powerful chaingun.
@@ -2839,7 +2880,7 @@ LTNK:
 	RenderSprites:
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 60
+		BuildPaletteOrder: 37
 		IconPalette: chrometd
 		Prerequisites: ~vehicles.ltnk, ~techlevel.low
 		Description: Fast, light tank.
@@ -2913,8 +2954,8 @@ MTNK:
 			shadow: mtnk.nod
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 80
-		Prerequisites: ~!drone.upgrade, ~vehicles.mtnk, ~techlevel.low
+		BuildPaletteOrder: 35
+		Prerequisites: ~!bdrone.upgrade, ~vehicles.mtnk, ~techlevel.low
 		IconPalette: chrometd
 		Description: Main battle tank.
 	TooltipExtras:
@@ -2958,17 +2999,18 @@ MTNK:
 		Weapon: PointLaser
 		LocalOffset: 0,10,90
 		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: pointlaser-upgrade
+		RequiresCondition: pointdef-upgrade
+		ReloadingCondition: pointlaser-charging
 		ForceTargetRelationships: Enemy
 	AttackTurreted:
 		Turrets: primary, secondary
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret@default:
-		RequiresCondition: !pointlaser-upgrade
+		RequiresCondition: !pointdef-upgrade
 	WithSpriteTurret@pointlaser:
 		Sequence: turretpd
-		RequiresCondition: pointlaser-upgrade
+		RequiresCondition: pointdef-upgrade
 	SpawnActorOnDeath:
 		Actor: MTNK.Husk
 		RequiresCondition: !being-warped
@@ -2979,11 +3021,21 @@ MTNK:
 	PointDefense:
 		Armament: secondary
 		PointDefenseTypes: Missile
-		RequiresCondition: pointlaser-upgrade
+		RequiresCondition: pointdef-upgrade && !gshield && !gshield-charging
 		ValidRelationships: Enemy
-	GrantConditionOnPrerequisite@POINTL:
-		Condition: pointlaser-upgrade
-		Prerequisites: pointlaser.upgrade
+	GrantConditionOnPrerequisite@POINTDEF:
+		Condition: pointdef-upgrade
+		Prerequisites: pointdef.upgrade
+	TimedDamageMultiplier@GSHIELD:
+		ActiveCondition: gshield
+		ChargingCondition: gshield-charging
+		ShowSelectionBar: false
+		Modifier: 25
+		Duration: 2
+		ChargeTime: 100
+		RequiresCondition: pointdef-upgrade && !pointlaser-charging
+	WithIdleOverlay@NSHIELD:
+		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
 
 MTNK.Drone:
 	Inherits: MTNK
@@ -2994,8 +3046,8 @@ MTNK.Drone:
 		-FactionImages:
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 81
-		Prerequisites: ~drone.upgrade, ~vehicles.mtnk, ~techlevel.low
+		BuildPaletteOrder: 36
+		Prerequisites: ~bdrone.upgrade, ~vehicles.mtnk, ~techlevel.low
 		IconPalette: chrometd
 		Description: Remotely piloted battle tank.
 	TooltipExtras:
@@ -3055,13 +3107,13 @@ MDRN:
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
 		Attributes: • Attaches to vehicles to provide support and repairs
 	Valued:
-		Cost: 200
+		Cost: 225
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Selectable:
 		DecorationBounds: 682, 682, 0, -341
 	Health:
-		HP: 15000
+		HP: 13000
 	Armor:
 		Type: Light
 	RevealsShroud:
@@ -3159,7 +3211,7 @@ MDRN.Attached:
 		MaxDelay: 75
 		TurnWhileAircraftPaused: true
 	Armament@PRIMARY:
-		Weapon: M60mgTD
+		Weapon: M60mgMD.Attached
 		LocalOffset: -500,0,72
 	DamageMultiplier@ATTACHED:
 		Modifier: 25
@@ -3184,7 +3236,7 @@ HTNK:
 		Queue: Vehicle
 		BuildPaletteOrder: 300
 		IconPalette: chrometd
-		Prerequisites: ~!drone.upgrade, gtek, ~vehicles.htnk, ~!ionmam.upgrade, ~!hovermam.upgrade, ~techlevel.high
+		Prerequisites: ~!mdrone.upgrade, gtek, ~vehicles.htnk, ~!ionmam.upgrade, ~!hovermam.upgrade, ~techlevel.high
 		Description: Big and slow tank with anti-air capability.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -3249,6 +3301,38 @@ HTNK:
 		Actors: htnk.drone, htnk.ion, htnk.hover
 	WithIdleOverlay@MINDCONTROL:
 		Offset: 0,0,512
+	# For upgrading on Repair Facility
+	Rearmable@UPGRADE:
+		RearmActors: fix, rep, srep
+		AmmoPools: upgrade
+	AmmoPool@UPGRADE:
+		Name: upgrade
+		Armaments: none
+		ReloadDelay: 5000
+	RearmsToUpgrade@IONUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: htnk.ion
+		RequiresCondition: ionmam-upgrade
+	RearmsToUpgrade@HOVERUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: htnk.hover
+		RequiresCondition: hovermam-upgrade
+	RearmsToUpgrade@DRONEUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: htnk.drone
+		RequiresCondition: mdrone-upgrade
+	GrantConditionOnPrerequisite@IONUPGRADE:
+		Condition: ionmam-upgrade
+		Prerequisites: ionmam.upgrade
+	GrantConditionOnPrerequisite@HOVERUPGRADE:
+		Condition: hovermam-upgrade
+		Prerequisites: hovermam.upgrade
+	GrantConditionOnPrerequisite@DRONEUPGRADE:
+		Condition: mdrone-upgrade
+		Prerequisites: mdrone.upgrade
 
 HTNK.Ion:
 	Inherits: HTNK
@@ -3264,6 +3348,14 @@ HTNK.Ion:
 	SpawnActorOnDeath:
 		Actor: HTNK.Ion.Husk
 	-UpgradeableTo:
+	-Rearmable@UPGRADE:
+	-AmmoPool@UPGRADE:
+	-RearmsToUpgrade@IONUPGRADE:
+	-RearmsToUpgrade@HOVERUPGRADE:
+	-RearmsToUpgrade@DRONEUPGRADE:
+	-GrantConditionOnPrerequisite@IONUPGRADE:
+	-GrantConditionOnPrerequisite@HOVERUPGRADE:
+	-GrantConditionOnPrerequisite@DRONEUPGRADE:
 
 HTNK.Hover:
 	Inherits: HTNK
@@ -3300,6 +3392,14 @@ HTNK.Hover:
 		Actor: HTNK.Hover.Husk
 		RequiresCondition: !being-warped && !onwater
 	-UpgradeableTo:
+	-Rearmable@UPGRADE:
+	-AmmoPool@UPGRADE:
+	-RearmsToUpgrade@IONUPGRADE:
+	-RearmsToUpgrade@HOVERUPGRADE:
+	-RearmsToUpgrade@DRONEUPGRADE:
+	-GrantConditionOnPrerequisite@IONUPGRADE:
+	-GrantConditionOnPrerequisite@HOVERUPGRADE:
+	-GrantConditionOnPrerequisite@DRONEUPGRADE:
 
 HTNK.Drone:
 	Inherits: HTNK
@@ -3309,7 +3409,7 @@ HTNK.Drone:
 		Queue: Vehicle
 		BuildPaletteOrder: 300
 		IconPalette: chrometd
-		Prerequisites: ~drone.upgrade, gtek, ~vehicles.htnk, ~techlevel.high
+		Prerequisites: ~mdrone.upgrade, gtek, ~vehicles.htnk, ~techlevel.high
 		Description: Remotely piloted heavy tank with anti-air capability.
 	TooltipExtras:
 		Attributes: • Can crush concrete walls\n• Requires active radar communication
@@ -3350,6 +3450,14 @@ HTNK.Drone:
 	-RejectsOrders@BERSERK:
 	-GrantCondition@BERSERK:
 	-UpgradeableTo:
+	-Rearmable@UPGRADE:
+	-AmmoPool@UPGRADE:
+	-RearmsToUpgrade@IONUPGRADE:
+	-RearmsToUpgrade@HOVERUPGRADE:
+	-RearmsToUpgrade@DRONEUPGRADE:
+	-GrantConditionOnPrerequisite@IONUPGRADE:
+	-GrantConditionOnPrerequisite@HOVERUPGRADE:
+	-GrantConditionOnPrerequisite@DRONEUPGRADE:
 
 MSAM:
 	Inherits: ^TankTD
@@ -3649,7 +3757,7 @@ BIKE:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 30
+		BuildPaletteOrder: 41
 		Prerequisites: ~vehicles.nod, ~techlevel.low
 		Queue: Vehicle
 		IconPalette: chrometd
@@ -3909,6 +4017,21 @@ HARV.TD:
 		Actors: c1,c7,c10
 		Probability: 5
 		RequiresCondition: !being-warped
+	GrantConditionOnPrerequisite@GSHIELD:
+		Condition: pointdef-upgrade
+		Prerequisites: pointdef.upgrade
+	TimedDamageMultiplier@GSHIELD:
+		ActiveCondition: gshield
+		ChargingColor: 008888
+		DrainingColor: 00ffff
+		Modifier: 25
+		Duration: 75
+		ChargeTime: 375
+		ActivateSound: gshieldup.aud
+		DeactivateSound: gshielddown.aud
+		RequiresCondition: pointdef-upgrade
+	WithIdleOverlay@NSHIELD:
+		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
 
 BTR:
 	Inherits: ^Tank
@@ -4698,6 +4821,22 @@ TITN:
 		Actors: titn.rail
 	WithIdleOverlay@MINDCONTROL:
 		Offset: 0,0,512
+	# For upgrading on Repair Facility
+	Rearmable@UPGRADE:
+		RearmActors: fix, rep, srep
+		AmmoPools: upgrade
+	AmmoPool@UPGRADE:
+		Name: upgrade
+		Armaments: none
+		ReloadDelay: 5000
+	RearmsToUpgrade@UPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: titn.rail
+		RequiresCondition: railgun-upgrade
+	GrantConditionOnPrerequisite@RAILUPGRADE:
+		Condition: railgun-upgrade
+		Prerequisites: railgun.upgrade
 
 TITN.RAIL:
 	Inherits: TITN
@@ -4720,6 +4859,10 @@ TITN.RAIL:
 	SpawnActorOnDeath:
 		Actor: TITN.RAIL.Husk
 	-UpgradeableTo:
+	-Rearmable@UPGRADE:
+	-AmmoPool@UPGRADE:
+	-RearmsToUpgrade@UPGRADE:
+	-GrantConditionOnPrerequisite@RAILUPGRADE:
 
 JUGG:
 	Inherits: ^TankTD
@@ -4738,13 +4881,13 @@ JUGG:
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets\n• Cannot fire while moving
-		Attributes: • Can crush smaller vehicles and concrete walls		
+		Attributes: • Can crush smaller vehicles and concrete walls
 	Mobile:
 		Locomotor: sheavytracked
 		Speed: 43
 		Voice: Move
 		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead || notmobile
-		BlockedCursor: move		
+		BlockedCursor: move
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Selectable:
@@ -4759,7 +4902,7 @@ JUGG:
 		MoveSequence: run
 	WithSpriteTurret:
 	AttackMove:
-		AttackMoveCondition: attack-move	
+		AttackMoveCondition: attack-move
 	Armament@PRIMARY:
 		Weapon: JuggernautGun
 		LocalOffset: 830,0,500, 830,100,500, 830,-100,500
@@ -4767,14 +4910,14 @@ JUGG:
 		RecoilRecovery: 30
 		MuzzleSequence: muzzle
 		PauseOnCondition: moving
-		ReloadingCondition: reloading		
+		ReloadingCondition: reloading
 	Armament@TARGETTER:
 		Name: targetter
 		Weapon: JuggernautGunTargeting
 		PauseOnCondition: reloading
 		RequiresCondition: attack-move || assault-move
 	AttackTurreted:
-		Armaments: primary, targetter	
+		Armaments: primary, targetter
 		PauseOnCondition: empdisable || being-warped
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
@@ -4798,7 +4941,7 @@ JUGG:
 	Voiced:
 		VoiceSet: DisrVoice
 	GrantConditionOnAttack@AIMING:
-		ArmamentNames: primary, targetter	
+		ArmamentNames: primary, targetter
 		Condition: aiming
 		RevokeDelay: 15
 		RevokeAll: false
@@ -5045,7 +5188,7 @@ RTNK:
 	Inherits@SLOWCRUSH: ^SlightlySlowedByCrushing
 	Buildable:
 		Queue: Vehicle
-		BuildPaletteOrder: 71
+		BuildPaletteOrder: 31
 		Prerequisites: ~vehicles.england, ~techlevel.low
 		Description: Advanced battle tank that can disguise when stationary.
 	TooltipExtras:
@@ -5057,8 +5200,8 @@ RTNK:
 	Tooltip:
 		Name: Mirage Tank
 	Mirage:
-		RequiresCondition: !empdisable && !being-warped && !driver-dead
-		RevealOn: Attack, Move, Heal, SelfHeal
+		RequiresCondition: !cloak-force-disabled && !invisibility && !driver-dead && !empdisable && !being-warped
+		RevealOn: Attack, Dock, Move, Damage, Heal, SelfHeal
 		MirageCondition: tree
 		DefaultTargetTypes: v08, v09, v10, v11, v12, v13, v14, v15, v16, v17, v18
 		InitialDelay: 100
@@ -5109,12 +5252,14 @@ RTNK:
 		CloakSound: vmirat2a.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1.aud
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Move, Damage, Heal, SelfHeal
+		UncloakOn: Attack, Dock, Move, Damage, Heal, SelfHeal
 		Palette: player
 		IsPlayerPalette: false
 		RequiresCondition: !cloak-force-disabled && !invisibility && !driver-dead && !empdisable && !being-warped
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
+	GrantConditionOnDamageState@UNCLOAK:
+		ValidDamageStates: Critical
 	Selectable:
 		DecorationBounds: 1194, 1194
 	ProducibleWithLevel:
@@ -5363,7 +5508,7 @@ MSAR:
 		DeployedCondition: deployed
 		UndeployedCondition: undeployed
 		Facing: 660
-		AllowedTerrainTypes: Clear, Road, Rough
+		AllowedTerrainTypes: Clear, Road, Rough, Ore, Gems, Tiberium, BlueTiberium
 		DeploySounds: placbldg.aud
 		UndeploySounds: clicky1.aud
 		UndeployOnMove: true

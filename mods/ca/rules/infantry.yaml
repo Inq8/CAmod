@@ -9,7 +9,7 @@ DOG:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Can only attack Infantry
-		Attributes: • Can detect spies, mines and cloaked units
+		Attributes: • Can detect spies, mines and cloaked units\n• Detects the scent of enemy infantry beyond vision range
 	RenderSprites:
 		PlayerPalette: player
 	WithDeathAnimation:
@@ -71,6 +71,11 @@ DOG:
 	DetectCloaked:
 		DetectionTypes: Cloak, Thief, Mine
 		Range: 4c0
+	RangedGpsRadarProvider:
+		Range: 12c0
+		TargetTypes: Infantry
+	WithRangeCircle:
+		Range: 12c0
 	Voiced:
 		VoiceSet: DogVoice
 	-TakeCover:
@@ -136,7 +141,7 @@ E2:
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 30
+		BuildPaletteOrder: 40
 		Prerequisites: ~infantry.e2, ~techlevel.infonly
 		Description: Infantry armed with grenades.
 	TooltipExtras:
@@ -258,8 +263,6 @@ E3:
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
-	AutoTarget:
-		ScanRadius: 5
 	GrantConditionOnPrerequisite@CRYO:
 		Condition: cryr-upgrade
 		Prerequisites: cryr.upgrade
@@ -319,6 +322,8 @@ U3:
 		Speed: 41
 		Voice: Move
 		PauseOnCondition: !undeployed
+		RequireForceMoveCondition: !undeployed
+		BlockedCursor: move
 	Armament@PRIMARY:
 		Weapon: M14
 		LocalOffset: 0,0,400
@@ -455,6 +460,7 @@ U3:
 		Voice: Attack
 		RequiresCondition: deployed
 		OutsideRangeRequiresForceFire: True
+		RangeMargin: 0
 	GrantConditionOnAttack:
 		Condition: animate-turret
 		RevokeDelay: 5
@@ -578,7 +584,7 @@ E6:
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 60
+		BuildPaletteOrder: 30
 		Prerequisites: ~infantry.ra, ~techlevel.infonly
 		Description: Utility infantry used for capturing/repairing structures.
 	TooltipExtras:
@@ -777,7 +783,7 @@ MEDI:
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 40
+		BuildPaletteOrder: 50
 		Prerequisites: ~infantry.medi, ~techlevel.infonly
 		Description: Heals nearby infantry.
 	TooltipExtras:
@@ -1305,7 +1311,7 @@ N2:
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 31
+		BuildPaletteOrder: 41
 		Prerequisites: ~pyle, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Infantry armed with grenades.
@@ -1461,8 +1467,6 @@ N3:
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
-	AutoTarget:
-		ScanRadius: 5
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	Selectable:
@@ -1722,7 +1726,7 @@ N6:
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 61
+		BuildPaletteOrder: 31
 		Prerequisites: ~infantry.td, ~techlevel.infonly
 		IconPalette: chrometd
 		Description: Utility infantry used for capturing/repairing structures.
@@ -1827,6 +1831,11 @@ SNIP:
 	Armament@PRIMARY:
 		Weapon: sniper
 		PauseOnCondition: !ammo
+		RequiresCondition: !apb-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: sniper.nonvehicle
+		PauseOnCondition: !ammo
+		RequiresCondition: apb-upgrade
 	Armament@DUMMY:
 		Name: tertiary
 		Weapon: sniper.dummy
@@ -1884,11 +1893,9 @@ SNIP:
 		FacingTolerance: 0
 		Armaments: primary, secondary, tertiary
 	WithInfantryBody:
-		DefaultAttackSequence: shoot
 		AttackSequences:
 			primary: shoot
 			secondary: shoot
-			tertiary: stand
 		StandSequences: stand, stand2
 		RequiresCondition: !parachute && !being-warped
 	WithInfantryBody@PARACHUTE:
@@ -2776,8 +2783,6 @@ N3C:
 	ReloadAmmoPool:
 		Delay: 50
 		Count: 1
-	AutoTarget:
-		ScanRadius: 5
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 
@@ -2882,7 +2887,7 @@ IVAN:
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 32
+		BuildPaletteOrder: 42
 		Prerequisites: ~infantry.ukraine, weap, ~techlevel.infonly
 		Description: Specialist demolition infantry armed with explosives.
 	TooltipExtras:
@@ -3041,6 +3046,7 @@ BRUT.Mutating:
 		Actor: brut
 		OwnerType: Victim
 		SpawnAfterDefeat: false
+	-ActorLostNotification:
 	-UpdatesPlayerStatistics:
 	-AutoTarget:
 	-AutoTargetPriority@DEFAULT:
@@ -3340,7 +3346,6 @@ BH:
 		Weapon: BlackHandFlamerWithSound
 	TakeCover:
 		ProneOffset: 160,0,-256
-		SpeedModifier: 60
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: being-warped
@@ -3468,6 +3473,8 @@ YURI:
 	Voiced:
 		VoiceSet: YuriVoice
 	-Crushable:
+	TakeCover:
+		SpeedModifier: 70
 	WithInfantryBody:
 		IdleSequences: idle
 		StandSequences: stand
@@ -3516,6 +3523,8 @@ SEAL:
 		Cost: 1000
 	Tooltip:
 		Name: Navy SEAL
+	Health:
+		HP: 14000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
@@ -3588,7 +3597,7 @@ SEAL:
 	-Targetable@HERO:
 
 XO:
-	Inherits: ^VehicleTD
+	Inherits: ^VehicleTD-NOUPG
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
@@ -3602,7 +3611,7 @@ XO:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
 		Weaknesses: • Cannot attack Aircraft
 	Valued:
-		Cost: 900
+		Cost: 1000
 	Tooltip:
 		Name: X-O Powersuit
 	UpdatesPlayerStatistics:
