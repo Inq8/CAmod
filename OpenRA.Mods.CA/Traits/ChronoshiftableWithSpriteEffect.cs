@@ -153,7 +153,7 @@ namespace OpenRA.Mods.CA.Traits
 				&& Info.ReturnToOrigin
 				&& info.ReturnToAvoidDeath
 				&& ReturnTicks > 0
-				&& (chronosphere == null || info.ReturnToAvoidDeathRelationships.HasStance(self.Owner.RelationshipWith(chronosphere.Owner))))
+				&& (chronosphere == null || info.ReturnToAvoidDeathRelationships.HasRelationship(self.Owner.RelationshipWith(chronosphere.Owner))))
 			{
 				returnToAvoidDeath = true;
 				self.World.Remove(self);

@@ -103,11 +103,11 @@ namespace OpenRA.Mods.CA.Traits
 		public int ChargeDelay { get; private set; }
 		public int MaxDistance { get; private set; }
 
-		public PortableChronoCA(PortableChronoCAInfo info)
+		public PortableChronoCA(Actor self, PortableChronoCAInfo info)
 			: base(info)
 		{
 			Info = info;
-			move = self.Trait<IMove>();		
+			move = self.Trait<IMove>();
 			ChargeDelay = Info.ChargeDelay;
 			MaxDistance = Info.MaxDistance;
 		}
