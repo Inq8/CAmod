@@ -63,4 +63,7 @@ namespace OpenRA.Mods.CA.Traits
 
 	[RequireExplicitImplementation]
 	public interface IBotAircraftBuilder { bool CanBuildMoreOfAircraft(ActorInfo actorInfo); }
+
+	[RequireExplicitImplementation]
+	public interface IPortableChronoModifier { int GetCooldownModifier(); int GetRangeModifier(); }
 }

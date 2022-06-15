@@ -1688,9 +1688,8 @@ MGG:
 		BuildPaletteOrder: 380
 		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
 		BuildDurationModifier: 50
-		Description: Regenerates the shroud nearby, obscuring the area.
+		Description: Regenerates the shroud nearby, obscuring enemy vision.\n  Can channel the effect to reduce enemy weapon range\n  and create persisting areas that do the same.
 	TooltipExtras:
-		Weaknesses: • Unarmed
 		Attributes: • Special Ability: Toggle Gap Generator
 	Valued:
 		Cost: 1000
@@ -1728,11 +1727,30 @@ MGG:
 		RequiresCondition: !being-warped
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
-	AttackOmni:
-	GuardsSelection:
-		RequiresCondition: !stance-attackanything
 	GrantConditionOnDeploy:
 		DeployedCondition: mgg-disabled
+	Armament@PRIMARY:
+		Weapon: MobileGapBeam
+		LocalOffset: 0, 0, 200
+		MuzzleSequence: muzzle
+		PauseOnCondition: cooldown
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: MobileVeilSpawner
+		LocalOffset: 0, 0, 200
+		PauseOnCondition: charged < 7
+		ReloadingCondition: cooldown
+	WithMuzzleOverlay:
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
+	GrantConditionOnAttack@charge:
+		Condition: charged
+		IsCyclic: true
+		RevokeDelay: 25
+		MaximumInstances: 7
+		RevokeAll: true
+	Turreted:
+		Offset: -299,0,171
 
 MRJ:
 	Inherits: ^Vehicle
@@ -2098,7 +2116,7 @@ CTNK:
 		PauseOnCondition: empdisable || being-warped
 	PortableChronoCA:
 		ChargeDelay: 375
-		MaxDistance: 18
+		MaxDistance: 16
 		RequiresCondition: !empdisable && !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -2107,6 +2125,13 @@ CTNK:
 	ProductionCostMultiplier@GermanyBonus:
 		Multiplier: 90
 		Prerequisites: vehicles.germany
+	PortableChronoMultiplier@TEMPORALFLUX:
+		RangeModifier: 125
+		CooldownModifier: 80
+		RequiresCondition: tflx-upgrade
+	GrantConditionOnPrerequisite@TEMPORALFLUX:
+		Condition: tflx-upgrade
+		Prerequisites: tflx.upgrade
 
 QTNK:
 	Inherits: ^Tank

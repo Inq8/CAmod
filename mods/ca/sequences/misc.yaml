@@ -229,6 +229,20 @@ explosion:
 		ZOffset: 2046
 		Offset: 0, 50, 60
 		ZRamp: 1
+	veilcloud: veilcloud
+		ZOffset: 2046
+		ZRamp: 1
+	veilcloudf: veilcloud
+		FlipX: true
+		ZOffset: 2046
+		ZRamp: 1
+	veilcloudsm: veilcloudsm
+		ZOffset: 2046
+		ZRamp: 1
+	veilcloudsmf: veilcloudsm
+		FlipX: true
+		ZOffset: 2046
+		ZRamp: 1
 	weatherbolt1: wclbolt1
 	weatherbolt2: wclbolt2
 	weatherbolt3: wclbolt3
@@ -328,6 +342,16 @@ explosion:
 		BlendMode: Alpha
 		Offset: 0, -10, 60
 		ZRamp: 1
+
+veildebuff:
+	Defaults:
+		BlendMode: Subtractive
+		Length: *
+		ZOffset: 2048
+		UseTilesetCode: false
+	vehicle: veildebuff
+	infantry: veildebuffsm
+		Offset: 0, -5
 
 laserfired2k:
 	Defaults:
@@ -1117,7 +1141,7 @@ icon:
 	xodrop: xodropicon
 	frenzy: frenzyicon
 	shadteam: shadteamicon
-	gpsscram: gpssicnh
+	veilofwar: veilofwaricnh
 	abombair: abombicon
 	mutabomb: gmutationicon
 	stormtroopers: stroopicon
@@ -1837,18 +1861,15 @@ shadgren:
 		ZOffset: 1023
 
 frenzy-overlay:
+	Defaults:
+		Length: *
+		BlendMode: Additive
+		UseTilesetCode: false
+		ZOffset: 512
 	vehicle: emp_fx01
-		Length: *
-		BlendMode: Additive
 		Offset: 0, 0
-		UseTilesetCode: false
-		ZOffset: 512
 	infantry: emp_fx02
-		Length: *
-		BlendMode: Additive
 		Offset: 0, -5
-		UseTilesetCode: false
-		ZOffset: 512
 
 nshield-overlay:
 	idle: nshield

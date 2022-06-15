@@ -293,7 +293,7 @@ hypersonic.upgrade:
 		IconPalette: chrometd
 		Description: Equip the MLRS/HMLRS with Hypersonic Missiles.\n\nUpgrades: MLRS/HMLRS
 	TooltipExtras:
-		Strengths: + Increased speed, precision and rate of fire
+		Strengths: + Increased range, speed, precision and rate of fire
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -309,7 +309,8 @@ hailstorm.upgrade:
 		IconPalette: chrometd
 		Description: Equip the MLRS/HMLRS with Hailstorm Missiles.\n\nUpgrades: MLRS/HMLRS
 	TooltipExtras:
-		Strengths: + Barrage of powerful but unguided missiles
+		Strengths: + Increased range, damage and area of effect\n+ Fires six missiles per salvo
+		Weaknesses: – Unguided
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -325,7 +326,7 @@ hammerhead.upgrade:
 		IconPalette: chrometd
 		Description: Equip the MLRS/HMLRS with Hammerhead Missiles.\n\nUpgrades: MLRS/HMLRS
 	TooltipExtras:
-		Strengths: + Increased area of effect and damage\n+ Briefly slows movement and rate of fire of impacted targets
+		Strengths: + Increased range, damage and area of effect\n+ Briefly slows movement and rate of fire of impacted targets
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -707,9 +708,9 @@ tflx.upgrade:
 	Buildable:
 		BuildPaletteOrder: 55
 		Prerequisites: ~orep.germany, ~techlevel.high
-		Description: Upgrades Chrono Prisons granting them the ability to teleport through time.\n\nUpgrades: Chrono Prison
+		Description: Upgrades Chrono Prisons granting them the ability to teleport\n  through time. Improves Chrono Tank chronoshifting.\n\nUpgrades: Chrono Prison\nUpgrades: Chrono Tank
 	TooltipExtras:
-		Strengths: + Add ability to teleport
+		Strengths: + Add ability to teleport (Chrono Prison only)\n+ Increase teleport range (Chrono Tank only)\n+ Reduce Teleport cooldown (Chrono Tank only)
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -777,7 +778,7 @@ carapace.upgrade:
 	TooltipExtras:
 		Strengths: + 40% reduced damage from explosives
 	Valued:
-		Cost: 1000
+		Cost: 1500
 	RenderSprites:
 		Image: carapace.upgrade
 

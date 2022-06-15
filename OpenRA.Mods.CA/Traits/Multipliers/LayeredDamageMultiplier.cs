@@ -57,7 +57,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			var validDamageType = Info.DamageTypes.IsEmpty || damage.DamageTypes.Overlaps(Info.DamageTypes);
 			var currentLayer = maxLayers - layersRemaining;
-			return  validDamageType ? Info.Layers[currentLayer] : 100;
+			return validDamageType ? Info.Layers[currentLayer] : 100;
 		}
 
 		void INotifyDamage.Damaged(Actor self, AttackInfo e)

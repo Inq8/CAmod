@@ -1742,12 +1742,12 @@ STMR:
 	Health:
 		HP: 25000
 	RevealsShroud:
-		Range: 10c0
-		MinRange: 8c0
+		Range: 11c0
+		MinRange: 9c0
 		Type: GroundPosition
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 8c0
+		Range: 9c0
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: StormriderZap
@@ -3245,7 +3245,7 @@ NERV:
 		Description: Provides an overview of the battlefield.
 		IconPalette: chromes
 	TooltipExtras:
-		Attributes: • Requires power to operate
+		Attributes: • Requires power to operate\n• Detects nearby enemy vehicles, aircraft and structures in fog of war
 	Valued:
 		Cost: 1800
 	Tooltip:
@@ -3291,6 +3291,8 @@ NERV:
 		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite@anyradar:
 		Prerequisite: anyradar
+	ProvidesPrerequisite@radarorrepair:
+		Prerequisite: radarorrepair
 	ProvidesPrerequisite@scrinrad:
 		Prerequisite: radar.scrin
 	ProvidesPrerequisiteValidatedFaction@reaprad:
@@ -3408,7 +3410,7 @@ NERV:
 		OrderName: feedermutation
 		Icon: feedermutation
 		Prerequisites: radar.collector
-		ChargeInterval: 6750
+		ChargeInterval: 6000
 		Description: Feeder Mutation
 		Condition: feedermutation
 		Dimensions: 1, 1
@@ -3535,7 +3537,7 @@ GRAV:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 130
-		Prerequisites: anyradar, repair, ~structures.scrin, ~techlevel.medium
+		Prerequisites: radarorrepair, ~structures.scrin, ~techlevel.medium
 		Description: Produces Scrin aircraft.
 		IconPalette: chromes
 	Valued:
@@ -3699,6 +3701,8 @@ SREP:
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair
+	ProvidesPrerequisite@radarorrepair:
+		Prerequisite: radarorrepair
 	ProvidesPrerequisite@allowsmcv:
 		Prerequisite: vehicles.mcv
 	ProximityExternalCondition@SREPREARM:
@@ -4487,6 +4491,8 @@ camera.resourcescan:
 camera.dummy:
 	Inherits: CAMERA
 	-RevealsShroud:
+	KillsSelf:
+		Delay: 25
 
 ichor.seeder:
 	Inherits: CAMERA

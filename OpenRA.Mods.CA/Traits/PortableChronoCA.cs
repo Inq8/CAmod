@@ -10,6 +10,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using OpenRA.Graphics;
 using OpenRA.Mods.CA.Activities;
 using OpenRA.Mods.Common.Graphics;
@@ -86,9 +87,22 @@ namespace OpenRA.Mods.CA.Traits
 		int conditionTicks = 0;
 
 		int token = Actor.InvalidConditionToken;
+		IPortableChronoModifier[] modifiers;
+
+		public int ChargeDelay { get; private set; }
+		public int MaxDistance { get; private set; }
 
 		public PortableChronoCA(PortableChronoCAInfo info)
-			: base(info) { }
+			: base(info)
+		{
+			ChargeDelay = Info.ChargeDelay;
+			MaxDistance = Info.MaxDistance;
+		}
+
+		protected override void Created(Actor self)
+		{
+			modifiers = self.TraitsImplementing<IPortableChronoModifier>().ToArray();
+		}
 
 		void ITick.Tick(Actor self)
 		{
@@ -137,7 +151,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			if (order.OrderString == "PortableChronoTeleport" && CanTeleport && order.Target.Type != TargetType.Invalid)
 			{
-				var maxDistance = Info.HasDistanceLimit ? Info.MaxDistance : (int?)null;
+				var maxDistance = Info.HasDistanceLimit ? MaxDistance : (int?)null;
 				self.CancelActivity();
 
 				var cell = self.World.Map.CellContaining(order.Target.CenterPosition);
@@ -164,7 +178,15 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void ResetChargeTime()
 		{
-			chargeTick = Info.ChargeDelay;
+			chargeTick = ChargeDelay;
+		}
+
+		public void UpdateModifiers()
+		{
+			MaxDistance = OpenRA.Mods.Common.Util.ApplyPercentageModifiers(Info.MaxDistance, modifiers.Select(m => m.GetRangeModifier()));
+			var chargePerc = Info.ChargeDelay > 0 ? (float)chargeTick / ChargeDelay : 1;
+			ChargeDelay = OpenRA.Mods.Common.Util.ApplyPercentageModifiers(Info.ChargeDelay, modifiers.Select(m => m.GetCooldownModifier()));
+			chargeTick = chargeTick > 0 ? (int)(ChargeDelay * chargePerc) : 0;
 		}
 
 		public bool CanTeleport
@@ -177,7 +199,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled)
 				return 0;
 
-			return (float)(Info.ChargeDelay - chargeTick) / Info.ChargeDelay;
+			return (float)(ChargeDelay - chargeTick) / ChargeDelay;
 		}
 
 		Color ISelectionBar.GetColor() { return Color.Magenta; }
@@ -266,7 +288,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			yield return new RangeCircleAnnotationRenderable(
 				self.CenterPosition,
-				WDist.FromCells(self.Trait<PortableChronoCA>().Info.MaxDistance),
+				WDist.FromCells(self.Trait<PortableChronoCA>().MaxDistance),
 				0,
 				info.CircleColor,
 				info.CircleWidth,

@@ -16,7 +16,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Warheads
 {
 	[Desc("Does nothing.")]
-	public class DummyWarhead : Warhead
+	public class DummyWarhead : TargetDamageWarhead
 	{
 		public override void DoImpact(in Target target, WarheadArgs args)
 		{

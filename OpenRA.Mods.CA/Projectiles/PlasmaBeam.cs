@@ -97,60 +97,65 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("Palette to use for launch effect.")]
 		public readonly string LaunchEffectPalette = "effect";
 
+		[Desc("Does the beam follow the target.")]
+		public readonly bool TrackTarget = false;
+
 		public IProjectile Create(ProjectileArgs args) { return new PlasmaBeam(args, this); }
 	}
 
 	public class PlasmaBeam : IProjectile, ISync
 	{
-		private readonly PlasmaBeamInfo info;
-		private readonly Color[] colors;
-		private WPos[] offsets;
-
+		readonly PlasmaBeamInfo info;
 		readonly ProjectileArgs args;
-		private WVec leftVector;
-		private WVec upVector;
 		readonly MersenneTwister random;
+		readonly Color[] colors;
 		readonly bool hasLaunchEffect;
+		readonly int numSegments;
+
+		int ticks = 0;
+		WPos[] offsets;
+		WVec[] distortions;
+		WVec leftVector;
+		WVec upVector;
+		WVec inaccuracyOffset;
 
 		[Sync]
-		WPos target;
-
-		[Sync]
-		WPos source;
-
-		[Sync]
-		WPos lastSource;
-
-		int ticks;
+		WPos target, source, lastTarget, lastSource;
 
 		public PlasmaBeam(ProjectileArgs args, PlasmaBeamInfo info)
 		{
 			this.args = args;
 			this.info = info;
 
-			source = args.Source;
-			lastSource = args.Source;
+			// Set the initial source and target positions
+			source = lastSource = args.Source;
 
 			if (info.ForceVertical)
-				target = new WPos(source.X, source.Y, 0);
+				target = lastTarget = new WPos(source.X, source.Y, 0);
 			else
-				target = args.PassiveTarget;
+				target = lastTarget = args.PassiveTarget;
 
-			var world = args.SourceActor.World;
+			random = args.SourceActor.World.SharedRandom;
 
+			// Apply inaccuracy to target
 			if (info.Inaccuracy.Length > 0)
 			{
 				var maxInaccuracyOffset = OpenRA.Mods.Common.Util.GetProjectileInaccuracy(info.Inaccuracy.Length, info.InaccuracyType, args);
-				target += WVec.FromPDF(args.SourceActor.World.SharedRandom, 2) * maxInaccuracyOffset / 1024;
+				inaccuracyOffset = WVec.FromPDF(random, 2) * maxInaccuracyOffset / 1024;
+				target += inaccuracyOffset;
 			}
 
 			// Check for blocking actors
-			if (info.Blockable && BlocksProjectiles.AnyBlockingActorsBetween(world, source, target, info.CenterBeamWidth, out var blockedPos))
-				target = blockedPos;
+			CheckBlocked();
 
 			var direction = target - source;
+			numSegments = info.SegmentLength > WDist.Zero ? (direction.Length - 1) / info.SegmentLength.Length + 1 : 1;
+			offsets = new WPos[numSegments + 1];
+			distortions = new WVec[numSegments + 1];
+
 			var rangeBonusAlpha = GetRangeBonusAlpha(direction);
 
+			// Set colours for beam center to beam edge (from InnerLightness to OuterLightness)
 			colors = new Color[info.Radius];
 			for (var i = 0; i < info.Radius; i++)
 			{
@@ -163,26 +168,35 @@ namespace OpenRA.Mods.CA.Projectiles
 				colors[i] = Color.FromArgb((int)(alpha), (int)(dstR * 0xff), (int)(dstG * 0xff), (int)(dstB * 0xff));
 			}
 
-			if (info.Distortion != 0 || info.DistortionAnimation != 0)
-				random = args.SourceActor.World.SharedRandom;
+			CalculateDistortion(direction);
+			CalculateBeam(direction);
 
-			CalculateMainBeam(direction);
-
-			if (ticks < 1)
+			// Do the beam impact (warheads)
+			var warheadArgs = new WarheadArgs(args)
 			{
-				var warheadArgs = new WarheadArgs(args)
-				{
-					ImpactOrientation = new WRot(WAngle.Zero, OpenRA.Mods.Common.Util.GetVerticalAngle(source, target), args.CurrentMuzzleFacing()),
-					ImpactPosition = target,
-				};
+				ImpactOrientation = new WRot(WAngle.Zero, OpenRA.Mods.Common.Util.GetVerticalAngle(source, target), args.CurrentMuzzleFacing()),
+				ImpactPosition = target,
+			};
 
-				args.Weapon.Impact(Target.FromPos(target), warheadArgs);
-			}
+			args.Weapon.Impact(Target.FromPos(target), warheadArgs);
 
+			// Do launch effect
 			hasLaunchEffect = !string.IsNullOrEmpty(info.LaunchEffectImage) && !string.IsNullOrEmpty(info.LaunchEffectSequence);
+			if (hasLaunchEffect)
+			{
+				Func<WAngle> getMuzzleFacing = () => args.CurrentMuzzleFacing();
+				args.SourceActor.World.AddFrameEndTask(w => w.Add(new SpriteEffect(args.CurrentSource, getMuzzleFacing, args.SourceActor.World,
+					info.LaunchEffectImage, info.LaunchEffectSequence, info.LaunchEffectPalette)));
+			}
 		}
 
-		private void CalculateMainBeam(WVec direction)
+		void CheckBlocked()
+		{
+			if (info.Blockable && BlocksProjectiles.AnyBlockingActorsBetween(args.SourceActor.World, source, target, info.CenterBeamWidth, out var blockedPos))
+				target = blockedPos;
+		}
+
+		void CalculateDistortion(WVec direction)
 		{
 			if (info.Distortion != 0 || info.DistortionAnimation != 0)
 			{
@@ -199,31 +213,49 @@ namespace OpenRA.Mods.CA.Projectiles
 				if (upVector.Length != 0)
 					upVector = 1024 * upVector / upVector.Length;
 			}
+		}
 
-			if (info.SegmentLength == WDist.Zero)
-				offsets = new[] { source, target };
-			else
+		void TrackTarget()
+		{
+			if (!info.TrackTarget || ticks == 0)
+				return;
+
+			if (!args.GuidedTarget.IsValidFor(args.SourceActor))
+				return;
+
+			var guidedTargetPos = args.Weapon.TargetActorCenter ? args.GuidedTarget.CenterPosition : args.GuidedTarget.Positions.PositionClosestTo(args.Source);
+			target = guidedTargetPos + inaccuracyOffset;
+		}
+
+		void CalculateBeam(WVec direction)
+		{
+			var shouldDistort = (ticks == 0 && info.Distortion != 0) || (ticks > 0 && info.DistortionAnimation != 0);
+
+			// Always keep the beam starting at source and ending at target
+			offsets[0] = source;
+			offsets[offsets.Length - 1] = target;
+
+			// For each offset between the start and end, set positions and apply any distortion
+			for (var i = 1; i < numSegments; i++)
 			{
-				var numSegments = (direction.Length - 1) / info.SegmentLength.Length + 1;
-				offsets = new WPos[numSegments + 1];
-				offsets[0] = source;
-				offsets[offsets.Length - 1] = target;
-
-				for (var i = 1; i < numSegments; i++)
+				// If initialising or source/target have moved set segment base positions
+				if (ticks == 0 || lastSource != source || target != lastTarget)
 				{
 					var segmentStart = direction / numSegments * i;
-					offsets[i] = source + segmentStart;
+					offsets[i] = source + segmentStart + distortions[i];
+				}
 
-					if (info.Distortion != 0)
-					{
-						var angle = WAngle.FromDegrees(random.Next(360));
-						var distortion = random.Next(info.Distortion);
+				// Apply distortion to each offset.
+				if (shouldDistort)
+				{
+					var angle = WAngle.FromDegrees(random.Next(360));
+					var distortion = random.Next(ticks > 0 ? info.DistortionAnimation : info.Distortion);
 
-						var offset = distortion * angle.Cos() * leftVector / (1024 * 1024)
-							+ distortion * angle.Sin() * upVector / (1024 * 1024);
+					var distOffset = distortion * angle.Cos() * leftVector / (1024 * 1024)
+						+ distortion * angle.Sin() * upVector / (1024 * 1024);
 
-						offsets[i] += offset;
-					}
+					offsets[i] += distOffset;
+					distortions[i] += distOffset;
 				}
 			}
 		}
@@ -231,39 +263,16 @@ namespace OpenRA.Mods.CA.Projectiles
 		public void Tick(World world)
 		{
 			source = args.CurrentSource();
-
-			if (hasLaunchEffect && ticks == 0)
-				world.AddFrameEndTask(w => w.Add(new SpriteEffect(args.CurrentSource, args.CurrentMuzzleFacing, world,
-					info.LaunchEffectImage, info.LaunchEffectSequence, info.LaunchEffectPalette)));
-
-			// Check for blocking actors
-			if (info.Blockable && BlocksProjectiles.AnyBlockingActorsBetween(world, source, target, info.CenterBeamWidth, out var blockedPos))
-				target = blockedPos;
+			TrackTarget();
+			CheckBlocked();
 
 			if (++ticks >= info.Duration)
 				world.AddFrameEndTask(w => w.Remove(this));
-			else if (info.DistortionAnimation != 0)
-			{
-				if (source != lastSource)
-					CalculateMainBeam(target - source);
-				else
-				{
-					offsets[0] = source;
-
-					for (var i = 1; i < offsets.Length - 1; i++)
-					{
-						var angle = WAngle.FromDegrees(random.Next(360));
-						var distortion = random.Next(info.DistortionAnimation);
-
-						var offset = distortion * angle.Cos() * leftVector / (1024 * 1024)
-							+ distortion * angle.Sin() * upVector / (1024 * 1024);
-
-						offsets[i] += offset;
-					}
-				}
-			}
+			else
+				CalculateBeam(target - source);
 
 			lastSource = source;
+			lastTarget = target;
 		}
 
 		// workaround to stop closer targets resulting in beam with lower alpha
