@@ -1803,6 +1803,8 @@ STMR:
 	AmmoPool:
 		Ammo: 15
 		AmmoCondition: ammo
+		Delay: 626
+		ReloadCount: 15
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
@@ -1884,8 +1886,7 @@ ENRV:
 		CruiseAltitude: 2560
 		RepulsionSpeed: 40
 		MaximumPitch: 56
-		IdealSeparation: 1c256
-		CanSlide: False
+		CanSlide: True
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
@@ -1893,10 +1894,14 @@ ENRV:
 		Offset: -750,-200,300
 		UsePlayerColor: true
 		ZOffset: -512
+		TrailLength: 18
+		TrailWidth: 48
 	Contrail@2:
 		Offset: -750,200,300
 		UsePlayerColor: true
 		ZOffset: -512
+		TrailLength: 18
+		TrailWidth: 48
 	SpawnActorOnDeath:
 		Actor: ENRV.Husk
 		RequiresCondition: !empdisable && !being-warped
@@ -1911,18 +1916,18 @@ ENRV:
 		Prerequisites: aircraft.upgraded
 	-EjectOnDeath:
 	AmmoPool:
-		Ammo: 4
+		Ammo: 5
 		AmmoCondition: ammo
 		ReloadDelay: 751
-		ReloadCount: 4
+		ReloadCount: 5
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
-		PipCount: 4
+		PipCount: 5
 	ReloadAmmoPoolCA:
 		Delay: 750
-		Count: 4
+		Count: 5
 		DelayOnFire: 375
 		DelayAfterReset: 60
 		ShowSelectionBar: true
@@ -1934,7 +1939,7 @@ ENRV:
 		Condition: srep-rearm
 	ReloadAmmoPool@SREPREARM:
 		Delay: 250
-		Count: 4
+		Count: 5
 		RequiresCondition: srep-rearm && !airborne
 
 DEVA:
