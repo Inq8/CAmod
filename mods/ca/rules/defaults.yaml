@@ -1706,6 +1706,26 @@
 	WithDamageOverlay:
 		Image: smoke_mtd
 
+^SlowedWhenDamaged:
+	GrantConditionOnDamageState@SLOWEDBYDAMAGE1:
+		Condition: damaged-medium
+		ValidDamageStates: Medium
+	GrantConditionOnDamageState@SLOWEDBYDAMAGE2:
+		Condition: damaged-heavy
+		ValidDamageStates: Heavy
+	GrantConditionOnDamageState@SLOWEDBYDAMAGE3:
+		Condition: damaged-critical
+		ValidDamageStates: Critical
+	SpeedMultiplier@SLOWEDBYDAMAGE1:
+		Modifier: 90
+		RequiresCondition: damaged-medium
+	SpeedMultiplier@SLOWEDBYDAMAGE2:
+		Modifier: 80
+		RequiresCondition: damaged-heavy
+	SpeedMultiplier@SLOWEDBYDAMAGE3:
+		Modifier: 70
+		RequiresCondition: damaged-critical
+
 ^SlowedByCrushing:
 	ExternalCondition@CRUSHATTEMPTSLOW:
 		Condition: crush-attempt-slow
@@ -2506,7 +2526,8 @@
 	GivesBuildableArea:
 		AreaTypes: building, fake
 	RepairableBuilding:
-		RepairStep: 700
+		RepairStep: 500
+		RepairPercent: 30
 		PlayerExperience: 25
 		RepairingNotification: Repairing
 		RequiresCondition: !being-warped
@@ -2617,6 +2638,9 @@
 	-CapturableProgressBar:
 	-CapturableProgressBlink:
 	-SpawnActorsOnSell:
+	RepairableBuilding:
+		RepairStep: 700
+		-RepairPercent:
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped && !hacked
 	RenderRangeCircle:
