@@ -121,7 +121,7 @@ namespace OpenRA.Mods.CA.SpriteLoaders
 			s.Position = start;
 
 			frames = tmp.ToArray();
-			if (palettes.Any())
+			if (palettes.Count > 0)
 				metadata = new TypeDictionary { new EmbeddedSpritePalette(framePalettes: palettes) };
 
 			return true;

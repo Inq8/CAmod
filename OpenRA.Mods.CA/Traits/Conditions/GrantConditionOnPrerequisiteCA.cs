@@ -50,13 +50,13 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyAddedToWorld.AddedToWorld(Actor self)
 		{
-			if (info.Prerequisites.Any())
+			if (info.Prerequisites.Length > 0)
 				globalManager.Register(self, this, info.Prerequisites);
 		}
 
 		void INotifyRemovedFromWorld.RemovedFromWorld(Actor self)
 		{
-			if (info.Prerequisites.Any())
+			if (info.Prerequisites.Length > 0)
 				globalManager.Unregister(self, this, info.Prerequisites);
 		}
 

@@ -52,7 +52,7 @@ namespace OpenRA.Mods.CA.Traits
 			this.category = category;
 			failRetryTicks = baseBuilder.Info.StructureProductionResumeDelay;
 			minimumExcessPower = baseBuilder.Info.MinimumExcessPower;
-			if (!baseBuilder.Info.NavalProductionTypes.Any())
+			if (baseBuilder.Info.NavalProductionTypes.Count == 0)
 				waterState = WaterCheck.DontCheck;
 		}
 

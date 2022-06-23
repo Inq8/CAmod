@@ -10,7 +10,6 @@
 #endregion
 
 using System.Collections.Generic;
-using System.Linq;
 using OpenRA.Mods.Common.Effects;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
@@ -128,7 +127,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 				if (++offset >= Info.Offsets.Length)
 					offset = 0;
 
-				if (!Info.TerrainTypes.Any() || Info.TerrainTypes.Contains(type))
+				if (Info.TerrainTypes.Count == 0 || Info.TerrainTypes.Contains(type))
 				{
 					var spawnFacing = Info.SpawnAtLastPosition ? cachedFacing : facing?.Facing ?? WAngle.Zero;
 

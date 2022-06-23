@@ -80,7 +80,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			var powerChangingIfToggled = 0;
 			var powerTraits = a.TraitsImplementing<Power>().Where(t => !t.IsTraitDisabled).ToArray();
-			if (powerTraits.Any())
+			if (powerTraits.Length > 0)
 			{
 				var powerMulTraits = a.TraitsImplementing<PowerMultiplier>().ToArray();
 				powerChangingIfToggled = powerTraits.Sum(p => p.Info.Amount) * (powerMulTraits.Sum(p => p.Info.Modifier) - 100) / 100;

@@ -138,7 +138,7 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 
 		void ITick.Tick(Actor self)
 		{
-			if (IsTraitDisabled || !queue.Any())
+			if (IsTraitDisabled || queue.Count == 0)
 				return;
 
 			var nextItem = queue.Peek();
@@ -170,7 +170,7 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 
 				queue.Dequeue();
 
-				if (!queue.Any())
+				if (queue.Count == 0)
 				{
 					eject = false;
 					RevokeCondition(self);
@@ -244,7 +244,7 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 		{
 			get
 			{
-				if (IsTraitDisabled || !Info.EjectOnDeploy || !queue.Any())
+				if (IsTraitDisabled || !Info.EjectOnDeploy || queue.Count == 0)
 					yield break;
 
 				yield return new DeployOrderTargeter(OrderID, 1, () => Info.EjectCursor);
@@ -269,7 +269,7 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 
 		float ISelectionBar.GetValue()
 		{
-			if (!Info.ShowSelectionBar || !queue.Any())
+			if (!Info.ShowSelectionBar || queue.Count == 0)
 				return 0;
 
 			var nextItem = queue.Peek();

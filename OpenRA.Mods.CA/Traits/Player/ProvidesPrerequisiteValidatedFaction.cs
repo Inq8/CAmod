@@ -84,7 +84,7 @@ namespace OpenRA.Mods.CA.Traits
 			// if ValidFactions trait is present and the current faction is not listed in it, switch the faction to a valid one if a player of that faction exists in the game
 			if (
 				validFactions != null
-				&& Info.Factions.Any()
+				&& Info.Factions.Count > 0
 				&& !validFactions.Info.Factions.Contains(faction))
 			{
 				var players = self.World.Players.Where(p => !p.NonCombatant && p.Playable);
@@ -120,10 +120,10 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled)
 				return;
 
-			if (Info.Factions.Any())
+			if (Info.Factions.Count > 0)
 				enabled = Info.Factions.Contains(faction);
 
-			if (Info.RequiresPrerequisites.Any() && enabled)
+			if (Info.RequiresPrerequisites.Length > 0 && enabled)
 				enabled = techTree.HasPrerequisites(Info.RequiresPrerequisites);
 		}
 

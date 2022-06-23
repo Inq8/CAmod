@@ -76,7 +76,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 				FuzzyStateMachine.Update(this);
 		}
 
-		public bool IsValid => Units.Any();
+		public bool IsValid => Units.Count > 0;
 
 		public Actor TargetActor
 		{

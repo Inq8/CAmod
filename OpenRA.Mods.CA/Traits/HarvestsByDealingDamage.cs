@@ -57,7 +57,7 @@ namespace OpenRA.Mods.CA.Traits
 				foreach (var t in l.ResourceTypes)
 					resources.Add(t.Key);
 
-			if (!resources.Any())
+			if (resources.Count == 0)
 				return;
 
 			var resource = resources.First();

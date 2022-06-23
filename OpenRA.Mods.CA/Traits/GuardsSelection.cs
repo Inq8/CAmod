@@ -62,7 +62,7 @@ namespace OpenRA.Mods.CA.Traits
 					&& IsValidGuardTarget(a))
 				.ToArray();
 
-			if (!guardActors.Any())
+			if (guardActors.Length == 0)
 				return;
 
 			var mainGuardActor = guardActors.ClosestTo(order.Target.CenterPosition);

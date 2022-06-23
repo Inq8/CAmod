@@ -421,7 +421,7 @@ namespace OpenRA.Mods.CA.Traits
 				.Where(unit => unit.IsIdle && unit.Info.HasTraitInfo<AttackBaseInfo>()
 					&& !unit.Info.HasTraitInfo<AircraftInfo>() && !Info.NavalUnitsTypes.Contains(unit.Info.Name) && !unit.Info.HasTraitInfo<HarvesterInfo>()).ToList();
 
-			if (!allEnemyBaseBuilder.Any() || ownUnits.Count < Info.SquadSize)
+			if (allEnemyBaseBuilder.Count == 0 || ownUnits.Count < Info.SquadSize)
 				return;
 
 			foreach (var b in allEnemyBaseBuilder)
@@ -432,7 +432,7 @@ namespace OpenRA.Mods.CA.Traits
 
 				if (AttackOrFleeFuzzyCA.Rush.CanAttack(ownUnits, enemies))
 				{
-					var target = enemies.Any() ? enemies.Random(World.LocalRandom) : b;
+					var target = enemies.Count > 0 ? enemies.Random(World.LocalRandom) : b;
 					var rush = GetSquadOfType(SquadCAType.Rush);
 					if (rush == null)
 						rush = RegisterNewSquad(bot, SquadCAType.Rush, target);

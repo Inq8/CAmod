@@ -96,7 +96,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled)
 				return;
 
-			if (!stacks.Any())
+			if (stacks.Count == 0)
 				return;
 
 			var stacksToRemove = 0;

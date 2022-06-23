@@ -155,7 +155,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			// Less harvesters than refineries - build a new harvester
 			var unitBuilder = requestUnitProduction.FirstOrDefault(Exts.IsTraitEnabled);
-			if (unitBuilder != null && Info.HarvesterTypes.Any())
+			if (unitBuilder != null && Info.HarvesterTypes.Count > 0)
 			{
 				var harvInfo = AIUtils.GetInfoByCommonName(Info.HarvesterTypes, player);
 				var numHarvesters = AIUtils.CountActorByCommonName(Info.HarvesterTypes, player);
