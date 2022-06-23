@@ -645,7 +645,7 @@ StormRiderZapAA:
 EnervatorBolts:
 	Inherits: ^AntiGroundMissile
 	Report: enervator-fire1.aud
-	ReloadDelay: 45
+	ReloadDelay: 40
 	Range: 5c0
 	TargetActorCenter: true
 	Projectile: MissileCA
@@ -665,7 +665,7 @@ EnervatorBolts:
 		-PointDefenseType:
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
-		Damage: 9250
+		Damage: 8500
 		ValidTargets: Ground, Water
 		Versus:
 			None: 30
@@ -697,7 +697,7 @@ EnervatorBoltsAA:
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
 		ValidRelationships: Enemy, Neutral
-		Damage: 7000
+		Damage: 6000
 		Versus:
 			None: 100
 			Wood: 100
@@ -705,7 +705,7 @@ EnervatorBoltsAA:
 			Concrete: 100
 			Brick: 100
 	Warhead@2Dam: SpreadDamage
-		Damage: 7000
+		Damage: 6000
 		Spread: 128
 		Falloff: 100, 50, 14, 0
 		ValidTargets: AirSmall
@@ -1240,7 +1240,7 @@ LeecherBeam:
 	ValidTargets: Ground, Water
 	StartBurstReport: leecher-fire1.aud
 	Range: 6c0
-	ReloadDelay: 40
+	ReloadDelay: 60
 	Burst: 6
 	BurstDelays: 5
 	Projectile: PlasmaBeam
@@ -1256,7 +1256,7 @@ LeecherBeam:
 		Inaccuracy: 128
 	Warhead@1Dam: SpreadDamage
 		Spread: 288
-		Damage: 2500
+		Damage: 3250
 		DamageTypes: Prone50Percent, TriggerProne, AtomizedDeath, FlakVestMitigated
 		Versus:
 			None: 100
@@ -1379,7 +1379,7 @@ FeederExplode:
 	Warhead@1Dam: SpreadDamage
 		Damage: 12000
 		Spread: 768
-		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		Falloff: 1000, 368, 135, 50, 25, 12, 0
 		InvalidTargets: Structure
 		Versus:
 			None: 40
