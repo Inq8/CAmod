@@ -457,22 +457,27 @@ FEED:
 		Weapon: FeederExplode
 		EmptyWeapon: FeederExplode
 		DamageSource: Killer
-		RequiresCondition: !full
+		RequiresCondition: !full && !cooldown
 	Explodes@FULL:
 		Weapon: FeederExplodeFull
 		EmptyWeapon: FeederExplode
 		DamageSource: Killer
-		RequiresCondition: full
+		RequiresCondition: full && !cooldown
 	AttackFrontal:
 		FacingTolerance: 64
 	Armament@PRIMARY:
 		Weapon: FeederTargeting
 	GrantConditionOnAttack:
 		Condition: triggered
+		RequiresCondition: !cooldown
 	GrantConditionOnDeploy:
 		DeployedCondition: triggered
+		RequiresCondition: !cooldown
+	GrantTimedCondition@COOLDOWN:
+		Duration: 50
+		Condition: cooldown
 	KillsSelf:
-		RequiresCondition: triggered || berserk
+		RequiresCondition: !cooldown && (triggered || berserk)
 	-TakeCover:
 	WithHarvesterCapacityBar:
 		SelectionBarColor: cc0000
