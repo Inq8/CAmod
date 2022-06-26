@@ -833,7 +833,7 @@
 ^HealingCooldown:
 	GrantConditionOnHealingReceived@HEALINGCOOLDOWN:
 		Condition: heal-cooldown
-		RequiredStacks: 20
+		RequiredHealing: 85000
 		StackDuration: 625
 		MinimumHealing: 2500
 		DamageTypes: DirectHeal
@@ -1665,7 +1665,7 @@
 		RequiresCondition: !mindcontrolled && !hacked && !restoring && !invulnerability
 	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 		Condition: repair-cooldown
-		RequiredStacksHPDivisor: 3750
+		RequiredHealing: 85000
 		StackDuration: 750
 		MinimumHealing: 2500
 		DamageTypes: DirectRepair
