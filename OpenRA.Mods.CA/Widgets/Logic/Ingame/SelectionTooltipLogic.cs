@@ -71,6 +71,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			var nameLabel = widget.Get<LabelWidget>("NAME");
 			var armorTypeLabel = widget.Get<LabelWidget>("ARMORTYPE");
 			var armorTypeIcon = widget.Get<ImageWidget>("ARMORTYPE_ICON");
+			var costLabel = widget.Get<LabelWidget>("COST");
+			var costIcon = widget.Get<ImageWidget>("COST_ICON");
 			var descLabel = widget.Get<LabelWidget>("DESC");
 			var strengthsLabel = widget.Get<LabelWidget>("STRENGTHS");
 			var weaknessesLabel = widget.Get<LabelWidget>("WEAKNESSES");
@@ -89,14 +91,30 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			var descLabelPadding = descLabel.Bounds.Height;
 
+			// Name
 			var tooltip = actor.TraitsImplementing<Tooltip>().FirstOrDefault(Exts.IsTraitEnabled);
 			var name = tooltip != null ? tooltip.Info.Name : actor.Info.Name;
-
 			nameLabel.Text = name;
-
 			var nameSize = font.Measure(name);
 
+			// Armor type
 			armorTypeLabel = GetArmorTypeLabel(armorTypeLabel, actor.Info);
+			var armorTypeSize = armorTypeLabel.Text != "" ? font.Measure(armorTypeLabel.Text) : new int2(0, 0);
+			armorTypeIcon.Visible = armorTypeSize.Y > 0;
+			armorTypeLabel.Bounds.Y = armorTypeIcon.Bounds.Y;
+
+			// Cost
+			var cost = 0;
+			var valued = actor.Info.TraitInfoOrDefault<ValuedInfo>();
+			if (valued != null)
+				cost = valued.Cost;
+
+			costLabel.Visible = costIcon.Visible = cost > 0;
+			costLabel.Text = cost.ToString();
+			costLabel.GetColor = () => Color.White;
+			var costSize = font.Measure(costLabel.Text);
+
+			// Strengths, weaknesses & attributes
 			var tooltipExtras = actor.TraitsImplementing<TooltipExtras>().FirstOrDefault(Exts.IsTraitEnabled);
 
 			if (tooltipExtras != null)
@@ -115,12 +133,9 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				descLabel.Text = "";
 			}
 
-			var armorTypeSize = armorTypeLabel.Text != "" ? font.Measure(armorTypeLabel.Text) : new int2(0, 0);
-			armorTypeIcon.Visible = armorTypeSize.Y > 0;
-			armorTypeLabel.Bounds.Y = armorTypeIcon.Bounds.Y;
-
 			var extrasSpacing = descLabel.Bounds.X / 2;
 
+			// Description
 			if (descLabel.Text == "")
 			{
 				var buildable = actor.Info.TraitInfoOrDefault<BuildableInfo>();
@@ -147,10 +162,10 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			descLabel.Bounds.Height += strengthsSize.Y + weaknessesSize.Y + attributesSize.Y + descLabelPadding + extrasSpacing;
 
 			var leftWidth = new[] { nameSize.X, descSize.X, strengthsSize.X, weaknessesSize.X, attributesSize.X }.Aggregate(Math.Max);
-			var rightWidth = new[] { armorTypeSize.X }.Aggregate(Math.Max);
+			var rightWidth = new[] { armorTypeSize.X, costSize.X }.Aggregate(Math.Max);
 
-			armorTypeIcon.Bounds.X = leftWidth + 2 * nameLabel.Bounds.X;
-			armorTypeLabel.Bounds.X = armorTypeIcon.Bounds.Right + iconMargin;
+			armorTypeIcon.Bounds.X = costIcon.Bounds.X = leftWidth + 2 * nameLabel.Bounds.X;
+			armorTypeLabel.Bounds.X = costLabel.Bounds.X = armorTypeIcon.Bounds.Right + iconMargin;
 			widget.Bounds.Width = leftWidth + rightWidth + 3 * nameLabel.Bounds.X + armorTypeIcon.Bounds.Width + iconMargin;
 
 			// Set the bottom margin to match the left margin
@@ -171,7 +186,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			if (armorTypeLabel.Text != "" && actor.HasTraitInfo<AircraftInfo>())
 				armorTypeLabel.Text = "Aircraft";
 
-			// hard coded, specific to CA - find a better way to set user-friendly names and colors for armor types
+			// Hard coded, specific to CA - find a better way to set user-friendly names and colors for armor types
 			switch (armorTypeLabel.Text)
 			{
 				case "None":

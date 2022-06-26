@@ -261,6 +261,8 @@ E3:
 		PauseOnCondition: being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	AutoTarget:
+		ScanRadius: 7
 	GrantConditionOnPrerequisite@CRYO:
 		Condition: cryr-upgrade
 		Prerequisites: cryr.upgrade
@@ -1460,6 +1462,8 @@ N3:
 		RequiresCondition: parachute
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	AutoTarget:
+		ScanRadius: 7
 	Selectable:
 		Class: e3
 	Convertible:
@@ -2761,6 +2765,8 @@ N3C:
 	ReloadAmmoPool:
 		Delay: 50
 		Count: 1
+	AutoTarget:
+		ScanRadius: 7
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 
@@ -2852,7 +2858,7 @@ RMBC:
 		Prerequisites: barracks.upgraded
 	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 		Condition: repair-cooldown
-		RequiredStacks: 20
+		RequiredHealing: 85000
 		StackDuration: 625
 		MinimumHealing: 2500
 		DamageTypes: DirectRepair
