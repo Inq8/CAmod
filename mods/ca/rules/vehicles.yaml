@@ -1269,7 +1269,6 @@ HARV:
 	Inherits: ^Vehicle-NOUPG
 	Inherits@HARVBALANCE: ^HarvesterBalancer
 	Inherits@SELECTION: ^SelectableEconomicUnit
-	Inherits@SLOWEDWHENDAMAGED: ^SlowedWhenDamaged
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 10
@@ -1319,11 +1318,6 @@ HARV:
 	SpawnActorOnDeath:
 		Actor: HARV.EmptyHusk
 		RequiresCondition: !being-warped && !charv-upgrade
-	ChangesHealth:
-		PercentageStep: 1
-		Delay: 25
-		StartIfBelow: 50
-		DamageCooldown: 500
 	GrantConditionOnTerrain@Tiberium:
 		Condition: ontib
 		TerrainTypes: Tiberium
@@ -3942,7 +3936,6 @@ HARV.TD:
 	Inherits: ^VehicleTD-NOUPG
 	Inherits@HARVBALANCE: ^HarvesterBalancer
 	Inherits@SELECTION: ^SelectableEconomicUnit
-	Inherits@SLOWEDWHENDAMAGED: ^SlowedWhenDamaged
 	RenderSprites:
 		Image: harv2
 	Valued:
@@ -3995,11 +3988,6 @@ HARV.TD:
 		RequiresCondition: !being-warped
 	WithHarvestAnimation:
 	WithDockingAnimation:
-	ChangesHealth:
-		PercentageStep: 1
-		Delay: 25
-		StartIfBelow: 50
-		DamageCooldown: 500
 	GrantConditionOnTerrain@Tiberium:
 		Condition: ontib
 		TerrainTypes: Tiberium
