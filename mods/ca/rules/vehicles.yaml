@@ -495,60 +495,28 @@ GTNK.squad:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
-	Inherits@SHRAPNEL: ^ThrowsShrapnel
 	Inherits@SLOWCRUSH: ^SlightlySlowedByCrushing
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 32
-		Prerequisites: ~!iraqtank.upgrade, ~!lasher.upgrade, ~vehicles.3tnk, ~techlevel.low
+		Prerequisites: ~!atomicengines.upgrade, ~!lasher.upgrade, ~vehicles.3tnk, ~techlevel.low
 		Description: Soviet main battle tank with dual cannons.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
-		RequiresCondition: !iraqtank-upgrade && !lasher-upgrade
-	TooltipExtras@IRAQ:
-		Strengths: • Strong vs Heavy Armor, Light Armor
-		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
-		Attributes: • Explodes and leaves radiation on death
-		IsStandard: false
-		RequiresCondition: iraqtank-upgrade
-	TooltipExtras@LASHER:
-		Description: Heavy tank with infantry crushing improvements.
-		Strengths: • Strong vs Heavy Armor, Light Armor
-		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
-		IsStandard: false
-		RequiresCondition: lasher-upgrade
 	Valued:
 		Cost: 1150
 	Tooltip:
 		Name: Heavy Tank
 		GenericName: Tank
-		RequiresCondition: !iraqtank-upgrade && !lasher-upgrade
-	Tooltip@IRAQ:
-		Name: Atomic Heavy Tank
-		GenericName: Tank
-		RequiresCondition: iraqtank-upgrade
-	Tooltip@LASHER:
-		Name: Lasher Tank
-		GenericName: Tank
-		RequiresCondition: lasher-upgrade
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
 		HP: 63000
-	DamageMultiplier@LASHER:
-		Modifier: 110
-		RequiresCondition: lasher-upgrade
 	Armor:
 		Type: Heavy
 	Mobile:
 		Speed: 56
-	SpeedMultiplier@IRAQTANK:
-		Modifier: 125
-		RequiresCondition: iraqtank-upgrade
-	SpeedMultiplier@LASHER:
-		Modifier: 120
-		RequiresCondition: lasher-upgrade && !iraqtank-upgrade
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -564,133 +532,97 @@ GTNK.squad:
 		RecoilRecovery: 38
 		LocalOffset: 768,85,90, 768,-85,90
 		MuzzleSequence: muzzle
-		RequiresCondition: !lasher-upgrade
-	Armament@LASHER:
-		Weapon: 125mmLasher
-		Recoil: 128
-		RecoilRecovery: 38
-		LocalOffset: 768,85,90, 768,-85,90
-		MuzzleSequence: muzzle
-		RequiresCondition: lasher-upgrade
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithSpriteTurret:
-		RequiresCondition: !lasher-upgrade
-	WithSpriteTurret@LASHER:
-		Sequence: turret2
-		RequiresCondition: lasher-upgrade
 	WithFacingSpriteBody:
-		RequiresCondition: !iraqtank-upgrade && !lasher-upgrade
-	WithFacingSpriteBody@IRAQ:
-		Name: iraqbody
-		Sequence: idle2
-		RequiresCondition: iraqtank-upgrade
-	WithFacingSpriteBody@LASHER:
-		Name: lasherbody
-		Sequence: idle3
-		RequiresCondition: lasher-upgrade && !iraqtank-upgrade
 	SpawnActorOnDeath:
 		Actor: 3TNK.Husk
-		RequiresCondition: !being-warped && !iraqtank-upgrade && !lasher-upgrade
-	SpawnActorOnDeath@LASHER:
-		Actor: 3TNK.YURI.Husk
-		RequiresCondition: !being-warped && !iraqtank-upgrade && lasher-upgrade
-	Explodes@IRAQTANK:
-		Weapon: UnitExplodeIraqTank
-		EmptyWeapon: UnitExplodeIraqTank
-		RequiresCondition: !being-warped && iraqtank-upgrade
-	ThrowsShrapnel@small:
-		RequiresCondition: iraqtank-upgrade
+		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 28,28
-	GrantConditionOnPrerequisite@IRAQ:
-		Condition: iraqtank-upgrade
-		Prerequisites: iraqtank.upgrade
-	GrantConditionOnPrerequisite@LASHER:
+	UpgradeableTo:
+		Actors: 3tnk.atomic, 3tnk.yuri, 3tnk.atomicyuri
+	# For upgrading on Service Depot
+	Rearmable@UPGRADE:
+		RearmActors: fix, rep, srep
+		AmmoPools: upgrade
+	AmmoPool@UPGRADE:
+		Name: upgrade
+		Armaments: none
+		ReloadDelay: 5000
+	GrantConditionOnPrerequisite@ATOMICUPGRADE:
+		Condition: atomicengines-upgrade
+		Prerequisites: atomicengines.upgrade
+	GrantConditionOnPrerequisite@LASHERUPGRADE:
 		Condition: lasher-upgrade
 		Prerequisites: lasher.upgrade
-	GrantCondition@IRAQ:
-		Condition: iraqtank-upgrade
-		RequiresCondition: iraqtank-upgrade
-		GrantPermanently: true
-	GrantCondition@LASHER:
-		Condition: lasher-upgrade
-		RequiresCondition: lasher-upgrade
-		GrantPermanently: true
-	SpeedMultiplier@CRUSHATTEMPTSLOW:
-		RequiresCondition: crush-attempt-slow && !crush-slow && !lasher-upgrade
-	SpeedMultiplier@CRUSHSLOW:
-		RequiresCondition: crush-slow && !lasher-upgrade
-	PeriodicExplosion@LASHER:
-		LocalOffset: 896, 0, 0
-		Weapon: Lasher
-		RequiresCondition: lasher-upgrade && lasher-move
-	GrantConditionOnMovement@LASHER:
-		ValidMovementTypes: Horizontal, Vertical, Turn
-		Condition: lasher-move
-		RequiresCondition: lasher-upgrade
-	UpgradeableTo:
-		Actors: 3tnk.iraq, 3tnk.yuri
+	RearmsToUpgrade@ATOMICUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: 3tnk.atomic
+		RequiresCondition: atomicengines-upgrade && !lasher-upgrade
+	RearmsToUpgrade@LASHERUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: 3tnk.yuri
+		RequiresCondition: lasher-upgrade && !atomicengines-upgrade
+	RearmsToUpgrade@ATOMICLASHERUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: 3tnk.atomicyuri
+		RequiresCondition: lasher-upgrade && atomicengines-upgrade
 
-3TNK.IRAQ:
+3TNK.ATOMIC:
 	Inherits: 3TNK
+	Inherits@SHRAPNEL: ^ThrowsShrapnel
 	RenderSprites:
 		Image: 3tnki
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 33
-		Prerequisites: ~iraqtank.upgrade, ~vehicles.3tnk, ~techlevel.low
-	-TooltipExtras:
-	-TooltipExtras@LASHER:
-	TooltipExtras@IRAQ:
-		IsStandard: true
-		-RequiresCondition:
+		Prerequisites: ~atomicengines.upgrade, ~!lasher.upgrade, ~vehicles.3tnk, ~techlevel.low
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
+		Attributes: • Explodes and leaves radiation on death
 	Valued:
 		Cost: 1150
 	Tooltip:
 		Name: Atomic Heavy Tank
 		GenericName: Tank
-		-RequiresCondition:
 	Turreted:
 		Offset: 0,0,20
 	Armament:
-		-RequiresCondition:
 	Selectable:
 		Class: 3tnk
-	SpeedMultiplier@IRAQTANK:
-		-RequiresCondition:
-	WithFacingSpriteBody:
-		-RequiresCondition:
-	WithSpriteTurret:
-		-RequiresCondition:
-	Explodes@IRAQTANK:
-		RequiresCondition: !being-warped
-	ThrowsShrapnel@small:
-		-RequiresCondition:
-	-Tooltip@IRAQ:
-	-Tooltip@LASHER:
+	SpeedMultiplier:
+		Modifier: 125
 	-SpawnActorOnDeath:
-	-SpawnActorOnDeath@LASHER:
-	-Armament@LASHER:
-	-SpeedMultiplier@LASHER:
-	-DamageMultiplier@LASHER:
-	-WithFacingSpriteBody@IRAQ:
-	-WithFacingSpriteBody@LASHER:
-	-WithSpriteTurret@LASHER:
-	-PeriodicExplosion@LASHER:
-	-GrantConditionOnMovement@LASHER:
-	-GrantConditionOnPrerequisite@IRAQ:
-	-GrantConditionOnPrerequisite@LASHER:
-	-GrantCondition@IRAQ:
-	-GrantCondition@LASHER:
+	Explodes@ATOMICENGINES:
+		Weapon: UnitExplodeIraqTank
+		EmptyWeapon: UnitExplodeIraqTank
+		RequiresCondition: !being-warped
 	SpeedMultiplier@CRUSHATTEMPTSLOW:
 		RequiresCondition: crush-attempt-slow && !crush-slow
 	SpeedMultiplier@CRUSHSLOW:
 		RequiresCondition: crush-slow
-	-UpgradeableTo:
+	UpgradeableTo:
+		Actors: 3tnk.atomicyuri
+	RearmsToUpgrade@LASHERUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: 3tnk.atomicyuri
+		RequiresCondition: lasher-upgrade
+	GrantConditionOnPrerequisite@LASHERUPGRADE:
+		Condition: lasher-upgrade
+		Prerequisites: lasher.upgrade
+	-RearmsToUpgrade@ATOMICUPGRADE:
+	-GrantConditionOnPrerequisite@ATOMICUPGRADE:
+	-RearmsToUpgrade@ATOMICLASHERUPGRADE:
 
 3TNK.YURI:
 	Inherits: 3TNK
@@ -699,93 +631,126 @@ GTNK.squad:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 34
-		Prerequisites: ~lasher.upgrade, ~vehicles.3tnk, ~techlevel.low
+		Prerequisites: ~lasher.upgrade, ~!atomicengines.upgrade, ~vehicles.3tnk, ~techlevel.low
 		Description: Heavy tank with infantry crushing improvements.
-	-TooltipExtras:
-	-TooltipExtras@IRAQ:
-	TooltipExtras@LASHER:
-		IsStandard: true
-		-RequiresCondition:
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
 	Tooltip:
 		Name: Lasher Tank
-		-RequiresCondition:
+		GenericName: Tank
 	Health:
 		HP: 57000
 	Selectable:
 		Class: 3tnk
-	Armament@LASHER:
-		-RequiresCondition:
-	SpeedMultiplier@LASHER:
-		-RequiresCondition:
+	Armament:
+		Weapon: 125mmLasher
+		Recoil: 128
+		RecoilRecovery: 38
+		LocalOffset: 768,0,90
+		MuzzleSequence: muzzle
+	SpeedMultiplier:
+		Modifier: 120
 	GrantConditionOnMovement@LASHER:
-		-RequiresCondition:
-	WithFacingSpriteBody:
-		-RequiresCondition:
-	WithSpriteTurret:
-		-RequiresCondition:
+		ValidMovementTypes: Horizontal, Vertical, Turn
+		Condition: lasher-move
 	PeriodicExplosion@LASHER:
 		RequiresCondition: lasher-move
-	SpawnActorOnDeath@LASHER:
-		RequiresCondition: !being-warped
+		LocalOffset: 896, 0, 0
+		Weapon: Lasher
 	AttackTurreted:
 		Voice: Attack
 	Mobile:
 		Voice: Move
 	Passenger:
 		Voice: Move
-	-Tooltip@IRAQ:
-	-Tooltip@LASHER:
-	-Armament:
-	-SpawnActorOnDeath:
-	-SpeedMultiplier@CRUSHATTEMPTSLOW:
-	-SpeedMultiplier@CRUSHSLOW:
-	-ExternalCondition@CRUSHATTEMPTSLOW:
-	-ExternalCondition@CRUSHSLOW:
-	-SpeedMultiplier@IRAQTANK:
-	-WithFacingSpriteBody@IRAQ:
-	-WithFacingSpriteBody@LASHER:
-	-WithSpriteTurret@LASHER:
-	-DamageMultiplier@LASHER:
-	-Explodes@IRAQTANK:
-	-GrantConditionOnPrerequisite@IRAQ:
-	-GrantConditionOnPrerequisite@LASHER:
-	-GrantCondition@IRAQ:
-	-GrantCondition@LASHER:
-	-ThrowsShrapnel@small:
 	Voiced:
 		VoiceSet: LasherTankVoice
+	SpawnActorOnDeath:
+		Actor: 3TNK.YURI.Husk
+	UpgradeableTo:
+		Actors: 3tnk.atomicyuri
+	-RearmsToUpgrade@LASHERUPGRADE:
+	-GrantConditionOnPrerequisite@LASHERUPGRADE:
+	GrantConditionOnPrerequisite@ATOMICUPGRADE:
+		Condition: atomicengines-upgrade
+		Prerequisites: atomicengines.upgrade
+	RearmsToUpgrade@ATOMICUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: 3tnk.atomicyuri
+		RequiresCondition: atomicengines-upgrade
+	-RearmsToUpgrade@ATOMICLASHERUPGRADE:
+
+3TNK.ATOMICYURI:
+	Inherits: 3TNK.ATOMIC
+	RenderSprites:
+		Image: 3tnkay
+	Buildable:
+		Queue: Vehicle
+		BuildPaletteOrder: 34
+		Prerequisites: ~lasher.upgrade, ~atomicengines.upgrade, ~vehicles.3tnk, ~techlevel.low
+		Description: Heavy tank with infantry crushing improvements.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
+		Attributes: • Explodes and leaves radiation on death
+	Tooltip:
+		Name: Atomic Lasher Tank
+		GenericName: Tank
+	Health:
+		HP: 57000
+	Selectable:
+		Class: 3tnk
+	Armament:
+		Weapon: 125mmLasher
+		Recoil: 128
+		RecoilRecovery: 38
+		LocalOffset: 768,0,90
+		MuzzleSequence: muzzle
+	SpeedMultiplier:
+		Modifier: 135
+	GrantConditionOnMovement@LASHER:
+		ValidMovementTypes: Horizontal, Vertical, Turn
+		Condition: lasher-move
+	PeriodicExplosion@LASHER:
+		RequiresCondition: lasher-move
+		LocalOffset: 896, 0, 0
+		Weapon: Lasher
+	AttackTurreted:
+		Voice: Attack
+	Mobile:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Voiced:
+		VoiceSet: LasherTankVoice
+	WithFacingSpriteBody:
+		Sequence: idle2
 	-UpgradeableTo:
+	-Rearmable@UPGRADE:
+	-AmmoPool@UPGRADE:
+	-RearmsToUpgrade@LASHERUPGRADE:
+	-GrantConditionOnPrerequisite@LASHERUPGRADE:
 
 4TNK:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
-	Inherits@SHRAPNEL: ^ThrowsShrapnel
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 290
-		Prerequisites: stek, ~vehicles.soviet, ~!iraqtank.upgrade, ~techlevel.high
+		Prerequisites: stek, ~vehicles.soviet, ~!atomicengines.upgrade, ~techlevel.high
 		Description: Big and slow tank with anti-air capability.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
 		Attributes: • Can crush concrete walls
-		RequiresCondition: !iraqtank-upgrade
-	TooltipExtras@IRAQ:
-		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
-		Attributes: • Can crush concrete walls\n• Explodes and leaves radiation on death
-		IsStandard: false
-		RequiresCondition: iraqtank-upgrade
 	Valued:
 		Cost: 1700
 	Tooltip:
 		Name: Mammoth Tank
 		GenericName: Tank
-		RequiresCondition: !iraqtank-upgrade
-	Tooltip@UPG:
-		Name: Atomic Mammoth Tank
-		GenericName: Tank
-		RequiresCondition: iraqtank-upgrade
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -795,9 +760,6 @@ GTNK.squad:
 	Mobile:
 		Speed: 42
 		Locomotor: heavytracked
-	SpeedMultiplier@IRAQTANK:
-		Modifier: 125
-		RequiresCondition: iraqtank-upgrade
 	Passenger:
 		Weight: 2
 	RevealsShroud:
@@ -825,25 +787,10 @@ GTNK.squad:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
 	WithFacingSpriteBody:
-		RequiresCondition: !iraqtank-upgrade
-	WithFacingSpriteBody@IRAQ:
-		Name: iraqbody
-		Sequence: idle2
-		RequiresCondition: iraqtank-upgrade
 	WithSpriteTurret:
-		RequiresCondition: !iraqtank-upgrade
-	WithSpriteTurret@UPG:
-		Sequence: turret2
-		RequiresCondition: iraqtank-upgrade
 	SpawnActorOnDeath:
 		Actor: 4TNK.Husk
-		RequiresCondition: !being-warped && !iraqtank-upgrade
-	Explodes@IRAQTANK:
-		Weapon: UnitExplodeIraqTank
-		EmptyWeapon: UnitExplodeIraqTank
-		RequiresCondition: !being-warped && iraqtank-upgrade
-	ThrowsShrapnel@small:
-		RequiresCondition: iraqtank-upgrade
+		RequiresCondition: !being-warped
 	ChangesHealth:
 		PercentageStep: 1
 		Delay: 25
@@ -856,51 +803,54 @@ GTNK.squad:
 	Carryable:
 		LocalOffset: 0,0,500
 	-Crushable:
-	GrantConditionOnPrerequisite@IRAQ:
-		Condition: iraqtank-upgrade
-		Prerequisites: iraqtank.upgrade
-	GrantCondition@IRAQ:
-		Condition: iraqtank-upgrade
-		RequiresCondition: iraqtank-upgrade
-		GrantPermanently: true
-	UpgradeableTo:
-		Actors: 4tnk.iraq
 	WithIdleOverlay@MINDCONTROL:
 		Offset: 0,0,512
+	UpgradeableTo:
+		Actors: 4tnk.atomic
+	# For upgrading on Service Depot
+	Rearmable@UPGRADE:
+		RearmActors: fix, rep, srep
+		AmmoPools: upgrade
+	AmmoPool@UPGRADE:
+		Name: upgrade
+		Armaments: none
+		ReloadDelay: 5000
+	GrantConditionOnPrerequisite@ATOMICUPGRADE:
+		Condition: atomicengines-upgrade
+		Prerequisites: atomicengines.upgrade
+	RearmsToUpgrade@ATOMICUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: 4tnk.atomic
+		RequiresCondition: atomicengines-upgrade
 
-4TNK.IRAQ:
+4TNK.ATOMIC:
 	Inherits: 4TNK
+	Inherits@SHRAPNEL: ^ThrowsShrapnel
 	RenderSprites:
 		Image: 4tnki
 	Buildable:
 		BuildPaletteOrder: 291
-		Prerequisites: stek, ~vehicles.soviet, ~iraqtank.upgrade, ~techlevel.high
-	-TooltipExtras:
-	TooltipExtras@IRAQ:
-		IsStandard: true
-		-RequiresCondition:
+		Prerequisites: stek, ~vehicles.soviet, ~atomicengines.upgrade, ~techlevel.high
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry 
+		Attributes: • Can crush concrete walls\n• Explodes and leaves radiation on death
 	Tooltip:
 		Name: Atomic Mammoth Tank
-		-RequiresCondition:
-	-Tooltip@UPG:
-	WithFacingSpriteBody:
-		-RequiresCondition:
-	WithSpriteTurret:
-		-RequiresCondition:
-	Explodes@IRAQTANK:
+	Explodes@ATOMICUPGRADE:
+		Weapon: UnitExplodeIraqTank
+		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: !being-warped
 	Selectable:
 		Class: 4tnk
-	SpeedMultiplier@IRAQTANK:
-		-RequiresCondition:
-	ThrowsShrapnel@small:
-		-RequiresCondition:
+	SpeedMultiplier:
+		Modifier: 125
+	-GrantConditionOnPrerequisite@ATOMICUPGRADE:
+	-RearmsToUpgrade@ATOMICUPGRADE:
 	-SpawnActorOnDeath:
-	-WithFacingSpriteBody@IRAQ:
-	-WithSpriteTurret@UPG:
-	-GrantConditionOnPrerequisite@IRAQ:
-	-GrantCondition@IRAQ:
 	-UpgradeableTo:
+	-Rearmable@UPGRADE:
+	-AmmoPool@UPGRADE:
 
 ARTY:
 	Inherits: ^Vehicle
@@ -6219,27 +6169,16 @@ APOC:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 300
-		Prerequisites: indp, ~vehicles.soviet, ~!iraqtank.upgrade, ~techlevel.high
+		Prerequisites: npwr, ~vehicles.soviet, ~!atomicengines.upgrade, ~techlevel.high
 		Description: Enormous slow tank with uranium shells and anti-air capability.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Attributes: • Can crush smaller vehicles and concrete walls
-		RequiresCondition: !iraqtank-upgrade
-	TooltipExtras@IRAQ:
-		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
-		Attributes: • Can crush smaller vehicles and concrete walls\n• Explodes and leaves radiation on death
-		IsStandard: false
-		RequiresCondition: iraqtank-upgrade
 	Valued:
 		Cost: 2600
 	Tooltip:
 		Name: Apocalypse Tank
 		GenericName: Tank
-		RequiresCondition: !iraqtank-upgrade
-	Tooltip@UPG:
-		Name: Atomic Apocalypse Tank
-		GenericName: Tank
-		RequiresCondition: iraqtank-upgrade
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -6279,16 +6218,11 @@ APOC:
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
 	WithFacingSpriteBody:
-		RequiresCondition: !iraqtank-upgrade
-	WithFacingSpriteBody@IRAQ:
-		Name: iraqbody
-		Sequence: idle2
-		RequiresCondition: iraqtank-upgrade
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	SpawnActorOnDeath:
 		Actor: APOC.Husk
-		RequiresCondition: !being-warped && iraqtank-upgrade
+		RequiresCondition: !being-warped
 	ChangesHealth:
 		PercentageStep: 1
 		Delay: 25
@@ -6305,49 +6239,49 @@ APOC:
 		VoiceSet: ApocalypseVoice
 	AttackMove:
 		Voice: Attack
-	GrantConditionOnPrerequisite@IRAQ:
-		Condition: iraqtank-upgrade
-		Prerequisites: iraqtank.upgrade
-	GrantCondition@IRAQ:
-		Condition: iraqtank-upgrade
-		RequiresCondition: iraqtank-upgrade
-		GrantPermanently: true
-	SpeedMultiplier@IRAQTANK:
-		Modifier: 125
-		RequiresCondition: iraqtank-upgrade
-	Explodes@IRAQTANK:
-		Weapon: UnitExplodeIraqTank
-		EmptyWeapon: UnitExplodeIraqTank
-		RequiresCondition: !being-warped && iraqtank-upgrade
-	-ProductionCostMultiplier@IndustrialPlantLevel1:
 	UpgradeableTo:
-		Actors: apoc.iraq
+		Actors: apoc.atomic
+	# For upgrading on Service Depot
+	Rearmable@UPGRADE:
+		RearmActors: fix, rep, srep
+		AmmoPools: upgrade
+	AmmoPool@UPGRADE:
+		Name: upgrade
+		Armaments: none
+		ReloadDelay: 5000
+	GrantConditionOnPrerequisite@ATOMICUPGRADE:
+		Condition: atomicengines-upgrade
+		Prerequisites: atomicengines.upgrade
+	RearmsToUpgrade@ATOMICUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: apoc.atomic
+		RequiresCondition: atomicengines-upgrade
 
-APOC.IRAQ:
+APOC.ATOMIC:
 	Inherits: APOC
 	RenderSprites:
 		Image: apoci
 	Tooltip:
 		Name: Atomic Apocalypse Tank
 		GenericName: Tank
-		-RequiresCondition:
-	-Tooltip@UPG:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 301
-		Prerequisites: indp, ~vehicles.soviet, ~iraqtank.upgrade, ~techlevel.high
-	-TooltipExtras:
-	TooltipExtras@IRAQ:
-		IsStandard: true
-		-RequiresCondition:
+		Prerequisites: npwr, ~vehicles.soviet, ~atomicengines.upgrade, ~techlevel.high
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Attributes: • Can crush smaller vehicles and concrete walls\n• Explodes and leaves radiation on death
 	WithFacingSpriteBody:
-		-RequiresCondition:
-	-WithFacingSpriteBody@IRAQ:
-	-SpawnActorOnDeath:
-	-GrantConditionOnPrerequisite@IRAQ:
-	-GrantCondition@IRAQ:
-	SpeedMultiplier@IRAQTANK:
-		-RequiresCondition:
-	Explodes@IRAQTANK:
+	SpeedMultiplier:
+		Modifier: 125
+	Explodes@ATOMICUPGRADE:
+		Weapon: UnitExplodeIraqTank
+		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: !being-warped
+	-GrantConditionOnPrerequisite@ATOMICUPGRADE:
+	-RearmsToUpgrade@ATOMICUPGRADE:
+	-SpawnActorOnDeath:
 	-UpgradeableTo:
+	-Rearmable@UPGRADE:
+	-AmmoPool@UPGRADE:
