@@ -606,10 +606,6 @@ GTNK.squad:
 		Weapon: UnitExplodeIraqTank
 		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: !being-warped
-	SpeedMultiplier@CRUSHATTEMPTSLOW:
-		RequiresCondition: crush-attempt-slow && !crush-slow
-	SpeedMultiplier@CRUSHSLOW:
-		RequiresCondition: crush-slow
 	UpgradeableTo:
 		Actors: 3tnk.atomicyuri
 	RearmsToUpgrade@LASHERUPGRADE:
@@ -668,6 +664,10 @@ GTNK.squad:
 		VoiceSet: LasherTankVoice
 	SpawnActorOnDeath:
 		Actor: 3TNK.YURI.Husk
+	-ExternalCondition@CRUSHATTEMPTSLOW:
+	-ExternalCondition@CRUSHSLOW:
+	-SpeedMultiplier@CRUSHATTEMPTSLOW:
+	-SpeedMultiplier@CRUSHSLOW:
 	UpgradeableTo:
 		Actors: 3tnk.atomicyuri
 	-RearmsToUpgrade@LASHERUPGRADE:
@@ -727,6 +727,10 @@ GTNK.squad:
 		VoiceSet: LasherTankVoice
 	WithFacingSpriteBody:
 		Sequence: idle2
+	-ExternalCondition@CRUSHATTEMPTSLOW:
+	-ExternalCondition@CRUSHSLOW:
+	-SpeedMultiplier@CRUSHATTEMPTSLOW:
+	-SpeedMultiplier@CRUSHSLOW:
 	-UpgradeableTo:
 	-Rearmable@UPGRADE:
 	-AmmoPool@UPGRADE:
@@ -833,7 +837,7 @@ GTNK.squad:
 		BuildPaletteOrder: 291
 		Prerequisites: stek, ~vehicles.soviet, ~atomicengines.upgrade, ~techlevel.high
 	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry 
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
 		Attributes: • Can crush concrete walls\n• Explodes and leaves radiation on death
 	Tooltip:
 		Name: Atomic Mammoth Tank
