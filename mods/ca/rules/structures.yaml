@@ -2735,7 +2735,7 @@ SBAG:
 	Inherits: ^Wall
 	RenderSprites:
 		-PlayerPalette:
-		Palette: terrain
+		Palette: effect
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 10
@@ -2760,6 +2760,9 @@ SBAG:
 
 FENC:
 	Inherits: ^Wall
+	RenderSprites:
+		-PlayerPalette:
+		Palette: effect
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 20
@@ -2828,7 +2831,6 @@ BRIK:
 		Type: Brick
 	Crushable:
 		CrushClasses: heavywall
-	BlocksProjectiles:
 	LineBuild:
 		NodeTypes: concrete
 	LineBuildNode:
