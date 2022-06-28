@@ -745,7 +745,7 @@ GTNK.squad:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 290
-		Prerequisites: stek, ~vehicles.soviet, ~!atomicengines.upgrade, ~techlevel.high
+		Prerequisites: stek, ~vehicles.soviet, ~!erad.upgrade, ~!atomicengines.upgrade, ~techlevel.high
 		Description: Big and slow tank with anti-air capability.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -810,7 +810,7 @@ GTNK.squad:
 	WithIdleOverlay@MINDCONTROL:
 		Offset: 0,0,512
 	UpgradeableTo:
-		Actors: 4tnk.atomic
+		Actors: 4tnk.atomic, 4tnk.erad, 4tnk.eradatomic
 	# For upgrading on Service Depot
 	Rearmable@UPGRADE:
 		RearmActors: fix, rep, srep
@@ -822,11 +822,24 @@ GTNK.squad:
 	GrantConditionOnPrerequisite@ATOMICUPGRADE:
 		Condition: atomicengines-upgrade
 		Prerequisites: atomicengines.upgrade
+	GrantConditionOnPrerequisite@ERADUPGRADE:
+		Condition: erad-upgrade
+		Prerequisites: erad.upgrade
 	RearmsToUpgrade@ATOMICUPGRADE:
 		AmmoPool: upgrade
 		UpgradeAudio: UnitUpgraded
 		Actor: 4tnk.atomic
-		RequiresCondition: atomicengines-upgrade
+		RequiresCondition: atomicengines-upgrade && !erad-upgrad
+	RearmsToUpgrade@ERADUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: 4tnk.erad
+		RequiresCondition: erad-upgrade && !atomicengines.upgrade
+	RearmsToUpgrade@ERADATOMICUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: 4tnk.eradatomic
+		RequiresCondition: atomicengines-upgrade && erad-upgrade
 
 4TNK.ATOMIC:
 	Inherits: 4TNK
@@ -835,7 +848,7 @@ GTNK.squad:
 		Image: 4tnki
 	Buildable:
 		BuildPaletteOrder: 291
-		Prerequisites: stek, ~vehicles.soviet, ~atomicengines.upgrade, ~techlevel.high
+		Prerequisites: stek, ~vehicles.soviet, ~atomicengines.upgrade, ~!erad.upgrade, ~techlevel.high
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
 		Attributes: • Can crush concrete walls\n• Explodes and leaves radiation on death
@@ -849,12 +862,69 @@ GTNK.squad:
 		Class: 4tnk
 	SpeedMultiplier:
 		Modifier: 125
+	UpgradeableTo:
+		Actors: 4tnk.eradatomic
+	GrantConditionOnPrerequisite@ERADUPGRADE:
+		Condition: erad-upgrade
+		Prerequisites: erad.upgrade
+	RearmsToUpgrade@ERADUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: 4tnk.erad
+		RequiresCondition: erad-upgrade
+	-SpawnActorOnDeath:
 	-GrantConditionOnPrerequisite@ATOMICUPGRADE:
 	-RearmsToUpgrade@ATOMICUPGRADE:
-	-SpawnActorOnDeath:
+	-RearmsToUpgrade@ERADATOMICUPGRADE:
+
+4TNK.ERAD:
+	Inherits: 4TNK
+	RenderSprites:
+		Image: 4tnkerad
+	Tooltip:
+		Name: Eradicator
+	Buildable:
+		Prerequisites: stek, ~vehicles.soviet, ~!atomicengines.upgrade, ~erad.upgrade, ~techlevel.high
+		Description: Big and slow tank armed with a radiation cannon.
+	Armament@PRIMARY:
+		Weapon: RadBeamWeaponHeavy
+		LocalOffset: 400,0,340
+	-Armament@SECONDARY:
+	UpgradeableTo:
+		Actors: 4tnk.eradatomic
+	GrantConditionOnPrerequisite@ATOMICUPGRADE:
+		Condition: atomicengines-upgrade
+		Prerequisites: atomicengines.upgrade
+	RearmsToUpgrade@ATOMICUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: 4tnk.eradatomic
+		RequiresCondition: atomicengines-upgrade
+	SpawnActorOnDeath:
+		Actor: 4TNK.ERAD.Husk
+		RequiresCondition: !being-warped
+	-GrantConditionOnPrerequisite@ERADUPGRADE:
+	-RearmsToUpgrade@ERADUPGRADE:
+	-RearmsToUpgrade@ERADATOMICUPGRADE:
+
+4TNK.ERADATOMIC:
+	Inherits: 4TNK.ATOMIC
+	RenderSprites:
+		Image: 4tnkeradi
+	Tooltip:
+		Name: Atomic Eradicator
+	Buildable:
+		Prerequisites: stek, ~vehicles.soviet, ~atomicengines.upgrade, ~erad.upgrade, ~techlevel.high
+		Description: Big and slow tank armed with a radiation cannon.
+	Armament@PRIMARY:
+		Weapon: RadBeamWeaponHeavy
+		LocalOffset: 400,0,340
+	-Armament@SECONDARY:
 	-UpgradeableTo:
 	-Rearmable@UPGRADE:
 	-AmmoPool@UPGRADE:
+	-GrantConditionOnPrerequisite@ERADUPGRADE:
+	-RearmsToUpgrade@ERADUPGRADE:
 
 ARTY:
 	Inherits: ^Vehicle
