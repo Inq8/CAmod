@@ -278,6 +278,29 @@ apwr:
 	icon: apwricon
 	fake-icon: fapwicon
 
+npwr:
+	Inherits: ^StructureOverlays
+	idle: npwr
+		Length: 4
+		Tick: 1000
+		Offset: 0,-10
+	damaged-idle: npwrd
+		Length: 4
+		Tick: 1000
+		Offset: 0,-10
+	make: npwrmake
+		Length: *
+		Offset: 0,-10
+	dead: npwrd
+		Tick: 800
+		Offset: 0,-10
+	bib: bib1
+		Length: *
+		UseTilesetExtension: true
+		TilesetOverrides:
+			INTERIOR: TEMPERAT
+	icon: npwricon
+
 tpwr:
 	Inherits: ^StructureOverlays
 	idle: tpwr

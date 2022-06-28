@@ -2197,6 +2197,77 @@ APWR:
 	InfiltrateForPowerOutage:
 		Types: SpyInfiltrate, PowerInfiltrate
 
+NPWR:
+	Inherits: ^Building
+	Inherits@POWER_OUTAGE: ^DisabledByPowerOutage
+	Inherits@SHAPE: ^3x2Shape
+	Inherits@POWERDRAIN: ^PowerDrainable
+	Inherits@OVERLOAD: ^HackableOverloadable
+	HitShape:
+		TargetableOffsets: -355,-1024,0
+	Buildable:
+		Queue: Building
+		BuildPaletteOrder: 165
+		Prerequisites: stek, ~techlevel.high
+		Description: Provides ten times the power of\n  a standard Power Plant.
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Atomic Reactor
+	ProvidesPrerequisite:
+		Prerequisite: anypower
+	Building:
+		Footprint: xxxx Xxxx ====
+		Dimensions: 4,3
+		LocalCenterOffset: 0,-512,0
+	Selectable:
+		Bounds: 96,72
+		DecorationBounds: 96,92,0,-10
+	Health:
+		HP: 70000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		Range: 5c0
+	WithBuildingBib:
+	Power:
+		Amount: 1000
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SpyInfiltrate, PowerInfiltrate
+	ScalePowerWithHealth:
+	WithDeathAnimation:
+		DeathSequence: dead
+		UseDeathTypeSuffix: false
+	InfiltrateForPowerOutage:
+		Types: SpyInfiltrate, PowerInfiltrate
+	WithIdleOverlay@SMOKE1:
+		Offset: 3400,-1400,0
+		Image: smokestack
+		Sequence: idle1
+		Palette: effect-ignore-lighting-alpha50
+		RequiresCondition: !(empdisable || being-warped || build-incomplete)
+	WithIdleOverlay@SMOKE2:
+		Offset: 2600,1300,0
+		Image: smokestack
+		Sequence: idle2
+		Palette: effect-ignore-lighting-alpha50
+		RequiresCondition: !(empdisable || being-warped || build-incomplete)
+	WithIdleOverlay@SMOKE3:
+		Offset: 4800,600,0
+		Image: smokestack
+		Sequence: idle3
+		Palette: effect-ignore-lighting-alpha50
+		RequiresCondition: !(empdisable || being-warped || build-incomplete)
+	Explodes:
+		Type: CenterPosition
+		Weapon: CrateNuke
+		EmptyWeapon: CrateNuke
+	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisiteValidatedFaction@iraq:
+		Factions: iraq
+		Prerequisite: npwr.iraq
+
 TPWR:
 	Inherits: APWR
 	Buildable:
@@ -2663,7 +2734,8 @@ FIX:
 SBAG:
 	Inherits: ^Wall
 	RenderSprites:
-		Palette: terrain
+		-PlayerPalette:
+		Palette: effect
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 10
@@ -2688,6 +2760,9 @@ SBAG:
 
 FENC:
 	Inherits: ^Wall
+	RenderSprites:
+		-PlayerPalette:
+		Palette: effect
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 20
@@ -2756,7 +2831,6 @@ BRIK:
 		Type: Brick
 	Crushable:
 		CrushClasses: heavywall
-	BlocksProjectiles:
 	LineBuild:
 		NodeTypes: concrete
 	LineBuildNode:

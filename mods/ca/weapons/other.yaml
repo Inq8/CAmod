@@ -1944,6 +1944,28 @@ RadBeamWeaponE:
 	Inherits: RadBeamWeapon
 	Range: 7c0
 
+RadBeamWeaponHeavy:
+	Inherits: RadBeamWeapon
+	ReloadDelay: 90
+	Report: eradcan1.aud
+	Projectile: RadBeam
+		Amplitude: 176
+		WaveLength: 384
+		Thickness: 64
+	Warhead@1Dam: SpreadDamage
+		Light: 120
+		Heavy: 100
+	Warhead@2Dam: SpreadDamage
+		Spread: 128
+		Damage: 4000
+		ValidTargets: Infantry, Vehicle, Ship
+	Warhead@1Radiation: CreateTintedCells
+		Spread: 1c0
+		Falloff: 65, 30, 5, 0
+		Level: 250
+		MaxLevel: 750
+		LayerName: radioactivity.strong
+
 RadEruptionWeapon:
 	ReloadDelay: 60
 	Report: idesat2a.aud
