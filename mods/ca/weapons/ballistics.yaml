@@ -132,6 +132,38 @@
 	Warhead@1Dam: SpreadDamage
 		Damage: 7000
 
+125mmAtomic:
+	Inherits: 125mm
+	Projectile: Bullet
+		Image: radball
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+	Warhead@3Eff: CreateEffect
+		Explosions: radhitsm
+		ExplosionPalette: caneon
+		Inaccuracy: 256
+	Warhead@18Radio: CreateTintedCells
+		Spread: 1c256
+		Level: 200
+		Falloff: 100, 32
+		LayerName: radioactivity.weak
+
+125mmLasherAtomic:
+	Inherits: 125mmLasher
+	Projectile: Bullet
+		Image: radball
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+	Warhead@3Eff: CreateEffect
+		Explosions: radhitsm
+		ExplosionPalette: caneon
+		Inaccuracy: 256
+	Warhead@18Radio: CreateTintedCells
+		Spread: 1c256
+		Level: 400
+		Falloff: 100, 32
+		LayerName: radioactivity.weak
+
 130mm:
 	Inherits: ^Cannon
 	ReloadDelay: 90
@@ -144,6 +176,22 @@
 			Light: 85
 			Heavy: 115
 		InvalidTargets: Air, AirSmall
+
+130mmAtomic:
+	Inherits: 130mm
+	Projectile: Bullet
+		Image: radball
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+	Warhead@3Eff: CreateEffect
+		Explosions: radhitsm
+		ExplosionPalette: caneon
+		Inaccuracy: 256
+	Warhead@18Radio: CreateTintedCells
+		Spread: 1c256
+		Level: 200
+		Falloff: 100, 32
+		LayerName: radioactivity.weak
 
 130mmTD:
 	Inherits: 130mm
@@ -186,6 +234,14 @@
 		Level: 250
 		Falloff: 100, 55, 32, 5
 		LayerName: radioactivity.weak
+
+152mmAtomic:
+	Inherits: 152mm
+	Projectile: Bullet
+		Image: radball
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			None: 60
 
 183mm:
 	Inherits: ^Cannon

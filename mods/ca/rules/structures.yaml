@@ -2270,6 +2270,26 @@ NPWR:
 	ProvidesPrerequisiteValidatedFaction@iraq:
 		Factions: iraq
 		Prerequisite: npwr.iraq
+	GrantExternalConditionPower@ATOMICAMMO:
+		OrderName: atomicammo
+		Icon: invuln
+		ChargeInterval: 4500
+		Description: Atomic Ammunition
+		Condition: atomic-ammo
+		Dimensions: 5, 5
+		Footprint: __x__ _xxx_ xxxxx _xxx_ __x__
+		ValidRelationships: Ally, Neutral
+		Duration: 600
+		AllowMultiple: false
+		LongDesc: \nGrants limited atomic ammunition to tanks.
+		OnFireSound: ironcur9.aud
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		DisplayRadarPing: True
+		Cursor: ability
+		PauseOnCondition: empdisable || being-warped
+		DisplayTimerRelationships: Ally, Neutral
+		Sequence: idle
 
 TPWR:
 	Inherits: APWR
