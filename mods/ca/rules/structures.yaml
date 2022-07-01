@@ -2293,13 +2293,14 @@ NPWR:
 		Sequence: idle
 
 TPWR:
+	Inherits@AUTOTARGET: ^AutoTargetGround
 	Inherits: APWR
 	Buildable:
 		Prerequisites: anyradar, ~techlevel.medium, ~structures.russia
-		Description: Provides double the power of\n  a standard Power Plant.
+		Description: Provides double the power of\n  a standard Power Plant.\n  Can divert half its power output to allow striking enemy targets.
 	TooltipExtras:
-		Weaknesses: • Unstable when damaged and overloaded.
-		Attributes: • Special Ability: Overload (toggled)
+		Weaknesses: • Unstable when damaged and channeling is enabled
+		Attributes: • Special Ability: Toggle Channeled Mode
 	Valued:
 		Cost: 600
 	Tooltip:
@@ -2308,35 +2309,43 @@ TPWR:
 		Offset: -20,-70,0
 		Sequence: power
 		RequiresCondition: overcharge && !(empdisable || being-warped || build-incomplete)
-	GrantTimedCondition@LOCKOUT:
-		Duration: 1500
-		Condition: lockout
+	WithDecoration@CHANNELED:
+		Image: poweron
+		Sequence: online
+		Palette: chrome
 		RequiresCondition: overcharge
-	GrantTimedCondition@COOLDOWN:
-		Duration: 250
-		Condition: cooldown
-		RequiresCondition: !overcharge
-	TimedConditionBar@LOCKOUT:
-		Condition: lockout
-		Color: FF0000
-	TimedConditionBar@COOLDOWN:
-		Condition: cooldown
-		Color: FFFF0080
+		Position: Center
+	CommandBarBlacklist:
+		DisableStop: false
+	Armament@PRIMARY:
+		Weapon: TTrackZap
+		LocalOffset: 0,0,512
+		RequiresCondition: overcharge && !tarc-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: TTrackZap.UPG
+		LocalOffset: 0,0,512
+		RequiresCondition: overcharge && tarc-upgrade
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped || build-incomplete
+	Turreted:
+	RangeMultiplier:
+		Modifier: 85
+	RenderRangeCircle:
+		Color: C12900
+	GrantConditionOnPrerequisite@TARC:
+		Condition: tarc-upgrade
+		Prerequisites: tarc.upgrade
 	GrantConditionOnDeploy@OVERCHARGE:
 		DeploySounds: btesat1a.aud
 		UndeploySounds: btesat1a.aud
 		DeployedCondition: overcharge
-		PauseOnCondition: lockout || cooldown
 		SkipMakeAnimation: true
-		RequiresCondition: !(empdisable || being-warped || build-incomplete) && !(owned-by-brutal-ai || owned-by-hard-ai || owned-by-normal-ai || owned-by-easy-ai || owned-by-naval-ai)
+		RequiresCondition: !(empdisable || being-warped || build-incomplete)
 	GrantConditionOnDamageState@VOLATILE:
 		Condition: volatile
 		ValidDamageStates: Heavy, Critical
-	GrantConditionOnDamageState@CRITICAL:
-		Condition: critical
-		ValidDamageStates: Critical
 	PowerMultiplier:
-		Modifier: 200
+		Modifier: 50
 		RequiresCondition: overcharge
 	PeriodicExplosion:
 		Weapon: TPWRZap
@@ -2344,15 +2353,16 @@ TPWR:
 	SoundOnDamageTransition:
 		DamagedSounds: bpowdiea.aud
 		DestroyedSounds: bpowdieb.aud
+	GrantConditionOnDamageState@MINORDAMAGE:
+		Condition: minordamage
+		ValidDamageStates: Light, Medium
 	GrantPeriodicCondition@BOTHELPER:
 		Condition: overcharge
-		CooldownDuration: 300
-		ActiveDuration: 900
+		CooldownDuration: 25
+		ActiveDuration: 375
 		StartsGranted: false
 		ShowSelectionBar: false
-		ActiveColor: 0080FF60
-		CooldownColor: FFFF0080
-		RequiresCondition: !critical && (owned-by-brutal-ai || owned-by-hard-ai || owned-by-normal-ai || owned-by-easy-ai || owned-by-naval-ai)
+		RequiresCondition: minordamage && (owned-by-brutal-ai || owned-by-hard-ai || owned-by-normal-ai || owned-by-easy-ai || owned-by-naval-ai)
 
 STEK:
 	Inherits: ^Building
