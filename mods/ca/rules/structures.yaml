@@ -2211,7 +2211,7 @@ NPWR:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 165
-		Prerequisites: stek, ~techlevel.high
+		Prerequisites: stek, ~structures.soviet, ~techlevel.high
 		Description: Provides ten times the power of\n  a standard Power Plant.
 	Valued:
 		Cost: 1000
@@ -2270,9 +2270,10 @@ NPWR:
 	ProvidesPrerequisiteValidatedFaction@iraq:
 		Factions: iraq
 		Prerequisite: npwr.iraq
+	SupportPowerChargeBar:
 	GrantExternalConditionPower@ATOMICAMMO:
 		OrderName: atomicammo
-		Icon: invuln
+		Icon: atomicammo
 		ChargeInterval: 4500
 		Description: Atomic Ammunition
 		Condition: atomic-ammo
@@ -2281,8 +2282,8 @@ NPWR:
 		ValidRelationships: Ally, Neutral
 		Duration: 600
 		AllowMultiple: false
-		LongDesc: \nGrants limited atomic ammunition to tanks.
-		OnFireSound: ironcur9.aud
+		LongDesc: \nGrants atomic ammunition to tanks for a limited time.
+		OnFireSound: atomicammo.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayRadarPing: True
