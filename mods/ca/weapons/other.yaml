@@ -1956,13 +1956,22 @@ RadBeamWeaponHeavy:
 		WaveLength: 384
 		Thickness: 64
 	Warhead@1Dam: SpreadDamage
-		Versus:
-			Light: 120
-			Heavy: 100
-	Warhead@2Dam: SpreadDamage
 		Spread: 128
-		Damage: 4000
-		ValidTargets: Infantry, Vehicle, Ship
+		InvalidTargets: Infantry
+		Versus:
+			Concrete: 35
+			Light: 75
+			Heavy: 70
+	Warhead@2Dam: HealthPercentageDamage
+		Spread: 128
+		Damage: 200
+		ValidTargets: Infantry
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+	Warhead@3Dam: SpreadDamage
+		Spread: 341
+		Damage: 2000
+		ValidTargets: Infantry
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@1Radiation: CreateTintedCells
 		Spread: 1c0
 		Falloff: 65, 30, 5, 0
