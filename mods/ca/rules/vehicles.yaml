@@ -1580,15 +1580,25 @@ APC:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 50
-		Prerequisites: ~vehicles.allies, ~techlevel.low
+		Prerequisites: ~vehicles.allies, ~!rapc.upgrade, ~techlevel.low
 		Description: Tough infantry transport.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
+		RequiresCondition: !rapc-upgrade
+	TooltipExtras@UPG:
+		Description: Tough infantry transport that fires high explosive shells.
+		Strengths: • Strong vs Infantry, Buildings, Defenses, Light Armor
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+		RequiresCondition: rapc-upgrade
 	Valued:
 		Cost: 600
 	Tooltip:
 		Name: Armored Personnel Carrier
+		RequiresCondition: !rapc-upgrade
+	Tooltip@UPG:
+		Name: Raider APC
+		RequiresCondition: rapc-upgrade
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -1598,6 +1608,9 @@ APC:
 	Mobile:
 		Speed: 108
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
+	SpeedMultiplier@UPG:
+		Modifier: 83
+		RequiresCondition: rapc-upgrade
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -1608,9 +1621,24 @@ APC:
 		Weapon: M60mg
 		LocalOffset: 85,0,171
 		MuzzleSequence: muzzle
+		RequiresCondition: !rapc-upgrade
+	Armament@UPG:
+		Weapon: 76mm
+		LocalOffset: 500,0,250
+		MuzzleSequence: muzzle2
+		RequiresCondition: rapc-upgrade
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !rapc-upgrade
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: rapc-upgrade
+	Turreted:
+		TurnSpeed: 28
+		RequiresCondition: rapc-upgrade
+	WithSpriteTurret:
+		RequiresCondition: rapc-upgrade
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5
@@ -1626,6 +1654,56 @@ APC:
 		RequiresCondition: !driver-dead && !cargo
 	Targetable@MINDCONTROL:
 		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
+	GrantConditionOnPrerequisite@RAIDER:
+		Condition: rapc-upgrade
+		Prerequisites: rapc.upgrade
+	GrantCondition@RAIDER:
+		Condition: rapc-upgrade
+		RequiresCondition: rapc-upgrade
+		GrantPermanently: true
+	Berserkable@UPGRADING:
+		RequiresCondition: upgrading
+	GrantTimedCondition@UPGRADING:
+		RequiresCondition: rapc-upgrade
+		Condition: upgrading
+		Duration: 1
+	UpgradeableTo:
+		Actors: rapc
+
+RAPC:
+	Inherits: APC
+	Buildable:
+		Prerequisites: ~vehicles.allies, ~rapc.upgrade, ~techlevel.low
+		Description: Tough infantry transport that fires high explosive shells.
+	Valued:
+		Cost: 800
+	Mobile:
+		Speed: 90
+	-Tooltip:
+	Tooltip@UPG:
+		-RequiresCondition:
+	-TooltipExtras:
+	TooltipExtras@UPG:
+		IsStandard: true
+		-RequiresCondition:
+	-AttackFrontal:
+	AttackTurreted:
+		-RequiresCondition:
+	Turreted:
+		-RequiresCondition:
+	WithSpriteTurret:
+		-RequiresCondition:
+	Selectable:
+		Class: apc
+	-Armament:
+	Armament@UPG:
+		-RequiresCondition:
+	-SpeedMultiplier@UPG:
+	-GrantConditionOnPrerequisite@RAIDER:
+	-GrantCondition@RAIDER:
+	-Berserkable@UPGRADING:
+	-GrantTimedCondition@UPGRADING:
+	-UpgradeableTo:
 
 APC.AI:
 	Inherits: APC
@@ -1634,8 +1712,28 @@ APC.AI:
 		Image: APC
 	Buildable:
 		Prerequisites: ~botplayer, ~vehicles.allies, ~techlevel.low
+	Tooltip:
+		-RequiresCondition:
+	-Tooltip@UPG:
+	TooltipExtras:
+		-RequiresCondition:
+	-TooltipExtras@UPG:
 	Cargo:
 		InitialUnits: E1,E1,E1,E3,E3
+	Armament:
+		-RequiresCondition:
+	-Armament@UPG:
+	AttackFrontal:
+		-RequiresCondition:
+	-AttackTurreted:
+	-Turreted:
+	-WithSpriteTurret:
+	-SpeedMultiplier@UPG:
+	-GrantConditionOnPrerequisite@RAIDER:
+	-GrantCondition@RAIDER:
+	-Berserkable@UPGRADING:
+	-GrantTimedCondition@UPGRADING:
+	-UpgradeableTo:
 
 MNLY:
 	Inherits: ^Tank

@@ -147,7 +147,7 @@ vulcan.upgrade:
 		Prerequisites: ~radar.gdi, ~techlevel.high
 		Description: Upgrades: APC
 	TooltipExtras:
-		Strengths: + Adds anti-air capability\n+ Increased damage against ground targets
+		Strengths: + Adds anti-air capability\n+ Increased damage against ground targets\n+ Adds turret
 		Weaknesses: – Increased cost\n– Reduced speed
 	Valued:
 		Cost: 750
@@ -640,6 +640,22 @@ indp.upgrade:
 
 #######################ALLIES############################
 #########################################################
+
+rapc.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Raider APC
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~radar.allies, ~techlevel.high
+		Description: Upgrades: APC
+	TooltipExtras:
+		Strengths: + Adds strong anti-structure damage\n+ Increased splash damage\n+ Adds turret
+		Weaknesses: – Increased cost\n– Slower projectile speed\n– Reduced speed
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: rapc.upgrade
 
 apb.upgrade:
 	Inherits: ^Upgrade

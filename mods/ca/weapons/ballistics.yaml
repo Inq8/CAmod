@@ -70,6 +70,27 @@
 		Versus:
 			Heavy: 70
 
+76mm:
+	Inherits: ^Cannon
+	Report: tnkfire3.aud
+	Projectile: Bullet
+		LaunchAngle: 62
+		Speed: 426
+	Warhead@1Dam: SpreadDamage
+		Spread: 256
+		Damage: 5200
+		Versus:
+			None: 100
+			Wood: 100
+			Concrete: 100
+			Light: 70
+			Heavy: 20
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated
+	Warhead@3EffGround: CreateEffect
+		Explosions: large_explosion
+		ImpactSounds: kaboom12.aud
+		ValidTargets: Ground, Ship, Trees
+
 90mm:
 	Inherits: ^Cannon
 	Warhead@1Dam: SpreadDamage
