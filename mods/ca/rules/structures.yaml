@@ -1288,6 +1288,31 @@ ATEK:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
+	DetonateWeaponPower@TEMPINC:
+		OrderName: tempinc
+		Prerequisites: atek.germany
+		Icon: tempinc
+		Cursor: ability
+		ChargeInterval: 10500
+		Description: Temporal Incursion
+		ActivationDelay: 25
+		LongDesc: \nSummons reinforcements from the future.\n    Units return to their origin time after a short time.
+		Weapon: TemporalIncursion
+		AirburstAltitude: 0c0
+		AllowMultiple: false
+		CameraActor: camera
+		CameraRemoveDelay: 375
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeSpeechNotification: Reinforce
+		DisplayTimerRelationships: Ally, Neutral
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayRadarPing: True
+		LaunchSound: chrono2.aud
+		IncomingSound: chrono2.aud
+		Sequence: idle
+		TargetCircleRange: 5c0
+		TargetCircleColor: 77ffffff
 	GrantConditionOnFogEnabled@FOGENABLED:
 		Condition: fogenabled
 	ExternalCondition@DUMMY:
@@ -1308,6 +1333,11 @@ ATEK:
 	ProvidesPrerequisite@FOGENABLED:
 		Prerequisite: fogenabled
 		RequiresCondition: fogenabled
+	ValidFactions:
+		Factions: england, germany, france, usa
+	ProvidesPrerequisiteValidatedFaction@germanyatek:
+		Factions: germany
+		Prerequisite: atek.germany
 	ProvidesPrerequisiteValidatedFaction@usaatek:
 		Factions: usa
 		Prerequisite: atek.usa
@@ -5660,6 +5690,8 @@ SGEN:
 		Range: 5c0
 		RequiresCondition: !disabled
 	WithBuildingBib:
+	ValidFactions:
+		Factions: blackh, marked, legion, shadow
 	ProvidesPrerequisiteValidatedFaction@shadow:
 		Factions: shadow
 		Prerequisite: sgen.shadow
@@ -6140,6 +6172,8 @@ OREP:
 	GrantCondition@DUMMY:
 		Condition: noupgrade
 		RequiresCondition: noupgrade
+	ValidFactions:
+		Factions: england, germany, france, usa
 	ProvidesPrerequisiteValidatedFaction@germanyorep:
 		Factions: germany
 		Prerequisite: orep.germany

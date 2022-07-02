@@ -288,6 +288,7 @@ GTNK.squad:
 
 2TNK.Chrono:
 	Inherits: 2TNK
+	Inherits@TEMPINC: ^TemporalReinforcement
 	RenderSprites:
 		Image: 2tnk
 		FactionImages:
@@ -309,6 +310,8 @@ GTNK.squad:
 			traveler: devo
 			harbinger: devo
 	-Buildable:
+	Explodes:
+		RequiresCondition: !warpout
 	GrantConditionOnFaction@France:
 		Factions: france
 		Condition: france
@@ -465,16 +468,6 @@ GTNK.squad:
 	SpawnActorOnDeath@SOVIET:
 		Actor: 3TNK.Husk
 		RequiresCondition: warpin && soviet && !(being-warped || warpout)
-	GrantTimedCondition@warpin:
-		Condition: warpin
-		Duration: 850
-	KillsSelf@warpout:
-		GrantsCondition: warpout
-		RequiresCondition: !warpin
-	Explodes@warpout:
-		Weapon: UnitExplodeWarpOut
-		EmptyWeapon: UnitExplodeWarpOut
-		RequiresCondition: warpout
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Infantry, Water, Underwater, Defense
 	AutoTargetPriority@ATTACKANYTHING:
@@ -489,6 +482,18 @@ GTNK.squad:
 		ValidTargets: Vehicle
 		InvalidTargets: NoAutoTarget
 		Priority: 10
+
+2TNK.TEMP:
+	Inherits: 2TNK
+	Inherits@TEMPINC: ^TemporalReinforcement
+	RenderSprites:
+		Image: 2tnk
+	Explodes:
+		RequiresCondition: !warpout
+	-ActorLostNotification:
+	-SpawnActorOnDeath:
+	-Buildable:
+	-ChronoshiftableWithSpriteEffect:
 
 3TNK:
 	Inherits: ^Tank
@@ -1041,6 +1046,7 @@ HOWI:
 
 ARTY.Chrono:
 	Inherits: ARTY
+	Inherits@TEMPINC: ^TemporalReinforcement
 	RenderSprites:
 		Image: arty
 		FactionImages:
@@ -1061,18 +1067,8 @@ ARTY.Chrono:
 		Factions: eagle, zocom, talon, arc, blackh, marked, legion, shadow
 		Condition: td
 	-Buildable:
-	GrantTimedCondition@warpin:
-		Condition: warpin
-		Duration: 850
-	KillsSelf@warpout:
-		GrantsCondition: warpout
-		RequiresCondition: !warpin
 	Explodes:
 		RequiresCondition: !warpout
-	Explodes@warpout:
-		Weapon: UnitExplodeWarpOut
-		EmptyWeapon: UnitExplodeWarpOut
-		RequiresCondition: warpout
 	Armament:
 		RequiresCondition: !scrin && !soviet && !td
 	Armament@TD:
@@ -1111,6 +1107,17 @@ ARTY.Chrono:
 	WithMoveAnimation:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		RequiresCondition: scrin
+
+ARTY.TEMP:
+	Inherits: ARTY
+	Inherits@TEMPINC: ^TemporalReinforcement
+	RenderSprites:
+		Image: arty
+	Explodes:
+		RequiresCondition: !warpout
+	-ActorLostNotification:
+	-Buildable:
+	-ChronoshiftableWithSpriteEffect:
 
 ISU:
 	Inherits: ^Tank
@@ -1551,6 +1558,17 @@ JEEP:
 		Range: 6c0
 		CloakTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
+
+JEEP.TEMP:
+	Inherits: JEEP
+	Inherits@TEMPINC: ^TemporalReinforcement
+	RenderSprites:
+		Image: jeep
+	Explodes:
+		RequiresCondition: !warpout
+	-ActorLostNotification:
+	-Buildable:
+	-ChronoshiftableWithSpriteEffect:
 
 APC:
 	Inherits: ^Tank
@@ -5476,6 +5494,18 @@ TNKD:
 		ValidTargets: Vehicle
 		InvalidTargets: NoAutoTarget
 		Priority: 10
+
+TNKD.TEMP:
+	Inherits: TNKD
+	Inherits@TEMPINC: ^TemporalReinforcement
+	RenderSprites:
+		Image: tnkd
+	Explodes:
+		RequiresCondition: !warpout
+	-ActorLostNotification:
+	-SpawnActorOnDeath:
+	-Buildable:
+	-ChronoshiftableWithSpriteEffect:
 
 MSAR:
 	Inherits: ^VehicleTD

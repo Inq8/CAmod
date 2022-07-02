@@ -380,6 +380,21 @@
 		RequiresCondition: being-warped
 		Modifier: 0
 
+^TemporalReinforcement:
+	GrantTimedCondition@TEMPINC:
+		Condition: warpin
+		Duration: 850
+	KillsSelf@TEMPINC:
+		GrantsCondition: warpout
+		RequiresCondition: !warpin
+	Explodes@TEMPINC:
+		Weapon: UnitExplodeWarpOut
+		EmptyWeapon: UnitExplodeWarpOut
+		RequiresCondition: warpout
+	TimedConditionBar@TEMPINC:
+		Condition: warpin
+		Color: FFFFFF
+
 ^Suppressable:
 	SpeedMultiplier@SUPPRESSION:
 		RequiresCondition: suppression
