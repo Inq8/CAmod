@@ -267,6 +267,21 @@ Player:
 					Attractiveness: -5
 					TargetMetric: None
 					CheckRadius: 8c0
+			tempinc:
+				OrderName: tempinc
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
+				Consideration@2:
+					Against: Enemy
+					Types: Water
+					Attractiveness: -5
+					TargetMetric: None
+					CheckRadius: 8c0
 			chronoshiftai:
 				OrderName: Chronoshiftai
 				MinimumAttractiveness: 5
@@ -302,12 +317,11 @@ Player:
 					CheckRadius: 5c0
 			gmutation:
 				OrderName: mutabomb
-				MinimumAttractiveness: 1500
+				MinimumAttractiveness: 6
 				Consideration@1:
 					Against: Enemy
 					Types: Infantry
 					Attractiveness: 1
-					TargetMetric: None
 					CheckRadius: 4c0
 			parabombs:
 				OrderName: parabombs
@@ -530,6 +544,14 @@ Player:
 					Attractiveness: -2
 					TargetMetric: Value
 					CheckRadius: 2c0
+			atomicammopower:
+				OrderName: atomicammo
+				MinimumAttractiveness: 2
+				Consideration@1:
+					Against: Ally
+					Types: AtomicAmmoTargetable
+					Attractiveness: 1
+					CheckRadius: 2c512
 			nshieldpower:
 				OrderName: nshieldorder
 				MinimumAttractiveness: 1000
@@ -807,6 +829,7 @@ Player:
 			fix: 1
 			rep: 1
 			srep: 1
+			npwr: 1
 			spen: 2
 			syrd: 2
 			spen.nod: 2
@@ -873,6 +896,7 @@ Player:
 			weat: 1
 			mslo.nod: 1
 			rift: 1
+			npwr: 1
 			indp: 1
 			tmpp: 1
 			upgc: 1
@@ -909,6 +933,7 @@ Player:
 			hovermam.upgrade: 1
 			ionmam.upgrade: 1
 			vulcan.upgrade: 1
+			rapc.upgrade: 1
 			empgren.upgrade: 1
 			hazmat.upgrade: 1
 			hazmatsoviet.upgrade: 1
@@ -922,7 +947,8 @@ Player:
 			seismic.upgrade: 1
 			tarc.upgrade: 1
 			indp.upgrade: 1
-			iraqtank.upgrade: 1
+			atomicengines.upgrade: 1
+			erad.upgrade: 1
 			lasher.upgrade: 1
 			v2.upgrade: 1
 			orep.upgrade: 1
@@ -1013,6 +1039,7 @@ Player:
 			fix: 1
 			rep: 1
 			srep: 1
+			npwr: 1
 			spen: 2
 			syrd: 2
 			spen.nod: 2
@@ -1079,6 +1106,7 @@ Player:
 			weat: 1
 			mslo.nod: 1
 			rift: 1
+			npwr: 1
 			indp: 1
 			tmpp: 1
 			upgc: 1
@@ -1115,6 +1143,7 @@ Player:
 			hovermam.upgrade: 1
 			ionmam.upgrade: 1
 			vulcan.upgrade: 1
+			rapc.upgrade: 1
 			empgren.upgrade: 1
 			hazmat.upgrade: 1
 			hazmatsoviet.upgrade: 1
@@ -1128,7 +1157,8 @@ Player:
 			seismic.upgrade: 1
 			tarc.upgrade: 1
 			indp.upgrade: 1
-			iraqtank.upgrade: 1
+			atomicengines.upgrade: 1
+			erad.upgrade: 1
 			lasher.upgrade: 1
 			v2.upgrade: 1
 			orep.upgrade: 1
@@ -1218,6 +1248,7 @@ Player:
 			fix: 1
 			rep: 1
 			srep: 1
+			npwr: 1
 			spen: 2
 			syrd: 2
 			spen.nod: 2
@@ -1284,6 +1315,7 @@ Player:
 			weat: 1
 			mslo.nod: 1
 			rift: 1
+			npwr: 1
 			indp: 1
 			tmpp: 1
 			upgc: 1
@@ -1320,6 +1352,7 @@ Player:
 			hovermam.upgrade: 1
 			ionmam.upgrade: 1
 			vulcan.upgrade: 1
+			rapc.upgrade: 1
 			empgren.upgrade: 1
 			hazmat.upgrade: 1
 			hazmatsoviet.upgrade: 1
@@ -1333,7 +1366,8 @@ Player:
 			seismic.upgrade: 1
 			tarc.upgrade: 1
 			indp.upgrade: 1
-			iraqtank.upgrade: 1
+			atomicengines.upgrade: 1
+			erad.upgrade: 1
 			lasher.upgrade: 1
 			v2.upgrade: 1
 			orep.upgrade: 1
@@ -1423,6 +1457,7 @@ Player:
 			fix: 1
 			rep: 1
 			srep: 1
+			npwr: 1
 			spen: 2
 			syrd: 2
 			spen.nod: 2
@@ -1489,6 +1524,7 @@ Player:
 			weat: 1
 			mslo.nod: 1
 			rift: 1
+			npwr: 1
 			indp: 1
 			tmpp: 1
 			upgc: 1
@@ -1525,6 +1561,7 @@ Player:
 			hovermam.upgrade: 1
 			ionmam.upgrade: 1
 			vulcan.upgrade: 1
+			rapc.upgrade: 1
 			empgren.upgrade: 1
 			hazmat.upgrade: 1
 			hazmatsoviet.upgrade: 1
@@ -1538,7 +1575,8 @@ Player:
 			seismic.upgrade: 1
 			tarc.upgrade: 1
 			indp.upgrade: 1
-			iraqtank.upgrade: 1
+			atomicengines.upgrade: 1
+			erad.upgrade: 1
 			lasher.upgrade: 1
 			v2.upgrade: 1
 			orep.upgrade: 1
@@ -1599,6 +1637,7 @@ Player:
 			fix: 1
 			rep: 1
 			srep: 1
+			npwr: 1
 			spen: 2
 			syrd: 2
 			spen.nod: 2
@@ -1658,6 +1697,7 @@ Player:
 			pdox: 1
 			sgen: 1
 			mani: 1
+			npwr: 1
 			indp: 1
 			tmpp: 1
 			upgc: 1
@@ -1698,6 +1738,7 @@ Player:
 			hovermam.upgrade: 1
 			ionmam.upgrade: 1
 			vulcan.upgrade: 1
+			rapc.upgrade: 1
 			empgren.upgrade: 1
 			hazmat.upgrade: 1
 			hazmatsoviet.upgrade: 1
@@ -1711,7 +1752,8 @@ Player:
 			seismic.upgrade: 1
 			tarc.upgrade: 1
 			indp.upgrade: 1
-			iraqtank.upgrade: 1
+			atomicengines.upgrade: 1
+			erad.upgrade: 1
 			lasher.upgrade: 1
 			v2.upgrade: 1
 			orep.upgrade: 1
@@ -1841,6 +1883,7 @@ Player:
 			jeep: 30
 			apc2.nodai: 20
 			apc2.gdiai: 20
+			rapc.ai: 20
 			vulc.ai: 10
 			hmmv: 30
 			gdrn: 30
@@ -1867,12 +1910,15 @@ Player:
 			tnkd: 45
 			rtnk: 45
 			3tnk: 70
-			3tnk.iraq: 70
+			3tnk.atomic: 70
 			3tnk.yuri: 70
+			3tnk.atomicyuri: 70
 			4tnk: 40
-			4tnk.iraq: 40
+			4tnk.atomic: 40
+			4tnk.erad: 40
+			4tnk.eradatomic: 40
 			apoc: 30
-			apoc.iraq: 30
+			apoc.atomic: 30
 			tpod: 40
 			rptp: 40
 			ltnk: 40
@@ -1892,6 +1938,7 @@ Player:
 			titn.rail: 40
 			jugg: 10
 			cryo: 10
+			mgg: 3
 			cdrn: 3
 			nhaw: 3
 			ctnk: 3
@@ -1949,15 +1996,19 @@ Player:
 			n4: 5
 			dog: 2
 			sab: 2
+			mgg: 1
 			cdrn: 1
 			nhaw: 1
-			apc: 2
-			apc2: 2
-			vulc: 5
+			apc.ai: 2
+			apc2.nodai: 2
+			apc2.gdiai: 2
+			rapc.ai: 2
+			vulc.ai: 5
 			hmmv: 2
 			bggy: 2
 			jeep: 2
-			sapc: 1
+			sapc.ai: 1
+			sapc.ai2: 1
 			e6: 1
 			n6: 1
 			s6: 1
@@ -2121,12 +2172,15 @@ Player:
 			tnkd: 45
 			rtnk: 45
 			3tnk: 70
-			3tnk.iraq: 70
+			3tnk.atomic: 70
 			3tnk.yuri: 70
+			3tnk.atomicyuri: 70
 			4tnk: 40
-			4tnk.iraq: 40
+			4tnk.atomic: 40
+			4tnk.erad: 40
+			4tnk.eradatomic: 40
 			apoc: 30
-			apoc.iraq: 30
+			apoc.atomic: 30
 			tpod: 40
 			rptp: 40
 			ltnk: 40
@@ -2146,6 +2200,7 @@ Player:
 			titn.rail: 40
 			jugg: 10
 			cryo: 10
+			mgg: 3
 			cdrn: 3
 			nhaw: 3
 			ctnk: 3
@@ -2203,15 +2258,19 @@ Player:
 			n4: 5
 			dog: 2
 			sab: 2
+			mgg: 1
 			cdrn: 1
 			nhaw: 1
-			apc: 2
-			apc2: 2
-			vulc: 5
+			apc.ai: 2
+			apc2.nodai: 2
+			apc2.gdiai: 2
+			rapc.ai: 2
+			vulc.ai: 5
 			hmmv: 2
 			bggy: 2
 			jeep: 2
-			sapc: 1
+			sapc.ai: 1
+			sapc.ai2: 1
 			e6: 1
 			n6: 1
 			s6: 1
@@ -2314,6 +2373,7 @@ Player:
 			yuri: 15
 			mast: 15
 			apc: 20
+			rapc: 20
 			sapc: 10
 			intl: 10
 			jeep: 30
@@ -2344,12 +2404,15 @@ Player:
 			tnkd: 45
 			rtnk: 45
 			3tnk: 70
-			3tnk.iraq: 70
+			3tnk.atomic: 70
 			3tnk.yuri: 70
+			3tnk.atomicyuri: 70
 			4tnk: 40
-			4tnk.iraq: 40
+			4tnk.atomic: 40
+			4tnk.erad: 40
+			4tnk.eradatomic: 40
 			apoc: 30
-			apoc.iraq: 30
+			apoc.atomic: 30
 			tpod: 40
 			rptp: 40
 			ltnk: 40
@@ -2369,6 +2432,7 @@ Player:
 			titn.rail: 40
 			jugg: 10
 			cryo: 10
+			mgg: 3
 			cdrn: 3
 			nhaw: 3
 			ctnk: 3
@@ -2426,10 +2490,12 @@ Player:
 			n4: 5
 			dog: 2
 			sab: 2
+			mgg: 1
 			cdrn: 1
 			nhaw: 1
 			apc: 2
 			apc2: 2
+			rapc: 2
 			vulc: 5
 			hmmv: 2
 			bggy: 2
@@ -2536,6 +2602,7 @@ Player:
 			yuri: 15
 			mast: 15
 			apc: 20
+			rapc: 20
 			sapc: 10
 			intl: 10
 			jeep: 30
@@ -2566,12 +2633,15 @@ Player:
 			tnkd: 45
 			rtnk: 45
 			3tnk: 70
-			3tnk.iraq: 70
+			3tnk.atomic: 70
 			3tnk.yuri: 70
+			3tnk.atomicyuri: 70
 			4tnk: 40
-			4tnk.iraq: 40
+			4tnk.atomic: 40
+			4tnk.erad: 40
+			4tnk.eradatomic: 40
 			apoc: 30
-			apoc.iraq: 30
+			apoc.atomic: 30
 			tpod: 40
 			rptp: 40
 			ltnk: 40
@@ -2591,6 +2661,7 @@ Player:
 			titn.rail: 40
 			jugg: 10
 			cryo: 10
+			mgg: 3
 			cdrn: 3
 			nhaw: 3
 			ctnk: 3
@@ -2648,10 +2719,12 @@ Player:
 			n4: 5
 			dog: 2
 			sab: 2
+			mgg: 1
 			cdrn: 1
 			nhaw: 1
 			apc: 2
 			apc2: 2
+			rapc: 2
 			vulc: 5
 			hmmv: 2
 			bggy: 2

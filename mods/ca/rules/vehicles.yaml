@@ -1711,7 +1711,7 @@ APC.AI:
 	RenderSprites:
 		Image: APC
 	Buildable:
-		Prerequisites: ~botplayer, ~vehicles.allies, ~techlevel.low
+		Prerequisites: ~botplayer, ~vehicles.allies, ~!rapc.upgrade, ~techlevel.low
 	Tooltip:
 		-RequiresCondition:
 	-Tooltip@UPG:
@@ -1734,6 +1734,16 @@ APC.AI:
 	-Berserkable@UPGRADING:
 	-GrantTimedCondition@UPGRADING:
 	-UpgradeableTo:
+
+RAPC.AI:
+	Inherits: RAPC
+	Inherits@AIUNLOAD: ^AIUNLOAD
+	RenderSprites:
+		Image: APC
+	Buildable:
+		Prerequisites: ~botplayer, ~vehicles.allies, ~rapc.upgrade, ~techlevel.low
+	Cargo:
+		InitialUnits: E1,E1,E1,E3,E3
 
 MNLY:
 	Inherits: ^Tank
