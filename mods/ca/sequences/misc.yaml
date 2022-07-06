@@ -44,6 +44,11 @@ flakball:
 		Length: *
 		ZOffset: 2046
 
+radball:
+	idle: radball
+		Length: *
+		ZOffset: 2046
+
 explosion:
 	Defaults:
 		Length: *
@@ -342,16 +347,27 @@ explosion:
 		BlendMode: Alpha
 		Offset: 0, -10, 60
 		ZRamp: 1
+	radhit: radhit
+		BlendMode: Additive
+	radhitsm: radhitsm
+		BlendMode: Additive
+	radburst: radburst
+		BlendMode: Additive
 
 veildebuff:
 	Defaults:
-		BlendMode: Subtractive
 		Length: *
 		ZOffset: 2048
 		UseTilesetCode: false
 	vehicle: veildebuff
 	infantry: veildebuffsm
 		Offset: 0, -5
+
+atomicammobuff:
+	idle: atomicammobuff
+		Length: *
+		ZOffset: 2048
+		BlendMode: Additive
 
 laserfired2k:
 	Defaults:
@@ -768,6 +784,12 @@ poweroff:
 		Tick: 160
 		ZOffset: 2047
 
+poweron:
+	online: poweron
+		Length: *
+		Tick: 160
+		ZOffset: 2047
+
 nosignal:
 	offline: nosig
 		Length: *
@@ -1145,6 +1167,8 @@ icon:
 	abombair: abombicon
 	mutabomb: gmutationicon
 	stormtroopers: stroopicon
+	atomicammo: atomicammoicon
+	tempinc: tempincicon
 	rescanpower: rescanpowericon
 	ichorpower: ichorpowericon
 	feedermutation: feedermutationicon

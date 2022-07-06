@@ -1939,6 +1939,9 @@ RadBeamWeapon:
 		Duration: 250
 		Condition: irradiated
 		ValidTargets: Vehicle, Ship
+	Warhead@3Eff: CreateEffect
+		Explosions: radhitsm
+		ExplosionPalette: caneon
 
 RadBeamWeaponE:
 	Inherits: RadBeamWeapon
@@ -1953,18 +1956,33 @@ RadBeamWeaponHeavy:
 		WaveLength: 384
 		Thickness: 64
 	Warhead@1Dam: SpreadDamage
-		Light: 120
-		Heavy: 100
-	Warhead@2Dam: SpreadDamage
 		Spread: 128
-		Damage: 4000
-		ValidTargets: Infantry, Vehicle, Ship
+		InvalidTargets: Infantry
+		Versus:
+			Wood: 45
+			Concrete: 45
+			Light: 75
+			Heavy: 50
+	Warhead@2Dam: HealthPercentageDamage
+		Spread: 128
+		Damage: 200
+		ValidTargets: Infantry
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+	Warhead@3Dam: SpreadDamage
+		Spread: 341
+		Damage: 2000
+		ValidTargets: Infantry
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@1Radiation: CreateTintedCells
 		Spread: 1c0
 		Falloff: 65, 30, 5, 0
 		Level: 250
 		MaxLevel: 750
 		LayerName: radioactivity.strong
+	Warhead@3Eff: CreateEffect
+		Explosions: radhit
+	Warhead@4Eff: CreateEffect
+		Explosions: radburst
 
 RadEruptionWeapon:
 	ReloadDelay: 60

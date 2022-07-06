@@ -288,6 +288,7 @@ GTNK.squad:
 
 2TNK.Chrono:
 	Inherits: 2TNK
+	Inherits@TEMPINC: ^TemporalReinforcement
 	RenderSprites:
 		Image: 2tnk
 		FactionImages:
@@ -309,6 +310,8 @@ GTNK.squad:
 			traveler: devo
 			harbinger: devo
 	-Buildable:
+	Explodes:
+		RequiresCondition: !warpout
 	GrantConditionOnFaction@France:
 		Factions: france
 		Condition: france
@@ -465,16 +468,6 @@ GTNK.squad:
 	SpawnActorOnDeath@SOVIET:
 		Actor: 3TNK.Husk
 		RequiresCondition: warpin && soviet && !(being-warped || warpout)
-	GrantTimedCondition@warpin:
-		Condition: warpin
-		Duration: 850
-	KillsSelf@warpout:
-		GrantsCondition: warpout
-		RequiresCondition: !warpin
-	Explodes@warpout:
-		Weapon: UnitExplodeWarpOut
-		EmptyWeapon: UnitExplodeWarpOut
-		RequiresCondition: warpout
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Infantry, Water, Underwater, Defense
 	AutoTargetPriority@ATTACKANYTHING:
@@ -490,12 +483,25 @@ GTNK.squad:
 		InvalidTargets: NoAutoTarget
 		Priority: 10
 
+2TNK.TEMP:
+	Inherits: 2TNK
+	Inherits@TEMPINC: ^TemporalReinforcement
+	RenderSprites:
+		Image: 2tnk
+	Explodes:
+		RequiresCondition: !warpout
+	-ActorLostNotification:
+	-SpawnActorOnDeath:
+	-Buildable:
+	-ChronoshiftableWithSpriteEffect:
+
 3TNK:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlightlySlowedByCrushing
+	Inherits@ATOMICAMMO: ^AtomicAmmunition
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 32
@@ -532,6 +538,16 @@ GTNK.squad:
 		RecoilRecovery: 38
 		LocalOffset: 768,85,90, 768,-85,90
 		MuzzleSequence: muzzle
+		PauseOnCondition: atomic-ammo || atomic-reloading
+		ReloadingCondition: reloading
+	Armament@ATOMICAMMO:
+		Weapon: 125mmAtomic
+		Recoil: 128
+		RecoilRecovery: 38
+		LocalOffset: 768,85,90, 768,-85,90
+		MuzzleSequence: muzzle
+		PauseOnCondition: !atomic-ammo || reloading
+		ReloadingCondition: atomic-reloading
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
@@ -596,7 +612,6 @@ GTNK.squad:
 		GenericName: Tank
 	Turreted:
 		Offset: 0,0,20
-	Armament:
 	Selectable:
 		Class: 3tnk
 	SpeedMultiplier:
@@ -641,10 +656,10 @@ GTNK.squad:
 		Class: 3tnk
 	Armament:
 		Weapon: 125mmLasher
-		Recoil: 128
-		RecoilRecovery: 38
 		LocalOffset: 768,0,90
-		MuzzleSequence: muzzle
+	Armament@ATOMICAMMO:
+		Weapon: 125mmLasherAtomic
+		LocalOffset: 768,0,90
 	SpeedMultiplier:
 		Modifier: 120
 	GrantConditionOnMovement@LASHER:
@@ -704,10 +719,10 @@ GTNK.squad:
 		Class: 3tnk
 	Armament:
 		Weapon: 125mmLasher
-		Recoil: 128
-		RecoilRecovery: 38
 		LocalOffset: 768,0,90
-		MuzzleSequence: muzzle
+	Armament@ATOMICAMMO:
+		Weapon: 125mmLasherAtomic
+		LocalOffset: 768,0,90
 	SpeedMultiplier:
 		Modifier: 135
 	GrantConditionOnMovement@LASHER:
@@ -742,6 +757,7 @@ GTNK.squad:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@ATOMICAMMO: ^AtomicAmmunition
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 290
@@ -776,10 +792,20 @@ GTNK.squad:
 		TurnSpeed: 8
 	Armament@PRIMARY:
 		Weapon: 130mm
-		LocalOffset: 900,180,340, 900,-180,340
 		Recoil: 171
 		RecoilRecovery: 30
+		LocalOffset: 900,180,340, 900,-180,340
 		MuzzleSequence: muzzle
+		PauseOnCondition: atomic-ammo || atomic-reloading
+		ReloadingCondition: reloading
+	Armament@ATOMICAMMO:
+		Weapon: 130mmAtomic
+		Recoil: 171
+		RecoilRecovery: 30
+		LocalOffset: 900,180,340, 900,-180,340
+		MuzzleSequence: muzzle
+		PauseOnCondition: !atomic-ammo || reloading
+		ReloadingCondition: atomic-reloading
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: MammothTusk
@@ -809,6 +835,8 @@ GTNK.squad:
 	-Crushable:
 	WithIdleOverlay@MINDCONTROL:
 		Offset: 0,0,512
+	WithIdleOverlay@ATOMICAMMO:
+		Offset: 0,0,512
 	UpgradeableTo:
 		Actors: 4tnk.atomic, 4tnk.erad, 4tnk.eradatomic
 	# For upgrading on Service Depot
@@ -829,12 +857,12 @@ GTNK.squad:
 		AmmoPool: upgrade
 		UpgradeAudio: UnitUpgraded
 		Actor: 4tnk.atomic
-		RequiresCondition: atomicengines-upgrade && !erad-upgrad
+		RequiresCondition: atomicengines-upgrade && !erad-upgrade
 	RearmsToUpgrade@ERADUPGRADE:
 		AmmoPool: upgrade
 		UpgradeAudio: UnitUpgraded
 		Actor: 4tnk.erad
-		RequiresCondition: erad-upgrade && !atomicengines.upgrade
+		RequiresCondition: erad-upgrade && !atomicengines-upgrade
 	RearmsToUpgrade@ERADATOMICUPGRADE:
 		AmmoPool: upgrade
 		UpgradeAudio: UnitUpgraded
@@ -889,6 +917,9 @@ GTNK.squad:
 	Armament@PRIMARY:
 		Weapon: RadBeamWeaponHeavy
 		LocalOffset: 400,0,340
+		-PauseOnCondition:
+		-ReloadingCondition:
+	-Armament@ATOMICAMMO:
 	-Armament@SECONDARY:
 	UpgradeableTo:
 		Actors: 4tnk.eradatomic
@@ -919,6 +950,9 @@ GTNK.squad:
 	Armament@PRIMARY:
 		Weapon: RadBeamWeaponHeavy
 		LocalOffset: 400,0,340
+		-PauseOnCondition:
+		-ReloadingCondition:
+	-Armament@ATOMICAMMO:
 	-Armament@SECONDARY:
 	-UpgradeableTo:
 	-Rearmable@UPGRADE:
@@ -1012,6 +1046,7 @@ HOWI:
 
 ARTY.Chrono:
 	Inherits: ARTY
+	Inherits@TEMPINC: ^TemporalReinforcement
 	RenderSprites:
 		Image: arty
 		FactionImages:
@@ -1032,18 +1067,8 @@ ARTY.Chrono:
 		Factions: eagle, zocom, talon, arc, blackh, marked, legion, shadow
 		Condition: td
 	-Buildable:
-	GrantTimedCondition@warpin:
-		Condition: warpin
-		Duration: 850
-	KillsSelf@warpout:
-		GrantsCondition: warpout
-		RequiresCondition: !warpin
 	Explodes:
 		RequiresCondition: !warpout
-	Explodes@warpout:
-		Weapon: UnitExplodeWarpOut
-		EmptyWeapon: UnitExplodeWarpOut
-		RequiresCondition: warpout
 	Armament:
 		RequiresCondition: !scrin && !soviet && !td
 	Armament@TD:
@@ -1082,6 +1107,17 @@ ARTY.Chrono:
 	WithMoveAnimation:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		RequiresCondition: scrin
+
+ARTY.TEMP:
+	Inherits: ARTY
+	Inherits@TEMPINC: ^TemporalReinforcement
+	RenderSprites:
+		Image: arty
+	Explodes:
+		RequiresCondition: !warpout
+	-ActorLostNotification:
+	-Buildable:
+	-ChronoshiftableWithSpriteEffect:
 
 ISU:
 	Inherits: ^Tank
@@ -1523,6 +1559,17 @@ JEEP:
 		CloakTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
 
+JEEP.TEMP:
+	Inherits: JEEP
+	Inherits@TEMPINC: ^TemporalReinforcement
+	RenderSprites:
+		Image: jeep
+	Explodes:
+		RequiresCondition: !warpout
+	-ActorLostNotification:
+	-Buildable:
+	-ChronoshiftableWithSpriteEffect:
+
 APC:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
@@ -1533,15 +1580,25 @@ APC:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 50
-		Prerequisites: ~vehicles.allies, ~techlevel.low
+		Prerequisites: ~vehicles.allies, ~!rapc.upgrade, ~techlevel.low
 		Description: Tough infantry transport.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
+		RequiresCondition: !rapc-upgrade
+	TooltipExtras@UPG:
+		Description: Tough infantry transport that fires high explosive shells.
+		Strengths: • Strong vs Infantry, Buildings, Defenses, Light Armor
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+		RequiresCondition: rapc-upgrade
 	Valued:
 		Cost: 600
 	Tooltip:
 		Name: Armored Personnel Carrier
+		RequiresCondition: !rapc-upgrade
+	Tooltip@UPG:
+		Name: Raider APC
+		RequiresCondition: rapc-upgrade
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -1551,6 +1608,9 @@ APC:
 	Mobile:
 		Speed: 108
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
+	SpeedMultiplier@UPG:
+		Modifier: 83
+		RequiresCondition: rapc-upgrade
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -1561,9 +1621,24 @@ APC:
 		Weapon: M60mg
 		LocalOffset: 85,0,171
 		MuzzleSequence: muzzle
+		RequiresCondition: !rapc-upgrade
+	Armament@UPG:
+		Weapon: 76mm
+		LocalOffset: 500,0,250
+		MuzzleSequence: muzzle2
+		RequiresCondition: rapc-upgrade
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !rapc-upgrade
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: rapc-upgrade
+	Turreted:
+		TurnSpeed: 28
+		RequiresCondition: rapc-upgrade
+	WithSpriteTurret:
+		RequiresCondition: rapc-upgrade
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5
@@ -1579,6 +1654,56 @@ APC:
 		RequiresCondition: !driver-dead && !cargo
 	Targetable@MINDCONTROL:
 		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
+	GrantConditionOnPrerequisite@RAIDER:
+		Condition: rapc-upgrade
+		Prerequisites: rapc.upgrade
+	GrantCondition@RAIDER:
+		Condition: rapc-upgrade
+		RequiresCondition: rapc-upgrade
+		GrantPermanently: true
+	Berserkable@UPGRADING:
+		RequiresCondition: upgrading
+	GrantTimedCondition@UPGRADING:
+		RequiresCondition: rapc-upgrade
+		Condition: upgrading
+		Duration: 1
+	UpgradeableTo:
+		Actors: rapc
+
+RAPC:
+	Inherits: APC
+	Buildable:
+		Prerequisites: ~vehicles.allies, ~rapc.upgrade, ~techlevel.low
+		Description: Tough infantry transport that fires high explosive shells.
+	Valued:
+		Cost: 800
+	Mobile:
+		Speed: 90
+	-Tooltip:
+	Tooltip@UPG:
+		-RequiresCondition:
+	-TooltipExtras:
+	TooltipExtras@UPG:
+		IsStandard: true
+		-RequiresCondition:
+	-AttackFrontal:
+	AttackTurreted:
+		-RequiresCondition:
+	Turreted:
+		-RequiresCondition:
+	WithSpriteTurret:
+		-RequiresCondition:
+	Selectable:
+		Class: apc
+	-Armament:
+	Armament@UPG:
+		-RequiresCondition:
+	-SpeedMultiplier@UPG:
+	-GrantConditionOnPrerequisite@RAIDER:
+	-GrantCondition@RAIDER:
+	-Berserkable@UPGRADING:
+	-GrantTimedCondition@UPGRADING:
+	-UpgradeableTo:
 
 APC.AI:
 	Inherits: APC
@@ -1587,8 +1712,28 @@ APC.AI:
 		Image: APC
 	Buildable:
 		Prerequisites: ~botplayer, ~vehicles.allies, ~techlevel.low
+	Tooltip:
+		-RequiresCondition:
+	-Tooltip@UPG:
+	TooltipExtras:
+		-RequiresCondition:
+	-TooltipExtras@UPG:
 	Cargo:
 		InitialUnits: E1,E1,E1,E3,E3
+	Armament:
+		-RequiresCondition:
+	-Armament@UPG:
+	AttackFrontal:
+		-RequiresCondition:
+	-AttackTurreted:
+	-Turreted:
+	-WithSpriteTurret:
+	-SpeedMultiplier@UPG:
+	-GrantConditionOnPrerequisite@RAIDER:
+	-GrantCondition@RAIDER:
+	-Berserkable@UPGRADING:
+	-GrantTimedCondition@UPGRADING:
+	-UpgradeableTo:
 
 MNLY:
 	Inherits: ^Tank
@@ -5448,6 +5593,18 @@ TNKD:
 		InvalidTargets: NoAutoTarget
 		Priority: 10
 
+TNKD.TEMP:
+	Inherits: TNKD
+	Inherits@TEMPINC: ^TemporalReinforcement
+	RenderSprites:
+		Image: tnkd
+	Explodes:
+		RequiresCondition: !warpout
+	-ActorLostNotification:
+	-SpawnActorOnDeath:
+	-Buildable:
+	-ChronoshiftableWithSpriteEffect:
+
 MSAR:
 	Inherits: ^VehicleTD
 	Valued:
@@ -6240,6 +6397,7 @@ APOC:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@SHRAPNEL: ^ThrowsShrapnel
+	Inherits@ATOMICAMMO: ^AtomicAmmunition
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 300
@@ -6277,10 +6435,20 @@ APOC:
 		TurnSpeed: 8
 	Armament@PRIMARY:
 		Weapon: 152mm
-		LocalOffset: 1400,100,340, 1400,-100,340
 		Recoil: 171
 		RecoilRecovery: 30
+		LocalOffset: 1400,100,340, 1400,-100,340
 		MuzzleSequence: muzzle
+		PauseOnCondition: atomic-ammo || atomic-reloading
+		ReloadingCondition: reloading
+	Armament@ATOMICAMMO:
+		Weapon: 152mmAtomic
+		Recoil: 171
+		RecoilRecovery: 30
+		LocalOffset: 1400,100,340, 1400,-100,340
+		MuzzleSequence: muzzle
+		PauseOnCondition: !atomic-ammo || reloading
+		ReloadingCondition: atomic-reloading
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: ApocalypseTusk
@@ -6308,6 +6476,10 @@ APOC:
 		DecorationBounds: 44,38,0,-4
 	Carryable:
 		LocalOffset: 0,0,500
+	WithIdleOverlay@MINDCONTROL:
+		Offset: 0,0,512
+	WithIdleOverlay@ATOMICAMMO:
+		Offset: 0,0,512
 	-Crushable:
 	Voiced:
 		VoiceSet: ApocalypseVoice
