@@ -147,7 +147,7 @@ vulcan.upgrade:
 		Prerequisites: ~radar.gdi, ~techlevel.high
 		Description: Upgrades: APC
 	TooltipExtras:
-		Strengths: + Adds anti-air capability\n+ Increased damage against ground targets
+		Strengths: + Adds anti-air capability\n+ Increased damage against ground targets\n+ Adds turret
 		Weaknesses: – Increased cost\n– Reduced speed
 	Valued:
 		Cost: 750
@@ -601,8 +601,8 @@ erad.upgrade:
 		Prerequisites: ~npwr.iraq, ~techlevel.high
 		Description: Upgrades Mammoth tanks\n  with volatile radiation cannon.\n\nReplaces: Mammoth Tank
 	TooltipExtras:
-		Strengths: + High area damage vs infantry and vehicles\n+ Irradiates impacted vehicles
-		Weaknesses: – Loses AA missiles
+		Strengths: + High area damage vs infantry and vehicles\n+ Irradiates impacted vehicles\n+ Increased range
+		Weaknesses: – Loses AA missiles\n– Reduced single-target anti-tank damage\n– Reduced damage vs buildings
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -615,7 +615,7 @@ tarc.upgrade:
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~stek.russia, ~techlevel.medium
-		Description: Upgrades Tesla Tank and Tesla Track weapons.\n\nUpgrades: Tesla Tank\nUpgrades: Tesla Track
+		Description: Upgrades Tesla Tank, Tesla Track and Tesla Reactor weapons.\n\nUpgrades: Tesla Tank\nUpgrades: Tesla Track\nUpgrades: Tesla Reactor
 	TooltipExtras:
 		Strengths: + Shots jump to up to 2 additional targets
 	Valued:
@@ -641,6 +641,22 @@ indp.upgrade:
 
 #######################ALLIES############################
 #########################################################
+
+rapc.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Raider APC
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~radar.allies, ~techlevel.high
+		Description: Upgrades: APC
+	TooltipExtras:
+		Strengths: + Adds strong anti-structure damage\n+ Increased splash damage\n+ Adds turret
+		Weaknesses: – Increased cost\n– Slower projectile speed\n– Reduced speed
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: rapc.upgrade
 
 apb.upgrade:
 	Inherits: ^Upgrade

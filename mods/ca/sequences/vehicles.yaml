@@ -450,16 +450,21 @@ apc:
 	muzzle: minigun16
 		Length: 6
 		Facings: 16
-	turret: jeep
-		Start: 32
+	turret: rapc
 		Facings: 32
 		UseClassicFacings: True
+	muzzle2: gunfire2
+		Length: 5
 	open: apc
 		Start: 32
 		Length: 3
 	unload: apc
 		Start: 32
 	icon: apcicon
+
+rapc:
+	Inherits: apc
+	icon: rapcicon
 
 apc.destroyed:
 	Inherits: ^VehicleOverlays

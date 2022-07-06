@@ -329,6 +329,7 @@
 		Image: frenzy-overlay
 		Palette: frenzyoverlay
 		RequiresCondition: frenzy
+		IsDecoration: True
 
 ^FrenzyInfantry:
 	Inherits: ^Frenzy
@@ -359,6 +360,7 @@
 	WithIdleOverlay@TEMPORAL:
 		Sequence: chrono-overlay
 		RequiresCondition: being-warped
+		IsDecoration: True
 	Explodes@TEMPORAL:
 		Weapon: TemporalExplode
 		EmptyWeapon: TemporalExplode
@@ -376,6 +378,21 @@
 	PowerMultiplier@TEMPORAL:
 		RequiresCondition: being-warped
 		Modifier: 0
+
+^TemporalReinforcement:
+	GrantTimedCondition@TEMPINC:
+		Condition: warpin
+		Duration: 750
+	KillsSelf@TEMPINC:
+		GrantsCondition: warpout
+		RequiresCondition: !warpin
+	Explodes@TEMPINC:
+		Weapon: UnitExplodeWarpOut
+		EmptyWeapon: UnitExplodeWarpOut
+		RequiresCondition: warpout
+	TimedConditionBar@TEMPINC:
+		Condition: warpin
+		Color: FFFFFF
 
 ^Suppressable:
 	SpeedMultiplier@SUPPRESSION:
@@ -417,6 +434,7 @@
 		Image: atomize-overlay
 		Palette: scrin
 		RequiresCondition: atomized
+		IsDecoration: True
 	ReloadDelayMultiplier@ATOMIZED:
 		RequiresCondition: atomized
 		Modifier: 125
@@ -472,6 +490,7 @@
 		Image: ionsurge-overlay
 		Palette: ionsurgeoverlay
 		RequiresCondition: ionsurge
+		IsDecoration: True
 	Targetable@IONSURGE:
 		TargetTypes: IonSurgable
 		RequiresCondition: !ionsurge
@@ -878,6 +897,20 @@
 		Modifier: 110
 		RequiresCondition: irradiated
 
+^AtomicAmmunition:
+	ExternalCondition@ATOMICAMMO:
+		Condition: atomic-ammo
+	WithIdleOverlay@ATOMICAMMO:
+		Sequence: idle
+		Image: atomicammobuff
+		Palette: effect-ignore-lighting-alpha50
+		RequiresCondition: atomic-ammo
+		Offset: 0,0,400
+		IsDecoration: True
+	FirepowerMultiplier@ATOMICAMMO:
+		RequiresCondition: atomic-ammo
+		Modifier: 115
+
 ^ForceShieldable:
 	WithModifiedPalette@FS:
 		RequiresCondition: forceshield && !invulnerability
@@ -905,6 +938,7 @@
 		Sequence: emp-overlay
 		Palette: tseffect
 		RequiresCondition: empdisable
+		IsDecoration: True
 	PowerMultiplier@EMPDISABLE:
 		RequiresCondition: empdisable
 		Modifier: 0
@@ -917,6 +951,7 @@
 	WithIdleOverlay@EMPDISABLE:
 		Sequence: emp-overlay
 		Palette: tseffect
+		IsDecoration: True
 
 ^NaniteRepair:
 	ChangesHealth@NREPAIR:
@@ -935,6 +970,7 @@
 		Sequence: emp-overlay
 		Palette: tseffect
 		RequiresCondition: nrepair && damaged
+		IsDecoration: True
 	WithDecoration@NREPAIR:
 		Image: select
 		Palette: chrome
@@ -952,6 +988,7 @@
 		Image: nshield-overlay
 		Palette: effect
 		RequiresCondition: nshield && !(empdisable || invulnerability || invisibility)
+		IsDecoration: True
 	ExternalCondition@NSHIELD:
 		Condition: nshield
 	DamageMultiplier@NSHIELD:
@@ -1203,8 +1240,9 @@
 	WithIdleOverlay@VEILED:
 		Sequence: vehicle
 		Image: veildebuff
-		Palette: effect
+		Palette: effect-ignore-lighting-alpha35
 		RequiresCondition: veiled
+		IsDecoration: True
 
 ^VeilableInfantry:
 	Inherits: ^Veilable
@@ -1314,6 +1352,7 @@
 		Palette: scrin
 		RequiresCondition: mindcontrolled
 		Offset: 0,0,300
+		IsDecoration: True
 
 ^Hackable:
 	Inherits: ^MindControllableBase

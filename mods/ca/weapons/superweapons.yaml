@@ -1094,7 +1094,7 @@ GpsScramble:
 		Image: crate-effects
 		Explosions: stealth
 
-ChronoAI:
+TemporalIncursion:
 	ReloadDelay: 1
 	Projectile: InstantExplode
 	Warhead@2Eff: CreateEffect
@@ -1103,12 +1103,17 @@ ChronoAI:
 		ValidTargets: Ground, Air, Water
 		ImpactSounds: chrono2.aud
 	Warhead@teleport: SpawnActor
-		Actors: 2tnk.chrono, 2tnk.chrono, 2tnk.chrono, arty.chrono, arty.chrono
+		Actors: 2tnk.temp, 2tnk.temp, tnkd.temp, arty.temp, jeep.temp
 		Range: 5
 		Image: chronoappear
 		Sequence: idle
 		ValidTargets: Air, Ground, Water
 	Warhead@3Flash: ChronoFlashEffect
+
+ChronoAI:
+	Inherits: TemporalIncursion
+	Warhead@teleport: SpawnActor
+		Actors: 2tnk.chrono, 2tnk.chrono, 2tnk.chrono, arty.chrono, arty.chrono
 
 TimeWarp:
 	ValidTargets: Temporal

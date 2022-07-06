@@ -610,12 +610,12 @@ MAST:
 	Armament@PRIMARY:
 		Weapon: EnslaveInfantry
 		LocalOffset: 150,0,400
-		PauseOnCondition: !ammo || charging || deployed
+		PauseOnCondition: !ammo || deployed
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: EnslaveVehicle
 		LocalOffset: 150,0,400
-		PauseOnCondition: !ammo || charging || deployed
+		PauseOnCondition: !ammo || deployed
 	MindController:
 		ArmamentNames: primary, secondary
 		Capacity: 3
@@ -643,7 +643,6 @@ MAST:
 		DeployedTicks: 35
 		CooldownTicks: 175
 		DeployedCondition: deployed
-		ChargingCondition: charging
 		ShowSelectionBar: true
 		StartsFullyCharged: true
 		Voice: Action
@@ -958,7 +957,7 @@ INTL:
 		Type: Heavy
 	RevealsShroud:
 		MinRange: 4c0
-		Range: 5c0
+		Range: 6c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
@@ -1750,7 +1749,7 @@ STMR:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 25000
+		HP: 26000
 	RevealsShroud:
 		Range: 11c0
 		MinRange: 9c0
