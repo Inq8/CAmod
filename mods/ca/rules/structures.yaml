@@ -1298,9 +1298,9 @@ ATEK:
 		Icon: tempinc
 		Cursor: ability
 		ChargeInterval: 9750
-		Description: Temporal Incursion
+		Name: Temporal Incursion
 		ActivationDelay: 25
-		LongDesc: \nSummons reinforcements from the future.\n    Units return to their origin time after a short time.
+		Description: \nSummons reinforcements from the future.\n    Units return to their origin time after a short time.
 		Weapon: TemporalIncursion
 		AirburstAltitude: 0c0
 		AllowMultiple: false
@@ -2254,8 +2254,8 @@ NPWR:
 		Dimensions: 4,3
 		LocalCenterOffset: 0,-512,0
 	Selectable:
-		Bounds: 96,72
-		DecorationBounds: 96,92,0,-10
+		Bounds: 4096,3072
+		DecorationBounds: 4096,3926,0,-427
 	Health:
 		HP: 70000
 	Armor:
@@ -2305,14 +2305,14 @@ NPWR:
 		OrderName: atomicammo
 		Icon: atomicammo
 		ChargeInterval: 4500
-		Description: Atomic Ammunition
+		Name: Atomic Ammunition
 		Condition: atomic-ammo
 		Dimensions: 5, 5
 		Footprint: __x__ _xxx_ xxxxx _xxx_ __x__
 		ValidRelationships: Ally, Neutral
 		Duration: 600
 		AllowMultiple: false
-		LongDesc: \nGrants atomic ammunition to tanks for a limited time.
+		Description: \nGrants atomic ammunition to tanks for a limited time.
 		OnFireSound: atomicammo.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -2798,7 +2798,6 @@ FIX:
 SBAG:
 	Inherits: ^Wall
 	RenderSprites:
-		-PlayerPalette:
 		Palette: effect
 	Buildable:
 		Queue: Defense
@@ -2825,7 +2824,6 @@ SBAG:
 FENC:
 	Inherits: ^Wall
 	RenderSprites:
-		-PlayerPalette:
 		Palette: effect
 	Buildable:
 		Queue: Defense
