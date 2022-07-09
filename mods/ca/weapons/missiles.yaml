@@ -1108,6 +1108,27 @@ HonestJohn:
 		Dimensions: 3,3
 		Footprint: xxx xxx xxx
 
+HonestJohn.UPG:
+	Inherits: HonestJohn
+	Warhead@1Dam: SpreadDamage
+		Spread: 256
+		Damage: 1200
+		Versus:
+			Light: 100
+			Heavy: 70
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@2Dam:
+		Damage: 1200
+		Versus:
+			Light: 100
+			Heavy: 70
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	-Warhead@3Dam:
+	-Warhead@4Dam:
+	Warhead@3Eff: CreateEffect
+		Explosions: large_blacknapalm
+		ExplosionPalette: scrin-ignore-lighting-alpha85
+
 HonestJohnTargeting:
 	Inherits: HonestJohn
 	ReloadDelay: 25

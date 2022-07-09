@@ -3842,11 +3842,18 @@ MLRS:
 		RealignDelay: 0
 	AttackMove:
 		AttackMoveCondition: attack-move
-	Armament:
+	Armament@PRIMARY:
 		Weapon: HonestJohn
 		LocalOffset: 0,171,0, 0,-171,0
 		PauseOnCondition: moving
 		ReloadingCondition: reloading
+		RequiresCondition: !blacknapalm-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: HonestJohn.UPG
+		LocalOffset: 0,171,0, 0,-171,0
+		PauseOnCondition: moving
+		ReloadingCondition: reloading
+		RequiresCondition: blacknapalm-upgrade
 	Armament@TARGETTER:
 		Name: targetter
 		Weapon: HonestJohnTargeting
@@ -3888,6 +3895,9 @@ MLRS:
 	ProductionCostMultiplier@BlackhBonus:
 		Multiplier: 90
 		Prerequisites: vehicles.blackh
+	GrantConditionOnPrerequisite@UPG:
+		Condition: blacknapalm-upgrade
+		Prerequisites: blacknapalm.upgrade
 
 STNK.Nod:
 	Inherits: ^VehicleTD
@@ -4143,9 +4153,21 @@ HFTK:
 		MuzzleSequence: muzzle
 		MuzzlePalette: tdeffect
 		LocalOffset: 750,200,150, 750,-200,150
+		RequiresCondition: !blacknapalm-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: HeavyFlameTankFlamer.UPG
+		MuzzleSequence: muzzle2
+		MuzzlePalette: scrin-ignore-lighting-alpha85
+		LocalOffset: 750,200,150, 750,-200,150
+		RequiresCondition: blacknapalm-upgrade
 	Armament@FF:
 		Weapon: HeavyFlameTankFlamerFF
 		LocalOffset: 750,200,150, 750,-200,150
+		RequiresCondition: !blacknapalm-upgrade
+	Armament@FFUPG:
+		Weapon: HeavyFlameTankFlamerFF
+		LocalOffset: 750,200,150, 750,-200,150
+		RequiresCondition: blacknapalm-upgrade
 	AttackTurreted:
 		Voice: Attack
 		RangeMargin: 0
@@ -4170,6 +4192,9 @@ HFTK:
 		RevokeDelay: 3
 	WithShadow:
 		RequiresCondition: parachute
+	GrantConditionOnPrerequisite@UPG:
+		Condition: blacknapalm-upgrade
+		Prerequisites: blacknapalm.upgrade
 
 HARV.TD:
 	Inherits: ^VehicleTD-NOUPG

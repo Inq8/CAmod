@@ -318,6 +318,18 @@ HeavyFlameTankFlamer:
 		AirThreshold: 256
 		Chance: 10
 
+HeavyFlameTankFlamer.UPG:
+	Inherits: HeavyFlameTankFlamer
+	Projectile: LinearPulse
+		Image: flameallblack
+		Palette: scrin-ignore-lighting-alpha85
+	Warhead@1Dam: SpreadDamage
+		Falloff: 100, 60, 25, 0
+		Versus:
+			Light: 100
+			Heavy: 60
+			Concrete: 50
+
 HeavyFlameTankFlamerFF:
 	Inherits: HeavyFlameTankFlamer
 	Projectile: LinearPulse

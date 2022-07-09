@@ -422,10 +422,26 @@ howi.upgrade:
 		Multiplier: 0
 		Prerequisites: radar.blackh
 
+blacknapalm.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Black Napalm
+	Buildable:
+		BuildPaletteOrder: 25
+		Prerequisites: ~tmpl.blackh, ~techlevel.high
+		Description: Superheated flame weapons that can melt armored targets.\n\nUpgrades: Heavy Flame Tank\nUpgrades: SSM Launcher
+	TooltipExtras:
+		Strengths: + Increased damage against vehicles
+		Weaknesses: – Reduced area of effect
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: blacknapalm.upgrade
+
 microwave.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Intensified Microwaves
+		Name: Upgrade: Intensified Microwaves
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~tmpl.legion, ~techlevel.high
@@ -441,7 +457,7 @@ microwave.upgrade:
 tibcore.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Tib Core Missiles
+		Name: Upgrade: Tib Core Missiles
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~tmpl, ~techlevel.high
