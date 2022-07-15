@@ -38,7 +38,7 @@ PROXYMINESPAWN:
 	RenderSprites:
 		Image: empty
 	Interactable:
-		Bounds: 24,24
+		Bounds: 1024, 1024
 	WithSpriteBody:
 	HiddenUnderFog:
 	Health:
@@ -288,7 +288,7 @@ camera.sathack:
 		Name: (support power proxy camera)
 	DetectCloaked:
 		Range: 10c0
-		CloakTypes: Cloak
+		DetectionTypes: Cloak
 
 camera.satscan:
 	Inherits: CAMERA
@@ -297,7 +297,7 @@ camera.satscan:
 		Queue: SpySatellite
 	Tooltip:
 		Name: Satellite Scan
-	RevealsMapCA:
+	RevealsMap:
 		RevealGeneratedShroud: false
 		RequiresCondition: uplinkavailable
 		ValidRelationships: Ally
@@ -323,7 +323,7 @@ camera.satscan.oneshot:
 		Voice: Build
 	KillsSelf:
 		Delay: 380
-	RevealsMapCA:
+	RevealsMap:
 		RequiresCondition: animation-complete
 	GrantDelayedCondition:
 		Delay: 375
@@ -411,7 +411,7 @@ SONAR:
 	Inherits: camera.spyplane
 	-RevealsShroud:
 	DetectCloaked:
-		CloakTypes: Underwater
+		DetectionTypes: Underwater
 		Range: 10c0
 
 FLARE:
@@ -465,7 +465,7 @@ MINE:
 		Terrain: Ore
 	AppearsOnMapPreview:
 		Terrain: Ore
-	SeedsResourceCA:
+	SeedsResource:
 		Interval: 70
 	MapEditorData:
 		Categories: Resource spawn
@@ -489,7 +489,7 @@ GMINE:
 		Terrain: Gems
 	AppearsOnMapPreview:
 		Terrain: Gems
-	SeedsResourceCA:
+	SeedsResource:
 		ResourceType: Gems
 	MapEditorData:
 		Categories: Resource spawn
@@ -557,8 +557,8 @@ powerproxy.parabombs:
 	AlwaysVisible:
 	AirstrikePower:
 		Icon: parabombs
-		Description: Parabombs (Single Use)
-		LongDesc: A Badger drops a load of parachuted bombs on your target.
+		Name: Parabombs (Single Use)
+		Description: A Badger drops a load of parachuted bombs on your target.
 		OneShot: true
 		AllowMultiple: true
 		UnitType: badr.bomber
@@ -579,8 +579,8 @@ powerproxy.sonarpulse:
 	AlwaysVisible:
 	SpawnActorPower:
 		Icon: sonar
-		Description: Sonar Pulse
-		LongDesc: Reveals all submarines in the vicinity for a \nshort time.
+		Name: Sonar Pulse
+		Description: Reveals all submarines in the vicinity for a \nshort time.
 		ChargeInterval: 750
 		EndChargeSpeechNotification: SonarPulseReady
 		SelectTargetSpeechNotification: SelectTarget
@@ -596,8 +596,8 @@ powerproxy.paratroopers:
 		Icon: paratroopers
 		SquadSize: 1
 		UnitType: halo.paradrop
-		Description: Paratroopers (Single Use)
-		LongDesc: A Halo transport drops a squad of infantry\nanywhere on the map.
+		Name: Paratroopers (Single Use)
+		Description: A Halo transport drops a squad of infantry\nanywhere on the map.
 		OneShot: true
 		AllowMultiple: true
 		DropItems: E1,E1,E1,E3,E3,E1,E1,E1,E2,E2
@@ -620,8 +620,8 @@ powerproxy.paratroopers.allies:
 		Icon: paratroopers
 		SquadSize: 1
 		UnitType: tran.paradrop
-		Description: Paratroopers (Single Use)
-		LongDesc: A Chinook drops a squad of infantry\nanywhere on the map.
+		Name: Paratroopers (Single Use)
+		Description: A Chinook drops a squad of infantry\nanywhere on the map.
 		OneShot: true
 		AllowMultiple: true
 		DropItems: E1,E1,E1,E1,E3,E3,E3,MEDI
@@ -645,8 +645,8 @@ powerproxy.airborne:
 		Icon: airborne
 		SquadSize: 1
 		UnitType: galx
-		Description: Airdrop: Guardian GIs (Single Use)
-		LongDesc: A Heavy Transport Plane drops a squad of Guardian GIs\nanywhere on the map.
+		Name: Airdrop: Guardian GIs (Single Use)
+		Description: A Heavy Transport Plane drops a squad of Guardian GIs\nanywhere on the map.
 		OneShot: true
 		AllowMultiple: true
 		DropItems: U3,U3,U3,U3,U3
@@ -672,8 +672,8 @@ powerproxy.airborne.tank:
 		Icon: airdropicon
 		SquadSize: 1
 		UnitType: galx
-		Description: Airdrop: Grizzly Tanks (Single Use)
-		LongDesc: A Heavy Transport Plane drops a pair of Grizzly Tanks\nanywhere on the map.
+		Name: Airdrop: Grizzly Tanks (Single Use)
+		Description: A Heavy Transport Plane drops a pair of Grizzly Tanks\nanywhere on the map.
 		OneShot: true
 		AllowMultiple: true
 		DropItems: GTNK,GTNK
@@ -705,8 +705,8 @@ powerproxy.airstrike:
 				SpawnOffset: 0,0,0
 				TargetOffset: 0,0,0
 		Icon: airstrike
-		Description: Air Strike (Single Use)
-		LongDesc: A10 strike planes drop napalm\nbombs on your target.
+		Name: Air Strike (Single Use)
+		Description: A10 strike planes drop napalm\nbombs on your target.
 		OneShot: true
 		AllowMultiple: true
 		SelectTargetSpeechNotification: SelectTarget
@@ -868,12 +868,28 @@ waypoint:
 		Categories: System
 
 fact.colorpicker:
+	Inherits: FACT
+	-Buildable:
+	-MapEditorData:
+	RenderSprites:
+		Image: fact
+		Palette: colorpicker
+
+afac.colorpicker:
 	Inherits: AFAC
 	-Buildable:
 	-MapEditorData:
 	RenderSprites:
 		Image: afac
-		Palette: colorpicker
+		Palette: colorpickertd
+
+sfac.colorpicker:
+	Inherits: SFAC
+	-Buildable:
+	-MapEditorData:
+	RenderSprites:
+		Image: sfac
+		Palette: colorpickerscrin
 
 CTFLAG:
 	Inherits: ^TechBuilding
@@ -893,7 +909,7 @@ CTFLAG:
 
 SPLIT2:
 	Inherits: ^TibTree
-	SeedsResourceCA:
+	SeedsResource:
 		ResourceType: Tiberium
 		Interval: 70
 	AppearsOnMapPreview:
@@ -908,7 +924,7 @@ SPLITBLUE:
 	Inherits: SPLIT2
 	RenderSprites:
 		Image: split3
-	SeedsResourceCA:
+	SeedsResource:
 		ResourceType: BlueTiberium
 	AppearsOnMapPreview:
 		Terrain: BlueTiberium
@@ -1022,7 +1038,7 @@ SHAB:
 		AvoidFriendly: true
 		BlockFriendly: false
 	Cloak:
-		CloakTypes: Mine
+		DetectionTypes: Mine
 		InitialDelay: 1
 		CloakSound: shad-beaconplace1.aud
 	RevealsShroud:

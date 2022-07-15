@@ -13,6 +13,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.Common.Traits
 {
+	[Desc("CA version adds a separate facing tolerance against air targets.")]
 	public class AttackAircraftCAInfo : AttackAircraftInfo, Requires<AircraftInfo>
 	{
 		[Desc("Tolerance for attack angle against air targets. Range [0, 128], 128 covers 360 degrees.")]

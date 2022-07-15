@@ -53,7 +53,7 @@ namespace OpenRA.Mods.CA.Projectiles
 		public readonly string HitAnim = null;
 
 		[Desc("Sequence of impact animation to use.")]
-		[SequenceReference("HitAnim")]
+		[SequenceReference(nameof(HitAnim), allowNullImage: true)]
 		public readonly string HitAnimSequence = "idle";
 
 		[PaletteReference]
@@ -110,7 +110,7 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			// Check for blocking actors
 			WPos blockedPos;
-			if (info.Blockable && BlocksProjectiles.AnyBlockingActorsBetween(world, source, target,
+			if (info.Blockable && BlocksProjectiles.AnyBlockingActorsBetween(world, args.SourceActor.Owner, source, target,
 				info.Width, out blockedPos))
 				target = blockedPos;
 
@@ -121,7 +121,13 @@ namespace OpenRA.Mods.CA.Projectiles
 				else
 					animationComplete = true;
 
-				args.Weapon.Impact(Target.FromPos(target), new WarheadArgs(args));
+				var warheadArgs = new WarheadArgs(args)
+				{
+					ImpactOrientation = new WRot(WAngle.Zero, Common.Util.GetVerticalAngle(source, target), args.CurrentMuzzleFacing()),
+					ImpactPosition = target,
+				};
+
+				args.Weapon.Impact(Target.FromPos(target), warheadArgs);
 				doneDamage = true;
 			}
 

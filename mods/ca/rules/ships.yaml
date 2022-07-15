@@ -24,7 +24,7 @@ SS:
 		Type: Light
 	Mobile:
 		TurnSpeed: 16
-		Speed: 52
+		Speed: 56
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 8c0
@@ -39,6 +39,7 @@ SS:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !crossing-ford
+		FacingTolerance: 0
 	AutoTarget:
 		InitialStance: HoldFire
 	AutoTargetPriority@DEFAULT:
@@ -46,7 +47,7 @@ SS:
 	AutoTargetPriority@ATTACKANYTHING:
 		ValidTargets: Water, Underwater
 	Selectable:
-		DecorationBounds: 38,38
+		DecorationBounds: 1621, 1621
 	GrantConditionOnAttack@STOPSHOOTINGROCKS:
 		Condition: im-dumb
 		RequiredShotsPerInstance: 2
@@ -91,7 +92,7 @@ MSUB:
 		Type: Light
 	Mobile:
 		TurnSpeed: 16
-		Speed: 45
+		Speed: 49
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 8c0
@@ -111,7 +112,7 @@ MSUB:
 	AutoTarget:
 		InitialStance: HoldFire
 	Selectable:
-		DecorationBounds: 44,44
+		DecorationBounds: 1877, 1877
 	Cloak:
 		CloakDelay: 100
 
@@ -141,7 +142,7 @@ DD:
 		Type: Heavy
 	Mobile:
 		TurnSpeed: 28
-		Speed: 52
+		Speed: 56
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 6c0
@@ -180,11 +181,11 @@ DD:
 		PauseOnCondition: empdisable || being-warped
 	WithSpriteTurret:
 	DetectCloaked:
-		CloakTypes: Underwater
+		DetectionTypes: Underwater
 		Range: 4c0
 	RenderDetectionCircle:
 	Selectable:
-		DecorationBounds: 38,38
+		DecorationBounds: 1621, 1621
 
 CA:
 	Inherits: ^Ship
@@ -211,7 +212,7 @@ CA:
 		Type: Heavy
 	Mobile:
 		TurnSpeed: 16
-		Speed: 28
+		Speed: 29
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 7c0
@@ -255,7 +256,7 @@ CA:
 	WithSpriteTurret@SECONDARY:
 		Turret: secondary
 	Selectable:
-		DecorationBounds: 44,44
+		DecorationBounds: 1877, 1877
 
 LST:
 	Inherits: ^Ship
@@ -280,7 +281,7 @@ LST:
 		Type: Heavy
 	Mobile:
 		Locomotor: lcraft
-		Speed: 100
+		Speed: 113
 		PauseOnCondition: notmobile || empdisable || being-warped
 	Hovers:
 		BobDistance: -35
@@ -301,7 +302,7 @@ LST:
 		LoadedCondition: cargo
 	-ChronoshiftableWithSpriteEffect:
 	Selectable:
-		DecorationBounds: 36,36
+		DecorationBounds: 1536, 1536
 	-InfiltrateToAttach@MINIDRONE:
 	-Targetable@MINIDRONE:
 	-ChangesHealth@MINIDRONE:
@@ -336,7 +337,7 @@ PT:
 		Type: Heavy
 	Mobile:
 		TurnSpeed: 28
-		Speed: 82
+		Speed: 92
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 7c0
@@ -361,11 +362,11 @@ PT:
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	DetectCloaked:
-		CloakTypes: Underwater
+		DetectionTypes: Underwater
 		Range: 4c0
 	RenderDetectionCircle:
 	Selectable:
-		DecorationBounds: 36,36
+		DecorationBounds: 1536, 1536
 
 PT2:
 	Inherits: ^Ship
@@ -394,7 +395,7 @@ PT2:
 		Type: Heavy
 	Mobile:
 		TurnSpeed: 28
-		Speed: 68
+		Speed: 72
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 7c0
@@ -432,11 +433,11 @@ PT2:
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !under-bridge
 	DetectCloaked:
-		CloakTypes: Underwater
+		DetectionTypes: Underwater
 		Range: 4c0
 	RenderDetectionCircle:
 	Selectable:
-		DecorationBounds: 36,36
+		DecorationBounds: 1536, 1536
 
 DD2:
 	Inherits: ^Ship
@@ -465,7 +466,7 @@ DD2:
 		Type: Heavy
 	Mobile:
 		TurnSpeed: 28
-		Speed: 56
+		Speed: 60
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 6c0
@@ -507,14 +508,14 @@ DD2:
 		PauseOnCondition: empdisable || being-warped
 	AutoTarget:
 	DetectCloaked:
-		CloakTypes: Underwater
+		DetectionTypes: Underwater
 		Range: 4c0
 	RenderDetectionCircle:
 	WithSpriteTurret@PRIMARY:
 		Turret: primary
 	WithMuzzleOverlay:
 	Selectable:
-		DecorationBounds: 38,38
+		DecorationBounds: 1621, 1621
 	PointDefense:
 		Armament: secondary
 		PointDefenseTypes: Missile
@@ -550,7 +551,7 @@ SS2:
 		Type: Light
 	Mobile:
 		TurnSpeed: 20
-		Speed: 56
+		Speed: 60
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 8c0
@@ -565,6 +566,7 @@ SS2:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !crossing-ford
+		FacingTolerance: 0
 	AutoTarget:
 		InitialStance: HoldFire
 	AutoTargetPriority@DEFAULT:
@@ -572,7 +574,7 @@ SS2:
 	AutoTargetPriority@ATTACKANYTHING:
 		ValidTargets: Water, Underwater
 	Selectable:
-		DecorationBounds: 38,38
+		DecorationBounds: 1621, 1621
 	GrantConditionOnAttack@STOPSHOOTINGROCKS:
 		Condition: im-dumb
 		RequiredShotsPerInstance: 2
@@ -617,7 +619,7 @@ ISUB:
 		Type: Light
 	Mobile:
 		TurnSpeed: 16
-		Speed: 30
+		Speed: 31
 		PauseOnCondition: empdisable || being-warped || launching
 	RevealsShroud:
 		MinRange: 5c0
@@ -642,10 +644,11 @@ ISUB:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: under-bridge || empdisable || being-warped
+		FacingTolerance: 0
 	AutoTarget:
 		InitialStance: HoldFire
 	Selectable:
-		DecorationBounds: 44,44
+		DecorationBounds: 1877, 1877
 	Cloak:
 		PauseOnCondition: launching || cloak-force-disabled || invisibility || being-warped || crossing-ford
 		CloakDelay: 100
@@ -711,7 +714,7 @@ CV:
 		Range: 5c0
 	Mobile:
 		TurnSpeed: 16
-		Speed: 30
+		Speed: 31
 		Voice: Move
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
@@ -747,7 +750,7 @@ CV:
 		Weapon: HornetLauncher
 		PauseOnCondition: under-bridge
 	Selectable:
-		DecorationBounds: 44,44
+		DecorationBounds: 1877, 1877
 	Voiced:
 		VoiceSet: DroneCarrVoice
 	WithRangeCircle@Attack:
@@ -783,7 +786,7 @@ SB:
 		Type: Light
 	Mobile:
 		TurnSpeed: 40
-		Speed: 100
+		Speed: 113
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -803,13 +806,14 @@ SB:
 		PauseOnCondition: under-bridge
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
 	WithMuzzleOverlay:
 	DetectCloaked:
-		CloakTypes: Underwater
+		DetectionTypes: Underwater
 		Range: 2c0
 	RenderDetectionCircle:
 	Selectable:
-		DecorationBounds: 36,36
+		DecorationBounds: 1536, 1536
 
 SEAS:
 	Inherits: ^Ship
@@ -836,7 +840,7 @@ SEAS:
 		Type: Heavy
 	Mobile:
 		TurnSpeed: 36
-		Speed: 82
+		Speed: 92
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 7c0
@@ -856,10 +860,11 @@ SEAS:
 		PauseOnCondition: under-bridge
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
 	WithMuzzleOverlay:
 	DetectCloaked:
-		CloakTypes: Underwater
+		DetectionTypes: Underwater
 		Range: 4c0
 	RenderDetectionCircle:
 	Selectable:
-		DecorationBounds: 36,36
+		DecorationBounds: 1536, 1536

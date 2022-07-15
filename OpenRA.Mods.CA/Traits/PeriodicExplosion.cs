@@ -108,7 +108,7 @@ namespace OpenRA.Mods.CA.Traits
 					return;
 
 				var localoffset = body != null
-					? body.LocalToWorld(info.LocalOffset.Rotate(body.QuantizeOrientation(self, self.Orientation)))
+					? body.LocalToWorld(info.LocalOffset.Rotate(body.QuantizeOrientation(self.Orientation)))
 					: info.LocalOffset;
 
 				var args = new WarheadArgs
@@ -122,10 +122,10 @@ namespace OpenRA.Mods.CA.Traits
 
 				weapon.Impact(Target.FromPos(self.CenterPosition + localoffset), args);
 
-				if (weapon.Report != null && weapon.Report.Any())
+				if (weapon.Report != null && weapon.Report.Length > 0)
 					Game.Sound.Play(SoundType.World, weapon.Report.Random(self.World.SharedRandom), self.CenterPosition);
 
-				if (burst == weapon.Burst && weapon.StartBurstReport != null && weapon.StartBurstReport.Any())
+				if (burst == weapon.Burst && weapon.StartBurstReport != null && weapon.StartBurstReport.Length > 0)
 					Game.Sound.Play(SoundType.World, weapon.StartBurstReport.Random(self.World.SharedRandom), self.CenterPosition);
 
 				if (--burst > 0)
@@ -142,7 +142,7 @@ namespace OpenRA.Mods.CA.Traits
 					fireDelay = Util.ApplyPercentageModifiers(weapon.ReloadDelay, modifiers);
 					burst = weapon.Burst;
 
-					if (weapon.AfterFireSound != null && weapon.AfterFireSound.Any())
+					if (weapon.AfterFireSound != null && weapon.AfterFireSound.Length > 0)
 					{
 						ScheduleDelayedAction(weapon.AfterFireSoundDelay, () =>
 						{

@@ -1,6 +1,6 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2018 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2021 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
  * as published by the Free Software Foundation, either version 3 of
@@ -21,7 +21,8 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	class PortableChronoCAInfo : ConditionalTraitInfo
+	[Desc("CA version makes trait conditional and allows for a condition applied upon teleporting.")]
+	class PortableChronoCAInfo : PausableConditionalTraitInfo, Requires<IMoveInfo>
 	{
 		[Desc("Cooldown in ticks until the unit can teleport.")]
 		public readonly int ChargeDelay = 500;
@@ -35,15 +36,19 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Sound to play when teleporting.")]
 		public readonly string ChronoshiftSound = "chrotnk1.aud";
 
+		[CursorReference]
 		[Desc("Cursor to display when able to deploy the actor.")]
 		public readonly string DeployCursor = "deploy";
 
+		[CursorReference]
 		[Desc("Cursor to display when unable to deploy the actor.")]
 		public readonly string DeployBlockedCursor = "deploy-blocked";
 
+		[CursorReference]
 		[Desc("Cursor to display when targeting a teleport location.")]
 		public readonly string TargetCursor = "chrono-target";
 
+		[CursorReference]
 		[Desc("Cursor to display when the targeted location is blocked.")]
 		public readonly string TargetBlockedCursor = "move-blocked";
 
@@ -75,11 +80,17 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Range circle border width.")]
 		public readonly float CircleBorderWidth = 3;
 
-		public override object Create(ActorInitializer init) { return new PortableChronoCA(this); }
+		[Desc("Color to use for the target line.")]
+		public readonly Color TargetLineColor = Color.LawnGreen;
+
+		public override object Create(ActorInitializer init) { return new PortableChronoCA(init.Self, this); }
 	}
 
-	class PortableChronoCA : ConditionalTrait<PortableChronoCAInfo>, IIssueOrder, IResolveOrder, ITick, ISelectionBar, IOrderVoice, ISync
+	class PortableChronoCA : PausableConditionalTrait<PortableChronoCAInfo>, IIssueOrder, IResolveOrder, ITick, ISelectionBar, IOrderVoice, ISync
 	{
+		public readonly new PortableChronoCAInfo Info;
+		readonly IMove move;
+
 		[Sync]
 		int chargeTick = 0;
 
@@ -92,9 +103,11 @@ namespace OpenRA.Mods.CA.Traits
 		public int ChargeDelay { get; private set; }
 		public int MaxDistance { get; private set; }
 
-		public PortableChronoCA(PortableChronoCAInfo info)
+		public PortableChronoCA(Actor self, PortableChronoCAInfo info)
 			: base(info)
 		{
+			Info = info;
+			move = self.Trait<IMove>();
 			ChargeDelay = Info.ChargeDelay;
 			MaxDistance = Info.MaxDistance;
 		}
@@ -106,7 +119,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		void ITick.Tick(Actor self)
 		{
-			if (IsTraitDisabled)
+			if (IsTraitDisabled || IsTraitPaused)
 				return;
 
 			if (chargeTick > 0)
@@ -135,7 +148,7 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				// HACK: Switch the global order generator instead of actually issuing an order
 				if (CanTeleport)
-					self.World.OrderGenerator = new PortableChronoOrderGenerator(self, Info);
+					self.World.OrderGenerator = new PortableChronoOrderGenerator(self, this);
 
 				// HACK: We need to issue a fake order to stop the game complaining about the bodge above
 				return new Order(order.OrderID, self, Target.Invalid, queued);
@@ -152,10 +165,16 @@ namespace OpenRA.Mods.CA.Traits
 			if (order.OrderString == "PortableChronoTeleport" && CanTeleport && order.Target.Type != TargetType.Invalid)
 			{
 				var maxDistance = Info.HasDistanceLimit ? MaxDistance : (int?)null;
-				self.CancelActivity();
+				if (!order.Queued)
+					self.CancelActivity();
 
 				var cell = self.World.Map.CellContaining(order.Target.CenterPosition);
+				if (maxDistance != null)
+					self.QueueActivity(move.MoveWithinRange(order.Target, WDist.FromCells(maxDistance.Value), targetLineColor: Info.TargetLineColor));
+
 				self.QueueActivity(new TeleportCA(self, cell, maxDistance, Info.KillCargo, Info.FlashScreen, Info.ChronoshiftSound));
+				self.QueueActivity(move.MoveTo(cell, 5, targetLineColor: Info.TargetLineColor));
+				self.ShowTargetLines();
 			}
 		}
 
@@ -189,21 +208,23 @@ namespace OpenRA.Mods.CA.Traits
 			chargeTick = chargeTick > 0 ? (int)(ChargeDelay * chargePerc) : 0;
 		}
 
-		public bool CanTeleport
-		{
-			get { return chargeTick <= 0; }
-		}
+		public bool CanTeleport => !IsTraitDisabled && !IsTraitPaused && chargeTick <= 0;
 
 		float ISelectionBar.GetValue()
 		{
 			if (IsTraitDisabled)
-				return 0;
+				return 0f;
 
 			return (float)(ChargeDelay - chargeTick) / ChargeDelay;
 		}
 
 		Color ISelectionBar.GetColor() { return Color.Magenta; }
-		bool ISelectionBar.DisplayWhenEmpty { get { return false; } }
+		bool ISelectionBar.DisplayWhenEmpty => false;
+
+		protected override void TraitDisabled(Actor self)
+		{
+			chargeTick = 0;
+		}
 	}
 
 	class PortableChronoOrderTargeter : IOrderTargeter
@@ -215,12 +236,12 @@ namespace OpenRA.Mods.CA.Traits
 			this.targetCursor = targetCursor;
 		}
 
-		public string OrderID { get { return "PortableChronoTeleport"; } }
-		public int OrderPriority { get { return 5; } }
+		public string OrderID => "PortableChronoTeleport";
+		public int OrderPriority => 5;
 		public bool IsQueued { get; protected set; }
 		public bool TargetOverridesSelection(Actor self, in Target target, List<Actor> actorsAt, CPos xy, TargetModifiers modifiers) { return true; }
 
-		public bool CanTarget(Actor self, in Target target, List<Actor> othersAtTarget, ref TargetModifiers modifiers, ref string cursor)
+		public bool CanTarget(Actor self, in Target target, ref TargetModifiers modifiers, ref string cursor)
 		{
 			if (modifiers.HasModifier(TargetModifiers.ForceMove))
 			{
@@ -244,12 +265,14 @@ namespace OpenRA.Mods.CA.Traits
 	class PortableChronoOrderGenerator : OrderGenerator
 	{
 		readonly Actor self;
+		readonly PortableChronoCA portableChrono;
 		readonly PortableChronoCAInfo info;
 
-		public PortableChronoOrderGenerator(Actor self, PortableChronoCAInfo info)
+		public PortableChronoOrderGenerator(Actor self, PortableChronoCA portableChrono)
 		{
 			this.self = self;
-			this.info = info;
+			this.portableChrono = portableChrono;
+			info = portableChrono.Info;
 		}
 
 		protected override IEnumerable<Order> OrderInner(World world, CPos cell, int2 worldPixel, MouseInput mi)
@@ -268,10 +291,19 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
+		protected override void SelectionChanged(World world, IEnumerable<Actor> selected)
+		{
+			if (!selected.Contains(self))
+				world.CancelInputMode();
+		}
+
 		protected override void Tick(World world)
 		{
-			if (!self.IsInWorld || self.IsDead)
+			if (portableChrono.IsTraitDisabled || portableChrono.IsTraitPaused)
+			{
 				world.CancelInputMode();
+				return;
+			}
 		}
 
 		protected override IEnumerable<IRenderable> Render(WorldRenderer wr, World world) { yield break; }
@@ -283,12 +315,12 @@ namespace OpenRA.Mods.CA.Traits
 			if (!self.IsInWorld || self.Owner != self.World.LocalPlayer)
 				yield break;
 
-			if (!self.Trait<PortableChronoCA>().Info.HasDistanceLimit)
+			if (!info.HasDistanceLimit)
 				yield break;
 
 			yield return new RangeCircleAnnotationRenderable(
 				self.CenterPosition,
-				WDist.FromCells(self.Trait<PortableChronoCA>().MaxDistance),
+				WDist.FromCells(info.MaxDistance),
 				0,
 				info.CircleColor,
 				info.CircleWidth,
@@ -299,7 +331,7 @@ namespace OpenRA.Mods.CA.Traits
 		protected override string GetCursor(World world, CPos cell, int2 worldPixel, MouseInput mi)
 		{
 			if (self.IsInWorld && self.Location != cell
-				&& self.Trait<PortableChronoCA>().CanTeleport && self.Owner.Shroud.IsExplored(cell))
+				&& portableChrono.CanTeleport && self.Owner.Shroud.IsExplored(cell))
 				return info.TargetCursor;
 			else
 				return info.TargetBlockedCursor;

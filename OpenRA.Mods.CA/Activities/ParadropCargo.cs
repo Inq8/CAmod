@@ -78,7 +78,7 @@ namespace OpenRA.Mods.CA.Activities
 			inDropRange = destination.IsInRange(self.CenterPosition, dropRange);
 
 			// We have troops, we are not near the DZ & the troops can't get out; Turn around
-			if (!cargo.IsEmpty(self) && !inDropRange && !cargo.CanUnload())
+			if (!cargo.IsEmpty() && !inDropRange && !cargo.CanUnload())
 			{
 				var pos = self.CenterPosition;
 				var delta = attackAircraft.GetTargetPosition(pos, destination) - pos;
@@ -87,7 +87,7 @@ namespace OpenRA.Mods.CA.Activities
 			}
 
 			// Empty; lets go home
-			if (cargo.IsEmpty(self))
+			if (cargo.IsEmpty())
 			{
 				if (exitParadrop)
 					return ChildActivity == null;
@@ -113,7 +113,7 @@ namespace OpenRA.Mods.CA.Activities
 					inu.Unloading(self);
 
 				var spawn = self.CenterPosition;
-				var dropActor = cargo.Peek(self);
+				var dropActor = cargo.Peek();
 				var dropCell = self.Location;
 				var dropPositionable = dropActor.Trait<IPositionable>();
 				var dropSubCell = dropPositionable.GetAvailableSubCell(dropCell);

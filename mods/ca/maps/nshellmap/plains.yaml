@@ -1,29 +1,26 @@
 World:
-	-SpawnMPUnits:
-	-MPStartLocations:
+	-SpawnStartingUnits:
+	-MapStartingLocations:
 	-CrateSpawner:
 	-StartGameNotification:
 	FlashPaletteEffect@LIGHTNINGSTRIKE:
 		Type: LightningStrike
+		ExcludePalettes: cursor, chrome, colorpicker, colorpickertd, colorpickerscrin, fog, shroud
 	MusicPlaylist:
 		BackgroundMusic: moi
 		DisableWorldSounds: true
 	LuaScript:
 		Scripts: shellmap.lua
-	ResourceType@ore:
-		ValuePerUnit: 0
-	ResourceType@green-tib:
-		ValuePerUnit: 0
 	WeatherOverlay@RAIN:
 		WindTick: 150, 550
 		UseSquares: false
 		ScatterDirection: 0, 0
-		Gravity: 2.00, 4.00
+		Gravity: 20, 25
 		SwingOffset: 0, 0
 		SwingSpeed: 0, 0
 		SwingAmplitude: 0, 0
 		ParticleColors: 72aaae, 72aea6, 5caea3, 6da69f
-		LineTailAlphaValue: 150
+		LineTailAlphaValue: 50
 		ParticleSize: 1, 1
 	TerrainLighting:
 		GreenTint: 1.01
@@ -32,41 +29,18 @@ World:
 		Green: 1.27
 		Blue: 1.15
 		Ambient: 0.55
-		ExcludePalettes: fog, shroud, cursor, chrome, chrometd, chromes, colorpicker, fog, shroud, tseffect, ra2effect, ra2unit, tdeffect, effect,  effect-ignore-lighting, tdeffect-ignore-lighting-alpha85, d2keffect-ignore-lighting-alpha75, d2keffect-ignore-lighting-alpha50, ra2effect-ignore-lighting-alpha90, ra2effect-ignore-lighting-alpha75, ra2effect-ignore-lighting-alpha50, tseffect-ignore-lighting-alpha75, tsunit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha90, tseffect-ignore-lighting-alpha90
+		ExcludePalettes: fog, shroud, cursor, chrome, chrometd, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud, tseffect, ra2effect, ra2unit, tdeffect, effect,  effect-ignore-lighting, tdeffect-ignore-lighting-alpha85, d2keffect-ignore-lighting-alpha75, d2keffect-ignore-lighting-alpha50, ra2effect-ignore-lighting-alpha90, ra2effect-ignore-lighting-alpha75, ra2effect-ignore-lighting-alpha50, tseffect-ignore-lighting-alpha75, tsunit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha90, tseffect-ignore-lighting-alpha90
 
 EditorWorld:
 	TerrainLighting:
 		GreenTint: 1.01
-		
+
 ^Palettes:
 	PaletteFromFile@terrain-temperat:
 		Name: terrain
 		Tileset: TEMPERAT
 		Filename: plains.pal
 		ShadowIndex: 3, 4
-	PaletteFromFile@player:
-		Name: player
-		Filename: temperat.pal
-		ShadowIndex: 4
-	PaletteFromFile@chrome:
-		Name: chrome
-		Filename: temperat.pal
-		ShadowIndex: 3
-		AllowModifiers: false
-	PaletteFromFile@cursor:
-		Name: cursor
-		Filename: temperat.pal
-		AllowModifiers: false
-		CursorPalette: true
-	PaletteFromFile@effect:
-		Name: effect
-		Filename: temperat.pal
-		ShadowIndex: 4
-	PaletteFromFile@colorpicker:
-		Name: colorpicker
-		Filename: temperattd.pal
-		ShadowIndex: 4
-		AllowModifiers: false
 
 ^GlobalBounty:
 	GivesBounty:
@@ -95,7 +69,7 @@ EditorWorld:
 ^Building:
 	DamageMultiplier@UNKILLABLE:
 		Modifier: 5
-		
+
 ^Defense:
 	DamageMultiplier@UNKILLABLE:
 		Modifier: 5
@@ -115,7 +89,7 @@ SPLIT3:
 		Range: 6c0
 		Intensity: 0.5
 		GreenTint: 1
-		
+
 SPLITBLUE:
 	TerrainLightSource:
 		Range: 6c0
@@ -137,7 +111,7 @@ powerproxy.airborne:
 		DisplayBeacon: false
 		SquadSize: 2
 		DropItems: U3,U3,U3,U3,U3,GTNK,U3,U3,U3,U3,U3,GTNK
-		
+
 U3:
 	AutoDeployer@AI:
 		RequiresCondition: !botowner && !deployed && !parachute
@@ -147,7 +121,7 @@ SEAL:
 	WithDecoration@COMMANDOSKULL:
 		Image: empty
 		Sequence: idle
-	
+
 OILB:
 	CashTrickler:
 		ShowTicks: false

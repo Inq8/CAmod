@@ -16,7 +16,8 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Grants a prerequisite while discharging at a configurable rate.")]
+	[Desc("Grants a prerequisite while discharging at a configurable rate.",
+		"CA version adds early deactivation penalty to prevent frequent toggling.")]
 	public class GrantPrerequisiteChargeDrainPowerCAInfo : SupportPowerInfo, ITechTreePrerequisiteInfo
 	{
 		[Desc("Rate at which the power discharges compared to charging")]
@@ -26,15 +27,12 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("The prerequisite type that this provides.")]
 		public readonly string Prerequisite = null;
 
-		[Translate]
 		[Desc("Label to display over the support power icon and in its tooltip while the power is active.")]
 		public readonly string ActiveText = "ACTIVE";
 
-		[Translate]
 		[Desc("Label to display over the support power icon and in its tooltip while the power is available but not active.")]
 		public readonly string AvailableText = "READY";
 
-		[Translate]
 		[Desc("If deactivating the power prior to full discharge, discharge by this additional amount to prevent frequent activation/deactivation with no penalty.")]
 		public readonly int EarlyDeactivationPenalty = 0;
 
@@ -195,19 +193,19 @@ namespace OpenRA.Mods.CA.Traits
 
 			public override string IconOverlayTextOverride()
 			{
-				var info = Info as GrantPrerequisiteChargeDrainPowerCAInfo;
-				if (info == null || !Active)
+				if (!Active)
 					return null;
 
+				var info = (GrantPrerequisiteChargeDrainPowerCAInfo)Info;
 				return active ? info.ActiveText : available ? info.AvailableText : null;
 			}
 
 			public override string TooltipTimeTextOverride()
 			{
-				var info = Info as GrantPrerequisiteChargeDrainPowerCAInfo;
-				if (info == null || !Active)
+				if (!Active)
 					return null;
 
+				var info = (GrantPrerequisiteChargeDrainPowerCAInfo)Info;
 				return active ? info.ActiveText : available ? info.AvailableText : null;
 			}
 		}

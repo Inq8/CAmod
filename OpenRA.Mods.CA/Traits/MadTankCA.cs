@@ -69,6 +69,10 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Types of damage that this trait causes to self while self-destructing. Leave empty for no damage types.")]
 		public readonly BitSet<DamageType> DamageTypes = default(BitSet<DamageType>);
 
+		[CursorReference]
+		[Desc("Cursor to display when able to set up the detonation sequence.")]
+		public readonly string DeployCursor = "deploy";
+
 		public override object Create(ActorInitializer init) { return new MadTankCA(init.Self, this); }
 
 		public override void RulesetLoaded(Ruleset rules, ActorInfo ai)
@@ -110,7 +114,7 @@ namespace OpenRA.Mods.CA.Traits
 			get
 			{
 				yield return new TargetTypeOrderTargeter(new BitSet<TargetableType>("DetonateAttack"), "DetonateAttack", 5, "attack", true, false) { ForceAttack = false };
-				yield return new DeployOrderTargeter("Detonate", 5);
+				yield return new DeployOrderTargeter("Detonate", 5, () => Info.DeployCursor);
 			}
 		}
 

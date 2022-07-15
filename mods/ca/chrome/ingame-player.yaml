@@ -1,7 +1,13 @@
 Container@PLAYER_WIDGETS:
+	Logic: LoadIngameChatLogic
 	Children:
-		LogicKeyListener@CONTROLGROUP_KEYHANDLER:
-			Logic: ControlGroupLogic
+		Container@CHAT_ROOT:
+		ControlGroups@CONTROLGROUPS:
+			SelectGroupKeyPrefix: ControlGroupSelect
+			CreateGroupKeyPrefix: ControlGroupCreate
+			AddToGroupKeyPrefix: ControlGroupAddTo
+			CombineWithGroupKeyPrefix: ControlGroupCombineWith
+			JumpToGroupKeyPrefix: ControlGroupJumpTo
 		LogicTicker@SIDEBAR_TICKER:
 		Container@SUPPORT_POWERS:
 			Logic: SupportPowerBinLogic
@@ -336,7 +342,6 @@ Container@PLAYER_WIDGETS:
 							Y: 5
 							ImageCollection: stance-icons
 							ImageName: hold-fire
-
 		Container@MUTE_INDICATOR:
 			Logic: MuteIndicatorLogic
 			X: WINDOW_RIGHT - WIDTH - 260
@@ -468,7 +473,7 @@ Container@PLAYER_WIDGETS:
 							SoundUp: RadarUp
 							SoundDown: RadarDown
 							Children:
-						VqaPlayer@PLAYER:
+						VideoPlayer@PLAYER:
 							X: 1
 							Y: 1
 							Width: 220
@@ -508,6 +513,7 @@ Container@PLAYER_WIDGETS:
 					IconSize: 62, 46
 					IconMargin: 1, 1
 					IconSpriteOffset: -1, -1
+					MinimumRows: 5
 					HotkeyPrefix: Production
 					HotkeyCount: 24
 					SelectProductionBuildingHotkey: SelectProductionBuilding
@@ -522,7 +528,7 @@ Container@PLAYER_WIDGETS:
 							ImageName: background-iconrow
 				Container@PRODUCTION_TYPES:
 					X: 7
-					Y: 0 - 2
+					Y: 2
 					Width: 29
 					Height: 240
 					Children:
@@ -543,7 +549,7 @@ Container@PLAYER_WIDGETS:
 									ImageCollection: production-icons
 						ProductionTypeButton@DEFENSE:
 							Logic: AddFactionSuffixLogic
-							Y: 27
+							Y: 31
 							Width: 28
 							Height: 28
 							VisualHeight: 0
@@ -559,7 +565,7 @@ Container@PLAYER_WIDGETS:
 									ImageCollection: production-icons
 						ProductionTypeButton@INFANTRY:
 							Logic: AddFactionSuffixLogic
-							Y: 54
+							Y: 62
 							Width: 28
 							Height: 28
 							VisualHeight: 0
@@ -575,7 +581,7 @@ Container@PLAYER_WIDGETS:
 									ImageCollection: production-icons
 						ProductionTypeButton@VEHICLE:
 							Logic: AddFactionSuffixLogic
-							Y: 81
+							Y: 93
 							Width: 28
 							Height: 28
 							VisualHeight: 0
@@ -591,7 +597,7 @@ Container@PLAYER_WIDGETS:
 									ImageCollection: production-icons
 						ProductionTypeButton@AIRCRAFT:
 							Logic: AddFactionSuffixLogic
-							Y: 108
+							Y: 124
 							Width: 28
 							Height: 28
 							VisualHeight: 0
@@ -607,7 +613,7 @@ Container@PLAYER_WIDGETS:
 									ImageCollection: production-icons
 						ProductionTypeButton@NAVAL:
 							Logic: AddFactionSuffixLogic
-							Y: 135
+							Y: 155
 							Width: 28
 							Height: 28
 							VisualHeight: 0
@@ -623,7 +629,7 @@ Container@PLAYER_WIDGETS:
 									ImageCollection: production-icons
 						ProductionTypeButton@UPGRADE:
 							Logic: AddFactionSuffixLogic
-							Y: 162
+							Y: 186
 							Width: 28
 							Height: 28
 							VisualHeight: 0
@@ -639,7 +645,7 @@ Container@PLAYER_WIDGETS:
 									ImageCollection: production-icons
 						Button@SCROLL_UP_BUTTON:
 							Logic: AddFactionSuffixLogic
-							Y: 189
+							Y: 217
 							Width: 28
 							Height: 22
 							VisualHeight: 0
@@ -654,7 +660,7 @@ Container@PLAYER_WIDGETS:
 									ImageName: up
 						Button@SCROLL_DOWN_BUTTON:
 							Logic: AddFactionSuffixLogic
-							Y: 214
+							Y: 242
 							Width: 28
 							Height: 22
 							VisualHeight: 0
@@ -667,7 +673,6 @@ Container@PLAYER_WIDGETS:
 									Y: 3
 									ImageCollection: scrollpanel-decorations
 									ImageName: down
-
 		Image@SIDEBAR_MONEYBIN:
 			Logic: AddFactionSuffixLogic
 			X: WINDOW_RIGHT - 250

@@ -138,7 +138,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled)
 				return;
 
-			if (!stacks.Any())
+			if (stacks.Count == 0)
 				return;
 
 			for (int i = 0; i < stacks.Count; i++)

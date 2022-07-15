@@ -10,7 +10,6 @@
 	ClassicFacingBodyOrientation:
 	QuantizeFacingsFromSequence:
 	RenderSprites:
-		PlayerPalette: overlayplayer
 
 ^1x1Shape:
 	HitShape:
@@ -295,7 +294,7 @@
 		Condition: berserk
 	Berserkable@BERSERK:
 		RequiresCondition: berserkactive
-	WithColoredOverlay@BERSERK:
+	WithModifiedPalette@BERSERK:
 		RequiresCondition: berserkactive
 		Palette: berserk
 	TimedConditionBar@BERSERK:
@@ -319,7 +318,7 @@
 		Modifier: 110
 	ExternalCondition@FRENZY:
 		Condition: frenzy
-	WithColoredOverlay@FRENZY:
+	WithModifiedPalette@FRENZY:
 		RequiresCondition: frenzy
 		Palette: frenzy
 	TimedConditionBar@FRENZY:
@@ -349,12 +348,12 @@
 	Targetable@TEMPORAL:
 		TargetTypes: Temporal
 		RequiresCondition: !invulnerability
-	WithColoredOverlay@TEMPORALl:
+	WithModifiedPalette@TEMPORALl:
 		RequiresCondition: being-warped
 		Palette: temporal
 	WithColoredOverlay@TEMPORAL2:
 		RequiresCondition: being-warped
-		Palette: lowpower
+		Color: 00000060
 	TimedConditionBar@TEMPORAL:
 		Condition: being-warped
 		Color: 2f74e2
@@ -406,7 +405,7 @@
 		Condition: suppression
 	WithColoredOverlay@SUPPRESSION:
 		RequiresCondition: suppression
-		Palette: suppression
+		Color: f454d064
 	TimedConditionBar@SUPPRESSION:
 		Condition: suppression
 		Color: f454d0
@@ -485,7 +484,7 @@
 		Condition: ionsurge
 	WithColoredOverlay@IONSURGE:
 		RequiresCondition: ionsurge
-		Palette: ionsurge
+		Color: bd70ff23
 	WithIdleOverlay@IONSURGE:
 		Sequence: vehicle
 		Image: ionsurge-overlay
@@ -511,7 +510,7 @@
 		RequiresCondition: powerdrain
 	WithColoredOverlay@POWERDRAIN:
 		RequiresCondition: powerdrain
-		Palette: disabled
+		Color: 000000b4
 	WithDecoration@POWERDRAIN:
 		Image: poweroff
 		Sequence: offline
@@ -718,15 +717,15 @@
 	WithDecoration@SEEK:
 		-BlinkPatterns:
 		BlinkPatterns:
-			seek : Off, On
+			seek: Off, On
 	WithDecoration@SEEK2:
 		-BlinkPatterns:
 		BlinkPatterns:
-			seek2 : Off, On
+			seek2: Off, On
 	WithDecoration@SEEK3:
 		-BlinkPatterns:
 		BlinkPatterns:
-			seek3 : Off, On
+			seek3: Off, On
 
 ^HazmatUpgrade:
 	GrantConditionOnPrerequisite@HAZMAT:
@@ -750,7 +749,7 @@
 		RequiresSelection: True
 		BlinkInterval: 64
 		BlinkPatterns:
-			bino : Off, On
+			bino: Off, On
 	WithDecoration@HAZMATSOVIET:
 		Image: pips
 		Sequence: pip-hazmats
@@ -760,7 +759,7 @@
 		RequiresSelection: True
 		BlinkInterval: 64
 		BlinkPatterns:
-			bino : Off, On
+			bino: Off, On
 	GrantConditionOnTerrain@HAZMATSOVIET:
 		TerrainTypes: Rough, Beach, Ford, Ore, Gems, Tiberium, BlueTiberium
 		Condition: onrough
@@ -862,8 +861,9 @@
 		RequiresCondition: !parachute && damaged && !being-warped && !heal-cooldown
 
 ^IronCurtainable:
-	WithColoredOverlay@IRONCURTAIN:
+	WithModifiedPalette@IRONCURTAIN:
 		RequiresCondition: invulnerability
+		Palette: invuln
 	DamageMultiplier@IRONCURTAIN:
 		RequiresCondition: invulnerability
 		Modifier: 0
@@ -879,9 +879,9 @@
 		RequiresCondition: invulnerability
 
 ^Irradiatable:
-	WithColoredOverlay@IRRADIATABLE:
-		Palette: irrad
+	WithModifiedPalette@IRRADIATABLE:
 		RequiresCondition: irradiated
+		Palette: irrad
 	TimedConditionBar@IRRADIATABLE:
 		Condition: irradiated
 		Color: 88DD00
@@ -914,9 +914,9 @@
 		TargetTypes: AtomicAmmoTargetable
 
 ^ForceShieldable:
-	WithColoredOverlay@FS:
-		Palette: forces
+	WithModifiedPalette@FS:
 		RequiresCondition: forceshield && !invulnerability
+		Palette: forces
 	DamageMultiplier@FS:
 		RequiresCondition: forceshield
 		Modifier: 0
@@ -932,7 +932,7 @@
 ^EmpDisable:
 	WithColoredOverlay@EMPDISABLE:
 		RequiresCondition: empdisable
-		Palette: disabled
+		Color: 000000b4
 	TimedConditionBar@EMPDISABLE:
 		Condition: empdisable
 		Color: FFFFFF
@@ -949,7 +949,7 @@
 
 ^EmpVisualEffect:
 	WithColoredOverlay@EMPDISABLE:
-		Palette: disabled
+		Color: 000000b4
 	WithIdleOverlay@EMPDISABLE:
 		Sequence: emp-overlay
 		Palette: tseffect
@@ -962,7 +962,7 @@
 		StartIfBelow: 100
 		DamageCooldown: 0
 		RequiresCondition: nrepair
-	WithColoredOverlay@NREPAIR:
+	WithModifiedPalette@NREPAIR:
 		RequiresCondition: nrepair && damaged && !(empdisable || invulnerability || invisibility)
 		Palette: nrepair
 	TimedConditionBar@NREPAIR:
@@ -1056,22 +1056,22 @@
 	ExternalCondition@GHIGH:
 		Condition: greenhighlight
 	WithColoredOverlay@GHIGH:
+		Color: 80ff8080
 		RequiresCondition: greenhighlight
-		Palette: greenhighlight
 
 ^RedFlash:
 	ExternalCondition@RHIGH:
 		Condition: redhighlight
 	WithColoredOverlay@RHIGH:
+		Color: ff404080
 		RequiresCondition: redhighlight
-		Palette: redhighlight
 
 ^WhiteFlash:
 	ExternalCondition@HIGH:
 		Condition: highlight
 	WithColoredOverlay@HIGH:
+		Color: ffffff80
 		RequiresCondition: highlight
-		Palette: highlight
 
 ^Cloakable:
 	ExternalCondition@INVIS:
@@ -1091,8 +1091,8 @@
 	ExternalCondition@SGENCLOAK:
 		Condition: sgen-invis
 	WithColoredOverlay@SGENCLOAK:
+		Color: 00e40041
 		RequiresCondition: invisibility
-		Palette: cloakgreen
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Heavy, Critical
@@ -1140,7 +1140,7 @@
 		Modifier: 115
 		RequiresCondition: chilled == 1
 	WithColoredOverlay@chilled1:
-		Palette: cold1
+		Color: 51aeda1c
 		RequiresCondition: chilled == 1
 	SpeedMultiplier@chilled2:
 		Modifier: 58
@@ -1149,7 +1149,7 @@
 		Modifier: 130
 		RequiresCondition: chilled == 2
 	WithColoredOverlay@chilled2:
-		Palette: cold2
+		Color: 51aeda38
 		RequiresCondition: chilled == 2
 	SpeedMultiplier@chilled3:
 		Modifier: 47
@@ -1158,7 +1158,7 @@
 		Modifier: 145
 		RequiresCondition: chilled == 3
 	WithColoredOverlay@chilled3:
-		Palette: cold3
+		Color: 51aeda54
 		RequiresCondition: chilled == 3
 	SpeedMultiplier@chilled4:
 		Modifier: 40
@@ -1167,7 +1167,7 @@
 		Modifier: 160
 		RequiresCondition: chilled == 4
 	WithColoredOverlay@chilled4:
-		Palette: cold4
+		Color: 51aeda70
 		RequiresCondition: chilled == 4
 	SpeedMultiplier@chilled5:
 		Modifier: 35
@@ -1176,7 +1176,7 @@
 		Modifier: 175
 		RequiresCondition: chilled == 5
 	WithColoredOverlay@chilled5:
-		Palette: cold5
+		Color: 51aeda8c
 		RequiresCondition: chilled == 5
 	SpeedMultiplier@chilled6:
 		Modifier: 30
@@ -1185,7 +1185,7 @@
 		Modifier: 200
 		RequiresCondition: chilled > 5
 	WithColoredOverlay@chilled6:
-		Palette: cold6
+		Color: 51aedaa8
 		RequiresCondition: chilled > 5
 
 ^Slowable:
@@ -1275,8 +1275,8 @@
 	ExternalCondition@detachable:
 		Condition: detach
 	WithColoredOverlay@detach:
-		Palette: moveflash
 		RequiresCondition: detach
+		Color: ffffff40
 	AmbientSound@c4:
 		SoundFiles: icoltima.aud, icoltimb.aud, icoltimc.aud
 		Delay: 5
@@ -1307,8 +1307,8 @@
 	ExternalCondition@detachable:
 		Condition: detach
 	WithColoredOverlay@detach:
-		Palette: moveflash
 		RequiresCondition: detach
+		Color: ffffff40
 	AmbientSound@tnt:
 		SoundFiles: icraloop.aud
 		Delay: 6
@@ -1608,7 +1608,7 @@
 		Locomotor: wheeled
 		TurnSpeed: 20
 	Selectable:
-		Bounds: 24, 24
+		Bounds: 1024, 1024
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Vehicle, C4, TNT
@@ -1632,8 +1632,6 @@
 	AttackMove:
 	HiddenUnderFog:
 	ActorLostNotification:
-	ProximityCaptor:
-		Types: Vehicle
 	WithDamageOverlay:
 	Guard:
 	Guardable:
@@ -1697,7 +1695,7 @@
 		DamageTypes: RadiationDeath
 		LayerName: radioactivity.medium
 	DetectCloaked@UNDERBRIDGE:
-		CloakTypes: Underbridge
+		DetectionTypes: Underbridge
 		Range: 5c0
 	GpsRadarDot:
 		Sequence: Vehicle
@@ -1722,7 +1720,7 @@
 ^VehicleTD-NOUPG:
 	Inherits@1: ^Vehicle
 	RenderSprites:
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 	WithDamageOverlay:
 		Image: smoke_mtd
 	Cloak@CRATE-CLOAK:
@@ -1743,7 +1741,7 @@
 	Mobile:
 		Locomotor: tracked
 	RenderSprites:
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 	WithDamageOverlay:
 		Image: smoke_mtd
 
@@ -1760,7 +1758,7 @@
 		Modifier: 35
 
 ^SlightlySlowedByCrushing:
-	Inherits@CRUSHSLOW:	^SlowedByCrushing
+	Inherits@CRUSHSLOW: ^SlowedByCrushing
 	SpeedMultiplier@CRUSHATTEMPTSLOW:
 		Modifier: 80
 	SpeedMultiplier@CRUSHSLOW:
@@ -1791,7 +1789,7 @@
 	Inherits@BINOS: ^BinoUpgradeInfantry
 	Inherits@ionsurge: ^IonSurgableInfantry
 	RenderSprites:
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 	Huntable:
 	OwnerLostAction:
 		Action: Kill
@@ -1803,7 +1801,7 @@
 	RevealsShroud:
 		Range: 4c0
 	Mobile:
-		Speed: 43
+		Speed: 46
 		Locomotor: foot
 		PauseOnCondition: being-warped
 	GrantConditionOnTerrain@ONTIB:
@@ -1831,8 +1829,8 @@
 		DeathType: ToxinDeath
 		RequiresLobbyCreeps: false
 	Selectable:
-		Bounds: 18,18,0,-6
-		DecorationBounds: 12,17,0,-6
+		Bounds: 768, 768, 0, -256
+		DecorationBounds: 512, 725, 0, -256
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
 		TargetTypes: Ground, Infantry, Disguise, TNT
@@ -1850,7 +1848,7 @@
 		StandSequences: stand
 		RequiresCondition: being-warped
 	WithDeathAnimation:
-		DeathSequencePalette: overlayplayertd
+		DeathSequencePalette: playertd
 		DeathTypes:
 			DefaultDeath: 1
 			BulletDeath: 2
@@ -1928,7 +1926,7 @@
 	RevealOnDeath:
 		Duration: 100
 	DetectCloaked:
-		CloakTypes: Cloak
+		DetectionTypes: Cloak
 		Range: 1c0
 	DamagedByTintedCells@RADSTRONG:
 		Damage: 750
@@ -2000,8 +1998,6 @@
 	Inherits@DRIVER: ^CanCaptureDriverlessVehicles
 	UpdatesPlayerStatistics:
 	MustBeDestroyed:
-	ProximityCaptor:
-		Types: Infantry
 	RevealsShroud:
 		Range: 5c0
 	TakeCover:
@@ -2098,8 +2094,6 @@
 		Range: 3c0
 	Passenger:
 		CustomPipType: gray
-	ProximityCaptor:
-		Types: CivilianInfantry
 	Voiced:
 		VoiceSet: CivilianMaleVoice
 	Wanders:
@@ -2126,6 +2120,7 @@
 		Weapon: PistolTD
 		RequiresCondition: td-faction
 	AttackFrontal:
+		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 
@@ -2168,7 +2163,7 @@
 		Locomotor: naval
 		PauseOnCondition: empdisable || being-warped
 	Selectable:
-		Bounds: 24,24
+		Bounds: 1024, 1024
 	Targetable:
 		TargetTypes: Ground, Water, Ship
 		RequiresCondition: !being-warped
@@ -2182,17 +2177,12 @@
 	AttackMove:
 	ActorLostNotification:
 		Notification: NavalUnitLost
-	ProximityCaptor:
-		Types: Ship
 	ChronoshiftableWithSpriteEffect:
 		Image: chrono
 		WarpInSequence: warpin
 		WarpOutSequence: warpout
 		Palette: ra2effect-ignore-lighting-alpha75
 	RepairableNear:
-		RepairActors: syrd, spen, syrd.gdi, spen.nod
-	#For AI
-	RepairableNearCA:
 		RepairActors: syrd, spen, syrd.gdi, spen.nod
 	WithDamageOverlay:
 	Explodes:
@@ -2234,7 +2224,7 @@
 		Condition: under-bridge
 		TerrainTypes: Bridge, Tunnel
 	Cloak@UNDERBRIDGE:
-		CloakTypes: Underbridge
+		DetectionTypes: Underbridge
 		UncloakOn: Unload
 		InitialDelay: 0
 		CloakDelay: 0
@@ -2247,7 +2237,7 @@
 		RequiresCondition: under-bridge
 		TargetTypes: Underbridge
 	DetectCloaked@UNDERBRIDGE:
-		CloakTypes: Underbridge
+		DetectionTypes: Underbridge
 		Range: 5c0
 	GrantConditionOnBotOwner@IAMBOT:
 		Condition: botowner
@@ -2270,7 +2260,7 @@
 		Condition: crossing-ford
 		TerrainTypes: Ford
 	Cloak:
-		CloakTypes: Underwater
+		DetectionTypes: Underwater
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Heal
 		InitialDelay: 0
 		CloakDelay: 50
@@ -2283,7 +2273,7 @@
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
 	DetectCloaked:
-		CloakTypes: Underwater
+		DetectionTypes: Underwater
 		Range: 4c0
 	RenderDetectionCircle:
 	Explodes:
@@ -2306,7 +2296,6 @@
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@handicaps: ^PlayerHandicaps
-	Huntable:
 	OwnerLostAction:
 		Action: Kill
 	Armor:
@@ -2315,7 +2304,7 @@
 	AppearsOnRadar:
 		UseLocation: true
 	Selectable:
-		Bounds: 24,24
+		Bounds: 1024, 1024
 	Aircraft:
 		AirborneCondition: airborne
 		TakeOffOnResupply: true
@@ -2338,8 +2327,6 @@
 	Guardable:
 	ActorLostNotification:
 		Notification: AirUnitLost
-	ProximityCaptor:
-		Types: Plane
 	Tooltip:
 		GenericName: Plane
 	WithShadow:
@@ -2394,6 +2381,7 @@
 	Inherits@TNT: ^TNTPlantable
 	Inherits@ionsurge: ^IonSurgable
 	Inherits@atomize: ^Atomizable
+	Huntable:
 	EjectOnDeath:
 		PilotActor: E1
 		SuccessRate: 50
@@ -2439,7 +2427,7 @@
 ^PlaneTD:
 	Inherits@1: ^Plane
 	RenderSprites:
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 	EjectOnDeath:
 		PilotActor: N1
 
@@ -2467,7 +2455,7 @@
 ^HelicopterTD:
 	Inherits@1: ^Helicopter
 	RenderSprites:
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 	EjectOnDeath:
 		PilotActor: N1
 
@@ -2493,7 +2481,6 @@
 		BuildSounds: placbldg.aud, build5.aud
 		UndeploySounds: cashturn.aud
 	ActorPreviewPlaceBuildingPreview:
-		OverridePalette: placebuilding
 	RequiresBuildableArea:
 		AreaTypes: building
 		Adjacent: 4
@@ -2508,8 +2495,6 @@
 	CaptureNotification:
 		LoseNotification: StructureLost
 	ShakeOnDeath:
-	ProximityCaptor:
-		Types: Building
 	Guardable:
 		Range: 3c0
 	FrozenUnderFog:
@@ -2520,7 +2505,7 @@
 		Categories: Building
 	CommandBarBlacklist:
 	WithColoredOverlay@FLARE:
-		Palette: flare
+		Color: ff000080
 		RequiresCondition: flare
 	ExternalCondition@FLARE:
 		Condition: flare
@@ -2538,8 +2523,9 @@
 	Inherits@gflash: ^WhiteFlash
 	Inherits@wflash: ^GreenFlash
 	Inherits@HACKABLE: ^Hackable
-	WithColoredOverlay@IRONCURTAIN:
+	WithModifiedPalette@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield
+		Palette: invuln
 	Huntable:
 	OwnerLostAction:
 		Action: Kill
@@ -2608,17 +2594,16 @@
 ^BuildingTD:
 	Inherits@1: ^Building
 	RenderSprites:
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 	SpawnActorOnDeath:
 		Actor: n1
 	SpawnActorsOnSell:
 		ActorTypes: n1,n1,n1,n1,n1,n1,n1,n1,n1,n1,c1,c1,c1,c1,c7,c7,c7,c7,c10,c10
 	ActorPreviewPlaceBuildingPreview:
-		OverridePalette: placebuildingtd
 	WithDeathAnimation:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
-		DeathSequencePalette: overlayplayertd
+		DeathSequencePalette: playertd
 
 ^WaterStructure:
 	Targetable@WATER:
@@ -2633,23 +2618,24 @@
 	Inherits@veilable: ^Veilable
 	Inherits@atomize: ^Atomizable
 	-SpeedMultiplier@concussion:
-	WithColoredOverlay@IRONCURTAIN:
+	WithModifiedPalette@IRONCURTAIN:
 		RequiresCondition: invulnerability
+		Palette: invuln
 	Selectable:
-		Bounds: 24,24
+		Bounds: 1024, 1024
 	Targetable:
 		TargetTypes: Ground, Structure, Defense
 	Targetable@EXPLOSIVES:
 		TargetTypes: C4, TNT, DetonateAttack
 	DetectCloaked:
-		CloakTypes: Cloak, AirCloak
+		DetectionTypes: Cloak, AirCloak
 		Range: 6c0
 		RequiresCondition: !(empdisable || being-warped)
 	MustBeDestroyed:
 		RequiredForShortGame: false
 	-GivesBuildableArea:
 	-AcceptsDeliveredCash:
-	-WithColoredOverlay@FS:
+	-WithModifiedPalette@FS:
 	-DamageMultiplier@FS:
 	-TimedConditionBar@FS:
 	-ExternalCondition@FS:
@@ -2687,7 +2673,7 @@
 		Weapon: TemporalExplode
 		EmptyWeapon: TemporalExplode
 	DetectCloaked@UNDERBRIDGE:
-		CloakTypes: Underbridge
+		DetectionTypes: Underbridge
 		Range: 6c0
 	-Targetable@HACKCAPTURABLE:
 	DelayedWeaponAttachable@C4:
@@ -2700,9 +2686,8 @@
 ^DefenseTD:
 	Inherits@1: ^Defense
 	RenderSprites:
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 	ActorPreviewPlaceBuildingPreview:
-		OverridePalette: placebuildingtd
 
 ^BuildingPlug:
 	Interactable:
@@ -2712,7 +2697,6 @@
 		UndeploySounds: cashturn.aud
 	SequencePlaceBuildingPreview:
 		Sequence: place
-		SequencePalette: placebuildingtd
 		Palette: terrain
 	KillsSelf:
 		RemoveInstead: true
@@ -2725,7 +2709,7 @@
 	Inherits@3: ^Cloakable
 	Inherits@handicaps: ^PlayerHandicaps
 	Interactable:
-		Bounds: 24,24
+		Bounds: 1024, 1024
 	OwnerLostAction:
 		Action: ChangeOwner
 	Building:
@@ -2735,7 +2719,6 @@
 		TerrainTypes: Clear,Road
 		UndeploySounds: cashturn.aud
 	FootprintPlaceBuildingPreview:
-		LineBuildSegmentPalette: placelinesegment
 	RequiresBuildableArea:
 		AreaTypes: building
 		Adjacent: 7
@@ -2852,7 +2835,7 @@
 	MapEditorData:
 		Categories: Decoration
 	Interactable:
-		Bounds: 24,24
+		Bounds: 1024, 1024
 
 ^CivBuilding:
 	Inherits: ^TechBuilding
@@ -3042,7 +3025,7 @@
 		RemoveInstead: True
 		RequiresCondition: salvaged
 	WithColoredOverlay@IDISABLE:
-		Palette: disabled
+		Color: 000000b4
 	Targetable:
 		TargetTypes: Ground, Husk, NoAutoTarget
 		RequiresForceFire: true
@@ -3172,7 +3155,7 @@
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 1
 	Interactable:
-		Bounds: 96,48
+		Bounds: 4096, 2048
 	ShakeOnDeath:
 		Duration: 15
 		Intensity: 6
@@ -3213,14 +3196,14 @@
 ^Crate:
 	Inherits@1: ^SpriteActor
 	Interactable:
-		Bounds: 24,24
+		Bounds: 1024, 1024
 	HiddenUnderFog:
 	Tooltip:
 		Name: Crate
 		GenericName: Crate
 		ShowOwnerRow: false
 	Crate:
-		Lifetime: 180
+		Duration: 4500
 		TerrainTypes: Clear, Rough, Road, Ore, Beach, Tiberium, BlueTiberium, Water
 	RenderSprites:
 		Palette: effect
@@ -3247,7 +3230,7 @@
 ^Mine:
 	Inherits: ^SpriteActor
 	Interactable:
-		Bounds: 24,24
+		Bounds: 1024, 1024
 	WithSpriteBody:
 	HiddenUnderFog:
 	Mine:
@@ -3264,7 +3247,7 @@
 		CloakSound:
 		UncloakSound:
 		Palette:
-		CloakTypes: Mine
+		DetectionTypes: Mine
 		InitialDelay: 0
 	Tooltip:
 		Name: Mine
@@ -3290,7 +3273,7 @@
 ^DisableOnLowPower:
 	WithColoredOverlay@IDISABLE:
 		RequiresCondition: disabled && !(invulnerability || empdisable || being-warped)
-		Palette: disabled
+		Color: 000000b4
 	GrantConditionOnPowerState@LOWPOWER:
 		Condition: lowpower
 		ValidPowerStates: Low, Critical
@@ -3301,7 +3284,7 @@
 ^DisableOnLowPowerOrForceDisabled:
 	WithColoredOverlay@IDISABLE:
 		RequiresCondition: disabled && !(invulnerability || empdisable || forceshield || being-warped)
-		Palette: disabled
+		Color: 000000b4
 	GrantConditionOnPowerState@LOWPOWER:
 		Condition: lowpower
 		ValidPowerStates: Low, Critical
@@ -3375,7 +3358,7 @@
 ^DisabledByPowerOutage:
 	WithColoredOverlay@IDISABLE:
 		RequiresCondition: disabled && !forceshield && !invulnerability && !empdisable
-		Palette: disabled
+		Color: 000000b4
 	ExternalCondition:
 		Condition: forcedisabled
 	TimedConditionBar@FSDISABLE:
@@ -3408,7 +3391,7 @@
 		Prerequisites: radar-active
 	WithColoredOverlay@DRONEDISABLE:
 		RequiresCondition: !radarenabled || empdisable
-		Palette: disabled
+		Color: 000000b4
 	WithDecoration@DRONEDISABLE:
 		Image: nosignal
 		Sequence: offline
@@ -3455,7 +3438,7 @@
 	Inherits@2: ^SpriteActor
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	RenderSprites:
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 	Huntable:
 	Health:
 		HP: 10000
@@ -3465,12 +3448,12 @@
 		Range: 6c0
 	Mobile:
 		Voice: Move
-		Speed: 56
+		Speed: 60
 		Locomotor: chem
 	SelectionDecorations:
 	WithSpriteControlGroupDecoration:
 	Selectable:
-		Bounds: 24,24
+		Bounds: 1024, 1024
 	Targetable:
 		TargetTypes: Ground, Infantry, Creep
 	AutoTarget:
@@ -3490,6 +3473,7 @@
 		MuzzlePalette: tdeffect-ignore-lighting-alpha85
 	AttackFrontal:
 		Voice: Attack
+		FacingTolerance: 0
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
 	WithSpriteBody:

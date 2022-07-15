@@ -195,7 +195,7 @@ namespace OpenRA.Mods.CA.Traits
 			overlay.IsDecoration = false;
 
 			var anim = new AnimationWithOffset(overlay,
-				() => body.LocalToWorld(Info.OverlayOffset.Rotate(body.QuantizeOrientation(self, self.Orientation))),
+				() => body.LocalToWorld(Info.OverlayOffset.Rotate(body.QuantizeOrientation(self.Orientation))),
 				() => IsTraitDisabled,
 				p => RenderUtils.ZOffsetFromCenter(self, p, 1));
 

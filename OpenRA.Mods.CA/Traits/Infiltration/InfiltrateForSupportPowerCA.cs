@@ -16,6 +16,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.Cnc.Traits
 {
+	[Desc("CA version makes the spawned proxy actor inherit the faction of the infiltrated actor.")]
 	class InfiltrateForSupportPowerCAInfo : TraitInfo
 	{
 		[ActorReference]

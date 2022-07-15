@@ -17,10 +17,13 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Produces an actor without using the standard production queue.")]
+	[Desc("Produces an actor without using the standard production queue.",
+		"CA version allows actors to be produced immediately when charged.",
+		"Also removes sorting of the producing actor as this can cause a crash when multiple exist.")]
 	public class ProduceActorPowerCAInfo : SupportPowerInfo
 	{
 		[ActorReference]
+		[FieldLoader.Require]
 		[Desc("Actors to produce.")]
 		public readonly string[] Actors = null;
 

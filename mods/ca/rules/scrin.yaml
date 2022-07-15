@@ -2,7 +2,7 @@
 ^ScrinBuilding:
 	Inherits@1: ^Building
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	SpawnActorOnDeath:
 		Actor: s1
 	SpawnActorsOnSell:
@@ -121,13 +121,13 @@ VEHICLES.SCRIN:
 ^ScrinInfantry:
 	Inherits: ^Soldier
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Voiced:
 		VoiceSet: ScrinInfantryVoice
 	Targetable:
 		TargetTypes: Ground, Infantry, TNT
 	WithDeathAnimation:
-		DeathSequencePalette: overlayplayerscrin
+		DeathSequencePalette: playerscrin
 		CrushedSequencePalette: scrin
 	-GrantConditionOnTerrain@ONTIB:
 	-GrantStackingCondition@TIBEXPOSED:
@@ -215,6 +215,7 @@ S1:
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 
@@ -241,7 +242,7 @@ S2:
 	Health:
 		HP: 7000
 	Mobile:
-		Speed: 80
+		Speed: 92
 	Armament@PRIMARY:
 		Weapon: RavagerShards
 		LocalOffset: 0,-100,250, 0,100,250
@@ -250,6 +251,7 @@ S2:
 		Weapon: RavagerShards
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	WithInfantryBody:
@@ -279,7 +281,7 @@ S3:
 	Health:
 		HP: 3500
 	Mobile:
-		Speed: 38
+		Speed: 41
 	Armament@PRIMARY:
 		Weapon: DisintegratorBeamAA
 		LocalOffset: 150,0,400
@@ -295,6 +297,7 @@ S3:
 		PauseOnCondition: !ammo
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	AutoTarget:
@@ -324,7 +327,7 @@ S4:
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
 		Attributes: • Special Ability: Teleport (with upgrade)
 	Mobile:
-		Speed: 49
+		Speed: 54
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -343,6 +346,7 @@ S4:
 		Weapon: IntruderDiscs
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	PortableChronoCA:
@@ -355,8 +359,8 @@ S4:
 		Condition: blink-upgrade
 		Prerequisites: blink.upgrade
 	WithColoredOverlay@BLINKFLASH:
+		Color: ffffff80
 		RequiresCondition: blink
-		Palette: highlight
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 
@@ -405,6 +409,7 @@ S6:
 	AttackFrontal:
 		Armaments: primary, secondary
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	Voiced:
 		VoiceSet: AssimilatorVoice
 	Targetable:
@@ -427,7 +432,7 @@ FEED:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
-		Speed: 66
+		Speed: 72
 	RevealsShroud:
 		Range: 5c0
 	Harvester:
@@ -513,6 +518,7 @@ SMEDI:
 		ForceTargetRelationships: None
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0		
 	AttackSoundsCA@HEALSOUND:
 		Sounds: heal2.aud
 	WithInfantryBody:
@@ -537,11 +543,11 @@ GSCR:
 	Inherits: BRUT
 	RenderSprites:
 		Image: gscr
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Voiced:
 		VoiceSet: GiantScrinVoice
 	WithDeathAnimation:
-		DeathSequencePalette: overlayplayerscrin
+		DeathSequencePalette: playerscrin
 	-Buildable:
 	Tooltip:
 		Name: Brutalizer
@@ -562,9 +568,9 @@ GSCR.Mutating:
 		Actor: gscr
 	RenderSprites:
 		Image: gscr
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	WithDeathAnimation:
-		DeathSequencePalette: overlayplayerscrin
+		DeathSequencePalette: playerscrin
 	Tooltip:
 		Name: Brutalizer
 
@@ -598,7 +604,7 @@ MAST:
 	Health:
 		HP: 11000
 	Mobile:
-		Speed: 56
+		Speed: 60
 	RevealsShroud:
 		Range: 6c0
 	Armament@PRIMARY:
@@ -643,6 +649,7 @@ MAST:
 		PauseOnCondition: being-warped
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	-Crushable:
@@ -682,10 +689,10 @@ MAST:
 HARV.Scrin:
 	Inherits: HARV.TD
 	Selectable:
-		DecorationBounds: 42,42
+		DecorationBounds: 1792, 1792
 	RenderSprites:
 		Image: harv.scrin
-		PlayerPalette: overlayplayer
+		PlayerPalette: player
 	WithShadow:
 		Offset: 43, 255, 0
 		ZOffset: -256
@@ -725,7 +732,7 @@ GUNW:
 	Tooltip:
 		Name: Gun Walker
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -733,7 +740,7 @@ GUNW:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 90
+		Speed: 100
 		TurnSpeed: 38
 	RevealsShroud:
 		MinRange: 4c0
@@ -774,13 +781,13 @@ SEEK:
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Valued:
 		Cost: 750
 	Tooltip:
 		Name: Seeker
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
@@ -794,7 +801,7 @@ SEEK:
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
 		Attributes: • Can detect cloaked units and mines.\n• Can traverse water
 	Mobile:
-		Speed: 95
+		Speed: 113
 		Locomotor: lighthover
 	Health:
 		HP: 22000
@@ -824,7 +831,7 @@ SEEK:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 5c0
-		CloakTypes: Cloak, Thief, AirCloak, Mine
+		DetectionTypes: Cloak, Thief, AirCloak, Mine
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -847,13 +854,13 @@ LACE:
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Valued:
 		Cost: 650
 	Tooltip:
 		Name: Lacerator
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
@@ -868,7 +875,7 @@ LACE:
 		Attributes: • Can detect cloaked units and mines.\n• Can traverse water
 	Mobile:
 		TurnSpeed: 40
-		Speed: 126
+		Speed: 144
 		Locomotor: lighthover
 	Health:
 		HP: 13000
@@ -901,7 +908,7 @@ LACE:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		CloakTypes: Cloak, Thief, AirCloak, Mine
+		DetectionTypes: Cloak, Thief, AirCloak, Mine
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -922,7 +929,7 @@ INTL:
 	Inherits@TRANSPORT: ^Transport
 	Inherits@HOVERTRAIL: ^HoverTrail
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -940,7 +947,7 @@ INTL:
 		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
 		Attributes: • Can traverse water
 	Mobile:
-		Speed: 56
+		Speed: 60
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 		TurnSpeed: 512
 		Locomotor: lighthover
@@ -963,7 +970,7 @@ INTL:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5
@@ -1025,13 +1032,13 @@ CORR:
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Valued:
 		Cost: 1100
 	Tooltip:
 		Name: Corrupter
 	Selectable:
-		DecorationBounds: 36,36,0,-3
+		DecorationBounds: 1536, 1536, 0, -128
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
@@ -1044,7 +1051,7 @@ CORR:
 		Strengths: • Strong vs Infantry, Buildings, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Mobile:
-		Speed: 66
+		Speed: 72
 		TurnSpeed: 16
 	Health:
 		HP: 42000
@@ -1061,6 +1068,7 @@ CORR:
 		LocalOffset: 750,0,100
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
 	Explodes:
 		Weapon: CorrupterExplode
 		EmptyWeapon: CorrupterExplode
@@ -1082,13 +1090,13 @@ LCHR:
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Valued:
 		Cost: 900
 	Tooltip:
 		Name: Leecher
 	Selectable:
-		DecorationBounds: 36,36,0,-3
+		DecorationBounds: 1536, 1536, 0, -128
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
@@ -1102,7 +1110,7 @@ LCHR:
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 		Attributes: • Regenerates health while dealing damage\n• Disables power plants and radars\n• Slows vehicles & cyborgs
 	Mobile:
-		Speed: 80
+		Speed: 92
 		TurnSpeed: 24
 	Health:
 		HP: 28000
@@ -1122,6 +1130,7 @@ LCHR:
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithMoveAnimation:
@@ -1138,13 +1147,13 @@ STCR:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Valued:
 		Cost: 1350
 	Tooltip:
 		Name: Stormcrawler
 	Selectable:
-		DecorationBounds: 36,36,0,-3
+		DecorationBounds: 1536, 1536, 0, -128
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
@@ -1157,7 +1166,7 @@ STCR:
 		Strengths: • Strong vs Defenses, Buildings
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
 	Mobile:
-		Speed: 43
+		Speed: 46
 		TurnSpeed: 16
 	Health:
 		HP: 94000
@@ -1202,7 +1211,7 @@ DEVO:
 	Tooltip:
 		Name: Devourer Tank
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -1211,7 +1220,7 @@ DEVO:
 		Type: Light
 	Mobile:
 		TurnSpeed: 512
-		Speed: 66
+		Speed: 72
 		Locomotor: lighthover
 	Hovers:
 		BobDistance: -25
@@ -1260,7 +1269,7 @@ DARK:
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 221
@@ -1275,7 +1284,7 @@ DARK:
 	Tooltip:
 		Name: Darkener Tank
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -1284,7 +1293,7 @@ DARK:
 		Type: Heavy
 	Mobile:
 		TurnSpeed: 16
-		Speed: 56
+		Speed: 60
 		Locomotor: lighthover
 	RevealsShroud:
 		MinRange: 4c0
@@ -1330,13 +1339,13 @@ RUIN:
 	Inherits@RESCONV: ^ResourceConversion
 	Inherits@HOVERTRAIL: ^HoverTrail
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Valued:
 		Cost: 1250
 	Tooltip:
 		Name: Ruiner
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
@@ -1350,7 +1359,7 @@ RUIN:
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
 		Attributes: • Can traverse water
 	Mobile:
-		Speed: 66
+		Speed: 72
 		TurnSpeed: 512
 		Locomotor: lighthover
 	Health:
@@ -1426,13 +1435,13 @@ ATMZ:
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Valued:
 		Cost: 1250
 	Tooltip:
 		Name: Atomizer
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
@@ -1446,7 +1455,7 @@ ATMZ:
 		Weaknesses: • Weak vs Infantry, Buildings
 		Attributes: • Targets take damage over time\n• Targets have reduced rate of fire\n• Effect spreads when affected targets die\n• Can traverse water
 	Mobile:
-		Speed: 66
+		Speed: 72
 		Locomotor: lighthover
 	Health:
 		HP: 20000
@@ -1507,7 +1516,7 @@ TPOD:
 	Valued:
 		Cost: 1800
 	Selectable:
-		Bounds: 30,52,0,-10
+		Bounds: 1280, 2218, 0, -426
 	Tooltip:
 		Name: Annihilator Tripod
 	UpdatesPlayerStatistics:
@@ -1518,7 +1527,7 @@ TPOD:
 		Type: Heavy
 	Mobile:
 		Locomotor: heavytracked
-		Speed: 43
+		Speed: 46
 		TurnSpeed: 512
 	Passenger:
 		Weight: 3
@@ -1540,10 +1549,6 @@ TPOD:
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
 		FireDelay: 20
-	Armament@SOUND:
-		Name: sound
-		Weapon: TripodLaserSound
-		FireDelay: 20
 	WithMuzzleOverlay:
 	Carryable:
 		LocalOffset: 0,0,700
@@ -1555,7 +1560,6 @@ TPOD:
 		Offset: 0,0,0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
-		Armaments: primary, secondary, sound
 	WithSpriteTurret:
 	WithMoveAnimation:
 	DeathSounds:
@@ -1581,7 +1585,7 @@ RPTP:
 	TooltipExtras:
 		Attributes: • Weapons empowered by Tiberium
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Valued:
 		Cost: 2200
 	Tooltip:
@@ -1591,7 +1595,7 @@ RPTP:
 	SpawnActorOnDeath:
 		Actor: RPTP.Husk
 	AttackTurreted:
-		Armaments: primary, secondary, primary-charged, secondary-charged, sound, sound-charged
+		Armaments: primary, secondary, primary-charged, secondary-charged
 	Armament@PRIMARY:
 		Weapon: ReaperLaser
 		LocalOffset: 700,550,1000
@@ -1601,10 +1605,6 @@ RPTP:
 		LocalOffset: 700,-550,1000
 		FireDelay: 15
 		PauseOnCondition: (ammo || charged-fire) && !uncharged-fire
-	Armament@SOUND:
-		Weapon: ReaperLaserSound
-		FireDelay: 15
-		PauseOnCondition: (ammo || charged-fire) && !uncharged-fire
 	Armament@PRIMARYCHARGED:
 		Name: primary-charged
 		Weapon: ReaperLaserCharged
@@ -1612,6 +1612,8 @@ RPTP:
 		PauseOnCondition: !ammo || uncharged-fire
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
+		AmmoUsage: 2
+		RequiresCondition: !resconv-upgrade
 	Armament@SECONDARYCHARGED:
 		Name: secondary-charged
 		Weapon: ReaperLaserChargedReversed
@@ -1620,24 +1622,25 @@ RPTP:
 		PauseOnCondition: !ammo || uncharged-fire
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
-	Armament@SOUNDCHARGED:
-		Name: sound-charged
-		Weapon: ReaperLaserChargedSound
-		FireDelay: 15
-		PauseOnCondition: !ammo || uncharged-fire
-	Armament@PRIMARYCHARGEDEXTAMMO:
+		AmmoUsage: 2
+		RequiresCondition: !resconv-upgrade
+	Armament@PRIMARYCHARGEDUPG:
 		Name: primary-charged
-		Weapon: ReaperLaserChargedDummy
+		Weapon: ReaperLaserCharged
 		LocalOffset: 700,550,1000
 		PauseOnCondition: !ammo || uncharged-fire
-		RequiresCondition: !resconv-upgrade
-	Armament@SECONDARYCHARGEDEXTAMMO:
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+		RequiresCondition: resconv-upgrade
+	Armament@SECONDARYCHARGEDUPG:
 		Name: secondary-charged
-		Weapon: ReaperLaserChargedDummy
+		Weapon: ReaperLaserChargedReversed
 		LocalOffset: 700,-550,1000
 		FireDelay: 15
 		PauseOnCondition: !ammo || uncharged-fire
-		RequiresCondition: !resconv-upgrade
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+		RequiresCondition: resconv-upgrade
 	AmmoPool@RESCONV:
 		Ammo: 140
 		Armaments: primary-charged, secondary-charged
@@ -1649,7 +1652,7 @@ RPTP:
 		RequiresCondition: on-resource && (ammo < 140 || charged-fire)
 	GrantConditionOnAttack@PRIMARY:
 		RevokeDelay: 50
-	GrantConditionOnAttack@PRIMARYCHARGED
+	GrantConditionOnAttack@PRIMARYCHARGED:
 		RevokeDelay: 50
 	WithIdleOverlay@RESCONVTIB:
 		Offset: 0,0,200
@@ -1675,20 +1678,20 @@ SMCV:
 		Weaknesses: • Unarmed
 		Attributes: • Special Ability: Deploy into Colony Platform
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Valued:
 		Cost: 3000
 	Tooltip:
 		Name: Colony Ship
 	Selectable:
 		Priority: 4
-		Bounds: 42,42
+		Bounds: 1792, 1792
 	Health:
 		HP: 75000
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 51
+		Speed: 54
 		Locomotor: lighthover
 		TurnSpeed: 512
 	RevealsShroud:
@@ -1799,10 +1802,17 @@ STMR:
 	SpawnActorOnDeath@EMP:
 		Actor: STMR.Husk.EMP
 		RequiresCondition: empdisable && !being-warped
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+		RequiresCondition: enable-smoke
 	Selectable:
-		DecorationBounds: 36,28
+		DecorationBounds: 1536, 1194
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
 	-EjectOnDeath:
@@ -1825,7 +1835,7 @@ STMR:
 		SelectionBarColor: ff00ff
 		RequiresCondition: !srep-rearm || airborne
 	DetectCloaked:
-		CloakTypes: Underwater
+		DetectionTypes: Underwater
 		Range: 8c0
 	Rearmable:
 		RearmActors: srep
@@ -1835,6 +1845,8 @@ STMR:
 		Delay: 200
 		Count: 15
 		RequiresCondition: srep-rearm && !airborne
+	GrantConditionOnDamageState@SmokeTrail:
+		Condition: enable-smoke
 
 ENRV:
 	Inherits: ^Helicopter
@@ -1914,10 +1926,17 @@ ENRV:
 	SpawnActorOnDeath@EMP:
 		Actor: ENRV.Husk.EMP
 		RequiresCondition: empdisable && !being-warped
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+		RequiresCondition: enable-smoke
 	Selectable:
-		DecorationBounds: 36,36
+		DecorationBounds: 1536, 1536
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
 	-EjectOnDeath:
@@ -1947,6 +1966,8 @@ ENRV:
 		Delay: 250
 		Count: 5
 		RequiresCondition: srep-rearm && !airborne
+	GrantConditionOnDamageState@SmokeTrail:
+		Condition: enable-smoke
 
 DEVA:
 	Inherits: ^Helicopter
@@ -2000,8 +2021,8 @@ DEVA:
 		AltitudeVelocity: 0c50
 		CanForceLand: False
 	Selectable:
-		Bounds: 36,28,0,2
-		DecorationBounds: 40,40,0,1
+		Bounds: 1536, 1194, 0, 85
+		DecorationBounds: 1706, 1706, 0, 42
 	Explodes:
 		Weapon: KirovExplode
 		RequiresCondition: !airborne
@@ -2094,8 +2115,8 @@ PAC:
 		AltitudeVelocity: 0c50
 		CanForceLand: False
 	Selectable:
-		Bounds: 36,28,0,2
-		DecorationBounds: 40,40,0,1
+		Bounds: 1536, 1194, 0, 85
+		DecorationBounds: 1706, 1706, 0, 42
 	Explodes:
 		Weapon: KirovExplode
 		RequiresCondition: !airborne
@@ -2244,9 +2265,15 @@ INVA:
 		-RequiresCondition:
 	-Selectable:
 	-ActorLostNotification:
-	SmokeTrailWhenDamaged:
-		Offset: -253,0,171
-		Interval: 2
+	LeavesTrails:
+		Offsets: -253,0,171
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+		RequiresCondition: enable-smoke
 	CarrierSlave:
 		LandingDistance: 8c0
 	Contrail@1:
@@ -2264,6 +2291,8 @@ INVA:
 	Targetable@AIRBORNE:
 		RequiresCondition: airborne
 		TargetTypes: ICBM
+	GrantConditionOnDamageState@SmokeTrail:
+		Condition: enable-smoke
 
 MSHP:
 	Inherits: ^Helicopter
@@ -2283,7 +2312,7 @@ MSHP:
 		Weaknesses: • Cannot attack Aircraft\n• Long charge time before firing anti-structure weapon\n• Cannot move while firing
 		Attributes: • Maximum 1 can be built\n• Can create wormholes
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Voiced:
 		VoiceSet: MothershipVoice
 	Valued:
@@ -2329,8 +2358,8 @@ MSHP:
 		CanForceLand: False
 		Voice: Move
 	Selectable:
-		Bounds: 42,42,0,2
-		DecorationBounds: 48,52,0,1
+		Bounds: 1792, 1792, 0, 85
+		DecorationBounds: 2048, 2218, 0, 42
 	Explodes:
 		Weapon: KirovExplode
 		RequiresCondition: !airborne
@@ -2358,7 +2387,7 @@ MSHP:
 		ChargeTicks: 200
 		PauseOnCondition: being-warped
 		OverlaySequence: wormholebeam
-		OverlayPalette: overlayplayerscrin
+		OverlayPalette: playerscrin
 		IsPlayerPalette: true
 		ShowSelectionBarWhenEmpty: false
 	ExternalCondition@PRODUCED:
@@ -2422,7 +2451,7 @@ SMCV.Husk:
 	Tooltip:
 		Name: Husk (Colony Ship)
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 		Image: smcv.destroyed
 
 HARV.Scrin.Husk:
@@ -2441,7 +2470,7 @@ GUNW.Husk:
 		Name: Husk (Gun Walker)
 	RenderSprites:
 		Image: gunw.destroyed
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 
 SEEK.Husk:
 	Inherits: ^Husk
@@ -2451,7 +2480,7 @@ SEEK.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: seek.destroyed
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
@@ -2462,7 +2491,7 @@ INTL.Husk:
 		Name: Husk (Interloper)
 	RenderSprites:
 		Image: intl.destroyed
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 
 CORR.Husk:
 	Inherits: ^Husk
@@ -2470,7 +2499,7 @@ CORR.Husk:
 		Name: Husk (Corrupter)
 	RenderSprites:
 		Image: corr.destroyed
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 
 DEVO.Husk:
 	Inherits: ^Husk
@@ -2478,7 +2507,7 @@ DEVO.Husk:
 		Name: Husk (Devourer)
 	RenderSprites:
 		Image: devo.destroyed
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 
 RUIN.Husk:
 	Inherits: ^Husk
@@ -2486,7 +2515,7 @@ RUIN.Husk:
 		Name: Husk (Ruiner)
 	RenderSprites:
 		Image: ruin.destroyed
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 
 TPOD.Husk:
 	Inherits: ^Husk
@@ -2496,7 +2525,7 @@ TPOD.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: tpod.destroyed
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 
 RPTP.Husk:
 	Inherits: ^Husk
@@ -2506,7 +2535,7 @@ RPTP.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: rptp.destroyed
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 
 STMR.Husk:
 	Inherits: ^PlaneHusk
@@ -2515,9 +2544,14 @@ STMR.Husk:
 	Aircraft:
 		TurnSpeed: 16
 		Speed: 157
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	Contrail@1:
 		Offset: -250,-250,100
 		UsePlayerColor: true
@@ -2534,7 +2568,7 @@ STMR.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: stmr
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 
 STMR.Husk.EMP:
 	Inherits: STMR.Husk
@@ -2550,9 +2584,14 @@ ENRV.Husk:
 	FallsToEarth:
 		MaximumSpinSpeed: 20
 		Velocity: 86
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	Contrail@1:
 		Offset: -750,-200,300
 		UsePlayerColor: true
@@ -2569,7 +2608,7 @@ ENRV.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: enrv
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 
 ENRV.Husk.EMP:
 	Inherits: ENRV.Husk
@@ -2700,7 +2739,7 @@ MSHP.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: mshp
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	SpawnActorOnDeath:
 		Actor: MSHP.Husk.Ground
 	WithIdleOverlay@RING:
@@ -2713,7 +2752,7 @@ MSHP.Husk.Ground:
 	Inherits@SHRAPNEL: ^ThrowsShrapnelBig
 	RenderSprites:
 		Image: mshp
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Tooltip:
 		Name: Husk (Mothership)
 	KillsSelf:
@@ -3024,8 +3063,8 @@ PROC.SCRIN:
 		RequiresSelection: true
 		PipCount: 17
 	Selectable:
-		Bounds: 72,56,0,12
-		DecorationBounds: 73,72
+		Bounds: 3072, 2389, 0, 512
+		DecorationBounds: 3114, 3072
 	InfiltrateForCash:
 		Types: ThiefInfiltrate
 		Percentage: 50
@@ -3046,7 +3085,7 @@ PORT:
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^2x2Shape
 	Selectable:
-		Bounds: 48,48
+		Bounds: 2048, 2048
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 840,-256,0, 840,512,0, 210,-512,0, -71,512,0
@@ -3149,7 +3188,7 @@ WSPH:
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
 	Selectable:
-		Bounds: 72,48
+		Bounds: 3072, 2048
 	HitShape:
 		TargetableOffsets: 0,0,0, 0,1024,0, 0,-1024,0
 		Type: Rectangle
@@ -3336,8 +3375,8 @@ NERV:
 		OrderName: resourcescan
 		Icon: rescanpower
 		ChargeInterval: 7500
-		Description: Resource Scan
-		LongDesc: \nReveals the area surrounding all resources\n    on the map.
+		Name: Resource Scan
+		Description: \nReveals the area surrounding all resources\n    on the map.
 		LaunchSound: tibscan.aud
 		PauseOnCondition: disabled || empdisable || being-warped
 		EffectImage: empty
@@ -3350,9 +3389,9 @@ NERV:
 		Prerequisites: radar.harbinger, !botplayer
 		Cursor: ability
 		ChargeInterval: 7500
-		Description: Buzzer Swarm
+		Name: Buzzer Swarm
 		ActivationDelay: 1
-		LongDesc: \nSpawns a controllable swarm which damages anything nearby;\n    particularly harmful to infantry.
+		Description: \nSpawns a controllable swarm which damages anything nearby;\n    particularly harmful to infantry.
 		LaunchSound: buzzers-create.aud
 		Weapon: BuzzerSpawner
 		AirburstAltitude: 0c0
@@ -3368,9 +3407,9 @@ NERV:
 		Prerequisites: radar.harbinger, botplayer
 		Cursor: ability
 		ChargeInterval: 7500
-		Description: Buzzer Swarm (AI)
+		Name: Buzzer Swarm (AI)
 		ActivationDelay: 1
-		LongDesc: \nSpawns a controllable swarm which damages anything nearby;\n    particularly harmful to infantry.
+		Description: \nSpawns a controllable swarm which damages anything nearby;\n    particularly harmful to infantry.
 		LaunchSound: buzzers-create.aud
 		Weapon: BuzzerSpawnerAI
 		AirburstAltitude: 0c0
@@ -3386,9 +3425,9 @@ NERV:
 		Prerequisites: radar.reaper
 		Cursor: ability
 		ChargeInterval: 7500
-		Description: Storm Spike
+		Name: Storm Spike
 		ActivationDelay: 1
-		LongDesc: \nCreates a temporary Storm Column defensive structure\n    at the target location.
+		Description: \nCreates a temporary Storm Column defensive structure\n    at the target location.
 		LaunchSound: scrinbuild.aud
 		Weapon: StormSpikeSpawner
 		AirburstAltitude: 0c0
@@ -3404,9 +3443,9 @@ NERV:
 		Prerequisites: radar.traveler
 		Cursor: ability
 		ChargeInterval: 6750
-		Description: Ion Surge
+		Name: Ion Surge
 		ActivationDelay: 1
-		LongDesc: \nIncreases the movement speed of all friendly units\n    passing through the target area.
+		Description: \nIncreases the movement speed of all friendly units\n    passing through the target area.
 		LaunchSound: ionsurge.aud
 		Weapon: IonSurgeSpawner
 		AirburstAltitude: 0c0
@@ -3422,14 +3461,14 @@ NERV:
 		Icon: feedermutation
 		Prerequisites: radar.collector
 		ChargeInterval: 6000
-		Description: Feeder Mutation
+		Name: Feeder Mutation
 		Condition: feedermutation
 		Dimensions: 1, 1
 		Footprint: x
 		ValidRelationships: Ally
 		Duration: 25
 		AllowMultiple: false
-		LongDesc: \nTransforms Scrin infantry into Feeders; exploding infantry able to consume\n    resources for additional damage.
+		Description: \nTransforms Scrin infantry into Feeders; exploding infantry able to consume\n    resources for additional damage.
 		OnFireSound: feedermutation.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -3506,8 +3545,8 @@ SCRT:
 		ActivationDelay: 5
 		AirburstAltitude: 0c0
 		AllowMultiple: false
-		Description: Force Shield
-		LongDesc: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
+		Name: Force Shield
+		Description: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
 		OnFireSound: forceon.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
@@ -3521,10 +3560,10 @@ SCRT:
 		Icon: ichorpower
 		Actor: ichor.seeder
 		ChargeInterval: 6000
-		Description: Ichor Seed
+		Name: Ichor Seed
 		LifeTime: -1
 		AllowMultiple: false
-		LongDesc: \nGrows tiberium at selected location.
+		Description: \nGrows tiberium at selected location.
 		LaunchSound: ichorseed.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -3556,7 +3595,7 @@ GRAV:
 	Tooltip:
 		Name: Gravity Stabilizer
 	Selectable:
-		Bounds: 72,48
+		Bounds: 3072, 2048
 	Building:
 		Footprint: xxx xxx ===
 		Dimensions: 3,3
@@ -3609,7 +3648,7 @@ SIGN:
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Selectable:
-		Bounds: 72,48
+		Bounds: 3072, 2048
 	Building:
 		Footprint: xxx xxx ===
 		Dimensions: 3,3
@@ -3681,8 +3720,8 @@ SREP:
 		Footprint: _+_ +++ _+_
 		Dimensions: 3,3
 	Selectable:
-		Bounds: 68,34,0,3
-		DecorationBounds: 72,48
+		Bounds: 2901, 1450, 0, 128
+		DecorationBounds: 3072, 2048
 	Health:
 		HP: 80000
 	Armor:
@@ -3763,7 +3802,7 @@ SILO.SCRIN:
 	Power:
 		Amount: -10
 	Selectable:
-		Bounds: 24,24
+		Bounds: 1024, 1024
 	Explodes:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
@@ -3830,8 +3869,8 @@ MANI:
 		OrderName: suppression
 		Icon: spresspower
 		ChargeInterval: 4500
-		Description: Suppression Field
-		LongDesc: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.
+		Name: Suppression Field
+		Description: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.
 		Duration: 600
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -3851,8 +3890,8 @@ MANI:
 		OrderName: suppressionsiphon
 		Icon: spresspower
 		ChargeInterval: 4500
-		Description: Suppression Field
-		LongDesc: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.\n\nDamage dealt to affected units restores\n    the attacker's health.
+		Name: Suppression Field
+		Description: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.\n\nDamage dealt to affected units restores\n    the attacker's health.
 		Duration: 600
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -3912,9 +3951,9 @@ RIFT:
 		Icon: riftpower
 		Cursor: ability
 		ChargeInterval: 13500
-		Description: Rift
+		Name: Rift
 		ActivationDelay: 50
-		LongDesc: \nInitiate a Rift which deals heavy damage\n    over time to a large area.
+		Description: \nInitiate a Rift which deals heavy damage\n    over time to a large area.
 		Weapon: RiftInit
 		AllowMultiple: false
 		CameraActor: camera
@@ -3964,7 +4003,7 @@ PTUR:
 	Inherits: ^Defense
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 60
@@ -3982,7 +4021,7 @@ PTUR:
 	Tooltip:
 		Name: Plasma Cannon
 	Selectable:
-		DecorationBounds: 24,28,0,-6
+		DecorationBounds: 1024, 1194, 0, -256
 	Building:
 	Health:
 		HP: 34000
@@ -4026,7 +4065,7 @@ SHAR:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetAirICBM
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 90
@@ -4042,7 +4081,7 @@ SHAR:
 	Tooltip:
 		Name: Shard Launcher
 	Selectable:
-		DecorationBounds: 24,44,0,-11
+		DecorationBounds: 1024, 1877, 0, -469
 	Health:
 		HP: 50000
 	Armor:
@@ -4074,7 +4113,7 @@ SHAR:
 		Amount: -50
 	ClassicFacingBodyOrientation:
 	DetectCloaked:
-		CloakTypes: AirCloak
+		DetectionTypes: AirCloak
 		RequiresCondition: !(disabled || empdisable || being-warped)
 	SpawnActorOnDeath:
 		Actor: s1
@@ -4086,7 +4125,7 @@ SCOL:
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Inherits@Flash: ^WhiteFlash
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 80
@@ -4102,7 +4141,7 @@ SCOL:
 	Tooltip:
 		Name: Storm Column
 	Selectable:
-		DecorationBounds: 24,48,0,-14
+		DecorationBounds: 1024, 2048, 0, -597
 	Health:
 		HP: 45000
 	Armor:
@@ -4392,6 +4431,7 @@ BUZZ:
 	Armament@PRIMARY:
 		Weapon: BuzzerTargeting
 	AttackFrontal:
+		FacingTolerance: 0
 
 BUZZ.AI:
 	Inherits: BUZZ
@@ -4510,7 +4550,7 @@ ichor.seeder:
 	HitShape:
 	Health:
 		HP: 1
-	SeedsResourceCA:
+	SeedsResource:
 		ResourceType: Tiberium
 		Interval: 2
 	-RevealsShroud:
@@ -4522,7 +4562,7 @@ ichor.seeder:
 		UseDeathTypeSuffix: False
 		CrushedSequence: fade
 		FallbackSequence: fade
-		DeathSequencePalette: overlayplayerscrin
+		DeathSequencePalette: playerscrin
 	KillsSelf:
 		Delay: 225
 
@@ -4553,12 +4593,12 @@ WORMHOLE:
 	Tooltip:
 		Name: Wormhole
 	RenderSprites:
-		PlayerPalette: overlayplayerscrin
+		PlayerPalette: playerscrin
 	WithSpriteBody:
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 1
 	Selectable:
-		Bounds: 32,32
+		Bounds: 1365, 1365
 	HiddenUnderFog:
 		Type: CenterPosition
 	HitShape:
