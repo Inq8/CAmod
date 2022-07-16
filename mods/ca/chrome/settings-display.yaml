@@ -195,10 +195,22 @@ Container@DISPLAY_PANEL:
 									Height: 20
 									Font: Regular
 									Text: Pause Menu Background
-
-						Container@PAUSE_SHELLMAP_CHECKBOX_CONTAINER:
+						Container@HIDE_REPLAY_CHAT_CHECKBOX_CONTAINER:
 							X: PARENT_RIGHT / 2 + 10
-							Width: PARENT_RIGHT / 2 - 20
+							Width: PARENT_RIGHT / 2 - 10
+							Children:
+								Checkbox@HIDE_REPLAY_CHAT_CHECKBOX:
+									Width: PARENT_RIGHT
+									Height: 20
+									Font: Regular
+									Text: Hide Chat in Replays
+				Container@ROW:
+					Width: PARENT_RIGHT - 24
+					Height: 20
+					Children:
+						Container@SELECTIONTOOLTIP_CHECKBOX_CONTAINER:
+							X: 10
+							Width: PARENT_RIGHT / 2 - 10
 							Children:
 								Checkbox@SELECTIONTOOLTIP_CHECKBOX:
 									Width: PARENT_RIGHT
