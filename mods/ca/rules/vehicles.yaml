@@ -62,7 +62,7 @@ KATY:
 		Queue: Vehicle
 		BuildPaletteOrder: 61
 		IconPalette: chrometd
-		Prerequisites: ~vehicles.soviet, ~!v2.upgrade, ~techlevel.medium
+		Prerequisites: ~vehicles.soviet, ~!v2.upgrade, ~techlevel.low
 		Description: Long-range rocket artillery.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
@@ -270,7 +270,7 @@ GTNK.squad:
 		Queue: Vehicle
 		BuildAtProductionType: Paradrop
 		BuildPaletteOrder: 1000
-		Prerequisites: dome, ~vehicles.usa, ~techlevel.low
+		Prerequisites: dome, ~vehicles.usa, ~techlevel.medium
 		Description: Prepare a pair of  Grizzly Tanks for airdrop.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
@@ -972,7 +972,7 @@ ARTY:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 60
-		Prerequisites: ~vehicles.allies, ~techlevel.medium
+		Prerequisites: ~vehicles.allies, ~techlevel.low
 		Description: Long-range artillery.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
@@ -1023,7 +1023,7 @@ ARTY.nod:
 	Buildable:
 		BuildPaletteOrder: 62
 		IconPalette: chrometd
-		Prerequisites: ~vehicles.nod, ~!howi.upgrade, ~techlevel.medium
+		Prerequisites: ~vehicles.nod, ~!howi.upgrade, ~techlevel.low
 	Armament:
 		Weapon: 155mmTD
 	Selectable:
@@ -1189,7 +1189,7 @@ SPEC:
 		Image: spec
 	Buildable:
 		BuildPaletteOrder: 241
-		Prerequisites: tmpl, ~vehicles.shadow, ~techlevel.medium
+		Prerequisites: tmpl, ~vehicles.shadow, ~techlevel.high
 		Description: Long-range stealth artillery.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
@@ -1334,7 +1334,7 @@ HARV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 10
-		Prerequisites: anyrefinery, ~vehicles.ra, ~!charv.upgrade, ~techlevel.infonly
+		Prerequisites: anyrefinery, ~vehicles.ra, ~!charv.upgrade, ~techlevel.low
 		Description: Collects Ore, Gems and Tiberium for processing.
 	TooltipExtras:
 		Weaknesses: • Unarmed
@@ -1471,7 +1471,7 @@ MCV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 500
-		Prerequisites: vehicles.mcv, ~vehicles.ra, ~techlevel.medium
+		Prerequisites: vehicles.mcv, ~vehicles.ra, ~techlevel.low
 		Description: Deploys into another Construction Yard.
 		BuildDurationModifier: 50
 	TooltipExtras:
@@ -1681,7 +1681,7 @@ APC:
 RAPC:
 	Inherits: APC
 	Buildable:
-		Prerequisites: ~vehicles.allies, ~rapc.upgrade, ~techlevel.low
+		Prerequisites: ~vehicles.allies, ~rapc.upgrade, ~techlevel.medium
 		Description: Tough infantry transport that fires high explosive shells.
 	Valued:
 		Cost: 800
@@ -1749,7 +1749,7 @@ RAPC.AI:
 	RenderSprites:
 		Image: RAPC
 	Buildable:
-		Prerequisites: ~botplayer, ~vehicles.allies, ~rapc.upgrade, ~techlevel.low
+		Prerequisites: ~botplayer, ~vehicles.allies, ~rapc.upgrade, ~techlevel.medium
 	Cargo:
 		InitialUnits: E1,E1,E1,E3,E3
 
@@ -1759,7 +1759,7 @@ MNLY:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 440
-		Prerequisites: repair, ~techlevel.medium, ~vehicles.human
+		Prerequisites: repair, ~techlevel.low, ~vehicles.human
 		Description: Lays mines to destroy unwary enemy units.
 	TooltipExtras:
 		Weaknesses: • Unarmed
@@ -1988,7 +1988,7 @@ MSG:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 385
-		Prerequisites: anyradar, ~vehicles.shadow, ~techlevel.high
+		Prerequisites: anyradar, ~vehicles.shadow, ~techlevel.medium
 		Description: Support unit that projects a cloaking field.
 	TooltipExtras:
 		Weaknesses: • Unarmed
@@ -2065,7 +2065,7 @@ TTRA:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 235
-		Prerequisites: structures.tsla, stek, ~vehicles.soviet, ~techlevel.medium
+		Prerequisites: structures.tsla, stek, ~vehicles.soviet, ~techlevel.high
 		Description: Half-track with mounted Tesla Coil.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Heavy Armor, Light Armor
@@ -2381,7 +2381,7 @@ AMCV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 501
-		Prerequisites: vehicles.mcv, ~vehicles.td, ~techlevel.infonly
+		Prerequisites: vehicles.mcv, ~vehicles.td, ~techlevel.low
 		IconPalette: chrometd
 		Description: Deploys into another Construction Yard.
 		BuildDurationModifier: 50
@@ -2503,7 +2503,7 @@ HMMV.TOW:
 		Image: hmmv
 	Buildable:
 		Description: Fast scout & anti-infantry vehicle\n  with anti-tank missile launcher.
-		Prerequisites: ~vehicles.hmmv, ~tow.upgrade, ~techlevel.low
+		Prerequisites: ~vehicles.hmmv, ~tow.upgrade, ~techlevel.high
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2602,7 +2602,7 @@ GDRN.TOW:
 	RenderSprites:
 		Image: gdrn
 	Buildable:
-		Prerequisites: ~vehicles.arc, ~tow.upgrade, ~techlevel.low
+		Prerequisites: ~vehicles.arc, ~tow.upgrade, ~techlevel.high
 	Valued:
 		Cost: 550
 	Tooltip:
@@ -2926,7 +2926,7 @@ VULC:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 52
-		Prerequisites: ~vehicles.gdi, ~vulcan.upgrade, ~techlevel.high
+		Prerequisites: ~vehicles.gdi, ~vulcan.upgrade, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Tough infantry transport, armed with a powerful chaingun.
 	TooltipExtras:
@@ -3043,7 +3043,7 @@ VULC.AI:
 	RenderSprites:
 		Image: VULC
 	Buildable:
-		Prerequisites: ~botplayer, ~vehicles.gdi, ~vulcan.upgrade, ~techlevel.high
+		Prerequisites: ~botplayer, ~vehicles.gdi, ~vulcan.upgrade, ~techlevel.medium
 	Cargo:
 		InitialUnits: N1,N1,N1,N2,N3
 
@@ -3223,7 +3223,7 @@ MTNK.Drone:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 36
-		Prerequisites: ~bdrone.upgrade, ~vehicles.mtnk, ~techlevel.low
+		Prerequisites: ~bdrone.upgrade, ~vehicles.mtnk, ~techlevel.high
 		IconPalette: chrometd
 		Description: Remotely piloted battle tank.
 	TooltipExtras:
@@ -3276,7 +3276,7 @@ MDRN:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 105
-		Prerequisites: anyradar, ~vehicles.arc, ~techlevel.low
+		Prerequisites: anyradar, ~vehicles.arc, ~techlevel.medium
 		Description: Hovering drone with machine gun.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -3850,7 +3850,7 @@ STNK.Nod:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 160
-		Prerequisites: anyradar, ~vehicles.nod, ~techlevel.high
+		Prerequisites: anyradar, ~vehicles.nod, ~techlevel.medium
 		Queue: Vehicle
 		IconPalette: chrometd
 		Description: Medium-range missile tank that can cloak.
@@ -4004,7 +4004,7 @@ FTNK:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 130
-		Prerequisites: anyradar, ~vehicles.ftnk, ~techlevel.low
+		Prerequisites: anyradar, ~vehicles.ftnk, ~techlevel.medium
 		Queue: Vehicle
 		IconPalette: chrometd
 		Description: Tank armed with dual short-range flamethrowers.
@@ -4054,7 +4054,7 @@ HFTK:
 		Queue: Vehicle
 		BuildPaletteOrder: 131
 		IconPalette: chrometd
-		Prerequisites: anyradar, ~vehicles.blackh, ~techlevel.low
+		Prerequisites: anyradar, ~vehicles.blackh, ~techlevel.medium
 		Description: Heavy tank armed with dual short-range flamethrowers.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings, Light Armor
@@ -4129,7 +4129,7 @@ HARV.TD:
 		GenericName: Harvester
 	Buildable:
 		BuildPaletteOrder: 12
-		Prerequisites: anyrefinery, ~vehicles.td, ~techlevel.infonly
+		Prerequisites: anyrefinery, ~vehicles.td, ~techlevel.low
 		Queue: Vehicle
 		IconPalette: chrometd
 		Description: Collects Ore, Gems and Tiberium for processing.
@@ -4292,7 +4292,7 @@ IFV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 120
-		Prerequisites: infantry.any, anyradar, ~vehicles.ifv, ~techlevel.low
+		Prerequisites: infantry.any, anyradar, ~vehicles.ifv, ~techlevel.medium
 		Description: Adaptable infantry transport.
 	Tooltip:
 		Name: Infantry Fighting Vehicle
@@ -4780,7 +4780,7 @@ IFV.AI:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 120
-		Prerequisites: anyradar, ~vehicles.allies, ~botplayer, ~techlevel.low
+		Prerequisites: anyradar, ~vehicles.allies, ~botplayer, ~techlevel.medium
 		Description: Adaptable infantry transport.
 	Tooltip:
 		Name: Infantry Fighting Vehicle
@@ -5656,7 +5656,7 @@ MSAR:
 		Queue: Vehicle
 		BuildPaletteOrder: 370
 		IconPalette: chrometd
-		Prerequisites: anyradar, ~vehicles.gdi, ~techlevel.high
+		Prerequisites: anyradar, ~vehicles.gdi, ~techlevel.medium
 		BuildDurationModifier: 50
 		Description: When deployed, detects enemies within a large radius.
 	TooltipExtras:
@@ -5745,7 +5745,7 @@ PTNK:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 230
-		Prerequisites: anyradar, ~vehicles.allies, ~!pcan.upgrade, ~techlevel.high
+		Prerequisites: anyradar, ~vehicles.allies, ~!pcan.upgrade, ~techlevel.medium
 		Description: Long-range artillery with Prism Tower derived weapon.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings, Defenses, Light Armor
@@ -5829,7 +5829,7 @@ WTNK:
 		Queue: Vehicle
 		BuildPaletteOrder: 210
 		IconPalette: chrometd
-		Prerequisites: anyradar, ~vehicles.legion, ~techlevel.high
+		Prerequisites: anyradar, ~vehicles.legion, ~techlevel.medium
 		Description: Prototype MGT-1A microwave gun tank.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses, Infantry

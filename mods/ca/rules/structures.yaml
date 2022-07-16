@@ -11,7 +11,7 @@ MSLO:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 140
-		Prerequisites: stek, ~techlevel.unrestricted, ~structures.soviet
+		Prerequisites: stek, ~structures.soviet, ~techlevel.unrestricted
 		BuildLimit: 1
 		Description: Provides an atomic bomb.
 	TooltipExtras:
@@ -602,7 +602,7 @@ TSLA:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 80
-		Prerequisites: vehicles.any, ~structures.soviet, ~techlevel.high
+		Prerequisites: vehicles.any, ~structures.soviet, ~techlevel.medium
 		Description: Advanced base defense.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -836,7 +836,7 @@ DOME:
 		Condition: jammed
 	AirstrikePower@clustermines:
 		ChargeInterval: 6000
-		Prerequisites: ~radar.france, ~techlevel.unrestricted
+		Prerequisites: ~radar.france
 		Name: Cluster Mines
 		Description: \nSends a cargo plane to drop a minefield\n    at the target location.
 		OrderName: clustermine
@@ -861,7 +861,7 @@ DOME:
 		OrderName: veilofwar
 		Icon: veilofwar
 		IconPalette: chrometd
-		Prerequisites: ~radar.england, ~techlevel.unrestricted
+		Prerequisites: ~radar.england
 		ChargeInterval: 4500
 		LifeTime: -1
 		Name: Veil of War
@@ -1000,7 +1000,7 @@ GUN:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 70
-		Prerequisites: infantry.any, ~structures.allies, ~techlevel.medium
+		Prerequisites: infantry.any, ~structures.allies, ~techlevel.low
 		Description: Basic anti-tank base defense.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor
@@ -1276,7 +1276,7 @@ ATEK:
 		Dimensions: 7, 7
 		Footprint: ___x___ __xxx__ _xxxxx_ xxxxxxx _xxxxx_ __xxx__ ___x___
 		Duration: 250
-		Prerequisites: forceshield.enabled, techlevel.high
+		Prerequisites: forceshield.enabled
 		Weapon: ForceShield
 		ActivationDelay: 5
 		AirburstAltitude: 0c0
@@ -1623,7 +1623,7 @@ PROC:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 60
-		Prerequisites: anypower, ~structures.ra, ~techlevel.infonly
+		Prerequisites: anypower, ~structures.ra
 		Description: Processes raw Tiberium, Ore\n  and Gems into credits.
 		BuildDuration: 1400
 	Valued:
@@ -1729,7 +1729,7 @@ SILO:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 35
-		Prerequisites: anyrefinery, ~structures.ra, ~techlevel.infonly
+		Prerequisites: anyrefinery, ~structures.ra
 		Description: Stores excess refined\nTiberium, Ore and Gems.
 	Valued:
 		Cost: 150
@@ -1773,7 +1773,7 @@ SILO:
 	ParatroopersPower@paratroopers:
 		OrderName: paratroopers
 		UnitType: halo.paradrop
-		Prerequisites: ~support.paratroopers, ~techlevel.low
+		Prerequisites: ~support.paratroopers
 		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: paratroopers
 		ChargeInterval: 7500
@@ -1798,7 +1798,7 @@ SILO:
 	ParatroopersPower@Russianparatroopers:
 		OrderName: stormtroopers
 		UnitType: halo.paradrop
-		Prerequisites: ~radar.russia, ~techlevel.high
+		Prerequisites: ~radar.russia
 		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: stormtroopers
 		ChargeInterval: 9000
@@ -1849,7 +1849,7 @@ SILO:
 		Prerequisite: support.parabombs
 	AirstrikePower@Russianparabombs:
 		OrderName: parabombs
-		Prerequisites: ~support.parabombs, ~techlevel.unrestricted
+		Prerequisites: ~support.parabombs
 		PauseOnCondition: empdisable || being-warped
 		Icon: parabombs
 		ChargeInterval: 7500
@@ -1871,7 +1871,7 @@ SILO:
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@CarpetBomb:
 		OrderName: carpetbomb
-		Prerequisites: ~radar.ukraine, ~techlevel.unrestricted
+		Prerequisites: ~radar.ukraine
 		PauseOnCondition: empdisable || being-warped
 		Icon: carpetbomb
 		ChargeInterval: 10500
@@ -1893,7 +1893,7 @@ SILO:
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@Iraqiparabombs:
 		OrderName: atombomb
-		Prerequisites: ~radar.iraq, ~techlevel.unrestricted
+		Prerequisites: ~radar.iraq
 		PauseOnCondition: empdisable || being-warped
 		Icon: abombair
 		ChargeInterval: 10500
@@ -1915,7 +1915,7 @@ SILO:
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@MutaBomb:
 		OrderName: mutabomb
-		Prerequisites: ~radar.yuri, ~techlevel.unrestricted
+		Prerequisites: ~radar.yuri
 		PauseOnCondition: empdisable || being-warped
 		Icon: mutabomb
 		IconPalette: scrin
@@ -1950,7 +1950,7 @@ HPAD:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 120
-		Prerequisites: radarorrepair, ~structures.ra, ~techlevel.infonly
+		Prerequisites: radarorrepair, ~structures.ra, ~techlevel.medium
 		Description: Produces and reloads helicopters.
 	Valued:
 		Cost: 500
@@ -2046,7 +2046,7 @@ HPAD:
 				SpawnDelay: 20
 				SpawnOffset: -1536,-1024,0
 				TargetOffset: 536,0,0
-		Prerequisites: ~aircraft.usa, ~techlevel.unrestricted
+		Prerequisites: ~aircraft.usa
 		Icon: strafe
 		ChargeInterval: 7500
 		Name: Strafing Run
@@ -2077,7 +2077,7 @@ AFLD:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 130
-		Prerequisites: radarorrepair, ~structures.soviet, ~techlevel.low
+		Prerequisites: radarorrepair, ~structures.soviet, ~techlevel.medium
 		Description: Produces and reloads aircraft.
 	Valued:
 		Cost: 500
@@ -2154,7 +2154,7 @@ POWR:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 10
-		Prerequisites: ~techlevel.infonly, ~structures.ra
+		Prerequisites: ~structures.ra
 		Description: Provides power for other structures.
 	Valued:
 		Cost: 300
@@ -2196,7 +2196,7 @@ APWR:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 110
-		Prerequisites: anyradar, ~techlevel.medium, ~structures.apwr
+		Prerequisites: anyradar, ~structures.apwr, ~techlevel.medium
 		Description: Provides double the power of\n  a standard Power Plant.
 	Valued:
 		Cost: 500
@@ -2326,7 +2326,7 @@ TPWR:
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Inherits: APWR
 	Buildable:
-		Prerequisites: anyradar, ~techlevel.medium, ~structures.russia
+		Prerequisites: anyradar, ~structures.russia, ~techlevel.medium
 		Description: Provides double the power of\n  a standard Power Plant.\n  Can divert half its power output to allow striking enemy targets.
 	TooltipExtras:
 		Weaknesses: • Unstable when damaged and channeling is enabled
@@ -2450,7 +2450,7 @@ STEK:
 		Dimensions: 7, 7
 		Footprint: ___x___ __xxx__ _xxxxx_ xxxxxxx _xxxxx_ __xxx__ ___x___
 		Duration: 250
-		Prerequisites: forceshield.enabled, techlevel.high
+		Prerequisites: forceshield.enabled
 		Weapon: ForceShield
 		ActivationDelay: 5
 		AirburstAltitude: 0c0
@@ -2492,7 +2492,7 @@ BARR:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 30
-		Prerequisites: anypower, ~structures.soviet, ~techlevel.infonly
+		Prerequisites: anypower, ~structures.soviet
 		Description: Trains infantry.
 	Valued:
 		Cost: 500
@@ -2594,10 +2594,10 @@ KENN:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 205
-		Prerequisites: anypower, ~structures.soviet, ~techlevel.infonly
+		Prerequisites: anypower, ~structures.soviet
 		Description: Trains Attack Dogs.
 	Valued:
-		Cost: 200
+		Cost: 100
 	Tooltip:
 		Name: Kennel
 	-GivesBuildableArea:
@@ -2642,7 +2642,7 @@ TENT:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 20
-		Prerequisites: anypower, ~structures.allies, ~techlevel.infonly
+		Prerequisites: anypower, ~structures.allies
 		Description: Trains infantry.
 	Valued:
 		Cost: 500
@@ -2737,7 +2737,7 @@ FIX:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 100
-		Prerequisites: vehicles.any, ~structures.ra, ~techlevel.medium
+		Prerequisites: vehicles.any, ~structures.ra, ~techlevel.low
 		Description: Repairs vehicles for credits.
 	TooltipExtras:
 		Attributes: • Nearby helipads/airfields will repair landed aircraft
@@ -2802,7 +2802,7 @@ SBAG:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 10
-		Prerequisites: ~structures.sandbag, ~techlevel.low
+		Prerequisites: ~structures.sandbag
 		Description: • Stops infantry and light vehicles\n• Can be crushed by tanks
 	Valued:
 		Cost: 30
@@ -2828,7 +2828,7 @@ FENC:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 20
-		Prerequisites: ~structures.soviet, ~techlevel.low
+		Prerequisites: ~structures.soviet
 		Description: • Stops infantry and light vehicles\n• Can be crushed by tanks
 	Valued:
 		Cost: 30
@@ -2852,7 +2852,7 @@ CHAIN:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 20
-		Prerequisites: ~structures.nod, ~techlevel.low
+		Prerequisites: ~structures.nod
 		Description: • Stops infantry and light vehicles\n• Can be crushed by tanks
 	Valued:
 		Cost: 30
@@ -2876,7 +2876,7 @@ BRIK:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 30
-		Prerequisites: anypower, ~structures.wall, ~techlevel.medium
+		Prerequisites: anypower, ~structures.wall
 		Description: • Stops units\n• Blocks enemy fire
 	Valued:
 		Cost: 200
@@ -3091,7 +3091,7 @@ PYLE:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 20
-		Prerequisites: anypower, ~structures.gdi, ~techlevel.low
+		Prerequisites: anypower, ~structures.gdi
 		IconPalette: chrometd
 		Description: Trains infantry.
 	Valued:
@@ -3190,7 +3190,7 @@ HAND:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 20
-		Prerequisites: anypower, ~structures.nod, ~techlevel.low
+		Prerequisites: anypower, ~structures.nod
 		IconPalette: chrometd
 		Description: Trains infantry.
 	Valued:
@@ -3603,7 +3603,7 @@ NUKE:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 10
-		Prerequisites: ~structures.td, ~techlevel.low
+		Prerequisites: ~structures.td
 		IconPalette: chrometd
 		Description: Provides power for other structures.
 	Valued:
@@ -3653,7 +3653,7 @@ NUK2:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 110
-		Prerequisites: anyradar, ~structures.td, ~techlevel.low
+		Prerequisites: anyradar, ~structures.td, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Provides double the power of\n  a standard Nuclear Power Plant.
 	Valued:
@@ -3939,7 +3939,7 @@ ATWR:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 80
-		Prerequisites: anyradar, ~structures.atwr, ~techlevel.high
+		Prerequisites: anyradar, ~structures.atwr, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Advanced base defense.
 	TooltipExtras:
@@ -3988,7 +3988,7 @@ STWR:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 80
-		Prerequisites: anyradar, ~structures.zocom, ~techlevel.high
+		Prerequisites: anyradar, ~structures.zocom, ~techlevel.medium
 		Description: Advanced base defense that emits devastating sonic shockwaves.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -4046,7 +4046,7 @@ OBLI:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 80
-		Prerequisites: anyradar, ~structures.nod, ~techlevel.high
+		Prerequisites: anyradar, ~structures.nod, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Advanced experimental base defense.
 	TooltipExtras:
@@ -4188,7 +4188,7 @@ HQ:
 		TargetCircleColor: 999999AA
 	ProduceActorPower@hackercell:
 		OrderName: hackercell
-		Prerequisites: infantry.any, ~radar.legion, ~techlevel.medium
+		Prerequisites: infantry.any, ~radar.legion
 		Icon: hackercell
 		Type: Infantry
 		ChargeInterval: 7500
@@ -4201,7 +4201,7 @@ HQ:
 	DropPodsPowerCA@Zocom:
 		OrderName: droppods
 		Cursor: ability
-		Prerequisites: ~radar.zocom, techlevel.high
+		Prerequisites: ~radar.zocom
 		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: droppods
 		IconPalette: chrometd
@@ -4224,7 +4224,7 @@ HQ:
 		ChargeInterval: 6000
 		Minimum: 500
 		Maximum: 2000
-		Prerequisites: ~radar.legion, techlevel.high
+		Prerequisites: ~radar.legion
 		AllowMultiple: false
 		Name: Cash Hack
 		Description: \nSteal up to $2000 credits from a targeted enemy Refinery.
@@ -4238,7 +4238,7 @@ HQ:
 		PauseOnCondition: disabled || empdisable || being-warped
 	AirstrikePower@BlackhandFirebomb:
 		OrderName: infernobomb
-		Prerequisites: ~radar.blackh, techlevel.unrestricted
+		Prerequisites: ~radar.blackh
 		Icon: infbomb
 		IconPalette: chrometd
 		ChargeInterval: 9000
@@ -4262,7 +4262,7 @@ HQ:
 		PauseOnCondition: disabled || empdisable || being-warped
 	AirReinforcementsPower@ShadowTeam:
 		OrderName: shadowteam
-		Prerequisites: ~radar.shadow, techlevel.unrestricted
+		Prerequisites: ~radar.shadow
 		Icon: shadteam
 		ChargeInterval: 6750
 		Name: Shadow Team
@@ -4425,7 +4425,7 @@ EYE:
 		TargetCircleColor: 4fff3390
 	IonCannonPower@surgicals:
 		OrderName: surgicalstrike
-		Prerequisites: ~eye.zocom, techlevel.unrestricted
+		Prerequisites: ~eye.zocom
 		Icon: surgicalstrike
 		IconPalette: chrometd
 		ChargeInterval: 6000
@@ -4481,7 +4481,7 @@ REP:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 100
-		Prerequisites: vehicles.any, ~structures.td, ~techlevel.medium
+		Prerequisites: vehicles.any, ~structures.td, ~techlevel.low
 		IconPalette: chrometd
 		Description: Repairs vehicles for credits.
 	TooltipExtras:
@@ -4539,7 +4539,7 @@ REP:
 ^GDIAirPowers:
 	SpawnActorPower@GDIEagleDropzone:
 		Actor: FLARE.dropzone
-		Prerequisites: ~radar.eagle, ~techlevel.low
+		Prerequisites: ~radar.eagle
 		PauseOnCondition: disabled || empdisable || being-warped
 		LifeTime: 280
 		OrderName: dropzoneeagle
@@ -4556,7 +4556,7 @@ REP:
 		EffectPalette: tseffect-ignore-lighting-alpha75
 	ParatroopersPower@xodrop:
 		OrderName: xodrop
-		Prerequisites: ~radar.talon, ~techlevel.medium
+		Prerequisites: ~radar.talon
 		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: xodrop
 		ChargeInterval: 9750
@@ -4625,7 +4625,7 @@ REP:
 ^InterceptorsPower:
 	InterceptorPower@AirDef:
 		OrderName: interceptors
-		Prerequisites: ~aircraft.gdi, techlevel.unrestricted
+		Prerequisites: ~aircraft.gdi, techlevel.medium
 		PauseOnCondition: empdisable || being-warped
 		Icon: airsupport
 		ChargeInterval: 10500
@@ -4662,7 +4662,7 @@ HPAD.TD:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 120
-		Prerequisites: radarorrepair, ~structures.td, ~techlevel.infonly
+		Prerequisites: radarorrepair, ~structures.td, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Produces and reloads helicopters.
 	Valued:
@@ -4765,7 +4765,7 @@ PROC.TD:
 		Name: Refinery
 	Buildable:
 		BuildPaletteOrder: 60
-		Prerequisites: anypower, ~structures.td, ~techlevel.low
+		Prerequisites: anypower, ~structures.td
 		Queue: Building
 		IconPalette: chrometd
 		Description: Processes raw Tiberium, Ore\n  and Gems into credits.
@@ -4833,7 +4833,7 @@ SILO.TD:
 		Name: Silo
 	Buildable:
 		BuildPaletteOrder: 35
-		Prerequisites: anyrefinery, ~structures.td, ~techlevel.infonly
+		Prerequisites: anyrefinery, ~structures.td
 		Queue: Defense
 		IconPalette: chrometd
 		Description: Stores processed Tiberium, Ore and Gems
@@ -4884,7 +4884,7 @@ AFLD.GDI:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 130
-		Prerequisites: radarorrepair, ~structures.gdi, ~techlevel.high
+		Prerequisites: radarorrepair, ~structures.gdi, ~techlevel.medium
 		Description: Produces and reloads aircraft.
 	Valued:
 		Cost: 500
@@ -5010,7 +5010,7 @@ GTEK:
 		Dimensions: 7, 7
 		Footprint: ___x___ __xxx__ _xxxxx_ xxxxxxx _xxxxx_ __xxx__ ___x___
 		Duration: 250
-		Prerequisites: forceshield.enabled, ~techlevel.high
+		Prerequisites: forceshield.enabled
 		Weapon: ForceShield
 		ActivationDelay: 5
 		AirburstAltitude: 0c0
@@ -5033,7 +5033,7 @@ GTEK:
 		Dimensions: 5, 5
 		Footprint: _xxx_ xxxxx xxxxx xxxxx _xxx_
 		Duration: 750
-		Prerequisites: ~gtek.arc, ~techlevel.unrestricted
+		Prerequisites: ~gtek.arc
 		Weapon: RepairFlash
 		ActivationDelay: 5
 		AirburstAltitude: 0c0
@@ -5099,7 +5099,7 @@ TMPL:
 		OrderName: clustermissile
 		Icon: clustermissile
 		IconPalette: chrometd
-		Prerequisites: ~techlevel.high, ~techlevel.unrestricted
+		Prerequisites: ~techlevel.unrestricted
 		Cursor: ability
 		ChargeInterval: 10500
 		Name: Cluster Missile
@@ -5143,7 +5143,7 @@ TMPL:
 		Dimensions: 7, 7
 		Footprint: ___x___ __xxx__ _xxxxx_ xxxxxxx _xxxxx_ __xxx__ ___x___
 		Duration: 250
-		Prerequisites: ~forceshield.enabled, ~techlevel.high
+		Prerequisites: ~forceshield.enabled
 		Weapon: ForceShield
 		ActivationDelay: 5
 		AirburstAltitude: 0c0
@@ -5162,7 +5162,7 @@ TMPL:
 	GrantExternalConditionPowerCA@Frenzy:
 		OrderName: frenzy
 		Icon: frenzy
-		Prerequisites: ~tmpl.marked, ~techlevel.high
+		Prerequisites: ~tmpl.marked
 		ChargeInterval: 6750
 		Weapon: Frenzy
 		Name: Frenzy
@@ -5229,7 +5229,7 @@ PRIS:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 90
-		Prerequisites: anyradar, ~structures.pris, ~techlevel.high
+		Prerequisites: anyradar, ~structures.pris, ~techlevel.medium
 		Description: Advanced experimental base defense.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -5494,7 +5494,7 @@ HTUR:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 100
-		Prerequisites: anyradar, ~structures.france, ~techlevel.high
+		Prerequisites: anyradar, ~structures.france, ~techlevel.medium
 		Description: Artillery base defense.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -5553,7 +5553,7 @@ GUN.Nod:
 		PlayerPalette: playertd
 	ActorPreviewPlaceBuildingPreview:
 	Buildable:
-		Prerequisites: infantry.any, ~structures.nod, ~techlevel.medium
+		Prerequisites: infantry.any, ~structures.nod, ~techlevel.low
 		IconPalette: chrometd
 	Armament:
 		Weapon: TurretGunTD
@@ -5692,7 +5692,7 @@ SGEN:
 		Factions: shadow
 		Prerequisite: sgen.shadow
 	GrantExternalConditionPowerCA@SGEN:
-		Prerequisites: ~!sgen.shadow, ~techlevel.unrestricted
+		Prerequisites: ~!sgen.shadow
 		OrderName: stealthgen
 		Icon: invis
 		IconPalette: chrometd
@@ -5721,7 +5721,7 @@ SGEN:
 	ExternalCondition@ACTIVE:
 		Condition: active
 	GrantExternalConditionPowerCA@SGENSHADOW:
-		Prerequisites: ~sgen.shadow, ~techlevel.unrestricted
+		Prerequisites: ~sgen.shadow
 		OrderName: stealthgenshadow
 		Icon: invis
 		IconPalette: chrometd
@@ -6671,7 +6671,6 @@ MSLO.Nod:
 		OrderName: chemmissile
 		Icon: chemmissile
 		IconPalette: chrometd
-		Prerequisites: techlevel.unrestricted
 		Cursor: chemmissile
 		ChargeInterval: 13500
 		Name: Chemical Missile
