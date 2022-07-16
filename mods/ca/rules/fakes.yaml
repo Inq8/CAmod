@@ -21,6 +21,16 @@ SYRF:
 		Footprint: xxx xxx xxx
 		Dimensions: 3,3
 		TerrainTypes: Water
+	HitShape:
+		TargetableOffsets: 768,0,0, 768,-1024,0, 768,1024,0
+		Type: Rectangle
+			TopLeft: -1536, -1152
+			BottomRight: 1536, 598
+	HitShape@BOTTOM:
+		TargetableOffsets: -768,0,0
+		Type: Rectangle
+			TopLeft: -512, 598
+			BottomRight: 512, 1110
 	RenderSprites:
 		Image: SYRD
 	Valued:
@@ -38,6 +48,7 @@ SYRF:
 WEAF:
 	Inherits: ^FakeBuilding
 	Inherits@infiltrate: ^InfiltratableFake
+	Inherits@SHAPE: ^3x2Shape
 	Buildable:
 		BuildPaletteOrder: 920
 		Prerequisites: weap, ~structures.england
@@ -50,7 +61,7 @@ WEAF:
 		GenericVisibility: Enemy
 		GenericStancePrefix: False
 	Building:
-		Footprint: xxx xxx ===
+		Footprint: xxx xxx +++
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	WithBuildingBib:
@@ -74,6 +85,7 @@ WEAF:
 DOMF:
 	Inherits: ^FakeBuilding
 	Inherits@infiltrate: ^InfiltratableFake
+	Inherits@SHAPE: ^2x2Shape
 	Tooltip:
 		Name: Fake Radar Dome
 		GenericName: Radar Dome
@@ -120,6 +132,11 @@ FACF:
 		LocalCenterOffset: 0,-512,0
 	Selectable:
 		Bounds: 3072, 3072
+	HitShape:
+		TargetableOffsets: 1273,939,0, -980,-640,0, -980,640,0
+		Type: Rectangle
+			TopLeft: -1536, -1536
+			BottomRight: 1536, 1536
 	WithBuildingBib:
 	WithBuildingPlacedAnimation:
 		RequiresCondition: !build-incomplete
