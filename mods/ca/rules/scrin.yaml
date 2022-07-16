@@ -43,10 +43,18 @@ VEHICLES.SCRIN:
 		RequiresSelection: true
 		Position: BottomLeft
 		Margin: 4, 3
-	GrantConditionOnTerrain@RESCONV:
-		Condition: on-resource
-		TerrainTypes: Tiberium, BlueTiberium, Ore, Gems
+	ExternalCondition@RESCONVTIB:
+		Condition: on-tib
+	ExternalCondition@RESCONVORE:
+		Condition: on-ore
+	ExternalCondition@RESCONVBLUETIB:
+		Condition: on-bluetib
+	ExternalCondition@RESCONVGEMS:
+		Condition: on-gems
 	GrantCondition@RESCONV:
+		Condition: on-resource
+		RequiresCondition: on-tib || on-ore || on-bluetib || on-gems
+	GrantCondition@RESCONVCHARGE:
 		Condition: charging-on-resource
 		RequiresCondition: resconv-upgrade && on-resource && (ammo < 65 || charged-fire)
 	GrantConditionOnTerrain@RESCONVTIB:

@@ -471,6 +471,10 @@ MINE:
 		Categories: Resource spawn
 	RequiresSpecificOwners:
 		ValidOwnerNames: Neutral
+	ProximityExternalCondition@ONORE:
+		Condition: on-ore
+		Range: 4c0
+		ValidRelationships: Ally, Neutral, Enemy
 
 GMINE:
 	Inherits@1: ^SpriteActor
@@ -495,6 +499,10 @@ GMINE:
 		Categories: Resource spawn
 	RequiresSpecificOwners:
 		ValidOwnerNames: Neutral
+	ProximityExternalCondition@ONGEMS:
+		Condition: on-gems
+		Range: 4c0
+		ValidRelationships: Ally, Neutral, Enemy
 
 RAILMINE:
 	Inherits@1: ^SpriteActor
@@ -932,6 +940,8 @@ SPLITBLUE:
 		Name: Blossom Tree (blue)
 	RadarColorFromTerrain:
 		Terrain: BlueTiberium
+	ProximityExternalCondition@ONTIB:
+		Condition: on-bluetib
 
 veil:
 	Inherits@1: CAMERA
