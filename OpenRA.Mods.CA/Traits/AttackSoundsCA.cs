@@ -49,7 +49,7 @@ namespace OpenRA.Mods.Common.Traits.Sound
 
 		void PlaySound(Actor self)
 		{
-			if (!info.Sounds.Any())
+			if (info.Sounds.Length == 0)
 				return;
 
 			var shouldStart = Info.AudibleThroughFog || (!self.World.ShroudObscures(self.CenterPosition) && !self.World.FogObscures(self.CenterPosition));

@@ -3,7 +3,7 @@ MSLO:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@SHAPE: ^2x1Shape
 	Selectable:
-		Bounds: 48,24
+		Bounds: 2048, 1024
 	Valued:
 		Cost: 2500
 	Tooltip:
@@ -11,7 +11,7 @@ MSLO:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 140
-		Prerequisites: stek, ~techlevel.unrestricted, ~structures.soviet
+		Prerequisites: stek, ~structures.soviet, ~techlevel.unrestricted
 		BuildLimit: 1
 		Description: Provides an atomic bomb.
 	TooltipExtras:
@@ -39,8 +39,8 @@ MSLO:
 		Cursor: nuke
 		Icon: abomb
 		ChargeInterval: 13500
-		Description: Atom Bomb
-		LongDesc: \nLaunches a devastating atomic bomb at the target location,\n    dealing heavy damage over a large area.
+		Name: Atom Bomb
+		Description: \nLaunches a devastating atomic bomb at the target location,\n    dealing heavy damage over a large area.
 		BeginChargeSpeechNotification: AbombPrepping
 		EndChargeSpeechNotification: AbombReady
 		SelectTargetSpeechNotification: SelectTarget
@@ -49,6 +49,7 @@ MSLO:
 		IncomingSpeechNotification: AbombLaunchDetected
 		LaunchSound: nukelaunch.aud
 		MissileWeapon: atomic
+		MissileImage: atomic
 		MissileDelay: 5
 		SpawnOffset: 1c0,427,0
 		DisplayTimerRelationships: Ally, Neutral, Enemy
@@ -100,8 +101,8 @@ GAP:
 	TooltipExtras:
 		Attributes: • Requires power to operate
 	Selectable:
-		Bounds: 24,24
-		DecorationBounds: 24,48,0,-12
+		Bounds: 1024, 1024
+		DecorationBounds: 1024, 2048, 0, -512
 	WithSpriteBody:
 		PauseOnCondition: disabled || empdisable || being-warped
 	Health:
@@ -161,7 +162,7 @@ SPEN:
 	Inherits@WATERSTRUCTURE: ^WaterStructure
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Selectable:
-		Bounds: 72,48
+		Bounds: 3072, 2048
 	RenderSprites:
 		PlayerPalette: playernavy
 	InfiltrateForSupportPower:
@@ -262,7 +263,7 @@ SPEN:
 	Power:
 		Amount: -30
 	DetectCloaked:
-		CloakTypes: Underwater
+		DetectionTypes: Underwater
 		Range: 10c0
 		RequiresCondition: !(empdisable || being-warped)
 	RenderDetectionCircle:
@@ -286,7 +287,7 @@ SYRD:
 	Inherits@WATERSTRUCTURE: ^WaterStructure
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Selectable:
-		Bounds: 72,48
+		Bounds: 3072, 2048
 	RenderSprites:
 		PlayerPalette: playernavy
 	InfiltrateForSupportPower:
@@ -363,7 +364,7 @@ SYRD:
 	Power:
 		Amount: -30
 	DetectCloaked:
-		CloakTypes: Underwater
+		DetectionTypes: Underwater
 		Range: 10c0
 		RequiresCondition: !(empdisable || being-warped)
 	RenderDetectionCircle:
@@ -403,8 +404,8 @@ IRON:
 		Footprint: xx
 		Dimensions: 2,1
 	Selectable:
-		Bounds: 48,28,0,2
-		DecorationBounds: 50,50,0,-12
+		Bounds: 2048, 1194, 0, 85
+		DecorationBounds: 2133, 2133, 0, -512
 	Health:
 		HP: 100000
 	Armor:
@@ -427,7 +428,7 @@ IRON:
 		Icon: invuln
 		ChargeInterval: 4500
 		Weapon: IronCurtain
-		Description: Iron Curtain
+		Name: Iron Curtain
 		Condition: invulnerability
 		Dimensions: 3, 3
 		Footprint: _x_ xxx _x_
@@ -436,7 +437,7 @@ IRON:
 		ActivationDelay: 0
 		AirburstAltitude: 0c0
 		AllowMultiple: false
-		LongDesc: \nMakes selected vehicles and structures\n    temporarily invulnerable\n\nWarning: Harmful to Infantry.
+		Description: \nMakes selected vehicles and structures\n    temporarily invulnerable\n\nWarning: Harmful to Infantry.
 		OnFireSound: ironcur9.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -464,7 +465,7 @@ PDOX:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@SHAPE: ^2x2Shape
 	Selectable:
-		Bounds: 48,48
+		Bounds: 2048, 2048
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 120
@@ -514,8 +515,8 @@ PDOX:
 		Duration: 600
 		Icon: chrono
 		ChargeInterval: 4500
-		Description: Chronoshift
-		LongDesc: \nTeleports selected units to a targeted location,\n    returning to their original location\n    after a short time.
+		Name: Chronoshift
+		Description: \nTeleports selected units to a targeted location,\n    returning to their original location\n    after a short time.
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		BeginChargeSpeechNotification: ChronosphereCharging
@@ -532,9 +533,9 @@ PDOX:
 		Icon: chrono
 		Cursor: ability
 		ChargeInterval: 7000
-		Description: Chronoshift
+		Name: Chronoshift
 		ActivationDelay: 25
-		LongDesc: \nTeleports selected units to a targeted location,\n    returning to their original location\n    after a short time.
+		Description: \nTeleports selected units to a targeted location,\n    returning to their original location\n    after a short time.
 		Weapon: ChronoAI
 		AirburstAltitude: 0c0
 		AllowMultiple: false
@@ -555,8 +556,8 @@ PDOX:
 		Prerequisites: pdox.germany
 		Cursor: ability
 		ChargeInterval: 4500
-		Description: Time Warp
-		LongDesc: \nDisrupts time and space at the target location.\n    Affected units & structures are frozen in time,\n    unable to act, but immune to damage.
+		Name: Time Warp
+		Description: \nDisrupts time and space at the target location.\n    Affected units & structures are frozen in time,\n    unable to act, but immune to damage.
 		Weapon: TimeWarp
 		Condition: being-warped
 		Duration: 375
@@ -601,7 +602,7 @@ TSLA:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 80
-		Prerequisites: vehicles.any, ~structures.soviet, ~techlevel.high
+		Prerequisites: vehicles.any, ~structures.soviet, ~techlevel.medium
 		Description: Advanced base defense.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -612,7 +613,7 @@ TSLA:
 	Tooltip:
 		Name: Tesla Coil
 	Selectable:
-		DecorationBounds: 24,40,0,-8
+		DecorationBounds: 1024, 1706, 0, -341
 	Health:
 		HP: 36000
 	Armor:
@@ -693,7 +694,7 @@ AGUN:
 	Tooltip:
 		Name: AA Gun
 	Selectable:
-		DecorationBounds: 24,32,0,-4
+		DecorationBounds: 1024, 1365, 0, -170
 	Health:
 		HP: 50000
 	Armor:
@@ -730,7 +731,7 @@ AGUN:
 		Amount: -50
 	ClassicFacingBodyOrientation:
 	DetectCloaked:
-		CloakTypes: AirCloak
+		DetectionTypes: AirCloak
 		RequiresCondition: !(disabled || empdisable || being-warped)
 
 DOME:
@@ -740,7 +741,7 @@ DOME:
 	Inherits@POWERDRAIN: ^PowerDrainableRadar
 	Inherits@SOVIETRADARPOWERS: ^SovietRadarPowers
 	Selectable:
-		Bounds: 48,48
+		Bounds: 2048, 2048
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 630,-384,0, 630,384,0, -700,-512,0, -700,512,0
@@ -835,9 +836,9 @@ DOME:
 		Condition: jammed
 	AirstrikePower@clustermines:
 		ChargeInterval: 6000
-		Prerequisites: ~radar.france, ~techlevel.unrestricted
-		Description: Cluster Mines
-		LongDesc: \nSends a cargo plane to drop a minefield\n    at the target location.
+		Prerequisites: ~radar.france
+		Name: Cluster Mines
+		Description: \nSends a cargo plane to drop a minefield\n    at the target location.
 		OrderName: clustermine
 		UnitType: c17.clustermines
 		CameraActor: camera
@@ -860,11 +861,11 @@ DOME:
 		OrderName: veilofwar
 		Icon: veilofwar
 		IconPalette: chrometd
-		Prerequisites: ~radar.england, ~techlevel.unrestricted
+		Prerequisites: ~radar.england
 		ChargeInterval: 4500
 		LifeTime: -1
-		Description: Veil of War
-		LongDesc: \nCreates an expanding area of shroud, reducing the vision\n    and weapon range of enemy units and defenses.
+		Name: Veil of War
+		Description: \nCreates an expanding area of shroud, reducing the vision\n    and weapon range of enemy units and defenses.
 		LaunchSound: sscrambl.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -999,7 +1000,7 @@ GUN:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 70
-		Prerequisites: infantry.any, ~structures.allies, ~techlevel.medium
+		Prerequisites: infantry.any, ~structures.allies, ~techlevel.low
 		Description: Basic anti-tank base defense.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor
@@ -1105,7 +1106,7 @@ SAM:
 	Inherits@AUTOTARGET: ^AutoTargetAirICBM
 	Inherits@SHAPE: ^2x1Shape
 	Selectable:
-		Bounds: 48,24
+		Bounds: 2048, 1024
 	HitShape:
 		Type: Rectangle
 			TopLeft: -768,-512
@@ -1159,7 +1160,7 @@ SAM:
 		Amount: -40
 	ClassicFacingBodyOrientation:
 	DetectCloaked:
-		CloakTypes: AirCloak
+		DetectionTypes: AirCloak
 		RequiresCondition: !(disabled || empdisable || being-warped)
 
 ATEK:
@@ -1167,7 +1168,7 @@ ATEK:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^2x2Shape
 	Selectable:
-		Bounds: 48,48
+		Bounds: 2048, 2048
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 140
@@ -1233,8 +1234,8 @@ ATEK:
 	ProduceActorPowerCA@InitialSatelliteScan:
 		PauseOnCondition: disabled || empdisable || being-warped
 		Prerequisites: anyradar, ~!gps.satellite.firstscan, ~fogenabled
-		Description: Spy Satellite
-		LongDesc: \nPeriodically reveals the entire map\n    for a short time (activated automatically).
+		Name: Spy Satellite
+		Description: \nPeriodically reveals the entire map\n    for a short time (activated automatically).
 		Icon: gps
 		Actors: camera.satscan, gps.satellite.firstscan
 		Type: SpySatellite
@@ -1245,8 +1246,8 @@ ATEK:
 	ProduceActorPowerCA@SatelliteScan:
 		PauseOnCondition: disabled || empdisable || being-warped
 		Prerequisites: anyradar, ~gps.satellite, ~gps.satellite.firstscan, ~fogenabled
-		Description: Spy Satellite
-		LongDesc: \nPeriodically reveals the entire map\n    for a short time (activated automatically).
+		Name: Spy Satellite
+		Description: \nPeriodically reveals the entire map\n    for a short time (activated automatically).
 		Icon: gps
 		Actors: camera.satscan
 		Type: SpySatellite
@@ -1257,8 +1258,8 @@ ATEK:
 	ProduceActorPowerCA@SatelliteScanNoFog:
 		PauseOnCondition: disabled || empdisable || being-warped
 		Prerequisites: anyradar, ~!fogenabled
-		Description: Spy Satellite
-		LongDesc: \nPermanently reveals the entire map (activated automatically).
+		Name: Spy Satellite
+		Description: \nPermanently reveals the entire map (activated automatically).
 		Icon: gps
 		Actors: camera.satscan.oneshot
 		Type: SpySatellite
@@ -1275,14 +1276,14 @@ ATEK:
 		Dimensions: 7, 7
 		Footprint: ___x___ __xxx__ _xxxxx_ xxxxxxx _xxxxx_ __xxx__ ___x___
 		Duration: 250
-		Prerequisites: forceshield.enabled, techlevel.high
+		Prerequisites: forceshield.enabled
 		Weapon: ForceShield
 		ActivationDelay: 5
 		AirburstAltitude: 0c0
 		AllowMultiple: false
 		Sequence: false-active
-		Description: Force Shield
-		LongDesc: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
+		Name: Force Shield
+		Description: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
 		OnFireSound: forceon.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
@@ -1297,9 +1298,9 @@ ATEK:
 		Icon: tempinc
 		Cursor: ability
 		ChargeInterval: 9750
-		Description: Temporal Incursion
+		Name: Temporal Incursion
 		ActivationDelay: 25
-		LongDesc: \nSummons reinforcements from the future.\n    Units return to their origin time after a short time.
+		Description: \nSummons reinforcements from the future.\n    Units return to their origin time after a short time.
 		Weapon: TemporalIncursion
 		AirburstAltitude: 0c0
 		AllowMultiple: false
@@ -1357,7 +1358,7 @@ WEAP:
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
 	Selectable:
-		Bounds: 72,48
+		Bounds: 3072, 2048
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 80
@@ -1470,7 +1471,6 @@ WEAP:
 	-ActorPreviewPlaceBuildingPreview:
 	SequencePlaceBuildingPreview:
 		Sequence: place
-		SequencePalette: placebuilding
 	GrantExternalConditionToProduced@DRONEEXIT:
 		Condition: radarenabled
 		Duration: 100
@@ -1480,7 +1480,7 @@ FACT:
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@BOTI: ^BotFallbackInsurance
 	Selectable:
-		Bounds: 72,72
+		Bounds: 3072, 3072
 	Building:
 		Footprint: xxX xxx XxX ===
 		Dimensions: 3,4
@@ -1623,7 +1623,7 @@ PROC:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 60
-		Prerequisites: anypower, ~structures.ra, ~techlevel.infonly
+		Prerequisites: anypower, ~structures.ra
 		Description: Processes raw Tiberium, Ore\n  and Gems into credits.
 		BuildDuration: 1400
 	Valued:
@@ -1635,8 +1635,8 @@ PROC:
 		Dimensions: 3,4
 		LocalCenterOffset: 0,-512,0
 	Selectable:
-		Bounds: 72,50,0,4
-		DecorationBounds: 72,70,0,-2
+		Bounds: 3072, 2133, 0, 170
+		DecorationBounds: 3072, 2986, 0, -85
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: ThiefInfiltrate
@@ -1720,17 +1720,16 @@ PROC:
 	-ActorPreviewPlaceBuildingPreview:
 	SequencePlaceBuildingPreview:
 		Sequence: idle
-		SequencePalette: placebuilding
 	CashHackable:
 
 SILO:
 	Inherits: ^Building
 	Selectable:
-		Bounds: 24,24
+		Bounds: 1024, 1024
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 35
-		Prerequisites: anyrefinery, ~structures.ra, ~techlevel.infonly
+		Prerequisites: anyrefinery, ~structures.ra
 		Description: Stores excess refined\nTiberium, Ore and Gems.
 	Valued:
 		Cost: 150
@@ -1774,12 +1773,12 @@ SILO:
 	ParatroopersPower@paratroopers:
 		OrderName: paratroopers
 		UnitType: halo.paradrop
-		Prerequisites: ~support.paratroopers, ~techlevel.low
+		Prerequisites: ~support.paratroopers
 		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: paratroopers
 		ChargeInterval: 7500
-		Description: Paratroopers
-		LongDesc: \nDispatches a Halo transport to drop a squad of infantry\n    anywhere on the map.
+		Name: Paratroopers
+		Description: \nDispatches a Halo transport to drop a squad of infantry\n    anywhere on the map.
 		SquadSize: 1
 		SquadOffset: 0,1792,0
 		DropItems: E1,E1,E2,E3,E3,E1,E1,E1
@@ -1799,12 +1798,12 @@ SILO:
 	ParatroopersPower@Russianparatroopers:
 		OrderName: stormtroopers
 		UnitType: halo.paradrop
-		Prerequisites: ~radar.russia, ~techlevel.high
+		Prerequisites: ~radar.russia
 		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: stormtroopers
 		ChargeInterval: 9000
-		Description: Storm-troopers
-		LongDesc: \nDispatches a Halo transport to drop a squad of Shock Troopers\n    anywhere on the map.
+		Name: Storm-troopers
+		Description: \nDispatches a Halo transport to drop a squad of Shock Troopers\n    anywhere on the map.
 		SquadSize: 1
 		SquadOffset: 0,1792,0
 		DropItems: SHOK,SHOK,SHOK,SHOK,SHOK
@@ -1827,8 +1826,8 @@ SILO:
 		Prerequisites: ~radar.soviet
 		PauseOnCondition: disabled || empdisable || being-warped
 		ChargeInterval: 3000
-		Description: Spy Plane
-		LongDesc: \nDispatches a spy plane that reveals the target location\n    for a limited time.
+		Name: Spy Plane
+		Description: \nDispatches a spy plane that reveals the target location\n    for a limited time.
 		SelectTargetSpeechNotification: SelectTarget
 		EndChargeSpeechNotification: SpyPlaneReady
 		LaunchSound: spyplane.aud
@@ -1850,12 +1849,12 @@ SILO:
 		Prerequisite: support.parabombs
 	AirstrikePower@Russianparabombs:
 		OrderName: parabombs
-		Prerequisites: ~support.parabombs, ~techlevel.unrestricted
+		Prerequisites: ~support.parabombs
 		PauseOnCondition: empdisable || being-warped
 		Icon: parabombs
 		ChargeInterval: 7500
-		Description: Parabombs
-		LongDesc: \nCalls in a Badger bomber which drops parachuted\n    bombs on your target.
+		Name: Parabombs
+		Description: \nCalls in a Badger bomber which drops parachuted\n    bombs on your target.
 		SelectTargetSpeechNotification: SelectTarget
 		CameraActor: camera
 		CameraRemoveDelay: 150
@@ -1872,12 +1871,12 @@ SILO:
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@CarpetBomb:
 		OrderName: carpetbomb
-		Prerequisites: ~radar.ukraine, ~techlevel.unrestricted
+		Prerequisites: ~radar.ukraine
 		PauseOnCondition: empdisable || being-warped
 		Icon: carpetbomb
 		ChargeInterval: 10500
-		Description: Carpet Bomb
-		LongDesc: \nCalls in a squad of Badgers which drop\n    bombs on your target.
+		Name: Carpet Bomb
+		Description: \nCalls in a squad of Badgers which drop\n    bombs on your target.
 		SelectTargetSpeechNotification: SelectTarget
 		CameraActor: camera
 		CameraRemoveDelay: 150
@@ -1894,12 +1893,12 @@ SILO:
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@Iraqiparabombs:
 		OrderName: atombomb
-		Prerequisites: ~radar.iraq, ~techlevel.unrestricted
+		Prerequisites: ~radar.iraq
 		PauseOnCondition: empdisable || being-warped
 		Icon: abombair
 		ChargeInterval: 10500
-		Description: Atomic Bomb
-		LongDesc: \nCalls in a a Badger bomber which drops an\n    atom bomb on your target.
+		Name: Atomic Bomb
+		Description: \nCalls in a a Badger bomber which drops an\n    atom bomb on your target.
 		SelectTargetSpeechNotification: SelectTarget
 		CameraActor: camera
 		CameraRemoveDelay: 150
@@ -1916,13 +1915,13 @@ SILO:
 		DirectionArrowAnimation: paradirection
 	AirstrikePower@MutaBomb:
 		OrderName: mutabomb
-		Prerequisites: ~radar.yuri, ~techlevel.unrestricted
+		Prerequisites: ~radar.yuri
 		PauseOnCondition: empdisable || being-warped
 		Icon: mutabomb
 		IconPalette: scrin
 		ChargeInterval: 6750
-		Description: Genetic Mutation Bomb
-		LongDesc: \nCalls in a Badger bomber which drops a genetic\n    mutation bomb on your target, transforming\n    infantry into Brutes under your control.
+		Name: Genetic Mutation Bomb
+		Description: \nCalls in a Badger bomber which drops a genetic\n    mutation bomb on your target, transforming\n    infantry into Brutes under your control.
 		SelectTargetSpeechNotification: SelectTarget
 		CameraActor: camera
 		CameraRemoveDelay: 150
@@ -1945,15 +1944,13 @@ HPAD:
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
 	Inherits@SOVIETBOMBINGPOWERS: ^SovietBombingPowers
-	Selectable:
-		Bounds: 48,48
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 768,-512,0, 768,512,0, -281,-512,0, -630,512,0
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 120
-		Prerequisites: radarorrepair, ~structures.ra, ~techlevel.infonly
+		Prerequisites: radarorrepair, ~structures.ra, ~techlevel.medium
 		Description: Produces and reloads helicopters.
 	Valued:
 		Cost: 500
@@ -2049,11 +2046,11 @@ HPAD:
 				SpawnDelay: 20
 				SpawnOffset: -1536,-1024,0
 				TargetOffset: 536,0,0
-		Prerequisites: ~aircraft.usa, ~techlevel.unrestricted
+		Prerequisites: ~aircraft.usa
 		Icon: strafe
 		ChargeInterval: 7500
-		Description: Strafing Run
-		LongDesc: \nCalls in P51 ground attack planes to perform\n    strafing runs on the target.
+		Name: Strafing Run
+		Description: \nCalls in P51 ground attack planes to perform\n    strafing runs on the target.
 		SelectTargetSpeechNotification: SelectTarget
 		CameraActor: camera
 		CameraRemoveDelay: 150
@@ -2080,14 +2077,14 @@ AFLD:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 130
-		Prerequisites: radarorrepair, ~structures.soviet, ~techlevel.low
+		Prerequisites: radarorrepair, ~structures.soviet, ~techlevel.medium
 		Description: Produces and reloads aircraft.
 	Valued:
 		Cost: 500
 	Tooltip:
 		Name: Airfield
 	Selectable:
-		Bounds: 72,48
+		Bounds: 3072, 2048
 	Building:
 		Footprint: xxx xxx
 		Dimensions: 3,2
@@ -2150,14 +2147,14 @@ POWR:
 	Inherits@POWERDRAIN: ^PowerDrainable
 	Inherits@OVERLOAD: ^HackableOverloadable
 	Selectable:
-		Bounds: 48,48
+		Bounds: 2048, 2048
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 640,-384,0, 640,512,0, -710,-512,0, -710,512,0
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 10
-		Prerequisites: ~techlevel.infonly, ~structures.ra
+		Prerequisites: ~structures.ra
 		Description: Provides power for other structures.
 	Valued:
 		Cost: 300
@@ -2199,7 +2196,7 @@ APWR:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 110
-		Prerequisites: anyradar, ~techlevel.medium, ~structures.apwr
+		Prerequisites: anyradar, ~structures.apwr, ~techlevel.medium
 		Description: Provides double the power of\n  a standard Power Plant.
 	Valued:
 		Cost: 500
@@ -2212,8 +2209,8 @@ APWR:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Selectable:
-		Bounds: 72,48
-		DecorationBounds: 72,68,0,-10
+		Bounds: 3072, 2048
+		DecorationBounds: 3072, 2901, 0, -426
 	Health:
 		HP: 70000
 	Armor:
@@ -2257,8 +2254,8 @@ NPWR:
 		Dimensions: 4,3
 		LocalCenterOffset: 0,-512,0
 	Selectable:
-		Bounds: 96,72
-		DecorationBounds: 96,92,0,-10
+		Bounds: 4096,3072
+		DecorationBounds: 4096,3926,0,-427
 	Health:
 		HP: 70000
 	Armor:
@@ -2308,14 +2305,14 @@ NPWR:
 		OrderName: atomicammo
 		Icon: atomicammo
 		ChargeInterval: 4500
-		Description: Atomic Ammunition
+		Name: Atomic Ammunition
 		Condition: atomic-ammo
 		Dimensions: 5, 5
 		Footprint: __x__ _xxx_ xxxxx _xxx_ __x__
 		ValidRelationships: Ally, Neutral
 		Duration: 600
 		AllowMultiple: false
-		LongDesc: \nGrants atomic ammunition to tanks for a limited time.
+		Description: \nGrants atomic ammunition to tanks for a limited time.
 		OnFireSound: atomicammo.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -2329,7 +2326,7 @@ TPWR:
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Inherits: APWR
 	Buildable:
-		Prerequisites: anyradar, ~techlevel.medium, ~structures.russia
+		Prerequisites: anyradar, ~structures.russia, ~techlevel.medium
 		Description: Provides double the power of\n  a standard Power Plant.\n  Can divert half its power output to allow striking enemy targets.
 	TooltipExtras:
 		Weaknesses: • Unstable when damaged and channeling is enabled
@@ -2402,7 +2399,7 @@ STEK:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^3x2Shape
 	Selectable:
-		Bounds: 72,48
+		Bounds: 3072, 2048
 	HitShape:
 		TargetableOffsets: 420,-768,0, 420,768,0, -770,-768,0, -770,768,0
 	Buildable:
@@ -2453,13 +2450,13 @@ STEK:
 		Dimensions: 7, 7
 		Footprint: ___x___ __xxx__ _xxxxx_ xxxxxxx _xxxxx_ __xxx__ ___x___
 		Duration: 250
-		Prerequisites: forceshield.enabled, techlevel.high
+		Prerequisites: forceshield.enabled
 		Weapon: ForceShield
 		ActivationDelay: 5
 		AirburstAltitude: 0c0
 		AllowMultiple: false
-		Description: Force Shield
-		LongDesc: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
+		Name: Force Shield
+		Description: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
 		OnFireSound: forceon.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
@@ -2488,14 +2485,14 @@ BARR:
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^2x2Shape
 	Selectable:
-		Bounds: 48,48
+		Bounds: 2048, 2048
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 490,-470,0, 355,512,0, -355,-512,0, -630,512,0
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 30
-		Prerequisites: anypower, ~structures.soviet, ~techlevel.infonly
+		Prerequisites: anypower, ~structures.soviet
 		Description: Trains infantry.
 	Valued:
 		Cost: 500
@@ -2593,14 +2590,14 @@ KENN:
 	Inherits: ^Building
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Selectable:
-		Bounds: 24,24
+		Bounds: 1024, 1024
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 205
-		Prerequisites: anypower, ~structures.soviet, ~techlevel.infonly
+		Prerequisites: anypower, ~structures.soviet
 		Description: Trains Attack Dogs.
 	Valued:
-		Cost: 200
+		Cost: 100
 	Tooltip:
 		Name: Kennel
 	-GivesBuildableArea:
@@ -2638,14 +2635,14 @@ TENT:
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^2x2Shape
 	Selectable:
-		Bounds: 48,48
+		Bounds: 2048, 2048
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 630,-512,0, 355,512,0, -281,-512,0, -630,512,0
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 20
-		Prerequisites: anypower, ~structures.allies, ~techlevel.infonly
+		Prerequisites: anypower, ~structures.allies
 		Description: Trains infantry.
 	Valued:
 		Cost: 500
@@ -2740,7 +2737,7 @@ FIX:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 100
-		Prerequisites: vehicles.any, ~structures.ra, ~techlevel.medium
+		Prerequisites: vehicles.any, ~structures.ra, ~techlevel.low
 		Description: Repairs vehicles for credits.
 	TooltipExtras:
 		Attributes: • Nearby helipads/airfields will repair landed aircraft
@@ -2752,8 +2749,8 @@ FIX:
 		Footprint: _+_ +++ _+_
 		Dimensions: 3,3
 	Selectable:
-		Bounds: 68,34,0,3
-		DecorationBounds: 72,48
+		Bounds: 2901, 1450, 0, 128
+		DecorationBounds: 3072, 2048
 	Health:
 		HP: 80000
 	Armor:
@@ -2801,12 +2798,11 @@ FIX:
 SBAG:
 	Inherits: ^Wall
 	RenderSprites:
-		-PlayerPalette:
 		Palette: effect
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 10
-		Prerequisites: ~structures.sandbag, ~techlevel.low
+		Prerequisites: ~structures.sandbag
 		Description: • Stops infantry and light vehicles\n• Can be crushed by tanks
 	Valued:
 		Cost: 30
@@ -2828,12 +2824,11 @@ SBAG:
 FENC:
 	Inherits: ^Wall
 	RenderSprites:
-		-PlayerPalette:
 		Palette: effect
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 20
-		Prerequisites: ~structures.soviet, ~techlevel.low
+		Prerequisites: ~structures.soviet
 		Description: • Stops infantry and light vehicles\n• Can be crushed by tanks
 	Valued:
 		Cost: 30
@@ -2857,7 +2852,7 @@ CHAIN:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 20
-		Prerequisites: ~structures.nod, ~techlevel.low
+		Prerequisites: ~structures.nod
 		Description: • Stops infantry and light vehicles\n• Can be crushed by tanks
 	Valued:
 		Cost: 30
@@ -2881,7 +2876,7 @@ BRIK:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 30
-		Prerequisites: anypower, ~structures.wall, ~techlevel.medium
+		Prerequisites: anypower, ~structures.wall
 		Description: • Stops units\n• Blocks enemy fire
 	Valued:
 		Cost: 200
@@ -3086,7 +3081,7 @@ PYLE:
 	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^2x2Shape
 	Selectable:
-		Bounds: 48,48
+		Bounds: 2048, 2048
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 840,-256,0, 840,512,0, 210,-512,0, -71,512,0
@@ -3096,7 +3091,7 @@ PYLE:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 20
-		Prerequisites: anypower, ~structures.gdi, ~techlevel.low
+		Prerequisites: anypower, ~structures.gdi
 		IconPalette: chrometd
 		Description: Trains infantry.
 	Valued:
@@ -3195,7 +3190,7 @@ HAND:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 20
-		Prerequisites: anypower, ~structures.nod, ~techlevel.low
+		Prerequisites: anypower, ~structures.nod
 		IconPalette: chrometd
 		Description: Trains infantry.
 	Valued:
@@ -3291,7 +3286,7 @@ WEAP.TD:
 	RenderSprites:
 		Image: awep
 	Selectable:
-		Bounds: 72,72
+		Bounds: 3072, 3072
 	HitShape:
 		TargetableOffsets: 0,0,0, 0,1024,0, 0,-1024,0
 		Type: Rectangle
@@ -3409,7 +3404,6 @@ WEAP.TD:
 	-ActorPreviewPlaceBuildingPreview:
 	SequencePlaceBuildingPreview:
 		Sequence: place
-		SequencePalette: placebuildingtd
 	GrantExternalConditionToProduced@DRONEEXIT:
 		Condition: radarenabled
 		Duration: 100
@@ -3503,8 +3497,8 @@ AIRS:
 		UnitType: c17
 		Icon: airdropicon
 		ChargeInterval: 13500
-		Description: Air Drop
-		LongDesc: \nDispatches cargo planes to air drop tanks\n    at the target location.
+		Name: Air Drop
+		Description: \nDispatches cargo planes to air drop tanks\n    at the target location.
 		DropItems: ltnk, ftnk, ltnk
 		SelectTargetSpeechNotification: SelectTarget
 		AllowImpassableCells: false
@@ -3526,8 +3520,8 @@ AIRS:
 		UnitType: c17
 		Icon: airdropicon
 		ChargeInterval: 13500
-		Description: Air Drop
-		LongDesc: \nDispatches cargo planes to air drop flame tanks\n    at the target location.
+		Name: Air Drop
+		Description: \nDispatches cargo planes to air drop flame tanks\n    at the target location.
 		DropItems: hftk, hftk
 		SelectTargetSpeechNotification: SelectTarget
 		AllowImpassableCells: false
@@ -3549,8 +3543,8 @@ AIRS:
 		UnitType: c17
 		Icon: airdropicon
 		ChargeInterval: 13500
-		Description: Air Drop
-		LongDesc: \nDispatches cargo planes to air drop stealth tanks\n    at the target location.
+		Name: Air Drop
+		Description: \nDispatches cargo planes to air drop stealth tanks\n    at the target location.
 		DropItems: stnk.nod, stnk.nod
 		SelectTargetSpeechNotification: SelectTarget
 		AllowImpassableCells: false
@@ -3609,7 +3603,7 @@ NUKE:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 10
-		Prerequisites: ~structures.td, ~techlevel.low
+		Prerequisites: ~structures.td
 		IconPalette: chrometd
 		Description: Provides power for other structures.
 	Valued:
@@ -3659,7 +3653,7 @@ NUK2:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 110
-		Prerequisites: anyradar, ~structures.td, ~techlevel.low
+		Prerequisites: anyradar, ~structures.td, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Provides double the power of\n  a standard Nuclear Power Plant.
 	Valued:
@@ -3833,7 +3827,7 @@ NSAM:
 	Inherits@AUTOTARGET: ^AutoTargetAirICBM
 	Inherits@SHAPE: ^2x1Shape
 	Selectable:
-		Bounds: 48,24
+		Bounds: 2048, 1024
 	HitShape:
 		Type: Rectangle
 			TopLeft: -768,-512
@@ -3886,9 +3880,8 @@ NSAM:
 	-ActorPreviewPlaceBuildingPreview:
 	SequencePlaceBuildingPreview:
 		Sequence: place
-		SequencePalette: placebuildingtd
 	DetectCloaked:
-		CloakTypes: AirCloak
+		DetectionTypes: AirCloak
 		RequiresCondition: !(disabled || empdisable || being-warped)
 
 GTWR:
@@ -3946,7 +3939,7 @@ ATWR:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 80
-		Prerequisites: anyradar, ~structures.atwr, ~techlevel.high
+		Prerequisites: anyradar, ~structures.atwr, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Advanced base defense.
 	TooltipExtras:
@@ -3962,8 +3955,8 @@ ATWR:
 	Armor:
 		Type: Concrete
 	Selectable:
-		Bounds: 24,24
-		DecorationBounds: 22,48,0,-12
+		Bounds: 1024, 1024
+		DecorationBounds: 938, 2048, 0, -512
 	RevealsShroud:
 		MinRange: 6c0
 		Range: 8c0
@@ -3995,7 +3988,7 @@ STWR:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 80
-		Prerequisites: anyradar, ~structures.zocom, ~techlevel.high
+		Prerequisites: anyradar, ~structures.zocom, ~techlevel.medium
 		Description: Advanced base defense that emits devastating sonic shockwaves.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -4041,7 +4034,7 @@ STWR:
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
 	Selectable:
-		DecorationBounds: 24,40,0,-8
+		DecorationBounds: 1024, 1706, 0, -341
 	GrantConditionOnPrerequisite@SONIC:
 		Condition: sonic-upgrade
 		Prerequisites: sonic.upgrade
@@ -4053,7 +4046,7 @@ OBLI:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 80
-		Prerequisites: anyradar, ~structures.nod, ~techlevel.high
+		Prerequisites: anyradar, ~structures.nod, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Advanced experimental base defense.
 	TooltipExtras:
@@ -4065,7 +4058,7 @@ OBLI:
 	Tooltip:
 		Name: Obelisk of Light
 	Selectable:
-		DecorationBounds: 22,42,0,-8
+		DecorationBounds: 938, 1792, 0, -341
 	Health:
 		HP: 64000
 	Armor:
@@ -4183,8 +4176,8 @@ HQ:
 		OrderName: sathack
 		Icon: hacksat
 		ChargeInterval: 4500
-		Description: Hack Satellite Uplink
-		LongDesc: \nReveals the targeted area for a short time.
+		Name: Hack Satellite Uplink
+		Description: \nReveals the targeted area for a short time.
 		LaunchSound: hacksat.aud
 		SelectTargetSpeechNotification: SelectTarget
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -4195,12 +4188,12 @@ HQ:
 		TargetCircleColor: 999999AA
 	ProduceActorPower@hackercell:
 		OrderName: hackercell
-		Prerequisites: infantry.any, ~radar.legion, ~techlevel.medium
+		Prerequisites: infantry.any, ~radar.legion
 		Icon: hackercell
 		Type: Infantry
 		ChargeInterval: 7500
-		Description: Hacker Cell
-		LongDesc: \nDeploy a squad of hackers that can remotely\n    capture buildings and take control of defenses.\n\nDeploys from primary infantry production structure.
+		Name: Hacker Cell
+		Description: \nDeploy a squad of hackers that can remotely\n    capture buildings and take control of defenses.\n\nDeploys from primary infantry production structure.
 		Actors: hack, hack, hack
 		LaunchSpeechNotification: ReinforcementsArrived
 		EndChargeSpeechNotification: Reinforce
@@ -4208,12 +4201,12 @@ HQ:
 	DropPodsPowerCA@Zocom:
 		OrderName: droppods
 		Cursor: ability
-		Prerequisites: ~radar.zocom, techlevel.high
+		Prerequisites: ~radar.zocom
 		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: droppods
 		IconPalette: chrometd
-		Description: Drop Pods
-		LongDesc: \nInstantly deploys a small team of elite soldiers\n    at the target location via orbital drop pods.
+		Name: Drop Pods
+		Description: \nInstantly deploys a small team of elite soldiers\n    at the target location via orbital drop pods.
 		EndChargeSpeechNotification: DropPodsAvailable
 		SelectTargetSpeechNotification: SelectTarget
 		DisplayRadarPing: True
@@ -4231,10 +4224,10 @@ HQ:
 		ChargeInterval: 6000
 		Minimum: 500
 		Maximum: 2000
-		Prerequisites: ~radar.legion, techlevel.high
+		Prerequisites: ~radar.legion
 		AllowMultiple: false
-		Description: Cash Hack
-		LongDesc: \nSteal up to $2000 credits from a targeted enemy Refinery.
+		Name: Cash Hack
+		Description: \nSteal up to $2000 credits from a targeted enemy Refinery.
 		OnFireSound: scashhac.aud
 		Notification: CreditsStolen
 		DisplayTimerRelationships: Ally
@@ -4245,12 +4238,12 @@ HQ:
 		PauseOnCondition: disabled || empdisable || being-warped
 	AirstrikePower@BlackhandFirebomb:
 		OrderName: infernobomb
-		Prerequisites: ~radar.blackh, techlevel.unrestricted
+		Prerequisites: ~radar.blackh
 		Icon: infbomb
 		IconPalette: chrometd
 		ChargeInterval: 9000
-		Description: Inferno Bomb
-		LongDesc: \nA B2 Stealth Bomber drops inferno bombs on your target.
+		Name: Inferno Bomb
+		Description: \nA B2 Stealth Bomber drops inferno bombs on your target.
 		SelectTargetSpeechNotification: SelectTarget
 		CameraActor: camera
 		CameraRemoveDelay: 150
@@ -4269,11 +4262,11 @@ HQ:
 		PauseOnCondition: disabled || empdisable || being-warped
 	AirReinforcementsPower@ShadowTeam:
 		OrderName: shadowteam
-		Prerequisites: ~radar.shadow, techlevel.unrestricted
+		Prerequisites: ~radar.shadow
 		Icon: shadteam
 		ChargeInterval: 6750
-		Description: Shadow Team
-		LongDesc: \nCalls for a Shadow Team; three stealth infantry\n    that arrive via glider armed with grenades\n    and a machine pistol.\n\nOperatives can be ordered to land\n    via the deploy command.
+		Name: Shadow Team
+		Description: \nCalls for a Shadow Team; three stealth infantry\n    that arrive via glider armed with grenades\n    and a machine pistol.\n\nOperatives can be ordered to land\n    via the deploy command.
 		SelectTargetSpeechNotification: SelectTarget
 		UnitType: sgli
 		QuantizedFacings: 8
@@ -4405,9 +4398,9 @@ EYE:
 		Icon: ioncannon
 		Cursor: ioncannon
 		ChargeInterval: 13500
-		Description: Ion Cannon
+		Name: Ion Cannon
 		ActivationDelay: 50
-		LongDesc: \nInitiate an Ion Cannon strike which deals\n    heavy damage over a large area.
+		Description: \nInitiate an Ion Cannon strike which deals\n    heavy damage over a large area.
 		Weapon: IonStormInit
 		AirburstAltitude: 4c512
 		AllowMultiple: false
@@ -4432,14 +4425,14 @@ EYE:
 		TargetCircleColor: 4fff3390
 	IonCannonPower@surgicals:
 		OrderName: surgicalstrike
-		Prerequisites: ~eye.zocom, techlevel.unrestricted
+		Prerequisites: ~eye.zocom
 		Icon: surgicalstrike
 		IconPalette: chrometd
 		ChargeInterval: 6000
 		WeaponDelay: 3
-		Description: Surgical Strike
+		Name: Surgical Strike
 		EffectPalette: tdeffect-ignore-lighting-alpha85
-		LongDesc: \nInitiate an precision Ion Cannon strike which instantly\n    deals instant damage to a small area.
+		Description: \nInitiate an precision Ion Cannon strike which instantly\n    deals instant damage to a small area.
 		BeginChargeSpeechNotification: IonCannonCharging
 		EndChargeSpeechNotification: IonCannonReady
 		LaunchSound: ion2.aud
@@ -4488,7 +4481,7 @@ REP:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 100
-		Prerequisites: vehicles.any, ~structures.td, ~techlevel.medium
+		Prerequisites: vehicles.any, ~structures.td, ~techlevel.low
 		IconPalette: chrometd
 		Description: Repairs vehicles for credits.
 	TooltipExtras:
@@ -4501,8 +4494,8 @@ REP:
 		Footprint: _+_ +++ _+_
 		Dimensions: 3,3
 	Selectable:
-		Bounds: 68,34,0,3
-		DecorationBounds: 72,48
+		Bounds: 2901, 1450, 0, 128
+		DecorationBounds: 3072, 2048
 	Health:
 		HP: 80000
 	Armor:
@@ -4546,15 +4539,15 @@ REP:
 ^GDIAirPowers:
 	SpawnActorPower@GDIEagleDropzone:
 		Actor: FLARE.dropzone
-		Prerequisites: ~radar.eagle, ~techlevel.low
+		Prerequisites: ~radar.eagle
 		PauseOnCondition: disabled || empdisable || being-warped
 		LifeTime: 280
 		OrderName: dropzoneeagle
 		Icon: orcaca
 		IconPalette: chrometd
 		ChargeInterval: 6000
-		Description: Reinforcements
-		LongDesc: \nAn Orca Carryall drops an APC containing\n    an infantry squad at the target location.
+		Name: Reinforcements
+		Description: \nAn Orca Carryall drops an APC containing\n    an infantry squad at the target location.
 		EndChargeSpeechNotification: Reinforce
 		LaunchSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
@@ -4563,13 +4556,13 @@ REP:
 		EffectPalette: tseffect-ignore-lighting-alpha75
 	ParatroopersPower@xodrop:
 		OrderName: xodrop
-		Prerequisites: ~radar.talon, ~techlevel.medium
+		Prerequisites: ~radar.talon
 		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: xodrop
 		ChargeInterval: 9750
-		Description: X-O Drop
+		Name: X-O Drop
 		UnitType: ocar.xo
-		LongDesc: \nAn Orca transport drops a squad of X-O Powersuits\n    at the target location.
+		Description: \nAn Orca transport drops a squad of X-O Powersuits\n    at the target location.
 		SquadSize: 1
 		SquadOffset: 0,1792,0
 		DropItems: XO,XO,XO
@@ -4592,8 +4585,8 @@ REP:
 		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: uavicon
 		ChargeInterval: 3750
-		Description: Recon Drone
-		LongDesc: \nA drone flies across the map, revealing the area as it passes.\n\nDetects cloaked units.
+		Name: Recon Drone
+		Description: \nA drone flies across the map, revealing the area as it passes.\n\nDetects cloaked units.
 		SelectTargetSpeechNotification: SelectTarget
 		EndChargeSpeechNotification: SpyPlaneReady
 		CameraActor: camera.spyplane
@@ -4613,8 +4606,8 @@ REP:
 		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: uavicon
 		ChargeInterval: 3000
-		Description: Recon Drone
-		LongDesc: \nA drone flies across the map, revealing the area as it passes.\n\nDetects cloaked units.
+		Name: Recon Drone
+		Description: \nA drone flies across the map, revealing the area as it passes.\n\nDetects cloaked units.
 		SelectTargetSpeechNotification: SelectTarget
 		EndChargeSpeechNotification: SpyPlaneReady
 		CameraActor: camera.spyplane
@@ -4632,12 +4625,12 @@ REP:
 ^InterceptorsPower:
 	InterceptorPower@AirDef:
 		OrderName: interceptors
-		Prerequisites: ~aircraft.gdi, techlevel.unrestricted
+		Prerequisites: ~aircraft.gdi, techlevel.medium
 		PauseOnCondition: empdisable || being-warped
 		Icon: airsupport
 		ChargeInterval: 10500
-		Description: Interceptors
-		LongDesc: \nA squadron of Interceptors provides\n    air cover over the target area,\n    engaging any enemy aircraft within range.
+		Name: Interceptors
+		Description: \nA squadron of Interceptors provides\n    air cover over the target area,\n    engaging any enemy aircraft within range.
 		SelectTargetSpeechNotification: SelectTarget
 		EndChargeSpeechNotification: SpyPlaneReady
 		CameraActor: camera
@@ -4669,7 +4662,7 @@ HPAD.TD:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 120
-		Prerequisites: radarorrepair, ~structures.td, ~techlevel.infonly
+		Prerequisites: radarorrepair, ~structures.td, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Produces and reloads helicopters.
 	Valued:
@@ -4772,7 +4765,7 @@ PROC.TD:
 		Name: Refinery
 	Buildable:
 		BuildPaletteOrder: 60
-		Prerequisites: anypower, ~structures.td, ~techlevel.low
+		Prerequisites: anypower, ~structures.td
 		Queue: Building
 		IconPalette: chrometd
 		Description: Processes raw Tiberium, Ore\n  and Gems into credits.
@@ -4810,8 +4803,8 @@ PROC.TD:
 		RequiresSelection: true
 		PipCount: 17
 	Selectable:
-		Bounds: 72,56,0,12
-		DecorationBounds: 73,72
+		Bounds: 3072, 2389, 0, 512
+		DecorationBounds: 3114, 3072
 	InfiltrateForCash:
 		Types: ThiefInfiltrate
 		Percentage: 50
@@ -4840,7 +4833,7 @@ SILO.TD:
 		Name: Silo
 	Buildable:
 		BuildPaletteOrder: 35
-		Prerequisites: anyrefinery, ~structures.td, ~techlevel.infonly
+		Prerequisites: anyrefinery, ~structures.td
 		Queue: Defense
 		IconPalette: chrometd
 		Description: Stores processed Tiberium, Ore and Gems
@@ -4872,7 +4865,7 @@ SILO.TD:
 	Power:
 		Amount: -10
 	Selectable:
-		DecorationBounds: 49,30
+		DecorationBounds: 2090, 1280
 	Explodes:
 		Weapon: SmallBuildingExplode
 		EmptyWeapon: SmallBuildingExplode
@@ -4891,7 +4884,7 @@ AFLD.GDI:
 	Buildable:
 		Queue: Building
 		BuildPaletteOrder: 130
-		Prerequisites: radarorrepair, ~structures.gdi, ~techlevel.high
+		Prerequisites: radarorrepair, ~structures.gdi, ~techlevel.medium
 		Description: Produces and reloads aircraft.
 	Valued:
 		Cost: 500
@@ -5017,13 +5010,13 @@ GTEK:
 		Dimensions: 7, 7
 		Footprint: ___x___ __xxx__ _xxxxx_ xxxxxxx _xxxxx_ __xxx__ ___x___
 		Duration: 250
-		Prerequisites: forceshield.enabled, ~techlevel.high
+		Prerequisites: forceshield.enabled
 		Weapon: ForceShield
 		ActivationDelay: 5
 		AirburstAltitude: 0c0
 		AllowMultiple: false
-		Description: Force Shield
-		LongDesc: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
+		Name: Force Shield
+		Description: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
 		OnFireSound: forceon.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
@@ -5040,13 +5033,13 @@ GTEK:
 		Dimensions: 5, 5
 		Footprint: _xxx_ xxxxx xxxxx xxxxx _xxx_
 		Duration: 750
-		Prerequisites: ~gtek.arc, ~techlevel.unrestricted
+		Prerequisites: ~gtek.arc
 		Weapon: RepairFlash
 		ActivationDelay: 5
 		AirburstAltitude: 0c0
 		AllowMultiple: false
-		Description: Nanite Repair
-		LongDesc: \nRepairs selected damaged vehicles over time.
+		Name: Nanite Repair
+		Description: \nRepairs selected damaged vehicles over time.
 		OnFireSound: srepaira.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
@@ -5086,7 +5079,7 @@ TMPL:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Selectable:
-		Bounds: 72,72
+		Bounds: 3072, 3072
 	Health:
 		HP: 100000
 	Armor:
@@ -5106,16 +5099,17 @@ TMPL:
 		OrderName: clustermissile
 		Icon: clustermissile
 		IconPalette: chrometd
-		Prerequisites: ~techlevel.high, ~techlevel.unrestricted
+		Prerequisites: ~techlevel.unrestricted
 		Cursor: ability
 		ChargeInterval: 10500
-		Description: Cluster Missile
-		LongDesc: \nLaunches an Cluster Missile which deals heavy\n    damage at the target location.
+		Name: Cluster Missile
+		Description: \nLaunches an Cluster Missile which deals heavy\n    damage at the target location.
 		EndChargeSpeechNotification: ClusMissileReady
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		IncomingSpeechNotification: MissileLaunchDetected
 		MissileWeapon: deathhand
+		MissileImage: deathhand
 		MissilePalette: temptd
 		LaunchSound: icbm1.aud
 		IncomingSound: icbm1.aud
@@ -5149,14 +5143,14 @@ TMPL:
 		Dimensions: 7, 7
 		Footprint: ___x___ __xxx__ _xxxxx_ xxxxxxx _xxxxx_ __xxx__ ___x___
 		Duration: 250
-		Prerequisites: ~forceshield.enabled, ~techlevel.high
+		Prerequisites: ~forceshield.enabled
 		Weapon: ForceShield
 		ActivationDelay: 5
 		AirburstAltitude: 0c0
 		AllowMultiple: false
 		Sequence: false-active
-		Description: Force Shield
-		LongDesc: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
+		Name: Force Shield
+		Description: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
 		OnFireSound: forceon.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
@@ -5168,10 +5162,10 @@ TMPL:
 	GrantExternalConditionPowerCA@Frenzy:
 		OrderName: frenzy
 		Icon: frenzy
-		Prerequisites: ~tmpl.marked, ~techlevel.high
+		Prerequisites: ~tmpl.marked
 		ChargeInterval: 6750
 		Weapon: Frenzy
-		Description: Frenzy
+		Name: Frenzy
 		Condition: frenzy
 		Dimensions: 5, 5
 		Footprint: _xxx_ xxxxx xxxxx xxxxx _xxx_
@@ -5181,7 +5175,7 @@ TMPL:
 		AirburstAltitude: 0c0
 		Sequence: false-active
 		AllowMultiple: false
-		LongDesc: \nIncreases the movement speed and rate of fire of\n    targeted units for a limited time.\n\nWarning: Affected units take increased damage.
+		Description: \nIncreases the movement speed and rate of fire of\n    targeted units for a limited time.\n\nWarning: Affected units take increased damage.
 		OnFireSound: nodfrenzy.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -5235,7 +5229,7 @@ PRIS:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 90
-		Prerequisites: anyradar, ~structures.pris, ~techlevel.high
+		Prerequisites: anyradar, ~structures.pris, ~techlevel.medium
 		Description: Advanced experimental base defense.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -5247,7 +5241,7 @@ PRIS:
 		Name: Prism Tower
 	Building:
 	Selectable:
-		DecorationBounds: 24,46,0,-10
+		DecorationBounds: 1024, 1962, 0, -426
 	Health:
 		HP: 35000
 	Armor:
@@ -5374,7 +5368,7 @@ SPEN.nod:
 	MapEditorData:
 		ExcludeTilesets: INTERIOR
 	DetectCloaked:
-		CloakTypes: Underwater
+		DetectionTypes: Underwater
 		Range: 10c0
 		RequiresCondition: !(empdisable || being-warped)
 	RenderDetectionCircle:
@@ -5474,7 +5468,7 @@ SYRD.gdi:
 	MapEditorData:
 		ExcludeTilesets: INTERIOR
 	DetectCloaked:
-		CloakTypes: Underwater
+		DetectionTypes: Underwater
 		Range: 10c0
 		RequiresCondition: !(empdisable || being-warped)
 	RenderDetectionCircle:
@@ -5500,7 +5494,7 @@ HTUR:
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 100
-		Prerequisites: anyradar, ~structures.france, ~techlevel.high
+		Prerequisites: anyradar, ~structures.france, ~techlevel.medium
 		Description: Artillery base defense.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -5547,7 +5541,7 @@ HTUR:
 	WithBuildingBib:
 		HasMinibib: true
 	Selectable:
-		Bounds: 48,48
+		Bounds: 2048, 2048
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
 	-ProductionCostMultiplier@FranceBonus:
@@ -5556,11 +5550,10 @@ GUN.Nod:
 	Inherits: GUN
 	RenderSprites:
 		Image: gun2
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 	ActorPreviewPlaceBuildingPreview:
-		OverridePalette: placebuildingtd
 	Buildable:
-		Prerequisites: infantry.any, ~structures.nod, ~techlevel.medium
+		Prerequisites: infantry.any, ~structures.nod, ~techlevel.low
 		IconPalette: chrometd
 	Armament:
 		Weapon: TurretGunTD
@@ -5699,13 +5692,13 @@ SGEN:
 		Factions: shadow
 		Prerequisite: sgen.shadow
 	GrantExternalConditionPowerCA@SGEN:
-		Prerequisites: ~!sgen.shadow, ~techlevel.unrestricted
+		Prerequisites: ~!sgen.shadow
 		OrderName: stealthgen
 		Icon: invis
 		IconPalette: chrometd
 		ChargeInterval: 4500
 		Weapon: StealthBubble
-		Description: Tiberium Stealth
+		Name: Tiberium Stealth
 		Condition: sgen-invis
 		ValidRelationships: Ally, Neutral, Enemy
 		Dimensions: 7, 7
@@ -5714,7 +5707,7 @@ SGEN:
 		ActivationDelay: 0
 		AirburstAltitude: 0c0
 		AllowMultiple: false
-		LongDesc: \nMakes selected vehicles and structures\n    temporarily invisible\n\nWarning: Harmful to Infantry.
+		Description: \nMakes selected vehicles and structures\n    temporarily invisible\n\nWarning: Harmful to Infantry.
 		OnFireSound: cloak6.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -5725,14 +5718,16 @@ SGEN:
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 		ActiveCondition: active
+	ExternalCondition@ACTIVE:
+		Condition: active
 	GrantExternalConditionPowerCA@SGENSHADOW:
-		Prerequisites: ~sgen.shadow, ~techlevel.unrestricted
+		Prerequisites: ~sgen.shadow
 		OrderName: stealthgenshadow
 		Icon: invis
 		IconPalette: chrometd
 		ChargeInterval: 4500
 		Weapon: StealthBubble
-		Description: Tiberium Stealth
+		Name: Tiberium Stealth
 		Condition: sgen-invis
 		ValidRelationships: Ally, Neutral, Enemy
 		Dimensions: 7, 7
@@ -5741,7 +5736,7 @@ SGEN:
 		ActivationDelay: 0
 		AirburstAltitude: 0c0
 		AllowMultiple: false
-		LongDesc: \nMakes selected vehicles and structures\n    temporarily invisible\n\nWarning: Harmful to Infantry.
+		Description: \nMakes selected vehicles and structures\n    temporarily invisible\n\nWarning: Harmful to Infantry.
 		OnFireSound: cloak6.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -5854,7 +5849,6 @@ LASP:
 		RequiresCondition: !disabled && !empdisable && !build-incomplete && !c4 && !being-warped && !hacked
 	-Capturable:
 	-CaptureNotification:
-	-ProximityCaptor:
 	-CaptureManager:
 	-CapturableProgressBar:
 	-CapturableProgressBlink:
@@ -5928,7 +5922,7 @@ LASF:
 	DamageMultiplier: # Prevent all normal damage, but still allows direct kills from the post
 		Modifier: 0
 	Interactable:
-		Bounds: 48, 24
+		Bounds: 2048, 1024
 
 PATR:
 	Inherits: ^DefenseTD
@@ -5990,8 +5984,8 @@ PATR:
 		Cursor: empmissile
 		Icon: empmissile
 		ChargeInterval: 4500
-		Description: E.M. Missile
-		LongDesc: \nFires a Tomahawk missile which disables all mechanical units\n    and structures on impact.
+		Name: E.M. Missile
+		Description: \nFires a Tomahawk missile which disables all mechanical units\n    and structures on impact.
 		BeginChargeSpeechNotification: EMMissilePrepping
 		EndChargeSpeechNotification: EMMissileReady
 		SelectTargetSpeechNotification: SelectTarget
@@ -6014,7 +6008,7 @@ PATR:
 	WithBuildingBib:
 		HasMinibib: true
 	Selectable:
-		Bounds: 48,48
+		Bounds: 2048, 2048
 	RejectsOrders:
 		Except: Sell, PowerDown
 	InfiltrateForSupportPowerReset:
@@ -6040,8 +6034,8 @@ INDP:
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^3x2Shape
 	Selectable:
-		Bounds: 72,56,0,12
-		DecorationBounds: 73,72
+		Bounds: 3072, 2389, 0, 512
+		DecorationBounds: 3114, 3072
 	WithSpriteBody:
 		PauseOnCondition: disabled || being-warped
 	HitShape:
@@ -6114,7 +6108,7 @@ OREP:
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Selectable:
-		Bounds: 72,48
+		Bounds: 3072, 2048
 	Building:
 		Footprint: xxx xxx ===
 		Dimensions: 3,3
@@ -6193,7 +6187,7 @@ UPGC:
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Selectable:
-		Bounds: 72,48
+		Bounds: 3072, 2048
 	Building:
 		Footprint: xxx xxx ===
 		Dimensions: 3,3
@@ -6296,8 +6290,8 @@ UPGC:
 		Icon: fstorm
 		IconPalette: chrometd
 		ChargeInterval: 7500
-		Description: Firestorm
-		LongDesc: \nFires a barrage of rockets at the target area.
+		Name: Firestorm
+		Description: \nFires a barrage of rockets at the target area.
 		BeginChargeSpeechNotification: FireStormOffline
 		EndChargeSpeechNotification: FireStormReady
 		SelectTargetSpeechNotification: SelectTarget
@@ -6347,8 +6341,8 @@ UPGC:
 		ChargeInterval: 4500
 		Icon: arscan
 		IconPalette: chrometd
-		Description: Advanced Radar Scan
-		LongDesc: \nReveals the location of enemy structures & units\n    through the fog of war.
+		Name: Advanced Radar Scan
+		Description: \nReveals the location of enemy structures & units\n    through the fog of war.
 		RequiresCondition: !build-incomplete && tower.radar
 		PauseOnCondition: !radar-active || disabled || being-warped
 		LaunchSound: gradarup.aud
@@ -6382,8 +6376,8 @@ UPGC:
 		Prerequisites: ~techlevel.unrestricted
 		ChargeInterval: 6000
 		LifeTime: 375
-		Description: Nanite Shield
-		LongDesc: \nReduces the damage taken by all vehicles in the target area.
+		Name: Nanite Shield
+		Description: \nReduces the damage taken by all vehicles in the target area.
 		LaunchSound: srepaira.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -6538,9 +6532,9 @@ TMPP:
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@PRIMARY: ^PrimaryBuilding
 	RenderSprites:
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 	Selectable:
-		Bounds: 72,60,0,6
+		Bounds: 3072, 2560, 0, 256
 	HitShape:
 		TargetableOffsets: 0,0,0, 0,1024,0, 0,-1024,0
 		Type: Rectangle
@@ -6640,7 +6634,7 @@ MSLO.Nod:
 	RenderSprites:
 		Image: nmslo
 	Selectable:
-		Bounds: 48,24,0,12
+		Bounds: 2048, 1024, 0, 512
 	Valued:
 		Cost: 2500
 	Tooltip:
@@ -6677,16 +6671,16 @@ MSLO.Nod:
 		OrderName: chemmissile
 		Icon: chemmissile
 		IconPalette: chrometd
-		Prerequisites: techlevel.unrestricted
 		Cursor: chemmissile
 		ChargeInterval: 13500
-		Description: Chemical Missile
-		LongDesc: \nLaunches an deadly Chemical Missile. Deals heavy damage\n    and creates toxic clouds which are extremely harmful to infantry.\n
+		Name: Chemical Missile
+		Description: \nLaunches an deadly Chemical Missile. Deals heavy damage\n    and creates toxic clouds which are extremely harmful to infantry.\n
 		EndChargeSpeechNotification: CMissileReady
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		IncomingSpeechNotification: MissileLaunchDetected
 		MissileWeapon: Chemicbm
+		MissileImage: Chemicbm
 		MissileDelay: 5
 		IncomingSound: nukelaunch.aud
 		LaunchSound: nukelaunch.aud
@@ -6729,7 +6723,7 @@ WEAT:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@SHAPE: ^2x2Shape
 	Selectable:
-		Bounds: 48,48
+		Bounds: 2048, 2048
 	Buildable:
 		Queue: Defense
 		BuildPaletteOrder: 130
@@ -6765,9 +6759,9 @@ WEAT:
 		Icon: storm
 		Cursor: ability
 		ChargeInterval: 13500
-		Description: Lightning Storm
+		Name: Lightning Storm
 		ActivationDelay: 50
-		LongDesc: \nInitiate a Lightning Storm which deals\n    heavy damage over a large area.
+		Description: \nInitiate a Lightning Storm which deals\n    heavy damage over a large area.
 		Weapon: WeatherStormInit
 		AirburstAltitude: 4c512
 		AllowMultiple: false

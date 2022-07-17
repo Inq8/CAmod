@@ -9,6 +9,7 @@
  */
 #endregion
 
+using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
@@ -49,9 +50,14 @@ namespace OpenRA.Mods.CA.Traits
 
 			var units = e.Damage.Value / Info.DivideDamageBy;
 			units = units > 1 ? units : 1;
-			var resources = self.World.WorldActor.TraitsImplementing<ResourceType>().ToList();
 
-			if (!resources.Any())
+			var resources = new List<string>();
+			var resourceLayers = self.World.Map.Rules.Actors["world"].TraitInfos<ResourceLayerInfo>().ToList();
+			foreach (var l in resourceLayers)
+				foreach (var t in l.ResourceTypes)
+					resources.Add(t.Key);
+
+			if (resources.Count == 0)
 				return;
 
 			var resource = resources.First();

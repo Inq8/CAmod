@@ -229,14 +229,22 @@ BADR.Husk:
 	Aircraft:
 		TurnSpeed: 5
 		Speed: 180
-	SmokeTrailWhenDamaged@0:
-		Offset: -432,560,0
-		Interval: 2
-		MinDamage: Undamaged
-	SmokeTrailWhenDamaged@1:
-		Offset: -432,-560,0
-		Interval: 2
-		MinDamage: Undamaged
+	LeavesTrails@0:
+		Offsets: -432,560,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+	LeavesTrails@1:
+		Offsets: -432,-560,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	RenderSprites:
 		Image: badr
 	-RevealOnDeath:
@@ -252,14 +260,22 @@ B2B.Husk:
 	Aircraft:
 		TurnSpeed: 5
 		Speed: 180
-	SmokeTrailWhenDamaged@0:
-		Offset: -432,560,0
-		Interval: 2
-		MinDamage: Undamaged
-	SmokeTrailWhenDamaged@1:
-		Offset: -432,-560,0
-		Interval: 2
-		MinDamage: Undamaged
+	LeavesTrails@0:
+		Offsets: -432,560,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+	LeavesTrails@1:
+		Offsets: -432,-560,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	RenderSprites:
 		Image: b2b
 	-RevealOnDeath:
@@ -279,10 +295,14 @@ MIG.Husk:
 	Aircraft:
 		TurnSpeed: 5
 		Speed: 201
-	SmokeTrailWhenDamaged:
-		Offset: -853,0,171
-		Interval: 2
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -853,0,171
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	RevealsShroud:
 		Range: 12c0
 		MinRange: 10c0
@@ -313,10 +333,14 @@ YAK.Husk:
 	Aircraft:
 		TurnSpeed: 5
 		Speed: 180
-	SmokeTrailWhenDamaged:
-		Offset: -853,0,0
-		Interval: 2
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -853,0,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	Contrail@1:
 		Offset: -98,-683,-10
 	Contrail@2:
@@ -345,10 +369,14 @@ P51.Husk:
 	Aircraft:
 		TurnSpeed: 5
 		Speed: 180
-	SmokeTrailWhenDamaged:
-		Offset: -853,0,0
-		Interval: 2
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -853,0,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	Contrail@1:
 		Offset: -78,-623,30
 	Contrail@2:
@@ -380,9 +408,14 @@ HELI.Husk:
 	WithIdleOverlay:
 		Offset: 0,0,85
 		Sequence: rotor
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	RevealsShroud:
 		Range: 12c0
 		MinRange: 10c0
@@ -415,9 +448,14 @@ HIND.Husk:
 		Speed: 112
 	WithIdleOverlay:
 		Sequence: rotor
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -452,10 +490,14 @@ SMIG.Husk:
 		Offset: -700,683,-100
 	Contrail@2:
 		Offset: -700,-683,-100
-	SmokeTrailWhenDamaged:
-		Offset: -1c43,0,0
-		Interval: 2
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -1c43,0,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	RenderSprites:
 		Image: smig
 
@@ -647,7 +689,7 @@ AMCV.Husk:
 	Tooltip:
 		Name: Husk (Mobile Construction Vehicle)
 	RenderSprites:
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 		Image: amcv.destroyed
 
 RTNK.Husk:
@@ -674,7 +716,7 @@ APC2.Husk:
 		Name: Husk (APC)
 	RenderSprites:
 		Image: apc2.destroyed
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 HMMV.Husk:
 	Inherits: ^HuskTD
@@ -682,7 +724,7 @@ HMMV.Husk:
 		Name: Husk (Hum-Vee)
 	RenderSprites:
 		Image: hmmv.destroyed
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 BGGY.Husk:
 	Inherits: ^HuskTD
@@ -690,7 +732,7 @@ BGGY.Husk:
 		Name: Husk (Fast Attack Buggy)
 	RenderSprites:
 		Image: bggy.destroyed
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 MTNK.Husk:
 	Inherits: ^HuskTD
@@ -700,7 +742,7 @@ MTNK.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: mtnk.destroyed
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 MTNK.DRONE.Husk:
 	Inherits: ^HuskTD
@@ -710,7 +752,7 @@ MTNK.DRONE.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: drone.destroyed
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 HTNK.Husk:
 	Inherits: ^HuskTD
@@ -720,7 +762,7 @@ HTNK.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: htnk.destroyed
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 HTNK.ION.Husk:
 	Inherits: ^HuskTD
@@ -730,7 +772,7 @@ HTNK.ION.Husk:
 		Anim: turret-ion
 	RenderSprites:
 		Image: htnk.destroyed
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 HTNK.HOVER.Husk:
 	Inherits: ^HuskTD
@@ -742,7 +784,7 @@ HTNK.HOVER.Husk:
 		Sequence: idle-hover
 	RenderSprites:
 		Image: htnk.destroyed
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 HTNK.DRONE.Husk:
 	Inherits: ^HuskTD
@@ -752,7 +794,7 @@ HTNK.DRONE.Husk:
 		Anim: turret-drone
 	RenderSprites:
 		Image: htnk.destroyed
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 TITN.Husk:
 	Inherits: ^HuskTD
@@ -762,7 +804,7 @@ TITN.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: titn.destroyed
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 TITN.RAIL.Husk:
 	Inherits: ^HuskTD
@@ -772,7 +814,7 @@ TITN.RAIL.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: titn.rail.destroyed
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 JUGG.Husk:
 	Inherits: ^HuskTD
@@ -782,7 +824,7 @@ JUGG.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: jugg.destroyed
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 FTNK.Husk:
 	Inherits: ^HuskTD
@@ -790,7 +832,7 @@ FTNK.Husk:
 		Name: Husk (Flame Tank)
 	RenderSprites:
 		Image: ftnk.destroyed
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 HFTK.Husk:
 	Inherits: ^Husk
@@ -807,7 +849,7 @@ BIKE.Husk:
 		Name: Husk (Recon Bike)
 	RenderSprites:
 		Image: bike.destroyed
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 MSAM.Husk:
 	Inherits: ^HuskTD
@@ -817,7 +859,7 @@ MSAM.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: msam.destroyed
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 STNK.NOD.Husk:
 	Inherits: ^HuskTD
@@ -825,7 +867,7 @@ STNK.NOD.Husk:
 		Name: Husk (Stealth Tank)
 	RenderSprites:
 		Image: stnknod.destroyed
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 APCH.Husk:
 	Inherits: ^HelicopterHusk
@@ -834,9 +876,14 @@ APCH.Husk:
 	Aircraft:
 		TurnSpeed: 4
 		Speed: 186
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -847,7 +894,7 @@ APCH.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: apch
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 APCH.Husk.EMP:
 	Inherits: APCH.Husk
@@ -868,9 +915,14 @@ ORCA.Husk:
 	Aircraft:
 		TurnSpeed: 4
 		Speed: 186
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	RevealsShroud:
 		Range: 12c0
 		MinRange: 10c0
@@ -881,7 +933,7 @@ ORCA.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: orca
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 ORCA.Husk.EMP:
 	Inherits: ORCA.Husk
@@ -905,9 +957,14 @@ OCAR.Husk:
 	FallsToEarth:
 		Velocity: 86
 		MaximumSpinSpeed: 20
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -918,7 +975,7 @@ OCAR.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: orcaca
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 OCAR.Husk.EMP:
 	Inherits: OCAR.Husk
@@ -935,13 +992,17 @@ UAV.Husk:
 		Offset: -725,683,0
 	Contrail@2:
 		Offset: -725,-683,0
-	SmokeTrailWhenDamaged:
-		Offset: -1c43,0,0
-		Interval: 2
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -1c43,0,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	RenderSprites:
 		Image: uav
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 UAV.Husk.EMP:
 	Inherits: UAV.Husk
@@ -953,7 +1014,7 @@ HARV.TD.Husk:
 		Name: Harvester (Destroyed)
 	RenderSprites:
 		Image: harv2.destroyed
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 A10.Husk:
 	Inherits: ^PlaneHusk
@@ -966,13 +1027,17 @@ A10.Husk:
 		Offset: -725,683,0
 	Contrail@2:
 		Offset: -725,-683,0
-	SmokeTrailWhenDamaged:
-		Offset: -1c43,0,0
-		Interval: 2
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -1c43,0,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	RenderSprites:
 		Image: a10
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 A10.Husk.EMP:
 	Inherits: A10.Husk
@@ -997,13 +1062,17 @@ YF23.Husk:
 		Offset: -325,483,0
 	Contrail@2:
 		Offset: -325,-483,0
-	SmokeTrailWhenDamaged:
-		Offset: -1c43,0,0
-		Interval: 2
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -1c43,0,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	RenderSprites:
 		Image: yf23
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 YF23.Husk.EMP:
 	Inherits: YF23.Husk
@@ -1020,13 +1089,17 @@ AURO.Husk:
 		Offset: -300,-800,-50
 	Contrail@2:
 		Offset: -300,800,-50
-	SmokeTrailWhenDamaged:
-		Offset: -1c43,0,0
-		Interval: 2
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -1c43,0,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	RenderSprites:
 		Image: auro
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 AURO.Husk.EMP:
 	Inherits: AURO.Husk
@@ -1047,17 +1120,25 @@ C17.Husk:
 	Aircraft:
 		TurnSpeed: 5
 		Speed: 236
-	SmokeTrailWhenDamaged@0:
-		Offset: -432,560,0
-		Interval: 2
-		MinDamage: Undamaged
-	SmokeTrailWhenDamaged@1:
-		Offset: -432,-560,0
-		Interval: 2
-		MinDamage: Undamaged
+	LeavesTrails@0:
+		Offsets: -432,560,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+	LeavesTrails@1:
+		Offsets: -432,-560,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	RenderSprites:
 		Image: c17
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 C17.Husk.EMP:
 	Inherits: C17.Husk
@@ -1070,17 +1151,25 @@ GALX.Husk:
 	Aircraft:
 		TurnSpeed: 5
 		Speed: 266
-	SmokeTrailWhenDamaged@0:
-		Offset: -432,560,0
-		Interval: 2
-		MinDamage: Undamaged
-	SmokeTrailWhenDamaged@1:
-		Offset: -432,-560,0
-		Interval: 2
-		MinDamage: Undamaged
+	LeavesTrails@0:
+		Offsets: -432,560,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+	LeavesTrails@1:
+		Offsets: -432,-560,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	RenderSprites:
 		Image: galx
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 GALX.Husk.EMP:
 	Inherits: GALX.Husk
@@ -1100,9 +1189,14 @@ RAH.Husk:
 	Aircraft:
 		TurnSpeed: 4
 		Speed: 186
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -1113,7 +1207,7 @@ RAH.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: rah66
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 RAH.Husk.EMP:
 	Inherits: RAH.Husk
@@ -1137,14 +1231,22 @@ KIRO.Husk:
 	FallsToEarth:
 		MaximumSpinSpeed: 0
 		Explosion: KirovExplode
-	SmokeTrailWhenDamaged@0:
-		Offset: -432,560,0
-		Interval: 2
-		MinDamage: Undamaged
-	SmokeTrailWhenDamaged@1:
-		Offset: -432,-560,0
-		Interval: 2
-		MinDamage: Undamaged
+	LeavesTrails@0:
+		Offsets: -432,560,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+	LeavesTrails@1:
+		Offsets: -432,-560,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -1224,7 +1326,7 @@ DISR.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: disr.destroyed
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 WTNK.Husk:
 	Inherits: ^HuskTD
@@ -1234,7 +1336,7 @@ WTNK.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: wtnk.destroyed
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 BATF.Husk:
 	Inherits: ^Husk
@@ -1337,9 +1439,14 @@ HARR.Husk:
 	Aircraft:
 		TurnSpeed: 4
 		Speed: 201
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	Contrail@1:
 		Offset: -400,-483,0
 	Contrail@2:
@@ -1374,9 +1481,14 @@ HORN.Husk:
 	Aircraft:
 		TurnSpeed: 4
 		Speed: 195
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	RevealsShroud:
 		Range: 2c0
 		MinRange: 1c0
@@ -1387,7 +1499,7 @@ HORN.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: horn
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 	FallsToEarth:
 		Explosion: UnitExplodeDrone
 
@@ -1412,9 +1524,14 @@ SCRN.Husk:
 	Aircraft:
 		TurnSpeed: 4
 		Speed: 225
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	Contrail@1:
 		Offset: -300,-183,0
 	Contrail@2:
@@ -1429,7 +1546,7 @@ SCRN.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: scrin
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 SCRN.Husk.EMP:
 	Inherits: SCRN.Husk
@@ -1452,9 +1569,14 @@ ORCB.Husk:
 		Speed: 155
 	FallsToEarth:
 		Velocity: 86
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -1465,7 +1587,7 @@ ORCB.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: orcab
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 ORCB.Husk.EMP:
 	Inherits: ORCB.Husk
@@ -1491,10 +1613,14 @@ SUK.Husk:
 	Aircraft:
 		TurnSpeed: 5
 		Speed: 225
-	SmokeTrailWhenDamaged:
-		Offset: -853,0,0
-		Interval: 2
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -853,0,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	RevealsShroud:
 		Range: 12c0
 		MinRange: 10c0
@@ -1544,7 +1670,7 @@ WTNK.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: mwtnk.destroyed
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 LTNK.Husk:
 	Inherits: ^HuskTD
@@ -1554,7 +1680,7 @@ LTNK.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: ltnk.destroyed
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 CHPR.Husk:
 	Inherits: ^Husk
@@ -1572,9 +1698,14 @@ VENM.Husk:
 	Aircraft:
 		TurnSpeed: 4
 		Speed: 186
-	SmokeTrailWhenDamaged:
-		Offset: -427,0,0
-		MinDamage: Undamaged
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
 	RevealsShroud:
 		Range: 12c0
 		MinRange: 10c0
@@ -1585,7 +1716,7 @@ VENM.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: venm
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 
 VENM.Husk.EMP:
 	Inherits: VENM.Husk

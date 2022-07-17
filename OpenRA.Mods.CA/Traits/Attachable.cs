@@ -108,11 +108,12 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void SetPosition(WPos pos)
 		{
-			if (attachedTo.CenterPosition == self.CenterPosition)
+			if (attachedTo.CenterPosition.X == self.CenterPosition.X && attachedTo.CenterPosition.Y == self.CenterPosition.Y)
 				return;
 
-			positionable.SetPosition(self, pos);
-			positionable.SetVisualPosition(self, pos);
+			var newPosition = new WPos(pos.X, pos.Y, self.CenterPosition.Z);
+			positionable.SetPosition(self, newPosition);
+			positionable.SetCenterPosition(self, newPosition);
 		}
 
 		void INotifyActorDisposing.Disposing(Actor self)
@@ -192,6 +193,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void ParentEnteredCargo()
 		{
+			if (!self.IsInWorld)
+				return;
+
 			self.World.AddFrameEndTask(w =>
 			{
 				w.Remove(self);
@@ -200,6 +204,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void ParentExitedCargo()
 		{
+			if (self.IsInWorld)
+				return;
+
 			self.World.AddFrameEndTask(w =>
 			{
 				SetPosition(attachedTo.CenterPosition);

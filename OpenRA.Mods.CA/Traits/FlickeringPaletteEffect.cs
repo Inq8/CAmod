@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System.Collections.Generic;
 using OpenRA.Graphics;
 using OpenRA.Primitives;
 using OpenRA.Traits;

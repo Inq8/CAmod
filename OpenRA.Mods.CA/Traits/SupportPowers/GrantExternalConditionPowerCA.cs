@@ -1,6 +1,6 @@
 ﻿#region Copyright & License Information
 /*
- * Copyright 2007-2019 The OpenRA Developers (see AUTHORS)
+ * Copyright 2007-2021 The OpenRA Developers (see AUTHORS)
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
  * as published by the Free Software Foundation, either version 3 of
@@ -23,7 +23,9 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	class GrantExternalConditionPowerCAInfo : SupportPowerInfo
+	[Desc("Grants a condition to actors in the target footprint.",
+		"CA version allows for a weapon detonation and a condition applied to the actor that activated the support power.")]
+	public class GrantExternalConditionPowerCAInfo : SupportPowerInfo
 	{
 		[FieldLoader.Require]
 		[Desc("The condition to apply. Must be included in the target actor's ExternalConditions list.")]
@@ -43,7 +45,7 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Sound to instantly play at the targeted area.")]
 		public readonly string OnFireSound = null;
 
-		[Desc("Player stances which condition can be applied to.")]
+		[Desc("Player relationships which condition can be applied to.")]
 		public readonly PlayerRelationship ValidRelationships = PlayerRelationship.Ally;
 
 		[SequenceReference]
@@ -51,8 +53,14 @@ namespace OpenRA.Mods.CA.Traits
 			"This requires the actor to have the WithSpriteBody trait or one of its derivatives.")]
 		public readonly string Sequence = "active";
 
+		[CursorReference]
 		[Desc("Cursor to display when there are no units to apply the condition in range.")]
 		public readonly string BlockedCursor = "move-blocked";
+
+		public readonly string FootprintImage = "overlay";
+
+		[SequenceReference(nameof(FootprintImage))]
+		public readonly string FootprintSequence = "target-select";
 
 		[WeaponReference]
 		[FieldLoader.Require]
@@ -131,7 +139,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			foreach (var a in UnitsInRange(self.World.Map.CellContaining(order.Target.CenterPosition)))
 				a.TraitsImplementing<ExternalCondition>()
-					.FirstOrDefault(t => t.Info.Condition == info.Condition && t.CanGrantCondition(a, self))
+					.FirstOrDefault(t => t.Info.Condition == info.Condition && t.CanGrantCondition(self))
 					?.GrantCondition(a, self, info.Duration);
 
 			if (info.Weapon != null)
@@ -153,11 +161,11 @@ namespace OpenRA.Mods.CA.Traits
 
 			return units.Distinct().Where(a =>
 			{
-				if (!info.ValidRelationships.HasStance(a.Owner.RelationshipWith(Self.Owner)))
+				if (!info.ValidRelationships.HasRelationship(Self.Owner.RelationshipWith(a.Owner)))
 					return false;
 
 				return a.TraitsImplementing<ExternalCondition>()
-					.Any(t => t.Info.Condition == info.Condition && t.CanGrantCondition(a, Self));
+					.Any(t => t.Info.Condition == info.Condition && t.CanGrantCondition(Self));
 			});
 		}
 
@@ -193,6 +201,7 @@ namespace OpenRA.Mods.CA.Traits
 			readonly char[] footprint;
 			readonly CVec dimensions;
 			readonly Sprite tile;
+			readonly float alpha;
 			readonly SupportPowerManager manager;
 			readonly string order;
 
@@ -207,7 +216,10 @@ namespace OpenRA.Mods.CA.Traits
 				this.power = power;
 				footprint = power.info.Footprint.Where(c => !char.IsWhiteSpace(c)).ToArray();
 				dimensions = power.info.Dimensions;
-				tile = world.Map.Rules.Sequences.GetSequence("overlay", "target-select").GetSprite(0);
+
+				var sequence = world.Map.Rules.Sequences.GetSequence(power.info.FootprintImage, power.info.FootprintSequence);
+				tile = sequence.GetSprite(0);
+				alpha = sequence.GetAlpha(0);
 			}
 
 			protected override IEnumerable<Order> OrderInner(World world, CPos cell, int2 worldPixel, MouseInput mi)
@@ -244,7 +256,7 @@ namespace OpenRA.Mods.CA.Traits
 				var pal = wr.Palette(TileSet.TerrainPaletteInternalName);
 
 				foreach (var t in power.CellsMatching(xy, footprint, dimensions))
-					yield return new SpriteRenderable(tile, wr.World.Map.CenterOfCell(t), WVec.Zero, -511, pal, 1f, true, true);
+					yield return new SpriteRenderable(tile, wr.World.Map.CenterOfCell(t), WVec.Zero, -511, pal, 1f, alpha, float3.Ones, TintModifiers.IgnoreWorldTint, true);
 			}
 
 			protected override string GetCursor(World world, CPos cell, int2 worldPixel, MouseInput mi)

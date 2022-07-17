@@ -12,7 +12,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenRA.Mods.Common.Pathfinder;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
@@ -110,7 +109,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		void QueueCaptureOrders(IBot bot)
 		{
-			if (!Info.CapturingActorTypes.Any() || player.WinState != WinState.Undefined)
+			if (Info.CapturingActorTypes.Count == 0 || player.WinState != WinState.Undefined)
 				return;
 
 			activeCapturers.RemoveAll(unitCannotBeOrderedOrIsIdle);
@@ -128,7 +127,7 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			var randomPlayer = world.Players.Where(p => !p.Spectating
-				&& Info.CapturableStances.HasStance(player.RelationshipWith(p))).Random(world.LocalRandom);
+				&& Info.CapturableStances.HasRelationship(player.RelationshipWith(p))).Random(world.LocalRandom);
 
 			var targetOptions = Info.CheckCaptureTargetsForVisibility
 				? GetVisibleActorsBelongingToPlayer(randomPlayer)
@@ -146,7 +145,7 @@ namespace OpenRA.Mods.CA.Traits
 				.OrderByDescending(target => target.GetSellValue())
 				.Take(maximumCaptureTargetOptions);
 
-			if (Info.CapturableActorTypes.Any())
+			if (Info.CapturableActorTypes.Count > 0)
 				capturableTargetOptions = capturableTargetOptions.Where(target => Info.CapturableActorTypes.Contains(target.Info.Name.ToLowerInvariant()));
 
 			if (!capturableTargetOptions.Any())
@@ -173,17 +172,17 @@ namespace OpenRA.Mods.CA.Traits
 
 		Target SafePath(Actor capturer, Actor target)
 		{
-			var locomotor = capturer.Trait<Mobile>().Locomotor;
+			var mobile = capturer.Trait<Mobile>();
+			var locomotor = mobile.Locomotor;
 
 			if (!domainIndex.IsPassable(capturer.Location, target.Location, locomotor))
 				return Target.Invalid;
 
-			var path = pathfinder.FindPath(
-				PathSearch.FromPoint(world, locomotor, capturer, capturer.Location, target.Location, BlockedByActor.None)
-					.WithCustomCost(loc => world.FindActorsInCircle(world.Map.CenterOfCell(loc), Info.EnemyAvoidanceRadius)
-						.Where(u => !u.IsDead && capturer.Owner.RelationshipWith(u.Owner) == PlayerRelationship.Enemy && capturer.IsTargetableBy(u))
-						.Sum(u => Math.Max(WDist.Zero.Length, Info.EnemyAvoidanceRadius.Length - (world.Map.CenterOfCell(loc) - u.CenterPosition).Length)))
-					.FromPoint(capturer.Location));
+			var path = mobile.PathFinder.FindUnitPathToTargetCellByPredicate(
+				capturer, new[] { capturer.Location }, loc => true, BlockedByActor.Stationary,
+				loc => world.FindActorsInCircle(world.Map.CenterOfCell(loc), Info.EnemyAvoidanceRadius)
+					.Where(u => !u.IsDead && capturer.Owner.RelationshipWith(u.Owner) == PlayerRelationship.Enemy && capturer.IsTargetableBy(u))
+					.Sum(u => Math.Max(WDist.Zero.Length, Info.EnemyAvoidanceRadius.Length - (world.Map.CenterOfCell(loc) - u.CenterPosition).Length)));
 
 			if (path.Count == 0)
 				return Target.Invalid;

@@ -53,7 +53,6 @@ if [ -f "${TEMPLATE_ROOT}/user.config" ]; then
 fi
 
 require_variables "MOD_ID" "ENGINE_DIRECTORY" "PACKAGING_DISPLAY_NAME" "PACKAGING_INSTALLER_NAME" "PACKAGING_COPY_CNC_DLL" "PACKAGING_COPY_D2K_DLL" \
-	"PACKAGING_OSX_MONO_TAG" "PACKAGING_OSX_MONO_SOURCE" "PACKAGING_OSX_MONO_TEMP_ARCHIVE_NAME" \
 	"PACKAGING_OSX_DMG_MOD_ICON_POSITION" "PACKAGING_OSX_DMG_APPLICATION_ICON_POSITION" "PACKAGING_OSX_DMG_HIDDEN_ICON_POSITION" \
 	"PACKAGING_FAQ_URL" "PACKAGING_OVERWRITE_MOD_VERSION"
 
@@ -64,6 +63,7 @@ if [ ! -f "${TEMPLATE_ROOT}/${ENGINE_DIRECTORY}/Makefile" ]; then
 fi
 
 . "${TEMPLATE_ROOT}/${ENGINE_DIRECTORY}/packaging/functions.sh"
+. "${TEMPLATE_ROOT}/packaging/functions.sh"
 
 # Import code signing certificate
 if [ -n "${MACOS_DEVELOPER_CERTIFICATE_BASE64}" ] && [ -n "${MACOS_DEVELOPER_CERTIFICATE_PASSWORD}" ] && [ -n "${MACOS_DEVELOPER_IDENTITY}" ]; then
@@ -104,7 +104,7 @@ build_platform() {
 	DMG_NAME="${2}"
 	LAUNCHER_DIR="${BUILTDIR}/${PACKAGING_OSX_APP_NAME}"
 	LAUNCHER_CONTENTS_DIR="${LAUNCHER_DIR}/Contents"
-	LAUNCHER_MACOS_DIR="${LAUNCHER_CONTENTS_DIR}/MacOS"
+	LAUNCHER_ASSEMBLY_DIR="${LAUNCHER_CONTENTS_DIR}/MacOS"
 	LAUNCHER_RESOURCES_DIR="${LAUNCHER_CONTENTS_DIR}/Resources"
 
 	echo "Building launcher (${PLATFORM})"
@@ -126,24 +126,21 @@ build_platform() {
 		modify_plist "<string>{DISCORD_URL_SCHEME}</string>" "" "${LAUNCHER_CONTENTS_DIR}/Info.plist"
 	fi
 
-	if [ "${PLATFORM}" = "compat" ]; then
+	if [ "${PLATFORM}" = "mono" ]; then
 		modify_plist "{MINIMUM_SYSTEM_VERSION}" "10.9" "${LAUNCHER_CONTENTS_DIR}/Info.plist"
-		clang -m64 "${TEMPLATE_ROOT}/${ENGINE_DIRECTORY}/packaging/macos/launcher-mono.m" -o "${LAUNCHER_MACOS_DIR}/OpenRA" -framework AppKit -mmacosx-version-min=10.9
+		clang -m64 "${TEMPLATE_ROOT}/${ENGINE_DIRECTORY}/packaging/macos/launcher-mono.m" -o "${LAUNCHER_ASSEMBLY_DIR}/Launcher" -framework AppKit -mmacosx-version-min=10.9
 	else
-		modify_plist "{MINIMUM_SYSTEM_VERSION}" "10.13" "${LAUNCHER_CONTENTS_DIR}/Info.plist"
-		clang -m64 "${TEMPLATE_ROOT}/${ENGINE_DIRECTORY}/packaging/macos/launcher.m" -o "${LAUNCHER_MACOS_DIR}/OpenRA" -framework AppKit -mmacosx-version-min=10.13
-
-		curl -s -L -o "${PACKAGING_OSX_MONO_TEMP_ARCHIVE_NAME}" -O "${PACKAGING_OSX_MONO_SOURCE}" || exit 3
-		unzip -qq -d "${BUILTDIR}" "${PACKAGING_OSX_MONO_TEMP_ARCHIVE_NAME}"
-		rm "${PACKAGING_OSX_MONO_TEMP_ARCHIVE_NAME}"
-
-		mv "${BUILTDIR}/mono" "${LAUNCHER_MACOS_DIR}"
-		mv "${BUILTDIR}/etc" "${LAUNCHER_RESOURCES_DIR}"
-		mv "${BUILTDIR}/lib" "${LAUNCHER_RESOURCES_DIR}"
+		modify_plist "{MINIMUM_SYSTEM_VERSION}" "10.14" "${LAUNCHER_CONTENTS_DIR}/Info.plist"
+		clang -m64 "${TEMPLATE_ROOT}/${ENGINE_DIRECTORY}/packaging/macos/launcher.m" -o "${LAUNCHER_ASSEMBLY_DIR}/Launcher" -framework AppKit -mmacosx-version-min=10.14
 	fi
 
 	echo "Building core files"
-	install_assemblies_mono "${TEMPLATE_ROOT}/${ENGINE_DIRECTORY}" "${LAUNCHER_RESOURCES_DIR}" "osx-x64" "True" "${PACKAGING_COPY_CNC_DLL}" "${PACKAGING_COPY_D2K_DLL}"
+	RUNTIME="net6"
+	if [ "${PLATFORM}" = "mono" ]; then
+		RUNTIME="mono"
+	fi
+
+	install_assemblies "${TEMPLATE_ROOT}/${ENGINE_DIRECTORY}" "${LAUNCHER_ASSEMBLY_DIR}" "osx-x64" "${RUNTIME}" "True" "${PACKAGING_COPY_CNC_DLL}" "${PACKAGING_COPY_D2K_DLL}"
 	install_data "${TEMPLATE_ROOT}/${ENGINE_DIRECTORY}" "${LAUNCHER_RESOURCES_DIR}"
 
 	for f in ${PACKAGING_COPY_ENGINE_FILES}; do
@@ -152,16 +149,9 @@ build_platform() {
 	done
 
 	echo "Building mod files"
-	pushd "${TEMPLATE_ROOT}" > /dev/null
-	make all
-	popd > /dev/null
+	install_mod_assemblies "${TEMPLATE_ROOT}" "${LAUNCHER_ASSEMBLY_DIR}" "osx-x64" "${RUNTIME}" "${TEMPLATE_ROOT}/${ENGINE_DIRECTORY}"
 
 	cp -LR "${TEMPLATE_ROOT}mods/"* "${LAUNCHER_RESOURCES_DIR}/mods"
-
-	for f in ${PACKAGING_COPY_MOD_BINARIES}; do
-		mkdir -p "${LAUNCHER_RESOURCES_DIR}/$(dirname "${f}")"
-		cp "${TEMPLATE_ROOT}/${ENGINE_DIRECTORY}/bin/${f}" "${LAUNCHER_RESOURCES_DIR}/${f}"
-	done
 
 	set_engine_version "${ENGINE_VERSION}" "${LAUNCHER_RESOURCES_DIR}"
 	if [ "${PACKAGING_OVERWRITE_MOD_VERSION}" == "True" ]; then
@@ -186,7 +176,6 @@ build_platform() {
 
 	# Sign binaries with developer certificate
 	if [ -n "${MACOS_DEVELOPER_IDENTITY}" ]; then
-		codesign -s "${MACOS_DEVELOPER_IDENTITY}" --timestamp --options runtime -f --entitlements "${TEMPLATE_ROOT}/${ENGINE_DIRECTORY}/packaging/macos/entitlements.plist" "${LAUNCHER_RESOURCES_DIR}/"*.dylib
 		codesign -s "${MACOS_DEVELOPER_IDENTITY}" --timestamp --options runtime -f --entitlements "${TEMPLATE_ROOT}/${ENGINE_DIRECTORY}/packaging/macos/entitlements.plist" --deep "${LAUNCHER_DIR}"
 	fi
 
@@ -248,7 +237,7 @@ notarize_package() {
 	sudo xcode-select -r
 
 	# Create a temporary read-only dmg for submission (notarization service rejects read/write images)
-	hdiutil convert "${DMG_PATH}" -format UDZO -imagekey zlib-level=9 -ov -o "${NOTARIZE_DMG_PATH}"
+	hdiutil convert "${DMG_PATH}" -format ULFO -ov -o "${NOTARIZE_DMG_PATH}"
 
 	NOTARIZATION_UUID=$(xcrun altool --notarize-app --primary-bundle-id "net.openra.modsdk" -u "${MACOS_DEVELOPER_USERNAME}" -p "${MACOS_DEVELOPER_PASSWORD}" --file "${NOTARIZE_DMG_PATH}" 2>&1 | awk -F' = ' '/RequestUUID/ { print $2; exit }')
 	if [ -z "${NOTARIZATION_UUID}" ]; then
@@ -288,15 +277,21 @@ notarize_package() {
 }
 
 finalize_package() {
-	DMG_PATH="${1}"
-	OUTPUT_PATH="${2}"
+	PLATFORM="${1}"
+	INPUT_PATH="${2}"
+	OUTPUT_PATH="${3}"
 
-	hdiutil convert "${DMG_PATH}" -format UDZO -imagekey zlib-level=9 -ov -o "${OUTPUT_PATH}"
-	rm "${DMG_PATH}"
+	if [ "${PLATFORM}" = "mono" ]; then
+		hdiutil convert "${INPUT_PATH}" -format UDZO -imagekey zlib-level=9 -ov -o "${OUTPUT_PATH}"
+	else
+		# ULFO offers better compression and faster decompression speeds, but is only supported by 10.11+
+		hdiutil convert "${INPUT_PATH}" -format ULFO -ov -o "${OUTPUT_PATH}"
+	fi
+	rm "${INPUT_PATH}"
 }
 
 build_platform "standard" "build.dmg"
-build_platform "compat" "build-compat.dmg"
+build_platform "mono" "build-mono.dmg"
 
 if [ -n "${MACOS_DEVELOPER_CERTIFICATE_BASE64}" ] && [ -n "${MACOS_DEVELOPER_CERTIFICATE_PASSWORD}" ] && [ -n "${MACOS_DEVELOPER_IDENTITY}" ]; then
 	security delete-keychain build.keychain
@@ -305,9 +300,9 @@ fi
 if [ -n "${MACOS_DEVELOPER_USERNAME}" ] && [ -n "${MACOS_DEVELOPER_PASSWORD}" ]; then
 	# Parallelize processing
 	(notarize_package "build.dmg") &
-	(notarize_package "build-compat.dmg") &
+	(notarize_package "build-mono.dmg") &
 	wait
 fi
 
-finalize_package "build.dmg" "${OUTPUTDIR}/${PACKAGING_INSTALLER_NAME}-${TAG}.dmg"
-finalize_package "build-compat.dmg" "${OUTPUTDIR}/${PACKAGING_INSTALLER_NAME}-${TAG}-compat.dmg"
+finalize_package "standard" "build.dmg" "${OUTPUTDIR}/${PACKAGING_INSTALLER_NAME}-${TAG}.dmg"
+finalize_package "mono" "build-mono.dmg" "${OUTPUTDIR}/${PACKAGING_INSTALLER_NAME}-${TAG}-mono.dmg"

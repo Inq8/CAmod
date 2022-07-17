@@ -54,7 +54,7 @@ namespace OpenRA.Mods.CA.Graphics
 
 		public IRenderable WithZOffset(int newOffset) { return new RadBeamRenderable(pos, zOffset, sourceToTarget, width, color, amplitude, wavelength, quantizationCount); }
 
-		public IRenderable OffsetBy(WVec vec) { return new RadBeamRenderable(pos + vec, zOffset, sourceToTarget, width, color, amplitude, wavelength, quantizationCount); }
+		public IRenderable OffsetBy(in WVec offset) { return new RadBeamRenderable(pos + offset, zOffset, sourceToTarget, width, color, amplitude, wavelength, quantizationCount); }
 
 		public IRenderable AsDecoration() { return this; }
 

@@ -4,6 +4,7 @@
 	ActorMap:
 	ScreenMap:
 	Selection:
+	ControlGroups:
 	MusicPlaylist:
 		VictoryMusic: slavesys
 		DefeatMusic: fsmenu
@@ -221,9 +222,7 @@
 			Ore: 100
 			Gems: 100
 			Tiberium: 100
-				PathingCost: -300
 			BlueTiberium: 100
-				PathingCost: -300
 			Beach: 100
 			Tunnel: 100
 			Water: 100
@@ -416,52 +415,24 @@
 		RandomFactionMembers: reaper, traveler, harbinger, collector
 		Side: Random
 		Description: Random Scrin Faction\nA random Scrin faction will be chosen when the game starts.
-	ResourceType@ore:
-		Type: Ore
-		Name: Valuable Minerals
-		ResourceType: 1
-		TerrainType: Ore
-		Palette: player
-		Sequences: gold01,gold02,gold03,gold04
-		MaxDensity: 12
-		ValuePerUnit: 25
-		AllowedTerrainTypes: Clear,Road
-		AllowUnderActors: true
-	ResourceType@gem:
-		Type: Gems
-		Name: Valuable Minerals
-		ResourceType: 2
-		TerrainType: Gems
-		Palette: player
-		Sequences: gem01,gem02,gem03,gem04
-		MaxDensity: 3
-		ValuePerUnit: 50
-		AllowedTerrainTypes: Clear,Road
-		AllowUnderActors: true
-	ResourceType@green-tib:
-		Type: Tiberium
-		ResourceType: 3
-		Palette: tiberiumpalette
-		TerrainType: Tiberium
-		Sequences: ti1,ti2,ti3,ti4,ti5,ti6,ti7,ti8,ti9,ti10,ti11,ti12
-		MaxDensity: 12
-		ValuePerUnit: 25
-		Name: Tiberium
-		AllowedTerrainTypes: Clear,Road
-		AllowUnderActors: true
-	ResourceType@blue-tib:
-		Type: BlueTiberium
-		ResourceType: 4
-		Palette: bluetiberium
-		TerrainType: BlueTiberium
-		Sequences: bti1,bti2,bti3,bti4,bti5,bti6,bti7,bti8,bti9,bti10,bti11,bti12
-		MaxDensity: 12
-		ValuePerUnit: 50
-		Name: Azure Tiberium
-		AllowedTerrainTypes: Clear,Road
-		AllowUnderActors: true
 	ResourceRenderer:
-		RenderTypes: Ore, Gems, Tiberium, BlueTiberium
+		ResourceTypes:
+			Ore:
+				Sequences: gold01, gold02, gold03, gold04
+				Palette: player
+				Name: Valuable Minerals
+			Gems:
+				Sequences: gem01, gem02, gem03, gem04
+				Palette: player
+				Name: Valuable Minerals
+			Tiberium:
+				Sequences: ti1,ti2,ti3,ti4,ti5,ti6,ti7,ti8,ti9,ti10,ti11,ti12
+				Palette: tiberiumpalette
+				Name: Tiberium
+			BlueTiberium:
+				Sequences: bti1,bti2,bti3,bti4,bti5,bti6,bti7,bti8,bti9,bti10,bti11,bti12
+				Palette: bluetiberium
+				Name: Azure Tiberium
 
 World:
 	Inherits: ^BaseWorld
@@ -510,6 +481,28 @@ World:
 		SmokeSequences: idle
 		MaxSmokeOffsetDistance: 213
 	ResourceLayer:
+		RecalculateResourceDensity: true
+		ResourceTypes:
+			Ore:
+				ResourceIndex: 1
+				TerrainType: Ore
+				AllowedTerrainTypes: Clear, Road
+				MaxDensity: 12
+			Gems:
+				ResourceIndex: 2
+				TerrainType: Gems
+				AllowedTerrainTypes: Clear, Road
+				MaxDensity: 3
+			Tiberium:
+				ResourceIndex: 3
+				TerrainType: Tiberium
+				AllowedTerrainTypes: Clear, Road
+				MaxDensity: 12
+			BlueTiberium:
+				ResourceIndex: 4
+				TerrainType: BlueTiberium
+				AllowedTerrainTypes: Clear, Road
+				MaxDensity: 12
 	ResourceClaimLayer:
 	TintedCellsLayer@RADSTRONG:
 		Color: 00FF00
@@ -544,13 +537,13 @@ World:
 		ShortGameCheckboxDisplayOrder: 2
 		TechLevelDropdownDisplayOrder: 2
 		GameSpeedDropdownDisplayOrder: 3
-	CreateMPPlayers:
-	MPStartUnits@mcvonly:
+	CreateMapPlayers:
+	StartingUnits@mcvonly:
 		Class: none
 		ClassName: MCV Only
 		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri
 		BaseActor: mcv
-	MPStartUnits@lightallies:
+	StartingUnits@lightallies:
 		Class: light
 		ClassName: Light Support
 		Factions: allies, england, france, germany, usa
@@ -558,7 +551,7 @@ World:
 		SupportActors: e1,e1,e1,e3,e3
 		InnerSupportRadius: 3
 		OuterSupportRadius: 5
-	MPStartUnits@lightsoviet:
+	StartingUnits@lightsoviet:
 		Class: light
 		ClassName: Light Support
 		Factions: soviet, russia, ukraine, iraq, yuri
@@ -566,7 +559,7 @@ World:
 		SupportActors: e1,e1,e1,e3,e3
 		InnerSupportRadius: 3
 		OuterSupportRadius: 5
-	MPStartUnits@heavyallies:
+	StartingUnits@heavyallies:
 		Class: heavy
 		ClassName: Heavy Support
 		Factions: allies, england, france, germany, usa
@@ -574,7 +567,7 @@ World:
 		SupportActors: e1,e1,e1,e3,e3,e3,2tnk,2tnk
 		InnerSupportRadius: 3
 		OuterSupportRadius: 5
-	MPStartUnits@heavysoviet:
+	StartingUnits@heavysoviet:
 		Class: heavy
 		ClassName: Heavy Support
 		Factions: soviet, russia, ukraine, iraq, yuri
@@ -582,12 +575,12 @@ World:
 		SupportActors: e1,e1,e1,e3,e3,3tnk,3tnk
 		InnerSupportRadius: 3
 		OuterSupportRadius: 5
-	MPStartUnits@mcvonly2:
+	StartingUnits@mcvonly2:
 		Class: none
 		ClassName: MCV Only
 		Factions: gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow
 		BaseActor: amcv
-	MPStartUnits@defaultgdia:
+	StartingUnits@defaultgdia:
 		Class: light
 		ClassName: Light Support
 		Factions: gdi, talon, zocom, eagle, arc
@@ -595,7 +588,7 @@ World:
 		SupportActors: n1,n1,n1,n3,n3
 		InnerSupportRadius: 3
 		OuterSupportRadius: 5
-	MPStartUnits@defaultnoda:
+	StartingUnits@defaultnoda:
 		Class: light
 		ClassName: Light Support
 		Factions: nod, blackh, marked, legion, shadow
@@ -603,7 +596,7 @@ World:
 		SupportActors: n1,n1,n1,n3,n3
 		InnerSupportRadius: 3
 		OuterSupportRadius: 5
-	MPStartUnits@heavynoda:
+	StartingUnits@heavynoda:
 		Class: heavy
 		ClassName: Heavy Support
 		Factions: nod, blackh, marked, legion, shadow
@@ -611,7 +604,7 @@ World:
 		SupportActors: n1,n1,n1,n3,n3,mtnk,mtnk
 		InnerSupportRadius: 3
 		OuterSupportRadius: 5
-	MPStartUnits@heavygdia:
+	StartingUnits@heavygdia:
 		Class: heavy
 		ClassName: Heavy Support
 		Factions: gdi, talon, zocom, eagle, arc
@@ -619,12 +612,12 @@ World:
 		SupportActors: n1,n1,n1,n3,n3,mtnk,mtnk
 		InnerSupportRadius: 3
 		OuterSupportRadius: 5
-	MPStartUnits@mcvonlyscrin:
+	StartingUnits@mcvonlyscrin:
 		Class: none
 		ClassName: MCV Only
 		Factions: scrin, reaper, traveler, harbinger, collector
 		BaseActor: smcv
-	MPStartUnits@lightscrin:
+	StartingUnits@lightscrin:
 		Class: light
 		ClassName: Light Support
 		Factions: scrin, reaper, traveler, harbinger, collector
@@ -632,7 +625,7 @@ World:
 		SupportActors: s1,s1,s1,s3,s3
 		InnerSupportRadius: 3
 		OuterSupportRadius: 5
-	MPStartUnits@heavyscrin:
+	StartingUnits@heavyscrin:
 		Class: heavy
 		ClassName: Heavy Support
 		Factions: scrin, reaper, traveler, harbinger, collector
@@ -640,9 +633,9 @@ World:
 		SupportActors: s1,s1,s1,s3,s3,seek,gunw
 		InnerSupportRadius: 3
 		OuterSupportRadius: 5
-	MPStartLocations:
+	MapStartingLocations:
 		SeparateTeamSpawnsCheckboxDisplayOrder: 6
-	SpawnMPUnits:
+	SpawnStartingUnits:
 		DropdownDisplayOrder: 1
 	PathFinder:
 	ValidateOrder:
@@ -664,12 +657,74 @@ World:
 			3: WarningThreeMinutesRemaining
 			2: WarningTwoMinutesRemaining
 			1: WarningOneMinuteRemaining
+	ColorPickerManager:
+		PreviewActor: fact.colorpicker
+		FactionPreviewActors:
+			england: fact.colorpicker
+			france: fact.colorpicker
+			germany: fact.colorpicker
+			usa: fact.colorpicker
+			russia: fact.colorpicker
+			ukraine: fact.colorpicker
+			iraq: fact.colorpicker
+			yuri: fact.colorpicker
+			marked: afac.colorpicker
+			legion: afac.colorpicker
+			blackh: afac.colorpicker
+			shadow: afac.colorpicker
+			talon: afac.colorpicker
+			eagle: afac.colorpicker
+			zocom: afac.colorpicker
+			arc: afac.colorpicker
+			reaper: sfac.colorpicker
+			harbinger: sfac.colorpicker
+			traveler: sfac.colorpicker
+			collector: sfac.colorpicker
+			Random: fact.colorpicker
+			RandomAllies: fact.colorpicker
+			RandomSoviet: fact.colorpicker
+			RandomNod: afac.colorpicker
+			RandomGdi: afac.colorpicker
+			RandomScrin: sfac.colorpicker
+		PresetHues: 0, 0.07, 0.14, 0.34, 0.57, 0.66, 0.74, 0.84, 0, 0.07, 0.12, 0.40, 0.49, 0.63, 0.74, 0.88
+		PresetSaturations: 0.95, 0.97, 0.95, 0.9, 0.97, 0.85, 0.9, 0.9, 0.4, 0.3, 0.48, 0.35, 0.88, 0.37, 0.35, 0.37
+		HsvSaturationRange: 0.3, 0.97
+		SimilarityThreshold: 0.16
+	OrderEffects:
+		TerrainFlashImage: moveflsh
+		TerrainFlashSequence: idle
+		TerrainFlashPalette: moveflash
+		ActorFlashType: Tint
 
 EditorWorld:
 	Inherits: ^BaseWorld
 	EditorActorLayer:
 	EditorCursorLayer:
 	EditorResourceLayer:
+		RecalculateResourceDensity: true
+		ResourceTypes:
+			Ore:
+				ResourceIndex: 1
+				TerrainType: Ore
+				AllowedTerrainTypes: Clear, Road
+				MaxDensity: 12
+			Gems:
+				ResourceIndex: 2
+				TerrainType: Gems
+				AllowedTerrainTypes: Clear, Road
+				MaxDensity: 3
+			Tiberium:
+				ResourceIndex: 3
+				TerrainType: Tiberium
+				AllowedTerrainTypes: Clear, Road
+				MaxDensity: 12
+			BlueTiberium:
+				ResourceIndex: 4
+				TerrainType: BlueTiberium
+				AllowedTerrainTypes: Clear, Road
+				MaxDensity: 12
 	EditorSelectionLayer:
 	LoadWidgetAtGameStart:
 	EditorActionManager:
+	BuildableTerrainOverlay:
+		AllowedTerrainTypes: Clear, Road

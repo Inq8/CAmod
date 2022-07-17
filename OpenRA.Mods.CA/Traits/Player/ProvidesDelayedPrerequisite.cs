@@ -136,10 +136,10 @@ namespace OpenRA.Mods.CA.Traits
 
 			enabled = remainingDelay <= 0;
 
-			if (Info.Factions.Any())
+			if (Info.Factions.Count > 0)
 				enabled = Info.Factions.Contains(faction);
 
-			if (Info.RequiresPrerequisites.Any() && enabled)
+			if (Info.RequiresPrerequisites.Length > 0 && enabled)
 				enabled = techTree.HasPrerequisites(Info.RequiresPrerequisites);
 		}
 

@@ -22,7 +22,7 @@ V2RL:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 56
+		Speed: 60
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -38,6 +38,7 @@ V2RL:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
 	WithFacingSpriteBody:
 		RequiresCondition: !reloading
 		Name: loaded
@@ -50,7 +51,7 @@ V2RL:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 
 KATY:
 	Inherits: ^Vehicle
@@ -61,7 +62,7 @@ KATY:
 		Queue: Vehicle
 		BuildPaletteOrder: 61
 		IconPalette: chrometd
-		Prerequisites: ~vehicles.soviet, ~!v2.upgrade, ~techlevel.medium
+		Prerequisites: ~vehicles.soviet, ~!v2.upgrade, ~techlevel.low
 		Description: Long-range rocket artillery.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
@@ -77,7 +78,7 @@ KATY:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 49
+		Speed: 54
 		TurnSpeed: 14
 	RevealsShroud:
 		Range: 5c0
@@ -92,12 +93,13 @@ KATY:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
 	Explodes:
 		Weapon: BarrelExplode
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 
 1TNK:
 	Inherits: ^Tank
@@ -127,7 +129,7 @@ KATY:
 		Type: Heavy
 	Mobile:
 		Locomotor: Amphibious
-		Speed: 95
+		Speed: 113
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
@@ -190,7 +192,7 @@ KATY:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 66
+		Speed: 72
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -220,7 +222,7 @@ KATY:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 
 GTNK:
 	Inherits: 2TNK
@@ -233,7 +235,7 @@ GTNK:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
 	Mobile:
-		Speed: 90
+		Speed: 100
 		Voice: Move
 	Passenger:
 		Voice: Move
@@ -268,7 +270,7 @@ GTNK.squad:
 		Queue: Vehicle
 		BuildAtProductionType: Paradrop
 		BuildPaletteOrder: 1000
-		Prerequisites: dome, ~vehicles.usa, ~techlevel.low
+		Prerequisites: dome, ~vehicles.usa, ~techlevel.medium
 		Description: Prepare a pair of  Grizzly Tanks for airdrop.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
@@ -436,7 +438,7 @@ GTNK.squad:
 		RequiresCondition: gdi || nod
 		Turret: tertiary
 		IsPlayerPalette: true
-		Palette: overlayplayertd
+		Palette: playertd
 	WithSpriteTurret@SCRIN:
 		Turret: secondary
 		RequiresCondition: scrin
@@ -522,7 +524,7 @@ GTNK.squad:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 56
+		Speed: 60
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -559,7 +561,7 @@ GTNK.squad:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	UpgradeableTo:
 		Actors: 3tnk.atomic, 3tnk.yuri, 3tnk.atomicyuri
 	# For upgrading on Service Depot
@@ -778,7 +780,7 @@ GTNK.squad:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 42
+		Speed: 44
 		Locomotor: heavytracked
 	Passenger:
 		Weight: 2
@@ -829,7 +831,7 @@ GTNK.squad:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 44,38,0,-4
+		DecorationBounds: 1877, 1621, 0, -170
 	Carryable:
 		LocalOffset: 0,0,500
 	-Crushable:
@@ -934,6 +936,8 @@ GTNK.squad:
 	SpawnActorOnDeath:
 		Actor: 4TNK.ERAD.Husk
 		RequiresCondition: !being-warped
+	-DamagedByTintedCells@RADSTRONG:
+	-DamagedByTintedCells@RADMED:
 	-GrantConditionOnPrerequisite@ERADUPGRADE:
 	-RearmsToUpgrade@ERADUPGRADE:
 	-RearmsToUpgrade@ERADATOMICUPGRADE:
@@ -968,7 +972,7 @@ ARTY:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 60
-		Prerequisites: ~vehicles.allies, ~techlevel.medium
+		Prerequisites: ~vehicles.allies, ~techlevel.low
 		Description: Long-range artillery.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
@@ -985,7 +989,7 @@ ARTY:
 		Type: Light
 	Mobile:
 		TurnSpeed: 10
-		Speed: 43
+		Speed: 46
 		Locomotor: lighttracked
 	RevealsShroud:
 		MinRange: 4c0
@@ -1001,6 +1005,7 @@ ARTY:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
 	WithMuzzleOverlay:
 	Explodes:
 		Weapon: ArtilleryExplode
@@ -1012,13 +1017,13 @@ ARTY.nod:
 	Inherits: ARTY
 	RenderSprites:
 		Image: artynod
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 	WithDamageOverlay:
 		Image: smoke_mtd
 	Buildable:
 		BuildPaletteOrder: 62
 		IconPalette: chrometd
-		Prerequisites: ~vehicles.nod, ~!howi.upgrade, ~techlevel.medium
+		Prerequisites: ~vehicles.nod, ~!howi.upgrade, ~techlevel.low
 	Armament:
 		Weapon: 155mmTD
 	Selectable:
@@ -1041,7 +1046,7 @@ HOWI:
 	Armament:
 		Weapon: 155mmTDM
 	Mobile:
-		Speed: 56
+		Speed: 60
 	WithSpriteTurret:
 
 ARTY.Chrono:
@@ -1145,7 +1150,7 @@ ISU:
 		Type: Heavy
 	Mobile:
 		TurnSpeed: 8
-		Speed: 43
+		Speed: 46
 		Locomotor: heavytracked
 		Voice: Move
 	RevealsShroud:
@@ -1163,6 +1168,7 @@ ISU:
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
+		FacingTolerance: 0
 	WithMuzzleOverlay:
 	Explodes:
 		Weapon: ArtilleryExplode
@@ -1183,7 +1189,7 @@ SPEC:
 		Image: spec
 	Buildable:
 		BuildPaletteOrder: 241
-		Prerequisites: tmpl, ~vehicles.shadow, ~techlevel.medium
+		Prerequisites: tmpl, ~vehicles.shadow, ~techlevel.high
 		Description: Long-range stealth artillery.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
@@ -1198,7 +1204,7 @@ SPEC:
 		HP: 11000
 	Mobile:
 		TurnSpeed: 20
-		Speed: 80
+		Speed: 92
 	Armament:
 		Weapon: 155mmSpec
 		LocalOffset: 624,0,408
@@ -1249,7 +1255,7 @@ SAPC:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 90
+		Speed: 100
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 	RevealsShroud:
 		MinRange: 4c0
@@ -1262,6 +1268,7 @@ SAPC:
 		LocalOffset: 85,0,171
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5
@@ -1327,7 +1334,7 @@ HARV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 10
-		Prerequisites: anyrefinery, ~vehicles.ra, ~!charv.upgrade, ~techlevel.infonly
+		Prerequisites: anyrefinery, ~vehicles.ra, ~!charv.upgrade, ~techlevel.low
 		Description: Collects Ore, Gems and Tiberium for processing.
 	TooltipExtras:
 		Weaknesses: • Unarmed
@@ -1338,7 +1345,7 @@ HARV:
 		GenericName: Harvester
 	Selectable:
 		Priority: 7
-		DecorationBounds: 42,42
+		DecorationBounds: 1792, 1792
 	Harvester:
 		Capacity: 26
 		Resources: Tiberium, BlueTiberium, Ore, Gems
@@ -1363,7 +1370,7 @@ HARV:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 66
+		Speed: 72
 		TurnSpeed: 24
 		Locomotor: heavywheeled
 	RevealsShroud:
@@ -1464,7 +1471,7 @@ MCV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 500
-		Prerequisites: vehicles.mcv, ~vehicles.ra, ~techlevel.medium
+		Prerequisites: vehicles.mcv, ~vehicles.ra, ~techlevel.low
 		Description: Deploys into another Construction Yard.
 		BuildDurationModifier: 50
 	TooltipExtras:
@@ -1476,13 +1483,13 @@ MCV:
 		Name: Mobile Construction Vehicle
 	Selectable:
 		Priority: 4
-		DecorationBounds: 42,42
+		DecorationBounds: 1792, 1792
 	Health:
 		HP: 75000
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 51
+		Speed: 54
 		Locomotor: heavywheeled
 	RevealsShroud:
 		Range: 4c0
@@ -1533,7 +1540,7 @@ JEEP:
 		Type: Light
 	Mobile:
 		TurnSpeed: 40
-		Speed: 126
+		Speed: 144
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 8c0
@@ -1556,7 +1563,7 @@ JEEP:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		CloakTypes: Cloak, Thief, AirCloak
+		DetectionTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
 
 JEEP.TEMP:
@@ -1606,7 +1613,7 @@ APC:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 108
+		Speed: 126
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 	SpeedMultiplier@UPG:
 		Modifier: 83
@@ -1631,6 +1638,7 @@ APC:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !rapc-upgrade
+		FacingTolerance: 0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: rapc-upgrade
@@ -1673,7 +1681,7 @@ APC:
 RAPC:
 	Inherits: APC
 	Buildable:
-		Prerequisites: ~vehicles.allies, ~rapc.upgrade, ~techlevel.low
+		Prerequisites: ~vehicles.allies, ~rapc.upgrade, ~techlevel.medium
 		Description: Tough infantry transport that fires high explosive shells.
 	Valued:
 		Cost: 800
@@ -1741,7 +1749,7 @@ RAPC.AI:
 	RenderSprites:
 		Image: RAPC
 	Buildable:
-		Prerequisites: ~botplayer, ~vehicles.allies, ~rapc.upgrade, ~techlevel.low
+		Prerequisites: ~botplayer, ~vehicles.allies, ~rapc.upgrade, ~techlevel.medium
 	Cargo:
 		InitialUnits: E1,E1,E1,E3,E3
 
@@ -1751,7 +1759,7 @@ MNLY:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 440
-		Prerequisites: repair, ~techlevel.medium, ~vehicles.human
+		Prerequisites: repair, ~techlevel.low, ~vehicles.human
 		Description: Lays mines to destroy unwary enemy units.
 	TooltipExtras:
 		Weaknesses: • Unarmed
@@ -1769,7 +1777,7 @@ MNLY:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 108
+		Speed: 126
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -1789,7 +1797,7 @@ MNLY:
 		RequiresSelection: true
 	DetectCloaked:
 		Range: 5c0
-		CloakTypes: Mine
+		DetectionTypes: Mine
 		RequiresCondition: !(empdisable || being-warped)
 	RenderDetectionCircle:
 	Explodes:
@@ -1823,7 +1831,7 @@ TRUK:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 108
+		Speed: 126
 	RevealsShroud:
 		Range: 4c0
 	DeliversCash:
@@ -1876,7 +1884,7 @@ MGG:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 66
+		Speed: 72
 	Carryable:
 		CarriedCondition: pickedup
 	WithIdleOverlay@SPINNER:
@@ -1949,7 +1957,7 @@ MRJ:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 66
+		Speed: 72
 	RevealsShroud:
 		Range: 7c0
 	WithIdleOverlay@SPINNER:
@@ -1980,7 +1988,7 @@ MSG:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 385
-		Prerequisites: anyradar, ~vehicles.shadow, ~techlevel.high
+		Prerequisites: anyradar, ~vehicles.shadow, ~techlevel.medium
 		Description: Support unit that projects a cloaking field.
 	TooltipExtras:
 		Weaknesses: • Unarmed
@@ -1994,7 +2002,7 @@ MSG:
 		Name: Mobile Stealth Generator (deployed)
 		RequiresCondition: deployed
 	Selectable:
-		DecorationBounds: 38,36,0,-1
+		DecorationBounds: 1621, 1536, 0, -42
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -2002,7 +2010,7 @@ MSG:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 56
+		Speed: 60
 		RequireForceMoveCondition: !undeployed
 	RevealsShroud:
 		MinRange: 4c0
@@ -2057,7 +2065,7 @@ TTRA:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 235
-		Prerequisites: structures.tsla, stek, ~vehicles.soviet, ~techlevel.medium
+		Prerequisites: structures.tsla, stek, ~vehicles.soviet, ~techlevel.high
 		Description: Half-track with mounted Tesla Coil.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Heavy Armor, Light Armor
@@ -2075,7 +2083,7 @@ TTRA:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 66
+		Speed: 72
 		Voice: Move
 	RevealsShroud:
 		MinRange: 5c0
@@ -2104,7 +2112,7 @@ TTRA:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 30,30
+		DecorationBounds: 1280, 1280
 	Passenger:
 		Voice: Move
 	Voiced:
@@ -2141,7 +2149,7 @@ TTNK:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 56
+		Speed: 60
 		Voice: Move
 	RevealsShroud:
 		MinRange: 4c0
@@ -2183,7 +2191,7 @@ TTNK:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 30,30
+		DecorationBounds: 1280, 1280
 	Passenger:
 		Voice: Move
 	Voiced:
@@ -2217,7 +2225,7 @@ DTRK:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 66
+		Speed: 72
 		Voice: Move
 	RevealsShroud:
 		Range: 4c0
@@ -2274,7 +2282,7 @@ CTNK:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 90
+		Speed: 100
 		Locomotor: heavywheeled
 	RevealsShroud:
 		MinRange: 4c0
@@ -2288,6 +2296,7 @@ CTNK:
 		LocalYaw: 60, -60
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
 	PortableChronoCA:
 		ChargeDelay: 375
 		MaxDistance: 16
@@ -2295,7 +2304,7 @@ CTNK:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 30,30
+		DecorationBounds: 1280, 1280
 	ProductionCostMultiplier@GermanyBonus:
 		Multiplier: 90
 		Prerequisites: vehicles.germany
@@ -2331,7 +2340,7 @@ QTNK:
 		Type: Heavy
 	Mobile:
 		PauseOnCondition: deployed || being-captured || empdisable || being-warped || driver-dead || notmobile
-		Speed: 43
+		Speed: 46
 	ChronoshiftableWithSpriteEffect:
 		RequiresCondition: !deployed && !being-captured && !being-warped
 	RevealsShroud:
@@ -2352,7 +2361,7 @@ QTNK:
 	Explodes:
 		Weapon: ArtilleryExplode
 	Selectable:
-		DecorationBounds: 44,38,0,-4
+		DecorationBounds: 1877, 1621, 0, -170
 	WithRangeCircle:
 		Color: FFFF0080
 		Range: 7c0
@@ -2372,7 +2381,7 @@ AMCV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 501
-		Prerequisites: vehicles.mcv, ~vehicles.td, ~techlevel.infonly
+		Prerequisites: vehicles.mcv, ~vehicles.td, ~techlevel.low
 		IconPalette: chrometd
 		Description: Deploys into another Construction Yard.
 		BuildDurationModifier: 50
@@ -2385,13 +2394,13 @@ AMCV:
 		Name: Mobile Construction Vehicle
 	Selectable:
 		Priority: 4
-		Bounds: 42,42
+		Bounds: 1792, 1792
 	Health:
 		HP: 75000
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 51
+		Speed: 54
 		Locomotor: heavywheeled
 	RevealsShroud:
 		Range: 4c0
@@ -2444,7 +2453,7 @@ HMMV:
 		Type: Light
 	Mobile:
 		TurnSpeed: 40
-		Speed: 126
+		Speed: 144
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 8c0
@@ -2465,7 +2474,7 @@ HMMV:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		CloakTypes: Cloak, Thief, AirCloak
+		DetectionTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -2494,7 +2503,7 @@ HMMV.TOW:
 		Image: hmmv
 	Buildable:
 		Description: Fast scout & anti-infantry vehicle\n  with anti-tank missile launcher.
-		Prerequisites: ~vehicles.hmmv, ~tow.upgrade, ~techlevel.low
+		Prerequisites: ~vehicles.hmmv, ~tow.upgrade, ~techlevel.high
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2567,7 +2576,7 @@ GDRN:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		CloakTypes: Cloak, Thief, AirCloak
+		DetectionTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
 	GrantConditionOnPrerequisite@GSHIELD:
 		Condition: pointdef-upgrade
@@ -2593,7 +2602,7 @@ GDRN.TOW:
 	RenderSprites:
 		Image: gdrn
 	Buildable:
-		Prerequisites: ~vehicles.arc, ~tow.upgrade, ~techlevel.low
+		Prerequisites: ~vehicles.arc, ~tow.upgrade, ~techlevel.high
 	Valued:
 		Cost: 550
 	Tooltip:
@@ -2635,7 +2644,7 @@ BGGY:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 126
+		Speed: 144
 		TurnSpeed: 40
 	RevealsShroud:
 		MinRange: 4c0
@@ -2657,7 +2666,7 @@ BGGY:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
-		CloakTypes: Cloak, Thief, AirCloak
+		DetectionTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -2706,7 +2715,7 @@ APC2:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 108
+		Speed: 126
 		PauseOnCondition: being-captured || empdisable || being-warped || notmobile || driver-dead
 	RevealsShroud:
 		MinRange: 4c0
@@ -2790,6 +2799,7 @@ APC2:
 		Armaments: primary
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !vulcan-upgrade
+		FacingTolerance: 0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 		Armaments: primary-upg, secondary-upg
@@ -2916,7 +2926,7 @@ VULC:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 52
-		Prerequisites: ~vehicles.gdi, ~vulcan.upgrade, ~techlevel.high
+		Prerequisites: ~vehicles.gdi, ~vulcan.upgrade, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Tough infantry transport, armed with a powerful chaingun.
 	TooltipExtras:
@@ -2933,7 +2943,7 @@ VULC:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 90
+		Speed: 100
 		PauseOnCondition: being-captured || empdisable || being-warped || notmobile
 	RevealsShroud:
 		MinRange: 4c0
@@ -3033,7 +3043,7 @@ VULC.AI:
 	RenderSprites:
 		Image: VULC
 	Buildable:
-		Prerequisites: ~botplayer, ~vehicles.gdi, ~vulcan.upgrade, ~techlevel.high
+		Prerequisites: ~botplayer, ~vehicles.gdi, ~vulcan.upgrade, ~techlevel.medium
 	Cargo:
 		InitialUnits: N1,N1,N1,N2,N3
 
@@ -3066,7 +3076,7 @@ LTNK:
 		Type: Heavy
 	Mobile:
 		Locomotor: Amphibious
-		Speed: 66
+		Speed: 72
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
@@ -3139,7 +3149,7 @@ MTNK:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 66
+		Speed: 72
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -3183,7 +3193,7 @@ MTNK:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	PointDefense:
 		Armament: secondary
 		PointDefenseTypes: Missile
@@ -3213,7 +3223,7 @@ MTNK.Drone:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 36
-		Prerequisites: ~bdrone.upgrade, ~vehicles.mtnk, ~techlevel.low
+		Prerequisites: ~bdrone.upgrade, ~vehicles.mtnk, ~techlevel.high
 		IconPalette: chrometd
 		Description: Remotely piloted battle tank.
 	TooltipExtras:
@@ -3252,7 +3262,7 @@ MTNK.Drone:
 	-ReloadDelayMultiplier@BERSERK:
 	-ExternalCondition@BERSERK:
 	-Berserkable@BERSERK:
-	-WithColoredOverlay@BERSERK:
+	-WithModifiedPalette@BERSERK:
 	-TimedConditionBar@BERSERK:
 	-RejectsOrders@BERSERK:
 	-GrantCondition@BERSERK:
@@ -3266,7 +3276,7 @@ MDRN:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 105
-		Prerequisites: anyradar, ~vehicles.arc, ~techlevel.low
+		Prerequisites: anyradar, ~vehicles.arc, ~techlevel.medium
 		Description: Hovering drone with machine gun.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -3277,11 +3287,14 @@ MDRN:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Selectable:
-		DecorationBounds: 16, 16, 0, -8
+		DecorationBounds: 682, 682, 0, -341
 	Health:
 		HP: 13000
 	Armor:
 		Type: Light
+	DamageTypeDamageMultiplier@FLAKARMOR:
+		DamageTypes: FlakVestMitigated
+		Modifier: 60
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -3356,24 +3369,32 @@ MDRN.Attached:
 	Interactable:
 	RenderSprites:
 		Image: mdrn
-	Mobile:
+	-Mobile:
+	AttachedAircraft:
+		TurnSpeed: 18
 		Speed: 0
-		Locomotor: cloud
-		ImmovableCondition: attached
-		PauseOnCondition: attached || empdisable || being-warped
+		CanHover: true
+		Repulsable: false
+		CruiseAltitude: 1
+		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,Water,Tree,River
+	RevealsShroud:
+		Type: GroundPosition
+	RevealsShroud@GAPGEN:
+		Type: GroundPosition
+	HiddenUnderFog:
+		Type: GroundPosition
 	WithSpriteTurret:
 		Sequence: turret-attached
 	TurnOnIdleCA:
 		MinDelay: 25
 		MaxDelay: 75
-		TurnWhileMobilePaused: true
+		TurnWhileAircraftPaused: true
 	Armament@PRIMARY:
 		Weapon: M60mgMD.Attached
 		LocalOffset: -500,0,72
 	DamageMultiplier@ATTACHED:
 		Modifier: 25
 	Attachable:
-		AttachedCondition: attached
 	ChangesHealth:
 		PercentageStep: 2
 		Delay: 25
@@ -3383,6 +3404,7 @@ MDRN.Attached:
 	-MindControllableProgressBar@HACKABLE:
 	-WithDecoration@HACKED:
 	-WithDecoration@RESTORING:
+	-ChronoshiftableWithSpriteEffect:
 
 HTNK:
 	Inherits: ^TankTD
@@ -3410,7 +3432,7 @@ HTNK:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 42
+		Speed: 44
 		Locomotor: heavytracked
 	Passenger:
 		Weight: 2
@@ -3450,7 +3472,7 @@ HTNK:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 44,38,0,-4
+		DecorationBounds: 1877, 1621, 0, -170
 	Carryable:
 		LocalOffset: 0,0,500
 	-Crushable:
@@ -3527,7 +3549,7 @@ HTNK.Hover:
 	TooltipExtras:
 		Attributes: • Can traverse water
 	Mobile:
-		Speed: 66
+		Speed: 72
 		Locomotor: hover
 	Turreted:
 		TurnSpeed: 16
@@ -3602,7 +3624,7 @@ HTNK.Drone:
 	-ReloadDelayMultiplier@BERSERK:
 	-ExternalCondition@BERSERK:
 	-Berserkable@BERSERK:
-	-WithColoredOverlay@BERSERK:
+	-WithModifiedPalette@BERSERK:
 	-TimedConditionBar@BERSERK:
 	-RejectsOrders@BERSERK:
 	-GrantCondition@BERSERK:
@@ -3645,9 +3667,9 @@ MSAM:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor
 	Mobile:
-		Speed: 66
+		Speed: 72
 	Health:
-		HP: 16000
+		HP: 18000
 	Armor:
 		Type: Light
 	RevealsShroud:
@@ -3668,7 +3690,7 @@ MSAM:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	GrantConditionOnPrerequisite@HSONIC:
 		Condition: hypersonic-upgrade
 		Prerequisites: hypersonic.upgrade
@@ -3746,7 +3768,7 @@ MLRS:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets\n• Cannot fire while moving
 	Mobile:
-		Speed: 66
+		Speed: 72
 		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead || notmobile
 		BlockedCursor: move
 	Health:
@@ -3807,7 +3829,7 @@ MLRS:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	ProductionCostMultiplier@BlackhBonus:
 		Multiplier: 90
 		Prerequisites: vehicles.blackh
@@ -3828,7 +3850,7 @@ STNK.Nod:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 160
-		Prerequisites: anyradar, ~vehicles.nod, ~techlevel.high
+		Prerequisites: anyradar, ~vehicles.nod, ~techlevel.medium
 		Queue: Vehicle
 		IconPalette: chrometd
 		Description: Medium-range missile tank that can cloak.
@@ -3837,7 +3859,7 @@ STNK.Nod:
 		Weaknesses: • Weak vs Infantry
 		Attributes: • Can be spotted by nearby infantry and defense structures
 	Mobile:
-		Speed: 108
+		Speed: 126
 	Health:
 		HP: 20000
 	Armor:
@@ -3924,7 +3946,7 @@ BIKE:
 		Weaknesses: • Weak vs Infantry, Light Armor
 	Mobile:
 		TurnSpeed: 40
-		Speed: 144
+		Speed: 170
 	Health:
 		HP: 11000
 	Armor:
@@ -3959,6 +3981,7 @@ BIKE:
 		RequiresCondition: tibcore-upgrade
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	GrantConditionOnPrerequisite@UPG:
@@ -3981,7 +4004,7 @@ FTNK:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 130
-		Prerequisites: anyradar, ~vehicles.ftnk, ~techlevel.low
+		Prerequisites: anyradar, ~vehicles.ftnk, ~techlevel.medium
 		Queue: Vehicle
 		IconPalette: chrometd
 		Description: Tank armed with dual short-range flamethrowers.
@@ -3989,7 +4012,7 @@ FTNK:
 		Strengths: • Strong vs Infantry, Buildings, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Mobile:
-		Speed: 66
+		Speed: 72
 	Health:
 		HP: 40000
 	Armor:
@@ -4011,6 +4034,7 @@ FTNK:
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped || parachute
+		FacingTolerance: 0
 	Explodes:
 		Weapon: BarrelExplode
 		EmptyWeapon: BarrelExplode
@@ -4030,7 +4054,7 @@ HFTK:
 		Queue: Vehicle
 		BuildPaletteOrder: 131
 		IconPalette: chrometd
-		Prerequisites: anyradar, ~vehicles.blackh, ~techlevel.low
+		Prerequisites: anyradar, ~vehicles.blackh, ~techlevel.medium
 		Description: Heavy tank armed with dual short-range flamethrowers.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings, Light Armor
@@ -4047,7 +4071,7 @@ HFTK:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 56
+		Speed: 60
 		Voice: Move
 	RevealsShroud:
 		MinRange: 4c0
@@ -4105,7 +4129,7 @@ HARV.TD:
 		GenericName: Harvester
 	Buildable:
 		BuildPaletteOrder: 12
-		Prerequisites: anyrefinery, ~vehicles.td, ~techlevel.infonly
+		Prerequisites: anyrefinery, ~vehicles.td, ~techlevel.low
 		Queue: Vehicle
 		IconPalette: chrometd
 		Description: Collects Ore, Gems and Tiberium for processing.
@@ -4113,7 +4137,7 @@ HARV.TD:
 		Weaknesses: • Unarmed
 	Selectable:
 		Priority: 7
-		DecorationBounds: 36,36
+		DecorationBounds: 1536, 1536
 	Harvester:
 		Capacity: 26
 		Resources: Tiberium, BlueTiberium, Ore, Gems
@@ -4134,7 +4158,7 @@ HARV.TD:
 			Tiberium: pip-green
 			BlueTiberium: pip-blue
 	Mobile:
-		Speed: 66
+		Speed: 72
 		TurnSpeed: 24
 		Locomotor: heavywheeled
 	Health:
@@ -4209,7 +4233,7 @@ BTR:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 90
+		Speed: 100
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 	RevealsShroud:
 		MinRange: 4c0
@@ -4268,7 +4292,7 @@ IFV:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 120
-		Prerequisites: infantry.any, anyradar, ~vehicles.ifv, ~techlevel.low
+		Prerequisites: infantry.any, anyradar, ~vehicles.ifv, ~techlevel.medium
 		Description: Adaptable infantry transport.
 	Tooltip:
 		Name: Infantry Fighting Vehicle
@@ -4395,7 +4419,7 @@ IFV:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 90
+		Speed: 100
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 	RevealsShroud:
 		MinRange: 5c0
@@ -4411,7 +4435,7 @@ IFV:
 		RequiresCondition: spyturr
 	DetectCloaked@SPY:
 		Range: 6c0
-		CloakTypes: Cloak, Thief, AirCloak
+		DetectionTypes: Cloak, Thief, AirCloak
 		RequiresCondition: spyturr && !(empdisable || being-warped)
 	Turreted:
 		TurnSpeed: 40
@@ -4756,7 +4780,7 @@ IFV.AI:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 120
-		Prerequisites: anyradar, ~vehicles.allies, ~botplayer, ~techlevel.low
+		Prerequisites: anyradar, ~vehicles.allies, ~botplayer, ~techlevel.medium
 		Description: Adaptable infantry transport.
 	Tooltip:
 		Name: Infantry Fighting Vehicle
@@ -4786,7 +4810,7 @@ IFV.AI:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 90
+		Speed: 100
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -4905,7 +4929,7 @@ TITN:
 	Valued:
 		Cost: 2000
 	Selectable:
-		Bounds: 30,40,0,0
+		Bounds: 1280, 1706, 0, 0
 	Tooltip:
 		Name: Titan
 	UpdatesPlayerStatistics:
@@ -4916,7 +4940,7 @@ TITN:
 		Type: Heavy
 	Mobile:
 		Locomotor: sheavytracked
-		Speed: 40
+		Speed: 43
 		Voice: Move
 	Passenger:
 		CustomPipType: red
@@ -5038,14 +5062,14 @@ JUGG:
 		Attributes: • Can crush smaller vehicles and concrete walls
 	Mobile:
 		Locomotor: sheavytracked
-		Speed: 40
+		Speed: 43
 		Voice: Move
 		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead || notmobile
 		BlockedCursor: move
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Selectable:
-		Bounds: 30,40,0,0
+		Bounds: 1280, 1706, 0, 0
 	Valued:
 		Cost: 1500
 	QuantizeFacingsFromSequence:
@@ -5118,7 +5142,7 @@ JUGG:
 TTRK:
 	Inherits: DTRK
 	RenderSprites:
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 	Buildable:
 		BuildPaletteOrder: 400
 		Prerequisites: techcenter, ~vehicles.ttrk, ~techlevel.high
@@ -5158,7 +5182,7 @@ DISR:
 		Type: Heavy
 	Mobile:
 		TurnSpeed: 16
-		Speed: 43
+		Speed: 46
 		Voice: Move
 	Passenger:
 		Weight: 2
@@ -5195,7 +5219,7 @@ DISR:
 		Voice: Attack
 	WithSpriteTurret:
 	Selectable:
-		DecorationBounds: 44,38,0,-4
+		DecorationBounds: 1877, 1621, 0, -170
 	Carryable:
 		LocalOffset: 0,0,500
 	ProducibleWithLevel:
@@ -5239,10 +5263,10 @@ HSAM:
 		Weaknesses: • Weak vs Heavy Armor
 		Attributes: • Can traverse water
 	Mobile:
-		Speed: 90
+		Speed: 100
 		Locomotor: hover
 	Health:
-		HP: 14000
+		HP: 16500
 	Armor:
 		Type: Light
 	RevealsShroud:
@@ -5371,7 +5395,7 @@ RTNK:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 66
+		Speed: 72
 		Voice: Move
 	Passenger:
 		Voice: Move
@@ -5415,7 +5439,7 @@ RTNK:
 	GrantConditionOnDamageState@UNCLOAK:
 		ValidDamageStates: Critical
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Voiced:
@@ -5452,7 +5476,7 @@ V3RL:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 43
+		Speed: 46
 		TurnSpeed: 16
 		Voice: Move
 		PauseOnCondition: launching || being-captured || empdisable || being-warped || driver-dead || notmobile
@@ -5471,6 +5495,7 @@ V3RL:
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
+		FacingTolerance: 0
 	WithFacingSpriteBody:
 		RequiresCondition: loaded
 		Name: loaded
@@ -5492,7 +5517,7 @@ V3RL:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	Voiced:
 		VoiceSet: V3Voice
 	Exit:
@@ -5554,7 +5579,7 @@ TNKD:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 56
+		Speed: 60
 		TurnSpeed: 16
 		Voice: Move
 	Passenger:
@@ -5587,7 +5612,7 @@ TNKD:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Infantry, Water, Underwater, Defense
 	AutoTargetPriority@ATTACKANYTHING:
@@ -5631,7 +5656,7 @@ MSAR:
 		Queue: Vehicle
 		BuildPaletteOrder: 370
 		IconPalette: chrometd
-		Prerequisites: anyradar, ~vehicles.gdi, ~techlevel.high
+		Prerequisites: anyradar, ~vehicles.gdi, ~techlevel.medium
 		BuildDurationModifier: 50
 		Description: When deployed, detects enemies within a large radius.
 	TooltipExtras:
@@ -5642,7 +5667,7 @@ MSAR:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 66
+		Speed: 72
 		RequireForceMoveCondition: !undeployed
 	RevealsShroud:
 		MinRange: 4c0
@@ -5680,7 +5705,7 @@ MSAR:
 		UndeployOnPickup: true
 	DetectCloaked@Deployed:
 		Range: 12c0
-		CloakTypes: Cloak, Thief, AirCloak
+		DetectionTypes: Cloak, Thief, AirCloak
 		RequiresCondition: deployed && !(empdisable || being-warped)
 	WithRangeCircle@Deployed:
 		Range: 12c0
@@ -5689,7 +5714,7 @@ MSAR:
 	ProvidesRadar:
 		RequiresCondition: deployed && !(empdisable || being-warped)
 	Selectable:
-		DecorationBounds: 30,30
+		DecorationBounds: 1280, 1280
 	ProximityExternalCondition@Bino:
 		Condition: bino
 		Range: 12c0
@@ -5720,7 +5745,7 @@ PTNK:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 230
-		Prerequisites: anyradar, ~vehicles.allies, ~!pcan.upgrade, ~techlevel.high
+		Prerequisites: anyradar, ~vehicles.allies, ~!pcan.upgrade, ~techlevel.medium
 		Description: Long-range artillery with Prism Tower derived weapon.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings, Defenses, Light Armor
@@ -5737,7 +5762,7 @@ PTNK:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 66
+		Speed: 72
 		Voice: Move
 	Passenger:
 		Voice: Move
@@ -5766,7 +5791,7 @@ PTNK:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 
 PCAN:
 	Inherits: PTNK
@@ -5789,6 +5814,7 @@ PCAN:
 		TargetFrozenActors: True
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
+		FacingTolerance: 0
 	SpawnActorOnDeath:
 		Actor: PCAN.Husk
 
@@ -5803,7 +5829,7 @@ WTNK:
 		Queue: Vehicle
 		BuildPaletteOrder: 210
 		IconPalette: chrometd
-		Prerequisites: anyradar, ~vehicles.legion, ~techlevel.high
+		Prerequisites: anyradar, ~vehicles.legion, ~techlevel.medium
 		Description: Prototype MGT-1A microwave gun tank.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses, Infantry
@@ -5819,7 +5845,7 @@ WTNK:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 80
+		Speed: 92
 		Voice: Move
 	Passenger:
 		Voice: Move
@@ -5861,7 +5887,7 @@ WTNK:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	GrantConditionOnPrerequisite@UPG:
@@ -5894,7 +5920,7 @@ BATF:
 		Type: Heavy
 	Mobile:
 		Locomotor: sheavytracked
-		Speed: 40
+		Speed: 43
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 		Voice: Move
 		TurnSpeed: 8
@@ -5909,7 +5935,7 @@ BATF:
 		Range: 4c0
 	DetectCloaked@SPY:
 		Range: 6c0
-		CloakTypes: Cloak, Thief, AirCloak
+		DetectionTypes: Cloak, Thief, AirCloak
 		RequiresCondition: loaded-spy && !(empdisable || being-warped)
 	AttackFrontal:
 		FacingTolerance: 24
@@ -5970,7 +5996,7 @@ BATF:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 44,38,0,-4
+		DecorationBounds: 1877, 1621, 0, -170
 	Carryable:
 		LocalOffset: 0,0,500
 	-Crushable:
@@ -6066,7 +6092,7 @@ MEMP:
 		Type: Heavy
 	Mobile:
 		PauseOnCondition: triggered || !radarenabled || empdisable || being-warped || notmobile
-		Speed: 108
+		Speed: 126
 	GrantTimedConditionOnDeploy:
 		DeploySound: mobempcharge1.aud
 		DeployedCondition: triggered
@@ -6176,7 +6202,7 @@ CDRN:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 108
+		Speed: 126
 		Voice: Move
 		PauseOnCondition: empdisable || being-warped || notmobile
 	RevealsShroud:
@@ -6265,7 +6291,7 @@ CHPR:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 42
+		Speed: 44
 		Locomotor: heavytracked
 		Voice: Move
 	Passenger:
@@ -6308,7 +6334,7 @@ CHPR:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 44,38,0,-4
+		DecorationBounds: 1877, 1621, 0, -170
 	Carryable:
 		LocalOffset: 0,0,500
 	-Crushable:
@@ -6375,7 +6401,7 @@ CRYO:
 		Weaknesses: • Cannot attack Aircraft
 		Attributes: • Slows enemy movement and increases damage taken
 	Mobile:
-		Speed: 66
+		Speed: 72
 		TurnSpeed: 16
 	Health:
 		HP: 26000
@@ -6394,10 +6420,11 @@ CRYO:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
 	Explodes:
 		Weapon: CryoExplosion
 	Selectable:
-		DecorationBounds: 28,28
+		DecorationBounds: 1194, 1194
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 
@@ -6428,7 +6455,7 @@ APOC:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 40
+		Speed: 43
 		TurnSpeed: 8
 		Locomotor: sheavytracked
 		Voice: Move
@@ -6483,7 +6510,7 @@ APOC:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	Selectable:
-		DecorationBounds: 44,38,0,-4
+		DecorationBounds: 1877, 1621, 0, -170
 	Carryable:
 		LocalOffset: 0,0,500
 	WithIdleOverlay@MINDCONTROL:

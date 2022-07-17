@@ -145,7 +145,7 @@ namespace OpenRA.Mods.CA.Traits
 
 				Container.RemoveWhere(p => !p.IsValid);
 
-				while (tokens.Count > 0 && !Container.Any())
+				while (tokens.Count > 0 && Container.Count == 0)
 					self.RevokeCondition(tokens.Pop());
 			}
 		}

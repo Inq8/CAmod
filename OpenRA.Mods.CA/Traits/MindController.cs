@@ -118,7 +118,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (controlTicks < Info.TicksToControl)
 				controlTicks++;
 
-			if (controlTicks == 1 && Info.InitSounds.Any())
+			if (controlTicks == 1 && Info.InitSounds.Length > 0)
 			{
 				if (Info.InitSoundControllerOnly)
 					Game.Sound.PlayToPlayer(SoundType.World, self.Owner, Info.InitSounds.Random(self.World.SharedRandom), self.CenterPosition);
@@ -236,7 +236,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		void ControlComplete(Actor self)
 		{
-			if (Info.ControlSounds.Any())
+			if (Info.ControlSounds.Length > 0)
 			{
 				if (Info.ControlSoundControllerOnly)
 					Game.Sound.PlayToPlayer(SoundType.World, self.Owner, Info.ControlSounds.Random(self.World.SharedRandom), self.CenterPosition);
@@ -266,7 +266,7 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			slaves.Clear();
-			while (controllingTokens.Any())
+			while (controllingTokens.Count > 0)
 				UnstackControllingCondition(self, Info.ControllingCondition);
 		}
 

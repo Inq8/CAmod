@@ -10,13 +10,15 @@
 #endregion
 
 using OpenRA.Mods.Common;
+using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Turns actor randomly when idle. CA version just allows turning when mobile trait is paused.")]
-	class TurnOnIdleCAInfo : ConditionalTraitInfo, Requires<MobileInfo>
+	[Desc("Turns actor randomly when idle.",
+		"CA version applies to aircraft and allows turning when mobile trait is paused.")]
+	class TurnOnIdleCAInfo : ConditionalTraitInfo, Requires<AircraftInfo>
 	{
 		[Desc("Minimum amount of ticks the actor will wait before the turn.")]
 		public readonly int MinDelay = 400;
@@ -24,44 +26,47 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Maximum amount of ticks the actor will wait before the turn.")]
 		public readonly int MaxDelay = 800;
 
-		[Desc("Continue turning while mobile trait is paused.")]
-		public readonly bool TurnWhileMobilePaused = false;
+		[Desc("Continue turning while aircraft trait is paused.")]
+		public readonly bool TurnWhileAircraftPaused = false;
 
 		public override object Create(ActorInitializer init) { return new TurnOnIdleCA(init, this); }
 	}
 
-	class TurnOnIdleCA : ConditionalTrait<TurnOnIdleCAInfo>, INotifyIdle
+	class TurnOnIdleCA : ConditionalTrait<TurnOnIdleCAInfo>, ITick
 	{
 		int currentDelay;
 		WAngle targetFacing;
-		readonly Mobile mobile;
+		readonly Aircraft aircraft;
 
 		public TurnOnIdleCA(ActorInitializer init, TurnOnIdleCAInfo info)
 			: base(info)
 		{
 			currentDelay = init.World.SharedRandom.Next(Info.MinDelay, Info.MaxDelay);
-			mobile = init.Self.Trait<Mobile>();
-			targetFacing = mobile.Facing;
+			aircraft = init.Self.Trait<Aircraft>();
+			targetFacing = aircraft.Facing;
 		}
 
-		void INotifyIdle.TickIdle(Actor self)
+		void ITick.Tick(Actor self)
 		{
 			if (IsTraitDisabled)
 				return;
 
-			if (mobile.IsTraitDisabled || (mobile.IsTraitPaused && !Info.TurnWhileMobilePaused))
+			if (aircraft.IsTraitDisabled || (aircraft.IsTraitPaused && !Info.TurnWhileAircraftPaused))
+				return;
+
+			if (!(self.CurrentActivity is FlyIdle))
 				return;
 
 			if (--currentDelay > 0)
 				return;
 
-			if (targetFacing == mobile.Facing)
+			if (targetFacing == aircraft.Facing)
 			{
 				targetFacing = new WAngle(self.World.SharedRandom.Next(1024));
 				currentDelay = self.World.SharedRandom.Next(Info.MinDelay, Info.MaxDelay);
 			}
 
-			mobile.Facing = Util.TickFacing(mobile.Facing, targetFacing, mobile.TurnSpeed);
+			aircraft.Facing = Util.TickFacing(aircraft.Facing, targetFacing, aircraft.TurnSpeed);
 		}
 	}
 }

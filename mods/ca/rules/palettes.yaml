@@ -108,6 +108,14 @@
 		Name: player
 		Filename: temperat.pal
 		ShadowIndex: 4
+	PaletteFromFile@playertd:
+		Name: playertd
+		Filename: temperattd.pal
+		ShadowIndex: 4
+	PaletteFromFile@playerscrin:
+		Name: playerscrin
+		Filename: scrin.pal
+		ShadowIndex: 4
 	PaletteFromFile@d2k:
 		Name: d2k
 		Filename: PALETTE.BIN
@@ -148,11 +156,6 @@
 		Name: ra2unit
 		Filename: ra2unittem.pal
 		ShadowIndex: 4
-	PaletteFromFile@colorpicker:
-		Name: colorpicker
-		Filename: temperattd.pal
-		ShadowIndex: 4
-		AllowModifiers: false
 	PaletteFromFile@desert:
 		Name: desert
 		Filename: desert.pal
@@ -161,19 +164,29 @@
 		Name: temptd
 		Filename: temperattd.pal
 		ShadowIndex: 4
-	PlayerColorPalette@TD:
+	OverlayPlayerColorPalette@TD:
 		BasePalette: temptd
 		BaseName: playertd
 		RemapIndex: 176, 178, 180, 182, 184, 186, 189, 191, 177, 179, 181, 183, 185, 187, 188, 190
-	OverlayPlayerColorPalette@TD:
-		BasePalette: temptd
-		Ramp: 0.14
-		BaseName: overlayplayertd
-		RemapIndex: 176, 178, 180, 182, 184, 186, 189, 191, 177, 179, 181, 183, 185, 187, 188, 190
-	PlayerColorPalette@D2K:
+	OverlayPlayerColorPalette@D2K:
 		BasePalette: d2k
 		BaseName: playerd2k
 		RemapIndex: 255, 254, 253, 252, 251, 250, 249, 248, 247, 246, 245, 244, 243, 242, 241, 240
+	OverlayColorPickerPalette@colorpicker:
+		Name: colorpicker
+		BasePalette: player
+		RemapIndex: 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95
+		AllowModifiers: false
+	OverlayColorPickerPalette@colorpickerscrin:
+		Name: colorpickerscrin
+		BasePalette: playerscrin
+		RemapIndex: 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95
+		AllowModifiers: false
+	OverlayColorPickerPalette@colorpickertd:
+		Name: colorpickertd
+		BasePalette: playertd
+		RemapIndex: 176, 178, 180, 182, 184, 186, 189, 191, 177, 179, 181, 183, 185, 187, 188, 190
+		AllowModifiers: false
 	PaletteFromFile@tseffect:
 		Name: tseffect
 		Filename: animts.pal
@@ -257,150 +270,30 @@
 		G: 0
 		B: 0
 		A: 140
-	PaletteFromRGBA@highlight:
-		Name: highlight
-		R: 255
-		G: 255
-		B: 255
-		A: 128
-	PaletteFromRGBA@greenhighlight:
-		Name: greenhighlight
-		R: 128
-		G: 255
-		B: 128
-		A: 128
-	PaletteFromRGBA@redhighlight:
-		Name: redhighlight
-		R: 255
-		G: 64
-		B: 64
-		A: 128
 	PaletteFromRGBA@scrinplasma:
 		Name: scrinplasma
 		R: 121
 		G: 101
 		B: 239
 		A: 40
-	PaletteFromRGBA@cold1:
-		Name: cold1
+	PaletteFromRGBA@cold:
+		Name: cold
 		R: 81
 		G: 174
 		B: 217
 		A: 28
-	PaletteFromRGBA@cold2:
-		Name: cold2
-		R: 81
-		G: 174
-		B: 217
-		A: 56
-	PaletteFromRGBA@cold3:
-		Name: cold3
-		R: 81
-		G: 174
-		B: 217
-		A: 84
-	PaletteFromRGBA@cold4:
-		Name: cold4
-		R: 81
-		G: 174
-		B: 217
-		A: 112
-	PaletteFromRGBA@cold5:
-		Name: cold5
-		R: 81
-		G: 174
-		B: 217
-		A: 140
-	PaletteFromRGBA@cold6:
-		Name: cold6
-		R: 81
-		G: 174
-		B: 217
-		A: 168
-	PaletteFromRGBA@hot1:
-		Name: hot1
-		R: 255
-		G: 80
-		B: 0
-		A: 64
-	PaletteFromRGBA@hot2:
-		Name: hot2
-		R: 255
-		G: 110
-		B: 0
-		A: 96
-	PaletteFromRGBA@hot3:
-		Name: hot3
-		R: 255
-		G: 140
-		B: 0
-		A: 128
 	PaletteFromRGBA@moveflash:
 		Name: moveflash
 		R: 255
 		G: 255
 		B: 255
 		A: 64
-	PaletteFromRGBA@invuln:
-		Name: invuln
-		R: 128
-		G: 0
-		B: 0
-		A: 128
-	PaletteFromRGBA@irrad:
-		Name: irrad
-		R: 64
-		G: 128
-		B: 0
-		A: 128
-	PaletteFromRGBA@forces:
-		Name: forces
-		R: 0
-		G: 0
-		B: 128
-		A: 200
-	PaletteFromRGBA@nrepair:
-		Name: nrepair
-		R: 0
-		G: 0
-		B: 128
-		A: 65
-	PaletteFromRGBA@disabled:
-		Name: disabled
-		R: 0
-		G: 0
-		B: 0
-		A: 180
-	PaletteFromRGBA@flare:
-		Name: flare
-		R: 255
-		G: 0
-		B: 0
-		A: 128
-	PaletteFromRGBA@berserk:
-		Name: berserk
-		R: 255
-		G: 0
-		B: 70
-		A: 130
-	PaletteFromRGBA@frenzy:
-		Name: frenzy
-		R: 136
-		G: 34
-		B: 0
-		A: 255
 	PaletteFromRGBA@frenzyoverlay:
 		Name: frenzyoverlay
 		R: 255
 		G: 68
 		B: 0
 		A: 40
-	PaletteFromRGBA@ionsurge:
-		Name: ionsurge
-		R: 189
-		G: 112
-		B: 255
-		A: 35
 	PaletteFromRGBA@ionsurgeoverlay:
 		Name: ionsurgeoverlay
 		R: 189
@@ -412,17 +305,11 @@
 	ShroudPalette@fog:
 		Name: fog
 		Fog: true
-	PlayerColorPalette@RA:
-		BasePalette: player
-		RemapIndex: 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95
 	OverlayPlayerColorPalette@RA:
 		BasePalette: player
-		Ramp: 0.13
-		BaseName: overlayplayer
 		RemapIndex: 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95
 	OverlayPlayerColorPalette@navy:
 		BasePalette: navy
-		Ramp: 0.13
 		BaseName: playernavy
 		RemapIndex: 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95
 	FixedColorPalette@BlueTiberium:
@@ -432,27 +319,27 @@
 		RemapIndex: 176, 178, 180, 182, 184, 186, 189, 191, 177, 179, 181, 183, 185, 187, 188, 190
 	PaletteFromPlayerPaletteWithAlpha@cloak:
 		BaseName: cloakra
-		BasePalette: overlayplayer
+		BasePalette: player
 		Alpha: 0.55
 	PaletteFromPlayerPaletteWithAlpha@cloakTD:
 		BaseName: cloaktd
-		BasePalette: overlayplayertd
+		BasePalette: playertd
 		Alpha: 0.55
 	PaletteFromPlayerPaletteWithAlpha@cloakgreen:
 		BaseName: cloakgreen
-		BasePalette: overlayplayer
+		BasePalette: player
 		Alpha: 0.25
 	PaletteFromPlayerPaletteWithAlpha@cloakblack:
 		BaseName: cloakblack
-		BasePalette: overlayplayer
+		BasePalette: player
 		Alpha: 0.20
 	PaletteFromPlayerPaletteWithAlpha@cloakgreenTD:
 		BaseName: cloakgreenTD
-		BasePalette: overlayplayertd
+		BasePalette: playertd
 		Alpha: 0.25
 	PaletteFromPlayerPaletteWithAlpha@cloakTDV:
 		BaseName: cloak
-		BasePalette: overlayplayertd
+		BasePalette: playertd
 		Alpha: 0.65
 	PaletteFromRGBA@cloak:
 		Name: cloak
@@ -484,7 +371,6 @@
 		G: 228
 		B: 0
 		A: 65
-	PlayerHighlightPalette:
 	MenuPaletteEffect:
 		MenuEffect: Desaturated
 	RotationPaletteEffect@defaultwater:
@@ -492,36 +378,42 @@
 		ExcludeTilesets: DESERT
 		ExcludePalettes: tiberiumpalette, bluetiberium
 	RotationPaletteEffect@actorswater:
-		Palettes: player, overlayplayer, effect, playernavy
+		Palettes: player, effect, playernavy
 		ExcludePalettes: playerd2k, d2k, tiberiumpalette, bluetiberium
 	RotationPaletteEffect@desertwater:
-		Palettes: terrain, temptd, playertd, overlayplayertd, tiberiumpalette, bluetiberium
+		Palettes: terrain, temptd, playertd, tiberiumpalette, bluetiberium
 		Tilesets: DESERT
 		RotationBase: 32
-		ExcludePalettes: cursor, chrome, chrometd, chromes, tiberiumpalette, colorpicker, playerd2k, d2k
+		ExcludePalettes: cursor, chrome, chrometd, chromes, tiberiumpalette, colorpicker, colorpickertd, colorpickerscrin, playerd2k, d2k
 	RotationPaletteEffect@desertwater-actor:
-		Palettes: desert, temptd, playertd, overlayplayertd, tdeffect, bluetiberium
+		Palettes: desert, temptd, playertd, tdeffect, bluetiberium
 		RotationBase: 32
-		ExcludePalettes: cursor, chrome, chrometd, tiberiumpalette, bluetiberium, chromes, colorpicker, playerd2k, d2k
+		ExcludePalettes: cursor, chrome, chrometd, tiberiumpalette, bluetiberium, chromes, colorpicker, colorpickertd, colorpickerscrin, playerd2k, d2k
 	LightPaletteRotator:
 		ExcludePalettes: playerd2k, d2k, terrain, tiberiumpalette, bluetiberium, effect, tdeffect, desert, tseffect, ra2effect, tsunit, ra2unit, ra2unit-ignore-lighting-alpha75, tsunit-ignore-lighting-alpha75, tseffect-ignore-lighting-alpha75, tseffect-ignore-lighting-alpha90, effect-ignore-lighting-alpha85, ioncloud
 	ChronoshiftPaletteEffect:
 	CloakPaletteEffect:
 	FlashPaletteEffect@NUKE:
 		Type: Nuke
-		ExcludePalettes: cursor, chrome, chrometd, chromes, colorpicker, fog, shroud, effect-ignore-lighting
+		ExcludePalettes: cursor, chrome, chrometd, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud, effect-ignore-lighting
 	PaletteFromPaletteWithAlpha@placelinesegment:
 		Name: placelinesegment
 		BasePalette: terrain
 		Alpha: 0.65
 	PaletteFromPlayerPaletteWithAlpha@placebuilding:
 		BaseName: placebuilding
-		BasePalette: overlayplayer
+		BasePalette: player
 		Alpha: 0.65
 	PaletteFromPlayerPaletteWithAlpha@placebuildingTD:
 		BaseName: placebuildingtd
-		BasePalette: overlayplayertd
+		BasePalette: playertd
 		Alpha: 0.65
+	PaletteFromRGBA@invuln:
+		Name: invuln
+		R: 128
+		G: 0
+		B: 0
+		A: 128
 	FlickeringPaletteEffect@IC:
 		PaletteName: invuln
 		BaseColor: 280000BB
@@ -529,34 +421,12 @@
 		AmplitudeGreen: 0
 		AmplitudeBlue: 0
 		QuantizationCount: 128
-	FlickeringPaletteEffect@FS:
-		PaletteName: forces
-		BaseColor: 00008066
-		AmplitudeRed: 0
-		AmplitudeGreen: 0
-		AmplitudeBlue: 20
-		QuantizationCount: 96
-	FlickeringPaletteEffect@FRENZY:
-		PaletteName: frenzy
-		BaseColor: 44120066
-		AmplitudeRed: 11
-		AmplitudeGreen: 3
-		AmplitudeBlue: 0
-		QuantizationCount: 48
-	FlickeringPaletteEffect@BERSERK:
-		PaletteName: berserk
-		BaseColor: 66002288
-		AmplitudeRed: 66
-		AmplitudeGreen: 0
-		AmplitudeBlue: 22
-		QuantizationCount: 32
-	FlickeringPaletteEffect@NREPAIR:
-		PaletteName: nrepair
-		BaseColor: 25cde90D
-		AmplitudeRed: 0
-		AmplitudeGreen: 0
-		AmplitudeBlue: 30
-		QuantizationCount: 96
+	PaletteFromRGBA@irrad:
+		Name: irrad
+		R: 64
+		G: 128
+		B: 0
+		A: 128
 	FlickeringPaletteEffect@IRRADIATED:
 		PaletteName: irrad
 		BaseColor: 55881144
@@ -564,6 +434,58 @@
 		AmplitudeGreen: 25
 		AmplitudeBlue: 0
 		QuantizationCount: 160
+	PaletteFromRGBA@forces:
+		Name: forces
+		R: 0
+		G: 0
+		B: 128
+		A: 200
+	FlickeringPaletteEffect@FS:
+		PaletteName: forces
+		BaseColor: 00008066
+		AmplitudeRed: 0
+		AmplitudeGreen: 0
+		AmplitudeBlue: 20
+		QuantizationCount: 96
+	PaletteFromRGBA@nrepair:
+		Name: nrepair
+		R: 0
+		G: 0
+		B: 128
+		A: 65
+	FlickeringPaletteEffect@NREPAIR:
+		PaletteName: nrepair
+		BaseColor: 25cde90D
+		AmplitudeRed: 0
+		AmplitudeGreen: 0
+		AmplitudeBlue: 30
+		QuantizationCount: 96
+	PaletteFromRGBA@berserk:
+		Name: berserk
+		R: 255
+		G: 0
+		B: 70
+		A: 130
+	FlickeringPaletteEffect@BERSERK:
+		PaletteName: berserk
+		BaseColor: 66002288
+		AmplitudeRed: 66
+		AmplitudeGreen: 0
+		AmplitudeBlue: 22
+		QuantizationCount: 32
+	PaletteFromRGBA@frenzy:
+		Name: frenzy
+		R: 136
+		G: 34
+		B: 0
+		A: 255
+	FlickeringPaletteEffect@FRENZY:
+		PaletteName: frenzy
+		BaseColor: 44120066
+		AmplitudeRed: 11
+		AmplitudeGreen: 3
+		AmplitudeBlue: 0
+		QuantizationCount: 48
 	PaletteFromRGBA@temporal:
 		Name: temporal
 		R: 128
@@ -577,18 +499,12 @@
 		AmplitudeGreen: 13
 		AmplitudeBlue: 16
 		QuantizationCount: 48
-	PaletteFromRGBA@lowpower:
-		Name: lowpower
-		R: 0
-		G: 0
-		B: 0
-		A: 96
 	WeatherPaletteEffect@LIGHTNINGSTORM:
 		Type: LightningStorm
 		Color: 08112E03
 		Length: 350
 		Ratio: 0.3
-		ExcludePalette: cursor, chrome, chrometd, chromes, colorpicker, fog, shroud, tseffect, ra2effect, ra2unit, tdeffect, effect,  effect-ignore-lighting, tdeffect-ignore-lighting-alpha85, d2keffect-ignore-lighting-alpha75, d2keffect-ignore-lighting-alpha50, ra2effect-ignore-lighting-alpha90, ra2effect-ignore-lighting-alpha75, ra2effect-ignore-lighting-alpha50, tseffect-ignore-lighting-alpha75, tsunit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha90, tseffect-ignore-lighting-alpha90
+		ExcludePalette: cursor, chrome, chrometd, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud, tseffect, ra2effect, ra2unit, tdeffect, effect,  effect-ignore-lighting, tdeffect-ignore-lighting-alpha85, d2keffect-ignore-lighting-alpha75, d2keffect-ignore-lighting-alpha50, ra2effect-ignore-lighting-alpha90, ra2effect-ignore-lighting-alpha75, ra2effect-ignore-lighting-alpha50, tseffect-ignore-lighting-alpha75, tsunit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha90, tseffect-ignore-lighting-alpha90
 	PaletteFromFile@caneon:
 		Name: caneon
 		Filename: caneon.pal
@@ -613,26 +529,15 @@
 		Name: scrin-ignore-lighting-alpha15
 		Alpha: 0.15
 		BasePalette: scrin
-	PlayerColorPalette@scrin:
-		BasePalette: scrin
-		BaseName: playerscrin
-		RemapIndex: 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95
 	OverlayPlayerColorPalette@scrin:
 		BasePalette: scrin
-		Ramp: 0.14
-		BaseName: overlayplayerscrin
+		BaseName: playerscrin
 		RemapIndex: 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95
 	PaletteFromFile@chromescrin:
 		Name: chromes
 		Filename: scrin.pal
 		ShadowIndex: 3
 		AllowModifiers: false
-	PaletteFromRGBA@suppression:
-		Name: suppression
-		R: 244
-		G: 84
-		B: 208
-		A: 100
 	PaletteFromGimpOrJascFile@IonCloud:
 		Name: ioncloud
 		Filename: ioncloud.pal

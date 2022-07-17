@@ -90,7 +90,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public Activity GetTransformActivity(Actor self)
 		{
-			return new Transform(self, Info.IntoActor)
+			return new Transform(Info.IntoActor)
 			{
 				Offset = Info.Offset,
 				Facing = Info.Facing,

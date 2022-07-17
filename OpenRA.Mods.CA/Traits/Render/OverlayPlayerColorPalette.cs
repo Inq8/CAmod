@@ -33,7 +33,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 		public readonly bool AllowModifiers = true;
 
 		[Desc("Lowers brightness range.")]
-		public readonly float Ramp = 0;
+		public readonly float Ramp = 0.125f;
 
 		public override object Create(ActorInitializer init) { return new OverlayPlayerColorPalette(this); }
 	}
@@ -57,7 +57,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 				var bw = (float)(((pal[i] & 0xff) + ((pal[i] >> 8) & 0xff) + ((pal[i] >> 16) & 0xff)) / 3) / 0xff - r;
 				if (bw < 0)
 				{
-						bw = 0;
+					bw = 0;
 				}
 
 				var dstR = bw > .5 ? 1 - (1 - 2 * (bw - .5)) * (1 - (float)c.R / 0xff) : 2 * bw * ((float)c.R / 0xff);

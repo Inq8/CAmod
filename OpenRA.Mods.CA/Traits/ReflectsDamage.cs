@@ -70,7 +70,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (!Info.ReflectsHealing && e.Damage.Value < 0)
 				return;
 
-			if (Info.InvalidAttackerActors.Any() && Info.InvalidAttackerActors.Contains(e.Attacker.Info.Name))
+			if (Info.InvalidAttackerActors.Count > 0 && Info.InvalidAttackerActors.Contains(e.Attacker.Info.Name))
 				return;
 
 			if (self == e.Attacker)
@@ -91,7 +91,7 @@ namespace OpenRA.Mods.CA.Traits
 					.ToList();
 			}
 
-			if (!units.Any())
+			if (units.Count == 0)
 				return;
 
 			var totalDamage = e.Damage.Value;
@@ -120,13 +120,13 @@ namespace OpenRA.Mods.CA.Traits
 			if (a == null || a.IsDead)
 				return false;
 
-			if (!Info.ValidRelationships.HasStance(a.Owner.RelationshipWith(Player)))
+			if (!Info.ValidRelationships.HasRelationship(a.Owner.RelationshipWith(Player)))
 				return false;
 
-			if (Info.ValidActors.Any() && !Info.ValidActors.Contains(a.Info.Name))
+			if (Info.ValidActors.Count > 0 && !Info.ValidActors.Contains(a.Info.Name))
 				return false;
 
-			if (Info.InvalidActors.Any() && Info.InvalidActors.Contains(a.Info.Name))
+			if (Info.InvalidActors.Count > 0 && Info.InvalidActors.Contains(a.Info.Name))
 				return false;
 
 			return true;

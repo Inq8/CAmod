@@ -43,7 +43,7 @@ namespace OpenRA.Mods.CA.Traits
 		readonly Lazy<BodyOrientation> coords;
 		readonly List<Actor> actors;
 		readonly List<Armament> armaments;
-		readonly HashSet<(AnimationWithOffset MuzzleFlash, string Palette)> muzzles;
+		readonly HashSet<(AnimationWithOffset Animation, string Sequence)> muzzles;
 		readonly Dictionary<Actor, IFacing> paxFacing;
 		readonly Dictionary<Actor, IPositionable> paxPos;
 		readonly Dictionary<Actor, RenderSprites> paxRender;
@@ -55,7 +55,7 @@ namespace OpenRA.Mods.CA.Traits
 			coords = Exts.Lazy(() => self.Trait<BodyOrientation>());
 			actors = new List<Actor>();
 			armaments = new List<Armament>();
-			muzzles = new HashSet<(AnimationWithOffset, string)>();
+			muzzles = new HashSet<(AnimationWithOffset Animation, string Sequence)>();
 			paxFacing = new Dictionary<Actor, IFacing>();
 			paxPos = new Dictionary<Actor, IPositionable>();
 			paxRender = new Dictionary<Actor, RenderSprites>();
@@ -109,7 +109,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		WVec PortOffset(Actor self, WVec offset)
 		{
-			var bodyOrientation = coords.Value.QuantizeOrientation(self, self.Orientation);
+			var bodyOrientation = coords.Value.QuantizeOrientation(self.Orientation);
 			return coords.Value.LocalToWorld(offset.Rotate(bodyOrientation));
 		}
 
@@ -131,7 +131,7 @@ namespace OpenRA.Mods.CA.Traits
 
 				var muzzleFacing = targetYaw;
 				paxFacing[a.Actor].Facing = muzzleFacing;
-				paxPos[a.Actor].SetVisualPosition(a.Actor, pos + PortOffset(self, port));
+				paxPos[a.Actor].SetCenterPosition(a.Actor, pos + PortOffset(self, port));
 
 				var barrel = a.CheckFire(a.Actor, facing, target);
 				if (barrel == null)
@@ -163,7 +163,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			// Display muzzle flashes
 			foreach (var m in muzzles)
-				foreach (var r in m.MuzzleFlash.Render(self, wr, wr.Palette(m.Palette), 1f))
+				foreach (var r in m.Animation.Render(self, wr.Palette(m.Sequence)))
 					yield return r;
 		}
 
@@ -179,7 +179,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			// Take a copy so that Tick() can remove animations
 			foreach (var m in muzzles.ToArray())
-				m.MuzzleFlash.Animation.Tick();
+				m.Animation.Animation.Tick();
 		}
 	}
 }

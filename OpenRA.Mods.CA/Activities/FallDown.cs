@@ -9,7 +9,7 @@
 #endregion
 
 using OpenRA.Activities;
-using OpenRA.Traits;
+using OpenRA.Mods.Common.Traits;
 
 namespace OpenRA.Mods.CA.Activities
 {
@@ -32,7 +32,7 @@ namespace OpenRA.Mods.CA.Activities
 		public override bool Tick(Actor self)
 		{
 			currentPosition -= fallVector;
-			pos.SetVisualPosition(self, currentPosition);
+			pos.SetCenterPosition(self, currentPosition);
 
 			// If the unit has landed, this will be the last tick
 			if (self.World.Map.DistanceAboveTerrain(currentPosition).Length <= 0)

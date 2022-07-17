@@ -192,7 +192,7 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		void CheckBlocked()
 		{
-			if (info.Blockable && BlocksProjectiles.AnyBlockingActorsBetween(args.SourceActor.World, source, target, info.CenterBeamWidth, out var blockedPos))
+			if (info.Blockable && BlocksProjectiles.AnyBlockingActorsBetween(args.SourceActor.World, args.SourceActor.Owner, source, target, info.CenterBeamWidth, out var blockedPos))
 				target = blockedPos;
 		}
 

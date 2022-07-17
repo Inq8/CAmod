@@ -27,7 +27,7 @@ namespace OpenRA.Mods.Common.Traits
 			var occupied = OccupiesSpace ? new Dictionary<CPos, SubCell>() { { location, SubCell.FullCell } } :
 				new Dictionary<CPos, SubCell>();
 
-			return new ReadOnlyDictionary<CPos, SubCell>(occupied);
+			return occupied;
 		}
 
 		bool IOccupySpaceInfo.SharesCell { get { return false; } }

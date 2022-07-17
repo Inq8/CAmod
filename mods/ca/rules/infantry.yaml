@@ -4,14 +4,13 @@ DOG:
 		Queue: Infantry
 		BuildAtProductionType: Dog
 		BuildPaletteOrder: 50
-		Prerequisites: ~kenn, ~techlevel.infonly
+		Prerequisites: kenn
 		Description: Melee anti-infantry scout unit.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Can only attack Infantry
 		Attributes: • Can detect spies, mines and cloaked units\n• Detects the scent of enemy infantry beyond vision range
 	RenderSprites:
-		Scale: 0.7
 		PlayerPalette: player
 	WithDeathAnimation:
 		DeathSequencePalette: player
@@ -23,12 +22,12 @@ DOG:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Selectable:
-		Bounds: 12,17,-1,-4
-		DecorationBounds: 12,17,-1,-4
+		Bounds: 512, 725, -42, -170
+		DecorationBounds: 512, 725, -42, -170
 	Health:
 		HP: 1800
 	Mobile:
-		Speed: 82
+		Speed: 94
 		Voice: Move
 		PauseOnCondition: attack-cooldown || eating || being-warped
 	Guard:
@@ -70,7 +69,7 @@ DOG:
 		RequiresCondition: run
 	IgnoresDisguise:
 	DetectCloaked:
-		CloakTypes: Cloak, Thief, Mine
+		DetectionTypes: Cloak, Thief, Mine
 		Range: 4c0
 	RangedGpsRadarProvider:
 		Range: 12c0
@@ -92,7 +91,7 @@ E1:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 10
-		Prerequisites: ~infantry.ra, ~techlevel.infonly
+		Prerequisites: ~infantry.ra
 		Description: General-purpose infantry.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
@@ -120,6 +119,7 @@ E1:
 		RequiresCondition: parachute
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	Convertible:
@@ -130,7 +130,7 @@ E1R1:
 	RenderSprites:
 		Image: E1
 	ProducibleWithLevel:
-		Prerequisites: techlevel.infonly
+		-Prerequisites:
 		InitialLevels: 1
 	-Buildable:
 
@@ -142,7 +142,7 @@ E2:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 40
-		Prerequisites: ~infantry.e2, ~techlevel.infonly
+		Prerequisites: ~infantry.e2
 		Description: Infantry armed with grenades.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Light Armor
@@ -156,7 +156,7 @@ E2:
 	Health:
 		HP: 5000
 	Mobile:
-		Speed: 56
+		Speed: 60
 	Armament@PRIMARY:
 		Weapon: Grenade
 		LocalOffset: 0,0,555
@@ -169,6 +169,7 @@ E2:
 		ProneOffset: 256,64,-331
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: throw
 		RequiresCondition: !parachute && !being-warped
@@ -192,7 +193,7 @@ E3:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 20
-		Prerequisites: ~infantry.ra, ~techlevel.infonly
+		Prerequisites: ~infantry.ra
 		Description: Anti-tank/anti-aircraft infantry.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Aircraft, Buildings, Defenses
@@ -206,7 +207,7 @@ E3:
 	Health:
 		HP: 3500
 	Mobile:
-		Speed: 38
+		Speed: 41
 	Armament@PRIMARY:
 		Weapon: RedEye
 		LocalOffset: 0,0,500
@@ -259,6 +260,7 @@ E3:
 		ProneOffset: 384,0,-395
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	AutoTarget:
@@ -284,7 +286,7 @@ E3:
 	WithDeathAnimation@CRYO:
 		RequiresCondition: cryr-upgrade
 		DeathSequence: die-cryo
-		DeathSequencePalette: overlayplayertd
+		DeathSequencePalette: playertd
 		DeathTypes:
 			DefaultDeath: 1
 			BulletDeath: 2
@@ -319,7 +321,7 @@ U3:
 	Health:
 		HP: 6500
 	Mobile:
-		Speed: 38
+		Speed: 41
 		Voice: Move
 		PauseOnCondition: !undeployed
 		RequireForceMoveCondition: !undeployed
@@ -453,6 +455,7 @@ U3:
 		PauseOnCondition: being-warped
 		RequiresCondition: undeployed
 		Voice: Attack
+		FacingTolerance: 0
 	AttackTurreted@deployed:
 		Armaments: deployed
 		Turrets: deploy
@@ -497,7 +500,7 @@ U3.squad:
 		Queue: Infantry
 		BuildAtProductionType: Paradrop
 		BuildPaletteOrder: 1000
-		Prerequisites: dome, ~infantry.usa, ~techlevel.infonly
+		Prerequisites: dome, ~infantry.usa, ~techlevel.medium
 		Description: Prepare five Guardian GIs for airdrop.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Aircraft, Buildings, Defenses
@@ -521,7 +524,7 @@ E3R1:
 	RenderSprites:
 		Image: E3
 	ProducibleWithLevel:
-		Prerequisites: techlevel.infonly
+		-Prerequisites:
 		InitialLevels: 1
 	-Buildable:
 
@@ -533,7 +536,7 @@ E4:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 70
-		Prerequisites: ~barr, ftur, ~techlevel.infonly
+		Prerequisites: ~barr, ftur, ~techlevel.low
 		Description: Short-range anti-infantry/anti-structure infantry.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings
@@ -547,7 +550,7 @@ E4:
 	Health:
 		HP: 9000
 	Mobile:
-		Speed: 49
+		Speed: 54
 	Armament:
 		Weapon: FireballGun
 		LocalOffset: 341,0,256
@@ -559,6 +562,7 @@ E4:
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		RequiresCondition: !parachute && !being-warped
@@ -583,7 +587,7 @@ E6:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 30
-		Prerequisites: ~infantry.ra, ~techlevel.infonly
+		Prerequisites: ~infantry.ra
 		Description: Utility infantry used for capturing/repairing structures.
 	TooltipExtras:
 		Weaknesses: • Unarmed
@@ -623,6 +627,7 @@ E6:
 	AttackFrontal:
 		Armaments: primary, secondary
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	Voiced:
 		VoiceSet: EngineerVoice
 	Targetable:
@@ -650,7 +655,7 @@ SPY:
 		AddToArmyValue: true
 	-Guard:
 	Mobile:
-		Speed: 49
+		Speed: 54
 		Voice: Move
 	RevealsShroud:
 		Range: 5c0
@@ -699,7 +704,7 @@ E7:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 190
-		Prerequisites: ~tent, atek, ~techlevel.infonly
+		Prerequisites: ~tent, atek, ~techlevel.high
 		BuildLimit: 1
 		Description: Elite commando infantry armed with dual pistols and C4.
 	TooltipExtras:
@@ -715,7 +720,7 @@ E7:
 	Health:
 		HP: 11000
 	Mobile:
-		Speed: 56
+		Speed: 60
 		Voice: Move
 	Guard:
 		Voice: Move
@@ -740,6 +745,7 @@ E7:
 	AttackFrontal:
 		PauseOnCondition: being-warped
 		Armaments: primary, secondary
+		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		StandSequences: stand
@@ -762,7 +768,7 @@ E7:
 	AnnounceOnKill:
 	IgnoresDisguise:
 	DetectCloaked:
-		CloakTypes: Cloak, Thief
+		DetectionTypes: Cloak, Thief
 		Range: 5c0
 	Voiced:
 		VoiceSet: TanyaVoice
@@ -780,7 +786,7 @@ MEDI:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 50
-		Prerequisites: ~infantry.medi, ~techlevel.infonly
+		Prerequisites: ~infantry.medi
 		Description: Heals nearby infantry.
 	TooltipExtras:
 		Weaknesses: • Unarmed
@@ -807,6 +813,7 @@ MEDI:
 		ForceTargetRelationships: None
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	AttackSoundsCA@HEALSOUND:
 		Sounds: heal2.aud
 	WithInfantryBody:
@@ -839,7 +846,7 @@ MECH:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 90
-		Prerequisites: repair, ~infantry.mech, ~techlevel.medium
+		Prerequisites: repair, ~infantry.mech, ~techlevel.low
 		Description: Repairs nearby vehicles.
 	TooltipExtras:
 		Weaknesses: • Unarmed
@@ -882,6 +889,7 @@ MECH:
 	AttackFrontal:
 		Voice: Action
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	AttackSoundsCA@REPAIRSOUND:
 		Sounds: fixit1.aud
 	CaptureManager:
@@ -934,7 +942,7 @@ HACK:
 	Health:
 		HP: 5000
 	Mobile:
-		Speed: 56
+		Speed: 60
 		Voice: Move
 		PauseOnCondition: !undeployed && being-warped
 		RequireForceMoveCondition: !undeployed
@@ -1031,7 +1039,7 @@ EINSTEIN:
 	Tooltip:
 		Name: Prof. Einstein
 	Mobile:
-		Speed: 49
+		Speed: 54
 	Voiced:
 		VoiceSet: EinsteinVoice
 
@@ -1041,7 +1049,7 @@ DELPHI:
 	Tooltip:
 		Name: Agent Delphi
 	Mobile:
-		Speed: 49
+		Speed: 54
 
 CHAN:
 	Inherits: ^CivInfantry
@@ -1063,7 +1071,7 @@ MOEBIUS:
 	Tooltip:
 		Name: Dr. Moebius
 	Mobile:
-		Speed: 49
+		Speed: 54
 
 GNRL:
 	Inherits@1: ^CivInfantry
@@ -1080,6 +1088,7 @@ GNRL:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -1140,14 +1149,14 @@ THF:
 		InitialDelay: 250
 		CloakDelay: 120
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Move
-		CloakTypes: Cloak
+		DetectionTypes: Cloak
 		IsPlayerPalette: false
 		RequiresCondition: !cloak-force-disabled
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
 	Mobile:
-		Speed: 49
+		Speed: 54
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
@@ -1172,7 +1181,7 @@ SHOK:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 80
-		Prerequisites: structures.tsla, anyradar, ~barr, ~techlevel.high
+		Prerequisites: structures.tsla, anyradar, ~barr, ~techlevel.medium
 		Description: Elite infantry with portable Tesla weapon.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -1225,6 +1234,7 @@ SHOK:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -1248,7 +1258,7 @@ N1:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 11
-		Prerequisites: ~!cyborg.production, ~infantry.td, ~techlevel.infonly
+		Prerequisites: ~!cyborg.production, ~infantry.td
 		IconPalette: chrometd
 		Description: General-purpose infantry.
 	TooltipExtras:
@@ -1270,6 +1280,7 @@ N1:
 		MuzzleSequence: garrison-muzzle
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		IdleSequences: idle1,idle2,idle3,idle4
@@ -1293,7 +1304,7 @@ N1R1:
 	RenderSprites:
 		Image: N1
 	ProducibleWithLevel:
-		Prerequisites: techlevel.infonly
+		-Prerequisites:
 		InitialLevels: 1
 	-Buildable:
 	UpdatesPlayerStatistics:
@@ -1307,7 +1318,7 @@ N2:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 41
-		Prerequisites: ~pyle, ~techlevel.infonly
+		Prerequisites: ~pyle
 		IconPalette: chrometd
 		Description: Infantry armed with grenades.
 	TooltipExtras:
@@ -1322,7 +1333,7 @@ N2:
 	Health:
 		HP: 5000
 	Mobile:
-		Speed: 56
+		Speed: 60
 	Armament@PRIMARY:
 		Weapon: Grenade
 		LocalOffset: 0,0,555
@@ -1339,6 +1350,7 @@ N2:
 		FireDelay: 15
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithInfantryBody:
 		StandSequences: stand
 		DefaultAttackSequence: throw
@@ -1367,7 +1379,7 @@ N2R1:
 	RenderSprites:
 		Image: N2
 	ProducibleWithLevel:
-		Prerequisites: techlevel.infonly
+		-Prerequisites:
 		InitialLevels: 1
 	-Buildable:
 	UpdatesPlayerStatistics:
@@ -1381,7 +1393,7 @@ N3:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 21
-		Prerequisites: ~!cyborg.production, ~infantry.td, ~techlevel.infonly
+		Prerequisites: ~!cyborg.production, ~infantry.td
 		IconPalette: chrometd
 		Description: Anti-tank/anti-aircraft infantry.
 	TooltipExtras:
@@ -1396,7 +1408,7 @@ N3:
 	Health:
 		HP: 3500
 	Mobile:
-		Speed: 38
+		Speed: 41
 	Armament@PRIMARY:
 		Weapon: RedEye
 		LocalOffset: 0,0,500
@@ -1452,6 +1464,7 @@ N3:
 		ProneOffset: 384,0,-395
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
 	WithInfantryBody:
@@ -1476,7 +1489,7 @@ N3R1:
 	RenderSprites:
 		Image: N3
 	ProducibleWithLevel:
-		Prerequisites: techlevel.infonly
+		-Prerequisites:
 		InitialLevels: 1
 	-Buildable:
 	UpdatesPlayerStatistics:
@@ -1490,7 +1503,7 @@ N4:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 71
-		Prerequisites: ~hand, ~!cyborg.production, ~techlevel.infonly
+		Prerequisites: ~hand, ~!cyborg.production
 		IconPalette: chrometd
 		Description: Short-range anti-infantry/anti-structure infantry.
 	TooltipExtras:
@@ -1505,7 +1518,7 @@ N4:
 	Health:
 		HP: 7000
 	Mobile:
-		Speed: 56
+		Speed: 60
 	Armament@PRIMARY:
 		Weapon: FlamerTD
 		LocalOffset: 341,0,254
@@ -1527,6 +1540,7 @@ N4:
 		RequiresCondition: parachute
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
 	WithMuzzleOverlay:
@@ -1552,7 +1566,7 @@ N5:
 		Queue: Infantry
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 72
-		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.infonly
+		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.high
 		IconPalette: chrometd
 		Description: Short-range anti-infantry/anti-structure cyborg infantry.
 	TooltipExtras:
@@ -1585,11 +1599,12 @@ N5:
 		Name: mounted
 		Weapon: ChemsprayE
 	Mobile:
-		Speed: 56
+		Speed: 60
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -1621,7 +1636,7 @@ N5R1:
 	RenderSprites:
 		Image: N5
 	ProducibleWithLevel:
-		Prerequisites: techlevel.infonly
+		-Prerequisites:
 		InitialLevels: 1
 	-Buildable:
 	UpdatesPlayerStatistics:
@@ -1650,7 +1665,7 @@ RMBO:
 		Weaknesses: • Cannot attack Aircraft
 		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Plants C4 to destroy structures and vehicles
 	Mobile:
-		Speed: 56
+		Speed: 60
 		Voice: Move
 	Guard:
 		Voice: Move
@@ -1678,6 +1693,7 @@ RMBO:
 		Voice: Attack
 		Armaments: primary, secondary
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		IdleSequences: idle1,idle2,idle3
@@ -1704,7 +1720,7 @@ RMBO:
 		Prerequisites: barracks.upgraded
 	IgnoresDisguise:
 	DetectCloaked:
-		CloakTypes: Cloak, Thief
+		DetectionTypes: Cloak, Thief
 		Range: 5c0
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, MindControlImmune
@@ -1719,7 +1735,7 @@ N6:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 31
-		Prerequisites: ~infantry.td, ~techlevel.infonly
+		Prerequisites: ~infantry.td
 		IconPalette: chrometd
 		Description: Utility infantry used for capturing/repairing structures.
 	TooltipExtras:
@@ -1753,6 +1769,7 @@ N6:
 	AttackFrontal:
 		Armaments: primary, secondary
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	Voiced:
 		VoiceSet: EngineerVoice
 	WithDeathAnimation:
@@ -1847,7 +1864,7 @@ SNIP:
 		RequiresCondition: apb-upgrade && rank-veteran >= 3
 		PauseOnCondition: !ammo
 	Mobile:
-		Speed: 43
+		Speed: 46
 		Voice: Move
 	Cloak@NORMAL:
 		InitialDelay: 200
@@ -1857,7 +1874,7 @@ SNIP:
 		CloakSound: gstealon.aud
 		UncloakSound: gstealof.aud
 		IsPlayerPalette: true
-		CloakTypes: Cloak
+		DetectionTypes: Cloak
 		RequiresCondition: !cloak-force-disabled
 		UncloakOn: Move, Unload, Infiltrate, Demolish, Dock, Attack
 	Cloak@CRATE-CLOAK:
@@ -1881,6 +1898,7 @@ SNIP:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 		Armaments: primary, secondary, tertiary
 	WithInfantryBody:
 		AttackSequences:
@@ -1934,7 +1952,7 @@ BORI:
 	Health:
 		HP: 11000
 	Mobile:
-		Speed: 56
+		Speed: 60
 		Voice: Move
 	-Crushable:
 	Guard:
@@ -1947,6 +1965,7 @@ BORI:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
 	Armament@PRIMARY:
@@ -1989,7 +2008,7 @@ BORI:
 	AnnounceOnKill:
 	IgnoresDisguise:
 	DetectCloaked:
-		CloakTypes: Cloak, Thief
+		DetectionTypes: Cloak, Thief
 		Range: 5c0
 	Voiced:
 		VoiceSet: BorisVoice
@@ -2033,6 +2052,7 @@ MORT:
 		FireDelay: 15
 	AttackFrontal:
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: throw
 		RequiresCondition: !parachute && !being-warped
@@ -2096,7 +2116,7 @@ SAB:
 	Health:
 		HP: 5000
 	Mobile:
-		Speed: 49
+		Speed: 54
 		Voice: Move
 	Armament:
 		Weapon: SilencedPPK
@@ -2106,6 +2126,7 @@ SAB:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: ReturnFire
@@ -2121,7 +2142,7 @@ SAB:
 		CloakedCondition: hidden
 		Palette: cloaktd
 		IsPlayerPalette: true
-		CloakTypes: Cloak
+		DetectionTypes: Cloak
 		RequiresCondition: deployed && !cloak-force-disabled
 		UncloakOn: Unload, Infiltrate, Demolish, Dock, Attack, Damage
 		CloakSound: gstealon.aud
@@ -2136,7 +2157,7 @@ SAB:
 		ValidDamageStates: Heavy, Critical
 	IgnoresDisguise:
 	DetectCloaked:
-		CloakTypes: Cloak, Thief
+		DetectionTypes: Cloak, Thief
 		Range: 4c0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -2152,7 +2173,7 @@ ACOL:
 		BuildAtProductionType: Infantry
 		BuildPaletteOrder: 180
 		IconPalette: chrometd
-		Prerequisites: anyradar, obli, ~infantry.marked, ~!cyborg.production, ~techlevel.high
+		Prerequisites: anyradar, obli, ~infantry.marked, ~!cyborg.production, ~techlevel.medium
 		Description: Cyborg infantry with a laser weapon.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -2167,7 +2188,7 @@ ACOL:
 	Health:
 		HP: 10000
 	Mobile:
-		Speed: 49
+		Speed: 54
 		Voice: Move
 	RevealsShroud:
 		Range: 5c0
@@ -2184,6 +2205,7 @@ ACOL:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		IdleSequences: idle3
@@ -2240,7 +2262,7 @@ JJET:
 		QuantizedFacings: 8
 	RenderSprites:
 		Image: jjet
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 	OwnerLostAction:
 		Action: Kill
 	AppearsOnRadar:
@@ -2279,7 +2301,7 @@ JJET:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 150
-		Prerequisites: anyradar, ~pyle, ~!bjet.upgrade, ~techlevel.infonly
+		Prerequisites: anyradar, ~pyle, ~!bjet.upgrade, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Flying general-purpose infantry.
 	TooltipExtras:
@@ -2341,6 +2363,7 @@ JJET:
 	AttackFrontal:
 		PauseOnCondition: being-warped
 		Voice: Attack
+		FacingTolerance: 0
 	WithInfantryBody:
 		IdleSequences: idle1,idle2
 		DefaultAttackSequence: attack
@@ -2358,7 +2381,7 @@ JJET:
 		Actor: JJET.Husk
 		RequiresCondition: airborne
 	WithDeathAnimation:
-		DeathSequencePalette: overlayplayertd
+		DeathSequencePalette: playertd
 		DeathTypes:
 			DefaultDeath: 1
 			BulletDeath: 2
@@ -2382,12 +2405,12 @@ JJET:
 	Hovers@CRUISING:
 		RequiresCondition: cruising
 	DetectCloaked:
-		CloakTypes: Cloak, Thief
+		DetectionTypes: Cloak, Thief
 		Range: 3c0
 	ActorLostNotification:
 	Selectable:
-		Bounds: 18,18,0,-6
-		DecorationBounds: 12,17,0,-6
+		Bounds: 768, 768, 0, -256
+		DecorationBounds: 512, 725, 0, -256
 	AttackMove:
 		Voice: Move
 	Guard:
@@ -2433,7 +2456,7 @@ BJET:
 	Valued:
 		Cost: 525
 	Buildable:
-		Prerequisites: anyradar, ~pyle, ~bjet.upgrade, ~techlevel.infonly
+		Prerequisites: anyradar, ~pyle, ~bjet.upgrade, ~techlevel.high
 		IconPalette: chrometd
 		Description: Flying infantry with a grenade launcher.
 	TooltipExtras:
@@ -2483,7 +2506,7 @@ JJET.Husk:
 		VTOL: true
 	RenderSprites:
 		Image: jjet
-		PlayerPalette: overlayplayertd
+		PlayerPalette: playertd
 	WithSpriteBody:
 		Sequence: die-falling
 	Health:
@@ -2494,7 +2517,7 @@ JJET.Husk:
 	WithDeathAnimation:
 		RequiresCondition: !water-death
 		FallbackSequence: die-flying
-		DeathSequencePalette: overlayplayertd
+		DeathSequencePalette: playertd
 	WithDeathAnimation@SPLASH:
 		RequiresCondition: water-death
 		FallbackSequence: die-splash
@@ -2513,7 +2536,7 @@ E8:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 130
-		Prerequisites: ~infantry.iraq, ttur, anyradar, ~techlevel.infonly
+		Prerequisites: ~infantry.iraq, ttur, anyradar, ~techlevel.medium
 		Description: Anti-infantry unit with radiation based weaponry.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -2543,6 +2566,7 @@ E8:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped || !undeployed
+		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -2626,7 +2650,7 @@ N1C:
 		Queue: Infantry
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 13
-		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.medium
+		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.high
 		IconPalette: chrometd
 		Description: General-purpose cyborg infantry.
 	TooltipExtras:
@@ -2643,11 +2667,12 @@ N1C:
 	Health:
 		HP: 21000
 	Mobile:
-		Speed: 43
+		Speed: 46
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -2678,7 +2703,7 @@ N3C:
 		Queue: Infantry
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 23
-		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.medium
+		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.high
 		IconPalette: chrometd
 		Description: Anti-tank/anti-aircraft cyborg infantry.
 	TooltipExtras:
@@ -2693,13 +2718,14 @@ N3C:
 		AddToArmyValue: true
 	-TakeCover:
 	Health:
-		HP:  9000
+		HP: 9000
 	Mobile:
-		Speed: 43
+		Speed: 46
 		Voice: Move
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -2778,7 +2804,6 @@ RMBC:
 	RenderSprites:
 		PlayerPalette: playerd2k
 		Image: cycom
-		Scale: 1
 	Buildable:
 		Queue: Infantry
 		BuildAtProductionType: Cyborg
@@ -2801,7 +2826,7 @@ RMBC:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 49
+		Speed: 54
 		Voice: Move
 		PauseOnCondition: being-warped || empdisable
 	RevealsShroud:
@@ -2809,6 +2834,7 @@ RMBC:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped || empdisable
+		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -2831,8 +2857,8 @@ RMBC:
 	WithDeathAnimation:
 		DeathSequencePalette: playerd2k
 	Selectable:
-		Bounds: 24,24,0,-4
-		DecorationBounds: 12,20,0,-4
+		Bounds: 1024, 1024, 0, -170
+		DecorationBounds: 512, 853, 0, -170
 	-TakeCover:
 	-Crushable:
 	-KillsSelf@Immolate:
@@ -2872,7 +2898,7 @@ IVAN:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 42
-		Prerequisites: ~infantry.ukraine, weap, ~techlevel.infonly
+		Prerequisites: ~infantry.ukraine, weap, ~techlevel.low
 		Description: Specialist demolition infantry armed with explosives.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Light Armor
@@ -2886,7 +2912,7 @@ IVAN:
 	Health:
 		HP: 12000
 	Mobile:
-		Speed: 66
+		Speed: 72
 		Voice: Move
 	AttackMove:
 		Voice: Move
@@ -2909,6 +2935,7 @@ IVAN:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: throw
 		RequiresCondition: !parachute && !being-warped
@@ -2936,7 +2963,7 @@ BRUT:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 85
-		Prerequisites: anyradar, ~infantry.yuri, ~techlevel.infonly
+		Prerequisites: anyradar, ~infantry.yuri, ~techlevel.medium
 		Description: Melee range genetically engineered hulk.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -2954,14 +2981,14 @@ BRUT:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 56
+		Speed: 60
 		Voice: Move
 	Passenger:
 		CargoType: Vehicle
 	RevealsShroud:
 		Range: 4c0
 	Selectable:
-		DecorationBounds: 14,19,-1,-8
+		DecorationBounds: 597, 810, -42, -341
 	Targetable:
 		RequiresCondition: !being-warped
 		TargetTypes: Ground, Infantry, MindControlImmune, DogImmune
@@ -2975,7 +3002,7 @@ BRUT:
 	AttackSounds:
 		Sounds: ibruatta.aud, ibruattb.aud
 	WithDeathAnimation:
-		DeathSequencePalette: overlayplayertd
+		DeathSequencePalette: playertd
 		DeathSequence: die
 		UseDeathTypeSuffix: true
 		DeathTypes:
@@ -3002,6 +3029,7 @@ BRUT:
 	AttackFrontal:
 		PauseOnCondition: being-warped
 		Voice: Attack
+		FacingTolerance: 0
 	-TakeCover:
 	-Captures@DRIVER_KILL:
 	-CaptureManager:
@@ -3083,7 +3111,7 @@ SHAD:
 	Health:
 		HP: 5000
 	Mobile:
-		Speed: 56
+		Speed: 60
 		Voice: Move
 	Armament@PRIMARY:
 		Weapon: ShadowOperativeGun
@@ -3098,6 +3126,7 @@ SHAD:
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
+		FacingTolerance: 0
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: ReturnFire
@@ -3107,7 +3136,7 @@ SHAD:
 		CloakedCondition: hidden
 		Palette: cloaktd
 		IsPlayerPalette: true
-		CloakTypes: Cloak
+		DetectionTypes: Cloak
 		UncloakOn: Unload, Demolish, Dock, Attack, Damage
 		CloakSound: gstealon.aud
 		UncloakSound: gstealof.aud
@@ -3117,7 +3146,7 @@ SHAD:
 		ValidDamageStates: Critical
 	IgnoresDisguise:
 	DetectCloaked:
-		CloakTypes: Cloak, Thief
+		DetectionTypes: Cloak, Thief
 		Range: 4c0
 	-WithParachute:
 	AmmoPool:
@@ -3183,7 +3212,7 @@ SGLI:
 		Actor: sgli.crashing
 		RequiresCondition: !being-warped
 	Selectable:
-		DecorationBounds: 30,28,0,2
+		DecorationBounds: 1280, 1194, 0, 85
 	TransformOnCondition:
 		IntoActor: sgli.deployed
 		RequiresCondition: deployed
@@ -3281,7 +3310,7 @@ SGLI.discarded:
 	MapEditorData:
 		Categories: Husk
 	WithColoredOverlay@IDISABLE:
-		Palette: disabled
+		Color: 00000060
 	ChangesHealth:
 		Step: -100
 		StartIfBelow: 101
@@ -3301,7 +3330,7 @@ BH:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 150
-		Prerequisites: anyradar, ~infantry.blackh, ~techlevel.infonly
+		Prerequisites: anyradar, ~infantry.blackh, ~techlevel.medium
 		Description: Elite precision anti-tank flamethrower unit.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
@@ -3315,7 +3344,7 @@ BH:
 	Health:
 		HP: 13000
 	Mobile:
-		Speed: 56
+		Speed: 60
 		Voice: Move
 	RevealsShroud:
 		Range: 5c0
@@ -3331,6 +3360,7 @@ BH:
 	AttackFrontal:
 		PauseOnCondition: being-warped
 		Voice: Attack
+		FacingTolerance: 0
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		RequiresCondition: !parachute && !being-warped
@@ -3370,7 +3400,7 @@ YURI:
 		Queue: Infantry
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 190
-		Prerequisites: ~barr, stek, ~infantry.yuri, ~techlevel.infonly
+		Prerequisites: ~barr, stek, ~infantry.yuri, ~techlevel.high
 		BuildLimit: 1
 		Description: Elite specialist infantry able to mind-control\n  enemy units and defenses.
 	TooltipExtras:
@@ -3386,7 +3416,7 @@ YURI:
 	Health:
 		HP: 11000
 	Mobile:
-		Speed: 56
+		Speed: 60
 		Voice: Move
 	Armament@PRIMARY:
 		Weapon: EnslaveInfantry
@@ -3443,6 +3473,7 @@ YURI:
 	AttackFrontal:
 		PauseOnCondition: being-warped && parachute
 		Armaments: primary, secondary, aidummy
+		FacingTolerance: 0
 	RevealsShroud:
 		Range: 6c0
 	Passenger:
@@ -3507,7 +3538,7 @@ SEAL:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 185
-		Prerequisites: ~infantry.usa, techcenter, ~techlevel.high
+		Prerequisites: ~infantry.usa, atek, ~techlevel.high
 		Queue: Infantry
 		IconPalette: chrome
 		BuildLimit: -1
@@ -3519,7 +3550,7 @@ SEAL:
 	Voiced:
 		VoiceSet: SealVoice
 	Mobile:
-		Speed: 49
+		Speed: 54
 		Locomotor: seal
 	Armament:
 		Weapon: mp5
@@ -3626,6 +3657,7 @@ XO:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
+		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithMuzzleOverlay:

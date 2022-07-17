@@ -17,7 +17,7 @@ hazmat.upgrade:
 		Name: Upgrade: Hazmat Suits
 	Buildable:
 		BuildPaletteOrder: 10
-		Prerequisites: ~anyradar, ~infantry.any, ~!player.soviet, ~!player.scrin, ~techlevel.high
+		Prerequisites: ~anyradar, ~infantry.any, ~!player.soviet, ~!player.scrin, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Infantry are equiped with hazmat suits which provides\n  protection against Tiberium and radiation.\n\nUpgrades: Infantry
 	TooltipExtras:
@@ -36,7 +36,7 @@ flakarmor.upgrade:
 		Prerequisites: ~techcenter, ~infantry.any, ~!player.nod, ~!player.scrin, ~techlevel.high
 		Description: Infantry are equiped with advanced flak armor which\n  provides protection against explosives.\n\nUpgrades: Infantry
 	TooltipExtras:
-		Strengths: + 40% reduced damage from explosives
+		Strengths: + 40% reduced damage from explosives\n+ 20% reduced damage from incendiary explosives
 	Valued:
 		Cost: 1500
 	RenderSprites:
@@ -51,7 +51,7 @@ bombard.strat:
 		Name: Strategy: Bombardment I
 	Buildable:
 		BuildPaletteOrder: 1
-		Prerequisites: ~radar.gdi, ~!seek.strat, ~!hold.strat, ~techlevel.high
+		Prerequisites: ~radar.gdi, ~!seek.strat, ~!hold.strat, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Firepower focused strategy.
 	TooltipExtras:
@@ -82,7 +82,7 @@ seek.strat:
 		Name: Strategy: Seek & Destroy
 	Buildable:
 		BuildPaletteOrder: 4
-		Prerequisites: ~radar.gdi, ~!bombard.strat, ~!hold.strat, ~techlevel.high
+		Prerequisites: ~radar.gdi, ~!bombard.strat, ~!hold.strat, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Speed and weapon range focused strategy.
 	TooltipExtras:
@@ -113,7 +113,7 @@ hold.strat:
 		Name: Strategy: Hold the Line
 	Buildable:
 		BuildPaletteOrder: 7
-		Prerequisites: ~radar.gdi, ~!bombard.strat, ~!seek.strat, ~techlevel.high
+		Prerequisites: ~radar.gdi, ~!bombard.strat, ~!seek.strat, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Defensive strategy.
 	TooltipExtras:
@@ -144,7 +144,7 @@ vulcan.upgrade:
 		Name: Upgrade: Vulcan
 	Buildable:
 		BuildPaletteOrder: 20
-		Prerequisites: ~radar.gdi, ~techlevel.high
+		Prerequisites: ~radar.gdi, ~techlevel.medium
 		Description: Upgrades: APC
 	TooltipExtras:
 		Strengths: + Adds anti-air capability\n+ Increased damage against ground targets\n+ Adds turret
@@ -406,7 +406,7 @@ howi.upgrade:
 		Name: Research: Howitzer
 	Buildable:
 		BuildPaletteOrder: 20
-		Prerequisites: ~radar.nod, ~techlevel.high
+		Prerequisites: ~radar.nod, ~techlevel.medium
 		Description: Allows construction of Howitzers.\n\nReplaces: Artillery
 	TooltipExtras:
 		Strengths: + Increased speed\n+ Has turret
@@ -533,7 +533,7 @@ hazmatsoviet.upgrade:
 		Name: Upgrade: Heavy Hazmat Suits
 	Buildable:
 		BuildPaletteOrder: 10
-		Prerequisites: ~anyradar, ~infantry.any, ~player.soviet, ~techlevel.high
+		Prerequisites: ~anyradar, ~infantry.any, ~player.soviet, ~techlevel.medium
 		Description: Infantry are equipped with heavy hazmat suits which provides\n  protection against Tiberium and radiation.\n\nUpgrades: Infantry
 	TooltipExtras:
 		Strengths: + Tiberium immunity\n+ High radiation resistance
@@ -549,7 +549,7 @@ lasher.upgrade:
 		Name: Upgrade: Lasher Tank
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: ~radar.yuri, ~techlevel.high
+		Prerequisites: ~radar.yuri, ~techlevel.medium
 		Description: Upgrades Heavy tanks with infantry crushing attachment\n  at the cost of some armor and firepower.\n\nUpgrades: Heavy Tank
 	TooltipExtras:
 		Strengths: + 20% faster movement\n + Damages infantry it moves through\n+ Not slowed by infantry
@@ -558,6 +558,7 @@ lasher.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: lasher.upgrade
+
 
 seismic.upgrade:
 	Inherits: ^Upgrade
@@ -647,7 +648,7 @@ rapc.upgrade:
 		Name: Upgrade: Raider
 	Buildable:
 		BuildPaletteOrder: 20
-		Prerequisites: ~radar.allies, ~techlevel.high
+		Prerequisites: ~radar.allies, ~techlevel.medium
 		Description: Allows construction of the Raider APC.\n\nReplaces: APC
 	TooltipExtras:
 		Strengths: + Adds strong anti-structure damage\n+ Increased splash damage\n+ Adds turret
@@ -663,7 +664,7 @@ apb.upgrade:
 		Name: Research: Raufoss Ammo
 	Buildable:
 		BuildPaletteOrder: 20
-		Prerequisites: ~radar.england, ~techlevel.high
+		Prerequisites: ~radar.england, ~techlevel.medium
 		Description: Upgrades Snipers granting them Raufoss armor piercing rounds,\n  which stun and damage armoured targets.\n\nUpgrades: Sniper
 	TooltipExtras:
 		Strengths: + Can damage vehicles with AP rounds which slow movement and rate of fire
@@ -772,7 +773,7 @@ blink.upgrade:
 		Name: Upgrade: Blink Packs
 	Buildable:
 		BuildPaletteOrder: 20
-		Prerequisites: ~nerv, ~techlevel.high
+		Prerequisites: ~nerv, ~techlevel.medium
 		Description: Equips Intruders with blink packs allowing\n  them to teleport.\n\nUpgrades: Intruder
 		IconPalette: scrin
 	TooltipExtras:
@@ -788,7 +789,7 @@ advart.upgrade:
 		Name: Upgrade: Advanced Articulators
 	Buildable:
 		BuildPaletteOrder: 21
-		Prerequisites: ~radar.traveler, ~techlevel.high
+		Prerequisites: ~radar.traveler, ~techlevel.medium
 		Description: Enable Scrin infantry to move faster.\n\nUpgrades: Scrin Infantry
 		IconPalette: scrin
 	TooltipExtras:
@@ -808,7 +809,7 @@ carapace.upgrade:
 		Description: Infantry gain a hardened carapace which\n  provides protection against explosives.\n\nUpgrades: Infantry
 		IconPalette: scrin
 	TooltipExtras:
-		Strengths: + 40% reduced damage from explosives
+		Strengths: + 40% reduced damage from explosives\n+ 20% reduced damage from incendiary explosives
 	Valued:
 		Cost: 1500
 	RenderSprites:

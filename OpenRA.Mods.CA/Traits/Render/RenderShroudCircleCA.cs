@@ -21,6 +21,7 @@ namespace OpenRA.Mods.CA.Traits
 {
 	public enum RangeCircleVisibility { Always, WhenSelected }
 
+	[Desc("CA version can be set to be visible either always, or only when actor is selected.")]
 	public class RenderShroudCircleCAInfo : ConditionalTraitInfo
 	{
 		[Desc("Color of the circle.")]

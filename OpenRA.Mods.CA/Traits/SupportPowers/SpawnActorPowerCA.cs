@@ -12,14 +12,13 @@
 using System.Collections.Generic;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common.Graphics;
-using OpenRA.Mods.Common.Orders;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
-using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Spawns an actor that stays for a limited amount of time.")]
+	[Desc("Spawns an actor that stays for a limited amount of time.",
+		"CA version extends the base version, adding a target circle.")]
 	public class SpawnActorPowerCAInfo : SpawnActorPowerInfo
 	{
 		public readonly WDist TargetCircleRange = WDist.Zero;
@@ -41,44 +40,22 @@ namespace OpenRA.Mods.CA.Traits
 
 		public override void SelectTarget(Actor self, string order, SupportPowerManager manager)
 		{
-			self.World.OrderGenerator = new SelectSpawnActorPowerCATarget(order, manager, this);
+			Game.Sound.PlayToPlayer(SoundType.UI, manager.Self.Owner, Info.SelectTargetSound);
+			Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech",
+				Info.SelectTargetSpeechNotification, self.Owner.Faction.InternalName);
+			self.World.OrderGenerator = new SelectSpawnActorPowerCATarget(order, manager, this, MouseButton.Left);
 		}
 	}
 
-	public class SelectSpawnActorPowerCATarget : OrderGenerator
+	public class SelectSpawnActorPowerCATarget : SelectSpawnActorPowerTarget
 	{
-		readonly SupportPowerManager manager;
-		readonly string order;
 		readonly SpawnActorPowerCA power;
 
-		public SelectSpawnActorPowerCATarget(string order, SupportPowerManager manager, SpawnActorPowerCA power)
+		public SelectSpawnActorPowerCATarget(string order, SupportPowerManager manager, SpawnActorPowerCA power, MouseButton button)
+			: base(order, manager, power, button)
 		{
-			// Clear selection if using Left-Click Orders
-			if (Game.Settings.Game.UseClassicMouseStyle)
-				manager.Self.World.Selection.Clear();
-
-			this.manager = manager;
-			this.order = order;
 			this.power = power;
 		}
-
-		protected override IEnumerable<Order> OrderInner(World world, CPos cell, int2 worldPixel, MouseInput mi)
-		{
-			world.CancelInputMode();
-			if (mi.Button == MouseButton.Left && world.Map.Contains(cell))
-				yield return new Order(order, manager.Self, Target.FromCell(world, cell), false) { SuppressVisualFeedback = true };
-		}
-
-		protected override void Tick(World world)
-		{
-			// Cancel the OG if we can't use the power
-			if (!manager.Powers.ContainsKey(order))
-				world.CancelInputMode();
-		}
-
-		protected override IEnumerable<IRenderable> Render(WorldRenderer wr, World world) { yield break; }
-
-		protected override IEnumerable<IRenderable> RenderAboveShroud(WorldRenderer wr, World world) { yield break; }
 
 		protected override IEnumerable<IRenderable> RenderAnnotations(WorldRenderer wr, World world)
 		{
@@ -99,11 +76,6 @@ namespace OpenRA.Mods.CA.Traits
 					Color.FromArgb(96, Color.Black),
 					3);
 			}
-		}
-
-		protected override string GetCursor(World world, CPos cell, int2 worldPixel, MouseInput mi)
-		{
-			return world.Map.Contains(cell) ? power.Info.Cursor : "generic-blocked";
 		}
 	}
 }

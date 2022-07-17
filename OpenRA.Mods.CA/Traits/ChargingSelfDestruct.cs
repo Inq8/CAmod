@@ -47,6 +47,9 @@ namespace OpenRA.Mods.CA.Traits
 		[VoiceReference]
 		public readonly string Voice = "Action";
 
+		[Desc("Cursor to display when deploying.")]
+		public readonly string DeployCursor = "deploy";
+
 		[GrantedConditionReference]
 		[Desc("The condition to grant to self while deployed.")]
 		public readonly string DeployedCondition = null;
@@ -90,7 +93,7 @@ namespace OpenRA.Mods.CA.Traits
 			get
 			{
 				yield return new TargetTypeOrderTargeter(new BitSet<TargetableType>("DetonateAttack"), "DetonateAttack", 5, "attack", true, false) { ForceAttack = false };
-				yield return new DeployOrderTargeter("Detonate", 5);
+				yield return new DeployOrderTargeter("Detonate", 5, () => info.DeployCursor);
 			}
 		}
 

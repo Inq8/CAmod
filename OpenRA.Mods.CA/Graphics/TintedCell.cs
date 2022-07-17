@@ -45,7 +45,7 @@ namespace OpenRA.Mods.CA.Graphics
 
 		public IRenderable WithPalette(PaletteReference newPalette) { return this; }
 		public IRenderable WithZOffset(int newOffset) { return this; }
-		public IRenderable OffsetBy(WVec vec) { return this; }
+		public IRenderable OffsetBy(in WVec vec) { return this; }
 		public IRenderable AsDecoration() { return this; }
 
 		public PaletteReference Palette { get { return null; } }
@@ -63,14 +63,14 @@ namespace OpenRA.Mods.CA.Graphics
 			if (firstTime)
 			{
 				var map = wr.World.Map;
-				var tileSet = wr.World.Map.Rules.TileSet;
+				var terrainInfo = wr.World.Map.Rules.TerrainInfo;
 				var uv = cpos.ToMPos(map);
 
 				if (!map.Height.Contains(uv))
 					return;
 
 				var tile = map.Tiles[uv];
-				var ti = tileSet.GetTileInfo(tile);
+				var ti = terrainInfo.GetTerrainInfo(tile);
 				var ramp = ti != null ? ti.RampType : 0;
 
 				var corners = map.Grid.Ramps[ramp].Corners;

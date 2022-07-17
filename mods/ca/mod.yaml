@@ -110,12 +110,14 @@ Assemblies:
 ChromeLayout:
 	common|chrome/ingame.yaml
 	common|chrome/ingame-chat.yaml
+	common|chrome/ingame-transients.yaml
 	common|chrome/ingame-fmvplayer.yaml
 	common|chrome/ingame-info.yaml
 	common|chrome/ingame-infoscripterror.yaml
 	common|chrome/ingame-infobriefing.yaml
 	common|chrome/ingame-infoobjectives.yaml
 	common|chrome/ingame-infostats.yaml
+	common|chrome/ingame-info-lobby-options.yaml
 	ca|chrome/ingame-menu.yaml
 	ca|chrome/ingame-observer.yaml
 	ca|chrome/ingame-player.yaml
@@ -157,6 +159,7 @@ ChromeLayout:
 	common|chrome/confirmation-dialogs.yaml
 	common|chrome/editor.yaml
 	common|chrome/playerprofile.yaml
+	common|chrome/text-notifications.yaml
 
 Weapons:
 	ca|weapons/explosions.yaml
@@ -177,7 +180,7 @@ Music:
 	ca|audio/music.yaml
 
 Translations:
-	ca|languages/english.yaml
+	common|languages/en.ftl
 
 Hotkeys:
 	common|hotkeys/game.yaml
@@ -185,6 +188,9 @@ Hotkeys:
 	common|hotkeys/production-common.yaml
 	common|hotkeys/supportpowers.yaml
 	common|hotkeys/viewport.yaml
+	common|hotkeys/chat.yaml
+	common|hotkeys/editor.yaml
+	common|hotkeys/control-groups.yaml
 	ca|hotkeys.yaml
 
 LoadScreen: ImageLoadScreen
@@ -236,7 +242,7 @@ Fonts:
 		Ascender: 18
 	Title:
 		Font: ca|bombard.ttf
-		Size: 48
+		Size: 32
 		Ascender: 26
 
 Missions:
@@ -245,6 +251,8 @@ Missions:
 MapGrid:
 	TileSize: 24,24
 	Type: Rectangular
+
+DefaultOrderGenerator: UnitOrderGenerator
 
 SupportsMapsFrom: ca, ra
 
@@ -264,37 +272,40 @@ SpriteSequenceFormat: ClassicTilesetSpecificSpriteSequence
 
 ModelSequenceFormat: PlaceholderModelSequence
 
+VideoFormats: Vqa, Wsa
+
+TerrainFormat: DefaultTerrain
+
 AssetBrowser:
 	SupportedExtensions: .r8, .shp, .tmp, .tem, .des, .sno, .int, .vqa
 
 GameSpeeds:
-	slowest:
-		Name: Slowest
-		Timestep: 80
-		OrderLatency: 2
-	slower:
-		Name: Slower
-		Timestep: 50
-		OrderLatency: 3
-	default:
-		Name: Normal
-		Timestep: 40
-		OrderLatency: 3
-	fast:
-		Name: Fast
-		Timestep: 35
-		OrderLatency: 4
-	faster:
-		Name: Faster
-		Timestep: 30
-		OrderLatency: 4
-	fastest:
-		Name: Fastest
-		Timestep: 20
-		OrderLatency: 6
-
-ColorValidator:
-	TeamColorPresets: FE1100, 800d0d, f57606, f5d378, ffe610, ffafe2, db39d5, 72079a, 03ef35, 008c00, 9d8c01, 00b3a8, 2244d4, 23aaff, 41eefd, abb7e4
+	DefaultSpeed: default
+	Speeds:
+		slowest:
+			Name: Slowest
+			Timestep: 80
+			OrderLatency: 2
+		slower:
+			Name: Slower
+			Timestep: 50
+			OrderLatency: 3
+		default:
+			Name: Normal
+			Timestep: 40
+			OrderLatency: 3
+		fast:
+			Name: Fast
+			Timestep: 35
+			OrderLatency: 4
+		faster:
+			Name: Faster
+			Timestep: 30
+			OrderLatency: 4
+		fastest:
+			Name: Fastest
+			Timestep: 20
+			OrderLatency: 6
 
 ModContent:
 	InstallPromptMessage: Combined Arms requires artwork and audio from the original games.\n\nQuick Install will automatically download this content (without music\nor videos) from a mirror of the 2008 Command & Conquer/Red Alert freeware release.\n\nAdvanced Install includes options for downloading the music and for\ncopying the videos and other content from an original game disc.

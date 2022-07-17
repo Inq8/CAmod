@@ -422,7 +422,7 @@ CorrupterSpew:
 		Palette: scrin-ignore-lighting-alpha85
 		TrailPalette: scrin-ignore-lighting-alpha85
 	Warhead@1Dam: SpreadDamage
-		DamageTypes: Prone50Percent, TriggerProne, PoisonDeath, FlakVestMitigated
+		DamageTypes: Prone50Percent, TriggerProne, PoisonDeath, FlakVestMitigatedMinor
 		Spread: 288
 		Damage: 1000
 		Versus:
@@ -482,7 +482,7 @@ RuinerCannon:
 			Light: 90
 			Heavy: 45
 			Brick: 20
-		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath, FlakVestMitigated
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath, FlakVestMitigatedMinor
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: ruiner-hit1.aud
 		Explosions: idle
@@ -559,52 +559,18 @@ ReaperLaserCharged:
 
 TripodLaserReversed:
 	Inherits: TripodLaser
-	-StartBurstReport:
 	FirstBurstTargetOffset: -150,-300,0
 	FollowingBurstTargetOffset: 50,100,0
 
 ReaperLaserReversed:
 	Inherits: ReaperLaser
-	-StartBurstReport:
 	FirstBurstTargetOffset: -150,-300,0
 	FollowingBurstTargetOffset: 50,100,0
 
 ReaperLaserChargedReversed:
 	Inherits: ReaperLaserCharged
-	-StartBurstReport:
 	FirstBurstTargetOffset: -60,-120,0
 	FollowingBurstTargetOffset: 20,40,0
-
-TripodLaserSound:
-	ReloadDelay: 66
-	Range: 6c0
-	ValidTargets: Ground, Water
-	Projectile: InstantHit
-	Report: tripod-fire1.aud, tripod-fire2.aud, tripod-fire3.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: 1
-
-ReaperLaserSound:
-	Inherits: TripodLaserSound
-	ReloadDelay: 56
-	Report: rtripod-fire1.aud, rtripod-fire2.aud, rtripod-fire3.aud
-	Range: 5c0
-
-ReaperLaserChargedSound:
-	Inherits: ReaperLaserSound
-	Report: rtripod-cfire1.aud, rtripod-cfire2.aud
-
-ReaperLaserChargedDummy:
-	Inherits: ReaperLaserCharged
-	-StartBurstReport:
-	-FirstBurstTargetOffset:
-	-FollowingBurstTargetOffset:
-	-Projectile:
-	-Warhead@2Smu:
-	-Warhead@3Eff:
-	Projectile: InstantHit
-	Warhead@1Dam: SpreadDamage
-		Damage: 0
 
 StormriderZap:
 	Range: 6c0
@@ -1291,7 +1257,7 @@ LeecherBeam:
 	Warhead@1Dam: SpreadDamage
 		Spread: 288
 		Damage: 3250
-		DamageTypes: Prone50Percent, TriggerProne, AtomizedDeath, FlakVestMitigated
+		DamageTypes: Prone50Percent, TriggerProne, AtomizedDeath, FlakVestMitigatedMinor
 		Versus:
 			None: 100
 			Light: 45
