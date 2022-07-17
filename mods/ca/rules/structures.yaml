@@ -2304,18 +2304,40 @@ NPWR:
 		Prerequisite: npwr.iraq
 	SupportPowerChargeBar:
 	GrantExternalConditionPower@ATOMICAMMO:
+		Prerequisites: ~structures.ftur
 		OrderName: atomicammo
 		Icon: atomicammo
 		ChargeInterval: 4500
-		Name: Atomic Ammunition
+		Name: Atomic Shells
 		Condition: atomic-ammo
-		Dimensions: 5, 5
-		Footprint: __x__ _xxx_ xxxxx _xxx_ __x__
-		ValidRelationships: Ally, Neutral
-		Duration: 600
+		Dimensions: 3, 3
+		Footprint: _x_ xxx _x_
+		ValidRelationships: Ally
+		Duration: 55
 		AllowMultiple: false
-		Description: \nGrants atomic ammunition to tanks for a limited time.
-		OnFireSound: atomicammo.aud
+		Description: \nGrants tanks a limited supply of atomic shells.
+		OnFireSound: atomshell.aud
+		SelectTargetSpeechNotification: SelectTarget
+		InsufficientPowerSpeechNotification: InsufficientPower
+		DisplayRadarPing: True
+		Cursor: ability
+		PauseOnCondition: empdisable || being-warped
+		DisplayTimerRelationships: Ally, Neutral
+		Sequence: idle
+	GrantExternalConditionPower@ATOMICAMMOIRAQ:
+		Prerequisites: ~structures.iraq
+		OrderName: atomicammoiraq
+		Icon: atomicammo
+		ChargeInterval: 4500
+		Name: Atomic Shells
+		Condition: atomic-ammo
+		Dimensions: 3, 3
+		Footprint: xxx xxx xxx
+		ValidRelationships: Ally
+		Duration: 55
+		AllowMultiple: false
+		Description: \nGrants tanks a limited supply of atomic shells.
+		OnFireSound: atomshell.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayRadarPing: True

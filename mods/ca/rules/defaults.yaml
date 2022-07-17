@@ -902,16 +902,33 @@
 		Condition: atomic-ammo
 	WithIdleOverlay@ATOMICAMMO:
 		Sequence: idle
-		Image: atomicammobuff
-		Palette: effect-ignore-lighting-alpha50
-		RequiresCondition: atomic-ammo
-		Offset: 0,0,400
+		Image: atomshell
+		Palette: effect
+		RequiresCondition: atomic-ammo && has-atomic-ammo < 6
+		Offset: 0,0,600
 		IsDecoration: True
 	FirepowerMultiplier@ATOMICAMMO:
-		RequiresCondition: atomic-ammo
+		RequiresCondition: has-atomic-ammo
 		Modifier: 115
 	Targetable@ATOMICAMMO:
 		TargetTypes: AtomicAmmoTargetable
+	AmmoPool@ATOMICAMMO:
+		Armaments: primary
+		Ammo: 6
+		ReloadCount: 6
+		InitialAmmo: 0
+		AmmoCondition: has-atomic-ammo
+	WithAmmoPipsDecoration@ATOMICAMMO:
+		Position: BottomLeft
+		Margin: 4, 3
+		PipCount: 6
+		ValidRelationships: Ally, Enemy, Neutral
+		RequiresSelection: false
+		RequiresCondition: has-atomic-ammo
+	ReloadAmmoPool@ATOMICAMMO:
+		Count: 6
+		Delay: 50
+		RequiresCondition: atomic-ammo && has-atomic-ammo < 6
 
 ^ForceShieldable:
 	WithModifiedPalette@FS:

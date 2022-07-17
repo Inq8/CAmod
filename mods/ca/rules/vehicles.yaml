@@ -540,7 +540,7 @@ GTNK.squad:
 		RecoilRecovery: 38
 		LocalOffset: 768,85,90, 768,-85,90
 		MuzzleSequence: muzzle
-		PauseOnCondition: atomic-ammo || atomic-reloading
+		PauseOnCondition: has-atomic-ammo || atomic-reloading
 		ReloadingCondition: reloading
 	Armament@ATOMICAMMO:
 		Weapon: 125mmAtomic
@@ -548,7 +548,7 @@ GTNK.squad:
 		RecoilRecovery: 38
 		LocalOffset: 768,85,90, 768,-85,90
 		MuzzleSequence: muzzle
-		PauseOnCondition: !atomic-ammo || reloading
+		PauseOnCondition: !has-atomic-ammo || reloading
 		ReloadingCondition: atomic-reloading
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
@@ -798,7 +798,7 @@ GTNK.squad:
 		RecoilRecovery: 30
 		LocalOffset: 900,180,340, 900,-180,340
 		MuzzleSequence: muzzle
-		PauseOnCondition: atomic-ammo || atomic-reloading
+		PauseOnCondition: has-atomic-ammo || atomic-reloading
 		ReloadingCondition: reloading
 	Armament@ATOMICAMMO:
 		Weapon: 130mmAtomic
@@ -806,7 +806,7 @@ GTNK.squad:
 		RecoilRecovery: 30
 		LocalOffset: 900,180,340, 900,-180,340
 		MuzzleSequence: muzzle
-		PauseOnCondition: !atomic-ammo || reloading
+		PauseOnCondition: !has-atomic-ammo || reloading
 		ReloadingCondition: atomic-reloading
 	Armament@SECONDARY:
 		Name: secondary
@@ -6476,7 +6476,7 @@ APOC:
 		RecoilRecovery: 30
 		LocalOffset: 1400,100,340, 1400,-100,340
 		MuzzleSequence: muzzle
-		PauseOnCondition: atomic-ammo || atomic-reloading
+		PauseOnCondition: has-atomic-ammo || atomic-reloading
 		ReloadingCondition: reloading
 	Armament@ATOMICAMMO:
 		Weapon: 152mmAtomic
@@ -6484,7 +6484,7 @@ APOC:
 		RecoilRecovery: 30
 		LocalOffset: 1400,100,340, 1400,-100,340
 		MuzzleSequence: muzzle
-		PauseOnCondition: !atomic-ammo || reloading
+		PauseOnCondition: !has-atomic-ammo || reloading
 		ReloadingCondition: atomic-reloading
 	Armament@SECONDARY:
 		Name: secondary
