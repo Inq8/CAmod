@@ -681,6 +681,13 @@ GTNK.squad:
 		VoiceSet: LasherTankVoice
 	SpawnActorOnDeath:
 		Actor: 3TNK.YURI.Husk
+	WithPlayOnceOnEnabledOverlay@ATOMICAMMO:
+		RequiresCondition: atomic-ammo && has-atomic-ammo < 6
+	AmmoPool@ATOMICAMMO:
+		Ammo: 6
+	ReloadAmmoPool@ATOMICAMMO:
+		Count: 6
+		RequiresCondition: atomic-ammo && has-atomic-ammo < 6
 	-ExternalCondition@CRUSHATTEMPTSLOW:
 	-ExternalCondition@CRUSHSLOW:
 	-SpeedMultiplier@CRUSHATTEMPTSLOW:
@@ -744,6 +751,13 @@ GTNK.squad:
 		VoiceSet: LasherTankVoice
 	WithFacingSpriteBody:
 		Sequence: idle2
+	WithPlayOnceOnEnabledOverlay@ATOMICAMMO:
+		RequiresCondition: atomic-ammo && has-atomic-ammo < 6
+	AmmoPool@ATOMICAMMO:
+		Ammo: 6
+	ReloadAmmoPool@ATOMICAMMO:
+		Count: 6
+		RequiresCondition: atomic-ammo && has-atomic-ammo < 6
 	-ExternalCondition@CRUSHATTEMPTSLOW:
 	-ExternalCondition@CRUSHSLOW:
 	-SpeedMultiplier@CRUSHATTEMPTSLOW:
@@ -837,8 +851,15 @@ GTNK.squad:
 	-Crushable:
 	WithIdleOverlay@MINDCONTROL:
 		Offset: 0,0,512
-	WithIdleOverlay@ATOMICAMMO:
-		Offset: 0,0,512
+	WithPlayOnceOnEnabledOverlay@ATOMICAMMO:
+		RequiresCondition: atomic-ammo && has-atomic-ammo < 10
+	WithAmmoPipsDecoration@ATOMICAMMO:
+		PipCount: 5
+	AmmoPool@ATOMICAMMO:
+		Ammo: 10
+	ReloadAmmoPool@ATOMICAMMO:
+		Count: 10
+		RequiresCondition: atomic-ammo && has-atomic-ammo < 10
 	UpgradeableTo:
 		Actors: 4tnk.atomic, 4tnk.erad, 4tnk.eradatomic
 	# For upgrading on Service Depot
@@ -936,6 +957,14 @@ GTNK.squad:
 	SpawnActorOnDeath:
 		Actor: 4TNK.ERAD.Husk
 		RequiresCondition: !being-warped
+	-ExternalCondition@ATOMICAMMO:
+	-WithPlayOnceOnEnabledOverlay@ATOMICAMMO:
+	-FirepowerMultiplier@ATOMICAMMO:
+	-Targetable@ATOMICAMMO:
+	-AmmoPool@ATOMICAMMO:
+	-WithAmmoPipsDecoration@ATOMICAMMO:
+	-ReloadAmmoPool@ATOMICAMMO:
+	-ReloadAmmoPoolCA@ATOMICAMMODECAY:
 	-DamagedByTintedCells@RADSTRONG:
 	-DamagedByTintedCells@RADMED:
 	-GrantConditionOnPrerequisite@ERADUPGRADE:
@@ -956,6 +985,14 @@ GTNK.squad:
 		LocalOffset: 400,0,340
 		-PauseOnCondition:
 		-ReloadingCondition:
+	-ExternalCondition@ATOMICAMMO:
+	-WithPlayOnceOnEnabledOverlay@ATOMICAMMO:
+	-FirepowerMultiplier@ATOMICAMMO:
+	-Targetable@ATOMICAMMO:
+	-AmmoPool@ATOMICAMMO:
+	-WithAmmoPipsDecoration@ATOMICAMMO:
+	-ReloadAmmoPool@ATOMICAMMO:
+	-ReloadAmmoPoolCA@ATOMICAMMODECAY:
 	-Armament@ATOMICAMMO:
 	-Armament@SECONDARY:
 	-UpgradeableTo:
@@ -6515,13 +6552,20 @@ APOC:
 		LocalOffset: 0,0,500
 	WithIdleOverlay@MINDCONTROL:
 		Offset: 0,0,512
-	WithIdleOverlay@ATOMICAMMO:
-		Offset: 0,0,512
 	-Crushable:
 	Voiced:
 		VoiceSet: ApocalypseVoice
 	AttackMove:
 		Voice: Attack
+	WithPlayOnceOnEnabledOverlay@ATOMICAMMO:
+		RequiresCondition: atomic-ammo && has-atomic-ammo < 6
+	WithAmmoPipsDecoration@ATOMICAMMO:
+		PipCount: 3
+	AmmoPool@ATOMICAMMO:
+		Ammo: 6
+	ReloadAmmoPool@ATOMICAMMO:
+		Count: 6
+		RequiresCondition: atomic-ammo && has-atomic-ammo < 6
 	UpgradeableTo:
 		Actors: apoc.atomic
 	# For upgrading on Service Depot

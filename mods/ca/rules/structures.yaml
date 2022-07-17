@@ -2259,7 +2259,7 @@ NPWR:
 		Bounds: 4096,3072
 		DecorationBounds: 4096,3926,0,-427
 	Health:
-		HP: 70000
+		HP: 100000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -2304,7 +2304,7 @@ NPWR:
 		Prerequisite: npwr.iraq
 	SupportPowerChargeBar:
 	GrantExternalConditionPower@ATOMICAMMO:
-		Prerequisites: ~structures.ftur
+		Prerequisites: ~!npwr.iraq
 		OrderName: atomicammo
 		Icon: atomicammo
 		ChargeInterval: 4500
@@ -2313,9 +2313,9 @@ NPWR:
 		Dimensions: 3, 3
 		Footprint: _x_ xxx _x_
 		ValidRelationships: Ally
-		Duration: 55
+		Duration: 1
 		AllowMultiple: false
-		Description: \nGrants tanks a limited supply of atomic shells.
+		Description: \nGrants tanks a limited supply of atomic shells (also for a limited duration).\n\nAffects Soviet tanks only (Heavy Tank, Lasher Tank, Mammoth Tank, Apocalypse Tank)
 		OnFireSound: atomshell.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -2325,7 +2325,7 @@ NPWR:
 		DisplayTimerRelationships: Ally, Neutral
 		Sequence: idle
 	GrantExternalConditionPower@ATOMICAMMOIRAQ:
-		Prerequisites: ~structures.iraq
+		Prerequisites: ~npwr.iraq
 		OrderName: atomicammoiraq
 		Icon: atomicammo
 		ChargeInterval: 4500
@@ -2334,9 +2334,9 @@ NPWR:
 		Dimensions: 3, 3
 		Footprint: xxx xxx xxx
 		ValidRelationships: Ally
-		Duration: 55
+		Duration: 1
 		AllowMultiple: false
-		Description: \nGrants tanks a limited supply of atomic shells.
+		Description: \nGrants tanks a limited supply of atomic shells (also for a limited duration).\n\nAffects Soviet tanks only (Heavy Tank, Lasher Tank, Mammoth Tank, Apocalypse Tank)
 		OnFireSound: atomshell.aud
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -2362,9 +2362,6 @@ TPWR:
 		Offset: -20,-70,0
 		Sequence: power
 		RequiresCondition: !(empdisable || being-warped || build-incomplete)
-	GrantConditionOnPrerequisite@TARC:
-		Condition: tarc-upgrade
-		Prerequisites: tarc.upgrade
 	GrantConditionOnDamageState@VOLATILE:
 		Condition: volatile
 		ValidDamageStates: Critical
