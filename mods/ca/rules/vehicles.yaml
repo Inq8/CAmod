@@ -1166,6 +1166,7 @@ ISU:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@ATOMICAMMO: ^AtomicAmmunition
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 180
@@ -1200,6 +1201,14 @@ ISU:
 		Weapon: 380mm
 		LocalOffset: 824,0,208
 		MuzzleSequence: muzzle
+		PauseOnCondition: has-atomic-ammo || atomic-reloading
+		ReloadingCondition: reloading
+	Armament@ATOMICAMMO:
+		Weapon: 380mmAtomic
+		LocalOffset: 824,0,208
+		MuzzleSequence: muzzle
+		PauseOnCondition: !has-atomic-ammo || reloading
+		ReloadingCondition: atomic-reloading
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
@@ -1207,6 +1216,15 @@ ISU:
 		Voice: Attack
 		FacingTolerance: 0
 	WithMuzzleOverlay:
+	WithPlayOnceOnEnabledOverlay@ATOMICAMMO:
+		RequiresCondition: atomic-ammo && has-atomic-ammo < 3
+	WithAmmoPipsDecoration@ATOMICAMMO:
+		PipCount: 3
+	AmmoPool@ATOMICAMMO:
+		Ammo: 3
+	ReloadAmmoPool@ATOMICAMMO:
+		Count: 3
+		RequiresCondition: atomic-ammo && has-atomic-ammo < 3
 	Explodes:
 		Weapon: ArtilleryExplode
 		LoadedChance: 75

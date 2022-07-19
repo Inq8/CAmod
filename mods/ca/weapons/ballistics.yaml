@@ -467,6 +467,22 @@ TitanGun:
 		Intensity: 1
 		Multiplier: 0.5,0.5
 
+380mmAtomic:
+	Inherits: 380mm
+	Projectile: Bullet
+		Image: 380mma
+	Warhead@3Eff_impact: CreateEffect
+		Explosions: nuke3
+		ImpactActors: false
+	Warhead@6Smu_areanuke1: LeaveSmudge
+		Size: 1
+		SmudgeType: Scorch
+		InvalidTargets: Vehicle, Structure, Wall, Trees
+	Warhead@18Radio: CreateTintedCells
+		Level: 300
+		Falloff: 100, 55, 32, 5
+		LayerName: radioactivity.weak
+
 8Inch:
 	Inherits: ^Artillery
 	MinRange: 3c0
