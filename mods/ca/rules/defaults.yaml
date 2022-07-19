@@ -900,22 +900,21 @@
 ^AtomicAmmunition:
 	ExternalCondition@ATOMICAMMO:
 		Condition: atomic-ammo
-	WithIdleOverlay@ATOMICAMMO:
+	WithPlayOnceOnEnabledOverlay@ATOMICAMMO:
 		Sequence: idle
 		Image: atomshell
 		Palette: effect
-		RequiresCondition: atomic-ammo && has-atomic-ammo < 6
+		RequiresCondition: atomic-ammo && has-atomic-ammo < 12
 		Offset: 0,0,600
 		IsDecoration: True
 	FirepowerMultiplier@ATOMICAMMO:
 		RequiresCondition: has-atomic-ammo
-		Modifier: 115
+		Modifier: 125
 	Targetable@ATOMICAMMO:
 		TargetTypes: AtomicAmmoTargetable
 	AmmoPool@ATOMICAMMO:
 		Armaments: primary
-		Ammo: 6
-		ReloadCount: 6
+		Ammo: 12
 		InitialAmmo: 0
 		AmmoCondition: has-atomic-ammo
 	WithAmmoPipsDecoration@ATOMICAMMO:
@@ -925,10 +924,16 @@
 		ValidRelationships: Ally, Enemy, Neutral
 		RequiresSelection: false
 		RequiresCondition: has-atomic-ammo
+		AmmoPools: primary
 	ReloadAmmoPool@ATOMICAMMO:
-		Count: 6
-		Delay: 50
-		RequiresCondition: atomic-ammo && has-atomic-ammo < 6
+		Count: 12
+		Delay: 1
+		RequiresCondition: atomic-ammo && has-atomic-ammo < 12
+	ReloadAmmoPoolCA@ATOMICAMMODECAY:
+		Count: -12
+		Delay: 1500
+		RequiresCondition: has-atomic-ammo
+		ShowSelectionBar: false
 
 ^ForceShieldable:
 	WithModifiedPalette@FS:
@@ -2086,6 +2091,7 @@
 	-DamagedByTintedCells@RADWEAK:
 	-DamagedByTintedCells@RADWEAKHAZMAT:
 	-DamageTypeDamageMultiplier@FLAKARMOR:
+	-DamageTypeDamageMultiplier@FLAKARMORMINOR:
 	-GrantConditionOnPrerequisite@FLAKARMOR:
 
 ^CivInfantry:
