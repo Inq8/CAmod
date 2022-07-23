@@ -1023,20 +1023,17 @@ nshield:
 shadow.beacon.camera:
 	Inherits@1: CAMERA
 	-Immobile:
-	Mobile:
-		Locomotor: cloud
-		ImmovableCondition: attached
-	GrantCondition:
-		Condition: attached
+	AttachedAircraft:
+		Speed: 0
+		CanHover: true
+		Repulsable: false
+		CruiseAltitude: 1
+		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,Water,Tree,River
 	Attachable:
 		AttachableType: shab
 	RevealsShroud:
 		Range: 8c0
-	GrantTimedCondition@active:
-		Condition: active
-		Duration: 6000
-	KillsSelf:
-		RequiresCondition: !active
+		Type: GroundPosition
 
 SHAB:
 	Inherits: ^Mine
