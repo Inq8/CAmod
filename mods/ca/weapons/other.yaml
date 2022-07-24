@@ -896,6 +896,13 @@ MADTankDetonate:
 		Condition: concussion
 		ValidTargets: Ground, Infantry, Vehicle, Ship
 
+LaserCharging:
+	ReloadDelay: 100
+	Range: 8c512
+	ValidTargets: Ground, Water
+	Projectile: InstantHit
+	Warhead@1Dam: Dummy
+
 Laser:
 	ReloadDelay: 100
 	ValidTargets: Ground, Water
@@ -927,14 +934,29 @@ Laser:
 
 Laser.Adv:
 	Inherits: Laser
-	Report: obelmod1.aud
-	Projectile: LaserZap
-		Color: FF00FF80
-		SecondaryBeamColor: FF00FF40
+	Report: obelmod2.aud
+	Range: 9c0
+	-Projectile:
+	Projectile: PlasmaBeam
+		Duration: 20
+		Colors: FF00BB80, FF0000A0, FF002270
+		InnerLightness: 200
+		OuterLightness: 115
+		Radius: 2
+		Distortion: 0
+		DistortionAnimation: 96
+		StartOffset: 0,480,0
+		FollowingOffset: 0,-48,0
+		RecalculateColors: true
+		TrackTarget: true
+		ImpactTicks: 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20
+		ZOffset: 2048
 	Warhead@1Dam: SpreadDamage
 		InvalidTargets: Air
 		Spread: 128
-		Damage: 40000
+		Damage: 4000
+	Warhead@3Eff: CreateEffect
+		Explosions: small_explosion_alt1, small_explosion_alt2, small_explosion_alt3
 
 LaserTur:
 	Inherits: Laser
@@ -956,9 +978,14 @@ LaserTur:
 
 LaserTur.Adv:
 	Inherits: LaserTur
+	Range: 7c0
 	ReloadDelay: 30
 	Projectile: LaserZap
-		SecondaryBeamColor: FF00FF30
+		Duration: 10
+		SecondaryBeamWidth: 75
+		SecondaryBeamColor: FF00FF60
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
 
 StealthAPCLaser:
 	Inherits: LaserTur
@@ -1051,6 +1078,14 @@ VenomLaser:
 		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
 
+VenomLaser.UPG:
+	Inherits: VenomLaser
+	Report: venmfireupg1.aud, venmfireupg1.aud
+	Projectile: LaserZap
+		Duration: 10
+		SecondaryBeamWidth: 75
+		SecondaryBeamColor: FF00FF60
+
 VenomLaserAA:
 	Inherits: VenomLaser
 	ValidTargets: Air, AirSmall
@@ -1063,6 +1098,14 @@ VenomLaserAA:
 			Light: 100
 			Heavy: 100
 	-Warhead@2Smu:
+
+VenomLaserAA.UPG:
+	Inherits: VenomLaserAA
+	Report: venmfireupg1.aud, venmfireupg1.aud
+	Projectile: LaserZap
+		Duration: 10
+		SecondaryBeamWidth: 75
+		SecondaryBeamColor: FF00FF60
 
 PointLaser:
 	Inherits: Laser

@@ -454,6 +454,21 @@ microwave.upgrade:
 	RenderSprites:
 		Image: microwave.upgrade
 
+supercharged.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Supercharged Lasers
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~tmpl.marked, ~techlevel.high
+		Description: Enhances heavy laser weapons.\n\nUpgrades: Obelisk of Light\nUpgrades: Laser Turret\nUpgrades: Venom
+	TooltipExtras:
+		Strengths: + Increased range\n+ Increased damage
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: supercharged.upgrade
+
 tibcore.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:

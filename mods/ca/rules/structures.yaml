@@ -4057,28 +4057,37 @@ OBLI:
 		Range: 6c0
 	WithBuildingBib:
 		HasMinibib: true
+	GrantConditionOnPrerequisite@SUPERCHARGED:
+		Condition: supercharged-upgrade
+		Prerequisites: supercharged.upgrade
 	-WithSpriteBody:
 	WithChargeSpriteBody:
 		Sequence: active
-	GrantConditionOnFaction@marked:
-		Condition: marked
-		Factions: marked
-	Armament:
+	Armament@PRIMARY:
 		Weapon: Laser
 		LocalOffset: 0,-85,1280
-		RequiresCondition: !marked
-	Armament@Marked:
+		RequiresCondition: !supercharged-upgrade
+		MuzzleSequence: muzzle
+		MuzzlePalette: caneon
+	Armament@SUPERCHARGED:
 		Weapon: Laser.Adv
 		LocalOffset: 0,-85,1280
-		RequiresCondition: marked
+		RequiresCondition: supercharged-upgrade
+		MuzzleSequence: muzzle2
+		MuzzlePalette: caneon
+	WithMuzzleOverlay:
 	AttackCharges:
 		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 		ChargeLevel: 50
 		ChargingCondition: charging
-	AmbientSound:
-		RequiresCondition: charging
+	AmbientSound@1:
+		RequiresCondition: charging && !supercharged-upgrade
 		SoundFiles: obelpowr.aud
-		Interval: 30, 40
+		Interval: 20
+	AmbientSound@2:
+		RequiresCondition: charging && supercharged-upgrade
+		SoundFiles: obelpowr2.aud
+		Interval: 20
 	Power:
 		Amount: -90
 	ProvidesPrerequisite@buildingname:
@@ -5568,18 +5577,18 @@ LTUR:
 	Turreted:
 		InitialFacing: 128
 	-WithTurretAttackAnimation:
-	GrantConditionOnFaction@marked:
-		Condition: marked
-		Factions: marked
+	GrantConditionOnPrerequisite@SUPERCHARGED:
+		Condition: supercharged-upgrade
+		Prerequisites: supercharged.upgrade
 	-Armament:
 	Armament:
 		Weapon: LaserTur
 		LocalOffset: 512,0,172
-		RequiresCondition: !marked
+		RequiresCondition: !supercharged-upgrade
 	Armament@Marked:
 		Weapon: LaserTur.Adv
 		LocalOffset: 512,0,172
-		RequiresCondition: marked
+		RequiresCondition: supercharged-upgrade
 	Power:
 		Amount: -25
 	DetectCloaked:

@@ -3172,10 +3172,22 @@ VENM:
 		Weapon: VenomLaser
 		LocalOffset: 600,0,-270
 		PauseOnCondition: !ammo
+		RequiresCondition: !supercharged-upgrade
 	Armament@SECONDARY:
 		Weapon: VenomLaserAA
 		LocalOffset: 600,0,-270
 		PauseOnCondition: !ammo
+		RequiresCondition: !supercharged-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: VenomLaser.UPG
+		LocalOffset: 600,0,-270
+		PauseOnCondition: !ammo
+		RequiresCondition: supercharged-upgrade
+	Armament@SECONDARYUPG:
+		Weapon: VenomLaserAA.UPG
+		LocalOffset: 600,0,-270
+		PauseOnCondition: !ammo
+		RequiresCondition: supercharged-upgrade
 	AttackAircraft:
 		FacingTolerance: 80
 		AttackType: Hover
@@ -3225,6 +3237,15 @@ VENM:
 		Prerequisites: aircraft.upgraded
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	GrantConditionOnPrerequisite@SUPERCHARGED:
+		Condition: supercharged-upgrade
+		Prerequisites: supercharged.upgrade
+	FirepowerMultiplier@SUPERCHARGED:
+		Modifier: 115
+		RequiresCondition: supercharged-upgrade
+	RangeMultiplier@SUPERCHARGED:
+		Modifier: 120
+		RequiresCondition: supercharged-upgrade
 
 AURO:
 	Inherits: ^PlaneTD
