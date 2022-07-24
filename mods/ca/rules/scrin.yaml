@@ -731,7 +731,7 @@ GUNW:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 24
-		Prerequisites: ~vehicles.scrin, ~techlevel.low
+		Prerequisites: ~vehicles.scrin, ~!shrw.upgrade, ~techlevel.low
 		Description: Durable light assault walker.
 		IconPalette: chrome
 	TooltipExtras:
@@ -783,6 +783,59 @@ GUNW:
 	SpeedMultiplier@TRAVELERSPEED:
 		RequiresCondition: travelerspeed
 		Modifier: 115
+	UpgradeableTo:
+		Actors: shrw
+	# For upgrading on Service Depot
+	Rearmable@UPGRADE:
+		RearmActors: fix, rep, srep
+		AmmoPools: upgrade
+	AmmoPool@UPGRADE:
+		Name: upgrade
+		Armaments: none
+		ReloadDelay: 5000
+	GrantConditionOnPrerequisite@SHRWUPGRADE:
+		Condition: shrw-upgrade
+		Prerequisites: shrw.upgrade
+	RearmsToUpgrade@SHRWUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: shrw
+		RequiresCondition: shrw-upgrade
+
+SHRW:
+	Inherits: GUNW
+	Tooltip:
+		Name: Shard Walker
+	Buildable:
+		Prerequisites: ~vehicles.scrin, ~shrw.upgrade, ~techlevel.medium
+		IconPalette: chromes
+	RenderSprites:
+		PlayerPalette: playerscrin
+	Armor:
+		Type: Heavy
+	Health:
+		HP: 35000
+	Mobile:
+		Speed: 92
+		TurnSpeed: 36
+	Armament@PRIMARY:
+		Weapon: ShardWalkerShards
+		LocalOffset: 450,92,100, 450,-92,100
+		-MuzzleSequence:
+		-MuzzlePalette:
+	Armament@SECONDARY:
+		Weapon: ShardWalkerShardsAA
+		LocalOffset: 450,92,100, 450,-92,100
+		-MuzzleSequence:
+		-MuzzlePalette:
+	-WithMuzzleOverlay:
+	-GrantConditionOnFaction@TRAVELERSPEED:
+	-SpeedMultiplier@TRAVELERSPEED:
+	-UpgradeableTo:
+	-Rearmable@UPGRADE:
+	-AmmoPool@UPGRADE:
+	-GrantConditionOnPrerequisite@SHRWUPGRADE:
+	-RearmsToUpgrade@SHRWUPGRADE:
 
 SEEK:
 	Inherits: ^Vehicle

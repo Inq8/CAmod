@@ -934,6 +934,7 @@ ShardLauncher:
 		ExplosionPalette: scrin
 		Image: shardhit
 		ValidTargets: Air, AirSmall, ICBM, Ground, Water, Trees
+		Inaccuracy: 128
 
 RavagerShards:
 	Inherits: ShardLauncher
@@ -962,6 +963,42 @@ RavagerShards:
 			Heavy: 10
 			Concrete: 30
 			Brick: 5
+
+ShardWalkerShards:
+	Inherits: RavagerShards
+	StartBurstReport: shard-fire1.aud
+	Projectile: Missile
+		Speed: 250
+		ContrailColor: 00FF0066
+		MinimumLaunchAngle: 80
+		MaximumLaunchAngle: 112
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 2600
+		Versus:
+			Wood: 10
+			Light: 32
+			Heavy: 15
+			Concrete: 10
+
+ShardWalkerShardsAA:
+	Inherits: ShardLauncher
+	ReloadDelay: 40
+	BurstDelays: 5
+	Range: 8c512
+	Projectile: Missile
+		RangeLimit: 8c512
+		ContrailColor: 00FF0066
+		Speed: 300
+	Warhead@1Dam: SpreadDamage
+		Damage: 1800
+		Range: 0, 0c64, 0c256, 3c0
+		Falloff: 100, 100, 30, 15
+	Warhead@2Dam: SpreadDamage
+		Damage: 1800
+		-Range:
+		Spread: 128
+		Falloff: 100, 50, 14, 0
 
 LaceratorShards:
 	Inherits: RavagerShards
