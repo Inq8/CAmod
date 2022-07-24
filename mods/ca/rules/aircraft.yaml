@@ -2188,10 +2188,20 @@ RAH:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor, Buildings
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
+		RequiresCondition: !alphacomanche-upgrade
+	TooltipExtras@UPG:
+		Strengths: • Strong vs Infantry, Light Armor, Buildings, Aircraft
+		Weaknesses: • Weak vs Heavy Armor, Defenses
+		IsStandard: false
+		RequiresCondition: alphacomanche-upgrade
 	Valued:
 		Cost: 1900
 	Tooltip:
 		Name: Comanche
+		RequiresCondition: !alphacomanche-upgrade
+	Tooltip@UPG:
+		Name: Alpha Comanche
+		RequiresCondition: alphacomanche-upgrade
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -2214,6 +2224,11 @@ RAH:
 		LocalOffset: 0,-213,-85, 0,213,-85
 		PauseOnCondition: !ammo
 		RequiresCondition: napalm-missiles
+	Armament@PRIMARYAA:
+		Weapon: Rah66AA
+		LocalOffset: 0,-213,-85, 0,213,-85
+		PauseOnCondition: !ammo
+		RequiresCondition: alphacomanche-upgrade
 	AttackAircraft:
 		FacingTolerance: 80
 		AttackType: Hover
@@ -2236,7 +2251,18 @@ RAH:
 		UncloakSound: appear1.aud
 		Palette: cloak
 		IsPlayerPalette: false
-		RequiresCondition: !cloak-force-disabled && airborne && !invisibility
+		UncloakOn: Attack, Dock, Damage, Heal, SelfHeal
+		RequiresCondition: !cloak-force-disabled && airborne && !invisibility && !alphacomanche-upgrade
+	Cloak@UPG:
+		DetectionTypes: AirCloak
+		InitialDelay: 100
+		CloakDelay: 100
+		CloakSound: trans1.aud
+		UncloakSound: appear1.aud
+		Palette: cloak
+		IsPlayerPalette: false
+		UncloakOn: Attack, Dock, Heal, SelfHeal
+		RequiresCondition: airborne && !invisibility && alphacomanche-upgrade
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
@@ -2300,6 +2326,9 @@ RAH:
 		ValidRelationships: Ally
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	GrantConditionOnPrerequisite@ALPHA:
+		Condition: alphacomanche-upgrade
+		Prerequisites: alphacomanche.upgrade
 
 KIRO:
 	Inherits: ^Helicopter
