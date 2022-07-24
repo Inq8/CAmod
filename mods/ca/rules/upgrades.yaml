@@ -867,7 +867,7 @@ carapace.upgrade:
 	Tooltip:
 		Name: Upgrade: Hardened Carapace
 	Buildable:
-		BuildPaletteOrder: 21
+		BuildPaletteOrder: 22
 		Prerequisites: ~scrt, ~infantry.any, ~player.scrin, ~techlevel.high
 		Description: Infantry gain a hardened carapace which\n  provides protection against explosives.\n\nUpgrades: Infantry
 		IconPalette: scrin
@@ -883,7 +883,7 @@ resconv.upgrade:
 	Tooltip:
 		Name: Upgrade: Resource Conversion
 	Buildable:
-		BuildPaletteOrder: 22
+		BuildPaletteOrder: 23
 		Prerequisites: ~scrt, ~techlevel.high
 		Description: Weapons of Devourer and Ruiner are empowered by\n  Tiberium and other resources. Reaper Tripod gains\n  additional charges\n\nUpgrades: Devourer\nUpgrades: Ruiner\nUpgrades: Reaper Tripod
 		IconPalette: scrin
@@ -926,18 +926,35 @@ regen.upgrade:
 	RenderSprites:
 		Image: regen.upgrade
 
+coalescence.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Coalescence
+	Buildable:
+		BuildPaletteOrder: 35
+		Prerequisites: ~scrt.collector, ~techlevel.high
+		Description: On death or when deployed,Leechers will transform\n  into a ball of bio-matter which heals nearby allies\n  and eventually coalesces into a new Leecher.\n\nUpgrades: Leecher
+		IconPalette: scrin
+	TooltipExtras:
+		Strengths: + Leecher able to resurrect
+		Weaknesses: – Reduced healing from dealing damage
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: coalescence.upgrade
+
 shields.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
 		Name: Upgrade: Fleet Shields
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~scrt, ~techlevel.high
+		Prerequisites: ~sign, ~techlevel.high
 		Description: Equip larger Scrin vessels with shields.\n\nUpgrades: Devastator\nUpgrades: Planetary Assault Carrier
 		IconPalette: scrin
 	TooltipExtras:
 		Strengths: + Grants an additonal health pool\n+ Resistance to EMP
 	Valued:
-		Cost: 1500
+		Cost: 1000
 	RenderSprites:
 		Image: shields.upgrade

@@ -1200,9 +1200,85 @@ LCHR:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 	ConvertsDamageToHealth:
 		DamagePercentConverted: 25
+		RequiresCondition: !coalescence-upgrade
+	ConvertsDamageToHealth@COALESCENCE:
+		DamagePercentConverted: 15
+		RequiresCondition: coalescence-upgrade
 	Explodes:
 		Weapon: LeecherExplode
 		EmptyWeapon: LeecherExplode
+		RequiresCondition: !coalescence-upgrade
+	Explodes@COALESCENCE:
+		Weapon: LeecherCoalesce
+		EmptyWeapon: LeecherCoalesce
+		RequiresCondition: coalescence-upgrade
+	GrantConditionOnPrerequisite@COALESCENCE:
+		Condition: coalescence-upgrade
+		Prerequisites: coalescence.upgrade
+	SpawnActorOnDeath:
+		Actor: lchr.orb
+		RequiresCondition: coalescence-upgrade
+	KillsSelf:
+		RequiresCondition: triggered
+	ActorLostNotification:
+		RequiresCondition: !triggered
+	GrantConditionOnDeploy:
+		DeployedCondition: triggered
+		RequiresCondition: coalescence-upgrade
+
+LCHR.Orb:
+	Inherits@1: ^1x1Shape
+	Inherits@2: ^SelectableSupportUnit
+	Selectable:
+		DecorationBounds: 1536, 1536, 0, -128
+	Tooltip:
+		Name: Leecher Orb
+	RenderSprites:
+		Image: lchr.orb
+		Palette: caneon
+	WithSpriteBody:
+	ClassicFacingBodyOrientation:
+		QuantizedFacings: 1
+	Targetable:
+		TargetTypes: Ground
+	HiddenUnderFog:
+		Type: CenterPosition
+	RevealsShroud:
+		Range: 4c0
+		Type: CenterPosition
+	Health:
+		HP: 28000
+	Armor:
+		Type: Light
+	Immobile:
+		OccupiesSpace: true
+	PeriodicExplosion@1:
+		Weapon: LeecherOrbHeal
+	KillsSelf:
+		Delay: 0
+		RequiresCondition: resurrect
+	Explodes:
+		Weapon: LeecherExplode
+		EmptyWeapon: LeecherExplode
+		RequiresCondition: !resurrect
+	Explodes@COALESCENCE:
+		Weapon: LeecherCoalesce
+		EmptyWeapon: LeecherCoalesce
+		RequiresCondition: resurrect
+	ActorLostNotification:
+		RequiresCondition: !resurrect
+	AmmoPool:
+		Ammo: 1
+		InitialAmmo: 0
+		AmmoCondition: resurrect
+	ReloadAmmoPoolCA:
+		Delay: 500
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: ff0000
+	SpawnActorOnDeath:
+		Actor: lchr
+		RequiresCondition: resurrect
 
 STCR:
 	Inherits: ^Tank
@@ -3594,6 +3670,9 @@ SCRT:
 		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
+	ProvidesPrerequisiteValidatedFaction@collscrt:
+		Factions: collector
+		Prerequisite: scrt.collector
 	ProvidesPrerequisite@buildingname:
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield

@@ -462,6 +462,13 @@ LeecherExplode:
 		ExplosionPalette: effect
 		ImpactSounds: vtoxcona.aud, vtoxconb.aud, vtoxconc.aud
 
+LeecherCoalesce:
+	ValidTargets: Ground, Water
+	Warhead@3Eff: CreateEffect
+		Explosions: lchr_coalesce
+		ExplosionPalette: effect
+		ImpactSounds: coalesce.aud
+
 RuinerCannon:
 	Inherits: 155mm
 	Report: ruiner-fire1.aud
@@ -1319,6 +1326,22 @@ LeecherBeam:
 		ExplosionPalette: scrin
 		Image: leechhitlg
 		Inaccuracy: 256
+
+LeecherOrbHeal:
+	ReloadDelay: 25
+	Range: 1c0
+	ValidTargets: Ground, Water
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Spread: 768
+		Damage: -1800
+		Falloff: 100, 50, 30, 15, 0
+		ValidTargets: Infantry, Vehicle
+		Versus:
+			None: 50
+			Light: 100
+			Heavy: 100
+		ValidRelationships: Ally
 
 AtomizerBolts:
 	Report: atomizer-fire1.aud
