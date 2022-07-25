@@ -226,7 +226,7 @@ pointdef.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~gtek, ~hold.strat, ~techlevel.high
 		IconPalette: chrometd
-		Description: Equips several units with point defense shields and/or point defense lasers\n  which protect against enemy fire.\n\nUpgrades: Battle Tank (Shield and Laser)\nUpgrades: Battle Drone (Shield and Laser)\nUpgrades: Hum-Vee(Shield)\nUpgrades: Guardian Drone(Shield)\nUpgrades: Harvester(Shield)\nUpgrades: Frigate (Laser)
+		Description: Equips several units with point defense shields and/or point defense lasers\n  which protect against enemy fire.\n\nUpgrades: Battle Tank (Shield and Laser)\nUpgrades: Battle Drone (Shield and Laser)\nUpgrades: Hum-Vee (Shield)\nUpgrades: Guardian Drone (Shield)\nUpgrades: Harvester (Shield)\nUpgrades: Frigate (Laser)
 	TooltipExtras:
 		Strengths: + Added Point Defense Shield\n+ Added Point Defense Laser
 	Valued:
@@ -917,7 +917,7 @@ regen.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~scrt, ~techlevel.high
-		Description: Scrin aircraft will regenerate health over time when not in combat.\n\nUpgrades: Stormrider\nUpgrades: Enervator\nUpgrades: Devastator\nUpgrades: Planetary Assault Carrier\nUpgrades: Mothership
+		Description: Scrin aircraft will regenerate health over time when not in combat.\n\nUpgrades: Stormrider\nUpgrades: Enervator\nUpgrades: Devastator Warship\nUpgrades: Planetary Assault Carrier\nUpgrades: Mothership
 		IconPalette: scrin
 	TooltipExtras:
 		Strengths: + Out-of-combat health regeneration
@@ -925,6 +925,23 @@ regen.upgrade:
 		Cost: 1500
 	RenderSprites:
 		Image: regen.upgrade
+
+plasma.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Charged Plasma
+	Buildable:
+		BuildPaletteOrder: 35
+		Prerequisites: ~scrt.harbinger, ~techlevel.high
+		Description: Devastator Warships upgraded to fire more powerful charged plasma projectiles.\n\nUpgrades: Devastator Warship
+		IconPalette: scrin
+	TooltipExtras:
+		Strengths: + Increased damage\n+ Increased area of effect\n+ Improved accuracy
+		Weaknesses: – Must charge before firing
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: plasma.upgrade
 
 coalescence.upgrade:
 	Inherits: ^Upgrade

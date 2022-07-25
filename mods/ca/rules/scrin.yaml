@@ -2146,11 +2146,44 @@ DEVA:
 	Armament@PRIMARY:
 		Weapon: DevastatorDiscs
 		LocalOffset: 500,0,0
-	AttackAircraft:
+		RequiresCondition: !plasma-upgrade
+	Armament@CHARGINGUPG:
+		Name: charge
+		Weapon: DevastatorTorpedoCharge
+		LocalOffset: 500,0,0
+		PauseOnCondition: cooldown
+		RequiresCondition: plasma-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: DevastatorTorpedo
+		PauseOnCondition: !ammo
+		LocalOffset: 500,0,0
+		RequiresCondition: plasma-upgrade
+		ReloadingCondition: cooldown
+	AmbientSound@CHARGE:
+		RequiresCondition: charging && !ammo
+		SoundFiles: plasmatorpcharge.aud
+	GrantConditionOnAttack@CHARGE:
+		Condition: charging
+		ArmamentNames: charge
+		RevokeDelay: 20
+	AmmoPool@CHARGE:
+		Ammo: 3
+		InitialAmmo: 0
+		AmmoCondition: ammo
+	ReloadAmmoPoolCA@CHARGE:
+		Delay: 100
+		Count: 3
+		ShowSelectionBar: true
+		SelectionBarColor: cc33ff
+		RequiresCondition: charging && !ammo
+	GrantConditionOnPrerequisite@PLASMA:
+		Condition: plasma-upgrade
+		Prerequisites: plasma.upgrade
+	AttackFrontal:
+		Armaments: primary, charge
 		FacingTolerance: 40
 		ForceFireIgnoresActors: True
 		TargetFrozenActors: True
-		AttackType: Hover
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
@@ -3670,6 +3703,9 @@ SCRT:
 		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
+	ProvidesPrerequisiteValidatedFaction@harbscrt:
+		Factions: harbinger
+		Prerequisite: scrt.harbinger
 	ProvidesPrerequisiteValidatedFaction@collscrt:
 		Factions: collector
 		Prerequisite: scrt.collector

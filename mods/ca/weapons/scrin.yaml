@@ -220,6 +220,35 @@ DevastatorDiscs:
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 
+DevastatorTorpedo:
+	Inherits: DevastatorDiscs
+	Burst: 3
+	Report: plasmatorp.aud
+	BurstDelays: 8
+	ReloadDelay: 120
+	Projectile: Bullet
+		Image: plasmatorp
+		Palette: scrin
+		LaunchAngle: 25
+		Inaccuracy: 1c0
+		Shadow: true
+		ShadowColor: 00000033
+	Warhead@1Dam: SpreadDamage
+		Damage: 12000
+		Spread: 512
+		Versus:
+			Heavy: 40
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigatedMinor
+	Warhead@4Eff: CreateEffect
+		Explosions: large_artillery_explosion
+		ImpactSounds: xplobig4.aud
+
+DevastatorTorpedoCharge:
+	ReloadDelay: 15
+	Range: 16c0
+	Projectile: InstantHit
+	Warhead@1Dum: Dummy
+
 ^ScrinLaser:
 	ValidTargets: Ground, Water
 	Range: 7c0
