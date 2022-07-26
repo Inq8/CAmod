@@ -258,6 +258,7 @@ SPEN:
 		PlayerExperience: 15
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	RallyPoint:
+		ForceSetType: Ship
 	ProductionBar:
 		ProductionType: Ship
 	Power:
@@ -359,6 +360,7 @@ SYRD:
 		PlayerExperience: 15
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	RallyPoint:
+		ForceSetType: Ship
 	ProductionBar:
 		ProductionType: Ship
 	Power:
@@ -1387,6 +1389,7 @@ WEAP:
 		RequiresCondition: !build-incomplete
 		Sequence: build-top
 	RallyPoint:
+		ForceSetType: Vehicle
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: 213,-128,0
@@ -1979,6 +1982,7 @@ HPAD:
 		ExitCell: 0,0
 		Facing: 896
 	RallyPoint:
+		ForceSetType: Aircraft
 	Production:
 		Produces: Aircraft, Helicopter
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -2103,6 +2107,7 @@ AFLD:
 		ExitCell: 1,1
 		Facing: 768
 	RallyPoint:
+		ForceSetType: Aircraft
 	Production:
 		Produces: Aircraft, Plane
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -2496,6 +2501,7 @@ BARR:
 		Range: 4c0
 	WithBuildingBib:
 	RallyPoint:
+		ForceSetType: Infantry
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: -170,810,0
@@ -2650,6 +2656,7 @@ TENT:
 		Range: 4c0
 	WithBuildingBib:
 	RallyPoint:
+		ForceSetType: Infantry
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: -42,810,0
@@ -3100,6 +3107,7 @@ PYLE:
 		Range: 4c0
 	WithBuildingBib:
 	RallyPoint:
+		ForceSetType: Infantry
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: -170,810,0
@@ -3199,6 +3207,7 @@ HAND:
 		Range: 4c0
 	WithBuildingBib:
 	RallyPoint:
+		ForceSetType: Infantry
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: 512,1024,0
@@ -3362,6 +3371,7 @@ WEAP.TD:
 		RequiresCondition: !build-incomplete
 		Sequence: build-top
 	RallyPoint:
+		ForceSetType: Vehicle
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: -341,-341,0
@@ -3434,6 +3444,7 @@ AIRS:
 		Sequence: idle-dish
 		RequiresCondition: !build-incomplete
 	RallyPoint:
+		ForceSetType: Vehicle
 	Exit@1:
 		SpawnOffset: -1024,0,0
 		ExitCell: 3,1
@@ -4685,6 +4696,7 @@ HPAD.TD:
 		SpawnOffset: 0,-256,0
 		Facing: 896
 	RallyPoint:
+		ForceSetType: Aircraft
 	Production:
 		Produces: Aircraft, Helicopter
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -4906,6 +4918,7 @@ AFLD.GDI:
 		ExitCell: 1,1
 		Facing: 768
 	RallyPoint:
+		ForceSetType: Aircraft
 	Production:
 		Produces: Aircraft, Plane
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -5358,6 +5371,7 @@ SPEN.nod:
 		PlayerExperience: 15
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	RallyPoint:
+		ForceSetType: Ship
 	ProductionBar:
 		ProductionType: Ship
 	Power:
@@ -5458,6 +5472,7 @@ SYRD.gdi:
 		PlayerExperience: 15
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	RallyPoint:
+		ForceSetType: Ship
 	ProductionBar:
 		ProductionType: Ship
 	Power:
@@ -6605,6 +6620,7 @@ TMPP:
 		ProductionTypes: Cyborg, Infantry
 		Priority: 0
 	RallyPoint:
+		ForceSetType: Infantry
 	GrantConditionOnPrerequisite@Cyborgs:
 		Prerequisites: cyborg.upgrade
 		Condition: cyborgs
