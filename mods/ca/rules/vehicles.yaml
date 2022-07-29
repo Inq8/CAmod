@@ -5872,6 +5872,22 @@ PTNK:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
+	# For upgrading on Service Depot
+	Rearmable@PCANUPGRADE:
+		RearmActors: fix, rep, srep
+		AmmoPools: upgrade
+	AmmoPool@PCANUPGRADE:
+		Name: upgrade
+		Armaments: none
+		ReloadDelay: 5000
+	GrantConditionOnPrerequisite@PCANUPGRADE:
+		Condition: pcan-upgrade
+		Prerequisites: pcan.upgrade
+	RearmsToUpgrade@PCANUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: pcan
+		RequiresCondition: pcan-upgrade
 
 PCAN:
 	Inherits: PTNK
@@ -5879,24 +5895,24 @@ PCAN:
 		BuildPaletteOrder: 231
 		Prerequisites: anyradar, ~vehicles.allies, ~pcan.upgrade, ~techlevel.high
 		Description: A prototype long-range artillery that fires highly focused beams of light.
-	TooltipExtras:
-		Strengths: • Strong vs Buildings, Defenses, Light Armor, Infantry
 	Tooltip:
 		Name: Prism Cannon
+	Mobile:
+		Speed: 60
+		TurnSpeed: 12
 	Armament:
 		Weapon: PrisCLaser
 		FireDelay: 10
 		LocalOffset: 420,0,180
-	-Turreted:
-	-AttackTurreted:
-	-WithSpriteTurret:
-	AttackFrontal:
-		TargetFrozenActors: True
-		PauseOnCondition: empdisable || being-warped
-		Voice: Attack
-		FacingTolerance: 0
 	SpawnActorOnDeath:
 		Actor: PCAN.Husk
+	Turreted:
+		TurnSpeed: 12
+		Offset: 0,0,0
+	-Rearmable@PCANUPGRADE:
+	-AmmoPool@PCANUPGRADE:
+	-GrantConditionOnPrerequisite@PCANUPGRADE:
+	-RearmsToUpgrade@PCANUPGRADE:
 
 WTNK:
 	Inherits: ^TankTD
