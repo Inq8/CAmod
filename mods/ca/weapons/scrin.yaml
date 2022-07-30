@@ -341,7 +341,7 @@ DevourerLaserCharged:
 		CenterBeamWidth: 45
 		StartOffset: 0,240,0
 		FollowingOffset: 0,-24,0
-		RecalculateDistortions: 2
+		RecalculateDistortionInterval: 2
 	Warhead@1Dam: SpreadDamage
 		Damage: 1350
 
@@ -587,7 +587,7 @@ ReaperLaserCharged:
 		Distortion: 128
 		DistortionAnimation: 128
 		SegmentLength: 196
-		RecalculateDistortions: 2
+		RecalculateDistortionInterval: 2
 	Warhead@1Dam: SpreadDamage
 		Damage: 1080
 
@@ -1242,14 +1242,14 @@ MothershipChargeBeam:
 	Warhead@1Dum: Dummy
 
 MothershipBeam:
-	ReloadDelay: 3
+	ReloadDelay: 340
 	Range: 0c512
 	TargetActorCenter: true
 	ValidTargets: Ground, Water
 	InvalidTargets: Infantry, Vehicle, Ship
 	Projectile: PlasmaBeam
 		ForceVertical: true
-		Duration: 4
+		Duration: 240
 		Colors: 461fc609, 98177809
 		InnerLightness: 240
 		Radius: 7
@@ -1262,6 +1262,9 @@ MothershipBeam:
 		SecondaryCenterBeam: true
 		SecondaryCenterBeamColor: ffffff44
 		ZOffset: 2048
+		RecalculateColors: true
+		RecalculateDistortionInterval: 3
+		ImpactInterval: 3
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
 		Falloff: 100, 50, 25, 15, 0

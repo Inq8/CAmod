@@ -104,8 +104,8 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("If true will recalculate colours every tick.")]
 		public readonly bool RecalculateColors = false;
 
-		[Desc("If true will recalculate distortions every tick.")]
-		public readonly int RecalculateDistortions = 0;
+		[Desc("If greater than zero will recalculate distortions at this interval.")]
+		public readonly int RecalculateDistortionInterval = 0;
 
 		[Desc("Beam will begin with this offset.")]
 		public readonly WVec StartOffset = WVec.Zero;
@@ -115,6 +115,9 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		[Desc("Ticks at which do do warhead impacts.")]
 		public readonly int[] ImpactTicks = { 0 };
+
+		[Desc("If greater than zero will do warhead impacts at this interval.")]
+		public readonly int ImpactInterval = 0;
 
 		[Desc("If target direction angle changes this much then beam will shut off.")]
 		public readonly WAngle MaxFacingDeviation = new WAngle(512);
@@ -140,6 +143,7 @@ namespace OpenRA.Mods.CA.Projectiles
 		WVec targetOffset;
 		bool trackingTarget;
 		WAngle initialMuzzleFacing;
+		bool recalculateOffsets;
 
 		[Sync]
 		WPos target, source, lastTarget, lastSource;
@@ -234,10 +238,11 @@ namespace OpenRA.Mods.CA.Projectiles
 			if (info.Distortion == 0 && info.DistortionAnimation == 0)
 				return;
 
-			if (ticks == 0 || (info.RecalculateDistortions > 0 && (ticks + 1) % info.RecalculateDistortions == 0))
+			if (ticks == 0 || (info.RecalculateDistortionInterval > 0 && (ticks + 1) % info.RecalculateDistortionInterval == 0))
 			{
 				offsets = new WPos[numSegments + 1];
 				distortions = new WVec[numSegments + 1];
+				recalculateOffsets = true;
 
 				if (ticks == 0)
 				{
@@ -303,7 +308,7 @@ namespace OpenRA.Mods.CA.Projectiles
 			for (var i = 1; i < numSegments; i++)
 			{
 				// If initialising or source/target have moved set segment base positions
-				if (ticks == 0 || lastSource != source || target != lastTarget)
+				if (ticks == 0 || lastSource != source || target != lastTarget || recalculateOffsets)
 				{
 					var segmentStart = direction / numSegments * i;
 					offsets[i] = source + segmentStart + distortions[i];
@@ -322,21 +327,23 @@ namespace OpenRA.Mods.CA.Projectiles
 					distortions[i] += distOffset;
 				}
 			}
+
+			recalculateOffsets = false;
 		}
 
 		void DoImpacts()
 		{
-			if (!info.ImpactTicks.Contains(ticks))
-				return;
-
-			// Do the beam impact (warheads)
-			var warheadArgs = new WarheadArgs(args)
+			if (info.ImpactTicks.Contains(ticks) || (info.ImpactInterval > 0 && (ticks + 1) % info.ImpactInterval == 0))
 			{
-				ImpactOrientation = new WRot(WAngle.Zero, OpenRA.Mods.Common.Util.GetVerticalAngle(source, target), args.CurrentMuzzleFacing()),
-				ImpactPosition = target,
-			};
+				// Do the beam impact (warheads)
+				var warheadArgs = new WarheadArgs(args)
+				{
+					ImpactOrientation = new WRot(WAngle.Zero, OpenRA.Mods.Common.Util.GetVerticalAngle(source, target), args.CurrentMuzzleFacing()),
+					ImpactPosition = target,
+				};
 
-			args.Weapon.Impact(Target.FromPos(target), warheadArgs);
+				args.Weapon.Impact(Target.FromPos(target), warheadArgs);
+			}
 		}
 
 		public void Tick(World world)

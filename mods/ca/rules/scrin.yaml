@@ -2514,6 +2514,7 @@ MSHP:
 		Weapon: MothershipBeam
 		LocalOffset: 0,0,-940
 		PauseOnCondition: !ammo
+		ReloadingCondition: cooldown
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: MothershipChargeBeam
@@ -2598,10 +2599,7 @@ MSHP:
 	GrantConditionOnAttack@ATTACKING:
 		Condition: attacking
 		ArmamentNames: primary
-	GrantConditionOnAttack@COOLDOWN:
-		Condition: cooldown
-		ArmamentNames: primary
-		RevokeDelay: 100
+		RevokeDelay: 240
 	AmbientSoundCA@CHARGING:
 		SoundFiles: mshp-charge.aud
 		RequiresCondition: charging
@@ -2609,29 +2607,29 @@ MSHP:
 		Condition: charging
 		ArmamentNames: secondary
 		RevokeDelay: 5
-	RejectsOrders:
+	SpeedMultiplier@ATTACKING:
+		Modifier: 0
 		RequiresCondition: attacking
 	AmmoPool:
-		Ammo: 80
+		Ammo: 1
 		InitialAmmo: 0
 		AmmoCondition: ammo
 		Armaments: primary
 	ReloadAmmoPoolCA@CHARGE:
 		Delay: 150
-		Count: 80
+		Count: 1
 		RequiresCondition: charging && !attacking
 		Sound: mshp-fire1.aud
 		ShowSelectionBar: true
 		SelectionBarColor: ff00ff
 	ReloadAmmoPoolCA@DRAIN:
-		Count: -80
+		Count: -1
 		Delay: 1
 		RequiresCondition: !charging && !attacking
 		ShowSelectionBar: false
 	-Targetable@TEMPORAL:
 	-SpeedMultiplier@TEMPORAL:
 	-RejectsOrders@TEMPORAL:
-	MothershipAttackBehaviour:
 
 #
 # ---- Husks
