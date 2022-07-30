@@ -125,8 +125,6 @@ namespace OpenRA.Mods.CA.Traits
 			Ticks = Info.Duration;
 			currentChargeTime = GetChargeTime(e.Damage.Value);
 
-			TextNotificationsManager.Debug("charge time {0}", currentChargeTime);
-
 			GrantActiveCondition(self);
 
 			if (Info.ActivateSound != null)

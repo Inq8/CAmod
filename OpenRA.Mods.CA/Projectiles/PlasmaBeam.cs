@@ -350,9 +350,8 @@ namespace OpenRA.Mods.CA.Projectiles
 		{
 			source = args.CurrentSource();
 
-			if (info.MaxFacingDeviation.Angle < 512 && !OpenRA.Mods.Common.Util.FacingWithinTolerance(args.CurrentMuzzleFacing(), initialMuzzleFacing, info.MaxFacingDeviation)) {
+			if (info.MaxFacingDeviation.Angle < 512 && !OpenRA.Mods.Common.Util.FacingWithinTolerance(args.CurrentMuzzleFacing(), initialMuzzleFacing, info.MaxFacingDeviation))
 				world.AddFrameEndTask(w => w.Remove(this));
-			}
 
 			var direction = target - source;
 
