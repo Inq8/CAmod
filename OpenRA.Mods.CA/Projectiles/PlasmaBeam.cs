@@ -104,6 +104,9 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("If true will recalculate colours every tick.")]
 		public readonly bool RecalculateColors = false;
 
+		[Desc("If true will recalculate distortions every tick.")]
+		public readonly int RecalculateDistortions = 0;
+
 		[Desc("Beam will begin with this offset.")]
 		public readonly WVec StartOffset = WVec.Zero;
 
@@ -186,7 +189,6 @@ namespace OpenRA.Mods.CA.Projectiles
 			// Check for blocking actors
 			CheckBlocked();
 			CalculateColors(direction);
-			CalculateDistortion(direction);
 			CalculateBeam(direction);
 			DoImpacts();
 
@@ -229,20 +231,29 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		void CalculateDistortion(WVec direction)
 		{
-			if (info.Distortion != 0 || info.DistortionAnimation != 0)
-			{
-				leftVector = new WVec(direction.Y, -direction.X, 0);
-				if (leftVector.Length != 0)
-					leftVector = 1024 * leftVector / leftVector.Length;
+			if (info.Distortion == 0 && info.DistortionAnimation == 0)
+				return;
 
-				upVector = leftVector.Length != 0
-					? new WVec(
-					-direction.X * direction.Z,
-					-direction.Z * direction.Y,
-					direction.X * direction.X + direction.Y * direction.Y)
-					: new WVec(direction.Z, direction.Z, 0);
-				if (upVector.Length != 0)
-					upVector = 1024 * upVector / upVector.Length;
+			if (ticks == 0 || (info.RecalculateDistortions > 0 && (ticks + 1) % info.RecalculateDistortions == 0))
+			{
+				offsets = new WPos[numSegments + 1];
+				distortions = new WVec[numSegments + 1];
+
+				if (ticks == 0)
+				{
+					leftVector = new WVec(direction.Y, -direction.X, 0);
+					if (leftVector.Length != 0)
+						leftVector = 1024 * leftVector / leftVector.Length;
+
+					upVector = leftVector.Length != 0
+						? new WVec(
+						-direction.X * direction.Z,
+						-direction.Z * direction.Y,
+						direction.X * direction.X + direction.Y * direction.Y)
+						: new WVec(direction.Z, direction.Z, 0);
+					if (upVector.Length != 0)
+						upVector = 1024 * upVector / upVector.Length;
+				}
 			}
 		}
 
@@ -280,6 +291,8 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		void CalculateBeam(WVec direction)
 		{
+			CalculateDistortion(direction);
+
 			var shouldDistort = (ticks == 0 && info.Distortion != 0) || (ticks > 0 && info.DistortionAnimation != 0);
 
 			// Always keep the beam starting at source and ending at target
@@ -342,10 +355,12 @@ namespace OpenRA.Mods.CA.Projectiles
 			CalculateColors(direction);
 
 			if (++ticks >= info.Duration)
+			{
 				world.AddFrameEndTask(w => w.Remove(this));
-			else
-				CalculateBeam(direction);
+				return;
+			}
 
+			CalculateBeam(direction);
 			DoImpacts();
 
 			lastSource = source;

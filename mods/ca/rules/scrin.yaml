@@ -29,12 +29,12 @@ VEHICLES.SCRIN:
 
 ^ResourceConversion:
 	AmmoPool@RESCONV:
-		Ammo: 65
+		Ammo: 5
 		InitialAmmo: 0
 		AmmoCondition: ammo
 		Armaments: primary-charged
 	ReloadAmmoPool@RESCONV:
-		Count: 13
+		Count: 1
 		Delay: 25
 		RequiresCondition: charging-on-resource
 	WithAmmoPipsDecoration@RESCONV:
@@ -1374,11 +1374,16 @@ DEVO:
 		Weapon: DevourerLaser
 		PauseOnCondition: (ammo || charged-fire) && !uncharged-fire
 		LocalOffset: 850,0,208
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
 	Armament@PRIMARYCHARGED:
 		Name: primary-charged
 		Weapon: DevourerLaserCharged
 		PauseOnCondition: !ammo || uncharged-fire
 		LocalOffset: 850,0,208
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	WithMuzzleOverlay:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	TurretedFloating:
@@ -1781,10 +1786,10 @@ RPTP:
 		MuzzlePalette: scrin
 		RequiresCondition: resconv-upgrade
 	AmmoPool@RESCONV:
-		Ammo: 140
+		Ammo: 20
 		Armaments: primary-charged, secondary-charged
 	ReloadAmmoPool@RESCONV:
-		Count: 28
+		Count: 4
 	WithAmmoPipsDecoration@RESCONV:
 		PipCount: 5
 	GrantCondition@RESCONVCHARGE:
@@ -2517,9 +2522,23 @@ MSHP:
 	Armament@TERTIARY:
 		Name: tertiary
 		Weapon: MothershipLaser
-		LocalOffset: 400,0,50, 400,0,-200, 400,0,300
+		LocalOffset: 400,0,-200
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
+	Armament@TERTIARY2:
+		Name: tertiary
+		Weapon: MothershipLaserLeft
+		LocalOffset: 400,0,50
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+		FireDelay: 5
+	Armament@TERTIARY3:
+		Name: tertiary
+		Weapon: MothershipLaserRight
+		LocalOffset: 400,0,300
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+		FireDelay: 10
 	WithMuzzleOverlay:
 	Aircraft:
 		CruiseAltitude: 3c512

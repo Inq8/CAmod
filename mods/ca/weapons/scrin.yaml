@@ -300,51 +300,50 @@ InterloperLaser:
 	Inherits: ^ScrinLaser
 	-Projectile:
 	Projectile: PlasmaBeam
-		Duration: 2
+		Duration: 21
 		Colors: 7d44ffE6, eb66ffE6, 5763ffE6
 		InnerLightness: 200
 		OuterLightness: 115
 		Radius: 2
-		Distortion: 0
-		DistortionAnimation: 96
 		SegmentLength: 0
 		Blockable: true
+		RecalculateColors: true
+		TrackTarget: true
+		ZOffset: 2048
+		MaxFacingDeviation: 64
 
 DevourerLaser:
 	Inherits: ^ScrinPlasmaBeam
-	StartBurstReport: devourer-fire1.aud, devourer-fire2.aud
-	FirstBurstTargetOffset: 0,-360,0
-	FollowingBurstTargetOffset: -0,60,0
-	Burst: 13
-	BurstDelays: 1
+	Report: devourer-fire1.aud, devourer-fire2.aud
+	ReloadDelay: 95
 	Projectile: PlasmaBeam
-		LaunchEffectImage: devo
-		LaunchEffectSequence: muzzle
-		LaunchEffectPalette: scrin
+		StartOffset: 0,360,0
+		FollowingOffset: 0,-36,0
+		ImpactTicks: 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 930
+		Damage: 1100
 		Versus:
 			None: 20
 
 DevourerLaserCharged:
 	Inherits: DevourerLaser
-	StartBurstReport: devourer-cfire1.aud, devourer-cfire2.aud
-	FirstBurstTargetOffset: 0,-180,0
-	FollowingBurstTargetOffset: -0,30,0
+	Report: devourer-cfire1.aud, devourer-cfire2.aud
 	Projectile: PlasmaBeam
-		Duration: 3
 		Colors: 461fc605, 98177805
 		InnerLightness: 240
 		Radius: 4
 		Distortion: 128
-		DistortionAnimation: 16
+		DistortionAnimation: 128
 		SegmentLength: 196
 		CenterBeamColor: ffffffff
 		CenterBeam: true
 		CenterBeamWidth: 45
+		StartOffset: 0,240,0
+		FollowingOffset: 0,-24,0
+		RecalculateDistortions: 2
 	Warhead@1Dam: SpreadDamage
-		Damage: 1150
+		Damage: 1350
 
 RiftCannon:
 	Inherits: ^ScrinLaser
@@ -546,14 +545,15 @@ RuinerCannonCharged:
 TripodLaser:
 	Inherits: ^ScrinPlasmaBeam
 	Range: 6c0
-	StartBurstReport: tripod-fire1.aud, tripod-fire2.aud, tripod-fire3.aud
-	FirstBurstTargetOffset: -150,300,0
-	FollowingBurstTargetOffset: 50,-100,0
-	ReloadDelay: 60
-	Burst: 7
-	BurstDelays: 1
+	Report: tripod-fire1.aud, tripod-fire2.aud, tripod-fire3.aud
+	ReloadDelay: 65
 	Projectile: PlasmaBeam
+		Duration: 7
 		Colors: 7d44ffE6, eb66ffE6, 5763ffE6
+		Blockable: false
+		StartOffset: -150,300,0
+		FollowingOffset: 50,-100,0
+		ImpactTicks: 0, 1, 2, 3, 4, 5, 6
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		Damage: 900
@@ -566,48 +566,48 @@ TripodLaser:
 
 ReaperLaser:
 	Inherits: TripodLaser
-	ReloadDelay: 50
-	StartBurstReport: rtripod-fire1.aud, rtripod-fire2.aud, rtripod-fire3.aud
+	ReloadDelay: 55
+	Report: rtripod-fire1.aud, rtripod-fire2.aud, rtripod-fire3.aud
 	Projectile: PlasmaBeam
-		Radius: 2
 		InnerLightness: 170
 		OuterLightness: 130
-		Colors: 006600EE, 008800EE
+		Colors: 338800EE, 008800EE
 		CenterBeam: true
 		CenterBeamWidth: 45
 		CenterBeamColor: eeffeeff
 
 ReaperLaserCharged:
 	Inherits: ReaperLaser
-	StartBurstReport: rtripod-cfire1.aud, rtripod-cfire2.aud
-	FirstBurstTargetOffset: -60,120,0
-	FollowingBurstTargetOffset: 20,-40,0
+	Report: rtripod-cfire1.aud, rtripod-cfire2.aud
 	Projectile: PlasmaBeam
-		Colors: 00660005, 00880005
-		Duration: 3
+		Colors: 33880005, 00880005
 		InnerLightness: 170
 		OuterLightness: 140
 		Radius: 4
 		Distortion: 128
-		DistortionAnimation: 16
+		DistortionAnimation: 128
 		SegmentLength: 196
+		RecalculateDistortions: 2
 	Warhead@1Dam: SpreadDamage
 		Damage: 1080
 
 TripodLaserReversed:
 	Inherits: TripodLaser
-	FirstBurstTargetOffset: -150,-300,0
-	FollowingBurstTargetOffset: 50,100,0
+	Projectile: PlasmaBeam
+		StartOffset: -150,-300,0
+		FollowingOffset: 50,100,0
 
 ReaperLaserReversed:
 	Inherits: ReaperLaser
-	FirstBurstTargetOffset: -150,-300,0
-	FollowingBurstTargetOffset: 50,100,0
+	Projectile: PlasmaBeam
+		StartOffset: -150,-300,0
+		FollowingOffset: 50,100,0
 
 ReaperLaserChargedReversed:
 	Inherits: ReaperLaserCharged
-	FirstBurstTargetOffset: -60,-120,0
-	FollowingBurstTargetOffset: 20,40,0
+	Projectile: PlasmaBeam
+		StartOffset: -150,-300,0
+		FollowingOffset: 50,100,0
 
 StormriderZap:
 	Range: 6c0
@@ -1279,36 +1279,40 @@ MothershipBeam:
 		Multiplier: 0.1,0.1
 
 MothershipLaser:
-	Inherits: ReaperLaser
+	Inherits: TripodLaser
 	ReloadDelay:
 	Report: mshp-zap1.aud, mshp-zap2.aud
-	-StartBurstReport:
 	Range: 6c0
 	MinRange: 1c0
 	ReloadDelay: 120
-	Burst: 7
-	BurstDelays: 4
-	FirstBurstTargetOffset: -768,0,0
-	FollowingBurstTargetOffset: 256,0,0
 	ValidTargets: Infantry, Vehicle, Ship
 	Projectile: PlasmaBeam
-		Radius: 2
-		InnerLightness: 170
-		OuterLightness: 130
-		CenterBeam: true
-		CenterBeamWidth: 45
-		CenterBeamColor: eeffeeff
-		ZOffset: 2048
 		Blockable: false
+		StartOffset: 0,672,0
+		FollowingOffset: 0,-112,0
+		Duration: 15
+		ImpactTicks: 0, 2, 4, 6, 8, 10, 12, 14
+		ZOffset: 6144
 	Warhead@1Dam: SpreadDamage
-		Damage: 4500
+		Damage: 1250
 		Versus:
 			None: 75
 			Light: 85
 			Wood: 20
 	Warhead@3Eff: CreateEffect
 		Explosions: small_explosion_alt1, small_explosion_alt2, small_explosion_alt3
-		ImpactSounds: kaboom15.aud
+
+MothershipLaserRight:
+	Inherits: MothershipLaser
+	Projectile: PlasmaBeam
+		StartOffset: 512,-672,0
+		FollowingOffset: 0,112,0
+
+MothershipLaserLeft:
+	Inherits: MothershipLaser
+	Projectile: PlasmaBeam
+		StartOffset: -512,-672,0
+		FollowingOffset: 0,112,0
 
 LeecherBeam:
 	ValidTargets: Ground, Water
