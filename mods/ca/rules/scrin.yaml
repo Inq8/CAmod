@@ -1225,14 +1225,19 @@ LCHR:
 	GrantConditionOnDeploy:
 		DeployedCondition: triggered
 		RequiresCondition: coalescence-upgrade
+	GivesBounty:
+		RequiresCondition: global-bounty && !coalescence-upgrade
 
 LCHR.Orb:
 	Inherits@1: ^1x1Shape
 	Inherits@2: ^SelectableSupportUnit
+	Inherits@bounty: ^GlobalBounty
 	Selectable:
 		DecorationBounds: 1536, 1536, 0, -128
 	Tooltip:
 		Name: Leecher Orb
+	TooltipExtras:
+		Description: Heals nearby allies. Will revive into a Leecher if not destroyed.
 	RenderSprites:
 		Image: lchr.orb
 		Palette: caneon
@@ -1250,6 +1255,8 @@ LCHR.Orb:
 		HP: 28000
 	Armor:
 		Type: Light
+	Valued:
+		Cost: 900
 	Immobile:
 		OccupiesSpace: true
 	PeriodicExplosion@1:
