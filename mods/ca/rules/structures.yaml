@@ -258,6 +258,7 @@ SPEN:
 		PlayerExperience: 15
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	RallyPoint:
+		ForceSetType: Ship
 	ProductionBar:
 		ProductionType: Ship
 	Power:
@@ -359,6 +360,7 @@ SYRD:
 		PlayerExperience: 15
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	RallyPoint:
+		ForceSetType: Ship
 	ProductionBar:
 		ProductionType: Ship
 	Power:
@@ -1387,6 +1389,7 @@ WEAP:
 		RequiresCondition: !build-incomplete
 		Sequence: build-top
 	RallyPoint:
+		ForceSetType: Vehicle
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: 213,-128,0
@@ -1979,6 +1982,7 @@ HPAD:
 		ExitCell: 0,0
 		Facing: 896
 	RallyPoint:
+		ForceSetType: Aircraft
 	Production:
 		Produces: Aircraft, Helicopter
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -2103,6 +2107,7 @@ AFLD:
 		ExitCell: 1,1
 		Facing: 768
 	RallyPoint:
+		ForceSetType: Aircraft
 	Production:
 		Produces: Aircraft, Plane
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -2496,6 +2501,7 @@ BARR:
 		Range: 4c0
 	WithBuildingBib:
 	RallyPoint:
+		ForceSetType: Infantry
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: -170,810,0
@@ -2548,6 +2554,8 @@ BARR:
 		Prerequisite: infantry.e2
 	ProvidesPrerequisite@thf:
 		Prerequisite: infantry.thf
+	ProvidesPrerequisite@dog:
+		Prerequisite: infantry.dog
 	ProvidesPrerequisite@boris:
 		Factions: russia, iraq, ukraine
 		Prerequisite: infantry.boris
@@ -2607,6 +2615,8 @@ KENN:
 		PauseOnCondition: forceshield || invulnerability || being-warped
 	ProductionBar:
 		ProductionType: Infantry
+	ProvidesPrerequisite@dog:
+		Prerequisite: infantry.dog
 	-SpawnActorsOnSell:
 	Power:
 		Amount: -10
@@ -2646,6 +2656,7 @@ TENT:
 		Range: 4c0
 	WithBuildingBib:
 	RallyPoint:
+		ForceSetType: Infantry
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: -42,810,0
@@ -3096,6 +3107,7 @@ PYLE:
 		Range: 4c0
 	WithBuildingBib:
 	RallyPoint:
+		ForceSetType: Infantry
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: -170,810,0
@@ -3195,6 +3207,7 @@ HAND:
 		Range: 4c0
 	WithBuildingBib:
 	RallyPoint:
+		ForceSetType: Infantry
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: 512,1024,0
@@ -3358,6 +3371,7 @@ WEAP.TD:
 		RequiresCondition: !build-incomplete
 		Sequence: build-top
 	RallyPoint:
+		ForceSetType: Vehicle
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: -341,-341,0
@@ -3430,6 +3444,7 @@ AIRS:
 		Sequence: idle-dish
 		RequiresCondition: !build-incomplete
 	RallyPoint:
+		ForceSetType: Vehicle
 	Exit@1:
 		SpawnOffset: -1024,0,0
 		ExitCell: 3,1
@@ -4053,28 +4068,37 @@ OBLI:
 		Range: 6c0
 	WithBuildingBib:
 		HasMinibib: true
+	GrantConditionOnPrerequisite@SUPERCHARGED:
+		Condition: supercharged-upgrade
+		Prerequisites: supercharged.upgrade
 	-WithSpriteBody:
 	WithChargeSpriteBody:
 		Sequence: active
-	GrantConditionOnFaction@marked:
-		Condition: marked
-		Factions: marked
-	Armament:
+	Armament@PRIMARY:
 		Weapon: Laser
 		LocalOffset: 0,-85,1280
-		RequiresCondition: !marked
-	Armament@Marked:
+		RequiresCondition: !supercharged-upgrade
+		MuzzleSequence: muzzle
+		MuzzlePalette: caneon
+	Armament@SUPERCHARGED:
 		Weapon: Laser.Adv
 		LocalOffset: 0,-85,1280
-		RequiresCondition: marked
+		RequiresCondition: supercharged-upgrade
+		MuzzleSequence: muzzle2
+		MuzzlePalette: caneon
+	WithMuzzleOverlay:
 	AttackCharges:
 		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 		ChargeLevel: 50
 		ChargingCondition: charging
-	AmbientSound:
-		RequiresCondition: charging
+	AmbientSound@1:
+		RequiresCondition: charging && !supercharged-upgrade
 		SoundFiles: obelpowr.aud
-		Interval: 30, 40
+		Interval: 20
+	AmbientSound@2:
+		RequiresCondition: charging && supercharged-upgrade
+		SoundFiles: obelpowr2.aud
+		Interval: 20
 	Power:
 		Amount: -90
 	ProvidesPrerequisite@buildingname:
@@ -4278,6 +4302,9 @@ HQ:
 	ProvidesPrerequisiteValidatedFaction@zocrad:
 		Factions: zocom
 		Prerequisite: radar.zocom
+	ProvidesPrerequisiteValidatedFaction@eagrad:
+		Factions: eagle
+		Prerequisite: radar.eagle
 	ProvidesPrerequisiteValidatedFaction@arcrad:
 		Factions: arc
 		Prerequisite: radar.arc
@@ -4669,6 +4696,7 @@ HPAD.TD:
 		SpawnOffset: 0,-256,0
 		Facing: 896
 	RallyPoint:
+		ForceSetType: Aircraft
 	Production:
 		Produces: Aircraft, Helicopter
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -4890,6 +4918,7 @@ AFLD.GDI:
 		ExitCell: 1,1
 		Facing: 768
 	RallyPoint:
+		ForceSetType: Aircraft
 	Production:
 		Produces: Aircraft, Plane
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -5342,6 +5371,7 @@ SPEN.nod:
 		PlayerExperience: 15
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	RallyPoint:
+		ForceSetType: Ship
 	ProductionBar:
 		ProductionType: Ship
 	Power:
@@ -5442,6 +5472,7 @@ SYRD.gdi:
 		PlayerExperience: 15
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	RallyPoint:
+		ForceSetType: Ship
 	ProductionBar:
 		ProductionType: Ship
 	Power:
@@ -5483,7 +5514,7 @@ HTUR:
 		Weaknesses: • Cannot attack Aircraft\n• Cannot hit targets at point-blank range
 		Attributes: • Requires power to operate\n• Can detect cloaked units
 	Valued:
-		Cost: 1650
+		Cost: 1750
 	Tooltip:
 		Name: Grand Cannon
 	Building:
@@ -5561,18 +5592,18 @@ LTUR:
 	Turreted:
 		InitialFacing: 128
 	-WithTurretAttackAnimation:
-	GrantConditionOnFaction@marked:
-		Condition: marked
-		Factions: marked
+	GrantConditionOnPrerequisite@SUPERCHARGED:
+		Condition: supercharged-upgrade
+		Prerequisites: supercharged.upgrade
 	-Armament:
 	Armament:
 		Weapon: LaserTur
 		LocalOffset: 512,0,172
-		RequiresCondition: !marked
+		RequiresCondition: !supercharged-upgrade
 	Armament@Marked:
 		Weapon: LaserTur.Adv
 		LocalOffset: 512,0,172
-		RequiresCondition: marked
+		RequiresCondition: supercharged-upgrade
 	Power:
 		Amount: -25
 	DetectCloaked:
@@ -6032,7 +6063,7 @@ INDP:
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
 	Valued:
-		Cost: 2500
+		Cost: 2000
 	-Capturable:
 	-CaptureNotification:
 	-CapturableProgressBar:
@@ -6121,7 +6152,7 @@ OREP:
 	-CaptureManager:
 	ProvidesPrerequisite@buildingname:
 	Valued:
-		Cost: 2500
+		Cost: 2000
 	Tooltip:
 		Name: Ore Purifier
 	ResourcePurifierCA@NORMAL:
@@ -6202,7 +6233,7 @@ UPGC:
 	-CapturableProgressBlink:
 	-CaptureManager:
 	Valued:
-		Cost: 2500
+		Cost: 2000
 	Tooltip:
 		Name: Upgrade Center
 	ValidFactions:
@@ -6552,7 +6583,7 @@ TMPP:
 	-CapturableProgressBlink:
 	-CaptureManager:
 	Valued:
-		Cost: 2500
+		Cost: 2000
 	Tooltip:
 		Name: Temple Prime
 	Power:
@@ -6589,6 +6620,7 @@ TMPP:
 		ProductionTypes: Cyborg, Infantry
 		Priority: 0
 	RallyPoint:
+		ForceSetType: Infantry
 	GrantConditionOnPrerequisite@Cyborgs:
 		Prerequisites: cyborg.upgrade
 		Condition: cyborgs

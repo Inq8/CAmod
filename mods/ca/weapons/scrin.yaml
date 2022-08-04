@@ -111,7 +111,7 @@ GunWalkerZapAA:
 	Range: 8c512
 	Projectile: Bullet
 		Image: scrinzapup
-		Speed: 1c448
+		Speed: 1c682
 		Blockable: false
 		Inaccuracy: 0
 	ValidTargets: Air, AirSmall
@@ -212,13 +212,42 @@ DevastatorDiscs:
 		Damage: 4250
 		Versus:
 			None: 100
-			Wood: 80
+			Wood: 85
 			Light: 60
 			Heavy: 25
 			Concrete: 100
 			Brick: 100
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
+
+DevastatorTorpedo:
+	Inherits: DevastatorDiscs
+	Burst: 3
+	Report: plasmatorp.aud
+	BurstDelays: 8
+	ReloadDelay: 120
+	Projectile: Bullet
+		Image: plasmatorp
+		Palette: scrin
+		LaunchAngle: 25
+		Inaccuracy: 1c0
+		Shadow: true
+		ShadowColor: 00000033
+	Warhead@1Dam: SpreadDamage
+		Damage: 12000
+		Spread: 512
+		Versus:
+			Heavy: 40
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigatedMinor
+	Warhead@4Eff: CreateEffect
+		Explosions: large_artillery_explosion
+		ImpactSounds: xplobig4.aud
+
+DevastatorTorpedoCharge:
+	ReloadDelay: 15
+	Range: 16c0
+	Projectile: InstantHit
+	Warhead@1Dum: Dummy
 
 ^ScrinLaser:
 	ValidTargets: Ground, Water
@@ -271,51 +300,50 @@ InterloperLaser:
 	Inherits: ^ScrinLaser
 	-Projectile:
 	Projectile: PlasmaBeam
-		Duration: 2
+		Duration: 21
 		Colors: 7d44ffE6, eb66ffE6, 5763ffE6
 		InnerLightness: 200
 		OuterLightness: 115
 		Radius: 2
-		Distortion: 0
-		DistortionAnimation: 96
 		SegmentLength: 0
 		Blockable: true
+		RecalculateColors: true
+		TrackTarget: true
+		ZOffset: 2048
+		MaxFacingDeviation: 64
 
 DevourerLaser:
 	Inherits: ^ScrinPlasmaBeam
-	StartBurstReport: devourer-fire1.aud, devourer-fire2.aud
-	FirstBurstTargetOffset: 0,-360,0
-	FollowingBurstTargetOffset: -0,60,0
-	Burst: 13
-	BurstDelays: 1
+	Report: devourer-fire1.aud, devourer-fire2.aud
+	ReloadDelay: 95
 	Projectile: PlasmaBeam
-		LaunchEffectImage: devo
-		LaunchEffectSequence: muzzle
-		LaunchEffectPalette: scrin
+		StartOffset: 0,360,0
+		FollowingOffset: 0,-36,0
+		ImpactTicks: 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 930
+		Damage: 1100
 		Versus:
 			None: 20
 
 DevourerLaserCharged:
 	Inherits: DevourerLaser
-	StartBurstReport: devourer-cfire1.aud, devourer-cfire2.aud
-	FirstBurstTargetOffset: 0,-180,0
-	FollowingBurstTargetOffset: -0,30,0
+	Report: devourer-cfire1.aud, devourer-cfire2.aud
 	Projectile: PlasmaBeam
-		Duration: 3
 		Colors: 461fc605, 98177805
 		InnerLightness: 240
 		Radius: 4
 		Distortion: 128
-		DistortionAnimation: 16
+		DistortionAnimation: 128
 		SegmentLength: 196
 		CenterBeamColor: ffffffff
 		CenterBeam: true
 		CenterBeamWidth: 45
+		StartOffset: 0,240,0
+		FollowingOffset: 0,-24,0
+		RecalculateDistortionInterval: 2
 	Warhead@1Dam: SpreadDamage
-		Damage: 1150
+		Damage: 1350
 
 RiftCannon:
 	Inherits: ^ScrinLaser
@@ -462,6 +490,13 @@ LeecherExplode:
 		ExplosionPalette: effect
 		ImpactSounds: vtoxcona.aud, vtoxconb.aud, vtoxconc.aud
 
+LeecherCoalesce:
+	ValidTargets: Ground, Water
+	Warhead@3Eff: CreateEffect
+		Explosions: lchr_coalesce
+		ExplosionPalette: effect
+		ImpactSounds: coalesce.aud
+
 RuinerCannon:
 	Inherits: 155mm
 	Report: ruiner-fire1.aud
@@ -478,7 +513,7 @@ RuinerCannon:
 		Damage: 5000
 		Versus:
 			None: 120
-			Wood: 90
+			Wood: 100
 			Concrete: 80
 			Light: 90
 			Heavy: 45
@@ -510,14 +545,15 @@ RuinerCannonCharged:
 TripodLaser:
 	Inherits: ^ScrinPlasmaBeam
 	Range: 6c0
-	StartBurstReport: tripod-fire1.aud, tripod-fire2.aud, tripod-fire3.aud
-	FirstBurstTargetOffset: -150,300,0
-	FollowingBurstTargetOffset: 50,-100,0
-	ReloadDelay: 60
-	Burst: 7
-	BurstDelays: 1
+	Report: tripod-fire1.aud, tripod-fire2.aud, tripod-fire3.aud
+	ReloadDelay: 65
 	Projectile: PlasmaBeam
+		Duration: 7
 		Colors: 7d44ffE6, eb66ffE6, 5763ffE6
+		Blockable: false
+		StartOffset: -150,300,0
+		FollowingOffset: 50,-100,0
+		ImpactTicks: 0, 1, 2, 3, 4, 5, 6
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		Damage: 900
@@ -530,48 +566,48 @@ TripodLaser:
 
 ReaperLaser:
 	Inherits: TripodLaser
-	ReloadDelay: 50
-	StartBurstReport: rtripod-fire1.aud, rtripod-fire2.aud, rtripod-fire3.aud
+	ReloadDelay: 55
+	Report: rtripod-fire1.aud, rtripod-fire2.aud, rtripod-fire3.aud
 	Projectile: PlasmaBeam
-		Radius: 2
 		InnerLightness: 170
 		OuterLightness: 130
-		Colors: 006600EE, 008800EE
+		Colors: 338800EE, 008800EE
 		CenterBeam: true
 		CenterBeamWidth: 45
 		CenterBeamColor: eeffeeff
 
 ReaperLaserCharged:
 	Inherits: ReaperLaser
-	StartBurstReport: rtripod-cfire1.aud, rtripod-cfire2.aud
-	FirstBurstTargetOffset: -60,120,0
-	FollowingBurstTargetOffset: 20,-40,0
+	Report: rtripod-cfire1.aud, rtripod-cfire2.aud
 	Projectile: PlasmaBeam
-		Colors: 00660005, 00880005
-		Duration: 3
+		Colors: 33880005, 00880005
 		InnerLightness: 170
 		OuterLightness: 140
 		Radius: 4
 		Distortion: 128
-		DistortionAnimation: 16
+		DistortionAnimation: 128
 		SegmentLength: 196
+		RecalculateDistortionInterval: 2
 	Warhead@1Dam: SpreadDamage
 		Damage: 1080
 
 TripodLaserReversed:
 	Inherits: TripodLaser
-	FirstBurstTargetOffset: -150,-300,0
-	FollowingBurstTargetOffset: 50,100,0
+	Projectile: PlasmaBeam
+		StartOffset: -150,-300,0
+		FollowingOffset: 50,100,0
 
 ReaperLaserReversed:
 	Inherits: ReaperLaser
-	FirstBurstTargetOffset: -150,-300,0
-	FollowingBurstTargetOffset: 50,100,0
+	Projectile: PlasmaBeam
+		StartOffset: -150,-300,0
+		FollowingOffset: 50,100,0
 
 ReaperLaserChargedReversed:
 	Inherits: ReaperLaserCharged
-	FirstBurstTargetOffset: -60,-120,0
-	FollowingBurstTargetOffset: 20,40,0
+	Projectile: PlasmaBeam
+		StartOffset: -150,-300,0
+		FollowingOffset: 50,100,0
 
 StormriderZap:
 	Range: 6c0
@@ -934,6 +970,7 @@ ShardLauncher:
 		ExplosionPalette: scrin
 		Image: shardhit
 		ValidTargets: Air, AirSmall, ICBM, Ground, Water, Trees
+		Inaccuracy: 128
 
 RavagerShards:
 	Inherits: ShardLauncher
@@ -962,6 +999,42 @@ RavagerShards:
 			Heavy: 10
 			Concrete: 30
 			Brick: 5
+
+ShardWalkerShards:
+	Inherits: RavagerShards
+	StartBurstReport: shard-fire1.aud
+	Projectile: Missile
+		Speed: 250
+		ContrailColor: 00FF0066
+		MinimumLaunchAngle: 80
+		MaximumLaunchAngle: 112
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 2600
+		Versus:
+			Wood: 10
+			Light: 32
+			Heavy: 15
+			Concrete: 10
+
+ShardWalkerShardsAA:
+	Inherits: ShardLauncher
+	ReloadDelay: 40
+	BurstDelays: 5
+	Range: 8c512
+	Projectile: Missile
+		RangeLimit: 8c512
+		ContrailColor: 00FF0066
+		Speed: 300
+	Warhead@1Dam: SpreadDamage
+		Damage: 1800
+		Range: 0, 0c64, 0c256, 3c0
+		Falloff: 100, 100, 30, 15
+	Warhead@2Dam: SpreadDamage
+		Damage: 1800
+		-Range:
+		Spread: 128
+		Falloff: 100, 50, 14, 0
 
 LaceratorShards:
 	Inherits: RavagerShards
@@ -1157,10 +1230,10 @@ MothershipChargeBeam:
 	InvalidTargets: Infantry, Vehicle, Ship
 	Projectile: PlasmaBeam
 		ForceVertical: true
-		Duration: 3
+		Duration: 2
 		Colors: ffffff44
 		InnerLightness: 200
-		OuterLightness: 100
+		OuterLightness: 75
 		Radius: 2
 		Distortion: 0
 		DistortionAnimation: 0
@@ -1169,14 +1242,14 @@ MothershipChargeBeam:
 	Warhead@1Dum: Dummy
 
 MothershipBeam:
-	ReloadDelay: 3
+	ReloadDelay: 340
 	Range: 0c512
 	TargetActorCenter: true
 	ValidTargets: Ground, Water
 	InvalidTargets: Infantry, Vehicle, Ship
 	Projectile: PlasmaBeam
 		ForceVertical: true
-		Duration: 4
+		Duration: 240
 		Colors: 461fc609, 98177809
 		InnerLightness: 240
 		Radius: 7
@@ -1189,6 +1262,9 @@ MothershipBeam:
 		SecondaryCenterBeam: true
 		SecondaryCenterBeamColor: ffffff44
 		ZOffset: 2048
+		RecalculateColors: true
+		RecalculateDistortionInterval: 3
+		ImpactInterval: 3
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
 		Falloff: 100, 50, 25, 15, 0
@@ -1206,36 +1282,40 @@ MothershipBeam:
 		Multiplier: 0.1,0.1
 
 MothershipLaser:
-	Inherits: ReaperLaser
+	Inherits: TripodLaser
 	ReloadDelay:
 	Report: mshp-zap1.aud, mshp-zap2.aud
-	-StartBurstReport:
 	Range: 6c0
 	MinRange: 1c0
 	ReloadDelay: 120
-	Burst: 7
-	BurstDelays: 4
-	FirstBurstTargetOffset: -768,0,0
-	FollowingBurstTargetOffset: 256,0,0
 	ValidTargets: Infantry, Vehicle, Ship
 	Projectile: PlasmaBeam
-		Radius: 2
-		InnerLightness: 170
-		OuterLightness: 130
-		CenterBeam: true
-		CenterBeamWidth: 45
-		CenterBeamColor: eeffeeff
-		ZOffset: 2048
 		Blockable: false
+		StartOffset: 0,672,0
+		FollowingOffset: 0,-112,0
+		Duration: 15
+		ImpactTicks: 0, 2, 4, 6, 8, 10, 12, 14
+		ZOffset: 6144
 	Warhead@1Dam: SpreadDamage
-		Damage: 4500
+		Damage: 1250
 		Versus:
 			None: 75
 			Light: 85
 			Wood: 20
 	Warhead@3Eff: CreateEffect
 		Explosions: small_explosion_alt1, small_explosion_alt2, small_explosion_alt3
-		ImpactSounds: kaboom15.aud
+
+MothershipLaserRight:
+	Inherits: MothershipLaser
+	Projectile: PlasmaBeam
+		StartOffset: 512,-672,0
+		FollowingOffset: 0,112,0
+
+MothershipLaserLeft:
+	Inherits: MothershipLaser
+	Projectile: PlasmaBeam
+		StartOffset: -512,-672,0
+		FollowingOffset: 0,112,0
 
 LeecherBeam:
 	ValidTargets: Ground, Water
@@ -1282,6 +1362,22 @@ LeecherBeam:
 		ExplosionPalette: scrin
 		Image: leechhitlg
 		Inaccuracy: 256
+
+LeecherOrbHeal:
+	ReloadDelay: 25
+	Range: 1c0
+	ValidTargets: Ground, Water
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Spread: 768
+		Damage: -1800
+		Falloff: 100, 50, 30, 15, 0
+		ValidTargets: Heal, Repair
+		Versus:
+			None: 50
+			Light: 100
+			Heavy: 100
+		ValidRelationships: Ally
 
 AtomizerBolts:
 	Report: atomizer-fire1.aud

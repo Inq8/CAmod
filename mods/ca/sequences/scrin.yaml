@@ -641,6 +641,26 @@ gunw.destroyed:
 		UseClassicFacings: True
 		ZOffset: -512
 
+shrw:
+	Inherits: ^VehicleOverlays
+	idle: shrw
+		Facings: 32
+		UseClassicFacings: True
+	move: shrw
+		Start: 32
+		Facings: 32
+		Length: 2
+		Tick: 80
+		UseClassicFacings: True
+	icon: shrwicon
+
+shrw.destroyed:
+	Inherits: ^VehicleOverlays
+	idle: shrw
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512
+
 seek:
 	Inherits: ^VehicleOverlays
 	idle: seek
@@ -742,6 +762,11 @@ lchr.destroyed:
 		UseClassicFacings: True
 		ZOffset: -512
 
+lchr.orb:
+	idle: lchrorb
+		Length: *
+		ZOffset: 2048
+
 stcr:
 	Inherits: ^VehicleOverlays
 	idle: stcr
@@ -760,7 +785,8 @@ devo:
 		Facings: 32
 		UseClassicFacings: True
 	muzzle: scrinmuzz2
-		Length: 5
+		Length: *
+		Frames: 0,1,2,3,0,1,2,3,0,1,2,3,0,1,2,3,0,1,2,3,4
 	icon: devoicon
 
 devo.destroyed:
@@ -828,7 +854,8 @@ tpod:
 		Length: 14
 		Tick: 60
 	muzzle: scrinmuzz2
-		Length: 5
+		Length: *
+		Frames: 0,1,2,0,1,2,3,4
 	icon: tpodicon
 
 tpod.destroyed:
@@ -857,7 +884,8 @@ rptp:
 		Length: 14
 		Tick: 60
 	muzzle: scrinmuzz3
-		Length: 5
+		Length: *
+		Frames: 0,1,2,0,1,2,3,4
 	icon: rptpicon
 
 rptp.destroyed:
@@ -952,13 +980,10 @@ mshp:
 		Tick: 40
 		Offset: 0, 40, 0
 		BlendMode: Additive
-	muzzle: scrinmuzz4
-		Length: 3
-		Frames: 3,3,3,3,3,3,3,3,3,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,3,3,3,3,3,3
-		Facings: 16
-		Tick: 40
+	muzzle: scrinmuzz2
+		Frames: 0,1,2,3,0,1,2,3,0,1,2,3,4
+		Length: *
 		ZOffset: 2046
-		BlendMode: Additive
 	icon: mshpicon
 
 #
@@ -1813,3 +1838,11 @@ wormholeblast:
 		Offset: 0, 40, 0
 		ZOffset: -512
 		BlendMode: Additive
+
+plasmatorp:
+	Defaults:
+		IgnoreWorldTint: true
+	idle: plasmatorp
+		Length: 5
+		Tick: 40
+		ZOffset: 2048

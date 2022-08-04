@@ -198,7 +198,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		void SetUnitInterval(string name)
 		{
-			if (!Info.UnitIntervals.ContainsKey(name))
+			if (Info.UnitIntervals == null || !Info.UnitIntervals.ContainsKey(name))
 				return;
 
 			activeUnitIntervals[name] = Info.UnitIntervals[name];

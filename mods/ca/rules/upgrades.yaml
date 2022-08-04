@@ -226,7 +226,7 @@ pointdef.upgrade:
 		BuildPaletteOrder: 50
 		Prerequisites: ~gtek, ~hold.strat, ~techlevel.high
 		IconPalette: chrometd
-		Description: Equips several units with point defense shields and/or point defense lasers\n  which protect against enemy fire.\n\nUpgrades: Battle Tank (Shield and Laser)\nUpgrades: Battle Drone (Shield and Laser)\nUpgrades: Hum-Vee(Shield)\nUpgrades: Guardian Drone(Shield)\nUpgrades: Harvester(Shield)\nUpgrades: Frigate (Laser)
+		Description: Equips several units with point defense shields and/or point defense lasers\n  which protect against enemy fire.\n\nUpgrades: Battle Tank (Shield and Laser)\nUpgrades: Battle Drone (Shield and Laser)\nUpgrades: Hum-Vee (Shield)\nUpgrades: Guardian Drone (Shield)\nUpgrades: Harvester (Shield)\nUpgrades: Frigate (Laser)
 	TooltipExtras:
 		Strengths: + Added Point Defense Shield\n+ Added Point Defense Laser
 	Valued:
@@ -422,10 +422,26 @@ howi.upgrade:
 		Multiplier: 0
 		Prerequisites: radar.blackh
 
+blacknapalm.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Black Napalm
+	Buildable:
+		BuildPaletteOrder: 25
+		Prerequisites: ~tmpl.blackh, ~techlevel.high
+		Description: Superheated flame weapons that can melt armored targets.\n\nUpgrades: Heavy Flame Tank\nUpgrades: SSM Launcher
+	TooltipExtras:
+		Strengths: + Increased damage against vehicles
+		Weaknesses: – Reduced area of effect
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: blacknapalm.upgrade
+
 microwave.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Intensified Microwaves
+		Name: Upgrade: Intensified Microwaves
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~tmpl.legion, ~techlevel.high
@@ -438,10 +454,40 @@ microwave.upgrade:
 	RenderSprites:
 		Image: microwave.upgrade
 
+supercharged.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Supercharged Lasers
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~tmpl.marked, ~techlevel.high
+		Description: Enhances heavy laser weapons.\n\nUpgrades: Obelisk of Light\nUpgrades: Laser Turret\nUpgrades: Venom
+	TooltipExtras:
+		Strengths: + Increased range\n+ Increased damage
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: supercharged.upgrade
+
+alphacomanche.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Alpha Comanche
+	Buildable:
+		BuildPaletteOrder: 25
+		Prerequisites: ~tmpl.shadow, ~techlevel.high
+		Description: Improves stealth and air-to-air combat capabilities of Comanche.\n\nUpgrades: Comanche
+	TooltipExtras:
+		Strengths: + Added air-to-air missiles\n+ Increased speed\n+ Damage no longer disrupts cloak\n+ Reduced cloaking time
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: alphacomanche.upgrade
+
 tibcore.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Tib Core Missiles
+		Name: Upgrade: Tib Core Missiles
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~tmpl, ~techlevel.high
@@ -588,7 +634,7 @@ atomicengines.upgrade:
 		Strengths: + 25% faster movement
 		Weaknesses: – Explodes on death
 	Valued:
-		Cost: 1000
+		Cost: 750
 	RenderSprites:
 		Image: atomicengines.upgrade
 
@@ -698,7 +744,7 @@ pcan.upgrade:
 		Description: Allows construction of Prism Cannons.\n\nReplaces: Prism Tank
 	TooltipExtras:
 		Strengths: + Increased range\n+ Increased burst damage
-		Weaknesses: – Reduced rate of fire\n– No turret
+		Weaknesses: – Reduced rate of fire\n– Reduced mobility
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -799,12 +845,29 @@ advart.upgrade:
 	RenderSprites:
 		Image: advart.upgrade
 
+shrw.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Shard Walker
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~radar.reaper, ~techlevel.medium
+		Description: Allows production of Shard Walkers, a heavier and\n  more powerful variant of the Gun Walker.\n\nReplaces: Gun Walker
+		IconPalette: scrin
+	TooltipExtras:
+		Strengths: + Increased durability\n+ Increased damage\n+ Increased range
+		Weaknesses: – Slower movement\n– Slower projectiles
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: shrw.upgrade
+
 carapace.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
 		Name: Upgrade: Hardened Carapace
 	Buildable:
-		BuildPaletteOrder: 21
+		BuildPaletteOrder: 22
 		Prerequisites: ~scrt, ~infantry.any, ~player.scrin, ~techlevel.high
 		Description: Infantry gain a hardened carapace which\n  provides protection against explosives.\n\nUpgrades: Infantry
 		IconPalette: scrin
@@ -820,7 +883,7 @@ resconv.upgrade:
 	Tooltip:
 		Name: Upgrade: Resource Conversion
 	Buildable:
-		BuildPaletteOrder: 22
+		BuildPaletteOrder: 23
 		Prerequisites: ~scrt, ~techlevel.high
 		Description: Weapons of Devourer and Ruiner are empowered by\n  Tiberium and other resources. Reaper Tripod gains\n  additional charges\n\nUpgrades: Devourer\nUpgrades: Ruiner\nUpgrades: Reaper Tripod
 		IconPalette: scrin
@@ -854,7 +917,7 @@ regen.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~scrt, ~techlevel.high
-		Description: Scrin aircraft will regenerate health over time when not in combat.\n\nUpgrades: Stormrider\nUpgrades: Enervator\nUpgrades: Devastator\nUpgrades: Planetary Assault Carrier\nUpgrades: Mothership
+		Description: Scrin aircraft will regenerate health over time when not in combat.\n\nUpgrades: Stormrider\nUpgrades: Enervator\nUpgrades: Devastator Warship\nUpgrades: Planetary Assault Carrier\nUpgrades: Mothership
 		IconPalette: scrin
 	TooltipExtras:
 		Strengths: + Out-of-combat health regeneration
@@ -863,18 +926,52 @@ regen.upgrade:
 	RenderSprites:
 		Image: regen.upgrade
 
+plasma.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Charged Plasma
+	Buildable:
+		BuildPaletteOrder: 35
+		Prerequisites: ~scrt.harbinger, ~techlevel.high
+		Description: Devastator Warships upgraded to fire more powerful charged plasma projectiles.\n\nUpgrades: Devastator Warship
+		IconPalette: scrin
+	TooltipExtras:
+		Strengths: + Increased damage\n+ Increased area of effect\n+ Improved accuracy
+		Weaknesses: – Must charge before firing
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: plasma.upgrade
+
+coalescence.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Coalescence
+	Buildable:
+		BuildPaletteOrder: 35
+		Prerequisites: ~scrt.collector, ~techlevel.high
+		Description: On death or when deployed, Leechers will transform\n  into a ball of bio-matter which heals nearby allies\n  and eventually coalesces into a new Leecher.\n\nUpgrades: Leecher
+		IconPalette: scrin
+	TooltipExtras:
+		Strengths: + Leecher able to resurrect
+		Weaknesses: – Reduced healing from dealing damage
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: coalescence.upgrade
+
 shields.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
 		Name: Upgrade: Fleet Shields
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~scrt, ~techlevel.high
+		Prerequisites: ~sign, ~techlevel.high
 		Description: Equip larger Scrin vessels with shields.\n\nUpgrades: Devastator\nUpgrades: Planetary Assault Carrier
 		IconPalette: scrin
 	TooltipExtras:
 		Strengths: + Grants an additonal health pool\n+ Resistance to EMP
 	Valued:
-		Cost: 1500
+		Cost: 1000
 	RenderSprites:
 		Image: shields.upgrade

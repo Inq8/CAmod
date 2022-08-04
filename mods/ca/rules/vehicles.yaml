@@ -3263,7 +3263,7 @@ MTNK:
 		ShowSelectionBar: false
 		Modifier: 25
 		Duration: 2
-		ChargeTime: 100
+		ScaleChargeTimeWithDamage: true
 		RequiresCondition: pointdef-upgrade && !pointlaser-charging
 	WithIdleOverlay@NSHIELD:
 		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
@@ -3724,7 +3724,7 @@ MSAM:
 	Mobile:
 		Speed: 72
 	Health:
-		HP: 18000
+		HP: 19000
 	Armor:
 		Type: Light
 	RevealsShroud:
@@ -3842,11 +3842,18 @@ MLRS:
 		RealignDelay: 0
 	AttackMove:
 		AttackMoveCondition: attack-move
-	Armament:
+	Armament@PRIMARY:
 		Weapon: HonestJohn
 		LocalOffset: 0,171,0, 0,-171,0
 		PauseOnCondition: moving
 		ReloadingCondition: reloading
+		RequiresCondition: !blacknapalm-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: HonestJohn.UPG
+		LocalOffset: 0,171,0, 0,-171,0
+		PauseOnCondition: moving
+		ReloadingCondition: reloading
+		RequiresCondition: blacknapalm-upgrade
 	Armament@TARGETTER:
 		Name: targetter
 		Weapon: HonestJohnTargeting
@@ -3888,6 +3895,9 @@ MLRS:
 	ProductionCostMultiplier@BlackhBonus:
 		Multiplier: 90
 		Prerequisites: vehicles.blackh
+	GrantConditionOnPrerequisite@UPG:
+		Condition: blacknapalm-upgrade
+		Prerequisites: blacknapalm.upgrade
 
 STNK.Nod:
 	Inherits: ^VehicleTD
@@ -4143,9 +4153,21 @@ HFTK:
 		MuzzleSequence: muzzle
 		MuzzlePalette: tdeffect
 		LocalOffset: 750,200,150, 750,-200,150
+		RequiresCondition: !blacknapalm-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: HeavyFlameTankFlamer.UPG
+		MuzzleSequence: muzzle2
+		MuzzlePalette: scrin-ignore-lighting-alpha85
+		LocalOffset: 750,200,150, 750,-200,150
+		RequiresCondition: blacknapalm-upgrade
 	Armament@FF:
 		Weapon: HeavyFlameTankFlamerFF
 		LocalOffset: 750,200,150, 750,-200,150
+		RequiresCondition: !blacknapalm-upgrade
+	Armament@FFUPG:
+		Weapon: HeavyFlameTankFlamerFF
+		LocalOffset: 750,200,150, 750,-200,150
+		RequiresCondition: blacknapalm-upgrade
 	AttackTurreted:
 		Voice: Attack
 		RangeMargin: 0
@@ -4170,6 +4192,9 @@ HFTK:
 		RevokeDelay: 3
 	WithShadow:
 		RequiresCondition: parachute
+	GrantConditionOnPrerequisite@UPG:
+		Condition: blacknapalm-upgrade
+		Prerequisites: blacknapalm.upgrade
 
 HARV.TD:
 	Inherits: ^VehicleTD-NOUPG
@@ -5321,7 +5346,7 @@ HSAM:
 		Speed: 100
 		Locomotor: hover
 	Health:
-		HP: 16500
+		HP: 17500
 	Armor:
 		Type: Light
 	RevealsShroud:
@@ -5847,6 +5872,22 @@ PTNK:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
+	# For upgrading on Service Depot
+	Rearmable@PCANUPGRADE:
+		RearmActors: fix, rep, srep
+		AmmoPools: upgrade
+	AmmoPool@PCANUPGRADE:
+		Name: upgrade
+		Armaments: none
+		ReloadDelay: 5000
+	GrantConditionOnPrerequisite@PCANUPGRADE:
+		Condition: pcan-upgrade
+		Prerequisites: pcan.upgrade
+	RearmsToUpgrade@PCANUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: pcan
+		RequiresCondition: pcan-upgrade
 
 PCAN:
 	Inherits: PTNK
@@ -5854,24 +5895,24 @@ PCAN:
 		BuildPaletteOrder: 231
 		Prerequisites: anyradar, ~vehicles.allies, ~pcan.upgrade, ~techlevel.high
 		Description: A prototype long-range artillery that fires highly focused beams of light.
-	TooltipExtras:
-		Strengths: • Strong vs Buildings, Defenses, Light Armor, Infantry
 	Tooltip:
 		Name: Prism Cannon
+	Mobile:
+		Speed: 60
+		TurnSpeed: 12
 	Armament:
 		Weapon: PrisCLaser
 		FireDelay: 10
 		LocalOffset: 420,0,180
-	-Turreted:
-	-AttackTurreted:
-	-WithSpriteTurret:
-	AttackFrontal:
-		TargetFrozenActors: True
-		PauseOnCondition: empdisable || being-warped
-		Voice: Attack
-		FacingTolerance: 0
 	SpawnActorOnDeath:
 		Actor: PCAN.Husk
+	Turreted:
+		TurnSpeed: 12
+		Offset: 0,0,0
+	-Rearmable@PCANUPGRADE:
+	-AmmoPool@PCANUPGRADE:
+	-GrantConditionOnPrerequisite@PCANUPGRADE:
+	-RearmsToUpgrade@PCANUPGRADE:
 
 WTNK:
 	Inherits: ^TankTD
@@ -6470,7 +6511,7 @@ CRYO:
 		Range: 4c0
 	Armament:
 		Weapon: CryoMissile
-		LocalOffset: 150,100,0, 150,-100,0
+		LocalOffset: 150,100,150, 150,-100,150
 	AttackFrontal:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True

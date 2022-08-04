@@ -29,12 +29,12 @@ VEHICLES.SCRIN:
 
 ^ResourceConversion:
 	AmmoPool@RESCONV:
-		Ammo: 65
+		Ammo: 5
 		InitialAmmo: 0
 		AmmoCondition: ammo
 		Armaments: primary-charged
 	ReloadAmmoPool@RESCONV:
-		Count: 13
+		Count: 1
 		Delay: 25
 		RequiresCondition: charging-on-resource
 	WithAmmoPipsDecoration@RESCONV:
@@ -731,7 +731,7 @@ GUNW:
 	Buildable:
 		Queue: Vehicle
 		BuildPaletteOrder: 24
-		Prerequisites: ~vehicles.scrin, ~techlevel.low
+		Prerequisites: ~vehicles.scrin, ~!shrw.upgrade, ~techlevel.low
 		Description: Durable light assault walker.
 		IconPalette: chrome
 	TooltipExtras:
@@ -783,6 +783,59 @@ GUNW:
 	SpeedMultiplier@TRAVELERSPEED:
 		RequiresCondition: travelerspeed
 		Modifier: 115
+	UpgradeableTo:
+		Actors: shrw
+	# For upgrading on Service Depot
+	Rearmable@UPGRADE:
+		RearmActors: fix, rep, srep
+		AmmoPools: upgrade
+	AmmoPool@UPGRADE:
+		Name: upgrade
+		Armaments: none
+		ReloadDelay: 5000
+	GrantConditionOnPrerequisite@SHRWUPGRADE:
+		Condition: shrw-upgrade
+		Prerequisites: shrw.upgrade
+	RearmsToUpgrade@SHRWUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: shrw
+		RequiresCondition: shrw-upgrade
+
+SHRW:
+	Inherits: GUNW
+	Tooltip:
+		Name: Shard Walker
+	Buildable:
+		Prerequisites: ~vehicles.scrin, ~shrw.upgrade, ~techlevel.medium
+		IconPalette: chromes
+	RenderSprites:
+		PlayerPalette: playerscrin
+	Armor:
+		Type: Heavy
+	Health:
+		HP: 35000
+	Mobile:
+		Speed: 92
+		TurnSpeed: 36
+	Armament@PRIMARY:
+		Weapon: ShardWalkerShards
+		LocalOffset: 450,92,100, 450,-92,100
+		-MuzzleSequence:
+		-MuzzlePalette:
+	Armament@SECONDARY:
+		Weapon: ShardWalkerShardsAA
+		LocalOffset: 450,92,100, 450,-92,100
+		-MuzzleSequence:
+		-MuzzlePalette:
+	-WithMuzzleOverlay:
+	-GrantConditionOnFaction@TRAVELERSPEED:
+	-SpeedMultiplier@TRAVELERSPEED:
+	-UpgradeableTo:
+	-Rearmable@UPGRADE:
+	-AmmoPool@UPGRADE:
+	-GrantConditionOnPrerequisite@SHRWUPGRADE:
+	-RearmsToUpgrade@SHRWUPGRADE:
 
 SEEK:
 	Inherits: ^Vehicle
@@ -1147,9 +1200,92 @@ LCHR:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 	ConvertsDamageToHealth:
 		DamagePercentConverted: 25
+		RequiresCondition: !coalescence-upgrade
+	ConvertsDamageToHealth@COALESCENCE:
+		DamagePercentConverted: 15
+		RequiresCondition: coalescence-upgrade
 	Explodes:
 		Weapon: LeecherExplode
 		EmptyWeapon: LeecherExplode
+		RequiresCondition: !coalescence-upgrade
+	Explodes@COALESCENCE:
+		Weapon: LeecherCoalesce
+		EmptyWeapon: LeecherCoalesce
+		RequiresCondition: coalescence-upgrade
+	GrantConditionOnPrerequisite@COALESCENCE:
+		Condition: coalescence-upgrade
+		Prerequisites: coalescence.upgrade
+	SpawnActorOnDeath:
+		Actor: lchr.orb
+		RequiresCondition: coalescence-upgrade
+	KillsSelf:
+		RequiresCondition: triggered
+	ActorLostNotification:
+		RequiresCondition: !triggered
+	GrantConditionOnDeploy:
+		DeployedCondition: triggered
+		RequiresCondition: coalescence-upgrade
+	GivesBounty:
+		RequiresCondition: global-bounty && !coalescence-upgrade
+
+LCHR.Orb:
+	Inherits@1: ^1x1Shape
+	Inherits@2: ^SelectableSupportUnit
+	Inherits@bounty: ^GlobalBounty
+	Selectable:
+		DecorationBounds: 1536, 1536, 0, -128
+	Tooltip:
+		Name: Leecher Orb
+	TooltipExtras:
+		Description: Heals nearby allies. Will revive into a Leecher if not destroyed.
+	RenderSprites:
+		Image: lchr.orb
+		Palette: caneon
+	WithSpriteBody:
+	ClassicFacingBodyOrientation:
+		QuantizedFacings: 1
+	Targetable:
+		TargetTypes: Ground, Vehicle
+	HiddenUnderFog:
+		Type: CenterPosition
+	RevealsShroud:
+		Range: 4c0
+		Type: CenterPosition
+	Health:
+		HP: 28000
+	Armor:
+		Type: Light
+	Valued:
+		Cost: 900
+	Immobile:
+		OccupiesSpace: true
+	PeriodicExplosion@1:
+		Weapon: LeecherOrbHeal
+	KillsSelf:
+		Delay: 0
+		RequiresCondition: resurrect
+	Explodes:
+		Weapon: LeecherExplode
+		EmptyWeapon: LeecherExplode
+		RequiresCondition: !resurrect
+	Explodes@COALESCENCE:
+		Weapon: LeecherCoalesce
+		EmptyWeapon: LeecherCoalesce
+		RequiresCondition: resurrect
+	ActorLostNotification:
+		RequiresCondition: !resurrect
+	AmmoPool:
+		Ammo: 1
+		InitialAmmo: 0
+		AmmoCondition: resurrect
+	ReloadAmmoPoolCA:
+		Delay: 500
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: ff0000
+	SpawnActorOnDeath:
+		Actor: lchr
+		RequiresCondition: resurrect
 
 STCR:
 	Inherits: ^Tank
@@ -1245,11 +1381,16 @@ DEVO:
 		Weapon: DevourerLaser
 		PauseOnCondition: (ammo || charged-fire) && !uncharged-fire
 		LocalOffset: 850,0,208
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
 	Armament@PRIMARYCHARGED:
 		Name: primary-charged
 		Weapon: DevourerLaserCharged
 		PauseOnCondition: !ammo || uncharged-fire
 		LocalOffset: 850,0,208
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	WithMuzzleOverlay:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	TurretedFloating:
@@ -1652,13 +1793,13 @@ RPTP:
 		MuzzlePalette: scrin
 		RequiresCondition: resconv-upgrade
 	AmmoPool@RESCONV:
-		Ammo: 140
+		Ammo: 20
 		Armaments: primary-charged, secondary-charged
 	ReloadAmmoPool@RESCONV:
-		Count: 28
+		Count: 4
 	WithAmmoPipsDecoration@RESCONV:
 		PipCount: 5
-	GrantCondition@RESCONV:
+	GrantCondition@RESCONVCHARGE:
 		RequiresCondition: on-resource && (ammo < 140 || charged-fire)
 	GrantConditionOnAttack@PRIMARY:
 		RevokeDelay: 50
@@ -2017,11 +2158,44 @@ DEVA:
 	Armament@PRIMARY:
 		Weapon: DevastatorDiscs
 		LocalOffset: 500,0,0
-	AttackAircraft:
+		RequiresCondition: !plasma-upgrade
+	Armament@CHARGINGUPG:
+		Name: charge
+		Weapon: DevastatorTorpedoCharge
+		LocalOffset: 500,0,0
+		PauseOnCondition: cooldown
+		RequiresCondition: plasma-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: DevastatorTorpedo
+		PauseOnCondition: !ammo
+		LocalOffset: 500,0,0
+		RequiresCondition: plasma-upgrade
+		ReloadingCondition: cooldown
+	AmbientSound@CHARGE:
+		RequiresCondition: charging && !ammo
+		SoundFiles: plasmatorpcharge.aud
+	GrantConditionOnAttack@CHARGE:
+		Condition: charging
+		ArmamentNames: charge
+		RevokeDelay: 20
+	AmmoPool@CHARGE:
+		Ammo: 3
+		InitialAmmo: 0
+		AmmoCondition: ammo
+	ReloadAmmoPoolCA@CHARGE:
+		Delay: 100
+		Count: 3
+		ShowSelectionBar: true
+		SelectionBarColor: cc33ff
+		RequiresCondition: charging && !ammo
+	GrantConditionOnPrerequisite@PLASMA:
+		Condition: plasma-upgrade
+		Prerequisites: plasma.upgrade
+	AttackFrontal:
+		Armaments: primary, charge
 		FacingTolerance: 40
 		ForceFireIgnoresActors: True
 		TargetFrozenActors: True
-		AttackType: Hover
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		CruiseAltitude: 2560
@@ -2347,6 +2521,7 @@ MSHP:
 		Weapon: MothershipBeam
 		LocalOffset: 0,0,-940
 		PauseOnCondition: !ammo
+		ReloadingCondition: cooldown
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: MothershipChargeBeam
@@ -2355,9 +2530,23 @@ MSHP:
 	Armament@TERTIARY:
 		Name: tertiary
 		Weapon: MothershipLaser
-		LocalOffset: 400,0,50, 400,0,-200, 400,0,300
+		LocalOffset: 400,0,-200
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
+	Armament@TERTIARY2:
+		Name: tertiary
+		Weapon: MothershipLaserLeft
+		LocalOffset: 400,0,50
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+		FireDelay: 5
+	Armament@TERTIARY3:
+		Name: tertiary
+		Weapon: MothershipLaserRight
+		LocalOffset: 400,0,300
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+		FireDelay: 10
 	WithMuzzleOverlay:
 	Aircraft:
 		CruiseAltitude: 3c512
@@ -2417,10 +2606,7 @@ MSHP:
 	GrantConditionOnAttack@ATTACKING:
 		Condition: attacking
 		ArmamentNames: primary
-	GrantConditionOnAttack@COOLDOWN:
-		Condition: cooldown
-		ArmamentNames: primary
-		RevokeDelay: 100
+		RevokeDelay: 240
 	AmbientSoundCA@CHARGING:
 		SoundFiles: mshp-charge.aud
 		RequiresCondition: charging
@@ -2428,29 +2614,29 @@ MSHP:
 		Condition: charging
 		ArmamentNames: secondary
 		RevokeDelay: 5
-	RejectsOrders:
+	SpeedMultiplier@ATTACKING:
+		Modifier: 0
 		RequiresCondition: attacking
 	AmmoPool:
-		Ammo: 80
+		Ammo: 1
 		InitialAmmo: 0
 		AmmoCondition: ammo
 		Armaments: primary
 	ReloadAmmoPoolCA@CHARGE:
 		Delay: 150
-		Count: 80
+		Count: 1
 		RequiresCondition: charging && !attacking
 		Sound: mshp-fire1.aud
 		ShowSelectionBar: true
 		SelectionBarColor: ff00ff
 	ReloadAmmoPoolCA@DRAIN:
-		Count: -80
+		Count: -1
 		Delay: 1
 		RequiresCondition: !charging && !attacking
 		ShowSelectionBar: false
 	-Targetable@TEMPORAL:
 	-SpeedMultiplier@TEMPORAL:
 	-RejectsOrders@TEMPORAL:
-	MothershipAttackBehaviour:
 
 #
 # ---- Husks
@@ -3128,6 +3314,7 @@ PORT:
 		Range: 4c0
 	WithBuildingBib:
 	RallyPoint:
+		ForceSetType: Infantry
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,512,0
@@ -3260,6 +3447,7 @@ WSPH:
 		Prerequisite: vehicles.tpod
 	WithBuildingBib:
 	RallyPoint:
+		ForceSetType: Vehicle
 	Exit@1:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,0,0
@@ -3541,6 +3729,12 @@ SCRT:
 		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
+	ProvidesPrerequisiteValidatedFaction@harbscrt:
+		Factions: harbinger
+		Prerequisite: scrt.harbinger
+	ProvidesPrerequisiteValidatedFaction@collscrt:
+		Factions: collector
+		Prerequisite: scrt.collector
 	ProvidesPrerequisite@buildingname:
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
@@ -3625,6 +3819,7 @@ GRAV:
 		ExitCell: 1,1
 		Facing: 720
 	RallyPoint:
+		ForceSetType: Aircraft
 	Production:
 		Produces: Aircraft, Plane
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -3689,7 +3884,7 @@ SIGN:
 	-CapturableProgressBlink:
 	-CaptureManager:
 	Valued:
-		Cost: 2500
+		Cost: 2000
 	Tooltip:
 		Name: Signal Transmitter
 	Power:

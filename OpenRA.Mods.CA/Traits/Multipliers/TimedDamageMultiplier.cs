@@ -54,6 +54,13 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If true, charging will be reset on taking any damage.")]
 		public readonly bool ResetChargingOnDamage = false;
 
+		[Desc("If true, charge time will be 1 tick per ScaleChargeTimeWithDamageAmount points of damage.",
+			"ChargeTime will be ignored.")]
+		public readonly bool ScaleChargeTimeWithDamage = false;
+
+		[Desc("If ScaleChargeTimeWithDamage is true, the amount of damage required to add 1 tick of charging time.")]
+		public readonly int ScaleChargeTimeWithDamageAmount = 10;
+
 		[Desc("Damage type(s) that trigger and are affected by the damage multiplier.")]
 		public readonly BitSet<DamageType> DamageTypes = default(BitSet<DamageType>);
 
@@ -72,6 +79,7 @@ namespace OpenRA.Mods.CA.Traits
 		public int Ticks { get; private set; }
 		int token = Actor.InvalidConditionToken;
 		TimedDamageMultiplierState state;
+		int currentChargeTime;
 
 		public TimedDamageMultiplier(TimedDamageMultiplierInfo info)
 			: base(info)
@@ -89,22 +97,34 @@ namespace OpenRA.Mods.CA.Traits
 			return validDamageType ? Info.Modifier : 100;
 		}
 
+		int GetChargeTime(int damage)
+		{
+			if (Info.ScaleChargeTimeWithDamage)
+			{
+				return damage / Info.ScaleChargeTimeWithDamageAmount;
+			}
+
+			return Info.ChargeTime;
+		}
+
 		void INotifyDamage.Damaged(Actor self, AttackInfo e)
 		{
 			if (IsTraitDisabled)
 				return;
 
-			if (Info.ResetChargingOnDamage && state == TimedDamageMultiplierState.Charging && e.Damage.Value > 0)
-				Ticks = Info.ChargeTime;
-
-			if (state != TimedDamageMultiplierState.Ready || e.Damage.Value < Info.MinimumDamage)
+			if (e.Damage.Value < Info.MinimumDamage || (!Info.DamageTypes.IsEmpty && !e.Damage.DamageTypes.Overlaps(Info.DamageTypes)))
 				return;
 
-			if (!Info.DamageTypes.IsEmpty && !e.Damage.DamageTypes.Overlaps(Info.DamageTypes))
+			if (Info.ResetChargingOnDamage && state == TimedDamageMultiplierState.Charging)
+				Ticks = currentChargeTime;
+
+			if (state != TimedDamageMultiplierState.Ready)
 				return;
 
 			state = TimedDamageMultiplierState.Draining;
 			Ticks = Info.Duration;
+			currentChargeTime = GetChargeTime(e.Damage.Value);
+
 			GrantActiveCondition(self);
 
 			if (Info.ActivateSound != null)
@@ -148,7 +168,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (state == TimedDamageMultiplierState.Draining)
 			{
 				state = TimedDamageMultiplierState.Charging;
-				Ticks = Info.ChargeTime;
+				Ticks = currentChargeTime;
 				RevokeCondition(self);
 				GrantChargingCondition(self);
 
@@ -188,7 +208,7 @@ namespace OpenRA.Mods.CA.Traits
 				return (float)Ticks / Info.Duration;
 
 			if (state == TimedDamageMultiplierState.Charging)
-				return (float)(Info.ChargeTime - Ticks) / Info.ChargeTime;
+				return (float)(currentChargeTime - Ticks) / currentChargeTime;
 
 			return 0f;
 		}
