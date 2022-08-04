@@ -652,6 +652,10 @@ shrw:
 		Length: 2
 		Tick: 80
 		UseClassicFacings: True
+	muzzle: scrinmuzz5
+		BlendMode: Additive
+		Length: 6
+		Facings: 16
 	icon: shrwicon
 
 shrw.destroyed:
@@ -764,6 +768,7 @@ lchr.destroyed:
 
 lchr.orb:
 	idle: lchrorb
+		BlendMode: Additive
 		Length: *
 		ZOffset: 2048
 
@@ -917,6 +922,10 @@ stmr:
 	idle: stmr
 		Facings: 32
 		UseClassicFacings: True
+	muzzle: scrinmuzz1
+		BlendMode: Additive
+		Length: 6
+		Facings: 16
 	icon: stmricon
 
 enrv:
@@ -936,6 +945,24 @@ deva:
 		UseClassicFacings: True
 		ZOffset: 1022
 		BlendMode: Additive
+	charge1: plasmatorp1
+		IgnoreWorldTint: true
+		BlendMode: Additive
+		Length: 5
+		Tick: 40
+		ZOffset: 2048
+	charge2: plasmatorp2
+		IgnoreWorldTint: true
+		BlendMode: Additive
+		Length: 5
+		Tick: 40
+		ZOffset: 2048
+	charge3: plasmatorp3
+		IgnoreWorldTint: true
+		BlendMode: Additive
+		Length: 5
+		Tick: 40
+		ZOffset: 2048
 	icon: devaicon
 
 pac:
@@ -1360,6 +1387,10 @@ shar:
 		Facings: 32
 		UseClassicFacings: True
 		Offset: 1,-11
+	muzzle: scrinmuzz5
+		BlendMode: Additive
+		Length: 6
+		Facings: 16
 	bib: mbTSLA
 		Length: *
 		UseTilesetExtension: true
@@ -1839,10 +1870,29 @@ wormholeblast:
 		ZOffset: -512
 		BlendMode: Additive
 
-plasmatorp:
+plasmatorp1:
 	Defaults:
 		IgnoreWorldTint: true
-	idle: plasmatorp
+		BlendMode: Additive
+	idle: plasmatorp1
+		Length: 5
+		Tick: 40
+		ZOffset: 2048
+
+plasmatorp2:
+	Defaults:
+		IgnoreWorldTint: true
+		BlendMode: Additive
+	idle: plasmatorp2
+		Length: 5
+		Tick: 40
+		ZOffset: 2048
+
+plasmatorp3:
+	Defaults:
+		IgnoreWorldTint: true
+		BlendMode: Additive
+	idle: plasmatorp3
 		Length: 5
 		Tick: 40
 		ZOffset: 2048

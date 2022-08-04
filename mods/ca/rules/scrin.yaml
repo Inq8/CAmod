@@ -760,13 +760,13 @@ GUNW:
 		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: GunWalkerZap
-		LocalOffset: 750,92,25, 750,-92,25
+		LocalOffset: 690,92,0, 690,-92,0
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: GunWalkerZapAA
-		LocalOffset: 750,92,25, 750,-92,25
+		LocalOffset: 690,92,0, 690,-92,0
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
@@ -820,15 +820,10 @@ SHRW:
 		TurnSpeed: 36
 	Armament@PRIMARY:
 		Weapon: ShardWalkerShards
-		LocalOffset: 450,92,100, 450,-92,100
-		-MuzzleSequence:
-		-MuzzlePalette:
+		LocalOffset: 690,92,0, 690,-92,0
 	Armament@SECONDARY:
 		Weapon: ShardWalkerShardsAA
-		LocalOffset: 450,92,100, 450,-92,100
-		-MuzzleSequence:
-		-MuzzlePalette:
-	-WithMuzzleOverlay:
+		LocalOffset: 690,92,0, 690,-92,0
 	-GrantConditionOnFaction@TRAVELERSPEED:
 	-SpeedMultiplier@TRAVELERSPEED:
 	-UpgradeableTo:
@@ -1911,13 +1906,18 @@ STMR:
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: StormriderZap
-		LocalOffset: 350,300,-85, 350,-300,-85
+		LocalOffset: 350,300,0, 350,-300,0
 		PauseOnCondition: !ammo
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: StormriderZapAA
-		LocalOffset: 350,300,-85, 350,-300,-85
+		LocalOffset: 350,300,0, 350,-300,0
 		PauseOnCondition: !ammo
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	WithMuzzleOverlay:
 	AttackAircraft:
 		FacingTolerance: 160
 		PersistentTargeting: false
@@ -2174,16 +2174,36 @@ DEVA:
 	AmbientSound@CHARGE:
 		RequiresCondition: charging && !ammo
 		SoundFiles: plasmatorpcharge.aud
+	WithIdleOverlay@CHARGE1:
+		Image: deva
+		Sequence: charge1
+		Palette: scrin
+		Offset: 500,0,0
+		RequiresCondition: charging == 1 && !ammo
+	WithIdleOverlay@CHARGE2:
+		Image: deva
+		Sequence: charge2
+		Palette: scrin
+		Offset: 500,0,0
+		RequiresCondition: charging == 2 && !ammo
+	WithIdleOverlay@CHARGE3:
+		Image: deva
+		Sequence: charge3
+		Palette: scrin
+		Offset: 500,0,0
+		RequiresCondition: charging > 2 && !ammo
 	GrantConditionOnAttack@CHARGE:
 		Condition: charging
 		ArmamentNames: charge
-		RevokeDelay: 20
+		MaximumInstances: 3
+		RevokeDelay: 34
+		IsCyclic: true
 	AmmoPool@CHARGE:
 		Ammo: 3
 		InitialAmmo: 0
 		AmmoCondition: ammo
 	ReloadAmmoPoolCA@CHARGE:
-		Delay: 100
+		Delay: 99
 		Count: 3
 		ShowSelectionBar: true
 		SelectionBarColor: cc33ff
@@ -4309,9 +4329,12 @@ SHAR:
 		RequiresCondition: !build-incomplete
 	Armament@PRIMARY:
 		Weapon: ShardLauncher
-		LocalOffset: 0,0,1050
+		LocalOffset: 300,0,1050
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
 	AttackTurreted:
 		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
+	WithMuzzleOverlay:
 	RenderRangeCircle:
 		RangeCircleType: aa
 	Power:

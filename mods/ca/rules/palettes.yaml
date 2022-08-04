@@ -390,7 +390,7 @@
 		RotationBase: 32
 		ExcludePalettes: cursor, chrome, chrometd, tiberiumpalette, bluetiberium, chromes, colorpicker, colorpickertd, colorpickerscrin, playerd2k, d2k
 	LightPaletteRotator:
-		ExcludePalettes: playerd2k, d2k, terrain, tiberiumpalette, bluetiberium, effect, tdeffect, desert, tseffect, ra2effect, tsunit, ra2unit, ra2unit-ignore-lighting-alpha75, tsunit-ignore-lighting-alpha75, tseffect-ignore-lighting-alpha75, tseffect-ignore-lighting-alpha90, effect-ignore-lighting-alpha85, ioncloud
+		ExcludePalettes: playerd2k, d2k, terrain, tiberiumpalette, bluetiberium, effect, tdeffect, scrineffect, desert, tseffect, ra2effect, tsunit, ra2unit, ra2unit-ignore-lighting-alpha75, tsunit-ignore-lighting-alpha75, tseffect-ignore-lighting-alpha75, tseffect-ignore-lighting-alpha90, effect-ignore-lighting-alpha85, ioncloud
 	ChronoshiftPaletteEffect:
 	CloakPaletteEffect:
 	FlashPaletteEffect@NUKE:
@@ -504,7 +504,7 @@
 		Color: 08112E03
 		Length: 350
 		Ratio: 0.3
-		ExcludePalette: cursor, chrome, chrometd, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud, tseffect, ra2effect, ra2unit, tdeffect, effect,  effect-ignore-lighting, tdeffect-ignore-lighting-alpha85, d2keffect-ignore-lighting-alpha75, d2keffect-ignore-lighting-alpha50, ra2effect-ignore-lighting-alpha90, ra2effect-ignore-lighting-alpha75, ra2effect-ignore-lighting-alpha50, tseffect-ignore-lighting-alpha75, tsunit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha90, tseffect-ignore-lighting-alpha90
+		ExcludePalette: cursor, chrome, chrometd, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud, tseffect, ra2effect, ra2unit, tdeffect, effect, scrineffect,  effect-ignore-lighting, tdeffect-ignore-lighting-alpha85, d2keffect-ignore-lighting-alpha75, d2keffect-ignore-lighting-alpha50, ra2effect-ignore-lighting-alpha90, ra2effect-ignore-lighting-alpha75, ra2effect-ignore-lighting-alpha50, tseffect-ignore-lighting-alpha75, tsunit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha90, tseffect-ignore-lighting-alpha90
 	PaletteFromFile@caneon:
 		Name: caneon
 		Filename: caneon.pal
@@ -515,6 +515,10 @@
 		BasePalette: caneon
 	PaletteFromFile@scrin:
 		Name: scrin
+		Filename: scrin.pal
+		ShadowIndex: 4
+	PaletteFromFile@scrineffect:
+		Name: scrineffect
 		Filename: scrin.pal
 		ShadowIndex: 4
 	PaletteFromPaletteWithAlpha@scrin-nolite-alpha85:
