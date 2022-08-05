@@ -87,7 +87,7 @@ ChemballLauncher:
 
 FireballGun:
 	Inherits: FireballLauncher
-	Range: 3c769
+	Range: 4c275
 	ReloadDelay: 40
 	Projectile: BulletCA
 		Speed: 140
@@ -254,6 +254,7 @@ FlamerTDFF:
 		Falloff: 100, 50, 0
 		ValidRelationships: Ally
 		-DebugOverlayColor:
+	-Warhead@2Smu:
 
 BigFlamerTD:
 	Inherits: FlamerTD
@@ -281,6 +282,7 @@ BigFlamerTDFF:
 		Falloff: 100, 50, 0
 		ValidRelationships: Ally
 		-DebugOverlayColor:
+	-Warhead@2Smu:
 
 ChemsprayTD:
 	Inherits: FlamerTD
@@ -301,8 +303,6 @@ ChemsprayTDFF:
 			Concrete: 40
 			Heavy: 40
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
-	Warhead@2Smu: LeaveSmudge
-		SmudgeType: Scorch-NoFlame
 
 HeavyFlameTankFlamer:
 	Inherits: BigFlamerTD
@@ -329,6 +329,8 @@ HeavyFlameTankFlamer.UPG:
 			Light: 100
 			Heavy: 60
 			Concrete: 50
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch-Black
 
 HeavyFlameTankFlamerFF:
 	Inherits: HeavyFlameTankFlamer
@@ -340,6 +342,7 @@ HeavyFlameTankFlamerFF:
 		Falloff: 100, 50, 0
 		ValidRelationships: Ally
 		-DebugOverlayColor:
+	-Warhead@2Smu:
 
 BlackHandFlamer:
 	Inherits: HeavyFlameTankFlamer
@@ -1673,6 +1676,13 @@ BurnFX:
 		Image: fire
 		Inaccuracy: 171
 		Explosions: 3, 6, 7, 8
+
+BurnFXBlack:
+	Inherits: BurnFX
+	Warhead@3Eff: CreateEffect
+		Image: fireblack
+		Explosions: 1, 2, 3, 4
+		ExplosionPalette: scrineffect
 
 LaserFence:
 	TargetActorCenter: true
