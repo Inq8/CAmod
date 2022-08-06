@@ -128,11 +128,11 @@ explosion:
 	med_chem: chemball2
 	large_chem: chemball3
 	lchr_explode: lchrexplode
-		BlendMode: Additive
+		Alpha: 0.95
 	lchr_coalesce: lchrexplode
 		Frames: 6,5,4,3,2,1,0
 		ZOffset: 2048
-		BlendMode: Additive
+		Alpha: 0.65
 	frag_1: frag1cnc
 	frag_3: frag3cnc
 	scud_explosion: fball1cnc
@@ -1035,6 +1035,20 @@ fire:
 	8: fire7
 		FlipX: true
 
+fireblack:
+	Defaults:
+		Length: *
+		Offset: 0,-3
+		Tick: 105
+		ZOffset: 511
+		IgnoreWorldTint: true
+	1: fire2black
+	2: fire3black
+	3: fire2black
+		FlipX: true
+	4: fire3black
+		FlipX: true
+
 rank:
 	rank-veteran-1: rank
 	rank-veteran-2: rank
@@ -1512,6 +1526,49 @@ scorch_flames:
 			smoke_m:
 				Length: *
 				Offset: 2, -5
+	medium_flame_black:
+		Length: *
+		Combine:
+			fire2black:
+				Length: *
+				Offset: 0,-3
+			fire2black:
+				Length: *
+				Offset: 0,-3
+			fire2black:
+				Length: *
+				Offset: 0,-3
+			fire2black:
+				Length: *
+				Offset: 0,-3
+			fire2black:
+				Length: *
+				Offset: 0,-3
+			smoke_m:
+				Length: *
+				Offset: 2, -5
+	small_flame_black:
+		Combine:
+			fire3black:
+				Length: *
+				Offset: 0,-3
+			fire3black:
+				Length: *
+				Offset: 0,-3
+			fire3black:
+				Length: *
+				Offset: 0,-3
+			fire3black:
+				Length: *
+				Offset: 0,-3
+			fire3black:
+				Length: *
+				Offset: 0,-3
+			smoke_m:
+				Length: *
+				Offset: 2, -5
+		Length: *
+		Offset: 0,-3
 
 mine:
 	idle:
