@@ -849,6 +849,16 @@
 		BlinkPatterns:
 			damaged && hospitalheal: On, Off
 
+^LeecherHealable:
+	ExternalCondition@LCHRHEAL:
+		Condition: lchr-healing
+	WithIdleOverlay@LCHRHEAL:
+		Image: lchrheal
+		Sequence: vehicle
+		Palette: scrin
+		RequiresCondition: lchr-healing && damaged
+		Offset: 0,0,400
+
 ^HealingCooldown:
 	GrantConditionOnHealingReceived@HEALINGCOOLDOWN:
 		Condition: heal-cooldown
@@ -1621,6 +1631,7 @@
 	Inherits@ionsurge: ^IonSurgable
 	Inherits@atomize: ^Atomizable
 	Inherits@minidrone: ^MiniDroneAttachable
+	Inherits@lchrheal: ^LeecherHealable
 	Huntable:
 	OwnerLostAction:
 		Action: Kill
@@ -1810,6 +1821,7 @@
 	Inherits@handicaps: ^PlayerHandicaps
 	Inherits@BINOS: ^BinoUpgradeInfantry
 	Inherits@ionsurge: ^IonSurgableInfantry
+	Inherits@lchrheal: ^LeecherHealable
 	RenderSprites:
 		PlayerPalette: playertd
 	Huntable:
@@ -2014,6 +2026,9 @@
 	DamageMultiplier@MINDCONTROL:
 		Modifier: 70
 		RequiresCondition: mindcontrolled
+	WithIdleOverlay@LCHRHEAL:
+		Sequence: infantry
+		Offset: 0,0,300
 
 ^Soldier:
 	Inherits: ^Infantry

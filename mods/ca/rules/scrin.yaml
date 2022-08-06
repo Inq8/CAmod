@@ -56,7 +56,7 @@ VEHICLES.SCRIN:
 		RequiresCondition: on-tib || on-ore || on-bluetib || on-gems
 	GrantCondition@RESCONVCHARGE:
 		Condition: charging-on-resource
-		RequiresCondition: resconv-upgrade && on-resource && (ammo < 65 || charged-fire)
+		RequiresCondition: resconv-upgrade && on-resource && (ammo < 5 || charged-fire)
 	GrantConditionOnTerrain@RESCONVTIB:
 		Condition: on-tib
 		TerrainTypes: Tiberium
@@ -1281,6 +1281,9 @@ LCHR.Orb:
 	SpawnActorOnDeath:
 		Actor: lchr
 		RequiresCondition: resurrect
+	ProximityExternalCondition@LCHRHEAL:
+		Condition: lchr-healing
+		Range: 2c256
 
 STCR:
 	Inherits: ^Tank
@@ -1795,7 +1798,7 @@ RPTP:
 	WithAmmoPipsDecoration@RESCONV:
 		PipCount: 5
 	GrantCondition@RESCONVCHARGE:
-		RequiresCondition: on-resource && (ammo < 140 || charged-fire)
+		RequiresCondition: on-resource && (ammo < 20 || charged-fire)
 	GrantConditionOnAttack@PRIMARY:
 		RevokeDelay: 50
 	GrantConditionOnAttack@PRIMARYCHARGED:
