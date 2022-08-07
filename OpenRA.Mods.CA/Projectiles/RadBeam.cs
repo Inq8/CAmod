@@ -122,10 +122,15 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			if (ticks < info.BeamDuration)
 			{
+				var zOffset = info.ZOffset;
+				var verticalDiff = target.Y - args.Source.Y;
+				if (verticalDiff > 0)
+					zOffset += verticalDiff;
+
 				WDist amp = info.ScaleAmplitudeWithDuration
 					? info.Amplitude * ticks / info.BeamDuration
 					: info.Amplitude;
-				yield return new RadBeamRenderable(args.Source, info.ZOffset, target - args.Source, info.Thickness, color, amp, info.WaveLength, info.QuantizationCount);
+				yield return new RadBeamRenderable(args.Source, zOffset, target - args.Source, info.Thickness, color, amp, info.WaveLength, info.QuantizationCount);
 			}
 
 			if (hitanim != null)

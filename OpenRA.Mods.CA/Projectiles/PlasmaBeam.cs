@@ -392,22 +392,27 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			if (ticks < info.Duration)
 			{
+				var zOffset = info.ZOffset;
+				var verticalDiff = target.Y - source.Y;
+				if (verticalDiff > 0)
+					zOffset += verticalDiff;
+
 				if (info.CenterBeam)
 				{
 					var rc = Color.FromArgb((info.Duration - ticks) * info.CenterBeamColor.A / info.Duration, info.CenterBeamColor);
-					yield return new BeamRenderable(source, info.ZOffset + 2, target - source, info.CenterBeamShape, info.CenterBeamWidth, rc);
+					yield return new BeamRenderable(source, zOffset + 2, target - source, info.CenterBeamShape, info.CenterBeamWidth, rc);
 
 					if (info.SecondaryCenterBeam)
 					{
 						var src = Color.FromArgb((info.Duration - ticks) * info.SecondaryCenterBeamColor.A / info.Duration, info.SecondaryCenterBeamColor);
-						yield return new BeamRenderable(source, info.ZOffset + 1, target - source,
+						yield return new BeamRenderable(source, zOffset + 1, target - source,
 							info.CenterBeamShape, info.SecondaryCenterBeamWidth, src);
 					}
 				}
 
 				for (var i = 0; i < offsets.Length - 1; i++)
 					for (var j = 0; j < info.Radius; j++)
-						yield return new KKNDLaserRenderable(offsets, info.ZOffset, new WDist(32 + (info.Radius - j - 1) * 64), colors[j]);
+						yield return new KKNDLaserRenderable(offsets, zOffset, new WDist(32 + (info.Radius - j - 1) * 64), colors[j]);
 			}
 		}
 	}

@@ -7,7 +7,7 @@ DisintegratorBeam:
 	ReloadDelay: 30
 	Range: 5c0
 	Report: disintegrator-fire1.aud, disintegrator-fire2.aud, disintegrator-fire3.aud
-	Projectile: LaserZap
+	Projectile: LaserZapCA
 		Color: 00FFCCAA
 		Width: 30
 		Duration: 3
@@ -27,7 +27,7 @@ DisintegratorBeamAA:
 	Inherits: DisintegratorBeam
 	Range: 7c0
 	ValidTargets: Air, AirSmall
-	Projectile: LaserZap
+	Projectile: LaserZapCA
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air
@@ -253,15 +253,15 @@ DevastatorTorpedoCharge:
 	ValidTargets: Ground, Water
 	Range: 7c0
 	ReloadDelay: 85
-	Projectile: LaserZap
+	Projectile: LaserZapCA
 		Duration: 3
 		Width: 45
-		ZOffset: 4096
+		ZOffset: 512
 		SecondaryBeam: true
 		Color: 66ff66FF
 		SecondaryBeamColor: 00AA00CC
 		SecondaryBeamWidth: 65
-		SecondaryBeamZOffset: 4095
+		SecondaryBeamZOffset: 511
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
@@ -309,7 +309,6 @@ InterloperLaser:
 		Blockable: true
 		RecalculateColors: true
 		TrackTarget: true
-		ZOffset: 7168
 		MaxFacingDeviation: 64
 
 DevourerLaser:
@@ -350,7 +349,7 @@ RiftCannon:
 	Report: darkener-fire1.aud, darkener-fire2.aud
 	ReloadDelay: 120
 	Range: 7c0
-	Projectile: LaserZap
+	Projectile: LaserZapCA
 		Duration: 20
 		Color: 000000FF
 		Width: 70
@@ -872,7 +871,7 @@ StormColumnZap:
 		Angle: 45
 		Distortion: 96
 		DistortionAnimation: 96
-		ZOffset: 1023
+		ZOffset: 512
 	Warhead@1Dam: SpreadDamage
 		Damage: 1600
 		Versus:
@@ -1240,7 +1239,7 @@ MothershipChargeBeam:
 		Distortion: 0
 		DistortionAnimation: 0
 		SegmentLength: 0
-		ZOffset: 2047
+		ZOffset: 512
 	Warhead@1Dum: Dummy
 
 MothershipBeam:
@@ -1297,7 +1296,7 @@ MothershipLaser:
 		FollowingOffset: 0,-112,0
 		Duration: 15
 		ImpactTicks: 0, 2, 4, 6, 8, 10, 12, 14
-		ZOffset: 6144
+		ZOffset: 512
 	Warhead@1Dam: SpreadDamage
 		Damage: 1250
 		Versus:
@@ -1335,7 +1334,6 @@ LeecherBeam:
 		Distortion: 150
 		DistortionAnimation: 150
 		SegmentLength: 350
-		ZOffset: 5120
 		Inaccuracy: 128
 	Warhead@1Dam: SpreadDamage
 		Spread: 288
@@ -1581,7 +1579,7 @@ MindSparkArc:
 		Distortion: 250
 		DistortionAnimation: 150
 		SegmentLength: 350
-		ZOffset: 1027
+		ZOffset: 512
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
 		Damage: 25000
