@@ -259,7 +259,12 @@ namespace OpenRA.Mods.CA.Projectiles
 		{
 			if (!IsBeamComplete && info.RenderBeam && !(wr.World.FogObscures(tailPos) && wr.World.FogObscures(headPos)))
 			{
-				var beamRender = new BeamRenderable(headPos, info.ZOffset, tailPos - headPos, info.Shape, info.Width, color);
+				var zOffset = info.ZOffset;
+				var verticalDiff = target.Y - args.Source.Y;
+				if (verticalDiff > 0)
+					zOffset += verticalDiff;
+
+				var beamRender = new BeamRenderable(headPos, zOffset, tailPos - headPos, info.Shape, info.Width, color);
 				return new[] { (IRenderable)beamRender };
 			}
 

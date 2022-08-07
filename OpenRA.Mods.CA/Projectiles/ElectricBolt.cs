@@ -260,10 +260,15 @@ namespace OpenRA.Mods.AS.Projectiles
 
 			if (ticks < info.Duration)
 			{
+				var zOffset = info.ZOffset;
+				var verticalDiff = target.Y - args.Source.Y;
+				if (verticalDiff > 0)
+					zOffset += verticalDiff;
+
 				foreach (var zap in zaps)
 				{
 					var offsets = zap.Positions;
-					yield return new ElectricBoltRenderable(offsets, info.ZOffset, info.Width, zap.Color);
+					yield return new ElectricBoltRenderable(offsets, zOffset, info.Width, zap.Color);
 				}
 			}
 		}

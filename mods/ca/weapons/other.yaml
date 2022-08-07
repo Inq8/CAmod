@@ -398,7 +398,7 @@ Napalm:
 	ReloadDelay: 3
 	Range: 7c0
 	Report: tesla1.aud
-	Projectile: TeslaZap
+	Projectile: TeslaZapCA
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
 		Damage: 10000
@@ -789,7 +789,7 @@ DefuseKit:
 	Range: 2c511
 	Report: gdefuse.aud
 	ValidTargets: C4Attached, TNTAttached
-	Projectile: LaserZap
+	Projectile: LaserZapCA
 		Width: 48
 		Duration: 4
 		Color: FFFFFF80
@@ -911,14 +911,14 @@ Laser:
 	ValidTargets: Ground, Water
 	Range: 8c512
 	Report: oblfire.aud
-	Projectile: LaserZap
+	Projectile: LaserZapCA
 		Width: 56
 		HitAnim: laserfire
 		Color: FF000080
-		ZOffset: 7168
+		ZOffset: 512
 		SecondaryBeam: true
 		SecondaryBeamWidth: 90
-		SecondaryBeamZOffset: 7167
+		SecondaryBeamZOffset: 511
 		SecondaryBeamColor: FF000040
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
@@ -953,7 +953,6 @@ Laser.Adv:
 		RecalculateColors: true
 		TrackTarget: true
 		ImpactTicks: 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20
-		ZOffset: 8192
 	Warhead@1Dam: SpreadDamage
 		InvalidTargets: Air
 		Spread: 128
@@ -966,7 +965,7 @@ LaserTur:
 	ReloadDelay: 38
 	Range: 6c0
 	Report: lastur1.aud
-	Projectile: LaserZap
+	Projectile: LaserZapCA
 		Width: 45
 		Duration: 5
 		SecondaryBeamWidth: 65
@@ -983,7 +982,7 @@ LaserTur.Adv:
 	Inherits: LaserTur
 	Range: 7c0
 	ReloadDelay: 30
-	Projectile: LaserZap
+	Projectile: LaserZapCA
 		Duration: 10
 		SecondaryBeamWidth: 75
 		SecondaryBeamColor: FF00FF60
@@ -1008,15 +1007,13 @@ XOLaser:
 	Report: xo-laser.aud
 	ReloadDelay: 100
 	Range: 5c0
-	Projectile: LaserZap
+	Projectile: LaserZapCA
 		Blockable: true
 		Width: 56
 		HitAnim: laserfire
 		Color: 9eff1480
-		ZOffset: 4096
 		SecondaryBeam: true
 		SecondaryBeamWidth: 90
-		SecondaryBeamZOffset: 4095
 		SecondaryBeamColor: 79cd0040
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
@@ -1034,7 +1031,7 @@ PortaLaser:
 	Range: 6c0
 	-Report:
 	StartBurstReport: lasgun.aud
-	Projectile: LaserZap
+	Projectile: LaserZapCA
 		Width: 30
 		Duration: 3
 		SecondaryBeamWidth: 50
@@ -1057,14 +1054,14 @@ VenomLaser:
 	ValidTargets: Ground, Water
 	Range: 5c0
 	Report: venmfire1.aud, venmfire2.aud
-	Projectile: LaserZap
+	Projectile: LaserZapCA
 		Width: 35
 		HitAnim: laserfire
 		Color: FF000080
-		ZOffset: 5120
+		ZOffset: 512
 		SecondaryBeam: true
 		SecondaryBeamWidth: 65
-		SecondaryBeamZOffset: 5119
+		SecondaryBeamZOffset: 511
 		SecondaryBeamColor: FF000040
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
@@ -1084,7 +1081,7 @@ VenomLaser:
 VenomLaser.UPG:
 	Inherits: VenomLaser
 	Report: venmfireupg1.aud, venmfireupg1.aud
-	Projectile: LaserZap
+	Projectile: LaserZapCA
 		Duration: 10
 		SecondaryBeamWidth: 75
 		SecondaryBeamColor: FF00FF60
@@ -1105,7 +1102,7 @@ VenomLaserAA:
 VenomLaserAA.UPG:
 	Inherits: VenomLaserAA
 	Report: venmfireupg1.aud, venmfireupg1.aud
-	Projectile: LaserZap
+	Projectile: LaserZapCA
 		Duration: 10
 		SecondaryBeamWidth: 75
 		SecondaryBeamColor: FF00FF60
@@ -1118,7 +1115,7 @@ PointLaser:
 	Range: 1c768
 	Report: vpalwe2d.aud
 	AirThreshold: 1c0
-	Projectile: LaserZap
+	Projectile: LaserZapCA
 		Width: 30
 		Duration: 3
 		-HitAnim:
@@ -1134,14 +1131,14 @@ PrisLaser:
 	ReloadDelay: 3
 	Range: 7c512
 	Report: prisfire.aud
-	Projectile: LaserZap
+	Projectile: LaserZapCA
 		Width: 35
 		HitAnim: plaserfire
 		Color: 00FFFFC8
-		ZOffset: 6144
+		ZOffset: 512
 		SecondaryBeam: true
 		SecondaryBeamWidth: 65
-		SecondaryBeamZOffset: 6143
+		SecondaryBeamZOffset: 511
 		SecondaryBeamColor: 75D1FF
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
@@ -1171,13 +1168,13 @@ PrisLaserSupport:
 	ReloadDelay: 3
 	Range: 5c0
 	Report: bpriat1a.aud
-	Projectile: LaserZap
+	Projectile: LaserZapCA
 		Width: 35
 		Color: 00FFFFC8
-		ZOffset: 4096
+		ZOffset: 512
 		SecondaryBeam: true
 		SecondaryBeamWidth: 65
-		SecondaryBeamZOffset: 4095
+		SecondaryBeamZOffset: 511
 		SecondaryBeamColor: 75D1FF
 	Warhead@1Dum: Dummy
 	AirThreshold: 1000
@@ -1187,7 +1184,7 @@ PrisTLaser:
 	Report: ptnkfire.aud
 	ReloadDelay: 50
 	Range: 9c0
-	Projectile: LaserZap
+	Projectile: LaserZapCA
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
 		Damage: 4400
@@ -1205,7 +1202,7 @@ PrisBurst:
 	Inherits: PrisTLaser
 	-Report:
 	Range: 3c0
-	Projectile: LaserZap
+	Projectile: LaserZapCA
 		-HitAnim:
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
@@ -1235,14 +1232,12 @@ PrisCLaser:
 	Report: pcanfire.aud
 	ReloadDelay: 140
 	Range: 12c0
-	Projectile: LaserZap
+	Projectile: LaserZapCA
 		Width: 70
 		Duration: 15
 		Color: 00FFEEDD
 		SecondaryBeamWidth: 180
 		SecondaryBeamColor: 84FFEF99
-		ZOffset: 11264
-		SecondaryBeamZOffset: 11263
 	Warhead@1Dam: SpreadDamage
 		Damage: 18000
 		Spread: 512
@@ -1399,7 +1394,7 @@ SonicZap:
 		DamageInterval: 3
 		Width: 420
 		Shape: Flat
-		ZOffset: 4096
+		ZOffset: 2048
 		BeyondTargetRange: 0c341
 		Blockable: true
 		TrackTarget: true
@@ -1445,7 +1440,7 @@ SonicZapVisual:
 		DamageInterval: 3
 		Width: 180
 		Shape: Flat
-		ZOffset: 4096
+		ZOffset: 2048
 		BeyondTargetRange: 0c341
 		Blockable: true
 		TrackTarget: true
@@ -1466,7 +1461,7 @@ GapBeam:
 		Colors: 111111CC,223333CC,11222299,222233CC,44444466,436a6666
 		Duration: 16
 		Angle: 45
-		ZOffset: 1023
+		ZOffset: 512
 		Width: 42
 		Distortion: 32
 		DistortionAnimation: 64
@@ -1880,7 +1875,7 @@ Flare:
 	MinRange: 3c0
 	ValidTargets: Structure
 	TargetActorCenter: true
-	Projectile: LaserZap
+	Projectile: LaserZapCA
 		Width: 45
 		Duration: 8
 		SecondaryBeamWidth: 65
@@ -1986,6 +1981,7 @@ RadBeamWeapon:
 		Amplitude: 176
 		WaveLength: 384
 		Thickness: 32
+		ZOffset: 512
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
 		Damage: 16000
@@ -2137,14 +2133,14 @@ NeutronCannonBeam:
 	ReloadDelay: 5
 	Range: 5c0
 	TargetActorCenter: true
-	Projectile: LaserZap
+	Projectile: LaserZapCA
 		Width: 60
 		Duration: 15
 		Color: 80C8FF88
-		ZOffset: 2046
+		ZOffset: 512
 		SecondaryBeam: true
 		SecondaryBeamWidth: 120
-		SecondaryBeamZOffset: 2046
+		SecondaryBeamZOffset: 511
 		SecondaryBeamColor: 80C8FF33
 	Warhead@Damage: SpreadDamage
 		Damage: 1
@@ -2163,12 +2159,12 @@ NeutronCannonPulse:
 	Inherits: NeutronCannonBeam
 	ReloadDelay: 20
 	-Projectile:
-	Projectile: AreaBeam
+	Projectile: AreaBeamCA
 		Speed: 0c768
 		Duration: 8
 		Width: 60
 		Shape: Flat
-		ZOffset: 2047
+		ZOffset: 512
 		TrackTarget: true
 		Color: d8f9f7cc
 
