@@ -175,7 +175,7 @@ namespace OpenRA.Mods.CA.Traits
 				harv.Harvester.CanHarvestCell(cell) &&
 				claimLayer.CanClaimCell(actor, cell);
 
-			var path = harv.Mobile.PathFinder.FindPathToTargetCellByPredicate(
+			var path = harv.Mobile.PathFinder.FindUnitPathToTargetCellByPredicate(
 				actor, new[] { actor.Location }, isValidResource, BlockedByActor.Stationary,
 				loc => world.FindActorsInCircle(world.Map.CenterOfCell(loc), Info.HarvesterEnemyAvoidanceRadius)
 					.Where(u => !u.IsDead && actor.Owner.RelationshipWith(u.Owner) == PlayerRelationship.Enemy)

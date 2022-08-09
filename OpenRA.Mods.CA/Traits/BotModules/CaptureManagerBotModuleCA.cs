@@ -59,6 +59,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		int minCaptureDelayTicks;
 		IPathFinder pathfinder;
+		DomainIndex domainIndex;
 
 		public CaptureManagerBotModuleCA(Actor self, CaptureManagerBotModuleCAInfo info)
 			: base(info)
@@ -80,6 +81,7 @@ namespace OpenRA.Mods.CA.Traits
 			minCaptureDelayTicks = world.LocalRandom.Next(0, Info.MinimumCaptureDelay);
 
 			pathfinder = world.WorldActor.Trait<IPathFinder>();
+			domainIndex = world.WorldActor.Trait<DomainIndex>();
 		}
 
 		void IBotTick.BotTick(IBot bot)
@@ -173,10 +175,10 @@ namespace OpenRA.Mods.CA.Traits
 			var mobile = capturer.Trait<Mobile>();
 			var locomotor = mobile.Locomotor;
 
-			if (!mobile.PathFinder.PathExistsForLocomotor(locomotor, capturer.Location, target.Location))
+			if (!domainIndex.IsPassable(capturer.Location, target.Location, locomotor))
 				return Target.Invalid;
 
-			var path = mobile.PathFinder.FindPathToTargetCellByPredicate(
+			var path = mobile.PathFinder.FindUnitPathToTargetCellByPredicate(
 				capturer, new[] { capturer.Location }, loc => true, BlockedByActor.Stationary,
 				loc => world.FindActorsInCircle(world.Map.CenterOfCell(loc), Info.EnemyAvoidanceRadius)
 					.Where(u => !u.IsDead && capturer.Owner.RelationshipWith(u.Owner) == PlayerRelationship.Enemy && capturer.IsTargetableBy(u))
