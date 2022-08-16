@@ -710,6 +710,23 @@ Container@PLAYER_WIDGETS:
 									Background: sidebar-scrolldown-button
 									TooltipText: Scroll down
 									TooltipContainer: TOOLTIP_CONTAINER
+				ProductionTabsCA@PRODUCTION_TABS:
+					RightButton: sidebar-production-tab-right-button
+					LeftButton: sidebar-production-tab-left-button
+					TabButton: sidebar-production-tab-button
+					TabWidth: 31
+					TabSpacing: 3
+					ArrowWidth: 17
+					Logic: AddFactionSuffixLogicCA, ProductionTabsLogicCA
+					PaletteWidget: PRODUCTION_PALETTE
+					TypesContainer: PRODUCTION_TYPES
+					BackgroundContainer: PRODUCTION_TABS_BACKGROUND
+					PreviousProductionTabKey: PreviousProductionTab
+					NextProductionTabKey: NextProductionTab
+					X: 47
+					Y: 295
+					Width: 204
+					Height: 24
 		Container@HPF_OVERLAY:
 			Logic: HierarchicalPathFinderOverlayLogic
 			X: WINDOW_RIGHT - WIDTH - 260

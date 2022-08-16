@@ -28,7 +28,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly int IdleBaseUnitsMaximum = 12;
 
 		[Desc("Production queues AI uses for producing units.")]
-		public readonly HashSet<string> UnitQueues = new HashSet<string> { "Vehicle", "Infantry", "Plane", "Ship", "Aircraft" };
+		public readonly HashSet<string> UnitQueues = new HashSet<string> { "VehicleSQ", "InfantrySQ", "AircraftSQ", "ShipSQ", "VehicleMQ", "InfantryMQ", "AircraftMQ", "ShipMQ" };
 
 		[Desc("What units to the AI should build.", "What relative share of the total army must be this type of unit.")]
 		public readonly Dictionary<string, int> UnitsToBuild = null;

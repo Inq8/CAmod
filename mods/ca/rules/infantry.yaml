@@ -1,7 +1,7 @@
 DOG:
 	Inherits: ^Soldier
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Dog
 		BuildPaletteOrder: 50
 		Prerequisites: kenn, ~infantry.dog
@@ -88,7 +88,7 @@ E1:
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 10
 		Prerequisites: ~infantry.ra
@@ -139,7 +139,7 @@ E2:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 40
 		Prerequisites: ~infantry.e2
@@ -190,7 +190,7 @@ E3:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 20
 		Prerequisites: ~infantry.ra
@@ -497,8 +497,8 @@ U3.squad:
 	Tooltip:
 		Name: Airdrop: Guardian GIs
 	Buildable:
-		Queue: Infantry
-		BuildAtProductionType: Paradrop
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: ParadropInfantry
 		BuildPaletteOrder: 1000
 		Prerequisites: dome, ~infantry.usa, ~techlevel.medium
 		Description: Prepare five Guardian GIs for airdrop.
@@ -512,7 +512,7 @@ U3.squad:
 		Image: squad.airborne
 	ProduceActorPowerCA:
 		Actors: powerproxy.airborne
-		Type: Infantry
+		Type: ParadropInfantry
 		OneShot: true
 		AutoFire: true
 		AllowMultiple: true
@@ -533,7 +533,7 @@ E4:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 70
 		Prerequisites: ~barr, ftur, ~techlevel.low
@@ -584,7 +584,7 @@ E6:
 	Inherits: ^Soldier
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 30
 		Prerequisites: ~infantry.ra
@@ -637,7 +637,7 @@ SPY:
 	Inherits: ^Soldier
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 100
 		Prerequisites: ~tent, anyradar, ~techlevel.medium
@@ -701,7 +701,7 @@ E7:
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 190
 		Prerequisites: ~tent, atek, ~techlevel.high
@@ -783,7 +783,7 @@ E7:
 MEDI:
 	Inherits: ^Soldier
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 50
 		Prerequisites: ~infantry.medi
@@ -843,7 +843,7 @@ MEDI:
 MECH:
 	Inherits: ^Soldier
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 90
 		Prerequisites: repair, ~infantry.mech, ~techlevel.low
@@ -1107,7 +1107,7 @@ GNRL:
 THF:
 	Inherits: ^Soldier
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 120
 		Prerequisites: anyradar, ~infantry.thf, ~techlevel.medium
@@ -1178,7 +1178,7 @@ SHOK:
 	AttackMove:
 		AttackMoveCondition: attack-move
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 80
 		Prerequisites: structures.tsla, anyradar, ~barr, ~techlevel.medium
@@ -1255,7 +1255,7 @@ N1:
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 11
 		Prerequisites: ~!cyborg.production, ~infantry.td
@@ -1315,7 +1315,7 @@ N2:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 41
 		Prerequisites: ~pyle
@@ -1390,7 +1390,7 @@ N3:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 21
 		Prerequisites: ~!cyborg.production, ~infantry.td
@@ -1500,7 +1500,7 @@ N4:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 71
 		Prerequisites: ~hand, ~!cyborg.production
@@ -1563,7 +1563,7 @@ N5:
 	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 72
 		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.high
@@ -1656,7 +1656,7 @@ RMBO:
 	Buildable:
 		BuildPaletteOrder: 210
 		Prerequisites: ~infantry.td, techcenter, ~techlevel.high
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		IconPalette: chrometd
 		BuildLimit: 1
 		Description: Elite infantry armed with an SMG and C4.
@@ -1732,7 +1732,7 @@ N6:
 	Inherits: ^Soldier
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 31
 		Prerequisites: ~infantry.td
@@ -1803,7 +1803,7 @@ SNIP:
 	RenderSprites:
 		Image: sniper
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 110
 		Prerequisites: ~infantry.england, anyradar, ~techlevel.medium
@@ -1933,7 +1933,7 @@ BORI:
 	RenderSprites:
 		Image: boris
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 200
 		Prerequisites: ~barr, stek, ~infantry.boris, ~techlevel.high
@@ -2026,7 +2026,7 @@ MORT:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 250
 		Prerequisites: ~stolentech.hand
@@ -2074,7 +2074,7 @@ SAB:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 140
 		Prerequisites: anyradar, ~hand, ~techlevel.medium
@@ -2169,7 +2169,7 @@ ACOL:
 	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Infantry
 		BuildPaletteOrder: 180
 		IconPalette: chrometd
@@ -2298,7 +2298,7 @@ JJET:
 		Duration: 100
 		Radius: 2c512
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 150
 		Prerequisites: anyradar, ~pyle, ~!bjet.upgrade, ~techlevel.medium
@@ -2533,7 +2533,7 @@ E8:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 130
 		Prerequisites: ~infantry.iraq, ttur, anyradar, ~techlevel.medium
@@ -2647,7 +2647,7 @@ N1C:
 	Inherits@BOTHELPER: ^BotCaptureHelper
 	RenderSprites:
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 13
 		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.high
@@ -2700,7 +2700,7 @@ N3C:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	RenderSprites:
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 23
 		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.high
@@ -2805,7 +2805,7 @@ RMBC:
 		PlayerPalette: playerd2k
 		Image: cycom
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 230
 		Prerequisites: tmpp, ~infantry.cyborg, ~techlevel.high
@@ -2895,7 +2895,7 @@ IVAN:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 42
 		Prerequisites: ~infantry.ukraine, weap, ~techlevel.low
@@ -2960,7 +2960,7 @@ BRUT:
 		ScanRadius: 4
 		InitialStance: AttackAnything
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 85
 		Prerequisites: anyradar, ~infantry.yuri, ~techlevel.medium
@@ -3327,7 +3327,7 @@ BH:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 150
 		Prerequisites: anyradar, ~infantry.blackh, ~techlevel.medium
@@ -3397,7 +3397,7 @@ YURI:
 	AutoTargetPriority@DEFAULT:
 		RequiresCondition: mindcontrolling < 3 && !stance-attackanything && !assault-move
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 190
 		Prerequisites: ~barr, stek, ~infantry.yuri, ~techlevel.high
@@ -3539,7 +3539,7 @@ SEAL:
 	Buildable:
 		BuildPaletteOrder: 185
 		Prerequisites: ~infantry.usa, atek, ~techlevel.high
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		IconPalette: chrome
 		BuildLimit: -1
 		Description: Elite infantry armed with an SMG and C4.
@@ -3611,7 +3611,7 @@ XO:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Powersuit
 		BuildPaletteOrder: 160
 		Prerequisites: gtek, infantry.any, vehicles.any, ~pyle, ~techlevel.high
