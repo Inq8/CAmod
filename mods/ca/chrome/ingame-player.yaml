@@ -455,20 +455,24 @@ Container@PLAYER_WIDGETS:
 									ImageCollection: order-icons
 									ImageName: options
 				Container@POWERBAR_PANEL:
-					Logic: IngamePowerBarLogic
-					X: 12
-					Y: 41
+					X: 14
+					Y: 36
 					Width: 11
 					Height: 222
 					Children:
-						ResourceBar@POWERBAR:
-							X: 4
-							Width: 3
-							Height: PARENT_BOTTOM
+						SpritePowerMeter@POWER_BAR:
+							Logic: SpritePowerMeterLogic
+							Height: 222
+							Width: 7
 							TooltipContainer: TOOLTIP_CONTAINER
 							TooltipTemplate: SIMPLE_TOOLTIP
-							IndicatorCollection: player-ui-bits-shared
-							IndicatorImage: power-indicator
+							ImageCollection: power-meter
+							NoPowerImage: grey
+							AvailablePowerImage: green
+							UsedPowerImage: red
+							OverUsedPowerImage: grey
+							FlashPowerImage: yellow
+
 				Image@RADAR:
 					Logic: AddFactionSuffixLogic, IngameRadarDisplayLogic
 					X: 28
