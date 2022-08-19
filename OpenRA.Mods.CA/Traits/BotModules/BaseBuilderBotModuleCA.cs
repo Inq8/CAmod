@@ -46,6 +46,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Tells the AI what building types are considered production facilities.")]
 		public readonly HashSet<string> ProductionTypes = new HashSet<string>();
 
+		[Desc("Tells the AI what building types are considered air production facilities.")]
+		public readonly HashSet<string> AirProductionTypes = new HashSet<string>();
+
 		[Desc("Tells the AI what building types are considered naval production facilities.")]
 		public readonly HashSet<string> NavalProductionTypes = new HashSet<string>();
 
@@ -66,6 +69,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Maximum number of extra refineries to build (in addition to 1 per construction yard).")]
 		public readonly int MaxExtraRefineries = 2;
+
+		[Desc("Maximum number of air production structures.")]
+		public readonly int MaxAirProduction = 5;
 
 		[Desc("Minimum excess power the AI should try to maintain.")]
 		public readonly int MinimumExcessPower = 0;
@@ -119,7 +125,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly int MaximumDefenseRadius = 20;
 
 		[Desc("Try to build another production building if there is too much cash.")]
-		public readonly int NewProductionCashThreshold = 5000;
+		public readonly int NewProductionCashThreshold = 10000;
 
 		[Desc("Radius in cells around a factory scanned for rally points by the AI.")]
 		public readonly int RallyPointScanRadius = 8;
@@ -349,7 +355,18 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			get
 			{
-				return AIUtils.CountBuildingByCommonName(Info.RefineryTypes, player) >= AIUtils.CountBuildingByCommonName(Info.ConstructionYardTypes, player) + Info.MaxExtraRefineries;
+				var currentRefineryCount = AIUtils.CountBuildingByCommonName(Info.RefineryTypes, player);
+				var currentConstructionYardCount = AIUtils.CountBuildingByCommonName(Info.ConstructionYardTypes, player);
+				return currentRefineryCount >= currentConstructionYardCount + Info.MaxExtraRefineries;
+			}
+		}
+
+		public bool HasMaxAirProduction
+		{
+			get
+			{
+				var currentAirProductionCount = AIUtils.CountBuildingByCommonName(Info.AirProductionTypes, player);
+				return currentAirProductionCount >= Info.MaxAirProduction;
 			}
 		}
 
@@ -357,8 +374,9 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			get
 			{
+				var desiredAmount = HasAdequateBarracksCount && HasAdequateFactoryCount ? Info.AdditionalMinimumRefineryCount : Info.InititalMinimumRefineryCount;
 				// Require at least one refinery, unless we can't build it.
-				return AIUtils.CountBuildingByCommonName(Info.RefineryTypes, player) >= 1 ||
+				return AIUtils.CountBuildingByCommonName(Info.RefineryTypes, player) >= desiredAmount ||
 					AIUtils.CountBuildingByCommonName(Info.PowerTypes, player) == 0 ||
 					AIUtils.CountBuildingByCommonName(Info.ConstructionYardTypes, player) == 0;
 			}

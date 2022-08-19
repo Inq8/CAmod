@@ -141,6 +141,18 @@ namespace OpenRA.Mods.CA.Traits
 				CPos? location = null;
 				string orderString = "PlaceBuilding";
 
+				// Check if we've hit the limit for this building already, if so cancel it
+				if (baseBuilder.Info.BuildingLimits.ContainsKey(currentBuilding.Item))
+				{
+					if ((AIUtils.CountBuildingByCommonName(new HashSet<string> { currentBuilding.Item }, player) >= baseBuilder.Info.BuildingLimits[currentBuilding.Item])
+						|| (baseBuilder.Info.RefineryTypes.Contains(currentBuilding.Item) && baseBuilder.HasMaxRefineries)
+						|| (baseBuilder.Info.AirProductionTypes.Contains(currentBuilding.Item) && baseBuilder.HasMaxAirProduction))
+					{
+						AIUtils.BotDebug($"{player} has already has enough {currentBuilding.Item}; cancelling production");
+						bot.QueueOrder(Order.CancelProduction(queue.Actor, currentBuilding.Item, 1));
+					}
+				}
+
 				// Check if Building is a plug for other Building
 				var actorInfo = world.Map.Rules.Actors[currentBuilding.Item];
 				var plugInfo = actorInfo.TraitInfoOrDefault<PlugInfo>();
@@ -307,16 +319,21 @@ namespace OpenRA.Mods.CA.Traits
 			if (baseBuilder.Info.NewProductionCashThreshold > 0 && playerResources.Resources > baseBuilder.Info.NewProductionCashThreshold)
 			{
 				var production = GetProducibleBuilding(baseBuilder.Info.ProductionTypes, buildableThings);
-				if (production != null && HasSufficientPowerForActor(production))
-				{
-					AIUtils.BotDebug("{0} decided to build {1}: Priority override (production)", queue.Actor.Owner, production.Name);
-					return production;
-				}
 
-				if (power != null && production != null && !HasSufficientPowerForActor(production))
+				var count = playerBuildings.Count(a => a.Info.Name == production.Name);
+				if (!baseBuilder.Info.BuildingLimits.ContainsKey(production.Name) || baseBuilder.Info.BuildingLimits[production.Name] > count)
 				{
-					AIUtils.BotDebug("{0} decided to build {1}: Priority override (would be low power)", queue.Actor.Owner, power.Name);
-					return power;
+					if (production != null && HasSufficientPowerForActor(production))
+					{
+						AIUtils.BotDebug("{0} decided to build {1}: Priority override (production)", queue.Actor.Owner, production.Name);
+						return production;
+					}
+
+					if (power != null && production != null && !HasSufficientPowerForActor(production))
+					{
+						AIUtils.BotDebug("{0} decided to build {1}: Priority override (would be low power)", queue.Actor.Owner, power.Name);
+						return power;
+					}
 				}
 			}
 
@@ -377,9 +394,15 @@ namespace OpenRA.Mods.CA.Traits
 					continue;
 
 				if (baseBuilder.Info.BuildingLimits.ContainsKey(name) && baseBuilder.Info.BuildingLimits[name] <= count)
+				{
+					AIUtils.BotDebug("{0} decided to build {1} but limit of {2} already reached)", queue.Actor.Owner, name, baseBuilder.Info.BuildingLimits[name]);
 					continue;
+				}
 
 				if (baseBuilder.Info.RefineryTypes.Contains(name) && baseBuilder.HasMaxRefineries)
+					continue;
+
+				if (baseBuilder.Info.AirProductionTypes.Contains(name) && baseBuilder.HasMaxAirProduction)
 					continue;
 
 				// If we're considering to build a naval structure, check whether there is enough water inside the base perimeter
