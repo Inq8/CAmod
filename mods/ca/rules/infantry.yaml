@@ -122,6 +122,9 @@ E1:
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	Convertible:
 		SpawnActors: N1C
 
@@ -183,6 +186,9 @@ E2:
 		DamageSource: Killer
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 
 E3:
@@ -262,6 +268,9 @@ E3:
 		PauseOnCondition: being-warped
 		FacingTolerance: 0
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	AutoTarget:
 		ScanRadius: 7
@@ -395,6 +404,9 @@ U3:
 		Modifier: 50
 		RequiresCondition: deployed
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	AutoTarget:
 		ScanRadius: 8
@@ -576,6 +588,9 @@ E4:
 		DamageSource: Killer
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	Convertible:
 		SpawnActors: N5
@@ -774,6 +789,9 @@ E7:
 		VoiceSet: TanyaVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, MindControlImmune
 	-Crushable:
@@ -834,6 +852,9 @@ MEDI:
 		Voice: Move
 		PauseOnCondition: being-warped
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
@@ -921,6 +942,9 @@ MECH:
 		ValidRelationships: Ally
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	GuardsSelection:
@@ -979,6 +1003,9 @@ HACK:
 	Voiced:
 		VoiceSet: HackerVoice
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
@@ -1245,6 +1272,9 @@ SHOK:
 		VoiceSet: ShokVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	ProductionCostMultiplier@RussiaBonus:
 		Multiplier: 90
 		Prerequisites: infantry.russia
@@ -1291,6 +1321,9 @@ N1:
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	Selectable:
 		Class: e1
@@ -1367,6 +1400,9 @@ N2:
 		DamageSource: Killer
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	Selectable:
 		Class: e2
@@ -1475,6 +1511,9 @@ N3:
 		RequiresCondition: parachute
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	AutoTarget:
 		ScanRadius: 7
 	Selectable:
@@ -1552,6 +1591,9 @@ N4:
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	Selectable:
 		Class: e4
 	Convertible:
@@ -1623,6 +1665,9 @@ N5:
 		DamageSource: Killer
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	GrantConditionOnPrerequisite@BIO:
 		Condition: biofirepower
@@ -1717,6 +1762,9 @@ RMBO:
 	Voiced:
 		VoiceSet: CommandoVoice
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	IgnoresDisguise:
 	DetectCloaked:
@@ -1918,6 +1966,9 @@ SNIP:
 		VoiceSet: SniperVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	AmmoPool:
 		Ammo: 1
 		AmmoCondition: ammo
@@ -2014,6 +2065,9 @@ BORI:
 		VoiceSet: BorisVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, MindControlImmune
 	TakeCover:
@@ -2067,6 +2121,9 @@ MORT:
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 
 SAB:
@@ -2161,6 +2218,9 @@ SAB:
 		Range: 4c0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	ProductionCostMultiplier@LegionBonus:
 		Multiplier: 80
 		Prerequisites: infantry.legion
@@ -2222,6 +2282,9 @@ ACOL:
 	Voiced:
 		VoiceSet: CyborgVoice
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	Selectable:
 		Class: acol
@@ -2397,6 +2460,9 @@ JJET:
 		CrushedSequence: die-crushed
 		RequiresCondition: !airborne
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	WithShadow:
 		Offset: 43, 128, 0
@@ -2577,6 +2643,9 @@ E8:
 		VoiceSet: DesVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	-Crushable:
 	PeriodicExplosion:
 		Weapon: RadEruptionWeapon
@@ -2689,6 +2758,9 @@ N1C:
 		MuzzleSequence: garrison-muzzle
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	WithInfantryBody:
 		RequiresCondition: !parachute && !being-warped
 	WithInfantryBody@PARACHUTE:
@@ -2795,6 +2867,9 @@ N3C:
 		ScanRadius: 7
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 
 RMBC:
 	Inherits: ^Cyborg
@@ -2882,6 +2957,9 @@ RMBC:
 		Modifier: 85
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 		Condition: repair-cooldown
 		RequiredHealing: 85000
@@ -2949,6 +3027,9 @@ IVAN:
 		DamageSource: Killer
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	Voiced:
 		VoiceSet: CrazyIvanVoice
@@ -3375,6 +3456,9 @@ BH:
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	AmbientSoundCA:
 		SoundFiles: flamer-loop1.aud
 		InitialSound: flamer-start1.aud
@@ -3503,6 +3587,9 @@ YURI:
 	AnnounceOnKill:
 	IgnoresDisguise:
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, MindControlImmune

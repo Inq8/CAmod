@@ -228,6 +228,9 @@ S1:
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 
 S2:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -263,6 +266,9 @@ S2:
 		PauseOnCondition: being-warped
 		FacingTolerance: 0
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
@@ -309,6 +315,9 @@ S3:
 		PauseOnCondition: being-warped
 		FacingTolerance: 0
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	AutoTarget:
 		ScanRadius: 6
@@ -358,6 +367,9 @@ S4:
 		PauseOnCondition: being-warped
 		FacingTolerance: 0
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	PortableChronoCA:
 		ChargeDelay: 500
@@ -662,6 +674,9 @@ MAST:
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	-Crushable:
 	TakeCover:
 		SpeedModifier: 70
@@ -774,6 +789,9 @@ GUNW:
 		FacingTolerance: 40
 		PauseOnCondition: empdisable || being-warped
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	WithMoveAnimation:
 		ValidMovementTypes: Horizontal, Vertical, Turn
@@ -893,6 +911,9 @@ SEEK:
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	SpawnActorOnDeath:
 		Actor: SEEK.Husk
 		RequiresCondition: !onwater && !being-warped
@@ -970,6 +991,9 @@ LACE:
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
@@ -1026,6 +1050,9 @@ INTL:
 		LocalOffset: 470,84,30, 470,-84,30
 	WithMuzzleOverlay:
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
@@ -1132,6 +1159,9 @@ CORR:
 		EmptyWeapon: CorrupterExplode
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	WithMoveAnimation:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 	GrantConditionOnFaction@TRAVELERSPEED:
@@ -1190,6 +1220,9 @@ LCHR:
 		PauseOnCondition: empdisable || being-warped
 		FacingTolerance: 0
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	WithMoveAnimation:
 		ValidMovementTypes: Horizontal, Vertical, Turn
@@ -1330,6 +1363,9 @@ STCR:
 		PauseOnCondition: empdisable || being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	WithShadow:
 		Offset: 80, 80, 0
 		ZOffset: -81
@@ -1390,6 +1426,9 @@ DEVO:
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	TurretedFloating:
 		TurnSpeed: 16
@@ -1457,6 +1496,9 @@ DARK:
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Turreted:
 		TurnSpeed: 16
@@ -1539,6 +1581,9 @@ RUIN:
 		Weapon: ArtilleryExplode
 		LoadedChance: 75
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Hovers:
 		BobDistance: -25
@@ -1636,6 +1681,9 @@ ATMZ:
 	WithSpriteTurret:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
@@ -1703,6 +1751,9 @@ TPOD:
 		LocalOffset: 0,0,700
 	-Crushable:
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	TurretedFloating:
 		TurnSpeed: 12
@@ -1969,6 +2020,9 @@ STMR:
 		DecorationBounds: 1536, 1194
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: aircraft.upgraded
 	-EjectOnDeath:
 	AmmoPool:
 		Ammo: 15
@@ -2092,6 +2146,9 @@ ENRV:
 	Selectable:
 		DecorationBounds: 1536, 1536
 	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: aircraft.upgraded
 	-EjectOnDeath:
 	AmmoPool:
@@ -2263,6 +2320,9 @@ DEVA:
 		RepairActors: fix, rep, srep
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: aircraft.upgraded
 	Shielded:
 		MaxStrength: 7500
 		RegenDelay: 350
@@ -2405,6 +2465,9 @@ PAC:
 	AutoTargetPriority@ATTACKANYTHING:
 		InvalidTargets: NoAutoTarget, AirLowPriority
 	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: aircraft.upgraded
 	Shielded:
 		MaxStrength: 10000
@@ -2598,6 +2661,9 @@ MSHP:
 		ForceFireIgnoresActors: true
 	-EjectOnDeath:
 	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: aircraft.upgraded
 	WithIdleOverlay@RING:
 		Image: mshp

@@ -50,6 +50,9 @@ V2RL:
 		Weapon: BarrelExplode
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
 
@@ -97,6 +100,9 @@ KATY:
 	Explodes:
 		Weapon: BarrelExplode
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
@@ -165,6 +171,9 @@ KATY:
 		RequiresCondition: !onwater && !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 
 2TNK:
 	Inherits: ^Tank
@@ -220,6 +229,9 @@ KATY:
 		Actor: 2TNK.Husk
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
@@ -560,6 +572,9 @@ GTNK.squad:
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
 	UpgradeableTo:
@@ -844,6 +859,9 @@ GTNK.squad:
 		DamageCooldown: 150
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1877, 1621, 0, -170
 	Carryable:
@@ -1049,6 +1067,9 @@ ARTY:
 		LoadedChance: 75
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 
 ARTY.nod:
 	Inherits: ARTY
@@ -1230,6 +1251,9 @@ ISU:
 		LoadedChance: 75
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	Passenger:
 		Voice: Move
 	Voiced:
@@ -1330,6 +1354,9 @@ SAPC:
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Capturable:
 		RequiresCondition: !being-warped && !cargo
@@ -1615,6 +1642,9 @@ JEEP:
 	WithSpriteTurret:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
@@ -1708,6 +1738,9 @@ APC:
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Capturable:
 		RequiresCondition: !being-warped && !cargo
@@ -2166,6 +2199,9 @@ TTRA:
 		Condition: jammed
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1280, 1280
 	Passenger:
@@ -2244,6 +2280,9 @@ TTNK:
 	Turreted:
 		TurnSpeed: 28
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1280, 1280
@@ -2357,6 +2396,9 @@ CTNK:
 		MaxDistance: 16
 		RequiresCondition: !empdisable && !being-warped
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1280, 1280
@@ -2532,6 +2574,9 @@ HMMV:
 		DetectionTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	GrantConditionOnPrerequisite@GSHIELD:
 		Condition: pointdef-upgrade
@@ -2725,6 +2770,9 @@ BGGY:
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 
 APC2:
 	Inherits: ^TankTD
@@ -2876,6 +2924,9 @@ APC2:
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Capturable:
 		RequiresCondition: !being-warped && !cargo
@@ -3081,6 +3132,9 @@ VULC:
 		LoadedCondition: cargo
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	Capturable:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
@@ -3167,6 +3221,9 @@ LTNK:
 		RequiresCondition: !onwater && !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	WithShadow:
 		RequiresCondition: parachute
 
@@ -3246,6 +3303,9 @@ MTNK:
 		Actor: MTNK.Husk
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
@@ -3526,6 +3586,9 @@ HTNK:
 		DamageCooldown: 150
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1877, 1621, 0, -170
 	Carryable:
@@ -3744,6 +3807,9 @@ MSAM:
 		Weapon: ArtilleryExplode
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
 	GrantConditionOnPrerequisite@HSONIC:
@@ -3890,6 +3956,9 @@ MLRS:
 		Count: 2
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
 	ProductionCostMultiplier@BlackhBonus:
@@ -3979,6 +4048,9 @@ STNK.Nod:
 		InitialStanceAI: ReturnFire
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	ProductionCostMultiplier@ShadowBonus:
 		Multiplier: 90
 		Prerequisites: vehicles.shadow
@@ -4049,6 +4121,9 @@ BIKE:
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	GrantConditionOnPrerequisite@UPG:
 		Condition: tibcore-upgrade
 		Prerequisites: tibcore.upgrade
@@ -4104,6 +4179,9 @@ FTNK:
 		Weapon: BarrelExplode
 		EmptyWeapon: BarrelExplode
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	WithShadow:
 		RequiresCondition: parachute
@@ -4180,6 +4258,9 @@ HFTK:
 		Weapon: BarrelExplode
 		EmptyWeapon: BarrelExplode
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	AmbientSoundCA:
 		SoundFiles: bigflamer-loop1.aud
@@ -4344,6 +4425,9 @@ BTR:
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Capturable:
 		RequiresCondition: !being-warped && !cargo
@@ -4747,6 +4831,9 @@ IFV:
 			c10: nochange
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	WithIdleOverlay@MEDIC:
 		Sequence: medic
 		PauseOnCondition: empdisable || being-warped
@@ -5072,6 +5159,9 @@ TITN:
 	-Crushable:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	SpawnActorOnDeath:
 		Actor: TITN.Husk
 		RequiresCondition: !being-warped
@@ -5211,6 +5301,9 @@ JUGG:
 	-Crushable:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	Explodes:
 		Weapon: ArtilleryExplode
 		LoadedChance: 75
@@ -5304,6 +5397,9 @@ DISR:
 		LocalOffset: 0,0,500
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	Targetable:
 		RequiresCondition: !being-warped
 		TargetTypes: Ground, Vehicle, C4, Disruptor
@@ -5375,6 +5471,9 @@ HSAM:
 		Weapon: ArtilleryExplode
 		LoadedChance: 75
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	GrantConditionOnPrerequisite@HSONIC:
 		Condition: hypersonic-upgrade
@@ -5522,6 +5621,9 @@ RTNK:
 		DecorationBounds: 1194, 1194
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	Voiced:
 		VoiceSet: MirageVoice
 	WithDecoration@disguise:
@@ -5595,6 +5697,9 @@ V3RL:
 	Explodes:
 		Weapon: BarrelExplode
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
@@ -5690,6 +5795,9 @@ TNKD:
 	Voiced:
 		VoiceSet: TnkdVoice
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
@@ -5873,6 +5981,9 @@ PTNK:
 		VoiceSet: PrismVoice
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
 	# For upgrading on Service Depot
@@ -5985,6 +6096,9 @@ WTNK:
 		VoiceSet: MWTnkVoice
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
 	UpdatesPlayerStatistics:
@@ -6093,6 +6207,9 @@ BATF:
 			s6: loaded-repair
 			mast: loaded-cmdo
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1877, 1621, 0, -170
@@ -6432,6 +6549,9 @@ CHPR:
 		Sequence: turretactive
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1877, 1621, 0, -170
 	Carryable:
@@ -6526,6 +6646,9 @@ CRYO:
 		DecorationBounds: 1194, 1194
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 
 APOC:
 	Inherits: ^Tank
@@ -6607,6 +6730,9 @@ APOC:
 		StartIfBelow: 50
 		DamageCooldown: 150
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1877, 1621, 0, -170
