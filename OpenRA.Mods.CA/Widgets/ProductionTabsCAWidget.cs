@@ -160,6 +160,7 @@ namespace OpenRA.Mods.Common.Widgets
 			{
 				queueGroup = value;
 				SelectNextTab(false);
+				paletteWidget.Value.ScrollToTop();
 			}
 		}
 
