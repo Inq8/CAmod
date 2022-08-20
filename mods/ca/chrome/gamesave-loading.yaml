@@ -4,15 +4,10 @@ Container@GAMESAVE_LOADING_SCREEN:
 	Height: WINDOW_BOTTOM
 	Children:
 		LogicKeyListener@CANCEL_HANDLER:
-		Background@STRIPE:
-			Y: (WINDOW_BOTTOM - HEIGHT) / 2
-			Width: WINDOW_RIGHT
-			Height: 256
-			Background: loadscreen-stripe
 		Image@LOGO:
-			X: (WINDOW_RIGHT - 256) / 2
+			X: (WINDOW_RIGHT - 1024) / 2
 			Y: (WINDOW_BOTTOM - 256) / 2
-			ImageCollection: logos
+			ImageCollection: loading-artwork
 			ImageName: logo
 		Label@TITLE:
 			Width: WINDOW_RIGHT
