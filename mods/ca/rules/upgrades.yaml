@@ -55,7 +55,7 @@ bombard.strat:
 		IconPalette: chrometd
 		Description: Firepower focused strategy.
 	TooltipExtras:
-		Strengths: + Increases unit firepower by 5%
+		Strengths: + Increases firepower of vehicles and aircraft by 5%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
 	Valued:
 		Cost: 1500
@@ -71,7 +71,7 @@ bombard2.strat:
 		Prerequisites: gtek, ~bombard.strat, ~techlevel.high
 		Description: Increase Bombardment strategy bonuses.
 	TooltipExtras:
-		Strengths: + Increases unit firepower by a further 5%
+		Strengths: + Increases firepower of vehicles and aircraft by a further 5%
 		-Attributes:
 	RenderSprites:
 		Image: bombard2.strat
@@ -86,7 +86,7 @@ seek.strat:
 		IconPalette: chrometd
 		Description: Speed and weapon range focused strategy.
 	TooltipExtras:
-		Strengths: + Increases unit speed and weapon range by 5%
+		Strengths: + Increases speed and weapon range of vehicles and aircraft by 5%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
 	Valued:
 		Cost: 1500
@@ -102,7 +102,7 @@ seek2.strat:
 		Prerequisites: gtek, ~seek.strat, ~techlevel.high
 		Description: Increase Seek & Destroy strategy bonuses.
 	TooltipExtras:
-		Strengths: + Increases unit speed and weapon range by a further 5%
+		Strengths: + Increases speed and weapon range of vehicles and aircraft by a further 5%
 		-Attributes:
 	RenderSprites:
 		Image: seek2.strat
@@ -117,7 +117,7 @@ hold.strat:
 		IconPalette: chrometd
 		Description: Defensive strategy.
 	TooltipExtras:
-		Strengths: + Increases unit armor by 5%
+		Strengths: + Increases armor of vehicles and aircraft by 5%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
 	Valued:
 		Cost: 1500
@@ -133,7 +133,7 @@ hold2.strat:
 		Prerequisites: gtek, ~hold.strat,  ~techlevel.high
 		Description: Increase Hold the Line strategy bonuses.
 	TooltipExtras:
-		Strengths: + Increases unit armor by a further 5%
+		Strengths: + Increases armor of vehicles and aircraft by a further 5%
 		-Attributes:
 	RenderSprites:
 		Image: hold2.strat
@@ -205,7 +205,7 @@ bjet.upgrade:
 tow.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: TOW Missile
+		Name: Research: TOW Missile
 	Buildable:
 		BuildPaletteOrder: 45
 		Prerequisites: ~gtek, ~seek.strat, ~techlevel.high
@@ -269,7 +269,7 @@ abur.upgrade:
 bdrone.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Battle Drone
+		Name: Research: Battle Drone
 	Buildable:
 		BuildPaletteOrder: 65
 		Prerequisites: ~gtek.arc, ~techlevel.high
@@ -457,7 +457,7 @@ microwave.upgrade:
 supercharged.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Supercharged Lasers
+		Name: Upgrade: Supercharged Lasers
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~tmpl.marked, ~techlevel.high
@@ -592,11 +592,11 @@ hazmatsoviet.upgrade:
 lasher.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Lasher Tank
+		Name: Research: Lasher Tank
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~radar.yuri, ~techlevel.medium
-		Description: Upgrades Heavy tanks with infantry crushing attachment\n  at the cost of some armor and firepower.\n\nUpgrades: Heavy Tank
+		Description: Upgrades Heavy tanks with infantry crushing attachment\n  at the cost of some armor and firepower.\n\nReplaces: Heavy Tank
 	TooltipExtras:
 		Strengths: + 20% faster movement\n + Damages infantry it moves through\n+ Not slowed by infantry
 		Weaknesses: – Reduced hit points\n– Reduced firepower
@@ -625,7 +625,7 @@ seismic.upgrade:
 atomicengines.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Atomic Engines
+		Name: Research: Atomic Engines
 	Buildable:
 		BuildPaletteOrder: 55
 		Prerequisites: ~npwr, ~techlevel.high
@@ -641,7 +641,7 @@ atomicengines.upgrade:
 erad.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Eradicator
+		Name: Research: Eradicator
 	Buildable:
 		BuildPaletteOrder: 55
 		Prerequisites: ~npwr.iraq, ~techlevel.high
@@ -657,7 +657,7 @@ erad.upgrade:
 tarc.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Tesla Arcing
+		Name: Upgrade: Tesla Arcing
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~stek.russia, ~techlevel.medium
@@ -695,7 +695,7 @@ rapc.upgrade:
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~radar.allies, ~techlevel.medium
-		Description: Allows construction of the Raider APC.\n\nReplaces: APC
+		Description: Allows construction of the Raider APC.\n\nUpgrades: APC
 	TooltipExtras:
 		Strengths: + Adds strong anti-structure damage\n+ Increased splash damage\n+ Adds turret
 		Weaknesses: – Increased cost\n– Slower projectile speed\n– Reduced speed
@@ -707,7 +707,7 @@ rapc.upgrade:
 apb.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Raufoss Ammo
+		Name: Upgrade: Raufoss Ammo
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~radar.england, ~techlevel.medium
@@ -753,7 +753,7 @@ pcan.upgrade:
 crym.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Cryo Missile
+		Name: Upgrade: Cryo Missile
 	Buildable:
 		BuildPaletteOrder: 41
 		Prerequisites: ~atek.usa, ~techlevel.high
@@ -772,7 +772,7 @@ charv.upgrade:
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~orep, ~techlevel.high
-		Description: Allows construction of Chrono Miners which\nteleport back to refineries.\n\nReplaces: Ore Truck
+		Description: Allows construction of Chrono Miners which\nteleport back to refineries.\n\nUpgrades: Ore Truck
 	TooltipExtras:
 		Strengths: + Teleport back to refinery
 	Valued:
@@ -848,7 +848,7 @@ advart.upgrade:
 shrw.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Shard Walker
+		Name: Research: Shard Walker
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~radar.reaper, ~techlevel.medium
