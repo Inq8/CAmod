@@ -3647,6 +3647,7 @@ NERV:
 		EffectImage: empty
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
+		SupportPowerPaletteOrder: 50
 	DetonateWeaponPower@BUZZERSWARM:
 		OrderName: buzzerswarm
 		Icon: buzzpower
@@ -3665,6 +3666,7 @@ NERV:
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
 		DisplayRadarPing: True
+		SupportPowerPaletteOrder: 50
 	DetonateWeaponPower@BUZZERSWARMAI:
 		OrderName: buzzerswarmai
 		Icon: buzzpower
@@ -3683,6 +3685,7 @@ NERV:
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
 		DisplayRadarPing: True
+		SupportPowerPaletteOrder: 50
 	DetonateWeaponPower@STORMSPIKE:
 		OrderName: stormspike
 		Icon: stormspikepower
@@ -3701,6 +3704,7 @@ NERV:
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
 		DisplayRadarPing: True
+		SupportPowerPaletteOrder: 20
 	DetonateWeaponPower@IONSURGE:
 		OrderName: ionsurge
 		Icon: ionsurgepower
@@ -3721,6 +3725,7 @@ NERV:
 		CameraRemoveDelay: 1
 		TargetCircleRange: 6c0
 		TargetCircleColor: b070ff90
+		SupportPowerPaletteOrder: 50
 	GrantExternalConditionPower@FEEDERMUTATION:
 		OrderName: feedermutation
 		Icon: feedermutation
@@ -3741,6 +3746,7 @@ NERV:
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayTimerRelationships: Ally
+		SupportPowerPaletteOrder: 50
 
 SCRT:
 	Inherits: ^ScrinBuilding
@@ -3821,6 +3827,7 @@ SCRT:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
+		SupportPowerPaletteOrder: 40
 	SpawnActorPower@ICHORSEED:
 		OrderName: ichorseed
 		Icon: ichorpower
@@ -3837,6 +3844,7 @@ SCRT:
 		EffectImage: empty
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
+		SupportPowerPaletteOrder: 40
 
 GRAV:
 	Inherits: ^ScrinBuilding
@@ -4127,7 +4135,6 @@ MANI:
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayRadarPing: True
 		ActivationDelay: 0
-		SupportPowerPaletteOrder: 10
 		TargetCircleRange: 3c512
 		TargetCircleColor: ff55ffcc
 		LaunchSound: suppression.aud
@@ -4136,6 +4143,7 @@ MANI:
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
 		Prerequisites: ~!mani.collector
+		SupportPowerPaletteOrder: 20
 	DetonateWeaponPower@SUPPRESSIONSIPHON:
 		PauseOnCondition: disabled || empdisable || being-warped
 		OrderName: suppressionsiphon
@@ -4148,7 +4156,6 @@ MANI:
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayRadarPing: True
 		ActivationDelay: 0
-		SupportPowerPaletteOrder: 10
 		TargetCircleRange: 3c512
 		TargetCircleColor: ff55ffcc
 		LaunchSound: suppression.aud
@@ -4157,6 +4164,7 @@ MANI:
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
 		Prerequisites: ~mani.collector
+		SupportPowerPaletteOrder: 20
 	ProductionCostMultiplier@COLLECTOR:
 		Multiplier: 90
 		Prerequisites: player.collector
@@ -4228,6 +4236,7 @@ RIFT:
 		Duration: 425
 		ActiveCondition: active
 		PaletteEffectType: LightningStorm
+		SupportPowerPaletteOrder: 10
 	WithIdleOverlay@ACTIVE:
 		Sequence: active-overlay
 		Palette: scrin

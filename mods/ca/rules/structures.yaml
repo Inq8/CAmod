@@ -66,6 +66,7 @@ MSLO:
 		CircleRanges: 6c512
 		CircleColor: BB0000AA
 		CircleBorderColor: 770000AA
+		SupportPowerPaletteOrder: 10
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -426,6 +427,7 @@ IRON:
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayTimerRelationships: Ally, Neutral, Enemy
+		SupportPowerPaletteOrder: 20
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -506,6 +508,7 @@ PDOX:
 		Dimensions: 5, 5
 		Footprint: __x__ _xxx_ xxxxx _xxx_ __x__
 		DisplayTimerRelationships: Ally, Neutral, Enemy
+		SupportPowerPaletteOrder: 20
 	DetonateWeaponPower@ChronoAI:
 		OrderName: Chronoshiftai
 		Prerequisites: botplayer
@@ -529,6 +532,7 @@ PDOX:
 		DisplayRadarPing: True
 		LaunchSound: chrono2.aud
 		IncomingSound: chrono2.aud
+		SupportPowerPaletteOrder: 20
 	GrantExternalConditionPowerCA@TimeWarp:
 		OrderName: TimeWarp
 		Icon: timewarp
@@ -559,6 +563,7 @@ PDOX:
 		DisplayRadarPing: True
 		LaunchSound: chrono2.aud
 		IncomingSound: chrono2.aud
+		SupportPowerPaletteOrder: 25
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -836,6 +841,7 @@ DOME:
 		SelectTargetSpeechNotification: SelectTarget
 		PauseOnCondition: disabled || empdisable || being-warped
 		RequiresCondition: !build-incomplete
+		SupportPowerPaletteOrder: 50
 	SpawnActorPowerCA@VeilOfWar:
 		Actor: veilofwar1
 		OrderName: veilofwar
@@ -859,6 +865,7 @@ DOME:
 		EffectPalette: tseffect-ignore-lighting-alpha75
 		TargetCircleRange: 9c512
 		TargetCircleColor: 999999AA
+		SupportPowerPaletteOrder: 50
 
 PBOX:
 	Inherits: ^Defense
@@ -1192,6 +1199,7 @@ ATEK:
 		OrderName: ProduceActorSat
 		AutoFire: True
 		RequiresCondition: gps-launched && fogenabled
+		SupportPowerPaletteOrder: 35
 	SupportPowerChargeBar:
 	Power:
 		Amount: -150
@@ -1218,6 +1226,7 @@ ATEK:
 		OrderName: InitialSatelliteScanPower
 		AutoFire: True
 		DisplayTimerRelationships: Ally
+		SupportPowerPaletteOrder: 35
 	ProduceActorPowerCA@SatelliteScan:
 		PauseOnCondition: disabled || empdisable || being-warped
 		Prerequisites: anyradar, ~gps.satellite, ~gps.satellite.firstscan, ~fogenabled
@@ -1230,6 +1239,7 @@ ATEK:
 		OrderName: SatelliteScanPower
 		AutoFire: True
 		DisplayTimerRelationships: Ally, Neutral, Enemy
+		SupportPowerPaletteOrder: 35
 	ProduceActorPowerCA@SatelliteScanNoFog:
 		PauseOnCondition: disabled || empdisable || being-warped
 		Prerequisites: anyradar, ~!fogenabled
@@ -1243,6 +1253,7 @@ ATEK:
 		OrderName: SatelliteScanNoFogPower
 		AutoFire: True
 		DisplayTimerRelationships: Ally, Neutral, Enemy
+		SupportPowerPaletteOrder: 35
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
 		Icon: forceshield
@@ -1267,6 +1278,7 @@ ATEK:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
+		SupportPowerPaletteOrder: 40
 	DetonateWeaponPower@TEMPINC:
 		OrderName: tempinc
 		Prerequisites: atek.germany
@@ -1292,6 +1304,7 @@ ATEK:
 		Sequence: idle
 		TargetCircleRange: 5c0
 		TargetCircleColor: 77ffffff
+		SupportPowerPaletteOrder: 40
 	GrantConditionOnFogEnabled@FOGENABLED:
 		Condition: fogenabled
 	ExternalCondition@DUMMY:
@@ -1754,6 +1767,7 @@ SILO:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 50
 	ParatroopersPower@Russianparatroopers:
 		OrderName: stormtroopers
 		UnitType: halo.paradrop
@@ -1779,6 +1793,7 @@ SILO:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 50
 	AirstrikePower@spyplane:
 		OrderName: spyplane
 		Icon: spyplane
@@ -1801,6 +1816,7 @@ SILO:
 		CircleSequence: circles
 		UseDirectionalTarget: true
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 50
 
 ^SovietBombingPowers:
 	ProvidesPrerequisiteValidatedFaction@parabombs:
@@ -1828,6 +1844,7 @@ SILO:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 45
 	AirstrikePower@CarpetBomb:
 		OrderName: carpetbomb
 		Prerequisites: ~radar.ukraine
@@ -1850,6 +1867,7 @@ SILO:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 45
 	AirstrikePower@Iraqiparabombs:
 		OrderName: atombomb
 		Prerequisites: ~radar.iraq
@@ -1872,6 +1890,7 @@ SILO:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 45
 	AirstrikePower@MutaBomb:
 		OrderName: mutabomb
 		Prerequisites: ~radar.yuri
@@ -1896,6 +1915,7 @@ SILO:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 45
 
 HPAD:
 	Inherits: ^Building
@@ -2019,6 +2039,7 @@ HPAD:
 		DirectionArrowAnimation: paradirection
 		Strikes: 3
 		CircleDelay: 40
+		SupportPowerPaletteOrder: 45
 
 AFLD:
 	Inherits: ^Building
@@ -2276,6 +2297,7 @@ NPWR:
 		PauseOnCondition: empdisable || being-warped
 		DisplayTimerRelationships: Ally, Neutral
 		Sequence: idle
+		SupportPowerPaletteOrder: 30
 	GrantExternalConditionPower@ATOMICAMMOIRAQ:
 		Prerequisites: ~npwr.iraq
 		OrderName: atomicammoiraq
@@ -2297,6 +2319,7 @@ NPWR:
 		PauseOnCondition: empdisable || being-warped
 		DisplayTimerRelationships: Ally, Neutral
 		Sequence: idle
+		SupportPowerPaletteOrder: 30
 
 TPWR:
 	Inherits@AUTOTARGET: ^AutoTargetGround
@@ -2400,6 +2423,7 @@ STEK:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
+		SupportPowerPaletteOrder: 40
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.stek
@@ -3421,6 +3445,7 @@ AIRS:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		Prerequisites: vehicles.marked
+		SupportPowerPaletteOrder: 60
 	ParatroopersPower@blackhairdrop:
 		OrderName: blackhairdrop
 		SquadSize: 2
@@ -3444,6 +3469,7 @@ AIRS:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		Prerequisites: vehicles.blackh
+		SupportPowerPaletteOrder: 60
 	ParatroopersPower@shadowairdrop:
 		OrderName: shadowairdrop
 		SquadSize: 2
@@ -3467,6 +3493,7 @@ AIRS:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		Prerequisites: vehicles.shadow
+		SupportPowerPaletteOrder: 60
 	WithDeliveryAnimation:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
@@ -4093,6 +4120,7 @@ HQ:
 		EffectPalette: tseffect-ignore-lighting-alpha75
 		TargetCircleRange: 9c512
 		TargetCircleColor: 999999AA
+		SupportPowerPaletteOrder: 50
 	ProduceActorPower@hackercell:
 		OrderName: hackercell
 		Prerequisites: infantry.any, ~radar.legion
@@ -4105,6 +4133,7 @@ HQ:
 		LaunchSpeechNotification: ReinforcementsArrived
 		EndChargeSpeechNotification: Reinforce
 		PauseOnCondition: disabled || empdisable || being-warped
+		SupportPowerPaletteOrder: 50
 	DropPodsPowerCA@Zocom:
 		OrderName: droppods
 		Cursor: ability
@@ -4125,6 +4154,7 @@ HQ:
 		EntryEffect: explosion
 		EntryEffectSequence: shock_wave
 		EntryEffectPalette: tseffect-ignore-lighting-alpha75
+		SupportPowerPaletteOrder: 50
 	CashHackPower@Legion:
 		OrderName: cashhack
 		Icon: chack
@@ -4143,6 +4173,7 @@ HQ:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable || being-warped
+		SupportPowerPaletteOrder: 50
 	AirstrikePower@BlackhandFirebomb:
 		OrderName: infernobomb
 		Prerequisites: ~radar.blackh
@@ -4167,6 +4198,7 @@ HQ:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		PauseOnCondition: disabled || empdisable || being-warped
+		SupportPowerPaletteOrder: 50
 	AirReinforcementsPower@ShadowTeam:
 		OrderName: shadowteam
 		Prerequisites: ~radar.shadow
@@ -4185,6 +4217,7 @@ HQ:
 		PauseOnCondition: disabled || empdisable || being-warped
 		LaunchSpeechNotification: ReinforcementsArrived
 		EndChargeSpeechNotification: Reinforce
+		SupportPowerPaletteOrder: 50
 	Power:
 		Amount: -40
 	-PowerMultiplier@POWERDRAIN:
@@ -4327,6 +4360,7 @@ EYE:
 		BeaconPoster: atomicon
 		TargetCircleRange: 6c512
 		TargetCircleColor: 4fff3390
+		SupportPowerPaletteOrder: 10
 	IonCannonPower@surgicals:
 		OrderName: surgicalstrike
 		Prerequisites: ~eye.zocom
@@ -4351,6 +4385,7 @@ EYE:
 		CircleSequence: circles
 		Cursor: ioncannon
 		PauseOnCondition: disabled || empdisable || being-warped
+		SupportPowerPaletteOrder: 15
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
@@ -4458,6 +4493,7 @@ REP:
 		EffectImage: empty
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
+		SupportPowerPaletteOrder: 50
 	ParatroopersPower@xodrop:
 		OrderName: xodrop
 		Prerequisites: ~radar.talon
@@ -4483,6 +4519,7 @@ REP:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 50
 	AirstrikePower@uav:
 		OrderName: gdiuav
 		Prerequisites: radar.gdi, ~!radar.arc
@@ -4504,6 +4541,7 @@ REP:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 50
 	AirstrikePower@uavST:
 		OrderName: gdiuavarc
 		Prerequisites: ~radar.arc
@@ -4525,6 +4563,7 @@ REP:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 50
 
 ^InterceptorsPower:
 	InterceptorPower@AirDef:
@@ -4551,6 +4590,7 @@ REP:
 		DirectionArrowAnimation: paradirection
 		GuardDuration: 500
 		Cordon: 5c0
+		SupportPowerPaletteOrder: 45
 
 HPAD.TD:
 	Inherits: ^BuildingTD
@@ -4922,6 +4962,7 @@ GTEK:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
+		SupportPowerPaletteOrder: 40
 	GrantExternalConditionPowerCA@NREPAIR:
 		OrderName: nrepair
 		Icon: nrepair
@@ -4944,6 +4985,7 @@ GTEK:
 		DisplayRadarPing: True
 		Cursor: repair
 		PauseOnCondition: disabled || empdisable ||  being-warped
+		SupportPowerPaletteOrder: 40
 	SupportPowerChargeBar:
 
 TMPL:
@@ -5026,6 +5068,7 @@ TMPL:
 		CircleRanges: 3c0
 		CircleColor: BB0000AA
 		CircleBorderColor: 770000AA
+		SupportPowerPaletteOrder: 40
 	WithBuildingBib:
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
@@ -5051,6 +5094,7 @@ TMPL:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
+		SupportPowerPaletteOrder: 40
 	GrantExternalConditionPowerCA@Frenzy:
 		OrderName: frenzy
 		Icon: frenzy
@@ -5075,6 +5119,7 @@ TMPL:
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayTimerRelationships: Ally
+		SupportPowerPaletteOrder: 40
 	SupportPowerChargeBar:
 	Power:
 		Amount: -150
@@ -5589,6 +5634,7 @@ SGEN:
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 		ActiveCondition: active
+		SupportPowerPaletteOrder: 20
 	ExternalCondition@ACTIVE:
 		Condition: active
 	GrantExternalConditionPowerCA@SGENSHADOW:
@@ -5618,6 +5664,7 @@ SGEN:
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 		ActiveCondition: active
+		SupportPowerPaletteOrder: 20
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -5863,6 +5910,7 @@ PATR:
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayTimerRelationships: Ally, Neutral, Enemy
+		SupportPowerPaletteOrder: 20
 	AmmoPool:
 		Ammo: 1
 		ReloadCount: 1
@@ -6168,6 +6216,7 @@ UPGC:
 		DisplayTimerRelationships: Ally
 		RequiresCondition: tower.rocket
 		Prerequisites: ~techlevel.unrestricted
+		SupportPowerPaletteOrder: 30
 	RejectsOrders:
 		Except: Sell, PowerDown
 	AmmoPool:
@@ -6221,6 +6270,7 @@ UPGC:
 		InsufficientPowerSpeechNotification: InsufficientPower
 		Prerequisites: ~techlevel.unrestricted
 		EarlyDeactivationPenalty: 1500
+		SupportPowerPaletteOrder: 30
 	DrainPrerequisitePowerOnDamage@RADAR:
 		OrderName: advradarorder
 	GrantConditionOnPrerequisite@SCAN:
@@ -6261,6 +6311,7 @@ UPGC:
 		RequiresCondition: tower.shield
 		TargetCircleRange: 6c0
 		TargetCircleColor: 64a5dcbb
+		SupportPowerPaletteOrder: 30
 	ProximityExternalCondition@NSHIELD-AUDIO:
 		Condition: nshield-audio
 		RequiresCondition: nshield-active
@@ -6566,6 +6617,7 @@ MSLO.Nod:
 		CircleRanges: 6c512
 		CircleColor: 00BB00AA
 		CircleBorderColor: 007700AA
+		SupportPowerPaletteOrder: 10
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -6650,6 +6702,7 @@ WEAT:
 		Duration: 350
 		ActiveCondition: active
 		PaletteEffectType: LightningStorm
+		SupportPowerPaletteOrder: 10
 	WithIdleOverlay@ACTIVE:
 		Sequence: active-overlay
 		Palette: d2keffect
