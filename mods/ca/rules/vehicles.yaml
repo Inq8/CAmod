@@ -106,6 +106,8 @@ KATY:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
+	UpgradeableTo:
+		Actors: v2rl
 
 1TNK:
 	Inherits: ^Tank
@@ -1086,6 +1088,24 @@ ARTY.nod:
 		Weapon: 155mmTD
 	Selectable:
 		Class: arty
+	UpgradeableTo:
+		Actors: howi
+	# For upgrading on Service Depot
+	Rearmable@UPGRADE:
+		RearmActors: fix, rep, srep
+		AmmoPools: upgrade
+	AmmoPool@UPGRADE:
+		Name: upgrade
+		Armaments: none
+		ReloadDelay: 5000
+	GrantConditionOnPrerequisite@HOWIUPGRADE:
+		Condition: howi-upgrade
+		Prerequisites: howi.upgrade
+	RearmsToUpgrade@HOWIUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: howi
+		RequiresCondition: howi-upgrade
 
 HOWI:
 	Inherits: ARTY.nod
@@ -3327,6 +3347,24 @@ MTNK:
 		RequiresCondition: pointdef-upgrade && !pointlaser-charging
 	WithIdleOverlay@NSHIELD:
 		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
+	UpgradeableTo:
+		Actors: mtnk.drone
+	# For upgrading on Service Depot
+	Rearmable@UPGRADE:
+		RearmActors: fix, rep, srep
+		AmmoPools: upgrade
+	AmmoPool@UPGRADE:
+		Name: upgrade
+		Armaments: none
+		ReloadDelay: 5000
+	GrantConditionOnPrerequisite@BDRONEUPGRADE:
+		Condition: bdrone-upgrade
+		Prerequisites: bdrone.upgrade
+	RearmsToUpgrade@BDRONEUPGRADE:
+		AmmoPool: upgrade
+		UpgradeAudio: UnitUpgraded
+		Actor: mtnk.drone
+		RequiresCondition: bdrone-upgrade
 
 MTNK.Drone:
 	Inherits: MTNK
@@ -5986,6 +6024,8 @@ PTNK:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
+	UpgradeableTo:
+		Actors: pcan
 	# For upgrading on Service Depot
 	Rearmable@PCANUPGRADE:
 		RearmActors: fix, rep, srep
