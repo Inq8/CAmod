@@ -197,9 +197,6 @@ namespace OpenRA.Mods.Common.Widgets
 			var rightDisabled = startTabIndex >= numTabs - MaxTabsVisible;
 			var rightHover = Ui.MouseOverWidget == this && rightButtonRect.Contains(Viewport.LastMousePos);
 
-			if (Background != null)
-				WidgetUtils.DrawPanel(Background, rb);
-
 			ButtonWidget.DrawBackground(LeftButton, leftButtonRect, leftDisabled, leftPressed, leftHover, false);
 			ButtonWidget.DrawBackground(RightButton, rightButtonRect, rightDisabled, rightPressed, rightHover, false);
 
