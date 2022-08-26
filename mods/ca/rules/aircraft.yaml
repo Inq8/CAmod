@@ -694,7 +694,7 @@ TRAN:
 		TargetRelationships: None
 		ForceTargetRelationships: None
 	Rearmable:
-		RearmActors: hpad, hpad.td, grav
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	WithIdleOverlay@ROTOR1AIR:
 		Offset: 597,0,213
 		Sequence: rotor
@@ -779,7 +779,7 @@ HALO:
 	Health:
 		HP: 44000
 	Buildable:
-		Prerequisites: hpad, ~aircraft.soviet, ~techlevel.medium
+		Prerequisites: afld, ~aircraft.soviet, ~techlevel.medium
 	-WithCargoHatchAnimation:
 	-WithIdleOverlay@ROTOR2AIR:
 	-WithIdleOverlay@ROTOR2GROUND:
@@ -1110,7 +1110,7 @@ HELI:
 	Selectable:
 		DecorationBounds: 1536, 1194
 	Rearmable:
-		RearmActors: hpad, hpad.td, grav
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
 
@@ -1121,7 +1121,7 @@ HIND:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 20
-		Prerequisites: hpad, ~aircraft.soviet, ~techlevel.medium
+		Prerequisites: afld, ~aircraft.soviet, ~techlevel.medium
 		Description: Helicopter gunship armed with\n  a chaingun and anti-tank rockets.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Heavy Armor, Light Armor
@@ -1237,7 +1237,7 @@ HIND:
 		DecorationBounds: 1621, 1365
 	Rearmable:
 		AmmoPools: primary, secondary
-		RearmActors: hpad, hpad.td, grav
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
 
@@ -1849,7 +1849,7 @@ APCH:
 	Selectable:
 		DecorationBounds: 1280, 1024
 	Rearmable:
-		RearmActors: hpad, hpad.td, grav
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
 	WithProductionIconOverlay:
@@ -1871,7 +1871,7 @@ ORCA:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 50
-		Prerequisites: hpad.td, ~aircraft.gdi, ~techlevel.medium
+		Prerequisites: afld.gdi, ~aircraft.gdi, ~techlevel.medium
 		IconPalette: chrometd
 		Description: VTOL gunship armed with\n  multi-purpose missiles.
 	TooltipExtras:
@@ -1951,7 +1951,7 @@ ORCA:
 	Selectable:
 		DecorationBounds: 1280, 1024
 	Rearmable:
-		RearmActors: hpad, hpad.td, grav
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
 	WithProductionIconOverlay:
@@ -2009,7 +2009,7 @@ ORCB:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 130
-		Prerequisites: hpad.td, ~aircraft.gdi, gtek, ~techlevel.high
+		Prerequisites: afld.gdi, ~aircraft.gdi, gtek, ~techlevel.high
 		IconPalette: chrometd
 		Description: VTOL bomber armed with EMP bombs.
 	TooltipExtras:
@@ -2097,7 +2097,7 @@ ORCB:
 		Types: Veterancy
 		Prerequisites: aircraft.upgraded
 	Rearmable:
-		RearmActors: hpad.td, hpad
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	Voiced:
 		VoiceSet: OrcaVoice
 	-RangeMultiplier@SEEK:
@@ -2340,7 +2340,7 @@ RAH:
 	Selectable:
 		DecorationBounds: 1536, 1194
 	Rearmable:
-		RearmActors: hpad, hpad.td, grav
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	Voiced:
 		VoiceSet: OxannaVoice
 	ProducibleWithLevel:
@@ -2371,7 +2371,7 @@ KIRO:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 160
-		Prerequisites: hpad, stek, ~aircraft.soviet, ~techlevel.high
+		Prerequisites: afld, stek, ~aircraft.soviet, ~techlevel.high
 		Description: Heavily armoured airship equipped with specialised bombs.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
@@ -2557,7 +2557,7 @@ OCAR:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 100
-		Prerequisites: hpad.td, rep, ~aircraft.gdi, ~techlevel.medium
+		Prerequisites: afld.gdi, rep, ~aircraft.gdi, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Fast VTOL Vehicle Transporter.
 	TooltipExtras:
@@ -2861,7 +2861,7 @@ HARR:
 		Types: Veterancy
 		Prerequisites: aircraft.upgraded
 	Rearmable:
-		RearmActors: hpad, hpad.td, grav
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
 
@@ -2977,7 +2977,7 @@ SCRN:
 		Types: Veterancy
 		Prerequisites: aircraft.upgraded
 	Rearmable:
-		RearmActors: hpad, hpad.td, grav
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	ProductionCostMultiplier@markedBonus:
 		Multiplier: 90
 		Prerequisites: player.marked
@@ -3311,7 +3311,7 @@ VENM:
 	Selectable:
 		DecorationBounds: 1280, 1024
 	Rearmable:
-		RearmActors: hpad, hpad.td, grav
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
 	WithProductionIconOverlay:

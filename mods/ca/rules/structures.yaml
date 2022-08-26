@@ -1929,7 +1929,7 @@ HPAD:
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 120
-		Prerequisites: radarorrepair, ~structures.ra, ~techlevel.medium
+		Prerequisites: radarorrepair, ~structures.allies, ~techlevel.medium
 		Description: Produces and reloads helicopters.
 	Valued:
 		Cost: 500
@@ -2060,7 +2060,7 @@ AFLD:
 	Tooltip:
 		Name: Airfield
 	Selectable:
-		Bounds: 3072, 2048
+		Bounds: 3072, 2176, 0, -256
 	Building:
 		Footprint: xxx xxx
 		Dimensions: 3,2
@@ -4606,7 +4606,7 @@ HPAD.TD:
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 120
-		Prerequisites: radarorrepair, ~structures.td, ~techlevel.medium
+		Prerequisites: radarorrepair, ~structures.nod, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Produces and reloads helicopters.
 	Valued:
@@ -4821,6 +4821,8 @@ AFLD.GDI:
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 420,0,0, 420,-1024,0, 420,1024,0, -777,0,0, -777,-1024,0, -777,1024,0
+	Selectable:
+		Bounds: 3072, 2176, 0, -256
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 130
@@ -4863,6 +4865,8 @@ AFLD.GDI:
 	ProvidesPrerequisiteValidatedFaction@arc:
 		Factions: arc
 		Prerequisite: aircraft.arc
+	ProvidesPrerequisite@chinook:
+		Prerequisite: aircraft.chinook
 	ProvidesPrerequisite@chinookvisible:
 		Prerequisite: aircraft.chinookvisible
 	SupportPowerChargeBar:
