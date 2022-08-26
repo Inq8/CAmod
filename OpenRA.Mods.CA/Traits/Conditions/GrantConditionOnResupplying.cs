@@ -14,38 +14,44 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Grants a condition when being resupplied.")]
-	public class GrantConditionOnResupplyInfo : PausableConditionalTraitInfo
+	[Desc("Grants a condition when resupplying another actor.")]
+	public class GrantConditionOnResupplyingInfo : PausableConditionalTraitInfo
 	{
 		[FieldLoader.Require]
 		[GrantedConditionReference]
 		[Desc("Condition to grant.")]
 		public readonly string Condition = null;
 
-		[Desc("Order name that toggles the condition.")]
-		public readonly bool GrantPermanently = false;
-
-		public override object Create(ActorInitializer init) { return new GrantConditionOnResupply(init.Self, this); }
+		public override object Create(ActorInitializer init) { return new GrantConditionOnResupplying(init.Self, this); }
 	}
 
-	public class GrantConditionOnResupply : PausableConditionalTrait<GrantConditionOnResupplyInfo>, INotifyBeingResupplied
+	public class GrantConditionOnResupplying : PausableConditionalTrait<GrantConditionOnResupplyingInfo>, INotifyResupply
 	{
 		int conditionToken = Actor.InvalidConditionToken;
+		bool repairing;
+		bool rearming;
 
-		public GrantConditionOnResupply(Actor self, GrantConditionOnResupplyInfo info)
+		public GrantConditionOnResupplying(Actor self, GrantConditionOnResupplyingInfo info)
 			: base(info) { }
 
-		void INotifyBeingResupplied.StartingResupply(Actor self, Actor host)
+		void INotifyResupply.BeforeResupply(Actor self, Actor target, ResupplyType types)
 		{
 			if (IsTraitDisabled || IsTraitPaused)
 				return;
 
-			GrantCondition(self);
+			repairing = types.HasFlag(ResupplyType.Repair);
+			rearming = types.HasFlag(ResupplyType.Rearm);
+
+			if (repairing || rearming)
+				GrantCondition(self);
 		}
 
-		void INotifyBeingResupplied.StoppingResupply(OpenRA.Actor self, OpenRA.Actor host)
+		void INotifyResupply.ResupplyTick(Actor self, Actor target, ResupplyType types)
 		{
-			if (!Info.GrantPermanently)
+			repairing = types.HasFlag(ResupplyType.Repair);
+			rearming = types.HasFlag(ResupplyType.Rearm);
+
+			if (!repairing && !rearming)
 				RevokeCondition(self);
 		}
 

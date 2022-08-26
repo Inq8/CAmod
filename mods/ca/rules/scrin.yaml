@@ -2027,34 +2027,25 @@ STMR:
 	AmmoPool:
 		Ammo: 15
 		AmmoCondition: ammo
-		ReloadDelay: 626
-		ReloadCount: 15
+		ReloadDelay: 70
+		ReloadCount: 5
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
 		PipCount: 3
-	ReloadAmmoPoolCA:
-		Delay: 625
-		Count: 15
-		DelayOnFire: 75
-		DelayAfterReset: 90
-		ShowSelectionBar: true
-		SelectionBarColor: ff00ff
-		RequiresCondition: !srep-rearm || airborne
 	DetectCloaked:
 		DetectionTypes: Underwater
 		Range: 8c0
 	Rearmable:
-		RearmActors: srep
-	ExternalCondition@SREPREARM:
-		Condition: srep-rearm
-	ReloadAmmoPool@SREPREARM:
-		Delay: 200
-		Count: 15
-		RequiresCondition: srep-rearm && !airborne
+		RearmActors: hpad, hpad.td, grav
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	GrantConditionOnResupply:
+		Condition: resupplying
+	Targetable@RESUPPLYING:
+		TargetTypes: Resupplying
+		RequiresCondition: resupplying
 
 ENRV:
 	Inherits: ^Helicopter
@@ -2113,6 +2104,7 @@ ENRV:
 		RepulsionSpeed: 40
 		MaximumPitch: 56
 		CanSlide: True
+		AltitudeVelocity: 0c100
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
@@ -2154,31 +2146,22 @@ ENRV:
 	AmmoPool:
 		Ammo: 5
 		AmmoCondition: ammo
-		ReloadDelay: 751
-		ReloadCount: 5
+		ReloadDelay: 45
+		ReloadCount: 1
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
 		PipCount: 5
-	ReloadAmmoPoolCA:
-		Delay: 750
-		Count: 5
-		DelayOnFire: 375
-		DelayAfterReset: 60
-		ShowSelectionBar: true
-		SelectionBarColor: ff00ff
-		RequiresCondition: !srep-rearm || airborne
 	Rearmable:
-		RearmActors: srep
-	ExternalCondition@SREPREARM:
-		Condition: srep-rearm
-	ReloadAmmoPool@SREPREARM:
-		Delay: 250
-		Count: 5
-		RequiresCondition: srep-rearm && !airborne
+		RearmActors: hpad, hpad.td, grav
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	GrantConditionOnResupply:
+		Condition: resupplying
+	Targetable@RESUPPLYING:
+		TargetTypes: Resupplying
+		RequiresCondition: resupplying
 
 DEVA:
 	Inherits: ^Helicopter
@@ -3850,6 +3833,7 @@ GRAV:
 	Inherits: ^ScrinBuilding
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@AIR: ^ProducesAircraft
+	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Buildable:
@@ -3882,6 +3866,8 @@ GRAV:
 		RequiresCondition: !being-captured
 		ExitCell: 1,1
 		Facing: 720
+		SpawnOffset: -128,0,0
+	Reservable:
 	RallyPoint:
 		ForceSetType: Aircraft
 	ValidFactions:
@@ -3897,13 +3883,39 @@ GRAV:
 	ProvidesPrerequisite@buildingname:
 	WithBuildingBib:
 	WithIdleOverlay@orb:
-		RequiresCondition: !build-incomplete
+		RequiresCondition: !build-incomplete && !resupplying
 	WithIdleOverlay@pylon:
 		Sequence: idle-pylon
 		RequiresCondition: !build-incomplete && !damaged
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
-		ValidDamageStates: Light, Medium, Heavy, Critical
+		ValidDamageStates: Heavy, Critical
+	GrantConditionOnResupplying@RESUPPLY:
+		Condition: resupplying
+	Armament@UNDAMAGED:
+		Weapon: GravityStabilizerZap
+		LocalOffset: -800,-500,1152, -250,450,1152, 150,-500,1152
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+		MuzzleSequence: muzzle
+		MuzzlePalette: playerscrin
+		RequiresCondition: !damaged
+	Armament@DAMAGED:
+		Weapon: GravityStabilizerZap
+		LocalOffset: -250,650,1024, 150,-600,1152
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+		MuzzleSequence: muzzle
+		MuzzlePalette: playerscrin
+		RequiresCondition: damaged
+	WithMuzzleOverlayCA:
+		IsPlayerPalette: true
+	AttackOmni:
+		PauseOnCondition: !resupplying
+		ValidRelationships: Ally
+	AutoTarget:
+	AutoTargetPriority@DEFAULT:
+		ValidRelationships: Ally
 
 SIGN:
 	Inherits: ^ScrinBuilding
@@ -4014,10 +4026,6 @@ SREP:
 		Prerequisite: radarorrepair
 	ProvidesPrerequisite@allowsmcv:
 		Prerequisite: vehicles.mcv
-	ProximityExternalCondition@SREPREARM:
-		Condition: srep-rearm
-		ValidRelationships: Ally
-		Range: 2c0
 	ProximityExternalCondition@AIRCRAFTREPAIR:
 		Condition: aircraft-repair
 		Range: 10c0
