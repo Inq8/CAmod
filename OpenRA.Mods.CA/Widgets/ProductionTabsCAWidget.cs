@@ -174,6 +174,7 @@ namespace OpenRA.Mods.Common.Widgets
 				paletteWidget.Value.CurrentQueue = value;
 				queueGroup = value != null ? value.Info.Group : null;
 				ForceSelectedTabVisible();
+				paletteWidget.Value.ScrollToTop();
 			}
 		}
 
