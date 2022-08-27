@@ -911,13 +911,14 @@
 ^AtomicAmmunition:
 	ExternalCondition@ATOMICAMMO:
 		Condition: atomic-ammo
-	WithPlayOnceOnEnabledOverlay@ATOMICAMMO:
+	WithRestartableIdleOverlay@ATOMICAMMO:
 		Sequence: idle
 		Image: atomshell
 		Palette: effect
 		RequiresCondition: atomic-ammo && has-atomic-ammo < 12
 		Offset: 0,0,600
 		IsDecoration: True
+		PlayOnce: True
 	FirepowerMultiplier@ATOMICAMMO:
 		RequiresCondition: has-atomic-ammo
 		Modifier: 130
@@ -942,7 +943,7 @@
 		RequiresCondition: atomic-ammo && has-atomic-ammo < 12
 	ReloadAmmoPoolCA@ATOMICAMMODECAY:
 		Count: -12
-		Delay: 1500
+		Delay: 2250
 		RequiresCondition: has-atomic-ammo
 		ShowSelectionBar: false
 

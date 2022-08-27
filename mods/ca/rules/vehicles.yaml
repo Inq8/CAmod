@@ -698,7 +698,7 @@ GTNK.squad:
 		VoiceSet: LasherTankVoice
 	SpawnActorOnDeath:
 		Actor: 3TNK.YURI.Husk
-	WithPlayOnceOnEnabledOverlay@ATOMICAMMO:
+	WithRestartableIdleOverlay@ATOMICAMMO:
 		RequiresCondition: atomic-ammo && has-atomic-ammo < 6
 	AmmoPool@ATOMICAMMO:
 		Ammo: 6
@@ -768,7 +768,7 @@ GTNK.squad:
 		VoiceSet: LasherTankVoice
 	WithFacingSpriteBody:
 		Sequence: idle2
-	WithPlayOnceOnEnabledOverlay@ATOMICAMMO:
+	WithRestartableIdleOverlay@ATOMICAMMO:
 		RequiresCondition: atomic-ammo && has-atomic-ammo < 6
 	AmmoPool@ATOMICAMMO:
 		Ammo: 6
@@ -871,7 +871,7 @@ GTNK.squad:
 	-Crushable:
 	WithIdleOverlay@MINDCONTROL:
 		Offset: 0,0,512
-	WithPlayOnceOnEnabledOverlay@ATOMICAMMO:
+	WithRestartableIdleOverlay@ATOMICAMMO:
 		RequiresCondition: atomic-ammo && has-atomic-ammo < 10
 	WithAmmoPipsDecoration@ATOMICAMMO:
 		PipCount: 5
@@ -978,7 +978,7 @@ GTNK.squad:
 		Actor: 4TNK.ERAD.Husk
 		RequiresCondition: !being-warped
 	-ExternalCondition@ATOMICAMMO:
-	-WithPlayOnceOnEnabledOverlay@ATOMICAMMO:
+	-WithRestartableIdleOverlay@ATOMICAMMO:
 	-FirepowerMultiplier@ATOMICAMMO:
 	-Targetable@ATOMICAMMO:
 	-AmmoPool@ATOMICAMMO:
@@ -1006,7 +1006,7 @@ GTNK.squad:
 		-PauseOnCondition:
 		-ReloadingCondition:
 	-ExternalCondition@ATOMICAMMO:
-	-WithPlayOnceOnEnabledOverlay@ATOMICAMMO:
+	-WithRestartableIdleOverlay@ATOMICAMMO:
 	-FirepowerMultiplier@ATOMICAMMO:
 	-Targetable@ATOMICAMMO:
 	-AmmoPool@ATOMICAMMO:
@@ -1257,7 +1257,7 @@ ISU:
 		Voice: Attack
 		FacingTolerance: 0
 	WithMuzzleOverlay:
-	WithPlayOnceOnEnabledOverlay@ATOMICAMMO:
+	WithRestartableIdleOverlay@ATOMICAMMO:
 		RequiresCondition: atomic-ammo && has-atomic-ammo < 3
 	WithAmmoPipsDecoration@ATOMICAMMO:
 		PipCount: 3
@@ -6785,7 +6785,7 @@ APOC:
 		VoiceSet: ApocalypseVoice
 	AttackMove:
 		Voice: Attack
-	WithPlayOnceOnEnabledOverlay@ATOMICAMMO:
+	WithRestartableIdleOverlay@ATOMICAMMO:
 		RequiresCondition: atomic-ammo && has-atomic-ammo < 6
 	WithAmmoPipsDecoration@ATOMICAMMO:
 		PipCount: 3

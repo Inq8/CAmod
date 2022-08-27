@@ -3964,8 +3964,14 @@ GRAV:
 		Amount: -20
 	ProvidesPrerequisite@buildingname:
 	WithBuildingBib:
-	WithIdleOverlay@orb:
+	WithRestartableIdleOverlay@orb:
 		RequiresCondition: !build-incomplete && !resupplying
+		RestartSequence: idle-overlay-activate
+		StartSequence: idle-overlay
+	WithRestartableIdleOverlay@orboff:
+		RequiresCondition: !build-incomplete && resupplying
+		Sequence: idle-overlay-deactivate
+		PlayOnce: true
 	WithIdleOverlay@pylon:
 		Sequence: idle-pylon
 		RequiresCondition: !build-incomplete && !damaged
