@@ -1082,6 +1082,8 @@ VenomLaser.UPG:
 VenomLaserAA:
 	Inherits: VenomLaser
 	ValidTargets: Air, AirSmall
+	Projectile: LaserZapCA
+		-HitAnim:
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air, AirSmall
 		Damage: 4000
@@ -1091,6 +1093,9 @@ VenomLaserAA:
 			Light: 100
 			Heavy: 100
 	-Warhead@2Smu:
+	Warhead@3Eff: CreateEffect
+		ValidTargets: Air, AirSmall
+		Explosions: med_explosion
 
 VenomLaserAA.UPG:
 	Inherits: VenomLaserAA

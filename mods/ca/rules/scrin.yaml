@@ -2046,6 +2046,28 @@ STMR:
 	Targetable@RESUPPLYING:
 		TargetTypes: Resupplying
 		RequiresCondition: resupplying
+	GrantConditionOnPrerequisite@SHIELDS:
+		Condition: shields-upgrade
+		Prerequisites: shields.upgrade
+	WithSpriteTurret@SHIELDS:
+		RequiresCondition: shields-upgrade && shields-up
+		Sequence: shield
+		Palette: scrinshield-ignore-lighting-alpha50
+	Turreted@SHIELDS:
+		PauseOnCondition: shields-upgrade
+		RequiresCondition: shields-upgrade
+	Shielded:
+		MaxStrength: 5000
+		RegenDelay: 350
+		RegenAmount: 250
+		RegenInterval: 5
+		ShieldsUpCondition: shields-up
+		RequiresCondition: shields-upgrade && !empdisable
+		SelectionBarColor: ead6ff
+	ExternalCondition@Shield:
+		Condition: shields-up
+	Targetable@TEMPORAL:
+		RequiresCondition: !shields-up
 
 ENRV:
 	Inherits: ^Helicopter
@@ -2162,6 +2184,28 @@ ENRV:
 	Targetable@RESUPPLYING:
 		TargetTypes: Resupplying
 		RequiresCondition: resupplying
+	GrantConditionOnPrerequisite@SHIELDS:
+		Condition: shields-upgrade
+		Prerequisites: shields.upgrade
+	WithSpriteTurret@SHIELDS:
+		RequiresCondition: shields-upgrade && shields-up
+		Sequence: shield
+		Palette: scrinshield-ignore-lighting-alpha50
+	Turreted@SHIELDS:
+		PauseOnCondition: shields-upgrade
+		RequiresCondition: shields-upgrade
+	Shielded:
+		MaxStrength: 5000
+		RegenDelay: 350
+		RegenAmount: 250
+		RegenInterval: 5
+		ShieldsUpCondition: shields-up
+		RequiresCondition: shields-upgrade && !empdisable
+		SelectionBarColor: ead6ff
+	ExternalCondition@Shield:
+		Condition: shields-up
+	Targetable@TEMPORAL:
+		RequiresCondition: !shields-up
 
 DEVA:
 	Inherits: ^Helicopter
@@ -2190,6 +2234,11 @@ DEVA:
 		HP: 32000
 	Armor:
 		Type: Heavy
+	HitShape:
+		TargetableOffsets: 0,0,0, -512,0,0, -1024,0,0
+		Type: Capsule
+			PointA: 0,896
+			PointB: 0, -256
 	RevealsShroud:
 		Range: 8c0
 		MinRange: 7c0
@@ -2294,6 +2343,7 @@ DEVA:
 	Turreted@SHIELDS:
 		PauseOnCondition: shields-upgrade
 		RequiresCondition: shields-upgrade
+		Offset: -64,0,0
 	KillsSelf:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
@@ -2346,6 +2396,11 @@ PAC:
 		HP: 52000
 	Armor:
 		Type: Heavy
+	HitShape:
+		TargetableOffsets: 0,0,0, 1024,0,0, -1024,0,0
+		Type: Capsule
+			PointA: 0,1024
+			PointB: 0,-1024
 	RevealsShroud:
 		Range: 11c0
 		MinRange: 8c0
@@ -2436,6 +2491,7 @@ PAC:
 	Turreted@SHIELDS:
 		PauseOnCondition: shields-upgrade
 		RequiresCondition: shields-upgrade
+		Offset: -128,0,0
 	KillsSelf:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
@@ -2578,6 +2634,10 @@ MSHP:
 		HP: 130000
 	Armor:
 		Type: Heavy
+	HitShape:
+		TargetableOffsets: 0,0,0, 2560,0,0, -2560,0,0, 0,2560,0, 0,-2560,0
+		Type: Circle
+			Radius: 2c768
 	RevealsShroud:
 		Range: 13c0
 		MinRange: 8c0
@@ -2709,6 +2769,28 @@ MSHP:
 	-Targetable@TEMPORAL:
 	-SpeedMultiplier@TEMPORAL:
 	-RejectsOrders@TEMPORAL:
+	GrantConditionOnPrerequisite@SHIELDS:
+		Condition: shields-upgrade
+		Prerequisites: shields.upgrade
+	WithSpriteTurret@SHIELDS:
+		RequiresCondition: shields-upgrade && shields-up
+		Sequence: shield
+		Palette: scrinshield-ignore-lighting-alpha50
+	Turreted@SHIELDS:
+		PauseOnCondition: shields-upgrade
+		RequiresCondition: shields-upgrade
+	Shielded:
+		MaxStrength: 20000
+		RegenDelay: 350
+		RegenAmount: 250
+		RegenInterval: 5
+		ShieldsUpCondition: shields-up
+		RequiresCondition: shields-upgrade && !empdisable
+		SelectionBarColor: ead6ff
+	ExternalCondition@Shield:
+		Condition: shields-up
+	Targetable@TEMPORAL:
+		RequiresCondition: !shields-up
 
 #
 # ---- Husks
