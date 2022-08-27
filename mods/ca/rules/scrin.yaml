@@ -2049,6 +2049,11 @@ STMR:
 	GrantConditionOnPrerequisite@SHIELDS:
 		Condition: shields-upgrade
 		Prerequisites: shields.upgrade
+	KillsSelf:
+		RequiresCondition: empdisable && cruising && !shields-upgrade
+	SpeedMultiplier@EMPDISABLE:
+		Modifier: 50
+		RequiresCondition: empdisable
 	WithSpriteTurret@SHIELDS:
 		RequiresCondition: shields-upgrade && shields-up
 		Sequence: shield
@@ -2187,6 +2192,11 @@ ENRV:
 	GrantConditionOnPrerequisite@SHIELDS:
 		Condition: shields-upgrade
 		Prerequisites: shields.upgrade
+	KillsSelf:
+		RequiresCondition: empdisable && cruising && !shields-upgrade
+	SpeedMultiplier@EMPDISABLE:
+		Modifier: 50
+		RequiresCondition: empdisable
 	WithSpriteTurret@SHIELDS:
 		RequiresCondition: shields-upgrade && shields-up
 		Sequence: shield
@@ -2347,7 +2357,7 @@ DEVA:
 	KillsSelf:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
-		Modifier: 0
+		Modifier: 50
 		RequiresCondition: empdisable
 	Repairable:
 		RepairActors: fix, rep, srep
@@ -2495,7 +2505,7 @@ PAC:
 	KillsSelf:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
-		Modifier: 0
+		Modifier: 50
 		RequiresCondition: empdisable
 	Repairable:
 		RepairActors: fix, rep, srep
@@ -2693,14 +2703,17 @@ MSHP:
 		RequiresCondition: !airborne
 	SpawnActorOnDeath:
 		Actor: MSHP.Husk
-		RequiresCondition: !being-warped
+		RequiresCondition: !empdisable && !being-warped
+	SpawnActorOnDeath@EMP:
+		Actor: MSHP.Husk.EMP
+		RequiresCondition: empdisable && !being-warped
 	-Hovers@CRUISING:
 	WithFacingSpriteBody:
 	AttackFrontal:
 		Armaments: primary, secondary, tertiary
 		FacingTolerance: 32
 		Voice: Attack
-		PauseOnCondition: being-warped
+		PauseOnCondition: empdisable || being-warped
 		ForceFireIgnoresActors: true
 	-EjectOnDeath:
 	ProducibleWithLevel:
@@ -2721,6 +2734,7 @@ MSHP:
 		OverlayPalette: playerscrin
 		IsPlayerPalette: true
 		ShowSelectionBarWhenEmpty: false
+		RequiresCondition: !empdisable
 	ExternalCondition@PRODUCED:
 		Condition: produced
 	VoiceAnnouncement:
@@ -2772,6 +2786,11 @@ MSHP:
 	GrantConditionOnPrerequisite@SHIELDS:
 		Condition: shields-upgrade
 		Prerequisites: shields.upgrade
+	KillsSelf:
+		RequiresCondition: empdisable && cruising && !shields-upgrade
+	SpeedMultiplier@EMPDISABLE:
+		Modifier: 50
+		RequiresCondition: empdisable
 	WithSpriteTurret@SHIELDS:
 		RequiresCondition: shields-upgrade && shields-up
 		Sequence: shield
@@ -3096,6 +3115,10 @@ MSHP.Husk:
 		Image: mshp
 		Sequence: ring
 		Offset: 0,0,0
+
+MSHP.Husk.EMP:
+	Inherits: MSHP.Husk
+	Inherits@EMP: ^EmpVisualEffect
 
 MSHP.Husk.Ground:
 	Inherits: ^Husk
