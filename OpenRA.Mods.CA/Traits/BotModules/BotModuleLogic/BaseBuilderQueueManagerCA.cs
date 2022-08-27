@@ -145,8 +145,7 @@ namespace OpenRA.Mods.CA.Traits
 				if (baseBuilder.Info.BuildingLimits.ContainsKey(currentBuilding.Item))
 				{
 					if ((AIUtils.CountBuildingByCommonName(new HashSet<string> { currentBuilding.Item }, player) >= baseBuilder.Info.BuildingLimits[currentBuilding.Item])
-						|| (baseBuilder.Info.RefineryTypes.Contains(currentBuilding.Item) && baseBuilder.HasMaxRefineries)
-						|| (baseBuilder.Info.AirProductionTypes.Contains(currentBuilding.Item) && baseBuilder.HasMaxAirProduction))
+						|| (baseBuilder.Info.RefineryTypes.Contains(currentBuilding.Item) && baseBuilder.HasMaxRefineries))
 					{
 						AIUtils.BotDebug($"{player} has already has enough {currentBuilding.Item}; cancelling production");
 						bot.QueueOrder(Order.CancelProduction(queue.Actor, currentBuilding.Item, 1));
@@ -400,9 +399,6 @@ namespace OpenRA.Mods.CA.Traits
 				}
 
 				if (baseBuilder.Info.RefineryTypes.Contains(name) && baseBuilder.HasMaxRefineries)
-					continue;
-
-				if (baseBuilder.Info.AirProductionTypes.Contains(name) && baseBuilder.HasMaxAirProduction)
 					continue;
 
 				// If we're considering to build a naval structure, check whether there is enough water inside the base perimeter

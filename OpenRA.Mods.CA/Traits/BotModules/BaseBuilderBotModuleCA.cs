@@ -46,9 +46,6 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Tells the AI what building types are considered production facilities.")]
 		public readonly HashSet<string> ProductionTypes = new HashSet<string>();
 
-		[Desc("Tells the AI what building types are considered air production facilities.")]
-		public readonly HashSet<string> AirProductionTypes = new HashSet<string>();
-
 		[Desc("Tells the AI what building types are considered naval production facilities.")]
 		public readonly HashSet<string> NavalProductionTypes = new HashSet<string>();
 
@@ -69,9 +66,6 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Maximum number of extra refineries to build (in addition to 1 per construction yard).")]
 		public readonly int MaxExtraRefineries = 2;
-
-		[Desc("Maximum number of air production structures.")]
-		public readonly int MaxAirProduction = 5;
 
 		[Desc("Minimum excess power the AI should try to maintain.")]
 		public readonly int MinimumExcessPower = 0;
@@ -361,20 +355,12 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		public bool HasMaxAirProduction
-		{
-			get
-			{
-				var currentAirProductionCount = AIUtils.CountBuildingByCommonName(Info.AirProductionTypes, player);
-				return currentAirProductionCount >= Info.MaxAirProduction;
-			}
-		}
-
 		public bool HasAdequateRefineryCount
 		{
 			get
 			{
 				var desiredAmount = HasAdequateBarracksCount && HasAdequateFactoryCount ? Info.AdditionalMinimumRefineryCount : Info.InititalMinimumRefineryCount;
+
 				// Require at least one refinery, unless we can't build it.
 				return AIUtils.CountBuildingByCommonName(Info.RefineryTypes, player) >= desiredAmount ||
 					AIUtils.CountBuildingByCommonName(Info.PowerTypes, player) == 0 ||
