@@ -3511,9 +3511,12 @@ AIRS:
 		Types: SpyInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
-	ProductionCostMultiplier@First:
+	ProductionCostMultiplier@FirstSQ:
 		Multiplier: 90
-		Prerequisites: !vehicles.any
+		Prerequisites: !vehicles.any, !global.multiqueue
+	ProductionCostMultiplier@MQ:
+		Multiplier: 90
+		Prerequisites: global.multiqueue
 
 NUKE:
 	Inherits: ^BuildingTD
