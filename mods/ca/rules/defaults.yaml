@@ -3684,11 +3684,11 @@
 		OnHoldAudio: OnHold
 		CancelledAudio: Cancelled
 	Production@SQINF:
-		Produces: InfantrySQ, Soldier, ParadropInfantry
+		Produces: InfantrySQ, Cyborg, Soldier, ParadropInfantry
 		PauseOnCondition: forceshield || invulnerability || being-warped
 		RequiresCondition: !global-multiqueue
 	Production@MQINF:
-		Produces: InfantryMQ, Soldier, ParadropInfantry
+		Produces: InfantryMQ, CyborgMQ, Cyborg, Soldier, ParadropInfantry
 		PauseOnCondition: forceshield || invulnerability || being-warped
 		RequiresCondition: global-multiqueue
 	ProductionBar@SQINF:
@@ -3701,6 +3701,20 @@
 		Condition: produced
 	Targetable@INF:
 		TargetTypes: InfantryProducer
+
+^ProducesCyborgs:
+	Inherits: ^ProducesInfantry
+	ProductionQueue@MQINF:
+		Type: CyborgMQ
+	Production@SQINF:
+		Produces: InfantrySQ, Cyborg, ParadropInfantry, Upgrade
+	Production@MQINF:
+		Produces: CyborgMQ, Cyborg, Upgrade
+	ProductionBar@SQINF:
+		ProductionType: InfantrySQ
+	ProductionBar@MQINF:
+		ProductionType: CyborgMQ
+	-Targetable@INF:
 
 ^ProducesVehicles:
 	Inherits@QUEUEUPDATER: ^QueueUpdater

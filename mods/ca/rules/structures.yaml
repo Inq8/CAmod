@@ -2565,10 +2565,14 @@ KENN:
 		RequiresCondition: !being-captured
 		SpawnOffset: -280,400,0
 		ExitCell: -1,0
-	Production:
+	Production@SQ:
 		Produces: InfantrySQ, Dog
 		PauseOnCondition: forceshield || invulnerability || being-warped
 		RequiresCondition: !global-multiqueue
+	Production@MQ:
+		Produces: Dog
+		PauseOnCondition: forceshield || invulnerability || being-warped
+		RequiresCondition: global-multiqueue
 	ProductionBar:
 		ProductionType: InfantrySQ
 	ProvidesPrerequisite@dog:
@@ -6459,7 +6463,7 @@ TMPP:
 	Inherits: ^BuildingTD
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^3x2Shape
-	Inherits@INF: ^ProducesInfantry
+	Inherits@INF: ^ProducesCyborgs
 	Inherits@UPG: ^ProducesUpgrades
 	RenderSprites:
 		PlayerPalette: playertd
@@ -6520,8 +6524,6 @@ TMPP:
 		Prerequisites: cyborg.upgrade, hand
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
-	Production@SQINF:
-		Produces: InfantrySQ, Cyborg, ParadropInfantry, Upgrade
 	Exit@1:
 		SpawnOffset: -170,1310,0
 		ExitCell: 1,3
@@ -6544,7 +6546,7 @@ TMPP:
 		EjectOnDeploy: true
 		ConvertingCondition: converting
 	PrimaryBuilding:
-		RequiresCondition: !converting
+		RequiresCondition: !converting && !global-multiqueue
 	-MindControllable:
 	-Targetable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
