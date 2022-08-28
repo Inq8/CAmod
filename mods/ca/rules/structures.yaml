@@ -1225,6 +1225,7 @@ ATEK:
 		ChargeInterval: 8250
 		OrderName: InitialSatelliteScanPower
 		AutoFire: True
+		OneShot: True
 		DisplayTimerRelationships: Ally
 		SupportPowerPaletteOrder: 35
 	ProduceActorPowerCA@SatelliteScan:
@@ -4124,14 +4125,15 @@ HQ:
 		TargetCircleRange: 9c512
 		TargetCircleColor: 999999AA
 		SupportPowerPaletteOrder: 50
-	ProduceActorPower@hackercell:
+	ProduceActorPowerCA@hackercell:
 		OrderName: hackercell
 		Prerequisites: infantry.any, ~radar.legion
 		Icon: hackercell
 		Type: ParadropInfantry
+		SelectTargetSpeechNotification: SelectTarget
 		ChargeInterval: 7500
 		Name: Hacker Cell
-		Description: \nDeploy a squad of hackers that can remotely\n    capture buildings and take control of defenses.\n\nDeploys from primary infantry production structure.
+		Description: \nDeploy a squad of hackers that can remotely\n    capture buildings and take control of defenses.\n\nTarget infantry production structure to deploy.
 		Actors: hack, hack, hack
 		LaunchSpeechNotification: ReinforcementsArrived
 		EndChargeSpeechNotification: Reinforce
@@ -6519,7 +6521,7 @@ TMPP:
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	Production@SQINF:
-		Produces: InfantrySQ, Cyborg, Upgrade
+		Produces: InfantrySQ, Cyborg, ParadropInfantry, Upgrade
 	Exit@1:
 		SpawnOffset: -170,1310,0
 		ExitCell: 1,3
