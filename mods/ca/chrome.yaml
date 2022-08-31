@@ -135,14 +135,14 @@ observer-scrollpanel-button-disabled:
 	Inherits: ^Dialog
 	PanelRegion: 769, 385, 2, 2, 122, 122, 2, 2
 
-observer-scrollheader-selected:
+observer-scrollheader:
 	Inherits: observer-scrollpanel-button-disabled
 
-observer-scrollitem-selected:
-	Inherits: observer-scrollpanel-button-pressed
+observer-scrollheader-highlighted:
+	Inherits: observer-scrollpanel-button-disabled
 
-observer-scrollitem-hover:
-	Inherits: observer-scrollpanel-button
+observer-scrollitem-highlighted:
+	Inherits: observer-scrollpanel-button-pressed
 
 # Used for the main menu frame
 dialog:
@@ -362,6 +362,24 @@ scrollpanel-button-pressed:
 scrollpanel-button-disabled:
 	Inherits: button
 
+scrollitem:
+
+scrollitem-hover:
+	Inherits: button
+
+scrollitem-highlighted:
+	Inherits: button-pressed
+
+scrollitem-nohover:
+
+scrollitem-nohover-highlighted:
+
+scrollheader:
+	Inherits: button
+
+scrollheader-highlighted:
+	Inherits: button
+
 slider:
 	Inherits: ^Dialog
 	Regions:
@@ -454,17 +472,6 @@ checkbox-toggle-highlighted-hover:
 
 checkbox-toggle-highlighted-pressed:
 	Inherits: checkbox-highlighted-pressed
-
-scrollitem-selected:
-	Inherits: button-pressed
-
-scrollitem-hover:
-	Inherits: button
-
-scrollheader-selected:
-	Inherits: button
-
-scrollitem-nohover:
 
 loading-artwork:
 	Image: ca-loading-artwork.png

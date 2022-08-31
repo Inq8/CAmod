@@ -33,9 +33,7 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				// HACK: RefreshState updated *all* actor state, not just the owner
 				// This is generally bogus, and specifically breaks cursors and tooltips by setting Hidden to false
-				var hidden = fa.Hidden;
 				fa.RefreshState();
-				fa.Hidden = hidden;
 				fa.NeedRenderables = true;
 			}
 		};
