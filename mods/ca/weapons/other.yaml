@@ -261,8 +261,9 @@ BigFlamerTD:
 	Burst: 2
 	BurstDelays: 5
 	Projectile: LinearPulse
-		Speed: 96
-		ImpactInterval: 3
+		Speed: 288
+		VisualSpeed: 96
+		ImpactInterval: 1
 		Image: flameallfast
 		Inaccuracy: 484
 		Palette: tseffect-ignore-lighting-alpha90
@@ -271,6 +272,8 @@ BigFlamerTD:
 		-ForceGround:
 	Warhead@1Dam: SpreadDamage
 		Damage: 925
+		Versus:
+			Light: 100
 
 BigFlamerTDFF:
 	Inherits: BigFlamerTD
@@ -352,6 +355,7 @@ BlackHandFlamer:
 	Range: 3c512
 	Projectile: LinearPulse
 		Speed: 220
+		-VisualSpeed:
 		ImpactInterval: 2
 		Inaccuracy: 160
 		Image: thinblueflame
