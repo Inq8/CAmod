@@ -28,7 +28,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly int IdleBaseUnitsMaximum = 12;
 
 		[Desc("Production queues AI uses for producing units.")]
-		public readonly HashSet<string> UnitQueues = new HashSet<string> { "VehicleSQ", "InfantrySQ", "AircraftSQ", "ShipSQ", "VehicleMQ", "InfantryMQ", "AircraftMQ", "ShipMQ" };
+		public readonly string[] UnitQueues = { "VehicleSQ", "InfantrySQ", "AircraftSQ", "ShipSQ", "VehicleMQ", "InfantryMQ", "AircraftMQ", "ShipMQ" };
 
 		[Desc("What units to the AI should build.", "What relative share of the total army must be this type of unit.")]
 		public readonly Dictionary<string, int> UnitsToBuild = null;
@@ -45,8 +45,11 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("How often should the unit builder check to build more units")]
 		public readonly int UnitBuilderInterval = 0;
 
-		[Desc("Mininum amount of credits in reserve for the Unit Builder to be active.")]
-		public readonly int UnitBuilderMinCredits = 2000;
+		[Desc("Only queue construction of a new unit when above this requirement.")]
+		public readonly int ProductionMinCashRequirement = 2000;
+
+		[Desc("Only queue construction of a new unit when above this requirement.")]
+		public readonly int MaximiseProductionCashRequirement = 10000;
 
 		[Desc("Maximum number of aircraft AI can build.",
 			"If MaintainAirSuperiority is true this only applies to units not listed in AirToAirUnits.")]
@@ -80,6 +83,8 @@ namespace OpenRA.Mods.CA.Traits
 
 		IBotRequestPauseUnitProduction[] requestPause;
 		int idleUnitCount;
+		int currentQueueIndex = 0;
+		PlayerResources playerResources;
 
 		int ticks;
 
@@ -97,6 +102,7 @@ namespace OpenRA.Mods.CA.Traits
 			// so we must query player traits from self, which refers
 			// for bot modules always to the Player actor.
 			requestPause = self.TraitsImplementing<IBotRequestPauseUnitProduction>().ToArray();
+			playerResources = self.Owner.PlayerActor.Trait<PlayerResources>();
 		}
 
 		void IBotNotifyIdleBaseUnits.UpdatedIdleBaseUnits(List<Actor> idleUnits)
@@ -106,9 +112,11 @@ namespace OpenRA.Mods.CA.Traits
 
 		void IBotTick.BotTick(IBot bot)
 		{
-			if (requestPause.Any(rp => rp.PauseUnitProduction))
+			// PERF: We shouldn't be queueing new units when we're low on cash
+			if (playerResources.Cash < Info.ProductionMinCashRequirement || requestPause.Any(rp => rp.PauseUnitProduction))
 				return;
 
+			// Decrement any active unit intervals, removing any that reach zero
 			foreach (KeyValuePair<string, int> i in activeUnitIntervals.ToList())
 			{
 				activeUnitIntervals[i.Key]--;
@@ -127,9 +135,21 @@ namespace OpenRA.Mods.CA.Traits
 					queuedBuildRequests.Remove(buildRequest);
 				}
 
-				if (player.PlayerActor.Trait<PlayerResources>().Cash + player.PlayerActor.Trait<PlayerResources>().Resources >= Info.UnitBuilderMinCredits)
-					foreach (var q in Info.UnitQueues)
-						BuildUnit(bot, q, idleUnitCount < Info.IdleBaseUnitsMaximum);
+				for (var i = 0; i < Info.UnitQueues.Length; i++)
+				{
+					if (++currentQueueIndex >= Info.UnitQueues.Length)
+						currentQueueIndex = 0;
+
+					if (AIUtils.FindQueues(player, Info.UnitQueues[currentQueueIndex]).Any())
+					{
+						// PERF: We tick only one type of valid queue at a time
+						// if AI gets enough cash, it can fill all of its queues with enough ticks
+						BuildUnit(bot, Info.UnitQueues[currentQueueIndex], idleUnitCount < Info.IdleBaseUnitsMaximum, false);
+
+						if (playerResources.Cash < Info.MaximiseProductionCashRequirement)
+							break;
+					}
+				}
 			}
 		}
 
@@ -143,7 +163,7 @@ namespace OpenRA.Mods.CA.Traits
 			return queuedBuildRequests.Count(r => r == requestedActor);
 		}
 
-		void BuildUnit(IBot bot, string category, bool buildRandom)
+		void BuildUnit(IBot bot, string category, bool buildRandom, bool excludeLimited)
 		{
 			// Pick a free queue
 			var queue = AIUtils.FindQueues(player, category).FirstOrDefault(q => !q.AllQueued().Any());
@@ -151,8 +171,8 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			var unit = buildRandom ?
-				ChooseRandomUnitToBuild(queue) :
-				ChooseUnitToBuild(queue);
+				ChooseRandomUnitToBuild(queue, excludeLimited) :
+				ChooseUnitToBuild(queue, excludeLimited);
 
 			if (unit == null)
 				return;
@@ -160,7 +180,12 @@ namespace OpenRA.Mods.CA.Traits
 			var name = unit.Name;
 
 			if (!ShouldBuild(name, false))
+			{
+				if (!excludeLimited)
+					BuildUnit(bot, category, buildRandom, true);
+
 				return;
+			}
 
 			SetUnitInterval(name);
 			bot.QueueOrder(Order.StartProduction(queue.Actor, name, 1));
@@ -188,7 +213,7 @@ namespace OpenRA.Mods.CA.Traits
 					break;
 			}
 
-			if (queue != null)
+			if (queue != null && queue.BuildableItems().Any(b => b.Name == name))
 			{
 				SetUnitInterval(name);
 				bot.QueueOrder(Order.StartProduction(queue.Actor, name, 1));
@@ -227,9 +252,9 @@ namespace OpenRA.Mods.CA.Traits
 			return true;
 		}
 
-		ActorInfo ChooseRandomUnitToBuild(ProductionQueue queue)
+		ActorInfo ChooseRandomUnitToBuild(ProductionQueue queue, bool excludeLimited)
 		{
-			var buildableThings = queue.BuildableItems();
+			var buildableThings = queue.BuildableItems().Where(a => Info.UnitsToBuild.ContainsKey(a.Name) && (!excludeLimited || !Info.UnitLimits.ContainsKey(a.Name)));
 			if (!buildableThings.Any())
 				return null;
 
@@ -237,7 +262,7 @@ namespace OpenRA.Mods.CA.Traits
 			return CanBuildMoreOfAircraft(unit) ? unit : null;
 		}
 
-		ActorInfo ChooseUnitToBuild(ProductionQueue queue)
+		ActorInfo ChooseUnitToBuild(ProductionQueue queue, bool excludeLimited)
 		{
 			var buildableThings = queue.BuildableItems();
 			if (!buildableThings.Any())
@@ -250,9 +275,10 @@ namespace OpenRA.Mods.CA.Traits
 
 			foreach (var unit in Info.UnitsToBuild.Shuffle(world.LocalRandom))
 				if (buildableThings.Any(b => b.Name == unit.Key))
-					if (myUnits.Count(a => a == unit.Key) * 100 < unit.Value * myUnits.Count)
-						if (CanBuildMoreOfAircraft(world.Map.Rules.Actors[unit.Key]))
-							return world.Map.Rules.Actors[unit.Key];
+					if (!excludeLimited || !Info.UnitLimits.ContainsKey(unit.Key))
+						if (myUnits.Count(a => a == unit.Key) * 100 < unit.Value * myUnits.Count)
+							if (CanBuildMoreOfAircraft(world.Map.Rules.Actors[unit.Key]))
+								return world.Map.Rules.Actors[unit.Key];
 
 			return null;
 		}

@@ -20,7 +20,8 @@ namespace OpenRA.Mods.CA.Traits
 {
 	class BaseBuilderQueueManagerCA
 	{
-		readonly string category;
+		public readonly string Category;
+		public int WaitTicks;
 
 		readonly BaseBuilderBotModuleCA baseBuilder;
 		readonly World world;
@@ -29,7 +30,6 @@ namespace OpenRA.Mods.CA.Traits
 		readonly PlayerResources playerResources;
 		readonly IResourceLayer resourceLayer;
 
-		int waitTicks;
 		Actor[] playerBuildings;
 		int failCount;
 		int failRetryTicks;
@@ -38,7 +38,10 @@ namespace OpenRA.Mods.CA.Traits
 		int cachedBuildings;
 		int minimumExcessPower;
 
+		bool itemQueuedThisTick = false;
+
 		WaterCheck waterState = WaterCheck.NotChecked;
+		readonly Dictionary<string, int> activeBuildingIntervals = new Dictionary<string, int>();
 
 		public BaseBuilderQueueManagerCA(BaseBuilderBotModuleCA baseBuilder, string category, Player p, PowerManager pm,
 			PlayerResources pr, IResourceLayer rl)
@@ -49,7 +52,7 @@ namespace OpenRA.Mods.CA.Traits
 			playerPower = pm;
 			playerResources = pr;
 			resourceLayer = rl;
-			this.category = category;
+			Category = category;
 			failRetryTicks = baseBuilder.Info.StructureProductionResumeDelay;
 			minimumExcessPower = baseBuilder.Info.MinimumExcessPower;
 			if (baseBuilder.Info.NavalProductionTypes.Count == 0)
@@ -58,6 +61,13 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void Tick(IBot bot)
 		{
+			foreach (KeyValuePair<string, int> i in activeBuildingIntervals.ToList())
+			{
+				activeBuildingIntervals[i.Key]--;
+				if (activeBuildingIntervals[i.Key] <= 0)
+					activeBuildingIntervals.Remove(i.Key);
+			}
+
 			// If failed to place something N consecutive times, wait M ticks until resuming building production
 			if (failCount >= baseBuilder.Info.MaximumFailedPlacementAttempts && --failRetryTicks <= 0)
 			{
@@ -96,23 +106,27 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			// Only update once per second or so
-			if (--waitTicks > 0)
+			if (WaitTicks > 0)
 				return;
 
 			playerBuildings = world.ActorsHavingTrait<Building>().Where(a => a.Owner == player).ToArray();
 			var excessPowerBonus = baseBuilder.Info.ExcessPowerIncrement * (playerBuildings.Count() / baseBuilder.Info.ExcessPowerIncreaseThreshold.Clamp(1, int.MaxValue));
 			minimumExcessPower = (baseBuilder.Info.MinimumExcessPower + excessPowerBonus).Clamp(baseBuilder.Info.MinimumExcessPower, baseBuilder.Info.MaximumExcessPower);
 
+			// PERF: Queue only one actor at a time per category
+			itemQueuedThisTick = false;
 			var active = false;
-			foreach (var queue in AIUtils.FindQueues(player, category))
+			foreach (var queue in AIUtils.FindQueues(player, Category))
+			{
 				if (TickQueue(bot, queue))
 					active = true;
+			}
 
 			// Add a random factor so not every AI produces at the same tick early in the game.
 			// Minimum should not be negative as delays in HackyAI could be zero.
 			var randomFactor = world.LocalRandom.Next(0, baseBuilder.Info.StructureProductionRandomBonusDelay);
 
-			waitTicks = active ? baseBuilder.Info.StructureProductionActiveDelay + randomFactor
+			WaitTicks = active ? baseBuilder.Info.StructureProductionActiveDelay + randomFactor
 				: baseBuilder.Info.StructureProductionInactiveDelay + randomFactor;
 		}
 
@@ -123,11 +137,17 @@ namespace OpenRA.Mods.CA.Traits
 			// Waiting to build something
 			if (currentBuilding == null && failCount < baseBuilder.Info.MaximumFailedPlacementAttempts)
 			{
+				// PERF: We shouldn't be queueing new buildings when we're low on cash
+				if (playerResources.Cash < baseBuilder.Info.ProductionMinCashRequirement || itemQueuedThisTick)
+					return false;
+
 				var item = ChooseBuildingToBuild(queue);
 				if (item == null)
 					return false;
 
 				bot.QueueOrder(Order.StartProduction(queue.Actor, item.Name, 1));
+				itemQueuedThisTick = true;
+				SetBuildingInterval(item.Name);
 			}
 			else if (currentBuilding != null && currentBuilding.Done)
 			{
@@ -211,8 +231,6 @@ namespace OpenRA.Mods.CA.Traits
 						ExtraData = queue.Actor.ActorID,
 						SuppressVisualFeedback = true
 					});
-
-					return true;
 				}
 			}
 
@@ -230,7 +248,8 @@ namespace OpenRA.Mods.CA.Traits
 				if (!baseBuilder.Info.BuildingLimits.ContainsKey(actor.Name))
 					return true;
 
-				return playerBuildings.Count(a => a.Info.Name == actor.Name) < baseBuilder.Info.BuildingLimits[actor.Name];
+				var count = playerBuildings.Count(a => a.Info.Name == actor.Name) + (baseBuilder.BuildingsBeingProduced != null ? (baseBuilder.BuildingsBeingProduced.ContainsKey(actor.Name) ? baseBuilder.BuildingsBeingProduced[actor.Name] : 0) : 0);
+				return count < baseBuilder.Info.BuildingLimits[actor.Name];
 			});
 
 			if (orderBy != null)
@@ -378,16 +397,28 @@ namespace OpenRA.Mods.CA.Traits
 					baseBuilder.Info.BuildingDelays[name] > world.WorldTick)
 					continue;
 
+				// Does this building have an interval which hasn't elapsed yet?
+				if (baseBuilder.Info.BuildingIntervals != null &&
+					baseBuilder.Info.BuildingIntervals.ContainsKey(name) &&
+					activeBuildingIntervals.ContainsKey(name))
+					continue;
+
 				// Can we build this structure?
 				if (!buildableThings.Any(b => b.Name == name))
 					continue;
 
+				// Check the number of this structure and its variants
+				var actorInfo = world.Map.Rules.Actors[name];
+				var buildingVariantInfo = actorInfo.TraitInfoOrDefault<PlaceBuildingVariantsInfo>();
+				var variants = buildingVariantInfo?.Actors ?? Array.Empty<string>();
+
+				var count = playerBuildings.Count(a => a.Info.Name == name || variants.Contains(a.Info.Name)) + (baseBuilder.BuildingsBeingProduced != null ? (baseBuilder.BuildingsBeingProduced.ContainsKey(name) ? baseBuilder.BuildingsBeingProduced[name] : 0) : 0);
+
 				// Do we want to build this structure?
-				var count = playerBuildings.Count(a => a.Info.Name == name);
 				if (count * 100 > frac.Value * playerBuildings.Length)
 					continue;
 
-				if (baseBuilder.Info.BuildingLimits.ContainsKey(name) && baseBuilder.Info.BuildingLimits[name] <= count)
+				if (baseBuilder.Info.BuildingLimits.ContainsKey(name) && count >= baseBuilder.Info.BuildingLimits[name])
 				{
 					AIUtils.BotDebug("{0} decided to build {1} but limit of {2} already reached)", queue.Actor.Owner, name, baseBuilder.Info.BuildingLimits[name]);
 					continue;
@@ -503,6 +534,14 @@ namespace OpenRA.Mods.CA.Traits
 
 			// Can't find a build location
 			return null;
+		}
+
+		void SetBuildingInterval(string name)
+		{
+			if (baseBuilder.Info.BuildingIntervals == null || !baseBuilder.Info.BuildingIntervals.ContainsKey(name))
+				return;
+
+			activeBuildingIntervals[name] = baseBuilder.Info.BuildingIntervals[name];
 		}
 	}
 }
