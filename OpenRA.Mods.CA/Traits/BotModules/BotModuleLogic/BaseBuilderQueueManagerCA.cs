@@ -318,21 +318,16 @@ namespace OpenRA.Mods.CA.Traits
 			if (baseBuilder.Info.NewProductionCashThreshold > 0 && playerResources.Resources > baseBuilder.Info.NewProductionCashThreshold)
 			{
 				var production = GetProducibleBuilding(baseBuilder.Info.ProductionTypes, buildableThings);
-
-				var count = playerBuildings.Count(a => a.Info.Name == production.Name);
-				if (!baseBuilder.Info.BuildingLimits.ContainsKey(production.Name) || baseBuilder.Info.BuildingLimits[production.Name] > count)
+				if (production != null && HasSufficientPowerForActor(production))
 				{
-					if (production != null && HasSufficientPowerForActor(production))
-					{
-						AIUtils.BotDebug("{0} decided to build {1}: Priority override (production)", queue.Actor.Owner, production.Name);
-						return production;
-					}
+					AIUtils.BotDebug("{0} decided to build {1}: Priority override (production)", queue.Actor.Owner, production.Name);
+					return production;
+				}
 
-					if (power != null && production != null && !HasSufficientPowerForActor(production))
-					{
-						AIUtils.BotDebug("{0} decided to build {1}: Priority override (would be low power)", queue.Actor.Owner, power.Name);
-						return power;
-					}
+				if (power != null && production != null && !HasSufficientPowerForActor(production))
+				{
+					AIUtils.BotDebug("{0} decided to build {1}: Priority override (would be low power)", queue.Actor.Owner, power.Name);
+					return power;
 				}
 			}
 
