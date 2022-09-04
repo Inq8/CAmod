@@ -16,7 +16,7 @@ WestPatrolPath = { WestPatrolWaypoint1.Location, WestPatrolWaypoint2.Location }
 -- Other Variables
 
 BasicAttackSquadUnits = { "e1", "e1", "e1", "e2", "e3", "e4", "3tnk", "btr" }
-AdvancedAttackSquadUnits = { "e1", "e1", "shok", "e1", "e2", "e3", "e3", "e4", "4tnk", "btr", "katy" }
+AdvancedAttackSquadUnits = { "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e3", "e4", "4tnk", "btr", "katy" }
 WestPatrolUnits = { WestPatrolUnit1, WestPatrolUnit2, WestPatrolUnit3, WestPatrolUnit4 }
 
 AttackSquadDelay =
@@ -56,9 +56,9 @@ AdvancedAttackSquadStart =
 
 EvacuationTime =
 {
-	easy = 150,
-	normal = 210,
-	hard = 270
+	easy = 180,
+	normal = 240,
+	hard = 300
 }
 
 -- Setup and Tick
@@ -75,7 +75,11 @@ WorldLoaded = function()
 
 	Trigger.OnDiscovered(SovietChronosphere, function()
 		if not chronosphereDiscovered then
+			chronosphereDiscovered = true
 			Media.DisplayMessage("Commander, the Soviets have been attempting to reverse engineer stolen Chronosphere technology! Use whatever means necessary to cease their experiments.", "HQ")
+			if InvestigateArea == nil then
+				InvestigateArea = Greece.AddObjective("Investigate the area.")
+			end
 			CaptureOrDestroyChronosphere = Greece.AddObjective("Capture or destroy the Soviet Chronosphere.")
 			Greece.MarkCompletedObjective(InvestigateArea)
 		end
@@ -89,9 +93,26 @@ end
 Tick = function()
 	if not baseEstablished and CheckForConYard() then
 		baseEstablished = true
-		InvestigateArea = Greece.AddObjective("Investigate the area.")
+		if InvestigateArea == nil then
+			InvestigateArea = Greece.AddObjective("Investigate the area.")
+		end
 		Greece.MarkCompletedObjective(EstablishBase)
 		Media.PlaySoundNotification(Greece, "AlertBleep")
+	end
+
+	if DateTime.GameTime > DateTime.Seconds(30) and Greece.HasNoRequiredUnits() then
+		if EstablishBase ~= nil and not Greece.IsObjectiveCompleted(EstablishBase) then
+			Greece.MarkFailedObjective(EstablishBase)
+		end
+		if InvestigateArea ~= nil and not Greece.IsObjectiveCompleted(InvestigateArea) then
+			Greece.MarkFailedObjective(InvestigateArea)
+		end
+		if CaptureOrDestroyChronosphere ~= nil and not Greece.IsObjectiveCompleted(CaptureOrDestroyChronosphere) then
+			Greece.MarkFailedObjective(CaptureOrDestroyChronosphere)
+		end
+		if DefendUntilEvacuation ~= nil and not Greece.IsObjectiveCompleted(DefendUntilEvacuation) then
+			Greece.MarkFailedObjective(DefendUntilEvacuation)
+		end
 	end
 end
 
@@ -108,6 +129,9 @@ InitUSSR = function()
 
 	-- Begin main attacks after difficulty based delay
 	Trigger.AfterDelay(AttackSquadDelay[Difficulty], ProduceAttackSquad)
+
+	-- Drop after 10 mins
+	Trigger.AfterDelay(DateTime.Minutes(10), DoHaloDrop)
 
 	-- Set western patrol
 	Utils.Do(WestPatrolUnits, function(unit)
@@ -242,6 +266,12 @@ InterdimensionalCrossrip = function()
 	end
 
 	crossRipped = true
+
+	Lighting.Ambient = 0.8
+	Lighting.Red = 0.8
+	Lighting.Blue = 0.9
+	Lighting.Green = 1.2
+
 	Trigger.AfterDelay(1, SpawnWormhole)
 	Trigger.AfterDelay(2, SpawnTibTree)
 
@@ -269,7 +299,7 @@ InterdimensionalCrossrip = function()
 	Actor.Create("flare", true, { Owner = Greece, Location = Evac2.Location })
 	Actor.Create("flare", true, { Owner = Greece, Location = Evac3.Location })
 
-	Trigger.AfterDelay(DateTime.Seconds(EvacuationTime[Difficulty]), function()
+	Trigger.AfterDelay(DateTime.Seconds(EvacuationTime[Difficulty] - 12), function()
 		Reinforcements.ReinforceWithTransport(Greece, "nhaw.paradrop", nil, { CPos.New(Evac1.Location.X - 10, Evac1.Location.Y + 15), CPos.New(Evac1.Location.X, Evac1.Location.Y - 1) })
 		Reinforcements.ReinforceWithTransport(Greece, "nhaw.paradrop", nil, { CPos.New(Evac2.Location.X - 10, Evac2.Location.Y + 15), CPos.New(Evac2.Location.X, Evac2.Location.Y - 1) })
 		Reinforcements.ReinforceWithTransport(Greece, "nhaw.paradrop", nil, { CPos.New(Evac2.Location.X - 10, Evac3.Location.Y + 15), CPos.New(Evac3.Location.X, Evac3.Location.Y - 1) })
@@ -308,4 +338,19 @@ AssaultPlayerBase = function(actor)
 	if not actor.IsDead then
 		actor.AttackMove(CPos.New(25,48))
 	end
+end
+
+DoHaloDrop = function()
+	local entryPath = { CPos.New(HaloDrop.Location.X + 35, HaloDrop.Location.Y - 25), HaloDrop.Location }
+
+	Reinforcements.ReinforceWithTransport(USSR, "halo.paradrop", { "e1", "e1", "e1", "e2", "e3", "e4" }, entryPath, nil, function(transport, cargo)
+		transport.UnloadPassengers()
+		Utils.Do(cargo, IdleHunt)
+		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			transport.Move(entryPath[1])
+		end)
+		Trigger.AfterDelay(DateTime.Seconds(12), function()
+			transport.Destroy()
+		end)
+	end)
 end
