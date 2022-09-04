@@ -293,6 +293,9 @@ namespace OpenRA.Mods.Common.Widgets
 
 			foreach (var g in Groups.Values)
 				g.Update(allQueues);
+
+			if (allQueues.Count > 0 && CurrentQueue == null)
+				CurrentQueue = allQueues.First();
 		}
 
 		public override bool YieldMouseFocus(MouseInput mi)
