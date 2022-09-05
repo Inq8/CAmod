@@ -29,6 +29,16 @@ Player:
 	Buildable:
 		Prerequisites: ~disabled
 
+^Infantry:
+	ProductionCostMultiplier@HardBonus:
+		Multiplier: 90
+		Prerequisites: hard.difficulty
+
+^Vehicle-NOUPG:
+	ProductionCostMultiplier@HardBonus:
+		Multiplier: 90
+		Prerequisites: hard.difficulty
+
 E7:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
@@ -152,6 +162,16 @@ BARR:
 		Bots: campaign
 	Production@MQINF:
 		RequiresCondition: owned-by-ai
+	ProvidesPrerequisite@HardBonus:
+		Prerequisite: hard.difficulty
+		Factions: russia
+		ResetOnOwnerChange: true
+
+WEAP:
+	ProvidesPrerequisite@HardBonus:
+		Prerequisite: hard.difficulty
+		Factions: russia
+		ResetOnOwnerChange: true
 
 TSLA:
 	-Targetable@TeslaBoost:
@@ -159,3 +179,8 @@ TSLA:
 WORMHOLE:
 	-PopControlled:
 	-Targetable:
+
+V01:
+	-SpawnRandomActorOnDeath@1:
+	-SpawnRandomActorOnDeath@2:
+	-SpawnRandomActorOnDeath@3:

@@ -51,6 +51,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Delay (in ticks) between attempting rush attacks.")]
 		public readonly int RushInterval = 600;
 
+		[Desc("Delay (in ticks) between issuing a protection order.")]
+		public readonly int ProtectInterval = 50;
+
 		[Desc("Delay (in ticks) between updating squads.")]
 		public readonly int AttackForceInterval = 75;
 
@@ -145,6 +148,9 @@ namespace OpenRA.Mods.CA.Traits
 		int assignRolesTicks;
 		int attackForceTicks;
 		int minAttackForceDelayTicks;
+
+		int protectOwnTicks;
+		Actor protectOwnFrom;
 
 		int desiredAttackForceValue;
 		int desiredAttackForceSize;
@@ -306,6 +312,9 @@ namespace OpenRA.Mods.CA.Traits
 				minAttackForceDelayTicks = Info.MinimumAttackForceDelay;
 				CreateAttackForce(bot);
 			}
+
+			if (--protectOwnTicks <= 0 && protectOwnFrom != null)
+				ProtectOwn(bot, protectOwnFrom);
 		}
 
 		void FindNewUnits(IBot bot)
@@ -447,6 +456,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		void ProtectOwn(IBot bot, Actor attacker)
 		{
+			protectOwnFrom = null;
+			protectOwnTicks = Info.ProtectInterval;
+
 			var protectSq = GetSquadOfType(SquadCAType.Protection);
 			if (protectSq == null)
 				protectSq = RegisterNewSquad(bot, SquadCAType.Protection, attacker);
@@ -484,7 +496,7 @@ namespace OpenRA.Mods.CA.Traits
 				foreach (var n in notifyPositionsUpdated)
 					n.UpdatedDefenseCenter(e.Attacker.Location);
 
-				ProtectOwn(bot, e.Attacker);
+				protectOwnFrom = e.Attacker;
 			}
 		}
 
