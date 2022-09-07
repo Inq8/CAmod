@@ -73,6 +73,8 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly string Voice = "Action";
 
 		public readonly bool ShowSelectionBar = true;
+		public readonly bool ShowSelectionBarWhenFull = true;
+		public readonly bool ShowSelectionBarWhenEmpty = true;
 		public readonly Color ChargingColor = Color.DarkRed;
 		public readonly Color DischargingColor = Color.DarkMagenta;
 
@@ -272,6 +274,9 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled || !Info.ShowSelectionBar || deployState == TimedDeployState.Undeploying)
 				return 0f;
 
+			if (!Info.ShowSelectionBarWhenFull && deployState == TimedDeployState.Ready)
+				return 0f;
+
 			if (deployState == TimedDeployState.Deploying || deployState == TimedDeployState.Ready)
 				return 1f;
 
@@ -280,7 +285,7 @@ namespace OpenRA.Mods.CA.Traits
 				: (float)ticks / Info.DeployedTicks;
 		}
 
-		bool ISelectionBar.DisplayWhenEmpty { get { return !IsTraitDisabled && Info.ShowSelectionBar; } }
+		bool ISelectionBar.DisplayWhenEmpty { get { return deployState == TimedDeployState.Ready ? Info.ShowSelectionBarWhenFull : Info.ShowSelectionBarWhenEmpty; } }
 
 		Color ISelectionBar.GetColor() { return deployState == TimedDeployState.Charging ? Info.ChargingColor : Info.DischargingColor; }
 	}
