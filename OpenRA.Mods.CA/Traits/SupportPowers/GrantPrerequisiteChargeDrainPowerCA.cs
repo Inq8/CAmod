@@ -110,8 +110,17 @@ namespace OpenRA.Mods.CA.Traits
 			// Additional discharge rate accrued from damage
 			int additionalDischargeSubTicks = 0;
 
+			int dischargeModifier;
+			string activeText;
+			string availableText;
+
 			public DischargeableSupportPowerInstance(string key, GrantPrerequisiteChargeDrainPowerCAInfo info, SupportPowerManager manager)
-				: base(key, info, manager) { }
+				: base(key, info, manager)
+			{
+				dischargeModifier = info.DischargeModifier;
+				activeText = info.ActiveText;
+				availableText = info.AvailableText;
+			}
 
 			void Deactivate()
 			{
@@ -145,7 +154,7 @@ namespace OpenRA.Mods.CA.Traits
 
 				if (active)
 				{
-					remainingSubTicks = orig + ((GrantPrerequisiteChargeDrainPowerCAInfo)Info).DischargeModifier + additionalDischargeSubTicks;
+					remainingSubTicks = orig + dischargeModifier + additionalDischargeSubTicks;
 					additionalDischargeSubTicks = 0;
 
 					if (remainingSubTicks > TotalTicks * 100)
@@ -196,8 +205,7 @@ namespace OpenRA.Mods.CA.Traits
 				if (!Active)
 					return null;
 
-				var info = (GrantPrerequisiteChargeDrainPowerCAInfo)Info;
-				return active ? info.ActiveText : available ? info.AvailableText : null;
+				return active ? activeText : available ? availableText : null;
 			}
 
 			public override string TooltipTimeTextOverride()
@@ -205,8 +213,7 @@ namespace OpenRA.Mods.CA.Traits
 				if (!Active)
 					return null;
 
-				var info = (GrantPrerequisiteChargeDrainPowerCAInfo)Info;
-				return active ? info.ActiveText : available ? info.AvailableText : null;
+				return active ? activeText : available ? availableText : null;
 			}
 		}
 	}
