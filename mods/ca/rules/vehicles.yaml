@@ -5122,6 +5122,7 @@ TITN:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@SHRAPNEL: ^ThrowsShrapnel
+	Inherits@PRECISION: ^PrecisionStance
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 303
@@ -5134,7 +5135,8 @@ TITN:
 	Valued:
 		Cost: 2000
 	Selectable:
-		Bounds: 1280, 1706, 0, 0
+		Bounds: 1280, 1706
+		DecorationBounds: 1280, 1706, 0, -100
 	Tooltip:
 		Name: Titan
 	UpdatesPlayerStatistics:
@@ -5256,6 +5258,7 @@ JUGG:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@SHRAPNEL: ^ThrowsShrapnel
+	Inherits@PRECISION: ^PrecisionStance
 	Tooltip:
 		Name: Juggernaut
 	Buildable:
@@ -5277,7 +5280,8 @@ JUGG:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Selectable:
-		Bounds: 1280, 1706, 0, 0
+		Bounds: 1280, 1706
+		DecorationBounds: 1280, 1706, 0, -100
 	Valued:
 		Cost: 1500
 	QuantizeFacingsFromSequence:
@@ -5291,19 +5295,28 @@ JUGG:
 		AttackMoveCondition: attack-move
 	Armament@PRIMARY:
 		Weapon: JuggernautGun
-		LocalOffset: 830,0,500, 830,100,500, 830,-100,500
+		LocalOffset: 700,0,650, 700,100,650, 700,-100,650
 		Recoil: 171
 		RecoilRecovery: 30
 		MuzzleSequence: muzzle
-		PauseOnCondition: moving
-		ReloadingCondition: reloading
+		PauseOnCondition: moving || reloading-secondary || precisionstance
+		ReloadingCondition: reloading-primary
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: RocketShells
+		LocalOffset: 700,0,650, 700,100,650, 700,-100,650
+		Recoil: 171
+		RecoilRecovery: 30
+		MuzzleSequence: muzzle
+		PauseOnCondition: moving || reloading-primary || !precisionstance
+		ReloadingCondition: reloading-secondary
 	Armament@TARGETTER:
 		Name: targetter
 		Weapon: JuggernautGunTargeting
-		PauseOnCondition: reloading
+		PauseOnCondition: reloading-primary || reloading-secondary
 		RequiresCondition: attack-move || assault-move
 	AttackTurreted:
-		Armaments: primary, targetter
+		Armaments: primary, secondary, targetter
 		PauseOnCondition: empdisable || being-warped
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
@@ -5327,10 +5340,18 @@ JUGG:
 	Voiced:
 		VoiceSet: DisrVoice
 	GrantConditionOnAttack@AIMING:
-		ArmamentNames: primary, targetter
+		ArmamentNames: primary, secondary, targetter
 		Condition: aiming
 		RevokeDelay: 15
 		RevokeAll: false
+	GrantConditionOnAttack@SECONDARYFIRING:
+		ArmamentNames: secondary
+		Condition: secondary-firing
+		RevokeDelay: 15
+		MaximumInstances: 3
+	GrantCondition@SECONDARYFIRING:
+		Condition: precisionstance
+		RequiresCondition: secondary-firing
 	GrantConditionOnMovement@MOVING:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		Condition: moving

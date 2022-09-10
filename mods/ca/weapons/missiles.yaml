@@ -1909,3 +1909,31 @@ Rocket.P51.R:
 Rocket.P51.L:
 	Inherits: Rocket.P51.R
 	FirstBurstTargetOffset: -758,613,0
+
+RocketShells:
+	Inherits: JuggernautGun
+	-StartBurstReport:
+	-Projectile:
+	Report: rocketshell1.aud, rocketshell2.aud, rocketshell3.aud
+	Projectile: MissileCA
+		Speed: 255
+		Blockable: false
+		Image: 120MM
+		TrailImage: smokey
+		Shadow: true
+		HorizontalRateOfTurn: 30
+		VerticalRateOfTurn: 30
+		PointDefenseType: Missile
+		HomingActivationDelay: 7
+		MinimumLaunchSpeed: 200
+		MaximumLaunchSpeed: 200
+		Acceleration: 30
+		MinimumLaunchAngle: 100
+		MaximumLaunchAngle: 100
+		ContrailLength: 15
+		ContrailColor: aaaa00aa
+		ContrailWidth: 0c40
+		Gravity: 0
+		CruiseAltitude: 2c0
+		Inaccuracy: 128
+		AllowSnapping: true

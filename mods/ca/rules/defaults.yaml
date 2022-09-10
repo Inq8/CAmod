@@ -889,6 +889,39 @@
 		DamageTypes: FireDeath
 		RequiresCondition: invulnerability
 
+^PrecisionStance:
+	WithModifiedPalette@PRECISION:
+		RequiresCondition: precisionstance
+		Palette: precision
+	RangeMultiplier@PRECISION:
+		RequiresCondition: precisionstance
+		Modifier: 200
+	ReloadDelayMultiplier@PRECISION:
+		RequiresCondition: precisionstance
+		Modifier: 200
+	TimedConditionBar@PRECISION:
+		Condition: precisionstance
+	ExternalCondition@PRECISION:
+		Condition: precisionstance
+	GrantTimedConditionOnDeploy@PRECISION:
+		DeployedCondition: precisionstance
+		CooldownTicks: 1250
+		DeployedTicks: 500
+		StartsFullyCharged: true
+		ChargingColor: 808000
+		DischargingColor: ffff00
+		ShowSelectionBarWhenFull: false
+		DeploySound: precisionstance.aud
+		DischargeOnAttack: true
+		RequiresCondition: precision-upgrade
+	GrantConditionOnPrerequisite@PRECISION:
+		Condition: precision-upgrade
+		Prerequisites: precision.upgrade
+	GrantTimedCondition@PRECISION:
+		Duration: 2
+		Condition: highlight
+		RequiresCondition: precisionstance
+
 ^Irradiatable:
 	WithModifiedPalette@IRRADIATABLE:
 		RequiresCondition: irradiated

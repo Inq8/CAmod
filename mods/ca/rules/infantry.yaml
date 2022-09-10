@@ -23,7 +23,6 @@ DOG:
 		AddToArmyValue: true
 	Selectable:
 		Bounds: 512, 725, -42, -170
-		DecorationBounds: 512, 725, -42, -170
 	Health:
 		HP: 1800
 	Mobile:
@@ -3697,6 +3696,7 @@ XO:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
+	Inherits@PRECISION: ^PrecisionStance
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Powersuit
@@ -3708,6 +3708,9 @@ XO:
 		Weaknesses: • Cannot attack Aircraft
 	Valued:
 		Cost: 1000
+	Selectable:
+		Bounds: 1024, 1024
+		DecorationBounds: 1024, 1024, 0, -100
 	Tooltip:
 		Name: X-O Powersuit
 	UpdatesPlayerStatistics:
