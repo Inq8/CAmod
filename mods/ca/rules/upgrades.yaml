@@ -766,12 +766,27 @@ pcan.upgrade:
 	RenderSprites:
 		Image: pcan.upgrade
 
+entrench.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Entrenchment
+	Buildable:
+		BuildPaletteOrder: 41
+		Prerequisites: ~atek.france, ~techlevel.high
+		Description: Enables Engineers to facilitate the building of defenses.\n\nUpgrades: Engineer
+	TooltipExtras:
+		Strengths: + Allows Engineers to deploy, enabling defensive structures to be built
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: entrench.upgrade
+
 crym.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
 		Name: Upgrade: Cryo Missile
 	Buildable:
-		BuildPaletteOrder: 41
+		BuildPaletteOrder: 42
 		Prerequisites: ~atek.usa, ~techlevel.high
 		Description: Equips Nighthawks with large Cryo missiles which reduce\n  target movement speed and increase damage taken.\n\nUpgrades: Nighthawk
 	TooltipExtras:

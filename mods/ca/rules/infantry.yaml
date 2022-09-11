@@ -613,10 +613,49 @@ E6:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	WithInfantryBody:
-		RequiresCondition: !parachute && !being-warped
+		RequiresCondition: undeployed && !parachute && !being-warped
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
+	WithSpriteBody@SETUP:
+		Name: setupbody
+		Sequence: idle-deployed-setup
+		RequiresCondition: !undeployed && !parachute && !being-warped && setting-up
+	WithSpriteBody@DEPLOYED:
+		Name: deployedbody
+		Sequence: idle-deployed
+		RequiresCondition: !undeployed && !parachute && !being-warped && !setting-up
+	WithMakeAnimation:
+		BodyNames: setupbody
+		Sequence: deploy
+	GrantConditionOnDeploy:
+		DeployedCondition: deployed
+		UndeployedCondition: undeployed
+		AllowedTerrainTypes: Clear, Road, Rough, Ore, Gems, Tiberium, BlueTiberium
+		DeploySounds: igidepa.aud, igidepb.aud
+		UndeploySounds: igidepa.aud, igidepb.aud
+		UndeployOnMove: true
+		UndeployOnPickup: true
+		PauseOnCondition: being-warped
+		SmartDeploy: True
+		RequiresCondition: !parachute && entrench-upgrade
+	GrantTimedCondition@SETUP:
+		Condition: setting-up
+		RequiresCondition: !undeployed
+		Duration: 375
+	GivesBuildableArea:
+		AreaTypes: defense
+		RequiresCondition: deployed && !setting-up
+	BaseProvider:
+		RequiresCondition: deployed && !setting-up
+		Range: 3c0
+	GrantCondition@EDITOR:
+		Condition: editorhack
+	WithInfantryBody@EDITOR:
+		RequiresCondition: !editorhack
+	GrantConditionOnPrerequisite@ENTRENCH:
+		Condition: entrench-upgrade
+		Prerequisites: entrench.upgrade
 	Passenger:
 		CustomPipType: yellow
 	EngineerRepair:
