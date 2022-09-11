@@ -4003,22 +4003,22 @@ OBLI:
 		Range: 6c0
 	WithBuildingBib:
 		HasMinibib: true
-	GrantConditionOnPrerequisite@SUPERCHARGED:
-		Condition: supercharged-upgrade
-		Prerequisites: supercharged.upgrade
+	GrantConditionOnPrerequisite@QUANTUM:
+		Condition: quantum-upgrade
+		Prerequisites: quantum.upgrade
 	-WithSpriteBody:
 	WithChargeSpriteBody:
 		Sequence: active
 	Armament@PRIMARY:
 		Weapon: Laser
 		LocalOffset: 0,-85,1280
-		RequiresCondition: !supercharged-upgrade
+		RequiresCondition: !quantum-upgrade
 		MuzzleSequence: muzzle
 		MuzzlePalette: caneon
-	Armament@SUPERCHARGED:
+	Armament@QUANTUM:
 		Weapon: Laser.Adv
 		LocalOffset: 0,-85,1280
-		RequiresCondition: supercharged-upgrade
+		RequiresCondition: quantum-upgrade
 		MuzzleSequence: muzzle2
 		MuzzlePalette: caneon
 	WithMuzzleOverlay:
@@ -4027,11 +4027,11 @@ OBLI:
 		ChargeLevel: 50
 		ChargingCondition: charging
 	AmbientSound@1:
-		RequiresCondition: charging && !supercharged-upgrade
+		RequiresCondition: charging && !quantum-upgrade
 		SoundFiles: obelpowr.aud
 		Interval: 20
 	AmbientSound@2:
-		RequiresCondition: charging && supercharged-upgrade
+		RequiresCondition: charging && quantum-upgrade
 		SoundFiles: obelpowr2.aud
 		Interval: 20
 	Power:
@@ -4942,6 +4942,9 @@ GTEK:
 		Factions: talon, zocom, eagle, arc
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
+	ProvidesPrerequisiteValidatedFaction@talongtek:
+		Factions: talon
+		Prerequisite: gtek.talon
 	ProvidesPrerequisiteValidatedFaction@arcgtek:
 		Factions: arc
 		Prerequisite: gtek.arc
@@ -5508,18 +5511,18 @@ LTUR:
 	Turreted:
 		InitialFacing: 128
 	-WithTurretAttackAnimation:
-	GrantConditionOnPrerequisite@SUPERCHARGED:
-		Condition: supercharged-upgrade
-		Prerequisites: supercharged.upgrade
+	GrantConditionOnPrerequisite@QUANTUM:
+		Condition: quantum-upgrade
+		Prerequisites: quantum.upgrade
 	-Armament:
 	Armament:
 		Weapon: LaserTur
 		LocalOffset: 512,0,172
-		RequiresCondition: !supercharged-upgrade
+		RequiresCondition: !quantum-upgrade
 	Armament@Marked:
 		Weapon: LaserTur.Adv
 		LocalOffset: 512,0,172
-		RequiresCondition: supercharged-upgrade
+		RequiresCondition: quantum-upgrade
 	Power:
 		Amount: -25
 	DetectCloaked:

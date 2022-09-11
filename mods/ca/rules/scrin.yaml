@@ -2257,18 +2257,18 @@ DEVA:
 	Armament@PRIMARY:
 		Weapon: DevastatorDiscs
 		LocalOffset: 500,0,0
-		RequiresCondition: !plasma-upgrade
+		RequiresCondition: !stellar-upgrade
 	Armament@CHARGINGUPG:
 		Name: charge
 		Weapon: DevastatorTorpedoCharge
 		LocalOffset: 500,0,0
 		PauseOnCondition: cooldown
-		RequiresCondition: plasma-upgrade
+		RequiresCondition: stellar-upgrade
 	Armament@PRIMARYUPG:
 		Weapon: DevastatorTorpedo
 		PauseOnCondition: !ammo
 		LocalOffset: 500,0,0
-		RequiresCondition: plasma-upgrade
+		RequiresCondition: stellar-upgrade
 		ReloadingCondition: cooldown
 	AmbientSound@CHARGE:
 		RequiresCondition: charging && !ammo
@@ -2307,9 +2307,9 @@ DEVA:
 		ShowSelectionBar: true
 		SelectionBarColor: cc33ff
 		RequiresCondition: charging && !ammo
-	GrantConditionOnPrerequisite@PLASMA:
-		Condition: plasma-upgrade
-		Prerequisites: plasma.upgrade
+	GrantConditionOnPrerequisite@STELLAR:
+		Condition: stellar-upgrade
+		Prerequisites: stellar.upgrade
 	AttackFrontal:
 		Armaments: primary, charge
 		FacingTolerance: 40

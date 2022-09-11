@@ -5122,7 +5122,7 @@ TITN:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@SHRAPNEL: ^ThrowsShrapnel
-	Inherits@PRECISION: ^PrecisionStance
+	Inherits@GYRO: ^GyroStabilizers
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 303
@@ -5258,7 +5258,7 @@ JUGG:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@SHRAPNEL: ^ThrowsShrapnel
-	Inherits@PRECISION: ^PrecisionStance
+	Inherits@GYRO: ^GyroStabilizers
 	Tooltip:
 		Name: Juggernaut
 	Buildable:
@@ -5299,7 +5299,7 @@ JUGG:
 		Recoil: 171
 		RecoilRecovery: 30
 		MuzzleSequence: muzzle
-		PauseOnCondition: moving || reloading-secondary || precisionstance
+		PauseOnCondition: moving || reloading-secondary || gyrostabilizers
 		ReloadingCondition: reloading-primary
 	Armament@SECONDARY:
 		Name: secondary
@@ -5308,7 +5308,7 @@ JUGG:
 		Recoil: 171
 		RecoilRecovery: 30
 		MuzzleSequence: muzzle
-		PauseOnCondition: moving || reloading-primary || !precisionstance
+		PauseOnCondition: moving || reloading-primary || !gyrostabilizers
 		ReloadingCondition: reloading-secondary
 	Armament@TARGETTER:
 		Name: targetter
@@ -5350,7 +5350,7 @@ JUGG:
 		RevokeDelay: 15
 		MaximumInstances: 3
 	GrantCondition@SECONDARYFIRING:
-		Condition: precisionstance
+		Condition: gyrostabilizers
 		RequiresCondition: secondary-firing
 	GrantConditionOnMovement@MOVING:
 		ValidMovementTypes: Horizontal, Vertical, Turn

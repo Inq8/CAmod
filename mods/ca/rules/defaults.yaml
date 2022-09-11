@@ -889,38 +889,38 @@
 		DamageTypes: FireDeath
 		RequiresCondition: invulnerability
 
-^PrecisionStance:
-	WithModifiedPalette@PRECISION:
-		RequiresCondition: precisionstance
-		Palette: precision
-	RangeMultiplier@PRECISION:
-		RequiresCondition: precisionstance
+^GyroStabilizers:
+	WithModifiedPalette@GYRO:
+		RequiresCondition: gyrostabilizers
+		Palette: gyro
+	RangeMultiplier@GYRO:
+		RequiresCondition: gyrostabilizers
 		Modifier: 200
-	ReloadDelayMultiplier@PRECISION:
-		RequiresCondition: precisionstance
+	ReloadDelayMultiplier@GYRO:
+		RequiresCondition: gyrostabilizers
 		Modifier: 200
-	TimedConditionBar@PRECISION:
-		Condition: precisionstance
-	ExternalCondition@PRECISION:
-		Condition: precisionstance
-	GrantTimedConditionOnDeploy@PRECISION:
-		DeployedCondition: precisionstance
+	TimedConditionBar@GYRO:
+		Condition: gyrostabilizers
+	ExternalCondition@GYRO:
+		Condition: gyrostabilizers
+	GrantTimedConditionOnDeploy@GYRO:
+		DeployedCondition: gyrostabilizers
 		CooldownTicks: 1250
 		DeployedTicks: 500
 		StartsFullyCharged: true
 		ChargingColor: 808000
 		DischargingColor: ffff00
 		ShowSelectionBarWhenFull: false
-		DeploySound: precisionstance.aud
+		DeploySound: gyrostabilizers.aud
 		DischargeOnAttack: true
-		RequiresCondition: precision-upgrade
-	GrantConditionOnPrerequisite@PRECISION:
-		Condition: precision-upgrade
-		Prerequisites: precision.upgrade
-	GrantTimedCondition@PRECISION:
+		RequiresCondition: gyro-upgrade
+	GrantConditionOnPrerequisite@GYRO:
+		Condition: gyro-upgrade
+		Prerequisites: gyro.upgrade
+	GrantTimedCondition@GYRO:
 		Duration: 2
 		Condition: highlight
-		RequiresCondition: precisionstance
+		RequiresCondition: gyrostabilizers
 
 ^Irradiatable:
 	WithModifiedPalette@IRRADIATABLE:
