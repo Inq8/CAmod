@@ -81,9 +81,9 @@ AdvancedAttackSquadStart =
 
 EvacuationTime =
 {
-	easy = 180,
-	normal = 240,
-	hard = 300
+	easy = 210,
+	normal = 270,
+	hard = 330
 }
 
 HaloDropInterval =
@@ -114,6 +114,11 @@ WorldLoaded = function()
 			end
 			CaptureOrDestroyChronosphere = Greece.AddObjective("Capture or destroy the Soviet Chronosphere.")
 			Greece.MarkCompletedObjective(InvestigateArea)
+			ChronoCamera = Actor.Create("smallcamera", true, { Owner = Greece, Location = SovietChronosphere.Location })
+
+			Trigger.AfterDelay(1, function()
+				ChronoCamera.Destroy()
+			end)
 		end
 	end)
 
@@ -146,6 +151,10 @@ Tick = function()
 			Greece.MarkFailedObjective(DefendUntilEvacuation)
 		end
 	end
+
+	if USSR.Cash < 1000 then
+		USSR.Cash = 2000
+	end
 end
 
 -- Functions
@@ -162,12 +171,18 @@ InitUSSR = function()
 	-- Begin main attacks after difficulty based delay
 	Trigger.AfterDelay(AttackSquadDelay[Difficulty], ProduceAttackSquad)
 
-	-- Drops start at 10 mins
-	Trigger.AfterDelay(DateTime.Minutes(10), DoEastHaloDrop)
+	-- Eastern Halo drops start at 10 mins
+	Trigger.AfterDelay(DateTime.Minutes(10), function()
+		local eastHaloDropEntryPath = { CPos.New(EastHaloDrop.Location.X + 35, EastHaloDrop.Location.Y - 25), EastHaloDrop.Location }
+		DoHaloDrop(eastHaloDropEntryPath)
+	end)
 
-	-- Western drop starts at 10:40 (hard only)
+	-- Western Halo drops start at 10:40 (hard only)
 	if Difficulty == "hard" then
-		Trigger.AfterDelay(DateTime.Seconds(640), DoWestHaloDrop)
+		Trigger.AfterDelay(DateTime.Seconds(640), function()
+			local westHaloDropEntryPath = { CPos.New(WestHaloDrop.Location.X - 35, WestHaloDrop.Location.Y - 25), WestHaloDrop.Location }
+			DoHaloDrop(westHaloDropEntryPath)
+		end)
 	end
 
 	-- Set western patrol
@@ -200,6 +215,15 @@ InitUSSR = function()
 
 	Trigger.OnCapture(SovietChronosphere, function()
 		SovietChronosphere.Kill()
+	end)
+
+	local buildings = Utils.Where(Map.ActorsInWorld, function(self) return self.Owner == USSR and self.HasProperty("StartBuildingRepairs") end)
+	Utils.Do(buildings, function(actor)
+		Trigger.OnDamaged(actor, function(building)
+			if building.Owner == USSR and building.Health < (building.MaxHealth * 75 / 100) then
+				building.StartBuildingRepairs()
+			end
+		end)
 	end)
 end
 
@@ -377,46 +401,37 @@ AssaultPlayerBase = function(actor)
 	end
 end
 
-DoEastHaloDrop = function()
+DoHaloDrop = function(entryPath)
 	if crossRipped then
 		return
 	end
 
-	local entryPath = { CPos.New(EastHaloDrop.Location.X + 35, EastHaloDrop.Location.Y - 25), EastHaloDrop.Location }
-
-	Reinforcements.ReinforceWithTransport(USSR, "halo.paradrop", { "e1", "e1", "e1", "e2", "e3", "e4" }, entryPath, nil, function(transport, cargo)
-		transport.UnloadPassengers()
-		Utils.Do(cargo, IdleHunt)
-		Trigger.AfterDelay(DateTime.Seconds(5), function()
-			transport.Move(entryPath[1])
-		end)
-		Trigger.AfterDelay(DateTime.Seconds(12), function()
-			transport.Destroy()
-		end)
-	end)
-
-	Trigger.AfterDelay(HaloDropInterval[Difficulty], DoEastHaloDrop)
-end
-
-DoWestHaloDrop = function()
-	if crossRipped then
-		return
+	local haloDropUnits = { "e1", "e1", "e1", "e2", "e3", "e4" }
+	if Difficulty == "hard" and DateTime.GameTime > DateTime.Minutes(15) then
+		haloDropUnits = { "e1", "e1", "e1", "e1", "e2", "e2", "e3", "e3", "e4", "shok" }
 	end
 
-	local entryPath = { CPos.New(WestHaloDrop.Location.X - 35, WestHaloDrop.Location.Y - 25), WestHaloDrop.Location }
+	Reinforcements.ReinforceWithTransport(USSR, "halo.paradrop", haloDropUnits, entryPath, nil, function(transport, cargo)
+		if not transport.IsDead then
+			transport.UnloadPassengers()
+			Utils.Do(cargo, IdleHunt)
 
-	Reinforcements.ReinforceWithTransport(USSR, "halo.paradrop", { "e1", "e1", "e1", "e2", "e3", "e4" }, entryPath, nil, function(transport, cargo)
-		transport.UnloadPassengers()
-		Utils.Do(cargo, IdleHunt)
-		Trigger.AfterDelay(DateTime.Seconds(5), function()
-			transport.Move(entryPath[1])
-		end)
-		Trigger.AfterDelay(DateTime.Seconds(12), function()
-			transport.Destroy()
-		end)
+			Trigger.AfterDelay(DateTime.Seconds(5), function()
+				if not transport.IsDead then
+					transport.Move(entryPath[1])
+				end
+			end)
+			Trigger.AfterDelay(DateTime.Seconds(12), function()
+				if not transport.IsDead then
+					transport.Destroy()
+				end
+			end)
+		end
 	end)
 
-	Trigger.AfterDelay(HaloDropInterval[Difficulty], DoWestHaloDrop)
+	Trigger.AfterDelay(HaloDropInterval[Difficulty], function()
+		DoHaloDrop(entryPath)
+	end)
 end
 
 SendDevastators = function()
