@@ -62,8 +62,9 @@
 	PrimaryBuilding:
 		PrimaryCondition: primary
 		SelectionNotification: PrimaryBuildingSelected
+		RequiresCondition: !global-multiqueue
 	WithDecoration@primary:
-		RequiresCondition: primary
+		RequiresCondition: primary && !global-multiqueue
 		Position: Top
 		Margin: 0, 4
 		RequiresSelection: true
@@ -888,6 +889,39 @@
 		DamageTypes: FireDeath
 		RequiresCondition: invulnerability
 
+^GyroStabilizers:
+	WithModifiedPalette@GYRO:
+		RequiresCondition: gyrostabilizers
+		Palette: gyro
+	RangeMultiplier@GYRO:
+		RequiresCondition: gyrostabilizers
+		Modifier: 200
+	ReloadDelayMultiplier@GYRO:
+		RequiresCondition: gyrostabilizers
+		Modifier: 200
+	TimedConditionBar@GYRO:
+		Condition: gyrostabilizers
+	ExternalCondition@GYRO:
+		Condition: gyrostabilizers
+	GrantTimedConditionOnDeploy@GYRO:
+		DeployedCondition: gyrostabilizers
+		CooldownTicks: 1250
+		DeployedTicks: 500
+		StartsFullyCharged: true
+		ChargingColor: 808000
+		DischargingColor: ffff00
+		ShowSelectionBarWhenFull: false
+		DeploySound: gyrostabilizers.aud
+		DischargeOnAttack: true
+		RequiresCondition: gyro-upgrade
+	GrantConditionOnPrerequisite@GYRO:
+		Condition: gyro-upgrade
+		Prerequisites: gyro.upgrade
+	GrantTimedCondition@GYRO:
+		Duration: 2
+		Condition: highlight
+		RequiresCondition: gyrostabilizers
+
 ^Irradiatable:
 	WithModifiedPalette@IRRADIATABLE:
 		RequiresCondition: irradiated
@@ -910,16 +944,17 @@
 ^AtomicAmmunition:
 	ExternalCondition@ATOMICAMMO:
 		Condition: atomic-ammo
-	WithPlayOnceOnEnabledOverlay@ATOMICAMMO:
+	WithRestartableIdleOverlay@ATOMICAMMO:
 		Sequence: idle
 		Image: atomshell
 		Palette: effect
 		RequiresCondition: atomic-ammo && has-atomic-ammo < 12
 		Offset: 0,0,600
 		IsDecoration: True
+		PlayOnce: True
 	FirepowerMultiplier@ATOMICAMMO:
 		RequiresCondition: has-atomic-ammo
-		Modifier: 130
+		Modifier: 150
 	Targetable@ATOMICAMMO:
 		TargetTypes: AtomicAmmoTargetable
 	AmmoPool@ATOMICAMMO:
@@ -941,7 +976,7 @@
 		RequiresCondition: atomic-ammo && has-atomic-ammo < 12
 	ReloadAmmoPoolCA@ATOMICAMMODECAY:
 		Count: -12
-		Delay: 1500
+		Delay: 2250
 		RequiresCondition: has-atomic-ammo
 		ShowSelectionBar: false
 
@@ -2486,7 +2521,7 @@
 		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems,Tiberium,BlueTiberium
 		Crushes: crate, mine, infantry
 	Repairable:
-		RepairActors: fix, rep, srep, hpad, hpad.td
+		RepairActors: fix, rep, srep, hpad, hpad.td, grav
 	Hovers@CRUISING:
 		RequiresCondition: cruising && !being-warped
 	-Contrail@1:
@@ -2724,6 +2759,8 @@
 		RequiresCondition: !invulnerability
 	DelayedWeaponAttachable@TNT:
 		RequiresCondition: !invulnerability
+	RequiresBuildableArea:
+		AreaTypes: building, defense
 
 ^DefenseTD:
 	Inherits@1: ^Defense
@@ -3598,3 +3635,249 @@
 		Condition: damage
 	UnloadOnCondition@AIUNLOAD:
 		RequiresCondition: damage || aiming
+
+^QueueUpdater:
+	FreeActor@QUEUEUPDATER:
+		Actor: QueueUpdaterDummy
+		RequiresCondition: updatequeue
+	GrantDelayedCondition@QUEUEUPDATER:
+		Delay: 1
+		Condition: updatequeue
+	GrantConditionOnPrerequisite@MQ:
+		Condition: global-multiqueue
+		Prerequisites: global.multiqueue
+
+^ProducesBuildings:
+	Inherits@QUEUEUPDATER: ^QueueUpdater
+	Inherits@PRIMARY: ^PrimaryBuilding
+	ProductionQueue@MQBLD:
+		Type: BuildingMQ
+		DisplayOrder: 1
+		Group: Building
+		LowPowerModifier: 250
+		ReadyAudio: ConstructionComplete
+		ReadyTextNotification: Construction complete.
+		BlockedAudio: NoBuild
+		BlockedTextNotification: Unable to build more.
+		LimitedAudio: BuildingInProgress
+		LimitedTextNotification: Unable to comply. Building in progress.
+		QueuedAudio: Building
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
+	ProductionQueue@MQDEF:
+		Type: DefenseMQ
+		DisplayOrder: 2
+		Group: Defense
+		LowPowerModifier: 250
+		ReadyAudio: ConstructionComplete
+		ReadyTextNotification: Construction complete.
+		BlockedAudio: NoBuild
+		BlockedTextNotification: Unable to build more.
+		LimitedAudio: BuildingInProgress
+		LimitedTextNotification: Unable to comply. Building in progress.
+		QueuedAudio: Building
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
+	Production@SQBLD:
+		Produces: BuildingSQ, DefenseSQ
+		PauseOnCondition: forceshield || invulnerability || being-warped
+		RequiresCondition: !global-multiqueue
+	Production@MQBLD:
+		Produces: BuildingMQ, DefenseMQ
+		PauseOnCondition: forceshield || invulnerability || being-warped
+		RequiresCondition: global-multiqueue
+	ProductionBar@SQBLD:
+		ProductionType: BuildingSQ
+		RequiresCondition: !global-multiqueue
+	ProductionBar@SQDEF:
+		ProductionType: DefenseSQ
+		Color: 8A8A8A
+		RequiresCondition: !global-multiqueue
+	ProductionBar@MQBLD:
+		ProductionType: BuildingMQ
+		RequiresCondition: global-multiqueue
+	ProductionBar@MQDEF:
+		ProductionType: DefenseMQ
+		Color: 8A8A8A
+		RequiresCondition: global-multiqueue
+
+^ProducesInfantry:
+	Inherits@QUEUEUPDATER: ^QueueUpdater
+	Inherits@PRIMARY: ^PrimaryBuilding
+	ProductionQueue@MQINF:
+		Type: InfantryMQ
+		DisplayOrder: 3
+		Group: Infantry
+		LowPowerModifier: 250
+		ReadyAudio: UnitReady
+		ReadyTextNotification: Unit ready.
+		BlockedAudio: NoBuild
+		BlockedTextNotification: Unable to build more.
+		LimitedAudio: BuildingInProgress
+		LimitedTextNotification: Unable to comply. Building in progress.
+		QueuedAudio: Training
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
+	Production@SQINF:
+		Produces: InfantrySQ, Cyborg, Soldier, ParadropInfantry
+		PauseOnCondition: forceshield || invulnerability || being-warped
+		RequiresCondition: !global-multiqueue
+	Production@MQINF:
+		Produces: InfantryMQ, CyborgMQ, Cyborg, Soldier, ParadropInfantry
+		PauseOnCondition: forceshield || invulnerability || being-warped
+		RequiresCondition: global-multiqueue
+	ProductionBar@SQINF:
+		ProductionType: InfantrySQ
+		RequiresCondition: !global-multiqueue
+	ProductionBar@MQINF:
+		ProductionType: InfantryMQ
+		RequiresCondition: global-multiqueue
+	GrantExternalConditionToProduced:
+		Condition: produced
+	Targetable@INF:
+		TargetTypes: InfantryProducer
+	GrantExternalConditionToOwner:
+		Condition: infqueuecount
+	ProductionTimeMultiplier@MQ1:
+		Multiplier: 150
+		Prerequisites: global.multiqueue, infqueuecount.one
+	ProductionTimeMultiplier@MQ2:
+		Multiplier: 200
+		Prerequisites: global.multiqueue, infqueuecount.two
+
+^ProducesCyborgs:
+	Inherits: ^ProducesInfantry
+	ProductionQueue@MQINF:
+		Type: CyborgMQ
+	Production@SQINF:
+		Produces: InfantrySQ, Cyborg, ParadropInfantry, Upgrade
+	Production@MQINF:
+		Produces: CyborgMQ, Cyborg, Upgrade
+	ProductionBar@SQINF:
+		ProductionType: InfantrySQ
+	ProductionBar@MQINF:
+		ProductionType: CyborgMQ
+	-Targetable@INF:
+	-ProductionTimeMultiplier@MQ1:
+	-ProductionTimeMultiplier@MQ2:
+
+^ProducesVehicles:
+	Inherits@QUEUEUPDATER: ^QueueUpdater
+	Inherits@PRIMARY: ^PrimaryBuilding
+	ProductionQueue@MQVEH:
+		Type: VehicleMQ
+		DisplayOrder: 4
+		Group: Vehicle
+		LowPowerModifier: 250
+		ReadyAudio: UnitReady
+		ReadyTextNotification: Unit ready.
+		BlockedAudio: NoBuild
+		BlockedTextNotification: Unable to build more.
+		LimitedAudio: BuildingInProgress
+		LimitedTextNotification: Unable to comply. Building in progress.
+		QueuedAudio: Building
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
+	Production@SQVEH:
+		Produces: VehicleSQ, ParadropVehicle, Powersuit
+		PauseOnCondition: forceshield || invulnerability || being-warped
+		RequiresCondition: !global-multiqueue
+	Production@MQVEH:
+		Produces: VehicleMQ, ParadropVehicle, Powersuit
+		PauseOnCondition: forceshield || invulnerability || being-warped
+		RequiresCondition: global-multiqueue
+	ProductionBar@SQVEH:
+		ProductionType: VehicleSQ
+		RequiresCondition: !global-multiqueue
+	ProductionBar@MQVEH:
+		ProductionType: VehicleMQ
+		RequiresCondition: global-multiqueue
+
+^ProducesNaval:
+	Inherits@QUEUEUPDATER: ^QueueUpdater
+	Inherits@PRIMARY: ^PrimaryBuilding
+	ProductionQueue@MQNAV:
+		Type: ShipMQ
+		DisplayOrder: 5
+		Group: Ship
+		LowPowerModifier: 250
+		ReadyAudio: UnitReady
+		ReadyTextNotification: Unit ready.
+		BlockedAudio: NoBuild
+		BlockedTextNotification: Unable to build more.
+		LimitedAudio: BuildingInProgress
+		LimitedTextNotification: Unable to comply. Building in progress.
+		QueuedAudio: Building
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
+	Production@SQNAV:
+		Produces: ShipSQ, Boat, Submarine
+		PauseOnCondition: forceshield || invulnerability || being-warped
+		RequiresCondition: !global-multiqueue
+	Production@MQNAV:
+		Produces: ShipSQ, Boat, Submarine
+		PauseOnCondition: forceshield || invulnerability || being-warped
+		RequiresCondition: global-multiqueue
+	ProductionBar@SQNAV:
+		ProductionType: ShipSQ
+		RequiresCondition: !global-multiqueue
+	ProductionBar@MQNAV:
+		ProductionType: ShipMQ
+		RequiresCondition: global-multiqueue
+
+^ProducesUpgrades:
+	Inherits@QUEUEUPDATER: ^QueueUpdater
+	Production@UPG:
+		Produces: Upgrade
+		PauseOnCondition: forceshield || invulnerability || being-warped
+	ProductionBar@UPG:
+		ProductionType: Upgrade
+	Exit@UPG:
+	-GrantConditionOnPrerequisite@MQ:
+
+^ProducesAircraft:
+	Inherits@QUEUEUPDATER: ^QueueUpdater
+	Inherits@PRIMARY: ^PrimaryBuilding
+	ProductionQueue@MQAIR:
+		Type: AircraftMQ
+		DisplayOrder: 6
+		Group: Aircraft
+		LowPowerModifier: 250
+		ReadyAudio: UnitReady
+		ReadyTextNotification: Unit ready.
+		BlockedAudio: NoBuild
+		BlockedTextNotification: Unable to build more.
+		LimitedAudio: BuildingInProgress
+		LimitedTextNotification: Unable to comply. Building in progress.
+		QueuedAudio: Building
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
+	Production@SQAIR:
+		Produces: AircraftSQ, Plane, Helicopter
+		PauseOnCondition: forceshield || invulnerability || being-warped
+		RequiresCondition: !global-multiqueue
+	Production@MQAIR:
+		Produces: AircraftMQ, Plane, Helicopter
+		PauseOnCondition: forceshield || invulnerability || being-warped
+		RequiresCondition: global-multiqueue
+	ProductionBar@SQAIR:
+		ProductionType: AircraftSQ
+		RequiresCondition: !global-multiqueue
+	ProductionBar@MQAIR:
+		ProductionType: AircraftMQ
+		RequiresCondition: global-multiqueue
+	GrantExternalConditionToOwner:
+		Condition: airqueuecount
+	ProductionTimeMultiplier@MQ1:
+		Multiplier: 150
+		Prerequisites: global.multiqueue, airqueuecount.one
+	ProductionTimeMultiplier@MQ2:
+		Multiplier: 200
+		Prerequisites: global.multiqueue, airqueuecount.two
+
+^ProducesHelicopters:
+	Inherits@AIR: ^ProducesAircraft
+	Production@SQAIR:
+		Produces: AircraftSQ, Helicopter
+	Production@MQAIR:
+		Produces: AircraftMQ, Helicopter

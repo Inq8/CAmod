@@ -22,7 +22,6 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Condition to grant.")]
 		public readonly string Condition = null;
 
-		[FieldLoader.Require]
 		[Desc("Order name that toggles the condition.")]
 		public readonly bool GrantPermanently = false;
 

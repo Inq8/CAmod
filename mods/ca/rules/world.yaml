@@ -313,7 +313,7 @@
 		Name: Talon
 		InternalName: talon
 		Side: GDI
-		Description: Steel Talon: Mech Warfare\n Units:\n  • Juggernaut\n  • Titan (replaces Mammoth Tank)\n\n Powers:\n  • X-O Drop\n\n Upgrades:\n  • Railgun Titan (replaces Titan)\n\n Bonuses:\n  • Upgrade Center (10% Discount)
+		Description: Steel Talon: Mech Warfare\n Units:\n  • Juggernaut\n  • Titan (replaces Mammoth Tank)\n\n Powers:\n  • X-O Drop\n\n Upgrades:\n  • Railgun Titan (replaces Titan)\n  • Gyro Stabilizers\n\n Bonuses:\n  • Upgrade Center (10% Discount)
 	Faction@10:
 		Name: ZOCOM
 		InternalName: zocom
@@ -343,7 +343,7 @@
 		Name: Marked
 		InternalName: marked
 		Side: Nod
-		Description: Marked of Kane: Alien Weaponry\n Units:\n  • Acolyte\n  • Venom (replaces Apache)\n\n Powers:\n  • Frenzy\n  • Tank Drop\n\n Upgrades:\n  • Supercharged Lasers\n\n Bonuses:\n  • Banshee (10% Discount)
+		Description: Marked of Kane: Alien Weaponry\n Units:\n  • Acolyte\n  • Venom (replaces Apache)\n\n Powers:\n  • Frenzy\n  • Tank Drop\n\n Upgrades:\n  • Quantum Capacitors\n\n Bonuses:\n  • Banshee (10% Discount)
 	Faction@15:
 		Name: Legion
 		InternalName: legion
@@ -373,7 +373,7 @@
 		Name: Harbinger-31
 		InternalName: harbinger
 		Side: Scrin
-		Description: Harbinger-31: Area Damage\n Units:\n  • Ruiner\n  • Darkener (replaces Devourer)\n\n Powers:\n  • Buzzer Swarm\n\n Upgrades:\n  • Charged Plasma\n\n Bonuses:\n  • Devastator Warship (10% Discount)
+		Description: Harbinger-31: Area Damage\n Units:\n  • Ruiner\n  • Darkener (replaces Devourer)\n\n Powers:\n  • Buzzer Swarm\n\n Upgrades:\n  • Stellar Fusion Cannon\n\n Bonuses:\n  • Devastator Warship (10% Discount)
 	Faction@20:
 		Name: Collector-73
 		InternalName: collector
@@ -445,8 +445,8 @@ World:
 	HelpCommand:
 	ScreenShaker:
 	BuildingInfluence:
-	ProductionQueueFromSelection:
-		ProductionPaletteWidget: PRODUCTION_PALETTE
+	ProductionQueueFromSelectionCA:
+		ProductionTabsWidget: PRODUCTION_TABS
 	LegacyBridgeLayer:
 		Bridges: bridge1, bridge2, br1, br2, br3, sbridge1, sbridge2, sbridge3, sbridge4, sbridge5, sbridge6, sbridge7, brg1, brg2, brg3, brv1, brv2, brv3, brh1, brh2, brh3
 	CustomTerrainDebugOverlay:
@@ -545,7 +545,7 @@ World:
 	MapOptions:
 		ShortGameCheckboxDisplayOrder: 2
 		TechLevelDropdownDisplayOrder: 2
-		GameSpeedDropdownDisplayOrder: 3
+		GameSpeedDropdownDisplayOrder: 1
 	CreateMapPlayers:
 	StartingUnits@mcvonly:
 		Class: none
@@ -645,7 +645,6 @@ World:
 	MapStartingLocations:
 		SeparateTeamSpawnsCheckboxDisplayOrder: 6
 	SpawnStartingUnits:
-		DropdownDisplayOrder: 1
 	PathFinder:
 	ValidateOrder:
 	DebugPauseState:
@@ -656,6 +655,7 @@ World:
 	LoadWidgetAtGameStart:
 	ScriptTriggers:
 	TimeLimitManager:
+		TimeLimitDisplayOrder: 2
 		TimeLimitWarnings:
 			40: FourtyMinutesRemaining
 			30: ThirtyMinutesRemaining

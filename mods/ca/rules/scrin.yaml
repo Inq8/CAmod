@@ -195,7 +195,7 @@ S1:
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 12
 		Prerequisites: ~infantry.scrin
@@ -228,13 +228,16 @@ S1:
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 
 S2:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 160
 		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.medium
@@ -264,6 +267,9 @@ S2:
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 	-TakeCover:
@@ -273,7 +279,7 @@ S3:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 22
 		Prerequisites: ~infantry.scrin
@@ -310,6 +316,9 @@ S3:
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	AutoTarget:
 		ScanRadius: 6
 	AmmoPool:
@@ -326,7 +335,7 @@ S4:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 170
 		Prerequisites: anyradar, ~infantry.scrin, ~techlevel.medium
@@ -359,6 +368,9 @@ S4:
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	PortableChronoCA:
 		ChargeDelay: 500
 		ChronoshiftSound: scrinport.aud
@@ -378,7 +390,7 @@ S6:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 32
 		Prerequisites: ~infantry.scrin
@@ -504,7 +516,7 @@ FEED:
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 240
 		Prerequisites: ~disabled, ~infantry.scrin
@@ -592,7 +604,7 @@ MAST:
 	AutoTargetPriority@DEFAULT:
 		RequiresCondition: mindcontrolling < 3 && !stance-attackanything && !assault-move
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 220
 		Prerequisites: scrt, ~infantry.scrin, ~techlevel.high
@@ -662,6 +674,9 @@ MAST:
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	-Crushable:
 	TakeCover:
 		SpeedModifier: 70
@@ -729,7 +744,7 @@ GUNW:
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Buildable:
-		Queue: Vehicle
+		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 24
 		Prerequisites: ~vehicles.scrin, ~!shrw.upgrade, ~techlevel.low
 		Description: Durable light assault walker.
@@ -774,6 +789,9 @@ GUNW:
 		FacingTolerance: 40
 		PauseOnCondition: empdisable || being-warped
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	WithMoveAnimation:
 		ValidMovementTypes: Horizontal, Vertical, Turn
@@ -851,7 +869,7 @@ SEEK:
 	Buildable:
 		BuildPaletteOrder: 42
 		Prerequisites: ~vehicles.seek, ~techlevel.low
-		Queue: Vehicle
+		Queue: VehicleSQ, VehicleMQ
 		Description: Light hover tank.
 		IconPalette: chrome
 	TooltipExtras:
@@ -893,6 +911,9 @@ SEEK:
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	SpawnActorOnDeath:
 		Actor: SEEK.Husk
 		RequiresCondition: !onwater && !being-warped
@@ -924,7 +945,7 @@ LACE:
 	Buildable:
 		BuildPaletteOrder: 43
 		Prerequisites: ~vehicles.traveler, ~techlevel.low
-		Queue: Vehicle
+		Queue: VehicleSQ, VehicleMQ
 		Description: Fast hover tank.
 		IconPalette: chrome
 	TooltipExtras:
@@ -970,6 +991,9 @@ LACE:
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
@@ -997,7 +1021,7 @@ INTL:
 	Buildable:
 		BuildPaletteOrder: 38
 		Prerequisites: ~vehicles.scrin, ~techlevel.low
-		Queue: Vehicle
+		Queue: VehicleSQ, VehicleMQ
 		Description: Heavily armoured front-line assault vehicle and troop carrier.
 		IconPalette: chrome
 	TooltipExtras:
@@ -1026,6 +1050,9 @@ INTL:
 		LocalOffset: 470,84,30, 470,-84,30
 	WithMuzzleOverlay:
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
@@ -1102,7 +1129,7 @@ CORR:
 	Buildable:
 		BuildPaletteOrder: 140
 		Prerequisites: anyradar, ~vehicles.corr, ~techlevel.medium
-		Queue: Vehicle
+		Queue: VehicleSQ, VehicleMQ
 		Description: Medium-ranged anti-infantry/structure unit.
 		IconPalette: chrome
 	TooltipExtras:
@@ -1132,6 +1159,9 @@ CORR:
 		EmptyWeapon: CorrupterExplode
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	WithMoveAnimation:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 	GrantConditionOnFaction@TRAVELERSPEED:
@@ -1160,7 +1190,7 @@ LCHR:
 	Buildable:
 		BuildPaletteOrder: 141
 		Prerequisites: anyradar, ~vehicles.collector, ~techlevel.medium
-		Queue: Vehicle
+		Queue: VehicleSQ, VehicleMQ
 		Description: Medium-ranged anti-infantry/structure unit.
 		IconPalette: chromes
 	TooltipExtras:
@@ -1190,6 +1220,9 @@ LCHR:
 		PauseOnCondition: empdisable || being-warped
 		FacingTolerance: 0
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	WithMoveAnimation:
 		ValidMovementTypes: Horizontal, Vertical, Turn
@@ -1240,7 +1273,7 @@ LCHR.Orb:
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 1
 	Targetable:
-		TargetTypes: Ground, Vehicle
+		TargetTypes: Ground, Vehicle, C4Immune
 	HiddenUnderFog:
 		Type: CenterPosition
 	RevealsShroud:
@@ -1303,7 +1336,7 @@ STCR:
 	Buildable:
 		BuildPaletteOrder: 150
 		Prerequisites: anyradar, ~vehicles.reaper, ~techlevel.medium
-		Queue: Vehicle
+		Queue: VehicleSQ, VehicleMQ
 		Description: Slow moving, very durable, short-range assault unit.
 		IconPalette: chromes
 	TooltipExtras:
@@ -1330,6 +1363,9 @@ STCR:
 		PauseOnCondition: empdisable || being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	WithShadow:
 		Offset: 80, 80, 0
 		ZOffset: -81
@@ -1342,7 +1378,7 @@ DEVO:
 	Inherits@RESCONV: ^ResourceConversion
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Buildable:
-		Queue: Vehicle
+		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 220
 		Prerequisites: anyradar, ~vehicles.devo, ~techlevel.medium
 		Description: Medium hover tank.
@@ -1391,6 +1427,9 @@ DEVO:
 	WithMuzzleOverlay:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	TurretedFloating:
 		TurnSpeed: 16
 		Offset: 0,0,0
@@ -1420,7 +1459,7 @@ DARK:
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Buildable:
-		Queue: Vehicle
+		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 221
 		Prerequisites: anyradar, ~vehicles.harbinger, ~techlevel.medium
 		Description: Heavy hover tank armed with a rift cannon.
@@ -1457,6 +1496,9 @@ DARK:
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Turreted:
 		TurnSpeed: 16
@@ -1500,7 +1542,7 @@ RUIN:
 	Buildable:
 		BuildPaletteOrder: 280
 		Prerequisites: scrt, ~vehicles.harbinger, ~techlevel.high
-		Queue: Vehicle
+		Queue: VehicleSQ, VehicleMQ
 		Description: Long-range hover artillery.
 		IconPalette: chrome
 	TooltipExtras:
@@ -1539,6 +1581,9 @@ RUIN:
 		Weapon: ArtilleryExplode
 		LoadedChance: 75
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Hovers:
 		BobDistance: -25
@@ -1594,7 +1639,7 @@ ATMZ:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		Queue: Vehicle
+		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 285
 		Prerequisites: scrt, ~vehicles.collector, ~techlevel.high
 		Description: Lightly armored long-range support unit.
@@ -1636,6 +1681,9 @@ ATMZ:
 	WithSpriteTurret:
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
@@ -1651,7 +1699,7 @@ TPOD:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Vehicle
+		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 310
 		Prerequisites: techcenter, ~vehicles.tpod, ~techlevel.high
 		Description: Heavy assault walker with beam weapons.
@@ -1703,6 +1751,9 @@ TPOD:
 		LocalOffset: 0,0,700
 	-Crushable:
 	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	TurretedFloating:
 		TurnSpeed: 12
@@ -1817,8 +1868,8 @@ SMCV:
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Buildable:
-		Queue: Vehicle
-		BuildPaletteOrder: 502
+		Queue: VehicleSQ, VehicleMQ
+		BuildPaletteOrder: 437
 		Prerequisites: vehicles.mcv, ~vehicles.scrin
 		IconPalette: chrome
 		Description: Deploys into another Colony Platform.
@@ -1879,8 +1930,7 @@ STMR:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
 	Buildable:
-		Queue: Aircraft
-		BuildAtProductionType: Plane
+		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 90
 		Prerequisites: ~aircraft.scrin, ~techlevel.medium
 		Description: Durable patrol craft.
@@ -1938,7 +1988,7 @@ STMR:
 		TakeoffSounds: dropup1.aud
 		LandingSounds: dropdwn1.aud
 		CanSlide: False
-		AltitudeVelocity: 0c200
+		AltitudeVelocity: 0c120
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
@@ -1969,38 +2019,59 @@ STMR:
 		DecorationBounds: 1536, 1194
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: aircraft.upgraded
 	-EjectOnDeath:
 	AmmoPool:
 		Ammo: 15
 		AmmoCondition: ammo
-		ReloadDelay: 626
-		ReloadCount: 15
+		ReloadDelay: 60
+		ReloadCount: 5
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
 		PipCount: 3
-	ReloadAmmoPoolCA:
-		Delay: 625
-		Count: 15
-		DelayOnFire: 75
-		DelayAfterReset: 90
-		ShowSelectionBar: true
-		SelectionBarColor: ff00ff
-		RequiresCondition: !srep-rearm || airborne
 	DetectCloaked:
 		DetectionTypes: Underwater
 		Range: 8c0
 	Rearmable:
-		RearmActors: srep
-	ExternalCondition@SREPREARM:
-		Condition: srep-rearm
-	ReloadAmmoPool@SREPREARM:
-		Delay: 200
-		Count: 15
-		RequiresCondition: srep-rearm && !airborne
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	GrantConditionOnResupply:
+		Condition: resupplying
+	Targetable@RESUPPLYING:
+		TargetTypes: Resupplying
+		RequiresCondition: resupplying
+	GrantConditionOnPrerequisite@SHIELDS:
+		Condition: shields-upgrade
+		Prerequisites: shields.upgrade
+	KillsSelf:
+		RequiresCondition: empdisable && cruising && !shields-upgrade
+	SpeedMultiplier@EMPDISABLE:
+		Modifier: 50
+		RequiresCondition: empdisable
+	WithSpriteTurret@SHIELDS:
+		RequiresCondition: shields-upgrade && shields-up
+		Sequence: shield
+		Palette: scrinshield-ignore-lighting-alpha50
+	Turreted@SHIELDS:
+		PauseOnCondition: shields-upgrade
+		RequiresCondition: shields-upgrade
+	Shielded:
+		MaxStrength: 5000
+		RegenDelay: 350
+		RegenAmount: 250
+		RegenInterval: 5
+		ShieldsUpCondition: shields-up
+		RequiresCondition: shields-upgrade && !empdisable
+		SelectionBarColor: ead6ff
+	ExternalCondition@Shield:
+		Condition: shields-up
+	Targetable@TEMPORAL:
+		RequiresCondition: !shields-up
 
 ENRV:
 	Inherits: ^Helicopter
@@ -2008,8 +2079,7 @@ ENRV:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
 	Buildable:
-		Queue: Aircraft
-		BuildAtProductionType: Plane
+		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 170
 		Prerequisites: scrt, ~aircraft.traveler, ~techlevel.high
 		Description: Fast attack craft that creates a focused suppression field.
@@ -2059,6 +2129,7 @@ ENRV:
 		RepulsionSpeed: 40
 		MaximumPitch: 56
 		CanSlide: True
+		AltitudeVelocity: 0c100
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
@@ -2093,35 +2164,56 @@ ENRV:
 		DecorationBounds: 1536, 1536
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: aircraft.upgraded
 	-EjectOnDeath:
 	AmmoPool:
 		Ammo: 5
 		AmmoCondition: ammo
-		ReloadDelay: 751
-		ReloadCount: 5
+		ReloadDelay: 45
+		ReloadCount: 1
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
 		PipCount: 5
-	ReloadAmmoPoolCA:
-		Delay: 750
-		Count: 5
-		DelayOnFire: 375
-		DelayAfterReset: 60
-		ShowSelectionBar: true
-		SelectionBarColor: ff00ff
-		RequiresCondition: !srep-rearm || airborne
 	Rearmable:
-		RearmActors: srep
-	ExternalCondition@SREPREARM:
-		Condition: srep-rearm
-	ReloadAmmoPool@SREPREARM:
-		Delay: 250
-		Count: 5
-		RequiresCondition: srep-rearm && !airborne
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	GrantConditionOnResupply:
+		Condition: resupplying
+	Targetable@RESUPPLYING:
+		TargetTypes: Resupplying
+		RequiresCondition: resupplying
+	GrantConditionOnPrerequisite@SHIELDS:
+		Condition: shields-upgrade
+		Prerequisites: shields.upgrade
+	KillsSelf:
+		RequiresCondition: empdisable && cruising && !shields-upgrade
+	SpeedMultiplier@EMPDISABLE:
+		Modifier: 50
+		RequiresCondition: empdisable
+	WithSpriteTurret@SHIELDS:
+		RequiresCondition: shields-upgrade && shields-up
+		Sequence: shield
+		Palette: scrinshield-ignore-lighting-alpha50
+	Turreted@SHIELDS:
+		PauseOnCondition: shields-upgrade
+		RequiresCondition: shields-upgrade
+	Shielded:
+		MaxStrength: 5000
+		RegenDelay: 350
+		RegenAmount: 250
+		RegenInterval: 5
+		ShieldsUpCondition: shields-up
+		RequiresCondition: shields-upgrade && !empdisable
+		SelectionBarColor: ead6ff
+	ExternalCondition@Shield:
+		Condition: shields-up
+	Targetable@TEMPORAL:
+		RequiresCondition: !shields-up
 
 DEVA:
 	Inherits: ^Helicopter
@@ -2129,8 +2221,7 @@ DEVA:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
 	Buildable:
-		Queue: Aircraft
-		BuildAtProductionType: Plane
+		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 170
 		Prerequisites: scrt, ~aircraft.scrin, ~techlevel.high
 		Description: Long-range siege warship.
@@ -2150,6 +2241,11 @@ DEVA:
 		HP: 32000
 	Armor:
 		Type: Heavy
+	HitShape:
+		TargetableOffsets: 0,0,0, -512,0,0, -1024,0,0
+		Type: Capsule
+			PointA: 0,896
+			PointB: 0, -256
 	RevealsShroud:
 		Range: 8c0
 		MinRange: 7c0
@@ -2161,18 +2257,18 @@ DEVA:
 	Armament@PRIMARY:
 		Weapon: DevastatorDiscs
 		LocalOffset: 500,0,0
-		RequiresCondition: !plasma-upgrade
+		RequiresCondition: !stellar-upgrade
 	Armament@CHARGINGUPG:
 		Name: charge
 		Weapon: DevastatorTorpedoCharge
 		LocalOffset: 500,0,0
 		PauseOnCondition: cooldown
-		RequiresCondition: plasma-upgrade
+		RequiresCondition: stellar-upgrade
 	Armament@PRIMARYUPG:
 		Weapon: DevastatorTorpedo
 		PauseOnCondition: !ammo
 		LocalOffset: 500,0,0
-		RequiresCondition: plasma-upgrade
+		RequiresCondition: stellar-upgrade
 		ReloadingCondition: cooldown
 	AmbientSound@CHARGE:
 		RequiresCondition: charging && !ammo
@@ -2211,9 +2307,9 @@ DEVA:
 		ShowSelectionBar: true
 		SelectionBarColor: cc33ff
 		RequiresCondition: charging && !ammo
-	GrantConditionOnPrerequisite@PLASMA:
-		Condition: plasma-upgrade
-		Prerequisites: plasma.upgrade
+	GrantConditionOnPrerequisite@STELLAR:
+		Condition: stellar-upgrade
+		Prerequisites: stellar.upgrade
 	AttackFrontal:
 		Armaments: primary, charge
 		FacingTolerance: 40
@@ -2254,14 +2350,18 @@ DEVA:
 	Turreted@SHIELDS:
 		PauseOnCondition: shields-upgrade
 		RequiresCondition: shields-upgrade
+		Offset: -64,0,0
 	KillsSelf:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
-		Modifier: 0
+		Modifier: 50
 		RequiresCondition: empdisable
 	Repairable:
 		RepairActors: fix, rep, srep
 	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: aircraft.upgraded
 	Shielded:
 		MaxStrength: 7500
@@ -2282,8 +2382,7 @@ PAC:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
 	Buildable:
-		Queue: Aircraft
-		BuildAtProductionType: Plane
+		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 180
 		Prerequisites: sign, scrt, ~aircraft.scrin, ~techlevel.high
 		Description: Warship that launches a squadron\n  of assault craft.
@@ -2303,6 +2402,11 @@ PAC:
 		HP: 52000
 	Armor:
 		Type: Heavy
+	HitShape:
+		TargetableOffsets: 0,0,0, 1024,0,0, -1024,0,0
+		Type: Capsule
+			PointA: 0,1024
+			PointB: 0,-1024
 	RevealsShroud:
 		Range: 11c0
 		MinRange: 8c0
@@ -2393,10 +2497,11 @@ PAC:
 	Turreted@SHIELDS:
 		PauseOnCondition: shields-upgrade
 		RequiresCondition: shields-upgrade
+		Offset: -128,0,0
 	KillsSelf:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
-		Modifier: 0
+		Modifier: 50
 		RequiresCondition: empdisable
 	Repairable:
 		RepairActors: fix, rep, srep
@@ -2405,6 +2510,9 @@ PAC:
 	AutoTargetPriority@ATTACKANYTHING:
 		InvalidTargets: NoAutoTarget, AirLowPriority
 	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: aircraft.upgraded
 	Shielded:
 		MaxStrength: 10000
@@ -2507,8 +2615,7 @@ MSHP:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
 	Buildable:
-		Queue: Aircraft
-		BuildAtProductionType: Plane
+		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 190
 		Prerequisites: sign, scrt, ~aircraft.scrin, ~techlevel.high
 		Description: Huge craft with powerful anti-structure beam weapon\n  and secondary beam weapons.
@@ -2532,6 +2639,10 @@ MSHP:
 		HP: 130000
 	Armor:
 		Type: Heavy
+	HitShape:
+		TargetableOffsets: 0,0,0, 2560,0,0, -2560,0,0, 0,2560,0, 0,-2560,0
+		Type: Circle
+			Radius: 2c768
 	RevealsShroud:
 		Range: 13c0
 		MinRange: 8c0
@@ -2587,17 +2698,23 @@ MSHP:
 		RequiresCondition: !airborne
 	SpawnActorOnDeath:
 		Actor: MSHP.Husk
-		RequiresCondition: !being-warped
+		RequiresCondition: !empdisable && !being-warped
+	SpawnActorOnDeath@EMP:
+		Actor: MSHP.Husk.EMP
+		RequiresCondition: empdisable && !being-warped
 	-Hovers@CRUISING:
 	WithFacingSpriteBody:
 	AttackFrontal:
 		Armaments: primary, secondary, tertiary
 		FacingTolerance: 32
 		Voice: Attack
-		PauseOnCondition: being-warped
+		PauseOnCondition: empdisable || being-warped
 		ForceFireIgnoresActors: true
 	-EjectOnDeath:
 	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: aircraft.upgraded
 	WithIdleOverlay@RING:
 		Image: mshp
@@ -2612,6 +2729,7 @@ MSHP:
 		OverlayPalette: playerscrin
 		IsPlayerPalette: true
 		ShowSelectionBarWhenEmpty: false
+		RequiresCondition: !empdisable
 	ExternalCondition@PRODUCED:
 		Condition: produced
 	VoiceAnnouncement:
@@ -2660,6 +2778,33 @@ MSHP:
 	-Targetable@TEMPORAL:
 	-SpeedMultiplier@TEMPORAL:
 	-RejectsOrders@TEMPORAL:
+	GrantConditionOnPrerequisite@SHIELDS:
+		Condition: shields-upgrade
+		Prerequisites: shields.upgrade
+	KillsSelf:
+		RequiresCondition: empdisable && cruising && !shields-upgrade
+	SpeedMultiplier@EMPDISABLE:
+		Modifier: 50
+		RequiresCondition: empdisable
+	WithSpriteTurret@SHIELDS:
+		RequiresCondition: shields-upgrade && shields-up
+		Sequence: shield
+		Palette: scrinshield-ignore-lighting-alpha50
+	Turreted@SHIELDS:
+		PauseOnCondition: shields-upgrade
+		RequiresCondition: shields-upgrade
+	Shielded:
+		MaxStrength: 20000
+		RegenDelay: 350
+		RegenAmount: 250
+		RegenInterval: 5
+		ShieldsUpCondition: shields-up
+		RequiresCondition: shields-upgrade && !empdisable
+		SelectionBarColor: ead6ff
+	ExternalCondition@Shield:
+		Condition: shields-up
+	Targetable@TEMPORAL:
+		RequiresCondition: !shields-up
 
 #
 # ---- Husks
@@ -2966,6 +3111,10 @@ MSHP.Husk:
 		Sequence: ring
 		Offset: 0,0,0
 
+MSHP.Husk.EMP:
+	Inherits: MSHP.Husk
+	Inherits@EMP: ^EmpVisualEffect
+
 MSHP.Husk.Ground:
 	Inherits: ^Husk
 	Inherits@SHRAPNEL: ^ThrowsShrapnelBig
@@ -3006,7 +3155,7 @@ SWAL:
 	Building:
 		BuildSounds: scrinbuild.aud
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 30
 		Prerequisites: anypower, ~structures.scrin
 		Description: • Stops units\n• Blocks enemy fire\n• Regenerates over time
@@ -3043,12 +3192,13 @@ SFAC:
 	Inherits: ^ScrinBuilding
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@BOTI: ^BotFallbackInsurance
+	Inherits@BLD: ^ProducesBuildings
 	Building:
 		Footprint: xxx xxx ===
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 1000
 		Prerequisites: ~disabled
 		IconPalette: chrometd
@@ -3064,9 +3214,6 @@ SFAC:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	WithBuildingBib:
-	Production:
-		Produces: Building, Defense
-		PauseOnCondition: forceshield || invulnerability || being-warped
 	Valued:
 		Cost: 3000
 	Tooltip:
@@ -3115,11 +3262,6 @@ SFAC:
 		Prerequisite: structures.collector
 	ProvidesPrerequisite@anyconyard:
 		Prerequisite: anyconyard
-	ProductionBar@Building:
-		ProductionType: Building
-	ProductionBar@Defense:
-		ProductionType: Defense
-		Color: 8A8A8A
 	BaseProvider:
 		PauseOnCondition: being-captured
 		Range: 16c0
@@ -3148,7 +3290,7 @@ REAC:
 	WithSpriteBody:
 		PauseOnCondition: disabled
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 10
 		Prerequisites: ~structures.scrin
 		IconPalette: chromes
@@ -3193,7 +3335,7 @@ REA2:
 	WithSpriteBody:
 		PauseOnCondition: disabled
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 110
 		Prerequisites: anyradar, ~structures.scrin, ~techlevel.medium
 		IconPalette: chrome
@@ -3245,7 +3387,7 @@ PROC.SCRIN:
 	Buildable:
 		BuildPaletteOrder: 60
 		Prerequisites: anypower, ~structures.scrin
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		IconPalette: chromes
 		Description: Processes raw Tiberium, Ore\n  and Gems into credits.
 		BuildDuration: 1400
@@ -3301,8 +3443,8 @@ PROC.SCRIN:
 
 PORT:
 	Inherits: ^ScrinBuilding
-	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@INF: ^ProducesInfantry
 	Selectable:
 		Bounds: 2048, 2048
 	HitShape:
@@ -3312,7 +3454,7 @@ PORT:
 			TopLeft: -1024, -1024
 			BottomRight: 1024, 640
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 20
 		Prerequisites: anypower, ~structures.scrin
 		IconPalette: chromes
@@ -3342,31 +3484,20 @@ PORT:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,512,0
 		ExitCell: 0,2
-		ProductionTypes: Soldier, Infantry
 	Exit@2:
 		RequiresCondition: !being-captured
 		SpawnOffset: 256,512,0
 		ExitCell: 1,2
-		ProductionTypes: Soldier, Infantry
 	Exit@3:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,512,0
 		ExitCell: -1,2
-		ProductionTypes: Soldier, Infantry
 		Priority: 0
 	Exit@4:
 		RequiresCondition: !being-captured
 		SpawnOffset: 256,512,0
 		ExitCell: 2,2
-		ProductionTypes: Soldier, Infantry
 		Priority: 0
-	Production:
-		Produces: Infantry, Soldier
-		PauseOnCondition: forceshield || invulnerability || being-warped
-	GrantExternalConditionToProduced:
-		Condition: produced
-	ProductionBar:
-		ProductionType: Infantry
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@scrin:
@@ -3404,9 +3535,9 @@ PORT:
 
 WSPH:
 	Inherits: ^ScrinBuilding
-	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
+	Inherits@VEH: ^ProducesVehicles
 	Selectable:
 		Bounds: 3072, 2048
 	HitShape:
@@ -3415,7 +3546,7 @@ WSPH:
 			TopLeft: -1536, -1024
 			BottomRight: 1536, 512
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 80
 		Prerequisites: proc.scrin, ~structures.scrin, ~techlevel.low
 		IconPalette: chromes
@@ -3475,14 +3606,9 @@ WSPH:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,0,0
 		ExitCell: 0,2
-	Production:
-		Produces: Vehicle, Paradrop, Powersuit
-		PauseOnCondition: forceshield || invulnerability || being-warped
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
-	ProductionBar:
-		ProductionType: Vehicle
 	Power:
 		Amount: -30
 	ProvidesPrerequisite@buildingname:
@@ -3506,11 +3632,12 @@ NERV:
 	Inherits: ^ScrinBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@POWERDRAIN: ^PowerDrainableRadar
+	Inherits@UPG: ^ProducesUpgrades
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 630,-384,0, 630,384,0, -700,-512,0, -700,512,0
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 90
 		Prerequisites: proc.scrin, ~structures.scrin, ~techlevel.medium
 		Description: Provides an overview of the battlefield.
@@ -3603,6 +3730,7 @@ NERV:
 		EffectImage: empty
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
+		SupportPowerPaletteOrder: 50
 	DetonateWeaponPower@BUZZERSWARM:
 		OrderName: buzzerswarm
 		Icon: buzzpower
@@ -3621,6 +3749,7 @@ NERV:
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
 		DisplayRadarPing: True
+		SupportPowerPaletteOrder: 50
 	DetonateWeaponPower@BUZZERSWARMAI:
 		OrderName: buzzerswarmai
 		Icon: buzzpower
@@ -3639,6 +3768,7 @@ NERV:
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
 		DisplayRadarPing: True
+		SupportPowerPaletteOrder: 50
 	DetonateWeaponPower@STORMSPIKE:
 		OrderName: stormspike
 		Icon: stormspikepower
@@ -3657,6 +3787,7 @@ NERV:
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
 		DisplayRadarPing: True
+		SupportPowerPaletteOrder: 20
 	DetonateWeaponPower@IONSURGE:
 		OrderName: ionsurge
 		Icon: ionsurgepower
@@ -3677,6 +3808,7 @@ NERV:
 		CameraRemoveDelay: 1
 		TargetCircleRange: 6c0
 		TargetCircleColor: b070ff90
+		SupportPowerPaletteOrder: 50
 	GrantExternalConditionPower@FEEDERMUTATION:
 		OrderName: feedermutation
 		Icon: feedermutation
@@ -3697,19 +3829,15 @@ NERV:
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayTimerRelationships: Ally
-	Production:
-		Produces: Upgrade
-		PauseOnCondition: forceshield || invulnerability || being-warped
-	ProductionBar:
-		ProductionType: Upgrade
-	Exit:
+		SupportPowerPaletteOrder: 50
 
 SCRT:
 	Inherits: ^ScrinBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@UPG: ^ProducesUpgrades
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 150
 		Prerequisites: vehicles.any, anyradar, ~structures.scrin, ~techlevel.high
 		Description: Provides Scrin advanced technologies.
@@ -3782,6 +3910,7 @@ SCRT:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
+		SupportPowerPaletteOrder: 40
 	SpawnActorPower@ICHORSEED:
 		OrderName: ichorseed
 		Icon: ichorpower
@@ -3798,31 +3927,27 @@ SCRT:
 		EffectImage: empty
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
-	Production:
-		Produces: Upgrade
-		PauseOnCondition: forceshield || invulnerability || being-warped
-	ProductionBar:
-		ProductionType: Upgrade
-	Exit:
+		SupportPowerPaletteOrder: 40
 
 GRAV:
 	Inherits: ^ScrinBuilding
-	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^3x2Shape
+	Inherits@AIR: ^ProducesHelicopters
+	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 130
 		Prerequisites: radarorrepair, ~structures.scrin, ~techlevel.medium
 		Description: Produces Scrin aircraft.
 		IconPalette: chromes
 	Valued:
-		Cost: 500
+		Cost: 750
 	Tooltip:
 		Name: Gravity Stabilizer
 	Selectable:
-		Bounds: 3072, 2048
+		Bounds: 3072, 2560, 0, -128
 	Building:
 		Footprint: xxx xxx ===
 		Dimensions: 3,3
@@ -3841,11 +3966,10 @@ GRAV:
 		RequiresCondition: !being-captured
 		ExitCell: 1,1
 		Facing: 720
+		SpawnOffset: -128,0,0
+	Reservable:
 	RallyPoint:
 		ForceSetType: Aircraft
-	Production:
-		Produces: Aircraft, Plane
-		PauseOnCondition: forceshield || invulnerability || being-warped
 	ValidFactions:
 		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisiteValidatedFaction@traveler:
@@ -3853,26 +3977,56 @@ GRAV:
 		Prerequisite: aircraft.traveler
 	ProvidesPrerequisite@scrin:
 		Prerequisite: aircraft.scrin
-	ProductionBar:
-		ProductionType: Aircraft
 	SupportPowerChargeBar:
 	Power:
 		Amount: -20
 	ProvidesPrerequisite@buildingname:
 	WithBuildingBib:
-	WithIdleOverlay@orb:
-		RequiresCondition: !build-incomplete
+	WithRestartableIdleOverlay@orb:
+		RequiresCondition: !build-incomplete && !resupplying
+		RestartSequence: idle-overlay-activate
+		StartSequence: idle-overlay
+	WithRestartableIdleOverlay@orboff:
+		RequiresCondition: !build-incomplete && resupplying
+		Sequence: idle-overlay-deactivate
+		PlayOnce: true
 	WithIdleOverlay@pylon:
 		Sequence: idle-pylon
 		RequiresCondition: !build-incomplete && !damaged
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
-		ValidDamageStates: Light, Medium, Heavy, Critical
+		ValidDamageStates: Heavy, Critical
+	GrantConditionOnResupplying@RESUPPLY:
+		Condition: resupplying
+	Armament@UNDAMAGED:
+		Weapon: GravityStabilizerZap
+		LocalOffset: -800,-500,1152, -250,450,1152, 150,-500,1152
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+		MuzzleSequence: muzzle
+		MuzzlePalette: playerscrin
+		RequiresCondition: !damaged
+	Armament@DAMAGED:
+		Weapon: GravityStabilizerZap
+		LocalOffset: -250,650,1024, 150,-600,1152
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+		MuzzleSequence: muzzle
+		MuzzlePalette: playerscrin
+		RequiresCondition: damaged
+	WithMuzzleOverlayCA:
+		IsPlayerPalette: true
+	AttackOmni:
+		PauseOnCondition: !resupplying
+	AutoTarget:
+	AutoTargetPriority@DEFAULT:
+		ValidRelationships: Ally
 
 SIGN:
 	Inherits: ^ScrinBuilding
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^3x2Shape
+	Inherits@UPG: ^ProducesUpgrades
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Selectable:
@@ -3893,7 +4047,7 @@ SIGN:
 		Range: 4c0
 	WithBuildingBib:
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.scrin, scrt, ~techlevel.high
 		Description: Provides access to the most powerful\n  Scrin units and technology.
@@ -3916,12 +4070,6 @@ SIGN:
 		RequiresCondition: !being-warped
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
-	Production:
-		Produces: Upgrade
-		PauseOnCondition: forceshield || invulnerability || being-warped
-	ProductionBar:
-		ProductionType: Upgrade
-	Exit:
 	-MindControllable:
 	-Targetable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
@@ -3935,7 +4083,7 @@ SREP:
 		Type: Polygon
 			Points: -1536,-300, -640,-811, 640,-811, 1536,-300, 1536,555, 640,1110, -640,1110, -1536,555
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 100
 		Prerequisites: vehicles.scrin, ~structures.scrin, ~techlevel.low
 		Description: Repairs vehicles for credits.
@@ -3983,10 +4131,6 @@ SREP:
 		Prerequisite: radarorrepair
 	ProvidesPrerequisite@allowsmcv:
 		Prerequisite: vehicles.mcv
-	ProximityExternalCondition@SREPREARM:
-		Condition: srep-rearm
-		ValidRelationships: Ally
-		Range: 2c0
 	ProximityExternalCondition@AIRCRAFTREPAIR:
 		Condition: aircraft-repair
 		Range: 10c0
@@ -4003,7 +4147,7 @@ SILO.SCRIN:
 	Buildable:
 		BuildPaletteOrder: 35
 		Prerequisites: proc.scrin, ~structures.scrin
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		IconPalette: chromes
 		Description: Stores processed Tiberium, Ore and Gems
 	-GivesBuildableArea:
@@ -4040,7 +4184,7 @@ MANI:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@SHAPE: ^2x2Shape
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 130
 		Prerequisites: scrt, ~structures.scrin, ~techlevel.unrestricted
 		BuildLimit: 1
@@ -4104,7 +4248,6 @@ MANI:
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayRadarPing: True
 		ActivationDelay: 0
-		SupportPowerPaletteOrder: 10
 		TargetCircleRange: 3c512
 		TargetCircleColor: ff55ffcc
 		LaunchSound: suppression.aud
@@ -4113,6 +4256,7 @@ MANI:
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
 		Prerequisites: ~!mani.collector
+		SupportPowerPaletteOrder: 20
 	DetonateWeaponPower@SUPPRESSIONSIPHON:
 		PauseOnCondition: disabled || empdisable || being-warped
 		OrderName: suppressionsiphon
@@ -4125,7 +4269,6 @@ MANI:
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayRadarPing: True
 		ActivationDelay: 0
-		SupportPowerPaletteOrder: 10
 		TargetCircleRange: 3c512
 		TargetCircleColor: ff55ffcc
 		LaunchSound: suppression.aud
@@ -4134,6 +4277,7 @@ MANI:
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
 		Prerequisites: ~mani.collector
+		SupportPowerPaletteOrder: 20
 	ProductionCostMultiplier@COLLECTOR:
 		Multiplier: 90
 		Prerequisites: player.collector
@@ -4143,7 +4287,7 @@ RIFT:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@SHAPE: ^2x2Shape
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 130
 		Prerequisites: scrt, ~structures.scrin, ~techlevel.unrestricted
 		BuildLimit: 1
@@ -4205,6 +4349,7 @@ RIFT:
 		Duration: 425
 		ActiveCondition: active
 		PaletteEffectType: LightningStorm
+		SupportPowerPaletteOrder: 10
 	WithIdleOverlay@ACTIVE:
 		Sequence: active-overlay
 		Palette: scrin
@@ -4233,7 +4378,7 @@ PTUR:
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 60
 		Prerequisites: port, ~structures.scrin, ~techlevel.low
 		Description: Anti-infantry base defense.
@@ -4295,7 +4440,7 @@ SHAR:
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 90
 		Prerequisites: anyradar, ~structures.scrin, ~techlevel.medium
 		Description: Anti-aircraft base defense.
@@ -4358,7 +4503,7 @@ SCOL:
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 80
 		Prerequisites: anyradar, ~structures.scrin, ~techlevel.medium
 		Description: Advanced base defense.
@@ -4726,7 +4871,8 @@ camera.rift:
 		StartSequence: spawn
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 1
-	AlwaysVisible:
+	HiddenUnderFog:
+		Type: GroundPosition
 	HitShape:
 	RevealsShroud:
 		Range: 6c0
@@ -4802,7 +4948,8 @@ ion.surge:
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 1
 	HitShape:
-	AlwaysVisible:
+	HiddenUnderFog:
+		Type: GroundPosition
 	Immobile:
 		OccupiesSpace: false
 	RenderSprites:

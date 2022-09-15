@@ -1,7 +1,7 @@
 DOG:
 	Inherits: ^Soldier
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Dog
 		BuildPaletteOrder: 50
 		Prerequisites: kenn, ~infantry.dog
@@ -23,7 +23,6 @@ DOG:
 		AddToArmyValue: true
 	Selectable:
 		Bounds: 512, 725, -42, -170
-		DecorationBounds: 512, 725, -42, -170
 	Health:
 		HP: 1800
 	Mobile:
@@ -88,7 +87,7 @@ E1:
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 10
 		Prerequisites: ~infantry.ra
@@ -122,6 +121,9 @@ E1:
 		FacingTolerance: 0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	Convertible:
 		SpawnActors: N1C
 
@@ -139,7 +141,7 @@ E2:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 40
 		Prerequisites: ~infantry.e2
@@ -184,13 +186,16 @@ E2:
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 
 E3:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 20
 		Prerequisites: ~infantry.ra
@@ -262,6 +267,9 @@ E3:
 		PauseOnCondition: being-warped
 		FacingTolerance: 0
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	AutoTarget:
 		ScanRadius: 7
@@ -396,6 +404,9 @@ U3:
 		RequiresCondition: deployed
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	AutoTarget:
 		ScanRadius: 8
 	GrantConditionOnPrerequisite@CRYO:
@@ -497,8 +508,8 @@ U3.squad:
 	Tooltip:
 		Name: Airdrop: Guardian GIs
 	Buildable:
-		Queue: Infantry
-		BuildAtProductionType: Paradrop
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: ParadropInfantry
 		BuildPaletteOrder: 1000
 		Prerequisites: dome, ~infantry.usa, ~techlevel.medium
 		Description: Prepare five Guardian GIs for airdrop.
@@ -512,7 +523,7 @@ U3.squad:
 		Image: squad.airborne
 	ProduceActorPowerCA:
 		Actors: powerproxy.airborne
-		Type: Infantry
+		Type: ParadropInfantry
 		OneShot: true
 		AutoFire: true
 		AllowMultiple: true
@@ -533,7 +544,7 @@ E4:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 70
 		Prerequisites: ~barr, ftur, ~techlevel.low
@@ -577,6 +588,9 @@ E4:
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	Convertible:
 		SpawnActors: N5
 
@@ -584,7 +598,7 @@ E6:
 	Inherits: ^Soldier
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 30
 		Prerequisites: ~infantry.ra
@@ -599,10 +613,49 @@ E6:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	WithInfantryBody:
-		RequiresCondition: !parachute && !being-warped
+		RequiresCondition: undeployed && !parachute && !being-warped
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
+	WithSpriteBody@SETUP:
+		Name: setupbody
+		Sequence: idle-deployed-setup
+		RequiresCondition: !undeployed && !parachute && !being-warped && setting-up
+	WithSpriteBody@DEPLOYED:
+		Name: deployedbody
+		Sequence: idle-deployed
+		RequiresCondition: !undeployed && !parachute && !being-warped && !setting-up
+	WithMakeAnimation:
+		BodyNames: setupbody
+		Sequence: deploy
+	GrantConditionOnDeploy:
+		DeployedCondition: deployed
+		UndeployedCondition: undeployed
+		AllowedTerrainTypes: Clear, Road, Rough, Ore, Gems, Tiberium, BlueTiberium
+		DeploySounds: igidepa.aud, igidepb.aud
+		UndeploySounds: igidepa.aud, igidepb.aud
+		UndeployOnMove: true
+		UndeployOnPickup: true
+		PauseOnCondition: being-warped
+		SmartDeploy: True
+		RequiresCondition: !parachute && entrench-upgrade
+	GrantTimedCondition@SETUP:
+		Condition: setting-up
+		RequiresCondition: !undeployed
+		Duration: 375
+	GivesBuildableArea:
+		AreaTypes: defense
+		RequiresCondition: deployed && !setting-up
+	BaseProvider:
+		RequiresCondition: deployed && !setting-up
+		Range: 3c0
+	GrantCondition@EDITOR:
+		Condition: editorhack
+	WithInfantryBody@EDITOR:
+		RequiresCondition: !editorhack
+	GrantConditionOnPrerequisite@ENTRENCH:
+		Condition: entrench-upgrade
+		Prerequisites: entrench.upgrade
 	Passenger:
 		CustomPipType: yellow
 	EngineerRepair:
@@ -637,7 +690,7 @@ SPY:
 	Inherits: ^Soldier
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 100
 		Prerequisites: ~tent, anyradar, ~techlevel.medium
@@ -701,7 +754,7 @@ E7:
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 190
 		Prerequisites: ~tent, atek, ~techlevel.high
@@ -774,6 +827,9 @@ E7:
 		VoiceSet: TanyaVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, MindControlImmune
 	-Crushable:
@@ -783,7 +839,7 @@ E7:
 MEDI:
 	Inherits: ^Soldier
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 50
 		Prerequisites: ~infantry.medi
@@ -835,6 +891,9 @@ MEDI:
 		PauseOnCondition: being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	GuardsSelection:
@@ -843,7 +902,7 @@ MEDI:
 MECH:
 	Inherits: ^Soldier
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 90
 		Prerequisites: repair, ~infantry.mech, ~techlevel.low
@@ -921,6 +980,9 @@ MECH:
 		ValidRelationships: Ally
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	GuardsSelection:
@@ -979,6 +1041,9 @@ HACK:
 	Voiced:
 		VoiceSet: HackerVoice
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
@@ -1107,7 +1172,7 @@ GNRL:
 THF:
 	Inherits: ^Soldier
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 120
 		Prerequisites: anyradar, ~infantry.thf, ~techlevel.medium
@@ -1178,7 +1243,7 @@ SHOK:
 	AttackMove:
 		AttackMoveCondition: attack-move
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 80
 		Prerequisites: structures.tsla, anyradar, ~barr, ~techlevel.medium
@@ -1245,6 +1310,9 @@ SHOK:
 		VoiceSet: ShokVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	ProductionCostMultiplier@RussiaBonus:
 		Multiplier: 90
 		Prerequisites: infantry.russia
@@ -1255,7 +1323,7 @@ N1:
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 11
 		Prerequisites: ~!cyborg.production, ~infantry.td
@@ -1292,6 +1360,9 @@ N1:
 		DeathSequencePalette: playertd
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	Selectable:
 		Class: e1
 	Convertible:
@@ -1315,7 +1386,7 @@ N2:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 41
 		Prerequisites: ~pyle
@@ -1368,6 +1439,9 @@ N2:
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	Selectable:
 		Class: e2
 	GrantConditionOnPrerequisite@EMPUPG:
@@ -1390,7 +1464,7 @@ N3:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 21
 		Prerequisites: ~!cyborg.production, ~infantry.td
@@ -1475,6 +1549,9 @@ N3:
 		RequiresCondition: parachute
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	AutoTarget:
 		ScanRadius: 7
 	Selectable:
@@ -1500,7 +1577,7 @@ N4:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 71
 		Prerequisites: ~hand, ~!cyborg.production
@@ -1552,6 +1629,9 @@ N4:
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	Selectable:
 		Class: e4
 	Convertible:
@@ -1563,7 +1643,7 @@ N5:
 	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 72
 		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.high
@@ -1624,6 +1704,9 @@ N5:
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	GrantConditionOnPrerequisite@BIO:
 		Condition: biofirepower
 		Prerequisites: bio
@@ -1656,7 +1739,7 @@ RMBO:
 	Buildable:
 		BuildPaletteOrder: 210
 		Prerequisites: ~infantry.td, techcenter, ~techlevel.high
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		IconPalette: chrometd
 		BuildLimit: 1
 		Description: Elite infantry armed with an SMG and C4.
@@ -1718,6 +1801,9 @@ RMBO:
 		VoiceSet: CommandoVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	IgnoresDisguise:
 	DetectCloaked:
 		DetectionTypes: Cloak, Thief
@@ -1732,7 +1818,7 @@ N6:
 	Inherits: ^Soldier
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 31
 		Prerequisites: ~infantry.td
@@ -1803,7 +1889,7 @@ SNIP:
 	RenderSprites:
 		Image: sniper
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 110
 		Prerequisites: ~infantry.england, anyradar, ~techlevel.medium
@@ -1918,6 +2004,9 @@ SNIP:
 		VoiceSet: SniperVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	AmmoPool:
 		Ammo: 1
 		AmmoCondition: ammo
@@ -1933,7 +2022,7 @@ BORI:
 	RenderSprites:
 		Image: boris
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 200
 		Prerequisites: ~barr, stek, ~infantry.boris, ~techlevel.high
@@ -2014,6 +2103,9 @@ BORI:
 		VoiceSet: BorisVoice
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, MindControlImmune
 	TakeCover:
@@ -2026,7 +2118,7 @@ MORT:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 250
 		Prerequisites: ~stolentech.hand
@@ -2068,13 +2160,16 @@ MORT:
 		DeathSequencePalette: playertd
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 
 SAB:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 140
 		Prerequisites: anyradar, ~hand, ~techlevel.medium
@@ -2161,6 +2256,9 @@ SAB:
 		Range: 4c0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	ProductionCostMultiplier@LegionBonus:
 		Multiplier: 80
 		Prerequisites: infantry.legion
@@ -2169,8 +2267,8 @@ ACOL:
 	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Buildable:
-		Queue: Infantry
-		BuildAtProductionType: Infantry
+		Queue: InfantrySQ, InfantryMQ, CyborgMQ
+		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 180
 		IconPalette: chrometd
 		Prerequisites: anyradar, obli, ~infantry.marked, ~!cyborg.production, ~techlevel.medium
@@ -2222,6 +2320,9 @@ ACOL:
 	Voiced:
 		VoiceSet: CyborgVoice
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	Selectable:
 		Class: acol
@@ -2298,7 +2399,7 @@ JJET:
 		Duration: 100
 		Radius: 2c512
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 150
 		Prerequisites: anyradar, ~pyle, ~!bjet.upgrade, ~techlevel.medium
@@ -2397,6 +2498,9 @@ JJET:
 		CrushedSequence: die-crushed
 		RequiresCondition: !airborne
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	WithShadow:
 		Offset: 43, 128, 0
@@ -2533,7 +2637,7 @@ E8:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 130
 		Prerequisites: ~infantry.iraq, ttur, anyradar, ~techlevel.medium
@@ -2576,6 +2680,9 @@ E8:
 	Voiced:
 		VoiceSet: DesVoice
 	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	-Crushable:
 	PeriodicExplosion:
@@ -2647,7 +2754,7 @@ N1C:
 	Inherits@BOTHELPER: ^BotCaptureHelper
 	RenderSprites:
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 13
 		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.high
@@ -2689,6 +2796,9 @@ N1C:
 		MuzzleSequence: garrison-muzzle
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	WithInfantryBody:
 		RequiresCondition: !parachute && !being-warped
 	WithInfantryBody@PARACHUTE:
@@ -2700,7 +2810,7 @@ N3C:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	RenderSprites:
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 23
 		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.high
@@ -2795,6 +2905,9 @@ N3C:
 		ScanRadius: 7
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 
 RMBC:
 	Inherits: ^Cyborg
@@ -2805,7 +2918,7 @@ RMBC:
 		PlayerPalette: playerd2k
 		Image: cycom
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 230
 		Prerequisites: tmpp, ~infantry.cyborg, ~techlevel.high
@@ -2882,6 +2995,9 @@ RMBC:
 		Modifier: 85
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 		Condition: repair-cooldown
 		RequiredHealing: 85000
@@ -2895,7 +3011,7 @@ IVAN:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 42
 		Prerequisites: ~infantry.ukraine, weap, ~techlevel.low
@@ -2950,6 +3066,9 @@ IVAN:
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	Voiced:
 		VoiceSet: CrazyIvanVoice
 
@@ -2960,7 +3079,7 @@ BRUT:
 		ScanRadius: 4
 		InitialStance: AttackAnything
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 85
 		Prerequisites: anyradar, ~infantry.yuri, ~techlevel.medium
@@ -3327,7 +3446,7 @@ BH:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 150
 		Prerequisites: anyradar, ~infantry.blackh, ~techlevel.medium
@@ -3375,6 +3494,9 @@ BH:
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	AmbientSoundCA:
 		SoundFiles: flamer-loop1.aud
 		InitialSound: flamer-start1.aud
@@ -3397,7 +3519,7 @@ YURI:
 	AutoTargetPriority@DEFAULT:
 		RequiresCondition: mindcontrolling < 3 && !stance-attackanything && !assault-move
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 190
 		Prerequisites: ~barr, stek, ~infantry.yuri, ~techlevel.high
@@ -3504,6 +3626,9 @@ YURI:
 	IgnoresDisguise:
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, MindControlImmune
 	GrantConditionOnAttack@AI:
@@ -3539,7 +3664,7 @@ SEAL:
 	Buildable:
 		BuildPaletteOrder: 185
 		Prerequisites: ~infantry.usa, atek, ~techlevel.high
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		IconPalette: chrome
 		BuildLimit: -1
 		Description: Elite infantry armed with an SMG and C4.
@@ -3610,8 +3735,9 @@ XO:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
+	Inherits@GYRO: ^GyroStabilizers
 	Buildable:
-		Queue: Infantry
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Powersuit
 		BuildPaletteOrder: 160
 		Prerequisites: gtek, infantry.any, vehicles.any, ~pyle, ~techlevel.high
@@ -3621,6 +3747,9 @@ XO:
 		Weaknesses: • Cannot attack Aircraft
 	Valued:
 		Cost: 1000
+	Selectable:
+		Bounds: 1024, 1024
+		DecorationBounds: 1024, 1024, 0, -100
 	Tooltip:
 		Name: X-O Powersuit
 	UpdatesPlayerStatistics:
@@ -3631,7 +3760,7 @@ XO:
 		Type: Light
 	Mobile:
 		TurnSpeed: 40
-		Speed: 49
+		Speed: 54
 		Voice: Move
 	Passenger:
 		Voice: Move

@@ -922,6 +922,11 @@ stmr:
 	idle: stmr
 		Facings: 32
 		UseClassicFacings: True
+	shield: stmrshield
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: 1022
+		BlendMode: Additive
 	muzzle: scrinmuzz1
 		BlendMode: Additive
 		Length: 6
@@ -933,6 +938,11 @@ enrv:
 	idle: enrv
 		Facings: 32
 		UseClassicFacings: True
+	shield: enrvshield
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: 1022
+		BlendMode: Additive
 	icon: enrvicon
 
 deva:
@@ -1006,6 +1016,10 @@ mshp:
 		Length: *
 		Tick: 40
 		Offset: 0, 40, 0
+		BlendMode: Additive
+	shield: mshpshield
+		Facings: 1
+		ZOffset: 1022
 		BlendMode: Additive
 	muzzle: scrinmuzz2
 		Frames: 0,1,2,3,0,1,2,3,0,1,2,3,4
@@ -1159,6 +1173,19 @@ grav:
 		BlendMode: Additive
 		Offset: 0,-1
 		ZOffset: -256
+	idle-overlay-activate: wormhole
+		Length: 15
+		Frames: 21, 21, 21, 21, 21, 21, 21, 21, 20, 19, 18, 17, 16, 15, 14
+		BlendMode: Additive
+		Offset: -3,-6
+		ZOffset: -256
+	idle-overlay-deactivate: wormhole
+		Start: 14
+		Length: 7
+		BlendMode: Additive
+		Offset: -3,-6
+		ZOffset: -256
+		Tick: 60
 	idle-pylon: grav
 		Start: 2
 		Length: 1
@@ -1166,6 +1193,10 @@ grav:
 	damaged-idle: grav
 		Start: 1
 		ZOffset: -512
+	muzzle: playerzapmuzzle
+		ZOffset: 3072
+		Length: *
+		BlendMode: Additive
 	make: gravmake
 		Length: *
 		Tick: 80
@@ -1886,7 +1917,7 @@ wormholeblast:
 plasmatorp1:
 	Defaults:
 		IgnoreWorldTint: true
-		BlendMode: Additive
+		Alpha: 0.95
 	idle: plasmatorp1
 		Length: 5
 		Tick: 40
@@ -1895,7 +1926,7 @@ plasmatorp1:
 plasmatorp2:
 	Defaults:
 		IgnoreWorldTint: true
-		BlendMode: Additive
+		Alpha: 0.95
 	idle: plasmatorp2
 		Length: 5
 		Tick: 40
@@ -1904,7 +1935,7 @@ plasmatorp2:
 plasmatorp3:
 	Defaults:
 		IgnoreWorldTint: true
-		BlendMode: Additive
+		Alpha: 0.95
 	idle: plasmatorp3
 		Length: 5
 		Tick: 40

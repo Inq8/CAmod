@@ -15,7 +15,8 @@ Player:
 	Inherits: ^BasePlayer
 	TechTree:
 	ClassicProductionQueue@Building:
-		Type: Building
+		Type: BuildingSQ
+		Group: Building
 		DisplayOrder: 0
 		LowPowerModifier: 250
 		ReadyAudio: ConstructionComplete
@@ -26,7 +27,8 @@ Player:
 		CancelledAudio: Cancelled
 		SpeedUp: False
 	ClassicProductionQueue@Defense:
-		Type: Defense
+		Type: DefenseSQ
+		Group: Defense
 		DisplayOrder: 1
 		LowPowerModifier: 250
 		ReadyAudio: ConstructionComplete
@@ -37,7 +39,8 @@ Player:
 		CancelledAudio: Cancelled
 		SpeedUp: False
 	ClassicProductionQueueCA@Vehicle:
-		Type: Vehicle
+		Type: VehicleSQ
+		Group: Vehicle
 		DisplayOrder: 3
 		LowPowerModifier: 250
 		ReadyAudio: UnitReady
@@ -49,7 +52,8 @@ Player:
 		SpeedUp: True
 		BuildTimeSpeedReduction: 100, 75, 60, 50
 	ClassicProductionQueueCA@Infantry:
-		Type: Infantry
+		Type: InfantrySQ
+		Group: Infantry
 		DisplayOrder: 2
 		LowPowerModifier: 250
 		ReadyAudio: UnitReady
@@ -61,7 +65,8 @@ Player:
 		SpeedUp: True
 		BuildTimeSpeedReduction: 100, 80, 67, 57, 50
 	ClassicProductionQueue@Ship:
-		Type: Ship
+		Type: ShipSQ
+		Group: Ship
 		DisplayOrder: 5
 		LowPowerModifier: 250
 		ReadyAudio: UnitReady
@@ -73,7 +78,8 @@ Player:
 		SpeedUp: True
 		BuildTimeSpeedReduction: 100, 75, 60, 50
 	ClassicProductionQueueCA@Aircraft:
-		Type: Aircraft
+		Type: AircraftSQ
+		Group: Aircraft
 		DisplayOrder: 4
 		LowPowerModifier: 250
 		ReadyAudio: UnitReady
@@ -87,6 +93,7 @@ Player:
 		CombinedBuildSpeedReduction: true
 	ClassicProductionQueue@Upgrade:
 		Type: Upgrade
+		Group: Upgrade
 		DisplayOrder: 6
 		LowPowerModifier: 250
 		ReadyAudio: UpgradeComplete
@@ -164,6 +171,13 @@ Player:
 		Enabled: True
 		DisplayOrder: 15
 		Prerequisites: global.balancedharvesting
+	LobbyPrerequisiteCheckbox@GLOBALMULTIQUEUE:
+		ID: multiqueue
+		Label: MultiQueue
+		Description: Each production facility can produce individually
+		Enabled: False
+		DisplayOrder: 16
+		Prerequisites: global.multiqueue
 	FrozenActorLayer:
 	BaseAttackNotifier:
 	PlayerStatistics:
@@ -263,10 +277,27 @@ Player:
 	ProvidesPrerequisite@collector:
 		Prerequisite: player.collector
 		Factions: collector
+	ExternalCondition@infqueuecount:
+		Condition: infqueuecount
+	ProvidesPrerequisite@infqueuecount1:
+		Prerequisite: infqueuecount.one
+		RequiresCondition: infqueuecount == 1
+	ProvidesPrerequisite@infqueuecount2:
+		Prerequisite: infqueuecount.two
+		RequiresCondition: infqueuecount >= 2
+	ExternalCondition@airqueuecount:
+		Condition: airqueuecount
+	ProvidesPrerequisite@airqueuecount1:
+		Prerequisite: airqueuecount.one
+		RequiresCondition: airqueuecount == 1
+	ProvidesPrerequisite@airqueuecount2:
+		Prerequisite: airqueuecount.two
+		RequiresCondition: airqueuecount >= 2
 	GrantConditionOnPrerequisiteManager:
 	GrantConditionOnPrerequisiteManagerCA:
 	EnemyWatcher:
-	VeteranProductionIconOverlay:
+	ProductionIconOverlayManager:
+		Type: Veterancy
 		Image: iconchevrons
 		Sequence: veteran
 	ResourceStorageWarning:

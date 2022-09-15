@@ -582,6 +582,7 @@ powerproxy.parabombs:
 		ClockSequence: clock
 		CircleSequence: circles
 		OrderName: crateparabombs
+		SupportPowerPaletteOrder: 70
 
 powerproxy.sonarpulse:
 	AlwaysVisible:
@@ -597,6 +598,7 @@ powerproxy.sonarpulse:
 		DeploySound: sonpulse.aud
 		EffectImage: moveflsh
 		EffectPalette: moveflash
+		SupportPowerPaletteOrder: 70
 
 powerproxy.paratroopers:
 	AlwaysVisible:
@@ -621,6 +623,7 @@ powerproxy.paratroopers:
 		ArrowSequence: arrow
 		ClockSequence: clock
 		CircleSequence: circles
+		SupportPowerPaletteOrder: 70
 
 powerproxy.paratroopers.allies:
 	AlwaysVisible:
@@ -645,6 +648,7 @@ powerproxy.paratroopers.allies:
 		ArrowSequence: arrow
 		ClockSequence: clock
 		CircleSequence: circles
+		SupportPowerPaletteOrder: 70
 
 powerproxy.airborne:
 	AlwaysVisible:
@@ -672,6 +676,7 @@ powerproxy.airborne:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 70
 
 powerproxy.airborne.tank:
 	AlwaysVisible:
@@ -699,6 +704,7 @@ powerproxy.airborne.tank:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 70
 
 powerproxy.airstrike:
 	AlwaysVisible:
@@ -732,6 +738,7 @@ powerproxy.airstrike:
 		Strikes: 2
 		CircleDelay: 20
 		OrderName: crateairstrike
+		SupportPowerPaletteOrder: 70
 
 barracks.upgraded:
 	AlwaysVisible:
@@ -1060,3 +1067,10 @@ SHAB:
 		Duration: 4500
 	KillsSelf:
 		RequiresCondition: !active
+
+# For MQ, ensures production tabs are updated properly
+QueueUpdaterDummy:
+	AlwaysVisible:
+	ProvidesPrerequisite:
+	KillsSelf:
+		RemoveInstead: true

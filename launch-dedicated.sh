@@ -53,6 +53,7 @@ LAUNCH_MOD="${Mod:-"${MOD_ID}"}"
 LISTEN_PORT="${ListenPort:-"1234"}"
 ADVERTISE_ONLINE="${AdvertiseOnline:-"True"}"
 PASSWORD="${Password:-""}"
+RECORD_REPLAYS="${RecordReplays:-"False"}"
 
 REQUIRE_AUTHENTICATION="${RequireAuthentication:-"False"}"
 PROFILE_ID_BLACKLIST="${ProfileIDBlacklist:-""}"
@@ -62,6 +63,10 @@ ENABLE_SINGLE_PLAYER="${EnableSingleplayer:-"False"}"
 ENABLE_SYNC_REPORTS="${EnableSyncReports:-"False"}"
 ENABLE_GEOIP="${EnableGeoIP:-"True"}"
 SHARE_ANONYMISED_IPS="${ShareAnonymizedIPs:-"True"}"
+
+JOIN_CHAT_DELAY="${JoinChatDelay:-"5000"}"
+
+QUERY_MAP_REPOSITORY="${QueryMapRepository:-"True"}"
 
 SUPPORT_DIR="${SupportDir:-""}"
 
@@ -79,6 +84,7 @@ while true; do
      Server.Name="${NAME}" Server.ListenPort="${LISTEN_PORT}" \
      Server.AdvertiseOnline="${ADVERTISE_ONLINE}" \
      Server.Password="${PASSWORD}" \
+     Server.RecordReplays="${RECORD_REPLAYS}" \
      Server.RequireAuthentication="${REQUIRE_AUTHENTICATION}" \
      Server.ProfileIDBlacklist="${PROFILE_ID_BLACKLIST}" \
      Server.ProfileIDWhitelist="${PROFILE_ID_WHITELIST}" \
@@ -86,5 +92,7 @@ while true; do
      Server.EnableSyncReports="${ENABLE_SYNC_REPORTS}" \
      Server.EnableGeoIP="${ENABLE_GEOIP}" \
      Server.ShareAnonymizedIPs="${SHARE_ANONYMISED_IPS}" \
+     Server.JoinChatDelay="${JOIN_CHAT_DELAY}" \
+     Server.QueryMapRepository="${QUERY_MAP_REPOSITORY}" \
      Engine.SupportDir="${SUPPORT_DIR}"
 done

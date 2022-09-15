@@ -1,0 +1,23 @@
+
+Crossrip:
+	ReloadDelay: 10000
+	Projectile: InstantExplode
+	Warhead@1Dam: SpreadDamage
+		Spread: 8c0
+		Damage: 45000
+		ValidTargets: Structure, Wall, Trees
+		Versus:
+			Wood: 250
+			Concrete: 250
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
+	Warhead@1Eff: CreateEffect
+		Explosions: chronowarpbig_effect
+		ExplosionPalette: ra2effect-ignore-lighting-alpha75
+		ImpactSounds: crossrip.aud
+		ValidTargets: Ground, Water, Air
+	Warhead@2Eff: CreateEffect
+		Explosions: mindblast
+		ExplosionPalette: ra2effect-ignore-lighting-alpha75
+		ValidTargets: Ground, Trees, Water, Underwater, Air, AirSmall
+		Delay: 25
+	Warhead@3Flash: ChronoFlashEffect

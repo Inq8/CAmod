@@ -13,13 +13,15 @@ Player:
 	ModularBot@CampaignAI:
 		Name: Campaign Player AI
 		Type: campaign
+	LobbyPrerequisiteCheckbox@GLOBALBOUNTY:
+		Enabled: False
 
 World:
 	CrateSpawner:
 		CheckboxEnabled: False
 		CheckboxLocked: True
-	-SpawnMPUnits:
-	-MPStartLocations:
+	-SpawnStartingUnits:
+	-MapStartingLocations:
 	ObjectivesPanel:
 		PanelName: MISSION_OBJECTIVES
 	MapBuildRadius:
@@ -31,22 +33,9 @@ World:
 		TechLevelDropdownLocked: True
 		ShortGameCheckboxLocked: True
 		ShortGameCheckboxEnabled: False
-
-E7:
-	-Crushable:
-
-E7.noautotarget:
-	Inherits: E7
-	-AutoTarget:
-	-AutoTargetPriority@DEFAULT:
-	-AutoTargetPriority@ATTACKANYTHING:
-	AttackMove:
-		-AssaultMoveScanCondition:
-	RenderSprites:
-		Image: E7
-
-^Vehicle:
-	Demolishable:
+	MusicPlaylist:
+		VictoryMusic: score
+		DefeatMusic: map
 
 MONEYCRATE:
 	Tooltip:
@@ -55,22 +44,3 @@ MONEYCRATE:
 		Amount: 2000
 	RenderSprites:
 		Image: scrate
-
-FCOM:
-	Capturable:
-		Types: ~disabled
-	-GivesBuildableArea:
-	-BaseProvider:
-
-MISS:
-	RevealsShroud:
-		Range: 3c0
-	-RevealsShroud@GAPGEN:
-
-Ant:
-	Buildable:
-		Prerequisites: ~disabled
-
-Zombie:
-	Buildable:
-		Prerequisites: ~disabled

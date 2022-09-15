@@ -1,0 +1,193 @@
+
+^Palettes:
+	GlobalLightingPaletteEffect:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, ca01.lua
+	MissionData:
+		Briefing: There have been reports of unusual energy readings emanating from a Soviet facility in the area.\n\nEstablish a base and investigate.\n\nIf the Soviets put up strong resistance then they must be hiding something of importance, in which case you are authorised to launch a full scale attack.\n\nUnfortunately we can't commit our most advanced equipment or aircraft until we've assessed if there is a significant threat.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: Difficulty
+		Description: The difficulty of the mission
+		Values:
+			easy: Easy
+			normal: Normal
+			hard: Hard
+		Default: normal
+	TimeLimitManager:
+		SkipTimerExpiredNotification: True
+		CountdownLabel: MISSION_TEXT
+		CountdownText: Evacuation begins in {0}
+
+Player:
+	PlayerResources:
+		DefaultCash: 5000
+
+^Disabled:
+	Buildable:
+		Prerequisites: ~disabled
+
+^Infantry:
+	ProductionCostMultiplier@HardBonus:
+		Multiplier: 90
+		Prerequisites: hard.difficulty
+
+^Vehicle-NOUPG:
+	ProductionCostMultiplier@HardBonus:
+		Multiplier: 90
+		Prerequisites: hard.difficulty
+
+E7:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+BORI:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+TNKD:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MRJ:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MGG:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+CTNK:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+CRYO:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+CHPR:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+TTNK:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+APOC:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+TRUK:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+HARR:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+SUK:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+KIRO:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+HPAD:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+ATEK:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+PDOX:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+	-ChronoshiftPower@chronoshift:
+	-DetonateWeaponPower@ChronoAI:
+	-GrantExternalConditionPowerCA@TimeWarp:
+	Power:
+		Amount: 0
+	ExternalCondition@DISABLED:
+		Condition: disabled
+	-GrantConditionOnPowerState@LOWPOWER:
+	-GrantCondition@IDISABLE:
+	-Explodes:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
+	AnnounceOnSeen:
+		PingOnRadar: true
+
+PDOX.CROSSRIP:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^SpriteActor
+	Inherits@SHAPE: ^2x2Shape
+	WithSpriteBody:
+	RenderSprites:
+	Interactable:
+	WithRestartableIdleOverlay:
+		Image: chronobubble
+		StartSequence: warpin
+		RestartSequence: warpin
+		Sequence: warpout
+		PlayOnce: true
+		Palette: ra2effect-ignore-lighting-alpha75
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+		TerrainTypes: Clear,Road
+	FrozenUnderFog:
+	PeriodicExplosion:
+		Weapon: Crossrip
+
+IRON:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+WEAT:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MSLO:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+OREP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+INDP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+NPWR:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+SYRD:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+SPEN:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+hazmat.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+hazmatsoviet.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+BARR:
+	GrantConditionOnBotOwner@CampaignAI:
+		Condition: owned-by-ai
+		Bots: campaign
+	Production@MQINF:
+		RequiresCondition: owned-by-ai
+	ProvidesPrerequisite@HardBonus:
+		Prerequisite: hard.difficulty
+		Factions: russia
+		ResetOnOwnerChange: true
+
+WEAP:
+	ProvidesPrerequisite@HardBonus:
+		Prerequisite: hard.difficulty
+		Factions: russia
+		ResetOnOwnerChange: true
+
+TSLA:
+	-Targetable@TeslaBoost:
+
+WORMHOLE:
+	-PopControlled:
+	-Targetable:
+
+V01:
+	-SpawnRandomActorOnDeath@1:
+	-SpawnRandomActorOnDeath@2:
+	-SpawnRandomActorOnDeath@3:
+
+SMALLCAMERA:
+	Inherits: CAMERA
+	RevealsShroud:
+		Range: 4c0

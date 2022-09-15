@@ -55,7 +55,7 @@ bombard.strat:
 		IconPalette: chrometd
 		Description: Firepower focused strategy.
 	TooltipExtras:
-		Strengths: + Increases unit firepower by 5%
+		Strengths: + Increases firepower of vehicles and aircraft by 5%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
 	Valued:
 		Cost: 1500
@@ -71,7 +71,7 @@ bombard2.strat:
 		Prerequisites: gtek, ~bombard.strat, ~techlevel.high
 		Description: Increase Bombardment strategy bonuses.
 	TooltipExtras:
-		Strengths: + Increases unit firepower by a further 5%
+		Strengths: + Increases firepower of vehicles and aircraft by a further 5%
 		-Attributes:
 	RenderSprites:
 		Image: bombard2.strat
@@ -86,7 +86,7 @@ seek.strat:
 		IconPalette: chrometd
 		Description: Speed and weapon range focused strategy.
 	TooltipExtras:
-		Strengths: + Increases unit speed and weapon range by 5%
+		Strengths: + Increases speed and weapon range of vehicles and aircraft by 5%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
 	Valued:
 		Cost: 1500
@@ -102,7 +102,7 @@ seek2.strat:
 		Prerequisites: gtek, ~seek.strat, ~techlevel.high
 		Description: Increase Seek & Destroy strategy bonuses.
 	TooltipExtras:
-		Strengths: + Increases unit speed and weapon range by a further 5%
+		Strengths: + Increases speed and weapon range of vehicles and aircraft by a further 5%
 		-Attributes:
 	RenderSprites:
 		Image: seek2.strat
@@ -117,7 +117,7 @@ hold.strat:
 		IconPalette: chrometd
 		Description: Defensive strategy.
 	TooltipExtras:
-		Strengths: + Increases unit armor by 5%
+		Strengths: + Increases armor of vehicles and aircraft by 5%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
 	Valued:
 		Cost: 1500
@@ -133,7 +133,7 @@ hold2.strat:
 		Prerequisites: gtek, ~hold.strat,  ~techlevel.high
 		Description: Increase Hold the Line strategy bonuses.
 	TooltipExtras:
-		Strengths: + Increases unit armor by a further 5%
+		Strengths: + Increases armor of vehicles and aircraft by a further 5%
 		-Attributes:
 	RenderSprites:
 		Image: hold2.strat
@@ -205,7 +205,7 @@ bjet.upgrade:
 tow.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: TOW Missile
+		Name: Research: TOW Missile
 	Buildable:
 		BuildPaletteOrder: 45
 		Prerequisites: ~gtek, ~seek.strat, ~techlevel.high
@@ -233,6 +233,22 @@ pointdef.upgrade:
 		Cost: 1500
 	RenderSprites:
 		Image: pointdef.upgrade
+
+gyro.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Gyro Stabilizers
+	Buildable:
+		BuildPaletteOrder: 60
+		Prerequisites: ~gtek.talon, ~techlevel.high
+		IconPalette: chrometd
+		Description: Allows mech units to activate gyro stabilizers, greatly increasing range but reducing rate of fire.\n\nUpgrades: Titan\nUpgrades: Railgun Titan\nUpgrades: Juggernaut\nUpgrades: X-O Powersuit
+	TooltipExtras:
+		Strengths: + Added Gyro Stabilizers ability (increased range, reduced rate of fire)
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: gyro.upgrade
 
 sonic.upgrade:
 	Inherits: ^Upgrade
@@ -269,7 +285,7 @@ abur.upgrade:
 bdrone.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Battle Drone
+		Name: Research: Battle Drone
 	Buildable:
 		BuildPaletteOrder: 65
 		Prerequisites: ~gtek.arc, ~techlevel.high
@@ -454,10 +470,10 @@ microwave.upgrade:
 	RenderSprites:
 		Image: microwave.upgrade
 
-supercharged.upgrade:
+quantum.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Supercharged Lasers
+		Name: Upgrade: Quantum Capacitors
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~tmpl.marked, ~techlevel.high
@@ -467,7 +483,7 @@ supercharged.upgrade:
 	Valued:
 		Cost: 1000
 	RenderSprites:
-		Image: supercharged.upgrade
+		Image: quantum.upgrade
 
 alphacomanche.upgrade:
 	Inherits: ^Upgrade
@@ -592,11 +608,11 @@ hazmatsoviet.upgrade:
 lasher.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Lasher Tank
+		Name: Research: Lasher Tank
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~radar.yuri, ~techlevel.medium
-		Description: Upgrades Heavy tanks with infantry crushing attachment\n  at the cost of some armor and firepower.\n\nUpgrades: Heavy Tank
+		Description: Upgrades Heavy tanks with infantry crushing attachment\n  at the cost of some armor and firepower.\n\nReplaces: Heavy Tank
 	TooltipExtras:
 		Strengths: + 20% faster movement\n + Damages infantry it moves through\n+ Not slowed by infantry
 		Weaknesses: – Reduced hit points\n– Reduced firepower
@@ -625,7 +641,7 @@ seismic.upgrade:
 atomicengines.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Atomic Engines
+		Name: Research: Atomic Engines
 	Buildable:
 		BuildPaletteOrder: 55
 		Prerequisites: ~npwr, ~techlevel.high
@@ -641,7 +657,7 @@ atomicengines.upgrade:
 erad.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Eradicator
+		Name: Research: Eradicator
 	Buildable:
 		BuildPaletteOrder: 55
 		Prerequisites: ~npwr.iraq, ~techlevel.high
@@ -657,7 +673,7 @@ erad.upgrade:
 tarc.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Tesla Arcing
+		Name: Upgrade: Tesla Arcing
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~stek.russia, ~techlevel.medium
@@ -695,7 +711,7 @@ rapc.upgrade:
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~radar.allies, ~techlevel.medium
-		Description: Allows construction of the Raider APC.\n\nReplaces: APC
+		Description: Allows construction of the Raider APC.\n\nUpgrades: APC
 	TooltipExtras:
 		Strengths: + Adds strong anti-structure damage\n+ Increased splash damage\n+ Adds turret
 		Weaknesses: – Increased cost\n– Slower projectile speed\n– Reduced speed
@@ -707,7 +723,7 @@ rapc.upgrade:
 apb.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Raufoss Ammo
+		Name: Upgrade: Raufoss Ammo
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~radar.england, ~techlevel.medium
@@ -750,12 +766,27 @@ pcan.upgrade:
 	RenderSprites:
 		Image: pcan.upgrade
 
+entrench.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Entrenchment
+	Buildable:
+		BuildPaletteOrder: 41
+		Prerequisites: ~atek.france, ~techlevel.high
+		Description: Enables Engineers to facilitate the building of defenses.\n\nUpgrades: Engineer
+	TooltipExtras:
+		Strengths: + Allows Engineers to deploy, enabling defensive structures to be built
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: entrench.upgrade
+
 crym.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Cryo Missile
+		Name: Upgrade: Cryo Missile
 	Buildable:
-		BuildPaletteOrder: 41
+		BuildPaletteOrder: 42
 		Prerequisites: ~atek.usa, ~techlevel.high
 		Description: Equips Nighthawks with large Cryo missiles which reduce\n  target movement speed and increase damage taken.\n\nUpgrades: Nighthawk
 	TooltipExtras:
@@ -772,7 +803,7 @@ charv.upgrade:
 	Buildable:
 		BuildPaletteOrder: 50
 		Prerequisites: ~orep, ~techlevel.high
-		Description: Allows construction of Chrono Miners which\nteleport back to refineries.\n\nReplaces: Ore Truck
+		Description: Allows construction of Chrono Miners which\nteleport back to refineries.\n\nUpgrades: Ore Truck
 	TooltipExtras:
 		Strengths: + Teleport back to refinery
 	Valued:
@@ -848,7 +879,7 @@ advart.upgrade:
 shrw.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Shard Walker
+		Name: Research: Shard Walker
 	Buildable:
 		BuildPaletteOrder: 20
 		Prerequisites: ~radar.reaper, ~techlevel.medium
@@ -926,14 +957,14 @@ regen.upgrade:
 	RenderSprites:
 		Image: regen.upgrade
 
-plasma.upgrade:
+stellar.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Upgrade: Charged Plasma
+		Name: Upgrade: Stellar Fusion Cannon
 	Buildable:
 		BuildPaletteOrder: 35
 		Prerequisites: ~scrt.harbinger, ~techlevel.high
-		Description: Devastator Warships upgraded to fire more powerful charged plasma projectiles.\n\nUpgrades: Devastator Warship
+		Description: Devastator Warships upgraded with stellar fusion cannon.\n\nUpgrades: Devastator Warship
 		IconPalette: scrin
 	TooltipExtras:
 		Strengths: + Increased damage\n+ Increased area of effect\n+ Improved accuracy
@@ -941,7 +972,7 @@ plasma.upgrade:
 	Valued:
 		Cost: 1000
 	RenderSprites:
-		Image: plasma.upgrade
+		Image: stellar.upgrade
 
 coalescence.upgrade:
 	Inherits: ^Upgrade
@@ -967,11 +998,11 @@ shields.upgrade:
 	Buildable:
 		BuildPaletteOrder: 40
 		Prerequisites: ~sign, ~techlevel.high
-		Description: Equip larger Scrin vessels with shields.\n\nUpgrades: Devastator\nUpgrades: Planetary Assault Carrier
+		Description: Equip Scrin airborne units with shields.\n\nUpgrades: Stormrider\nUpgrades: Enervator\nUpgrades: Devastator Warship\nUpgrades: Planetary Assault Carrier\nUpgrades: Mothership
 		IconPalette: scrin
 	TooltipExtras:
 		Strengths: + Grants an additonal health pool\n+ Resistance to EMP
 	Valued:
-		Cost: 1000
+		Cost: 1500
 	RenderSprites:
 		Image: shields.upgrade

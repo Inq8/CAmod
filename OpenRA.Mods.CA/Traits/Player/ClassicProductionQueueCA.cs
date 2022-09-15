@@ -20,14 +20,11 @@ namespace OpenRA.Mods.CA.Traits
 	[Desc("Attach this to the player actor (not a building!) to define a new shared build queue.",
 		"Will only work together with the Production: trait on the actor that actually does the production.",
 		"You will also want to add PrimaryBuildings: to let the user choose where new units should exit.",
-		"CA version replaces upgraded units in the queue by referencing the UpgradeableTo trait.")]
+		"CA version allows build speed reduction to take into account all buildings for a type if BuildAtProductionType is set.")]
 	public class ClassicProductionQueueCAInfo : ClassicProductionQueueInfo
 	{
 		[Desc("If true, ignore BuildAtProductionType when calculating build duration, so all structures for this queue are counted.")]
 		public readonly bool CombinedBuildSpeedReduction = false;
-
-		[Desc("If true, any units being produced that have been replaced by an upgrade will be completed.")]
-		public readonly bool CompleteUpgradedInProgress = false;
 
 		public override object Create(ActorInitializer init) { return new ClassicProductionQueueCA(init, this); }
 	}
@@ -36,8 +33,6 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		public readonly new ClassicProductionQueueCAInfo Info;
 		readonly Actor self;
-		PowerManager playerPower;
-		HashSet<string> lastBuildableNames = new HashSet<string>();
 
 		public ClassicProductionQueueCA(ActorInitializer init, ClassicProductionQueueCAInfo info)
 			: base(init, info)
@@ -88,120 +83,5 @@ namespace OpenRA.Mods.CA.Traits
 
 			return Util.ApplyPercentageModifiers(time, modifiers);
 		}
-
-		// overrides ProductionQueue.TickInner() so that the new ReplaceOrCancelUnbuildableItems() is called
-		protected override void TickInner(Actor self, bool allProductionPaused)
-		{
-			ReplaceOrCancelUnbuildableItems();
-
-			if (Queue.Count > 0 && !allProductionPaused)
-				Queue[0].Tick(playerResources);
-		}
-
-		// copied from ProductionQueue.CancelUnbuildableItems(), amended to allow in-place replacements due to upgrades
-		protected void ReplaceOrCancelUnbuildableItems()
-		{
-			if (Queue.Count == 0)
-			{
-				// reset lastBuildableNames to ensure checks will be done immediately when queue is populated again
-				lastBuildableNames = new HashSet<string>();
-				return;
-			}
-
-			var buildableNames = BuildableItems().Select(b => b.Name).ToHashSet();
-
-			// if buildables haven't changed since last tick we don't need to do anything else
-			if (lastBuildableNames == buildableNames)
-				return;
-
-			var rules = self.World.Map.Rules;
-			var replacements = new Dictionary<string, ReplacementDetails>();
-
-			if (playerPower == null)
-				playerPower = self.Owner.PlayerActor.TraitOrDefault<PowerManager>();
-
-			// EndProduction removes the item from the queue, so we enumerate
-			// by index in reverse to avoid issues with index reassignment
-			for (var i = Queue.Count - 1; i >= 0; i--)
-			{
-				if (buildableNames.Contains(Queue[i].Item))
-					continue;
-
-				Queue[i] = GetReplacement(Queue[i], replacements, buildableNames, rules, out bool replaced);
-				if (replaced)
-					continue;
-
-				// Refund what's been paid so far
-				playerResources.GiveCash(Queue[i].TotalCost - Queue[i].RemainingCost);
-				EndProduction(Queue[i]);
-			}
-
-			lastBuildableNames = buildableNames;
-		}
-
-		ProductionItem GetReplacement(ProductionItem queueItem, Dictionary<string, ReplacementDetails> replacements, HashSet<string> buildableNames, Ruleset rules, out bool replaced)
-		{
-			replaced = false;
-
-			// if started already, and not set to complete any in progress, don't replace (will be cancelled and refunded)
-			if (queueItem.Item == null || (queueItem.Started && !Info.CompleteUpgradedInProgress))
-				return queueItem;
-
-			if (!replacements.ContainsKey(queueItem.Item))
-			{
-				var upgradeableTo = rules.Actors[queueItem.Item].TraitInfoOrDefault<UpgradeableToInfo>();
-				var replacement = new ReplacementDetails();
-
-				if (upgradeableTo != null)
-				{
-					var replacementName = upgradeableTo.Actors.Where(a => buildableNames.Contains(a)).FirstOrDefault();
-					if (replacementName != null)
-					{
-						replacement.Info = rules.Actors[replacementName];
-						var valued = replacement.Info.TraitInfoOrDefault<ValuedInfo>();
-						replacement.Cost = valued != null ? valued.Cost : 0;
-					}
-				}
-
-				replacements[queueItem.Item] = replacement;
-			}
-
-			if (replacements[queueItem.Item].Info != null)
-			{
-				// if a replacement is buildable, but we've already started producing, we should be able to finish production (as CompleteUpgradedInProgress is true)
-				if (queueItem.Started)
-				{
-					replaced = true;
-					return queueItem;
-				}
-
-				var r = replacements[queueItem.Item];
-
-				var replacementItem = new ProductionItem(this, r.Info.Name, r.Cost, playerPower, () => self.World.AddFrameEndTask(_ =>
-				{
-					// Make sure the item hasn't been invalidated between the ProductionItem ticking and this FrameEndTask running
-					if (!Queue.Any(j => j.Done && j.Item == r.Info.Name))
-						return;
-
-					var isBuilding = r.Info.HasTraitInfo<BuildingInfo>();
-					if (isBuilding)
-						return;
-
-					if (BuildUnit(r.Info))
-						Game.Sound.PlayNotification(rules, self.Owner, "Speech", Info.ReadyAudio, self.Owner.Faction.InternalName);
-				}));
-
-				replaced = true;
-				return replacementItem;
-			}
-
-			return queueItem;
-		}
-	}
-
-	public class ReplacementDetails
-	{
-		public ActorInfo Info;
-		public int Cost;
 	}
 }

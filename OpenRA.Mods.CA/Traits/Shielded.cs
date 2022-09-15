@@ -31,6 +31,7 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Number of ticks between recharging.")]
 		public readonly int RegenInterval = 25;
 
+		[GrantedConditionReference]
 		[Desc("Condition to grant when shields are active.")]
 		public readonly string ShieldsUpCondition = null;
 

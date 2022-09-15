@@ -751,7 +751,7 @@ StingerGTWR:
 			None: 55
 			Wood: 55
 			Light: 70
-			Heavy: 60
+			Heavy: 75
 			Concrete: 70
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
@@ -1303,7 +1303,7 @@ IFVRocketsAAE.CRYO:
 	ReloadDelay: 130
 	Burst: 2
 	BurstDelays: 4
-	Range: 8c0
+	Range: 9c0
 	MinRange: 3c0
 	Report: rocket1.aud
 	Projectile: MissileCA
@@ -1338,7 +1338,7 @@ IFVRocketsAAE.CRYO:
 
 227mm.upg:
 	Inherits: 227mm
-	Range: 8c768
+	Range: 9c768
 	Projectile: MissileCA
 		ContrailLength: 15
 	Warhead@1Dam: SpreadDamage
@@ -1375,7 +1375,7 @@ IFVRocketsAAE.CRYO:
 
 227mm.Hailstorm:
 	Inherits: 227mm.upg
-	Range: 10c0
+	Range: 10c512
 	Report: hailstormmissile1.aud, hailstormmissile2.aud
 	Burst: 6
 	BurstDelays: 6
@@ -1909,3 +1909,31 @@ Rocket.P51.R:
 Rocket.P51.L:
 	Inherits: Rocket.P51.R
 	FirstBurstTargetOffset: -758,613,0
+
+RocketShells:
+	Inherits: JuggernautGun
+	-StartBurstReport:
+	-Projectile:
+	Report: rocketshell1.aud, rocketshell2.aud, rocketshell3.aud
+	Projectile: MissileCA
+		Speed: 255
+		Blockable: false
+		Image: 120MM
+		TrailImage: smokey
+		Shadow: true
+		HorizontalRateOfTurn: 30
+		VerticalRateOfTurn: 30
+		PointDefenseType: Missile
+		HomingActivationDelay: 7
+		MinimumLaunchSpeed: 200
+		MaximumLaunchSpeed: 200
+		Acceleration: 30
+		MinimumLaunchAngle: 100
+		MaximumLaunchAngle: 100
+		ContrailLength: 15
+		ContrailColor: aaaa00aa
+		ContrailWidth: 0c40
+		Gravity: 0
+		CruiseAltitude: 2c0
+		Inaccuracy: 128
+		AllowSnapping: true

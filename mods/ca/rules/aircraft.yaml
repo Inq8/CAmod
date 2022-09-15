@@ -205,7 +205,7 @@ MIG:
 	Inherits: ^Plane
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Buildable:
-		Queue: Aircraft
+		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 70
 		Prerequisites: afld, ~aircraft.soviet, ~techlevel.medium
@@ -305,6 +305,9 @@ MIG:
 		RequiresCondition: enable-smoke
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: aircraft.upgraded
 	Rearmable:
 		RearmActors: afld, afld.gdi
 	GrantConditionOnDamageState@SmokeTrail:
@@ -314,7 +317,7 @@ SUK:
 	Inherits: ^Plane
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Buildable:
-		Queue: Aircraft
+		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 120
 		Prerequisites: afld, stek, ~aircraft.soviet, ~!seismic.upgrade, ~techlevel.high
@@ -423,6 +426,9 @@ SUK:
 		DecorationBounds: 1280, 1194, 0, 85
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: aircraft.upgraded
 	Rearmable:
 		RearmActors: afld, afld.gdi
 	GrantConditionOnPrerequisite@SEISMIC:
@@ -458,7 +464,7 @@ YAK:
 	Inherits: ^Plane
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Buildable:
-		Queue: Aircraft
+		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 25
 		Prerequisites: afld, ~aircraft.soviet, ~techlevel.medium
@@ -546,6 +552,9 @@ YAK:
 		RequiresCondition: enable-smoke
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: aircraft.upgraded
 	Selectable:
 		DecorationBounds: 1280, 1194, 0, 85
 	Rearmable:
@@ -632,7 +641,7 @@ TRAN:
 	RenderSprites:
 		Image: tran3
 	Buildable:
-		Queue: Aircraft
+		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 10
 		Prerequisites: aircraft.chinook, ~aircraft.chinookvisible, ~techlevel.medium
@@ -685,7 +694,7 @@ TRAN:
 		TargetRelationships: None
 		ForceTargetRelationships: None
 	Rearmable:
-		RearmActors: hpad, hpad.td
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	WithIdleOverlay@ROTOR1AIR:
 		Offset: 597,0,213
 		Sequence: rotor
@@ -770,7 +779,7 @@ HALO:
 	Health:
 		HP: 44000
 	Buildable:
-		Prerequisites: hpad, ~aircraft.soviet, ~techlevel.medium
+		Prerequisites: afld, ~aircraft.soviet, ~techlevel.medium
 	-WithCargoHatchAnimation:
 	-WithIdleOverlay@ROTOR2AIR:
 	-WithIdleOverlay@ROTOR2GROUND:
@@ -820,7 +829,7 @@ NHAW:
 	RenderSprites:
 		Image: nhaw
 	Buildable:
-		Queue: Aircraft
+		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 10
 		Prerequisites: ~aircraft.nhaw, ~techlevel.medium
@@ -1007,7 +1016,7 @@ HELI:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Buildable:
-		Queue: Aircraft
+		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 50
 		Prerequisites: ~aircraft.allies, ~techlevel.medium
@@ -1095,10 +1104,13 @@ HELI:
 		RequiresCondition: enable-smoke
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: aircraft.upgraded
 	Selectable:
 		DecorationBounds: 1536, 1194
 	Rearmable:
-		RearmActors: hpad, hpad.td
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
 
@@ -1106,10 +1118,10 @@ HIND:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Buildable:
-		Queue: Aircraft
+		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 20
-		Prerequisites: hpad, ~aircraft.soviet, ~techlevel.medium
+		Prerequisites: afld, ~aircraft.soviet, ~techlevel.medium
 		Description: Helicopter gunship armed with\n  a chaingun and anti-tank rockets.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Heavy Armor, Light Armor
@@ -1218,11 +1230,14 @@ HIND:
 		RequiresCondition: enable-smoke
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: aircraft.upgraded
 	Selectable:
 		DecorationBounds: 1621, 1365
 	Rearmable:
 		AmmoPools: primary, secondary
-		RearmActors: hpad, hpad.td
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
 
@@ -1351,7 +1366,7 @@ A10:
 	Inherits: ^PlaneTD
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Buildable:
-		Queue: Aircraft
+		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 80
 		Prerequisites: afld.gdi, ~aircraft.gdi, ~!sidewinders.upgrade, ~techlevel.medium
@@ -1373,7 +1388,7 @@ A10:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 26000
+		HP: 27000
 	RevealsShroud:
 		Range: 11c0
 		MinRange: 9c0
@@ -1463,6 +1478,9 @@ A10:
 		Type: CenterPosition
 		RequiresCondition: enable-smoke
 	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: aircraft.upgraded
 	Rearmable:
 		RearmActors: afld, afld.gdi
@@ -1743,7 +1761,7 @@ APCH:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		Queue: Aircraft
+		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 30
 		Prerequisites: ~aircraft.apch, ~techlevel.medium
@@ -1831,8 +1849,11 @@ APCH:
 	Selectable:
 		DecorationBounds: 1280, 1024
 	Rearmable:
-		RearmActors: hpad, hpad.td
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: aircraft.upgraded
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
@@ -1847,10 +1868,10 @@ ORCA:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		Queue: Aircraft
+		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 50
-		Prerequisites: hpad.td, ~aircraft.gdi, ~techlevel.medium
+		Prerequisites: afld.gdi, ~aircraft.gdi, ~techlevel.medium
 		IconPalette: chrometd
 		Description: VTOL gunship armed with\n  multi-purpose missiles.
 	TooltipExtras:
@@ -1930,8 +1951,11 @@ ORCA:
 	Selectable:
 		DecorationBounds: 1280, 1024
 	Rearmable:
-		RearmActors: hpad, hpad.td
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: aircraft.upgraded
 	GrantConditionOnOrders@ATTACKING:
 		Condition: attacking
@@ -1982,10 +2006,10 @@ ORCB:
 	RenderSprites:
 		Image: orcab
 	Buildable:
-		Queue: Aircraft
+		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 130
-		Prerequisites: hpad.td, ~aircraft.gdi, gtek, ~techlevel.high
+		Prerequisites: afld.gdi, ~aircraft.gdi, gtek, ~techlevel.high
 		IconPalette: chrometd
 		Description: VTOL bomber armed with EMP bombs.
 	TooltipExtras:
@@ -2069,8 +2093,11 @@ ORCB:
 		MoveSequence: move
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: aircraft.upgraded
 	Rearmable:
-		RearmActors: hpad.td, hpad
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	Voiced:
 		VoiceSet: OrcaVoice
 	-RangeMultiplier@SEEK:
@@ -2178,7 +2205,7 @@ RAH:
 	RenderSprites:
 		Image: rah66
 	Buildable:
-		Queue: Aircraft
+		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 60
 		IconPalette: chrometd
@@ -2313,10 +2340,13 @@ RAH:
 	Selectable:
 		DecorationBounds: 1536, 1194
 	Rearmable:
-		RearmActors: hpad, hpad.td
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	Voiced:
 		VoiceSet: OxannaVoice
 	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: aircraft.upgraded
 	GrantConditionOnFaction@blackh:
 		Factions: blackh
@@ -2338,10 +2368,10 @@ KIRO:
 	RenderSprites:
 		Image: kirov
 	Buildable:
-		Queue: Aircraft
+		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 160
-		Prerequisites: hpad, stek, ~aircraft.soviet, ~techlevel.high
+		Prerequisites: afld, stek, ~aircraft.soviet, ~techlevel.high
 		Description: Heavily armoured airship equipped with specialised bombs.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
@@ -2507,6 +2537,9 @@ KIRO:
 	-RangeMultiplier@SEEK3:
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: aircraft.upgraded
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
 
@@ -2521,10 +2554,10 @@ OCAR:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		Queue: Aircraft
+		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 100
-		Prerequisites: hpad.td, rep, ~aircraft.gdi, ~techlevel.medium
+		Prerequisites: afld.gdi, rep, ~aircraft.gdi, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Fast VTOL Vehicle Transporter.
 	TooltipExtras:
@@ -2726,7 +2759,7 @@ HARR:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Buildable:
-		Queue: Aircraft
+		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 110
 		Prerequisites: atek, ~aircraft.allies, ~techlevel.high
@@ -2824,8 +2857,11 @@ HARR:
 		VoiceSet: HarrierVoice
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: aircraft.upgraded
 	Rearmable:
-		RearmActors: hpad, hpad.td
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
 
@@ -2835,7 +2871,7 @@ SCRN:
 	RenderSprites:
 		Image: scrin
 	Buildable:
-		Queue: Aircraft
+		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 150
 		IconPalette: chrometd
@@ -2937,8 +2973,11 @@ SCRN:
 		VoiceSet: ScrinVoice
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: aircraft.upgraded
 	Rearmable:
-		RearmActors: hpad, hpad.td
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	ProductionCostMultiplier@markedBonus:
 		Multiplier: 90
 		Prerequisites: player.marked
@@ -3174,7 +3213,7 @@ VENM:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		Queue: Aircraft
+		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 31
 		Prerequisites: ~aircraft.marked, ~techlevel.medium
@@ -3203,28 +3242,28 @@ VENM:
 		Weapon: VenomLaser
 		LocalOffset: 600,0,-270
 		PauseOnCondition: !ammo
-		RequiresCondition: !supercharged-upgrade
+		RequiresCondition: !quantum-upgrade
 		MuzzleSequence: muzzle
 		MuzzlePalette: caneon
 	Armament@SECONDARY:
 		Weapon: VenomLaserAA
 		LocalOffset: 600,0,-270
 		PauseOnCondition: !ammo
-		RequiresCondition: !supercharged-upgrade
+		RequiresCondition: !quantum-upgrade
 		MuzzleSequence: muzzle
 		MuzzlePalette: caneon
 	Armament@PRIMARYUPG:
 		Weapon: VenomLaser.UPG
 		LocalOffset: 600,0,-270
 		PauseOnCondition: !ammo
-		RequiresCondition: supercharged-upgrade
+		RequiresCondition: quantum-upgrade
 		MuzzleSequence: muzzle
 		MuzzlePalette: caneon
 	Armament@SECONDARYUPG:
 		Weapon: VenomLaserAA.UPG
 		LocalOffset: 600,0,-270
 		PauseOnCondition: !ammo
-		RequiresCondition: supercharged-upgrade
+		RequiresCondition: quantum-upgrade
 		MuzzleSequence: muzzle
 		MuzzlePalette: caneon
 	WithMuzzleOverlay:
@@ -3272,26 +3311,29 @@ VENM:
 	Selectable:
 		DecorationBounds: 1280, 1024
 	Rearmable:
-		RearmActors: hpad, hpad.td
+		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: aircraft.upgraded
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
-	GrantConditionOnPrerequisite@SUPERCHARGED:
-		Condition: supercharged-upgrade
-		Prerequisites: supercharged.upgrade
-	FirepowerMultiplier@SUPERCHARGED:
+	GrantConditionOnPrerequisite@QUANTUM:
+		Condition: quantum-upgrade
+		Prerequisites: quantum.upgrade
+	FirepowerMultiplier@QUANTUM:
 		Modifier: 115
-		RequiresCondition: supercharged-upgrade
-	RangeMultiplier@SUPERCHARGED:
+		RequiresCondition: quantum-upgrade
+	RangeMultiplier@QUANTUM:
 		Modifier: 120
-		RequiresCondition: supercharged-upgrade
+		RequiresCondition: quantum-upgrade
 
 AURO:
 	Inherits: ^PlaneTD
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Buildable:
-		Queue: Aircraft
+		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Plane
 		BuildPaletteOrder: 140
 		Prerequisites: afld.gdi, ~aircraft.eagle, gtek, ~techlevel.high
@@ -3403,6 +3445,9 @@ AURO:
 		Type: CenterPosition
 		RequiresCondition: enable-smoke
 	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
 		Prerequisites: aircraft.upgraded
 	Rearmable:
 		RearmActors: afld, afld.gdi

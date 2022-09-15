@@ -25,6 +25,9 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("Speed the pulse travels.")]
 		public readonly WDist Speed = new WDist(384);
 
+		[Desc("Visual speed of the projectile.")]
+		public readonly WDist VisualSpeed = WDist.Zero;
+
 		[Desc("Minimum distance travelled before doing damage.")]
 		public readonly WDist MinimumImpactDistance = WDist.Zero;
 
@@ -32,7 +35,7 @@ namespace OpenRA.Mods.CA.Projectiles
 		public readonly WDist MaximumImpactDistance = WDist.Zero;
 
 		[Desc("Maximum distance travelled by projectile visual (if present). Zero falls back to weapon range.")]
-		public readonly WDist ProjectileVisualRange = WDist.Zero;
+		public readonly WDist VisualRange = WDist.Zero;
 
 		[Desc("Whether to ignore range modifiers, as these can mess up the relationship between ImpactSpacing, Speed and max range.")]
 		public readonly bool IgnoreRangeModifiers = true;
@@ -73,17 +76,20 @@ namespace OpenRA.Mods.CA.Projectiles
 	{
 		readonly LinearPulseInfo info;
 		readonly ProjectileArgs args;
-		readonly WDist speed;
+		readonly WVec speed;
+		readonly WVec visualSpeed;
+
 		readonly WAngle facing;
 		readonly Animation anim;
 
 		[Sync]
-		WPos pos, target, source;
+		WPos pos, visualPos, target, source;
 		int ticks;
 		int intervalTicks;
 		int totalDistanceTravelled;
+		int totalVisualDistanceTravelled;
 		int range;
-		int projectileRange;
+		int visualRange;
 
 		public Actor SourceActor { get { return args.SourceActor; } }
 
@@ -91,23 +97,27 @@ namespace OpenRA.Mods.CA.Projectiles
 		{
 			this.info = info;
 			this.args = args;
-			speed = info.Speed;
+
+			speed = new WVec(0, -info.Speed.Length, 0);
+			visualSpeed = info.VisualSpeed != WDist.Zero && info.VisualSpeed != info.Speed ? new WVec(0, -info.VisualSpeed.Length, 0) : speed;
+
 			source = args.Source;
 
 			var world = args.SourceActor.World;
 
 			// projectile starts at the source position
-			pos = args.Source;
+			pos = visualPos = args.Source;
 
 			if (info.ForceGround)
 				pos = new WPos(pos.X, pos.Y, 0);
 
 			// initially no distance has been travelled by the pulse
 			totalDistanceTravelled = 0;
+			totalVisualDistanceTravelled = 0;
 
 			// the weapon range (total distance to be travelled)
 			range = args.Weapon.Range.Length;
-			projectileRange = info.ProjectileVisualRange == WDist.Zero ? range : info.ProjectileVisualRange.Length;
+			visualRange = info.VisualRange == WDist.Zero ? range : info.VisualRange.Length;
 
 			if (!info.IgnoreRangeModifiers)
 				range = OpenRA.Mods.Common.Util.ApplyPercentageModifiers(range, args.RangeModifiers);
@@ -141,12 +151,19 @@ namespace OpenRA.Mods.CA.Projectiles
 		{
 			anim?.Tick();
 
-			var lastPos = pos;
-			var convertedVelocity = new WVec(0, -speed.Length, 0);
-			var velocity = convertedVelocity.Rotate(WRot.FromYaw(facing));
-			pos = pos + velocity;
+			var directionalSpeed = speed.Rotate(WRot.FromYaw(facing));
+			pos = pos + directionalSpeed;
 
-			totalDistanceTravelled += speed.Length;
+			var visualDirectionalSpeed = directionalSpeed;
+			if (info.VisualSpeed != info.Speed)
+			{
+				visualDirectionalSpeed = visualSpeed.Rotate(WRot.FromYaw(facing));
+			}
+
+			visualPos = visualPos + visualDirectionalSpeed;
+
+			totalDistanceTravelled += info.Speed.Length;
+			totalVisualDistanceTravelled += info.VisualSpeed != WDist.Zero && info.VisualSpeed != info.Speed ? info.VisualSpeed.Length : info.Speed.Length;
 			intervalTicks++;
 
 			if (intervalTicks >= info.ImpactInterval)
@@ -156,7 +173,7 @@ namespace OpenRA.Mods.CA.Projectiles
 					Explode(world);
 			}
 
-			if (totalDistanceTravelled >= range)
+			if (totalDistanceTravelled >= range && totalVisualDistanceTravelled >= visualRange)
 				world.AddFrameEndTask(w => w.Remove(this));
 
 			ticks++;
@@ -180,22 +197,22 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		public IEnumerable<IRenderable> Render(WorldRenderer wr)
 		{
-			if (anim == null || totalDistanceTravelled >= projectileRange)
+			if (anim == null || totalVisualDistanceTravelled >= visualRange)
 				yield break;
 
 			var world = args.SourceActor.World;
-			if (!world.FogObscures(pos))
+			if (!world.FogObscures(visualPos))
 			{
 				if (info.Shadow)
 				{
-					var dat = world.Map.DistanceAboveTerrain(pos);
-					var shadowPos = pos - new WVec(0, 0, dat.Length);
+					var dat = world.Map.DistanceAboveTerrain(visualPos);
+					var shadowPos = visualPos - new WVec(0, 0, dat.Length);
 					foreach (var r in anim.Render(shadowPos, wr.Palette(info.ShadowPalette)))
 						yield return r;
 				}
 
 				var palette = wr.Palette(info.Palette);
-				foreach (var r in anim.Render(pos, palette))
+				foreach (var r in anim.Render(visualPos, palette))
 					yield return r;
 			}
 		}

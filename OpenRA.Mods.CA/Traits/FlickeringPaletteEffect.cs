@@ -35,6 +35,8 @@ namespace OpenRA.Mods.CA.Traits
 
 		public readonly int QuantizationCount = 16;
 
+		public readonly int? ShadowIndex = 4;
+
 		public override object Create(ActorInitializer init) { return new FlickeringPaletteEffect(this); }
 	}
 
@@ -62,6 +64,9 @@ namespace OpenRA.Mods.CA.Traits
 
 			for (int j = 1; j < Palette.Size; j++)
 			{
+				if (info.ShadowIndex != null && info.ShadowIndex == j)
+					continue;
+
 				var color = Color.FromArgb(info.BaseColor.A, red, green, blue);
 				p.SetColor(j, color);
 			}

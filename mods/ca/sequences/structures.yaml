@@ -1052,12 +1052,26 @@ sgate:
 sbag:
 	idle: sbag
 		Length: 16
+	damaged-idle: sbag
+		Start: 32
+		Length: 16
 	icon: sbagicon
 
 fenc:
 	idle: fenc
 		Length: 16
+	damaged-idle: fenc
+		Start: 16
+		Length: 16
 	icon: fencicon
+
+chain:
+	idle: chain
+		Length: 16
+	damaged-idle: chain
+		Start: 16
+		Length: 16
+	icon: chainicon
 
 cycl:
 	idle: cycl
@@ -1342,17 +1356,6 @@ nsam:
 		Length: 18
 		Facings: 8
 	icon: samicon
-
-chain:
-	idle: chain
-		Length: 16
-	scratched-idle: chain
-		Start: 16
-		Length: 16
-	damaged-idle: chain
-		Start: 32
-		Length: 16
-	icon: chainicon
 
 hq:
 	Inherits: ^StructureOverlays

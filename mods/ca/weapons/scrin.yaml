@@ -446,6 +446,7 @@ CorrupterSpew:
 		Image: tibspew2
 		LaunchAngle: 62
 		Inaccuracy: 682
+		Blockable: false
 		Palette: scrin-ignore-lighting-alpha85
 		TrailPalette: scrin-ignore-lighting-alpha85
 	Warhead@1Dam: SpreadDamage
@@ -456,7 +457,7 @@ CorrupterSpew:
 		Versus:
 			None: 300
 			Wood: 125
-			Light: 80
+			Light: 90
 			Heavy: 30
 			Concrete: 30
 			Brick: 5
@@ -641,13 +642,14 @@ StormriderZap:
 		Damage: 1000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Smu: LeaveSmudge
-		SmudgeType: Scorch
+		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Structure, Wall
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
 		Image: scrinzaphit
 		ValidTargets: Ground, Ship, Air, AirSmall, Trees
+		Inaccuracy: 128
 	Warhead@4EffWater: CreateEffect
 		Explosions: water_piffs
 		ValidTargets: Water, Underwater
@@ -932,6 +934,32 @@ StormcrawlerZap:
 			Light: 30
 			Heavy: 30
 			Concrete: 100
+
+GravityStabilizerZap:
+	Inherits: StormColumnZap
+	-StartBurstReport:
+	Range: 1c512
+	ReloadDelay: 25
+	Burst: 6
+	BurstDelays: 6
+	-Warhead@1Dam:
+	-Warhead@2Smu:
+	-Warhead@3Eff:
+	ValidTargets: Resupplying
+	FirstBurstTargetOffset: 0,0,192
+	Projectile: ElectricBolt
+		Colors: FFFFFF88, FFFFFF44
+		PlayerColorZaps: 2
+		PlayerColorZapAlpha: 100, 180
+		Duration: 6
+		Width: 32
+	Warhead@1Dum: Dummy
+		ValidRelationships: Ally
+	Warhead@highlight: GrantExternalCondition
+		Range: 0c511
+		Duration: 1
+		Condition: highlight
+		ValidTargets: Resupplying
 
 ShardLauncher:
 	StartBurstReport: shard-fire1.aud

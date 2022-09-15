@@ -9,7 +9,7 @@ MSLO:
 	Tooltip:
 		Name: Missile Silo
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 140
 		Prerequisites: stek, ~structures.soviet, ~techlevel.unrestricted
 		BuildLimit: 1
@@ -66,6 +66,7 @@ MSLO:
 		CircleRanges: 6c512
 		CircleColor: BB0000AA
 		CircleBorderColor: 770000AA
+		SupportPowerPaletteOrder: 10
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -94,7 +95,7 @@ GAP:
 	Tooltip:
 		Name: Gap Generator
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 110
 		Prerequisites: atek, ~structures.allies, ~techlevel.high
 		Description: Regenerates the shroud nearby, obscuring enemy vision.\n  Can channel the effect to reduce enemy weapon range\n  and create persisting areas that do the same.
@@ -159,7 +160,7 @@ GAP:
 SPEN:
 	Inherits: ^Building
 	Inherits@WATERSTRUCTURE: ^WaterStructure
-	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@NAV: ^ProducesNaval
 	Selectable:
 		Bounds: 3072, 2048
 	RenderSprites:
@@ -174,7 +175,7 @@ SPEN:
 	Tooltip:
 		Name: Sub Pen
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 220
 		Prerequisites: anypower, ~structures.soviet, ~techlevel.navy, ~techlevel.low
 		Description: Produces and repairs\nsubmarines and transports.
@@ -203,52 +204,41 @@ SPEN:
 		SpawnOffset: 0,-213,0
 		Facing: 384
 		ExitCell: -1,2
-		ProductionTypes: Submarine
 	Exit@2:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,-213,0
 		Facing: 640
 		ExitCell: 3,2
-		ProductionTypes: Submarine
 	Exit@3:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,0,0
 		Facing: 128
 		ExitCell: 0,0
-		ProductionTypes: Submarine
 	Exit@4:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,0,0
 		Facing: 896
 		ExitCell: 2,0
-		ProductionTypes: Submarine
 	Exit@b1:
 		RequiresCondition: !being-captured
 		SpawnOffset: -1024,1024,0
 		Facing: 640
 		ExitCell: 0,2
-		ProductionTypes: Ship
 	Exit@b2:
 		RequiresCondition: !being-captured
 		SpawnOffset: 1024,1024,0
 		Facing: 896
 		ExitCell: 2,2
-		ProductionTypes: Ship
 	Exit@b3:
 		RequiresCondition: !being-captured
 		SpawnOffset: -1024,-1024,0
 		Facing: 384
 		ExitCell: 0,0
-		ProductionTypes: Ship
 	Exit@b4:
 		RequiresCondition: !being-captured
 		SpawnOffset: 1024,-1024,0
 		Facing: 128
 		ExitCell: 2,0
-		ProductionTypes: Ship
-	Production:
-		Produces: Ship, Submarine
-		PauseOnCondition: forceshield || invulnerability || being-warped
 	-SpawnActorsOnSell:
 	RepairsUnits:
 		HpPerStep: 1000
@@ -258,8 +248,6 @@ SPEN:
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	RallyPoint:
 		ForceSetType: Ship
-	ProductionBar:
-		ProductionType: Ship
 	Power:
 		Amount: -30
 	DetectCloaked:
@@ -285,7 +273,7 @@ SPEN:
 SYRD:
 	Inherits: ^Building
 	Inherits@WATERSTRUCTURE: ^WaterStructure
-	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@NAV: ^ProducesNaval
 	Selectable:
 		Bounds: 3072, 2048
 	RenderSprites:
@@ -296,7 +284,7 @@ SYRD:
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 210
 		Prerequisites: anypower, ~structures.allies, ~techlevel.navy, ~techlevel.low
 		Description: Produces and repairs\nships and transports.
@@ -329,28 +317,21 @@ SYRD:
 		SpawnOffset: -1024,1024,0
 		Facing: 640
 		ExitCell: 0,2
-		ProductionTypes: Ship, Boat
 	Exit@2:
 		RequiresCondition: !being-captured
 		SpawnOffset: 1024,1024,0
 		Facing: 896
 		ExitCell: 2,2
-		ProductionTypes: Ship, Boat
 	Exit@3:
 		RequiresCondition: !being-captured
 		SpawnOffset: -1024,-1024,0
 		Facing: 384
 		ExitCell: 0,0
-		ProductionTypes: Ship, Boat
 	Exit@4:
 		RequiresCondition: !being-captured
 		SpawnOffset: 1024,-1024,0
 		Facing: 128
 		ExitCell: 2,0
-		ProductionTypes: Ship, Boat
-	Production:
-		Produces: Ship, Boat
-		PauseOnCondition: forceshield || invulnerability || being-warped
 	-SpawnActorsOnSell:
 	RepairsUnits:
 		HpPerStep: 1000
@@ -360,8 +341,6 @@ SYRD:
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	RallyPoint:
 		ForceSetType: Ship
-	ProductionBar:
-		ProductionType: Ship
 	Power:
 		Amount: -30
 	DetectCloaked:
@@ -390,7 +369,7 @@ IRON:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@SHAPE: ^2x1Shape
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 130
 		Prerequisites: stek, ~structures.soviet, ~techlevel.unrestricted
 		BuildLimit: 1
@@ -448,6 +427,7 @@ IRON:
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayTimerRelationships: Ally, Neutral, Enemy
+		SupportPowerPaletteOrder: 20
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -468,7 +448,7 @@ PDOX:
 	Selectable:
 		Bounds: 2048, 2048
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 120
 		Prerequisites: atek, ~structures.allies, ~techlevel.unrestricted
 		BuildLimit: 1
@@ -528,6 +508,7 @@ PDOX:
 		Dimensions: 5, 5
 		Footprint: __x__ _xxx_ xxxxx _xxx_ __x__
 		DisplayTimerRelationships: Ally, Neutral, Enemy
+		SupportPowerPaletteOrder: 20
 	DetonateWeaponPower@ChronoAI:
 		OrderName: Chronoshiftai
 		Prerequisites: botplayer
@@ -551,6 +532,7 @@ PDOX:
 		DisplayRadarPing: True
 		LaunchSound: chrono2.aud
 		IncomingSound: chrono2.aud
+		SupportPowerPaletteOrder: 20
 	GrantExternalConditionPowerCA@TimeWarp:
 		OrderName: TimeWarp
 		Icon: timewarp
@@ -581,6 +563,7 @@ PDOX:
 		DisplayRadarPing: True
 		LaunchSound: chrono2.aud
 		IncomingSound: chrono2.aud
+		SupportPowerPaletteOrder: 25
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -601,7 +584,7 @@ TSLA:
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Inherits@Flash: ^WhiteFlash
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 80
 		Prerequisites: vehicles.any, ~structures.soviet, ~techlevel.medium
 		Description: Advanced base defense.
@@ -682,7 +665,7 @@ AGUN:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetAirICBM
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 90
 		Prerequisites: anyradar, ~structures.allies, ~techlevel.medium
 		Description: Anti-aircraft base defense.
@@ -741,13 +724,14 @@ DOME:
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@POWERDRAIN: ^PowerDrainableRadar
 	Inherits@SOVIETRADARPOWERS: ^SovietRadarPowers
+	Inherits@UPG: ^ProducesUpgrades
 	Selectable:
 		Bounds: 2048, 2048
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 630,-384,0, 630,384,0, -700,-512,0, -700,512,0
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 90
 		Prerequisites: anyrefinery, ~structures.ra, ~techlevel.medium
 		Description: Provides an overview of the battlefield.
@@ -857,6 +841,7 @@ DOME:
 		SelectTargetSpeechNotification: SelectTarget
 		PauseOnCondition: disabled || empdisable || being-warped
 		RequiresCondition: !build-incomplete
+		SupportPowerPaletteOrder: 50
 	SpawnActorPowerCA@VeilOfWar:
 		Actor: veilofwar1
 		OrderName: veilofwar
@@ -880,12 +865,7 @@ DOME:
 		EffectPalette: tseffect-ignore-lighting-alpha75
 		TargetCircleRange: 9c512
 		TargetCircleColor: 999999AA
-	Production:
-		Produces: Upgrade
-		PauseOnCondition: forceshield || invulnerability || being-warped
-	ProductionBar:
-		ProductionType: Upgrade
-	Exit:
+		SupportPowerPaletteOrder: 50
 
 PBOX:
 	Inherits: ^Defense
@@ -894,7 +874,7 @@ PBOX:
 		Name: Pillbox
 	Building:
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 40
 		Prerequisites: infantry.any, ~structures.pbox, ~techlevel.low
 		Description: Anti-infantry base defense.
@@ -944,7 +924,7 @@ HBOX:
 		Name: Camo Pillbox
 	Building:
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 50
 		Prerequisites: infantry.any, ~structures.england, ~techlevel.low
 		Description: Anti-infantry base defense.
@@ -999,7 +979,7 @@ GUN:
 	Inherits: ^Defense
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 70
 		Prerequisites: infantry.any, ~structures.allies, ~techlevel.low
 		Description: Basic anti-tank base defense.
@@ -1054,7 +1034,7 @@ FTUR:
 	Inherits: ^Defense
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 60
 		Prerequisites: infantry.any, ~structures.ftur, ~techlevel.low
 		Description: Anti-infantry base defense.
@@ -1113,7 +1093,7 @@ SAM:
 			TopLeft: -768,-512
 			BottomRight: 768,512
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 100
 		Prerequisites: anyradar, ~structures.soviet, ~techlevel.medium
 		Description: Anti-aircraft base defense.
@@ -1168,10 +1148,11 @@ ATEK:
 	Inherits: ^Building
 	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@UPG: ^ProducesUpgrades
 	Selectable:
 		Bounds: 2048, 2048
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 140
 		Prerequisites: vehicles.any, anyradar, ~structures.allies, ~techlevel.high
 		Description: Provides Allied advanced technologies.
@@ -1218,6 +1199,7 @@ ATEK:
 		OrderName: ProduceActorSat
 		AutoFire: True
 		RequiresCondition: gps-launched && fogenabled
+		SupportPowerPaletteOrder: 35
 	SupportPowerChargeBar:
 	Power:
 		Amount: -150
@@ -1243,7 +1225,9 @@ ATEK:
 		ChargeInterval: 8250
 		OrderName: InitialSatelliteScanPower
 		AutoFire: True
+		OneShot: True
 		DisplayTimerRelationships: Ally
+		SupportPowerPaletteOrder: 35
 	ProduceActorPowerCA@SatelliteScan:
 		PauseOnCondition: disabled || empdisable || being-warped
 		Prerequisites: anyradar, ~gps.satellite, ~gps.satellite.firstscan, ~fogenabled
@@ -1256,6 +1240,7 @@ ATEK:
 		OrderName: SatelliteScanPower
 		AutoFire: True
 		DisplayTimerRelationships: Ally, Neutral, Enemy
+		SupportPowerPaletteOrder: 35
 	ProduceActorPowerCA@SatelliteScanNoFog:
 		PauseOnCondition: disabled || empdisable || being-warped
 		Prerequisites: anyradar, ~!fogenabled
@@ -1269,6 +1254,7 @@ ATEK:
 		OrderName: SatelliteScanNoFogPower
 		AutoFire: True
 		DisplayTimerRelationships: Ally, Neutral, Enemy
+		SupportPowerPaletteOrder: 35
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
 		Icon: forceshield
@@ -1293,6 +1279,7 @@ ATEK:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
+		SupportPowerPaletteOrder: 40
 	DetonateWeaponPower@TEMPINC:
 		OrderName: tempinc
 		Prerequisites: atek.germany
@@ -1318,6 +1305,7 @@ ATEK:
 		Sequence: idle
 		TargetCircleRange: 5c0
 		TargetCircleColor: 77ffffff
+		SupportPowerPaletteOrder: 40
 	GrantConditionOnFogEnabled@FOGENABLED:
 		Condition: fogenabled
 	ExternalCondition@DUMMY:
@@ -1343,25 +1331,24 @@ ATEK:
 	ProvidesPrerequisiteValidatedFaction@germanyatek:
 		Factions: germany
 		Prerequisite: atek.germany
+	ProvidesPrerequisiteValidatedFaction@franceatek:
+		Factions: france
+		Prerequisite: atek.france
 	ProvidesPrerequisiteValidatedFaction@usaatek:
 		Factions: usa
 		Prerequisite: atek.usa
-	Production:
+	Production@UPG:
 		Produces: Upgrade, SpySatellite
-		PauseOnCondition: forceshield || invulnerability || being-warped
-	ProductionBar:
-		ProductionType: Upgrade
-	Exit:
 
 WEAP:
 	Inherits: ^Building
-	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
+	Inherits@VEH: ^ProducesVehicles
 	Selectable:
 		Bounds: 3072, 2048
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 80
 		Prerequisites: anyrefinery, ~structures.ra, ~techlevel.low
 		Description: Produces vehicles.
@@ -1393,9 +1380,6 @@ WEAP:
 		RequiresCondition: !being-captured
 		SpawnOffset: 213,-128,0
 		ExitCell: 1,2
-	Production:
-		Produces: Vehicle, Paradrop, Powersuit
-		PauseOnCondition: forceshield || invulnerability || being-warped
 	ValidFactions:
 		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
 	ProvidesPrerequisite@any:
@@ -1452,8 +1436,6 @@ WEAP:
 	ProvidesPrerequisiteValidatedFaction@qtnk:
 		Factions: russia, ukraine, iraq
 		Prerequisite: vehicles.qtnk
-	ProductionBar:
-		ProductionType: Vehicle
 	Power:
 		Amount: -30
 	ProvidesPrerequisite@buildingname:
@@ -1479,8 +1461,8 @@ WEAP:
 
 FACT:
 	Inherits: ^Building
-	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@BOTI: ^BotFallbackInsurance
+	Inherits@BLD: ^ProducesBuildings
 	Selectable:
 		Bounds: 3072, 3072
 	Building:
@@ -1488,7 +1470,7 @@ FACT:
 		Dimensions: 3,4
 		LocalCenterOffset: 0,-512,0
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 1000
 		Prerequisites: ~disabled
 		Description: Produces structures.
@@ -1555,9 +1537,6 @@ FACT:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
-	Production:
-		Produces: Building, Defense
-		PauseOnCondition: forceshield || invulnerability || being-warped
 	Valued:
 		Cost: 3000
 	Tooltip:
@@ -1588,11 +1567,6 @@ FACT:
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
-	ProductionBar@Building:
-		ProductionType: Building
-	ProductionBar@Defense:
-		ProductionType: Defense
-		Color: 8A8A8A
 	BaseProvider:
 		PauseOnCondition: being-captured
 		Range: 16c0
@@ -1623,7 +1597,7 @@ PROC:
 	Inherits: ^Building
 	Inherits@BOTREF: ^BotRefinery
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 60
 		Prerequisites: anypower, ~structures.ra
 		Description: Processes raw Tiberium, Ore\n  and Gems into credits.
@@ -1729,7 +1703,7 @@ SILO:
 	Selectable:
 		Bounds: 1024, 1024
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 35
 		Prerequisites: anyrefinery, ~structures.ra
 		Description: Stores excess refined\nTiberium, Ore and Gems.
@@ -1797,6 +1771,7 @@ SILO:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 50
 	ParatroopersPower@Russianparatroopers:
 		OrderName: stormtroopers
 		UnitType: halo.paradrop
@@ -1822,6 +1797,7 @@ SILO:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 50
 	AirstrikePower@spyplane:
 		OrderName: spyplane
 		Icon: spyplane
@@ -1844,6 +1820,7 @@ SILO:
 		CircleSequence: circles
 		UseDirectionalTarget: true
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 50
 
 ^SovietBombingPowers:
 	ProvidesPrerequisiteValidatedFaction@parabombs:
@@ -1871,6 +1848,7 @@ SILO:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 45
 	AirstrikePower@CarpetBomb:
 		OrderName: carpetbomb
 		Prerequisites: ~radar.ukraine
@@ -1893,6 +1871,7 @@ SILO:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 45
 	AirstrikePower@Iraqiparabombs:
 		OrderName: atombomb
 		Prerequisites: ~radar.iraq
@@ -1915,6 +1894,7 @@ SILO:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 45
 	AirstrikePower@MutaBomb:
 		OrderName: mutabomb
 		Prerequisites: ~radar.yuri
@@ -1939,23 +1919,24 @@ SILO:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 45
 
 HPAD:
 	Inherits: ^Building
-	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
 	Inherits@SOVIETBOMBINGPOWERS: ^SovietBombingPowers
+	Inherits@AIR: ^ProducesHelicopters
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 768,-512,0, 768,512,0, -281,-512,0, -630,512,0
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 120
-		Prerequisites: radarorrepair, ~structures.ra, ~techlevel.medium
+		Prerequisites: radarorrepair, ~structures.allies, ~techlevel.medium
 		Description: Produces and reloads helicopters.
 	Valued:
-		Cost: 500
+		Cost: 750
 	Tooltip:
 		Name: Helipad
 	Building:
@@ -1982,12 +1963,7 @@ HPAD:
 		Facing: 896
 	RallyPoint:
 		ForceSetType: Aircraft
-	Production:
-		Produces: Aircraft, Helicopter
-		PauseOnCondition: forceshield || invulnerability || being-warped
 	Reservable:
-	ProductionBar:
-		ProductionType: Aircraft
 	Power:
 		Amount: -20
 	ValidFactions:
@@ -2067,27 +2043,28 @@ HPAD:
 		DirectionArrowAnimation: paradirection
 		Strikes: 3
 		CircleDelay: 40
+		SupportPowerPaletteOrder: 45
 
 AFLD:
 	Inherits: ^Building
-	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
 	Inherits@SOVIETBOMBINGPOWERS: ^SovietBombingPowers
+	Inherits@AIR: ^ProducesAircraft
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 420,0,0, 420,-1024,0, 420,1024,0, -777,0,0, -777,-1024,0, -777,1024,0
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 130
 		Prerequisites: radarorrepair, ~structures.soviet, ~techlevel.medium
 		Description: Produces and reloads aircraft.
 	Valued:
-		Cost: 500
+		Cost: 750
 	Tooltip:
 		Name: Airfield
 	Selectable:
-		Bounds: 3072, 2048
+		Bounds: 3072, 2176, 0, -256
 	Building:
 		Footprint: xxx xxx
 		Dimensions: 3,2
@@ -2107,9 +2084,6 @@ AFLD:
 		Facing: 768
 	RallyPoint:
 		ForceSetType: Aircraft
-	Production:
-		Produces: Aircraft, Plane
-		PauseOnCondition: forceshield || invulnerability || being-warped
 	Reservable:
 	ProvidesPrerequisite@soviet:
 		Factions: russia, ukraine, iraq, yuri
@@ -2126,8 +2100,6 @@ AFLD:
 	ProvidesPrerequisite@yuri:
 		Factions: yuri
 		Prerequisite: aircraft.yuri
-	ProductionBar:
-		ProductionType: Aircraft
 	SupportPowerChargeBar:
 	Power:
 		Amount: -20
@@ -2156,7 +2128,7 @@ POWR:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 640,-384,0, 640,512,0, -710,-512,0, -710,512,0
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 10
 		Prerequisites: ~structures.ra
 		Description: Provides power for other structures.
@@ -2198,7 +2170,7 @@ APWR:
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 110
 		Prerequisites: anyradar, ~structures.apwr, ~techlevel.medium
 		Description: Provides double the power of\n  a standard Power Plant.
@@ -2240,10 +2212,11 @@ NPWR:
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@POWERDRAIN: ^PowerDrainable
 	Inherits@OVERLOAD: ^HackableOverloadable
+	Inherits@UPG: ^ProducesUpgrades
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 165
 		Prerequisites: stek, ~structures.soviet, ~techlevel.high
 		Description: Provides ten times the power of\n  a standard Power Plant.
@@ -2328,6 +2301,7 @@ NPWR:
 		PauseOnCondition: empdisable || being-warped
 		DisplayTimerRelationships: Ally, Neutral
 		Sequence: idle
+		SupportPowerPaletteOrder: 30
 	GrantExternalConditionPower@ATOMICAMMOIRAQ:
 		Prerequisites: ~npwr.iraq
 		OrderName: atomicammoiraq
@@ -2349,6 +2323,7 @@ NPWR:
 		PauseOnCondition: empdisable || being-warped
 		DisplayTimerRelationships: Ally, Neutral
 		Sequence: idle
+		SupportPowerPaletteOrder: 30
 
 TPWR:
 	Inherits@AUTOTARGET: ^AutoTargetGround
@@ -2384,12 +2359,13 @@ STEK:
 	Inherits: ^Building
 	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^3x2Shape
+	Inherits@UPG: ^ProducesUpgrades
 	Selectable:
 		Bounds: 3072, 2048
 	HitShape:
 		TargetableOffsets: 420,-768,0, 420,768,0, -770,-768,0, -770,768,0
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 150
 		Prerequisites: vehicles.any, anyradar, ~structures.soviet, ~techlevel.high
 		Description: Provides Soviet advanced technologies.
@@ -2451,6 +2427,7 @@ STEK:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
+		SupportPowerPaletteOrder: 40
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.stek
@@ -2459,24 +2436,18 @@ STEK:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SabInfiltrate
-	Production:
-		Produces: Upgrade
-		PauseOnCondition: forceshield || invulnerability || being-warped
-	ProductionBar:
-		ProductionType: Upgrade
-	Exit:
 
 BARR:
 	Inherits: ^Building
-	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@INF: ^ProducesInfantry
 	Selectable:
 		Bounds: 2048, 2048
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 490,-470,0, 355,512,0, -355,-512,0, -630,512,0
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 30
 		Prerequisites: anypower, ~structures.soviet
 		Description: Trains infantry.
@@ -2505,31 +2476,20 @@ BARR:
 		RequiresCondition: !being-captured
 		SpawnOffset: -170,810,0
 		ExitCell: 1,2
-		ProductionTypes: Soldier, Infantry
 	Exit@2:
 		RequiresCondition: !being-captured
 		SpawnOffset: -725,640,0
 		ExitCell: 0,2
-		ProductionTypes: Soldier, Infantry
 	Exit@3:
 		RequiresCondition: !being-captured
 		SpawnOffset: -170,810,0
 		ExitCell: -1,2
-		ProductionTypes: Soldier, Infantry
 		Priority: 0
 	Exit@4:
 		RequiresCondition: !being-captured
 		SpawnOffset: -725,640,0
 		ExitCell: 2,2
-		ProductionTypes: Soldier, Infantry
 		Priority: 0
-	Production:
-		Produces: Infantry, Soldier
-		PauseOnCondition: forceshield || invulnerability || being-warped
-	GrantExternalConditionToProduced:
-		Condition: produced
-	ProductionBar:
-		ProductionType: Infantry
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@human:
@@ -2578,10 +2538,11 @@ BARR:
 KENN:
 	Inherits: ^Building
 	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@QUEUEUPDATER: ^QueueUpdater
 	Selectable:
 		Bounds: 1024, 1024
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 205
 		Prerequisites: anypower, ~structures.soviet
 		Description: Trains Attack Dogs.
@@ -2603,17 +2564,20 @@ KENN:
 		RequiresCondition: !being-captured
 		SpawnOffset: -280,400,0
 		ExitCell: 0,1
-		ProductionTypes: Dog, Infantry
 	Exit@2:
 		RequiresCondition: !being-captured
 		SpawnOffset: -280,400,0
 		ExitCell: -1,0
-		ProductionTypes: Dog, Infantry
-	Production:
-		Produces: Infantry, Dog
+	Production@SQ:
+		Produces: InfantrySQ, Dog
 		PauseOnCondition: forceshield || invulnerability || being-warped
+		RequiresCondition: !global-multiqueue
+	Production@MQ:
+		Produces: Dog
+		PauseOnCondition: forceshield || invulnerability || being-warped
+		RequiresCondition: global-multiqueue
 	ProductionBar:
-		ProductionType: Infantry
+		ProductionType: InfantrySQ
 	ProvidesPrerequisite@dog:
 		Prerequisite: infantry.dog
 	-SpawnActorsOnSell:
@@ -2623,15 +2587,15 @@ KENN:
 
 TENT:
 	Inherits: ^Building
-	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@INF: ^ProducesInfantry
 	Selectable:
 		Bounds: 2048, 2048
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 630,-512,0, 355,512,0, -281,-512,0, -630,512,0
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 20
 		Prerequisites: anypower, ~structures.allies
 		Description: Trains infantry.
@@ -2660,31 +2624,20 @@ TENT:
 		RequiresCondition: !being-captured
 		SpawnOffset: -42,810,0
 		ExitCell: 1,2
-		ProductionTypes: Soldier, Infantry
 	Exit@2:
 		RequiresCondition: !being-captured
 		SpawnOffset: -725,640,0
 		ExitCell: 0,2
-		ProductionTypes: Soldier, Infantry
 	Exit@3:
 		RequiresCondition: !being-captured
 		SpawnOffset: -42,810,0
 		ExitCell: -1,2
-		ProductionTypes: Soldier, Infantry
 		Priority: 0
 	Exit@4:
 		RequiresCondition: !being-captured
 		SpawnOffset: -725,640,0
 		ExitCell: 2,2
-		ProductionTypes: Soldier, Infantry
 		Priority: 0
-	Production:
-		Produces: Infantry, Soldier
-		PauseOnCondition: forceshield || invulnerability || being-warped
-	GrantExternalConditionToProduced:
-		Condition: produced
-	ProductionBar:
-		ProductionType: Infantry
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@human:
@@ -2727,7 +2680,7 @@ TENT:
 FIX:
 	Inherits: ^Building
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 100
 		Prerequisites: vehicles.any, ~structures.ra, ~techlevel.low
 		Description: Repairs vehicles for credits.
@@ -2792,7 +2745,7 @@ SBAG:
 	RenderSprites:
 		Palette: effect
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 10
 		Prerequisites: ~structures.sandbag
 		Description: • Stops infantry and light vehicles\n• Can be crushed by tanks
@@ -2818,7 +2771,7 @@ FENC:
 	RenderSprites:
 		Palette: effect
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 20
 		Prerequisites: ~structures.soviet
 		Description: • Stops infantry and light vehicles\n• Can be crushed by tanks
@@ -2842,7 +2795,7 @@ FENC:
 CHAIN:
 	Inherits: ^Wall
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 20
 		Prerequisites: ~structures.nod
 		Description: • Stops infantry and light vehicles\n• Can be crushed by tanks
@@ -2866,7 +2819,7 @@ CHAIN:
 BRIK:
 	Inherits: ^Wall
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 30
 		Prerequisites: anypower, ~structures.wall
 		Description: • Stops units\n• Blocks enemy fire
@@ -3070,8 +3023,8 @@ STRUCTURES.TSLA:
 
 PYLE:
 	Inherits: ^BuildingTD
-	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@INF: ^ProducesInfantry
 	Selectable:
 		Bounds: 2048, 2048
 	HitShape:
@@ -3081,7 +3034,7 @@ PYLE:
 			TopLeft: -1024, -1024
 			BottomRight: 1024, 640
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 20
 		Prerequisites: anypower, ~structures.gdi
 		IconPalette: chrometd
@@ -3111,31 +3064,20 @@ PYLE:
 		RequiresCondition: !being-captured
 		SpawnOffset: -170,810,0
 		ExitCell: 1,2
-		ProductionTypes: Soldier, Infantry
 	Exit@2:
 		RequiresCondition: !being-captured
 		SpawnOffset: -725,640,0
 		ExitCell: 0,2
-		ProductionTypes: Soldier, Infantry
 	Exit@3:
 		RequiresCondition: !being-captured
 		SpawnOffset: -170,810,0
 		ExitCell: -1,2
-		ProductionTypes: Soldier, Infantry
 		Priority: 0
 	Exit@4:
 		RequiresCondition: !being-captured
 		SpawnOffset: -725,640,0
 		ExitCell: 2,2
-		ProductionTypes: Soldier, Infantry
 		Priority: 0
-	Production:
-		Produces: Infantry, Soldier
-		PauseOnCondition: forceshield || invulnerability || being-warped
-	GrantExternalConditionToProduced:
-		Condition: produced
-	ProductionBar:
-		ProductionType: Infantry
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@human:
@@ -3175,13 +3117,13 @@ PYLE:
 
 HAND:
 	Inherits: ^BuildingTD
-	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@INF: ^ProducesInfantry
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 630,-512,0, 355,512,0, -281,-512,0, -630,512,0
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 20
 		Prerequisites: anypower, ~structures.nod
 		IconPalette: chrometd
@@ -3226,13 +3168,8 @@ HAND:
 		SpawnOffset: 512,1024,0
 		ExitCell: 2,2
 		Priority: 0
-	Production:
-		Produces: Infantry, Soldier, Cyborg
-		PauseOnCondition: forceshield || invulnerability || being-warped
-	GrantExternalConditionToProduced:
-		Condition: produced
-	ProductionBar:
-		ProductionType: Infantry
+	Production@SQINF:
+		Produces: InfantrySQ, Soldier, Cyborg, ParadropInfantry
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
@@ -3274,9 +3211,9 @@ HAND:
 
 WEAP.TD:
 	Inherits: ^BuildingTD
-	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
+	Inherits@VEH: ^ProducesVehicles
 	RenderSprites:
 		Image: awep
 	Selectable:
@@ -3287,7 +3224,7 @@ WEAP.TD:
 			TopLeft: -1536, -1024
 			BottomRight: 1536, 512
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 80
 		Prerequisites: anyrefinery, ~structures.weap.td, ~structures.td, ~techlevel.low
 		IconPalette: chrometd
@@ -3375,14 +3312,9 @@ WEAP.TD:
 		RequiresCondition: !being-captured
 		SpawnOffset: -341,-341,0
 		ExitCell: 0,2
-	Production:
-		Produces: Vehicle, Paradrop, Powersuit
-		PauseOnCondition: forceshield || invulnerability || being-warped
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
-	ProductionBar:
-		ProductionType: Vehicle
 	Power:
 		Amount: -30
 	ProvidesPrerequisite@buildingname:
@@ -3405,8 +3337,8 @@ WEAP.TD:
 
 AIRS:
 	Inherits: ^BuildingTD
-	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@NOMCV: ^UnlocksMcvIfNoneOwned
+	Inherits@VEH: ^ProducesVehicles
 	RenderSprites:
 		Image: astrip
 	HitShape:
@@ -3415,7 +3347,7 @@ AIRS:
 			TopLeft: -2048, -1024
 			BottomRight: 2048, 1024
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 80
 		Prerequisites: anyrefinery, ~structures.airs, ~techlevel.low
 		IconPalette: chrometd
@@ -3447,13 +3379,24 @@ AIRS:
 	Exit@1:
 		SpawnOffset: -1024,0,0
 		ExitCell: 3,1
-	ProductionAirdropCA:
-		Produces: Vehicle, Powersuit
+	-Production@SQVEH:
+	-Production@MQVEH:
+	ProductionAirdropCA@SQVEH:
+		Produces: VehicleSQ, ParadropVehicle, Powersuit
 		PauseOnCondition: forceshield || invulnerability || being-warped
 		ActorType: c17.cargo
 		ReadyAudio: ReinforcementsArrived
 		SpawnType: ClosestEdgeToDestination
 		ProportionalSpeed: true
+		RequiresCondition: !global-multiqueue
+	ProductionAirdropCA@MQVEH:
+		Produces: VehicleMQ, ParadropVehicle, Powersuit
+		PauseOnCondition: forceshield || invulnerability || being-warped
+		ActorType: c17.cargo
+		ReadyAudio: ReinforcementsArrived
+		SpawnType: ClosestEdgeToDestination
+		ProportionalSpeed: true
+		RequiresCondition: global-multiqueue
 	ValidFactions:
 		Factions: blackh, marked, shadow
 	ProvidesPrerequisite@any:
@@ -3510,6 +3453,7 @@ AIRS:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		Prerequisites: vehicles.marked
+		SupportPowerPaletteOrder: 60
 	ParatroopersPower@blackhairdrop:
 		OrderName: blackhairdrop
 		SquadSize: 2
@@ -3533,6 +3477,7 @@ AIRS:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		Prerequisites: vehicles.blackh
+		SupportPowerPaletteOrder: 60
 	ParatroopersPower@shadowairdrop:
 		OrderName: shadowairdrop
 		SquadSize: 2
@@ -3556,12 +3501,11 @@ AIRS:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		Prerequisites: vehicles.shadow
+		SupportPowerPaletteOrder: 60
 	WithDeliveryAnimation:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
-	ProductionBar:
-		ProductionType: Vehicle
 	Power:
 		Amount: -30
 	InfiltrateForSupportPower@STOLENTECH:
@@ -3575,9 +3519,12 @@ AIRS:
 		Types: SpyInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
-	ProductionCostMultiplier@First:
+	ProductionCostMultiplier@FirstSQ:
 		Multiplier: 90
-		Prerequisites: !vehicles.any
+		Prerequisites: !vehicles.any, !global.multiqueue
+	ProductionCostMultiplier@MQ:
+		Multiplier: 90
+		Prerequisites: global.multiqueue
 
 NUKE:
 	Inherits: ^BuildingTD
@@ -3597,7 +3544,7 @@ NUKE:
 	WithSpriteBody:
 		PauseOnCondition: disabled
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 10
 		Prerequisites: ~structures.td
 		IconPalette: chrometd
@@ -3647,7 +3594,7 @@ NUK2:
 	WithSpriteBody:
 		PauseOnCondition: disabled
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 110
 		Prerequisites: anyradar, ~structures.td, ~techlevel.medium
 		IconPalette: chrometd
@@ -3681,9 +3628,9 @@ NUK2:
 
 AFAC:
 	Inherits: ^BuildingTD
-	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@BOTI: ^BotFallbackInsurance
+	Inherits@BLD: ^ProducesBuildings
 	RenderSprites:
 		FactionImages:
 			nod: nodfact
@@ -3696,7 +3643,7 @@ AFAC:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 1000
 		Prerequisites: ~disabled
 		IconPalette: chrometd
@@ -3712,9 +3659,6 @@ AFAC:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	WithBuildingBib:
-	Production:
-		Produces: Building, Defense
-		PauseOnCondition: forceshield || invulnerability || being-warped
 	Valued:
 		Cost: 3000
 	Tooltip:
@@ -3795,11 +3739,6 @@ AFAC:
 		Prerequisite: structures.atwr
 	ProvidesPrerequisite@anyconyard:
 		Prerequisite: anyconyard
-	ProductionBar@Building:
-		ProductionType: Building
-	ProductionBar@Defense:
-		ProductionType: Defense
-		Color: 8A8A8A
 	BaseProvider:
 		PauseOnCondition: being-captured
 		Range: 16c0
@@ -3829,7 +3768,7 @@ NSAM:
 			TopLeft: -768,-512
 			BottomRight: 768,512
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 100
 		Prerequisites: anyradar, ~structures.nod, ~techlevel.medium
 		Description: Anti-aircraft base defense.
@@ -3884,7 +3823,7 @@ GTWR:
 	Inherits: ^DefenseTD
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 50
 		Prerequisites: infantry.any, ~structures.gdi, ~techlevel.low
 		IconPalette: chrometd
@@ -3933,7 +3872,7 @@ ATWR:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 80
 		Prerequisites: anyradar, ~structures.atwr, ~techlevel.medium
 		IconPalette: chrometd
@@ -3982,7 +3921,7 @@ STWR:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 80
 		Prerequisites: anyradar, ~structures.zocom, ~techlevel.medium
 		Description: Advanced base defense that emits devastating sonic shockwaves.
@@ -4040,7 +3979,7 @@ OBLI:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 80
 		Prerequisites: anyradar, ~structures.nod, ~techlevel.medium
 		IconPalette: chrometd
@@ -4067,22 +4006,22 @@ OBLI:
 		Range: 6c0
 	WithBuildingBib:
 		HasMinibib: true
-	GrantConditionOnPrerequisite@SUPERCHARGED:
-		Condition: supercharged-upgrade
-		Prerequisites: supercharged.upgrade
+	GrantConditionOnPrerequisite@QUANTUM:
+		Condition: quantum-upgrade
+		Prerequisites: quantum.upgrade
 	-WithSpriteBody:
 	WithChargeSpriteBody:
 		Sequence: active
 	Armament@PRIMARY:
 		Weapon: Laser
 		LocalOffset: 0,-85,1280
-		RequiresCondition: !supercharged-upgrade
+		RequiresCondition: !quantum-upgrade
 		MuzzleSequence: muzzle
 		MuzzlePalette: caneon
-	Armament@SUPERCHARGED:
+	Armament@QUANTUM:
 		Weapon: Laser.Adv
 		LocalOffset: 0,-85,1280
-		RequiresCondition: supercharged-upgrade
+		RequiresCondition: quantum-upgrade
 		MuzzleSequence: muzzle2
 		MuzzlePalette: caneon
 	WithMuzzleOverlay:
@@ -4091,11 +4030,11 @@ OBLI:
 		ChargeLevel: 50
 		ChargingCondition: charging
 	AmbientSound@1:
-		RequiresCondition: charging && !supercharged-upgrade
+		RequiresCondition: charging && !quantum-upgrade
 		SoundFiles: obelpowr.aud
 		Interval: 20
 	AmbientSound@2:
-		RequiresCondition: charging && supercharged-upgrade
+		RequiresCondition: charging && quantum-upgrade
 		SoundFiles: obelpowr2.aud
 		Interval: 20
 	Power:
@@ -4109,6 +4048,7 @@ HQ:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@POWERDRAIN: ^PowerDrainableRadar
 	Inherits@GDIAIRPOWERS: ^GDIAirPowers
+	Inherits@UPG: ^ProducesUpgrades
 	HitShape:
 		TargetableOffsets: 0,0,0, 0,512,0, 420,-598,256
 		Type: Rectangle
@@ -4123,7 +4063,7 @@ HQ:
 			shadow: nodhq
 			arc: hqr
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 90
 		Prerequisites: anyrefinery, ~structures.td, ~techlevel.medium
 		IconPalette: chrometd
@@ -4191,18 +4131,21 @@ HQ:
 		EffectPalette: tseffect-ignore-lighting-alpha75
 		TargetCircleRange: 9c512
 		TargetCircleColor: 999999AA
-	ProduceActorPower@hackercell:
+		SupportPowerPaletteOrder: 50
+	ProduceActorPowerCA@hackercell:
 		OrderName: hackercell
 		Prerequisites: infantry.any, ~radar.legion
 		Icon: hackercell
-		Type: Infantry
+		Type: ParadropInfantry
+		SelectTargetSpeechNotification: SelectTarget
 		ChargeInterval: 7500
 		Name: Hacker Cell
-		Description: \nDeploy a squad of hackers that can remotely\n    capture buildings and take control of defenses.\n\nDeploys from primary infantry production structure.
+		Description: \nDeploy a squad of hackers that can remotely\n    capture buildings and take control of defenses.\n\nTarget infantry production structure to deploy.
 		Actors: hack, hack, hack
 		LaunchSpeechNotification: ReinforcementsArrived
 		EndChargeSpeechNotification: Reinforce
 		PauseOnCondition: disabled || empdisable || being-warped
+		SupportPowerPaletteOrder: 50
 	DropPodsPowerCA@Zocom:
 		OrderName: droppods
 		Cursor: ability
@@ -4223,6 +4166,7 @@ HQ:
 		EntryEffect: explosion
 		EntryEffectSequence: shock_wave
 		EntryEffectPalette: tseffect-ignore-lighting-alpha75
+		SupportPowerPaletteOrder: 50
 	CashHackPower@Legion:
 		OrderName: cashhack
 		Icon: chack
@@ -4241,6 +4185,7 @@ HQ:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable || being-warped
+		SupportPowerPaletteOrder: 50
 	AirstrikePower@BlackhandFirebomb:
 		OrderName: infernobomb
 		Prerequisites: ~radar.blackh
@@ -4265,6 +4210,7 @@ HQ:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		PauseOnCondition: disabled || empdisable || being-warped
+		SupportPowerPaletteOrder: 50
 	AirReinforcementsPower@ShadowTeam:
 		OrderName: shadowteam
 		Prerequisites: ~radar.shadow
@@ -4283,6 +4229,7 @@ HQ:
 		PauseOnCondition: disabled || empdisable || being-warped
 		LaunchSpeechNotification: ReinforcementsArrived
 		EndChargeSpeechNotification: Reinforce
+		SupportPowerPaletteOrder: 50
 	Power:
 		Amount: -40
 	-PowerMultiplier@POWERDRAIN:
@@ -4330,12 +4277,6 @@ HQ:
 		Proxy: stolentech.hq
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
-	Production:
-		Produces: Upgrade
-		PauseOnCondition: forceshield || invulnerability || being-warped
-	ProductionBar:
-		ProductionType: Upgrade
-	Exit:
 	ProductionCostMultiplier@ARCDISCOUNT:
 		Multiplier: 50
 		Prerequisites: anyradar, player.arc
@@ -4353,7 +4294,7 @@ EYE:
 			TopLeft: -1024, -384
 			BottomRight: 1024, 1024
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 130
 		Prerequisites: gtek, ~structures.gdi, ~techlevel.unrestricted
 		IconPalette: chrometd
@@ -4431,6 +4372,7 @@ EYE:
 		BeaconPoster: atomicon
 		TargetCircleRange: 6c512
 		TargetCircleColor: 4fff3390
+		SupportPowerPaletteOrder: 10
 	IonCannonPower@surgicals:
 		OrderName: surgicalstrike
 		Prerequisites: ~eye.zocom
@@ -4455,6 +4397,7 @@ EYE:
 		CircleSequence: circles
 		Cursor: ioncannon
 		PauseOnCondition: disabled || empdisable || being-warped
+		SupportPowerPaletteOrder: 15
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
@@ -4487,7 +4430,7 @@ REP:
 		Type: Polygon
 			Points: -1536,-300, -640,-811, 640,-811, 1536,-300, 1536,555, 640,1110, -640,1110, -1536,555
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 100
 		Prerequisites: vehicles.any, ~structures.td, ~techlevel.low
 		IconPalette: chrometd
@@ -4562,6 +4505,7 @@ REP:
 		EffectImage: empty
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
+		SupportPowerPaletteOrder: 50
 	ParatroopersPower@xodrop:
 		OrderName: xodrop
 		Prerequisites: ~radar.talon
@@ -4587,6 +4531,7 @@ REP:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 50
 	AirstrikePower@uav:
 		OrderName: gdiuav
 		Prerequisites: radar.gdi, ~!radar.arc
@@ -4608,6 +4553,7 @@ REP:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 50
 	AirstrikePower@uavST:
 		OrderName: gdiuavarc
 		Prerequisites: ~radar.arc
@@ -4629,6 +4575,7 @@ REP:
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 50
 
 ^InterceptorsPower:
 	InterceptorPower@AirDef:
@@ -4655,26 +4602,27 @@ REP:
 		DirectionArrowAnimation: paradirection
 		GuardDuration: 500
 		Cordon: 5c0
+		SupportPowerPaletteOrder: 45
 
 HPAD.TD:
 	Inherits: ^BuildingTD
-	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
 	Inherits@INTERCEPTORS: ^InterceptorsPower
+	Inherits@AIR: ^ProducesHelicopters
 	RenderSprites:
 		Image: hpad2
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 768,-512,0, 768,512,0, -281,-512,0, -630,512,0
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 120
-		Prerequisites: radarorrepair, ~structures.td, ~techlevel.medium
+		Prerequisites: radarorrepair, ~structures.nod, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Produces and reloads helicopters.
 	Valued:
-		Cost: 500
+		Cost: 750
 	Tooltip:
 		Name: Helipad
 	Building:
@@ -4696,12 +4644,7 @@ HPAD.TD:
 		Facing: 896
 	RallyPoint:
 		ForceSetType: Aircraft
-	Production:
-		Produces: Aircraft, Helicopter
-		PauseOnCondition: forceshield || invulnerability || being-warped
 	Reservable:
-	ProductionBar:
-		ProductionType: Aircraft
 	WithBuildingBib:
 	Power:
 		Amount: -20
@@ -4775,7 +4718,7 @@ PROC.TD:
 	Buildable:
 		BuildPaletteOrder: 60
 		Prerequisites: anypower, ~structures.td
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		IconPalette: chrometd
 		Description: Processes raw Tiberium, Ore\n  and Gems into credits.
 		BuildDuration: 1400
@@ -4843,7 +4786,7 @@ SILO.TD:
 	Buildable:
 		BuildPaletteOrder: 35
 		Prerequisites: anyrefinery, ~structures.td
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		IconPalette: chrometd
 		Description: Stores processed Tiberium, Ore and Gems
 	Building:
@@ -4881,22 +4824,24 @@ SILO.TD:
 
 AFLD.GDI:
 	Inherits: ^Building
-	Inherits@PRIMARY: ^PrimaryBuilding
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
 	Inherits@INTERCEPTORS: ^InterceptorsPower
+	Inherits@AIR: ^ProducesAircraft
 	RenderSprites:
 		Image: afldgdi
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 420,0,0, 420,-1024,0, 420,1024,0, -777,0,0, -777,-1024,0, -777,1024,0
+	Selectable:
+		Bounds: 3072, 2176, 0, -256
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 130
 		Prerequisites: radarorrepair, ~structures.gdi, ~techlevel.medium
 		Description: Produces and reloads aircraft.
 	Valued:
-		Cost: 500
+		Cost: 750
 	Tooltip:
 		Name: Airfield
 	Building:
@@ -4918,9 +4863,6 @@ AFLD.GDI:
 		Facing: 768
 	RallyPoint:
 		ForceSetType: Aircraft
-	Production:
-		Produces: Aircraft, Plane
-		PauseOnCondition: forceshield || invulnerability || being-warped
 	Reservable:
 	ValidFactions:
 		Factions: talon, zocom, eagle, arc
@@ -4935,10 +4877,10 @@ AFLD.GDI:
 	ProvidesPrerequisiteValidatedFaction@arc:
 		Factions: arc
 		Prerequisite: aircraft.arc
+	ProvidesPrerequisite@chinook:
+		Prerequisite: aircraft.chinook
 	ProvidesPrerequisite@chinookvisible:
 		Prerequisite: aircraft.chinookvisible
-	ProductionBar:
-		ProductionType: Aircraft
 	SupportPowerChargeBar:
 	Power:
 		Amount: -20
@@ -4958,8 +4900,9 @@ GTEK:
 	Inherits: ^Building
 	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^3x2Shape
+	Inherits@UPG: ^ProducesUpgrades
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 150
 		IconPalette: chrometd
 		Prerequisites: vehicles.any, anyradar, ~structures.gdi, ~techlevel.high
@@ -5002,6 +4945,9 @@ GTEK:
 		Factions: talon, zocom, eagle, arc
 	ProvidesPrerequisite:
 		Prerequisite: techcenter
+	ProvidesPrerequisiteValidatedFaction@talongtek:
+		Factions: talon
+		Prerequisite: gtek.talon
 	ProvidesPrerequisiteValidatedFaction@arcgtek:
 		Factions: arc
 		Prerequisite: gtek.arc
@@ -5035,6 +4981,7 @@ GTEK:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
+		SupportPowerPaletteOrder: 40
 	GrantExternalConditionPowerCA@NREPAIR:
 		OrderName: nrepair
 		Icon: nrepair
@@ -5057,18 +5004,14 @@ GTEK:
 		DisplayRadarPing: True
 		Cursor: repair
 		PauseOnCondition: disabled || empdisable ||  being-warped
+		SupportPowerPaletteOrder: 40
 	SupportPowerChargeBar:
-	Production:
-		Produces: Upgrade
-		PauseOnCondition: forceshield || invulnerability || being-warped
-	ProductionBar:
-		ProductionType: Upgrade
-	Exit:
 
 TMPL:
 	Inherits: ^BuildingTD
 	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^3x2Shape
+	Inherits@UPG: ^ProducesUpgrades
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 0,-896,0, 0,896,0, 840,0,0, -706,0,0, -706,-768,0, -706,640,0
@@ -5077,7 +5020,7 @@ TMPL:
 	Tooltip:
 		Name: Temple of Nod
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 140
 		Prerequisites: vehicles.any, anyradar, ~structures.nod, ~techlevel.high
 		IconPalette: chrometd
@@ -5144,6 +5087,7 @@ TMPL:
 		CircleRanges: 3c0
 		CircleColor: BB0000AA
 		CircleBorderColor: 770000AA
+		SupportPowerPaletteOrder: 40
 	WithBuildingBib:
 	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
@@ -5169,6 +5113,7 @@ TMPL:
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
+		SupportPowerPaletteOrder: 40
 	GrantExternalConditionPowerCA@Frenzy:
 		OrderName: frenzy
 		Icon: frenzy
@@ -5193,6 +5138,7 @@ TMPL:
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayTimerRelationships: Ally
+		SupportPowerPaletteOrder: 40
 	SupportPowerChargeBar:
 	Power:
 		Amount: -150
@@ -5225,20 +5171,14 @@ TMPL:
 	ProvidesPrerequisiteValidatedFaction@shadowtmpl:
 		Factions: shadow
 		Prerequisite: tmpl.shadow
-	Production:
-		Produces: Upgrade
-		PauseOnCondition: forceshield || invulnerability || being-warped
-	ProductionBar:
-		ProductionType: Upgrade
-	Exit:
 
 PRIS:
 	Inherits: ^Defense
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Buildable:
-		Queue: Defense
-		BuildPaletteOrder: 90
+		Queue: DefenseSQ, DefenseMQ
+		BuildPaletteOrder: 80
 		Prerequisites: anyradar, ~structures.pris, ~techlevel.medium
 		Description: Advanced experimental base defense.
 	TooltipExtras:
@@ -5303,7 +5243,7 @@ PRIS:
 SPEN.nod:
 	Inherits: ^Building
 	Inherits@WATERSTRUCTURE: ^WaterStructure
-	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@NAV: ^ProducesNaval
 	RenderSprites:
 		Image: SPENNOD
 		PlayerPalette: playernavy
@@ -5317,7 +5257,7 @@ SPEN.nod:
 	Tooltip:
 		Name: Sub Pen
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 240
 		IconPalette: chrometd
 		Prerequisites: anypower, ~structures.nod, ~techlevel.navy, ~techlevel.low
@@ -5347,22 +5287,16 @@ SPEN.nod:
 		SpawnOffset: 0,-213,0
 		Facing: 384
 		ExitCell: -1,2
-		ProductionTypes: Submarine, Ship
 	Exit@2:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,-213,0
 		Facing: 640
 		ExitCell: 3,2
-		ProductionTypes: Submarine, Ship
 	Exit@3:
 		RequiresCondition: !being-captured
 		SpawnOffset: 0,0,0
 		Facing: 0
 		ExitCell: 1,0
-		ProductionTypes: Submarine, Ship
-	Production:
-		Produces: Ship, Submarine
-		PauseOnCondition: forceshield || invulnerability || being-warped
 	RepairsUnits:
 		HpPerStep: 1000
 		StartRepairingNotification: Repairing
@@ -5371,8 +5305,6 @@ SPEN.nod:
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	RallyPoint:
 		ForceSetType: Ship
-	ProductionBar:
-		ProductionType: Ship
 	Power:
 		Amount: -30
 	ProvidesPrerequisite@buildingname:
@@ -5399,7 +5331,7 @@ SPEN.nod:
 SYRD.gdi:
 	Inherits: ^Building
 	Inherits@WATERSTRUCTURE: ^WaterStructure
-	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@NAV: ^ProducesNaval
 	RenderSprites:
 		Image: GSYRD
 		PlayerPalette: playernavy
@@ -5409,7 +5341,7 @@ SYRD.gdi:
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 230
 		Prerequisites: anypower, ~structures.gdi, ~techlevel.navy, ~techlevel.low
 		Description: Produces and repairs ships\nand transports.
@@ -5442,28 +5374,21 @@ SYRD.gdi:
 		SpawnOffset: -1024,1024,0
 		Facing: 640
 		ExitCell: 0,2
-		ProductionTypes: Ship, Boat
 	Exit@2:
 		RequiresCondition: !being-captured
 		SpawnOffset: 1024,1024,0
 		Facing: 896
 		ExitCell: 2,2
-		ProductionTypes: Ship, Boat
 	Exit@3:
 		RequiresCondition: !being-captured
 		SpawnOffset: -1024,-1024,0
 		Facing: 384
 		ExitCell: 0,0
-		ProductionTypes: Ship, Boat
 	Exit@4:
 		RequiresCondition: !being-captured
 		SpawnOffset: 1024,-1024,0
 		Facing: 128
 		ExitCell: 2,0
-		ProductionTypes: Ship, Boat
-	Production:
-		Produces: Ship, Boat
-		PauseOnCondition: forceshield || invulnerability || being-warped
 	RepairsUnits:
 		HpPerStep: 1000
 		StartRepairingNotification: Repairing
@@ -5472,8 +5397,6 @@ SYRD.gdi:
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	RallyPoint:
 		ForceSetType: Ship
-	ProductionBar:
-		ProductionType: Ship
 	Power:
 		Amount: -30
 	ProvidesPrerequisite@buildingname:
@@ -5504,8 +5427,8 @@ HTUR:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@SHAPE: ^2x2Shape
 	Buildable:
-		Queue: Defense
-		BuildPaletteOrder: 100
+		Queue: DefenseSQ, DefenseMQ
+		BuildPaletteOrder: 80
 		Prerequisites: anyradar, ~structures.france, ~techlevel.medium
 		Description: Artillery base defense.
 	TooltipExtras:
@@ -5591,18 +5514,18 @@ LTUR:
 	Turreted:
 		InitialFacing: 128
 	-WithTurretAttackAnimation:
-	GrantConditionOnPrerequisite@SUPERCHARGED:
-		Condition: supercharged-upgrade
-		Prerequisites: supercharged.upgrade
+	GrantConditionOnPrerequisite@QUANTUM:
+		Condition: quantum-upgrade
+		Prerequisites: quantum.upgrade
 	-Armament:
 	Armament:
 		Weapon: LaserTur
 		LocalOffset: 512,0,172
-		RequiresCondition: !supercharged-upgrade
+		RequiresCondition: !quantum-upgrade
 	Armament@Marked:
 		Weapon: LaserTur.Adv
 		LocalOffset: 512,0,172
-		RequiresCondition: supercharged-upgrade
+		RequiresCondition: quantum-upgrade
 	Power:
 		Amount: -25
 	DetectCloaked:
@@ -5612,7 +5535,7 @@ TTUR:
 	Inherits: ^DefenseTD
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 60
 		Prerequisites: infantry.any, ~structures.iraq, ~techlevel.low
 		IconPalette: chrometd
@@ -5666,7 +5589,7 @@ SGEN:
 	Inherits: ^Building
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 130
 		Prerequisites: tmpl, ~structures.nod, ~techlevel.unrestricted
 		BuildLimit: 1
@@ -5730,6 +5653,7 @@ SGEN:
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 		ActiveCondition: active
+		SupportPowerPaletteOrder: 20
 	ExternalCondition@ACTIVE:
 		Condition: active
 	GrantExternalConditionPowerCA@SGENSHADOW:
@@ -5759,6 +5683,7 @@ SGEN:
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 		ActiveCondition: active
+		SupportPowerPaletteOrder: 20
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -5833,7 +5758,7 @@ LASP:
 	Inherits: ^Building
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 30
 		Prerequisites: ~structures.nod, nuk2, ~techlevel.medium
 		IconPalette: chrometd
@@ -5902,6 +5827,7 @@ LASF:
 	EnergyWall:
 		ActiveCondition: active-posts == 2
 		Weapon: LaserFence
+		TerrainTypes: Clear, Rough, Road
 	GrantConditionOnLineBuildDirection@X:
 		Direction: X
 		Condition: laserfence-direction-x
@@ -5941,7 +5867,7 @@ PATR:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@SHAPE: ^2x2Shape
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 130
 		Prerequisites: gtek, ~structures.gdi, ~techlevel.unrestricted
 		BuildLimit: 1
@@ -6003,6 +5929,7 @@ PATR:
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayTimerRelationships: Ally, Neutral, Enemy
+		SupportPowerPaletteOrder: 20
 	AmmoPool:
 		Ammo: 1
 		ReloadCount: 1
@@ -6045,6 +5972,7 @@ INDP:
 	Inherits: ^Building
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^3x2Shape
+	Inherits@UPG: ^ProducesUpgrades
 	Selectable:
 		Bounds: 3072, 2389, 0, 512
 		DecorationBounds: 3114, 3072
@@ -6054,7 +5982,7 @@ INDP:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 640,-384,0, 640,512,0, -710,-512,0, -710,512,0
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.soviet, stek, ~techlevel.high
 		Description: Vehicles & aircraft are produced 15% faster and cost 5% less.
@@ -6137,7 +6065,7 @@ OREP:
 		Range: 4c0
 	WithBuildingBib:
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.allies, atek, ~techlevel.high
 		Description: Refines ore, gems & Tiberium, increasing income by 5%.\n  Provides access to advanced chrono harvester technology.
@@ -6196,6 +6124,7 @@ UPGC:
 	Inherits: ^BuildingTD
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^3x2Shape
+	Inherits@UPG: ^ProducesUpgrades
 	HitShape:
 		TargetableOffsets: -355,-1024,0
 	Selectable:
@@ -6218,7 +6147,7 @@ UPGC:
 	WithSpriteBody:
 		PauseOnCondition: disabled || being-warped
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.gdi, gtek, ~techlevel.high
 		Description: Allows the construction of advanced weaponry and upgrades.
@@ -6254,9 +6183,6 @@ UPGC:
 		Amount: -150
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
-	Production:
-		Produces: Upgrade
-		PauseOnCondition: forceshield || invulnerability || being-warped
 	ProductionAirdropCA:
 		Produces: Money
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -6275,8 +6201,6 @@ UPGC:
 		Actors: truk.drop
 		ShowSelectionBar: true
 		RequiresCondition: tower.drop && !(empdisable || disabled || being-warped)
-	ProductionBar:
-		ProductionType: Upgrade
 	Exit:
 		SpawnOffset: 511,511,0
 		ExitCell: 1,1
@@ -6311,6 +6235,7 @@ UPGC:
 		DisplayTimerRelationships: Ally
 		RequiresCondition: tower.rocket
 		Prerequisites: ~techlevel.unrestricted
+		SupportPowerPaletteOrder: 30
 	RejectsOrders:
 		Except: Sell, PowerDown
 	AmmoPool:
@@ -6364,6 +6289,7 @@ UPGC:
 		InsufficientPowerSpeechNotification: InsufficientPower
 		Prerequisites: ~techlevel.unrestricted
 		EarlyDeactivationPenalty: 1500
+		SupportPowerPaletteOrder: 30
 	DrainPrerequisitePowerOnDamage@RADAR:
 		OrderName: advradarorder
 	GrantConditionOnPrerequisite@SCAN:
@@ -6404,6 +6330,7 @@ UPGC:
 		RequiresCondition: tower.shield
 		TargetCircleRange: 6c0
 		TargetCircleColor: 64a5dcbb
+		SupportPowerPaletteOrder: 30
 	ProximityExternalCondition@NSHIELD-AUDIO:
 		Condition: nshield-audio
 		RequiresCondition: nshield-active
@@ -6471,7 +6398,7 @@ UPGC.BOMB:
 		Description: Provides an napalm rocket barrage.
 		IconPalette: chrometd
 	TooltipExtras:
-		Strengths: + Increases unit firepower by a further 5%\n+ Unlocks Firestorm Missile Barrage power
+		Strengths: + Increases firepower of vehicles and aircraft by a further 5%\n+ Unlocks Firestorm Missile Barrage power
 		Attributes: \n(!) Mutually exclusive with Supply Drop Zone
 	Plug:
 		Type: tower.rocket
@@ -6491,7 +6418,7 @@ UPGC.SEEK:
 		Description: Provides detailed information on enemy locations.
 		IconPalette: chrometd
 	TooltipExtras:
-		Strengths: + Increases unit speed and weapon range by a further 5%\n+ Unlocks Advanced Radar Scan power
+		Strengths: + Increases speed and weapon range of vehicles and aircraft by a further 5%\n+ Unlocks Advanced Radar Scan power
 		Attributes: \n(!) Mutually exclusive with Supply Drop Zone
 	Plug:
 		Type: tower.radar
@@ -6511,7 +6438,7 @@ UPGC.HOLD:
 		Description: Provides the ability to shield units in an area
 		IconPalette: chrometd
 	TooltipExtras:
-		Strengths: + Increases unit armor by a further 5%\n+ Unlocks Nanite Shield power
+		Strengths: + Increases armor of vehicles and aircraft by a further 5%\n+ Unlocks Nanite Shield power
 		Attributes: \n(!) Mutually exclusive with Supply Drop Zone
 	Plug:
 		Type: tower.shield
@@ -6542,7 +6469,8 @@ TMPP:
 	Inherits: ^BuildingTD
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^3x2Shape
-	Inherits@PRIMARY: ^PrimaryBuilding
+	Inherits@INF: ^ProducesCyborgs
+	Inherits@UPG: ^ProducesUpgrades
 	RenderSprites:
 		PlayerPalette: playertd
 	Selectable:
@@ -6568,7 +6496,7 @@ TMPP:
 		Range: 4c0
 	WithBuildingBib:
 	Buildable:
-		Queue: Building
+		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
 		IconPalette: chrometd
 		Prerequisites: ~structures.nod, tmpl, ~techlevel.high
@@ -6602,21 +6530,12 @@ TMPP:
 		Prerequisites: cyborg.upgrade, hand
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
-	Production:
-		Produces: Upgrade, Infantry, Cyborg
-		PauseOnCondition: forceshield || invulnerability || being-warped
-	GrantExternalConditionToProduced:
-		Condition: produced
-	ProductionBar:
-		ProductionType: Upgrade
 	Exit@1:
 		SpawnOffset: -170,1310,0
 		ExitCell: 1,3
-		ProductionTypes: Cyborg, Infantry
 	Exit@2:
 		SpawnOffset: 190,-400,0
 		ExitCell: 1,-1
-		ProductionTypes: Cyborg, Infantry
 		Priority: 0
 	RallyPoint:
 		ForceSetType: Infantry
@@ -6633,7 +6552,7 @@ TMPP:
 		EjectOnDeploy: true
 		ConvertingCondition: converting
 	PrimaryBuilding:
-		RequiresCondition: !converting
+		RequiresCondition: !converting && !global-multiqueue
 	-MindControllable:
 	-Targetable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
@@ -6653,7 +6572,7 @@ MSLO.Nod:
 	Tooltip:
 		Name: Missile Silo
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 140
 		IconPalette: chrometd
 		Prerequisites: tmpl, ~techlevel.unrestricted, ~structures.nod
@@ -6715,6 +6634,7 @@ MSLO.Nod:
 		CircleRanges: 6c512
 		CircleColor: 00BB00AA
 		CircleBorderColor: 007700AA
+		SupportPowerPaletteOrder: 10
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -6738,7 +6658,7 @@ WEAT:
 	Selectable:
 		Bounds: 2048, 2048
 	Buildable:
-		Queue: Defense
+		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 130
 		Prerequisites: atek, ~structures.allies, ~techlevel.unrestricted
 		BuildLimit: 1
@@ -6799,6 +6719,7 @@ WEAT:
 		Duration: 350
 		ActiveCondition: active
 		PaletteEffectType: LightningStorm
+		SupportPowerPaletteOrder: 10
 	WithIdleOverlay@ACTIVE:
 		Sequence: active-overlay
 		Palette: d2keffect

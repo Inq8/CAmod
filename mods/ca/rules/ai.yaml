@@ -764,7 +764,8 @@ Player:
 		McvFactoryTypes: weap, weap.td, airs, wsph
 	BaseBuilderBotModuleCA@brutal-vhard:
 		RequiresCondition: enable-brutal-ai || enable-vhard-ai
-		BuildingQueues: Building, Upgrade
+		BuildingQueues: BuildingSQ, BuildingMQ, Upgrade
+		DefenseQueues: DefenseSQ, DefenseMQ
 		MinimumExcessPower: 50
 		MaximumExcessPower: 350
 		ExcessPowerIncrement: 10
@@ -781,6 +782,14 @@ Player:
 		AntiAirTypes: sam, nsam, agun, cram, shar
 		DefenseTypes: pbox, hbox, htur, gun, gun.td, gtwr, atwr, ptur, scol, obli, ltur, stwr, tsla, ftur, ttur, pris, sam, nsam, agun, cram, shar
 		MaxBaseRadius: 26
+		BuildingIntervals:
+			proc: 2250
+			proc.td: 2250
+			proc.scrin: 2250
+			weap: 2250
+			weap.td: 2250
+			airs: 2250
+			wsph: 2250
 		BuildingDelays:
 			kenn: 2800
 			dome: 4500
@@ -846,16 +855,16 @@ Player:
 			proc: 30
 			proc.td: 30
 			proc.scrin: 30
-			hand: 5
-			pyle: 5
-			barr: 5
-			tent: 5
-			port: 5
+			hand: 15
+			pyle: 15
+			barr: 15
+			tent: 15
+			port: 15
 			kenn: 1
-			weap: 5
-			weap.td: 5
-			airs: 5
-			wsph: 5
+			weap: 10
+			weap.td: 10
+			airs: 10
+			wsph: 10
 			pbox: 7
 			hbox: 7
 			gtwr: 7
@@ -949,7 +958,7 @@ Player:
 			howi.upgrade: 1
 			microwave.upgrade: 1
 			blacknapalm.upgrade: 1
-			supercharged.upgrade: 1
+			quantum.upgrade: 1
 			alphacomanche.upgrade: 1
 			tibcore.upgrade: 1
 			rahstealth.upgrade: 1
@@ -973,7 +982,7 @@ Player:
 			carapace.upgrade: 1
 			advart.upgrade: 1
 			shrw.upgrade: 1
-			plasma.upgrade: 1
+			stellar.upgrade: 1
 			coalescence.upgrade: 1
 			resconv.upgrade: 1
 			ioncon.upgrade: 1
@@ -981,7 +990,8 @@ Player:
 			shields.upgrade: 1
 	BaseBuilderBotModuleCA@hard:
 		RequiresCondition: enable-hard-ai
-		BuildingQueues: Building, Upgrade
+		BuildingQueues: BuildingSQ, BuildingMQ, Upgrade
+		DefenseQueues: DefenseSQ, DefenseMQ
 		MinimumExcessPower: 50
 		MaximumExcessPower: 290
 		ExcessPowerIncrement: 30
@@ -998,6 +1008,14 @@ Player:
 		AntiAirTypes: sam, nsam, agun, cram, shar
 		DefenseTypes: pbox, hbox, htur, gun, gun.td, gtwr, atwr, ptur, scol, obli, ltur, stwr, tsla, ftur, ttur, pris, sam, nsam, agun, cram, shar
 		MaxBaseRadius: 23
+		BuildingIntervals:
+			proc: 2250
+			proc.td: 2250
+			proc.scrin: 2250
+			weap: 2250
+			weap.td: 2250
+			airs: 2250
+			wsph: 2250
 		BuildingDelays:
 			kenn: 2800
 			dome: 4500
@@ -1063,16 +1081,16 @@ Player:
 			proc: 30
 			proc.td: 30
 			proc.scrin: 30
-			hand: 5
-			pyle: 5
-			barr: 5
-			tent: 5
-			port: 5
+			hand: 15
+			pyle: 15
+			barr: 15
+			tent: 15
+			port: 15
 			kenn: 1
-			weap: 5
-			weap.td: 5
-			airs: 5
-			wsph: 5
+			weap: 10
+			weap.td: 10
+			airs: 10
+			wsph: 10
 			pbox: 7
 			hbox: 7
 			gtwr: 7
@@ -1166,7 +1184,7 @@ Player:
 			howi.upgrade: 1
 			microwave.upgrade: 1
 			blacknapalm.upgrade: 1
-			supercharged.upgrade: 1
+			quantum.upgrade: 1
 			alphacomanche.upgrade: 1
 			tibcore.upgrade: 1
 			rahstealth.upgrade: 1
@@ -1190,7 +1208,7 @@ Player:
 			carapace.upgrade: 1
 			advart.upgrade: 1
 			shrw.upgrade: 1
-			plasma.upgrade: 1
+			stellar.upgrade: 1
 			coalescence.upgrade: 1
 			resconv.upgrade: 1
 			ioncon.upgrade: 1
@@ -1198,7 +1216,8 @@ Player:
 			shields.upgrade: 1
 	BaseBuilderBotModuleCA@normal:
 		RequiresCondition: enable-normal-ai
-		BuildingQueues: Building, Upgrade
+		BuildingQueues: BuildingSQ, BuildingMQ, Upgrade
+		DefenseQueues: DefenseSQ, DefenseMQ
 		MinimumExcessPower: 50
 		MaximumExcessPower: 200
 		ExcessPowerIncrement: 40
@@ -1214,6 +1233,14 @@ Player:
 		SiloTypes: silo,silo.td,silo.scrin
 		AntiAirTypes: sam, nsam, agun, cram, shar
 		DefenseTypes: pbox, hbox, htur, gun, gun.td, gtwr, atwr, ptur, scol, obli, ltur, stwr, tsla, ftur, ttur, pris, sam, nsam, agun, cram, shar
+		BuildingIntervals:
+			proc: 2250
+			proc.td: 2250
+			proc.scrin: 2250
+			weap: 2250
+			weap.td: 2250
+			airs: 2250
+			wsph: 2250
 		BuildingDelays:
 			kenn: 2800
 			dome: 4500
@@ -1279,16 +1306,16 @@ Player:
 			proc: 30
 			proc.td: 30
 			proc.scrin: 30
-			hand: 5
-			pyle: 5
-			barr: 5
-			tent: 5
-			port: 5
+			hand: 15
+			pyle: 15
+			barr: 15
+			tent: 15
+			port: 15
 			kenn: 1
-			weap: 5
-			weap.td: 5
-			airs: 5
-			wsph: 5
+			weap: 10
+			weap.td: 10
+			airs: 10
+			wsph: 10
 			pbox: 7
 			hbox: 7
 			gtwr: 7
@@ -1382,7 +1409,7 @@ Player:
 			howi.upgrade: 1
 			microwave.upgrade: 1
 			blacknapalm.upgrade: 1
-			supercharged.upgrade: 1
+			quantum.upgrade: 1
 			alphacomanche.upgrade: 1
 			tibcore.upgrade: 1
 			rahstealth.upgrade: 1
@@ -1406,7 +1433,7 @@ Player:
 			carapace.upgrade: 1
 			advart.upgrade: 1
 			shrw.upgrade: 1
-			plasma.upgrade: 1
+			stellar.upgrade: 1
 			coalescence.upgrade: 1
 			resconv.upgrade: 1
 			ioncon.upgrade: 1
@@ -1414,7 +1441,8 @@ Player:
 			shields.upgrade: 1
 	BaseBuilderBotModuleCA@easy:
 		RequiresCondition: enable-easy-ai
-		BuildingQueues: Building, Upgrade
+		BuildingQueues: BuildingSQ, BuildingMQ, Upgrade
+		DefenseQueues: DefenseSQ, DefenseMQ
 		MinimumExcessPower: 50
 		MaximumExcessPower: 200
 		ExcessPowerIncrement: 50
@@ -1430,6 +1458,14 @@ Player:
 		SiloTypes: silo,silo.td,silo.scrin
 		AntiAirTypes: sam, nsam, agun, cram, shar
 		DefenseTypes: pbox, hbox, htur, gun, gun.td, gtwr, atwr, ptur, scol, obli, ltur, stwr, tsla, ftur, ttur, pris, sam, nsam, agun, cram, shar
+		BuildingIntervals:
+			proc: 2250
+			proc.td: 2250
+			proc.scrin: 2250
+			weap: 2250
+			weap.td: 2250
+			airs: 2250
+			wsph: 2250
 		BuildingDelays:
 			kenn: 2800
 			dome: 4500
@@ -1598,7 +1634,7 @@ Player:
 			howi.upgrade: 1
 			microwave.upgrade: 1
 			blacknapalm.upgrade: 1
-			supercharged.upgrade: 1
+			quantum.upgrade: 1
 			alphacomanche.upgrade: 1
 			tibcore.upgrade: 1
 			rahstealth.upgrade: 1
@@ -1622,7 +1658,7 @@ Player:
 			carapace.upgrade: 1
 			advart.upgrade: 1
 			shrw.upgrade: 1
-			plasma.upgrade: 1
+			stellar.upgrade: 1
 			coalescence.upgrade: 1
 			resconv.upgrade: 1
 			ioncon.upgrade: 1
@@ -1630,7 +1666,8 @@ Player:
 			shields.upgrade: 1
 	BaseBuilderBotModuleCA@naval:
 		RequiresCondition: enable-naval-ai
-		BuildingQueues: Building, Upgrade
+		BuildingQueues: BuildingSQ, BuildingMQ, Upgrade
+		DefenseQueues: DefenseSQ, DefenseMQ
 		MinimumExcessPower: 50
 		MaximumExcessPower: 300
 		ExcessPowerIncrement: 20
@@ -1646,6 +1683,14 @@ Player:
 		SiloTypes: silo,silo.td,silo.scrin
 		AntiAirTypes: sam, nsam, agun, cram, shar
 		DefenseTypes: pbox, hbox, htur, gun, gun.td, gtwr, atwr, ptur, scol, obli, ltur, stwr, tsla, ftur, ttur, pris, sam, nsam, agun, cram, shar
+		BuildingIntervals:
+			proc: 2250
+			proc.td: 2250
+			proc.scrin: 2250
+			weap: 2250
+			weap.td: 2250
+			airs: 2250
+			wsph: 2250
 		BuildingLimits:
 			barr: 5
 			tent: 5
@@ -1682,16 +1727,16 @@ Player:
 			proc: 30
 			proc.td: 30
 			proc.scrin: 30
-			hand: 2
-			pyle: 2
-			barr: 2
-			tent: 2
-			port: 2
+			hand: 5
+			pyle: 5
+			barr: 5
+			tent: 5
+			port: 5
 			kenn: 1
-			weap: 3
-			weap.td: 3
-			airs: 3
-			wsph: 3
+			weap: 5
+			weap.td: 5
+			airs: 5
+			wsph: 5
 			pbox: 7
 			hbox: 7
 			gtwr: 7
@@ -1782,7 +1827,7 @@ Player:
 			howi.upgrade: 1
 			microwave.upgrade: 1
 			blacknapalm.upgrade: 1
-			supercharged.upgrade: 1
+			quantum.upgrade: 1
 			alphacomanche.upgrade: 1
 			tibcore.upgrade: 1
 			rahstealth.upgrade: 1
@@ -1806,7 +1851,7 @@ Player:
 			carapace.upgrade: 1
 			advart.upgrade: 1
 			shrw.upgrade: 1
-			plasma.upgrade: 1
+			stellar.upgrade: 1
 			coalescence.upgrade: 1
 			resconv.upgrade: 1
 			ioncon.upgrade: 1
@@ -1861,7 +1906,7 @@ Player:
 		MaintainAirSuperiority: true
 		AirToAirUnits: heli, yak, mig, orca, apch, scrn, venm, stmr, enrv, a10.upg, harr
 		AirThreatUnits: heli, yak, mig, orca, apch, scrn, venm, stmr, enrv, a10.upg, harr, pac, deva, kiro, mshp
-		UnitBuilderMinCredits: 1800
+		ProductionMinCashRequirement: 1800
 		UnitIntervals:
 			mshp: 7500
 			mcv: 3000

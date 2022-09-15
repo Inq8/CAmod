@@ -6,6 +6,7 @@ set Name="Dedicated Server"
 set ListenPort=1234
 set AdvertiseOnline=True
 set Password=""
+set RecordReplays=False
 
 set RequireAuthentication=False
 set ProfileIDBlacklist=""
@@ -15,6 +16,12 @@ set EnableSingleplayer=False
 set EnableSyncReports=False
 set EnableGeoIP=True
 set ShareAnonymizedIPs=True
+
+set JoinChatDelay=5000
+
+set QueryMapRepository=True
+
+set SupportDir=""
 
 @echo off
 setlocal EnableDelayedExpansion
@@ -33,7 +40,7 @@ if not exist %ENGINE_DIRECTORY%\bin\OpenRA.exe goto noengine
 cd %ENGINE_DIRECTORY%
 
 :loop
-bin\OpenRA.Server.exe Game.Mod=%MOD_ID% Engine.EngineDir=".." Server.Name=%Name% Server.ListenPort=%ListenPort% Server.AdvertiseOnline=%AdvertiseOnline% Server.EnableSingleplayer=%EnableSingleplayer% Server.Password=%Password% Server.RequireAuthentication=%RequireAuthentication% Server.ProfileIDBlacklist=%ProfileIDBlacklist% Server.ProfileIDWhitelist=%ProfileIDWhitelist% Server.EnableSyncReports=%EnableSyncReports% Server.EnableGeoIP=%EnableGeoIP% Server.ShareAnonymizedIPs=%ShareAnonymizedIPs% Engine.SupportDir=%SupportDir%
+bin\OpenRA.Server.exe Game.Mod=%MOD_ID% Engine.EngineDir=".." Server.Name=%Name% Server.ListenPort=%ListenPort% Server.AdvertiseOnline=%AdvertiseOnline% Server.EnableSingleplayer=%EnableSingleplayer% Server.Password=%Password% Server.RecordReplays=%RecordReplays% Server.RequireAuthentication=%RequireAuthentication% Server.ProfileIDBlacklist=%ProfileIDBlacklist% Server.ProfileIDWhitelist=%ProfileIDWhitelist% Server.EnableSyncReports=%EnableSyncReports% Server.EnableGeoIP=%EnableGeoIP% Server.ShareAnonymizedIPs=%ShareAnonymizedIPs% Server.JoinChatDelay=%JoinChatDelay% Server.QueryMapRepository=%QueryMapRepository% Engine.SupportDir=%SupportDir%
 goto loop
 
 :noengine

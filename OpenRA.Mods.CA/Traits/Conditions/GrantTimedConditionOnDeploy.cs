@@ -72,7 +72,12 @@ namespace OpenRA.Mods.CA.Traits
 		[VoiceReference]
 		public readonly string Voice = "Action";
 
+		[Desc("If true, after deploying the condition will only start to drain after the actor attacks.")]
+		public readonly bool DischargeOnAttack = false;
+
 		public readonly bool ShowSelectionBar = true;
+		public readonly bool ShowSelectionBarWhenFull = true;
+		public readonly bool ShowSelectionBarWhenEmpty = true;
 		public readonly Color ChargingColor = Color.DarkRed;
 		public readonly Color DischargingColor = Color.DarkMagenta;
 
@@ -82,13 +87,14 @@ namespace OpenRA.Mods.CA.Traits
 	public enum TimedDeployState { Charging, Ready, Active, Deploying, Undeploying }
 
 	public class GrantTimedConditionOnDeploy : PausableConditionalTrait<GrantTimedConditionOnDeployInfo>,
-		IResolveOrder, IIssueOrder, ISelectionBar, IOrderVoice, ISync, ITick, IIssueDeployOrder
+		IResolveOrder, IIssueOrder, ISelectionBar, IOrderVoice, ISync, ITick, IIssueDeployOrder, INotifyAttack
 	{
 		readonly Actor self;
 		readonly bool canTurn;
 		int deployedToken = Actor.InvalidConditionToken;
 		int deployingToken = Actor.InvalidConditionToken;
 		int chargingToken = Actor.InvalidConditionToken;
+		bool attacked;
 
 		WithSpriteBody[] wsbs;
 
@@ -104,6 +110,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			this.self = self;
 			canTurn = self.Info.HasTraitInfo<IFacingInfo>();
+			attacked = false;
 		}
 
 		protected override void Created(Actor self)
@@ -205,8 +212,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (deployedToken == Actor.InvalidConditionToken)
 				deployedToken = self.GrantCondition(Info.DeployedCondition);
 
-			if (deployingToken != Actor.InvalidConditionToken)
-				deployingToken = self.RevokeCondition(deployingToken);
+			RevokeDeployingCondition();
 
 			deployState = TimedDeployState.Active;
 		}
@@ -230,13 +236,29 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		void OnUndeployCompleted()
+		void RevokeDeployingCondition()
+		{
+			attacked = false;
+			if (deployingToken != Actor.InvalidConditionToken)
+				deployingToken = self.RevokeCondition(deployingToken);
+		}
+
+		void RevokeDeployedCondition()
 		{
 			if (deployedToken != Actor.InvalidConditionToken)
 				deployedToken = self.RevokeCondition(deployedToken);
+		}
 
-			if (deployingToken != Actor.InvalidConditionToken)
-				deployingToken = self.RevokeCondition(deployingToken);
+		void RevokeChargingCondition()
+		{
+			if (chargingToken != Actor.InvalidConditionToken)
+				chargingToken = self.RevokeCondition(chargingToken);
+		}
+
+		void OnUndeployCompleted()
+		{
+			RevokeDeployingCondition();
+			RevokeDeployedCondition();
 
 			deployState = TimedDeployState.Charging;
 			ticks = Info.CooldownTicks;
@@ -253,23 +275,38 @@ namespace OpenRA.Mods.CA.Traits
 			if (deployState == TimedDeployState.Ready || deployState == TimedDeployState.Deploying || deployState == TimedDeployState.Undeploying)
 				return;
 
+			if (deployState == TimedDeployState.Active && Info.DischargeOnAttack && !attacked)
+				return;
+
 			if (--ticks < 0)
 			{
 				if (deployState == TimedDeployState.Charging)
 				{
 					ticks = Info.DeployedTicks;
 					deployState = TimedDeployState.Ready;
-					if (chargingToken != Actor.InvalidConditionToken)
-						chargingToken = self.RevokeCondition(chargingToken);
+					RevokeChargingCondition();
 				}
 				else
 					RevokeDeploy();
 			}
 		}
 
+		void INotifyAttack.Attacking(Actor self, in Target target, Armament a, Barrel barrel)
+		{
+			if (IsTraitDisabled || IsTraitPaused)
+				return;
+
+			attacked = true;
+		}
+
+		void INotifyAttack.PreparingAttack(Actor self, in Target target, Armament a, Barrel barrel) { }
+
 		float ISelectionBar.GetValue()
 		{
 			if (IsTraitDisabled || !Info.ShowSelectionBar || deployState == TimedDeployState.Undeploying)
+				return 0f;
+
+			if (!Info.ShowSelectionBarWhenFull && deployState == TimedDeployState.Ready)
 				return 0f;
 
 			if (deployState == TimedDeployState.Deploying || deployState == TimedDeployState.Ready)
@@ -280,7 +317,7 @@ namespace OpenRA.Mods.CA.Traits
 				: (float)ticks / Info.DeployedTicks;
 		}
 
-		bool ISelectionBar.DisplayWhenEmpty { get { return !IsTraitDisabled && Info.ShowSelectionBar; } }
+		bool ISelectionBar.DisplayWhenEmpty { get { return deployState == TimedDeployState.Ready ? Info.ShowSelectionBarWhenFull : Info.ShowSelectionBarWhenEmpty; } }
 
 		Color ISelectionBar.GetColor() { return deployState == TimedDeployState.Charging ? Info.ChargingColor : Info.DischargingColor; }
 	}

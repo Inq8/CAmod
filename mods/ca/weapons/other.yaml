@@ -261,8 +261,9 @@ BigFlamerTD:
 	Burst: 2
 	BurstDelays: 5
 	Projectile: LinearPulse
-		Speed: 96
-		ImpactInterval: 3
+		Speed: 288
+		VisualSpeed: 96
+		ImpactInterval: 1
 		Image: flameallfast
 		Inaccuracy: 484
 		Palette: tseffect-ignore-lighting-alpha90
@@ -271,6 +272,8 @@ BigFlamerTD:
 		-ForceGround:
 	Warhead@1Dam: SpreadDamage
 		Damage: 925
+		Versus:
+			Light: 100
 
 BigFlamerTDFF:
 	Inherits: BigFlamerTD
@@ -352,6 +355,7 @@ BlackHandFlamer:
 	Range: 3c512
 	Projectile: LinearPulse
 		Speed: 220
+		-VisualSpeed:
 		ImpactInterval: 2
 		Inaccuracy: 160
 		Image: thinblueflame
@@ -364,9 +368,9 @@ BlackHandFlamer:
 		Falloff: 100, 100, 0
 		Damage: 260
 		Versus:
-			None: 75
+			None: 60
 			Wood: 15
-			Light: 60
+			Light: 55
 			Heavy: 100
 			Concrete: 35
 			Brick: 5
@@ -1082,6 +1086,8 @@ VenomLaser.UPG:
 VenomLaserAA:
 	Inherits: VenomLaser
 	ValidTargets: Air, AirSmall
+	Projectile: LaserZapCA
+		-HitAnim:
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air, AirSmall
 		Damage: 4000
@@ -1091,6 +1097,9 @@ VenomLaserAA:
 			Light: 100
 			Heavy: 100
 	-Warhead@2Smu:
+	Warhead@3Eff: CreateEffect
+		ValidTargets: Air, AirSmall
+		Explosions: med_explosion
 
 VenomLaserAA.UPG:
 	Inherits: VenomLaserAA
@@ -2302,9 +2311,6 @@ U2Camera:
 
 DummyWeapon:
 	Warhead@Dummy: Dummy
-
-GuardianShieldUse:
-	Inherits: DummyWeapon
 
 Lasher:
 	ReloadDelay: 5
