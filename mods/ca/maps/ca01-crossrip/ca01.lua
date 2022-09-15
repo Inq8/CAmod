@@ -1,6 +1,6 @@
 -- Locations
 
-SovietBorder = { CPos.New(8,37), CPos.New(9,37), CPos.New(10,37), CPos.New(11,37), CPos.New(12,37), CPos.New(13,37), CPos.New(14,37), CPos.New(15,37), CPos.New(16,37), CPos.New(17,37), CPos.New(18,37), CPos.New(19,37), CPos.New(20,37), CPos.New(21,37) }
+SovietBorder = { CPos.New(9,32), CPos.New(10,32), CPos.New(11,32), CPos.New(12,32), CPos.New(13,32), CPos.New(14,32), CPos.New(15,32), CPos.New(16,32), CPos.New(17,32), CPos.New(18,32) }
 SovietMainBaseEntrance = { CPos.New(39,3), CPos.New(39,4), CPos.New(39,5), CPos.New(39,6), CPos.New(39,7), CPos.New(39,8), CPos.New(39,9), CPos.New(39,10), CPos.New(39,11), CPos.New(39,12), CPos.New(39,13) }
 SovietChronosphereLocation = CPos.New(60,25)
 TreesToTransform = { TreeToTransform1, TreeToTransform2, TreeToTransform3, TreeToTransform4 }
@@ -62,7 +62,7 @@ ScrinInvasionInterval =
 {
 	easy = DateTime.Seconds(18),
 	normal = DateTime.Seconds(12),
-	hard = DateTime.Seconds(10)
+	hard = DateTime.Seconds(12)
 }
 
 ScrinVehiclesIntervalMultiplier =
@@ -91,6 +91,12 @@ HaloDropInterval =
 	easy = DateTime.Minutes(3),
 	normal = DateTime.Minutes(2),
 	hard = DateTime.Minutes(1)
+}
+
+NavalDropInterval =
+{
+	normal = DateTime.Minutes(4),
+	hard = DateTime.Minutes(2)
 }
 
 -- Setup and Tick
@@ -185,6 +191,11 @@ InitUSSR = function()
 		end)
 	end
 
+	-- Beach drop at 12:00
+	if Difficulty ~= "easy" then
+		Trigger.AfterDelay(DateTime.Minutes(12), DoNavalDrop)
+	end
+
 	-- Set western patrol
 	Utils.Do(WestPatrolUnits, function(unit)
 		if not unit.IsDead then
@@ -192,17 +203,15 @@ InitUSSR = function()
 		end
 	end)
 
-	-- Any Soviet units that cross the border go into hunt mode
 	Trigger.OnEnteredFootprint(SovietBorder, function(a, id)
+		-- Any Soviet/Scrin units that cross the border go into hunt mode
 		if a.Owner == USSR or a.Owner == Scrin then
 			ClearTriggersStopAndHunt(a)
 		end
-	end)
 
-	-- On damaging first flame tower, start making infantry at western barracks
-	Trigger.OnDamaged(SovietWestFlameTower1, function()
-		if not westAttacked then
-			westAttacked = true
+		-- On player crossing Soviet border start making infantry at western barracks
+		if not sovietBorderCrossed and a.Owner == Greece then
+			sovietBorderCrossed = true
 			ProduceWestDefenseSquad()
 		end
 	end)
@@ -432,6 +441,29 @@ DoHaloDrop = function(entryPath)
 	Trigger.AfterDelay(HaloDropInterval[Difficulty], function()
 		DoHaloDrop(entryPath)
 	end)
+end
+
+DoNavalDrop = function()
+	if crossRipped then
+		return
+	end
+
+	local navalDropPath = { CPos.New(NavalDrop.Location.X - 3, NavalDrop.Location.Y - 1), NavalDrop.Location }
+	local navalDropUnits = { "3tnk", "v2rl", "3tnk" }
+
+	Reinforcements.ReinforceWithTransport(USSR, "lst", navalDropUnits, navalDropPath, { navalDropPath[2], navalDropPath[1] }, function(transport, cargo)
+		if not transport.IsDead then
+			transport.UnloadPassengers()
+			Utils.Do(cargo, function(a)
+				Trigger.OnAddedToWorld(a, function()
+					AssaultPlayerBase(a)
+					IdleHunt(a)
+				end)
+			end)
+		end
+	end)
+
+	Trigger.AfterDelay(NavalDropInterval[Difficulty], DoNavalDrop)
 end
 
 SendDevastators = function()
