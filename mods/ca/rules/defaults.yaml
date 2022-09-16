@@ -1874,11 +1874,11 @@
 		Locomotor: foot
 		PauseOnCondition: being-warped
 	GrantConditionOnTerrain@ONTIB:
-		Condition: ontib
+		Condition: on-tib
 		TerrainTypes: Tiberium, BlueTiberium
 	GrantStackingCondition@TIBEXPOSED:
 		Condition: tibexposed
-		RequiresCondition: ontib
+		RequiresCondition: on-tib
 		DelayPerInstance: 250
 		RevokeDelay: 500
 	DamagedByTerrain@TIBDAMAGE:
@@ -2100,25 +2100,27 @@
 	Inherits@SLOWABLE: ^Slowable
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, Cyborg
+	ExternalCondition@ONTIB:
+		Condition: on-tib
 	ChangesHealth@THEAL:
 		Step: 0
 		PercentageStep: 1
 		Delay: 15
 		StartIfBelow: 100
 		DamageCooldown: 150
-		RequiresCondition: ontib
+		RequiresCondition: on-tib
 		DamageTypes: ToxinDeath
 	WithDecoration@REDCROSS:
-		RequiresCondition: ontib || (hospitalheal && damaged)
+		RequiresCondition: on-tib || (hospitalheal && damaged)
 	WithDecoration@RANK-1:
 		BlinkPatterns:
-			ontib || (damaged && hospitalheal): On, Off
+			on-tib || (damaged && hospitalheal): On, Off
 	WithDecoration@RANK-2:
 		BlinkPatterns:
-			ontib || (damaged && hospitalheal): On, Off
+			on-tib || (damaged && hospitalheal): On, Off
 	WithDecoration@RANK-ELITE:
 		BlinkPatterns:
-			ontib || (damaged && hospitalheal): On, Off
+			on-tib || (damaged && hospitalheal): On, Off
 	-GrantConditionOnPrerequisite@BIO:
 	-GrantConditionOnPrerequisite@HAZMAT:
 	-GrantConditionOnPrerequisite@HAZMATSOVIET:
