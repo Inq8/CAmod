@@ -28,10 +28,9 @@ World:
 Player:
 	PlayerResources:
 		DefaultCash: 5000
-
-^Disabled:
-	Buildable:
-		Prerequisites: ~disabled
+	ProvidesPrerequisite@HardBonus:
+		Prerequisite: hard.difficulty
+		Factions: russia
 
 ^Infantry:
 	ProductionCostMultiplier@HardBonus:
@@ -166,16 +165,6 @@ BARR:
 		Bots: campaign
 	Production@MQINF:
 		RequiresCondition: owned-by-ai
-	ProvidesPrerequisite@HardBonus:
-		Prerequisite: hard.difficulty
-		Factions: russia
-		ResetOnOwnerChange: true
-
-WEAP:
-	ProvidesPrerequisite@HardBonus:
-		Prerequisite: hard.difficulty
-		Factions: russia
-		ResetOnOwnerChange: true
 
 TSLA:
 	-Targetable@TeslaBoost:

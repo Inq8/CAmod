@@ -104,7 +104,7 @@ NavalDropInterval =
 WorldLoaded = function()
 	Greece = Player.GetPlayer("Greece")
 	USSR = Player.GetPlayer("USSR")
-	Scrin = Player.GetPlayer("Scrin");
+	Scrin = Player.GetPlayer("Scrin")
 	EstablishBase = Greece.AddObjective("Establish a base.")
 
 	Trigger.OnKilled(Church, function()
@@ -140,10 +140,15 @@ Tick = function()
 			InvestigateArea = Greece.AddObjective("Investigate the area.")
 		end
 		Greece.MarkCompletedObjective(EstablishBase)
-		Media.PlaySoundNotification(Greece, "AlertBleep")
 	end
 
-	if DateTime.GameTime > DateTime.Seconds(30) and Greece.HasNoRequiredUnits() then
+	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
+		OncePerSecondChecks()
+	end
+end
+
+OncePerSecondChecks = function()
+	if Greece.HasNoRequiredUnits() then
 		if EstablishBase ~= nil and not Greece.IsObjectiveCompleted(EstablishBase) then
 			Greece.MarkFailedObjective(EstablishBase)
 		end
@@ -320,14 +325,6 @@ CreateScrinVehicles = function()
 	Trigger.AfterDelay(ScrinInvasionInterval[Difficulty] * ScrinVehiclesIntervalMultiplier[Difficulty], CreateScrinVehicles)
 end
 
-ClearTriggersStopAndHunt = function(a)
-	if a.HasProperty("Hunt") and not a.IsDead then
-		Trigger.ClearAll(a)
-		a.Stop()
-		a.Hunt()
-	end
-end
-
 InterdimensionalCrossrip = function()
 	if crossRipped then
 		return
@@ -350,7 +347,6 @@ InterdimensionalCrossrip = function()
 		Greece.MarkCompletedObjective(CaptureOrDestroyChronosphere)
 	end
 
-	Media.PlaySoundNotification(Greece, "AlertBleep")
 	DateTime.TimeLimit = DateTime.Seconds(EvacuationTime[Difficulty])
 
 	Trigger.OnTimerExpired(function()

@@ -16,7 +16,9 @@ InitObjectives = function(player)
 
 	Trigger.OnObjectiveCompleted(player, function(p, id)
 		Media.DisplayMessage(p.GetObjectiveDescription(id), "Objective completed")
+		Media.PlaySoundNotification(Greece, "AlertBleep")
 	end)
+
 	Trigger.OnObjectiveFailed(player, function(p, id)
 		Media.DisplayMessage(p.GetObjectiveDescription(id), "Objective failed")
 	end)
@@ -74,5 +76,15 @@ end
 IdleHunt = function(actor)
 	if actor.HasProperty("Hunt") and not actor.IsDead then
 		Trigger.OnIdle(actor, actor.Hunt)
+	end
+end
+
+ClearTriggersStopAndHunt = function(a)
+	if not a.IsDead then
+		Trigger.ClearAll(a)
+		a.Stop()
+		if a.HasProperty("Hunt") then
+			a.Hunt()
+		end
 	end
 end
