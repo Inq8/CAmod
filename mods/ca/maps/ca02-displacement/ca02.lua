@@ -43,13 +43,13 @@ MaxLosses = {
 TimeBetweenConvoys = {
 	easy = { DateTime.Minutes(1), DateTime.Minutes(8), DateTime.Minutes(5), DateTime.Minutes(4)  },
 	normal = { DateTime.Minutes(1), DateTime.Minutes(7), DateTime.Minutes(4), DateTime.Minutes(3) },
-	hard = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Minutes(3), DateTime.Minutes(3) }
+	hard = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Seconds(150), DateTime.Minutes(3) }
 }
 
 ScrinAttackInterval = {
 	easy = DateTime.Minutes(4),
-	normal = DateTime.Minutes(3),
-	hard = DateTime.Minutes(2)
+	normal = DateTime.Seconds(150),
+	hard = DateTime.Seconds(70)
 }
 
 ScrinAirAttackInterval = {
@@ -68,14 +68,14 @@ BasicAttackSquadUnits = { "s1", "s1", "s1", "s3", "s3", "intl.ai2", "intl.ai2", 
 
 AdvancedAttackSquadUnits = {
 	easy = { "s1", "s1", "s1", "s3", "s3", "intl.ai2", "intl.ai2", "gunw", "gunw", "corr" },
-	normal = { "s1", "s1", "s1", "s1", "s3", "s3", "s4", "intl.ai2", "intl.ai2", "gunw", "corr", "seek" },
-	hard = { "s1", "s1", "s1", "s1", "s1", "s1", "s2", "s3", "s3", "s4", "intl.ai2", "intl.ai2", "gunw", "corr", "seek", "seek", "tpod" }
+	normal = { "s1", "s1", "s1", "s1", "s3", "s3", "s4", "intl.ai2", "intl.ai2", "gunw", "corr", "devo" },
+	hard = { "s1", "s1", "s1", "s1", "s1", "s1", "s2", "s3", "s3", "s4", "intl.ai2", "intl.ai2", "gunw", "corr", "devo", "seek", "tpod" }
 }
 
 AirAttackSquadUnits = {
 	easy = { "stmr", "stmr" },
-	normal = { "stmr", "stmr" },
-	hard = { "stmr", "stmr", "stmr" }
+	normal = { "stmr", "stmr", "stmr" },
+	hard = { "stmr", "stmr", "stmr", "stmr" }
 }
 
 -- Setup and Tick
@@ -256,6 +256,10 @@ InitScrin = function()
 
 	TargetSwapChance(scrinGroundAttackers, Scrin, 10)
 	CallForHelpOnDamaged(scrinGroundAttackers)
+
+	if Difficulty == "hard" then
+		Trigger.AfterDelay(DateTime.Minutes(20), SendDevastators)
+	end
 end
 
 ScrinAttackWave = function()
@@ -291,7 +295,12 @@ end
 ScrinAirAttackWave = function()
 	Scrin.Build(AirAttackSquadUnits[Difficulty], function(units)
 		Utils.Do(units, function(unit)
-			IdleHunt(unit)
+			Trigger.OnIdle(unit, function()
+				local target = ChooseRandomBuildingTarget(unit, Greece)
+				if target ~= nil then
+					unit.Attack(target)
+				end
+			end)
 		end)
 
 		local assemblyPoint = Utils.Random(ScrinAttackAssemblyLocations)
@@ -311,16 +320,43 @@ end
 CallForHelpOnDamaged = function(actors)
 	Utils.Do(actors, function(actor)
 		Trigger.OnDamaged(actor, function(self, attacker, damage)
-			local nearbyUnits = Map.ActorsInCircle(self.CenterPosition, WDist.New(5120), IsScrinGroundHunterUnit)
 
-			Utils.Do(nearbyUnits, function(nearbyUnit)
-				if not actor.IsDead and not actor.HasTag("idleHunt") then
-					nearbyUnit.AddTag("idleHunt")
-					IdleHunt(nearbyUnit)
-				end
-			end)
+			if not self.HasTag("helpCalled") then
+				self.AddTag("helpCalled")
+				local nearbyUnits = Map.ActorsInCircle(self.CenterPosition, WDist.New(5120), IsScrinGroundHunterUnit)
+
+				Utils.Do(nearbyUnits, function(nearbyUnit)
+					if not actor.IsDead and not actor.HasTag("idleHunt") then
+						nearbyUnit.AddTag("idleHunt")
+						IdleHunt(nearbyUnit)
+					end
+				end)
+			end
 		end)
 	end)
+end
+
+SendDevastators = function()
+	if not GravityStabilizer1.IsDead and GravityStabilizer1.Owner == Scrin then
+		GravityStabilizer1.Produce("deva")
+	end
+
+	if not GravityStabilizer2.IsDead and GravityStabilizer2.Owner == Scrin then
+		GravityStabilizer1.Produce("deva")
+	end
+
+	Trigger.AfterDelay(DateTime.Seconds(5), function()
+		IdleDevastators = Utils.Where(Scrin.GetActorsByType("deva"), function(actor) return actor.IsIdle end)
+		Utils.Do(IdleDevastators, function(unit)
+			local target = ChooseRandomBuildingTarget(unit, Greece)
+			if target ~= nil then
+				unit.Attack(target)
+				IdleHunt(unit)
+			end
+		end)
+	end)
+
+	Trigger.AfterDelay(DateTime.Minutes(2), SendDevastators)
 end
 
 -- Filters
