@@ -67,6 +67,17 @@ ChooseRandomTarget = function(unit, enemyPlayer)
 	return target
 end
 
+ChooseRandomBuildingTarget = function(unit, enemyPlayer)
+	local target = nil
+	local enemies = Utils.Where(enemyPlayer.GetActors(), function(self)
+		return self.HasProperty("Health") and self.HasProperty("StartBuildingRepairs") and unit.CanTarget(self) and not Utils.Any({ "sbag", "fenc", "brik", "cycl", "barb" }, function(type) return self.Type == type end)
+	end)
+	if #enemies > 0 then
+		target = Utils.Random(enemies)
+	end
+	return target
+end
+
 OnAnyDamaged = function(actors, func)
 	Utils.Do(actors, function(actor)
 		Trigger.OnDamaged(actor, func)
@@ -87,4 +98,46 @@ ClearTriggersStopAndHunt = function(a)
 			a.Hunt()
 		end
 	end
+end
+
+AutoRepairBuildings = function(player)
+	local buildings = Utils.Where(Map.ActorsInWorld, function(self) return self.Owner == player and self.HasProperty("StartBuildingRepairs") end)
+	Utils.Do(buildings, function(actor)
+		Trigger.OnDamaged(actor, function(building)
+			if building.Owner == player and building.Health < (building.MaxHealth * 75 / 100) then
+				building.StartBuildingRepairs()
+			end
+		end)
+	end)
+end
+
+-- Returns true if player has one of any of the specified actor types
+HasOneOf = function(player, types)
+	local count = 0
+
+	Utils.Do(types, function(name)
+		if #player.GetActorsByType(name) > 0 then
+			count = count + 1
+		end
+	end)
+
+	return count > 0
+end
+
+-- Make specified units have a chance to swap targets when attacked instead of chasing one target endlessly
+TargetSwapChance = function(units, player, chance)
+	Utils.Do(units, function(unit)
+		Trigger.OnDamaged(unit, function(self, attacker, damage)
+			if attacker.EffectiveOwner == player then
+				return
+			end
+			local rand = Utils.RandomInteger(1,100)
+			if rand > 100 - chance then
+				if unit.HasProperty("Attack") and not unit.IsDead then
+					unit.Stop()
+					unit.Attack(attacker)
+				end
+			end
+		end)
+	end)
 end

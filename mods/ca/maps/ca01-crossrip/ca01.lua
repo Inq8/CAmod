@@ -231,14 +231,7 @@ InitUSSR = function()
 		SovietChronosphere.Kill()
 	end)
 
-	local buildings = Utils.Where(Map.ActorsInWorld, function(self) return self.Owner == USSR and self.HasProperty("StartBuildingRepairs") end)
-	Utils.Do(buildings, function(actor)
-		Trigger.OnDamaged(actor, function(building)
-			if building.Owner == USSR and building.Health < (building.MaxHealth * 75 / 100) then
-				building.StartBuildingRepairs()
-			end
-		end)
-	end)
+	AutoRepairBuildings(USSR)
 end
 
 ProduceWestDefenseSquad = function()
