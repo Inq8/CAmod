@@ -395,7 +395,7 @@ end
 
 AssaultPlayerBase = function(actor)
 	if not actor.IsDead then
-		actor.AttackMove(CPos.New(18,41))
+		actor.AttackMove(CPos.New(18,41), 2)
 	end
 end
 
@@ -440,16 +440,12 @@ DoNavalDrop = function()
 	local navalDropPath = { CPos.New(NavalDrop.Location.X - 3, NavalDrop.Location.Y - 1), NavalDrop.Location }
 	local navalDropUnits = { "3tnk", "v2rl", "3tnk" }
 
-	Reinforcements.ReinforceWithTransport(USSR, "lst", navalDropUnits, navalDropPath, { navalDropPath[2], navalDropPath[1] }, function(transport, cargo)
-		if not transport.IsDead then
-			transport.UnloadPassengers()
-			Utils.Do(cargo, function(a)
-				Trigger.OnAddedToWorld(a, function()
-					AssaultPlayerBase(a)
-					IdleHunt(a)
-				end)
-			end)
-		end
+	local raiders = Reinforcements.ReinforceWithTransport(USSR, "lst", navalDropUnits, navalDropPath, { navalDropPath[2], navalDropPath[1] })[2]
+	Utils.Do(raiders, function(a)
+		Trigger.OnAddedToWorld(a, function()
+			AssaultPlayerBase(a)
+			IdleHunt(a)
+		end)
 	end)
 
 	Trigger.AfterDelay(NavalDropInterval[Difficulty], DoNavalDrop)
