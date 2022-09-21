@@ -1,6 +1,6 @@
 -- Locations
 
-SovietBorder = { CPos.New(8,37), CPos.New(9,37), CPos.New(10,37), CPos.New(11,37), CPos.New(12,37), CPos.New(13,37), CPos.New(14,37), CPos.New(15,37), CPos.New(16,37), CPos.New(17,37), CPos.New(18,37), CPos.New(19,37), CPos.New(20,37), CPos.New(21,37) }
+SovietBorder = { CPos.New(9,32), CPos.New(10,32), CPos.New(11,32), CPos.New(12,32), CPos.New(13,32), CPos.New(14,32), CPos.New(15,32), CPos.New(16,32), CPos.New(17,32), CPos.New(18,32) }
 SovietMainBaseEntrance = { CPos.New(39,3), CPos.New(39,4), CPos.New(39,5), CPos.New(39,6), CPos.New(39,7), CPos.New(39,8), CPos.New(39,9), CPos.New(39,10), CPos.New(39,11), CPos.New(39,12), CPos.New(39,13) }
 SovietChronosphereLocation = CPos.New(60,25)
 TreesToTransform = { TreeToTransform1, TreeToTransform2, TreeToTransform3, TreeToTransform4 }
@@ -62,7 +62,7 @@ ScrinInvasionInterval =
 {
 	easy = DateTime.Seconds(18),
 	normal = DateTime.Seconds(12),
-	hard = DateTime.Seconds(10)
+	hard = DateTime.Seconds(12)
 }
 
 ScrinVehiclesIntervalMultiplier =
@@ -93,12 +93,18 @@ HaloDropInterval =
 	hard = DateTime.Minutes(1)
 }
 
+NavalDropInterval =
+{
+	normal = DateTime.Minutes(4),
+	hard = DateTime.Minutes(2)
+}
+
 -- Setup and Tick
 
 WorldLoaded = function()
 	Greece = Player.GetPlayer("Greece")
 	USSR = Player.GetPlayer("USSR")
-	Scrin = Player.GetPlayer("Scrin");
+	Scrin = Player.GetPlayer("Scrin")
 	EstablishBase = Greece.AddObjective("Establish a base.")
 
 	Trigger.OnKilled(Church, function()
@@ -134,10 +140,15 @@ Tick = function()
 			InvestigateArea = Greece.AddObjective("Investigate the area.")
 		end
 		Greece.MarkCompletedObjective(EstablishBase)
-		Media.PlaySoundNotification(Greece, "AlertBleep")
 	end
 
-	if DateTime.GameTime > DateTime.Seconds(30) and Greece.HasNoRequiredUnits() then
+	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
+		OncePerSecondChecks()
+	end
+end
+
+OncePerSecondChecks = function()
+	if Greece.HasNoRequiredUnits() then
 		if EstablishBase ~= nil and not Greece.IsObjectiveCompleted(EstablishBase) then
 			Greece.MarkFailedObjective(EstablishBase)
 		end
@@ -185,6 +196,11 @@ InitUSSR = function()
 		end)
 	end
 
+	-- Beach drop at 12:00
+	if Difficulty ~= "easy" then
+		Trigger.AfterDelay(DateTime.Minutes(12), DoNavalDrop)
+	end
+
 	-- Set western patrol
 	Utils.Do(WestPatrolUnits, function(unit)
 		if not unit.IsDead then
@@ -192,17 +208,15 @@ InitUSSR = function()
 		end
 	end)
 
-	-- Any Soviet units that cross the border go into hunt mode
 	Trigger.OnEnteredFootprint(SovietBorder, function(a, id)
+		-- Any Soviet/Scrin units that cross the border go into hunt mode
 		if a.Owner == USSR or a.Owner == Scrin then
 			ClearTriggersStopAndHunt(a)
 		end
-	end)
 
-	-- On damaging first flame tower, start making infantry at western barracks
-	Trigger.OnDamaged(SovietWestFlameTower1, function()
-		if not westAttacked then
-			westAttacked = true
+		-- On player crossing Soviet border start making infantry at western barracks
+		if not sovietBorderCrossed and a.Owner == Greece then
+			sovietBorderCrossed = true
 			ProduceWestDefenseSquad()
 		end
 	end)
@@ -217,14 +231,7 @@ InitUSSR = function()
 		SovietChronosphere.Kill()
 	end)
 
-	local buildings = Utils.Where(Map.ActorsInWorld, function(self) return self.Owner == USSR and self.HasProperty("StartBuildingRepairs") end)
-	Utils.Do(buildings, function(actor)
-		Trigger.OnDamaged(actor, function(building)
-			if building.Owner == USSR and building.Health < (building.MaxHealth * 75 / 100) then
-				building.StartBuildingRepairs()
-			end
-		end)
-	end)
+	AutoRepairBuildings(USSR)
 end
 
 ProduceWestDefenseSquad = function()
@@ -311,14 +318,6 @@ CreateScrinVehicles = function()
 	Trigger.AfterDelay(ScrinInvasionInterval[Difficulty] * ScrinVehiclesIntervalMultiplier[Difficulty], CreateScrinVehicles)
 end
 
-ClearTriggersStopAndHunt = function(a)
-	if a.HasProperty("Hunt") and not a.IsDead then
-		Trigger.ClearAll(a)
-		a.Stop()
-		a.Hunt()
-	end
-end
-
 InterdimensionalCrossrip = function()
 	if crossRipped then
 		return
@@ -341,7 +340,6 @@ InterdimensionalCrossrip = function()
 		Greece.MarkCompletedObjective(CaptureOrDestroyChronosphere)
 	end
 
-	Media.PlaySoundNotification(Greece, "AlertBleep")
 	DateTime.TimeLimit = DateTime.Seconds(EvacuationTime[Difficulty])
 
 	Trigger.OnTimerExpired(function()
@@ -397,7 +395,7 @@ end
 
 AssaultPlayerBase = function(actor)
 	if not actor.IsDead then
-		actor.AttackMove(CPos.New(18,41))
+		actor.AttackMove(CPos.New(18,41), 2)
 	end
 end
 
@@ -432,6 +430,25 @@ DoHaloDrop = function(entryPath)
 	Trigger.AfterDelay(HaloDropInterval[Difficulty], function()
 		DoHaloDrop(entryPath)
 	end)
+end
+
+DoNavalDrop = function()
+	if crossRipped then
+		return
+	end
+
+	local navalDropPath = { CPos.New(NavalDrop.Location.X - 3, NavalDrop.Location.Y - 1), NavalDrop.Location }
+	local navalDropUnits = { "3tnk", "v2rl", "3tnk" }
+
+	local raiders = Reinforcements.ReinforceWithTransport(USSR, "lst", navalDropUnits, navalDropPath, { navalDropPath[2], navalDropPath[1] })[2]
+	Utils.Do(raiders, function(a)
+		Trigger.OnAddedToWorld(a, function()
+			AssaultPlayerBase(a)
+			IdleHunt(a)
+		end)
+	end)
+
+	Trigger.AfterDelay(NavalDropInterval[Difficulty], DoNavalDrop)
 end
 
 SendDevastators = function()

@@ -385,7 +385,7 @@ RiftCannon:
 		Actors: camera.minirift
 		Range: 1
 		ForceGround: false
-		ValidTargets: Ground, Water, Rift
+		ValidTargets: Ground, Water, Rift, Trees
 
 MiniRift:
 	ReloadDelay: 10
@@ -1097,7 +1097,7 @@ RiftInit:
 		Actors: camera.rift
 		Range: 1
 		ForceGround: false
-		ValidTargets: Ground, Water
+		ValidTargets: Ground, Water, Trees
 
 Rift:
 	ReloadDelay: 5
@@ -1158,6 +1158,7 @@ BuzzerSpawner:
 		Actors: buzz
 		Range: 1
 		ForceGround: false
+		ValidTargets: Ground, Water, Trees
 
 BuzzerSpawnerAI:
 	Inherits: BuzzerSpawner
@@ -1212,7 +1213,7 @@ StormSpikeSpawner:
 	Warhead@spawn: SpawnBuilding
 		Buildings: scol.temp
 		Range: 3
-		ValidTargets: Air, AirSmall, Ground, Water
+		ValidTargets: Ground, Water, Trees
 
 IonSurgeSpawner:
 	ReloadDelay: 1
@@ -1221,7 +1222,7 @@ IonSurgeSpawner:
 		Actors: ion.surge
 		Range: 1
 		ForceGround: false
-		ValidTargets: Ground, Water
+		ValidTargets: Ground, Water, Trees
 
 IonSurge:
 	ReloadDelay: 20
@@ -1562,7 +1563,7 @@ MindSparkSpawnerMaster:
 		Actors: mspk
 		Range: 1
 		ForceGround: false
-		ValidTargets: Ground, Water
+		ValidTargets: Ground, Water, Trees
 		Delay: 8
 	Warhead@Suppress: GrantExternalCondition
 		Range: 2c0
