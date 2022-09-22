@@ -23,22 +23,6 @@ World:
 Player:
 	PlayerResources:
 		DefaultCash: 1000
-	ProvidesPrerequisite@HardBonus:
-		Prerequisite: hard.difficulty
-		Factions: reaper
-	ProvidesPrerequisite@BotPlayer:
-		Prerequisite: botplayer
-		Factions: reaper
-
-^Infantry:
-	ProductionCostMultiplier@HardBonus:
-		Multiplier: 90
-		Prerequisites: hard.difficulty
-
-^Vehicle-NOUPG:
-	ProductionCostMultiplier@HardBonus:
-		Multiplier: 90
-		Prerequisites: hard.difficulty
 
 E7:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -86,17 +70,13 @@ ATEK:
 	-GrantExternalConditionPowerCA@FSHIELD:
 	-DetonateWeaponPower@TEMPINC:
 
+STMR:
+	AutoTarget:
+		InitialStanceAI: HoldFire
+
 REA2:
 	Power:
 		Amount: 400
-
-INTL.AI2:
-	Buildable:
-		Prerequisites: ~botplayer, ~vehicles.scrin, ~techlevel.low
-
-TPOD:
-	Buildable:
-		Prerequisites: ~botplayer, scrt, ~techlevel.high
 
 FIX:
 	ProximityExternalCondition@AIRCRAFTREPAIR:

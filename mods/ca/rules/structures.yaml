@@ -656,9 +656,6 @@ TSLA:
 		RequiresCondition: charged
 		BlinkInterval: 64
 		RequiresSelection: true
-	ProvidesPrerequisite@TSLA:
-		Factions: soviet, russia, ukraine, iraq, yuri
-		Prerequisite: structures.tsla
 
 AGUN:
 	Inherits: ^Defense
@@ -2085,26 +2082,26 @@ AFLD:
 	RallyPoint:
 		ForceSetType: Aircraft
 	Reservable:
-	ProvidesPrerequisite@soviet:
+	ValidFactions:
 		Factions: russia, ukraine, iraq, yuri
+	ProvidesPrerequisite@soviet:
 		Prerequisite: aircraft.soviet
-	ProvidesPrerequisite@russia:
+	ProvidesPrerequisiteValidatedFaction@russia:
 		Factions: russia
 		Prerequisite: aircraft.russia
-	ProvidesPrerequisite@ukraine:
+	ProvidesPrerequisiteValidatedFaction@ukraine:
 		Factions: ukraine
 		Prerequisite: aircraft.ukraine
-	ProvidesPrerequisite@iraq:
+	ProvidesPrerequisiteValidatedFaction@iraq:
 		Factions: iraq
 		Prerequisite: aircraft.iraq
-	ProvidesPrerequisite@yuri:
+	ProvidesPrerequisiteValidatedFaction@yuri:
 		Factions: yuri
 		Prerequisite: aircraft.yuri
 	SupportPowerChargeBar:
 	Power:
 		Amount: -20
 	ProvidesPrerequisite@buildingname:
-		Prerequisite: afld
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate
@@ -3011,15 +3008,6 @@ INFANTRY.MECH:
 		Name: Barracks
 	Buildable:
 		Description: Mechanical Barracks
-
-STRUCTURES.TSLA:
-	AlwaysVisible:
-	Interactable:
-	Tooltip:
-		GenericName:
-		Name: Tesla Coil
-	Buildable:
-		Description: Tesla Coil
 
 PYLE:
 	Inherits: ^BuildingTD
@@ -4866,7 +4854,7 @@ AFLD.GDI:
 	Reservable:
 	ValidFactions:
 		Factions: talon, zocom, eagle, arc
-	ProvidesPrerequisiteValidatedFaction@gdi:
+	ProvidesPrerequisite@gdi:
 		Prerequisite: aircraft.gdi
 	ProvidesPrerequisiteValidatedFaction@eagle:
 		Factions: eagle

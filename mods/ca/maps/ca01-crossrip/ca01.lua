@@ -6,9 +6,20 @@ SovietChronosphereLocation = CPos.New(60,25)
 TreesToTransform = { TreeToTransform1, TreeToTransform2, TreeToTransform3, TreeToTransform4 }
 WormholeSpawns = { WormholeSpawn1.Location, WormholeSpawn2.Location, WormholeSpawn3.Location, WormholeSpawn4.Location, WormholeSpawn5.Location }
 
-AttackPaths =
-{
-	{ AttackWaypoint1.Location, AttackWaypoint2.Location, AttackWaypoint3.Location, AttackWaypoint4.Location }
+SovietAttackPaths = {
+	{ AttackWaypoint1.Location, AttackWaypoint2.Location, AttackWaypoint3.Location, AttackWaypoint5.Location },
+	{ AttackWaypoint1.Location, AttackWaypoint2.Location, AttackWaypoint3.Location, AttackWaypoint4.Location, AttackWaypoint5.Location }
+}
+
+AirAttackPaths = {
+	{ DevastatorSpawn1.Location, DevastatorDestination1.Location },
+	{ DevastatorSpawn2.Location, DevastatorDestination2.Location },
+	{ DevastatorSpawn3.Location, DevastatorDestination3.Location }
+}
+
+ScrinAttackPaths = {
+	{ AttackWaypoint4.Location, AttackWaypoint5.Location },
+	{ AttackWaypoint5.Location },
 }
 
 WestPatrolPath = { WestPatrolWaypoint1.Location, WestPatrolWaypoint2.Location }
@@ -17,12 +28,130 @@ WestPatrolPath = { WestPatrolWaypoint1.Location, WestPatrolWaypoint2.Location }
 
 WestPatrolUnits = { WestPatrolUnit1, WestPatrolUnit2, WestPatrolUnit3, WestPatrolUnit4 }
 
-BasicAttackSquadUnits = { "e1", "e1", "e1", "e2", "e3", "e4", "3tnk", "btr" }
-
-AdvancedAttackSquadUnits = {
-	easy = { "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e3", "e4", "4tnk", "btr" },
-	normal = { "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e3", "e4", "3tnk", "4tnk", "katy" },
-	hard = { "e1", "e1", "e3", "shok", "e1", "shok", "e1", "e2", "e3", "e3", "e4", "3tnk", "4tnk", "btr", "katy", "ttra" }
+Squads = {
+	Basic = {
+		Player = nil,
+		Delay = {
+			easy = DateTime.Seconds(130),
+			normal = DateTime.Seconds(100),
+			hard = DateTime.Seconds(70)
+		},
+		Interval = {
+			easy = DateTime.Seconds(30),
+			normal = DateTime.Seconds(20),
+			hard = DateTime.Seconds(10)
+		},
+		QueueProductionStatuses = {
+			Infantry = false,
+			Vehicles = false
+		},
+		IdleUnits = { },
+		ProducerActors = { Infantry = { SovietBarracks }, Vehicles = { SovietWarFactory } },
+		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
+		Units = {
+			easy = {
+				Infantry = { "e1", "e1", "e1", "e2", "e3", "e4" },
+				Vehicles = { "3tnk", "btr" }
+			},
+			normal = {
+				Infantry = { "e1", "e1", "e1", "e2", "e3", "e4" },
+				Vehicles = { "3tnk", "btr" }
+			},
+			hard = {
+				Infantry = { "e1", "e1", "e1", "e2", "e3", "e4" },
+				Vehicles = { "3tnk", "btr" }
+			}
+		},
+		AttackPaths = SovietAttackPaths,
+		TransitionTo = {
+			SquadType = "Advanced",
+			GameTime = {
+				easy = DateTime.Minutes(15),
+				normal = DateTime.Minutes(10),
+				hard = DateTime.Minutes(7)
+			}
+		}
+	},
+	Advanced = {
+		Player = nil,
+		Interval = {
+			easy = DateTime.Seconds(30),
+			normal = DateTime.Seconds(20),
+			hard = DateTime.Seconds(10)
+		},
+		QueueProductionStatuses = {
+			Infantry = false,
+			Vehicles = false
+		},
+		IdleUnits = { },
+		ProducerActors = { Infantry = { SovietBarracks }, Vehicles = { SovietWarFactory } },
+		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
+		Units = {
+			easy = {
+				Infantry = { "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e3", "e4" },
+				Vehicles = { "4tnk", "btr" }
+			},
+			normal = {
+				Infantry = { "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e3", "e4" },
+				Vehicles = { "3tnk", "4tnk", "katy" }
+			},
+			hard = {
+				Infantry = { "e1", "e1", "e3", "shok", "e1", "shok", "e1", "e2", "e3", "e3", "e4" },
+				Vehicles = { "3tnk", "4tnk", "btr", "katy", "ttra" }
+			}
+		},
+		AttackPaths = SovietAttackPaths
+	},
+	Western = {
+		Player = nil,
+		Interval = {
+			easy = DateTime.Seconds(45),
+			normal = DateTime.Seconds(30),
+			hard = DateTime.Seconds(15)
+		},
+		QueueProductionStatuses = {
+			Infantry = false
+		},
+		IdleUnits = { },
+		ProducerActors = { Infantry = { SovietWestBarracks } },
+		Units = {
+			easy = { Infantry = { "e1", "e2", "e3", "e4" } },
+			normal = { Infantry = { "e1", "e2", "e3", "e4" } },
+			hard = { Infantry = { "e1", "e2", "e3", "e4" } }
+		},
+		AttackPaths = {
+			{ AttackWaypoint4.Location, AttackWaypoint5.Location }
+		}
+	},
+	Migs = {
+		Delay = {
+			easy = DateTime.Minutes(12),
+			normal = DateTime.Minutes(9),
+			hard = DateTime.Minutes(6)
+		},
+		Interval = {
+			easy = DateTime.Minutes(6),
+			normal = DateTime.Minutes(4),
+			hard = DateTime.Minutes(2)
+		},
+		QueueProductionStatuses = {
+			Aircraft = false
+		},
+		IdleUnits = { },
+		ProducerActors = nil,
+		ProducerTypes = { Aircraft = { "afld" } },
+		Units = {
+			easy = {
+				Aircraft = { "mig" }
+			},
+			normal = {
+				Aircraft = { "mig", "mig" }
+			},
+			hard = {
+				Aircraft = { "mig", "mig" }
+			}
+		}
+	}
 }
 
 ScrinInfantrySquads = {
@@ -37,66 +166,45 @@ ScrinVehicleTypes = {
 	hard = { "seek", "corr", "devo", "ruin", "tpod" }
 }
 
-AttackSquadDelay =
-{
-	easy = DateTime.Seconds(130),
-	normal = DateTime.Seconds(100),
-	hard = DateTime.Seconds(70)
-}
-
-AttackSquadInterval =
-{
-	easy = DateTime.Seconds(40),
-	normal = DateTime.Seconds(30),
-	hard = DateTime.Seconds(20)
-}
-
-WestDefenseSquadInterval =
-{
-	easy = DateTime.Seconds(45),
-	normal = DateTime.Seconds(30),
-	hard = DateTime.Seconds(15)
-}
-
-ScrinInvasionInterval =
-{
+ScrinInvasionInterval = {
 	easy = DateTime.Seconds(18),
 	normal = DateTime.Seconds(12),
 	hard = DateTime.Seconds(12)
 }
 
-ScrinVehiclesIntervalMultiplier =
-{
+ScrinVehiclesIntervalMultiplier = {
 	easy = 4,
 	normal = 4,
 	hard = 3
 }
 
-AdvancedAttackSquadStart =
-{
-	easy = 22500,
-	normal = 15000,
-	hard = 10500
+EvacuationTime = {
+	easy = DateTime.Minutes(4),
+	normal = DateTime.Minutes(5),
+	hard = DateTime.Minutes(6)
 }
 
-EvacuationTime =
-{
-	easy = 210,
-	normal = 270,
-	hard = 330
+HaloDropStart = {
+	easy = DateTime.Minutes(10),
+	normal = DateTime.Minutes(9),
+	hard = DateTime.Minutes(8)
 }
 
-HaloDropInterval =
-{
+HaloDropInterval = {
 	easy = DateTime.Minutes(3),
 	normal = DateTime.Minutes(2),
 	hard = DateTime.Minutes(1)
 }
 
-NavalDropInterval =
-{
+NavalDropInterval = {
 	normal = DateTime.Minutes(4),
 	hard = DateTime.Minutes(2)
+}
+
+ChronosphereAutoDestructTime = {
+	easy = DateTime.Minutes(30),
+	normal = DateTime.Minutes(24),
+	hard = DateTime.Minutes(18)
 }
 
 -- Setup and Tick
@@ -163,9 +271,8 @@ OncePerSecondChecks = function()
 		end
 	end
 
-	if USSR.Cash < 1000 then
-		USSR.Cash = 2000
-	end
+	USSR.Cash = 2500
+	USSR.Resources = 2500
 end
 
 -- Functions
@@ -176,23 +283,25 @@ CheckForConYard = function()
 end
 
 InitUSSR = function()
-	-- Main base barracks as primary
-	SovietBarracks.IsPrimaryBuilding = true
-
 	-- Begin main attacks after difficulty based delay
-	Trigger.AfterDelay(AttackSquadDelay[Difficulty], ProduceAttackSquad)
-
+	Trigger.AfterDelay(Squads.Basic.Delay[Difficulty], function()
+		InitAttackSquad(Squads.Basic, USSR)
+	end)
+DateTime.Minutes(10)
 	-- Eastern Halo drops start at 10 mins
-	Trigger.AfterDelay(DateTime.Minutes(10), function()
-		local eastHaloDropEntryPath = { CPos.New(EastHaloDrop.Location.X + 35, EastHaloDrop.Location.Y - 25), EastHaloDrop.Location }
-		DoHaloDrop(eastHaloDropEntryPath)
+	Trigger.AfterDelay(HaloDropStart[Difficulty], function()
+		local eastHaloDropEntryPaths = {
+			{ CPos.New(EastHaloDrop.Location.X + 35, EastHaloDrop.Location.Y - 25), EastHaloDrop.Location },
+			{ CPos.New(EastHaloDrop.Location.X + 35, EastHaloDrop.Location.Y - 25), EastHaloDropAlt.Location },
+		}
+		DoHaloDrop(eastHaloDropEntryPaths)
 	end)
 
 	-- Western Halo drops start at 10:40 (hard only)
 	if Difficulty == "hard" then
-		Trigger.AfterDelay(DateTime.Seconds(640), function()
-			local westHaloDropEntryPath = { CPos.New(WestHaloDrop.Location.X - 35, WestHaloDrop.Location.Y - 25), WestHaloDrop.Location }
-			DoHaloDrop(westHaloDropEntryPath)
+		Trigger.AfterDelay(HaloDropStart[Difficulty] + DateTime.Seconds(40), function()
+			local westHaloDropEntryPaths = { { CPos.New(WestHaloDrop.Location.X - 35, WestHaloDrop.Location.Y - 25), WestHaloDrop.Location } }
+			DoHaloDrop(westHaloDropEntryPaths)
 		end)
 	end
 
@@ -208,6 +317,10 @@ InitUSSR = function()
 		end
 	end)
 
+	Trigger.AfterDelay(Squads.Migs.Delay[Difficulty], function()
+		InitAirAttackSquad(Squads.Migs, USSR, Greece, { "harv", "pris", "agun", "pbox" })
+	end)
+
 	Trigger.OnEnteredFootprint(SovietBorder, function(a, id)
 		-- Any Soviet/Scrin units that cross the border go into hunt mode
 		if a.Owner == USSR or a.Owner == Scrin then
@@ -217,7 +330,7 @@ InitUSSR = function()
 		-- On player crossing Soviet border start making infantry at western barracks
 		if not sovietBorderCrossed and a.Owner == Greece then
 			sovietBorderCrossed = true
-			ProduceWestDefenseSquad()
+			InitAttackSquad(Squads.Western, USSR)
 		end
 	end)
 
@@ -231,53 +344,14 @@ InitUSSR = function()
 		SovietChronosphere.Kill()
 	end)
 
+	-- After an amount of time based on difficulty, reveal and auto-destruct the Chronosphere
+	Trigger.AfterDelay(ChronosphereAutoDestructTime[Difficulty], function()
+		AutoChronoCamera = Actor.Create("smallcamera", true, { Owner = Greece, Location = SovietChronosphere.Location })
+		Trigger.AfterDelay(DateTime.Seconds(10), SovietChronosphere.Kill)
+		Trigger.AfterDelay(DateTime.Seconds(15), AutoChronoCamera.Destroy)
+	end)
+
 	AutoRepairBuildings(USSR)
-end
-
-ProduceWestDefenseSquad = function()
-	if SovietWestBarracks.IsDead or SovietWestBarracks.Owner ~= USSR then
-		return
-	end
-
-	local westDefenseUnits = { "e1", "e2", "e1", "e3" }
-
-	SovietWestBarracks.Build(westDefenseUnits, function(units)
-		Utils.Do(units, function(unit)
-			IdleHunt(unit)
-		end)
-		Trigger.AfterDelay(WestDefenseSquadInterval[Difficulty], ProduceWestDefenseSquad)
-	end)
-end
-
-ProduceAttackSquad = function()
-	if SovietBarracks.IsDead or SovietBarracks.Owner ~= USSR or SovietWarFactory.IsDead or SovietWarFactory.Owner ~= USSR then
-		return
-	end
-
-	if DateTime.GameTime  >= AdvancedAttackSquadStart[Difficulty] then
-		attackSquad = AdvancedAttackSquadUnits[Difficulty]
-	else
-		attackSquad = BasicAttackSquadUnits
-	end
-
-	USSR.Build(attackSquad, function(units)
-		SendAttackSquad(units)
-		Trigger.AfterDelay(AttackSquadInterval[Difficulty], ProduceAttackSquad)
-	end)
-end
-
-SendAttackSquad = function(units)
-	Utils.Do(units, function(unit)
-		IdleHunt(unit)
-	end)
-
-	local attackPath = Utils.Random(AttackPaths)
-
-	Utils.Do(units, function(unit)
-		if not unit.IsDead then
-			unit.Patrol(attackPath, true, 50)
-		end
-	end)
 end
 
 ScrinInvasion = function()
@@ -290,7 +364,6 @@ ScrinInvasion = function()
 			Trigger.AfterDelay(5, function()
 				AssaultPlayerBase(unit)
 			end)
-			IdleHunt(unit)
 		end)
 	end)
 
@@ -311,7 +384,6 @@ CreateScrinVehicles = function()
 			Trigger.AfterDelay(5, function()
 				AssaultPlayerBase(unit)
 			end)
-			IdleHunt(unit)
 		end)
 	end)
 
@@ -340,7 +412,7 @@ InterdimensionalCrossrip = function()
 		Greece.MarkCompletedObjective(CaptureOrDestroyChronosphere)
 	end
 
-	DateTime.TimeLimit = DateTime.Seconds(EvacuationTime[Difficulty])
+	DateTime.TimeLimit = EvacuationTime[Difficulty]
 
 	Trigger.OnTimerExpired(function()
 		if Greece.HasNoRequiredUnits() then
@@ -356,13 +428,13 @@ InterdimensionalCrossrip = function()
 	Actor.Create("flare", true, { Owner = Greece, Location = Evac2.Location })
 	Actor.Create("flare", true, { Owner = Greece, Location = Evac3.Location })
 
-	Trigger.AfterDelay(DateTime.Seconds(EvacuationTime[Difficulty] - 12), function()
+	Trigger.AfterDelay(EvacuationTime[Difficulty] - DateTime.Seconds(12), function()
 		Reinforcements.ReinforceWithTransport(Greece, "nhaw.paradrop", nil, { CPos.New(Evac1.Location.X - 10, Evac1.Location.Y + 15), CPos.New(Evac1.Location.X, Evac1.Location.Y - 1) })
 		Reinforcements.ReinforceWithTransport(Greece, "nhaw.paradrop", nil, { CPos.New(Evac2.Location.X - 10, Evac2.Location.Y + 15), CPos.New(Evac2.Location.X, Evac2.Location.Y - 1) })
 		Reinforcements.ReinforceWithTransport(Greece, "nhaw.paradrop", nil, { CPos.New(Evac2.Location.X - 10, Evac3.Location.Y + 15), CPos.New(Evac3.Location.X, Evac3.Location.Y - 1) })
 	end)
 
-	Trigger.AfterDelay(DateTime.Seconds(EvacuationTime[Difficulty]) - DateTime.Seconds(30), SendDevastators)
+	Trigger.AfterDelay(EvacuationTime[Difficulty] - DateTime.Seconds(40), SendDevastators)
 end
 
 SpawnTibTree = function()
@@ -395,11 +467,15 @@ end
 
 AssaultPlayerBase = function(actor)
 	if not actor.IsDead then
-		actor.AttackMove(CPos.New(18,41), 2)
+		if Utils.RandomInteger(0,2) == 1 then
+			actor.AttackMove(AttackWaypoint4.Location)
+		end
+		actor.AttackMove(AttackWaypoint5.Location)
 	end
+	IdleHunt(actor)
 end
 
-DoHaloDrop = function(entryPath)
+DoHaloDrop = function(entryPaths)
 	if crossRipped then
 		return
 	end
@@ -409,11 +485,16 @@ DoHaloDrop = function(entryPath)
 		haloDropUnits = { "e1", "e1", "e1", "e1", "e2", "e2", "e3", "e3", "e4", "shok" }
 	end
 
+	local entryPath = Utils.Random(entryPaths)
+
 	Reinforcements.ReinforceWithTransport(USSR, "halo.paradrop", haloDropUnits, entryPath, nil, function(transport, cargo)
 		if not transport.IsDead then
 			transport.UnloadPassengers()
-			Utils.Do(cargo, IdleHunt)
-
+			Trigger.AfterDelay(DateTime.Seconds(5), function()
+				Utils.Do(cargo, function(a)
+					AssaultPlayerBase(a)
+				end)
+			end)
 			Trigger.AfterDelay(DateTime.Seconds(5), function()
 				if not transport.IsDead then
 					transport.Move(entryPath[1])
@@ -428,7 +509,7 @@ DoHaloDrop = function(entryPath)
 	end)
 
 	Trigger.AfterDelay(HaloDropInterval[Difficulty], function()
-		DoHaloDrop(entryPath)
+		DoHaloDrop(entryPaths)
 	end)
 end
 
@@ -444,7 +525,6 @@ DoNavalDrop = function()
 	Utils.Do(raiders, function(a)
 		Trigger.OnAddedToWorld(a, function()
 			AssaultPlayerBase(a)
-			IdleHunt(a)
 		end)
 	end)
 
@@ -452,11 +532,14 @@ DoNavalDrop = function()
 end
 
 SendDevastators = function()
-	local units = Reinforcements.Reinforce(Scrin, { "deva", "deva", "deva" }, { CPos.New(WestHaloDrop.Location.X - 25, WestHaloDrop.Location.Y - 25) }, 5)
+	local deva1 = Reinforcements.Reinforce(Scrin, { "deva" }, { DevastatorSpawn1.Location, DevastatorDestination1.Location })
+	local deva2 = Reinforcements.Reinforce(Scrin, { "deva" }, { DevastatorSpawn2.Location, DevastatorDestination2.Location })
+	local deva3 = Reinforcements.Reinforce(Scrin, { "deva" }, { DevastatorSpawn3.Location, DevastatorDestination3.Location })
+	local units = { deva1[1], deva2[1], deva3[1] }
+
 	Utils.Do(units, function(unit)
 		Trigger.AfterDelay(5, function()
 			AssaultPlayerBase(unit)
 		end)
-		IdleHunt(unit)
 	end)
 end

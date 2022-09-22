@@ -28,19 +28,6 @@ World:
 Player:
 	PlayerResources:
 		DefaultCash: 5000
-	ProvidesPrerequisite@HardBonus:
-		Prerequisite: hard.difficulty
-		Factions: russia
-
-^Infantry:
-	ProductionCostMultiplier@HardBonus:
-		Multiplier: 85
-		Prerequisites: hard.difficulty
-
-^Vehicle-NOUPG:
-	ProductionCostMultiplier@HardBonus:
-		Multiplier: 85
-		Prerequisites: hard.difficulty
 
 E7:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -78,6 +65,10 @@ TRUK:
 HARR:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
+MIG:
+	AutoTarget:
+		InitialStanceAI: HoldFire
+
 SUK:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
@@ -105,7 +96,7 @@ PDOX:
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
 	AnnounceOnSeen:
-		PingOnRadar: true
+		PingRadar: true
 
 PDOX.CROSSRIP:
 	Inherits@1: ^ExistsInWorld
@@ -158,13 +149,6 @@ hazmat.upgrade:
 
 hazmatsoviet.upgrade:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-BARR:
-	GrantConditionOnBotOwner@CampaignAI:
-		Condition: owned-by-ai
-		Bots: campaign
-	Production@MQINF:
-		RequiresCondition: owned-by-ai
 
 TSLA:
 	-Targetable@TeslaBoost:

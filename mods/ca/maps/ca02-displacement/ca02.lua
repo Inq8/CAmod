@@ -28,7 +28,11 @@ ConvoyExits = {
 	{ SecondConvoyPath9.Location, CPos.New(SecondConvoyPath9.Location.X - 1, SecondConvoyPath9.Location.Y), CPos.New(SecondConvoyPath9.Location.X + 1, SecondConvoyPath9.Location.Y) }
 }
 
-ScrinAttackAssemblyLocations = { ScrinAttackAssembly1.Location, ScrinAttackAssembly2.Location, ScrinAttackAssembly3.Location }
+ScrinAttackPaths = {
+	{ ScrinAttackAssembly1.Location, PlayerRefinery.Location },
+	{ ScrinAttackAssembly2.Location, PlayerRefinery.Location },
+	{ ScrinAttackAssembly3.Location, PlayerRefinery.Location }
+}
 
 -- Other Variables
 
@@ -41,41 +45,117 @@ MaxLosses = {
 }
 
 TimeBetweenConvoys = {
-	easy = { DateTime.Minutes(1), DateTime.Minutes(8), DateTime.Minutes(5), DateTime.Minutes(4)  },
-	normal = { DateTime.Minutes(1), DateTime.Minutes(7), DateTime.Minutes(4), DateTime.Minutes(3) },
-	hard = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Seconds(150), DateTime.Minutes(3) }
+	easy = { DateTime.Minutes(1), DateTime.Minutes(8), DateTime.Minutes(4), DateTime.Minutes(4)  },
+	normal = { DateTime.Minutes(1), DateTime.Minutes(7), DateTime.Minutes(3), DateTime.Minutes(3) },
+	hard = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Seconds(150), DateTime.Seconds(150) }
 }
 
-ScrinAttackInterval = {
-	easy = DateTime.Minutes(4),
-	normal = DateTime.Seconds(150),
-	hard = DateTime.Seconds(70)
-}
-
-ScrinAirAttackInterval = {
-	easy = DateTime.Minutes(6),
-	normal = DateTime.Minutes(4),
-	hard = DateTime.Minutes(2)
-}
-
-AdvancedAttackSquadStart = {
-	easy = DateTime.Minutes(20),
-	normal = DateTime.Minutes(15),
+DevastatorsDelay = {
+	normal = DateTime.Minutes(20),
 	hard = DateTime.Minutes(10)
 }
 
-BasicAttackSquadUnits = { "s1", "s1", "s1", "s3", "s3", "intl.ai2", "intl.ai2", "gunw" }
-
-AdvancedAttackSquadUnits = {
-	easy = { "s1", "s1", "s1", "s3", "s3", "intl.ai2", "intl.ai2", "gunw", "gunw", "corr" },
-	normal = { "s1", "s1", "s1", "s1", "s3", "s3", "s4", "intl.ai2", "intl.ai2", "gunw", "corr", "devo" },
-	hard = { "s1", "s1", "s1", "s1", "s1", "s1", "s2", "s3", "s3", "s4", "intl.ai2", "intl.ai2", "gunw", "corr", "devo", "seek", "tpod" }
-}
-
-AirAttackSquadUnits = {
-	easy = { "stmr", "stmr" },
-	normal = { "stmr", "stmr", "stmr" },
-	hard = { "stmr", "stmr", "stmr", "stmr" }
+Squads = {
+	Basic = {
+		Delay = {
+			easy = DateTime.Seconds(210),
+			normal = DateTime.Seconds(140),
+			hard = DateTime.Seconds(70)
+		},
+		Interval = {
+			easy = DateTime.Seconds(150),
+			normal = DateTime.Seconds(100),
+			hard = DateTime.Seconds(50)
+		},
+		QueueProductionStatuses = {
+			Infantry = false,
+			Vehicles = false
+		},
+		IdleUnits = { },
+		ProducerActors = nil,
+		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" } },
+		Units = {
+			easy = {
+				Infantry = { "s1", "s1", "s1", "s3", "s3" },
+				Vehicles = { "intl.ai2", "intl.ai2", "gunw" }
+			},
+			normal = {
+				Infantry = { "s1", "s1", "s1", "s1", "s3", "s3" },
+				Vehicles = { "intl.ai2", "intl.ai2", "gunw" }
+			},
+			hard = {
+				Infantry = { "s1", "s1", "s1", "s1", "s3", "s3", "s4" },
+				Vehicles = { "intl.ai2", "intl.ai2", "gunw", "seek" }
+			}
+		},
+		AttackPaths = ScrinAttackPaths,
+		TransitionTo = {
+			SquadType = "Advanced",
+			GameTime = {
+				easy = DateTime.Minutes(20),
+				normal = DateTime.Minutes(15),
+				hard = DateTime.Minutes(10)
+			}
+		}
+	},
+	Advanced = {
+		Interval = {
+			easy = DateTime.Seconds(150),
+			normal = DateTime.Seconds(100),
+			hard = DateTime.Seconds(50)
+		},
+		QueueProductionStatuses = {
+			Infantry = false,
+			Vehicles = false
+		},
+		IdleUnits = { },
+		ProducerActors = nil,
+		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" } },
+		Units = {
+			easy = {
+				Infantry = { "s1", "s1", "s1", "s3", "s3" },
+				Vehicles = { "intl.ai2", "intl.ai2", "gunw", "gunw", "corr" }
+			},
+			normal = {
+				Infantry = { "s1", "s1", "s1", "s1", "s3", "s3", "s4", "s4" },
+				Vehicles = { "intl.ai2", "intl.ai2", "gunw", "corr", "devo", "seek", "seek" }
+			},
+			hard = {
+				Infantry = { "s1", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "s3", "s3", "s4", "s4" },
+				Vehicles = { "intl.ai2", "intl.ai2", "gunw", "corr", "devo", "seek", "tpod", "seek" }
+			}
+		},
+		AttackPaths = ScrinAttackPaths
+	},
+	Air = {
+		Delay = {
+			easy = DateTime.Minutes(6),
+			normal = DateTime.Minutes(4),
+			hard = DateTime.Minutes(2)
+		},
+		Interval = {
+			easy = DateTime.Minutes(6),
+			normal = DateTime.Minutes(4),
+			hard = DateTime.Minutes(2)
+		},
+		QueueProductionStatuses = {
+			Aircraft = false
+		},
+		IdleUnits = { },
+		ProducerActors = nil,
+		ProducerTypes = { Aircraft = { "grav" } },
+		Units = {
+			easy = {
+				Aircraft = { "stmr", "stmr" }
+			},
+			normal = {
+				Aircraft = { "stmr", "stmr", "stmr" }
+			},
+			hard = {
+				Aircraft = { "stmr", "stmr", "stmr", "stmr" }
+			}
+		}
+	}
 }
 
 -- Setup and Tick
@@ -88,7 +168,6 @@ WorldLoaded = function()
 	Timer = 0
 	TrucksLost = 0
 	NextConvoyIdx = 1
-	PlayerBaseLocation = PlayerRefinery.Location
 
 	InitObjectives(Greece)
 	InitScrin()
@@ -123,9 +202,8 @@ Tick = function()
 end
 
 OncePerSecondChecks = function()
-	if Scrin.Cash < 1000 then
-		Scrin.Cash = 2000
-	end
+	Scrin.Cash = 2500
+	Scrin.Resources = 2500
 
 	if Timer > 0 then
 		if Timer > 25 then
@@ -171,9 +249,9 @@ InitConvoy = function()
 	local nextConvoy = Convoys[NextConvoyIdx]
 
 	-- Spawn and announce flare
-	ConvoyFlare = Actor.Create("flare", true, { Owner = Greece, Location = nextConvoy["FlareWaypoint"].Location })
+	ConvoyFlare = Actor.Create("flare", true, { Owner = Greece, Location = nextConvoy.FlareWaypoint.Location })
 	Media.PlaySpeechNotification(Greece, "SignalFlare")
-	Beacon.New(Greece, nextConvoy["FlareWaypoint"].CenterPosition)
+	Beacon.New(Greece, nextConvoy.FlareWaypoint.CenterPosition)
 
 	-- Set the timer
 	Timer = TimeBetweenConvoys[Difficulty][NextConvoyIdx]
@@ -185,8 +263,8 @@ InitConvoy = function()
 		UpdateConvoyCountdown()
 		Media.PlaySpeechNotification(Greece, "ConvoyApproaching")
 
-		local trucks = Reinforcements.Reinforce(England, ConvoyUnits, nextConvoy["Spawn"], 50, function(truck)
-			Utils.Do(nextConvoy["Path"], function(waypoint)
+		local trucks = Reinforcements.Reinforce(England, ConvoyUnits, nextConvoy.Spawn, 50, function(truck)
+			Utils.Do(nextConvoy.Path, function(waypoint)
 				truck.Move(waypoint)
 			end)
 		end)
@@ -244,93 +322,32 @@ InitScrin = function()
 	SeekerPatroller2.Patrol({ SeekerPatrol1a.Location, SeekerPatrol1b.Location })
 	SeekerPatroller3.Patrol({ SeekerPatrol1a.Location, SeekerPatrol1b.Location })
 
-	Trigger.AfterDelay(ScrinAttackInterval[Difficulty], function()
-		ScrinAttackWave()
+	Trigger.AfterDelay(Squads.Basic.Delay[Difficulty], function()
+		InitAttackSquad(Squads.Basic, Scrin)
 	end)
 
-	Trigger.AfterDelay(ScrinAirAttackInterval[Difficulty], function()
-		ScrinAirAttackWave()
+	Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
+		InitAirAttackSquad(Squads.Air, Scrin, Greece, { "proc", "dome", "atek", "apwr", "ptnk" })
 	end)
 
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
 
-	TargetSwapChance(scrinGroundAttackers, Scrin, 10)
-	CallForHelpOnDamaged(scrinGroundAttackers)
-
-	if Difficulty == "hard" then
-		Trigger.AfterDelay(DateTime.Minutes(20), SendDevastators)
-	end
-end
-
-ScrinAttackWave = function()
-	if DateTime.GameTime >= AdvancedAttackSquadStart[Difficulty] then
-		attackSquad = AdvancedAttackSquadUnits[Difficulty]
-	else
-		attackSquad = BasicAttackSquadUnits
-	end
-
-	Scrin.Build(attackSquad, function(units)
-		Utils.Do(units, function(unit)
-			IdleHunt(unit)
-			Trigger.OnPassengerExited(unit, function(t, p)
-				IdleHunt(p)
-			end)
-		end)
-
-		TargetSwapChance(units, Scrin, 10)
-
-		local assemblyPoint = Utils.Random(ScrinAttackAssemblyLocations)
-
-		Utils.Do(units, function(unit)
-			if not unit.IsDead then
-				unit.AttackMove(assemblyPoint)
-				unit.AttackMove(PlayerBaseLocation)
-			end
-		end)
-
-		Trigger.AfterDelay(ScrinAttackInterval[Difficulty], ScrinAttackWave)
-	end)
-end
-
-ScrinAirAttackWave = function()
-	Scrin.Build(AirAttackSquadUnits[Difficulty], function(units)
-		Utils.Do(units, function(unit)
-			Trigger.OnIdle(unit, function()
-				local target = ChooseRandomBuildingTarget(unit, Greece)
-				if target ~= nil then
-					unit.Attack(target)
-				end
-			end)
-		end)
-
-		local assemblyPoint = Utils.Random(ScrinAttackAssemblyLocations)
-
-		Utils.Do(units, function(unit)
-			unit.AttackMove(assemblyPoint)
-			local target = ChooseRandomBuildingTarget(unit, Greece)
-			if target ~= nil then
-				unit.Attack(target)
-			end
-		end)
+	Utils.Do(scrinGroundAttackers, function(a)
+		TargetSwapChance(a, Scrin, 10)
+		CallForHelpOnDamaged(a, IsScrinGroundHunterUnit)
 	end)
 
-	Trigger.AfterDelay(ScrinAirAttackInterval[Difficulty], ScrinAirAttackWave)
-end
+	if Difficulty ~= "easy" then
+		Trigger.AfterDelay(DevastatorsDelay[Difficulty], SendDevastators)
+	end
 
-CallForHelpOnDamaged = function(actors)
-	Utils.Do(actors, function(actor)
-		Trigger.OnDamaged(actor, function(self, attacker, damage)
-
-			if not self.HasTag("helpCalled") then
-				self.AddTag("helpCalled")
-				local nearbyUnits = Map.ActorsInCircle(self.CenterPosition, WDist.New(5120), IsScrinGroundHunterUnit)
-
-				Utils.Do(nearbyUnits, function(nearbyUnit)
-					if not actor.IsDead and not actor.HasTag("idleHunt") then
-						nearbyUnit.AddTag("idleHunt")
-						IdleHunt(nearbyUnit)
-					end
-				end)
+	local stormriders = Scrin.GetActorsByType("stmr")
+	Utils.Do(stormriders, function(a)
+		Trigger.OnDamaged(a, function()
+			if not a.IsDead and a.AmmoCount == 0 then
+				a.Stop()
+				Trigger.ClearAll(a)
+				InitializeAttackAircraft(a, Greece, { "proc", "dome", "atek", "apwr", "ptnk" })
 			end
 		end)
 	end)
@@ -342,17 +359,19 @@ SendDevastators = function()
 	end
 
 	if not GravityStabilizer2.IsDead and GravityStabilizer2.Owner == Scrin then
-		GravityStabilizer1.Produce("deva")
+		GravityStabilizer2.Produce("deva")
 	end
 
 	Trigger.AfterDelay(DateTime.Seconds(5), function()
-		IdleDevastators = Utils.Where(Scrin.GetActorsByType("deva"), function(actor) return actor.IsIdle end)
-		Utils.Do(IdleDevastators, function(unit)
-			local target = ChooseRandomBuildingTarget(unit, Greece)
-			if target ~= nil then
-				unit.Attack(target)
-				IdleHunt(unit)
+		local devastators = Scrin.GetActorsByType("deva")
+		Utils.Do(devastators, function(unit)
+			if not unit.IsDead then
+				local target = ChooseRandomBuildingTarget(unit, Greece)
+				if target ~= nil then
+					unit.Attack(target)
+				end
 			end
+			IdleHunt(unit)
 		end)
 	end)
 
