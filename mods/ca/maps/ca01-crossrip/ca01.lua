@@ -202,7 +202,6 @@ NavalDropInterval = {
 }
 
 ChronosphereAutoDestructTime = {
-	easy = DateTime.Minutes(30),
 	normal = DateTime.Minutes(24),
 	hard = DateTime.Minutes(18)
 }
@@ -345,11 +344,13 @@ DateTime.Minutes(10)
 	end)
 
 	-- After an amount of time based on difficulty, reveal and auto-destruct the Chronosphere
-	Trigger.AfterDelay(ChronosphereAutoDestructTime[Difficulty], function()
-		AutoChronoCamera = Actor.Create("smallcamera", true, { Owner = Greece, Location = SovietChronosphere.Location })
-		Trigger.AfterDelay(DateTime.Seconds(10), SovietChronosphere.Kill)
-		Trigger.AfterDelay(DateTime.Seconds(15), AutoChronoCamera.Destroy)
-	end)
+	if Difficulty ~= "easy" then
+		Trigger.AfterDelay(ChronosphereAutoDestructTime[Difficulty], function()
+			AutoChronoCamera = Actor.Create("smallcamera", true, { Owner = Greece, Location = SovietChronosphere.Location })
+			Trigger.AfterDelay(DateTime.Seconds(10), SovietChronosphere.Kill)
+			Trigger.AfterDelay(DateTime.Seconds(15), AutoChronoCamera.Destroy)
+		end)
+	end
 
 	AutoRepairBuildings(USSR)
 end

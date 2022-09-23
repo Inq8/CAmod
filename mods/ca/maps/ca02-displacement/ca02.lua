@@ -92,9 +92,9 @@ Squads = {
 		TransitionTo = {
 			SquadType = "Advanced",
 			GameTime = {
-				easy = DateTime.Minutes(20),
-				normal = DateTime.Minutes(15),
-				hard = DateTime.Minutes(10)
+				easy = DateTime.Minutes(15),
+				normal = DateTime.Minutes(10),
+				hard = DateTime.Minutes(8)
 			}
 		}
 	},
@@ -327,7 +327,7 @@ InitScrin = function()
 	end)
 
 	Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Air, Scrin, Greece, { "proc", "dome", "atek", "apwr", "ptnk" })
+		InitAirAttackSquad(Squads.Air, Scrin, Greece, { "proc", "dome", "atek", "apwr", "ptnk", "heli", "harr" })
 	end)
 
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
@@ -347,7 +347,7 @@ InitScrin = function()
 			if not a.IsDead and a.AmmoCount == 0 then
 				a.Stop()
 				Trigger.ClearAll(a)
-				InitializeAttackAircraft(a, Greece, { "proc", "dome", "atek", "apwr", "ptnk" })
+				InitializeAttackAircraft(a, Greece, { "proc", "dome", "atek", "apwr", "ptnk", "heli", "harr" })
 			end
 		end)
 	end)
