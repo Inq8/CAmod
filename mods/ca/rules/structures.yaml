@@ -1377,6 +1377,7 @@ WEAP:
 		RequiresCondition: !being-captured
 		SpawnOffset: 213,-128,0
 		ExitCell: 1,2
+	TracksCapturedFaction:
 	ValidFactions:
 		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
 	ProvidesPrerequisite@any:
@@ -1471,6 +1472,7 @@ FACT:
 		BuildPaletteOrder: 1000
 		Prerequisites: ~disabled
 		Description: Produces structures.
+	TracksCapturedFaction:
 	ValidFactions:
 		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
 	ProvidesPrerequisite@ra:
@@ -2273,6 +2275,8 @@ NPWR:
 		Weapon: CrateNuke
 		EmptyWeapon: CrateNuke
 	ProvidesPrerequisite@buildingname:
+	ValidFactions:
+		Factions: russia, ukraine, iraq, yuri
 	ProvidesPrerequisiteValidatedFaction@iraq:
 		Factions: iraq
 		Prerequisite: npwr.iraq
@@ -2487,32 +2491,34 @@ BARR:
 		SpawnOffset: -725,640,0
 		ExitCell: 2,2
 		Priority: 0
+	ValidFactions:
+		Factions: russia, ukraine, iraq, yuri
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@human:
 		Prerequisite: infantry.human
 	ProvidesPrerequisite@infantryra:
 		Prerequisite: infantry.ra
-	ProvidesPrerequisite@russia:
+	ProvidesPrerequisiteValidatedFaction@russia:
 		Factions: russia
 		Prerequisite: infantry.russia
-	ProvidesPrerequisite@ukraine:
+	ProvidesPrerequisiteValidatedFaction@ukraine:
 		Factions: ukraine
 		Prerequisite: infantry.ukraine
-	ProvidesPrerequisite@iraq:
+	ProvidesPrerequisiteValidatedFaction@iraq:
 		Factions: iraq
 		Prerequisite: infantry.iraq
-	ProvidesPrerequisite@yuri:
+	ProvidesPrerequisiteValidatedFaction@yuri:
 		Factions: yuri
 		Prerequisite: infantry.yuri
-	ProvidesPrerequisite@e2:
+	ProvidesPrerequisiteValidatedFaction@e2:
 		Factions: russia, iraq, yuri
 		Prerequisite: infantry.e2
 	ProvidesPrerequisite@thf:
 		Prerequisite: infantry.thf
 	ProvidesPrerequisite@dog:
 		Prerequisite: infantry.dog
-	ProvidesPrerequisite@boris:
+	ProvidesPrerequisiteValidatedFaction@boris:
 		Factions: russia, iraq, ukraine
 		Prerequisite: infantry.boris
 	Power:
@@ -2635,22 +2641,24 @@ TENT:
 		SpawnOffset: -725,640,0
 		ExitCell: 2,2
 		Priority: 0
+	ValidFactions:
+		Factions: england, germany, france, usa
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@human:
 		Prerequisite: infantry.human
 	ProvidesPrerequisite@infantryra:
 		Prerequisite: infantry.ra
-	ProvidesPrerequisite@england:
+	ProvidesPrerequisiteValidatedFaction@england:
 		Factions: england
 		Prerequisite: infantry.england
-	ProvidesPrerequisite@france:
+	ProvidesPrerequisiteValidatedFaction@france:
 		Factions: france
 		Prerequisite: infantry.france
-	ProvidesPrerequisite@germany:
+	ProvidesPrerequisiteValidatedFaction@germany:
 		Factions: germany
 		Prerequisite: infantry.germany
-	ProvidesPrerequisite@usa:
+	ProvidesPrerequisiteValidatedFaction@usa:
 		Factions: usa
 		Prerequisite: infantry.usa
 	ProvidesPrerequisite@mech:
@@ -3066,22 +3074,24 @@ PYLE:
 		SpawnOffset: -725,640,0
 		ExitCell: 2,2
 		Priority: 0
+	ValidFactions:
+		Factions: talon, zocom, eagle, arc
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@human:
 		Prerequisite: infantry.human
 	ProvidesPrerequisite@infantrytd:
 		Prerequisite: infantry.td
-	ProvidesPrerequisite@talon:
+	ProvidesPrerequisiteValidatedFaction@talon:
 		Factions: talon
 		Prerequisite: infantry.talon
-	ProvidesPrerequisite@zocom:
+	ProvidesPrerequisiteValidatedFaction@zocom:
 		Factions: zocom
 		Prerequisite: infantry.zocom
-	ProvidesPrerequisite@eagle:
+	ProvidesPrerequisiteValidatedFaction@eagle:
 		Factions: eagle
 		Prerequisite: infantry.eagle
-	ProvidesPrerequisite@arc:
+	ProvidesPrerequisiteValidatedFaction@arc:
 		Factions: arc
 		Prerequisite: infantry.arc
 	ProvidesPrerequisite@medi:
@@ -3161,22 +3171,24 @@ HAND:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
+	ValidFactions:
+		Factions: blackh, marked, legion, shadow
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@human:
 		Prerequisite: infantry.human
 	ProvidesPrerequisite@infantrytd:
 		Prerequisite: infantry.td
-	ProvidesPrerequisite@blackh:
+	ProvidesPrerequisiteValidatedFaction@blackh:
 		Factions: blackh
 		Prerequisite: infantry.blackh
-	ProvidesPrerequisite@marked:
+	ProvidesPrerequisiteValidatedFaction@marked:
 		Factions: marked
 		Prerequisite: infantry.marked
-	ProvidesPrerequisite@legion:
+	ProvidesPrerequisiteValidatedFaction@legion:
 		Factions: legion
 		Prerequisite: infantry.legion
-	ProvidesPrerequisite@shadow:
+	ProvidesPrerequisiteValidatedFaction@shadow:
 		Factions: shadow
 		Prerequisite: infantry.shadow
 	ProvidesPrerequisite@mech:
@@ -3235,6 +3247,7 @@ WEAP.TD:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
+	TracksCapturedFaction:
 	ValidFactions:
 		Factions: talon, zocom, eagle, arc, legion
 	ProvidesPrerequisite@any:
@@ -3385,6 +3398,7 @@ AIRS:
 		SpawnType: ClosestEdgeToDestination
 		ProportionalSpeed: true
 		RequiresCondition: global-multiqueue
+	TracksCapturedFaction:
 	ValidFactions:
 		Factions: blackh, marked, shadow
 	ProvidesPrerequisite@any:
@@ -3677,6 +3691,7 @@ AFAC:
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
+	TracksCapturedFaction:
 	ValidFactions:
 		Factions: talon, zocom, eagle, arc, blackh, marked, legion, shadow
 	ProvidesPrerequisite@td:

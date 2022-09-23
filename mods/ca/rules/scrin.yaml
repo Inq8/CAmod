@@ -3244,6 +3244,7 @@ SFAC:
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
+	TracksCapturedFaction:
 	ValidFactions:
 		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite@scrin:
@@ -3498,20 +3499,22 @@ PORT:
 		SpawnOffset: 256,512,0
 		ExitCell: 2,2
 		Priority: 0
+	ValidFactions:
+		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@scrin:
 		Prerequisite: infantry.scrin
-	ProvidesPrerequisite@reaper:
+	ProvidesPrerequisiteValidatedFaction@reaper:
 		Factions: reaper
 		Prerequisite: infantry.reaper
-	ProvidesPrerequisite@traveler:
+	ProvidesPrerequisiteValidatedFaction@traveler:
 		Factions: traveler
 		Prerequisite: infantry.traveler
-	ProvidesPrerequisite@harbinger:
+	ProvidesPrerequisiteValidatedFaction@harbinger:
 		Factions: harbinger
 		Prerequisite: infantry.harbinger
-	ProvidesPrerequisite@collector:
+	ProvidesPrerequisiteValidatedFaction@collector:
 		Factions: collector
 		Prerequisite: infantry.collector
 	Power:
@@ -3569,6 +3572,7 @@ WSPH:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
+	TracksCapturedFaction:
 	ValidFactions:
 		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite@any:
@@ -4233,6 +4237,8 @@ MANI:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
+	ValidFactions:
+		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisiteValidatedFaction@collector:
 		Factions: collector
 		Prerequisite: mani.collector
