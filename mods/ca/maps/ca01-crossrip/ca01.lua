@@ -54,21 +54,21 @@ Squads = {
 				Vehicles = { "3tnk", "btr" }
 			},
 			normal = {
-				Infantry = { "e1", "e1", "e1", "e2", "e3", "e4" },
-				Vehicles = { "3tnk", "btr" }
+				Infantry = { "e1", "e1", "e1", "e1", "e2", "e3", "e4" },
+				Vehicles = { "3tnk", "btr.ai", "btr" }
 			},
 			hard = {
-				Infantry = { "e1", "e1", "e1", "e2", "e3", "e4" },
-				Vehicles = { "3tnk", "btr" }
+				Infantry = { "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e3", "e4" },
+				Vehicles = { "3tnk", "btr.ai", "3tnk" }
 			}
 		},
 		AttackPaths = SovietAttackPaths,
 		TransitionTo = {
 			SquadType = "Advanced",
 			GameTime = {
-				easy = DateTime.Minutes(15),
-				normal = DateTime.Minutes(10),
-				hard = DateTime.Minutes(7)
+				easy = DateTime.Minutes(12),
+				normal = DateTime.Minutes(9),
+				hard = DateTime.Minutes(6)
 			}
 		}
 	},
@@ -89,7 +89,7 @@ Squads = {
 		Units = {
 			easy = {
 				Infantry = { "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e3", "e4" },
-				Vehicles = { "4tnk", "btr" }
+				Vehicles = { "4tnk", "btr.ai" }
 			},
 			normal = {
 				Infantry = { "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e3", "e4" },
@@ -97,7 +97,7 @@ Squads = {
 			},
 			hard = {
 				Infantry = { "e1", "e1", "e3", "shok", "e1", "shok", "e1", "e2", "e3", "e3", "e4" },
-				Vehicles = { "3tnk", "4tnk", "btr", "katy", "ttra" }
+				Vehicles = { "3tnk", "4tnk", "btr.ai", "katy", "ttra" }
 			}
 		},
 		AttackPaths = SovietAttackPaths
@@ -117,7 +117,7 @@ Squads = {
 		Units = {
 			easy = { Infantry = { "e1", "e2", "e3", "e4" } },
 			normal = { Infantry = { "e1", "e2", "e3", "e4" } },
-			hard = { Infantry = { "e1", "e2", "e3", "e4" } }
+			hard = { Infantry = { "e1", "e2", "e3", "e4", "e4", "shok" } }
 		},
 		AttackPaths = {
 			{ AttackWaypoint4.Location, AttackWaypoint5.Location }
@@ -148,7 +148,7 @@ Squads = {
 				Aircraft = { "mig", "mig" }
 			},
 			hard = {
-				Aircraft = { "mig", "mig" }
+				Aircraft = { "mig", "mig", "mig" }
 			}
 		}
 	}
@@ -202,8 +202,8 @@ NavalDropInterval = {
 }
 
 ChronosphereAutoDestructTime = {
-	normal = DateTime.Minutes(24),
-	hard = DateTime.Minutes(18)
+	normal = DateTime.Minutes(35),
+	hard = DateTime.Minutes(25)
 }
 
 -- Setup and Tick
@@ -349,6 +349,15 @@ DateTime.Minutes(10)
 			AutoChronoCamera = Actor.Create("smallcamera", true, { Owner = Greece, Location = SovietChronosphere.Location })
 			Trigger.AfterDelay(DateTime.Seconds(10), SovietChronosphere.Kill)
 			Trigger.AfterDelay(DateTime.Seconds(15), AutoChronoCamera.Destroy)
+
+			local sovietGroundAttackers = USSR.GetGroundAttackers()
+			Utils.Do(sovietGroundAttackers, function(a)
+				Trigger.AfterDelay(Utils.RandomInteger(5,250), function()
+					if not a.IsDead then
+						a.Kill()
+					end
+				end)
+			end)
 		end)
 	end
 

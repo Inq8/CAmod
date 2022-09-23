@@ -130,6 +130,9 @@ AutoRepairBuildings = function(player)
 end
 
 AutoRepairBuilding = function(a, player)
+	if a.IsDead then
+		return
+	end
 	Trigger.OnDamaged(a, function(building)
 		if building.Owner == player and building.Health < (building.MaxHealth * 75 / 100) then
 			building.StartBuildingRepairs()
@@ -218,7 +221,9 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 			Trigger.AfterDelay(DateTime.Seconds(2), function()
 				if squad.AirTargetTypes ~= nil and squad.AirTargetPlayer ~= nil then
 					Utils.Do(squad.IdleUnits, function(a)
-						InitializeAttackAircraft(a, squad.AirTargetPlayer, squad.AirTargetTypes)
+						if not a.IsDead and a.IsInWorld then
+							InitializeAttackAircraft(a, squad.AirTargetPlayer, squad.AirTargetTypes)
+						end
 					end)
 					squad.IdleUnits = { }
 				else
@@ -267,7 +272,7 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 				Trigger.OnProduction(producer, function(p, produced)
 					squad.IdleUnits[#squad.IdleUnits + 1] = produced
 
-					if produced.HasProperty("HasPassengers") then
+					if produced.HasProperty("HasPassengers") and not produced.IsDead then
 						Trigger.OnPassengerExited(produced, function(t, p)
 							IdleHunt(p)
 						end)
@@ -309,14 +314,12 @@ end
 
 SendAttackSquad = function(squad)
 	Utils.Do(squad.IdleUnits, function(a)
-
-		if not a.IsDead then
+		if not a.IsDead and a.IsInWorld then
 			if squad.AttackPaths ~= nil then
 				a.Patrol(Utils.Random(squad.AttackPaths), false)
 			end
 		end
 		IdleHunt(a)
-
 	end)
 	squad.IdleUnits = { }
 end

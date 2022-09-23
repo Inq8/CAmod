@@ -45,9 +45,9 @@ MaxLosses = {
 }
 
 TimeBetweenConvoys = {
-	easy = { DateTime.Minutes(1), DateTime.Minutes(8), DateTime.Minutes(4), DateTime.Minutes(4)  },
-	normal = { DateTime.Minutes(1), DateTime.Minutes(7), DateTime.Minutes(3), DateTime.Minutes(3) },
-	hard = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Seconds(150), DateTime.Seconds(150) }
+	easy = { DateTime.Minutes(1), DateTime.Minutes(8), DateTime.Minutes(3), DateTime.Minutes(4)  },
+	normal = { DateTime.Minutes(1), DateTime.Minutes(7), DateTime.Seconds(150), DateTime.Minutes(3) },
+	hard = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Seconds(90), DateTime.Seconds(150) }
 }
 
 DevastatorsDelay = {
@@ -64,8 +64,8 @@ Squads = {
 		},
 		Interval = {
 			easy = DateTime.Seconds(150),
-			normal = DateTime.Seconds(100),
-			hard = DateTime.Seconds(50)
+			normal = DateTime.Seconds(95),
+			hard = DateTime.Seconds(40)
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -101,8 +101,8 @@ Squads = {
 	Advanced = {
 		Interval = {
 			easy = DateTime.Seconds(150),
-			normal = DateTime.Seconds(100),
-			hard = DateTime.Seconds(50)
+			normal = DateTime.Seconds(80),
+			hard = DateTime.Seconds(20)
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
