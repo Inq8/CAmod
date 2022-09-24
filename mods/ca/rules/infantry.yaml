@@ -331,9 +331,8 @@ U3:
 	Mobile:
 		Speed: 41
 		Voice: Move
-		PauseOnCondition: !undeployed
+		PauseOnCondition: !undeployed || being-warped
 		RequireForceMoveCondition: !undeployed
-		BlockedCursor: move
 	Armament@PRIMARY:
 		Weapon: M14
 		LocalOffset: 0,0,400
@@ -625,19 +624,20 @@ E6:
 		Name: deployedbody
 		Sequence: idle-deployed
 		RequiresCondition: !undeployed && !parachute && !being-warped && !setting-up
-	WithMakeAnimation:
+	WithMakeAnimation@SETUP:
 		BodyNames: setupbody
+		Sequence: deploy
+	WithMakeAnimation@DEPLOYED:
+		BodyNames: deployedbody
 		Sequence: deploy
 	GrantConditionOnDeploy:
 		DeployedCondition: deployed
 		UndeployedCondition: undeployed
-		AllowedTerrainTypes: Clear, Road, Rough, Ore, Gems, Tiberium, BlueTiberium
 		DeploySounds: igidepa.aud, igidepb.aud
 		UndeploySounds: igidepa.aud, igidepb.aud
 		UndeployOnMove: true
-		UndeployOnPickup: true
 		PauseOnCondition: being-warped
-		SmartDeploy: True
+		SmartDeploy: true
 		RequiresCondition: !parachute && entrench-upgrade
 	GrantTimedCondition@SETUP:
 		Condition: setting-up
@@ -1006,8 +1006,8 @@ HACK:
 	Mobile:
 		Speed: 60
 		Voice: Move
-		PauseOnCondition: !undeployed && being-warped
-		RequireForceMoveCondition: !undeployed
+		PauseOnCondition: hacking || being-warped
+		RequireForceMoveCondition: hacking
 	RevealsShroud:
 		Range: 5c0
 	Passenger:
@@ -1052,7 +1052,7 @@ HACK:
 		UndeployedCondition: undeployed
 		UndeployOnMove: true
 		UndeployOnPickup: true
-		SmartDeploy: True
+		SmartDeploy: true
 	DeployOnAttack:
 		RequiresCondition: undeployed
 	MindController:
@@ -1064,6 +1064,7 @@ HACK:
 		InitSoundControllerOnly: true
 		ControlSounds: hacker-hacked.aud
 		ControllingCondition: hacked-in
+		ProgressCondition: hacking
 		UndeployOnControl: true
 	WithDecoration@HACKEDIN:
 		Image: hacking
@@ -2656,7 +2657,6 @@ E8:
 		HP: 22500
 	Mobile:
 		Voice: Move
-		PauseOnCondition: !undeployed && being-warped
 	RevealsShroud:
 		Range: 5c0
 	Armament@PRIMARY:
