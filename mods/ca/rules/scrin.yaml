@@ -2258,64 +2258,56 @@ DEVA:
 		Weapon: DevastatorDiscs
 		LocalOffset: 500,0,0
 		RequiresCondition: !stellar-upgrade
-	Armament@CHARGINGUPG:
-		Name: charge
-		Weapon: DevastatorTorpedoCharge
-		LocalOffset: 500,0,0
-		PauseOnCondition: cooldown
-		RequiresCondition: stellar-upgrade
 	Armament@PRIMARYUPG:
+		Name: primary-upg
 		Weapon: DevastatorTorpedo
-		PauseOnCondition: !ammo
 		LocalOffset: 500,0,0
 		RequiresCondition: stellar-upgrade
-		ReloadingCondition: cooldown
 	AmbientSound@CHARGE:
-		RequiresCondition: charging && !ammo
+		RequiresCondition: charging
 		SoundFiles: plasmatorpcharge.aud
 	WithIdleOverlay@CHARGE1:
 		Image: deva
 		Sequence: charge1
 		Palette: scrin
 		Offset: 500,0,0
-		RequiresCondition: charging == 1 && !ammo
+		RequiresCondition: charging == 1
 	WithIdleOverlay@CHARGE2:
 		Image: deva
 		Sequence: charge2
 		Palette: scrin
 		Offset: 500,0,0
-		RequiresCondition: charging == 2 && !ammo
+		RequiresCondition: charging == 2
 	WithIdleOverlay@CHARGE3:
 		Image: deva
 		Sequence: charge3
 		Palette: scrin
 		Offset: 500,0,0
-		RequiresCondition: charging > 2 && !ammo
-	GrantConditionOnAttack@CHARGE:
-		Condition: charging
-		ArmamentNames: charge
-		MaximumInstances: 3
-		RevokeDelay: 34
-		IsCyclic: true
-	AmmoPool@CHARGE:
-		Ammo: 3
-		InitialAmmo: 0
-		AmmoCondition: ammo
-	ReloadAmmoPoolCA@CHARGE:
-		Delay: 99
-		Count: 3
-		ShowSelectionBar: true
-		SelectionBarColor: cc33ff
-		RequiresCondition: charging && !ammo
+		RequiresCondition: charging > 2
 	GrantConditionOnPrerequisite@STELLAR:
 		Condition: stellar-upgrade
 		Prerequisites: stellar.upgrade
 	AttackFrontal:
-		Armaments: primary, charge
+		Armaments: primary
 		FacingTolerance: 40
 		ForceFireIgnoresActors: True
 		TargetFrozenActors: True
 		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !stellar-upgrade
+	AttackFrontalCharged:
+		Armaments: primary-upg
+		FacingTolerance: 40
+		ForceFireIgnoresActors: True
+		TargetFrozenActors: True
+		ChargeLevel: 100
+		DischargeRate: 100
+		ChargingCondition: charging
+		ConditionChargeLevels: 1, 34, 67
+		ShotsPerCharge: 3
+		ShowSelectionBar: true
+		SelectionBarColor: cc33ff
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: stellar-upgrade
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 768

@@ -1523,11 +1523,12 @@ A10:
 		InvalidTargets: NoAutoTarget
 	UpgradeableTo:
 		Actors: a10.upg
-	ReloadAmmoPool@NOSIDEWINDERS:
+	ReloadAmmoPoolCA@NOSIDEWINDERS:
 		Delay: 25
 		Count: -4
 		AmmoPool: secondary
 		RequiresCondition: !resupplied-with-sidewinders && ammo2
+		ShowSelectionBar: false
 	GrantConditionOnResupply:
 		Condition: resupplied-with-sidewinders
 		GrantPermanently: true
@@ -1554,7 +1555,7 @@ A10.UPG:
 	-UpgradeableTo:
 	WithAmmoPipsDecoration@SECONDARY:
 		-RequiresCondition:
-	-ReloadAmmoPool@NOSIDEWINDERS:
+	-ReloadAmmoPoolCA@NOSIDEWINDERS:
 	-GrantConditionOnResupply:
 
 A10.bomber:
