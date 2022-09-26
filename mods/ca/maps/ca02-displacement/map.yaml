@@ -24,6 +24,11 @@ Players:
 		OwnsWorld: True
 		NonCombatant: True
 		Faction: england
+	PlayerReference@Creeps:
+		Name: Creeps
+		NonCombatant: True
+		Faction: england
+		Enemies: USSR, Greece, England, Scrin
 	PlayerReference@Greece:
 		Name: Greece
 		AllowBots: False
@@ -35,26 +40,26 @@ Players:
 		Color: AEBEFD
 		LockSpawn: True
 		LockTeam: True
-		Enemies: Scrin
+		Enemies: Scrin, Creeps
 	PlayerReference@Scrin:
 		Name: Scrin
 		Bot: campaign
 		Faction: reaper
 		Color: 7700FF
-		Enemies: Greece, England, USSR
+		Enemies: Greece, England, USSR, Creeps
 	PlayerReference@England:
 		Name: England
 		Bot: campaign
 		Faction: england
 		Color: A1EF8C
 		Allies: Greece
-		Enemies: Scrin
+		Enemies: Scrin, Creeps
 	PlayerReference@USSR:
 		Name: USSR
 		Bot: campaign
 		Faction: russia
 		Color: FE1100
-		Enemies: Scrin
+		Enemies: Scrin, Creeps
 
 Actors:
 	Actor21: v02
