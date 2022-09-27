@@ -169,21 +169,30 @@ TargetSwapChance = function(unit, player, chance)
 	end)
 end
 
-CallForHelpOnDamaged = function(actor, filter)
+CallForHelpOnDamagedOrKilled = function(actor, filter)
 	Trigger.OnDamaged(actor, function(self, attacker, damage)
-
-		if not self.HasTag("helpCalled") then
-			self.AddTag("helpCalled")
-			local nearbyUnits = Map.ActorsInCircle(self.CenterPosition, WDist.New(5120), filter)
-
-			Utils.Do(nearbyUnits, function(nearbyUnit)
-				if not actor.IsDead and not actor.HasTag("idleHunt") then
-					nearbyUnit.AddTag("idleHunt")
-					IdleHunt(nearbyUnit)
-				end
-			end)
-		end
+		CallForHelp(self, filter)
 	end)
+	Trigger.OnKilled(actor, function(self, killer)
+		CallForHelp(self, filter)
+	end)
+end
+
+CallForHelp = function(self, filter)
+	if not self.HasTag("helpCalled") then
+		if not self.IsDead then
+			self.AddTag("helpCalled")
+		end
+
+		local nearbyUnits = Map.ActorsInCircle(self.CenterPosition, WDist.New(5120), filter)
+
+		Utils.Do(nearbyUnits, function(nearbyUnit)
+			if not actor.IsDead and not actor.HasTag("idleHunt") then
+				nearbyUnit.AddTag("idleHunt")
+				IdleHunt(nearbyUnit)
+			end
+		end)
+	end
 end
 
 --- Attack squad functionality, requires Squads object to be defined properly in the mission script file

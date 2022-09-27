@@ -334,7 +334,7 @@ InitScrin = function()
 
 	Utils.Do(scrinGroundAttackers, function(a)
 		TargetSwapChance(a, Scrin, 10)
-		CallForHelpOnDamaged(a, IsScrinGroundHunterUnit)
+		CallForHelpOnDamagedOrKilled(a, IsScrinGroundHunterUnit)
 	end)
 
 	if Difficulty ~= "easy" then
