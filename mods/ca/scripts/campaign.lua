@@ -17,16 +17,18 @@ BuildTimeMultipliers = {
 
 InitObjectives = function(player)
 	Trigger.OnObjectiveAdded(player, function(p, id)
-		Media.DisplayMessage(p.GetObjectiveDescription(id), "New " .. string.lower(p.GetObjectiveType(id)) .. " objective")
+		Trigger.AfterDelay(1, function()
+			Media.DisplayMessage(p.GetObjectiveDescription(id), "New " .. string.lower(p.GetObjectiveType(id)) .. " objective", HSLColor.Yellow)
+		end)
 	end)
 
 	Trigger.OnObjectiveCompleted(player, function(p, id)
-		Media.DisplayMessage(p.GetObjectiveDescription(id), "Objective completed")
 		Media.PlaySoundNotification(player, "AlertBleep")
+		Media.DisplayMessage(p.GetObjectiveDescription(id), "Objective completed", HSLColor.LimeGreen)
 	end)
 
 	Trigger.OnObjectiveFailed(player, function(p, id)
-		Media.DisplayMessage(p.GetObjectiveDescription(id), "Objective failed")
+		Media.DisplayMessage(p.GetObjectiveDescription(id), "Objective failed", HSLColor.Red)
 	end)
 
 	Trigger.OnPlayerLost(player, function()
@@ -40,6 +42,10 @@ InitObjectives = function(player)
 			Media.PlaySpeechNotification(player, "MissionAccomplished")
 		end)
 	end)
+end
+
+Notification = function(text)
+	Media.DisplayMessage(text, "Notification", HSLColor.FromHex("1E90FF"))
 end
 
 AttackAircraftTargets = { }
@@ -187,7 +193,7 @@ CallForHelp = function(self, filter)
 		local nearbyUnits = Map.ActorsInCircle(self.CenterPosition, WDist.New(5120), filter)
 
 		Utils.Do(nearbyUnits, function(nearbyUnit)
-			if not actor.IsDead and not actor.HasTag("idleHunt") then
+			if not nearbyUnit.IsDead and not nearbyUnit.HasTag("idleHunt") then
 				nearbyUnit.AddTag("idleHunt")
 				IdleHunt(nearbyUnit)
 			end

@@ -165,7 +165,7 @@ WorldLoaded = function()
 	England = Player.GetPlayer("England")
 	Scrin = Player.GetPlayer("Scrin")
 	USSR = Player.GetPlayer("USSR")
-	Timer = 0
+	TimerTicks = 0
 	TrucksLost = 0
 	NextConvoyIdx = 1
 
@@ -205,11 +205,11 @@ OncePerSecondChecks = function()
 	Scrin.Cash = 2500
 	Scrin.Resources = 2500
 
-	if Timer > 0 then
-		if Timer > 25 then
-			Timer = Timer - 25
+	if TimerTicks > 0 then
+		if TimerTicks > 25 then
+			TimerTicks = TimerTicks - 25
 		else
-			Timer = 0
+			TimerTicks = 0
 		end
 		UpdateConvoyCountdown()
 	end
@@ -234,14 +234,18 @@ end
 -- Functions
 
 UpdateConvoyCountdown = function()
-	if Timer == 0 then
+	if TimerTicks == 0 then
 		if Difficulty == "hard" then
-			UserInterface.SetMissionText("Protect the convoy. All trucks must survive." , HSLColor.White)
+			UserInterface.SetMissionText("Protect the convoy. All trucks must survive." , HSLColor.Yellow)
 		else
-			UserInterface.SetMissionText("Protect the convoy. Acceptable losses: " .. TrucksLost .. " / " ..  MaxLosses[Difficulty] , HSLColor.White)
+			if TrucksLost == MaxLosses[Difficulty] then
+				UserInterface.SetMissionText("Protect the convoy. No more trucks can be lost.", HSLColor.Yellow)
+			else
+				UserInterface.SetMissionText("Protect the convoy. Acceptable losses: " .. TrucksLost .. " / " ..  MaxLosses[Difficulty] , HSLColor.Yellow)
+			end
 		end
 	else
-		UserInterface.SetMissionText("Next convoy arrives in " .. Utils.FormatTime(Timer), HSLColor.Yellow)
+		UserInterface.SetMissionText("Next convoy arrives in " .. Utils.FormatTime(TimerTicks), HSLColor.Yellow)
 	end
 end
 
@@ -254,14 +258,15 @@ InitConvoy = function()
 	Beacon.New(Greece, nextConvoy.FlareWaypoint.CenterPosition)
 
 	-- Set the timer
-	Timer = TimeBetweenConvoys[Difficulty][NextConvoyIdx]
+	TimerTicks = TimeBetweenConvoys[Difficulty][NextConvoyIdx]
 	UpdateConvoyCountdown()
 
 	-- Schedule convoy to arrive after timer expires
-	Trigger.AfterDelay(Timer, function()
+	Trigger.AfterDelay(TimerTicks, function()
 		ConvoyFlare.Destroy()
 		UpdateConvoyCountdown()
 		Media.PlaySpeechNotification(Greece, "ConvoyApproaching")
+		Notification("Convoy approaching.")
 
 		local trucks = Reinforcements.Reinforce(England, ConvoyUnits, nextConvoy.Spawn, 50, function(truck)
 			Utils.Do(nextConvoy.Path, function(waypoint)
@@ -275,7 +280,7 @@ InitConvoy = function()
 				Media.PlaySpeechNotification(Greece, "ConvoyUnitLost")
 				Media.PlaySoundNotification(Greece, "AlertBuzzer")
 
-				if Timer == 0 then
+				if TimerTicks == 0 then
 					UpdateConvoyCountdown()
 				end
 

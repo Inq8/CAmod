@@ -212,7 +212,12 @@ WorldLoaded = function()
 	Greece = Player.GetPlayer("Greece")
 	USSR = Player.GetPlayer("USSR")
 	Scrin = Player.GetPlayer("Scrin")
-	EstablishBase = Greece.AddObjective("Establish a base.")
+	TimerTicks = 0
+
+	Trigger.AfterDelay(1, function()
+		EstablishBase = Greece.AddObjective("Establish a base.")
+		UserInterface.SetMissionText("Establish a base.", HSLColor.Yellow)
+	end)
 
 	Trigger.OnKilled(Church, function()
 		Actor.Create("moneycrate", true, { Owner = Greece, Location = Church.Location })
@@ -221,11 +226,12 @@ WorldLoaded = function()
 	Trigger.OnDiscovered(SovietChronosphere, function()
 		if not chronosphereDiscovered then
 			chronosphereDiscovered = true
-			Media.DisplayMessage("Commander, the Soviets have been attempting to reverse engineer stolen Chronosphere technology! Use whatever means necessary to cease their experiments.", "HQ")
+			Notification("Commander, the Soviets have been attempting to reverse engineer stolen Chronosphere technology! Use whatever means necessary to cease their experiments.")
 			if InvestigateArea == nil then
 				InvestigateArea = Greece.AddObjective("Investigate the area.")
 			end
 			CaptureOrDestroyChronosphere = Greece.AddObjective("Capture or destroy the Soviet Chronosphere.")
+			UserInterface.SetMissionText("Capture or destroy the Soviet Chronosphere.", HSLColor.Yellow)
 			Greece.MarkCompletedObjective(InvestigateArea)
 			ChronoCamera = Actor.Create("smallcamera", true, { Owner = Greece, Location = SovietChronosphere.Location })
 
@@ -245,6 +251,7 @@ Tick = function()
 		baseEstablished = true
 		if InvestigateArea == nil then
 			InvestigateArea = Greece.AddObjective("Investigate the area.")
+			UserInterface.SetMissionText(nil)
 		end
 		Greece.MarkCompletedObjective(EstablishBase)
 	end
@@ -267,6 +274,16 @@ OncePerSecondChecks = function()
 		end
 		if DefendUntilEvacuation ~= nil and not Greece.IsObjectiveCompleted(DefendUntilEvacuation) then
 			Greece.MarkFailedObjective(DefendUntilEvacuation)
+		end
+	end
+
+	if TimerTicks > 0 then
+		if TimerTicks > 25 then
+			TimerTicks = TimerTicks - 25
+			UserInterface.SetMissionText("Evacuation begins in " .. Utils.FormatTime(TimerTicks), HSLColor.Yellow)
+		else
+			TimerTicks = 0
+			UserInterface.SetMissionText("Evacuation underway.", HSLColor.Yellow)
 		end
 	end
 
@@ -415,14 +432,14 @@ InterdimensionalCrossrip = function()
 	Trigger.AfterDelay(1, SpawnWormhole)
 	Trigger.AfterDelay(2, SpawnTibTree)
 
-	Media.DisplayMessage("What in God's name!? Fall back to your base, prepare for evacuation. We'll need whatever intel you found to fix .. whatever this is.", "HQ")
+	Notification("What in God's name!? Fall back to your base, prepare for evacuation. We'll need whatever intel you found to fix .. whatever this is.")
 	DefendUntilEvacuation = Greece.AddObjective("Defend your base until evacuation is prepared.")
 
 	if CaptureOrDestroyChronosphere ~= nil then
 		Greece.MarkCompletedObjective(CaptureOrDestroyChronosphere)
 	end
 
-	DateTime.TimeLimit = EvacuationTime[Difficulty]
+	TimerTicks = EvacuationTime[Difficulty]
 
 	Trigger.OnTimerExpired(function()
 		if Greece.HasNoRequiredUnits() then
@@ -432,7 +449,10 @@ InterdimensionalCrossrip = function()
 		end
 	end)
 
-	Trigger.AfterDelay(12, ScrinInvasion)
+	Trigger.AfterDelay(12, function()
+		ScrinInvasion()
+		Media.PlaySpeechNotification(Greece, "TimerStarted")
+	end)
 
 	Actor.Create("flare", true, { Owner = Greece, Location = Evac1.Location })
 	Actor.Create("flare", true, { Owner = Greece, Location = Evac2.Location })
