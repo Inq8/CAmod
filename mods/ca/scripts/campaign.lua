@@ -15,6 +15,18 @@ BuildTimeMultipliers = {
 	hard = 0.8
 }
 
+ConyardTypes = { "fact", "afac", "sfac" }
+
+HarvesterTypes = { "harv", "harv.td", "harv.scrin" }
+
+FactoryTypes = { "weap", "weap.td", "wsph", "airs" }
+
+RefineryTypes = { "proc", "proc.td", "proc.scrin" }
+
+CashRewardOnCaptureTypes = { "proc", "proc.td", "proc.scrin", "silo", "silo.td", "silo.scrin" }
+
+WallTypes = { "sbag", "fenc", "brik", "cycl", "barb" }
+
 InitObjectives = function(player)
 	Trigger.OnObjectiveAdded(player, function(p, id)
 		Trigger.AfterDelay(1, function()
@@ -50,24 +62,24 @@ end
 
 AttackAircraftTargets = { }
 InitializeAttackAircraft = function(aircraft, targetPlayer, targetTypes)
-	Trigger.OnIdle(aircraft, function()
+	Trigger.OnIdle(aircraft, function(self)
 		local actorId = tostring(aircraft)
 		local target = AttackAircraftTargets[actorId]
 
 		if not target or not target.IsInWorld then
 			if targetTypes ~= nil then
-				target = ChooseRandomTargetOfTypes(aircraft, targetPlayer, targetTypes)
+				target = ChooseRandomTargetOfTypes(self, targetPlayer, targetTypes)
 			else
-				target = ChooseRandomTarget(aircraft, targetPlayer)
+				target = ChooseRandomTarget(self, targetPlayer)
 			end
 		end
 
 		if target then
 			AttackAircraftTargets[actorId] = target
-			aircraft.Attack(target)
+			self.Attack(target)
 		else
 			AttackAircraftTargets[actorId] = nil
-			aircraft.ReturnToBase()
+			self.ReturnToBase()
 		end
 	end)
 end
@@ -75,7 +87,7 @@ end
 ChooseRandomTarget = function(unit, targetPlayer)
 	local target = nil
 	local enemies = Utils.Where(targetPlayer.GetActors(), function(self)
-		return self.HasProperty("Health") and unit.CanTarget(self) and not Utils.Any({ "sbag", "fenc", "brik", "cycl", "barb" }, function(type) return self.Type == type end)
+		return self.HasProperty("Health") and unit.CanTarget(self) and not Utils.Any(WallTypes, function(type) return self.Type == type end)
 	end)
 	if #enemies > 0 then
 		target = Utils.Random(enemies)
@@ -97,7 +109,7 @@ end
 ChooseRandomBuildingTarget = function(unit, targetPlayer)
 	local target = nil
 	local enemies = Utils.Where(targetPlayer.GetActors(), function(self)
-		return self.HasProperty("Health") and self.HasProperty("StartBuildingRepairs") and unit.CanTarget(self) and not Utils.Any({ "sbag", "fenc", "brik", "cycl", "barb" }, function(type) return self.Type == type end)
+		return self.HasProperty("Health") and self.HasProperty("StartBuildingRepairs") and unit.CanTarget(self) and not Utils.Any(WallTypes, function(type) return self.Type == type end)
 	end)
 	if #enemies > 0 then
 		target = Utils.Random(enemies)
@@ -114,34 +126,76 @@ end
 -- Make the unit hunt when it becomes idle.
 IdleHunt = function(actor)
 	if actor.HasProperty("Hunt") and not actor.IsDead then
-		Trigger.OnIdle(actor, actor.Hunt)
+		Trigger.OnIdle(actor, function(a)
+			if a.IsInWorld then
+				a.Hunt()
+			end
+		end)
 	end
 end
 
-ClearTriggersStopAndHunt = function(a)
-	if not a.IsDead then
-		Trigger.ClearAll(a)
-		a.Stop()
-		if a.HasProperty("Hunt") then
-			a.Hunt()
-		end
-	end
-end
-
-AutoRepairBuildings = function(player)
+AutoRepairAndRebuildBuildings = function(player)
 	local buildings = Utils.Where(Map.ActorsInWorld, function(self) return self.Owner == player and self.HasProperty("StartBuildingRepairs") end)
 	Utils.Do(buildings, function(a)
 		AutoRepairBuilding(a, player)
+		AutoRebuildBuilding(a, player)
 	end)
 end
 
-AutoRepairBuilding = function(a, player)
-	if a.IsDead then
+AutoRepairBuilding = function(building, player)
+	if building.IsDead then
 		return
 	end
-	Trigger.OnDamaged(a, function(building)
-		if building.Owner == player and building.Health < (building.MaxHealth * 75 / 100) then
-			building.StartBuildingRepairs()
+	Trigger.OnDamaged(building, function(self, attacker, damage)
+		if self.Owner == player and self.Health < (self.MaxHealth * 75 / 100) then
+			self.StartBuildingRepairs()
+		end
+	end)
+end
+
+AutoRebuildBuilding = function(building, player)
+	if building.IsDead then
+		return
+	end
+	Trigger.OnRemovedFromWorld(building, function(self)
+		local buildingType = self.Type
+		local loc = self.Location
+		local pos = self.CenterPosition
+		BuildBuilding(buildingType, player, loc, pos)
+	end)
+end
+
+BuildBuilding = function(buildingType, player, loc, pos)
+	local buildTime = math.ceil(Actor.BuildTime(buildingType) * BuildTimeMultipliers[Difficulty])
+	local randomExtraTime = Utils.RandomInteger(DateTime.Seconds(10), DateTime.Seconds(30))
+
+	Trigger.AfterDelay(buildTime + randomExtraTime, function()
+		if HasConyard(player) then
+			local topLeft = WPos.New(pos.X - 8192, pos.Y - 8192, 0)
+			local bottomRight = WPos.New(pos.X + 8192, pos.Y + 8192, 0)
+			local nearbyBuildings = Map.ActorsInBox(topLeft, bottomRight, function(a)
+				return not a.IsDead and a.Owner == player and a.HasProperty("StartBuildingRepairs")
+			end)
+
+			topLeft = WPos.New(pos.X - 2048, pos.Y - 2048, 0)
+			bottomRight = WPos.New(pos.X + 2048, pos.Y + 2048, 0)
+			local nearbyUnits = Map.ActorsInBox(topLeft, bottomRight, function(a)
+				return not a.IsDead and a.HasProperty("Move")
+			end)
+
+			local nearbyEnemyBuildings = Map.ActorsInBox(topLeft, bottomRight, function(a)
+				return not a.IsDead and a.Owner ~= player and a.HasProperty("StartBuildingRepairs")
+			end)
+
+			-- Rebuild if no units are nearby (potentially blocking), no enemy buildings are nearby, and friendly buildings are in the area
+			if #nearbyBuildings > 0 and #nearbyUnits == 0 and #nearbyEnemyBuildings == 0 then
+				local b = Actor.Create(buildingType, true, { Owner = player, Location = loc })
+				AutoRepairBuilding(b, player);
+				AutoRebuildBuilding(b, player);
+			-- Otherwise retry
+			else
+				BuildBuilding(buildingType, player, loc, pos)
+			end
 		end
 	end)
 end
@@ -214,10 +268,19 @@ InitAttackSquad = function(squad, player)
 		table.insert(queues, k)
 	end
 
-	-- go through each queue for the current difficulty
-	Utils.Do(queues, function(queue)
-		ProduceNextAttackSquadUnit(squad, queue, 1)
-	end)
+	-- make sure ActiveCondition function returns true (if it exists)
+	local isActive = squad.ActiveCondition == nil or squad.ActiveCondition()
+
+	if isActive then
+		-- go through each queue for the current difficulty
+		Utils.Do(queues, function(queue)
+			ProduceNextAttackSquadUnit(squad, queue, 1)
+		end)
+	else
+		Trigger.AfterDelay(squad.Interval[Difficulty], function()
+			InitAttackSquad(squad, player)
+		end)
+	end
 end
 
 InitAirAttackSquad = function(squad, player, targetPlayer, targetTypes)
@@ -300,13 +363,16 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 
 				-- clear the OnProduction trigger as other squads may be produced from the same building
 				Trigger.AfterDelay(1, function()
-					Trigger.ClearAll(producer)
+					if not producer.IsDead then
+						Trigger.ClearAll(producer)
+					end
 				end)
 
 				-- restore repair trigger
 				if producer.HasProperty("StartBuildingRepairs") then
 					Trigger.AfterDelay(2, function()
 						AutoRepairBuilding(producer, squad.Player)
+						AutoRebuildBuilding(producer, squad.Player)
 					end)
 				end
 			end
@@ -328,13 +394,132 @@ IsSquadInProduction = function(squad)
 end
 
 SendAttackSquad = function(squad)
+	local squadLeader = nil
+
 	Utils.Do(squad.IdleUnits, function(a)
-		if not a.IsDead and a.IsInWorld then
-			if squad.AttackPaths ~= nil then
-				a.Patrol(Utils.Random(squad.AttackPaths), false)
+		if squad.AttackPaths ~= nil then
+			local attackPath = Utils.Random(squad.AttackPaths)
+
+			if not a.IsDead and a.IsInWorld then
+				if squad.FollowLeader ~= nil and squad.FollowLeader == true and squadLeader == nil then
+					squadLeader = a;
+				end
+
+				if squadLeader == nil or a == squadLeader or not a.HasProperty("Guard") then
+					a.Patrol(attackPath, false)
+				else
+					a.AttackMove(attackPath[1])
+					a.Guard(squadLeader)
+					Trigger.OnDamaged(squadLeader, function(self, attacker, damage)
+						ClearSquadLeader(a, attackPath[#attackPath])
+					end)
+					Trigger.OnKilled(squadLeader, function(self, killer)
+						ClearSquadLeader(a, attackPath[#attackPath])
+					end)
+					Trigger.OnIdle(squadLeader, function(self)
+						ClearSquadLeader(a, attackPath[#attackPath])
+					end)
+				end
 			end
 		end
 		IdleHunt(a)
 	end)
 	squad.IdleUnits = { }
+end
+
+ClearSquadLeader = function(actor, attackWaypoint)
+	if not actor.IsDead and actor.IsInWorld then
+		Trigger.ClearAll(actor)
+		Trigger.AfterDelay(1, function()
+			IdleHunt(actor)
+			if not actor.IsDead and actor.IsInWorld then
+				actor.Stop()
+				actor.AttackMove(attackWaypoint)
+			end
+		end)
+	end
+end
+
+SetupRefAndSilosCaptureCredits = function(player)
+	local silosAndRefineries = player.GetActorsByTypes(CashRewardOnCaptureTypes)
+	Utils.Do(silosAndRefineries, function(a)
+		Trigger.OnCapture(a, function(self, captor, oldOwner, newOwner)
+			newOwner.Cash = newOwner.Cash + 500
+			Media.FloatingText("+$500", self.CenterPosition, 30, newOwner.Color)
+		end)
+	end)
+end
+
+HasConyard = function(player)
+	local Conyards = player.GetActorsByTypes(ConyardTypes)
+	return #Conyards >= 1
+end
+
+AutoReplaceHarvesters = function(player)
+	Trigger.AfterDelay(DateTime.Seconds(1), function()
+		local harvesters = player.GetActorsByTypes(HarvesterTypes)
+		Utils.Do(harvesters, function(a)
+			AutoReplaceHarvester(player, a)
+		end)
+	end)
+
+	Trigger.OnAnyProduction(function(producer, produced, productionType)
+		if produced.Owner == player then
+			Utils.Do(HarvesterTypes, function(t)
+				if not produced.IsDead and produced.Type == t then
+					local refineries = player.GetActorsByTypes(RefineryTypes)
+					local refinery = Utils.Random(refineries)
+					produced.Move(refinery.Location, 2)
+					produced.FindResources()
+					AutoReplaceHarvester(player, produced)
+				end
+			end)
+		end
+	end)
+end
+
+AutoReplaceHarvester = function(player, harvester)
+	Trigger.OnKilled(harvester, function(self, killer)
+		local harvType = self.Type
+		local buildTime = math.ceil(Actor.BuildTime(harvType) * BuildTimeMultipliers[Difficulty])
+		local randomExtraTime = Utils.RandomInteger(DateTime.Seconds(5), DateTime.Seconds(15))
+
+		Trigger.AfterDelay(buildTime + randomExtraTime, function()
+			local producers = player.GetActorsByTypes(FactoryTypes)
+
+			if #producers > 0 then
+				local producer = Utils.Random(producers)
+				producer.Produce(harvType)
+			end
+		end)
+	end)
+end
+
+DoHelicopterDrop = function(player, entryPath, transportType, units, unitFunc, transportExitFunc)
+	Reinforcements.ReinforceWithTransport(player, transportType, units, entryPath, nil, function(transport, cargo)
+		if not transport.IsDead then
+			transport.UnloadPassengers()
+			if unitFunc ~= nil then
+				Trigger.AfterDelay(DateTime.Seconds(5), function()
+					Utils.Do(cargo, function(a)
+						unitFunc(a)
+					end)
+				end)
+			end
+			if transportExitFunc ~= nil then
+				transportExitFunc(transport)
+			end
+		end
+	end)
+end
+
+DoNavalTransportDrop = function(player, entryPath, exitPath, transportType, units, unitFunc)
+	local cargo = Reinforcements.ReinforceWithTransport(player, transportType, units, entryPath, exitPath)[2]
+	if unitFunc ~= nil then
+		Utils.Do(cargo, function(a)
+			Trigger.OnAddedToWorld(a, function(self)
+				unitFunc(self)
+			end)
+		end)
+	end
 end

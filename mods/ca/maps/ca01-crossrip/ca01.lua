@@ -3,8 +3,14 @@
 SovietBorder = { CPos.New(9,32), CPos.New(10,32), CPos.New(11,32), CPos.New(12,32), CPos.New(13,32), CPos.New(14,32), CPos.New(15,32), CPos.New(16,32), CPos.New(17,32), CPos.New(18,32) }
 SovietMainBaseEntrance = { CPos.New(39,3), CPos.New(39,4), CPos.New(39,5), CPos.New(39,6), CPos.New(39,7), CPos.New(39,8), CPos.New(39,9), CPos.New(39,10), CPos.New(39,11), CPos.New(39,12), CPos.New(39,13) }
 SovietChronosphereLocation = CPos.New(60,25)
-TreesToTransform = { TreeToTransform1, TreeToTransform2, TreeToTransform3, TreeToTransform4 }
 WormholeSpawns = { WormholeSpawn1.Location, WormholeSpawn2.Location, WormholeSpawn3.Location, WormholeSpawn4.Location, WormholeSpawn5.Location }
+
+TreesToTransform = {
+	{ Actor = TreeToTransform1, Location = TreeToTransform1.Location },
+	{ Actor = TreeToTransform2, Location = TreeToTransform2.Location },
+	{ Actor = TreeToTransform3, Location = TreeToTransform3.Location },
+	{ Actor = TreeToTransform4, Location = TreeToTransform4.Location }
+}
 
 SovietAttackPaths = {
 	{ AttackWaypoint1.Location, AttackWaypoint2.Location, AttackWaypoint3.Location, AttackWaypoint5.Location },
@@ -27,132 +33,6 @@ WestPatrolPath = { WestPatrolWaypoint1.Location, WestPatrolWaypoint2.Location }
 -- Other Variables
 
 WestPatrolUnits = { WestPatrolUnit1, WestPatrolUnit2, WestPatrolUnit3, WestPatrolUnit4 }
-
-Squads = {
-	Basic = {
-		Player = nil,
-		Delay = {
-			easy = DateTime.Seconds(130),
-			normal = DateTime.Seconds(100),
-			hard = DateTime.Seconds(70)
-		},
-		Interval = {
-			easy = DateTime.Seconds(30),
-			normal = DateTime.Seconds(20),
-			hard = DateTime.Seconds(10)
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false
-		},
-		IdleUnits = { },
-		ProducerActors = { Infantry = { SovietBarracks }, Vehicles = { SovietWarFactory } },
-		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = {
-			easy = {
-				Infantry = { "e1", "e1", "e1", "e2", "e3", "e4" },
-				Vehicles = { "3tnk", "btr" }
-			},
-			normal = {
-				Infantry = { "e1", "e1", "e1", "e1", "e2", "e3", "e4" },
-				Vehicles = { "3tnk", "btr.ai", "btr" }
-			},
-			hard = {
-				Infantry = { "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e3", "e4" },
-				Vehicles = { "3tnk", "btr.ai", "3tnk" }
-			}
-		},
-		AttackPaths = SovietAttackPaths,
-		TransitionTo = {
-			SquadType = "Advanced",
-			GameTime = {
-				easy = DateTime.Minutes(12),
-				normal = DateTime.Minutes(9),
-				hard = DateTime.Minutes(6)
-			}
-		}
-	},
-	Advanced = {
-		Player = nil,
-		Interval = {
-			easy = DateTime.Seconds(30),
-			normal = DateTime.Seconds(20),
-			hard = DateTime.Seconds(10)
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false
-		},
-		IdleUnits = { },
-		ProducerActors = { Infantry = { SovietBarracks }, Vehicles = { SovietWarFactory } },
-		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = {
-			easy = {
-				Infantry = { "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e3", "e4" },
-				Vehicles = { "4tnk", "btr.ai" }
-			},
-			normal = {
-				Infantry = { "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e3", "e4" },
-				Vehicles = { "3tnk", "4tnk", "katy" }
-			},
-			hard = {
-				Infantry = { "e1", "e1", "e3", "shok", "e1", "shok", "e1", "e2", "e3", "e3", "e4" },
-				Vehicles = { "3tnk", "4tnk", "btr.ai", "katy", "ttra" }
-			}
-		},
-		AttackPaths = SovietAttackPaths
-	},
-	Western = {
-		Player = nil,
-		Interval = {
-			easy = DateTime.Seconds(45),
-			normal = DateTime.Seconds(30),
-			hard = DateTime.Seconds(15)
-		},
-		QueueProductionStatuses = {
-			Infantry = false
-		},
-		IdleUnits = { },
-		ProducerActors = { Infantry = { SovietWestBarracks } },
-		Units = {
-			easy = { Infantry = { "e1", "e2", "e3", "e4" } },
-			normal = { Infantry = { "e1", "e2", "e3", "e4" } },
-			hard = { Infantry = { "e1", "e2", "e3", "e4", "e4", "shok" } }
-		},
-		AttackPaths = {
-			{ AttackWaypoint4.Location, AttackWaypoint5.Location }
-		}
-	},
-	Migs = {
-		Delay = {
-			easy = DateTime.Minutes(12),
-			normal = DateTime.Minutes(9),
-			hard = DateTime.Minutes(6)
-		},
-		Interval = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2)
-		},
-		QueueProductionStatuses = {
-			Aircraft = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
-		ProducerTypes = { Aircraft = { "afld" } },
-		Units = {
-			easy = {
-				Aircraft = { "mig" }
-			},
-			normal = {
-				Aircraft = { "mig", "mig" }
-			},
-			hard = {
-				Aircraft = { "mig", "mig", "mig" }
-			}
-		}
-	}
-}
 
 ScrinInfantrySquads = {
 	easy = { "s1", "s1", "s1", "s3" },
@@ -206,6 +86,138 @@ ChronosphereAutoDestructTime = {
 	hard = DateTime.Minutes(25)
 }
 
+-- Squads
+
+Squads = {
+	Basic = {
+		Player = nil,
+		Delay = {
+			easy = DateTime.Seconds(130),
+			normal = DateTime.Seconds(100),
+			hard = DateTime.Seconds(70)
+		},
+		Interval = {
+			easy = DateTime.Seconds(30),
+			normal = DateTime.Seconds(20),
+			hard = DateTime.Seconds(10)
+		},
+		QueueProductionStatuses = {
+			Infantry = false,
+			Vehicles = false
+		},
+		FollowLeader = true,
+		IdleUnits = { },
+		ProducerActors = { Infantry = { SovietBarracks }, Vehicles = { SovietWarFactory } },
+		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
+		Units = {
+			easy = {
+				Infantry = { "e3", "e1", "e1", "e1", "e2", "e4" },
+				Vehicles = { "3tnk", "btr" }
+			},
+			normal = {
+				Infantry = { "e3", "e1", "e1", "e1", "e1", "e2", "e4" },
+				Vehicles = { "3tnk", "btr.ai", "btr" }
+			},
+			hard = {
+				Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4" },
+				Vehicles = { "3tnk", "btr.ai", "3tnk" }
+			}
+		},
+		AttackPaths = SovietAttackPaths,
+		TransitionTo = {
+			SquadType = "Advanced",
+			GameTime = {
+				easy = DateTime.Minutes(12),
+				normal = DateTime.Minutes(9),
+				hard = DateTime.Minutes(6)
+			}
+		}
+	},
+	Advanced = {
+		Player = nil,
+		Interval = {
+			easy = DateTime.Seconds(30),
+			normal = DateTime.Seconds(20),
+			hard = DateTime.Seconds(10)
+		},
+		QueueProductionStatuses = {
+			Infantry = false,
+			Vehicles = false
+		},
+		FollowLeader = true,
+		IdleUnits = { },
+		ProducerActors = { Infantry = { SovietBarracks }, Vehicles = { SovietWarFactory } },
+		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
+		Units = {
+			easy = {
+				Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" },
+				Vehicles = { "4tnk", "btr.ai" }
+			},
+			normal = {
+				Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" },
+				Vehicles = { "3tnk", "4tnk", "katy" }
+			},
+			hard = {
+				Infantry = { "e3", "e1", "e1", "e3", "shok", "e1", "shok", "e1", "e2", "e3", "e4" },
+				Vehicles = { "3tnk", "4tnk", "btr.ai", "katy", "ttra" }
+			}
+		},
+		AttackPaths = SovietAttackPaths
+	},
+	Western = {
+		Player = nil,
+		Interval = {
+			easy = DateTime.Seconds(45),
+			normal = DateTime.Seconds(30),
+			hard = DateTime.Seconds(15)
+		},
+		QueueProductionStatuses = {
+			Infantry = false
+		},
+		FollowLeader = true,
+		IdleUnits = { },
+		ProducerActors = { Infantry = { SovietWestBarracks } },
+		Units = {
+			easy = { Infantry = { "e3", "e1", "e2", "e4" } },
+			normal = { Infantry = { "e3", "e1", "e2", "e4" } },
+			hard = { Infantry = { "e3", "e1", "e2", "e4", "e4", "shok" } }
+		},
+		AttackPaths = {
+			{ AttackWaypoint4.Location, AttackWaypoint5.Location }
+		}
+	},
+	Migs = {
+		Player = nil,
+		Delay = {
+			easy = DateTime.Minutes(12),
+			normal = DateTime.Minutes(9),
+			hard = DateTime.Minutes(6)
+		},
+		Interval = {
+			easy = DateTime.Minutes(6),
+			normal = DateTime.Minutes(4),
+			hard = DateTime.Minutes(2)
+		},
+		QueueProductionStatuses = {
+			Aircraft = false
+		},
+		IdleUnits = { },
+		ProducerActors = nil,
+		ProducerTypes = { Aircraft = { "afld" } },
+		Units = {
+			easy = {
+				Aircraft = { "mig" }
+			},
+			normal = {
+				Aircraft = { "mig", "mig" }
+			},
+			hard = {
+				Aircraft = { "mig", "mig", "mig" }
+			}
+		}
+	}
+}
+
 -- Setup and Tick
 
 WorldLoaded = function()
@@ -215,25 +227,26 @@ WorldLoaded = function()
 	TimerTicks = 0
 
 	Trigger.AfterDelay(1, function()
-		EstablishBase = Greece.AddObjective("Establish a base.")
+		ObjectiveEstablishBase = Greece.AddObjective("Establish a base.")
 		UserInterface.SetMissionText("Establish a base.", HSLColor.Yellow)
 	end)
 
-	Trigger.OnKilled(Church, function()
+	Trigger.OnKilled(Church, function(self, killer)
 		Actor.Create("moneycrate", true, { Owner = Greece, Location = Church.Location })
 	end)
 
-	Trigger.OnDiscovered(SovietChronosphere, function()
-		if not chronosphereDiscovered then
+	Trigger.OnEnteredProximityTrigger(SovietChronosphere.CenterPosition, WDist.New(5 * 1024), function(a, id)
+		if a.Owner == Greece and not chronosphereDiscovered then
+			Trigger.RemoveProximityTrigger(id)
 			chronosphereDiscovered = true
 			Notification("Commander, the Soviets have been attempting to reverse engineer stolen Chronosphere technology! Use whatever means necessary to cease their experiments.")
-			if InvestigateArea == nil then
-				InvestigateArea = Greece.AddObjective("Investigate the area.")
+			if ObjectiveInvestigateArea == nil then
+				ObjectiveInvestigateArea = Greece.AddObjective("Investigate the area.")
 			end
-			CaptureOrDestroyChronosphere = Greece.AddObjective("Capture or destroy the Soviet Chronosphere.")
+			ObjectiveCaptureOrDestroyChronosphere = Greece.AddObjective("Capture or destroy the Soviet Chronosphere.")
 			UserInterface.SetMissionText("Capture or destroy the Soviet Chronosphere.", HSLColor.Yellow)
-			Greece.MarkCompletedObjective(InvestigateArea)
-			ChronoCamera = Actor.Create("smallcamera", true, { Owner = Greece, Location = SovietChronosphere.Location })
+			Greece.MarkCompletedObjective(ObjectiveInvestigateArea)
+			ChronoCamera = Actor.Create("smallcamera", true, { Owner = Greece, Location = SovietChronosphereLocation })
 
 			Trigger.AfterDelay(1, function()
 				ChronoCamera.Destroy()
@@ -247,13 +260,13 @@ WorldLoaded = function()
 end
 
 Tick = function()
-	if not baseEstablished and CheckForConYard() then
+	if not baseEstablished and HasConyard(Greece) then
 		baseEstablished = true
-		if InvestigateArea == nil then
-			InvestigateArea = Greece.AddObjective("Investigate the area.")
+		if ObjectiveInvestigateArea == nil then
+			ObjectiveInvestigateArea = Greece.AddObjective("Investigate the area.")
 			UserInterface.SetMissionText(nil)
 		end
-		Greece.MarkCompletedObjective(EstablishBase)
+		Greece.MarkCompletedObjective(ObjectiveEstablishBase)
 	end
 
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
@@ -262,20 +275,8 @@ Tick = function()
 end
 
 OncePerSecondChecks = function()
-	if Greece.HasNoRequiredUnits() then
-		if EstablishBase ~= nil and not Greece.IsObjectiveCompleted(EstablishBase) then
-			Greece.MarkFailedObjective(EstablishBase)
-		end
-		if InvestigateArea ~= nil and not Greece.IsObjectiveCompleted(InvestigateArea) then
-			Greece.MarkFailedObjective(InvestigateArea)
-		end
-		if CaptureOrDestroyChronosphere ~= nil and not Greece.IsObjectiveCompleted(CaptureOrDestroyChronosphere) then
-			Greece.MarkFailedObjective(CaptureOrDestroyChronosphere)
-		end
-		if DefendUntilEvacuation ~= nil and not Greece.IsObjectiveCompleted(DefendUntilEvacuation) then
-			Greece.MarkFailedObjective(DefendUntilEvacuation)
-		end
-	end
+	USSR.Cash = 5000
+	USSR.Resources = 5000
 
 	if TimerTicks > 0 then
 		if TimerTicks > 25 then
@@ -284,26 +285,45 @@ OncePerSecondChecks = function()
 		else
 			TimerTicks = 0
 			UserInterface.SetMissionText("Evacuation underway.", HSLColor.Yellow)
+			Greece.MarkCompletedObjective(ObjectiveDefendUntilEvacuation)
 		end
 	end
 
-	USSR.Cash = 2500
-	USSR.Resources = 2500
+	if Greece.HasNoRequiredUnits() then
+		if ObjectiveEstablishBase ~= nil and not Greece.IsObjectiveCompleted(ObjectiveEstablishBase) then
+			Greece.MarkFailedObjective(ObjectiveEstablishBase)
+		end
+		if ObjectiveInvestigateArea ~= nil and not Greece.IsObjectiveCompleted(ObjectiveInvestigateArea) then
+			Greece.MarkFailedObjective(ObjectiveInvestigateArea)
+		end
+		if ObjectiveCaptureOrDestroyChronosphere ~= nil and not Greece.IsObjectiveCompleted(ObjectiveCaptureOrDestroyChronosphere) then
+			Greece.MarkFailedObjective(ObjectiveCaptureOrDestroyChronosphere)
+		end
+		if ObjectiveDefendUntilEvacuation ~= nil and not Greece.IsObjectiveCompleted(ObjectiveDefendUntilEvacuation) then
+			Greece.MarkFailedObjective(ObjectiveDefendUntilEvacuation)
+		end
+	end
 end
 
 -- Functions
 
-CheckForConYard = function()
-	local ConYards = Utils.Where(Map.ActorsInWorld, function(actor) return actor.Type == "fact" and actor.Owner == Greece end)
-	return #ConYards >= 1
-end
-
 InitUSSR = function()
+	AutoRepairAndRebuildBuildings(USSR)
+	SetupRefAndSilosCaptureCredits(USSR)
+	AutoReplaceHarvesters(USSR)
+
+	-- Set western patrol
+	Utils.Do(WestPatrolUnits, function(unit)
+		if not unit.IsDead then
+			unit.Patrol(WestPatrolPath, true, 100)
+		end
+	end)
+
 	-- Begin main attacks after difficulty based delay
 	Trigger.AfterDelay(Squads.Basic.Delay[Difficulty], function()
 		InitAttackSquad(Squads.Basic, USSR)
 	end)
-DateTime.Minutes(10)
+
 	-- Eastern Halo drops start at 10 mins
 	Trigger.AfterDelay(HaloDropStart[Difficulty], function()
 		local eastHaloDropEntryPaths = {
@@ -323,26 +343,15 @@ DateTime.Minutes(10)
 
 	-- Beach drop at 12:00
 	if Difficulty ~= "easy" then
-		Trigger.AfterDelay(DateTime.Minutes(12), DoNavalDrop)
+		Trigger.AfterDelay(DateTime.Minutes(12), DoSovietNavalDrop)
 	end
 
-	-- Set western patrol
-	Utils.Do(WestPatrolUnits, function(unit)
-		if not unit.IsDead then
-			unit.Patrol(WestPatrolPath, true, 100)
-		end
-	end)
-
+	-- MiG attacks
 	Trigger.AfterDelay(Squads.Migs.Delay[Difficulty], function()
 		InitAirAttackSquad(Squads.Migs, USSR, Greece, { "harv", "pris", "agun", "pbox" })
 	end)
 
 	Trigger.OnEnteredFootprint(SovietBorder, function(a, id)
-		-- Any Soviet/Scrin units that cross the border go into hunt mode
-		if a.Owner == USSR or a.Owner == Scrin then
-			ClearTriggersStopAndHunt(a)
-		end
-
 		-- On player crossing Soviet border start making infantry at western barracks
 		if not sovietBorderCrossed and a.Owner == Greece then
 			sovietBorderCrossed = true
@@ -351,22 +360,34 @@ DateTime.Minutes(10)
 	end)
 
 	-- On destroying or capturing Chronosphere
-	Trigger.OnKilled(SovietChronosphere, function()
+	Trigger.OnKilled(SovietChronosphere, function(self, killer)
 		Actor.Create("pdox.crossrip", true, { Owner = USSR, Location = SovietChronosphereLocation})
 		InterdimensionalCrossrip()
 	end)
 
-	Trigger.OnCapture(SovietChronosphere, function()
+	Trigger.OnCapture(SovietChronosphere, function(self, captor, oldOwner, newOwner)
 		SovietChronosphere.Kill()
 	end)
 
 	-- After an amount of time based on difficulty, reveal and auto-destruct the Chronosphere
 	if Difficulty ~= "easy" then
 		Trigger.AfterDelay(ChronosphereAutoDestructTime[Difficulty], function()
-			AutoChronoCamera = Actor.Create("smallcamera", true, { Owner = Greece, Location = SovietChronosphere.Location })
-			Trigger.AfterDelay(DateTime.Seconds(10), SovietChronosphere.Kill)
-			Trigger.AfterDelay(DateTime.Seconds(15), AutoChronoCamera.Destroy)
-
+			if not chronosphereDiscovered then
+				chronosphereDiscovered = true
+				AutoChronoCamera = Actor.Create("smallcamera", true, { Owner = Greece, Location = SovietChronosphereLocation })
+				Trigger.AfterDelay(DateTime.Seconds(15), AutoChronoCamera.Destroy)
+				if ObjectiveEstablishBase ~= nil and not Greece.IsObjectiveCompleted(ObjectiveEstablishBase) then
+					Greece.MarkCompletedObjective(ObjectiveEstablishBase)
+				end
+				if ObjectiveInvestigateArea ~= nil and not Greece.IsObjectiveCompleted(ObjectiveInvestigateArea) then
+					Greece.MarkCompletedObjective(ObjectiveInvestigateArea)
+				end
+			end
+			Trigger.AfterDelay(DateTime.Seconds(10), function()
+				if not SovietChronosphere.IsDead then
+					SovietChronosphere.Kill()
+				end
+			end)
 			local sovietGroundAttackers = USSR.GetGroundAttackers()
 			Utils.Do(sovietGroundAttackers, function(a)
 				Trigger.AfterDelay(Utils.RandomInteger(5,250), function()
@@ -377,8 +398,6 @@ DateTime.Minutes(10)
 			end)
 		end)
 	end
-
-	AutoRepairBuildings(USSR)
 end
 
 ScrinInvasion = function()
@@ -433,25 +452,16 @@ InterdimensionalCrossrip = function()
 	Trigger.AfterDelay(2, SpawnTibTree)
 
 	Notification("What in God's name!? Fall back to your base, prepare for evacuation. We'll need whatever intel you found to fix .. whatever this is.")
-	DefendUntilEvacuation = Greece.AddObjective("Defend your base until evacuation is prepared.")
+	ObjectiveDefendUntilEvacuation = Greece.AddObjective("Defend your base until evacuation is prepared.")
 
-	if CaptureOrDestroyChronosphere ~= nil then
-		Greece.MarkCompletedObjective(CaptureOrDestroyChronosphere)
+	if ObjectiveCaptureOrDestroyChronosphere ~= nil then
+		Greece.MarkCompletedObjective(ObjectiveCaptureOrDestroyChronosphere)
 	end
-
-	TimerTicks = EvacuationTime[Difficulty]
-
-	Trigger.OnTimerExpired(function()
-		if Greece.HasNoRequiredUnits() then
-			Greece.MarkFailedObjective(DefendUntilEvacuation)
-		else
-			Greece.MarkCompletedObjective(DefendUntilEvacuation)
-		end
-	end)
 
 	Trigger.AfterDelay(12, function()
 		ScrinInvasion()
 		Media.PlaySpeechNotification(Greece, "TimerStarted")
+		TimerTicks = EvacuationTime[Difficulty]
 	end)
 
 	Actor.Create("flare", true, { Owner = Greece, Location = Evac1.Location })
@@ -469,9 +479,10 @@ end
 
 SpawnTibTree = function()
 	local tibTree = TreesToTransform[#TreesToTransform]
-	local loc = tibTree.Location
-	tibTree.Destroy()
-	Actor.Create("split2", true, { Owner = Scrin, Location = loc})
+	if not tibTree.Actor.IsDead then
+		tibTree.Actor.Destroy()
+	end
+	Actor.Create("split2", true, { Owner = Scrin, Location = tibTree.Location})
 	table.remove(TreesToTransform, #TreesToTransform)
 
 	if #TreesToTransform > 0 then
@@ -486,12 +497,6 @@ SpawnWormhole = function()
 
 	if #WormholeSpawns > 0 then
 		Trigger.AfterDelay(1, SpawnWormhole)
-	end
-end
-
-IdleHunt = function(actor)
-	if actor.HasProperty("Hunt") and not actor.IsDead then
-		Trigger.OnIdle(actor, actor.Hunt)
 	end
 end
 
@@ -510,32 +515,25 @@ DoHaloDrop = function(entryPaths)
 		return
 	end
 
+	local entryPath = Utils.Random(entryPaths)
+
 	local haloDropUnits = { "e1", "e1", "e1", "e2", "e3", "e4" }
 	if Difficulty == "hard" and DateTime.GameTime > DateTime.Minutes(15) then
 		haloDropUnits = { "e1", "e1", "e1", "e1", "e2", "e2", "e3", "e3", "e4", "shok" }
 	end
 
-	local entryPath = Utils.Random(entryPaths)
+	DoHelicopterDrop(USSR, entryPath, "halo.paradrop", haloDropUnits, AssaultPlayerBase, function(t)
+		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			if not t.IsDead then
+				t.Move(entryPath[1])
 
-	Reinforcements.ReinforceWithTransport(USSR, "halo.paradrop", haloDropUnits, entryPath, nil, function(transport, cargo)
-		if not transport.IsDead then
-			transport.UnloadPassengers()
-			Trigger.AfterDelay(DateTime.Seconds(5), function()
-				Utils.Do(cargo, function(a)
-					AssaultPlayerBase(a)
-				end)
-			end)
-			Trigger.AfterDelay(DateTime.Seconds(5), function()
-				if not transport.IsDead then
-					transport.Move(entryPath[1])
-				end
-			end)
-			Trigger.AfterDelay(DateTime.Seconds(12), function()
-				if not transport.IsDead then
-					transport.Destroy()
-				end
-			end)
-		end
+			end
+		end)
+		Trigger.AfterDelay(DateTime.Seconds(12), function()
+			if not t.IsDead then
+				t.Destroy()
+			end
+		end)
 	end)
 
 	Trigger.AfterDelay(HaloDropInterval[Difficulty], function()
@@ -543,22 +541,18 @@ DoHaloDrop = function(entryPaths)
 	end)
 end
 
-DoNavalDrop = function()
+DoSovietNavalDrop = function()
 	if crossRipped then
 		return
 	end
 
 	local navalDropPath = { CPos.New(NavalDrop.Location.X - 3, NavalDrop.Location.Y - 1), NavalDrop.Location }
+	local navalDropExitPath = { navalDropPath[2], navalDropPath[1] }
 	local navalDropUnits = { "3tnk", "v2rl", "3tnk" }
 
-	local raiders = Reinforcements.ReinforceWithTransport(USSR, "lst", navalDropUnits, navalDropPath, { navalDropPath[2], navalDropPath[1] })[2]
-	Utils.Do(raiders, function(a)
-		Trigger.OnAddedToWorld(a, function()
-			AssaultPlayerBase(a)
-		end)
-	end)
+	DoNavalTransportDrop(USSR, navalDropPath, navalDropExitPath, "lst", navalDropUnits, AssaultPlayerBase)
 
-	Trigger.AfterDelay(NavalDropInterval[Difficulty], DoNavalDrop)
+	Trigger.AfterDelay(NavalDropInterval[Difficulty], DoSovietNavalDrop)
 end
 
 SendDevastators = function()

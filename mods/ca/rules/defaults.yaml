@@ -2158,17 +2158,16 @@
 		Class: CivInfantry
 	Valued:
 		Cost: 10
-	GrantConditionOnFaction@FACTION:
-		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri, gdi, zocom, eagle, talon, arc, nod, blackh, legion, marked, shadow
-		Condition: owned-by-faction
+	GrantConditionOnCombatantOwner@COMBATANT:
+		Condition: owned-by-combatant
 	Tooltip:
 		Name: Civilian
 		GenericVisibility: None
-		RequiresCondition: !owned-by-faction
-	Tooltip@FACTION:
+		RequiresCondition: !owned-by-combatant
+	Tooltip@COMBATANT:
 		Name: Technician
 		GenericVisibility: None
-		RequiresCondition: owned-by-faction
+		RequiresCondition: owned-by-combatant
 	RevealsShroud:
 		Range: 3c0
 	Passenger:

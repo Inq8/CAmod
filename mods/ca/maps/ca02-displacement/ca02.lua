@@ -55,6 +55,8 @@ DevastatorsDelay = {
 	hard = DateTime.Minutes(10)
 }
 
+-- Squads
+
 Squads = {
 	Basic = {
 		Delay = {
@@ -165,6 +167,7 @@ WorldLoaded = function()
 	England = Player.GetPlayer("England")
 	Scrin = Player.GetPlayer("Scrin")
 	USSR = Player.GetPlayer("USSR")
+	Neutral = Player.GetPlayer("Neutral")
 	TimerTicks = 0
 	TrucksLost = 0
 	NextConvoyIdx = 1
@@ -173,12 +176,12 @@ WorldLoaded = function()
 	InitScrin()
 	Camera.Position = PlayerBarracks.CenterPosition
 
-	ObjectiveClearPath = Greece.AddObjective("Clear a path for inbound convoys")
+	ObjectiveClearPath = Greece.AddObjective("Clear a path for inbound convoys.")
 
 	if Difficulty == "hard" then
-		ObjectiveProtectConvoys = Greece.AddObjective("Do not lose any convoy trucks")
+		ObjectiveProtectConvoys = Greece.AddObjective("Do not lose any convoy trucks.")
 	else
-		ObjectiveProtectConvoys = Greece.AddObjective("Do not lose more than " .. MaxLosses[Difficulty] .. " convoy trucks")
+		ObjectiveProtectConvoys = Greece.AddObjective("Do not lose more than " .. MaxLosses[Difficulty] .. " convoy trucks.")
 	end
 
 	Trigger.AfterDelay(DateTime.Seconds(15), function()
@@ -193,6 +196,20 @@ WorldLoaded = function()
 			end
 		end)
 	end)
+
+	-- Easter egg
+	Trigger.OnKilled(Church, function(a)
+		Media.PlaySound("screams.aud")
+		local congregation1 = Reinforcements.Reinforce(Neutral, { "c1" }, { Church.Location, CPos.New(Church.Location.X - 2, Church.Location.Y - 1) })[1]
+		local congregation2 = Reinforcements.Reinforce(Neutral, { "c3" }, { Church.Location, CPos.New(Church.Location.X - 2, Church.Location.Y) })[1]
+		local congregation3 = Reinforcements.Reinforce(Neutral, { "c4" }, { Church.Location, CPos.New(Church.Location.X - 2, Church.Location.Y + 1) })[1]
+		local congregation4 = Reinforcements.Reinforce(Neutral, { "c8" }, { Church.Location, CPos.New(Church.Location.X - 2, Church.Location.Y + 2) })[1]
+		Trigger.AfterDelay(DateTime.Seconds(1), function()
+			Media.FloatingText("WHY??", congregation2.CenterPosition, 30, HSLColor.Red)
+		end)
+		congregation1.Scatter()
+		congregation3.Scatter()
+	end)
 end
 
 Tick = function()
@@ -202,8 +219,8 @@ Tick = function()
 end
 
 OncePerSecondChecks = function()
-	Scrin.Cash = 2500
-	Scrin.Resources = 2500
+	Scrin.Cash = 5000
+	Scrin.Resources = 5000
 
 	if TimerTicks > 0 then
 		if TimerTicks > 25 then
@@ -275,7 +292,7 @@ InitConvoy = function()
 		end)
 
 		Utils.Do(trucks, function(truck)
-			Trigger.OnKilled(truck, function()
+			Trigger.OnKilled(truck, function(self, killer)
 				TrucksLost = TrucksLost + 1
 				Media.PlaySpeechNotification(Greece, "ConvoyUnitLost")
 				Media.PlaySoundNotification(Greece, "AlertBuzzer")
@@ -290,7 +307,7 @@ InitConvoy = function()
 				end
 			end)
 
-			Trigger.OnRemovedFromWorld(truck, function()
+			Trigger.OnRemovedFromWorld(truck, function(a)
 				local numTrucks = #England.GetActorsByType("truk")
 				if numTrucks == 0 then
 					NextConvoyIdx = NextConvoyIdx + 1
@@ -300,10 +317,10 @@ InitConvoy = function()
 							InitConvoy()
 						end)
 					else
-						ObjectiveDestroyScrinBase = Greece.AddObjective("Destroy the alien stronghold")
+						ObjectiveDestroyScrinBase = Greece.AddObjective("Destroy the alien stronghold.")
 						Greece.MarkCompletedObjective(ObjectiveClearPath)
 						Greece.MarkCompletedObjective(ObjectiveProtectConvoys)
-						UserInterface.SetMissionText("Destroy the alien stronghold", HSLColor.Yellow)
+						UserInterface.SetMissionText("Destroy the alien stronghold.", HSLColor.Yellow)
 					end
 				end
 			end)
@@ -312,7 +329,9 @@ InitConvoy = function()
 end
 
 InitScrin = function()
-	AutoRepairBuildings(Scrin)
+	AutoRepairAndRebuildBuildings(Scrin)
+	SetupRefAndSilosCaptureCredits(Scrin)
+	AutoReplaceHarvesters(Scrin)
 
 	StormriderAttacker1.Attack(PlayerRefinery)
 	StormriderAttacker2.Attack(PlayerRefinery)
@@ -348,11 +367,14 @@ InitScrin = function()
 
 	local stormriders = Scrin.GetActorsByType("stmr")
 	Utils.Do(stormriders, function(a)
-		Trigger.OnDamaged(a, function()
-			if not a.IsDead and a.AmmoCount == 0 then
-				a.Stop()
-				Trigger.ClearAll(a)
-				InitializeAttackAircraft(a, Greece, { "proc", "dome", "atek", "apwr", "ptnk", "heli", "harr" })
+		Trigger.OnDamaged(a, function(self, attacker, damage)
+			if not self.IsDead and self.AmmoCount() == 0 then
+				Trigger.ClearAll(self)
+				self.Stop()
+				self.ReturnToBase()
+				Trigger.AfterDelay(DateTime.Seconds(1), function()
+					InitializeAttackAircraft(self, Greece, { "proc", "dome", "atek", "apwr", "ptnk", "heli", "harr" })
+				end)
 			end
 		end)
 	end)

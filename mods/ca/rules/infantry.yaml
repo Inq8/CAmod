@@ -1316,7 +1316,7 @@ SHOK:
 		Prerequisites: barracks.upgraded
 	ProductionCostMultiplier@RussiaBonus:
 		Multiplier: 90
-		Prerequisites: infantry.russia
+		Prerequisites: player.russia
 
 N1:
 	Inherits: ^Soldier
@@ -2262,7 +2262,7 @@ SAB:
 		Prerequisites: barracks.upgraded
 	ProductionCostMultiplier@LegionBonus:
 		Multiplier: 80
-		Prerequisites: infantry.legion
+		Prerequisites: player.legion
 
 ACOL:
 	Inherits: ^Cyborg
@@ -2379,8 +2379,12 @@ JJET:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 		Type: GroundPosition
+	Voiced:
+		VoiceSet: JJVoice
 	AttackMove:
+		Voice: Move
 	Guard:
+		Voice: Move
 	Guardable:
 	ActorLostNotification:
 		Notification: AirUnitLost
@@ -2512,16 +2516,9 @@ JJET:
 	DetectCloaked:
 		DetectionTypes: Cloak, Thief
 		Range: 3c0
-	ActorLostNotification:
 	Selectable:
 		Bounds: 768, 768, 0, -256
 		DecorationBounds: 512, 725, 0, -256
-	AttackMove:
-		Voice: Move
-	Guard:
-		Voice: Move
-	Voiced:
-		VoiceSet: JJVoice
 	AutoTargetPriority@DEFAULT:
 		RequiresCondition: !stance-attackanything && !assault-move && !airborne
 	AutoTargetPriority@ATTACKANYTHING:
