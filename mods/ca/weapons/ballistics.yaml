@@ -361,8 +361,21 @@ TitanGun:
 			None: 70
 			Wood: 100
 			Concrete: 85
-			Light: 85
-			Heavy: 35
+			Light: 80
+			Heavy: 20
+	Warhead@2Dam: SpreadDamage
+		Damage: 975
+		Spread: 426
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		ValidTargets: Vehicle
+		Versus:
+			Heavy: 20
+			None: 0
+			Wood: 0
+			Light: 5
+			Concrete: 0
+			Brick: 0
+		DamageTypes: SmallExplosionDeath
 
 155mmTD:
 	Inherits: 155mm
@@ -399,6 +412,7 @@ TitanGun:
 			Concrete: 70
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigatedMinor
+	-Warhead@2Dam:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Eff: CreateEffect
@@ -608,7 +622,7 @@ GrenadeJJ:
 	Projectile: Bullet
 		ContrailLength: 30
 		ContrailStartColorAlpha: 128
-		Speed: 180
+		Speed: 200
 	Warhead@1Dam: SpreadDamage
 		Damage: 6000
 		Spread: 341
@@ -616,7 +630,8 @@ GrenadeJJ:
 		Versus:
 			None: 200
 			Wood: 65
-			Heavy: 15
+			Heavy: 20
+			Light: 95
 	-Warhead@2Dam:
 
 EMPGrenade:

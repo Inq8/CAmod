@@ -963,10 +963,23 @@ SCUD:
 		Versus:
 			None: 90
 			Wood: 80
-			Light: 70
-			Heavy: 40
+			Light: 65
+			Heavy: 25
 			Concrete: 50
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
+	Warhead@2Dam: SpreadDamage
+		Damage: 3400
+		Spread: 512
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		ValidTargets: Vehicle
+		Versus:
+			Heavy: 20
+			None: 0
+			Wood: 0
+			Light: 5
+			Concrete: 0
+			Brick: 0
+		DamageTypes: SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: building, building2
 	Warhead@4EffWater: CreateEffect
@@ -985,10 +998,23 @@ V3Weapon:
 		Versus:
 			None: 90
 			Wood: 100
-			Light: 70
-			Heavy: 40
+			Light: 65
+			Heavy: 25
 			Concrete: 60
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
+	Warhead@2Dam: SpreadDamage
+		Damage: 3400
+		Spread: 512
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		ValidTargets: Vehicle
+		Versus:
+			Heavy: 35
+			None: 0
+			Wood: 0
+			Light: 5
+			Concrete: 0
+			Brick: 0
+		DamageTypes: SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: building, building2
 		ValidTargets: Ground, Air, Ship, Trees, ICBM
@@ -1194,6 +1220,19 @@ BikeRockets.TibCore:
 		Damage: 4400
 		Versus:
 			Concrete: 70
+			Heavy: 0
+	Warhead@2Dam: SpreadDamage
+		Damage: 4400
+		Spread: 341
+		ValidTargets: Vehicle
+		Versus:
+			Heavy: 100
+			None: 0
+			Wood: 0
+			Light: 0
+			Concrete: 0
+			Brick: 0
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: tibcorehit1.aud, tibcorehit2.aud, tibcorehit3.aud
 	Warhead@tib: CreateEffect
@@ -1257,6 +1296,20 @@ IFVRocketsE:
 		ContrailLength: 10
 	Warhead@1Dam: SpreadDamage
 		Damage: 3750
+		Versus:
+			Heavy: 0
+	Warhead@2Dam: SpreadDamage
+		Spread: 341
+		Damage: 3750
+		ValidTargets: Vehicle
+		Versus:
+			Heavy: 100
+			None: 0
+			Wood: 0
+			Light: 0
+			Concrete: 0
+			Brick: 0
+		DamageTypes: ExplosionDeath
 
 IFVRocketsE.CRYO:
 	Inherits: IFVRocketsE
@@ -1264,6 +1317,9 @@ IFVRocketsE.CRYO:
 		Image: cryomiss
 	Warhead@1Dam: SpreadDamage
 		DamageTypes: Prone50Percent, TriggerProne, FrozenDeath
+		Damage: 3150
+	Warhead@2Dam: SpreadDamage
+		DamageTypes: FrozenDeath
 		Damage: 3150
 	Warhead@3Eff: CreateEffect
 		Explosions: cryohit
@@ -1400,6 +1456,8 @@ IFVRocketsAAE.CRYO:
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
 		Damage: 370
+		Versus:
+			Heavy: 45
 
 227mmAA:
 	Inherits: ^AntiAirMissile
@@ -1519,6 +1577,20 @@ StnkMissile.TibCore:
 	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 3850
+		Versus:
+			Heavy: 0
+	Warhead@2Dam: SpreadDamage
+		Spread: 341
+		Damage: 3850
+		ValidTargets: Vehicle
+		Versus:
+			Heavy: 100
+			None: 0
+			Wood: 0
+			Light: 0
+			Concrete: 0
+			Brick: 0
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: tibcorehit1.aud, tibcorehit2.aud, tibcorehit3.aud
 	Warhead@tib: CreateEffect
@@ -1613,9 +1685,9 @@ Rah66AG:
 			Wood: 60
 			Concrete: 30
 			Light: 55
-			Heavy: 20
+			Heavy: 25
 			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigatedMinor
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: caneon
@@ -1697,7 +1769,7 @@ ScrinTorp:
 	Warhead@1Dam: SpreadDamage
 		Spread: 768
 		Damage: 950
-		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		Falloff: 1000, 400, 160, 64, 26, 10, 0
 		ValidTargets: Ground, Water
 		Versus:
 			None: 10

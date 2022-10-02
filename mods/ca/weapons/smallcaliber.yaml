@@ -342,10 +342,10 @@ Vulcan3:
 		Versus:
 			Wood: 30
 			Concrete: 20
+			Heavy: 12
 	Warhead@2Eff: CreateEffect
 		Explosions: piffs
 		Inaccuracy: 0
-
 
 ChainGun.Yak.R:
 	Inherits: ^HeavyMG
@@ -542,7 +542,7 @@ M60mgJJ:
 	Burst: 3
 	Warhead@1Dam: SpreadDamage
 		Versus:
-			Light: 40
+			Light: 50
 
 M60mgJJ.ground:
 	Inherits: M60mgJJ
@@ -774,6 +774,8 @@ SNIPER.vehicle:
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
 		Damage: 7000
+		Versus:
+			Light: 90
 		ValidTargets: Vehicle, Ship
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Smu: LeaveSmudge
