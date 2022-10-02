@@ -82,8 +82,8 @@ NavalDropInterval = {
 }
 
 ChronosphereAutoDestructTime = {
-	normal = DateTime.Minutes(35),
-	hard = DateTime.Minutes(25)
+	normal = DateTime.Minutes(45),
+	hard = DateTime.Minutes(35)
 }
 
 -- Squads
@@ -138,7 +138,7 @@ Squads = {
 		Interval = {
 			easy = DateTime.Seconds(30),
 			normal = DateTime.Seconds(20),
-			hard = DateTime.Seconds(10)
+			hard = DateTime.Seconds(5)
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -236,21 +236,9 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(SovietChronosphere.CenterPosition, WDist.New(5 * 1024), function(a, id)
-		if a.Owner == Greece and not chronosphereDiscovered then
+		if a.Owner == Greece then
 			Trigger.RemoveProximityTrigger(id)
-			chronosphereDiscovered = true
-			Notification("Commander, the Soviets have been attempting to reverse engineer stolen Chronosphere technology! Use whatever means necessary to cease their experiments.")
-			if ObjectiveInvestigateArea == nil then
-				ObjectiveInvestigateArea = Greece.AddObjective("Investigate the area.")
-			end
-			ObjectiveCaptureOrDestroyChronosphere = Greece.AddObjective("Capture or destroy the Soviet Chronosphere.")
-			UserInterface.SetMissionText("Capture or destroy the Soviet Chronosphere.", HSLColor.Yellow)
-			Greece.MarkCompletedObjective(ObjectiveInvestigateArea)
-			ChronoCamera = Actor.Create("smallcamera", true, { Owner = Greece, Location = SovietChronosphereLocation })
-
-			Trigger.AfterDelay(1, function()
-				ChronoCamera.Destroy()
-			end)
+			ChronosphereDiscovered()
 		end
 	end)
 
@@ -372,17 +360,7 @@ InitUSSR = function()
 	-- After an amount of time based on difficulty, reveal and auto-destruct the Chronosphere
 	if Difficulty ~= "easy" then
 		Trigger.AfterDelay(ChronosphereAutoDestructTime[Difficulty], function()
-			if not chronosphereDiscovered then
-				chronosphereDiscovered = true
-				AutoChronoCamera = Actor.Create("smallcamera", true, { Owner = Greece, Location = SovietChronosphereLocation })
-				Trigger.AfterDelay(DateTime.Seconds(15), AutoChronoCamera.Destroy)
-				if ObjectiveEstablishBase ~= nil and not Greece.IsObjectiveCompleted(ObjectiveEstablishBase) then
-					Greece.MarkCompletedObjective(ObjectiveEstablishBase)
-				end
-				if ObjectiveInvestigateArea ~= nil and not Greece.IsObjectiveCompleted(ObjectiveInvestigateArea) then
-					Greece.MarkCompletedObjective(ObjectiveInvestigateArea)
-				end
-			end
+			ChronosphereDiscovered()
 			Trigger.AfterDelay(DateTime.Seconds(10), function()
 				if not SovietChronosphere.IsDead then
 					SovietChronosphere.Kill()
@@ -434,6 +412,27 @@ CreateScrinVehicles = function()
 	end)
 
 	Trigger.AfterDelay(ScrinInvasionInterval[Difficulty] * ScrinVehiclesIntervalMultiplier[Difficulty], CreateScrinVehicles)
+end
+
+ChronosphereDiscovered = function()
+	if not chronosphereDiscovered then
+		baseEstablished = true
+		chronosphereDiscovered = true
+		Notification("Commander, the Soviets have been attempting to reverse engineer stolen Chronosphere technology! Use whatever means necessary to cease their experiments.")
+
+		AutoChronoCamera = Actor.Create("smallcamera", true, { Owner = Greece, Location = SovietChronosphereLocation })
+		Trigger.AfterDelay(DateTime.Seconds(5), AutoChronoCamera.Destroy)
+
+		ObjectiveCaptureOrDestroyChronosphere = Greece.AddObjective("Capture or destroy the Soviet Chronosphere.")
+		UserInterface.SetMissionText("Capture or destroy the Soviet Chronosphere.", HSLColor.Yellow)
+
+		if ObjectiveEstablishBase ~= nil and not Greece.IsObjectiveCompleted(ObjectiveEstablishBase) then
+			Greece.MarkCompletedObjective(ObjectiveEstablishBase)
+		end
+		if ObjectiveInvestigateArea ~= nil and not Greece.IsObjectiveCompleted(ObjectiveInvestigateArea) then
+			Greece.MarkCompletedObjective(ObjectiveInvestigateArea)
+		end
+	end
 end
 
 InterdimensionalCrossrip = function()

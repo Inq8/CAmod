@@ -90,9 +90,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 
 		protected static Actor FindDefenselessTarget(SquadCA owner)
 		{
-			Actor target = null;
-
-			target = FindAirTarget(owner);
+			var target = FindAirTarget(owner);
 			if (target != null)
 				return target;
 
