@@ -47,14 +47,14 @@ HaloDropInterval = {
 }
 
 NavalDropStart = {
-	easy = DateTime.Minutes(15),
-	normal = DateTime.Minutes(13),
-	hard = DateTime.Minutes(11)
+	easy = DateTime.Minutes(17),
+	normal = DateTime.Minutes(15),
+	hard = DateTime.Minutes(13)
 }
 
 NavalDropInterval = {
-	easy = DateTime.Minutes(6),
-	normal = DateTime.Minutes(4),
+	easy = DateTime.Minutes(4),
+	normal = DateTime.Minutes(3),
 	hard = DateTime.Minutes(2)
 }
 
@@ -180,13 +180,13 @@ Squads = {
 	Migs = {
 		Player = nil,
 		Delay = {
-			easy = DateTime.Minutes(12),
-			normal = DateTime.Minutes(9),
-			hard = DateTime.Minutes(6)
+			easy = DateTime.Minutes(13),
+			normal = DateTime.Minutes(11),
+			hard = DateTime.Minutes(9)
 		},
 		Interval = {
-			easy = DateTime.Minutes(4),
-			normal = DateTime.Minutes(3),
+			easy = DateTime.Minutes(3),
+			normal = DateTime.Seconds(150),
 			hard = DateTime.Minutes(2)
 		},
 		QueueProductionStatuses = {

@@ -27,6 +27,8 @@ CashRewardOnCaptureTypes = { "proc", "proc.td", "proc.scrin", "silo", "silo.td",
 
 WallTypes = { "sbag", "fenc", "brik", "cycl", "barb" }
 
+KeyStructures = { "fact", "afac", "sfac", "proc", "proc.td", "proc.scrin", "weap", "weap.td", "airs", "wsph", "dome", "hq", "nerv" }
+
 InitObjectives = function(player)
 	Trigger.OnObjectiveAdded(player, function(p, id)
 		Trigger.AfterDelay(1, function()
@@ -127,10 +129,24 @@ end
 IdleHunt = function(actor)
 	if actor.HasProperty("Hunt") and not actor.IsDead then
 		Trigger.OnIdle(actor, function(a)
-			if a.IsInWorld then
+			if not a.IsDead and a.IsInWorld then
 				a.Hunt()
 			end
 		end)
+	end
+end
+
+AssaultPlayerBaseOrHunt = function(actor, player)
+	if not actor.IsDead and actor.IsInWorld then
+		local keyBaseBuildings = player.GetActorsByTypes(KeyStructures)
+		if #keyBaseBuildings > 0 then
+			local keyBaseBuilding = Utils.Random(keyBaseBuildings)
+			actor.AttackMove(keyBaseBuilding.Location)
+		else
+			if actor.HasProperty("Hunt") then
+				actor.Hunt()
+			end
+		end
 	end
 end
 
