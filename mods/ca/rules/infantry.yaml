@@ -2998,7 +2998,7 @@ RMBC:
 	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 		Condition: repair-cooldown
 		RequiredHealing: 85000
-		StackDuration: 625
+		StackDuration: 1000
 		MinimumHealing: 2500
 		DamageTypes: DirectRepair
 		ShowSelectionBar: true
@@ -3146,6 +3146,10 @@ BRUT:
 		PauseOnCondition: being-warped
 		Voice: Attack
 		FacingTolerance: 0
+	DamageTypeDamageMultiplier@FLAKARMOR:
+		Modifier: 90
+	DamageTypeDamageMultiplier@FLAKARMORMINOR:
+		Modifier: 95
 	-TakeCover:
 	-Captures@DRIVER_KILL:
 	-CaptureManager:

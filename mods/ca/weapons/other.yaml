@@ -1181,6 +1181,28 @@ PrisLaserSupport:
 	Warhead@1Dum: Dummy
 	AirThreshold: 1000
 
+
+PrisBurst:
+	Inherits: PrisLaser
+	-Report:
+	Range: 3c0
+	Projectile: LaserZapCA
+		-HitAnim:
+	Warhead@1Dam: SpreadDamage
+		Spread: 256
+		Damage: 6500
+		Versus:
+			None: 85
+			Wood: 40
+			Concrete: 25
+			Light: 100
+			Heavy: 55
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated
+	-Warhead@Burst:
+	Warhead@3Eff: CreateEffect
+		Explosions: small_explosion
+		-ImpactSounds:
+
 PrisTLaser:
 	Inherits: PrisLaser
 	Report: ptnkfire.aud
@@ -1196,38 +1218,28 @@ PrisTLaser:
 			Wood: 100
 			Concrete: 100
 			Light: 100
-			Heavy: 50
+			Heavy: 45
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigatedMinor
 	Warhead@Burst: FireCluster
 		Weapon: PrisTBurst
 
-PrisBurst:
+PrisTBurst:
 	Inherits: PrisTLaser
 	-Report:
 	Range: 3c0
 	Projectile: LaserZapCA
 		-HitAnim:
 	Warhead@1Dam: SpreadDamage
-		Spread: 256
-		Damage: 6500
+		Damage: 2100
+		Spread: 160
 		Versus:
-			None: 85
-			Wood: 40
-			Concrete: 25
+			Wood: 35
+			Concrete: 100
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated
 	-Warhead@Burst:
 	Warhead@3Eff: CreateEffect
 		Explosions: small_explosion
 		-ImpactSounds:
-
-PrisTBurst:
-	Inherits: PrisBurst
-	Warhead@1Dam: SpreadDamage
-		Damage: 2100
-		Spread: 160
-		Versus:
-			None: 150
-			Wood: 35
-			Concrete: 100
 
 PrisCLaser:
 	Inherits: PrisTLaser
@@ -1248,7 +1260,7 @@ PrisCLaser:
 			Wood: 100
 			Concrete: 75
 			Light: 85
-			Heavy: 35
+			Heavy: 30
 	-Warhead@Burst:
 
 KirovBomb:

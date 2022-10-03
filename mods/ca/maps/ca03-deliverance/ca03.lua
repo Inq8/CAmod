@@ -24,12 +24,24 @@ SovietHindPatrolPath = { NavalEastAssembly.Location, NavalSouthEastAssembly.Loca
 
 HaloDropPaths = {
 	{ HaloDrop1Spawn.Location, HaloDrop1Landing.Location },
-	{ HaloDrop2Spawn.Location, HaloDrop2Spawn.Location }
+	{ HaloDrop2Spawn.Location, HaloDrop2Landing.Location },
+	{ HaloDrop3Spawn.Location, HaloDrop3Landing.Location },
+	{ HaloDrop4Spawn.Location, HaloDrop4Landing.Location },
+	{ HaloDrop5Spawn.Location, HaloDrop5Landing.Location },
+	{ HaloDrop6Spawn.Location, HaloDrop6Landing.Location },
+	{ HaloDrop7Spawn.Location, HaloDrop7Landing.Location }
+}
+
+LateHaloDropPaths = {
+	{ LateHaloDrop1Spawn.Location, LateHaloDrop1Landing.Location },
+	{ LateHaloDrop2Spawn.Location, LateHaloDrop2Landing.Location },
+	{ LateHaloDrop3Spawn.Location, LateHaloDrop3Landing.Location }
 }
 
 NavalDropPaths = {
 	{ RaidSpawn.Location, RaidLanding1.Location },
-	{ RaidSpawn.Location, RaidLanding2.Location }
+	{ RaidSpawn.Location, RaidLanding2.Location },
+	{ RaidSpawn.Location, RaidLanding3.Location }
 }
 
 -- Other Variables
@@ -129,15 +141,15 @@ Squads = {
 		Units = {
 			easy = {
 				Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" },
-				Vehicles = { "4tnk", "btr.ai" }
+				Vehicles = { "4tnk", "btr.ai", "katy" }
 			},
 			normal = {
 				Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" },
-				Vehicles = { "3tnk", "4tnk", "katy" }
+				Vehicles = { "3tnk", "btr.ai", "4tnk", "v2rl" }
 			},
 			hard = {
 				Infantry = { "e3", "e1", "e1", "e3", "shok", "e1", "shok", "e1", "e2", "e3", "e4" },
-				Vehicles = { "3tnk", "4tnk", "btr.ai", "katy", "ttra" }
+				Vehicles = { "3tnk", "4tnk", "btr.ai", "ttra", "v2rl" }
 			}
 		},
 		AttackPaths = SovietMainAttackPaths
@@ -263,43 +275,7 @@ WorldLoaded = function()
 	Trigger.OnEnteredProximityTrigger(GDIBaseTopRight.CenterPosition, WDist.New(16 * 1024), function(a, id)
 		if a.Owner == Greece then
 			Trigger.RemoveProximityTrigger(id)
-
-			local gdiForces = GDI.GetActors()
-			Utils.Do(gdiForces, function(a)
-				if a.Type ~= "player" then
-					a.Owner = Greece
-				end
-			end)
-
-			InitUSSRAttacks()
-
-			Trigger.AfterDelay(DateTime.Seconds(1), function()
-				Actor.Create("QueueUpdaterDummy", true, { Owner = Greece, Location = GDIBaseCenter.Location })
-				ObjectiveHoldOut = Greece.AddObjective("Hold out until reinforcements arrive.")
-				UserInterface.SetMissionText("Hold out until reinforcements arrive.", HSLColor.Yellow)
-				Greece.MarkCompletedObjective(ObjectiveFindBase)
-			end)
-
-			Trigger.AfterDelay(HoldOutTime[Difficulty] - DateTime.Seconds(20), function()
-				McvFlare = Actor.Create("flare", true, { Owner = Greece, Location = McvRally.Location })
-				Media.PlaySpeechNotification(Greece, "SignalFlare")
-				Beacon.New(Greece, McvRally.CenterPosition)
-				Trigger.AfterDelay(DateTime.Seconds(20), function()
-					McvFlare.Destroy()
-				end)
-			end)
-
-			Trigger.AfterDelay(HoldOutTime[Difficulty], function()
-				ObjectiveLocateCommander = Greece.AddObjective("Locate the GDI commander.")
-				Greece.MarkCompletedObjective(ObjectiveHoldOut)
-				UserInterface.SetMissionText("Locate the GDI commander.", HSLColor.Yellow)
-
-				Trigger.AfterDelay(DateTime.Seconds(1), function()
-					Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
-					Reinforcements.Reinforce(Greece, { "mcv" }, { McvEntry.Location, McvRally.Location })
-					Beacon.New(Greece, McvRally.CenterPosition)
-				end)
-			end)
+			GDIBaseFound()
 		end
 	end)
 
@@ -369,6 +345,11 @@ WorldLoaded = function()
 			GDICommanderAlive = false
 		end
 	end)
+
+	-- Add V3s to advanced squad after 17 mins
+	Trigger.AfterDelay(DateTime.Minutes(17), function()
+		Squads.MainAdvanced.Units.hard.Vehicles = { "3tnk", "4tnk", "btr.ai", "ttra", "v2rl", "v3rl" }
+	end)
 end
 
 Tick = function()
@@ -407,6 +388,49 @@ end
 
 -- Functions
 
+GDIBaseFound = function()
+	if not IsGDIBaseFound then
+		IsGDIBaseFound = true
+
+		local gdiForces = GDI.GetActors()
+		Utils.Do(gdiForces, function(a)
+			if a.Type ~= "player" then
+				a.Owner = Greece
+			end
+		end)
+
+		InitUSSRAttacks()
+
+		Trigger.AfterDelay(DateTime.Seconds(1), function()
+			Actor.Create("QueueUpdaterDummy", true, { Owner = Greece, Location = GDIBaseCenter.Location })
+			ObjectiveHoldOut = Greece.AddObjective("Hold out until reinforcements arrive.")
+			UserInterface.SetMissionText("Hold out until reinforcements arrive.", HSLColor.Yellow)
+			Greece.MarkCompletedObjective(ObjectiveFindBase)
+		end)
+
+		Trigger.AfterDelay(HoldOutTime[Difficulty] - DateTime.Seconds(20), function()
+			McvFlare = Actor.Create("flare", true, { Owner = Greece, Location = McvRally.Location })
+			Media.PlaySpeechNotification(Greece, "SignalFlare")
+			Beacon.New(Greece, McvRally.CenterPosition)
+			Trigger.AfterDelay(DateTime.Seconds(20), function()
+				McvFlare.Destroy()
+			end)
+		end)
+
+		Trigger.AfterDelay(HoldOutTime[Difficulty], function()
+			ObjectiveLocateCommander = Greece.AddObjective("Locate the GDI commander.")
+			Greece.MarkCompletedObjective(ObjectiveHoldOut)
+			UserInterface.SetMissionText("Locate the GDI commander.", HSLColor.Yellow)
+
+			Trigger.AfterDelay(DateTime.Seconds(1), function()
+				Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
+				Reinforcements.Reinforce(Greece, { "mcv" }, { McvEntry.Location, McvRally.Location })
+				Beacon.New(Greece, McvRally.CenterPosition)
+			end)
+		end)
+	end
+end
+
 PlayerForcesDefeated = function()
 	if ObjectiveFindBase ~= nil and not Greece.IsObjectiveCompleted(ObjectiveFindBase) then
 		local playerActors = Greece.GetActors()
@@ -417,7 +441,7 @@ PlayerForcesDefeated = function()
 end
 
 InitUSSR = function()
-	AutoRepairAndRebuildBuildings(USSR)
+	AutoRepairAndRebuildBuildings(USSR, 15)
 	SetupRefAndSilosCaptureCredits(USSR)
 	AutoReplaceHarvesters(USSR)
 	InitUSSRPatrols()
@@ -451,6 +475,14 @@ InitUSSR = function()
 				end)
 			end
 		end)
+	end)
+
+	Trigger.OnKilled(SovietNorthFactory, function(self, killer)
+		TransitionHaloDrops()
+	end)
+
+	Trigger.OnCapture(SovietNorthFactory, function(self, captor, oldOwner, newOwner)
+		TransitionHaloDrops()
 	end)
 end
 
@@ -488,11 +520,10 @@ InitUSSRAttacks = function()
 	end)
 
 	Trigger.AfterDelay(Squads.Migs.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Migs, USSR, Greece, { "harv", "harv.td", "pbox", "pris", "ptnk", "mtnk", "2tnk" })
+		InitAirAttackSquad(Squads.Migs, USSR, Greece, { "harv", "harv.td", "pris", "ifv", "cryo", "ptnk", "pcan" })
 	end)
 
 	InitAttackSquad(Squads.Naval, USSR)
-
 
 	Trigger.AfterDelay(HaloDropStart[Difficulty], function()
 		DoHaloDrop()
@@ -505,6 +536,10 @@ end
 
 IsUSSRGroundHunterUnit = function(actor)
 	return actor.Owner == USSR and actor.HasProperty("Move") and not actor.HasProperty("Land") and actor.HasProperty("Hunt") and actor.Type ~= "v2rl" and actor.Type ~= "katy"
+end
+
+TransitionHaloDrops = function()
+	HaloDropPaths = LateHaloDropPaths
 end
 
 DoHaloDrop = function()

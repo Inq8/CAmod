@@ -29,6 +29,8 @@ WallTypes = { "sbag", "fenc", "brik", "cycl", "barb" }
 
 KeyStructures = { "fact", "afac", "sfac", "proc", "proc.td", "proc.scrin", "weap", "weap.td", "airs", "wsph", "dome", "hq", "nerv" }
 
+NextRebuildTimes = { }
+
 InitObjectives = function(player)
 	Trigger.OnObjectiveAdded(player, function(p, id)
 		Trigger.AfterDelay(1, function()
@@ -150,7 +152,7 @@ AssaultPlayerBaseOrHunt = function(actor, player)
 	end
 end
 
-AutoRepairAndRebuildBuildings = function(player)
+AutoRepairAndRebuildBuildings = function(player, maxRebuildAttempts)
 	local buildings = Utils.Where(Map.ActorsInWorld, function(self) return self.Owner == player and self.HasProperty("StartBuildingRepairs") end)
 	Utils.Do(buildings, function(a)
 		AutoRepairBuilding(a, player)
@@ -169,7 +171,7 @@ AutoRepairBuilding = function(building, player)
 	end)
 end
 
-AutoRebuildBuilding = function(building, player)
+AutoRebuildBuilding = function(building, player, maxAttempts)
 	if building.IsDead then
 		return
 	end
@@ -177,20 +179,37 @@ AutoRebuildBuilding = function(building, player)
 		local buildingType = self.Type
 		local loc = self.Location
 		local pos = self.CenterPosition
-		BuildBuilding(buildingType, player, loc, pos)
+		RebuildBuilding(buildingType, player, loc, pos, 1, maxAttempts)
 	end)
 end
 
-BuildBuilding = function(buildingType, player, loc, pos)
-	local buildTime = math.ceil(Actor.BuildTime(buildingType) * BuildTimeMultipliers[Difficulty])
-	local randomExtraTime = Utils.RandomInteger(DateTime.Seconds(10), DateTime.Seconds(30))
+RebuildBuilding = function(buildingType, player, loc, pos, attemptNumber, maxAttempts)
 
-	Trigger.AfterDelay(buildTime + randomExtraTime, function()
+	-- If next build time set for player, or it's in the past, set to current game time
+	if NextRebuildTimes[player] == nil or NextRebuildTimes[player] < DateTime.GameTime then
+		NextRebuildTimes[player] = DateTime.GameTime
+	end
+
+	local buildTime = math.ceil(Actor.BuildTime(buildingType) * BuildTimeMultipliers[Difficulty])
+	local delayToAdd = NextRebuildTimes[player] - DateTime.GameTime
+
+	-- Add build time of the next building to the next build time for the player
+	if attemptNumber == 1 then
+		NextRebuildTimes[player] = NextRebuildTimes[player] + buildTime
+	elseif delayToAdd < DateTime.Seconds(30) then
+		delayToAdd = DateTime.Seconds(30)
+	end
+
+	Trigger.AfterDelay(buildTime + delayToAdd, function()
 		if HasConyard(player) then
 			local topLeft = WPos.New(pos.X - 8192, pos.Y - 8192, 0)
 			local bottomRight = WPos.New(pos.X + 8192, pos.Y + 8192, 0)
 			local nearbyBuildings = Map.ActorsInBox(topLeft, bottomRight, function(a)
 				return not a.IsDead and a.Owner == player and a.HasProperty("StartBuildingRepairs")
+			end)
+
+			local nearbyEnemyBuildings = Map.ActorsInBox(topLeft, bottomRight, function(a)
+				return not a.IsDead and a.Owner ~= player and a.HasProperty("StartBuildingRepairs")
 			end)
 
 			topLeft = WPos.New(pos.X - 2048, pos.Y - 2048, 0)
@@ -199,18 +218,14 @@ BuildBuilding = function(buildingType, player, loc, pos)
 				return not a.IsDead and a.HasProperty("Move")
 			end)
 
-			local nearbyEnemyBuildings = Map.ActorsInBox(topLeft, bottomRight, function(a)
-				return not a.IsDead and a.Owner ~= player and a.HasProperty("StartBuildingRepairs")
-			end)
-
 			-- Rebuild if no units are nearby (potentially blocking), no enemy buildings are nearby, and friendly buildings are in the area
 			if #nearbyBuildings > 0 and #nearbyUnits == 0 and #nearbyEnemyBuildings == 0 then
 				local b = Actor.Create(buildingType, true, { Owner = player, Location = loc })
 				AutoRepairBuilding(b, player);
 				AutoRebuildBuilding(b, player);
 			-- Otherwise retry
-			else
-				BuildBuilding(buildingType, player, loc, pos)
+			elseif maxAttempts == nil or attemptNumber < maxAttempts then
+				RebuildBuilding(buildingType, player, loc, pos, attemptNumber + 1, maxAttempts)
 			end
 		end
 	end)
@@ -421,19 +436,20 @@ SendAttackSquad = function(squad)
 					squadLeader = a;
 				end
 
+				Trigger.OnDamaged(a, function(self, attacker, damage)
+					ClearSquadLeader(self, attackPath[#attackPath])
+				end)
+
 				if squadLeader == nil or a == squadLeader or not a.HasProperty("Guard") then
 					a.Patrol(attackPath, false)
 				else
 					a.AttackMove(attackPath[1])
 					a.Guard(squadLeader)
-					Trigger.OnDamaged(squadLeader, function(self, attacker, damage)
-						ClearSquadLeader(a, attackPath[#attackPath])
-					end)
 					Trigger.OnKilled(squadLeader, function(self, killer)
-						ClearSquadLeader(a, attackPath[#attackPath])
+						ClearSquadLeader(self, attackPath[#attackPath])
 					end)
 					Trigger.OnIdle(squadLeader, function(self)
-						ClearSquadLeader(a, attackPath[#attackPath])
+						ClearSquadLeader(self, attackPath[#attackPath])
 					end)
 				end
 			end
@@ -450,7 +466,7 @@ ClearSquadLeader = function(actor, attackWaypoint)
 			IdleHunt(actor)
 			if not actor.IsDead and actor.IsInWorld then
 				actor.Stop()
-				actor.AttackMove(attackWaypoint)
+				actor.AttackMove(attackWaypoint, 3)
 			end
 		end)
 	end

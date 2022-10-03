@@ -787,7 +787,11 @@
 	DamageTypeDamageMultiplier@CYBORGFLAKARMOR:
 		RequiresCondition: cyborgarmor-upgrade
 		DamageTypes: FlakVestMitigated
-		Modifier: 90
+		Modifier: 85
+	DamageTypeDamageMultiplier@CYBORGFLAKARMORMINOR:
+		RequiresCondition: cyborgarmor-upgrade
+		DamageTypes: FlakVestMitigatedMinor
+		Modifier: 95
 
 ^BinoUpgrade:
 	ExternalCondition@BINO:
@@ -1775,7 +1779,7 @@
 	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 		Condition: repair-cooldown
 		RequiredHealing: 85000
-		StackDuration: 750
+		StackDuration: 1000
 		MinimumHealing: 2500
 		DamageTypes: DirectRepair
 		ShowSelectionBar: true

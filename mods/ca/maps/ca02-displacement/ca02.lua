@@ -329,7 +329,7 @@ InitConvoy = function()
 end
 
 InitScrin = function()
-	AutoRepairAndRebuildBuildings(Scrin)
+	AutoRepairAndRebuildBuildings(Scrin, 15)
 	SetupRefAndSilosCaptureCredits(Scrin)
 	AutoReplaceHarvesters(Scrin)
 

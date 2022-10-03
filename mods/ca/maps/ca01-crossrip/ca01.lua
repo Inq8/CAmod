@@ -248,8 +248,8 @@ WorldLoaded = function()
 end
 
 Tick = function()
-	if not baseEstablished and HasConyard(Greece) then
-		baseEstablished = true
+	if not IsBaseEstablished and HasConyard(Greece) then
+		IsBaseEstablished = true
 		if ObjectiveInvestigateArea == nil then
 			ObjectiveInvestigateArea = Greece.AddObjective("Investigate the area.")
 			UserInterface.SetMissionText(nil)
@@ -296,7 +296,7 @@ end
 -- Functions
 
 InitUSSR = function()
-	AutoRepairAndRebuildBuildings(USSR)
+	AutoRepairAndRebuildBuildings(USSR, 10)
 	SetupRefAndSilosCaptureCredits(USSR)
 	AutoReplaceHarvesters(USSR)
 
@@ -339,11 +339,14 @@ InitUSSR = function()
 		InitAirAttackSquad(Squads.Migs, USSR, Greece, { "harv", "pris", "agun", "pbox" })
 	end)
 
+	-- On player crossing Soviet border start making infantry at western barracks
 	Trigger.OnEnteredFootprint(SovietBorder, function(a, id)
-		-- On player crossing Soviet border start making infantry at western barracks
-		if not sovietBorderCrossed and a.Owner == Greece then
-			sovietBorderCrossed = true
-			InitAttackSquad(Squads.Western, USSR)
+		if a.Owner == Greece then
+			Trigger.RemoveFootprintTrigger(id)
+			if not IsWesternSquadActive then
+				IsWesternSquadActive = true
+				InitAttackSquad(Squads.Western, USSR)
+			end
 		end
 	end)
 
@@ -392,9 +395,9 @@ ScrinInvasion = function()
 	end)
 
 	Trigger.AfterDelay(ScrinInvasionInterval[Difficulty], ScrinInvasion)
-	if not invasionStarted then
+	if not IsInvasionStarted then
 		Trigger.AfterDelay(ScrinInvasionInterval[Difficulty] * 2, CreateScrinVehicles)
-		invasionStarted = true
+		IsInvasionStarted = true
 	end
 end
 
@@ -415,9 +418,9 @@ CreateScrinVehicles = function()
 end
 
 ChronosphereDiscovered = function()
-	if not chronosphereDiscovered then
-		baseEstablished = true
-		chronosphereDiscovered = true
+	if not IsChronosphereDiscovered then
+		IsBaseEstablished = true
+		IsChronosphereDiscovered = true
 		Notification("Commander, the Soviets have been attempting to reverse engineer stolen Chronosphere technology! Use whatever means necessary to cease their experiments.")
 
 		AutoChronoCamera = Actor.Create("smallcamera", true, { Owner = Greece, Location = SovietChronosphereLocation })
@@ -436,11 +439,11 @@ ChronosphereDiscovered = function()
 end
 
 InterdimensionalCrossrip = function()
-	if crossRipped then
+	if IsCrossRipped then
 		return
 	end
 
-	crossRipped = true
+	IsCrossRipped = true
 
 	Lighting.Ambient = 0.8
 	Lighting.Red = 0.8
@@ -510,7 +513,7 @@ AssaultPlayerBase = function(actor)
 end
 
 DoHaloDrop = function(entryPaths)
-	if crossRipped then
+	if IsCrossRipped then
 		return
 	end
 
@@ -541,7 +544,7 @@ DoHaloDrop = function(entryPaths)
 end
 
 DoSovietNavalDrop = function()
-	if crossRipped then
+	if IsCrossRipped then
 		return
 	end
 
