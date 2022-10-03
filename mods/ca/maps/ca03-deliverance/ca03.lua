@@ -260,7 +260,7 @@ WorldLoaded = function()
 	end
 
 	-- On finding the GDI base, transfer ownership to player
-	Trigger.OnEnteredProximityTrigger(GDIRefinery.CenterPosition, WDist.New(9 * 1024), function(a, id)
+	Trigger.OnEnteredProximityTrigger(GDIBaseTopRight.CenterPosition, WDist.New(16 * 1024), function(a, id)
 		if a.Owner == Greece then
 			Trigger.RemoveProximityTrigger(id)
 
@@ -310,7 +310,7 @@ WorldLoaded = function()
 			Beacon.New(Greece, GDICommanderSpawn.CenterPosition)
 			ObjectiveCapturePrison = Greece.AddObjective("Take control of prison and rescue GDI commander.")
 
-			if ObjectiveLocateCommander ~= nil then
+			if ObjectiveLocateCommander ~= nil and not Greece.IsObjectiveCompleted(ObjectiveLocateCommander) then
 				Greece.MarkCompletedObjective(ObjectiveLocateCommander)
 			end
 
@@ -326,6 +326,10 @@ WorldLoaded = function()
 	Trigger.OnCapture(SovietPrison, function(self, captor, oldOwner, newOwner)
 		if newOwner == Greece then
 			local commander = Reinforcements.Reinforce(GDI, { "gnrl" }, { GDICommanderSpawn.Location, GDICommanderRally.Location })[1]
+
+			if ObjectiveLocateCommander ~= nil and not Greece.IsObjectiveCompleted(ObjectiveLocateCommander) then
+				Greece.MarkCompletedObjective(ObjectiveLocateCommander)
+			end
 
 			Trigger.OnKilled(commander, function(self, killer)
 				GDICommanderAlive = false
@@ -535,7 +539,7 @@ end
 
 AssaultPlayerBase = function(actor)
 	if not actor.IsDead then
-		actor.Patrol({ GDIBaseCenter.Location, ShoreCenter.Location })
+		actor.Patrol({ GDIBaseCenter.Location, EastAttackRally.Location, ShoreCenter.Location, VillageCenter.Location })
 	end
 	IdleHunt(actor)
 end
