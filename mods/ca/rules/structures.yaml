@@ -515,7 +515,7 @@ PDOX:
 		Icon: chrono
 		Cursor: ability
 		ChargeInterval: 7000
-		Name: Chronoshift
+		Name: Chronoshift (AI)
 		ActivationDelay: 25
 		Description: \nTeleports selected units to a targeted location,\n    returning to their original location\n    after a short time.
 		Weapon: ChronoAI
@@ -4137,13 +4137,27 @@ HQ:
 		SupportPowerPaletteOrder: 50
 	ProduceActorPowerCA@hackercell:
 		OrderName: hackercell
-		Prerequisites: infantry.any, ~radar.legion
+		Prerequisites: infantry.any, ~radar.legion, ~!botplayer
 		Icon: hackercell
 		Type: ParadropInfantry
 		SelectTargetSpeechNotification: SelectTarget
 		ChargeInterval: 7500
 		Name: Hacker Cell
 		Description: \nDeploy a squad of hackers that can remotely\n    capture buildings and take control of defenses.\n\nTarget infantry production structure to deploy.
+		Actors: hack, hack, hack
+		LaunchSpeechNotification: ReinforcementsArrived
+		EndChargeSpeechNotification: Reinforce
+		PauseOnCondition: disabled || empdisable || being-warped
+		SupportPowerPaletteOrder: 50
+	ProduceActorPowerCA@hackercellAI:
+		OrderName: hackercellai
+		Prerequisites: infantry.any, ~radar.legion, ~botplayer
+		Icon: hackercell
+		Type: ParadropInfantry
+		SelectTargetSpeechNotification: SelectTarget
+		ChargeInterval: 7500
+		Name: Hacker Cell (AI)
+		Description: \nDeploy a squad of hackers that can remotely\n    capture buildings and take control of defenses.
 		Actors: hack, hack, hack
 		LaunchSpeechNotification: ReinforcementsArrived
 		EndChargeSpeechNotification: Reinforce
