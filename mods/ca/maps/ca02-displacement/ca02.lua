@@ -168,6 +168,7 @@ WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
 	USSR = Player.GetPlayer("USSR")
 	Neutral = Player.GetPlayer("Neutral")
+	MissionPlayer = Greece
 	TimerTicks = 0
 	TrucksLost = 0
 	NextConvoyIdx = 1
@@ -213,38 +214,45 @@ WorldLoaded = function()
 end
 
 Tick = function()
-	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		OncePerSecondChecks()
-	end
+	OncePerSecondChecks()
+	OncePerFiveSecondChecks()
 end
 
 OncePerSecondChecks = function()
-	Scrin.Cash = 5000
-	Scrin.Resources = 5000
+	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
+		Scrin.Cash = 5000
+		Scrin.Resources = 5000
 
-	if TimerTicks > 0 then
-		if TimerTicks > 25 then
-			TimerTicks = TimerTicks - 25
-		else
-			TimerTicks = 0
+		if TimerTicks > 0 then
+			if TimerTicks > 25 then
+				TimerTicks = TimerTicks - 25
+			else
+				TimerTicks = 0
+			end
+			UpdateConvoyCountdown()
 		end
-		UpdateConvoyCountdown()
+
+		if Greece.HasNoRequiredUnits() then
+			if ObjectiveClearPath ~= nil and not Greece.IsObjectiveCompleted(ObjectiveClearPath) then
+				Greece.MarkFailedObjective(ObjectiveClearPath)
+			end
+			if ObjectiveProtectConvoys ~= nil and not Greece.IsObjectiveCompleted(ObjectiveProtectConvoys) then
+				Greece.MarkFailedObjective(ObjectiveProtectConvoys)
+			end
+			if ObjectiveDestroyScrinBase ~= nil and not Greece.IsObjectiveCompleted(ObjectiveDestroyScrinBase) then
+				Greece.MarkFailedObjective(ObjectiveDestroyScrinBase)
+			end
+		end
+
+		if ObjectiveDestroyScrinBase ~= nil and not HasOneOf(Scrin, { "reac", "rea2", "sfac", "proc.scrin", "port", "wsph", "nerv", "grav", "scrt", "srep" }) then
+			Greece.MarkCompletedObjective(ObjectiveDestroyScrinBase)
+		end
 	end
+end
 
-	if Greece.HasNoRequiredUnits() then
-		if ObjectiveClearPath ~= nil and not Greece.IsObjectiveCompleted(ObjectiveClearPath) then
-			Greece.MarkFailedObjective(ObjectiveClearPath)
-		end
-		if ObjectiveProtectConvoys ~= nil and not Greece.IsObjectiveCompleted(ObjectiveProtectConvoys) then
-			Greece.MarkFailedObjective(ObjectiveProtectConvoys)
-		end
-		if ObjectiveDestroyScrinBase ~= nil and not Greece.IsObjectiveCompleted(ObjectiveDestroyScrinBase) then
-			Greece.MarkFailedObjective(ObjectiveDestroyScrinBase)
-		end
-	end
-
-	if ObjectiveDestroyScrinBase ~= nil and not HasOneOf(Scrin, { "reac", "rea2", "sfac", "proc.scrin", "port", "wsph", "nerv", "grav", "scrt", "srep" }) then
-		Greece.MarkCompletedObjective(ObjectiveDestroyScrinBase)
+OncePerFiveSecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
+		UpdatePlayerBaseLocation()
 	end
 end
 

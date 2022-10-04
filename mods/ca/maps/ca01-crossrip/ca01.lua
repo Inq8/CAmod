@@ -224,6 +224,7 @@ WorldLoaded = function()
 	Greece = Player.GetPlayer("Greece")
 	USSR = Player.GetPlayer("USSR")
 	Scrin = Player.GetPlayer("Scrin")
+	MissionPlayer = Greece
 	TimerTicks = 0
 
 	Trigger.AfterDelay(1, function()
@@ -257,39 +258,46 @@ Tick = function()
 		Greece.MarkCompletedObjective(ObjectiveEstablishBase)
 	end
 
-	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		OncePerSecondChecks()
-	end
+	OncePerSecondChecks()
+	OncePerFiveSecondChecks()
 end
 
 OncePerSecondChecks = function()
-	USSR.Cash = 5000
-	USSR.Resources = 5000
+	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
+		USSR.Cash = 5000
+		USSR.Resources = 5000
 
-	if TimerTicks > 0 then
-		if TimerTicks > 25 then
-			TimerTicks = TimerTicks - 25
-			UserInterface.SetMissionText("Evacuation begins in " .. Utils.FormatTime(TimerTicks), HSLColor.Yellow)
-		else
-			TimerTicks = 0
-			UserInterface.SetMissionText("Evacuation underway.", HSLColor.Yellow)
-			Greece.MarkCompletedObjective(ObjectiveDefendUntilEvacuation)
+		if TimerTicks > 0 then
+			if TimerTicks > 25 then
+				TimerTicks = TimerTicks - 25
+				UserInterface.SetMissionText("Evacuation begins in " .. Utils.FormatTime(TimerTicks), HSLColor.Yellow)
+			else
+				TimerTicks = 0
+				UserInterface.SetMissionText("Evacuation underway.", HSLColor.Yellow)
+				Greece.MarkCompletedObjective(ObjectiveDefendUntilEvacuation)
+			end
+		end
+
+		if Greece.HasNoRequiredUnits() then
+			if ObjectiveEstablishBase ~= nil and not Greece.IsObjectiveCompleted(ObjectiveEstablishBase) then
+				Greece.MarkFailedObjective(ObjectiveEstablishBase)
+			end
+			if ObjectiveInvestigateArea ~= nil and not Greece.IsObjectiveCompleted(ObjectiveInvestigateArea) then
+				Greece.MarkFailedObjective(ObjectiveInvestigateArea)
+			end
+			if ObjectiveCaptureOrDestroyChronosphere ~= nil and not Greece.IsObjectiveCompleted(ObjectiveCaptureOrDestroyChronosphere) then
+				Greece.MarkFailedObjective(ObjectiveCaptureOrDestroyChronosphere)
+			end
+			if ObjectiveDefendUntilEvacuation ~= nil and not Greece.IsObjectiveCompleted(ObjectiveDefendUntilEvacuation) then
+				Greece.MarkFailedObjective(ObjectiveDefendUntilEvacuation)
+			end
 		end
 	end
+end
 
-	if Greece.HasNoRequiredUnits() then
-		if ObjectiveEstablishBase ~= nil and not Greece.IsObjectiveCompleted(ObjectiveEstablishBase) then
-			Greece.MarkFailedObjective(ObjectiveEstablishBase)
-		end
-		if ObjectiveInvestigateArea ~= nil and not Greece.IsObjectiveCompleted(ObjectiveInvestigateArea) then
-			Greece.MarkFailedObjective(ObjectiveInvestigateArea)
-		end
-		if ObjectiveCaptureOrDestroyChronosphere ~= nil and not Greece.IsObjectiveCompleted(ObjectiveCaptureOrDestroyChronosphere) then
-			Greece.MarkFailedObjective(ObjectiveCaptureOrDestroyChronosphere)
-		end
-		if ObjectiveDefendUntilEvacuation ~= nil and not Greece.IsObjectiveCompleted(ObjectiveDefendUntilEvacuation) then
-			Greece.MarkFailedObjective(ObjectiveDefendUntilEvacuation)
-		end
+OncePerFiveSecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
+		UpdatePlayerBaseLocation()
 	end
 end
 
@@ -369,27 +377,24 @@ InitUSSR = function()
 					SovietChronosphere.Kill()
 				end
 			end)
-			local sovietGroundAttackers = USSR.GetGroundAttackers()
-			Utils.Do(sovietGroundAttackers, function(a)
-				Trigger.AfterDelay(Utils.RandomInteger(5,250), function()
-					if not a.IsDead then
-						a.Kill()
-					end
-				end)
-			end)
 		end)
 	end
 end
 
 ScrinInvasion = function()
 	local wormholes = Scrin.GetActorsByType("wormhole")
+	local assaultWaypoints = { AttackWaypoint5.Location }
+
+	if Utils.RandomInteger(0,2) == 1 then
+		assaultWaypoints = { AttackWaypoint4.Location, AttackWaypoint5.Location }
+	end
 
 	Utils.Do(wormholes, function(wormhole)
 		local units = Reinforcements.Reinforce(Scrin, ScrinInfantrySquads[Difficulty], { wormhole.Location }, 1)
 		Utils.Do(units, function(unit)
 			unit.Scatter()
 			Trigger.AfterDelay(5, function()
-				AssaultPlayerBase(unit)
+				AssaultPlayerBaseOrHunt(unit, assaultWaypoints)
 			end)
 		end)
 	end)
@@ -409,7 +414,7 @@ CreateScrinVehicles = function()
 		Utils.Do(units, function(unit)
 			unit.Scatter()
 			Trigger.AfterDelay(5, function()
-				AssaultPlayerBase(unit)
+				AssaultPlayerBaseOrHunt(unit, assaultWaypoints)
 			end)
 		end)
 	end)
@@ -444,6 +449,19 @@ InterdimensionalCrossrip = function()
 	end
 
 	IsCrossRipped = true
+
+	if not SovietWarFactory.IsDead then
+		SovietWarFactory.Kill()
+	end
+
+	local sovietGroundAttackers = USSR.GetGroundAttackers()
+	Utils.Do(sovietGroundAttackers, function(a)
+		Trigger.AfterDelay(Utils.RandomInteger(5,250), function()
+			if not a.IsDead then
+				a.Kill()
+			end
+		end)
+	end)
 
 	Lighting.Ambient = 0.8
 	Lighting.Red = 0.8
@@ -502,16 +520,6 @@ SpawnWormhole = function()
 	end
 end
 
-AssaultPlayerBase = function(actor)
-	if not actor.IsDead then
-		if Utils.RandomInteger(0,2) == 1 then
-			actor.AttackMove(AttackWaypoint4.Location)
-		end
-		actor.AttackMove(AttackWaypoint5.Location)
-	end
-	IdleHunt(actor)
-end
-
 DoHaloDrop = function(entryPaths)
 	if IsCrossRipped then
 		return
@@ -524,7 +532,7 @@ DoHaloDrop = function(entryPaths)
 		haloDropUnits = { "e1", "e1", "e1", "e1", "e2", "e2", "e3", "e3", "e4", "shok" }
 	end
 
-	DoHelicopterDrop(USSR, entryPath, "halo.paradrop", haloDropUnits, AssaultPlayerBase, function(t)
+	DoHelicopterDrop(USSR, entryPath, "halo.paradrop", haloDropUnits, AssaultPlayerBaseOrHunt, function(t)
 		Trigger.AfterDelay(DateTime.Seconds(5), function()
 			if not t.IsDead then
 				t.Move(entryPath[1])
@@ -552,7 +560,7 @@ DoSovietNavalDrop = function()
 	local navalDropExitPath = { navalDropPath[2], navalDropPath[1] }
 	local navalDropUnits = { "3tnk", "v2rl", "3tnk" }
 
-	DoNavalTransportDrop(USSR, navalDropPath, navalDropExitPath, "lst", navalDropUnits, AssaultPlayerBase)
+	DoNavalTransportDrop(USSR, navalDropPath, navalDropExitPath, "lst", navalDropUnits, AssaultPlayerBaseOrHunt)
 
 	Trigger.AfterDelay(NavalDropInterval[Difficulty], DoSovietNavalDrop)
 end
@@ -565,7 +573,7 @@ SendDevastators = function()
 
 	Utils.Do(units, function(unit)
 		Trigger.AfterDelay(5, function()
-			AssaultPlayerBase(unit)
+			AssaultPlayerBaseOrHunt(unit)
 		end)
 	end)
 end

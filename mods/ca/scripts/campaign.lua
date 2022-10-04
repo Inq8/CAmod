@@ -27,9 +27,11 @@ CashRewardOnCaptureTypes = { "proc", "proc.td", "proc.scrin", "silo", "silo.td",
 
 WallTypes = { "sbag", "fenc", "brik", "cycl", "barb" }
 
-KeyStructures = { "fact", "afac", "sfac", "proc", "proc.td", "proc.scrin", "weap", "weap.td", "airs", "wsph", "dome", "hq", "nerv" }
+KeyStructures = { "fact", "afac", "sfac", "proc", "proc.td", "proc.scrin", "weap", "weap.td", "airs", "wsph", "dome", "hq", "nerv", "atek", "stek", "gtek", "tmpl", "scrt" }
 
 NextRebuildTimes = { }
+
+SquadLeaders = { }
 
 InitObjectives = function(player)
 	Trigger.OnObjectiveAdded(player, function(p, id)
@@ -140,17 +142,41 @@ IdleHunt = function(actor)
 	end
 end
 
-AssaultPlayerBaseOrHunt = function(actor, player)
-	if not actor.IsDead and actor.IsInWorld then
-		local keyBaseBuildings = player.GetActorsByTypes(KeyStructures)
-		if #keyBaseBuildings > 0 then
-			local keyBaseBuilding = Utils.Random(keyBaseBuildings)
-			actor.AttackMove(keyBaseBuilding.Location)
-		else
-			if actor.HasProperty("Hunt") then
+AssaultPlayerBaseOrHunt = function(actor, waypoints)
+	Trigger.AfterDelay(1, function()
+		if not actor.IsDead then
+			if waypoints ~= nil then
+				Utils.Do(waypoints, function(w)
+					actor.AttackMove(w)
+				end)
+			end
+			if PlayerBaseLocation ~= nil then
+				local possibleCellsInner = Utils.ExpandFootprint({ PlayerBaseLocation }, true)
+				local possibleCells = Utils.ExpandFootprint(possibleCellsInner, false)
+				local cell = Utils.Random(possibleCells)
+				actor.AttackMove(cell)
+			elseif actor.HasProperty("Hunt") then
 				actor.Hunt()
 			end
+			Trigger.AfterDelay(1, function()
+				if not actor.IsDead then
+					Trigger.OnIdle(actor, function(a)
+						AssaultPlayerBaseOrHunt(a)
+					end)
+				end
+			end)
 		end
+	end)
+end
+
+UpdatePlayerBaseLocation = function()
+	if MissionPlayer == nil then
+		return
+	end
+	local keyBaseBuildings = MissionPlayer.GetActorsByTypes(KeyStructures)
+	if #keyBaseBuildings > 0 then
+		local keyBaseBuilding = Utils.Random(keyBaseBuildings)
+		PlayerBaseLocation = keyBaseBuilding.Location
 	end
 end
 
@@ -332,7 +358,7 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 			Trigger.AfterDelay(DateTime.Seconds(2), function()
 				if squad.AirTargetTypes ~= nil and squad.AirTargetPlayer ~= nil then
 					Utils.Do(squad.IdleUnits, function(a)
-						if not a.IsDead and a.IsInWorld then
+						if not a.IsDead then
 							InitializeAttackAircraft(a, squad.AirTargetPlayer, squad.AirTargetTypes)
 						end
 					end)
@@ -385,7 +411,7 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 
 					if produced.HasProperty("HasPassengers") and not produced.IsDead then
 						Trigger.OnPassengerExited(produced, function(t, p)
-							IdleHunt(p)
+							AssaultPlayerBaseOrHunt(p)
 						end)
 					end
 
@@ -428,49 +454,89 @@ end
 
 SendAttackSquad = function(squad)
 	local squadLeader = nil
+	local attackPath = nil
+
+	if squad.AttackPaths ~= nil then
+		attackPath = Utils.Random(squad.AttackPaths)
+	end
 
 	Utils.Do(squad.IdleUnits, function(a)
-		if squad.AttackPaths ~= nil then
-			local attackPath = Utils.Random(squad.AttackPaths)
+		local actorId = tostring(a)
 
+		if attackPath ~= nil then
 			if not a.IsDead and a.IsInWorld then
 				if squad.FollowLeader ~= nil and squad.FollowLeader == true and squadLeader == nil then
 					squadLeader = a;
 				end
 
-				Trigger.OnDamaged(a, function(self, attacker, damage)
-					ClearSquadLeader(self, attackPath[#attackPath])
-				end)
-
-				if squadLeader == nil or a == squadLeader or not a.HasProperty("Guard") then
-					a.Patrol(attackPath, false)
-				else
-					a.AttackMove(attackPath[1])
-					a.Guard(squadLeader)
-					Trigger.OnKilled(squadLeader, function(self, killer)
-						ClearSquadLeader(self, attackPath[#attackPath])
+				-- If squad leader, queue attack move to each attack path waypoint
+				if squadLeader == nil or a == squadLeader then
+					Utils.Do(attackPath, function(w)
+						a.AttackMove(w, 3)
+						if squad.IsNaval ~= nil and squad.IsNaval then
+							IdleHunt(a)
+						else
+							AssaultPlayerBaseOrHunt(a);
+						end
 					end)
-					Trigger.OnIdle(squadLeader, function(self)
-						ClearSquadLeader(self, attackPath[#attackPath])
+
+					-- On damaged or killed
+					Trigger.OnDamaged(a, function(self, attacker, damage)
+						ClearSquadLeader(squadLeader)
+					end)
+
+					Trigger.OnKilled(a, function(self, attacker, damage)
+						ClearSquadLeader(squadLeader)
+					end)
+
+				-- If not squad leader, follow the leader
+				else
+					SquadLeaders[actorId] = squadLeader
+					FollowSquadLeader(a)
+
+					-- If damaged (stop guarding, attack move to enemy base)
+					Trigger.OnDamaged(a, function(self, attacker, damage)
+						ClearSquadLeader(SquadLeaders[actorId])
 					end)
 				end
 			end
+		else
+			if squad.IsNaval ~= nil and squad.IsNaval then
+				IdleHunt(a)
+			else
+				AssaultPlayerBaseOrHunt(a);
+			end
 		end
-		IdleHunt(a)
 	end)
 	squad.IdleUnits = { }
 end
 
-ClearSquadLeader = function(actor, attackWaypoint)
+ClearSquadLeader = function(squadLeader)
+	for k,v in pairs(SquadLeaders) do
+		if v == squadLeader then
+			SquadLeaders[k] = nil
+		end
+	end
+end
+
+FollowSquadLeader = function(actor)
 	if not actor.IsDead and actor.IsInWorld then
-		Trigger.ClearAll(actor)
-		Trigger.AfterDelay(1, function()
-			IdleHunt(actor)
-			if not actor.IsDead and actor.IsInWorld then
-				actor.Stop()
-				actor.AttackMove(attackWaypoint, 3)
-			end
-		end)
+		local actorId = tostring(actor)
+
+		if SquadLeaders[actorId] ~= nil and not SquadLeaders[actorId].IsDead then
+			local possibleCells = Utils.ExpandFootprint({ SquadLeaders[actorId].Location }, true)
+			local cell = Utils.Random(possibleCells)
+			actor.Stop()
+			actor.AttackMove(cell, 1)
+
+			Trigger.AfterDelay(Utils.RandomInteger(35,65), function()
+				FollowSquadLeader(actor)
+			end)
+		else
+			actor.Stop()
+			Trigger.ClearAll(actor)
+			AssaultPlayerBaseOrHunt(actor);
+		end
 	end
 end
 

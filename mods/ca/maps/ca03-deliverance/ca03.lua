@@ -221,6 +221,7 @@ Squads = {
 	},
 	Naval = {
 		Player = nil,
+		IsNaval = true,
 		ActiveCondition = function()
 			return PlayerHasNavalProduction(Greece)
 		end,
@@ -250,6 +251,7 @@ WorldLoaded = function()
 	Greece = Player.GetPlayer("Greece")
 	GDI = Player.GetPlayer("GDI")
 	USSR = Player.GetPlayer("USSR")
+	MissionPlayer = Greece
 	TimerTicks = 0
 	GDICommanderAlive = true
 
@@ -352,39 +354,46 @@ WorldLoaded = function()
 end
 
 Tick = function()
-	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		OncePerSecondChecks()
-	end
+	OncePerSecondChecks()
+	OncePerFiveSecondChecks()
 end
 
 OncePerSecondChecks = function()
-	USSR.Cash = 5000
-	USSR.Resources = 5000
+	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
+		USSR.Cash = 5000
+		USSR.Resources = 5000
 
-	if TimerTicks > 0 then
-		if TimerTicks > 25 then
-			TimerTicks = TimerTicks - 25
-		else
-			TimerTicks = 0
+		if TimerTicks > 0 then
+			if TimerTicks > 25 then
+				TimerTicks = TimerTicks - 25
+			else
+				TimerTicks = 0
+			end
 		end
+
+		if PlayerForcesDefeated() or not GDICommanderAlive then
+			if ObjectiveFindBase ~= nil and not Greece.IsObjectiveCompleted(ObjectiveFindBase) then
+				Greece.MarkFailedObjective(ObjectiveFindBase)
+			end
+			if ObjectiveHoldOut ~= nil and not Greece.IsObjectiveCompleted(ObjectiveHoldOut) then
+				Greece.MarkFailedObjective(ObjectiveHoldOut)
+			end
+			if ObjectiveLocateCommander ~= nil and not Greece.IsObjectiveCompleted(ObjectiveLocateCommander) then
+				Greece.MarkFailedObjective(ObjectiveLocateCommander)
+			end
+			if ObjectiveCapturePrison ~= nil and not Greece.IsObjectiveCompleted(ObjectiveCapturePrison) then
+				Greece.MarkFailedObjective(ObjectiveCapturePrison)
+			end
+		end
+
+		NavalReinforcements()
 	end
+end
 
-	if PlayerForcesDefeated() or not GDICommanderAlive then
-		if ObjectiveFindBase ~= nil and not Greece.IsObjectiveCompleted(ObjectiveFindBase) then
-			Greece.MarkFailedObjective(ObjectiveFindBase)
-		end
-		if ObjectiveHoldOut ~= nil and not Greece.IsObjectiveCompleted(ObjectiveHoldOut) then
-			Greece.MarkFailedObjective(ObjectiveHoldOut)
-		end
-		if ObjectiveLocateCommander ~= nil and not Greece.IsObjectiveCompleted(ObjectiveLocateCommander) then
-			Greece.MarkFailedObjective(ObjectiveLocateCommander)
-		end
-		if ObjectiveCapturePrison ~= nil and not Greece.IsObjectiveCompleted(ObjectiveCapturePrison) then
-			Greece.MarkFailedObjective(ObjectiveCapturePrison)
-		end
+OncePerFiveSecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
+		UpdatePlayerBaseLocation()
 	end
-
-	NavalReinforcements()
 end
 
 -- Functions
@@ -563,7 +572,7 @@ DoHaloDrop = function()
 		haloDropUnits = { "e1", "e1", "e1", "e1", "e2", "e2", "e3", "e3", "e4", "shok" }
 	end
 
-	DoHelicopterDrop(USSR, entryPath, "halo.paradrop", haloDropUnits, AssaultPlayerBase, function(t)
+	DoHelicopterDrop(USSR, entryPath, "halo.paradrop", haloDropUnits, AssaultPlayerBaseOrHunt, function(t)
 		Trigger.AfterDelay(DateTime.Seconds(5), function()
 			if not t.IsDead then
 				t.Move(entryPath[1])
@@ -584,7 +593,7 @@ DoNavalDrop = function()
 		navalDropUnits = { "3tnk", "v3rl", "3tnk", "btr.ai" }
 	end
 
-	DoNavalTransportDrop(USSR, navalDropPath, navalDropExitPath, "lst", navalDropUnits, AssaultPlayerBase)
+	DoNavalTransportDrop(USSR, navalDropPath, navalDropExitPath, "lst", navalDropUnits, AssaultPlayerBaseOrHunt)
 
 	Trigger.AfterDelay(NavalDropInterval[Difficulty], DoNavalDrop)
 end
@@ -595,11 +604,11 @@ NavalReinforcements = function()
 		Trigger.AfterDelay(DateTime.Seconds(5), function()
 			local cruisers = { "ca", "ca" }
 
-			if Difficult == "hard" then
+			if Difficulty == "hard" then
 				cruisers = { "ca" }
 			end
 
-			local destroyers = { "dd", "dd" }
+			local destroyers = { "dd", "dd", "dd" }
 
 			Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
 			Beacon.New(Greece, CruiserSpawn.CenterPosition)
