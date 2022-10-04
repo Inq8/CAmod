@@ -67,23 +67,25 @@ end
 AttackAircraftTargets = { }
 InitializeAttackAircraft = function(aircraft, targetPlayer, targetTypes)
 	Trigger.OnIdle(aircraft, function(self)
-		local actorId = tostring(aircraft)
-		local target = AttackAircraftTargets[actorId]
+		if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
+			local actorId = tostring(aircraft)
+			local target = AttackAircraftTargets[actorId]
 
-		if not target or not target.IsInWorld then
-			if targetTypes ~= nil then
-				target = ChooseRandomTargetOfTypes(self, targetPlayer, targetTypes)
-			else
-				target = ChooseRandomTarget(self, targetPlayer)
+			if not target or not target.IsInWorld then
+				if targetTypes ~= nil then
+					target = ChooseRandomTargetOfTypes(self, targetPlayer, targetTypes)
+				else
+					target = ChooseRandomTarget(self, targetPlayer)
+				end
 			end
-		end
 
-		if target then
-			AttackAircraftTargets[actorId] = target
-			self.Attack(target)
-		else
-			AttackAircraftTargets[actorId] = nil
-			self.ReturnToBase()
+			if target then
+				AttackAircraftTargets[actorId] = target
+				self.Attack(target)
+			else
+				AttackAircraftTargets[actorId] = nil
+				self.ReturnToBase()
+			end
 		end
 	end)
 end
