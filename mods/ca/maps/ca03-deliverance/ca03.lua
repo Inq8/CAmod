@@ -66,8 +66,8 @@ NavalDropStart = {
 
 NavalDropInterval = {
 	easy = DateTime.Minutes(4),
-	normal = DateTime.Minutes(3),
-	hard = DateTime.Minutes(2)
+	normal = DateTime.Seconds(210),
+	hard = DateTime.Minutes(3)
 }
 
 HoldOutTime = {
@@ -222,8 +222,7 @@ Squads = {
 	Naval = {
 		Player = nil,
 		ActiveCondition = function()
-			local navalProductionBuildings = Greece.GetActorsByTypes({ "syrd", "spen" })
-			return #navalProductionBuildings > 0
+			return PlayerHasNavalProduction(Greece)
 		end,
 		Interval = {
 			easy = DateTime.Seconds(45),
@@ -384,6 +383,8 @@ OncePerSecondChecks = function()
 			Greece.MarkFailedObjective(ObjectiveCapturePrison)
 		end
 	end
+
+	NavalReinforcements()
 end
 
 -- Functions
@@ -428,6 +429,18 @@ GDIBaseFound = function()
 				Beacon.New(Greece, McvRally.CenterPosition)
 			end)
 		end)
+
+		if Difficulty ~= "hard" then
+			Trigger.AfterDelay(DateTime.Seconds(792), function()
+				Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
+				Beacon.New(Greece, GDIReinforcementsEntry.CenterPosition)
+				local gdiReinforcements = { "mtnk", "htnk" }
+				if Difficulty == "easy" then
+					gdiReinforcements = { "htnk" , "htnk" }
+				end
+				Reinforcements.Reinforce(Greece, gdiReinforcements, { GDIReinforcementsEntry.Location, GDIReinforcementsRally.Location }, 75)
+			end)
+		end
 	end
 end
 
@@ -520,7 +533,7 @@ InitUSSRAttacks = function()
 	end)
 
 	Trigger.AfterDelay(Squads.Migs.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Migs, USSR, Greece, { "harv", "harv.td", "pris", "ifv", "cryo", "ptnk", "pcan" })
+		InitAirAttackSquad(Squads.Migs, USSR, Greece, { "harv", "harv.td", "pris", "ifv", "cryo", "ptnk", "pcan", "ca" })
 	end)
 
 	InitAttackSquad(Squads.Naval, USSR)
@@ -544,8 +557,8 @@ end
 
 DoHaloDrop = function()
 	local entryPath = Utils.Random(HaloDropPaths)
-
 	local haloDropUnits = { "e1", "e1", "e1", "e2", "e3", "e4" }
+
 	if Difficulty == "hard" and DateTime.GameTime > DateTime.Minutes(15) then
 		haloDropUnits = { "e1", "e1", "e1", "e1", "e2", "e2", "e3", "e3", "e4", "shok" }
 	end
@@ -567,9 +580,38 @@ DoNavalDrop = function()
 	local navalDropExitPath = { navalDropPath[2], navalDropPath[1] }
 	local navalDropUnits = { "3tnk", "v2rl", "3tnk", "btr.ai" }
 
+	if Difficulty == "hard" and DateTime.GameTime > DateTime.Minutes(15) then
+		navalDropUnits = { "3tnk", "v3rl", "3tnk", "btr.ai" }
+	end
+
 	DoNavalTransportDrop(USSR, navalDropPath, navalDropExitPath, "lst", navalDropUnits, AssaultPlayerBase)
 
 	Trigger.AfterDelay(NavalDropInterval[Difficulty], DoNavalDrop)
+end
+
+NavalReinforcements = function()
+	if not NavalReinforcementsArrived and PlayerHasNavalProduction(Greece) then
+		NavalReinforcementsArrived = true
+		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			local cruisers = { "ca", "ca" }
+
+			if Difficult == "hard" then
+				cruisers = { "ca" }
+			end
+
+			local destroyers = { "dd", "dd" }
+
+			Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
+			Beacon.New(Greece, CruiserSpawn.CenterPosition)
+			Reinforcements.Reinforce(Greece, cruisers, { CruiserSpawn.Location, CruiserDestination.Location }, 75)
+			Reinforcements.Reinforce(Greece, destroyers, { DestroyerSpawn.Location, DestroyerDestination.Location }, 75)
+		end)
+	end
+end
+
+PlayerHasNavalProduction = function(player)
+	local navalProductionBuildings = player.GetActorsByTypes({ "syrd", "spen" })
+	return #navalProductionBuildings > 0
 end
 
 AssaultPlayerBase = function(actor)
