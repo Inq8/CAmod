@@ -233,7 +233,7 @@ RebuildBuilding = function(buildingType, player, loc, pos, attemptNumber, maxAtt
 			local topLeft = WPos.New(pos.X - 8192, pos.Y - 8192, 0)
 			local bottomRight = WPos.New(pos.X + 8192, pos.Y + 8192, 0)
 			local nearbyBuildings = Map.ActorsInBox(topLeft, bottomRight, function(a)
-				return not a.IsDead and a.Owner == player and a.HasProperty("StartBuildingRepairs")
+				return not a.IsDead and a.Owner == player and a.HasProperty("StartBuildingRepairs") and not a.HasProperty("Attack")
 			end)
 
 			local nearbyEnemyBuildings = Map.ActorsInBox(topLeft, bottomRight, function(a)

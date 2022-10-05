@@ -18,7 +18,7 @@ Convoys = {
 	},
 	{
 		Spawn = { FourthConvoyPath1.Location, FourthConvoyPath2.Location },
-		Path = { FourthConvoyPath3.Location, FourthConvoyPath4.Location, FourthConvoyPath5.Location, FourthConvoyPath6.Location, FourthConvoyPath7.Location, FourthConvoyPath8.Location, FourthConvoyPath9.Location, FourthConvoyPath10.Location, FourthConvoyPath11.Location, FourthConvoyPath12.Location, FourthConvoyPath13.Location, FourthConvoyPath14.Location, FourthConvoyPath15.Location, FourthConvoyPath16.Location, ThirdConvoyPath6.Location, ThirdConvoyPath7.Location, ThirdConvoyPath8.Location, ThirdConvoyPath9.Location, ThirdConvoyPath10.Location, SecondConvoyPath2.Location, SecondConvoyPath3.Location, SecondConvoyPath4.Location, SecondConvoyPath5.Location, SecondConvoyPath6.Location, SecondConvoyPath7.Location, SecondConvoyPath8.Location, SecondConvoyPath9.Location },
+		Path = { FourthConvoyPath3.Location, FourthConvoyPath4.Location, FourthConvoyPath5.Location, FourthConvoyPath6.Location, FourthConvoyPath7.Location, FourthConvoyPath8.Location, FourthConvoyPath9.Location, FourthConvoyPath10.Location, FourthConvoyPath11.Location, FourthConvoyPath12.Location, FourthConvoyPath13.Location, FourthConvoyPath14.Location, FourthConvoyPath15.Location, FourthConvoyPath16.Location, SecondConvoyPath6.Location, SecondConvoyPath7.Location, SecondConvoyPath8.Location, SecondConvoyPath9.Location },
 		FlareWaypoint = FourthConvoyPath2
 	}
 }
@@ -39,15 +39,15 @@ ScrinAttackPaths = {
 ConvoyUnits = { "truk", "truk", "truk", "truk", "truk" }
 
 MaxLosses = {
-	easy = 10,
-	normal = 5,
+	easy = 9,
+	normal = 4,
 	hard = 0
 }
 
 TimeBetweenConvoys = {
 	easy = { DateTime.Minutes(1), DateTime.Minutes(8), DateTime.Minutes(3), DateTime.Minutes(4)  },
 	normal = { DateTime.Minutes(1), DateTime.Minutes(7), DateTime.Seconds(150), DateTime.Minutes(3) },
-	hard = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Seconds(90), DateTime.Seconds(150) }
+	hard = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Seconds(90), DateTime.Minutes(3) }
 }
 
 DevastatorsDelay = {
@@ -66,7 +66,7 @@ Squads = {
 		},
 		Interval = {
 			easy = DateTime.Seconds(150),
-			normal = DateTime.Seconds(95),
+			normal = DateTime.Seconds(90),
 			hard = DateTime.Seconds(40)
 		},
 		QueueProductionStatuses = {
@@ -103,8 +103,8 @@ Squads = {
 	Advanced = {
 		Interval = {
 			easy = DateTime.Seconds(150),
-			normal = DateTime.Seconds(80),
-			hard = DateTime.Seconds(20)
+			normal = DateTime.Seconds(70),
+			hard = DateTime.Seconds(25)
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -131,9 +131,9 @@ Squads = {
 	},
 	Air = {
 		Delay = {
-			easy = DateTime.Minutes(6),
+			easy = DateTime.Minutes(5),
 			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2)
+			hard = DateTime.Minutes(3)
 		},
 		Interval = {
 			easy = DateTime.Minutes(6),

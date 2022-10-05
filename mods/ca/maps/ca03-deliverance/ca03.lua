@@ -192,14 +192,14 @@ Squads = {
 	Migs = {
 		Player = nil,
 		Delay = {
-			easy = DateTime.Minutes(13),
+			easy = DateTime.Minutes(12),
 			normal = DateTime.Minutes(11),
-			hard = DateTime.Minutes(9)
+			hard = DateTime.Minutes(10)
 		},
 		Interval = {
 			easy = DateTime.Minutes(3),
 			normal = DateTime.Seconds(150),
-			hard = DateTime.Minutes(2)
+			hard = DateTime.Seconds(150)
 		},
 		QueueProductionStatuses = {
 			Aircraft = false
@@ -228,7 +228,7 @@ Squads = {
 		Interval = {
 			easy = DateTime.Seconds(45),
 			normal = DateTime.Seconds(30),
-			hard = DateTime.Seconds(15)
+			hard = DateTime.Seconds(20)
 		},
 		QueueProductionStatuses = {
 			Ships = false
@@ -314,11 +314,13 @@ WorldLoaded = function()
 
 			Trigger.AfterDelay(DateTime.Seconds(3), function()
 				if GDICommanderAlive then
+					Notification("GDI commander freed.")
 					Media.PlaySpeechNotification(Greece, "TargetFreed")
 				end
 
 				Trigger.AfterDelay(DateTime.Seconds(3), function()
 					Media.PlaySpeechNotification(Greece, "AlliedReinforcementsWest")
+					Notification("GDI transport en route.")
 					Reinforcements.ReinforceWithTransport(GDI, "tran", nil, { GDIRescueSpawn.Location, GDIRescueRally.Location }, nil, function(transport, cargo)
 
 						Trigger.AfterDelay(DateTime.Seconds(1), function()
@@ -421,6 +423,7 @@ GDIBaseFound = function()
 		Trigger.AfterDelay(HoldOutTime[Difficulty] - DateTime.Seconds(20), function()
 			McvFlare = Actor.Create("flare", true, { Owner = Greece, Location = McvRally.Location })
 			Media.PlaySpeechNotification(Greece, "SignalFlare")
+			Notification("Signal flare detected. Reinforcements inbound.")
 			Beacon.New(Greece, McvRally.CenterPosition)
 			Trigger.AfterDelay(DateTime.Seconds(20), function()
 				McvFlare.Destroy()
@@ -434,7 +437,8 @@ GDIBaseFound = function()
 
 			Trigger.AfterDelay(DateTime.Seconds(1), function()
 				Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
-				Reinforcements.Reinforce(Greece, { "mcv" }, { McvEntry.Location, McvRally.Location })
+				Notification("Reinforcements have arrived.")
+				Reinforcements.Reinforce(Greece, { "2tnk", "mcv", "2tnk" }, { McvEntry.Location, McvRally.Location }, 75)
 				Beacon.New(Greece, McvRally.CenterPosition)
 			end)
 		end)
@@ -498,14 +502,6 @@ InitUSSR = function()
 			end
 		end)
 	end)
-
-	Trigger.OnKilled(SovietNorthFactory, function(self, killer)
-		TransitionHaloDrops()
-	end)
-
-	Trigger.OnCapture(SovietNorthFactory, function(self, captor, oldOwner, newOwner)
-		TransitionHaloDrops()
-	end)
 end
 
 InitUSSRPatrols = function()
@@ -560,12 +556,15 @@ IsUSSRGroundHunterUnit = function(actor)
 	return actor.Owner == USSR and actor.HasProperty("Move") and not actor.HasProperty("Land") and actor.HasProperty("Hunt") and actor.Type ~= "v2rl" and actor.Type ~= "katy"
 end
 
-TransitionHaloDrops = function()
-	HaloDropPaths = LateHaloDropPaths
-end
-
 DoHaloDrop = function()
-	local entryPath = Utils.Random(HaloDropPaths)
+	local entryPath
+
+	if SovietNorthFactory.IsDead or SovietNorthFactory.Owner ~= USSR then
+		entryPath = Utils.Random(LateHaloDropPaths)
+	else
+		entryPath = Utils.Random(HaloDropPaths)
+	end
+
 	local haloDropUnits = { "e1", "e1", "e1", "e2", "e3", "e4" }
 
 	if Difficulty == "hard" and DateTime.GameTime > DateTime.Minutes(15) then
