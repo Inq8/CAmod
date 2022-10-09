@@ -1,0 +1,195 @@
+
+^Palettes:
+	GlobalLightingPaletteEffect:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, ca04.lua
+	MissionData:
+		Briefing: Intel reports that the Soviets are preparing to strike their ruptured Chronosphere with atomic weapons in an attempt to put an end to the damage that it continues to cause. They don't know what they are dealing with. If they succeed, the consequences could be apocalyptic.\n\nThere isn't enough time to launch a full offensive, so our best option is a small, covert operation to take out their missile silos.\n\nThe bulk of the Soviet forces in the region are busy pushing back the alien invaders, so the bases here are vulnerable to such an attack. If all goes to plan, by the time they realise there's a significant threat it will be too late.\n\nWe have been preparing our own means of containing the Chronosphere, and assuming we succeed in stopping the Soviets from launching, this would be as good a time as any to put it to the test.\n\nFirst, you must take out the three atomic reactors that power the Soviet Tesla Coils so that our team can slip by the remaining defenses.\n\nNext, take out the SAM sites along the shore-line to clear a path for our attempt at containment.\n\nThirdly, destroy the two missile silos that are preparing to launch.\n\nThen we will send in our experimental weapon. Escort it to the Chronosphere and neutralize it.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: Difficulty
+		Description: The difficulty of the mission
+		Values:
+			easy: Easy
+			normal: Normal
+			hard: Hard
+		Default: normal
+	Locomotor@SEAL:
+		TerrainSpeeds:
+			Rough: 100
+			Ford: 100
+			Beach: 100
+			Water: 100
+			Ore: 100
+
+Player:
+	PlayerResources:
+		DefaultCash: 0
+	DeveloperMode:
+		CheckboxEnabled: true
+
+DOG:
+	Mobile:
+		Speed: 46
+	Health:
+		HP: 4500
+
+E2:
+	Mobile:
+		Speed: 46
+
+E3:
+	Mobile:
+		Speed: 46
+
+E4:
+	Mobile:
+		Speed: 46
+
+PDOX.CROSSRIP:
+	Inherits: PDOX
+	Targetable:
+		TargetTypes: Temporal
+	Tooltip:
+		Name: Ruptured Chronosphere
+	-TooltipExtras:
+	Buildable:
+		Description: Causes temporal and interdimensional crossrips.
+	-Valued:
+	-WithBuildingBib:
+	-WithColoredOverlay@IDISABLE:
+
+TSLA:
+	-Targetable@TeslaBoost:
+	ExternalCondition@DISABLED:
+		Condition: disabled
+
+SAM:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
+
+TPWR:
+	Power:
+		Amount: 10000
+
+WORMHOLE:
+	-PopControlled:
+	-Targetable:
+
+SPY:
+	RevealsShroud:
+		Range: 9c512
+	Mobile:
+		Speed: 60
+
+SEAL:
+	Health:
+		HP: 10000
+	RevealsShroud:
+		Range: 7c0
+	-AutoTarget:
+	-AutoTargetPriority@DEFAULT:
+	-AutoTargetPriority@ATTACKANYTHING:
+	GainsExperience:
+		ExperienceModifier: 250000
+	ReloadAmmoPoolCA:
+		Delay: 250
+
+FENC:
+	-BlocksProjectiles:
+
+LST:
+	RejectsOrders:
+	-Selectable:
+	Interactable:
+
+OCAR.CHPR:
+	Inherits: OCAR
+	RejectsOrders:
+	-Selectable:
+	Interactable:
+	Aircraft:
+		InitialFacing: 512
+	Carryall:
+		InitialActor: chpr
+
+SAPC:
+	ExternalCondition@FORCEUNCLOAK:
+		Condition: cloak-force-disabled
+	AutoTarget:
+		InitialStanceAI: HoldFire
+	-Targetable:
+
+MSLO:
+	NukePower:
+		DisplayTimerRelationships: None
+		AllowMultiple: true
+
+^NukeDummy:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+
+NukeDummyEasy:
+	Inherits: ^NukeDummy
+	NukePower@EASY:
+		Cursor: nuke
+		Icon: abomb
+		ChargeInterval: 67500
+		Name: Atom Bomb
+		IncomingSound: nukelaunch.aud
+		IncomingSpeechNotification: AbombLaunchDetected
+		LaunchSound: nukelaunch.aud
+		MissileWeapon: atomic
+		MissileImage: atomic
+		MissileDelay: 5
+		SpawnOffset: 1c0,427,0
+		DisplayTimerRelationships: Ally, Neutral, Enemy
+		TrailImage: smokey2
+		TrailSequences: idle
+		TrailPalette: tseffect-ignore-lighting-alpha75
+		AllowMultiple: true
+
+NukeDummyNormal:
+	Inherits: ^NukeDummy
+	NukePower@NORMAL:
+		Cursor: nuke
+		Icon: abomb
+		ChargeInterval: 52500
+		Name: Atom Bomb
+		IncomingSound: nukelaunch.aud
+		IncomingSpeechNotification: AbombLaunchDetected
+		LaunchSound: nukelaunch.aud
+		MissileWeapon: atomic
+		MissileImage: atomic
+		MissileDelay: 5
+		SpawnOffset: 1c0,427,0
+		DisplayTimerRelationships: Ally, Neutral, Enemy
+		TrailImage: smokey2
+		TrailSequences: idle
+		TrailPalette: tseffect-ignore-lighting-alpha75
+		AllowMultiple: true
+
+NukeDummyHard:
+	Inherits: ^NukeDummy
+	NukePower@HARD:
+		Cursor: nuke
+		Icon: abomb
+		ChargeInterval: 37500
+		Name: Atom Bomb
+		IncomingSound: nukelaunch.aud
+		IncomingSpeechNotification: AbombLaunchDetected
+		LaunchSound: nukelaunch.aud
+		MissileWeapon: atomic
+		MissileImage: atomic
+		MissileDelay: 5
+		SpawnOffset: 1c0,427,0
+		DisplayTimerRelationships: Ally, Neutral, Enemy
+		TrailImage: smokey2
+		TrailSequences: idle
+		TrailPalette: tseffect-ignore-lighting-alpha75
+		AllowMultiple: true

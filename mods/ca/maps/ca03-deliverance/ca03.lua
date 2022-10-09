@@ -265,6 +265,9 @@ WorldLoaded = function()
 	if Difficulty ~= "hard" then
 		SovietMammoth1.Destroy()
 		SovietV22.Destroy()
+		Trigger.AfterDelay(DateTime.Seconds(3), function()
+			Tip("If you put a Mechanic or Engineer inside an IFV it becomes a repair vehicle.")
+		end)
 	end
 
 	if Difficulty == "easy" then
@@ -476,7 +479,7 @@ InitUSSR = function()
 
 	Utils.Do(ussrGroundAttackers, function(a)
 		TargetSwapChance(a, USSR, 10)
-		CallForHelpOnDamagedOrKilled(a, IsUSSRGroundHunterUnit)
+		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
 	end)
 
 	-- If main sub pens are destroyed, update naval attack path

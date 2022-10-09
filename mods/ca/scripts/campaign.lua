@@ -66,6 +66,10 @@ Notification = function(text)
 	Media.DisplayMessage(text, "Notification", HSLColor.FromHex("1E90FF"))
 end
 
+Tip = function(text)
+	Media.DisplayMessage(text, "Tip", HSLColor.FromHex("29F3CF"))
+end
+
 AttackAircraftTargets = { }
 InitializeAttackAircraft = function(aircraft, targetPlayer, targetTypes)
 	Trigger.OnIdle(aircraft, function(self)
@@ -180,6 +184,13 @@ UpdatePlayerBaseLocation = function()
 	end
 end
 
+AutoRepairBuildings = function(player)
+	local buildings = Utils.Where(Map.ActorsInWorld, function(self) return self.Owner == player and self.HasProperty("StartBuildingRepairs") end)
+	Utils.Do(buildings, function(a)
+		AutoRepairBuilding(a, player)
+	end)
+end
+
 AutoRepairAndRebuildBuildings = function(player, maxRebuildAttempts)
 	local buildings = Utils.Where(Map.ActorsInWorld, function(self) return self.Owner == player and self.HasProperty("StartBuildingRepairs") end)
 	Utils.Do(buildings, function(a)
@@ -288,22 +299,26 @@ TargetSwapChance = function(unit, player, chance)
 	end)
 end
 
-CallForHelpOnDamagedOrKilled = function(actor, filter)
+CallForHelpOnDamagedOrKilled = function(actor, range, filter)
 	Trigger.OnDamaged(actor, function(self, attacker, damage)
-		CallForHelp(self, filter)
+		if attacker.Owner == MissionPlayer then
+			CallForHelp(self, range, filter)
+		end
 	end)
 	Trigger.OnKilled(actor, function(self, killer)
-		CallForHelp(self, filter)
+		if killer.Owner == MissionPlayer then
+			CallForHelp(self, range, filter)
+		end
 	end)
 end
 
-CallForHelp = function(self, filter)
+CallForHelp = function(self, range, filter)
 	if not self.HasTag("helpCalled") then
 		if not self.IsDead then
 			self.AddTag("helpCalled")
 		end
 
-		local nearbyUnits = Map.ActorsInCircle(self.CenterPosition, WDist.New(5120), filter)
+		local nearbyUnits = Map.ActorsInCircle(self.CenterPosition, range, filter)
 
 		Utils.Do(nearbyUnits, function(nearbyUnit)
 			if not nearbyUnit.IsDead and not nearbyUnit.HasTag("idleHunt") then
