@@ -110,12 +110,16 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnKilled(Chronosphere, function(self, killer)
+		if not Greece.IsObjectiveFailed(ObjectivePreserveSEALs) then
+			Greece.MarkCompletedObjective(ObjectivePreserveSEALs)
+		end
 		Greece.MarkCompletedObjective(ObjectiveNeutralizeChronosphere)
 	end)
 
 	if Difficulty ~= "hard" then
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
 			Tip('Disguise your spy by "attacking" enemy infantry.')
+			Tip("Navy SEALs can swim.")
 		end)
 	end
 
