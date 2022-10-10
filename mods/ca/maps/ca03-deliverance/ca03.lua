@@ -500,7 +500,9 @@ InitUSSR = function()
 				self.Stop()
 				self.ReturnToBase()
 				Trigger.AfterDelay(DateTime.Seconds(1), function()
-					self.Patrol(SovietHindPatrolPath, true)
+					if not self.IsDead then
+						self.Patrol(SovietHindPatrolPath, true)
+					end
 				end)
 			end
 		end)
