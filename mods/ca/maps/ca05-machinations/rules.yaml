@@ -1,0 +1,105 @@
+^Palettes:
+	GlobalLightingPaletteEffect:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, ca05.lua
+	MissionData:
+		Briefing: As the Chronosphere was neutralised, we detected transports moving away that quickly disappeared. Information provided by GDI suggests these are likely forces from a group calling themselves the Brotherhood of Nod who are known to make extensive use of such stealth technology.\n\nWe do not know what they could have been doing there, or what they were able to learn or salvage, but from what we can gather it would be extremely bad for Chronosphere technology to fall into their hands.\n\nOur satellites were able to detect and track ship movements that we believe must have carried whatever they stole, and have located what appears to be a research facility hidden in a disused quarry in North Africa.\n\nNod submarines make a large scale landing difficult, but if we can establish a base on the coast we'll be able to launch an offensive from there.\n\nWith GDI's assistance we have been able to augment our harvesters and refineries to harvest the Tiberium crystals that are becoming widespread. Nod also has a harvesting operation in the area. Gather what resources you can without alerting Nod to our presence, build up your forces, then capture their research facility.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: Difficulty
+		Description: The difficulty of the mission
+		Values:
+			easy: Easy
+			normal: Normal
+			hard: Hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: prp
+
+Player:
+	PlayerResources:
+		DefaultCash: 5000
+
+^NodPalette:
+	RenderSprites:
+		PlayerPalette: playertdunit
+
+^VehicleTD-NOUPG:
+	Inherits@NODPAL: ^NodPalette
+
+^TankTD:
+	Inherits@NODPAL: ^NodPalette
+
+^PlaneTD:
+	Inherits@NODPAL: ^NodPalette
+
+^HelicopterTD:
+	Inherits@NODPAL: ^NodPalette
+
+^Infantry:
+	Inherits@NODPAL: ^NodPalette
+	WithDeathAnimation:
+		DeathSequencePalette: playertdunit
+		CrushedSequencePalette: playertdunit
+		CrushedPaletteIsPlayerPalette: true
+
+SAPC:
+	RenderSprites:
+		PlayerPalette: playerraunit
+
+ARTY.nod:
+	Inherits@NODPAL: ^NodPalette
+
+HOWI:
+	Inherits@NODPAL: ^NodPalette
+
+APCH.Husk:
+	Inherits@NODPAL: ^NodPalette
+
+RAH.Husk:
+	Inherits@NODPAL: ^NodPalette
+
+SCRN.Husk:
+	Inherits@NODPAL: ^NodPalette
+
+HARV.TD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+AMCV:
+	RenderSprites:
+		PlayerPalette: playertd
+
+LST:
+	RejectsOrders:
+	-Selectable:
+	Interactable:
+
+^ScrinInfantry:
+	WithDeathAnimation:
+		CrushedPaletteIsPlayerPalette: false
+
+BIO:
+	Tooltip:
+		Name: Research Lab
+	-TooltipDescription@ally:
+	-TooltipDescription@other:
+	-ProvidesPrerequisite@mortar:
+	-ProvidesPrerequisite@toxintruck:
+
+TMPL:
+	-NukePower@Cluster:
+
+ATEK:
+	-DummyGpsPower@NOFOG:
+	-DummyGpsPower@FOG:
+	-ProduceActorPowerCA@SatelliteLaunched:
+	-ProduceActorPowerCA@InitialSatelliteScan:
+	-ProduceActorPowerCA@SatelliteScan:
+	-ProduceActorPowerCA@SatelliteScanNoFog:
+	-GrantExternalConditionPowerCA@FSHIELD:
+	-DetonateWeaponPower@TEMPINC:

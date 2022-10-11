@@ -101,16 +101,22 @@ Squads = {
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
 		Units = {
 			easy = {
-				Infantry = { "e3", "e1", "e1", "e1", "e2", "e4" },
-				Vehicles = { "3tnk", "btr" }
+				{
+					Infantry = { "e3", "e1", "e1", "e1", "e2", "e4" },
+					Vehicles = { "3tnk", "btr" }
+				}
 			},
 			normal = {
-				Infantry = { "e3", "e1", "e1", "e1", "e1", "e2", "e4" },
-				Vehicles = { "3tnk", "btr.ai", "btr" }
+				{
+					Infantry = { "e3", "e1", "e1", "e1", "e1", "e2", "e4" },
+					Vehicles = { "3tnk", "btr.ai", "btr" }
+				}
 			},
 			hard = {
-				Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4" },
-				Vehicles = { "3tnk", "btr.ai", "3tnk" }
+				{
+					Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4" },
+					Vehicles = { "3tnk", "btr.ai", "3tnk" }
+				}
 			}
 		},
 		AttackPaths = SovietMainAttackPaths,
@@ -140,16 +146,22 @@ Squads = {
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
 		Units = {
 			easy = {
-				Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" },
-				Vehicles = { "4tnk", "btr.ai", "katy" }
+				{
+					Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" },
+					Vehicles = { "4tnk", "btr.ai", "katy" }
+				}
 			},
 			normal = {
-				Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" },
-				Vehicles = { "3tnk", "btr.ai", "4tnk", "v2rl" }
+				{
+					Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" },
+					Vehicles = { "3tnk", "btr.ai", "4tnk", "v2rl" }
+				}
 			},
 			hard = {
-				Infantry = { "e3", "e1", "e1", "e3", "shok", "e1", "shok", "e1", "e2", "e3", "e4" },
-				Vehicles = { "3tnk", "4tnk", "btr.ai", "ttra", "v2rl" }
+				{
+					Infantry = { "e3", "e1", "e1", "e3", "shok", "e1", "shok", "e1", "e2", "e3", "e4" },
+					Vehicles = { "3tnk", "4tnk", "btr.ai", "ttra", "v2rl" }
+				}
 			}
 		},
 		AttackPaths = SovietMainAttackPaths
@@ -175,16 +187,22 @@ Squads = {
 		ProducerActors = { Infantry = { SovietNorthBarracks1, SovietNorthBarracks2 }, Vehicles = { SovietNorthFactory } },
 		Units = {
 			easy = {
-				Infantry = { "e3", "e1", "e1", "e1", "e2" },
-				Vehicles = { "btr" }
+				{
+					Infantry = { "e3", "e1", "e1", "e1", "e2" },
+					Vehicles = { "btr" }
+				}
 			},
 			normal = {
-				Infantry = { "e3", "e1", "e1", "e1", "e1", "e2", "e4" },
-				Vehicles = { "3tnk", "btr.ai" }
+				{
+					Infantry = { "e3", "e1", "e1", "e1", "e1", "e2", "e4" },
+					Vehicles = { "3tnk", "btr.ai" }
+				}
 			},
 			hard = {
-				Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4" },
-				Vehicles = { "3tnk", "btr.ai", "3tnk" }
+				{
+					Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4" },
+					Vehicles = { "3tnk", "btr.ai", "3tnk" }
+				}
 			}
 		},
 		AttackPaths = SovietNorthernAttackPaths
@@ -209,13 +227,13 @@ Squads = {
 		ProducerTypes = { Aircraft = { "afld" } },
 		Units = {
 			easy = {
-				Aircraft = { "mig" }
+				{ Aircraft = { "mig" } }
 			},
 			normal = {
-				Aircraft = { "mig", "mig" }
+				{ Aircraft = { "mig", "mig" } }
 			},
 			hard = {
-				Aircraft = { "mig", "mig", "mig" }
+				{ Aircraft = { "mig", "mig", "mig" } }
 			}
 		},
 	},
@@ -237,9 +255,15 @@ Squads = {
 		ProducerActors = { Ships = { SovietSouthSubPen1, SovietSouthSubPen2 } },
 		ProducerTypes = { Ships = { "spen" } },
 		Units = {
-			easy = { Ships = { "ss", "seas" } },
-			normal = { Ships = { "ss", "seas" } },
-			hard = { Ships = { "ss", "ss", "seas" } }
+			easy = {
+				{ Ships = { "ss", "seas" } }
+			},
+			normal = {
+				{ Ships = { "ss", "seas" } }
+			},
+			hard = {
+				{ Ships = { "ss", "ss", "seas" } }
+			}
 		},
 		AttackPaths = SovietNavalAttackPaths
 	}
@@ -620,11 +644,6 @@ NavalReinforcements = function()
 			Reinforcements.Reinforce(Greece, destroyers, { DestroyerSpawn.Location, DestroyerDestination.Location }, 75)
 		end)
 	end
-end
-
-PlayerHasNavalProduction = function(player)
-	local navalProductionBuildings = player.GetActorsByTypes({ "syrd", "spen" })
-	return #navalProductionBuildings > 0
 end
 
 AssaultPlayerBase = function(actor)

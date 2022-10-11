@@ -264,6 +264,11 @@ InitUSSR = function()
 	AutoRepairBuildings(USSR)
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
 
+	Utils.Do(ussrGroundAttackers, function(a)
+		TargetSwapChance(a, USSR, 10)
+		CallForHelpOnDamagedOrKilled(a, WDist.New(4096), IsUSSRGroundHunterUnit)
+	end)
+
 	if Difficulty == "hard" then
 		NukeDummy = Actor.Create("NukeDummyHard", true, { Owner = USSR, Location = Chronosphere.Location })
 	elseif Difficulty == "easy" then
@@ -271,11 +276,6 @@ InitUSSR = function()
 	else
 		NukeDummy = Actor.Create("NukeDummyNormal", true, { Owner = USSR, Location = Chronosphere.Location })
 	end
-
-	Utils.Do(ussrGroundAttackers, function(a)
-		TargetSwapChance(a, USSR, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(4096), IsUSSRGroundHunterUnit)
-	end)
 
 	Utils.Do(Patrols, function(p)
 		Utils.Do(p.Units, function(unit)

@@ -18,6 +18,8 @@ World:
 			normal: Normal
 			hard: Hard
 		Default: normal
+	MusicPlaylist:
+		StartingMusic: run1226m
 	Locomotor@SEAL:
 		TerrainSpeeds:
 			Rough: 100
@@ -29,8 +31,6 @@ World:
 Player:
 	PlayerResources:
 		DefaultCash: 0
-	DeveloperMode:
-		CheckboxEnabled: true
 
 DOG:
 	Mobile:
@@ -62,6 +62,17 @@ PDOX.CROSSRIP:
 	-Valued:
 	-WithBuildingBib:
 	-WithColoredOverlay@IDISABLE:
+	-InfiltrateForSupportPowerReset:
+	-Targetable@INFILTRATION:
+	-WithMakeAnimation:
+	-DetonateWeaponPower@ChronoAI:
+	-GrantExternalConditionPowerCA@TimeWarp:
+	-CaptureManager:
+	-Capturable:
+	-CapturableProgressBar:
+	-CapturableProgressBlink:
+	-Sellable:
+	-Targetable@HACKCAPTURABLE:
 
 TSLA:
 	-Targetable@TeslaBoost:
@@ -94,6 +105,7 @@ SEAL:
 	-AutoTarget:
 	-AutoTargetPriority@DEFAULT:
 	-AutoTargetPriority@ATTACKANYTHING:
+	-AttackMove:
 	GainsExperience:
 		ExperienceModifier: 250000
 	ReloadAmmoPoolCA:
@@ -116,6 +128,10 @@ OCAR.CHPR:
 		InitialFacing: 512
 	Carryall:
 		InitialActor: chpr
+	RenderSprites:
+		Palette: temptd
+	Health:
+		HP: 100000
 
 SAPC:
 	ExternalCondition@FORCEUNCLOAK:
@@ -128,6 +144,8 @@ MSLO:
 	NukePower:
 		DisplayTimerRelationships: None
 		AllowMultiple: true
+	-InfiltrateForSupportPowerReset:
+	-Targetable@INFILTRATION:
 
 ^NukeDummy:
 	AlwaysVisible:
@@ -193,3 +211,39 @@ NukeDummyHard:
 		TrailSequences: idle
 		TrailPalette: tseffect-ignore-lighting-alpha75
 		AllowMultiple: true
+
+SPEN:
+	-InfiltrateForSupportPower:
+	-Targetable@INFILTRATION:
+
+DOME:
+	-InfiltrateForExploration:
+	-Targetable@INFILTRATION:
+
+WEAP:
+	-Targetable@INFILTRATION:
+	-InfiltrateForSupportPower:
+
+HPAD:
+	-Targetable@INFILTRATION:
+	-InfiltrateForSupportPower:
+
+AFLD:
+	-Targetable@INFILTRATION:
+	-InfiltrateForSupportPower:
+
+POWR:
+	-Targetable@INFILTRATION:
+	-InfiltrateForPowerOutage:
+
+APWR:
+	-Targetable@INFILTRATION:
+	-InfiltrateForPowerOutage:
+
+NPWR:
+	-Targetable@INFILTRATION:
+	-InfiltrateForPowerOutage:
+
+BARR:
+	-Targetable@INFILTRATION:
+	-InfiltrateForSupportPower@spy:

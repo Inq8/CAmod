@@ -78,16 +78,22 @@ Squads = {
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" } },
 		Units = {
 			easy = {
-				Infantry = { "s1", "s1", "s1", "s3", "s3" },
-				Vehicles = { "intl.ai2", "intl.ai2", "gunw" }
+				{
+					Infantry = { "s1", "s1", "s1", "s3", "s3" },
+					Vehicles = { "intl.ai2", "intl.ai2", "gunw" }
+				}
 			},
 			normal = {
-				Infantry = { "s1", "s1", "s1", "s1", "s3", "s3" },
-				Vehicles = { "intl.ai2", "intl.ai2", "gunw" }
+				{
+					Infantry = { "s1", "s1", "s1", "s1", "s3", "s3" },
+					Vehicles = { "intl.ai2", "intl.ai2", "gunw" }
+				}
 			},
 			hard = {
-				Infantry = { "s1", "s1", "s1", "s1", "s3", "s3", "s4" },
-				Vehicles = { "intl.ai2", "intl.ai2", "gunw", "seek" }
+				{
+					Infantry = { "s1", "s1", "s1", "s1", "s3", "s3", "s4" },
+					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "seek" }
+				}
 			}
 		},
 		AttackPaths = ScrinAttackPaths,
@@ -115,16 +121,22 @@ Squads = {
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" } },
 		Units = {
 			easy = {
-				Infantry = { "s1", "s1", "s1", "s3", "s3" },
-				Vehicles = { "intl.ai2", "intl.ai2", "gunw", "gunw", "corr" }
+				{
+					Infantry = { "s1", "s1", "s1", "s3", "s3" },
+					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "gunw", "corr" }
+				}
 			},
 			normal = {
-				Infantry = { "s1", "s1", "s1", "s1", "s3", "s3", "s4", "s4" },
-				Vehicles = { "intl.ai2", "intl.ai2", "gunw", "corr", "devo", "seek", "seek" }
+				{
+					Infantry = { "s1", "s1", "s1", "s1", "s3", "s3", "s4", "s4" },
+					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "corr", "devo", "seek", "seek" }
+				}
 			},
 			hard = {
-				Infantry = { "s1", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "s3", "s3", "s4", "s4" },
-				Vehicles = { "intl.ai2", "intl.ai2", "gunw", "corr", "devo", "seek", "tpod", "seek" }
+				{
+					Infantry = { "s1", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "s3", "s3", "s4", "s4" },
+					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "corr", "devo", "seek", "tpod", "seek" }
+				}
 			}
 		},
 		AttackPaths = ScrinAttackPaths
@@ -148,13 +160,13 @@ Squads = {
 		ProducerTypes = { Aircraft = { "grav" } },
 		Units = {
 			easy = {
-				Aircraft = { "stmr", "stmr" }
+				{ Aircraft = { "stmr", "stmr" } }
 			},
 			normal = {
-				Aircraft = { "stmr", "stmr", "stmr" }
+				{ Aircraft = { "stmr", "stmr", "stmr" } }
 			},
 			hard = {
-				Aircraft = { "stmr", "stmr", "stmr", "stmr" }
+				{ Aircraft = { "stmr", "stmr", "stmr", "stmr" } }
 			}
 		}
 	}

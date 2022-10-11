@@ -23,6 +23,8 @@ FactoryTypes = { "weap", "weap.td", "wsph", "airs" }
 
 RefineryTypes = { "proc", "proc.td", "proc.scrin" }
 
+NavalProductionTypes = { "syrd", "spen", "syrd.gdi", "spen.nod" }
+
 CashRewardOnCaptureTypes = { "proc", "proc.td", "proc.scrin", "silo", "silo.td", "silo.scrin" }
 
 WallTypes = { "sbag", "fenc", "brik", "cycl", "barb" }
@@ -32,6 +34,14 @@ KeyStructures = { "fact", "afac", "sfac", "proc", "proc.td", "proc.scrin", "weap
 NextRebuildTimes = { }
 
 SquadLeaders = { }
+
+AlertedUnits = { }
+
+-- per production structure, stores which squad to assign produced units to next
+SquadAssignmentQueue = { }
+
+-- stores which AI production structures have triggers assigned to prevent them being added multiple times
+OnProductionTriggers = { }
 
 InitObjectives = function(player)
 	Trigger.OnObjectiveAdded(player, function(p, id)
@@ -315,16 +325,21 @@ CallForHelpOnDamagedOrKilled = function(actor, range, filter)
 end
 
 CallForHelp = function(self, range, filter)
-	if not self.HasTag("helpCalled") then
+	local selfId = tostring(self);
+	if AlertedUnits[selfId] == nil then
 		if not self.IsDead then
-			self.AddTag("helpCalled")
+			AlertedUnits[selfId] = true
+			self.Stop()
+			IdleHunt(self)
 		end
 
 		local nearbyUnits = Map.ActorsInCircle(self.CenterPosition, range, filter)
 
 		Utils.Do(nearbyUnits, function(nearbyUnit)
-			if not nearbyUnit.IsDead and not nearbyUnit.HasTag("idleHunt") then
-				nearbyUnit.AddTag("idleHunt")
+			local nearbyUnitId = tostring(nearbyUnit)
+			if not nearbyUnit.IsDead and AlertedUnits[nearbyUnitId] == nil then
+				AlertedUnits[nearbyUnitId] = true
+				nearbyUnit.Stop()
 				IdleHunt(nearbyUnit)
 			end
 		end)
@@ -348,7 +363,11 @@ InitAttackSquad = function(squad, player)
 	local isActive = squad.ActiveCondition == nil or squad.ActiveCondition()
 
 	if isActive then
-		-- go through each queue for the current difficulty
+
+		-- randomly select a unit composition for next wave
+		squad.QueuedUnits = Utils.Random(squad.Units[Difficulty])
+
+		-- go through each queue for the current difficulty and start producing the first unit
 		Utils.Do(queues, function(queue)
 			ProduceNextAttackSquadUnit(squad, queue, 1)
 		end)
@@ -366,23 +385,24 @@ InitAirAttackSquad = function(squad, player, targetPlayer, targetTypes)
 end
 
 ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
-	local units = squad.Units[Difficulty][queue]
+	local units = squad.QueuedUnits[queue]
 
-	-- if there are no more units to build for this queue, check if any other queues are producing, if not produce next attack squad after interval
+	-- if there are no more units to build for this queue, check if any other queues are producing -- if none are, send the attack and produce next attack squad after interval
 	if unitIndex > #units then
 		squad.QueueProductionStatuses[queue] = false
-		if not IsSquadInProduction(squad) then
-			Trigger.AfterDelay(DateTime.Seconds(2), function()
-				if squad.AirTargetTypes ~= nil and squad.AirTargetPlayer ~= nil then
-					Utils.Do(squad.IdleUnits, function(a)
-						if not a.IsDead then
-							InitializeAttackAircraft(a, squad.AirTargetPlayer, squad.AirTargetTypes)
-						end
-					end)
-					squad.IdleUnits = { }
-				else
-					SendAttackSquad(squad)
-				end
+
+		-- only send if units have actually been produced for this queue, and no other queues are producing
+		if #units > 0 and not IsSquadInProduction(squad) then
+			local dispatchDelay
+
+			if squad.DispatchDelay ~= nil then
+				dispatchDelay = squad.DispatchDelay
+			else
+				dispatchDelay = DateTime.Seconds(2)
+			end
+
+			Trigger.AfterDelay(dispatchDelay, function()
+				SendAttackSquad(squad)
 			end)
 			Trigger.AfterDelay(squad.Interval[Difficulty], function()
 				local transitionPlayer = squad.Player
@@ -422,41 +442,48 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 
 			-- create the unit
 			if producer ~= nil then
-				-- add produced unit to list of idle units for the squad
-				Trigger.OnProduction(producer, function(p, produced)
-					squad.IdleUnits[#squad.IdleUnits + 1] = produced
+				local producerId = tostring(producer)
+				AddToSquadAssignmentQueue(producerId, squad)
 
-					if produced.HasProperty("HasPassengers") and not produced.IsDead then
-						Trigger.OnPassengerExited(produced, function(t, p)
-							AssaultPlayerBaseOrHunt(p)
-						end)
-					end
+				if OnProductionTriggers[producerId] == nil then
+					OnProductionTriggers[producerId] = true
 
-					TargetSwapChance(produced, squad.Player, 10)
-				end)
+					-- add produced unit to list of idle units for the squad
+					Trigger.OnProduction(producer, function(p, produced)
 
-				producer.Produce(nextUnit)
+						if SquadAssignmentQueue[producerId][1] ~= nil then
+							local assignedSquad = SquadAssignmentQueue[producerId][1]
+							SquadAssignmentQueue[producerId][1].IdleUnits[#assignedSquad.IdleUnits + 1] = produced
+							table.remove(SquadAssignmentQueue[producerId], 1)
+						elseif produced.HasProperty("Hunt") then
+							produced.Hunt()
+						end
 
-				-- clear the OnProduction trigger as other squads may be produced from the same building
-				Trigger.AfterDelay(1, function()
-					if not producer.IsDead then
-						Trigger.ClearAll(producer)
-					end
-				end)
+						if produced.HasProperty("HasPassengers") and not produced.IsDead then
+							Trigger.OnPassengerExited(produced, function(t, p)
+								AssaultPlayerBaseOrHunt(p)
+							end)
+						end
 
-				-- restore repair trigger
-				if producer.HasProperty("StartBuildingRepairs") then
-					Trigger.AfterDelay(2, function()
-						AutoRepairBuilding(producer, squad.Player)
-						AutoRebuildBuilding(producer, squad.Player)
+						TargetSwapChance(produced, squad.Player, 10)
 					end)
 				end
+
+				producer.Produce(nextUnit)
 			end
 
 			-- start producing the next unit
 			ProduceNextAttackSquadUnit(squad, queue, unitIndex + 1)
 		end)
 	end
+end
+
+-- used to make sure multiple squads being produced from the same structure don't get mixed up
+AddToSquadAssignmentQueue = function(producerId, squad)
+	if SquadAssignmentQueue[producerId] == nil then
+		SquadAssignmentQueue[producerId] = { }
+	end
+	SquadAssignmentQueue[producerId][#SquadAssignmentQueue[producerId] + 1] = squad
 end
 
 IsSquadInProduction = function(squad)
@@ -470,61 +497,70 @@ IsSquadInProduction = function(squad)
 end
 
 SendAttackSquad = function(squad)
-	local squadLeader = nil
-	local attackPath = nil
 
-	if squad.AttackPaths ~= nil then
-		attackPath = Utils.Random(squad.AttackPaths)
-	end
-
-	Utils.Do(squad.IdleUnits, function(a)
-		local actorId = tostring(a)
-
-		if attackPath ~= nil then
-			if not a.IsDead and a.IsInWorld then
-				if squad.FollowLeader ~= nil and squad.FollowLeader == true and squadLeader == nil then
-					squadLeader = a;
-				end
-
-				-- If squad leader, queue attack move to each attack path waypoint
-				if squadLeader == nil or a == squadLeader then
-					Utils.Do(attackPath, function(w)
-						a.AttackMove(w, 3)
-						if squad.IsNaval ~= nil and squad.IsNaval then
-							IdleHunt(a)
-						else
-							AssaultPlayerBaseOrHunt(a);
-						end
-					end)
-
-					-- On damaged or killed
-					Trigger.OnDamaged(a, function(self, attacker, damage)
-						ClearSquadLeader(squadLeader)
-					end)
-
-					Trigger.OnKilled(a, function(self, attacker, damage)
-						ClearSquadLeader(squadLeader)
-					end)
-
-				-- If not squad leader, follow the leader
-				else
-					SquadLeaders[actorId] = squadLeader
-					FollowSquadLeader(a)
-
-					-- If damaged (stop guarding, attack move to enemy base)
-					Trigger.OnDamaged(a, function(self, attacker, damage)
-						ClearSquadLeader(SquadLeaders[actorId])
-					end)
-				end
+	if squad.AirTargetTypes ~= nil and squad.AirTargetPlayer ~= nil then
+		Utils.Do(squad.IdleUnits, function(a)
+			if not a.IsDead then
+				InitializeAttackAircraft(a, squad.AirTargetPlayer, squad.AirTargetTypes)
 			end
-		else
-			if squad.IsNaval ~= nil and squad.IsNaval then
-				IdleHunt(a)
-			else
-				AssaultPlayerBaseOrHunt(a);
-			end
+		end)
+	else
+		local squadLeader = nil
+		local attackPath = nil
+
+		if squad.AttackPaths ~= nil then
+			attackPath = Utils.Random(squad.AttackPaths)
 		end
-	end)
+
+		Utils.Do(squad.IdleUnits, function(a)
+			local actorId = tostring(a)
+
+			if attackPath ~= nil then
+				if not a.IsDead and a.IsInWorld then
+					if squad.FollowLeader ~= nil and squad.FollowLeader == true and squadLeader == nil then
+						squadLeader = a;
+					end
+
+					-- If squad leader, queue attack move to each attack path waypoint
+					if squadLeader == nil or a == squadLeader then
+						Utils.Do(attackPath, function(w)
+							a.AttackMove(w, 3)
+							if squad.IsNaval ~= nil and squad.IsNaval then
+								IdleHunt(a)
+							else
+								AssaultPlayerBaseOrHunt(a);
+							end
+						end)
+
+						-- On damaged or killed
+						Trigger.OnDamaged(a, function(self, attacker, damage)
+							ClearSquadLeader(squadLeader)
+						end)
+
+						Trigger.OnKilled(a, function(self, attacker, damage)
+							ClearSquadLeader(squadLeader)
+						end)
+
+					-- If not squad leader, follow the leader
+					else
+						SquadLeaders[actorId] = squadLeader
+						FollowSquadLeader(a)
+
+						-- If damaged (stop guarding, attack move to enemy base)
+						Trigger.OnDamaged(a, function(self, attacker, damage)
+							ClearSquadLeader(SquadLeaders[actorId])
+						end)
+					end
+				end
+			else
+				if squad.IsNaval ~= nil and squad.IsNaval then
+					IdleHunt(a)
+				else
+					AssaultPlayerBaseOrHunt(a);
+				end
+			end
+		end)
+	end
 	squad.IdleUnits = { }
 end
 
@@ -639,4 +675,9 @@ DoNavalTransportDrop = function(player, entryPath, exitPath, transportType, unit
 			end)
 		end)
 	end
+end
+
+PlayerHasNavalProduction = function(player)
+	local navalProductionBuildings = player.GetActorsByTypes(NavalProductionTypes)
+	return #navalProductionBuildings > 0
 end

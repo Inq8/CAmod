@@ -111,16 +111,22 @@ Squads = {
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
 		Units = {
 			easy = {
-				Infantry = { "e3", "e1", "e1", "e1", "e2", "e4" },
-				Vehicles = { "3tnk", "btr" }
+				{
+					Infantry = { "e3", "e1", "e1", "e1", "e2", "e4" },
+					Vehicles = { "3tnk", "btr" }
+				}
 			},
 			normal = {
-				Infantry = { "e3", "e1", "e1", "e1", "e1", "e2", "e4" },
-				Vehicles = { "3tnk", "btr.ai", "btr" }
+				{
+					Infantry = { "e3", "e1", "e1", "e1", "e1", "e2", "e4" },
+					Vehicles = { "3tnk", "btr.ai", "btr" }
+				}
 			},
 			hard = {
-				Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4" },
-				Vehicles = { "3tnk", "btr.ai", "3tnk" }
+				{
+					Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4" },
+					Vehicles = { "3tnk", "btr.ai", "3tnk" }
+				}
 			}
 		},
 		AttackPaths = SovietAttackPaths,
@@ -150,16 +156,22 @@ Squads = {
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
 		Units = {
 			easy = {
-				Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" },
-				Vehicles = { "4tnk", "btr.ai" }
+				{
+					Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" },
+					Vehicles = { "4tnk", "btr.ai" }
+				}
 			},
 			normal = {
-				Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" },
-				Vehicles = { "3tnk", "4tnk", "katy" }
+				{
+					Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" },
+					Vehicles = { "3tnk", "4tnk", "katy" }
+				}
 			},
 			hard = {
-				Infantry = { "e3", "e1", "e1", "e3", "shok", "e1", "shok", "e1", "e2", "e3", "e4" },
-				Vehicles = { "3tnk", "4tnk", "btr.ai", "katy", "ttra" }
+				{
+					Infantry = { "e3", "e1", "e1", "e3", "shok", "e1", "shok", "e1", "e2", "e3", "e4" },
+					Vehicles = { "3tnk", "4tnk", "btr.ai", "katy", "ttra" }
+				}
 			}
 		},
 		AttackPaths = SovietAttackPaths
@@ -178,9 +190,9 @@ Squads = {
 		IdleUnits = { },
 		ProducerActors = { Infantry = { SovietWestBarracks } },
 		Units = {
-			easy = { Infantry = { "e3", "e1", "e2", "e4" } },
-			normal = { Infantry = { "e3", "e1", "e2", "e4" } },
-			hard = { Infantry = { "e3", "e1", "e2", "e4", "e4", "shok" } }
+			easy = { { Infantry = { "e3", "e1", "e2", "e4" } } },
+			normal = { { Infantry = { "e3", "e1", "e2", "e4" } } },
+			hard = { { Infantry = { "e3", "e1", "e2", "e4", "e4", "shok" } } }
 		},
 		AttackPaths = {
 			{ AttackWaypoint4.Location, AttackWaypoint5.Location }
@@ -206,13 +218,13 @@ Squads = {
 		ProducerTypes = { Aircraft = { "afld" } },
 		Units = {
 			easy = {
-				Aircraft = { "mig" }
+				{ Aircraft = { "mig" } }
 			},
 			normal = {
-				Aircraft = { "mig", "mig" }
+				{ Aircraft = { "mig", "mig" } }
 			},
 			hard = {
-				Aircraft = { "mig", "mig", "mig" }
+				{ Aircraft = { "mig", "mig", "mig" } }
 			}
 		}
 	}
