@@ -26,7 +26,7 @@ namespace OpenRA.Mods.CA.Activities
 		public AttackCharged(Actor self, in Target target, bool allowMovement, bool forceAttack, Color? targetLineColor = null)
 			: base(self, target, allowMovement, forceAttack, targetLineColor)
 		{
-			attackFrontalChargesTrait = self.TraitsImplementing<AttackFrontalCharged>().ToArray().Where(Exts.IsTraitEnabled).First();
+			attackFrontalChargesTrait = self.TraitsImplementing<AttackFrontalCharged>().ToArray().Where(t => !t.IsTraitDisabled).First();
 			facing = self.Trait<IFacing>();
 		}
 

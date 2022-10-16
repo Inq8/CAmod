@@ -92,7 +92,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			var descLabelPadding = descLabel.Bounds.Height;
 
 			// Name
-			var tooltip = actor.TraitsImplementing<Tooltip>().FirstOrDefault(Exts.IsTraitEnabled);
+			var tooltip = actor.TraitsImplementing<Tooltip>().FirstOrDefault(t => !t.IsTraitDisabled);
 			var name = tooltip != null ? tooltip.Info.Name : actor.Info.Name;
 			nameLabel.Text = name;
 			var nameSize = font.Measure(name);
@@ -115,7 +115,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			var costSize = font.Measure(costLabel.Text);
 
 			// Strengths, weaknesses & attributes
-			var tooltipExtras = actor.TraitsImplementing<TooltipExtras>().FirstOrDefault(Exts.IsTraitEnabled);
+			var tooltipExtras = actor.TraitsImplementing<TooltipExtras>().FirstOrDefault(t => !t.IsTraitDisabled);
 
 			if (tooltipExtras != null)
 			{
