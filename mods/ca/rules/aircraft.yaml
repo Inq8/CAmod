@@ -1574,6 +1574,7 @@ A10.UPG:
 		-RequiresCondition:
 	-ReloadAmmoPoolCA@NOSIDEWINDERS:
 	-GrantConditionOnResupply:
+	-GrantConditionOnBotOwner@BOTSIDEWINDERS:
 
 A10.bomber:
 	Inherits: ^NeutralPlane
@@ -2387,6 +2388,18 @@ RAH:
 	SpeedMultiplier@ALPHA:
 		Modifier: 110
 		RequiresCondition: alphacomanche-upgrade
+	AutoTargetPriority@DEFAULT:
+		RequiresCondition: !stance-attackanything && !assault-move && !alphacomanche-upgrade
+	AutoTargetPriority@ATTACKANYTHING:
+		RequiresCondition: (stance-attackanything  || assault-move) && !alphacomanche-upgrade
+	AutoTargetPriority@DEFAULTAA:
+		RequiresCondition: !stance-attackanything && !assault-move && alphacomanche-upgrade
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Defense
+		InvalidTargets: NoAutoTarget, WaterStructure, AirLowPriority
+	AutoTargetPriority@ATTACKANYTHINGAA:
+		RequiresCondition: (stance-attackanything  || assault-move) && alphacomanche-upgrade
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Structure, Defense
+		InvalidTargets: NoAutoTarget
 
 KIRO:
 	Inherits: ^Helicopter
