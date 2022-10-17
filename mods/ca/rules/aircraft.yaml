@@ -1407,6 +1407,11 @@ A10:
 	RevealsShroud@GAPGEN:
 		Range: 9c0
 		Type: GroundPosition
+	Armament@PRIMARYBLD:
+		Weapon: NapalmTDBuilding
+		LocalOffset: 2,-256,-43, 2,256,-43
+		PauseOnCondition: !ammo
+		Name: primarybld
 	Armament@PRIMARY:
 		Weapon: NapalmTD
 		LocalOffset: 2,-256,-43, 2,256,-43
@@ -1423,6 +1428,7 @@ A10:
 		OpportunityFire: true
 		PauseOnCondition: empdisable || being-warped
 		AirFacingTolerance: 80
+		Armaments: primary, primarybld, secondary
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
