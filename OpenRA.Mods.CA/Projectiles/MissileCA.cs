@@ -132,17 +132,35 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("Should trail animation be spawned when the propulsion is not activated.")]
 		public readonly bool TrailWhenDeactivated = false;
 
+		[Desc("When set, display a line behind the actor. Length is measured in ticks after appearing.")]
 		public readonly int ContrailLength = 0;
 
+		[Desc("Time (in ticks) after which the line should appear. Controls the distance to the actor.")]
+		public readonly int ContrailDelay = 1;
+
+		[Desc("Equivalent to sequence ZOffset. Controls Z sorting.")]
 		public readonly int ContrailZOffset = 2047;
 
+		[Desc("Thickness of the emitted line.")]
 		public readonly WDist ContrailWidth = new WDist(64);
 
-		public readonly Color ContrailColor = Color.White;
+		[Desc("RGB color at the contrail start.")]
+		public readonly Color ContrailStartColor = Color.White;
 
-		public readonly bool ContrailUsePlayerColor = false;
+		[Desc("Use player remap color instead of a custom color at the contrail the start.")]
+		public readonly bool ContrailStartColorUsePlayerColor = false;
 
-		public readonly int ContrailDelay = 1;
+		[Desc("The alpha value [from 0 to 255] of color at the contrail the start.")]
+		public readonly int ContrailStartColorAlpha = 255;
+
+		[Desc("RGB color at the contrail end. Set to start color if undefined")]
+		public readonly Color? ContrailEndColor;
+
+		[Desc("Use player remap color instead of a custom color at the contrail end.")]
+		public readonly bool ContrailEndColorUsePlayerColor = false;
+
+		[Desc("The alpha value [from 0 to 255] of color at the contrail end.")]
+		public readonly int ContrailEndColorAlpha = 0;
 
 		[Desc("Should missile targeting be thrown off by nearby actors with JamsMissiles.")]
 		public readonly bool Jammable = true;
@@ -269,8 +287,9 @@ namespace OpenRA.Mods.CA.Projectiles
 
 			if (info.ContrailLength > 0)
 			{
-				var color = info.ContrailUsePlayerColor ? ContrailRenderable.ChooseColor(args.SourceActor) : info.ContrailColor;
-				contrail = new ContrailRenderable(world, color, info.ContrailWidth, info.ContrailLength, info.ContrailDelay, info.ContrailZOffset);
+				var startcolor = info.ContrailStartColorUsePlayerColor ? Color.FromArgb(info.ContrailStartColorAlpha, args.SourceActor.Owner.Color) : Color.FromArgb(info.ContrailStartColorAlpha, info.ContrailStartColor);
+				var endcolor = info.ContrailEndColorUsePlayerColor ? Color.FromArgb(info.ContrailEndColorAlpha, args.SourceActor.Owner.Color) : Color.FromArgb(info.ContrailEndColorAlpha, info.ContrailEndColor ?? info.ContrailStartColor);
+				contrail = new ContrailRenderable(world, startcolor, endcolor, info.ContrailWidth, info.ContrailLength, info.ContrailDelay, info.ContrailZOffset);
 			}
 
 			trailPalette = info.TrailPalette;
@@ -341,13 +360,12 @@ namespace OpenRA.Mods.CA.Projectiles
 			var tarDistVec = targetPosition + offset - pos;
 			var relTarHorDist = tarDistVec.HorizontalLength;
 
-			int predClfHgt = 0;
-			int predClfDist = 0;
-			int lastHtChg = 0;
-			int lastHt = 0;
+			var predClfHgt = 0;
+			var predClfDist = 0;
+			var lastHt = 0;
 
 			if (info.TerrainHeightAware)
-				InclineLookahead(world, relTarHorDist, out predClfHgt, out predClfDist, out lastHtChg, out lastHt);
+				InclineLookahead(world, relTarHorDist, out predClfHgt, out predClfDist, out _, out lastHt);
 
 			// Height difference between the incline height and missile height
 			var diffClfMslHgt = predClfHgt - pos.Z;
@@ -576,7 +594,7 @@ namespace OpenRA.Mods.CA.Projectiles
 		int HomingInnerTick(int predClfDist, int diffClfMslHgt, int relTarHorDist, int lastHtChg, int lastHt,
 			int nxtRelTarHorDist, int relTarHgt, int vFacing, bool targetPassedBy)
 		{
-			int desiredVFacing = vFacing;
+			int desiredVFacing;
 
 			// Incline coming up -> attempt to reach the incline so that after predClfDist
 			// the height above the terrain is positive but as close to 0 as possible

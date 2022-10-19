@@ -76,7 +76,7 @@ EnslaveVehicle:
 		ValidRelationships: Neutral, Enemy
 
 GunWalkerZap:
-	Range: 4c512
+	Range: 5c0
 	Report: gunwalker-fire1.aud, gunwalker-fire2.aud
 	ReloadDelay: 30
 	Burst: 5
@@ -225,7 +225,7 @@ DevastatorTorpedo:
 	Burst: 3
 	Report: plasmatorp.aud
 	BurstDelays: 8
-	ReloadDelay: 120
+	ReloadDelay: 80
 	Projectile: Bullet
 		Image: plasmatorp3
 		Palette: scrin
@@ -242,12 +242,6 @@ DevastatorTorpedo:
 	Warhead@4Eff: CreateEffect
 		Explosions: large_artillery_explosion
 		ImpactSounds: xplobig4.aud
-
-DevastatorTorpedoCharge:
-	ReloadDelay: 33
-	Range: 16c0
-	Projectile: InstantHit
-	Warhead@1Dum: Dummy
 
 ^ScrinLaser:
 	ValidTargets: Ground, Water
@@ -519,6 +513,7 @@ RuinerCannon:
 			Heavy: 45
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath, FlakVestMitigatedMinor
+	-Warhead@2Dam:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 	Warhead@3Eff: CreateEffect
@@ -630,7 +625,7 @@ StormriderZap:
 		Damage: 4800
 		Versus:
 			None: 105
-			Wood: 35
+			Wood: 50
 			Concrete: 30
 			Light: 55
 			Heavy: 20
@@ -694,7 +689,8 @@ EnervatorBolts:
 		Palette: scrin
 		Inaccuracy: 128
 		ContrailLength: 20
-		ContrailColor: FF00FF77
+		ContrailStartColor: FF00FF77
+		ContrailStartColorAlpha: 119
 		ContrailWidth: 32
 		Jammable: true
 		LockOnProbability: 100
@@ -973,7 +969,8 @@ ShardLauncher:
 		Palette: scrin
 		ContrailWidth: 0c48
 		ContrailLength: 12
-		ContrailColor: 00FF00AA
+		ContrailStartColor: 00FF00AA
+		ContrailStartColorAlpha: 170
 		Jammable: true
 		Blockable: false
 		Inaccuracy: 0
@@ -1011,7 +1008,8 @@ RavagerShards:
 	Projectile: Missile
 		Speed: 213
 		ContrailLength: 9
-		ContrailColor: 00FF0044
+		ContrailStartColor: 00FF0044
+		ContrailStartColorAlpha: 68
 		Inaccuracy: 128
 		RangeLimit: 7c0
 		Jammable: false
@@ -1034,7 +1032,8 @@ ShardWalkerShards:
 	StartBurstReport: shard-fire1.aud
 	Projectile: Missile
 		Speed: 250
-		ContrailColor: 00FF0066
+		ContrailStartColor: 00FF0066
+		ContrailStartColorAlpha: 102
 		MinimumLaunchAngle: 80
 		MaximumLaunchAngle: 112
 	Warhead@1Dam: SpreadDamage
@@ -1042,7 +1041,7 @@ ShardWalkerShards:
 		Damage: 2600
 		Versus:
 			Wood: 10
-			Light: 32
+			Light: 35
 			Heavy: 15
 			Concrete: 10
 
@@ -1053,7 +1052,8 @@ ShardWalkerShardsAA:
 	Range: 8c512
 	Projectile: Missile
 		RangeLimit: 8c512
-		ContrailColor: 00FF0066
+		ContrailStartColor: 00FF0066
+		ContrailStartColorAlpha: 102
 		Speed: 300
 	Warhead@1Dam: SpreadDamage
 		Damage: 1800
@@ -1074,7 +1074,8 @@ LaceratorShards:
 		Image: bshard
 		ContrailLength: 9
 		ContrailWidth: 0c32
-		ContrailColor: 4455FFAA
+		ContrailStartColor: 4455FFAA
+		ContrailStartColorAlpha: 170
 		Jammable: true
 	Warhead@1Dam: SpreadDamage
 		Damage: 2900
@@ -1399,7 +1400,7 @@ LeecherOrbHeal:
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
 		Spread: 768
-		Damage: -1500
+		Damage: -1650
 		Falloff: 100, 50, 35, 15
 		ValidTargets: Heal, Repair
 		Versus:

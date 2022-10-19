@@ -272,15 +272,17 @@ MIG:
 		Offset: -598,683,0
 	Contrail@AB1:
 		Offset: -400,-50,-20
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: cc550080
+		StartColor: cc550080
+		StartColorAlpha: 128
 		TrailLength: 10
 	Contrail@AB2:
 		Offset: -400,50,-20
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: cc550080
+		StartColor: cc550080
+		StartColorAlpha: 128
 		TrailLength: 10
 	SpawnActorOnDeath:
 		Actor: MIG.Husk
@@ -333,6 +335,8 @@ SUK:
 		RequiresCondition: seismic-upgrade
 	Valued:
 		Cost: 2000
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
 	Tooltip:
 		Name: Sukhoi Attack Plane
 	Health:
@@ -391,15 +395,17 @@ SUK:
 		Offset: -598,683,-40
 	Contrail@AB1:
 		Offset: -400,-70,-20
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: cc550080
+		StartColor: cc550080
+		StartColorAlpha: 128
 		TrailLength: 10
 	Contrail@AB2:
 		Offset: -400,70,-20
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: cc550080
+		StartColor: cc550080
+		StartColorAlpha: 128
 		TrailLength: 10
 	SpawnActorOnDeath:
 		Actor: SUK.Husk
@@ -1266,15 +1272,17 @@ U2:
 		Offset: -725,-683,0
 	Contrail@AB1:
 		Offset: -400,-70,-20
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: cc550080
+		StartColor: cc550080
+		StartColorAlpha: 128
 		TrailLength: 10
 	Contrail@AB2:
 		Offset: -400,70,-20
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: cc550080
+		StartColor: cc550080
+		StartColorAlpha: 128
 		TrailLength: 10
 	LeavesTrails:
 		Offsets: -1c43,0,0
@@ -1318,15 +1326,17 @@ SMIG:
 		Offset: -700,-683,-100
 	Contrail@AB1:
 		Offset: -400,-70,-20
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: cc550080
+		StartColor: cc550080
+		StartColorAlpha: 128
 		TrailLength: 10
 	Contrail@AB2:
 		Offset: -400,70,-20
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: cc550080
+		StartColor: cc550080
+		StartColorAlpha: 128
 		TrailLength: 10
 	AttackAircraft:
 		FacingTolerance: 80
@@ -1388,7 +1398,7 @@ A10:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 27000
+		HP: 28000
 	RevealsShroud:
 		Range: 11c0
 		MinRange: 9c0
@@ -1397,6 +1407,11 @@ A10:
 	RevealsShroud@GAPGEN:
 		Range: 9c0
 		Type: GroundPosition
+	Armament@PRIMARYBLD:
+		Weapon: NapalmTDBuilding
+		LocalOffset: 2,-256,-43, 2,256,-43
+		PauseOnCondition: !ammo
+		Name: primarybld
 	Armament@PRIMARY:
 		Weapon: NapalmTD
 		LocalOffset: 2,-256,-43, 2,256,-43
@@ -1413,6 +1428,7 @@ A10:
 		OpportunityFire: true
 		PauseOnCondition: empdisable || being-warped
 		AirFacingTolerance: 80
+		Armaments: primary, primarybld, secondary
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
@@ -1521,15 +1537,19 @@ A10:
 		InvalidTargets: NoAutoTarget
 	UpgradeableTo:
 		Actors: a10.upg
-	ReloadAmmoPool@NOSIDEWINDERS:
+	ReloadAmmoPoolCA@NOSIDEWINDERS:
 		Delay: 25
 		Count: -4
 		AmmoPool: secondary
-		RequiresCondition: !resupplied-with-sidewinders && ammo2
+		RequiresCondition: !resupplied-with-sidewinders && ammo2 && airborne
+		ShowSelectionBar: false
 	GrantConditionOnResupply:
 		Condition: resupplied-with-sidewinders
 		GrantPermanently: true
 		RequiresCondition: sidewinders-upgrade
+	GrantConditionOnBotOwner@BOTSIDEWINDERS:
+		Condition: resupplied-with-sidewinders
+		Bots: brutal, vhard, hard, normal, easy, naval
 
 A10.UPG:
 	Inherits: A10
@@ -1552,8 +1572,9 @@ A10.UPG:
 	-UpgradeableTo:
 	WithAmmoPipsDecoration@SECONDARY:
 		-RequiresCondition:
-	-ReloadAmmoPool@NOSIDEWINDERS:
+	-ReloadAmmoPoolCA@NOSIDEWINDERS:
 	-GrantConditionOnResupply:
+	-GrantConditionOnBotOwner@BOTSIDEWINDERS:
 
 A10.bomber:
 	Inherits: ^NeutralPlane
@@ -1647,23 +1668,27 @@ C17:
 	Contrail@1:
 		Offset: -261,-650,0
 		TrailLength: 15
-		UsePlayerColor: false
-		Color: FFFFFF80
+		StartColorUsePlayerColor: false
+		StartColor: FFFFFF80
+		StartColorAlpha: 128
 	Contrail@2:
 		Offset: -85,-384,0
 		TrailLength: 16
-		UsePlayerColor: false
-		Color: FFFFFF80
+		StartColorUsePlayerColor: false
+		StartColor: FFFFFF80
+		StartColorAlpha: 128
 	Contrail@3:
 		Offset: -85,384,0
 		TrailLength: 16
-		UsePlayerColor: false
-		Color: FFFFFF80
+		StartColorUsePlayerColor: false
+		StartColor: FFFFFF80
+		StartColorAlpha: 128
 	Contrail@4:
 		Offset: -261,650,0
 		TrailLength: 15
-		UsePlayerColor: false
-		Color: FFFFFF80
+		StartColorUsePlayerColor: false
+		StartColor: FFFFFF80
+		StartColorAlpha: 128
 	SpawnActorOnDeath:
 		Actor: C17.Husk
 		RequiresCondition: !empdisable
@@ -1946,8 +1971,6 @@ ORCA:
 	WithMoveAnimation@AFTERBURNER:
 		MoveSequence: move-afterburner
 		RequiresCondition: abur-upgrade && afterburner && attacking && moving
-	WithMoveAnimation:
-		MoveSequence: move
 	Selectable:
 		DecorationBounds: 1280, 1024
 	Rearmable:
@@ -1968,16 +1991,18 @@ ORCA:
 		RequiresCondition: abur-upgrade && afterburner && attacking && moving
 	Contrail@AB1:
 		Offset: -300,-150,-70
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: cc550080
+		StartColor: cc550080
+		StartColorAlpha: 128
 		TrailLength: 10
 		RequiresCondition: abur-upgrade && afterburner && attacking && moving
 	Contrail@AB2:
 		Offset: -300,150,-70
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: cc550080
+		StartColor: cc550080
+		StartColorAlpha: 128
 		TrailLength: 10
 		RequiresCondition: abur-upgrade && afterburner && attacking && moving
 	GrantThermalCondition@AFTERBURNER:
@@ -2114,16 +2139,18 @@ ORCB:
 		RequiresCondition: abur-upgrade && afterburner && attacking && moving
 	Contrail@AB1:
 		Offset: -300,-350,-70
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: cc550080
+		StartColor: cc550080
+		StartColorAlpha: 128
 		TrailLength: 10
 		RequiresCondition: abur-upgrade && afterburner && attacking && moving
 	Contrail@AB2:
 		Offset: -300,350,-70
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: cc550080
+		StartColor: cc550080
+		StartColorAlpha: 128
 		TrailLength: 10
 		RequiresCondition: abur-upgrade && afterburner && attacking && moving
 	GrantThermalCondition@AFTERBURNER:
@@ -2221,7 +2248,7 @@ RAH:
 		IsStandard: false
 		RequiresCondition: alphacomanche-upgrade
 	Valued:
-		Cost: 1900
+		Cost: 1800
 	Tooltip:
 		Name: Comanche
 		RequiresCondition: !alphacomanche-upgrade
@@ -2361,6 +2388,18 @@ RAH:
 	SpeedMultiplier@ALPHA:
 		Modifier: 110
 		RequiresCondition: alphacomanche-upgrade
+	AutoTargetPriority@DEFAULT:
+		RequiresCondition: !stance-attackanything && !assault-move && !alphacomanche-upgrade
+	AutoTargetPriority@ATTACKANYTHING:
+		RequiresCondition: (stance-attackanything  || assault-move) && !alphacomanche-upgrade
+	AutoTargetPriority@DEFAULTAA:
+		RequiresCondition: !stance-attackanything && !assault-move && alphacomanche-upgrade
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Defense
+		InvalidTargets: NoAutoTarget, WaterStructure, AirLowPriority
+	AutoTargetPriority@ATTACKANYTHINGAA:
+		RequiresCondition: (stance-attackanything  || assault-move) && alphacomanche-upgrade
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Structure, Defense
+		InvalidTargets: NoAutoTarget
 
 KIRO:
 	Inherits: ^Helicopter
@@ -2619,25 +2658,29 @@ OCAR:
 	Contrail@1:
 		Offset: 30,-600,-20
 		TrailLength: 15
-		UsePlayerColor: false
-		Color: FFFFFF80
+		StartColorUsePlayerColor: false
+		StartColor: FFFFFF80
+		StartColorAlpha: 128
 	Contrail@2:
 		Offset: -885,-184,0
 		TrailLength: 16
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: cc550080
+		StartColor: cc550080
+		StartColorAlpha: 128
 	Contrail@3:
 		Offset: -885,184,0
 		TrailLength: 16
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: cc550080
+		StartColor: cc550080
+		StartColorAlpha: 128
 	Contrail@4:
 		Offset: 30,600,-20
 		TrailLength: 15
-		UsePlayerColor: false
-		Color: FFFFFF80
+		StartColorUsePlayerColor: false
+		StartColor: FFFFFF80
+		StartColorAlpha: 128
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
 
@@ -2673,11 +2716,11 @@ OCAR.XO:
 	Contrail@2:
 		Offset: -885,-184,0
 		ZOffset: -512
-		Color: cc550080
+		StartColor: cc550080
 	Contrail@3:
 		Offset: -885,184,0
 		ZOffset: -512
-		Color: cc550080
+		StartColor: cc550080
 	Contrail@4:
 		Offset: 30,600,-20
 	Aircraft:
@@ -2822,14 +2865,14 @@ HARR:
 		RequiresSelection: true
 	Contrail@1:
 		Offset: -400,-443,0
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: FFFFFF80
+		StartColor: FFFFFF80
 	Contrail@2:
 		Offset: -400,443,0
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: FFFFFF80
+		StartColor: FFFFFF80
 	SpawnActorOnDeath:
 		Actor: HARR.Husk
 		RequiresCondition: airborne && ammo && !empdisable && !being-warped
@@ -2938,13 +2981,15 @@ SCRN:
 		PipCount: 3
 	Contrail@1:
 		Offset: -300,-143,0
-		Color: 00FF0080
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
+		StartColor: 00FF00
+		StartColorAlpha: 128
 		ZOffset: -512
 	Contrail@2:
 		Offset: -300,143,0
-		Color: 00FF0080
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
+		StartColor: 00FF00
+		StartColorAlpha: 128
 		ZOffset: -512
 	SpawnActorOnDeath:
 		Actor: SCRN.Husk
@@ -3052,7 +3097,7 @@ HORN:
 		LandingDistance: 8c0
 	Contrail@1:
 		Offset: -432,0,0
-		Color: cc550080
+		StartColor: cc550080
 		TrailLength: 10
 	-Contrail@2:
 	Interactable:
@@ -3113,15 +3158,17 @@ YF23.Bomber:
 		Offset: -325,-483,0
 	Contrail@AB1:
 		Offset: -400,-80,-10
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: cc550080
+		StartColor: cc550080
+		StartColorAlpha: 128
 		TrailLength: 10
 	Contrail@AB2:
 		Offset: -400,80,-10
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: cc550080
+		StartColor: cc550080
+		StartColorAlpha: 128
 		TrailLength: 10
 	SpawnActorOnDeath:
 		Actor: YF23.Husk
@@ -3350,7 +3397,7 @@ AURO:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 16000
+		HP: 18000
 	RevealsShroud:
 		Range: 12c0
 		MinRange: 10c0
@@ -3409,15 +3456,17 @@ AURO:
 		DecorationBounds: 1706, 1237, 0, 42
 	Contrail@AB1:
 		Offset: -400,-70,-50
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: cc550080
+		StartColor: cc550080
+		StartColorAlpha: 128
 		TrailLength: 10
 	Contrail@AB2:
 		Offset: -400,70,-50
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: cc550080
+		StartColor: cc550080
+		StartColorAlpha: 128
 		TrailLength: 10
 	Contrail@1:
 		Offset: -300,-800,-50

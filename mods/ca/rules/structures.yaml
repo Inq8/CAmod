@@ -47,6 +47,7 @@ MSLO:
 		InsufficientPowerSpeechNotification: InsufficientPower
 		IncomingSound: nukelaunch.aud
 		IncomingSpeechNotification: AbombLaunchDetected
+		IncomingTextNotification: Atom Bomb launch detected.
 		LaunchSound: nukelaunch.aud
 		MissileWeapon: atomic
 		MissileImage: atomic
@@ -515,7 +516,7 @@ PDOX:
 		Icon: chrono
 		Cursor: ability
 		ChargeInterval: 7000
-		Name: Chronoshift
+		Name: Chronoshift (AI)
 		ActivationDelay: 25
 		Description: \nTeleports selected units to a targeted location,\n    returning to their original location\n    after a short time.
 		Weapon: ChronoAI
@@ -656,9 +657,6 @@ TSLA:
 		RequiresCondition: charged
 		BlinkInterval: 64
 		RequiresSelection: true
-	ProvidesPrerequisite@TSLA:
-		Factions: soviet, russia, ukraine, iraq, yuri
-		Prerequisite: structures.tsla
 
 AGUN:
 	Inherits: ^Defense
@@ -749,7 +747,7 @@ DOME:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
 	Health:
-		HP: 100000
+		HP: 110000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -785,7 +783,7 @@ DOME:
 	ProvidesPrerequisite@radarorrepair:
 		Prerequisite: radarorrepair
 	ProvidesPrerequisiteValidatedFaction@allrad:
-		Factions:  england, france, germany, usa
+		Factions: england, france, germany, usa
 		Prerequisite: radar.allies
 	ProvidesPrerequisiteValidatedFaction@engrad:
 		Factions: england
@@ -1380,6 +1378,7 @@ WEAP:
 		RequiresCondition: !being-captured
 		SpawnOffset: 213,-128,0
 		ExitCell: 1,2
+	TracksCapturedFaction:
 	ValidFactions:
 		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
 	ProvidesPrerequisite@any:
@@ -1474,6 +1473,7 @@ FACT:
 		BuildPaletteOrder: 1000
 		Prerequisites: ~disabled
 		Description: Produces structures.
+	TracksCapturedFaction:
 	ValidFactions:
 		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
 	ProvidesPrerequisite@ra:
@@ -1936,7 +1936,7 @@ HPAD:
 		Prerequisites: radarorrepair, ~structures.allies, ~techlevel.medium
 		Description: Produces and reloads helicopters.
 	Valued:
-		Cost: 750
+		Cost: 650
 	Tooltip:
 		Name: Helipad
 	Building:
@@ -2060,7 +2060,7 @@ AFLD:
 		Prerequisites: radarorrepair, ~structures.soviet, ~techlevel.medium
 		Description: Produces and reloads aircraft.
 	Valued:
-		Cost: 750
+		Cost: 650
 	Tooltip:
 		Name: Airfield
 	Selectable:
@@ -2085,26 +2085,26 @@ AFLD:
 	RallyPoint:
 		ForceSetType: Aircraft
 	Reservable:
-	ProvidesPrerequisite@soviet:
+	ValidFactions:
 		Factions: russia, ukraine, iraq, yuri
+	ProvidesPrerequisite@soviet:
 		Prerequisite: aircraft.soviet
-	ProvidesPrerequisite@russia:
+	ProvidesPrerequisiteValidatedFaction@russia:
 		Factions: russia
 		Prerequisite: aircraft.russia
-	ProvidesPrerequisite@ukraine:
+	ProvidesPrerequisiteValidatedFaction@ukraine:
 		Factions: ukraine
 		Prerequisite: aircraft.ukraine
-	ProvidesPrerequisite@iraq:
+	ProvidesPrerequisiteValidatedFaction@iraq:
 		Factions: iraq
 		Prerequisite: aircraft.iraq
-	ProvidesPrerequisite@yuri:
+	ProvidesPrerequisiteValidatedFaction@yuri:
 		Factions: yuri
 		Prerequisite: aircraft.yuri
 	SupportPowerChargeBar:
 	Power:
 		Amount: -20
 	ProvidesPrerequisite@buildingname:
-		Prerequisite: afld
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate
@@ -2276,6 +2276,8 @@ NPWR:
 		Weapon: CrateNuke
 		EmptyWeapon: CrateNuke
 	ProvidesPrerequisite@buildingname:
+	ValidFactions:
+		Factions: russia, ukraine, iraq, yuri
 	ProvidesPrerequisiteValidatedFaction@iraq:
 		Factions: iraq
 		Prerequisite: npwr.iraq
@@ -2490,32 +2492,34 @@ BARR:
 		SpawnOffset: -725,640,0
 		ExitCell: 2,2
 		Priority: 0
+	ValidFactions:
+		Factions: russia, ukraine, iraq, yuri
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@human:
 		Prerequisite: infantry.human
 	ProvidesPrerequisite@infantryra:
 		Prerequisite: infantry.ra
-	ProvidesPrerequisite@russia:
+	ProvidesPrerequisiteValidatedFaction@russia:
 		Factions: russia
 		Prerequisite: infantry.russia
-	ProvidesPrerequisite@ukraine:
+	ProvidesPrerequisiteValidatedFaction@ukraine:
 		Factions: ukraine
 		Prerequisite: infantry.ukraine
-	ProvidesPrerequisite@iraq:
+	ProvidesPrerequisiteValidatedFaction@iraq:
 		Factions: iraq
 		Prerequisite: infantry.iraq
-	ProvidesPrerequisite@yuri:
+	ProvidesPrerequisiteValidatedFaction@yuri:
 		Factions: yuri
 		Prerequisite: infantry.yuri
-	ProvidesPrerequisite@e2:
+	ProvidesPrerequisiteValidatedFaction@e2:
 		Factions: russia, iraq, yuri
 		Prerequisite: infantry.e2
 	ProvidesPrerequisite@thf:
 		Prerequisite: infantry.thf
 	ProvidesPrerequisite@dog:
 		Prerequisite: infantry.dog
-	ProvidesPrerequisite@boris:
+	ProvidesPrerequisiteValidatedFaction@boris:
 		Factions: russia, iraq, ukraine
 		Prerequisite: infantry.boris
 	Power:
@@ -2638,22 +2642,24 @@ TENT:
 		SpawnOffset: -725,640,0
 		ExitCell: 2,2
 		Priority: 0
+	ValidFactions:
+		Factions: england, germany, france, usa
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@human:
 		Prerequisite: infantry.human
 	ProvidesPrerequisite@infantryra:
 		Prerequisite: infantry.ra
-	ProvidesPrerequisite@england:
+	ProvidesPrerequisiteValidatedFaction@england:
 		Factions: england
 		Prerequisite: infantry.england
-	ProvidesPrerequisite@france:
+	ProvidesPrerequisiteValidatedFaction@france:
 		Factions: france
 		Prerequisite: infantry.france
-	ProvidesPrerequisite@germany:
+	ProvidesPrerequisiteValidatedFaction@germany:
 		Factions: germany
 		Prerequisite: infantry.germany
-	ProvidesPrerequisite@usa:
+	ProvidesPrerequisiteValidatedFaction@usa:
 		Factions: usa
 		Prerequisite: infantry.usa
 	ProvidesPrerequisite@mech:
@@ -2737,7 +2743,7 @@ FIX:
 		Condition: aircraft-repair
 		Range: 10c0
 	WithRangeCircle@AIRCRAFTREPAIR:
-		Color: 888899AA
+		Color: FFD000AA
 		Range: 10c0
 
 SBAG:
@@ -3012,15 +3018,6 @@ INFANTRY.MECH:
 	Buildable:
 		Description: Mechanical Barracks
 
-STRUCTURES.TSLA:
-	AlwaysVisible:
-	Interactable:
-	Tooltip:
-		GenericName:
-		Name: Tesla Coil
-	Buildable:
-		Description: Tesla Coil
-
 PYLE:
 	Inherits: ^BuildingTD
 	Inherits@SHAPE: ^2x2Shape
@@ -3078,22 +3075,24 @@ PYLE:
 		SpawnOffset: -725,640,0
 		ExitCell: 2,2
 		Priority: 0
+	ValidFactions:
+		Factions: talon, zocom, eagle, arc
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@human:
 		Prerequisite: infantry.human
 	ProvidesPrerequisite@infantrytd:
 		Prerequisite: infantry.td
-	ProvidesPrerequisite@talon:
+	ProvidesPrerequisiteValidatedFaction@talon:
 		Factions: talon
 		Prerequisite: infantry.talon
-	ProvidesPrerequisite@zocom:
+	ProvidesPrerequisiteValidatedFaction@zocom:
 		Factions: zocom
 		Prerequisite: infantry.zocom
-	ProvidesPrerequisite@eagle:
+	ProvidesPrerequisiteValidatedFaction@eagle:
 		Factions: eagle
 		Prerequisite: infantry.eagle
-	ProvidesPrerequisite@arc:
+	ProvidesPrerequisiteValidatedFaction@arc:
 		Factions: arc
 		Prerequisite: infantry.arc
 	ProvidesPrerequisite@medi:
@@ -3173,22 +3172,24 @@ HAND:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
+	ValidFactions:
+		Factions: blackh, marked, legion, shadow
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@human:
 		Prerequisite: infantry.human
 	ProvidesPrerequisite@infantrytd:
 		Prerequisite: infantry.td
-	ProvidesPrerequisite@blackh:
+	ProvidesPrerequisiteValidatedFaction@blackh:
 		Factions: blackh
 		Prerequisite: infantry.blackh
-	ProvidesPrerequisite@marked:
+	ProvidesPrerequisiteValidatedFaction@marked:
 		Factions: marked
 		Prerequisite: infantry.marked
-	ProvidesPrerequisite@legion:
+	ProvidesPrerequisiteValidatedFaction@legion:
 		Factions: legion
 		Prerequisite: infantry.legion
-	ProvidesPrerequisite@shadow:
+	ProvidesPrerequisiteValidatedFaction@shadow:
 		Factions: shadow
 		Prerequisite: infantry.shadow
 	ProvidesPrerequisite@mech:
@@ -3247,6 +3248,7 @@ WEAP.TD:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
+	TracksCapturedFaction:
 	ValidFactions:
 		Factions: talon, zocom, eagle, arc, legion
 	ProvidesPrerequisite@any:
@@ -3397,6 +3399,7 @@ AIRS:
 		SpawnType: ClosestEdgeToDestination
 		ProportionalSpeed: true
 		RequiresCondition: global-multiqueue
+	TracksCapturedFaction:
 	ValidFactions:
 		Factions: blackh, marked, shadow
 	ProvidesPrerequisite@any:
@@ -3444,6 +3447,7 @@ AIRS:
 		EndChargeSpeechNotification: Reinforce
 		LaunchSpeechNotification: ReinforcementsArrived
 		IncomingSpeechNotification: EnemyUnitsApproaching
+		IncomingTextNotification: Enemy air drop detected.
 		CameraActor: camera.paradrop
 		DisplayBeacon: true
 		BeaconPoster: lrairdropicon
@@ -3468,6 +3472,7 @@ AIRS:
 		EndChargeSpeechNotification: Reinforce
 		LaunchSpeechNotification: ReinforcementsArrived
 		IncomingSpeechNotification: EnemyUnitsApproaching
+		IncomingTextNotification: Enemy air drop detected.
 		CameraActor: camera.paradrop
 		DisplayBeacon: true
 		BeaconPoster: lrairdropicon
@@ -3492,6 +3497,7 @@ AIRS:
 		EndChargeSpeechNotification: Reinforce
 		LaunchSpeechNotification: ReinforcementsArrived
 		IncomingSpeechNotification: EnemyUnitsApproaching
+		IncomingTextNotification: Enemy air drop detected.
 		CameraActor: camera.paradrop
 		DisplayBeacon: true
 		BeaconPoster: lrairdropicon
@@ -3689,6 +3695,7 @@ AFAC:
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
+	TracksCapturedFaction:
 	ValidFactions:
 		Factions: talon, zocom, eagle, arc, blackh, marked, legion, shadow
 	ProvidesPrerequisite@td:
@@ -3886,7 +3893,7 @@ ATWR:
 	Tooltip:
 		Name: Advanced Guard Tower
 	Health:
-		HP: 48000
+		HP: 50000
 	Armor:
 		Type: Concrete
 	Selectable:
@@ -3935,7 +3942,7 @@ STWR:
 		Name: Sonic Tower
 	Building:
 	Health:
-		HP: 42000
+		HP: 45000
 	Armor:
 		Type: Concrete
 	RevealsShroud:
@@ -4088,7 +4095,7 @@ HQ:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
 	Health:
-		HP: 100000
+		HP: 110000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -4134,13 +4141,27 @@ HQ:
 		SupportPowerPaletteOrder: 50
 	ProduceActorPowerCA@hackercell:
 		OrderName: hackercell
-		Prerequisites: infantry.any, ~radar.legion
+		Prerequisites: infantry.any, ~radar.legion, ~!botplayer
 		Icon: hackercell
 		Type: ParadropInfantry
 		SelectTargetSpeechNotification: SelectTarget
 		ChargeInterval: 7500
 		Name: Hacker Cell
 		Description: \nDeploy a squad of hackers that can remotely\n    capture buildings and take control of defenses.\n\nTarget infantry production structure to deploy.
+		Actors: hack, hack, hack
+		LaunchSpeechNotification: ReinforcementsArrived
+		EndChargeSpeechNotification: Reinforce
+		PauseOnCondition: disabled || empdisable || being-warped
+		SupportPowerPaletteOrder: 50
+	ProduceActorPowerCA@hackercellAI:
+		OrderName: hackercellai
+		Prerequisites: infantry.any, ~radar.legion, ~botplayer
+		Icon: hackercell
+		Type: ParadropInfantry
+		SelectTargetSpeechNotification: SelectTarget
+		ChargeInterval: 7500
+		Name: Hacker Cell (AI)
+		Description: \nDeploy a squad of hackers that can remotely\n    capture buildings and take control of defenses.
 		Actors: hack, hack, hack
 		LaunchSpeechNotification: ReinforcementsArrived
 		EndChargeSpeechNotification: Reinforce
@@ -4360,6 +4381,7 @@ EYE:
 		EndChargeSpeechNotification: IonCannonReady
 		InsufficientPowerSpeechNotification: InsufficientPower
 		IncomingSpeechNotification: IonCannonApproach
+		IncomingTextNotification: Ion cannon approaching.
 		IncomingSound: nukelaunch.aud
 		LaunchSound: nukelaunch.aud
 		DisplayTimerRelationships: Ally, Neutral, Enemy
@@ -4484,7 +4506,7 @@ REP:
 		Condition: aircraft-repair
 		Range: 10c0
 	WithRangeCircle@AIRCRAFTREPAIR:
-		Color: 888899AA
+		Color: FFD000AA
 		Range: 10c0
 
 ^GDIAirPowers:
@@ -4622,7 +4644,7 @@ HPAD.TD:
 		IconPalette: chrometd
 		Description: Produces and reloads helicopters.
 	Valued:
-		Cost: 750
+		Cost: 650
 	Tooltip:
 		Name: Helipad
 	Building:
@@ -4841,7 +4863,7 @@ AFLD.GDI:
 		Prerequisites: radarorrepair, ~structures.gdi, ~techlevel.medium
 		Description: Produces and reloads aircraft.
 	Valued:
-		Cost: 750
+		Cost: 650
 	Tooltip:
 		Name: Airfield
 	Building:
@@ -4866,7 +4888,7 @@ AFLD.GDI:
 	Reservable:
 	ValidFactions:
 		Factions: talon, zocom, eagle, arc
-	ProvidesPrerequisiteValidatedFaction@gdi:
+	ProvidesPrerequisite@gdi:
 		Prerequisite: aircraft.gdi
 	ProvidesPrerequisiteValidatedFaction@eagle:
 		Factions: eagle
@@ -4913,7 +4935,7 @@ GTEK:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Health:
-		HP: 100000
+		HP: 110000
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SabInfiltrate
@@ -5031,7 +5053,7 @@ TMPL:
 	Selectable:
 		Bounds: 3072, 3072
 	Health:
-		HP: 100000
+		HP: 110000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -5058,6 +5080,7 @@ TMPL:
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		IncomingSpeechNotification: MissileLaunchDetected
+		IncomingTextNotification: Cluster Missile launch detected.
 		MissileWeapon: deathhand
 		MissileImage: deathhand
 		MissilePalette: temptd
@@ -6000,7 +6023,7 @@ INDP:
 		Dimensions: 3,4
 		LocalCenterOffset: 0,-512,0
 	Health:
-		HP: 100000
+		HP: 110000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -6051,7 +6074,7 @@ OREP:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Health:
-		HP: 100000
+		HP: 110000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -6131,7 +6154,7 @@ UPGC:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-1024,0
 	Health:
-		HP: 100000
+		HP: 110000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -6482,7 +6505,7 @@ TMPP:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Health:
-		HP: 100000
+		HP: 110000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -6608,6 +6631,7 @@ MSLO.Nod:
 		SelectTargetSpeechNotification: SelectTarget
 		InsufficientPowerSpeechNotification: InsufficientPower
 		IncomingSpeechNotification: MissileLaunchDetected
+		IncomingTextNotification: Chemical Missile launch detected.
 		MissileWeapon: Chemicbm
 		MissileImage: Chemicbm
 		MissileDelay: 5
@@ -6701,6 +6725,7 @@ WEAT:
 		EndChargeSpeechNotification: StormReady
 		InsufficientPowerSpeechNotification: InsufficientPower
 		IncomingSpeechNotification: StormApproach
+		IncomingTextNotification: Storm approaching.
 		IncomingSound: sweaintr.aud
 		LaunchSound: sweaintr.aud
 		DisplayTimerRelationships: Ally, Neutral, Enemy

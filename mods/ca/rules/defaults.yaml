@@ -787,7 +787,11 @@
 	DamageTypeDamageMultiplier@CYBORGFLAKARMOR:
 		RequiresCondition: cyborgarmor-upgrade
 		DamageTypes: FlakVestMitigated
-		Modifier: 90
+		Modifier: 85
+	DamageTypeDamageMultiplier@CYBORGFLAKARMORMINOR:
+		RequiresCondition: cyborgarmor-upgrade
+		DamageTypes: FlakVestMitigatedMinor
+		Modifier: 95
 
 ^BinoUpgrade:
 	ExternalCondition@BINO:
@@ -1775,7 +1779,7 @@
 	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 		Condition: repair-cooldown
 		RequiredHealing: 85000
-		StackDuration: 750
+		StackDuration: 1000
 		MinimumHealing: 2500
 		DamageTypes: DirectRepair
 		ShowSelectionBar: true
@@ -2158,17 +2162,16 @@
 		Class: CivInfantry
 	Valued:
 		Cost: 10
-	GrantConditionOnFaction@FACTION:
-		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri, gdi, zocom, eagle, talon, arc, nod, blackh, legion, marked, shadow
-		Condition: owned-by-faction
+	GrantConditionOnCombatantOwner@COMBATANT:
+		Condition: owned-by-combatant
 	Tooltip:
 		Name: Civilian
 		GenericVisibility: None
-		RequiresCondition: !owned-by-faction
-	Tooltip@FACTION:
+		RequiresCondition: !owned-by-combatant
+	Tooltip@COMBATANT:
 		Name: Technician
 		GenericVisibility: None
-		RequiresCondition: owned-by-faction
+		RequiresCondition: owned-by-combatant
 	RevealsShroud:
 		Range: 3c0
 	Passenger:
@@ -2431,13 +2434,15 @@
 		Duration: 100
 		Radius: 2c512
 	Contrail@1:
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: FFFFFF80
+		StartColor: FFFFFF80
+		StartColorAlpha: 128
 	Contrail@2:
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: FFFFFF80
+		StartColor: FFFFFF80
+		StartColorAlpha: 128
 	GpsRadarDot:
 		Sequence: Plane
 
@@ -2787,6 +2792,8 @@
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^SpriteActor
 	Inherits@shape: ^1x1Shape
+	CustomRadarColor:
+		Color: EEEEEE
 	Inherits@3: ^Cloakable
 	Inherits@handicaps: ^PlayerHandicaps
 	Interactable:
@@ -3155,13 +3162,15 @@
 		Duration: 60
 		Radius: 4c0
 	Contrail@1:
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: FFFFFF80
+		StartColor: FFFFFF80
+		StartColorAlpha: 128
 	Contrail@2:
-		UsePlayerColor: false
+		StartColorUsePlayerColor: false
 		ZOffset: -512
-		Color: FFFFFF80
+		StartColor: FFFFFF80
+		StartColorAlpha: 128
 
 ^PlaneHuskEmpty:
 	Inherits: ^PlaneHusk
@@ -3741,10 +3750,10 @@
 	GrantExternalConditionToOwner:
 		Condition: infqueuecount
 	ProductionTimeMultiplier@MQ1:
-		Multiplier: 150
+		Multiplier: 125
 		Prerequisites: global.multiqueue, infqueuecount.one
 	ProductionTimeMultiplier@MQ2:
-		Multiplier: 200
+		Multiplier: 150
 		Prerequisites: global.multiqueue, infqueuecount.two
 
 ^ProducesCyborgs:
@@ -3871,10 +3880,10 @@
 	GrantExternalConditionToOwner:
 		Condition: airqueuecount
 	ProductionTimeMultiplier@MQ1:
-		Multiplier: 150
+		Multiplier: 125
 		Prerequisites: global.multiqueue, airqueuecount.one
 	ProductionTimeMultiplier@MQ2:
-		Multiplier: 200
+		Multiplier: 150
 		Prerequisites: global.multiqueue, airqueuecount.two
 
 ^ProducesHelicopters:

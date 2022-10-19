@@ -143,7 +143,8 @@ MaverickSU:
 		TrailImage: smokey
 		ContrailLength: 8
 		ContrailWidth: 48
-		ContrailColor: ff990088
+		ContrailStartColor: ff990088
+		ContrailStartColorAlpha: 128
 	Warhead@1Dam: SpreadDamage
 		Damage: 16000
 		Spread: 448
@@ -189,7 +190,8 @@ SeismicMissile:
 		TrailDelay: 2
 		ContrailWidth: 64
 		ContrailLength: 8
-		ContrailColor: ff6600aa
+		ContrailStartColor: ff6600aa
+		ContrailStartColorAlpha: 170
 		Speed: 180
 		LaunchAngle: 0
 	Warhead@1Dam: SpreadDamage
@@ -199,7 +201,7 @@ SeismicMissile:
 		ValidTargets: Ground, Water
 		Versus:
 			None: 10
-			Wood: 55
+			Wood: 70
 			Light: 75
 			Heavy: 100
 			Concrete: 75
@@ -282,7 +284,8 @@ Dragon.TibCore:
 		Image: tibcoremsl
 		RangeLimit: 9c0
 		ContrailLength: 15
-		ContrailColor: 33aa00aa
+		ContrailStartColor: 33aa00aa
+		ContrailStartColorAlpha: 170
 		ContrailWidth: 0c40
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: tibcorehit1.aud, tibcorehit2.aud, tibcorehit3.aud
@@ -421,7 +424,7 @@ HellfireAG.Harrier:
 		ValidTargets: Ground, Water, Trees
 		Versus:
 			None: 100
-			Wood: 65
+			Wood: 80
 			Light: 60
 			Heavy: 30
 			Concrete: 30
@@ -603,7 +606,8 @@ RedEye.TibCore:
 	Projectile: MissileCA
 		Image: tibcoremsl
 		ContrailLength: 15
-		ContrailColor: 33aa00aa
+		ContrailStartColor: 33aa00aa
+		ContrailStartColorAlpha: 170
 		ContrailWidth: 0c40
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: tibcorehit1.aud, tibcorehit2.aud, tibcorehit3.aud
@@ -795,7 +799,8 @@ TOW:
 		PointDefenseType: Missile
 		LockOnInaccuracy: 0
 		ContrailLength: 17
-		ContrailColor: ccccccaa
+		ContrailStartColor: ccccccaa
+		ContrailStartColorAlpha: 170
 		ContrailWidth: 0c48
 		MinimumLaunchAngle: 0
 		MaximumLaunchAngle: 48
@@ -958,10 +963,23 @@ SCUD:
 		Versus:
 			None: 90
 			Wood: 80
-			Light: 70
-			Heavy: 40
+			Light: 65
+			Heavy: 25
 			Concrete: 50
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
+	Warhead@2Dam: SpreadDamage
+		Damage: 3400
+		Spread: 512
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		ValidTargets: Vehicle
+		Versus:
+			Heavy: 20
+			None: 0
+			Wood: 0
+			Light: 5
+			Concrete: 0
+			Brick: 0
+		DamageTypes: SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: building, building2
 	Warhead@4EffWater: CreateEffect
@@ -980,10 +998,23 @@ V3Weapon:
 		Versus:
 			None: 90
 			Wood: 100
-			Light: 70
-			Heavy: 40
+			Light: 65
+			Heavy: 25
 			Concrete: 60
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
+	Warhead@2Dam: SpreadDamage
+		Damage: 3400
+		Spread: 512
+		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		ValidTargets: Vehicle
+		Versus:
+			Heavy: 35
+			None: 0
+			Wood: 0
+			Light: 5
+			Concrete: 0
+			Brick: 0
+		DamageTypes: SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: building, building2
 		ValidTargets: Ground, Air, Ship, Trees, ICBM
@@ -1180,7 +1211,8 @@ BikeRockets.TibCore:
 		Speed: 266
 		Image: tibcoremsl
 		ContrailLength: 15
-		ContrailColor: 33aa00aa
+		ContrailStartColor: 33aa00aa
+		ContrailStartColorAlpha: 170
 		ContrailWidth: 0c40
 		RangeLimit: 9c0
 	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
@@ -1188,6 +1220,19 @@ BikeRockets.TibCore:
 		Damage: 4400
 		Versus:
 			Concrete: 70
+			Heavy: 0
+	Warhead@2Dam: SpreadDamage
+		Damage: 4400
+		Spread: 341
+		ValidTargets: Vehicle
+		Versus:
+			Heavy: 100
+			None: 0
+			Wood: 0
+			Light: 0
+			Concrete: 0
+			Brick: 0
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: tibcorehit1.aud, tibcorehit2.aud, tibcorehit3.aud
 	Warhead@tib: CreateEffect
@@ -1203,7 +1248,8 @@ BikeRocketsAA.TibCore:
 		Speed: 357
 		Image: tibcoremsl
 		ContrailLength: 15
-		ContrailColor: 33aa00aa
+		ContrailStartColor: 33aa00aa
+		ContrailStartColorAlpha: 170
 		ContrailWidth: 0c40
 	Warhead@1Dam: SpreadDamage
 		Damage: 3960
@@ -1250,6 +1296,20 @@ IFVRocketsE:
 		ContrailLength: 10
 	Warhead@1Dam: SpreadDamage
 		Damage: 3750
+		Versus:
+			Heavy: 0
+	Warhead@2Dam: SpreadDamage
+		Spread: 341
+		Damage: 3750
+		ValidTargets: Vehicle
+		Versus:
+			Heavy: 100
+			None: 0
+			Wood: 0
+			Light: 0
+			Concrete: 0
+			Brick: 0
+		DamageTypes: ExplosionDeath
 
 IFVRocketsE.CRYO:
 	Inherits: IFVRocketsE
@@ -1257,6 +1317,9 @@ IFVRocketsE.CRYO:
 		Image: cryomiss
 	Warhead@1Dam: SpreadDamage
 		DamageTypes: Prone50Percent, TriggerProne, FrozenDeath
+		Damage: 3150
+	Warhead@2Dam: SpreadDamage
+		DamageTypes: FrozenDeath
 		Damage: 3150
 	Warhead@3Eff: CreateEffect
 		Explosions: cryohit
@@ -1341,6 +1404,7 @@ IFVRocketsAAE.CRYO:
 	Range: 9c768
 	Projectile: MissileCA
 		ContrailLength: 15
+		ContrailStartColorAlpha: 230
 	Warhead@1Dam: SpreadDamage
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated
 
@@ -1352,7 +1416,7 @@ IFVRocketsAAE.CRYO:
 		Speed: 366
 		Inaccuracy: 341
 		LockOnInaccuracy: 512
-		ContrailColor: 00FFFFE6
+		ContrailStartColor: 00FFFFE6
 	Warhead@1Dam: SpreadDamage
 		Damage: 830
 
@@ -1361,7 +1425,7 @@ IFVRocketsAAE.CRYO:
 	BurstDelays: 12
 	Report: hammerheadmissile1.aud, hammerheadmissile2.aud
 	Projectile: MissileCA
-		ContrailColor: FFCC00E6
+		ContrailStartColor: FFCC00E6
 	Warhead@1Dam: SpreadDamage
 		Damage: 860
 		Spread: 426
@@ -1385,13 +1449,15 @@ IFVRocketsAAE.CRYO:
 		TrailImage: smokey
 		Shadow: True
 		ContrailLength: 15
-		ContrailColor: FF4400E6
+		ContrailStartColor: FF4400E6
 		Speed: 266
 		Inaccuracy: 1c0
 		LaunchAngle: 62
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
 		Damage: 370
+		Versus:
+			Heavy: 45
 
 227mmAA:
 	Inherits: ^AntiAirMissile
@@ -1427,6 +1493,7 @@ IFVRocketsAAE.CRYO:
 	Projectile: MissileCA
 		Speed: 366
 		ContrailLength: 15
+		ContrailStartColorAlpha: 230
 		RangeLimit: 8c512
 	Warhead@1Dam: SpreadDamage
 		Damage: 2650
@@ -1437,19 +1504,19 @@ IFVRocketsAAE.CRYO:
 	Inherits: 227mmAA.upg
 	Report: vaegattb.aud, vaegatta.aud
 	Projectile: MissileCA
-		ContrailColor: 00FFFFE6
+		ContrailStartColor: 00FFFFE6
 
 227mmAA.Hammerhead:
 	Inherits: 227mmAA.upg
 	Report: hammerheadmissile1.aud, hammerheadmissile2.aud
 	Projectile: MissileCA
-		ContrailColor: FFCC00E6
+		ContrailStartColor: FFCC00E6
 
 227mmAA.Hailstorm:
 	Inherits: 227mmAA.upg
 	Report: hailstormmissile1.aud, hailstormmissile2.aud
 	Projectile: MissileCA
-		ContrailColor: FF4400E6
+		ContrailStartColor: FF4400E6
 
 StnkMissile:
 	Inherits: ^AntiGroundMissile
@@ -1503,12 +1570,27 @@ StnkMissile.TibCore:
 		Speed: 266
 		Image: tibcoremsl
 		ContrailLength: 15
-		ContrailColor: 33aa00aa
+		ContrailStartColor: 33aa00aa
+		ContrailStartColorAlpha: 170
 		ContrailWidth: 0c40
 		RangeLimit: 9c0
 	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 3850
+		Versus:
+			Heavy: 0
+	Warhead@2Dam: SpreadDamage
+		Spread: 341
+		Damage: 3850
+		ValidTargets: Vehicle
+		Versus:
+			Heavy: 100
+			None: 0
+			Wood: 0
+			Light: 0
+			Concrete: 0
+			Brick: 0
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: tibcorehit1.aud, tibcorehit2.aud, tibcorehit3.aud
 	Warhead@tib: CreateEffect
@@ -1526,7 +1608,8 @@ StnkMissileAA.TibCore:
 		Speed: 357
 		Image: tibcoremsl
 		ContrailLength: 15
-		ContrailColor: 33aa00aa
+		ContrailStartColor: 33aa00aa
+		ContrailStartColorAlpha: 170
 		ContrailWidth: 0c40
 	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
 	Warhead@1Dam: SpreadDamage
@@ -1590,7 +1673,8 @@ Rah66AG:
 		Speed: 250
 		LaunchAngle: 10
 		ContrailLength: 15
-		ContrailColor: 33aa00aa
+		ContrailStartColor: 33aa00aa
+		ContrailStartColorAlpha: 170
 		ContrailWidth: 0c40
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
@@ -1601,9 +1685,9 @@ Rah66AG:
 			Wood: 60
 			Concrete: 30
 			Light: 55
-			Heavy: 20
+			Heavy: 25
 			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigatedMinor
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: caneon
@@ -1621,7 +1705,8 @@ Rah66AG.BlackHand:
 	Projectile: Bullet
 		Image: dragon
 		-ContrailLength:
-		-ContrailColor:
+		-ContrailStartColor:
+		-ContrailStartColorAlpha:
 		-ContrailWidth:
 	Warhead@1Dam: SpreadDamage
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
@@ -1642,7 +1727,8 @@ Rah66AA:
 		Speed: 250
 		Image: tibcoremsl
 		ContrailLength: 15
-		ContrailColor: 33aa00aa
+		ContrailStartColor: 33aa00aa
+		ContrailStartColorAlpha: 170
 		ContrailWidth: 0c40
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
@@ -1657,7 +1743,8 @@ Rah66AA.BlackHand:
 	Projectile: MissileCA
 		Image: dragon
 		-ContrailLength:
-		-ContrailColor:
+		-ContrailStartColor:
+		-ContrailStartColorAlpha:
 		-ContrailWidth:
 	Warhead@3Eff: CreateEffect
 		-Image:
@@ -1682,7 +1769,7 @@ ScrinTorp:
 	Warhead@1Dam: SpreadDamage
 		Spread: 768
 		Damage: 950
-		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		Falloff: 1000, 400, 160, 64, 26, 10, 0
 		ValidTargets: Ground, Water
 		Versus:
 			None: 10
@@ -1785,7 +1872,8 @@ CryoMissile:
 		Speed: 300
 		LaunchAngle: 65
 		ContrailLength: 17
-		ContrailColor: 8fc6ffaa
+		ContrailStartColor: 8fc6ffaa
+		ContrailStartColorAlpha: 170
 		ContrailWidth: 0c48
 	ValidTargets: Ground, Water
 	Warhead@1Dam: SpreadDamage
@@ -1931,7 +2019,8 @@ RocketShells:
 		MinimumLaunchAngle: 100
 		MaximumLaunchAngle: 100
 		ContrailLength: 15
-		ContrailColor: aaaa00aa
+		ContrailStartColor: aaaa00aa
+		ContrailStartColorAlpha: 170
 		ContrailWidth: 0c40
 		Gravity: 0
 		CruiseAltitude: 2c0

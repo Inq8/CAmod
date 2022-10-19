@@ -658,7 +658,7 @@ MAST:
 		Weapon: MindSparkSpawnerSlave
 		InitialDelay: 18
 		RequiresCondition: deployed && !being-warped
-		KillSlaveTypes: Infantry
+		KillSlaveTypes: Infantry, Cyborg
 		KillSlavesDamageTypes: BulletDeath
 		PostExplosionAction: Neutralize
 	GrantTimedConditionOnDeploy:
@@ -1440,7 +1440,7 @@ DEVO:
 	WithSpriteTurret:
 	ProductionCostMultiplier@REAPBONUS:
 		Multiplier: 90
-		Prerequisites: vehicles.reaper
+		Prerequisites: player.reaper
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
@@ -1936,7 +1936,7 @@ STMR:
 		Description: Durable patrol craft.
 		IconPalette: chrome
 	TooltipExtras:
-		Strengths: • Strong vs Infantry, Light Armor, Aircraft
+		Strengths: • Strong vs Infantry, Light Armor, Buildings, Aircraft
 		Weaknesses: • Weak vs Heavy Armor, Defenses
 		Attributes: • Can detect submarines
 	Valued:
@@ -1994,11 +1994,15 @@ STMR:
 		InitialStanceAI: AttackAnything
 	Contrail@1:
 		Offset: -250,-250,100
-		UsePlayerColor: true
+		StartColorUsePlayerColor: true
+		StartColorAlpha: 128
+		EndColorUsePlayerColor: true
 		ZOffset: -512
 	Contrail@2:
 		Offset: -250,250,100
-		UsePlayerColor: true
+		StartColorUsePlayerColor: true
+		StartColorAlpha: 128
+		EndColorUsePlayerColor: true
 		ZOffset: -512
 	SpawnActorOnDeath:
 		Actor: STMR.Husk
@@ -2061,7 +2065,7 @@ STMR:
 		PauseOnCondition: shields-upgrade
 		RequiresCondition: shields-upgrade
 	Shielded:
-		MaxStrength: 5000
+		MaxStrength: 6500
 		RegenDelay: 350
 		RegenAmount: 250
 		RegenInterval: 5
@@ -2135,13 +2139,17 @@ ENRV:
 		InitialStanceAI: AttackAnything
 	Contrail@1:
 		Offset: -750,-200,300
-		UsePlayerColor: true
+		StartColorUsePlayerColor: true
+		StartColorAlpha: 128
+		EndColorUsePlayerColor: true
 		ZOffset: -512
 		TrailLength: 18
 		TrailWidth: 48
 	Contrail@2:
 		Offset: -750,200,300
-		UsePlayerColor: true
+		StartColorUsePlayerColor: true
+		StartColorAlpha: 128
+		EndColorUsePlayerColor: true
 		ZOffset: -512
 		TrailLength: 18
 		TrailWidth: 48
@@ -2203,7 +2211,7 @@ ENRV:
 		PauseOnCondition: shields-upgrade
 		RequiresCondition: shields-upgrade
 	Shielded:
-		MaxStrength: 5000
+		MaxStrength: 5625
 		RegenDelay: 350
 		RegenAmount: 250
 		RegenInterval: 5
@@ -2258,64 +2266,56 @@ DEVA:
 		Weapon: DevastatorDiscs
 		LocalOffset: 500,0,0
 		RequiresCondition: !stellar-upgrade
-	Armament@CHARGINGUPG:
-		Name: charge
-		Weapon: DevastatorTorpedoCharge
-		LocalOffset: 500,0,0
-		PauseOnCondition: cooldown
-		RequiresCondition: stellar-upgrade
 	Armament@PRIMARYUPG:
+		Name: primary-upg
 		Weapon: DevastatorTorpedo
-		PauseOnCondition: !ammo
 		LocalOffset: 500,0,0
 		RequiresCondition: stellar-upgrade
-		ReloadingCondition: cooldown
 	AmbientSound@CHARGE:
-		RequiresCondition: charging && !ammo
+		RequiresCondition: charging
 		SoundFiles: plasmatorpcharge.aud
 	WithIdleOverlay@CHARGE1:
 		Image: deva
 		Sequence: charge1
 		Palette: scrin
 		Offset: 500,0,0
-		RequiresCondition: charging == 1 && !ammo
+		RequiresCondition: charging == 1
 	WithIdleOverlay@CHARGE2:
 		Image: deva
 		Sequence: charge2
 		Palette: scrin
 		Offset: 500,0,0
-		RequiresCondition: charging == 2 && !ammo
+		RequiresCondition: charging == 2
 	WithIdleOverlay@CHARGE3:
 		Image: deva
 		Sequence: charge3
 		Palette: scrin
 		Offset: 500,0,0
-		RequiresCondition: charging > 2 && !ammo
-	GrantConditionOnAttack@CHARGE:
-		Condition: charging
-		ArmamentNames: charge
-		MaximumInstances: 3
-		RevokeDelay: 34
-		IsCyclic: true
-	AmmoPool@CHARGE:
-		Ammo: 3
-		InitialAmmo: 0
-		AmmoCondition: ammo
-	ReloadAmmoPoolCA@CHARGE:
-		Delay: 99
-		Count: 3
-		ShowSelectionBar: true
-		SelectionBarColor: cc33ff
-		RequiresCondition: charging && !ammo
+		RequiresCondition: charging > 2
 	GrantConditionOnPrerequisite@STELLAR:
 		Condition: stellar-upgrade
 		Prerequisites: stellar.upgrade
 	AttackFrontal:
-		Armaments: primary, charge
+		Armaments: primary
 		FacingTolerance: 40
 		ForceFireIgnoresActors: True
 		TargetFrozenActors: True
 		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: !stellar-upgrade
+	AttackFrontalCharged:
+		Armaments: primary-upg
+		FacingTolerance: 40
+		ForceFireIgnoresActors: True
+		TargetFrozenActors: True
+		ChargeLevel: 100
+		DischargeRate: 100
+		ChargingCondition: charging
+		ConditionChargeLevels: 1, 34, 67
+		ShotsPerCharge: 3
+		ShowSelectionBar: true
+		SelectionBarColor: cc33ff
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: stellar-upgrade
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 768
@@ -2339,7 +2339,7 @@ DEVA:
 	-EjectOnDeath:
 	ProductionCostMultiplier@HARBONUS:
 		Multiplier: 90
-		Prerequisites: vehicles.harbinger
+		Prerequisites: player.harbinger
 	GrantConditionOnPrerequisite@SHIELDS:
 		Condition: shields-upgrade
 		Prerequisites: shields.upgrade
@@ -2364,7 +2364,7 @@ DEVA:
 		Types: Veterancy
 		Prerequisites: aircraft.upgraded
 	Shielded:
-		MaxStrength: 7500
+		MaxStrength: 8000
 		RegenDelay: 350
 		RegenAmount: 250
 		RegenInterval: 5
@@ -2515,7 +2515,7 @@ PAC:
 		Types: Veterancy
 		Prerequisites: aircraft.upgraded
 	Shielded:
-		MaxStrength: 10000
+		MaxStrength: 13000
 		RegenDelay: 350
 		RegenAmount: 250
 		RegenInterval: 5
@@ -2593,7 +2593,9 @@ INVA:
 		LandingDistance: 8c0
 	Contrail@1:
 		Offset: -432,0,0
-		UsePlayerColor: true
+		StartColorUsePlayerColor: true
+		EndColorUsePlayerColor: true
+		StartColorAlpha: 128
 		TrailLength: 10
 	-Contrail@2:
 	Interactable:
@@ -2794,7 +2796,7 @@ MSHP:
 		PauseOnCondition: shields-upgrade
 		RequiresCondition: shields-upgrade
 	Shielded:
-		MaxStrength: 20000
+		MaxStrength: 26000
 		RegenDelay: 350
 		RegenAmount: 250
 		RegenInterval: 5
@@ -2918,10 +2920,14 @@ STMR.Husk:
 		Type: CenterPosition
 	Contrail@1:
 		Offset: -250,-250,100
-		UsePlayerColor: true
+		StartColorUsePlayerColor: true
+		EndColorUsePlayerColor: true
+		StartColorAlpha: 255
 	Contrail@2:
 		Offset: -250,250,100
-		UsePlayerColor: true
+		StartColorUsePlayerColor: true
+		EndColorUsePlayerColor: true
+		StartColorAlpha: 255
 	RevealsShroud:
 		Range: 11c0
 		MinRange: 9c0
@@ -2958,10 +2964,12 @@ ENRV.Husk:
 		Type: CenterPosition
 	Contrail@1:
 		Offset: -750,-200,300
-		UsePlayerColor: true
+		StartColorUsePlayerColor: true
+		EndColorUsePlayerColor: true
 	Contrail@2:
 		Offset: -750,200,300
-		UsePlayerColor: true
+		StartColorUsePlayerColor: true
+		EndColorUsePlayerColor: true
 	RevealsShroud:
 		Range: 12c0
 		MinRange: 10c0
@@ -3244,6 +3252,7 @@ SFAC:
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
+	TracksCapturedFaction:
 	ValidFactions:
 		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite@scrin:
@@ -3498,20 +3507,22 @@ PORT:
 		SpawnOffset: 256,512,0
 		ExitCell: 2,2
 		Priority: 0
+	ValidFactions:
+		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite@infantryany:
 		Prerequisite: infantry.any
 	ProvidesPrerequisite@scrin:
 		Prerequisite: infantry.scrin
-	ProvidesPrerequisite@reaper:
+	ProvidesPrerequisiteValidatedFaction@reaper:
 		Factions: reaper
 		Prerequisite: infantry.reaper
-	ProvidesPrerequisite@traveler:
+	ProvidesPrerequisiteValidatedFaction@traveler:
 		Factions: traveler
 		Prerequisite: infantry.traveler
-	ProvidesPrerequisite@harbinger:
+	ProvidesPrerequisiteValidatedFaction@harbinger:
 		Factions: harbinger
 		Prerequisite: infantry.harbinger
-	ProvidesPrerequisite@collector:
+	ProvidesPrerequisiteValidatedFaction@collector:
 		Factions: collector
 		Prerequisite: infantry.collector
 	Power:
@@ -3569,6 +3580,7 @@ WSPH:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
+	TracksCapturedFaction:
 	ValidFactions:
 		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite@any:
@@ -3656,7 +3668,7 @@ NERV:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
 	Health:
-		HP: 100000
+		HP: 110000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -3851,7 +3863,7 @@ SCRT:
 		Dimensions: 2,3
 		LocalCenterOffset: 0,-512,0
 	Health:
-		HP: 100000
+		HP: 110000
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SabInfiltrate
@@ -3943,7 +3955,7 @@ GRAV:
 		Description: Produces Scrin aircraft.
 		IconPalette: chromes
 	Valued:
-		Cost: 750
+		Cost: 650
 	Tooltip:
 		Name: Gravity Stabilizer
 	Selectable:
@@ -4036,7 +4048,7 @@ SIGN:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Health:
-		HP: 100000
+		HP: 110000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -4135,7 +4147,7 @@ SREP:
 		Condition: aircraft-repair
 		Range: 10c0
 	WithRangeCircle@AIRCRAFTREPAIR:
-		Color: 888899AA
+		Color: FFD000AA
 		Range: 10c0
 
 SILO.SCRIN:
@@ -4233,6 +4245,8 @@ MANI:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
+	ValidFactions:
+		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisiteValidatedFaction@collector:
 		Factions: collector
 		Prerequisite: mani.collector
@@ -4334,6 +4348,7 @@ RIFT:
 		EndChargeSpeechNotification: RiftReady
 		InsufficientPowerSpeechNotification: InsufficientPower
 		IncomingSpeechNotification: RiftApproach
+		IncomingTextNotification: Rift Generator activated.
 		IncomingSound: nukelaunch.aud
 		LaunchSound: nukelaunch.aud
 		DisplayTimerRelationships: Ally, Neutral, Enemy

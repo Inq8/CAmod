@@ -24,6 +24,11 @@ Players:
 		OwnsWorld: True
 		NonCombatant: True
 		Faction: england
+	PlayerReference@Creeps:
+		Name: Creeps
+		NonCombatant: True
+		Faction: england
+		Enemies: USSR, Greece, England, Scrin
 	PlayerReference@Greece:
 		Name: Greece
 		AllowBots: False
@@ -32,29 +37,29 @@ Players:
 		LockFaction: True
 		Faction: germany
 		LockColor: True
-		Color: AEBEFD
+		Color: 99acf2
 		LockSpawn: True
 		LockTeam: True
-		Enemies: Scrin
+		Enemies: Scrin, Creeps
 	PlayerReference@Scrin:
 		Name: Scrin
 		Bot: campaign
 		Faction: reaper
 		Color: 7700FF
-		Enemies: Greece, England, USSR
+		Enemies: Greece, England, USSR, Creeps
 	PlayerReference@England:
 		Name: England
 		Bot: campaign
 		Faction: england
 		Color: A1EF8C
 		Allies: Greece
-		Enemies: Scrin
+		Enemies: Scrin, Creeps
 	PlayerReference@USSR:
 		Name: USSR
 		Bot: campaign
 		Faction: russia
 		Color: FE1100
-		Enemies: Scrin
+		Enemies: Scrin, Creeps
 
 Actors:
 	Actor21: v02
@@ -104,12 +109,6 @@ Actors:
 	Actor46: pris
 		Owner: Greece
 		Location: 26,45
-	Actor16: sbag
-		Owner: Greece
-		Location: 49,42
-	Actor18: sbag
-		Owner: Greece
-		Location: 50,42
 	Actor19: sbag
 		Owner: Greece
 		Location: 43,42
@@ -122,24 +121,12 @@ Actors:
 	Actor25: sbag
 		Owner: Greece
 		Location: 44,43
-	Actor26: sbag
-		Owner: Greece
-		Location: 48,42
-	Actor27: sbag
-		Owner: Greece
-		Location: 48,43
-	Actor28: sbag
-		Owner: Greece
-		Location: 50,43
 	Actor29: sbag
 		Owner: Greece
 		Location: 42,43
 	Actor51: pris
 		Owner: Greece
 		Location: 43,43
-	Actor53: pris
-		Owner: Greece
-		Location: 49,43
 	Actor79: apwr
 		Owner: Greece
 		Location: 4,51
@@ -444,130 +431,130 @@ Actors:
 		Owner: Greece
 		Location: 30,56
 	Actor186: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 93,20
 	Actor202: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 93,19
 	Actor204: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 93,18
 	Actor205: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 92,18
 	Actor215: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 92,17
 	Actor216: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 92,16
 	Actor217: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 91,16
 	Actor218: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 90,16
 	Actor219: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 94,20
 	Actor220: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 95,20
 	Actor221: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 96,20
 	Actor222: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 97,20
 	Actor223: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 99,20
 	Actor224: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 98,20
 	Actor225: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 89,16
 	Actor226: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 89,15
 	Actor227: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 90,15
 	Actor228: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 100,20
 	Actor229: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 101,20
 	Actor230: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 101,21
 	Actor231: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 102,21
 	Actor232: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 102,20
 	Actor233: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 89,14
 	Actor234: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 89,13
 	Actor235: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 89,12
 	Actor236: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 90,12
 	Actor237: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 90,13
 	Actor245: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 89,4
 	Actor248: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 89,3
 	Actor249: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 89,2
 	Actor250: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 89,1
 	Actor251: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 90,1
 	Actor252: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 91,1
 	Actor253: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 92,1
 	Actor254: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 93,1
 	Actor255: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 94,1
 	Actor256: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 96,1
 	Actor257: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 95,1
 	Actor258: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 97,1
 	Actor259: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 98,1
 	Actor261: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 90,2
 	Actor246: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 99,1
 	Actor269: ptur
 		Owner: Scrin
@@ -586,106 +573,106 @@ Actors:
 		Owner: Scrin
 		Location: 102,15
 	Actor247: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 100,1
 	Actor260: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 101,1
 	Actor277: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 102,1
 	Actor278: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 103,1
 	Actor279: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 104,1
 	Actor280: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 105,1
 	Actor281: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 106,1
 	Actor282: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 107,1
 	Actor283: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 108,1
 	Actor284: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 108,2
 	Actor285: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 108,3
 	Actor286: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 108,4
 	Actor287: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 108,5
 	Actor288: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 108,6
 	Actor289: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 108,7
 	Actor290: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 108,8
 	Actor291: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 108,9
 	Actor292: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 108,10
 	Actor293: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 107,9
 	Actor294: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 107,10
 	Actor295: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 107,15
 	Actor296: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 108,15
 	Actor297: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 107,16
 	Actor298: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 108,16
 	Actor299: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 108,17
 	Actor300: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 108,18
 	Actor301: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 108,19
 	Actor302: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 108,20
 	Actor303: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 108,21
 	Actor304: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 106,21
 	Actor305: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 105,21
 	Actor306: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 105,20
 	Actor307: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 107,21
 	Actor308: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 106,20
 	Actor275: scrt
 		Owner: Scrin
@@ -893,7 +880,7 @@ Actors:
 		SubCell: 3
 		Facing: 384
 		Location: 47,57
-	Actor368: v01
+	Church: v01
 		Owner: Neutral
 		Location: 48,50
 	Actor369: v02
@@ -1123,21 +1110,6 @@ Actors:
 		Facing: 384
 		SubCell: 3
 		Location: 32,14
-	Actor484: s1
-		Owner: Scrin
-		Facing: 384
-		SubCell: 3
-		Location: 36,16
-	Actor485: s1
-		Owner: Scrin
-		Facing: 384
-		Location: 36,16
-		SubCell: 1
-	Actor486: s1
-		Owner: Scrin
-		Facing: 384
-		SubCell: 3
-		Location: 39,17
 	Actor487: s1
 		Owner: Scrin
 		Facing: 384
@@ -1148,11 +1120,6 @@ Actors:
 		Facing: 384
 		Location: 35,13
 		SubCell: 3
-	Actor489: s3
-		Owner: Scrin
-		SubCell: 3
-		Location: 38,15
-		Facing: 384
 	Actor490: s3
 		Owner: Scrin
 		SubCell: 3
@@ -1233,10 +1200,6 @@ Actors:
 		Owner: Scrin
 		TurretFacing: 384
 		Location: 106,48
-	Actor514: shar
-		Owner: Scrin
-		TurretFacing: 384
-		Location: 57,23
 	Actor518: rea2
 		Owner: Scrin
 		Location: 124,22
@@ -1247,64 +1210,64 @@ Actors:
 		Owner: Scrin
 		Location: 118,22
 	Actor521: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 117,22
 	Actor522: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 117,23
 	Actor523: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 117,24
 	Actor525: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 117,25
 	Actor538: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 127,25
 	Actor539: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 127,24
 	Actor540: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 127,23
 	Actor541: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 127,22
 	Actor542: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 127,21
 	Actor543: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 126,21
 	Actor544: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 124,21
 	Actor545: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 117,21
 	Actor546: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 118,21
 	Actor547: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 119,21
 	Actor548: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 120,21
 	Actor549: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 121,21
 	Actor550: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 122,21
 	Actor551: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 123,21
 	Actor552: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 125,21
 	Actor524: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 117,26
 	Actor526: rea2
 		Owner: Scrin
@@ -1316,46 +1279,46 @@ Actors:
 		Owner: Scrin
 		Location: 124,25
 	Actor529: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 127,26
 	Actor530: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 117,27
 	Actor531: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 127,27
 	Actor532: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 117,28
 	Actor533: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 118,28
 	Actor534: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 119,28
 	Actor535: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 120,28
 	Actor536: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 121,28
 	Actor537: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 122,28
 	Actor554: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 123,28
 	Actor555: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 124,28
 	Actor556: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 125,28
 	Actor557: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 126,28
 	Actor558: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 127,28
 	Actor515: ptur
 		Owner: Scrin
@@ -1367,9 +1330,6 @@ Actors:
 	Actor517: tc05
 		Owner: Neutral
 		Location: 18,13
-	Actor553: t02
-		Owner: Neutral
-		Location: 30,8
 	Actor559: t02
 		Owner: Neutral
 		Location: 42,2
@@ -1445,9 +1405,6 @@ Actors:
 	Actor583: v04
 		Owner: Neutral
 		Location: 27,24
-	Actor584: v11
-		Owner: Neutral
-		Location: 34,20
 	Actor585: v06
 		Owner: Neutral
 		Location: 4,25
@@ -1664,12 +1621,6 @@ Actors:
 	FourthConvoyPath14: waypoint
 		Owner: England
 		Location: 69,23
-	FourthConvoyPath15: waypoint
-		Owner: England
-		Location: 63,23
-	FourthConvoyPath16: waypoint
-		Owner: England
-		Location: 61,21
 	Actor646: powr
 		Location: 63,55
 		Faction: germany
@@ -1871,18 +1822,9 @@ Actors:
 	Actor703: t11
 		Owner: Neutral
 		Location: 85,19
-	Actor704: t10
-		Owner: Neutral
-		Location: 93,25
-	Actor705: t15
-		Owner: Neutral
-		Location: 92,35
 	Actor706: t12
 		Owner: Neutral
 		Location: 79,21
-	Actor707: t10
-		Owner: Neutral
-		Location: 102,26
 	Actor708: t15
 		Owner: Neutral
 		Location: 110,32
@@ -1907,9 +1849,6 @@ Actors:
 	Actor715: tc01
 		Owner: Neutral
 		Location: 106,42
-	Actor716: t05
-		Owner: Neutral
-		Location: 99,32
 	Actor717: t10
 		Owner: Neutral
 		Location: 115,43
@@ -2344,26 +2283,6 @@ Actors:
 		Facing: 384
 		SubCell: 3
 		Location: 74,28
-	Actor808: s1
-		Owner: Scrin
-		SubCell: 3
-		Location: 57,24
-		Facing: 384
-	Actor809: s1
-		Owner: Scrin
-		Facing: 384
-		SubCell: 3
-		Location: 55,23
-	Actor810: s2
-		Owner: Scrin
-		Facing: 384
-		SubCell: 3
-		Location: 58,24
-	Actor811: s3
-		Owner: Scrin
-		Facing: 384
-		Location: 58,23
-		SubCell: 3
 	Actor812: seek
 		Owner: Scrin
 		Facing: 384
@@ -2609,11 +2528,6 @@ Actors:
 		Location: 44,44
 		SubCell: 1
 		Facing: 1023
-	Actor871: e1
-		Owner: Greece
-		SubCell: 3
-		Location: 47,43
-		Facing: 1023
 	Actor872: e1
 		Owner: Greece
 		SubCell: 3
@@ -2639,11 +2553,6 @@ Actors:
 		Facing: 384
 		Location: 31,21
 		SubCell: 1
-	Actor877: s1
-		Owner: Scrin
-		Facing: 384
-		Location: 36,16
-		SubCell: 2
 	Actor878: s1
 		Owner: Scrin
 		Facing: 384
@@ -2663,11 +2572,6 @@ Actors:
 		Owner: Scrin
 		Facing: 384
 		Location: 48,9
-		SubCell: 1
-	Actor882: s1
-		Owner: Scrin
-		Facing: 384
-		Location: 55,23
 		SubCell: 1
 	Actor883: s1
 		Owner: Scrin
@@ -2694,11 +2598,6 @@ Actors:
 		Location: 44,19
 		SubCell: 2
 		Facing: 642
-	Actor888: s1
-		Owner: Scrin
-		Facing: 384
-		Location: 58,24
-		SubCell: 1
 	Actor889: s1
 		Owner: Scrin
 		Facing: 384
@@ -2901,10 +2800,10 @@ Actors:
 		Facing: 384
 		Location: 62,8
 	Actor927: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 89,5
 	Actor928: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 89,6
 	Actor929: scol
 		Owner: Scrin
@@ -2914,16 +2813,16 @@ Actors:
 		TurretFacing: 333
 		Location: 88,7
 	Actor931: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 89,7
 	Actor932: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 90,7
 	Actor933: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 89,8
 	Actor934: swal
-		Owner: Neutral
+		Owner: Scrin
 		Location: 90,8
 	Actor936: intl
 		Owner: Scrin
@@ -2956,5 +2855,145 @@ Actors:
 		Owner: Scrin
 		Location: 65,43
 		Facing: 384
+	Actor829: s1
+		Owner: Scrin
+		Facing: 384
+		SubCell: 3
+		Location: 55,25
+	Actor882: s1
+		Owner: Scrin
+		Facing: 384
+		SubCell: 1
+		Location: 55,25
+	Actor891: s1
+		Owner: Scrin
+		SubCell: 3
+		Facing: 384
+		Location: 57,26
+	Actor892: s2
+		Owner: Scrin
+		Facing: 384
+		SubCell: 3
+		Location: 58,26
+	Actor941: t16
+		Owner: Neutral
+		Location: 29,9
+	Actor942: tc01
+		Owner: Neutral
+		Location: 36,20
+	Actor943: tc01
+		Owner: Neutral
+		Location: 36,20
+	Actor944: t14
+		Owner: Neutral
+		Location: 37,19
+	Actor945: t16
+		Owner: Neutral
+		Location: 35,21
+	Actor946: t06
+		Owner: Neutral
+		Location: 39,16
+	Actor947: s1
+		Owner: Scrin
+		Facing: 384
+		SubCell: 3
+		Location: 35,16
+	Actor948: s1
+		Owner: Scrin
+		Facing: 384
+		SubCell: 1
+		Location: 35,16
+	Actor877: t15
+		Owner: Neutral
+		Location: 63,22
+	FourthConvoyPath16: waypoint
+		Owner: England
+		Location: 49,24
+	FourthConvoyPath15: waypoint
+		Owner: England
+		Location: 61,25
+	Actor949: t08
+		Owner: Neutral
+		Location: 62,24
+	Actor950: shar
+		Owner: Scrin
+		TurretFacing: 384
+		Location: 60,27
+	Actor888: s1
+		Owner: Scrin
+		Facing: 384
+		Location: 62,27
+		SubCell: 3
+	Actor890: s3
+		Owner: Scrin
+		Facing: 384
+		Location: 63,27
+		SubCell: 3
+	Actor935: s3
+		Owner: Scrin
+		Facing: 384
+		SubCell: 3
+		Location: 36,17
+	Actor951: sbag
+		Owner: Greece
+		Location: 51,42
+	Actor952: sbag
+		Owner: Greece
+		Location: 52,42
+	Actor953: sbag
+		Owner: Greece
+		Location: 53,42
+	Actor954: sbag
+		Owner: Greece
+		Location: 51,43
+	Actor955: pris
+		Owner: Greece
+		Location: 52,43
+	Actor956: sbag
+		Owner: Greece
+		Location: 53,43
+	Actor871: t17
+		Owner: Neutral
+		Location: 57,37
+	Actor958: t16
+		Owner: Neutral
+		Location: 95,26
+	Actor959: tc04
+		Owner: Neutral
+		Location: 97,23
+	Actor960: t14
+		Owner: Neutral
+		Location: 92,22
+	Actor961: t06
+		Owner: Neutral
+		Location: 92,26
+	Actor962: tc01
+		Owner: Neutral
+		Location: 100,23
+	Actor957: tc02
+		Owner: Neutral
+		Location: 97,33
+	Actor963: e1
+		Owner: Greece
+		SubCell: 3
+		Location: 50,44
+		Facing: 737
+	Actor964: e1
+		Owner: Greece
+		Location: 54,43
+		SubCell: 3
+		Facing: 737
+	Actor965: e1
+		Owner: Greece
+		Facing: 384
+		Location: 54,43
+		SubCell: 1
+	Actor966: e3
+		Owner: Greece
+		Facing: 384
+		Location: 50,44
+		SubCell: 1
 
 Rules: ca|rules/campaign-rules.yaml, ca|rules/campaign-tooltips.yaml, ca|rules/campaign-palettes.yaml, rules.yaml
+
+Weapons: weapons.yaml

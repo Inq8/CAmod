@@ -20,27 +20,12 @@ World:
 			normal: Normal
 			hard: Hard
 		Default: normal
-	TimeLimitManager:
-		SkipTimerExpiredNotification: True
-		CountdownLabel: MISSION_TEXT
-		CountdownText: Evacuation begins in {0}
+	MusicPlaylist:
+		StartingMusic: radio2ca
 
 Player:
 	PlayerResources:
 		DefaultCash: 5000
-	ProvidesPrerequisite@HardBonus:
-		Prerequisite: hard.difficulty
-		Factions: russia
-
-^Infantry:
-	ProductionCostMultiplier@HardBonus:
-		Multiplier: 85
-		Prerequisites: hard.difficulty
-
-^Vehicle-NOUPG:
-	ProductionCostMultiplier@HardBonus:
-		Multiplier: 85
-		Prerequisites: hard.difficulty
 
 E7:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -72,11 +57,12 @@ TTNK:
 APOC:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-TRUK:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
 HARR:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MIG:
+	AutoTarget:
+		InitialStanceAI: HoldFire
 
 SUK:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -105,7 +91,7 @@ PDOX:
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
 	AnnounceOnSeen:
-		PingOnRadar: true
+		PingRadar: true
 
 PDOX.CROSSRIP:
 	Inherits@1: ^ExistsInWorld
@@ -159,13 +145,6 @@ hazmat.upgrade:
 hazmatsoviet.upgrade:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-BARR:
-	GrantConditionOnBotOwner@CampaignAI:
-		Condition: owned-by-ai
-		Bots: campaign
-	Production@MQINF:
-		RequiresCondition: owned-by-ai
-
 TSLA:
 	-Targetable@TeslaBoost:
 
@@ -182,3 +161,11 @@ SMALLCAMERA:
 	Inherits: CAMERA
 	RevealsShroud:
 		Range: 4c0
+
+HALO.paradrop:
+	Health:
+		HP: 90000
+
+LST:
+	Health:
+		HP: 100000

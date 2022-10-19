@@ -331,9 +331,8 @@ U3:
 	Mobile:
 		Speed: 41
 		Voice: Move
-		PauseOnCondition: !undeployed
+		PauseOnCondition: !undeployed || being-warped
 		RequireForceMoveCondition: !undeployed
-		BlockedCursor: move
 	Armament@PRIMARY:
 		Weapon: M14
 		LocalOffset: 0,0,400
@@ -625,19 +624,20 @@ E6:
 		Name: deployedbody
 		Sequence: idle-deployed
 		RequiresCondition: !undeployed && !parachute && !being-warped && !setting-up
-	WithMakeAnimation:
+	WithMakeAnimation@SETUP:
 		BodyNames: setupbody
+		Sequence: deploy
+	WithMakeAnimation@DEPLOYED:
+		BodyNames: deployedbody
 		Sequence: deploy
 	GrantConditionOnDeploy:
 		DeployedCondition: deployed
 		UndeployedCondition: undeployed
-		AllowedTerrainTypes: Clear, Road, Rough, Ore, Gems, Tiberium, BlueTiberium
 		DeploySounds: igidepa.aud, igidepb.aud
 		UndeploySounds: igidepa.aud, igidepb.aud
 		UndeployOnMove: true
-		UndeployOnPickup: true
 		PauseOnCondition: being-warped
-		SmartDeploy: True
+		SmartDeploy: true
 		RequiresCondition: !parachute && entrench-upgrade
 	GrantTimedCondition@SETUP:
 		Condition: setting-up
@@ -1006,8 +1006,8 @@ HACK:
 	Mobile:
 		Speed: 60
 		Voice: Move
-		PauseOnCondition: !undeployed && being-warped
-		RequireForceMoveCondition: !undeployed
+		PauseOnCondition: hacking || being-warped
+		RequireForceMoveCondition: hacking
 	RevealsShroud:
 		Range: 5c0
 	Passenger:
@@ -1052,7 +1052,7 @@ HACK:
 		UndeployedCondition: undeployed
 		UndeployOnMove: true
 		UndeployOnPickup: true
-		SmartDeploy: True
+		SmartDeploy: true
 	DeployOnAttack:
 		RequiresCondition: undeployed
 	MindController:
@@ -1064,6 +1064,7 @@ HACK:
 		InitSoundControllerOnly: true
 		ControlSounds: hacker-hacked.aud
 		ControllingCondition: hacked-in
+		ProgressCondition: hacking
 		UndeployOnControl: true
 	WithDecoration@HACKEDIN:
 		Image: hacking
@@ -1246,7 +1247,7 @@ SHOK:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 80
-		Prerequisites: structures.tsla, anyradar, ~barr, ~techlevel.medium
+		Prerequisites: tsla, anyradar, ~barr, ~techlevel.medium
 		Description: Elite infantry with portable Tesla weapon.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -1315,7 +1316,7 @@ SHOK:
 		Prerequisites: barracks.upgraded
 	ProductionCostMultiplier@RussiaBonus:
 		Multiplier: 90
-		Prerequisites: infantry.russia
+		Prerequisites: player.russia
 
 N1:
 	Inherits: ^Soldier
@@ -2261,7 +2262,7 @@ SAB:
 		Prerequisites: barracks.upgraded
 	ProductionCostMultiplier@LegionBonus:
 		Multiplier: 80
-		Prerequisites: infantry.legion
+		Prerequisites: player.legion
 
 ACOL:
 	Inherits: ^Cyborg
@@ -2378,8 +2379,12 @@ JJET:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 		Type: GroundPosition
+	Voiced:
+		VoiceSet: JJVoice
 	AttackMove:
+		Voice: Move
 	Guard:
+		Voice: Move
 	Guardable:
 	ActorLostNotification:
 		Notification: AirUnitLost
@@ -2511,16 +2516,9 @@ JJET:
 	DetectCloaked:
 		DetectionTypes: Cloak, Thief
 		Range: 3c0
-	ActorLostNotification:
 	Selectable:
 		Bounds: 768, 768, 0, -256
 		DecorationBounds: 512, 725, 0, -256
-	AttackMove:
-		Voice: Move
-	Guard:
-		Voice: Move
-	Voiced:
-		VoiceSet: JJVoice
 	AutoTargetPriority@DEFAULT:
 		RequiresCondition: !stance-attackanything && !assault-move && !airborne
 	AutoTargetPriority@ATTACKANYTHING:
@@ -2656,7 +2654,6 @@ E8:
 		HP: 22500
 	Mobile:
 		Voice: Move
-		PauseOnCondition: !undeployed && being-warped
 	RevealsShroud:
 		Range: 5c0
 	Armament@PRIMARY:
@@ -2935,7 +2932,7 @@ RMBC:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 38000
+		HP: 39000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -3001,7 +2998,7 @@ RMBC:
 	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 		Condition: repair-cooldown
 		RequiredHealing: 85000
-		StackDuration: 625
+		StackDuration: 1000
 		MinimumHealing: 2500
 		DamageTypes: DirectRepair
 		ShowSelectionBar: true
@@ -3149,6 +3146,10 @@ BRUT:
 		PauseOnCondition: being-warped
 		Voice: Attack
 		FacingTolerance: 0
+	DamageTypeDamageMultiplier@FLAKARMOR:
+		Modifier: 90
+	DamageTypeDamageMultiplier@FLAKARMORMINOR:
+		Modifier: 95
 	-TakeCover:
 	-Captures@DRIVER_KILL:
 	-CaptureManager:

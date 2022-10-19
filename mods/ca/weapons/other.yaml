@@ -127,9 +127,9 @@ Napalmtd:
 		ValidTargets: Ground, Water
 		Versus:
 			None: 100
-			Wood: 60
+			Wood: 0
 			Light: 100
-			Heavy: 50
+			Heavy: 55
 			Concrete: 55
 			Brick: 5
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigatedMinor
@@ -143,6 +143,26 @@ Napalmtd:
 		RandomClusterCount: 3
 		Dimensions: 3,3
 		Footprint: xxx xxx xxx
+
+NapalmtdBuilding:
+	Inherits: Napalmtd
+	-Report:
+	-Projectile:
+	Projectile: InstantHit
+	TargetActorCenter: false
+	Warhead@1Dam: SpreadDamage
+		Delay: 35
+		Versus:
+			None: 0
+			Wood: 50
+			Light: 0
+			Heavy: 0
+			Concrete: 0
+			Brick: 0
+		DebugOverlayColor: ffaa00
+	-Warhead@2Smu:
+	-Warhead@3Eff:
+	-Warhead@Flames:
 
 Flamer:
 	ReloadDelay: 50
@@ -1181,6 +1201,28 @@ PrisLaserSupport:
 	Warhead@1Dum: Dummy
 	AirThreshold: 1000
 
+
+PrisBurst:
+	Inherits: PrisLaser
+	-Report:
+	Range: 3c0
+	Projectile: LaserZapCA
+		-HitAnim:
+	Warhead@1Dam: SpreadDamage
+		Spread: 256
+		Damage: 6500
+		Versus:
+			None: 85
+			Wood: 40
+			Concrete: 25
+			Light: 100
+			Heavy: 55
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated
+	-Warhead@Burst:
+	Warhead@3Eff: CreateEffect
+		Explosions: small_explosion
+		-ImpactSounds:
+
 PrisTLaser:
 	Inherits: PrisLaser
 	Report: ptnkfire.aud
@@ -1196,38 +1238,28 @@ PrisTLaser:
 			Wood: 100
 			Concrete: 100
 			Light: 100
-			Heavy: 50
+			Heavy: 45
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigatedMinor
 	Warhead@Burst: FireCluster
 		Weapon: PrisTBurst
 
-PrisBurst:
+PrisTBurst:
 	Inherits: PrisTLaser
 	-Report:
 	Range: 3c0
 	Projectile: LaserZapCA
 		-HitAnim:
 	Warhead@1Dam: SpreadDamage
-		Spread: 256
-		Damage: 6500
+		Damage: 2100
+		Spread: 160
 		Versus:
-			None: 85
-			Wood: 40
-			Concrete: 25
+			Wood: 35
+			Concrete: 100
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated
 	-Warhead@Burst:
 	Warhead@3Eff: CreateEffect
 		Explosions: small_explosion
 		-ImpactSounds:
-
-PrisTBurst:
-	Inherits: PrisBurst
-	Warhead@1Dam: SpreadDamage
-		Damage: 2100
-		Spread: 160
-		Versus:
-			None: 150
-			Wood: 35
-			Concrete: 100
 
 PrisCLaser:
 	Inherits: PrisTLaser
@@ -1248,7 +1280,7 @@ PrisCLaser:
 			Wood: 100
 			Concrete: 75
 			Light: 85
-			Heavy: 35
+			Heavy: 30
 	-Warhead@Burst:
 
 KirovBomb:
@@ -1715,7 +1747,7 @@ OrcaBomb:
 			None: 100
 			Wood: 20
 			Light: 20
-			Heavy: 20
+			Heavy: 40
 			Concrete: 20
 			Brick: 5
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
@@ -2241,7 +2273,7 @@ JDAM:
 		ValidTargets: Ground, Water
 		Versus:
 			None: 0
-			Wood: 80
+			Wood: 100
 			Light: 80
 			Heavy: 100
 			Concrete: 80
