@@ -25,30 +25,25 @@ Player:
 	PlayerResources:
 		DefaultCash: 2000
 
-^GDIPalette:
+^TDPalette:
 	RenderSprites:
 		Palette: temptd
 
 ^VehicleTD-NOUPG:
-	Inherits@GDIPAL: ^GDIPalette
 	Voiced:
 		VoiceSet: VehicleTDVoice
 
 ^PlaneTD:
-	Inherits@GDIPAL: ^GDIPalette
 	Voiced:
 		VoiceSet: VehicleTDVoice
 
 ^HelicopterTD:
-	Inherits@GDIPAL: ^GDIPalette
 	Voiced:
 		VoiceSet: VehicleTDVoice
 
-ORCA.Husk:
-	Inherits@GDIPAL: ^GDIPalette
-
 ^GDIInfantry:
-	Inherits: ^GDIPalette
+	RenderSprites:
+		Palette: temptd
 	WithDeathAnimation:
 		DeathSequencePalette: temptd
 		DeathPaletteIsPlayerPalette: false
@@ -146,13 +141,9 @@ HQ:
 	-AirstrikePower@uav:
 
 ^BuildingTD:
-	Inherits@GDIPAL: ^GDIPalette
 	WithDeathAnimation:
 		DeathSequencePalette: temptd
 		DeathPaletteIsPlayerPalette: false
-
-^DefenseTD:
-	Inherits@GDIPAL: ^GDIPalette
 
 PYLE:
 

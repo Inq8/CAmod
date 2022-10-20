@@ -1639,6 +1639,10 @@
 		Multiplier: 90
 		Prerequisites: indp, indp.upgrade, !indplowpower
 
+^TDPalette:
+	RenderSprites:
+		PlayerPalette: playertd
+
 ^Vehicle-NOUPG:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^IronCurtainable
@@ -1791,8 +1795,7 @@
 
 ^VehicleTD-NOUPG:
 	Inherits@1: ^Vehicle-NOUPG
-	RenderSprites:
-		PlayerPalette: playertd
+	Inherits@TDPAL: ^TDPalette
 	WithDamageOverlay:
 		Image: smoke_mtd
 	Cloak@CRATE-CLOAK:
@@ -1812,10 +1815,6 @@
 	Inherits: ^VehicleTD
 	Mobile:
 		Locomotor: tracked
-	RenderSprites:
-		PlayerPalette: playertd
-	WithDamageOverlay:
-		Image: smoke_mtd
 
 ^SlowedByCrushing:
 	ExternalCondition@CRUSHATTEMPTSLOW:
@@ -2510,8 +2509,7 @@
 
 ^PlaneTD:
 	Inherits@1: ^Plane
-	RenderSprites:
-		PlayerPalette: playertd
+	Inherits@TDPAL: ^TDPalette
 	EjectOnDeath:
 		PilotActor: N1
 
@@ -2538,8 +2536,7 @@
 
 ^HelicopterTD:
 	Inherits@1: ^Helicopter
-	RenderSprites:
-		PlayerPalette: playertd
+	Inherits@TDPAL: ^TDPalette
 	EjectOnDeath:
 		PilotActor: N1
 
@@ -2677,8 +2674,7 @@
 
 ^BuildingTD:
 	Inherits@1: ^Building
-	RenderSprites:
-		PlayerPalette: playertd
+	Inherits@TDPAL: ^TDPalette
 	SpawnActorOnDeath:
 		Actor: n1
 	SpawnActorsOnSell:
@@ -2771,8 +2767,7 @@
 
 ^DefenseTD:
 	Inherits@1: ^Defense
-	RenderSprites:
-		PlayerPalette: playertd
+	Inherits@TDPAL: ^TDPalette
 	ActorPreviewPlaceBuildingPreview:
 
 ^BuildingPlug:
@@ -3139,6 +3134,7 @@
 
 ^HuskTD:
 	Inherits: ^Husk
+	Inherits@TDPAL: ^TDPalette
 	WithIdleOverlay@Burns:
 		Image: fire
 		Sequence: 5
@@ -3172,8 +3168,11 @@
 		StartColor: FFFFFF80
 		StartColorAlpha: 128
 
-^PlaneHuskEmpty:
+^PlaneHuskTD:
 	Inherits: ^PlaneHusk
+	Inherits@TDPAL: ^TDPalette
+
+^PlaneHuskEmpty:
 	FallsToEarth:
 		Explosion: UnitExplodePlaneEmpty
 
@@ -3196,8 +3195,11 @@
 		Duration: 60
 		Radius: 4c0
 
-^HelicopterHuskEmpty:
+^HelicopterHuskTD:
 	Inherits: ^HelicopterHusk
+	Inherits@TDPAL: ^TDPalette
+
+^HelicopterHuskEmpty:
 	FallsToEarth:
 		Explosion: UnitExplodeHeliEmpty
 
@@ -3531,8 +3533,7 @@
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^SpriteActor
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	RenderSprites:
-		PlayerPalette: playertd
+	Inherits@TDPAL: ^TDPalette
 	Huntable:
 	Health:
 		HP: 10000

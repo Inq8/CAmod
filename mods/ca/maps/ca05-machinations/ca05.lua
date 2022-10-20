@@ -236,7 +236,7 @@ Squads = {
 	LabDefense = {
 		Player = nil,
 		ActiveCondition = function()
-			return not HasConyard(Nod)
+			return CountConyards(Nod) < 2
 		end,
 		Delay = {
 			easy = DateTime.Minutes(20),
@@ -384,12 +384,17 @@ InitNod = function()
 	end)
 
 	InitAttackSquad(Squads.Naval, Nod)
+	InitAttackSquad(Squads.LabDefense, Nod)
 
-	Actor.Create("hazmat.upgrade", true, { Owner = Nod, Location = ResearchLab.Location })
+	Actor.Create("hazmat.upgrade", true, { Owner = Nod, CPos.New(0,0) })
 
 	if Difficulty == "hard" then
-		Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod, Location = ResearchLab.Location })
-		Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod, Location = ResearchLab.Location })
+		Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod, CPos.New(0,0) })
+		Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod, CPos.New(0,0) })
+
+		Trigger.AfterDelay(DateTime.Minutes(15), function()
+			Actor.Create("tibcore.upgrade", true, { Owner = Nod, CPos.New(0,0) })
+		end)
 	end
 end
 

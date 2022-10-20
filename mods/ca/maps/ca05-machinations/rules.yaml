@@ -24,47 +24,27 @@ Player:
 	PlayerResources:
 		DefaultCash: 5000
 
-^NodPalette:
+^TDPalette:
 	RenderSprites:
 		PlayerPalette: playertdunit
 
-^VehicleTD-NOUPG:
-	Inherits@NODPAL: ^NodPalette
-
-^TankTD:
-	Inherits@NODPAL: ^NodPalette
-
-^PlaneTD:
-	Inherits@NODPAL: ^NodPalette
-
-^HelicopterTD:
-	Inherits@NODPAL: ^NodPalette
-
 ^Infantry:
-	Inherits@NODPAL: ^NodPalette
+	RenderSprites:
+		PlayerPalette: playertdunit
 	WithDeathAnimation:
 		DeathSequencePalette: playertdunit
-		CrushedSequencePalette: playertdunit
-		CrushedPaletteIsPlayerPalette: true
+
+^BuildingTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+^DefenseTD:
+	RenderSprites:
+		PlayerPalette: playertd
 
 SAPC:
 	RenderSprites:
 		PlayerPalette: playerraunit
-
-ARTY.nod:
-	Inherits@NODPAL: ^NodPalette
-
-HOWI:
-	Inherits@NODPAL: ^NodPalette
-
-APCH.Husk:
-	Inherits@NODPAL: ^NodPalette
-
-RAH.Husk:
-	Inherits@NODPAL: ^NodPalette
-
-SCRN.Husk:
-	Inherits@NODPAL: ^NodPalette
 
 HARV.TD:
 	RenderSprites:
@@ -79,10 +59,6 @@ LST:
 	-Selectable:
 	Interactable:
 
-^ScrinInfantry:
-	WithDeathAnimation:
-		CrushedPaletteIsPlayerPalette: false
-
 BIO:
 	Tooltip:
 		Name: Research Lab
@@ -92,7 +68,25 @@ BIO:
 	-ProvidesPrerequisite@toxintruck:
 
 TMPL:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
 	-NukePower@Cluster:
+
+TMPP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+HQ:
+	-SpawnActorPowerCA@sathack:
+	-AirstrikePower@BlackhandFirebomb:
+
+BH:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+HFTK:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+FTNK:
+	Buildable:
+		Prerequisites: ~vehicles.nod, anyradar, ~techlevel.low
 
 ATEK:
 	-DummyGpsPower@NOFOG:

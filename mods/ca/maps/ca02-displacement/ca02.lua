@@ -50,11 +50,6 @@ TimeBetweenConvoys = {
 	hard = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Seconds(90), DateTime.Minutes(3) }
 }
 
-DevastatorsDelay = {
-	normal = DateTime.Minutes(20),
-	hard = DateTime.Minutes(10)
-}
-
 -- Squads
 
 Squads = {
@@ -141,7 +136,7 @@ Squads = {
 		},
 		AttackPaths = ScrinAttackPaths
 	},
-	Air = {
+	Stormriders = {
 		Delay = {
 			easy = DateTime.Minutes(5),
 			normal = DateTime.Minutes(4),
@@ -167,6 +162,30 @@ Squads = {
 			},
 			hard = {
 				{ Aircraft = { "stmr", "stmr", "stmr", "stmr" } }
+			}
+		}
+	},
+	Devastators = {
+		Delay = {
+			normal = DateTime.Minutes(17),
+			hard = DateTime.Minutes(10)
+		},
+		Interval = {
+			normal = DateTime.Seconds(100)
+			hard = DateTime.Seconds(2)
+		},
+		QueueProductionStatuses = {
+			Aircraft = false
+		},
+		IdleUnits = { },
+		ProducerActors = nil,
+		ProducerTypes = { Aircraft = { "grav" } },
+		Units = {
+			normal = {
+				{ Aircraft = { "deva" } }
+			},
+			hard = {
+				{ Aircraft = { "deva", "deva" } }
 			}
 		}
 	}
@@ -370,9 +389,15 @@ InitScrin = function()
 		InitAttackSquad(Squads.Basic, Scrin)
 	end)
 
-	Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Air, Scrin, Greece, { "proc", "dome", "atek", "apwr", "ptnk", "heli", "harr" })
+	Trigger.AfterDelay(Squads.Stormriders.Delay[Difficulty], function()
+		InitAirAttackSquad(Squads.Stormriders, Scrin, Greece, { "proc", "dome", "atek", "apwr", "ptnk", "heli", "harr" })
 	end)
+
+	if Difficulty ~= "easy" then
+		Trigger.AfterDelay(Squads.Devastators.Delay[Difficulty], function()
+			InitAirAttackSquad(Squads.Devastators, Scrin, Greece, { "proc", "dome", "atek", "apwr", "pris", "fix" })
+		end)
+	end
 
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
 
@@ -380,10 +405,6 @@ InitScrin = function()
 		TargetSwapChance(a, Scrin, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
 	end)
-
-	if Difficulty ~= "easy" then
-		Trigger.AfterDelay(DevastatorsDelay[Difficulty], SendDevastators)
-	end
 
 	local stormriders = Scrin.GetActorsByType("stmr")
 	Utils.Do(stormriders, function(a)
@@ -398,31 +419,6 @@ InitScrin = function()
 			end
 		end)
 	end)
-end
-
-SendDevastators = function()
-	if not GravityStabilizer1.IsDead and GravityStabilizer1.Owner == Scrin then
-		GravityStabilizer1.Produce("deva")
-	end
-
-	if not GravityStabilizer2.IsDead and GravityStabilizer2.Owner == Scrin then
-		GravityStabilizer2.Produce("deva")
-	end
-
-	Trigger.AfterDelay(DateTime.Seconds(5), function()
-		local devastators = Scrin.GetActorsByType("deva")
-		Utils.Do(devastators, function(unit)
-			if not unit.IsDead then
-				local target = ChooseRandomBuildingTarget(unit, Greece)
-				if target ~= nil then
-					unit.Attack(target)
-				end
-			end
-			IdleHunt(unit)
-		end)
-	end)
-
-	Trigger.AfterDelay(DateTime.Minutes(2), SendDevastators)
 end
 
 -- Filters

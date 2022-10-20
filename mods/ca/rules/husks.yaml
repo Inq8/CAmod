@@ -319,8 +319,8 @@ MIG.Husk.EMP:
 	Inherits: ^EmpVisualEffect
 
 MIG.Husk.Empty:
-	Inherits: ^PlaneHuskEmpty
 	Inherits: MIG.Husk
+	Inherits: ^PlaneHuskEmpty
 
 MIG.Husk.Empty.EMP:
 	Inherits: MIG.Husk.Empty
@@ -689,7 +689,6 @@ AMCV.Husk:
 	Tooltip:
 		Name: Husk (Mobile Construction Vehicle)
 	RenderSprites:
-		PlayerPalette: playertd
 		Image: amcv.destroyed
 
 RTNK.Husk:
@@ -716,7 +715,6 @@ APC2.Husk:
 		Name: Husk (APC)
 	RenderSprites:
 		Image: apc2.destroyed
-		PlayerPalette: playertd
 
 HMMV.Husk:
 	Inherits: ^HuskTD
@@ -724,7 +722,6 @@ HMMV.Husk:
 		Name: Husk (Hum-Vee)
 	RenderSprites:
 		Image: hmmv.destroyed
-		PlayerPalette: playertd
 
 BGGY.Husk:
 	Inherits: ^HuskTD
@@ -732,7 +729,6 @@ BGGY.Husk:
 		Name: Husk (Fast Attack Buggy)
 	RenderSprites:
 		Image: bggy.destroyed
-		PlayerPalette: playertd
 
 MTNK.Husk:
 	Inherits: ^HuskTD
@@ -742,7 +738,6 @@ MTNK.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: mtnk.destroyed
-		PlayerPalette: playertd
 
 MTNK.DRONE.Husk:
 	Inherits: ^HuskTD
@@ -752,7 +747,6 @@ MTNK.DRONE.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: drone.destroyed
-		PlayerPalette: playertd
 
 HTNK.Husk:
 	Inherits: ^HuskTD
@@ -762,7 +756,6 @@ HTNK.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: htnk.destroyed
-		PlayerPalette: playertd
 
 HTNK.ION.Husk:
 	Inherits: ^HuskTD
@@ -772,7 +765,6 @@ HTNK.ION.Husk:
 		Anim: turret-ion
 	RenderSprites:
 		Image: htnk.destroyed
-		PlayerPalette: playertd
 
 HTNK.HOVER.Husk:
 	Inherits: ^HuskTD
@@ -784,7 +776,6 @@ HTNK.HOVER.Husk:
 		Sequence: idle-hover
 	RenderSprites:
 		Image: htnk.destroyed
-		PlayerPalette: playertd
 
 HTNK.DRONE.Husk:
 	Inherits: ^HuskTD
@@ -794,7 +785,6 @@ HTNK.DRONE.Husk:
 		Anim: turret-drone
 	RenderSprites:
 		Image: htnk.destroyed
-		PlayerPalette: playertd
 
 TITN.Husk:
 	Inherits: ^HuskTD
@@ -804,7 +794,6 @@ TITN.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: titn.destroyed
-		PlayerPalette: playertd
 
 TITN.RAIL.Husk:
 	Inherits: ^HuskTD
@@ -814,7 +803,6 @@ TITN.RAIL.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: titn.rail.destroyed
-		PlayerPalette: playertd
 
 JUGG.Husk:
 	Inherits: ^HuskTD
@@ -824,7 +812,6 @@ JUGG.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: jugg.destroyed
-		PlayerPalette: playertd
 
 FTNK.Husk:
 	Inherits: ^HuskTD
@@ -832,7 +819,6 @@ FTNK.Husk:
 		Name: Husk (Flame Tank)
 	RenderSprites:
 		Image: ftnk.destroyed
-		PlayerPalette: playertd
 
 HFTK.Husk:
 	Inherits: ^HuskTD
@@ -849,7 +835,6 @@ BIKE.Husk:
 		Name: Husk (Recon Bike)
 	RenderSprites:
 		Image: bike.destroyed
-		PlayerPalette: playertd
 
 MSAM.Husk:
 	Inherits: ^HuskTD
@@ -859,7 +844,6 @@ MSAM.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: msam.destroyed
-		PlayerPalette: playertd
 
 STNK.NOD.Husk:
 	Inherits: ^HuskTD
@@ -867,10 +851,9 @@ STNK.NOD.Husk:
 		Name: Husk (Stealth Tank)
 	RenderSprites:
 		Image: stnknod.destroyed
-		PlayerPalette: playertd
 
 APCH.Husk:
-	Inherits: ^HelicopterHusk
+	Inherits: ^HelicopterHuskTD
 	Tooltip:
 		Name: Apache
 	Aircraft:
@@ -894,22 +877,21 @@ APCH.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: apch
-		PlayerPalette: playertd
 
 APCH.Husk.EMP:
 	Inherits: APCH.Husk
 	Inherits: ^EmpVisualEffect
 
 APCH.Husk.Empty:
-	Inherits: ^HelicopterHuskEmpty
 	Inherits: APCH.Husk
+	Inherits: ^HelicopterHuskEmpty
 
 APCH.Husk.Empty.EMP:
 	Inherits: APCH.Husk.Empty
 	Inherits: ^EmpVisualEffect
 
 ORCA.Husk:
-	Inherits: ^HelicopterHusk
+	Inherits: ^HelicopterHuskTD
 	Tooltip:
 		Name: Orca
 	Aircraft:
@@ -933,22 +915,21 @@ ORCA.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: orca
-		PlayerPalette: playertd
 
 ORCA.Husk.EMP:
 	Inherits: ORCA.Husk
 	Inherits: ^EmpVisualEffect
 
 ORCA.Husk.Empty:
-	Inherits: ^HelicopterHuskEmpty
 	Inherits: ORCA.Husk
+	Inherits: ^HelicopterHuskEmpty
 
 ORCA.Husk.Empty.EMP:
 	Inherits: ORCA.Husk.Empty
 	Inherits: ^EmpVisualEffect
 
 OCAR.Husk:
-	Inherits: ^HelicopterHusk
+	Inherits: ^HelicopterHuskTD
 	Tooltip:
 		Name: Orca Carryall
 	Aircraft:
@@ -975,14 +956,13 @@ OCAR.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: orcaca
-		PlayerPalette: playertd
 
 OCAR.Husk.EMP:
 	Inherits: OCAR.Husk
 	Inherits: ^EmpVisualEffect
 
 UAV.Husk:
-	Inherits: ^PlaneHusk
+	Inherits: ^PlaneHuskTD
 	Tooltip:
 		Name: Husk (UAV)
 	Aircraft:
@@ -1002,7 +982,6 @@ UAV.Husk:
 		Type: CenterPosition
 	RenderSprites:
 		Image: uav
-		PlayerPalette: playertd
 
 UAV.Husk.EMP:
 	Inherits: UAV.Husk
@@ -1014,10 +993,9 @@ HARV.TD.Husk:
 		Name: Harvester (Destroyed)
 	RenderSprites:
 		Image: harv2.destroyed
-		PlayerPalette: playertd
 
 A10.Husk:
-	Inherits: ^PlaneHusk
+	Inherits: ^PlaneHuskTD
 	Tooltip:
 		Name: Husk (Warthog)
 	Aircraft:
@@ -1037,22 +1015,21 @@ A10.Husk:
 		Type: CenterPosition
 	RenderSprites:
 		Image: a10
-		PlayerPalette: playertd
 
 A10.Husk.EMP:
 	Inherits: A10.Husk
 	Inherits: ^EmpVisualEffect
 
 A10.Husk.Empty:
-	Inherits: ^PlaneHuskEmpty
 	Inherits: A10.Husk
+	Inherits: ^PlaneHuskEmpty
 
 A10.Husk.Empty.EMP:
 	Inherits: A10.Husk.Empty
 	Inherits: ^EmpVisualEffect
 
 YF23.Husk:
-	Inherits: ^PlaneHusk
+	Inherits: ^PlaneHuskTD
 	Tooltip:
 		Name: Husk (Aurora)
 	Aircraft:
@@ -1072,14 +1049,13 @@ YF23.Husk:
 		Type: CenterPosition
 	RenderSprites:
 		Image: yf23
-		PlayerPalette: playertd
 
 YF23.Husk.EMP:
 	Inherits: YF23.Husk
 	Inherits: ^EmpVisualEffect
 
 AURO.Husk:
-	Inherits: ^PlaneHusk
+	Inherits: ^PlaneHuskTD
 	Tooltip:
 		Name: Husk (Aurora)
 	Aircraft:
@@ -1099,22 +1075,21 @@ AURO.Husk:
 		Type: CenterPosition
 	RenderSprites:
 		Image: auro
-		PlayerPalette: playertd
 
 AURO.Husk.EMP:
 	Inherits: AURO.Husk
 	Inherits: ^EmpVisualEffect
 
 AURO.Husk.Empty:
-	Inherits: ^PlaneHuskEmpty
 	Inherits: AURO.Husk
+	Inherits: ^PlaneHuskEmpty
 
 AURO.Husk.Empty.EMP:
 	Inherits: AURO.Husk.Empty
 	Inherits: ^EmpVisualEffect
 
 C17.Husk:
-	Inherits: ^PlaneHusk
+	Inherits: ^PlaneHuskTD
 	Tooltip:
 		Name: C17
 	Aircraft:
@@ -1138,7 +1113,6 @@ C17.Husk:
 		Type: CenterPosition
 	RenderSprites:
 		Image: c17
-		PlayerPalette: playertd
 
 C17.Husk.EMP:
 	Inherits: C17.Husk
@@ -1183,7 +1157,7 @@ BTR.Husk:
 		Image: BTR.destroyed
 
 RAH.Husk:
-	Inherits: ^HelicopterHusk
+	Inherits: ^HelicopterHuskTD
 	Tooltip:
 		Name: Comanche
 	Aircraft:
@@ -1207,15 +1181,14 @@ RAH.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: rah66
-		PlayerPalette: playertd
 
 RAH.Husk.EMP:
 	Inherits: RAH.Husk
 	Inherits: ^EmpVisualEffect
 
 RAH.Husk.Empty:
-	Inherits: ^HelicopterHuskEmpty
 	Inherits: RAH.Husk
+	Inherits: ^HelicopterHuskEmpty
 
 RAH.Husk.Empty.EMP:
 	Inherits: RAH.Husk.Empty
@@ -1326,7 +1299,6 @@ DISR.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: disr.destroyed
-		PlayerPalette: playertd
 
 WTNK.Husk:
 	Inherits: ^HuskTD
@@ -1336,7 +1308,6 @@ WTNK.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: wtnk.destroyed
-		PlayerPalette: playertd
 
 BATF.Husk:
 	Inherits: ^Husk
@@ -1467,15 +1438,15 @@ HARR.Husk.EMP:
 	Inherits: ^EmpVisualEffect
 
 HARR.Husk.Empty:
-	Inherits: ^PlaneHuskEmpty
 	Inherits: HARR.Husk
+	Inherits: ^PlaneHuskEmpty
 
 HARR.Husk.Empty.EMP:
 	Inherits: HARR.Husk.Empty
 	Inherits: ^EmpVisualEffect
 
 HORN.Husk:
-	Inherits: ^PlaneHusk
+	Inherits: ^PlaneHuskTD
 	Tooltip:
 		Name: Hornet
 	Aircraft:
@@ -1499,7 +1470,6 @@ HORN.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: horn
-		PlayerPalette: playertd
 	FallsToEarth:
 		Explosion: UnitExplodeDrone
 
@@ -1508,7 +1478,6 @@ HORN.Husk.EMP:
 	Inherits: ^EmpVisualEffect
 
 HORN.Husk.Empty:
-	Inherits: ^PlaneHuskEmpty
 	Inherits: HORN.Husk
 	FallsToEarth:
 		Explosion: UnitExplodeDroneEmpty
@@ -1518,7 +1487,7 @@ HORN.Husk.Empty.EMP:
 	Inherits: ^EmpVisualEffect
 
 SCRN.Husk:
-	Inherits: ^PlaneHusk
+	Inherits: ^PlaneHuskTD
 	Tooltip:
 		Name: Banshee
 	Aircraft:
@@ -1546,22 +1515,21 @@ SCRN.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: scrin
-		PlayerPalette: playertd
 
 SCRN.Husk.EMP:
 	Inherits: SCRN.Husk
 	Inherits: ^EmpVisualEffect
 
 SCRN.Husk.Empty:
-	Inherits: ^PlaneHuskEmpty
 	Inherits: SCRN.Husk
+	Inherits: ^PlaneHuskEmpty
 
 SCRN.Husk.Empty.EMP:
 	Inherits: SCRN.Husk.Empty
 	Inherits: ^EmpVisualEffect
 
 ORCB.Husk:
-	Inherits: ^HelicopterHusk
+	Inherits: ^HelicopterHuskTD
 	Tooltip:
 		Name: Orca Bomber
 	Aircraft:
@@ -1587,7 +1555,6 @@ ORCB.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: orcab
-		PlayerPalette: playertd
 
 ORCB.Husk.EMP:
 	Inherits: ORCB.Husk
@@ -1595,8 +1562,7 @@ ORCB.Husk.EMP:
 
 ORCB.Husk.Empty:
 	Inherits: ORCB.Husk
-	FallsToEarth:
-		Explosion: UnitExplodeDroneEmpty
+	Inherits: ^HelicopterHuskEmpty
 
 ORCB.Husk.Empty.EMP:
 	Inherits: ORCB.Husk.Empty
@@ -1637,10 +1603,8 @@ SUK.Husk.EMP:
 	Inherits: ^EmpVisualEffect
 
 SUK.Husk.Empty:
-	Inherits: ^PlaneHuskEmpty
 	Inherits: SUK.Husk
-	FallsToEarth:
-		Explosion: UnitExplodeDroneEmpty
+	Inherits: ^PlaneHuskEmpty
 
 SUK.Husk.Empty.EMP:
 	Inherits: SUK.Husk.Empty
@@ -1670,7 +1634,6 @@ WTNK.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: mwtnk.destroyed
-		PlayerPalette: playertd
 
 LTNK.Husk:
 	Inherits: ^HuskTD
@@ -1680,7 +1643,6 @@ LTNK.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: ltnk.destroyed
-		PlayerPalette: playertd
 
 CHPR.Husk:
 	Inherits: ^Husk
@@ -1692,7 +1654,7 @@ CHPR.Husk:
 		Image: chpr.destroyed
 
 VENM.Husk:
-	Inherits: ^HelicopterHusk
+	Inherits: ^HelicopterHuskTD
 	Tooltip:
 		Name: Venom
 	Aircraft:
@@ -1716,17 +1678,14 @@ VENM.Husk:
 		Type: GroundPosition
 	RenderSprites:
 		Image: venm
-		PlayerPalette: playertd
 
 VENM.Husk.EMP:
 	Inherits: VENM.Husk
 	Inherits: ^EmpVisualEffect
 
 VENM.Husk.Empty:
-	Inherits: ^HelicopterHuskEmpty
 	Inherits: VENM.Husk
-	FallsToEarth:
-		Explosion: UnitExplodeDroneEmpty
+	Inherits: ^HelicopterHuskEmpty
 
 VENM.Husk.Empty.EMP:
 	Inherits: VENM.Husk.Empty
