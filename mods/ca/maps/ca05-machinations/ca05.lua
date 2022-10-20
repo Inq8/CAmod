@@ -386,14 +386,16 @@ InitNod = function()
 	InitAttackSquad(Squads.Naval, Nod)
 	InitAttackSquad(Squads.LabDefense, Nod)
 
-	Actor.Create("hazmat.upgrade", true, { Owner = Nod, CPos.New(0,0) })
+	local upgradeCreationLocation = CPos.New(0, 0)
+
+	Actor.Create("hazmat.upgrade", true, { Owner = Nod, Location = upgradeCreationLocation })
 
 	if Difficulty == "hard" then
-		Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod, CPos.New(0,0) })
-		Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod, CPos.New(0,0) })
+		Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod, Location = upgradeCreationLocation })
+		Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod, Location = upgradeCreationLocation })
 
 		Trigger.AfterDelay(DateTime.Minutes(15), function()
-			Actor.Create("tibcore.upgrade", true, { Owner = Nod, CPos.New(0,0) })
+			Actor.Create("tibcore.upgrade", true, { Owner = Nod, Location = upgradeCreationLocation })
 		end)
 	end
 end
