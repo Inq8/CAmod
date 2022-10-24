@@ -82,16 +82,20 @@ stance-icons:
 	Regions:
 		attack-anything: 0, 119, 16, 16
 		attack-anything-disabled: 0, 136, 16, 16
-		attack-anything-active: 0, 153, 16, 16
 		defend: 17, 119, 16, 16
 		defend-disabled: 17, 136, 16, 16
-		defend-active: 17, 153, 16, 16
 		return-fire: 34, 119, 16, 16
 		return-fire-disabled: 34, 136, 16, 16
-		return-fire-active: 34, 153, 16, 16
 		hold-fire: 51, 119, 16, 16
 		hold-fire-disabled: 51, 136, 16, 16
-		hold-fire-active: 51, 153, 16, 16
+
+stance-icons-highlighted:
+	Inherits: stance-icons
+	Regions:
+		attack-anything: 0, 153, 16, 16
+		defend: 17, 153, 16, 16
+		return-fire: 34, 153, 16, 16
+		hold-fire: 51, 153, 16, 16
 
 command-icons:
 	Inherits: ^Glyphs
@@ -112,6 +116,9 @@ command-icons:
 		stop-disabled: 150, 232, 24, 24
 		queue-orders: 175, 207, 24, 24
 		queue-orders-disabled: 175, 232, 24, 24
+
+command-icons-highlighted:
+	Inherits: command-icons
 
 sidebar-observer:
 	Inherits: ^Sidebar
@@ -190,6 +197,7 @@ lobby-bits:
 	Regions:
 		spawn-unclaimed: 91, 119, 22, 22
 		spawn-claimed: 68, 119, 22, 22
+		spawn-disabled: 114, 119, 22, 22
 		admin: 170, 0, 6, 5
 		colorpicker: 68, 119, 22, 22
 		huepicker: 136, 0, 7, 15
@@ -431,7 +439,7 @@ checkmark-tick:
 		unchecked: 0, 0, 0, 0
 		unchecked-pressed: 204, 0, 16, 16
 
-checkmark-highlighted-tick:
+checkmark-tick-highlighted:
 	Inherits: checkmark-tick
 
 checkmark-cross:
@@ -442,7 +450,7 @@ checkmark-cross:
 		unchecked: 0, 0, 0, 0
 		unchecked-pressed: 238, 0, 16, 16
 
-checkmark-highlighted-cross:
+checkmark-cross-highlighted:
 	Inherits: checkmark-cross
 
 checkmark-mute:
@@ -453,7 +461,7 @@ checkmark-mute:
 		checked: 17, 170, 16, 16
 		checked-pressed: 0, 170, 16, 16
 
-checkmark-highlighted-mute:
+checkmark-mute-highlighted:
 	Inherits: checkmark-mute
 
 checkbox-hover:
