@@ -119,8 +119,13 @@ LST:
 	-Selectable:
 	Interactable:
 
+^GDIPalette:
+	RenderSprites:
+		Palette: temptd
+
 OCAR.CHPR:
 	Inherits: OCAR
+	Inherits@GDIPAL: ^GDIPalette
 	RejectsOrders:
 	-Selectable:
 	Interactable:
@@ -128,14 +133,17 @@ OCAR.CHPR:
 		InitialFacing: 512
 	Carryall:
 		InitialActor: chpr
-	RenderSprites:
-		Palette: temptd
 	Health:
 		HP: 100000
+
+OCAR.Husk:
+	Inherits@GDIPAL: ^GDIPalette
 
 SAPC:
 	ExternalCondition@FORCEUNCLOAK:
 		Condition: cloak-force-disabled
+	RenderSprites:
+		PlayerPalette: playerraunit
 	AutoTarget:
 		InitialStanceAI: HoldFire
 	-Targetable:
@@ -157,7 +165,7 @@ NukeDummyEasy:
 	NukePower@EASY:
 		Cursor: nuke
 		Icon: abomb
-		ChargeInterval: 67500
+		ChargeInterval: 60000
 		Name: Atom Bomb
 		IncomingSound: nukelaunch.aud
 		IncomingSpeechNotification: AbombLaunchDetected
@@ -177,7 +185,7 @@ NukeDummyNormal:
 	NukePower@NORMAL:
 		Cursor: nuke
 		Icon: abomb
-		ChargeInterval: 52500
+		ChargeInterval: 45000
 		Name: Atom Bomb
 		IncomingSound: nukelaunch.aud
 		IncomingSpeechNotification: AbombLaunchDetected
@@ -197,7 +205,7 @@ NukeDummyHard:
 	NukePower@HARD:
 		Cursor: nuke
 		Icon: abomb
-		ChargeInterval: 37500
+		ChargeInterval: 30000
 		Name: Atom Bomb
 		IncomingSound: nukelaunch.aud
 		IncomingSpeechNotification: AbombLaunchDetected

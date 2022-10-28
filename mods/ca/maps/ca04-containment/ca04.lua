@@ -28,13 +28,15 @@ Patrols = {
 Reactors = { EastReactor, SouthReactor, WestReactor }
 
 ShoreSAMs = { ShoreSAM1, ShoreSAM2, ShoreSAM3, ShoreSAM4, ShoreSAM5 }
+ShoreSAMFlareLocation = ShoreSAM5.Location
+ShoreSAMBeaconPosition = ShoreSAM5.CenterPosition
 
 MissileSilos = { TopSilo, BottomSilo }
 
 NukeTimer = {
-	hard = DateTime.Minutes(15),
-	normal = DateTime.Minutes(25),
-	easy = DateTime.Minutes(35)
+	hard = DateTime.Minutes(20),
+	normal = DateTime.Minutes(30),
+	easy = DateTime.Minutes(40)
 }
 
 -- Setup and Tick
@@ -72,7 +74,9 @@ WorldLoaded = function()
 				Greece.MarkFailedObjective(ObjectivePreserveSEALs)
 			end
 
-			CheckSquad()
+			if not Greece.IsObjectiveCompleted(ObjectiveKillReactors) and ((Seal1.IsDead and Seal2.IsDead) or Spy.IsDead) then
+				Greece.MarkFailedObjective(ObjectiveKillReactors)
+			end
 		end)
 	end)
 
@@ -92,6 +96,7 @@ WorldLoaded = function()
 	Trigger.OnKilled(SouthReactor, function(self, killer)
 		CheckReactors()
 		DisableSouthTeslas()
+		DoShoreSAMFlare()
 		if EastReactor.IsDead then
 			DisableNorthTeslas()
 		end
@@ -99,13 +104,29 @@ WorldLoaded = function()
 
 	Utils.Do(ShoreSAMs, function(a)
 		Trigger.OnKilled(a, function(self, killer)
-			CheckShoreSAMs()
+			if ShoreSAM1.IsDead and ShoreSAM2.IsDead and ShoreSAM3.IsDead and ShoreSAM4.IsDead and ShoreSAM5.IsDead then
+				Greece.MarkCompletedObjective(ObjectiveKillSAMSites)
+
+				if Greece.IsObjectiveCompleted(ObjectiveKillSilos) then
+					DropChronoPrison()
+				end
+			end
 		end)
 	end)
 
 	Utils.Do(MissileSilos, function(a)
 		Trigger.OnKilled(a, function(self, killer)
-			CheckMissileSilos()
+			if TopSilo.IsDead and BottomSilo.IsDead then
+				if not NukeDummy.IsDead then
+					NukeDummy.Destroy()
+				end
+
+				Greece.MarkCompletedObjective(ObjectiveKillSilos)
+
+				if Greece.IsObjectiveCompleted(ObjectiveKillSAMSites) then
+					DropChronoPrison()
+				end
+			end
 		end)
 	end)
 
@@ -150,79 +171,74 @@ WorldLoaded = function()
 			Media.PlaySound("nukelaunch.aud")
 			Media.PlaySpeechNotification(Greece, "AbombLaunchDetected")
 			Notification("A-Bomb launch detected.")
-		end
 
-		Trigger.AfterDelay(DateTime.Seconds(15), function()
-			WhiteOut = true
-			Media.PlaySound("crossrip.aud")
-			Trigger.AfterDelay(DateTime.Seconds(2), function()
-				if not Greece.IsObjectiveCompleted(ObjectiveKillSilos) then
-					Greece.MarkFailedObjective(ObjectiveKillSilos)
-				end
-				if not Greece.IsObjectiveCompleted(ObjectiveNeutralizeChronosphere) then
-					Greece.MarkFailedObjective(ObjectiveNeutralizeChronosphere)
-				end
+			Trigger.AfterDelay(DateTime.Seconds(15), function()
+				WhiteOut = true
+				Media.PlaySound("crossrip.aud")
+				Trigger.AfterDelay(DateTime.Seconds(2), function()
+					if not Greece.IsObjectiveCompleted(ObjectiveKillSilos) then
+						Greece.MarkFailedObjective(ObjectiveKillSilos)
+					end
+					if not Greece.IsObjectiveCompleted(ObjectiveNeutralizeChronosphere) then
+						Greece.MarkFailedObjective(ObjectiveNeutralizeChronosphere)
+					end
+				end)
 			end)
-		end)
+		end
 	end)
 end
 
 DisableEastTeslas = function()
-	EastTesla1.GrantCondition("disabled")
-	EastTesla2.GrantCondition("disabled")
-	EastTesla3.GrantCondition("disabled")
-	EastTesla4.GrantCondition("disabled")
-	EastTesla5.GrantCondition("disabled")
+	local teslaCoils = { EastTesla1, EastTesla2, EastTesla3, EastTesla4, EastTesla5 }
+	Utils.Do(teslaCoils, function(self)
+		if not self.IsDead then
+			self.GrantCondition("disabled")
+		end
+	end)
 end
 
 DisableSouthTeslas = function()
-	SouthTesla1.GrantCondition("disabled")
-	SouthTesla2.GrantCondition("disabled")
+	local teslaCoils = { SouthTesla1, SouthTesla2 }
+	Utils.Do(teslaCoils, function(self)
+		if not self.IsDead then
+			self.GrantCondition("disabled")
+		end
+	end)
 end
 
 DisableWestTeslas = function()
-	WestTesla1.GrantCondition("disabled")
-	WestTesla2.GrantCondition("disabled")
-	WestTesla3.GrantCondition("disabled")
-	WestTesla4.GrantCondition("disabled")
-	WestTesla5.GrantCondition("disabled")
+	local teslaCoils = { WestTesla1, WestTesla2, WestTesla3, WestTesla4, WestTesla5 }
+	Utils.Do(teslaCoils, function(self)
+		if not self.IsDead then
+			self.GrantCondition("disabled")
+		end
+	end)
 end
 
 DisableNorthTeslas = function()
-	NorthTesla1.GrantCondition("disabled")
-	NorthTesla2.GrantCondition("disabled")
-	NorthTesla3.GrantCondition("disabled")
-	NorthTesla4.GrantCondition("disabled")
-	NorthTesla5.GrantCondition("disabled")
-	NorthTesla6.GrantCondition("disabled")
+	local teslaCoils = { NorthTesla1, NorthTesla2, NorthTesla3, NorthTesla4, NorthTesla5, NorthTesla6 }
+	Utils.Do(teslaCoils, function(self)
+		if not self.IsDead then
+			self.GrantCondition("disabled")
+		end
+	end)
+end
+
+DoShoreSAMFlare = function()
+	Trigger.AfterDelay(DateTime.Seconds(4), function()
+		ShoreSAMFlare = Actor.Create("flare", true, { Owner = Greece, Location = ShoreSAMFlareLocation })
+		Media.PlaySpeechNotification(Greece, "SignalFlare")
+		Notification("Signal flare detected. Shore SAM site located.")
+		Beacon.New(Greece, ShoreSAMBeaconPosition)
+		Trigger.AfterDelay(DateTime.Seconds(10), function()
+			ShoreSAMFlare.Destroy()
+		end)
+	end)
 end
 
 CheckReactors = function()
 	if EastReactor.IsDead and SouthReactor.IsDead and WestReactor.IsDead then
 		Greece.MarkCompletedObjective(ObjectiveKillReactors)
-	end
-end
-
-CheckShoreSAMs = function()
-	if ShoreSAM1.IsDead and ShoreSAM2.IsDead and ShoreSAM3.IsDead and ShoreSAM4.IsDead and ShoreSAM5.IsDead then
-		Greece.MarkCompletedObjective(ObjectiveKillSAMSites)
-	end
-end
-
-CheckMissileSilos = function()
-	if TopSilo.IsDead and BottomSilo.IsDead then
-		if not NukeDummy.IsDead then
-			NukeDummy.Destroy()
-		end
-
-		Greece.MarkCompletedObjective(ObjectiveKillSilos)
-		DropChronoPrison()
-	end
-end
-
-CheckSquad = function()
-	if not Greece.IsObjectiveCompleted(ObjectiveKillReactors) and ((Seal1.IsDead and Seal2.IsDead) or Spy.IsDead) then
-		Greece.MarkFailedObjective(ObjectiveKillReactors)
 	end
 end
 

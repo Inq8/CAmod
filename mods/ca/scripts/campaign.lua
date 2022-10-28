@@ -17,7 +17,7 @@ BuildTimeMultipliers = {
 
 ConyardTypes = { "fact", "afac", "sfac" }
 
-HarvesterTypes = { "harv", "harv.td", "harv.scrin" }
+HarvesterTypes = { "harv", "harv.td", "harv.scrin", "harv.chrono" }
 
 FactoryTypes = { "weap", "weap.td", "wsph", "airs" }
 
@@ -450,22 +450,32 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 
 					-- add produced unit to list of idle units for the squad
 					Trigger.OnProduction(producer, function(p, produced)
+						local isHarvester = false
 
-						if SquadAssignmentQueue[producerId][1] ~= nil then
-							local assignedSquad = SquadAssignmentQueue[producerId][1]
-							SquadAssignmentQueue[producerId][1].IdleUnits[#assignedSquad.IdleUnits + 1] = produced
-							table.remove(SquadAssignmentQueue[producerId], 1)
-						elseif produced.HasProperty("Hunt") then
-							produced.Hunt()
+						-- we don't want to add harvesters to squads, which are produced when replacements are needed
+						Utils.Do(HarvesterTypes, function(harvesterType)
+							if produced.Type == harvesterType then
+								isHarvester = true
+							end
+						end)
+
+						if not isHarvester then
+							if SquadAssignmentQueue[producerId][1] ~= nil then
+								local assignedSquad = SquadAssignmentQueue[producerId][1]
+								SquadAssignmentQueue[producerId][1].IdleUnits[#assignedSquad.IdleUnits + 1] = produced
+								table.remove(SquadAssignmentQueue[producerId], 1)
+							elseif produced.HasProperty("Hunt") then
+								produced.Hunt()
+							end
+
+							if produced.HasProperty("HasPassengers") and not produced.IsDead then
+								Trigger.OnPassengerExited(produced, function(t, p)
+									AssaultPlayerBaseOrHunt(p)
+								end)
+							end
+
+							TargetSwapChance(produced, squad.Player, 10)
 						end
-
-						if produced.HasProperty("HasPassengers") and not produced.IsDead then
-							Trigger.OnPassengerExited(produced, function(t, p)
-								AssaultPlayerBaseOrHunt(p)
-							end)
-						end
-
-						TargetSwapChance(produced, squad.Player, 10)
 					end)
 				end
 
@@ -604,8 +614,12 @@ SetupRefAndSilosCaptureCredits = function(player)
 end
 
 HasConyard = function(player)
+	return CountConyards(player) >= 1
+end
+
+CountConyards = function(player)
 	local Conyards = player.GetActorsByTypes(ConyardTypes)
-	return #Conyards >= 1
+	return #Conyards
 end
 
 AutoReplaceHarvesters = function(player)
@@ -621,10 +635,12 @@ AutoReplaceHarvesters = function(player)
 			Utils.Do(HarvesterTypes, function(t)
 				if not produced.IsDead and produced.Type == t then
 					local refineries = player.GetActorsByTypes(RefineryTypes)
-					local refinery = Utils.Random(refineries)
-					produced.Move(refinery.Location, 2)
-					produced.FindResources()
-					AutoReplaceHarvester(player, produced)
+					if #refineries > 0 then
+						local refinery = Utils.Random(refineries)
+						produced.Move(refinery.Location, 2)
+						produced.FindResources()
+						AutoReplaceHarvester(player, produced)
+					end
 				end
 			end)
 		end

@@ -1398,7 +1398,7 @@ A10:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 28000
+		HP: 27000
 	RevealsShroud:
 		Range: 11c0
 		MinRange: 9c0
@@ -1579,6 +1579,7 @@ A10.UPG:
 A10.bomber:
 	Inherits: ^NeutralPlane
 	Inherits@EMP: ^EmpDisable
+	Inherits@TDPAL: ^TDPalette
 	Tooltip:
 		Name: Warthog
 	Health:
@@ -1604,7 +1605,6 @@ A10.bomber:
 	-Voiced:
 	RenderSprites:
 		Image: a10
-		PlayerPalette: playertd
 	EjectOnDeath:
 		PilotActor: N1
 	RejectsOrders:
@@ -1641,9 +1641,8 @@ A10.bomber:
 
 C17:
 	Inherits: ^NeutralPlane
+	Inherits@TDPAL: ^TDPalette
 	Inherits@EMP: ^EmpDisable
-	RenderSprites:
-		PlayerPalette: playertd
 	ParaDrop:
 		DropRange: 4c0
 		ChuteSound: chute1.aud
@@ -2176,6 +2175,7 @@ ORCB:
 UAV:
 	Inherits: ^NeutralPlane
 	Inherits@EMP: ^EmpDisable
+	Inherits@TDPAL: ^TDPalette
 	Health:
 		HP: 40000
 	Tooltip:
@@ -2221,8 +2221,6 @@ UAV:
 	Interactable:
 	GivesExperience:
 		Experience: 1000
-	RenderSprites:
-		PlayerPalette: playertd
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
 
