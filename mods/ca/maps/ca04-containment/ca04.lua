@@ -66,15 +66,12 @@ WorldLoaded = function()
 	LandingCraft.Move(LandingCraftExit.Location)
 	LandingCraft.Destroy()
 
-	local squadMembers = { Spy, Seal1, Seal2 }
-	Utils.Do(squadMembers, function(a)
+	local seals = { Seal1, Seal2 }
+	Utils.Do(seals, function(a)
 		Trigger.OnKilled(a, function(self, killer)
+			Greece.MarkFailedObjective(ObjectivePreserveSEALs)
 
-			if self.Type == "seal" then
-				Greece.MarkFailedObjective(ObjectivePreserveSEALs)
-			end
-
-			if not Greece.IsObjectiveCompleted(ObjectiveKillReactors) and ((Seal1.IsDead and Seal2.IsDead) or Spy.IsDead) then
+			if not Greece.IsObjectiveCompleted(ObjectiveKillReactors) and Seal1.IsDead and Seal2.IsDead then
 				Greece.MarkFailedObjective(ObjectiveKillReactors)
 			end
 		end)
