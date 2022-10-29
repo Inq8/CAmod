@@ -142,8 +142,8 @@ Squads = {
 	Advanced = {
 		Player = nil,
 		Interval = {
-			easy = DateTime.Seconds(30),
-			normal = DateTime.Seconds(20),
+			easy = DateTime.Seconds(25),
+			normal = DateTime.Seconds(15),
 			hard = DateTime.Seconds(5)
 		},
 		QueueProductionStatuses = {
