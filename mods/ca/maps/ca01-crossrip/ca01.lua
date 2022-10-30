@@ -92,8 +92,8 @@ Squads = {
 	Basic = {
 		Player = nil,
 		Delay = {
-			easy = DateTime.Seconds(130),
-			normal = DateTime.Seconds(100),
+			easy = DateTime.Seconds(150),
+			normal = DateTime.Seconds(110),
 			hard = DateTime.Seconds(70)
 		},
 		Interval = {
@@ -254,6 +254,12 @@ WorldLoaded = function()
 			ChronosphereDiscovered()
 		end
 	end)
+
+	if Difficulty == "easy" then
+		HeavyTank1.Destroy()
+	else
+		Ranger1.Destroy()
+	end
 
 	InitObjectives(Greece)
 	InitUSSR()

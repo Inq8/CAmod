@@ -82,13 +82,13 @@ Squads = {
 	MainBasic = {
 		Player = nil,
 		Delay = {
-			easy = DateTime.Seconds(30),
-			normal = DateTime.Seconds(15),
+			easy = DateTime.Seconds(60),
+			normal = DateTime.Seconds(30),
 			hard = DateTime.Seconds(5)
 		},
 		Interval = {
-			easy = DateTime.Seconds(30),
-			normal = DateTime.Seconds(20),
+			easy = DateTime.Seconds(50),
+			normal = DateTime.Seconds(30),
 			hard = DateTime.Seconds(10)
 		},
 		QueueProductionStatuses = {
@@ -132,8 +132,8 @@ Squads = {
 	MainAdvanced = {
 		Player = nil,
 		Interval = {
-			easy = DateTime.Seconds(30),
-			normal = DateTime.Seconds(20),
+			easy = DateTime.Seconds(45),
+			normal = DateTime.Seconds(25),
 			hard = DateTime.Seconds(10)
 		},
 		QueueProductionStatuses = {
