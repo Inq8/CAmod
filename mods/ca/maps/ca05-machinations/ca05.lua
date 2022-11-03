@@ -1,3 +1,8 @@
+InitialUnits = {
+	easy = { "mcv", "2tnk", "jeep" },
+	normal = { "mcv", "jeep" },
+	hard = { "mcv" }
+}
 
 NodSouthAttackPaths = {
 	{ LeftAttack1.Location, LeftAttack2.Location, LeftAttack3.Location },
@@ -403,7 +408,7 @@ end
 DoMcvArrival = function()
 	local mcvArrivalPath = { McvEntry.Location, McvLanding.Location }
 	local mcvExitPath = { McvEntry.Location }
-	DoNavalTransportDrop(Greece, mcvArrivalPath, mcvExitPath, "lst", { "mcv" }, function(a)
+	DoNavalTransportDrop(Greece, mcvArrivalPath, mcvExitPath, "lst", InitialUnits[Difficulty], function(a)
 		a.Move(McvRally.Location)
 	end)
 end

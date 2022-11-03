@@ -77,12 +77,12 @@ KATY:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 15000
+		HP: 13000
 	Armor:
 		Type: Light
 	Mobile:
 		Speed: 54
-		TurnSpeed: 14
+		TurnSpeed: 12
 	RevealsShroud:
 		Range: 5c0
 	Armament@PRIMARY:
@@ -1529,6 +1529,8 @@ HARV:
 		RequiresCondition: pointdef-upgrade
 	WithIdleOverlay@NSHIELD:
 		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
+	ChangesHealth@MINIDRONE:
+		Step: 2250
 
 HARV.Chrono:
 	Inherits: HARV
@@ -3549,7 +3551,7 @@ MDRN.Attached:
 		Weapon: M60mgMD.Attached
 		LocalOffset: -500,0,72
 	DamageMultiplier@ATTACHED:
-		Modifier: 25
+		Modifier: 15
 	Attachable:
 	ChangesHealth:
 		PercentageStep: 2
@@ -4408,6 +4410,8 @@ HARV.TD:
 		RequiresCondition: pointdef-upgrade
 	WithIdleOverlay@NSHIELD:
 		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
+	ChangesHealth@MINIDRONE:
+		Step: 2250
 
 BTR:
 	Inherits: ^Tank
