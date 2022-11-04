@@ -203,6 +203,7 @@ WorldLoaded = function()
 	TimerTicks = 0
 	TrucksLost = 0
 	NextConvoyIdx = 1
+	CurrentConvoyArrivalComplete = false
 
 	InitObjectives(Greece)
 	InitScrin()
@@ -323,11 +324,16 @@ InitConvoy = function()
 		UpdateConvoyCountdown()
 		Media.PlaySpeechNotification(Greece, "ConvoyApproaching")
 		Notification("Convoy approaching.")
+		CurrentConvoyArrivalComplete = false
 
 		local trucks = Reinforcements.Reinforce(England, ConvoyUnits, nextConvoy.Spawn, 50, function(truck)
 			Utils.Do(nextConvoy.Path, function(waypoint)
 				truck.Move(waypoint)
 			end)
+		end)
+
+		Trigger.AfterDelay(DateTime.Seconds(15), function()
+			CurrentConvoyArrivalComplete = true
 		end)
 
 		Utils.Do(trucks, function(truck)
@@ -347,19 +353,21 @@ InitConvoy = function()
 			end)
 
 			Trigger.OnRemovedFromWorld(truck, function(a)
-				local numTrucks = #England.GetActorsByType("truk")
-				if numTrucks == 0 then
-					NextConvoyIdx = NextConvoyIdx + 1
-					if NextConvoyIdx <= #Convoys then
-						UserInterface.SetMissionText("Awaiting next convoy.")
-						Trigger.AfterDelay(DateTime.Seconds(15), function()
-							InitConvoy()
-						end)
-					else
-						ObjectiveDestroyScrinBase = Greece.AddObjective("Destroy the alien stronghold.")
-						Greece.MarkCompletedObjective(ObjectiveClearPath)
-						Greece.MarkCompletedObjective(ObjectiveProtectConvoys)
-						UserInterface.SetMissionText("Destroy the alien stronghold.", HSLColor.Yellow)
+				if CurrentConvoyArrivalComplete then
+					local numTrucks = #England.GetActorsByType("truk")
+					if numTrucks == 0 then
+						NextConvoyIdx = NextConvoyIdx + 1
+						if NextConvoyIdx <= #Convoys then
+							UserInterface.SetMissionText("Awaiting next convoy.")
+							Trigger.AfterDelay(DateTime.Seconds(15), function()
+								InitConvoy()
+							end)
+						else
+							ObjectiveDestroyScrinBase = Greece.AddObjective("Destroy the alien stronghold.")
+							Greece.MarkCompletedObjective(ObjectiveClearPath)
+							Greece.MarkCompletedObjective(ObjectiveProtectConvoys)
+							UserInterface.SetMissionText("Destroy the alien stronghold.", HSLColor.Yellow)
+						end
 					end
 				end
 			end)
