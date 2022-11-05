@@ -41,6 +41,9 @@ namespace OpenRA.Mods.CA.Warheads
 		[Desc("Should the weapons be fired around the intended target or at the explosion's epicenter.")]
 		public readonly bool AroundTarget = false;
 
+		[Desc("Does this weapon aim at the target's center regardless of other targetable offsets?")]
+		public readonly bool TargetActorCenter = false;
+
 		WeaponInfo weapon;
 
 		public void RulesetLoaded(Ruleset rules, WeaponInfo info)
@@ -149,7 +152,7 @@ namespace OpenRA.Mods.CA.Warheads
 					CurrentSource = () => centerPosition,
 					SourceActor = firedBy,
 					GuidedTarget = shrapnelTarget,
-					PassiveTarget = shrapnelTarget.CenterPosition
+					PassiveTarget = TargetActorCenter ? shrapnelTarget.CenterPosition : shrapnelTarget.Positions.PositionClosestTo(epicenter)
 				};
 
 				if (projectileArgs.Weapon.Projectile != null)

@@ -450,7 +450,7 @@ PDOX:
 		Bounds: 2048, 2048
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
-		BuildPaletteOrder: 120
+		BuildPaletteOrder: 130
 		Prerequisites: atek, ~structures.allies, ~techlevel.unrestricted
 		BuildLimit: 1
 		Description: Can be used to teleports units anywhere on the map.
@@ -2215,6 +2215,9 @@ NPWR:
 	Inherits@UPG: ^ProducesUpgrades
 	HitShape:
 		TargetableOffsets: -355,-1024,0
+		Type: Rectangle
+			TopLeft: -1792, -1280
+			BottomRight: 1792, 1024
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 165
@@ -3219,11 +3222,6 @@ WEAP.TD:
 		Image: awep
 	Selectable:
 		Bounds: 3072, 3072
-	HitShape:
-		TargetableOffsets: 0,0,0, 0,1024,0, 0,-1024,0
-		Type: Rectangle
-			TopLeft: -1536, -1024
-			BottomRight: 1536, 512
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 80
@@ -4056,6 +4054,8 @@ HQ:
 	Inherits@POWERDRAIN: ^PowerDrainableRadar
 	Inherits@GDIAIRPOWERS: ^GDIAirPowers
 	Inherits@UPG: ^ProducesUpgrades
+	Selectable:
+		Bounds: 2048, 2304
 	HitShape:
 		TargetableOffsets: 0,0,0, 0,512,0, 420,-598,256
 		Type: Rectangle
@@ -4309,14 +4309,16 @@ EYE:
 	Inherits: ^BuildingTD
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@POWERDRAIN: ^PowerDrainableRadar
+	Selectable:
+		Bounds: 2048, 2304
 	HitShape:
 		TargetableOffsets: 0,0,0, 0,512,128, 420,-598,213
 		Type: Rectangle
-			TopLeft: -1024, -384
+			TopLeft: -1024, -1024
 			BottomRight: 1024, 1024
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
-		BuildPaletteOrder: 130
+		BuildPaletteOrder: 140
 		Prerequisites: gtek, ~structures.gdi, ~techlevel.unrestricted
 		IconPalette: chrometd
 		BuildLimit: 1
@@ -5713,7 +5715,7 @@ SGEN:
 		UseTargetableCellsOffsets: true
 		Type: Rectangle
 			TopLeft: -1536, -1024
-			BottomRight: 1024, 1024
+			BottomRight: 1536, 1024
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
@@ -5994,13 +5996,13 @@ INDP:
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@UPG: ^ProducesUpgrades
 	Selectable:
-		Bounds: 3072, 2389, 0, 512
-		DecorationBounds: 3114, 3072
+		Bounds: 3072, 2816, 0, -256
+	HitShape:
+		Type: Rectangle
+			TopLeft: -1536, -1024
+			BottomRight: 1536, 1280
 	WithSpriteBody:
 		PauseOnCondition: disabled || being-warped
-	HitShape:
-		UseTargetableCellsOffsets: false
-		TargetableOffsets: 0,0,0, 640,-384,0, 640,512,0, -710,-512,0, -710,512,0
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
@@ -6019,8 +6021,8 @@ INDP:
 	Tooltip:
 		Name: Industrial Plant
 	Building:
-		Footprint: ___ xxx xxx ===
-		Dimensions: 3,4
+		Footprint: xxx xxx ===
+		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Health:
 		HP: 110000
@@ -6065,8 +6067,6 @@ OREP:
 	Inherits: ^Building
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^3x2Shape
-	HitShape:
-		TargetableOffsets: -355,-1024,0
 	Selectable:
 		Bounds: 3072, 2048
 	Building:
@@ -6145,14 +6145,16 @@ UPGC:
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@UPG: ^ProducesUpgrades
-	HitShape:
-		TargetableOffsets: -355,-1024,0
 	Selectable:
-		Bounds: 3072, 2048
+		Bounds: 3072, 2560, 0, 256
 	Building:
 		Footprint: xxx xxx ===
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-1024,0
+	HitShape:
+		Type: Rectangle
+			TopLeft: -1536, -1024
+			BottomRight: 1536, 1536
 	Health:
 		HP: 110000
 	Armor:
@@ -6496,10 +6498,11 @@ TMPP:
 	Selectable:
 		Bounds: 3072, 2560, 0, 256
 	HitShape:
-		TargetableOffsets: 0,0,0, 0,1024,0, 0,-1024,0
+		UseTargetableCellsOffsets: false
+		TargetableOffsets: 512,0,0, -256,0,0, -256,1024,0, -256,-1024,0, -1536,0,0, -1536,1024,0, -1536,-1024,0
 		Type: Rectangle
 			TopLeft: -1536, -1024
-			BottomRight: 1536, 512
+			BottomRight: 1536, 1536
 	Building:
 		Footprint: XxX xxx X+X
 		Dimensions: 3,3
@@ -6586,7 +6589,7 @@ MSLO.Nod:
 	RenderSprites:
 		Image: nmslo
 	Selectable:
-		Bounds: 2048, 1024, 0, 512
+		Bounds: 2048, 1280
 	Valued:
 		Cost: 2500
 	Tooltip:
@@ -6603,7 +6606,6 @@ MSLO.Nod:
 	Building:
 		Footprint: xx
 		Dimensions: 2,1
-		LocalCenterOffset: 0,-512,0
 	Health:
 		HP: 100000
 	Armor:
@@ -6680,7 +6682,7 @@ WEAT:
 		Bounds: 2048, 2048
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
-		BuildPaletteOrder: 130
+		BuildPaletteOrder: 140
 		Prerequisites: atek, ~structures.allies, ~techlevel.unrestricted
 		BuildLimit: 1
 		Description: Provides Lightning Storm support power.
