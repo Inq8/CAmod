@@ -8,6 +8,7 @@
  */
 #endregion
 
+using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
@@ -21,8 +22,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("The condition to grant.")]
 		public readonly string Condition = null;
 
-		[Desc("Number of ticks to wait before granting the condition.")]
-		public readonly int Delay = 50;
+		[Desc("Number of ticks to wait before granting the condition.",
+			"Two values indicate a random delay range.")]
+		public readonly int[] Delay = { 50 };
 
 		[Desc("If the trait is disabled, revoke the condition and reset the delay.")]
 		public readonly bool RevokeOnDisabled = false;
@@ -30,7 +32,7 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If the trait is paused, revoke the condition and reset the delay.")]
 		public readonly bool RevokeOnPaused = false;
 
-		public override object Create(ActorInitializer init) { return new GrantDelayedCondition(this); }
+		public override object Create(ActorInitializer init) { return new GrantDelayedCondition(init.Self, this); }
 	}
 
 	public class GrantDelayedCondition : PausableConditionalTrait<GrantDelayedConditionInfo>, ITick
@@ -38,12 +40,14 @@ namespace OpenRA.Mods.CA.Traits
 		readonly GrantDelayedConditionInfo info;
 		int token = Actor.InvalidConditionToken;
 		public int DelayRemaining { get; private set; }
+		int delay;
 
-		public GrantDelayedCondition(GrantDelayedConditionInfo info)
+		public GrantDelayedCondition(Actor self, GrantDelayedConditionInfo info)
 			: base(info)
 		{
 			this.info = info;
-			DelayRemaining = info.Delay;
+			delay = Util.RandomInRange(self.World.SharedRandom, info.Delay);
+			DelayRemaining = delay;
 		}
 
 		void ITick.Tick(Actor self)
@@ -60,7 +64,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (!info.RevokeOnDisabled)
 				return;
 
-			DelayRemaining = info.Delay;
+			DelayRemaining = delay;
 
 			if (token != Actor.InvalidConditionToken)
 				token = self.RevokeCondition(token);
@@ -71,7 +75,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (!info.RevokeOnPaused)
 				return;
 
-			DelayRemaining = info.Delay;
+			DelayRemaining = delay;
 
 			if (token != Actor.InvalidConditionToken)
 				token = self.RevokeCondition(token);

@@ -122,6 +122,86 @@ VEHICLES.SCRIN:
 		DamageCooldown: 250
 		RequiresCondition: regen-upgrade
 
+^IonConduits:
+	GrantConditionOnPrerequisite@IONCON:
+		Condition: ioncon-upgrade
+		Prerequisites: ioncon.upgrade
+	Targetable@StormBoost:
+		TargetTypes: StormBoost
+	AmbientSoundCA@IONSTORM:
+		SoundFiles: ionstorm.aud
+		Delay: 0
+		Interval: 850
+		VolumeMultiplier: 0.4
+		RequiresCondition: storm-active
+	AmbientSoundCA@AMBIENCE:
+		SoundFiles: thunder1.aud, thunder2.aud, thunder3.aud, thunder4.aud, thunder5.aud, thunder.ambient.aud
+		Delay: 20, 200
+		Interval: 250, 1250
+		VolumeMultiplier: 0.3
+		RequiresCondition: storm-active
+	LaysMinefield@IONSTORM:
+		Mines: strm, strm, strm.live
+		MineSelectionMode: Shuffled
+		Locations: 0,1, 1,0, -1,0
+		RecreationInterval: 150
+		RequiresCondition: storm-active
+	GrantConditionOnAttackCA@IONSTORM:
+		RequiresActorTarget: true
+		Condition: storm-active
+		RevokeDelay: 75
+		RevokeAll: true
+		MaximumInstances: 50
+		RequiresCondition: ioncon-upgrade
+	RangeMultiplier@IONSTORM1:
+		Modifier: 105
+		RequiresCondition: storm-active >= 14 && storm-active < 28
+	FirepowerMultiplier@IONSTORM1:
+		Modifier: 110
+		RequiresCondition: storm-active >= 14 && storm-active < 28
+	DamageMultiplier@IONSTORM1:
+		Modifier: 90
+		RequiresCondition: storm-active >= 14 && storm-active < 28
+	RangeMultiplier@IONSTORM2:
+		Modifier: 110
+		RequiresCondition: storm-active >= 28 && storm-active < 42
+	FirepowerMultiplier@IONSTORM2:
+		Modifier: 115
+		RequiresCondition: storm-active >= 28 && storm-active < 42
+	DamageMultiplier@IONSTORM2:
+		Modifier: 85
+		RequiresCondition: storm-active >= 28 && storm-active < 42
+	RangeMultiplier@IONSTORM3:
+		Modifier: 115
+		RequiresCondition: storm-active >= 42
+	FirepowerMultiplier@IONSTORM3:
+		Modifier: 120
+		RequiresCondition: storm-active >= 42
+	DamageMultiplier@IONSTORM3:
+		Modifier: 80
+		RequiresCondition: storm-active >= 42
+	WithDecoration@IONSTORM1:
+		Image: pips
+		Sequence: pip-ion1
+		Palette: scrin
+		Position: BottomLeft
+		Margin: -6, 3
+		RequiresCondition: storm-active >= 14 && storm-active < 28
+	WithDecoration@IONSTORM2:
+		Image: pips
+		Sequence: pip-ion2
+		Palette: scrin
+		Position: BottomLeft
+		Margin: -6, 3
+		RequiresCondition: storm-active >= 28 && storm-active < 42
+	WithDecoration@IONSTORM3:
+		Image: pips
+		Sequence: pip-ion3
+		Palette: scrin
+		Position: BottomLeft
+		Margin: -6, 3
+		RequiresCondition: storm-active >= 42
+
 #
 # ---- Infantry
 #
@@ -1323,6 +1403,7 @@ STCR:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@IONCONDUITS: ^IonConduits
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1369,6 +1450,41 @@ STCR:
 	WithShadow:
 		Offset: 80, 80, 0
 		ZOffset: -81
+	GrantConditionOnAttackCA@IONSTORM:
+		RevokeDelay: 200
+		MaximumInstances: 42
+	LaysMinefield@IONSTORM:
+		Mines: strm2
+		Locations: 0,0
+		KillOnRemove: false
+		RemoveOnDisable: false
+	RangeMultiplier@IONSTORM1:
+		Modifier: 110
+		RequiresCondition: storm-active >= 12 && storm-active < 24
+	FirepowerMultiplier@IONSTORM1:
+		RequiresCondition: storm-active >= 12 && storm-active < 24
+	DamageMultiplier@IONSTORM1:
+		RequiresCondition: storm-active >= 12 && storm-active < 24
+	RangeMultiplier@IONSTORM2:
+		Modifier: 120
+		RequiresCondition: storm-active >= 24 && storm-active < 36
+	FirepowerMultiplier@IONSTORM2:
+		RequiresCondition: storm-active >= 24 && storm-active < 36
+	DamageMultiplier@IONSTORM2:
+		RequiresCondition: storm-active >= 24 && storm-active < 36
+	RangeMultiplier@IONSTORM3:
+		Modifier: 130
+		RequiresCondition: storm-active >= 36
+	FirepowerMultiplier@IONSTORM3:
+		RequiresCondition: storm-active >= 36
+	DamageMultiplier@IONSTORM3:
+		RequiresCondition: storm-active >= 36
+	WithDecoration@IONSTORM1:
+		RequiresCondition: storm-active >= 12 && storm-active < 24
+	WithDecoration@IONSTORM2:
+		RequiresCondition: storm-active >= 24 && storm-active < 36
+	WithDecoration@IONSTORM3:
+		RequiresCondition: storm-active >= 36
 
 DEVO:
 	Inherits: ^Vehicle
@@ -2655,34 +2771,39 @@ MSHP:
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: MothershipBeam
+		Turret: none
 		LocalOffset: 0,0,-940
 		PauseOnCondition: !ammo
 		ReloadingCondition: cooldown
 	Armament@SECONDARY:
 		Name: secondary
+		Turret: none
 		Weapon: MothershipChargeBeam
 		LocalOffset: 0,0,-940
 		PauseOnCondition: attacking || ammo || cooldown
 	Armament@TERTIARY:
 		Name: tertiary
+		Turret: none
 		Weapon: MothershipLaser
 		LocalOffset: 400,0,-200
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
 	Armament@TERTIARY2:
 		Name: tertiary
+		Turret: none
 		Weapon: MothershipLaserLeft
 		LocalOffset: 400,0,50
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
-		FireDelay: 5
+		FireDelay: 10
 	Armament@TERTIARY3:
 		Name: tertiary
+		Turret: none
 		Weapon: MothershipLaserRight
 		LocalOffset: 400,0,300
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
-		FireDelay: 10
+		FireDelay: 20
 	WithMuzzleOverlay:
 	Aircraft:
 		CruiseAltitude: 3c512
@@ -3458,10 +3579,7 @@ PORT:
 		Bounds: 2048, 2048
 	HitShape:
 		UseTargetableCellsOffsets: false
-		TargetableOffsets: 0,0,0, 840,-256,0, 840,512,0, 210,-512,0, -71,512,0
-		Type: Rectangle
-			TopLeft: -1024, -1024
-			BottomRight: 1024, 640
+		TargetableOffsets: 0,0,0, 630,-512,0, 355,512,0, -281,-512,0, -630,512,0
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 20
@@ -3551,11 +3669,6 @@ WSPH:
 	Inherits@VEH: ^ProducesVehicles
 	Selectable:
 		Bounds: 3072, 2048
-	HitShape:
-		TargetableOffsets: 0,0,0, 0,1024,0, 0,-1024,0
-		Type: Rectangle
-			TopLeft: -1536, -1024
-			BottomRight: 1536, 512
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 80
@@ -3645,9 +3758,7 @@ NERV:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@POWERDRAIN: ^PowerDrainableRadar
 	Inherits@UPG: ^ProducesUpgrades
-	HitShape:
-		UseTargetableCellsOffsets: false
-		TargetableOffsets: 0,0,0, 630,-384,0, 630,384,0, -700,-512,0, -700,512,0
+	Inherits@SHAPE: ^2x2Shape
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 90
@@ -3663,7 +3774,7 @@ NERV:
 	Building:
 		Footprint: xx xx ==
 		Dimensions: 2,3
-		LocalCenterOffset: 0,-768,0
+		LocalCenterOffset: 0,-512,0
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
@@ -3862,6 +3973,8 @@ SCRT:
 		Footprint: xx xx ==
 		Dimensions: 2,3
 		LocalCenterOffset: 0,-512,0
+	Selectable:
+		Bounds: 2048, 2560
 	Health:
 		HP: 110000
 	Targetable@INFILTRATION:
@@ -3963,7 +4076,7 @@ GRAV:
 	Building:
 		Footprint: xxx xxx ===
 		Dimensions: 3,3
-		LocalCenterOffset: 0,-768,0
+		LocalCenterOffset: 0,-512,0
 	Health:
 		HP: 100000
 	Armor:
@@ -4039,8 +4152,6 @@ SIGN:
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@UPG: ^ProducesUpgrades
-	HitShape:
-		TargetableOffsets: -355,-1024,0
 	Selectable:
 		Bounds: 3072, 2048
 	Building:
@@ -4130,7 +4241,7 @@ SREP:
 		Interval: 7
 		StartRepairingNotification: Repairing
 		FinishRepairingNotification: UnitRepaired
-		PlayerExperience: 15
+		PlayerExperience: 5
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
@@ -4211,7 +4322,6 @@ MANI:
 	Building:
 		Footprint: xx xx
 		Dimensions: 2,2
-		LocalCenterOffset: 0,-512,0
 	Health:
 		HP: 100000
 	Armor:
@@ -4233,11 +4343,6 @@ MANI:
 		Amount: -200
 	MustBeDestroyed:
 		RequiredForShortGame: false
-	HitShape:
-		UseTargetableCellsOffsets: true
-		Type: Rectangle
-			TopLeft: -1536, -1024
-			BottomRight: 1024, 1024
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
@@ -4302,7 +4407,7 @@ RIFT:
 	Inherits@SHAPE: ^2x2Shape
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
-		BuildPaletteOrder: 130
+		BuildPaletteOrder: 140
 		Prerequisites: scrt, ~structures.scrin, ~techlevel.unrestricted
 		BuildLimit: 1
 		Description: Provides Rift support power.
@@ -4317,6 +4422,10 @@ RIFT:
 		Footprint: xx xx
 		Dimensions: 2,2
 		LocalCenterOffset: 0,-512,0
+	HitShape:
+		Type: Rectangle
+			TopLeft: -1024, -768
+			BottomRight: 1024, 1536
 	Health:
 		HP: 100000
 	Armor:
@@ -4515,6 +4624,7 @@ SCOL:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetGround
 	Inherits@Flash: ^WhiteFlash
+	Inherits@IONCONDUITS: ^IonConduits
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Buildable:
@@ -4532,7 +4642,7 @@ SCOL:
 	Tooltip:
 		Name: Storm Column
 	Selectable:
-		DecorationBounds: 1024, 2048, 0, -597
+		DecorationBounds: 1280, 2048, 0, -597
 	Health:
 		HP: 45000
 	Armor:
@@ -4541,6 +4651,9 @@ SCOL:
 		MinRange: 6c0
 		Range: 8c0
 		RevealGeneratedShroud: false
+	HitShape:
+		UseTargetableCellsOffsets: true
+		TargetableOffsets: 0,0,768
 	RevealsShroud@GAPGEN:
 		Range: 6c0
 	WithBuildingBib:
@@ -4548,8 +4661,6 @@ SCOL:
 	Armament:
 		Weapon: StormColumnZap
 		LocalOffset: 0,0,900, 0,0,1100, 0,0,700, 0,0,1300, 0,0,500
-	ExternalCondition@CHARGED:
-		Condition: charged
 	AttackOmni:
 		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	Power:
@@ -4559,74 +4670,12 @@ SCOL:
 	SpawnActorOnDeath:
 		Actor: s1
 	-SpawnRandomActorOnDeath:
-	GrantConditionOnPrerequisite@IONCON:
-		Condition: ioncon-upgrade
-		Prerequisites: ioncon.upgrade
-	Targetable@StormBoost:
-		TargetTypes: StormBoost
-		RequiresCondition: !(powerdown || charged)
-	AmbientSoundCA@IONSTORM:
-		SoundFiles: ionstorm.aud
-		Delay: 0
-		Interval: 850
-		VolumeMultiplier: 0.4
-		RequiresCondition: storm-active
-	LaysMinefield@IONSTORM:
-		Mines: strm
-		Locations: 0,1, 1,0, -1,0
-		RecreationInterval: 150
-		KillOnRemove: true
-		RequiresCondition: storm-active
-	GrantConditionOnAttackCA@IONSTORM:
-		RequiresActorTarget: true
-		Condition: storm-active
-		RevokeDelay: 75
-		RevokeAll: true
-		MaximumInstances: 70
-		RequiresCondition: ioncon-upgrade
-	RangeMultiplier@IONSTORM1:
-		Modifier: 105
-		RequiresCondition: storm-active >= 14
-	FirepowerMultiplier@IONSTORM1:
-		Modifier: 105
-		RequiresCondition: storm-active >= 14
-	DamageMultiplier@IONSTORM1:
-		Modifier: 95
-		RequiresCondition: storm-active >= 14
-	RangeMultiplier@IONSTORM2:
-		Modifier: 105
-		RequiresCondition: storm-active >= 28
-	FirepowerMultiplier@IONSTORM2:
-		Modifier: 105
-		RequiresCondition: storm-active >= 28
-	DamageMultiplier@IONSTORM2:
-		Modifier: 95
-		RequiresCondition: storm-active >= 28
-	RangeMultiplier@IONSTORM3:
-		Modifier: 105
-		RequiresCondition: storm-active >= 42
-	FirepowerMultiplier@IONSTORM3:
-		Modifier: 105
-		RequiresCondition: storm-active >= 42
-	DamageMultiplier@IONSTORM3:
-		Modifier: 95
-		RequiresCondition: storm-active >= 42
-	RangeMultiplier@IONSTORM4:
-		Modifier: 105
-		RequiresCondition: storm-active >= 56
-	FirepowerMultiplier@IONSTORM4:
-		Modifier: 105
-		RequiresCondition: storm-active >= 56
-	DamageMultiplier@IONSTORM4:
-		Modifier: 95
-		RequiresCondition: storm-active >= 56
 
 STRM:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^SpriteActor
-	Inherits@AUTOTARGET: ^AutoTargetAll
 	RenderSprites:
-		Palette: ioncloud-ignore-lighting-alpha50
+		Palette: ioncloud
 	HiddenUnderFog:
 		Type: CenterPosition
 	Tooltip:
@@ -4636,7 +4685,7 @@ STRM:
 	HitShape:
 	KillsSelf:
 		RemoveInstead: False
-		Delay: 350, 450
+		Delay: 175, 225
 	Wanders:
 		WanderMoveRadius: 1
 		ReduceMoveRadiusDelay: 3
@@ -4649,7 +4698,7 @@ STRM:
 		UseDeathTypeSuffix: False
 		CrushedSequence: die
 		FallbackSequence: die
-		DeathSequencePalette: ioncloud-ignore-lighting-alpha50
+		DeathSequencePalette: ioncloud
 	WithSpriteBody@Cloud2:
 		RequiresCondition: strm2
 		StartSequence: make2
@@ -4662,7 +4711,7 @@ STRM:
 		UseDeathTypeSuffix: False
 		CrushedSequence: die2
 		FallbackSequence: die2
-		DeathSequencePalette: ioncloud-ignore-lighting-alpha50
+		DeathSequencePalette: ioncloud
 	WithSpriteBody@Cloud3:
 		RequiresCondition: strm3
 		StartSequence: make3
@@ -4675,7 +4724,7 @@ STRM:
 		CrushedSequence: die3
 		FallbackSequence: die3
 		RequiresCondition: strm3
-		DeathSequencePalette: ioncloud-ignore-lighting-alpha50
+		DeathSequencePalette: ioncloud
 	WithSpriteBody@Cloud4:
 		RequiresCondition: strm4
 		StartSequence: make4
@@ -4688,7 +4737,7 @@ STRM:
 		CrushedSequence: die4
 		FallbackSequence: die4
 		RequiresCondition: strm4
-		DeathSequencePalette: ioncloud-ignore-lighting-alpha50
+		DeathSequencePalette: ioncloud
 	Mobile:
 		Locomotor: cloud
 		Speed: 3
@@ -4697,49 +4746,44 @@ STRM:
 	Interactable:
 	GrantRandomCondition@CloudShape:
 		Conditions: strm1, strm2, strm3, strm4
-	GrantRandomCondition@LiveCloud:
-		Conditions: live, dead, dead, dead, dead, dead, dead, dead
-	AutoTargetPriority@STORM:
-		ValidTargets: StormBoost
-		Priority: 1
-	AutoTargetPriority@ATTACKANYTHING:
-		Priority: 10
+
+STRM.Live:
+	Inherits: STRM
+	Inherits@AUTOTARGET: ^AutoTargetAll
+	RenderSprites:
+		Image: strm
+	JamsMissiles@IONSTORM:
+		Chance: 10
+		Range: 5c0
 	AutoTarget:
 		InitialStance: AttackAnything
-	AmbientSoundCA@AMBIENCE:
-		SoundFiles: thunder1.aud, thunder2.aud, thunder3.aud, thunder4.aud, thunder5.aud, thunder.ambient.aud
-		Delay: 20, 200
-		Interval: 250, 1250
-		VolumeMultiplier: 0.3
-		RequiresCondition: live && !dead
 	Armament:
-		Weapon: StormColumnCloudZap
+		Weapon: IonCloudZap
 		LocalOffset: 0,0,0
-	Armament@charge:
-		FireDelay: 15
-		Name: secondary
-		Weapon: StormColumnCloudCharge
-		LocalOffset: 0,0,0
-		TargetRelationships: Ally
-		ForceTargetRelationships: None
-	GrantConditionOnAttack@CHARGESFX:
-		ArmamentNames: secondary
-		Condition: charge-fire
-		RevokeDelay: 200
-	AmbientSoundCA@CHARGESFX:
-		SoundFiles: stormcolumn-fire1.aud, stormcolumn-fire2.aud
-		Delay: 0
-		Interval: 250
-		VolumeMultiplier: 0.4
-		RequiresCondition: charge-fire
 	AttackTurreted:
 		RequiresCondition: live
 	Turreted:
-		Offset: 0,0, 3072
+		Offset: 0, 0, 3072
+	GrantDelayedCondition:
+		Condition: live
+		Delay: 25, 75
+	PeriodicExplosion:
+		InitialDelay: 20
+		Weapon: IonCloudChargeSource
+		LocalOffset: 0, 0, 3072
+
+STRM2:
+	Inherits: STRM.Live
+	RenderSprites:
+		Image: strm2
+	Armament:
+		Weapon: IonCloudMinorZap
+	Turreted:
+		Offset: 0,0, 1024
+	PeriodicExplosion:
+		LocalOffset: 0, 0, 1024
 	JamsMissiles@IONSTORM:
-		RequiresCondition: live
-		Chance: 10
-		Range: 5c0
+		Range: 2c512
 
 SCOL.Temp:
 	Inherits: SCOL
@@ -4776,8 +4820,6 @@ SCOL.Temp:
 		PauseOnCondition: build-incomplete || empdisable || being-warped
 	DetectCloaked:
 		RequiresCondition: !(empdisable || being-warped)
-	Targetable@StormBoost:
-		RequiresCondition: !charged
 
 #
 # ---- misc

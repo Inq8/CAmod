@@ -10,18 +10,27 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
+using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	public enum MineSelectionMode { Random, Ordered, Shuffled }
+
 	[Desc("This actor places mines around itself, and replenishes them after a while.")]
 	public class LaysMinefieldInfo : PausableConditionalTraitInfo
 	{
 		[FieldLoader.Require]
-		[Desc("Types of mines to place, if multipile is defined, a random one will be selected.")]
-		public readonly HashSet<string> Mines = new HashSet<string>();
+		[Desc("Types of mines to place. MineSelectionType determines how this is used.")]
+		public readonly List<string> Mines = new List<string>();
+
+		[Desc("Accepts values: Random, to select a mine type randomly from Mines for each location,",
+			"Ordered, to use each mine in Mines in sequence until each location is used,",
+			"Shuffled to use each mine in Mines in randomised sequence until each location is used.")]
+		public readonly MineSelectionMode MineSelectionMode = MineSelectionMode.Random;
 
 		[FieldLoader.Require]
 		[Desc("Locations to place the mines, from top-left of the building.")]
@@ -43,7 +52,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly BitSet<DamageType> DamageTypes = default(BitSet<DamageType>);
 
 		[Desc("Ignore placement rules")]
-		public readonly bool PlacementIgnroesOccupiesSpace = true;
+		public readonly bool PlacementIgnoresOccupiesSpace = true;
 
 		public override object Create(ActorInitializer init) { return new LaysMinefield(this); }
 	}
@@ -75,41 +84,50 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void SpawnMines(Actor self)
 		{
+			var mineTypes = Info.Mines;
+			if (Info.MineSelectionMode != MineSelectionMode.Ordered)
+				mineTypes = ((IEnumerable<string>)Info.Mines).Shuffle(self.World.SharedRandom).ToList();
+
+			var mineTypeIdx = 0;
+
 			foreach (var offset in Info.Locations)
 			{
-				var cell = self.Location + offset;
-				{
-					foreach (var actor in Info.Mines)
-					{
-						var ai = self.World.Map.Rules.Actors[actor];
-						var ip = ai.TraitInfo<IPositionableInfo>();
-						var mine = self.World.CreateActor(actor.ToLowerInvariant(), new TypeDictionary
-							{
-								new OwnerInit(self.Owner),
-								new LocationInit(cell)
-							});
+				SpawnMine(self, offset, mineTypes[mineTypeIdx]);
 
-						if (Info.PlacementIgnroesOccupiesSpace)
-							mines.Add(mine);
-						else
-						{
-							if (!ip.CanEnterCell(self.World, null, cell))
-								continue;
-							else
-								mines.Add(mine);
-						}
-					}
-				}
+				if (Info.MineSelectionMode == MineSelectionMode.Random || mineTypeIdx == mineTypes.Count - 1)
+					mineTypeIdx = 0;
+				else
+					mineTypeIdx++;
+			}
+		}
+
+		void SpawnMine(Actor self, CVec offset, string actor)
+		{
+			var cell = self.Location + offset;
+			var ai = self.World.Map.Rules.Actors[actor];
+			var ip = ai.TraitInfo<IPositionableInfo>();
+			var mine = self.World.CreateActor(actor.ToLowerInvariant(), new TypeDictionary
+				{
+					new OwnerInit(self.Owner),
+					new LocationInit(cell)
+				});
+
+			if (Info.PlacementIgnoresOccupiesSpace)
+				mines.Add(mine);
+			else
+			{
+				if (ip.CanEnterCell(self.World, null, cell))
+					mines.Add(mine);
 			}
 		}
 
 		public void RemoveMines(Actor self)
 		{
-				foreach (var mine in mines)
-					if (Info.KillOnRemove)
-						mine.Kill(mine, Info.DamageTypes);
+			foreach (var mine in mines)
+				if (Info.KillOnRemove)
+					mine.Kill(mine, Info.DamageTypes);
 
-				mines.Clear();
+			mines.Clear();
 		}
 
 		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)

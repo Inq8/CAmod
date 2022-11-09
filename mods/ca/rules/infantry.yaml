@@ -711,6 +711,10 @@ SPY:
 		Speed: 54
 		Voice: Move
 	RevealsShroud:
+		Range: 7c0
+		MinRange: 5c0
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
 		Range: 5c0
 	Passenger:
 		CustomPipType: blue
@@ -724,7 +728,7 @@ SPY:
 	Infiltrates:
 		Types: SpyInfiltrate
 		Notification: BuildingInfiltrated
-		PlayerExperience: 50
+		PlayerExperience: 15
 	-WithInfantryBody:
 	WithDisguisingInfantryBody:
 		DefaultAttackSequence: shoot
@@ -955,7 +959,7 @@ MECH:
 		CapturingCondition: salvaging
 	Captures:
 		CaptureTypes: husk
-		PlayerExperience: 25
+		PlayerExperience: 5
 		ConsumedByCapture: False
 		CaptureDelay: 150
 		PlayerExperienceRelationships: Neutral, Enemy
@@ -1196,11 +1200,11 @@ THF:
 	CaptureManager:
 	Captures:
 		CaptureTypes: vehicle
-		PlayerExperience: 50
+		PlayerExperience: 15
 	Infiltrates:
 		Types: ThiefInfiltrate
 		Notification: BuildingInfiltrated
-		PlayerExperience: 50
+		PlayerExperience: 15
 	Voiced:
 		VoiceSet: ThiefVoice
 	-TakeCover:
@@ -2186,7 +2190,11 @@ SAB:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	RevealsShroud:
-		Range: 6c0
+		Range: 7c0
+		MinRange: 5c0
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 5c0
 	Passenger:
 		CustomPipType: red
 		Voice: Move
@@ -2194,11 +2202,11 @@ SAB:
 		Voice: Move
 	Infiltrates@tec:
 		Types: SabInfiltrate
-		PlayerExperience: 50
+		PlayerExperience: 15
 		Notification: NewOptions
 	Infiltrates@pwr:
 		Types: PowerInfiltrate
-		PlayerExperience: 50
+		PlayerExperience: 15
 	Voiced:
 		VoiceSet: InfilVoice
 	WithInfantryBody:

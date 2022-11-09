@@ -1210,12 +1210,16 @@ grav:
 nerv:
 	Inherits: ^StructureOverlays
 	idle: nerv
+		Offset: 0, -4
 	active: nerv
+		Offset: 0, -4
 	damaged-idle: nerv
 		Start: 1
+		Offset: 0, -4
 	make: nervmake
 		Length: *
 		Tick: 80
+		Offset: 0, -4
 	bib: bib3
 		Length: *
 		UseTilesetExtension: true
@@ -1336,17 +1340,21 @@ sign:
 mani:
 	Inherits: ^StructureOverlays
 	idle: mani
+		Offset: 0, -11
 	active: mani
+		Offset: 0, -11
 	damaged-idle: mani
 		Start: 1
+		Offset: 0, -11
+	make: manimake
+		Length: *
+		Tick: 80
+		Offset: 0, -11
 	bib: bib3
 		Length: *
 		UseTilesetExtension: true
 		TilesetOverrides:
 			INTERIOR: TEMPERAT
-	make: manimake
-		Length: *
-		Tick: 80
 	icon: maniicon
 
 rift:
@@ -1795,100 +1803,42 @@ lchrheal:
 		Alpha: 0.8
 
 strm:
-	idle: ioncloud1
-		Length: *
-		Tick: 90
+	Defaults:
+		Alpha: 0.85
 		Offset: 1, -72, 48
 		ZRamp: 1
 		ZOffset: 1023
 		BlendMode: Screen
+		Tick: 90
+		Length: *
+	idle: ioncloud1
 	make: ioncloud1d
 		Frames: 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0
-		Length: *
-		Tick: 90
-		Offset: 1, -72, 48
-		ZRamp: 1
-		ZOffset: 1023
-		BlendMode: Screen
 	die: ioncloud1d
-		Length: *
-		Tick: 90
-		Offset: 1, -72, 48
-		ZRamp: 1
-		ZOffset: 1023
-		BlendMode: Screen
 	make2: ioncloud2d
 		Frames: 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0
-		Length: *
-		Tick: 90
-		Offset: 1, -72, 48
-		ZRamp: 1
-		ZOffset: 1023
-		BlendMode: Screen
 	idle2: ioncloud2
-		Length: *
-		Tick: 90
-		Offset: 1, -72, 48
-		ZRamp: 1
-		ZOffset: 1023
-		BlendMode: Screen
 	die2: ioncloud2d
-		Length: *
-		Tick: 90
-		Offset: 1, -72, 48
-		ZRamp: 1
-		ZOffset: 1023
-		BlendMode: Screen
 	idle3: ioncloud1
-		Length: *
-		Tick: 90
-		Offset: 1, -72, 48
-		ZRamp: 1
-		ZOffset: 1023
-		BlendMode: Screen
 		FlipX: True
 	make3: ioncloud1d
 		Frames: 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0
-		Length: *
-		Tick: 90
-		Offset: 1, -72, 48
-		ZRamp: 1
-		ZOffset: 1023
-		BlendMode: Screen
 		FlipX: True
 	die3: ioncloud1d
-		Length: *
-		Tick: 90
-		Offset: 1, -72, 48
-		ZRamp: 1
-		ZOffset: 1023
-		BlendMode: Screen
 		FlipX: True
 	make4: ioncloud2d
 		Frames: 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0
-		Length: *
-		Tick: 90
-		Offset: 1, -72, 48
-		ZRamp: 1
-		ZOffset: 1023
-		BlendMode: Screen
 		FlipX: True
 	idle4: ioncloud2
-		Length: *
-		Tick: 90
-		Offset: 1, -72, 48
-		ZRamp: 1
-		ZOffset: 1023
-		BlendMode: Screen
 		FlipX: True
 	die4: ioncloud2d
-		Length: *
-		Tick: 90
-		Offset: 1, -72, 48
-		ZRamp: 1
-		ZOffset: 1023
-		BlendMode: Screen
 		FlipX: True
+
+strm2:
+	Inherits: strm
+	Defaults:
+		Alpha: 0.7
+		Offset: 1, -24, 48
 
 wormhole:
 	idle: wormhole
