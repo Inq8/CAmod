@@ -257,7 +257,12 @@ WorldLoaded = function()
 
 	if Difficulty == "easy" then
 		HeavyTank1.Destroy()
+		Flamer1.Destroy()
+		Flamer2.Destroy()
 	else
+		if Difficulty == "normal" then
+			Flamer1.Destroy()
+		end
 		Ranger1.Destroy()
 	end
 

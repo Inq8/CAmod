@@ -360,7 +360,7 @@ end
 
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
-
+		UpdatePlayerBaseLocation()
 	end
 end
 
