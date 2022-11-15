@@ -1,0 +1,31 @@
+Hack:
+	Range: 8c0
+	Warhead@immobilise: GrantExternalCondition
+		Range: 0c511
+		Duration: 50
+		Condition: notmobile
+		ValidTargets:  Vehicle
+		ValidRelationships: Neutral, Enemy
+
+SMG:
+	ReloadDelay: 25
+	-Projectile:
+	Projectile: InstantHit
+	InvalidTargets: Vehicle, Ship, Water, Structure, Husk
+	Warhead@1Dam: SpreadDamage
+		Damage: 25000
+		ValidTargets: Infantry, Wall
+		Versus:
+			Brick: 8
+
+IonCannon:
+	Warhead@1Dam: SpreadDamage
+		Damage: 20000
+
+IonBolt:
+	Warhead@1Dam_impact: SpreadDamage
+		Damage: 4000
+
+MEMP:
+	Warhead@emp: GrantExternalCondition
+		Duration: 600

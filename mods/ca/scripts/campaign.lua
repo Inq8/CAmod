@@ -46,7 +46,11 @@ OnProductionTriggers = { }
 InitObjectives = function(player)
 	Trigger.OnObjectiveAdded(player, function(p, id)
 		Trigger.AfterDelay(1, function()
-			Media.DisplayMessage(p.GetObjectiveDescription(id), "New " .. string.lower(p.GetObjectiveType(id)) .. " objective", HSLColor.Yellow)
+			local colour = HSLColor.Yellow
+			if p.GetObjectiveType(id) ~= "Primary" then
+				colour = HSLColor.Gray
+			end
+			Media.DisplayMessage(p.GetObjectiveDescription(id), "New " .. string.lower(p.GetObjectiveType(id)) .. " objective", colour)
 		end)
 	end)
 
@@ -203,11 +207,22 @@ AutoRepairBuildings = function(player)
 	end)
 end
 
-AutoRepairAndRebuildBuildings = function(player, maxRebuildAttempts)
+AutoRepairAndRebuildBuildings = function(player, maxRebuildAttempts, excludedRebuildTypes)
 	local buildings = Utils.Where(Map.ActorsInWorld, function(self) return self.Owner == player and self.HasProperty("StartBuildingRepairs") end)
 	Utils.Do(buildings, function(a)
+		local excludeFromRebuilding = false
+		if excludedRebuildTypes ~= nil then
+			Utils.Do(excludedRebuildTypes, function(t)
+				if t == a.Type then
+					excludeFromRebuilding = true
+					return;
+				end
+			end)
+		end
 		AutoRepairBuilding(a, player)
-		AutoRebuildBuilding(a, player)
+		if not excludeFromRebuilding then
+			AutoRebuildBuilding(a, player)
+		end
 	end)
 end
 

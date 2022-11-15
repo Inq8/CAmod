@@ -1,0 +1,230 @@
+^Palettes:
+	GlobalLightingPaletteEffect:
+		Red: 0.8
+		Green: 0.8
+		Blue: 1
+		Ambient: 0.9
+	WeatherOverlay:
+		ParticleDensityFactor: 16
+		Gravity: 16, 24
+		WindTick: 150, 425
+		ScatterDirection: -12, 12
+		ParticleSize: 2, 3
+		ParticleColors: ECECEC44, E4E4E444, D0D0D044, BCBCBC44
+		LineTailAlphaValue: 0
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, ca09.lua
+	MissionData:
+		Briefing: Despite my assurances, the Soviets have begun a large scale offensive towards our Temple Prime facility. Stalin always was a short-sighted fool.\n\nTo ensure the safety of the temple, we must take the Soviet nuclear arsenal out of the equation. My informants tell me that the Soviets plan to launch their missiles to wipe out the bulk of our defense forces, and then roll in with their tanks to clean up any survivors.\n\nThe Soviet missile silos are located on a heavily fortified island. We are not in an ideal position to strike, but with the Soviet army moving south we should be able to set up a staging area on the coast and storm the island before the Soviets can send reinforcements.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: Difficulty
+		Description: The difficulty of the mission
+		Values:
+			easy: Easy
+			normal: Normal
+			hard: Hard
+		Default: normal
+
+Player:
+	PlayerResources:
+		DefaultCash: 5000
+
+^TDPalette:
+	RenderSprites:
+		PlayerPalette: playertdunit
+
+^Infantry:
+	RenderSprites:
+		PlayerPalette: playertdunit
+	WithDeathAnimation:
+		DeathSequencePalette: playertdunit
+
+^BuildingTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+^DefenseTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+SAPC:
+	RenderSprites:
+		PlayerPalette: playerraunit
+
+LST:
+	RenderSprites:
+		PlayerPalette: playerraunit
+
+SB:
+	RenderSprites:
+		PlayerPalette: playerraunit
+
+SS2:
+	RenderSprites:
+		PlayerPalette: playerraunit
+
+ISUB:
+	RenderSprites:
+		PlayerPalette: playerraunit
+
+HARV.TD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+AMCV:
+	RenderSprites:
+		PlayerPalette: playertd
+
+FTNK:
+	Buildable:
+		Prerequisites: anyradar, airs
+
+HFTK:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+ISUB:
+	Buildable:
+		Prerequisites: ~spen.nod, tmpl, ~difficulty.easy
+
+blacknapalm.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+cyborg.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+cyborgarmor.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+cyborgspeed.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+C17:
+	Health:
+		HP: 15000
+
+AIRS:
+	ParatroopersPower@markedairdrop:
+		Prerequisites: airs
+	-ParatroopersPower@blackhairdrop:
+
+HQ:
+	-AirstrikePower@BlackhandFirebomb:
+
+MSLO.Nod:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+RMBC:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+TMPL:
+	-NukePower@Cluster:
+
+TSLA:
+	-Targetable@TeslaBoost:
+	ExternalCondition@DISABLED:
+		Condition: powerdown
+
+SAM:
+	ExternalCondition@DISABLED:
+		Condition: powerdown
+
+MSLO:
+	NukePower:
+		DisplayTimerRelationships: Ally
+		ChargeInterval: 25
+		AllowMultiple: true
+	-InfiltrateForSupportPowerReset:
+	-Targetable@INFILTRATION:
+
+^NukeDummy:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+
+NukeDummyEasy:
+	Inherits: ^NukeDummy
+	NukePower@EASY:
+		Cursor: nuke
+		Icon: abomb
+		ChargeInterval: 75000
+		Name: Atom Bomb
+		IncomingSound: nukelaunch.aud
+		IncomingSpeechNotification: AbombLaunchDetected
+		LaunchSound: nukelaunch.aud
+		MissileWeapon: atomic
+		MissileImage: atomic
+		MissileDelay: 5
+		SpawnOffset: 1c0,427,0
+		DisplayTimerRelationships: Ally, Neutral, Enemy
+		TrailImage: smokey2
+		TrailSequences: idle
+		TrailPalette: tseffect-ignore-lighting-alpha75
+		AllowMultiple: true
+
+NukeDummyNormal:
+	Inherits: ^NukeDummy
+	NukePower@NORMAL:
+		Cursor: nuke
+		Icon: abomb
+		ChargeInterval: 60000
+		Name: Atom Bomb
+		IncomingSound: nukelaunch.aud
+		IncomingSpeechNotification: AbombLaunchDetected
+		LaunchSound: nukelaunch.aud
+		MissileWeapon: atomic
+		MissileImage: atomic
+		MissileDelay: 5
+		SpawnOffset: 1c0,427,0
+		DisplayTimerRelationships: Ally, Neutral, Enemy
+		TrailImage: smokey2
+		TrailSequences: idle
+		TrailPalette: tseffect-ignore-lighting-alpha75
+		AllowMultiple: true
+
+NukeDummyHard:
+	Inherits: ^NukeDummy
+	NukePower@HARD:
+		Cursor: nuke
+		Icon: abomb
+		ChargeInterval: 45000
+		Name: Atom Bomb
+		IncomingSound: nukelaunch.aud
+		IncomingSpeechNotification: AbombLaunchDetected
+		LaunchSound: nukelaunch.aud
+		MissileWeapon: atomic
+		MissileImage: atomic
+		MissileDelay: 5
+		SpawnOffset: 1c0,427,0
+		DisplayTimerRelationships: Ally, Neutral, Enemy
+		TrailImage: smokey2
+		TrailSequences: idle
+		TrailPalette: tseffect-ignore-lighting-alpha75
+		AllowMultiple: true
+
+OILB:
+	CashTrickler:
+		Interval: 375
+		Amount: 200
+
+difficulty.easy:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesPrerequisite:
+
+E2:
+	Mobile:
+		Speed: 46
+
+E3:
+	Mobile:
+		Speed: 46
+
+E4:
+	Mobile:
+		Speed: 46

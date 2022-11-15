@@ -1,0 +1,234 @@
+^Palettes:
+	GlobalLightingPaletteEffect:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, ca07.lua
+	MissionData:
+		Briefing: The Allies are now gripped by fear and suspicion. We must seize this opportunity to further destabilize their uneasy alliance with GDI.\n\nVery recently GDI launched one of their orbital weapons platforms. Both groups are being cautious about what information they give each other. The Allies were only partially informed and are predictably concerned, given recent events.\n\nLet us turn their fear into anger. Take control of GDI's Ion Cannon control systems and use the weapon against the Allies.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: Difficulty
+		Description: The difficulty of the mission
+		Values:
+			easy: Easy
+			normal: Normal
+			hard: Hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: rain
+
+Player:
+	PlayerResources:
+		DefaultCash: 0
+
+^TDPalette:
+	RenderSprites:
+		PlayerPalette: playertdunit
+
+^Infantry:
+	RenderSprites:
+		PlayerPalette: playertdunit
+	WithDeathAnimation:
+		DeathSequencePalette: playertdunit
+
+^BuildingTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+^DefenseTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+SAPC:
+	RenderSprites:
+		PlayerPalette: playerraunit
+
+HARV.TD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+AMCV:
+	RenderSprites:
+		PlayerPalette: playertd
+
+cyborg.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+cyborgarmor.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+cyborgspeed.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MEMP:
+	-ExternalCondition@DRONECONTROL:
+	-GrantConditionOnPrerequisite@DRONECONTROL:
+	-WithColoredOverlay@DRONEDISABLE:
+	-WithDecoration@DRONEDISABLE:
+	ExternalCondition@IMMOBILISE:
+		Condition: notmobile
+	Mobile:
+		PauseOnCondition: triggered || empdisable || being-warped || notmobile
+	GrantTimedConditionOnDeploy:
+		RequiresCondition: !(empdisable || being-warped)
+
+HTNK.Drone:
+	-ExternalCondition@DRONECONTROL:
+	-GrantConditionOnPrerequisite@DRONECONTROL:
+	-WithColoredOverlay@DRONEDISABLE:
+	-WithDecoration@DRONEDISABLE:
+	ExternalCondition@IMMOBILISE:
+		Condition: notmobile
+	Mobile:
+		PauseOnCondition: empdisable || being-warped || notmobile
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
+
+MTNK.Drone:
+	-ExternalCondition@DRONECONTROL:
+	-GrantConditionOnPrerequisite@DRONECONTROL:
+	-WithColoredOverlay@DRONEDISABLE:
+	-WithDecoration@DRONEDISABLE:
+	ExternalCondition@IMMOBILISE:
+		Condition: notmobile
+	Mobile:
+		PauseOnCondition: empdisable || being-warped || notmobile
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
+
+GDRN:
+	ExternalCondition@IMMOBILISE:
+		Condition: notmobile
+
+^DifficultyModifiers:
+	ExternalCondition@NORMAL:
+		Condition: difficulty-normal
+	ExternalCondition@EASY:
+		Condition: difficulty-easy
+	DamageMultiplier@NORMAL:
+		Modifier: 80
+		RequiresCondition: difficulty-normal
+	DamageMultiplier@EASY:
+		Modifier: 60
+		RequiresCondition: difficulty-easy
+	RevealsShroudMultiplier@NORMAL:
+		Modifier: 115
+		RequiresCondition: difficulty-normal
+	RevealsShroudMultiplier@EASY:
+		Modifier: 130
+		RequiresCondition: difficulty-easy
+	RangeMultiplier@EASY:
+		Modifier: 115
+		RequiresCondition: difficulty-easy
+
+STNK.Nod:
+	Inherits@DIFFICULTY: ^DifficultyModifiers
+	GrantCondition:
+		Condition: tibcore-upgrade
+	RevealsShroud:
+		Range: 8c0
+
+RMBO:
+	Inherits@DIFFICULTY: ^DifficultyModifiers
+	-AutoTarget:
+	-AutoTargetPriority@DEFAULT:
+	-AutoTargetPriority@ATTACKANYTHING:
+	-ChangesHealth@ELITE:
+	AttackMove:
+		-AssaultMoveCondition:
+	RevealsShroud:
+		Range: 8c0
+
+HACK:
+	Inherits@DIFFICULTY: ^DifficultyModifiers
+	-WithMindControlArc@HACK:
+
+sathack.dummy:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	SpawnActorPowerCA@sathack:
+		Actor: camera.sathack
+		LifeTime: 75
+		OrderName: sathack
+		Icon: hacksat
+		ChargeInterval: 3000
+		Name: Hack Satellite Uplink
+		Description: \nReveals the targeted area for a short time.
+		LaunchSound: hacksat.aud
+		SelectTargetSpeechNotification: SelectTarget
+		EffectImage: empty
+		EffectSequence: idle
+		EffectPalette: tseffect-ignore-lighting-alpha75
+		TargetCircleRange: 9c512
+		TargetCircleColor: 999999AA
+		SupportPowerPaletteOrder: 50
+
+ATEK:
+	-DummyGpsPower@NOFOG:
+	-DummyGpsPower@FOG:
+	-ProduceActorPowerCA@SatelliteLaunched:
+	-ProduceActorPowerCA@InitialSatelliteScan:
+	-ProduceActorPowerCA@SatelliteScan:
+	-ProduceActorPowerCA@SatelliteScanNoFog:
+	-GrantExternalConditionPowerCA@FSHIELD:
+	-DetonateWeaponPower@TEMPINC:
+
+BRIDGEHUT:
+	-Targetable:
+	-Demolishable:
+
+BRIDGEHUT.small:
+	-Targetable:
+	-Demolishable:
+
+TRUK:
+	-SpawnActorOnDeath:
+
+GTWR:
+	-Power:
+
+REP:
+	-Power:
+
+HOSP:
+	Inherits@HACKABLE: ^Hackable
+	-PeriodicProducerCA@MEDIC:
+	-PeriodicProducerCA@REJUVENATOR:
+	-GrantConditionIfOwnerIsNeutral:
+	-GrantConditionOnPrerequisite@SCRIN:
+	TooltipExtras:
+		Description: When controlled, heals nearby infantry.
+
+NUKE:
+	WithDecoration@HACKED:
+		Sequence: hacked
+	-ChangesHealth@HACKED:
+
+NUK2:
+	WithDecoration@HACKED:
+		Sequence: hacked
+	-ChangesHealth@HACKED:
+
+WOOD:
+	-BlocksProjectiles:
+
+EYE:
+	DetonateWeaponPower@IonStorm:
+		DisplayTimerRelationships: Ally
+		ChargeInterval: 375
+		-PauseOnCondition:
+		-BeginChargeSpeechNotification:
+	IonCannonPower@surgicals:
+		ChargeInterval: 125
+		-PauseOnCondition:
+		-BeginChargeSpeechNotification:
+	Power:
+		Amount: 0
+
+# Hunt() requires only 1 AttackBase
+JJET:
+	-AttackAircraft:

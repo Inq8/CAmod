@@ -152,7 +152,7 @@ namespace OpenRA.Mods.CA.Traits
 				self.QueueActivity(order.Queued, new DetonationSequence(self, this));
 		}
 
-		class DetonationSequence : Activity
+		public class DetonationSequence : Activity
 		{
 			readonly Actor self;
 			readonly MadTankCA mad;

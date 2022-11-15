@@ -106,6 +106,8 @@ RMBO:
 	-AutoTarget:
 	-AutoTargetPriority@DEFAULT:
 	-AutoTargetPriority@ATTACKANYTHING:
+	AttackMove:
+		-AssaultMoveCondition:
 	-Armament@sapper:
 	TakeCover:
 		SpeedModifier: 85
@@ -130,9 +132,6 @@ RMBO:
 	ReloadDelayMultiplier@RANK-2:
 	ReloadDelayMultiplier@RANK-ELITE:
 	-ChangesHealth@ELITE:
-	SpeedMultiplier@WARNINGSUPPRESSION:
-		Modifier: 100
-		RequiresCondition: rank-veteran && assault-move
 	SpawnActorOnDeath@ONEDEATH:
 		Actor: death.first
 		RequiresCondition: !one-death
