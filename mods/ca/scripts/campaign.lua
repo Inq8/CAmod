@@ -303,9 +303,11 @@ TargetSwapChance = function(unit, player, chance)
 		end
 		local rand = Utils.RandomInteger(1,100)
 		if rand > 100 - chance then
-			if unit.HasProperty("Attack") and not unit.IsDead then
+			if not unit.IsDead and not attacker.IsDead and unit.HasProperty("Attack") then
 				unit.Stop()
-				unit.Attack(attacker)
+				if unit.CanTarget(attacker) then
+					unit.Attack(attacker)
+				end
 			end
 		end
 	end)
