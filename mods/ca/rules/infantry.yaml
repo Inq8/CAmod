@@ -1361,8 +1361,6 @@ N1:
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
-	WithDeathAnimation:
-		DeathSequencePalette: playertd
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	WithProductionIconOverlay:
@@ -1434,8 +1432,6 @@ N2:
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
-	WithDeathAnimation:
-		DeathSequencePalette: playertd
 	Explodes:
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall
@@ -1544,8 +1540,6 @@ N3:
 	AttackFrontal:
 		PauseOnCondition: being-warped
 		FacingTolerance: 0
-	WithDeathAnimation:
-		DeathSequencePalette: playertd
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		RequiresCondition: !parachute && !being-warped
@@ -1623,8 +1617,6 @@ N4:
 	AttackFrontal:
 		PauseOnCondition: being-warped
 		FacingTolerance: 0
-	WithDeathAnimation:
-		DeathSequencePalette: playertd
 	WithMuzzleOverlay:
 	Explodes:
 		Weapon: UnitExplodeFlameSmall
@@ -1665,8 +1657,6 @@ N5:
 		AddToArmyValue: true
 	Health:
 		HP: 17000
-	WithDeathAnimation:
-		DeathSequencePalette: playertd
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 		RequiresCondition: !parachute && !being-warped
@@ -1863,8 +1853,6 @@ N6:
 		FacingTolerance: 0
 	Voiced:
 		VoiceSet: EngineerVoice
-	WithDeathAnimation:
-		DeathSequencePalette: playertd
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	WithInfantryBody:
@@ -2161,8 +2149,6 @@ MORT:
 		EmptyWeapon: UnitExplodeChemSmall
 		Chance: 33
 		RequiresCondition: !being-warped
-	WithDeathAnimation:
-		DeathSequencePalette: playertd
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	WithProductionIconOverlay:
@@ -3126,7 +3112,6 @@ BRUT:
 	AttackSounds:
 		Sounds: ibruatta.aud, ibruattb.aud
 	WithDeathAnimation:
-		DeathSequencePalette: playertd
 		DeathSequence: die
 		UseDeathTypeSuffix: true
 		DeathTypes:
