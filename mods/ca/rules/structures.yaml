@@ -6416,7 +6416,7 @@ UPGC.BOMB:
 	Buildable:
 		Queue: Upgrade
 		BuildPaletteOrder: 3
-		Prerequisites: upgc, !upgc.plugged, bombard2.strat, ~bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
+		Prerequisites: ~player.gdi, upgc, !upgc.plugged, bombard2.strat, ~bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
 		Description: Provides an napalm rocket barrage.
 		IconPalette: chrometd
 	TooltipExtras:
@@ -6438,7 +6438,7 @@ UPGC.SEEK:
 	Buildable:
 		Queue: Upgrade
 		BuildPaletteOrder: 6
-		Prerequisites: upgc, !upgc.plugged, seek2.strat, ~seek.strat, ~!bombard.strat, ~!hold.strat, ~techlevel.high
+		Prerequisites: ~player.gdi, upgc, !upgc.plugged, seek2.strat, ~seek.strat, ~!bombard.strat, ~!hold.strat, ~techlevel.high
 		Description: Provides detailed information on enemy locations.
 		IconPalette: chrometd
 	TooltipExtras:
@@ -6460,7 +6460,7 @@ UPGC.HOLD:
 	Buildable:
 		Queue: Upgrade
 		BuildPaletteOrder: 9
-		Prerequisites: upgc, !upgc.plugged, hold2.strat, ~hold.strat, ~!bombard.strat, ~!seek.strat, ~techlevel.high
+		Prerequisites: ~player.gdi, upgc, !upgc.plugged, hold2.strat, ~hold.strat, ~!bombard.strat, ~!seek.strat, ~techlevel.high
 		Description: Provides the ability to shield units in an area
 		IconPalette: chrometd
 	TooltipExtras:
@@ -6482,7 +6482,7 @@ UPGC.DROP:
 	Buildable:
 		Queue: Upgrade
 		BuildPaletteOrder: 90
-		Prerequisites: ~upgc, ~!upgc.plugged, ~techlevel.high
+		Prerequisites: ~player.gdi, upgc, !upgc.plugged, ~techlevel.high
 		Description: Provides a dropzone for emergency supplies.
 		IconPalette: chrometd
 	TooltipExtras:

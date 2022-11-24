@@ -226,7 +226,13 @@ AutoRebuildBuilding = function(building, player, maxAttempts)
 	if building.IsDead then
 		return
 	end
-	Trigger.OnRemovedFromWorld(building, function(self)
+	Trigger.OnKilled(building, function(self, killer)
+		local buildingType = self.Type
+		local loc = self.Location
+		local pos = self.CenterPosition
+		RebuildBuilding(buildingType, player, loc, pos, 1, maxAttempts)
+	end)
+	Trigger.OnSold(building, function(self)
 		local buildingType = self.Type
 		local loc = self.Location
 		local pos = self.CenterPosition
@@ -247,8 +253,11 @@ RebuildBuilding = function(buildingType, player, loc, pos, attemptNumber, maxAtt
 	-- Add build time of the next building to the next build time for the player
 	if attemptNumber == 1 then
 		NextRebuildTimes[player] = NextRebuildTimes[player] + buildTime
-	elseif delayToAdd < DateTime.Seconds(30) then
-		delayToAdd = DateTime.Seconds(30)
+	else
+		if delayToAdd < DateTime.Seconds(20) then
+			delayToAdd = DateTime.Seconds(20)
+		end
+		delayToAdd = delayToAdd + DateTime.Seconds(Utils.RandomInteger(10,30))
 	end
 
 	Trigger.AfterDelay(buildTime + delayToAdd, function()
@@ -269,8 +278,14 @@ RebuildBuilding = function(buildingType, player, loc, pos, attemptNumber, maxAtt
 				return not a.IsDead and a.HasProperty("Move")
 			end)
 
-			-- Rebuild if no units are nearby (potentially blocking), no enemy buildings are nearby, and friendly buildings are in the area
-			if #nearbyBuildings > 0 and #nearbyUnits == 0 and #nearbyEnemyBuildings == 0 then
+			topLeft = WPos.New(pos.X - 512, pos.Y - 512, 0)
+			bottomRight = WPos.New(pos.X + 512, pos.Y + 512, 0)
+			local sameCellActors = Map.ActorsInBox(topLeft, bottomRight, function(a)
+				return not a.IsDead and a.Owner == player and a.HasProperty("Kill")
+			end)
+
+			-- Rebuild if no units are nearby (potentially blocking), no enemy buildings are nearby, and friendly buildings are in the area (but nothing friendly in the same cell)
+			if #nearbyBuildings > 0 and #nearbyUnits == 0 and #nearbyEnemyBuildings == 0 and #sameCellActors == 0 then
 				local b = Actor.Create(buildingType, true, { Owner = player, Location = loc })
 				AutoRepairBuilding(b, player);
 				AutoRebuildBuilding(b, player);
@@ -298,14 +313,16 @@ end
 -- Make specified units have a chance to swap targets when attacked instead of chasing one target endlessly
 TargetSwapChance = function(unit, player, chance)
 	Trigger.OnDamaged(unit, function(self, attacker, damage)
-		if attacker.EffectiveOwner == player then
+		if attacker.Owner ~= MissionPlayer then
 			return
 		end
 		local rand = Utils.RandomInteger(1,100)
 		if rand > 100 - chance then
-			if unit.HasProperty("Attack") and not unit.IsDead then
+			if not unit.IsDead and not attacker.IsDead and unit.HasProperty("Attack") then
 				unit.Stop()
-				unit.Attack(attacker)
+				if unit.CanTarget(attacker) then
+					unit.Attack(attacker)
+				end
 			end
 		end
 	end)

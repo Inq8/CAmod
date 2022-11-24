@@ -156,7 +156,10 @@ namespace OpenRA.Mods.CA.Traits
 				&& (chronosphere == null || info.ReturnToAvoidDeathRelationships.HasRelationship(self.Owner.RelationshipWith(chronosphere.Owner))))
 			{
 				returnToAvoidDeath = true;
-				self.World.Remove(self);
+				self.World.AddFrameEndTask(w =>
+				{
+					self.World.Remove(self);
+				});
 			}
 		}
 

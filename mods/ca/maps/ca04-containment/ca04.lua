@@ -134,9 +134,17 @@ WorldLoaded = function()
 		Greece.MarkCompletedObjective(ObjectiveNeutralizeChronosphere)
 	end)
 
+	if Difficulty ~= "easy" then
+		HealCrate1.Destroy()
+		HealCrate3.Destroy()
+		if Difficulty == "hard" then
+			HealCrate2.Destroy()
+		end
+	end
+
 	if Difficulty ~= "hard" then
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
-			Tip('Disguise your spy by "attacking" enemy infantry.')
+			Tip('Disguise your spy by "attacking" enemy infantry. Dogs can see through the disguise.')
 			Tip("Navy SEALs can swim.")
 		end)
 	end
