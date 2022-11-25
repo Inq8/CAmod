@@ -297,22 +297,10 @@ WorldLoaded = function()
 	ObjectiveFindLab = Greece.AddObjective("Locate the Nod research lab.")
 
 	-- On proximity to lab, reveal it and update objectives.
-	Trigger.OnEnteredProximityTrigger(ResearchLab.CenterPosition, WDist.New(8 * 1024), function(a, id)
+	Trigger.OnEnteredProximityTrigger(ResearchLab.CenterPosition, WDist.New(10 * 1024), function(a, id)
 		if a.Owner == Greece then
 			Trigger.RemoveProximityTrigger(id)
-			Beacon.New(Greece, ResearchLab.CenterPosition)
-			ObjectiveCaptureLab = Greece.AddObjective("Capture the Nod research lab.")
-
-			if ObjectiveFindLab ~= nil and not Greece.IsObjectiveCompleted(ObjectiveFindLab) then
-				Greece.MarkCompletedObjective(ObjectiveFindLab)
-			end
-
-			UserInterface.SetMissionText("Capture the Nod research lab.", HSLColor.Yellow)
-			LabCamera = Actor.Create("camera.paradrop", true, { Owner = Greece, Location = ResearchLab.Location })
-
-			Trigger.AfterDelay(DateTime.Seconds(5), function()
-				LabCamera.Destroy()
-			end)
+			RevealLab()
 		end
 	end)
 
@@ -322,7 +310,12 @@ WorldLoaded = function()
 		end
 	end)
 
+	Trigger.OnDamaged(ResearchLab, function(self, attacker, damage)
+		RevealLab()
+	end)
+
 	Trigger.OnKilled(ResearchLab, function(self, killer)
+		RevealLab()
 		Greece.MarkFailedObjective(ObjectiveCaptureLab)
 	end)
 end
@@ -415,4 +408,24 @@ end
 
 IsNodGroundHunterUnit = function(actor)
 	return actor.Owner == Nod and actor.HasProperty("Move") and not actor.HasProperty("Land") and actor.HasProperty("Hunt") and actor.Type ~= "mlrs" and actor.Type ~= "arty.nod"
+end
+
+RevealLab = function()
+	if not LabIsRevealed then
+		Beacon.New(Greece, ResearchLab.CenterPosition)
+		ObjectiveCaptureLab = Greece.AddObjective("Capture the Nod research lab.")
+
+		if ObjectiveFindLab ~= nil and not Greece.IsObjectiveCompleted(ObjectiveFindLab) then
+			Greece.MarkCompletedObjective(ObjectiveFindLab)
+		end
+
+		UserInterface.SetMissionText("Capture the Nod research lab.", HSLColor.Yellow)
+		LabCamera = Actor.Create("camera.paradrop", true, { Owner = Greece, Location = ResearchLab.Location })
+
+		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			LabCamera.Destroy()
+		end)
+
+		LabIsRevealed = true
+	end
 end

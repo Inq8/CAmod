@@ -311,20 +311,12 @@ WorldLoaded = function()
 	Trigger.OnEnteredProximityTrigger(SovietPrison.CenterPosition, WDist.New(10 * 1024), function(a, id)
 		if a.Owner == Greece then
 			Trigger.RemoveProximityTrigger(id)
-			Beacon.New(Greece, GDICommanderSpawn.CenterPosition)
-			ObjectiveCapturePrison = Greece.AddObjective("Take control of prison and rescue GDI commander.")
-
-			if ObjectiveLocateCommander ~= nil and not Greece.IsObjectiveCompleted(ObjectiveLocateCommander) then
-				Greece.MarkCompletedObjective(ObjectiveLocateCommander)
-			end
-
-			UserInterface.SetMissionText("Take control of prison and rescue GDI commander.", HSLColor.Yellow)
-			PrisonCamera = Actor.Create("camera.paradrop", true, { Owner = Greece, Location = SovietPrison.Location })
-
-			Trigger.AfterDelay(DateTime.Seconds(5), function()
-				PrisonCamera.Destroy()
-			end)
+			RevealPrison()
 		end
+	end)
+
+	Trigger.OnDamaged(SovietPrison, function(self, attacker, damage)
+		RevealPrison()
 	end)
 
 	Trigger.OnCapture(SovietPrison, function(self, captor, oldOwner, newOwner)
@@ -481,6 +473,25 @@ GDIBaseFound = function()
 				Reinforcements.Reinforce(Greece, gdiReinforcements, { GDIReinforcementsEntry.Location, GDIReinforcementsRally.Location }, 75)
 			end)
 		end
+	end
+end
+
+RevealPrison = function()
+	if not PrisonRevealed then
+		Beacon.New(Greece, GDICommanderSpawn.CenterPosition)
+		ObjectiveCapturePrison = Greece.AddObjective("Take control of prison and rescue GDI commander.")
+
+		if ObjectiveLocateCommander ~= nil and not Greece.IsObjectiveCompleted(ObjectiveLocateCommander) then
+			Greece.MarkCompletedObjective(ObjectiveLocateCommander)
+		end
+
+		UserInterface.SetMissionText("Take control of prison and rescue GDI commander.", HSLColor.Yellow)
+		PrisonCamera = Actor.Create("camera.paradrop", true, { Owner = Greece, Location = SovietPrison.Location })
+
+		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			PrisonCamera.Destroy()
+		end)
+		PrisonRevealed = true
 	end
 end
 
