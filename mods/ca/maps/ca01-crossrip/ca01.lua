@@ -81,11 +81,6 @@ NavalDropInterval = {
 	hard = DateTime.Minutes(2)
 }
 
-ChronosphereAutoDestructTime = {
-	normal = DateTime.Minutes(45),
-	hard = DateTime.Minutes(35)
-}
-
 -- Squads
 
 Squads = {
@@ -97,8 +92,8 @@ Squads = {
 			hard = DateTime.Seconds(70)
 		},
 		Interval = {
-			easy = DateTime.Seconds(30),
-			normal = DateTime.Seconds(20),
+			easy = DateTime.Seconds(35),
+			normal = DateTime.Seconds(25),
 			hard = DateTime.Seconds(10)
 		},
 		QueueProductionStatuses = {
@@ -255,20 +250,32 @@ WorldLoaded = function()
 		end
 	end)
 
-	if Difficulty == "easy" then
+	if Difficulty ~= "hard" then
 		HeavyTank1.Destroy()
 		Flamer1.Destroy()
-		Flamer2.Destroy()
-	else
-		if Difficulty == "normal" then
-			Flamer1.Destroy()
+		if Difficulty == "easy" then
+			Flamer2.Destroy()
 		end
+	end
+	if Difficulty ~= "easy" then
 		Ranger1.Destroy()
 	end
 
 	InitObjectives(Greece)
 	InitUSSR()
 	Camera.Position = PlayerMcv.CenterPosition
+
+	Trigger.AfterDelay(DateTime.Seconds(2), function()
+		BaseFlare = Actor.Create("flare", true, { Owner = Greece, Location = DeploySuggestion.Location })
+		Media.PlaySpeechNotification(Greece, "SignalFlare")
+		Notification("Signal flare detected.")
+		Trigger.OnEnteredProximityTrigger(DeploySuggestion.CenterPosition, WDist.New(6 * 1024), function(a, id)
+			if a.Owner == Greece and a.Type ~= "waypoint" and a.Type ~= "flare" then
+				Trigger.RemoveProximityTrigger(id)
+				BaseFlare.Destroy()
+			end
+		end)
+	end)
 end
 
 Tick = function()
@@ -390,18 +397,6 @@ InitUSSR = function()
 	Trigger.OnCapture(SovietChronosphere, function(self, captor, oldOwner, newOwner)
 		SovietChronosphere.Kill()
 	end)
-
-	-- After an amount of time based on difficulty, reveal and auto-destruct the Chronosphere
-	if Difficulty ~= "easy" then
-		Trigger.AfterDelay(ChronosphereAutoDestructTime[Difficulty], function()
-			ChronosphereDiscovered()
-			Trigger.AfterDelay(DateTime.Seconds(10), function()
-				if not SovietChronosphere.IsDead then
-					SovietChronosphere.Kill()
-				end
-			end)
-		end)
-	end
 end
 
 ScrinInvasion = function()
