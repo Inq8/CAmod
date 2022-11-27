@@ -289,12 +289,23 @@ WorldLoaded = function()
 		end
 	end)
 
+	-- If player enters vicinity of south east base after GDI base has been taken over, add free power
+	Trigger.OnEnteredProximityTrigger(SouthEastBaseCenter.CenterPosition, WDist.New(12 * 1024), function(a, id)
+		if a.Owner == Nod and ObjectiveTakeOverBase ~= nil and Nod.IsObjectiveCompleted(ObjectiveTakeOverBase) then
+			Trigger.RemoveProximityTrigger(id)
+			Actor.Create("powercheat.minor", true, { Owner = Greece, Location = SouthEastBaseCenter.Location })
+		end
+	end)
+
 	-- Finding researchers
 	Utils.Do(Researchers, function(researcher)
 		Trigger.OnEnteredProximityTrigger(researcher.CenterPosition, WDist.New(8 * 1024), function(a, id)
 			if a.Owner == Nod then
 				Trigger.RemoveProximityTrigger(id)
 				Notification("Researcher located.")
+				if ObjectiveRescueResearchers == nil then
+					ObjectiveRescueResearchers = Nod.AddObjective("Locate and rescue Nod researchers.")
+				end
 				local researcherCamera = Actor.Create("camera.paradrop", true, { Owner = Nod, Location = researcher.Location })
 				Trigger.AfterDelay(DateTime.Seconds(10), function()
 					researcherCamera.Destroy()
@@ -337,6 +348,7 @@ WorldLoaded = function()
 					end
 
 					Reinforcements.ReinforceWithTransport(EvacPlayer, "tran", nil, { EvacSpawn.Location, EvacPoint.Location }, nil, function(transport, cargo)
+						Notification("Evacuation transport inbound.")
 						Trigger.AfterDelay(DateTime.Seconds(1), function()
 							if not Researcher1.IsDead then
 								Researcher1.EnterTransport(transport)
@@ -356,6 +368,8 @@ WorldLoaded = function()
 							end
 						end)
 					end)
+				else
+					Notification("A researcher has reached the evacuation point. Waiting for the second.")
 				end
 			end)
 		end
@@ -383,6 +397,12 @@ OncePerSecondChecks = function()
 		end
 
 		if Nod.HasNoRequiredUnits() then
+			if ObjectiveRescueResearchers ~= nil and not Nod.IsObjectiveCompleted(ObjectiveRescueResearchers) then
+				Nod.MarkFailedObjective(ObjectiveRescueResearchers)
+			end
+		end
+
+		if Researcher1.IsDead or Researcher2.IsDead then
 			if ObjectiveRescueResearchers ~= nil and not Nod.IsObjectiveCompleted(ObjectiveRescueResearchers) then
 				Nod.MarkFailedObjective(ObjectiveRescueResearchers)
 			end
@@ -429,8 +449,11 @@ AwakenSleeperCell = function()
 			GDIHarvester.Owner = Nod
 		end
 
-		if ObjectiveTakeOverBase ~= nil and not Nod.IsObjectiveCompleted(ObjectiveTakeOverBase) then
+		if ObjectiveRescueResearchers == nil then
 			ObjectiveRescueResearchers = Nod.AddObjective("Locate and rescue Nod researchers.")
+		end
+
+		if ObjectiveTakeOverBase ~= nil and not Nod.IsObjectiveCompleted(ObjectiveTakeOverBase) then
 			Nod.MarkCompletedObjective(ObjectiveTakeOverBase)
 		end
 
