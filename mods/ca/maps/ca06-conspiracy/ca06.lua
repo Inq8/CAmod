@@ -451,6 +451,10 @@ AwakenSleeperCell = function()
 			GDIHarvester.Owner = Nod
 		end
 
+		Trigger.AfterDelay(1, function()
+			Actor.Create("QueueUpdaterDummy", true, { Owner = Nod, Location = GDIBaseCenter.Location })
+		end)
+
 		if ObjectiveRescueResearchers == nil then
 			ObjectiveRescueResearchers = Nod.AddObjective("Locate and rescue Nod researchers.")
 		end

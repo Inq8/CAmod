@@ -430,6 +430,10 @@ GDIBaseFound = function()
 			end
 		end)
 
+		Trigger.AfterDelay(1, function()
+			Actor.Create("QueueUpdaterDummy", true, { Owner = Greece, Location = GDIBaseCenter.Location })
+		end)
+
 		InitUSSRAttacks()
 
 		Trigger.AfterDelay(DateTime.Seconds(1), function()
