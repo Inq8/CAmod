@@ -909,7 +909,7 @@ MECH:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 90
-		Prerequisites: repair, ~infantry.mech, ~techlevel.low
+		Prerequisites: repair, ~!cyborg.production, ~infantry.mech, ~techlevel.low
 		Description: Repairs nearby vehicles.
 	TooltipExtras:
 		Weaknesses: • Unarmed
@@ -991,6 +991,25 @@ MECH:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	GuardsSelection:
 		ValidTargets: Vehicle
+
+CMEC:
+	Inherits: MECH
+	Inherits: ^Cyborg
+	Health:
+		HP: 17000
+	-TakeCover:
+	Voiced:
+		VoiceSet: CyborgVoice
+	Buildable:
+		Prerequisites: repair, ~cyborg.production, ~infantry.cyborg, ~infantry.mech, ~techlevel.low
+	Tooltip:
+		Name: Cyborg Mechanic
+	AttackSoundsCA@REPAIRSOUND:
+		Sounds: cmecrepair.aud
+	WithInfantryBody:
+		StandSequences: stand
+	RevealsShroud:
+		Range: 5c0
 
 HACK:
 	Inherits: ^Soldier
