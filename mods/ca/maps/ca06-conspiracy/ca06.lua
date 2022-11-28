@@ -281,17 +281,19 @@ WorldLoaded = function()
 		end
 	end)
 
-	-- If player tries to go through the Allied base before going to GDI base
+	-- If player tries to go through the Allied base before going to GDI base, begin attacks after a delay
 	Trigger.OnEnteredProximityTrigger(BaseTriggerBackup.CenterPosition, WDist.New(10 * 1024), function(a, id)
 		if a.Owner == Nod then
 			Trigger.RemoveProximityTrigger(id)
-			AwakenSleeperCell()
+			Trigger.AfterDelay(DateTime.Minutes(2), function()
+				InitAlliedAttacks()
+			end)
 		end
 	end)
 
-	-- If player enters vicinity of south east base after GDI base has been taken over, add free power
+	-- If player enters vicinity of south east base with a ground unit after GDI base has been taken over, add free power
 	Trigger.OnEnteredProximityTrigger(SouthEastBaseCenter.CenterPosition, WDist.New(12 * 1024), function(a, id)
-		if a.Owner == Nod and ObjectiveTakeOverBase ~= nil and Nod.IsObjectiveCompleted(ObjectiveTakeOverBase) then
+		if a.Owner == Nod and not a.HasProperty("Land") and ObjectiveTakeOverBase ~= nil and Nod.IsObjectiveCompleted(ObjectiveTakeOverBase) then
 			Trigger.RemoveProximityTrigger(id)
 			Actor.Create("powercheat.minor", true, { Owner = Greece, Location = SouthEastBaseCenter.Location })
 		end
@@ -458,32 +460,7 @@ AwakenSleeperCell = function()
 		end
 
 		-- Initialise Allied attacks
-		Trigger.AfterDelay(Squads.SouthBasic.Delay[Difficulty], function()
-			InitAttackSquad(Squads.SouthBasic, Greece)
-		end)
-
-		Trigger.AfterDelay(Squads.NorthBasic.Delay[Difficulty], function()
-			InitAttackSquad(Squads.NorthBasic, Greece)
-		end)
-
-		Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
-			InitAirAttackSquad(Squads.Air, Greece, Nod, { "harv", "harv.td", "arty.nod", "mlrs", "obli", "atwr", "gtwr", "gun.nod", "hq", "nuk2" })
-		end)
-
-		Trigger.AfterDelay(ChinookDropStart[Difficulty], function()
-			DoChinookDrop()
-		end)
-
-		Trigger.AfterDelay(GDIReinforcementDelay[Difficulty], function()
-			local gdiReinforcements = { "mtnk", "mtnk" }
-			if Difficulty == "hard" then
-				gdiReinforcements = { "htnk" , "htnk" }
-			end
-
-			Reinforcements.Reinforce(GDI, gdiReinforcements, GDIReinforcementPath, 75, function(a)
-				AssaultPlayerBaseOrHunt(a)
-			end)
-		end)
+		InitAlliedAttacks()
 	end
 end
 
@@ -524,6 +501,39 @@ InitGreece = function()
 
 	if Difficulty == "hard" then
 		Actor.Create("cryr.upgrade", true, { Owner = Greece, Location = upgradeCreationLocation })
+	end
+end
+
+InitAlliedAttacks = function()
+	if not AlliedAttacksInitialized then
+		AlliedAttacksInitialized = true
+
+		Trigger.AfterDelay(Squads.SouthBasic.Delay[Difficulty], function()
+			InitAttackSquad(Squads.SouthBasic, Greece)
+		end)
+
+		Trigger.AfterDelay(Squads.NorthBasic.Delay[Difficulty], function()
+			InitAttackSquad(Squads.NorthBasic, Greece)
+		end)
+
+		Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
+			InitAirAttackSquad(Squads.Air, Greece, Nod, { "harv", "harv.td", "arty.nod", "mlrs", "obli", "atwr", "gtwr", "gun.nod", "hq", "nuk2" })
+		end)
+
+		Trigger.AfterDelay(ChinookDropStart[Difficulty], function()
+			DoChinookDrop()
+		end)
+
+		Trigger.AfterDelay(GDIReinforcementDelay[Difficulty], function()
+			local gdiReinforcements = { "mtnk", "mtnk" }
+			if Difficulty == "hard" then
+				gdiReinforcements = { "htnk" , "htnk" }
+			end
+
+			Reinforcements.Reinforce(GDI, gdiReinforcements, GDIReinforcementPath, 75, function(a)
+				AssaultPlayerBaseOrHunt(a)
+			end)
+		end)
 	end
 end
 
