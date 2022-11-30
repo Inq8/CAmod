@@ -92,13 +92,13 @@ WorldLoaded = function()
 	end)
 
 	if Difficulty ~= "hard" then
-		Trigger.OnEnteredFootprint(DroneTipLocations, function(a)
+		Trigger.OnEnteredFootprint(DroneTipLocations, function(a, id)
 			if a.Owner == Nod then
 				Trigger.RemoveFootprintTrigger(id)
 				Tip("Mammoth Drone detected. Hackers can take control of this vehicle.")
 			end
 		end)
-		Trigger.OnEnteredFootprint(EmpTipLocations, function(a)
+		Trigger.OnEnteredFootprint(EmpTipLocations, function(a, id)
 			if a.Owner == Nod then
 				Trigger.RemoveFootprintTrigger(id)
 				Tip("Too many guards up ahead. Find a way to neutralise them.")
@@ -187,7 +187,7 @@ InitGreece = function()
 		end)
 	end)
 
-	Trigger.OnEnteredFootprint({ AlliedBoundary1.Location, AlliedBoundary2.Location, AlliedBoundary3.Location, AlliedBoundary4.Location, AlliedBoundary5.Location, AlliedBoundary6.Location }, function(a)
+	Trigger.OnEnteredFootprint({ AlliedBoundary1.Location, AlliedBoundary2.Location, AlliedBoundary3.Location, AlliedBoundary4.Location, AlliedBoundary5.Location, AlliedBoundary6.Location }, function(a, id)
 		if a.Owner == Greece and not a.IsDead and a.HasProperty("Move") then
 			a.Stop()
 			local randomDest = Utils.Random({ AlliedBase1.Location, AlliedBase2.Location, AlliedBase4.Location, AlliedBase5.Location })
