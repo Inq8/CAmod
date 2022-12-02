@@ -17,15 +17,15 @@ WormholeDelay = {
 }
 
 WormholeInterval = {
-	easy = DateTime.Seconds(160),
-	normal = DateTime.Seconds(120),
+	easy = DateTime.Seconds(120),
+	normal = DateTime.Seconds(100),
 	hard = DateTime.Seconds(80)
 }
 
 WormholeUnitsDelay = {
 	easy = DateTime.Seconds(90),
-	normal = DateTime.Seconds(70),
-	hard = DateTime.Seconds(50)
+	normal = DateTime.Seconds(60),
+	hard = DateTime.Seconds(30)
 }
 
 WormholeUnitsInterval = {

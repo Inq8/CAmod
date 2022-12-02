@@ -28,7 +28,6 @@ WorldLoaded = function()
 		Actor.Create("nuke", true, { Owner = GDI, Location = Power1Spawn.Location })
 		Actor.Create("nuke", true, { Owner = GDI, Location = Power2Spawn.Location })
 	else
-		Actor.Create("sathack.dummy", true, { Owner = Nod, Location = Commando.Location })
 
 		if Difficulty == "normal" then
 			Commando.GrantCondition("difficulty-normal")
@@ -42,6 +41,7 @@ WorldLoaded = function()
 			Hacker2.GrantCondition("difficulty-easy")
 			StealthTank1.GrantCondition("difficulty-easy")
 			StealthTank2.GrantCondition("difficulty-easy")
+			Actor.Create("sathack.dummy", true, { Owner = Nod, Location = Commando.Location })
 		end
 
 		JumpJet1.Destroy()

@@ -74,6 +74,9 @@ MEMP:
 		PauseOnCondition: triggered || empdisable || being-warped || notmobile
 	GrantTimedConditionOnDeploy:
 		RequiresCondition: !(empdisable || being-warped)
+	Tooltip:
+		Name: E.M.P Drone
+		GenericVisibility: None
 
 HTNK.Drone:
 	-ExternalCondition@DRONECONTROL:
@@ -86,6 +89,8 @@ HTNK.Drone:
 		PauseOnCondition: empdisable || being-warped || notmobile
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
+	Tooltip:
+		GenericVisibility: None
 
 MTNK.Drone:
 	-ExternalCondition@DRONECONTROL:
@@ -98,10 +103,14 @@ MTNK.Drone:
 		PauseOnCondition: empdisable || being-warped || notmobile
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
+	Tooltip:
+		GenericVisibility: None
 
 GDRN:
 	ExternalCondition@IMMOBILISE:
 		Condition: notmobile
+	Tooltip:
+		GenericVisibility: None
 
 ^DifficultyModifiers:
 	ExternalCondition@NORMAL:

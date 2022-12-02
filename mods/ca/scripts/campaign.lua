@@ -567,12 +567,13 @@ SendAttackSquad = function(squad)
 					if squadLeader == nil or a == squadLeader then
 						Utils.Do(attackPath, function(w)
 							a.AttackMove(w, 3)
-							if squad.IsNaval ~= nil and squad.IsNaval then
-								IdleHunt(a)
-							else
-								AssaultPlayerBaseOrHunt(a);
-							end
 						end)
+
+						if squad.IsNaval ~= nil and squad.IsNaval then
+							IdleHunt(a)
+						else
+							AssaultPlayerBaseOrHunt(a);
+						end
 
 						-- On damaged or killed
 						Trigger.OnDamaged(a, function(self, attacker, damage)
