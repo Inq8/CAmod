@@ -3822,25 +3822,34 @@ ENLI:
 		Description: Elite cyborg infantry unit armed with\n  a particle cannon that deals area damage.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
-		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Heals on Tiberium
+		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
+		Attributes: • Heals on Tiberium\n• EMP blast ability
 	Valued:
 		Cost: 1000
 	Tooltip:
 		Name: Enlightened
 	-TakeCover:
+	-Crushable:
+	-KillsSelf@Immolate:
+	Targetable:
+		TargetTypes: Ground, Vehicle, C4Immune, ChaosImmune, DriverKillImmune, Cyborg
+	-Targetable@HEAL:
+	Targetable@REPAIR:
+		RequiresCondition: !parachute && damaged && !being-warped && !repair-cooldown
+		TargetTypes: Repair
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Armor:
 		Type: Heavy
 	Health:
-		HP: 27500
+		HP: 30000
 	Mobile:
-		Speed: 54
+		Speed: 60
 		Voice: Move
+		PauseOnCondition: being-warped || empdisable
 	AttackFrontal:
 		Voice: Attack
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || empdisable
 		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
@@ -3855,18 +3864,40 @@ ENLI:
 		LocalOffset: 200,0,300
 	Armament@Garrison:
 		Name: mounted
-		Weapon: Vulcan3
-		MuzzleSequence: garrison-muzzle
+		Weapon: EnlightenedBeam
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	WithInfantryBody:
-		RequiresCondition: !parachute && !being-warped
-	WithInfantryBody:
+		DefaultAttackSequence: shoot
 		IdleSequences: idle, idle2
 		StandSequences: stand, stand2
+		RequiresCondition: !parachute && !being-warped && !empdisable
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
+	WithInfantryBody@Warped:
+		RequiresCondition: being-warped || empdisable
+	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
+		Condition: repair-cooldown
+		RequiredHealing: 85000
+		StackDuration: 1000
+		MinimumHealing: 2500
+		DamageTypes: DirectRepair
+		ShowSelectionBar: true
+	GrantTimedConditionOnDeploy:
+		DeployedCondition: triggered
+		CooldownTicks: 375
+		DeployedTicks: 5
+		StartsFullyCharged: true
+		RequiresCondition: !(empdisable || being-warped)
+		ShowSelectionBarWhenFull: false
+		ChargingColor: 88EEFF
+	PeriodicExplosion:
+		Weapon: EnlightenedEmp
+		RequiresCondition: triggered
+	WithColoredOverlay@EMP:
+		RequiresCondition: triggered
+		Color: 88EEFFcc

@@ -1094,13 +1094,13 @@ EnlightenedBeam:
 		MaxFacingDeviation: 64
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
-		Damage: 5500
+		Damage: 5200
 		Falloff: 100, 70, 40, 15, 0
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		Versus:
-			None: 15
-			Wood: 50
-			Concrete: 40
+			None: 10
+			Wood: 70
+			Concrete: 45
 			Light: 80
 	Warhead@2Eff: CreateEffect
 		Explosions: enliexplode1, enliexplode2
@@ -1109,6 +1109,25 @@ EnlightenedBeam:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
+
+EnlightenedEmp:
+	ReloadDelay: 375
+	Warhead@1Emp: GrantExternalCondition
+		Range: 1c896
+		Duration: 150
+		Condition: empdisable
+		ValidTargets: Ground, Vehicle, Defense
+		ValidRelationships: Enemy, Neutral
+	Warhead@2Emp: GrantExternalCondition
+		Range: 1c896
+		Duration: 150
+		Condition: empdisable
+		ValidTargets: Ground, Vehicle, Defense
+		InvalidTargets: Cyborg
+		ValidRelationships: Ally
+	Warhead@3Eff_impact: CreateEffect
+		Explosions: enliemp1, enliemp2
+		ImpactSounds: enli-emp.aud
 
 VenomLaser:
 	ReloadDelay: 30
