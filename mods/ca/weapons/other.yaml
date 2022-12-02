@@ -1071,6 +1071,45 @@ PortaLaserE:
 	Inherits: PortaLaser
 	Range: 7c0
 
+EnlightenedBeam:
+	ReloadDelay: 65
+	ValidTargets: Ground, Water
+	Range: 6c0
+	Report: enli-fire1.aud, enli-fire2.aud, enli-fire3.aud
+	Projectile: PlasmaBeam
+		Duration: 10
+		CenterBeam: true
+		CenterBeamColor: FFFFFFAA
+		CenterBeamWidth: 48
+		Colors: 0EF3C101, 0E9FF301, 0EEBF301
+		InnerLightness: 200
+		OuterLightness: 120
+		Radius: 2
+		SegmentLength: 120
+		Distortion: 10
+		DistortionAnimation: 20
+		Blockable: true
+		RecalculateColors: true
+		TrackTarget: false
+		MaxFacingDeviation: 64
+	Warhead@1Dam: SpreadDamage
+		Spread: 512
+		Damage: 5500
+		Falloff: 100, 70, 40, 15, 0
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		Versus:
+			None: 15
+			Wood: 50
+			Concrete: 40
+			Light: 80
+	Warhead@2Eff: CreateEffect
+		Explosions: enliexplode1, enliexplode2
+		ImpactSounds: expnew17.aud, expnew16.aud
+		ValidTargets: Ground, Air
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch-NoFlame
+		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
+
 VenomLaser:
 	ReloadDelay: 30
 	ValidTargets: Ground, Water

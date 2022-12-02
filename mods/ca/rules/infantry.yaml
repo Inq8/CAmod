@@ -3801,3 +3801,66 @@ XO:
 		Interval: 3
 		Sequences: descend
 	-WithParachute:
+
+ENLI:
+	Inherits: ^Cyborg
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@EMP: ^EmpDisable
+	Inherits@CLOAK: ^Cloakable
+	RenderSprites:
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ, CyborgMQ
+		BuildAtProductionType: Cyborg
+		BuildPaletteOrder: 225
+		Prerequisites: tmpp, ~infantry.cyborg, ~techlevel.high
+		Description: Elite cyborg infantry unit armed with\n  a particle cannon that deals area damage.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
+		Attributes: • Heals on Tiberium
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Enlightened
+	-TakeCover:
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Armor:
+		Type: Heavy
+	Health:
+		HP: 27500
+	Mobile:
+		Speed: 54
+		Voice: Move
+	AttackFrontal:
+		Voice: Attack
+		PauseOnCondition: being-warped
+		FacingTolerance: 0
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Guard:
+		Voice: Move
+	Voiced:
+		VoiceSet: EnlightenedVoice
+	Armament@PRIMARY:
+		Weapon: EnlightenedBeam
+		LocalOffset: 200,0,300
+	Armament@Garrison:
+		Name: mounted
+		Weapon: Vulcan3
+		MuzzleSequence: garrison-muzzle
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
+	WithInfantryBody:
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody:
+		IdleSequences: idle, idle2
+		StandSequences: stand, stand2
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
