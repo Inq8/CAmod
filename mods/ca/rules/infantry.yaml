@@ -2924,15 +2924,11 @@ RMBC:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@EMP: ^EmpDisable
 	Inherits@CLOAK: ^Cloakable
-	RenderSprites:
-		PlayerPalette: playerd2k
-		Image: cycom
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 230
 		Prerequisites: tmpp, ~infantry.cyborg, ~techlevel.high
-		IconPalette: chrometd
 		Description: Elite cyborg infantry unit armed with\n  a plasma cannon.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -2977,8 +2973,6 @@ RMBC:
 		EmptyWeapon: UnitExplodeSmall
 		Chance: 100
 		RequiresCondition: !being-warped
-	WithDeathAnimation:
-		DeathSequencePalette: playerd2k
 	Selectable:
 		Bounds: 1024, 1024, 0, -170
 		DecorationBounds: 512, 853, 0, -170
@@ -2993,8 +2987,8 @@ RMBC:
 		TargetTypes: Repair
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-		StandSequences: stand
-		IdleSequences: idle1, idle2
+		StandSequences: stand, stand2
+		IdleSequences: idle, idle2
 		RequiresCondition: !being-warped && !empdisable && !parachute
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
