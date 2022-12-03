@@ -70,6 +70,7 @@ WorldLoaded = function()
 
 	ObjectivePurgeScrin = Nod.AddObjective("Eliminate the Scrin presence.")
 	ObjectiveSaveAllCivilians = Nod.AddSecondaryObjective("Allow no civilians to be killed.")
+	Notification("The Scrin are preparing reinforcements, we must eliminate their foothold here quickly.")
 
 	NodCamera1.Destroy()
 	NodCamera2.Destroy()
@@ -106,6 +107,20 @@ WorldLoaded = function()
 				Nod.MarkFailedObjective(ObjectiveSaveAllCivilians)
 			end
 		end)
+	end)
+
+	Trigger.OnEnteredProximityTrigger(TopBoundary.CenterPosition, WDist.New(5 * 1024), function(a, id)
+		if a.Owner == Civilian and a.HasProperty("Move") then
+			a.Stop()
+			a.Move(TopTownCenter.Location)
+		end
+	end)
+
+	Trigger.OnEnteredProximityTrigger(BottomBoundary.CenterPosition, WDist.New(5 * 1024), function(a, id)
+		if a.Owner == Civilian and a.HasProperty("Move") then
+			a.Stop()
+			a.Move(BottomTownCenter.Location)
+		end
 	end)
 
 	UpdateScrinCounter()
@@ -183,7 +198,7 @@ SpawnWormhole = function()
 		randomDormantWormhole.SpawnCount = 0
 		local camera = Actor.Create("smallcamera", true, { Owner = Nod, Location = randomLocation })
 		Beacon.New(Nod, randomDormantWormhole.Actor.CenterPosition)
-		Notification("Scrin wormhole detected.")
+		Notification("Scrin wormhole detected. Destroy it before Scrin reinforcements arrive.")
 
 		UpdateScrinCounter()
 

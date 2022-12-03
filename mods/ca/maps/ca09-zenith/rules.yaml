@@ -124,6 +124,9 @@ RMBC:
 TMPL:
 	-NukePower@Cluster:
 
+TMPP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
 TSLA:
 	-Targetable@TeslaBoost:
 	ExternalCondition@DISABLED:
@@ -140,6 +143,8 @@ MSLO:
 		AllowMultiple: true
 	-InfiltrateForSupportPowerReset:
 	-Targetable@INFILTRATION:
+	Health:
+		HP: 200000
 
 ^NukeDummy:
 	AlwaysVisible:
@@ -228,3 +233,9 @@ E3:
 E4:
 	Mobile:
 		Speed: 46
+
+camera.sathack:
+	DetectCloaked:
+		Range: 8c0
+	RevealsShroud:
+		Range: 8c0

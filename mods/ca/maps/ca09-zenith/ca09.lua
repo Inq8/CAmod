@@ -89,6 +89,12 @@ TeslaReactors = { TeslaReactor1, TeslaReactor2, TeslaReactor3, TeslaReactor4, Te
 AirbaseStructures = { Airfield1, Airfield2, Airfield3, Airfield4, Airfield5, Helipad1, Helipad2, Helipad3 }
 PatrolPath = { Patrol1.Location, Patrol2.Location, Patrol3.Location, Patrol4.Location, Patrol5.Location, Patrol6.Location, Patrol7.Location, Patrol8.Location, Patrol9.Location }
 
+RebuildExcludes = {
+	USSR = {
+		Types = { "tsla", "ftur", "tpwr", "afld", "hpad" }
+	}
+}
+
 -- Setup and Tick
 
 WorldLoaded = function()
@@ -115,6 +121,12 @@ WorldLoaded = function()
 		NukeDummy = Actor.Create("NukeDummyEasy", true, { Owner = USSR, Location = NukeSilo1.Location })
 		Actor.Create("difficulty.easy", true, { Owner = Nod, Location = PlayerStart.Location })
 	end
+
+	local satHack = Actor.Create("camera.sathack", true, { Owner = Nod, Location = SatHack.Location })
+
+	Trigger.AfterDelay(DateTime.Seconds(4), function()
+		satHack.Destroy()
+	end)
 
 	Trigger.AfterDelay(NukeTimer[Difficulty] + DateTime.Seconds(3), function()
 		if not NukeDummy.IsDead then
@@ -171,7 +183,7 @@ InitUSSR = function()
 	if Difficulty == "easy" then
 		AutoRepairBuildings(USSR)
 	else
-		AutoRepairAndRebuildBuildings(USSR, 5, { "tsla", "ftur", "tpwr", "afld", "hpad" })
+		AutoRepairAndRebuildBuildings(USSR, 5)
 	end
 
 	SetupRefAndSilosCaptureCredits(USSR)

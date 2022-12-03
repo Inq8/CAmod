@@ -303,8 +303,10 @@ DeployCyborgs = function()
 	end
 
 	Utils.Do(CyborgFactories, function(f)
-		local randomCyborg = Utils.Random(CyborgTypes)
-		f.Produce(randomCyborg)
+		if not f.IsDead then
+			local randomCyborg = Utils.Random(CyborgTypes)
+			f.Produce(randomCyborg)
+		end
 	end)
 	TemplePrime.Produce("rmbc")
 	CyborgWaves = CyborgWaves + 1
