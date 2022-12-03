@@ -83,7 +83,7 @@ WorldLoaded = function()
 		end)
 	end)
 
-	Utils.Do({ Commando, Hacker1, Hacker2 }, function(h)
+	Utils.Do({ Hacker1, Hacker2 }, function(h)
 		Trigger.OnKilled(h, function(self, killer)
 			if (Commando.IsDead or (Hacker1.IsDead and Hacker2.IsDead)) and not Nod.IsObjectiveCompleted(ObjectiveHackIonControl) then
 				Nod.MarkFailedObjective(ObjectiveHackIonControl)
