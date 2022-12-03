@@ -3748,14 +3748,6 @@
 		Condition: produced
 	Targetable@INF:
 		TargetTypes: InfantryProducer
-	GrantExternalConditionToOwner:
-		Condition: infqueuecount
-	ProductionTimeMultiplier@MQ1:
-		Multiplier: 125
-		Prerequisites: global.multiqueue, infqueuecount.one
-	ProductionTimeMultiplier@MQ2:
-		Multiplier: 150
-		Prerequisites: global.multiqueue, infqueuecount.two
 
 ^ProducesCyborgs:
 	Inherits: ^ProducesInfantry
@@ -3770,8 +3762,6 @@
 	ProductionBar@MQINF:
 		ProductionType: CyborgMQ
 	-Targetable@INF:
-	-ProductionTimeMultiplier@MQ1:
-	-ProductionTimeMultiplier@MQ2:
 
 ^ProducesVehicles:
 	Inherits@QUEUEUPDATER: ^QueueUpdater
@@ -3878,14 +3868,6 @@
 	ProductionBar@MQAIR:
 		ProductionType: AircraftMQ
 		RequiresCondition: global-multiqueue
-	GrantExternalConditionToOwner:
-		Condition: airqueuecount
-	ProductionTimeMultiplier@MQ1:
-		Multiplier: 125
-		Prerequisites: global.multiqueue, airqueuecount.one
-	ProductionTimeMultiplier@MQ2:
-		Multiplier: 150
-		Prerequisites: global.multiqueue, airqueuecount.two
 
 ^ProducesHelicopters:
 	Inherits@AIR: ^ProducesAircraft
