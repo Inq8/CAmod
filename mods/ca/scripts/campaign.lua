@@ -173,7 +173,7 @@ IdleHunt = function(actor)
 	end
 end
 
-AssaultPlayerBaseOrHunt = function(actor, waypoints)
+AssaultPlayerBaseOrHunt = function(actor, waypoints, fromIdle)
 	Trigger.AfterDelay(1, function()
 		if not actor.IsDead then
 			if waypoints ~= nil then
@@ -189,12 +189,15 @@ AssaultPlayerBaseOrHunt = function(actor, waypoints)
 			elseif actor.HasProperty("Hunt") then
 				actor.Hunt()
 			end
-			Trigger.AfterDelay(1, function()
-				if not actor.IsDead then
-					Trigger.OnIdle(actor, function(a)
-						AssaultPlayerBaseOrHunt(a)
-					end)
-				end
+			-- only add the OnIdle trigger if it wasn't triggered from OnIdle (don't need multiple triggers)
+			if not fromIdle then
+				Trigger.AfterDelay(1, function()
+					if not actor.IsDead then
+						Trigger.OnIdle(actor, function(a)
+							AssaultPlayerBaseOrHunt(a, nil, true)
+						end)
+					end
+				end)
 			end)
 		end
 	end)
