@@ -497,76 +497,79 @@ PortaTeslaCharge:
 
 TTrackZap:
 	Inherits: ^TeslaWeapon
-	ReloadDelay: 130
+	ReloadDelay: 135
 	Range: 8c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 11500
+		Damage: 12500
 		Versus:
-			Wood: 60
-			Concrete: 60
+			Wood: 50
+			Concrete: 50
+			Light: 90
 
 TTrackZap.UPG:
 	Inherits: TTrackZap
 	Warhead@Arc: FireShrapnel
-		Weapon: TTankArc1
+		Weapon: TTrackArc1
 		Amount: 1
-		AimChance: 90
+		AimChance: 100
 		ThrowWithoutTarget: false
 
-TTankZap:
-	Inherits: TTrackZap
-	Report: vtesatta.aud, vtesattb.aud
-	Range: 5c512
-	ReloadDelay: 90
+TTrackArc1:
+	Inherits: TTrackZap.UPG
+	-Report:
+	Range: 2c0
+	ValidTargets: Vehicle, Ship
 	Warhead@1Dam: SpreadDamage
-		Damage: 4500
+		ValidTargets: Vehicle, Ship
+		ValidRelationships: Enemy, Neutral
 		Versus:
-			None: 0
+			None: 115
+			Light: 35
+			Heavy: 45
+	Warhead@Arc: FireShrapnel
+		Weapon: TTrackArc2
+		ValidTargets: Vehicle, Ship, Infantry
+		AimChance: 65
 
-TTankZapSecondary:
-	Inherits: TTankZap
+TTrackArc2:
+	Inherits: TTrackArc1
+	ValidTargets: Vehicle, Ship, Infantry
 	Warhead@1Dam: SpreadDamage
+		ValidTargets: Vehicle, Ship, Infantry
+	-Warhead@Arc:
+
+TTankZap:
+	Inherits: ^TeslaWeapon
+	Report: vtesatta.aud, vtesattb.aud
+	ReloadDelay: 90
+	Burst: 2
+	BurstDelays: 3
+	Range: 5c512
+	Warhead@1Dam: SpreadDamage
+		Damage: 5300
 		Versus:
-			None: 1000
+			Wood: 50
+			Concrete: 50
+			Heavy: 60
 
 TTankZap.UPG:
 	Inherits: TTankZap
 	Warhead@Arc: FireShrapnel
-		Weapon: TTankArc1
+		Weapon: TTankArc
 		Amount: 1
-		AimChance: 90
+		AimChance: 100
 		ThrowWithoutTarget: false
 
-TTankZapSecondary.UPG:
-	Inherits: TTankZap.UPG
-	Warhead@1Dam: SpreadDamage
-		Versus:
-			None: 1000
-	-Warhead@Arc:
-
-TTankArc1:
-	Inherits: TTrackZap.UPG
-	Range: 2c0
-	ValidTargets: Infantry, Vehicle, Ship
-	Warhead@1Dam: SpreadDamage
-		ValidTargets: Infantry, Vehicle, Ship
-		ValidRelationships: Enemy, Neutral
-		Versus:
-			None: 115
-			Light: 40
-			Heavy: 40
+TTankArc:
+	Inherits: TTankZap
 	-Report:
-	Warhead@Arc: FireShrapnel
-		Weapon: TTankArc2
-		ValidTargets: Infantry
-		AimChance: 65
-
-TTankArc2:
-	Inherits: TTankArc1
+	Range: 2c0
 	ValidTargets: Infantry
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Infantry
-	-Warhead@Arc:
+		ValidRelationships: Enemy, Neutral
+		Versus:
+			None: 125
 
 DogJaw:
 	ValidTargets: Infantry

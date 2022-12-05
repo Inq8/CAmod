@@ -2180,7 +2180,7 @@ TTRA:
 		Prerequisites: tsla, stek, ~vehicles.soviet, ~techlevel.high
 		Description: Half-track with mounted Tesla Coil.
 	TooltipExtras:
-		Strengths: • Strong vs Infantry, Heavy Armor, Light Armor
+		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
 		Weaknesses: • Cannot attack Aircraft
 		Attributes: • Jams nearby enemy radar
 	Valued:
@@ -2250,7 +2250,7 @@ TTNK:
 		Prerequisites: tsla, anyradar, ~vehicles.russia, ~techlevel.medium
 		Description: Tank with twin mounted Tesla Coils.
 	TooltipExtras:
-		Strengths: • Strong vs Infantry, Heavy Armor, Light Armor
+		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft
 	Valued:
 		Cost: 1250
@@ -2274,28 +2274,14 @@ TTNK:
 		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: TTankZap
-		LocalOffset: 511,200,113
+		LocalOffset: 511,200,113, 511,-200,113
 		RequiresCondition: !tarc-upgrade
 		MuzzleSequence: muzzle
-	Armament@SECONDARY:
-		Name: secondary
-		Weapon: TTankZapSecondary
-		LocalOffset: 511,-200,113
-		RequiresCondition: !tarc-upgrade
-		MuzzleSequence: muzzle
-		FireDelay: 3
 	Armament@PRIMARYUPG:
 		Weapon: TTankZap.UPG
-		LocalOffset: 511,200,113
+		LocalOffset: 511,200,113, 511,-200,113
 		RequiresCondition: tarc-upgrade
 		MuzzleSequence: muzzle
-	Armament@SECONDARYUPG:
-		Name: secondary
-		Weapon: TTankZapSecondary.UPG
-		LocalOffset: 511,-200,113
-		RequiresCondition: tarc-upgrade
-		MuzzleSequence: muzzle
-		FireDelay: 3
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
