@@ -991,6 +991,10 @@ MECH:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	GuardsSelection:
 		ValidTargets: Vehicle
+	Convertible:
+		SpawnActors: CMEC
+	UpgradeableTo:
+		Actors: cmec
 
 CMEC:
 	Inherits: MECH
@@ -998,6 +1002,8 @@ CMEC:
 	Health:
 		HP: 17000
 	-TakeCover:
+	-Convertible:
+	-UpgradeableTo:
 	Voiced:
 		VoiceSet: CyborgVoice
 	Buildable:

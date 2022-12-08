@@ -12,6 +12,7 @@
 using System.Collections.Generic;
 using OpenRA.Activities;
 using OpenRA.Mods.CA.Activities;
+using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
 using OpenRA.Traits;
@@ -107,7 +108,7 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			// Stop charging when we lose our target
-			charging = self.CurrentActivity is AttackCharged && !reloading && IsAiming;
+			charging = (self.CurrentActivity is AttackCharged || self.CurrentActivity is AttackMoveActivity) && !reloading && IsAiming;
 
 			var delta = charging ? Info.ChargeRate : -Info.DischargeRate;
 			ChargeLevel = (ChargeLevel + delta).Clamp(0, Info.ChargeLevel);
