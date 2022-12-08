@@ -175,7 +175,7 @@ OncePerSecondChecks = function()
 			Nod.MarkCompletedObjective(ObjectiveProtectTemple)
 
 			local upgradeCreationLocation = CPos.New(0, 0)
-			Actor.Create("cyborg.upgrade", true, { Owner = Nod, Location = upgradeCreationLocation })
+			Actor.Create("advcyborg.upgrade", true, { Owner = Nod, Location = upgradeCreationLocation })
 			Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod, Location = upgradeCreationLocation })
 			Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod, Location = upgradeCreationLocation })
 			DeployCyborgs()

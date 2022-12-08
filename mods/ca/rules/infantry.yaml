@@ -909,7 +909,7 @@ MECH:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 90
-		Prerequisites: repair, ~!cyborg.production, ~infantry.mech, ~techlevel.low
+		Prerequisites: repair, ~!tmpp, ~infantry.mech, ~techlevel.low
 		Description: Repairs nearby vehicles.
 	TooltipExtras:
 		Weaknesses: • Unarmed
@@ -1007,7 +1007,7 @@ CMEC:
 	Voiced:
 		VoiceSet: CyborgVoice
 	Buildable:
-		Prerequisites: repair, ~cyborg.production, ~infantry.cyborg, ~infantry.mech, ~techlevel.low
+		Prerequisites: repair, tmpp, ~tmpp, ~infantry.mech, ~techlevel.high
 	Tooltip:
 		Name: Cyborg Mechanic
 	AttackSoundsCA@REPAIRSOUND:
@@ -1356,7 +1356,7 @@ N1:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 11
-		Prerequisites: ~!cyborg.production, ~infantry.td
+		Prerequisites: ~!tmpp, ~infantry.td
 		IconPalette: chrometd
 		Description: General-purpose infantry.
 	TooltipExtras:
@@ -1493,7 +1493,7 @@ N3:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 21
-		Prerequisites: ~!cyborg.production, ~infantry.td
+		Prerequisites: ~!tmpp, ~infantry.td
 		IconPalette: chrometd
 		Description: Anti-tank/anti-aircraft infantry.
 	TooltipExtras:
@@ -1604,7 +1604,7 @@ N4:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 71
-		Prerequisites: ~hand, ~!cyborg.production
+		Prerequisites: ~hand, ~!tmpp
 		IconPalette: chrometd
 		Description: Short-range anti-infantry/anti-structure infantry.
 	TooltipExtras:
@@ -1668,7 +1668,7 @@ N5:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 72
-		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.high
+		Prerequisites: tmpp, ~tmpp, ~techlevel.high
 		IconPalette: chrometd
 		Description: Short-range anti-infantry/anti-structure cyborg infantry.
 	TooltipExtras:
@@ -2291,7 +2291,7 @@ ACOL:
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 180
 		IconPalette: chrometd
-		Prerequisites: anyradar, obli, ~infantry.marked, ~!cyborg.production, ~techlevel.medium
+		Prerequisites: anyradar, obli, ~infantry.marked, ~!tmpp, ~techlevel.medium
 		Description: Cyborg infantry with a laser weapon.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -2360,7 +2360,7 @@ ACOL.UPG:
 	Health:
 		HP: 20000
 	Buildable:
-		Prerequisites: anyradar, obli, ~infantry.marked, ~cyborg.production, ~techlevel.high
+		Prerequisites: anyradar, obli, ~infantry.marked, ~tmpp, ~techlevel.high
 	-TakeCover:
 	-Convertible:
 	-UpgradeableTo:
@@ -2773,7 +2773,7 @@ N1C:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 13
-		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.high
+		Prerequisites: tmpp, ~tmpp, ~techlevel.high
 		IconPalette: chrometd
 		Description: General-purpose cyborg infantry.
 	TooltipExtras:
@@ -2829,7 +2829,7 @@ N3C:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 23
-		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.high
+		Prerequisites: tmpp, ~tmpp, ~techlevel.high
 		IconPalette: chrometd
 		Description: Anti-tank/anti-aircraft cyborg infantry.
 	TooltipExtras:
@@ -2934,7 +2934,7 @@ RMBC:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 230
-		Prerequisites: tmpp, ~infantry.cyborg, ~techlevel.high
+		Prerequisites: tmpp, advcyborg.upgrade, ~techlevel.high
 		Description: Elite cyborg infantry unit armed with\n  a plasma cannon.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -3818,8 +3818,8 @@ ENLI:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 225
-		Prerequisites: tmpp, ~infantry.cyborg, ~techlevel.high
-		Description: Elite cyborg infantry unit armed with\n  a particle cannon that deals area damage.
+		Prerequisites: tmpp, advcyborg.upgrade, ~techlevel.high
+		Description: Heavy cyborg infantry unit armed with\n  a particle cannon that deals area damage.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft

@@ -555,22 +555,19 @@ alphacomanche.upgrade:
 	RenderSprites:
 		Image: alphacomanche.upgrade
 
-cyborg.upgrade:
+advcyborg.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Cybernetics
+		Name: Research: Advanced Cyborgs
 	Buildable:
 		BuildPaletteOrder: 40
 		Prerequisites: ~player.nod, tmpp, ~techlevel.high
 		IconPalette: chrometd
-		Description: Basic infantry are superseded by more\n  powerful cyborg equivalents.\n\nReplaces: Mini-Gunner\nReplaces: Rocket Soldier\nReplaces: Flamethrower\nUpgrades: Acolyte
-	TooltipExtras:
-		Strengths: + Significantly increased health and damage
-		Weaknesses: – Increased cost
+		Description: Allows production of advanced cyborgs.\n\nUnlocks: Enlightened\nUnlocks: Cyborg Elite
 	Valued:
 		Cost: 1000
 	RenderSprites:
-		Image: cyborg.upgrade
+		Image: advcyborg.upgrade
 
 cyborgspeed.upgrade:
 	Inherits: ^Upgrade
@@ -578,9 +575,9 @@ cyborgspeed.upgrade:
 		Name: Upgrade: Improved Cyborg Speed
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, cyborg.upgrade, tmpp, ~techlevel.high
+		Prerequisites: ~player.nod, tmpp, ~techlevel.high
 		IconPalette: chrometd
-		Description: Improves cyborg movement speed.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Reaper\nUpgrades: Chemical Warrior\nUpgrades: Acolyte\nUpgrades: Cyborg Elite
+		Description: Improves cyborg movement speed.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Reaper\nUpgrades: Chemical Warrior\nUpgrades: Acolyte\nUpgrades: Cyborg Mechanic\nUpgrades: Enlightened\nUpgrades: Cyborg Elite
 	TooltipExtras:
 		Strengths: + 20% faster movement
 	Valued:
@@ -594,9 +591,9 @@ cyborgarmor.upgrade:
 		Name: Upgrade: Improved Cyborg Armour
 	Buildable:
 		BuildPaletteOrder: 40
-		Prerequisites: ~player.nod, cyborg.upgrade, tmpp, ~techlevel.high
+		Prerequisites: ~player.nod, tmpp, ~techlevel.high
 		IconPalette: chrometd
-		Description: Improves cyborg armor.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Reaper\nUpgrades: Chemical Warrior\nUpgrades: Acolyte\nUpgrades: Cyborg Elite
+		Description: Improves cyborg armor.\n\nUpgrades: Cyborg\nUpgrades: Cyborg Reaper\nUpgrades: Chemical Warrior\nUpgrades: Acolyte\nUpgrades: Cyborg Mechanic\nUpgrades: Enlightened\nUpgrades: Cyborg Elite
 	TooltipExtras:
 		Strengths: + 20% reduced damage taken\n+ Additional 10% reduced damage from explosives
 	Valued:
