@@ -1,0 +1,136 @@
+^Palettes:
+	GlobalLightingPaletteEffect:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, ca06.lua
+	MissionData:
+		Briefing: The Allied attack on our research facility in North Africa happened more swiftly than anticipated. While most of our assets were safely removed, two highly valued researchers were captured.\n\nWhile I have no reason to doubt their loyalty to the Brotherhood, their captivity is unacceptable. Any information falling into enemy hands jeopardizes our mission.\n\nYour objective is two-fold. A GDI base exists close to where the researchers are currently being held. One of our sleeper cells recently moved into position there and is poised to take control of the base. Take a small force to distract and weaken the GDI forces, and when the time is right our brothers will make their allegiance known.\n\nWith the base under our control, locate our captured brethren and bring them home.\n\nEven if the Allies don't suspect GDI of outright treachery, the fact that they were so deeply compromised will surely make the Allies reconsider how closely they cooperate in future.
+	MapOptions:
+		ShortGameCheckboxEnabled: False
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: Difficulty
+		Description: The difficulty of the mission
+		Values:
+			easy: Easy
+			normal: Normal
+			hard: Hard
+		Default: normal
+
+Player:
+	PlayerResources:
+		DefaultCash: 5000
+
+^TDPalette:
+	RenderSprites:
+		PlayerPalette: playertdunit
+
+^Infantry:
+	RenderSprites:
+		PlayerPalette: playertdunit
+	WithDeathAnimation:
+		DeathSequencePalette: playertdunit
+
+SHAD:
+	RenderSprites:
+		PlayerPalette: playertd
+	WithDeathAnimation:
+		DeathSequencePalette: playertd
+
+^BuildingTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+^DefenseTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+SAPC:
+	RenderSprites:
+		PlayerPalette: playerraunit
+
+HARV.TD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+AMCV:
+	RenderSprites:
+		PlayerPalette: playertd
+
+AFAC:
+	RenderSprites:
+		-FactionImages:
+
+TMPP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MSLO.Nod:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+RMBC:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+TMPP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+cyborg.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+cyborgarmor.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+cyborgspeed.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+CHAN:
+	-Wanders:
+	Selectable:
+		-Class:
+	Mobile:
+		Speed: 54
+	Tooltip:
+		Name: Nod Researcher
+		-RequiresCondition:
+	-GrantConditionOnCombatantOwner@COMBATANT:
+	-Tooltip@COMBATANT:
+	-Valued:
+
+MOEBIUS:
+	Tooltip:
+		Name: Nod Researcher
+		-RequiresCondition:
+	Voiced:
+		VoiceSet: CivilianMaleVoice
+	-GrantConditionOnCombatantOwner@COMBATANT:
+	-Tooltip@COMBATANT:
+	-Valued:
+
+ATEK:
+	-DummyGpsPower@NOFOG:
+	-DummyGpsPower@FOG:
+	-ProduceActorPowerCA@SatelliteLaunched:
+	-ProduceActorPowerCA@InitialSatelliteScan:
+	-ProduceActorPowerCA@SatelliteScan:
+	-ProduceActorPowerCA@SatelliteScanNoFog:
+	-GrantExternalConditionPowerCA@FSHIELD:
+	-DetonateWeaponPower@TEMPINC:
+
+HQ:
+	SpawnActorPowerCA@sathack:
+		LifeTime: 75
+	-ProduceActorPowerCA@hackercell:
+	-CashHackPower@Legion:
+
+HOSP:
+	Inherits@HACKABLE: ^Hackable
+	-PeriodicProducerCA@MEDIC:
+	-PeriodicProducerCA@REJUVENATOR:
+	-GrantConditionIfOwnerIsNeutral:
+	-GrantConditionOnPrerequisite@SCRIN:
+	TooltipExtras:
+		Description: When controlled, heals nearby infantry.
+
+# Hunt() requires only 1 AttackBase
+BATF.AI:
+	-AttackFrontal:

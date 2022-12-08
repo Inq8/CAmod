@@ -277,22 +277,6 @@ Player:
 	ProvidesPrerequisite@collector:
 		Prerequisite: player.collector
 		Factions: collector
-	ExternalCondition@infqueuecount:
-		Condition: infqueuecount
-	ProvidesPrerequisite@infqueuecount1:
-		Prerequisite: infqueuecount.one
-		RequiresCondition: infqueuecount == 1
-	ProvidesPrerequisite@infqueuecount2:
-		Prerequisite: infqueuecount.two
-		RequiresCondition: infqueuecount >= 2
-	ExternalCondition@airqueuecount:
-		Condition: airqueuecount
-	ProvidesPrerequisite@airqueuecount1:
-		Prerequisite: airqueuecount.one
-		RequiresCondition: airqueuecount == 1
-	ProvidesPrerequisite@airqueuecount2:
-		Prerequisite: airqueuecount.two
-		RequiresCondition: airqueuecount >= 2
 	GrantConditionOnPrerequisiteManager:
 	GrantConditionOnPrerequisiteManagerCA:
 	EnemyWatcher:

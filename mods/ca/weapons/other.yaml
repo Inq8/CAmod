@@ -388,9 +388,9 @@ BlackHandFlamer:
 		Falloff: 100, 100, 0
 		Damage: 260
 		Versus:
-			None: 60
+			None: 55
 			Wood: 15
-			Light: 55
+			Light: 70
 			Heavy: 100
 			Concrete: 35
 			Brick: 5
@@ -497,76 +497,79 @@ PortaTeslaCharge:
 
 TTrackZap:
 	Inherits: ^TeslaWeapon
-	ReloadDelay: 130
+	ReloadDelay: 135
 	Range: 8c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 11500
+		Damage: 12500
 		Versus:
-			Wood: 60
-			Concrete: 60
+			Wood: 50
+			Concrete: 50
+			Light: 90
 
 TTrackZap.UPG:
 	Inherits: TTrackZap
 	Warhead@Arc: FireShrapnel
-		Weapon: TTankArc1
+		Weapon: TTrackArc1
 		Amount: 1
-		AimChance: 90
+		AimChance: 100
 		ThrowWithoutTarget: false
 
-TTankZap:
-	Inherits: TTrackZap
-	Report: vtesatta.aud, vtesattb.aud
-	Range: 5c512
-	ReloadDelay: 90
+TTrackArc1:
+	Inherits: TTrackZap.UPG
+	-Report:
+	Range: 2c0
+	ValidTargets: Vehicle, Ship
 	Warhead@1Dam: SpreadDamage
-		Damage: 4500
+		ValidTargets: Vehicle, Ship
+		ValidRelationships: Enemy, Neutral
 		Versus:
-			None: 0
+			None: 115
+			Light: 35
+			Heavy: 45
+	Warhead@Arc: FireShrapnel
+		Weapon: TTrackArc2
+		ValidTargets: Vehicle, Ship, Infantry
+		AimChance: 65
 
-TTankZapSecondary:
-	Inherits: TTankZap
+TTrackArc2:
+	Inherits: TTrackArc1
+	ValidTargets: Vehicle, Ship, Infantry
 	Warhead@1Dam: SpreadDamage
+		ValidTargets: Vehicle, Ship, Infantry
+	-Warhead@Arc:
+
+TTankZap:
+	Inherits: ^TeslaWeapon
+	Report: vtesatta.aud, vtesattb.aud
+	ReloadDelay: 90
+	Burst: 2
+	BurstDelays: 3
+	Range: 5c512
+	Warhead@1Dam: SpreadDamage
+		Damage: 5300
 		Versus:
-			None: 1000
+			Wood: 50
+			Concrete: 50
+			Heavy: 60
 
 TTankZap.UPG:
 	Inherits: TTankZap
 	Warhead@Arc: FireShrapnel
-		Weapon: TTankArc1
+		Weapon: TTankArc
 		Amount: 1
-		AimChance: 90
+		AimChance: 100
 		ThrowWithoutTarget: false
 
-TTankZapSecondary.UPG:
-	Inherits: TTankZap.UPG
-	Warhead@1Dam: SpreadDamage
-		Versus:
-			None: 1000
-	-Warhead@Arc:
-
-TTankArc1:
-	Inherits: TTrackZap.UPG
-	Range: 2c0
-	ValidTargets: Infantry, Vehicle, Ship
-	Warhead@1Dam: SpreadDamage
-		ValidTargets: Infantry, Vehicle, Ship
-		ValidRelationships: Enemy, Neutral
-		Versus:
-			None: 115
-			Light: 40
-			Heavy: 40
+TTankArc:
+	Inherits: TTankZap
 	-Report:
-	Warhead@Arc: FireShrapnel
-		Weapon: TTankArc2
-		ValidTargets: Infantry
-		AimChance: 65
-
-TTankArc2:
-	Inherits: TTankArc1
+	Range: 2c0
 	ValidTargets: Infantry
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Infantry
-	-Warhead@Arc:
+		ValidRelationships: Enemy, Neutral
+		Versus:
+			None: 125
 
 DogJaw:
 	ValidTargets: Infantry
@@ -1034,11 +1037,13 @@ XOLaser:
 		SecondaryBeamColor: 79cd0040
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 9000
+		Damage: 10000
 		Versus:
 			None: 100
 			Wood: 45
 			Concrete: 80
+			Light: 80
+			Heavy: 100
 
 PortaLaser:
 	Inherits: Laser
@@ -1065,6 +1070,45 @@ PortaLaser:
 PortaLaserE:
 	Inherits: PortaLaser
 	Range: 7c0
+
+EnlightenedBeam:
+	ReloadDelay: 65
+	ValidTargets: Ground, Water
+	Range: 6c0
+	Report: enli-fire1.aud, enli-fire2.aud, enli-fire3.aud
+	Projectile: PlasmaBeam
+		Duration: 10
+		CenterBeam: true
+		CenterBeamColor: FFFFFFAA
+		CenterBeamWidth: 48
+		Colors: 0EF3C101, 0E9FF301, 0EEBF301
+		InnerLightness: 200
+		OuterLightness: 120
+		Radius: 2
+		SegmentLength: 120
+		Distortion: 10
+		DistortionAnimation: 20
+		Blockable: true
+		RecalculateColors: true
+		TrackTarget: false
+		MaxFacingDeviation: 64
+	Warhead@1Dam: SpreadDamage
+		Spread: 512
+		Damage: 5500
+		Falloff: 100, 70, 40, 15, 0
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		Versus:
+			None: 15
+			Wood: 50
+			Concrete: 40
+			Light: 80
+	Warhead@2Eff: CreateEffect
+		Explosions: enliexplode1, enliexplode2
+		ImpactSounds: expnew17.aud, expnew16.aud
+		ValidTargets: Ground, Air
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch-NoFlame
+		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
 
 VenomLaser:
 	ReloadDelay: 30
@@ -1227,7 +1271,7 @@ PrisTLaser:
 	Inherits: PrisLaser
 	Report: ptnkfire.aud
 	ReloadDelay: 50
-	Range: 9c0
+	Range: 8c0
 	Projectile: LaserZapCA
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
@@ -1265,7 +1309,7 @@ PrisCLaser:
 	Inherits: PrisTLaser
 	Report: pcanfire.aud
 	ReloadDelay: 140
-	Range: 12c0
+	Range: 11c0
 	Projectile: LaserZapCA
 		Width: 70
 		Duration: 15

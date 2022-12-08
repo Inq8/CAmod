@@ -2029,6 +2029,8 @@ SMCV:
 		RequiresCondition: !being-warped
 	TransferTimedExternalConditionOnTransform:
 		Condition: invulnerability
+	TransferTimedExternalConditionOnTransform@INVIS:
+		Condition: invisibility
 	-Crushable:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
@@ -3406,6 +3408,8 @@ SFAC:
 		Damage: 950
 	TransferTimedExternalConditionOnTransform:
 		Condition: invulnerability
+	TransferTimedExternalConditionOnTransform@INVIS:
+		Condition: invisibility
 	SpawnActorsOnSell:
 		ActorTypes: s1,s1,s1,s1,s6
 
@@ -4068,7 +4072,7 @@ GRAV:
 		Description: Produces Scrin aircraft.
 		IconPalette: chromes
 	Valued:
-		Cost: 650
+		Cost: 500
 	Tooltip:
 		Name: Gravity Stabilizer
 	Selectable:
@@ -4509,19 +4513,19 @@ PTUR:
 		IconPalette: chrome
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
-		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
+		Weaknesses: • Cannot attack Aircraft
 		Attributes: • Can detect cloaked units
 	Valued:
-		Cost: 600
+		Cost: 725
 	CustomSellValue:
-		Value: 300
+		Value: 350
 	Tooltip:
 		Name: Plasma Cannon
 	Selectable:
 		DecorationBounds: 1024, 1194, 0, -256
 	Building:
 	Health:
-		HP: 34000
+		HP: 35000
 	Armor:
 		Type: Concrete
 	RevealsShroud:

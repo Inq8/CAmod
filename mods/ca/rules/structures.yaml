@@ -1590,6 +1590,8 @@ FACT:
 		Damage: 950
 	TransferTimedExternalConditionOnTransform:
 		Condition: invulnerability
+	TransferTimedExternalConditionOnTransform@INVIS:
+		Condition: invisibility
 	SpawnActorsOnSell:
 		ActorTypes: e1,e1,e1,e1,e6
 
@@ -1936,7 +1938,7 @@ HPAD:
 		Prerequisites: radarorrepair, ~structures.allies, ~techlevel.medium
 		Description: Produces and reloads helicopters.
 	Valued:
-		Cost: 650
+		Cost: 500
 	Tooltip:
 		Name: Helipad
 	Building:
@@ -2060,7 +2062,7 @@ AFLD:
 		Prerequisites: radarorrepair, ~structures.soviet, ~techlevel.medium
 		Description: Produces and reloads aircraft.
 	Valued:
-		Cost: 650
+		Cost: 500
 	Tooltip:
 		Name: Airfield
 	Selectable:
@@ -3758,6 +3760,8 @@ AFAC:
 		Damage: 950
 	TransferTimedExternalConditionOnTransform:
 		Condition: invulnerability
+	TransferTimedExternalConditionOnTransform@INVIS:
+		Condition: invisibility
 	SpawnActorsOnSell:
 		ActorTypes: n1,n1,n1,n1,n6
 
@@ -3879,7 +3883,7 @@ ATWR:
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 80
-		Prerequisites: anyradar, ~structures.atwr, ~techlevel.medium
+		Prerequisites: vehicles.any, ~structures.atwr, ~techlevel.medium
 		IconPalette: chrometd
 		Description: Advanced base defense.
 	TooltipExtras:
@@ -3928,7 +3932,7 @@ STWR:
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 80
-		Prerequisites: anyradar, ~structures.zocom, ~techlevel.medium
+		Prerequisites: vehicles.any, ~structures.zocom, ~techlevel.medium
 		Description: Advanced base defense that emits devastating sonic shockwaves.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -4646,7 +4650,7 @@ HPAD.TD:
 		IconPalette: chrometd
 		Description: Produces and reloads helicopters.
 	Valued:
-		Cost: 650
+		Cost: 500
 	Tooltip:
 		Name: Helipad
 	Building:
@@ -4865,7 +4869,7 @@ AFLD.GDI:
 		Prerequisites: radarorrepair, ~structures.gdi, ~techlevel.medium
 		Description: Produces and reloads aircraft.
 	Valued:
-		Cost: 650
+		Cost: 500
 	Tooltip:
 		Name: Airfield
 	Building:

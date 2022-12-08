@@ -1,0 +1,121 @@
+^Palettes:
+	GlobalLightingPaletteEffect:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, ca10.lua
+	MissionData:
+		Briefing: The first warriors of our new army are almost ready. Soviet forces march towards the Temple Prime complex oblivious to what awaits them.\n\nOnce our new army is unleashed the Soviets will not stand a chance, however their preparation cannot be hastened. Protect the temple at all costs.
+	MapOptions:
+		ShortGameCheckboxEnabled: False
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: Difficulty
+		Description: The difficulty of the mission
+		Values:
+			easy: Easy
+			normal: Normal
+			hard: Hard
+		Default: normal
+
+Player:
+	PlayerResources:
+		DefaultCash: 5000
+
+^TDPalette:
+	RenderSprites:
+		PlayerPalette: playertdunit
+
+^Infantry:
+	RenderSprites:
+		PlayerPalette: playertdunit
+	WithDeathAnimation:
+		DeathSequencePalette: playertdunit
+
+^BuildingTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+^DefenseTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+SAPC:
+	RenderSprites:
+		PlayerPalette: playerraunit
+
+HARV.TD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+AMCV:
+	RenderSprites:
+		PlayerPalette: playertd
+
+AIRS:
+	ParatroopersPower@markedairdrop:
+		Prerequisites: airs
+	-ParatroopersPower@blackhairdrop:
+
+WTNK:
+	Buildable:
+		Prerequisites: anyradar, airs, ~techlevel.medium
+
+FTNK:
+	Buildable:
+		Prerequisites: anyradar, airs
+
+HFTK:
+	Buildable:
+		Prerequisites: anyradar, airs
+
+RMBC:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+	Health:
+		HP: 80000
+
+microwave.upgrade:
+	Buildable:
+		Prerequisites: ~cyborg.upgrade
+
+quantum.upgrade:
+	Buildable:
+		Prerequisites: tmpl
+
+alphacomanche.upgrade:
+	Buildable:
+		Prerequisites: tmpl
+
+cyborg.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+cyborgarmor.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+cyborgspeed.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+BIO:
+	-OwnerLostAction:
+	-SpawnActorOnDeath:
+	-ProvidesPrerequisite@mortar:
+	-ProvidesPrerequisite@toxintruck:
+	Tooltip:
+		Name: Weapons Lab
+	-TooltipDescription@ally:
+	-TooltipDescription@other:
+	Explodes:
+		Type: Footprint
+		Weapon: BuildingExplode
+		EmptyWeapon: BuildingExplode
+	Exit@1:
+		SpawnOffset: -190,880,0
+		ExitCell: 1,2
+		ProductionTypes: Cyborg
+	Exit@2:
+		SpawnOffset: 190,-400,0
+		ExitCell: 1,-1
+		ProductionTypes: Cyborg
+	Production:
+		Produces: Cyborg
+	RallyPoint:

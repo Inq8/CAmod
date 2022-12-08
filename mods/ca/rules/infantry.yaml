@@ -909,7 +909,7 @@ MECH:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 90
-		Prerequisites: repair, ~infantry.mech, ~techlevel.low
+		Prerequisites: repair, ~!cyborg.production, ~infantry.mech, ~techlevel.low
 		Description: Repairs nearby vehicles.
 	TooltipExtras:
 		Weaknesses: • Unarmed
@@ -991,6 +991,25 @@ MECH:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	GuardsSelection:
 		ValidTargets: Vehicle
+
+CMEC:
+	Inherits: MECH
+	Inherits: ^Cyborg
+	Health:
+		HP: 17000
+	-TakeCover:
+	Voiced:
+		VoiceSet: CyborgVoice
+	Buildable:
+		Prerequisites: repair, ~cyborg.production, ~infantry.cyborg, ~infantry.mech, ~techlevel.low
+	Tooltip:
+		Name: Cyborg Mechanic
+	AttackSoundsCA@REPAIRSOUND:
+		Sounds: cmecrepair.aud
+	WithInfantryBody:
+		StandSequences: stand
+	RevealsShroud:
+		Range: 5c0
 
 HACK:
 	Inherits: ^Soldier
@@ -2905,15 +2924,11 @@ RMBC:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@EMP: ^EmpDisable
 	Inherits@CLOAK: ^Cloakable
-	RenderSprites:
-		PlayerPalette: playerd2k
-		Image: cycom
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 230
 		Prerequisites: tmpp, ~infantry.cyborg, ~techlevel.high
-		IconPalette: chrometd
 		Description: Elite cyborg infantry unit armed with\n  a plasma cannon.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -2926,7 +2941,7 @@ RMBC:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 39000
+		HP: 40000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -2949,7 +2964,7 @@ RMBC:
 		VoiceSet: CyborgCommandoVoice
 	Armament@PRIMARY:
 		Weapon: CyCannon
-		LocalOffset: 0,0,300
+		LocalOffset: 300,0,300
 	Armament@Garrison:
 		Name: mounted
 		Weapon: cycannon
@@ -2958,11 +2973,6 @@ RMBC:
 		EmptyWeapon: UnitExplodeSmall
 		Chance: 100
 		RequiresCondition: !being-warped
-	WithDeathAnimation:
-		DeathSequencePalette: playerd2k
-	Selectable:
-		Bounds: 1024, 1024, 0, -170
-		DecorationBounds: 512, 853, 0, -170
 	-TakeCover:
 	-Crushable:
 	-KillsSelf@Immolate:
@@ -2974,8 +2984,8 @@ RMBC:
 		TargetTypes: Repair
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-		StandSequences: stand
-		IdleSequences: idle1, idle2
+		StandSequences: stand, stand2
+		IdleSequences: idle, idle2
 		RequiresCondition: !being-warped && !empdisable && !parachute
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
@@ -3716,7 +3726,7 @@ SEAL:
 		Ammo: 1
 		AmmoCondition: ammo
 	ReloadAmmoPoolCA:
-		Delay: 875
+		Delay: 500
 		Count: 1
 		ShowSelectionBar: true
 		SelectionBarColor: dd0000
@@ -3791,3 +3801,66 @@ XO:
 		Interval: 3
 		Sequences: descend
 	-WithParachute:
+
+ENLI:
+	Inherits: ^Cyborg
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@EMP: ^EmpDisable
+	Inherits@CLOAK: ^Cloakable
+	RenderSprites:
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ, CyborgMQ
+		BuildAtProductionType: Cyborg
+		BuildPaletteOrder: 225
+		Prerequisites: tmpp, ~infantry.cyborg, ~techlevel.high
+		Description: Elite cyborg infantry unit armed with\n  a particle cannon that deals area damage.
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
+		Attributes: • Heals on Tiberium
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Enlightened
+	-TakeCover:
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Armor:
+		Type: Heavy
+	Health:
+		HP: 27500
+	Mobile:
+		Speed: 54
+		Voice: Move
+	AttackFrontal:
+		Voice: Attack
+		PauseOnCondition: being-warped
+		FacingTolerance: 0
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Guard:
+		Voice: Move
+	Voiced:
+		VoiceSet: EnlightenedVoice
+	Armament@PRIMARY:
+		Weapon: EnlightenedBeam
+		LocalOffset: 200,0,300
+	Armament@Garrison:
+		Name: mounted
+		Weapon: Vulcan3
+		MuzzleSequence: garrison-muzzle
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
+	WithInfantryBody:
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody:
+		IdleSequences: idle, idle2
+		StandSequences: stand, stand2
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute

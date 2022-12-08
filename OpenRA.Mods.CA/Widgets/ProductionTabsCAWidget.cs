@@ -265,6 +265,9 @@ namespace OpenRA.Mods.Common.Widgets
 		// Is added to world.ActorAdded by the SidebarLogic handler
 		public void ActorChanged(Actor a)
 		{
+			if (a.World.Disposing)
+				return;
+
 			if (a.Info.HasTraitInfo<ProductionQueueInfo>())
 			{
 				UpdateQueues(a);

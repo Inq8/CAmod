@@ -31,22 +31,37 @@ WallTypes = { "sbag", "fenc", "brik", "cycl", "barb" }
 
 KeyStructures = { "fact", "afac", "sfac", "proc", "proc.td", "proc.scrin", "weap", "weap.td", "airs", "wsph", "dome", "hq", "nerv", "atek", "stek", "gtek", "tmpl", "scrt" }
 
+-- stores timings for AI rebuilding (populated automatically)
 NextRebuildTimes = { }
 
+-- stores active squad leaders (populated automatically)
 SquadLeaders = { }
 
+-- stores actors which have called for help so they don't do so repeatedly (populated automatically)
 AlertedUnits = { }
 
--- per production structure, stores which squad to assign produced units to next
+-- per production structure, stores which squad to assign produced units to next (populated automatically)
 SquadAssignmentQueue = { }
 
--- stores which AI production structures have triggers assigned to prevent them being added multiple times
+-- stores which AI production structures have triggers assigned to prevent them being added multiple times (populated automatically)
 OnProductionTriggers = { }
+
+-- used to define actors and/or types of actors that the AI should not rebuild
+RebuildExcludes = {
+	-- USSR = {
+	-- 	 Actors = { "ActorName" },
+	-- 	 Types = { "proc" }
+	-- }
+}
 
 InitObjectives = function(player)
 	Trigger.OnObjectiveAdded(player, function(p, id)
 		Trigger.AfterDelay(1, function()
-			Media.DisplayMessage(p.GetObjectiveDescription(id), "New " .. string.lower(p.GetObjectiveType(id)) .. " objective", HSLColor.Yellow)
+			local colour = HSLColor.Yellow
+			if p.GetObjectiveType(id) ~= "Primary" then
+				colour = HSLColor.Gray
+			end
+			Media.DisplayMessage(p.GetObjectiveDescription(id), "New " .. string.lower(p.GetObjectiveType(id)) .. " objective", colour)
 		end)
 	end)
 
@@ -147,7 +162,7 @@ OnAnyDamaged = function(actors, func)
 	end)
 end
 
--- Make the unit hunt when it becomes idle.
+-- make the unit hunt when it becomes idle.
 IdleHunt = function(actor)
 	if actor.HasProperty("Hunt") and not actor.IsDead then
 		Trigger.OnIdle(actor, function(a)
@@ -158,7 +173,7 @@ IdleHunt = function(actor)
 	end
 end
 
-AssaultPlayerBaseOrHunt = function(actor, waypoints)
+AssaultPlayerBaseOrHunt = function(actor, waypoints, fromIdle)
 	Trigger.AfterDelay(1, function()
 		if not actor.IsDead then
 			if waypoints ~= nil then
@@ -174,12 +189,15 @@ AssaultPlayerBaseOrHunt = function(actor, waypoints)
 			elseif actor.HasProperty("Hunt") then
 				actor.Hunt()
 			end
-			Trigger.AfterDelay(1, function()
-				if not actor.IsDead then
-					Trigger.OnIdle(actor, function(a)
-						AssaultPlayerBaseOrHunt(a)
-					end)
-				end
+			-- only add the OnIdle trigger if it wasn't triggered from OnIdle (don't need multiple triggers)
+			if not fromIdle then
+				Trigger.AfterDelay(1, function()
+					if not actor.IsDead then
+						Trigger.OnIdle(actor, function(a)
+							AssaultPlayerBaseOrHunt(a, nil, true)
+						end)
+					end
+				end)
 			end)
 		end
 	end)
@@ -206,8 +224,29 @@ end
 AutoRepairAndRebuildBuildings = function(player, maxRebuildAttempts)
 	local buildings = Utils.Where(Map.ActorsInWorld, function(self) return self.Owner == player and self.HasProperty("StartBuildingRepairs") end)
 	Utils.Do(buildings, function(a)
+		local excludeFromRebuilding = false
+		if RebuildExcludes ~= nil and RebuildExcludes[player.Name] ~= nil then
+			if RebuildExcludes[player.Name].Actors ~= nil then
+				Utils.Do(RebuildExcludes[player.Name].Actors, function(aa)
+					if aa == a then
+						excludeFromRebuilding = true
+						return;
+					end
+				end)
+			end
+			if RebuildExcludes[player.Name].Types ~= nil then
+				Utils.Do(RebuildExcludes[player.Name].Types, function(t)
+					if a.Type == t then
+						excludeFromRebuilding = true
+						return;
+					end
+				end)
+			end
+		end
 		AutoRepairBuilding(a, player)
-		AutoRebuildBuilding(a, player)
+		if not excludeFromRebuilding then
+			AutoRebuildBuilding(a, player)
+		end
 	end)
 end
 
@@ -242,7 +281,7 @@ end
 
 RebuildBuilding = function(buildingType, player, loc, pos, attemptNumber, maxAttempts)
 
-	-- If next build time set for player, or it's in the past, set to current game time
+	-- if next build time set for player, or it's in the past, set to current game time
 	if NextRebuildTimes[player] == nil or NextRebuildTimes[player] < DateTime.GameTime then
 		NextRebuildTimes[player] = DateTime.GameTime
 	end
@@ -250,7 +289,7 @@ RebuildBuilding = function(buildingType, player, loc, pos, attemptNumber, maxAtt
 	local buildTime = math.ceil(Actor.BuildTime(buildingType) * BuildTimeMultipliers[Difficulty])
 	local delayToAdd = NextRebuildTimes[player] - DateTime.GameTime
 
-	-- Add build time of the next building to the next build time for the player
+	-- add build time of the next building to the next build time for the player
 	if attemptNumber == 1 then
 		NextRebuildTimes[player] = NextRebuildTimes[player] + buildTime
 	else
@@ -297,7 +336,7 @@ RebuildBuilding = function(buildingType, player, loc, pos, attemptNumber, maxAtt
 	end)
 end
 
--- Returns true if player has one of any of the specified actor types
+-- returns true if player has one of any of the specified actor types
 HasOneOf = function(player, types)
 	local count = 0
 
@@ -310,7 +349,7 @@ HasOneOf = function(player, types)
 	return count > 0
 end
 
--- Make specified units have a chance to swap targets when attacked instead of chasing one target endlessly
+-- make specified units have a chance to swap targets when attacked instead of chasing one target endlessly
 TargetSwapChance = function(unit, player, chance)
 	Trigger.OnDamaged(unit, function(self, attacker, damage)
 		if attacker.Owner ~= MissionPlayer then
@@ -363,7 +402,7 @@ CallForHelp = function(self, range, filter)
 	end
 end
 
---- Attack squad functionality, requires Squads object to be defined properly in the mission script file
+--- attack squad functionality, requires Squads object to be defined properly in the mission script file
 InitAttackSquad = function(squad, player)
 	squad.Player = player
 
@@ -548,18 +587,19 @@ SendAttackSquad = function(squad)
 						squadLeader = a;
 					end
 
-					-- If squad leader, queue attack move to each attack path waypoint
+					-- if squad leader, queue attack move to each attack path waypoint
 					if squadLeader == nil or a == squadLeader then
 						Utils.Do(attackPath, function(w)
 							a.AttackMove(w, 3)
-							if squad.IsNaval ~= nil and squad.IsNaval then
-								IdleHunt(a)
-							else
-								AssaultPlayerBaseOrHunt(a);
-							end
 						end)
 
-						-- On damaged or killed
+						if squad.IsNaval ~= nil and squad.IsNaval then
+							IdleHunt(a)
+						else
+							AssaultPlayerBaseOrHunt(a);
+						end
+
+						-- on damaged or killed
 						Trigger.OnDamaged(a, function(self, attacker, damage)
 							ClearSquadLeader(squadLeader)
 						end)
@@ -568,12 +608,12 @@ SendAttackSquad = function(squad)
 							ClearSquadLeader(squadLeader)
 						end)
 
-					-- If not squad leader, follow the leader
+					-- if not squad leader, follow the leader
 					else
 						SquadLeaders[actorId] = squadLeader
 						FollowSquadLeader(a)
 
-						-- If damaged (stop guarding, attack move to enemy base)
+						-- if damaged (stop guarding, attack move to enemy base)
 						Trigger.OnDamaged(a, function(self, attacker, damage)
 							ClearSquadLeader(SquadLeaders[actorId])
 						end)

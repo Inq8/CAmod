@@ -49,9 +49,24 @@ MONEYCRATE:
 	RenderSprites:
 		Image: scrate
 
+POWERCHEAT:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	Power:
+		Amount: 5000
+
+POWERCHEAT.MINOR:
+	Inherits: POWERCHEAT
+	Power:
+		Amount: 1500
+
 ^Disabled:
 	Buildable:
 		Prerequisites: ~disabled
 
 TRUK:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+FENC:
+	-BlocksProjectiles:
