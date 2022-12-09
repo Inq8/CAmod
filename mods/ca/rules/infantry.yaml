@@ -997,27 +997,92 @@ MECH:
 		Actors: cmec
 
 CMEC:
-	Inherits: MECH
-	Inherits@CYBORG: ^Cyborg
-	Health:
-		HP: 17000
-	-TakeCover:
-	-Convertible:
-	-UpgradeableTo:
-	Voiced:
-		VoiceSet: CyborgVoice
+	Inherits: ^Cyborg
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
+		BuildPaletteOrder: 90
 		Prerequisites: repair, tmpp, ~tmpp, ~infantry.mech, ~techlevel.high
+		Description: Repairs nearby vehicles.
+	TooltipExtras:
+		Weaknesses: • Unarmed
+		Attributes: • Can salvage destroyed vehicles for credits
+	Valued:
+		Cost: 400
 	Tooltip:
 		Name: Cyborg Mechanic
-	AttackSoundsCA@REPAIRSOUND:
-		Sounds: cmecrepair.aud
-	WithInfantryBody:
-		StandSequences: stand
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 17000
+	Mobile:
+		Voice: Move
+		PauseOnCondition: being-warped
 	RevealsShroud:
 		Range: 5c0
+	Passenger:
+		CustomPipType: blue
+		Voice: Move
+	Guard:
+		Voice: Move
+	Armament:
+		Weapon: Repair
+		Cursor: repair
+		OutsideRangeCursor: repair
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+	Armament@defuse:
+		Weapon: DefuseKit
+		Cursor: goldwrench
+		OutsideRangeCursor: goldwrench
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+		Name: secondary
+	AutoTargetPriority@defuse:
+		ValidTargets: C4Attached
+		InvalidTargets: NoAutoTarget
+		ValidRelationships: Ally
+	AttackFrontal:
+		Voice: Action
+		PauseOnCondition: being-warped
+		FacingTolerance: 0
+	AttackSoundsCA@REPAIRSOUND:
+		Sounds: cmecrepair.aud
+	CaptureManager:
+		CapturingCondition: salvaging
+	Captures:
+		CaptureTypes: husk
+		PlayerExperience: 5
+		ConsumedByCapture: False
+		CaptureDelay: 150
+		PlayerExperienceRelationships: Neutral, Enemy
+		EnterCursor: sell2
+		EnterBlockedCursor: move-blocked
+	WithInfantryBody:
+		IdleSequences: idle1, idle2
+		DefaultAttackSequence: repair
+		StandSequences: stand
+		RequiresCondition: !parachute && !being-warped && !salvaging
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
+	WithInfantryBody@SALVAGE:
+		StandSequences: repair
+		RequiresCondition: salvaging
+	Voiced:
+		VoiceSet: CyborgVoice
+	AutoTarget:
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Repair
+		ValidRelationships: Ally
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
+	GuardsSelection:
+		ValidTargets: Vehicle
+	-TakeCover:
 
 HACK:
 	Inherits: ^Soldier
