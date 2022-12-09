@@ -53,8 +53,11 @@ namespace OpenRA.Mods.CA.Traits
 			"The filename of the audio is defined per faction in notifications.yaml.")]
 		public readonly string BlockedAudio = null;
 
-		[Desc("Allows the actors to be produced immediately when charged.")]
+		[Desc("If true, actors are produced immediately when charged (and SelectProducer is ignored).")]
 		public readonly bool AutoFire = false;
+
+		[Desc("If true, producer must be selected, otherwise chosen automatically.")]
+		public readonly bool SelectProducer = true;
 
 		[Desc("Cursor to display when unable to Cash Hack.")]
 		public readonly string BlockedCursor = "move-blocked";
@@ -76,7 +79,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public override void SelectTarget(Actor self, string order, SupportPowerManager manager)
 		{
-			if (info.AutoFire)
+			if (info.AutoFire || !info.SelectProducer)
 				self.World.IssueOrder(new Order(order, manager.Self, false));
 			else
 				self.World.OrderGenerator = new SelectProductionTarget(Self.World, order, manager, this);
@@ -101,7 +104,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			IOrderedEnumerable<TraitPair<Production>> producers;
 
-			if (info.AutoFire)
+			if (info.AutoFire || !info.SelectProducer)
 			{
 				producers = self.World.ActorsWithTrait<Production>()
 					.Where(x => x.Actor.Owner == self.Owner
