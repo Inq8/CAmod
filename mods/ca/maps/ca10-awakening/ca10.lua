@@ -92,8 +92,8 @@ AirAttackCompositions = {
 }
 
 GroundAttackInterval = {
-	easy = DateTime.Seconds(44),
-	normal = DateTime.Seconds(33),
+	easy = DateTime.Seconds(30),
+	normal = DateTime.Seconds(26),
 	hard = DateTime.Seconds(22)
 }
 
@@ -110,8 +110,8 @@ HaloDropInterval = {
 }
 
 AirAttackStart = {
-	easy = DateTime.Minutes(12),
-	normal = DateTime.Minutes(9),
+	easy = DateTime.Minutes(10),
+	normal = DateTime.Minutes(8),
 	hard = DateTime.Minutes(6)
 }
 
@@ -175,7 +175,7 @@ OncePerSecondChecks = function()
 			Nod.MarkCompletedObjective(ObjectiveProtectTemple)
 
 			local upgradeCreationLocation = CPos.New(0, 0)
-			Actor.Create("cyborg.upgrade", true, { Owner = Nod, Location = upgradeCreationLocation })
+			Actor.Create("advcyborg.upgrade", true, { Owner = Nod, Location = upgradeCreationLocation })
 			Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod, Location = upgradeCreationLocation })
 			Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod, Location = upgradeCreationLocation })
 			DeployCyborgs()

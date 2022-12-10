@@ -1415,7 +1415,7 @@ SAPC.AI:
 	RenderSprites:
 		Image: sapc
 	Buildable:
-		Prerequisites: ~botplayer, ~!cyborg.production, tmpl, ~vehicles.nod, ~techlevel.high
+		Prerequisites: ~botplayer, ~!tmpp, tmpl, ~vehicles.nod, ~techlevel.high
 	Cargo:
 		InitialUnits: N1,N1,N4,N3,N3
 
@@ -1425,7 +1425,7 @@ SAPC.AI2:
 	RenderSprites:
 		Image: sapc
 	Buildable:
-		Prerequisites: ~botplayer, ~cyborg.production, tmpl, ~vehicles.nod, ~techlevel.high
+		Prerequisites: ~botplayer, ~tmpp, tmpl, ~vehicles.nod, ~techlevel.high
 	Cargo:
 		InitialUnits: N1C,N1C,N5,N3C,N3C
 
@@ -6128,23 +6128,21 @@ WTNK:
 		Offset: 0,0,0
 	Armament@PRIMARY:
 		Weapon: MicrowaveZap
-		FireDelay: 7
 		LocalOffset: 500,0,140
 		MuzzleSequence: muzzle
 		MuzzlePalette: tseffect-ignore-lighting-alpha75
 		RequiresCondition: !microwave-upgrade
 	Armament@PRIMARYUPG:
 		Weapon: MicrowaveZap.UPG
-		FireDelay: 7
 		LocalOffset: 500,0,140
 		MuzzleSequence: muzzle
 		MuzzlePalette: tseffect-ignore-lighting-alpha75
 		RequiresCondition: microwave-upgrade
-	Armament@PRIMARYSOUND:
-		Weapon: MicrowaveZapSound
-	AttackTurreted:
+	AttackTurretedCharged:
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
+		ChargeLevel: 9
+		ChargingCondition: charging
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	SpawnActorOnDeath:
@@ -6164,6 +6162,13 @@ WTNK:
 	GrantConditionOnPrerequisite@UPG:
 		Condition: microwave-upgrade
 		Prerequisites: microwave.upgrade
+	GrantConditionOnAttack@CHARGE:
+		Condition: charging
+		RevokeDelay: 10
+	AmbientSoundCA@CHARGE:
+		RequiresCondition: charging
+		SoundFiles: coreup1.aud
+		Interval: 50
 
 #adjust offsets
 BATF:
@@ -6371,7 +6376,7 @@ MEMP:
 		DeploySound: mobempcharge1.aud
 		DeployedCondition: triggered
 		CooldownTicks: 450
-		DeployedTicks: 72
+		DeployedTicks: 50
 		RequiresCondition: radarenabled && !(empdisable || being-warped)
 		ChargingColor: 0277bd
 		DischargingColor: 03a9f4

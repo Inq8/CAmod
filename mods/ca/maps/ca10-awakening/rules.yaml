@@ -69,6 +69,37 @@ HFTK:
 	Buildable:
 		Prerequisites: anyradar, airs
 
+N1:
+	Buildable:
+		Prerequisites: ~infantry.td
+
+N3:
+	Buildable:
+		Prerequisites: ~infantry.td
+
+N4:
+	Buildable:
+		Prerequisites: ~hand
+
+MECH:
+	Buildable:
+		Prerequisites: repair, ~infantry.mech
+
+N1C:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+N3C:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+N5:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+CMEC:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+ENLI:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
 RMBC:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 	Health:
@@ -76,7 +107,7 @@ RMBC:
 
 microwave.upgrade:
 	Buildable:
-		Prerequisites: ~cyborg.upgrade
+		Prerequisites: tmpl
 
 quantum.upgrade:
 	Buildable:
@@ -86,7 +117,7 @@ alphacomanche.upgrade:
 	Buildable:
 		Prerequisites: tmpl
 
-cyborg.upgrade:
+advcyborg.upgrade:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
 cyborgarmor.upgrade:

@@ -198,7 +198,7 @@ AssaultPlayerBaseOrHunt = function(actor, waypoints, fromIdle)
 						end)
 					end
 				end)
-			end)
+			end
 		end
 	end)
 end

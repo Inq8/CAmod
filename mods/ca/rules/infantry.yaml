@@ -909,7 +909,7 @@ MECH:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 90
-		Prerequisites: repair, ~!cyborg.production, ~infantry.mech, ~techlevel.low
+		Prerequisites: repair, ~!tmpp, ~infantry.mech, ~techlevel.low
 		Description: Repairs nearby vehicles.
 	TooltipExtras:
 		Weaknesses: • Unarmed
@@ -991,25 +991,98 @@ MECH:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	GuardsSelection:
 		ValidTargets: Vehicle
+	Convertible:
+		SpawnActors: CMEC
+	UpgradeableTo:
+		Actors: cmec
 
 CMEC:
-	Inherits: MECH
 	Inherits: ^Cyborg
-	Health:
-		HP: 17000
-	-TakeCover:
-	Voiced:
-		VoiceSet: CyborgVoice
 	Buildable:
-		Prerequisites: repair, ~cyborg.production, ~infantry.cyborg, ~infantry.mech, ~techlevel.low
+		Queue: InfantrySQ, InfantryMQ, CyborgMQ
+		BuildAtProductionType: Cyborg
+		BuildPaletteOrder: 90
+		Prerequisites: repair, tmpp, ~tmpp, ~infantry.mech, ~techlevel.high
+		Description: Repairs nearby vehicles.
+	TooltipExtras:
+		Weaknesses: • Unarmed
+		Attributes: • Can salvage destroyed vehicles for credits
+	Valued:
+		Cost: 400
 	Tooltip:
 		Name: Cyborg Mechanic
-	AttackSoundsCA@REPAIRSOUND:
-		Sounds: cmecrepair.aud
-	WithInfantryBody:
-		StandSequences: stand
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 17000
+	Mobile:
+		Voice: Move
+		PauseOnCondition: being-warped
 	RevealsShroud:
 		Range: 5c0
+	Passenger:
+		CustomPipType: blue
+		Voice: Move
+	Guard:
+		Voice: Move
+	Armament:
+		Weapon: Repair
+		Cursor: repair
+		OutsideRangeCursor: repair
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+	Armament@defuse:
+		Weapon: DefuseKit
+		Cursor: goldwrench
+		OutsideRangeCursor: goldwrench
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+		Name: secondary
+	AutoTargetPriority@defuse:
+		ValidTargets: C4Attached
+		InvalidTargets: NoAutoTarget
+		ValidRelationships: Ally
+	AttackFrontal:
+		Voice: Action
+		PauseOnCondition: being-warped
+		FacingTolerance: 0
+	AttackSoundsCA@REPAIRSOUND:
+		Sounds: cmecrepair.aud
+	CaptureManager:
+		CapturingCondition: salvaging
+	Captures:
+		CaptureTypes: husk
+		PlayerExperience: 5
+		ConsumedByCapture: False
+		CaptureDelay: 150
+		PlayerExperienceRelationships: Neutral, Enemy
+		EnterCursor: sell2
+		EnterBlockedCursor: move-blocked
+	WithInfantryBody:
+		IdleSequences: idle1, idle2
+		DefaultAttackSequence: repair
+		StandSequences: stand
+		RequiresCondition: !parachute && !being-warped && !salvaging
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
+	WithInfantryBody@SALVAGE:
+		StandSequences: repair
+		RequiresCondition: salvaging
+	Voiced:
+		VoiceSet: CyborgVoice
+	AutoTarget:
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Repair
+		ValidRelationships: Ally
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
+	GuardsSelection:
+		ValidTargets: Vehicle
+	-TakeCover:
 
 HACK:
 	Inherits: ^Soldier
@@ -1350,7 +1423,7 @@ N1:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 11
-		Prerequisites: ~!cyborg.production, ~infantry.td
+		Prerequisites: ~!tmpp, ~infantry.td
 		IconPalette: chrometd
 		Description: General-purpose infantry.
 	TooltipExtras:
@@ -1487,7 +1560,7 @@ N3:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 21
-		Prerequisites: ~!cyborg.production, ~infantry.td
+		Prerequisites: ~!tmpp, ~infantry.td
 		IconPalette: chrometd
 		Description: Anti-tank/anti-aircraft infantry.
 	TooltipExtras:
@@ -1598,7 +1671,7 @@ N4:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 71
-		Prerequisites: ~hand, ~!cyborg.production
+		Prerequisites: ~hand, ~!tmpp
 		IconPalette: chrometd
 		Description: Short-range anti-infantry/anti-structure infantry.
 	TooltipExtras:
@@ -1662,7 +1735,7 @@ N5:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 72
-		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.high
+		Prerequisites: tmpp, ~tmpp, ~techlevel.high
 		IconPalette: chrometd
 		Description: Short-range anti-infantry/anti-structure cyborg infantry.
 	TooltipExtras:
@@ -2239,12 +2312,6 @@ SAB:
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: ReturnFire
-	GrantTimedConditionOnDeploy:
-		DeployedCondition: deployed
-		CooldownTicks: 1250
-		DeployedTicks: 375
-		StartsFullyCharged: true
-		PauseOnCondition: !moving && deployed
 	Cloak:
 		InitialDelay: 0
 		CloakDelay: 25
@@ -2252,7 +2319,7 @@ SAB:
 		Palette: cloaktd
 		IsPlayerPalette: true
 		DetectionTypes: Cloak
-		RequiresCondition: deployed && !cloak-force-disabled
+		RequiresCondition: can-cloak && !cloak-force-disabled
 		UncloakOn: Unload, Infiltrate, Demolish, Dock, Attack, Damage
 		CloakSound: gstealon.aud
 		UncloakSound: gstealof.aud
@@ -2276,6 +2343,18 @@ SAB:
 	ProductionCostMultiplier@LegionBonus:
 		Multiplier: 80
 		Prerequisites: player.legion
+	GrantChargingCondition@CLOAK:
+		Condition: can-cloak
+		InitialCharge: 1000
+		MaxCharge: 1000
+		PauseOnCondition: moving
+		RequiresCondition: !cloak-force-disabled
+		ChargeRate: 1
+		DischargeRate: 2
+		ChargingColor: 777777
+		DischargingColor: 999999
+		ChargeDelay: 250
+		ShowSelectionBarWhenFull: false
 
 ACOL:
 	Inherits: ^Cyborg
@@ -2285,7 +2364,7 @@ ACOL:
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 180
 		IconPalette: chrometd
-		Prerequisites: anyradar, obli, ~infantry.marked, ~!cyborg.production, ~techlevel.medium
+		Prerequisites: anyradar, obli, ~infantry.marked, ~!tmpp, ~techlevel.medium
 		Description: Cyborg infantry with a laser weapon.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -2354,7 +2433,7 @@ ACOL.UPG:
 	Health:
 		HP: 20000
 	Buildable:
-		Prerequisites: anyradar, obli, ~infantry.marked, ~cyborg.production, ~techlevel.high
+		Prerequisites: anyradar, obli, ~infantry.marked, ~tmpp, ~techlevel.high
 	-TakeCover:
 	-Convertible:
 	-UpgradeableTo:
@@ -2767,7 +2846,7 @@ N1C:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 13
-		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.high
+		Prerequisites: tmpp, ~tmpp, ~techlevel.high
 		IconPalette: chrometd
 		Description: General-purpose cyborg infantry.
 	TooltipExtras:
@@ -2823,7 +2902,7 @@ N3C:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 23
-		Prerequisites: ~cyborg.production, ~infantry.cyborg, ~techlevel.high
+		Prerequisites: tmpp, ~tmpp, ~techlevel.high
 		IconPalette: chrometd
 		Description: Anti-tank/anti-aircraft cyborg infantry.
 	TooltipExtras:
@@ -2928,7 +3007,7 @@ RMBC:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 230
-		Prerequisites: tmpp, ~infantry.cyborg, ~techlevel.high
+		Prerequisites: ~infantry.nod, tmpp, advcyborg.upgrade, ~techlevel.high
 		Description: Elite cyborg infantry unit armed with\n  a plasma cannon.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
@@ -3812,29 +3891,38 @@ ENLI:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 225
-		Prerequisites: tmpp, ~infantry.cyborg, ~techlevel.high
-		Description: Elite cyborg infantry unit armed with\n  a particle cannon that deals area damage.
+		Prerequisites: ~infantry.nod, tmpp, advcyborg.upgrade, ~techlevel.high
+		Description: Heavy cyborg infantry unit armed with\n  a particle cannon that deals area damage.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
-		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Heals on Tiberium
+		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
+		Attributes: • Heals on Tiberium\n• EMP blast ability
 	Valued:
 		Cost: 1000
 	Tooltip:
 		Name: Enlightened
 	-TakeCover:
+	-Crushable:
+	-KillsSelf@Immolate:
+	Targetable:
+		TargetTypes: Ground, Vehicle, C4Immune, ChaosImmune, DriverKillImmune, Cyborg
+	-Targetable@HEAL:
+	Targetable@REPAIR:
+		RequiresCondition: !parachute && damaged && !being-warped && !repair-cooldown
+		TargetTypes: Repair
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Armor:
 		Type: Heavy
 	Health:
-		HP: 27500
+		HP: 30000
 	Mobile:
-		Speed: 54
+		Speed: 60
 		Voice: Move
+		PauseOnCondition: being-warped || empdisable
 	AttackFrontal:
 		Voice: Attack
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || empdisable
 		FacingTolerance: 0
 	AttackMove:
 		Voice: Move
@@ -3849,18 +3937,40 @@ ENLI:
 		LocalOffset: 200,0,300
 	Armament@Garrison:
 		Name: mounted
-		Weapon: Vulcan3
-		MuzzleSequence: garrison-muzzle
+		Weapon: EnlightenedBeam
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	WithInfantryBody:
-		RequiresCondition: !parachute && !being-warped
-	WithInfantryBody:
+		DefaultAttackSequence: shoot
 		IdleSequences: idle, idle2
 		StandSequences: stand, stand2
+		RequiresCondition: !parachute && !being-warped && !empdisable
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
+	WithInfantryBody@Warped:
+		RequiresCondition: being-warped || empdisable
+	GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
+		Condition: repair-cooldown
+		RequiredHealing: 85000
+		StackDuration: 1000
+		MinimumHealing: 2500
+		DamageTypes: DirectRepair
+		ShowSelectionBar: true
+	GrantTimedConditionOnDeploy:
+		DeployedCondition: triggered
+		CooldownTicks: 375
+		DeployedTicks: 5
+		StartsFullyCharged: true
+		RequiresCondition: !(empdisable || being-warped)
+		ShowSelectionBarWhenFull: false
+		ChargingColor: 88EEFF
+	PeriodicExplosion:
+		Weapon: EnlightenedEmp
+		RequiresCondition: triggered
+	WithColoredOverlay@EMP:
+		RequiresCondition: triggered
+		Color: 88EEFFcc

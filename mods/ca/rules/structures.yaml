@@ -3185,6 +3185,8 @@ HAND:
 		Prerequisite: infantry.human
 	ProvidesPrerequisite@infantrytd:
 		Prerequisite: infantry.td
+	ProvidesPrerequisite@nod:
+		Prerequisite: infantry.nod
 	ProvidesPrerequisiteValidatedFaction@blackh:
 		Factions: blackh
 		Prerequisite: infantry.blackh
@@ -3199,8 +3201,6 @@ HAND:
 		Prerequisite: infantry.shadow
 	ProvidesPrerequisite@mech:
 		Prerequisite: infantry.mech
-	ProvidesPrerequisite@cyborg:
-		Prerequisite: infantry.cyborg
 	InfiltrateForSupportPower@STOLENTECH:
 		Types: SabInfiltrate
 		Proxy: stolentech.hand
@@ -4171,6 +4171,7 @@ HQ:
 		EndChargeSpeechNotification: Reinforce
 		PauseOnCondition: disabled || empdisable || being-warped
 		SupportPowerPaletteOrder: 50
+		SelectProducer: false
 	DropPodsPowerCA@Zocom:
 		OrderName: droppods
 		Cursor: ability
@@ -6538,7 +6539,7 @@ TMPP:
 		Description: Provides access to cybernetic upgrades.
 		BuildLimit: 1
 	TooltipExtras:
-		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked\n• Special Ability: Cyborg Converter (with upgrade)
+		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked\n• Special Ability: Cyborg Converter
 	-Capturable:
 	-CaptureNotification:
 	-CapturableProgressBar:
@@ -6552,17 +6553,13 @@ TMPP:
 		Amount: -150
 	ProvidesPrerequisite@Name:
 		RequiresCondition: !being-warped
-	ProvidesPrerequisite@CYBORGPRODUCTION:
-		Prerequisite: cyborg.production
-		RequiresCondition: cyborg-production
+	ProvidesPrerequisite@nod:
+		Prerequisite: infantry.nod
 	ProvidesPrerequisite@marked:
 		Factions: marked
 		Prerequisite: infantry.marked
-	ProvidesPrerequisite@cyborg:
-		Prerequisite: infantry.cyborg
-	GrantConditionOnPrerequisite@CYBORGPRODUCTION:
-		Condition: cyborg-production
-		Prerequisites: cyborg.upgrade, hand
+	ProvidesPrerequisite@mech:
+		Prerequisite: infantry.mech
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	Exit@1:
@@ -6574,15 +6571,11 @@ TMPP:
 		Priority: 0
 	RallyPoint:
 		ForceSetType: Infantry
-	GrantConditionOnPrerequisite@Cyborgs:
-		Prerequisites: cyborg.upgrade
-		Condition: cyborgs
 	UnitConverter:
 		Type: Cyborg
 		ReadyAudio: UnitUpgraded
 		NoCashAudio: InsufficientFunds
 		BlockedAudio: OnHold
-		RequiresCondition: cyborgs
 		CostDifferenceRequired: true
 		EjectOnDeploy: true
 		ConvertingCondition: converting

@@ -10,17 +10,14 @@
 #endregion
 
 using System.Collections.Generic;
-using OpenRA.Activities;
-using OpenRA.Mods.CA.Activities;
-using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Unit got to face the target")]
-	public class AttackFrontalChargedInfo : AttackFrontalInfo, Requires<IFacingInfo>
+	[Desc("Actor has a visual turret used to attack.")]
+	public class AttackTurretedChargedInfo : AttackTurretedInfo, Requires<TurretedInfo>
 	{
 		[Desc("Amount of charge required to attack.")]
 		public readonly int ChargeLevel = 25;
@@ -44,15 +41,16 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly bool ShowSelectionBar = false;
 		public readonly Color SelectionBarColor = Color.FromArgb(128, 200, 255);
 
-		public override object Create(ActorInitializer init) { return new AttackFrontalCharged(init.Self, this); }
+		public override object Create(ActorInitializer init) { return new AttackTurretedCharged(init.Self, this); }
 	}
 
-	public class AttackFrontalCharged : AttackFrontal, INotifyAttack, INotifySold, ISelectionBar
+	public class AttackTurretedCharged : AttackTurreted, INotifyAttack, INotifySold, ISelectionBar
 	{
-		public new readonly AttackFrontalChargedInfo Info;
+		public new readonly AttackTurretedChargedInfo Info;
 
 		readonly Stack<int> chargingTokens = new Stack<int>();
 
+		bool turretReady;
 		bool charging;
 		int shotsFired;
 
@@ -85,11 +83,12 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		public AttackFrontalCharged(Actor self, AttackFrontalChargedInfo info)
+		public AttackTurretedCharged(Actor self, AttackTurretedChargedInfo info)
 			: base(self, info)
 		{
 			Info = info;
 			shotsFired = 0;
+			turretReady = false;
 		}
 
 		protected override void Tick(Actor self)
@@ -100,7 +99,7 @@ namespace OpenRA.Mods.CA.Traits
 			var reloading = false;
 			foreach (var armament in Armaments)
 			{
-				if (armament.IsReloading && armament.Burst == armament.Weapon.Burst)
+				if (armament.IsTraitEnabled() && armament.FireDelay > 0 && armament.Burst == armament.Weapon.Burst)
 				{
 					reloading = true;
 					break;
@@ -108,7 +107,7 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			// Stop charging when we lose our target
-			charging = (self.CurrentActivity is AttackCharged || self.CurrentActivity is AttackMoveActivity) && !reloading && IsAiming;
+			charging = !reloading && IsAiming && turretReady;
 
 			var delta = charging ? Info.ChargeRate : -Info.DischargeRate;
 			ChargeLevel = (ChargeLevel + delta).Clamp(0, Info.ChargeLevel);
@@ -131,11 +130,6 @@ namespace OpenRA.Mods.CA.Traits
 
 			while (chargingTokens.Count < StackCount)
 				chargingTokens.Push(self.GrantCondition(Info.ChargingCondition));
-		}
-
-		public override Activity GetAttackActivity(Actor self, AttackSource source, in Target newTarget, bool allowMove, bool forceAttack, Color? targetLineColor = null)
-		{
-			return new AttackCharged(self, newTarget, allowMove, forceAttack, targetLineColor);
 		}
 
 		void INotifyAttack.Attacking(Actor self, in Target target, Armament a, Barrel barrel)
@@ -166,5 +160,20 @@ namespace OpenRA.Mods.CA.Traits
 		bool ISelectionBar.DisplayWhenEmpty { get { return false; } }
 
 		Color ISelectionBar.GetColor() { return Info.SelectionBarColor; }
+
+		// Main change with AttackTurreted, also checks if charged here
+		protected override bool CanAttack(Actor self, in Target target)
+		{
+			if (target.Type == TargetType.Invalid)
+				return false;
+
+			// Don't break early from this loop - we want to bring all turrets to bear!
+			turretReady = false;
+			foreach (var t in turrets)
+				if (t.FaceTarget(self, target))
+					turretReady = true;
+
+			return turretReady && base.CanAttack(self, target) && IsCharged;
+		}
 	}
 }
