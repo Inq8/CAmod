@@ -2312,12 +2312,6 @@ SAB:
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: ReturnFire
-	GrantTimedConditionOnDeploy:
-		DeployedCondition: deployed
-		CooldownTicks: 1250
-		DeployedTicks: 375
-		StartsFullyCharged: true
-		PauseOnCondition: !moving && deployed
 	Cloak:
 		InitialDelay: 0
 		CloakDelay: 25
@@ -2325,7 +2319,7 @@ SAB:
 		Palette: cloaktd
 		IsPlayerPalette: true
 		DetectionTypes: Cloak
-		RequiresCondition: deployed && !cloak-force-disabled
+		RequiresCondition: can-cloak && !cloak-force-disabled
 		UncloakOn: Unload, Infiltrate, Demolish, Dock, Attack, Damage
 		CloakSound: gstealon.aud
 		UncloakSound: gstealof.aud
@@ -2349,6 +2343,18 @@ SAB:
 	ProductionCostMultiplier@LegionBonus:
 		Multiplier: 80
 		Prerequisites: player.legion
+	GrantChargingCondition@CLOAK:
+		Condition: can-cloak
+		InitialCharge: 1000
+		MaxCharge: 1000
+		PauseOnCondition: moving
+		RequiresCondition: !cloak-force-disabled
+		ChargeRate: 1
+		DischargeRate: 2
+		ChargingColor: 777777
+		DischargingColor: 999999
+		ChargeDelay: 250
+		ShowSelectionBarWhenFull: false
 
 ACOL:
 	Inherits: ^Cyborg
