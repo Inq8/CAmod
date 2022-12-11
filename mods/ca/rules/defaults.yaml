@@ -1821,7 +1821,7 @@
 		Condition: crush-attempt-slow
 	SpeedMultiplier@CRUSHATTEMPTSLOW:
 		RequiresCondition: crush-attempt-slow && !crush-slow
-		Modifier: 60
+		Modifier: 55
 	ExternalCondition@CRUSHSLOW:
 		Condition: crush-slow
 	SpeedMultiplier@CRUSHSLOW:
@@ -1831,7 +1831,7 @@
 ^SlightlySlowedByCrushing:
 	Inherits@CRUSHSLOW: ^SlowedByCrushing
 	SpeedMultiplier@CRUSHATTEMPTSLOW:
-		Modifier: 80
+		Modifier: 70
 	SpeedMultiplier@CRUSHSLOW:
 		Modifier: 50
 
@@ -2096,6 +2096,15 @@
 	GrantConditionOnPrerequisite@FLAKARMOR:
 		Condition: flakarmor-upgrade
 		Prerequisites: flakarmor.upgrade
+	GrantTimedConditionOnCrushWarning@QUICKDODGE:
+		Condition: quickdodge
+		Duration: 20
+	SpeedMultiplier@QUICKDODGE:
+		RequiresCondition: quickdodge
+		Modifier: 200
+	DamageMultiplier@QUICKDODGE:
+		RequiresCondition: quickdodge
+		Modifier: 50
 
 ^Cyborg:
 	Inherits: ^Soldier
