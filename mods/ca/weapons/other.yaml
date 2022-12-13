@@ -1075,7 +1075,7 @@ PortaLaserE:
 EnlightenedBeam:
 	ReloadDelay: 65
 	ValidTargets: Ground, Water
-	Range: 6c0
+	Range: 6c512
 	Report: enli-fire1.aud, enli-fire2.aud, enli-fire3.aud
 	Projectile: PlasmaBeam
 		Duration: 10
@@ -1103,6 +1103,17 @@ EnlightenedBeam:
 			Wood: 70
 			Concrete: 45
 			Light: 80
+		ValidRelationships: Enemy, Neutral
+	Warhead@2Dam: SpreadDamage
+		Spread: 256
+		Damage: 2600
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		Versus:
+			None: 10
+			Wood: 70
+			Concrete: 45
+			Light: 80
+		ValidRelationships: Ally
 	Warhead@2Eff: CreateEffect
 		Explosions: enliexplode1, enliexplode2
 		ImpactSounds: expnew17.aud, expnew16.aud
