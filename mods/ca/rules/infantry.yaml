@@ -3065,8 +3065,10 @@ RMBC:
 		TargetTypes: Repair
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-		StandSequences: stand, stand2
+		StandSequences: stand
 		IdleSequences: idle, idle2
+		MinIdleDelay: 75
+		MaxIdleDelay: 375
 		RequiresCondition: !being-warped && !empdisable && !parachute
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
@@ -3950,6 +3952,8 @@ ENLI:
 		IdleSequences: idle, idle2
 		StandSequences: stand, stand2
 		RequiresCondition: !parachute && !being-warped && !empdisable
+		MinIdleDelay: 75
+		MaxIdleDelay: 375
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
