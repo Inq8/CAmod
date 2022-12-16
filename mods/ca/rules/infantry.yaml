@@ -2419,26 +2419,27 @@ ACOL:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	Selectable:
-		Class: acol
 	Convertible:
-		SpawnActors: ACOL.UPG
+		SpawnActors: TPLR
 	UpgradeableTo:
-		Actors: acol.upg
+		Actors: tplr.upg
 
-ACOL.UPG:
+TPLR:
 	Inherits: ACOL
-	RenderSprites:
-		Image: acol
+	Tooltip:
+		Name: Templar
 	Valued:
 		Cost: 500
 	Health:
-		HP: 20000
+		HP: 21000
 	Buildable:
 		Prerequisites: anyradar, obli, ~infantry.marked, ~tmpp, ~techlevel.high
 	-TakeCover:
 	-Convertible:
 	-UpgradeableTo:
+	WithInfantryBody:
+		IdleSequences: idle, idle2
+		StandSequences: stand, stand2
 
 JJET:
 	Inherits@1: ^ExistsInWorld

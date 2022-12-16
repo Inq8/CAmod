@@ -66,13 +66,13 @@ AdvancedUnits = {
 		{ Infantry = {}, Vehicles = { "bggy", "bike", "bike", "stnk.nod" } },
 		{ Infantry = { "n3", "n1", "n1", "n4", "n1" }, Vehicles = { "ltnk", "ltnk" } },
 		{ Infantry = { "n3", "n1", "n1", "n4", "n1" }, Vehicles = { "ltnk", "arty.nod" } },
-		{ Infantry = { "acol.upg", "acol.upg", "n1c", "n3c", "n5" }, Vehicles = { "ftnk", "ltnk" } },
+		{ Infantry = { "tplr", "tplr", "n1c", "n3c", "n5" }, Vehicles = { "ftnk", "ltnk" } },
 	},
 	hard = {
 		{ Infantry = {}, Vehicles = { "stnk.nod", "stnk.nod", "stnk.nod", "sapc.ai" } },
 		{ Infantry = { "n3", "n1", "n1", "n1", "n1", "n4", "n3" }, Vehicles = { "ltnk", "ltnk", "ftnk", "arty.nod" } },
 		{ Infantry = { "n3", "n1", "n1", "n1", "n4", "n1", "n3" }, Vehicles = { "ltnk", "mlrs", "arty.nod", "howi" } },
-		{ Infantry = { "acol.upg", "acol.upg", "rmbc", "n1c", "n3c", "n5", "n1c", "n1c" }, Vehicles = { "ftnk", "ltnk" } },
+		{ Infantry = { "tplr", "tplr", "rmbc", "n1c", "n3c", "n5", "n1c", "n1c" }, Vehicles = { "ftnk", "ltnk" } },
 	}
 }
 
@@ -81,10 +81,10 @@ LabDefenseUnits = {
 		{ Infantry = { "n1c", "n1c", "n1c", "n3c" }, Vehicles = { "ltnk" } },
 	},
 	normal = {
-		{ Infantry = { "n1c", "n1c", "n1c", "n3c", "n5", "n1c", "acol.upg" }, Vehicles = { "ltnk", "mlrs", "bike", "bike" } },
+		{ Infantry = { "n1c", "n1c", "n1c", "n3c", "n5", "n1c", "tplr" }, Vehicles = { "ltnk", "mlrs", "bike", "bike" } },
 	},
 	hard = {
-		{ Infantry = { "n1c", "n1c", "n1c", "n3c", "n5", "n1c", "acol.upg", "acol.upg", "rmbc" }, Vehicles = { "ltnk", "mlrs", "stnk.nod", "hftk", "ltnk" } },
+		{ Infantry = { "n1c", "n1c", "n1c", "n3c", "n5", "n1c", "tplr", "tplr", "rmbc" }, Vehicles = { "ltnk", "mlrs", "stnk.nod", "hftk", "ltnk" } },
 	}
 }
 
