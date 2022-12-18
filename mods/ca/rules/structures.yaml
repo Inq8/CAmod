@@ -6012,7 +6012,7 @@ INDP:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.soviet, stek, ~techlevel.high
-		Description: Vehicles & aircraft are produced 15% faster and cost 5% less.
+		Description: Vehicles & aircraft are produced 15% faster and cost 10% less.
 		BuildLimit: 1
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
@@ -6093,7 +6093,7 @@ OREP:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.allies, atek, ~techlevel.high
-		Description: Refines ore, gems & Tiberium, increasing income by 5%.\n  Provides access to advanced chrono harvester technology.
+		Description: Refines ore, gems & Tiberium, increasing income by 10%.\n  Provides access to advanced chrono harvester technology.
 		BuildLimit: 1
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
@@ -6108,10 +6108,10 @@ OREP:
 	Tooltip:
 		Name: Ore Purifier
 	ResourcePurifierCA@NORMAL:
-		Modifier: 5
+		Modifier: 10
 		RequiresCondition: !disabled && !being-warped && !orep-upgrade
 	ResourcePurifierCA@UPGRADE:
-		Modifier: 10
+		Modifier: 15
 		RequiresCondition: !disabled && !being-warped && orep-upgrade
 	Power:
 		Amount: -150
@@ -6415,7 +6415,7 @@ UPGC.SOCK:
 UPGC.BOMB:
 	Inherits: ^BuildingPlug
 	Valued:
-		Cost: 1500
+		Cost: 1250
 	Tooltip:
 		Name: Upgrade: Firestorm Missile System
 	Buildable:
@@ -6430,14 +6430,14 @@ UPGC.BOMB:
 	Plug:
 		Type: tower.rocket
 	Power:
-		Amount: -100
+		Amount: -75
 	RenderSprites:
 		PlayerPalette: playertd
 
 UPGC.SEEK:
 	Inherits: ^BuildingPlug
 	Valued:
-		Cost: 1500
+		Cost: 1250
 	Tooltip:
 		Name: Upgrade: Advanced Radar System
 	Buildable:
@@ -6452,14 +6452,14 @@ UPGC.SEEK:
 	Plug:
 		Type: tower.radar
 	Power:
-		Amount: -100
+		Amount: -75
 	RenderSprites:
 		PlayerPalette: playertd
 
 UPGC.HOLD:
 	Inherits: ^BuildingPlug
 	Valued:
-		Cost: 1500
+		Cost: 1250
 	Tooltip:
 		Name: Upgrade: Nanoshield Generator
 	Buildable:
@@ -6474,14 +6474,14 @@ UPGC.HOLD:
 	Plug:
 		Type: tower.shield
 	Power:
-		Amount: -100
+		Amount: -75
 	RenderSprites:
 		PlayerPalette: playertd
 
 UPGC.DROP:
 	Inherits: ^BuildingPlug
 	Valued:
-		Cost: 1500
+		Cost: 1250
 	Tooltip:
 		Name: Upgrade: Supply Drop Zone
 	Buildable:
