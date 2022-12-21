@@ -885,7 +885,7 @@ PBOX:
 	CustomSellValue:
 		Value: 300
 	Health:
-		HP: 34000
+		HP: 36000
 	Armor:
 		Type: Concrete
 	RevealsShroud:
@@ -993,7 +993,7 @@ GUN:
 		Name: Turret
 	Building:
 	Health:
-		HP: 36000
+		HP: 44000
 	Armor:
 		Type: Concrete
 	RevealsShroud:
@@ -1048,7 +1048,7 @@ FTUR:
 		Name: Flame Tower
 	Building:
 	Health:
-		HP: 34000
+		HP: 36000
 	Armor:
 		Type: Concrete
 	RevealsShroud:
@@ -2556,7 +2556,7 @@ KENN:
 		Prerequisites: anypower, ~structures.soviet
 		Description: Trains Attack Dogs.
 	Valued:
-		Cost: 100
+		Cost: 150
 	Tooltip:
 		Name: Kennel
 	-GivesBuildableArea:
@@ -3849,7 +3849,7 @@ GTWR:
 		Name: Guard Tower
 	Building:
 	Health:
-		HP: 34000
+		HP: 36000
 	Armor:
 		Type: Concrete
 	RevealsShroud:
@@ -5524,6 +5524,8 @@ LTUR:
 	Inherits: GUN.Nod
 	RenderSprites:
 		Image: ltur
+	Health:
+		HP: 36000
 	Valued:
 		Cost: 600
 	CustomSellValue:
@@ -5579,7 +5581,7 @@ TTUR:
 		Name: Chemical Tower
 	Building:
 	Health:
-		HP: 34000
+		HP: 38000
 	Armor:
 		Type: Concrete
 	RevealsShroud:
@@ -6012,7 +6014,7 @@ INDP:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.soviet, stek, ~techlevel.high
-		Description: Vehicles & aircraft are produced 15% faster and cost 5% less.
+		Description: Vehicles & aircraft are produced 15% faster and cost 10% less.
 		BuildLimit: 1
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
@@ -6093,7 +6095,7 @@ OREP:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 200
 		Prerequisites: ~structures.allies, atek, ~techlevel.high
-		Description: Refines ore, gems & Tiberium, increasing income by 5%.\n  Provides access to advanced chrono harvester technology.
+		Description: Refines ore, gems & Tiberium, increasing income by 10%.\n  Provides access to advanced chrono harvester technology.
 		BuildLimit: 1
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Cannot be captured or hacked
@@ -6108,10 +6110,10 @@ OREP:
 	Tooltip:
 		Name: Ore Purifier
 	ResourcePurifierCA@NORMAL:
-		Modifier: 5
+		Modifier: 10
 		RequiresCondition: !disabled && !being-warped && !orep-upgrade
 	ResourcePurifierCA@UPGRADE:
-		Modifier: 10
+		Modifier: 15
 		RequiresCondition: !disabled && !being-warped && orep-upgrade
 	Power:
 		Amount: -150
@@ -6415,7 +6417,7 @@ UPGC.SOCK:
 UPGC.BOMB:
 	Inherits: ^BuildingPlug
 	Valued:
-		Cost: 1500
+		Cost: 1250
 	Tooltip:
 		Name: Upgrade: Firestorm Missile System
 	Buildable:
@@ -6430,14 +6432,14 @@ UPGC.BOMB:
 	Plug:
 		Type: tower.rocket
 	Power:
-		Amount: -100
+		Amount: -75
 	RenderSprites:
 		PlayerPalette: playertd
 
 UPGC.SEEK:
 	Inherits: ^BuildingPlug
 	Valued:
-		Cost: 1500
+		Cost: 1250
 	Tooltip:
 		Name: Upgrade: Advanced Radar System
 	Buildable:
@@ -6452,14 +6454,14 @@ UPGC.SEEK:
 	Plug:
 		Type: tower.radar
 	Power:
-		Amount: -100
+		Amount: -75
 	RenderSprites:
 		PlayerPalette: playertd
 
 UPGC.HOLD:
 	Inherits: ^BuildingPlug
 	Valued:
-		Cost: 1500
+		Cost: 1250
 	Tooltip:
 		Name: Upgrade: Nanoshield Generator
 	Buildable:
@@ -6474,14 +6476,14 @@ UPGC.HOLD:
 	Plug:
 		Type: tower.shield
 	Power:
-		Amount: -100
+		Amount: -75
 	RenderSprites:
 		PlayerPalette: playertd
 
 UPGC.DROP:
 	Inherits: ^BuildingPlug
 	Valued:
-		Cost: 1500
+		Cost: 1250
 	Tooltip:
 		Name: Upgrade: Supply Drop Zone
 	Buildable:

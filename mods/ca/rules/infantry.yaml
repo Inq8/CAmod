@@ -71,10 +71,10 @@ DOG:
 		DetectionTypes: Cloak, Thief, Mine
 		Range: 4c0
 	RangedGpsRadarProvider:
-		Range: 12c0
+		Range: 10c0
 		TargetTypes: Infantry
 	WithRangeCircle:
-		Range: 12c0
+		Range: 10c0
 	Voiced:
 		VoiceSet: DogVoice
 	-TakeCover:
@@ -1149,6 +1149,8 @@ HACK:
 		UndeployOnMove: true
 		UndeployOnPickup: true
 		SmartDeploy: true
+		DeployCursor: move
+		DeployBlockedCursor: move
 	DeployOnAttack:
 		RequiresCondition: undeployed
 	MindController:
@@ -2260,7 +2262,7 @@ SAB:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Can only attack Infantry
-		Attributes: • Can detect spies and cloaked units\n• Special Ability: Stealth (Timed)
+		Attributes: • Can detect spies and cloaked units\n• Limited stealth (drains while moving)
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2417,26 +2419,30 @@ ACOL:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	Selectable:
-		Class: acol
 	Convertible:
-		SpawnActors: ACOL.UPG
+		SpawnActors: TPLR
 	UpgradeableTo:
-		Actors: acol.upg
+		Actors: tplr.upg
 
-ACOL.UPG:
+TPLR:
 	Inherits: ACOL
-	RenderSprites:
-		Image: acol
+	Tooltip:
+		Name: Templar
 	Valued:
-		Cost: 500
+		Cost: 525
 	Health:
-		HP: 20000
+		HP: 21000
 	Buildable:
 		Prerequisites: anyradar, obli, ~infantry.marked, ~tmpp, ~techlevel.high
 	-TakeCover:
 	-Convertible:
 	-UpgradeableTo:
+	-Crushable:
+	WithInfantryBody:
+		IdleSequences: idle, idle2
+		StandSequences: stand, stand2
+	Voiced:
+		VoiceSet: TemplarVoice
 
 JJET:
 	Inherits@1: ^ExistsInWorld
@@ -2671,13 +2677,12 @@ BJET:
 	WithInfantryBody@AIRBORNE:
 		DefaultAttackSequence: flying-attack-upg
 		StandSequences: hover-upg
-		IdleSequences: idle-upg
 		MinIdleDelay: 0
 		MaxIdleDelay: 1
 		MoveSequence: flying-upg
 		RequiresCondition: airborne
 	WithInfantryBody:
-		IdleSequences: idle1-upg,idle2-upg
+		IdleSequences: idle1-upg, idle2-upg
 		DefaultAttackSequence: attack-upg
 		RequiresCondition: !airborne
 	-UpgradeableTo:
@@ -3063,8 +3068,10 @@ RMBC:
 		TargetTypes: Repair
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-		StandSequences: stand, stand2
+		StandSequences: stand
 		IdleSequences: idle, idle2
+		MinIdleDelay: 75
+		MaxIdleDelay: 375
 		RequiresCondition: !being-warped && !empdisable && !parachute
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
@@ -3619,7 +3626,7 @@ YURI:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 11000
+		HP: 15000
 	Mobile:
 		Speed: 60
 		Voice: Move
@@ -3934,7 +3941,7 @@ ENLI:
 		VoiceSet: EnlightenedVoice
 	Armament@PRIMARY:
 		Weapon: EnlightenedBeam
-		LocalOffset: 200,0,300
+		LocalOffset: 300,0,300
 	Armament@Garrison:
 		Name: mounted
 		Weapon: EnlightenedBeam
@@ -3948,6 +3955,8 @@ ENLI:
 		IdleSequences: idle, idle2
 		StandSequences: stand, stand2
 		RequiresCondition: !parachute && !being-warped && !empdisable
+		MinIdleDelay: 75
+		MaxIdleDelay: 375
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute

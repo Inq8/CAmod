@@ -29,39 +29,41 @@ HaloDropPaths = {
 }
 
 CyborgFactories = { CyborgFactory1, CyborgFactory2, CyborgFactory3, CyborgFactory4 }
-CyborgTypes = { "n1c", "n1c", "n3c", "acol", "n5", "rmbc" }
+CyborgTypes = { "n1c", "n1c", "n3c", "n5", "acol", "tplr", "enli", "rmbc" }
 CyborgRallyPoints = { CyborgRally1.Location, CyborgRally2.Location }
 MaxCyborgWaves = 50
 
 GroundAttackCompositions = {
 	easy = {
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "btr.ai" } },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "katy" }, MinTime = DateTime.Minutes(6) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "v2rl" }, MinTime = DateTime.Minutes(8) },
-		{ Units = { "shok", "shok", "shok", "ttnk", "ttra" }, MinTime = DateTime.Minutes(9) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "v3rl" }, MinTime = DateTime.Minutes(12) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "btr.ai", "e1", "e1" } },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "katy", "e1", "e1" }, MinTime = DateTime.Minutes(6) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "v2rl", "e1", "e1" }, MinTime = DateTime.Minutes(8) },
+		{ Units = { "shok", "shok", "shok", "ttnk", "ttra", "shok" }, MinTime = DateTime.Minutes(9) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "v3rl", "e3", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(12) },
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "4tnk", "3tnk" }, MinTime = DateTime.Minutes(14) },
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "v2rl", "v3rl" }, MinTime = DateTime.Minutes(17) },
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "apoc", "v3rl", "btr.ai" }, MinTime = DateTime.Minutes(19) },
 	},
 	normal = {
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "btr.ai" } },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "katy" }, MinTime = DateTime.Minutes(4) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "v2rl" }, MinTime = DateTime.Minutes(6) },
-		{ Units = { "shok", "shok", "shok", "shok", "shok", "ttnk", "ttra" }, MinTime = DateTime.Minutes(8) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "4tnk", "v3rl" }, MinTime = DateTime.Minutes(12) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "v3rl", "v3rl" }, MinTime = DateTime.Minutes(17) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "apoc", "v3rl", "btr.ai" }, MinTime = DateTime.Minutes(18) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "e8", "4tnk.erad", "v3rl", "btr.ai" }, MinTime = DateTime.Minutes(19) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "btr.ai", "e3", "e1", "e2", "e1" } },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "katy", "e3", "e1", "e2", "e1" }, MinTime = DateTime.Minutes(4) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "v2rl", "btr.ai" }, MinTime = DateTime.Minutes(6) },
+		{ Units = { "shok", "shok", "shok", "shok", "shok", "ttnk", "shok", "ttra", "shok" }, MinTime = DateTime.Minutes(8) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "3tnk", "3tnk", "e3", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(9) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "4tnk", "v3rl", "e3", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(10) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "v3rl", "v3rl", "e3", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(17) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "apoc", "v3rl", "btr.ai", "e3", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(18) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "e8", "4tnk.erad", "v3rl", "btr.ai", "e3", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(19) },
 	},
 	hard = {
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "3tnk", "btr.ai" }, MaxTime = DateTime.Minutes(5) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "v2rl", "btr.ai" }, MinTime = DateTime.Minutes(4), MaxTime = DateTime.Minutes(8) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "e1", "btr.ai", "3tnk", "ttra" }, MinTime = DateTime.Minutes(4), MaxTime = DateTime.Minutes(17) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "3tnk", "btr.ai", "e3", "e1", "e2", "e1", "e1" }, MaxTime = DateTime.Minutes(5), MaxTime = DateTime.Minutes(19) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "v2rl", "btr.ai", "e3", "e1", "e2", "e1", "e1" }, MinTime = DateTime.Minutes(4), MaxTime = DateTime.Minutes(8) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "e1", "btr.ai", "3tnk", "ttra", "e3", "e1", "e2", "e1", "e1" }, MinTime = DateTime.Minutes(4), MaxTime = DateTime.Minutes(17) },
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "4tnk", "btr.ai", "shok", "e8", "katy" }, MinTime = DateTime.Minutes(6), MaxTime = DateTime.Minutes(18) },
-		{ Units = { "shok", "shok", "shok", "shok", "shok", "ttnk", "ttnk", "ttra" }, MinTime = DateTime.Minutes(7) },
+		{ Units = { "shok", "shok", "shok", "shok", "shok", "ttnk", "ttnk", "shok", "ttra", "shok" }, MinTime = DateTime.Minutes(7) },
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "e3", "3tnk", "3tnk", "btr.ai", "e2", "e3", "e1", "e1" }, MinTime = DateTime.Minutes(8) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "4tnk", "v3rl", "v2rl", "shok" }, MinTime = DateTime.Minutes(8) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "4tnk", "v3rl", "v2rl", "shok", "e3", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(8) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "3tnk", "3tnk", "e3", "3tnk", "btr.ai", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(9) },
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "shok", "apoc", "4tnk", "btr.ai", "v3rl" }, MinTime = DateTime.Minutes(10) },
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "3tnk", "4tnk", "btr.ai", "btr.ai", "v3rl", "v3rl" }, MinTime = DateTime.Minutes(15) },
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "e8", "e8", "4tnk.erad", "4tnk", "btr.ai", "btr.ai", "v3rl", "v3rl" }, MinTime = DateTime.Minutes(17) },
@@ -98,14 +100,14 @@ GroundAttackInterval = {
 }
 
 HaloDropStart = {
-	easy = DateTime.Minutes(11),
-	normal = DateTime.Minutes(8),
+	easy = DateTime.Minutes(9),
+	normal = DateTime.Minutes(7),
 	hard = DateTime.Minutes(5)
 }
 
 HaloDropInterval = {
-	easy = DateTime.Minutes(3),
-	normal = DateTime.Seconds(100),
+	easy = DateTime.Minutes(120),
+	normal = DateTime.Seconds(70),
 	hard = DateTime.Seconds(40)
 }
 
@@ -116,9 +118,9 @@ AirAttackStart = {
 }
 
 AirAttackInterval = {
-	easy = DateTime.Minutes(3),
+	easy = DateTime.Minutes(2),
 	normal = DateTime.Minutes(2),
-	hard = DateTime.Minutes(2)
+	hard = DateTime.Seconds(2)
 }
 
 HoldOutTime = {
@@ -198,6 +200,9 @@ end
 InitUSSR = function()
 	AutoRepairAndRebuildBuildings(USSR, 15)
 	SetupRefAndSilosCaptureCredits(USSR)
+
+	local upgradeCreationLocation = CPos.New(0, 0)
+	Actor.Create("tarc.upgrade", true, { Owner = USSR, Location = upgradeCreationLocation })
 
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
 

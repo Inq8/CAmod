@@ -467,7 +467,7 @@ PortaTesla:
 		Damage: 4500
 		Versus:
 			None: 280
-			Wood: 73
+			Wood: 60
 			Heavy: 75
 			Concrete: 70
 
@@ -504,7 +504,7 @@ TTrackZap:
 		Versus:
 			Wood: 50
 			Concrete: 50
-			Light: 90
+			Light: 85
 
 TTrackZap.UPG:
 	Inherits: TTrackZap
@@ -544,7 +544,7 @@ TTankZap:
 	ReloadDelay: 90
 	Burst: 2
 	BurstDelays: 3
-	Range: 5c512
+	Range: 5c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 5300
 		Versus:
@@ -867,7 +867,7 @@ Hack:
 	Warhead@CAMERA: SpawnActor
 		Actors: camera.hacker
 		Range: 1
-		ValidRelationships: Neutral, Enemy
+		ImpactActors: false
 	Warhead@green: GrantExternalCondition
 		Range: 0c511
 		Duration: 2
@@ -1075,7 +1075,7 @@ PortaLaserE:
 EnlightenedBeam:
 	ReloadDelay: 65
 	ValidTargets: Ground, Water
-	Range: 6c0
+	Range: 6c512
 	Report: enli-fire1.aud, enli-fire2.aud, enli-fire3.aud
 	Projectile: PlasmaBeam
 		Duration: 10
@@ -1103,6 +1103,17 @@ EnlightenedBeam:
 			Wood: 70
 			Concrete: 45
 			Light: 80
+		ValidRelationships: Enemy, Neutral
+	Warhead@2Dam: SpreadDamage
+		Spread: 256
+		Damage: 2600
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		Versus:
+			None: 10
+			Wood: 70
+			Concrete: 45
+			Light: 80
+		ValidRelationships: Ally
 	Warhead@2Eff: CreateEffect
 		Explosions: enliexplode1, enliexplode2
 		ImpactSounds: expnew17.aud, expnew16.aud
@@ -2036,7 +2047,7 @@ Lasher:
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 341, 682
 		Falloff: 100, 100, 0
-		Damage: 1000
+		Damage: 1850
 		ValidTargets: Infantry
 		DamageTypes: BulletDeath
 		ValidRelationships: Enemy, Neutral, Ally
@@ -2168,8 +2179,8 @@ CyCannon:
 		Blockable: false
 		HorizontalRateOfTurn: 8
 		Shadow: true
-		Image: laserfired2k
-		Palette: d2k
+		Image: rmbctorp
+		Palette: tdeffect
 		MinimumLaunchSpeed: 75
 		Speed: 384
 		RangeLimit: 8c0
