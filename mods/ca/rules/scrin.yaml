@@ -2018,6 +2018,7 @@ SMCV:
 		Facing: 384
 		TransformSounds: placbldg.aud, build5.aud
 		NoTransformNotification: BuildingCannotPlaceAudio
+		NoTransformTextNotification: Cannot deploy here.
 		PauseOnCondition: empdisable || being-warped
 	MustBeDestroyed:
 		RequiredForShortGame: true
@@ -3858,6 +3859,7 @@ NERV:
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
 		SupportPowerPaletteOrder: 50
+		EndChargeTextNotification: Resource Scan ready.
 	DetonateWeaponPower@BUZZERSWARM:
 		OrderName: buzzerswarm
 		Icon: buzzpower
@@ -3872,6 +3874,8 @@ NERV:
 		Weapon: BuzzerSpawner
 		AirburstAltitude: 0c0
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		EndChargeTextNotification: Buzzer Swarm ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
@@ -3891,6 +3895,8 @@ NERV:
 		Weapon: BuzzerSpawnerAI
 		AirburstAltitude: 0c0
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		EndChargeTextNotification: Buzzer Swarm ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
@@ -3910,6 +3916,8 @@ NERV:
 		Weapon: StormSpikeSpawner
 		AirburstAltitude: 0c0
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		EndChargeTextNotification: Storm Spike ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
@@ -3929,6 +3937,8 @@ NERV:
 		Weapon: IonSurgeSpawner
 		AirburstAltitude: 0c0
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		EndChargeTextNotification: Ion Surge ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayRadarPing: True
 		CameraActor: camera.dummy
@@ -3951,7 +3961,9 @@ NERV:
 		Description: \nTransforms Scrin infantry into Feeders; exploding infantry able to consume\n    resources for additional damage.
 		OnFireSound: feedermutation.aud
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeTextNotification: Feeder Mutation ready.
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -4034,8 +4046,10 @@ SCRT:
 		OnFireSound: forceon.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		EndChargeSpeechNotification: ForceShieldReady
+		EndChargeTextNotification: Force Shield ready.
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
@@ -4051,7 +4065,9 @@ SCRT:
 		Description: \nGrows tiberium at selected location.
 		LaunchSound: ichorseed.aud
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeTextNotification: Ichor Seed ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		EffectImage: empty
 		EffectSequence: idle
@@ -4244,7 +4260,9 @@ SREP:
 		HpPerStep: 1000
 		Interval: 7
 		StartRepairingNotification: Repairing
+		StartRepairingTextNotification: Repairing.
 		FinishRepairingNotification: UnitRepaired
+		FinishRepairingTextNotification: Unit repaired.
 		PlayerExperience: 5
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	WithResupplyAnimation:
@@ -4368,7 +4386,9 @@ MANI:
 		Description: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.
 		Duration: 600
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeTextNotification: Suppression Field ready.
 		DisplayRadarPing: True
 		ActivationDelay: 0
 		TargetCircleRange: 3c512
@@ -4389,7 +4409,9 @@ MANI:
 		Description: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.\n\nDamage dealt to affected units restores\n    the attacker's health.
 		Duration: 600
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeTextNotification: Suppression Field ready.
 		DisplayRadarPing: True
 		ActivationDelay: 0
 		TargetCircleRange: 3c512
@@ -4458,7 +4480,9 @@ RIFT:
 		CameraActor: camera
 		CameraRemoveDelay: 375
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: RiftReady
+		EndChargeTextNotification: Rift Generator ready.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		IncomingSpeechNotification: RiftApproach
 		IncomingTextNotification: Rift Generator activated.

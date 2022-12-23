@@ -43,7 +43,9 @@ MSLO:
 		Description: \nLaunches a devastating atomic bomb at the target location,\n    dealing heavy damage over a large area.
 		BeginChargeSpeechNotification: AbombPrepping
 		EndChargeSpeechNotification: AbombReady
+		EndChargeTextNotification: A-bomb ready.
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		IncomingSound: nukelaunch.aud
 		IncomingSpeechNotification: AbombLaunchDetected
@@ -244,7 +246,9 @@ SPEN:
 	RepairsUnits:
 		HpPerStep: 1000
 		StartRepairingNotification: Repairing
+		StartRepairingTextNotification: Repairing.
 		FinishRepairingNotification: UnitRepaired
+		FinishRepairingTextNotification: Unit repaired.
 		PlayerExperience: 5
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	RallyPoint:
@@ -337,7 +341,9 @@ SYRD:
 	RepairsUnits:
 		HpPerStep: 1000
 		StartRepairingNotification: Repairing
+		StartRepairingTextNotification: Repairing.
 		FinishRepairingNotification: UnitRepaired
+		FinishRepairingTextNotification: Unit repaired.
 		PlayerExperience: 5
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	RallyPoint:
@@ -421,8 +427,10 @@ IRON:
 		Description: \nMakes selected vehicles and structures\n    temporarily invulnerable\n\nWarning: Harmful to Infantry.
 		OnFireSound: ironcur9.aud
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		EndChargeSpeechNotification: IronCurtainReady
+		EndChargeTextNotification: Iron Curtain ready.
 		BeginChargeSpeechNotification: IronCurtainCharging
 		DisplayRadarPing: True
 		Cursor: ability
@@ -500,9 +508,11 @@ PDOX:
 		Name: Chronoshift
 		Description: \nTeleports selected units to a targeted location,\n    returning to their original location\n    after a short time.
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		BeginChargeSpeechNotification: ChronosphereCharging
 		EndChargeSpeechNotification: ChronosphereReady
+		EndChargeTextNotification: Chronosphere ready.
 		LaunchSound: chrono2.aud
 		KillCargo: true
 		DisplayRadarPing: True
@@ -525,9 +535,11 @@ PDOX:
 		CameraActor: camera
 		CameraRemoveDelay: 375
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		BeginChargeSpeechNotification: ChronosphereCharging
 		EndChargeSpeechNotification: ChronosphereReady
+		EndChargeTextNotification: Chronosphere ready.
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayRadarPing: True
@@ -551,9 +563,11 @@ PDOX:
 		ValidRelationships: Ally, Enemy, Neutral
 		AllowMultiple: false
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		BeginChargeSpeechNotification: ChronosphereCharging
 		EndChargeSpeechNotification: ChronosphereReady
+		EndChargeTextNotification: Time Warp ready.
 		DisplayTimerRelationships: Ally
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayBeacon: True
@@ -837,6 +851,8 @@ DOME:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		EndChargeTextNotification: Cluster Mines ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		RequiresCondition: !build-incomplete
 		SupportPowerPaletteOrder: 50
@@ -852,7 +868,9 @@ DOME:
 		Description: \nCreates an expanding area of shroud, reducing the vision\n    and weapon range of enemy units and defenses.
 		LaunchSound: sscrambl.aud
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeTextNotification: Veil of War ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayRadarPing: True
 		DisplayTimerRelationships: Ally
@@ -1272,8 +1290,10 @@ ATEK:
 		OnFireSound: forceon.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		EndChargeSpeechNotification: ForceShieldReady
+		EndChargeTextNotification: Force Shield ready.
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
@@ -1293,8 +1313,10 @@ ATEK:
 		CameraActor: camera
 		CameraRemoveDelay: 375
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		EndChargeSpeechNotification: Reinforce
+		EndChargeTextNotification: Temporal Incursion ready.
 		DisplayTimerRelationships: Ally, Neutral
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayRadarPing: True
@@ -1762,7 +1784,9 @@ SILO:
 		DropItems: E1,E1,E2,E3,E3,E1,E1,E1
 		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: Reinforce
+		EndChargeTextNotification: Paratroopers ready.
 		AllowImpassableCells: false
 		QuantizedFacings: 8
 		CameraActor: camera.paradrop
@@ -1788,7 +1812,9 @@ SILO:
 		DropItems: SHOK,SHOK,SHOK,SHOK,SHOK
 		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: Reinforce
+		EndChargeTextNotification: Stormtroopers ready.
 		AllowImpassableCells: false
 		QuantizedFacings: 8
 		CameraActor: camera.paradrop
@@ -1809,7 +1835,9 @@ SILO:
 		Name: Spy Plane
 		Description: \nDispatches a spy plane that reveals the target location\n    for a limited time.
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: SpyPlaneReady
+		EndChargeTextNotification: Spy Plane ready.
 		LaunchSound: spyplane.aud
 		CameraActor: camera.spyplane
 		CameraRemoveDelay: 150
@@ -1837,6 +1865,7 @@ SILO:
 		Name: Parabombs
 		Description: \nCalls in a Badger bomber which drops parachuted\n    bombs on your target.
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		CameraActor: camera
 		CameraRemoveDelay: 150
 		UnitType: badr.bomber
@@ -1860,6 +1889,7 @@ SILO:
 		Name: Carpet Bomb
 		Description: \nCalls in a squad of Badgers which drop\n    bombs on your target.
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		CameraActor: camera
 		CameraRemoveDelay: 150
 		UnitType: badr.cbomber
@@ -1883,6 +1913,7 @@ SILO:
 		Name: Atomic Bomb
 		Description: \nCalls in a a Badger bomber which drops an\n    atom bomb on your target.
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		CameraActor: camera
 		CameraRemoveDelay: 150
 		UnitType: badr.nbomber
@@ -1907,6 +1938,7 @@ SILO:
 		Name: Genetic Mutation Bomb
 		Description: \nCalls in a Badger bomber which drops a genetic\n    mutation bomb on your target, transforming\n    infantry into Brutes under your control.
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		CameraActor: camera
 		CameraRemoveDelay: 150
 		UnitType: badr.mbomber
@@ -2033,6 +2065,8 @@ HPAD:
 		Name: Strafing Run
 		Description: \nCalls in P51 ground attack planes to perform\n    strafing runs on the target.
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		EndChargeTextNotification: Strafing Run ready.
 		CameraActor: camera
 		CameraRemoveDelay: 150
 		QuantizedFacings: 8
@@ -2302,7 +2336,9 @@ NPWR:
 		Description: \nGrants tanks a limited supply of atomic shells (also for a limited duration).\n\nAffects Soviet tanks only (Heavy Tank, Lasher Tank, Siege Tank, Mammoth Tank, Apocalypse Tank)
 		OnFireSound: atomshell.aud
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeTextNotification: Atomic Shells ready.
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: empdisable || being-warped
@@ -2324,7 +2360,9 @@ NPWR:
 		Description: \nGrants tanks a limited supply of atomic shells (also for a limited duration).\n\nAffects Soviet tanks only (Heavy Tank, Lasher Tank, Mammoth Tank, Apocalypse Tank)
 		OnFireSound: atomshell.aud
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeTextNotification: Atomic Shells ready.
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: empdisable || being-warped
@@ -2429,8 +2467,10 @@ STEK:
 		OnFireSound: forceon.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		EndChargeSpeechNotification: ForceShieldReady
+		EndChargeTextNotification: Force Shield ready.
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
@@ -2724,7 +2764,9 @@ FIX:
 		HpPerStep: 1000
 		Interval: 7
 		StartRepairingNotification: Repairing
+		StartRepairingTextNotification: Repairing.
 		FinishRepairingNotification: UnitRepaired
+		FinishRepairingTextNotification: Unit repaired.
 		PlayerExperience: 5
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	WithBuildingBib:
@@ -3443,8 +3485,10 @@ AIRS:
 		Description: \nDispatches cargo planes to air drop tanks\n    at the target location.
 		DropItems: ltnk, ftnk, ltnk
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		AllowImpassableCells: false
 		EndChargeSpeechNotification: Reinforce
+		EndChargeTextNotification: Air Drop ready.
 		LaunchSpeechNotification: ReinforcementsArrived
 		IncomingSpeechNotification: EnemyUnitsApproaching
 		IncomingTextNotification: Enemy air drop detected.
@@ -3468,8 +3512,10 @@ AIRS:
 		Description: \nDispatches cargo planes to air drop flame tanks\n    at the target location.
 		DropItems: hftk, hftk
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		AllowImpassableCells: false
 		EndChargeSpeechNotification: Reinforce
+		EndChargeTextNotification: Air Drop ready.
 		LaunchSpeechNotification: ReinforcementsArrived
 		IncomingSpeechNotification: EnemyUnitsApproaching
 		IncomingTextNotification: Enemy air drop detected.
@@ -3493,8 +3539,10 @@ AIRS:
 		Description: \nDispatches cargo planes to air drop stealth tanks\n    at the target location.
 		DropItems: stnk.nod, stnk.nod
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		AllowImpassableCells: false
 		EndChargeSpeechNotification: Reinforce
+		EndChargeTextNotification: Air Drop ready.
 		LaunchSpeechNotification: ReinforcementsArrived
 		IncomingSpeechNotification: EnemyUnitsApproaching
 		IncomingTextNotification: Enemy air drop detected.
@@ -4136,6 +4184,7 @@ HQ:
 		Description: \nReveals the targeted area for a short time.
 		LaunchSound: hacksat.aud
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		PauseOnCondition: disabled || empdisable || being-warped
 		EffectImage: empty
 		EffectSequence: idle
@@ -4149,12 +4198,14 @@ HQ:
 		Icon: hackercell
 		Type: ParadropInfantry
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		ChargeInterval: 7500
 		Name: Hacker Cell
 		Description: \nDeploy a squad of hackers that can remotely\n    capture buildings and take control of defenses.\n\nTarget infantry production structure to deploy.
 		Actors: hack, hack, hack
 		LaunchSpeechNotification: ReinforcementsArrived
 		EndChargeSpeechNotification: Reinforce
+		EndChargeTextNotification: Hacker Cell ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		SupportPowerPaletteOrder: 50
 	ProduceActorPowerCA@hackercellAI:
@@ -4163,12 +4214,14 @@ HQ:
 		Icon: hackercell
 		Type: ParadropInfantry
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		ChargeInterval: 7500
 		Name: Hacker Cell (AI)
 		Description: \nDeploy a squad of hackers that can remotely\n    capture buildings and take control of defenses.
 		Actors: hack, hack, hack
 		LaunchSpeechNotification: ReinforcementsArrived
 		EndChargeSpeechNotification: Reinforce
+		EndChargeTextNotification: Hacker Cell ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		SupportPowerPaletteOrder: 50
 		SelectProducer: false
@@ -4182,7 +4235,9 @@ HQ:
 		Name: Drop Pods
 		Description: \nInstantly deploys a small team of elite soldiers\n    at the target location via orbital drop pods.
 		EndChargeSpeechNotification: DropPodsAvailable
+		EndChargeTextNotification: Drop Pods ready.
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		DisplayRadarPing: True
 		ChargeInterval: 4500
 		Weapon: DropPodArrive
@@ -4207,7 +4262,9 @@ HQ:
 		Notification: CreditsStolen
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeTextNotification: Cash Hack ready.
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -4221,6 +4278,8 @@ HQ:
 		Name: Inferno Bomb
 		Description: \nA B2 Stealth Bomber drops inferno bombs on your target.
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		EndChargeTextNotification: Inferno Bomb ready.
 		CameraActor: camera
 		CameraRemoveDelay: 150
 		UnitType: b2b
@@ -4245,6 +4304,10 @@ HQ:
 		Name: Shadow Team
 		Description: \nCalls for a Shadow Team; three stealth infantry\n    that arrive via glider armed with grenades\n    and a machine pistol.\n\nOperatives can be ordered to land\n    via the deploy command.
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		LaunchSpeechNotification: ReinforcementsArrived
+		EndChargeSpeechNotification: Reinforce
+		EndChargeTextNotification: Shadow Team ready.
 		UnitType: sgli
 		QuantizedFacings: 8
 		DisplayBeacon: false
@@ -4253,8 +4316,6 @@ HQ:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		PauseOnCondition: disabled || empdisable || being-warped
-		LaunchSpeechNotification: ReinforcementsArrived
-		EndChargeSpeechNotification: Reinforce
 		SupportPowerPaletteOrder: 50
 	Power:
 		Amount: -40
@@ -4384,8 +4445,10 @@ EYE:
 		CameraActor: camera
 		CameraRemoveDelay: 375
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		BeginChargeSpeechNotification: IonCannonCharging
 		EndChargeSpeechNotification: IonCannonReady
+		EndChargeTextNotification: Ion Cannon ready.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		IncomingSpeechNotification: IonCannonApproach
 		IncomingTextNotification: Ion cannon approaching.
@@ -4414,8 +4477,10 @@ EYE:
 		Description: \nInitiate an precision Ion Cannon strike which instantly\n    deals instant damage to a small area.
 		BeginChargeSpeechNotification: IonCannonCharging
 		EndChargeSpeechNotification: IonCannonReady
+		EndChargeTextNotification: Surgical Strike ready.
 		LaunchSound: ion2.aud
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayRadarPing: True
 		DisplayTimerRelationships: Ally
@@ -4495,7 +4560,9 @@ REP:
 		HpPerStep: 1000
 		Interval: 7
 		StartRepairingNotification: Repairing
+		StartRepairingTextNotification: Repairing.
 		FinishRepairingNotification: UnitRepaired
+		FinishRepairingTextNotification: Unit repaired.
 		PlayerExperience: 5
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	WithResupplyAnimation:
@@ -4529,8 +4596,10 @@ REP:
 		Name: Reinforcements
 		Description: \nAn Orca Carryall drops an APC containing\n    an infantry squad at the target location.
 		EndChargeSpeechNotification: Reinforce
+		EndChargeTextNotification: Reinforcements ready.
 		LaunchSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		EffectImage: empty
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
@@ -4549,7 +4618,9 @@ REP:
 		DropItems: XO,XO,XO
 		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: Reinforce
+		EndChargeTextNotification: X-O Drop ready.
 		AllowImpassableCells: false
 		QuantizedFacings: 8
 		CameraActor: camera.paradrop
@@ -4570,7 +4641,9 @@ REP:
 		Name: Recon Drone
 		Description: \nA drone flies across the map, revealing the area as it passes.\n\nDetects cloaked units.
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: SpyPlaneReady
+		EndChargeTextNotification: Recon Drone ready.
 		CameraActor: camera.spyplane
 		CameraRemoveDelay: 0
 		UnitType: uav
@@ -4592,7 +4665,9 @@ REP:
 		Name: Recon Drone
 		Description: \nA drone flies across the map, revealing the area as it passes.\n\nDetects cloaked units.
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: SpyPlaneReady
+		EndChargeTextNotification: Recon Drone ready.
 		CameraActor: camera.spyplane
 		CameraRemoveDelay: 0
 		UnitType: uav
@@ -4616,7 +4691,9 @@ REP:
 		Name: Interceptors
 		Description: \nA squadron of Interceptors provides\n    air cover over the target area,\n    engaging any enemy aircraft within range.
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: SpyPlaneReady
+		EndChargeTextNotification: Interceptors ready.
 		CameraActor: camera
 		CameraRemoveDelay: 450
 		UnitType: yf23.bomber
@@ -5002,8 +5079,10 @@ GTEK:
 		OnFireSound: forceon.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		EndChargeSpeechNotification: ForceShieldReady
+		EndChargeTextNotification: Force Shield ready.
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
@@ -5026,7 +5105,9 @@ GTEK:
 		OnFireSound: srepaira.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeTextNotification: Nanite Repair ready.
 		DisplayRadarPing: True
 		Cursor: repair
 		PauseOnCondition: disabled || empdisable ||  being-warped
@@ -5084,7 +5165,9 @@ TMPL:
 		Name: Cluster Missile
 		Description: \nLaunches an Cluster Missile which deals heavy\n    damage at the target location.
 		EndChargeSpeechNotification: ClusMissileReady
+		EndChargeTextNotification: Cluster Missile ready.
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		IncomingSpeechNotification: MissileLaunchDetected
 		IncomingTextNotification: Cluster Missile launch detected.
@@ -5135,8 +5218,10 @@ TMPL:
 		OnFireSound: forceon.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		EndChargeSpeechNotification: ForceShieldReady
+		EndChargeTextNotification: Force Shield ready.
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
@@ -5160,7 +5245,9 @@ TMPL:
 		Description: \nIncreases the movement speed and rate of fire of\n    targeted units for a limited time.\n\nWarning: Affected units take increased damage.
 		OnFireSound: nodfrenzy.aud
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeTextNotification: Frenzy ready.
 		DisplayRadarPing: True
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -5327,7 +5414,9 @@ SPEN.nod:
 	RepairsUnits:
 		HpPerStep: 1000
 		StartRepairingNotification: Repairing
+		StartRepairingTextNotification: Repairing.
 		FinishRepairingNotification: UnitRepaired
+		FinishRepairingTextNotification: Unit repaired.
 		PlayerExperience: 5
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	RallyPoint:
@@ -5419,7 +5508,9 @@ SYRD.gdi:
 	RepairsUnits:
 		HpPerStep: 1000
 		StartRepairingNotification: Repairing
+		StartRepairingTextNotification: Repairing.
 		FinishRepairingNotification: UnitRepaired
+		FinishRepairingTextNotification: Unit repaired.
 		PlayerExperience: 5
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	RallyPoint:
@@ -5674,9 +5765,11 @@ SGEN:
 		Description: \nMakes selected vehicles and structures\n    temporarily invisible\n\nWarning: Harmful to Infantry.
 		OnFireSound: cloak6.aud
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		BeginChargeSpeechNotification: ChemStealthCharging
 		EndChargeSpeechNotification: ChemStealthReady
+		EndChargeTextNotification: Stealth Generator ready.
 		DisplayRadarPing: True
 		Cursor: chemmissile
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -5704,9 +5797,11 @@ SGEN:
 		Description: \nMakes selected vehicles and structures\n    temporarily invisible\n\nWarning: Harmful to Infantry.
 		OnFireSound: cloak6.aud
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		BeginChargeSpeechNotification: ChemStealthCharging
 		EndChargeSpeechNotification: ChemStealthReady
+		EndChargeTextNotification: Stealth Generator ready.
 		DisplayRadarPing: True
 		Cursor: chemmissile
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -5955,7 +6050,9 @@ PATR:
 		Description: \nFires a Tomahawk missile which disables all mechanical units\n    and structures on impact.
 		BeginChargeSpeechNotification: EMMissilePrepping
 		EndChargeSpeechNotification: EMMissileReady
+		EndChargeTextNotification: E.M. Missile ready.
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 		SupportPowerPaletteOrder: 20
@@ -6259,7 +6356,9 @@ UPGC:
 		Description: \nFires a barrage of rockets at the target area.
 		BeginChargeSpeechNotification: FireStormOffline
 		EndChargeSpeechNotification: FireStormReady
+		EndChargeTextNotification: Firestorm Missiles ready.
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayTimerRelationships: Ally
 		RequiresCondition: tower.rocket
@@ -6315,7 +6414,9 @@ UPGC:
 		BeginChargeSound: gradardn.aud
 		DisplayTimerRelationships: Ally
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeTextNotification: Advanced Radar Scan ready.
 		Prerequisites: ~techlevel.unrestricted
 		EarlyDeactivationPenalty: 1500
 		SupportPowerPaletteOrder: 30
@@ -6347,7 +6448,9 @@ UPGC:
 		Description: \nReduces the damage taken by all vehicles in the target area.
 		LaunchSound: srepaira.aud
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeTextNotification: Nanite Shield ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayRadarPing: True
 		DisplayTimerRelationships: Ally
@@ -6637,7 +6740,9 @@ MSLO.Nod:
 		Name: Chemical Missile
 		Description: \nLaunches an deadly Chemical Missile. Deals heavy damage\n    and creates toxic clouds which are extremely harmful to infantry.\n
 		EndChargeSpeechNotification: CMissileReady
+		EndChargeTextNotification: Chemical Missile ready.
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		IncomingSpeechNotification: MissileLaunchDetected
 		IncomingTextNotification: Chemical Missile launch detected.
@@ -6731,7 +6836,9 @@ WEAT:
 		CameraActor: camera
 		CameraRemoveDelay: 375
 		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
 		EndChargeSpeechNotification: StormReady
+		EndChargeTextNotification: Lightning Storm ready.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		IncomingSpeechNotification: StormApproach
 		IncomingTextNotification: Storm approaching.
