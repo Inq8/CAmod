@@ -65,6 +65,17 @@ POWERCHEAT.MINOR:
 	Buildable:
 		Prerequisites: ~disabled
 
+TRAN.Evac:
+	Inherits: TRAN
+	RenderSprites:
+		Image: tran
+	DamageMultiplier@INVULN:
+		Modifier: 0
+	-KillsSelf:
+	Aircraft:
+		TurnToLand: True
+		InitialFacing: 0
+
 TRUK:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 

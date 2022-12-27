@@ -340,7 +340,7 @@ WorldLoaded = function()
 				Trigger.AfterDelay(DateTime.Seconds(3), function()
 					Media.PlaySpeechNotification(Greece, "AlliedReinforcementsWest")
 					Notification("GDI transport en route.")
-					Reinforcements.ReinforceWithTransport(GDI, "tran", nil, { GDIRescueSpawn.Location, GDIRescueRally.Location }, nil, function(transport, cargo)
+					Reinforcements.ReinforceWithTransport(GDI, "tran.evac", nil, { GDIRescueSpawn.Location, GDIRescueRally.Location }, nil, function(transport, cargo)
 
 						Trigger.AfterDelay(DateTime.Seconds(1), function()
 							if not commander.IsDead then

@@ -325,7 +325,7 @@ WorldLoaded = function()
 		end)
 
 		Trigger.OnKilled(researcher, function(self, killer)
-			if ObjectiveRescueResearchers ~= nil and not Nod.IsObjectiveCompleted(ObjectiveRescueResearchers) then
+			if not EvacExiting and ObjectiveRescueResearchers ~= nil and not Nod.IsObjectiveCompleted(ObjectiveRescueResearchers) then
 				Nod.MarkFailedObjective(ObjectiveRescueResearchers)
 			end
 		end)
@@ -349,7 +349,7 @@ WorldLoaded = function()
 						EvacFlare.Destroy()
 					end
 
-					Reinforcements.ReinforceWithTransport(EvacPlayer, "tran", nil, { EvacSpawn.Location, EvacPoint.Location }, nil, function(transport, cargo)
+					Reinforcements.ReinforceWithTransport(EvacPlayer, "tran.evac", nil, { EvacSpawn.Location, EvacPoint.Location }, nil, function(transport, cargo)
 						Notification("Evacuation transport inbound.")
 						Trigger.AfterDelay(DateTime.Seconds(1), function()
 							if not Researcher1.IsDead then
@@ -361,6 +361,7 @@ WorldLoaded = function()
 						end)
 						Trigger.OnPassengerEntered(transport, function(t, passenger)
 							if t.PassengerCount == 2 then
+								EvacExiting = true
 								Media.PlaySpeechNotification(Nod, "TargetRescued")
 								t.Move(EvacSpawn.Location)
 								t.Destroy()
@@ -398,13 +399,13 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		if Nod.HasNoRequiredUnits() then
+		if not EvacExiting and Nod.HasNoRequiredUnits() then
 			if ObjectiveRescueResearchers ~= nil and not Nod.IsObjectiveCompleted(ObjectiveRescueResearchers) then
 				Nod.MarkFailedObjective(ObjectiveRescueResearchers)
 			end
 		end
 
-		if Researcher1.IsDead or Researcher2.IsDead then
+		if not EvacExiting and (Researcher1.IsDead or Researcher2.IsDead) then
 			if ObjectiveRescueResearchers ~= nil and not Nod.IsObjectiveCompleted(ObjectiveRescueResearchers) then
 				Nod.MarkFailedObjective(ObjectiveRescueResearchers)
 			end
