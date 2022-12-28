@@ -65,8 +65,8 @@ NavalDropStart = {
 }
 
 NavalDropInterval = {
-	easy = DateTime.Minutes(4),
-	normal = DateTime.Seconds(210),
+	easy = DateTime.Minutes(5),
+	normal = DateTime.Minutes(4),
 	hard = DateTime.Minutes(3)
 }
 
@@ -88,8 +88,8 @@ Squads = {
 		},
 		Interval = {
 			easy = DateTime.Seconds(50),
-			normal = DateTime.Seconds(30),
-			hard = DateTime.Seconds(10)
+			normal = DateTime.Seconds(35),
+			hard = DateTime.Seconds(20)
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -132,9 +132,9 @@ Squads = {
 	MainAdvanced = {
 		Player = nil,
 		Interval = {
-			easy = DateTime.Seconds(45),
-			normal = DateTime.Seconds(25),
-			hard = DateTime.Seconds(10)
+			easy = DateTime.Seconds(50),
+			normal = DateTime.Seconds(35),
+			hard = DateTime.Seconds(20)
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -174,9 +174,9 @@ Squads = {
 			hard = DateTime.Seconds(5)
 		},
 		Interval = {
-			easy = DateTime.Seconds(25),
-			normal = DateTime.Seconds(20),
-			hard = DateTime.Seconds(15)
+			easy = DateTime.Seconds(40),
+			normal = DateTime.Seconds(30),
+			hard = DateTime.Seconds(20)
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -210,13 +210,13 @@ Squads = {
 	Migs = {
 		Player = nil,
 		Delay = {
-			easy = DateTime.Minutes(12),
-			normal = DateTime.Minutes(11),
+			easy = DateTime.Minutes(14),
+			normal = DateTime.Minutes(12),
 			hard = DateTime.Minutes(10)
 		},
 		Interval = {
 			easy = DateTime.Minutes(3),
-			normal = DateTime.Seconds(150),
+			normal = DateTime.Seconds(165),
 			hard = DateTime.Seconds(150)
 		},
 		QueueProductionStatuses = {

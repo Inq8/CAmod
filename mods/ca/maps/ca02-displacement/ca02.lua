@@ -45,9 +45,9 @@ MaxLosses = {
 }
 
 TimeBetweenConvoys = {
-	easy = { DateTime.Minutes(2), DateTime.Minutes(8), DateTime.Minutes(3), DateTime.Minutes(4)  },
-	normal = { DateTime.Seconds(90), DateTime.Minutes(7), DateTime.Seconds(150), DateTime.Minutes(3) },
-	hard = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Seconds(90), DateTime.Minutes(3) }
+	easy = { DateTime.Minutes(3), DateTime.Minutes(8), DateTime.Minutes(3), DateTime.Minutes(4)  },
+	normal = { DateTime.Minutes(2), DateTime.Minutes(7), DateTime.Seconds(170), DateTime.Minutes(4) },
+	hard = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Seconds(90), DateTime.Minutes(4) }
 }
 
 -- Squads
