@@ -359,11 +359,7 @@ SUK:
 		LocalOffset: 0,-640,0, 0,640,0
 		PauseOnCondition: !ammo
 		RequiresCondition: seismic-upgrade
-	Armament@UPGRADEDUMMY:
-		Weapon: SeismicMissileDummy
-		LocalOffset: 0,-640,0, 0,640,0
-		PauseOnCondition: !ammo
-		RequiresCondition: seismic-upgrade
+		AmmoUsage: 2
 	AttackAircraft:
 		FacingTolerance: 80
 		PersistentTargeting: false
@@ -459,8 +455,6 @@ SUK.UPG:
 	-GrantConditionOnPrerequisite@SEISMIC:
 	-Armament:
 	Armament@UPGRADE:
-		-RequiresCondition:
-	Armament@UPGRADEDUMMY:
 		-RequiresCondition:
 	Selectable:
 		Class: suk
