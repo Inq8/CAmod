@@ -45,24 +45,24 @@ MaxLosses = {
 }
 
 TimeBetweenConvoys = {
-	easy = { DateTime.Minutes(3), DateTime.Minutes(8), DateTime.Minutes(3), DateTime.Minutes(4)  },
-	normal = { DateTime.Minutes(2), DateTime.Minutes(7), DateTime.Seconds(170), DateTime.Minutes(4) },
-	hard = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Seconds(90), DateTime.Minutes(4) }
+	easy = { DateTime.Minutes(3), DateTime.Minutes(8), DateTime.Seconds(210), DateTime.Minutes(4)  },
+	normal = { DateTime.Minutes(2), DateTime.Minutes(7), DateTime.Seconds(165), DateTime.Minutes(4) },
+	hard = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Seconds(120), DateTime.Minutes(4) }
 }
 
 -- Squads
 
 Squads = {
-	Basic = {
+	Main = {
 		Delay = {
-			easy = DateTime.Seconds(210),
-			normal = DateTime.Seconds(140),
-			hard = DateTime.Seconds(70)
+			easy = DateTime.Seconds(230),
+			normal = DateTime.Seconds(160),
+			hard = DateTime.Seconds(90)
 		},
-		Interval = {
-			easy = DateTime.Seconds(150),
-			normal = DateTime.Seconds(90),
-			hard = DateTime.Seconds(40)
+		AttackValuePerSecond = {
+			easy = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(13), Value = 30 } },
+			normal = { { MinTime = 0, Value = 38 }, { MinTime = DateTime.Minutes(11), Value = 45 } },
+			hard = { { MinTime = 0, Value = 60 }, { MinTime = DateTime.Minutes(9), Value = 70 } },
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -74,78 +74,53 @@ Squads = {
 		Units = {
 			easy = {
 				{
-					Infantry = { "s1", "s1", "s1", "s3", "s3" },
-					Vehicles = { "intl.ai2", "intl.ai2", "gunw" }
+					Infantry = { "s1", "s1", "s1", "s3", "s3" }, -- 900
+					Vehicles = { "intl.ai2", "intl.ai2", "gunw" }, -- 2200 + 1025*2
+					MaxTime = DateTime.Minutes(13),
+				},
+				{
+					Infantry = { "s1", "s1", "s1", "s3", "s3" }, -- 900
+					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "gunw", "corr" }, -- 3900 + 1025*2
+					MinTime = DateTime.Minutes(13),
 				}
 			},
 			normal = {
 				{
-					Infantry = { "s1", "s1", "s1", "s1", "s3", "s3" },
-					Vehicles = { "intl.ai2", "intl.ai2", "gunw" }
+					Infantry = { "s1", "s1", "s1", "s1", "s3", "s3" }, -- 1000
+					Vehicles = { "intl.ai2", "intl.ai2", "gunw" }, -- 2200  + 1025*2
+					MaxTime = DateTime.Minutes(11),
+				},
+				{
+					Infantry = { "s1", "s1", "s1", "s1", "s3", "s3", "s4", "s4" }, -- 2000
+					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "corr", "devo", "seek", "seek" }, -- 6150 + 1025*2
+					MinTime = DateTime.Minutes(11),
 				}
 			},
 			hard = {
 				{
-					Infantry = { "s1", "s1", "s1", "s1", "s3", "s3", "s4" },
-					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "seek" }
+					Infantry = { "s1", "s1", "s1", "s1", "s3", "s3", "s4" }, -- 1500
+					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "seek" }, -- 2950 + 1025*2
+					MaxTime = DateTime.Minutes(9),
+				},
+				{
+					Infantry = { "s1", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "s3", "s4" }, -- 2950
+					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "corr", "devo", "seek", "tpod", "seek" }, -- 7950
+					MinTime = DateTime.Minutes(9),
 				}
 			}
 		},
 		AttackPaths = ScrinAttackPaths,
-		TransitionTo = {
-			SquadType = "Advanced",
-			GameTime = {
-				easy = DateTime.Minutes(15),
-				normal = DateTime.Minutes(10),
-				hard = DateTime.Minutes(8)
-			}
-		}
-	},
-	Advanced = {
-		Interval = {
-			easy = DateTime.Seconds(150),
-			normal = DateTime.Seconds(70),
-			hard = DateTime.Seconds(25)
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false
-		},
-		IdleUnits = { },
-		ProducerActors = nil,
-		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" } },
-		Units = {
-			easy = {
-				{
-					Infantry = { "s1", "s1", "s1", "s3", "s3" },
-					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "gunw", "corr" }
-				}
-			},
-			normal = {
-				{
-					Infantry = { "s1", "s1", "s1", "s1", "s3", "s3", "s4", "s4" },
-					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "corr", "devo", "seek", "seek" }
-				}
-			},
-			hard = {
-				{
-					Infantry = { "s1", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "s3", "s3", "s4", "s4" },
-					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "corr", "devo", "seek", "tpod", "seek" }
-				}
-			}
-		},
-		AttackPaths = ScrinAttackPaths
 	},
 	Stormriders = {
 		Delay = {
-			easy = DateTime.Minutes(5),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(3)
+			easy = DateTime.Seconds(330),
+			normal = DateTime.Seconds(270),
+			hard = DateTime.Seconds(210)
 		},
 		Interval = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2)
+			easy = DateTime.Minutes(330),
+			normal = DateTime.Seconds(240),
+			hard = DateTime.Seconds(150)
 		},
 		QueueProductionStatuses = {
 			Aircraft = false
@@ -167,12 +142,12 @@ Squads = {
 	},
 	Devastators = {
 		Delay = {
-			normal = DateTime.Minutes(17),
+			normal = DateTime.Minutes(15),
 			hard = DateTime.Minutes(10)
 		},
 		Interval = {
-			normal = DateTime.Seconds(100),
-			hard = DateTime.Seconds(2)
+			normal = DateTime.Seconds(120),
+			hard = DateTime.Seconds(60)
 		},
 		QueueProductionStatuses = {
 			Aircraft = false
@@ -393,8 +368,8 @@ InitScrin = function()
 	SeekerPatroller2.Patrol({ SeekerPatrol1a.Location, SeekerPatrol1b.Location })
 	SeekerPatroller3.Patrol({ SeekerPatrol1a.Location, SeekerPatrol1b.Location })
 
-	Trigger.AfterDelay(Squads.Basic.Delay[Difficulty], function()
-		InitAttackSquad(Squads.Basic, Scrin)
+	Trigger.AfterDelay(Squads.Main.Delay[Difficulty], function()
+		InitAttackSquad(Squads.Main, Scrin)
 	end)
 
 	Trigger.AfterDelay(Squads.Stormriders.Delay[Difficulty], function()
@@ -427,10 +402,4 @@ InitScrin = function()
 			end
 		end)
 	end)
-end
-
--- Filters
-
-IsScrinGroundHunterUnit = function(actor)
-	return actor.Owner == Scrin and actor.HasProperty("Move") and not actor.HasProperty("Land") and actor.HasProperty("Hunt")
 end

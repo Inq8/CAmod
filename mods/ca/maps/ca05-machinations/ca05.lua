@@ -37,45 +37,6 @@ Patrols = {
 
 -- Squads
 
-BasicUnits = {
-	easy = {
-		{ Infantry = {}, Vehicles = { "bike", "bike" } },
-		{ Infantry = {}, Vehicles = { "bggy", "bike" } },
-		{ Infantry = { "n3", "n1", "n1" }, Vehicles = { "bggy", "bggy" } },
-	},
-	normal = {
-		{ Infantry = {}, Vehicles = { "bggy", "bike", "bike" } },
-		{ Infantry = { "n3", "n1", "n1", "n4" }, Vehicles = { "bggy", "bggy", "bike" } },
-		{ Infantry = { "n3", "n1", "n1", "n4" }, Vehicles = { "ltnk" } },
-	},
-	hard = {
-		{ Infantry = {}, Vehicles = { "bike", "bike", "bike", "bike" } },
-		{ Infantry = { "n3", "n1", "n1", "n1", "n4" }, Vehicles = { "bggy", "bggy", "bike", "bike" } },
-		{ Infantry = { "n3", "n1", "n1", "n4" }, Vehicles = { "ltnk", "bggy", "bike" } },
-	}
-}
-
-AdvancedUnits = {
-	easy = {
-		{ Infantry = {}, Vehicles = { "bike", "bike", "bike" } },
-		{ Infantry = { "n3", "n1", "n1", "n1" }, Vehicles = { "ltnk", "ltnk" } },
-		{ Infantry = { "n3", "n1", "n4", "n1" }, Vehicles = { "ftnk", "ftnk" } },
-		{ Infantry = { "n1c", "n1c", "n3c" }, Vehicles = { "ltnk" } },
-	},
-	normal = {
-		{ Infantry = {}, Vehicles = { "bggy", "bike", "bike", "stnk.nod" } },
-		{ Infantry = { "n3", "n1", "n1", "n4", "n1" }, Vehicles = { "ltnk", "ltnk" } },
-		{ Infantry = { "n3", "n1", "n1", "n4", "n1" }, Vehicles = { "ltnk", "arty.nod" } },
-		{ Infantry = { "tplr", "tplr", "n1c", "n3c", "n5" }, Vehicles = { "ftnk", "ltnk" } },
-	},
-	hard = {
-		{ Infantry = {}, Vehicles = { "stnk.nod", "stnk.nod", "stnk.nod", "sapc.ai" } },
-		{ Infantry = { "n3", "n1", "n1", "n1", "n1", "n4", "n3" }, Vehicles = { "ltnk", "ltnk", "ftnk", "arty.nod" } },
-		{ Infantry = { "n3", "n1", "n1", "n1", "n4", "n1", "n3" }, Vehicles = { "ltnk", "mlrs", "arty.nod", "howi" } },
-		{ Infantry = { "tplr", "tplr", "rmbc", "n1c", "n3c", "n5", "n1c", "n1c" }, Vehicles = { "ftnk", "ltnk" } },
-	}
-}
-
 LabDefenseUnits = {
 	easy = {
 		{ Infantry = { "n1c", "n1c", "n1c", "n3c" }, Vehicles = { "ltnk" } },
@@ -89,90 +50,44 @@ LabDefenseUnits = {
 }
 
 Squads = {
-	SouthBasic = {
+	South = {
 		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(8),
 			normal = DateTime.Minutes(6),
 			hard = DateTime.Minutes(4)
 		},
-		Interval = {
-			easy = DateTime.Seconds(50),
-			normal = DateTime.Seconds(35),
-			hard = DateTime.Seconds(20)
+		AttackValuePerSecond = {
+			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 30 } },
+			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 35 }, { MinTime = DateTime.Minutes(16), Value = 50 } },
+			hard = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(10), Value = 60 }, { MinTime = DateTime.Minutes(14), Value = 80 } },
 		},
 		DispatchDelay = DateTime.Seconds(15),
 		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
 		IdleUnits = { },
 		ProducerActors = { Infantry = { NodSouthHand }, Vehicles = { NodSouthAirstrip } },
-		Units = BasicUnits,
+		Units = UnitCompositions.Nod.Main,
 		AttackPaths = NodSouthAttackPaths,
-		TransitionTo = {
-			SquadType = "SouthAdvanced",
-			GameTime = {
-				easy = DateTime.Minutes(15),
-				normal = DateTime.Minutes(13),
-				hard = DateTime.Minutes(11)
-			}
-		}
 	},
-	EastBasic = {
+	East = {
 		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(5),
 			normal = DateTime.Minutes(4),
 			hard = DateTime.Minutes(3)
 		},
-		Interval = {
-			easy = DateTime.Seconds(70),
-			normal = DateTime.Seconds(50),
-			hard = DateTime.Seconds(30)
+		AttackValuePerSecond = {
+			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 30 } },
+			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 35 }, { MinTime = DateTime.Minutes(16), Value = 50 } },
+			hard = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(10), Value = 60 }, { MinTime = DateTime.Minutes(14), Value = 80 } },
 		},
 		DispatchDelay = DateTime.Seconds(15),
 		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
 		IdleUnits = { },
 		ProducerActors = { Infantry = { NodEastHand1, NodEastHand2 }, Vehicles = { NodEastAirstrip } },
-		Units = BasicUnits,
-		AttackPaths = NodEastAttackPaths,
-		TransitionTo = {
-			SquadType = "EastAdvanced",
-			GameTime = {
-				easy = DateTime.Minutes(14),
-				normal = DateTime.Minutes(12),
-				hard = DateTime.Minutes(10)
-			}
-		}
-	},
-	SouthAdvanced = {
-		Player = nil,
-		Interval = {
-			easy = DateTime.Seconds(60),
-			normal = DateTime.Seconds(40),
-			hard = DateTime.Seconds(20)
-		},
-		DispatchDelay = DateTime.Seconds(15),
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
-		FollowLeader = true,
-		IdleUnits = { },
-		ProducerActors = { Infantry = { NodSouthHand }, Vehicles = { NodSouthAirstrip } },
-		Units = AdvancedUnits,
-		AttackPaths = NodSouthAttackPaths
-	},
-	EastAdvanced = {
-		Player = nil,
-		Interval = {
-			easy = DateTime.Seconds(60),
-			normal = DateTime.Seconds(40),
-			hard = DateTime.Seconds(20)
-		},
-		DispatchDelay = DateTime.Seconds(15),
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
-		FollowLeader = true,
-		IdleUnits = { },
-		ProducerActors = { Infantry = { NodEastHand1, NodEastHand2 }, Vehicles = { NodEastAirstrip } },
-		Units = AdvancedUnits,
+		Units = UnitCompositions.Nod.Main,
 		AttackPaths = NodEastAttackPaths,
 	},
 	Air = {
@@ -211,7 +126,6 @@ Squads = {
 	},
 	Naval = {
 		Player = nil,
-		IsNaval = true,
 		ActiveCondition = function()
 			return PlayerHasNavalProduction(Greece)
 		end,
@@ -248,11 +162,6 @@ Squads = {
 			normal = DateTime.Minutes(15),
 			hard = DateTime.Minutes(10)
 		},
-		Interval = {
-			easy = DateTime.Seconds(30),
-			normal = DateTime.Seconds(20),
-			hard = DateTime.Seconds(10)
-		},
 		DispatchDelay = DateTime.Seconds(15),
 		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
@@ -277,6 +186,25 @@ WorldLoaded = function()
 	Camera.Position = McvLanding.CenterPosition
 
 	DoMcvArrival()
+
+	if Difficulty ~= "hard" then
+		EastObelisk2.Destroy()
+		EastObelisk4.Destroy()
+		SouthWestObelisk2.Destroy()
+		SouthWestObelisk3.Destroy()
+		RiverTurret1.Destroy()
+
+		if Difficulty == "easy" then
+			SouthWestObelisk1.Destroy()
+			EastObelisk1.Destroy()
+			EastObelisk3.Destroy()
+			LabObelisk1.Destroy()
+			LabObelisk2.Destroy()
+			RebuildExcludes = { Nod = { Types = { "obli", "gun.nod" } } }
+		else
+			RebuildExcludes = { Nod = { Types = { "obli" } } }
+		end
+	end
 
 	Utils.Do(Patrols, function(p)
 		Utils.Do(p.Units, function(unit)
@@ -369,31 +297,29 @@ InitNod = function()
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
 	end)
 
-	Trigger.AfterDelay(Squads.SouthBasic.Delay[Difficulty], function()
-		InitAttackSquad(Squads.SouthBasic, Nod)
+	Trigger.AfterDelay(Squads.South.Delay[Difficulty], function()
+		InitAttackSquad(Squads.South, Nod)
 	end)
 
-	Trigger.AfterDelay(Squads.EastBasic.Delay[Difficulty], function()
-		InitAttackSquad(Squads.EastBasic, Nod)
+	Trigger.AfterDelay(Squads.East.Delay[Difficulty], function()
+		InitAttackSquad(Squads.East, Nod)
 	end)
 
 	Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
 		InitAirAttackSquad(Squads.Air, Nod, Greece, { "harv", "harv.td", "pris", "ifv", "cryo", "ptnk", "pcan", "ca", "dome", "apwr", "mech", "medi" })
 	end)
 
-	InitAttackSquad(Squads.Naval, Nod)
+	InitNavalAttackSquad(Squads.Naval, Nod)
 	InitAttackSquad(Squads.LabDefense, Nod)
 
-	local upgradeCreationLocation = CPos.New(0, 0)
-
-	Actor.Create("hazmat.upgrade", true, { Owner = Nod, Location = upgradeCreationLocation })
+	Actor.Create("hazmat.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
 
 	if Difficulty == "hard" then
-		Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod, Location = upgradeCreationLocation })
-		Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod, Location = upgradeCreationLocation })
+		Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
+		Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
 
 		Trigger.AfterDelay(DateTime.Minutes(15), function()
-			Actor.Create("tibcore.upgrade", true, { Owner = Nod, Location = upgradeCreationLocation })
+			Actor.Create("tibcore.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
 		end)
 	end
 end
@@ -404,10 +330,6 @@ DoMcvArrival = function()
 	DoNavalTransportDrop(Greece, mcvArrivalPath, mcvExitPath, "lst", InitialUnits[Difficulty], function(a)
 		a.Move(McvRally.Location)
 	end)
-end
-
-IsNodGroundHunterUnit = function(actor)
-	return actor.Owner == Nod and actor.HasProperty("Move") and not actor.HasProperty("Land") and actor.HasProperty("Hunt") and actor.Type ~= "mlrs" and actor.Type ~= "arty.nod"
 end
 
 RevealLab = function()

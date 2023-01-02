@@ -106,7 +106,7 @@ HaloDropStart = {
 }
 
 HaloDropInterval = {
-	easy = DateTime.Minutes(120),
+	easy = DateTime.Seconds(120),
 	normal = DateTime.Seconds(70),
 	hard = DateTime.Seconds(40)
 }
@@ -145,6 +145,12 @@ WorldLoaded = function()
 
 	ObjectiveProtectTemple = Nod.AddObjective("Protect Temple Prime.")
 
+	if Difficulty == "hard" then
+		Utils.Do(Nod.GetActorsByType("mlrs"), function(a)
+			a.Destroy()
+		end)
+	end
+
 	Trigger.OnKilled(TemplePrime, function(self, killer)
 		if not Nod.IsObjectiveCompleted(ObjectiveProtectTemple) then
 			Nod.MarkFailedObjective(ObjectiveProtectTemple)
@@ -176,11 +182,23 @@ OncePerSecondChecks = function()
 			ObjectiveDestroySovietForces = Nod.AddObjective("Destroy all Soviet forces.")
 			Nod.MarkCompletedObjective(ObjectiveProtectTemple)
 
-			local upgradeCreationLocation = CPos.New(0, 0)
-			Actor.Create("advcyborg.upgrade", true, { Owner = Nod, Location = upgradeCreationLocation })
-			Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod, Location = upgradeCreationLocation })
-			Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod, Location = upgradeCreationLocation })
+			Actor.Create("advcyborg.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
+			Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
+			Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
 			DeployCyborgs()
+
+			if ObjectiveDestroyBases ~= nil then
+				local sovietBuildings = USSR.GetActorsByTypes({ "mcv", "fact", "proc", "tsla" })
+				if #sovietBuildings == 0 then
+					Nod.MarkCompletedObjective(ObjectiveDestroyBases)
+				else
+					Nod.MarkFailedObjective(ObjectiveDestroyBases)
+
+					Utils.Do(sovietBuildings, function(a)
+						a.Sell()
+					end)
+				end
+			end
 		end
 
 		if CyborgWaves >= MaxCyborgWaves then
@@ -201,8 +219,8 @@ InitUSSR = function()
 	AutoRepairAndRebuildBuildings(USSR, 15)
 	SetupRefAndSilosCaptureCredits(USSR)
 
-	local upgradeCreationLocation = CPos.New(0, 0)
-	Actor.Create("tarc.upgrade", true, { Owner = USSR, Location = upgradeCreationLocation })
+	Actor.Create("POWERCHEAT", true, { Owner = USSR, Location = UpgradeCreationLocation })
+	Actor.Create("tarc.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
 
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
 
@@ -217,10 +235,36 @@ InitUSSR = function()
 	Trigger.AfterDelay(HaloDropStart[Difficulty], function()
 		DoHaloDrop()
 	end)
-end
 
-IsUSSRGroundHunterUnit = function(actor)
-	return actor.Owner == USSR and actor.HasProperty("Move") and not actor.HasProperty("Land") and actor.HasProperty("Hunt")
+	BaseAttemptLocations = {
+		{ SpawnLocation = AttackSpawn8.Location, DeployLocation = ConyardPosition1.Location, RefLocation = RefPosition1.Location, TeslaCoilLocation = TeslaCoilPosition1.Location },
+		{ SpawnLocation = AttackSpawn5.Location, DeployLocation = ConyardPosition2.Location, RefLocation = RefPosition2.Location, TeslaCoilLocation = TeslaCoilPosition2.Location },
+		{ SpawnLocation = AttackSpawn2.Location, DeployLocation = ConyardPosition3.Location, RefLocation = RefPosition3.Location, TeslaCoilLocation = TeslaCoilPosition3.Location },
+	}
+
+	BaseAttemptTimes = { DateTime.Seconds(543), DateTime.Seconds(755), DateTime.Seconds(954) }
+	BaseAttemptTimes = { DateTime.Seconds(5), DateTime.Seconds(10), DateTime.Seconds(15) }
+	local attemptCount = 0
+
+	Utils.Do(Utils.Shuffle(BaseAttemptLocations), function(attempt)
+		attemptCount = attemptCount + 1
+		Trigger.AfterDelay(BaseAttemptTimes[attemptCount], function()
+			if ObjectiveDestroyBases == nil then
+				ObjectiveDestroyBases = Nod.AddSecondaryObjective("Crush any Soviet attempts to establish a base.")
+			else
+				Notification("The Soviets are attempting to set up another base.")
+			end
+			Reinforcements.Reinforce(USSR, { "mcv" }, { attempt.SpawnLocation, attempt.DeployLocation }, 0, function(a)
+				a.Deploy()
+				Trigger.AfterDelay(DateTime.Seconds(2), function()
+					Actor.Create("proc", true, { Owner = USSR, Location = attempt.RefLocation })
+				end)
+				Trigger.AfterDelay(DateTime.Seconds(3), function()
+					Actor.Create("tsla", true, { Owner = USSR, Location = attempt.TeslaCoilLocation })
+				end)
+			end)
+		end)
+	end)
 end
 
 DoGroundAttack = function(isAdditional)

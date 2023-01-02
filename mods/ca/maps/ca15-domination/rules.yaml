@@ -1,0 +1,227 @@
+^Palettes:
+	GlobalLightingPaletteEffect:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, ca15.lua
+	MissionData:
+		Briefing: Now that the Allies and GDI are no longer on our doorstep and we have begun to replenish our forces, we can turn our attention to the Brotherhood of Nod.\n\nKane cannot be trusted. He thinks that his cyborg army gives him such an advantage, and that we have been so weakened, that we will do his bidding without question. His arrogant overconfidence will be his downfall.\n\nIt is time to make use of our own secret weapon, Yuri. With his psionic powers he can turn our enemies into loyal servants.\n\nThere is but one obstacle. Kane's cyborgs are impervious to Yuri's powers, as their minds are protected by their cybernetic implants.\n\nIn order for Yuri to be able to control the minds of these cyborgs, we must break through the encryption that protects them.\n\nMake use of one of our best thieves to infiltrate a Nod cybernetics lab to steal the encryption algorithms. Without this protection the cyborgs will be vulnerable to Yuri, and we will be able to use Kane's own cyborgs against him.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: Difficulty
+		Description: The difficulty of the mission
+		Values:
+			easy: Easy
+			normal: Normal
+			hard: Hard
+		Default: normal
+
+Player:
+	PlayerResources:
+		DefaultCash: 2000
+
+^TDPalette:
+	RenderSprites:
+		PlayerPalette: playertdunit
+
+^Infantry:
+	RenderSprites:
+		PlayerPalette: playertdunit
+	WithDeathAnimation:
+		DeathSequencePalette: playertdunit
+
+^BuildingTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+^DefenseTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+SAPC:
+	RenderSprites:
+		PlayerPalette: playerraunit
+
+HARV.TD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+AMCV:
+	RenderSprites:
+		PlayerPalette: playertd
+
+TMPL:
+	-NukePower@Cluster:
+
+YURI:
+	RevealsShroud:
+		Range: 10c0
+	AirstrikePower@MutaBomb:
+		OrderName: mutabomb
+		Icon: mutabomb
+		IconPalette: scrin
+		ChargeInterval: 4500
+		Name: Genetic Mutation Bomb
+		Description: \nCalls in a Badger bomber which drops a genetic\n    mutation bomb on your target, transforming\n    infantry into Brutes under your control.\n\nDoes not affect cyborgs.
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		CameraActor: camera
+		CameraRemoveDelay: 150
+		UnitType: badr.mbomber
+		QuantizedFacings: 8
+		DisplayBeacon: true
+		BeaconPoster: gmutation
+		BeaconPosterPalette: chromes
+		SquadSize: 1
+		SquadOffset: 0,1792,0
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 45
+		RequiresCondition: mutabomb-enabled
+	PeriodicExplosionOnSlaves:
+		KillSlaveTypes: Infantry, Cyborg, Vehicle
+	ExternalCondition@MUTABOMB:
+		Condition: mutabomb-enabled
+	-AutoTarget:
+	-AutoTargetPriority@DEFAULT:
+	-AutoTargetPriority@ATTACKANYTHING:
+	-Captures@DRIVER_KILL:
+	AttackMove:
+		-AssaultMoveCondition:
+
+BRUT:
+	AutoTarget:
+		InitialStance: Defend
+
+THF:
+	Buildable:
+		Description: Normally steals enemy credits and hijacks enemy vehicles.\n\nCurrent mission to steal encryption codes.
+	-Captures:
+	-Captures@DRIVER_KILL:
+
+LASW:
+	Inherits: BRIK
+	-Buildable:
+	Tooltip:
+		Name: Laser Fence
+	-SoundOnDamageTransition:
+	DamageMultiplier:
+		Modifier: 0
+	-Crushable:
+	LineBuild:
+		NodeTypes: lasw
+	LineBuildNode:
+		Types: lasw
+	WithWallSpriteBody:
+		Type: lasw
+	RenderSprites:
+		Image: lasw
+	-Targetable:
+
+N4:
+	Mobile:
+		Speed: 46
+
+^Cyborg:
+	Tooltip:
+		GenericName: Cyborg
+
+^DecryptableCyborg:
+	Targetable@MINDCONTROL:
+		RequiresCondition: !mindcontrolled && !hacked && !restoring && decrypted
+	GrantConditionOnPrerequisite@DECRYPTED:
+		Condition: decrypted
+		Prerequisites: cyborgsdecrypted
+
+N1C:
+	Inherits@DECRYPT: ^DecryptableCyborg
+
+N3C:
+	Inherits@DECRYPT: ^DecryptableCyborg
+
+N5:
+	Inherits@DECRYPT: ^DecryptableCyborg
+
+ACOL:
+	Inherits@DECRYPT: ^DecryptableCyborg
+
+RMBC:
+	Inherits@DECRYPT: ^DecryptableCyborg
+	RenderSprites:
+		PlayerPalette: playertd
+	WithDeathAnimation:
+		DeathSequencePalette: playertd
+	DamageMultiplier@MCBUFF:
+		Modifier: 50
+		RequiresCondition: mindcontrolled
+
+ENLI:
+	Inherits@DECRYPT: ^DecryptableCyborg
+	RenderSprites:
+		PlayerPalette: playertd
+	WithDeathAnimation:
+		DeathSequencePalette: playertd
+	DamageMultiplier@MCBUFF:
+		Modifier: 50
+		RequiresCondition: mindcontrolled
+
+ACOL:
+	Inherits@DECRYPT: ^DecryptableCyborg
+	DamageMultiplier@MCBUFF:
+		Modifier: 50
+		RequiresCondition: mindcontrolled
+
+TPLR:
+	Inherits@DECRYPT: ^DecryptableCyborg
+	DamageMultiplier@MCBUFF:
+		Modifier: 50
+		RequiresCondition: mindcontrolled
+
+MISS:
+	Tooltip:
+		Name: Cybernetics Lab
+	TooltipDescription:
+		Description: Nod cyborg research facility and data warehouse.
+		ValidRelationships: Ally, Enemy
+	-TooltipDescription@ally:
+	-TooltipDescription@other:
+	InfiltrateForSupportPowerCA@DECRYPT:
+		Types: ThiefInfiltrate
+		Proxy: cyborgsdecrypted
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
+	Targetable@DECRYPT:
+		TargetTypes: ThiefInfiltrate
+
+cyborgsdecrypted:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesPrerequisite:
+
+BADR.MBomber:
+	Health:
+		HP: 10000
+
+OBLI:
+	ExternalCondition@DISABLED:
+		Condition: disabled
+
+NSAM:
+	ExternalCondition@DISABLED:
+		Condition: disabled
+
+LASP:
+	ExternalCondition@DISABLED:
+		Condition: disabled
+	DamageMultiplier@REDUC:
+		Modifier: 20
+
+HALO.paradrop:
+	DamageMultiplier@INVULN:
+		Modifier: 0

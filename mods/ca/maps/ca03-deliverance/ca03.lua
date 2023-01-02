@@ -53,9 +53,9 @@ HaloDropStart = {
 }
 
 HaloDropInterval = {
-	easy = DateTime.Minutes(3),
-	normal = DateTime.Minutes(2),
-	hard = DateTime.Minutes(1)
+	easy = DateTime.Minutes(4),
+	normal = DateTime.Minutes(3),
+	hard = DateTime.Minutes(2)
 }
 
 NavalDropStart = {
@@ -65,9 +65,9 @@ NavalDropStart = {
 }
 
 NavalDropInterval = {
-	easy = DateTime.Minutes(5),
-	normal = DateTime.Minutes(4),
-	hard = DateTime.Minutes(3)
+	easy = DateTime.Seconds(330),
+	normal = DateTime.Seconds(270),
+	hard = DateTime.Seconds(210)
 }
 
 HoldOutTime = {
@@ -79,17 +79,17 @@ HoldOutTime = {
 -- Squads
 
 Squads = {
-	MainBasic = {
+	Main = {
 		Player = nil,
 		Delay = {
-			easy = DateTime.Seconds(60),
-			normal = DateTime.Seconds(30),
-			hard = DateTime.Seconds(5)
+			easy = DateTime.Seconds(90),
+			normal = DateTime.Seconds(60),
+			hard = DateTime.Seconds(30)
 		},
-		Interval = {
-			easy = DateTime.Seconds(50),
-			normal = DateTime.Seconds(35),
-			hard = DateTime.Seconds(20)
+		AttackValuePerSecond = {
+			easy = { { MinTime = 0, Value = 30 }, { MinTime = DateTime.Minutes(14), Value = 30 } },
+			normal = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(12), Value = 40 } },
+			hard = { { MinTime = 0, Value = 60 }, { MinTime = DateTime.Minutes(10), Value = 60 } },
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -99,84 +99,20 @@ Squads = {
 		IdleUnits = { },
 		ProducerActors = { Infantry = { SovietMainBarracks1, SovietMainBarracks2 }, Vehicles = { SovietMainFactory1, SovietMainFactory2 } },
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = {
-			easy = {
-				{
-					Infantry = { "e3", "e1", "e1", "e1", "e2", "e4" },
-					Vehicles = { "3tnk", "btr" }
-				}
-			},
-			normal = {
-				{
-					Infantry = { "e3", "e1", "e1", "e1", "e1", "e2", "e4" },
-					Vehicles = { "3tnk", "btr.ai", "btr" }
-				}
-			},
-			hard = {
-				{
-					Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4" },
-					Vehicles = { "3tnk", "btr.ai", "3tnk" }
-				}
-			}
-		},
+		Units = UnitCompositions.Soviet.Main,
 		AttackPaths = SovietMainAttackPaths,
-		TransitionTo = {
-			SquadType = "MainAdvanced",
-			GameTime = {
-				easy = DateTime.Minutes(17),
-				normal = DateTime.Minutes(15),
-				hard = DateTime.Minutes(12)
-			}
-		}
-	},
-	MainAdvanced = {
-		Player = nil,
-		Interval = {
-			easy = DateTime.Seconds(50),
-			normal = DateTime.Seconds(35),
-			hard = DateTime.Seconds(20)
-		},
-		QueueProductionStatuses = {
-			Infantry = false,
-			Vehicles = false
-		},
-		FollowLeader = true,
-		IdleUnits = { },
-		ProducerActors = { Infantry = { SovietMainBarracks1, SovietMainBarracks2 }, Vehicles = { SovietMainFactory1, SovietMainFactory2 } },
-		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = {
-			easy = {
-				{
-					Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" },
-					Vehicles = { "4tnk", "btr.ai", "katy" }
-				}
-			},
-			normal = {
-				{
-					Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" },
-					Vehicles = { "3tnk", "btr.ai", "4tnk", "v2rl" }
-				}
-			},
-			hard = {
-				{
-					Infantry = { "e3", "e1", "e1", "e3", "shok", "e1", "shok", "e1", "e2", "e3", "e4" },
-					Vehicles = { "3tnk", "4tnk", "btr.ai", "ttra", "v2rl" }
-				}
-			}
-		},
-		AttackPaths = SovietMainAttackPaths
 	},
 	Northern = {
 		Player = nil,
 		Delay = {
-			easy = DateTime.Seconds(30),
-			normal = DateTime.Seconds(15),
-			hard = DateTime.Seconds(5)
+			easy = DateTime.Seconds(90),
+			normal = DateTime.Seconds(60),
+			hard = DateTime.Seconds(30)
 		},
-		Interval = {
-			easy = DateTime.Seconds(40),
-			normal = DateTime.Seconds(30),
-			hard = DateTime.Seconds(20)
+		AttackValuePerSecond = {
+			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 15 } },
+			normal = { { MinTime = 0, Value = 30 }, { MinTime = DateTime.Minutes(12), Value = 30 } },
+			hard = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(10), Value = 40 } },
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -185,6 +121,7 @@ Squads = {
 		FollowLeader = true,
 		IdleUnits = { },
 		ProducerActors = { Infantry = { SovietNorthBarracks1, SovietNorthBarracks2 }, Vehicles = { SovietNorthFactory } },
+		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
 		Units = {
 			easy = {
 				{
@@ -239,7 +176,6 @@ Squads = {
 	},
 	Naval = {
 		Player = nil,
-		IsNaval = true,
 		ActiveCondition = function()
 			return PlayerHasNavalProduction(Greece)
 		end,
@@ -366,11 +302,6 @@ WorldLoaded = function()
 		if self.Owner ~= Greece then
 			GDICommanderAlive = false
 		end
-	end)
-
-	-- Add V3s to advanced squad after 17 mins
-	Trigger.AfterDelay(DateTime.Minutes(17), function()
-		Squads.MainAdvanced.Units.hard.Vehicles = { "3tnk", "4tnk", "btr.ai", "ttra", "v2rl", "v3rl" }
 	end)
 end
 
@@ -573,8 +504,8 @@ InitUSSRPatrols = function()
 end
 
 InitUSSRAttacks = function()
-	Trigger.AfterDelay(Squads.MainBasic.Delay[Difficulty], function()
-		InitAttackSquad(Squads.MainBasic, USSR)
+	Trigger.AfterDelay(Squads.Main.Delay[Difficulty], function()
+		InitAttackSquad(Squads.Main, USSR)
 	end)
 
 	Trigger.AfterDelay(Squads.Northern.Delay[Difficulty], function()
@@ -585,7 +516,7 @@ InitUSSRAttacks = function()
 		InitAirAttackSquad(Squads.Migs, USSR, Greece, { "harv", "harv.td", "pris", "ifv", "cryo", "ptnk", "pcan", "ca" })
 	end)
 
-	InitAttackSquad(Squads.Naval, USSR)
+	InitNavalAttackSquad(Squads.Naval, USSR)
 
 	Trigger.AfterDelay(HaloDropStart[Difficulty], function()
 		DoHaloDrop()
@@ -594,10 +525,6 @@ InitUSSRAttacks = function()
 	Trigger.AfterDelay(NavalDropStart[Difficulty], function()
 		DoNavalDrop()
 	end)
-end
-
-IsUSSRGroundHunterUnit = function(actor)
-	return actor.Owner == USSR and actor.HasProperty("Move") and not actor.HasProperty("Land") and actor.HasProperty("Hunt") and actor.Type ~= "v2rl" and actor.Type ~= "katy"
 end
 
 DoHaloDrop = function()
@@ -630,9 +557,13 @@ end
 DoNavalDrop = function()
 	local navalDropPath = Utils.Random(NavalDropPaths)
 	local navalDropExitPath = { navalDropPath[2], navalDropPath[1] }
-	local navalDropUnits = { "3tnk", "v2rl", "3tnk", "btr.ai" }
+	local navalDropUnits = { "3tnk", "v2rl", "btr.ai" }
 
-	if Difficulty == "hard" and DateTime.GameTime > DateTime.Minutes(15) then
+	if Difficulty ~= "easy" then
+		navalDropUnits = { "3tnk", "v2rl", "3tnk", "btr.ai" }
+	end
+
+	if Difficulty == "hard" and DateTime.GameTime > DateTime.Minutes(18) then
 		navalDropUnits = { "3tnk", "v3rl", "3tnk", "btr.ai" }
 	end
 
@@ -659,11 +590,4 @@ NavalReinforcements = function()
 			Reinforcements.Reinforce(Greece, destroyers, { DestroyerSpawn.Location, DestroyerDestination.Location }, 75)
 		end)
 	end
-end
-
-AssaultPlayerBase = function(actor)
-	if not actor.IsDead then
-		actor.Patrol({ GDIBaseCenter.Location, EastAttackRally.Location, ShoreCenter.Location, VillageCenter.Location })
-	end
-	IdleHunt(actor)
 end

@@ -62,8 +62,7 @@ WorldLoaded = function()
 
 	Camera.Position = PlayerStart.CenterPosition
 
-	local upgradeCreationLocation = CPos.New(0, 0)
-	Actor.Create("tibcore.upgrade", true, { Owner = Nod, Location = upgradeCreationLocation })
+	Actor.Create("tibcore.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
 
 	InitObjectives(Nod)
 	InitScrin()
@@ -177,10 +176,6 @@ InitScrin = function()
 		TargetSwapChance(a, Scrin, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
 	end)
-end
-
-IsScrinGroundHunterUnit = function(actor)
-	return actor.Owner == Scrin and actor.HasProperty("Move") and not actor.HasProperty("Land") and actor.HasProperty("Hunt")
 end
 
 SpawnWormhole = function()

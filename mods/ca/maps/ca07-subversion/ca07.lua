@@ -205,11 +205,3 @@ InitGDIPatrols = function()
 		BattleTankPatroller1.Patrol(BattleTankPatrolPath, true)
 	end
 end
-
-IsGDIGroundHunterUnit = function(actor)
-	return actor.Owner == GDI and actor.HasProperty("Move") and (not actor.HasProperty("Land") or actor.Type == "jjet")and actor.HasProperty("Hunt") and actor.Type ~= "msam" and actor.Type ~= "memp"
-end
-
-IsGreeceGroundHunterUnit = function(actor)
-	return actor.Owner == Greece and actor.HasProperty("Move") and not actor.HasProperty("Land") and actor.HasProperty("Hunt") and actor.Type ~= "arty" and actor.Type ~= "cryo" and actor.Type ~= "mgg" and actor.Type ~= "mrj"
-end
