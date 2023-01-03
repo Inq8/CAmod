@@ -243,7 +243,6 @@ InitUSSR = function()
 	}
 
 	BaseAttemptTimes = { DateTime.Seconds(543), DateTime.Seconds(755), DateTime.Seconds(954) }
-	BaseAttemptTimes = { DateTime.Seconds(5), DateTime.Seconds(10), DateTime.Seconds(15) }
 	local attemptCount = 0
 
 	Utils.Do(Utils.Shuffle(BaseAttemptLocations), function(attempt)

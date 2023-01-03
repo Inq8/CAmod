@@ -84,15 +84,15 @@ SiegeBreakThreshold = {
 }
 
 AutoSiegeBreakTime = {
-	easy = DateTime.Minutes(45),
-	normal = DateTime.Minutes(30),
-	hard = DateTime.Minutes(15)
+	easy = DateTime.Minutes(30),
+	normal = DateTime.Minutes(20),
+	hard = DateTime.Minutes(10)
 }
 
 AutoAttackStartTime = {
-	easy = DateTime.Minutes(25),
-	normal = DateTime.Minutes(20),
-	hard = DateTime.Minutes(15)
+	easy = DateTime.Minutes(16),
+	normal = DateTime.Minutes(12),
+	hard = DateTime.Minutes(8)
 }
 
 WorldLoaded = function()
@@ -218,7 +218,7 @@ InitGDI = function()
 	Actor.Create("hazmat.upgrade", true, { Owner = GDI, Location = UpgradeCreationLocation })
 
 	if Difficulty == "hard" then
-		Trigger.AfterDelay(DateTime.Minutes(5), function()
+		Trigger.AfterDelay(DateTime.Minutes(10), function()
 			local strategyUpgrades = {
 				{ "bombard.strat", "bombard2.strat", "hailstorm.upgrade" },
 				{ "seek.strat", "seek2.strat", "hypersonic.upgrade" },
@@ -244,7 +244,7 @@ EngineerDrop = function()
 		Notification("Reinforcements have arrived.")
 	end)
 
-	DoHelicopterDrop(USSR, entryPath, "halo.paradrop", haloDropUnits, function(u) u.Scatter() end, function(t)
+	DoHelicopterDrop(USSR, entryPath, "halo.paradrop", haloDropUnits, nil, function(t)
 		Trigger.AfterDelay(DateTime.Seconds(5), function()
 			if not t.IsDead then
 				t.Move(entryPath[1])
