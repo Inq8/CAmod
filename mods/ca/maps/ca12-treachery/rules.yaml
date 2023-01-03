@@ -1,0 +1,138 @@
+^Palettes:
+	GlobalLightingPaletteEffect:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, ca12.lua
+	MissionData:
+		Briefing: We have been betrayed! Our recent losses were enough for the coward General Yegorov to show his true colours. He, along with an unknown number of troops loyal to him, have defected to the Allies.\n\nHe was not counting on hostilities with the Brotherhood of Nod ending so soon, and must now be feeling very nervous.\n\nHe deserves no mercy. Put an end to the traitor and anyone who tries to protect him.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: Difficulty
+		Description: The difficulty of the mission
+		Values:
+			easy: Easy
+			normal: Normal
+			hard: Hard
+		Default: normal
+
+Player:
+	PlayerResources:
+		DefaultCash: 5000
+
+^TDPalette:
+	RenderSprites:
+		PlayerPalette: playertdunit
+
+^Infantry:
+	RenderSprites:
+		PlayerPalette: playertdunit
+	WithDeathAnimation:
+		DeathSequencePalette: playertdunit
+
+^BuildingTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+^DefenseTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+SAPC:
+	RenderSprites:
+		PlayerPalette: playerraunit
+
+HARV.TD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+AMCV:
+	RenderSprites:
+		PlayerPalette: playertd
+
+MCV:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+DOME:
+	-ParatroopersPower@Russianparatroopers:
+	AirstrikePower@spyplane:
+		ChargeInterval: 4500
+
+AFLD:
+	-AirstrikePower@Russianparabombs:
+
+ATEK:
+	-DummyGpsPower@NOFOG:
+	-DummyGpsPower@FOG:
+	-ProduceActorPowerCA@SatelliteLaunched:
+	-ProduceActorPowerCA@InitialSatelliteScan:
+	-ProduceActorPowerCA@SatelliteScan:
+	-ProduceActorPowerCA@SatelliteScanNoFog:
+	-GrantExternalConditionPowerCA@FSHIELD:
+	-DetonateWeaponPower@TEMPINC:
+
+HPAD.Abandoned:
+	Inherits: HPAD
+	RenderSprites:
+		Image: hpad
+	Exit@1:
+		Facing: 384
+	Power:
+		Amount: 0
+	-RallyPoint:
+	-AirstrikePower@Russianparabombs:
+	-FreeActor@QUEUEUPDATER:
+	-GrantDelayedCondition@QUEUEUPDATER:
+	-GrantConditionOnPrerequisite@MQ:
+	-PrimaryBuilding:
+	-WithDecoration@primary:
+	-ProductionQueue@MQAIR:
+	-Production@SQAIR:
+	-Production@MQAIR:
+	-ProductionBar@SQAIR:
+	-ProductionBar@MQAIR:
+
+HALO:
+	GrantConditionIfOwnerIsNeutral@NEUTRAL:
+		Condition: is-neutral
+	WithIdleOverlay@ROTOR1GROUND:
+		PauseOnCondition: is-neutral
+	RevealsShroud:
+		Range: 10c0
+
+BORI:
+	RevealsShroud:
+		Range: 8c0
+	-Demolition:
+	AutoTarget:
+		RequiresCondition: autoattack-enabled
+	ExternalCondition@ATTACKMOVEENABLE:
+		Condition: autoattack-enabled
+
+SMIG:
+	-Targetable@AIRBORNE:
+
+GNRL:
+	Tooltip:
+		Name: General Yegorov
+		-GenericVisibility:
+		-RequiresCondition:
+	-GrantConditionOnCombatantOwner@COMBATANT:
+	-Tooltip@COMBATANT:
+	-Valued:
+	-AttackFrontal:
+	-AttackMove:
+	-Guard:
+	-GrantConditionOnFaction@RA:
+	-GrantConditionOnFaction@TD:
+	-Armament@RA:
+	-Armament@TD:
+	-AutoTarget:
+	-AutoTargetPriority@DEFAULT:
+	-AutoTargetPriority@ATTACKANYTHING:
+
+# Hunt() requires only 1 AttackBase
+BATF.AI:
+	-AttackFrontal:

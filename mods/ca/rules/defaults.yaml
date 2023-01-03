@@ -1076,7 +1076,9 @@
 		HpPerStep: 1000
 		Interval: 7
 		StartRepairingNotification: Repairing
+		StartRepairingTextNotification: Repairing.
 		FinishRepairingNotification: UnitRepaired
+		FinishRepairingTextNotification: Unit repaired.
 		PlayerExperience: 5
 		RequiresCondition: aircraft-repair && !forceshield && !invulnerability && !being-warped
 	WithDecoration@AIRCRAFTREPAIR:
@@ -1708,6 +1710,7 @@
 	AttackMove:
 	HiddenUnderFog:
 	ActorLostNotification:
+		TextNotification: Unit lost.
 	WithDamageOverlay:
 	Guard:
 	Guardable:
@@ -1721,7 +1724,9 @@
 		RequiresCondition: !being-warped
 	CaptureNotification:
 		Notification: UnitStolen
+		TextNotification: Unit stolen.
 		LoseNotification: UnitLost
+		LoseTextNotification: Unit lost.
 	MustBeDestroyed:
 	Voiced:
 		VoiceSet: VehicleVoice
@@ -1944,6 +1949,7 @@
 		RequiresCondition: disable-experience
 	HiddenUnderFog:
 	ActorLostNotification:
+		TextNotification: Unit lost.
 	Crushable:
 		WarnProbability: 100
 		CrushSound: squishy2.aud
@@ -2267,6 +2273,7 @@
 	AttackMove:
 	ActorLostNotification:
 		Notification: NavalUnitLost
+		TextNotification: Naval unit lost.
 	ChronoshiftableWithSpriteEffect:
 		Image: chrono
 		WarpInSequence: warpin
@@ -2417,6 +2424,7 @@
 	Guardable:
 	ActorLostNotification:
 		Notification: AirUnitLost
+		TextNotification: Airborne unit lost.
 	Tooltip:
 		GenericName: Plane
 	WithShadow:
@@ -2583,7 +2591,9 @@
 		Weapon: BuildingExplode
 		EmptyWeapon: BuildingExplode
 	CaptureNotification:
+		TextNotification: Structure captured.
 		LoseNotification: StructureLost
+		LoseTextNotification: Structure lost (captured).
 	ShakeOnDeath:
 	Guardable:
 		Range: 3c0
@@ -2655,6 +2665,7 @@
 		RequiresCondition: !build-incomplete && !c4 && !being-captured && !being-warped && !hacked
 		SellSounds: cashturn.aud
 		Notification: StructureSold
+		TextNotification: Structure sold.
 	WithBuildingRepairDecoration:
 		Image: allyrepair
 		Sequence: repair

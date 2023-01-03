@@ -38,14 +38,13 @@ jobs:
           file: build/linux/*
 
   macos:
-    name: macOS Disk Images
+    name: macOS Disk Image
     runs-on: macos-11
-
     steps:
       - name: Clone Repository
         uses: actions/checkout@v2
 
-      - name: Install .NET 6
+      - name: Install .NET 6.0
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '6.0.x'
@@ -53,7 +52,7 @@ jobs:
       - name: Prepare Environment
         run: echo "GIT_TAG=${GITHUB_REF#refs/tags/}" >> ${GITHUB_ENV}
 
-      - name: Package Disk Images
+      - name: Package Disk Image
         env:
           MACOS_DEVELOPER_IDENTITY: ${{ secrets.MACOS_DEVELOPER_IDENTITY }}
           MACOS_DEVELOPER_CERTIFICATE_BASE64: ${{ secrets.MACOS_DEVELOPER_CERTIFICATE_BASE64 }}
@@ -65,7 +64,7 @@ jobs:
           mkdir -p build/macos
           ./packaging/macos/buildpackage.sh "${GIT_TAG}" "${PWD}/build/macos"
 
-      - name: Upload Packages
+      - name: Upload Package
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}

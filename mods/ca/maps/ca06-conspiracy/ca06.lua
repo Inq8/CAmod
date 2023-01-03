@@ -40,132 +40,43 @@ Patrols = {
 
 -- Squads
 
-BasicUnits = {
-	easy = {
-		{ Infantry = {}, Vehicles = { "1tnk", "jeep" } },
-		{ Infantry = {}, Vehicles = { "2tnk", "ifv.ai" } },
-		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1" }, Vehicles = { "2tnk", "jeep" } },
-	},
-	normal = {
-		{ Infantry = {}, Vehicles = { "apc.ai", "1tnk", "jeep"  } },
-		{ Infantry = {}, Vehicles = { "2tnk", "ifv.ai", "1tnk" } },
-		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1" }, Vehicles = { "2tnk", "ifv.ai", "apc.ai" } },
-	},
-	hard = {
-		{ Infantry = {}, Vehicles = { "rapc.ai", "1tnk", "1tnk", "jeep" } },
-		{ Infantry = { "e3", "e1", "e1" }, Vehicles = { "2tnk", "2tnk", "arty", "ifv.ai", "rapc.ai"  } },
-		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1", "e1", "e1" }, Vehicles = { "2tnk", "ifv.ai", "rapc.ai" } },
-	}
-}
-
-AdvancedUnits = {
-	easy = {
-		{ Infantry = {}, Vehicles = { "1tnk", "1tnk", "jeep", "jeep" } },
-		{ Infantry = { "e3", "e1", "e1" }, Vehicles = { "2tnk", "ifv.ai", "arty" } },
-		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1" }, Vehicles = { "2tnk", "2tnk", "jeep" } },
-		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1" }, Vehicles = { "2tnk", "rapc", "ptnk" } },
-		{ Infantry = { "seal", "seal", "seal" }, Vehicles = { "ifv.ai", "ifv.ai" } },
-		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1" }, Vehicles = { "batf.ai" } },
-	},
-	normal = {
-		{ Infantry = {}, Vehicles = { "rapc.ai", "1tnk", "1tnk", "jeep"  } },
-		{ Infantry = {}, Vehicles = { "2tnk", "ifv.ai", "1tnk", "2tnk" } },
-		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "e3" }, Vehicles = { "2tnk", "ifv.ai", "apc.ai", "rapc.ai" } },
-		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "e3" }, Vehicles = { "2tnk", "ifv.ai", "apc.ai", "ptnk" } },
-		{ Infantry = { "seal", "seal", "seal", "seal" }, Vehicles = { "ifv.ai", "ifv.ai", "ifv.ai" } },
-		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1" }, Vehicles = { "batf.ai", "ifv.ai", "ifv.ai" } },
-	},
-	hard = {
-		{ Infantry = {}, Vehicles = { "rapc.ai", "1tnk", "1tnk", "jeep", "cryo" } },
-		{ Infantry = {}, Vehicles = { "2tnk", "2tnk", "ifv.ai", "rapc.ai", "pcan"  } },
-		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "snip", "e1", "e3" }, Vehicles = { "2tnk", "ifv.ai", "rapc.ai", "rapc.ai", "arty" } },
-		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1", "e1", "e1", "snip", "e1", "e3" }, Vehicles = { "ctnk", "ctnk", "ctnk", "ptnk", "ifv.ai" } },
-		{ Infantry = { "seal", "seal", "seal", "seal", "seal" }, Vehicles = { "ifv.ai", "ifv.ai", "ifv.ai", "ifv.ai" } },
-		{ Infantry = { "e3", "e1", "e1", "e1", "e3", "e1" }, Vehicles = { "batf.ai", "batf.ai", "ifv.ai", "ifv.ai" } },
-	}
-}
-
 Squads = {
-	SouthBasic = {
+	South = {
 		Player = nil,
 		Delay = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2)
+			easy = DateTime.Seconds(390),
+			normal = DateTime.Seconds(270),
+			hard = DateTime.Seconds(150)
 		},
-		Interval = {
-			easy = DateTime.Seconds(50),
-			normal = DateTime.Seconds(35),
-			hard = DateTime.Seconds(20)
+		AttackValuePerSecond = {
+			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 30 } },
+			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 46 } },
+			hard = { { MinTime = 0, Value = 45 }, { MinTime = DateTime.Minutes(10), Value = 50 }, { MinTime = DateTime.Minutes(14), Value = 55 } },
 		},
 		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
 		IdleUnits = { },
 		ProducerActors = { Infantry = { AlliedSouthBarracks }, Vehicles = { AlliedSouthFactory } },
-		Units = BasicUnits,
+		Units = UnitCompositions.Allied.Main,
 		AttackPaths = GreeceSouthAttackPaths,
-		TransitionTo = {
-			SquadType = "SouthAdvanced",
-			GameTime = {
-				easy = DateTime.Minutes(18),
-				normal = DateTime.Minutes(16),
-				hard = DateTime.Minutes(14)
-			}
-		}
 	},
-	NorthBasic = {
+	North = {
 		Player = nil,
 		Delay = {
-			easy = DateTime.Minutes(3),
-			normal = DateTime.Minutes(2),
-			hard = DateTime.Minutes(1)
+			easy = DateTime.Seconds(210),
+			normal = DateTime.Seconds(150),
+			hard = DateTime.Seconds(90)
 		},
-		Interval = {
-			easy = DateTime.Seconds(55),
-			normal = DateTime.Seconds(45),
-			hard = DateTime.Seconds(35)
-		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
-		FollowLeader = true,
-		IdleUnits = { },
-		ProducerActors = { Infantry = { AlliedNorthBarracks }, Vehicles = { AlliedNorthFactory } },
-		Units = BasicUnits,
-		AttackPaths = GreeceNorthAttackPaths,
-		TransitionTo = {
-			SquadType = "NorthAdvanced",
-			GameTime = {
-				easy = DateTime.Minutes(17),
-				normal = DateTime.Minutes(15),
-				hard = DateTime.Minutes(13)
-			}
-		}
-	},
-	SouthAdvanced = {
-		Player = nil,
-		Interval = {
-			easy = DateTime.Seconds(60),
-			normal = DateTime.Seconds(40),
-			hard = DateTime.Seconds(20)
-		},
-		QueueProductionStatuses = { Infantry = false, Vehicles = false },
-		FollowLeader = true,
-		IdleUnits = { },
-		ProducerActors = { Infantry = { AlliedSouthBarracks }, Vehicles = { AlliedSouthFactory } },
-		Units = AdvancedUnits,
-		AttackPaths = GreeceSouthAttackPaths
-	},
-	NorthAdvanced = {
-		Player = nil,
-		Interval = {
-			easy = DateTime.Seconds(60),
-			normal = DateTime.Seconds(40),
-			hard = DateTime.Seconds(20)
+		AttackValuePerSecond = {
+			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 30 } },
+			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 46 } },
+			hard = { { MinTime = 0, Value = 45 }, { MinTime = DateTime.Minutes(10), Value = 50 }, { MinTime = DateTime.Minutes(14), Value = 55 } },
 		},
 		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
 		IdleUnits = { },
 		ProducerActors = { Infantry = { AlliedNorthBarracks }, Vehicles = { AlliedNorthFactory } },
-		Units = AdvancedUnits,
+		Units = UnitCompositions.Allied.Main,
 		AttackPaths = GreeceNorthAttackPaths,
 	},
 	Air = {
@@ -256,8 +167,15 @@ WorldLoaded = function()
 
 	if Difficulty ~= "hard" then
 		GDIDefender2.Destroy()
+		NorthGapGenerator.Destroy()
+		RebuildExcludes = { Greece = { Types = { "htur", "pris" } } }
+
 		if Difficulty == "easy" then
 			GDIDefender1.Destroy()
+			SouthGapGenerator1.Destroy()
+			SouthGapGenerator2.Destroy()
+			SouthGapGenerator3.Destroy()
+			RebuildExcludes = { Greece = { Types = { "htur", "pris", "gun", "pbox" } } }
 		end
 
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
@@ -295,7 +213,7 @@ WorldLoaded = function()
 	Trigger.OnEnteredProximityTrigger(SouthEastBaseCenter.CenterPosition, WDist.New(12 * 1024), function(a, id)
 		if a.Owner == Nod and not a.HasProperty("Land") and ObjectiveTakeOverBase ~= nil and Nod.IsObjectiveCompleted(ObjectiveTakeOverBase) then
 			Trigger.RemoveProximityTrigger(id)
-			Actor.Create("powercheat.minor", true, { Owner = Greece, Location = SouthEastBaseCenter.Location })
+			Actor.Create("powercheat.minor", true, { Owner = Greece, Location = UpgradeCreationLocation })
 		end
 	end)
 
@@ -325,7 +243,7 @@ WorldLoaded = function()
 		end)
 
 		Trigger.OnKilled(researcher, function(self, killer)
-			if ObjectiveRescueResearchers ~= nil and not Nod.IsObjectiveCompleted(ObjectiveRescueResearchers) then
+			if not EvacExiting and ObjectiveRescueResearchers ~= nil and not Nod.IsObjectiveCompleted(ObjectiveRescueResearchers) then
 				Nod.MarkFailedObjective(ObjectiveRescueResearchers)
 			end
 		end)
@@ -349,7 +267,7 @@ WorldLoaded = function()
 						EvacFlare.Destroy()
 					end
 
-					Reinforcements.ReinforceWithTransport(EvacPlayer, "tran", nil, { EvacSpawn.Location, EvacPoint.Location }, nil, function(transport, cargo)
+					Reinforcements.ReinforceWithTransport(EvacPlayer, "tran.evac", nil, { EvacSpawn.Location, EvacPoint.Location }, nil, function(transport, cargo)
 						Notification("Evacuation transport inbound.")
 						Trigger.AfterDelay(DateTime.Seconds(1), function()
 							if not Researcher1.IsDead then
@@ -361,6 +279,7 @@ WorldLoaded = function()
 						end)
 						Trigger.OnPassengerEntered(transport, function(t, passenger)
 							if t.PassengerCount == 2 then
+								EvacExiting = true
 								Media.PlaySpeechNotification(Nod, "TargetRescued")
 								t.Move(EvacSpawn.Location)
 								t.Destroy()
@@ -398,13 +317,13 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		if Nod.HasNoRequiredUnits() then
+		if not EvacExiting and Nod.HasNoRequiredUnits() then
 			if ObjectiveRescueResearchers ~= nil and not Nod.IsObjectiveCompleted(ObjectiveRescueResearchers) then
 				Nod.MarkFailedObjective(ObjectiveRescueResearchers)
 			end
 		end
 
-		if Researcher1.IsDead or Researcher2.IsDead then
+		if not EvacExiting and (Researcher1.IsDead or Researcher2.IsDead) then
 			if ObjectiveRescueResearchers ~= nil and not Nod.IsObjectiveCompleted(ObjectiveRescueResearchers) then
 				Nod.MarkFailedObjective(ObjectiveRescueResearchers)
 			end
@@ -498,13 +417,11 @@ InitGreece = function()
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGreeceGroundHunterUnit)
 	end)
 
-	local upgradeCreationLocation = CPos.New(0, 0)
-
-	Actor.Create("hazmat.upgrade", true, { Owner = Greece, Location = upgradeCreationLocation })
-	Actor.Create("apb.upgrade", true, { Owner = Greece, Location = upgradeCreationLocation })
+	Actor.Create("hazmat.upgrade", true, { Owner = Greece, Location = UpgradeCreationLocation })
+	Actor.Create("apb.upgrade", true, { Owner = Greece, Location = UpgradeCreationLocation })
 
 	if Difficulty == "hard" then
-		Actor.Create("cryr.upgrade", true, { Owner = Greece, Location = upgradeCreationLocation })
+		Actor.Create("cryr.upgrade", true, { Owner = Greece, Location = UpgradeCreationLocation })
 	end
 end
 
@@ -512,12 +429,12 @@ InitAlliedAttacks = function()
 	if not AlliedAttacksInitialized then
 		AlliedAttacksInitialized = true
 
-		Trigger.AfterDelay(Squads.SouthBasic.Delay[Difficulty], function()
-			InitAttackSquad(Squads.SouthBasic, Greece)
+		Trigger.AfterDelay(Squads.South.Delay[Difficulty], function()
+			InitAttackSquad(Squads.South, Greece)
 		end)
 
-		Trigger.AfterDelay(Squads.NorthBasic.Delay[Difficulty], function()
-			InitAttackSquad(Squads.NorthBasic, Greece)
+		Trigger.AfterDelay(Squads.North.Delay[Difficulty], function()
+			InitAttackSquad(Squads.North, Greece)
 		end)
 
 		Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
@@ -539,14 +456,6 @@ InitAlliedAttacks = function()
 			end)
 		end)
 	end
-end
-
-IsGDIGroundHunterUnit = function(actor)
-	return actor.Owner == GDI and actor.HasProperty("Move") and not actor.HasProperty("Land") and actor.HasProperty("Hunt")
-end
-
-IsGreeceGroundHunterUnit = function(actor)
-	return actor.Owner == Greece and actor.HasProperty("Move") and not actor.HasProperty("Land") and actor.HasProperty("Hunt") and actor.Type ~= "arty" and actor.Type ~= "cryo" and actor.Type ~= "mgg" and actor.Type ~= "mrj"
 end
 
 DoChinookDrop = function()

@@ -61,12 +61,74 @@ POWERCHEAT.MINOR:
 	Power:
 		Amount: 1500
 
+SMALLCAMERA:
+	Inherits: CAMERA
+	RevealsShroud:
+		Range: 4c0
+
 ^Disabled:
 	Buildable:
 		Prerequisites: ~disabled
+
+TRAN.Evac:
+	Inherits: TRAN
+	-Buildable:
+	RenderSprites:
+		Image: tran
+	DamageMultiplier@INVULN:
+		Modifier: 0
+	-KillsSelf:
+	Aircraft:
+		TurnToLand: True
+		InitialFacing: 0
 
 TRUK:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
 FENC:
 	-BlocksProjectiles:
+
+^AffectedByDriverKill:
+	ChangesHealth@DRIVER_DEAD:
+		PercentageStep: 0
+
+# For attack interval calculations, factoring in extra value from cargo
+SAPC.AI:
+	Valued:
+		Cost: 2100
+
+SAPC.AI2:
+	Valued:
+		Cost: 2725
+
+APC.AI:
+	Valued:
+		Cost: 1500
+
+RAPC.AI:
+	Valued:
+		Cost: 1700
+
+VULC.AI:
+	Valued:
+		Cost: 1560
+
+BTR.AI:
+	Valued:
+		Cost: 1475
+
+BATF.AI:
+	Valued:
+		Cost: 2500
+
+APC2.NODAI:
+	Valued:
+		Cost: 1400
+
+APC2.GDIAI:
+	Valued:
+		Cost: 1360
+
+INTL.AI2:
+	Valued:
+		Cost: 1875

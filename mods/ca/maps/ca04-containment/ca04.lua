@@ -307,10 +307,6 @@ InitUSSR = function()
 	end)
 end
 
-IsUSSRGroundHunterUnit = function(actor)
-	return actor.Owner == USSR and actor.HasProperty("Move") and not actor.HasProperty("Land") and actor.HasProperty("Hunt") and actor.Type ~= "v2rl" and actor.Type ~= "katy"
-end
-
 DropChronoPrison = function()
 	ChronoPrisonFlare = Actor.Create("flare", true, { Owner = Greece, Location = CarryallDropPoint.Location })
 	Media.PlaySpeechNotification(Greece, "SignalFlare")

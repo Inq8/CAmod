@@ -172,11 +172,6 @@ V01:
 	-SpawnRandomActorOnDeath@2:
 	-SpawnRandomActorOnDeath@3:
 
-SMALLCAMERA:
-	Inherits: CAMERA
-	RevealsShroud:
-		Range: 4c0
-
 HALO.paradrop:
 	Health:
 		HP: 90000
@@ -184,3 +179,12 @@ HALO.paradrop:
 LST:
 	Health:
 		HP: 100000
+
+# Hunt() requires only 1 AttackBase
+DEVA:
+	-AttackFrontalCharged:
+	-Armament@PRIMARYUPG:
+	-AmbientSound@CHARGE:
+	-WithIdleOverlay@CHARGE1:
+	-WithIdleOverlay@CHARGE2:
+	-WithIdleOverlay@CHARGE3:

@@ -660,6 +660,7 @@ E6:
 		CustomPipType: yellow
 	EngineerRepair:
 	RepairsBridges:
+		EnterBehaviour: Exit
 	CaptureManager:
 	Captures:
 		CaptureTypes: building
@@ -728,6 +729,7 @@ SPY:
 	Infiltrates:
 		Types: SpyInfiltrate
 		Notification: BuildingInfiltrated
+		TextNotification: Building infiltrated.
 		PlayerExperience: 15
 	-WithInfantryBody:
 	WithDisguisingInfantryBody:
@@ -1003,7 +1005,7 @@ CMEC:
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 90
 		Prerequisites: repair, tmpp, ~tmpp, ~infantry.mech, ~techlevel.high
-		Description: Repairs nearby vehicles.
+		Description: Repairs nearby vehicles and advanced cyborgs.
 	TooltipExtras:
 		Weaknesses: • Unarmed
 		Attributes: • Can salvage destroyed vehicles for credits
@@ -1298,6 +1300,7 @@ THF:
 	Infiltrates:
 		Types: ThiefInfiltrate
 		Notification: BuildingInfiltrated
+		TextNotification: Building infiltrated.
 		PlayerExperience: 15
 	Voiced:
 		VoiceSet: ThiefVoice
@@ -1924,6 +1927,7 @@ N6:
 		CustomPipType: yellow
 	EngineerRepair:
 	RepairsBridges:
+		EnterBehaviour: Exit
 	CaptureManager:
 	Captures:
 		CaptureTypes: building
@@ -2284,9 +2288,12 @@ SAB:
 		Types: SabInfiltrate
 		PlayerExperience: 15
 		Notification: NewOptions
+		TextNotification: Building infiltrated.
 	Infiltrates@pwr:
 		Types: PowerInfiltrate
 		PlayerExperience: 15
+		Notification: BuildingInfiltrated
+		TextNotification: Building infiltrated.
 	Voiced:
 		VoiceSet: InfilVoice
 	WithInfantryBody:

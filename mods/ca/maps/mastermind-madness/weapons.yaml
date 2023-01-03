@@ -13,5 +13,14 @@ TTankZapSecondary.UPG:
 		Versus:
 			None: 800
 
+EnslaveInfantry:
+	ValidTargets: MindControllableInfantry
+	Warhead@1Dam: TargetDamage
+		ValidTargets: MindControllableInfantry
+
 EnslaveVehicle:
-	InvalidTargets: Infantry, MindControlImmune
+	ReloadDelay: 50
+	InvalidTargets: MindControllableInfantry, MindControlImmune
+	Warhead@1Dam: TargetDamage
+		ValidTargets: MindControllable
+		InvalidTargets: MindControllableInfantry

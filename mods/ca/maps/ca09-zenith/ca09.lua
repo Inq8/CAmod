@@ -8,7 +8,7 @@ Squads = {
 			hard = DateTime.Minutes(6)
 		},
 		Interval = {
-			easy = DateTime.Minutes(210),
+			easy = DateTime.Seconds(210),
 			normal = DateTime.Seconds(180),
 			hard = DateTime.Seconds(150)
 		},
@@ -41,7 +41,7 @@ Squads = {
 			hard = DateTime.Minutes(4)
 		},
 		Interval = {
-			easy = DateTime.Minutes(210),
+			easy = DateTime.Seconds(210),
 			normal = DateTime.Seconds(180),
 			hard = DateTime.Seconds(150)
 		},
@@ -188,7 +188,7 @@ InitUSSR = function()
 
 	SetupRefAndSilosCaptureCredits(USSR)
 
-	Actor.Create("POWERCHEAT", true, { Owner = USSR, Location = NukeSilo1.Location })
+	Actor.Create("POWERCHEAT", true, { Owner = USSR, Location = UpgradeCreationLocation })
 
 	Utils.Do(NukeSilos, function(a)
 		Trigger.ClearAll(a)
@@ -269,10 +269,6 @@ InitUSSR = function()
 	Trigger.AfterDelay(HaloDropStart[Difficulty], function()
 		DoHaloDrop()
 	end)
-end
-
-IsUSSRGroundHunterUnit = function(actor)
-	return actor.Owner == USSR and actor.HasProperty("Move") and not actor.HasProperty("Land") and actor.HasProperty("Hunt") and actor.Type ~= "v2rl" and actor.Type ~= "katy"
 end
 
 DoHaloDrop = function()

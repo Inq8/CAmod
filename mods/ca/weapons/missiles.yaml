@@ -192,7 +192,7 @@ SeismicMissile:
 		ContrailLength: 8
 		ContrailStartColor: ff6600aa
 		ContrailStartColorAlpha: 170
-		Speed: 180
+		Speed: 250
 		LaunchAngle: 0
 	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
@@ -233,20 +233,6 @@ SeismicMissile:
 		Duration: 5
 		Intensity: 1
 		Multiplier: 0.5,0.5
-
-SeismicMissileDummy:
-	Inherits: SeismicMissile
-	-Report:
-	-Projectile:
-	Projectile: InstantHit
-	Warhead@1Dam: SpreadDamage
-		Damage: 1
-	-Warhead@2Smu:
-	-Warhead@3Eff:
-	-Warhead@4EffWater:
-	-Warhead@Concussion1:
-	-Warhead@Concussion2:
-	-Warhead@5Shake:
 
 Dragon:
 	Inherits: ^AntiGroundMissile

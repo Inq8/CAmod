@@ -29,7 +29,7 @@ World:
 		TechLevelDropdownVisible: False
 		ShortGameCheckboxLocked: True
 	MissionData:
-		Briefing: ================\n\n- Each player starts with a single Mastermind (mind control unit that can control up to 3 units at a time).\n-------------------------\n- Random neutral units are spawned across the map (indestructible until controlled).\n-------------------------\n- Force fire required to mind control neutral units.\n-------------------------\n- Deploy (F) Mastermind for limited duration cloak.\n-------------------------\n- Objective is to kill all enemy Masterminds.\n\n================\n
+		Briefing: ================\n\n- Each player starts with a single Mastermind (mind control unit that can control up to 3 units at a time).\n-------------------------\n- Random neutral units are spawned across the map (indestructible until controlled).\n-------------------------\n- Deploy (F) Mastermind for limited duration cloak.\n-------------------------\n- Objective is to kill all enemy Masterminds.\n\n================\n
 
 Player:
 	PlayerResources:
@@ -53,6 +53,9 @@ Player:
 	LobbyPrerequisiteCheckbox@BALANCEDHARVESTING:
 		Enabled: True
 		Locked: True
+	LobbyPrerequisiteCheckbox@GLOBALMULTIQUEUE:
+		Enabled: False
+		Locked: True
 
 ^IndestructibleWhenNeutral:
 	GrantConditionIfOwnerIsNeutral@NEUTRAL:
@@ -66,24 +69,29 @@ Player:
 	GrantCondition@NEUTRALDISABLE:
 		Condition: being-warped
 		RequiresCondition: is-neutral
-	Targetable:
-		RequiresCondition: !being-warped || is-neutral
 	WithModifiedPalette@TEMPORALl:
 		RequiresCondition: being-warped && !is-neutral
 	WithColoredOverlay@TEMPORAL2:
 		RequiresCondition: being-warped && !is-neutral
 	WithIdleOverlay@TEMPORAL:
 		RequiresCondition: being-warped && !is-neutral
+	Targetable@TEMPORAL:
+		RequiresCondition: !invulnerability && !is-neutral
 
 ^Infantry:
 	Inherits@INDESTRUCTIBLE: ^IndestructibleWhenNeutral
 	Crushable:
 		RequiresCondition: !is-neutral
+	Targetable@MCINF:
+		TargetTypes: MindControllableInfantry
 
 ^Vehicle-NOUPG:
 	Inherits@INDESTRUCTIBLE: ^IndestructibleWhenNeutral
 	Capturable:
 		RequiresCondition: !is-neutral
+
+^Defense:
+	Inherits@INDESTRUCTIBLE: ^IndestructibleWhenNeutral
 
 ^AffectedByDriverKill:
 	GrantConditionIfOwnerIsNeutral:
@@ -98,6 +106,9 @@ MAST:
 	-TakeCover:
 	-PeriodicExplosion:
 	-PeriodicExplosionOnSlaves:
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: HoldFire
 	AttackFrontal:
 		-Armaments:
 	Health:
@@ -231,66 +242,29 @@ FTUR:
 	Power:
 		Amount: 0
 
-DOG:
-	Targetable:
-		RequiresCondition: !being-warped || is-neutral
-
-1TNK:
-	Targetable:
-		RequiresCondition: !onwater && !parachute && (!being-warped || is-neutral)
-
-LTNK:
-	Targetable:
-		RequiresCondition: !onwater && !parachute && (!being-warped || is-neutral)
-
-DISR:
-	Targetable:
-		RequiresCondition: !being-warped || is-neutral
+# Make drones mindcontrollable and not disabled without radar
 
 HTNK.Drone:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune
-	-ExternalCondition@DRONECONTROL:
-	-GrantConditionOnPrerequisite@DRONECONTROL:
-	-WithDecoration@DRONEDISABLE:
-	-WithColoredOverlay@DRONEDISABLE:
-	Mobile:
-		PauseOnCondition: empdisable || being-warped || notmobile
-	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+	ProvidesPrerequisite@radar-active:
+		Prerequisite: radar-active
 
 MTNK.Drone:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune
 	Power:
 		Amount: 0
-	-ExternalCondition@DRONECONTROL:
-	-GrantConditionOnPrerequisite@DRONECONTROL:
-	-WithDecoration@DRONEDISABLE:
-	-WithColoredOverlay@DRONEDISABLE:
-	Mobile:
-		PauseOnCondition: empdisable || being-warped || notmobile
-	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
+	ProvidesPrerequisite@radar-active:
+		Prerequisite: radar-active
 
 MEMP:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune
 	Power:
 		Amount: 0
-	-ExternalCondition@DRONECONTROL:
-	-GrantConditionOnPrerequisite@DRONECONTROL:
-	-WithDecoration@DRONEDISABLE:
-	-WithColoredOverlay@DRONEDISABLE:
-	Mobile:
-		PauseOnCondition: triggered || empdisable || being-warped || notmobile
-	GrantTimedConditionOnDeploy:
-		RequiresCondition: empdisable || being-warped
-
-BRUT:
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, TNT, DogImmune
-		RequiresCondition: !being-warped || is-neutral
+	ProvidesPrerequisite@radar-active:
+		Prerequisite: radar-active
 
 CDRN:
 	Targetable:
@@ -309,6 +283,10 @@ MDRN:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune
 	Power:
 		Amount: 0
+
+BRUT:
+	Targetable:
+		TargetTypes: Ground, Infantry, Disguise, TNT, DogImmune
 
 CRATE:
 	-GiveCashCrateAction:
