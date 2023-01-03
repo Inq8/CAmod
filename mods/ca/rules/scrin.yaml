@@ -995,9 +995,6 @@ SEEK:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
-	SpawnActorOnDeath:
-		Actor: SEEK.Husk
-		RequiresCondition: !onwater && !being-warped
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
@@ -1451,6 +1448,9 @@ STCR:
 	WithShadow:
 		Offset: 80, 80, 0
 		ZOffset: -81
+	SpawnActorOnDeath:
+		Actor: STCR.Husk
+		RequiresCondition: !being-warped
 	GrantConditionOnAttackCA@IONSTORM:
 		RevokeDelay: 200
 		MaximumInstances: 42
@@ -2998,6 +2998,14 @@ DEVO.Husk:
 		Name: Husk (Devourer)
 	RenderSprites:
 		Image: devo.destroyed
+		PlayerPalette: playerscrin
+
+STCR.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Stormcrawler)
+	RenderSprites:
+		Image: stcr.destroyed
 		PlayerPalette: playerscrin
 
 RUIN.Husk:
