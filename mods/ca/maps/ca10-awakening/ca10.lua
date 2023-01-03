@@ -220,6 +220,7 @@ InitUSSR = function()
 	SetupRefAndSilosCaptureCredits(USSR)
 
 	Actor.Create("POWERCHEAT", true, { Owner = USSR, Location = UpgradeCreationLocation })
+	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
 	Actor.Create("tarc.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
 
 	local ussrGroundAttackers = USSR.GetGroundAttackers()

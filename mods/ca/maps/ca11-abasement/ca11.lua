@@ -269,6 +269,10 @@ InitScrin = function()
 
 	if Difficulty == "hard" then
 		Actor.Create("ioncon.upgrade", true, { Owner = Scrin, Location = UpgradeCreationLocation })
+
+		Trigger.AfterDelay(DateTime.Minutes(20), function()
+			Actor.Create("carapace.upgrade", true, { Owner = Scrin, Location = UpgradeCreationLocation })
+		end)
 	end
 end
 

@@ -200,6 +200,10 @@ InitGreece = function()
 
 	if Difficulty == "hard" then
 		Actor.Create("cryr.upgrade", true, { Owner = Greece, Location = UpgradeCreationLocation })
+
+		Trigger.AfterDelay(DateTime.Minutes(20), function()
+			Actor.Create("flakarmor.upgrade", true, { Owner = Greece, Location = UpgradeCreationLocation })
+		end)
 	end
 end
 
@@ -229,6 +233,10 @@ InitGDI = function()
 			Utils.Do(selectedStrategyUpgrades, function(u)
 				Actor.Create(u, true, { Owner = GDI, Location = UpgradeCreationLocation })
 			end)
+		end)
+
+		Trigger.AfterDelay(DateTime.Minutes(20), function()
+			Actor.Create("flakarmor.upgrade", true, { Owner = GDI, Location = UpgradeCreationLocation })
 		end)
 	end
 end

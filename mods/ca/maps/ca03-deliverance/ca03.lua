@@ -452,6 +452,15 @@ InitUSSR = function()
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
 	end)
 
+	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
+
+	if Difficulty == "hard" then
+		Trigger.AfterDelay(DateTime.Minutes(15), function()
+			Actor.Create("flakarmor.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
+			Actor.Create("tarc.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
+		end)
+	end
+
 	-- If main sub pens are destroyed, update naval attack path
 	Utils.Do({ SovietSouthSubPen1, SovietSouthSubPen2 }, function(a)
 		Trigger.OnRemovedFromWorld(a, function(self)

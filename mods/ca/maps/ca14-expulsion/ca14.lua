@@ -208,6 +208,8 @@ InitGDI = function()
 		InitAirAttackSquad(Squads.GDIAir, GDI, USSR, { "harv", "v2rl", "apwr", "tsla", "ttra", "v3rl", "mig", "hind", "suk", "suk.upg", "kiro", "apoc" })
 	end)
 
+	Actor.Create("hazmat.upgrade", true, { Owner = GDI, Location = UpgradeCreationLocation })
+
 	if Difficulty == "hard" then
 		Trigger.AfterDelay(DateTime.Minutes(5), function()
 			local strategyUpgrades = {
@@ -220,6 +222,10 @@ InitGDI = function()
 			Utils.Do(selectedStrategyUpgrades, function(u)
 				Actor.Create(u, true, { Owner = GDI, Location = UpgradeCreationLocation })
 			end)
+		end)
+
+		Trigger.AfterDelay(DateTime.Minutes(20), function()
+			Actor.Create("flakarmor.upgrade", true, { Owner = GDI, Location = UpgradeCreationLocation })
 		end)
 	end
 end

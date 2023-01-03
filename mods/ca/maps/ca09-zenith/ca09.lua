@@ -189,6 +189,14 @@ InitUSSR = function()
 	SetupRefAndSilosCaptureCredits(USSR)
 
 	Actor.Create("POWERCHEAT", true, { Owner = USSR, Location = UpgradeCreationLocation })
+	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
+
+	if Difficulty == "hard" then
+		Trigger.AfterDelay(DateTime.Minutes(20), function()
+			Actor.Create("flakarmor.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
+			Actor.Create("tarc.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
+		end)
+	end
 
 	Utils.Do(NukeSilos, function(a)
 		Trigger.ClearAll(a)
