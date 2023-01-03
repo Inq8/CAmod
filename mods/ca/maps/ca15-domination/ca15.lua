@@ -167,6 +167,7 @@ WorldLoaded = function()
 						t.Move(EvacSpawn.Location)
 						Trigger.AfterDelay(DateTime.Seconds(2), function()
 							USSR.MarkCompletedObjective(ObjectiveEscape)
+							USSR.MarkCompletedObjective(ObjectiveKeepYuriAlive)
 						end)
 					end
 				end)
