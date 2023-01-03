@@ -122,6 +122,7 @@ WorldLoaded = function()
 
 	if Difficulty == "hard" then
 		Cruiser.Patrol(CruiserPatrolPath)
+		AbandonedAirfield.Destroy()
 	else
 		Cruiser.Destroy()
 	end
