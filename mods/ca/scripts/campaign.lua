@@ -10,8 +10,8 @@
 Difficulty = Map.LobbyOption("difficulty")
 
 StructureBuildTimeMultipliers = {
-	easy = 1.5,
-	normal = 1.25,
+	easy = 3,
+	normal = 2,
 	hard = 1,
 }
 

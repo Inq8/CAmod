@@ -215,12 +215,10 @@ WorldLoaded = function()
 	TimerTicks = 0
 	GDICommanderAlive = true
 
-	InitObjectives(Greece)
-	InitUSSR()
 	Camera.Position = PlayerStart.CenterPosition
 
-	ObjectiveFindBase = Greece.AddObjective("Find besieged GDI base.")
-	UserInterface.SetMissionText("Find besieged GDI base.", HSLColor.Yellow)
+	InitObjectives(Greece)
+	InitUSSR()
 
 	if Difficulty ~= "hard" then
 		SovietMammoth1.Destroy()
@@ -228,12 +226,15 @@ WorldLoaded = function()
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
 			Tip("If you put a Mechanic or Engineer inside an IFV it becomes a repair vehicle.")
 		end)
+
+		if Difficulty == "easy" then
+			SovietMammoth2.Destroy()
+			SovietV21.Destroy()
+		end
 	end
 
-	if Difficulty == "easy" then
-		SovietMammoth2.Destroy()
-		SovietV21.Destroy()
-	end
+	ObjectiveFindBase = Greece.AddObjective("Find besieged GDI base.")
+	UserInterface.SetMissionText("Find besieged GDI base.", HSLColor.Yellow)
 
 	-- On finding the GDI base, transfer ownership to player
 	Trigger.OnEnteredProximityTrigger(GDIBaseTopRight.CenterPosition, WDist.New(16 * 1024), function(a, id)
@@ -440,6 +441,10 @@ PlayerForcesDefeated = function()
 end
 
 InitUSSR = function()
+	if Difficulty == "easy" then
+		RebuildExcludes.USSR = { Types = { "tsla", "ftur" } }
+	end
+
 	AutoRepairAndRebuildBuildings(USSR, 15)
 	SetupRefAndSilosCaptureCredits(USSR)
 	AutoReplaceHarvesters(USSR)

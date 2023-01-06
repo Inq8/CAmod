@@ -23,12 +23,6 @@ SouthWestPowerPlants = { SouthWestPower1, SouthWestPower2, SouthWestPower3, Sout
 SouthEastPowerPlants = { SouthEastPower1, SouthEastPower2, SouthEastPower3, SouthEastPower4 }
 NorthPowerPlants = { NorthPower1, NorthPower2, NorthPower3, NorthPower4 }
 
-RebuildExcludes = {
-	Nod = {
-	 	 Types = { "nuke", "nuk2", "tmpl", "afac", "obli", "gun.nod" }
-	}
-}
-
 WorldLoaded = function()
 	USSR = Player.GetPlayer("USSR")
 	Nod = Player.GetPlayer("Nod")
@@ -203,6 +197,8 @@ OncePerFiveSecondChecks = function()
 end
 
 InitNod = function()
+	RebuildExcludes.Nod = { Types = { "nuke", "nuk2", "tmpl", "afac", "obli", "gun.nod" } }
+
 	AutoRepairAndRebuildBuildings(Nod, 10)
 	SetupRefAndSilosCaptureCredits(Nod)
 	AutoReplaceHarvesters(Nod)

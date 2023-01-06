@@ -181,10 +181,10 @@ WorldLoaded = function()
 	MissionPlayer = Greece
 	TimerTicks = 0
 
-	InitObjectives(Greece)
-	InitNod()
 	Camera.Position = McvLanding.CenterPosition
 
+	InitObjectives(Greece)
+	InitNod()
 	DoMcvArrival()
 
 	if Difficulty ~= "hard" then
@@ -200,9 +200,6 @@ WorldLoaded = function()
 			EastObelisk3.Destroy()
 			LabObelisk1.Destroy()
 			LabObelisk2.Destroy()
-			RebuildExcludes = { Nod = { Types = { "obli", "gun.nod" } } }
-		else
-			RebuildExcludes = { Nod = { Types = { "obli" } } }
 		end
 	end
 
@@ -286,6 +283,10 @@ OncePerFiveSecondChecks = function()
 end
 
 InitNod = function()
+	if Difficulty == "easy" then
+		RebuildExcludes.Nod = { Types = { "obli", "gun.nod" } }
+	end
+
 	AutoRepairAndRebuildBuildings(Nod, 20)
 	SetupRefAndSilosCaptureCredits(Nod)
 	AutoReplaceHarvesters(Nod)

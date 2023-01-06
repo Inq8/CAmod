@@ -114,12 +114,6 @@ WorldLoaded = function()
 	ObjectiveDestroyBases = USSR.AddObjective("Break the siege and destroy the enemy bases.")
 	EngineerDrop()
 
-	if Difficulty == "easy" then
-		RebuildExcludes = { Greece = { Types = { "gun", "pbox", "pris" } }, GDI = { Types = { "gtwr", "atwr" } } }
-	elseif Difficulty == "normal" then
-		RebuildExcludes = { Greece = { Types = { "pris" } }, GDI = { Types = { "atwr" } } }
-	end
-
 	Trigger.AfterDelay(5, function()
 		SiegeActors = Map.ActorsInBox(SiegeTopLeft.CenterPosition, SiegeBottomRight.CenterPosition, function(a)
 			return (a.Owner == Greece or a.Owner == GDI) and a.Type ~= "camera" and a.HasProperty("Move")
@@ -184,6 +178,10 @@ OncePerFiveSecondChecks = function()
 end
 
 InitGreece = function()
+	if Difficulty == "easy" then
+		RebuildExcludes.Greece = { Types = { "gun", "pbox", "pris" } }
+	end
+
 	AutoRepairAndRebuildBuildings(Greece, 10)
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)
@@ -208,6 +206,10 @@ InitGreece = function()
 end
 
 InitGDI = function()
+	if Difficulty == "easy" then
+		RebuildExcludes.GDI = { Types = { "gtwr", "atwr" } }
+	end
+
 	AutoRepairAndRebuildBuildings(GDI, 10)
 	SetupRefAndSilosCaptureCredits(GDI)
 	AutoReplaceHarvesters(GDI)

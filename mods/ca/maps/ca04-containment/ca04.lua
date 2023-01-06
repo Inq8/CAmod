@@ -50,6 +50,7 @@ WorldLoaded = function()
 
 	InitObjectives(Greece)
 	InitUSSR()
+
 	Camera.Position = PlayerStart.CenterPosition
 
 	Lighting.Ambient = 0.95

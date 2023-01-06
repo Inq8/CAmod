@@ -179,12 +179,6 @@ WorldLoaded = function()
 	ObjectiveSecureNorthNodBase = USSR.AddSecondaryObjective("Secure northern Nod base.")
 	ObjectiveSecureSouthNodBase = USSR.AddSecondaryObjective("Secure southern Nod base.")
 
-	if Difficulty == "easy" then
-		RebuildExcludes = { Scrin = { Types = { "scol", "ptur" } } }
-	elseif Difficulty == "normal" then
-		RebuildExcludes = { Scrin = { Types = { "scol" } } }
-	end
-
 	Trigger.OnCapture(SignalTransmitter, function(self, captor, oldOwner, newOwner)
 		if newOwner == USSR then
 			USSR.MarkCompletedObjective(ObjectiveCaptureSignalTransmitter)
@@ -242,6 +236,10 @@ OncePerFiveSecondChecks = function()
 end
 
 InitScrin = function()
+	if Difficulty == "easy" then
+		RebuildExcludes.Scrin = { Types = { "scol", "ptur" } }
+	end
+
 	AutoRepairAndRebuildBuildings(Scrin, 10)
 	SetupRefAndSilosCaptureCredits(Scrin)
 	AutoReplaceHarvesters(Scrin)

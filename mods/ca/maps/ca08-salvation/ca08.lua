@@ -62,8 +62,6 @@ WorldLoaded = function()
 
 	Camera.Position = PlayerStart.CenterPosition
 
-	Actor.Create("tibcore.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
-
 	InitObjectives(Nod)
 	InitScrin()
 
@@ -77,6 +75,8 @@ WorldLoaded = function()
 	NodCamera4.Destroy()
 	NodCamera5.Destroy()
 	NodCamera6.Destroy()
+
+	Actor.Create("tibcore.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
 
 	if Difficulty == "easy" then
 		Nod.Cash = 4800

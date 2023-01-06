@@ -114,12 +114,6 @@ WorldLoaded = function()
 
 	AbandonedHalo.ReturnToBase(AbandonedHelipad)
 
-	if Difficulty == "easy" then
-		RebuildExcludes = { Greece = { Types = { "gun", "pbox", "pris" } } }
-	elseif Difficulty == "normal" then
-		RebuildExcludes = { Greece = { Types = { "pris" } } }
-	end
-
 	if Difficulty == "hard" then
 		Cruiser.Patrol(CruiserPatrolPath)
 		AbandonedAirfield.Destroy()
@@ -208,6 +202,10 @@ OncePerFiveSecondChecks = function()
 end
 
 InitGreece = function()
+	if Difficulty == "easy" then
+		RebuildExcludes.Greece = { Types = { "gun", "pbox", "pris" } }
+	end
+
 	AutoRepairAndRebuildBuildings(Greece, 10)
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)

@@ -180,9 +180,10 @@ WorldLoaded = function()
 	NextConvoyIdx = 1
 	CurrentConvoyArrivalComplete = false
 
+	Camera.Position = PlayerBarracks.CenterPosition
+
 	InitObjectives(Greece)
 	InitScrin()
-	Camera.Position = PlayerBarracks.CenterPosition
 
 	ObjectiveClearPath = Greece.AddObjective("Clear a path for inbound convoys.")
 
@@ -351,6 +352,10 @@ InitConvoy = function()
 end
 
 InitScrin = function()
+	if Difficulty == "easy" then
+		RebuildExcludes.Scrin = { Types = { "scol", "ptur" } }
+	end
+
 	AutoRepairAndRebuildBuildings(Scrin, 15)
 	SetupRefAndSilosCaptureCredits(Scrin)
 	AutoReplaceHarvesters(Scrin)

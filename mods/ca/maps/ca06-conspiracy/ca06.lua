@@ -148,6 +148,22 @@ WorldLoaded = function()
 	InitGDI()
 	InitGreece()
 
+	if Difficulty ~= "hard" then
+		GDIDefender2.Destroy()
+		NorthGapGenerator.Destroy()
+
+		if Difficulty == "easy" then
+			GDIDefender1.Destroy()
+			SouthGapGenerator1.Destroy()
+			SouthGapGenerator2.Destroy()
+			SouthGapGenerator3.Destroy()
+		end
+
+		Trigger.AfterDelay(DateTime.Seconds(3), function()
+			Tip("Stealth units can be detected by enemy defenses, as well as infantry at close range.")
+		end)
+	end
+
 	ObjectiveTakeOverBase = Nod.AddObjective("Take control of the GDI base due south.")
 	UserInterface.SetMissionText("Take control of the GDI base due south.", HSLColor.Yellow)
 
@@ -164,24 +180,6 @@ WorldLoaded = function()
 			end)
 		end
 	end)
-
-	if Difficulty ~= "hard" then
-		GDIDefender2.Destroy()
-		NorthGapGenerator.Destroy()
-		RebuildExcludes = { Greece = { Types = { "htur", "pris" } } }
-
-		if Difficulty == "easy" then
-			GDIDefender1.Destroy()
-			SouthGapGenerator1.Destroy()
-			SouthGapGenerator2.Destroy()
-			SouthGapGenerator3.Destroy()
-			RebuildExcludes = { Greece = { Types = { "htur", "pris", "gun", "pbox" } } }
-		end
-
-		Trigger.AfterDelay(DateTime.Seconds(3), function()
-			Tip("Stealth units can be detected by enemy defenses, as well as infantry at close range.")
-		end)
-	end
 
 	Utils.Do(Patrols, function(p)
 		Utils.Do(p.Units, function(unit)
@@ -406,6 +404,10 @@ InitGDI = function()
 end
 
 InitGreece = function()
+	if Difficulty == "easy" then
+		RebuildExcludes.Greece = { Types = { "htur", "pris", "gun", "pbox" } }
+	end
+
 	AutoRepairAndRebuildBuildings(Greece, 15)
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)

@@ -92,8 +92,8 @@ Squads = {
 			hard = DateTime.Minutes(1)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 32 }, { MinTime = DateTime.Minutes(12), Value = 64 } },
-			normal = { { MinTime = 0, Value = 55 } },
+			easy = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 50 } },
+			normal = { { MinTime = 0, Value = 50 } },
 			hard = { { MinTime = 0, Value = 80 } },
 		},
 		QueueProductionStatuses = {
@@ -207,6 +207,26 @@ WorldLoaded = function()
 	MissionPlayer = Greece
 	TimerTicks = 0
 
+	Camera.Position = PlayerMcv.CenterPosition
+
+	InitObjectives(Greece)
+	InitUSSR()
+
+	if Difficulty ~= "hard" then
+		HeavyTank1.Destroy()
+		Flamer1.Destroy()
+		TeslaCoil3.Destroy()
+	end
+
+	if Difficulty == "easy" then
+		Flamer2.Destroy()
+		SovietWestFlameTower2.Destroy()
+		TeslaCoil1.Destroy()
+		TeslaCoil2.Destroy()
+	else
+		Ranger1.Destroy()
+	end
+
 	Trigger.AfterDelay(1, function()
 		ObjectiveEstablishBase = Greece.AddObjective("Establish a base.")
 		UserInterface.SetMissionText("Establish a base.", HSLColor.Yellow)
@@ -222,24 +242,6 @@ WorldLoaded = function()
 			ChronosphereDiscovered()
 		end
 	end)
-
-	if Difficulty ~= "hard" then
-		HeavyTank1.Destroy()
-		Flamer1.Destroy()
-		TeslaCoil3.Destroy()
-	end
-	if Difficulty == "easy" then
-		Flamer2.Destroy()
-		SovietWestFlameTower2.Destroy()
-		TeslaCoil1.Destroy()
-		TeslaCoil2.Destroy()
-	else
-		Ranger1.Destroy()
-	end
-
-	InitObjectives(Greece)
-	InitUSSR()
-	Camera.Position = PlayerMcv.CenterPosition
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
 		BaseFlare = Actor.Create("flare", true, { Owner = Greece, Location = DeploySuggestion.Location })
@@ -310,6 +312,10 @@ end
 -- Functions
 
 InitUSSR = function()
+	if Difficulty == "easy" then
+		RebuildExcludes.USSR = { Types = { "tsla", "ftur" } }
+	end
+
 	AutoRepairAndRebuildBuildings(USSR, 10)
 	SetupRefAndSilosCaptureCredits(USSR)
 	AutoReplaceHarvesters(USSR)
