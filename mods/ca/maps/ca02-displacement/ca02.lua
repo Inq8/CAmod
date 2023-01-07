@@ -61,7 +61,7 @@ Squads = {
 		},
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(13), Value = 30 } },
-			normal = { { MinTime = 0, Value = 38 }, { MinTime = DateTime.Minutes(11), Value = 45 } },
+			normal = { { MinTime = 0, Value = 35 }, { MinTime = DateTime.Minutes(11), Value = 45 } },
 			hard = { { MinTime = 0, Value = 60 }, { MinTime = DateTime.Minutes(9), Value = 70 } },
 		},
 		QueueProductionStatuses = {

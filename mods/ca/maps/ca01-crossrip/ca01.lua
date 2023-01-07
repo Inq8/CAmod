@@ -120,11 +120,11 @@ Squads = {
 			normal = {
 				{
 					Infantry = { "e3", "e1", "e1", "e1", "e1", "e2", "e4" }, -- 1060
-					Vehicles = { "3tnk", "btr.ai", "btr" }, -- 2500 (+800)
+					Vehicles = { "3tnk", "btr.ai" }, -- 2500 (+800)
 					MaxTime = DateTime.Minutes(9)
 				},
 				{
-					Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" }, -- 2110
+					Infantry = { "e3", "e1", "e1", "shok", "e1", "e2", "e3", "e4" }, -- 2110
 					Vehicles = { "3tnk", "4tnk", "katy" }, -- 3550
 					MinTime = DateTime.Minutes(9)
 				}
@@ -236,7 +236,7 @@ WorldLoaded = function()
 		Actor.Create("moneycrate", true, { Owner = Greece, Location = Church.Location })
 	end)
 
-	Trigger.OnEnteredProximityTrigger(SovietChronosphere.CenterPosition, WDist.New(6 * 1024), function(a, id)
+	Trigger.OnEnteredProximityTrigger(SovietChronosphere.CenterPosition, WDist.New(7 * 1024), function(a, id)
 		if a.Owner == Greece then
 			Trigger.RemoveProximityTrigger(id)
 			ChronosphereDiscovered()
@@ -264,6 +264,24 @@ Tick = function()
 			UserInterface.SetMissionText(nil)
 		end
 		Greece.MarkCompletedObjective(ObjectiveEstablishBase)
+
+		if Difficulty ~= "hard" then
+			Trigger.AfterDelay(DateTime.Seconds(5), function()
+				Tip("Build a barracks for access to static defenses which should allow you to hold off any early attacks. Use Pillboxes against infantry and Turrets against vehicles.")
+			end)
+
+			Trigger.AfterDelay(DateTime.Minutes(1), function()
+				Tip("Information is displayed in the bottom right of the screen if any single unit or structure is selected, listing its strengths and weaknesses (as long as Selected Unit Tooltip is enabled in settings).")
+			end)
+
+			Trigger.AfterDelay(DateTime.Minutes(2), function()
+				Tip("Mechanics can repair your vehicles in the field. Putting a Mechanic or Engineer inside an IFV turns it into a repair vehicle. Build a Supply Depot for access to Mechanics.")
+			end)
+
+			Trigger.AfterDelay(DateTime.Minutes(3), function()
+				Tip("Prism Tanks are excellent long range support units that are effective against infantry, defenses and light vehicles. Build a Radar Dome for access to Prism Tanks.")
+			end)
+		end
 	end
 
 	OncePerSecondChecks()
@@ -314,6 +332,8 @@ end
 InitUSSR = function()
 	if Difficulty == "easy" then
 		RebuildExcludes.USSR = { Types = { "tsla", "ftur" } }
+	elseif Difficulty == "normal" then
+		RebuildExcludes.USSR = { Types = { "tsla" } }
 	end
 
 	AutoRepairAndRebuildBuildings(USSR, 10)
@@ -559,7 +579,11 @@ DoSovietNavalDrop = function()
 
 	local navalDropPath = { CPos.New(NavalDrop.Location.X - 3, NavalDrop.Location.Y - 1), NavalDrop.Location }
 	local navalDropExitPath = { navalDropPath[2], navalDropPath[1] }
-	local navalDropUnits = { "3tnk", "v2rl", "3tnk" }
+	local navalDropUnits = { "3tnk", "v2rl" }
+
+	if Difficulty == "hard" then
+		navalDropUnits = { "3tnk", "v2rl", "3tnk" }
+	end
 
 	DoNavalTransportDrop(USSR, navalDropPath, navalDropExitPath, "lst", navalDropUnits, AssaultPlayerBaseOrHunt)
 
