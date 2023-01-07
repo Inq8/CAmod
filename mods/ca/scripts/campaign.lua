@@ -51,8 +51,8 @@ RebuildExcludes = {
 -- begin automatically populated vars (do not assign values to these)
 --
 
--- stores timings for AI rebuilding
-NextRebuildTimes = { }
+-- queued structures for AI
+BuildingQueues = { }
 
 -- stores active squad leaders
 SquadLeaders = { }
@@ -246,7 +246,7 @@ AutoRepairBuildings = function(player)
 	end)
 end
 
-AutoRepairAndRebuildBuildings = function(player, maxRebuildAttempts)
+AutoRepairAndRebuildBuildings = function(player, maxAttempts)
 	local buildings = Utils.Where(Map.ActorsInWorld, function(self) return self.Owner == player and self.HasProperty("StartBuildingRepairs") end)
 	Utils.Do(buildings, function(a)
 		local excludeFromRebuilding = false
@@ -270,7 +270,7 @@ AutoRepairAndRebuildBuildings = function(player, maxRebuildAttempts)
 		end
 		AutoRepairBuilding(a, player)
 		if not excludeFromRebuilding then
-			AutoRebuildBuilding(a, player)
+			AutoRebuildBuilding(a, player, maxAttempts)
 		end
 	end)
 end
@@ -287,78 +287,122 @@ AutoRepairBuilding = function(building, player)
 end
 
 AutoRebuildBuilding = function(building, player, maxAttempts)
+	if BuildingQueues[player.Name] == nil then
+		BuildingQueues[player.Name] = { }
+	end
 	if building.IsDead then
 		return
 	end
 	Trigger.OnKilled(building, function(self, killer)
-		local loc = self.Location
-		local pos = self.CenterPosition
-		RebuildBuilding(self, player, loc, pos, 1, maxAttempts)
+		AddToRebuildQueue(building, player, building.Location, building.CenterPosition, maxAttempts)
 	end)
 	Trigger.OnSold(building, function(self)
-		local loc = self.Location
-		local pos = self.CenterPosition
-		RebuildBuilding(self, player, loc, pos, 1, maxAttempts)
+		AddToRebuildQueue(building, player, building.Location, building.CenterPosition, maxAttempts)
 	end)
 end
 
-RebuildBuilding = function(building, player, loc, pos, attemptNumber, maxAttempts)
+AddToRebuildQueue = function(building, player, loc, pos, maxAttempts)
+	local queueItem = {
+		Actor = building,
+		Player = player,
+		Location = loc,
+		CenterPosition = pos,
+		AttemptsRemaining = maxAttempts,
+		MaxAttempts = maxAttempts
+	}
 
-	-- if next build time set for player, or it's in the past, set to current game time
-	if NextRebuildTimes[player] == nil or NextRebuildTimes[player] < DateTime.GameTime then
-		NextRebuildTimes[player] = DateTime.GameTime
+	BuildingQueues[player.Name][#BuildingQueues[player.Name] + 1] = queueItem
+
+	-- if the queue was empty, start rebuild immediately
+	if #BuildingQueues[player.Name] == 1 then
+		RebuildNextBuilding(player)
+	end
+end
+
+RebuildNextBuilding = function(player)
+	if BuildingQueues[player.Name] == nil or #BuildingQueues[player.Name] == 0 then
+		return
 	end
 
-	local buildTime = math.ceil(Actor.BuildTime(building.Type) * StructureBuildTimeMultipliers[Difficulty])
-	local delayToAdd = NextRebuildTimes[player] - DateTime.GameTime
+	local queueItem = BuildingQueues[player.Name][1]
+	RebuildBuilding(queueItem)
+end
 
-	-- add build time of the next building to the next build time for the player
-	if attemptNumber == 1 then
-		NextRebuildTimes[player] = NextRebuildTimes[player] + buildTime
-	else
-		if delayToAdd < DateTime.Seconds(20) then
-			delayToAdd = DateTime.Seconds(20)
+RebuildBuilding = function(queueItem)
+	local buildTime = math.ceil(Actor.BuildTime(queueItem.Actor.Type) * StructureBuildTimeMultipliers[Difficulty])
+
+	Trigger.AfterDelay(buildTime, function()
+		table.remove(BuildingQueues[queueItem.Player.Name], 1)
+
+		-- rebuild if no units are nearby (potentially blocking), no enemy buildings are nearby, and friendly buildings are in the area (but nothing friendly in the same cell)
+		if CanRebuild(queueItem, queueItem.Player) then
+			local b = Actor.Create(queueItem.Actor.Type, true, { Owner = queueItem.Player, Location = queueItem.Location })
+			AutoRepairBuilding(b, queueItem.Player);
+			AutoRebuildBuilding(b, queueItem.Player, queueItem.MaxAttempts);
+			RestoreSquadProduction(queueItem.Actor, b)
+
+		-- otherwise add to back of queue (if attempts remaining)
+		elseif queueItem.AttemptsRemaining > 1 then
+			queueItem.AttemptsRemaining = queueItem.AttemptsRemaining - 1
+			BuildingQueues[queueItem.Player.Name][#BuildingQueues[queueItem.Player.Name] + 1] = queueItem
 		end
-		delayToAdd = delayToAdd + DateTime.Seconds(Utils.RandomInteger(10,30))
-	end
 
-	Trigger.AfterDelay(buildTime + delayToAdd, function()
-		if HasConyard(player) then
-			local topLeft = WPos.New(pos.X - 8192, pos.Y - 8192, 0)
-			local bottomRight = WPos.New(pos.X + 8192, pos.Y + 8192, 0)
-			local nearbyBuildings = Map.ActorsInBox(topLeft, bottomRight, function(a)
-				return not a.IsDead and a.Owner == player and a.HasProperty("StartBuildingRepairs") and not a.HasProperty("Attack")
-			end)
-
-			local nearbyEnemyBuildings = Map.ActorsInBox(topLeft, bottomRight, function(a)
-				return not a.IsDead and a.Owner ~= player and a.HasProperty("StartBuildingRepairs")
-			end)
-
-			topLeft = WPos.New(pos.X - 2048, pos.Y - 2048, 0)
-			bottomRight = WPos.New(pos.X + 2048, pos.Y + 2048, 0)
-			local nearbyUnits = Map.ActorsInBox(topLeft, bottomRight, function(a)
-				return not a.IsDead and a.HasProperty("Move")
-			end)
-
-			topLeft = WPos.New(pos.X - 512, pos.Y - 512, 0)
-			bottomRight = WPos.New(pos.X + 512, pos.Y + 512, 0)
-			local sameCellActors = Map.ActorsInBox(topLeft, bottomRight, function(a)
-				return not a.IsDead and a.Owner == player and a.HasProperty("Kill")
-			end)
-
-			-- rebuild if no units are nearby (potentially blocking), no enemy buildings are nearby, and friendly buildings are in the area (but nothing friendly in the same cell)
-			if #nearbyBuildings > 0 and #nearbyUnits == 0 and #nearbyEnemyBuildings == 0 and #sameCellActors == 0 then
-				local b = Actor.Create(building.Type, true, { Owner = player, Location = loc })
-				AutoRepairBuilding(b, player);
-				AutoRebuildBuilding(b, player);
-				RestoreSquadProduction(building, b)
-
-			-- otherwise retry
-			elseif maxAttempts == nil or attemptNumber < maxAttempts then
-				RebuildBuilding(building, player, loc, pos, attemptNumber + 1, maxAttempts)
-			end
-		end
+		RebuildNextBuilding(queueItem.Player)
 	end)
+end
+
+CanRebuild = function(queueItem)
+	if not HasConyard(queueItem.Player) then
+		return false
+	end
+
+	local loc = queueItem.Location
+	local pos = queueItem.CenterPosition
+
+	-- require being in conyard build radius
+	if EnforceAiBuildRadius then
+		local nearbyConyards = Map.ActorsInCircle(queueItem.CenterPosition, WDist.New(20480), function(a)
+			return a.Owner == queueItem.Player
+		end)
+
+		if #nearbyConyards == 0 then
+			return false
+		end
+	end
+
+	local topLeft = WPos.New(pos.X - 2048, pos.Y - 2048, 0)
+	local bottomRight = WPos.New(pos.X + 2048, pos.Y + 2048, 0)
+
+	local nearbyUnits = Map.ActorsInBox(topLeft, bottomRight, function(a)
+		return not a.IsDead and a.HasProperty("Move")
+	end)
+
+	-- require no nearby units (stops building on top of them)
+	if #nearbyUnits > 0 then
+		return false
+	end
+
+	topLeft = WPos.New(pos.X - 8192, pos.Y - 8192, 0)
+	bottomRight = WPos.New(pos.X + 8192, pos.Y + 8192, 0)
+	local nearbyBuildings = Map.ActorsInBox(topLeft, bottomRight, function(a)
+		return not a.IsDead and a.Owner == queueItem.Player and a.HasProperty("StartBuildingRepairs") and not a.HasProperty("Attack")
+	end)
+
+	-- require an owned building nearby
+	if #nearbyBuildings == 0 then
+		return false
+	end
+
+	local nearbyEnemyBuildings = Map.ActorsInBox(topLeft, bottomRight, function(a)
+		return not a.IsDead and a.Owner == MissionPlayer and a.HasProperty("StartBuildingRepairs")
+	end)
+
+	-- require no player owned buildings nearby
+	if #nearbyEnemyBuildings > 0 then
+		return false
+	end
+
+	return true
 end
 
 RestoreSquadProduction = function(oldBuilding, newBuilding)
