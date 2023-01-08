@@ -9,7 +9,7 @@ Patrols = {
 	},
 	{
 		Units = { PatrollerC1, PatrollerC2, PatrollerC3, PatrollerC4, PatrollerC5, PatrollerC6, PatrollerC7, PatrollerC8 },
-		Path = { PatrolC1.Location, PatrolC2.Location, PatrolC3.Location, PatrolC2.Location }
+		Path = { PatrolC1.Location, PatrolC2.Location, PatrolC3.Location, PatrolC4.Location, PatrolC5.Location, PatrolC4.Location, PatrolC3.Location, PatrolC2.Location }
 	},
 	{
 		Units = { PatrollerD1, PatrollerD2, PatrollerD3, PatrollerD4, PatrollerD5, PatrollerD6 },
@@ -143,7 +143,13 @@ WorldLoaded = function()
 		end
 	end
 
+	if Difficulty == "easy" then
+		V21.Destroy()
+	end
+
 	if Difficulty ~= "hard" then
+		V22.Destroy()
+
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
 			Tip('Disguise your spy by "attacking" enemy infantry. Dogs can see through the disguise.')
 			Tip("Navy SEALs can swim.")
@@ -284,6 +290,10 @@ end
 
 InitUSSR = function()
 	AutoRepairBuildings(USSR)
+
+	Actor.Create("POWERCHEAT", true, { Owner = USSR, Location = UpgradeCreationLocation })
+	Actor.Create("POWERCHEAT", true, { Owner = USSR, Location = UpgradeCreationLocation })
+
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
 
 	Utils.Do(ussrGroundAttackers, function(a)

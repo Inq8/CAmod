@@ -223,6 +223,11 @@ WorldLoaded = function()
 	if Difficulty ~= "hard" then
 		SovietMammoth1.Destroy()
 		SovietV22.Destroy()
+
+		SovietV23.Destroy()
+		SovietV24.Destroy()
+		SovietMammoth3.Destroy()
+
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
 			Tip("If you put a Mechanic or Engineer inside an IFV it becomes a repair vehicle.")
 		end)
@@ -443,6 +448,8 @@ end
 InitUSSR = function()
 	if Difficulty == "easy" then
 		RebuildExcludes.USSR = { Types = { "tsla", "ftur" } }
+	elseif Difficulty == "normal" then
+		RebuildExcludes.USSR = { Types = { "tsla" } }
 	end
 
 	AutoRepairAndRebuildBuildings(USSR, 15)
@@ -571,14 +578,18 @@ end
 DoNavalDrop = function()
 	local navalDropPath = Utils.Random(NavalDropPaths)
 	local navalDropExitPath = { navalDropPath[2], navalDropPath[1] }
-	local navalDropUnits = { "3tnk", "v2rl", "btr.ai" }
+	local navalDropUnits = { "3tnk", "btr.ai" }
 
-	if Difficulty ~= "easy" then
-		navalDropUnits = { "3tnk", "v2rl", "3tnk", "btr.ai" }
+	if Difficulty == "normal" then
+		navalDropUnits = { "3tnk", "v2rl", "btr.ai" }
 	end
 
-	if Difficulty == "hard" and DateTime.GameTime > DateTime.Minutes(18) then
-		navalDropUnits = { "3tnk", "v3rl", "3tnk", "btr.ai" }
+	if Difficulty == "hard" then
+		if DateTime.GameTime > DateTime.Minutes(18) then
+			navalDropUnits = { "3tnk", "v3rl", "3tnk", "btr.ai" }
+		else
+			navalDropUnits = { "3tnk", "v2rl", "3tnk", "btr.ai" }
+		end
 	end
 
 	DoNavalTransportDrop(USSR, navalDropPath, navalDropExitPath, "lst", navalDropUnits, AssaultPlayerBaseOrHunt)
