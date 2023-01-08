@@ -42,7 +42,7 @@ LabDefenseUnits = {
 		{ Infantry = { "n1c", "n1c", "n1c", "n3c" }, Vehicles = { "ltnk" } },
 	},
 	normal = {
-		{ Infantry = { "n1c", "n1c", "n1c", "n3c", "n5", "n1c", "tplr" }, Vehicles = { "ltnk", "mlrs", "bike", "bike" } },
+		{ Infantry = { "n1c", "n1c", "n1c", "n3c", "n5", "n1c", "acol" }, Vehicles = { "ltnk", "bggy", "bike", "bike" } },
 	},
 	hard = {
 		{ Infantry = { "n1c", "n1c", "n1c", "n3c", "n5", "n1c", "tplr", "tplr", "rmbc" }, Vehicles = { "ltnk", "mlrs", "stnk.nod", "hftk", "ltnk" } },
@@ -99,7 +99,7 @@ Squads = {
 		},
 		Interval = {
 			easy = DateTime.Minutes(3),
-			normal = DateTime.Seconds(150),
+			normal = DateTime.Seconds(165),
 			hard = DateTime.Seconds(150)
 		},
 		QueueProductionStatuses = {
@@ -155,12 +155,12 @@ Squads = {
 	LabDefense = {
 		Player = nil,
 		ActiveCondition = function()
-			return CountConyards(Nod) < 2
+			return CountConyards(Nod) < 2 and DateTime.GameTime >= DateTime.Minutes(15)
 		end,
-		Delay = {
-			easy = DateTime.Minutes(20),
-			normal = DateTime.Minutes(15),
-			hard = DateTime.Minutes(10)
+		AttackValuePerSecond = {
+			easy = { { MinTime = 0, Value = 15 } },
+			normal = { { MinTime = 0, Value = 25 } },
+			hard = { { MinTime = 0, Value = 40 } },
 		},
 		DispatchDelay = DateTime.Seconds(15),
 		QueueProductionStatuses = { Infantry = false, Vehicles = false },

@@ -385,7 +385,7 @@ CanRebuild = function(queueItem)
 	topLeft = WPos.New(pos.X - 8192, pos.Y - 8192, 0)
 	bottomRight = WPos.New(pos.X + 8192, pos.Y + 8192, 0)
 	local nearbyBuildings = Map.ActorsInBox(topLeft, bottomRight, function(a)
-		return not a.IsDead and a.Owner == queueItem.Player and a.HasProperty("StartBuildingRepairs") and not a.HasProperty("Attack")
+		return not a.IsDead and a.Owner == queueItem.Player and a.HasProperty("StartBuildingRepairs") and not a.HasProperty("Attack") and not a.Type == "silo" and not a.Type == "silo.td" and not a.Type == "silo.scrin"
 	end)
 
 	-- require an owned building nearby
@@ -1056,9 +1056,9 @@ UnitCompositions = {
 				{ Infantry = { "n3", "n1", "n1", "n4" }, Vehicles = { "ltnk" }, MaxTime = DateTime.Minutes(12) },
 
 				{ Infantry = {}, Vehicles = { "bggy", "bike", "bike", "stnk.nod" }, MinTime = DateTime.Minutes(12) },
-				{ Infantry = { "n3", "n1", "n1", "n4", "n1" }, Vehicles = { "ltnk", "ltnk" }, MinTime = DateTime.Minutes(12) },
+				{ Infantry = { "n3", "n1", "n1", "n4", "n1", "bh" }, Vehicles = { "ltnk", "ltnk" }, MinTime = DateTime.Minutes(12) },
 				{ Infantry = { "n3", "n1", "n1", "n4", "n1" }, Vehicles = { "ltnk", "arty.nod" }, MinTime = DateTime.Minutes(12) },
-				{ Infantry = { "tplr", "tplr", "n1c", "n3c", "n5" }, Vehicles = { "ftnk", "ltnk" }, MinTime = DateTime.Minutes(12) },
+				{ Infantry = { "acol", "acol", "n1c", "n3c", "n5" }, Vehicles = { "ftnk", "ltnk" }, MinTime = DateTime.Minutes(12) },
 			},
 			hard = {
 				{ Infantry = {}, Vehicles = { "bike", "bike", "bike", "bike" }, MaxTime = DateTime.Minutes(10) },
@@ -1066,7 +1066,7 @@ UnitCompositions = {
 				{ Infantry = { "n3", "n1", "n1", "n4" }, Vehicles = { "ltnk", "bggy", "bike" }, MaxTime = DateTime.Minutes(10) },
 
 				{ Infantry = {}, Vehicles = { "stnk.nod", "stnk.nod", "stnk.nod", "sapc.ai" }, MinTime = DateTime.Minutes(10) },
-				{ Infantry = { "n3", "n1", "n1", "n1", "n1", "n4", "n3" }, Vehicles = { "ltnk", "ltnk", "ftnk", "arty.nod" }, MinTime = DateTime.Minutes(10) },
+				{ Infantry = { "n3", "n1", "n1", "n1", "n1", "n4", "n3", "bh" }, Vehicles = { "ltnk", "ltnk", "ftnk", "arty.nod" }, MinTime = DateTime.Minutes(10) },
 				{ Infantry = { "n3", "n1", "n1", "n1", "n4", "n1", "n3" }, Vehicles = { "ltnk", "mlrs", "arty.nod", "howi" }, MinTime = DateTime.Minutes(10) },
 				{ Infantry = { "tplr", "tplr", "rmbc", "n1c", "n3c", "n5", "n1c", "n1c" }, Vehicles = { "ftnk", "ltnk" }, MinTime = DateTime.Minutes(10) },
 			}
