@@ -63,7 +63,7 @@ WorldLoaded = function()
 	Trigger.AfterDelay(DateTime.Seconds(3), function()
 		Tip("Yuri can mind control up to three enemy units. Mind controlling a fourth will make him lose control of the earliest controlled.")
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
-			Tip("Deploying Yuri releases a mind blast around Yuri and his slaves, killing the slaves in the process.")
+			Tip("Deploying Yuri releases a mind blast around Yuri and his slaves, releasing the slaves in the process.")
 		end)
 	end)
 
