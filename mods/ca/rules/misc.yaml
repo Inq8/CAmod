@@ -341,10 +341,20 @@ camera.hacker:
 gps.satellite:
 	AlwaysVisible:
 	ProvidesPrerequisite:
+	Interactable:
+	Buildable:
+		Queue: SpySatellite
+	Tooltip:
+		Name: GPS Satellite
 
 gps.satellite.firstscan:
 	AlwaysVisible:
 	ProvidesPrerequisite:
+	Interactable:
+	Buildable:
+		Queue: SpySatellite
+	Tooltip:
+		Name: GPS Satellite
 
 camera.cloud:
 	Interactable:
@@ -651,6 +661,7 @@ powerproxy.paratroopers.allies:
 		SupportPowerPaletteOrder: 70
 
 powerproxy.airborne:
+	Interactable:
 	AlwaysVisible:
 	ParatroopersPower:
 		OrderName: airborne
@@ -677,8 +688,13 @@ powerproxy.airborne:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		SupportPowerPaletteOrder: 70
+	Buildable:
+		Queue: PowerProxy
+	Tooltip:
+		Name: Guardian GIs (Single Use)
 
 powerproxy.airborne.tank:
+	Interactable:
 	AlwaysVisible:
 	ParatroopersPower:
 		OrderName: airbornetank
@@ -705,6 +721,10 @@ powerproxy.airborne.tank:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		SupportPowerPaletteOrder: 70
+	Buildable:
+		Queue: PowerProxy
+	Tooltip:
+		Name: Grizzly Tanks (Single Use)
 
 powerproxy.airstrike:
 	AlwaysVisible:
