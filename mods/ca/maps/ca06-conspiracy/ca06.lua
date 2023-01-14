@@ -151,12 +151,14 @@ WorldLoaded = function()
 	if Difficulty ~= "hard" then
 		GDIDefender2.Destroy()
 		NorthGapGenerator.Destroy()
+		HardOnlyPower.Destroy()
 
 		if Difficulty == "easy" then
 			GDIDefender1.Destroy()
 			SouthGapGenerator1.Destroy()
 			SouthGapGenerator2.Destroy()
 			SouthGapGenerator3.Destroy()
+			HardAndNormalOnlyPower.Destroy()
 		end
 
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
@@ -204,14 +206,6 @@ WorldLoaded = function()
 			Trigger.AfterDelay(DateTime.Minutes(2), function()
 				InitAlliedAttacks()
 			end)
-		end
-	end)
-
-	-- If player enters vicinity of south east base with a ground unit after GDI base has been taken over, add free power
-	Trigger.OnEnteredProximityTrigger(SouthEastBaseCenter.CenterPosition, WDist.New(12 * 1024), function(a, id)
-		if a.Owner == Nod and not a.HasProperty("Land") and ObjectiveTakeOverBase ~= nil and Nod.IsObjectiveCompleted(ObjectiveTakeOverBase) then
-			Trigger.RemoveProximityTrigger(id)
-			Actor.Create("powercheat.minor", true, { Owner = Greece, Location = UpgradeCreationLocation })
 		end
 	end)
 
@@ -379,6 +373,13 @@ AwakenSleeperCell = function()
 		if ObjectiveTakeOverBase ~= nil and not Nod.IsObjectiveCompleted(ObjectiveTakeOverBase) then
 			Nod.MarkCompletedObjective(ObjectiveTakeOverBase)
 		end
+
+		local extraPower1 = Actor.Create("apwr", true, { Owner = Greece, Location = ExtraPower1.Location })
+		local extraPower2 = Actor.Create("apwr", true, { Owner = Greece, Location = ExtraPower2.Location })
+		AutoRepairBuilding(extraPower1, Greece)
+		AutoRebuildBuilding(extraPower1, Greece, 15)
+		AutoRepairBuilding(extraPower2, Greece)
+		AutoRebuildBuilding(extraPower2, Greece, 15)
 
 		-- Initialise Allied attacks
 		InitAlliedAttacks()

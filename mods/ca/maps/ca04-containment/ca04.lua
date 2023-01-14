@@ -292,7 +292,6 @@ InitUSSR = function()
 	AutoRepairBuildings(USSR)
 
 	Actor.Create("POWERCHEAT", true, { Owner = USSR, Location = UpgradeCreationLocation })
-	Actor.Create("POWERCHEAT", true, { Owner = USSR, Location = UpgradeCreationLocation })
 
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
 

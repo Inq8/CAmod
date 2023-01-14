@@ -41,34 +41,50 @@ World:
 		VictoryMusic: score
 		DefeatMusic: map
 
-MONEYCRATE:
-	Tooltip:
-		Name: Crate
-	GiveCashCrateAction:
-		Amount: 2000
-	RenderSprites:
-		Image: scrate
-
-POWERCHEAT:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
-	Power:
-		Amount: 5000
-
-POWERCHEAT.MINOR:
-	Inherits: POWERCHEAT
-	Power:
-		Amount: 1500
-
-SMALLCAMERA:
-	Inherits: CAMERA
-	RevealsShroud:
-		Range: 4c0
+^AffectedByDriverKill:
+	ChangesHealth@DRIVER_DEAD:
+		PercentageStep: 0
 
 ^Disabled:
 	Buildable:
 		Prerequisites: ~disabled
+
+^AiExtraPower:
+	GrantConditionOnBotOwnerCA@EXTRAPOWER:
+		Condition: ai-extra-power
+	PowerMultiplier@EXTRAPOWER:
+		Modifier: 130
+		RequiresCondition: ai-extra-power
+
+POWR:
+	Inherits@EXTRAPOWER: ^AiExtraPower
+
+APWR:
+	Inherits@EXTRAPOWER: ^AiExtraPower
+
+TPWR:
+	Inherits@EXTRAPOWER: ^AiExtraPower
+
+NUKE:
+	Inherits@EXTRAPOWER: ^AiExtraPower
+
+NUK2:
+	Inherits@EXTRAPOWER: ^AiExtraPower
+
+REAC:
+	Inherits@EXTRAPOWER: ^AiExtraPower
+
+REA2:
+	Inherits@EXTRAPOWER: ^AiExtraPower
+
+SMIG:
+	-Targetable@AIRBORNE:
+
+TRUK:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+FENC:
+	-BlocksProjectiles:
 
 TRAN.Evac:
 	Inherits: TRAN
@@ -82,22 +98,29 @@ TRAN.Evac:
 		TurnToLand: True
 		InitialFacing: 0
 
-SMIG:
-	-Targetable@AIRBORNE:
-
-TRUK:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-FENC:
-	-BlocksProjectiles:
+MONEYCRATE:
+	Tooltip:
+		Name: Crate
+	GiveCashCrateAction:
+		Amount: 2000
+	RenderSprites:
+		Image: scrate
 
 HEALCRATE:
 	Crate:
 		Duration: 0
 
-^AffectedByDriverKill:
-	ChangesHealth@DRIVER_DEAD:
-		PercentageStep: 0
+SMALLCAMERA:
+	Inherits: CAMERA
+	RevealsShroud:
+		Range: 4c0
+
+POWERCHEAT:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	Power:
+		Amount: 10000
 
 # For attack interval calculations, factoring in extra value from cargo
 SAPC.AI:

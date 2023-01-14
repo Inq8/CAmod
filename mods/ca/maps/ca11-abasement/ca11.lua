@@ -244,8 +244,6 @@ InitScrin = function()
 	SetupRefAndSilosCaptureCredits(Scrin)
 	AutoReplaceHarvesters(Scrin)
 
-	Actor.Create("POWERCHEAT", true, { Owner = Scrin, Location = UpgradeCreationLocation })
-
 	Trigger.AfterDelay(Squads.ScrinMain.Delay[Difficulty], function()
 		InitAttackSquad(Squads.ScrinMain, Scrin)
 	end)

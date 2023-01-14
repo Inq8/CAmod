@@ -228,6 +228,12 @@ WorldLoaded = function()
 		SovietV24.Destroy()
 		SovietMammoth3.Destroy()
 
+		HardOnlySub1.Destroy()
+		HardOnlySub2.Destroy()
+		HardOnlySub3.Destroy()
+		HardOnlySub4.Destroy()
+		HardOnlySub5.Destroy()
+
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
 			Tip("If you put a Mechanic or Engineer inside an IFV it becomes a repair vehicle.")
 		end)

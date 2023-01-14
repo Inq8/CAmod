@@ -210,7 +210,6 @@ InitGreece = function()
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)
 
-	Actor.Create("POWERCHEAT.MINOR", true, { Owner = Greece, Location = UpgradeCreationLocation })
 	Actor.Create("POWERCHEAT", true, { Owner = Traitor, Location = UpgradeCreationLocation })
 
 	local alliedGroundAttackers = Greece.GetGroundAttackers()
