@@ -460,7 +460,7 @@ TeslaZapBoost3:
 
 PortaTesla:
 	Inherits: ^TeslaWeapon
-	ReloadDelay: 70
+	ReloadDelay: 75
 	Range: 6c0
 	Report: shktrop1.aud
 	Warhead@1Dam: SpreadDamage
@@ -1884,9 +1884,14 @@ MicrowaveZap:
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@emp: GrantExternalCondition
 		Range: 0c511
-		Duration: 50
+		Duration: 75
 		Condition: empdisable
-		ValidTargets: Defense, Vehicle
+		ValidTargets: Vehicle
+	Warhead@empdef: GrantExternalCondition
+		Range: 0c511
+		Duration: 100
+		Condition: empdisable
+		ValidTargets: Defense
 
 MicrowaveZap.UPG:
 	Inherits: MicrowaveZap
@@ -1898,11 +1903,8 @@ MicrowaveZap.UPG:
 	Warhead@emp: GrantExternalCondition
 		Range: 1c0
 		ValidTargets: Vehicle
-	Warhead@emp2: GrantExternalCondition
-		Range: 0c511
+	Warhead@empdef: GrantExternalCondition
 		Duration: 200
-		Condition: empdisable
-		ValidTargets: Defense
 	Warhead@highlight: GrantExternalCondition
 		Range: 0c511
 		Duration: 2
