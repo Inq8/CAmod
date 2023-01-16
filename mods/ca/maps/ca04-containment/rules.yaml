@@ -1,6 +1,18 @@
 
 ^Palettes:
 	GlobalLightingPaletteEffect:
+	WeatherOverlay@RAIN:
+		WindTick: 300, 550
+		UseSquares: false
+		ScatterDirection: 0, 0
+		Gravity: 35, 45
+		SwingOffset: 0, 0
+		SwingSpeed: 0, 0
+		SwingAmplitude: 0, 0
+		ParticleColors: aaaaaa, 999999, aa6666, 66aa66
+		LineTailAlphaValue: 12
+		ParticleSize: 1, 1
+		ParticleDensityFactor: 10
 
 World:
 	LuaScript:
@@ -38,6 +50,18 @@ DOG:
 	Health:
 		HP: 4500
 
+E1:
+	ExternalCondition@NORMAL:
+		Condition: difficulty-normal
+	ExternalCondition@EASY:
+		Condition: difficulty-easy
+	RangeMultiplier@EASY:
+		Modifier: 80
+		RequiresCondition: difficulty-easy
+	RangeMultiplier@NORMAL:
+		Modifier: 90
+		RequiresCondition: difficulty-normal
+
 E2:
 	Mobile:
 		Speed: 46
@@ -58,6 +82,8 @@ PDOX.CROSSRIP:
 		Name: Ruptured Chronosphere
 	Health:
 		HP: 35000
+	Armor:
+		Type: Concrete
 	-TooltipExtras:
 	Buildable:
 		Description: Causes temporal and interdimensional crossrips.
@@ -95,7 +121,23 @@ SPY:
 	Mobile:
 		Speed: 60
 
+^DifficultyModifiers:
+	ExternalCondition@NORMAL:
+		Condition: difficulty-normal
+	ExternalCondition@EASY:
+		Condition: difficulty-easy
+	DamageMultiplier@EASY:
+		Modifier: 80
+		RequiresCondition: difficulty-easy
+	RevealsShroudMultiplier@NORMALEASY:
+		Modifier: 115
+		RequiresCondition: difficulty-normal || difficulty-easy
+	RangeMultiplier@EASY:
+		Modifier: 115
+		RequiresCondition: difficulty-easy
+
 SEAL:
+	Inherits@DIFFICULTY: ^DifficultyModifiers
 	Health:
 		HP: 10000
 	RevealsShroud:
@@ -150,6 +192,8 @@ MSLO:
 		AllowMultiple: true
 	-InfiltrateForSupportPowerReset:
 	-Targetable@INFILTRATION:
+	Health:
+		HP: 60000
 
 ^NukeDummy:
 	AlwaysVisible:
