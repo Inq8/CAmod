@@ -3316,8 +3316,8 @@ SHAD:
 		StandSequences: stand, stand2
 		IdleSequences: idle1, idle2
 		AttackSequences:
-			primary: shoot
-			secondary: throw
+			primary: throw
+			secondary: shoot
 		MinIdleDelay: 80
 		MaxIdleDelay: 250
 		RequiresCondition: !parachute && !being-warped
@@ -3330,12 +3330,13 @@ SHAD:
 		Speed: 72
 		Voice: Move
 	Armament@PRIMARY:
-		Weapon: ShadowOperativeGun
-	Armament@SECONDARY:
-		Name: secondary
+		Name: primary
 		Weapon: ShadowOperativeGrenade
 		LocalOffset: 0,0,555
 		FireDelay: 15
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: ShadowOperativeGun
 	Armament@Garrison:
 		Name: mounted
 		Weapon: ShadowOperativeGun
