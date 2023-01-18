@@ -22,18 +22,24 @@ TraitorUnits = {
 	},
 }
 
+ReinforcementsDelay = {
+	hard = DateTime.Minutes(10),
+	hard = DateTime.Minutes(12),
+	hard = DateTime.Minutes(14),
+}
+
 Squads = {
 	Main = {
 		Player = nil,
 		Delay = {
-			easy = DateTime.Seconds(210),
-			normal = DateTime.Seconds(150),
-			hard = DateTime.Seconds(90)
+			easy = DateTime.Minutes(4),
+			normal = DateTime.Minutes(3),
+			hard = DateTime.Minutes(2)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 40 } },
-			normal = { { MinTime = 0, Value = 34 }, { MinTime = DateTime.Minutes(12), Value = 68 } },
-			hard = { { MinTime = 0, Value = 52 }, { MinTime = DateTime.Minutes(10), Value = 105 } },
+			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(15), Value = 40 } },
+			normal = { { MinTime = 0, Value = 34 }, { MinTime = DateTime.Minutes(13), Value = 68 } },
+			hard = { { MinTime = 0, Value = 52 }, { MinTime = DateTime.Minutes(11), Value = 105 } },
 		},
 		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
@@ -45,14 +51,14 @@ Squads = {
 	Traitor = {
 		Player = nil,
 		Delay = {
-			easy = DateTime.Seconds(270),
-			normal = DateTime.Seconds(210),
-			hard = DateTime.Seconds(150)
+			easy = DateTime.Minutes(5),
+			normal = DateTime.Minutes(4),
+			hard = DateTime.Minutes(3)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 20 } },
-			normal = { { MinTime = 0, Value = 16 }, { MinTime = DateTime.Minutes(12), Value = 32 } },
-			hard = { { MinTime = 0, Value = 28 }, { MinTime = DateTime.Minutes(10), Value = 55 } },
+			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(15), Value = 20 } },
+			normal = { { MinTime = 0, Value = 16 }, { MinTime = DateTime.Minutes(13), Value = 32 } },
+			hard = { { MinTime = 0, Value = 28 }, { MinTime = DateTime.Minutes(11), Value = 55 } },
 		},
 		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
@@ -274,4 +280,21 @@ AbandonedBaseDiscovered = function()
 	if not Boris.IsDead then
 		Boris.GrantCondition("autoattack-enabled")
 	end
+
+	Trigger.AfterDelay(ReinforcementsDelay[Difficulty], function()
+		Media.PlaySpeechNotification(USSR, "ReinforcementsArrived")
+		Beacon.New(USSR, PlayerStart.CenterPosition)
+		local reinforcements = { "4tnk", "4tnk", "v2rl", "btr" }
+		if Difficulty == "easy" then
+			reinforcements = { "4tnk", "4tnk", "v3rl", "v3rl", "btr" }
+		elseif Difficulty == "normal" then
+			reinforcements = { "4tnk", "4tnk", "v2rl", "v2rl", "btr" }
+		end
+		Reinforcements.Reinforce(USSR, reinforcements, { ReinforcementsSpawn.Location, PlayerStart.Location }, 75)
+	end)
+
+	Trigger.AfterDelay(DateTime.Seconds(30), function()
+		ShockDrop = Actor.Create("shockdrop", false, { Owner = USSR, Location = UpgradeCreationLocation })
+		ShockDrop.TargetParatroopers(AbandonedBaseCenter.CenterPosition, Angle.North)
+	end)
 end
