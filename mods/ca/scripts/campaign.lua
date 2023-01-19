@@ -191,7 +191,7 @@ end
 
 AssaultPlayerBaseOrHunt = function(actor, targetPlayer, waypoints, fromIdle)
 
-	if not actor.HasProperty("AttackMove") then
+	if not actor.HasProperty("AttackMove") or actor.Owner == MissionPlayer then
 		return
 	end
 
@@ -769,11 +769,6 @@ SendAttackSquad = function(squad)
 							ClearSquadLeader(SquadLeaders[actorId])
 						end)
 					end
-
-					Trigger.OnCapture(a, function(self, captor, oldOwner, newOwner)
-						self.Stop()
-						Trigger.ClearAll(self)
-					end)
 				end
 			else
 				if squad.IsNaval ~= nil and squad.IsNaval then

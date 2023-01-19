@@ -185,6 +185,11 @@ OncePerSecondChecks = function()
 			Actor.Create("advcyborg.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
 			Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
 			Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
+
+			if not TemplePrime.IsDead then
+				TemplePrime.GrantCondition("awakening-complete")
+			end
+
 			DeployCyborgs()
 
 			if ObjectiveDestroyBases ~= nil then
@@ -250,7 +255,8 @@ InitUSSR = function()
 		attemptCount = attemptCount + 1
 		Trigger.AfterDelay(BaseAttemptTimes[attemptCount], function()
 			if ObjectiveDestroyBases == nil then
-				ObjectiveDestroyBases = Nod.AddSecondaryObjective("Crush any Soviet attempts to establish a base.")
+				Notification("The Soviets are attempting to set up a base in the area.")
+				ObjectiveDestroyBases = Nod.AddSecondaryObjective("Crush any Soviet attempts to establish a base\nbefore the timer runs out.")
 			else
 				Notification("The Soviets are attempting to set up another base.")
 			end
