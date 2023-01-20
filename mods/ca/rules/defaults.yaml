@@ -2562,6 +2562,34 @@
 	EjectOnDeath:
 		PilotActor: N1
 
+^Barrel:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^SpriteActor
+	Inherits@shape: ^1x1Shape
+	Interactable:
+		Bounds: 1024, 1024
+	Health:
+		HP: 1000
+	Explodes:
+		Weapon: BarrelExplode
+		Type: Footprint
+	Tooltip:
+		Name: Explosive Barrel
+		ShowOwnerRow: False
+	Armor:
+		Type: None
+	Targetable:
+		TargetTypes: Ground, DemoTruck, Barrel, NoAutoTarget
+	MapEditorData:
+		Categories: Decoration
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+		TerrainTypes: Clear,Road
+	WithSpriteBody:
+	FrozenUnderFog:
+	FrozenUnderFogUpdatedByGpsRadar:
+
 ^BasicBuilding:
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^IronCurtainable
@@ -2659,11 +2687,11 @@
 	SpawnActorOnDeath:
 		Actor: e1
 		Probability: 5
-		RequiresCondition: !being-warped
+		RequiresCondition: !being-warped && !hacked
 	SpawnRandomActorOnDeath:
 		Actors: c1,c7,c10
 		Probability: 10
-		RequiresCondition: !being-warped
+		RequiresCondition: !being-warped && !hacked
 	MustBeDestroyed:
 		RequiredForShortGame: true
 	Sellable:

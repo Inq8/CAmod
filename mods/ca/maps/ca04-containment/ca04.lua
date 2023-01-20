@@ -162,7 +162,8 @@ WorldLoaded = function()
 	end
 
 	Trigger.OnEnteredProximityTrigger(Chronosphere.CenterPosition, WDist.New(8192), function(a, id)
-		if a.Owner == Greece then
+		if not IsChronosphereReached and a.Owner == Greece then
+			IsChronosphereReached = true
 			Trigger.RemoveProximityTrigger(id)
 			SAPC1.GrantCondition("cloak-force-disabled", 25)
 			SAPC2.GrantCondition("cloak-force-disabled", 25)

@@ -254,7 +254,7 @@ EngineerDrop = function()
 		Notification("Reinforcements have arrived.")
 	end)
 
-	DoHelicopterDrop(USSR, entryPath, "halo.paradrop", haloDropUnits, nil, function(t)
+	DoHelicopterDrop(USSR, entryPath, "halo.engis", haloDropUnits, nil, function(t)
 		Trigger.AfterDelay(DateTime.Seconds(5), function()
 			if not t.IsDead then
 				t.Move(entryPath[1])

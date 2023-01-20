@@ -93,18 +93,32 @@ WorldLoaded = function()
 
 	if Difficulty ~= "hard" then
 		Trigger.OnEnteredFootprint(DroneTipLocations, function(a, id)
-			if a.Owner == Nod then
+			if a.Owner == Nod and not DroneTipShown then
+				DroneTipShown = true
 				Trigger.RemoveFootprintTrigger(id)
-				Tip("Mammoth Drone detected. Hackers can take control of this vehicle.")
-			end
-		end)
-		Trigger.OnEnteredFootprint(EmpTipLocations, function(a, id)
-			if a.Owner == Nod then
-				Trigger.RemoveFootprintTrigger(id)
-				Tip("Too many guards up ahead. Find a way to neutralise them.")
+				if not MammothDrone.IsDead and MammothDrone.Owner ~= Nod then
+					Tip("Mammoth Drone detected. Hackers can take control of this vehicle.")
+				end
 			end
 		end)
 	end
+
+	local revealPoints = { EntranceReveal1, EntranceReveal2, EntranceReveal3, EntranceReveal4, BridgeDefendersReveal1, BridgeDefendersReveal2 }
+	Utils.Do(revealPoints, function(p)
+		Trigger.OnEnteredProximityTrigger(p.CenterPosition, WDist.New(11 * 1024), function(a, id)
+			if a.Owner == Nod then
+				Trigger.RemoveProximityTrigger(id)
+				if p == BridgeDefendersReveal1 and not BridgeTipShown then
+					BridgeTipShown = true
+					Tip("Too many guards up ahead. Find a way to neutralise them.")
+				end
+				local camera = Actor.Create("smallcamera", true, { Owner = Nod, Location = p.Location })
+				Trigger.AfterDelay(DateTime.Seconds(4), function()
+					camera.Destroy()
+				end)
+			end
+		end)
+	end)
 end
 
 Tick = function()

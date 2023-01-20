@@ -290,6 +290,9 @@ AutoRebuildBuilding = function(building, player, maxAttempts)
 	if BuildingQueues[player.Name] == nil then
 		BuildingQueues[player.Name] = { }
 	end
+	if maxAttempts == nil then
+		maxAttempts = 15
+	end
 	if building.IsDead then
 		return
 	end

@@ -256,7 +256,8 @@ InitUSSR = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(MADTank.CenterPosition, WDist.New(8 * 1024), function(a, id)
-		if a.Owner == Nod then
+		if a.Owner == Nod and not IsMADTankDetonated then
+			IsMADTankDetonated = true
 			Trigger.RemoveProximityTrigger(id)
 			MADTank.MadTankDetonate()
 		end

@@ -39,10 +39,13 @@ WorldLoaded = function()
 
 	if Difficulty == "easy" then
 		StartLightTank.Destroy()
-		StartTurret2.Destroy()
+		StartTurret3.Destroy()
 		SouthWestTurret1.Destroy()
 		SouthWestTurret2.Destroy()
 		FirstStealthTank.Destroy()
+	else
+		EasyGren1.Destroy()
+		EasyGren2.Destroy()
 	end
 
 	if Difficulty == "hard" then
@@ -58,6 +61,7 @@ WorldLoaded = function()
 		HardOnlyChemWarrior2.Destroy()
 		NodCommando.Destroy()
 		SouthStealthTank.Destroy()
+		HardOnlyTurret1.Destroy()
 	end
 
 	Trigger.AfterDelay(DateTime.Seconds(3), function()

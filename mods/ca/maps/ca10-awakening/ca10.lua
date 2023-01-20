@@ -165,8 +165,8 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		USSR.Cash = 7500
-		USSR.Resources = 7500
+		USSR.Cash = 2500
+		USSR.Resources = 2500
 
 		if TimerTicks > 0 then
 			if TimerTicks > 25 then

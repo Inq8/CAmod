@@ -248,7 +248,8 @@ WorldLoaded = function()
 		Media.PlaySpeechNotification(Greece, "SignalFlare")
 		Notification("Signal flare detected.")
 		Trigger.OnEnteredProximityTrigger(DeploySuggestion.CenterPosition, WDist.New(6 * 1024), function(a, id)
-			if a.Owner == Greece and a.Type ~= "waypoint" and a.Type ~= "flare" then
+			if a.Owner == Greece and a.Type ~= "waypoint" and a.Type ~= "flare" and not IsDeploySuggestionReached then
+				IsDeploySuggestionReached = true
 				Trigger.RemoveProximityTrigger(id)
 				BaseFlare.Destroy()
 			end
@@ -479,7 +480,7 @@ InterdimensionalCrossrip = function()
 	Utils.Do(sovietGroundAttackers, function(a)
 		Trigger.AfterDelay(Utils.RandomInteger(5,250), function()
 			if not a.IsDead then
-				a.Kill()
+				a.Kill("ExplosionDeath")
 			end
 		end)
 	end)

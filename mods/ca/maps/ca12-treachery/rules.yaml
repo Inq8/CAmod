@@ -62,12 +62,6 @@ DOME:
 	AirstrikePower@spyplane:
 		ChargeInterval: 4500
 
-AFLD:
-	-AirstrikePower@Russianparabombs:
-
-HPAD:
-	-AirstrikePower@Russianparabombs:
-
 ATEK:
 	-DummyGpsPower@NOFOG:
 	-DummyGpsPower@FOG:
@@ -120,6 +114,12 @@ GNRL:
 		Name: General Yegorov
 		-GenericVisibility:
 		-RequiresCondition:
+	RenderSprites:
+		Image: boris
+		-Palette:
+		PlayerPalette: playertd
+	WithDeathAnimation:
+		DeathSequencePalette: playertd
 	-GrantConditionOnCombatantOwner@COMBATANT:
 	-Tooltip@COMBATANT:
 	-Valued:
@@ -133,6 +133,21 @@ GNRL:
 	-AutoTarget:
 	-AutoTargetPriority@DEFAULT:
 	-AutoTargetPriority@ATTACKANYTHING:
+
+FCOM:
+	Health:
+		HP: 200000
+	Tooltip:
+		Name: General Yegorov's HQ
+	-TooltipDescription@ally:
+	-TooltipDescription@other:
+	-BaseProvider:
+	-SpawnActorOnDeath:
+	RepairableBuilding:
+		RepairStep: 500
+		RepairPercent: 30
+		PlayerExperience: 5
+		RepairingNotification: Repairing
 
 SHOCKDROP:
 	ParatroopersPower:

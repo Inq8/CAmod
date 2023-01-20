@@ -334,7 +334,7 @@ DoMcvArrival = function()
 end
 
 RevealLab = function()
-	if not LabIsRevealed then
+	if not IsLabRevealed then
 		Beacon.New(Greece, ResearchLab.CenterPosition)
 		ObjectiveCaptureLab = Greece.AddObjective("Capture the Nod research lab.")
 
@@ -349,6 +349,6 @@ RevealLab = function()
 			LabCamera.Destroy()
 		end)
 
-		LabIsRevealed = true
+		IsLabRevealed = true
 	end
 end

@@ -164,14 +164,14 @@ WorldLoaded = function()
 	Trigger.OnAllKilledOrCaptured(Wormholes, function()
 		local actors = Scrin.GetActorsByTypes(ScrinActorTypes)
 		Utils.Do(actors, function(actor)
-			if actor.HasProperty("Kill") and not actor.IsDead then actor.Kill() end
+			if actor.HasProperty("Kill") and not actor.IsDead then actor.Kill("BulletDeath") end
 		end)
 
         Trigger.AfterDelay(DateTime.Seconds(5), function()
             Utils.Do(NodPlayers, function(nodPlayer)
                 local nodActors = nodPlayer.GetActors()
                 Utils.Do(nodActors, function(nodActor)
-                    if nodActor.HasProperty("Kill") and not nodActor.IsDead then nodActor.Kill() end
+                    if nodActor.HasProperty("Kill") and not nodActor.IsDead then nodActor.Kill("BulletDeath") end
                 end)
             end)
         end)
@@ -180,14 +180,14 @@ WorldLoaded = function()
 	Trigger.OnAllKilledOrCaptured(NodWormholes, function()
 		local actors = Scrin.GetActorsByTypes(ScrinActorTypes)
 		Utils.Do(actors, function(actor)
-			if actor.HasProperty("Kill") and not actor.IsDead then actor.Kill() end
+			if actor.HasProperty("Kill") and not actor.IsDead then actor.Kill("BulletDeath") end
 		end)
 
         Trigger.AfterDelay(DateTime.Seconds(5), function()
             Utils.Do(GDIPlayers, function(gdiPlayer)
                 local gdiActors = gdiPlayer.GetActors()
                 Utils.Do(gdiActors, function(gdiActor)
-                    if gdiActor.HasProperty("Kill") and not gdiActor.IsDead then gdiActor.Kill() end
+                    if gdiActor.HasProperty("Kill") and not gdiActor.IsDead then gdiActor.Kill("BulletDeath") end
                 end)
             end)
         end)

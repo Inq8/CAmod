@@ -64,7 +64,8 @@ YURI:
 		OrderName: mutabomb
 		Icon: mutabomb
 		IconPalette: scrin
-		ChargeInterval: 4500
+		ChargeInterval: 7500
+		StartFullyCharged: true
 		Name: Genetic Mutation Bomb
 		Description: \nCalls in a Badger bomber which drops a genetic\n    mutation bomb on your target, transforming\n    infantry into Brutes under your control.\n\nDoes not affect cyborgs.
 		SelectTargetSpeechNotification: SelectTarget
@@ -226,12 +227,16 @@ OBLI:
 NSAM:
 	ExternalCondition@DISABLED:
 		Condition: disabled
+	Targetable:
+		TargetTypes: Ground, Structure
 
 LASP:
 	ExternalCondition@DISABLED:
 		Condition: disabled
 	DamageMultiplier@REDUC:
 		Modifier: 20
+	RepairableBuilding:
+		RepairStep: 2750
 
 HALO.paradrop:
 	DamageMultiplier@INVULN:

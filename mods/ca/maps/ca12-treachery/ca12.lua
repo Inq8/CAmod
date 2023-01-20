@@ -115,7 +115,6 @@ WorldLoaded = function()
 	InitGreece()
 
 	ObjectiveKillTraitor = USSR.AddObjective("Find and kill the traitor General Yegorov.")
-	ObjectiveKeepBorisAlive = USSR.AddObjective("Boris must survive.")
 	ObjectiveFindSovietBase = USSR.AddSecondaryObjective("Take control of abandoned Soviet base.")
 
 	AbandonedHalo.ReturnToBase(AbandonedHelipad)
@@ -123,6 +122,9 @@ WorldLoaded = function()
 	if Difficulty == "hard" then
 		Cruiser.Patrol(CruiserPatrolPath)
 		AbandonedAirfield.Destroy()
+		--local traitorConyardLocation = TraitorConyard.Location
+		--TraitorConyard.Destroy()
+		--Actor.Create("weap", true, { Owner = Traitor, Location = traitorConyardLocation })
 	else
 		Cruiser.Destroy()
 	end
@@ -150,11 +152,6 @@ WorldLoaded = function()
 
 	Trigger.OnKilled(TraitorGeneral, function(self, killer)
 		USSR.MarkCompletedObjective(ObjectiveKillTraitor)
-		USSR.MarkCompletedObjective(ObjectiveKeepBorisAlive)
-	end)
-
-	Trigger.OnKilled(Boris, function(self, killer)
-		USSR.MarkFailedObjective(ObjectiveKeepBorisAlive)
 	end)
 
 	Trigger.OnCapture(TraitorTechCenter, function(self, captor, oldOwner, newOwner)
@@ -169,6 +166,28 @@ WorldLoaded = function()
 	Trigger.OnKilled(TraitorTechCenter, function(self, killer)
 		if ObjectiveCaptureTraitorTechCenter ~= nil and not USSR.IsObjectiveCompleted(ObjectiveCaptureTraitorTechCenter) then
 			USSR.MarkFailedObjective(ObjectiveCaptureTraitorTechCenter)
+		end
+	end)
+
+	Trigger.OnKilled(TraitorHQ, function(self, killer)
+		TraitorHQKilledOrCaptured()
+	end)
+
+	Trigger.OnCapture(TraitorHQ, function(self, captor, oldOwner, newOwner)
+		TraitorHQKilledOrCaptured()
+	end)
+
+	-- After 10 minutes, remove Yegorov if player hasn't got close to him yet (effectively entering the HQ)
+	Trigger.AfterDelay(DateTime.Minutes(10), function()
+		TraitorRetreatToHQ()
+	end)
+
+	Trigger.OnEnteredProximityTrigger(TraitorHQSpawn.CenterPosition, WDist.New(12 * 1024), function(a, id)
+		if a.Owner == USSR then
+			Trigger.RemoveProximityTrigger(id)
+			if TraitorGeneral.IsInWorld then
+				YegorovStaysOutside = true
+			end
 		end
 	end)
 end
@@ -190,12 +209,6 @@ OncePerSecondChecks = function()
 				TimerTicks = TimerTicks - 25
 			else
 				TimerTicks = 0
-			end
-		end
-
-		if Boris.IsDead then
-			if ObjectiveKeepBorisAlive ~= nil and not USSR.IsObjectiveCompleted(ObjectiveKeepBorisAlive) then
-				USSR.MarkFailedObjective(ObjectiveKeepBorisAlive)
 			end
 		end
 	end
@@ -245,6 +258,13 @@ InitGreece = function()
 end
 
 AbandonedBaseDiscovered = function()
+	if IsAbandonedBaseDiscovered then
+		return
+	end
+
+	IsAbandonedBaseDiscovered = true
+	TraitorRetreatToHQ()
+
 	local baseBuildings = Map.ActorsInBox(AbandonedBaseTopLeft.CenterPosition, AbandonedBaseBottomRight.CenterPosition, function(a)
 		return a.Owner == USSRAbandoned
 	end)
@@ -297,4 +317,21 @@ AbandonedBaseDiscovered = function()
 		ShockDrop = Actor.Create("shockdrop", false, { Owner = USSR, Location = UpgradeCreationLocation })
 		ShockDrop.TargetParatroopers(AbandonedBaseCenter.CenterPosition, Angle.North)
 	end)
+end
+
+TraitorHQKilledOrCaptured = function()
+	-- Spawn Yegorov (unless he's outside already)
+	if not TraitorGeneral.IsInWorld then
+		local traitorGeneral = Actor.Create("gnrl", true, { Owner = Traitor, Location = TraitorHQSpawn.Location })
+		traitorGeneral.Move(TraitorGeneralSafePoint.Location)
+		Trigger.OnKilled(traitorGeneral, function(self, killer)
+			USSR.MarkCompletedObjective(ObjectiveKillTraitor)
+		end)
+	end
+end
+
+TraitorRetreatToHQ = function()
+	if not YegorovStaysOutside and TraitorGeneral.IsInWorld then
+		TraitorGeneral.Destroy()
+	end
 end

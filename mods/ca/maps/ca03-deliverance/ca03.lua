@@ -424,7 +424,7 @@ GDIBaseFound = function()
 end
 
 RevealPrison = function()
-	if not PrisonRevealed then
+	if not IsPrisonRevealed then
 		Beacon.New(Greece, GDICommanderSpawn.CenterPosition)
 		ObjectiveCapturePrison = Greece.AddObjective("Take control of prison and rescue GDI commander.")
 
@@ -438,7 +438,7 @@ RevealPrison = function()
 		Trigger.AfterDelay(DateTime.Seconds(5), function()
 			PrisonCamera.Destroy()
 		end)
-		PrisonRevealed = true
+		IsPrisonRevealed = true
 	end
 end
 
