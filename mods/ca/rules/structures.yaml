@@ -2734,7 +2734,7 @@ FIX:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 100
 		Prerequisites: vehicles.any, ~structures.ra, ~techlevel.low
-		Description: Repairs vehicles for credits.
+		Description: Repairs vehicles and aircraft.
 	TooltipExtras:
 		Attributes: • Nearby helipads/airfields will repair landed aircraft
 	Valued:
@@ -4528,7 +4528,7 @@ REP:
 		BuildPaletteOrder: 100
 		Prerequisites: vehicles.any, ~structures.td, ~techlevel.low
 		IconPalette: chrometd
-		Description: Repairs vehicles for credits.
+		Description: Repairs vehicles and aircraft.
 	TooltipExtras:
 		Attributes: • Nearby helipads/airfields will repair landed aircraft
 	Valued:
@@ -5183,6 +5183,7 @@ TMPL:
 		FlightVelocity: 0c624
 		DisplayRadarPing: True
 		CameraRange: 10c0
+		CameraRemoveDelay: 50
 		ArrowSequence: arrow
 		ClockSequence: clockTD
 		CircleSequence: circles
@@ -5193,7 +5194,7 @@ TMPL:
 		DisplayBeacon: True
 		BeaconPoster: clustermissile
 		BeaconPosterPalette: temptd
-		DisplayTimerRelationships: Ally, Neutral, Enemy
+		DisplayTimerRelationships: Ally
 		CircleRanges: 3c0
 		CircleColor: BB0000AA
 		CircleBorderColor: 770000AA
@@ -6150,6 +6151,10 @@ INDP:
 		RequiresCondition: disabled || empdisable || being-warped
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
+	SpawnActorOnDeath:
+		RequiresCondition: !being-warped
+	SpawnRandomActorOnDeath:
+		RequiresCondition: !being-warped
 	GrantConditionOnPrerequisite@Bot:
 		Condition: owned-by-ai
 		Prerequisites: botplayer
@@ -6219,6 +6224,10 @@ OREP:
 		UseDeathTypeSuffix: false
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
+	SpawnActorOnDeath:
+		RequiresCondition: !being-warped
+	SpawnRandomActorOnDeath:
+		RequiresCondition: !being-warped
 	GrantConditionOnPrerequisite@Bot:
 		Condition: owned-by-ai
 		Prerequisites: botplayer
@@ -6309,6 +6318,10 @@ UPGC:
 		Amount: -150
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
+	SpawnActorOnDeath:
+		RequiresCondition: !being-warped
+	SpawnRandomActorOnDeath:
+		RequiresCondition: !being-warped
 	ProductionAirdropCA:
 		Produces: Money
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -6667,6 +6680,10 @@ TMPP:
 		Prerequisite: infantry.mech
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
+	SpawnActorOnDeath:
+		RequiresCondition: !being-warped
+	SpawnRandomActorOnDeath:
+		RequiresCondition: !being-warped
 	Exit@1:
 		SpawnOffset: -170,1310,0
 		ExitCell: 1,3

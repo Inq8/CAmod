@@ -92,8 +92,8 @@ Squads = {
 			hard = DateTime.Minutes(1)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 32 }, { MinTime = DateTime.Minutes(12), Value = 64 } },
-			normal = { { MinTime = 0, Value = 55 } },
+			easy = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 50 } },
+			normal = { { MinTime = 0, Value = 50 } },
 			hard = { { MinTime = 0, Value = 80 } },
 		},
 		QueueProductionStatuses = {
@@ -120,11 +120,11 @@ Squads = {
 			normal = {
 				{
 					Infantry = { "e3", "e1", "e1", "e1", "e1", "e2", "e4" }, -- 1060
-					Vehicles = { "3tnk", "btr.ai", "btr" }, -- 2500 (+800)
+					Vehicles = { "3tnk", "btr.ai" }, -- 2500 (+800)
 					MaxTime = DateTime.Minutes(9)
 				},
 				{
-					Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" }, -- 2110
+					Infantry = { "e3", "e1", "e1", "shok", "e1", "e2", "e3", "e4" }, -- 2110
 					Vehicles = { "3tnk", "4tnk", "katy" }, -- 3550
 					MinTime = DateTime.Minutes(9)
 				}
@@ -207,27 +207,17 @@ WorldLoaded = function()
 	MissionPlayer = Greece
 	TimerTicks = 0
 
-	Trigger.AfterDelay(1, function()
-		ObjectiveEstablishBase = Greece.AddObjective("Establish a base.")
-		UserInterface.SetMissionText("Establish a base.", HSLColor.Yellow)
-	end)
+	Camera.Position = PlayerMcv.CenterPosition
 
-	Trigger.OnKilled(Church, function(self, killer)
-		Actor.Create("moneycrate", true, { Owner = Greece, Location = Church.Location })
-	end)
-
-	Trigger.OnEnteredProximityTrigger(SovietChronosphere.CenterPosition, WDist.New(6 * 1024), function(a, id)
-		if a.Owner == Greece then
-			Trigger.RemoveProximityTrigger(id)
-			ChronosphereDiscovered()
-		end
-	end)
+	InitObjectives(Greece)
+	InitUSSR()
 
 	if Difficulty ~= "hard" then
 		HeavyTank1.Destroy()
 		Flamer1.Destroy()
 		TeslaCoil3.Destroy()
 	end
+
 	if Difficulty == "easy" then
 		Flamer2.Destroy()
 		SovietWestFlameTower2.Destroy()
@@ -237,16 +227,29 @@ WorldLoaded = function()
 		Ranger1.Destroy()
 	end
 
-	InitObjectives(Greece)
-	InitUSSR()
-	Camera.Position = PlayerMcv.CenterPosition
+	Trigger.AfterDelay(1, function()
+		ObjectiveEstablishBase = Greece.AddObjective("Establish a base.")
+		UserInterface.SetMissionText("Establish a base.", HSLColor.Yellow)
+	end)
+
+	Trigger.OnKilled(Church, function(self, killer)
+		Actor.Create("moneycrate", true, { Owner = Greece, Location = Church.Location })
+	end)
+
+	Trigger.OnEnteredProximityTrigger(SovietChronosphere.CenterPosition, WDist.New(7 * 1024), function(a, id)
+		if a.Owner == Greece then
+			Trigger.RemoveProximityTrigger(id)
+			ChronosphereDiscovered()
+		end
+	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
 		BaseFlare = Actor.Create("flare", true, { Owner = Greece, Location = DeploySuggestion.Location })
 		Media.PlaySpeechNotification(Greece, "SignalFlare")
 		Notification("Signal flare detected.")
 		Trigger.OnEnteredProximityTrigger(DeploySuggestion.CenterPosition, WDist.New(6 * 1024), function(a, id)
-			if a.Owner == Greece and a.Type ~= "waypoint" and a.Type ~= "flare" then
+			if a.Owner == Greece and a.Type ~= "waypoint" and a.Type ~= "flare" and not IsDeploySuggestionReached then
+				IsDeploySuggestionReached = true
 				Trigger.RemoveProximityTrigger(id)
 				BaseFlare.Destroy()
 			end
@@ -262,6 +265,24 @@ Tick = function()
 			UserInterface.SetMissionText(nil)
 		end
 		Greece.MarkCompletedObjective(ObjectiveEstablishBase)
+
+		if Difficulty ~= "hard" then
+			Trigger.AfterDelay(DateTime.Seconds(5), function()
+				Tip("Build a barracks for access to static defenses which should allow you to hold off any early attacks. Use Pillboxes against infantry and Turrets against vehicles.")
+			end)
+
+			Trigger.AfterDelay(DateTime.Minutes(1), function()
+				Tip("Information is displayed in the bottom right of the screen if any single unit or structure is selected, listing its strengths and weaknesses (as long as Selected Unit Tooltip is enabled in settings).")
+			end)
+
+			Trigger.AfterDelay(DateTime.Minutes(2), function()
+				Tip("Mechanics can repair your vehicles in the field. Putting a Mechanic or Engineer inside an IFV turns it into a repair vehicle. Build a Supply Depot for access to Mechanics.")
+			end)
+
+			Trigger.AfterDelay(DateTime.Minutes(3), function()
+				Tip("Prism Tanks are excellent long range support units that are effective against infantry, defenses and light vehicles. Build a Radar Dome for access to Prism Tanks.")
+			end)
+		end
 	end
 
 	OncePerSecondChecks()
@@ -310,6 +331,12 @@ end
 -- Functions
 
 InitUSSR = function()
+	if Difficulty == "easy" then
+		RebuildExcludes.USSR = { Types = { "tsla", "ftur" } }
+	elseif Difficulty == "normal" then
+		RebuildExcludes.USSR = { Types = { "tsla" } }
+	end
+
 	AutoRepairAndRebuildBuildings(USSR, 10)
 	SetupRefAndSilosCaptureCredits(USSR)
 	AutoReplaceHarvesters(USSR)
@@ -453,7 +480,7 @@ InterdimensionalCrossrip = function()
 	Utils.Do(sovietGroundAttackers, function(a)
 		Trigger.AfterDelay(Utils.RandomInteger(5,250), function()
 			if not a.IsDead then
-				a.Kill()
+				a.Kill("ExplosionDeath")
 			end
 		end)
 	end)
@@ -553,7 +580,11 @@ DoSovietNavalDrop = function()
 
 	local navalDropPath = { CPos.New(NavalDrop.Location.X - 3, NavalDrop.Location.Y - 1), NavalDrop.Location }
 	local navalDropExitPath = { navalDropPath[2], navalDropPath[1] }
-	local navalDropUnits = { "3tnk", "v2rl", "3tnk" }
+	local navalDropUnits = { "3tnk", "v2rl" }
+
+	if Difficulty == "hard" then
+		navalDropUnits = { "3tnk", "v2rl", "3tnk" }
+	end
 
 	DoNavalTransportDrop(USSR, navalDropPath, navalDropExitPath, "lst", navalDropUnits, AssaultPlayerBaseOrHunt)
 

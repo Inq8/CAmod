@@ -691,11 +691,11 @@ MAST:
 		Prerequisites: scrt, ~infantry.scrin, ~techlevel.high
 		BuildLimit: 1
 		IconPalette: chrome
-		Description: Elite specialist infantry able to mind-control\n  enemy units and defenses.
+		Description: Elite specialist infantry able to mind-control\n  enemy units (up to 3 at a time).
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Vehicles, Defenses, Buildings
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Can capture enemy buildings\n• Less range and longer reload against vehicles\n• Special Ability: Mind Shatter
+		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Can capture enemy buildings\n• Shorter range and longer reload against vehicles\n• Special Ability: Mind Shatter
 	Voiced:
 		VoiceSet: MastermindVoice
 	Valued:
@@ -995,9 +995,6 @@ SEEK:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
-	SpawnActorOnDeath:
-		Actor: SEEK.Husk
-		RequiresCondition: !onwater && !being-warped
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
@@ -1091,6 +1088,7 @@ INTL:
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
 	Inherits@HOVERTRAIL: ^HoverTrail
+	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1451,6 +1449,9 @@ STCR:
 	WithShadow:
 		Offset: 80, 80, 0
 		ZOffset: -81
+	SpawnActorOnDeath:
+		Actor: STCR.Husk
+		RequiresCondition: !being-warped
 	GrantConditionOnAttackCA@IONSTORM:
 		RevokeDelay: 200
 		MaximumInstances: 42
@@ -1815,6 +1816,7 @@ TPOD:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 310
@@ -3000,6 +3002,14 @@ DEVO.Husk:
 		Image: devo.destroyed
 		PlayerPalette: playerscrin
 
+STCR.Husk:
+	Inherits: ^Husk
+	Tooltip:
+		Name: Husk (Stormcrawler)
+	RenderSprites:
+		Image: stcr.destroyed
+		PlayerPalette: playerscrin
+
 RUIN.Husk:
 	Inherits: ^Husk
 	Tooltip:
@@ -3450,8 +3460,6 @@ REAC:
 	WithBuildingBib:
 	Power:
 		Amount: 100
-	ProvidesPrerequisite:
-		Prerequisite: anypower
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, PowerInfiltrate
@@ -4214,6 +4222,8 @@ SIGN:
 		RequiresCondition: !being-warped
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
+	SpawnActorOnDeath:
+		RequiresCondition: !being-warped
 	-MindControllable:
 	-Targetable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
@@ -4230,7 +4240,7 @@ SREP:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 100
 		Prerequisites: vehicles.scrin, ~structures.scrin, ~techlevel.low
-		Description: Repairs vehicles for credits.
+		Description: Repairs vehicles and aircraft.
 		IconPalette: chromes
 	Valued:
 		Cost: 1000

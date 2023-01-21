@@ -806,6 +806,7 @@ IonStormInit:
 		Palette: effect
 		Weapon: IonCloudRandomInit
 		Duration: 220
+		ImpactActors: false
 
 IonCloudRandomInit:
 	Projectile: InstantHit
@@ -815,6 +816,7 @@ IonCloudRandomInit:
 		Amount: 1
 		AimChance: 50
 		ValidTargets: Air, Ground, Water
+		ImpactActors: false
 
 IonCloud:
 	ReloadDelay: 220
@@ -965,6 +967,7 @@ WeatherStormInit:
 		Weapon: WeatherCloudDirectInit
 		Duration: 210
 		Delay: 50
+		ImpactActors: false
 	Warhead@2: SpawnSmokeParticle
 		ValidTargets: Ground, Air, Water
 		Delay: 50
@@ -972,6 +975,7 @@ WeatherStormInit:
 		Palette: ra2effect
 		Weapon: WeatherCloudRandomInit
 		Duration: 210
+		ImpactActors: false
 	Warhead@4: CreateEffect
 		Delay: 50
 		ImpactSounds: sweaintr.aud
@@ -997,6 +1001,7 @@ WeatherCloudDirectInit:
 	Warhead@barrage3: FireFragment
 		Weapon: WeatherCloud
 		ValidTargets: Air, Ground, Water
+		ImpactActors: false
 
 WeatherCloudRandomInit:
 	Projectile: InstantHit
@@ -1019,6 +1024,7 @@ WeatherCloudRandomInit:
 		Amount: 2
 		AimChance: 50
 		ValidTargets: Air, Ground, Water
+		ImpactActors: false
 
 WeatherCloud:
 	ReloadDelay: 120

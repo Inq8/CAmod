@@ -3322,15 +3322,9 @@ Actors:
 	Actor1109: apwr
 		Owner: Greece
 		Location: 50,5
-	Actor1110: powr
+	HardAndNormalOnlyPower: powr
 		Owner: Greece
 		Location: 61,10
-	Actor1111: apwr
-		Owner: Greece
-		Location: 75,88
-	Actor1112: apwr
-		Owner: Greece
-		Location: 78,88
 	Actor1113: apwr
 		Owner: Greece
 		Location: 81,88
@@ -3464,7 +3458,7 @@ Actors:
 	Actor1124: powr
 		Owner: Greece
 		Location: 89,87
-	Actor1125: apwr
+	HardOnlyPower: apwr
 		Owner: Greece
 		Location: 91,83
 	SouthWestAttack1: waypoint
@@ -3903,9 +3897,15 @@ Actors:
 		Facing: 384
 		SubCell: 1
 		Location: 64,20
+	ExtraPower2: waypoint
+		Owner: Neutral
+		Location: 78,88
+	ExtraPower1: waypoint
+		Owner: Neutral
+		Location: 75,88
 
 Rules: ca|rules/campaign-rules.yaml, ca|rules/campaign-tooltips.yaml, ca|rules/campaign-palettes.yaml, rules.yaml
 
-Weapons: ca|weapons/campaign.yaml
+Weapons: ca|weapons/campaign.yaml, weapons.yaml
 
 Notifications: notifications.yaml

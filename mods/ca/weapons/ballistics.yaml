@@ -43,7 +43,7 @@
 			Wood: 52
 			Light: 116
 			Heavy: 75
-			Concrete: 35
+			Concrete: 30
 
 25mmFRAG:
 	Inherits: ^Cannon
@@ -69,6 +69,7 @@
 		Damage: 3500
 		Versus:
 			Heavy: 70
+			Concrete: 35
 
 76mm:
 	Inherits: ^Cannon
@@ -274,12 +275,13 @@
 	Warhead@1Dam: SpreadDamage
 		Damage: 12000
 		Versus:
-			Heavy: 170
+			Heavy: 160
 			None: 10
 			Wood: 15
 			Light: 40
 			Concrete: 20
 		InvalidTargets: Air, AirSmall
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
 
 TurretGun:
 	Inherits: ^Cannon
@@ -656,7 +658,7 @@ EMPGrenade:
 ShadowOperativeGrenade:
 	Inherits: Grenade
 	ReloadDelay: 50
-	ValidTargets: Structure, Vehicle, Ship
+	InvalidTargets: Infantry
 	Projectile: Bullet
 		Image: shadgren
 	Warhead@1Dam: SpreadDamage
@@ -670,7 +672,7 @@ ShadowOperativeGrenade:
 ShadowGliderGrenade:
 	Range: 1c0
 	Inherits: ShadowOperativeGrenade
-	-ValidTargets:
+	-InvalidTargets:
 	Projectile:
 		LaunchAngle: 0
 

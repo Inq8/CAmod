@@ -18,14 +18,14 @@ GDINorthEastAttackPaths = {
 Squads = {
 	GDIMain = {
 		Delay = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2)
+			easy = DateTime.Seconds(330),
+			normal = DateTime.Seconds(210),
+			hard = DateTime.Seconds(90)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 30 } },
-			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 50 } },
-			hard = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(10), Value = 80 } },
+			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
+			normal = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(12), Value = 35 } },
+			hard = { { MinTime = 0, Value = 30 }, { MinTime = DateTime.Minutes(10), Value = 50 } },
 		},
 		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
@@ -85,9 +85,9 @@ Squads = {
 			hard = DateTime.Minutes(11)
 		},
 		Interval = {
-			easy = DateTime.Minutes(4),
-			normal = DateTime.Minutes(3),
-			hard = DateTime.Minutes(2)
+			easy = DateTime.Minutes(5),
+			normal = DateTime.Minutes(4),
+			hard = DateTime.Minutes(3)
 		},
 		QueueProductionStatuses = {
 			Aircraft = false
@@ -124,6 +124,11 @@ WorldLoaded = function()
 	InitGDI()
 
 	ObjectiveExpelGDI = USSR.AddObjective("Remove the GDI presence.")
+
+	if Difficulty == "easy" then
+		BattleTank1.Destroy()
+		BattleTank2.Destroy()
+	end
 
 	local initialAttackers = { InitialAttacker1, InitialAttacker2, InitialAttacker3, InitialAttacker4, InitialAttacker5, InitialAttacker6 }
 
@@ -203,6 +208,8 @@ InitGDI = function()
 		InitAirAttackSquad(Squads.GDIAir, GDI, USSR, { "harv", "v2rl", "apwr", "tsla", "ttra", "v3rl", "mig", "hind", "suk", "suk.upg", "kiro", "apoc" })
 	end)
 
+	Actor.Create("hazmat.upgrade", true, { Owner = GDI, Location = UpgradeCreationLocation })
+
 	if Difficulty == "hard" then
 		Trigger.AfterDelay(DateTime.Minutes(5), function()
 			local strategyUpgrades = {
@@ -215,6 +222,10 @@ InitGDI = function()
 			Utils.Do(selectedStrategyUpgrades, function(u)
 				Actor.Create(u, true, { Owner = GDI, Location = UpgradeCreationLocation })
 			end)
+		end)
+
+		Trigger.AfterDelay(DateTime.Minutes(20), function()
+			Actor.Create("flakarmor.upgrade", true, { Owner = GDI, Location = UpgradeCreationLocation })
 		end)
 	end
 end

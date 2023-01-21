@@ -22,18 +22,24 @@ TraitorUnits = {
 	},
 }
 
+ReinforcementsDelay = {
+	hard = DateTime.Minutes(10),
+	hard = DateTime.Minutes(12),
+	hard = DateTime.Minutes(14),
+}
+
 Squads = {
 	Main = {
 		Player = nil,
 		Delay = {
-			easy = DateTime.Seconds(210),
-			normal = DateTime.Seconds(150),
-			hard = DateTime.Seconds(90)
+			easy = DateTime.Minutes(4),
+			normal = DateTime.Minutes(3),
+			hard = DateTime.Minutes(2)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 40 } },
-			normal = { { MinTime = 0, Value = 34 }, { MinTime = DateTime.Minutes(12), Value = 68 } },
-			hard = { { MinTime = 0, Value = 52 }, { MinTime = DateTime.Minutes(10), Value = 105 } },
+			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(15), Value = 40 } },
+			normal = { { MinTime = 0, Value = 34 }, { MinTime = DateTime.Minutes(13), Value = 68 } },
+			hard = { { MinTime = 0, Value = 52 }, { MinTime = DateTime.Minutes(11), Value = 105 } },
 		},
 		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
@@ -45,14 +51,14 @@ Squads = {
 	Traitor = {
 		Player = nil,
 		Delay = {
-			easy = DateTime.Seconds(270),
-			normal = DateTime.Seconds(210),
-			hard = DateTime.Seconds(150)
+			easy = DateTime.Minutes(5),
+			normal = DateTime.Minutes(4),
+			hard = DateTime.Minutes(3)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 20 } },
-			normal = { { MinTime = 0, Value = 16 }, { MinTime = DateTime.Minutes(12), Value = 32 } },
-			hard = { { MinTime = 0, Value = 28 }, { MinTime = DateTime.Minutes(10), Value = 55 } },
+			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(15), Value = 20 } },
+			normal = { { MinTime = 0, Value = 16 }, { MinTime = DateTime.Minutes(13), Value = 32 } },
+			hard = { { MinTime = 0, Value = 28 }, { MinTime = DateTime.Minutes(11), Value = 55 } },
 		},
 		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
@@ -109,19 +115,16 @@ WorldLoaded = function()
 	InitGreece()
 
 	ObjectiveKillTraitor = USSR.AddObjective("Find and kill the traitor General Yegorov.")
-	ObjectiveKeepBorisAlive = USSR.AddObjective("Boris must survive.")
 	ObjectiveFindSovietBase = USSR.AddSecondaryObjective("Take control of abandoned Soviet base.")
 
 	AbandonedHalo.ReturnToBase(AbandonedHelipad)
 
-	if Difficulty == "easy" then
-		RebuildExcludes = { Greece = { Types = { "gun", "pbox", "pris" } } }
-	elseif Difficulty == "normal" then
-		RebuildExcludes = { Greece = { Types = { "pris" } } }
-	end
-
 	if Difficulty == "hard" then
 		Cruiser.Patrol(CruiserPatrolPath)
+		AbandonedAirfield.Destroy()
+		--local traitorConyardLocation = TraitorConyard.Location
+		--TraitorConyard.Destroy()
+		--Actor.Create("weap", true, { Owner = Traitor, Location = traitorConyardLocation })
 	else
 		Cruiser.Destroy()
 	end
@@ -149,11 +152,6 @@ WorldLoaded = function()
 
 	Trigger.OnKilled(TraitorGeneral, function(self, killer)
 		USSR.MarkCompletedObjective(ObjectiveKillTraitor)
-		USSR.MarkCompletedObjective(ObjectiveKeepBorisAlive)
-	end)
-
-	Trigger.OnKilled(Boris, function(self, killer)
-		USSR.MarkFailedObjective(ObjectiveKeepBorisAlive)
 	end)
 
 	Trigger.OnCapture(TraitorTechCenter, function(self, captor, oldOwner, newOwner)
@@ -168,6 +166,28 @@ WorldLoaded = function()
 	Trigger.OnKilled(TraitorTechCenter, function(self, killer)
 		if ObjectiveCaptureTraitorTechCenter ~= nil and not USSR.IsObjectiveCompleted(ObjectiveCaptureTraitorTechCenter) then
 			USSR.MarkFailedObjective(ObjectiveCaptureTraitorTechCenter)
+		end
+	end)
+
+	Trigger.OnKilled(TraitorHQ, function(self, killer)
+		TraitorHQKilledOrCaptured()
+	end)
+
+	Trigger.OnCapture(TraitorHQ, function(self, captor, oldOwner, newOwner)
+		TraitorHQKilledOrCaptured()
+	end)
+
+	-- After 10 minutes, remove Yegorov if player hasn't got close to him yet (effectively entering the HQ)
+	Trigger.AfterDelay(DateTime.Minutes(10), function()
+		TraitorRetreatToHQ()
+	end)
+
+	Trigger.OnEnteredProximityTrigger(TraitorHQSpawn.CenterPosition, WDist.New(12 * 1024), function(a, id)
+		if a.Owner == USSR then
+			Trigger.RemoveProximityTrigger(id)
+			if TraitorGeneral.IsInWorld then
+				YegorovStaysOutside = true
+			end
 		end
 	end)
 end
@@ -191,12 +211,6 @@ OncePerSecondChecks = function()
 				TimerTicks = 0
 			end
 		end
-
-		if Boris.IsDead then
-			if ObjectiveKeepBorisAlive ~= nil and not USSR.IsObjectiveCompleted(ObjectiveKeepBorisAlive) then
-				USSR.MarkFailedObjective(ObjectiveKeepBorisAlive)
-			end
-		end
 	end
 end
 
@@ -207,11 +221,14 @@ OncePerFiveSecondChecks = function()
 end
 
 InitGreece = function()
+	if Difficulty == "easy" then
+		RebuildExcludes.Greece = { Types = { "gun", "pbox", "pris" } }
+	end
+
 	AutoRepairAndRebuildBuildings(Greece, 10)
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)
 
-	Actor.Create("POWERCHEAT.MINOR", true, { Owner = Greece, Location = UpgradeCreationLocation })
 	Actor.Create("POWERCHEAT", true, { Owner = Traitor, Location = UpgradeCreationLocation })
 
 	local alliedGroundAttackers = Greece.GetGroundAttackers()
@@ -233,10 +250,21 @@ InitGreece = function()
 
 	if Difficulty == "hard" then
 		Actor.Create("cryr.upgrade", true, { Owner = Greece, Location = UpgradeCreationLocation })
+
+		Trigger.AfterDelay(DateTime.Minutes(20), function()
+			Actor.Create("flakarmor.upgrade", true, { Owner = Greece, Location = UpgradeCreationLocation })
+		end)
 	end
 end
 
 AbandonedBaseDiscovered = function()
+	if IsAbandonedBaseDiscovered then
+		return
+	end
+
+	IsAbandonedBaseDiscovered = true
+	TraitorRetreatToHQ()
+
 	local baseBuildings = Map.ActorsInBox(AbandonedBaseTopLeft.CenterPosition, AbandonedBaseBottomRight.CenterPosition, function(a)
 		return a.Owner == USSRAbandoned
 	end)
@@ -271,5 +299,39 @@ AbandonedBaseDiscovered = function()
 
 	if not Boris.IsDead then
 		Boris.GrantCondition("autoattack-enabled")
+	end
+
+	Trigger.AfterDelay(ReinforcementsDelay[Difficulty], function()
+		Media.PlaySpeechNotification(USSR, "ReinforcementsArrived")
+		Beacon.New(USSR, PlayerStart.CenterPosition)
+		local reinforcements = { "4tnk", "4tnk", "v2rl", "btr" }
+		if Difficulty == "easy" then
+			reinforcements = { "4tnk", "4tnk", "v3rl", "v3rl", "btr" }
+		elseif Difficulty == "normal" then
+			reinforcements = { "4tnk", "4tnk", "v2rl", "v2rl", "btr" }
+		end
+		Reinforcements.Reinforce(USSR, reinforcements, { ReinforcementsSpawn.Location, PlayerStart.Location }, 75)
+	end)
+
+	Trigger.AfterDelay(DateTime.Seconds(30), function()
+		ShockDrop = Actor.Create("shockdrop", false, { Owner = USSR, Location = UpgradeCreationLocation })
+		ShockDrop.TargetParatroopers(AbandonedBaseCenter.CenterPosition, Angle.North)
+	end)
+end
+
+TraitorHQKilledOrCaptured = function()
+	-- Spawn Yegorov (unless he's outside already)
+	if not TraitorGeneral.IsInWorld then
+		local traitorGeneral = Actor.Create("gnrl", true, { Owner = Traitor, Location = TraitorHQSpawn.Location })
+		traitorGeneral.Move(TraitorGeneralSafePoint.Location)
+		Trigger.OnKilled(traitorGeneral, function(self, killer)
+			USSR.MarkCompletedObjective(ObjectiveKillTraitor)
+		end)
+	end
+end
+
+TraitorRetreatToHQ = function()
+	if not YegorovStaysOutside and TraitorGeneral.IsInWorld then
+		TraitorGeneral.Destroy()
 	end
 end

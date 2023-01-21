@@ -23,12 +23,6 @@ SouthWestPowerPlants = { SouthWestPower1, SouthWestPower2, SouthWestPower3, Sout
 SouthEastPowerPlants = { SouthEastPower1, SouthEastPower2, SouthEastPower3, SouthEastPower4 }
 NorthPowerPlants = { NorthPower1, NorthPower2, NorthPower3, NorthPower4 }
 
-RebuildExcludes = {
-	Nod = {
-	 	 Types = { "nuke", "nuk2", "tmpl", "afac", "obli", "gun.nod" }
-	}
-}
-
 WorldLoaded = function()
 	USSR = Player.GetPlayer("USSR")
 	Nod = Player.GetPlayer("Nod")
@@ -45,10 +39,13 @@ WorldLoaded = function()
 
 	if Difficulty == "easy" then
 		StartLightTank.Destroy()
-		StartTurret2.Destroy()
+		StartTurret3.Destroy()
 		SouthWestTurret1.Destroy()
 		SouthWestTurret2.Destroy()
 		FirstStealthTank.Destroy()
+	else
+		EasyGren1.Destroy()
+		EasyGren2.Destroy()
 	end
 
 	if Difficulty == "hard" then
@@ -64,12 +61,13 @@ WorldLoaded = function()
 		HardOnlyChemWarrior2.Destroy()
 		NodCommando.Destroy()
 		SouthStealthTank.Destroy()
+		HardOnlyTurret1.Destroy()
 	end
 
 	Trigger.AfterDelay(DateTime.Seconds(3), function()
 		Tip("Yuri can mind control up to three enemy units. Mind controlling a fourth will make him lose control of the earliest controlled.")
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
-			Tip("Deploying Yuri releases a mind blast around Yuri and his slaves, killing the slaves in the process.")
+			Tip("Deploying Yuri releases a mind blast around Yuri and his slaves, releasing the slaves in the process.")
 		end)
 	end)
 
@@ -167,6 +165,7 @@ WorldLoaded = function()
 						t.Move(EvacSpawn.Location)
 						Trigger.AfterDelay(DateTime.Seconds(2), function()
 							USSR.MarkCompletedObjective(ObjectiveEscape)
+							USSR.MarkCompletedObjective(ObjectiveKeepYuriAlive)
 						end)
 					end
 				end)
@@ -202,6 +201,8 @@ OncePerFiveSecondChecks = function()
 end
 
 InitNod = function()
+	RebuildExcludes.Nod = { Types = { "nuke", "nuk2", "tmpl", "afac", "obli", "gun.nod" } }
+
 	AutoRepairAndRebuildBuildings(Nod, 10)
 	SetupRefAndSilosCaptureCredits(Nod)
 	AutoReplaceHarvesters(Nod)

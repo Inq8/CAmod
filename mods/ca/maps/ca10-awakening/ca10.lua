@@ -165,8 +165,8 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		USSR.Cash = 7500
-		USSR.Resources = 7500
+		USSR.Cash = 2500
+		USSR.Resources = 2500
 
 		if TimerTicks > 0 then
 			if TimerTicks > 25 then
@@ -185,6 +185,11 @@ OncePerSecondChecks = function()
 			Actor.Create("advcyborg.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
 			Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
 			Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
+
+			if not TemplePrime.IsDead then
+				TemplePrime.GrantCondition("awakening-complete")
+			end
+
 			DeployCyborgs()
 
 			if ObjectiveDestroyBases ~= nil then
@@ -220,6 +225,7 @@ InitUSSR = function()
 	SetupRefAndSilosCaptureCredits(USSR)
 
 	Actor.Create("POWERCHEAT", true, { Owner = USSR, Location = UpgradeCreationLocation })
+	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
 	Actor.Create("tarc.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
 
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
@@ -243,14 +249,14 @@ InitUSSR = function()
 	}
 
 	BaseAttemptTimes = { DateTime.Seconds(543), DateTime.Seconds(755), DateTime.Seconds(954) }
-	BaseAttemptTimes = { DateTime.Seconds(5), DateTime.Seconds(10), DateTime.Seconds(15) }
 	local attemptCount = 0
 
 	Utils.Do(Utils.Shuffle(BaseAttemptLocations), function(attempt)
 		attemptCount = attemptCount + 1
 		Trigger.AfterDelay(BaseAttemptTimes[attemptCount], function()
 			if ObjectiveDestroyBases == nil then
-				ObjectiveDestroyBases = Nod.AddSecondaryObjective("Crush any Soviet attempts to establish a base.")
+				Notification("The Soviets are attempting to set up a base in the area.")
+				ObjectiveDestroyBases = Nod.AddSecondaryObjective("Crush any Soviet attempts to establish a base\nbefore the timer runs out.")
 			else
 				Notification("The Soviets are attempting to set up another base.")
 			end

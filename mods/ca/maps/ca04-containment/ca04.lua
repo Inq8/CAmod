@@ -8,12 +8,12 @@ Patrols = {
 		Path = { PatrolB1.Location, PatrolB2.Location, PatrolB3.Location, PatrolB2.Location, PatrolB4.Location, PatrolB5.Location, PatrolB6.Location, PatrolB7.Location, PatrolB8.Location, PatrolB9.Location, PatrolB8.Location, PatrolB7.Location, PatrolB6.Location, PatrolB5.Location, PatrolB4.Location }
 	},
 	{
-		Units = { PatrollerC1, PatrollerC2, PatrollerC3, PatrollerC4, PatrollerC5, PatrollerC6, PatrollerC7, PatrollerC8 },
-		Path = { PatrolC1.Location, PatrolC2.Location, PatrolC3.Location, PatrolC2.Location }
+		Units = { PatrollerC1, PatrollerC2, PatrollerC3, PatrollerC4, PatrollerC5, PatrollerC6, PatrollerC7, PatrollerC8, PatrollerC9 },
+		Path = { PatrolC1.Location, PatrolC2.Location, PatrolC3.Location, PatrolC4.Location, PatrolC5.Location, PatrolC4.Location, PatrolC3.Location, PatrolC2.Location }
 	},
 	{
 		Units = { PatrollerD1, PatrollerD2, PatrollerD3, PatrollerD4, PatrollerD5, PatrollerD6 },
-		Path = { PatrolD1.Location, PatrolD2.Location }
+		Path = { PatrolD1.Location, PatrolD2.Location, PatrolD3.Location, PatrolD4.Location, PatrolD3.Location, PatrolD2.Location }
 	},
 	{
 		Units = { PatrollerE1, PatrollerE2, PatrollerE3, PatrollerE4, PatrollerE5, PatrollerE6 },
@@ -50,12 +50,15 @@ WorldLoaded = function()
 
 	InitObjectives(Greece)
 	InitUSSR()
+
 	Camera.Position = PlayerStart.CenterPosition
 
-	Lighting.Ambient = 0.95
-	Lighting.Red = 1
-	Lighting.Blue = 1
-	Lighting.Green = 1.1
+	Lighting.Ambient = 0.22
+	Lighting.Red = 2.5
+	Lighting.Blue = 0.85
+	Lighting.Green = 1.6
+
+	Sunrise()
 
 	ObjectiveKillReactors = Greece.AddObjective("Destroy the three Atomic Reactors.")
 	ObjectiveKillSAMSites = Greece.AddObjective("Destroy Soviet SAM sites along shoreline.")
@@ -143,14 +146,24 @@ WorldLoaded = function()
 	end
 
 	if Difficulty ~= "hard" then
+		V22.Destroy()
+
+		Seal1.GrantCondition("difficulty-" .. Difficulty)
+		Seal2.GrantCondition("difficulty-" .. Difficulty)
+
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
 			Tip('Disguise your spy by "attacking" enemy infantry. Dogs can see through the disguise.')
 			Tip("Navy SEALs can swim.")
 		end)
+
+		if Difficulty == "easy" then
+			V21.Destroy()
+		end
 	end
 
 	Trigger.OnEnteredProximityTrigger(Chronosphere.CenterPosition, WDist.New(8192), function(a, id)
-		if a.Owner == Greece then
+		if not IsChronosphereReached and a.Owner == Greece then
+			IsChronosphereReached = true
 			Trigger.RemoveProximityTrigger(id)
 			SAPC1.GrantCondition("cloak-force-disabled", 25)
 			SAPC2.GrantCondition("cloak-force-disabled", 25)
@@ -191,6 +204,32 @@ WorldLoaded = function()
 			end)
 		end
 	end)
+end
+
+
+Sunrise = function()
+	local active = false
+
+	if Lighting.Ambient < 0.85 then
+		Lighting.Ambient = Lighting.Ambient + 0.0002
+		active = true
+	end
+
+	if Lighting.Red > 0.9 then
+		Lighting.Red = Lighting.Red - 0.0005
+		active = true
+	end
+
+	if Lighting.Green > 1.25 then
+		Lighting.Green = Lighting.Green - 0.0002
+		active = true
+	end
+
+	if active then
+		Trigger.AfterDelay(5, function()
+			Sunrise()
+		end)
+	end
 end
 
 DisableEastTeslas = function()
@@ -283,6 +322,9 @@ end
 
 InitUSSR = function()
 	AutoRepairBuildings(USSR)
+
+	Actor.Create("POWERCHEAT", true, { Owner = USSR, Location = UpgradeCreationLocation })
+
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
 
 	Utils.Do(ussrGroundAttackers, function(a)
@@ -297,6 +339,11 @@ InitUSSR = function()
 	else
 		NukeDummy = Actor.Create("NukeDummyNormal", true, { Owner = USSR, Location = Chronosphere.Location })
 	end
+
+	local e1s = USSR.GetActorsByType("e1")
+	Utils.Do(e1s, function(a)
+		a.GrantCondition("difficulty-" .. Difficulty)
+	end)
 
 	Utils.Do(Patrols, function(p)
 		Utils.Do(p.Units, function(unit)

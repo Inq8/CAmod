@@ -151,6 +151,8 @@ RMBO:
 		-AssaultMoveCondition:
 	RevealsShroud:
 		Range: 8c0
+	ChangesHealth@HOSPITAL:
+		Step: 1000
 
 HACK:
 	Inherits@DIFFICULTY: ^DifficultyModifiers
@@ -210,6 +212,7 @@ HOSP:
 	-PeriodicProducerCA@REJUVENATOR:
 	-GrantConditionIfOwnerIsNeutral:
 	-GrantConditionOnPrerequisite@SCRIN:
+	-RallyPoint:
 	TooltipExtras:
 		Description: When controlled, heals nearby infantry.
 
@@ -231,6 +234,9 @@ HQ:
 	-AirstrikePower@uav:
 
 AFLD.GDI:
+	-InterceptorPower@AirDef:
+
+HPAD.TD:
 	-InterceptorPower@AirDef:
 
 EYE:

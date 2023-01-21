@@ -654,7 +654,6 @@ SMG:
 	Range: 7c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 25000
-		ValidTargets: Infantry
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piff
@@ -724,7 +723,7 @@ AKME:
 	Range: 6c0
 
 SNIPER:
-	ReloadDelay: 120
+	ReloadDelay: 130
 	Range: 7c0
 	Report: snipe.aud
 	Projectile: InstantHit
@@ -766,7 +765,7 @@ SNIPERE:
 	Range: 6c0
 
 SNIPER.vehicle:
-	ReloadDelay: 120
+	ReloadDelay: 130
 	Range: 7c0
 	Report: ijarwe1a.aud
 	ValidTargets: Vehicle, Ship
@@ -795,7 +794,7 @@ SNIPER.vehicle:
 		InvalidTargets: Ship, Structure, Bridge
 	Warhead@Concussion: GrantExternalCondition
 		Range: 0c256
-		Duration: 100
+		Duration: 75
 		Condition: concussion
 		ValidTargets: Vehicle, Ship
 
@@ -845,9 +844,8 @@ ShadowOperativeGun:
 	BurstDelays: 3
 	Report: shad-fire1.aud, shad-fire2.aud, shad-fire3.aud
 	Projectile: InstantHit
-	InvalidTargets: Structure, Vehicle, Ship
+	ValidTargets: Infantry
 	Warhead@1Dam: SpreadDamage
-		InvalidTargets: Structure, Vehicle, Ship
 		Spread: 42
 		Damage: 2800
 		Versus:
@@ -873,7 +871,7 @@ HeliGunAG:
 			None: 144
 			Wood: 50
 			Light: 54
-			Heavy: 20
+			Heavy: 30
 
 HeliGunAA:
 	Inherits: ^AACannon

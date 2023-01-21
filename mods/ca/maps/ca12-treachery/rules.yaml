@@ -17,6 +17,8 @@ World:
 			normal: Normal
 			hard: Hard
 		Default: normal
+	MusicPlaylist:
+		StartingMusic: terminat
 
 Player:
 	PlayerResources:
@@ -60,9 +62,6 @@ DOME:
 	AirstrikePower@spyplane:
 		ChargeInterval: 4500
 
-AFLD:
-	-AirstrikePower@Russianparabombs:
-
 ATEK:
 	-DummyGpsPower@NOFOG:
 	-DummyGpsPower@FOG:
@@ -82,7 +81,6 @@ HPAD.Abandoned:
 	Power:
 		Amount: 0
 	-RallyPoint:
-	-AirstrikePower@Russianparabombs:
 	-FreeActor@QUEUEUPDATER:
 	-GrantDelayedCondition@QUEUEUPDATER:
 	-GrantConditionOnPrerequisite@MQ:
@@ -111,14 +109,17 @@ BORI:
 	ExternalCondition@ATTACKMOVEENABLE:
 		Condition: autoattack-enabled
 
-SMIG:
-	-Targetable@AIRBORNE:
-
 GNRL:
 	Tooltip:
 		Name: General Yegorov
 		-GenericVisibility:
 		-RequiresCondition:
+	RenderSprites:
+		Image: boris
+		-Palette:
+		PlayerPalette: playertd
+	WithDeathAnimation:
+		DeathSequencePalette: playertd
 	-GrantConditionOnCombatantOwner@COMBATANT:
 	-Tooltip@COMBATANT:
 	-Valued:
@@ -132,6 +133,27 @@ GNRL:
 	-AutoTarget:
 	-AutoTargetPriority@DEFAULT:
 	-AutoTargetPriority@ATTACKANYTHING:
+
+FCOM:
+	Health:
+		HP: 200000
+	Tooltip:
+		Name: General Yegorov's HQ
+	-TooltipDescription@ally:
+	-TooltipDescription@other:
+	-BaseProvider:
+	-SpawnActorOnDeath:
+	RepairableBuilding:
+		RepairStep: 500
+		RepairPercent: 30
+		PlayerExperience: 5
+		RepairingNotification: Repairing
+
+SHOCKDROP:
+	ParatroopersPower:
+		DisplayBeacon: False
+		DropItems: SHOK, SHOK, SHOK, SHOK, SHOK
+	AlwaysVisible:
 
 # Hunt() requires only 1 AttackBase
 BATF.AI:

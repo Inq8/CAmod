@@ -179,12 +179,6 @@ WorldLoaded = function()
 	ObjectiveSecureNorthNodBase = USSR.AddSecondaryObjective("Secure northern Nod base.")
 	ObjectiveSecureSouthNodBase = USSR.AddSecondaryObjective("Secure southern Nod base.")
 
-	if Difficulty == "easy" then
-		RebuildExcludes = { Scrin = { Types = { "scol", "ptur" } } }
-	elseif Difficulty == "normal" then
-		RebuildExcludes = { Scrin = { Types = { "scol" } } }
-	end
-
 	Trigger.OnCapture(SignalTransmitter, function(self, captor, oldOwner, newOwner)
 		if newOwner == USSR then
 			USSR.MarkCompletedObjective(ObjectiveCaptureSignalTransmitter)
@@ -242,11 +236,13 @@ OncePerFiveSecondChecks = function()
 end
 
 InitScrin = function()
+	if Difficulty == "easy" then
+		RebuildExcludes.Scrin = { Types = { "scol", "ptur" } }
+	end
+
 	AutoRepairAndRebuildBuildings(Scrin, 10)
 	SetupRefAndSilosCaptureCredits(Scrin)
 	AutoReplaceHarvesters(Scrin)
-
-	Actor.Create("POWERCHEAT", true, { Owner = Scrin, Location = UpgradeCreationLocation })
 
 	Trigger.AfterDelay(Squads.ScrinMain.Delay[Difficulty], function()
 		InitAttackSquad(Squads.ScrinMain, Scrin)
@@ -269,6 +265,10 @@ InitScrin = function()
 
 	if Difficulty == "hard" then
 		Actor.Create("ioncon.upgrade", true, { Owner = Scrin, Location = UpgradeCreationLocation })
+
+		Trigger.AfterDelay(DateTime.Minutes(20), function()
+			Actor.Create("carapace.upgrade", true, { Owner = Scrin, Location = UpgradeCreationLocation })
+		end)
 	end
 end
 

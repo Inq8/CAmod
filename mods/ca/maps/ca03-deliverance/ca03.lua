@@ -215,25 +215,37 @@ WorldLoaded = function()
 	TimerTicks = 0
 	GDICommanderAlive = true
 
-	InitObjectives(Greece)
-	InitUSSR()
 	Camera.Position = PlayerStart.CenterPosition
 
-	ObjectiveFindBase = Greece.AddObjective("Find besieged GDI base.")
-	UserInterface.SetMissionText("Find besieged GDI base.", HSLColor.Yellow)
+	InitObjectives(Greece)
+	InitUSSR()
 
 	if Difficulty ~= "hard" then
 		SovietMammoth1.Destroy()
 		SovietV22.Destroy()
+
+		SovietV23.Destroy()
+		SovietV24.Destroy()
+		SovietMammoth3.Destroy()
+
+		HardOnlySub1.Destroy()
+		HardOnlySub2.Destroy()
+		HardOnlySub3.Destroy()
+		HardOnlySub4.Destroy()
+		HardOnlySub5.Destroy()
+
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
 			Tip("If you put a Mechanic or Engineer inside an IFV it becomes a repair vehicle.")
 		end)
+
+		if Difficulty == "easy" then
+			SovietMammoth2.Destroy()
+			SovietV21.Destroy()
+		end
 	end
 
-	if Difficulty == "easy" then
-		SovietMammoth2.Destroy()
-		SovietV21.Destroy()
-	end
+	ObjectiveFindBase = Greece.AddObjective("Find besieged GDI base.")
+	UserInterface.SetMissionText("Find besieged GDI base.", HSLColor.Yellow)
 
 	-- On finding the GDI base, transfer ownership to player
 	Trigger.OnEnteredProximityTrigger(GDIBaseTopRight.CenterPosition, WDist.New(16 * 1024), function(a, id)
@@ -412,7 +424,7 @@ GDIBaseFound = function()
 end
 
 RevealPrison = function()
-	if not PrisonRevealed then
+	if not IsPrisonRevealed then
 		Beacon.New(Greece, GDICommanderSpawn.CenterPosition)
 		ObjectiveCapturePrison = Greece.AddObjective("Take control of prison and rescue GDI commander.")
 
@@ -426,7 +438,7 @@ RevealPrison = function()
 		Trigger.AfterDelay(DateTime.Seconds(5), function()
 			PrisonCamera.Destroy()
 		end)
-		PrisonRevealed = true
+		IsPrisonRevealed = true
 	end
 end
 
@@ -440,6 +452,12 @@ PlayerForcesDefeated = function()
 end
 
 InitUSSR = function()
+	if Difficulty == "easy" then
+		RebuildExcludes.USSR = { Types = { "tsla", "ftur" } }
+	elseif Difficulty == "normal" then
+		RebuildExcludes.USSR = { Types = { "tsla" } }
+	end
+
 	AutoRepairAndRebuildBuildings(USSR, 15)
 	SetupRefAndSilosCaptureCredits(USSR)
 	AutoReplaceHarvesters(USSR)
@@ -451,6 +469,15 @@ InitUSSR = function()
 		TargetSwapChance(a, USSR, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
 	end)
+
+	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
+
+	if Difficulty == "hard" then
+		Trigger.AfterDelay(DateTime.Minutes(15), function()
+			Actor.Create("flakarmor.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
+			Actor.Create("tarc.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
+		end)
+	end
 
 	-- If main sub pens are destroyed, update naval attack path
 	Utils.Do({ SovietSouthSubPen1, SovietSouthSubPen2 }, function(a)
@@ -557,14 +584,18 @@ end
 DoNavalDrop = function()
 	local navalDropPath = Utils.Random(NavalDropPaths)
 	local navalDropExitPath = { navalDropPath[2], navalDropPath[1] }
-	local navalDropUnits = { "3tnk", "v2rl", "btr.ai" }
+	local navalDropUnits = { "3tnk", "btr.ai" }
 
-	if Difficulty ~= "easy" then
-		navalDropUnits = { "3tnk", "v2rl", "3tnk", "btr.ai" }
+	if Difficulty == "normal" then
+		navalDropUnits = { "3tnk", "v2rl", "btr.ai" }
 	end
 
-	if Difficulty == "hard" and DateTime.GameTime > DateTime.Minutes(18) then
-		navalDropUnits = { "3tnk", "v3rl", "3tnk", "btr.ai" }
+	if Difficulty == "hard" then
+		if DateTime.GameTime > DateTime.Minutes(18) then
+			navalDropUnits = { "3tnk", "v3rl", "3tnk", "btr.ai" }
+		else
+			navalDropUnits = { "3tnk", "v2rl", "3tnk", "btr.ai" }
+		end
 	end
 
 	DoNavalTransportDrop(USSR, navalDropPath, navalDropExitPath, "lst", navalDropUnits, AssaultPlayerBaseOrHunt)

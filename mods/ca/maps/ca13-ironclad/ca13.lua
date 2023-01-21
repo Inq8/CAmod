@@ -84,15 +84,15 @@ SiegeBreakThreshold = {
 }
 
 AutoSiegeBreakTime = {
-	easy = DateTime.Minutes(45),
-	normal = DateTime.Minutes(30),
-	hard = DateTime.Minutes(15)
+	easy = DateTime.Minutes(30),
+	normal = DateTime.Minutes(20),
+	hard = DateTime.Minutes(10)
 }
 
 AutoAttackStartTime = {
-	easy = DateTime.Minutes(25),
-	normal = DateTime.Minutes(20),
-	hard = DateTime.Minutes(15)
+	easy = DateTime.Minutes(16),
+	normal = DateTime.Minutes(12),
+	hard = DateTime.Minutes(8)
 }
 
 WorldLoaded = function()
@@ -113,12 +113,6 @@ WorldLoaded = function()
 
 	ObjectiveDestroyBases = USSR.AddObjective("Break the siege and destroy the enemy bases.")
 	EngineerDrop()
-
-	if Difficulty == "easy" then
-		RebuildExcludes = { Greece = { Types = { "gun", "pbox", "pris" } }, GDI = { Types = { "gtwr", "atwr" } } }
-	elseif Difficulty == "normal" then
-		RebuildExcludes = { Greece = { Types = { "pris" } }, GDI = { Types = { "atwr" } } }
-	end
 
 	Trigger.AfterDelay(5, function()
 		SiegeActors = Map.ActorsInBox(SiegeTopLeft.CenterPosition, SiegeBottomRight.CenterPosition, function(a)
@@ -184,6 +178,10 @@ OncePerFiveSecondChecks = function()
 end
 
 InitGreece = function()
+	if Difficulty == "easy" then
+		RebuildExcludes.Greece = { Types = { "gun", "pbox", "pris" } }
+	end
+
 	AutoRepairAndRebuildBuildings(Greece, 10)
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)
@@ -200,10 +198,18 @@ InitGreece = function()
 
 	if Difficulty == "hard" then
 		Actor.Create("cryr.upgrade", true, { Owner = Greece, Location = UpgradeCreationLocation })
+
+		Trigger.AfterDelay(DateTime.Minutes(20), function()
+			Actor.Create("flakarmor.upgrade", true, { Owner = Greece, Location = UpgradeCreationLocation })
+		end)
 	end
 end
 
 InitGDI = function()
+	if Difficulty == "easy" then
+		RebuildExcludes.GDI = { Types = { "gtwr", "atwr" } }
+	end
+
 	AutoRepairAndRebuildBuildings(GDI, 10)
 	SetupRefAndSilosCaptureCredits(GDI)
 	AutoReplaceHarvesters(GDI)
@@ -218,7 +224,7 @@ InitGDI = function()
 	Actor.Create("hazmat.upgrade", true, { Owner = GDI, Location = UpgradeCreationLocation })
 
 	if Difficulty == "hard" then
-		Trigger.AfterDelay(DateTime.Minutes(5), function()
+		Trigger.AfterDelay(DateTime.Minutes(10), function()
 			local strategyUpgrades = {
 				{ "bombard.strat", "bombard2.strat", "hailstorm.upgrade" },
 				{ "seek.strat", "seek2.strat", "hypersonic.upgrade" },
@@ -229,6 +235,10 @@ InitGDI = function()
 			Utils.Do(selectedStrategyUpgrades, function(u)
 				Actor.Create(u, true, { Owner = GDI, Location = UpgradeCreationLocation })
 			end)
+		end)
+
+		Trigger.AfterDelay(DateTime.Minutes(20), function()
+			Actor.Create("flakarmor.upgrade", true, { Owner = GDI, Location = UpgradeCreationLocation })
 		end)
 	end
 end
@@ -244,7 +254,7 @@ EngineerDrop = function()
 		Notification("Reinforcements have arrived.")
 	end)
 
-	DoHelicopterDrop(USSR, entryPath, "halo.paradrop", haloDropUnits, function(u) u.Scatter() end, function(t)
+	DoHelicopterDrop(USSR, entryPath, "halo.engis", haloDropUnits, nil, function(t)
 		Trigger.AfterDelay(DateTime.Seconds(5), function()
 			if not t.IsDead then
 				t.Move(entryPath[1])

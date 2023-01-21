@@ -145,7 +145,7 @@ WorldLoaded = function()
 	Trigger.OnAllKilledOrCaptured(Wormholes, function()
 		local actors = Scrin.GetActors()
 		Utils.Do(actors, function(actor)
-			if actor.HasProperty("Kill") and not actor.IsDead then actor.Kill() end
+			if actor.HasProperty("Kill") and not actor.IsDead then actor.Kill("BulletDeath") end
 		end)
 	end)
 end

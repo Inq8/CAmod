@@ -104,6 +104,7 @@ Maverick:
 			Concrete: 100
 			Light: 60
 			Heavy: 85
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
 
 MaverickAA:
 	Inherits: ^AirToAirMissile
@@ -126,7 +127,7 @@ Sidewinder:
 
 MaverickSU:
 	Inherits: Maverick
-	Range: 9c0
+	Range: 8c0
 	Report: vbleatta.aud, vbleattb.aud
 	Burst: 4
 	BurstDelays: 0, 10, 0
@@ -173,7 +174,7 @@ MaverickSU:
 
 SeismicMissile:
 	ReloadDelay: 70
-	Range: 9c0
+	Range: 8c0
 	MinRange: 3c0
 	Report: rocket1.aud
 	Burst: 2
@@ -206,7 +207,7 @@ SeismicMissile:
 			Heavy: 100
 			Concrete: 75
 			Brick: 100
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
@@ -365,6 +366,7 @@ HellfireAG:
 			Wood: 40
 			Light: 70
 			Concrete: 120
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
 
 HellfireAG.Orca:
 	Inherits: HellfireAG
@@ -1265,7 +1267,7 @@ IFVRockets:
 		Versus:
 			Wood: 55
 			Concrete: 60
-			Light: 80
+			Light: 85
 
 IFVRocketsAA:
 	Inherits: RedEye
@@ -1374,7 +1376,7 @@ IFVRocketsAAE.CRYO:
 			None: 100
 			Wood: 75
 			Light: 72
-			Heavy: 35
+			Heavy: 30
 			Concrete: 72
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
@@ -1643,7 +1645,7 @@ BoatMissileAA:
 
 Rah66AG:
 	ReloadDelay: 35
-	Range: 5c0
+	Range: 6c0
 	MinRange: 0c768
 	Report: rocket2.aud
 	Burst: 4
@@ -1766,7 +1768,7 @@ ScrinTorp:
 			Light: 30
 			Heavy: 65
 			Brick: 75
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Eff: CreateEffect

@@ -17,14 +17,14 @@ WormholeDelay = {
 }
 
 WormholeInterval = {
-	easy = DateTime.Seconds(120),
-	normal = DateTime.Seconds(100),
-	hard = DateTime.Seconds(80)
+	easy = DateTime.Seconds(110),
+	normal = DateTime.Seconds(90),
+	hard = DateTime.Seconds(70)
 }
 
 WormholeUnitsDelay = {
-	easy = DateTime.Seconds(90),
-	normal = DateTime.Seconds(60),
+	easy = DateTime.Seconds(70),
+	normal = DateTime.Seconds(50),
 	hard = DateTime.Seconds(30)
 }
 
@@ -62,8 +62,6 @@ WorldLoaded = function()
 
 	Camera.Position = PlayerStart.CenterPosition
 
-	Actor.Create("tibcore.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
-
 	InitObjectives(Nod)
 	InitScrin()
 
@@ -77,6 +75,8 @@ WorldLoaded = function()
 	NodCamera4.Destroy()
 	NodCamera5.Destroy()
 	NodCamera6.Destroy()
+
+	Actor.Create("tibcore.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
 
 	if Difficulty == "easy" then
 		Nod.Cash = 4800

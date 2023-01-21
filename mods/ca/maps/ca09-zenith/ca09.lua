@@ -89,12 +89,6 @@ TeslaReactors = { TeslaReactor1, TeslaReactor2, TeslaReactor3, TeslaReactor4, Te
 AirbaseStructures = { Airfield1, Airfield2, Airfield3, Airfield4, Airfield5, Helipad1, Helipad2, Helipad3 }
 PatrolPath = { Patrol1.Location, Patrol2.Location, Patrol3.Location, Patrol4.Location, Patrol5.Location, Patrol6.Location, Patrol7.Location, Patrol8.Location, Patrol9.Location }
 
-RebuildExcludes = {
-	USSR = {
-		Types = { "tsla", "ftur", "tpwr", "afld", "hpad" }
-	}
-}
-
 -- Setup and Tick
 
 WorldLoaded = function()
@@ -180,6 +174,8 @@ OncePerFiveSecondChecks = function()
 end
 
 InitUSSR = function()
+	RebuildExcludes.USSR = { Types = { "tsla", "ftur", "tpwr", "afld", "hpad" } }
+
 	if Difficulty == "easy" then
 		AutoRepairBuildings(USSR)
 	else
@@ -189,6 +185,14 @@ InitUSSR = function()
 	SetupRefAndSilosCaptureCredits(USSR)
 
 	Actor.Create("POWERCHEAT", true, { Owner = USSR, Location = UpgradeCreationLocation })
+	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
+
+	if Difficulty == "hard" then
+		Trigger.AfterDelay(DateTime.Minutes(20), function()
+			Actor.Create("flakarmor.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
+			Actor.Create("tarc.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
+		end)
+	end
 
 	Utils.Do(NukeSilos, function(a)
 		Trigger.ClearAll(a)
@@ -252,7 +256,8 @@ InitUSSR = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(MADTank.CenterPosition, WDist.New(8 * 1024), function(a, id)
-		if a.Owner == Nod then
+		if a.Owner == Nod and not IsMADTankDetonated then
+			IsMADTankDetonated = true
 			Trigger.RemoveProximityTrigger(id)
 			MADTank.MadTankDetonate()
 		end

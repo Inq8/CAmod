@@ -111,11 +111,11 @@ orep.upgrade:
 
 vulcan.upgrade:
 	Buildable:
-		Prerequisites: radar.gdi
+		Prerequisites: anyradar, ~radar.gdi
 
 rapc.upgrade:
 	Buildable:
-		Prerequisites: radar.allies
+		Prerequisites: anyradar, ~radar.allies
 
 A10:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -220,14 +220,14 @@ MISS:
 		ValidRelationships: Ally
 	-TooltipDescription@ally:
 	-TooltipDescription@other:
+	Health:
+		HP: 200000
 
 FCOM:
 	Tooltip:
 		Name: Command Center
 	-TooltipDescription@ally:
 	-TooltipDescription@other:
-	Power:
-		Amount: 1200
 
 GNRL:
 	Tooltip:

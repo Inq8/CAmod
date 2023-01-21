@@ -61,7 +61,7 @@ Squads = {
 		},
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(13), Value = 30 } },
-			normal = { { MinTime = 0, Value = 38 }, { MinTime = DateTime.Minutes(11), Value = 45 } },
+			normal = { { MinTime = 0, Value = 35 }, { MinTime = DateTime.Minutes(11), Value = 45 } },
 			hard = { { MinTime = 0, Value = 60 }, { MinTime = DateTime.Minutes(9), Value = 70 } },
 		},
 		QueueProductionStatuses = {
@@ -180,9 +180,10 @@ WorldLoaded = function()
 	NextConvoyIdx = 1
 	CurrentConvoyArrivalComplete = false
 
+	Camera.Position = PlayerBarracks.CenterPosition
+
 	InitObjectives(Greece)
 	InitScrin()
-	Camera.Position = PlayerBarracks.CenterPosition
 
 	ObjectiveClearPath = Greece.AddObjective("Clear a path for inbound convoys.")
 
@@ -351,6 +352,10 @@ InitConvoy = function()
 end
 
 InitScrin = function()
+	if Difficulty == "easy" then
+		RebuildExcludes.Scrin = { Types = { "scol", "ptur" } }
+	end
+
 	AutoRepairAndRebuildBuildings(Scrin, 15)
 	SetupRefAndSilosCaptureCredits(Scrin)
 	AutoReplaceHarvesters(Scrin)
