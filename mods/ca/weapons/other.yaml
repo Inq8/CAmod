@@ -438,7 +438,7 @@ TeslaZap:
 	Warhead@1Dam: SpreadDamage
 		Versus:
 			Wood: 60
-			Concrete: 75
+			Concrete: 80
 
 TeslaZapBoost1:
 	Inherits: TeslaZap
@@ -1242,9 +1242,9 @@ PrisLaser:
 		Damage: 13000
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		Versus:
-			None: 50
+			None: 45
 			Wood: 40
-			Concrete: 80
+			Concrete: 90
 			Light: 75
 			Heavy: 75
 			Brick: 50
@@ -1276,7 +1276,6 @@ PrisLaserSupport:
 	Warhead@1Dum: Dummy
 	AirThreshold: 1000
 
-
 PrisBurst:
 	Inherits: PrisLaser
 	-Report:
@@ -1287,7 +1286,7 @@ PrisBurst:
 		Spread: 256
 		Damage: 6500
 		Versus:
-			None: 85
+			None: 75
 			Wood: 40
 			Concrete: 25
 			Light: 100
@@ -2271,7 +2270,7 @@ NeutronCannonSound:
 	Projectile: InstantHit
 
 SonicPulse:
-	ReloadDelay: 70
+	ReloadDelay: 68
 	Range: 7c512
 	Report: sonicpulse1.aud, sonicpulse2.aud
 	Projectile: LinearPulse
@@ -2289,7 +2288,7 @@ SonicPulse:
 			Wood: 45
 			Light: 90
 			Heavy: 100
-			Concrete: 65
+			Concrete: 70
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: sonicpulse1, sonicpulse2
