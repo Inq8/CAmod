@@ -255,11 +255,15 @@ InitUSSR = function()
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
 	end)
 
-	Trigger.OnEnteredProximityTrigger(MADTank.CenterPosition, WDist.New(8 * 1024), function(a, id)
+	Trigger.OnEnteredProximityTrigger(MADTank.CenterPosition, WDist.New(7 * 1024), function(a, id)
 		if a.Owner == Nod and not IsMADTankDetonated then
 			IsMADTankDetonated = true
 			Trigger.RemoveProximityTrigger(id)
 			MADTank.MadTankDetonate()
+			local madTankCamera = Actor.Create("smallcamera", true, { Owner = Nod, Location = MADTank.Location })
+			Trigger.AfterDelay(DateTime.Seconds(4), function()
+				madTankCamera.Destroy()
+			end)
 		end
 	end)
 
