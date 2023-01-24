@@ -23,8 +23,8 @@ TraitorUnits = {
 }
 
 ReinforcementsDelay = {
-	hard = DateTime.Minutes(10),
-	hard = DateTime.Minutes(12),
+	easy = DateTime.Minutes(10),
+	normal = DateTime.Minutes(12),
 	hard = DateTime.Minutes(14),
 }
 
