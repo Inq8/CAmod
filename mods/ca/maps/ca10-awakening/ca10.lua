@@ -194,6 +194,8 @@ OncePerSecondChecks = function()
 
 			if ObjectiveDestroyBases ~= nil then
 				local sovietBuildings = USSR.GetActorsByTypes({ "mcv", "fact", "proc", "tsla" })
+				local sovietHarvesters = USSR.GetActorsByType("harv")
+
 				if #sovietBuildings == 0 then
 					Nod.MarkCompletedObjective(ObjectiveDestroyBases)
 				else
@@ -203,7 +205,20 @@ OncePerSecondChecks = function()
 						a.Sell()
 					end)
 				end
+
+				Utils.Do(sovietHarvesters, function(a)
+					a.Kill()
+				end)
 			end
+
+			Trigger.AfterDelay(DateTime.Seconds(15), function()
+				local sovietForces = USSR.GetGroundAttackers()
+				Utils.Do(sovietForces, function(a)
+					a.Stop()
+					Trigger.ClearAll(a)
+					AssaultPlayerBaseOrHunt(a)
+				end)
+			end)
 		end
 
 		if CyborgWaves >= MaxCyborgWaves then
