@@ -111,7 +111,9 @@ Squads = {
 			hard = DateTime.Seconds(120)
 		},
 		ActiveCondition = function()
-			return (not WarpSphere1.IsDead or not WarpSphere2.IsDead) and (not Portal1.IsDead or not Portal2.IsDead)
+			local portals = Scrin.GetActorsByType("port")
+			local warpSpheres = Scrin.GetActorsByType("wsph")
+			return #portals > 0 and #warpSpheres > 0
 		end,
 		QueueProductionStatuses = { Infantry = false },
 		FollowLeader = false,
@@ -132,7 +134,9 @@ Squads = {
 			hard = DateTime.Seconds(120)
 		},
 		ActiveCondition = function()
-			return (not WarpSphere1.IsDead or not WarpSphere2.IsDead) and (not Portal1.IsDead or not Portal2.IsDead)
+			local portals = Scrin.GetActorsByType("port")
+			local warpSpheres = Scrin.GetActorsByType("wsph")
+			return #portals > 0 and #warpSpheres > 0
 		end,
 		DispatchDelay = DateTime.Seconds(15),
 		QueueProductionStatuses = { Infantry = false, Vehicles = false },
@@ -206,10 +210,10 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		Scrin.Cash = 7500
-		Scrin.Resources = 7500
-		Nod.Cash = 7500
-		Nod.Resources = 7500
+		Scrin.Cash = 2500
+		Scrin.Resources = 2500
+		Nod.Cash = 5000
+		Nod.Resources = 5000
 
 		if TimerTicks > 0 then
 			if TimerTicks > 25 then
