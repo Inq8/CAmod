@@ -127,11 +127,30 @@ WorldLoaded = function()
 		--Actor.Create("weap", true, { Owner = Traitor, Location = traitorConyardLocation })
 	else
 		Cruiser.Destroy()
+		HardOnlyMGG.Destroy()
+		HardOnlyTurret1.Destroy()
+		HardOnlyTurret2.Destroy()
+		HardOnlyTurret3.Destroy()
+		HardOnlyTurret4.Destroy()
+		HardOnlyTurret5.Destroy()
+		HardOnlyGapGenerator.Destroy()
+		HardOnlyTeslaCoil.Destroy()
+		HardOnlyCryoLauncher.Destroy()
 	end
 
 	Trigger.OnCapture(AbandonedHelipad, function(self, captor, oldOwner, newOwner)
 		if newOwner == USSR then
 			AbandonedHalo.Owner = USSR
+		end
+	end)
+
+	Trigger.OnEnteredProximityTrigger(GuardsReveal1.CenterPosition, WDist.New(11 * 1024), function(a, id)
+		if a.Owner == USSR and not a.HasProperty("Land") then
+			Trigger.RemoveProximityTrigger(id)
+			local camera = Actor.Create("smallcamera", true, { Owner = USSR, Location = GuardsReveal1.Location })
+			Trigger.AfterDelay(DateTime.Seconds(5), function()
+				camera.Destroy()
+			end)
 		end
 	end)
 

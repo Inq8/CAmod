@@ -5,7 +5,7 @@ World:
 	LuaScript:
 		Scripts: campaign.lua, ca12.lua
 	MissionData:
-		Briefing: We have been betrayed! Our recent losses were enough for the coward General Yegorov to show his true colours. He, along with an unknown number of troops loyal to him, have defected to the Allies.\n\nHe was not counting on hostilities with the Brotherhood of Nod ending so soon, and must now be feeling very nervous.\n\nHe deserves no mercy. Put an end to the traitor and anyone who tries to protect him.
+		Briefing: We have been betrayed! Our recent losses were enough for the coward General Yegorov to show his true colours. He, along with an unknown number of troops loyal to him, have defected to the Allies.\n\nHe was not counting on hostilities with the Brotherhood of Nod ending so soon, and must now be feeling very nervous.\n\nHe deserves no mercy. Put an end to the traitor and anyone who tries to protect him.\n\nBoris believes he can kill the traitor by himself. If you don't share his confidence then the safer approach would be to find our abandoned base, build up a force, and overwhelm Yegorov's defenders.
 	MapOptions:
 		ShortGameCheckboxEnabled: True
 	ScriptLobbyDropdown@DIFFICULTY:
@@ -57,6 +57,9 @@ AMCV:
 MCV:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
+MSLO:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
 DOME:
 	-ParatroopersPower@Russianparatroopers:
 	AirstrikePower@spyplane:
@@ -80,6 +83,7 @@ HPAD.Abandoned:
 		Facing: 384
 	Power:
 		Amount: 0
+	-AirstrikePower@Russianparabombs:
 	-RallyPoint:
 	-FreeActor@QUEUEUPDATER:
 	-GrantDelayedCondition@QUEUEUPDATER:

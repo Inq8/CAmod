@@ -534,7 +534,7 @@ Actors:
 	Actor141: apwr
 		Owner: USSRAbandoned
 		Location: 9,55
-		Health: 25
+		Health: 31
 	Actor142: sam
 		Owner: USSRAbandoned
 		Location: 23,61
@@ -568,7 +568,7 @@ Actors:
 	Actor150: apwr
 		Owner: USSRAbandoned
 		Location: 9,51
-		Health: 13
+		Health: 23
 	AbandonedAirfield: afld
 		Owner: USSRAbandoned
 		Location: 14,52
@@ -1233,14 +1233,14 @@ Actors:
 	Actor373: pbox
 		Owner: Greece
 		Location: 85,37
-	Actor375: gun
+	HardOnlyTurret5: gun
 		Owner: Greece
 		Location: 81,43
 		TurretFacing: 618
 	Actor374: pbox
 		Owner: Greece
 		Location: 85,32
-	Actor376: gun
+	HardOnlyTurret4: gun
 		Owner: Greece
 		Location: 83,35
 		TurretFacing: 808
@@ -1637,12 +1637,14 @@ Actors:
 	Actor512: gun
 		Owner: Greece
 		Location: 62,96
-	Actor513: gun
+	HardOnlyTurret1: gun
 		Owner: Greece
 		Location: 23,97
-	Actor514: gun
+		TurretFacing: 192
+	HardOnlyTurret2: gun
 		Owner: Greece
 		Location: 16,97
+		TurretFacing: 192
 	Actor515: pbox
 		Owner: Greece
 		Location: 14,82
@@ -1679,7 +1681,7 @@ Actors:
 		SubCell: 3
 		Location: 47,105
 		Facing: 586
-	Actor533: tsla
+	HardOnlyTeslaCoil: tsla
 		Owner: Traitor
 		Location: 46,66
 	Actor534: tsla
@@ -1700,6 +1702,7 @@ Actors:
 	Actor539: gun
 		Owner: Greece
 		Location: 49,64
+		TurretFacing: 192
 	Actor540: gun
 		Owner: Greece
 		Location: 44,69
@@ -1709,6 +1712,7 @@ Actors:
 	Actor542: gun
 		Owner: Greece
 		Location: 56,64
+		TurretFacing: 192
 	Actor543: agun
 		Owner: Greece
 		Location: 57,66
@@ -1775,9 +1779,9 @@ Actors:
 		SubCell: 3
 	Actor566: e1
 		Owner: Traitor
-		Facing: 384
 		Location: 81,42
 		SubCell: 3
+		Facing: 384
 	Actor567: e1
 		Owner: Traitor
 		Facing: 384
@@ -2384,7 +2388,7 @@ Actors:
 	Actor760: gap
 		Owner: Greece
 		Location: 58,104
-	Actor761: gap
+	HardOnlyGapGenerator: gap
 		Owner: Greece
 		Location: 76,42
 	Actor762: dd
@@ -2973,10 +2977,10 @@ Actors:
 		SubCell: 3
 		Location: 20,35
 		Facing: 0
-	Actor887: mgg
+	HardOnlyMGG: mgg
 		Owner: Greece
-		Facing: 384
 		Location: 52,69
+		Facing: 384
 	Actor888: jeep
 		Owner: Greece
 		Facing: 384
@@ -3031,7 +3035,7 @@ Actors:
 	Actor901: pbox
 		Owner: Greece
 		Location: 81,84
-	Actor902: gun
+	HardOnlyTurret3: gun
 		Owner: Greece
 		Location: 85,84
 		TurretFacing: 0
@@ -3083,7 +3087,7 @@ Actors:
 		Owner: Greece
 		Location: 60,94
 		Facing: 761
-	Actor916: cryo
+	HardOnlyCryoLauncher: cryo
 		Owner: Greece
 		Location: 75,39
 		Facing: 523
@@ -3408,6 +3412,9 @@ Actors:
 	TraitorHQSpawn: waypoint
 		Owner: Neutral
 		Location: 45,103
+	GuardsReveal1: waypoint
+		Owner: Neutral
+		Location: 43,28
 
 Rules: ca|rules/campaign-rules.yaml, ca|rules/campaign-tooltips.yaml, ca|rules/campaign-palettes.yaml, rules.yaml
 
