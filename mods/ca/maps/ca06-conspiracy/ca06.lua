@@ -296,10 +296,10 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		Greece.Cash = 7500
-		Greece.Resources = 7500
-		GDI.Cash = 7500
-		GDI.Resources = 7500
+		Greece.Cash = Greece.ResourceCapacity - 500
+		Greece.Resources = Greece.ResourceCapacity - 500
+		GDI.Cash = GDI.ResourceCapacity - 500
+		GDI.Resources = GDI.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
 			if TimerTicks > 25 then

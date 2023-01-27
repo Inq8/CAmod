@@ -210,10 +210,10 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		Scrin.Cash = 2500
-		Scrin.Resources = 2500
-		Nod.Cash = 5000
-		Nod.Resources = 5000
+		Scrin.Cash = Scrin.ResourceCapacity - 500
+		Scrin.Resources = Scrin.ResourceCapacity - 500
+		Nod.Cash = Nod.ResourceCapacity - 500
+		Nod.Resources = Nod.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
 			if TimerTicks > 25 then

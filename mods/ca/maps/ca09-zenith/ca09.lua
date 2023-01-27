@@ -154,8 +154,8 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		USSR.Cash = 7500
-		USSR.Resources = 7500
+		USSR.Cash = USSR.ResourceCapacity - 500
+		USSR.Resources = USSR.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
 			if TimerTicks > 25 then
@@ -256,7 +256,7 @@ InitUSSR = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(MADTank.CenterPosition, WDist.New(7 * 1024), function(a, id)
-		if a.Owner == Nod and not IsMADTankDetonated then
+		if a.Owner == Nod and not a.HasProperty("Land") and not IsMADTankDetonated then
 			IsMADTankDetonated = true
 			Trigger.RemoveProximityTrigger(id)
 			MADTank.MadTankDetonate()

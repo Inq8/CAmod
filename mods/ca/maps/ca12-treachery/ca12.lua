@@ -218,10 +218,10 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		Greece.Cash = 3500
-		Greece.Resources = 3500
-		Traitor.Cash = 3500
-		Traitor.Resources = 3500
+		Greece.Cash = Greece.ResourceCapacity - 500
+		Greece.Resources = Greece.ResourceCapacity - 500
+		Traitor.Cash = Traitor.ResourceCapacity - 500
+		Traitor.Resources = Traitor.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
 			if TimerTicks > 25 then
