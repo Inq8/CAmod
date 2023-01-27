@@ -295,14 +295,21 @@ DoHaloDrop = function()
 		haloDropUnits = { "e1", "e1", "e1", "e1", "e2", "e2", "e3", "e3", "e4", "shok" }
 	end
 
-	DoHelicopterDrop(USSRUnits, entryPath, "halo.paradrop", haloDropUnits, function(u) u.Patrol(PatrolPath) end, function(t)
-		Trigger.AfterDelay(DateTime.Seconds(5), function()
-			if not t.IsDead then
-				t.Move(entryPath[1])
-				t.Destroy()
+	DoHelicopterDrop(USSRUnits, entryPath, "halo.paradrop", haloDropUnits,
+		function(u)
+			if not u.IsDead then
+				u.Patrol(PatrolPath)
 			end
-		end)
-	end)
+		end,
+		function(t)
+			Trigger.AfterDelay(DateTime.Seconds(5), function()
+				if not t.IsDead then
+					t.Move(entryPath[1])
+					t.Destroy()
+				end
+			end)
+		end
+	)
 
 	Trigger.AfterDelay(HaloDropInterval[Difficulty], DoHaloDrop)
 end

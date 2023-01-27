@@ -207,17 +207,14 @@ OncePerSecondChecks = function()
 				end
 
 				Utils.Do(sovietHarvesters, function(a)
-					a.Kill()
+					if not a.IsDead then
+						a.Kill()
+					end
 				end)
 			end
 
 			Trigger.AfterDelay(DateTime.Seconds(15), function()
-				local sovietForces = USSR.GetGroundAttackers()
-				Utils.Do(sovietForces, function(a)
-					a.Stop()
-					Trigger.ClearAll(a)
-					AssaultPlayerBaseOrHunt(a)
-				end)
+				CleanUp()
 			end)
 		end
 
@@ -384,4 +381,22 @@ DeployCyborgs = function()
 	if CyborgWaves < MaxCyborgWaves then
 		Trigger.AfterDelay(DateTime.Seconds(2), DeployCyborgs)
 	end
+end
+
+CleanUp = function()
+	local sovietForces = USSR.GetGroundAttackers()
+
+	if #sovietForces == 0 then
+		return
+	end
+
+	Utils.Do(sovietForces, function(a)
+		a.Stop()
+		Trigger.ClearAll(a)
+		AssaultPlayerBaseOrHunt(a)
+	end)
+
+	Trigger.AfterDelay(DateTime.Seconds(30), function()
+		CleanUp()
+	end)
 end
