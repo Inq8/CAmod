@@ -23,9 +23,9 @@ TraitorUnits = {
 }
 
 ReinforcementsDelay = {
-	easy = DateTime.Minutes(10),
-	normal = DateTime.Minutes(12),
-	hard = DateTime.Minutes(14),
+	easy = DateTime.Minutes(3),
+	normal = DateTime.Minutes(7),
+	hard = DateTime.Minutes(11),
 }
 
 Squads = {
@@ -236,6 +236,12 @@ end
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
 		UpdatePlayerBaseLocation()
+
+		if USSR.HasNoRequiredUnits() then
+			if ObjectiveKillTraitor ~= nil and not USSR.IsObjectiveCompleted(ObjectiveKillTraitor) then
+				USSR.MarkFailedObjective(ObjectiveKillTraitor)
+			end
+		end
 	end
 end
 
@@ -323,13 +329,11 @@ AbandonedBaseDiscovered = function()
 	Trigger.AfterDelay(ReinforcementsDelay[Difficulty], function()
 		Media.PlaySpeechNotification(USSR, "ReinforcementsArrived")
 		Beacon.New(USSR, PlayerStart.CenterPosition)
-		local reinforcements = { "4tnk", "4tnk", "v2rl", "btr" }
-		if Difficulty == "easy" then
-			reinforcements = { "4tnk", "4tnk", "v3rl", "v3rl", "btr" }
-		elseif Difficulty == "normal" then
-			reinforcements = { "4tnk", "4tnk", "v2rl", "v2rl", "btr" }
+		local reinforcements = { "4tnk", "4tnk", "v3rl", "v3rl", "btr" }
+		if Difficulty == "hard" then
+			reinforcements = { "4tnk", "4tnk", "v2rl", "btr" }
 		end
-		Reinforcements.Reinforce(USSR, reinforcements, { ReinforcementsSpawn.Location, PlayerStart.Location }, 75)
+		Reinforcements.Reinforce(USSR, reinforcements, { ReinforcementsSpawn.Location, ReinforcementsDestination.Location }, 75)
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(30), function()
