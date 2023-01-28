@@ -60,6 +60,13 @@ MCV:
 MSLO:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
+TPWR:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+APWR:
+	Buildable:
+		Prerequisites: ~structures.ra, anyradar
+
 DOME:
 	-ParatroopersPower@Russianparatroopers:
 	AirstrikePower@spyplane:
@@ -162,7 +169,12 @@ SHOCKDROP:
 	ParatroopersPower:
 		DisplayBeacon: False
 		DropItems: SHOK, SHOK, SHOK, SHOK, SHOK
+		UnitType: halo.paradrop.invuln
 	AlwaysVisible:
+
+HALO.paradrop.invuln:
+	Inherits: HALO.paradrop
+	-Targetable@AIRBORNE:
 
 # Hunt() requires only 1 AttackBase
 BATF.AI:

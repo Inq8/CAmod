@@ -164,7 +164,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(TraitorTechCenter.CenterPosition, WDist.New(9 * 1024), function(a, id)
-		if a.Owner == USSR then
+		if a.Owner == USSR and a.Type ~= "smig" then
 			Trigger.RemoveProximityTrigger(id)
 			TraitorTechCenterDiscovered()
 		end
@@ -179,7 +179,7 @@ WorldLoaded = function()
 
 	Trigger.OnKilled(Bodyguard1, function(self, killer)
 		Trigger.AfterDelay(DateTime.Seconds(4), function()
-			if not TraitorGeneral.IsDead then
+			if not TraitorGeneral.IsDead and TraitorGeneral.IsInWorld then
 				TraitorGeneral.Move(TraitorGeneralSafePoint.Location)
 			end
 		end)
@@ -210,15 +210,6 @@ WorldLoaded = function()
 
 	Trigger.OnCapture(TraitorHQ, function(self, captor, oldOwner, newOwner)
 		TraitorHQKilledOrCaptured()
-	end)
-
-	Trigger.OnEnteredProximityTrigger(TraitorHQSpawn.CenterPosition, WDist.New(12 * 1024), function(a, id)
-		if a.Owner == USSR and not a.HasProperty("Land") then
-			Trigger.RemoveProximityTrigger(id)
-			if TraitorGeneral.IsInWorld then
-				YegorovStaysOutside = true
-			end
-		end
 	end)
 end
 
@@ -319,7 +310,11 @@ AbandonedBaseDiscovered = function()
 	end
 
 	IsAbandonedBaseDiscovered = true
-	TraitorRetreatToHQ()
+
+	-- Yegorov retreats to HQ
+	if TraitorGeneral.IsInWorld then
+		TraitorGeneral.Destroy()
+	end
 
 	local baseBuildings = Map.ActorsInBox(AbandonedBaseTopLeft.CenterPosition, AbandonedBaseBottomRight.CenterPosition, function(a)
 		return a.Owner == USSRAbandoned
@@ -364,7 +359,7 @@ AbandonedBaseDiscovered = function()
 
 	Trigger.AfterDelay(DateTime.Seconds(30), function()
 		ShockDrop = Actor.Create("shockdrop", false, { Owner = USSR, Location = UpgradeCreationLocation })
-		ShockDrop.TargetParatroopers(AbandonedBaseCenter.CenterPosition, Angle.North)
+		ShockDrop.TargetParatroopers(AbandonedBaseCenter.CenterPosition, Angle.SouthWest)
 	end)
 end
 
@@ -376,11 +371,5 @@ TraitorHQKilledOrCaptured = function()
 		Trigger.OnKilled(traitorGeneral, function(self, killer)
 			USSR.MarkCompletedObjective(ObjectiveKillTraitor)
 		end)
-	end
-end
-
-TraitorRetreatToHQ = function()
-	if not YegorovStaysOutside and TraitorGeneral.IsInWorld then
-		TraitorGeneral.Destroy()
 	end
 end
