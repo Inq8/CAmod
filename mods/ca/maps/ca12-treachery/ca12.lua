@@ -114,10 +114,14 @@ WorldLoaded = function()
 	InitObjectives(USSR)
 	InitGreece()
 
+	HaloDropper = Actor.Create("halodrop", false, { Owner = USSR })
+	ShockDropper = Actor.Create("shockdrop", false, { Owner = USSR })
+
 	ObjectiveKillTraitor = USSR.AddObjective("Find and kill the traitor General Yegorov.")
 	ObjectiveFindSovietBase = USSR.AddSecondaryObjective("Take control of abandoned Soviet base.")
 
 	AbandonedHalo.ReturnToBase(AbandonedHelipad)
+	SetupRefAndSilosCaptureCredits(Traitor)
 
 	if Difficulty == "hard" then
 		Cruiser.Patrol(CruiserPatrolPath)
@@ -187,6 +191,19 @@ WorldLoaded = function()
 
 	Trigger.OnKilled(TraitorGeneral, function(self, killer)
 		USSR.MarkCompletedObjective(ObjectiveKillTraitor)
+	end)
+
+	Trigger.OnAllKilled({ TraitorSAM1, TraitorSAM2 }, function()
+		Media.PlaySpeechNotification(USSR, "ReinforcementsArrived")
+		HaloDropper.TargetParatroopers(EastParadrop1.CenterPosition, Angle.West)
+
+		Trigger.AfterDelay(DateTime.Seconds(2), function()
+			ShockDropper.TargetParatroopers(EastParadrop2.CenterPosition, Angle.West)
+		end)
+
+		Trigger.AfterDelay(DateTime.Seconds(4), function()
+			HaloDropper.TargetParatroopers(EastParadrop3.CenterPosition, Angle.West)
+		end)
 	end)
 
 	Trigger.OnCapture(TraitorTechCenter, function(self, captor, oldOwner, newOwner)
@@ -358,8 +375,8 @@ AbandonedBaseDiscovered = function()
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(30), function()
-		ShockDrop = Actor.Create("shockdrop", false, { Owner = USSR, Location = UpgradeCreationLocation })
-		ShockDrop.TargetParatroopers(AbandonedBaseCenter.CenterPosition, Angle.SouthWest)
+		Media.PlaySpeechNotification(USSR, "ReinforcementsArrived")
+		ShockDropper.TargetParatroopers(AbandonedBaseCenter.CenterPosition, Angle.SouthWest)
 	end)
 end
 
