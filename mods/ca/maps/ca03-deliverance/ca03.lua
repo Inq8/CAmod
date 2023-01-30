@@ -374,13 +374,13 @@ GDIBaseFound = function()
 		end)
 
 		Trigger.AfterDelay(1, function()
-			Actor.Create("QueueUpdaterDummy", true, { Owner = Greece, Location = GDIBaseCenter.Location })
+			Actor.Create("QueueUpdaterDummy", true, { Owner = Greece, Location = UpgradeCreationLocation })
 		end)
 
 		InitUSSRAttacks()
 
 		Trigger.AfterDelay(DateTime.Seconds(1), function()
-			Actor.Create("QueueUpdaterDummy", true, { Owner = Greece, Location = GDIBaseCenter.Location })
+			Actor.Create("QueueUpdaterDummy", true, { Owner = Greece, Location = UpgradeCreationLocation })
 			ObjectiveHoldOut = Greece.AddObjective("Hold out until reinforcements arrive.")
 			UserInterface.SetMissionText("Hold out until reinforcements arrive.", HSLColor.Yellow)
 			Greece.MarkCompletedObjective(ObjectiveFindBase)

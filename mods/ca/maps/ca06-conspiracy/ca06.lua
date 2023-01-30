@@ -363,7 +363,7 @@ AwakenSleeperCell = function()
 		end
 
 		Trigger.AfterDelay(1, function()
-			Actor.Create("QueueUpdaterDummy", true, { Owner = Nod, Location = GDIBaseCenter.Location })
+			Actor.Create("QueueUpdaterDummy", true, { Owner = Nod, Location = UpgradeCreationLocation })
 		end)
 
 		if ObjectiveRescueResearchers == nil then

@@ -60,6 +60,17 @@ TMPL:
 YURI:
 	RevealsShroud:
 		Range: 10c0
+	PeriodicExplosionOnSlaves:
+		KillSlaveTypes: None
+		PostExplosionAction: Unlink
+	-AutoTarget:
+	-AutoTargetPriority@DEFAULT:
+	-AutoTargetPriority@ATTACKANYTHING:
+	-Captures@DRIVER_KILL:
+	AttackMove:
+		-AssaultMoveCondition:
+
+powerproxy.mutabomb:
 	AirstrikePower@MutaBomb:
 		OrderName: mutabomb
 		Icon: mutabomb
@@ -85,18 +96,7 @@ YURI:
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
 		SupportPowerPaletteOrder: 45
-		RequiresCondition: mutabomb-enabled
-	PeriodicExplosionOnSlaves:
-		KillSlaveTypes: None
-		PostExplosionAction: Unlink
-	ExternalCondition@MUTABOMB:
-		Condition: mutabomb-enabled
-	-AutoTarget:
-	-AutoTargetPriority@DEFAULT:
-	-AutoTargetPriority@ATTACKANYTHING:
-	-Captures@DRIVER_KILL:
-	AttackMove:
-		-AssaultMoveCondition:
+	AlwaysVisible:
 
 BRUT:
 	AutoTarget:
@@ -151,9 +151,6 @@ N3C:
 N5:
 	Inherits@DECRYPT: ^DecryptableCyborg
 
-ACOL:
-	Inherits@DECRYPT: ^DecryptableCyborg
-
 RMBC:
 	Inherits@DECRYPT: ^DecryptableCyborg
 	RenderSprites:
@@ -161,7 +158,7 @@ RMBC:
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
 	DamageMultiplier@MCBUFF:
-		Modifier: 50
+		Modifier: 75
 		RequiresCondition: mindcontrolled
 
 ENLI:
@@ -171,19 +168,19 @@ ENLI:
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
 	DamageMultiplier@MCBUFF:
-		Modifier: 50
+		Modifier: 70
 		RequiresCondition: mindcontrolled
 
 ACOL:
 	Inherits@DECRYPT: ^DecryptableCyborg
 	DamageMultiplier@MCBUFF:
-		Modifier: 50
+		Modifier: 60
 		RequiresCondition: mindcontrolled
 
 TPLR:
 	Inherits@DECRYPT: ^DecryptableCyborg
 	DamageMultiplier@MCBUFF:
-		Modifier: 50
+		Modifier: 60
 		RequiresCondition: mindcontrolled
 
 MISS:
@@ -215,10 +212,14 @@ BADR.MBomber:
 NUKE:
 	Health:
 		HP: 35000
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
 
 NUK2:
 	Health:
 		HP: 35000
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
 
 OBLI:
 	ExternalCondition@DISABLED:
