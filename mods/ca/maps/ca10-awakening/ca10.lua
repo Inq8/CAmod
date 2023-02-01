@@ -41,8 +41,8 @@ GroundAttackCompositions = {
 		{ Units = { "shok", "shok", "shok", "ttnk", "ttra", "shok" }, MinTime = DateTime.Minutes(9) },
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "v3rl", "e3", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(12) },
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "4tnk", "3tnk" }, MinTime = DateTime.Minutes(14) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "v2rl", "v3rl" }, MinTime = DateTime.Minutes(17) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "apoc", "v3rl", "btr.ai" }, MinTime = DateTime.Minutes(19) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "v2rl", "e3", "v3rl" }, MinTime = DateTime.Minutes(17) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "apoc", "v3rl", "btr.ai" }, MinTime = DateTime.Minutes(19) },
 	},
 	normal = {
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "btr.ai", "e3", "e1", "e2", "e1" } },
@@ -50,23 +50,23 @@ GroundAttackCompositions = {
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "v2rl", "btr.ai" }, MinTime = DateTime.Minutes(6) },
 		{ Units = { "shok", "shok", "shok", "shok", "shok", "ttnk", "shok", "ttra", "shok" }, MinTime = DateTime.Minutes(8) },
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "3tnk", "3tnk", "e3", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(9) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "4tnk", "v3rl", "e3", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(10) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "v3rl", "v3rl", "e3", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(17) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "apoc", "v3rl", "btr.ai", "e3", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(18) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "e8", "4tnk.erad", "v3rl", "btr.ai", "e3", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(19) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "4tnk", "v3rl", "e3", "e1", "e1", "e2", "e3" }, MinTime = DateTime.Minutes(10) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "v3rl", "e3", "v3rl", "e3", "btr.ai", "e1", "e1", "e2", "e3" }, MinTime = DateTime.Minutes(17) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "apoc", "e3", "v3rl", "btr.ai", "e3", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(18) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "e8", "4tnk.erad", "e3", "v3rl", "btr.ai", "e3", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(19) },
 	},
 	hard = {
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "3tnk", "btr.ai", "e3", "e1", "e2", "e1", "e1" }, MaxTime = DateTime.Minutes(5), MaxTime = DateTime.Minutes(19) },
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "v2rl", "btr.ai", "e3", "e1", "e2", "e1", "e1" }, MinTime = DateTime.Minutes(4), MaxTime = DateTime.Minutes(8) },
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "e1", "btr.ai", "3tnk", "ttra", "e3", "e1", "e2", "e1", "e1" }, MinTime = DateTime.Minutes(4), MaxTime = DateTime.Minutes(17) },
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "4tnk", "btr.ai", "shok", "e8", "katy" }, MinTime = DateTime.Minutes(6), MaxTime = DateTime.Minutes(18) },
-		{ Units = { "shok", "shok", "shok", "shok", "shok", "ttnk", "ttnk", "shok", "ttra", "shok" }, MinTime = DateTime.Minutes(7) },
+		{ Units = { "shok", "shok", "shok", "shok", "shok", "ttnk", "ttnk", "shok", "e3", "ttra", "shok" }, MinTime = DateTime.Minutes(7) },
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "e3", "3tnk", "3tnk", "btr.ai", "e2", "e3", "e1", "e1" }, MinTime = DateTime.Minutes(8) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "4tnk", "v3rl", "v2rl", "shok", "e3", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(8) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "4tnk", "v3rl", "v2rl", "e3", "shok", "e3", "e1", "e1", "e2", "btr.ai" }, MinTime = DateTime.Minutes(8) },
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "3tnk", "3tnk", "e3", "3tnk", "btr.ai", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(9) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "shok", "apoc", "4tnk", "btr.ai", "v3rl" }, MinTime = DateTime.Minutes(10) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "shok", "apoc", "4tnk", "e3", "btr.ai", "v3rl" }, MinTime = DateTime.Minutes(10) },
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "3tnk", "4tnk", "btr.ai", "btr.ai", "v3rl", "v3rl" }, MinTime = DateTime.Minutes(15) },
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "e8", "e8", "4tnk.erad", "4tnk", "btr.ai", "btr.ai", "v3rl", "v3rl" }, MinTime = DateTime.Minutes(17) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "e3", "e8", "e8", "4tnk.erad", "e3", "4tnk", "btr.ai", "btr.ai", "v3rl", "v3rl" }, MinTime = DateTime.Minutes(17) },
 	},
 }
 
@@ -165,8 +165,8 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		USSR.Cash = 2500
-		USSR.Resources = 2500
+		USSR.Cash = USSR.ResourceCapacity - 500
+		USSR.Resources = USSR.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
 			if TimerTicks > 25 then
@@ -194,6 +194,8 @@ OncePerSecondChecks = function()
 
 			if ObjectiveDestroyBases ~= nil then
 				local sovietBuildings = USSR.GetActorsByTypes({ "mcv", "fact", "proc", "tsla" })
+				local sovietHarvesters = USSR.GetActorsByType("harv")
+
 				if #sovietBuildings == 0 then
 					Nod.MarkCompletedObjective(ObjectiveDestroyBases)
 				else
@@ -203,7 +205,17 @@ OncePerSecondChecks = function()
 						a.Sell()
 					end)
 				end
+
+				Utils.Do(sovietHarvesters, function(a)
+					if not a.IsDead then
+						a.Kill()
+					end
+				end)
 			end
+
+			Trigger.AfterDelay(DateTime.Seconds(15), function()
+				CleanUp()
+			end)
 		end
 
 		if CyborgWaves >= MaxCyborgWaves then
@@ -369,4 +381,22 @@ DeployCyborgs = function()
 	if CyborgWaves < MaxCyborgWaves then
 		Trigger.AfterDelay(DateTime.Seconds(2), DeployCyborgs)
 	end
+end
+
+CleanUp = function()
+	local sovietForces = USSR.GetGroundAttackers()
+
+	if #sovietForces == 0 then
+		return
+	end
+
+	Utils.Do(sovietForces, function(a)
+		a.Stop()
+		Trigger.ClearAll(a)
+		AssaultPlayerBaseOrHunt(a)
+	end)
+
+	Trigger.AfterDelay(DateTime.Seconds(30), function()
+		CleanUp()
+	end)
 end

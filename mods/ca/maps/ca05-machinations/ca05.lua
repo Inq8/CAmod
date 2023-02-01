@@ -252,8 +252,8 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		Nod.Cash = 7500
-		Nod.Resources = 7500
+		Nod.Cash = Nod.ResourceCapacity - 500
+		Nod.Resources = Nod.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
 			if TimerTicks > 25 then

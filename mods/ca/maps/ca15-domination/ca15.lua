@@ -19,7 +19,7 @@ Patrols = {
 }
 
 StartPowerPlants = { StartPower1, StartPower2 }
-SouthWestPowerPlants = { SouthWestPower1, SouthWestPower2, SouthWestPower3, SouthWestPower4, SouthWestPower5, SouthWestPower6, SouthWestPower7, SouthWestPower8, SouthWestPower9 }
+SouthWestPowerPlants = { SouthWestPower1, SouthWestPower2, SouthWestPower3, SouthWestPower4, SouthWestPower5, SouthWestPower6 }
 SouthEastPowerPlants = { SouthEastPower1, SouthEastPower2, SouthEastPower3, SouthEastPower4 }
 NorthPowerPlants = { NorthPower1, NorthPower2, NorthPower3, NorthPower4 }
 
@@ -81,7 +81,7 @@ WorldLoaded = function()
 		DisableDefenses(centerDefenses)
 		DisableLaserFences()
 		Media.PlaySound("powrdn1.aud")
-		Yuri.GrantCondition("mutabomb-enabled")
+		Actor.Create("powerproxy.mutabomb", true, { Owner = USSR, Location = UpgradeCreationLocation })
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
 			Tip("The Genetic Mutation Bomb support power can turn enemy infantry into Brutes under your command. Avoid enemy SAM sites by holding the mouse button when selecting the target, allowing you to control the approach angle.")
 		end)
@@ -181,8 +181,8 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		Nod.Cash = 7500
-		Nod.Resources = 7500
+		Nod.Cash = Nod.ResourceCapacity - 500
+		Nod.Resources = Nod.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
 			if TimerTicks > 25 then

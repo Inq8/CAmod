@@ -818,8 +818,8 @@ SetupRefAndSilosCaptureCredits = function(player)
 	local silosAndRefineries = player.GetActorsByTypes(CashRewardOnCaptureTypes)
 	Utils.Do(silosAndRefineries, function(a)
 		Trigger.OnCapture(a, function(self, captor, oldOwner, newOwner)
-			newOwner.Cash = newOwner.Cash + 500
-			Media.FloatingText("+$500", self.CenterPosition, 30, newOwner.Color)
+			newOwner.Cash = newOwner.Cash + 1500
+			Media.FloatingText("+$1500", self.CenterPosition, 30, newOwner.Color)
 		end)
 	end)
 end

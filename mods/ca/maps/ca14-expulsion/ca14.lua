@@ -23,9 +23,9 @@ Squads = {
 			hard = DateTime.Seconds(90)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
-			normal = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(12), Value = 35 } },
-			hard = { { MinTime = 0, Value = 30 }, { MinTime = DateTime.Minutes(10), Value = 50 } },
+			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 25 }, { MinTime = DateTime.Minutes(30), Value = 30 } },
+			normal = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(12), Value = 35 }, { MinTime = DateTime.Minutes(30), Value = 45 } },
+			hard = { { MinTime = 0, Value = 30 }, { MinTime = DateTime.Minutes(10), Value = 50 }, { MinTime = DateTime.Minutes(30), Value = 60 } },
 		},
 		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
@@ -41,9 +41,9 @@ Squads = {
 			hard = DateTime.Minutes(6)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 6 }, { MinTime = DateTime.Minutes(14), Value = 12 } },
-			normal = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(12), Value = 20 } },
-			hard = { { MinTime = 0, Value = 16 }, { MinTime = DateTime.Minutes(10), Value = 32 } },
+			easy = { { MinTime = 0, Value = 6 }, { MinTime = DateTime.Minutes(14), Value = 12 }, { MinTime = DateTime.Minutes(30), Value = 14 } },
+			normal = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(12), Value = 20 }, { MinTime = DateTime.Minutes(30), Value = 24 } },
+			hard = { { MinTime = 0, Value = 16 }, { MinTime = DateTime.Minutes(10), Value = 32 }, { MinTime = DateTime.Minutes(30), Value = 40 } },
 		},
 		QueueProductionStatuses = { Infantry = false },
 		FollowLeader = true,
@@ -153,8 +153,8 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		GDI.Cash = 7500
-		GDI.Resources = 7500
+		GDI.Cash = GDI.ResourceCapacity - 500
+		GDI.Resources = GDI.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
 			if TimerTicks > 25 then

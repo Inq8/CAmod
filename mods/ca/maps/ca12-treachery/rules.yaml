@@ -5,9 +5,9 @@ World:
 	LuaScript:
 		Scripts: campaign.lua, ca12.lua
 	MissionData:
-		Briefing: We have been betrayed! Our recent losses were enough for the coward General Yegorov to show his true colours. He, along with an unknown number of troops loyal to him, have defected to the Allies.\n\nHe was not counting on hostilities with the Brotherhood of Nod ending so soon, and must now be feeling very nervous.\n\nHe deserves no mercy. Put an end to the traitor and anyone who tries to protect him.
+		Briefing: We have been betrayed! Our recent losses were enough for the coward General Yegorov to show his true colours. He, along with an unknown number of troops loyal to him, have defected to the Allies.\n\nHe was not counting on hostilities with the Brotherhood of Nod ending so soon, and must now be feeling very nervous.\n\nHe deserves no mercy. Put an end to the traitor and anyone who tries to protect him.\n\nBoris believes he can kill the traitor by himself. If you don't share his confidence then the safer approach would be to find our abandoned base, build up a force, and overwhelm Yegorov's defenders.
 	MapOptions:
-		ShortGameCheckboxEnabled: True
+		ShortGameCheckboxEnabled: False
 	ScriptLobbyDropdown@DIFFICULTY:
 		ID: difficulty
 		Label: Difficulty
@@ -57,10 +57,24 @@ AMCV:
 MCV:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
+MSLO:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+TPWR:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+APWR:
+	Buildable:
+		Prerequisites: ~structures.ra, anyradar
+
 DOME:
 	-ParatroopersPower@Russianparatroopers:
 	AirstrikePower@spyplane:
 		ChargeInterval: 4500
+
+PROC:
+	StoresResources:
+		Capacity: 30000
 
 ATEK:
 	-DummyGpsPower@NOFOG:
@@ -80,6 +94,7 @@ HPAD.Abandoned:
 		Facing: 384
 	Power:
 		Amount: 0
+	-AirstrikePower@Russianparabombs:
 	-RallyPoint:
 	-FreeActor@QUEUEUPDATER:
 	-GrantDelayedCondition@QUEUEUPDATER:
@@ -139,6 +154,7 @@ FCOM:
 		HP: 200000
 	Tooltip:
 		Name: General Yegorov's HQ
+		-GenericVisibility:
 	-TooltipDescription@ally:
 	-TooltipDescription@other:
 	-BaseProvider:
@@ -149,11 +165,23 @@ FCOM:
 		PlayerExperience: 5
 		RepairingNotification: Repairing
 
+HALODROP:
+	ParatroopersPower:
+		DisplayBeacon: False
+		DropItems: E1, E1, E3, E2, E1, E1, E3, E8, E1
+		UnitType: halo.paradrop.invuln
+	AlwaysVisible:
+
 SHOCKDROP:
 	ParatroopersPower:
 		DisplayBeacon: False
 		DropItems: SHOK, SHOK, SHOK, SHOK, SHOK
+		UnitType: halo.paradrop.invuln
 	AlwaysVisible:
+
+HALO.paradrop.invuln:
+	Inherits: HALO.paradrop
+	-Targetable@AIRBORNE:
 
 # Hunt() requires only 1 AttackBase
 BATF.AI:

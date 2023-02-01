@@ -154,8 +154,8 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		USSR.Cash = 7500
-		USSR.Resources = 7500
+		USSR.Cash = USSR.ResourceCapacity - 500
+		USSR.Resources = USSR.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
 			if TimerTicks > 25 then
@@ -255,11 +255,15 @@ InitUSSR = function()
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
 	end)
 
-	Trigger.OnEnteredProximityTrigger(MADTank.CenterPosition, WDist.New(8 * 1024), function(a, id)
-		if a.Owner == Nod and not IsMADTankDetonated then
+	Trigger.OnEnteredProximityTrigger(MADTank.CenterPosition, WDist.New(7 * 1024), function(a, id)
+		if a.Owner == Nod and not a.HasProperty("Land") and not IsMADTankDetonated then
 			IsMADTankDetonated = true
 			Trigger.RemoveProximityTrigger(id)
 			MADTank.MadTankDetonate()
+			local madTankCamera = Actor.Create("smallcamera", true, { Owner = Nod, Location = MADTank.Location })
+			Trigger.AfterDelay(DateTime.Seconds(4), function()
+				madTankCamera.Destroy()
+			end)
 		end
 	end)
 
@@ -291,14 +295,21 @@ DoHaloDrop = function()
 		haloDropUnits = { "e1", "e1", "e1", "e1", "e2", "e2", "e3", "e3", "e4", "shok" }
 	end
 
-	DoHelicopterDrop(USSRUnits, entryPath, "halo.paradrop", haloDropUnits, function(u) u.Patrol(PatrolPath) end, function(t)
-		Trigger.AfterDelay(DateTime.Seconds(5), function()
-			if not t.IsDead then
-				t.Move(entryPath[1])
-				t.Destroy()
+	DoHelicopterDrop(USSRUnits, entryPath, "halo.paradrop", haloDropUnits,
+		function(u)
+			if not u.IsDead then
+				u.Patrol(PatrolPath)
 			end
-		end)
-	end)
+		end,
+		function(t)
+			Trigger.AfterDelay(DateTime.Seconds(5), function()
+				if not t.IsDead then
+					t.Move(entryPath[1])
+					t.Destroy()
+				end
+			end)
+		end
+	)
 
 	Trigger.AfterDelay(HaloDropInterval[Difficulty], DoHaloDrop)
 end

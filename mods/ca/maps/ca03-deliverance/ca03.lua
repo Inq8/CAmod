@@ -324,8 +324,8 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		USSR.Cash = 5000
-		USSR.Resources = 5000
+		USSR.Cash = USSR.ResourceCapacity - 500
+		USSR.Resources = USSR.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
 			if TimerTicks > 25 then
@@ -374,13 +374,13 @@ GDIBaseFound = function()
 		end)
 
 		Trigger.AfterDelay(1, function()
-			Actor.Create("QueueUpdaterDummy", true, { Owner = Greece, Location = GDIBaseCenter.Location })
+			Actor.Create("QueueUpdaterDummy", true, { Owner = Greece, Location = UpgradeCreationLocation })
 		end)
 
 		InitUSSRAttacks()
 
 		Trigger.AfterDelay(DateTime.Seconds(1), function()
-			Actor.Create("QueueUpdaterDummy", true, { Owner = Greece, Location = GDIBaseCenter.Location })
+			Actor.Create("QueueUpdaterDummy", true, { Owner = Greece, Location = UpgradeCreationLocation })
 			ObjectiveHoldOut = Greece.AddObjective("Hold out until reinforcements arrive.")
 			UserInterface.SetMissionText("Hold out until reinforcements arrive.", HSLColor.Yellow)
 			Greece.MarkCompletedObjective(ObjectiveFindBase)

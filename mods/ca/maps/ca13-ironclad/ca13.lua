@@ -15,9 +15,9 @@ Squads = {
 	GreeceMain = {
 		Player = nil,
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 30 } },
-			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 50 } },
-			hard = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(10), Value = 80 } },
+			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
+			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 45 } },
+			hard = { { MinTime = 0, Value = 35 }, { MinTime = DateTime.Minutes(10), Value = 75 } },
 		},
 		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
@@ -29,9 +29,9 @@ Squads = {
 	GDIMain = {
 		Player = nil,
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 30 } },
-			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 50 } },
-			hard = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(10), Value = 80 } },
+			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
+			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 45 } },
+			hard = { { MinTime = 0, Value = 35 }, { MinTime = DateTime.Minutes(10), Value = 75 } },
 		},
 		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
@@ -78,9 +78,9 @@ Squads = {
 }
 
 SiegeBreakThreshold = {
-	easy = 75,
-	normal = 60,
-	hard = 45
+	easy = 90,
+	normal = 75,
+	hard = 60
 }
 
 AutoSiegeBreakTime = {
@@ -138,10 +138,10 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		GDI.Cash = 5000
-		GDI.Resources = 5000
-		Greece.Cash = 5000
-		Greece.Resources = 5000
+		GDI.Cash =  GDI.ResourceCapacity - 500
+		GDI.Resources =  GDI.ResourceCapacity - 500
+		Greece.Cash =  Greece.ResourceCapacity - 500
+		Greece.Resources =  Greece.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
 			if TimerTicks > 25 then

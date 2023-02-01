@@ -23,18 +23,18 @@ TraitorUnits = {
 }
 
 ReinforcementsDelay = {
-	hard = DateTime.Minutes(10),
-	hard = DateTime.Minutes(12),
-	hard = DateTime.Minutes(14),
+	easy = DateTime.Minutes(3),
+	normal = DateTime.Minutes(7),
+	hard = DateTime.Minutes(11),
 }
 
 Squads = {
 	Main = {
 		Player = nil,
 		Delay = {
-			easy = DateTime.Minutes(4),
-			normal = DateTime.Minutes(3),
-			hard = DateTime.Minutes(2)
+			easy = DateTime.Seconds(270),
+			normal = DateTime.Seconds(210),
+			hard = DateTime.Seconds(150)
 		},
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(15), Value = 40 } },
@@ -114,10 +114,14 @@ WorldLoaded = function()
 	InitObjectives(USSR)
 	InitGreece()
 
+	HaloDropper = Actor.Create("halodrop", false, { Owner = USSR })
+	ShockDropper = Actor.Create("shockdrop", false, { Owner = USSR })
+
 	ObjectiveKillTraitor = USSR.AddObjective("Find and kill the traitor General Yegorov.")
 	ObjectiveFindSovietBase = USSR.AddSecondaryObjective("Take control of abandoned Soviet base.")
 
 	AbandonedHalo.ReturnToBase(AbandonedHelipad)
+	SetupRefAndSilosCaptureCredits(Traitor)
 
 	if Difficulty == "hard" then
 		Cruiser.Patrol(CruiserPatrolPath)
@@ -127,11 +131,46 @@ WorldLoaded = function()
 		--Actor.Create("weap", true, { Owner = Traitor, Location = traitorConyardLocation })
 	else
 		Cruiser.Destroy()
+		HardOnlyMGG.Destroy()
+		HardOnlyTurret1.Destroy()
+		HardOnlyTurret2.Destroy()
+		HardOnlyTurret3.Destroy()
+		HardOnlyTurret4.Destroy()
+		HardOnlyTurret5.Destroy()
+		HardOnlyGapGenerator.Destroy()
+		HardOnlyTeslaCoil.Destroy()
+		HardOnlyCryoLauncher.Destroy()
 	end
 
 	Trigger.OnCapture(AbandonedHelipad, function(self, captor, oldOwner, newOwner)
 		if newOwner == USSR then
 			AbandonedHalo.Owner = USSR
+
+			if Difficulty ~= "hard" then
+				Trigger.AfterDelay(DateTime.Seconds(5), function()
+					local islandFlare = Actor.Create("flare", true, { Owner = USSR, Location = ReinforcementsDestination.Location })
+					Trigger.AfterDelay(DateTime.Seconds(10), islandFlare.Destroy)
+					Beacon.New(USSR, ReinforcementsDestination.CenterPosition)
+					Media.PlaySpeechNotification(USSR, "SignalFlare")
+				end)
+			end
+		end
+	end)
+
+	Trigger.OnEnteredProximityTrigger(GuardsReveal1.CenterPosition, WDist.New(11 * 1024), function(a, id)
+		if a.Owner == USSR and not a.HasProperty("Land") then
+			Trigger.RemoveProximityTrigger(id)
+			local camera = Actor.Create("smallcamera", true, { Owner = USSR, Location = GuardsReveal1.Location })
+			Trigger.AfterDelay(DateTime.Seconds(5), function()
+				camera.Destroy()
+			end)
+		end
+	end)
+
+	Trigger.OnEnteredProximityTrigger(TraitorTechCenter.CenterPosition, WDist.New(9 * 1024), function(a, id)
+		if a.Owner == USSR and a.Type ~= "smig" then
+			Trigger.RemoveProximityTrigger(id)
+			TraitorTechCenterDiscovered()
 		end
 	end)
 
@@ -144,7 +183,7 @@ WorldLoaded = function()
 
 	Trigger.OnKilled(Bodyguard1, function(self, killer)
 		Trigger.AfterDelay(DateTime.Seconds(4), function()
-			if not TraitorGeneral.IsDead then
+			if not TraitorGeneral.IsDead and TraitorGeneral.IsInWorld then
 				TraitorGeneral.Move(TraitorGeneralSafePoint.Location)
 			end
 		end)
@@ -152,6 +191,19 @@ WorldLoaded = function()
 
 	Trigger.OnKilled(TraitorGeneral, function(self, killer)
 		USSR.MarkCompletedObjective(ObjectiveKillTraitor)
+	end)
+
+	Trigger.OnAllKilled({ TraitorSAM1, TraitorSAM2 }, function()
+		Media.PlaySpeechNotification(USSR, "ReinforcementsArrived")
+		HaloDropper.TargetParatroopers(EastParadrop1.CenterPosition, Angle.West)
+
+		Trigger.AfterDelay(DateTime.Seconds(2), function()
+			ShockDropper.TargetParatroopers(EastParadrop2.CenterPosition, Angle.West)
+		end)
+
+		Trigger.AfterDelay(DateTime.Seconds(4), function()
+			HaloDropper.TargetParatroopers(EastParadrop3.CenterPosition, Angle.West)
+		end)
 	end)
 
 	Trigger.OnCapture(TraitorTechCenter, function(self, captor, oldOwner, newOwner)
@@ -176,20 +228,6 @@ WorldLoaded = function()
 	Trigger.OnCapture(TraitorHQ, function(self, captor, oldOwner, newOwner)
 		TraitorHQKilledOrCaptured()
 	end)
-
-	-- After 10 minutes, remove Yegorov if player hasn't got close to him yet (effectively entering the HQ)
-	Trigger.AfterDelay(DateTime.Minutes(10), function()
-		TraitorRetreatToHQ()
-	end)
-
-	Trigger.OnEnteredProximityTrigger(TraitorHQSpawn.CenterPosition, WDist.New(12 * 1024), function(a, id)
-		if a.Owner == USSR then
-			Trigger.RemoveProximityTrigger(id)
-			if TraitorGeneral.IsInWorld then
-				YegorovStaysOutside = true
-			end
-		end
-	end)
 end
 
 Tick = function()
@@ -199,10 +237,10 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		Greece.Cash = 3500
-		Greece.Resources = 3500
-		Traitor.Cash = 3500
-		Traitor.Resources = 3500
+		Greece.Cash = Greece.ResourceCapacity - 500
+		Greece.Resources = Greece.ResourceCapacity - 500
+		Traitor.Cash = Traitor.ResourceCapacity - 500
+		Traitor.Resources = Traitor.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
 			if TimerTicks > 25 then
@@ -217,6 +255,12 @@ end
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
 		UpdatePlayerBaseLocation()
+
+		if USSR.HasNoRequiredUnits() then
+			if ObjectiveKillTraitor ~= nil and not USSR.IsObjectiveCompleted(ObjectiveKillTraitor) then
+				USSR.MarkFailedObjective(ObjectiveKillTraitor)
+			end
+		end
 	end
 end
 
@@ -257,13 +301,37 @@ InitGreece = function()
 	end
 end
 
+TraitorTechCenterDiscovered = function()
+	if IsTraitorTechCenterDiscovered then
+		return
+	end
+
+	IsTraitorTechCenterDiscovered = true
+
+	local traitorTechCenterFlare = Actor.Create("flare", true, { Owner = USSR, Location = TraitorTechCenterFlare.Location })
+	Trigger.AfterDelay(DateTime.Seconds(10), traitorTechCenterFlare.Destroy)
+	Beacon.New(USSR, TraitorTechCenterFlare.CenterPosition)
+	Media.PlaySpeechNotification(USSR, "SignalFlare")
+
+	if ObjectiveCaptureTraitorTechCenter == nil then
+		ObjectiveCaptureTraitorTechCenter = USSR.AddSecondaryObjective("Capture Traitor's Tech Center.")
+		if TraitorTechCenter.IsDead then
+			USSR.MarkFailedObjective(ObjectiveCaptureTraitorTechCenter)
+		end
+	end
+end
+
 AbandonedBaseDiscovered = function()
 	if IsAbandonedBaseDiscovered then
 		return
 	end
 
 	IsAbandonedBaseDiscovered = true
-	TraitorRetreatToHQ()
+
+	-- Yegorov retreats to HQ
+	if TraitorGeneral.IsInWorld then
+		TraitorGeneral.Destroy()
+	end
 
 	local baseBuildings = Map.ActorsInBox(AbandonedBaseTopLeft.CenterPosition, AbandonedBaseBottomRight.CenterPosition, function(a)
 		return a.Owner == USSRAbandoned
@@ -274,12 +342,7 @@ AbandonedBaseDiscovered = function()
 	end)
 
 	USSR.MarkCompletedObjective(ObjectiveFindSovietBase)
-	if ObjectiveCaptureTraitorTechCenter == nil then
-		ObjectiveCaptureTraitorTechCenter = USSR.AddSecondaryObjective("Capture Traitor's Tech Center.")
-		if TraitorTechCenter.IsDead then
-			USSR.MarkFailedObjective(ObjectiveCaptureTraitorTechCenter)
-		end
-	end
+	TraitorTechCenterDiscovered()
 
 	Trigger.AfterDelay(Squads.Main.Delay[Difficulty], function()
 		InitAttackSquad(Squads.Main, Greece)
@@ -303,19 +366,17 @@ AbandonedBaseDiscovered = function()
 
 	Trigger.AfterDelay(ReinforcementsDelay[Difficulty], function()
 		Media.PlaySpeechNotification(USSR, "ReinforcementsArrived")
-		Beacon.New(USSR, PlayerStart.CenterPosition)
-		local reinforcements = { "4tnk", "4tnk", "v2rl", "btr" }
-		if Difficulty == "easy" then
-			reinforcements = { "4tnk", "4tnk", "v3rl", "v3rl", "btr" }
-		elseif Difficulty == "normal" then
-			reinforcements = { "4tnk", "4tnk", "v2rl", "v2rl", "btr" }
+		Beacon.New(USSR, ReinforcementsDestination.CenterPosition)
+		local reinforcements = { "4tnk", "4tnk", "v3rl", "v3rl", "btr" }
+		if Difficulty == "hard" then
+			reinforcements = { "4tnk", "4tnk", "v2rl", "btr" }
 		end
-		Reinforcements.Reinforce(USSR, reinforcements, { ReinforcementsSpawn.Location, PlayerStart.Location }, 75)
+		Reinforcements.Reinforce(USSR, reinforcements, { ReinforcementsSpawn.Location, ReinforcementsDestination.Location }, 75)
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(30), function()
-		ShockDrop = Actor.Create("shockdrop", false, { Owner = USSR, Location = UpgradeCreationLocation })
-		ShockDrop.TargetParatroopers(AbandonedBaseCenter.CenterPosition, Angle.North)
+		Media.PlaySpeechNotification(USSR, "ReinforcementsArrived")
+		ShockDropper.TargetParatroopers(AbandonedBaseCenter.CenterPosition, Angle.SouthWest)
 	end)
 end
 
@@ -327,11 +388,5 @@ TraitorHQKilledOrCaptured = function()
 		Trigger.OnKilled(traitorGeneral, function(self, killer)
 			USSR.MarkCompletedObjective(ObjectiveKillTraitor)
 		end)
-	end
-end
-
-TraitorRetreatToHQ = function()
-	if not YegorovStaysOutside and TraitorGeneral.IsInWorld then
-		TraitorGeneral.Destroy()
 	end
 end
