@@ -56,7 +56,7 @@ GroundAttackCompositions = {
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "e8", "4tnk.erad", "e3", "v3rl", "btr.ai", "e3", "e1", "e1", "e2" }, MinTime = DateTime.Minutes(19) },
 	},
 	hard = {
-		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "3tnk", "btr.ai", "e3", "e1", "e2", "e1", "e1" }, MaxTime = DateTime.Minutes(5), MaxTime = DateTime.Minutes(19) },
+		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "3tnk", "btr.ai", "e3", "e1", "e2", "e1", "e1" }, MaxTime = DateTime.Minutes(19) },
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "3tnk", "v2rl", "btr.ai", "e3", "e1", "e2", "e1", "e1" }, MinTime = DateTime.Minutes(4), MaxTime = DateTime.Minutes(8) },
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "e1", "btr.ai", "3tnk", "ttra", "e3", "e1", "e2", "e1", "e1" }, MinTime = DateTime.Minutes(4), MaxTime = DateTime.Minutes(17) },
 		{ Units = { "e1", "e1", "e1", "e2", "e3", "4tnk", "btr.ai", "shok", "e8", "katy" }, MinTime = DateTime.Minutes(6), MaxTime = DateTime.Minutes(18) },

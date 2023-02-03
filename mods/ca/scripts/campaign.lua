@@ -543,12 +543,12 @@ InitAttackSquad = function(squad, player, targetPlayer)
 			end)
 		else
 			Trigger.AfterDelay(DateTime.Seconds(15), function()
-				InitAttackSquad(squad, player)
+				InitAttackSquad(squad, player, targetPlayer)
 			end)
 		end
 	else
 		Trigger.AfterDelay(DateTime.Seconds(15), function()
-			InitAttackSquad(squad, player)
+			InitAttackSquad(squad, player, targetPlayer)
 		end)
 	end
 end
