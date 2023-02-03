@@ -71,12 +71,12 @@ WorldLoaded = function()
 		end)
 	end)
 
-	Trigger.OnAllKilled(StartPowerPlants, function()
+	Trigger.OnAllKilledOrCaptured(StartPowerPlants, function()
 		local startSAMs = { StartSAM1, StartSAM2 }
 		DisableDefenses(startSAMs)
 	end)
 
-	Trigger.OnAllKilled(SouthWestPowerPlants, function()
+	Trigger.OnAllKilledOrCaptured(SouthWestPowerPlants, function()
 		local centerDefenses = { SouthWestSAM, CenterObelisk1, CenterObelisk2, CenterObelisk3, CenterObelisk4, CenterSAM1, CenterSAM2, CenterSAM3 }
 		DisableDefenses(centerDefenses)
 		DisableLaserFences()
@@ -87,12 +87,12 @@ WorldLoaded = function()
 		end)
 	end)
 
-	Trigger.OnAllKilled(SouthEastPowerPlants, function()
+	Trigger.OnAllKilledOrCaptured(SouthEastPowerPlants, function()
 		local southEastDefenses = { SouthEastSAM1, SouthEastSAM2, SouthEastSAM3, SouthEastSAM4, SouthEastObelisk1, SouthEastObelisk2, SouthEastObelisk3, SouthEastObelisk4 }
 		DisableDefenses(southEastDefenses)
 	end)
 
-	Trigger.OnAllKilled(NorthPowerPlants, function()
+	Trigger.OnAllKilledOrCaptured(NorthPowerPlants, function()
 		local northDefenses = { NorthSAM1, NorthSAM2, NorthObelisk1, NorthObelisk2, NorthObelisk3, NorthObelisk4 }
 		DisableDefenses(northDefenses)
 	end)
