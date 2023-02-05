@@ -1,6 +1,6 @@
 NodLightUnitTypes = { "bike", "bike", "bggy", "n1", "n1", "n1", "n4", "n4", "n3" }
 NodHeavyUnitTypes = { "ltnk", "ltnk", "apc2.nodai", "hftk", "mlrs" }
-NodCyborgUnitTypes = { "n1c", "n1c", "n1c", "n1c", "n3c", "n3c", "rmbc", "rmbc" }
+NodCyborgUnitTypes = { "n1c", "n1c", "n1c", "n1c", "n3c", "enli", "rmbc", "rmbc" }
 AlliedUnitTypes = { "hmmv", "mtnk", "vulc.ai", "mtnk", "msam", "vulc.ai", "htnk.ion", "n1", "n1", "n1", "n1", "n3", "n3", "n2", "rmbo" }
 SovietUnitTypes = { "3tnk.atomic", "v2rl", "isu", "4tnk.atomic", "btr.ai", "e1", "e1", "e1", "e4", "e3", "e3" }
 SovietHeavyUnitTypes = { "apoc.atomic", "3tnk.atomic", "4tnk.atomic", "btr.ai", "v2rl", "e1", "e1", "e4", "ivan", "e3", "e3" }
@@ -22,7 +22,7 @@ ProducedUnitTypes =
 	{ factory = Sovietinf, types = { "e1", "e2" } },
 	{ factory = Nodinf, types = { "n1", "n3", "n4" } },
 	{ factory = Aveh, types = { "2tnk", "ptnk", "batf.ai" } },
-	{ factory = Usaveh, types = { "mtnk", "disr", "titn.rail", "hmmv", "htnk.ion", "msam", "mtnk" } },
+	{ factory = Usaveh, types = { "mtnk", "disr", "titn.rail", "hmmv", "htnk.ion", "hsam", "mtnk" } },
 	{ factory = Usaveh2, types = { "mtnk", "disr", "titn", "hmmv", "htnk.ion", "msam", "mtnk" } },
 	{ factory = Sovietveh, types = { "3tnk.atomic", "4tnk.atomic", "katy", "v2rl", "btr.ai" } },
 	{ factory = Nodveh, types = { "ltnk", "hftk", "stnk.nod", "howi" } }
