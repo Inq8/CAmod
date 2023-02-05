@@ -28,30 +28,39 @@ ProducedUnitTypes =
 	{ factory = Nodveh, types = { "ltnk", "hftk", "stnk.nod", "howi" } }
 }
 
+GDIBase1Location = Chronosphere.Location
+GDIBase2Location = Usaveh2.Location
+AlliedBaseLocation = AlliedCenter.Location
+NodBaseLocation = NodHQ.Location
+SovietBaseLocation = Sovietinf.Location
+
 BindActorTriggers = function(a)
-	if a.HasProperty("Hunt") then
-		if a.Owner == usa then
+	Trigger.AfterDelay(15, function()
+		if not a.IsDead and a.HasProperty("Scatter") then
+			a.Scatter()
 			Trigger.OnIdle(a, function(a)
-				if a.IsInWorld then
-					a.AttackMove(NodHQ.Location)
+				if not a.IsDead and a.IsInWorld and a.HasProperty("AttackMove") then
+					if a.Owner == usa then
+						a.AttackMove(FuzzyLocation(NodBaseLocation))
+					elseif a.Owner == allies then
+						a.AttackMove(FuzzyLocation(SovietBaseLocation))
+					elseif a.Owner == Soviet then
+						a.AttackMove(FuzzyLocation(AlliedBaseLocation))
+					elseif a.Owner == blackh then
+						local randomTarget = Utils.Random({ GDIBase1Location, GDIBase2Location, AlliedBaseLocation, AlliedBaseLocation })
+						a.AttackMove(FuzzyLocation(randomTarget))
+					end
 				end
 			end)
-		else
-			if a.Owner == allies then
-				Trigger.OnIdle(a, function(a)
-					if a.IsInWorld then
-						a.Hunt()
-					end
-				end)
-			else
-				Trigger.OnIdle(a, function(a)
-					if a.IsInWorld then
-						a.Hunt()
-					end
-				end)
-			end
 		end
-	end
+	end)
+end
+
+FuzzyLocation = function(loc)
+	local expand1 = Utils.ExpandFootprint({ loc }, true)
+	local expand2 = Utils.ExpandFootprint(expand1, true)
+	local expand3 = Utils.ExpandFootprint(expand2, true)
+	return Utils.Random(expand3)
 end
 
 SendNodUnits = function(entryCell, unitTypes, interval)
@@ -168,15 +177,17 @@ SetupFactories = function()
 end
 
 ChronoshiftAlliedUnits = function()
-	local cells = Utils.ExpandFootprint({ ChronoshiftLocation.Location }, false)
-	local units = { }
-	for i = 1, #cells do
-		local unit = Actor.Create("gtnk", true, { Owner = allies, Facing = Angle.East })
-		BindActorTriggers(unit)
-		units[unit] = cells[i]
+	if not Chronosphere.IsDead then
+		local cells = Utils.ExpandFootprint({ ChronoshiftLocation.Location }, false)
+		local units = { }
+		for i = 1, #cells do
+			local unit = Actor.Create("gtnk", true, { Owner = allies, Facing = Angle.East })
+			BindActorTriggers(unit)
+			units[unit] = cells[i]
+		end
+		Chronosphere.Chronoshift(units)
+		Trigger.AfterDelay(DateTime.Seconds(60), ChronoshiftAlliedUnits)
 	end
-	Chronosphere.Chronoshift(units)
-	Trigger.AfterDelay(DateTime.Seconds(60), ChronoshiftAlliedUnits)
 end
 
 ticks = 0
@@ -195,7 +206,7 @@ WorldLoaded = function()
 	blackh = Player.GetPlayer("Nod")
 	allies = Player.GetPlayer("Allies")
 	viewportOrigin = Camera.Position
-	
+
 	SetupFactories()
 	ShipAlliedUnits()
 	InsertAlliedChinookReinforcements(Helispawn1, Helidrop1)
@@ -208,7 +219,7 @@ WorldLoaded = function()
 	ParadropAlliesUnits()
 	Trigger.AfterDelay(DateTime.Seconds(5), ChronoshiftAlliedUnits)
 	Utils.Do(ProducedUnitTypes, ProduceUnits)
-	
+
 	Trigger.AfterDelay(DateTime.Seconds(30), function() SendMigs(Mig1Waypoints) end)
 	Trigger.AfterDelay(DateTime.Seconds(30), function() SendMigs(Mig2Waypoints) end)
 
