@@ -1,4 +1,4 @@
-MapFormat: 11
+MapFormat: 12
 
 RequiresMod: ca
 
@@ -6,7 +6,7 @@ Title: Shellmap
 
 Author: Inq
 
-Tileset: TEMPERAT
+Tileset: SNOW
 
 MapSize: 146,146
 
@@ -21,42 +21,41 @@ Players:
 		Name: Neutral
 		OwnsWorld: True
 		NonCombatant: True
-		Faction: england
+		Faction: gdi
 	PlayerReference@Creeps:
 		Name: Creeps
 		NonCombatant: True
-		Faction: england
-		Enemies: Multi0, Multi2, Multi3
-	PlayerReference@Multi0:
-		Name: Multi0
-		Faction: england
-		Color: 9FBAFF
-		Enemies: Creeps, Multi2, Multi3
-	PlayerReference@Multi2:
-		Name: Multi2
-		Faction: reaper
-		Color: 7353FF
-		Enemies: Creeps, Multi0, Multi3
-	PlayerReference@Multi3:
-		Name: Multi3
-		Faction: blackh
-		LockColor: True
+		Faction: gdi
+		Enemies: GDI, Soviet, Nod, Allies
+	PlayerReference@GDI:
+		Name: GDI
+		Faction: gdi
+		Color: F5D378
+		Enemies: Creeps, Soviet, Nod
+	PlayerReference@Soviet:
+		Name: Soviet
+		Faction: soviet
 		Color: FE0000
-		Enemies: Creeps, Multi0, Multi2
+		Enemies: Creeps, GDI, Nod, Allies
+	PlayerReference@Nod:
+		Name: Nod
+		Faction: nod
+		LockColor: True
+		Color: FE1100
+		Enemies: Creeps, GDI, Soviet, Allies
+	PlayerReference@Allies:
+		Name: Allies
+		Faction: allies
+		Color: ABB7E4
+		Enemies: Creeps, Soviet, Nod
 
 Actors:
-	Actor1: tc02
-		Owner: Neutral
-		Location: 56,53
 	Actor5: tc04
 		Owner: Neutral
 		Location: 40,37
 	Actor6: t16
 		Owner: Neutral
 		Location: 34,34
-	Actor7: t14
-		Owner: Neutral
-		Location: 57,55
 	Actor8: tc02
 		Owner: Neutral
 		Location: 35,37
@@ -135,9 +134,6 @@ Actors:
 	Actor47: tc05
 		Owner: Neutral
 		Location: 71,79
-	Actor48: tc01
-		Owner: Neutral
-		Location: 67,80
 	Actor49: t16
 		Owner: Neutral
 		Location: 74,80
@@ -162,9 +158,6 @@ Actors:
 	Actor56: t07
 		Owner: Neutral
 		Location: 20,10
-	Actor57: t01
-		Owner: Neutral
-		Location: 21,11
 	Actor58: tc01
 		Owner: Neutral
 		Location: 24,10
@@ -177,9 +170,6 @@ Actors:
 	Actor61: split2
 		Owner: Neutral
 		Location: 10,40
-	Actor62: split2
-		Owner: Neutral
-		Location: 82,52
 	Actor63: split2
 		Owner: Neutral
 		Location: 9,49
@@ -207,24 +197,6 @@ Actors:
 	Actor73: t03
 		Owner: Neutral
 		Location: 39,35
-	Actor74: t02
-		Owner: Neutral
-		Location: 89,90
-	Actor75: t03
-		Owner: Neutral
-		Location: 89,91
-	Actor76: t01
-		Owner: Neutral
-		Location: 92,90
-	Actor77: tc02
-		Owner: Neutral
-		Location: 90,66
-	Actor78: t01
-		Owner: Neutral
-		Location: 92,65
-	Actor79: t08
-		Owner: Neutral
-		Location: 92,67
 	Actor81: t10
 		Owner: Neutral
 		Location: 1,25
@@ -315,18 +287,9 @@ Actors:
 	Actor122: t01
 		Owner: Neutral
 		Location: 31,34
-	Actor123: t02
-		Owner: Neutral
-		Location: 61,56
-	Actor124: t16
-		Owner: Neutral
-		Location: 53,87
 	Actor125: t02
 		Owner: Neutral
 		Location: 39,3
-	Actor126: t03
-		Owner: Neutral
-		Location: 49,89
 	Actor127: t14
 		Owner: Neutral
 		Location: 42,1
@@ -372,24 +335,9 @@ Actors:
 	Actor142: t13
 		Owner: Neutral
 		Location: 55,19
-	Actor143: t16
-		Owner: Neutral
-		Location: 49,74
-	Actor144: t17
-		Owner: Neutral
-		Location: 64,73
-	Actor145: tc04
-		Owner: Neutral
-		Location: 68,65
 	Actor146: t02
 		Owner: Neutral
 		Location: 90,74
-	Actor147: t01
-		Owner: Neutral
-		Location: 76,61
-	Actor148: t11
-		Owner: Neutral
-		Location: 58,59
 	Actor149: t14
 		Owner: Neutral
 		Location: 87,40
@@ -429,12 +377,6 @@ Actors:
 	Actor163: t16
 		Owner: Neutral
 		Location: 28,17
-	Actor165: tc01
-		Owner: Neutral
-		Location: 44,83
-	Actor166: t10
-		Owner: Neutral
-		Location: 43,82
 	Actor167: t15
 		Owner: Neutral
 		Location: 48,8
@@ -471,7 +413,7 @@ Actors:
 	Actor172: oilb
 		Location: 55,11
 		Faction: england
-		Owner: Multi2
+		Owner: Soviet
 	Actor173: barl
 		Owner: Neutral
 		Location: 54,12
@@ -505,18 +447,6 @@ Actors:
 	Actor191: wood
 		Owner: Neutral
 		Location: 57,11
-	Actor164: split3
-		Owner: Neutral
-		Location: 110,15
-	Actor170: split2
-		Owner: Neutral
-		Location: 108,20
-	Actor171: split2
-		Owner: Neutral
-		Location: 131,35
-	Actor192: split3
-		Owner: Neutral
-		Location: 130,40
 	Actor193: split2
 		Owner: Neutral
 		Location: 108,64
@@ -532,9 +462,6 @@ Actors:
 	Actor197: split3
 		Owner: Neutral
 		Location: 90,121
-	Actor198: split3
-		Owner: Neutral
-		Location: 65,104
 	Actor199: split2
 		Owner: Neutral
 		Location: 35,106
@@ -592,75 +519,9 @@ Actors:
 	Actor217: tc01
 		Owner: Neutral
 		Location: 115,99
-	Actor218: t11
-		Owner: Neutral
-		Location: 115,69
-	Actor219: t10
-		Owner: Neutral
-		Location: 118,67
-	Actor220: t14
-		Owner: Neutral
-		Location: 113,62
 	Actor221: tc01
 		Owner: Neutral
 		Location: 129,66
-	Actor222: tc04
-		Owner: Neutral
-		Location: 123,35
-	Actor223: tc04
-		Owner: Neutral
-		Location: 114,18
-	Actor224: t16
-		Owner: Neutral
-		Location: 117,14
-	Actor225: tc01
-		Owner: Neutral
-		Location: 134,29
-	Actor226: t15
-		Owner: Neutral
-		Location: 136,5
-	Actor228: t17
-		Owner: Neutral
-		Location: 137,7
-	Actor227: t12
-		Owner: Neutral
-		Location: 140,6
-	Actor229: t02
-		Owner: Neutral
-		Location: 139,2
-	Actor230: t01
-		Owner: Neutral
-		Location: 136,3
-	Actor231: t06
-		Owner: Neutral
-		Location: 141,4
-	Actor232: t01
-		Owner: Neutral
-		Location: 100,35
-	Actor233: t08
-		Owner: Neutral
-		Location: 102,35
-	Actor234: t11
-		Owner: Neutral
-		Location: 100,34
-	Actor235: t10
-		Owner: Neutral
-		Location: 116,16
-	Actor236: tc01
-		Owner: Neutral
-		Location: 122,38
-	Actor237: tc05
-		Owner: Neutral
-		Location: 135,30
-	Actor238: tc03
-		Owner: Neutral
-		Location: 114,64
-	Actor239: t03
-		Owner: Neutral
-		Location: 116,68
-	Actor240: t16
-		Owner: Neutral
-		Location: 117,68
 	Actor241: t15
 		Owner: Neutral
 		Location: 130,99
@@ -685,18 +546,6 @@ Actors:
 	Actor248: t03
 		Owner: Neutral
 		Location: 99,132
-	Actor249: t11
-		Owner: Neutral
-		Location: 113,84
-	Actor250: t10
-		Owner: Neutral
-		Location: 112,83
-	Actor251: tc03
-		Owner: Neutral
-		Location: 114,83
-	Actor252: t16
-		Owner: Neutral
-		Location: 115,82
 	Actor253: tc02
 		Owner: Neutral
 		Location: 142,83
@@ -769,62 +618,9 @@ Actors:
 	Actor276: tc05
 		Owner: Neutral
 		Location: 1,142
-	Actor277: oilb
-		Location: 93,19
-		Faction: england
-		Owner: Multi3
-	Actor278: oilb
-		Location: 102,94
-		Faction: england
-		Owner: Multi3
 	Actor279: oilb
 		Location: 65,121
-		Owner: Multi0
-	Actor280: wood
-		Owner: Neutral
-		Location: 92,18
-	Actor281: wood
-		Owner: Neutral
-		Location: 93,18
-	Actor282: wood
-		Owner: Neutral
-		Location: 94,18
-	Actor283: wood
-		Owner: Neutral
-		Location: 95,18
-	Actor285: wood
-		Owner: Neutral
-		Location: 95,19
-	Actor284: wood
-		Owner: Neutral
-		Location: 95,20
-	Actor286: wood
-		Owner: Neutral
-		Location: 95,21
-	Actor287: wood
-		Owner: Neutral
-		Location: 101,97
-	Actor288: wood
-		Owner: Neutral
-		Location: 102,97
-	Actor289: wood
-		Owner: Neutral
-		Location: 103,97
-	Actor290: wood
-		Owner: Neutral
-		Location: 104,97
-	Actor291: wood
-		Owner: Neutral
-		Location: 104,96
-	Actor292: wood
-		Owner: Neutral
-		Location: 104,95
-	Actor293: wood
-		Owner: Neutral
-		Location: 104,94
-	Actor294: wood
-		Owner: Neutral
-		Location: 104,93
+		Owner: GDI
 	Actor296: wood
 		Owner: Neutral
 		Location: 64,123
@@ -846,36 +642,12 @@ Actors:
 	Actor295: wood
 		Owner: Neutral
 		Location: 68,123
-	Actor300: wood
-		Owner: Neutral
-		Location: 100,97
-	Actor301: brl3
-		Owner: Neutral
-		Location: 101,96
 	Actor302: brl3
 		Owner: Neutral
 		Location: 68,122
 	Actor305: barl
 		Owner: Neutral
 		Location: 67,121
-	Actor306: brl3
-		Owner: Neutral
-		Location: 92,19
-	Actor307: barl
-		Owner: Neutral
-		Location: 94,21
-	Actor309: tc01
-		Owner: Neutral
-		Location: 82,93
-	Actor310: tc04
-		Owner: Neutral
-		Location: 82,94
-	Actor308: tc05
-		Owner: Neutral
-		Location: 80,94
-	Actor311: tc03
-		Owner: Neutral
-		Location: 84,93
 	Actor314: t10
 		Owner: Neutral
 		Location: 81,98
@@ -885,42 +657,12 @@ Actors:
 	Actor313: split2
 		Owner: Neutral
 		Location: 81,83
-	Actor316: tc04
-		Owner: Neutral
-		Location: 63,92
-	Actor315: t15
-		Owner: Neutral
-		Location: 61,92
-	Actor317: tc03
-		Owner: Neutral
-		Location: 66,92
-	Actor318: tc02
-		Owner: Neutral
-		Location: 68,87
 	Actor319: tc05
 		Owner: Neutral
 		Location: 67,88
-	Actor320: t10
-		Owner: Neutral
-		Location: 66,90
-	Actor321: t15
-		Owner: Neutral
-		Location: 62,87
 	Actor322: tc01
 		Owner: Neutral
 		Location: 63,86
-	Actor323: t16
-		Owner: Neutral
-		Location: 64,89
-	Actor324: t08
-		Owner: Neutral
-		Location: 63,90
-	Actor325: tc04
-		Owner: Neutral
-		Location: 65,70
-	Actor326: tc02
-		Owner: Neutral
-		Location: 63,72
 	Actor327: tc02
 		Owner: Neutral
 		Location: 53,111
@@ -957,27 +699,12 @@ Actors:
 	Actor338: tc03
 		Owner: Neutral
 		Location: 79,99
-	Actor339: tc02
-		Owner: Neutral
-		Location: 104,85
-	Actor340: tc01
-		Owner: Neutral
-		Location: 103,83
-	Actor342: tc03
-		Owner: Neutral
-		Location: 106,86
 	Actor343: tc04
 		Owner: Neutral
 		Location: 96,64
 	Actor344: tc02
 		Owner: Neutral
 		Location: 89,72
-	Actor345: t15
-		Owner: Neutral
-		Location: 105,79
-	Actor346: t13
-		Owner: Neutral
-		Location: 110,85
 	Actor347: tc04
 		Owner: Neutral
 		Location: 69,54
@@ -993,12 +720,6 @@ Actors:
 	Actor351: t10
 		Owner: Neutral
 		Location: 68,49
-	Actor352: tc01
-		Owner: Neutral
-		Location: 71,43
-	Actor353: t11
-		Owner: Neutral
-		Location: 73,44
 	Actor354: tc02
 		Owner: Neutral
 		Location: 72,50
@@ -1017,687 +738,277 @@ Actors:
 	Actor359: t11
 		Owner: Neutral
 		Location: 98,55
-	Actor360: tc04
-		Owner: Neutral
-		Location: 100,76
 	Actor361: tc02
 		Owner: Neutral
 		Location: 100,86
-	Actor341: t13
-		Owner: Neutral
-		Location: 105,83
-	Actor362: t11
-		Owner: Neutral
-		Location: 106,84
-	Actor363: tc04
-		Owner: Neutral
-		Location: 41,91
-	Actor364: tc05
-		Owner: Neutral
-		Location: 42,92
-	Actor365: tc02
-		Owner: Neutral
-		Location: 41,93
-	Actor366: tc03
-		Owner: Neutral
-		Location: 39,92
-	Actor367: t11
-		Owner: Neutral
-		Location: 36,90
-	Actor368: t11
-		Owner: Neutral
-		Location: 45,94
-	Actor369: tc01
-		Owner: Neutral
-		Location: 54,86
-	Actor370: utilpol2
-		Owner: Neutral
-		Location: 52,79
-	Actor372: utilpol1
-		Owner: Neutral
-		Location: 48,81
 	Actor373: t01
 		Owner: Neutral
 		Location: 55,77
-	Actor374: t02
-		Owner: Neutral
-		Location: 58,82
-	Actor371: v06
-		Owner: Neutral
-		Location: 52,76
 	Usaspawn: waypoint
-		Owner: Multi0
+		Owner: GDI
 		Location: 61,132
-	Actor378: chain
-		Owner: Multi3
-		Location: 106,93
 	Actor379: chain
-		Owner: Multi3
+		Owner: Nod
 		Location: 106,94
 	Actor380: chain
-		Owner: Multi3
+		Owner: Nod
 		Location: 106,95
-	Actor381: chain
-		Owner: Multi3
-		Location: 107,93
 	Actor383: chain
-		Owner: Multi3
+		Owner: Nod
 		Location: 106,96
 	Actor384: chain
-		Owner: Multi3
+		Owner: Nod
 		Location: 106,97
 	Actor385: obli
-		Owner: Multi3
+		Owner: Nod
 		Location: 107,94
 	Actor386: hq
-		Owner: Multi3
+		Owner: Nod
 		Location: 107,97
 	Actor387: chain
-		Owner: Multi3
+		Owner: Nod
 		Location: 106,98
 	Actor388: chain
-		Owner: Multi3
+		Owner: Nod
 		Location: 106,99
-	Actor389: chain
-		Owner: Multi3
-		Location: 106,100
-	Actor390: chain
-		Owner: Multi3
-		Location: 107,100
-	Actor391: chain
-		Owner: Multi3
-		Location: 108,100
-	Actor392: chain
-		Owner: Multi3
-		Location: 109,100
-	Actor393: chain
-		Owner: Multi3
-		Location: 110,100
-	Actor394: chain
-		Owner: Multi3
-		Location: 111,100
-	Actor395: chain
-		Owner: Multi3
-		Location: 112,100
-	Actor396: chain
-		Owner: Multi3
-		Location: 113,100
 	Actor397: chain
-		Owner: Multi3
+		Owner: Nod
 		Location: 114,100
 	Actor398: chain
-		Owner: Multi3
+		Owner: Nod
 		Location: 114,99
 	Actor399: chain
-		Owner: Multi3
+		Owner: Nod
 		Location: 114,98
 	Actor400: chain
-		Owner: Multi3
+		Owner: Nod
 		Location: 115,98
-	Actor401: nuk2
-		Owner: Multi3
-		Location: 112,97
-	Actor402: nuk2
-		Owner: Multi3
-		Location: 110,97
 	Nodinf: hand
-		Owner: Multi3
+		Owner: Nod
 		Location: 113,89
-	Actor403: chain
-		Owner: Multi3
-		Location: 106,91
-	Actor405: chain
-		Owner: Multi3
-		Location: 106,90
-	Actor406: chain
-		Owner: Multi3
-		Location: 107,90
-	Actor407: chain
-		Owner: Multi3
-		Location: 108,90
-	Actor408: chain
-		Owner: Multi3
-		Location: 109,90
-	Actor404: chain
-		Owner: Multi3
-		Location: 107,91
-	Actor409: chain
-		Owner: Multi3
-		Location: 110,90
-	Actor410: chain
-		Owner: Multi3
-		Location: 111,90
-	Actor411: chain
-		Owner: Multi3
-		Location: 111,89
-	Actor412: chain
-		Owner: Multi3
-		Location: 112,89
-	Actor413: chain
-		Owner: Multi3
-		Location: 112,90
-	Actor414: gun.nod
-		Owner: Multi3
-		Location: 105,93
-		TurretFacing: 380
-	Actor415: gun.nod
-		Owner: Multi3
-		Location: 105,91
 	Actor416: proc.td
-		Owner: Multi3
+		Owner: Nod
 		Location: 117,92
-	Actor417: afac
-		Owner: Multi3
+	NodHQ: afac
+		Owner: Nod
 		Location: 113,94
 	Nodveh: airs
-		Owner: Multi3
+		Owner: Nod
 		Location: 120,86
-	Actor419: chain
-		Owner: Multi3
-		Location: 120,82
-	Actor420: chain
-		Owner: Multi3
-		Location: 119,81
-	Actor421: chain
-		Owner: Multi3
-		Location: 120,81
-	Actor422: chain
-		Owner: Multi3
-		Location: 119,82
-	Actor423: chain
-		Owner: Multi3
-		Location: 121,81
-	Actor424: chain
-		Owner: Multi3
-		Location: 122,81
-	Actor425: chain
-		Owner: Multi3
-		Location: 124,82
-	Actor426: chain
-		Owner: Multi3
-		Location: 123,81
-	Actor427: chain
-		Owner: Multi3
-		Location: 124,82
-	Actor428: chain
-		Owner: Multi3
-		Location: 124,81
-	Actor429: chain
-		Owner: Multi3
-		Location: 124,83
-	Actor430: chain
-		Owner: Multi3
-		Location: 124,84
-	Actor431: chain
-		Owner: Multi3
-		Location: 123,84
-	Actor432: chain
-		Owner: Multi3
-		Location: 123,83
 	Actor433: obli
-		Owner: Multi3
+		Owner: Nod
 		Location: 123,82
 	Actor434: nuk2
-		Owner: Multi3
+		Owner: Nod
 		Location: 115,84
 	Actor435: n4
-		Owner: Multi3
+		Owner: Nod
 		Facing: 384
 		SubCell: 3
 		Location: 112,92
 	Actor436: n1
-		Owner: Multi3
+		Owner: Nod
 		SubCell: 3
 		Location: 109,94
 		Facing: 237
 	Actor437: n1
-		Owner: Multi3
+		Owner: Nod
 		SubCell: 3
 		Location: 111,95
 		Facing: 618
 	Actor438: n1
-		Owner: Multi3
+		Owner: Nod
 		SubCell: 3
 		Facing: 384
 		Location: 104,90
 	Actor439: bggy
-		Owner: Multi3
+		Owner: Nod
 		Facing: 384
 		Location: 115,92
 	Actor440: hftk
-		Owner: Multi3
+		Owner: Nod
 		Location: 121,90
 		Facing: 261
 	Nodspawn: waypoint
-		Owner: Multi3
+		Owner: Nod
 		Location: 144,78
-	Actor441: sfac
-		Owner: Multi2
-		Location: 2,5
-	Actor442: swal
-		Owner: Multi2
-		Location: 1,10
-	Actor443: swal
-		Owner: Multi2
-		Location: 3,10
-	Actor444: swal
-		Owner: Multi2
-		Location: 2,10
-	Actor445: swal
-		Owner: Multi2
-		Location: 4,10
-	Actor446: swal
-		Owner: Multi2
-		Location: 5,10
-	Actor447: swal
-		Owner: Multi2
-		Location: 6,10
-	Actor448: swal
-		Owner: Multi2
-		Location: 6,9
-	Actor449: swal
-		Owner: Multi2
-		Location: 6,8
-	Actor455: swal
-		Owner: Multi2
-		Location: 6,3
-	Actor456: swal
-		Owner: Multi2
-		Location: 6,1
-	Actor457: swal
-		Owner: Multi2
-		Location: 6,2
-	Actor458: swal
-		Owner: Multi2
-		Location: 1,9
-	Actor459: swal
-		Owner: Multi2
-		Location: 2,9
-	Actor460: swal
-		Owner: Multi2
-		Location: 5,1
-	Actor461: swal
-		Owner: Multi2
-		Location: 5,2
-	Actor451: fact
-		Owner: Multi0
-		Location: 61,141
 	Actor466: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 60,140
 	Actor467: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 61,140
 	Actor468: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 63,140
 	Actor469: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 62,140
 	Actor470: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 64,140
 	Actor471: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 59,140
 	Actor472: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 58,140
 	Actor462: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 60,141
 	Actor463: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 60,142
 	Actor465: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 60,143
 	Actor473: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 60,144
 	Actor474: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 64,144
 	Actor475: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 64,143
 	Actor476: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 64,142
 	Actor477: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 64,141
 	Actor478: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 57,140
 	Actor479: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 57,141
 	Actor480: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 56,141
 	Actor481: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 56,140
-	Actor464: proc
-		Owner: Multi0
-		Location: 47,136
-	Usaveh: weap
-		Owner: Multi0
-		Location: 66,133
-	Chronosphere: pdox
-		Owner: Multi0
-		Location: 46,133
-	Actor483: apwr
-		Owner: Multi0
-		Location: 57,142
-	Actor484: apwr
-		Owner: Multi0
-		Location: 54,142
-	Actor485: apwr
-		Owner: Multi0
-		Location: 51,142
 	Actor487: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 67,129
 	Actor488: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 68,129
 	Actor489: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 69,129
 	Actor490: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 70,129
 	Actor491: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 70,130
 	Actor492: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 70,131
 	Actor493: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 71,131
 	Actor494: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 72,132
 	Actor495: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 72,131
 	Actor496: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 73,132
 	Actor497: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 73,131
 	Actor498: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 73,133
 	Actor499: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 73,134
 	Actor500: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 73,135
 	Actor501: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 73,136
 	Actor502: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 73,137
 	Actor503: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 73,138
 	Actor504: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 72,139
 	Actor505: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 73,139
 	Actor506: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 72,138
 	Actor508: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 67,130
 	Actor486: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 68,130
 	Actor507: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 62,129
 	Actor509: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 62,130
 	Actor510: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 61,130
 	Actor511: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 61,129
 	Actor513: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 59,131
 	Actor514: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 59,131
 	Actor515: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 59,130
-	Actor517: pris
-		Owner: Multi0
-		Location: 69,130
-	Actor512: pris
-		Owner: Multi0
-		Location: 60,130
 	Actor516: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 60,129
 	Actor518: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 59,129
 	Actor519: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 60,131
 	Actor520: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 60,132
 	Actor521: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 59,132
-	Usainf: tent
-		Owner: Multi0
-		Location: 70,136
-	Actor523: rea2
-		Owner: Multi2
-		Location: 7,1
-	Actor524: rea2
-		Owner: Multi2
-		Location: 10,1
-	Actor525: rea2
-		Owner: Multi2
-		Location: 13,1
-	Actor526: swal
-		Owner: Multi2
-		Location: 16,3
-	Actor527: swal
-		Owner: Multi2
-		Location: 16,2
-	Actor528: swal
-		Owner: Multi2
-		Location: 16,1
-	Actor529: swal
-		Owner: Multi2
-		Location: 17,3
-	Actor530: swal
-		Owner: Multi2
-		Location: 17,2
-	Actor531: swal
-		Owner: Multi2
-		Location: 6,4
-	Actor532: swal
-		Owner: Multi2
-		Location: 7,4
-	Actor533: swal
-		Owner: Multi2
-		Location: 7,4
-	Actor534: swal
-		Owner: Multi2
-		Location: 7,5
-	Actor535: swal
-		Owner: Multi2
-		Location: 6,5
-	Actor536: swal
-		Owner: Multi2
-		Location: 7,8
-	Actor537: swal
-		Owner: Multi2
-		Location: 6,7
-	Actor538: swal
-		Owner: Multi2
-		Location: 7,7
-	Actor539: proc.scrin
-		Owner: Multi2
-		Location: 14,6
-	Actor540: swal
-		Owner: Multi2
-		Location: 22,8
-	Actor541: swal
-		Owner: Multi2
-		Location: 22,10
-	Actor542: swal
-		Owner: Multi2
-		Location: 22,9
-	Actor543: swal
-		Owner: Multi2
-		Location: 22,11
-	Actor544: swal
-		Owner: Multi2
-		Location: 22,12
-	Actor545: swal
-		Owner: Multi2
-		Location: 21,9
-	Actor546: swal
-		Owner: Multi2
-		Location: 21,8
-	Actor547: swal
-		Owner: Multi2
-		Location: 22,13
-	Actor548: swal
-		Owner: Multi2
-		Location: 22,14
-	Actor549: swal
-		Owner: Multi2
-		Location: 21,15
-	Actor550: swal
-		Owner: Multi2
-		Location: 22,15
-	Actor551: swal
-		Owner: Multi2
-		Location: 21,16
-	Actor552: swal
-		Owner: Multi2
-		Location: 22,16
-	Actor553: rptp
-		Owner: Multi2
-		Location: 13,19
-		Facing: 602
-	Actor554: rptp
-		Owner: Multi2
-		Location: 18,16
-		Facing: 642
-	Actor555: scol
-		Owner: Multi2
-		Location: 21,14
-	Actor556: scol
-		Owner: Multi2
-		Location: 9,20
-	Actor557: swal
-		Owner: Multi2
-		Location: 10,20
-	Actor558: swal
-		Owner: Multi2
-		Location: 11,20
-	Actor559: swal
-		Owner: Multi2
-		Location: 11,21
-	Actor560: swal
-		Owner: Multi2
-		Location: 10,21
-	Actor561: swal
-		Owner: Multi2
-		Location: 9,21
-	Actor562: swal
-		Owner: Multi2
-		Location: 8,21
-	Actor563: swal
-		Owner: Multi2
-		Location: 7,21
-	Actor564: swal
-		Owner: Multi2
-		Location: 6,21
-	Actor565: swal
-		Owner: Multi2
-		Location: 5,21
-	Actor566: swal
-		Owner: Multi2
-		Location: 4,21
-	Actor567: swal
-		Owner: Multi2
-		Location: 4,20
-	Actor568: swal
-		Owner: Multi2
-		Location: 5,20
-	Scrininf: port
-		Owner: Multi2
-		Location: 8,15
-	Scrinveh: wsph
-		Owner: Multi2
-		Location: 3,12
-	helispawn2: waypoint
-		Owner: Multi0
-		Location: 44,143
 	Helispawn1: waypoint
-		Owner: Multi0
+		Owner: GDI
 		Location: 74,143
 	Nodspawn2: waypoint
-		Owner: Multi3
+		Owner: Nod
 		Location: 143,61
-	Scrinspawn2: waypoint
-		Owner: Multi2
+	Sovietspawn2: waypoint
+		Owner: Soviet
 		Location: 2,23
-	Scrinspawn: waypoint
-		Owner: Multi2
+	Sovietspawn: waypoint
+		Owner: Soviet
 		Location: 34,3
-	Actor569: mshp.husk
-		Owner: Multi2
-		Facing: 384
-		Location: 80,64
-	Actor570: mshp.husk
-		Owner: Multi2
-		Location: 44,75
-		Facing: 384
 	Nodspawn3: waypoint
-		Owner: Multi3
+		Owner: Nod
 		Location: 144,98
-	wormhole1: wormhole
-		Owner: Multi2
-		Location: 80,64
-	wormhole2: wormhole
-		Owner: Multi2
-		Location: 44,75
-	Airdrop1: waypoint
-		Owner: Neutral
-		Location: 59,75
 	Helidrop1: waypoint
 		Owner: Neutral
 		Location: 91,87
-	Airdrop2: waypoint
-		Owner: Neutral
-		Location: 94,79
-	Airdrop3: waypoint
-		Owner: Neutral
-		Location: 68,35
 	Actor571: t15
 		Owner: Neutral
 		Location: 112,119
@@ -1711,38 +1022,32 @@ Actors:
 		Owner: Neutral
 		Location: 57,25
 	Actor575: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 48,129
 	Actor576: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 48,130
 	Actor577: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 47,130
 	Actor578: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 47,129
 	Actor579: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 46,129
 	Actor580: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 45,129
 	Actor581: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 45,130
 	Actor582: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 45,131
 	Actor583: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 45,132
-	Actor585: brik
-		Owner: Multi0
-		Location: 46,133
-	Nodspawn4: waypoint
-		Owner: Multi3
-		Location: 103,3
 	Actor588: tc04
 		Owner: Neutral
 		Location: 18,63
@@ -1767,12 +1072,6 @@ Actors:
 	Actor595: tc05
 		Owner: Neutral
 		Location: 138,78
-	Actor596: tc01
-		Owner: Neutral
-		Location: 138,94
-	Actor597: tc03
-		Owner: Neutral
-		Location: 129,91
 	Actor598: tc02
 		Owner: Neutral
 		Location: 56,120
@@ -1785,768 +1084,1392 @@ Actors:
 	Actor601: t13
 		Owner: Neutral
 		Location: 28,121
-	Actor602: tc04
-		Owner: Neutral
-		Location: 121,25
-	Actor603: t16
-		Owner: Neutral
-		Location: 123,21
-	Actor604: tc02
-		Owner: Neutral
-		Location: 115,30
-	Actor605: tc01
-		Owner: Neutral
-		Location: 117,27
-	Actor606: t07
-		Owner: Neutral
-		Location: 124,22
-	Actor607: t05
-		Owner: Neutral
-		Location: 124,28
 	Usaspawn2: waypoint
-		Owner: Multi0
+		Owner: GDI
 		Location: 3,121
-	Actor587: proc
-		Owner: Multi0
-		Location: 28,99
-	Actor608: fact
-		Owner: Multi0
-		Location: 24,95
-	Actor609: apwr
-		Owner: Multi0
-		Location: 15,95
-	Actor610: apwr
-		Owner: Multi0
-		Location: 15,98
-	Actor611: apwr
-		Owner: Multi0
-		Location: 15,101
-	Actor613: apwr
-		Owner: Multi0
-		Location: 11,97
-	Actor614: dome
-		Owner: Multi0
-		Location: 20,100
-	Usaveh2: weap
-		Owner: Multi0
-		Location: 18,90
-	Actor616: agun
-		Owner: Multi0
-		Location: 21,96
 	Actor620: sbag
-		Owner: Multi0
+		Owner: GDI
 		Location: 22,96
 	Actor621: sbag
-		Owner: Multi0
+		Owner: GDI
 		Location: 22,95
 	Actor622: sbag
-		Owner: Multi0
+		Owner: GDI
 		Location: 21,95
 	Actor623: sbag
-		Owner: Multi0
+		Owner: GDI
 		Location: 20,95
 	Actor624: sbag
-		Owner: Multi0
+		Owner: GDI
 		Location: 20,96
 	Actor625: sbag
-		Owner: Multi0
+		Owner: GDI
 		Location: 59,124
 	Actor626: sbag
-		Owner: Multi0
+		Owner: GDI
 		Location: 58,124
 	Actor627: sbag
-		Owner: Multi0
+		Owner: GDI
 		Location: 57,125
 	Actor628: sbag
-		Owner: Multi0
+		Owner: GDI
 		Location: 57,124
 	Actor629: sbag
-		Owner: Multi0
+		Owner: GDI
 		Location: 59,125
 	Actor630: sbag
-		Owner: Multi0
+		Owner: GDI
 		Location: 45,125
 	Actor631: sbag
-		Owner: Multi0
+		Owner: GDI
 		Location: 44,125
 	Actor632: sbag
-		Owner: Multi0
+		Owner: GDI
 		Location: 44,126
 	Actor633: sbag
-		Owner: Multi0
+		Owner: GDI
 		Location: 46,125
 	Actor634: sbag
-		Owner: Multi0
+		Owner: GDI
 		Location: 46,126
 	Actor636: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 46,131
 	Actor635: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 46,132
 	Actor637: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 10,100
 	Actor645: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 14,104
 	Actor646: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 15,104
 	Actor647: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 16,104
 	Actor648: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 18,104
 	Actor649: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 18,104
 	Actor650: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 19,104
 	Actor651: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 17,104
 	Actor652: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 17,104
 	Actor638: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 13,104
 	Actor639: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 12,104
 	Actor640: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 10,104
 	Actor641: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 11,104
 	Actor642: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 10,103
 	Actor643: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 10,101
 	Actor644: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 10,102
 	Actor653: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 11,103
 	Actor654: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 10,99
 	Actor655: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 10,97
 	Actor656: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 10,98
 	Actor657: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 9,97
 	Actor658: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 8,97
 	Actor659: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 7,97
 	Actor660: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 7,96
 	Actor661: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 8,97
 	Actor662: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 8,96
-	Actor663: apwr
-		Owner: Multi0
-		Location: 11,100
-	Actor664: pris
-		Owner: Multi0
-		Location: 11,85
-	Actor666: pris
-		Owner: Multi0
-		Location: 21,85
-	Usainf2: tent
-		Owner: Multi0
-		Location: 36,94
-	Actor690: fix
-		Owner: Multi0
-		Location: 11,90
 	Actor691: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 8,88
 	Actor692: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 7,88
 	Actor693: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 7,87
 	Actor694: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 8,87
 	Actor695: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 7,86
 	Actor696: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 7,85
 	Actor697: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 8,85
 	Actor698: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 9,85
 	Actor699: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 10,85
 	Actor700: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 10,84
 	Actor701: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 11,84
 	Actor702: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 12,84
 	Actor703: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 12,85
 	Actor704: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 13,85
 	Actor712: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 20,85
 	Actor713: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 19,85
 	Actor714: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 21,84
 	Actor715: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 20,84
 	Actor716: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 22,84
 	Actor717: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 22,85
 	Actor718: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 23,85
 	Actor719: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 23,86
 	Actor720: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 23,87
 	Actor721: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 23,88
 	Actor722: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 23,89
 	Actor723: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 23,90
 	Actor724: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 24,90
 	Actor725: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 25,90
 	Actor726: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 26,90
 	Actor727: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 27,90
 	Actor730: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 20,104
 	Actor731: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 21,104
 	Actor732: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 21,103
 	Actor733: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 20,103
-	Actor734: agun
-		Owner: Multi0
-		Location: 33,98
 	Actor738: sbag
-		Owner: Multi0
+		Owner: GDI
 		Location: 34,98
 	Actor739: sbag
-		Owner: Multi0
+		Owner: GDI
 		Location: 34,97
 	Actor740: sbag
-		Owner: Multi0
+		Owner: GDI
 		Location: 33,97
 	Actor741: sbag
-		Owner: Multi0
+		Owner: GDI
 		Location: 32,97
 	Actor742: sbag
-		Owner: Multi0
+		Owner: GDI
 		Location: 32,98
 	Actor743: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 28,90
 	Actor744: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 29,90
 	Actor745: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 29,91
 	Actor746: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 28,91
-	Actor728: pris
-		Owner: Multi0
-		Location: 27,91
-	Actor747: brik
-		Owner: Multi0
-		Location: 33,93
-	Actor748: brik
-		Owner: Multi0
-		Location: 33,94
-	Actor749: brik
-		Owner: Multi0
-		Location: 32,94
-	Actor750: brik
-		Owner: Multi0
-		Location: 32,93
-	Actor729: gap
-		Owner: Multi0
-		Location: 23,93
-	Actor751: pris
-		Owner: Multi0
-		Location: 33,95
-	Actor753: afac
-		Owner: Multi3
-		Location: 82,27
-	Actor755: nuk2
-		Owner: Multi3
-		Location: 88,26
-	Actor756: nuk2
-		Owner: Multi3
-		Location: 88,23
-	Actor757: nuk2
-		Owner: Multi3
-		Location: 90,26
-	Actor758: nuk2
-		Owner: Multi3
-		Location: 90,23
-	Nodinf2: hand
-		Owner: Multi3
-		Location: 78,26
-	Actor759: chain
-		Owner: Multi3
-		Location: 75,30
-	Actor760: chain
-		Owner: Multi3
-		Location: 76,30
-	Actor761: chain
-		Owner: Multi3
-		Location: 76,29
-	Actor762: chain
-		Owner: Multi3
-		Location: 75,29
-	Actor763: chain
-		Owner: Multi3
-		Location: 77,30
-	Actor765: chain
-		Owner: Multi3
-		Location: 77,32
-	Actor766: chain
-		Owner: Multi3
-		Location: 77,30
-	Actor768: chain
-		Owner: Multi3
-		Location: 77,31
-	Actor769: chain
-		Owner: Multi3
-		Location: 78,32
-	Actor764: chain
-		Owner: Multi3
-		Location: 79,32
-	Actor767: chain
-		Owner: Multi3
-		Location: 80,32
-	Actor770: chain
-		Owner: Multi3
-		Location: 81,32
-	Actor771: chain
-		Owner: Multi3
-		Location: 81,33
-	Actor772: chain
-		Owner: Multi3
-		Location: 82,33
-	Actor773: chain
-		Owner: Multi3
-		Location: 83,33
-	Actor774: chain
-		Owner: Multi3
-		Location: 84,33
-	Actor775: chain
-		Owner: Multi3
-		Location: 85,32
-	Actor776: chain
-		Owner: Multi3
-		Location: 85,33
-	Actor777: chain
-		Owner: Multi3
-		Location: 85,31
-	Actor778: chain
-		Owner: Multi3
-		Location: 85,30
-	Actor780: chain
-		Owner: Multi3
-		Location: 86,30
-	Actor781: chain
-		Owner: Multi3
-		Location: 88,30
-	Actor783: chain
-		Owner: Multi3
-		Location: 87,30
-	Actor779: chain
-		Owner: Multi3
-		Location: 89,30
-	Actor782: chain
-		Owner: Multi3
-		Location: 90,30
-	Actor784: chain
-		Owner: Multi3
-		Location: 91,30
-	Actor785: chain
-		Owner: Multi3
-		Location: 92,30
-	Actor786: chain
-		Owner: Multi3
-		Location: 92,29
-	Actor787: chain
-		Owner: Multi3
-		Location: 92,28
-	Actor792: chain
-		Owner: Multi3
-		Location: 92,23
-	Actor793: chain
-		Owner: Multi3
-		Location: 92,22
-	Actor794: chain
-		Owner: Multi3
-		Location: 91,22
-	Actor795: chain
-		Owner: Multi3
-		Location: 91,21
-	Actor796: chain
-		Owner: Multi3
-		Location: 92,21
-	Actor797: proc.td
-		Owner: Multi3
-		Location: 78,20
-	Actor798: obli
-		Owner: Multi3
-		Location: 78,31
-	Actor754: nsam
-		Owner: Multi3
-		Location: 82,32
-	Actor799: chain
-		Owner: Multi3
-		Location: 80,19
-	Actor800: chain
-		Owner: Multi3
-		Location: 81,19
-	Actor801: chain
-		Owner: Multi3
-		Location: 82,19
-	Actor802: chain
-		Owner: Multi3
-		Location: 85,19
-	Actor803: chain
-		Owner: Multi3
-		Location: 84,19
-	Actor804: chain
-		Owner: Multi3
-		Location: 83,19
-	Actor805: chain
-		Owner: Multi3
-		Location: 86,19
-	Actor806: chain
-		Owner: Multi3
-		Location: 86,19
-	Actor807: chain
-		Owner: Multi3
-		Location: 87,19
-	Actor808: chain
-		Owner: Multi3
-		Location: 88,19
-	Actor809: chain
-		Owner: Multi3
-		Location: 88,20
-	Actor810: chain
-		Owner: Multi3
-		Location: 87,20
-	Actor813: silo.td
-		Owner: Multi3
-		Location: 82,21
-	Actor815: chain
-		Owner: Multi3
-		Location: 75,26
-	Actor816: chain
-		Owner: Multi3
-		Location: 76,26
-	Actor817: chain
-		Owner: Multi3
-		Location: 75,25
-	Actor818: chain
-		Owner: Multi3
-		Location: 76,25
-	Actor819: chain
-		Owner: Multi3
-		Location: 75,24
-	Actor822: chain
-		Owner: Multi3
-		Location: 79,19
-	Actor820: chain
-		Owner: Multi3
-		Location: 79,18
-	Actor821: chain
-		Owner: Multi3
-		Location: 80,18
-	Actor823: chain
-		Owner: Multi3
-		Location: 75,23
-	Actor824: chain
-		Owner: Multi3
-		Location: 74,23
-	Actor825: chain
-		Owner: Multi3
-		Location: 74,24
-	Actor826: obli
-		Owner: Multi3
-		Location: 76,24
 	Actor827: hpad
-		Owner: Multi0
+		Owner: GDI
 		Location: 9,87
 	Actor831: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 18,86
 	Actor832: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 18,85
-	Actor835: pbox
-		Owner: Multi0
-		Location: 18,84
-	Actor836: pbox
-		Owner: Multi0
-		Location: 14,84
 	Actor828: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 14,85
 	Actor829: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 14,86
 	Actor830: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 19,86
 	Actor833: brik
-		Owner: Multi0
+		Owner: GDI
 		Location: 13,86
-	Nodveh2: airs
-		Owner: Multi3
-		Location: 82,22
-	Actor834: gun.nod
-		Owner: Multi3
-		Location: 75,22
-	Actor837: gun.nod
-		Owner: Multi3
-		Location: 78,19
-		TurretFacing: 0
-	Actor812: gun.nod
-		Owner: Multi3
-		Location: 74,26
-		TurretFacing: 309
-	Actor811: gun.nod
-		Owner: Multi3
-		Location: 74,29
-		TurretFacing: 364
-	Actor788: chain
-		Owner: Multi3
-		Location: 93,28
-	Actor789: chain
-		Owner: Multi3
-		Location: 94,28
-	Actor790: chain
-		Owner: Multi3
-		Location: 93,23
-	Actor791: chain
-		Owner: Multi3
-		Location: 94,23
-	Actor838: chain
-		Owner: Multi3
-		Location: 95,23
-	Actor839: chain
-		Owner: Multi3
-		Location: 95,28
-	Actor840: chain
-		Owner: Multi3
-		Location: 95,27
-	Actor841: chain
-		Owner: Multi3
-		Location: 95,24
-	Actor842: chain
-		Owner: Multi3
-		Location: 96,24
-	Actor843: chain
-		Owner: Multi3
-		Location: 96,23
-	Actor844: chain
-		Owner: Multi3
-		Location: 96,27
-	Actor845: chain
-		Owner: Multi3
-		Location: 96,28
-	Actor814: n1
-		Owner: Multi3
-		SubCell: 3
-		Location: 79,29
-		Facing: 229
-	Actor846: n1
-		Owner: Multi3
-		SubCell: 3
-		Location: 84,31
-		TurretFacing: 0
-		Facing: 166
-	Actor847: n3
-		Owner: Multi3
-		Facing: 384
-		SubCell: 3
-		Location: 86,21
-	Actor848: acol
-		Owner: Multi3
-		Facing: 384
-		SubCell: 3
-		Location: 73,25
 	Actor849: e1
-		Owner: Multi0
+		Owner: GDI
 		SubCell: 3
 		Location: 17,87
 		Facing: 650
 	Actor850: e1
-		Owner: Multi0
+		Owner: GDI
 		SubCell: 3
 		Location: 15,88
 		Facing: 848
 	Actor851: e3
-		Owner: Multi0
+		Owner: GDI
 		SubCell: 3
 		Location: 40,96
 		Facing: 198
 	Actor852: e1r1
-		Owner: Multi0
+		Owner: GDI
 		Location: 32,92
 		SubCell: 3
 		Facing: 0
 	Actor853: e1r1
-		Owner: Multi0
+		Owner: GDI
 		SubCell: 3
 		Location: 29,92
 		Facing: 689
 	Actor854: e1
-		Owner: Multi0
+		Owner: GDI
 		Facing: 384
 		SubCell: 3
 		Location: 35,96
-	Actor855: pcan
-		Owner: Multi0
-		Location: 29,94
-		Facing: 896
-	Actor856: tnkd
-		Owner: Multi0
-		Location: 18,88
+	Actor859: fact
+		Owner: Soviet
+		Location: 2,4
+	Actor860: tpwr
+		Owner: Soviet
+		Location: 7,1
+	Actor861: tpwr
+		Owner: Soviet
+		Location: 10,1
+	Actor862: tpwr
+		Owner: Soviet
+		Location: 13,1
+	Actor863: proc
+		Owner: Soviet
+		Location: 15,5
+	Sovietinf: barr
+		Owner: Soviet
+		Location: 8,13
+	Sovietveh: weap
+		Owner: Soviet
+		Location: 3,12
+	Actor864: tsla
+		Owner: Soviet
+		Location: 9,20
+	Actor865: tsla
+		Owner: Soviet
+		Location: 21,14
+	Actor737: brik
+		Owner: Soviet
+		Location: 10,20
+	Actor752: brik
+		Owner: Soviet
+		Location: 11,20
+	Actor866: brik
+		Owner: Soviet
+		Location: 11,21
+	Actor867: brik
+		Owner: Soviet
+		Location: 10,21
+	Actor868: brik
+		Owner: Soviet
+		Location: 9,21
+	Actor869: brik
+		Owner: Soviet
+		Location: 8,21
+	Actor870: brik
+		Owner: Soviet
+		Location: 7,21
+	Actor871: brik
+		Owner: Soviet
+		Location: 6,21
+	Actor872: brik
+		Owner: Soviet
+		Location: 4,21
+	Actor873: brik
+		Owner: Soviet
+		Location: 4,21
+	Actor874: brik
+		Owner: Soviet
+		Location: 5,21
+	Actor875: brik
+		Owner: Soviet
+		Location: 3,21
+	Actor876: brik
+		Owner: Soviet
+		Location: 2,21
+	Actor877: brik
+		Owner: Soviet
+		Location: 1,21
+	Actor878: brik
+		Owner: Soviet
+		Location: 1,20
+	Actor879: brik
+		Owner: Soviet
+		Location: 2,20
+	Actor880: brik
+		Owner: Soviet
+		Location: 2,9
+	Actor881: brik
+		Owner: Soviet
+		Location: 3,9
+	Actor882: brik
+		Owner: Soviet
+		Location: 4,9
+	Actor883: brik
+		Owner: Soviet
+		Location: 5,9
+	Actor884: brik
+		Owner: Soviet
+		Location: 6,9
+	Actor885: brik
+		Owner: Soviet
+		Location: 6,8
+	Actor886: brik
+		Owner: Soviet
+		Location: 6,7
+	Actor887: brik
+		Owner: Soviet
+		Location: 7,7
+	Actor888: brik
+		Owner: Soviet
+		Location: 7,8
+	Actor889: brik
+		Owner: Soviet
+		Location: 2,10
+	Actor890: brik
+		Owner: Soviet
+		Location: 1,10
+	Actor891: brik
+		Owner: Soviet
+		Location: 1,9
+	Actor892: brik
+		Owner: Soviet
+		Location: 6,1
+	Actor895: brik
+		Owner: Soviet
+		Location: 5,1
+	Actor896: brik
+		Owner: Soviet
+		Location: 17,2
+	Actor897: brik
+		Owner: Soviet
+		Location: 18,2
+	Actor898: brik
+		Owner: Soviet
+		Location: 18,1
+	Actor899: brik
+		Owner: Soviet
+		Location: 17,1
+	Actor900: brik
+		Owner: Soviet
+		Location: 19,1
+	Actor901: brik
+		Owner: Soviet
+		Location: 20,1
+	Actor902: brik
+		Owner: Soviet
+		Location: 21,1
+	Actor903: brik
+		Owner: Soviet
+		Location: 21,2
+	Actor904: brik
+		Owner: Soviet
+		Location: 21,3
+	Actor905: brik
+		Owner: Soviet
+		Location: 21,4
+	Actor906: brik
+		Owner: Soviet
+		Location: 20,4
+	Actor907: brik
+		Owner: Soviet
+		Location: 20,5
+	Actor908: brik
+		Owner: Soviet
+		Location: 21,5
+	Actor909: brik
+		Owner: Soviet
+		Location: 4,1
+	Actor910: brik
+		Owner: Soviet
+		Location: 4,2
+	Actor893: brik
+		Owner: Soviet
+		Location: 6,2
+	Actor894: brik
+		Owner: Soviet
+		Location: 6,3
+	Actor911: brik
+		Owner: Soviet
+		Location: 7,4
+	Actor912: brik
+		Owner: Soviet
+		Location: 7,5
+	Actor913: brik
+		Owner: Soviet
+		Location: 6,4
+	Actor914: brik
+		Owner: Soviet
+		Location: 6,5
+	Actor915: brik
+		Owner: Soviet
+		Location: 5,2
+	Actor916: brik
+		Owner: Soviet
+		Location: 21,13
+	Actor917: brik
+		Owner: Soviet
+		Location: 21,12
+	Actor918: brik
+		Owner: Soviet
+		Location: 21,11
+	Actor919: brik
+		Owner: Soviet
+		Location: 21,10
+	Actor920: brik
+		Owner: Soviet
+		Location: 21,9
+	Actor921: brik
+		Owner: Soviet
+		Location: 20,9
+	Actor922: brik
+		Owner: Soviet
+		Location: 20,8
+	Actor923: brik
+		Owner: Soviet
+		Location: 20,8
+	Actor924: brik
+		Owner: Soviet
+		Location: 21,8
+	Actor929: brik
+		Owner: Soviet
+		Location: 22,13
+	Actor930: brik
+		Owner: Soviet
+		Location: 22,14
+	Actor931: brik
+		Owner: Soviet
+		Location: 22,15
+	Actor932: brik
+		Owner: Soviet
+		Location: 21,15
+	Actor933: brik
+		Owner: Soviet
+		Location: 21,16
+	Actor934: brik
+		Owner: Soviet
+		Location: 22,16
+	Actor925: proc.td
+		Owner: GDI
+		Location: 28,99
+	Actor926: cram
+		Owner: GDI
+		Location: 33,98
+	Actor928: atwr
+		Owner: GDI
+		Location: 27,91
+	Actor855: cram
+		Owner: GDI
+		Location: 21,96
+	Actor835: gtwr
+		Owner: GDI
+		Location: 14,84
+	Actor836: gtwr
+		Owner: GDI
+		Location: 18,84
+	Actor935: atwr
+		Owner: GDI
+		Location: 11,85
+	Actor936: atwr
+		Owner: GDI
+		Location: 21,85
+	Actor937: rep
+		Owner: GDI
+		Location: 11,89
+	Usaveh2: weap.td
+		Owner: GDI
+		Location: 18,90
+	Actor938: nuk2
+		Owner: GDI
+		Location: 11,100
+	Actor939: nuk2
+		Owner: GDI
+		Location: 13,100
+	Actor940: nuk2
+		Owner: GDI
+		Location: 15,100
+	Actor941: nuk2
+		Owner: GDI
+		Location: 13,97
+	Actor942: nuk2
+		Owner: GDI
+		Location: 11,97
+	Actor943: hq
+		Owner: GDI
+		Location: 19,99
+	Usainf2: pyle
+		Owner: GDI
+		Location: 37,94
+	Actor944: afac
+		Owner: GDI
+		Location: 25,95
+	Actor856: afac
+		Owner: GDI
+		Location: 61,141
+	Usaveh: weap.td
+		Owner: GDI
+		Location: 66,132
+	Usainf: pyle
+		Owner: GDI
+		Location: 70,136
+	Actor945: atwr
+		Owner: GDI
+		Location: 60,130
+	Actor946: atwr
+		Owner: GDI
+		Location: 69,130
+	Actor947: nuk2
+		Owner: GDI
+		Location: 52,142
+	Actor948: nuk2
+		Owner: GDI
+		Location: 54,142
+	Actor949: nuk2
+		Owner: GDI
+		Location: 56,142
+	Actor950: nuk2
+		Owner: GDI
+		Location: 58,142
+	Actor951: proc.td
+		Owner: GDI
+		Location: 48,138
+	wormhole2: waypoint
+		Owner: Soviet
+		Location: 52,2
+	wormhole3: waypoint
+		Owner: Soviet
+		Location: 25,2
+	Nodspawn4: waypoint
+		Owner: Nod
+		Location: 144,88
+	Airdrop2: waypoint
+		Owner: Neutral
+		Location: 87,91
+	Actor663: tc01
+		Owner: Neutral
+		Location: 102,87
+	Actor664: tc02
+		Owner: Neutral
+		Location: 115,75
+	Actor665: tc03
+		Owner: Neutral
+		Location: 115,82
+	Actor666: tc05
+		Owner: Neutral
+		Location: 100,73
+	Mig11: waypoint
+		Location: 94,1
+		Owner: Neutral
+	Mig12: waypoint
+		Location: 68,33
+		Owner: Neutral
+	Mig13: waypoint
+		Location: 41,38
+		Owner: Neutral
+	Mig14: waypoint
+		Location: 1,26
+		Owner: Neutral
+	Mig21: waypoint
+		Location: 96,3
+		Owner: Neutral
+	Mig22: waypoint
+		Location: 70,35
+		Owner: Neutral
+	Mig23: waypoint
+		Location: 41,40
+		Owner: Neutral
+	Mig24: waypoint
+		Location: 1,28
+		Owner: Neutral
+	LstEntry: waypoint
+		Owner: Neutral
+		Location: 133,2
+	LstUnload: waypoint
+		Owner: Neutral
+		Location: 117,38
+	wormhole1: waypoint
+		Owner: Neutral
+		Location: 101,2
+	AlliedCenter: fact
+		Owner: Allies
+		Location: 80,64
+	Actor669: pbox
+		Owner: Allies
+		Location: 83,73
+	Aveh: weap
+		Owner: Allies
+		Location: 74,64
+	Actor674: brik
+		Owner: Allies
+		Location: 84,72
+	Actor676: brik
+		Owner: Allies
+		Location: 86,72
+	Actor677: brik
+		Owner: Allies
+		Location: 86,71
+	Actor675: brik
+		Owner: Allies
+		Location: 83,72
+	Actor678: brik
+		Owner: Allies
+		Location: 83,71
+	Actor679: brik
+		Owner: Allies
+		Location: 84,71
+	Actor680: brik
+		Owner: Allies
+		Location: 86,70
+	Actor681: brik
+		Owner: Allies
+		Location: 86,69
+	Actor682: brik
+		Owner: Allies
+		Location: 87,69
+	Actor683: brik
+		Owner: Allies
+		Location: 89,69
+	Actor684: brik
+		Owner: Allies
+		Location: 88,69
+	Actor685: brik
+		Owner: Allies
+		Location: 89,68
+	Actor686: brik
+		Owner: Allies
+		Location: 88,68
+	Actor673: brik
+		Owner: Allies
+		Location: 85,72
+	Actor688: brik
+		Owner: Allies
+		Location: 76,72
+	Actor689: brik
+		Owner: Allies
+		Location: 75,72
+	Actor690: brik
+		Owner: Allies
+		Location: 75,71
+	Actor705: brik
+		Owner: Allies
+		Location: 76,71
+	Actor687: brik
+		Owner: Allies
+		Location: 74,72
+	Actor706: brik
+		Owner: Allies
+		Location: 73,72
+	Actor707: brik
+		Owner: Allies
+		Location: 73,71
+	Actor708: brik
+		Owner: Allies
+		Location: 73,70
+	Actor709: brik
+		Owner: Allies
+		Location: 73,69
+	Actor710: brik
+		Owner: Allies
+		Location: 73,68
+	Actor711: brik
+		Owner: Allies
+		Location: 74,68
+	Actor728: brik
+		Owner: Allies
+		Location: 74,69
+	Actor729: fix
+		Owner: Allies
+		Location: 76,67
+	Actor734: apwr
+		Owner: Allies
+		Location: 77,59
+	Actor735: apwr
+		Owner: Allies
+		Location: 80,59
+	Actor765: brik
+		Owner: Allies
+		Location: 76,52
+	Actor766: brik
+		Owner: Allies
+		Location: 77,52
+	Actor767: brik
+		Owner: Allies
+		Location: 78,52
+	Actor768: brik
+		Owner: Allies
+		Location: 79,52
+	Actor770: brik
+		Owner: Allies
+		Location: 87,52
+	Actor771: brik
+		Owner: Allies
+		Location: 86,52
+	Actor772: brik
+		Owner: Allies
+		Location: 85,52
+	Actor774: brik
+		Owner: Allies
+		Location: 88,52
+	Actor775: brik
+		Owner: Allies
+		Location: 88,53
+	Actor776: brik
+		Owner: Allies
+		Location: 87,53
+	Actor777: brik
+		Owner: Allies
+		Location: 88,54
+	Actor778: brik
+		Owner: Allies
+		Location: 88,55
+	Actor779: brik
+		Owner: Allies
+		Location: 88,56
+	Actor780: brik
+		Owner: Allies
+		Location: 87,56
+	Actor781: brik
+		Owner: Allies
+		Location: 87,55
+	Actor782: brik
+		Owner: Allies
+		Location: 76,53
+	Actor783: brik
+		Owner: Allies
+		Location: 76,54
+	Actor784: brik
+		Owner: Allies
+		Location: 76,55
+	Actor785: brik
+		Owner: Allies
+		Location: 77,55
+	Actor786: brik
+		Owner: Allies
+		Location: 76,56
+	Actor787: brik
+		Owner: Allies
+		Location: 77,56
+	Actor788: brik
+		Owner: Allies
+		Location: 79,53
+	Actor789: brik
+		Owner: Allies
+		Location: 80,53
+	Actor790: brik
+		Owner: Allies
+		Location: 84,53
+	Actor791: brik
+		Owner: Allies
+		Location: 85,53
+	Actor736: brik
+		Owner: Allies
+		Location: 80,53
+	Actor751: brik
+		Owner: Allies
+		Location: 80,52
+	Actor769: brik
+		Owner: Allies
+		Location: 84,52
+	Actor773: pris
+		Owner: Allies
+		Location: 78,53
+	Actor792: pris
+		Owner: Allies
+		Location: 86,53
+	Actor793: pris
+		Owner: Allies
+		Location: 85,71
+	Actor794: pris
+		Owner: Allies
+		Location: 74,71
+	Actor796: dome
+		Owner: Allies
+		Location: 86,66
+	Actor797: apwr
+		Owner: Allies
+		Location: 78,56
+	Ainf: tent
+		Owner: Allies
+		Location: 89,61
+	Actor799: tc05
+		Owner: Neutral
+		Location: 125,46
+	Actor800: tc04
+		Owner: Neutral
+		Location: 109,23
+	Actor801: tc02
+		Owner: Neutral
+		Location: 134,50
+	Actor802: t16
+		Owner: Neutral
+		Location: 135,49
+	Actor803: t13
+		Owner: Neutral
+		Location: 133,49
+	Actor804: t11
+		Owner: Neutral
+		Location: 109,5
+	Actor809: batf
+		Owner: Allies
+		Location: 79,72
+		Facing: 491
+	Actor810: ptnk
+		Owner: Allies
+		Location: 82,53
+		Facing: 0
+	Actor814: pbox
+		Owner: Allies
+		Location: 76,73
+	Actor824: e1
+		Owner: Allies
+		Facing: 384
+		SubCell: 3
+		Location: 82,72
+	Actor825: e1
+		Owner: Allies
+		Location: 77,70
+		SubCell: 3
+		TurretFacing: 618
+		Facing: 666
+	Actor826: medi
+		Owner: Allies
+		SubCell: 3
+		Location: 88,63
+		Facing: 491
+	Actor834: e1
+		Owner: Allies
+		Facing: 384
+		SubCell: 3
+		Location: 84,54
+	Actor837: e1
+		Owner: Allies
+		SubCell: 3
+		Location: 80,54
+		Facing: 563
+	Actor840: htnk.ion
+		Owner: GDI
+		Location: 62,91
+		Facing: 769
+		TurretFacing: 0
+	Actor841: n1
+		Owner: GDI
+		SubCell: 3
+		Location: 63,90
+		Facing: 888
+	Actor842: n2
+		Owner: GDI
+		SubCell: 3
+		Location: 64,92
+		Facing: 586
+	Actor843: n1
+		Owner: GDI
+		Facing: 384
+		SubCell: 3
+		Location: 63,130
+	Actor844: n1
+		Owner: GDI
+		SubCell: 3
+		Location: 66,129
+		Facing: 47
+	Actor845: n3
+		Owner: GDI
+		SubCell: 3
+		Location: 68,136
+		Facing: 158
+	Actor846: fact
+		Owner: Allies
+		Location: 10,134
+	Actor847: apwr
+		Owner: Allies
+		Location: 2,134
+	Actor848: apwr
+		Owner: Allies
+		Location: 2,137
+	Actor857: apwr
+		Owner: Allies
+		Location: 5,134
+	Actor858: apwr
+		Owner: Allies
+		Location: 5,137
+	Actor952: proc
+		Owner: Allies
+		Location: 7,128
+	Actor953: agun
+		Owner: Allies
+		Location: 16,135
+	Chronosphere: pdox
+		Owner: Allies
+		Location: 13,140
+	Actor955: sbag
+		Owner: Allies
+		Location: 13,142
+	Actor956: sbag
+		Owner: Allies
+		Location: 14,142
+	Actor957: sbag
+		Owner: Allies
+		Location: 15,142
+	Actor958: sbag
+		Owner: Allies
+		Location: 15,141
+	Actor959: sbag
+		Owner: Allies
+		Location: 15,140
+	Actor960: sbag
+		Owner: Allies
+		Location: 15,139
+	Actor961: sbag
+		Owner: Allies
+		Location: 14,139
+	Actor962: sbag
+		Owner: Allies
+		Location: 13,139
+	Actor963: sbag
+		Owner: Allies
+		Location: 15,136
+	Actor964: sbag
+		Owner: Allies
+		Location: 16,136
+	Actor965: sbag
+		Owner: Allies
+		Location: 17,136
+	Actor966: sbag
+		Owner: Allies
+		Location: 17,135
+	Actor967: sbag
+		Owner: Allies
+		Location: 17,134
+	Actor968: sbag
+		Owner: Allies
+		Location: 16,134
+	Actor969: sbag
+		Owner: Allies
+		Location: 15,134
+	Actor970: sbag
+		Owner: Allies
+		Location: 15,136
+	Actor971: sbag
+		Owner: Allies
+		Location: 15,135
+	Actor972: e1
+		Owner: Allies
+		SubCell: 3
+		Location: 14,133
+		Facing: 848
+	Actor973: e1
+		Owner: Allies
+		SubCell: 3
+		Location: 9,139
+		Facing: 626
+	Actor974: gap
+		Owner: Allies
+		Location: 91,60
+	Actor980: pris
+		Owner: Allies
+		Location: 95,58
+	Actor981: pris
+		Owner: Allies
+		Location: 95,62
+	Actor982: brik
+		Owner: Allies
+		Location: 97,62
+	Actor983: brik
+		Owner: Allies
+		Location: 96,62
+	Actor984: brik
+		Owner: Allies
+		Location: 96,61
+	Actor985: brik
+		Owner: Allies
+		Location: 97,61
+	Actor986: brik
+		Owner: Allies
+		Location: 96,59
+	Actor987: brik
+		Owner: Allies
+		Location: 97,59
+	Actor988: brik
+		Owner: Allies
+		Location: 97,58
+	Actor989: brik
+		Owner: Allies
+		Location: 96,58
+	Actor990: brik
+		Owner: Allies
+		Location: 95,59
+	Actor991: brik
+		Owner: Allies
+		Location: 95,61
+	Actor992: brik
+		Owner: Allies
+		Location: 94,61
+	Actor993: brik
+		Owner: Allies
+		Location: 94,62
+	Actor994: brik
+		Owner: Allies
+		Location: 94,63
+	Actor995: brik
+		Owner: Allies
+		Location: 93,63
+	Actor996: brik
+		Owner: Allies
+		Location: 93,64
+	Actor997: brik
+		Owner: Allies
+		Location: 94,64
+	Actor998: brik
+		Owner: Allies
+		Location: 94,59
+	Actor999: brik
+		Owner: Allies
+		Location: 93,59
+	Actor1000: brik
+		Owner: Allies
+		Location: 93,58
+	Actor1001: brik
+		Owner: Allies
+		Location: 94,58
+	Actor838: apwr
+		Owner: Allies
+		Location: 2,130
+	ChronoshiftLocation: waypoint
+		Owner: Neutral
+		Location: 85,60
+	Actor954: syrd.gdi
+		Owner: GDI
+		Location: 50,96
+	Actor1002: ice01
+		Owner: Neutral
+		Location: 55,86
+	Actor1003: ice02
+		Owner: Neutral
+		Location: 51,83
+	Actor1004: dd2
+		Owner: GDI
+		Location: 65,98
+		Facing: 769
+	Actor817: spen.nod
+		Owner: Nod
+		Location: 109,83
+	Actor816: sbag
+		Owner: Allies
+		Location: 91,68
+	Actor819: sbag
+		Owner: Allies
+		Location: 92,68
+	Actor820: sbag
+		Owner: Allies
+		Location: 93,68
+	Actor821: sbag
+		Owner: Allies
+		Location: 93,67
+	Actor822: sbag
+		Owner: Allies
+		Location: 93,66
+	Actor823: sbag
+		Owner: Allies
+		Location: 91,66
+	Actor1007: sbag
+		Owner: Allies
+		Location: 92,66
+	Actor1008: sbag
+		Owner: Allies
+		Location: 91,67
+	Actor1006: agun
+		Owner: Allies
+		Location: 92,67
+	Actor811: brik
+		Owner: Allies
+		Location: 69,68
+	Actor812: brik
+		Owner: Allies
+		Location: 68,68
+	Actor815: brik
+		Owner: Allies
+		Location: 68,67
+	Actor1014: brik
+		Owner: Allies
+		Location: 68,66
+	Actor1015: brik
+		Owner: Allies
+		Location: 68,62
+	Actor1017: brik
+		Owner: Allies
+		Location: 68,61
+	Actor1018: brik
+		Owner: Allies
+		Location: 69,61
+	Actor1019: brik
+		Owner: Allies
+		Location: 68,63
+	Actor1023: brik
+		Owner: Allies
+		Location: 69,66
+	Actor1011: brik
+		Owner: Allies
+		Location: 72,67
+	Actor1009: brik
+		Owner: Allies
+		Location: 73,67
+	Actor1010: brik
+		Owner: Allies
+		Location: 69,67
+	Actor1012: brik
+		Owner: Allies
+		Location: 70,67
+	Actor1013: brik
+		Owner: Allies
+		Location: 71,67
+	Actor1016: brik
+		Owner: Allies
+		Location: 69,63
+	Actor1020: brik
+		Owner: Allies
+		Location: 69,62
+	Actor1024: gun.nod
+		Owner: Allies
+		Location: 67,62
+	Actor1025: gun.nod
+		Owner: Allies
+		Location: 67,67
+	Actor1026: htur
+		Owner: Allies
+		Location: 71,62
+		TurretFacing: 245
+	Actor1021: hbox
+		Owner: Allies
+		Location: 67,66
+	Actor1022: hbox
+		Owner: Allies
+		Location: 67,63
+	Actor1027: apwr
+		Owner: Allies
+		Location: 4,140
+	Actor1028: apwr
+		Owner: Allies
+		Location: 7,140
+	Actor798: cycl
+		Owner: Nod
+		Location: 107,89
+	Actor805: cycl
+		Owner: Nod
+		Location: 106,89
+	Actor806: cycl
+		Owner: Nod
+		Location: 108,89
+	Actor807: cycl
+		Owner: Nod
+		Location: 109,89
+	Actor808: cycl
+		Owner: Nod
+		Location: 110,89
+	Actor1031: cycl
+		Owner: Nod
+		Location: 123,81
+	Actor1032: cycl
+		Owner: Nod
+		Location: 124,81
+	Actor1033: cycl
+		Owner: Nod
+		Location: 124,82
+	Actor1030: gun.nod
+		Owner: Nod
+		Location: 105,94
+	Actor1034: gun.nod
+		Owner: Nod
+		Location: 105,90
+	Actor1005: dd2
+		Owner: GDI
+		Location: 53,77
+		Facing: 0
+	Airdrop1: waypoint
+		Owner: Neutral
+		Location: 58,64
+	Actor1035: hbox
+		Owner: Allies
+		Location: 79,51
+	Actor1036: hbox
+		Owner: Allies
+		Location: 85,51
+	Actor1037: hbox
+		Owner: Allies
+		Location: 98,62
+	Actor1038: hbox
+		Owner: Allies
+		Location: 98,59
+	Helispawn2: waypoint
+		Owner: GDI
+		Location: 65,143
+	Helidrop2: waypoint
+		Owner: Neutral
+		Location: 90,91
+	Actor839: nuk2
+		Owner: Nod
+		Location: 123,92
+	Actor1039: nuk2
+		Owner: Nod
+		Location: 125,92
+	Actor1029: obli
+		Owner: Nod
+		Location: 107,90
+	Actor1040: chain
+		Owner: Nod
+		Location: 106,90
+	Actor1041: chain
+		Owner: Nod
+		Location: 106,100
+	Actor1042: chain
+		Owner: Nod
+		Location: 107,100
+	Actor1043: chain
+		Owner: Nod
+		Location: 108,100
+	Actor1044: chain
+		Owner: Nod
+		Location: 113,100
+	Actor1045: ltur
+		Owner: Nod
+		Location: 108,101
+		TurretFacing: 404
+	Actor1046: ltur
+		Owner: Nod
+		Location: 113,101
+		TurretFacing: 531
+	Actor1047: nuk2
+		Owner: Nod
+		Location: 127,92
+	Actor1048: obli
+		Owner: Nod
+		Location: 113,99
+	Actor795: proc
+		Owner: Allies
+		Location: 87,56
+	Actor813: t07
+		Owner: Neutral
+		Location: 62,93
+	Actor818: isub
+		Owner: Nod
+		Location: 104,81
 		Facing: 261
-	Actor857: rptp
-		Owner: Multi2
-		Location: 41,80
-		Facing: 436
-	Actor858: rptp
-		Owner: Multi2
-		Location: 46,81
-		Facing: 658
-	Actor859: ruin
-		Owner: Multi2
-		Location: 41,76
-		Facing: 222
-	Actor860: smedi
-		Owner: Multi2
-		SubCell: 3
-		Facing: 384
-		Location: 43,75
-	Actor861: s4
-		Owner: Multi2
-		SubCell: 3
-		Facing: 384
-		Location: 48,78
-	Actor862: s4
-		Owner: Multi2
-		Facing: 384
-		SubCell: 3
-		Location: 38,77
-	Actor864: s1
-		Owner: Multi2
-		Facing: 384
-		SubCell: 3
-		Location: 47,72
-	Actor863: s2
-		Owner: Multi2
-		SubCell: 3
-		Location: 49,76
-		Facing: 713
-	Actor865: s2
-		Owner: Multi2
-		SubCell: 3
-		Location: 39,78
-		Facing: 198
-	Actor866: s2
-		Owner: Multi2
-		Facing: 384
-		SubCell: 3
-		Location: 41,73
-	Actor867: s2
-		Owner: Multi2
-		SubCell: 3
-		Location: 44,81
-		Facing: 420
-	Actor868: gscr
-		Owner: Multi2
-		Facing: 384
-		SubCell: 3
-		Location: 78,67
-	Actor869: gscr
-		Owner: Multi2
-		SubCell: 3
-		Location: 82,66
-		Facing: 761
-	Actor870: gscr
-		Owner: Multi2
-		SubCell: 3
-		Location: 81,68
-		Facing: 634
-	Actor872: mshp.husk
-		Owner: Multi2
-		Facing: 384
-		Location: 51,51
-	wormhole3: wormhole
-		Owner: Multi2
-		Location: 51,51
+	Airdrop3: waypoint
+		Owner: Neutral
+		Location: 75,42
+	Airdrop4: waypoint
+		Owner: Neutral
+		Location: 84,63
+	Actor927: tc04
+		Owner: Neutral
+		Location: 44,86
+	Actor975: tc01
+		Owner: Neutral
+		Location: 46,76
+	Actor976: atwr
+		Owner: GDI
+		Location: 41,93
+	Actor977: brik
+		Owner: GDI
+		Location: 41,94
+	Actor978: brik
+		Owner: GDI
+		Location: 42,94
+	Actor979: brik
+		Owner: GDI
+		Location: 42,93
+	Actor1049: brik
+		Owner: GDI
+		Location: 42,92
+	Actor1050: brik
+		Owner: GDI
+		Location: 41,92
+	Actor1051: brik
+		Owner: GDI
+		Location: 41,95
+	Actor1052: brik
+		Owner: GDI
+		Location: 42,95
+	Actor1053: brik
+		Owner: GDI
+		Location: 41,91
+	Actor1054: brik
+		Owner: GDI
+		Location: 42,91
 
-Rules: plains.yaml
+Rules: ca|rules/campaign-rules.yaml, ca|rules/campaign-tooltips.yaml, ca|rules/campaign-palettes.yaml, rules.yaml
+
+Weapons: ca|weapons/campaign.yaml
