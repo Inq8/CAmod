@@ -1,12 +1,12 @@
 NodLightUnitTypes = { "bike", "bike", "bggy", "n1", "n1", "n1", "n4", "n4", "n3" }
-NodHeavyUnitTypes = { "ltnk", "ltnk", "apc.ai", "hftk", "mlrs" }
+NodHeavyUnitTypes = { "ltnk", "ltnk", "apc2.nodai", "hftk", "mlrs" }
 NodCyborgUnitTypes = { "n1c", "n1c", "n1c", "n1c", "n3c", "n3c", "rmbc", "rmbc" }
 AlliedUnitTypes = { "hmmv", "mtnk", "vulc.ai", "mtnk", "msam", "vulc.ai", "htnk.ion", "n1", "n1", "n1", "n1", "n3", "n3", "n2", "rmbo" }
 SovietUnitTypes = { "3tnk.atomic", "v2rl", "isu", "4tnk.atomic", "btr.ai", "e1", "e1", "e1", "e4", "e3", "e3" }
 SovietHeavyUnitTypes = { "apoc.atomic", "3tnk.atomic", "4tnk.atomic", "btr.ai", "v2rl", "e1", "e1", "e4", "ivan", "e3", "e3" }
 ShipUnitTypes = { "3tnk", "3tnk", "btr.ai", "btr.ai", "katy" }
-ProxyType = "powerproxy.paratroopers"
-ProxySovietType = "powerproxy.shocktroopers"
+ProxyType = "powerproxy.paratroopers.allies"
+ProxySovietType = "powerproxy.paratroopers"
 ProxyAlliesType = "powerproxy.airborne"
 ParadropWaypoints = { Airdrop2}
 SovietParadropWaypoints = { Airdrop1, Airdrop3}
@@ -124,7 +124,7 @@ ParadropAlliesUnits = function()
 		end)
 	end)
 
-	Trigger.AfterDelay(DateTime.Seconds(135), ParadropUSAUnits)
+	Trigger.AfterDelay(DateTime.Seconds(135), ParadropAlliesUnits)
 end
 
 SendMigs = function(waypoints)
