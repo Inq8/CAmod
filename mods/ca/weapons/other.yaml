@@ -2197,7 +2197,15 @@ CyCannon:
 			Concrete: 25
 			Brick: 75
 		DamageTypes: Prone350Percent, TriggerProne, ExplosionDeath
-
+	Warhead@3Eff: CreateEffect
+		Explosions: large_explosion
+		ImpactSounds: expnew16.aud, expnew17.aud
+	Warhead@green: GrantExternalCondition
+		Range: 0c511
+		Duration: 2
+		Condition: greenhighlight
+		ValidTargets: Ground, Vehicle
+		
 NeutronCannon:
 	ValidTargets: Temporal
 	ReloadDelay: 5

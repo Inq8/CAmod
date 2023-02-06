@@ -46,6 +46,13 @@ EditorWorld:
 ^TDPalette:
 	RenderSprites:
 		PlayerPalette: playertdunit
+		
+^Defense:
+	ChangesHealth@REPAIRSHELL:
+		PercentageStep: 5
+		Delay: 25
+		StartIfBelow: 100
+		DamageCooldown: 0
 
 ^BuildingTD:
 	RenderSprites:
@@ -196,6 +203,14 @@ BATF.AI:
 
 APC2.NODAI:
 	-AttackTurreted:
+
+BTR:
+	Mobile:
+		Speed: 46
+		
+APC2:
+	Mobile:
+		Speed: 46
 
 RMBC:
 	RenderSprites:
