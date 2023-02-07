@@ -51,7 +51,7 @@ EditorWorld:
 	ChangesHealth@REPAIRSHELL:
 		PercentageStep: 5
 		Delay: 25
-		StartIfBelow: 100
+		StartIfBelow: 60
 		DamageCooldown: 0
 
 ^BuildingTD:
@@ -115,10 +115,19 @@ AMCV:
 ^Wall:
 	DamageMultiplier@UNKILLABLE:
 		Modifier: 5
+	ChangesHealth@REPAIRSHELL:
+		PercentageStep: 5
+		Delay: 25
+		StartIfBelow: 60
+		DamageCooldown: 0
 
 ^Bridge:
 	DamageMultiplier:
 		Modifier: 0
+
+^TNTPlantable:
+	WithDecoration@tnt:
+		RequiresSelection: True
 
 SPLIT2:
 	TerrainLightSource:
@@ -178,12 +187,6 @@ OILB:
 	CashTrickler:
 		ShowTicks: false
 
-WORMHOLE:
-	DamageMultiplier@UNKILLABLE:
-		Modifier: 0
-	PopControlled:
-		Limit: 3
-
 PDOX:
 	Power:
 		Amount: -1
@@ -205,10 +208,6 @@ APC2.NODAI:
 	-AttackTurreted:
 
 BTR:
-	Mobile:
-		Speed: 46
-		
-APC2:
 	Mobile:
 		Speed: 46
 

@@ -10,7 +10,7 @@ ProxySovietType = "powerproxy.paratroopers"
 ProxyAlliesType = "powerproxy.airborne"
 ParadropWaypoints = { Airdrop2}
 SovietParadropWaypoints = { Airdrop1, Airdrop3}
-AlliesParadropWaypoints = { Airdrop4}
+AlliesParadropWaypoints = { Airdrop4, Airdrop5}
 Mig1Waypoints = { Mig11, Mig12, Mig13, Mig14 }
 Mig2Waypoints = { Mig21, Mig22, Mig23, Mig24 }
 HelicopterUnitTypes = { "n1", "n1", "n1", "n2", "n3", "n3" };
@@ -21,7 +21,9 @@ ProducedUnitTypes =
 	{ factory = Ainf, types = { "e1", "e3" } },
 	{ factory = Sovietinf, types = { "e1", "e2" } },
 	{ factory = Nodinf, types = { "n1", "n3", "n4" } },
+	{ factory = Nodinf2, types = { "enli", "rmbc", "tplr" } },
 	{ factory = Aveh, types = { "2tnk", "ptnk", "batf.ai" } },
+	{ factory = Aveh2, types = { "tnkd", "pcan", "batf.ai" } },
 	{ factory = Usaveh, types = { "mtnk", "disr", "titn.rail", "hmmv", "htnk.ion", "hsam", "mtnk" } },
 	{ factory = Usaveh2, types = { "mtnk", "disr", "titn", "hmmv", "htnk.ion", "msam", "mtnk" } },
 	{ factory = Sovietveh, types = { "3tnk.atomic", "4tnk.atomic", "katy", "v2rl", "btr.ai" } },
@@ -43,7 +45,7 @@ BindActorTriggers = function(a)
 					if a.Owner == usa then
 						a.AttackMove(FuzzyLocation(NodBaseLocation))
 					elseif a.Owner == allies then
-						a.AttackMove(FuzzyLocation(SovietBaseLocation))
+						a.Hunt()
 					elseif a.Owner == Soviet then
 						a.AttackMove(FuzzyLocation(AlliedBaseLocation))
 					elseif a.Owner == blackh then
