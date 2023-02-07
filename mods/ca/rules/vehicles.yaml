@@ -1082,8 +1082,6 @@ ARTY.nod:
 	Inherits: ^VehicleTD
 	RenderSprites:
 		Image: artynod
-	WithDamageOverlay:
-		Image: smoke_mtd
 	Buildable:
 		BuildPaletteOrder: 62
 		IconPalette: chrometd
@@ -1287,10 +1285,12 @@ ISU:
 		RequiresCondition: !being-warped
 
 SPEC:
-	Inherits: ARTY.nod
-	RenderSprites:
-		Image: spec
+	Inherits: ^VehicleTD
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
 	Buildable:
+		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 241
 		Prerequisites: tmpl, ~vehicles.shadow, ~techlevel.high
 		Description: Long-range stealth artillery.
@@ -1301,19 +1301,42 @@ SPEC:
 		Cost: 1350
 	Tooltip:
 		Name: Spectre
-	Selectable:
-		Class: spec
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
 	Health:
 		HP: 11000
+	Armor:
+		Type: Light
 	Mobile:
 		TurnSpeed: 20
 		Speed: 92
+		Locomotor: lighttracked
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Armament:
 		Weapon: 155mmSpec
 		LocalOffset: 624,0,408
 		FireDelay: 25
 	Armament@TARGETTER:
 		Weapon: 155mmSpecTargeting
+	AttackFrontal:
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: True
+		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
+	WithMuzzleOverlay:
+	Explodes:
+		Weapon: ArtilleryExplode
+		LoadedChance: 75
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	Cloak@NORMAL:
 		InitialDelay: 90
 		CloakDelay: 90
