@@ -664,6 +664,8 @@ GSCR:
 		IdleSequences: idle1, idle2, idle3, idle4
 	AttackSounds:
 		Sounds: gscr-attack1.aud, gscr-attack2.aud
+	Selectable:
+		DecorationBounds: 640, 896, -32, -256
 
 GSCR.Mutating:
 	Inherits: BRUT.Mutating
@@ -753,6 +755,8 @@ MAST:
 	AttackFrontal:
 		PauseOnCondition: being-warped
 		FacingTolerance: 0
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	WithProductionIconOverlay:
