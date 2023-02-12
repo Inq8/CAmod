@@ -154,7 +154,6 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		USSR.Cash = USSR.ResourceCapacity - 500
 		USSR.Resources = USSR.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
@@ -184,13 +183,13 @@ InitUSSR = function()
 
 	SetupRefAndSilosCaptureCredits(USSR)
 
-	Actor.Create("POWERCHEAT", true, { Owner = USSR, Location = UpgradeCreationLocation })
-	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
+	Actor.Create("POWERCHEAT", true, { Owner = USSR })
+	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR })
 
 	if Difficulty == "hard" then
 		Trigger.AfterDelay(DateTime.Minutes(20), function()
-			Actor.Create("flakarmor.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
-			Actor.Create("tarc.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
+			Actor.Create("flakarmor.upgrade", true, { Owner = USSR })
+			Actor.Create("tarc.upgrade", true, { Owner = USSR })
 		end)
 	end
 
@@ -222,7 +221,7 @@ InitUSSR = function()
 					local teslaCoils = USSR.GetActorsByType("tsla")
 					Utils.Do(teslaCoils, function(a)
 						if not a.IsDead then
-							a.GrantCondition("powerdown")
+							a.GrantCondition("disabled")
 						end
 					end)
 					if not Nod.IsObjectiveCompleted(ObjectiveKillReactors) then

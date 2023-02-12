@@ -687,7 +687,7 @@ MAST:
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	AutoTargetPriority@DEFAULT:
-		RequiresCondition: mindcontrolling < 3 && !stance-attackanything && !assault-move
+		RequiresCondition: !maxcontrolled && !stance-attackanything && !assault-move
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -706,6 +706,10 @@ MAST:
 		Cost: 1350
 	Tooltip:
 		Name: Mastermind
+		RequiresCondition: !rank-elite
+	Tooltip@PRODIGY:
+		Name: Prodigy
+		RequiresCondition: rank-elite
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -728,6 +732,7 @@ MAST:
 		Capacity: 3
 		ControlSounds: mastermind-fire.aud
 		ControllingCondition: mindcontrolling
+		MaxControlledCondition: maxcontrolled
 	WithMindControlArc@MC:
 		Color: c71585
 		Transparency: 55
@@ -757,8 +762,48 @@ MAST:
 	AttackFrontal:
 		PauseOnCondition: being-warped
 		FacingTolerance: 0
+	Selectable:
+		DecorationBounds: 640, 896, -32, -256
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+		RequiresCondition: !rank-elite
+	WithDeathAnimation:
+		RequiresCondition: !rank-elite
+	WithInfantryBody@PRODIGY:
+		StandSequences: pdgy-stand
+		MoveSequence: pdgy-run
+		IdleSequences: pdgy-idle1, pdgy-idle2, pdgy-idle3, pdgy-idle4
+		DefaultAttackSequence: pdgy-shoot
+		RequiresCondition: rank-elite && !transforming
+	WithDeathAnimation@PDGY:
+		DeathSequencePalette: playerscrin
+		CrushedSequencePalette: scrin
+		DeathSequence: pdgy-die
+		DeathTypes:
+			DefaultDeath: 1
+			BulletDeath: 2
+			SmallExplosionDeath: 3
+			ExplosionDeath: 4
+			FireDeath: 5
+			ElectricityDeath: 6
+			PoisonDeath: 7
+			ChronoDeath: 8
+			ToxinDeath: 9
+			RadiationDeath: 10
+			FrozenDeath: 11
+			AtomizedDeath: 12
+		CrushedSequence: die-crushed
+		RequiresCondition: rank-elite && !transforming
+	WithSpriteBody@PRODIGYMAKE:
+		RequiresCondition: transforming
+		Sequence: stand
+	GrantTimedCondition@PRODIGYMAKE:
+		Condition: transforming
+		Duration: 25
+		RequiresCondition: rank-elite
+	WithEnabledAnimation@PRODIGYMAKE:
+		RequiresCondition: transforming
+		Sequence: pdgy-make
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	WithProductionIconOverlay:
@@ -793,6 +838,15 @@ MAST:
 	ReloadAmmoPool:
 		Delay: 35
 		Count: 1
+	MindControllerCapacityModifier@RANK-1:
+		Amount: 1
+		RequiresCondition: rank-veteran == 1
+	MindControllerCapacityModifier@RANK-2:
+		Amount: 2
+		RequiresCondition: rank-veteran == 2
+	MindControllerCapacityModifier@RANK-ELITE:
+		Amount: 3
+		RequiresCondition: rank-elite
 
 #
 # ---- Vehicles

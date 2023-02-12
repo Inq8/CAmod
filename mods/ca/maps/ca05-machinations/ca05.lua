@@ -252,7 +252,6 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		Nod.Cash = Nod.ResourceCapacity - 500
 		Nod.Resources = Nod.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
@@ -287,7 +286,7 @@ InitNod = function()
 		RebuildExcludes.Nod = { Types = { "obli", "gun.nod" } }
 	end
 
-	AutoRepairAndRebuildBuildings(Nod, 20)
+	AutoRepairAndRebuildBuildings(Nod, 15)
 	SetupRefAndSilosCaptureCredits(Nod)
 	AutoReplaceHarvesters(Nod)
 
@@ -313,14 +312,14 @@ InitNod = function()
 	InitNavalAttackSquad(Squads.Naval, Nod)
 	InitAttackSquad(Squads.LabDefense, Nod)
 
-	Actor.Create("hazmat.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
+	Actor.Create("hazmat.upgrade", true, { Owner = Nod })
 
 	if Difficulty == "hard" then
-		Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
-		Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
+		Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod })
+		Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod })
 
 		Trigger.AfterDelay(DateTime.Minutes(15), function()
-			Actor.Create("tibcore.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
+			Actor.Create("tibcore.upgrade", true, { Owner = Nod })
 		end)
 	end
 end

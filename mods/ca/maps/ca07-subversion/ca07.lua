@@ -128,9 +128,7 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		Greece.Cash = Greece.ResourceCapacity - 500
 		Greece.Resources = Greece.ResourceCapacity - 500
-		GDI.Cash = GDI.ResourceCapacity - 500
 		GDI.Resources = GDI.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
@@ -182,6 +180,8 @@ InitGDI = function()
 			CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
 		end
 	end)
+
+	Actor.Create("hazmat.upgrade", true, { Owner = GDI })
 end
 
 InitGreece = function()
@@ -208,6 +208,8 @@ InitGreece = function()
 			a.Move(randomDest)
 		end
 	end)
+
+	Actor.Create("hazmat.upgrade", true, { Owner = Greece })
 end
 
 InitGDIPatrols = function()

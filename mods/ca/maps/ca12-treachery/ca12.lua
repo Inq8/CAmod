@@ -114,8 +114,8 @@ WorldLoaded = function()
 	InitObjectives(USSR)
 	InitGreece()
 
-	HaloDropper = Actor.Create("halodrop", false, { Owner = USSR })
-	ShockDropper = Actor.Create("shockdrop", false, { Owner = USSR })
+	HaloDropper = Actor.Create("powerproxy.halodrop", false, { Owner = USSR })
+	ShockDropper = Actor.Create("powerproxy.shockdrop", false, { Owner = USSR })
 
 	ObjectiveKillTraitor = USSR.AddObjective("Find and kill the traitor General Yegorov.")
 	ObjectiveFindSovietBase = USSR.AddSecondaryObjective("Take control of abandoned Soviet base.")
@@ -237,9 +237,7 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		Greece.Cash = Greece.ResourceCapacity - 500
 		Greece.Resources = Greece.ResourceCapacity - 500
-		Traitor.Cash = Traitor.ResourceCapacity - 500
 		Traitor.Resources = Traitor.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
@@ -269,11 +267,12 @@ InitGreece = function()
 		RebuildExcludes.Greece = { Types = { "gun", "pbox", "pris" } }
 	end
 
-	AutoRepairAndRebuildBuildings(Greece, 10)
+	AutoRepairAndRebuildBuildings(Greece, 15)
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)
 
-	Actor.Create("POWERCHEAT", true, { Owner = Traitor, Location = UpgradeCreationLocation })
+	Actor.Create("POWERCHEAT", true, { Owner = Traitor })
+	Actor.Create("hazmatsoviet.upgrade", true, { Owner = Traitor })
 
 	local alliedGroundAttackers = Greece.GetGroundAttackers()
 
@@ -289,14 +288,14 @@ InitGreece = function()
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGroundHunterUnit)
 	end)
 
-	Actor.Create("hazmat.upgrade", true, { Owner = Greece, Location = UpgradeCreationLocation })
-	Actor.Create("apb.upgrade", true, { Owner = Greece, Location = UpgradeCreationLocation })
+	Actor.Create("hazmat.upgrade", true, { Owner = Greece })
+	Actor.Create("apb.upgrade", true, { Owner = Greece })
 
 	if Difficulty == "hard" then
-		Actor.Create("cryr.upgrade", true, { Owner = Greece, Location = UpgradeCreationLocation })
+		Actor.Create("cryr.upgrade", true, { Owner = Greece })
 
 		Trigger.AfterDelay(DateTime.Minutes(20), function()
-			Actor.Create("flakarmor.upgrade", true, { Owner = Greece, Location = UpgradeCreationLocation })
+			Actor.Create("flakarmor.upgrade", true, { Owner = Greece })
 		end)
 	end
 end
@@ -357,7 +356,7 @@ AbandonedBaseDiscovered = function()
 	end)
 
 	Trigger.AfterDelay(1, function()
-		Actor.Create("QueueUpdaterDummy", true, { Owner = USSR, Location = UpgradeCreationLocation })
+		Actor.Create("QueueUpdaterDummy", true, { Owner = USSR })
 	end)
 
 	if not Boris.IsDead then

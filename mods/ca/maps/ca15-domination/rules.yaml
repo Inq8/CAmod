@@ -71,6 +71,13 @@ YURI:
 	-Captures@DRIVER_KILL:
 	AttackMove:
 		-AssaultMoveCondition:
+	-GainsExperience:
+	-ProducibleWithLevel:
+	ExternalCondition@VET:
+		Condition: rank-veteran
+	DamageMultiplier@YAMLFIX:
+		Modifier: 100
+		RequiresCondition: maxcontrolled
 
 powerproxy.mutabomb:
 	AirstrikePower@MutaBomb:
@@ -223,19 +230,11 @@ NUK2:
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
 
-OBLI:
-	ExternalCondition@DISABLED:
-		Condition: disabled
-
 NSAM:
-	ExternalCondition@DISABLED:
-		Condition: disabled
 	Targetable:
 		TargetTypes: Ground, Structure
 
 LASP:
-	ExternalCondition@DISABLED:
-		Condition: disabled
 	DamageMultiplier@REDUC:
 		Modifier: 20
 	RepairableBuilding:

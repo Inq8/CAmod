@@ -1418,6 +1418,7 @@
 			hack: hacked
 		RevokingConditions:
 			hack: restoring
+	GivesExperienceToMaster:
 
 ^MindControllable:
 	Inherits: ^MindControllableBase
@@ -3700,6 +3701,9 @@
 	FreeActor@QUEUEUPDATER:
 		Actor: QueueUpdaterDummy
 		RequiresCondition: updatequeue
+	SpawnActorOnCapture@QUEUEUPDATER:
+		Actor: QueueUpdaterDummy
+		Delay: 1
 	GrantDelayedCondition@QUEUEUPDATER:
 		Delay: 1
 		Condition: updatequeue

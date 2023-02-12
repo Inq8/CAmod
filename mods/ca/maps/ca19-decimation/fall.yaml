@@ -1,0 +1,179 @@
+^Palettes:
+	PaletteFromFile@terrain-temperat:
+		Filename: fall.pal
+	FixedColorPalette@Red4:
+		Base: terrain
+		Name: Red4
+		RemapIndex: 153, 154, 155
+		Color: b00000
+	FixedColorPalette@Red3:
+		Base: Red4
+		Name: Red3
+		RemapIndex: 151
+		Color: b00000
+	FixedColorPalette@Red2:
+		Base: Red3
+		Name: Red2
+		RemapIndex: 150
+		Color: a00000
+	FixedColorPalette@Red1:
+		Base: Red2
+		Name: Red1
+		RemapIndex: 152
+		Color: 900000
+	FixedColorPalette@Red:
+		Base: Red1
+		Name: Red
+		RemapIndex: 26, 30
+		Color: 700000
+	FixedColorPalette@Orange4:
+		Base: terrain
+		Name: Orange4
+		RemapIndex: 153, 154, 155
+		Color: c06000
+	FixedColorPalette@Orange3:
+		Base: Orange4
+		Name: Orange3
+		RemapIndex: 151
+		Color: c06000
+	FixedColorPalette@Orange2:
+		Base: Orange3
+		Name: Orange2
+		RemapIndex: 150
+		Color: b06000
+	FixedColorPalette@Orange1:
+		Base: Orange2
+		Name: Orange1
+		RemapIndex: 152
+		Color: a05000
+	FixedColorPalette@Orange:
+		Base: Orange1
+		Name: Orange
+		RemapIndex: 26, 30
+		Color: 704000
+	FixedColorPalette@Yellow4:
+		Base: terrain
+		Name: Yellow4
+		RemapIndex: 153, 154, 155
+		Color: c0c000
+	FixedColorPalette@Yellow3:
+		Base: Yellow4
+		Name: Yellow3
+		RemapIndex: 151
+		Color: c0c000
+	FixedColorPalette@Yellow2:
+		Base: Yellow3
+		Name: Yellow2
+		RemapIndex: 150
+		Color: b0b000
+	FixedColorPalette@Yellow1:
+		Base: Yellow2
+		Name: Yellow1
+		RemapIndex: 152
+		Color: a0a000
+	FixedColorPalette@Yellow:
+		Base: Yellow1
+		Name: Yellow
+		RemapIndex: 26, 30
+		Color: 707000
+	FixedColorPalette@LGreen4:
+		Base: terrain
+		Name: LGreen4
+		RemapIndex: 153, 154, 155
+		Color: 60c000
+	FixedColorPalette@LGreen3:
+		Base: LGreen4
+		Name: LGreen3
+		RemapIndex: 151
+		Color: 60c000
+	FixedColorPalette@LGreen2:
+		Base: LGreen3
+		Name: LGreen2
+		RemapIndex: 150
+		Color: 60b000
+	FixedColorPalette@LGreen1:
+		Base: LGreen2
+		Name: LGreen1
+		RemapIndex: 152
+		Color: 50a000
+	FixedColorPalette@LGreen:
+		Base: LGreen1
+		Name: LGreen
+		RemapIndex: 26, 30
+		Color: 407000
+	PaletteFromPaletteWithAlpha@Orange25:
+		Name: Orange25
+		BasePalette: Orange
+		Alpha: 0.25
+	PaletteFromPaletteWithAlpha@Orange50:
+		Name: Orange50
+		BasePalette: Orange
+		Alpha: 0.50
+	PaletteFromPaletteWithAlpha@Orange75:
+		Name: Orange75
+		BasePalette: Orange
+		Alpha: 0.75
+	PaletteFromPaletteWithAlpha@LGreen50:
+		Name: LGreen50
+		BasePalette: LGreen
+		Alpha: 0.50
+
+^ColoredTrees:
+	WithIdleOverlay@Red:
+		Sequence: idle
+		RequiresCondition: RedOrange25 || RedOrange50 || RedOrange75
+		Palette: Red
+	WithIdleOverlay@Orange:
+		Sequence: idle
+		RequiresCondition: Orange
+		Palette: Orange
+	WithIdleOverlay@Yellow:
+		Sequence: idle
+		RequiresCondition: Orange25Yellow || Orange50Yellow || Orange75Yellow || Yellow
+		Palette: Yellow
+	WithIdleOverlay@Orange25:
+		Sequence: idle
+		RequiresCondition: RedOrange25 || Orange25Yellow
+		Palette: Orange25
+	WithIdleOverlay@Orange50:
+		Sequence: idle
+		RequiresCondition: RedOrange50 || Orange50Yellow
+		Palette: Orange50
+	WithIdleOverlay@Orange75:
+		Sequence: idle
+		RequiresCondition: RedOrange75 || Orange75Yellow
+		Palette: Orange75
+	GrantRandomCondition@COLORS:
+		Conditions: RedOrange25, RedOrange50, RedOrange75, Orange, Orange75Yellow, Orange50Yellow, Orange25Yellow, Yellow
+	WithSpriteBody:
+		RequiresCondition: !RedOrange25 && !RedOrange50 && !RedOrange75 && !Orange && !Orange75Yellow && !Orange50Yellow && !Orange25Yellow && !Yellow
+
+T03:
+	Inherits@COLOR: ^ColoredTrees
+
+T10:
+	Inherits@COLOR: ^ColoredTrees
+
+T11:
+	Inherits@COLOR: ^ColoredTrees
+
+T12:
+	Inherits@COLOR: ^ColoredTrees
+
+T13:
+	Inherits@COLOR: ^ColoredTrees
+
+T14:
+	Inherits@COLOR: ^ColoredTrees
+
+T15:
+	Inherits@COLOR: ^ColoredTrees
+
+T17:
+	Inherits@COLOR: ^ColoredTrees
+
+TC02:
+	Inherits@COLOR: ^ColoredTrees
+
+TC05:
+	Inherits@COLOR: ^ColoredTrees

@@ -38,6 +38,10 @@ namespace OpenRA.Mods.CA.Traits
 		[GrantedConditionReference]
 		public readonly string ProgressCondition;
 
+		[Desc("Condition to grant to self when at full capacity.")]
+		[GrantedConditionReference]
+		public readonly string MaxControlledCondition;
+
 		[Desc("The sound played when target is mind controlled.")]
 		public readonly string[] ControlSounds = { };
 
@@ -75,6 +79,12 @@ namespace OpenRA.Mods.CA.Traits
 
 		public IEnumerable<Actor> Slaves { get { return slaves; } }
 
+		MindControllerInfo info;
+		int capacity;
+		IEnumerable<MindControllerCapacityModifier> capacityModifiers;
+		bool refreshCapacity;
+		int maxControlledToken = Actor.InvalidConditionToken;
+
 		// Only tracked when TicksToControl greater than zero
 		Target lastTarget = Target.Invalid;
 		Target currentTarget = Target.Invalid;
@@ -84,7 +94,10 @@ namespace OpenRA.Mods.CA.Traits
 		public MindController(Actor self, MindControllerInfo info)
 			: base(info)
 		{
+			this.info = info;
 			ResetProgress(self);
+			capacityModifiers = self.TraitsImplementing<MindControllerCapacityModifier>();
+			UpdateCapacity(self);
 		}
 
 		void StackControllingCondition(Actor self, string condition)
@@ -109,11 +122,15 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				slaves.Remove(slave);
 				UnstackControllingCondition(self, Info.ControllingCondition);
+				MaxControlledCheck(self);
 			}
 		}
 
 		void ITick.Tick(Actor self)
 		{
+			if (refreshCapacity)
+				UpdateCapacity(self);
+
 			if (Info.TicksToControl == 0)
 				return;
 
@@ -155,6 +172,35 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (progressToken != Actor.InvalidConditionToken)
 				progressToken = self.RevokeCondition(progressToken);
+		}
+
+		void MaxControlledCheck(Actor self)
+		{
+			if (capacity == 0)
+				return;
+
+			if (slaves.Count() >= capacity)
+				GrantMaxControlledCondition(self);
+			else
+				RevokeMaxControlledCondition(self);
+		}
+
+		public void GrantMaxControlledCondition(Actor self)
+		{
+			if (string.IsNullOrEmpty(Info.MaxControlledCondition))
+				return;
+
+			if (maxControlledToken == Actor.InvalidConditionToken)
+				maxControlledToken = self.GrantCondition(Info.MaxControlledCondition);
+		}
+
+		public void RevokeMaxControlledCondition(Actor self)
+		{
+			if (string.IsNullOrEmpty(Info.MaxControlledCondition))
+				return;
+
+			if (maxControlledToken != Actor.InvalidConditionToken)
+				maxControlledToken = self.RevokeCondition(maxControlledToken);
 		}
 
 		public void ResolveOrder(Actor self, Order order)
@@ -241,7 +287,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (mindControllable.IsTraitDisabled || mindControllable.IsTraitPaused)
 				return;
 
-			if (Info.Capacity > 0 && !Info.DiscardOldest && slaves.Count() >= Info.Capacity)
+			if (capacity > 0 && !Info.DiscardOldest && slaves.Count() >= capacity)
 				return;
 
 			if (mindControllable.Master != null)
@@ -254,10 +300,11 @@ namespace OpenRA.Mods.CA.Traits
 			StackControllingCondition(self, Info.ControllingCondition);
 			mindControllable.LinkMaster(currentTarget.Actor, self);
 
-			if (Info.Capacity > 0 && Info.DiscardOldest && slaves.Count() > Info.Capacity)
+			if (capacity > 0 && Info.DiscardOldest && slaves.Count() > capacity)
 				slaves[0].Trait<MindControllable>().RevokeMindControl(slaves[0], 0);
 
 			ControlComplete(self);
+			MaxControlledCheck(self);
 		}
 
 		void ControlComplete(Actor self)
@@ -294,6 +341,8 @@ namespace OpenRA.Mods.CA.Traits
 			slaves.Clear();
 			while (controllingTokens.Count > 0)
 				UnstackControllingCondition(self, Info.ControllingCondition);
+
+			RevokeMaxControlledCondition(self);
 		}
 
 		public void TransformSlave(Actor self, Actor oldSlave, Actor newSlave)
@@ -349,6 +398,33 @@ namespace OpenRA.Mods.CA.Traits
 					return true;
 
 			return false;
+		}
+
+		void UpdateCapacity(Actor self)
+		{
+			refreshCapacity = false;
+			var newCapacity = info.Capacity;
+
+			// Modifiers have no effect if the base capacity is unlimited.
+			if (info.Capacity == 0)
+				return;
+
+			foreach (var capacityModifier in capacityModifiers)
+				newCapacity += capacityModifier.Amount;
+
+			capacity = Math.Max(newCapacity, 1);
+
+			var currentSlaveCount = slaves.Count();
+			var numSlavesToRemove = currentSlaveCount - capacity;
+			for (var i = numSlavesToRemove; i > 0; i--)
+				slaves[i].Trait<MindControllable>().RevokeMindControl(slaves[i], 0);
+
+			MaxControlledCheck(self);
+		}
+
+		public void ModifierUpdated()
+		{
+			refreshCapacity = true;
 		}
 	}
 }

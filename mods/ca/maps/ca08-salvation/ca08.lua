@@ -76,7 +76,7 @@ WorldLoaded = function()
 	NodCamera5.Destroy()
 	NodCamera6.Destroy()
 
-	Actor.Create("tibcore.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
+	Actor.Create("tibcore.upgrade", true, { Owner = Nod })
 
 	if Difficulty == "easy" then
 		Nod.Cash = 4800
@@ -132,7 +132,6 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		Scrin.Cash = Scrin.ResourceCapacity - 500
 		Scrin.Resources = Scrin.ResourceCapacity - 500
 
 		if TimerTicks > 0 then

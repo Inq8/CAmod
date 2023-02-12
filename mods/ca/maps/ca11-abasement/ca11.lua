@@ -210,9 +210,7 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		Scrin.Cash = Scrin.ResourceCapacity - 500
 		Scrin.Resources = Scrin.ResourceCapacity - 500
-		Nod.Cash = Nod.ResourceCapacity - 500
 		Nod.Resources = Nod.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
@@ -244,7 +242,7 @@ InitScrin = function()
 		RebuildExcludes.Scrin = { Types = { "scol", "ptur" } }
 	end
 
-	AutoRepairAndRebuildBuildings(Scrin, 10)
+	AutoRepairAndRebuildBuildings(Scrin, 15)
 	SetupRefAndSilosCaptureCredits(Scrin)
 	AutoReplaceHarvesters(Scrin)
 
@@ -268,16 +266,17 @@ InitScrin = function()
 	end)
 
 	if Difficulty == "hard" then
-		Actor.Create("ioncon.upgrade", true, { Owner = Scrin, Location = UpgradeCreationLocation })
+		Actor.Create("ioncon.upgrade", true, { Owner = Scrin })
 
 		Trigger.AfterDelay(DateTime.Minutes(20), function()
-			Actor.Create("carapace.upgrade", true, { Owner = Scrin, Location = UpgradeCreationLocation })
+			Actor.Create("carapace.upgrade", true, { Owner = Scrin })
 		end)
 	end
 end
 
 InitNod = function()
-	Actor.Create("POWERCHEAT", true, { Owner = Nod, Location = UpgradeCreationLocation })
+	Actor.Create("POWERCHEAT", true, { Owner = Nod })
+	Actor.Create("hazmat.upgrade", true, { Owner = Nod })
 
 	-- Prevent Nod forces destroying Signal Transmitter
 	Trigger.OnEnteredProximityTrigger(NodAttackLimiter.CenterPosition, WDist.New(8 * 1024), function(a, id)

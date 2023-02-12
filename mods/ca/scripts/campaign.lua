@@ -21,6 +21,10 @@ UnitBuildTimeMultipliers = {
 	hard = 0.5,
 }
 
+CapturedCreditsAmount = 1250
+
+EnforceAiBuildRadius = false
+
 UpgradeCreationLocation = CPos.New(0, 0)
 
 ConyardTypes = { "fact", "afac", "sfac" }
@@ -377,7 +381,7 @@ CanRebuild = function(queueItem)
 	local bottomRight = WPos.New(pos.X + 2048, pos.Y + 2048, 0)
 
 	local nearbyUnits = Map.ActorsInBox(topLeft, bottomRight, function(a)
-		return not a.IsDead and a.HasProperty("Move")
+		return not a.IsDead and a.HasProperty("Move") and not a.HasProperty("Land")
 	end)
 
 	-- require no nearby units (stops building on top of them)
@@ -388,7 +392,7 @@ CanRebuild = function(queueItem)
 	topLeft = WPos.New(pos.X - 8192, pos.Y - 8192, 0)
 	bottomRight = WPos.New(pos.X + 8192, pos.Y + 8192, 0)
 	local nearbyBuildings = Map.ActorsInBox(topLeft, bottomRight, function(a)
-		return not a.IsDead and a.Owner == queueItem.Player and a.HasProperty("StartBuildingRepairs") and not a.HasProperty("Attack") and not a.Type == "silo" and not a.Type == "silo.td" and not a.Type == "silo.scrin"
+		return not a.IsDead and a.Owner == queueItem.Player and a.HasProperty("StartBuildingRepairs") and not a.HasProperty("Attack") and a.Type ~= "silo" and a.Type ~= "silo.td" and a.Type ~= "silo.scrin"
 	end)
 
 	-- require an owned building nearby
@@ -818,7 +822,7 @@ SetupRefAndSilosCaptureCredits = function(player)
 	local silosAndRefineries = player.GetActorsByTypes(CashRewardOnCaptureTypes)
 	Utils.Do(silosAndRefineries, function(a)
 		Trigger.OnCapture(a, function(self, captor, oldOwner, newOwner)
-			newOwner.Cash = newOwner.Cash + 1500
+			newOwner.Cash = newOwner.Cash + CapturedCreditsAmount
 			Media.FloatingText("+$1500", self.CenterPosition, 30, newOwner.Color)
 		end)
 	end)
@@ -912,7 +916,7 @@ end
 -- Filters
 
 IsGroundHunterUnit = function(actor)
-	return actor.HasProperty("Move") and not actor.HasProperty("Land") and actor.HasProperty("Hunt")
+	return not actor.IsDead and actor.HasProperty("Move") and not actor.HasProperty("Land") and actor.HasProperty("Hunt")
 end
 
 IsGreeceGroundHunterUnit = function(actor)

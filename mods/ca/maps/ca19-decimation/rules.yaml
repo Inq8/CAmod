@@ -1,0 +1,171 @@
+^Palettes:
+	GlobalLightingPaletteEffect:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, ca19.lua
+	MissionData:
+		Briefing: Another of the human factions, the Soviets, have recently turned the tide in their favour.\n\nTheir numbers include one named Yuri who posseses substantial psionic power, which has enabled the Soviets to assert control over a large portion of Kane's cybernetically enhanced troops.\n\nThe Soviets are now in the process of rebuilding their armies which had suffered significant losses, and if left unchecked they could threaten us.\n\nUltimately we seek to usurp Yuri's domnination of the cyborgs, but it is critical that the already sizeable Soviet armies are not bolstered further.\n\nYour mission is to launch a full scale attack against the Soviet industrial heartland. Numerous factories are located here which are rapidly producing new equipment. Many of their vehicles are without crews, pending final maintenance and preparations.\n\nThey must be destroyed along with the factories that produced them.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: Difficulty
+		Description: The difficulty of the mission
+		Values:
+			easy: Easy
+			normal: Normal
+			hard: Hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: valves1b
+
+Player:
+	PlayerResources:
+		DefaultCash: 5000
+	SupportPowerBotModule@CAMPAIGN:
+		Decisions:
+			spyplane:
+				OrderName: spyplane
+				MinimumAttractiveness: 1
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 5c0
+			parabombs:
+				OrderName: parabombs
+				MinimumAttractiveness: 1
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 5c0
+			paratroopers:
+				OrderName: paratroopers
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
+				Consideration@2:
+					Against: Enemy
+					Types: Water
+					Attractiveness: -5
+					TargetMetric: None
+					CheckRadius: 8c0
+			ironcurtainpower:
+				OrderName: ironcurtain
+				MinimumAttractiveness: 1000
+				FineScanRadius: 2
+				Consideration@3:
+					Against: Ally
+					Types: Vehicle, Tank
+					Attractiveness: 5
+					TargetMetric: Value
+					CheckRadius: 2c0
+				Consideration@4:
+					Against: Ally
+					Types: Infantry
+					Attractiveness: -2
+					TargetMetric: Value
+					CheckRadius: 2c0
+
+^TDPalette:
+	RenderSprites:
+		PlayerPalette: playertdunit
+
+^Infantry:
+	RenderSprites:
+		PlayerPalette: playertdunit
+	WithDeathAnimation:
+		DeathSequencePalette: playertdunit
+
+^BuildingTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+^DefenseTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+SAPC:
+	RenderSprites:
+		PlayerPalette: playerraunit
+
+HARV.TD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+AMCV:
+	RenderSprites:
+		PlayerPalette: playertd
+
+INTL.Loaded:
+	Inherits: INTL
+	RenderSprites:
+		Image: intl
+	Cargo:
+		InitialUnits: S1,S1,S1,S3,S3
+	-Buildable:
+
+fleetaccess:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesPrerequisite:
+
+MAST:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+TPOD:
+	Buildable:
+		Prerequisites: techcenter, ~vehicles.scrin
+
+RPTP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+ENRV:
+	Buildable:
+		Prerequisites: scrt, ~aircraft.scrin, ~fleetaccess
+
+DEVA:
+	Buildable:
+		Prerequisites: scrt, ~aircraft.scrin, ~fleetaccess
+
+PAC:
+	Buildable:
+		Prerequisites: sign, scrt, ~aircraft.scrin, ~fleetaccess
+
+MSHP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+SIGN:
+	Buildable:
+		Prerequisites: ~structures.scrin, scrt, ~fleetaccess
+
+shields.upgrade:
+	Buildable:
+		Prerequisites: ~player.scrin, sign, ~fleetaccess
+
+IRON:
+	GrantExternalConditionPowerCA@IRONCURTAIN:
+		DisplayTimerRelationships: Ally
+
+DOME:
+	ParatroopersPower@paratroopers:
+		-Prerequisites:
+		RequiresCondition: paratroopers-enabled
+	ExternalCondition@paratroopers:
+		Condition: paratroopers-enabled
+	-ParatroopersPower@Russianparatroopers:
+
+AFLD:
+	AirstrikePower@Russianparabombs:
+		RequiresCondition: parabombs-enabled
+	ExternalCondition@parabombs:
+		Condition: parabombs-enabled

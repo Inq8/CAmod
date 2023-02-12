@@ -296,9 +296,7 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		Greece.Cash = Greece.ResourceCapacity - 500
 		Greece.Resources = Greece.ResourceCapacity - 500
-		GDI.Cash = GDI.ResourceCapacity - 500
 		GDI.Resources = GDI.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
@@ -363,7 +361,7 @@ AwakenSleeperCell = function()
 		end
 
 		Trigger.AfterDelay(1, function()
-			Actor.Create("QueueUpdaterDummy", true, { Owner = Nod, Location = UpgradeCreationLocation })
+			Actor.Create("QueueUpdaterDummy", true, { Owner = Nod })
 		end)
 
 		if ObjectiveRescueResearchers == nil then
@@ -420,14 +418,14 @@ InitGreece = function()
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGreeceGroundHunterUnit)
 	end)
 
-	Actor.Create("hazmat.upgrade", true, { Owner = Greece, Location = UpgradeCreationLocation })
-	Actor.Create("apb.upgrade", true, { Owner = Greece, Location = UpgradeCreationLocation })
+	Actor.Create("hazmat.upgrade", true, { Owner = Greece })
+	Actor.Create("apb.upgrade", true, { Owner = Greece })
 
 	if Difficulty == "hard" then
-		Actor.Create("cryr.upgrade", true, { Owner = Greece, Location = UpgradeCreationLocation })
+		Actor.Create("cryr.upgrade", true, { Owner = Greece })
 
 		Trigger.AfterDelay(DateTime.Minutes(20), function()
-			Actor.Create("flakarmor.upgrade", true, { Owner = Greece, Location = UpgradeCreationLocation })
+			Actor.Create("flakarmor.upgrade", true, { Owner = Greece })
 		end)
 	end
 end

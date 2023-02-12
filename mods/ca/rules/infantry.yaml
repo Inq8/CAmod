@@ -1342,8 +1342,6 @@ SHOK:
 		RequiresCondition: assault-move || attack-move
 		ValidTargets: TeslaBoost
 		ValidRelationships: Enemy
-	AttackMove:
-		AttackMoveCondition: attack-move
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1403,6 +1401,7 @@ SHOK:
 		PauseOnCondition: being-warped
 		FacingTolerance: 0
 	AttackMove:
+		AttackMoveCondition: attack-move
 		Voice: Move
 	Passenger:
 		Voice: Move
@@ -3616,7 +3615,7 @@ YURI:
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	AutoTargetPriority@DEFAULT:
-		RequiresCondition: mindcontrolling < 3 && !stance-attackanything && !assault-move
+		RequiresCondition: !maxcontrolled && !stance-attackanything && !assault-move
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -3658,6 +3657,7 @@ YURI:
 		Capacity: 3
 		ControlSounds: iyurat1a.aud
 		ControllingCondition: mindcontrolling
+		MaxControlledCondition: maxcontrolled
 	WithMindControlArc@MC:
 		Color: c71585
 		Transparency: 55
@@ -3749,6 +3749,15 @@ YURI:
 	ReloadAmmoPool:
 		Delay: 35
 		Count: 1
+	MindControllerCapacityModifier@RANK-1:
+		Amount: 1
+		RequiresCondition: rank-veteran == 1
+	MindControllerCapacityModifier@RANK-2:
+		Amount: 2
+		RequiresCondition: rank-veteran == 2
+	MindControllerCapacityModifier@RANK-ELITE:
+		Amount: 3
+		RequiresCondition: rank-elite
 
 SEAL:
 	Inherits: RMBO

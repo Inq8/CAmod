@@ -1,0 +1,168 @@
+^Palettes:
+	PaletteFromFile@terrain-temperat:
+		Filename: ca18.pal
+	FlashPaletteEffect@LIGHTNINGSTRIKE:
+		Type: LightningStrike
+		ExcludePalettes: cursor, chrome, colorpicker, colorpickertd, colorpickerscrin, fog, shroud
+	FlashPaletteEffect@IONSTRIKE:
+		Type: IonStrike
+		ExcludePalettes: cursor, chrome, colorpicker, colorpickertd, colorpickerscrin, fog, shroud
+		Color: D48FFF
+	GlobalLightingPaletteEffect:
+		Red: 1.2
+		Green: 1
+		Blue: 1.2
+		Ambient: 0.7
+		ExcludePalettes: fog, shroud, cursor, chrome, chrometd, chromes, colorpicker, colorpickertd, colorpickerscrin, tseffect, ra2effect, ra2unit, tdeffect, effect-ignore-lighting, tdeffect-ignore-lighting-alpha85, d2keffect-ignore-lighting-alpha75, d2keffect-ignore-lighting-alpha50, ra2effect-ignore-lighting-alpha90, ra2effect-ignore-lighting-alpha75, ra2effect-ignore-lighting-alpha50, tseffect-ignore-lighting-alpha75, tsunit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha90, tseffect-ignore-lighting-alpha90
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, ca18.lua
+	MissionData:
+		Briefing: A concentration of aircraft belonging to the same two human factions has been identified in this area and has been evaluated as the next significant threat to be dealt with.\n\nYou have been allocated a small task force with which you must eliminate these aircraft and their landing areas.\n\nYou must also neutralise all anti-aircraft defensive structures. This will ensure our fleet can be redeployed to the central repository with minimal airborne resistance.\n\nAn ion storm has been created to ensure that all hostile aircraft will be confined to the ground for the duration of this mission. The energy required to maintain the storm are substantial; waste no time.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: Difficulty
+		Description: The difficulty of the mission
+		Values:
+			easy: Easy
+			normal: Normal
+			hard: Hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: rainnite
+
+Player:
+	PlayerResources:
+		DefaultCash: 5000
+
+^TDPalette:
+	RenderSprites:
+		PlayerPalette: playertdunit
+
+^Infantry:
+	RenderSprites:
+		PlayerPalette: playertdunit
+	WithDeathAnimation:
+		DeathSequencePalette: playertdunit
+
+^BuildingTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+^DefenseTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+SAPC:
+	RenderSprites:
+		PlayerPalette: playerraunit
+
+HARV.TD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+AMCV:
+	RenderSprites:
+		PlayerPalette: playertd
+
+^GroundedAircraft:
+	ExternalCondition@GROUNDED:
+		Condition: grounded
+	AutoTarget:
+		InitialStanceAI: HoldFire
+	DamageMultiplier@GROUNDED:
+		Modifier: 200
+		RequiresCondition: grounded
+
+ORCA:
+	Inherits@GROUNDED: ^GroundedAircraft
+	-SpawnActorOnDeath:
+
+A10:
+	Inherits@GROUNDED: ^GroundedAircraft
+	-SpawnActorOnDeath:
+
+HELI:
+	Inherits@GROUNDED: ^GroundedAircraft
+	WithIdleOverlay@ROTORGROUND:
+		PauseOnCondition: grounded
+	-SpawnActorOnDeath:
+
+HARR:
+	Inherits@GROUNDED: ^GroundedAircraft
+	-SpawnActorOnDeath:
+
+AURO:
+	Inherits@GROUNDED: ^GroundedAircraft
+	-SpawnActorOnDeath:
+
+WORMHOLE:
+	-PopControlled:
+	-Targetable:
+
+GRAV:
+	Power:
+		Amount: 0
+
+ATEK:
+	-DummyGpsPower@NOFOG:
+	-DummyGpsPower@FOG:
+	-ProduceActorPowerCA@SatelliteLaunched:
+	-ProduceActorPowerCA@InitialSatelliteScan:
+	-ProduceActorPowerCA@SatelliteScan:
+	-ProduceActorPowerCA@SatelliteScanNoFog:
+	-GrantExternalConditionPowerCA@FSHIELD:
+	-DetonateWeaponPower@TEMPINC:
+
+^DifficultyModifiers:
+	ExternalCondition@NORMAL:
+		Condition: difficulty-normal
+	ExternalCondition@EASY:
+		Condition: difficulty-easy
+	RevealsShroudMultiplier@NORMALEASY:
+		Modifier: 115
+		RequiresCondition: difficulty-normal || difficulty-easy
+
+LCHR:
+	Inherits@DIFFICULTY: ^DifficultyModifiers
+	RevealsShroud:
+		MinRange: 0
+		Range: 8c0
+		-RevealGeneratedShroud:
+	-RevealsShroud@GAPGEN:
+	RangeMultiplier@REDUCEDRANGE:
+		Modifier: 94
+	AutoTarget:
+		InitialStance: HoldFire
+	-GainsExperience:
+	GainsExperience:
+		LevelUpNotification: LevelUp
+		Conditions:
+			2000: rank-veteran
+			4000: rank-veteran
+			8000: rank-veteran
+
+LCHR.Orb:
+	Health:
+		HP: 15000
+	ReloadAmmoPoolCA:
+		Delay: 250
+
+S4:
+	Inherits@DIFFICULTY: ^DifficultyModifiers
+	RevealsShroud:
+		Range: 8c0
+	PortableChronoCA:
+		MaxDistance: 8
+	AutoTarget:
+		InitialStance: HoldFire
+	-GainsExperience:
+	GainsExperience:
+		LevelUpNotification: LevelUp
+		Conditions:
+			2000: rank-veteran
+			4000: rank-veteran
+			8000: rank-veteran
