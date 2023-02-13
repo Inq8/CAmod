@@ -399,7 +399,11 @@ FlipSouthBase = function()
 	end)
 
 	InitAttackSquad(Squads.NodSouth, Nod, Scrin)
-	SouthAirstrip.Produce("harv.td")
+
+	local airstrips = Nod.GetActorsByType("airs")
+	if #airstrips > 0 then
+		airstrips[1].Produce("harv.td")
+	end
 
 	local turret4 = Actor.Create("gun.nod", true, { Owner = Nod, Location = NodTurret4.Location })
 	AutoRepairBuilding(turret4, Nod)
