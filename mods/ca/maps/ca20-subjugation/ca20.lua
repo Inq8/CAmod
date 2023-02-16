@@ -23,6 +23,8 @@ TibTrucks = {
 			hard = DateTime.Minutes(4),
 		},
 		Path = { ETibTruckPath1.Location, ETibTruckPath2.Location, ETibTruckPath3.Location, ETibTruckPath4.Location },
+		ObjectiveText = "Prevent first enriched Tiberium delivery\nfrom reaching Yuri.",
+		Objective = nil,
 	},
 	Second = {
 		Actor = NTibTruck,
@@ -32,6 +34,8 @@ TibTrucks = {
 			hard = DateTime.Minutes(10),
 		},
 		Path = { NTibTruckPath1.Location, NTibTruckPath2.Location, NTibTruckPath3.Location, NTibTruckPath4.Location, NTibTruckPath5.Location, NTibTruckPath6.Location, NTibTruckPath7.Location, NTibTruckPath8.Location, NTibTruckPath9.Location, NTibTruckPath10.Location },
+		ObjectiveText = "Prevent second enriched Tiberium delivery\nfrom reaching Yuri.",
+		Objective = nil,
 	},
 	Third = {
 		Actor = STibTruck,
@@ -41,6 +45,8 @@ TibTrucks = {
 			hard = DateTime.Minutes(16),
 		},
 		Path = { STibTruckPath1.Location, STibTruckPath2.Location, STibTruckPath3.Location, STibTruckPath4.Location, STibTruckPath5.Location, STibTruckPath6.Location },
+		ObjectiveText = "Prevent third enriched Tiberium delivery\nfrom reaching Yuri.",
+		Objective = nil,
 	},
 }
 
@@ -62,14 +68,6 @@ WorldLoaded = function()
 
 	ObjectiveCaptureTibFacilities = Scrin.AddObjective("Capture three Tiberium enrichment facilities.")
 	ObjectiveMastermindSurvives = Scrin.AddObjective("Mastermind must survive.")
-
-	ObjectivePreventFirstTibDelivery = Scrin.AddSecondaryObjective("Prevent first enriched Tiberium delivery\nfrom reaching Yuri.")
-	ObjectivePreventSecondTibDelivery =  Scrin.AddSecondaryObjective("Prevent second enriched Tiberium delivery\nfrom reaching Yuri.")
-	ObjectivePreventThirdTibDelivery = Scrin.AddSecondaryObjective("Prevent third enriched Tiberium delivery\nfrom reaching Yuri.")
-
-	TibTrucks.First.Objective = ObjectivePreventFirstTibDelivery
-	TibTrucks.Second.Objective = ObjectivePreventSecondTibDelivery
-	TibTrucks.Third.Objective = ObjectivePreventThirdTibDelivery
 
 	if Difficulty ~= "hard" then
 		Mastermind.GrantCondition("difficulty-" .. Difficulty)
@@ -159,10 +157,11 @@ WorldLoaded = function()
 
 	Utils.Do(TibTrucks, function(t)
 		Trigger.AfterDelay(t.Delay[Difficulty], function()
-			if not t.Actor.IsDead and t.Actor.Owner == USSR and not Scrin.IsObjectiveFailed(t.Objective) then
-				Notification("Enriched ichor shipment detected. Prevent it from reaching Yuri's command center.")
+			if not t.Actor.IsDead and t.Actor.Owner == USSR and t.Objective == nil then
+				Notification("Enriched ichor shipment detected. Dispatch is imminent. Prevent it from reaching Yuri's command center.")
+				t.Objective = Scrin.AddSecondaryObjective(t.ObjectiveText)
 				local camera = Actor.Create("smallcamera", true, { Owner = Scrin, Location = t.Actor.Location })
-				Trigger.AfterDelay(DateTime.Seconds(4), function()
+				Trigger.AfterDelay(DateTime.Seconds(10), function()
 					camera.Destroy()
 				end)
 				Beacon.New(Scrin, t.Actor.CenterPosition)
@@ -176,7 +175,7 @@ WorldLoaded = function()
 							if not YuriHQ.IsDead and a.Owner == USSR and YuriHQ.Owner == USSR then
 								YuriHQ.GrantCondition("enriched")
 								a.Destroy()
-								Notification("An delivery of enriched ichor has reached Yuri's command center and he has grown more powerful.")
+								Notification("An shipment of enriched ichor has reached Yuri's command center and he has grown more powerful.")
 								if t.Objective ~= nil and not Scrin.IsObjectiveCompleted(t.Objective) then
 									Scrin.MarkFailedObjective(t.Objective)
 								end
@@ -187,16 +186,21 @@ WorldLoaded = function()
 			end
 		end)
 		Trigger.OnKilled(t.Actor, function(self, killer)
-			if t.Objective ~= nil and not Scrin.IsObjectiveFailed(t.Objective) then
-				Scrin.MarkCompletedObjective(t.Objective)
+			if t.Objective == nil then
+				t.Objective = Scrin.AddSecondaryObjective(t.ObjectiveText)
 			end
+			Trigger.AfterDelay(2, function()
+				if not Scrin.IsObjectiveFailed(t.Objective) then
+					Scrin.MarkCompletedObjective(t.Objective)
+				end
+			end)
 		end)
 	end)
 
 	local revealPoints = { EntranceReveal1, EntranceReveal2, EntranceReveal3, EntranceReveal4, EntranceReveal5, EntranceReveal6, EntranceReveal7 }
 	Utils.Do(revealPoints, function(p)
 		Trigger.OnEnteredProximityTrigger(p.CenterPosition, WDist.New(11 * 1024), function(a, id)
-			if a.Owner == Scrin then
+			if a.Owner == Scrin and a.Type ~= "camera" then
 				Trigger.RemoveProximityTrigger(id)
 				local camera = Actor.Create("smallcamera", true, { Owner = Scrin, Location = p.Location })
 				Trigger.AfterDelay(DateTime.Seconds(4), function()
