@@ -1394,6 +1394,7 @@ LCHR:
 		RequiresCondition: coalescence-upgrade
 	GivesBounty:
 		RequiresCondition: global-bounty && !coalescence-upgrade
+	TransfersStanceToDeathActor:
 
 LCHR.Orb:
 	Inherits@1: ^1x1Shape
@@ -1456,6 +1457,9 @@ LCHR.Orb:
 	ProximityExternalCondition@LCHRHEAL:
 		Condition: lchr-healing
 		Range: 2c256
+	AutoTarget:
+	TransfersStanceToDeathActor:
+	AttackOmni:
 
 STCR:
 	Inherits: ^Tank
