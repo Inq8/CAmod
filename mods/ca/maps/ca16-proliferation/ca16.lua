@@ -56,11 +56,19 @@ RaidInterval = {
 	hard = DateTime.Seconds(55),
 }
 
-BaseReinforcementsInterval = {
-	easy = DateTime.Seconds(150),
-	normal = DateTime.Seconds(210),
-	hard = DateTime.Seconds(270),
+ReinforcementInitialThreshold = {
+	easy = 27500,
+	normal = 35000,
+	hard = 42500,
 }
+
+ReinforcementFinalThreshold = {
+	easy = 70000,
+	normal = 85000,
+	hard = 100000,
+}
+
+ReinforcementThresholdIncrement = 5000
 
 RaidCompositions = {
 	easy = {
@@ -141,6 +149,7 @@ WorldLoaded = function()
 	MissionPlayer = Scrin
 	TimerTicks = MaintenanceDuration[Difficulty]
 	FieldsClearedAndBeingHarvested = 0
+	NextReinforcementThreshold = ReinforcementInitialThreshold[Difficulty]
 
 	Camera.Position = PlayerStart.CenterPosition
 
@@ -153,10 +162,6 @@ WorldLoaded = function()
 	Trigger.AfterDelay(1, function()
 		CheckFields()
 		UpdateObjectiveMessage()
-	end)
-
-	Trigger.AfterDelay(BaseReinforcementsInterval[Difficulty], function()
-		DoReinforcements()
 	end)
 
 	Trigger.OnAllKilledOrCaptured(NodHarvestActors, function()
@@ -196,13 +201,6 @@ OncePerSecondChecks = function()
 		Nod.Cash = Nod.ResourceCapacity - 1000
 		Nod.Resources = Nod.ResourceCapacity - 1000
 
-		if Scrin.Cash > 5000 then
-			Scrin.Cash = 5000
-		end
-		if Scrin.Resources > 5000 then
-			Scrin.Resources = 5000
-		end
-
 		if Scrin.HasNoRequiredUnits() then
 			if ObjectiveEliminateNodHarvesting ~= nil and not Scrin.IsObjectiveCompleted(ObjectiveEliminateNodHarvesting) then
 				Scrin.MarkFailedObjective(ObjectiveDestroyFactories)
@@ -227,16 +225,21 @@ end
 
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
-		UpdateRaidTarget()
-
 		local playerTotalFunds = Scrin.Cash + Scrin.Resources
 		Scrin.Cash = 0
 		Scrin.Resources = playerTotalFunds
 
-		if Scrin.Resources > 5000 then
-			Scrin.Resources = 5000
+		if Scrin.Resources >= NextReinforcementThreshold then
+			Scrin.Resources = Scrin.Resources - NextReinforcementThreshold
+
+			if NextReinforcementThreshold < ReinforcementFinalThreshold[Difficulty] then
+				NextReinforcementThreshold = NextReinforcementThreshold + ReinforcementThresholdIncrement
+			end
+
+			DoReinforcements()
 		end
 
+		UpdateRaidTarget()
 		CheckFields()
 		CheckColonyPlatform()
 	end
@@ -390,12 +393,6 @@ DoReinforcements = function()
 
 	Trigger.AfterDelay(DateTime.Seconds(10), function()
 		wormhole.Kill()
-	end)
-
-	local reinforcementsInterval = BaseReinforcementsInterval[Difficulty] - (DateTime.Seconds(10) * FieldsClearedAndBeingHarvested)
-
-	Trigger.AfterDelay(reinforcementsInterval, function()
-		DoReinforcements()
 	end)
 end
 

@@ -142,10 +142,6 @@ WorldLoaded = function()
 		end
 	end)
 
-	Trigger.OnKilled(Mastermind, function(self, killer)
-		Scrin.MarkFailedObjective(ObjectiveMastermindSurvives)
-	end)
-
 	Trigger.OnCapture(YuriHQ, function(self, captor, oldOwner, newOwner)
 		if ObjectiveCaptureYuriHQ == nil then
 			ObjectiveCaptureYuriHQ = Scrin.AddObjective("Capture Yuri's command center.")
@@ -171,11 +167,11 @@ WorldLoaded = function()
 							t.Actor.Move(waypoint)
 						end)
 						Trigger.OnEnteredFootprint({ t.Path[#t.Path] }, function(a, id)
-							Trigger.RemoveFootprintTrigger(id)
-							if not YuriHQ.IsDead and a.Owner == USSR and YuriHQ.Owner == USSR then
+							if not YuriHQ.IsDead and YuriHQ.Owner == USSR and a == t.Actor and a.Owner == USSR then
+								Trigger.RemoveFootprintTrigger(id)
 								YuriHQ.GrantCondition("enriched")
 								a.Destroy()
-								Notification("An shipment of enriched ichor has reached Yuri's command center and he has grown more powerful.")
+								Notification("A shipment of enriched ichor has reached Yuri's command center and he has grown more powerful.")
 								if t.Objective ~= nil and not Scrin.IsObjectiveCompleted(t.Objective) then
 									Scrin.MarkFailedObjective(t.Objective)
 								end
@@ -226,6 +222,10 @@ OncePerSecondChecks = function()
 			else
 				TimerTicks = 0
 			end
+		end
+
+		if Mastermind.IsDead then
+			Scrin.MarkFailedObjective(ObjectiveMastermindSurvives)
 		end
 	end
 end

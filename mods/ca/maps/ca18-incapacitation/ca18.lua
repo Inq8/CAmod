@@ -2,7 +2,7 @@
 PowerGrids = {
 	{
 		Providers = { NWPower1, NWPower2, NWPower3, NWPower4 },
-		Consumers = { NWPowered1, NWPowered2, NWPowered3, NWPowered4, NWPowered5, NWPowered6, NWPowered7, NWPowered8, NWPowered9 },
+		Consumers = { NWPowered1, NWPowered2, NWPowered3, NWPowered4, NWPowered5, NWPowered6, NWPowered7, NWPowered8, NWPowered9, NPowered10 },
 	},
 	{
 		Providers = { NPower1, NPower2, NPower3, NPower4 },

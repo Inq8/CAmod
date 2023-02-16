@@ -152,7 +152,7 @@ camera.resourcescan:
 		Range: 4c0
 
 MISS:
-	Inherits@AUTOTARGET: ^AutoTargetGround
+	Inherits@AUTOTARGET: ^AutoTargetAll
 	Tooltip:
 		Name: Yuri's Command Center
 	WithRangeCircle@0:
@@ -254,10 +254,23 @@ DOG:
 HALO:
 	Buildable:
 		Prerequisites: hpad
+	Health:
+		HP: 17000
+	Targetable@MINDCONTROL:
+		TargetTypes: MindControllable
+	KillsSelf@YURIMC:
+		RequiresCondition: yurimc
+	GrantConditionOnBotOwnerCA@YURIMC:
+		Condition: yurimc
+	-EjectOnDeath:
 
 HIND:
 	Buildable:
 		Prerequisites: hpad
+	Health:
+		HP: 17000
+	Targetable@MINDCONTROL:
+		TargetTypes: MindControllable
 
 YAK:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
