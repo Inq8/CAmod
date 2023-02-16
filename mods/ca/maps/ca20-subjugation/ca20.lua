@@ -196,7 +196,7 @@ WorldLoaded = function()
 	local revealPoints = { EntranceReveal1, EntranceReveal2, EntranceReveal3, EntranceReveal4, EntranceReveal5, EntranceReveal6, EntranceReveal7 }
 	Utils.Do(revealPoints, function(p)
 		Trigger.OnEnteredProximityTrigger(p.CenterPosition, WDist.New(11 * 1024), function(a, id)
-			if a.Owner == Scrin and a.Type ~= "camera" then
+			if a.Owner == Scrin and a.Type ~= "smallcamera" then
 				Trigger.RemoveProximityTrigger(id)
 				local camera = Actor.Create("smallcamera", true, { Owner = Scrin, Location = p.Location })
 				Trigger.AfterDelay(DateTime.Seconds(4), function()
