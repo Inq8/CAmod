@@ -8,14 +8,13 @@ on:
 jobs:
   linux:
     name: Linux AppImages
-    runs-on: ubuntu-20.04
-
+    runs-on: ubuntu-22.04
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Install .NET 6
-        uses: actions/setup-dotnet@v1
+      - name: Install .NET 6.0
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
 
@@ -26,6 +25,7 @@ jobs:
         run: |
           make engine
           mkdir -p build/linux
+          sudo apt install libfuse2
           ./packaging/linux/buildpackage.sh "${GIT_TAG}" "${PWD}/build/linux"
 
       - name: Upload Packages
@@ -42,10 +42,10 @@ jobs:
     runs-on: macos-11
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install .NET 6.0
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
 
@@ -75,14 +75,13 @@ jobs:
 
   windows:
     name: Windows Installers
-    runs-on: ubuntu-20.04
-
+    runs-on: ubuntu-22.04
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Install .NET 6
-        uses: actions/setup-dotnet@v1
+      - name: Install .NET 6.0
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
 
