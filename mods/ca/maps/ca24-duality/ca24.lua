@@ -27,11 +27,15 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnKilled(Commando, function()
-		GDI.MarkFailedObjective(ObjectiveCommandoSurvive)
+		if not CommandoEscaped then
+			GDI.MarkFailedObjective(ObjectiveCommandoSurvive)
+		end
 	end)
 
 	Trigger.OnKilled(Tanya, function()
-		GDI.MarkFailedObjective(ObjectiveTanyaSurvive)
+		if not TanyaEscaped then
+			GDI.MarkFailedObjective(ObjectiveTanyaSurvive)
+		end
 	end)
 
 	local silos = Scrin.GetActorsByTypes({ "silo.scrin", "silo.scrinblue"})
@@ -76,18 +80,42 @@ OncePerSecondChecks = function()
 
 		if NumSilosRemaining == 0 and not GDI.IsObjectiveCompleted(ObjectiveDestroyTiberiumStores) then
 			ObjectiveEscape = GDI.AddObjective("Exit the facility.")
-			UserInterface.SetMissionText("Exit the facility." , HSLColor.Lime)
+
+			if GDI.IsObjectiveCompleted(ObjectiveFindTanya) then
+				UserInterface.SetMissionText("Exit the facility." , HSLColor.Lime)
+			else
+				UserInterface.SetMissionText("Find Tanya and exit the facility." , HSLColor.Lime)
+			end
+
 			GDI.MarkCompletedObjective(ObjectiveDestroyTiberiumStores)
 			local exitFlare = Actor.Create("flare", true, { Owner = GDI, Location = Exit.Location })
 			Beacon.New(GDI, Exit.CenterPosition)
 			Media.PlaySpeechNotification(GDI, "SignalFlare")
 			Notification("Signal flare detected.")
-			Trigger.OnEnteredProximityTrigger(Exit.CenterPosition, WDist.New(4 * 1024), function(a, id)
-				if a.Owner == GDI and (a.Type == "rmbo" or a.Type == "e7") then
-					Trigger.RemoveProximityTrigger(id)
-					exitFlare.Destroy()
+			Trigger.OnEnteredProximityTrigger(Exit.CenterPosition, WDist.New(3 * 1024), function(a, id)
+				if a.Owner == GDI and a.Type ~= "flare" then
+					Trigger.AfterDelay(DateTime.Seconds(5), function()
+						if not exitFlare.IsDead then
+							exitFlare.Destroy()
+						end
+					end)
+					if a.Type == "rmbo" then
+						if GDI.IsObjectiveCompleted(ObjectiveFindTanya) then
+							CommandoEscaped = true
+							GDI.MarkCompletedObjective(ObjectiveCommandoSurvive)
+							Commando.Destroy()
+						end
+					elseif a.Type == "e7" then
+						TanyaEscaped = true
+						GDI.MarkCompletedObjective(ObjectiveTanyaSurvive)
+						Tanya.Destroy()
+					end
 				end
 			end)
+		end
+
+		if CommandoEscaped and TanyaEscaped then
+			GDI.MarkCompletedObjective(ObjectiveEscape)
 		end
 	end
 end
