@@ -40,7 +40,7 @@ Players:
 		Color: F2CF74
 		LockSpawn: True
 		LockTeam: True
-		Enemies: Nod, NodCiv, Creeps
+		Enemies: Nod, Creeps
 	PlayerReference@Nod:
 		Name: Nod
 		Bot: campaign
@@ -51,16 +51,12 @@ Players:
 	PlayerReference@NodCiv:
 		Name: NodCiv
 		Bot: campaign
+		NonCombatant: True
 		Faction: blackh
 		Allies: Nod
 		Enemies: GDI, Creeps
 
 Actors:
-	Actor0: htnk
-		Owner: GDI
-		Location: 46,82
-		Health: 72
-		Facing: 768
 	Actor1: htnk
 		Owner: GDI
 		Location: 52,82
@@ -75,31 +71,11 @@ Actors:
 		Owner: GDI
 		Location: 57,84
 		Health: 79
-		Facing: 721
-	Actor4: apc2
-		Owner: GDI
-		Location: 42,84
-		Health: 80
-		Facing: 983
-	Actor5: mtnk
-		Owner: GDI
-		Location: 39,87
-		Health: 80
-		Facing: 753
-	Actor6: msam
-		Owner: GDI
-		Location: 35,85
-		Health: 79
-		Facing: 769
+		Facing: 737
 	Actor7: hmmv
 		Owner: GDI
 		Location: 55,82
 		Facing: 674
-	Actor8: hmmv
-		Owner: GDI
-		Location: 42,86
-		Facing: 943
-		Health: 83
 	Actor9: n1
 		Owner: GDI
 		SubCell: 3
@@ -160,11 +136,11 @@ Actors:
 		SubCell: 3
 		Location: 44,82
 		Facing: 79
-	Actor25: stnk.nod
+	NormalHardOnlyStnk: stnk.nod
 		Owner: Nod
 		Location: 58,87
-		Facing: 103
 		Stance: Defend
+		Facing: 103
 	Actor26: ltnk
 		Owner: Nod
 		Location: 54,78
@@ -422,14 +398,6 @@ Actors:
 		Location: 16,78
 		Facing: 396
 		TurretFacing: 911
-	Actor116: bggy
-		Owner: Nod
-		Facing: 384
-		Location: 20,87
-	Actor117: stnk.nod
-		Owner: Nod
-		Location: 20,82
-		Facing: 285
 	Actor118: n1
 		Owner: Nod
 		SubCell: 3
@@ -455,16 +423,6 @@ Actors:
 		SubCell: 3
 		Facing: 384
 		Location: 19,79
-	Actor123: n1
-		Owner: GDI
-		SubCell: 3
-		Location: 15,84
-		Facing: 674
-	Actor124: n1
-		Owner: GDI
-		SubCell: 3
-		Location: 14,81
-		Facing: 777
 	Actor125: n1
 		Owner: GDI
 		SubCell: 3
@@ -475,11 +433,6 @@ Actors:
 		SubCell: 3
 		Location: 13,88
 		Facing: 808
-	Actor127: n1
-		Owner: GDI
-		Location: 14,81
-		SubCell: 1
-		Facing: 880
 	Actor128: n1
 		Owner: GDI
 		SubCell: 3
@@ -676,11 +629,11 @@ Actors:
 	WestHand: hand
 		Owner: Nod
 		Location: 6,25
-	Actor212: gun
+	Actor212: gun.nod
 		Owner: Nod
 		Location: 12,27
 		TurretFacing: 705
-	Actor213: gun
+	Actor213: gun.nod
 		Owner: Nod
 		Location: 9,22
 		TurretFacing: 713
@@ -2566,17 +2519,11 @@ Actors:
 	Actor699: oilb
 		Owner: Nod
 		Location: 94,103
-	Actor700: oilb
-		Owner: Nod
-		Location: 88,55
-	Actor701: oilb
-		Owner: Nod
-		Location: 5,29
 	Actor702: msg
 		Owner: Nod
 		DeployState: Deployed
-		Facing: 384
 		Location: 8,29
+		Facing: 384
 	Actor704: gun.nod
 		Owner: Nod
 		Location: 40,48
@@ -2657,5 +2604,94 @@ Actors:
 	Actor728: camera
 		Owner: Nod
 		Location: 38,16
+	Actor729: silo.td
+		Owner: Nod
+		Location: 87,55
+	Actor730: silo.td
+		Owner: Nod
+		Location: 5,29
+	Actor731: silo.td
+		Owner: Nod
+		Location: 7,31
+	Actor732: oilb
+		Owner: Nod
+		Location: 11,39
+	Actor733: oilb
+		Owner: Nod
+		Location: 94,63
+	NormalHardOnlyLtnk: ltnk
+		Owner: Nod
+		Location: 36,100
+		Facing: 126
+	Actor735: ltnk
+		Owner: Nod
+		Location: 35,97
+		Facing: 103
+	Actor736: bike
+		Owner: Nod
+		Facing: 384
+		Location: 50,79
+	Actor737: bggy
+		Owner: Nod
+		Location: 18,86
+		Facing: 253
+	Actor738: ftnk
+		Owner: Nod
+		Location: 38,100
+		Facing: 253
+	Actor739: htnk
+		Owner: GDI
+		Location: 60,84
+		Health: 72
+		Facing: 768
+	Actor740: apc2
+		Owner: GDI
+		Location: 46,82
+		Health: 80
+		Facing: 983
+	Actor741: hmmv
+		Owner: GDI
+		Location: 42,84
+		Health: 83
+		Facing: 0
+	Actor742: mtnk
+		Owner: GDI
+		Location: 42,86
+		Health: 80
+		Facing: 951
+	Actor743: msam
+		Owner: GDI
+		Location: 37,86
+		Health: 79
+		Facing: 634
+	Actor744: medi
+		Owner: GDI
+		SubCell: 3
+		Location: 13,82
+		Facing: 856
+	NormalHardOnlyArty: arty.nod
+		Owner: Nod
+		Location: 21,82
+		Facing: 245
+	Actor745: n1
+		Owner: GDI
+		SubCell: 3
+		Facing: 777
+		Location: 13,81
+	Actor747: n1
+		Owner: GDI
+		SubCell: 1
+		Facing: 880
+		Location: 13,81
+	Actor748: n1
+		Owner: GDI
+		SubCell: 3
+		Facing: 674
+		Location: 14,84
+	Actor749: n1
+		Owner: GDI
+		SubCell: 3
+		Facing: 384
+		Location: 62,85
 
 Rules: ca|rules/campaign-rules.yaml, ca|rules/campaign-tooltips.yaml, ca|rules/campaign-palettes.yaml, rules.yaml

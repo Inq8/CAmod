@@ -28,7 +28,7 @@ Squads = {
 			hard = { { MinTime = 0, Value = 105 } },
 		},
 		ActiveCondition = function()
-			return Mastermind3.IsDead or Mastermind4.IsDead or DateTime.GameTime > DateTime.Minutes(15)
+			return Mastermind3.IsDead or Mastermind4.IsDead or DateTime.GameTime > DateTime.Minutes(6)
 		end,
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -44,14 +44,14 @@ Squads = {
 	},
 	ScrinWater = {
 		Delay = {
-			easy = DateTime.Seconds(240),
-			normal = DateTime.Seconds(180),
-			hard = DateTime.Seconds(120)
+			easy = DateTime.Seconds(140),
+			normal = DateTime.Seconds(120),
+			hard = DateTime.Seconds(100)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 20 } },
-			normal = { { MinTime = 0, Value = 16 }, { MinTime = DateTime.Minutes(12), Value = 32 } },
-			hard = { { MinTime = 0, Value = 28 }, { MinTime = DateTime.Minutes(10), Value = 55 } },
+			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(12), Value = 20 } },
+			normal = { { MinTime = 0, Value = 16 }, { MinTime = DateTime.Minutes(10), Value = 32 } },
+			hard = { { MinTime = 0, Value = 28 }, { MinTime = DateTime.Minutes(8), Value = 55 } },
 		},
 		QueueProductionStatuses = {
 			Vehicles = false
@@ -81,9 +81,9 @@ Squads = {
 	},
 	ScrinAir = {
 		Delay = {
-			easy = DateTime.Minutes(12),
-			normal = DateTime.Minutes(10),
-			hard = DateTime.Minutes(8)
+			easy = DateTime.Minutes(10),
+			normal = DateTime.Minutes(8),
+			hard = DateTime.Minutes(6)
 		},
 		Interval = {
 			easy = DateTime.Minutes(6),
@@ -151,7 +151,9 @@ WorldLoaded = function()
 
 	ObjectiveLiberateBases = GDI.AddObjective("Kill Masterminds to liberate GDI bases.")
 
-	if Difficulty ~= "easy" then
+	if Difficulty == "easy" then
+		NormalHardOnlyTripod.Destroy()
+	else
 		ObjectiveMinimiseCasualties = GDI.AddObjective("Avoid killing mind controlled GDI units.")
 	end
 

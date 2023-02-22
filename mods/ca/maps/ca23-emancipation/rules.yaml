@@ -24,7 +24,7 @@ World:
 
 Player:
 	PlayerResources:
-		DefaultCash: 5000
+		DefaultCash: 0
 
 ^TDPalette:
 	RenderSprites:
@@ -86,3 +86,15 @@ EYE:
 PATR:
 	AttackOrderPower@EMPMISSILE:
 		DisplayTimerRelationships: Ally
+
+GDRN:
+	RevealsShroud:
+		Range: 8c0
+
+UAV:
+	-Targetable@AIRBORNE:
+	RevealsShroud:
+		Range: 12c0
+		MinRange: 10c0
+	RevealsShroud@GAPGEN:
+		Range: 10c0

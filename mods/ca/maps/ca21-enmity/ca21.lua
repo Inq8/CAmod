@@ -38,9 +38,9 @@ HoldOutTime = {
 }
 
 ChemMissileEnabledTime = {
-	easy = DateTime.Seconds((60 * 21) + 41),
-	normal = DateTime.Seconds((60 * 16) + 41),
-	hard = DateTime.Seconds((60 * 11) + 41),
+	easy = DateTime.Seconds((60 * 25) + 41),
+	normal = DateTime.Seconds((60 * 20) + 41),
+	hard = DateTime.Seconds((60 * 15) + 41),
 }
 
 StructuresToSellToAvoidCapture = { SouthHand1, SouthHand2, SouthAirstrip, SouthConyard, WestHand, CenterHand, Helipad1, Helipad2 }
@@ -170,6 +170,12 @@ WorldLoaded = function()
 	InitObjectives(GDI)
 	InitNod()
 
+	if Difficulty == "easy" then
+		NormalHardOnlyArty.Destroy()
+		NormalHardOnlyStnk.Destroy()
+		NormalHardOnlyLtnk.Destroy()
+	end
+
 	ObjectiveEliminateNod = GDI.AddObjective("Eliminate all Nod forces.")
 
 	Trigger.AfterDelay(HoldOutTime[Difficulty] - DateTime.Seconds(20), function()
@@ -187,6 +193,7 @@ WorldLoaded = function()
 		Notification("Reinforcements have arrived.")
 		Reinforcements.Reinforce(GDI, { "hmmv", "mtnk", "amcv", "mtnk" }, { McvSpawn.Location, McvRally.Location }, 75)
 		Beacon.New(GDI, McvRally.CenterPosition)
+		GDI.Cash = 5000
 	end)
 
 	Trigger.OnKilled(Church1, function(self, killer)
@@ -224,7 +231,7 @@ OncePerSecondChecks = function()
 		Nod.Resources = Nod.ResourceCapacity - 500
 
 		if Nod.HasNoRequiredUnits() then
-			Nod.MarkCompletedObjective(ObjectiveEliminateNod)
+			GDI.MarkCompletedObjective(ObjectiveEliminateNod)
 		end
 
 		if GDI.HasNoRequiredUnits() then

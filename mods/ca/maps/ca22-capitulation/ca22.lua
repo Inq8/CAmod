@@ -1,7 +1,7 @@
 
 AttackPaths = {
-	{ WestDelivery4.Location, AttackRally1.Location },
-	{ WestDelivery4.Location, AttackRally2.Location },
+	{ WestDelivery3.Location, AttackRally1.Location },
+	{ WestDelivery3.Location, AttackRally2.Location },
 	{ SouthDelivery3.Location, AttackRally2.Location },
 	{ SouthDelivery3.Location, AttackRally3.Location },
 }
@@ -41,9 +41,9 @@ Squads = {
 	Main = {
 		Player = nil,
 		Delay = {
-			easy = DateTime.Minutes(8),
-			normal = DateTime.Minutes(6),
-			hard = DateTime.Minutes(4)
+			easy = DateTime.Minutes(5),
+			normal = DateTime.Minutes(4),
+			hard = DateTime.Minutes(3)
 		},
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 30 } },
@@ -56,6 +56,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		IdleUnits = { },
+		ProducerActors = { Infantry = { MainBarracks1, MainBarracks2 }, Vehicles = { MainFactory } },
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
 		Units = UnitCompositions.Soviet.Main,
 		AttackPaths = AttackPaths,
@@ -185,7 +186,7 @@ WorldLoaded = function()
     GDI = Player.GetPlayer("GDI")
     USSR = Player.GetPlayer("USSR")
 	MissionPlayer = GDI
-	TimerTicks = DateTime.Minutes(20)
+	TimerTicks = DateTime.Minutes(15)
 	CurrentDelivery = 1
 
 	Camera.Position = PlayerStart.CenterPosition
@@ -209,7 +210,24 @@ WorldLoaded = function()
 		TeslaReactorsOffline()
 	end)
 
-	DoDelivery()
+	Trigger.AfterDelay(DateTime.Minutes(2), function()
+		DoDelivery()
+	end)
+
+	local revealPoints = { SupplyReveal1, SupplyReveal2, SupplyReveal3 }
+	Utils.Do(revealPoints, function(p)
+		Trigger.OnEnteredProximityTrigger(p.CenterPosition, WDist.New(12 * 1024), function(a, id)
+			if a.Owner == GDI and a.Type ~= "camera" then
+				Trigger.RemoveProximityTrigger(id)
+				local camera = Actor.Create("camera", true, { Owner = GDI, Location = p.Location })
+				Notification("Fuel supply route identified.")
+				Beacon.New(GDI, p.CenterPosition)
+				Trigger.AfterDelay(DateTime.Seconds(4), function()
+					camera.Destroy()
+				end)
+			end
+		end)
+	end)
 end
 
 Tick = function()
@@ -229,6 +247,8 @@ OncePerSecondChecks = function()
 				ReactorStarved()
 			end
 		end
+
+		UpdateObjectiveText()
 
 		if GDI.HasNoRequiredUnits() then
 			GDI.MarkFailedObjective(ObjectiveCaptureOrDestroyBunker)
@@ -288,6 +308,19 @@ InitUSSR = function()
 			SovietRadar.GrantCondition("paratroopers-enabled")
 		end
 	end)
+
+	Trigger.OnEnteredFootprint({ReactorDeliveryPoint1.Location, ReactorDeliveryPoint2.Location, ReactorDeliveryPoint3.Location, ReactorDeliveryPoint4.Location }, function(a, id)
+		if a.Owner == USSR and a.Type == "utrk" then
+			a.Destroy()
+			if not GDI.IsObjectiveCompleted(ObjectiveStarveAtomicReactor) then
+				TimerTicks = TimerTicks + DateTime.Minutes(5)
+				if TimerTicks > DateTime.Minutes(15) then
+					TimerTicks = DateTime.Minutes(15)
+				end
+				Notification("A shipment of fuel has reached the Soviet reactor.")
+			end
+		end
+	end)
 end
 
 DoDelivery = function()
@@ -299,22 +332,18 @@ DoDelivery = function()
 		end)
 
 		Trigger.OnIdle(truck, function(self)
-			self.Destroy()
-			if not GDI.IsObjectiveCompleted(ObjectiveStarveAtomicReactor) then
-				TimerTicks = TimerTicks + DateTime.Minutes(5)
-				if TimerTicks > DateTime.Minutes(15) then
-					TimerTicks = DateTime.Minutes(15)
-					-- Notification("A shipment of uranium reached the Soviet reactor.")
-				end
-			end
+			truck.Move()
+			truck.Move(delivery.Path[#delivery.Path])
 		end)
 	end)
 
 	if CurrentDelivery < #Deliveries then
 		CurrentDelivery = CurrentDelivery + 1
+	else
+		CurrentDelivery = 1
 	end
 
-	Trigger.AfterDelay(DateTime.Minutes(1), function()
+	Trigger.AfterDelay(DateTime.Minutes(2), function()
 		if not GDI.IsObjectiveCompleted(ObjectiveStarveAtomicReactor) then
 			DoDelivery()
 		end
@@ -334,7 +363,7 @@ ReactorStarved = function()
 		if not AtomicReactor.IsDead then
 			AtomicReactor.GrantCondition("disabled")
 		end
-		Notification("Main power for the Soviet base is now offline.")
+		Notification("Atomic Reactor offline. Main power for the Soviet base is down.")
 	end
 end
 
@@ -352,4 +381,13 @@ TeslaReactorsOffline = function()
 		end
 	end)
 	Notification("Soviet outer air defenses are now offline. Tesla Coils are no longer supercharged.")
+end
+
+UpdateObjectiveText = function()
+	if not GDI.IsObjectiveCompleted(ObjectiveStarveAtomicReactor) then
+		local percentage = math.floor(TimerTicks / DateTime.Minutes(15) * 100)
+		UserInterface.SetMissionText("Atomic Reactor fuel level: " .. percentage .. "%", HSLColor.Yellow)
+	else
+		UserInterface.SetMissionText("Capture or destroy Stalin's bunker.", HSLColor.Yellow)
+	end
 end
