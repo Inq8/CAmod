@@ -126,11 +126,13 @@ else
 	modify_plist "<string>{DISCORD_URL_SCHEME}</string>" "" "${LAUNCHER_CONTENTS_DIR}/Info.plist"
 fi
 
-# Compile universal (x86_64 + arm64) Launcher and arch-specific apphosts
+# Compile universal (x86_64 + arm64) arch-specific apphosts
 clang "${TEMPLATE_ROOT}/${ENGINE_DIRECTORY}/packaging/macos/apphost.c" -o "${LAUNCHER_ASSEMBLY_DIR}/apphost-x86_64" -framework AppKit -target x86_64-apple-macos10.15
 clang "${TEMPLATE_ROOT}/${ENGINE_DIRECTORY}/packaging/macos/apphost.c" -o "${LAUNCHER_ASSEMBLY_DIR}/apphost-arm64" -framework AppKit -target arm64-apple-macos10.15
 clang "${TEMPLATE_ROOT}/${ENGINE_DIRECTORY}/packaging/macos/apphost-mono.c" -o "${LAUNCHER_ASSEMBLY_DIR}/apphost-mono" -framework AppKit -target x86_64-apple-macos10.11
 clang "${TEMPLATE_ROOT}/${ENGINE_DIRECTORY}/packaging/macos/checkmono.c" -o "${LAUNCHER_ASSEMBLY_DIR}/checkmono" -framework AppKit -target x86_64-apple-macos10.11
+
+# Compile universal (x86_64 + arm64) Launcher
 clang "${TEMPLATE_ROOT}/${ENGINE_DIRECTORY}/packaging/macos/launcher.m" -o "${LAUNCHER_ASSEMBLY_DIR}/Launcher-x86_64" -framework AppKit -target x86_64-apple-macos10.11
 clang "${TEMPLATE_ROOT}/${ENGINE_DIRECTORY}/packaging/macos/launcher.m" -o "${LAUNCHER_ASSEMBLY_DIR}/Launcher-arm64" -framework AppKit -target arm64-apple-macos10.15
 lipo -create -output "${LAUNCHER_ASSEMBLY_DIR}/Launcher" "${LAUNCHER_ASSEMBLY_DIR}/Launcher-x86_64" "${LAUNCHER_ASSEMBLY_DIR}/Launcher-arm64"
