@@ -1,0 +1,193 @@
+^Palettes:
+	GlobalLightingPaletteEffect:
+		Red: 0.85
+		Green: 0.85
+		Blue: 1
+		Ambient: 0.85
+	WeatherOverlay:
+		ParticleDensityFactor: 4
+		Gravity: 16, 24
+		WindTick: 150, 425
+		ScatterDirection: -12, 12
+		ParticleSize: 2, 3
+		ParticleColors: ECECEC44, E4E4E444, D0D0D044, BCBCBC44
+		LineTailAlphaValue: 0
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, ca22.lua
+	MissionData:
+		Briefing: The path to the Scrin stronghold is now clear and preparations for our assault are underway. Stalin is a wildcard that we cannot ignore, and we have decided it would be best to remove him from the equation.\n\nHe has retreated to a heavily fortified compound in Siberia and surrounded himself with his most loyal and experienced troops. Soviet ground forces suffered huge losses as a result of recent Scrin incursions, however their air force is still largely intact, so expect Stalin to make heavy use of it.\n\nHis stronghold is very heavily defended, but the enormous power requirements of its primary defenses mean any interruption to the power infrastructure would make any attack far more likely to succeed.\n\nAn Atomic Reactor is the primary source of power. Allied spies have reported to us that the fuel supplies for this reactor have been running low for some time, so if we can cut their supply lines and prevent additional fuel from reaching the reactor, it would only be a matter of time before it is forced to shut down.\n\nThe base also has a secondary source of power in the form of a bank of Tesla Reactors on a nearby island. These reactors enable the base's Tesla Coils to be supercharged and should be destroyed before an attack on the main stronghold is attempted.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: Difficulty
+		Description: The difficulty of the mission
+		Values:
+			easy: Easy
+			normal: Normal
+			hard: Hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: fac2226m
+
+Player:
+	PlayerResources:
+		DefaultCash: 5000
+	SupportPowerBotModule@CAMPAIGN:
+		Decisions:
+			spyplane:
+				OrderName: spyplane
+				MinimumAttractiveness: 1
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 5c0
+			parabombs:
+				OrderName: parabombs
+				MinimumAttractiveness: 1
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 5c0
+			paratroopers:
+				OrderName: paratroopers
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
+				Consideration@2:
+					Against: Enemy
+					Types: Water
+					Attractiveness: -5
+					TargetMetric: None
+					CheckRadius: 8c0
+
+^TDPalette:
+	RenderSprites:
+		PlayerPalette: playertdunit
+
+^Infantry:
+	RenderSprites:
+		PlayerPalette: playertdunit
+	WithDeathAnimation:
+		DeathSequencePalette: playertdunit
+
+^BuildingTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+^DefenseTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+SAPC:
+	RenderSprites:
+		PlayerPalette: playerraunit
+
+HARV.TD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+AMCV:
+	RenderSprites:
+		PlayerPalette: playertd
+
+EYE:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+ATWR:
+	Buildable:
+		Prerequisites: vehicles.any, ~structures.gdi, ~techlevel.medium
+
+STWR:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+TSLA:
+	-Targetable@TeslaBoost:
+	ExternalCondition@BUFFREMOVED:
+		Condition: buff-removed
+	GrantCondition@CHARGED1:
+		Condition: charged
+		RequiresCondition: !buff-removed
+	GrantCondition@CHARGED2:
+		Condition: charged
+		RequiresCondition: !buff-removed
+	GrantCondition@CHARGED3:
+		Condition: charged
+		RequiresCondition: !buff-removed
+	DamageMultiplier@BUFFED:
+		Modifier: 50
+			RequiresCondition: !buff-removed
+
+SAM:
+	ExternalCondition@BUFFREMOVED:
+		Condition: buff-removed
+	DamageMultiplier@BUFFED:
+		Modifier: 50
+		RequiresCondition: !buff-removed
+
+DOME:
+	ParatroopersPower@paratroopers:
+		-Prerequisites:
+		RequiresCondition: paratroopers-enabled
+	ExternalCondition@paratroopers:
+		Condition: paratroopers-enabled
+	-ParatroopersPower@Russianparatroopers:
+
+AFLD:
+	AirstrikePower@Russianparabombs:
+		RequiresCondition: parabombs-enabled
+	ExternalCondition@parabombs:
+		Condition: parabombs-enabled
+
+NPWR:
+	ExternalCondition@DISABLED:
+		Condition: disabled
+	WithIdleOverlay@SMOKE1:
+		RequiresCondition: !(disabled || being-warped || build-incomplete)
+	WithIdleOverlay@SMOKE2:
+		RequiresCondition: !(disabled || being-warped || build-incomplete)
+	WithIdleOverlay@SMOKE3:
+		RequiresCondition: !(disabled || being-warped || build-incomplete)
+	Health:
+		HP: 180000
+
+FCOM:
+	Health:
+		HP: 200000
+	Tooltip:
+		Name: Stalin's Bunker
+		-GenericVisibility:
+	-TooltipDescription@ally:
+	-TooltipDescription@other:
+	-BaseProvider:
+	-SpawnActorOnDeath:
+	RepairableBuilding:
+		RepairStep: 500
+		RepairPercent: 30
+		PlayerExperience: 5
+		RepairingNotification: Repairing
+
+UTRK:
+	Inherits: DTRK
+	RenderSprites:
+		Image: dtrk
+	Health:
+		HP: 20000
+	Mobile:
+		Speed: 54
+	Explodes:
+		Weapon: CrateNuke
+		EmptyWeapon: CrateNuke
+
+UAV:
+	-Targetable@AIRBORNE:

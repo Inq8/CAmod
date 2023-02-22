@@ -172,7 +172,7 @@ InitScrin = function()
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
 
 	Utils.Do(scrinGroundAttackers, function(a)
-		TargetSwapChance(a, Scrin, 10)
+		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
 	end)
 end
@@ -246,7 +246,7 @@ SpawnWormholeUnits = function(wormhole)
 			Trigger.AfterDelay(160, function()
 				if not a.IsDead then
 					a.Scatter()
-					TargetSwapChance(a, Scrin, 10)
+					TargetSwapChance(a, 10)
 					CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
 				end
 			end)

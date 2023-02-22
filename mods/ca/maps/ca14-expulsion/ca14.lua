@@ -187,7 +187,7 @@ InitGDI = function()
 	local gdiGroundAttackers = GDI.GetGroundAttackers()
 
 	Utils.Do(gdiGroundAttackers, function(a)
-		TargetSwapChance(a, GDI, 10)
+		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
 	end)
 

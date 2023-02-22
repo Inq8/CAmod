@@ -268,7 +268,7 @@ InitGreece = function()
 	local alliedGroundAttackers = Greece.GetGroundAttackers()
 
 	Utils.Do(alliedGroundAttackers, function(a)
-		TargetSwapChance(a, Greece, 10)
+		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGreeceGroundHunterUnit)
 	end)
 
@@ -312,7 +312,7 @@ InitGDI = function()
 	local gdiGroundAttackers = GDI.GetGroundAttackers()
 
 	Utils.Do(gdiGroundAttackers, function(a)
-		TargetSwapChance(a, GDI, 10)
+		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
 	end)
 

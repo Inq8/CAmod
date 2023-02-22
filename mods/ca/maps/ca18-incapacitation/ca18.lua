@@ -163,7 +163,7 @@ WorldLoaded = function()
 		end)
 	end)
 
-	local revealPoints = { EntranceReveal1, EntranceReveal2, EntranceReveal3, EntranceReveal4, EntranceReveal5, EntranceReveal6, EntranceReveal7 }
+	local revealPoints = { EntranceReveal1, EntranceReveal2, EntranceReveal3, EntranceReveal4, EntranceReveal5, EntranceReveal6, EntranceReveal7, EntranceReveal8 }
 	Utils.Do(revealPoints, function(p)
 		Trigger.OnEnteredProximityTrigger(p.CenterPosition, WDist.New(11 * 1024), function(a, id)
 			if a.Owner == Scrin then
@@ -241,7 +241,7 @@ InitGreece = function()
 	local alliedGroundAttackers = Greece.GetGroundAttackers()
 
 	Utils.Do(alliedGroundAttackers, function(a)
-		TargetSwapChance(a, Greece, 10)
+		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGreeceGroundHunterUnit)
 	end)
 end
@@ -272,7 +272,7 @@ InitGDI = function()
 	local gdiGroundAttackers = GDI.GetGroundAttackers()
 
 	Utils.Do(gdiGroundAttackers, function(a)
-		TargetSwapChance(a, GDI, 10)
+		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
 	end)
 end

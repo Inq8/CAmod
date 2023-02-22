@@ -1,0 +1,153 @@
+RMBO:
+	Health:
+		HP: 25000
+	MustBeDestroyed:
+		RequiredForShortGame: true
+	Mobile:
+		Speed: 92
+	TakeCover:
+		SpeedModifier: 85
+	ExternalCondition@slowed:
+		Condition: slowed
+	SpeedMultiplier@slowed1:
+		Modifier: 70
+		RequiresCondition: slowed == 1
+	SpeedMultiplier@slowed2:
+		Modifier: 40
+		RequiresCondition: slowed > 1
+	WithDecoration@COMMANDOSKULL:
+		RequiresCondition: chilled
+	GainsExperience:
+		ExperienceModifier: 5000
+	-DamageMultiplier@RANK-1:
+	-DamageMultiplier@RANK-2:
+	-FirepowerMultiplier@RANK-1:
+	-FirepowerMultiplier@RANK-2:
+	-FirepowerMultiplier@RANK-ELITE:
+	ReloadDelayMultiplier@RANK-1:
+	ReloadDelayMultiplier@RANK-2:
+	ReloadDelayMultiplier@RANK-ELITE:
+	-ChangesHealth@ELITE:
+
+S1:
+	AutoTarget:
+		ScanRadius: 7
+	RevealsShroud:
+		Range: 7c0
+
+S2:
+	AutoTarget:
+		ScanRadius: 7
+	RevealsShroud:
+		Range: 7c0
+
+S3:
+	AutoTarget:
+		ScanRadius: 7
+	RevealsShroud:
+		Range: 7c0
+	Mobile:
+		Speed: 46
+
+S4:
+	AutoTarget:
+		ScanRadius: 7
+	RevealsShroud:
+		Range: 7c0
+	Mobile:
+		Speed: 46
+
+FEED2:
+	Inherits: S1
+	RenderSprites:
+		Image: feed
+	ConvertsDamageToHealth:
+		DamagePercentConverted: 300
+	WithInfantryBody:
+		DefaultAttackSequence: harvest
+	Armament@PRIMARY:
+		Weapon: LeecherBeam
+		LocalOffset: 150,0,200
+		-MuzzleSequence:
+	-Armament@Garrison:
+	QuantizeFacingsFromSequence:
+		Sequence: idle
+	WithInfantryBody:
+		MoveSequence: move
+		StandSequences: idle
+	WithInfantryBody@Warped:
+		MoveSequence: move
+		StandSequences: idle
+	Explodes:
+		Weapon: FeederExplode
+		EmptyWeapon: FeederExplode
+
+GSCR:
+	Armor:
+		Type: None
+	Health:
+		HP: 50000
+	AutoTarget:
+		ScanRadius: 7
+	RevealsShroud:
+		Range: 7c0
+
+CORR:
+	AutoTarget:
+		ScanRadius: 7
+	RevealsShroud:
+		Range: 7c0
+
+DARK:
+	AutoTarget:
+		ScanRadius: 7
+	Armament:
+		FireDelay: 20
+
+GUNW:
+	AutoTarget:
+		ScanRadius: 7
+	Mobile:
+		Speed: 53
+		TurnSpeed: 16
+
+RUIN:
+	AutoTarget:
+		ScanRadius: 8
+	RevealsShroud:
+		Range: 8c0
+
+LCHR:
+	AutoTarget:
+		ScanRadius: 7
+	RevealsShroud:
+		Range: 7c0
+	Mobile:
+		Speed: 53
+		TurnSpeed: 16
+	ConvertsDamageToHealth:
+		DamagePercentConverted: 300
+
+camera.minirift:
+	KillsSelf:
+		Delay: 875
+
+BRIK:
+	-RenderSprites:
+	RenderSpritesEditorOnly:
+	DamageMultiplier@INVULN:
+		Modifier: 0
+
+SBAG:
+	-BlocksProjectiles:
+
+BARB:
+	-BlocksProjectiles:
+
+PTUR:
+	Health:
+		HP: 60000
+	Turreted:
+		TurnSpeed: 28
+	Armament:
+		Weapon: TurretDiscs

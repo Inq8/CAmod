@@ -94,47 +94,18 @@ RMBO:
 		Cost: 0
 	Buildable:
 		Prerequisites: ~rmbospawn
-		BuildDuration: 1000
+		BuildDuration: 500
 		BuildDurationModifier: 100
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Cannot attack Aircraft
 		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Voiced by Frank Klepacki
-	Health:
-		HP: 25000
-	MustBeDestroyed:
-		RequiredForShortGame: true
-	Mobile:
-		Speed: 92
 	-AutoTarget:
 	-AutoTargetPriority@DEFAULT:
 	-AutoTargetPriority@ATTACKANYTHING:
 	AttackMove:
 		-AssaultMoveCondition:
 	-Armament@sapper:
-	TakeCover:
-		SpeedModifier: 85
-	ExternalCondition@slowed:
-		Condition: slowed
-	SpeedMultiplier@slowed1:
-		Modifier: 70
-		RequiresCondition: slowed == 1
-	SpeedMultiplier@slowed2:
-		Modifier: 40
-		RequiresCondition: slowed > 1
-	WithDecoration@COMMANDOSKULL:
-		RequiresCondition: chilled
-	GainsExperience:
-		ExperienceModifier: 5000
-	-DamageMultiplier@RANK-1:
-	-DamageMultiplier@RANK-2:
-	-FirepowerMultiplier@RANK-1:
-	-FirepowerMultiplier@RANK-2:
-	-FirepowerMultiplier@RANK-ELITE:
-	ReloadDelayMultiplier@RANK-1:
-	ReloadDelayMultiplier@RANK-2:
-	ReloadDelayMultiplier@RANK-ELITE:
-	-ChangesHealth@ELITE:
 	SpawnActorOnDeath@ONEDEATH:
 		Actor: death.first
 		RequiresCondition: !one-death
@@ -166,126 +137,21 @@ RMBO:
 		Condition: five-deaths
 		Prerequisites: death.fifth
 	ProductionTimeMultiplier@TWODEATHS:
-		Multiplier: 175
+		Multiplier: 150
 		Prerequisites: death.second, !death.third
 	ProductionTimeMultiplier@THREEDEATHS:
-		Multiplier: 250
+		Multiplier: 300
 		Prerequisites: death.third, !death.fourth
 	ProductionTimeMultiplier@FOURDEATHS:
-		Multiplier: 325
+		Multiplier: 450
 		Prerequisites: death.fourth, !death.fifth
 	ProductionTimeMultiplier@FIVEDEATHS:
-		Multiplier: 400
+		Multiplier: 600
 		Prerequisites: death.fifth
-
-S1:
-	AutoTarget:
-		ScanRadius: 7
-	RevealsShroud:
-		Range: 7c0
-
-S2:
-	AutoTarget:
-		ScanRadius: 7
-	RevealsShroud:
-		Range: 7c0
-
-S3:
-	AutoTarget:
-		ScanRadius: 7
-	RevealsShroud:
-		Range: 7c0
-	Mobile:
-		Speed: 46
-
-S4:
-	AutoTarget:
-		ScanRadius: 7
-	RevealsShroud:
-		Range: 7c0
-	Mobile:
-		Speed: 46
-
-FEED2:
-	Inherits: S1
-	RenderSprites:
-		Image: feed
-	ConvertsDamageToHealth:
-		DamagePercentConverted: 300
-	WithInfantryBody:
-		DefaultAttackSequence: harvest
-	Armament@PRIMARY:
-		Weapon: LeecherBeam
-		LocalOffset: 150,0,200
-		-MuzzleSequence:
-	-Armament@Garrison:
-	QuantizeFacingsFromSequence:
-		Sequence: idle
-	WithInfantryBody:
-		MoveSequence: move
-		StandSequences: idle
-	WithInfantryBody@Warped:
-		MoveSequence: move
-		StandSequences: idle
-
-GSCR:
-	Armor:
-		Type: None
-	Health:
-		HP: 50000
-	AutoTarget:
-		ScanRadius: 7
-	RevealsShroud:
-		Range: 7c0
-
-CORR:
-	AutoTarget:
-		ScanRadius: 7
-	RevealsShroud:
-		Range: 7c0
-
-DARK:
-	AutoTarget:
-		ScanRadius: 7
-	Armament:
-		FireDelay: 20
-
-GUNW:
-	AutoTarget:
-		ScanRadius: 7
-	Mobile:
-		Speed: 53
-		TurnSpeed: 16
-
-RUIN:
-	AutoTarget:
-		ScanRadius: 8
-
-LCHR:
-	AutoTarget:
-		ScanRadius: 7
-	Mobile:
-		Speed: 53
-		TurnSpeed: 16
-	ConvertsDamageToHealth:
-		DamagePercentConverted: 300
-
-camera.minirift:
-	KillsSelf:
-		Delay: 875
-
-WORMHOLE:
-	MapEditorData:
-		Categories: System
-	MustBeDestroyed:
-		RequiredForShortGame: true
-	PopControlled:
-		Limit: 3
-	Health:
-		HP: 50000
 
 RMBOSPAWN:
 	Inherits: CAMERA
+	Inherits@PROD: ^ProducesInfantry
 	Tooltip:
 		Name: Spawn Point
 	MustBeDestroyed:
@@ -312,25 +178,15 @@ RMBOSPAWN:
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall
 
-BRIK:
-	-RenderSprites:
-	RenderSpritesEditorOnly:
-	DamageMultiplier@INVULN:
-		Modifier: 0
-
-SBAG:
-	-BlocksProjectiles:
-
-BARB:
-	-BlocksProjectiles:
-
-PTUR:
+WORMHOLE:
+	MapEditorData:
+		Categories: System
+	MustBeDestroyed:
+		RequiredForShortGame: true
+	PopControlled:
+		Limit: 3
 	Health:
-		HP: 60000
-	Turreted:
-		TurnSpeed: 28
-	Armament:
-		Weapon: TurretDiscs
+		HP: 50000
 
 ^DeathToken:
 	AlwaysVisible:

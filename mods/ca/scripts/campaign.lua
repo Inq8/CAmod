@@ -446,7 +446,7 @@ HasOneOf = function(player, types)
 end
 
 -- make specified units have a chance to swap targets when attacked instead of chasing one target endlessly
-TargetSwapChance = function(unit, player, chance)
+TargetSwapChance = function(unit, chance)
 	Trigger.OnDamaged(unit, function(self, attacker, damage)
 		if self.Owner == MissionPlayer or attacker.Owner ~= MissionPlayer then
 			return
@@ -672,7 +672,7 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 								end)
 							end
 
-							TargetSwapChance(produced, squad.Player, 10)
+							TargetSwapChance(produced, 10)
 						end
 					end)
 				end
@@ -957,6 +957,8 @@ SovietAdvancedArty = { "v3rl", "v3rl", "isu" }
 TeslaVariant = { "ttnk", "ttra" }
 BasicCyborg = { "n1c", "n3c", "n5", "acol" }
 AdvancedCyborg = { "rmbc", "enli", "tplr" }
+MigOrSukhoi = { "mig", "mig", "suk", "suk.upg" }
+HindOrYak = { "hind", "yak" }
 
 UnitCompositions = {
 	Allied = {

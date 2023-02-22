@@ -293,7 +293,7 @@ InitNod = function()
 	local nodGroundAttackers = Nod.GetGroundAttackers()
 
 	Utils.Do(nodGroundAttackers, function(a)
-		TargetSwapChance(a, Nod, 10)
+		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
 	end)
 

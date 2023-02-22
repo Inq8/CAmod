@@ -247,6 +247,8 @@ OncePerFiveSecondChecks = function()
 end
 
 InitUSSR = function()
+	RebuildExcludes.USSR = { Types = { "weap", "indp", "npwr", "tpwr", "tsla" }, Actors = { IslandAirfield1, IslandAirfield2, IslandAirfield3, IslandAirfield4, IslandAirfield5 } }
+
 	AutoRepairAndRebuildBuildings(USSR, 15)
 	SetupRefAndSilosCaptureCredits(USSR)
 	AutoReplaceHarvesters(USSR)
@@ -254,14 +256,12 @@ InitUSSR = function()
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
 
 	Utils.Do(ussrGroundAttackers, function(a)
-		TargetSwapChance(a, USSR, 10)
+		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
 	end)
 
 	Actor.Create("POWERCHEAT", true, { Owner = USSR })
 	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR })
-
-	RebuildExcludes.USSR = { Types = { "weap", "indp", "npwr", "tpwr", "tsla" }, Actors = { IslandAirfield1, IslandAirfield2, IslandAirfield3, IslandAirfield4, IslandAirfield5 } }
 
 	Trigger.AfterDelay(DateTime.Seconds(5), function()
 		Utils.Do({ ShoreInf1, ShoreInf2, ShoreInf3, ShoreInf4, ShoreHeavyTank1, ShoreHeavyTank2 }, function(self)

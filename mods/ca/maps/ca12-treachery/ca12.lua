@@ -277,14 +277,14 @@ InitGreece = function()
 	local alliedGroundAttackers = Greece.GetGroundAttackers()
 
 	Utils.Do(alliedGroundAttackers, function(a)
-		TargetSwapChance(a, Greece, 10)
+		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGreeceGroundHunterUnit)
 	end)
 
 	local traitorGroundAttackers = Traitor.GetGroundAttackers()
 
 	Utils.Do(traitorGroundAttackers, function(a)
-		TargetSwapChance(a, Traitor, 10)
+		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGroundHunterUnit)
 	end)
 

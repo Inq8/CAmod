@@ -250,7 +250,7 @@ InitScrin = function()
 		InitAttackSquad(Squads.ScrinMain, Scrin)
 	end)
 
-	Trigger.AfterDelay(Squads.ScrinMain.Delay[Difficulty], function()
+	Trigger.AfterDelay(Squads.ScrinWater.Delay[Difficulty], function()
 		InitAttackSquad(Squads.ScrinWater, Scrin)
 	end)
 
@@ -261,7 +261,7 @@ InitScrin = function()
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
 
 	Utils.Do(scrinGroundAttackers, function(a)
-		TargetSwapChance(a, Scrin, 10)
+		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
 	end)
 
