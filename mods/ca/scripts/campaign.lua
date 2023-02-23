@@ -46,7 +46,7 @@ KeyStructures = { "fact", "afac", "sfac", "proc", "proc.td", "proc.scrin", "weap
 -- used to define actors and/or types of actors that the AI should not rebuild
 RebuildExcludes = {
 	-- USSR = {
-	-- 	 Actors = { "ActorName" },
+	-- 	 Actors = { Actor },
 	-- 	 Types = { "proc" }
 	-- }
 }
@@ -830,7 +830,7 @@ SetupRefAndSilosCaptureCredits = function(player)
 	Utils.Do(silosAndRefineries, function(a)
 		Trigger.OnCapture(a, function(self, captor, oldOwner, newOwner)
 			newOwner.Cash = newOwner.Cash + CapturedCreditsAmount
-			Media.FloatingText("+$1500", self.CenterPosition, 30, newOwner.Color)
+			Media.FloatingText("+$" .. CapturedCreditsAmount, self.CenterPosition, 30, newOwner.Color)
 		end)
 	end)
 end
