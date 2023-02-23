@@ -136,7 +136,6 @@ Squads = {
 	},
 }
 
-
 WorldLoaded = function()
     GDI = Player.GetPlayer("GDI")
     Scrin = Player.GetPlayer("Scrin")
@@ -189,6 +188,10 @@ WorldLoaded = function()
 				Utils.Do(slaves, function(s)
 					if not s.IsDead then
 						s.Owner = GDI
+						s.Stop()
+						if s.HasProperty("FindResources") then
+							s.FindResources()
+						end
 					end
 				end)
 
@@ -285,6 +288,8 @@ OncePerFiveSecondChecks = function()
 end
 
 InitScrin = function()
+	Actor.Create("POWERCHEAT", true, { Owner = GDISlaves })
+
 	AutoRepairAndRebuildBuildings(Scrin, 15)
 	SetupRefAndSilosCaptureCredits(Scrin)
 	AutoReplaceHarvesters(Scrin)

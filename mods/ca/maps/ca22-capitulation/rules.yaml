@@ -161,7 +161,7 @@ NPWR:
 	WithIdleOverlay@SMOKE3:
 		RequiresCondition: !(disabled || being-warped || build-incomplete)
 	Health:
-		HP: 300000
+		HP: 400000
 
 FCOM:
 	Health:
@@ -178,6 +178,13 @@ FCOM:
 		RepairPercent: 30
 		PlayerExperience: 5
 		RepairingNotification: Repairing
+	GrantCondition@HASPOWER:
+		Condition: invulnerability
+		RequiresCondition: !ic-offline
+	ExternalCondition@ICOFFLINE:
+		Condition: ic-offline
+	Capturable:
+		RequiresCondition: !invulnerability && !build-incomplete && !being-warped
 
 UTRK:
 	Inherits: DTRK
@@ -190,6 +197,11 @@ UTRK:
 	Explodes:
 		Weapon: CrateNuke
 		EmptyWeapon: CrateNuke
+	Buildable:
+		Prerequisites: ~disabled
+		Description: Truck carrying reactor fuel.
+	Tooltip:
+		Name: Reactor Fuel Truck
 
 UAV:
 	-Targetable@AIRBORNE:

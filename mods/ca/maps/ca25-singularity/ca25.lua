@@ -6,9 +6,9 @@ NEReactors = { NEPower1, NEPower2, NEPower3, NEPower4, NEPower5, NEPower6 }
 Squads = {
 	ScrinWest = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 20 } },
-			normal = { { MinTime = 0, Value = 33 } },
-			hard = { { MinTime = 0, Value = 50 } },
+			easy = { { MinTime = 0, Value = 25 } },
+			normal = { { MinTime = 0, Value = 40 } },
+			hard = { { MinTime = 0, Value = 60 } },
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -24,9 +24,9 @@ Squads = {
 	},
 	ScrinEast = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 20 } },
-			normal = { { MinTime = 0, Value = 33 } },
-			hard = { { MinTime = 0, Value = 50 } },
+			easy = { { MinTime = 0, Value = 25 } },
+			normal = { { MinTime = 0, Value = 40 } },
+			hard = { { MinTime = 0, Value = 60 } },
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -42,9 +42,9 @@ Squads = {
 	},
 	ScrinCenter = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 20 } },
-			normal = { { MinTime = 0, Value = 33 } },
-			hard = { { MinTime = 0, Value = 50 } },
+			easy = { { MinTime = 0, Value = 25 } },
+			normal = { { MinTime = 0, Value = 40 } },
+			hard = { { MinTime = 0, Value = 60 } },
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -136,13 +136,10 @@ Squads = {
 	},
 	USSR = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 20 } },
-			normal = { { MinTime = 0, Value = 33 } },
-			hard = { { MinTime = 0, Value = 50 } },
+			easy = { { MinTime = 0, Value = 25 } },
+			normal = { { MinTime = 0, Value = 25 } },
+			hard = { { MinTime = 0, Value = 25 } },
 		},
-		ActiveCondition = function()
-			return not SovietsFreed
-		end,
 		QueueProductionStatuses = {
 			Infantry = false,
 			Vehicles = false,
@@ -152,17 +149,14 @@ Squads = {
 		ProducerActors = nil,
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
 		Units = UnitCompositions.Soviet.Main,
-		AttackPaths = { { WestAttackNode2.Location, WestAttackNode1.Location } },
+		AttackPaths = { { WestAttackNode2.Location, WestAttackNode1.Location, WormholeWP.Location } },
 	},
 	Nod = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 20 } },
-			normal = { { MinTime = 0, Value = 33 } },
-			hard = { { MinTime = 0, Value = 50 } },
+			easy = { { MinTime = 0, Value = 25 } },
+			normal = { { MinTime = 0, Value = 25 } },
+			hard = { { MinTime = 0, Value = 25 } },
 		},
-		ActiveCondition = function()
-			return not NodFreed1
-		end,
 		QueueProductionStatuses = {
 			Infantry = false,
 			Vehicles = false,
@@ -173,17 +167,14 @@ Squads = {
 		ProducerActors = nil,
 		ProducerTypes = { Infantry = { "hand" }, Vehicles = { "airs" } },
 		Units = UnitCompositions.Nod.Main,
-		AttackPaths = { { EastAttackNode1.Location } },
+		AttackPaths = { { EastAttackNode1.Location, WormholeWP.Location } },
 	},
 	Greece = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 20 } },
-			normal = { { MinTime = 0, Value = 33 } },
-			hard = { { MinTime = 0, Value = 50 } },
+			easy = { { MinTime = 0, Value = 25 } },
+			normal = { { MinTime = 0, Value = 25 } },
+			hard = { { MinTime = 0, Value = 25 } },
 		},
-		ActiveCondition = function()
-			return not AlliesFreed
-		end,
 		QueueProductionStatuses = {
 			Infantry = false,
 			Vehicles = false,
@@ -193,7 +184,7 @@ Squads = {
 		ProducerActors = nil,
 		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
 		Units = UnitCompositions.Allied.Main,
-		AttackPaths = { { CenterAttackNode1.Location } },
+		AttackPaths = { { CenterAttackNode1.Location, WormholeWP.Location } },
 	},
 	ScrinAir = {
 		Delay = {
@@ -403,7 +394,7 @@ OncePerFiveSecondChecks = function()
 end
 
 InitScrin = function()
-	RebuildExcludes.Scrin = { Types = { "sign", "rift" }, Actors = { NWPower1, NWPower2, NWPower3, NWPower4, NWPower5, NWPower6, NEPower1, NEPower2, NEPower3, NEPower4, NEPower5, NEPower6 } }
+	RebuildExcludes.Scrin = { Types = { "sign", "rift" }, Actors = { NWPower1, NWPower2, NWPower3, NWPower4, NWPower5, NWPower6, NWPower7, NWPower8, NEPower1, NEPower2, NEPower3, NEPower4, NEPower5, NEPower6, NEPower7, NEPower8 } }
 
 	AutoRepairAndRebuildBuildings(Scrin, 15)
 	SetupRefAndSilosCaptureCredits(Scrin)
@@ -496,21 +487,21 @@ InitNod = function()
 	AutoRepairAndRebuildBuildings(Nod, 15)
 	SetupRefAndSilosCaptureCredits(Nod)
 	AutoReplaceHarvesters(Nod)
-	InitAttackSquad(Squads.Nod, Nod)
+	InitAttackSquad(Squads.Nod, Nod, Scrin)
 end
 
 InitUSSR = function()
 	AutoRepairAndRebuildBuildings(USSR, 15)
 	SetupRefAndSilosCaptureCredits(USSR)
 	AutoReplaceHarvesters(USSR)
-	InitAttackSquad(Squads.USSR, USSR)
+	InitAttackSquad(Squads.USSR, USSR, Scrin)
 end
 
 InitGreece = function()
 	AutoRepairAndRebuildBuildings(Greece, 15)
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)
-	InitAttackSquad(Squads.Greece, Greece)
+	InitAttackSquad(Squads.Greece, Greece, Scrin)
 end
 
 InitHackers = function()
@@ -519,7 +510,7 @@ InitHackers = function()
 			return
 		end
 
-		Media.DisplayMessage("Commander, we are sending you a squad of hackers. Use them to hack into the Scrin Signal Transmitter and we will be able to bring down the Mothership's shields.", "Nod Commander", HSLColor.FromHex("1E90FF"))
+		Media.DisplayMessage("Commander, we are sending you a squad of hackers. Use them to hack into the Scrin Signal Transmitter and we will be able to bring down the Mothership's shields.", "Nod Commander", HSLColor.FromHex("FF0000"))
 
 		Media.PlaySpeechNotification(GDI, "SignalFlare")
 		local hackerFlare = Actor.Create("flare", true, { Owner = GDI, Location = HackerDropLanding.Location })
@@ -707,10 +698,15 @@ FlipSlaveFaction = function(player)
 			a.Owner = targetPlayer
 			Trigger.ClearAll(a)
 			Trigger.AfterDelay(1, function()
-				if not a.IsDead and a.HasProperty("AttackMove") then
-					a.Stop()
-					a.AttackMove(attackPath[1])
-					a.AttackMove(attackPath[2])
+				if not a.IsDead then
+					if a.HasProperty("AttackMove") then
+						a.Stop()
+						a.AttackMove(attackPath[1])
+						a.AttackMove(attackPath[2])
+					elseif a.HasProperty("FindResources") then
+						a.Stop()
+						a.FindResources()
+					end
 				end
 			end)
 		end

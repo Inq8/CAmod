@@ -332,7 +332,7 @@ DoDelivery = function()
 		end)
 
 		Trigger.OnIdle(truck, function(self)
-			truck.Move()
+			truck.Move(delivery.Path[#delivery.Path - 1])
 			truck.Move(delivery.Path[#delivery.Path])
 		end)
 	end)
@@ -364,6 +364,7 @@ ReactorStarved = function()
 			AtomicReactor.GrantCondition("disabled")
 		end
 		Notification("Atomic Reactor offline. Main power for the Soviet base is down.")
+		StalinHQ.GrantCondition("ic-offline")
 	end
 end
 

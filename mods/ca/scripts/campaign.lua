@@ -485,8 +485,10 @@ CallForHelp = function(self, range, filter)
 	if AlertedUnits[selfId] == nil then
 		if not self.IsDead then
 			AlertedUnits[selfId] = true
-			self.Stop()
-			IdleHunt(self)
+			if filter(self) then
+				self.Stop()
+				IdleHunt(self)
+			end
 		end
 
 		local nearbyUnits = Map.ActorsInCircle(self.CenterPosition, range, filter)
@@ -604,7 +606,7 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 			end
 
 			Trigger.AfterDelay(ticksUntilNext, function()
-				InitAttackSquad(squad, squad.Player)
+				InitAttackSquad(squad, squad.Player, squad.TargetPlayer)
 			end)
 		end
 	-- if more units to build, set them to produce after delay equal to their build time (with difficulty multiplier applied)
@@ -941,13 +943,13 @@ IsNodGroundHunterUnit = function(actor)
 end
 
 IsScrinGroundHunterUnit = function(actor)
-	return actor.Owner == Scrin and IsGroundHunterUnit(actor)
+	return actor.Owner == Scrin and IsGroundHunterUnit(actor) and actor.Type ~= "mast"
 end
 
 -- Units
 
 GunWalkerSeekerOrLacerator = { "gunw", "seek", "lace", "shrw" }
-DevouCorrupterDevourerOrDarkenerrerOrDarkener = { "corr", "devo", "dark" }
+CorrupterDevourerOrDarkener = { "corr", "devo", "dark" }
 TripodReaperOrRuiner = { "tpod", "tpod", "rptp", "ruin" }
 PacOrDevastator = { "pac", "deva" }
 GDIMammothVariant = { "titn.rail", "htnk.ion", "htnk.hover", "htnk.drone" }
