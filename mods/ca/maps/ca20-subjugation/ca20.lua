@@ -82,6 +82,7 @@ WorldLoaded = function()
 	end
 
 	Actor.Create("blink.upgrade", true, { Owner = Scrin })
+	Actor.Create("radar.dummy", true, { Owner = Scrin })
 
 	Trigger.AfterDelay(DateTime.Seconds(7), function()
 		Tip("The Mastermind can mind control up to three enemy units. Mind controlling a fourth will make him lose control of the earliest controlled.")

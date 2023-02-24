@@ -18,6 +18,8 @@ WorldLoaded = function()
 
 	Scrin.Resources = Scrin.ResourceCapacity
 
+	Actor.Create("radar.dummy", true, { Owner = GDI })
+
 	Trigger.OnEnteredProximityTrigger(Tanya.CenterPosition, WDist.New(7 * 1024), function(a, id)
 		if a.Owner == GDI then
 			Trigger.RemoveProximityTrigger(id)
