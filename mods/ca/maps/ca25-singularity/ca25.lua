@@ -722,8 +722,11 @@ DoFinale = function()
 	Lighting.Green = 0.8
 
 	Wormhole.Destroy()
-	Actor.Create("wormholelg", true, { Owner = Scrin, Location = WormholeWP.Location })
 	Actor.Create("camera", true, { Owner = GDI, Location = WormholeWP.Location })
+
+	Trigger.AfterDelay(1, function()
+		Actor.Create("wormholelg", true, { Owner = Scrin, Location = WormholeWP.Location })
+	end)
 
 	local kane = Actor.Create("kane", true, { Owner = Kane, Location = KaneSpawn.Location, Facing = Angle.South })
 	Trigger.AfterDelay(DateTime.Seconds(5), function()
