@@ -1,7 +1,9 @@
+
 ProdigyPatrolPath = { ProdigyPatrol1.Location, ProdigyPatrol2.Location, ProdigyPatrol3.Location, ProdigyPatrol4.Location, ProdigyPatrol5.Location, ProdigyPatrol6.Location, ProdigyPatrol7.Location, ProdigyPatrol8.Location, ProdigyPatrol9.Location, ProdigyPatrol10.Location, ProdigyPatrol11.Location, ProdigyPatrol12.Location, ProdigyPatrol13.Location, ProdigyPatrol14.Location, ProdigyPatrol15.Location, ProdigyPatrol16.Location, ProdigyPatrol17.Location, ProdigyPatrol18.Location, ProdigyPatrol19.Location, ProdigyPatrol9.Location, ProdigyPatrol8.Location, ProdigyPatrol20.Location }
 
 WorldLoaded = function()
     GDI = Player.GetPlayer("GDI")
+	Greece = Player.GetPlayer("Greece")
     Scrin = Player.GetPlayer("Scrin")
 	MissionPlayer = GDI
 	TimerTicks = 0
@@ -9,36 +11,34 @@ WorldLoaded = function()
 	Camera.Position = Commando.CenterPosition
 
 	InitObjectives(GDI)
+	InitObjectives(Greece)
 	InitScrin()
 
-	ObjectiveFindTanya = GDI.AddObjective("Find Tanya.")
-	ObjectiveDestroyTiberiumStores = GDI.AddObjective("Destroy all Tiberium stores.")
-	ObjectiveCommandoSurvive = GDI.AddObjective("Commando must survive.")
-	ObjectiveTanyaSurvive = GDI.AddObjective("Tanya must survive.")
+	ObjectiveDestroyTiberiumStoresGDI = GDI.AddObjective("Destroy all Tiberium stores.")
+	ObjectiveCommandoSurvivesGDI = GDI.AddObjective("Commando must survive and escape.")
+	ObjectiveTanyaSurvivesGDI = GDI.AddObjective("Tanya must survive and escape.")
+	Actor.Create("radar.dummy", true, { Owner = GDI })
+	Commando.GrantCondition("difficulty-" .. Difficulty)
+
+	ObjectiveDestroyTiberiumStoresGreece = Greece.AddObjective("Destroy all Tiberium stores.")
+	ObjectiveTanyaSurvivesGreece = Greece.AddObjective("Tanya must survive and escape.")
+	ObjectiveCommandoSurvivesGreece = Greece.AddObjective("Commando must survive and escape.")
+	Actor.Create("radar.dummy", true, { Owner = Greece })
+	Tanya.GrantCondition("difficulty-" .. Difficulty)
 
 	Scrin.Resources = Scrin.ResourceCapacity
 
-	Actor.Create("radar.dummy", true, { Owner = GDI })
-	Commando.GrantCondition("difficulty-" .. Difficulty)
-	Tanya.GrantCondition("difficulty-" .. Difficulty)
-
-	Trigger.OnEnteredProximityTrigger(Tanya.CenterPosition, WDist.New(7 * 1024), function(a, id)
-		if a.Owner == GDI then
-			Trigger.RemoveProximityTrigger(id)
-			Tanya.Owner = GDI
-			GDI.MarkCompletedObjective(ObjectiveFindTanya)
-		end
-	end)
-
 	Trigger.OnKilled(Commando, function()
 		if not CommandoEscaped then
-			GDI.MarkFailedObjective(ObjectiveCommandoSurvive)
+			GDI.MarkFailedObjective(ObjectiveCommandoSurvivesGDI)
+			Greece.MarkFailedObjective(ObjectiveCommandoSurvivesGreece)
 		end
 	end)
 
 	Trigger.OnKilled(Tanya, function()
 		if not TanyaEscaped then
-			GDI.MarkFailedObjective(ObjectiveTanyaSurvive)
+			Greece.MarkFailedObjective(ObjectiveTanyaSurvivesGreece)
+			GDI.MarkFailedObjective(ObjectiveTanyaSurvivesGDI)
 		end
 	end)
 
@@ -82,44 +82,44 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		if NumSilosRemaining == 0 and not GDI.IsObjectiveCompleted(ObjectiveDestroyTiberiumStores) then
-			ObjectiveEscape = GDI.AddObjective("Exit the facility.")
+		if NumSilosRemaining == 0 and not IsExitActive then
+			IsExitActive = true
 
-			if GDI.IsObjectiveCompleted(ObjectiveFindTanya) then
-				UserInterface.SetMissionText("Exit the facility." , HSLColor.Lime)
-			else
-				UserInterface.SetMissionText("Find Tanya and exit the facility." , HSLColor.Lime)
-			end
+			UserInterface.SetMissionText("Exit the facility." , HSLColor.Lime)
 
-			GDI.MarkCompletedObjective(ObjectiveDestroyTiberiumStores)
+			GDI.MarkCompletedObjective(ObjectiveDestroyTiberiumStoresGDI)
+			Greece.MarkCompletedObjective(ObjectiveDestroyTiberiumStoresGreece)
+
 			local exitFlare = Actor.Create("flare", true, { Owner = GDI, Location = Exit.Location })
 			Beacon.New(GDI, Exit.CenterPosition)
 			Media.PlaySpeechNotification(GDI, "SignalFlare")
 			Notification("Signal flare detected.")
 			Trigger.OnEnteredProximityTrigger(Exit.CenterPosition, WDist.New(3 * 1024), function(a, id)
-				if a.Owner == GDI and a.Type ~= "flare" then
+				if (a.Owner == GDI or a.Owner == Greece) and a.Type ~= "flare" then
 					Trigger.AfterDelay(DateTime.Seconds(5), function()
 						if not exitFlare.IsDead then
 							exitFlare.Destroy()
 						end
 					end)
 					if a.Type == "rmbo" then
-						if GDI.IsObjectiveCompleted(ObjectiveFindTanya) then
-							CommandoEscaped = true
-							GDI.MarkCompletedObjective(ObjectiveCommandoSurvive)
-							Commando.Destroy()
-						end
+						CommandoEscaped = true
+						Commando.Destroy()
 					elseif a.Type == "e7" then
 						TanyaEscaped = true
-						GDI.MarkCompletedObjective(ObjectiveTanyaSurvive)
 						Tanya.Destroy()
 					end
 				end
 			end)
 		end
 
-		if CommandoEscaped and TanyaEscaped then
-			GDI.MarkCompletedObjective(ObjectiveEscape)
+		if CommandoEscaped then
+			GDI.MarkCompletedObjective(ObjectiveCommandoSurvivesGDI)
+			Greece.MarkCompletedObjective(ObjectiveCommandoSurvivesGreece)
+		end
+
+		if TanyaEscaped then
+			Greece.MarkCompletedObjective(ObjectiveTanyaSurvivesGreece)
+			GDI.MarkCompletedObjective(ObjectiveTanyaSurvivesGDI)
 		end
 	end
 end
