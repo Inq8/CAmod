@@ -26,15 +26,15 @@ OuterSAMs = { OuterSAM1, OuterSAM2, OuterSAM3, OuterSAM4, OuterSAM5, OuterSAM6, 
 TeslaReactors = { TPower1, TPower2, TPower3, TPower4, TPower5, TPower6, TPower7, TPower8, TPower9 }
 
 ParabombsEnabledDelay = {
-	easy = DateTime.Minutes(5),
-	normal = DateTime.Minutes(4),
-	hard = DateTime.Minutes(3)
+	easy = DateTime.Minutes(9),
+	normal = DateTime.Minutes(7),
+	hard = DateTime.Minutes(5)
 }
 
 ParatroopersEnabledDelay = {
-	easy = DateTime.Minutes(4),
-	normal = DateTime.Minutes(3),
-	hard = DateTime.Minutes(2)
+	easy = DateTime.Minutes(8),
+	normal = DateTime.Minutes(6),
+	hard = DateTime.Minutes(4)
 }
 
 Squads = {
@@ -284,17 +284,17 @@ InitUSSR = function()
 	end)
 
 	Trigger.AfterDelay(Squads.AirAntiLight.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.AirAntiLight, USSR, GDI, { "msam", "xo", "rmbo", "proc.td", "nuk2", "hq", "gtek", "n3" })
+		InitAirAttackSquad(Squads.AirAntiLight, USSR, GDI, { "msam", "xo", "rmbo", "nuk2", "hq", "gtek", "n3" })
 	end)
 
 	Trigger.AfterDelay(Squads.AirAntiHeavy.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.AirAntiHeavy, USSR, GDI, { "harv.td", "atwr", "htnk", "htnk.ion", "mtnk", "disr" })
+		InitAirAttackSquad(Squads.AirAntiHeavy, USSR, GDI, { "atwr", "htnk", "htnk.ion", "mtnk", "disr" })
 	end)
 
 	InitAirAttackSquad(Squads.AirAntiAir, USSR, GDI, { "orca", "a10", "a10.upg", "auro" })
 
 	Trigger.AfterDelay(Squads.Kirovs.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Kirovs, USSR, GDI, { "proc.td", "nuk2", "hq", "gtek", "atwr", "nuke", "weap.td", "pyle" })
+		InitAirAttackSquad(Squads.Kirovs, USSR, GDI, { "proc.td", "nuk2", "hq", "gtek", "atwr", "nuke", "weap.td", "eye", "patr", "pyle" })
 	end)
 
 	Trigger.AfterDelay(ParabombsEnabledDelay[Difficulty], function()
