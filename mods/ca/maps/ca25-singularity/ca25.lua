@@ -6,57 +6,66 @@ NEReactors = { NEPower1, NEPower2, NEPower3, NEPower4, NEPower5, NEPower6 }
 Squads = {
 	ScrinWest = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 25 } },
-			normal = { { MinTime = 0, Value = 40 } },
-			hard = { { MinTime = 0, Value = 60 } },
+			easy = { { MinTime = 0, Value = 35 } },
+			normal = { { MinTime = 0, Value = 50 } },
+			hard = { { MinTime = 0, Value = 70 } },
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
 			Vehicles = false,
 			Aircraft = false,
 		},
-		FollowSquadLeader = true,
+		InitTime = DateTime.Minutes(2),
+		FollowLeader = true,
 		IdleUnits = { },
 		ProducerActors = { Infantry = { WestPortal }, Vehicles = { WestWarpSphere } },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
 		Units = UnitCompositions.Scrin.Main,
-		AttackPaths = { { WestAttackNode1.Location, WestAttackNode2.Location, WestAttackNode3.Location, WestAttackNode4.Location } },
+		AttackPaths = {
+			{ WestAttackNode1.Location, WestAttackNode2.Location, WestAttackNode5.Location },
+			{ WestAttackNode1.Location, WestAttackNode2.Location, WestAttackNode3.Location, WestAttackNode4.Location, WestAttackNode5.Location },
+		},
 	},
 	ScrinEast = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 25 } },
-			normal = { { MinTime = 0, Value = 40 } },
-			hard = { { MinTime = 0, Value = 60 } },
+			easy = { { MinTime = 0, Value = 35 } },
+			normal = { { MinTime = 0, Value = 50 } },
+			hard = { { MinTime = 0, Value = 70 } },
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
 			Vehicles = false,
 			Aircraft = false,
 		},
-		FollowSquadLeader = true,
+		InitTime = DateTime.Minutes(4),
+		FollowLeader = true,
 		IdleUnits = { },
 		ProducerActors = { Infantry = { EastPortal }, Vehicles = { EastWarpSphere } },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
 		Units = UnitCompositions.Scrin.Main,
-		AttackPaths = { { EastAttackNode1.Location, EastAttackNode2.Location, EastAttackNode3.Location } },
+		AttackPaths = {
+			{ EastAttackNode1.Location, EastAttackNode2.Location, EastAttackNode3.Location, EastAttackNode4.Location, EastAttackNode5.Location },
+			{ EastAttackNode1.Location, EastAttackNode5.Location },
+		},
 	},
 	ScrinCenter = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 25 } },
-			normal = { { MinTime = 0, Value = 40 } },
-			hard = { { MinTime = 0, Value = 60 } },
+			easy = { { MinTime = 0, Value = 35 } },
+			normal = { { MinTime = 0, Value = 50 } },
+			hard = { { MinTime = 0, Value = 70 } },
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
 			Vehicles = false,
 			Aircraft = false,
 		},
-		FollowSquadLeader = true,
+		InitTime = 0,
+		FollowLeader = true,
 		IdleUnits = { },
 		ProducerActors = { Infantry = { CenterPortal }, Vehicles = { CenterWarpSphere } },
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
 		Units = UnitCompositions.Scrin.Main,
-		AttackPaths = { { CenterAttackNode1.Location, CenterAttackNode2.Location } },
+		AttackPaths = { { CenterAttackNode1.Location, CenterAttackNode2.Location, CenterAttackNode3.Location } },
 	},
 	SovietSlaves = {
 		Delay = {
@@ -65,9 +74,9 @@ Squads = {
 			hard = DateTime.Seconds(90)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 20 } },
-			normal = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(12), Value = 33 } },
-			hard = { { MinTime = 0, Value = 26 }, { MinTime = DateTime.Minutes(10), Value = 50 } },
+			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 20 } },
+			normal = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(12), Value = 33 } },
+			hard = { { MinTime = 0, Value = 30 }, { MinTime = DateTime.Minutes(10), Value = 50 } },
 		},
 		ActiveCondition = function()
 			return not SovietsFreed
@@ -76,12 +85,12 @@ Squads = {
 			Infantry = false,
 			Vehicles = false,
 		},
-		FollowSquadLeader = true,
+		FollowLeader = true,
 		IdleUnits = { },
 		ProducerActors = nil,
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
 		Units = UnitCompositions.Soviet.Main,
-		AttackPaths = { { WestAttackNode3.Location, WestAttackNode4.Location } },
+		AttackPaths = { { WestAttackNode4.Location, WestAttackNode5.Location } },
 	},
 	NodSlaves = {
 		Delay = {
@@ -90,9 +99,9 @@ Squads = {
 			hard = DateTime.Seconds(90)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 20 } },
-			normal = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(12), Value = 33 } },
-			hard = { { MinTime = 0, Value = 26 }, { MinTime = DateTime.Minutes(10), Value = 50 } },
+			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 20 } },
+			normal = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(12), Value = 33 } },
+			hard = { { MinTime = 0, Value = 30 }, { MinTime = DateTime.Minutes(10), Value = 50 } },
 		},
 		ActiveCondition = function()
 			return not NodFreed
@@ -102,12 +111,12 @@ Squads = {
 			Vehicles = false,
 		},
 		DispatchDelay = DateTime.Seconds(15),
-		FollowSquadLeader = true,
+		FollowLeader = true,
 		IdleUnits = { },
 		ProducerActors = nil,
 		ProducerTypes = { Infantry = { "hand" }, Vehicles = { "airs" } },
 		Units = UnitCompositions.Nod.Main,
-		AttackPaths = { { EastAttackNode2.Location, EastAttackNode3.Location } },
+		AttackPaths = { { EastAttackNode4.Location, EastAttackNode5.Location } },
 	},
 	AlliedSlaves = {
 		Delay = {
@@ -127,12 +136,12 @@ Squads = {
 			Infantry = false,
 			Vehicles = false,
 		},
-		FollowSquadLeader = true,
+		FollowLeader = true,
 		IdleUnits = { },
 		ProducerActors = nil,
 		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
 		Units = UnitCompositions.Allied.Main,
-		AttackPaths = { { CenterAttackNode2.Location } },
+		AttackPaths = { { CenterAttackNode3.Location } },
 	},
 	USSR = {
 		AttackValuePerSecond = {
@@ -144,7 +153,7 @@ Squads = {
 			Infantry = false,
 			Vehicles = false,
 		},
-		FollowSquadLeader = true,
+		FollowLeader = true,
 		IdleUnits = { },
 		ProducerActors = nil,
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
@@ -166,7 +175,7 @@ Squads = {
 			Vehicles = false,
 		},
 		DispatchDelay = DateTime.Seconds(15),
-		FollowSquadLeader = true,
+		FollowLeader = true,
 		IdleUnits = { },
 		ProducerActors = nil,
 		ProducerTypes = { Infantry = { "hand" }, Vehicles = { "airs" } },
@@ -175,7 +184,7 @@ Squads = {
 			normal = UnitCompositions.Nod.Main.normal,
 			hard = UnitCompositions.Nod.Main.normal,
 		},
-		AttackPaths = { { EastAttackNode1.Location, WormholeWP.Location } },
+		AttackPaths = { { EastAttackNode2.Location, EastAttackNode1.Location, WormholeWP.Location } },
 	},
 	Greece = {
 		AttackValuePerSecond = {
@@ -187,7 +196,7 @@ Squads = {
 			Infantry = false,
 			Vehicles = false,
 		},
-		FollowSquadLeader = true,
+		FollowLeader = true,
 		IdleUnits = { },
 		ProducerActors = nil,
 		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
@@ -196,7 +205,7 @@ Squads = {
 			normal = UnitCompositions.Allied.Main.normal,
 			hard = UnitCompositions.Allied.Main.normal,
 		},
-		AttackPaths = { { CenterAttackNode1.Location, WormholeWP.Location } },
+		AttackPaths = { { CenterAttackNode2.Location, CenterAttackNode1.Location, WormholeWP.Location } },
 	},
 	ScrinAir = {
 		Delay = {
@@ -268,6 +277,10 @@ WorldLoaded = function()
 	MissionPlayer = GDI
 	TimerTicks = 0
 
+	-- override so buffed immobile cyborgs aren't produced
+	BasicCyborg = { "n1c", "n5", "acol" }
+	AdvancedCyborg = { "n1c", "acol", "bh" }
+
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(GDI)
@@ -280,6 +293,8 @@ WorldLoaded = function()
 
 	Trigger.OnAllKilledOrCaptured(NWReactors, function()
 		ScrinDefenseBuff1.Destroy()
+		Notification("The north-west reactors are down. Scrin defenses have been weakened.")
+
 		if ScrinDefenseBuff2.IsDead then
 			IonConduits.Destroy()
 			if NodFreed then
@@ -294,6 +309,8 @@ WorldLoaded = function()
 
 	Trigger.OnAllKilledOrCaptured(NEReactors, function()
 		ScrinDefenseBuff2.Destroy()
+		Notification("The north-east reactors are down. Scrin defenses have been weakened.")
+
 		if ScrinDefenseBuff1.IsDead then
 			IonConduits.Destroy()
 			if NodFreed then
@@ -408,7 +425,7 @@ OncePerFiveSecondChecks = function()
 		end
 
 		local hackers = GDI.GetActorsByType("hack")
-		if NodFreed and #hackers == 0 and not ShieldsOffline and FirstHackersRequested and not MoreHackersRequested and not SignalTransmitter.IsDead then
+		if NodFreed and #hackers == 0 and not ShieldsOffline and FirstHackersArrived and not MoreHackersRequested and not SignalTransmitter.IsDead then
 			MoreHackersRequested = true
 
 			Trigger.AfterDelay(HackersDelay[Difficulty], function()
@@ -446,7 +463,7 @@ InitScrin = function()
 	MothershipShields = Actor.Create("mothership.shields", true, { Owner = Scrin })
 
 	if Difficulty == "hard" then
-		Trigger.AfterDelay(DateTime.Minutes(15), function()
+		Trigger.AfterDelay(DateTime.Minutes(12), function()
 			Actor.Create("carapace.upgrade", true, { Owner = Scrin })
 		end)
 	end
@@ -471,7 +488,6 @@ InitNodSlaves = function()
 
 	Utils.Do(nodGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
 	end)
 
 	Trigger.AfterDelay(Squads.NodSlaves.Delay[Difficulty], function()
@@ -488,7 +504,6 @@ InitSovietSlaves = function()
 
 	Utils.Do(sovietGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
 	end)
 
 	Trigger.AfterDelay(Squads.SovietSlaves.Delay[Difficulty], function()
@@ -505,7 +520,6 @@ InitAlliedSlaves = function()
 
 	Utils.Do(alliedGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGreeceGroundHunterUnit)
 	end)
 
 	Trigger.AfterDelay(Squads.AlliedSlaves.Delay[Difficulty], function()
@@ -514,34 +528,36 @@ InitAlliedSlaves = function()
 end
 
 InitNod = function()
-	AutoRepairAndRebuildBuildings(Nod, 15)
-	SetupRefAndSilosCaptureCredits(Nod)
-	AutoReplaceHarvesters(Nod)
-	InitAttackSquad(Squads.Nod, Nod, Scrin)
+	Trigger.AfterDelay(1, function()
+		AutoRepairAndRebuildBuildings(Nod, 15)
+		AutoReplaceHarvesters(Nod)
+		InitAttackSquad(Squads.Nod, Nod, Scrin)
+	end)
 end
 
 InitUSSR = function()
-	AutoRepairAndRebuildBuildings(USSR, 15)
-	SetupRefAndSilosCaptureCredits(USSR)
-	AutoReplaceHarvesters(USSR)
-	InitAttackSquad(Squads.USSR, USSR, Scrin)
+	Trigger.AfterDelay(1, function()
+		AutoRepairAndRebuildBuildings(USSR, 15)
+		AutoReplaceHarvesters(USSR)
+		InitAttackSquad(Squads.USSR, USSR, Scrin)
+	end)
 end
 
 InitGreece = function()
-	AutoRepairAndRebuildBuildings(Greece, 15)
-	SetupRefAndSilosCaptureCredits(Greece)
-	AutoReplaceHarvesters(Greece)
-	InitAttackSquad(Squads.Greece, Greece, Scrin)
+	Trigger.AfterDelay(1, function()
+		AutoRepairAndRebuildBuildings(Greece, 15)
+		AutoReplaceHarvesters(Greece)
+		InitAttackSquad(Squads.Greece, Greece, Scrin)
+	end)
 end
 
 InitHackers = function()
-	FirstHackersRequested = true
-
 	Trigger.AfterDelay(HackersDelay[Difficulty], function()
 		if SignalTransmitter.IsDead then
 			return
 		end
 
+		FirstHackersArrived = true
 		Media.DisplayMessage("Commander, we are sending you a squad of hackers. Use them to hack into the Scrin Signal Transmitter and we will be able to bring down the Mothership's shields.", "Nod Commander", HSLColor.FromHex("FF0000"))
 		DropHackers()
 		Beacon.New(GDI, SignalTransmitter.CenterPosition)
@@ -580,7 +596,7 @@ InitChronoTanks = function()
 			return
 		end
 
-		Notification("The Allies have provided us with a squadron of Chrono Tanks. We can use them to disrupt Scrin power in the north east.")
+		Notification("The Allies have provided us with a squadron of Chrono Tanks. We can use them to disrupt Scrin power in the north-east.")
 		Media.PlaySpeechNotification(GDI, "SignalFlare")
 		local northEastPowerFlare = Actor.Create("flare", true, { Owner = GDI, Location = NorthEastPowerBeacon.Location })
 		Trigger.AfterDelay(DateTime.Seconds(10), function()
@@ -606,7 +622,7 @@ InitMADTankAttack = function()
 		if ScrinDefenseBuff1.IsDead then
 			return
 		end
-		Notification("Signal flare detected. The Soviets are sending a MAD Tank to disrupt Scrin power in the north west. They have requested we rendezvous and provide escort.")
+		Notification("Signal flare detected. The Soviets are sending a MAD Tank to disrupt Scrin power in the north-west. They have requested we rendezvous and provide escort.")
 
 		Media.PlaySpeechNotification(GDI, "SignalFlare")
 		local northWestPowerFlare = Actor.Create("flare", true, { Owner = GDI, Location = MADTankPath9.Location })
@@ -627,16 +643,7 @@ InitMADTankAttack = function()
 
 		MADTank = Actor.Create("qtnk", true, { Owner = USSR, Location = MADTankSpawn.Location, Facing = Angle.East })
 		MADTank.Move(MADTankPath1.Location)
-		MADTank.Move(MADTankPath2.Location)
-		MADTank.Move(MADTankPath3.Location)
-		MADTank.Move(MADTankPath4.Location)
-		MADTank.Move(MADTankPath5.Location)
-		MADTank.Move(MADTankPath6.Location)
-		MADTank.Move(MADTankPath7.Location)
-		MADTank.Move(MADTankPath8.Location)
-		MADTank.Move(MADTankPath9.Location)
-		MADTank.Wait(25)
-		MADTank.MadTankDetonate()
+		Notification("MAD Tank has arrived. Rendezvous to provide escort.")
 
 		Trigger.OnDamaged(MADTank, function(self, attacker, damage)
 			if self.Health < self.MaxHealth / 3 and not IsMADTankIronCurtained and not MADTank.IsDead then
@@ -650,7 +657,35 @@ InitMADTankAttack = function()
 				end)
 			end
 		end)
+
+		Trigger.OnEnteredProximityTrigger(MADTank.CenterPosition, WDist.New(7 * 1024), function(a, id)
+			if a.Owner == GDI and a.HasProperty("Attack") then
+				Trigger.RemoveProximityTrigger(id)
+				SendMADTank()
+			end
+		end)
+
+		Trigger.AfterDelay(DateTime.Minutes(5), function()
+			SendMADTank()
+		end)
 	end)
+end
+
+SendMADTank = function()
+	if not MADTankEnRoute and not MADTank.IsDead then
+		MADTankEnRoute = true
+		Notification("MAD Tank en route to target.")
+		MADTank.Move(MADTankPath2.Location)
+		MADTank.Move(MADTankPath3.Location)
+		MADTank.Move(MADTankPath4.Location)
+		MADTank.Move(MADTankPath5.Location)
+		MADTank.Move(MADTankPath6.Location)
+		MADTank.Move(MADTankPath7.Location)
+		MADTank.Move(MADTankPath8.Location)
+		MADTank.Move(MADTankPath9.Location)
+		MADTank.Wait(25)
+		MADTank.MadTankDetonate()
+	end
 end
 
 DoInterceptors = function()
@@ -688,9 +723,19 @@ DoInterceptors = function()
 				a.Move(InterceptorExit2.Location)
 				a.Destroy()
 			end)
+
 			Trigger.OnIdle(interceptor3, function(a)
 				a.Move(InterceptorExit3.Location)
 				a.Destroy()
+			end)
+
+			Trigger.AfterDelay(DateTime.Seconds(20), function()
+				Utils.Do({ { interceptor1, InterceptorExit1.Location }, { interceptor2, InterceptorExit2.Location }, { interceptor3, InterceptorExit3.Location } }, function (i)
+					if not i[1].IsDead then
+						i[1].Move(i[2])
+						i[1].Destroy()
+					end
+				end)
 			end)
 		end)
 	end)
@@ -706,6 +751,7 @@ FlipSlaveFaction = function(player)
 	if player == NodSlaves then
 		targetPlayer = Nod
 		NodFreed = true
+		Squads.NodSlaves.IdleUnits = { }
 		attackPath = { EastAttackNode1.Location, WormholeWP.Location }
 		InitNod()
 		InitAttackSquad(Squads.ScrinEast, Scrin)
@@ -715,6 +761,7 @@ FlipSlaveFaction = function(player)
 	elseif player == SovietSlaves then
 		targetPlayer = USSR
 		SovietsFreed = true
+		Squads.SovietSlaves.IdleUnits = { }
 		attackPath = { WestAttackNode1.Location, WormholeWP.Location }
 		InitUSSR()
 		InitAttackSquad(Squads.ScrinWest, Scrin)
@@ -722,6 +769,7 @@ FlipSlaveFaction = function(player)
 	elseif player == AlliedSlaves then
 		targetPlayer = Greece
 		AlliesFreed = true
+		Squads.AlliedSlaves.IdleUnits = { }
 		attackPath = { CenterAttackNode1.Location, WormholeWP.Location }
 		InitGreece()
 		InitAttackSquad(Squads.ScrinCenter, Scrin)
@@ -734,7 +782,13 @@ FlipSlaveFaction = function(player)
 		if not a.IsDead and a.IsInWorld and a.Type ~= "player" and a.Type ~= "rmbc" and a.Type ~= "enli" and a.Type ~= "tplr" and a.Type ~= "n3c" then
 			a.Owner = targetPlayer
 			Trigger.ClearAll(a)
-			Trigger.AfterDelay(1, function()
+
+			local delay = Utils.RandomInteger(DateTime.Seconds(1), DateTime.Seconds(25))
+			if a.HasProperty("FindResources") then
+				delay = 1
+			end
+
+			Trigger.AfterDelay(delay, function()
 				if not a.IsDead then
 					if a.HasProperty("AttackMove") then
 						a.Stop()

@@ -35,7 +35,7 @@ Squads = {
 			Vehicles = false,
 			Aircraft = false,
 		},
-		FollowSquadLeader = true,
+		FollowLeader = true,
 		IdleUnits = { },
 		ProducerActors = nil,
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
@@ -188,7 +188,9 @@ WorldLoaded = function()
 				Utils.Do(slaves, function(s)
 					if not s.IsDead then
 						s.Owner = GDI
-						s.Stop()
+						if s.HasProperty("Move") then
+							s.Stop()
+						end
 						if s.HasProperty("FindResources") then
 							s.FindResources()
 						end

@@ -288,6 +288,9 @@ AutoRepairBuilding = function(building, player)
 			self.StartBuildingRepairs()
 		end
 	end)
+	if building.Owner == player and building.Health < (building.MaxHealth * 75 / 100) then
+		building.StartBuildingRepairs()
+	end
 end
 
 AutoRebuildBuilding = function(building, player, maxAttempts)
@@ -642,40 +645,20 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 
 			-- create the unit
 			if producer ~= nil then
+
 				local producerId = tostring(producer)
 				AddToSquadAssignmentQueue(producerId, squad)
 
-				if OnProductionTriggers[producerId] == nil then
-					OnProductionTriggers[producerId] = true
+				-- add production trigger once for the producer (or add again if owner has changed)
+				if OnProductionTriggers[producerId] == nil or OnProductionTriggers[producerId] ~= producer.Owner.Name then
+					OnProductionTriggers[producerId] = tostring(producer.Owner.Name)
 
 					-- add produced unit to list of idle units for the squad
 					Trigger.OnProduction(producer, function(p, produced)
-						local isHarvester = false
-
-						-- we don't want to add harvesters to squads, which are produced when replacements are needed
-						Utils.Do(HarvesterTypes, function(harvesterType)
-							if produced.Type == harvesterType then
-								isHarvester = true
-							end
-						end)
-
-						if not isHarvester then
-							if SquadAssignmentQueue[producerId][1] ~= nil then
-								local assignedSquad = SquadAssignmentQueue[producerId][1]
-								SquadAssignmentQueue[producerId][1].IdleUnits[#assignedSquad.IdleUnits + 1] = produced
-								table.remove(SquadAssignmentQueue[producerId], 1)
-							elseif produced.HasProperty("Hunt") then
-								produced.Hunt()
-							end
-
-							if produced.HasProperty("HasPassengers") and not produced.IsDead then
-								Trigger.OnPassengerExited(produced, function(t, p)
-									AssaultPlayerBaseOrHunt(p, squad.TargetPlayer)
-								end)
-							end
-
-							TargetSwapChance(produced, 10)
+						if p.Owner ~= produced.Owner then
+							return
 						end
+						HandleProducedSquadUnit(produced, producerId, squad)
 					end)
 				end
 
@@ -686,6 +669,37 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 			-- start producing the next unit
 			ProduceNextAttackSquadUnit(squad, queue, unitIndex + 1)
 		end)
+	end
+end
+
+HandleProducedSquadUnit = function(produced, producerId, squad)
+	local isHarvester = false
+
+	-- we don't want to add harvesters to squads, which are produced when replacements are needed
+	Utils.Do(HarvesterTypes, function(harvesterType)
+		if produced.Type == harvesterType then
+			isHarvester = true
+		end
+	end)
+
+	if not isHarvester then
+
+		-- assign unit to IdleUnits of the next squad in the assignment queue of the producer
+		if SquadAssignmentQueue[produced.Owner.Name][producerId][1] ~= nil then
+			local assignedSquad = SquadAssignmentQueue[produced.Owner.Name][producerId][1]
+			SquadAssignmentQueue[produced.Owner.Name][producerId][1].IdleUnits[#assignedSquad.IdleUnits + 1] = produced
+			table.remove(SquadAssignmentQueue[produced.Owner.Name][producerId], 1)
+		elseif produced.HasProperty("Hunt") then
+			produced.Hunt()
+		end
+
+		if produced.HasProperty("HasPassengers") and not produced.IsDead then
+			Trigger.OnPassengerExited(produced, function(transport, passenger)
+				AssaultPlayerBaseOrHunt(passenger, squad.TargetPlayer)
+			end)
+		end
+
+		TargetSwapChance(produced, 10)
 	end
 end
 
@@ -710,11 +724,15 @@ CalculateInterval = function(squad)
 end
 
 -- used to make sure multiple squads being produced from the same structure don't get mixed up
+-- also split by player to prevent these getting jumbled if producer owner changes
 AddToSquadAssignmentQueue = function(producerId, squad)
-	if SquadAssignmentQueue[producerId] == nil then
-		SquadAssignmentQueue[producerId] = { }
+	if SquadAssignmentQueue[squad.Player.Name] == nil then
+		SquadAssignmentQueue[squad.Player.Name] = { }
 	end
-	SquadAssignmentQueue[producerId][#SquadAssignmentQueue[producerId] + 1] = squad
+	if SquadAssignmentQueue[squad.Player.Name][producerId] == nil then
+		SquadAssignmentQueue[squad.Player.Name][producerId] = { }
+	end
+	SquadAssignmentQueue[squad.Player.Name][producerId][#SquadAssignmentQueue[squad.Player.Name][producerId] + 1] = squad
 end
 
 IsSquadInProduction = function(squad)
@@ -728,7 +746,6 @@ IsSquadInProduction = function(squad)
 end
 
 SendAttackSquad = function(squad)
-
 	if squad.IsAir ~= nil and squad.IsAir then
 		Utils.Do(squad.IdleUnits, function(a)
 			if not a.IsDead then

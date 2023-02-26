@@ -31,6 +31,8 @@ World:
 		Default: normal
 	MusicPlaylist:
 		StartingMusic: target
+	MapBuildRadius:
+		AllyBuildRadiusCheckboxEnabled: True
 
 Player:
 	PlayerResources:
@@ -164,7 +166,6 @@ MSHP:
 	AmbientSoundCA:
 		-RequiresCondition:
 		AudibleThroughFog: false
-		VolumeMultiplier: 0.4
 	-DetonateWeaponOnDeploy:
 	Health:
 		HP: 300000
@@ -182,6 +183,11 @@ MAST:
 		Capacity: 5
 	Health:
 		HP: 32000
+	DamageTypeDamageMultiplier@FLAKARMOR:
+		-RequiresCondition: carapace-upgrade
+	DamageTypeDamageMultiplier@FLAKARMORMINOR:
+		-RequiresCondition: carapace-upgrade
+	-GrantConditionOnPrerequisite@CARAPACE:
 
 QTNK:
 	-FirepowerMultiplier@MADIC:

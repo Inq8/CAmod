@@ -28,7 +28,7 @@ Squads = {
 			Vehicles = false,
 			Aircraft = false,
 		},
-		FollowSquadLeader = true,
+		FollowLeader = true,
 		IdleUnits = { },
 		ProducerActors = nil,
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
