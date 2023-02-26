@@ -116,6 +116,12 @@ WorldLoaded = function()
 				p.MarkFailedObjective(Objectives.KillSAMSites[p])
 			end)
 		end
+
+		if not AllReactorsDead or not BothNukeSilosDead or not AllSAMSitesDead then
+			Utils.Do(Players, function(p)
+				p.MarkFailedObjective(Objectives.NeutralizeChronosphere[p])
+			end)
+		end
 	end)
 
 	Trigger.OnKilled(WestReactor, function(self, killer)

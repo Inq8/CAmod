@@ -78,16 +78,22 @@ WorldLoaded = function()
 				BothSealsDead = true
 			end
 
-			if not AllReactorsDead and BothSealsDead then
-				Greece.MarkFailedObjective(ObjectiveKillReactors)
-			end
+			if BothSealsDead then
+				if not AllReactorsDead then
+					Greece.MarkFailedObjective(ObjectiveKillReactors)
+				end
 
-			if not BothNukeSilosDead and BothSealsDead then
-				Greece.MarkFailedObjective(ObjectiveKillSilos)
-			end
+				if not BothNukeSilosDead then
+					Greece.MarkFailedObjective(ObjectiveKillSilos)
+				end
 
-			if not AllSAMSitesDead and BothSealsDead then
-				Greece.MarkFailedObjective(ObjectiveKillSAMSites)
+				if not AllSAMSitesDead then
+					Greece.MarkFailedObjective(ObjectiveKillSAMSites)
+				end
+
+				if not AllReactorsDead or not BothNukeSilosDead or not AllSAMSitesDead then
+					Greece.MarkFailedObjective(ObjectiveNeutralizeChronosphere)
+				end
 			end
 		end)
 	end)
