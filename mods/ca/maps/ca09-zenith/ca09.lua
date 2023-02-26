@@ -163,6 +163,12 @@ OncePerSecondChecks = function()
 				TimerTicks = 0
 			end
 		end
+
+		if Nod.HasNoRequiredUnits() then
+			if not Nod.IsObjectiveCompleted(ObjectiveKillSilos) then
+				Nod.MarkFailedObjective(ObjectiveKillSilos)
+			end
+		end
 	end
 end
 

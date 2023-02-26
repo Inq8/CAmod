@@ -72,23 +72,14 @@ WorldLoaded = function()
 		end
 	end)
 
-	Utils.Do(AlliedKeyBuildings, function(b)
-		Trigger.OnKilled(b, function(self, killer)
-			local intactKeyBuildings = Utils.Where(AlliedKeyBuildings, function(b)
-				return not b.IsDead
-			end)
-			if #intactKeyBuildings == 0 then
-				Nod.MarkCompletedObjective(ObjectiveDestroyAlliedBase)
-			end
-		end)
+	Trigger.OnAllKilled(AlliedKeyBuildings, function()
+		Nod.MarkCompletedObjective(ObjectiveDestroyAlliedBase)
 	end)
 
-	Utils.Do({ Hacker1, Hacker2 }, function(h)
-		Trigger.OnKilled(h, function(self, killer)
-			if (Commando.IsDead or (Hacker1.IsDead and Hacker2.IsDead)) and not Nod.IsObjectiveCompleted(ObjectiveHackIonControl) then
-				Nod.MarkFailedObjective(ObjectiveHackIonControl)
-			end
-		end)
+	Trigger.OnAllKilled({ Hacker1, Hacker2 }, function()
+		if not Nod.IsObjectiveCompleted(ObjectiveHackIonControl) then
+			Nod.MarkFailedObjective(ObjectiveHackIonControl)
+		end
 	end)
 
 	if Difficulty ~= "hard" then

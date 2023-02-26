@@ -66,12 +66,13 @@ WorldLoaded = function()
 	MissionPlayer = USA1
 	TimerTicks = 0
 
-	Players = { USA1, USA2, England }
+	Players = { USA1, USA2 }
 
 	InitObjectives(USA1)
 	InitObjectives(USA2)
 
 	if England ~= nil then
+		table.insert(Players, England)
 		InitObjectives(England)
 	else
 		Spy.Owner = USA1
@@ -90,35 +91,38 @@ WorldLoaded = function()
 
 	Utils.Do(Objectives, function(o)
 		Utils.Do(Players, function(p)
-			if p ~= nil then
-				o[p.Name] = p.AddObjective(o.Text)
-			end
+			o[p.Name] = p.AddObjective(o.Text)
 		end)
 	end)
 
 	LandingCraft.Move(LandingCraftExit.Location)
 	LandingCraft.Destroy()
 
-	local seals = { Seal1, Seal2 }
-	Utils.Do(seals, function(a)
-		Trigger.OnKilled(a, function(self, killer)
-			if not AllReactorsDead and Seal1.IsDead and Seal2.IsDead then
-				Utils.Do(Players, function(p)
-					if p ~= nil then
-						p.MarkFailedObjective(Objectives.KillReactors[p])
-					end
-				end)
-			end
-		end)
+	Trigger.OnAllKilled({ Seal1, Seal2 }, function(self, killer)
+		if not AllReactorsDead then
+			Utils.Do(Players, function(p)
+				p.MarkFailedObjective(Objectives.KillReactors[p])
+			end)
+		end
+
+		if not BothNukeSilosDead then
+			Utils.Do(Players, function(p)
+				p.MarkFailedObjective(Objectives.KillSilos[p])
+			end)
+		end
+
+		if not AllSAMSitesDead then
+			Utils.Do(Players, function(p)
+				p.MarkFailedObjective(Objectives.KillSAMSites[p])
+			end)
+		end
 	end)
 
 	Trigger.OnKilled(WestReactor, function(self, killer)
-		CheckReactors()
 		DisableWestTeslas()
 	end)
 
 	Trigger.OnKilled(EastReactor, function(self, killer)
-		CheckReactors()
 		DisableEastTeslas()
 		if SouthReactor.IsDead then
 			DisableNorthTeslas()
@@ -126,7 +130,6 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnKilled(SouthReactor, function(self, killer)
-		CheckReactors()
 		DisableSouthTeslas()
 		DoShoreSAMFlare()
 		if EastReactor.IsDead then
@@ -134,13 +137,19 @@ WorldLoaded = function()
 		end
 	end)
 
+	Trigger.OnAllKilled(Reactors, function()
+		AllReactorsDead = true
+
+		Utils.Do(Players, function(p)
+			p.MarkCompletedObjective(Objectives.KillReactors[p])
+		end)
+	end)
+
 	Trigger.OnAllKilled(ShoreSAMs, function()
 		AllSAMSitesDead = true
 
 		Utils.Do(Players, function(p)
-			if p ~= nil then
-				p.MarkCompletedObjective(Objectives.KillSAMSites[p])
-			end
+			p.MarkCompletedObjective(Objectives.KillSAMSites[p])
 		end)
 
 		if BothNukeSilosDead then
@@ -156,9 +165,7 @@ WorldLoaded = function()
 		end
 
 		Utils.Do(Players, function(p)
-			if p ~= nil then
-				p.MarkCompletedObjective(Objectives.KillSilos[p])
-			end
+			p.MarkCompletedObjective(Objectives.KillSilos[p])
 		end)
 
 		if AllSAMSitesDead then
@@ -168,9 +175,7 @@ WorldLoaded = function()
 
 	Trigger.OnKilled(Chronosphere, function(self, killer)
 		Utils.Do(Players, function(p)
-			if p ~= nil then
-				p.MarkCompletedObjective(Objectives.NeutralizeChronosphere[p])
-			end
+			p.MarkCompletedObjective(Objectives.NeutralizeChronosphere[p])
 		end)
 	end)
 
@@ -226,9 +231,7 @@ WorldLoaded = function()
 			Media.PlaySound("nukelaunch.aud")
 
 			Utils.Do(Players, function(p)
-				if p ~= nil then
-					Media.PlaySpeechNotification(p, "AbombLaunchDetected")
-				end
+				Media.PlaySpeechNotification(p, "AbombLaunchDetected")
 			end)
 
 			Notification("A-Bomb launch detected.")
@@ -239,14 +242,12 @@ WorldLoaded = function()
 				Trigger.AfterDelay(DateTime.Seconds(2), function()
 
 					Utils.Do(Players, function(p)
-						if p ~= nil then
-							if not p.IsObjectiveCompleted(Objectives.KillSilos[p]) then
-								p.MarkFailedObjective(Objectives.KillSilos[p])
-							end
+						if not p.IsObjectiveCompleted(Objectives.KillSilos[p]) then
+							p.MarkFailedObjective(Objectives.KillSilos[p])
+						end
 
-							if not p.IsObjectiveCompleted(Objectives.NeutralizeChronosphere[p]) then
-								p.MarkFailedObjective(Objectives.NeutralizeChronosphere[p])
-							end
+						if not p.IsObjectiveCompleted(Objectives.NeutralizeChronosphere[p]) then
+							p.MarkFailedObjective(Objectives.NeutralizeChronosphere[p])
 						end
 					end)
 				end)
@@ -254,7 +255,6 @@ WorldLoaded = function()
 		end
 	end)
 end
-
 
 Sunrise = function()
 	local active = false
@@ -321,9 +321,7 @@ DoShoreSAMFlare = function()
 	Trigger.AfterDelay(DateTime.Seconds(4), function()
 
 		Utils.Do(Players, function(p)
-			if p ~= nil then
-				Media.PlaySpeechNotification(p, "SignalFlare")
-			end
+			Media.PlaySpeechNotification(p, "SignalFlare")
 		end)
 
 		Beacon.New(USA1, ShoreSAMBeaconPosition)
@@ -334,17 +332,6 @@ DoShoreSAMFlare = function()
 			ShoreSAMFlare.Destroy()
 		end)
 	end)
-end
-
-CheckReactors = function()
-	if EastReactor.IsDead and SouthReactor.IsDead and WestReactor.IsDead then
-		AllReactorsDead = true
-		Utils.Do(Players, function(p)
-			if p ~= nil then
-				p.MarkCompletedObjective(Objectives.KillReactors[p])
-			end
-		end)
-	end
 end
 
 Tick = function()
@@ -424,9 +411,7 @@ DropChronoPrison = function()
 	ChronoPrisonFlare = Actor.Create("flare", true, { Owner = ChronoPrisonPlayer, Location = CarryallDropPoint.Location })
 
 	Utils.Do(Players, function(p)
-		if p ~= nil then
-			Media.PlaySpeechNotification(p, "SignalFlare")
-		end
+		Media.PlaySpeechNotification(p, "SignalFlare")
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(1), function()

@@ -215,6 +215,9 @@ OncePerSecondChecks = function()
 			Trigger.AfterDelay(DateTime.Seconds(15), function()
 				CleanUp()
 			end)
+
+		elseif ObjectiveDestroySovietForces ~= nil and not Nod.IsObjectiveCompleted(ObjectiveDestroySovietForces) and Nod.HasNoRequiredUnits() then
+			Nod.MarkFailedObjective(ObjectiveDestroySovietForces)
 		end
 
 		if CyborgWaves >= MaxCyborgWaves then

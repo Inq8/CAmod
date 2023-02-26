@@ -372,6 +372,10 @@ OncePerSecondChecks = function()
 				TimerTicks = 0
 			end
 		end
+
+		if GDI.HasNoRequiredUnits() and not GDI.IsObjectiveCompleted(ObjectiveDestroyMothership) then
+			GDI.MarkFailedObjective(ObjectiveDestroyMothership)
+		end
 	end
 end
 

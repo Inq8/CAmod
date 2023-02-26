@@ -74,19 +74,29 @@ WorldLoaded = function()
 		Trigger.OnKilled(a, function(self, killer)
 			Greece.MarkFailedObjective(ObjectivePreserveSEALs)
 
-			if not Greece.IsObjectiveCompleted(ObjectiveKillReactors) and Seal1.IsDead and Seal2.IsDead then
+			if Seal1.IsDead and Seal2.IsDead then
+				BothSealsDead = true
+			end
+
+			if not AllReactorsDead and BothSealsDead then
 				Greece.MarkFailedObjective(ObjectiveKillReactors)
+			end
+
+			if not BothNukeSilosDead and BothSealsDead then
+				Greece.MarkFailedObjective(ObjectiveKillSilos)
+			end
+
+			if not AllSAMSitesDead and BothSealsDead then
+				Greece.MarkFailedObjective(ObjectiveKillSAMSites)
 			end
 		end)
 	end)
 
 	Trigger.OnKilled(WestReactor, function(self, killer)
-		CheckReactors()
 		DisableWestTeslas()
 	end)
 
 	Trigger.OnKilled(EastReactor, function(self, killer)
-		CheckReactors()
 		DisableEastTeslas()
 		if SouthReactor.IsDead then
 			DisableNorthTeslas()
@@ -94,7 +104,6 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnKilled(SouthReactor, function(self, killer)
-		CheckReactors()
 		DisableSouthTeslas()
 		DoShoreSAMFlare()
 		if EastReactor.IsDead then
@@ -102,32 +111,31 @@ WorldLoaded = function()
 		end
 	end)
 
-	Utils.Do(ShoreSAMs, function(a)
-		Trigger.OnKilled(a, function(self, killer)
-			if ShoreSAM1.IsDead and ShoreSAM2.IsDead and ShoreSAM3.IsDead and ShoreSAM4.IsDead and ShoreSAM5.IsDead then
-				Greece.MarkCompletedObjective(ObjectiveKillSAMSites)
-
-				if Greece.IsObjectiveCompleted(ObjectiveKillSilos) then
-					DropChronoPrison()
-				end
-			end
-		end)
+	Trigger.OnAllKilled(Reactors, function()
+		AllReactorsDead = true
+		Greece.MarkCompletedObjective(ObjectiveKillReactors)
 	end)
 
-	Utils.Do(MissileSilos, function(a)
-		Trigger.OnKilled(a, function(self, killer)
-			if TopSilo.IsDead and BottomSilo.IsDead then
-				if not NukeDummy.IsDead then
-					NukeDummy.Destroy()
-				end
+	Trigger.OnAllKilled(ShoreSAMs, function()
+		AllSAMSitesDead = true
+		Greece.MarkCompletedObjective(ObjectiveKillSAMSites)
 
-				Greece.MarkCompletedObjective(ObjectiveKillSilos)
+		if BothNukeSilosDead then
+			DropChronoPrison()
+		end
+	end)
 
-				if Greece.IsObjectiveCompleted(ObjectiveKillSAMSites) then
-					DropChronoPrison()
-				end
-			end
-		end)
+	Trigger.OnAllKilled(MissileSilos, function()
+		BothNukeSilosDead = true
+		Greece.MarkCompletedObjective(ObjectiveKillSilos)
+
+		if not NukeDummy.IsDead then
+			NukeDummy.Destroy()
+		end
+
+		if AllSAMSitesDead then
+			DropChronoPrison()
+		end
 	end)
 
 	Trigger.OnKilled(Chronosphere, function(self, killer)
@@ -278,12 +286,6 @@ DoShoreSAMFlare = function()
 			ShoreSAMFlare.Destroy()
 		end)
 	end)
-end
-
-CheckReactors = function()
-	if EastReactor.IsDead and SouthReactor.IsDead and WestReactor.IsDead then
-		Greece.MarkCompletedObjective(ObjectiveKillReactors)
-	end
 end
 
 Tick = function()
