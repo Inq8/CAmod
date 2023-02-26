@@ -207,14 +207,14 @@ AssaultPlayerBaseOrHunt = function(actor, targetPlayer, waypoints, fromIdle)
 		if not actor.IsDead then
 			if waypoints ~= nil then
 				Utils.Do(waypoints, function(w)
-					actor.AttackMove(w)
+					actor.AttackMove(w, 1)
 				end)
 			end
 			if targetPlayer == MissionPlayer and PlayerBaseLocation ~= nil then
 				local possibleCellsInner = Utils.ExpandFootprint({ PlayerBaseLocation }, true)
 				local possibleCells = Utils.ExpandFootprint(possibleCellsInner, false)
 				local cell = Utils.Random(possibleCells)
-				actor.AttackMove(cell)
+				actor.AttackMove(cell, 1)
 			elseif actor.HasProperty("Hunt") then
 				actor.Hunt()
 			end

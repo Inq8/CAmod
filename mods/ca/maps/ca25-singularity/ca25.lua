@@ -148,7 +148,11 @@ Squads = {
 		IdleUnits = { },
 		ProducerActors = nil,
 		ProducerTypes = { Infantry = { "barr" }, Vehicles = { "weap" } },
-		Units = UnitCompositions.Soviet.Main,
+		Units = {
+			easy = UnitCompositions.Soviet.Main.normal,
+			normal = UnitCompositions.Soviet.Main.normal,
+			hard = UnitCompositions.Soviet.Main.normal,
+		},
 		AttackPaths = { { WestAttackNode2.Location, WestAttackNode1.Location, WormholeWP.Location } },
 	},
 	Nod = {
@@ -166,7 +170,11 @@ Squads = {
 		IdleUnits = { },
 		ProducerActors = nil,
 		ProducerTypes = { Infantry = { "hand" }, Vehicles = { "airs" } },
-		Units = UnitCompositions.Nod.Main,
+		Units = {
+			easy = UnitCompositions.Nod.Main.normal,
+			normal = UnitCompositions.Nod.Main.normal,
+			hard = UnitCompositions.Nod.Main.normal,
+		},
 		AttackPaths = { { EastAttackNode1.Location, WormholeWP.Location } },
 	},
 	Greece = {
@@ -183,7 +191,11 @@ Squads = {
 		IdleUnits = { },
 		ProducerActors = nil,
 		ProducerTypes = { Infantry = { "tent" }, Vehicles = { "weap" } },
-		Units = UnitCompositions.Allied.Main,
+		Units = {
+			easy = UnitCompositions.Allied.Main.normal,
+			normal = UnitCompositions.Allied.Main.normal,
+			hard = UnitCompositions.Allied.Main.normal,
+		},
 		AttackPaths = { { CenterAttackNode1.Location, WormholeWP.Location } },
 	},
 	ScrinAir = {
@@ -394,6 +406,20 @@ OncePerFiveSecondChecks = function()
 				DoInterceptors()
 			end)
 		end
+
+		local hackers = GDI.GetActorsByType("hack")
+		if NodFreed and #hackers == 0 and not ShieldsOffline and FirstHackersRequested and not MoreHackersRequested and not SignalTransmitter.IsDead then
+			MoreHackersRequested = true
+
+			Trigger.AfterDelay(HackersDelay[Difficulty], function()
+				if SignalTransmitter.IsDead then
+					return
+				end
+
+				Media.DisplayMessage("We are sending you another squad of hackers. Perhaps you'll be more careful with them this time.", "Nod Commander", HSLColor.FromHex("FF0000"))
+				DropHackers()
+			end)
+		end
 	end
 end
 
@@ -509,35 +535,41 @@ InitGreece = function()
 end
 
 InitHackers = function()
+	FirstHackersRequested = true
+
 	Trigger.AfterDelay(HackersDelay[Difficulty], function()
 		if SignalTransmitter.IsDead then
 			return
 		end
 
 		Media.DisplayMessage("Commander, we are sending you a squad of hackers. Use them to hack into the Scrin Signal Transmitter and we will be able to bring down the Mothership's shields.", "Nod Commander", HSLColor.FromHex("FF0000"))
-
-		Media.PlaySpeechNotification(GDI, "SignalFlare")
-		local hackerFlare = Actor.Create("flare", true, { Owner = GDI, Location = HackerDropLanding.Location })
-		Trigger.AfterDelay(DateTime.Seconds(10), function()
-			hackerFlare.Destroy()
-		end)
-
+		DropHackers()
 		Beacon.New(GDI, SignalTransmitter.CenterPosition)
-		Beacon.New(GDI, HackerDropLanding.CenterPosition)
+	end)
+end
 
-		local entryPath = { HackerDropSpawn.Location, HackerDropLanding.Location }
-		DoHelicopterDrop(Nod, entryPath, "tran.evac", { "hack", "hack", "hack" }, nil, function(t)
-			Trigger.AfterDelay(DateTime.Seconds(5), function()
-				if not t.IsDead then
-					t.Move(entryPath[1])
-					t.Destroy()
-				end
+DropHackers = function()
+	Beacon.New(GDI, HackerDropLanding.CenterPosition)
+	Media.PlaySpeechNotification(GDI, "SignalFlare")
+	local hackerFlare = Actor.Create("flare", true, { Owner = GDI, Location = HackerDropLanding.Location })
+	Trigger.AfterDelay(DateTime.Seconds(10), function()
+		hackerFlare.Destroy()
+	end)
 
-				local hackers = Nod.GetActorsByType("hack")
-				Utils.Do(hackers, function(a)
-					a.Owner = GDI
-				end)
+	local entryPath = { HackerDropSpawn.Location, HackerDropLanding.Location }
+	DoHelicopterDrop(Nod, entryPath, "tran.evac", { "hack", "hack", "hack" }, nil, function(t)
+		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			if not t.IsDead then
+				t.Move(entryPath[1])
+				t.Destroy()
+			end
+
+			local hackers = Nod.GetActorsByType("hack")
+			Utils.Do(hackers, function(a)
+				a.Owner = GDI
 			end)
+
+			MoreHackersRequested = false
 		end)
 	end)
 end
@@ -580,6 +612,7 @@ InitMADTankAttack = function()
 		local northWestPowerFlare = Actor.Create("flare", true, { Owner = GDI, Location = MADTankPath9.Location })
 		local madTankFlare = Actor.Create("flare", true, { Owner = GDI, Location = MADTankPath1.Location })
 		Trigger.AfterDelay(DateTime.Seconds(20), function()
+			northWestPowerFlare.Destroy()
 			madTankFlare.Destroy()
 		end)
 
@@ -705,8 +738,8 @@ FlipSlaveFaction = function(player)
 				if not a.IsDead then
 					if a.HasProperty("AttackMove") then
 						a.Stop()
-						a.AttackMove(attackPath[1])
-						a.AttackMove(attackPath[2])
+						a.AttackMove(attackPath[1], 2)
+						a.AttackMove(attackPath[2], 2)
 					elseif a.HasProperty("FindResources") then
 						a.Stop()
 						a.FindResources()
@@ -734,8 +767,8 @@ DoFinale = function()
 
 	local kane = Actor.Create("kane", true, { Owner = Kane, Location = KaneSpawn.Location, Facing = Angle.South })
 	Trigger.AfterDelay(DateTime.Seconds(5), function()
-		Media.DisplayMessage("Well commander, we meet at last, and will again. You have played your part impeccably. The final domino falls and the way is open. Come brothers, our future awaits!", "Kane", HSLColor.FromHex("FF0000"))
-		Beacon.New(GDI, kane.CenterPosition)
+		Media.DisplayMessage("Well commander, we meet at last, and will again. You have played your part impeccably.", "Kane", HSLColor.FromHex("FF0000"))
+		Beacon.New(GDI, WormholeWP.CenterPosition)
 
 		local cyborgs = NodSlaves.GetActorsByTypes({ "rmbc", "enli", "tplr", "n3c" })
 
@@ -755,7 +788,12 @@ DoFinale = function()
 			end)
 		end)
 
+		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			Media.DisplayMessage("The final domino falls and the way is open.", "Kane", HSLColor.FromHex("FF0000"))
+		end)
+
 		Trigger.AfterDelay(DateTime.Seconds(10), function()
+			Media.DisplayMessage("Come brothers, our future awaits!", "Kane", HSLColor.FromHex("FF0000"))
 			kane.Move(WormholeWP.Location)
 		end)
 

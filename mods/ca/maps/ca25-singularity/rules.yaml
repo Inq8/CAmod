@@ -8,7 +8,7 @@
 		Ambient: 0.8
 	FlashPaletteEffect@CHRONO:
 		Type: Chronoshift
-		ExcludePalettes: cursor, chrome, colorpicker, colorpickertd, colorpickerscrin, fog, shroud
+		ExcludePalettes: cursor, chrome, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud
 
 ^BaseWorld:
 	TerrainLighting:
@@ -170,7 +170,8 @@ MSHP:
 		HP: 300000
 	Shielded:
 		MaxStrength: 1500000
-		RegenAmount: 1500
+		RegenAmount: 1000
+		RegenDelay: 750
 		RequiresCondition: mothership-shields
 	GrantConditionOnPrerequisite@MSHPSHIELDS:
 		Condition: mothership-shields
@@ -308,9 +309,12 @@ N3C:
 SIGN:
 	Inherits@HACKABLE: ^Hackable
 	Health:
-		HP: 200000
+		HP: 300000
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Cannot be captured
+	RepairableBuilding:
+		RepairStep: 1500
+		RepairPercent: 0
 
 YF23.Interceptor:
 	Inherits: MIG
@@ -463,6 +467,11 @@ KANE:
 		StandSequences: parachute
 		RequiresCondition: parachute
 	-Targetable:
+
+HACK:
+	-Valued:
+	Health:
+		HP: 10000
 
 GTEK:
 	GrantExternalConditionPowerCA@NREPAIR:
