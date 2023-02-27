@@ -3624,7 +3624,7 @@ YURI:
 		BuildPaletteOrder: 190
 		Prerequisites: ~barr, stek, ~infantry.yuri, ~techlevel.high
 		BuildLimit: 1
-		Description: Elite specialist infantry able to mind-control\n  enemy units (up to 3 at a time).
+		Description: Elite specialist infantry able to mind-control\n  enemy units (up to 3, increases with veterancy).
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Vehicles, Defenses, Buildings
 		Weaknesses: • Cannot attack Aircraft
@@ -3658,8 +3658,10 @@ YURI:
 		ArmamentNames: primary, secondary
 		Capacity: 3
 		ControlSounds: iyurat1a.aud
+		ReleaseSounds: yuri-release.aud
 		ControllingCondition: mindcontrolling
 		MaxControlledCondition: maxcontrolled
+		ManualReleaseEnabled: true
 	WithMindControlArc@MC:
 		Color: c71585
 		Transparency: 55
@@ -3680,12 +3682,9 @@ YURI:
 		Weapon: MindblastSlave
 		InitialDelay: 18
 		RequiresCondition: deployed && !being-warped
-		KillSlaveTypes: Infantry, Cyborg
-		KillSlavesDamageTypes: BulletDeath
-		PostExplosionAction: Neutralize
 	GrantTimedConditionOnDeploy:
 		DeployedTicks: 35
-		CooldownTicks: 200
+		CooldownTicks: 125
 		DeployedCondition: deployed
 		DeployingCondition: deploying
 		DeployAnimation: deployed

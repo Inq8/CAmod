@@ -11,6 +11,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenRA.Mods.CA.Orders;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
@@ -45,8 +46,14 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("The sound played when target is mind controlled.")]
 		public readonly string[] ControlSounds = { };
 
+		[Desc("The sound played when slave is released.")]
+		public readonly string[] ReleaseSounds = { };
+
 		[Desc("If true, mind control start sound is only played to the controlling player.")]
 		public readonly bool ControlSoundControllerOnly = false;
+
+		[Desc("If true, release sound is only played to the controlling player.")]
+		public readonly bool ReleaseSoundControllerOnly = false;
 
 		[Desc("The sound played (to the controlling player only) when beginning mind control process.")]
 		public readonly string[] InitSounds = { };
@@ -69,10 +76,16 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If true, slave will be released when attacking a new target.")]
 		public readonly bool ReleaseOnNewTarget = false;
 
+		[Desc("Cursor to use for targeting slaves to release.")]
+		public readonly string ReleaseSlaveCursor = "pinkdeploy";
+
+		[Desc("If true, slaves can be targeted to release them.")]
+		public readonly bool ManualReleaseEnabled = false;
+
 		public override object Create(ActorInitializer init) { return new MindController(init.Self, this); }
 	}
 
-	public class MindController : PausableConditionalTrait<MindControllerInfo>, INotifyAttack, INotifyKilled, INotifyActorDisposing, INotifyCreated, IResolveOrder, ITick
+	public class MindController : PausableConditionalTrait<MindControllerInfo>, INotifyAttack, INotifyKilled, INotifyActorDisposing, INotifyCreated, IIssueOrder, IResolveOrder, ITick
 	{
 		readonly List<Actor> slaves = new List<Actor>();
 		readonly Stack<int> controllingTokens = new Stack<int>();
@@ -203,8 +216,24 @@ namespace OpenRA.Mods.CA.Traits
 				maxControlledToken = self.RevokeCondition(maxControlledToken);
 		}
 
-		public void ResolveOrder(Actor self, Order order)
+		void IResolveOrder.ResolveOrder(Actor self, Order order)
 		{
+			if (order.OrderString == "ReleaseSlave")
+			{
+				order.Target.Actor.Trait<MindControllable>().RevokeMindControl(order.Target.Actor, 0);
+
+				if (Info.ReleaseSounds.Length > 0)
+				{
+					if (Info.ReleaseSoundControllerOnly)
+						Game.Sound.PlayToPlayer(SoundType.World, self.Owner, Info.ReleaseSounds.Random(self.World.SharedRandom), self.CenterPosition);
+					else
+						Game.Sound.Play(SoundType.World, Info.ReleaseSounds.Random(self.World.SharedRandom), self.CenterPosition);
+				}
+
+				return;
+			}
+
+			// For all other order, if target has changed, reset progress
 			if (order.Target.Actor != currentTarget.Actor)
 			{
 				ResetProgress(self);
@@ -425,6 +454,34 @@ namespace OpenRA.Mods.CA.Traits
 		public void ModifierUpdated()
 		{
 			refreshCapacity = true;
+		}
+
+		IEnumerable<IOrderTargeter> IIssueOrder.Orders
+		{
+			get
+			{
+				yield return new ReleaseSlaveOrderTargeter(
+					"ReleaseSlave",
+					5,
+					Info.ReleaseSlaveCursor,
+					IsManuallyReleasableSlave);
+			}
+		}
+
+		Order IIssueOrder.IssueOrder(Actor self, IOrderTargeter order, in Target target, bool queued)
+		{
+			if (order.OrderID == "ReleaseSlave")
+				return new Order(order.OrderID, self, target, queued);
+
+			return null;
+		}
+
+		bool IsManuallyReleasableSlave(Actor a)
+		{
+			if (!Info.ManualReleaseEnabled)
+				return false;
+
+			return slaves.Contains(a);
 		}
 	}
 }

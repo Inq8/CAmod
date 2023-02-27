@@ -695,11 +695,11 @@ MAST:
 		Prerequisites: scrt, ~infantry.scrin, ~techlevel.high
 		BuildLimit: 1
 		IconPalette: chrome
-		Description: Elite specialist infantry able to mind-control\n  enemy units (up to 3 at a time).
+		Description: Elite specialist infantry able to mind-control\n  enemy units (up to 3, increases with veterancy).
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Vehicles, Defenses, Buildings
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Can capture enemy buildings\n• Shorter range and longer reload against vehicles\n• Special Ability: Mind Shatter
+		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Can capture enemy buildings\n• Shorter range and longer reload against vehicles\n• Special Ability: Mind Spark
 	Voiced:
 		VoiceSet: MastermindVoice
 	Valued:
@@ -731,8 +731,10 @@ MAST:
 		ArmamentNames: primary, secondary
 		Capacity: 3
 		ControlSounds: mastermind-fire.aud
+		ReleaseSounds: mastermind-release.aud
 		ControllingCondition: mindcontrolling
 		MaxControlledCondition: maxcontrolled
+		ManualReleaseEnabled: true
 	WithMindControlArc@MC:
 		Color: c71585
 		Transparency: 55
@@ -748,12 +750,9 @@ MAST:
 		Weapon: MindSparkSpawnerSlave
 		InitialDelay: 18
 		RequiresCondition: deployed && !being-warped
-		KillSlaveTypes: Infantry, Cyborg
-		KillSlavesDamageTypes: BulletDeath
-		PostExplosionAction: Neutralize
 	GrantTimedConditionOnDeploy:
 		DeployedTicks: 35
-		CooldownTicks: 175
+		CooldownTicks: 100
 		DeployedCondition: deployed
 		ShowSelectionBar: true
 		StartsFullyCharged: true
