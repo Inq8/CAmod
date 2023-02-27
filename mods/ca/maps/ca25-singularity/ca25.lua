@@ -274,12 +274,9 @@ WorldLoaded = function()
 	SovietSlaves = Player.GetPlayer("SovietSlaves")
 	NodSlaves = Player.GetPlayer("NodSlaves")
 	Kane = Player.GetPlayer("Kane")
+	SignalTransmitterPlayer = Player.GetPlayer("SignalTransmitter") -- separate player to prevent AI from attacking it
 	MissionPlayer = GDI
 	TimerTicks = 0
-
-	-- override so buffed immobile cyborgs aren't produced
-	BasicCyborg = { "n1c", "n5", "acol" }
-	AdvancedCyborg = { "n1c", "acol", "bh" }
 
 	Camera.Position = PlayerStart.CenterPosition
 
@@ -425,7 +422,7 @@ OncePerFiveSecondChecks = function()
 		end
 
 		local hackers = GDI.GetActorsByType("hack")
-		if NodFreed and #hackers == 0 and not ShieldsOffline and FirstHackersArrived and not MoreHackersRequested and not SignalTransmitter.IsDead then
+		if NodFreed and #hackers == 0 and not ShieldsOffline and not FirstHackersArrived and not MoreHackersRequested and not SignalTransmitter.IsDead then
 			MoreHackersRequested = true
 
 			Trigger.AfterDelay(HackersDelay[Difficulty], function()
@@ -442,6 +439,8 @@ end
 
 InitScrin = function()
 	RebuildExcludes.Scrin = { Types = { "sign", "rift" }, Actors = { NWPower1, NWPower2, NWPower3, NWPower4, NWPower5, NWPower6, NWPower7, NWPower8, NEPower1, NEPower2, NEPower3, NEPower4, NEPower5, NEPower6, NEPower7, NEPower8 } }
+
+	AutoRepairBuildings(SignalTransmitterPlayer)
 
 	AutoRepairAndRebuildBuildings(Scrin, 15)
 	SetupRefAndSilosCaptureCredits(Scrin)
@@ -492,6 +491,11 @@ InitNodSlaves = function()
 
 	Trigger.AfterDelay(Squads.NodSlaves.Delay[Difficulty], function()
 		InitAttackSquad(Squads.NodSlaves, NodSlaves)
+	end)
+
+	local cyborgs = NodSlaves.GetActorsByTypes({ "rmbc", "enli", "tplr", "n3c" })
+	Utils.Do(cyborgs, function(c)
+		c.GrantCondition("bluebuff")
 	end)
 end
 
@@ -727,15 +731,6 @@ DoInterceptors = function()
 			Trigger.OnIdle(interceptor3, function(a)
 				a.Move(InterceptorExit3.Location)
 				a.Destroy()
-			end)
-
-			Trigger.AfterDelay(DateTime.Seconds(20), function()
-				Utils.Do({ { interceptor1, InterceptorExit1.Location }, { interceptor2, InterceptorExit2.Location }, { interceptor3, InterceptorExit3.Location } }, function (i)
-					if not i[1].IsDead then
-						i[1].Move(i[2])
-						i[1].Destroy()
-					end
-				end)
 			end)
 		end)
 	end)

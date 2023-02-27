@@ -286,13 +286,17 @@ mothership.shields:
 		Sequence: idle
 		Offset: 0,0,300
 		Palette: scrin
+		RequiresCondition: bluebuff
 	DamageMultiplier@BLUEBUFF:
 		Modifier: 20
+		RequiresCondition: bluebuff
 	ChangesHealth@THEAL:
 		PercentageStep: 2
 		DamageCooldown: 0
 	Mobile:
-		PauseOnCondition: !kane-revealed
+		PauseOnCondition: !kane-revealed && bluebuff
+	ExternalCondition@BLUEBUFF:
+		Condition: bluebuff
 	ExternalCondition@KANE:
 		Condition: kane-revealed
 	RenderSprites:
@@ -321,15 +325,22 @@ SIGN:
 	RepairableBuilding:
 		RepairStep: 1500
 		RepairPercent: 0
+	Power:
+		Amount: 0
 
 YF23.Interceptor:
 	Inherits: MIG
 	Inherits: ^TDPalette
 	-Buildable:
+	Rearmable:
+		RearmActors: wormhole
+	Repairable:
+		RepairActors: wormhole
 	RenderSprites:
 		Image: yf23
 	Aircraft:
 		Speed: 400
+		OpportunityFire: false
 	Health:
 		HP: 500000
 	Armament@AA:
@@ -360,6 +371,14 @@ YF23.Interceptor:
 	RevealsShroud@GAPGEN:
 		Range: 5c0
 		Type: GroundPosition
+	SpawnActorOnDeath:
+		Actor: YF23.Husk
+	SpawnActorOnDeath@EMP:
+		Actor: YF23.Husk.EMP
+	SpawnActorOnDeath@Empty:
+		Actor: YF23.Husk
+	SpawnActorOnDeath@EmptyEMP:
+		Actor: YF23.Husk.EMP
 
 ^AutoTargetAirICBM:
 	AutoTargetPriority@DEFAULT:

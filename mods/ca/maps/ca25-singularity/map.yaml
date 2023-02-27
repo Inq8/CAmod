@@ -41,7 +41,7 @@ Players:
 		LockSpawn: True
 		LockTeam: True
 		Allies: Greece, Nod, USSR
-		Enemies: Scrin, NodSlaves, SovietSlaves, AlliedSlaves, Creeps, Kane
+		Enemies: Scrin, NodSlaves, SovietSlaves, AlliedSlaves, Creeps, Kane, SignalTransmitter
 	PlayerReference@Greece:
 		Name: Greece
 		Bot: campaign
@@ -97,6 +97,12 @@ Players:
 		Faction: blackh
 		Color: FE1100
 		Enemies: Scrin, GDI, USSR, Greece
+	PlayerReference@SignalTransmitter:
+		Name: SignalTransmitter
+		Bot: campaign
+		Faction: reaper
+		Color: 7700FF
+		Enemies: GDI
 
 Actors:
 	Actor3: shar
@@ -1160,7 +1166,7 @@ Actors:
 		Owner: Scrin
 		Location: 75,36
 	SignalTransmitter: sign
-		Owner: Scrin
+		Owner: SignalTransmitter
 		Location: 75,36
 	Actor334: swal
 		Owner: Scrin
@@ -5116,6 +5122,30 @@ Actors:
 		SubCell: 3
 		Location: 37,84
 		Facing: 634
+	Actor1662: tpod
+		Owner: Scrin
+		Location: 123,9
+		Facing: 269
+	Actor1663: e4
+		Owner: SovietSlaves
+		SubCell: 3
+		Location: 20,124
+		Facing: 753
+	Actor1664: e4
+		Owner: SovietSlaves
+		SubCell: 3
+		Location: 20,120
+		Facing: 785
+	Actor1665: e1
+		Owner: SovietSlaves
+		SubCell: 3
+		Location: 21,117
+		Facing: 697
+	Actor1666: e1
+		Owner: SovietSlaves
+		Location: 20,125
+		SubCell: 3
+		Facing: 697
 
 Rules: ca|rules/campaign-rules.yaml, ca|rules/campaign-tooltips.yaml, ca|rules/campaign-palettes.yaml, rules.yaml
 
