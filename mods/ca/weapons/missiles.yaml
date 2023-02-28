@@ -81,6 +81,7 @@
 		-Arm:
 		Speed: 384
 		HorizontalRateOfTurn: 40
+		Inaccuracy: 0
 		LockOnInaccuracy: 0
 		RangeLimit: 13c0
 		AllowSnapping: true
@@ -1376,7 +1377,7 @@ IFVRocketsAAE.CRYO:
 			None: 100
 			Wood: 75
 			Light: 72
-			Heavy: 30
+			Heavy: 28
 			Concrete: 72
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
@@ -1404,8 +1405,9 @@ IFVRocketsAAE.CRYO:
 	ReloadDelay: 120
 	Projectile: MissileCA
 		Speed: 366
-		Inaccuracy: 341
-		LockOnInaccuracy: 512
+		Inaccuracy: 64
+		LockOnInaccuracy: 64
+		LockOnProbability: 100
 		ContrailStartColor: 00FFFFE6
 	Warhead@1Dam: SpreadDamage
 		Damage: 830
@@ -1447,7 +1449,8 @@ IFVRocketsAAE.CRYO:
 		Spread: 426
 		Damage: 370
 		Versus:
-			Heavy: 38
+			Wood: 80
+			Concrete: 80
 
 227mmAA:
 	Inherits: ^AntiAirMissile
@@ -1464,12 +1467,12 @@ IFVRocketsAAE.CRYO:
 		CruiseAltitude: 2c0
 		RangeLimit: 7c512
 	Warhead@1Dam: SpreadDamage
-		Damage: 2200
+		Damage: 2000
 		Falloff: 100, 37, 14, 5, 0
 		Spread: 0c128
 		-Range:
 	Warhead@2Dam: SpreadDamage
-		Damage: 2200
+		Damage: 2000
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: xplos.aud
 
@@ -1486,9 +1489,9 @@ IFVRocketsAAE.CRYO:
 		ContrailStartColorAlpha: 230
 		RangeLimit: 8c512
 	Warhead@1Dam: SpreadDamage
-		Damage: 2650
+		Damage: 2400
 	Warhead@2Dam: SpreadDamage
-		Damage: 2650
+		Damage: 2400
 
 227mmAA.Hypersonic:
 	Inherits: 227mmAA.upg
