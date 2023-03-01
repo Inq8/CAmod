@@ -212,6 +212,9 @@ WorldLoaded = function()
 				ObjectiveCaptureTraitorTechCenter = USSR.AddSecondaryObjective("Capture Traitor's Tech Center.")
 			end
 			USSR.MarkCompletedObjective(ObjectiveCaptureTraitorTechCenter)
+			Trigger.AfterDelay(DateTime.Seconds(2), function()
+				Notification("The traitor's tech center is ours! Let us rain down V3 rockets on the traitor, or perhaps crush him under the tracks of a Mammoth Tank!")
+			end)
 		end
 	end)
 

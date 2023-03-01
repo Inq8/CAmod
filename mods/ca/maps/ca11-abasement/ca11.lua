@@ -378,6 +378,8 @@ FlipNorthBase = function()
 		AutoRepairBuilding(turret3, Nod)
 		AutoRebuildBuilding(turret3, Nod)
 	end)
+
+	BaseFlipNotification()
 end
 
 FlipSouthBase = function()
@@ -414,6 +416,8 @@ FlipSouthBase = function()
 		AutoRepairBuilding(turret5, Nod)
 		AutoRebuildBuilding(turret5, Nod)
 	end)
+
+	BaseFlipNotification()
 end
 
 SignalTransmitterDiscovered = function()
@@ -424,4 +428,16 @@ SignalTransmitterDiscovered = function()
 		local autoCamera = Actor.Create("smallcamera", true, { Owner = USSR, Location = SignalTransmitterLocation })
 		Trigger.AfterDelay(DateTime.Seconds(5), autoCamera.Destroy)
 	end
+end
+
+BaseFlipNotification = function()
+	Trigger.AfterDelay(DateTime.Seconds(3), function()
+		if not IsFirstBaseFlipped then
+			IsFirstBaseFlipped = true
+			Media.DisplayMessage("Your efforts are appreciated. The Brotherhood will provide support.", "Nod Commander", HSLColor.FromHex("FF0000"))
+		elseif not IsSecondBaseFlipped then
+			IsSecondBaseFlipped = true
+			Media.DisplayMessage("Kane will be pleased. Now we must focus our efforts and secure the Signal Transmitter!", "Nod Commander", HSLColor.FromHex("FF0000"))
+		end
+	end)
 end

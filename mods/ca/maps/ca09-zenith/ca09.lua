@@ -104,8 +104,8 @@ WorldLoaded = function()
 	InitUSSR()
 
 	ObjectiveKillSilos = Nod.AddObjective("Destroy Soviet missile silos before launch.")
-	ObjectiveKillReactors = Nod.AddSecondaryObjective("Destroy reactors on north west of island.")
-	ObjectiveKillAirbase = Nod.AddSecondaryObjective("Destroy airbase on north east of island.")
+	ObjectiveKillReactors = Nod.AddSecondaryObjective("Destroy reactors on north-west of island.")
+	ObjectiveKillAirbase = Nod.AddSecondaryObjective("Destroy airbase on north-east of island.")
 
 	if Difficulty == "hard" then
 		NukeDummy = Actor.Create("NukeDummyHard", true, { Owner = USSR, Location = NukeSilo1.Location })
@@ -179,7 +179,7 @@ OncePerFiveSecondChecks = function()
 end
 
 InitUSSR = function()
-	RebuildExcludes.USSR = { Types = { "tsla", "ftur", "tpwr", "afld", "hpad" } }
+	RebuildExcludes.USSR = { Types = { "tsla", "ftur", "tpwr", "afld", "hpad", "mslo" } }
 
 	if Difficulty == "easy" then
 		AutoRepairBuildings(USSR)
@@ -199,57 +199,27 @@ InitUSSR = function()
 		end)
 	end
 
-	Utils.Do(NukeSilos, function(a)
-		Trigger.ClearAll(a)
-		Trigger.AfterDelay(1, function()
-			AutoRepairBuilding(a, USSR)
+	Trigger.OnAllKilledOrCaptured(NukeSilos, function()
+		Nod.MarkCompletedObjective(ObjectiveKillSilos)
+	end)
 
-			Trigger.OnKilled(a, function(self, killer)
-				Trigger.AfterDelay(DateTime.Seconds(1), function()
-					local livingNukeSilos = Utils.Where(NukeSilos, function(a)
-						return not a.IsDead
-					end)
-					if #livingNukeSilos == 0 and not Nod.IsObjectiveFailed(ObjectiveKillSilos) then
-						Nod.MarkCompletedObjective(ObjectiveKillSilos)
-					end
-				end)
-			end)
+	Trigger.OnAllKilledOrCaptured(TeslaReactors, function()
+		local teslaCoils = USSR.GetActorsByType("tsla")
+		Utils.Do(teslaCoils, function(a)
+			if not a.IsDead then
+				a.GrantCondition("disabled")
+			end
+		end)
+		Nod.MarkCompletedObjective(ObjectiveKillReactors)
+		Trigger.AfterDelay(DateTime.Seconds(2), function()
+			Notification("Excellent! The north-west Tesla Reactors have been neutralised; all Soviet Tesla Coils are now offline.")
 		end)
 	end)
 
-	Utils.Do(TeslaReactors, function(a)
-		Trigger.OnKilled(a, function(self, killer)
-			Trigger.AfterDelay(DateTime.Seconds(1), function()
-				local livingTeslaReactors = Utils.Where(TeslaReactors, function(a)
-					return not a.IsDead
-				end)
-				if #livingTeslaReactors == 0 then
-					local teslaCoils = USSR.GetActorsByType("tsla")
-					Utils.Do(teslaCoils, function(a)
-						if not a.IsDead then
-							a.GrantCondition("disabled")
-						end
-					end)
-					if not Nod.IsObjectiveCompleted(ObjectiveKillReactors) then
-						Nod.MarkCompletedObjective(ObjectiveKillReactors)
-					end
-				end
-			end)
-		end)
-	end)
-
-	Utils.Do(AirbaseStructures, function(a)
-		Trigger.OnKilled(a, function(self, killer)
-			Trigger.AfterDelay(DateTime.Seconds(1), function()
-				local livingAirbaseStructures = Utils.Where(AirbaseStructures, function(a)
-					return not a.IsDead
-				end)
-				if #livingAirbaseStructures == 0 then
-					if not Nod.IsObjectiveCompleted(ObjectiveKillAirbase) then
-						Nod.MarkCompletedObjective(ObjectiveKillAirbase)
-					end
-				end
-			end)
+	Trigger.OnAllKilledOrCaptured(AirbaseStructures, function()
+		Nod.MarkCompletedObjective(ObjectiveKillAirbase)
+		Trigger.AfterDelay(DateTime.Seconds(2), function()
+			Notification("Good work commander! Their airbase has been neutralised, so you no longer have to worry about being attacked from the air.")
 		end)
 	end)
 

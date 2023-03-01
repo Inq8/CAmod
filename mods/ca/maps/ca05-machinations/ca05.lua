@@ -1,7 +1,7 @@
 InitialUnits = {
-	easy = { "mcv", "2tnk", "jeep" },
-	normal = { "mcv", "jeep" },
-	hard = { "mcv" }
+	easy = { "jeep", "mcv", "2tnk", "e1", "e1", "e1", "e3" },
+	normal = { "jeep", "mcv", "e1", "e1", "e1", "e3"  },
+	hard = { "jeep", "mcv", "e1", "e1", "e3" }
 }
 
 NodSouthAttackPaths = {
@@ -53,9 +53,9 @@ Squads = {
 	South = {
 		Player = nil,
 		Delay = {
-			easy = DateTime.Minutes(8),
-			normal = DateTime.Minutes(6),
-			hard = DateTime.Minutes(4)
+			easy = DateTime.Minutes(6),
+			normal = DateTime.Minutes(4),
+			hard = DateTime.Minutes(2)
 		},
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 30 } },
@@ -73,9 +73,9 @@ Squads = {
 	East = {
 		Player = nil,
 		Delay = {
-			easy = DateTime.Minutes(5),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(3)
+			easy = DateTime.Minutes(3),
+			normal = DateTime.Minutes(2),
+			hard = DateTime.Minutes(1)
 		},
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 30 } },
@@ -203,14 +203,6 @@ WorldLoaded = function()
 		end
 	end
 
-	Utils.Do(Patrols, function(p)
-		Utils.Do(p.Units, function(unit)
-			if not unit.IsDead then
-				unit.Patrol(p.Path, true)
-			end
-		end)
-	end)
-
 	Trigger.OnKilled(Church1, function(self, killer)
 		Actor.Create("moneycrate", true, { Owner = Greece, Location = Church1.Location })
 	end)
@@ -242,6 +234,15 @@ WorldLoaded = function()
 	Trigger.OnKilled(ResearchLab, function(self, killer)
 		RevealLab()
 		Greece.MarkFailedObjective(ObjectiveCaptureLab)
+	end)
+
+	Utils.Do({ Turret1, Turret2, Turret3, Turret4, LeftAttack2, MiddleAttack3, EastBoundary }, function (t)
+		Trigger.OnEnteredProximityTrigger(t.CenterPosition, WDist.New(7 * 1024), function(a, id)
+			if a.Owner == Greece then
+				Trigger.RemoveProximityTrigger(id)
+				InitNodAttacks()
+			end
+		end)
 	end)
 end
 
@@ -297,18 +298,6 @@ InitNod = function()
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
 	end)
 
-	Trigger.AfterDelay(Squads.South.Delay[Difficulty], function()
-		InitAttackSquad(Squads.South, Nod)
-	end)
-
-	Trigger.AfterDelay(Squads.East.Delay[Difficulty], function()
-		InitAttackSquad(Squads.East, Nod)
-	end)
-
-	Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Air, Nod, Greece, { "harv", "harv.td", "pris", "ifv", "cryo", "ptnk", "pcan", "ca", "dome", "apwr", "mech", "medi" })
-	end)
-
 	InitNavalAttackSquad(Squads.Naval, Nod)
 	InitAttackSquad(Squads.LabDefense, Nod)
 
@@ -320,6 +309,33 @@ InitNod = function()
 
 		Trigger.AfterDelay(DateTime.Minutes(15), function()
 			Actor.Create("tibcore.upgrade", true, { Owner = Nod })
+		end)
+	end
+end
+
+InitNodAttacks = function()
+	if not NodAttacksInitialized then
+		NodAttacksInitialized = true
+		Notification("Nod forces have been alerted to your presence, prepare your defenses!")
+
+		Utils.Do(Patrols, function(p)
+			Utils.Do(p.Units, function(unit)
+				if not unit.IsDead then
+					unit.Patrol(p.Path, true)
+				end
+			end)
+		end)
+
+		Trigger.AfterDelay(Squads.South.Delay[Difficulty], function()
+			InitAttackSquad(Squads.South, Nod)
+		end)
+
+		Trigger.AfterDelay(Squads.East.Delay[Difficulty], function()
+			InitAttackSquad(Squads.East, Nod)
+		end)
+
+		Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
+			InitAirAttackSquad(Squads.Air, Nod, Greece, { "harv", "harv.td", "pris", "ifv", "cryo", "ptnk", "pcan", "ca", "dome", "apwr", "mech", "medi" })
 		end)
 	end
 end

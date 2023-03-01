@@ -88,8 +88,8 @@ Squads = {
 		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(3),
-			normal = DateTime.Minutes(2),
-			hard = DateTime.Minutes(1)
+			normal = DateTime.Minutes(2) + DateTime.Seconds(30),
+			hard = DateTime.Minutes(2)
 		},
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 50 } },
