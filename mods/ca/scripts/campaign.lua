@@ -116,7 +116,7 @@ Tip = function(text)
 end
 
 AttackAircraftTargets = { }
-InitializeAttackAircraft = function(aircraft, targetPlayer, targetTypes)
+InitAttackAircraft = function(aircraft, targetPlayer, targetTypes)
 	if not aircraft.IsDead then
 		Trigger.OnIdle(aircraft, function(self)
 			if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
@@ -345,7 +345,7 @@ RebuildBuilding = function(queueItem)
 		table.remove(BuildingQueues[queueItem.Player.Name], 1)
 
 		-- rebuild if no units are nearby (potentially blocking), no enemy buildings are nearby, and friendly buildings are in the area (but nothing friendly in the same cell)
-		if CanRebuild(queueItem, queueItem.Player) then
+		if CanRebuild(queueItem) then
 			local b = Actor.Create(queueItem.Actor.Type, true, { Owner = queueItem.Player, Location = queueItem.Location })
 			AutoRepairBuilding(b, queueItem.Player);
 			AutoRebuildBuilding(b, queueItem.Player, queueItem.MaxAttempts);
@@ -749,7 +749,7 @@ SendAttackSquad = function(squad)
 	if squad.IsAir ~= nil and squad.IsAir then
 		Utils.Do(squad.IdleUnits, function(a)
 			if not a.IsDead then
-				InitializeAttackAircraft(a, squad.TargetPlayer, squad.AirTargetTypes)
+				InitAttackAircraft(a, squad.TargetPlayer, squad.AirTargetTypes)
 			end
 		end)
 	else

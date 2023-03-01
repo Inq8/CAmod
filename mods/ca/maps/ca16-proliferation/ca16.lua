@@ -257,7 +257,7 @@ InitNod = function()
 		Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod })
 	end
 
-	AutoRepairBuildings(Nod, 10)
+	AutoRepairBuildings(Nod)
 	SetupRefAndSilosCaptureCredits(Nod)
 
 	local nodGroundAttackers = Nod.GetGroundAttackers()

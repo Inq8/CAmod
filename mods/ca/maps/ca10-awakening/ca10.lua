@@ -120,7 +120,7 @@ AirAttackStart = {
 AirAttackInterval = {
 	easy = DateTime.Minutes(2),
 	normal = DateTime.Minutes(2),
-	hard = DateTime.Seconds(2)
+	hard = DateTime.Minutes(2)
 }
 
 HoldOutTime = {
@@ -332,7 +332,7 @@ DoAirAttack = function()
 
 	local units = Reinforcements.Reinforce(USSR, randomComposition, randomAttackPath, 25, function(a)
 		Trigger.AfterDelay(DateTime.Seconds(2), function()
-			InitializeAttackAircraft(a, Nod, { "nuke", "nuk2", "obli", "gun.nod", "mlrs", "arty.nod", "harv.td", "ltnk" })
+			InitAttackAircraft(a, Nod, { "nuke", "nuk2", "obli", "gun.nod", "mlrs", "arty.nod", "harv.td", "ltnk" })
 		end)
 	end)
 

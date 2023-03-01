@@ -114,7 +114,7 @@ SendScrinUnits = function(wormhole, attackPaths, numPlayers)
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(interval), function()
-		SendScrinUnits(wormhole, attackPaths, interval)
+		SendScrinUnits(wormhole, attackPaths, numPlayers)
 	end)
 end
 

@@ -118,7 +118,7 @@ Squads = {
 			hard = DateTime.Seconds(210)
 		},
 		Interval = {
-			easy = DateTime.Minutes(330),
+			easy = DateTime.Seconds(330),
 			normal = DateTime.Seconds(240),
 			hard = DateTime.Seconds(150)
 		},
@@ -401,7 +401,7 @@ InitScrin = function()
 				self.Stop()
 				self.ReturnToBase()
 				Trigger.AfterDelay(DateTime.Seconds(1), function()
-					InitializeAttackAircraft(self, Greece, { "proc", "dome", "atek", "apwr", "ptnk", "heli", "harr" })
+					InitAttackAircraft(self, Greece, { "proc", "dome", "atek", "apwr", "ptnk", "heli", "harr" })
 				end)
 			end
 		end)
