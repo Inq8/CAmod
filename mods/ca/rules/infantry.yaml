@@ -272,7 +272,7 @@ E3:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	AutoTarget:
-		ScanRadius: 7
+		ScanRadius: 6
 	GrantConditionOnPrerequisite@CRYO:
 		Condition: cryr-upgrade
 		Prerequisites: cryr.upgrade
@@ -1650,7 +1650,7 @@ N3:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	AutoTarget:
-		ScanRadius: 7
+		ScanRadius: 6
 	Selectable:
 		Class: e3
 	Convertible:
@@ -3758,6 +3758,9 @@ YURI:
 		RequiresCondition: rank-veteran == 2
 	MindControllerCapacityModifier@RANK-ELITE:
 		Amount: 3
+		RequiresCondition: rank-elite
+	RangeMultiplier@RANK-ELITE:
+		Modifier: 115
 		RequiresCondition: rank-elite
 
 SEAL:
