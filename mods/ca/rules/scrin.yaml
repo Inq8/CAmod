@@ -699,7 +699,7 @@ MAST:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Vehicles, Defenses, Buildings
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Can capture enemy buildings\n• Shorter range and longer reload against vehicles\n• Special Ability: Mind Spark
+		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Can capture enemy buildings\n• Shorter range and longer reload against vehicles\n• Special Ability: Mind Shatter
 	Voiced:
 		VoiceSet: MastermindVoice
 	Valued:
@@ -750,9 +750,11 @@ MAST:
 		Weapon: MindSparkSpawnerSlave
 		InitialDelay: 18
 		RequiresCondition: deployed && !being-warped
+		KillSlaveTypes: Infantry, Vehicle
+		KillSlavesDamageTypes: BulletDeath
 	GrantTimedConditionOnDeploy:
 		DeployedTicks: 35
-		CooldownTicks: 100
+		CooldownTicks: 150
 		DeployedCondition: deployed
 		ShowSelectionBar: true
 		StartsFullyCharged: true
