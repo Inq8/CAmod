@@ -742,6 +742,7 @@ end
 
 FlipSlaveFaction = function(player)
 	local attackPath
+	local targetPlayer
 
 	if player == NodSlaves then
 		targetPlayer = Nod

@@ -305,8 +305,8 @@ LightningStrike = function()
 
 	repeat
 		soundNumber = Utils.RandomInteger(1, 6)
-	until(soundNumber ~= lastSoundNumber)
-	lastSoundNumber = soundNumber
+	until(soundNumber ~= LastSoundNumber)
+	LastSoundNumber = soundNumber
 
 	Trigger.AfterDelay(thunderDelay, function()
 		Media.PlaySound("thunder" .. soundNumber .. ".aud")
@@ -319,7 +319,7 @@ IonStorm = function()
 	Lighting.Flash("IonStrike", duration)
 	repeat
 		soundNumber = Utils.RandomInteger(1, 3)
-	until(soundNumber ~= lastIonSoundNumber)
-	lastIonSoundNumber = soundNumber
+	until(soundNumber ~= LastIonSoundNumber)
+	LastIonSoundNumber = soundNumber
 	Media.PlaySound("ionstorm" .. soundNumber .. ".aud")
 end

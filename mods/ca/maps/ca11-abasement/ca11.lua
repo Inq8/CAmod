@@ -310,8 +310,8 @@ LightningStrike = function()
 
 	repeat
 		soundNumber = Utils.RandomInteger(1, 6)
-	until(soundNumber ~= lastSoundNumber)
-	lastSoundNumber = soundNumber
+	until(soundNumber ~= LastSoundNumber)
+	LastSoundNumber = soundNumber
 
 	Trigger.AfterDelay(thunderDelay, function()
 		Media.PlaySound("thunder" .. soundNumber .. ".aud")

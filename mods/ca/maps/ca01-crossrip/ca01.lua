@@ -263,7 +263,7 @@ Tick = function()
 		IsBaseEstablished = true
 		if ObjectiveInvestigateArea == nil then
 			ObjectiveInvestigateArea = Greece.AddObjective("Investigate the area.")
-			UserInterface.SetMissionText(nil)
+			UserInterface.SetMissionText("")
 		end
 		Greece.MarkCompletedObjective(ObjectiveEstablishBase)
 
@@ -405,18 +405,14 @@ end
 
 ScrinInvasion = function()
 	local wormholes = Scrin.GetActorsByType("wormhole")
-	local assaultWaypoints = { AttackWaypoint5.Location }
 
-	if Utils.RandomInteger(0,2) == 1 then
-		assaultWaypoints = { AttackWaypoint4.Location, AttackWaypoint5.Location }
-	end
 
 	Utils.Do(wormholes, function(wormhole)
 		local units = Reinforcements.Reinforce(Scrin, ScrinInfantrySquads[Difficulty], { wormhole.Location }, 1)
 		Utils.Do(units, function(unit)
 			unit.Scatter()
 			Trigger.AfterDelay(5, function()
-				AssaultPlayerBaseOrHunt(unit, MissionPlayer, assaultWaypoints)
+				AssaultPlayerBaseOrHunt(unit, MissionPlayer, GetScrinAssaultWaypoints())
 			end)
 		end)
 	end)
@@ -436,12 +432,22 @@ CreateScrinVehicles = function()
 		Utils.Do(units, function(unit)
 			unit.Scatter()
 			Trigger.AfterDelay(5, function()
-				AssaultPlayerBaseOrHunt(unit, MissionPlayer, assaultWaypoints)
+				AssaultPlayerBaseOrHunt(unit, MissionPlayer, GetScrinAssaultWaypoints())
 			end)
 		end)
 	end)
 
 	Trigger.AfterDelay(ScrinInvasionInterval[Difficulty] * ScrinVehiclesIntervalMultiplier[Difficulty], CreateScrinVehicles)
+end
+
+GetScrinAssaultWaypoints = function()
+	local assaultWaypoints = { AttackWaypoint5.Location }
+
+	if Utils.RandomInteger(0,2) == 1 then
+		assaultWaypoints = { AttackWaypoint4.Location, AttackWaypoint5.Location }
+	end
+
+	return assaultWaypoints
 end
 
 ChronosphereDiscovered = function()
