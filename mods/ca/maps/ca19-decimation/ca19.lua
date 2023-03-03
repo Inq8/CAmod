@@ -152,6 +152,7 @@ WorldLoaded = function()
 	MissionPlayer = Scrin
 	IslandAirfieldsEliminated = false
 	IslandSAMsDestroyed = false
+	DefensesOffline = false
 
 	Camera.Position = PlayerStart.CenterPosition
 
@@ -174,6 +175,8 @@ WorldLoaded = function()
 			Utils.Do(grid.Consumers, function(consumer)
 				if not consumer.IsDead then
 					consumer.GrantCondition("disabled")
+					DefensesOffline = true
+					Notification("Soviet power supply neutralized; defenses are now offline.")
 				end
 			end)
 		end)
@@ -216,6 +219,24 @@ WorldLoaded = function()
 
 		if IslandSAMsDestroyed then
 			DevastatorReinforcements()
+		end
+	end)
+
+	Trigger.OnEnteredProximityTrigger(TankYardReveal.CenterPosition, WDist.New(11 * 1024), function(a, id)
+		if a.Owner == Scrin and a.Type ~= "camera" then
+			Trigger.RemoveProximityTrigger(id)
+
+			if not DefensesOffline then
+				Notification("The entrance to the Soviet equipment holding area has been located. Substantial defenses detected. Recommened neutralizing power before beginning assault.")
+			else
+				Notification("The entrance to the Soviet equipment holding area has been located.")
+			end
+
+			Beacon.New(Scrin, TankYardReveal.CenterPosition)
+			local camera = Actor.Create("camera", true, { Owner = Scrin, Location = TankYardReveal.Location })
+			Trigger.AfterDelay(DateTime.Seconds(4), function()
+				camera.Destroy()
+			end)
 		end
 	end)
 end
