@@ -3872,7 +3872,7 @@ MSAM:
 		Offset: -256,0,128
 	AttackTurreted:
 		TargetFrozenActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || reloading
 	WithSpriteTurret:
 	Explodes:
 		Weapon: ArtilleryExplode
@@ -3897,45 +3897,53 @@ MSAM:
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: !hypersonic-upgrade && !hammerhead-upgrade && !hailstorm-upgrade
+		ReloadingCondition: reloading
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: 227mmAA
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: !hypersonic-upgrade && !hammerhead-upgrade && !hailstorm-upgrade
+		ReloadingCondition: reloading
 	Armament@PRIMARYUPG1:
 		Weapon: 227mm.Hypersonic
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hypersonic-upgrade
+		ReloadingCondition: reloading
 	Armament@SECONDARYUPG1:
 		Name: secondary
 		Weapon: 227mmAA.Hypersonic
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hypersonic-upgrade
+		ReloadingCondition: reloading
 	Armament@PRIMARYUPG2:
 		Weapon: 227mm.Hammerhead
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hammerhead-upgrade
+		ReloadingCondition: reloading
 	Armament@SECONDARYUPG2:
 		Name: secondary
 		Weapon: 227mmAA.Hammerhead
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hammerhead-upgrade
+		ReloadingCondition: reloading
 	Armament@PRIMARYUPG3:
 		Weapon: 227mm.Hailstorm
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hailstorm-upgrade
+		ReloadingCondition: reloading
 	Armament@SECONDARYUPG3:
 		Name: secondary
 		Weapon: 227mmAA.Hailstorm
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hailstorm-upgrade
+		ReloadingCondition: reloading
 
 MLRS:
 	Inherits: ^TankTD
@@ -5561,7 +5569,7 @@ HSAM:
 	AttackTurreted:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: false
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || reloading
 	WithSpriteTurret:
 	Explodes:
 		Weapon: ArtilleryExplode
@@ -5585,45 +5593,53 @@ HSAM:
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: !hypersonic-upgrade && !hammerhead-upgrade && !hailstorm-upgrade
+		ReloadingCondition: reloading
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: 227mmAAH
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: !hypersonic-upgrade && !hammerhead-upgrade && !hailstorm-upgrade
+		ReloadingCondition: reloading
 	Armament@PRIMARYUPG1:
 		Weapon: 227mm.Hypersonic
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hypersonic-upgrade
+		ReloadingCondition: reloading
 	Armament@SECONDARYUPG1:
 		Name: secondary
 		Weapon: 227mmAA.Hypersonic
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hypersonic-upgrade
+		ReloadingCondition: reloading
 	Armament@PRIMARYUPG2:
 		Weapon: 227mm.Hammerhead
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hammerhead-upgrade
+		ReloadingCondition: reloading
 	Armament@SECONDARYUPG2:
 		Name: secondary
 		Weapon: 227mmAA.Hammerhead
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hammerhead-upgrade
+		ReloadingCondition: reloading
 	Armament@PRIMARYUPG3:
 		Weapon: 227mm.Hailstorm
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hailstorm-upgrade
+		ReloadingCondition: reloading
 	Armament@SECONDARYUPG3:
 		Name: secondary
 		Weapon: 227mmAA.Hailstorm
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hailstorm-upgrade
+		ReloadingCondition: reloading
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater

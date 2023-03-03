@@ -270,11 +270,14 @@ Dragon.TibCore:
 	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
 	Projectile: MissileCA
 		Image: tibcoremsl
+		Speed: 266
 		RangeLimit: 9c0
 		ContrailLength: 15
 		ContrailStartColor: 33aa00aa
 		ContrailStartColorAlpha: 170
 		ContrailWidth: 0c40
+	Warhead@1Dam: SpreadDamage
+		Damage: 7175
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: tibcorehit1.aud, tibcorehit2.aud, tibcorehit3.aud
 	Warhead@tib: CreateEffect
@@ -287,7 +290,7 @@ Dragon.CYB.TibCore:
 	Inherits: Dragon.TibCore
 	Report: itanweaa.aud, itanweab.aud, itanweac.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 7000
+		Damage: 7175
 
 DragonGI:
 	Inherits: Dragon
@@ -1460,19 +1463,19 @@ IFVRocketsAAE.CRYO:
 	Range: 6c512
 	Report: rocket1.aud
 	Projectile: MissileCA
-		Speed: 280
+		Speed: 230
 		Image: Dragon
 		Inaccuracy: 0
 		HorizontalRateOfTurn: 60
 		CruiseAltitude: 2c0
 		RangeLimit: 7c512
 	Warhead@1Dam: SpreadDamage
-		Damage: 2000
+		Damage: 2200
 		Falloff: 100, 37, 14, 5, 0
-		Spread: 0c128
+		Spread: 0c256
 		-Range:
 	Warhead@2Dam: SpreadDamage
-		Damage: 2000
+		Damage: 2200
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: xplos.aud
 
@@ -1482,22 +1485,23 @@ IFVRocketsAAE.CRYO:
 
 227mmAA.upg:
 	Inherits: 227mmAA
-	Range: 7c512
+	Range: 6c512
 	Projectile: MissileCA
-		Speed: 366
+		Speed: 250
 		ContrailLength: 15
 		ContrailStartColorAlpha: 230
-		RangeLimit: 8c512
+		RangeLimit: 7c512
 	Warhead@1Dam: SpreadDamage
-		Damage: 2400
+		Damage: 2600
 	Warhead@2Dam: SpreadDamage
-		Damage: 2400
+		Damage: 2600
 
 227mmAA.Hypersonic:
 	Inherits: 227mmAA.upg
 	Report: vaegattb.aud, vaegatta.aud
 	Projectile: MissileCA
 		ContrailStartColor: 00FFFFE6
+		Speed: 320
 
 227mmAA.Hammerhead:
 	Inherits: 227mmAA.upg

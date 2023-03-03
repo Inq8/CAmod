@@ -204,6 +204,7 @@ WorldLoaded = function()
 	Greece = Player.GetPlayer("Greece")
 	USSR = Player.GetPlayer("USSR")
 	Scrin = Player.GetPlayer("Scrin")
+	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayer = Greece
 	TimerTicks = 0
 
@@ -523,7 +524,7 @@ SpawnTibTree = function()
 	if not tibTree.Actor.IsDead then
 		tibTree.Actor.Destroy()
 	end
-	Actor.Create("split2", true, { Owner = Scrin, Location = tibTree.Location})
+	Actor.Create("split2", true, { Owner = Neutral, Location = tibTree.Location})
 	table.remove(TreesToTransform, #TreesToTransform)
 
 	if #TreesToTransform > 0 then
