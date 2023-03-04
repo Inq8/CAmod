@@ -1,3 +1,6 @@
+
+RespawnEnabled = Map.LobbyOption("respawn") == "enabled"
+
 Patrols = {
 	{
 		Units = { PatrollerA1, PatrollerA2, PatrollerA3, PatrollerA4, PatrollerA5, PatrollerA6 },
@@ -61,7 +64,7 @@ WorldLoaded = function()
 	USA2 = Player.GetPlayer("USA2")
 	England = Player.GetPlayer("England")
 	USSR = Player.GetPlayer("USSR")
-	Scrin = Player.GetPlayer("Scrin")
+	Nod = Player.GetPlayer("Nod")
 	MissionPlayer = USA1
 	TimerTicks = 0
 	Players = { USA1, USA2 }
@@ -96,29 +99,35 @@ WorldLoaded = function()
 	LandingCraft.Move(LandingCraftExit.Location)
 	LandingCraft.Destroy()
 
+	RespawnTrigger(Seal1)
+	RespawnTrigger(Seal2)
+	RespawnTrigger(Spy)
+
 	Trigger.OnAllKilled({ Seal1, Seal2 }, function(self, killer)
-		if not AllReactorsDead then
-			Utils.Do(Players, function(p)
-				p.MarkFailedObjective(Objectives.KillReactors[p])
-			end)
-		end
+		if not RespawnEnabled then
+			if not AllReactorsDead then
+				Utils.Do(Players, function(p)
+					p.MarkFailedObjective(Objectives.KillReactors[p])
+				end)
+			end
 
-		if not BothNukeSilosDead then
-			Utils.Do(Players, function(p)
-				p.MarkFailedObjective(Objectives.KillSilos[p])
-			end)
-		end
+			if not BothNukeSilosDead then
+				Utils.Do(Players, function(p)
+					p.MarkFailedObjective(Objectives.KillSilos[p])
+				end)
+			end
 
-		if not AllSAMSitesDead then
-			Utils.Do(Players, function(p)
-				p.MarkFailedObjective(Objectives.KillSAMSites[p])
-			end)
-		end
+			if not AllSAMSitesDead then
+				Utils.Do(Players, function(p)
+					p.MarkFailedObjective(Objectives.KillSAMSites[p])
+				end)
+			end
 
-		if not AllReactorsDead or not BothNukeSilosDead or not AllSAMSitesDead then
-			Utils.Do(Players, function(p)
-				p.MarkFailedObjective(Objectives.NeutralizeChronosphere[p])
-			end)
+			if not AllReactorsDead or not BothNukeSilosDead or not AllSAMSitesDead then
+				Utils.Do(Players, function(p)
+					p.MarkFailedObjective(Objectives.NeutralizeChronosphere[p])
+				end)
+			end
 		end
 	end)
 
@@ -244,8 +253,15 @@ WorldLoaded = function()
 				WhiteOut = true
 				Media.PlaySound("crossrip.aud")
 				Trigger.AfterDelay(DateTime.Seconds(2), function()
-
 					Utils.Do(Players, function(p)
+						if not p.IsObjectiveCompleted(Objectives.KillReactors[p]) then
+							p.MarkFailedObjective(Objectives.KillReactors[p])
+						end
+
+						if not p.IsObjectiveCompleted(Objectives.KillSAMSites[p]) then
+							p.MarkFailedObjective(Objectives.KillSAMSites[p])
+						end
+
 						if not p.IsObjectiveCompleted(Objectives.KillSilos[p]) then
 							p.MarkFailedObjective(Objectives.KillSilos[p])
 						end
@@ -441,4 +457,27 @@ DropChronoPrison = function()
 			end
 		end)
 	end)
+end
+
+RespawnTrigger = function(a)
+	if RespawnEnabled then
+		Trigger.OnKilled(a, function()
+			local name
+			if a.Type == "spy" then
+				name = "Spy"
+			else
+				name = "SEAL"
+			end
+			Notification(name .. " respawns in 30 seconds.")
+			Trigger.AfterDelay(DateTime.Seconds(30), function()
+				local respawnedActor = Actor.Create(a.Type, true, { Owner = a.Owner, Location = PlayerStart.Location })
+				Beacon.New(a.Owner, PlayerStart.CenterPosition)
+				Media.PlaySpeechNotification(a.Owner, "ReinforcementsArrived")
+				if a.Type == "seal" then
+					respawnedActor.GrantCondition("difficulty-" .. Difficulty)
+				end
+				RespawnTrigger(respawnedActor)
+			end)
+		end)
+	end
 end
