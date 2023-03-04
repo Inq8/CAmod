@@ -77,8 +77,8 @@ HaloDropInterval = {
 }
 
 NavalDropInterval = {
-	normal = DateTime.Minutes(4),
-	hard = DateTime.Minutes(2)
+	normal = DateTime.Minutes(5),
+	hard = DateTime.Minutes(3)
 }
 
 -- Squads
@@ -217,6 +217,7 @@ WorldLoaded = function()
 		HeavyTank1.Destroy()
 		Flamer1.Destroy()
 		TeslaCoil3.Destroy()
+		HardOnlyV2.Destroy()
 	end
 
 	if Difficulty == "easy" then
