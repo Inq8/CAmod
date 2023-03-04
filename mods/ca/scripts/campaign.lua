@@ -956,6 +956,23 @@ PlayerHasNavalProduction = function(player)
 	return #navalProductionBuildings > 0
 end
 
+SetupReveals = function(revealPoints, cameraType)
+	if cameraType == nil then
+		cameraType = "smallcamera"
+	end
+	Utils.Do(revealPoints, function(p)
+		Trigger.OnEnteredProximityTrigger(p.CenterPosition, WDist.New(11 * 1024), function(a, id)
+			if a.Owner == MissionPlayer and a.Type ~= cameraType then
+				Trigger.RemoveProximityTrigger(id)
+				local camera = Actor.Create(cameraType, true, { Owner = MissionPlayer, Location = p.Location })
+				Trigger.AfterDelay(DateTime.Seconds(4), function()
+					camera.Destroy()
+				end)
+			end
+		end)
+	end)
+end
+
 -- Filters
 
 IsGroundHunterUnit = function(actor)

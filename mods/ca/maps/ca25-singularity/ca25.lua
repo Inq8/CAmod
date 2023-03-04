@@ -347,22 +347,11 @@ WorldLoaded = function()
 		end
 	end)
 
-	local revealPoints = { EntranceReveal1, EntranceReveal2, EntranceReveal3, GrandCannonReveal1, GrandCannonReveal2 }
-	Utils.Do(revealPoints, function(p)
-		Trigger.OnEnteredProximityTrigger(p.CenterPosition, WDist.New(11 * 1024), function(a, id)
-			if a.Owner == GDI and a.Type ~= "smallcamera" then
-				Trigger.RemoveProximityTrigger(id)
-				local camera = Actor.Create("smallcamera", true, { Owner = GDI, Location = p.Location })
-				Trigger.AfterDelay(DateTime.Seconds(4), function()
-					camera.Destroy()
-				end)
-			end
-		end)
-	end)
-
 	Trigger.OnKilled(Mothership, function(self, killer)
 		DoFinale()
 	end)
+
+	SetupReveals({ EntranceReveal1, EntranceReveal2, EntranceReveal3, GrandCannonReveal1, GrandCannonReveal2 })
 end
 
 MoveToWormhole = function(a)

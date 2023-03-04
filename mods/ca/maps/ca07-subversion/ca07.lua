@@ -97,7 +97,7 @@ WorldLoaded = function()
 	local revealPoints = { EntranceReveal1, EntranceReveal2, EntranceReveal3, EntranceReveal4, BridgeDefendersReveal1, BridgeDefendersReveal2 }
 	Utils.Do(revealPoints, function(p)
 		Trigger.OnEnteredProximityTrigger(p.CenterPosition, WDist.New(11 * 1024), function(a, id)
-			if a.Owner == Nod then
+			if a.Owner == Nod and a.Type ~= "smallcamera" then
 				Trigger.RemoveProximityTrigger(id)
 				if p == BridgeDefendersReveal1 and not BridgeTipShown then
 					BridgeTipShown = true

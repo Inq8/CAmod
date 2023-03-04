@@ -219,6 +219,8 @@ WorldLoaded = function()
 		congregation1.Scatter()
 		congregation3.Scatter()
 	end)
+
+	SetupReveals({ EntranceReveal1, EntranceReveal2, EntranceReveal3 })
 end
 
 Tick = function()

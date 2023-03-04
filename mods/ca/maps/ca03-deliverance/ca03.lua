@@ -315,6 +315,8 @@ WorldLoaded = function()
 			GDICommanderAlive = false
 		end
 	end)
+
+	SetupReveals({ EntranceReveal1, EntranceReveal2, EntranceReveal3, EntranceReveal4 })
 end
 
 Tick = function()
