@@ -31,28 +31,15 @@ ScrinSquads = {
     {"feed2", "feed2", "s1", "s1"},
 }
 
-GetCommandosAlive = function()
-	local num = 0
-
-	for i,player in pairs(Players) do
-		local commandos = player.GetActorsByType("rmbo")
-		for j,rmbo in pairs(commandos) do
-			num = num + 1
-		end
-	end
-
-	return num
-end
-
 GetNumPlayers = function()
     local num = 0
 
-    for i,player in pairs(Players) do
-        local spawns = player.GetActorsByType("rmbospawn")
-        for j,spawn in pairs(spawns) do
-            num = num + 1
-        end
-    end
+	Utils.Do(Players, function(player)
+		if player.Name ~= "Neutral" then
+			local spawns = player.GetActorsByType("rmbospawn")
+			num = num + #spawns
+		end
+	end)
 
     return num
 end
@@ -113,6 +100,13 @@ end
 
 WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
+	Neutral = Player.GetPlayer("Neutral")
+
+	local neutralSpawns = Neutral.GetActorsByType("rmbospawn")
+	Utils.Do(neutralSpawns, function(a)
+		a.Destroy()
+	end)
+
 	local initialPlayers = GetNumPlayers()
 
 	SendScrinUnits(WormholeNE, AttackPaths[2])
