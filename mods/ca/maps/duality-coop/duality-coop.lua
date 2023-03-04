@@ -1,12 +1,30 @@
 
 ProdigyPatrolPath = { ProdigyPatrol1.Location, ProdigyPatrol2.Location, ProdigyPatrol3.Location, ProdigyPatrol4.Location, ProdigyPatrol5.Location, ProdigyPatrol6.Location, ProdigyPatrol7.Location, ProdigyPatrol8.Location, ProdigyPatrol9.Location, ProdigyPatrol10.Location, ProdigyPatrol11.Location, ProdigyPatrol12.Location, ProdigyPatrol13.Location, ProdigyPatrol14.Location, ProdigyPatrol15.Location, ProdigyPatrol16.Location, ProdigyPatrol17.Location, ProdigyPatrol18.Location, ProdigyPatrol19.Location, ProdigyPatrol9.Location, ProdigyPatrol8.Location, ProdigyPatrol20.Location }
 
+RespawnEnabled = Map.LobbyOption("respawn") == "enabled"
+
+Objectives = {
+	DestroyTiberiumStores = {
+		Text = "Destroy all Scrin Tiberium stores.",
+	},
+	Escape = {
+		Text = "Exit the facility.",
+	},
+	CommandoSurvives = {
+		Text = "Commando must survive and escape.",
+	},
+	TanyaSurvives = {
+		Text = "Tanya must survive and escape.",
+	},
+}
+
 WorldLoaded = function()
     GDI = Player.GetPlayer("GDI")
 	Greece = Player.GetPlayer("Greece")
     Scrin = Player.GetPlayer("Scrin")
 	MissionPlayer = GDI
 	TimerTicks = 0
+	Players = { GDI, Greece }
 
 	Camera.Position = Commando.CenterPosition
 
@@ -14,33 +32,26 @@ WorldLoaded = function()
 	InitObjectives(Greece)
 	InitScrin()
 
-	ObjectiveDestroyTiberiumStoresGDI = GDI.AddObjective("Destroy all Tiberium stores.")
-	ObjectiveCommandoSurvivesGDI = GDI.AddObjective("Commando must survive and escape.")
-	ObjectiveTanyaSurvivesGDI = GDI.AddObjective("Tanya must survive and escape.")
-	Actor.Create("radar.dummy", true, { Owner = GDI })
-	Commando.GrantCondition("difficulty-" .. Difficulty)
+	Utils.Do(Players, function(p)
+		Objectives.DestroyTiberiumStores[p.Name] = p.AddObjective(Objectives.DestroyTiberiumStores.Text)
+	end)
 
-	ObjectiveDestroyTiberiumStoresGreece = Greece.AddObjective("Destroy all Tiberium stores.")
-	ObjectiveTanyaSurvivesGreece = Greece.AddObjective("Tanya must survive and escape.")
-	ObjectiveCommandoSurvivesGreece = Greece.AddObjective("Commando must survive and escape.")
-	Actor.Create("radar.dummy", true, { Owner = Greece })
+	if not RespawnEnabled then
+		Utils.Do(Players, function(p)
+			Objectives.CommandoSurvives[p.Name] = p.AddObjective(Objectives.CommandoSurvives.Text)
+			Objectives.TanyaSurvives[p.Name] = p.AddObjective(Objectives.TanyaSurvives.Text)
+		end)
+	end
+
+	Commando.GrantCondition("difficulty-" .. Difficulty)
 	Tanya.GrantCondition("difficulty-" .. Difficulty)
+	Actor.Create("radar.dummy", true, { Owner = GDI })
+	Actor.Create("radar.dummy", true, { Owner = Greece })
 
 	Scrin.Resources = Scrin.ResourceCapacity
 
-	Trigger.OnKilled(Commando, function()
-		if not CommandoEscaped then
-			GDI.MarkFailedObjective(ObjectiveCommandoSurvivesGDI)
-			Greece.MarkFailedObjective(ObjectiveCommandoSurvivesGreece)
-		end
-	end)
-
-	Trigger.OnKilled(Tanya, function()
-		if not TanyaEscaped then
-			Greece.MarkFailedObjective(ObjectiveTanyaSurvivesGreece)
-			GDI.MarkFailedObjective(ObjectiveTanyaSurvivesGDI)
-		end
-	end)
+	CommandoDeathTrigger(Commando)
+	TanyaDeathTrigger(Tanya)
 
 	local silos = Scrin.GetActorsByTypes({ "silo.scrin", "silo.scrinblue"})
 	Utils.Do(silos, function(a)
@@ -87,8 +98,15 @@ OncePerSecondChecks = function()
 
 			UserInterface.SetMissionText("Exit the facility." , HSLColor.Lime)
 
-			GDI.MarkCompletedObjective(ObjectiveDestroyTiberiumStoresGDI)
-			Greece.MarkCompletedObjective(ObjectiveDestroyTiberiumStoresGreece)
+			if RespawnEnabled then
+				Utils.Do(Players, function(p)
+					Objectives.Escape[p.Name] = p.AddObjective(Objectives.Escape.Text)
+				end)
+			end
+
+			Utils.Do(Players, function(p)
+				p.MarkCompletedObjective(Objectives.DestroyTiberiumStores[p.Name])
+			end)
 
 			local exitFlare = Actor.Create("flare", true, { Owner = GDI, Location = Exit.Location })
 			Beacon.New(GDI, Exit.CenterPosition)
@@ -113,13 +131,29 @@ OncePerSecondChecks = function()
 		end
 
 		if CommandoEscaped then
-			GDI.MarkCompletedObjective(ObjectiveCommandoSurvivesGDI)
-			Greece.MarkCompletedObjective(ObjectiveCommandoSurvivesGreece)
+			if not RespawnEnabled then
+				Utils.Do(Players, function(p)
+					p.MarkCompletedObjective(Objectives.CommandoSurvives[p.Name])
+				end)
+			else
+				Notification("Commando has exited the facility.")
+			end
 		end
 
 		if TanyaEscaped then
-			Greece.MarkCompletedObjective(ObjectiveTanyaSurvivesGreece)
-			GDI.MarkCompletedObjective(ObjectiveTanyaSurvivesGDI)
+			if not RespawnEnabled then
+				Utils.Do(Players, function(p)
+					p.MarkCompletedObjective(Objectives.TanyaSurvives[p.Name])
+				end)
+			else
+				Notification("Tanya has exited the facility.")
+			end
+		end
+
+		if RespawnEnabled and CommandoEscaped and TanyaEscaped then
+			Utils.Do(Players, function(p)
+				p.MarkCompletedObjective(Objectives.Escape[p.Name])
+			end)
 		end
 	end
 end
@@ -137,8 +171,8 @@ InitScrin = function()
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
 
 	Utils.Do(scrinGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
+		TargetSwapChance(a, 10, function(p) return p == GDI or p == Greece end)
+		CallForHelpOnDamagedOrKilled(a, WDist.New(4096), IsScrinGroundHunterUnit, function(p) return p == GDI or p == Greece end)
 	end)
 end
 
@@ -154,4 +188,50 @@ ActivateProdigy = function()
 		Prodigy.GrantCondition("activated")
 		Beacon.New(GDI, Prodigy.CenterPosition)
 	end
+end
+
+CommandoDeathTrigger = function(commando)
+	Trigger.OnKilled(commando, function()
+		if not RespawnEnabled and not CommandoEscaped then
+			Utils.Do(Players, function(p)
+				p.MarkFailedObjective(Objectives.CommandoSurvives[p.Name])
+			end)
+		elseif RespawnEnabled then
+			Notification("Commando respawns in 30 seconds.")
+			Trigger.AfterDelay(DateTime.Seconds(30), function()
+				local respawnWaypoint = CommandoSpawn
+				if NumSilosRemaining == 0 then
+					respawnWaypoint = EscapeRespawn
+				end
+				Commando = Actor.Create("rmbo", true, { Owner = GDI, Location = respawnWaypoint.Location })
+				Beacon.New(GDI, respawnWaypoint.CenterPosition)
+				Media.PlaySpeechNotification(GDI, "ReinforcementsArrived")
+				Commando.GrantCondition("difficulty-" .. Difficulty)
+				CommandoDeathTrigger(Commando)
+			end)
+		end
+	end)
+end
+
+TanyaDeathTrigger = function(tanya)
+	Trigger.OnKilled(tanya, function()
+		if not RespawnEnabled and not TanyaEscaped then
+			Utils.Do(Players, function(p)
+				p.MarkFailedObjective(Objectives.TanyaSurvives[p.Name])
+			end)
+		elseif RespawnEnabled then
+			Notification("Tanya respawns in 30 seconds.")
+			Trigger.AfterDelay(DateTime.Seconds(30), function()
+				local respawnWaypoint = CommandoSpawn
+				if NumSilosRemaining == 0 then
+					respawnWaypoint = EscapeRespawn
+				end
+				Tanya = Actor.Create("e7", true, { Owner = Greece, Location = respawnWaypoint.Location })
+				Beacon.New(Greece, respawnWaypoint.CenterPosition)
+				Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
+				Tanya.GrantCondition("difficulty-" .. Difficulty)
+				TanyaDeathTrigger(Tanya)
+			end)
+		end
+	end)
 end

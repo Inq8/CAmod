@@ -12,7 +12,7 @@ WorldLoaded = function()
 	InitScrin()
 
 	ObjectiveFindTanya = GDI.AddObjective("Find Tanya.")
-	ObjectiveDestroyTiberiumStores = GDI.AddObjective("Destroy all Tiberium stores.")
+	ObjectiveDestroyTiberiumStores = GDI.AddObjective("Destroy all Scrin Tiberium stores.")
 	ObjectiveCommandoSurvive = GDI.AddObjective("Commando must survive.")
 	ObjectiveTanyaSurvive = GDI.AddObjective("Tanya must survive.")
 

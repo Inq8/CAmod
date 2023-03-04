@@ -76,34 +76,44 @@ OnProductionTriggers = { }
 
 InitObjectives = function(player)
 	Trigger.OnObjectiveAdded(player, function(p, id)
-		Trigger.AfterDelay(1, function()
-			local colour = HSLColor.Yellow
-			if p.GetObjectiveType(id) ~= "Primary" then
-				colour = HSLColor.Gray
-			end
-			Media.DisplayMessage(p.GetObjectiveDescription(id), "New " .. string.lower(p.GetObjectiveType(id)) .. " objective", colour)
-		end)
+		if p.IsLocalPlayer then
+			Trigger.AfterDelay(1, function()
+				local colour = HSLColor.Yellow
+				if p.GetObjectiveType(id) ~= "Primary" then
+					colour = HSLColor.Gray
+				end
+				Media.DisplayMessage(p.GetObjectiveDescription(id), "New " .. string.lower(p.GetObjectiveType(id)) .. " objective", colour)
+			end)
+		end
 	end)
 
 	Trigger.OnObjectiveCompleted(player, function(p, id)
-		Media.PlaySoundNotification(player, "AlertBleep")
-		Media.DisplayMessage(p.GetObjectiveDescription(id), "Objective completed", HSLColor.LimeGreen)
+		if p.IsLocalPlayer then
+			Media.PlaySoundNotification(player, "AlertBleep")
+			Media.DisplayMessage(p.GetObjectiveDescription(id), "Objective completed", HSLColor.LimeGreen)
+		end
 	end)
 
 	Trigger.OnObjectiveFailed(player, function(p, id)
-		Media.DisplayMessage(p.GetObjectiveDescription(id), "Objective failed", HSLColor.Red)
+		if p.IsLocalPlayer then
+			Media.DisplayMessage(p.GetObjectiveDescription(id), "Objective failed", HSLColor.Red)
+		end
 	end)
 
 	Trigger.OnPlayerLost(player, function()
-		Trigger.AfterDelay(DateTime.Seconds(1), function()
-			Media.PlaySpeechNotification(player, "MissionFailed")
-		end)
+		if player.IsLocalPlayer then
+			Trigger.AfterDelay(DateTime.Seconds(1), function()
+				Media.PlaySpeechNotification(player, "MissionFailed")
+			end)
+		end
 	end)
 
 	Trigger.OnPlayerWon(player, function()
-		Trigger.AfterDelay(DateTime.Seconds(1), function()
-			Media.PlaySpeechNotification(player, "MissionAccomplished")
-		end)
+		if player.IsLocalPlayer then
+			Trigger.AfterDelay(DateTime.Seconds(1), function()
+				Media.PlaySpeechNotification(player, "MissionAccomplished")
+			end)
+		end
 	end)
 end
 
@@ -449,9 +459,12 @@ HasOneOf = function(player, types)
 end
 
 -- make specified units have a chance to swap targets when attacked instead of chasing one target endlessly
-TargetSwapChance = function(unit, chance)
+TargetSwapChance = function(unit, chance, isMissionPlayerFunc)
+	if isMissionPlayerFunc == nil then
+		isMissionPlayerFunc = function(p) return p == MissionPlayer end
+	end
 	Trigger.OnDamaged(unit, function(self, attacker, damage)
-		if self.Owner == MissionPlayer or attacker.Owner ~= MissionPlayer then
+		if isMissionPlayerFunc(self.Owner) or not isMissionPlayerFunc(attacker.Owner) then
 			return
 		end
 		local rand = Utils.RandomInteger(1,100)
@@ -466,21 +479,27 @@ TargetSwapChance = function(unit, chance)
 	end)
 end
 
-CallForHelpOnDamagedOrKilled = function(actor, range, filter)
+CallForHelpOnDamagedOrKilled = function(actor, range, filter, isMissionPlayerFunc)
+	if isMissionPlayerFunc == nil then
+		isMissionPlayerFunc = function(p) return p == MissionPlayer end
+	end
 	Trigger.OnDamaged(actor, function(self, attacker, damage)
-		if attacker.Owner == MissionPlayer then
-			CallForHelp(self, range, filter)
+		if isMissionPlayerFunc(attacker.Owner) then
+			CallForHelp(self, range, filter, isMissionPlayerFunc)
 		end
 	end)
 	Trigger.OnKilled(actor, function(self, killer)
-		if killer.Owner == MissionPlayer then
-			CallForHelp(self, range, filter)
+		if isMissionPlayerFunc(killer.Owner) then
+			CallForHelp(self, range, filter, isMissionPlayerFunc)
 		end
 	end)
 end
 
-CallForHelp = function(self, range, filter)
-	if self.Owner == MissionPlayer then
+CallForHelp = function(self, range, filter, isMissionPlayerFunc)
+	if isMissionPlayerFunc == nil then
+		isMissionPlayerFunc = function(p) return p == MissionPlayer end
+	end
+	if isMissionPlayerFunc(self.Owner) then
 		return
 	end
 

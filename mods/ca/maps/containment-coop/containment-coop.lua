@@ -39,7 +39,6 @@ NukeTimer = {
 	easy = DateTime.Minutes(40)
 }
 
-
 Objectives = {
 	KillReactors = {
 		Text = "Destroy the three Atomic Reactors.",
@@ -65,7 +64,6 @@ WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
 	MissionPlayer = USA1
 	TimerTicks = 0
-
 	Players = { USA1, USA2 }
 
 	InitObjectives(USA1)
@@ -381,8 +379,8 @@ InitUSSR = function()
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
 
 	Utils.Do(ussrGroundAttackers, function(a)
-		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(4096), IsUSSRGroundHunterUnit)
+		TargetSwapChance(a, 10, function(p) return p == USA1 or p == USA2 or p == England end)
+		CallForHelpOnDamagedOrKilled(a, WDist.New(4096), IsUSSRGroundHunterUnit, function(p) return p == USA1 or p == USA2 or p == England end)
 	end)
 
 	if Difficulty == "hard" then
