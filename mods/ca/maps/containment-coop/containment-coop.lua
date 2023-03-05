@@ -107,25 +107,25 @@ WorldLoaded = function()
 		if not RespawnEnabled then
 			if not AllReactorsDead then
 				Utils.Do(Players, function(p)
-					p.MarkFailedObjective(Objectives.KillReactors[p])
+					p.MarkFailedObjective(Objectives.KillReactors[p.Name])
 				end)
 			end
 
 			if not BothNukeSilosDead then
 				Utils.Do(Players, function(p)
-					p.MarkFailedObjective(Objectives.KillSilos[p])
+					p.MarkFailedObjective(Objectives.KillSilos[p.Name])
 				end)
 			end
 
 			if not AllSAMSitesDead then
 				Utils.Do(Players, function(p)
-					p.MarkFailedObjective(Objectives.KillSAMSites[p])
+					p.MarkFailedObjective(Objectives.KillSAMSites[p.Name])
 				end)
 			end
 
 			if not AllReactorsDead or not BothNukeSilosDead or not AllSAMSitesDead then
 				Utils.Do(Players, function(p)
-					p.MarkFailedObjective(Objectives.NeutralizeChronosphere[p])
+					p.MarkFailedObjective(Objectives.NeutralizeChronosphere[p.Name])
 				end)
 			end
 		end
@@ -154,7 +154,7 @@ WorldLoaded = function()
 		AllReactorsDead = true
 
 		Utils.Do(Players, function(p)
-			p.MarkCompletedObjective(Objectives.KillReactors[p])
+			p.MarkCompletedObjective(Objectives.KillReactors[p.Name])
 		end)
 	end)
 
@@ -162,7 +162,7 @@ WorldLoaded = function()
 		AllSAMSitesDead = true
 
 		Utils.Do(Players, function(p)
-			p.MarkCompletedObjective(Objectives.KillSAMSites[p])
+			p.MarkCompletedObjective(Objectives.KillSAMSites[p.Name])
 		end)
 
 		if BothNukeSilosDead then
@@ -178,7 +178,7 @@ WorldLoaded = function()
 		end
 
 		Utils.Do(Players, function(p)
-			p.MarkCompletedObjective(Objectives.KillSilos[p])
+			p.MarkCompletedObjective(Objectives.KillSilos[p.Name])
 		end)
 
 		if AllSAMSitesDead then
@@ -188,7 +188,7 @@ WorldLoaded = function()
 
 	Trigger.OnKilled(Chronosphere, function(self, killer)
 		Utils.Do(Players, function(p)
-			p.MarkCompletedObjective(Objectives.NeutralizeChronosphere[p])
+			p.MarkCompletedObjective(Objectives.NeutralizeChronosphere[p.Name])
 		end)
 	end)
 
@@ -254,20 +254,20 @@ WorldLoaded = function()
 				Media.PlaySound("crossrip.aud")
 				Trigger.AfterDelay(DateTime.Seconds(2), function()
 					Utils.Do(Players, function(p)
-						if not p.IsObjectiveCompleted(Objectives.KillReactors[p]) then
-							p.MarkFailedObjective(Objectives.KillReactors[p])
+						if not p.IsObjectiveCompleted(Objectives.KillReactors[p.Name]) then
+							p.MarkFailedObjective(Objectives.KillReactors[p.Name])
 						end
 
-						if not p.IsObjectiveCompleted(Objectives.KillSAMSites[p]) then
-							p.MarkFailedObjective(Objectives.KillSAMSites[p])
+						if not p.IsObjectiveCompleted(Objectives.KillSAMSites[p.Name]) then
+							p.MarkFailedObjective(Objectives.KillSAMSites[p.Name])
 						end
 
-						if not p.IsObjectiveCompleted(Objectives.KillSilos[p]) then
-							p.MarkFailedObjective(Objectives.KillSilos[p])
+						if not p.IsObjectiveCompleted(Objectives.KillSilos[p.Name]) then
+							p.MarkFailedObjective(Objectives.KillSilos[p.Name])
 						end
 
-						if not p.IsObjectiveCompleted(Objectives.NeutralizeChronosphere[p]) then
-							p.MarkFailedObjective(Objectives.NeutralizeChronosphere[p])
+						if not p.IsObjectiveCompleted(Objectives.NeutralizeChronosphere[p.Name]) then
+							p.MarkFailedObjective(Objectives.NeutralizeChronosphere[p.Name])
 						end
 					end)
 				end)
@@ -452,7 +452,11 @@ DropChronoPrison = function()
 
 				local chronoPrisons = ChronoPrisonPlayer.GetActorsByType("chpr")
 				Trigger.OnKilled(chronoPrisons[1], function(self, killer)
-					ChronoPrisonPlayer.MarkFailedObjective(ObjectiveNeutralizeChronosphere)
+					Utils.Do(Players, function(p)
+						if not p.IsObjectiveCompleted(Objectives.NeutralizeChronosphere[p.Name]) then
+							p.MarkFailedObjective(Objectives.NeutralizeChronosphere[p.Name])
+						end
+					end)
 				end)
 			end
 		end)
