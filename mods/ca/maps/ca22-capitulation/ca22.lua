@@ -21,9 +21,11 @@ Deliveries = {
 	},
 }
 
-OuterSAMs = { OuterSAM1, OuterSAM2, OuterSAM3, OuterSAM4, OuterSAM5, OuterSAM6, OuterSAM7, OuterSAM8, OuterSAM9, OuterSAM10, OuterSAM11, OuterSAM12, OuterSAM13, OuterSAM14, OuterSAM15, OuterSAM16, OuterSAM17, OuterSAM18, OuterSAM19, OuterSAM20, OuterSAM21, OuterSAM22, OuterSAM23, OuterSAM24, OuterSAM25, OuterSAM26, OuterSAM27, OuterSAM28, OuterSAM29, OuterSAM30, OuterSAM31, OuterSAM32, OuterSAM33, OuterSAM34, OuterSAM35, OuterSAM36, OuterSAM37  }
+OuterSAMs = { OuterSAM2, OuterSAM4, OuterSAM6, OuterSAM8, OuterSAM10, OuterSAM12, OuterSAM14, OuterSAM16, OuterSAM18, OuterSAM20, OuterSAM22, OuterSAM24, OuterSAM26, OuterSAM28, OuterSAM30, OuterSAM31, OuterSAM32, OuterSAM33, OuterSAM34, OuterSAM35, OuterSAM36, OuterSAM37  }
 
 TeslaReactors = { TPower1, TPower2, TPower3, TPower4, TPower5, TPower6, TPower7, TPower8, TPower9 }
+
+InnerTeslas = { InnerTesla1, InnerTesla2, InnerTesla3, InnerTesla4 }
 
 ParabombsEnabledDelay = {
 	easy = DateTime.Minutes(9),
@@ -36,6 +38,8 @@ ParatroopersEnabledDelay = {
 	normal = DateTime.Minutes(6),
 	hard = DateTime.Minutes(4)
 }
+
+MaxReactorFuelTime = DateTime.Minutes(10)
 
 Squads = {
 	Main = {
@@ -186,7 +190,7 @@ WorldLoaded = function()
     GDI = Player.GetPlayer("GDI")
     USSR = Player.GetPlayer("USSR")
 	MissionPlayer = GDI
-	TimerTicks = DateTime.Minutes(15)
+	TimerTicks = MaxReactorFuelTime
 	CurrentDelivery = 1
 
 	Camera.Position = PlayerStart.CenterPosition
@@ -276,6 +280,12 @@ InitUSSR = function()
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
 	end)
 
+	Utils.Do(InnerTeslas, function(a)
+		if not a.IsDead then
+			a.GrantCondition("invulnerability")
+		end
+	end)
+
 	Actor.Create("POWERCHEAT", true, { Owner = USSR })
 	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR })
 
@@ -314,8 +324,8 @@ InitUSSR = function()
 			a.Destroy()
 			if not GDI.IsObjectiveCompleted(ObjectiveStarveAtomicReactor) then
 				TimerTicks = TimerTicks + DateTime.Minutes(5)
-				if TimerTicks > DateTime.Minutes(15) then
-					TimerTicks = DateTime.Minutes(15)
+				if TimerTicks > MaxReactorFuelTime then
+					TimerTicks = MaxReactorFuelTime
 				end
 				Notification("A shipment of fuel has reached the Soviet reactor.")
 			end
@@ -354,41 +364,78 @@ ReactorStarved = function()
 	if not IsReactorStarved then
 		IsReactorStarved = true
 		GDI.MarkCompletedObjective(ObjectiveStarveAtomicReactor)
+		DisableMainPower()
+
+		if not StalinHQ.IsDead then
+			StalinHQ.GrantCondition("ic-offline")
+		end
+
+		if not AtomicReactor.IsDead then
+			AtomicReactor.GrantCondition("ic-offline")
+			AtomicReactor.GrantCondition("disabled")
+		end
+
+		Utils.Do(InnerTeslas, function(a)
+			if not a.IsDead then
+				a.GrantCondition("ic-offline")
+			end
+		end)
+
+		local notificationText = "The Atomic Reactor is offline"
+		if AreTeslaReactorsOffline then
+			notificationText = notificationText .. ". The Soviet base is now completely without power."
+		else
+			notificationText = notificationText .. ", but the Telsa Reactors in the south-east continue to provide the base with power."
+		end
+		Notification(notificationText)
+	end
+end
+
+TeslaReactorsOffline = function()
+	if not AreTeslaReactorsOffline then
+		AreTeslaReactorsOffline = true
+		GDI.MarkCompletedObjective(ObjectiveDestroyTeslaReactors)
+		DisableMainPower()
+
+		Utils.Do(OuterSAMs, function(a)
+			if not a.IsDead then
+				a.GrantCondition("disabled")
+			end
+		end)
+
+		local defenses = USSR.GetActorsByTypes({ "sam", "tsla" })
+		Utils.Do(defenses, function(a)
+			if not a.IsDead then
+				a.GrantCondition("buff-removed")
+			end
+		end)
+
+		local notificationText = "Soviet secondary power is offline."
+		if IsReactorStarved then
+			notificationText = notificationText .. " The Soviet base is now completely without power."
+		else
+			notificationText = notificationText .. " Tesla Coils are no longer supercharged and some perimeter air defenses are down, however the Atomic Reactor continues to provide the base with power."
+		end
+		Notification(notificationText)
+	end
+end
+
+UpdateObjectiveText = function()
+	if not GDI.IsObjectiveCompleted(ObjectiveStarveAtomicReactor) then
+		local percentage = math.floor(TimerTicks / MaxReactorFuelTime * 100)
+		UserInterface.SetMissionText("Atomic Reactor fuel level: " .. percentage .. "%", HSLColor.Yellow)
+	else
+		UserInterface.SetMissionText("Capture or destroy Stalin's bunker.", HSLColor.Yellow)
+	end
+end
+
+DisableMainPower = function()
+	if IsReactorStarved and AreTeslaReactorsOffline then
 		local defenses = USSR.GetActorsByTypes({ "sam", "tsla" })
 		Utils.Do(defenses, function(a)
 			if not a.IsDead then
 				a.GrantCondition("disabled")
 			end
 		end)
-		if not AtomicReactor.IsDead then
-			AtomicReactor.GrantCondition("disabled")
-		end
-		Notification("Atomic Reactor offline. Main power for the Soviet base is down.")
-		StalinHQ.GrantCondition("ic-offline")
-	end
-end
-
-TeslaReactorsOffline = function()
-	GDI.MarkCompletedObjective(ObjectiveDestroyTeslaReactors)
-	Utils.Do(OuterSAMs, function(a)
-		if not a.IsDead then
-			a.GrantCondition("disabled")
-		end
-	end)
-	local defenses = USSR.GetActorsByTypes({ "sam", "tsla" })
-	Utils.Do(defenses, function(a)
-		if not a.IsDead then
-			a.GrantCondition("buff-removed")
-		end
-	end)
-	Notification("Soviet outer air defenses are now offline. Tesla Coils are no longer supercharged.")
-end
-
-UpdateObjectiveText = function()
-	if not GDI.IsObjectiveCompleted(ObjectiveStarveAtomicReactor) then
-		local percentage = math.floor(TimerTicks / DateTime.Minutes(15) * 100)
-		UserInterface.SetMissionText("Atomic Reactor fuel level: " .. percentage .. "%", HSLColor.Yellow)
-	else
-		UserInterface.SetMissionText("Capture or destroy Stalin's bunker.", HSLColor.Yellow)
 	end
 end
