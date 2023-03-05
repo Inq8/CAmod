@@ -351,6 +351,12 @@ WorldLoaded = function()
 		DoFinale()
 	end)
 
+	Trigger.OnKilled(SignalTransmitter, function(self, killer)
+		if ObjectiveHackSignalTransmitter ~= nil and not GDI.IsObjectiveCompleted(ObjectiveHackSignalTransmitter) then
+			GDI.MarkFailedObjective(ObjectiveHackSignalTransmitter)
+		end
+	end)
+
 	SetupReveals({ EntranceReveal1, EntranceReveal2, EntranceReveal3, GrandCannonReveal1, GrandCannonReveal2 })
 end
 
@@ -583,7 +589,9 @@ DropHackers = function()
 			end)
 
 			if not FirstHackersArrived then
-				ObjectiveHackSignalTransmitter = GDI.AddSecondaryObjective("Hack Signal Transmitter to bring shields down.")
+				if not SignalTransmitter.IsDead then
+					ObjectiveHackSignalTransmitter = GDI.AddSecondaryObjective("Hack Signal Transmitter to bring shields down.")
+				end
 				FirstHackersArrived = true
 			end
 			MoreHackersRequested = false
