@@ -401,6 +401,11 @@ OncePerFiveSecondChecks = function()
 		if not ShieldsOffline and not SignalTransmitter.IsDead and SignalTransmitter.Owner == GDI then
 			ShieldsOffline = true
 			MothershipShields.Destroy()
+
+			if ObjectiveHackSignalTransmitter ~= nil then
+				GDI.MarkCompletedObjective(ObjectiveHackSignalTransmitter)
+			end
+
 			Notification("The Mothership's shields are down! Air attacks resuming.")
 			Trigger.AfterDelay(DateTime.Seconds(10), function()
 				DoInterceptors()
@@ -411,7 +416,7 @@ OncePerFiveSecondChecks = function()
 		end
 
 		local hackers = GDI.GetActorsByType("hack")
-		if NodFreed and #hackers == 0 and not ShieldsOffline and not FirstHackersArrived and not MoreHackersRequested and not SignalTransmitter.IsDead then
+		if NodFreed and #hackers == 0 and not ShieldsOffline and FirstHackersArrived and not MoreHackersRequested and not SignalTransmitter.IsDead then
 			MoreHackersRequested = true
 
 			Trigger.AfterDelay(HackersDelay[Difficulty], function()
@@ -550,7 +555,6 @@ InitHackers = function()
 			return
 		end
 
-		FirstHackersArrived = true
 		Media.DisplayMessage("Commander, we are sending you a squad of hackers. Use them to hack into the Scrin Signal Transmitter and we will be able to bring down the Mothership's shields.", "Nod Commander", HSLColor.FromHex("FF0000"))
 		DropHackers()
 		Beacon.New(GDI, SignalTransmitter.CenterPosition)
@@ -578,6 +582,10 @@ DropHackers = function()
 				a.Owner = GDI
 			end)
 
+			if not FirstHackersArrived then
+				ObjectiveHackSignalTransmitter = GDI.AddSecondaryObjective("Hack Signal Transmitter to bring shields down.")
+				FirstHackersArrived = true
+			end
 			MoreHackersRequested = false
 		end)
 	end)
