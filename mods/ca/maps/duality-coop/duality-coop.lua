@@ -18,6 +18,12 @@ Objectives = {
 	},
 }
 
+ScrinReinforcementInterval = {
+	easy = DateTime.Seconds(45),
+	normal = DateTime.Seconds(30),
+	hard = DateTime.Seconds(15),
+}
+
 WorldLoaded = function()
     GDI = Player.GetPlayer("GDI")
 	Greece = Player.GetPlayer("Greece")
@@ -108,6 +114,8 @@ OncePerSecondChecks = function()
 				p.MarkCompletedObjective(Objectives.DestroyTiberiumStores[p.Name])
 			end)
 
+			InitWormholes()
+
 			local exitFlare = Actor.Create("flare", true, { Owner = GDI, Location = Exit.Location })
 			Beacon.New(GDI, Exit.CenterPosition)
 			Media.PlaySpeechNotification(GDI, "SignalFlare")
@@ -135,7 +143,8 @@ OncePerSecondChecks = function()
 				Utils.Do(Players, function(p)
 					p.MarkCompletedObjective(Objectives.CommandoSurvives[p.Name])
 				end)
-			else
+			elseif not IsCommandoExitNotified then
+				IsCommandoExitNotified = true
 				Notification("Commando has exited the facility.")
 			end
 		end
@@ -145,7 +154,8 @@ OncePerSecondChecks = function()
 				Utils.Do(Players, function(p)
 					p.MarkCompletedObjective(Objectives.TanyaSurvives[p.Name])
 				end)
-			else
+			elseif not IsTanyaExitNotified then
+				IsTanyaExitNotified = true
 				Notification("Tanya has exited the facility.")
 			end
 		end
@@ -234,4 +244,37 @@ TanyaDeathTrigger = function(tanya)
 			end)
 		end
 	end)
+end
+
+InitWormholes = function()
+	Actor.Create("wormhole", true, { Owner = Scrin, Location = WormholeSpawn1.Location })
+	Actor.Create("wormhole", true, { Owner = Scrin, Location = WormholeSpawn2.Location })
+	Actor.Create("wormhole", true, { Owner = Scrin, Location = WormholeSpawn3.Location })
+	Trigger.AfterDelay(DateTime.Seconds(8), function()
+		ScrinReinforcements()
+	end)
+end
+
+ScrinReinforcements = function()
+	local wormholes = Scrin.GetActorsByType("wormhole")
+
+	Utils.Do(wormholes, function(wormhole)
+		local units = { }
+		local possibleUnits = { "s1", "s1", "s3", "gscr", "feed", "s2", "s4" }
+		for i=1, 7 do
+			table.insert(units, Utils.Random(possibleUnits))
+		end
+
+		local units = Reinforcements.Reinforce(Scrin, units, { wormhole.Location }, 5, function(a)
+			a.Scatter()
+			Trigger.AfterDelay(5, function()
+				if not a.IsDead then
+					a.AttackMove(Exit.Location)
+					IdleHunt(a)
+				end
+			end)
+		end)
+	end)
+
+	Trigger.AfterDelay(ScrinReinforcementInterval[Difficulty], ScrinReinforcements)
 end

@@ -409,7 +409,6 @@ end
 ScrinInvasion = function()
 	local wormholes = Scrin.GetActorsByType("wormhole")
 
-
 	Utils.Do(wormholes, function(wormhole)
 		local units = Reinforcements.Reinforce(Scrin, ScrinInfantrySquads[Difficulty], { wormhole.Location }, 1)
 		Utils.Do(units, function(unit)

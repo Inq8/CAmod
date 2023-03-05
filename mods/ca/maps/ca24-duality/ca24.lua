@@ -1,4 +1,11 @@
+
 ProdigyPatrolPath = { ProdigyPatrol1.Location, ProdigyPatrol2.Location, ProdigyPatrol3.Location, ProdigyPatrol4.Location, ProdigyPatrol5.Location, ProdigyPatrol6.Location, ProdigyPatrol7.Location, ProdigyPatrol8.Location, ProdigyPatrol9.Location, ProdigyPatrol10.Location, ProdigyPatrol11.Location, ProdigyPatrol12.Location, ProdigyPatrol13.Location, ProdigyPatrol14.Location, ProdigyPatrol15.Location, ProdigyPatrol16.Location, ProdigyPatrol17.Location, ProdigyPatrol18.Location, ProdigyPatrol19.Location, ProdigyPatrol9.Location, ProdigyPatrol8.Location, ProdigyPatrol20.Location }
+
+ScrinReinforcementInterval = {
+	easy = DateTime.Seconds(45),
+	normal = DateTime.Seconds(30),
+	hard = DateTime.Seconds(15),
+}
 
 WorldLoaded = function()
     GDI = Player.GetPlayer("GDI")
@@ -116,6 +123,8 @@ OncePerSecondChecks = function()
 					end
 				end
 			end)
+
+			InitWormholes()
 		end
 
 		if CommandoEscaped and TanyaEscaped then
@@ -154,4 +163,37 @@ ActivateProdigy = function()
 		Prodigy.GrantCondition("activated")
 		Beacon.New(GDI, Prodigy.CenterPosition)
 	end
+end
+
+InitWormholes = function()
+	Actor.Create("wormhole", true, { Owner = Scrin, Location = WormholeSpawn1.Location })
+	Actor.Create("wormhole", true, { Owner = Scrin, Location = WormholeSpawn2.Location })
+	Actor.Create("wormhole", true, { Owner = Scrin, Location = WormholeSpawn3.Location })
+	Trigger.AfterDelay(DateTime.Seconds(8), function()
+		ScrinReinforcements()
+	end)
+end
+
+ScrinReinforcements = function()
+	local wormholes = Scrin.GetActorsByType("wormhole")
+
+	Utils.Do(wormholes, function(wormhole)
+		local units = { }
+		local possibleUnits = { "s1", "s1", "s3", "gscr", "feed", "s2", "s4" }
+		for i=1, 7 do
+			table.insert(units, Utils.Random(possibleUnits))
+		end
+
+		local units = Reinforcements.Reinforce(Scrin, units, { wormhole.Location }, 5, function(a)
+			a.Scatter()
+			Trigger.AfterDelay(5, function()
+				if not a.IsDead then
+					a.AttackMove(Exit.Location)
+					IdleHunt(a)
+				end
+			end)
+		end)
+	end)
+
+	Trigger.AfterDelay(ScrinReinforcementInterval[Difficulty], ScrinReinforcements)
 end
