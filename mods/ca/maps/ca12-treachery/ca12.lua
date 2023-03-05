@@ -362,10 +362,6 @@ AbandonedBaseDiscovered = function()
 		Actor.Create("QueueUpdaterDummy", true, { Owner = USSR })
 	end)
 
-	if not Boris.IsDead then
-		Boris.GrantCondition("autoattack-enabled")
-	end
-
 	Trigger.AfterDelay(ReinforcementsDelay[Difficulty], function()
 		Media.PlaySpeechNotification(USSR, "ReinforcementsArrived")
 		Beacon.New(USSR, ReinforcementsDestination.CenterPosition)
