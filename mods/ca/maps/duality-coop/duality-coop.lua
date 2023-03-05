@@ -18,6 +18,12 @@ Objectives = {
 	},
 }
 
+TimeLimit = {
+	easy = DateTime.Minutes(30),
+	normal = DateTime.Minutes(30),
+	hard = DateTime.Minutes(30),
+}
+
 ScrinReinforcementInterval = {
 	easy = DateTime.Seconds(45),
 	normal = DateTime.Seconds(30),
@@ -29,7 +35,7 @@ WorldLoaded = function()
 	Greece = Player.GetPlayer("Greece")
     Scrin = Player.GetPlayer("Scrin")
 	MissionPlayer = GDI
-	TimerTicks = 0
+	TimerTicks = TimeLimit[Difficulty]
 	Players = { GDI, Greece }
 
 	Camera.Position = Commando.CenterPosition
@@ -96,13 +102,27 @@ OncePerSecondChecks = function()
 				TimerTicks = TimerTicks - 25
 			else
 				TimerTicks = 0
+
+				if NumSilosRemaining > 0 then
+					Utils.Do(Players, function(p)
+						if not p.IsObjectiveCompleted(Objectives.DestroyTiberiumStores[p.Name]) then
+							p.MarkFailedObjective(Objectives.DestroyTiberiumStores[p.Name])
+						end
+					end)
+				elseif IsExitActive then
+					Utils.Do(Players, function(p)
+						if not p.IsObjectiveCompleted(Objectives.Escape[p.Name]) then
+							p.MarkFailedObjective(Objectives.Escape[p.Name])
+						end
+					end)
+				end
 			end
 		end
 
 		if NumSilosRemaining == 0 and not IsExitActive then
 			IsExitActive = true
 
-			UserInterface.SetMissionText("Exit the facility." , HSLColor.Lime)
+			UpdateObjectiveText()
 
 			if RespawnEnabled then
 				Utils.Do(Players, function(p)
@@ -111,7 +131,9 @@ OncePerSecondChecks = function()
 			end
 
 			Utils.Do(Players, function(p)
-				p.MarkCompletedObjective(Objectives.DestroyTiberiumStores[p.Name])
+				if not p.IsObjectiveFailed(Objectives.DestroyTiberiumStores[p.Name]) then
+					p.MarkCompletedObjective(Objectives.DestroyTiberiumStores[p.Name])
+				end
 			end)
 
 			InitWormholes()
@@ -165,6 +187,8 @@ OncePerSecondChecks = function()
 				p.MarkCompletedObjective(Objectives.Escape[p.Name])
 			end)
 		end
+
+		UpdateObjectiveText()
 	end
 end
 
@@ -187,7 +211,11 @@ InitScrin = function()
 end
 
 UpdateObjectiveText = function()
-	UserInterface.SetMissionText("Tiberium stores remaining: " .. NumSilosRemaining , HSLColor.Yellow)
+	if IsExitActive then
+		UserInterface.SetMissionText("Exit the facility. Time remaining: " .. Utils.FormatTime(TimerTicks), HSLColor.Lime)
+	else
+		UserInterface.SetMissionText("Tiberium stores remaining: " .. NumSilosRemaining .. "\n      Time remaining: " .. Utils.FormatTime(TimerTicks), HSLColor.Yellow)
+	end
 end
 
 ActivateProdigy = function()
