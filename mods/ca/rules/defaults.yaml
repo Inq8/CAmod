@@ -311,11 +311,8 @@
 	ReloadDelayMultiplier@FRENZY:
 		RequiresCondition: frenzy
 		Modifier: 75
-	DamageMultiplier@FRENZY:
-		RequiresCondition: frenzy
-		Modifier: 110
 	ExternalCondition@FRENZY:
-		Condition: frenzy
+		Condition: frenzyinit
 	WithModifiedPalette@FRENZY:
 		RequiresCondition: frenzy
 		Palette: frenzy
@@ -328,6 +325,16 @@
 		Palette: frenzyoverlay
 		RequiresCondition: frenzy
 		IsDecoration: True
+	GrantTimedCondition@FRENZY:
+		Condition: frenzy
+		RequiresCondition: frenzyinit
+		Duration: 500
+	ReloadDelayMultiplier@FRENZYDEBUFF:
+		RequiresCondition: !frenzy && frenzyinit
+		Modifier: 115
+	SpeedMultiplier@FRENZYDEBUFF:
+		RequiresCondition: !frenzy && frenzyinit
+		Modifier: 85
 
 ^FrenzyInfantry:
 	Inherits: ^Frenzy
