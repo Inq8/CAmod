@@ -288,7 +288,7 @@ ScrinReinforcements = function()
 
 	Utils.Do(wormholes, function(wormhole)
 		local units = { }
-		local possibleUnits = { "s1", "s1", "s3", "gscr", "feed", "s2", "s4" }
+		local possibleUnits = { "s1", "s1", "s3", "gscr", "feed2", "s2", "s4" }
 		for i=1, 7 do
 			table.insert(units, Utils.Random(possibleUnits))
 		end
