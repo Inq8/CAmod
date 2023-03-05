@@ -170,11 +170,52 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnAllKilled(Masterminds, function()
-		ObjectiveEliminateScrin = GDI.AddObjective("Eliminate the Scrin presence.")
+		if ObjectiveEliminateScrin == nil then
+			ObjectiveEliminateScrin = GDI.AddObjective("Eliminate the Scrin presence.")
+		end
 		GDI.MarkCompletedObjective(ObjectiveLiberateBases)
 		if ObjectiveMinimiseCasualties ~= nil and EnslavedUnitsKilled <= MaxEnslavedUnitsKilled[Difficulty] then
 			GDI.MarkCompletedObjective(ObjectiveMinimiseCasualties)
 		end
+		UpdateObjectiveText()
+	end)
+
+	Trigger.OnKilled(Mastermind1, function(self, killer)
+		local notificationText = "Good work commander, the first outpost has been freed."
+		if not Mastermind2.IsDead then
+			notificationText = notificationText .. " Head north-east to find our next base."
+		end
+		Notification(notificationText)
+	end)
+
+	Trigger.OnKilled(Mastermind2, function(self, killer)
+		local notificationText = "Excellent, the second base has been freed."
+		if not Mastermind3.IsDead then
+			notificationText = notificationText .. " Our airbase was located south-east of here."
+		end
+		Notification(notificationText)
+	end)
+
+	Trigger.OnKilled(Mastermind3, function(self, killer)
+		local notificationText = "Great job, the airbase has been secured."
+		if not Mastermind4.IsDead then
+			notificationText = notificationText .. " The largest of our bases in the area was located south of the airbase."
+		end
+		Notification(notificationText)
+	end)
+
+	Trigger.OnKilled(Mastermind4, function(self, killer)
+		local notificationText = "Our main base is no longer under Scrin control, well done commander."
+		if not Mastermind1.IsDead or not Mastermind2.IsDead or not Mastermind3.IsDead or not Mastermind5.IsDead then
+			notificationText = notificationText .. " Some of our forces remain under Scrin control. Eliminate the remaining Masterminds, then we can take the fight to the Scrin."
+		else
+			notificationText = notificationText .. " It's safe to say the Scrin have outsayed their welcome; give 'em hell commander."
+		end
+		Notification(notificationText)
+	end)
+
+	Trigger.OnKilled(Mastermind5, function(self, killer)
+		Notification("Good job getting our EMP Missile launcher back. This should come in very handy.")
 	end)
 
 	Trigger.AfterDelay(1, function()
@@ -188,12 +229,16 @@ WorldLoaded = function()
 				Utils.Do(slaves, function(s)
 					if not s.IsDead then
 						s.Owner = GDI
-						if s.HasProperty("Move") then
-							s.Stop()
-						end
-						if s.HasProperty("FindResources") then
-							s.FindResources()
-						end
+						Trigger.AfterDelay(1, function()
+							if not s.IsDead then
+								if s.HasProperty("Move") then
+									s.Stop()
+								end
+								if s.HasProperty("FindResources") then
+									s.FindResources()
+								end
+							end
+						end)
 					end
 				end)
 
@@ -243,6 +288,15 @@ WorldLoaded = function()
 		end
 	end)
 
+	Trigger.AfterDelay(1, function()
+		local enslavedHarvesters = GDISlaves.GetActorsByType("harv.td")
+		Utils.Do(enslavedHarvesters, function(a)
+			if not a.IsDead then
+				a.Stop()
+			end
+		end)
+	end)
+
 	SetupReveals({ EntranceReveal1, EntranceReveal2, EntranceReveal3, EntranceReveal4, EntranceReveal5, EntranceReveal6 })
 	UpdateObjectiveText()
 end
@@ -256,7 +310,10 @@ OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
 		Scrin.Resources = Scrin.ResourceCapacity - 500
 
-		if Scrin.HasNoRequiredUnits() and ObjectiveEliminateScrin ~= nil then
+		if Scrin.HasNoRequiredUnits() then
+			if ObjectiveEliminateScrin == nil then
+				ObjectiveEliminateScrin = GDI.AddObjective("Eliminate the Scrin presence.")
+			end
 			GDI.MarkCompletedObjective(ObjectiveEliminateScrin)
 		end
 
