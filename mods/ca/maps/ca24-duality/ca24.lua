@@ -158,11 +158,47 @@ end
 ActivateProdigy = function()
 	if not Prodigy.IsDead then
 		Notification("We're tracking a powerful Scrin unit. Do not engage!")
-		Prodigy.Patrol(ProdigyPatrolPath)
-		Prodigy.GrantCondition("difficulty-" .. Difficulty)
 		Prodigy.GrantCondition("activated")
 		Beacon.New(GDI, Prodigy.CenterPosition)
+
+		if Difficulty == "hard" then
+			UpdateProdigyTarget()
+		else
+			Prodigy.Patrol(ProdigyPatrolPath)
+		end
 	end
+end
+
+UpdateProdigyTarget = function()
+	if not Prodigy.IsDead then
+		local maintainCurrentTarget = false
+
+		-- if current target has been set and is not dead, determine whether it's close enough to prevent looking for a new target
+		if ProdigyCurrentTarget ~= nil and not ProdigyCurrentTarget.IsDead then
+			local closeTargets = Map.ActorsInCircle(Prodigy.CenterPosition, WDist.New(30 * 1024), function(t)
+				return not t.IsDead and t.Owner == GDI and (t.Type == "rmbo" or t.Type == "e7")
+			end)
+			Utils.Do(closeTargets, function(t)
+				if t == ProdigyCurrentTarget then
+					maintainCurrentTarget = true
+				end
+			end)
+		end
+
+		-- if current target hasn't been set yet, or it's dead, or the current target isn't close, randomly select a new target
+		if not maintainCurrentTarget then
+			local possibleTargets = GDI.GetActorsByTypes({ "rmbo", "e7" })
+			if #possibleTargets > 0 then
+				ProdigyCurrentTarget = Utils.Random(possibleTargets)
+				Prodigy.Stop()
+				Prodigy.AttackMove(ProdigyCurrentTarget.Location)
+			end
+		end
+	end
+
+	Trigger.AfterDelay(DateTime.Seconds(15), function()
+		UpdateProdigyTarget()
+	end)
 end
 
 InitWormholes = function()

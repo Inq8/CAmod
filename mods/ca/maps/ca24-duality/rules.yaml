@@ -147,31 +147,11 @@ MAST:
 		ValidRelationships: Ally, Enemy
 		Color: 9b25ffaa
 		Range: 12c0
-		RequiresCondition: rank-elite && activated && difficulty-normal
-	WithRangeCircle@ZAPRANGEHARD:
-		Type: Psi
-		Visible: Always
-		ValidRelationships: Ally, Enemy
-		Color: 9b25ffaa
-		Range: 15c0
-		RequiresCondition: rank-elite && activated && difficulty-hard
+		RequiresCondition: rank-elite && activated
 	ExternalCondition@ACTIVATED:
 		Condition: activated
-	ExternalCondition@NORMAL:
-		Condition: difficulty-normal
-	ExternalCondition@HARD:
-		Condition: difficulty-hard
 	Armament@PRIMARY:
 		Weapon: ProdigyZap
-	RangeMultiplier@HARD:
-		Modifier: 125
-		RequiresCondition: difficulty-hard
-	RevealsShroudMultiplier@HARD:
-		Modifier: 125
-		RequiresCondition: difficulty-hard
-	SpeedMultiplier@HARD:
-		Modifier: 115
-		RequiresCondition: difficulty-hard
 
 WORMHOLE:
 	-PopControlled:
