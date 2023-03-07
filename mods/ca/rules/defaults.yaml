@@ -1319,13 +1319,18 @@
 	RangeMultiplier@VEILED:
 		Modifier: 80
 		RequiresCondition: veiled
+	RangeMultiplier@GAPVEILED:
+		Modifier: 60
+		RequiresCondition: gapveiled
 	ExternalCondition@VEILED:
 		Condition: veiled
+	ExternalCondition@GAPVEILED:
+		Condition: gapveiled
 	WithIdleOverlay@VEILED:
 		Sequence: vehicle
 		Image: veildebuff
 		Palette: effect-ignore-lighting-alpha35
-		RequiresCondition: veiled
+		RequiresCondition: veiled || gapveiled
 		IsDecoration: True
 
 ^VeilableInfantry:
