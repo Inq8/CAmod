@@ -2127,6 +2127,7 @@ MRJ:
 
 MSG:
 	Inherits: ^Vehicle
+	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 385
@@ -2153,7 +2154,6 @@ MSG:
 		Type: Light
 	Mobile:
 		Speed: 60
-		RequireForceMoveCondition: !undeployed
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -5952,6 +5952,7 @@ TNKD.TEMP:
 
 MSAR:
 	Inherits: ^VehicleTD
+	Inherits@SELECTION: ^SelectableSupportUnit
 	Valued:
 		Cost: 1200
 	Tooltip:
@@ -5978,7 +5979,6 @@ MSAR:
 		Type: Heavy
 	Mobile:
 		Speed: 72
-		RequireForceMoveCondition: !undeployed
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -5987,10 +5987,6 @@ MSAR:
 		Range: 4c0
 	RenderSprites:
 		Image: msar
-	Repairable:
-		RequireForceMoveCondition: !undeployed
-	Passenger:
-		RequireForceMoveCondition: !undeployed
 	GrantCondition@PREVIEWWORKAROUND:
 		Condition: real-actor
 	WithMakeAnimation:
