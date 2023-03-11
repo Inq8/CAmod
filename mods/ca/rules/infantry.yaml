@@ -173,6 +173,7 @@ E2:
 		PauseOnCondition: being-warped
 		FacingTolerance: 0
 	WithInfantryBody:
+		StandSequences: stand
 		DefaultAttackSequence: throw
 		RequiresCondition: !parachute && !being-warped
 	WithInfantryBody@PARACHUTE:
@@ -612,6 +613,7 @@ E6:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	WithInfantryBody:
+		StandSequences: stand
 		RequiresCondition: undeployed && !parachute && !being-warped
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
@@ -1957,6 +1959,7 @@ N6:
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	WithInfantryBody:
+		StandSequences: stand
 		RequiresCondition: !parachute && !being-warped
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
