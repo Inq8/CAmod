@@ -80,6 +80,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		void GiveExperience(Actor master, int exp)
 		{
+			if (master.IsDead)
+				return;
+
 			var gainsExperience = master.TraitOrDefault<GainsExperience>();
 			if (gainsExperience == null)
 				return;
