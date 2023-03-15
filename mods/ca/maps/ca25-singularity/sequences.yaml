@@ -1,0 +1,81 @@
+wormholelg:
+	idle: wormholelg
+		Length: 13
+		ZOffset: 1023
+		BlendMode: Additive
+	die: wormholelg
+		Length: 13
+		ZOffset: 1023
+		BlendMode: Additive
+	make: wormholelg
+		Length: 13
+		ZOffset: 1023
+		BlendMode: Additive
+
+wormhole:
+	idle: wormhole
+		ZOffset: 9000
+	die: wormhole
+		ZOffset: 9000
+	make: wormhole
+		ZOffset: 9000
+
+enrvbolthit:
+	idle2: enrvbolthit
+		BlendMode: Additive
+		Length: *
+		ZOffset: 2047
+		FlipX: true
+
+bluebuff:
+	idle: bluebuff
+		Length: *
+		ZOffset: 1023
+		Tick: 80
+		Alpha: 0.8
+
+kane:
+	Inherits: ^CommonDeaths
+	stand: kane
+		Facings: 8
+	run: kane
+		Start: 8
+		Length: 6
+		Facings: 8
+		Tick: 100
+	parachute: kane
+		Start: 3
+	shoot: yuria
+		Length: 2
+		Tick: 140
+		Facings: 8
+	die1: kane
+		Start: 139
+		Length: 8
+	die2: kane
+		Start: 147
+		Length: 8
+	die3: kane
+		Start: 155
+		Length: 8
+	die4: kane
+		Start: 163
+		Length: 12
+	die5: kane
+		Start: 175
+		Length: 18
+	die7: kane
+		Start: 139
+		Length: 8
+	chrono-overlay: chronofade_small
+		Length: *
+		BlendMode: Additive
+		Offset: 0, 0
+		UseTilesetCode: false
+		ZOffset: 512
+		Tick: 80
+	mind-overlay: mindanim
+		Length: *
+		Tick: 200
+		BlendMode: Alpha
+		Offset: 0, 0

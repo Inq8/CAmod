@@ -1,0 +1,37 @@
+Subjugate:
+	ReloadDelay: 5
+	Range: 20c0
+	Report: iyurat1a.aud
+	ValidTargets: MindControllable
+	InvalidTargets: MindControlImmune, YuriMindControlImmune
+	Projectile: InstantHit
+	Warhead@1Change: ChangeOwner
+		Range: 0c511
+		ValidRelationships: Enemy
+		ValidTargets: MindControllable
+		InvalidTargets: MindControlImmune, YuriMindControlImmune
+
+TPWRZap:
+	Warhead@1Dam: SpreadDamage
+		Damage: 20
+
+TPWRArc1:
+	Warhead@1Dam: SpreadDamage
+		Damage: 20
+
+TPWRArc2:
+	Warhead@1Dam: SpreadDamage
+		Damage: 20
+
+ChainGun:
+	InvalidTargets: MindControlImmune
+	Warhead@1Dam: SpreadDamage
+		InvalidTargets: MindControlImmune
+
+HindRockets:
+	InvalidTargets: Infantry, MindControlImmune
+	Warhead@1Dam: SpreadDamage
+		InvalidTargets: MindControlImmune
+
+HindRockets.AnyTarget:
+	InvalidTargets: MindControlImmune

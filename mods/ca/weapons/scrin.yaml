@@ -187,7 +187,7 @@ IntruderDiscs:
 			None: 25
 			Wood: 100
 			Light: 65
-			Heavy: 100
+			Heavy: 95
 			Concrete: 100
 
 DevastatorDiscs:
@@ -1291,7 +1291,7 @@ MothershipChargeBeam:
 		Distortion: 0
 		DistortionAnimation: 0
 		SegmentLength: 0
-		ZOffset: 512
+		ZOffset: 2048
 	Warhead@1Dum: Dummy
 
 MothershipBeam:
@@ -1317,18 +1317,21 @@ MothershipBeam:
 		ZOffset: 2048
 		RecalculateColors: true
 		RecalculateDistortionInterval: 3
-		ImpactInterval: 3
+		ImpactInterval: 5
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
 		Falloff: 100, 75, 56, 42, 31, 23, 17, 13, 10, 7
-		Damage: 3000
+		Damage: 8000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
-	Warhead@3Eff: CreateEffect
-		Explosions: large_explosion
-		Inaccuracy: 171
+	Warhead@5Eff: CreateEffect
+		Image: mshpshockwave
+		ExplosionPalette: scrineffect
+		Explosions: idle1, idle2, idle3, idle4
+		Inaccuracy: 512
 	Warhead@4Eff: CreateEffect
-		Explosions: large_explosion
-		Inaccuracy: 1024
+		Image: mshpshockwave
+		Explosions: inner1, inner2, inner3, inner4
+		ExplosionPalette: scrineffect
 	Warhead@5Shake: ShakeScreen
 		Duration: 5
 		Intensity: 1
@@ -1373,7 +1376,7 @@ MothershipLaserLeft:
 LeecherBeam:
 	ValidTargets: Ground, Water
 	StartBurstReport: leecher-fire1.aud
-	Range: 6c0
+	Range: 5c512
 	ReloadDelay: 60
 	Burst: 6
 	BurstDelays: 5
@@ -1395,7 +1398,7 @@ LeecherBeam:
 		Versus:
 			None: 100
 			Light: 45
-			Wood: 70
+			Wood: 60
 			Heavy: 15
 			Concrete: 15
 			Brick: 5

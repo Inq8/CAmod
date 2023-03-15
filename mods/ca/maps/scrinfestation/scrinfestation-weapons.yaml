@@ -2,8 +2,9 @@ SMG:
 	ReloadDelay: 25
 	ValidTargets: Ground
 	-InvalidTargets:
-	Projectile: Bullet
-		Speed: 3c0
+	-Projectile:
+	Projectile: InstantHit
+		Blockable: true
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Ground
 		ValidRelationships: Enemy, Neutral
@@ -59,6 +60,9 @@ RuinerCannon:
 	Projectile: Bullet
 		Speed: 150
 		Blockable: true
+	Warhead@1Dam: SpreadDamage
+		Damage: 12000
+		DamageTypes: TriggerProne, RadiationDeath
 
 RiftCannon:
 	Warhead@1Dam: SpreadDamage

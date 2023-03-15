@@ -7,7 +7,7 @@ World:
 	MissionData:
 		Briefing: Now that the Allies and GDI are no longer on our doorstep and we have begun to replenish our forces, we can turn our attention to the Brotherhood of Nod.\n\nKane cannot be trusted. He thinks that his cyborg army gives him such an advantage, and that we have been so weakened, that we will do his bidding without question. His arrogant overconfidence will be his downfall.\n\nIt is time to make use of our own secret weapon, Yuri. With his psionic powers he can turn our enemies into loyal servants.\n\nThere is but one obstacle. Kane's cyborgs are impervious to Yuri's powers, as their minds are protected by their cybernetic implants.\n\nIn order for Yuri to be able to control the minds of these cyborgs, we must break through the encryption that protects them.\n\nMake use of one of our best thieves to infiltrate a Nod cybernetics lab to steal the encryption algorithms. Without this protection the cyborgs will be vulnerable to Yuri, and we will be able to use Kane's own cyborgs against him.
 	MapOptions:
-		ShortGameCheckboxEnabled: True
+		ShortGameCheckboxEnabled: False
 	ScriptLobbyDropdown@DIFFICULTY:
 		ID: difficulty
 		Label: Difficulty
@@ -23,6 +23,8 @@ World:
 Player:
 	PlayerResources:
 		DefaultCash: 2000
+	PowerManager:
+		AdviceInterval: 240000
 
 ^TDPalette:
 	RenderSprites:
@@ -60,15 +62,16 @@ TMPL:
 YURI:
 	RevealsShroud:
 		Range: 10c0
-	PeriodicExplosionOnSlaves:
-		KillSlaveTypes: None
-		PostExplosionAction: Unlink
-	-AutoTarget:
-	-AutoTargetPriority@DEFAULT:
-	-AutoTargetPriority@ATTACKANYTHING:
+	AutoTarget:
+		InitialStance: HoldFire
 	-Captures@DRIVER_KILL:
-	AttackMove:
-		-AssaultMoveCondition:
+	-GainsExperience:
+	-ProducibleWithLevel:
+	ExternalCondition@VET:
+		Condition: rank-veteran
+	DamageMultiplier@YAMLFIX:
+		Modifier: 100
+		RequiresCondition: maxcontrolled
 
 powerproxy.mutabomb:
 	AirstrikePower@MutaBomb:
@@ -221,19 +224,11 @@ NUK2:
 	-SpawnActorOnDeath:
 	-SpawnRandomActorOnDeath:
 
-OBLI:
-	ExternalCondition@DISABLED:
-		Condition: disabled
-
 NSAM:
-	ExternalCondition@DISABLED:
-		Condition: disabled
 	Targetable:
 		TargetTypes: Ground, Structure
 
 LASP:
-	ExternalCondition@DISABLED:
-		Condition: disabled
 	DamageMultiplier@REDUC:
 		Modifier: 20
 	RepairableBuilding:

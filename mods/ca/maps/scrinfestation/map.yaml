@@ -1,4 +1,4 @@
-MapFormat: 11
+MapFormat: 12
 
 RequiresMod: ca
 
@@ -14,7 +14,7 @@ Bounds: 1,1,96,96
 
 Visibility: Lobby
 
-Categories: Minigame
+Categories: Co-op Mission, Minigame
 
 LockPreview: True
 
@@ -46,6 +46,8 @@ Players:
 		Playable: True
 		LockFaction: True
 		Faction: RandomGDI
+		LockSpawn: True
+		Spawn: 1
 		LockTeam: True
 		Team: 1
 		Enemies: Scrin
@@ -54,6 +56,8 @@ Players:
 		Playable: True
 		LockFaction: True
 		Faction: RandomGDI
+		LockSpawn: True
+		Spawn: 2
 		LockTeam: True
 		Team: 1
 		Enemies: Scrin
@@ -62,6 +66,8 @@ Players:
 		Playable: True
 		LockFaction: True
 		Faction: RandomGDI
+		LockSpawn: True
+		Spawn: 3
 		LockTeam: True
 		Team: 1
 		Enemies: Scrin
@@ -70,6 +76,8 @@ Players:
 		Playable: True
 		LockFaction: True
 		Faction: RandomGDI
+		LockSpawn: True
+		Spawn: 4
 		LockTeam: True
 		Team: 1
 		Enemies: Scrin
@@ -78,6 +86,8 @@ Players:
 		Playable: True
 		LockFaction: True
 		Faction: RandomGDI
+		LockSpawn: True
+		Spawn: 5
 		LockTeam: True
 		Team: 1
 		Enemies: Scrin
@@ -86,6 +96,8 @@ Players:
 		Playable: True
 		LockFaction: True
 		Faction: RandomGDI
+		LockSpawn: True
+		Spawn: 6
 		LockTeam: True
 		Team: 1
 		Enemies: Scrin
@@ -94,6 +106,8 @@ Players:
 		Playable: True
 		LockFaction: True
 		Faction: RandomGDI
+		LockSpawn: True
+		Spawn: 7
 		LockTeam: True
 		Team: 1
 		Enemies: Scrin
@@ -102,6 +116,8 @@ Players:
 		Playable: True
 		LockFaction: True
 		Faction: RandomGDI
+		LockSpawn: True
+		Spawn: 8
 		LockTeam: True
 		Team: 1
 		Enemies: Scrin
@@ -110,6 +126,8 @@ Players:
 		Playable: True
 		LockFaction: True
 		Faction: RandomGDI
+		LockSpawn: True
+		Spawn: 9
 		LockTeam: True
 		Team: 1
 		Enemies: Scrin
@@ -118,6 +136,8 @@ Players:
 		Playable: True
 		LockFaction: True
 		Faction: RandomGDI
+		LockSpawn: True
+		Spawn: 10
 		LockTeam: True
 		Team: 1
 		Enemies: Scrin
@@ -5653,11 +5673,6 @@ Actors:
 	Actor1729: brik
 		Owner: Neutral
 		Location: 24,35
-	Actor1730: medi
-		Owner: GDI
-		SubCell: 3
-		Location: 26,35
-		Facing: 384
 	Actor1732: brik
 		Owner: Neutral
 		Location: 28,35
@@ -5734,7 +5749,19 @@ Actors:
 		Facing: 384
 		SubCell: 3
 		Location: 87,33
+	Actor1725: healcrate
+		Owner: Neutral
+		Location: 26,34
+	Actor1730: healcrate
+		Owner: Neutral
+		Location: 90,18
+	Actor1731: healcrate
+		Owner: Neutral
+		Location: 95,95
+	Actor1747: healcrate
+		Owner: Neutral
+		Location: 15,17
 
-Rules: rules.yaml
+Rules: scrinfestation-rules-base.yaml, scrinfestation-rules.yaml
 
-Weapons: weapons.yaml
+Weapons: scrinfestation-weapons.yaml

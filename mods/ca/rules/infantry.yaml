@@ -173,6 +173,7 @@ E2:
 		PauseOnCondition: being-warped
 		FacingTolerance: 0
 	WithInfantryBody:
+		StandSequences: stand
 		DefaultAttackSequence: throw
 		RequiresCondition: !parachute && !being-warped
 	WithInfantryBody@PARACHUTE:
@@ -272,7 +273,7 @@ E3:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	AutoTarget:
-		ScanRadius: 7
+		ScanRadius: 6
 	GrantConditionOnPrerequisite@CRYO:
 		Condition: cryr-upgrade
 		Prerequisites: cryr.upgrade
@@ -612,6 +613,7 @@ E6:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	WithInfantryBody:
+		StandSequences: stand
 		RequiresCondition: undeployed && !parachute && !being-warped
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
@@ -713,10 +715,10 @@ SPY:
 		Voice: Move
 	RevealsShroud:
 		Range: 7c0
-		MinRange: 5c0
+		MinRange: 6c0
 		RevealGeneratedShroud: false
 	RevealsShroud@GAPGEN:
-		Range: 5c0
+		Range: 6c0
 	Passenger:
 		CustomPipType: blue
 		Voice: Move
@@ -1089,6 +1091,8 @@ CMEC:
 HACK:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Buildable:
+		Queue: HackerCell
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -1326,6 +1330,8 @@ THF:
 		Speed: 54
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+	-SpeedMultiplier@HAZMATSOVIET:
+	-GrantConditionOnTerrain@HAZMATSOVIET:
 
 SHOK:
 	Inherits: ^Soldier
@@ -1342,8 +1348,6 @@ SHOK:
 		RequiresCondition: assault-move || attack-move
 		ValidTargets: TeslaBoost
 		ValidRelationships: Enemy
-	AttackMove:
-		AttackMoveCondition: attack-move
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1403,6 +1407,7 @@ SHOK:
 		PauseOnCondition: being-warped
 		FacingTolerance: 0
 	AttackMove:
+		AttackMoveCondition: attack-move
 		Voice: Move
 	Passenger:
 		Voice: Move
@@ -1649,7 +1654,7 @@ N3:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
 	AutoTarget:
-		ScanRadius: 7
+		ScanRadius: 6
 	Selectable:
 		Class: e3
 	Convertible:
@@ -1954,6 +1959,7 @@ N6:
 	Targetable:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	WithInfantryBody:
+		StandSequences: stand
 		RequiresCondition: !parachute && !being-warped
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
@@ -1999,6 +2005,10 @@ SNIP:
 		HP: 4500
 	RevealsShroud:
 		Range: 7c0
+		MinRange: 6c0
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 6c0
 	AutoTargetPriority@DEFAULTINF:
 		RequiresCondition: !apb-upgrade && !stance-attackanything && !assault-move
 	AutoTargetPriority@ATTACKANYTHINGINF:
@@ -2275,10 +2285,10 @@ SAB:
 		AddToArmyValue: true
 	RevealsShroud:
 		Range: 7c0
-		MinRange: 5c0
+		MinRange: 6c0
 		RevealGeneratedShroud: false
 	RevealsShroud@GAPGEN:
-		Range: 5c0
+		Range: 6c0
 	Passenger:
 		CustomPipType: red
 		Voice: Move
@@ -2478,11 +2488,11 @@ JJET:
 		Type: GroundPosition
 	RevealsShroud:
 		Range: 6c0
-		MinRange: 4c0
+		MinRange: 5c0
 		Type: GroundPosition
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 4c0
+		Range: 5c0
 		Type: GroundPosition
 	Voiced:
 		VoiceSet: JJVoice
@@ -3616,14 +3626,14 @@ YURI:
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	AutoTargetPriority@DEFAULT:
-		RequiresCondition: mindcontrolling < 3 && !stance-attackanything && !assault-move
+		RequiresCondition: !maxcontrolled && !stance-attackanything && !assault-move
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 190
 		Prerequisites: ~barr, stek, ~infantry.yuri, ~techlevel.high
 		BuildLimit: 1
-		Description: Elite specialist infantry able to mind-control\n  enemy units (up to 3 at a time).
+		Description: Elite specialist infantry able to mind-control\n  enemy units (up to 3, increases with veterancy).
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Vehicles, Defenses, Buildings
 		Weaknesses: • Cannot attack Aircraft
@@ -3657,7 +3667,10 @@ YURI:
 		ArmamentNames: primary, secondary
 		Capacity: 3
 		ControlSounds: iyurat1a.aud
+		ReleaseSounds: yuri-release.aud
 		ControllingCondition: mindcontrolling
+		MaxControlledCondition: maxcontrolled
+		ManualReleaseEnabled: true
 	WithMindControlArc@MC:
 		Color: c71585
 		Transparency: 55
@@ -3678,12 +3691,11 @@ YURI:
 		Weapon: MindblastSlave
 		InitialDelay: 18
 		RequiresCondition: deployed && !being-warped
-		KillSlaveTypes: Infantry, Cyborg
+		KillSlaveTypes: Infantry, Vehicle
 		KillSlavesDamageTypes: BulletDeath
-		PostExplosionAction: Neutralize
 	GrantTimedConditionOnDeploy:
 		DeployedTicks: 35
-		CooldownTicks: 200
+		CooldownTicks: 150
 		DeployedCondition: deployed
 		DeployingCondition: deploying
 		DeployAnimation: deployed
@@ -3749,6 +3761,18 @@ YURI:
 	ReloadAmmoPool:
 		Delay: 35
 		Count: 1
+	MindControllerCapacityModifier@RANK-1:
+		Amount: 1
+		RequiresCondition: rank-veteran == 1
+	MindControllerCapacityModifier@RANK-2:
+		Amount: 2
+		RequiresCondition: rank-veteran == 2
+	MindControllerCapacityModifier@RANK-ELITE:
+		Amount: 3
+		RequiresCondition: rank-elite
+	RangeMultiplier@RANK-ELITE:
+		Modifier: 115
+		RequiresCondition: rank-elite
 
 SEAL:
 	Inherits: RMBO

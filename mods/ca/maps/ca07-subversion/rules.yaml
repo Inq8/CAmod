@@ -7,7 +7,7 @@ World:
 	MissionData:
 		Briefing: The Allies are now gripped by fear and suspicion. We must seize this opportunity to further destabilize their uneasy alliance with GDI.\n\nVery recently GDI launched one of their orbital weapons platforms. Both groups are being cautious about what information they give each other. The Allies were only partially informed and are predictably concerned, given recent events.\n\nLet us turn their fear into anger. Take control of GDI's Ion Cannon control systems and use the weapon against the Allies.
 	MapOptions:
-		ShortGameCheckboxEnabled: True
+		ShortGameCheckboxEnabled: False
 	ScriptLobbyDropdown@DIFFICULTY:
 		ID: difficulty
 		Label: Difficulty
@@ -143,12 +143,9 @@ STNK.Nod:
 
 RMBO:
 	Inherits@DIFFICULTY: ^DifficultyModifiers
-	-AutoTarget:
-	-AutoTargetPriority@DEFAULT:
-	-AutoTargetPriority@ATTACKANYTHING:
+	AutoTarget:
+		InitialStance: HoldFire
 	-ChangesHealth@ELITE:
-	AttackMove:
-		-AssaultMoveCondition:
 	RevealsShroud:
 		Range: 8c0
 	ChangesHealth@HOSPITAL:
@@ -197,9 +194,6 @@ BRIDGEHUT.small:
 	-Targetable:
 	-Demolishable:
 
-TRUK:
-	-SpawnActorOnDeath:
-
 GTWR:
 	-Power:
 
@@ -226,9 +220,6 @@ NUK2:
 		Sequence: hacked
 	-ChangesHealth@HACKED:
 
-WOOD:
-	-BlocksProjectiles:
-
 HQ:
 	-DropPodsPowerCA@Zocom:
 	-AirstrikePower@uav:
@@ -253,5 +244,13 @@ EYE:
 		Amount: 0
 
 # Hunt() requires only 1 AttackBase
+BATF.AI:
+	-AttackFrontal:
+
+APC2:
+	-AttackTurreted:
+	-Armament@GAT:
+	-Armament@GATG:
+
 JJET:
 	-AttackAircraft:

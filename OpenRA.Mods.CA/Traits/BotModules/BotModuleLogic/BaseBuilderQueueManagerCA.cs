@@ -37,6 +37,7 @@ namespace OpenRA.Mods.CA.Traits
 		int cachedBases;
 		int cachedBuildings;
 		int minimumExcessPower;
+		int minCashRequirement;
 
 		bool itemQueuedThisTick = false;
 
@@ -55,6 +56,7 @@ namespace OpenRA.Mods.CA.Traits
 			Category = category;
 			failRetryTicks = baseBuilder.Info.StructureProductionResumeDelay;
 			minimumExcessPower = baseBuilder.Info.MinimumExcessPower;
+			minCashRequirement = baseBuilder.Info.DefenseQueues.Contains(Category) ? baseBuilder.Info.DefenseProductionMinCashRequirement : baseBuilder.Info.BuildingProductionMinCashRequirement;
 			if (baseBuilder.Info.NavalProductionTypes.Count == 0)
 				waterState = WaterCheck.DontCheck;
 		}
@@ -137,12 +139,12 @@ namespace OpenRA.Mods.CA.Traits
 			// Waiting to build something
 			if (currentBuilding == null && failCount < baseBuilder.Info.MaximumFailedPlacementAttempts)
 			{
-				// PERF: We shouldn't be queueing new buildings when we're low on cash
-				if (playerResources.Cash < baseBuilder.Info.ProductionMinCashRequirement || itemQueuedThisTick)
-					return false;
-
 				var item = ChooseBuildingToBuild(queue);
 				if (item == null)
+					return false;
+
+				// We shouldn't be queueing new buildings (other than refineries) when we're low on cash
+				if ((playerResources.Cash + playerResources.Resources < minCashRequirement && !baseBuilder.Info.RefineryTypes.Contains(item.Name)) || itemQueuedThisTick)
 					return false;
 
 				bot.QueueOrder(Order.StartProduction(queue.Actor, item.Name, 1));

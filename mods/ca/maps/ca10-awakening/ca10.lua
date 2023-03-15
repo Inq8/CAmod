@@ -120,7 +120,7 @@ AirAttackStart = {
 AirAttackInterval = {
 	easy = DateTime.Minutes(2),
 	normal = DateTime.Minutes(2),
-	hard = DateTime.Seconds(2)
+	hard = DateTime.Minutes(2)
 }
 
 HoldOutTime = {
@@ -165,7 +165,6 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		USSR.Cash = USSR.ResourceCapacity - 500
 		USSR.Resources = USSR.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
@@ -182,9 +181,9 @@ OncePerSecondChecks = function()
 			ObjectiveDestroySovietForces = Nod.AddObjective("Destroy all Soviet forces.")
 			Nod.MarkCompletedObjective(ObjectiveProtectTemple)
 
-			Actor.Create("advcyborg.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
-			Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
-			Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod, Location = UpgradeCreationLocation })
+			Actor.Create("advcyborg.upgrade", true, { Owner = Nod })
+			Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod })
+			Actor.Create("cyborgarmor.upgrade", true, { Owner = Nod })
 
 			if not TemplePrime.IsDead then
 				TemplePrime.GrantCondition("awakening-complete")
@@ -216,6 +215,9 @@ OncePerSecondChecks = function()
 			Trigger.AfterDelay(DateTime.Seconds(15), function()
 				CleanUp()
 			end)
+
+		elseif ObjectiveDestroySovietForces ~= nil and not Nod.IsObjectiveCompleted(ObjectiveDestroySovietForces) and Nod.HasNoRequiredUnits() then
+			Nod.MarkFailedObjective(ObjectiveDestroySovietForces)
 		end
 
 		if CyborgWaves >= MaxCyborgWaves then
@@ -236,9 +238,9 @@ InitUSSR = function()
 	AutoRepairAndRebuildBuildings(USSR, 15)
 	SetupRefAndSilosCaptureCredits(USSR)
 
-	Actor.Create("POWERCHEAT", true, { Owner = USSR, Location = UpgradeCreationLocation })
-	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
-	Actor.Create("tarc.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
+	Actor.Create("POWERCHEAT", true, { Owner = USSR })
+	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR })
+	Actor.Create("tarc.upgrade", true, { Owner = USSR })
 
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
 
@@ -330,7 +332,7 @@ DoAirAttack = function()
 
 	local units = Reinforcements.Reinforce(USSR, randomComposition, randomAttackPath, 25, function(a)
 		Trigger.AfterDelay(DateTime.Seconds(2), function()
-			InitializeAttackAircraft(a, Nod, { "nuke", "nuk2", "obli", "gun.nod", "mlrs", "arty.nod", "harv.td", "ltnk" })
+			InitAttackAircraft(a, Nod, { "nuke", "nuk2", "obli", "gun.nod", "mlrs", "arty.nod", "harv.td", "ltnk" })
 		end)
 	end)
 

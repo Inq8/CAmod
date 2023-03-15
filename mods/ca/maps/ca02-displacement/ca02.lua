@@ -118,7 +118,7 @@ Squads = {
 			hard = DateTime.Seconds(210)
 		},
 		Interval = {
-			easy = DateTime.Minutes(330),
+			easy = DateTime.Seconds(330),
 			normal = DateTime.Seconds(240),
 			hard = DateTime.Seconds(150)
 		},
@@ -219,6 +219,8 @@ WorldLoaded = function()
 		congregation1.Scatter()
 		congregation3.Scatter()
 	end)
+
+	SetupReveals({ EntranceReveal1, EntranceReveal2, EntranceReveal3 })
 end
 
 Tick = function()
@@ -228,7 +230,6 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		Scrin.Cash = Scrin.ResourceCapacity - 500
 		Scrin.Resources = Scrin.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
@@ -390,7 +391,7 @@ InitScrin = function()
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
 
 	Utils.Do(scrinGroundAttackers, function(a)
-		TargetSwapChance(a, Scrin, 10)
+		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
 	end)
 
@@ -402,7 +403,7 @@ InitScrin = function()
 				self.Stop()
 				self.ReturnToBase()
 				Trigger.AfterDelay(DateTime.Seconds(1), function()
-					InitializeAttackAircraft(self, Greece, { "proc", "dome", "atek", "apwr", "ptnk", "heli", "harr" })
+					InitAttackAircraft(self, Greece, { "proc", "dome", "atek", "apwr", "ptnk", "heli", "harr" })
 				end)
 			end
 		end)

@@ -544,7 +544,7 @@ TTankZap:
 	ReloadDelay: 90
 	Burst: 2
 	BurstDelays: 3
-	Range: 5c0
+	Range: 5c512
 	Warhead@1Dam: SpreadDamage
 		Damage: 5300
 		Versus:
@@ -1027,7 +1027,7 @@ XOLaser:
 	Inherits: Laser
 	Report: xo-laser.aud
 	ReloadDelay: 100
-	Range: 5c0
+	Range: 5c768
 	Projectile: LaserZapCA
 		Blockable: true
 		Width: 56
@@ -1038,12 +1038,12 @@ XOLaser:
 		SecondaryBeamColor: 79cd0040
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 10000
+		Damage: 10750
 		Versus:
 			None: 100
-			Wood: 45
-			Concrete: 80
-			Light: 80
+			Wood: 40
+			Concrete: 75
+			Light: 75
 			Heavy: 100
 
 PortaLaser:
@@ -1096,7 +1096,7 @@ EnlightenedBeam:
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
 		Damage: 5200
-		Falloff: 100, 70, 40, 15, 0
+		Falloff: 100, 85, 60, 25, 0
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		Versus:
 			None: 10
@@ -1126,13 +1126,13 @@ EnlightenedEmp:
 	ReloadDelay: 375
 	Warhead@1Emp: GrantExternalCondition
 		Range: 1c896
-		Duration: 150
+		Duration: 250
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle, Defense
 		ValidRelationships: Enemy, Neutral
 	Warhead@2Emp: GrantExternalCondition
 		Range: 1c896
-		Duration: 150
+		Duration: 250
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle, Defense
 		InvalidTargets: Cyborg
@@ -1144,7 +1144,7 @@ EnlightenedEmp:
 VenomLaser:
 	ReloadDelay: 30
 	ValidTargets: Ground, Water
-	Range: 5c0
+	Range: 5c512
 	Report: venmfire1.aud, venmfire2.aud
 	Projectile: LaserZapCA
 		Width: 35
@@ -1578,7 +1578,7 @@ GapBeam:
 	Warhead@Debuff: GrantExternalCondition
 		Range: 0c512
 		Duration: 15
-		Condition: veiled
+		Condition: gapveiled
 		ValidRelationships: Enemy, Neutral
 	Warhead@3Eff: CreateEffect
 		Explosions: veilcloudsm, veilcloudsmf
@@ -2205,7 +2205,7 @@ CyCannon:
 		Duration: 2
 		Condition: greenhighlight
 		ValidTargets: Ground, Vehicle
-		
+
 NeutronCannon:
 	ValidTargets: Temporal
 	ReloadDelay: 5

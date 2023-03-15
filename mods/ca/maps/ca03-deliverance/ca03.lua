@@ -315,6 +315,8 @@ WorldLoaded = function()
 			GDICommanderAlive = false
 		end
 	end)
+
+	SetupReveals({ EntranceReveal1, EntranceReveal2, EntranceReveal3, EntranceReveal4 })
 end
 
 Tick = function()
@@ -324,7 +326,6 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		USSR.Cash = USSR.ResourceCapacity - 500
 		USSR.Resources = USSR.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
@@ -374,13 +375,13 @@ GDIBaseFound = function()
 		end)
 
 		Trigger.AfterDelay(1, function()
-			Actor.Create("QueueUpdaterDummy", true, { Owner = Greece, Location = UpgradeCreationLocation })
+			Actor.Create("QueueUpdaterDummy", true, { Owner = Greece })
 		end)
 
 		InitUSSRAttacks()
 
 		Trigger.AfterDelay(DateTime.Seconds(1), function()
-			Actor.Create("QueueUpdaterDummy", true, { Owner = Greece, Location = UpgradeCreationLocation })
+			Actor.Create("QueueUpdaterDummy", true, { Owner = Greece })
 			ObjectiveHoldOut = Greece.AddObjective("Hold out until reinforcements arrive.")
 			UserInterface.SetMissionText("Hold out until reinforcements arrive.", HSLColor.Yellow)
 			Greece.MarkCompletedObjective(ObjectiveFindBase)
@@ -466,16 +467,16 @@ InitUSSR = function()
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
 
 	Utils.Do(ussrGroundAttackers, function(a)
-		TargetSwapChance(a, USSR, 10)
+		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
 	end)
 
-	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
+	Actor.Create("hazmatsoviet.upgrade", true, { Owner = USSR })
 
 	if Difficulty == "hard" then
 		Trigger.AfterDelay(DateTime.Minutes(15), function()
-			Actor.Create("flakarmor.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
-			Actor.Create("tarc.upgrade", true, { Owner = USSR, Location = UpgradeCreationLocation })
+			Actor.Create("flakarmor.upgrade", true, { Owner = USSR })
+			Actor.Create("tarc.upgrade", true, { Owner = USSR })
 		end)
 	end
 

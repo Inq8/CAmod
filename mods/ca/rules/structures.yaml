@@ -863,7 +863,7 @@ DOME:
 		Icon: veilofwar
 		IconPalette: chrometd
 		Prerequisites: ~radar.england
-		ChargeInterval: 4500
+		ChargeInterval: 6000
 		LifeTime: -1
 		Name: Veil of War
 		Description: \nCreates an expanding area of shroud, reducing the vision\n    and weapon range of enemy units and defenses.
@@ -2898,6 +2898,7 @@ BRIK:
 		Types: concrete
 	WithWallSpriteBody:
 		Type: concrete
+	BlocksProjectiles:
 
 CYCL:
 	Inherits: ^Wall
@@ -4479,6 +4480,7 @@ EYE:
 		BeginChargeSpeechNotification: IonCannonCharging
 		EndChargeSpeechNotification: IonCannonReady
 		EndChargeTextNotification: Surgical Strike ready.
+		IncomingSound: ion2.aud
 		LaunchSound: ion2.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -4710,6 +4712,8 @@ REP:
 		GuardDuration: 500
 		Cordon: 5c0
 		SupportPowerPaletteOrder: 45
+		LaunchSound: interceptors.aud
+		IncomingSound: interceptors.aud
 
 HPAD.TD:
 	Inherits: ^BuildingTD
@@ -5235,16 +5239,16 @@ TMPL:
 		ChargeInterval: 6750
 		Weapon: Frenzy
 		Name: Frenzy
-		Condition: frenzy
+		Condition: frenzyinit
 		Dimensions: 5, 5
 		Footprint: _xxx_ xxxxx xxxxx xxxxx _xxx_
 		ValidRelationships: Ally
-		Duration: 500
+		Duration: 750
 		ActivationDelay: 0
 		AirburstAltitude: 0c0
 		Sequence: false-active
 		AllowMultiple: false
-		Description: \nIncreases the movement speed and rate of fire of\n    targeted units for a limited time.\n\nWarning: Affected units take increased damage.
+		Description: \nIncreases the movement speed and rate of fire of\n    targeted units for a limited time.\n\nWarning: Units are weakened for a short time\n    after frenzy wears off.
 		OnFireSound: nodfrenzy.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.

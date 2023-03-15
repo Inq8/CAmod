@@ -1,0 +1,115 @@
+^Palettes:
+	GlobalLightingPaletteEffect:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, ca21.lua
+	MissionData:
+		Briefing: ———[    Chapter V Introduction    ]———\n\nThe Scrin have been rapidly growing their influence. Kane has disappeared and much of his cyborg army is now under their control, along with significant concentrations of Soviet forces.\n\nThe rest of the Brotherhood has fractured. Some have joined the Scrin willingly, seeing them as the true heralds of a new age, while others cling to their belief that Kane will return and continue to do battle with both us and the invaders.\n\nThe Soviet resurgence was short lived and they are once again in disarray. Stalin has retreated to Siberia, and without Yuri their offensive capabilities are limited, however Stalin still refuses to negotiate a truce and cannot be relied upon to behave rationally.\n\nWe have lost much ground, but we believe there is hope. We do not think the Scrin had intended to rely so heavily on human forces to do their bidding, and are only doing so because they are unable to send for reinforcements. Their invasion force is insufficient, and their situation is more precarious than they would have us believe.\n\nThey have been consolidating territory and amassing stockpiles of Tiberium. They are preparing for something, and we need to find out what.\n\n———[    Mission Briefing    ]———\n\nNod forces continue to strike at our supply lines. Even with the survival of humanity at stake they cannot put their hatred aside. We cannot advance on the Scrin until this Nod threat is neutralised.\n\nOne route to the front line has been particularly ravaged. A detachment that was sent to secure the area has reported that they have encountered Nod scouts and they suspect another ambush is imminent. Take command of these forces and ensure they are not overwhelmed.\n\nIt seems likely that the Nod stronghold for the entire region is nearby, but we have thus far been unable to find it. If this turns out to be the case, we will send reinforcements and you are instructed to purge whatever Nod forces are present.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: Difficulty
+		Description: The difficulty of the mission
+		Values:
+			easy: Easy
+			normal: Normal
+			hard: Hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: trouble
+
+Player:
+	PlayerResources:
+		DefaultCash: 0
+	SupportPowerBotModule@CAMPAIGN:
+		Decisions:
+			chemmissilepower:
+				OrderName: chemmissile
+				MinimumAttractiveness: 3000
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 5c0
+
+^TDPalette:
+	RenderSprites:
+		PlayerPalette: playertdunit
+
+^Infantry:
+	RenderSprites:
+		PlayerPalette: playertdunit
+	WithDeathAnimation:
+		DeathSequencePalette: playertdunit
+
+^BuildingTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+^DefenseTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+SAPC:
+	RenderSprites:
+		PlayerPalette: playerraunit
+
+HARV.TD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+AMCV:
+	RenderSprites:
+		PlayerPalette: playertd
+
+^Cloakable:
+	Cloak@MSGCLOAK:
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Damage, Heal, SelfHeal
+
+MSG:
+	WithRangeCircle@MSG:
+		Range: 9c512
+	ProximityExternalCondition@MSG:
+		Range: 9c512
+
+SGEN:
+	WithRangeCircle@SGEN:
+		Range: 14c512
+	ProximityExternalCondition@SGEN:
+		Range: 14c512
+	GrantExternalConditionPowerCA@SGEN:
+		DisplayTimerRelationships: Ally
+
+UAV:
+	-DetectCloaked:
+	-Targetable@AIRBORNE:
+
+HQ:
+	AirstrikePower@uav:
+		Description: \nA drone flies across the map, revealing the area as it passes.
+
+ATWR:
+	Buildable:
+		Prerequisites: vehicles.any, ~structures.gdi, ~techlevel.medium
+
+STWR:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+EYE:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+ORCA:
+	Buildable:
+		Prerequisites: ~aircraft.gdi
+
+HPAD.TD:
+	-InterceptorPower@AirDef:
+
+MSLO.Nod:
+	NukePower@Chemmiss:
+		RequiresCondition: chem-missile-enabled
+	ExternalCondition@CHEMENABLED:
+		Condition: chem-missile-enabled

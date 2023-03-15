@@ -72,23 +72,14 @@ WorldLoaded = function()
 		end
 	end)
 
-	Utils.Do(AlliedKeyBuildings, function(b)
-		Trigger.OnKilled(b, function(self, killer)
-			local intactKeyBuildings = Utils.Where(AlliedKeyBuildings, function(b)
-				return not b.IsDead
-			end)
-			if #intactKeyBuildings == 0 then
-				Nod.MarkCompletedObjective(ObjectiveDestroyAlliedBase)
-			end
-		end)
+	Trigger.OnAllKilled(AlliedKeyBuildings, function()
+		Nod.MarkCompletedObjective(ObjectiveDestroyAlliedBase)
 	end)
 
-	Utils.Do({ Hacker1, Hacker2 }, function(h)
-		Trigger.OnKilled(h, function(self, killer)
-			if (Commando.IsDead or (Hacker1.IsDead and Hacker2.IsDead)) and not Nod.IsObjectiveCompleted(ObjectiveHackIonControl) then
-				Nod.MarkFailedObjective(ObjectiveHackIonControl)
-			end
-		end)
+	Trigger.OnAllKilled({ Hacker1, Hacker2 }, function()
+		if not Nod.IsObjectiveCompleted(ObjectiveHackIonControl) then
+			Nod.MarkFailedObjective(ObjectiveHackIonControl)
+		end
 	end)
 
 	if Difficulty ~= "hard" then
@@ -106,7 +97,7 @@ WorldLoaded = function()
 	local revealPoints = { EntranceReveal1, EntranceReveal2, EntranceReveal3, EntranceReveal4, BridgeDefendersReveal1, BridgeDefendersReveal2 }
 	Utils.Do(revealPoints, function(p)
 		Trigger.OnEnteredProximityTrigger(p.CenterPosition, WDist.New(11 * 1024), function(a, id)
-			if a.Owner == Nod then
+			if a.Owner == Nod and a.Type ~= "smallcamera" then
 				Trigger.RemoveProximityTrigger(id)
 				if p == BridgeDefendersReveal1 and not BridgeTipShown then
 					BridgeTipShown = true
@@ -128,9 +119,7 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		Greece.Cash = Greece.ResourceCapacity - 500
 		Greece.Resources = Greece.ResourceCapacity - 500
-		GDI.Cash = GDI.ResourceCapacity - 500
 		GDI.Resources = GDI.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
@@ -177,11 +166,13 @@ InitGDI = function()
 	local gdiGroundAttackers = GDI.GetGroundAttackers()
 
 	Utils.Do(gdiGroundAttackers, function(a)
-		TargetSwapChance(a, GDI, 10)
+		TargetSwapChance(a, 10)
 		if a.Type ~= "memp" and a.Type ~= "gdrn" and a.Type ~= "htnk.drone" and a.Type ~= "mtnk.drone" then
 			CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
 		end
 	end)
+
+	Actor.Create("hazmat.upgrade", true, { Owner = GDI })
 end
 
 InitGreece = function()
@@ -208,6 +199,8 @@ InitGreece = function()
 			a.Move(randomDest)
 		end
 	end)
+
+	Actor.Create("hazmat.upgrade", true, { Owner = Greece })
 end
 
 InitGDIPatrols = function()

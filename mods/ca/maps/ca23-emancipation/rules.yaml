@@ -1,0 +1,109 @@
+^Palettes:
+	GlobalLightingPaletteEffect:
+	PaletteFromFile@terrain-temperat:
+		Filename: ca|maps/ca19-decimation/fall.pal
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, ca23.lua
+	MissionData:
+		Briefing: A disaster has occurred, commander. Several of our bases near the front line, which we have been using as staging areas for our final assault, have fallen to Scrin mind control.\n\nWe have encountered the Scrin Masterminds before, but we had no idea they were capable of anything on this scale.\n\nOur Advanced Robotics Command has begun mass mobilisation of drone units, as we cannot risk sending any forces that are vulnerable to mind control.\n\nYour mission is to take some of these drone units and use them to neutralise the Scrin Masterminds. Although we cannot be sure, we think that killing a Mastermind will release all of the minds it has enslaved.\n\nTake care not to kill GDI forces that are under Scrin control. Once you have regained control of all of our bases, destroy the Scrin presence in the area.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: Difficulty
+		Description: The difficulty of the mission
+		Values:
+			easy: Easy
+			normal: Normal
+			hard: Hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: march
+
+Player:
+	PlayerResources:
+		DefaultCash: 0
+
+^TDPalette:
+	RenderSprites:
+		PlayerPalette: playertdunit
+
+^Infantry:
+	RenderSprites:
+		PlayerPalette: playertdunit
+	WithDeathAnimation:
+		DeathSequencePalette: playertdunit
+
+^BuildingTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+^DefenseTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+SAPC:
+	RenderSprites:
+		PlayerPalette: playerraunit
+
+HARV.TD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+amcv.enabled:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesPrerequisite:
+
+AMCV:
+	RenderSprites:
+		PlayerPalette: playertd
+	Buildable:
+		Prerequisites: vehicles.mcv, ~amcv.enabled, ~vehicles.td
+
+MAST:
+	MindController:
+		Capacity: 0
+	GrantCondition@mindcontrolling:
+		Condition: mindcontrolling
+	-WithDecoration@COMMANDOSKULL:
+
+MSAR:
+	MustBeDestroyed:
+		RequiredForShortGame: true
+
+MANI:
+	DetonateWeaponPower@SUPPRESSION:
+		DisplayTimerRelationships: Ally
+
+EYE:
+	DetonateWeaponPower@IonStorm:
+		DisplayTimerRelationships: Ally
+
+PATR:
+	AttackOrderPower@EMPMISSILE:
+		DisplayTimerRelationships: Ally
+
+GDRN:
+	RevealsShroud:
+		Range: 8c0
+
+UAV:
+	-Targetable@AIRBORNE:
+	RevealsShroud:
+		Range: 12c0
+		MinRange: 10c0
+	RevealsShroud@GAPGEN:
+		Range: 10c0
+
+# Hunt() requires only 1 AttackBase
+DEVA:
+	-AttackFrontalCharged:
+	-Armament@PRIMARYUPG:
+	-AmbientSound@CHARGE:
+	-WithIdleOverlay@CHARGE1:
+	-WithIdleOverlay@CHARGE2:
+	-WithIdleOverlay@CHARGE3:

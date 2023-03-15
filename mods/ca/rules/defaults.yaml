@@ -311,11 +311,8 @@
 	ReloadDelayMultiplier@FRENZY:
 		RequiresCondition: frenzy
 		Modifier: 75
-	DamageMultiplier@FRENZY:
-		RequiresCondition: frenzy
-		Modifier: 110
 	ExternalCondition@FRENZY:
-		Condition: frenzy
+		Condition: frenzyinit
 	WithModifiedPalette@FRENZY:
 		RequiresCondition: frenzy
 		Palette: frenzy
@@ -328,6 +325,16 @@
 		Palette: frenzyoverlay
 		RequiresCondition: frenzy
 		IsDecoration: True
+	GrantTimedCondition@FRENZY:
+		Condition: frenzy
+		RequiresCondition: frenzyinit
+		Duration: 500
+	ReloadDelayMultiplier@FRENZYDEBUFF:
+		RequiresCondition: !frenzy && frenzyinit
+		Modifier: 115
+	SpeedMultiplier@FRENZYDEBUFF:
+		RequiresCondition: !frenzy && frenzyinit
+		Modifier: 85
 
 ^FrenzyInfantry:
 	Inherits: ^Frenzy
@@ -893,7 +900,7 @@
 ^TankBusterVulnerability:
 	DamageTypeDamageMultiplier@TANKBUSTERVULN:
 		DamageTypes: TankBuster
-		Modifier: 130
+		Modifier: 133
 
 ^GyroStabilizers:
 	WithModifiedPalette@GYRO:
@@ -901,10 +908,10 @@
 		Palette: gyro
 	RangeMultiplier@GYRO:
 		RequiresCondition: gyrostabilizers
-		Modifier: 200
+		Modifier: 175
 	ReloadDelayMultiplier@GYRO:
 		RequiresCondition: gyrostabilizers
-		Modifier: 200
+		Modifier: 175
 	TimedConditionBar@GYRO:
 		Condition: gyrostabilizers
 	ExternalCondition@GYRO:
@@ -1280,10 +1287,10 @@
 	ExternalCondition@concussion:
 		Condition: concussion
 	SpeedMultiplier@concussion:
-		Modifier: 55
+		Modifier: 75
 		RequiresCondition: concussion
 	ReloadDelayMultiplier@concussion:
-		Modifier: 150
+		Modifier: 200
 		RequiresCondition: concussion
 	WithDecoration@Concussion:
 		Image: pips
@@ -1310,15 +1317,20 @@
 
 ^Veilable:
 	RangeMultiplier@VEILED:
-		Modifier: 50
+		Modifier: 80
 		RequiresCondition: veiled
+	RangeMultiplier@GAPVEILED:
+		Modifier: 60
+		RequiresCondition: gapveiled
 	ExternalCondition@VEILED:
 		Condition: veiled
+	ExternalCondition@GAPVEILED:
+		Condition: gapveiled
 	WithIdleOverlay@VEILED:
 		Sequence: vehicle
 		Image: veildebuff
 		Palette: effect-ignore-lighting-alpha35
-		RequiresCondition: veiled
+		RequiresCondition: veiled || gapveiled
 		IsDecoration: True
 
 ^VeilableInfantry:
@@ -1418,6 +1430,7 @@
 			hack: hacked
 		RevokingConditions:
 			hack: restoring
+	GivesExperienceToMaster:
 
 ^MindControllable:
 	Inherits: ^MindControllableBase
@@ -2860,7 +2873,6 @@
 		DestroyedSounds: sandbag2.aud
 	Crushable:
 		CrushClasses: wall
-	BlocksProjectiles:
 	LineBuild:
 		Range: 8
 		NodeTypes: wall
@@ -3700,6 +3712,9 @@
 	FreeActor@QUEUEUPDATER:
 		Actor: QueueUpdaterDummy
 		RequiresCondition: updatequeue
+	SpawnActorOnCapture@QUEUEUPDATER:
+		Actor: QueueUpdaterDummy
+		Delay: 1
 	GrantDelayedCondition@QUEUEUPDATER:
 		Delay: 1
 		Condition: updatequeue

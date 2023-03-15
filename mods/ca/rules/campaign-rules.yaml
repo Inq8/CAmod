@@ -11,8 +11,13 @@ Player:
 		DefaultCashDropdownLocked: True
 		DefaultCash: 0
 	ModularBot@CampaignAI:
-		Name: Campaign Player AI
+		Name: Campaign AI
 		Type: campaign
+	GrantConditionOnBotOwner@CampaignAI:
+		Condition: enable-campaign-ai
+		Bots: campaign
+	SupportPowerBotModule@CAMPAIGN:
+		RequiresCondition: enable-campaign-ai
 	LobbyPrerequisiteCheckbox@GLOBALBOUNTY:
 		Enabled: False
 	LobbyPrerequisiteCheckbox@GLOBALMULTIQUEUE:
@@ -77,23 +82,81 @@ REAC:
 REA2:
 	Inherits@EXTRAPOWER: ^AiExtraPower
 
+PRIS:
+	ExternalCondition@DISABLED:
+		Condition: disabled
+
+HTUR:
+	ExternalCondition@DISABLED:
+		Condition: disabled
+
+AGUN:
+	ExternalCondition@DISABLED:
+		Condition: disabled
+
+GAP:
+	ExternalCondition@DISABLED:
+		Condition: disabled
+
+TSLA:
+	ExternalCondition@DISABLED:
+		Condition: disabled
+
+SAM:
+	ExternalCondition@DISABLED:
+		Condition: disabled
+
+ATWR:
+	ExternalCondition@DISABLED:
+		Condition: disabled
+
+STWR:
+	ExternalCondition@DISABLED:
+		Condition: disabled
+
+CRAM:
+	ExternalCondition@DISABLED:
+		Condition: disabled
+
+OBLI:
+	ExternalCondition@DISABLED:
+		Condition: disabled
+
+NSAM:
+	ExternalCondition@DISABLED:
+		Condition: disabled
+
+LASP:
+	ExternalCondition@DISABLED:
+		Condition: disabled
+
+SCOL:
+	ExternalCondition@DISABLED:
+		Condition: disabled
+
+SCOL.Temp:
+	-ExternalCondition@DISABLED:
+
+SHAR:
+	ExternalCondition@DISABLED:
+		Condition: disabled
+
+SGEN:
+	ExternalCondition@DISABLED:
+		Condition: disabled
+
 SMIG:
 	-Targetable@AIRBORNE:
 
 TRUK:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-CHAIN:
-	-BlocksProjectiles:
-
-FENC:
-	-BlocksProjectiles:
-
 TRAN.Evac:
 	Inherits: TRAN
 	-Buildable:
 	RenderSprites:
 		Image: tran
+		PlayerPalette: playerraunit
 	DamageMultiplier@INVULN:
 		Modifier: 0
 	-KillsSelf:
@@ -101,11 +164,17 @@ TRAN.Evac:
 		TurnToLand: True
 		InitialFacing: 0
 
+TRUK:
+	Mobile:
+		Speed: 54
+	-SpawnActorOnDeath:
+
 MONEYCRATE:
 	Tooltip:
 		Name: Crate
 	GiveCashCrateAction:
 		Amount: 2000
+		ExcludedActorTypes: c1, c2, c3, c4, c5, c6, c7, c8, c9, c10
 	RenderSprites:
 		Image: scrate
 
@@ -124,6 +193,42 @@ POWERCHEAT:
 	ScriptTriggers:
 	Power:
 		Amount: 10000
+
+hold3.strat:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesPrerequisite@upgradename:
+
+radar.dummy:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesRadar:
+
+E2:
+	Buildable:
+		Prerequisites: ~infantry.e2, ~!pyle
+
+N1:
+	Buildable:
+		Prerequisites: ~!tmpp, ~infantry.td, ~!infantry.ra
+
+N3:
+	Buildable:
+		Prerequisites: ~!tmpp, ~infantry.td, ~!infantry.ra
+
+N6:
+	Buildable:
+		Prerequisites: ~infantry.td, ~!infantry.ra
+
+SHAD:
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildPaletteOrder: 500
+		Prerequisites: ~disabled
+		BuildAtProductionType: Soldier
+		Description: Elite stealth infantry.
 
 # For attack interval calculations, factoring in extra value from cargo
 SAPC.AI:

@@ -11,6 +11,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenRA.Mods.CA.Orders;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
@@ -38,11 +39,21 @@ namespace OpenRA.Mods.CA.Traits
 		[GrantedConditionReference]
 		public readonly string ProgressCondition;
 
+		[Desc("Condition to grant to self when at full capacity.")]
+		[GrantedConditionReference]
+		public readonly string MaxControlledCondition;
+
 		[Desc("The sound played when target is mind controlled.")]
 		public readonly string[] ControlSounds = { };
 
+		[Desc("The sound played when slave is released.")]
+		public readonly string[] ReleaseSounds = { };
+
 		[Desc("If true, mind control start sound is only played to the controlling player.")]
 		public readonly bool ControlSoundControllerOnly = false;
+
+		[Desc("If true, release sound is only played to the controlling player.")]
+		public readonly bool ReleaseSoundControllerOnly = false;
 
 		[Desc("The sound played (to the controlling player only) when beginning mind control process.")]
 		public readonly string[] InitSounds = { };
@@ -65,15 +76,27 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If true, slave will be released when attacking a new target.")]
 		public readonly bool ReleaseOnNewTarget = false;
 
+		[Desc("Cursor to use for targeting slaves to release.")]
+		public readonly string ReleaseSlaveCursor = "pinkdeploy";
+
+		[Desc("If true, slaves can be targeted to release them.")]
+		public readonly bool ManualReleaseEnabled = false;
+
 		public override object Create(ActorInitializer init) { return new MindController(init.Self, this); }
 	}
 
-	public class MindController : PausableConditionalTrait<MindControllerInfo>, INotifyAttack, INotifyKilled, INotifyActorDisposing, INotifyCreated, IResolveOrder, ITick
+	public class MindController : PausableConditionalTrait<MindControllerInfo>, INotifyAttack, INotifyKilled, INotifyActorDisposing, INotifyCreated, IIssueOrder, IResolveOrder, ITick
 	{
 		readonly List<Actor> slaves = new List<Actor>();
 		readonly Stack<int> controllingTokens = new Stack<int>();
 
 		public IEnumerable<Actor> Slaves { get { return slaves; } }
+
+		MindControllerInfo info;
+		int capacity;
+		IEnumerable<MindControllerCapacityModifier> capacityModifiers;
+		bool refreshCapacity;
+		int maxControlledToken = Actor.InvalidConditionToken;
 
 		// Only tracked when TicksToControl greater than zero
 		Target lastTarget = Target.Invalid;
@@ -84,7 +107,10 @@ namespace OpenRA.Mods.CA.Traits
 		public MindController(Actor self, MindControllerInfo info)
 			: base(info)
 		{
+			this.info = info;
 			ResetProgress(self);
+			capacityModifiers = self.TraitsImplementing<MindControllerCapacityModifier>();
+			UpdateCapacity(self);
 		}
 
 		void StackControllingCondition(Actor self, string condition)
@@ -109,11 +135,15 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				slaves.Remove(slave);
 				UnstackControllingCondition(self, Info.ControllingCondition);
+				MaxControlledCheck(self);
 			}
 		}
 
 		void ITick.Tick(Actor self)
 		{
+			if (refreshCapacity)
+				UpdateCapacity(self);
+
 			if (Info.TicksToControl == 0)
 				return;
 
@@ -157,8 +187,53 @@ namespace OpenRA.Mods.CA.Traits
 				progressToken = self.RevokeCondition(progressToken);
 		}
 
-		public void ResolveOrder(Actor self, Order order)
+		void MaxControlledCheck(Actor self)
 		{
+			if (capacity == 0)
+				return;
+
+			if (slaves.Count() >= capacity)
+				GrantMaxControlledCondition(self);
+			else
+				RevokeMaxControlledCondition(self);
+		}
+
+		public void GrantMaxControlledCondition(Actor self)
+		{
+			if (string.IsNullOrEmpty(Info.MaxControlledCondition))
+				return;
+
+			if (maxControlledToken == Actor.InvalidConditionToken)
+				maxControlledToken = self.GrantCondition(Info.MaxControlledCondition);
+		}
+
+		public void RevokeMaxControlledCondition(Actor self)
+		{
+			if (string.IsNullOrEmpty(Info.MaxControlledCondition))
+				return;
+
+			if (maxControlledToken != Actor.InvalidConditionToken)
+				maxControlledToken = self.RevokeCondition(maxControlledToken);
+		}
+
+		void IResolveOrder.ResolveOrder(Actor self, Order order)
+		{
+			if (order.OrderString == "ReleaseSlave")
+			{
+				order.Target.Actor.Trait<MindControllable>().RevokeMindControl(order.Target.Actor, 0);
+
+				if (Info.ReleaseSounds.Length > 0)
+				{
+					if (Info.ReleaseSoundControllerOnly)
+						Game.Sound.PlayToPlayer(SoundType.World, self.Owner, Info.ReleaseSounds.Random(self.World.SharedRandom), self.CenterPosition);
+					else
+						Game.Sound.Play(SoundType.World, Info.ReleaseSounds.Random(self.World.SharedRandom), self.CenterPosition);
+				}
+
+				return;
+			}
+
+			// For all other order, if target has changed, reset progress
 			if (order.Target.Actor != currentTarget.Actor)
 			{
 				ResetProgress(self);
@@ -241,7 +316,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (mindControllable.IsTraitDisabled || mindControllable.IsTraitPaused)
 				return;
 
-			if (Info.Capacity > 0 && !Info.DiscardOldest && slaves.Count() >= Info.Capacity)
+			if (capacity > 0 && !Info.DiscardOldest && slaves.Count() >= capacity)
 				return;
 
 			if (mindControllable.Master != null)
@@ -254,10 +329,11 @@ namespace OpenRA.Mods.CA.Traits
 			StackControllingCondition(self, Info.ControllingCondition);
 			mindControllable.LinkMaster(currentTarget.Actor, self);
 
-			if (Info.Capacity > 0 && Info.DiscardOldest && slaves.Count() > Info.Capacity)
+			if (capacity > 0 && Info.DiscardOldest && slaves.Count() > capacity)
 				slaves[0].Trait<MindControllable>().RevokeMindControl(slaves[0], 0);
 
 			ControlComplete(self);
+			MaxControlledCheck(self);
 		}
 
 		void ControlComplete(Actor self)
@@ -294,6 +370,8 @@ namespace OpenRA.Mods.CA.Traits
 			slaves.Clear();
 			while (controllingTokens.Count > 0)
 				UnstackControllingCondition(self, Info.ControllingCondition);
+
+			RevokeMaxControlledCondition(self);
 		}
 
 		public void TransformSlave(Actor self, Actor oldSlave, Actor newSlave)
@@ -349,6 +427,61 @@ namespace OpenRA.Mods.CA.Traits
 					return true;
 
 			return false;
+		}
+
+		void UpdateCapacity(Actor self)
+		{
+			refreshCapacity = false;
+			var newCapacity = info.Capacity;
+
+			// Modifiers have no effect if the base capacity is unlimited.
+			if (info.Capacity == 0)
+				return;
+
+			foreach (var capacityModifier in capacityModifiers)
+				newCapacity += capacityModifier.Amount;
+
+			capacity = Math.Max(newCapacity, 1);
+
+			var currentSlaveCount = slaves.Count();
+			var numSlavesToRemove = currentSlaveCount - capacity;
+			for (var i = numSlavesToRemove; i > 0; i--)
+				slaves[i].Trait<MindControllable>().RevokeMindControl(slaves[i], 0);
+
+			MaxControlledCheck(self);
+		}
+
+		public void ModifierUpdated()
+		{
+			refreshCapacity = true;
+		}
+
+		IEnumerable<IOrderTargeter> IIssueOrder.Orders
+		{
+			get
+			{
+				yield return new ReleaseSlaveOrderTargeter(
+					"ReleaseSlave",
+					5,
+					Info.ReleaseSlaveCursor,
+					IsManuallyReleasableSlave);
+			}
+		}
+
+		Order IIssueOrder.IssueOrder(Actor self, IOrderTargeter order, in Target target, bool queued)
+		{
+			if (order.OrderID == "ReleaseSlave")
+				return new Order(order.OrderID, self, target, queued);
+
+			return null;
+		}
+
+		bool IsManuallyReleasableSlave(Actor a)
+		{
+			if (!Info.ManualReleaseEnabled)
+				return false;
+
+			return slaves.Contains(a);
 		}
 	}
 }

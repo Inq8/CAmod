@@ -1,0 +1,306 @@
+^Palettes:
+	GlobalLightingPaletteEffect:
+	PaletteFromFile@terrain-temperat:
+		Filename: brown.pal
+	WeatherOverlay@RAIN:
+		WindTick: 150, 550
+		UseSquares: false
+		ScatterDirection: 0, 0
+		Gravity: 20, 25
+		SwingOffset: 0, 0
+		SwingSpeed: 0, 0
+		SwingAmplitude: 0, 0
+		ParticleColors: 72aaae, 72aea6, 5caea3, 6da69f
+		LineTailAlphaValue: 25
+		ParticleSize: 1, 1
+		ParticleDensityFactor: 5
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, ca20.lua
+	MissionData:
+		Briefing: We have located the one known as Yuri. Cloistered and protected by his cybernetic and genetically engineered slaves, he has been using an enriched form of ichor to empower his already considerable psionic powers.\n\nHe must be stopped, but kept alive so that we may learn more of his experiments.\n\nWe believe the enriched ichor will be similarly effective at increasing the power of our Masterminds. To test this theory, capture Yuri's enrichment facilities. The enriched ichor will be consumed by the Mastermind who will then be capable of protecting your other units against Yuri's influence.\n\nOnce all of the available enriched ichor has been consumed, use whatever forces you have remaining, along with any you have enslaved, to assault and capture Yuri's command center.
+	MapOptions:
+		ShortGameCheckboxEnabled: False
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: Difficulty
+		Description: The difficulty of the mission
+		Values:
+			easy: Easy
+			normal: Normal
+			hard: Hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: duskhour
+
+Player:
+	PlayerResources:
+		DefaultCash: 0
+
+^TDPalette:
+	RenderSprites:
+		PlayerPalette: playertdunit
+
+^Infantry:
+	RenderSprites:
+		PlayerPalette: playertdunit
+	WithDeathAnimation:
+		DeathSequencePalette: playertdunit
+
+^BuildingTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+^DefenseTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+SAPC:
+	RenderSprites:
+		PlayerPalette: playerraunit
+
+HARV.TD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+AMCV:
+	RenderSprites:
+		PlayerPalette: playertd
+
+^MindControllable:
+	Targetable@MINDCONTROL:
+		TargetTypes: MindControllable
+		RequiresCondition: !hacked && !restoring
+	ExternalCondition@MCPROTECTION:
+		Condition: mc-protection
+	Targetable@MCPROTECTION:
+		RequiresCondition: mc-protection
+		TargetTypes: YuriMindControlImmune
+
+^DifficultyModifiers:
+	ExternalCondition@NORMAL:
+		Condition: difficulty-normal
+	ExternalCondition@EASY:
+		Condition: difficulty-easy
+	DamageMultiplier@EASY:
+		Modifier: 60
+		RequiresCondition: difficulty-easy
+	DamageMultiplier@NORMAL:
+		Modifier: 80
+		RequiresCondition: difficulty-normal
+	RevealsShroudMultiplier@EASY:
+		Modifier: 130
+		RequiresCondition: difficulty-easy
+	RevealsShroudMultiplier@NORMAL:
+		Modifier: 115
+		RequiresCondition: difficulty-normal
+	RangeMultiplier@EASY:
+		Modifier: 130
+		RequiresCondition: difficulty-easy
+	RangeMultiplier@NORMAL:
+		Modifier: 115
+		RequiresCondition: difficulty-normal
+
+MAST:
+	Inherits@DIFFICULTY: ^DifficultyModifiers
+	-GainsExperience:
+	-ProducibleWithLevel:
+	ExternalCondition@VET:
+		Condition: rank-veteran
+	RevealActorsPower@RESOURCESCAN:
+		CameraActor: camera.resourcescan
+		TargetActors: bio, miss, truk
+		LifeTime: 125
+		OrderName: resourcescan
+		Icon: rescanpower
+		ChargeInterval: 4500
+		Name: Resource Scan
+		Description: \nReveals high concentrations of Tiberium.
+		LaunchSound: tibscan.aud
+		EffectImage: empty
+		EffectSequence: idle
+		EffectPalette: tseffect-ignore-lighting-alpha75
+		SupportPowerPaletteOrder: 50
+		EndChargeTextNotification: Resource Scan ready.
+	ProximityExternalCondition@MCPROTECTION:
+		RequiresCondition: rank-elite
+		Condition: mc-protection
+		ValidRelationships: Ally, Enemy, Neutral
+		Range: 20c0
+	WithRangeCircle@MCPROTECTION:
+		Type: Psi
+		Visible: Always
+		ValidRelationships: Ally
+		Color: 7700ffaa
+		Range: 20c0
+		RequiresCondition: rank-elite
+	RevealsShroud:
+		Range: 7c0
+	AutoTarget:
+		InitialStance: HoldFire
+	-RangeMultiplier@RANK-ELITE:
+
+SEEK:
+	RevealsShroud:
+		Range: 8c512
+
+camera.resourcescan:
+	RevealsShroud:
+		Range: 4c0
+
+MISS:
+	Inherits@AUTOTARGET: ^AutoTargetAll
+	Tooltip:
+		Name: Yuri's Command Center
+	WithRangeCircle@0:
+		Type: Psi
+		Visible: Always
+		ValidRelationships: Enemy
+		Color: ff00ff66
+		Range: 20c0
+		RequiresCondition: !enriched
+	WithRangeCircle@1:
+		Type: Psi
+		Visible: Always
+		ValidRelationships: Enemy
+		Color: ff00ff66
+		Range: 26c0
+		RequiresCondition: enriched == 1
+	WithRangeCircle@2:
+		Type: Psi
+		Visible: Always
+		ValidRelationships: Enemy
+		Color: ff00ff66
+		Range: 32c0
+		RequiresCondition: enriched == 2
+	WithRangeCircle@3:
+		Type: Psi
+		Visible: Always
+		ValidRelationships: Enemy
+		Color: ff00ff66
+		Range: 38c0
+		RequiresCondition: enriched >= 3
+	RangeMultiplier@1:
+		Modifier: 130
+		RequiresCondition: enriched == 1
+	RangeMultiplier@2:
+		Modifier: 160
+		RequiresCondition: enriched == 2
+	RangeMultiplier@3:
+		Modifier: 190
+		RequiresCondition: enriched >= 3
+	GrantConditionOnBotOwnerCA@BOTOWNER:
+		Condition: owned-by-ai
+	AttackOmni:
+		RequiresCondition: owned-by-ai
+	Armament@0:
+		Weapon: Subjugate
+	Health:
+		HP: 500000
+	ExternalCondition@ENRICHED:
+		Condition: enriched
+	RevealsShroud:
+		Range: 20c0
+	RevealsShroudMultiplier@1:
+		Modifier: 130
+		RequiresCondition: enriched == 1
+	RevealsShroudMultiplier@2:
+		Modifier: 160
+		RequiresCondition: enriched == 2
+	RevealsShroudMultiplier@3:
+		Modifier: 190
+		RequiresCondition: enriched >= 3
+
+BIO:
+	Tooltip:
+		Name: Tiberium Enrichment Facility
+	Health:
+		HP: 120000
+	-ProvidesPrerequisite@mortar:
+	-ProvidesPrerequisite@toxintruck:
+
+DOME:
+	-AirstrikePower@spyplane:
+
+HPAD:
+	-AirstrikePower@Russianparabombs:
+	-AirstrikePower@MutaBomb:
+
+SILO:
+	Power:
+		Amount: 0
+
+YURI:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MCV:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+BRUT:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+SHOK:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+THF:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+DOG:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+HALO:
+	Buildable:
+		Prerequisites: hpad
+	Health:
+		HP: 17000
+	Targetable@MINDCONTROL:
+		TargetTypes: MindControllable
+	KillsSelf@YURIMC:
+		RequiresCondition: yurimc
+	GrantConditionOnBotOwnerCA@YURIMC:
+		Condition: yurimc
+	-EjectOnDeath:
+
+HIND:
+	Buildable:
+		Prerequisites: hpad
+	Health:
+		HP: 17000
+	Targetable@MINDCONTROL:
+		TargetTypes: MindControllable
+
+YAK:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MIG:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+KIRO:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+SUK:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+shrw.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+E4:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+TTRA:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+E6:
+	Voiced:
+		VoiceSet: GenericVoice
+
+3TNK.YURI:
+	Voiced:
+		VoiceSet: VehicleVoice
+	AttackTurreted:
+		-Voice:
+	Mobile:
+		-Voice:
+	Passenger:
+		-Voice:

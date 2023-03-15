@@ -1,0 +1,32 @@
+SMG:
+	InvalidTargets: Structure
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			Light: 8
+			Heavy: 6
+
+Colt45:
+	-Projectile:
+	Projectile: InstantHit
+		Blockable: true
+	ReloadDelay: 8
+	ValidTargets: Ground
+	InvalidTargets: Structure
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Ground
+		ValidRelationships: Enemy, Neutral
+		Versus:
+			Light: 8
+			Heavy: 6
+
+PlaceC4:
+	ValidTargets: Structure
+
+ProdigyZap:
+	Range: 12c0
+	Projectile: InstantHit
+	Report: mastermind-fire.aud
+	Warhead@1Dam: SpreadDamage
+		Spread: 128
+		Damage: 100000
+		DamageTypes: BulletDeath

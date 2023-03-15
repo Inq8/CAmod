@@ -308,7 +308,7 @@ ChainGun:
 	Inherits: ^HeavyMG
 	Report: gun13.aud
 	ReloadDelay: 12
-	Range: 5c0
+	Range: 5c512
 	MinRange: 0c768
 	Projectile: Bullet
 		Blockable: false
@@ -527,7 +527,7 @@ M60mgTD:
 
 M60mgXO:
 	Inherits: M60mgTD
-	Range: 5c0
+	Range: 5c768
 	Burst: 2
 	ReloadDelay: 50
 	Warhead@1Dam: SpreadDamage
@@ -537,6 +537,7 @@ M60mgXO:
 
 M60mgJJ:
 	Inherits: M60mg
+	Range: 4c768
 	Projectile: Bullet
 		Blockable: false
 	Report: vblhatta.aud, vblhattb.aud
@@ -574,7 +575,7 @@ M60mgMD.Attached:
 
 MGattG:
 	Inherits: ^HeavyMG
-	Range: 4c768
+	Range: 5c0
 	ReloadDelay: 5
 	-Report:
 	Warhead@1Dam: SpreadDamage
@@ -773,11 +774,11 @@ SNIPER.vehicle:
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 7000
+		Damage: 6000
 		Versus:
-			Light: 90
+			Heavy: 90
 		ValidTargets: Vehicle, Ship
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
@@ -861,7 +862,7 @@ HeliGunAG:
 	Inherits: ^HeavyMG
 	Report: mgbtr1.aud, mgbtr2.aud, mgbtr3.aud
 	ReloadDelay: 12
-	Range: 5c0
+	Range: 5c512
 	MinRange: 0c768
 	Projectile: Bullet
 		Blockable: false

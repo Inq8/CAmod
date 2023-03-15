@@ -54,12 +54,12 @@ ScrinSquads = {
 GetNumPlayers = function(players)
 	local num = 0
 
-	for i,player in pairs(players) do
-		local spawns = player.GetActorsByType("rmbospawn")
-		for j,spawn in pairs(spawns) do
-			num = num + 1
+	Utils.Do(players, function(player)
+		if player.Name ~= "Neutral" then
+			local spawns = player.GetActorsByType("rmbospawn")
+			num = num + #spawns
 		end
-	end
+	end)
 
 	return num
 end
@@ -114,14 +114,21 @@ SendScrinUnits = function(wormhole, attackPaths, numPlayers)
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(interval), function()
-		SendScrinUnits(wormhole, attackPaths, interval)
+		SendScrinUnits(wormhole, attackPaths, numPlayers)
 	end)
 end
 
 WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
+	Neutral = Player.GetPlayer("Neutral")
     GDI = Player.GetPlayer("Scrin")
     Nod = Player.GetPlayer("Nod")
+
+	local neutralSpawns = Neutral.GetActorsByType("rmbospawn")
+	Utils.Do(neutralSpawns, function(a)
+		a.Destroy()
+	end)
+
 	local initialGdiPlayers = GetNumPlayers(GDIPlayers)
     local initialNodPlayers = GetNumPlayers(NodPlayers)
 

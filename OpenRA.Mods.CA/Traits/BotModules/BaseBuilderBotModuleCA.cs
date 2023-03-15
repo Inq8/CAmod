@@ -121,8 +121,11 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Try to build another production building if there is too much cash.")]
 		public readonly int NewProductionCashThreshold = 10000;
 
-		[Desc("Only queue construction of a new structure when above this requirement.")]
-		public readonly int ProductionMinCashRequirement = 500;
+		[Desc("Only queue construction of a new building when above this requirement.")]
+		public readonly int BuildingProductionMinCashRequirement = 1750;
+
+		[Desc("Only queue construction of a new defense when above this requirement.")]
+		public readonly int DefenseProductionMinCashRequirement = 2250;
 
 		[Desc("Radius in cells around a factory scanned for rally points by the AI.")]
 		public readonly int RallyPointScanRadius = 8;
@@ -276,20 +279,16 @@ namespace OpenRA.Mods.CA.Traits
 						findQueue = true;
 					}
 
-					// Refresh "BuildingsBeingProduced" only when AI can produce
-					if (playerResources.Cash >= Info.ProductionMinCashRequirement)
+					foreach (var queue in queues)
 					{
-						foreach (var queue in queues)
-						{
-							var producing = queue.AllQueued().FirstOrDefault();
-							if (producing == null)
-								continue;
+						var producing = queue.AllQueued().FirstOrDefault();
+						if (producing == null)
+							continue;
 
-							if (BuildingsBeingProduced.ContainsKey(producing.Item))
-								BuildingsBeingProduced[producing.Item] = BuildingsBeingProduced[producing.Item] + 1;
-							else
-								BuildingsBeingProduced.Add(producing.Item, 1);
-						}
+						if (BuildingsBeingProduced.ContainsKey(producing.Item))
+							BuildingsBeingProduced[producing.Item] = BuildingsBeingProduced[producing.Item] + 1;
+						else
+							BuildingsBeingProduced.Add(producing.Item, 1);
 					}
 				}
 			}

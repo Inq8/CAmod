@@ -23,9 +23,9 @@ Squads = {
 			hard = DateTime.Seconds(90)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 25 }, { MinTime = DateTime.Minutes(30), Value = 30 } },
-			normal = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(12), Value = 35 }, { MinTime = DateTime.Minutes(30), Value = 45 } },
-			hard = { { MinTime = 0, Value = 30 }, { MinTime = DateTime.Minutes(10), Value = 50 }, { MinTime = DateTime.Minutes(30), Value = 60 } },
+			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 25 }, { MinTime = DateTime.Minutes(18), Value = 35 } },
+			normal = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(12), Value = 35 }, { MinTime = DateTime.Minutes(18), Value = 45 } },
+			hard = { { MinTime = 0, Value = 30 }, { MinTime = DateTime.Minutes(10), Value = 50 }, { MinTime = DateTime.Minutes(18), Value = 65 } },
 		},
 		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = true,
@@ -41,9 +41,9 @@ Squads = {
 			hard = DateTime.Minutes(6)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 6 }, { MinTime = DateTime.Minutes(14), Value = 12 }, { MinTime = DateTime.Minutes(30), Value = 14 } },
-			normal = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(12), Value = 20 }, { MinTime = DateTime.Minutes(30), Value = 24 } },
-			hard = { { MinTime = 0, Value = 16 }, { MinTime = DateTime.Minutes(10), Value = 32 }, { MinTime = DateTime.Minutes(30), Value = 40 } },
+			easy = { { MinTime = 0, Value = 6 }, { MinTime = DateTime.Minutes(14), Value = 12 }, { MinTime = DateTime.Minutes(18), Value = 20 } },
+			normal = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(12), Value = 20 }, { MinTime = DateTime.Minutes(18), Value = 30 } },
+			hard = { { MinTime = 0, Value = 16 }, { MinTime = DateTime.Minutes(10), Value = 32 }, { MinTime = DateTime.Minutes(18), Value = 45 } },
 		},
 		QueueProductionStatuses = { Infantry = false },
 		FollowLeader = true,
@@ -153,7 +153,6 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		GDI.Cash = GDI.ResourceCapacity - 500
 		GDI.Resources = GDI.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
@@ -181,14 +180,14 @@ OncePerFiveSecondChecks = function()
 end
 
 InitGDI = function()
-	AutoRepairAndRebuildBuildings(GDI, 10)
+	AutoRepairAndRebuildBuildings(GDI, 15)
 	SetupRefAndSilosCaptureCredits(GDI)
 	AutoReplaceHarvesters(GDI)
 
 	local gdiGroundAttackers = GDI.GetGroundAttackers()
 
 	Utils.Do(gdiGroundAttackers, function(a)
-		TargetSwapChance(a, GDI, 10)
+		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsGDIGroundHunterUnit)
 	end)
 
@@ -208,7 +207,7 @@ InitGDI = function()
 		InitAirAttackSquad(Squads.GDIAir, GDI, USSR, { "harv", "v2rl", "apwr", "tsla", "ttra", "v3rl", "mig", "hind", "suk", "suk.upg", "kiro", "apoc" })
 	end)
 
-	Actor.Create("hazmat.upgrade", true, { Owner = GDI, Location = UpgradeCreationLocation })
+	Actor.Create("hazmat.upgrade", true, { Owner = GDI })
 
 	if Difficulty == "hard" then
 		Trigger.AfterDelay(DateTime.Minutes(5), function()
@@ -220,12 +219,12 @@ InitGDI = function()
 
 			local selectedStrategyUpgrades = Utils.Random(strategyUpgrades)
 			Utils.Do(selectedStrategyUpgrades, function(u)
-				Actor.Create(u, true, { Owner = GDI, Location = UpgradeCreationLocation })
+				Actor.Create(u, true, { Owner = GDI })
 			end)
 		end)
 
 		Trigger.AfterDelay(DateTime.Minutes(20), function()
-			Actor.Create("flakarmor.upgrade", true, { Owner = GDI, Location = UpgradeCreationLocation })
+			Actor.Create("flakarmor.upgrade", true, { Owner = GDI })
 		end)
 	end
 end

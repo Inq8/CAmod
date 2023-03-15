@@ -4,7 +4,7 @@ Patrols = {
 		Path = { PatrolA1.Location, PatrolA2.Location, PatrolA3.Location, PatrolA4.Location, PatrolA5.Location, PatrolA6.Location, PatrolA1.Location, PatrolA7.Location, PatrolA8.Location, PatrolA9.Location, PatrolA8.Location, PatrolA7.Location }
 	},
 	{
-		Units = { PatrollerB1, PatrollerB2, PatrollerB3, PatrollerB4, PatrollerB5, PatrollerB6, PatrollerB7 },
+		Units = { PatrollerB1, PatrollerB2, PatrollerB3, PatrollerB4, PatrollerB5, PatrollerB6 },
 		Path = { PatrolB1.Location, PatrolB2.Location, PatrolB3.Location, PatrolB2.Location, PatrolB4.Location, PatrolB5.Location, PatrolB6.Location, PatrolB7.Location, PatrolB8.Location, PatrolB9.Location, PatrolB8.Location, PatrolB7.Location, PatrolB6.Location, PatrolB5.Location, PatrolB4.Location }
 	},
 	{
@@ -74,19 +74,35 @@ WorldLoaded = function()
 		Trigger.OnKilled(a, function(self, killer)
 			Greece.MarkFailedObjective(ObjectivePreserveSEALs)
 
-			if not Greece.IsObjectiveCompleted(ObjectiveKillReactors) and Seal1.IsDead and Seal2.IsDead then
-				Greece.MarkFailedObjective(ObjectiveKillReactors)
+			if Seal1.IsDead and Seal2.IsDead then
+				BothSealsDead = true
+			end
+
+			if BothSealsDead then
+				if not AllReactorsDead then
+					Greece.MarkFailedObjective(ObjectiveKillReactors)
+				end
+
+				if not BothNukeSilosDead then
+					Greece.MarkFailedObjective(ObjectiveKillSilos)
+				end
+
+				if not AllSAMSitesDead then
+					Greece.MarkFailedObjective(ObjectiveKillSAMSites)
+				end
+
+				if not AllReactorsDead or not BothNukeSilosDead or not AllSAMSitesDead then
+					Greece.MarkFailedObjective(ObjectiveNeutralizeChronosphere)
+				end
 			end
 		end)
 	end)
 
 	Trigger.OnKilled(WestReactor, function(self, killer)
-		CheckReactors()
 		DisableWestTeslas()
 	end)
 
 	Trigger.OnKilled(EastReactor, function(self, killer)
-		CheckReactors()
 		DisableEastTeslas()
 		if SouthReactor.IsDead then
 			DisableNorthTeslas()
@@ -94,7 +110,6 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnKilled(SouthReactor, function(self, killer)
-		CheckReactors()
 		DisableSouthTeslas()
 		DoShoreSAMFlare()
 		if EastReactor.IsDead then
@@ -102,32 +117,31 @@ WorldLoaded = function()
 		end
 	end)
 
-	Utils.Do(ShoreSAMs, function(a)
-		Trigger.OnKilled(a, function(self, killer)
-			if ShoreSAM1.IsDead and ShoreSAM2.IsDead and ShoreSAM3.IsDead and ShoreSAM4.IsDead and ShoreSAM5.IsDead then
-				Greece.MarkCompletedObjective(ObjectiveKillSAMSites)
-
-				if Greece.IsObjectiveCompleted(ObjectiveKillSilos) then
-					DropChronoPrison()
-				end
-			end
-		end)
+	Trigger.OnAllKilled(Reactors, function()
+		AllReactorsDead = true
+		Greece.MarkCompletedObjective(ObjectiveKillReactors)
 	end)
 
-	Utils.Do(MissileSilos, function(a)
-		Trigger.OnKilled(a, function(self, killer)
-			if TopSilo.IsDead and BottomSilo.IsDead then
-				if not NukeDummy.IsDead then
-					NukeDummy.Destroy()
-				end
+	Trigger.OnAllKilled(ShoreSAMs, function()
+		AllSAMSitesDead = true
+		Greece.MarkCompletedObjective(ObjectiveKillSAMSites)
 
-				Greece.MarkCompletedObjective(ObjectiveKillSilos)
+		if BothNukeSilosDead then
+			DropChronoPrison()
+		end
+	end)
 
-				if Greece.IsObjectiveCompleted(ObjectiveKillSAMSites) then
-					DropChronoPrison()
-				end
-			end
-		end)
+	Trigger.OnAllKilled(MissileSilos, function()
+		BothNukeSilosDead = true
+		Greece.MarkCompletedObjective(ObjectiveKillSilos)
+
+		if not NukeDummy.IsDead then
+			NukeDummy.Destroy()
+		end
+
+		if AllSAMSitesDead then
+			DropChronoPrison()
+		end
 	end)
 
 	Trigger.OnKilled(Chronosphere, function(self, killer)
@@ -280,12 +294,6 @@ DoShoreSAMFlare = function()
 	end)
 end
 
-CheckReactors = function()
-	if EastReactor.IsDead and SouthReactor.IsDead and WestReactor.IsDead then
-		Greece.MarkCompletedObjective(ObjectiveKillReactors)
-	end
-end
-
 Tick = function()
 	if WhiteOut ~= nil and WhiteOut then
 		Lighting.Ambient = Lighting.Ambient + 0.015
@@ -299,7 +307,6 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		USSR.Cash = USSR.ResourceCapacity - 500
 		USSR.Resources = USSR.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
@@ -323,12 +330,12 @@ end
 InitUSSR = function()
 	AutoRepairBuildings(USSR)
 
-	Actor.Create("POWERCHEAT", true, { Owner = USSR, Location = UpgradeCreationLocation })
+	Actor.Create("POWERCHEAT", true, { Owner = USSR })
 
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
 
 	Utils.Do(ussrGroundAttackers, function(a)
-		TargetSwapChance(a, USSR, 10)
+		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(4096), IsUSSRGroundHunterUnit)
 	end)
 

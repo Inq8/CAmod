@@ -214,6 +214,8 @@ VEHICLES.SCRIN:
 		VoiceSet: ScrinInfantryVoice
 	Targetable:
 		TargetTypes: Ground, Infantry, TNT
+	WithInfantryBody:
+		IdleSequences: idle1, idle2, idle3, idle4
 	WithDeathAnimation:
 		DeathSequencePalette: playerscrin
 		CrushedSequencePalette: scrin
@@ -685,7 +687,7 @@ MAST:
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	AutoTargetPriority@DEFAULT:
-		RequiresCondition: mindcontrolling < 3 && !stance-attackanything && !assault-move
+		RequiresCondition: !maxcontrolled && !stance-attackanything && !assault-move
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -693,7 +695,7 @@ MAST:
 		Prerequisites: scrt, ~infantry.scrin, ~techlevel.high
 		BuildLimit: 1
 		IconPalette: chrome
-		Description: Elite specialist infantry able to mind-control\n  enemy units (up to 3 at a time).
+		Description: Elite specialist infantry able to mind-control\n  enemy units (up to 3, increases with veterancy).
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Vehicles, Defenses, Buildings
 		Weaknesses: • Cannot attack Aircraft
@@ -704,6 +706,10 @@ MAST:
 		Cost: 1350
 	Tooltip:
 		Name: Mastermind
+		RequiresCondition: !rank-elite
+	Tooltip@PRODIGY:
+		Name: Prodigy
+		RequiresCondition: rank-elite
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -725,7 +731,10 @@ MAST:
 		ArmamentNames: primary, secondary
 		Capacity: 3
 		ControlSounds: mastermind-fire.aud
+		ReleaseSounds: mastermind-release.aud
 		ControllingCondition: mindcontrolling
+		MaxControlledCondition: maxcontrolled
+		ManualReleaseEnabled: true
 	WithMindControlArc@MC:
 		Color: c71585
 		Transparency: 55
@@ -741,12 +750,11 @@ MAST:
 		Weapon: MindSparkSpawnerSlave
 		InitialDelay: 18
 		RequiresCondition: deployed && !being-warped
-		KillSlaveTypes: Infantry, Cyborg
+		KillSlaveTypes: Infantry, Vehicle
 		KillSlavesDamageTypes: BulletDeath
-		PostExplosionAction: Neutralize
 	GrantTimedConditionOnDeploy:
 		DeployedTicks: 35
-		CooldownTicks: 175
+		CooldownTicks: 150
 		DeployedCondition: deployed
 		ShowSelectionBar: true
 		StartsFullyCharged: true
@@ -755,8 +763,48 @@ MAST:
 	AttackFrontal:
 		PauseOnCondition: being-warped
 		FacingTolerance: 0
+	Selectable:
+		DecorationBounds: 640, 896, -32, -256
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+		RequiresCondition: !rank-elite
+	WithDeathAnimation:
+		RequiresCondition: !rank-elite
+	WithInfantryBody@PRODIGY:
+		StandSequences: pdgy-stand
+		MoveSequence: pdgy-run
+		IdleSequences: pdgy-idle1, pdgy-idle2, pdgy-idle3, pdgy-idle4
+		DefaultAttackSequence: pdgy-shoot
+		RequiresCondition: rank-elite && !transforming
+	WithDeathAnimation@PDGY:
+		DeathSequencePalette: playerscrin
+		CrushedSequencePalette: scrin
+		DeathSequence: pdgy-die
+		DeathTypes:
+			DefaultDeath: 1
+			BulletDeath: 2
+			SmallExplosionDeath: 3
+			ExplosionDeath: 4
+			FireDeath: 5
+			ElectricityDeath: 6
+			PoisonDeath: 7
+			ChronoDeath: 8
+			ToxinDeath: 9
+			RadiationDeath: 10
+			FrozenDeath: 11
+			AtomizedDeath: 12
+		CrushedSequence: die-crushed
+		RequiresCondition: rank-elite && !transforming
+	WithSpriteBody@PRODIGYMAKE:
+		RequiresCondition: transforming
+		Sequence: stand
+	GrantTimedCondition@PRODIGYMAKE:
+		Condition: transforming
+		Duration: 25
+		RequiresCondition: rank-elite
+	WithEnabledAnimation@PRODIGYMAKE:
+		RequiresCondition: transforming
+		Sequence: pdgy-make
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	WithProductionIconOverlay:
@@ -791,6 +839,18 @@ MAST:
 	ReloadAmmoPool:
 		Delay: 35
 		Count: 1
+	MindControllerCapacityModifier@RANK-1:
+		Amount: 1
+		RequiresCondition: rank-veteran == 1
+	MindControllerCapacityModifier@RANK-2:
+		Amount: 2
+		RequiresCondition: rank-veteran == 2
+	MindControllerCapacityModifier@RANK-ELITE:
+		Amount: 3
+		RequiresCondition: rank-elite
+	RangeMultiplier@RANK-ELITE:
+		Modifier: 115
+		RequiresCondition: rank-elite
 
 #
 # ---- Vehicles
@@ -969,11 +1029,11 @@ SEEK:
 	Armor:
 		Type: Light
 	RevealsShroud:
-		MinRange: 4c0
+		MinRange: 5c0
 		Range: 7c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 4c0
+		Range: 5c0
 	Turreted:
 		TurnSpeed: 40
 		Offset: -280,0,0
@@ -1263,7 +1323,7 @@ LCHR:
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
-		Cost: 900
+		Cost: 950
 	Tooltip:
 		Name: Leecher
 	Selectable:
@@ -1281,8 +1341,8 @@ LCHR:
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 		Attributes: • Regenerates health while dealing damage\n• Disables power plants and radars\n• Slows vehicles & cyborgs
 	Mobile:
-		Speed: 92
-		TurnSpeed: 24
+		Speed: 82
+		TurnSpeed: 22
 	Health:
 		HP: 28000
 	Armor:
@@ -1313,7 +1373,7 @@ LCHR:
 		DamagePercentConverted: 25
 		RequiresCondition: !coalescence-upgrade
 	ConvertsDamageToHealth@COALESCENCE:
-		DamagePercentConverted: 15
+		DamagePercentConverted: 10
 		RequiresCondition: coalescence-upgrade
 	Explodes:
 		Weapon: LeecherExplode
@@ -1338,6 +1398,7 @@ LCHR:
 		RequiresCondition: coalescence-upgrade
 	GivesBounty:
 		RequiresCondition: global-bounty && !coalescence-upgrade
+	TransfersStanceToDeathActor:
 
 LCHR.Orb:
 	Inherits@1: ^1x1Shape
@@ -1363,7 +1424,7 @@ LCHR.Orb:
 		Range: 4c0
 		Type: CenterPosition
 	Health:
-		HP: 34000
+		HP: 30000
 	Armor:
 		Type: Light
 	Valued:
@@ -1400,6 +1461,9 @@ LCHR.Orb:
 	ProximityExternalCondition@LCHRHEAL:
 		Condition: lchr-healing
 		Range: 2c256
+	AutoTarget:
+	TransfersStanceToDeathActor:
+	AttackOmni:
 
 STCR:
 	Inherits: ^Tank
@@ -1522,7 +1586,7 @@ DEVO:
 		Type: Light
 	Mobile:
 		TurnSpeed: 512
-		Speed: 72
+		Speed: 70
 		Locomotor: lighthover
 	Hovers:
 		BobDistance: -25
@@ -1602,7 +1666,7 @@ DARK:
 	Armor:
 		Type: Heavy
 	Mobile:
-		TurnSpeed: 16
+		TurnSpeed: 20
 		Speed: 60
 		Locomotor: lighthover
 	RevealsShroud:
@@ -1623,7 +1687,7 @@ DARK:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
 	Turreted:
-		TurnSpeed: 16
+		TurnSpeed: 20
 		Offset: 0,0,0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
@@ -1847,7 +1911,7 @@ TPOD:
 		Type: Heavy
 	Mobile:
 		Locomotor: heavytracked
-		Speed: 46
+		Speed: 44
 		TurnSpeed: 512
 	Passenger:
 		Weight: 3
@@ -2157,7 +2221,7 @@ STMR:
 	AmmoPool:
 		Ammo: 15
 		AmmoCondition: ammo
-		ReloadDelay: 60
+		ReloadDelay: 45
 		ReloadCount: 5
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
@@ -2307,7 +2371,7 @@ ENRV:
 	AmmoPool:
 		Ammo: 5
 		AmmoCondition: ammo
-		ReloadDelay: 45
+		ReloadDelay: 35
 		ReloadCount: 1
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
@@ -2539,11 +2603,11 @@ PAC:
 			PointB: 0,-1024
 	RevealsShroud:
 		Range: 11c0
-		MinRange: 8c0
+		MinRange: 9c0
 		Type: GroundPosition
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 8c0
+		Range: 9c0
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: InvaderLauncher
@@ -2778,7 +2842,7 @@ MSHP:
 			Radius: 2c768
 	RevealsShroud:
 		Range: 13c0
-		MinRange: 8c0
+		MinRange: 11c0
 		Type: GroundPosition
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
@@ -4418,6 +4482,7 @@ MANI:
 		TargetCircleRange: 3c512
 		TargetCircleColor: ff55ffcc
 		LaunchSound: suppression.aud
+		IncomingSound: suppression.aud
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 		Weapon: SuppressionField
 		CameraActor: camera.dummy
@@ -4441,6 +4506,7 @@ MANI:
 		TargetCircleRange: 3c512
 		TargetCircleColor: ff55ffcc
 		LaunchSound: suppression.aud
+		IncomingSound: suppression.aud
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 		Weapon: SuppressionSiphonField
 		CameraActor: camera.dummy
@@ -5113,6 +5179,8 @@ WORMHOLE:
 		CrushedSequence: die
 		FallbackSequence: die
 	WithMakeAnimation:
+	MapEditorData:
+		Categories: System
 
 # infiltrator stolen tech
 

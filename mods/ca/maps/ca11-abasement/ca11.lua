@@ -28,7 +28,7 @@ Squads = {
 			Vehicles = false,
 			Aircraft = false,
 		},
-		FollowSquadLeader = true,
+		FollowLeader = true,
 		IdleUnits = { },
 		ProducerActors = nil,
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
@@ -210,9 +210,7 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		Scrin.Cash = Scrin.ResourceCapacity - 500
 		Scrin.Resources = Scrin.ResourceCapacity - 500
-		Nod.Cash = Nod.ResourceCapacity - 500
 		Nod.Resources = Nod.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
@@ -244,7 +242,7 @@ InitScrin = function()
 		RebuildExcludes.Scrin = { Types = { "scol", "ptur" } }
 	end
 
-	AutoRepairAndRebuildBuildings(Scrin, 10)
+	AutoRepairAndRebuildBuildings(Scrin, 15)
 	SetupRefAndSilosCaptureCredits(Scrin)
 	AutoReplaceHarvesters(Scrin)
 
@@ -252,7 +250,7 @@ InitScrin = function()
 		InitAttackSquad(Squads.ScrinMain, Scrin)
 	end)
 
-	Trigger.AfterDelay(Squads.ScrinMain.Delay[Difficulty], function()
+	Trigger.AfterDelay(Squads.ScrinWater.Delay[Difficulty], function()
 		InitAttackSquad(Squads.ScrinWater, Scrin)
 	end)
 
@@ -263,21 +261,22 @@ InitScrin = function()
 	local scrinGroundAttackers = Scrin.GetGroundAttackers()
 
 	Utils.Do(scrinGroundAttackers, function(a)
-		TargetSwapChance(a, Scrin, 10)
+		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
 	end)
 
 	if Difficulty == "hard" then
-		Actor.Create("ioncon.upgrade", true, { Owner = Scrin, Location = UpgradeCreationLocation })
+		Actor.Create("ioncon.upgrade", true, { Owner = Scrin })
 
 		Trigger.AfterDelay(DateTime.Minutes(20), function()
-			Actor.Create("carapace.upgrade", true, { Owner = Scrin, Location = UpgradeCreationLocation })
+			Actor.Create("carapace.upgrade", true, { Owner = Scrin })
 		end)
 	end
 end
 
 InitNod = function()
-	Actor.Create("POWERCHEAT", true, { Owner = Nod, Location = UpgradeCreationLocation })
+	Actor.Create("POWERCHEAT", true, { Owner = Nod })
+	Actor.Create("hazmat.upgrade", true, { Owner = Nod })
 
 	-- Prevent Nod forces destroying Signal Transmitter
 	Trigger.OnEnteredProximityTrigger(NodAttackLimiter.CenterPosition, WDist.New(8 * 1024), function(a, id)
@@ -311,8 +310,8 @@ LightningStrike = function()
 
 	repeat
 		soundNumber = Utils.RandomInteger(1, 6)
-	until(soundNumber ~= lastSoundNumber)
-	lastSoundNumber = soundNumber
+	until(soundNumber ~= LastSoundNumber)
+	LastSoundNumber = soundNumber
 
 	Trigger.AfterDelay(thunderDelay, function()
 		Media.PlaySound("thunder" .. soundNumber .. ".aud")
@@ -379,6 +378,8 @@ FlipNorthBase = function()
 		AutoRepairBuilding(turret3, Nod)
 		AutoRebuildBuilding(turret3, Nod)
 	end)
+
+	BaseFlipNotification()
 end
 
 FlipSouthBase = function()
@@ -400,7 +401,11 @@ FlipSouthBase = function()
 	end)
 
 	InitAttackSquad(Squads.NodSouth, Nod, Scrin)
-	SouthAirstrip.Produce("harv.td")
+
+	local airstrips = Nod.GetActorsByType("airs")
+	if #airstrips > 0 then
+		airstrips[1].Produce("harv.td")
+	end
 
 	local turret4 = Actor.Create("gun.nod", true, { Owner = Nod, Location = NodTurret4.Location })
 	AutoRepairBuilding(turret4, Nod)
@@ -411,6 +416,8 @@ FlipSouthBase = function()
 		AutoRepairBuilding(turret5, Nod)
 		AutoRebuildBuilding(turret5, Nod)
 	end)
+
+	BaseFlipNotification()
 end
 
 SignalTransmitterDiscovered = function()
@@ -421,4 +428,16 @@ SignalTransmitterDiscovered = function()
 		local autoCamera = Actor.Create("smallcamera", true, { Owner = USSR, Location = SignalTransmitterLocation })
 		Trigger.AfterDelay(DateTime.Seconds(5), autoCamera.Destroy)
 	end
+end
+
+BaseFlipNotification = function()
+	Trigger.AfterDelay(DateTime.Seconds(3), function()
+		if not IsFirstBaseFlipped then
+			IsFirstBaseFlipped = true
+			Media.DisplayMessage("Your efforts are appreciated. The Brotherhood will provide support.", "Nod Commander", HSLColor.FromHex("FF0000"))
+		elseif not IsSecondBaseFlipped then
+			IsSecondBaseFlipped = true
+			Media.DisplayMessage("Kane will be pleased. Now we must focus our efforts and secure the Signal Transmitter!", "Nod Commander", HSLColor.FromHex("FF0000"))
+		end
+	end)
 end

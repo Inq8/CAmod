@@ -6,15 +6,15 @@ on:
 
 jobs:
   linux:
-    name: Linux (.NET 6)
-    runs-on: ubuntu-20.04
+    name: Linux (.NET 6.0)
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Install .NET 6
-        uses: actions/setup-dotnet@v1
+      - name: Install .NET 6.0
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
 
@@ -36,11 +36,11 @@ jobs:
 
   linux-mono:
     name: Linux (mono)
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Prepare Environment
         run: |
@@ -64,10 +64,10 @@ jobs:
 
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Install .NET 6
-        uses: actions/setup-dotnet@v1
+      - name: Install .NET 6.0
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
 
@@ -75,7 +75,7 @@ jobs:
         shell: powershell
         run: |
           # Work around runtime failures on the GH Actions runner
-          dotnet nuget locals all --clear
+          dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
           .\make.ps1 check
 
       - name: Check Mods

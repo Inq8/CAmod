@@ -77,8 +77,8 @@ HaloDropInterval = {
 }
 
 NavalDropInterval = {
-	normal = DateTime.Minutes(4),
-	hard = DateTime.Minutes(2)
+	normal = DateTime.Minutes(5),
+	hard = DateTime.Minutes(3)
 }
 
 -- Squads
@@ -88,8 +88,8 @@ Squads = {
 		Player = nil,
 		Delay = {
 			easy = DateTime.Minutes(3),
-			normal = DateTime.Minutes(2),
-			hard = DateTime.Minutes(1)
+			normal = DateTime.Minutes(2) + DateTime.Seconds(30),
+			hard = DateTime.Minutes(2)
 		},
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 50 } },
@@ -204,6 +204,7 @@ WorldLoaded = function()
 	Greece = Player.GetPlayer("Greece")
 	USSR = Player.GetPlayer("USSR")
 	Scrin = Player.GetPlayer("Scrin")
+	Neutral = Player.GetPlayer("Neutral")
 	MissionPlayer = Greece
 	TimerTicks = 0
 
@@ -216,6 +217,7 @@ WorldLoaded = function()
 		HeavyTank1.Destroy()
 		Flamer1.Destroy()
 		TeslaCoil3.Destroy()
+		HardOnlyV2.Destroy()
 	end
 
 	if Difficulty == "easy" then
@@ -255,6 +257,8 @@ WorldLoaded = function()
 			end
 		end)
 	end)
+
+	SetupReveals({ EntranceReveal1, EntranceReveal2 })
 end
 
 Tick = function()
@@ -262,7 +266,7 @@ Tick = function()
 		IsBaseEstablished = true
 		if ObjectiveInvestigateArea == nil then
 			ObjectiveInvestigateArea = Greece.AddObjective("Investigate the area.")
-			UserInterface.SetMissionText(nil)
+			UserInterface.SetMissionText("")
 		end
 		Greece.MarkCompletedObjective(ObjectiveEstablishBase)
 
@@ -291,7 +295,6 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		USSR.Cash = USSR.ResourceCapacity - 500
 		USSR.Resources = USSR.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
@@ -405,18 +408,13 @@ end
 
 ScrinInvasion = function()
 	local wormholes = Scrin.GetActorsByType("wormhole")
-	local assaultWaypoints = { AttackWaypoint5.Location }
-
-	if Utils.RandomInteger(0,2) == 1 then
-		assaultWaypoints = { AttackWaypoint4.Location, AttackWaypoint5.Location }
-	end
 
 	Utils.Do(wormholes, function(wormhole)
 		local units = Reinforcements.Reinforce(Scrin, ScrinInfantrySquads[Difficulty], { wormhole.Location }, 1)
 		Utils.Do(units, function(unit)
 			unit.Scatter()
 			Trigger.AfterDelay(5, function()
-				AssaultPlayerBaseOrHunt(unit, MissionPlayer, assaultWaypoints)
+				AssaultPlayerBaseOrHunt(unit, MissionPlayer, GetScrinAssaultWaypoints())
 			end)
 		end)
 	end)
@@ -436,12 +434,22 @@ CreateScrinVehicles = function()
 		Utils.Do(units, function(unit)
 			unit.Scatter()
 			Trigger.AfterDelay(5, function()
-				AssaultPlayerBaseOrHunt(unit, MissionPlayer, assaultWaypoints)
+				AssaultPlayerBaseOrHunt(unit, MissionPlayer, GetScrinAssaultWaypoints())
 			end)
 		end)
 	end)
 
 	Trigger.AfterDelay(ScrinInvasionInterval[Difficulty] * ScrinVehiclesIntervalMultiplier[Difficulty], CreateScrinVehicles)
+end
+
+GetScrinAssaultWaypoints = function()
+	local assaultWaypoints = { AttackWaypoint5.Location }
+
+	if Utils.RandomInteger(0,2) == 1 then
+		assaultWaypoints = { AttackWaypoint4.Location, AttackWaypoint5.Location }
+	end
+
+	return assaultWaypoints
 end
 
 ChronosphereDiscovered = function()
@@ -524,7 +532,7 @@ SpawnTibTree = function()
 	if not tibTree.Actor.IsDead then
 		tibTree.Actor.Destroy()
 	end
-	Actor.Create("split2", true, { Owner = Scrin, Location = tibTree.Location})
+	Actor.Create("split2", true, { Owner = Neutral, Location = tibTree.Location})
 	table.remove(TreesToTransform, #TreesToTransform)
 
 	if #TreesToTransform > 0 then

@@ -12,7 +12,7 @@ V2RL:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Valued:
-		Cost: 900
+		Cost: 800
 	Tooltip:
 		Name: V2 Rocket Launcher
 	UpdatesPlayerStatistics:
@@ -1079,11 +1079,9 @@ ARTY:
 
 ARTY.nod:
 	Inherits: ARTY
-	Inherits: ^VehicleTD
+	Inherits@TD: ^VehicleTD
 	RenderSprites:
 		Image: artynod
-	WithDamageOverlay:
-		Image: smoke_mtd
 	Buildable:
 		BuildPaletteOrder: 62
 		IconPalette: chrometd
@@ -1287,11 +1285,14 @@ ISU:
 		RequiresCondition: !being-warped
 
 SPEC:
-	Inherits: ARTY.nod
-	RenderSprites:
-		Image: spec
+	Inherits: ^VehicleTD
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
 	Buildable:
+		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 241
+		IconPalette: chrometd
 		Prerequisites: tmpl, ~vehicles.shadow, ~techlevel.high
 		Description: Long-range stealth artillery.
 	TooltipExtras:
@@ -1301,19 +1302,42 @@ SPEC:
 		Cost: 1350
 	Tooltip:
 		Name: Spectre
-	Selectable:
-		Class: spec
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
 	Health:
 		HP: 11000
+	Armor:
+		Type: Light
 	Mobile:
 		TurnSpeed: 20
 		Speed: 92
+		Locomotor: lighttracked
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
 	Armament:
 		Weapon: 155mmSpec
 		LocalOffset: 624,0,408
 		FireDelay: 25
 	Armament@TARGETTER:
 		Weapon: 155mmSpecTargeting
+	AttackFrontal:
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: True
+		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 0
+	WithMuzzleOverlay:
+	Explodes:
+		Weapon: ArtilleryExplode
+		LoadedChance: 75
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
 	Cloak@NORMAL:
 		InitialDelay: 90
 		CloakDelay: 90
@@ -1653,11 +1677,11 @@ JEEP:
 		TurnSpeed: 40
 		Speed: 144
 	RevealsShroud:
-		MinRange: 4c0
+		MinRange: 6c0
 		Range: 8c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 4c0
+		Range: 6c0
 	Turreted:
 		TurnSpeed: 40
 		Offset: 0,0,128
@@ -1964,7 +1988,8 @@ TRUK:
 
 TRUK.DROP:
 	Inherits: TRUK
-	-Buildable:
+	Buildable:
+		Queue: Dropzone
 	RenderSprites:
 		Image: truk
 	-DeliversCash:
@@ -2016,7 +2041,7 @@ MGG:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	CreatesShroud:
-		Range: 7c0
+		Range: 6c0
 		RequiresCondition: !empdisable && !being-warped && !mgg-disabled
 	RenderShroudCircleCA:
 		Color: 999999AA
@@ -2102,6 +2127,7 @@ MRJ:
 
 MSG:
 	Inherits: ^Vehicle
+	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 385
@@ -2128,7 +2154,6 @@ MSG:
 		Type: Light
 	Mobile:
 		Speed: 60
-		RequireForceMoveCondition: !undeployed
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -2203,11 +2228,11 @@ TTRA:
 		Speed: 72
 		Voice: Move
 	RevealsShroud:
-		MinRange: 5c0
+		MinRange: 4c0
 		Range: 6c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 5c0
+		Range: 4c0
 	Armament@PRIMARY:
 		Weapon: TTrackZap
 		LocalOffset: 0,0,213
@@ -2570,11 +2595,11 @@ HMMV:
 		TurnSpeed: 40
 		Speed: 144
 	RevealsShroud:
-		MinRange: 4c0
+		MinRange: 6c0
 		Range: 8c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 4c0
+		Range: 6c0
 	Turreted:
 		TurnSpeed: 40
 		Offset: -85,0,128
@@ -2672,11 +2697,11 @@ GDRN:
 		Speed: 126
 		Voice: Move
 	RevealsShroud:
-		MinRange: 4c0
+		MinRange: 5c0
 		Range: 7c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 4c0
+		Range: 5c0
 	Turreted:
 		TurnSpeed: 40
 		Offset: 0,0,0
@@ -2769,11 +2794,11 @@ BGGY:
 		Speed: 144
 		TurnSpeed: 40
 	RevealsShroud:
-		MinRange: 4c0
+		MinRange: 6c0
 		Range: 8c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 4c0
+		Range: 6c0
 	Turreted:
 		TurnSpeed: 40
 		Offset: -43,0,128
@@ -3843,11 +3868,11 @@ MSAM:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 20
+		TurnSpeed: 16
 		Offset: -256,0,128
 	AttackTurreted:
 		TargetFrozenActors: True
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || reloading
 	WithSpriteTurret:
 	Explodes:
 		Weapon: ArtilleryExplode
@@ -3872,45 +3897,53 @@ MSAM:
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: !hypersonic-upgrade && !hammerhead-upgrade && !hailstorm-upgrade
+		ReloadingCondition: reloading
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: 227mmAA
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: !hypersonic-upgrade && !hammerhead-upgrade && !hailstorm-upgrade
+		ReloadingCondition: reloading
 	Armament@PRIMARYUPG1:
 		Weapon: 227mm.Hypersonic
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hypersonic-upgrade
+		ReloadingCondition: reloading
 	Armament@SECONDARYUPG1:
 		Name: secondary
 		Weapon: 227mmAA.Hypersonic
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hypersonic-upgrade
+		ReloadingCondition: reloading
 	Armament@PRIMARYUPG2:
 		Weapon: 227mm.Hammerhead
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hammerhead-upgrade
+		ReloadingCondition: reloading
 	Armament@SECONDARYUPG2:
 		Name: secondary
 		Weapon: 227mmAA.Hammerhead
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hammerhead-upgrade
+		ReloadingCondition: reloading
 	Armament@PRIMARYUPG3:
 		Weapon: 227mm.Hailstorm
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hailstorm-upgrade
+		ReloadingCondition: reloading
 	Armament@SECONDARYUPG3:
 		Name: secondary
 		Weapon: 227mmAA.Hailstorm
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hailstorm-upgrade
+		ReloadingCondition: reloading
 
 MLRS:
 	Inherits: ^TankTD
@@ -4198,7 +4231,7 @@ FTNK:
 		Strengths: • Strong vs Infantry, Buildings, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Mobile:
-		Speed: 78
+		Speed: 82
 	Health:
 		HP: 40000
 	Armor:
@@ -4249,7 +4282,7 @@ HFTK:
 		Strengths: • Strong vs Infantry, Buildings, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Valued:
-		Cost: 1100
+		Cost: 1000
 	Tooltip:
 		Name: Heavy Flame Tank
 		GenericName: Tank
@@ -4260,7 +4293,7 @@ HFTK:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 66
+		Speed: 70
 		Voice: Move
 	RevealsShroud:
 		MinRange: 4c0
@@ -4634,15 +4667,15 @@ IFV:
 		Speed: 100
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
 	RevealsShroud:
-		MinRange: 5c0
+		MinRange: 4c0
 		Range: 6c0
 		RevealGeneratedShroud: False
 		RequiresCondition: !spyturr
 	RevealsShroud@GAPGEN:
-		Range: 5c0
+		Range: 4c0
 	RevealsShroud@SPY:
 		Range: 10c0
-		MinRange: 5c0
+		MinRange: 4c0
 		RevealGeneratedShroud: False
 		RequiresCondition: spyturr
 	DetectCloaked@SPY:
@@ -5191,6 +5224,15 @@ TITN:
 		LocalYaw: -100,100
 		Recoil: 43
 		MuzzleSequence: muzzle
+		PauseOnCondition: gyrostabilizers
+	Armament@SECONDARYGYRO:
+		Name: secondary
+		Weapon: TitanTusk.Gyro
+		LocalOffset: -85,-384,340
+		LocalYaw: -100,100
+		Recoil: 43
+		MuzzleSequence: muzzle
+		PauseOnCondition: !gyrostabilizers
 	Turreted:
 		TurnSpeed: 10
 		Offset: 0,0,0
@@ -5523,7 +5565,7 @@ HSAM:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 20
+		TurnSpeed: 16
 		Offset: -200,0,0
 	Hovers:
 		BobDistance: -35
@@ -5536,7 +5578,7 @@ HSAM:
 	AttackTurreted:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: false
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: empdisable || being-warped || reloading
 	WithSpriteTurret:
 	Explodes:
 		Weapon: ArtilleryExplode
@@ -5560,45 +5602,53 @@ HSAM:
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: !hypersonic-upgrade && !hammerhead-upgrade && !hailstorm-upgrade
+		ReloadingCondition: reloading
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: 227mmAAH
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: !hypersonic-upgrade && !hammerhead-upgrade && !hailstorm-upgrade
+		ReloadingCondition: reloading
 	Armament@PRIMARYUPG1:
 		Weapon: 227mm.Hypersonic
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hypersonic-upgrade
+		ReloadingCondition: reloading
 	Armament@SECONDARYUPG1:
 		Name: secondary
 		Weapon: 227mmAA.Hypersonic
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hypersonic-upgrade
+		ReloadingCondition: reloading
 	Armament@PRIMARYUPG2:
 		Weapon: 227mm.Hammerhead
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hammerhead-upgrade
+		ReloadingCondition: reloading
 	Armament@SECONDARYUPG2:
 		Name: secondary
 		Weapon: 227mmAA.Hammerhead
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hammerhead-upgrade
+		ReloadingCondition: reloading
 	Armament@PRIMARYUPG3:
 		Weapon: 227mm.Hailstorm
 		LocalOffset: 213,128,0, 213,-128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hailstorm-upgrade
+		ReloadingCondition: reloading
 	Armament@SECONDARYUPG3:
 		Name: secondary
 		Weapon: 227mmAA.Hailstorm
 		LocalOffset: 213,-128,0, 213,128,0
 		LocalYaw: 100, -100
 		RequiresCondition: hailstorm-upgrade
+		ReloadingCondition: reloading
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
@@ -5902,6 +5952,7 @@ TNKD.TEMP:
 
 MSAR:
 	Inherits: ^VehicleTD
+	Inherits@SELECTION: ^SelectableSupportUnit
 	Valued:
 		Cost: 1200
 	Tooltip:
@@ -5928,7 +5979,6 @@ MSAR:
 		Type: Heavy
 	Mobile:
 		Speed: 72
-		RequireForceMoveCondition: !undeployed
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -5937,10 +5987,6 @@ MSAR:
 		Range: 4c0
 	RenderSprites:
 		Image: msar
-	Repairable:
-		RequireForceMoveCondition: !undeployed
-	Passenger:
-		RequireForceMoveCondition: !undeployed
 	GrantCondition@PREVIEWWORKAROUND:
 		Condition: real-actor
 	WithMakeAnimation:

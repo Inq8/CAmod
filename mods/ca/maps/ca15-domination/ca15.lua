@@ -67,7 +67,7 @@ WorldLoaded = function()
 	Trigger.AfterDelay(DateTime.Seconds(3), function()
 		Tip("Yuri can mind control up to three enemy units. Mind controlling a fourth will make him lose control of the earliest controlled.")
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
-			Tip("Deploying Yuri releases a mind blast around Yuri and his slaves, releasing the slaves in the process.")
+			Tip("Deploying Yuri releases a mind blast around Yuri and his slaves, killing the slaves in the process.")
 		end)
 	end)
 
@@ -81,7 +81,7 @@ WorldLoaded = function()
 		DisableDefenses(centerDefenses)
 		DisableLaserFences()
 		Media.PlaySound("powrdn1.aud")
-		Actor.Create("powerproxy.mutabomb", true, { Owner = USSR, Location = UpgradeCreationLocation })
+		Actor.Create("powerproxy.mutabomb", true, { Owner = USSR })
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
 			Tip("The Genetic Mutation Bomb support power can turn enemy infantry into Brutes under your command. Avoid enemy SAM sites by holding the mouse button when selecting the target, allowing you to control the approach angle.")
 		end)
@@ -118,7 +118,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnInfiltrated(CyberneticsLab, function(self, infiltrator)
-		Actor.Create("cyborgsdecrypted", true, { Owner = Nod, Location = UpgradeCreationLocation })
+		Actor.Create("cyborgsdecrypted", true, { Owner = Nod })
 		ObjectiveDestroyTemple = USSR.AddObjective("Locate and destroy the Temple of Nod.")
 		USSR.MarkCompletedObjective(ObjectiveStealCodes)
 
@@ -172,6 +172,8 @@ WorldLoaded = function()
 			end)
 		end
 	end)
+
+	SetupReveals({ EntranceReveal1, EntranceReveal2, EntranceReveal3 })
 end
 
 Tick = function()
@@ -181,7 +183,6 @@ end
 
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-		Nod.Cash = Nod.ResourceCapacity - 500
 		Nod.Resources = Nod.ResourceCapacity - 500
 
 		if TimerTicks > 0 then
@@ -203,16 +204,17 @@ end
 InitNod = function()
 	RebuildExcludes.Nod = { Types = { "nuke", "nuk2", "tmpl", "afac", "obli", "gun.nod" } }
 
-	AutoRepairAndRebuildBuildings(Nod, 10)
+	AutoRepairAndRebuildBuildings(Nod, 15)
 	SetupRefAndSilosCaptureCredits(Nod)
 	AutoReplaceHarvesters(Nod)
 
-	Actor.Create("POWERCHEAT", true, { Owner = Nod, Location = UpgradeCreationLocation })
+	Actor.Create("POWERCHEAT", true, { Owner = Nod })
+	Actor.Create("hazmat.upgrade", true, { Owner = Nod })
 
 	local nodGroundAttackers = Nod.GetGroundAttackers()
 
 	Utils.Do(nodGroundAttackers, function(a)
-		TargetSwapChance(a, Nod, 10)
+		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsNodGroundHunterUnit)
 	end)
 

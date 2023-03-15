@@ -1,0 +1,105 @@
+GatewayOpener:
+	ReloadDelay: 25
+	Range: 0c512
+	TargetActorCenter: true
+	ValidTargets: Ground, Water
+	Projectile: PlasmaBeam
+		ForceVertical: true
+		Duration: 26
+		Colors: 461fc609, 98177809
+		InnerLightness: 240
+		OuterLightness: 120
+		Radius: 7
+		Distortion: 128
+		DistortionAnimation: 128
+		SegmentLength: 250
+		CenterBeamColor: ffffffcc
+		CenterBeam: true
+		CenterBeamWidth: 42
+		SecondaryCenterBeam: true
+		SecondaryCenterBeamColor: ffffff44
+		ZOffset: 2048
+		RecalculateColors: true
+		RecalculateDistortionInterval: 3
+	Warhead@1Dam: SpreadDamage
+		Damage: 0
+	Warhead@5Shake: ShakeScreen
+		Duration: 5
+		Intensity: 1
+		Multiplier: 0.1,0.1
+	Warhead@3Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: scrin
+		Image: enrvbolthit
+	Warhead@4Eff: CreateEffect
+		Explosions: idle2
+		ExplosionPalette: scrin
+		Image: enrvbolthit
+		Delay: 5
+	Warhead@5Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: scrin
+		Image: enrvbolthit
+		Delay: 10
+	Warhead@6Eff: CreateEffect
+		Explosions: idle2
+		ExplosionPalette: scrin
+		Image: enrvbolthit
+		Delay: 15
+	Warhead@7Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: scrin
+		Image: enrvbolthit
+		Delay: 20
+
+WidowAA2:
+	Inherits: WidowAA
+	ReloadDelay: 8
+	Range: 26c0
+	Burst: 2
+	BurstDelays: 0
+	TargetActorCenter: true
+	Projectile: MissileCA
+		Speed: 600
+		ContrailLength: 8
+		LockOnInaccuracy: 1c512
+		Inaccuracy: 1c512
+		Acceleration: 600
+		ContrailStartColor: FF660066
+		PointDefenseType: None
+		RangeLimit: 26c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 5000
+	Warhead@3Eff: CreateEffect
+		Explosions: large_artillery_explosion
+
+ShardLauncher:
+	ValidTargets: Air, AirSmall, ICBM, YF23
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Air, ICBM, YF23
+
+ShardWalkerShardsAA:
+	ValidTargets: Air, AirSmall, ICBM
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Air, ICBM
+
+ZSU-23:
+	ValidTargets: Air, AirSmall, ICBM, YF23
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Air, ICBM, YF23
+
+EnslaveVehicle:
+	Range: 7c0
+	ReloadDelay: 35
+
+Singularity:
+	ReloadDelay: 10000
+	Projectile: InstantExplode
+	Warhead@1Dam: SpreadDamage
+		Spread: 8c0
+		Damage: 80000
+		ValidTargets: Wall
+		Versus:
+			Wood: 150
+			Concrete: 150
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary

@@ -81,6 +81,7 @@
 		-Arm:
 		Speed: 384
 		HorizontalRateOfTurn: 40
+		Inaccuracy: 0
 		LockOnInaccuracy: 0
 		RangeLimit: 13c0
 		AllowSnapping: true
@@ -269,11 +270,14 @@ Dragon.TibCore:
 	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
 	Projectile: MissileCA
 		Image: tibcoremsl
+		Speed: 266
 		RangeLimit: 9c0
 		ContrailLength: 15
 		ContrailStartColor: 33aa00aa
 		ContrailStartColorAlpha: 170
 		ContrailWidth: 0c40
+	Warhead@1Dam: SpreadDamage
+		Damage: 7175
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: tibcorehit1.aud, tibcorehit2.aud, tibcorehit3.aud
 	Warhead@tib: CreateEffect
@@ -286,7 +290,7 @@ Dragon.CYB.TibCore:
 	Inherits: Dragon.TibCore
 	Report: itanweaa.aud, itanweab.aud, itanweac.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 7000
+		Damage: 7175
 
 DragonGI:
 	Inherits: Dragon
@@ -375,7 +379,7 @@ HellfireAG.Orca:
 
 HindRockets:
 	Inherits: HellfireAG
-	Range: 5c0
+	Range: 5c512
 	ReloadDelay: 70
 	Report: hind-rocket1.aud, hind-rocket2.aud
 	ValidTargets: Ground
@@ -540,6 +544,11 @@ TitanTusk:
 		Damage: 10000
 	Warhead@2Dam: SpreadDamage
 		Damage: 10000
+
+TitanTusk.Gyro:
+	Inherits: TitanTusk
+	ReloadDelay: 30
+	Range: 3c256
 
 APCTusk:
 	Inherits: MammothTusk
@@ -1259,7 +1268,7 @@ SBRockets:
 
 IFVRockets:
 	Inherits: Dragon
-	Range: 4c512
+	Range: 5c512
 	Burst: 2
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
@@ -1281,7 +1290,7 @@ IFVRocketsAA:
 IFVRocketsE:
 	Inherits: IFVRockets
 	Report: vifvatta.aud
-	Range: 5c512
+	Range: 6c0
 	Projectile: MissileCA
 		ContrailLength: 10
 	Warhead@1Dam: SpreadDamage
@@ -1376,7 +1385,7 @@ IFVRocketsAAE.CRYO:
 			None: 100
 			Wood: 75
 			Light: 72
-			Heavy: 30
+			Heavy: 28
 			Concrete: 72
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@3Eff: CreateEffect
@@ -1391,7 +1400,7 @@ IFVRocketsAAE.CRYO:
 
 227mm.upg:
 	Inherits: 227mm
-	Range: 9c768
+	Range: 9c0
 	Projectile: MissileCA
 		ContrailLength: 15
 		ContrailStartColorAlpha: 230
@@ -1402,10 +1411,12 @@ IFVRocketsAAE.CRYO:
 	Inherits: 227mm.upg
 	Report: vaegattb.aud, vaegatta.aud
 	ReloadDelay: 120
+	Range: 9c0
 	Projectile: MissileCA
 		Speed: 366
-		Inaccuracy: 341
-		LockOnInaccuracy: 512
+		Inaccuracy: 64
+		LockOnInaccuracy: 64
+		LockOnProbability: 100
 		ContrailStartColor: 00FFFFE6
 	Warhead@1Dam: SpreadDamage
 		Damage: 830
@@ -1416,6 +1427,7 @@ IFVRocketsAAE.CRYO:
 	Report: hammerheadmissile1.aud, hammerheadmissile2.aud
 	Projectile: MissileCA
 		ContrailStartColor: FFCC00E6
+		LockOnProbability: 80
 	Warhead@1Dam: SpreadDamage
 		Damage: 860
 		Spread: 426
@@ -1429,7 +1441,7 @@ IFVRocketsAAE.CRYO:
 
 227mm.Hailstorm:
 	Inherits: 227mm.upg
-	Range: 10c512
+	Range: 10c0
 	Report: hailstormmissile1.aud, hailstormmissile2.aud
 	Burst: 6
 	BurstDelays: 6
@@ -1447,7 +1459,8 @@ IFVRocketsAAE.CRYO:
 		Spread: 426
 		Damage: 370
 		Versus:
-			Heavy: 45
+			Wood: 80
+			Concrete: 80
 
 227mmAA:
 	Inherits: ^AntiAirMissile
@@ -1457,7 +1470,7 @@ IFVRocketsAAE.CRYO:
 	Range: 6c512
 	Report: rocket1.aud
 	Projectile: MissileCA
-		Speed: 280
+		Speed: 230
 		Image: Dragon
 		Inaccuracy: 0
 		HorizontalRateOfTurn: 60
@@ -1466,7 +1479,7 @@ IFVRocketsAAE.CRYO:
 	Warhead@1Dam: SpreadDamage
 		Damage: 2200
 		Falloff: 100, 37, 14, 5, 0
-		Spread: 0c128
+		Spread: 0c256
 		-Range:
 	Warhead@2Dam: SpreadDamage
 		Damage: 2200
@@ -1479,22 +1492,23 @@ IFVRocketsAAE.CRYO:
 
 227mmAA.upg:
 	Inherits: 227mmAA
-	Range: 7c512
+	Range: 6c512
 	Projectile: MissileCA
-		Speed: 366
+		Speed: 250
 		ContrailLength: 15
 		ContrailStartColorAlpha: 230
-		RangeLimit: 8c512
+		RangeLimit: 7c512
 	Warhead@1Dam: SpreadDamage
-		Damage: 2650
+		Damage: 2600
 	Warhead@2Dam: SpreadDamage
-		Damage: 2650
+		Damage: 2600
 
 227mmAA.Hypersonic:
 	Inherits: 227mmAA.upg
 	Report: vaegattb.aud, vaegatta.aud
 	Projectile: MissileCA
 		ContrailStartColor: 00FFFFE6
+		Speed: 320
 
 227mmAA.Hammerhead:
 	Inherits: 227mmAA.upg

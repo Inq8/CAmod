@@ -112,10 +112,6 @@ namespace OpenRA.Mods.CA.Traits
 
 		void IBotTick.BotTick(IBot bot)
 		{
-			// PERF: We shouldn't be queueing new units when we're low on cash
-			if (playerResources.Cash < Info.ProductionMinCashRequirement || requestPause.Any(rp => rp.PauseUnitProduction))
-				return;
-
 			// Decrement any active unit intervals, removing any that reach zero
 			foreach (KeyValuePair<string, int> i in activeUnitIntervals.ToList())
 			{
@@ -123,6 +119,9 @@ namespace OpenRA.Mods.CA.Traits
 				if (activeUnitIntervals[i.Key] <= 0)
 					activeUnitIntervals.Remove(i.Key);
 			}
+
+			if (requestPause.Any(rp => rp.PauseUnitProduction))
+				return;
 
 			ticks++;
 
@@ -135,6 +134,10 @@ namespace OpenRA.Mods.CA.Traits
 					queuedBuildRequests.Remove(buildRequest);
 				}
 
+				// Don't produce if we don't have enough cash
+				if (playerResources.Cash + playerResources.Resources < Info.ProductionMinCashRequirement)
+					return;
+
 				for (var i = 0; i < Info.UnitQueues.Length; i++)
 				{
 					if (++currentQueueIndex >= Info.UnitQueues.Length)
@@ -146,7 +149,7 @@ namespace OpenRA.Mods.CA.Traits
 						// if AI gets enough cash, it can fill all of its queues with enough ticks
 						BuildUnit(bot, Info.UnitQueues[currentQueueIndex], idleUnitCount < Info.IdleBaseUnitsMaximum, false);
 
-						if (playerResources.Cash < Info.MaximiseProductionCashRequirement)
+						if (playerResources.Cash + playerResources.Resources < Info.MaximiseProductionCashRequirement)
 							break;
 					}
 				}
