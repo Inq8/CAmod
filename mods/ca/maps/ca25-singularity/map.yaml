@@ -41,7 +41,7 @@ Players:
 		LockSpawn: True
 		LockTeam: True
 		Allies: Greece, Nod, USSR
-		Enemies: Scrin, NodSlaves, SovietSlaves, AlliedSlaves, Creeps, Kane, SignalTransmitter
+		Enemies: Scrin, NodSlaves, SovietSlaves, AlliedSlaves, CyborgSlaves, Creeps, Kane, SignalTransmitter
 	PlayerReference@Greece:
 		Name: Greece
 		Bot: campaign
@@ -68,35 +68,42 @@ Players:
 		Bot: campaign
 		Faction: reaper
 		Color: 7700FF
-		Allies: NodSlaves, SovietSlaves, AlliedSlaves
+		Allies: NodSlaves, SovietSlaves, AlliedSlaves, CyborgSlaves
 		Enemies: GDI, Greece, USSR, Nod, Creeps, Kane
 	PlayerReference@NodSlaves:
 		Name: NodSlaves
 		Bot: campaign
 		Faction: blackh
 		Color: D500E8
-		Allies: Scrin, SovietSlaves, AlliedSlaves
+		Allies: Scrin, SovietSlaves, AlliedSlaves, CyborgSlaves
 		Enemies: GDI, Greece, USSR, Nod, Creeps
 	PlayerReference@SovietSlaves:
 		Name: SovietSlaves
 		Bot: campaign
 		Faction: germany
 		Color: D500E8
-		Allies: Scrin, AlliedSlaves, NodSlaves
-		Enemies: GDI, Greece, USSR, Nod, Creeps
+		Allies: Scrin, AlliedSlaves, NodSlaves, CyborgSlaves
+		Enemies: GDI, Greece, USSR, Nod, Creeps, Kane
 	PlayerReference@AlliedSlaves:
 		Name: AlliedSlaves
 		Bot: campaign
 		Faction: germany
 		Color: D500E8
-		Allies: Scrin, NodSlaves, SovietSlaves
-		Enemies: GDI, Greece, USSR, Nod, Creeps
+		Allies: Scrin, NodSlaves, SovietSlaves, CyborgSlaves
+		Enemies: GDI, Greece, USSR, Nod, Creeps, Kane
+	PlayerReference@CyborgSlaves:
+		Name: CyborgSlaves
+		Bot: campaign
+		Faction: blackh
+		Color: D500E8
+		Allies: Scrin, SovietSlaves, AlliedSlaves, NodSlaves
+		Enemies: GDI, Greece, USSR, Creeps
 	PlayerReference@Kane:
 		Name: Kane
 		Bot: campaign
 		Faction: blackh
 		Color: FE1100
-		Enemies: Scrin, GDI, USSR, Greece
+		Enemies: Scrin, GDI, USSR, Greece, AlliedSlaves, SovietSlaves
 	PlayerReference@SignalTransmitter:
 		Name: SignalTransmitter
 		Bot: campaign
@@ -513,9 +520,11 @@ Actors:
 	Actor138: shar
 		Owner: Scrin
 		Location: 62,24
+		TurretFacing: 317
 	Actor139: shar
 		Owner: Scrin
 		Location: 70,24
+		TurretFacing: 761
 	Actor140: swal
 		Owner: Scrin
 		Location: 71,24
@@ -553,22 +562,22 @@ Actors:
 		Owner: Scrin
 		Location: 72,25
 	Actor152: tplr
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 1
 		Facing: 512
 		Location: 74,25
 	Actor153: tplr
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 2
 		Facing: 512
 		Location: 74,25
 	Actor154: tplr
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 4
 		Facing: 512
 		Location: 74,25
 	Actor155: tplr
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 5
 		Facing: 512
 		Location: 74,25
@@ -597,22 +606,22 @@ Actors:
 		Owner: Scrin
 		Location: 55,26
 	Actor164: tplr
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 1
 		Facing: 512
 		Location: 58,26
 	Actor165: tplr
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 2
 		Facing: 512
 		Location: 58,26
 	Actor166: tplr
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 4
 		Facing: 512
 		Location: 58,26
 	Actor167: tplr
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 5
 		Facing: 512
 		Location: 58,26
@@ -690,22 +699,22 @@ Actors:
 		Owner: Scrin
 		Location: 71,28
 	Actor193: enli
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 1
 		Facing: 512
 		Location: 74,28
 	Actor194: enli
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 4
 		Facing: 512
 		Location: 74,28
 	Actor195: enli
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 2
 		Facing: 512
 		Location: 74,28
 	Actor196: enli
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 5
 		Facing: 512
 		Location: 74,28
@@ -715,6 +724,7 @@ Actors:
 	Actor198: shar
 		Owner: Scrin
 		Location: 89,28
+		TurretFacing: 642
 	Actor199: scol
 		Owner: Scrin
 		Location: 38,29
@@ -770,22 +780,22 @@ Actors:
 		Owner: Scrin
 		Location: 55,30
 	Actor217: enli
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 1
 		Facing: 512
 		Location: 58,30
 	Actor218: enli
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 4
 		Facing: 512
 		Location: 58,30
 	Actor219: enli
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 2
 		Facing: 512
 		Location: 58,30
 	Actor220: enli
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 5
 		Facing: 512
 		Location: 58,30
@@ -801,6 +811,7 @@ Actors:
 	Actor224: shar
 		Owner: Scrin
 		Location: 70,30
+		TurretFacing: 713
 	Actor225: swal
 		Owner: Scrin
 		Location: 71,30
@@ -853,49 +864,51 @@ Actors:
 	Actor241: shar
 		Owner: Scrin
 		Location: 63,31
+		TurretFacing: 412
 	Actor242: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 1
 		Facing: 512
 		Location: 65,31
 	Actor243: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 4
 		Facing: 512
 		Location: 65,31
 	Actor244: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 2
 		Facing: 512
 		Location: 65,31
 	Actor245: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 5
 		Facing: 512
 		Location: 65,31
 	Actor246: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 1
 		Facing: 512
 		Location: 67,31
 	Actor247: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 4
 		Facing: 512
 		Location: 67,31
 	Actor248: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 2
 		Facing: 512
 		Location: 67,31
 	Actor249: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 5
 		Facing: 512
 		Location: 67,31
 	Actor250: shar
 		Owner: Scrin
 		Location: 69,31
+		TurretFacing: 547
 	Actor251: swal
 		Owner: Scrin
 		Location: 70,31
@@ -996,22 +1009,22 @@ Actors:
 		Owner: Scrin
 		Location: 70,33
 	Actor285: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 1
 		Facing: 512
 		Location: 74,33
 	Actor286: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 4
 		Facing: 512
 		Location: 74,33
 	Actor287: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 2
 		Facing: 512
 		Location: 74,33
 	Actor288: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 5
 		Facing: 512
 		Location: 74,33
@@ -1031,22 +1044,22 @@ Actors:
 		Owner: Scrin
 		Location: 55,34
 	Actor295: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 1
 		Facing: 512
 		Location: 59,34
 	Actor296: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 4
 		Facing: 512
 		Location: 59,34
 	Actor297: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 2
 		Facing: 512
 		Location: 59,34
 	Actor298: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 5
 		Facing: 512
 		Location: 59,34
@@ -1090,22 +1103,22 @@ Actors:
 		Owner: Scrin
 		Location: 68,35
 	Actor312: enli
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 1
 		Facing: 512
 		Location: 70,35
 	Actor313: enli
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 4
 		Facing: 512
 		Location: 70,35
 	Actor314: enli
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 2
 		Facing: 512
 		Location: 70,35
 	Actor315: enli
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 5
 		Facing: 512
 		Location: 70,35
@@ -1128,22 +1141,22 @@ Actors:
 		Owner: Scrin
 		Location: 56,36
 	Actor323: enli
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 1
 		Facing: 512
 		Location: 61,36
 	Actor324: enli
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 4
 		Facing: 512
 		Location: 61,36
 	Actor325: enli
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 2
 		Facing: 512
 		Location: 61,36
 	Actor326: enli
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 5
 		Facing: 512
 		Location: 61,36
@@ -1245,42 +1258,42 @@ Actors:
 		Owner: Scrin
 		Location: 58,39
 	Actor359: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 1
 		Facing: 512
 		Location: 64,39
 	Actor360: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 4
 		Facing: 512
 		Location: 64,39
 	Actor361: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 2
 		Facing: 512
 		Location: 64,39
 	Actor362: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 5
 		Facing: 512
 		Location: 64,39
 	Actor363: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 1
 		Facing: 512
 		Location: 68,39
 	Actor364: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 4
 		Facing: 512
 		Location: 68,39
 	Actor365: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 2
 		Facing: 512
 		Location: 68,39
 	Actor366: rmbc
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 5
 		Facing: 512
 		Location: 68,39
@@ -1303,45 +1316,45 @@ Actors:
 		Owner: Scrin
 		Location: 58,40
 	Actor373: tplr
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 1
 		Facing: 512
 		Location: 62,40
 	Actor374: tplr
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 2
 		Facing: 512
 		Location: 62,40
 	Actor375: tplr
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 4
 		Facing: 512
 		Location: 62,40
 	Actor376: tplr
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 5
-		Facing: 512
 		Location: 62,40
+		Facing: 512
 	Actor377: tplr
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 1
 		Facing: 512
 		Location: 71,40
 	Actor378: tplr
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 2
 		Facing: 512
 		Location: 71,40
 	Actor379: tplr
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 4
 		Facing: 512
 		Location: 71,40
 	Actor380: tplr
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 5
-		Facing: 512
 		Location: 71,40
+		Facing: 512
 	Actor381: swal
 		Owner: Scrin
 		Location: 74,40
@@ -1400,6 +1413,7 @@ Actors:
 	Actor406: shar
 		Owner: Scrin
 		Location: 89,47
+		TurretFacing: 404
 	Actor407: scol
 		Owner: Scrin
 		Location: 81,50
@@ -1421,6 +1435,7 @@ Actors:
 	Actor413: shar
 		Owner: Scrin
 		Location: 85,51
+		TurretFacing: 507
 	Actor414: shar
 		Owner: Scrin
 		Location: 49,52
@@ -1445,6 +1460,7 @@ Actors:
 	Actor421: shar
 		Owner: Scrin
 		Location: 57,53
+		TurretFacing: 333
 	Actor422: swal
 		Owner: Scrin
 		Location: 65,53
@@ -4071,62 +4087,62 @@ Actors:
 		Owner: Scrin
 		Location: 79,44
 	Actor1343: n3c
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 1
 		Facing: 512
 		Location: 60,27
 	Actor1348: n3c
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 2
 		Facing: 512
 		Location: 60,27
 	Actor1349: n3c
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 4
 		Facing: 512
 		Location: 60,27
 	Actor1350: n3c
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 5
 		Facing: 512
 		Location: 60,27
 	Actor1399: n3c
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 1
 		Facing: 512
 		Location: 66,21
 	Actor1400: n3c
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 2
 		Facing: 512
 		Location: 66,21
 	Actor1481: n3c
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 4
 		Facing: 512
 		Location: 66,21
 	Actor1482: n3c
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 5
 		Facing: 512
 		Location: 66,21
 	Actor1483: n3c
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 1
 		Facing: 512
 		Location: 72,27
 	Actor1484: n3c
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 2
 		Facing: 512
 		Location: 72,27
 	Actor1485: n3c
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 4
 		Facing: 512
 		Location: 72,27
 	Actor1486: n3c
-		Owner: NodSlaves
+		Owner: CyborgSlaves
 		SubCell: 5
 		Facing: 512
 		Location: 72,27
@@ -4151,9 +4167,6 @@ Actors:
 	InterceptorExit3: waypoint
 		Owner: Neutral
 		Location: 1,37
-	Actor1493: waypoint
-		Owner: Neutral
-		Location: 38,1
 	InterceptorExit1: waypoint
 		Owner: Neutral
 		Location: 45,1
@@ -4981,10 +4994,6 @@ Actors:
 		Owner: Scrin
 		Location: 32,109
 		TurretFacing: 570
-	Actor1638: corr
-		Owner: Scrin
-		Facing: 384
-		Location: 120,95
 	Actor1639: s4
 		Owner: Scrin
 		Facing: 384
@@ -5146,6 +5155,71 @@ Actors:
 		Location: 20,125
 		SubCell: 3
 		Facing: 697
+	Actor1667: rptp
+		Owner: Scrin
+		Location: 71,33
+		Facing: 610
+	Actor1668: rptp
+		Owner: Scrin
+		Facing: 384
+		Location: 61,33
+	Actor1669: corr
+		Owner: Scrin
+		Facing: 384
+		Location: 115,92
+	Actor1638: e3
+		Owner: NodSlaves
+		Facing: 384
+		SubCell: 1
+		Location: 100,79
+	Actor1670: e3
+		Owner: NodSlaves
+		Facing: 384
+		SubCell: 3
+		Location: 110,77
+	Actor1671: atmz
+		Owner: Scrin
+		Facing: 384
+		Location: 56,41
+	Actor1672: atmz
+		Owner: Scrin
+		Location: 76,39
+		Facing: 610
+	Actor1673: atmz
+		Owner: Scrin
+		Location: 79,28
+		TurretFacing: 0
+		Facing: 634
+	Actor1674: atmz
+		Owner: Scrin
+		Facing: 384
+		Location: 48,28
+	Actor1675: ruin
+		Owner: Scrin
+		Facing: 384
+		Location: 58,32
+	Actor1676: ruin
+		Owner: Scrin
+		Location: 74,31
+		Facing: 634
+	Actor1677: shar
+		Owner: Scrin
+		Location: 59,48
+		TurretFacing: 333
+	Actor1678: shar
+		Owner: Scrin
+		Location: 72,48
+		TurretFacing: 586
+	Actor1679: scol
+		Owner: Scrin
+		Location: 57,17
+	Actor1680: scol
+		Owner: Scrin
+		Location: 76,18
+	Actor1493: lchr
+		Owner: Scrin
+		Location: 70,59
+		Facing: 467
 
 Rules: ca|rules/campaign-rules.yaml, ca|rules/campaign-tooltips.yaml, ca|rules/campaign-palettes.yaml, rules.yaml
 

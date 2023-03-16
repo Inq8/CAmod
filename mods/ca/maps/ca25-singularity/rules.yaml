@@ -168,7 +168,7 @@ MSHP:
 		AudibleThroughFog: false
 	-DetonateWeaponOnDeploy:
 	Health:
-		HP: 300000
+		HP: 525000
 	Shielded:
 		MaxStrength: 1500000
 		RegenAmount: 1000
@@ -288,21 +288,26 @@ mothership.shields:
 		Palette: scrin
 		RequiresCondition: bluebuff
 	DamageMultiplier@BLUEBUFF:
-		Modifier: 20
+		Modifier: 15
 		RequiresCondition: bluebuff
-	ChangesHealth@THEAL:
+	ChangesHealth@BLUEBUFF:
 		PercentageStep: 2
-		DamageCooldown: 0
+		Delay: 15
+		StartIfBelow: 100
 	Mobile:
 		PauseOnCondition: !kane-revealed && bluebuff
 	ExternalCondition@BLUEBUFF:
 		Condition: bluebuff
 	ExternalCondition@KANE:
 		Condition: kane-revealed
+	ExternalCondition@PROVOKED:
+		Condition: provoked
 	RenderSprites:
 		PlayerPalette: playertd
 	WithDeathAnimation:
 		DeathSequencePalette: playertd
+	AttackFrontal:
+		PauseOnCondition: !kane-revealed && bluebuff && !provoked
 
 RMBC:
 	Inherits@BLUEBUFF: ^BlueBuff
