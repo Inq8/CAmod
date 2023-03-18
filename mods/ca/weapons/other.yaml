@@ -497,7 +497,7 @@ PortaTeslaCharge:
 
 TTrackZap:
 	Inherits: ^TeslaWeapon
-	ReloadDelay: 135
+	ReloadDelay: 125
 	Range: 8c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 12500
@@ -523,19 +523,20 @@ TTrackArc1:
 		ValidTargets: Vehicle, Ship
 		ValidRelationships: Enemy, Neutral
 		Versus:
-			None: 115
 			Light: 35
 			Heavy: 45
 	Warhead@Arc: FireShrapnel
 		Weapon: TTrackArc2
 		ValidTargets: Vehicle, Ship, Infantry
-		AimChance: 65
+		AimChance: 100
 
 TTrackArc2:
 	Inherits: TTrackArc1
 	ValidTargets: Vehicle, Ship, Infantry
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Vehicle, Ship, Infantry
+		Versus:
+			None: 115
 	-Warhead@Arc:
 
 TTankZap:
@@ -569,7 +570,7 @@ TTankArc:
 		ValidTargets: Infantry
 		ValidRelationships: Enemy, Neutral
 		Versus:
-			None: 125
+			None: 130
 
 DogJaw:
 	ValidTargets: Infantry
@@ -1537,6 +1538,12 @@ SonicZap.UPG:
 		Color: 00ffcc25
 	Warhead@1Dam: SpreadDamage
 		Damage: 760
+	Warhead@4Conc: GrantExternalCondition
+		Range: 1c0
+		Duration: 75
+		Condition: concussion
+		ValidTargets: Infantry, Vehicle, Ship
+		ValidRelationships: Enemy, Neutral
 
 SonicZapVisual:
 	ReloadDelay: 120
