@@ -347,10 +347,12 @@ InitUSSR = function()
 		NukeDummy = Actor.Create("NukeDummyNormal", true, { Owner = USSR, Location = Chronosphere.Location })
 	end
 
-	local e1s = USSR.GetActorsByType("e1")
-	Utils.Do(e1s, function(a)
-		a.GrantCondition("difficulty-" .. Difficulty)
-	end)
+	if Difficulty ~= "hard" then
+		local e1s = USSR.GetActorsByType("e1")
+		Utils.Do(e1s, function(a)
+			a.GrantCondition("difficulty-" .. Difficulty)
+		end)
+	end
 
 	Utils.Do(Patrols, function(p)
 		Utils.Do(p.Units, function(unit)

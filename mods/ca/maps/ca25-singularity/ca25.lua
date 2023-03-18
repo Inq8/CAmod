@@ -616,7 +616,7 @@ end
 
 DropHackers = function()
 	Beacon.New(GDI, HackerDropLanding.CenterPosition)
-	Media.PlaySpeechNotification(GDI, "SignalFlare")
+	Media.PlaySpeechNotification(GDI, "ReinforcementsArrived")
 	local hackerFlare = Actor.Create("flare", true, { Owner = GDI, Location = HackerDropLanding.Location })
 	Trigger.AfterDelay(DateTime.Seconds(10), function()
 		hackerFlare.Destroy()
@@ -653,7 +653,7 @@ InitChronoTanks = function()
 		end
 
 		Notification("The Allies have provided us with a squadron of Chrono Tanks. We can use them to disrupt Scrin power in the north-east.")
-		Media.PlaySpeechNotification(GDI, "SignalFlare")
+		Media.PlaySpeechNotification(GDI, "ReinforcementsArrived")
 		local northEastPowerFlare = Actor.Create("flare", true, { Owner = GDI, Location = NorthEastPowerBeacon.Location })
 		Trigger.AfterDelay(DateTime.Seconds(10), function()
 			northEastPowerFlare.Destroy()
