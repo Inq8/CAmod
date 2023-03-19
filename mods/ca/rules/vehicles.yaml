@@ -3373,6 +3373,7 @@ MTNK:
 		Modifier: 25
 		Duration: 2
 		ScaleChargeTimeWithDamage: true
+		ScaleChargeTimeWithDamageAmount: 7
 		RequiresCondition: pointdef-upgrade && !pointlaser-charging
 	WithIdleOverlay@NSHIELD:
 		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
@@ -3428,6 +3429,12 @@ MTNK.Drone:
 		VoiceSet: DroneVoice
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
+	ChangesHealth:
+		PercentageStep: 1
+		Delay: 25
+		StartIfBelow: 100
+		DamageCooldown: 150
+		RequiresCondition: !mdrn-attached
 	-CaptureManager:
 	-Capturable:
 	-CaptureNotification:
@@ -3795,6 +3802,9 @@ HTNK.Drone:
 		VoiceSet: DroneVoice
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
+	ChangesHealth:
+		StartIfBelow: 100
+		RequiresCondition: !mdrn-attached
 	-CaptureManager:
 	-Capturable:
 	-CaptureNotification:
