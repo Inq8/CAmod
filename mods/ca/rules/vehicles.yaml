@@ -1760,6 +1760,12 @@ APC:
 		MinRange: 4c0
 		Range: 5c0
 		RevealGeneratedShroud: False
+		RequiresCondition: !rapc-upgrade
+	RevealsShroud@UPG:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+		RequiresCondition: rapc-upgrade
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Armament:
@@ -1828,6 +1834,10 @@ RAPC:
 		Cost: 800
 	Mobile:
 		Speed: 100
+	RevealsShroud:
+		Range: 6c0
+		-RequiresCondition:
+	-RevealsShroud@UPG:
 	-Tooltip:
 	Tooltip@UPG:
 		-RequiresCondition:
