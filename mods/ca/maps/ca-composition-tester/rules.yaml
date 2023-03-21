@@ -78,17 +78,35 @@ Player:
 		Locked: True
 		Enabled: False
 
-RESETBOX:
+CONFIGWORMHOLE:
 	Inherits: WORMHOLE
 	-PopControlled:
 	-Targetable:
 	WithTextDecoration:
 		Text: Reset
 		Position: Top
+		Font: Bold
 		ValidRelationships: Ally, Enemy, Neutral
-		Color: FF0000
 	RenderSprites:
 		Image: wormhole
+
+RESETWORMHOLE:
+	Inherits: CONFIGWORMHOLE
+	WithTextDecoration:
+		Text: Reset
+		Color: FF0000
+
+SAVEWORMHOLE:
+	Inherits: CONFIGWORMHOLE
+	WithTextDecoration:
+		Text: Save
+		Color: 00FF00
+
+RESTOREWORMHOLE:
+	Inherits: CONFIGWORMHOLE
+	WithTextDecoration:
+		Text: Restore
+		Color: 00FFFF
 
 ^Upgrade:
 	Buildable:
