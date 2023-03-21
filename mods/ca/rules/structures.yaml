@@ -857,6 +857,32 @@ DOME:
 		PauseOnCondition: disabled || empdisable || being-warped
 		RequiresCondition: !build-incomplete
 		SupportPowerPaletteOrder: 50
+	SpawnActorPowerCA@VeilOfWar:
+		Actor: veilofwar1
+		OrderName: veilofwar
+		Icon: veilofwar
+		IconPalette: chrometd
+		Prerequisites: ~radar.england
+		ChargeInterval: 6000
+		LifeTime: -1
+		Name: Veil of War
+		Description: \nCreates an expanding area of shroud, reducing the vision\n    and weapon range of enemy units and defenses.
+		LaunchSound: sscrambl.aud
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeTextNotification: Veil of War ready.
+		PauseOnCondition: disabled || empdisable || being-warped
+		DisplayRadarPing: True
+		DisplayTimerRelationships: Ally
+		Cursor: ability
+		AllowMultiple: false
+		EffectImage: empty
+		EffectSequence: idle
+		EffectPalette: tseffect-ignore-lighting-alpha75
+		TargetCircleRange: 9c512
+		TargetCircleColor: 999999AA
+		SupportPowerPaletteOrder: 50
 
 PBOX:
 	Inherits: ^Defense
@@ -1301,32 +1327,6 @@ ATEK:
 		TargetCircleRange: 5c0
 		TargetCircleColor: 77ffffff
 		SupportPowerPaletteOrder: 40
-	SpawnActorPowerCA@VeilOfWar:
-		Actor: veilofwar1
-		OrderName: veilofwar
-		Icon: veilofwar
-		IconPalette: chrometd
-		Prerequisites: ~atek.england
-		ChargeInterval: 6000
-		LifeTime: -1
-		Name: Veil of War
-		Description: \nCreates an expanding area of shroud, reducing the vision\n    and weapon range of enemy units and defenses.
-		LaunchSound: sscrambl.aud
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		InsufficientPowerSpeechNotification: InsufficientPower
-		EndChargeTextNotification: Veil of War ready.
-		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayRadarPing: True
-		DisplayTimerRelationships: Ally
-		Cursor: ability
-		AllowMultiple: false
-		EffectImage: empty
-		EffectSequence: idle
-		EffectPalette: tseffect-ignore-lighting-alpha75
-		TargetCircleRange: 8c512
-		TargetCircleColor: 999999AA
-		SupportPowerPaletteOrder: 50
 	GrantConditionOnFogEnabled@FOGENABLED:
 		Condition: fogenabled
 	ExternalCondition@DUMMY:
@@ -1349,9 +1349,6 @@ ATEK:
 		RequiresCondition: fogenabled
 	ValidFactions:
 		Factions: england, germany, france, usa
-	ProvidesPrerequisiteValidatedFaction@englandatek:
-		Factions: england
-		Prerequisite: atek.england
 	ProvidesPrerequisiteValidatedFaction@germanyatek:
 		Factions: germany
 		Prerequisite: atek.germany
