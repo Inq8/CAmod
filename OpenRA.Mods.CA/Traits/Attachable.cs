@@ -193,7 +193,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void ParentEnteredCargo()
 		{
-			if (!self.IsInWorld)
+			if (!IsValid || !self.IsInWorld)
 				return;
 
 			self.World.AddFrameEndTask(w =>
@@ -204,7 +204,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void ParentExitedCargo()
 		{
-			if (self.IsInWorld)
+			if (!IsValid || self.IsInWorld)
 				return;
 
 			self.World.AddFrameEndTask(w =>
