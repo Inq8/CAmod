@@ -65,6 +65,7 @@ Player:
 		Locked: True
 	DeveloperMode:
 		CheckboxLocked: True
+		CheckboxVisible: False
 	LobbyPrerequisiteCheckbox@GLOBALFACTUNDEPLOY:
 		Enabled: True
 		Locked: True
@@ -75,8 +76,22 @@ Player:
 		Enabled: True
 		Locked: True
 	LobbyPrerequisiteCheckbox@REVEALONFIRE:
-		Locked: True
+		Locked: False
 		Enabled: False
+	LobbyPrerequisiteCheckbox@FREEUPGRADES:
+		ID: freeupgrades
+		Label: Free Upgrades
+		Description: Upgrades are free
+		Enabled: True
+		DisplayOrder: 999
+		Prerequisites: global.freeupgrades
+
+DOME:
+	GpsRadarProvider:
+		RequiresCondition: gps-active
+	GrantConditionOnDeploy:
+		DeployedCondition: gps-active
+		SkipMakeAnimation: true
 
 CONFIGWORMHOLE:
 	Inherits: WORMHOLE
@@ -782,6 +797,11 @@ DEVA:
 PAC:
 	Buildable:
 		Prerequisites: afld
+
+^Upgrade:
+	ProductionCostMultiplier@FREEUPGRADES:
+		Multiplier: 0
+		Prerequisites: global.freeupgrades
 
 hazmat.upgrade:
 	Buildable:
