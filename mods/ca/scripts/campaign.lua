@@ -637,8 +637,8 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 			end
 
 			-- every harvester killed delays the next wave
-			if HarvesterDeathStacks[squad.Player] ~= nil and HarvesterDeathStacks[squad.Player] > 0 then
-				HarvesterDeathStacks[squad.Player] = HarvesterDeathStacks[squad.Player] - 1
+			if HarvesterDeathStacks[squad.Player.Name] ~= nil and HarvesterDeathStacks[squad.Player.Name] > 0 then
+				HarvesterDeathStacks[squad.Player.Name] = HarvesterDeathStacks[squad.Player.Name] - 1
 				ticksUntilNext = ticksUntilNext + HarvesterDeathDelayTime[Difficulty]
 			end
 
