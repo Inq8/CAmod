@@ -123,11 +123,11 @@ WorldLoaded = function()
 
 		Trigger.AfterDelay(DateTime.Seconds(5), function()
 			wormhole.Kill()
-			Tip("Leechers drain health from targets. They can be deployed to temporarily transform into orbs which heal nearby allies.")
+			Tip("Leechers can be deployed to temporarily transform into balls of bio-matter which heal nearby allies.")
 		end)
 
 		Trigger.AfterDelay(DateTime.Seconds(10), function()
-			Tip("Leechers also transform into these orbs to avoid death and attempt to regenerate. In either case they are vulnerable in this state.")
+			Tip("Leechers also transform in this way to avoid death and attempt to regenerate. In either case they are vulnerable in this state.")
 		end)
 	end)
 

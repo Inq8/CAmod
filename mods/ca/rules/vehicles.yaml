@@ -153,7 +153,7 @@ KATY:
 		RequiresCondition: onwater
 	RevealsShroud:
 		MinRange: 4c0
-		Range: 5c0
+		Range: 6c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
@@ -1760,6 +1760,12 @@ APC:
 		MinRange: 4c0
 		Range: 5c0
 		RevealGeneratedShroud: False
+		RequiresCondition: !rapc-upgrade
+	RevealsShroud@UPG:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+		RequiresCondition: rapc-upgrade
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Armament:
@@ -1828,6 +1834,10 @@ RAPC:
 		Cost: 800
 	Mobile:
 		Speed: 100
+	RevealsShroud:
+		Range: 6c0
+		-RequiresCondition:
+	-RevealsShroud@UPG:
 	-Tooltip:
 	Tooltip@UPG:
 		-RequiresCondition:
@@ -1864,6 +1874,9 @@ APC.AI:
 	Tooltip:
 		-RequiresCondition:
 	-Tooltip@UPG:
+	RevealsShroud:
+		-RequiresCondition:
+	-RevealsShroud@UPG:
 	TooltipExtras:
 		-RequiresCondition:
 	-TooltipExtras@UPG:
@@ -3248,7 +3261,7 @@ LTNK:
 		RequiresCondition: onwater && !parachute
 	RevealsShroud:
 		MinRange: 4c0
-		Range: 5c0
+		Range: 6c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
@@ -3373,6 +3386,7 @@ MTNK:
 		Modifier: 25
 		Duration: 2
 		ScaleChargeTimeWithDamage: true
+		ScaleChargeTimeWithDamageAmount: 7
 		RequiresCondition: pointdef-upgrade && !pointlaser-charging
 	WithIdleOverlay@NSHIELD:
 		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
@@ -3428,8 +3442,12 @@ MTNK.Drone:
 		VoiceSet: DroneVoice
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
-	AttachOnCreation@DRONEPAIR:
-		Actor: mdrn.attached
+	ChangesHealth:
+		PercentageStep: 1
+		Delay: 25
+		StartIfBelow: 100
+		DamageCooldown: 150
+		RequiresCondition: !mdrn-attached
 	-CaptureManager:
 	-Capturable:
 	-CaptureNotification:
@@ -3797,8 +3815,9 @@ HTNK.Drone:
 		VoiceSet: DroneVoice
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
-	AttachOnCreation@DRONEPAIR:
-		Actor: mdrn.attached
+	ChangesHealth:
+		StartIfBelow: 100
+		RequiresCondition: !mdrn-attached
 	-CaptureManager:
 	-Capturable:
 	-CaptureNotification:
@@ -5462,6 +5481,7 @@ DISR:
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Light Armor, Infantry
 		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Slows enemy movement and rate of fire (with upgrade)
 	Health:
 		HP: 70000
 	Armor:

@@ -1,0 +1,1144 @@
+
+World:
+	LuaScript:
+		Scripts: composition-tester.lua
+	MissionData:
+		Briefing: Map for testing fixed value army compositions against each other. Requires 2 players. Move the supply truck to the wormhole to reset.
+	StartingUnits@none:
+		Class: none
+		ClassName: None
+		-BaseActor:
+		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri, gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow, scrin, reaper, traveler, harbinger, collector
+	-StartingUnits@mcvonly:
+	-StartingUnits@lightallies:
+	-StartingUnits@lightsoviet:
+	-StartingUnits@heavyallies:
+	-StartingUnits@heavysoviet:
+	-StartingUnits@mcvonly2:
+	-StartingUnits@defaultgdia:
+	-StartingUnits@defaultnoda:
+	-StartingUnits@heavynoda:
+	-StartingUnits@heavygdia:
+	-StartingUnits@mcvonlyscrin:
+	-StartingUnits@lightscrin:
+	-StartingUnits@heavyscrin:
+	SpawnStartingUnits:
+		DropdownLocked: True
+	MapBuildRadius:
+		AllyBuildRadiusCheckboxLocked: True
+		BuildRadiusCheckboxLocked: True
+		AllyBuildRadiusCheckboxEnabled: True
+		BuildRadiusCheckboxEnabled: True
+	MapOptions:
+		TechLevelDropdownLocked: True
+		TechLevelDropdownVisible: False
+		ShortGameCheckboxLocked: True
+	CrateSpawner:
+		CheckboxLocked: True
+		CheckboxEnabled: False
+	MapStartingLocations:
+		SeparateTeamSpawnsCheckboxEnabled: False
+		SeparateTeamSpawnsCheckboxLocked: True
+
+Player:
+	PlayerResources:
+		SelectableCash: 5000, 6000, 8000, 10000, 15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000, 75000, 100000, 200000
+		DefaultCash: 15000
+	LobbyPrerequisiteCheckbox@GLOBALMULTIQUEUE:
+		Enabled: False
+		Locked: True
+	ClassicProductionQueueCA@Vehicle:
+		BuildTimeSpeedReduction: 0
+	ClassicProductionQueueCA@Infantry:
+		BuildTimeSpeedReduction: 0
+	ClassicProductionQueue@Ship:
+		BuildTimeSpeedReduction: 0
+	ClassicProductionQueueCA@Aircraft:
+		BuildTimeSpeedReduction: 0
+	ClassicProductionQueue@Upgrade:
+		BuildTimeSpeedReduction: 0
+	LobbyPrerequisiteCheckbox@GLOBALBOUNTY:
+		Enabled: False
+		Locked: True
+	LobbyPrerequisiteCheckbox@FORCESHIELD:
+		Enabled: False
+		Locked: True
+	DeveloperMode:
+		CheckboxLocked: True
+		CheckboxVisible: False
+	LobbyPrerequisiteCheckbox@GLOBALFACTUNDEPLOY:
+		Enabled: True
+		Locked: True
+	LobbyPrerequisiteCheckbox@NAVY:
+		Enabled: True
+		Locked: True
+	LobbyPrerequisiteCheckbox@BALANCEDHARVESTING:
+		Enabled: True
+		Locked: True
+	LobbyPrerequisiteCheckbox@REVEALONFIRE:
+		Locked: False
+		Enabled: False
+	LobbyPrerequisiteCheckbox@FREEUPGRADES:
+		ID: freeupgrades
+		Label: Free Upgrades
+		Description: Upgrades are free
+		Enabled: True
+		DisplayOrder: 999
+		Prerequisites: global.freeupgrades
+
+DOME:
+	GpsRadarProvider:
+		RequiresCondition: gps-active
+	GrantConditionOnDeploy:
+		DeployedCondition: gps-active
+		SkipMakeAnimation: true
+
+CONFIGWORMHOLE:
+	Inherits: WORMHOLE
+	-PopControlled:
+	-Targetable:
+	WithTextDecoration:
+		Text: Reset
+		Position: Top
+		Font: Bold
+		ValidRelationships: Ally, Enemy, Neutral
+	RenderSprites:
+		Image: wormhole
+
+RESETWORMHOLE:
+	Inherits: CONFIGWORMHOLE
+	WithTextDecoration:
+		Text: Reset
+		Color: FF0000
+
+SAVEWORMHOLE:
+	Inherits: CONFIGWORMHOLE
+	WithTextDecoration:
+		Text: Save
+		Color: 00FF00
+
+RESTOREWORMHOLE:
+	Inherits: CONFIGWORMHOLE
+	WithTextDecoration:
+		Text: Restore
+		Color: 00FFFF
+
+^Upgrade:
+	Buildable:
+		BuildDurationModifier: 0
+
+V2RL:
+	Buildable:
+		Prerequisites: vehicles.any
+
+KATY:
+	Buildable:
+		Prerequisites: vehicles.any
+
+1TNK:
+	Buildable:
+		Prerequisites: vehicles.any
+2TNK:
+	Buildable:
+		Prerequisites: vehicles.any
+
+GTNK.squad:
+	Buildable:
+		Prerequisites: vehicles.any
+
+3TNK:
+	Buildable:
+		Prerequisites: vehicles.any
+
+3TNK.ATOMIC:
+	Buildable:
+		Prerequisites: vehicles.any
+
+3TNK.YURI:
+	Buildable:
+		Prerequisites: vehicles.any
+
+3TNK.ATOMICYURI:
+	Buildable:
+		Prerequisites: vehicles.any
+
+4TNK:
+	Buildable:
+		Prerequisites: vehicles.any
+
+4TNK.ATOMIC:
+	Buildable:
+		Prerequisites: vehicles.any
+
+4TNK.ERAD:
+	Buildable:
+		Prerequisites: vehicles.any
+
+4TNK.ERADATOMIC:
+	Buildable:
+		Prerequisites: vehicles.any
+
+ARTY:
+	Buildable:
+		Prerequisites: vehicles.any
+
+ARTY.nod:
+	Buildable:
+		Prerequisites: vehicles.any
+
+HOWI:
+	Buildable:
+		Prerequisites: vehicles.any
+
+ISU:
+	Buildable:
+		Prerequisites: vehicles.any
+
+SPEC:
+	Buildable:
+		Prerequisites: vehicles.any
+
+SAPC:
+	Buildable:
+		Prerequisites: vehicles.any
+
+HARV:
+	Buildable:
+		Prerequisites: vehicles.any
+
+HARV.Chrono:
+	Buildable:
+		Prerequisites: vehicles.any
+
+MCV:
+	Buildable:
+		Prerequisites: vehicles.any
+
+JEEP:
+	Buildable:
+		Prerequisites: vehicles.any
+
+APC:
+	Buildable:
+		Prerequisites: vehicles.any
+
+RAPC:
+	Buildable:
+		Prerequisites: vehicles.any
+
+MNLY:
+	Buildable:
+		Prerequisites: vehicles.any
+
+MGG:
+	Buildable:
+		Prerequisites: vehicles.any
+MRJ:
+	Buildable:
+		Prerequisites: vehicles.any
+
+MSG:
+	Buildable:
+		Prerequisites: vehicles.any
+
+TTRA:
+	Buildable:
+		Prerequisites: vehicles.any
+
+TTNK:
+	Buildable:
+		Prerequisites: vehicles.any
+
+DTRK:
+	Buildable:
+		Prerequisites: vehicles.any
+
+CTNK:
+	Buildable:
+		Prerequisites: vehicles.any
+
+QTNK:
+	Buildable:
+		Prerequisites: vehicles.any
+
+AMCV:
+	Buildable:
+		Prerequisites: vehicles.any
+
+HMMV:
+	Buildable:
+		Prerequisites: vehicles.any
+
+HMMV.TOW:
+	Buildable:
+		Prerequisites: vehicles.any
+
+GDRN:
+	Buildable:
+		Prerequisites: vehicles.any
+
+GDRN.TOW:
+	Buildable:
+		Prerequisites: vehicles.any
+
+BGGY:
+	Buildable:
+		Prerequisites: vehicles.any
+
+APC2:
+	Buildable:
+		Prerequisites: vehicles.any
+
+VULC:
+	Buildable:
+		Prerequisites: vehicles.any
+
+LTNK:
+	Buildable:
+		Prerequisites: vehicles.any
+
+MTNK:
+	Buildable:
+		Prerequisites: vehicles.any
+
+MTNK.Drone:
+	Buildable:
+		Prerequisites: vehicles.any
+
+MDRN:
+	Buildable:
+		Prerequisites: vehicles.any
+
+HTNK:
+	Buildable:
+		Prerequisites: vehicles.any
+
+HTNK.Ion:
+	Buildable:
+		Prerequisites: vehicles.any
+
+HTNK.Hover:
+	Buildable:
+		Prerequisites: vehicles.any
+
+HTNK.Drone:
+	Buildable:
+		Prerequisites: vehicles.any
+
+MSAM:
+	Buildable:
+		Prerequisites: vehicles.any
+
+MLRS:
+	Buildable:
+		Prerequisites: vehicles.any
+
+STNK.Nod:
+	Buildable:
+		Prerequisites: vehicles.any
+
+BIKE:
+	Buildable:
+		Prerequisites: vehicles.any
+
+FTNK:
+	Buildable:
+		Prerequisites: vehicles.any
+
+HFTK:
+	Buildable:
+		Prerequisites: vehicles.any
+
+HARV.TD:
+	Buildable:
+		Prerequisites: vehicles.any
+
+BTR:
+	Buildable:
+		Prerequisites: vehicles.any
+
+IFV:
+	Buildable:
+		Prerequisites: vehicles.any
+
+TITN:
+	Buildable:
+		Prerequisites: vehicles.any
+
+TITN.RAIL:
+	Buildable:
+		Prerequisites: vehicles.any
+
+JUGG:
+	Buildable:
+		Prerequisites: vehicles.any
+
+TTRK:
+	Buildable:
+		Prerequisites: vehicles.any
+
+DISR:
+	Buildable:
+		Prerequisites: vehicles.any
+
+HSAM:
+	Buildable:
+		Prerequisites: vehicles.any
+
+RTNK:
+	Buildable:
+		Prerequisites: vehicles.any
+
+V3RL:
+	Buildable:
+		Prerequisites: vehicles.any
+
+TNKD:
+	Buildable:
+		Prerequisites: vehicles.any
+
+MSAR:
+	Buildable:
+		Prerequisites: vehicles.any
+
+PTNK:
+	Buildable:
+		Prerequisites: vehicles.any
+
+PCAN:
+	Buildable:
+		Prerequisites: vehicles.any
+
+WTNK:
+	Buildable:
+		Prerequisites: vehicles.any
+
+BATF:
+	Buildable:
+		Prerequisites: vehicles.any
+
+MEMP:
+	Buildable:
+		Prerequisites: vehicles.any
+
+CDRN:
+	Buildable:
+		Prerequisites: vehicles.any
+
+CHPR:
+	Buildable:
+		Prerequisites: vehicles.any
+
+CRYO:
+	Buildable:
+		Prerequisites: vehicles.any
+
+APOC:
+	Buildable:
+		Prerequisites: vehicles.any
+
+APOC.ATOMIC:
+	Buildable:
+		Prerequisites: vehicles.any
+
+TRUK:
+	Buildable:
+		Prerequisites: ~disabled
+	-SpawnActorOnDeath:
+
+DOG:
+	Buildable:
+		Prerequisites: infantry.any
+
+E1:
+	Buildable:
+		Prerequisites: infantry.any
+
+E2:
+	Buildable:
+		Prerequisites: infantry.any
+
+E3:
+	Buildable:
+		Prerequisites: infantry.any
+
+U3:
+	Buildable:
+		Prerequisites: infantry.any
+
+U3.squad:
+	Buildable:
+		Prerequisites: infantry.any
+
+E4:
+	Buildable:
+		Prerequisites: infantry.any
+
+E6:
+	Buildable:
+		Prerequisites: infantry.any
+
+SPY:
+	Buildable:
+		Prerequisites: infantry.any
+
+E7:
+	Buildable:
+		Prerequisites: infantry.any
+
+MEDI:
+	Buildable:
+		Prerequisites: infantry.any
+
+MECH:
+	Buildable:
+		Prerequisites: infantry.any
+
+CMEC:
+	Buildable:
+		Prerequisites: infantry.any
+
+THF:
+	Buildable:
+		Prerequisites: infantry.any
+
+SHOK:
+	Buildable:
+		Prerequisites: infantry.any
+
+N1:
+	Buildable:
+		Prerequisites: infantry.any
+
+N2:
+	Buildable:
+		Prerequisites: infantry.any
+
+N3:
+	Buildable:
+		Prerequisites: infantry.any
+
+N4:
+	Buildable:
+		Prerequisites: infantry.any
+
+N5:
+	Buildable:
+		Prerequisites: infantry.any
+
+RMBO:
+	Buildable:
+		Prerequisites: infantry.any
+
+N6:
+	Buildable:
+		Prerequisites: infantry.any
+
+SNIP:
+	Buildable:
+		Prerequisites: infantry.any
+
+BORI:
+	Buildable:
+		Prerequisites: infantry.any
+
+MORT:
+	Buildable:
+		Prerequisites: infantry.any
+
+SAB:
+	Buildable:
+		Prerequisites: infantry.any
+
+ACOL:
+	Buildable:
+		Prerequisites: infantry.any
+
+TPLR:
+	Buildable:
+		Prerequisites: infantry.any
+
+JJET:
+	Buildable:
+		Prerequisites: infantry.any
+
+BJET:
+	Buildable:
+		Prerequisites: infantry.any
+
+E8:
+	Buildable:
+		Prerequisites: infantry.any
+
+N1C:
+	Buildable:
+		Prerequisites: infantry.any
+
+N3C:
+	Buildable:
+		Prerequisites: infantry.any
+
+RMBC:
+	Buildable:
+		Prerequisites: infantry.any
+
+IVAN:
+	Buildable:
+		Prerequisites: infantry.any
+
+BRUT:
+	Buildable:
+		Prerequisites: infantry.any
+
+BH:
+	Buildable:
+		Prerequisites: infantry.any
+
+YURI:
+	Buildable:
+		Prerequisites: infantry.any
+
+SEAL:
+	Buildable:
+		Prerequisites: infantry.any
+
+XO:
+	Buildable:
+		Prerequisites: infantry.any
+
+ENLI:
+	Buildable:
+		Prerequisites: infantry.any
+
+MIG:
+	Buildable:
+		Prerequisites: afld
+
+SUK:
+	Buildable:
+		Prerequisites: afld
+
+SUK.UPG:
+	Buildable:
+		Prerequisites: afld
+
+YAK:
+	Buildable:
+		Prerequisites: afld
+
+TRAN:
+	Buildable:
+		Prerequisites: afld
+
+HALO:
+	Buildable:
+		Prerequisites: afld
+
+NHAW:
+	Buildable:
+		Prerequisites: afld
+
+HELI:
+	Buildable:
+		Prerequisites: afld
+
+HIND:
+	Buildable:
+		Prerequisites: afld
+
+A10:
+	Buildable:
+		Prerequisites: afld
+
+A10.UPG:
+	Buildable:
+		Prerequisites: afld
+
+APCH:
+	Buildable:
+		Prerequisites: afld
+
+ORCA:
+	Buildable:
+		Prerequisites: afld
+
+ORCB:
+	Buildable:
+		Prerequisites: afld
+
+RAH:
+	Buildable:
+		Prerequisites: afld
+
+KIRO:
+	Buildable:
+		Prerequisites: afld
+
+OCAR:
+	Buildable:
+		Prerequisites: afld
+
+HARR:
+	Buildable:
+		Prerequisites: afld
+
+SCRN:
+	Buildable:
+		Prerequisites: afld
+
+VENM:
+	Buildable:
+		Prerequisites: afld
+
+AURO:
+	Buildable:
+		Prerequisites: afld
+
+S1:
+	Buildable:
+		Prerequisites: infantry.any
+
+S2:
+	Buildable:
+		Prerequisites: infantry.any
+
+S3:
+	Buildable:
+		Prerequisites: infantry.any
+
+S4:
+	Buildable:
+		Prerequisites: infantry.any
+
+S6:
+	Buildable:
+		Prerequisites: infantry.any
+
+MAST:
+	Buildable:
+		Prerequisites: infantry.any
+
+HARV.Scrin:
+	Buildable:
+		Prerequisites: vehicles.any
+
+GUNW:
+	Buildable:
+		Prerequisites: vehicles.any
+
+SHRW:
+	Buildable:
+		Prerequisites: vehicles.any
+
+SEEK:
+	Buildable:
+		Prerequisites: vehicles.any
+
+LACE:
+	Buildable:
+		Prerequisites: vehicles.any
+
+INTL:
+	Buildable:
+		Prerequisites: vehicles.any
+
+CORR:
+	Buildable:
+		Prerequisites: vehicles.any
+
+LCHR:
+	Buildable:
+		Prerequisites: vehicles.any
+
+STCR:
+	Buildable:
+		Prerequisites: vehicles.any
+
+DEVO:
+	Buildable:
+		Prerequisites: vehicles.any
+
+DARK:
+	Buildable:
+		Prerequisites: vehicles.any
+
+RUIN:
+	Buildable:
+		Prerequisites: vehicles.any
+
+ATMZ:
+	Buildable:
+		Prerequisites: vehicles.any
+
+TPOD:
+	Buildable:
+		Prerequisites: vehicles.any
+
+RPTP:
+	Buildable:
+		Prerequisites: vehicles.any
+
+SMCV:
+	Buildable:
+		Prerequisites: vehicles.any
+
+STMR:
+	Buildable:
+		Prerequisites: afld
+
+ENRV:
+	Buildable:
+		Prerequisites: afld
+
+DEVA:
+	Buildable:
+		Prerequisites: afld
+
+PAC:
+	Buildable:
+		Prerequisites: afld
+
+^Upgrade:
+	ProductionCostMultiplier@FREEUPGRADES:
+		Multiplier: 0
+		Prerequisites: global.freeupgrades
+
+hazmat.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+flakarmor.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+bombard.strat:
+	Buildable:
+		Prerequisites: anyradar, ~!seek.strat, ~!hold.strat
+
+bombard2.strat:
+	Buildable:
+		Prerequisites: anyradar, ~bombard.strat
+
+seek.strat:
+	Buildable:
+		Prerequisites: anyradar, ~!bombard.strat, ~!hold.strat
+
+seek2.strat:
+	Buildable:
+		Prerequisites: anyradar, ~seek.strat
+
+hold.strat:
+	Buildable:
+		Prerequisites: anyradar, ~!bombard.strat, ~!seek.strat
+
+hold2.strat:
+	Buildable:
+		Prerequisites: anyradar, ~hold.strat
+
+vulcan.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+sidewinders.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+empgren.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+strategic.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+bjet.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+tow.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+pointdef.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+stratmiss.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+hypersonic.upgrade:
+	Buildable:
+		Prerequisites: anyradar, ~!hailstorm.upgrade, ~!hammerhead.upgrade
+
+hailstorm.upgrade:
+	Buildable:
+		Prerequisites: anyradar, ~!hypersonic.upgrade, ~!hammerhead.upgrade
+
+hammerhead.upgrade:
+	Buildable:
+		Prerequisites: anyradar, ~!hypersonic.upgrade, ~!hailstorm.upgrade
+
+gyro.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+sonic.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+abur.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+bdrone.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+railgun.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+ionmam.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+hovermam.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+mdrone.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+#########################NOD#########
+########################################
+
+howi.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+tibcore.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+blacknapalm.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+microwave.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+quantum.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+alphacomanche.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+cyborgspeed.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+cyborgarmor.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+#########################SOVIET#########
+########################################
+
+hazmatsoviet.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+v2.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+lasher.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+seismic.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+atomicengines.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+erad.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+tarc.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+indp.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+#######################ALLIES############################
+#########################################################
+
+rapc.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+apb.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+cryr.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+pcan.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+entrench.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+crym.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+tflx.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+charv.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+orep.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+################################SCRIN##############################
+###################################################################
+
+blink.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+shrw.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+advart.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+carapace.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+resconv.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+ioncon.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+regen.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+stellar.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+coalescence.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+shields.upgrade:
+	Buildable:
+		Prerequisites: anyradar
+
+WEAP:
+	DamageMultiplier@1:
+		Modifier: 0
+
+TENT:
+	DamageMultiplier@1:
+		Modifier: 0
+
+AFLD:
+	DamageMultiplier@1:
+		Modifier: 0
+
+HQ:
+	DamageMultiplier@1:
+		Modifier: 0
+
+FIX:
+	DamageMultiplier@1:
+		Modifier: 0
+
+NUK2:
+	DamageMultiplier@1:
+		Modifier: 0
+
+SYRD:
+	DamageMultiplier@1:
+		Modifier: 0
+
+SS:
+	Buildable:
+		Prerequisites: syrd
+
+MSUB:
+	Buildable:
+		Prerequisites: syrd
+
+DD:
+	Buildable:
+		Prerequisites: syrd
+
+CA:
+	Buildable:
+		Prerequisites: syrd
+
+LST:
+	Buildable:
+		Prerequisites: syrd
+
+PT:
+	Buildable:
+		Prerequisites: syrd
+
+PT2:
+	Buildable:
+		Prerequisites: syrd
+
+DD2:
+	Buildable:
+		Prerequisites: syrd
+
+SS2:
+	Buildable:
+		Prerequisites: syrd
+
+ISUB:
+	Buildable:
+		Prerequisites: syrd
+
+CV:
+	Buildable:
+		Prerequisites: syrd
+
+SB:
+	Buildable:
+		Prerequisites: syrd
+
+SEAS:
+	Buildable:
+		Prerequisites: syrd

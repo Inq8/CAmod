@@ -159,6 +159,10 @@ WorldLoaded = function()
 	ObjectiveEliminateNodHarvesting = Scrin.AddObjective("Eliminate all enemy harvesting operations.")
 	ObjectiveHarvestFields = Scrin.AddObjective("Establish and maintain harvesting operations\nat all six blue ichor fields.")
 
+	Trigger.AfterDelay(DateTime.Seconds(3), function()
+		Tip("A tiberium field is considered occupied when it has been cleared of Nod forces and when you have both a refinery and an active harvester nearby.")
+	end)
+
 	Trigger.AfterDelay(1, function()
 		CheckFields()
 		UpdateObjectiveMessage()

@@ -58,7 +58,11 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			var guardActors = world.Selection.Actors
-				.Where(a => a.Owner == world.LocalPlayer && a.IsInWorld && !a.IsDead && a.Info.HasTraitInfo<AttackBaseInfo>()
+				.Where(a => a.Owner == world.LocalPlayer
+					&& a.IsInWorld
+					&& !a.IsDead
+					&& a.Info.HasTraitInfo<AttackBaseInfo>()
+					&& a != self
 					&& IsValidGuardTarget(a))
 				.ToArray();
 

@@ -1323,7 +1323,7 @@ LCHR:
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
-		Cost: 950
+		Cost: 1000
 	Tooltip:
 		Name: Leecher
 	Selectable:
@@ -1339,10 +1339,10 @@ LCHR:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
-		Attributes: • Regenerates health while dealing damage\n• Disables power plants and radars\n• Slows vehicles & cyborgs
+		Attributes: • Regenerates health while dealing damage (without upgrade)\n• Disables power plants and radars\n• Slows vehicles & cyborgs\n• Regenerates and heals allies when in coalescence form (with upgrade)\n• Special Ability: Coalescence (with upgrade)
 	Mobile:
 		Speed: 82
-		TurnSpeed: 22
+		TurnSpeed: 20
 	Health:
 		HP: 28000
 	Armor:
@@ -1372,9 +1372,6 @@ LCHR:
 	ConvertsDamageToHealth:
 		DamagePercentConverted: 25
 		RequiresCondition: !coalescence-upgrade
-	ConvertsDamageToHealth@COALESCENCE:
-		DamagePercentConverted: 10
-		RequiresCondition: coalescence-upgrade
 	Explodes:
 		Weapon: LeecherExplode
 		EmptyWeapon: LeecherExplode

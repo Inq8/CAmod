@@ -21,6 +21,12 @@ UnitBuildTimeMultipliers = {
 	hard = 0.5,
 }
 
+HarvesterDeathDelayTime = {
+	easy = DateTime.Seconds(60),
+	normal = DateTime.Seconds(40),
+	hard = DateTime.Seconds(20),
+}
+
 CapturedCreditsAmount = 1250
 
 EnforceAiBuildRadius = false
@@ -69,6 +75,9 @@ SquadAssignmentQueue = { }
 
 -- stores which AI production structures have triggers assigned to prevent them being added multiple times
 OnProductionTriggers = { }
+
+-- when player kills an AI harvester it delays the production of the next attack wave
+HarvesterDeathStacks = { }
 
 --
 -- end automatically populated vars
@@ -627,6 +636,12 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 				ticksUntilNext = CalculateInterval(squad)
 			end
 
+			-- every harvester killed delays the next wave
+			if HarvesterDeathStacks[squad.Player.Name] ~= nil and HarvesterDeathStacks[squad.Player.Name] > 0 then
+				HarvesterDeathStacks[squad.Player.Name] = HarvesterDeathStacks[squad.Player.Name] - 1
+				ticksUntilNext = ticksUntilNext + HarvesterDeathDelayTime[Difficulty]
+			end
+
 			Trigger.AfterDelay(ticksUntilNext, function()
 				InitAttackSquad(squad, squad.Player, squad.TargetPlayer)
 			end)
@@ -919,7 +934,16 @@ AutoReplaceHarvester = function(player, harvester)
 				producer.Produce(harvType)
 			end
 		end)
+
+		AddHarvesterDeathStack(player)
 	end)
+end
+
+AddHarvesterDeathStack = function(player)
+	if HarvesterDeathStacks[player.Name] == nil then
+		HarvesterDeathStacks[player.Name] = 0
+	end
+	HarvesterDeathStacks[player.Name] = HarvesterDeathStacks[player.Name] + 1
 end
 
 DoHelicopterDrop = function(player, entryPath, transportType, units, unitFunc, transportExitFunc)

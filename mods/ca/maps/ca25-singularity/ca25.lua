@@ -273,6 +273,7 @@ WorldLoaded = function()
 	AlliedSlaves = Player.GetPlayer("AlliedSlaves")
 	SovietSlaves = Player.GetPlayer("SovietSlaves")
 	NodSlaves = Player.GetPlayer("NodSlaves")
+	CyborgSlaves = Player.GetPlayer("CyborgSlaves")
 	Kane = Player.GetPlayer("Kane")
 	SignalTransmitterPlayer = Player.GetPlayer("SignalTransmitter") -- separate player to prevent AI from attacking it
 	MissionPlayer = GDI
@@ -299,7 +300,7 @@ WorldLoaded = function()
 			end
 		end
 
-		if not MADTank.IsDead and MADTankInvulnToken ~= nil then
+		if MADTank ~= nil and not MADTank.IsDead and MADTankInvulnToken ~= nil then
 			MADTank.RevokeCondition(MADTankInvulnToken)
 		end
 	end)
@@ -332,10 +333,9 @@ WorldLoaded = function()
 
 	Trigger.AfterDelay(DateTime.Seconds(10), function()
 		DoInterceptors()
-	end)
-
-	Trigger.AfterDelay(DateTime.Seconds(25), function()
-		Notification("We barely made a scratch! We'll need you to bring those shields down before we can do damage.")
+		Trigger.AfterDelay(DateTime.Seconds(15), function()
+			Notification("We barely made a scratch! We'll need you to bring those shields down before we can do damage.")
+		end)
 	end)
 
 	local wormholeFootprint = Utils.ExpandFootprint({ WormholeWP.Location }, true)
@@ -354,6 +354,30 @@ WorldLoaded = function()
 	Trigger.OnKilled(SignalTransmitter, function(self, killer)
 		if ObjectiveHackSignalTransmitter ~= nil and not GDI.IsObjectiveCompleted(ObjectiveHackSignalTransmitter) then
 			GDI.MarkFailedObjective(ObjectiveHackSignalTransmitter)
+			Trigger.AfterDelay(DateTime.Seconds(2), function()
+				Media.DisplayMessage("The Signal Transmitter has been destroyed! Your only option now is to use brute force to bring those shields down. I only hope you can do it in time.", "Nod Commander", HSLColor.FromHex("FF0000"))
+			end)
+		end
+	end)
+
+	local cyborgs = CyborgSlaves.GetActorsByTypes({ "rmbc", "enli", "tplr", "n3c" })
+	Utils.Do(cyborgs, function(c)
+		c.GrantCondition("bluebuff")
+
+		Trigger.OnDamaged(c, function(self, attacker, damage)
+			if not SleepingCyborgsMessageShown and not Mothership.IsDead and self.Health < self.MaxHealth * 0.75 then
+				SleepingCyborgsMessageShown = true
+				Notification("Those cyborgs appear to be in some kind of hibernation commander, and that enriched Tiberium is giving them some serious regeneration. Recommend we avoid firing on them, lest they wake up!")
+			end
+		end)
+	end)
+
+	Trigger.OnAnyKilled(cyborgs, function()
+		if not CyborgsProvoked then
+			CyborgsProvoked = true
+			Utils.Do(cyborgs, function(c)
+				c.GrantCondition("provoked")
+			end)
 		end
 	end)
 
@@ -365,7 +389,7 @@ MoveToWormhole = function(a)
 		a.Stop()
 		a.Scatter()
 		a.Move(WormholeWP.Location)
-		Trigger.AfterDelay(DateTime.Seconds(4), function()
+		Trigger.AfterDelay(DateTime.Seconds(7), function()
 			MoveToWormhole(a)
 		end)
 	end
@@ -413,11 +437,29 @@ OncePerFiveSecondChecks = function()
 			end
 
 			Notification("The Mothership's shields are down! Air attacks resuming.")
+
 			Trigger.AfterDelay(DateTime.Seconds(10), function()
 				DoInterceptors()
-			end)
-			Trigger.AfterDelay(DateTime.Minutes(5), function()
-				DoInterceptors()
+
+				Trigger.AfterDelay(DateTime.Seconds(15), function()
+					if not Mothership.IsDead then
+						Notification("Attack run successful! The Mothership's hull has sustained significant damage. Keep up the pressure Commander; next attack run ETA 2 minutes.")
+
+						Trigger.AfterDelay(DateTime.Minutes(2), function()
+							DoInterceptors()
+
+							Trigger.AfterDelay(DateTime.Seconds(15), function()
+								if not Mothership.IsDead then
+									Notification("One more pass should do it commander, ETA 2 minutes.")
+
+									Trigger.AfterDelay(DateTime.Minutes(2), function()
+										DoInterceptors()
+									end)
+								end
+							end)
+						end)
+					end
+				end)
 			end)
 		end
 
@@ -438,7 +480,7 @@ OncePerFiveSecondChecks = function()
 end
 
 InitScrin = function()
-	RebuildExcludes.Scrin = { Types = { "sign", "rift" }, Actors = { NWPower1, NWPower2, NWPower3, NWPower4, NWPower5, NWPower6, NWPower7, NWPower8, NEPower1, NEPower2, NEPower3, NEPower4, NEPower5, NEPower6, NEPower7, NEPower8 } }
+	RebuildExcludes.Scrin = { Types = { "sign", "rift", "reac", "rea2" } }
 
 	AutoRepairBuildings(SignalTransmitterPlayer)
 
@@ -476,6 +518,16 @@ InitScrin = function()
 	Trigger.AfterDelay(Squads.ScrinAir.Delay[Difficulty], function()
 		InitAirAttackSquad(Squads.ScrinAir, Scrin, GDI, { "harv.td", "msam", "hsam", "nuke", "nuk2", "orca", "a10", "a10.upg", "auro", "htnk", "htnk.drone", "htnk.ion", "htnk.hover", "titn", "titn.rail" })
 	end)
+
+	local scrinPower = Scrin.GetActorsByTypes({ "reac", "rea2" })
+	Trigger.OnAllKilledOrCaptured(scrinPower, function()
+		local scrinDefenses = Scrin.GetActorsByTypes({ "scol", "shar" })
+		Utils.Do(scrinDefenses, function(a)
+			if not a.IsDead then
+				a.GrantCondition("disabled")
+			end
+		end)
+	end)
 end
 
 InitNodSlaves = function()
@@ -491,11 +543,6 @@ InitNodSlaves = function()
 
 	Trigger.AfterDelay(Squads.NodSlaves.Delay[Difficulty], function()
 		InitAttackSquad(Squads.NodSlaves, NodSlaves)
-	end)
-
-	local cyborgs = NodSlaves.GetActorsByTypes({ "rmbc", "enli", "tplr", "n3c" })
-	Utils.Do(cyborgs, function(c)
-		c.GrantCondition("bluebuff")
 	end)
 end
 
@@ -569,7 +616,7 @@ end
 
 DropHackers = function()
 	Beacon.New(GDI, HackerDropLanding.CenterPosition)
-	Media.PlaySpeechNotification(GDI, "SignalFlare")
+	Media.PlaySpeechNotification(GDI, "ReinforcementsArrived")
 	local hackerFlare = Actor.Create("flare", true, { Owner = GDI, Location = HackerDropLanding.Location })
 	Trigger.AfterDelay(DateTime.Seconds(10), function()
 		hackerFlare.Destroy()
@@ -606,7 +653,7 @@ InitChronoTanks = function()
 		end
 
 		Notification("The Allies have provided us with a squadron of Chrono Tanks. We can use them to disrupt Scrin power in the north-east.")
-		Media.PlaySpeechNotification(GDI, "SignalFlare")
+		Media.PlaySpeechNotification(GDI, "ReinforcementsArrived")
 		local northEastPowerFlare = Actor.Create("flare", true, { Owner = GDI, Location = NorthEastPowerBeacon.Location })
 		Trigger.AfterDelay(DateTime.Seconds(10), function()
 			northEastPowerFlare.Destroy()
@@ -780,7 +827,7 @@ FlipSlaveFaction = function(player)
 	local actors = player.GetActors()
 
 	Utils.Do(actors, function(a)
-		if not a.IsDead and a.IsInWorld and a.Type ~= "player" and a.Type ~= "rmbc" and a.Type ~= "enli" and a.Type ~= "tplr" and a.Type ~= "n3c" then
+		if not a.IsDead and a.IsInWorld and a.Type ~= "player" then
 			a.Owner = targetPlayer
 			Trigger.ClearAll(a)
 
@@ -825,7 +872,7 @@ DoFinale = function()
 		Media.DisplayMessage("Well commander, we meet at last, and will again. You have played your part impeccably.", "Kane", HSLColor.FromHex("FF0000"))
 		Beacon.New(GDI, WormholeWP.CenterPosition)
 
-		local cyborgs = NodSlaves.GetActorsByTypes({ "rmbc", "enli", "tplr", "n3c" })
+		local cyborgs = CyborgSlaves.GetActorsByTypes({ "rmbc", "enli", "tplr", "n3c" })
 
 		Utils.Do(cyborgs, function(a)
 			a.Owner = Kane
@@ -837,7 +884,6 @@ DoFinale = function()
 					a.Scatter()
 				end
 				Trigger.AfterDelay(DateTime.Seconds(7), function()
-					--a.Stance = "HoldFire"
 					MoveToWormhole(a)
 				end)
 			end)

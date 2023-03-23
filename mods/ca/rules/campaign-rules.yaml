@@ -150,6 +150,9 @@ SMIG:
 
 TRUK:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
+	Mobile:
+		Speed: 54
+	-SpawnActorOnDeath:
 
 TRAN.Evac:
 	Inherits: TRAN
@@ -163,11 +166,6 @@ TRAN.Evac:
 	Aircraft:
 		TurnToLand: True
 		InitialFacing: 0
-
-TRUK:
-	Mobile:
-		Speed: 54
-	-SpawnActorOnDeath:
 
 MONEYCRATE:
 	Tooltip:
@@ -229,6 +227,18 @@ SHAD:
 		Prerequisites: ~disabled
 		BuildAtProductionType: Soldier
 		Description: Elite stealth infantry.
+
+PROC:
+	InfiltrateForCash:
+		Maximum: 1250
+
+PROC.TD:
+	InfiltrateForCash:
+		Maximum: 1250
+
+PROC.SCRIN:
+	InfiltrateForCash:
+		Maximum: 1250
 
 # For attack interval calculations, factoring in extra value from cargo
 SAPC.AI:
