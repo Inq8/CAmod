@@ -201,13 +201,16 @@ WorldLoaded = function()
 		if not Mastermind4.IsDead then
 			notificationText = notificationText .. " The largest of our bases in the area was located south of the airbase."
 		end
+		if not Mastermind5.IsDead then
+			notificationText = notificationText .. " We have also lost contact with our outpost on the island to the north."
+		end
 		Notification(notificationText)
 	end)
 
 	Trigger.OnKilled(Mastermind4, function(self, killer)
 		local notificationText = "Our main base is no longer under Scrin control, well done commander."
 		if not Mastermind1.IsDead or not Mastermind2.IsDead or not Mastermind3.IsDead or not Mastermind5.IsDead then
-			notificationText = notificationText .. " Some of our forces remain under Scrin control. Eliminate the remaining Masterminds, then we can take the fight to the Scrin."
+			notificationText = notificationText .. " Some of our forces are still enslaved. Eliminate the remaining Masterminds, then we can take the fight to the Scrin."
 		else
 			notificationText = notificationText .. " It's safe to say the Scrin have outsayed their welcome; give 'em hell commander."
 		end
@@ -358,7 +361,10 @@ InitScrin = function()
 	end
 
 	InitAttackSquad(Squads.ScrinMain, Scrin)
-	InitAttackSquad(Squads.ScrinBigAir, Scrin)
+
+	if Difficulty ~= "easy" then
+		InitAttackSquad(Squads.ScrinBigAir, Scrin)
+	end
 
 	Trigger.AfterDelay(Squads.ScrinWater.Delay[Difficulty], function()
 		InitAttackSquad(Squads.ScrinWater, Scrin)

@@ -47,6 +47,13 @@ Players:
 		Faction: russia
 		Color: FE1100
 		Enemies: GDI, Creeps
+	PlayerReference@Greece:
+		Name: Greece
+		Bot: campaign
+		Faction: england
+		Color: FE1100
+		Allies: GDI
+		Enemies: Creeps
 
 Actors:
 	Actor10: fact
@@ -3454,7 +3461,7 @@ Actors:
 		Facing: 384
 		Location: 59,37
 		SubCell: 3
-	Actor1156: e1
+	SpyDisguiseTarget: e1
 		Owner: USSR
 		Location: 70,36
 		SubCell: 1
@@ -3808,6 +3815,16 @@ Actors:
 	SupplyReveal3: waypoint
 		Owner: Neutral
 		Location: 10,36
+	Spy: spy
+		Owner: Greece
+		SubCell: 3
+		Location: 73,29
+		Facing: 384
+	SpyKiller: dog
+		Owner: USSR
+		SubCell: 3
+		Location: 54,56
+		Facing: 674
 
 Rules: ca|rules/campaign-rules.yaml, ca|rules/campaign-tooltips.yaml, ca|rules/campaign-palettes.yaml, rules.yaml
 

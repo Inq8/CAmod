@@ -133,74 +133,83 @@ VEHICLES.SCRIN:
 		Delay: 0
 		Interval: 850
 		VolumeMultiplier: 0.4
-		RequiresCondition: storm-active
+		RequiresCondition: storm-level
 	AmbientSoundCA@AMBIENCE:
 		SoundFiles: thunder1.aud, thunder2.aud, thunder3.aud, thunder4.aud, thunder5.aud, thunder.ambient.aud
 		Delay: 20, 200
 		Interval: 250, 1250
 		VolumeMultiplier: 0.3
-		RequiresCondition: storm-active
+		RequiresCondition: storm-level
 	LaysMinefield@IONSTORM:
 		Mines: strm, strm, strm.live
 		MineSelectionMode: Shuffled
 		Locations: 0,1, 1,0, -1,0
 		RecreationInterval: 150
-		RequiresCondition: storm-active
+		RequiresCondition: storm-level
 	GrantConditionOnAttackCA@IONSTORM:
 		RequiresActorTarget: true
 		Condition: storm-active
 		RevokeDelay: 75
-		RevokeAll: true
-		MaximumInstances: 50
 		RequiresCondition: ioncon-upgrade
+	GrantConditionOnDamage@IONSTORM:
+		Condition: storm-active
+		Duration: 75
+		RequiresCondition: ioncon-upgrade
+		ValidRelationships: Ally, Enemy, Neutral
+	GrantStackingCondition@IONSTORM:
+		Condition: storm-level
+		DelayPerInstance: 100
+		MaximumInstances: 3
+		RevokeDelay: 200
+		RequiresCondition: storm-active
 	RangeMultiplier@IONSTORM1:
 		Modifier: 105
-		RequiresCondition: storm-active >= 14 && storm-active < 28
+		RequiresCondition: storm-level == 1
 	FirepowerMultiplier@IONSTORM1:
 		Modifier: 110
-		RequiresCondition: storm-active >= 14 && storm-active < 28
+		RequiresCondition: storm-level == 2
 	DamageMultiplier@IONSTORM1:
 		Modifier: 90
-		RequiresCondition: storm-active >= 14 && storm-active < 28
+		RequiresCondition: storm-level == 3
 	RangeMultiplier@IONSTORM2:
 		Modifier: 110
-		RequiresCondition: storm-active >= 28 && storm-active < 42
+		RequiresCondition: storm-level == 1
 	FirepowerMultiplier@IONSTORM2:
 		Modifier: 115
-		RequiresCondition: storm-active >= 28 && storm-active < 42
+		RequiresCondition: storm-level == 2
 	DamageMultiplier@IONSTORM2:
 		Modifier: 85
-		RequiresCondition: storm-active >= 28 && storm-active < 42
+		RequiresCondition: storm-level == 3
 	RangeMultiplier@IONSTORM3:
 		Modifier: 115
-		RequiresCondition: storm-active >= 42
+		RequiresCondition: storm-level == 1
 	FirepowerMultiplier@IONSTORM3:
 		Modifier: 120
-		RequiresCondition: storm-active >= 42
+		RequiresCondition: storm-level == 2
 	DamageMultiplier@IONSTORM3:
 		Modifier: 80
-		RequiresCondition: storm-active >= 42
+		RequiresCondition: storm-level == 3
 	WithDecoration@IONSTORM1:
 		Image: pips
 		Sequence: pip-ion1
 		Palette: scrin
 		Position: BottomLeft
 		Margin: -6, 3
-		RequiresCondition: storm-active >= 14 && storm-active < 28
+		RequiresCondition: storm-level == 1
 	WithDecoration@IONSTORM2:
 		Image: pips
 		Sequence: pip-ion2
 		Palette: scrin
 		Position: BottomLeft
 		Margin: -6, 3
-		RequiresCondition: storm-active >= 28 && storm-active < 42
+		RequiresCondition: storm-level == 2
 	WithDecoration@IONSTORM3:
 		Image: pips
 		Sequence: pip-ion3
 		Palette: scrin
 		Position: BottomLeft
 		Margin: -6, 3
-		RequiresCondition: storm-active >= 42
+		RequiresCondition: storm-level == 3
 
 #
 # ---- Infantry
@@ -1517,9 +1526,6 @@ STCR:
 	SpawnActorOnDeath:
 		Actor: STCR.Husk
 		RequiresCondition: !being-warped
-	GrantConditionOnAttackCA@IONSTORM:
-		RevokeDelay: 200
-		MaximumInstances: 42
 	LaysMinefield@IONSTORM:
 		Mines: strm2
 		Locations: 0,0
@@ -1527,31 +1533,10 @@ STCR:
 		RemoveOnDisable: false
 	RangeMultiplier@IONSTORM1:
 		Modifier: 110
-		RequiresCondition: storm-active >= 12 && storm-active < 24
-	FirepowerMultiplier@IONSTORM1:
-		RequiresCondition: storm-active >= 12 && storm-active < 24
-	DamageMultiplier@IONSTORM1:
-		RequiresCondition: storm-active >= 12 && storm-active < 24
 	RangeMultiplier@IONSTORM2:
 		Modifier: 120
-		RequiresCondition: storm-active >= 24 && storm-active < 36
-	FirepowerMultiplier@IONSTORM2:
-		RequiresCondition: storm-active >= 24 && storm-active < 36
-	DamageMultiplier@IONSTORM2:
-		RequiresCondition: storm-active >= 24 && storm-active < 36
 	RangeMultiplier@IONSTORM3:
 		Modifier: 130
-		RequiresCondition: storm-active >= 36
-	FirepowerMultiplier@IONSTORM3:
-		RequiresCondition: storm-active >= 36
-	DamageMultiplier@IONSTORM3:
-		RequiresCondition: storm-active >= 36
-	WithDecoration@IONSTORM1:
-		RequiresCondition: storm-active >= 12 && storm-active < 24
-	WithDecoration@IONSTORM2:
-		RequiresCondition: storm-active >= 24 && storm-active < 36
-	WithDecoration@IONSTORM3:
-		RequiresCondition: storm-active >= 36
 
 DEVO:
 	Inherits: ^Vehicle

@@ -232,6 +232,14 @@ WorldLoaded = function()
 			end
 		end)
 	end)
+
+	Spy.DisguiseAs(SpyDisguiseTarget)
+	Trigger.AfterDelay(DateTime.Seconds(5), function()
+		Beacon.New(GDI, Spy.CenterPosition)
+		Media.DisplayMessage("Feels like they're getting suspicious, I'm getting out of here...", "Allied Spy", HSLColor.FromHex("1E90FF"))
+		Spy.Move(SouthDelivery3.Location)
+		SpyKiller.Attack(Spy)
+	end)
 end
 
 Tick = function()
