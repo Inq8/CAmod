@@ -323,22 +323,6 @@ hammerhead.upgrade:
 	RenderSprites:
 		Image: hammerhead.upgrade
 
-gyro.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Gyro Stabilizers
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.talon, gtek, ~techlevel.high
-		IconPalette: chrometd
-		Description: Allows mech units to activate gyro stabilizers, greatly increasing range but reducing rate of fire.\n\nUpgrades: Titan\nUpgrades: Railgun Titan\nUpgrades: Juggernaut\nUpgrades: X-O Powersuit
-	TooltipExtras:
-		Strengths: + Added Gyro Stabilizers ability (increased range, reduced rate of fire)
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: gyro.upgrade
-
 sonic.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -452,6 +436,22 @@ mdrone.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: mdrone.upgrade
+
+gyro.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Gyro Stabilizers
+	Buildable:
+		BuildPaletteOrder: 40
+		Prerequisites: ~player.talon, upgc, ~techlevel.high
+		IconPalette: chrometd
+		Description: Allows mech units to activate gyro stabilizers, greatly increasing range but reducing rate of fire.\n\nUpgrades: Titan\nUpgrades: Railgun Titan\nUpgrades: Juggernaut\nUpgrades: X-O Powersuit
+	TooltipExtras:
+		Strengths: + Added Gyro Stabilizers ability (increased range, reduced rate of fire)
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: gyro.upgrade
 
 #########################NOD#########
 ########################################
@@ -880,22 +880,6 @@ orep.upgrade:
 ################################SCRIN##############################
 ###################################################################
 
-blink.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Blink Packs
-	Buildable:
-		BuildPaletteOrder: 20
-		Prerequisites: ~player.scrin, nerv, ~techlevel.medium
-		Description: Equips Intruders with blink packs allowing\n  them to teleport.\n\nUpgrades: Intruder
-		IconPalette: chromes
-	TooltipExtras:
-		Strengths: + Teleport ability
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: blink.upgrade
-
 shrw.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -944,6 +928,22 @@ carapace.upgrade:
 		Cost: 1500
 	RenderSprites:
 		Image: carapace.upgrade
+
+blink.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Blink Packs
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.scrin, scrt, ~techlevel.medium
+		Description: Equips Intruders with blink packs allowing\n  them to teleport.\n\nUpgrades: Intruder
+		IconPalette: chromes
+	TooltipExtras:
+		Strengths: + Teleport ability
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: blink.upgrade
 
 resconv.upgrade:
 	Inherits: ^Upgrade
