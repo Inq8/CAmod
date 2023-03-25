@@ -1258,23 +1258,6 @@ IonSurge:
 		ValidTargets: IonSurgable
 		ValidRelationships: Ally
 
-WormholeOpener:
-	Report: darkener-fire1.aud, darkener-fire2.aud
-	ReloadDelay: 150
-	Range: 0c256
-	Projectile: InstantHit
-	Warhead@1Dam: SpreadDamage
-		Damage: 100000
-		ValidTargets: Wormhole
-	Warhead@Spawn: SpawnActor
-		Actors: wormhole
-		Delay: 14
-		Range: 2
-		ForceGround: true
-		AvoidActors: true
-	Warhead@3Eff: CreateEffect
-		ImpactSounds: wormhole-open.aud
-
 MothershipChargeBeam:
 	ReloadDelay: 3
 	Range: 0c512
@@ -1352,6 +1335,7 @@ MothershipLaser:
 		ImpactTicks: 0, 2, 4, 6, 8, 10, 12, 14
 		ZOffset: 512
 		Colors: 7d44ff96, eb66ff86, 5763ff96
+		MaxFacingDeviation: 256
 	Warhead@1Dam: SpreadDamage
 		Damage: 1250
 		Versus:

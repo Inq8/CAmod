@@ -2905,16 +2905,6 @@ MSHP:
 		Image: mshp
 		Sequence: ring
 		Offset: 0,0,72
-	DetonateWeaponOnDeploy:
-		Weapon: WormholeOpener
-		ForceGround: true
-		ChargeTicks: 200
-		PauseOnCondition: being-warped
-		OverlaySequence: wormholebeam
-		OverlayPalette: playerscrin
-		IsPlayerPalette: true
-		ShowSelectionBarWhenEmpty: false
-		RequiresCondition: !empdisable
 	ExternalCondition@PRODUCED:
 		Condition: produced
 	VoiceAnnouncement:
@@ -2990,6 +2980,30 @@ MSHP:
 		Condition: shields-up
 	Targetable@TEMPORAL:
 		RequiresCondition: !shields-up
+	SpawnActorAbility:
+		Actor: wormhole
+		SkipMakeAnimations: false
+		Range: 20c0
+		CircleColor: 9988ff
+		SpawnSounds: wormhole-open.aud
+		SelectTargetSpeechNotification: SelectTarget
+		AmmoPool: wormholespawner
+	AmmoPool@WORMHOLESPAWNER:
+		Name: wormholespawner
+		Armaments: none
+		Ammo: 2
+	ReloadAmmoPoolCA@WORMHOLESPAWNER:
+		AmmoPool: wormholespawner
+		Delay: 750
+		Count: 2
+		ShowSelectionBar: true
+		SelectionBarColor: 9988ff
+		ReloadWhenAmmoReaches: 0
+	WithAmmoPipsDecoration@WORMHOLESPAWNER:
+		AmmoPools: wormholespawner
+		RequiresSelection: true
+		Position: BottomLeft
+		Margin: 4, 3
 
 #
 # ---- Husks
@@ -5139,7 +5153,7 @@ WORMHOLE:
 		Type: CenterPosition
 	HitShape:
 	RevealsShroud:
-		Range: 6c0
+		Range: 4c0
 		Type: CenterPosition
 	Immobile:
 		OccupiesSpace: true
