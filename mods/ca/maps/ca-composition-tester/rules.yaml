@@ -97,6 +97,8 @@ CONFIGWORMHOLE:
 	Inherits: WORMHOLE
 	-PopControlled:
 	-Targetable:
+	Immobile:
+		OccupiesSpace: false
 	WithTextDecoration:
 		Text: Reset
 		Position: Top
@@ -122,6 +124,36 @@ RESTOREWORMHOLE:
 	WithTextDecoration:
 		Text: Restore
 		Color: 00FFFF
+
+RESETWORMHOLE1:
+	Inherits: RESETWORMHOLE
+	WithTextDecoration:
+		Text: Reset P1
+
+SAVEWORMHOLE1:
+	Inherits: SAVEWORMHOLE
+	WithTextDecoration:
+		Text: Save P1
+
+RESTOREWORMHOLE1:
+	Inherits: RESTOREWORMHOLE
+	WithTextDecoration:
+		Text: Restore P1
+
+RESETWORMHOLE2:
+	Inherits: RESETWORMHOLE
+	WithTextDecoration:
+		Text: Reset P2
+
+SAVEWORMHOLE2:
+	Inherits: SAVEWORMHOLE
+	WithTextDecoration:
+		Text: Save P2
+
+RESTOREWORMHOLE2:
+	Inherits: RESTOREWORMHOLE
+	WithTextDecoration:
+		Text: Restore P2
 
 ^Upgrade:
 	Buildable:
@@ -445,6 +477,10 @@ TRUK:
 	Buildable:
 		Prerequisites: ~disabled
 	-SpawnActorOnDeath:
+	-Targetable:
+	Mobile:
+		Speed: 180
+		TurnSpeed: 40
 
 DOG:
 	Buildable:

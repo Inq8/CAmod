@@ -13,40 +13,57 @@ WorldLoaded = function()
         StartingCash = 20000
     end
 
-    RestoreTrucks()
+    Trigger.OnEnteredFootprint({ ResetWH.Location }, function(a, id)
+        Media.DisplayMessage("Resetting all...", "Notification", HSLColor.FromHex("FF0000"))
+        Reset({ Multi0, Multi1 })
+    end)
+
+    Trigger.OnEnteredFootprint({ SaveWH.Location }, function(a, id)
+        Media.DisplayMessage("Compositions saved.", "Notification", HSLColor.FromHex("00FF00"))
+        Save({ Multi0, Multi1 })
+    end)
+
+    Trigger.OnEnteredFootprint({ RestoreWH.Location }, function(a, id)
+        Media.DisplayMessage("Restoring compositions...", "Notification", HSLColor.FromHex("00FFFF"))
+        Restore({ Multi0, Multi1 })
+    end)
+
+    Trigger.OnEnteredFootprint({ ResetLeftWH.Location }, function(a, id)
+        Media.DisplayMessage("Resetting player 1...", "Notification", HSLColor.FromHex("FF0000"))
+        Reset({ Multi0 })
+    end)
+
+    Trigger.OnEnteredFootprint({ SaveLeftWH.Location }, function(a, id)
+        Media.DisplayMessage("Player 1 composition saved.", "Notification", HSLColor.FromHex("00FF00"))
+        Save({ Multi0 })
+    end)
+
+    Trigger.OnEnteredFootprint({ RestoreLeftWH.Location }, function(a, id)
+        Media.DisplayMessage("Restoring player 1 composition...", "Notification", HSLColor.FromHex("00FFFF"))
+        Restore({ Multi0 })
+    end)
+
+    Trigger.OnEnteredFootprint({ ResetRightWH.Location }, function(a, id)
+        Media.DisplayMessage("Resetting player 2...", "Notification", HSLColor.FromHex("FF0000"))
+        Reset({ Multi1 })
+    end)
+
+    Trigger.OnEnteredFootprint({ SaveRightWH.Location }, function(a, id)
+        Media.DisplayMessage("Player 2 composition saved.", "Notification", HSLColor.FromHex("00FF00"))
+        Save({ Multi1 })
+    end)
+
+    Trigger.OnEnteredFootprint({ RestoreRightWH.Location }, function(a, id)
+        Media.DisplayMessage("Restoring player 2 composition...", "Notification", HSLColor.FromHex("00FFFF"))
+        Restore({ Multi1 })
+    end)
+
+    RestoreTrucks({ Multi0, Multi1 })
 end
 
 Tick = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
-        local resetActors = Map.ActorsInCircle(ResetWH.CenterPosition, WDist.New(1024), function(a)
-            return a.Type == "truk"
-        end)
-
-        if #resetActors > 0 then
-            Reset()
-        else
-            local resetActors = Map.ActorsInCircle(RestoreWH.CenterPosition, WDist.New(1024), function(a)
-                return a.Type == "truk"
-            end)
-
-            if #resetActors > 0 then
-                Utils.Do(resetActors, function(a)
-                    a.Destroy()
-                end)
-                Restore()
-            else
-                local saveActors = Map.ActorsInCircle(SaveWH.CenterPosition, WDist.New(1024), function(a)
-                    return a.Type == "truk"
-                end)
-
-                if #saveActors > 0 then
-                    Utils.Do(resetActors, function(a)
-                        a.Destroy()
-                    end)
-                    Save()
-                end
-            end
-        end
+        -- Do nothing
     end
 end
 
@@ -54,8 +71,8 @@ IsUpgrade = function(a)
     return string.find(a.Type, ".upgrade") or string.find(a.Type, ".strat")
 end
 
-KillTrucks = function()
-    Utils.Do({ Multi0, Multi1 }, function(p)
+KillTrucks = function(players)
+    Utils.Do(players, function(p)
         if p ~= nil then
             local trucks = p.GetActorsByType("truk")
             Utils.Do(trucks, function(a)
@@ -65,22 +82,24 @@ KillTrucks = function()
     end)
 end
 
-RestoreTrucks = function()
-    if Multi0 ~= nil then
-        Actor.Create("truk", true, { Owner = Multi0, Location = Save1.Location, Facing = Angle.East })
-        Actor.Create("truk", true, { Owner = Multi0, Location = Restore1.Location, Facing = Angle.East })
-        Actor.Create("truk", true, { Owner = Multi0, Location = Reset1.Location, Facing = Angle.East })
-    end
+RestoreTrucks = function(players)
+    Utils.Do(players, function(p)
+        if p ~= nil and p == Multi0 then
+            Actor.Create("truk", true, { Owner = Multi0, Location = Save1.Location, Facing = Angle.West })
+            Actor.Create("truk", true, { Owner = Multi0, Location = Restore1.Location, Facing = Angle.West })
+            Actor.Create("truk", true, { Owner = Multi0, Location = Reset1.Location, Facing = Angle.West })
+        end
 
-    if Multi1 ~= nil then
-        Actor.Create("truk", true, { Owner = Multi1, Location = Save2.Location, Facing = Angle.West })
-        Actor.Create("truk", true, { Owner = Multi1, Location = Restore2.Location, Facing = Angle.West })
-        Actor.Create("truk", true, { Owner = Multi1, Location = Reset2.Location, Facing = Angle.West })
-    end
+        if p ~= nil and p == Multi1 then
+            Actor.Create("truk", true, { Owner = Multi1, Location = Save2.Location, Facing = Angle.East })
+            Actor.Create("truk", true, { Owner = Multi1, Location = Restore2.Location, Facing = Angle.East })
+            Actor.Create("truk", true, { Owner = Multi1, Location = Reset2.Location, Facing = Angle.East })
+        end
+    end)
 end
 
-KillUnits = function()
-    Utils.Do({ Multi0, Multi1 }, function(p)
+KillUnits = function(players)
+    Utils.Do(players, function(p)
         if p ~= nil then
             local actors = p.GetActors()
 
@@ -91,8 +110,8 @@ KillUnits = function()
     end)
 end
 
-ResetCash = function()
-    Utils.Do({ Multi0, Multi1 }, function(p)
+ResetCash = function(players)
+    Utils.Do(players, function(p)
         if p ~= nil then
             p.Cash = 0
             p.Resources = 0
@@ -104,8 +123,8 @@ ResetCash = function()
     end)
 end
 
-ResetBuildings = function()
-    Utils.Do({ Multi0, Multi1 }, function(p)
+ResetBuildings = function(players)
+    Utils.Do(players, function(p)
         if p ~= nil then
             local buildings = p.GetActorsByTypes({ "weap", "tent", "afld", "syrd" })
             Utils.Do(buildings, function(b)
@@ -135,21 +154,18 @@ KillUnit = function(a)
     end
 end
 
-Reset = function()
-	Media.DisplayMessage("Resetting...", "Notification", HSLColor.FromHex("FF0000"))
-    ResetCash()
-    ResetBuildings()
-    KillUnits()
-    RestoreTrucks()
+Reset = function(players)
+    ResetCash(players)
+    ResetBuildings(players)
+    KillUnits(players)
+    RestoreTrucks(players)
 end
 
-Save = function()
-	Media.DisplayMessage("Compositions saved.", "Notification", HSLColor.FromHex("00FF00"))
+Save = function(players)
+    KillTrucks(players)
+    RestoreTrucks(players)
 
-    KillTrucks()
-    RestoreTrucks()
-
-    Utils.Do({ Multi0, Multi1 }, function(p)
+    Utils.Do(players, function(p)
         if p ~= nil then
             SavedCompositions[p.Name] = { }
             SavedCash[p.Name] = p.Resources + p.Cash
@@ -162,8 +178,15 @@ Save = function()
                         Type = a.Type,
                         Location = a.Location,
                         CenterPosition = a.CenterPosition,
-                        Facing = a.Facing
+                        Facing = a.Facing,
                     }
+
+                    if a.HasProperty("HasPassengers") and a.HasPassengers then
+                        unit.Cargo = {}
+                        Utils.Do(a.Passengers, function(c)
+                            table.insert(unit.Cargo, c.Type)
+                        end)
+                    end
 
                     table.insert(SavedCompositions[p.Name], unit)
                 elseif IsUpgrade(a) then
@@ -178,18 +201,24 @@ Save = function()
     end)
 end
 
-Restore = function()
-	Media.DisplayMessage("Restoring compositions...", "Notification", HSLColor.FromHex("00FFFF"))
-    KillUnits()
-    ResetBuildings()
+Restore = function(players)
+    KillUnits(players)
+    ResetBuildings(players)
 
     Trigger.AfterDelay(DateTime.Seconds(1) + 10, function()
-        Utils.Do({ Multi0, Multi1 }, function(p)
+        Utils.Do(players, function(p)
             if p ~= nil then
                 if SavedCompositions[p.Name] ~= nil and #SavedCompositions[p.Name] > 0 then
                     Utils.Do(SavedCompositions[p.Name], function(u)
                         if u.Location ~= nil then
-                            Actor.Create(u.Type, true, { Owner = p, Location = u.Location, CenterPosition = u.CenterPosition, Facing = u.Facing })
+                            local newActor = Actor.Create(u.Type, true, { Owner = p, Location = u.Location, CenterPosition = u.CenterPosition, Facing = u.Facing })
+
+                            if u.Cargo ~= nil then
+                                Utils.Do(u.Cargo, function(c)
+                                    local passenger = Actor.Create(c, true, { Owner = p })
+                                    newActor.LoadPassenger(passenger)
+                                end)
+                            end
                         else
                             Actor.Create(u.Type, true, { Owner = p })
                         end
@@ -202,6 +231,6 @@ Restore = function()
                 end
             end
         end)
-        RestoreTrucks()
+        RestoreTrucks(players)
     end)
 end
