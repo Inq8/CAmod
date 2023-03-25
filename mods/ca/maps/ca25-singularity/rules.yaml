@@ -208,7 +208,7 @@ QTNK:
 		Prerequisites: scrindefensebuff2
 	DamageMultiplier@BUFF1:
 		RequiresCondition: scol-buff == 1
-		Modifier: 50
+		Modifier: 40
 	DamageMultiplier@BUFF2:
 		RequiresCondition: scol-buff == 2
 		Modifier: 25
@@ -220,7 +220,7 @@ QTNK:
 		Modifier: 150
 	RangeMultiplier@BUFF1:
 		RequiresCondition: scol-buff == 1
-		Modifier: 115
+		Modifier: 120
 	RangeMultiplier@BUFF2:
 		RequiresCondition: scol-buff == 2
 		Modifier: 130
@@ -316,14 +316,20 @@ ENLI:
 
 TPLR:
 	Inherits@BLUEBUFF: ^BlueBuff
+	Health:
+		HP: 30000
 
 N3C:
 	Inherits@BLUEBUFF: ^BlueBuff
+	Health:
+		HP: 30000
 
 SIGN:
 	Inherits@HACKABLE: ^Hackable
 	Health:
 		HP: 300000
+	Tooltip:
+		GenericVisibility: None
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Cannot be captured
 	RepairableBuilding:
