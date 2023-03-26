@@ -3,7 +3,7 @@ World:
 	LuaScript:
 		Scripts: composition-tester.lua
 	MissionData:
-		Briefing: Map for testing fixed value army compositions against each other. Requires 2 players. Move the supply truck to the wormhole to reset.
+		Briefing: Map for testing fixed value army compositions against each other. Requires 2+ players. Move the trucks into wormholes to reset/save/restore.
 	StartingUnits@none:
 		Class: none
 		ClassName: None
@@ -28,7 +28,7 @@ World:
 		AllyBuildRadiusCheckboxLocked: True
 		BuildRadiusCheckboxLocked: True
 		AllyBuildRadiusCheckboxEnabled: True
-		BuildRadiusCheckboxEnabled: True
+		BuildRadiusCheckboxEnabled: False
 	MapOptions:
 		TechLevelDropdownLocked: True
 		TechLevelDropdownVisible: False
@@ -47,6 +47,12 @@ Player:
 	LobbyPrerequisiteCheckbox@GLOBALMULTIQUEUE:
 		Enabled: False
 		Locked: True
+	ClassicProductionQueue@Building:
+		BuildTimeSpeedReduction: 0
+		SpeedUp: True
+	ClassicProductionQueue@Defense:
+		BuildTimeSpeedReduction: 0
+		SpeedUp: True
 	ClassicProductionQueueCA@Vehicle:
 		BuildTimeSpeedReduction: 0
 	ClassicProductionQueueCA@Infantry:
@@ -85,13 +91,6 @@ Player:
 		Enabled: True
 		DisplayOrder: 999
 		Prerequisites: global.freeupgrades
-
-DOME:
-	GpsRadarProvider:
-		RequiresCondition: gps-active
-	GrantConditionOnDeploy:
-		DeployedCondition: gps-active
-		SkipMakeAnimation: true
 
 CONFIGWORMHOLE:
 	Inherits: WORMHOLE
@@ -154,6 +153,36 @@ RESTOREWORMHOLE2:
 	Inherits: RESTOREWORMHOLE
 	WithTextDecoration:
 		Text: Restore P2
+
+RESETWORMHOLE3:
+	Inherits: RESETWORMHOLE
+	WithTextDecoration:
+		Text: Reset P3
+
+SAVEWORMHOLE3:
+	Inherits: SAVEWORMHOLE
+	WithTextDecoration:
+		Text: Save P3
+
+RESTOREWORMHOLE3:
+	Inherits: RESTOREWORMHOLE
+	WithTextDecoration:
+		Text: Restore P3
+
+RESETWORMHOLE4:
+	Inherits: RESETWORMHOLE
+	WithTextDecoration:
+		Text: Reset P4
+
+SAVEWORMHOLE4:
+	Inherits: SAVEWORMHOLE
+	WithTextDecoration:
+		Text: Save P4
+
+RESTOREWORMHOLE4:
+	Inherits: RESTOREWORMHOLE
+	WithTextDecoration:
+		Text: Restore P4
 
 ^Upgrade:
 	Buildable:
@@ -834,6 +863,98 @@ PAC:
 	Buildable:
 		Prerequisites: afld
 
+PBOX:
+	Buildable:
+		Prerequisites: fact
+
+HBOX:
+	Buildable:
+		Prerequisites: fact
+
+FTUR:
+	Buildable:
+		Prerequisites: fact
+
+TTUR:
+	Buildable:
+		Prerequisites: fact
+
+LTUR:
+	Buildable:
+		Prerequisites: fact
+
+GTWR:
+	Buildable:
+		Prerequisites: fact
+
+FTUR:
+	Buildable:
+		Prerequisites: fact
+
+GUN:
+	Buildable:
+		Prerequisites: fact
+
+GUN.Nod:
+	Buildable:
+		Prerequisites: fact
+
+PTUR:
+	Buildable:
+		Prerequisites: fact
+
+PRIS:
+	Buildable:
+		Prerequisites: fact
+
+TSLA:
+	Buildable:
+		Prerequisites: fact
+
+OBLI:
+	Buildable:
+		Prerequisites: fact
+
+ATWR:
+	Buildable:
+		Prerequisites: fact
+
+STWR:
+	Buildable:
+		Prerequisites: fact
+
+SCOL:
+	Buildable:
+		Prerequisites: fact
+
+GUN:
+	Buildable:
+		Prerequisites: fact
+
+HTUR:
+	Buildable:
+		Prerequisites: fact
+
+SAM:
+	Buildable:
+		Prerequisites: fact
+
+NSAM:
+	Buildable:
+		Prerequisites: fact
+
+AGUN:
+	Buildable:
+		Prerequisites: fact
+
+CRAM:
+	Buildable:
+		Prerequisites: fact
+
+SHAR:
+	Buildable:
+		Prerequisites: fact
+
 ^Upgrade:
 	ProductionCostMultiplier@FREEUPGRADES:
 		Multiplier: 0
@@ -1099,6 +1220,10 @@ shields.upgrade:
 	Buildable:
 		Prerequisites: anyradar
 
+FACT:
+	DamageMultiplier@1:
+		Modifier: 0
+
 WEAP:
 	DamageMultiplier@1:
 		Modifier: 0
@@ -1111,7 +1236,12 @@ AFLD:
 	DamageMultiplier@1:
 		Modifier: 0
 
-HQ:
+DOME:
+	GpsRadarProvider:
+		RequiresCondition: gps-active
+	GrantConditionOnDeploy:
+		DeployedCondition: gps-active
+		SkipMakeAnimation: true
 	DamageMultiplier@1:
 		Modifier: 0
 

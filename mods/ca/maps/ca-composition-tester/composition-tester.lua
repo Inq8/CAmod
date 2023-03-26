@@ -4,61 +4,112 @@ SavedCash = { }
 WorldLoaded = function()
 	Multi0 = Player.GetPlayer("Multi0")
 	Multi1 = Player.GetPlayer("Multi1")
+	Multi2 = Player.GetPlayer("Multi2")
+	Multi3 = Player.GetPlayer("Multi3")
 
     if Multi0 ~= nil then
         StartingCash = Multi0.Cash
     elseif Multi1 ~= nil then
         StartingCash = Multi1.Cash
+    elseif Multi2 ~= nil then
+        StartingCash = Multi2.Cash
+    elseif Multi3 ~= nil then
+        StartingCash = Multi3.Cash
     else
         StartingCash = 20000
     end
 
-    Trigger.OnEnteredFootprint({ ResetWH.Location }, function(a, id)
-        Media.DisplayMessage("Resetting all...", "Notification", HSLColor.FromHex("FF0000"))
+    Trigger.OnEnteredFootprint({ ResetBottomWH.Location }, function(a, id)
+        Media.DisplayMessage("Resetting players 1/2...", "Notification", HSLColor.FromHex("FF0000"))
         Reset({ Multi0, Multi1 })
     end)
 
-    Trigger.OnEnteredFootprint({ SaveWH.Location }, function(a, id)
-        Media.DisplayMessage("Compositions saved.", "Notification", HSLColor.FromHex("00FF00"))
+    Trigger.OnEnteredFootprint({ SaveBottomWH.Location }, function(a, id)
+        Media.DisplayMessage("Player 1/2 compositions saved.", "Notification", HSLColor.FromHex("00FF00"))
         Save({ Multi0, Multi1 })
     end)
 
-    Trigger.OnEnteredFootprint({ RestoreWH.Location }, function(a, id)
-        Media.DisplayMessage("Restoring compositions...", "Notification", HSLColor.FromHex("00FFFF"))
+    Trigger.OnEnteredFootprint({ RestoreBottomWH.Location }, function(a, id)
+        Media.DisplayMessage("Restoring player 1/2 compositions...", "Notification", HSLColor.FromHex("00FFFF"))
         Restore({ Multi0, Multi1 })
     end)
 
-    Trigger.OnEnteredFootprint({ ResetLeftWH.Location }, function(a, id)
+    Trigger.OnEnteredFootprint({ Reset1WH.Location }, function(a, id)
         Media.DisplayMessage("Resetting player 1...", "Notification", HSLColor.FromHex("FF0000"))
         Reset({ Multi0 })
     end)
 
-    Trigger.OnEnteredFootprint({ SaveLeftWH.Location }, function(a, id)
+    Trigger.OnEnteredFootprint({ Save1WH.Location }, function(a, id)
         Media.DisplayMessage("Player 1 composition saved.", "Notification", HSLColor.FromHex("00FF00"))
         Save({ Multi0 })
     end)
 
-    Trigger.OnEnteredFootprint({ RestoreLeftWH.Location }, function(a, id)
+    Trigger.OnEnteredFootprint({ Restore1WH.Location }, function(a, id)
         Media.DisplayMessage("Restoring player 1 composition...", "Notification", HSLColor.FromHex("00FFFF"))
         Restore({ Multi0 })
     end)
 
-    Trigger.OnEnteredFootprint({ ResetRightWH.Location }, function(a, id)
+    Trigger.OnEnteredFootprint({ Reset2WH.Location }, function(a, id)
         Media.DisplayMessage("Resetting player 2...", "Notification", HSLColor.FromHex("FF0000"))
         Reset({ Multi1 })
     end)
 
-    Trigger.OnEnteredFootprint({ SaveRightWH.Location }, function(a, id)
+    Trigger.OnEnteredFootprint({ Save2WH.Location }, function(a, id)
         Media.DisplayMessage("Player 2 composition saved.", "Notification", HSLColor.FromHex("00FF00"))
         Save({ Multi1 })
     end)
 
-    Trigger.OnEnteredFootprint({ RestoreRightWH.Location }, function(a, id)
+    Trigger.OnEnteredFootprint({ Restore2WH.Location }, function(a, id)
         Media.DisplayMessage("Restoring player 2 composition...", "Notification", HSLColor.FromHex("00FFFF"))
         Restore({ Multi1 })
     end)
 
-    RestoreTrucks({ Multi0, Multi1 })
+    Trigger.OnEnteredFootprint({ ResetTopWH.Location }, function(a, id)
+        Media.DisplayMessage("Resetting players 3/4...", "Notification", HSLColor.FromHex("FF0000"))
+        Reset({ Multi2, Multi3 })
+    end)
+
+    Trigger.OnEnteredFootprint({ SaveTopWH.Location }, function(a, id)
+        Media.DisplayMessage("Player 3/4 compositions saved.", "Notification", HSLColor.FromHex("00FF00"))
+        Save({ MMulti2, Multi3 })
+    end)
+
+    Trigger.OnEnteredFootprint({ RestoreTopWH.Location }, function(a, id)
+        Media.DisplayMessage("Restoring player 3/4 compositions...", "Notification", HSLColor.FromHex("00FFFF"))
+        Restore({ Multi2, Multi3 })
+    end)
+
+    Trigger.OnEnteredFootprint({ Reset3WH.Location }, function(a, id)
+        Media.DisplayMessage("Resetting player 3...", "Notification", HSLColor.FromHex("FF0000"))
+        Reset({ Multi2 })
+    end)
+
+    Trigger.OnEnteredFootprint({ Save3WH.Location }, function(a, id)
+        Media.DisplayMessage("Player 3 composition saved.", "Notification", HSLColor.FromHex("00FF00"))
+        Save({ Multi2 })
+    end)
+
+    Trigger.OnEnteredFootprint({ Restore3WH.Location }, function(a, id)
+        Media.DisplayMessage("Restoring player 3 composition...", "Notification", HSLColor.FromHex("00FFFF"))
+        Restore({ Multi2 })
+    end)
+
+    Trigger.OnEnteredFootprint({ Reset4WH.Location }, function(a, id)
+        Media.DisplayMessage("Resetting player 4...", "Notification", HSLColor.FromHex("FF0000"))
+        Reset({ Multi3 })
+    end)
+
+    Trigger.OnEnteredFootprint({ Save4WH.Location }, function(a, id)
+        Media.DisplayMessage("Player 4 composition saved.", "Notification", HSLColor.FromHex("00FF00"))
+        Save({ Multi3 })
+    end)
+
+    Trigger.OnEnteredFootprint({ Restore4WH.Location }, function(a, id)
+        Media.DisplayMessage("Restoring player 4 composition...", "Notification", HSLColor.FromHex("00FFFF"))
+        Restore({ Multi3 })
+    end)
+
+    RestoreTrucks({ Multi0, Multi1, Multi2, Multi3 })
 end
 
 Tick = function()
@@ -85,15 +136,27 @@ end
 RestoreTrucks = function(players)
     Utils.Do(players, function(p)
         if p ~= nil and p == Multi0 then
-            Actor.Create("truk", true, { Owner = Multi0, Location = Save1.Location, Facing = Angle.West })
-            Actor.Create("truk", true, { Owner = Multi0, Location = Restore1.Location, Facing = Angle.West })
-            Actor.Create("truk", true, { Owner = Multi0, Location = Reset1.Location, Facing = Angle.West })
+            Actor.Create("truk", true, { Owner = Multi0, Location = Truck1A.Location, Facing = Angle.West })
+            Actor.Create("truk", true, { Owner = Multi0, Location = Truck1B.Location, Facing = Angle.West })
+            Actor.Create("truk", true, { Owner = Multi0, Location = Truck1C.Location, Facing = Angle.West })
         end
 
         if p ~= nil and p == Multi1 then
-            Actor.Create("truk", true, { Owner = Multi1, Location = Save2.Location, Facing = Angle.East })
-            Actor.Create("truk", true, { Owner = Multi1, Location = Restore2.Location, Facing = Angle.East })
-            Actor.Create("truk", true, { Owner = Multi1, Location = Reset2.Location, Facing = Angle.East })
+            Actor.Create("truk", true, { Owner = Multi1, Location = Truck2A.Location, Facing = Angle.East })
+            Actor.Create("truk", true, { Owner = Multi1, Location = Truck2B.Location, Facing = Angle.East })
+            Actor.Create("truk", true, { Owner = Multi1, Location = Truck2C.Location, Facing = Angle.East })
+        end
+
+        if p ~= nil and p == Multi2 then
+            Actor.Create("truk", true, { Owner = Multi2, Location = Truck3A.Location, Facing = Angle.West })
+            Actor.Create("truk", true, { Owner = Multi2, Location = Truck3B.Location, Facing = Angle.West })
+            Actor.Create("truk", true, { Owner = Multi2, Location = Truck3C.Location, Facing = Angle.West })
+        end
+
+        if p ~= nil and p == Multi3 then
+            Actor.Create("truk", true, { Owner = Multi3, Location = Truck3A.Location, Facing = Angle.East })
+            Actor.Create("truk", true, { Owner = Multi3, Location = Truck3B.Location, Facing = Angle.East })
+            Actor.Create("truk", true, { Owner = Multi3, Location = Truck3C.Location, Facing = Angle.East })
         end
     end)
 end
@@ -126,7 +189,7 @@ end
 ResetBuildings = function(players)
     Utils.Do(players, function(p)
         if p ~= nil then
-            local buildings = p.GetActorsByTypes({ "weap", "tent", "afld", "syrd" })
+            local buildings = p.GetActorsByTypes({ "weap", "tent", "afld", "syrd", "fact" })
             Utils.Do(buildings, function(b)
                 local loc = b.Location
                 Trigger.AfterDelay(5, function()
