@@ -100,7 +100,7 @@ namespace OpenRA.Mods.CA.Activities
 			// Consume teleport charges if this wasn't triggered via chronosphere
 			if (teleporter == self && pc != null)
 			{
-				pc.ResetChargeTime();
+				pc.ConsumeCharge();
 				pc.GrantCondition(self);
 			}
 

@@ -2429,7 +2429,7 @@ CTNK:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 100
+		Speed: 92
 		Locomotor: heavywheeled
 	RevealsShroud:
 		MinRange: 4c0
@@ -2445,8 +2445,11 @@ CTNK:
 		PauseOnCondition: empdisable || being-warped
 		FacingTolerance: 0
 	PortableChronoCA:
+		Charges: 1
 		ChargeDelay: 375
+		Cooldown: 25
 		MaxDistance: 16
+		ResetRechargeOnUse: false
 		RequiresCondition: !empdisable && !being-warped
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -2458,13 +2461,17 @@ CTNK:
 	ProductionCostMultiplier@GermanyBonus:
 		Multiplier: 90
 		Prerequisites: player.germany
-	PortableChronoMultiplier@TEMPORALFLUX:
+	PortableChronoModifier@TEMPORALFLUX:
 		RangeModifier: 125
-		CooldownModifier: 80
+		CooldownModifier: 180
+		ExtraCharges: 1
 		RequiresCondition: tflx-upgrade
 	GrantConditionOnPrerequisite@TEMPORALFLUX:
 		Condition: tflx-upgrade
 		Prerequisites: tflx.upgrade
+	WithChronoshiftChargePipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
 
 QTNK:
 	Inherits: ^Tank

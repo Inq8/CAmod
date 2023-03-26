@@ -1,6 +1,6 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2021 The OpenRA Developers (see AUTHORS)
+ * Copyright (c) The OpenRA Developers and Contributors
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
  * as published by the Free Software Foundation, either version 3 of
@@ -21,7 +21,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("CA version makes trait conditional and allows for a condition applied upon teleporting.")]
+	[Desc("CA version makes trait conditional and allows for a condition applied upon teleporting, and allows use of ammo pool for multiple charges.")]
 	class PortableChronoCAInfo : PausableConditionalTraitInfo, Requires<IMoveInfo>
 	{
 		[Desc("Cooldown in ticks until the unit can teleport.")]
@@ -83,6 +83,18 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Color to use for the target line.")]
 		public readonly Color TargetLineColor = Color.LawnGreen;
 
+		[Desc("Number of charges.")]
+		public readonly int Charges = 1;
+
+		[Desc("If true, gain max charges after recharging.")]
+		public readonly bool RechargeToMax = false;
+
+		[Desc("If true recharge will reset any ongoing recharge on teleport.")]
+		public readonly bool ResetRechargeOnUse = true;
+
+		[Desc("Cooldown between jumps (irrespective of charge).")]
+		public readonly int Cooldown = 0;
+
 		public override object Create(ActorInitializer init) { return new PortableChronoCA(init.Self, this); }
 	}
 
@@ -96,12 +108,15 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Sync]
 		int conditionTicks = 0;
+		int cooldownTicks = 0;
 
 		int token = Actor.InvalidConditionToken;
 		IPortableChronoModifier[] modifiers;
 
 		public int ChargeDelay { get; private set; }
 		public int MaxDistance { get; private set; }
+		public int MaxCharges { get; private set; }
+		public int Charges { get; private set; }
 
 		public PortableChronoCA(Actor self, PortableChronoCAInfo info)
 			: base(info)
@@ -110,6 +125,8 @@ namespace OpenRA.Mods.CA.Traits
 			move = self.Trait<IMove>();
 			ChargeDelay = Info.ChargeDelay;
 			MaxDistance = Info.MaxDistance;
+			MaxCharges = Info.Charges;
+			Charges = Info.Charges;
 		}
 
 		protected override void Created(Actor self)
@@ -122,8 +139,29 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled || IsTraitPaused)
 				return;
 
+			if (cooldownTicks > 0)
+				cooldownTicks--;
+
 			if (chargeTick > 0)
+			{
 				chargeTick--;
+
+				if (chargeTick == 0)
+				{
+					if (Info.RechargeToMax)
+					{
+						Charges = MaxCharges;
+					}
+					else
+					{
+						if (Charges < MaxCharges)
+							Charges++;
+
+						if (Charges < MaxCharges)
+							ResetChargeTime();
+					}
+				}
+			}
 
 			if (--conditionTicks < 0 && token != Actor.InvalidConditionToken)
 				token = self.RevokeCondition(token);
@@ -195,6 +233,16 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
+		public void ConsumeCharge()
+		{
+			cooldownTicks = Info.Cooldown;
+
+			Charges--;
+
+			if (Info.ResetRechargeOnUse || chargeTick == 0)
+				ResetChargeTime();
+		}
+
 		public void ResetChargeTime()
 		{
 			chargeTick = ChargeDelay;
@@ -206,13 +254,23 @@ namespace OpenRA.Mods.CA.Traits
 			var chargePerc = Info.ChargeDelay > 0 ? (float)chargeTick / ChargeDelay : 1;
 			ChargeDelay = OpenRA.Mods.Common.Util.ApplyPercentageModifiers(Info.ChargeDelay, modifiers.Select(m => m.GetCooldownModifier()));
 			chargeTick = chargeTick > 0 ? (int)(ChargeDelay * chargePerc) : 0;
+			var prevMaxCharges = MaxCharges;
+			MaxCharges = Info.Charges + modifiers.Sum(m => m.GetExtraCharges());
+
+			if (prevMaxCharges < MaxCharges)
+				Charges += MaxCharges - prevMaxCharges;
+
+			if (Charges < MaxCharges && chargeTick == 0)
+				ResetChargeTime();
+			else if (Charges > MaxCharges)
+				Charges = MaxCharges;
 		}
 
-		public bool CanTeleport => !IsTraitDisabled && !IsTraitPaused && chargeTick <= 0;
+		public bool CanTeleport => !IsTraitDisabled && !IsTraitPaused && Charges > 0 && cooldownTicks == 0;
 
 		float ISelectionBar.GetValue()
 		{
-			if (IsTraitDisabled)
+			if (IsTraitDisabled || chargeTick == 0)
 				return 0f;
 
 			return (float)(ChargeDelay - chargeTick) / ChargeDelay;
@@ -224,6 +282,9 @@ namespace OpenRA.Mods.CA.Traits
 		protected override void TraitDisabled(Actor self)
 		{
 			chargeTick = 0;
+
+			if (token != Actor.InvalidConditionToken)
+				token = self.RevokeCondition(token);
 		}
 	}
 

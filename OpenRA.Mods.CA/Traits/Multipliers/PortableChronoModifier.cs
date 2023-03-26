@@ -16,7 +16,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Modifies the range and/or cooldown of PortableChronoCA.")]
-	public class PortableChronoMultiplierInfo : ConditionalTraitInfo, Requires<PortableChronoCAInfo>
+	public class PortableChronoModifierInfo : ConditionalTraitInfo, Requires<PortableChronoCAInfo>
 	{
 		[Desc("Percentage modifier to apply.")]
 		public readonly int RangeModifier = 100;
@@ -24,16 +24,20 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Percentage modifier to apply.")]
 		public readonly int CooldownModifier = 100;
 
-		public override object Create(ActorInitializer init) { return new PortableChronoMultiplier(this); }
+		[Desc("Number of extra charges to grant.")]
+		public readonly int ExtraCharges = 0;
+
+		public override object Create(ActorInitializer init) { return new PortableChronoModifier(this); }
 	}
 
-	public class PortableChronoMultiplier : ConditionalTrait<PortableChronoMultiplierInfo>, IPortableChronoModifier
+	public class PortableChronoModifier : ConditionalTrait<PortableChronoModifierInfo>, IPortableChronoModifier
 	{
-		public PortableChronoMultiplier(PortableChronoMultiplierInfo info)
+		public PortableChronoModifier(PortableChronoModifierInfo info)
 			: base(info) { }
 
 		int IPortableChronoModifier.GetCooldownModifier() => IsTraitDisabled ? 100 : Info.CooldownModifier;
 		int IPortableChronoModifier.GetRangeModifier() => IsTraitDisabled ? 100 : Info.RangeModifier;
+		int IPortableChronoModifier.GetExtraCharges() => IsTraitDisabled ? 0 : Info.ExtraCharges;
 
 		protected override void TraitEnabled(Actor self)
 		{
