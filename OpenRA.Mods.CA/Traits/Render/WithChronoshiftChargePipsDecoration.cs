@@ -10,7 +10,7 @@
 #endregion
 
 using System.Collections.Generic;
-using OpenRA.Mods.CA.Traits;
+using System.Linq;
 using OpenRA.Mods.Common.Traits.Render;
 using OpenRA.Graphics;
 using OpenRA.Traits;
@@ -43,6 +43,9 @@ namespace OpenRA.Mods.CA.Traits.Render
 		[PaletteReference]
 		public readonly string Palette = "chrome";
 
+		[Desc("Will not show anything if total pips is less than this.")]
+		public readonly int MinimumPips = 2;
+
 		public override object Create(ActorInitializer init) { return new WithChronoshiftChargePipsDecoration(init.Self, this); }
 	}
 
@@ -73,6 +76,10 @@ namespace OpenRA.Mods.CA.Traits.Render
 			var totalAmmo = pc.MaxCharges;
 
 			var pipCount = Info.PipCount > 0 ? Info.PipCount : totalAmmo;
+
+			if (pipCount < Info.MinimumPips)
+				yield break;
+
 			for (var i = 0; i < pipCount; i++)
 			{
 				pips.PlayRepeating(currentAmmo * pipCount > i * totalAmmo ? Info.FullSequence : Info.EmptySequence);
