@@ -911,7 +911,7 @@ DoFinale = function()
 end
 
 CreatePermanentMothershipCamera = function()
-	if not IsPermanentMothershipCameraCreated then
+	if not Mothership.IsDead and not IsPermanentMothershipCameraCreated then
 		IsPermanentMothershipCameraCreated = true
 		Actor.Create("camera", true, { Owner = GDI, Location = Mothership.Location })
 	end
