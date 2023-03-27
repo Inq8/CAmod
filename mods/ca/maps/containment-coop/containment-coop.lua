@@ -92,7 +92,7 @@ WorldLoaded = function()
 
 	Utils.Do(Objectives, function(o)
 		Utils.Do(Players, function(p)
-			o[p.Name] = p.AddObjective(o.Text)
+			o[p.InternalName] = p.AddObjective(o.Text)
 		end)
 	end)
 
@@ -107,25 +107,25 @@ WorldLoaded = function()
 		if not RespawnEnabled then
 			if not AllReactorsDead then
 				Utils.Do(Players, function(p)
-					p.MarkFailedObjective(Objectives.KillReactors[p.Name])
+					p.MarkFailedObjective(Objectives.KillReactors[p.InternalName])
 				end)
 			end
 
 			if not BothNukeSilosDead then
 				Utils.Do(Players, function(p)
-					p.MarkFailedObjective(Objectives.KillSilos[p.Name])
+					p.MarkFailedObjective(Objectives.KillSilos[p.InternalName])
 				end)
 			end
 
 			if not AllSAMSitesDead then
 				Utils.Do(Players, function(p)
-					p.MarkFailedObjective(Objectives.KillSAMSites[p.Name])
+					p.MarkFailedObjective(Objectives.KillSAMSites[p.InternalName])
 				end)
 			end
 
 			if not AllReactorsDead or not BothNukeSilosDead or not AllSAMSitesDead then
 				Utils.Do(Players, function(p)
-					p.MarkFailedObjective(Objectives.NeutralizeChronosphere[p.Name])
+					p.MarkFailedObjective(Objectives.NeutralizeChronosphere[p.InternalName])
 				end)
 			end
 		end
@@ -154,7 +154,7 @@ WorldLoaded = function()
 		AllReactorsDead = true
 
 		Utils.Do(Players, function(p)
-			p.MarkCompletedObjective(Objectives.KillReactors[p.Name])
+			p.MarkCompletedObjective(Objectives.KillReactors[p.InternalName])
 		end)
 	end)
 
@@ -162,7 +162,7 @@ WorldLoaded = function()
 		AllSAMSitesDead = true
 
 		Utils.Do(Players, function(p)
-			p.MarkCompletedObjective(Objectives.KillSAMSites[p.Name])
+			p.MarkCompletedObjective(Objectives.KillSAMSites[p.InternalName])
 		end)
 
 		if BothNukeSilosDead then
@@ -178,7 +178,7 @@ WorldLoaded = function()
 		end
 
 		Utils.Do(Players, function(p)
-			p.MarkCompletedObjective(Objectives.KillSilos[p.Name])
+			p.MarkCompletedObjective(Objectives.KillSilos[p.InternalName])
 		end)
 
 		if AllSAMSitesDead then
@@ -188,7 +188,7 @@ WorldLoaded = function()
 
 	Trigger.OnKilled(Chronosphere, function(self, killer)
 		Utils.Do(Players, function(p)
-			p.MarkCompletedObjective(Objectives.NeutralizeChronosphere[p.Name])
+			p.MarkCompletedObjective(Objectives.NeutralizeChronosphere[p.InternalName])
 		end)
 	end)
 
@@ -254,20 +254,20 @@ WorldLoaded = function()
 				Media.PlaySound("crossrip.aud")
 				Trigger.AfterDelay(DateTime.Seconds(2), function()
 					Utils.Do(Players, function(p)
-						if not p.IsObjectiveCompleted(Objectives.KillReactors[p.Name]) then
-							p.MarkFailedObjective(Objectives.KillReactors[p.Name])
+						if not p.IsObjectiveCompleted(Objectives.KillReactors[p.InternalName]) then
+							p.MarkFailedObjective(Objectives.KillReactors[p.InternalName])
 						end
 
-						if not p.IsObjectiveCompleted(Objectives.KillSAMSites[p.Name]) then
-							p.MarkFailedObjective(Objectives.KillSAMSites[p.Name])
+						if not p.IsObjectiveCompleted(Objectives.KillSAMSites[p.InternalName]) then
+							p.MarkFailedObjective(Objectives.KillSAMSites[p.InternalName])
 						end
 
-						if not p.IsObjectiveCompleted(Objectives.KillSilos[p.Name]) then
-							p.MarkFailedObjective(Objectives.KillSilos[p.Name])
+						if not p.IsObjectiveCompleted(Objectives.KillSilos[p.InternalName]) then
+							p.MarkFailedObjective(Objectives.KillSilos[p.InternalName])
 						end
 
-						if not p.IsObjectiveCompleted(Objectives.NeutralizeChronosphere[p.Name]) then
-							p.MarkFailedObjective(Objectives.NeutralizeChronosphere[p.Name])
+						if not p.IsObjectiveCompleted(Objectives.NeutralizeChronosphere[p.InternalName]) then
+							p.MarkFailedObjective(Objectives.NeutralizeChronosphere[p.InternalName])
 						end
 					end)
 				end)
@@ -455,8 +455,8 @@ DropChronoPrison = function()
 				local chronoPrisons = ChronoPrisonPlayer.GetActorsByType("chpr")
 				Trigger.OnKilled(chronoPrisons[1], function(self, killer)
 					Utils.Do(Players, function(p)
-						if not p.IsObjectiveCompleted(Objectives.NeutralizeChronosphere[p.Name]) then
-							p.MarkFailedObjective(Objectives.NeutralizeChronosphere[p.Name])
+						if not p.IsObjectiveCompleted(Objectives.NeutralizeChronosphere[p.InternalName]) then
+							p.MarkFailedObjective(Objectives.NeutralizeChronosphere[p.InternalName])
 						end
 					end)
 				end)

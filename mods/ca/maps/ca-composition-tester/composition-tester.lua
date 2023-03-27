@@ -167,8 +167,8 @@ Save = function(players)
 
     Utils.Do(players, function(p)
         if p ~= nil then
-            SavedCompositions[p.Name] = { }
-            SavedCash[p.Name] = p.Resources + p.Cash
+            SavedCompositions[p.InternalName] = { }
+            SavedCash[p.InternalName] = p.Resources + p.Cash
 
             local units = p.GetActors()
 
@@ -188,13 +188,13 @@ Save = function(players)
                         end)
                     end
 
-                    table.insert(SavedCompositions[p.Name], unit)
+                    table.insert(SavedCompositions[p.InternalName], unit)
                 elseif IsUpgrade(a) then
                     local upg = {
                         Type = a.Type,
                     }
 
-                    table.insert(SavedCompositions[p.Name], upg)
+                    table.insert(SavedCompositions[p.InternalName], upg)
                 end
             end)
         end
@@ -208,8 +208,8 @@ Restore = function(players)
     Trigger.AfterDelay(DateTime.Seconds(1) + 10, function()
         Utils.Do(players, function(p)
             if p ~= nil then
-                if SavedCompositions[p.Name] ~= nil and #SavedCompositions[p.Name] > 0 then
-                    Utils.Do(SavedCompositions[p.Name], function(u)
+                if SavedCompositions[p.InternalName] ~= nil and #SavedCompositions[p.InternalName] > 0 then
+                    Utils.Do(SavedCompositions[p.InternalName], function(u)
                         if u.Location ~= nil then
                             local newActor = Actor.Create(u.Type, true, { Owner = p, Location = u.Location, CenterPosition = u.CenterPosition, Facing = u.Facing })
 
@@ -225,8 +225,8 @@ Restore = function(players)
                     end)
                 end
 
-                if SavedCash[p.Name] ~= nil then
-                    p.Cash = SavedCash[p.Name]
+                if SavedCash[p.InternalName] ~= nil then
+                    p.Cash = SavedCash[p.InternalName]
                     p.Resources = 0
                 end
             end

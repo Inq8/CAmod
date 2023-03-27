@@ -45,13 +45,13 @@ WorldLoaded = function()
 	InitScrin()
 
 	Utils.Do(Players, function(p)
-		Objectives.DestroyTiberiumStores[p.Name] = p.AddObjective(Objectives.DestroyTiberiumStores.Text)
+		Objectives.DestroyTiberiumStores[p.InternalName] = p.AddObjective(Objectives.DestroyTiberiumStores.Text)
 	end)
 
 	if not RespawnEnabled then
 		Utils.Do(Players, function(p)
-			Objectives.CommandoSurvives[p.Name] = p.AddObjective(Objectives.CommandoSurvives.Text)
-			Objectives.TanyaSurvives[p.Name] = p.AddObjective(Objectives.TanyaSurvives.Text)
+			Objectives.CommandoSurvives[p.InternalName] = p.AddObjective(Objectives.CommandoSurvives.Text)
+			Objectives.TanyaSurvives[p.InternalName] = p.AddObjective(Objectives.TanyaSurvives.Text)
 		end)
 	end
 
@@ -105,14 +105,14 @@ OncePerSecondChecks = function()
 
 				if NumSilosRemaining > 0 then
 					Utils.Do(Players, function(p)
-						if not p.IsObjectiveCompleted(Objectives.DestroyTiberiumStores[p.Name]) then
-							p.MarkFailedObjective(Objectives.DestroyTiberiumStores[p.Name])
+						if not p.IsObjectiveCompleted(Objectives.DestroyTiberiumStores[p.InternalName]) then
+							p.MarkFailedObjective(Objectives.DestroyTiberiumStores[p.InternalName])
 						end
 					end)
 				elseif IsExitActive then
 					Utils.Do(Players, function(p)
-						if not p.IsObjectiveCompleted(Objectives.Escape[p.Name]) then
-							p.MarkFailedObjective(Objectives.Escape[p.Name])
+						if not p.IsObjectiveCompleted(Objectives.Escape[p.InternalName]) then
+							p.MarkFailedObjective(Objectives.Escape[p.InternalName])
 						end
 					end)
 				end
@@ -126,13 +126,13 @@ OncePerSecondChecks = function()
 
 			if RespawnEnabled then
 				Utils.Do(Players, function(p)
-					Objectives.Escape[p.Name] = p.AddObjective(Objectives.Escape.Text)
+					Objectives.Escape[p.InternalName] = p.AddObjective(Objectives.Escape.Text)
 				end)
 			end
 
 			Utils.Do(Players, function(p)
-				if not p.IsObjectiveFailed(Objectives.DestroyTiberiumStores[p.Name]) then
-					p.MarkCompletedObjective(Objectives.DestroyTiberiumStores[p.Name])
+				if not p.IsObjectiveFailed(Objectives.DestroyTiberiumStores[p.InternalName]) then
+					p.MarkCompletedObjective(Objectives.DestroyTiberiumStores[p.InternalName])
 				end
 			end)
 
@@ -163,7 +163,7 @@ OncePerSecondChecks = function()
 		if CommandoEscaped then
 			if not RespawnEnabled then
 				Utils.Do(Players, function(p)
-					p.MarkCompletedObjective(Objectives.CommandoSurvives[p.Name])
+					p.MarkCompletedObjective(Objectives.CommandoSurvives[p.InternalName])
 				end)
 			elseif not IsCommandoExitNotified then
 				IsCommandoExitNotified = true
@@ -174,7 +174,7 @@ OncePerSecondChecks = function()
 		if TanyaEscaped then
 			if not RespawnEnabled then
 				Utils.Do(Players, function(p)
-					p.MarkCompletedObjective(Objectives.TanyaSurvives[p.Name])
+					p.MarkCompletedObjective(Objectives.TanyaSurvives[p.InternalName])
 				end)
 			elseif not IsTanyaExitNotified then
 				IsTanyaExitNotified = true
@@ -184,7 +184,7 @@ OncePerSecondChecks = function()
 
 		if RespawnEnabled and CommandoEscaped and TanyaEscaped then
 			Utils.Do(Players, function(p)
-				p.MarkCompletedObjective(Objectives.Escape[p.Name])
+				p.MarkCompletedObjective(Objectives.Escape[p.InternalName])
 			end)
 		end
 
@@ -268,7 +268,7 @@ CommandoDeathTrigger = function(commando)
 	Trigger.OnKilled(commando, function()
 		if not RespawnEnabled and not CommandoEscaped then
 			Utils.Do(Players, function(p)
-				p.MarkFailedObjective(Objectives.CommandoSurvives[p.Name])
+				p.MarkFailedObjective(Objectives.CommandoSurvives[p.InternalName])
 			end)
 		elseif RespawnEnabled then
 			Notification("Commando respawns in 30 seconds.")
@@ -291,7 +291,7 @@ TanyaDeathTrigger = function(tanya)
 	Trigger.OnKilled(tanya, function()
 		if not RespawnEnabled and not TanyaEscaped then
 			Utils.Do(Players, function(p)
-				p.MarkFailedObjective(Objectives.TanyaSurvives[p.Name])
+				p.MarkFailedObjective(Objectives.TanyaSurvives[p.InternalName])
 			end)
 		elseif RespawnEnabled then
 			Notification("Tanya respawns in 30 seconds.")
