@@ -250,12 +250,11 @@ DOG:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
 HALO:
+	Inherits@MC: ^MindControllable
 	Buildable:
 		Prerequisites: hpad
 	Health:
 		HP: 17000
-	Targetable@MINDCONTROL:
-		TargetTypes: MindControllable
 	KillsSelf@YURIMC:
 		RequiresCondition: yurimc
 	GrantConditionOnBotOwnerCA@YURIMC:
@@ -263,12 +262,11 @@ HALO:
 	-EjectOnDeath:
 
 HIND:
+	Inherits@MC: ^MindControllable
 	Buildable:
 		Prerequisites: hpad
 	Health:
 		HP: 17000
-	Targetable@MINDCONTROL:
-		TargetTypes: MindControllable
 
 YAK:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
