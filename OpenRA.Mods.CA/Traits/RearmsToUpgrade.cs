@@ -96,7 +96,11 @@ namespace OpenRA.Mods.CA.Traits
 			if (facing != null) transform.Facing = facing.Facing;
 			transform.SkipMakeAnims = Info.SkipMakeAnims;
 			transform.Altitude = self.CenterPosition;
-			self.CurrentActivity.QueueChild(transform);
+
+			if (self.CurrentActivity != null)
+				self.CurrentActivity.QueueChild(transform);
+			else
+				self.QueueActivity(transform);
 
 			if (Info.UpgradeAudio != null)
 				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.UpgradeAudio, faction);
