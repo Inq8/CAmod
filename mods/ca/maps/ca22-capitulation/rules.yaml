@@ -173,6 +173,8 @@ NPWR:
 		RequiresCondition: !(disabled || being-warped || build-incomplete)
 	WithIdleOverlay@SMOKE3:
 		RequiresCondition: !(disabled || being-warped || build-incomplete)
+	Capturable:
+		RequiresCondition: !build-incomplete && !being-warped && !invulnerability
 	Health:
 		HP: 400000
 
