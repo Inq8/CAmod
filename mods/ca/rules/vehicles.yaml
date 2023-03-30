@@ -12,7 +12,7 @@ V2RL:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Valued:
-		Cost: 800
+		Cost: 850
 	Tooltip:
 		Name: V2 Rocket Launcher
 	UpdatesPlayerStatistics:
@@ -1039,7 +1039,7 @@ ARTY:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Valued:
-		Cost: 550
+		Cost: 650
 	Tooltip:
 		Name: Artillery
 	UpdatesPlayerStatistics:
@@ -1079,7 +1079,11 @@ ARTY:
 
 ARTY.nod:
 	Inherits: ARTY
-	Inherits@TD: ^VehicleTD
+	Inherits@TDPAL: ^TDPalette
+	WithDamageOverlay:
+		Image: smoke_mtd
+	Cloak@CRATE-CLOAK:
+		Palette: cloak
 	RenderSprites:
 		Image: artynod
 	Buildable:
@@ -1122,11 +1126,12 @@ HOWI:
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	Turreted:
-		TurnSpeed: 10
+		TurnSpeed: 18
 	Armament:
 		Weapon: 155mmTDM
 	Mobile:
-		Speed: 60
+		Speed: 72
+		TurnSpeed: 18
 	WithSpriteTurret:
 
 ARTY.Chrono:
@@ -2234,7 +2239,7 @@ TTRA:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 20000
+		HP: 25000
 	Armor:
 		Type: Light
 	Mobile:
