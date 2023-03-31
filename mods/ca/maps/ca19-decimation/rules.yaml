@@ -119,6 +119,12 @@ fleetaccess:
 	ScriptTriggers:
 	ProvidesPrerequisite:
 
+reaperaccess:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesPrerequisite:
+
 MAST:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
@@ -128,12 +134,29 @@ THF:
 BORI:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
+DARK:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.scrin
+
+LCHR:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.scrin
+
+RUIN:
+	Buildable:
+		Prerequisites: scrt, ~vehicles.scrin
+
+ATMZ:
+	Buildable:
+		Prerequisites: scrt, ~vehicles.scrin
+
 TPOD:
 	Buildable:
-		Prerequisites: techcenter, ~vehicles.scrin
+		Prerequisites: scrt, ~vehicles.scrin
 
 RPTP:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
+	Buildable:
+		Prerequisites: scrt, ~vehicles.scrin, ~reaperaccess
 
 ENRV:
 	Buildable:
@@ -157,6 +180,14 @@ SIGN:
 shields.upgrade:
 	Buildable:
 		Prerequisites: ~player.scrin, sign, ~fleetaccess
+
+stellar.upgrade:
+	Buildable:
+		Prerequisites: scrt
+
+coalescence.upgrade:
+	Buildable:
+		Prerequisites: scrt
 
 IRON:
 	GrantExternalConditionPowerCA@IRONCURTAIN:
