@@ -523,20 +523,15 @@ TTrackArc1:
 		ValidTargets: Vehicle, Ship
 		ValidRelationships: Enemy, Neutral
 		Versus:
-			Light: 35
-			Heavy: 45
+			Light: 15
+			Heavy: 25
 	Warhead@Arc: FireShrapnel
 		Weapon: TTrackArc2
-		ValidTargets: Vehicle, Ship, Infantry
 		AimChance: 100
 
 TTrackArc2:
 	Inherits: TTrackArc1
-	ValidTargets: Vehicle, Ship, Infantry
 	Warhead@1Dam: SpreadDamage
-		ValidTargets: Vehicle, Ship, Infantry
-		Versus:
-			None: 115
 	-Warhead@Arc:
 
 TTankZap:
@@ -1039,7 +1034,8 @@ XOLaser:
 		SecondaryBeamColor: 79cd0040
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 10750
+		Damage: 11000
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, TankBuster
 		Versus:
 			None: 100
 			Wood: 40
@@ -1688,7 +1684,7 @@ Railgun:
 TitanRailgun:
 	Inherits: Railgun
 	Report: titanrailgun1.aud, titanrailgun2.aud
-	ReloadDelay: 90
+	ReloadDelay: 80
 	Range: 5c768
 	Projectile: Railgun
 		DamageActorsInLine: true
@@ -1733,7 +1729,7 @@ TitanRailgunImpact:
 		ValidRelationships: Enemy, Neutral, Ally
 
 IonZap:
-	ReloadDelay: 90
+	ReloadDelay: 80
 	Range: 5c768
 	Report: ion1.aud
 	InvalidTargets: Air
@@ -1759,7 +1755,7 @@ IonZap:
 		ZOffset: 2045
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
-		Damage: 12500
+		Damage: 12000
 		ValidRelationships: Ally, Neutral, Enemy
 		InvalidTargets: Air
 		AffectsParent: false
@@ -2115,7 +2111,7 @@ RadBeamWeaponE:
 
 RadBeamWeaponHeavy:
 	Inherits: RadBeamWeapon
-	ReloadDelay: 90
+	ReloadDelay: 80
 	Report: eradcan1.aud
 	Projectile: RadBeam
 		Amplitude: 176
