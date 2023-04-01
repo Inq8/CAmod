@@ -2220,6 +2220,7 @@ NeutronCannon:
 	BurstDelays: 5
 	Range: 5c0
 	Projectile: InstantHit
+	TargetActorCenter: true
 	Warhead@Damage: WarpPercentDamage
 		Damage: 2
 		Spread: 1
@@ -2237,6 +2238,15 @@ NeutronCannonAA:
 	ValidTargets: TemporalAir
 	Warhead@Damage: WarpPercentDamage
 		ValidTargets: TemporalAir
+		InvalidTargets: Shielded
+	Warhead@ShieldDamage: SpreadDamage
+		Damage: 250
+		ValidTargets: Shielded
+	Warhead@ShieldWarp: GrantExternalCondition
+		Range: 0c512
+		Duration: 10
+		Condition: shield-warped
+		ValidTargets: Shielded
 
 NeutronCannonBeam:
 	ValidTargets: Temporal, TemporalAir
