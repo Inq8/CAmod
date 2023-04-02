@@ -7,6 +7,7 @@
 		BuildLimit: 1
 		BuildDurationModifier: 100
 	ProvidesPrerequisite@upgradename:
+	ProvidesUpgrade@upgradename:
 
 #########################SHARED#########
 ########################################
@@ -156,13 +157,13 @@ vulcan.upgrade:
 		Name: Upgrade: Vulcan
 	Buildable:
 		BuildPaletteOrder: 20
-		Prerequisites: ~player.gdi, anyradar, ~techlevel.medium
+		Prerequisites: ~player.gdi, weap.td, ~techlevel.medium
 		Description: Upgrades: APC
 	TooltipExtras:
 		Strengths: + Adds anti-air capability\n+ Increased damage against ground targets\n+ Adds turret
 		Weaknesses: – Increased cost\n– Reduced speed
 	Valued:
-		Cost: 750
+		Cost: 1000
 	RenderSprites:
 		Image: vulcan.upgrade
 

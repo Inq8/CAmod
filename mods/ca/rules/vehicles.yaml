@@ -108,6 +108,10 @@ KATY:
 		DecorationBounds: 1194, 1194
 	UpgradeableTo:
 		Actors: v2rl
+	Upgradeable@V2:
+		Type: v2.upgrade
+		Actor: v2rl
+		UpgradeAtActors: fix, rep, srep
 
 1TNK:
 	Inherits: ^Tank
@@ -584,35 +588,16 @@ GTNK.squad:
 		DecorationBounds: 1194, 1194
 	UpgradeableTo:
 		Actors: 3tnk.atomic, 3tnk.yuri, 3tnk.atomicyuri
-	# For upgrading on Service Depot
-	Rearmable@UPGRADE:
-		RearmActors: fix, rep, srep
-		AmmoPools: upgrade
-	AmmoPool@UPGRADE:
-		Name: upgrade
-		Armaments: none
-		ReloadDelay: 5000
-	GrantConditionOnPrerequisite@ATOMICUPGRADE:
-		Condition: atomicengines-upgrade
-		Prerequisites: atomicengines.upgrade
-	GrantConditionOnPrerequisite@LASHERUPGRADE:
-		Condition: lasher-upgrade
-		Prerequisites: lasher.upgrade
-	RearmsToUpgrade@ATOMICUPGRADE:
-		AmmoPool: upgrade
-		UpgradeAudio: UnitUpgraded
+	Upgradeable@ATOMIC:
+		Type: atomicengines.upgrade
 		Actor: 3tnk.atomic
-		RequiresCondition: atomicengines-upgrade && !lasher-upgrade
-	RearmsToUpgrade@LASHERUPGRADE:
-		AmmoPool: upgrade
-		UpgradeAudio: UnitUpgraded
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
+	Upgradeable@LASHER:
+		Type: lasher.upgrade
 		Actor: 3tnk.yuri
-		RequiresCondition: lasher-upgrade && !atomicengines-upgrade
-	RearmsToUpgrade@ATOMICLASHERUPGRADE:
-		AmmoPool: upgrade
-		UpgradeAudio: UnitUpgraded
-		Actor: 3tnk.atomicyuri
-		RequiresCondition: lasher-upgrade && atomicengines-upgrade
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
 
 3TNK.ATOMIC:
 	Inherits: 3TNK
@@ -645,17 +630,13 @@ GTNK.squad:
 		RequiresCondition: !being-warped
 	UpgradeableTo:
 		Actors: 3tnk.atomicyuri
-	RearmsToUpgrade@LASHERUPGRADE:
-		AmmoPool: upgrade
-		UpgradeAudio: UnitUpgraded
+	Upgradeable@ATOMICLASHER:
+		Type: atomicengines.upgrade
 		Actor: 3tnk.atomicyuri
-		RequiresCondition: lasher-upgrade
-	GrantConditionOnPrerequisite@LASHERUPGRADE:
-		Condition: lasher-upgrade
-		Prerequisites: lasher.upgrade
-	-RearmsToUpgrade@ATOMICUPGRADE:
-	-GrantConditionOnPrerequisite@ATOMICUPGRADE:
-	-RearmsToUpgrade@ATOMICLASHERUPGRADE:
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
+	-Upgradeable@ATOMIC:
+	-Upgradeable@LASHER:
 
 3TNK.YURI:
 	Inherits: 3TNK
@@ -714,17 +695,13 @@ GTNK.squad:
 	-SpeedMultiplier@CRUSHSLOW:
 	UpgradeableTo:
 		Actors: 3tnk.atomicyuri
-	-RearmsToUpgrade@LASHERUPGRADE:
-	-GrantConditionOnPrerequisite@LASHERUPGRADE:
-	GrantConditionOnPrerequisite@ATOMICUPGRADE:
-		Condition: atomicengines-upgrade
-		Prerequisites: atomicengines.upgrade
-	RearmsToUpgrade@ATOMICUPGRADE:
-		AmmoPool: upgrade
-		UpgradeAudio: UnitUpgraded
+	Upgradeable@ATOMICLASHER:
+		Type: atomicengines.upgrade
 		Actor: 3tnk.atomicyuri
-		RequiresCondition: atomicengines-upgrade
-	-RearmsToUpgrade@ATOMICLASHERUPGRADE:
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
+	-Upgradeable@ATOMIC:
+	-Upgradeable@LASHER:
 
 3TNK.ATOMICYURI:
 	Inherits: 3TNK.ATOMIC
@@ -783,10 +760,7 @@ GTNK.squad:
 	-SpeedMultiplier@CRUSHATTEMPTSLOW:
 	-SpeedMultiplier@CRUSHSLOW:
 	-UpgradeableTo:
-	-Rearmable@UPGRADE:
-	-AmmoPool@UPGRADE:
-	-RearmsToUpgrade@LASHERUPGRADE:
-	-GrantConditionOnPrerequisite@LASHERUPGRADE:
+	-Upgradeable@ATOMICLASHER:
 
 4TNK:
 	Inherits: ^Tank
@@ -886,35 +860,16 @@ GTNK.squad:
 		RequiresCondition: atomic-ammo && has-atomic-ammo < 10
 	UpgradeableTo:
 		Actors: 4tnk.atomic, 4tnk.erad, 4tnk.eradatomic
-	# For upgrading on Service Depot
-	Rearmable@UPGRADE:
-		RearmActors: fix, rep, srep
-		AmmoPools: upgrade
-	AmmoPool@UPGRADE:
-		Name: upgrade
-		Armaments: none
-		ReloadDelay: 5000
-	GrantConditionOnPrerequisite@ATOMICUPGRADE:
-		Condition: atomicengines-upgrade
-		Prerequisites: atomicengines.upgrade
-	GrantConditionOnPrerequisite@ERADUPGRADE:
-		Condition: erad-upgrade
-		Prerequisites: erad.upgrade
-	RearmsToUpgrade@ATOMICUPGRADE:
-		AmmoPool: upgrade
-		UpgradeAudio: UnitUpgraded
+	Upgradeable@ATOMIC:
+		Type: atomicengines.upgrade
 		Actor: 4tnk.atomic
-		RequiresCondition: atomicengines-upgrade && !erad-upgrade
-	RearmsToUpgrade@ERADUPGRADE:
-		AmmoPool: upgrade
-		UpgradeAudio: UnitUpgraded
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
+	Upgradeable@ERAD:
+		Type: erad.upgrade
 		Actor: 4tnk.erad
-		RequiresCondition: erad-upgrade && !atomicengines-upgrade
-	RearmsToUpgrade@ERADATOMICUPGRADE:
-		AmmoPool: upgrade
-		UpgradeAudio: UnitUpgraded
-		Actor: 4tnk.eradatomic
-		RequiresCondition: atomicengines-upgrade && erad-upgrade
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
 
 4TNK.ATOMIC:
 	Inherits: 4TNK
@@ -939,18 +894,13 @@ GTNK.squad:
 		Modifier: 125
 	UpgradeableTo:
 		Actors: 4tnk.eradatomic
-	GrantConditionOnPrerequisite@ERADUPGRADE:
-		Condition: erad-upgrade
-		Prerequisites: erad.upgrade
-	RearmsToUpgrade@ERADUPGRADE:
-		AmmoPool: upgrade
-		UpgradeAudio: UnitUpgraded
-		Actor: 4tnk.erad
-		RequiresCondition: erad-upgrade
-	-SpawnActorOnDeath:
-	-GrantConditionOnPrerequisite@ATOMICUPGRADE:
-	-RearmsToUpgrade@ATOMICUPGRADE:
-	-RearmsToUpgrade@ERADATOMICUPGRADE:
+	Upgradeable@ERADATOMIC:
+		Type: erad.upgrade
+		Actor: 4tnk.eradatomic
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
+	-Upgradeable@ATOMIC:
+	-Upgradeable@ERAD:
 
 4TNK.ERAD:
 	Inherits: 4TNK
@@ -968,16 +918,6 @@ GTNK.squad:
 		-ReloadingCondition:
 	-Armament@ATOMICAMMO:
 	-Armament@SECONDARY:
-	UpgradeableTo:
-		Actors: 4tnk.eradatomic
-	GrantConditionOnPrerequisite@ATOMICUPGRADE:
-		Condition: atomicengines-upgrade
-		Prerequisites: atomicengines.upgrade
-	RearmsToUpgrade@ATOMICUPGRADE:
-		AmmoPool: upgrade
-		UpgradeAudio: UnitUpgraded
-		Actor: 4tnk.eradatomic
-		RequiresCondition: atomicengines-upgrade
 	SpawnActorOnDeath:
 		Actor: 4TNK.ERAD.Husk
 		RequiresCondition: !being-warped
@@ -991,9 +931,15 @@ GTNK.squad:
 	-ReloadAmmoPoolCA@ATOMICAMMODECAY:
 	-DamagedByTintedCells@RADSTRONG:
 	-DamagedByTintedCells@RADMED:
-	-GrantConditionOnPrerequisite@ERADUPGRADE:
-	-RearmsToUpgrade@ERADUPGRADE:
-	-RearmsToUpgrade@ERADATOMICUPGRADE:
+	UpgradeableTo:
+		Actors: 4tnk.eradatomic
+	Upgradeable@ERADATOMIC:
+		Type: atomicengines.upgrade
+		Actor: 4tnk.eradatomic
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
+	-Upgradeable@ATOMIC:
+	-Upgradeable@ERAD:
 
 4TNK.ERADATOMIC:
 	Inherits: 4TNK.ATOMIC
@@ -1020,10 +966,7 @@ GTNK.squad:
 	-Armament@ATOMICAMMO:
 	-Armament@SECONDARY:
 	-UpgradeableTo:
-	-Rearmable@UPGRADE:
-	-AmmoPool@UPGRADE:
-	-GrantConditionOnPrerequisite@ERADUPGRADE:
-	-RearmsToUpgrade@ERADUPGRADE:
+	-Upgradeable@ERADATOMIC:
 
 ARTY:
 	Inherits: ^Vehicle
@@ -1096,22 +1039,11 @@ ARTY.nod:
 		Class: arty
 	UpgradeableTo:
 		Actors: howi
-	# For upgrading on Service Depot
-	Rearmable@UPGRADE:
-		RearmActors: fix, rep, srep
-		AmmoPools: upgrade
-	AmmoPool@UPGRADE:
-		Name: upgrade
-		Armaments: none
-		ReloadDelay: 5000
-	GrantConditionOnPrerequisite@HOWIUPGRADE:
-		Condition: howi-upgrade
-		Prerequisites: howi.upgrade
-	RearmsToUpgrade@HOWIUPGRADE:
-		AmmoPool: upgrade
-		UpgradeAudio: UnitUpgraded
+	Upgradeable@HOWI:
+		Type: howi.upgrade
 		Actor: howi
-		RequiresCondition: howi-upgrade
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
 
 HOWI:
 	Inherits: ARTY.nod
@@ -1735,20 +1667,10 @@ APC:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
-		RequiresCondition: !rapc-upgrade
-	TooltipExtras@UPG:
-		Description: Tough infantry transport that fires high explosive shells.
-		Strengths: • Strong vs Infantry, Buildings, Defenses, Light Armor
-		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
-		RequiresCondition: rapc-upgrade
 	Valued:
 		Cost: 600
 	Tooltip:
 		Name: Armored Personnel Carrier
-		RequiresCondition: !rapc-upgrade
-	Tooltip@UPG:
-		Name: Armored Personnel Carrier (Raider)
-		RequiresCondition: rapc-upgrade
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -1758,44 +1680,20 @@ APC:
 	Mobile:
 		Speed: 126
 		PauseOnCondition: notmobile || being-captured || empdisable || being-warped || driver-dead
-	SpeedMultiplier@UPG:
-		Modifier: 83
-		RequiresCondition: rapc-upgrade
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
 		RevealGeneratedShroud: False
-		RequiresCondition: !rapc-upgrade
-	RevealsShroud@UPG:
-		MinRange: 4c0
-		Range: 6c0
-		RevealGeneratedShroud: False
-		RequiresCondition: rapc-upgrade
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Armament:
 		Weapon: M60mg
 		LocalOffset: 85,0,171
 		MuzzleSequence: muzzle
-		RequiresCondition: !rapc-upgrade
-	Armament@UPG:
-		Weapon: 76mm
-		LocalOffset: 500,0,250
-		MuzzleSequence: muzzle2
-		RequiresCondition: rapc-upgrade
 	WithMuzzleOverlay:
 	AttackFrontal:
 		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: !rapc-upgrade
 		FacingTolerance: 0
-	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: rapc-upgrade
-	Turreted:
-		TurnSpeed: 28
-		RequiresCondition: rapc-upgrade
-	WithSpriteTurret:
-		RequiresCondition: rapc-upgrade
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5
@@ -1814,21 +1712,12 @@ APC:
 		RequiresCondition: !driver-dead && !cargo
 	Targetable@MINDCONTROL:
 		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
-	GrantConditionOnPrerequisite@RAIDER:
-		Condition: rapc-upgrade
-		Prerequisites: rapc.upgrade
-	GrantCondition@RAIDER:
-		Condition: rapc-upgrade
-		RequiresCondition: rapc-upgrade
-		GrantPermanently: true
-	Berserkable@UPGRADING:
-		RequiresCondition: upgrading
-	GrantTimedCondition@UPGRADING:
-		RequiresCondition: rapc-upgrade
-		Condition: upgrading
-		Duration: 1
 	UpgradeableTo:
 		Actors: rapc
+	Upgradeable@RAIDER:
+		Type: rapc.upgrade
+		Actor: rapc
+		UpgradeAtActors: fix, rep, srep
 
 RAPC:
 	Inherits: APC
@@ -1841,33 +1730,24 @@ RAPC:
 		Speed: 100
 	RevealsShroud:
 		Range: 6c0
-		-RequiresCondition:
-	-RevealsShroud@UPG:
-	-Tooltip:
-	Tooltip@UPG:
-		-RequiresCondition:
-	-TooltipExtras:
-	TooltipExtras@UPG:
-		IsStandard: true
-		-RequiresCondition:
+	Tooltip:
+		Name: Armored Personnel Carrier (Raider)
+	TooltipExtras:
+		Description: Tough infantry transport that fires high explosive shells.
+		Strengths: • Strong vs Infantry, Buildings, Defenses, Light Armor
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
 	-AttackFrontal:
 	AttackTurreted:
-		-RequiresCondition:
+		PauseOnCondition: empdisable || being-warped
 	Turreted:
-		-RequiresCondition:
+		TurnSpeed: 28
 	WithSpriteTurret:
-		-RequiresCondition:
-	Selectable:
-		Class: apc
-	-Armament:
-	Armament@UPG:
-		-RequiresCondition:
-	-SpeedMultiplier@UPG:
-	-GrantConditionOnPrerequisite@RAIDER:
-	-GrantCondition@RAIDER:
-	-Berserkable@UPGRADING:
-	-GrantTimedCondition@UPGRADING:
+	Armament:
+		Weapon: 76mm
+		LocalOffset: 500,0,250
+		MuzzleSequence: muzzle2
 	-UpgradeableTo:
+	-Upgradeable@RAIDER:
 
 APC.AI:
 	Inherits: APC
@@ -1876,31 +1756,10 @@ APC.AI:
 		Image: APC
 	Buildable:
 		Prerequisites: ~botplayer, ~vehicles.allies, ~!rapc.upgrade, ~techlevel.low
-	Tooltip:
-		-RequiresCondition:
-	-Tooltip@UPG:
-	RevealsShroud:
-		-RequiresCondition:
-	-RevealsShroud@UPG:
-	TooltipExtras:
-		-RequiresCondition:
-	-TooltipExtras@UPG:
 	Cargo:
 		InitialUnits: E1,E1,E1,E3,E3
-	Armament:
-		-RequiresCondition:
-	-Armament@UPG:
-	AttackFrontal:
-		-RequiresCondition:
-	-AttackTurreted:
-	-Turreted:
-	-WithSpriteTurret:
-	-SpeedMultiplier@UPG:
-	-GrantConditionOnPrerequisite@RAIDER:
-	-GrantCondition@RAIDER:
-	-Berserkable@UPGRADING:
-	-GrantTimedCondition@UPGRADING:
 	-UpgradeableTo:
+	-Upgradeable@RAIDER:
 
 RAPC.AI:
 	Inherits: RAPC
@@ -2665,6 +2524,11 @@ HMMV:
 		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
 	UpgradeableTo:
 		Actors: hmmv.tow
+	Upgradeable@TOW:
+		Type: tow.upgrade
+		Actor: hmmv.tow
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 200
 
 HMMV.TOW:
 	Inherits: HMMV
@@ -2691,6 +2555,7 @@ HMMV.TOW:
 	WithSpriteTurret:
 		Sequence: turrettow
 	-UpgradeableTo:
+	-Upgradeable@TOW:
 
 GDRN:
 	Inherits: ^Vehicle
@@ -2767,6 +2632,11 @@ GDRN:
 		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
 	UpgradeableTo:
 		Actors: gdrn.tow
+	Upgradeable@TOW:
+		Type: tow.upgrade
+		Actor: gdrn.tow
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 200
 
 GDRN.TOW:
 	Inherits: GDRN
@@ -2789,6 +2659,7 @@ GDRN.TOW:
 	WithSpriteTurret:
 		Sequence: turrettow
 	-UpgradeableTo:
+	-Upgradeable@TOW:
 
 BGGY:
 	Inherits: ^VehicleTD
@@ -2869,21 +2740,10 @@ APC2:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
-		RequiresCondition: !vulcan-upgrade
-	TooltipExtras@UPG:
-		Description: Tough infantry transport, armed with a powerful chaingun.
-		Strengths: • Strong vs Aircraft, Infantry, Light Armor
-		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses
-		RequiresCondition: vulcan-upgrade
-		IsStandard: false
 	Valued:
 		Cost: 600
 	Tooltip:
 		Name: Armored Personnel Carrier
-		RequiresCondition: !vulcan-upgrade
-	Tooltip@UPG:
-		Name: Vulcan
-		RequiresCondition: vulcan-upgrade
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -2897,99 +2757,15 @@ APC2:
 		MinRange: 4c0
 		Range: 5c0
 		RevealGeneratedShroud: False
-		RequiresCondition: !vulcan-upgrade
-	RevealsShroud@UPG:
-		MinRange: 4c0
-		Range: 6c0
-		RevealGeneratedShroud: False
-		RequiresCondition: vulcan-upgrade
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Armament:
 		Weapon: M60mgTD
 		LocalOffset: 85,0,171
 		MuzzleSequence: muzzle
-		RequiresCondition: !vulcan-upgrade
-		Turret: null
-	Armament@GAT:
-		Name: primary-upg
-		Weapon: MGatt
-		LocalOffset: 220,0,350
-		MuzzleSequence: muzzle
-		RequiresCondition: vulcan-upgrade
-		PauseOnCondition: attacking-ground
-	Armament@GATG:
-		Name: secondary-upg
-		Weapon: MGattG
-		LocalOffset: 321,0,85
-		MuzzleSequence: muzzle
-		RequiresCondition: vulcan-upgrade
-		PauseOnCondition: attacking-air
-	FirepowerMultiplier@GAT1:
-		Modifier: 115
-		RequiresCondition: (attacking-air && gattling == 1) || (attacking-ground && gattling-ground == 1)
-	FirepowerMultiplier@GAT2:
-		Modifier: 130
-		RequiresCondition: (attacking-air && gattling == 2) || (attacking-ground && gattling-ground >= 2)
-	FirepowerMultiplier@GAT3:
-		Modifier: 145
-		RequiresCondition: attacking-air && gattling >= 3
-	AmbientSoundCA@ATTACKSOUND1:
-		SoundFiles: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
-		RequiresCondition: (attacking-air && gattling == 1) || (attacking-ground && gattling-ground == 1)
-	AmbientSoundCA@ATTACKSOUND2:
-		InitialSound: vgatlo4a.aud
-		SoundFiles: vgatlo5a.aud, vgatlo5b.aud
-		RequiresCondition: (attacking-air && gattling == 2) || (attacking-ground && gattling-ground >= 2)
-	AmbientSoundCA@ATTACKSOUND3:
-		InitialSound: vgatlo7a.aud
-		SoundFiles: vgatlo8a.aud, vgatlo8b.aud
-		RequiresCondition: attacking-air && gattling >= 3
-	GrantConditionOnAttackCA@ATTACKING-AIR:
-		ArmamentNames: primary-upg
-		Condition: attacking-air
-		RevokeDelay: 6
-	GrantConditionOnAttackCA@ATTACKING-GROUND:
-		ArmamentNames: secondary-upg
-		Condition: attacking-ground
-		RevokeDelay: 6
-	GrantConditionOnAttack:
-		ArmamentNames: primary-upg
-		Condition: gattling
-		RequiredShotsPerInstance: 1,2,4
-		MaximumInstances: 3
-		RevokeDelay: 40
-		RevokeOnNewTarget: False
-		RevokeAll: True
-		RequiresCondition: !attacking-ground
-	GrantConditionOnAttack@GROUND:
-		ArmamentNames: secondary-upg
-		Condition: gattling-ground
-		RequiredShotsPerInstance: 1,4
-		MaximumInstances: 2
-		RevokeDelay: 40
-		RevokeOnNewTarget: False
-		RevokeAll: True
-		RequiresCondition: !attacking-air
 	AttackFrontal:
-		Armaments: primary
 		PauseOnCondition: empdisable || being-warped
-		RequiresCondition: !vulcan-upgrade
 		FacingTolerance: 0
-	AttackTurreted:
-		PauseOnCondition: empdisable || being-warped
-		Armaments: primary-upg, secondary-upg
-		RequiresCondition: vulcan-upgrade
-	Turreted:
-		TurnSpeed: 28
-		Offset: 0,0,150
-		RequiresCondition: vulcan-upgrade
-	WithSpriteTurret:
-		Sequence: turret2
-		RequiresCondition: !gattling-ground && vulcan-upgrade
-	WithSpriteTurret@GROUND:
-		Sequence: turret2-ground
-		RequiresCondition: gattling-ground && vulcan-upgrade
 	WithMuzzleOverlay:
 	Cargo:
 		Types: Infantry
@@ -3009,56 +2785,14 @@ APC2:
 		RequiresCondition: !driver-dead && !cargo
 	Targetable@MINDCONTROL:
 		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
-	GrantConditionOnPrerequisite@VULCAN:
-		Condition: vulcan-upgrade
-		Prerequisites: vulcan.upgrade
-	GrantCondition@VULCAN:
-		Condition: vulcan-upgrade
-		RequiresCondition: vulcan-upgrade
-		GrantPermanently: true
-	Berserkable@UPGRADING:
-		RequiresCondition: upgrading
-	GrantTimedCondition@UPGRADING:
-		RequiresCondition: vulcan-upgrade
-		Condition: upgrading
-		Duration: 1
-	SpeedMultiplier@UPG:
-		Modifier: 83
-		RequiresCondition: vulcan-upgrade
-	AutoTarget:
-		AttackAnythingCondition: stance-attackanything
-	AutoTargetPriority@DEFAULTAA:
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
-		InvalidTargets: NoAutoTarget
-		RequiresCondition: (!stance-attackanything && !assault-move) && vulcan-upgrade
-	AutoTargetPriority@ATTACKANYTHINGAA:
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
-		InvalidTargets: NoAutoTarget
-		RequiresCondition: (stance-attackanything || assault-move) && vulcan-upgrade
-	AutoTargetPriority@DEFAULTAAPRIO:
-		RequiresCondition: (!stance-attackanything && !assault-move) && vulcan-upgrade
-		ValidTargets: Air
-		InvalidTargets: NoAutoTarget
-		Priority: 10
-	AutoTargetPriority@ATTACKANYTHINGAAPRIO:
-		RequiresCondition: (!stance-attackanything && !assault-move) && vulcan-upgrade
-		ValidTargets: Air
-		InvalidTargets: NoAutoTarget
-		Priority: 10
-	AutoTargetPriority@DEFAULTG:
-		RequiresCondition: !stance-attackanything && !assault-move && !vulcan-upgrade
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
-		InvalidTargets: NoAutoTarget
-	AutoTargetPriority@ATTACKANYTHINGG:
-		RequiresCondition: (stance-attackanything || assault-move) && !vulcan-upgrade
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense, Mine
-		InvalidTargets: NoAutoTarget
-	AttackMove:
-		AssaultMoveCondition: assault-move
 	Selectable:
 		Class: apc
 	UpgradeableTo:
 		Actors: vulc
+	Upgradeable@VULCAN:
+		Type: vulcan.upgrade
+		Actor: vulc
+		UpgradeAtActors: fix, rep, srep
 
 APC2.NODAI:
 	Inherits: APC2
@@ -3069,6 +2803,8 @@ APC2.NODAI:
 		Image: APC2
 	Cargo:
 		InitialUnits: N1,N1,N1,N3,N4
+	-UpgradeableTo:
+	-Upgradeable@VULCAN:
 
 APC2.GDIAI:
 	Inherits: APC2
@@ -3079,6 +2815,8 @@ APC2.GDIAI:
 		Image: APC2
 	Cargo:
 		InitialUnits: N1,N1,N1,N2,N3
+	-UpgradeableTo:
+	-Upgradeable@VULCAN:
 
 APC2.Reinforce:
 	Inherits: APC2
@@ -3094,6 +2832,7 @@ APC2.Reinforce:
 		RequiresCondition: damage
 		BotOnly: False
 	-UpgradeableTo:
+	-Upgradeable@VULCAN:
 
 VULC:
 	Inherits: ^TankTD
@@ -3405,22 +3144,12 @@ MTNK:
 		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
 	UpgradeableTo:
 		Actors: mtnk.drone
-	# For upgrading on Service Depot
-	Rearmable@UPGRADE:
-		RearmActors: fix, rep, srep
-		AmmoPools: upgrade
-	AmmoPool@UPGRADE:
-		Name: upgrade
-		Armaments: none
-		ReloadDelay: 5000
-	GrantConditionOnPrerequisite@BDRONEUPGRADE:
-		Condition: bdrone-upgrade
-		Prerequisites: bdrone.upgrade
-	RearmsToUpgrade@BDRONEUPGRADE:
-		AmmoPool: upgrade
-		UpgradeAudio: UnitUpgraded
+	Upgradeable@BDRONE:
+		Type: bdrone.upgrade
 		Actor: mtnk.drone
-		RequiresCondition: bdrone-upgrade
+		UpgradeAtActors: fix, rep, srep
+		Cost: 0
+		BuildDuration: 100
 
 MTNK.Drone:
 	Inherits: MTNK
@@ -3479,6 +3208,8 @@ MTNK.Drone:
 	-TimedConditionBar@BERSERK:
 	-RejectsOrders@BERSERK:
 	-GrantCondition@BERSERK:
+	-UpgradeableTo:
+	-Upgradeable@BDRONE:
 
 MDRN:
 	Inherits: ^Vehicle
@@ -3696,42 +3427,25 @@ HTNK:
 	Carryable:
 		LocalOffset: 0,0,500
 	-Crushable:
-	UpgradeableTo:
-		Actors: htnk.drone, htnk.ion, htnk.hover
 	WithIdleOverlay@MINDCONTROL:
 		Offset: 0,0,512
-	# For upgrading on Repair Facility
-	Rearmable@UPGRADE:
-		RearmActors: fix, rep, srep
-		AmmoPools: upgrade
-	AmmoPool@UPGRADE:
-		Name: upgrade
-		Armaments: none
-		ReloadDelay: 5000
-	RearmsToUpgrade@IONUPGRADE:
-		AmmoPool: upgrade
-		UpgradeAudio: UnitUpgraded
+	UpgradeableTo:
+		Actors: htnk.drone, htnk.ion, htnk.hover
+	Upgradeable@ION:
+		Type: ionmam.upgrade
 		Actor: htnk.ion
-		RequiresCondition: ionmam-upgrade
-	RearmsToUpgrade@HOVERUPGRADE:
-		AmmoPool: upgrade
-		UpgradeAudio: UnitUpgraded
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
+	Upgradeable@HOVER:
+		Type: hovermam.upgrade
 		Actor: htnk.hover
-		RequiresCondition: hovermam-upgrade
-	RearmsToUpgrade@DRONEUPGRADE:
-		AmmoPool: upgrade
-		UpgradeAudio: UnitUpgraded
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
+	Upgradeable@DRONE:
+		Type: mdrone.upgrade
 		Actor: htnk.drone
-		RequiresCondition: mdrone-upgrade
-	GrantConditionOnPrerequisite@IONUPGRADE:
-		Condition: ionmam-upgrade
-		Prerequisites: ionmam.upgrade
-	GrantConditionOnPrerequisite@HOVERUPGRADE:
-		Condition: hovermam-upgrade
-		Prerequisites: hovermam.upgrade
-	GrantConditionOnPrerequisite@DRONEUPGRADE:
-		Condition: mdrone-upgrade
-		Prerequisites: mdrone.upgrade
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
 
 HTNK.Ion:
 	Inherits: HTNK
@@ -3747,14 +3461,9 @@ HTNK.Ion:
 	SpawnActorOnDeath:
 		Actor: HTNK.Ion.Husk
 	-UpgradeableTo:
-	-Rearmable@UPGRADE:
-	-AmmoPool@UPGRADE:
-	-RearmsToUpgrade@IONUPGRADE:
-	-RearmsToUpgrade@HOVERUPGRADE:
-	-RearmsToUpgrade@DRONEUPGRADE:
-	-GrantConditionOnPrerequisite@IONUPGRADE:
-	-GrantConditionOnPrerequisite@HOVERUPGRADE:
-	-GrantConditionOnPrerequisite@DRONEUPGRADE:
+	-Upgradeable@ION:
+	-Upgradeable@HOVER:
+	-Upgradeable@DRONE:
 
 HTNK.Hover:
 	Inherits: HTNK
@@ -3791,14 +3500,9 @@ HTNK.Hover:
 		Actor: HTNK.Hover.Husk
 		RequiresCondition: !being-warped && !onwater
 	-UpgradeableTo:
-	-Rearmable@UPGRADE:
-	-AmmoPool@UPGRADE:
-	-RearmsToUpgrade@IONUPGRADE:
-	-RearmsToUpgrade@HOVERUPGRADE:
-	-RearmsToUpgrade@DRONEUPGRADE:
-	-GrantConditionOnPrerequisite@IONUPGRADE:
-	-GrantConditionOnPrerequisite@HOVERUPGRADE:
-	-GrantConditionOnPrerequisite@DRONEUPGRADE:
+	-Upgradeable@ION:
+	-Upgradeable@HOVER:
+	-Upgradeable@DRONE:
 
 HTNK.Drone:
 	Inherits: HTNK
@@ -3850,14 +3554,9 @@ HTNK.Drone:
 	-RejectsOrders@BERSERK:
 	-GrantCondition@BERSERK:
 	-UpgradeableTo:
-	-Rearmable@UPGRADE:
-	-AmmoPool@UPGRADE:
-	-RearmsToUpgrade@IONUPGRADE:
-	-RearmsToUpgrade@HOVERUPGRADE:
-	-RearmsToUpgrade@DRONEUPGRADE:
-	-GrantConditionOnPrerequisite@IONUPGRADE:
-	-GrantConditionOnPrerequisite@HOVERUPGRADE:
-	-GrantConditionOnPrerequisite@DRONEUPGRADE:
+	-Upgradeable@ION:
+	-Upgradeable@HOVER:
+	-Upgradeable@DRONE:
 
 MSAM:
 	Inherits: ^TankTD
@@ -5291,26 +4990,15 @@ TITN:
 	SpawnActorOnDeath:
 		Actor: TITN.Husk
 		RequiresCondition: !being-warped
-	UpgradeableTo:
-		Actors: titn.rail
 	WithIdleOverlay@MINDCONTROL:
 		Offset: 0,0,512
-	# For upgrading on Repair Facility
-	Rearmable@UPGRADE:
-		RearmActors: fix, rep, srep
-		AmmoPools: upgrade
-	AmmoPool@UPGRADE:
-		Name: upgrade
-		Armaments: none
-		ReloadDelay: 5000
-	RearmsToUpgrade@UPGRADE:
-		AmmoPool: upgrade
-		UpgradeAudio: UnitUpgraded
+	UpgradeableTo:
+		Actors: titn.rail
+	Upgradeable@RAILGUN:
+		Type: railgun.upgrade
 		Actor: titn.rail
-		RequiresCondition: railgun-upgrade
-	GrantConditionOnPrerequisite@RAILUPGRADE:
-		Condition: railgun-upgrade
-		Prerequisites: railgun.upgrade
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
 
 TITN.RAIL:
 	Inherits: TITN
@@ -5333,10 +5021,7 @@ TITN.RAIL:
 	SpawnActorOnDeath:
 		Actor: TITN.RAIL.Husk
 	-UpgradeableTo:
-	-Rearmable@UPGRADE:
-	-AmmoPool@UPGRADE:
-	-RearmsToUpgrade@UPGRADE:
-	-GrantConditionOnPrerequisite@RAILUPGRADE:
+	-Upgradeable@RAILGUN:
 
 JUGG:
 	Inherits: ^TankTD
@@ -6139,22 +5824,11 @@ PTNK:
 		DecorationBounds: 1194, 1194
 	UpgradeableTo:
 		Actors: pcan
-	# For upgrading on Service Depot
-	Rearmable@PCANUPGRADE:
-		RearmActors: fix, rep, srep
-		AmmoPools: upgrade
-	AmmoPool@PCANUPGRADE:
-		Name: upgrade
-		Armaments: none
-		ReloadDelay: 5000
-	GrantConditionOnPrerequisite@PCANUPGRADE:
-		Condition: pcan-upgrade
-		Prerequisites: pcan.upgrade
-	RearmsToUpgrade@PCANUPGRADE:
-		AmmoPool: upgrade
-		UpgradeAudio: UnitUpgraded
+	Upgradeable@PCAN:
+		Type: pcan.upgrade
 		Actor: pcan
-		RequiresCondition: pcan-upgrade
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
 
 PCAN:
 	Inherits: PTNK
@@ -6182,10 +5856,8 @@ PCAN:
 		Voice: Attack
 		ChargeLevel: 15
 		ChargingSounds: pcancharge.aud
-	-Rearmable@PCANUPGRADE:
-	-AmmoPool@PCANUPGRADE:
-	-GrantConditionOnPrerequisite@PCANUPGRADE:
-	-RearmsToUpgrade@PCANUPGRADE:
+	-UpgradeableTo:
+	-Upgradeable@PCAN:
 
 WTNK:
 	Inherits: ^TankTD
@@ -6916,22 +6588,11 @@ APOC:
 		RequiresCondition: atomic-ammo && has-atomic-ammo < 6
 	UpgradeableTo:
 		Actors: apoc.atomic
-	# For upgrading on Service Depot
-	Rearmable@UPGRADE:
-		RearmActors: fix, rep, srep
-		AmmoPools: upgrade
-	AmmoPool@UPGRADE:
-		Name: upgrade
-		Armaments: none
-		ReloadDelay: 5000
-	GrantConditionOnPrerequisite@ATOMICUPGRADE:
-		Condition: atomicengines-upgrade
-		Prerequisites: atomicengines.upgrade
-	RearmsToUpgrade@ATOMICUPGRADE:
-		AmmoPool: upgrade
-		UpgradeAudio: UnitUpgraded
+	Upgradeable@ATOMIC:
+		Type: atomicengines.upgrade
 		Actor: apoc.atomic
-		RequiresCondition: atomicengines-upgrade
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
 
 APOC.ATOMIC:
 	Inherits: APOC
@@ -6954,9 +6615,6 @@ APOC.ATOMIC:
 		Weapon: UnitExplodeIraqTank
 		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: !being-warped
-	-GrantConditionOnPrerequisite@ATOMICUPGRADE:
-	-RearmsToUpgrade@ATOMICUPGRADE:
 	-SpawnActorOnDeath:
 	-UpgradeableTo:
-	-Rearmable@UPGRADE:
-	-AmmoPool@UPGRADE:
+	-Upgradeable@ATOMIC:

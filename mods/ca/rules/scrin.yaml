@@ -994,22 +994,11 @@ GUNW:
 		Modifier: 115
 	UpgradeableTo:
 		Actors: shrw
-	# For upgrading on Service Depot
-	Rearmable@UPGRADE:
-		RearmActors: fix, rep, srep
-		AmmoPools: upgrade
-	AmmoPool@UPGRADE:
-		Name: upgrade
-		Armaments: none
-		ReloadDelay: 5000
-	GrantConditionOnPrerequisite@SHRWUPGRADE:
-		Condition: shrw-upgrade
-		Prerequisites: shrw.upgrade
-	RearmsToUpgrade@SHRWUPGRADE:
-		AmmoPool: upgrade
-		UpgradeAudio: UnitUpgraded
+	Upgradeable@SHRW:
+		Type: shrw.upgrade
 		Actor: shrw
-		RequiresCondition: shrw-upgrade
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
 
 SHRW:
 	Inherits: GUNW
@@ -1036,10 +1025,7 @@ SHRW:
 	-GrantConditionOnFaction@TRAVELERSPEED:
 	-SpeedMultiplier@TRAVELERSPEED:
 	-UpgradeableTo:
-	-Rearmable@UPGRADE:
-	-AmmoPool@UPGRADE:
-	-GrantConditionOnPrerequisite@SHRWUPGRADE:
-	-RearmsToUpgrade@SHRWUPGRADE:
+	-Upgradeable@SHRW:
 
 SEEK:
 	Inherits: ^Vehicle
@@ -4255,10 +4241,12 @@ SREP:
 		Prerequisites: vehicles.scrin, ~structures.scrin, ~techlevel.low
 		Description: Repairs vehicles and aircraft.
 		IconPalette: chromes
+	TooltipExtras:
+		Attributes: • Nearby helipads/airfields will repair landed aircraft\n• Can retrofit existing units with upgrades
 	Valued:
 		Cost: 1000
 	Tooltip:
-		Name: Repair Bay
+		Name: Regeneration Bay
 	Building:
 		Footprint: _+_ +++ _+_
 		Dimensions: 3,3
