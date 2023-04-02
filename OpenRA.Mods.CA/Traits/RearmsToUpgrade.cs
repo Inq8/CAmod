@@ -91,16 +91,9 @@ namespace OpenRA.Mods.CA.Traits
 		void Transform(Actor self)
 		{
 			var faction = self.Owner.Faction.InternalName;
-			var facing = self.TraitOrDefault<IFacing>();
 			var transform = new InstantTransform(self, Info.Actor) { ForceHealthPercentage = 0, Faction = faction };
-			if (facing != null) transform.Facing = facing.Facing;
 			transform.SkipMakeAnims = Info.SkipMakeAnims;
-			transform.Altitude = self.CenterPosition;
-
-			if (self.CurrentActivity != null)
-				self.CurrentActivity.QueueChild(transform);
-			else
-				self.QueueActivity(transform);
+			self.CurrentActivity.QueueChild(transform);
 
 			if (Info.UpgradeAudio != null)
 				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Info.UpgradeAudio, faction);
