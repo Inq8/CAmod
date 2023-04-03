@@ -204,6 +204,10 @@ ResetBuildings = function(players)
 end
 
 KillUnit = function(a)
+    if IsIgnoredUnit(a.Type) then
+        return
+    end
+
     if not a.HasProperty("StartBuildingRepairs") and a.Type ~= "player" and a.HasProperty("Kill") and not a.IsDead then
         a.Stop()
         a.Destroy()
@@ -236,7 +240,11 @@ Save = function(players)
             local units = p.GetActors()
 
             Utils.Do(units, function(a)
-                if not a.HasProperty("StartBuildingRepairs") and a.Type ~= "player" and a.HasProperty("Kill") and not a.IsDead and a.Type ~= "truk" then
+                if IsIgnoredUnit(a.Type) then
+                    return
+                end
+
+                if not a.HasProperty("StartBuildingRepairs") and a.Type ~= "player" and a.HasProperty("Kill") and a.HasProperty("Move") and not a.IsDead and a.Type ~= "truk" then
                     local unit = {
                         Type = a.Type,
                         Location = a.Location,
@@ -296,4 +304,43 @@ Restore = function(players)
         end)
         RestoreTrucks(players)
     end)
+end
+
+IgnoredUnits = {
+    "badr",
+    "badr.bomber",
+    "badr.cbomber",
+    "badr.nbomber",
+    "badr.mbomber",
+    "b2b",
+    "p51",
+    "tran.paradrop",
+    "halo.paradrop",
+    "nhaw.paradrop",
+    "u2",
+    "smig",
+    "a10.bomber",
+    "c17",
+    "c17.cargo",
+    "c17.clustermines",
+    "c17.xo",
+    "uav",
+    "ocar.reinforce",
+    "ocar.xo",
+    "ocar.pod",
+    "horn",
+    "inva",
+    "yf23.bomber",
+    "pod",
+    "pod2",
+    "pod3",
+}
+
+IsIgnoredUnit = function(a)
+    for _, value in pairs(IgnoredUnits) do
+        if value == a then
+            return true
+        end
+    end
+    return false
 end
