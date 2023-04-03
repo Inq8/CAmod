@@ -14,7 +14,7 @@
 		ValidTargets: Air
 		ValidRelationships: Enemy, Neutral
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Spread: 128
 		Falloff: 100, 50, 14, 0
 		Damage: 2000
@@ -36,7 +36,7 @@ ZSU-23:
 		ValidTargets: Air, ICBM
 		Damage: 2500
 		Range: 0, 0c64, 0c256, 3c768
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 2500
 		Range: 0, 0c64, 0c256, 1c768
 		Falloff: 100, 70, 30, 10
@@ -49,7 +49,7 @@ FLAK-23-AA:
 	Report: flak1.aud, flak2.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 1500
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 1500
 
 FLAK-23-AG:
@@ -76,7 +76,7 @@ FLAK-23-AG:
 			Concrete: 10
 			Brick: 20
 		ValidTargets: Ground, Water
-	-Warhead@2Dam:
+	-Warhead@smallDamage:
 	Warhead@2Eff: CreateEffect
 		Explosions: flak_explosion_ground
 		ValidTargets: Ground, Ship, Trees
@@ -92,7 +92,7 @@ FLAK-SEAS-AA:
 	Range: 8c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 2200
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 2200
 
 FLAK-SEAS-AG:
@@ -119,7 +119,7 @@ Gatt:
 		Damage: 1300
 		Range: 0, 0c64, 0c256, 3c768
 		ValidTargets: Air, ICBM
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 1300
 		Range: 0, 0c64, 0c256, 1c768
 		Falloff: 100, 70, 30, 10
@@ -134,7 +134,7 @@ MGatt:
 	Range: 7c512
 	Warhead@1Dam: SpreadDamage
 		Damage: 665
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 665
 	Warhead@2Eff: CreateEffect
 		ValidTargets: Air, AirSmall
@@ -371,7 +371,7 @@ ChainGun.Yak.L:
 
 ChainGun.Yak.AA:
 	Inherits: ChainGun.Yak.R
-	ValidTargets: Air
+	ValidTargets: Air, AirSmall
 	-MinRange:
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 0c64, 0c256, 1c768
@@ -386,6 +386,13 @@ ChainGun.Yak.AA:
 			Heavy: 100
 			Concrete: 100
 			Brick: 100
+	Warhead@smallDamage: SpreadDamage
+		Spread: 341
+		Falloff: 100, 50, 14, 0
+		Damage: 1500
+		ValidTargets: AirSmall
+		ValidRelationships: Enemy, Neutral
+		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: small_explosion_air
 		ValidTargets: Air
@@ -551,6 +558,17 @@ M60mgJJ.ground:
 	Inherits: M60mgJJ
 	Projectile: Bullet
 		Blockable: true
+
+M60mgJJAA:
+	Inherits: M60mgJJ
+	Range: 5c512
+	ValidTargets: Air, AirSmall
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Air, AirSmall
+		Damage: 350
+		Versus:
+			Light: 100
+			Heavy: 100
 
 M60mgIFV:
 	Inherits: M60mg
@@ -884,8 +902,9 @@ HeliGunAA:
 	Warhead@1Dam: SpreadDamage
 		Damage: 2000
 		Range: 0, 0c64, 0c256, 1c768
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 2000
+		Spread: 341
 	Warhead@2Eff: CreateEffect
 		-ImpactSounds: flakhit1.aud, flakhit2.aud, flakhit3.aud
 		-ImpactSoundChance: 100

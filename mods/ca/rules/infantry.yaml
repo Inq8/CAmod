@@ -2528,8 +2528,8 @@ JJET:
 		IconPalette: chrometd
 		Description: Flying general-purpose infantry.
 	TooltipExtras:
-		Strengths: • Strong vs Infantry
-		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
+		Strengths: • Strong vs Infantry, Aircraft
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses
 		Attributes: • Can detect cloaked units
 	Valued:
 		Cost: 350
@@ -2564,7 +2564,7 @@ JJET:
 		Type: Light
 	Aircraft:
 		CruiseAltitude: 1c0
-		IdealSeparation: 0c255
+		IdealSeparation: 0c384
 		InitialFacing: 92
 		Speed: 99
 		LandableTerrainTypes: Clear,Rough,Road,Ore,Beach,Gems,Tiberium,BlueTiberium
@@ -2583,6 +2583,9 @@ JJET:
 	Armament@GROUND:
 		Weapon: M60mgJJ.Ground
 		RequiresCondition: !airborne
+	Armament@AA:
+		Weapon: M60mgJJAA
+		RequiresCondition: airborne
 	AttackFrontal:
 		PauseOnCondition: being-warped
 		Voice: Attack
@@ -2679,8 +2682,8 @@ BJET:
 		IconPalette: chrometd
 		Description: Flying infantry with a grenade launcher.
 	TooltipExtras:
-		Strengths: • Strong vs Buildings, Defenses, Light Armor
-		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
+		Strengths: • Strong vs Buildings, Defenses, Light Armor, Aircraft
+		Weaknesses: • Weak vs Heavy Armor\n• Has difficulty hitting moving targets
 		Attributes: • Can detect cloaked units
 	Tooltip:
 		Name: Bombardier
