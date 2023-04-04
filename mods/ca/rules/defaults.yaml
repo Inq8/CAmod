@@ -3711,9 +3711,12 @@
 	GrantDelayedCondition@QUEUEUPDATER:
 		Delay: 1
 		Condition: updatequeue
-	GrantConditionOnPrerequisite@MQ:
+	GrantConditionOnPrerequisite@MQF:
 		Condition: global-multiqueue
-		Prerequisites: global.multiqueue
+		Prerequisites: global.multiqueuefull
+	GrantConditionOnPrerequisite@MQS:
+		Condition: global-multiqueue
+		Prerequisites: global.multiqueuescaled
 
 ^ProducesBuildings:
 	Inherits@QUEUEUPDATER: ^QueueUpdater
@@ -3804,6 +3807,12 @@
 		Condition: produced
 	Targetable@INF:
 		TargetTypes: InfantryProducer
+	ProductionCostMultiplier@MQS1:
+		Multiplier: 300
+		Prerequisites: infantry.any, global.multiqueuescaled, !optprod1.upgrade, !optprod2.upgrade
+	ProductionCostMultiplier@MQS2:
+		Multiplier: 200
+		Prerequisites: infantry.any, global.multiqueuescaled, optprod1.upgrade, !optprod2.upgrade
 
 ^ProducesCyborgs:
 	Inherits: ^ProducesInfantry
@@ -3818,6 +3827,8 @@
 	ProductionBar@MQINF:
 		ProductionType: CyborgMQ
 	-Targetable@INF:
+	-ProductionCostMultiplier@MQS1:
+	-ProductionCostMultiplier@MQS2:
 
 ^ProducesVehicles:
 	Inherits@QUEUEUPDATER: ^QueueUpdater
@@ -3850,6 +3861,12 @@
 	ProductionBar@MQVEH:
 		ProductionType: VehicleMQ
 		RequiresCondition: global-multiqueue
+	ProductionCostMultiplier@MQS1:
+		Multiplier: 175
+		Prerequisites: vehicles.any, global.multiqueuescaled, !optprod1.upgrade, !optprod2.upgrade
+	ProductionCostMultiplier@MQS2:
+		Multiplier: 125
+		Prerequisites: vehicles.any, global.multiqueuescaled, optprod1.upgrade, !optprod2.upgrade
 
 ^ProducesNaval:
 	Inherits@QUEUEUPDATER: ^QueueUpdater
@@ -3892,7 +3909,8 @@
 		ProductionType: Upgrade
 	Exit@UPG:
 		ProductionTypes: Upgrade
-	-GrantConditionOnPrerequisite@MQ:
+	-GrantConditionOnPrerequisite@MQF:
+	-GrantConditionOnPrerequisite@MQS:
 
 ^ProducesAircraft:
 	Inherits@QUEUEUPDATER: ^QueueUpdater

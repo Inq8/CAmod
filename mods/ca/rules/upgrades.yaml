@@ -31,6 +31,22 @@ hazmat.upgrade:
 		Multiplier: 70
 		Prerequisites: player.nod
 
+optprod1.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Optimized Production I
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: anyradar, ~techlevel.medium, ~global.multiqueuescaled
+		IconPalette: chromes
+		Description: Reduces the cost of additional infantry and vehicle production structures.
+	TooltipExtras:
+		Strengths: + Reduced cost of additional infantry production by $500\n+ Reduced cost of additional vehicle production by $1000
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: optprod1.upgrade
+
 flakarmor.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -45,6 +61,21 @@ flakarmor.upgrade:
 		Cost: 1500
 	RenderSprites:
 		Image: flakarmor.upgrade
+
+optprod2.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Optimized Production II
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: techcenter, ~techlevel.high, ~global.multiqueuescaled, ~optprod1.upgrade
+		Description: Reduces the cost of additional infantry and vehicle production structures.
+	TooltipExtras:
+		Strengths: + Reduced cost of additional infantry production by $500\n+ Reduced cost of additional vehicle production by $500
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: optprod2.upgrade
 
 #########################GDI#########
 ########################################
