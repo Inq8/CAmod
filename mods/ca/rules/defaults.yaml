@@ -3943,6 +3943,12 @@
 	ProductionBar@MQAIR:
 		ProductionType: AircraftMQ
 		RequiresCondition: global-multiqueue
+	ProductionCostMultiplier@MQS1:
+		Multiplier: 200
+		Prerequisites: aircraft.any, global.multiqueuescaled, !optprod1.upgrade, !optprod2.upgrade
+	ProductionCostMultiplier@MQS2:
+		Multiplier: 150
+		Prerequisites: aircraft.any, global.multiqueuescaled, optprod1.upgrade, !optprod2.upgrade
 
 ^ProducesHelicopters:
 	Inherits@AIR: ^ProducesAircraft

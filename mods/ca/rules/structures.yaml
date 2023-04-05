@@ -3582,9 +3582,6 @@ AIRS:
 		Multiplier: 90
 		Prerequisites: global.multiqueuefull
 	ProductionCostMultiplier@MQS1:
-		Multiplier: 90
-		Prerequisites: global.multiqueuescaled, !vehicles.any
-	ProductionCostMultiplier@MQS1:
 		Multiplier: 165
 		Prerequisites: global.multiqueuescaled, vehicles.any, !optprod1.upgrade, !optprod2.upgrade
 	ProductionCostMultiplier@MQS2:
@@ -3593,6 +3590,9 @@ AIRS:
 	ProductionCostMultiplier@MQS3:
 		Multiplier: 90
 		Prerequisites: global.multiqueuescaled, vehicles.any, optprod1.upgrade, optprod2.upgrade
+	ProductionCostMultiplier@MQS4:
+		Multiplier: 90
+		Prerequisites: global.multiqueuescaled, !vehicles.any
 
 NUKE:
 	Inherits: ^BuildingTD
