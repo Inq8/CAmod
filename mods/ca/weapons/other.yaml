@@ -500,7 +500,7 @@ TTrackZap:
 	ReloadDelay: 125
 	Range: 8c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 12500
+		Damage: 13500
 		Versus:
 			Wood: 50
 			Concrete: 50
@@ -517,14 +517,14 @@ TTrackZap.UPG:
 TTrackArc1:
 	Inherits: TTrackZap.UPG
 	-Report:
-	Range: 2c0
+	Range: 2c512
 	ValidTargets: Vehicle, Ship
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Vehicle, Ship
 		ValidRelationships: Enemy, Neutral
 		Versus:
 			Light: 15
-			Heavy: 25
+			Heavy: 15
 	Warhead@Arc: FireShrapnel
 		Weapon: TTrackArc2
 		AimChance: 100
@@ -537,16 +537,17 @@ TTrackArc2:
 TTankZap:
 	Inherits: ^TeslaWeapon
 	Report: vtesatta.aud, vtesattb.aud
-	ReloadDelay: 80
+	ReloadDelay: 50
 	Burst: 2
 	BurstDelays: 3
 	Range: 5c512
 	Warhead@1Dam: SpreadDamage
-		Damage: 4800
+		Damage: 3000
 		Versus:
-			Wood: 50
-			Concrete: 50
-			Heavy: 60
+			None: 420
+			Wood: 60
+			Concrete: 60
+			Heavy: 85
 
 TTankZap.UPG:
 	Inherits: TTankZap
@@ -559,13 +560,12 @@ TTankZap.UPG:
 TTankArc:
 	Inherits: TTankZap
 	-Report:
-	Range: 2c0
-	ValidTargets: Infantry
+	Range: 2c512
 	Warhead@1Dam: SpreadDamage
-		ValidTargets: Infantry
 		ValidRelationships: Enemy, Neutral
+		Damage: 1500
 		Versus:
-			None: 130
+			None: 210
 
 DogJaw:
 	ValidTargets: Infantry
@@ -719,7 +719,7 @@ PlaceC4Seal:
 	InvalidTargets: Vehicle, C4Attached, TNTAttached, C4Immune
 	Range: 1c255
 	Warhead@AttachDelayedWeapon: AttachDelayedWeapon
-		TriggerTime: 40
+		TriggerTime: 20
 		Type: c4seal
 		ScaleTriggerTimeWithValue: true
 	Warhead@highlight: GrantExternalCondition

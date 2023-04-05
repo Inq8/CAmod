@@ -100,7 +100,7 @@ namespace OpenRA.Mods.CA.Traits
 			var reloading = false;
 			foreach (var armament in Armaments)
 			{
-				if (armament.IsReloading && armament.Burst == armament.Weapon.Burst)
+				if (!armament.IsTraitDisabled && armament.IsReloading && armament.Burst == armament.Weapon.Burst)
 				{
 					reloading = true;
 					break;

@@ -788,21 +788,6 @@ rapc.upgrade:
 	RenderSprites:
 		Image: rapc.upgrade
 
-apb.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Raufoss Ammo
-	Buildable:
-		BuildPaletteOrder: 20
-		Prerequisites: ~player.england, anyradar, ~techlevel.medium
-		Description: Upgrades Snipers granting them Raufoss armor piercing rounds,\n  which stun and damage armoured targets.\n\nUpgrades: Sniper
-	TooltipExtras:
-		Strengths: + Can damage vehicles with AP rounds which slow movement and rate of fire
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: apb.upgrade
-
 cryr.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -833,6 +818,22 @@ pcan.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: pcan.upgrade
+
+apb.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Raufoss Ammo
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.england, atek, ~techlevel.high
+		Description: Upgrades Snipers granting them Raufoss armor piercing rounds,\n  which stun and damage vehicles.\n\nUpgrades: Sniper
+	TooltipExtras:
+		Strengths: + Can damage vehicles with AP rounds which slow movement and rate of fire
+		Weaknesses: – Reduced range
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: apb.upgrade
 
 entrench.upgrade:
 	Inherits: ^Upgrade

@@ -1982,7 +1982,7 @@ VICE:
 
 SNIP:
 	Inherits: ^Soldier
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMovePrioritizeInfantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 		Image: sniper
@@ -2010,10 +2010,8 @@ SNIP:
 		RevealGeneratedShroud: false
 	RevealsShroud@GAPGEN:
 		Range: 6c0
-	AutoTargetPriority@DEFAULTINF:
-		RequiresCondition: !apb-upgrade && !stance-attackanything && !assault-move
-	AutoTargetPriority@ATTACKANYTHINGINF:
-		RequiresCondition: !apb-upgrade && (stance-attackanything || assault-move)
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Infantry
 	AutoTargetPriority@DEFAULTVEH:
 		RequiresCondition: apb-upgrade && !stance-attackanything && !assault-move
 		ValidTargets: Vehicle, Ship
@@ -2026,31 +2024,17 @@ SNIP:
 		Priority: 10
 	Armament@PRIMARY:
 		Weapon: sniper
-		PauseOnCondition: !ammo
 		RequiresCondition: !apb-upgrade
 	Armament@PRIMARYUPG:
-		Weapon: sniper.nonvehicle
-		PauseOnCondition: !ammo
-		RequiresCondition: apb-upgrade
-	Armament@DUMMY:
-		Name: tertiary
-		Weapon: sniper.dummy
-		PauseOnCondition: ammo
+		Weapon: sniper.vehicle
+		RequiresCondition: apb-upgrade && rank-veteran < 3
+	Armament@PRIMARYUPGELITE:
+		Weapon: sniper.vehicleElite
+		RequiresCondition: apb-upgrade && rank-veteran >= 3
 	Armament@Garrison:
 		Weapon: sniperE
 		Name: mounted
 		MuzzleSequence: garrison-muzzle
-		PauseOnCondition: !ammo
-	Armament@APROUND:
-		Name: secondary
-		Weapon: sniper.vehicle
-		RequiresCondition: apb-upgrade && rank-veteran < 3
-		PauseOnCondition: !ammo
-	Armament@APROUNDELITE:
-		Name: secondary
-		Weapon: sniper.vehicleElite
-		RequiresCondition: apb-upgrade && rank-veteran >= 3
-		PauseOnCondition: !ammo
 	Mobile:
 		Speed: 46
 		Voice: Move
@@ -2083,17 +2067,28 @@ SNIP:
 		Palette: temptd
 		Position: TopRight
 		RequiresCondition: hidden
-	AttackFrontal:
+	AttackFrontalCharged:
 		Voice: Attack
-		PauseOnCondition: being-warped
 		FacingTolerance: 0
-		Armaments: primary, secondary, tertiary
+		ChargeLevel: 25
+		ChargingCondition: aiming
+		PauseOnCondition: being-warped
+		ShowSelectionBar: true
+		SelectionBarColor: 117700
 	WithInfantryBody:
 		AttackSequences:
 			primary: shoot
 			secondary: shoot
 		StandSequences: stand, stand2
-		RequiresCondition: !parachute && !being-warped
+		RequiresCondition: !parachute && !being-warped && !aiming
+	WithInfantryBody@AIMING:
+		AttackSequences:
+			primary: aim
+			secondary: aim
+		RequiresCondition: !parachute && !being-warped && aiming
+		Name: aimbody
+		IdleSequences: aim
+		StandSequences: aim
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
@@ -2109,12 +2104,6 @@ SNIP:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	AmmoPool:
-		Ammo: 1
-		AmmoCondition: ammo
-	ReloadAmmoPool:
-		Delay: 130
-		Count: 1
 
 BORI:
 	Inherits: ^Soldier
@@ -3850,7 +3839,7 @@ SEAL:
 		Ammo: 1
 		AmmoCondition: ammo
 	ReloadAmmoPoolCA:
-		Delay: 500
+		Delay: 300
 		Count: 1
 		ShowSelectionBar: true
 		SelectionBarColor: dd0000
