@@ -54,7 +54,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override void RulesetLoaded(Ruleset rules, ActorInfo ai)
 		{
 			if (ai.TraitInfos<AmmoPoolInfo>().Count(ap => ap.Name == AmmoPool) != 1)
-				throw new YamlException("ReloadsAmmoPool.AmmoPool requires exactly one AmmoPool with matching Name!");
+				throw new YamlException("ReloadAmmoPoolCA.AmmoPool requires exactly one AmmoPool with matching Name!");
 
 			base.RulesetLoaded(rules, ai);
 		}

@@ -64,6 +64,12 @@ order-icons:
 		stats: 204, 68, 16, 16
 		stats-disabled: 204, 85, 16, 16
 		stats-active: 204, 102, 16, 16
+		upgrade: 85, 68, 16, 16
+		upgrade-disabled: 85, 85, 16, 16
+		upgrade-active: 85, 102, 16, 16
+		cancel: 51, 119, 16, 16
+		cancel-disabled: 51, 136, 16, 16
+		cancel-active: 51, 153, 16, 16
 
 power-icons:
 	Inherits: ^Glyphs
@@ -570,6 +576,11 @@ power-meter:
 		green: 1,10,7,2
 		grey: 1,13,7,2
 
+unit-upgrade-buttons:
+	Image: unit-upgrade-button.png
+	Regions:
+		upgrade: 0, 0, 32, 32
+
 ^PlayerUIBits:
 	Regions:
 		background: 0, 0, 258, 597
@@ -631,13 +642,21 @@ power-meter:
 	PanelRegion: 476, 31, 0, 0, 16, 24, 0, 0
 
 ^SidebarTopButton:
-	PanelRegion: 260, 59, 1, 1, 34, 22, 1, 1
+	Inherits: ^SidebarProductionTypeButton
 ^SidebarTopButtonHover:
-	PanelRegion: 297, 59, 1, 1, 34, 22, 1, 1
+	Inherits: ^SidebarProductionTypeButtonHover
 ^SidebarTopButtonPressed:
-	PanelRegion: 334, 59, 1, 1, 34, 22, 1, 1
+	Inherits: ^SidebarProductionTypeButtonPressed
+^SidebarTopButtonHighlighted:
+	Inherits: ^SidebarProductionTypeButtonHighlighted
+^SidebarTopButtonHighlightedHover:
+	Inherits: ^SidebarProductionTypeButtonHighlightedHover
+^SidebarTopButtonHighlightedPressed:
+	Inherits: ^SidebarProductionTypeButtonPressed
 ^SidebarTopButtonDisabled:
-	PanelRegion: 408, 59, 1, 1, 34, 22, 1, 1
+	Inherits: ^SidebarProductionTypeButtonDisabled
+^SidebarTopButtonHighlightedDisabled:
+	Inherits: ^SidebarProductionTabButtonDisabled
 
 ^SidebarScrollUpButton:
 	PanelRegion: 260, 84, 0, 0, 97, 18, 0, 0
@@ -758,9 +777,21 @@ sidebar-top-button-allies-hover:
 sidebar-top-button-allies-pressed:
 	Inherits@IMAGE: player-ui-allies
 	Inherits@PANELREGION: ^SidebarTopButtonPressed
+sidebar-top-button-allies-highlighted:
+	Inherits@IMAGE: player-ui-allies
+	Inherits@PANELREGION: ^SidebarTopButtonHighlighted
+sidebar-top-button-allies-highlighted-hover:
+	Inherits@IMAGE: player-ui-allies
+	Inherits@PANELREGION: ^SidebarTopButtonHighlightedHover
+sidebar-top-button-allies-highlighted-pressed:
+	Inherits@IMAGE: player-ui-allies
+	Inherits@PANELREGION: ^SidebarTopButtonHighlightedPressed
 sidebar-top-button-allies-disabled:
 	Inherits@IMAGE: player-ui-allies
 	Inherits@PANELREGION: ^SidebarTopButtonDisabled
+sidebar-top-button-allies-highlighted-disabled:
+	Inherits@IMAGE: player-ui-allies
+	Inherits@PANELREGION: ^SidebarTopButtonHighlightedDisabled
 
 sidebar-scrollup-button-allies:
 	Inherits@IMAGE: player-ui-allies
@@ -902,9 +933,21 @@ sidebar-top-button-soviet-hover:
 sidebar-top-button-soviet-pressed:
 	Inherits@IMAGE: player-ui-soviet
 	Inherits@PANELREGION: ^SidebarTopButtonPressed
+sidebar-top-button-soviet-highlighted:
+	Inherits@IMAGE: player-ui-soviet
+	Inherits@PANELREGION: ^SidebarTopButtonHighlighted
+sidebar-top-button-soviet-highlighted-hover:
+	Inherits@IMAGE: player-ui-soviet
+	Inherits@PANELREGION: ^SidebarTopButtonHighlightedHover
+sidebar-top-button-soviet-highlighted-pressed:
+	Inherits@IMAGE: player-ui-soviet
+	Inherits@PANELREGION: ^SidebarTopButtonHighlightedPressed
 sidebar-top-button-soviet-disabled:
 	Inherits@IMAGE: player-ui-soviet
 	Inherits@PANELREGION: ^SidebarTopButtonDisabled
+sidebar-top-button-soviet-highlighted-disabled:
+	Inherits@IMAGE: player-ui-soviet
+	Inherits@PANELREGION: ^SidebarTopButtonHighlightedDisabled
 
 sidebar-scrollup-button-soviet:
 	Inherits@IMAGE: player-ui-soviet
@@ -1046,9 +1089,21 @@ sidebar-top-button-gdi-hover:
 sidebar-top-button-gdi-pressed:
 	Inherits@IMAGE: player-ui-gdi
 	Inherits@PANELREGION: ^SidebarTopButtonPressed
+sidebar-top-button-gdi-highlighted:
+	Inherits@IMAGE: player-ui-gdi
+	Inherits@PANELREGION: ^SidebarTopButtonHighlighted
+sidebar-top-button-gdi-highlighted-hover:
+	Inherits@IMAGE: player-ui-gdi
+	Inherits@PANELREGION: ^SidebarTopButtonHighlightedHover
+sidebar-top-button-gdi-highlighted-pressed:
+	Inherits@IMAGE: player-ui-gdi
+	Inherits@PANELREGION: ^SidebarTopButtonHighlightedPressed
 sidebar-top-button-gdi-disabled:
 	Inherits@IMAGE: player-ui-gdi
 	Inherits@PANELREGION: ^SidebarTopButtonDisabled
+sidebar-top-button-gdi-highlighted-disabled:
+	Inherits@IMAGE: player-ui-gdi
+	Inherits@PANELREGION: ^SidebarTopButtonHighlightedDisabled
 
 sidebar-scrollup-button-gdi:
 	Inherits@IMAGE: player-ui-gdi
@@ -1190,9 +1245,21 @@ sidebar-top-button-nod-hover:
 sidebar-top-button-nod-pressed:
 	Inherits@IMAGE: player-ui-nod
 	Inherits@PANELREGION: ^SidebarTopButtonPressed
+sidebar-top-button-nod-highlighted:
+	Inherits@IMAGE: player-ui-nod
+	Inherits@PANELREGION: ^SidebarTopButtonHighlighted
+sidebar-top-button-nod-highlighted-hover:
+	Inherits@IMAGE: player-ui-nod
+	Inherits@PANELREGION: ^SidebarTopButtonHighlightedHover
+sidebar-top-button-nod-highlighted-pressed:
+	Inherits@IMAGE: player-ui-nod
+	Inherits@PANELREGION: ^SidebarTopButtonHighlightedPressed
 sidebar-top-button-nod-disabled:
 	Inherits@IMAGE: player-ui-nod
 	Inherits@PANELREGION: ^SidebarTopButtonDisabled
+sidebar-top-button-nod-highlighted-disabled:
+	Inherits@IMAGE: player-ui-nod
+	Inherits@PANELREGION: ^SidebarTopButtonHighlightedDisabled
 
 sidebar-scrollup-button-nod:
 	Inherits@IMAGE: player-ui-nod
@@ -1334,9 +1401,21 @@ sidebar-top-button-scrin-hover:
 sidebar-top-button-scrin-pressed:
 	Inherits@IMAGE: player-ui-scrin
 	Inherits@PANELREGION: ^SidebarTopButtonPressed
+sidebar-top-button-scrin-highlighted:
+	Inherits@IMAGE: player-ui-scrin
+	Inherits@PANELREGION: ^SidebarTopButtonHighlighted
+sidebar-top-button-scrin-highlighted-hover:
+	Inherits@IMAGE: player-ui-scrin
+	Inherits@PANELREGION: ^SidebarTopButtonHighlightedHover
+sidebar-top-button-scrin-highlighted-pressed:
+	Inherits@IMAGE: player-ui-scrin
+	Inherits@PANELREGION: ^SidebarTopButtonHighlightedPressed
 sidebar-top-button-scrin-disabled:
 	Inherits@IMAGE: player-ui-scrin
 	Inherits@PANELREGION: ^SidebarTopButtonDisabled
+sidebar-top-button-scrin-highlighted-disabled:
+	Inherits@IMAGE: player-ui-scrin
+	Inherits@PANELREGION: ^SidebarTopButtonHighlightedDisabled
 
 sidebar-scrollup-button-scrin:
 	Inherits@IMAGE: player-ui-scrin

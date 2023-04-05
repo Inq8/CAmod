@@ -122,6 +122,39 @@ VEHICLES.SCRIN:
 		DamageCooldown: 250
 		RequiresCondition: regen-upgrade
 
+^ScrinShields:
+	Shielded:
+		MaxStrength: 6500
+		RegenDelay: 350
+		RegenAmount: 250
+		RegenInterval: 5
+		ShieldsUpCondition: shields-up
+		RequiresCondition: shields-upgrade && !empdisable
+		SelectionBarColor: ead6ff
+	Targetable@SHIELDS:
+		TargetTypes: Shielded
+		RequiresCondition: shields-up
+	GrantConditionOnPrerequisite@SHIELDS:
+		Condition: shields-upgrade
+		Prerequisites: shields.upgrade
+	WithSpriteTurret@SHIELDS:
+		RequiresCondition: shields-upgrade && shields-up
+		Sequence: shield
+		Palette: scrinshield-ignore-lighting-alpha50
+	Turreted@SHIELDS:
+		PauseOnCondition: shields-upgrade
+		RequiresCondition: shields-upgrade
+	SpeedMultiplier@SHIELDWARP:
+		Modifier: 25
+		RequiresCondition: shield-warped
+	ExternalCondition@SHIELDWARP:
+		Condition: shield-warped
+	WithColoredOverlay@SHIELDWARP:
+		RequiresCondition: shield-warped
+		Color: 51aeda38
+	WithIdleOverlay@TEMPORAL:
+		RequiresCondition: being-warped || shield-warped
+
 ^IonConduits:
 	GrantConditionOnPrerequisite@IONCON:
 		Condition: ioncon-upgrade
@@ -464,6 +497,7 @@ S4:
 		Prerequisites: barracks.upgraded
 	PortableChronoCA:
 		ChargeDelay: 500
+		MaxDistance: 16
 		ChronoshiftSound: scrinport.aud
 		RequiresCondition: blink-upgrade
 		TeleportCondition: blink
@@ -548,7 +582,7 @@ FEED:
 	Mobile:
 		Speed: 72
 	RevealsShroud:
-		Range: 5c0
+		Range: 7c0
 	Harvester:
 		Capacity: 10
 		Resources: Tiberium, BlueTiberium, Ore, Gems
@@ -604,6 +638,9 @@ FEED:
 	WithIdleOverlay:
 		StartSequence: spawn-overlay
 		Palette: scrin
+	SpeedMultiplier@FULL:
+		RequiresCondition: full
+		Modifier: 120
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -957,22 +994,11 @@ GUNW:
 		Modifier: 115
 	UpgradeableTo:
 		Actors: shrw
-	# For upgrading on Service Depot
-	Rearmable@UPGRADE:
-		RearmActors: fix, rep, srep
-		AmmoPools: upgrade
-	AmmoPool@UPGRADE:
-		Name: upgrade
-		Armaments: none
-		ReloadDelay: 5000
-	GrantConditionOnPrerequisite@SHRWUPGRADE:
-		Condition: shrw-upgrade
-		Prerequisites: shrw.upgrade
-	RearmsToUpgrade@SHRWUPGRADE:
-		AmmoPool: upgrade
-		UpgradeAudio: UnitUpgraded
+	Upgradeable@SHRW:
+		Type: shrw.upgrade
 		Actor: shrw
-		RequiresCondition: shrw-upgrade
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
 
 SHRW:
 	Inherits: GUNW
@@ -999,10 +1025,7 @@ SHRW:
 	-GrantConditionOnFaction@TRAVELERSPEED:
 	-SpeedMultiplier@TRAVELERSPEED:
 	-UpgradeableTo:
-	-Rearmable@UPGRADE:
-	-AmmoPool@UPGRADE:
-	-GrantConditionOnPrerequisite@SHRWUPGRADE:
-	-RearmsToUpgrade@SHRWUPGRADE:
+	-Upgradeable@SHRW:
 
 SEEK:
 	Inherits: ^Vehicle
@@ -2101,6 +2124,7 @@ STMR:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
+	Inherits@SHIELDS: ^ScrinShields
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 90
@@ -2222,39 +2246,18 @@ STMR:
 	Targetable@RESUPPLYING:
 		TargetTypes: Resupplying
 		RequiresCondition: resupplying
-	GrantConditionOnPrerequisite@SHIELDS:
-		Condition: shields-upgrade
-		Prerequisites: shields.upgrade
 	KillsSelf:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
-		Modifier: 50
+		Modifier: 0
 		RequiresCondition: empdisable
-	WithSpriteTurret@SHIELDS:
-		RequiresCondition: shields-upgrade && shields-up
-		Sequence: shield
-		Palette: scrinshield-ignore-lighting-alpha50
-	Turreted@SHIELDS:
-		PauseOnCondition: shields-upgrade
-		RequiresCondition: shields-upgrade
-	Shielded:
-		MaxStrength: 6500
-		RegenDelay: 350
-		RegenAmount: 250
-		RegenInterval: 5
-		ShieldsUpCondition: shields-up
-		RequiresCondition: shields-upgrade && !empdisable
-		SelectionBarColor: ead6ff
-	ExternalCondition@Shield:
-		Condition: shields-up
-	Targetable@TEMPORAL:
-		RequiresCondition: !shields-up
 
 ENRV:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
+	Inherits@SHIELDS: ^ScrinShields
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 170
@@ -2369,39 +2372,20 @@ ENRV:
 	Targetable@RESUPPLYING:
 		TargetTypes: Resupplying
 		RequiresCondition: resupplying
-	GrantConditionOnPrerequisite@SHIELDS:
-		Condition: shields-upgrade
-		Prerequisites: shields.upgrade
 	KillsSelf:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
-		Modifier: 50
+		Modifier: 0
 		RequiresCondition: empdisable
-	WithSpriteTurret@SHIELDS:
-		RequiresCondition: shields-upgrade && shields-up
-		Sequence: shield
-		Palette: scrinshield-ignore-lighting-alpha50
-	Turreted@SHIELDS:
-		PauseOnCondition: shields-upgrade
-		RequiresCondition: shields-upgrade
 	Shielded:
 		MaxStrength: 5625
-		RegenDelay: 350
-		RegenAmount: 250
-		RegenInterval: 5
-		ShieldsUpCondition: shields-up
-		RequiresCondition: shields-upgrade && !empdisable
-		SelectionBarColor: ead6ff
-	ExternalCondition@Shield:
-		Condition: shields-up
-	Targetable@TEMPORAL:
-		RequiresCondition: !shields-up
 
 DEVA:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
+	Inherits@SHIELDS: ^ScrinShields
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 170
@@ -2515,21 +2499,10 @@ DEVA:
 	ProductionCostMultiplier@HARBONUS:
 		Multiplier: 90
 		Prerequisites: player.harbinger
-	GrantConditionOnPrerequisite@SHIELDS:
-		Condition: shields-upgrade
-		Prerequisites: shields.upgrade
-	WithSpriteTurret@SHIELDS:
-		RequiresCondition: shields-upgrade && shields-up
-		Sequence: shield
-		Palette: scrinshield-ignore-lighting-alpha50
-	Turreted@SHIELDS:
-		PauseOnCondition: shields-upgrade
-		RequiresCondition: shields-upgrade
-		Offset: -64,0,0
 	KillsSelf:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
-		Modifier: 50
+		Modifier: 0
 		RequiresCondition: empdisable
 	Repairable:
 		RepairActors: fix, rep, srep
@@ -2540,22 +2513,15 @@ DEVA:
 		Prerequisites: aircraft.upgraded
 	Shielded:
 		MaxStrength: 8000
-		RegenDelay: 350
-		RegenAmount: 250
-		RegenInterval: 5
-		ShieldsUpCondition: shields-up
-		RequiresCondition: shields-upgrade && !empdisable
-		SelectionBarColor: ead6ff
-	ExternalCondition@Shield:
-		Condition: shields-up
-	Targetable@TEMPORAL:
-		RequiresCondition: !shields-up
+	Turreted@SHIELDS:
+		Offset: -64,0,0
 
 PAC:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
+	Inherits@SHIELDS: ^ScrinShields
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 180
@@ -2663,21 +2629,10 @@ PAC:
 	DeathSounds:
 		Voice: Die
 	-EjectOnDeath:
-	GrantConditionOnPrerequisite@SHIELDS:
-		Condition: shields-upgrade
-		Prerequisites: shields.upgrade
-	WithSpriteTurret@SHIELDS:
-		RequiresCondition: shields-upgrade && shields-up
-		Sequence: shield
-		Palette: scrinshield-ignore-lighting-alpha50
-	Turreted@SHIELDS:
-		PauseOnCondition: shields-upgrade
-		RequiresCondition: shields-upgrade
-		Offset: -128,0,0
 	KillsSelf:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
-		Modifier: 50
+		Modifier: 0
 		RequiresCondition: empdisable
 	Repairable:
 		RepairActors: fix, rep, srep
@@ -2692,16 +2647,8 @@ PAC:
 		Prerequisites: aircraft.upgraded
 	Shielded:
 		MaxStrength: 13000
-		RegenDelay: 350
-		RegenAmount: 250
-		RegenInterval: 5
-		ShieldsUpCondition: shields-up
-		RequiresCondition: shields-upgrade && !empdisable
-		SelectionBarColor: ead6ff
-	ExternalCondition@Shield:
-		Condition: shields-up
-	Targetable@TEMPORAL:
-		RequiresCondition: !shields-up
+	Turreted@SHIELDS:
+		Offset: -128,0,0
 
 INVA:
 	Inherits: ^NeutralPlane
@@ -2792,6 +2739,7 @@ MSHP:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
+	Inherits@SHIELDS: ^ScrinShields
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 190
@@ -2904,16 +2852,7 @@ MSHP:
 		Image: mshp
 		Sequence: ring
 		Offset: 0,0,72
-	DetonateWeaponOnDeploy:
-		Weapon: WormholeOpener
-		ForceGround: true
-		ChargeTicks: 200
 		PauseOnCondition: being-warped
-		OverlaySequence: wormholebeam
-		OverlayPalette: playerscrin
-		IsPlayerPalette: true
-		ShowSelectionBarWhenEmpty: false
-		RequiresCondition: !empdisable
 	ExternalCondition@PRODUCED:
 		Condition: produced
 	VoiceAnnouncement:
@@ -2959,36 +2898,37 @@ MSHP:
 		Delay: 1
 		RequiresCondition: !charging && !attacking
 		ShowSelectionBar: false
-	-Targetable@TEMPORAL:
-	-SpeedMultiplier@TEMPORAL:
-	-RejectsOrders@TEMPORAL:
-	GrantConditionOnPrerequisite@SHIELDS:
-		Condition: shields-upgrade
-		Prerequisites: shields.upgrade
 	KillsSelf:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
-		Modifier: 50
+		Modifier: 0
 		RequiresCondition: empdisable
-	WithSpriteTurret@SHIELDS:
-		RequiresCondition: shields-upgrade && shields-up
-		Sequence: shield
-		Palette: scrinshield-ignore-lighting-alpha50
-	Turreted@SHIELDS:
-		PauseOnCondition: shields-upgrade
-		RequiresCondition: shields-upgrade
 	Shielded:
 		MaxStrength: 26000
-		RegenDelay: 350
-		RegenAmount: 250
-		RegenInterval: 5
-		ShieldsUpCondition: shields-up
-		RequiresCondition: shields-upgrade && !empdisable
-		SelectionBarColor: ead6ff
-	ExternalCondition@Shield:
-		Condition: shields-up
-	Targetable@TEMPORAL:
-		RequiresCondition: !shields-up
+	SpawnActorAbility:
+		Actor: wormhole
+		SkipMakeAnimations: false
+		Range: 20c0
+		CircleColor: 9988ff
+		SpawnSounds: wormhole-open.aud
+		SelectTargetSpeechNotification: SelectTarget
+		AmmoPool: wormholespawner
+	AmmoPool@WORMHOLESPAWNER:
+		Name: wormholespawner
+		Armaments: none
+		Ammo: 2
+	ReloadAmmoPoolCA@WORMHOLESPAWNER:
+		AmmoPool: wormholespawner
+		Delay: 750
+		Count: 2
+		ShowSelectionBar: true
+		SelectionBarColor: 9988ff
+		ReloadWhenAmmoReaches: 0
+	WithAmmoPipsDecoration@WORMHOLESPAWNER:
+		AmmoPools: wormholespawner
+		RequiresSelection: true
+		Position: BottomLeft
+		Margin: 4, 3
 
 #
 # ---- Husks
@@ -4301,10 +4241,12 @@ SREP:
 		Prerequisites: vehicles.scrin, ~structures.scrin, ~techlevel.low
 		Description: Repairs vehicles and aircraft.
 		IconPalette: chromes
+	TooltipExtras:
+		Attributes: • Nearby helipads/airfields will repair landed aircraft\n• Can retrofit existing units with upgrades
 	Valued:
 		Cost: 1000
 	Tooltip:
-		Name: Repair Bay
+		Name: Regeneration Bay
 	Building:
 		Footprint: _+_ +++ _+_
 		Dimensions: 3,3
@@ -5138,7 +5080,7 @@ WORMHOLE:
 		Type: CenterPosition
 	HitShape:
 	RevealsShroud:
-		Range: 6c0
+		Range: 4c0
 		Type: CenterPosition
 	Immobile:
 		OccupiesSpace: true

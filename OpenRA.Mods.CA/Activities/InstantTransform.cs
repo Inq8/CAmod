@@ -9,6 +9,7 @@
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
 using OpenRA.Activities;
 using OpenRA.Mods.CA.Traits;
@@ -25,13 +26,12 @@ namespace OpenRA.Mods.CA.Activities
 	{
 		public readonly string ToActor;
 		public CVec Offset = CVec.Zero;
-		public WAngle Facing = new WAngle(384);
-		public WPos Altitude = WPos.Zero;
 		public string[] Sounds = { };
 		public string Notification = null;
 		public int ForceHealthPercentage = 0;
 		public bool SkipMakeAnims = false;
 		public string Faction = null;
+		public Action OnComplete;
 
 		public InstantTransform(Actor self, string toActor)
 		{
@@ -98,9 +98,16 @@ namespace OpenRA.Mods.CA.Activities
 				{
 					new LocationInit(self.Location + Offset),
 					new OwnerInit(self.Owner),
-					new FacingInit(Facing),
-					new CenterPositionInit(Altitude),
+					new CenterPositionInit(self.CenterPosition),
 				};
+
+				var facing = self.TraitOrDefault<IFacing>();
+				if (facing != null)
+					init.Add(new FacingInit(facing.Facing));
+
+				var turreted = self.TraitsImplementing<Turreted>().FirstEnabledTraitOrDefault();
+				if (turreted != null)
+					init.Add(new TurretFacingInit(turreted.LocalOrientation.Yaw));
 
 				if (SkipMakeAnims)
 					init.Add(new SkipMakeAnimsInit());
@@ -141,6 +148,9 @@ namespace OpenRA.Mods.CA.Activities
 
 				if (controlgroup.HasValue)
 					w.ControlGroups.AddToControlGroup(a, controlgroup.Value);
+
+				if (OnComplete != null)
+					OnComplete();
 			});
 		}
 	}

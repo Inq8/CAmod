@@ -40,7 +40,7 @@ DisintegratorBeamAA:
 			Wood: 100
 			Concrete: 100
 			Light: 100
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		ValidTargets: AirSmall
 		ValidRelationships: Enemy, Neutral
 		Spread: 128
@@ -126,7 +126,7 @@ GunWalkerZapAA:
 			Concrete: 100
 			Light: 100
 			Heavy: 100
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 1800
 		ValidTargets: AirSmall
 		ValidRelationships: Enemy, Neutral
@@ -513,7 +513,6 @@ RuinerCannon:
 			Heavy: 45
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath, FlakVestMitigatedMinor
-	-Warhead@2Dam:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 	Warhead@3Eff: CreateEffect
@@ -668,9 +667,9 @@ StormRiderZapAA:
 			Concrete: 100
 			Light: 100
 			Heavy: 100
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 1800
-		Spread: 128
+		Spread: 341
 		Falloff: 100, 50, 14, 0
 		ValidTargets: AirSmall
 		ValidRelationships: Enemy, Neutral
@@ -738,9 +737,9 @@ EnervatorBoltsAA:
 			Light: 100
 			Concrete: 100
 			Brick: 100
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 6000
-		Spread: 128
+		Spread: 341
 		Falloff: 100, 50, 14, 0
 		ValidTargets: AirSmall
 		ValidRelationships: Enemy, Neutral
@@ -815,9 +814,9 @@ InvaderZapAA:
 			Concrete: 100
 			Wood: 100
 			None: 100
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 200
-		Spread: 128
+		Spread: 341
 		Falloff: 100, 50, 14, 0
 		ValidTargets: AirSmall
 		ValidRelationships: Enemy, Neutral
@@ -1006,7 +1005,7 @@ ShardLauncher:
 		Falloff: 100, 100, 30, 15
 		Damage: 2650
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		ValidTargets: AirSmall
 		ValidRelationships: Enemy, Neutral
 		Range: 0, 0c64, 0c256, 1c768
@@ -1081,7 +1080,7 @@ ShardWalkerShardsAA:
 		Damage: 1800
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 1800
 		-Range:
 		Spread: 128
@@ -1258,23 +1257,6 @@ IonSurge:
 		ValidTargets: IonSurgable
 		ValidRelationships: Ally
 
-WormholeOpener:
-	Report: darkener-fire1.aud, darkener-fire2.aud
-	ReloadDelay: 150
-	Range: 0c256
-	Projectile: InstantHit
-	Warhead@1Dam: SpreadDamage
-		Damage: 100000
-		ValidTargets: Wormhole
-	Warhead@Spawn: SpawnActor
-		Actors: wormhole
-		Delay: 14
-		Range: 2
-		ForceGround: true
-		AvoidActors: true
-	Warhead@3Eff: CreateEffect
-		ImpactSounds: wormhole-open.aud
-
 MothershipChargeBeam:
 	ReloadDelay: 3
 	Range: 0c512
@@ -1352,6 +1334,7 @@ MothershipLaser:
 		ImpactTicks: 0, 2, 4, 6, 8, 10, 12, 14
 		ZOffset: 512
 		Colors: 7d44ff96, eb66ff86, 5763ff96
+		MaxFacingDeviation: 256
 	Warhead@1Dam: SpreadDamage
 		Damage: 1250
 		Versus:

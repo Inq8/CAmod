@@ -58,7 +58,7 @@
 			Light: 100
 			Concrete: 100
 			Brick: 100
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Spread: 128
 		Falloff: 100, 50, 14, 0
 		ValidTargets: AirSmall
@@ -85,6 +85,8 @@
 		LockOnInaccuracy: 0
 		RangeLimit: 13c0
 		AllowSnapping: true
+	Warhead@smallDamage: SpreadDamage
+		Spread: 341
 
 Maverick:
 	Inherits: ^AirToGroundMissile
@@ -116,7 +118,7 @@ MaverickAA:
 	BurstDelays: 10
 	Warhead@1Dam: SpreadDamage
 		Damage: 6000
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 6000
 
 Sidewinder:
@@ -448,7 +450,7 @@ HellfireAA:
 	BurstDelays: 14
 	Warhead@1Dam: SpreadDamage
 		Damage: 3000
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 3000
 
 HellfireAA.Orca:
@@ -468,7 +470,7 @@ HellfireAA.Harrier:
 		ContrailLength: 10
 	Warhead@1Dam: SpreadDamage
 		Damage: 6750
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 6750
 
 WidowAA:
@@ -483,7 +485,7 @@ WidowAA:
 		ContrailLength: 6
 	Warhead@1Dam: SpreadDamage
 		Damage: 6000
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 6000
 
 MammothTusk:
@@ -504,7 +506,7 @@ MammothTusk:
 			Light: 50
 			Heavy: 50
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 2000
 		Spread: 128
 		Falloff: 100, 50, 14, 0
@@ -530,7 +532,7 @@ ApocalypseTusk:
 		Speed: 401
 	Warhead@1Dam: SpreadDamage
 		Damage: 4000
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 4000
 
 TitanTusk:
@@ -542,7 +544,7 @@ TitanTusk:
 		RangeLimit: 10c614
 	Warhead@1Dam: SpreadDamage
 		Damage: 10000
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 10000
 
 TitanTusk.Gyro:
@@ -571,7 +573,7 @@ Nike:
 		Damage: 6750
 		Range: 0, 0c64, 0c256, 4c256
 		ValidTargets: Air, ICBM
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 6750
 		Range: 0, 0c64, 0c256, 2c256
 		Falloff: 100, 70, 30, 10
@@ -593,7 +595,7 @@ RedEye:
 		Damage: 4000
 		Range: 0, 0c64, 0c256, 3c0
 		ValidTargets: Air
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 4000
 		-Range:
 		Spread: 128
@@ -621,7 +623,7 @@ RedEye.CYB:
 	Report: itanweaa.aud, itanweab.aud, itanweac.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 4600
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 4600
 
 RedEye.CYB.TibCore:
@@ -629,7 +631,7 @@ RedEye.CYB.TibCore:
 	Report: itanweaa.aud, itanweab.aud, itanweac.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 4600
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 4600
 
 RedEye.CRYO:
@@ -724,7 +726,7 @@ StingerAA:
 			Light: 100
 			Concrete: 100
 			Brick: 100
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 3375
 		Spread: 128
 		Falloff: 100, 50, 14, 0
@@ -778,7 +780,7 @@ APTusk:
 	Warhead@1Dam: SpreadDamage
 		Damage: 8000
 		Versus:
-			None: 35
+			None: 20
 			Wood: 55
 			Light: 60
 			Heavy: 100
@@ -1200,7 +1202,7 @@ BikeRocketsAA:
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
 		Damage: 3600
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 3600
 
 BikeRockets.TibCore:
@@ -1252,7 +1254,7 @@ BikeRocketsAA.TibCore:
 		ContrailWidth: 0c40
 	Warhead@1Dam: SpreadDamage
 		Damage: 3960
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 3960
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: tibcorehit1.aud, tibcorehit2.aud, tibcorehit3.aud
@@ -1284,13 +1286,13 @@ IFVRocketsAA:
 	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
 		Damage: 4200
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 4200
 
 IFVRocketsE:
 	Inherits: IFVRockets
 	Report: vifvatta.aud
-	Range: 5c768
+	Range: 6c0
 	Projectile: MissileCA
 		ContrailLength: 10
 	Warhead@1Dam: SpreadDamage
@@ -1337,7 +1339,7 @@ IFVRocketsAAE:
 		ContrailLength: 10
 	Warhead@1Dam: SpreadDamage
 		Damage: 4800
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 4800
 
 IFVRocketsAAE.CRYO:
@@ -1346,7 +1348,7 @@ IFVRocketsAAE.CRYO:
 		Image: cryomiss
 	Warhead@1Dam: SpreadDamage
 		Damage: 4100
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 4100
 	Warhead@3Eff: CreateEffect
 		Explosions: cryohit
@@ -1481,7 +1483,7 @@ IFVRocketsAAE.CRYO:
 		Falloff: 100, 37, 14, 5, 0
 		Spread: 0c256
 		-Range:
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 2200
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: xplos.aud
@@ -1500,7 +1502,7 @@ IFVRocketsAAE.CRYO:
 		RangeLimit: 7c512
 	Warhead@1Dam: SpreadDamage
 		Damage: 2600
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 2600
 
 227mmAA.Hypersonic:
@@ -1559,7 +1561,7 @@ StnkMissileAA:
 		RangeLimit: 9c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 4800
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 4800
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: xplos.aud
@@ -1618,7 +1620,7 @@ StnkMissileAA.TibCore:
 	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
 	Warhead@1Dam: SpreadDamage
 		Damage: 3360
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 3360
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: tibcorehit1.aud, tibcorehit2.aud, tibcorehit3.aud
@@ -1808,7 +1810,7 @@ ScrinTorpAA:
 		Jammable: false
 	Warhead@1Dam: SpreadDamage
 		Damage: 4000
-	Warhead@2Dam: SpreadDamage
+	Warhead@smallDamage: SpreadDamage
 		Damage: 4000
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: expnew17.aud

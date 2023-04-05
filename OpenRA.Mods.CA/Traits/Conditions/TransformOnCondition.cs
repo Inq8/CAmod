@@ -39,11 +39,8 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override void TraitEnabled(Actor self)
 		{
-			var facing = self.TraitOrDefault<IFacing>();
 			var transform = new InstantTransform(self, info.IntoActor) { ForceHealthPercentage = info.ForceHealthPercentage, Faction = faction };
-			if (facing != null) transform.Facing = facing.Facing;
 			transform.SkipMakeAnims = info.SkipMakeAnims;
-			transform.Altitude = self.CenterPosition;
 			self.CancelActivity();
 			self.QueueActivity(transform);
 		}

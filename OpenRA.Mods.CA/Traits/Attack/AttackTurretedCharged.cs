@@ -38,6 +38,12 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Number of shots that can be fired after charging.")]
 		public readonly int ShotsPerCharge = 1;
 
+		[Desc("Charging sounds.")]
+		public readonly string[] ChargingSounds = null;
+
+		[Desc("Charging sound audible through fog.")]
+		public readonly bool ChargeAudibleThroughFog = true;
+
 		public readonly bool ShowSelectionBar = false;
 		public readonly Color SelectionBarColor = Color.FromArgb(128, 200, 255);
 
@@ -109,6 +115,9 @@ namespace OpenRA.Mods.CA.Traits
 			// Stop charging when we lose our target
 			charging = !reloading && IsAiming && turretReady;
 
+			if (charging && ChargeLevel == 0)
+				ChargeSound(self);
+
 			var delta = charging ? Info.ChargeRate : -Info.DischargeRate;
 			ChargeLevel = (ChargeLevel + delta).Clamp(0, Info.ChargeLevel);
 
@@ -174,6 +183,20 @@ namespace OpenRA.Mods.CA.Traits
 					turretReady = true;
 
 			return turretReady && base.CanAttack(self, target) && IsCharged;
+		}
+
+		void ChargeSound(Actor self)
+		{
+			if (Info.ChargingSounds == null)
+				return;
+
+			var sound = Info.ChargingSounds.RandomOrDefault(Game.CosmeticRandom);
+			var shouldStart = Info.ChargeAudibleThroughFog || (!self.World.ShroudObscures(self.CenterPosition) && !self.World.FogObscures(self.CenterPosition));
+
+			if (!shouldStart)
+				return;
+
+			Game.Sound.Play(SoundType.World, sound, self.CenterPosition);
 		}
 	}
 }

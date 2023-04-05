@@ -196,13 +196,16 @@ Player:
 		Enabled: True
 		DisplayOrder: 15
 		Prerequisites: global.balancedharvesting
-	LobbyPrerequisiteCheckbox@GLOBALMULTIQUEUE:
-		ID: multiqueue
-		Label: MultiQueue
-		Description: Each production facility can produce individually
-		Enabled: False
-		DisplayOrder: 16
-		Prerequisites: global.multiqueue
+	LobbyPrerequisiteDropdown@QUEUETYPE:
+		ID: queuetype
+		Label: Production Type
+		Description: Single Queue = One queue per production category, Multi Queue = One queue per production structure
+		DisplayOrder: 17
+		DefaultValue: global.singlequeue
+		Values:
+			Single-Queue: global.singlequeue
+			Multi-Queue: global.multiqueuefull
+			Multi-Queue Scaled: global.multiqueuescaled
 	FrozenActorLayer:
 	BaseAttackNotifier:
 		TextNotification: Base under attack.
@@ -322,3 +325,4 @@ Player:
 		RandomExit: true
 	AutoDeployManager:
 	CapturedFactionsManager:
+	UpgradesManager:

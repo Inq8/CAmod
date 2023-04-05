@@ -81,12 +81,12 @@
 		Speed: 426
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
-		Damage: 6800
+		Damage: 5800
 		Versus:
-			None: 80
+			None: 95
 			Wood: 100
-			Concrete: 85
-			Light: 55
+			Concrete: 100
+			Light: 65
 			Heavy: 15
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@3EffGround: CreateEffect
@@ -189,7 +189,7 @@
 
 130mm:
 	Inherits: ^Cannon
-	ReloadDelay: 90
+	ReloadDelay: 80
 	Burst: 2
 	InvalidTargets: Air, AirSmall, Infantry
 	Warhead@1Dam: SpreadDamage
@@ -222,7 +222,7 @@
 
 130mmTD.Drone:
 	Inherits: 130mmTD
-	ReloadDelay: 30
+	ReloadDelay: 28
 	Warhead@1Dam: SpreadDamage
 		Damage: 2600
 
@@ -308,7 +308,7 @@ TurretGunTD:
 
 TitanGun:
 	Inherits: TurretGunTD
-	ReloadDelay: 90
+	ReloadDelay: 80
 	Report: vtadatta.aud, vtadattb.aud, vtadattc.aud
 	Range: 5c0
 	Warhead@1Dam: SpreadDamage
@@ -365,20 +365,7 @@ TitanGun:
 			Wood: 100
 			Concrete: 85
 			Light: 80
-			Heavy: 20
-	Warhead@2Dam: SpreadDamage
-		Damage: 975
-		Spread: 426
-		Falloff: 1000, 550, 200, 50, 18, 7, 0
-		ValidTargets: Vehicle
-		Versus:
-			Heavy: 25
-			None: 0
-			Wood: 0
-			Light: 5
-			Concrete: 0
-			Brick: 0
-		DamageTypes: SmallExplosionDeath
+			Heavy: 35
 
 155mmTD:
 	Inherits: 155mm
@@ -415,7 +402,6 @@ TitanGun:
 			Concrete: 70
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigatedMinor
-	-Warhead@2Dam:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Eff: CreateEffect
@@ -460,7 +446,7 @@ TitanGun:
 			Wood: 100
 			Concrete: 100
 			Light: 85
-			Heavy: 38
+			Heavy: 32
 	Warhead@2Dam: SpreadDamage
 		Damage: 70000
 		Spread: 341
@@ -470,13 +456,13 @@ TitanGun:
 		Explosions: large_artillery_explosion
 		ImpactSounds: artyhit.aud, artyhit2.aud, artyhit3.aud
 	Warhead@Concussion1: GrantExternalCondition
-		Range: 1c512
-		Duration: 140
+		Range: 0c768
+		Duration: 125
 		Condition: concussion
 		ValidTargets: Ground, Infantry, Vehicle, Ship
 	Warhead@Concussion2: GrantExternalCondition
-		Range: 3c0
-		Duration: 70
+		Range: 1c768
+		Duration: 35
 		Condition: concussion
 		ValidTargets: Ground, Infantry, Vehicle, Ship
 	Warhead@5Shake: ShakeScreen

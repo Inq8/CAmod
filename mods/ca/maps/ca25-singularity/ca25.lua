@@ -1,7 +1,7 @@
 
-NWReactors = { NWPower1, NWPower2, NWPower3, NWPower4, NWPower5, NWPower6 }
+NWReactors = { NWPower1, NWPower2, NWPower3, NWPower4, NWPower5, NWPower6, NWPower7, NWPower8 }
 
-NEReactors = { NEPower1, NEPower2, NEPower3, NEPower4, NEPower5, NEPower6 }
+NEReactors = { NEPower1, NEPower2, NEPower3, NEPower4, NEPower5, NEPower6, NEPower7, NEPower8 }
 
 Squads = {
 	ScrinWest = {
@@ -352,6 +352,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnKilled(SignalTransmitter, function(self, killer)
+		CreatePermanentMothershipCamera()
 		if ObjectiveHackSignalTransmitter ~= nil and not GDI.IsObjectiveCompleted(ObjectiveHackSignalTransmitter) then
 			GDI.MarkFailedObjective(ObjectiveHackSignalTransmitter)
 			Trigger.AfterDelay(DateTime.Seconds(2), function()
@@ -365,7 +366,7 @@ WorldLoaded = function()
 		c.GrantCondition("bluebuff")
 
 		Trigger.OnDamaged(c, function(self, attacker, damage)
-			if not SleepingCyborgsMessageShown and not Mothership.IsDead and self.Health < self.MaxHealth * 0.75 then
+			if not SleepingCyborgsMessageShown and not Mothership.IsDead and self.Health < self.MaxHealth * 0.8 then
 				SleepingCyborgsMessageShown = true
 				Notification("Those cyborgs appear to be in some kind of hibernation commander, and that enriched Tiberium is giving them some serious regeneration. Recommend we avoid firing on them, lest they wake up!")
 			end
@@ -431,6 +432,7 @@ OncePerFiveSecondChecks = function()
 		if not ShieldsOffline and not SignalTransmitter.IsDead and SignalTransmitter.Owner == GDI then
 			ShieldsOffline = true
 			MothershipShields.Destroy()
+			CreatePermanentMothershipCamera()
 
 			if ObjectiveHackSignalTransmitter ~= nil then
 				GDI.MarkCompletedObjective(ObjectiveHackSignalTransmitter)
@@ -714,14 +716,14 @@ InitMADTankAttack = function()
 			end
 		end)
 
-		Trigger.OnEnteredProximityTrigger(MADTank.CenterPosition, WDist.New(7 * 1024), function(a, id)
+		Trigger.OnEnteredProximityTrigger(MADTankPath1.CenterPosition, WDist.New(7 * 1024), function(a, id)
 			if a.Owner == GDI and a.HasProperty("Attack") then
 				Trigger.RemoveProximityTrigger(id)
 				SendMADTank()
 			end
 		end)
 
-		Trigger.AfterDelay(DateTime.Minutes(5), function()
+		Trigger.AfterDelay(DateTime.Minutes(2), function()
 			SendMADTank()
 		end)
 	end)
@@ -906,4 +908,11 @@ DoFinale = function()
 			GDI.MarkCompletedObjective(ObjectiveDestroyMothership)
 		end)
 	end)
+end
+
+CreatePermanentMothershipCamera = function()
+	if not Mothership.IsDead and not IsPermanentMothershipCameraCreated then
+		IsPermanentMothershipCameraCreated = true
+		Actor.Create("camera", true, { Owner = GDI, Location = Mothership.Location })
+	end
 end

@@ -170,6 +170,11 @@ WorldLoaded = function()
 		Reinforcements.Reinforce(Scrin, { "devo" }, { ScrinReinforce2Spawn.Location, ScrinReinforce2Dest.Location }, 75)
 	end)
 
+	Trigger.AfterDelay(DateTime.Minutes(12), function()
+		Actor.Create("reaperaccess", true, { Owner = Scrin })
+		Notification("You have been granted access to Reaper Tripods.")
+	end)
+
 	Utils.Do(PowerGrids, function(grid)
 		Trigger.OnAllKilledOrCaptured(grid.Providers, function()
 			Utils.Do(grid.Consumers, function(consumer)

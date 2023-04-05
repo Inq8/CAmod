@@ -140,10 +140,10 @@
 
 ^BotGroundProductionBonus:
 	ProductionCostMultiplier@brutalbonus:
-		Multiplier: 50
+		Multiplier: 60
 		Prerequisites: is-brutal-ai
 	ProductionCostMultiplier@vhardbonus:
-		Multiplier: 70
+		Multiplier: 75
 		Prerequisites: is-vhard-ai
 	ProductionCostMultiplier@hardbonus:
 		Multiplier: 90
@@ -151,11 +151,8 @@
 
 ^BotAirProductionBonus:
 	ProductionCostMultiplier@brutalbonus:
-		Multiplier: 90
-		Prerequisites: is-brutal-ai
-	ProductionCostMultiplier@vhardbonus:
 		Multiplier: 95
-		Prerequisites: is-vhard-ai
+		Prerequisites: is-brutal-ai
 
 # The Bot does not know how to sell up when he does not have an income. This provides an income, when floating less than 2500$
 ^BotFallbackInsurance:
@@ -352,16 +349,12 @@
 		SelectionBarColor: 40FFFF
 	Targetable@TEMPORAL:
 		TargetTypes: Temporal
-		RequiresCondition: !invulnerability
 	WithModifiedPalette@TEMPORALl:
 		RequiresCondition: being-warped
 		Palette: temporal
 	WithColoredOverlay@TEMPORAL2:
 		RequiresCondition: being-warped
 		Color: 00000060
-	TimedConditionBar@TEMPORAL:
-		Condition: being-warped
-		Color: 2f74e2
 	WithIdleOverlay@TEMPORAL:
 		Sequence: chrono-overlay
 		RequiresCondition: being-warped
@@ -3718,9 +3711,12 @@
 	GrantDelayedCondition@QUEUEUPDATER:
 		Delay: 1
 		Condition: updatequeue
-	GrantConditionOnPrerequisite@MQ:
+	GrantConditionOnPrerequisite@MQF:
 		Condition: global-multiqueue
-		Prerequisites: global.multiqueue
+		Prerequisites: global.multiqueuefull
+	GrantConditionOnPrerequisite@MQS:
+		Condition: global-multiqueue
+		Prerequisites: global.multiqueuescaled
 
 ^ProducesBuildings:
 	Inherits@QUEUEUPDATER: ^QueueUpdater
@@ -3811,6 +3807,12 @@
 		Condition: produced
 	Targetable@INF:
 		TargetTypes: InfantryProducer
+	ProductionCostMultiplier@MQS1:
+		Multiplier: 300
+		Prerequisites: infantry.any, global.multiqueuescaled, !optprod1.upgrade, !optprod2.upgrade
+	ProductionCostMultiplier@MQS2:
+		Multiplier: 200
+		Prerequisites: infantry.any, global.multiqueuescaled, optprod1.upgrade, !optprod2.upgrade
 
 ^ProducesCyborgs:
 	Inherits: ^ProducesInfantry
@@ -3825,6 +3827,8 @@
 	ProductionBar@MQINF:
 		ProductionType: CyborgMQ
 	-Targetable@INF:
+	-ProductionCostMultiplier@MQS1:
+	-ProductionCostMultiplier@MQS2:
 
 ^ProducesVehicles:
 	Inherits@QUEUEUPDATER: ^QueueUpdater
@@ -3857,6 +3861,12 @@
 	ProductionBar@MQVEH:
 		ProductionType: VehicleMQ
 		RequiresCondition: global-multiqueue
+	ProductionCostMultiplier@MQS1:
+		Multiplier: 175
+		Prerequisites: vehicles.any, global.multiqueuescaled, !optprod1.upgrade, !optprod2.upgrade
+	ProductionCostMultiplier@MQS2:
+		Multiplier: 125
+		Prerequisites: vehicles.any, global.multiqueuescaled, optprod1.upgrade, !optprod2.upgrade
 
 ^ProducesNaval:
 	Inherits@QUEUEUPDATER: ^QueueUpdater
@@ -3898,7 +3908,9 @@
 	ProductionBar@UPG:
 		ProductionType: Upgrade
 	Exit@UPG:
-	-GrantConditionOnPrerequisite@MQ:
+		ProductionTypes: Upgrade
+	-GrantConditionOnPrerequisite@MQF:
+	-GrantConditionOnPrerequisite@MQS:
 
 ^ProducesAircraft:
 	Inherits@QUEUEUPDATER: ^QueueUpdater

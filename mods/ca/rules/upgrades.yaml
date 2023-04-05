@@ -7,6 +7,7 @@
 		BuildLimit: 1
 		BuildDurationModifier: 100
 	ProvidesPrerequisite@upgradename:
+	ProvidesUpgrade@upgradename:
 
 #########################SHARED#########
 ########################################
@@ -30,6 +31,22 @@ hazmat.upgrade:
 		Multiplier: 70
 		Prerequisites: player.nod
 
+optprod1.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Optimized Production I
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: anyradar, ~techlevel.medium, ~global.multiqueuescaled
+		IconPalette: chromes
+		Description: Reduces the cost of additional infantry and vehicle production structures.
+	TooltipExtras:
+		Strengths: + Reduced cost of additional infantry production by $500\n+ Reduced cost of additional vehicle production by $1000
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: optprod1.upgrade
+
 flakarmor.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -44,6 +61,21 @@ flakarmor.upgrade:
 		Cost: 1500
 	RenderSprites:
 		Image: flakarmor.upgrade
+
+optprod2.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Optimized Production II
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: techcenter, ~techlevel.high, ~global.multiqueuescaled, ~optprod1.upgrade
+		Description: Reduces the cost of additional infantry and vehicle production structures.
+	TooltipExtras:
+		Strengths: + Reduced cost of additional infantry production by $500\n+ Reduced cost of additional vehicle production by $500
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: optprod2.upgrade
 
 #########################GDI#########
 ########################################
@@ -323,22 +355,6 @@ hammerhead.upgrade:
 	RenderSprites:
 		Image: hammerhead.upgrade
 
-gyro.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Gyro Stabilizers
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.talon, gtek, ~techlevel.high
-		IconPalette: chrometd
-		Description: Allows mech units to activate gyro stabilizers, greatly increasing range but reducing rate of fire.\n\nUpgrades: Titan\nUpgrades: Railgun Titan\nUpgrades: Juggernaut\nUpgrades: X-O Powersuit
-	TooltipExtras:
-		Strengths: + Added Gyro Stabilizers ability (increased range, reduced rate of fire)
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: gyro.upgrade
-
 sonic.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -452,6 +468,22 @@ mdrone.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: mdrone.upgrade
+
+gyro.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Gyro Stabilizers
+	Buildable:
+		BuildPaletteOrder: 40
+		Prerequisites: ~player.talon, upgc, ~techlevel.high
+		IconPalette: chrometd
+		Description: Allows mech units to activate gyro stabilizers, greatly increasing range but reducing rate of fire.\n\nUpgrades: Titan\nUpgrades: Railgun Titan\nUpgrades: Juggernaut\nUpgrades: X-O Powersuit
+	TooltipExtras:
+		Strengths: + Added Gyro Stabilizers ability (increased range, reduced rate of fire)
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: gyro.upgrade
 
 #########################NOD#########
 ########################################
@@ -841,7 +873,7 @@ tflx.upgrade:
 		Prerequisites: ~player.germany, pdox, ~techlevel.high
 		Description: Upgrades Chrono Prisons granting them the ability to teleport\n  through time. Improves Chrono Tank chronoshifting.\n\nUpgrades: Chrono Prison\nUpgrades: Chrono Tank
 	TooltipExtras:
-		Strengths: + Add ability to teleport (Chrono Prison only)\n+ Increase teleport range (Chrono Tank only)\n+ Reduce Teleport cooldown (Chrono Tank only)
+		Strengths: + Add ability to teleport (Chrono Prison only)\n+ Increased teleport range (Chrono Tank only)\n+ Chrono Tank can teleport twice before recharging
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -879,22 +911,6 @@ orep.upgrade:
 
 ################################SCRIN##############################
 ###################################################################
-
-blink.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Blink Packs
-	Buildable:
-		BuildPaletteOrder: 20
-		Prerequisites: ~player.scrin, nerv, ~techlevel.medium
-		Description: Equips Intruders with blink packs allowing\n  them to teleport.\n\nUpgrades: Intruder
-		IconPalette: chromes
-	TooltipExtras:
-		Strengths: + Teleport ability
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: blink.upgrade
 
 shrw.upgrade:
 	Inherits: ^Upgrade
@@ -944,6 +960,22 @@ carapace.upgrade:
 		Cost: 1500
 	RenderSprites:
 		Image: carapace.upgrade
+
+blink.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Blink Packs
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.scrin, scrt, ~techlevel.medium
+		Description: Equips Intruders with blink packs allowing\n  them to teleport.\n\nUpgrades: Intruder
+		IconPalette: chromes
+	TooltipExtras:
+		Strengths: + Teleport ability
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: blink.upgrade
 
 resconv.upgrade:
 	Inherits: ^Upgrade

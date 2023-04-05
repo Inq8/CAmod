@@ -374,9 +374,9 @@ BlackHandFlamer:
 	Burst: 28
 	Range: 3c512
 	Projectile: LinearPulse
-		Speed: 220
-		-VisualSpeed:
-		ImpactInterval: 2
+		Speed: 440
+		VisualSpeed: 220
+		ImpactInterval: 1
 		Inaccuracy: 160
 		Image: thinblueflame
 		Palette: effect-ignore-lighting-alpha85
@@ -523,20 +523,15 @@ TTrackArc1:
 		ValidTargets: Vehicle, Ship
 		ValidRelationships: Enemy, Neutral
 		Versus:
-			Light: 35
-			Heavy: 45
+			Light: 15
+			Heavy: 25
 	Warhead@Arc: FireShrapnel
 		Weapon: TTrackArc2
-		ValidTargets: Vehicle, Ship, Infantry
 		AimChance: 100
 
 TTrackArc2:
 	Inherits: TTrackArc1
-	ValidTargets: Vehicle, Ship, Infantry
 	Warhead@1Dam: SpreadDamage
-		ValidTargets: Vehicle, Ship, Infantry
-		Versus:
-			None: 115
 	-Warhead@Arc:
 
 TTankZap:
@@ -599,8 +594,8 @@ BruteAttack:
 		InvalidTargets: Structure
 		Versus:
 			None: 100
-			Light: 50
-			Heavy: 70
+			Light: 60
+			Heavy: 75
 			Concrete: 35
 			Wood: 25
 
@@ -929,7 +924,7 @@ MADTankDetonate:
 		ValidTargets: Ground, Infantry, Vehicle, Ship
 
 Laser:
-	ReloadDelay: 100
+	ReloadDelay: 95
 	ValidTargets: Ground, Water
 	Range: 8c512
 	Report: oblfire.aud
@@ -1039,7 +1034,8 @@ XOLaser:
 		SecondaryBeamColor: 79cd0040
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 10750
+		Damage: 11000
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, TankBuster
 		Versus:
 			None: 100
 			Wood: 40
@@ -1339,7 +1335,7 @@ PrisTBurst:
 PrisCLaser:
 	Inherits: PrisTLaser
 	Report: pcanfire.aud
-	ReloadDelay: 140
+	ReloadDelay: 125
 	Range: 11c0
 	Projectile: LaserZapCA
 		Width: 70
@@ -1688,7 +1684,7 @@ Railgun:
 TitanRailgun:
 	Inherits: Railgun
 	Report: titanrailgun1.aud, titanrailgun2.aud
-	ReloadDelay: 90
+	ReloadDelay: 80
 	Range: 5c768
 	Projectile: Railgun
 		DamageActorsInLine: true
@@ -1733,7 +1729,7 @@ TitanRailgunImpact:
 		ValidRelationships: Enemy, Neutral, Ally
 
 IonZap:
-	ReloadDelay: 90
+	ReloadDelay: 80
 	Range: 5c768
 	Report: ion1.aud
 	InvalidTargets: Air
@@ -1759,7 +1755,7 @@ IonZap:
 		ZOffset: 2045
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
-		Damage: 12500
+		Damage: 12000
 		ValidRelationships: Ally, Neutral, Enemy
 		InvalidTargets: Air
 		AffectsParent: false
@@ -1854,7 +1850,7 @@ MicrowaveZap:
 	ValidTargets: Ground, Water
 	InvalidTargets: Air
 	TargetActorCenter: true
-	ReloadDelay: 210
+	ReloadDelay: 200
 	Range: 7c0
 	Report: corefir1.aud
 	Projectile: Railgun
@@ -2055,10 +2051,10 @@ Lasher:
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 341, 682
 		Falloff: 100, 100, 0
-		Damage: 1850
+		Damage: 2000
 		ValidTargets: Infantry
 		DamageTypes: BulletDeath
-		ValidRelationships: Enemy, Neutral, Ally
+		ValidRelationships: Enemy, Neutral
 
 ChaosDroneTargeting:
 	Range: 2c0
@@ -2115,7 +2111,7 @@ RadBeamWeaponE:
 
 RadBeamWeaponHeavy:
 	Inherits: RadBeamWeapon
-	ReloadDelay: 90
+	ReloadDelay: 80
 	Report: eradcan1.aud
 	Projectile: RadBeam
 		Amplitude: 176
@@ -2128,7 +2124,7 @@ RadBeamWeaponHeavy:
 			Wood: 45
 			Concrete: 45
 			Light: 75
-			Heavy: 50
+			Heavy: 65
 	Warhead@2Dam: HealthPercentageDamage
 		Spread: 128
 		Damage: 200
@@ -2220,6 +2216,7 @@ NeutronCannon:
 	BurstDelays: 5
 	Range: 5c0
 	Projectile: InstantHit
+	TargetActorCenter: true
 	Warhead@Damage: WarpPercentDamage
 		Damage: 2
 		Spread: 1
@@ -2237,6 +2234,15 @@ NeutronCannonAA:
 	ValidTargets: TemporalAir
 	Warhead@Damage: WarpPercentDamage
 		ValidTargets: TemporalAir
+		InvalidTargets: Shielded
+	Warhead@ShieldDamage: SpreadDamage
+		Damage: 250
+		ValidTargets: Shielded
+	Warhead@ShieldWarp: GrantExternalCondition
+		Range: 0c512
+		Duration: 10
+		Condition: shield-warped
+		ValidTargets: Shielded
 
 NeutronCannonBeam:
 	ValidTargets: Temporal, TemporalAir

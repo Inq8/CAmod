@@ -66,11 +66,14 @@ AMCV:
 	RenderSprites:
 		PlayerPalette: playertd
 
-# Hunt() requires only 1 AttackBase
-APC2:
-	-AttackTurreted:
-	-Armament@GAT:
-	-Armament@GATG:
+ISU:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.soviet
 
+E8:
+	Buildable:
+		Prerequisites: barr, dome
+
+# Hunt() requires only 1 AttackBase
 JJET:
 	-AttackAircraft:

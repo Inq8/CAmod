@@ -55,7 +55,7 @@ GetNumPlayers = function(players)
 	local num = 0
 
 	Utils.Do(players, function(player)
-		if player.Name ~= "Neutral" then
+		if player.InternalName ~= "Neutral" then
 			local spawns = player.GetActorsByType("rmbospawn")
 			num = num + #spawns
 		end

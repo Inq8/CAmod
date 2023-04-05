@@ -273,17 +273,17 @@ AutoRepairAndRebuildBuildings = function(player, maxAttempts)
 	local buildings = Utils.Where(Map.ActorsInWorld, function(self) return self.Owner == player and self.HasProperty("StartBuildingRepairs") end)
 	Utils.Do(buildings, function(a)
 		local excludeFromRebuilding = false
-		if RebuildExcludes ~= nil and RebuildExcludes[player.Name] ~= nil then
-			if RebuildExcludes[player.Name].Actors ~= nil then
-				Utils.Do(RebuildExcludes[player.Name].Actors, function(aa)
+		if RebuildExcludes ~= nil and RebuildExcludes[player.InternalName] ~= nil then
+			if RebuildExcludes[player.InternalName].Actors ~= nil then
+				Utils.Do(RebuildExcludes[player.InternalName].Actors, function(aa)
 					if aa == a then
 						excludeFromRebuilding = true
 						return;
 					end
 				end)
 			end
-			if RebuildExcludes[player.Name].Types ~= nil then
-				Utils.Do(RebuildExcludes[player.Name].Types, function(t)
+			if RebuildExcludes[player.InternalName].Types ~= nil then
+				Utils.Do(RebuildExcludes[player.InternalName].Types, function(t)
 					if a.Type == t then
 						excludeFromRebuilding = true
 						return;
@@ -313,8 +313,8 @@ AutoRepairBuilding = function(building, player)
 end
 
 AutoRebuildBuilding = function(building, player, maxAttempts)
-	if BuildingQueues[player.Name] == nil then
-		BuildingQueues[player.Name] = { }
+	if BuildingQueues[player.InternalName] == nil then
+		BuildingQueues[player.InternalName] = { }
 	end
 	if maxAttempts == nil then
 		maxAttempts = 15
@@ -340,20 +340,20 @@ AddToRebuildQueue = function(building, player, loc, pos, maxAttempts)
 		MaxAttempts = maxAttempts
 	}
 
-	BuildingQueues[player.Name][#BuildingQueues[player.Name] + 1] = queueItem
+	BuildingQueues[player.InternalName][#BuildingQueues[player.InternalName] + 1] = queueItem
 
 	-- if the queue was empty, start rebuild immediately
-	if #BuildingQueues[player.Name] == 1 then
+	if #BuildingQueues[player.InternalName] == 1 then
 		RebuildNextBuilding(player)
 	end
 end
 
 RebuildNextBuilding = function(player)
-	if BuildingQueues[player.Name] == nil or #BuildingQueues[player.Name] == 0 then
+	if BuildingQueues[player.InternalName] == nil or #BuildingQueues[player.InternalName] == 0 then
 		return
 	end
 
-	local queueItem = BuildingQueues[player.Name][1]
+	local queueItem = BuildingQueues[player.InternalName][1]
 	RebuildBuilding(queueItem)
 end
 
@@ -361,7 +361,7 @@ RebuildBuilding = function(queueItem)
 	local buildTime = math.ceil(Actor.BuildTime(queueItem.Actor.Type) * StructureBuildTimeMultipliers[Difficulty])
 
 	Trigger.AfterDelay(buildTime, function()
-		table.remove(BuildingQueues[queueItem.Player.Name], 1)
+		table.remove(BuildingQueues[queueItem.Player.InternalName], 1)
 
 		-- rebuild if no units are nearby (potentially blocking), no enemy buildings are nearby, and friendly buildings are in the area (but nothing friendly in the same cell)
 		if CanRebuild(queueItem) then
@@ -373,7 +373,7 @@ RebuildBuilding = function(queueItem)
 		-- otherwise add to back of queue (if attempts remaining)
 		elseif queueItem.AttemptsRemaining > 1 then
 			queueItem.AttemptsRemaining = queueItem.AttemptsRemaining - 1
-			BuildingQueues[queueItem.Player.Name][#BuildingQueues[queueItem.Player.Name] + 1] = queueItem
+			BuildingQueues[queueItem.Player.InternalName][#BuildingQueues[queueItem.Player.InternalName] + 1] = queueItem
 		end
 
 		RebuildNextBuilding(queueItem.Player)
@@ -637,8 +637,8 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 			end
 
 			-- every harvester killed delays the next wave
-			if HarvesterDeathStacks[squad.Player.Name] ~= nil and HarvesterDeathStacks[squad.Player.Name] > 0 then
-				HarvesterDeathStacks[squad.Player.Name] = HarvesterDeathStacks[squad.Player.Name] - 1
+			if HarvesterDeathStacks[squad.Player.InternalName] ~= nil and HarvesterDeathStacks[squad.Player.InternalName] > 0 then
+				HarvesterDeathStacks[squad.Player.InternalName] = HarvesterDeathStacks[squad.Player.InternalName] - 1
 				ticksUntilNext = ticksUntilNext + HarvesterDeathDelayTime[Difficulty]
 			end
 
@@ -684,8 +684,8 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 				AddToSquadAssignmentQueue(producerId, squad)
 
 				-- add production trigger once for the producer (or add again if owner has changed)
-				if OnProductionTriggers[producerId] == nil or OnProductionTriggers[producerId] ~= producer.Owner.Name then
-					OnProductionTriggers[producerId] = tostring(producer.Owner.Name)
+				if OnProductionTriggers[producerId] == nil or OnProductionTriggers[producerId] ~= producer.Owner.InternalName then
+					OnProductionTriggers[producerId] = tostring(producer.Owner.InternalName)
 
 					-- add produced unit to list of idle units for the squad
 					Trigger.OnProduction(producer, function(p, produced)
@@ -719,10 +719,10 @@ HandleProducedSquadUnit = function(produced, producerId, squad)
 	if not isHarvester then
 
 		-- assign unit to IdleUnits of the next squad in the assignment queue of the producer
-		if SquadAssignmentQueue[produced.Owner.Name][producerId][1] ~= nil then
-			local assignedSquad = SquadAssignmentQueue[produced.Owner.Name][producerId][1]
-			SquadAssignmentQueue[produced.Owner.Name][producerId][1].IdleUnits[#assignedSquad.IdleUnits + 1] = produced
-			table.remove(SquadAssignmentQueue[produced.Owner.Name][producerId], 1)
+		if SquadAssignmentQueue[produced.Owner.InternalName][producerId][1] ~= nil then
+			local assignedSquad = SquadAssignmentQueue[produced.Owner.InternalName][producerId][1]
+			SquadAssignmentQueue[produced.Owner.InternalName][producerId][1].IdleUnits[#assignedSquad.IdleUnits + 1] = produced
+			table.remove(SquadAssignmentQueue[produced.Owner.InternalName][producerId], 1)
 		elseif produced.HasProperty("Hunt") then
 			produced.Hunt()
 		end
@@ -760,13 +760,13 @@ end
 -- used to make sure multiple squads being produced from the same structure don't get mixed up
 -- also split by player to prevent these getting jumbled if producer owner changes
 AddToSquadAssignmentQueue = function(producerId, squad)
-	if SquadAssignmentQueue[squad.Player.Name] == nil then
-		SquadAssignmentQueue[squad.Player.Name] = { }
+	if SquadAssignmentQueue[squad.Player.InternalName] == nil then
+		SquadAssignmentQueue[squad.Player.InternalName] = { }
 	end
-	if SquadAssignmentQueue[squad.Player.Name][producerId] == nil then
-		SquadAssignmentQueue[squad.Player.Name][producerId] = { }
+	if SquadAssignmentQueue[squad.Player.InternalName][producerId] == nil then
+		SquadAssignmentQueue[squad.Player.InternalName][producerId] = { }
 	end
-	SquadAssignmentQueue[squad.Player.Name][producerId][#SquadAssignmentQueue[squad.Player.Name][producerId] + 1] = squad
+	SquadAssignmentQueue[squad.Player.InternalName][producerId][#SquadAssignmentQueue[squad.Player.InternalName][producerId] + 1] = squad
 end
 
 IsSquadInProduction = function(squad)
@@ -940,10 +940,10 @@ AutoReplaceHarvester = function(player, harvester)
 end
 
 AddHarvesterDeathStack = function(player)
-	if HarvesterDeathStacks[player.Name] == nil then
-		HarvesterDeathStacks[player.Name] = 0
+	if HarvesterDeathStacks[player.InternalName] == nil then
+		HarvesterDeathStacks[player.InternalName] = 0
 	end
-	HarvesterDeathStacks[player.Name] = HarvesterDeathStacks[player.Name] + 1
+	HarvesterDeathStacks[player.InternalName] = HarvesterDeathStacks[player.InternalName] + 1
 end
 
 DoHelicopterDrop = function(player, entryPath, transportType, units, unitFunc, transportExitFunc)
