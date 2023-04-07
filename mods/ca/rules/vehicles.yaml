@@ -2834,8 +2834,6 @@ APC2.Reinforce:
 	UnloadOnCondition@UNLOAD:
 		RequiresCondition: damage
 		BotOnly: False
-	-UpgradeableTo:
-	-Upgradeable@VULCAN:
 
 VULC:
 	Inherits: ^TankTD
@@ -2970,6 +2968,20 @@ VULC.AI:
 		Prerequisites: ~botplayer, ~vehicles.gdi, ~vulcan.upgrade, ~techlevel.medium
 	Cargo:
 		InitialUnits: N1,N1,N1,N2,N3
+
+VULC.Reinforce:
+	Inherits: VULC
+	Inherits@AIUNLOAD: ^AIUNLOAD
+	RenderSprites:
+		Image: vulc
+	-Buildable:
+	Cargo:
+		InitialUnits: N1,N1,N2,N3,N3
+	GrantConditionOnDamageState@UNLOAD:
+		Condition: damage
+	UnloadOnCondition@UNLOAD:
+		RequiresCondition: damage
+		BotOnly: False
 
 LTNK:
 	Inherits: ^TankTD
@@ -6495,7 +6507,7 @@ APOC:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 300
-		Prerequisites: npwr, ~vehicles.soviet, ~!atomicengines.upgrade, ~techlevel.high
+		Prerequisites: npwr, stek, ~vehicles.soviet, ~!atomicengines.upgrade, ~techlevel.high
 		Description: Enormous slow tank with uranium shells and anti-air capability.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
@@ -6607,7 +6619,7 @@ APOC.ATOMIC:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 301
-		Prerequisites: npwr, ~vehicles.soviet, ~atomicengines.upgrade, ~techlevel.high
+		Prerequisites: npwr, stek, ~vehicles.soviet, ~atomicengines.upgrade, ~techlevel.high
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Attributes: • Can crush smaller vehicles and concrete walls\n• Explodes and leaves radiation on death
