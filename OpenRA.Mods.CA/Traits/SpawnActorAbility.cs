@@ -103,9 +103,10 @@ namespace OpenRA.Mods.CA.Traits
 			faction = init.GetValue<FactionInit, string>(init.Self.Owner.Faction.InternalName);
 		}
 
-		void INotifyCreated.Created(Actor self)
+		protected override void Created(Actor self)
 		{
 			ammoPool = self.TraitsImplementing<AmmoPool>().SingleOrDefault(ap => ap.Info.Name == Info.AmmoPool);
+			base.Created(self);
 		}
 
 		Order IIssueDeployOrder.IssueDeployOrder(Actor self, bool queued)
@@ -172,7 +173,8 @@ namespace OpenRA.Mods.CA.Traits
 			return order.OrderString == "SpawnActorAbility" ? Info.Voice : null;
 		}
 
-		public bool CanSpawnActor {
+		public bool CanSpawnActor
+		{
 			get { return ammoPool == null || ammoPool.HasAmmo; }
 		}
 	}
