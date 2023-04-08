@@ -3431,6 +3431,15 @@ SGLI:
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: being-warped
+	Cloak:
+		InitialDelay: 1
+		CloakDelay: 125
+		Palette: cloakra
+		IsPlayerPalette: true
+		DetectionTypes: Cloak
+		UncloakOn: Attack, Damage
+		CloakSound: gstealon.aud
+		UncloakSound: gstealof.aud
 	SpawnActorOnDeath:
 		Actor: sgli.crashing
 		RequiresCondition: !being-warped
@@ -3446,7 +3455,7 @@ SGLI:
 		TargetTypes: AirSmall
 	GrantTimedCondition@GLIDING:
 		Condition: gliding
-		Duration: 750
+		Duration: 1125
 	TimedConditionBar@GLIDING:
 		Condition: gliding
 		Color: 8A8A8A
@@ -3489,6 +3498,7 @@ SGLI.crashing:
 	RejectsOrders:
 		-RequiresCondition:
 	-MapEditorData:
+	-Cloak:
 
 SGLI.deployed:
 	Inherits: SGLI
@@ -3518,6 +3528,7 @@ SGLI.deployed:
 	RejectsOrders:
 		-RequiresCondition:
 	-MapEditorData:
+	-Cloak:
 
 SGLI.discarded:
 	Inherits@1: ^SpriteActor
