@@ -717,6 +717,7 @@ HandleProducedSquadUnit = function(produced, producerId, squad)
 	end)
 
 	if not isHarvester then
+		InitSquadAssignmentQueueForProducer(producerId, squad)
 
 		-- assign unit to IdleUnits of the next squad in the assignment queue of the producer
 		if SquadAssignmentQueue[produced.Owner.InternalName][producerId][1] ~= nil then
@@ -760,13 +761,17 @@ end
 -- used to make sure multiple squads being produced from the same structure don't get mixed up
 -- also split by player to prevent these getting jumbled if producer owner changes
 AddToSquadAssignmentQueue = function(producerId, squad)
+	InitSquadAssignmentQueueForProducer(producerId, squad)
+	SquadAssignmentQueue[squad.Player.InternalName][producerId][#SquadAssignmentQueue[squad.Player.InternalName][producerId] + 1] = squad
+end
+
+InitSquadAssignmentQueueForProducer = function(producerId, squad)
 	if SquadAssignmentQueue[squad.Player.InternalName] == nil then
 		SquadAssignmentQueue[squad.Player.InternalName] = { }
 	end
 	if SquadAssignmentQueue[squad.Player.InternalName][producerId] == nil then
 		SquadAssignmentQueue[squad.Player.InternalName][producerId] = { }
 	end
-	SquadAssignmentQueue[squad.Player.InternalName][producerId][#SquadAssignmentQueue[squad.Player.InternalName][producerId] + 1] = squad
 end
 
 IsSquadInProduction = function(squad)
