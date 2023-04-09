@@ -613,8 +613,8 @@ MGattG:
 	Report: gun5.aud
 	ValidTargets: Ground, Infantry
 	InvalidTargets: Vehicle, Ship, Water, Structure, Wall, Husk
-	Projectile: Bullet
-		Speed: 1c682
+	Projectile: InstantHit
+		Blockable: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
 		Damage: 15000
@@ -715,8 +715,7 @@ AKM:
 	BurstDelays: 2
 	Range: 7c0
 	InvalidTargets: Structure, Wall, Husk, Air, AirSmall
-	Projectile: Bullet
-		Speed: 1c682
+	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
 		Damage: 4700
@@ -829,12 +828,18 @@ CommandoIFVGun:
 	ReloadDelay: 10
 	Burst: 3
 	BurstDelays: 2
+	-Projectile:
+	Projectile: Bullet
+		Speed: 1c682
 	Warhead@1Dam: SpreadDamage
 		Damage: 4700
 
 SealIFVGun:
 	Inherits: MP5
 	ReloadDelay: 8
+	-Projectile:
+	Projectile: Bullet
+		Speed: 1c682
 
 ShadowOperativeGun:
 	Inherits: ^HeavyMG
