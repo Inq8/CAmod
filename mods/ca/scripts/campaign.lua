@@ -689,7 +689,8 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 
 					-- add produced unit to list of idle units for the squad
 					Trigger.OnProduction(producer, function(p, produced)
-						if p.Owner ~= produced.Owner then
+						if produced.Owner ~= p.Owner or produced.Owner ~= squad.Player then
+							produced.Owner = squad.Player
 							return
 						end
 						HandleProducedSquadUnit(produced, producerId, squad)
