@@ -377,6 +377,7 @@ WorldLoaded = function()
 		if not CyborgsProvoked then
 			CyborgsProvoked = true
 			Utils.Do(cyborgs, function(c)
+				TargetSwapChance(c, 10)
 				c.GrantCondition("provoked")
 			end)
 		end

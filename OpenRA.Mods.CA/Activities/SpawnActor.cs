@@ -59,7 +59,8 @@ namespace OpenRA.Mods.CA.Activities
 			var td = CreateTypeDictionary(self, targetCell);
 			var placed = false;
 
-			self.World.AddFrameEndTask(w => {
+			self.World.AddFrameEndTask(w =>
+			{
 				var unit = self.World.CreateActor(false, type, td);
 				var positionable = unit.TraitOrDefault<IPositionable>();
 

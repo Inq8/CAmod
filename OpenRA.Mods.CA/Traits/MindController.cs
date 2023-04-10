@@ -73,6 +73,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If true, undeploy when control is gained of target.")]
 		public readonly bool UndeployOnControl = false;
 
+		[Desc("If true and TicksToControl > 0, undeploy if interrupted (e.g. if target dies).")]
+		public readonly bool UndeployOnInterrupt = false;
+
 		[Desc("If true, slave will be released when attacking a new target.")]
 		public readonly bool ReleaseOnNewTarget = false;
 
@@ -104,6 +107,8 @@ namespace OpenRA.Mods.CA.Traits
 		int controlTicks;
 		int progressToken = Actor.InvalidConditionToken;
 
+		GrantConditionOnDeploy deployTrait;
+
 		public MindController(Actor self, MindControllerInfo info)
 			: base(info)
 		{
@@ -111,6 +116,11 @@ namespace OpenRA.Mods.CA.Traits
 			ResetProgress(self);
 			capacityModifiers = self.TraitsImplementing<MindControllerCapacityModifier>();
 			UpdateCapacity(self);
+		}
+
+		protected override void Created(Actor self)
+		{
+			deployTrait = self.TraitOrDefault<GrantConditionOnDeploy>();
 		}
 
 		void StackControllingCondition(Actor self, string condition)
@@ -148,7 +158,15 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			if (currentTarget.Type != TargetType.Actor)
+			{
+				if (Info.UndeployOnInterrupt && deployTrait != null && deployTrait.DeployState == DeployState.Deployed)
+				{
+					ResetProgress(self);
+					deployTrait.Undeploy();
+				}
+
 				return;
+			}
 
 			if (controlTicks < Info.TicksToControl)
 				controlTicks++;
@@ -348,7 +366,6 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (Info.UndeployOnControl)
 			{
-				var deployTrait = self.TraitOrDefault<GrantConditionOnDeploy>();
 				if (deployTrait != null && deployTrait.DeployState == DeployState.Deployed)
 					deployTrait.Undeploy();
 			}

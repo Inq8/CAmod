@@ -409,6 +409,7 @@ U3:
 		Prerequisites: barracks.upgraded
 	AutoTarget:
 		ScanRadius: 8
+		AllowMovement: False
 	GrantConditionOnPrerequisite@CRYO:
 		Condition: cryr-upgrade
 		Prerequisites: cryr.upgrade
@@ -1171,6 +1172,7 @@ HACK:
 		ControllingCondition: hacked-in
 		ProgressCondition: hacking
 		UndeployOnControl: true
+		UndeployOnInterrupt: true
 	WithDecoration@HACKEDIN:
 		Image: hacking
 		Sequence: hacking
@@ -1982,7 +1984,7 @@ VICE:
 
 SNIP:
 	Inherits: ^Soldier
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMovePrioritizeInfantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 		Image: sniper
@@ -2010,10 +2012,8 @@ SNIP:
 		RevealGeneratedShroud: false
 	RevealsShroud@GAPGEN:
 		Range: 6c0
-	AutoTargetPriority@DEFAULTINF:
-		RequiresCondition: !apb-upgrade && !stance-attackanything && !assault-move
-	AutoTargetPriority@ATTACKANYTHINGINF:
-		RequiresCondition: !apb-upgrade && (stance-attackanything || assault-move)
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Infantry
 	AutoTargetPriority@DEFAULTVEH:
 		RequiresCondition: apb-upgrade && !stance-attackanything && !assault-move
 		ValidTargets: Vehicle, Ship
@@ -2026,31 +2026,17 @@ SNIP:
 		Priority: 10
 	Armament@PRIMARY:
 		Weapon: sniper
-		PauseOnCondition: !ammo
 		RequiresCondition: !apb-upgrade
 	Armament@PRIMARYUPG:
-		Weapon: sniper.nonvehicle
-		PauseOnCondition: !ammo
-		RequiresCondition: apb-upgrade
-	Armament@DUMMY:
-		Name: tertiary
-		Weapon: sniper.dummy
-		PauseOnCondition: ammo
+		Weapon: sniper.vehicle
+		RequiresCondition: apb-upgrade && rank-veteran < 3
+	Armament@PRIMARYUPGELITE:
+		Weapon: sniper.vehicleElite
+		RequiresCondition: apb-upgrade && rank-veteran >= 3
 	Armament@Garrison:
 		Weapon: sniperE
 		Name: mounted
 		MuzzleSequence: garrison-muzzle
-		PauseOnCondition: !ammo
-	Armament@APROUND:
-		Name: secondary
-		Weapon: sniper.vehicle
-		RequiresCondition: apb-upgrade && rank-veteran < 3
-		PauseOnCondition: !ammo
-	Armament@APROUNDELITE:
-		Name: secondary
-		Weapon: sniper.vehicleElite
-		RequiresCondition: apb-upgrade && rank-veteran >= 3
-		PauseOnCondition: !ammo
 	Mobile:
 		Speed: 46
 		Voice: Move
@@ -2083,17 +2069,27 @@ SNIP:
 		Palette: temptd
 		Position: TopRight
 		RequiresCondition: hidden
-	AttackFrontal:
+	AttackFrontalCharged:
 		Voice: Attack
-		PauseOnCondition: being-warped
 		FacingTolerance: 0
-		Armaments: primary, secondary, tertiary
+		ChargeLevel: 25
+		ChargingCondition: aiming
+		PauseOnCondition: being-warped
+		ShowSelectionBar: true
+		SelectionBarColor: 117700
 	WithInfantryBody:
 		AttackSequences:
 			primary: shoot
 			secondary: shoot
 		StandSequences: stand, stand2
-		RequiresCondition: !parachute && !being-warped
+		RequiresCondition: !parachute && !being-warped && !aiming
+	WithInfantryBody@AIMING:
+		AttackSequences:
+			primary: aim
+			secondary: aim
+		RequiresCondition: !parachute && !being-warped && aiming
+		IdleSequences: aim
+		StandSequences: aim
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
@@ -2109,12 +2105,6 @@ SNIP:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	AmmoPool:
-		Ammo: 1
-		AmmoCondition: ammo
-	ReloadAmmoPool:
-		Delay: 130
-		Count: 1
 
 BORI:
 	Inherits: ^Soldier
@@ -2472,7 +2462,7 @@ JJET:
 	Inherits@9: ^AuraHealable
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
 	Inherits@mind: ^MindControllable
@@ -3441,6 +3431,15 @@ SGLI:
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: being-warped
+	Cloak:
+		InitialDelay: 1
+		CloakDelay: 125
+		Palette: cloakra
+		IsPlayerPalette: true
+		DetectionTypes: Cloak
+		UncloakOn: Attack, Damage
+		CloakSound: gstealon.aud
+		UncloakSound: gstealof.aud
 	SpawnActorOnDeath:
 		Actor: sgli.crashing
 		RequiresCondition: !being-warped
@@ -3456,7 +3455,7 @@ SGLI:
 		TargetTypes: AirSmall
 	GrantTimedCondition@GLIDING:
 		Condition: gliding
-		Duration: 750
+		Duration: 1125
 	TimedConditionBar@GLIDING:
 		Condition: gliding
 		Color: 8A8A8A
@@ -3499,6 +3498,7 @@ SGLI.crashing:
 	RejectsOrders:
 		-RequiresCondition:
 	-MapEditorData:
+	-Cloak:
 
 SGLI.deployed:
 	Inherits: SGLI
@@ -3528,6 +3528,7 @@ SGLI.deployed:
 	RejectsOrders:
 		-RequiresCondition:
 	-MapEditorData:
+	-Cloak:
 
 SGLI.discarded:
 	Inherits@1: ^SpriteActor
@@ -3650,7 +3651,7 @@ YURI:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 15000
+		HP: 20000
 	Mobile:
 		Speed: 60
 		Voice: Move
@@ -3713,7 +3714,7 @@ YURI:
 		Armaments: primary, secondary, aidummy
 		FacingTolerance: 0
 	RevealsShroud:
-		Range: 6c0
+		Range: 7c0
 	Passenger:
 		CustomPipType: red
 		Voice: Move
@@ -3850,7 +3851,7 @@ SEAL:
 		Ammo: 1
 		AmmoCondition: ammo
 	ReloadAmmoPoolCA:
-		Delay: 500
+		Delay: 300
 		Count: 1
 		ShowSelectionBar: true
 		SelectionBarColor: dd0000

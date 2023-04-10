@@ -9,11 +9,10 @@
  */
 #endregion
 
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using OpenRA.Activities;
 using OpenRA.Mods.CA.Activities;
-using OpenRA.Mods.CA.Orders;
 using OpenRA.Mods.Common.Orders;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
@@ -116,7 +115,7 @@ namespace OpenRA.Mods.CA.Traits
 			UpgradeInfo = new UpgradeInfo();
 		}
 
-		void INotifyCreated.Created(Actor self)
+		protected override void Created(Actor self)
 		{
 			var upgradeInfo = upgradesManager.UpgradeableActorCreated(this, Info.Type, self.Info.Name, Info.Actor, Info.Condition, Info.Cost, Info.BuildDuration, Info.BuildDurationModifier);
 			UpgradeInfo.BuildDuration = upgradeInfo.BuildDuration;
@@ -125,6 +124,8 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (upgradesManager.IsUnlocked(Info.Type))
 				Unlock();
+
+			base.Created(self);
 		}
 
 		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)

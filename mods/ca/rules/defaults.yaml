@@ -2450,10 +2450,11 @@
 	Explodes:
 		Weapon: UnitExplode
 		RequiresCondition: !airborne
-	RevealOnFire:
+	RevealOnFireCA:
 		RevealGeneratedShroud: True
 		Duration: 20
-		Radius: 2c512
+		Radius: 2c0
+		GroundPosition: true
 	RevealOnDeath:
 		Duration: 100
 		Radius: 2c512
@@ -3808,10 +3809,10 @@
 	Targetable@INF:
 		TargetTypes: InfantryProducer
 	ProductionCostMultiplier@MQS1:
-		Multiplier: 300
+		Multiplier: 200
 		Prerequisites: infantry.any, global.multiqueuescaled, !optprod1.upgrade, !optprod2.upgrade
 	ProductionCostMultiplier@MQS2:
-		Multiplier: 200
+		Multiplier: 150
 		Prerequisites: infantry.any, global.multiqueuescaled, optprod1.upgrade, !optprod2.upgrade
 
 ^ProducesCyborgs:
@@ -3862,7 +3863,7 @@
 		ProductionType: VehicleMQ
 		RequiresCondition: global-multiqueue
 	ProductionCostMultiplier@MQS1:
-		Multiplier: 175
+		Multiplier: 150
 		Prerequisites: vehicles.any, global.multiqueuescaled, !optprod1.upgrade, !optprod2.upgrade
 	ProductionCostMultiplier@MQS2:
 		Multiplier: 125
@@ -3943,6 +3944,12 @@
 	ProductionBar@MQAIR:
 		ProductionType: AircraftMQ
 		RequiresCondition: global-multiqueue
+	ProductionCostMultiplier@MQS1:
+		Multiplier: 200
+		Prerequisites: aircraft.any, global.multiqueuescaled, !optprod1.upgrade, !optprod2.upgrade
+	ProductionCostMultiplier@MQS2:
+		Multiplier: 150
+		Prerequisites: aircraft.any, global.multiqueuescaled, optprod1.upgrade, !optprod2.upgrade
 
 ^ProducesHelicopters:
 	Inherits@AIR: ^ProducesAircraft

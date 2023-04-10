@@ -10,9 +10,9 @@
 #endregion
 
 using System.Linq;
-using OpenRA.Traits;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Mods.Common.Traits.Render;
+using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits.Render
 {
@@ -29,7 +29,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 		public override object Create(ActorInitializer init) { return new WithEnabledAnimation(init.Self, this); }
 	}
 
-	public class WithEnabledAnimation: ConditionalTrait<WithEnabledAnimationInfo>
+	public class WithEnabledAnimation : ConditionalTrait<WithEnabledAnimationInfo>
 	{
 		readonly WithSpriteBody wsb;
 

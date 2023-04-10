@@ -40,12 +40,14 @@ namespace OpenRA.Mods.CA.Traits
 				type = self.Info.Name;
 		}
 
-		void INotifyCreated.Created(Actor self)
+		protected override void Created(Actor self)
 		{
 			if (IsTraitDisabled)
 				return;
 
 			upgradesManager.UpgradeProviderCreated(type);
+
+			base.Created(self);
 		}
 
 		protected override void TraitEnabled(Actor self)

@@ -92,8 +92,9 @@ namespace OpenRA.Mods.CA.Activities
 				Cancel(self, true);
 
 			if (IsCanceling || isHostInvalid)
+			{
 				return true;
-
+			}
 			else if (!isCloseEnough)
 			{
 				var targetCell = self.World.Map.CellContaining(host.Actor.CenterPosition);

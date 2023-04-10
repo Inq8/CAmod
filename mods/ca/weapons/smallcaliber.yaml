@@ -534,7 +534,7 @@ M60mgTD:
 
 M60mgXO:
 	Inherits: M60mgTD
-	Range: 5c768
+	Range: 6c0
 	Burst: 2
 	ReloadDelay: 60
 	Warhead@1Dam: SpreadDamage
@@ -613,8 +613,8 @@ MGattG:
 	Report: gun5.aud
 	ValidTargets: Ground, Infantry
 	InvalidTargets: Vehicle, Ship, Water, Structure, Wall, Husk
-	Projectile: Bullet
-		Speed: 1c682
+	Projectile: InstantHit
+		Blockable: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
 		Damage: 15000
@@ -715,8 +715,7 @@ AKM:
 	BurstDelays: 2
 	Range: 7c0
 	InvalidTargets: Structure, Wall, Husk, Air, AirSmall
-	Projectile: Bullet
-		Speed: 1c682
+	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
 		Damage: 4700
@@ -743,8 +742,8 @@ AKME:
 	Range: 6c0
 
 SNIPER:
-	ReloadDelay: 130
-	Range: 7c0
+	ReloadDelay: 105
+	Range: 8c512
 	Report: snipe.aud
 	Projectile: InstantHit
 		Blockable: true
@@ -766,47 +765,30 @@ SNIPER:
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
 
-SNIPER.nonvehicle:
-	Inherits: SNIPER
-	InvalidTargets: Vehicle, Ship
-	Warhead@1Dam: SpreadDamage
-		InvalidTargets: Vehicle, Ship
-
-SNIPER.dummy:
-	Inherits: SNIPER
-	-Report:
-	-Warhead@1Dam:
-	-Warhead@2Eff:
-	-Warhead@3EffWater:
-	Warhead@1Dum: Dummy
-
 SNIPERE:
 	Inherits: SNIPER
 	Range: 6c0
 
 SNIPER.vehicle:
-	ReloadDelay: 130
+	Inherits: SNIPER
 	Range: 7c0
 	Report: ijarwe1a.aud
-	ValidTargets: Vehicle, Ship
-	Projectile: InstantHit
-		Blockable: true
 	Warhead@1Dam: SpreadDamage
-		Spread: 42
-		Damage: 6000
 		Versus:
-			Heavy: 90
-		ValidTargets: Vehicle, Ship
+			Light: 28
+			Heavy: 25
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
 	Warhead@2Eff: CreateEffect
 		Explosions: piff
+		-ValidTargets:
 	Warhead@3Eff: CreateEffect
 		Explosions: small_explosion
 		ImpactSounds: kaboom12.aud
 		ValidTargets: Vehicle, Ship, Trees
+	-Warhead@3EffWater:
 	Warhead@4EffWater: CreateEffect
 		Explosions: small_splash
 		ImpactSounds: splash9.aud
@@ -840,21 +822,24 @@ SNIPER.vehicleElite:
 
 SniperIFVGun:
 	Inherits: SNIPER.vehicle
-	-ValidTargets:
-	Warhead@1Dam: SpreadDamage
-		-ValidTargets:
 
 CommandoIFVGun:
 	Inherits: SMG
 	ReloadDelay: 10
 	Burst: 3
 	BurstDelays: 2
+	-Projectile:
+	Projectile: Bullet
+		Speed: 1c682
 	Warhead@1Dam: SpreadDamage
 		Damage: 4700
 
 SealIFVGun:
 	Inherits: MP5
 	ReloadDelay: 8
+	-Projectile:
+	Projectile: Bullet
+		Speed: 1c682
 
 ShadowOperativeGun:
 	Inherits: ^HeavyMG

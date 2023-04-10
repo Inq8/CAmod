@@ -1184,7 +1184,7 @@ ATEK:
 		Dimensions: 2,3
 		LocalCenterOffset: 0,-512,0
 	Health:
-		HP: 100000
+		HP: 110000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -1969,7 +1969,7 @@ HPAD:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 120
 		Prerequisites: radarorrepair, ~structures.allies, ~techlevel.medium
-		Description: Produces and reloads helicopters.
+		Description: Produces and reloads helicopters and VTOL aircraft.
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2424,7 +2424,7 @@ STEK:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Health:
-		HP: 100000
+		HP: 110000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -3582,10 +3582,7 @@ AIRS:
 		Multiplier: 90
 		Prerequisites: global.multiqueuefull
 	ProductionCostMultiplier@MQS1:
-		Multiplier: 90
-		Prerequisites: global.multiqueuescaled, !vehicles.any
-	ProductionCostMultiplier@MQS1:
-		Multiplier: 165
+		Multiplier: 140
 		Prerequisites: global.multiqueuescaled, vehicles.any, !optprod1.upgrade, !optprod2.upgrade
 	ProductionCostMultiplier@MQS2:
 		Multiplier: 115
@@ -3593,6 +3590,9 @@ AIRS:
 	ProductionCostMultiplier@MQS3:
 		Multiplier: 90
 		Prerequisites: global.multiqueuescaled, vehicles.any, optprod1.upgrade, optprod2.upgrade
+	ProductionCostMultiplier@MQS4:
+		Multiplier: 90
+		Prerequisites: global.multiqueuescaled, !vehicles.any
 
 NUKE:
 	Inherits: ^BuildingTD
@@ -4743,7 +4743,7 @@ HPAD.TD:
 		BuildPaletteOrder: 120
 		Prerequisites: radarorrepair, ~structures.nod, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Produces and reloads helicopters.
+		Description: Produces and reloads helicopters and VTOL aircraft.
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -6147,7 +6147,7 @@ INDP:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Health:
-		HP: 110000
+		HP: 120000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -6200,7 +6200,7 @@ OREP:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Health:
-		HP: 110000
+		HP: 120000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -6286,7 +6286,7 @@ UPGC:
 			TopLeft: -1536, -1024
 			BottomRight: 1536, 1536
 	Health:
-		HP: 110000
+		HP: 120000
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -6656,7 +6656,7 @@ TMPP:
 		Dimensions: 3,3
 		LocalCenterOffset: 0,-512,0
 	Health:
-		HP: 110000
+		HP: 120000
 	Armor:
 		Type: Wood
 	RevealsShroud:

@@ -273,22 +273,26 @@ AutoRepairAndRebuildBuildings = function(player, maxAttempts)
 	local buildings = Utils.Where(Map.ActorsInWorld, function(self) return self.Owner == player and self.HasProperty("StartBuildingRepairs") end)
 	Utils.Do(buildings, function(a)
 		local excludeFromRebuilding = false
-		if RebuildExcludes ~= nil and RebuildExcludes[player.InternalName] ~= nil then
-			if RebuildExcludes[player.InternalName].Actors ~= nil then
-				Utils.Do(RebuildExcludes[player.InternalName].Actors, function(aa)
-					if aa == a then
-						excludeFromRebuilding = true
-						return;
-					end
-				end)
-			end
-			if RebuildExcludes[player.InternalName].Types ~= nil then
-				Utils.Do(RebuildExcludes[player.InternalName].Types, function(t)
-					if a.Type == t then
-						excludeFromRebuilding = true
-						return;
-					end
-				end)
+		if a.Type == "fact" or a.Type == "afac" or a.Type == "sfac" then
+			excludeFromRebuilding = true
+		else
+			if RebuildExcludes ~= nil and RebuildExcludes[player.InternalName] ~= nil then
+				if RebuildExcludes[player.InternalName].Actors ~= nil then
+					Utils.Do(RebuildExcludes[player.InternalName].Actors, function(aa)
+						if aa == a then
+							excludeFromRebuilding = true
+							return;
+						end
+					end)
+				end
+				if RebuildExcludes[player.InternalName].Types ~= nil then
+					Utils.Do(RebuildExcludes[player.InternalName].Types, function(t)
+						if a.Type == t then
+							excludeFromRebuilding = true
+							return;
+						end
+					end)
+				end
 			end
 		end
 		AutoRepairBuilding(a, player)
@@ -689,7 +693,8 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 
 					-- add produced unit to list of idle units for the squad
 					Trigger.OnProduction(producer, function(p, produced)
-						if p.Owner ~= produced.Owner then
+						if produced.Owner ~= p.Owner or produced.Owner ~= squad.Player then
+							produced.Owner = squad.Player
 							return
 						end
 						HandleProducedSquadUnit(produced, producerId, squad)
@@ -717,6 +722,7 @@ HandleProducedSquadUnit = function(produced, producerId, squad)
 	end)
 
 	if not isHarvester then
+		InitSquadAssignmentQueueForProducer(producerId, squad)
 
 		-- assign unit to IdleUnits of the next squad in the assignment queue of the producer
 		if SquadAssignmentQueue[produced.Owner.InternalName][producerId][1] ~= nil then
@@ -760,13 +766,17 @@ end
 -- used to make sure multiple squads being produced from the same structure don't get mixed up
 -- also split by player to prevent these getting jumbled if producer owner changes
 AddToSquadAssignmentQueue = function(producerId, squad)
+	InitSquadAssignmentQueueForProducer(producerId, squad)
+	SquadAssignmentQueue[squad.Player.InternalName][producerId][#SquadAssignmentQueue[squad.Player.InternalName][producerId] + 1] = squad
+end
+
+InitSquadAssignmentQueueForProducer = function(producerId, squad)
 	if SquadAssignmentQueue[squad.Player.InternalName] == nil then
 		SquadAssignmentQueue[squad.Player.InternalName] = { }
 	end
 	if SquadAssignmentQueue[squad.Player.InternalName][producerId] == nil then
 		SquadAssignmentQueue[squad.Player.InternalName][producerId] = { }
 	end
-	SquadAssignmentQueue[squad.Player.InternalName][producerId][#SquadAssignmentQueue[squad.Player.InternalName][producerId] + 1] = squad
 end
 
 IsSquadInProduction = function(squad)

@@ -2722,6 +2722,7 @@ BGGY:
 
 APC2:
 	Inherits: ^TankTD
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
@@ -2833,8 +2834,6 @@ APC2.Reinforce:
 	UnloadOnCondition@UNLOAD:
 		RequiresCondition: damage
 		BotOnly: False
-	-UpgradeableTo:
-	-Upgradeable@VULCAN:
 
 VULC:
 	Inherits: ^TankTD
@@ -2969,6 +2968,20 @@ VULC.AI:
 		Prerequisites: ~botplayer, ~vehicles.gdi, ~vulcan.upgrade, ~techlevel.medium
 	Cargo:
 		InitialUnits: N1,N1,N1,N2,N3
+
+VULC.Reinforce:
+	Inherits: VULC
+	Inherits@AIUNLOAD: ^AIUNLOAD
+	RenderSprites:
+		Image: vulc
+	-Buildable:
+	Cargo:
+		InitialUnits: N1,N1,N2,N3,N3
+	GrantConditionOnDamageState@UNLOAD:
+		Condition: damage
+	UnloadOnCondition@UNLOAD:
+		RequiresCondition: damage
+		BotOnly: False
 
 LTNK:
 	Inherits: ^TankTD
@@ -3961,10 +3974,10 @@ FTNK:
 		IconPalette: chrometd
 		Description: Tank armed with dual short-range flamethrowers.
 	TooltipExtras:
-		Strengths: • Strong vs Infantry, Buildings, Light Armor
-		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
+		Strengths: • Strong vs Infantry, Buildings, Light Armor, Defenses
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
 	Mobile:
-		Speed: 82
+		Speed: 76
 	Health:
 		HP: 40000
 	Armor:
@@ -4012,7 +4025,7 @@ HFTK:
 		Prerequisites: anyradar, ~vehicles.blackh, ~techlevel.medium
 		Description: Heavy tank armed with dual short-range flamethrowers.
 	TooltipExtras:
-		Strengths: • Strong vs Infantry, Buildings, Light Armor
+		Strengths: • Strong vs Infantry, Buildings, Light Armor, Defenses
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 	Valued:
 		Cost: 1000
@@ -4026,7 +4039,7 @@ HFTK:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 70
+		Speed: 68
 		Voice: Move
 	RevealsShroud:
 		MinRange: 4c0
@@ -6494,7 +6507,7 @@ APOC:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 300
-		Prerequisites: npwr, ~vehicles.soviet, ~!atomicengines.upgrade, ~techlevel.high
+		Prerequisites: npwr, stek, ~vehicles.soviet, ~!atomicengines.upgrade, ~techlevel.high
 		Description: Enormous slow tank with uranium shells and anti-air capability.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
@@ -6606,7 +6619,7 @@ APOC.ATOMIC:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 301
-		Prerequisites: npwr, ~vehicles.soviet, ~atomicengines.upgrade, ~techlevel.high
+		Prerequisites: npwr, stek, ~vehicles.soviet, ~atomicengines.upgrade, ~techlevel.high
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
 		Attributes: • Can crush smaller vehicles and concrete walls\n• Explodes and leaves radiation on death

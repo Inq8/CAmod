@@ -78,7 +78,7 @@ namespace OpenRA.Mods.CA.Traits
 			var selectedPrerequisite = self.World.LobbyInfo.GlobalSettings
 				.OptionOrDefault(info.ID, info.DefaultValue);
 
-			prerequisites = info.Prerequisites;
+			prerequisites.Add(selectedPrerequisite);
 		}
 
 		IEnumerable<string> ITechTreePrerequisite.ProvidesPrerequisites => prerequisites;

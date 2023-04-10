@@ -65,6 +65,12 @@ AMCV:
 	RenderSprites:
 		PlayerPalette: playertd
 
+recondronedetection:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	ProvidesPrerequisite:
+
 ^Cloakable:
 	Cloak@MSGCLOAK:
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Damage, Heal, SelfHeal
@@ -84,7 +90,12 @@ SGEN:
 		DisplayTimerRelationships: Ally
 
 UAV:
-	-DetectCloaked:
+	DetectCloaked:
+		RequiresCondition: has-detection
+		Range: 7c0
+	GrantConditionOnPrerequisite@DETECTION:
+		Condition: has-detection
+		Prerequisites: recondronedetection
 	-Targetable@AIRBORNE:
 
 HQ:

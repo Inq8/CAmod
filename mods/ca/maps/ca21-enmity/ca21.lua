@@ -219,6 +219,11 @@ WorldLoaded = function()
 			ChemSilo.GrantCondition("chem-missile-enabled")
 		end
 	end)
+
+	Trigger.AfterDelay(DateTime.Minutes(22), function()
+		Notification("Commander, we've equipped our recon drones with stealth detection. This should help you locate the Nod bases in the area.")
+		Actor.Create("recondronedetection", true, { Owner = GDI })
+	end)
 end
 
 Tick = function()

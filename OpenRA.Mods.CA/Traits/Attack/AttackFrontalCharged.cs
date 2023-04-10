@@ -92,6 +92,12 @@ namespace OpenRA.Mods.CA.Traits
 			shotsFired = 0;
 		}
 
+		protected override void TraitEnabled(Actor self)
+		{
+			if (self.CurrentActivity is Attack && !(self.CurrentActivity is AttackCharged))
+				self.CurrentActivity.Cancel(self);
+		}
+
 		protected override void Tick(Actor self)
 		{
 			if (IsTraitDisabled || IsTraitPaused)
@@ -100,7 +106,7 @@ namespace OpenRA.Mods.CA.Traits
 			var reloading = false;
 			foreach (var armament in Armaments)
 			{
-				if (armament.IsReloading && armament.Burst == armament.Weapon.Burst)
+				if (!armament.IsTraitDisabled && armament.IsReloading && armament.Burst == armament.Weapon.Burst)
 				{
 					reloading = true;
 					break;

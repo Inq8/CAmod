@@ -11,8 +11,8 @@
 
 using System;
 using System.Linq;
-using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.CA.Orders;
+using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Widgets;
 using OpenRA.Traits;
 using OpenRA.Widgets;
