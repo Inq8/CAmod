@@ -351,6 +351,13 @@ WorldLoaded = function()
 		DoFinale()
 	end)
 
+	Trigger.OnDamaged(SignalTransmitter, function(self, attacker, damage)
+		if not SignalTransmitterDamageWarning and not FirstHackersArrived and self.Health < self.MaxHealth / 2 then
+			SignalTransmitterDamageWarning = true
+			Notification("Commander, we have reason to believe that the Signal Transmitter may be key to bringing the Mothership's shields down. Recommend we leave it intact until we have more details.")
+		end
+	end)
+
 	Trigger.OnKilled(SignalTransmitter, function(self, killer)
 		CreatePermanentMothershipCamera()
 		if ObjectiveHackSignalTransmitter ~= nil and not GDI.IsObjectiveCompleted(ObjectiveHackSignalTransmitter) then
