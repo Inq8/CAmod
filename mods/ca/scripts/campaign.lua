@@ -273,22 +273,26 @@ AutoRepairAndRebuildBuildings = function(player, maxAttempts)
 	local buildings = Utils.Where(Map.ActorsInWorld, function(self) return self.Owner == player and self.HasProperty("StartBuildingRepairs") end)
 	Utils.Do(buildings, function(a)
 		local excludeFromRebuilding = false
-		if RebuildExcludes ~= nil and RebuildExcludes[player.InternalName] ~= nil then
-			if RebuildExcludes[player.InternalName].Actors ~= nil then
-				Utils.Do(RebuildExcludes[player.InternalName].Actors, function(aa)
-					if aa == a then
-						excludeFromRebuilding = true
-						return;
-					end
-				end)
-			end
-			if RebuildExcludes[player.InternalName].Types ~= nil then
-				Utils.Do(RebuildExcludes[player.InternalName].Types, function(t)
-					if a.Type == t then
-						excludeFromRebuilding = true
-						return;
-					end
-				end)
+		if a.Type == "fact" or a.Type == "afac" or a.Type == "sfac" then
+			excludeFromRebuilding = true
+		else
+			if RebuildExcludes ~= nil and RebuildExcludes[player.InternalName] ~= nil then
+				if RebuildExcludes[player.InternalName].Actors ~= nil then
+					Utils.Do(RebuildExcludes[player.InternalName].Actors, function(aa)
+						if aa == a then
+							excludeFromRebuilding = true
+							return;
+						end
+					end)
+				end
+				if RebuildExcludes[player.InternalName].Types ~= nil then
+					Utils.Do(RebuildExcludes[player.InternalName].Types, function(t)
+						if a.Type == t then
+							excludeFromRebuilding = true
+							return;
+						end
+					end)
+				end
 			end
 		end
 		AutoRepairBuilding(a, player)
