@@ -36,8 +36,8 @@ optprod1.upgrade:
 	Tooltip:
 		Name: Upgrade: Optimized Production I
 	Buildable:
-		BuildPaletteOrder: 20
-		Prerequisites: anyradar, ~techlevel.medium, ~global.multiqueuescaled
+		BuildPaletteOrder: 15
+		Prerequisites: anyradar, ~techlevel.medium, ~global.multiqueuescaled, ~!optprod1.upgrade
 		IconPalette: chromes
 		Description: Reduces the cost of additional infantry, vehicle and air production structures.
 	TooltipExtras:
@@ -46,6 +46,21 @@ optprod1.upgrade:
 		Cost: 500
 	RenderSprites:
 		Image: optprod1.upgrade
+
+optprod2.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Optimized Production II
+	Buildable:
+		BuildPaletteOrder: 15
+		Prerequisites: techcenter, ~techlevel.high, ~global.multiqueuescaled, ~optprod1.upgrade
+		Description: Reduces the cost of additional infantry, vehicle and aircraft production structures.
+	TooltipExtras:
+		Strengths: + Reduced cost of additional infantry/air production by $250\n+ Reduced cost of additional vehicle production by $500
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: optprod2.upgrade
 
 flakarmor.upgrade:
 	Inherits: ^Upgrade
@@ -61,21 +76,6 @@ flakarmor.upgrade:
 		Cost: 1500
 	RenderSprites:
 		Image: flakarmor.upgrade
-
-optprod2.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Upgrade: Optimized Production II
-	Buildable:
-		BuildPaletteOrder: 20
-		Prerequisites: techcenter, ~techlevel.high, ~global.multiqueuescaled, ~optprod1.upgrade
-		Description: Reduces the cost of additional infantry, vehicle and aircraft production structures.
-	TooltipExtras:
-		Strengths: + Reduced cost of additional infantry/air production by $250\n+ Reduced cost of additional vehicle production by $500
-	Valued:
-		Cost: 500
-	RenderSprites:
-		Image: optprod2.upgrade
 
 #########################GDI#########
 ########################################
@@ -641,7 +641,7 @@ hazmatsoviet.upgrade:
 	Tooltip:
 		Name: Upgrade: Heavy Hazmat Suits
 	Buildable:
-		BuildPaletteOrder: 20
+		BuildPaletteOrder: 10
 		Prerequisites: ~player.soviet, anyradar, infantry.any, ~techlevel.medium
 		Description: Infantry are equipped with heavy hazmat suits which provides\n  protection against Tiberium and radiation.\n\nUpgrades: Infantry
 	TooltipExtras:
