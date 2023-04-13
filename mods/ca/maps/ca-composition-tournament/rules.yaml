@@ -1,0 +1,255 @@
+
+World:
+	LuaScript:
+		Scripts: composition-tournament.lua
+	MissionData:
+		Briefing: All units available and can be built instantly. Players are pitted against each other in sealed off arenas. Every player plays every other player at least once. Capture the command center to win a matchup. Winner is the player with the most matchup victories.
+	ScriptLobbyDropdown@cycles:
+		ID: numcycles
+		Label: No. of Round Robins
+		Description: How many times each player plays every other player
+		Values:
+			1: 1
+			2: 2
+			3: 3
+			4: 4
+			5: 5
+			6: 6
+			7: 7
+		Default: 2
+
+Player:
+	LobbyPrerequisiteCheckbox@SATHACK:
+		ID: satscan
+		Label: Satscan Enabled
+		Description: Players can periodically use a satscan power
+		Enabled: True
+		DisplayOrder: 999
+		Prerequisites: global.satscan
+
+playerutils:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	EditorOnlyTooltip:
+		Name: (player utils)
+	Immobile:
+		OccupiesSpace: false
+	WithSpriteBody:
+	RenderSpritesEditorOnly:
+		Image: waypoint
+	BodyOrientation:
+		QuantizedFacings: 1
+	MapEditorData:
+		Categories: System
+	ProvidesRadar:
+	Power:
+		Amount: 3000
+	MustBeDestroyed:
+		RequiredForShortGame: true
+	StoresResources:
+		Capacity: 500000
+	SpawnActorPowerCA@sathack:
+		Actor: camera.sathack
+		Prerequisites: global.satscan
+		LifeTime: 120
+		OrderName: sathack
+		Icon: hacksat
+		ChargeInterval: 2250
+		Name: Satscan
+		Description: \nReveals the targeted area for a short time.
+		LaunchSound: hacksat.aud
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		EffectImage: empty
+		EffectSequence: idle
+		EffectPalette: tseffect-ignore-lighting-alpha75
+		TargetCircleRange: 9c512
+		TargetCircleColor: 999999AA
+		SupportPowerPaletteOrder: 50
+		StartFullyCharged: true
+
+basebuilder:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	EditorOnlyTooltip:
+		Name: (basebuilder)
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+		TerrainTypes: Clear,Road
+	WithSpriteBody:
+	RenderSpritesEditorOnly:
+		Image: waypoint
+	BaseProvider:
+		Range: 22c0
+	GivesBuildableArea:
+		AreaTypes: static
+
+spectatorcam:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
+	RevealsMap:
+		RevealGeneratedShroud: true
+		ValidRelationships: Ally
+
+^Defense:
+	RequiresBuildableArea:
+		Adjacent: 22
+		AreaTypes: static
+
+E6:
+	Valued:
+		Cost: 0
+	Captures:
+		CaptureDelay: 325
+	Buildable:
+		BuildLimit: 1
+
+N6:
+	Valued:
+		Cost: 0
+	Captures:
+		CaptureDelay: 325
+	Buildable:
+		BuildLimit: 1
+
+S6:
+	Valued:
+		Cost: 0
+	Captures:
+		CaptureDelay: 325
+	Buildable:
+		BuildLimit: 1
+
+MISS:
+	DamageMultiplier@1:
+		Modifier: 0
+	Capturable:
+		RequiresCondition: !locked
+	ExternalCondition@LOCKED:
+		Condition: locked
+	Tooltip:
+		Name: Arena Command Center
+	TooltipDescription@ally:
+		Description: Capture this to win the matchup.
+	TooltipDescription@other:
+		Description: Capture this to win the matchup.
+
+WEAP:
+	-Sellable:
+	Capturable:
+		Types: None
+		RequiresCondition: being-captured
+	Targetable@TEMPORAL:
+		TargetTypes: None
+	Targetable@HACKABLE:
+		TargetTypes: None
+
+TENT:
+	-Sellable:
+	Capturable:
+		Types: None
+		RequiresCondition: being-captured
+	Targetable@TEMPORAL:
+		TargetTypes: None
+	Targetable@HACKABLE:
+		TargetTypes: None
+
+AFLD:
+	-Sellable:
+	Capturable:
+		Types: None
+		RequiresCondition: being-captured
+	Targetable@TEMPORAL:
+		TargetTypes: None
+	Targetable@HACKABLE:
+		TargetTypes: None
+	-AirstrikePower@Russianparabombs:
+	-AirstrikePower@CarpetBomb:
+	-AirstrikePower@Iraqiparabombs:
+	-AirstrikePower@MutaBomb:
+
+FIX:
+	Inherits@UPG: ^ProducesUpgrades
+	-Sellable:
+	Capturable:
+		Types: None
+		RequiresCondition: being-captured
+	Targetable@TEMPORAL:
+		TargetTypes: None
+	Targetable@HACKABLE:
+		TargetTypes: None
+	Production@SQBLD:
+		Produces: DefenseSQ
+		PauseOnCondition: forceshield || invulnerability || being-warped
+		RequiresCondition: !global-multiqueue
+	ProductionBar@SQDEF:
+		ProductionType: DefenseSQ
+		Color: 8A8A8A
+		RequiresCondition: !global-multiqueue
+
+AGUN.AI:
+	Inherits: AGUN
+	-Targetable:
+	Power:
+		Amount: 0
+	-Buildable:
+	Armament:
+		Weapon: ZSU-23-AI
+
+CTNK:
+	PortableChronoCA:
+		MaxDistance: 10
+
+CHPR:
+	PortableChronoCA:
+		MaxDistance: 10
+
+S4:
+	PortableChronoCA:
+		MaxDistance: 10
+
+MCV:
+	Buildable:
+		Prerequisites: ~disabled
+
+AMCV:
+	Buildable:
+		Prerequisites: ~disabled
+
+SMCV:
+	Buildable:
+		Prerequisites: ~disabled
+
+# ####
+
+hazmat.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+hazmatsoviet.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+bombard.strat:
+	Buildable:
+		Prerequisites: ~disabled
+
+seek.strat:
+	Buildable:
+		Prerequisites: ~disabled
+
+hold.strat:
+	Buildable:
+		Prerequisites: ~disabled
+
+U3.squad:
+	Buildable:
+		Prerequisites: ~disabled
+
+GTNK.squad:
+	Buildable:
+		Prerequisites: ~disabled
