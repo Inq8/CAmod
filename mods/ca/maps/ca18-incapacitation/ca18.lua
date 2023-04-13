@@ -293,7 +293,7 @@ LightningStrike = function()
 	Lighting.Flash("LightningStrike", duration)
 
 	repeat
-		soundNumber = Utils.RandomInteger(1, 6)
+		soundNumber = Utils.RandomInteger(1, 7)
 	until(soundNumber ~= LastSoundNumber)
 	LastSoundNumber = soundNumber
 
@@ -307,7 +307,7 @@ IonStorm = function()
 	local soundNumber
 	Lighting.Flash("IonStrike", duration)
 	repeat
-		soundNumber = Utils.RandomInteger(1, 3)
+		soundNumber = Utils.RandomInteger(1, 4)
 	until(soundNumber ~= LastIonSoundNumber)
 	LastIonSoundNumber = soundNumber
 	Media.PlaySound("ionstorm" .. soundNumber .. ".aud")
