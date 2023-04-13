@@ -1,6 +1,6 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2020 The OpenRA Developers (see AUTHORS)
+ * Copyright (c) The OpenRA Developers and Contributors
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
  * as published by the Free Software Foundation, either version 3 of
@@ -31,10 +31,6 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Changes the effective (displayed) owner of the spawned actor to the old owner (victim).")]
 		public readonly bool EffectiveOwnerFromOwner = false;
-
-		[Desc("DeathType that triggers the actor spawn. " +
-			"Leave empty to spawn an actor ignoring the DeathTypes.")]
-		public readonly string DeathType = null;
 
 		[Desc("Skips the spawned actor's make animations if true.")]
 		public readonly bool SkipMakeAnimations = true;

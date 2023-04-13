@@ -1504,6 +1504,9 @@
 			mdrn: 1
 		LimitConditions:
 			mdrn: mdrn-attached
+	AttachOnTransform@MINIDRONE:
+		Actor: mdrn.attached
+		RequiresCondition: mdrn-attached
 
 ^HoverTrail:
 	LeavesTrails:
@@ -2393,6 +2396,7 @@
 	-ChangesHealth@MINIDRONE:
 	-ExternalCondition@MINIDRONE:
 	-AttachableTo:
+	-AttachOnTransform@MINIDRONE:
 
 ^NeutralPlane:
 	Inherits@1: ^ExistsInWorld
