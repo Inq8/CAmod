@@ -89,6 +89,8 @@ Player:
 	LobbyPrerequisiteDropdown@QUEUETYPE:
 		DefaultValue: global.singlequeue
 		Visible: False
+		Values:
+			Single-Queue: global.singlequeue
 
 ^Upgrade:
 	Buildable:
@@ -455,7 +457,9 @@ SPY:
 
 E7:
 	Buildable:
-		Prerequisites: infantry.any
+		Prerequisites: infantry.any, !gunhero
+	ProvidesPrerequisite@GUNHERO:
+		Prerequisite: gunhero
 
 MEDI:
 	Buildable:
@@ -499,7 +503,9 @@ N5:
 
 RMBO:
 	Buildable:
-		Prerequisites: infantry.any
+		Prerequisites: infantry.any, !gunhero
+	ProvidesPrerequisite@GUNHERO:
+		Prerequisite: gunhero
 
 N6:
 	Buildable:
@@ -511,7 +517,9 @@ SNIP:
 
 BORI:
 	Buildable:
-		Prerequisites: infantry.any
+		Prerequisites: infantry.any, !gunhero
+	ProvidesPrerequisite@GUNHERO:
+		Prerequisite: gunhero
 
 MORT:
 	Buildable:
@@ -567,7 +575,9 @@ BH:
 
 YURI:
 	Buildable:
-		Prerequisites: infantry.any
+		Prerequisites: infantry.any, !mchero
+	ProvidesPrerequisite@MCHERO:
+		Prerequisite: mchero
 
 SEAL:
 	Buildable:
@@ -687,7 +697,9 @@ S6:
 
 MAST:
 	Buildable:
-		Prerequisites: infantry.any
+		Prerequisites: infantry.any, !mchero
+	ProvidesPrerequisite@MCHERO:
+		Prerequisite: mchero
 
 HARV.Scrin:
 	Buildable:

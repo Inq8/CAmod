@@ -26,8 +26,6 @@ Player:
 		Enabled: True
 		DisplayOrder: 999
 		Prerequisites: global.satscan
-	LobbyPrerequisiteDropdown@QUEUETYPE:
-		DefaultValue: global.singlequeue
 
 playerutils:
 	AlwaysVisible:
@@ -109,6 +107,9 @@ E6:
 		CaptureDelay: 325
 	Buildable:
 		BuildLimit: 1
+		Prerequisites: infantry.any, !engi
+	ProvidesPrerequisite@ENGI:
+		Prerequisite: engi
 
 N6:
 	Valued:
@@ -117,6 +118,9 @@ N6:
 		CaptureDelay: 325
 	Buildable:
 		BuildLimit: 1
+		Prerequisites: infantry.any, !engi
+	ProvidesPrerequisite@ENGI:
+		Prerequisite: engi
 
 S6:
 	Valued:
@@ -125,6 +129,9 @@ S6:
 		CaptureDelay: 325
 	Buildable:
 		BuildLimit: 1
+		Prerequisites: infantry.any, !engi
+	ProvidesPrerequisite@ENGI:
+		Prerequisite: engi
 
 MISS:
 	DamageMultiplier@1:
