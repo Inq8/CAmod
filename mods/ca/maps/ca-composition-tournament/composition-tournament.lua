@@ -289,11 +289,17 @@ ResetAll = function()
                 KillUnit(a)
             end)
             Utils.Do(SpectatorCams, function(c)
-                c.Destroy()
+                if not c.IsDead then
+                    c.Destroy()
+                end
             end)
             Utils.Do(BaseBuilders, function(b)
-                b.Destroy()
+                if not b.IsDead then
+                    b.Destroy()
+                end
             end)
+            SpectatorCams = { }
+            BaseBuilders = { }
         end
     end)
 end
