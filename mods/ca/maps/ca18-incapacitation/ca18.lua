@@ -221,7 +221,7 @@ InitGreece = function()
 	Actor.Create("hazmat.upgrade", true, { Owner = Greece })
 	Actor.Create("cryr.upgrade", true, { Owner = Greece })
 
-	RebuildExcludes.Greece = { Types = { "powr", "apwr", "hpad", "agun" } }
+	RebuildExcludes.Greece = { Types = { "powr", "apwr", "hpad", "agun", "pbox", "pris" } }
 
 	AutoRepairAndRebuildBuildings(Greece, 15)
 	SetupRefAndSilosCaptureCredits(Greece)
@@ -245,7 +245,7 @@ InitGDI = function()
 		Actor.Create("hold3.strat", true, { Owner = GDI })
 	end
 
-	RebuildExcludes.GDI = { Types = { "nuke", "nuk2", "hpad.td", "afld.gdi", "cram" } }
+	RebuildExcludes.GDI = { Types = { "nuke", "nuk2", "hpad.td", "afld.gdi", "cram", "gtwr", "atwr" } }
 
 	local titanTriggerFootprint = { TitanTrigger1.Location, TitanTrigger2.Location, TitanTrigger3.Location, TitanTrigger4.Location, TitanTrigger5.Location }
 	Trigger.OnEnteredFootprint(titanTriggerFootprint, function(a, id)
