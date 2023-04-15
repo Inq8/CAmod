@@ -81,12 +81,9 @@ GunWalkerZap:
 	ReloadDelay: 30
 	Burst: 5
 	BurstDelays: 8
-	Projectile: Bullet
-		Image: scrinzap
-		Speed: 800
-		Palette: scrin
-		Inaccuracy: 0c64
+	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
+		Spread: 128
 		Damage: 2450
 		Versus:
 			None: 100
@@ -96,11 +93,23 @@ GunWalkerZap:
 			Heavy: 15
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
+
+GunwalkerZapVisual:
+	Inherits: GunWalkerZap
+	-Report:
+	-Projectile:
+	Projectile: Bullet
+		Image: scrinzap
+		Speed: 800
+		Palette: scrin
+	-Warhead@1Dam:
+	Warhead@1Dum: Dummy
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
 		Image: scrinzaphit
 		ValidTargets: Ground, Ship, Air, AirSmall, Trees
+		Inaccuracy: 128
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piffs
 		ValidTargets: Water, Underwater
@@ -113,7 +122,6 @@ GunWalkerZapAA:
 		Image: scrinzapup
 		Speed: 1c682
 		Blockable: false
-		Inaccuracy: 0
 	ValidTargets: Air, AirSmall
 	Warhead@1Dam: SpreadDamage
 		Damage: 1800
