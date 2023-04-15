@@ -2640,7 +2640,7 @@ JJET:
 		Priority: 1
 	AutoTargetPriority@DEFAULT_AIR_ATTACK_INFANTRY:
 		RequiresCondition: !stance-attackanything && !assault-move && airborne
-		ValidTargets: Infantry
+		ValidTargets: Air, AirSmall, Infantry
 		InvalidTargets: NoAutoTarget, WaterStructure
 		Priority: 10
 	AutoTargetPriority@ATTACKANYTHING_AIR:
@@ -2650,7 +2650,7 @@ JJET:
 		Priority: 1
 	AutoTargetPriority@ATTACKANYTHING_AIR_ATTACK_INFANTRY:
 		RequiresCondition: (stance-attackanything || assault-move) && airborne
-		ValidTargets: Infantry
+		ValidTargets: Air, AirSmall, Infantry
 		InvalidTargets: NoAutoTarget
 		Priority: 10
 	KillsSelf:
