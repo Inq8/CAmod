@@ -479,9 +479,15 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				yield return new ReleaseSlaveOrderTargeter(
 					"ReleaseSlave",
+					6,
+					Info.ReleaseSlaveCursor,
+					(target, modifiers) => !modifiers.HasModifier(TargetModifiers.ForceMove) && IsManuallyReleasableSlave(target));
+
+				yield return new ReleaseSlaveOrderTargeter(
+					"ReleaseSlave",
 					5,
 					Info.ReleaseSlaveCursor,
-					IsManuallyReleasableSlave);
+					(target, modifiers) => modifiers.HasModifier(TargetModifiers.ForceMove) && IsManuallyReleasableSlave(target));
 			}
 		}
 
