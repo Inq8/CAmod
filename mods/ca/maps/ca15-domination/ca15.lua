@@ -129,15 +129,11 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnKilled(TempleOfNod, function(self, killer)
-		ObjectiveEscape = USSR.AddObjective("Bring Yuri to the extraction point.")
+		TempleDestroyed()
+	end)
 
-		if ObjectiveDestroyTemple ~= nil then
-			USSR.MarkCompletedObjective(ObjectiveDestroyTemple)
-		end
-
-		if ObjectiveStealCodes ~= nil and USSR.IsObjectiveCompleted(ObjectiveStealCodes) then
-			InitEvacSite()
-		end
+	Trigger.OnSold(TempleOfNod, functon(self)
+		TempleDestroyed()
 	end)
 
 	Trigger.OnEnteredProximityTrigger(EvacLanding.CenterPosition, WDist.New(2560), function(a, id)
@@ -245,6 +241,18 @@ DisableDefenses = function(actors)
 			a.GrantCondition("disabled")
 		end
 	end)
+end
+
+TempleDestroyed = function()
+	ObjectiveEscape = USSR.AddObjective("Bring Yuri to the extraction point.")
+
+	if ObjectiveDestroyTemple ~= nil then
+		USSR.MarkCompletedObjective(ObjectiveDestroyTemple)
+	end
+
+	if ObjectiveStealCodes ~= nil and USSR.IsObjectiveCompleted(ObjectiveStealCodes) then
+		InitEvacSite()
+	end
 end
 
 InitEvacSite = function()
