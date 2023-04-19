@@ -50,6 +50,7 @@ fi
 
 NAME="${Name:-"Dedicated Server"}"
 LAUNCH_MOD="${Mod:-"${MOD_ID}"}"
+MAP="${Mod:-""}"
 LISTEN_PORT="${ListenPort:-"1234"}"
 ADVERTISE_ONLINE="${AdvertiseOnline:-"True"}"
 PASSWORD="${Password:-""}"
@@ -64,7 +65,7 @@ ENABLE_SYNC_REPORTS="${EnableSyncReports:-"False"}"
 ENABLE_GEOIP="${EnableGeoIP:-"True"}"
 SHARE_ANONYMISED_IPS="${ShareAnonymizedIPs:-"True"}"
 
-JOIN_CHAT_DELAY="${JoinChatDelay:-"5000"}"
+FLOOD_LIMIT_JOIN_COOLDOWN="${FloodLimitJoinCooldown:-"5000"}"
 
 QUERY_MAP_REPOSITORY="${QueryMapRepository:-"True"}"
 
@@ -81,7 +82,9 @@ cd "${ENGINE_DIRECTORY}"
 
 while true; do
      MOD_SEARCH_PATHS="${MOD_SEARCH_PATHS}" ${RUNTIME_LAUNCHER} bin/OpenRA.Server.dll Engine.EngineDir=".." Game.Mod="${LAUNCH_MOD}" \
-     Server.Name="${NAME}" Server.ListenPort="${LISTEN_PORT}" \
+     Server.Name="${NAME}" \
+	 Server.ListenPort="${LISTEN_PORT}" \
+	 Server.Map="${MAP}" \
      Server.AdvertiseOnline="${ADVERTISE_ONLINE}" \
      Server.Password="${PASSWORD}" \
      Server.RecordReplays="${RECORD_REPLAYS}" \
@@ -92,7 +95,7 @@ while true; do
      Server.EnableSyncReports="${ENABLE_SYNC_REPORTS}" \
      Server.EnableGeoIP="${ENABLE_GEOIP}" \
      Server.ShareAnonymizedIPs="${SHARE_ANONYMISED_IPS}" \
-     Server.JoinChatDelay="${JOIN_CHAT_DELAY}" \
+     Server.FloodLimitJoinCooldown="${FLOOD_LIMIT_JOIN_COOLDOWN}" \
      Server.QueryMapRepository="${QUERY_MAP_REPOSITORY}" \
      Engine.SupportDir="${SUPPORT_DIR}"
 done
