@@ -471,7 +471,7 @@ GTNK.squad:
 		CloakSound: vmirat2a.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1.aud
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Move, Damage, Heal, SelfHeal
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Move, Damage, Heal
 		Palette: player
 		IsPlayerPalette: false
 		RequiresCondition: england && !cloak-force-disabled && !invisibility && !driver-dead && !empdisable && !being-warped
@@ -1295,7 +1295,7 @@ SPEC:
 		UncloakSound: appear1.aud
 		Palette: cloak
 		IsPlayerPalette: false
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver-dead
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
@@ -1371,7 +1371,7 @@ SAPC:
 		UncloakSound: appear1.aud
 		Palette: cloak
 		IsPlayerPalette: false
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver-dead
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
@@ -3856,7 +3856,7 @@ STNK.Nod:
 		UncloakSound: appear1.aud
 		Palette: cloak
 		IsPlayerPalette: false
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver-dead && !parachute
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
@@ -5434,7 +5434,7 @@ RTNK:
 		Name: Mirage Tank
 	Mirage:
 		RequiresCondition: !cloak-force-disabled && !invisibility && !driver-dead && !empdisable && !being-warped
-		RevealOn: Attack, Dock, Move, Damage, Heal, SelfHeal
+		RevealOn: Attack, Dock, Move, Damage, Heal
 		MirageCondition: tree
 		DefaultTargetTypes: v08, v09, v10, v11, v12, v13, v14, v15, v16, v17, v18
 		InitialDelay: 100
@@ -5485,7 +5485,7 @@ RTNK:
 		CloakSound: vmirat2a.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1.aud
-		UncloakOn: Attack, Dock, Move, Damage, Heal, SelfHeal
+		UncloakOn: Attack, Dock, Move, Damage, Heal
 		Palette: player
 		IsPlayerPalette: false
 		RequiresCondition: !cloak-force-disabled && !invisibility && !driver-dead && !empdisable && !being-warped

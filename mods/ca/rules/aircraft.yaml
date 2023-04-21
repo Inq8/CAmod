@@ -2299,7 +2299,7 @@ RAH:
 		UncloakSound: appear1.aud
 		Palette: cloak
 		IsPlayerPalette: false
-		UncloakOn: Attack, Dock, Damage, Heal, SelfHeal
+		UncloakOn: Attack, Dock, Damage, Heal
 		RequiresCondition: !cloak-force-disabled && airborne && !invisibility && !alphacomanche-upgrade
 	Cloak@UPG:
 		DetectionTypes: AirCloak
@@ -2309,7 +2309,7 @@ RAH:
 		UncloakSound: appear1.aud
 		Palette: cloak
 		IsPlayerPalette: false
-		UncloakOn: Attack, Dock, Heal, SelfHeal
+		UncloakOn: Attack, Dock, Heal
 		RequiresCondition: airborne && !invisibility && alphacomanche-upgrade
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
