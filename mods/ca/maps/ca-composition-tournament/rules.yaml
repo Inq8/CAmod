@@ -16,9 +16,14 @@ World:
 			5: 5
 			6: 6
 			7: 7
-		Default: 2
+			8: 8
+			9: 9
+			10: 10
+		Default: 3
 
 Player:
+	PlayerResources:
+		SelectableCash: 5000, 7500, 10000, 15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000, 75000, 100000, 200000
 	LobbyPrerequisiteCheckbox@SATHACK:
 		ID: satscan
 		Label: Satscan Enabled
@@ -158,6 +163,9 @@ WEAP:
 		TargetTypes: None
 	Targetable@HACKABLE:
 		TargetTypes: None
+	-SpawnActorsOnSell:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
 
 TENT:
 	-Sellable:
@@ -168,6 +176,9 @@ TENT:
 		TargetTypes: None
 	Targetable@HACKABLE:
 		TargetTypes: None
+	-SpawnActorsOnSell:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
 
 AFLD:
 	-Sellable:
@@ -182,6 +193,9 @@ AFLD:
 	-AirstrikePower@CarpetBomb:
 	-AirstrikePower@Iraqiparabombs:
 	-AirstrikePower@MutaBomb:
+	-SpawnActorsOnSell:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
 
 FIX:
 	Inherits@UPG: ^ProducesUpgrades
@@ -199,6 +213,9 @@ FIX:
 	ProductionBar@SQDEF:
 		ProductionType: DefenseSQ
 		Color: 8A8A8A
+	-SpawnActorsOnSell:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
 
 AGUN.AI:
 	Inherits: AGUN

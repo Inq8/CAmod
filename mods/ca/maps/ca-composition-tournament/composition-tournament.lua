@@ -3,7 +3,11 @@ NumCycles = Map.LobbyOption("numcycles")
 Rounds = { }
 SpectatorCams = { }
 CurrentRound = 1
+CurrentRoundTime = 0
 BaseBuilders = { }
+Players = { }
+PlayerScores = { }
+PlayerSurrenderTimes = { }
 
 WorldLoaded = function()
     PossiblePlayers = {
@@ -27,13 +31,11 @@ WorldLoaded = function()
 
     Neutral = Player.GetPlayer("Neutral")
 
-    Players = { }
-    PlayerScores = { }
-
     Utils.Do(PossiblePlayers, function(p)
         if p ~= nil then
             table.insert(Players, p)
             table.insert(PlayerScores, { Player = p, Captures = 0, Losses = 0 })
+            PlayerSurrenderTimes[p.InternalName] = nil
             StartingCash = p.Cash
         end
     end)
@@ -42,89 +44,94 @@ WorldLoaded = function()
         table.insert(Players, { InternalName = "Empty", IsBot = true, IsLocalPlayer = false })
     end
 
-    HQs = Neutral.GetActorsByType("miss")
-
     BaseRadius = WDist.New(12288)
 
     Trigger.AfterDelay(1, function()
         Arenas = {
             {
-                Player1Buildings = Map.ActorsInCircle(Base1.CenterPosition, BaseRadius, IsBaseBuilding),
-                Player2Buildings = Map.ActorsInCircle(Base2.CenterPosition, BaseRadius, IsBaseBuilding),
                 HQ = HQ1,
                 Base1Pos = Base1.CenterPosition,
                 Base2Pos = Base2.CenterPosition,
-                TopLeft = Arena1TopLeft,
-                BottomRight = Arena1BottomRight,
+                Player1Buildings = { },
+                Player2Buildings = { },
             },
             {
-                Player1Buildings = Map.ActorsInCircle(Base3.CenterPosition, BaseRadius, IsBaseBuilding),
-                Player2Buildings = Map.ActorsInCircle(Base4.CenterPosition, BaseRadius, IsBaseBuilding),
                 HQ = HQ2,
                 Base1Pos = Base3.CenterPosition,
                 Base2Pos = Base4.CenterPosition,
-                TopLeft = Arena2TopLeft,
-                BottomRight = Arena2BottomRight,
+                Player1Buildings = { },
+                Player2Buildings = { },
             },
             {
-                Player1Buildings = Map.ActorsInCircle(Base5.CenterPosition, BaseRadius, IsBaseBuilding),
-                Player2Buildings = Map.ActorsInCircle(Base6.CenterPosition, BaseRadius, IsBaseBuilding),
                 HQ = HQ3,
                 Base1Pos = Base5.CenterPosition,
                 Base2Pos = Base6.CenterPosition,
-                TopLeft = Arena3TopLeft,
-                BottomRight = Arena3BottomRight,
+                Player1Buildings = { },
+                Player2Buildings = { },
             },
             {
-                Player1Buildings = Map.ActorsInCircle(Base7.CenterPosition, BaseRadius, IsBaseBuilding),
-                Player2Buildings = Map.ActorsInCircle(Base8.CenterPosition, BaseRadius, IsBaseBuilding),
                 HQ = HQ4,
                 Base1Pos = Base7.CenterPosition,
                 Base2Pos = Base8.CenterPosition,
-                TopLeft = Arena4TopLeft,
-                BottomRight = Arena4BottomRight,
+                Player1Buildings = { },
+                Player2Buildings = { },
             },
             {
-                Player1Buildings = Map.ActorsInCircle(Base9.CenterPosition, BaseRadius, IsBaseBuilding),
-                Player2Buildings = Map.ActorsInCircle(Base10.CenterPosition, BaseRadius, IsBaseBuilding),
                 HQ = HQ5,
                 Base1Pos = Base9.CenterPosition,
                 Base2Pos = Base10.CenterPosition,
-                TopLeft = Arena5TopLeft,
-                BottomRight = Arena5BottomRight,
+                Player1Buildings = { },
+                Player2Buildings = { },
             },
             {
-                Player1Buildings = Map.ActorsInCircle(Base11.CenterPosition, BaseRadius, IsBaseBuilding),
-                Player2Buildings = Map.ActorsInCircle(Base12.CenterPosition, BaseRadius, IsBaseBuilding),
                 HQ = HQ6,
                 Base1Pos = Base11.CenterPosition,
                 Base2Pos = Base12.CenterPosition,
-                TopLeft = Arena6TopLeft,
-                BottomRight = Arena6BottomRight,
+                Player1Buildings = { },
+                Player2Buildings = { },
             },
             {
-                Player1Buildings = Map.ActorsInCircle(Base13.CenterPosition, BaseRadius, IsBaseBuilding),
-                Player2Buildings = Map.ActorsInCircle(Base14.CenterPosition, BaseRadius, IsBaseBuilding),
                 HQ = HQ7,
                 Base1Pos = Base13.CenterPosition,
                 Base2Pos = Base14.CenterPosition,
-                TopLeft = Arena7TopLeft,
-                BottomRight = Arena7BottomRight,
+                Player1Buildings = { },
+                Player2Buildings = { },
             },
             {
-                Player1Buildings = Map.ActorsInCircle(Base15.CenterPosition, BaseRadius, IsBaseBuilding),
-                Player2Buildings = Map.ActorsInCircle(Base16.CenterPosition, BaseRadius, IsBaseBuilding),
                 HQ = HQ8,
                 Base1Pos = Base15.CenterPosition,
                 Base2Pos = Base16.CenterPosition,
-                TopLeft = Arena8TopLeft,
-                BottomRight = Arena8BottomRight,
+                Player1Buildings = { },
+                Player2Buildings = { },
             }
         }
+
+        -- populate the initial building types and locations so they can be rebuilt each round, then destroy initial buildings
+        Utils.Do(Arenas, function(arena)
+            local player1Buildings = GetBaseBuildings(arena.Base1Pos)
+            local player2Buildings = GetBaseBuildings(arena.Base2Pos)
+
+            Utils.Do(player1Buildings, function(b)
+                table.insert(arena.Player1Buildings, { Type = b.Type, Location = b.Location })
+                Trigger.AfterDelay(1, function()
+                    b.Destroy()
+                end)
+            end)
+            Utils.Do(player2Buildings, function(b)
+                table.insert(arena.Player2Buildings, { Type = b.Type, Location = b.Location })
+                Trigger.AfterDelay(1, function()
+                    b.Destroy()
+                end)
+            end)
+        end)
 
         CalculateMatchups()
         InitRound()
     end)
+end
+
+GetBaseBuildings = function(basePos)
+    return Map.ActorsInCircle(basePos, BaseRadius, IsBaseBuilding)
 end
 
 Tick = function()
@@ -132,6 +139,8 @@ Tick = function()
         if CurrentRound > #Rounds then
             return
         end
+
+        CurrentRoundTime = CurrentRoundTime + 25
 
         local activeMatchups = 0
 
@@ -159,8 +168,32 @@ Tick = function()
                 end
 
                 EndMatchup(matchup)
-            elseif not matchup.Player1.IsBot and not matchup.Player2.IsBot then
+            elseif matchup.Winner == nil and not matchup.Player1.IsBot and not matchup.Player2.IsBot then
                 activeMatchups = activeMatchups + 1
+
+                -- every 5 seconds check if players have active units
+                if CurrentRoundTime > DateTime.Seconds(45) and DateTime.GameTime % 125 == 0 then
+                    Utils.Do({ { matchup.Player1, matchup.Player2 }, { matchup.Player2, matchup.Player1 } }, function(p)
+                        local hqFlipped = false
+                        local units = Utils.Where(p[1].GetActors(), IsActiveUnit)
+                        if #units == 0 then
+                            if PlayerSurrenderTimes[p[1].InternalName] == nil then
+                                PlayerSurrenderTimes[p[1].InternalName] = DateTime.GameTime + DateTime.Seconds(20)
+                                if p[1].IsLocalPlayer then
+                                    Media.DisplayMessage("If you have no units in 20 seconds you will lose this round.", "Notification", HSLColor.FromHex("FF0000"))
+                                elseif p[2].IsLocalPlayer then
+                                    Media.DisplayMessage("If your opponent has no units in 20 seconds you will win this round.", "Notification", HSLColor.FromHex("00FF00"))
+                                end
+                            elseif DateTime.GameTime > PlayerSurrenderTimes[p[1].InternalName] and not hqFlipped then
+                                hqFlipped = true
+                                Arenas[matchup.ArenaIdx].HQ.Owner = p[2]
+                                PlayerSurrenderTimes[p[1].InternalName] = nil
+                            end
+                        else
+                            PlayerSurrenderTimes[p[1].InternalName] = nil
+                        end
+                    end)
+                end
             end
         end)
 
@@ -227,6 +260,71 @@ CalculateMatchups = function()
     end
 end
 
+InitRound = function()
+    Media.DisplayMessage("Round " .. CurrentRound .. " starting...", "Notification", HSLColor.FromHex("1E90FF"))
+    UserInterface.SetMissionText("Round " .. CurrentRound .. " of " .. #Rounds, HSLColor.Yellow)
+    ResetAll()
+    CurrentRoundTime = 0
+
+    if #Rounds == 0 then
+        return
+    end
+
+    Trigger.AfterDelay(DateTime.Seconds(2), function()
+        local roundMatchups = Rounds[CurrentRound]
+        Media.DisplayMessage("Round started. Objectives capturable in 45 seconds.", "Notification", HSLColor.FromHex("1E90FF"))
+
+        local objectives = Neutral.GetActorsByType("miss")
+        Utils.Do(objectives, function(o)
+            o.GrantCondition("locked", 1125)
+        end)
+
+        Trigger.AfterDelay(1125, function()
+            Media.DisplayMessage("Objectives are now capturable.", "Notification", HSLColor.FromHex("1E90FF"))
+        end)
+
+        for i=1, #roundMatchups do
+            local matchup = roundMatchups[i]
+
+            if matchup.Player1.IsBot then
+                if matchup.Player2.IsLocalPlayer then
+                    Media.DisplayMessage("You have no opponent this round, please wait for the next one.", "Notification", HSLColor.FromHex("1E90FF"))
+                end
+                table.insert(SpectatorCams, Actor.Create("spectatorcam", true, { Owner = matchup.Player2 }))
+            elseif matchup.Player2.IsBot then
+                if matchup.Player1.IsLocalPlayer then
+                    Media.DisplayMessage("You have no opponent this round, please wait for the next one.", "Notification", HSLColor.FromHex("1E90FF"))
+                end
+                table.insert(SpectatorCams, Actor.Create("spectatorcam", true, { Owner = matchup.Player1 }))
+            else
+                Utils.Do(Arenas[matchup.ArenaIdx].Player1Buildings, function(b)
+                    Actor.Create(b.Type, true, { Owner = matchup.Player1, Location = b.Location })
+                end)
+                Utils.Do(Arenas[matchup.ArenaIdx].Player2Buildings, function(b)
+                    Actor.Create(b.Type, true, { Owner = matchup.Player2, Location = b.Location })
+                end)
+
+                Beacon.New(matchup.Player1, Arenas[matchup.ArenaIdx].Base1Pos)
+                Beacon.New(matchup.Player2, Arenas[matchup.ArenaIdx].Base2Pos)
+
+                if matchup.Player1.IsLocalPlayer then
+                    Camera.Position = Arenas[matchup.ArenaIdx].Base1Pos
+                elseif matchup.Player2.IsLocalPlayer then
+                    Camera.Position = Arenas[matchup.ArenaIdx].Base2Pos
+                end
+
+                table.insert(BaseBuilders, Actor.Create("basebuilder", true, { Owner = matchup.Player1, Location = Arenas[matchup.ArenaIdx].HQ.Location }))
+                table.insert(BaseBuilders, Actor.Create("basebuilder", true, { Owner = matchup.Player2, Location = Arenas[matchup.ArenaIdx].HQ.Location }))
+
+                Trigger.AfterDelay(1, function()
+                    Actor.Create("QueueUpdaterDummy", true, { Owner = matchup.Player1 })
+                    Actor.Create("QueueUpdaterDummy", true, { Owner = matchup.Player2 })
+                end)
+            end
+        end
+    end)
+end
+
 EndMatchup = function(matchup)
     local loserUnits = matchup.Loser.GetActors()
     Utils.Do(loserUnits, function(u)
@@ -252,7 +350,7 @@ EndGame = function()
     ResetAll()
 
     table.sort(PlayerScores, function(a, b) return a.Captures * 100000000 - a.Player.DeathsCost > b.Captures * 100000000 - b.Player.DeathsCost end)
-    local rankingText = ""
+    local rankingText = "\n\n"
 
     local playerRank = 1
 
@@ -265,7 +363,7 @@ EndGame = function()
     end)
 
     Utils.Do(Players, function(p)
-        if p ~= Winner then
+        if p ~= Winner and not p.IsBot then
             local utils = p.GetActorsByType("playerutils")
             Utils.Do(utils, function(u)
                 u.Destroy()
@@ -283,7 +381,13 @@ ResetAll = function()
             p.Cash = 0
             p.Resources = StartingCash
             local playerBuildings = p.GetActorsByTypes({ "miss", "weap", "tent", "afld", "fix" })
-            Utils.Do(playerBuildings, function(c) c.Owner = Neutral end)
+            Utils.Do(playerBuildings, function(b)
+                if b.Type == "miss" then
+                    b.Owner = Neutral
+                else
+                    b.Kill()
+                end
+            end)
             local actors = p.GetActors()
             Utils.Do(actors, function(a)
                 KillUnit(a)
@@ -304,70 +408,12 @@ ResetAll = function()
     end)
 end
 
-InitRound = function()
-    Media.DisplayMessage("Round " .. CurrentRound .. " starting...", "Notification", HSLColor.FromHex("1E90FF"))
-    UserInterface.SetMissionText("Round " .. CurrentRound .. " of " .. #Rounds, HSLColor.Yellow)
-    ResetAll()
-
-    if #Rounds == 0 then
-        return
-    end
-
-    Trigger.AfterDelay(DateTime.Seconds(2), function()
-        local roundMatchups = Rounds[CurrentRound]
-        Media.DisplayMessage("Round started. Objectives capturable in 30 seconds.", "Notification", HSLColor.FromHex("1E90FF"))
-
-        local objectives = Neutral.GetActorsByType("miss")
-        Utils.Do(objectives, function(o)
-            o.GrantCondition("locked", 750)
-        end)
-
-        Trigger.AfterDelay(750, function()
-            Media.DisplayMessage("Objectives are now capturable.", "Notification", HSLColor.FromHex("1E90FF"))
-        end)
-
-        for i=1, #roundMatchups do
-            local matchup = roundMatchups[i]
-
-            if matchup.Player1.IsBot then
-                table.insert(SpectatorCams, Actor.Create("spectatorcam", true, { Owner = matchup.Player2 }))
-            elseif matchup.Player2.IsBot then
-                table.insert(SpectatorCams, Actor.Create("spectatorcam", true, { Owner = matchup.Player1 }))
-            else
-                Utils.Do(Arenas[matchup.ArenaIdx].Player1Buildings, function(b)
-                    b.Owner = matchup.Player1
-                end)
-                Utils.Do(Arenas[matchup.ArenaIdx].Player2Buildings, function(b)
-                    b.Owner = matchup.Player2
-                end)
-
-                Beacon.New(matchup.Player1, Arenas[matchup.ArenaIdx].Base1Pos)
-                Beacon.New(matchup.Player2, Arenas[matchup.ArenaIdx].Base2Pos)
-
-                if matchup.Player1.IsLocalPlayer then
-                    Camera.Position = Arenas[matchup.ArenaIdx].Base1Pos
-                elseif matchup.Player2.IsLocalPlayer then
-                    Camera.Position = Arenas[matchup.ArenaIdx].Base2Pos
-                end
-
-                table.insert(BaseBuilders, Actor.Create("basebuilder", true, { Owner = matchup.Player1, Location = Arenas[matchup.ArenaIdx].HQ.Location }))
-                table.insert(BaseBuilders, Actor.Create("basebuilder", true, { Owner = matchup.Player2, Location = Arenas[matchup.ArenaIdx].HQ.Location }))
-
-                Trigger.AfterDelay(1, function()
-                    Actor.Create("QueueUpdaterDummy", true, { Owner = matchup.Player1 })
-                    Actor.Create("QueueUpdaterDummy", true, { Owner = matchup.Player2 })
-                end)
-            end
-        end
-    end)
-end
-
 KillUnit = function(a)
     if IsUpgrade(a) then
         Trigger.AfterDelay(5, function()
             a.Destroy()
         end)
-    elseif not IsBaseBuilding(a) and a.Type ~= "player" and a.HasProperty("Kill") and not a.IsDead then
+    elseif IsActiveUnit(a) or IsDefense(a) then
         a.Stop()
         a.Destroy()
         Trigger.AfterDelay(5, function()
@@ -382,4 +428,12 @@ end
 
 IsBaseBuilding = function(a)
     return a.HasProperty("StartBuildingRepairs") or a.Type == "miss"
+end
+
+IsActiveUnit = function(a)
+    return not IsBaseBuilding(a) and a.Type ~= "player" and a.Type ~= "playerutils" and a.HasProperty("Kill") and not a.IsDead
+end
+
+IsDefense = function(a)
+    return a.HasProperty("StartBuildingRepairs") and a.HasProperty("Attack")
 end
