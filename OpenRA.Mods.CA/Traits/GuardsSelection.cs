@@ -10,6 +10,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
 using OpenRA.Traits;
@@ -23,15 +24,28 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly BitSet<TargetableType> ValidTargets = new BitSet<TargetableType>("Ground", "Water");
 
 		[Desc("Maximum number of guard orders to chain together.")]
-		public readonly int MaxTargets = 12;
+		public readonly int MaxTargets = 10;
+
+		[Desc("Color to use for the target line.")]
+		public readonly Color TargetLineColor = Color.OrangeRed;
+
+		[Desc("Maximum range that guarding actors will maintain.")]
+		public readonly WDist Range = WDist.FromCells(2);
 
 		public override object Create(ActorInitializer init) { return new GuardsSelection(init, this); }
 	}
 
-	class GuardsSelection : ConditionalTrait<GuardsSelectionInfo>, IResolveOrder
+	class GuardsSelection : ConditionalTrait<GuardsSelectionInfo>, IResolveOrder, INotifyCreated
 	{
+		IMove move;
+
 		public GuardsSelection(ActorInitializer init, GuardsSelectionInfo info)
 			: base(info) { }
+
+		void INotifyCreated.Created(Actor self)
+		{
+			move = self.Trait<IMove>();
+		}
 
 		void IResolveOrder.ResolveOrder(Actor self, Order order)
 		{
@@ -74,8 +88,8 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			var mainGuardTarget = Target.FromActor(mainGuardActor);
-
-			world.IssueOrder(new Order("Guard", self, mainGuardTarget, false, null, null));
+			self.QueueActivity(false, new AttackMoveActivity(self, () => move.MoveFollow(self, mainGuardTarget, WDist.Zero, Info.Range, targetLineColor: Info.TargetLineColor)));
+			self.ShowTargetLines();
 
 			var guardTargets = 0;
 
@@ -85,7 +99,8 @@ namespace OpenRA.Mods.CA.Traits
 					continue;
 
 				guardTargets++;
-				world.IssueOrder(new Order("Guard", self, Target.FromActor(guardActor), true, null, null));
+
+				self.QueueActivity(true, new AttackMoveActivity(self, () => move.MoveFollow(self, Target.FromActor(guardActor), WDist.Zero, Info.Range, targetLineColor: Info.TargetLineColor)));
 
 				if (guardTargets >= Info.MaxTargets)
 					break;
