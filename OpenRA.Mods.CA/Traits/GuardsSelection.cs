@@ -42,9 +42,10 @@ namespace OpenRA.Mods.CA.Traits
 		public GuardsSelection(ActorInitializer init, GuardsSelectionInfo info)
 			: base(info) { }
 
-		void INotifyCreated.Created(Actor self)
+		protected override void Created(Actor self)
 		{
 			move = self.Trait<IMove>();
+			base.Created(self);
 		}
 
 		void IResolveOrder.ResolveOrder(Actor self, Order order)
