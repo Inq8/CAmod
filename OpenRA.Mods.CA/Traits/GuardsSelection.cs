@@ -1,10 +1,11 @@
 ﻿#region Copyright & License Information
 /*
- * Copyright 2015- OpenRA.Mods.AS Developers (see AUTHORS)
- * This file is a part of a third-party plugin for OpenRA, which is
- * free software. It is made available to you under the terms of the
- * GNU General Public License as published by the Free Software
- * Foundation. For more information, see COPYING.
+ * Copyright (c) The OpenRA Developers and Contributors
+ * This file is part of OpenRA, which is free software. It is made
+ * available to you under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
@@ -59,7 +60,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (order.Queued)
 				return;
 
-			var validOrders = new HashSet<string> { "AttackMove", "AssaultMove", "Attack", "ForceAttack", "Move" };
+			var validOrders = new HashSet<string> { "AttackMove", "AssaultMove", "Attack", "ForceAttack", "Move", "KeepDistance" };
 
 			if (!validOrders.Contains(order.OrderString))
 				return;
@@ -73,10 +74,10 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			var guardActors = world.Selection.Actors
-				.Where(a => a.Owner == world.LocalPlayer
-					&& a.IsInWorld
+				.Where(a => a.Owner == self.Owner
+					&& !a.Disposed
 					&& !a.IsDead
-					&& a.Info.HasTraitInfo<AttackBaseInfo>()
+					&& a.IsInWorld
 					&& a != self
 					&& IsValidGuardTarget(a))
 				.ToArray();
@@ -89,19 +90,14 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			var mainGuardTarget = Target.FromActor(mainGuardActor);
-			self.QueueActivity(false, new AttackMoveActivity(self, () => move.MoveFollow(self, mainGuardTarget, WDist.Zero, Info.Range, targetLineColor: Info.TargetLineColor)));
-			self.ShowTargetLines();
+			world.IssueOrder(new Order("Guard", self, mainGuardTarget, false, null, null));
 
 			var guardTargets = 0;
 
 			foreach (var guardActor in guardActors)
 			{
-				if (guardActor.Disposed || guardActor.IsDead || !guardActor.IsInWorld)
-					continue;
-
 				guardTargets++;
-
-				self.QueueActivity(true, new AttackMoveActivity(self, () => move.MoveFollow(self, Target.FromActor(guardActor), WDist.Zero, Info.Range, targetLineColor: Info.TargetLineColor)));
+				world.IssueOrder(new Order("Guard", self, Target.FromActor(guardActor), true, null, null));
 
 				if (guardTargets >= Info.MaxTargets)
 					break;
@@ -111,6 +107,9 @@ namespace OpenRA.Mods.CA.Traits
 		bool IsValidGuardTarget(Actor targetActor)
 		{
 			if (!Info.ValidTargets.Overlaps(targetActor.GetEnabledTargetTypes()))
+				return false;
+
+			if (!targetActor.Info.HasTraitInfo<AttackBaseInfo>())
 				return false;
 
 			var guardsSelection = targetActor.TraitsImplementing<GuardsSelection>();
