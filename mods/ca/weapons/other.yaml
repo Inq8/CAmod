@@ -132,7 +132,7 @@ Napalmtd:
 			Heavy: 55
 			Concrete: 55
 			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigatedMinor
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigatedMinor, AirToGround
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Eff: CreateEffect
@@ -1183,7 +1183,7 @@ VenomLaser:
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
 		Damage: 5500
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, AirToGround
 		Versus:
 			None: 250
 			Wood: 60
@@ -1216,6 +1216,7 @@ VenomLaserAA:
 			Concrete: 100
 			Light: 100
 			Heavy: 100
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	-Warhead@2Smu:
 	Warhead@3Eff: CreateEffect
 		ValidTargets: Air, AirSmall
@@ -2388,7 +2389,7 @@ JDAM:
 			Light: 80
 			Heavy: 100
 			Concrete: 80
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster, AirToGround
 	Warhead@2Dam: SpreadDamage
 		Spread: 512
 		Damage: 10000
@@ -2401,7 +2402,7 @@ JDAM:
 			Heavy: 0
 			Concrete: 0
 			Brick: 0
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated, AirToGround
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Eff: CreateEffect
