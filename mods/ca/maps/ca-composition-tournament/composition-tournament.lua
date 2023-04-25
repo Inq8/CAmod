@@ -172,17 +172,17 @@ Tick = function()
                 activeMatchups = activeMatchups + 1
 
                 -- every 5 seconds check if players have active units
-                if CurrentRoundTime > DateTime.Seconds(45) and DateTime.GameTime % 125 == 0 then
+                if CurrentRoundTime > DateTime.Seconds(60) and DateTime.GameTime % 125 == 0 then
                     Utils.Do({ { matchup.Player1, matchup.Player2 }, { matchup.Player2, matchup.Player1 } }, function(p)
                         local hqFlipped = false
                         local units = Utils.Where(p[1].GetActors(), IsActiveUnit)
                         if #units == 0 then
                             if PlayerSurrenderTimes[p[1].InternalName] == nil then
-                                PlayerSurrenderTimes[p[1].InternalName] = DateTime.GameTime + DateTime.Seconds(20)
+                                PlayerSurrenderTimes[p[1].InternalName] = DateTime.GameTime + DateTime.Seconds(15)
                                 if p[1].IsLocalPlayer then
-                                    Media.DisplayMessage("If you have no units in 20 seconds you will lose this round.", "Notification", HSLColor.FromHex("FF0000"))
+                                    Media.DisplayMessage("If you have no units in 15 seconds you will lose this round.", "Notification", HSLColor.FromHex("FF0000"))
                                 elseif p[2].IsLocalPlayer then
-                                    Media.DisplayMessage("If your opponent has no units in 20 seconds you will win this round.", "Notification", HSLColor.FromHex("00FF00"))
+                                    Media.DisplayMessage("If your opponent has no units in 15 seconds you will win this round.", "Notification", HSLColor.FromHex("00FF00"))
                                 end
                             elseif DateTime.GameTime > PlayerSurrenderTimes[p[1].InternalName] and not hqFlipped then
                                 hqFlipped = true
@@ -272,14 +272,14 @@ InitRound = function()
 
     Trigger.AfterDelay(DateTime.Seconds(2), function()
         local roundMatchups = Rounds[CurrentRound]
-        Media.DisplayMessage("Round started. Objectives capturable in 45 seconds.", "Notification", HSLColor.FromHex("1E90FF"))
+        Media.DisplayMessage("Round started. Objectives capturable in 60 seconds.", "Notification", HSLColor.FromHex("1E90FF"))
 
         local objectives = Neutral.GetActorsByType("miss")
         Utils.Do(objectives, function(o)
-            o.GrantCondition("locked", 1125)
+            o.GrantCondition("locked", 1500)
         end)
 
-        Trigger.AfterDelay(1125, function()
+        Trigger.AfterDelay(1500, function()
             Media.DisplayMessage("Objectives are now capturable.", "Notification", HSLColor.FromHex("1E90FF"))
         end)
 

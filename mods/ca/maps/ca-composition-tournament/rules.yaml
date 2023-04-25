@@ -3,7 +3,7 @@ World:
 	LuaScript:
 		Scripts: composition-tournament.lua
 	MissionData:
-		Briefing: All units available and can be built instantly. Players are pitted against each other in sealed off arenas. Every player plays every other player at least once. Capture the command center to win a matchup. Winner is the player with the most matchup victories.
+		Briefing: ================\n\n- All units/defenses can be built instantly.\n-------------------------\n- Players are pitted against each other in sealed off arenas.\n-------------------------\n- Every player plays every other player at least once.\n-------------------------\n- Capture the command center to win a matchup.\n-------------------------\n- Winner is the player with the most matchup victories.\n-------------------------\n- Do not surrender (this will remove you from subsequent rounds).\n\n================\n
 	ScriptLobbyDropdown@cycles:
 		ID: numcycles
 		Label: No. of Round Robins
@@ -114,9 +114,11 @@ E6:
 		CaptureDelay: 325
 	Buildable:
 		BuildLimit: 1
-		Prerequisites: infantry.any, !engi
+		Prerequisites: ~player.ra, !engi
 	ProvidesPrerequisite@ENGI:
 		Prerequisite: engi
+	Mobile:
+		Speed: 90
 
 N6:
 	Valued:
@@ -125,9 +127,11 @@ N6:
 		CaptureDelay: 325
 	Buildable:
 		BuildLimit: 1
-		Prerequisites: infantry.any, !engi
+		Prerequisites: ~player.td, !engi
 	ProvidesPrerequisite@ENGI:
 		Prerequisite: engi
+	Mobile:
+		Speed: 90
 
 S6:
 	Valued:
@@ -136,9 +140,11 @@ S6:
 		CaptureDelay: 325
 	Buildable:
 		BuildLimit: 1
-		Prerequisites: infantry.any, !engi
+		Prerequisites: ~player.scrin, !engi
 	ProvidesPrerequisite@ENGI:
 		Prerequisite: engi
+	Mobile:
+		Speed: 90
 
 MISS:
 	DamageMultiplier@1:
@@ -259,18 +265,6 @@ hazmat.upgrade:
 		Prerequisites: ~disabled
 
 hazmatsoviet.upgrade:
-	Buildable:
-		Prerequisites: ~disabled
-
-bombard.strat:
-	Buildable:
-		Prerequisites: ~disabled
-
-seek.strat:
-	Buildable:
-		Prerequisites: ~disabled
-
-hold.strat:
 	Buildable:
 		Prerequisites: ~disabled
 
