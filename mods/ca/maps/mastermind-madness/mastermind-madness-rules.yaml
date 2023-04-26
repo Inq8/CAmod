@@ -1,4 +1,6 @@
 World:
+	MissionData:
+		Briefing: ================\n\n- Each player starts with a single Mastermind (mind control unit that can control up to 3 units at a time).\n-------------------------\n- Random neutral units are spawned across the map (indestructible until controlled).\n-------------------------\n- Deploy (F) Mastermind for limited duration cloak.\n-------------------------\n- Objective is to kill all enemy Masterminds.\n\n================\n
 	StartingUnits@mastonly:
 		Class: none
 		ClassName: Mastermind
@@ -18,44 +20,55 @@ World:
 	-StartingUnits@lightscrin:
 	-StartingUnits@heavyscrin:
 	SpawnStartingUnits:
-		DropdownLocked: True
+		DropdownVisible: False
 	MapBuildRadius:
-		AllyBuildRadiusCheckboxLocked: True
-		BuildRadiusCheckboxLocked: True
-		AllyBuildRadiusCheckboxEnabled: True
-		BuildRadiusCheckboxEnabled: True
+		AllyBuildRadiusCheckboxVisible: False
+		BuildRadiusCheckboxVisible: False
 	MapOptions:
-		TechLevelDropdownLocked: True
 		TechLevelDropdownVisible: False
+		ShortGameCheckboxEnabled: True
 		ShortGameCheckboxLocked: True
-	MissionData:
-		Briefing: ================\n\n- Each player starts with a single Mastermind (mind control unit that can control up to 3 units at a time).\n-------------------------\n- Random neutral units are spawned across the map (indestructible until controlled).\n-------------------------\n- Deploy (F) Mastermind for limited duration cloak.\n-------------------------\n- Objective is to kill all enemy Masterminds.\n\n================\n
+		ShortGameCheckboxVisible: False
+	CrateSpawner:
+		CheckboxEnabled: False
+		CheckboxLocked: True
+		CheckboxVisible: False
+	MapStartingLocations:
+		SeparateTeamSpawnsCheckboxVisible: False
+	TimeLimitManager:
+		TimeLimitLocked: True
+		TimeLimitDropdownVisible: False
 
 Player:
 	PlayerResources:
 		SelectableCash: 0
 		DefaultCash: 0
-		DefaultCashDropdownLocked: True
+		DefaultCashDropdownVisible: False
 	LobbyPrerequisiteCheckbox@GLOBALBOUNTY:
 		Enabled: False
 		Locked: True
+		Visible: False
 	LobbyPrerequisiteCheckbox@FORCESHIELD:
-		Enabled: True
-		Locked: True
+		Enabled: False
+		Visible: False
 	DeveloperMode:
 		CheckboxLocked: True
+		CheckboxVisible: False
 	LobbyPrerequisiteCheckbox@GLOBALFACTUNDEPLOY:
-		Enabled: True
-		Locked: True
+		Visible: False
 	LobbyPrerequisiteCheckbox@NAVY:
-		Enabled: True
-		Locked: True
+		Visible: False
 	LobbyPrerequisiteCheckbox@BALANCEDHARVESTING:
-		Enabled: True
+		Visible: False
+	LobbyPrerequisiteCheckbox@REVEALONFIRE:
+		Enabled: False
 		Locked: True
+		Visible: False
 	LobbyPrerequisiteDropdown@QUEUETYPE:
 		DefaultValue: global.singlequeue
-		Locked: True
+		Visible: False
+		Values:
+			Single-Queue: global.singlequeue
 
 ^IndestructibleWhenNeutral:
 	GrantConditionIfOwnerIsNeutral@NEUTRAL:

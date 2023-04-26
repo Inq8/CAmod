@@ -249,6 +249,14 @@ WorldLoaded = function()
 		BaseFlare = Actor.Create("flare", true, { Owner = Greece, Location = DeploySuggestion.Location })
 		Media.PlaySpeechNotification(Greece, "SignalFlare")
 		Notification("Signal flare detected.")
+		Beacon.New(Greece, DeploySuggestion.CenterPosition)
+		Trigger.AfterDelay(DateTime.Seconds(2), function()
+			Tip("Spacebar is the default hotkey for centering the screen at the most recent notification beacon.")
+			Trigger.AfterDelay(DateTime.Seconds(2), function()
+				Tip("Enter is the default hotkey for opening the chat panel (in case you miss notification messages).")
+			end)
+		end)
+
 		Trigger.OnEnteredProximityTrigger(DeploySuggestion.CenterPosition, WDist.New(6 * 1024), function(a, id)
 			if a.Owner == Greece and a.Type ~= "waypoint" and a.Type ~= "flare" and not IsDeploySuggestionReached then
 				IsDeploySuggestionReached = true

@@ -3,13 +3,17 @@ Player:
 	MissionObjectives:
 		EarlyGameOver: true
 	Shroud:
-		FogCheckboxLocked: True
-		FogCheckboxEnabled: True
-		ExploredMapCheckboxLocked: True
 		ExploredMapCheckboxEnabled: False
+		ExploredMapCheckboxLocked: True
+		ExploredMapCheckboxVisible: False
+		FogCheckboxEnabled: True
+		FogCheckboxLocked: True
+		FogCheckboxVisible: False
 	PlayerResources:
 		DefaultCashDropdownLocked: True
+		DefaultCashDropdownVisible: False
 		DefaultCash: 0
+		SelectableCash: 0, 1000, 2000, 5000
 	ModularBot@CampaignAI:
 		Name: Campaign AI
 		Type: campaign
@@ -20,28 +24,59 @@ Player:
 		RequiresCondition: enable-campaign-ai
 	LobbyPrerequisiteCheckbox@GLOBALBOUNTY:
 		Enabled: False
-	LobbyPrerequisiteDropdown@QUEUETYPE:
-		DefaultValue: global.singlequeue
+		Locked: True
+		Visible: False
 	LobbyPrerequisiteCheckbox@FORCESHIELD:
 		Enabled: False
+		Locked: True
+		Visible: False
+	LobbyPrerequisiteCheckbox@GLOBALFACTUNDEPLOY:
+		Locked: True
+		Visible: False
+	LobbyPrerequisiteCheckbox@NAVY:
+		Locked: True
+		Visible: False
+	LobbyPrerequisiteCheckbox@BALANCEDHARVESTING:
+		Locked: True
+		Visible: False
+	LobbyPrerequisiteCheckbox@REVEALONFIRE:
+		Locked: True
+		Visible: False
+	DeveloperMode:
+		CheckboxLocked: True
+		CheckboxVisible: False
+	LobbyPrerequisiteDropdown@QUEUETYPE:
+		DefaultValue: global.singlequeue
+		Locked: True
+		Visible: False
+		Values:
+			Single-Queue: global.singlequeue
 
 World:
 	CrateSpawner:
 		CheckboxEnabled: False
 		CheckboxLocked: True
+		CheckboxVisible: False
 	-SpawnStartingUnits:
 	-MapStartingLocations:
 	ObjectivesPanel:
 		PanelName: MISSION_OBJECTIVES
 	MapBuildRadius:
-		AllyBuildRadiusCheckboxLocked: True
 		AllyBuildRadiusCheckboxEnabled: False
-		BuildRadiusCheckboxLocked: True
+		AllyBuildRadiusCheckboxLocked: True
+		AllyBuildRadiusCheckboxVisible: False
 		BuildRadiusCheckboxEnabled: True
+		BuildRadiusCheckboxLocked: True
+		BuildRadiusCheckboxVisible: False
 	MapOptions:
 		TechLevelDropdownLocked: True
-		ShortGameCheckboxLocked: True
+		TechLevelDropdownVisible: False
 		ShortGameCheckboxEnabled: False
+		ShortGameCheckboxLocked: True
+		ShortGameCheckboxVisible: False
+	TimeLimitManager:
+		TimeLimitLocked: True
+		TimeLimitDropdownVisible: False
 	MusicPlaylist:
 		VictoryMusic: score
 		DefeatMusic: map
@@ -49,6 +84,12 @@ World:
 ^AffectedByDriverKill:
 	ChangesHealth@DRIVER_DEAD:
 		PercentageStep: 0
+
+^CivInfantry:
+	Tooltip:
+		GenericVisibility: Enemy
+	Tooltip@COMBATANT:
+		GenericVisibility: Enemy
 
 ^Disabled:
 	Buildable:
@@ -167,9 +208,21 @@ TRAN.Evac:
 		TurnToLand: True
 		InitialFacing: 0
 
+V01:
+	-SpawnRandomActorOnDeath@1:
+	-SpawnRandomActorOnDeath@2:
+	-SpawnRandomActorOnDeath@3:
+
+V25:
+	-SpawnRandomActorOnDeath@1:
+	-SpawnRandomActorOnDeath@2:
+	-SpawnRandomActorOnDeath@3:
+
 MONEYCRATE:
 	Tooltip:
 		Name: Crate
+	Crate:
+		Duration: 0
 	GiveCashCrateAction:
 		Amount: 2000
 		ExcludedActorTypes: c1, c2, c3, c4, c5, c6, c7, c8, c9, c10

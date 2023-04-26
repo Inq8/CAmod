@@ -12,6 +12,10 @@ PowerGrids = {
 		Providers = { SPower1, SPower2, SPower3 },
 		Consumers = { SPowered1, SPowered2, SPowered3, SPowered4, SPowered5, SPowered6, SPowered7 },
 	},
+	{
+		Providers = { CPower1, CPower2, CPower3, CPower4 },
+		Consumers = { CPowered1, CPowered2, CPowered3, CPowered4, CPowered5, CPowered6, CPowered7, CPowered8, CPowered9, CPowered10, CPowered11, CPowered12, CPowered13, CPowered14, CPowered15, CPowered16 },
+	},
 }
 
 TibTrucks = {
@@ -194,7 +198,17 @@ WorldLoaded = function()
 		end)
 	end)
 
-	SetupReveals({ EntranceReveal1, EntranceReveal2, EntranceReveal3, EntranceReveal4, EntranceReveal5, EntranceReveal6, EntranceReveal7, EntranceReveal8, EntranceReveal9, EntranceReveal10, EntranceReveal11 })
+	Trigger.OnEnteredProximityTrigger(YuriHQ.CenterPosition, WDist.New(18 * 1024), function(a, id)
+		if a.Owner == MissionPlayer and a.Type ~= cameraType then
+			Trigger.RemoveProximityTrigger(id)
+			if not YuriDefenderTipShown then
+				YuriDefenderTipShown = true
+				Tip("Yuri's command center is heavily guarded. Brute force is unlikely to be the best approach.")
+			end
+		end
+	end)
+
+	SetupReveals({ EntranceReveal1, EntranceReveal2, EntranceReveal3, EntranceReveal4, EntranceReveal5, EntranceReveal6, EntranceReveal7, EntranceReveal8, EntranceReveal9, EntranceReveal10, EntranceReveal11 }, "smallcamera")
 end
 
 Tick = function()

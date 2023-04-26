@@ -908,6 +908,7 @@ MEDI:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	GuardsSelection:
 		ValidTargets: Infantry
+	KeepsDistance:
 
 MECH:
 	Inherits: ^Soldier
@@ -1001,6 +1002,7 @@ MECH:
 		SpawnActors: CMEC
 	UpgradeableTo:
 		Actors: cmec
+	KeepsDistance:
 
 CMEC:
 	Inherits: ^Cyborg
@@ -1089,6 +1091,7 @@ CMEC:
 	GuardsSelection:
 		ValidTargets: Vehicle
 	-TakeCover:
+	KeepsDistance:
 
 HACK:
 	Inherits: ^Soldier
@@ -2640,7 +2643,7 @@ JJET:
 		Priority: 1
 	AutoTargetPriority@DEFAULT_AIR_ATTACK_INFANTRY:
 		RequiresCondition: !stance-attackanything && !assault-move && airborne
-		ValidTargets: Infantry
+		ValidTargets: Air, AirSmall, Infantry
 		InvalidTargets: NoAutoTarget, WaterStructure
 		Priority: 10
 	AutoTargetPriority@ATTACKANYTHING_AIR:
@@ -2650,7 +2653,7 @@ JJET:
 		Priority: 1
 	AutoTargetPriority@ATTACKANYTHING_AIR_ATTACK_INFANTRY:
 		RequiresCondition: (stance-attackanything || assault-move) && airborne
-		ValidTargets: Infantry
+		ValidTargets: Air, AirSmall, Infantry
 		InvalidTargets: NoAutoTarget
 		Priority: 10
 	KillsSelf:
@@ -3196,7 +3199,7 @@ BRUT:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 30000
+		HP: 32000
 	Armor:
 		Type: Light
 	Mobile:
@@ -3651,7 +3654,7 @@ YURI:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 20000
+		HP: 18000
 	Mobile:
 		Speed: 60
 		Voice: Move
@@ -3926,6 +3929,10 @@ XO:
 		Interval: 3
 		Sequences: descend
 	-WithParachute:
+	RangeMultiplier@GYRO:
+		Modifier: 130
+	ReloadDelayMultiplier@GYRO:
+		Modifier: 130
 
 ENLI:
 	Inherits: ^Cyborg

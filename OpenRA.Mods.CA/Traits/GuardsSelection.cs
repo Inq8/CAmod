@@ -1,15 +1,17 @@
 ﻿#region Copyright & License Information
 /*
- * Copyright 2015- OpenRA.Mods.AS Developers (see AUTHORS)
- * This file is a part of a third-party plugin for OpenRA, which is
- * free software. It is made available to you under the terms of the
- * GNU General Public License as published by the Free Software
- * Foundation. For more information, see COPYING.
+ * Copyright (c) The OpenRA Developers and Contributors
+ * This file is part of OpenRA, which is free software. It is made
+ * available to you under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version. For more
+ * information, see COPYING.
  */
 #endregion
 
 using System.Collections.Generic;
 using System.Linq;
+using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
 using OpenRA.Traits;
@@ -23,15 +25,29 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly BitSet<TargetableType> ValidTargets = new BitSet<TargetableType>("Ground", "Water");
 
 		[Desc("Maximum number of guard orders to chain together.")]
-		public readonly int MaxTargets = 12;
+		public readonly int MaxTargets = 10;
+
+		[Desc("Color to use for the target line.")]
+		public readonly Color TargetLineColor = Color.OrangeRed;
+
+		[Desc("Maximum range that guarding actors will maintain.")]
+		public readonly WDist Range = WDist.FromCells(2);
 
 		public override object Create(ActorInitializer init) { return new GuardsSelection(init, this); }
 	}
 
-	class GuardsSelection : ConditionalTrait<GuardsSelectionInfo>, IResolveOrder
+	class GuardsSelection : ConditionalTrait<GuardsSelectionInfo>, IResolveOrder, INotifyCreated
 	{
+		IMove move;
+
 		public GuardsSelection(ActorInitializer init, GuardsSelectionInfo info)
 			: base(info) { }
+
+		protected override void Created(Actor self)
+		{
+			move = self.Trait<IMove>();
+			base.Created(self);
+		}
 
 		void IResolveOrder.ResolveOrder(Actor self, Order order)
 		{
@@ -44,7 +60,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (order.Queued)
 				return;
 
-			var validOrders = new HashSet<string> { "AttackMove", "AssaultMove", "Attack", "ForceAttack", "Move" };
+			var validOrders = new HashSet<string> { "AttackMove", "AssaultMove", "Attack", "ForceAttack", "Move", "KeepDistance" };
 
 			if (!validOrders.Contains(order.OrderString))
 				return;
@@ -54,14 +70,14 @@ namespace OpenRA.Mods.CA.Traits
 
 			var world = self.World;
 
-			if (order.Target.Type == TargetType.Actor && (order.Target.Actor.Disposed || order.Target.Actor.Owner == world.LocalPlayer || !order.Target.Actor.IsInWorld || order.Target.Actor.IsDead))
+			if (order.Target.Type == TargetType.Actor && (order.Target.Actor.Disposed || order.Target.Actor.Owner == self.Owner || !order.Target.Actor.IsInWorld || order.Target.Actor.IsDead))
 				return;
 
 			var guardActors = world.Selection.Actors
-				.Where(a => a.Owner == world.LocalPlayer
-					&& a.IsInWorld
+				.Where(a => a.Owner == self.Owner
+					&& !a.Disposed
 					&& !a.IsDead
-					&& a.Info.HasTraitInfo<AttackBaseInfo>()
+					&& a.IsInWorld
 					&& a != self
 					&& IsValidGuardTarget(a))
 				.ToArray();
@@ -74,16 +90,12 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			var mainGuardTarget = Target.FromActor(mainGuardActor);
-
 			world.IssueOrder(new Order("Guard", self, mainGuardTarget, false, null, null));
 
 			var guardTargets = 0;
 
 			foreach (var guardActor in guardActors)
 			{
-				if (guardActor.Disposed || guardActor.IsDead || !guardActor.IsInWorld)
-					continue;
-
 				guardTargets++;
 				world.IssueOrder(new Order("Guard", self, Target.FromActor(guardActor), true, null, null));
 
@@ -97,8 +109,11 @@ namespace OpenRA.Mods.CA.Traits
 			if (!Info.ValidTargets.Overlaps(targetActor.GetEnabledTargetTypes()))
 				return false;
 
-			var guardsSelection = targetActor.Info.HasTraitInfo<GuardsSelectionInfo>();
-			if (guardsSelection)
+			if (!targetActor.Info.HasTraitInfo<AttackBaseInfo>())
+				return false;
+
+			var guardsSelection = targetActor.TraitsImplementing<GuardsSelection>();
+			if (guardsSelection.Any(t => !t.IsTraitDisabled))
 				return false;
 
 			return true;

@@ -112,6 +112,7 @@ KATY:
 		Type: v2.upgrade
 		Actor: v2rl
 		UpgradeAtActors: fix, rep, srep
+		RequiresCondition: !mindcontrolled
 
 1TNK:
 	Inherits: ^Tank
@@ -470,7 +471,7 @@ GTNK.squad:
 		CloakSound: vmirat2a.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1.aud
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Move, Damage, Heal, SelfHeal
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Move, Damage, Heal
 		Palette: player
 		IsPlayerPalette: false
 		RequiresCondition: england && !cloak-force-disabled && !invisibility && !driver-dead && !empdisable && !being-warped
@@ -593,11 +594,13 @@ GTNK.squad:
 		Actor: 3tnk.atomic
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
+		RequiresCondition: !mindcontrolled
 	Upgradeable@LASHER:
 		Type: lasher.upgrade
 		Actor: 3tnk.yuri
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
+		RequiresCondition: !mindcontrolled
 
 3TNK.ATOMIC:
 	Inherits: 3TNK
@@ -631,10 +634,11 @@ GTNK.squad:
 	UpgradeableTo:
 		Actors: 3tnk.atomicyuri
 	Upgradeable@ATOMICLASHER:
-		Type: atomicengines.upgrade
+		Type: lasher.upgrade
 		Actor: 3tnk.atomicyuri
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
+		RequiresCondition: !mindcontrolled
 	-Upgradeable@ATOMIC:
 	-Upgradeable@LASHER:
 
@@ -700,6 +704,7 @@ GTNK.squad:
 		Actor: 3tnk.atomicyuri
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
+		RequiresCondition: !mindcontrolled
 	-Upgradeable@ATOMIC:
 	-Upgradeable@LASHER:
 
@@ -865,11 +870,13 @@ GTNK.squad:
 		Actor: 4tnk.atomic
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
+		RequiresCondition: !mindcontrolled
 	Upgradeable@ERAD:
 		Type: erad.upgrade
 		Actor: 4tnk.erad
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
+		RequiresCondition: !mindcontrolled
 
 4TNK.ATOMIC:
 	Inherits: 4TNK
@@ -899,6 +906,7 @@ GTNK.squad:
 		Actor: 4tnk.eradatomic
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
+		RequiresCondition: !mindcontrolled
 	-Upgradeable@ATOMIC:
 	-Upgradeable@ERAD:
 
@@ -938,6 +946,7 @@ GTNK.squad:
 		Actor: 4tnk.eradatomic
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
+		RequiresCondition: !mindcontrolled
 	-Upgradeable@ATOMIC:
 	-Upgradeable@ERAD:
 
@@ -1044,6 +1053,7 @@ ARTY.nod:
 		Actor: howi
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
+		RequiresCondition: !mindcontrolled
 
 HOWI:
 	Inherits: ARTY.nod
@@ -1062,7 +1072,7 @@ HOWI:
 	Armament:
 		Weapon: 155mmTDM
 	Mobile:
-		Speed: 72
+		Speed: 64
 		TurnSpeed: 18
 	WithSpriteTurret:
 	-UpgradeableTo:
@@ -1285,7 +1295,7 @@ SPEC:
 		UncloakSound: appear1.aud
 		Palette: cloak
 		IsPlayerPalette: false
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver-dead
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
@@ -1361,7 +1371,7 @@ SAPC:
 		UncloakSound: appear1.aud
 		Palette: cloak
 		IsPlayerPalette: false
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver-dead
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
@@ -1720,6 +1730,7 @@ APC:
 		Type: rapc.upgrade
 		Actor: rapc
 		UpgradeAtActors: fix, rep, srep
+		RequiresCondition: !mindcontrolled
 
 RAPC:
 	Inherits: APC
@@ -2162,7 +2173,7 @@ TTNK:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft
 	Valued:
-		Cost: 1250
+		Cost: 1150
 	Tooltip:
 		Name: Tesla Tank
 		GenericName: Tank
@@ -2531,6 +2542,7 @@ HMMV:
 		Actor: hmmv.tow
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 200
+		RequiresCondition: !mindcontrolled
 
 HMMV.TOW:
 	Inherits: HMMV
@@ -2639,6 +2651,7 @@ GDRN:
 		Actor: gdrn.tow
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 200
+		RequiresCondition: !mindcontrolled
 
 GDRN.TOW:
 	Inherits: GDRN
@@ -2796,6 +2809,7 @@ APC2:
 		Type: vulcan.upgrade
 		Actor: vulc
 		UpgradeAtActors: fix, rep, srep
+		RequiresCondition: !mindcontrolled
 
 APC2.NODAI:
 	Inherits: APC2
@@ -2842,6 +2856,7 @@ VULC:
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 52
@@ -3165,6 +3180,7 @@ MTNK:
 		UpgradeAtActors: fix, rep, srep
 		Cost: 0
 		BuildDuration: 100
+		RequiresCondition: !mindcontrolled
 
 MTNK.Drone:
 	Inherits: MTNK
@@ -3307,6 +3323,7 @@ MDRN:
 	-Targetable@MINIDRONE:
 	-ChangesHealth@MINIDRONE:
 	-ExternalCondition@MINIDRONE:
+	-AttachOnTransform@MINIDRONE:
 	AttachableTo:
 		-Limits:
 		-LimitConditions:
@@ -3451,16 +3468,19 @@ HTNK:
 		Actor: htnk.ion
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
+		RequiresCondition: !mindcontrolled
 	Upgradeable@HOVER:
 		Type: hovermam.upgrade
 		Actor: htnk.hover
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
+		RequiresCondition: !mindcontrolled
 	Upgradeable@DRONE:
 		Type: mdrone.upgrade
 		Actor: htnk.drone
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
+		RequiresCondition: !mindcontrolled
 
 HTNK.Ion:
 	Inherits: HTNK
@@ -3798,6 +3818,7 @@ STNK.Nod:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@BERSERK: ^Berserk
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	RenderSprites:
 		Image: STNKTnod
 	Valued:
@@ -3837,7 +3858,7 @@ STNK.Nod:
 		UncloakSound: appear1.aud
 		Palette: cloak
 		IsPlayerPalette: false
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver-dead && !parachute
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
@@ -4202,6 +4223,7 @@ BTR:
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 21
@@ -4280,10 +4302,11 @@ IFV:
 	Inherits@TRANSPORT: ^Transport
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 120
-		Prerequisites: infantry.any, anyradar, ~vehicles.ifv, ~techlevel.medium
+		Prerequisites: infantry.any, radarorrepair, ~vehicles.ifv, ~techlevel.medium
 		Description: Adaptable infantry transport.
 	Tooltip:
 		Name: Infantry Fighting Vehicle
@@ -4342,7 +4365,7 @@ IFV:
 		Attributes: • Weapon/function changes depending on infantry passenger
 		RequiresCondition: !full || samturr || nochange
 	TooltipExtras@gunturr:
-		Strengths: • Strong vs Infantry, Light Armor, Buildings
+		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 		IsStandard: false
 		RequiresCondition: gunturr
@@ -4618,6 +4641,7 @@ IFV:
 			e6: engturr
 			n6: engturr
 			mech: engturr
+			cmec: engturr
 			mort: chemturr
 			shok: testurr
 			rmbo: commturr
@@ -4766,6 +4790,8 @@ IFV:
 		Palette: effect
 		Position: TopLeft
 		ValidRelationships: Ally, Enemy, Neutral
+	KeepsDistance:
+		RequiresCondition: engturr
 
 IFV.AI:
 	Inherits: ^Tank
@@ -5014,6 +5040,7 @@ TITN:
 		Actor: titn.rail
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
+		RequiresCondition: !mindcontrolled
 
 TITN.RAIL:
 	Inherits: TITN
@@ -5413,7 +5440,7 @@ RTNK:
 		Name: Mirage Tank
 	Mirage:
 		RequiresCondition: !cloak-force-disabled && !invisibility && !driver-dead && !empdisable && !being-warped
-		RevealOn: Attack, Dock, Move, Damage, Heal, SelfHeal
+		RevealOn: Attack, Dock, Move, Damage, Heal
 		MirageCondition: tree
 		DefaultTargetTypes: v08, v09, v10, v11, v12, v13, v14, v15, v16, v17, v18
 		InitialDelay: 100
@@ -5464,7 +5491,7 @@ RTNK:
 		CloakSound: vmirat2a.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1.aud
-		UncloakOn: Attack, Dock, Move, Damage, Heal, SelfHeal
+		UncloakOn: Attack, Dock, Move, Damage, Heal
 		Palette: player
 		IsPlayerPalette: false
 		RequiresCondition: !cloak-force-disabled && !invisibility && !driver-dead && !empdisable && !being-warped
@@ -5844,6 +5871,7 @@ PTNK:
 		Actor: pcan
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
+		RequiresCondition: !mindcontrolled
 
 PCAN:
 	Inherits: PTNK
@@ -6415,7 +6443,7 @@ CHPR:
 	AutoTargetPriority@DEFAULT:
 		RequiresCondition: !stance-attackanything && !assault-move
 		ValidTargets: Temporal
-		InvalidTargets: NoAutoTarget
+		InvalidTargets: NoAutoTarget, Building
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: stance-attackanything || assault-move
 		ValidTargets: Temporal
@@ -6608,6 +6636,7 @@ APOC:
 		Actor: apoc.atomic
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
+		RequiresCondition: !mindcontrolled
 
 APOC.ATOMIC:
 	Inherits: APOC

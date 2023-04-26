@@ -1,0 +1,1313 @@
+
+World:
+	StartingUnits@none:
+		Class: none
+		ClassName: None
+		-BaseActor:
+		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri, gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow, scrin, reaper, traveler, harbinger, collector
+	-StartingUnits@mcvonly:
+	-StartingUnits@lightallies:
+	-StartingUnits@lightsoviet:
+	-StartingUnits@heavyallies:
+	-StartingUnits@heavysoviet:
+	-StartingUnits@mcvonly2:
+	-StartingUnits@defaultgdia:
+	-StartingUnits@defaultnoda:
+	-StartingUnits@heavynoda:
+	-StartingUnits@heavygdia:
+	-StartingUnits@mcvonlyscrin:
+	-StartingUnits@lightscrin:
+	-StartingUnits@heavyscrin:
+	SpawnStartingUnits:
+		DropdownVisible: False
+	MapBuildRadius:
+		AllyBuildRadiusCheckboxVisible: False
+		BuildRadiusCheckboxVisible: False
+		AllyBuildRadiusCheckboxEnabled: True
+		BuildRadiusCheckboxEnabled: False
+	MapOptions:
+		TechLevelDropdownLocked: True
+		TechLevelDropdownVisible: False
+		ShortGameCheckboxEnabled: True
+		ShortGameCheckboxLocked: True
+		ShortGameCheckboxVisible: False
+	CrateSpawner:
+		CheckboxEnabled: False
+		CheckboxLocked: True
+		CheckboxVisible: False
+	MapStartingLocations:
+		SeparateTeamSpawnsCheckboxVisible: False
+	TimeLimitManager:
+		TimeLimitDropdownVisible: False
+
+Player:
+	PlayerResources:
+		SelectableCash: 5000, 6000, 8000, 10000, 15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000, 75000, 100000, 200000
+		DefaultCash: 20000
+	ClassicProductionQueue@Building:
+		BuildTimeSpeedReduction: 0
+		SpeedUp: True
+	ClassicProductionQueue@Defense:
+		BuildTimeSpeedReduction: 0
+		SpeedUp: True
+	ClassicProductionQueueCA@Vehicle:
+		BuildTimeSpeedReduction: 0
+	ClassicProductionQueueCA@Infantry:
+		BuildTimeSpeedReduction: 0
+	ClassicProductionQueue@Ship:
+		BuildTimeSpeedReduction: 0
+	ClassicProductionQueueCA@Aircraft:
+		BuildTimeSpeedReduction: 0
+	ClassicProductionQueue@Upgrade:
+		BuildTimeSpeedReduction: 0
+	LobbyPrerequisiteCheckbox@GLOBALBOUNTY:
+		Enabled: False
+		Locked: True
+		Visible: False
+	LobbyPrerequisiteCheckbox@FORCESHIELD:
+		Enabled: False
+		Visible: False
+	DeveloperMode:
+		CheckboxLocked: True
+		CheckboxVisible: False
+	LobbyPrerequisiteCheckbox@GLOBALFACTUNDEPLOY:
+		Enabled: True
+		Visible: False
+	LobbyPrerequisiteCheckbox@NAVY:
+		Enabled: True
+		Visible: False
+	LobbyPrerequisiteCheckbox@BALANCEDHARVESTING:
+		Enabled: True
+		Visible: False
+	LobbyPrerequisiteCheckbox@REVEALONFIRE:
+		Enabled: False
+		Locked: True
+		Visible: False
+	LobbyPrerequisiteDropdown@QUEUETYPE:
+		DefaultValue: global.singlequeue
+		Locked: True
+		Visible: False
+		Values:
+			Single-Queue: global.singlequeue
+	LobbyPrerequisiteCheckbox@FREEUPGRADES:
+		ID: freeupgrades
+		Label: Free Upgrades
+		Description: Upgrades are free
+		Enabled: True
+		DisplayOrder: 999
+		Prerequisites: global.freeupgrades
+	LobbyPrerequisiteCheckbox@BUILDANYTHING:
+		ID: buildanything
+		Label: Build Anything
+		Description: Everything is unlocked regardless of chosen faction
+		Enabled: False
+		DisplayOrder: 999
+		Prerequisites: global.buildanything
+
+	ProvidesPrerequisite@PLAYERHUMAN:
+		Prerequisite: player.human
+		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri, talon, zocom, eagle, arc, blackh, marked, legion, shadow
+	ProvidesPrerequisite@PLAYERRA:
+		Prerequisite: player.ra
+		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
+	ProvidesPrerequisite@PLAYERTD:
+		Prerequisite: player.td
+		Factions: talon, zocom, eagle, arc, blackh, marked, legion, shadow
+	ProvidesPrerequisite@PLAYERALLIESORGDI:
+		Prerequisite: player.alliesorgdi
+		Factions: england, france, germany, usa, talon, zocom, eagle, arc
+	ProvidesPrerequisite@PLAYERALLIESORNOD:
+		Prerequisite: player.alliesornod
+		Factions: england, france, germany, usa, blackh, marked, legion, shadow
+	ProvidesPrerequisite@PLAYERALLIESORGDIORNOD:
+		Prerequisite: player.alliesorgdiornod
+		Factions: england, france, germany, usa, talon, zocom, eagle, arc, blackh, marked, legion, shadow
+
+	ProvidesPrerequisite@BUILDANYTHINGALLIES:
+		Prerequisite: player.allies
+		RequiresPrerequisites: global.buildanything
+	ProvidesPrerequisite@BUILDANYTHINGSOVIET:
+		Prerequisite: player.soviet
+		RequiresPrerequisites: global.buildanything
+	ProvidesPrerequisite@BUILDANYTHINGGDI:
+		Prerequisite: player.gdi
+		RequiresPrerequisites: global.buildanything
+	ProvidesPrerequisite@BUILDANYTHINGNOD:
+		Prerequisite: player.nod
+		RequiresPrerequisites: global.buildanything
+	ProvidesPrerequisite@BUILDANYTHINGSCRIN:
+		Prerequisite: player.scrin
+		RequiresPrerequisites: global.buildanything
+
+	ProvidesPrerequisite@BUILDANYTHINGHUMAN:
+		Prerequisite: player.human
+		RequiresPrerequisites: global.buildanything
+	ProvidesPrerequisite@BUILDANYTHINGRA:
+		Prerequisite: player.ra
+		RequiresPrerequisites: global.buildanything
+	ProvidesPrerequisite@BUILDANYTHINGTD:
+		Prerequisite: player.td
+		RequiresPrerequisites: global.buildanything
+	ProvidesPrerequisite@BUILDANYTHINGALLIESORGDI:
+		Prerequisite: player.alliesorgdi
+		RequiresPrerequisites: global.buildanything
+	ProvidesPrerequisite@BUILDANYTHINGALLIESORNOD:
+		Prerequisite: player.alliesornod
+		RequiresPrerequisites: global.buildanything
+	ProvidesPrerequisite@BUILDANYTHINGALLIESORGDIORNOD:
+		Prerequisite: player.alliesorgdiornod
+		RequiresPrerequisites: global.buildanything
+
+^Upgrade:
+	Buildable:
+		BuildDurationModifier: 0
+
+V2RL:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+KATY:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+1TNK:
+	Buildable:
+		Prerequisites: ~player.allies
+
+2TNK:
+	Buildable:
+		Prerequisites: ~player.allies
+
+GTNK.squad:
+	Buildable:
+		Prerequisites: ~player.allies
+
+3TNK:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+3TNK.ATOMIC:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+3TNK.YURI:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+3TNK.ATOMICYURI:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+4TNK:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+4TNK.ATOMIC:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+4TNK.ERAD:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+4TNK.ERADATOMIC:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+ARTY:
+	Buildable:
+		Prerequisites: ~player.allies
+
+ARTY.nod:
+	Buildable:
+		Prerequisites: ~player.nod
+
+HOWI:
+	Buildable:
+		Prerequisites: ~player.nod
+
+ISU:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+SPEC:
+	Buildable:
+		Prerequisites: ~player.nod
+
+SAPC:
+	Buildable:
+		Prerequisites: ~player.nod
+
+HARV:
+	Buildable:
+		Prerequisites: ~player.ra
+
+HARV.Chrono:
+	Buildable:
+		Prerequisites: ~player.allies
+
+MCV:
+	Buildable:
+		Prerequisites: ~player.ra
+
+JEEP:
+	Buildable:
+		Prerequisites: ~player.allies
+
+APC:
+	Buildable:
+		Prerequisites: ~player.allies
+
+RAPC:
+	Buildable:
+		Prerequisites: ~player.allies
+
+MNLY:
+	Buildable:
+		Prerequisites: ~player.human
+
+MGG:
+	Buildable:
+		Prerequisites: ~player.allies
+
+MRJ:
+	Buildable:
+		Prerequisites: ~player.allies
+
+MSG:
+	Buildable:
+		Prerequisites: ~player.nod
+
+TTRA:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+TTNK:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+DTRK:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+CTNK:
+	Buildable:
+		Prerequisites: ~player.allies
+
+QTNK:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+AMCV:
+	Buildable:
+		Prerequisites: ~player.td
+
+HMMV:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+HMMV.TOW:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+GDRN:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+GDRN.TOW:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+BGGY:
+	Buildable:
+		Prerequisites: ~player.nod
+
+APC2:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+VULC:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+LTNK:
+	Buildable:
+		Prerequisites: ~player.nod
+
+MTNK:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+MTNK.Drone:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+MDRN:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+HTNK:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+HTNK.Ion:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+HTNK.Hover:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+HTNK.Drone:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+MSAM:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+MLRS:
+	Buildable:
+		Prerequisites: ~player.nod
+
+STNK.Nod:
+	Buildable:
+		Prerequisites: ~player.nod
+
+BIKE:
+	Buildable:
+		Prerequisites: ~player.nod
+
+FTNK:
+	Buildable:
+		Prerequisites: ~player.nod
+
+HFTK:
+	Buildable:
+		Prerequisites: ~player.nod
+
+HARV.TD:
+	Buildable:
+		Prerequisites: ~player.td
+
+BTR:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+IFV:
+	Buildable:
+		Prerequisites: ~player.allies
+
+TITN:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+TITN.RAIL:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+JUGG:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+TTRK:
+	Buildable:
+		Prerequisites: ~player.nod
+
+DISR:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+HSAM:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+RTNK:
+	Buildable:
+		Prerequisites: ~player.allies
+
+V3RL:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+TNKD:
+	Buildable:
+		Prerequisites: ~player.allies
+
+MSAR:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+PTNK:
+	Buildable:
+		Prerequisites: ~player.allies
+
+PCAN:
+	Buildable:
+		Prerequisites: ~player.allies
+
+WTNK:
+	Buildable:
+		Prerequisites: ~player.nod
+
+BATF:
+	Buildable:
+		Prerequisites: ~player.allies
+
+MEMP:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+CDRN:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+CHPR:
+	Buildable:
+		Prerequisites: ~player.allies
+
+CRYO:
+	Buildable:
+		Prerequisites: ~player.allies
+
+APOC:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+APOC.ATOMIC:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+TRUK:
+	Buildable:
+		Prerequisites: ~disabled
+	-SpawnActorOnDeath:
+	-Targetable:
+	Mobile:
+		Speed: 180
+		TurnSpeed: 40
+
+DOG:
+	Buildable:
+		Prerequisites: ~player.soviet
+		-BuildAtProductionType:
+
+E1:
+	Buildable:
+		Prerequisites: ~player.ra
+
+E2:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+E3:
+	Buildable:
+		Prerequisites: ~player.ra
+
+U3.squad:
+	Buildable:
+		Prerequisites: ~player.allies
+
+E4:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+E6:
+	Buildable:
+		Prerequisites: ~player.ra
+
+SPY:
+	Buildable:
+		Prerequisites: ~player.allies
+
+E7:
+	Buildable:
+		Prerequisites: ~player.allies, !gunhero
+	ProvidesPrerequisite@GUNHERO:
+		Prerequisite: gunhero
+
+MEDI:
+	Buildable:
+		Prerequisites: ~player.alliesorgdi
+
+MECH:
+	Buildable:
+		Prerequisites: ~player.alliesornod
+
+CMEC:
+	Buildable:
+		Prerequisites: ~player.nod
+
+THF:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+SHOK:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+N1:
+	Buildable:
+		Prerequisites: ~player.td
+
+N2:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+N3:
+	Buildable:
+		Prerequisites: ~player.td
+
+N4:
+	Buildable:
+		Prerequisites: ~player.nod
+
+N5:
+	Buildable:
+		Prerequisites: ~player.nod
+
+RMBO:
+	Buildable:
+		Prerequisites: ~player.td, !gunhero
+	ProvidesPrerequisite@GUNHERO:
+		Prerequisite: gunhero
+
+N6:
+	Buildable:
+		Prerequisites: ~player.td
+
+SNIP:
+	Buildable:
+		Prerequisites: ~player.allies
+
+BORI:
+	Buildable:
+		Prerequisites: ~player.soviet, !gunhero
+	ProvidesPrerequisite@GUNHERO:
+		Prerequisite: gunhero
+
+MORT:
+	Buildable:
+		Prerequisites: ~player.nod
+
+SAB:
+	Buildable:
+		Prerequisites: ~player.nod
+
+ACOL:
+	Buildable:
+		Prerequisites: ~player.nod
+
+TPLR:
+	Buildable:
+		Prerequisites: ~player.nod
+
+JJET:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+BJET:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+E8:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+N1C:
+	Buildable:
+		Prerequisites: ~player.nod
+
+N3C:
+	Buildable:
+		Prerequisites: ~player.nod
+
+RMBC:
+	Buildable:
+		Prerequisites: ~player.nod
+
+IVAN:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+BRUT:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+BH:
+	Buildable:
+		Prerequisites: ~player.nod
+
+YURI:
+	Buildable:
+		Prerequisites: ~player.soviet, !mchero
+	ProvidesPrerequisite@MCHERO:
+		Prerequisite: mchero
+
+SEAL:
+	Buildable:
+		Prerequisites: ~player.allies
+
+XO:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+ENLI:
+	Buildable:
+		Prerequisites: ~player.nod
+
+MIG:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+SUK:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+SUK.UPG:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+YAK:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+TRAN:
+	Buildable:
+		Prerequisites: ~player.alliesorgdiornod
+
+HALO:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+NHAW:
+	Buildable:
+		Prerequisites: ~player.allies
+
+HELI:
+	Buildable:
+		Prerequisites: ~player.allies
+
+HIND:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+A10:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+A10.UPG:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+APCH:
+	Buildable:
+		Prerequisites: ~player.nod
+
+ORCA:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+ORCB:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+RAH:
+	Buildable:
+		Prerequisites: ~player.nod
+
+KIRO:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+OCAR:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+HARR:
+	Buildable:
+		Prerequisites: ~player.allies
+
+SCRN:
+	Buildable:
+		Prerequisites: ~player.nod
+
+VENM:
+	Buildable:
+		Prerequisites: ~player.nod
+
+AURO:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+S1:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+S2:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+S3:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+S4:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+S6:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+MAST:
+	Buildable:
+		Prerequisites: ~player.scrin, !mchero
+	ProvidesPrerequisite@MCHERO:
+		Prerequisite: mchero
+
+HARV.Scrin:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+GUNW:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+SHRW:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+SEEK:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+LACE:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+INTL:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+CORR:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+LCHR:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+STCR:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+DEVO:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+DARK:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+RUIN:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+ATMZ:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+TPOD:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+RPTP:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+SMCV:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+STMR:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+ENRV:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+DEVA:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+PAC:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+PBOX:
+	Buildable:
+		Prerequisites: ~player.allies
+
+HBOX:
+	Buildable:
+		Prerequisites: ~player.allies
+
+FTUR:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+TTUR:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+LTUR:
+	Buildable:
+		Prerequisites: ~player.nod
+
+GTWR:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+GUN:
+	Buildable:
+		Prerequisites: ~player.allies
+
+GUN.Nod:
+	Buildable:
+		Prerequisites: ~player.nod
+
+PTUR:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+PRIS:
+	Buildable:
+		Prerequisites: ~player.allies
+
+TSLA:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+OBLI:
+	Buildable:
+		Prerequisites: ~player.nod
+
+ATWR:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+STWR:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+SCOL:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+GUN:
+	Buildable:
+		Prerequisites: ~player.allies
+
+HTUR:
+	Buildable:
+		Prerequisites: ~player.allies
+
+SAM:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+NSAM:
+	Buildable:
+		Prerequisites: ~player.nod
+
+AGUN:
+	Buildable:
+		Prerequisites: ~player.allies
+
+CRAM:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+SHAR:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+UPGC.DROP:
+	Buildable:
+		Prerequisites: ~disabled
+
+^Upgrade:
+	ProductionCostMultiplier@FREEUPGRADES:
+		Multiplier: 0
+		Prerequisites: global.freeupgrades
+
+hazmat.upgrade:
+	Buildable:
+		Prerequisites: ~player.alliesorgdiornod
+
+flakarmor.upgrade:
+	Buildable:
+		Prerequisites: ~player.human
+
+bombard.strat:
+	Buildable:
+		Prerequisites: ~player.gdi, ~!seek.strat, ~!hold.strat
+
+bombard2.strat:
+	Buildable:
+		Prerequisites: ~player.gdi, ~bombard.strat
+
+seek.strat:
+	Buildable:
+		Prerequisites: ~player.gdi, ~!bombard.strat, ~!hold.strat
+
+seek2.strat:
+	Buildable:
+		Prerequisites: ~player.gdi, ~seek.strat
+
+hold.strat:
+	Buildable:
+		Prerequisites: ~player.gdi, ~!bombard.strat, ~!seek.strat
+
+hold2.strat:
+	Buildable:
+		Prerequisites: ~player.gdi, ~hold.strat
+
+vulcan.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+sidewinders.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+empgren.upgrade:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+strategic.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+bjet.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+tow.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+pointdef.upgrade:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+stratmiss.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+hypersonic.upgrade:
+	Buildable:
+		Prerequisites: ~player.gdi, ~!hailstorm.upgrade, ~!hammerhead.upgrade
+
+hailstorm.upgrade:
+	Buildable:
+		Prerequisites: ~player.gdi, ~!hypersonic.upgrade, ~!hammerhead.upgrade
+
+hammerhead.upgrade:
+	Buildable:
+		Prerequisites: ~player.gdi, ~!hypersonic.upgrade, ~!hailstorm.upgrade
+
+gyro.upgrade:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+sonic.upgrade:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+abur.upgrade:
+	Buildable:
+		Prerequisites: ~player.gdi
+
+bdrone.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+railgun.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+ionmam.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+hovermam.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+mdrone.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+UPGC.BOMB:
+	Buildable:
+		Prerequisites: ~disabled
+
+UPGC.SEEK:
+	Buildable:
+		Prerequisites: ~disabled
+
+UPGC.HOLD:
+	Buildable:
+		Prerequisites: ~disabled
+
+UPGC.DROP:
+	Buildable:
+		Prerequisites: ~disabled
+
+#########################NOD#########
+########################################
+
+howi.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+tibcore.upgrade:
+	Buildable:
+		Prerequisites: ~player.nod
+
+blacknapalm.upgrade:
+	Buildable:
+		Prerequisites: ~player.nod
+
+microwave.upgrade:
+	Buildable:
+		Prerequisites: ~player.nod
+
+quantum.upgrade:
+	Buildable:
+		Prerequisites: ~player.nod
+
+alphacomanche.upgrade:
+	Buildable:
+		Prerequisites: ~player.nod
+
+advcyborg.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+cyborgspeed.upgrade:
+	Buildable:
+		Prerequisites: ~player.nod
+
+cyborgarmor.upgrade:
+	Buildable:
+		Prerequisites: ~player.nod
+
+#########################SOVIET#########
+########################################
+
+hazmatsoviet.upgrade:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+v2.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+lasher.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+seismic.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+atomicengines.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+erad.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+tarc.upgrade:
+	Buildable:
+		Prerequisites: ~player.soviet
+
+indp.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+#######################ALLIES############################
+#########################################################
+
+rapc.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+apb.upgrade:
+	Buildable:
+		Prerequisites: ~player.allies
+
+cryr.upgrade:
+	Buildable:
+		Prerequisites: ~player.allies
+
+pcan.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+entrench.upgrade:
+	Buildable:
+		Prerequisites: ~player.allies
+
+crym.upgrade:
+	Buildable:
+		Prerequisites: ~player.allies
+
+tflx.upgrade:
+	Buildable:
+		Prerequisites: ~player.allies
+
+charv.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+orep.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+################################SCRIN##############################
+###################################################################
+
+blink.upgrade:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+shrw.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+advart.upgrade:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+carapace.upgrade:
+	Buildable:
+		Prerequisites: ~disabled
+
+resconv.upgrade:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+ioncon.upgrade:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+regen.upgrade:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+stellar.upgrade:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+coalescence.upgrade:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+shields.upgrade:
+	Buildable:
+		Prerequisites: ~player.scrin
+
+FACT:
+	DamageMultiplier@1:
+		Modifier: 0
+
+WEAP:
+	DamageMultiplier@1:
+		Modifier: 0
+
+TENT:
+	DamageMultiplier@1:
+		Modifier: 0
+
+AFLD:
+	DamageMultiplier@1:
+		Modifier: 0
+
+DOME:
+	GpsRadarProvider:
+		RequiresCondition: gps-active
+	GrantConditionOnDeploy:
+		DeployedCondition: gps-active
+		SkipMakeAnimation: true
+	DamageMultiplier@1:
+		Modifier: 0
+
+FIX:
+	DamageMultiplier@1:
+		Modifier: 0
+
+NUK2:
+	DamageMultiplier@1:
+		Modifier: 0
+
+SYRD:
+	DamageMultiplier@1:
+		Modifier: 0
+
+SS:
+	Buildable:
+		Prerequisites: syrd
+
+MSUB:
+	Buildable:
+		Prerequisites: syrd
+
+DD:
+	Buildable:
+		Prerequisites: syrd
+
+CA:
+	Buildable:
+		Prerequisites: syrd
+
+LST:
+	Buildable:
+		Prerequisites: syrd
+
+PT:
+	Buildable:
+		Prerequisites: syrd
+
+PT2:
+	Buildable:
+		Prerequisites: syrd
+
+DD2:
+	Buildable:
+		Prerequisites: syrd
+
+SS2:
+	Buildable:
+		Prerequisites: syrd
+
+ISUB:
+	Buildable:
+		Prerequisites: syrd
+
+CV:
+	Buildable:
+		Prerequisites: syrd
+
+SB:
+	Buildable:
+		Prerequisites: syrd
+
+SEAS:
+	Buildable:
+		Prerequisites: syrd

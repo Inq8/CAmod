@@ -4,9 +4,8 @@ World:
 		Scripts: campaign.lua, containment-coop.lua
 	MissionData:
 		Briefing: ================\n\nSpoiler warning: This is a co-op version of the GDI campaign mission with the same name.\n\nThe two USA players control the Navy SEALs. The third (optional) England player controls the Spy. If there are only two players, the first player also controls the Spy.\n\n1. Destroy Atomic Reactors.\n2. Destroy Soviet SAM sites along shoreline.\n3. Destroy Atom Bomb silos before they launch.\n4. Neutralize the Chronosphere.\n\n================\n
-	MapBuildRadius:
-		BuildRadiusCheckboxLocked: True
-		BuildRadiusCheckboxEnabled: False
+	MapStartingLocations:
+		SeparateTeamSpawnsCheckboxVisible: False
 	ScriptLobbyDropdown@RESPAWN:
 		ID: respawn
 		Label: Respawns
@@ -18,32 +17,8 @@ World:
 
 Player:
 	PlayerResources:
-		DefaultCashDropdownLocked: True
-	LobbyPrerequisiteCheckbox@GLOBALBOUNTY:
-		Enabled: False
-		Locked: True
-	LobbyPrerequisiteCheckbox@FORCESHIELD:
-		Enabled: False
-		Locked: True
-	DeveloperMode:
-		CheckboxLocked: True
-	LobbyPrerequisiteCheckbox@GLOBALFACTUNDEPLOY:
-		Enabled: False
-		Locked: True
-	LobbyPrerequisiteCheckbox@NAVY:
-		Enabled: False
-		Locked: True
-	LobbyPrerequisiteCheckbox@BALANCEDHARVESTING:
-		Enabled: False
-		Locked: True
-	LobbyPrerequisiteCheckbox@REVEALONFIRE:
-		Enabled: False
-		Locked: True
-	LobbyPrerequisiteDropdown@QUEUETYPE:
-		DefaultValue: global.singlequeue
-		Locked: True
+		SelectableCash: 0
 	Shroud:
-		ExploredMapCheckboxLocked: True
-		ExploredMapCheckboxEnabled: False
-		FogCheckboxLocked: False
 		FogCheckboxEnabled: True
+		FogCheckboxLocked: False
+		FogCheckboxVisible: True

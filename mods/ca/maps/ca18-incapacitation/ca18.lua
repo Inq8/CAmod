@@ -221,7 +221,7 @@ InitGreece = function()
 	Actor.Create("hazmat.upgrade", true, { Owner = Greece })
 	Actor.Create("cryr.upgrade", true, { Owner = Greece })
 
-	RebuildExcludes.Greece = { Types = { "powr", "apwr", "hpad", "agun" } }
+	RebuildExcludes.Greece = { Types = { "powr", "apwr", "hpad", "agun", "pbox", "pris" } }
 
 	AutoRepairAndRebuildBuildings(Greece, 15)
 	SetupRefAndSilosCaptureCredits(Greece)
@@ -245,10 +245,21 @@ InitGDI = function()
 		Actor.Create("hold3.strat", true, { Owner = GDI })
 	end
 
-	RebuildExcludes.GDI = { Types = { "nuke", "nuk2", "hpad.td", "afld.gdi", "cram" } }
+	RebuildExcludes.GDI = { Types = { "nuke", "nuk2", "hpad.td", "afld.gdi", "cram", "gtwr", "atwr" } }
 
-	local titanPatrolPath = { TitanPatrol1.Location, TitanPatrol2.Location, TitanPatrol3.Location, TitanPatrol4.Location, TitanPatrol5.Location, TitanPatrol6.Location }
-	TitanPatroller.Patrol(titanPatrolPath, true)
+	local titanTriggerFootprint = { TitanTrigger1.Location, TitanTrigger2.Location, TitanTrigger3.Location, TitanTrigger4.Location, TitanTrigger5.Location }
+	Trigger.OnEnteredFootprint(titanTriggerFootprint, function(a, id)
+		if a.Owner == Scrin and not IsTitanSpotted then
+			IsTitanSpotted = true
+			Trigger.RemoveProximityTrigger(id)
+			local camera = Actor.Create("smallcamera", true, { Owner = MissionPlayer, Location = TitanPatroller.Location })
+			Trigger.AfterDelay(DateTime.Seconds(4), function()
+				camera.Destroy()
+			end)
+			local titanPatrolPath = { TitanPatrol1.Location, TitanPatrol2.Location, TitanPatrol3.Location, TitanPatrol4.Location, TitanPatrol5.Location, TitanPatrol6.Location }
+			TitanPatroller.Patrol(titanPatrolPath, true)
+		end
+	end)
 
 	local miniDronePatrolPath = { MiniDronePatrol1.Location, MiniDronePatrol2.Location, MiniDronePatrol3.Location, MiniDronePatrol4.Location, MiniDronePatrol5.Location, MiniDronePatrol6.Location, MiniDronePatrol5.Location, MiniDronePatrol4.Location, MiniDronePatrol3.Location, MiniDronePatrol2.Location }
 	MiniDronePatroller1.Patrol(miniDronePatrolPath, true)
@@ -293,7 +304,7 @@ LightningStrike = function()
 	Lighting.Flash("LightningStrike", duration)
 
 	repeat
-		soundNumber = Utils.RandomInteger(1, 6)
+		soundNumber = Utils.RandomInteger(1, 7)
 	until(soundNumber ~= LastSoundNumber)
 	LastSoundNumber = soundNumber
 
@@ -307,7 +318,7 @@ IonStorm = function()
 	local soundNumber
 	Lighting.Flash("IonStrike", duration)
 	repeat
-		soundNumber = Utils.RandomInteger(1, 3)
+		soundNumber = Utils.RandomInteger(1, 4)
 	until(soundNumber ~= LastIonSoundNumber)
 	LastIonSoundNumber = soundNumber
 	Media.PlaySound("ionstorm" .. soundNumber .. ".aud")

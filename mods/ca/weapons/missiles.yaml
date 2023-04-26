@@ -43,6 +43,8 @@
 ^AirToGroundMissile:
 	Inherits: ^AntiGroundMissile
 	Projectile: MissileCA
+	Warhead@1Dam: SpreadDamage
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster, AirToGround
 
 ^AntiAirMissile:
 	Inherits: ^AntiGroundMissile
@@ -107,7 +109,6 @@ Maverick:
 			Concrete: 100
 			Light: 60
 			Heavy: 85
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
 
 MaverickAA:
 	Inherits: ^AirToAirMissile
@@ -210,7 +211,7 @@ SeismicMissile:
 			Heavy: 100
 			Concrete: 75
 			Brick: 100
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster, AirToGround
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
@@ -372,7 +373,6 @@ HellfireAG:
 			Wood: 40
 			Light: 70
 			Concrete: 120
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
 
 HellfireAG.Orca:
 	Inherits: HellfireAG
@@ -550,7 +550,7 @@ TitanTusk:
 TitanTusk.Gyro:
 	Inherits: TitanTusk
 	ReloadDelay: 30
-	Range: 3c256
+	Range: 3c768
 
 APCTusk:
 	Inherits: MammothTusk
@@ -1690,7 +1690,7 @@ Rah66AG:
 			Light: 55
 			Heavy: 25
 			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigatedMinor
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigatedMinor, AirToGround
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: caneon
@@ -1770,7 +1770,7 @@ ScrinTorp:
 		Speed: 682
 		LaunchAngle: 10
 	Warhead@1Dam: SpreadDamage
-		Spread: 768
+		Spread: 512
 		Damage: 950
 		Falloff: 1000, 400, 160, 64, 26, 10, 0
 		ValidTargets: Ground, Water
@@ -1781,7 +1781,7 @@ ScrinTorp:
 			Light: 30
 			Heavy: 65
 			Brick: 75
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster, AirToGround
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Eff: CreateEffect

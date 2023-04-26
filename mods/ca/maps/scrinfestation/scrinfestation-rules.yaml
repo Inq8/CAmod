@@ -6,6 +6,10 @@
 		Ambient: 0.9
 
 World:
+	MissionData:
+		Briefing: ================\n\n- Each player starts with a single Commando.\n-------------------------\n- If your Commando dies you can build a new one (takes longer for each death).\n-------------------------\n- Fight your way through the Scrin forces.\n-------------------------\n- Objective is to find and destroy the Scrin portals.\n-------------------------\n- Mission failed if all spawn points are lost and all Commandos are dead.\n\n================\n
+	LuaScript:
+		Scripts: scrinfestation.lua
 	StartingUnits@rmboonly:
 		Class: none
 		ClassName: Commando Only
@@ -25,60 +29,59 @@ World:
 	-StartingUnits@lightscrin:
 	-StartingUnits@heavyscrin:
 	SpawnStartingUnits:
-		DropdownLocked: True
+		DropdownVisible: False
 	MapBuildRadius:
-		AllyBuildRadiusCheckboxLocked: True
-		BuildRadiusCheckboxLocked: True
-		AllyBuildRadiusCheckboxEnabled: False
-		BuildRadiusCheckboxEnabled: True
+		AllyBuildRadiusCheckboxVisible: False
+		BuildRadiusCheckboxVisible: False
 	MapOptions:
-		TechLevelDropdownLocked: True
 		TechLevelDropdownVisible: False
+		ShortGameCheckboxEnabled: True
 		ShortGameCheckboxLocked: True
-	MissionData:
-		Briefing: ================\n\n- Each player starts with a single Commando. Auto-attack is disabled.\n-------------------------\n- If your Commando dies you can build a new one (takes longer for each death).\n-------------------------\n- Fight your way through the Scrin forces.\n-------------------------\n- Objective is to find and destroy the Scrin portals.\n-------------------------\n- Mission failed if all spawn points are lost and all Commandos are dead.\n\n================\n
+		ShortGameCheckboxVisible: False
 	CrateSpawner:
-		CheckboxLocked: True
 		CheckboxEnabled: False
-	LuaScript:
-		Scripts: scrinfestation.lua
+		CheckboxLocked: True
+		CheckboxVisible: False
 	MapStartingLocations:
-		SeparateTeamSpawnsCheckboxEnabled: True
-		SeparateTeamSpawnsCheckboxLocked: True
+		SeparateTeamSpawnsCheckboxVisible: False
+	TimeLimitManager:
+		TimeLimitLocked: True
+		TimeLimitDropdownVisible: False
 
 Player:
 	PlayerResources:
 		SelectableCash: 0
 		DefaultCash: 0
-		DefaultCashDropdownLocked: True
+		DefaultCashDropdownVisible: False
 	LobbyPrerequisiteCheckbox@GLOBALBOUNTY:
 		Enabled: False
 		Locked: True
+		Visible: False
 	LobbyPrerequisiteCheckbox@FORCESHIELD:
 		Enabled: False
-		Locked: True
+		Visible: False
 	DeveloperMode:
 		CheckboxLocked: True
+		CheckboxVisible: False
 	LobbyPrerequisiteCheckbox@GLOBALFACTUNDEPLOY:
-		Enabled: False
-		Locked: True
+		Visible: False
 	LobbyPrerequisiteCheckbox@NAVY:
-		Enabled: False
-		Locked: True
+		Visible: False
 	LobbyPrerequisiteCheckbox@BALANCEDHARVESTING:
-		Enabled: False
-		Locked: True
+		Visible: False
 	LobbyPrerequisiteCheckbox@REVEALONFIRE:
 		Enabled: False
 		Locked: True
+		Visible: False
 	LobbyPrerequisiteDropdown@QUEUETYPE:
 		DefaultValue: global.singlequeue
-		Locked: True
+		Visible: False
+		Values:
+			Single-Queue: global.singlequeue
 	Shroud:
-		ExploredMapCheckboxLocked: True
 		ExploredMapCheckboxEnabled: False
-		FogCheckboxLocked: True
-		FogCheckboxEnabled: False
+		ExploredMapCheckboxVisible: False
+		ExploredMapCheckboxLocked: True
 	ModularBot@DormantAI:
 		Name: Dormant AI
 		Type: dormant

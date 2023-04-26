@@ -132,7 +132,7 @@ Napalmtd:
 			Heavy: 55
 			Concrete: 55
 			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigatedMinor
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigatedMinor, AirToGround
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Eff: CreateEffect
@@ -564,10 +564,10 @@ TTankArc:
 	Range: 2c512
 	Warhead@1Dam: SpreadDamage
 		ValidRelationships: Enemy, Neutral
-		InvalidTargets: Wall, Trees
-		Damage: 1500
+		ValidTargets: Infantry, Vehicle, Defense
+		Damage: 1000
 		Versus:
-			None: 210
+			None: 315
 
 DogJaw:
 	ValidTargets: Infantry
@@ -625,15 +625,35 @@ Heal:
 	ReloadDelay: 80
 	Range: 4c0
 	ValidTargets: Heal
-	Projectile: Bullet
-		Speed: 1c682
+	Projectile: InstantHit
+		Blockable: true
+	TargetActorCenter: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 213
-		Damage: -5000
+		Damage: -3500
+		Falloff: 100, 52, 20, 7, 0
 		ValidRelationships: Ally
 		ValidTargets: Heal
 		DebugOverlayColor: 00FF00
 		DamageTypes: DirectHeal
+	Warhead@2Dam: TargetDamage
+		Damage: -500
+		ValidRelationships: Ally
+		ValidTargets: Heal
+		DamageTypes: DirectHeal
+		Delay: 20
+	Warhead@3Dam: TargetDamage
+		Damage: -500
+		ValidRelationships: Ally
+		ValidTargets: Heal
+		DamageTypes: DirectHeal
+		Delay: 40
+	Warhead@4Dam: TargetDamage
+		Damage: -500
+		ValidRelationships: Ally
+		ValidTargets: Heal
+		DamageTypes: DirectHeal
+		Delay: 60
 
 Repair:
 	Inherits: Heal
@@ -643,6 +663,9 @@ Repair:
 		Damage: -3000
 		ValidTargets: Repair
 		DamageTypes: DirectRepair
+	-Warhead@2Dam:
+	-Warhead@3Dam:
+	-Warhead@4Dam:
 	Warhead@highlight: GrantExternalCondition
 		Range: 0c511
 		Duration: 2
@@ -666,6 +689,9 @@ RepairFlash:
 		Damage: -1
 		ValidTargets: Repair
 		-DamageTypes:
+	-Warhead@2Dam:
+	-Warhead@3Dam:
+	-Warhead@4Dam:
 	Warhead@highlight: GrantExternalCondition
 		Range: 2c511
 		Duration: 2
@@ -791,7 +817,7 @@ TNT:
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		Damage: 2800
-		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		Falloff: 1000, 448, 192, 50, 18, 7, 0
 		ValidTargets: Ground, Water
 		Versus:
 			Light: 70
@@ -1157,7 +1183,7 @@ VenomLaser:
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
 		Damage: 5500
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, AirToGround
 		Versus:
 			None: 250
 			Wood: 60
@@ -1190,6 +1216,7 @@ VenomLaserAA:
 			Concrete: 100
 			Light: 100
 			Heavy: 100
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	-Warhead@2Smu:
 	Warhead@3Eff: CreateEffect
 		ValidTargets: Air, AirSmall
@@ -2053,9 +2080,9 @@ Lasher:
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 341, 682
 		Falloff: 100, 100, 0
-		Damage: 2000
+		Damage: 4000
 		ValidTargets: Infantry
-		DamageTypes: BulletDeath
+		DamageTypes: BulletDeath, FlakVestMitigatedMinor
 		ValidRelationships: Enemy, Neutral
 
 ChaosDroneTargeting:
@@ -2094,8 +2121,9 @@ RadBeamWeapon:
 			Brick: 0
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@2Dam: SpreadDamage
-		Spread: 128
-		Damage: 4000
+		Spread: 341
+		Damage: 3750
+		Falloff: 100, 37, 25, 15, 0
 		ValidTargets: Infantry
 		DamageTypes: RadiationDeath
 	Warhead@2irrad: GrantExternalCondition
@@ -2361,7 +2389,7 @@ JDAM:
 			Light: 80
 			Heavy: 100
 			Concrete: 80
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster, AirToGround
 	Warhead@2Dam: SpreadDamage
 		Spread: 512
 		Damage: 10000
@@ -2374,7 +2402,7 @@ JDAM:
 			Heavy: 0
 			Concrete: 0
 			Brick: 0
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated, AirToGround
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Eff: CreateEffect

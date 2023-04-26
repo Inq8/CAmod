@@ -615,7 +615,7 @@ TSLA:
 	Selectable:
 		DecorationBounds: 1024, 1706, 0, -341
 	Health:
-		HP: 36000
+		HP: 37500
 	Armor:
 		Type: Concrete
 	RevealsShroud:
@@ -677,6 +677,7 @@ AGUN:
 	Inherits: ^Defense
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetAirICBM
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 90
@@ -833,7 +834,7 @@ DOME:
 	ExternalCondition@JAMMED:
 		Condition: jammed
 	AirstrikePower@clustermines:
-		ChargeInterval: 6000
+		ChargeInterval: 6750
 		Prerequisites: ~radar.france
 		Name: Cluster Mines
 		Description: \nSends a cargo plane to drop a minefield\n    at the target location.
@@ -904,7 +905,7 @@ PBOX:
 	CustomSellValue:
 		Value: 300
 	Health:
-		HP: 36000
+		HP: 40000
 	Armor:
 		Type: Concrete
 	RevealsShroud:
@@ -954,7 +955,7 @@ HBOX:
 	CustomSellValue:
 		Value: 350
 	Health:
-		HP: 34000
+		HP: 40000
 	Armor:
 		Type: Concrete
 	RevealsShroud:
@@ -1012,7 +1013,7 @@ GUN:
 		Name: Turret
 	Building:
 	Health:
-		HP: 44000
+		HP: 46500
 	Armor:
 		Type: Concrete
 	RevealsShroud:
@@ -1067,7 +1068,7 @@ FTUR:
 		Name: Flame Tower
 	Building:
 	Health:
-		HP: 36000
+		HP: 40000
 	Armor:
 		Type: Concrete
 	RevealsShroud:
@@ -1103,6 +1104,7 @@ SAM:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetAirICBM
 	Inherits@SHAPE: ^2x1Shape
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Selectable:
 		Bounds: 2048, 1024
 	HitShape:
@@ -3832,6 +3834,7 @@ NSAM:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetAirICBM
 	Inherits@SHAPE: ^2x1Shape
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Selectable:
 		Bounds: 2048, 1024
 	HitShape:
@@ -3911,7 +3914,7 @@ GTWR:
 		Name: Guard Tower
 	Building:
 	Health:
-		HP: 36000
+		HP: 40000
 	Armor:
 		Type: Concrete
 	RevealsShroud:
@@ -5015,6 +5018,10 @@ AFLD.GDI:
 		Proxy: powerproxy.airstrike
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+	SpawnActorOnDeath:
+		Actor: n1
+	SpawnActorsOnSell:
+		ActorTypes: n1,n1,n1,n1,n1,n1,n1,n1,n1,n1,c1,c1,c1,c1,c7,c7,c7,c7,c10,c10
 
 GTEK:
 	Inherits: ^Building
@@ -5634,7 +5641,7 @@ LTUR:
 	RenderSprites:
 		Image: ltur
 	Health:
-		HP: 36000
+		HP: 40000
 	Valued:
 		Cost: 600
 	CustomSellValue:
@@ -5690,7 +5697,7 @@ TTUR:
 		Name: Chemical Tower
 	Building:
 	Health:
-		HP: 38000
+		HP: 44000
 	Armor:
 		Type: Concrete
 	RevealsShroud:

@@ -81,12 +81,9 @@ GunWalkerZap:
 	ReloadDelay: 30
 	Burst: 5
 	BurstDelays: 8
-	Projectile: Bullet
-		Image: scrinzap
-		Speed: 800
-		Palette: scrin
-		Inaccuracy: 0c64
+	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
+		Spread: 128
 		Damage: 2450
 		Versus:
 			None: 100
@@ -96,11 +93,23 @@ GunWalkerZap:
 			Heavy: 15
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
+
+GunwalkerZapVisual:
+	Inherits: GunWalkerZap
+	-Report:
+	-Projectile:
+	Projectile: Bullet
+		Image: scrinzap
+		Speed: 800
+		Palette: scrin
+	-Warhead@1Dam:
+	Warhead@1Dum: Dummy
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
 		Image: scrinzaphit
 		ValidTargets: Ground, Ship, Air, AirSmall, Trees
+		Inaccuracy: 128
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piffs
 		ValidTargets: Water, Underwater
@@ -113,7 +122,6 @@ GunWalkerZapAA:
 		Image: scrinzapup
 		Speed: 1c682
 		Blockable: false
-		Inaccuracy: 0
 	ValidTargets: Air, AirSmall
 	Warhead@1Dam: SpreadDamage
 		Damage: 1800
@@ -629,12 +637,12 @@ StormriderZap:
 			Light: 55
 			Heavy: 30
 			Brick: 20
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, AirToGround
 	Warhead@2Dam: SpreadDamage
 		ValidTargets: Water
 		Spread: 128
 		Damage: 1000
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, AirToGround
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 		InvalidTargets: Structure, Wall
@@ -667,12 +675,14 @@ StormRiderZapAA:
 			Concrete: 100
 			Light: 100
 			Heavy: 100
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@smallDamage: SpreadDamage
 		Damage: 1800
 		Spread: 341
 		Falloff: 100, 50, 14, 0
 		ValidTargets: AirSmall
 		ValidRelationships: Enemy, Neutral
+	-Warhead@2Dam:
 	-Warhead@2Smu:
 
 EnervatorBolts:
@@ -707,7 +717,7 @@ EnervatorBolts:
 			Light: 70
 			Heavy: 100
 			Concrete: 120
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster, AirToGround
 	Warhead@2Sup: GrantExternalCondition
 		Range: 0c768
 		Duration: 75
@@ -737,6 +747,7 @@ EnervatorBoltsAA:
 			Light: 100
 			Concrete: 100
 			Brick: 100
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@smallDamage: SpreadDamage
 		Damage: 6000
 		Spread: 341
@@ -782,10 +793,10 @@ InvaderZap:
 			None: 65
 			Wood: 10
 			Concrete: 15
-			Light: 75
+			Light: 85
 			Heavy: 100
 			Brick: 20
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, AirToGround
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
 		ExplosionPalette: scrin
@@ -814,8 +825,9 @@ InvaderZapAA:
 			Concrete: 100
 			Wood: 100
 			None: 100
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@smallDamage: SpreadDamage
-		Damage: 200
+		Damage: 220
 		Spread: 341
 		Falloff: 100, 50, 14, 0
 		ValidTargets: AirSmall

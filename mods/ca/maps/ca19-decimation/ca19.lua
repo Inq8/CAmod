@@ -170,7 +170,7 @@ WorldLoaded = function()
 		Reinforcements.Reinforce(Scrin, { "devo" }, { ScrinReinforce2Spawn.Location, ScrinReinforce2Dest.Location }, 75)
 	end)
 
-	Trigger.AfterDelay(DateTime.Minutes(12), function()
+	Trigger.AfterDelay(DateTime.Minutes(20), function()
 		Actor.Create("reaperaccess", true, { Owner = Scrin })
 		Notification("You have been granted access to Reaper Tripods.")
 	end)
@@ -180,10 +180,10 @@ WorldLoaded = function()
 			Utils.Do(grid.Consumers, function(consumer)
 				if not consumer.IsDead then
 					consumer.GrantCondition("disabled")
-					DefensesOffline = true
-					Notification("Soviet power supply neutralized; defenses are now offline.")
 				end
 			end)
+			DefensesOffline = true
+			Notification("Soviet power supply neutralized; defenses are now offline.")
 		end)
 	end)
 

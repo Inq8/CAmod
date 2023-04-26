@@ -1,6 +1,6 @@
 #region Copyright & License Information
 /*
- * Copyright 2007-2022 The OpenRA Developers (see AUTHORS)
+ * Copyright (c) The OpenRA Developers and Contributors
  * This file is part of OpenRA, which is free software. It is made
  * available to you under the terms of the GNU General Public License
  * as published by the Free Software Foundation, either version 3 of
@@ -53,6 +53,8 @@ namespace OpenRA.Mods.CA.Traits
 		readonly string faction;
 		int delayTicks;
 		bool spawnPending;
+		WPos spawnPosition;
+		CPos spawnCell;
 
 		public SpawnActorOnCapture(ActorInitializer init, SpawnActorOnCaptureInfo info)
 			: base(info)
@@ -68,6 +70,8 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			spawnPending = true;
+			spawnPosition = self.CenterPosition;
+			spawnCell = self.Location + Info.Offset;
 			delayTicks = Info.Delay;
 		}
 
@@ -92,8 +96,8 @@ namespace OpenRA.Mods.CA.Traits
 			var td = new TypeDictionary
 			{
 				new ParentActorInit(self),
-				new LocationInit(self.Location + Info.Offset),
-				new CenterPositionInit(self.CenterPosition),
+				new LocationInit(spawnCell),
+				new CenterPositionInit(spawnPosition),
 				new FactionInit(faction)
 			};
 

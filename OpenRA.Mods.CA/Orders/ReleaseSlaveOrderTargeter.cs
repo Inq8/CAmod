@@ -19,10 +19,10 @@ namespace OpenRA.Mods.CA.Orders
 	public class ReleaseSlaveOrderTargeter : UnitOrderTargeter
 	{
 		readonly string releaseCursor;
-		readonly Func<Actor, bool> canTarget;
+		readonly Func<Actor, TargetModifiers, bool> canTarget;
 
 		public ReleaseSlaveOrderTargeter(string order, int priority, string releaseCursor,
-			Func<Actor, bool> canTarget)
+			Func<Actor, TargetModifiers, bool> canTarget)
 			: base(order, priority, releaseCursor, false, true)
 		{
 			this.releaseCursor = releaseCursor;
@@ -31,7 +31,7 @@ namespace OpenRA.Mods.CA.Orders
 
 		public override bool CanTargetActor(Actor self, Actor target, TargetModifiers modifiers, ref string cursor)
 		{
-			if (!self.Owner.IsAlliedWith(target.Owner) || !target.Info.HasTraitInfo<MindControllableInfo>() || !canTarget(target))
+			if (!self.Owner.IsAlliedWith(target.Owner) || !target.Info.HasTraitInfo<MindControllableInfo>() || !canTarget(target, modifiers))
 				return false;
 
 			cursor = releaseCursor;

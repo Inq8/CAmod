@@ -864,7 +864,7 @@
 ^HealingCooldown:
 	GrantConditionOnHealingReceived@HEALINGCOOLDOWN:
 		Condition: heal-cooldown
-		RequiredHealing: 85000
+		RequiredHealing: 75000
 		StackDuration: 625
 		MinimumHealing: 2500
 		DamageTypes: DirectHeal
@@ -895,30 +895,34 @@
 		DamageTypes: TankBuster
 		Modifier: 133
 
+^AirToGroundProtection:
+	DamageTypeDamageMultiplier@A2GPROTECTION:
+		DamageTypes: AirToGround
+		Modifier: 66
+
 ^GyroStabilizers:
 	WithModifiedPalette@GYRO:
 		RequiresCondition: gyrostabilizers
 		Palette: gyro
 	RangeMultiplier@GYRO:
 		RequiresCondition: gyrostabilizers
-		Modifier: 175
+		Modifier: 165
 	ReloadDelayMultiplier@GYRO:
 		RequiresCondition: gyrostabilizers
-		Modifier: 175
+		Modifier: 165
 	TimedConditionBar@GYRO:
 		Condition: gyrostabilizers
 	ExternalCondition@GYRO:
 		Condition: gyrostabilizers
 	GrantTimedConditionOnDeploy@GYRO:
 		DeployedCondition: gyrostabilizers
-		CooldownTicks: 1250
+		CooldownTicks: 1500
 		DeployedTicks: 500
 		StartsFullyCharged: true
 		ChargingColor: 808000
 		DischargingColor: ffff00
 		ShowSelectionBarWhenFull: false
 		DeploySound: gyrostabilizers.aud
-		DischargeOnAttack: true
 		RequiresCondition: gyro-upgrade
 	GrantConditionOnPrerequisite@GYRO:
 		Condition: gyro-upgrade
@@ -1179,7 +1183,7 @@
 		Palette: cloakgreen
 		CloakSound: cloak5.aud
 		UncloakSound: appear1.aud
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 	ExternalCondition@MSGCLOAK:
 		Condition: msg-invis
 
@@ -1192,7 +1196,7 @@
 		Palette: cloak
 		IsPlayerPalette: false
 		RequiresCondition: (crate-cloak) && !(cloak-force-disabled || invisibility)
-		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal, SelfHeal
+		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 	TimedConditionBar@CRATE-CLOAK:
 		Condition: crate-cloak
 		Color: 606060
@@ -1488,6 +1492,7 @@
 	InfiltrateToAttach@MINIDRONE:
 		Actor: mdrn.attached
 		Types: MiniDroneAttachable
+		InfiltratedSound: mdrn-attach.aud
 	Targetable@MINIDRONE:
 		TargetTypes: MiniDroneAttachable
 		RequiresCondition: !mdrn-attached
@@ -1504,6 +1509,9 @@
 			mdrn: 1
 		LimitConditions:
 			mdrn: mdrn-attached
+	AttachOnTransform@MINIDRONE:
+		Actor: mdrn.attached
+		RequiresCondition: mdrn-attached
 
 ^HoverTrail:
 	LeavesTrails:
@@ -2393,6 +2401,7 @@
 	-ChangesHealth@MINIDRONE:
 	-ExternalCondition@MINIDRONE:
 	-AttachableTo:
+	-AttachOnTransform@MINIDRONE:
 
 ^NeutralPlane:
 	Inherits@1: ^ExistsInWorld
@@ -3809,10 +3818,10 @@
 	Targetable@INF:
 		TargetTypes: InfantryProducer
 	ProductionCostMultiplier@MQS1:
-		Multiplier: 200
+		Multiplier: 300
 		Prerequisites: infantry.any, global.multiqueuescaled, !optprod1.upgrade, !optprod2.upgrade
 	ProductionCostMultiplier@MQS2:
-		Multiplier: 150
+		Multiplier: 200
 		Prerequisites: infantry.any, global.multiqueuescaled, optprod1.upgrade, !optprod2.upgrade
 
 ^ProducesCyborgs:

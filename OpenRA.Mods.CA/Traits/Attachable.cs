@@ -31,7 +31,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new Attachable(init, this); }
 	}
 
-	public class Attachable : INotifyCreated, INotifyKilled, INotifyActorDisposing, INotifyOwnerChanged, ITick, INotifyBlockingMove
+	public class Attachable : INotifyCreated, INotifyKilled, INotifyActorDisposing, INotifyOwnerChanged, ITick, INotifyBlockingMove, INotifyAiming
 	{
 		public readonly AttachableInfo Info;
 		AttachableTo attachedTo;
@@ -212,6 +212,12 @@ namespace OpenRA.Mods.CA.Traits
 				SetPosition(attachedTo.CenterPosition);
 				w.Add(self);
 			});
+		}
+
+		void INotifyAiming.StartedAiming(Actor self, AttackBase attack) { }
+		void INotifyAiming.StoppedAiming(Actor self, AttackBase attack)
+		{
+			Stop();
 		}
 	}
 }

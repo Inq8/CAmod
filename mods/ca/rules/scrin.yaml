@@ -191,7 +191,7 @@ VEHICLES.SCRIN:
 		ValidRelationships: Ally, Enemy, Neutral
 	GrantStackingCondition@IONSTORM:
 		Condition: storm-level
-		DelayPerInstance: 100
+		DelayPerInstance: 120
 		MaximumInstances: 3
 		RevokeDelay: 200
 		RequiresCondition: storm-active
@@ -689,6 +689,7 @@ SMEDI:
 		TargetTypes: Ground, Infantry, ChaosImmune
 	GuardsSelection:
 		ValidTargets: Infantry
+	KeepsDistance:
 
 GSCR:
 	Inherits: BRUT
@@ -759,7 +760,7 @@ MAST:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 20000
+		HP: 18000
 	Mobile:
 		Speed: 60
 	RevealsShroud:
@@ -934,6 +935,7 @@ GUNW:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 24
@@ -969,6 +971,9 @@ GUNW:
 		LocalOffset: 690,92,0, 690,-92,0
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
+	Armament@PRIMARYVISUAL:
+		Weapon: GunWalkerZapVisual
+		LocalOffset: 690,92,0, 690,-92,0
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: GunWalkerZapAA
@@ -1019,6 +1024,7 @@ SHRW:
 	Armament@PRIMARY:
 		Weapon: ShardWalkerShards
 		LocalOffset: 690,92,0, 690,-92,0
+	-Armament@PRIMARYVISUAL:
 	Armament@SECONDARY:
 		Weapon: ShardWalkerShardsAA
 		LocalOffset: 690,92,0, 690,-92,0
@@ -4563,7 +4569,7 @@ PTUR:
 		DecorationBounds: 1024, 1194, 0, -256
 	Building:
 	Health:
-		HP: 42000
+		HP: 45000
 	Armor:
 		Type: Concrete
 	RevealsShroud:
@@ -4603,6 +4609,7 @@ SHAR:
 	Inherits: ^Defense
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetAirICBM
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Buildable:
