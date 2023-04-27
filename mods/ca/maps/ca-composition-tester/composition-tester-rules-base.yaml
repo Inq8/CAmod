@@ -26,8 +26,11 @@ World:
 		AllyBuildRadiusCheckboxEnabled: True
 		BuildRadiusCheckboxEnabled: False
 	MapOptions:
-		TechLevelDropdownLocked: True
-		TechLevelDropdownVisible: False
+		TechLevelDropdownLocked: False
+		TechLevelDropdownVisible: True
+		TechLevelDropdownLabel: Units Available
+		TechLevelDropdownDescription: What units/defenses players can build
+		TechLevel: factionspecific
 		ShortGameCheckboxEnabled: True
 		ShortGameCheckboxLocked: True
 		ShortGameCheckboxVisible: False
@@ -96,13 +99,6 @@ Player:
 		Enabled: True
 		DisplayOrder: 999
 		Prerequisites: global.freeupgrades
-	LobbyPrerequisiteCheckbox@BUILDANYTHING:
-		ID: buildanything
-		Label: Build Anything
-		Description: Everything is unlocked regardless of chosen faction
-		Enabled: False
-		DisplayOrder: 999
-		Prerequisites: global.buildanything
 
 	ProvidesPrerequisite@PLAYERHUMAN:
 		Prerequisite: player.human
@@ -123,40 +119,19 @@ Player:
 		Prerequisite: player.alliesorgdiornod
 		Factions: england, france, germany, usa, talon, zocom, eagle, arc, blackh, marked, legion, shadow
 
-	ProvidesPrerequisite@BUILDANYTHINGALLIES:
-		Prerequisite: player.allies
-		RequiresPrerequisites: global.buildanything
-	ProvidesPrerequisite@BUILDANYTHINGSOVIET:
-		Prerequisite: player.soviet
-		RequiresPrerequisites: global.buildanything
-	ProvidesPrerequisite@BUILDANYTHINGGDI:
-		Prerequisite: player.gdi
-		RequiresPrerequisites: global.buildanything
-	ProvidesPrerequisite@BUILDANYTHINGNOD:
-		Prerequisite: player.nod
-		RequiresPrerequisites: global.buildanything
-	ProvidesPrerequisite@BUILDANYTHINGSCRIN:
-		Prerequisite: player.scrin
-		RequiresPrerequisites: global.buildanything
-
-	ProvidesPrerequisite@BUILDANYTHINGHUMAN:
-		Prerequisite: player.human
-		RequiresPrerequisites: global.buildanything
-	ProvidesPrerequisite@BUILDANYTHINGRA:
-		Prerequisite: player.ra
-		RequiresPrerequisites: global.buildanything
-	ProvidesPrerequisite@BUILDANYTHINGTD:
-		Prerequisite: player.td
-		RequiresPrerequisites: global.buildanything
-	ProvidesPrerequisite@BUILDANYTHINGALLIESORGDI:
-		Prerequisite: player.alliesorgdi
-		RequiresPrerequisites: global.buildanything
-	ProvidesPrerequisite@BUILDANYTHINGALLIESORNOD:
-		Prerequisite: player.alliesornod
-		RequiresPrerequisites: global.buildanything
-	ProvidesPrerequisite@BUILDANYTHINGALLIESORGDIORNOD:
-		Prerequisite: player.alliesorgdiornod
-		RequiresPrerequisites: global.buildanything
+	-ProvidesTechPrerequisite@infonly:
+	-ProvidesTechPrerequisite@low:
+	-ProvidesTechPrerequisite@medium:
+	-ProvidesTechPrerequisite@high:
+	-ProvidesTechPrerequisite@unrestricted:
+	ProvidesTechPrerequisite@factionspecific:
+		Name: Faction Specific
+		Prerequisites: techlevel.infonly, techlevel.low, techlevel.medium, techlevel.high, techlevel.unrestricted
+		Id: factionspecific
+	ProvidesTechPrerequisite@buildanything:
+		Name: Build Anything
+		Prerequisites: player.allies, player.soviet, player.gdi, player.nod, player.scrin, player.human, player.ra, player.td, player.alliesorgdi, player.alliesornod, player.alliesorgdiornod, techlevel.infonly, techlevel.low, techlevel.medium, techlevel.high, techlevel.unrestricted
+		Id: buildanything
 
 ^Upgrade:
 	Buildable:
@@ -1238,6 +1213,10 @@ TENT:
 AFLD:
 	DamageMultiplier@1:
 		Modifier: 0
+	-AirstrikePower@Russianparabombs:
+	-AirstrikePower@CarpetBomb:
+	-AirstrikePower@Iraqiparabombs:
+	-AirstrikePower@MutaBomb:
 
 DOME:
 	GpsRadarProvider:
@@ -1247,6 +1226,11 @@ DOME:
 		SkipMakeAnimation: true
 	DamageMultiplier@1:
 		Modifier: 0
+	-AirstrikePower@clustermines:
+	-SpawnActorPowerCA@VeilOfWar:
+	-ParatroopersPower@paratroopers:
+	-ParatroopersPower@Russianparatroopers:
+	-AirstrikePower@spyplane:
 
 FIX:
 	DamageMultiplier@1:
