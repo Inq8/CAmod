@@ -1794,7 +1794,7 @@ MNLY:
 		Description: Lays mines to destroy unwary enemy units.
 	TooltipExtras:
 		Weaknesses: • Unarmed
-		Attributes: • Can detect mines.
+		Attributes: • Can detect and disarm mines.
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -1822,6 +1822,7 @@ MNLY:
 	AmmoPool:
 		Ammo: 5
 		RearmSound: minelay1.aud
+		Armaments: none
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
@@ -1839,6 +1840,22 @@ MNLY:
 		RearmActors: fix, rep
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	Armament@PRIMARY:
+		Weapon: MineDefuser
+		Cursor: goldwrench
+		OutsideRangeCursor: goldwrench
+		Name: primary
+		TargetRelationships: Enemy, Neutral
+	AutoTarget:
+	AutoTargetPriority@MINEDEFUSER:
+		ValidTargets: Mine
+		InvalidTargets: NoAutoTarget
+	AttackFrontalCharged:
+		FacingTolerance: 0
+		ChargeLevel: 75
+		PauseOnCondition: empdisable || being-warped
+		ShowSelectionBar: true
+		SelectionBarColor: ffff00
 
 TRUK:
 	Inherits: ^Vehicle

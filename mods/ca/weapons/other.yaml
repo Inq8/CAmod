@@ -2625,3 +2625,21 @@ DropDummy:
 	Warhead: SpreadDamage
 		Spread: 56
 		Damage: 1
+
+MineDefuser:
+	Range: 1c512
+	ReloadDelay: 6
+	ValidTargets: Mine
+	Projectile: InstantHit
+	Warhead@1Dam: SpreadDamage
+		Damage: 12000
+		ValidTargets: Mine
+		Delay: 5
+	Warhead@1Def: GrantExternalCondition
+		Condition: defused
+		Range: 0c511
+		Duration: 25
+		ValidTargets: Mine
+	Warhead@3Eff: CreateEffect
+		Explosions: med_explosion
+		ImpactSounds: mineblo1.aud
