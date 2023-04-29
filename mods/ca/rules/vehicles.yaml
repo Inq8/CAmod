@@ -5731,7 +5731,7 @@ MSAR:
 	Inherits: ^VehicleTD
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Valued:
-		Cost: 1200
+		Cost: 1100
 	Tooltip:
 		Name: Mobile Sensor Array
 		RequiresCondition: !deployed
@@ -5746,7 +5746,7 @@ MSAR:
 		IconPalette: chrometd
 		Prerequisites: anyradar, ~vehicles.gdi, ~techlevel.medium
 		BuildDurationModifier: 50
-		Description: When deployed, detects enemies within a large radius.
+		Description: When deployed, detects enemy vehicles,\n  aircraft and structures within a large radius.
 	TooltipExtras:
 		Weaknesses: • Unarmed
 		Attributes: • Can detect cloaked units (when deployed)\n• Increases nearby ground unit vision range (when deployed)\n• Special Ability: Activate Sensor Array
@@ -5807,10 +5807,11 @@ MSAR:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 	RangedGpsRadarProvider:
-		Range: 18c0
+		Range: 24c0
+		TargetTypes: Vehicle, Aircraft, Structure
 		RequiresCondition: deployed && !(empdisable || being-warped)
 	WithDetectionCircle:
-		Range: 18c0
+		Range: 24c0
 		RequiresCondition: deployed && !(empdisable || being-warped)
 		TrailCount: 3
 	ExternalCondition@JAMMED:
