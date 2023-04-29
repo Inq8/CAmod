@@ -302,6 +302,10 @@ WorldLoaded = function()
 							t.Destroy()
 							Trigger.AfterDelay(DateTime.Seconds(7), function()
 								Greece.MarkCompletedObjective(ObjectiveCapturePrison)
+
+								if not IsHoldOutComplete then
+									Notification("Continue holding your position, we need to keep the Soviets busy so they don't pursue the GDI commander.")
+								end
 							end)
 						end)
 					end)
@@ -398,16 +402,7 @@ GDIBaseFound = function()
 		end)
 
 		Trigger.AfterDelay(HoldOutTime[Difficulty], function()
-			ObjectiveLocateCommander = Greece.AddObjective("Locate the GDI commander.")
-			Greece.MarkCompletedObjective(ObjectiveHoldOut)
-			UserInterface.SetMissionText("Locate the GDI commander.", HSLColor.Yellow)
-
-			Trigger.AfterDelay(DateTime.Seconds(1), function()
-				Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
-				Notification("Reinforcements have arrived.")
-				Reinforcements.Reinforce(Greece, { "2tnk", "mcv", "2tnk" }, { McvEntry.Location, McvRally.Location }, 75)
-				Beacon.New(Greece, McvRally.CenterPosition)
-			end)
+			HoldOutComplete()
 		end)
 
 		if Difficulty ~= "hard" then
@@ -419,6 +414,28 @@ GDIBaseFound = function()
 					gdiReinforcements = { "htnk" , "htnk" }
 				end
 				Reinforcements.Reinforce(Greece, gdiReinforcements, { GDIReinforcementsEntry.Location, GDIReinforcementsRally.Location }, 75)
+			end)
+		end
+	end
+end
+
+HoldOutComplete = function()
+	if not IsHoldOutComplete then
+		IsHoldOutComplete = true
+
+		if ObjectiveLocateCommander == nil then
+			ObjectiveLocateCommander = Greece.AddObjective("Locate the GDI commander.")
+			UserInterface.SetMissionText("Locate the GDI commander.", HSLColor.Yellow)
+		end
+
+		Greece.MarkCompletedObjective(ObjectiveHoldOut)
+
+		if ObjectiveCapturePrison == nil or not Greece.IsObjectiveCompleted(ObjectiveCapturePrison) then
+			Trigger.AfterDelay(DateTime.Seconds(1), function()
+				Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
+				Notification("Reinforcements have arrived.")
+				Reinforcements.Reinforce(Greece, { "2tnk", "mcv", "2tnk" }, { McvEntry.Location, McvRally.Location }, 75)
+				Beacon.New(Greece, McvRally.CenterPosition)
 			end)
 		end
 	end
