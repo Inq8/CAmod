@@ -427,18 +427,26 @@ end
 RevealPrison = function()
 	if not IsPrisonRevealed then
 		Beacon.New(Greece, GDICommanderSpawn.CenterPosition)
-		ObjectiveCapturePrison = Greece.AddObjective("Take control of prison and rescue GDI commander.")
 
-		if ObjectiveLocateCommander ~= nil and not Greece.IsObjectiveCompleted(ObjectiveLocateCommander) then
-			Greece.MarkCompletedObjective(ObjectiveLocateCommander)
+		if ObjectiveLocateCommander == nil then
+			ObjectiveLocateCommander = Greece.AddObjective("Locate the GDI commander.")
 		end
 
-		UserInterface.SetMissionText("Take control of prison and rescue GDI commander.", HSLColor.Yellow)
-		PrisonCamera = Actor.Create("camera.paradrop", true, { Owner = Greece, Location = SovietPrison.Location })
+		Trigger.AfterDelay(DateTime.Seconds(1), function()
+			ObjectiveCapturePrison = Greece.AddObjective("Take control of prison and rescue GDI commander.")
 
-		Trigger.AfterDelay(DateTime.Seconds(5), function()
-			PrisonCamera.Destroy()
+			if not Greece.IsObjectiveCompleted(ObjectiveLocateCommander) then
+				Greece.MarkCompletedObjective(ObjectiveLocateCommander)
+			end
+
+			UserInterface.SetMissionText("Take control of prison and rescue GDI commander.", HSLColor.Yellow)
+			PrisonCamera = Actor.Create("camera.paradrop", true, { Owner = Greece, Location = SovietPrison.Location })
+
+			Trigger.AfterDelay(DateTime.Seconds(5), function()
+				PrisonCamera.Destroy()
+			end)
 		end)
+
 		IsPrisonRevealed = true
 	end
 end
