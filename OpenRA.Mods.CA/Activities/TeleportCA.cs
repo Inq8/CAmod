@@ -78,7 +78,12 @@ namespace OpenRA.Mods.CA.Activities
 			Game.Sound.Play(SoundType.World, sound, self.CenterPosition);
 			Game.Sound.Play(SoundType.World, sound, self.World.Map.CenterOfCell(destination));
 
-			self.Trait<IPositionable>().SetPosition(self, destination);
+			var positionable = self.Trait<IPositionable>();
+
+			var subCell = positionable.GetAvailableSubCell(destination);
+			if (subCell != SubCell.Invalid)
+				positionable.SetPosition(self, destination, subCell);
+
 			self.Generation++;
 
 			if (killCargo)
