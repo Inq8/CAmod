@@ -206,6 +206,12 @@ WorldLoaded = function()
 		end)
 	end)
 
+	Trigger.OnCapture(TraitorConyard, function(self, captor, oldOwner, newOwner)
+		Trigger.AfterDelay(DateTime.Minutes(1), function()
+			InitAlliedAttacks()
+		end)
+	end)
+
 	Trigger.OnCapture(TraitorTechCenter, function(self, captor, oldOwner, newOwner)
 		if newOwner == USSR then
 			if ObjectiveCaptureTraitorTechCenter == nil then
@@ -346,17 +352,7 @@ AbandonedBaseDiscovered = function()
 	USSR.MarkCompletedObjective(ObjectiveFindSovietBase)
 	TraitorTechCenterDiscovered()
 
-	Trigger.AfterDelay(Squads.Main.Delay[Difficulty], function()
-		InitAttackSquad(Squads.Main, Greece)
-	end)
-
-	Trigger.AfterDelay(Squads.Traitor.Delay[Difficulty], function()
-		InitAttackSquad(Squads.Traitor, Traitor)
-	end)
-
-	Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
-		InitAirAttackSquad(Squads.Air, Greece, Nod, { "harv", "v2rl", "apwr", "tsla", "ttra", "v3rl", "mig", "hind", "suk", "suk.upg", "kiro", "apoc" })
-	end)
+	InitAlliedAttacks()
 
 	Trigger.AfterDelay(1, function()
 		Actor.Create("QueueUpdaterDummy", true, { Owner = USSR })
@@ -385,6 +381,23 @@ TraitorHQKilledOrCaptured = function()
 		traitorGeneral.Move(TraitorGeneralSafePoint.Location)
 		Trigger.OnKilled(traitorGeneral, function(self, killer)
 			USSR.MarkCompletedObjective(ObjectiveKillTraitor)
+		end)
+	end
+end
+
+InitAlliedAttacks = function()
+	if not AttacksStarted then
+		AttacksStarted = true
+		Trigger.AfterDelay(Squads.Main.Delay[Difficulty], function()
+			InitAttackSquad(Squads.Main, Greece)
+		end)
+
+		Trigger.AfterDelay(Squads.Traitor.Delay[Difficulty], function()
+			InitAttackSquad(Squads.Traitor, Traitor)
+		end)
+
+		Trigger.AfterDelay(Squads.Air.Delay[Difficulty], function()
+			InitAirAttackSquad(Squads.Air, Greece, Nod, { "harv", "v2rl", "apwr", "tsla", "ttra", "v3rl", "mig", "hind", "suk", "suk.upg", "kiro", "apoc" })
 		end)
 	end
 end

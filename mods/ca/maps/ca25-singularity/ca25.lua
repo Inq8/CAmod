@@ -373,7 +373,7 @@ WorldLoaded = function()
 		c.GrantCondition("bluebuff")
 
 		Trigger.OnDamaged(c, function(self, attacker, damage)
-			if not SleepingCyborgsMessageShown and not Mothership.IsDead and self.Health < self.MaxHealth * 0.8 then
+			if not SleepingCyborgsMessageShown and not Mothership.IsDead and not self.IsDead and self.Health < self.MaxHealth * 0.8 then
 				SleepingCyborgsMessageShown = true
 				Notification("Those cyborgs appear to be in some kind of hibernation commander, and that enriched Tiberium is giving them some serious regeneration. Recommend we avoid firing on them, lest they wake up!")
 			end

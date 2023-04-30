@@ -39,9 +39,9 @@ AirReinforcements = {
 NodHarvestActors = { NWRef, NRef, NERef, SRef1, SRef2, SERef1, SERef2, NWHarv, NHarv, NEHarv, SWHarv1, SWHarv2, SEHarv1, SEHarv2 }
 
 MaintenanceDuration = {
-	easy = DateTime.Minutes(5),
-	normal = DateTime.Minutes(5),
-	hard = DateTime.Minutes(5),
+	easy = DateTime.Minutes(4),
+	normal = DateTime.Minutes(4),
+	hard = DateTime.Minutes(4),
 }
 
 RaidStart = {
