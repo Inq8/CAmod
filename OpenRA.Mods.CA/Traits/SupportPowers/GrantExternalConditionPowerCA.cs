@@ -79,6 +79,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Duration of the Active condition (in ticks). Set to 0 for a permanent condition.")]
 		public readonly int ActiveDuration = 50;
 
+		[Desc("If true, targets must not be under shroud/fog.")]
+		public readonly bool TargetMustBeVisible = true;
+
 		public WeaponInfo WeaponInfo { get; private set; }
 
 		public override object Create(ActorInitializer init) { return new GrantExternalConditionPowerCA(init.Self, this); }
@@ -169,6 +172,14 @@ namespace OpenRA.Mods.CA.Traits
 			});
 		}
 
+		public IEnumerable<Actor> VisibleUnitsInRange(CPos xy)
+		{
+			return UnitsInRange(xy).Where(a =>
+			{
+				return !(info.TargetMustBeVisible && (Self.World.ShroudObscures(a.Location) || Self.World.FogObscures(a.Location)));
+			});
+		}
+
 		void RevokeCondition(Actor self)
 		{
 			if (activeToken != Actor.InvalidConditionToken)
@@ -225,7 +236,7 @@ namespace OpenRA.Mods.CA.Traits
 			protected override IEnumerable<Order> OrderInner(World world, CPos cell, int2 worldPixel, MouseInput mi)
 			{
 				world.CancelInputMode();
-				if (mi.Button == MouseButton.Left && power.UnitsInRange(cell).Any())
+				if (mi.Button == MouseButton.Left && power.VisibleUnitsInRange(cell).Any())
 					yield return new Order(order, manager.Self, Target.FromCell(world, cell), false) { SuppressVisualFeedback = true };
 			}
 
@@ -241,7 +252,7 @@ namespace OpenRA.Mods.CA.Traits
 			protected override IEnumerable<IRenderable> RenderAnnotations(WorldRenderer wr, World world)
 			{
 				var xy = wr.Viewport.ViewToWorld(Viewport.LastMousePos);
-				foreach (var unit in power.UnitsInRange(xy))
+				foreach (var unit in power.VisibleUnitsInRange(xy))
 				{
 					var decorations = unit.TraitsImplementing<ISelectionDecorations>().FirstEnabledTraitOrDefault();
 					if (decorations != null)
@@ -261,7 +272,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			protected override string GetCursor(World world, CPos cell, int2 worldPixel, MouseInput mi)
 			{
-				return power.UnitsInRange(cell).Any() ? power.info.Cursor : power.info.BlockedCursor;
+				return power.VisibleUnitsInRange(cell).Any() ? power.info.Cursor : power.info.BlockedCursor;
 			}
 		}
 	}
