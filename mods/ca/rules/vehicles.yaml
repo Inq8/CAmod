@@ -2543,9 +2543,9 @@ HMMV:
 		ActiveCondition: gshield
 		ChargingColor: 008888
 		DrainingColor: 00ffff
-		Modifier: 25
+		Modifier: 40
 		Duration: 75
-		ChargeTime: 375
+		ChargeTime: 500
 		ActivateSound: gshieldup.aud
 		DeactivateSound: gshielddown.aud
 		RequiresCondition: pointdef-upgrade
@@ -2652,9 +2652,9 @@ GDRN:
 		ActiveCondition: gshield
 		ChargingColor: 008888
 		DrainingColor: 00FFFF61
-		Modifier: 25
+		Modifier: 40
 		Duration: 75
-		ChargeTime: 375
+		ChargeTime: 500
 		ActivateSound: gshieldup.aud
 		DeactivateSound: gshielddown.aud
 		RequiresCondition: pointdef-upgrade
@@ -6177,6 +6177,7 @@ MEMP:
 	Inherits: ^TankTD
 	Inherits@IDISABLE: ^DisabledByRadarLoss
 	Inherits@HACKABLE: ^Hackable
+	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 410
