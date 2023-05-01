@@ -576,24 +576,23 @@ Grenade:
 		Inaccuracy: 554
 		Image: BOMB
 	Warhead@1Dam: SpreadDamage
-		Spread: 288
-		Falloff: 100, 50, 28, 18, 12, 6, 0
+		Spread: 256
 		Damage: 3000
 		Versus:
-			None: 180
+			None: 80
 			Wood: 100
 			Light: 90
-			Concrete: 100
+			Concrete: 90
 			Brick: 45
 	Warhead@2Dam: SpreadDamage
-		Spread: 28
+		Spread: 42
 		Damage: 3000
 		Versus:
-			None: 150
+			None: 200
 			Wood: 100
 			Light: 90
 			Heavy: 25
-			Concrete: 100
+			Concrete: 90
 			Brick: 45
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
@@ -615,9 +614,11 @@ GrenadeJJ:
 		Speed: 200
 	Warhead@1Dam: SpreadDamage
 		Damage: 6000
+		Falloff: 100, 50, 28, 18, 12, 6, 0
 		Versus:
 			None: 150
 			Wood: 65
+			Concrete: 100
 			Heavy: 20
 			Light: 95
 	-Warhead@2Dam:
@@ -627,6 +628,8 @@ EMPGrenade:
 	Projectile: Bullet
 		Image: empgren
 	Warhead@1Dam: SpreadDamage
+		Versus:
+			Concrete: 100
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
 	Warhead@2Dam: SpreadDamage
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
@@ -654,6 +657,7 @@ ShadowOperativeGrenade:
 	Warhead@2Dam: SpreadDamage
 		Damage: 3500
 		Versus:
+			Concrete: 100
 			Light: 100
 			Heavy: 100
 
