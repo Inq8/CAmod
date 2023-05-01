@@ -3187,8 +3187,13 @@ MTNK:
 		ScaleChargeTimeWithDamage: true
 		ScaleChargeTimeWithDamageAmount: 7
 		RequiresCondition: pointdef-upgrade && !pointlaser-charging
+	GrantTimedCondition@NSHIELDVISUAL:
+		Condition: gshieldvisual
+		RequiresCondition: gshield
+		Duration: 8
+		ForceFullDuration: true
 	WithIdleOverlay@NSHIELD:
-		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
+		RequiresCondition: (nshield || gshieldvisual) && !(empdisable || invulnerability || invisibility)
 	UpgradeableTo:
 		Actors: mtnk.drone
 	Upgradeable@BDRONE:
