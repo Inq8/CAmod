@@ -203,6 +203,12 @@ WorldLoaded = function()
 		end
 	end
 
+	if Difficulty ~= "easy" then
+		Trigger.AfterDelay(DateTime.Minutes(14), function()
+			InitNodAttacks()
+		end)
+	end
+
 	Trigger.OnKilled(Church1, function(self, killer)
 		Actor.Create("moneycrate", true, { Owner = Greece, Location = Church1.Location })
 	end)
