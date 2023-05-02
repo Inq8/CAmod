@@ -5,6 +5,23 @@ World:
 	MissionData:
 		Briefing: Map for testing fixed value army compositions against each other. Requires 2+ players. Move the trucks into wormholes to reset/save/restore.
 
+DOME:
+	GpsRadarProvider:
+		RequiresCondition: gps-active
+	GrantDelayedCondition@GPS:
+		Condition: gps-active
+		Delay: 1
+
+INDP:
+	Valued:
+		Cost: 0
+	Buildable:
+		Prerequisites: ~player.soviet
+
+indp.upgrade:
+	Buildable:
+		Prerequisites: ~player.soviet
+
 CONFIGWORMHOLE:
 	Inherits: WORMHOLE
 	-PopControlled:
