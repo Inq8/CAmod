@@ -46,7 +46,10 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 		public readonly int BuildTime = 0;
 
 		[Desc("Percentage of conversion cost to use as duration in ticks to convert (if actor has none defined in Buildable).")]
-		public readonly int DefaultBuildDurationModifier = 60;
+		public readonly int BuildDurationModifier = 60;
+
+		[Desc("If true, BuildDurationModifier will override the equivalent value in Buildable.")]
+		public readonly bool OverrideUnitBuildDurationModifier = false;
 
 		[Desc("Whether the player has to pay any difference in cost between the unit being converted and the unit it converts into.")]
 		public readonly bool CostDifferenceRequired = false;
@@ -125,7 +128,7 @@ namespace OpenRA.Mods.CA.Traits.UnitConverter
 					queueItem.ConversionCostRemaining = queueItem.ConversionCost;
 
 					var buildable = queueItem.OutputActor.TraitInfoOrDefault<BuildableInfo>();
-					queueItem.BuildDurationModifier = buildable != null ? buildable.BuildDurationModifier : Info.DefaultBuildDurationModifier;
+					queueItem.BuildDurationModifier = buildable != null && !Info.OverrideUnitBuildDurationModifier ? buildable.BuildDurationModifier : Info.BuildDurationModifier;
 
 					queueItem.BuildDuration = Info.BuildTime > 0 ? Info.BuildTime : Util.ApplyPercentageModifiers(queueItem.ConversionCost, new int[] { queueItem.BuildDurationModifier });
 					queueItem.BuildDurationRemaining = queueItem.BuildDuration;
