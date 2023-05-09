@@ -577,24 +577,13 @@ Grenade:
 		Image: BOMB
 	Warhead@1Dam: SpreadDamage
 		Spread: 256
-		Damage: 3000
+		Damage: 6000
 		Versus:
-			None: 80
+			None: 60
 			Wood: 100
 			Light: 90
-			Concrete: 90
+			Concrete: 75
 			Brick: 45
-	Warhead@2Dam: SpreadDamage
-		Spread: 42
-		Damage: 3000
-		Versus:
-			None: 200
-			Wood: 100
-			Light: 90
-			Heavy: 25
-			Concrete: 90
-			Brick: 45
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion
 	Warhead@4EffWater: CreateEffect
@@ -613,7 +602,6 @@ GrenadeJJ:
 		ContrailStartColorAlpha: 128
 		Speed: 200
 	Warhead@1Dam: SpreadDamage
-		Damage: 6000
 		Spread: 288
 		Falloff: 100, 50, 28, 18, 12, 6, 0
 		Versus:
@@ -622,7 +610,6 @@ GrenadeJJ:
 			Concrete: 100
 			Heavy: 20
 			Light: 95
-	-Warhead@2Dam:
 
 EMPGrenade:
 	Inherits: Grenade
@@ -630,9 +617,7 @@ EMPGrenade:
 		Image: empgren
 	Warhead@1Dam: SpreadDamage
 		Versus:
-			Concrete: 100
-		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
-	Warhead@2Dam: SpreadDamage
+			Concrete: 85
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
 	Warhead@5emp: GrantExternalCondition
 		Range: 0c768
@@ -654,13 +639,12 @@ ShadowOperativeGrenade:
 	Projectile: Bullet
 		Image: shadgren
 	Warhead@1Dam: SpreadDamage
-		Damage: 3500
-	Warhead@2Dam: SpreadDamage
-		Damage: 3500
+		Damage: 7000
 		Versus:
 			Concrete: 100
 			Light: 100
-			Heavy: 100
+			Heavy: 75
+		ValidRelationships: Enemy, Neutral
 
 ShadowGliderGrenade:
 	Range: 1c0
