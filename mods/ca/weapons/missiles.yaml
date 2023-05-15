@@ -49,6 +49,9 @@
 ^AntiAirMissile:
 	Inherits: ^AntiGroundMissile
 	ValidTargets: Air, AirSmall
+	Projectile: MissileCA
+		Inaccuracy: 0
+		LockOnInaccuracy: 0
 	Warhead@1Dam: SpreadDamage
 		Range: 0, 0c64, 0c256, 3c0
 		Falloff: 100, 100, 30, 15
@@ -83,8 +86,6 @@
 		-Arm:
 		Speed: 384
 		HorizontalRateOfTurn: 40
-		Inaccuracy: 0
-		LockOnInaccuracy: 0
 		RangeLimit: 13c0
 		AllowSnapping: true
 	Warhead@smallDamage: SpreadDamage
@@ -102,13 +103,13 @@ Maverick:
 		CruiseAltitude: 2c0
 		RangeLimit: 14c410
 	Warhead@1Dam: SpreadDamage
-		Damage: 10750
+		Damage: 11000
 		Versus:
-			None: 25
-			Wood: 35
-			Concrete: 100
+			None: 20
+			Wood: 30
+			Concrete: 95
 			Light: 65
-			Heavy: 85
+			Heavy: 100
 
 MaverickAA:
 	Inherits: ^AirToAirMissile
@@ -366,12 +367,12 @@ HellfireAG:
 		HorizontalRateOfTurn: 40
 		RangeLimit: 10c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 4500
+		Damage: 5500
 		Versus:
-			None: 25
-			Wood: 40
-			Light: 80
-			Concrete: 120
+			None: 20
+			Wood: 30
+			Light: 65
+			Concrete: 95
 
 HellfireAG.Orca:
 	Inherits: HellfireAG
@@ -390,24 +391,28 @@ HindRockets:
 	Warhead@1Dam: SpreadDamage
 		Damage: 1825
 		Versus:
+			None: 25
 			Light: 44
 			Wood: 40
 			Concrete: 34
-			Heavy: 70
+			Heavy: 75
 
 HindRockets.AnyTarget:
 	Inherits: HindRockets
 	-InvalidTargets:
 
 HellfireAG.Harrier:
-	Inherits: HellfireAG
+	Inherits: ^AirToGroundMissile
 	Range: 8c0
 	MinRange: 2c0
+	ReloadDelay: 100
 	Report: migmis.aud, migmis2.aud
 	Burst: 2
 	BurstDelays: 10
 	TargetActorCenter: true
 	Projectile: MissileCA
+		Speed: 256
+		HorizontalRateOfTurn: 40
 		RangeLimit: 12c512
 		ContrailLength: 10
 		Inaccuracy: 512
@@ -564,7 +569,6 @@ Nike:
 	ValidTargets: Air, AirSmall, ICBM
 	Projectile: MissileCA
 		Arm: 3
-		Inaccuracy: 0
 		Image: MISSILE
 		HorizontalRateOfTurn: 100
 		RangeLimit: 9c0
@@ -582,24 +586,23 @@ Nike:
 		ValidTargets: Air, AirSmall, ICBM, Ground, Water, Trees
 
 RedEye:
-	Inherits: Nike
+	Inherits: ^AntiAirMissile
 	Range: 7c512
 	ReloadDelay: 50
 	Report: missile1.aud
 	ValidTargets: Air, AirSmall
 	Projectile: MissileCA
+		Arm: 3
 		Image: Dragon
 		HorizontalRateOfTurn: 80
+		RangeLimit: 9c0
 		Speed: 298
 	Warhead@1Dam: SpreadDamage
 		Damage: 4000
-		Range: 0, 0c64, 0c256, 3c0
-		ValidTargets: Air
 	Warhead@smallDamage: SpreadDamage
 		Damage: 4000
-		-Range:
-		Spread: 128
-		Falloff: 100, 50, 14, 0
+	Warhead@3Eff: CreateEffect
+		ValidTargets: Air, AirSmall, ICBM, Ground, Water, Trees
 
 RedEye.TibCore:
 	Inherits: RedEye
@@ -968,7 +971,7 @@ SCUD:
 			Heavy: 25
 			Concrete: 50
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
-	Warhead@2Dam: SpreadDamage
+	Warhead@antiHeavySplash: SpreadDamage
 		Damage: 3400
 		Spread: 448
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
@@ -1003,7 +1006,7 @@ V3Weapon:
 			Heavy: 25
 			Concrete: 60
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
-	Warhead@2Dam: SpreadDamage
+	Warhead@antiHeavySplash: SpreadDamage
 		Damage: 3400
 		Spread: 448
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
@@ -1221,13 +1224,13 @@ BikeRockets.TibCore:
 		Damage: 4400
 		Versus:
 			Concrete: 70
-			Heavy: 0
-	Warhead@2Dam: SpreadDamage
+			Heavy: 34
+	Warhead@antiHeavySplash: SpreadDamage
 		Damage: 4400
 		Spread: 341
 		ValidTargets: Vehicle
 		Versus:
-			Heavy: 100
+			Heavy: 66
 			None: 0
 			Wood: 0
 			Light: 0
@@ -1299,7 +1302,7 @@ IFVRocketsE:
 		Damage: 3750
 		Versus:
 			Heavy: 0
-	Warhead@2Dam: SpreadDamage
+	Warhead@antiHeavySplash: SpreadDamage
 		Spread: 341
 		Damage: 3750
 		ValidTargets: Vehicle
@@ -1319,7 +1322,7 @@ IFVRocketsE.CRYO:
 	Warhead@1Dam: SpreadDamage
 		DamageTypes: Prone50Percent, TriggerProne, FrozenDeath
 		Damage: 3150
-	Warhead@2Dam: SpreadDamage
+	Warhead@antiHeavySplash: SpreadDamage
 		DamageTypes: FrozenDeath
 		Damage: 3150
 	Warhead@3Eff: CreateEffect
@@ -1474,7 +1477,6 @@ IFVRocketsAAE.CRYO:
 	Projectile: MissileCA
 		Speed: 230
 		Image: Dragon
-		Inaccuracy: 0
 		HorizontalRateOfTurn: 60
 		CruiseAltitude: 2c0
 		RangeLimit: 7c512
@@ -1555,7 +1557,7 @@ StnkMissileAA:
 	BurstDelays: 4
 	Projectile: MissileCA
 		Arm: 0
-		Inaccuracy: 213
+		Inaccuracy: 128
 		HorizontalRateOfTurn: 40
 		Speed: 298
 		RangeLimit: 9c0
@@ -1584,19 +1586,19 @@ StnkMissile.TibCore:
 	Warhead@1Dam: SpreadDamage
 		Damage: 3850
 		Versus:
-			Heavy: 0
-	Warhead@2Dam: SpreadDamage
+			Heavy: 34
+	Warhead@antiHeavySplash: SpreadDamage
 		Spread: 341
 		Damage: 3850
 		ValidTargets: Vehicle
 		Versus:
-			Heavy: 100
+			Heavy: 66
 			None: 0
 			Wood: 0
 			Light: 0
 			Concrete: 0
 			Brick: 0
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: tibcorehit1.aud, tibcorehit2.aud, tibcorehit3.aud
 	Warhead@tib: CreateEffect
@@ -1774,16 +1776,16 @@ ScrinTorp:
 		LaunchAngle: 10
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
-		Damage: 950
+		Damage: 700
 		Falloff: 1000, 400, 160, 64, 26, 10, 0
 		ValidTargets: Ground, Water
 		Versus:
-			None: 10
-			Wood: 30
-			Concrete: 65
-			Light: 35
-			Heavy: 65
-			Brick: 75
+			None: 15
+			Wood: 40
+			Concrete: 100
+			Light: 50
+			Heavy: 100
+			Brick: 95
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster, AirToGround
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch

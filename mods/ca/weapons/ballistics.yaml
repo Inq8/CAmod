@@ -379,21 +379,24 @@ TitanGun:
 	Range: 7c768
 
 155mmSpec:
-	Inherits: 155mmTD
+	Inherits: ^Artillery
 	Report: spec-fire1.aud, spec-fire2.aud
 	ReloadDelay: 200
 	MinRange: 3c0
 	Range: 13c0
 	Burst: 3
 	BurstDelays: 7
+	TargetActorCenter: true
 	Projectile: Bullet
 		Image: firetrail
 		TrailImage: smokey
 		TrailDelay: 1
 		Speed: 180
+		Inaccuracy: 1c138
 		LaunchAngle: 90
 	Warhead@1Dam: SpreadDamage
 		Damage: 8500
+		Falloff: 100, 55, 20, 5
 		Versus:
 			None: 100
 			Wood: 95
