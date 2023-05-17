@@ -101,7 +101,8 @@ end
 
 ParadropSovietUnits = function()
 	local lz = Utils.Random(SovietParadropWaypoints)
-	local aircraft = powersovietproxy.TargetParatroopers(lz.CenterPosition)
+	local randomAngle = Angle.New(Utils.RandomInteger(384, 769))
+	local aircraft = powersovietproxy.TargetParatroopers(lz.CenterPosition, randomAngle)
 
 	Utils.Do(aircraft, function(a)
 		Trigger.OnPassengerExited(a, function(t, p)
@@ -114,7 +115,8 @@ end
 
 ParadropUSAUnits = function()
 	local lz = Utils.Random(ParadropWaypoints)
-	local aircraft = powerproxy.TargetParatroopers(lz.CenterPosition)
+	local randomAngle = Angle.New(Utils.RandomInteger(0, 1024))
+	local aircraft = powerproxy.TargetParatroopers(lz.CenterPosition, randomAngle)
 
 	Utils.Do(aircraft, function(a)
 		Trigger.OnPassengerExited(a, function(t, p)
@@ -127,7 +129,8 @@ end
 
 ParadropAlliesUnits = function()
 	local lz = Utils.Random(AlliesParadropWaypoints)
-	local aircraft = poweralliesproxy.TargetParatroopers(lz.CenterPosition)
+	local randomAngle = Angle.New(Utils.RandomInteger(0, 1024))
+	local aircraft = poweralliesproxy.TargetParatroopers(lz.CenterPosition, randomAngle)
 
 	Utils.Do(aircraft, function(a)
 		Trigger.OnPassengerExited(a, function(t, p)
