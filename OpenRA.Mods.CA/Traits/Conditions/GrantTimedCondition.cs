@@ -25,6 +25,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Number of ticks to wait before revoking the condition.")]
 		public readonly int Duration = 50;
 
+		[Desc("If true, condition will last for full duration once enabled, even if trait is subsequently disabled/paused.")]
+		public readonly bool ForceFullDuration = false;
+
 		public override object Create(ActorInitializer init) { return new GrantTimedCondition(this); }
 	}
 
@@ -68,11 +71,14 @@ namespace OpenRA.Mods.CA.Traits
 
 		void ITick.Tick(Actor self)
 		{
-			if (IsTraitDisabled && token != Actor.InvalidConditionToken)
-				RevokeCondition(self);
+			if (!Info.ForceFullDuration || Ticks <= 0)
+			{
+				if (IsTraitDisabled && token != Actor.InvalidConditionToken)
+					RevokeCondition(self);
 
-			if (IsTraitPaused || IsTraitDisabled)
-				return;
+				if (IsTraitPaused || IsTraitDisabled)
+					return;
+			}
 
 			foreach (var w in watchers)
 				w.Update(info.Duration, Ticks);

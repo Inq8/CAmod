@@ -561,13 +561,22 @@
 		Modifier: 95
 	FirepowerMultiplier@BOMBARD:
 		RequiresCondition: bombard
-		Modifier: 105
+		Modifier: 103
 	FirepowerMultiplier@BOMBARD2:
 		RequiresCondition: bombard2
-		Modifier: 105
+		Modifier: 103
 	FirepowerMultiplier@BOMBARD3:
 		RequiresCondition: bombard3
-		Modifier: 105
+		Modifier: 103
+	ReloadDelayMultiplier@BOMBARD:
+		RequiresCondition: bombard
+		Modifier: 97
+	ReloadDelayMultiplier@BOMBARD2:
+		RequiresCondition: bombard
+		Modifier: 97
+	ReloadDelayMultiplier@BOMBARD3:
+		RequiresCondition: bombard
+		Modifier: 97
 	RangeMultiplier@SEEK:
 		RequiresCondition: seek
 		Modifier: 105
@@ -898,7 +907,7 @@
 ^AirToGroundProtection:
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		DamageTypes: AirToGround
-		Modifier: 66
+		Modifier: 60
 
 ^GyroStabilizers:
 	WithModifiedPalette@GYRO:
@@ -1158,6 +1167,9 @@
 	GrantCondition@INVIS:
 		Condition: invisibility
 		RequiresCondition: sgen-invis || msg-invis
+	TimedConditionBar@SGENCLOAK:
+		Condition: sgen-invis
+		Color: 66dd00
 	Cloak@SGENCLOAK:
 		RequiresCondition: sgen-invis
 		InitialDelay: 0
@@ -3400,7 +3412,7 @@
 		AvoidFriendly: false
 		BlockFriendly: false
 	Health:
-		HP: 8000
+		HP: 10000
 		NotifyAppliedDamage: false
 	Cloak:
 		CloakSound:
@@ -3872,10 +3884,10 @@
 		ProductionType: VehicleMQ
 		RequiresCondition: global-multiqueue
 	ProductionCostMultiplier@MQS1:
-		Multiplier: 150
+		Multiplier: 170
 		Prerequisites: vehicles.any, global.multiqueuescaled, !optprod1.upgrade, !optprod2.upgrade
 	ProductionCostMultiplier@MQS2:
-		Multiplier: 125
+		Multiplier: 135
 		Prerequisites: vehicles.any, global.multiqueuescaled, optprod1.upgrade, !optprod2.upgrade
 
 ^ProducesNaval:

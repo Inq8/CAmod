@@ -41,7 +41,7 @@ optprod1.upgrade:
 		IconPalette: chromes
 		Description: Reduces the cost of additional infantry, vehicle and air production structures.
 	TooltipExtras:
-		Strengths: + Reduced cost of additional infantry production by $500\n+ Reduced cost of additional vehicle production by $500\n+ Reduced cost of additional aircraft production by $250
+		Strengths: + Reduced cost of additional infantry production by $500\n+ Reduced cost of additional vehicle production by $700\n+ Reduced cost of additional aircraft production by $250
 	Valued:
 		Cost: 500
 	RenderSprites:
@@ -56,7 +56,7 @@ optprod2.upgrade:
 		Prerequisites: techcenter, ~techlevel.high, ~global.multiqueuescaled, ~optprod1.upgrade
 		Description: Reduces the cost of additional infantry, vehicle and aircraft production structures.
 	TooltipExtras:
-		Strengths: + Reduced cost of additional infantry production by $500\n+ Reduced cost of additional vehicle production by $500\n+ Reduced cost of additional aircraft production by $250
+		Strengths: + Reduced cost of additional infantry production by $500\n+ Reduced cost of additional vehicle production by $700\n+ Reduced cost of additional aircraft production by $250
 	Valued:
 		Cost: 500
 	RenderSprites:
@@ -99,7 +99,7 @@ bombard.strat:
 		IconPalette: chrometd
 		Description: Firepower focused strategy.
 	TooltipExtras:
-		Strengths: + Increases firepower of vehicles and aircraft by 5%
+		Strengths: + Increases firepower and rate of fire of vehicles and aircraft by 3%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
 	Valued:
 		Cost: 1250
@@ -115,7 +115,7 @@ bombard2.strat:
 		Prerequisites: ~player.gdi, gtek, ~bombard.strat, ~techlevel.high
 		Description: Increase Bombardment strategy bonuses.
 	TooltipExtras:
-		Strengths: + Increases firepower of vehicles and aircraft by a further 5%
+		Strengths: + Increases firepower and rate of fire of vehicles and aircraft by a further 3%
 		-Attributes:
 	RenderSprites:
 		Image: bombard2.strat
@@ -316,7 +316,7 @@ hypersonic.upgrade:
 		IconPalette: chrometd
 		Description: Equip the MLRS/HMLRS with Hypersonic Missiles.\n\nUpgrades: MLRS/HMLRS
 	TooltipExtras:
-		Strengths: + Increased speed, precision and rate of fire
+		Strengths: + Increased range, speed, precision and damage
 	Valued:
 		Cost: 1000
 	RenderSprites:
@@ -332,7 +332,7 @@ hailstorm.upgrade:
 		IconPalette: chrometd
 		Description: Equip the MLRS/HMLRS with Hailstorm Missiles.\n\nUpgrades: MLRS/HMLRS
 	TooltipExtras:
-		Strengths: + Increased range, damage and area of effect\n+ Fires six missiles per salvo
+		Strengths: + Increased damage, area of effect and range\n+ Fires six missiles per salvo
 		Weaknesses: – Unguided
 	Valued:
 		Cost: 1000
@@ -400,7 +400,7 @@ bdrone.upgrade:
 		Strengths: + Immunity to crew kill, chaos gas and mind control\n+ Reduced cost\n+ Increased rate of fire\n+ Self-repair
 		Weaknesses: – Disabled if radar is down\n– Can be hacked
 	Valued:
-		Cost: 1000
+		Cost: 1250
 	RenderSprites:
 		Image: bdrone.upgrade
 

@@ -74,18 +74,18 @@
 
 76mm:
 	Inherits: ^Cannon
-	Range: 5c768
+	Range: 5c0
 	Report: smallcan3.aud
 	Projectile: Bullet
 		LaunchAngle: 62
 		Speed: 426
 	Warhead@1Dam: SpreadDamage
-		Spread: 256
-		Damage: 5800
+		Spread: 341
+		Damage: 5500
 		Versus:
-			None: 95
-			Wood: 100
-			Concrete: 100
+			None: 100
+			Wood: 95
+			Concrete: 85
 			Light: 65
 			Heavy: 15
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
@@ -240,7 +240,7 @@
 		Versus:
 			None: 40
 			Tree: 200
-			Light: 85
+			Light: 92
 			Heavy: 115
 			Wood: 70
 			Concrete: 60
@@ -379,21 +379,24 @@ TitanGun:
 	Range: 7c768
 
 155mmSpec:
-	Inherits: 155mmTD
+	Inherits: ^Artillery
 	Report: spec-fire1.aud, spec-fire2.aud
 	ReloadDelay: 200
 	MinRange: 3c0
 	Range: 13c0
 	Burst: 3
 	BurstDelays: 7
+	TargetActorCenter: true
 	Projectile: Bullet
 		Image: firetrail
 		TrailImage: smokey
 		TrailDelay: 1
 		Speed: 180
+		Inaccuracy: 1c138
 		LaunchAngle: 90
 	Warhead@1Dam: SpreadDamage
 		Damage: 8500
+		Falloff: 100, 55, 20, 5
 		Versus:
 			None: 100
 			Wood: 95
@@ -576,26 +579,14 @@ Grenade:
 		Inaccuracy: 554
 		Image: BOMB
 	Warhead@1Dam: SpreadDamage
-		Spread: 288
-		Falloff: 100, 50, 28, 18, 12, 6, 0
-		Damage: 3000
+		Spread: 256
+		Damage: 6000
 		Versus:
-			None: 180
+			None: 60
 			Wood: 100
 			Light: 90
-			Concrete: 100
+			Concrete: 75
 			Brick: 45
-	Warhead@2Dam: SpreadDamage
-		Spread: 28
-		Damage: 3000
-		Versus:
-			None: 150
-			Wood: 100
-			Light: 90
-			Heavy: 25
-			Concrete: 100
-			Brick: 45
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion
 	Warhead@4EffWater: CreateEffect
@@ -614,21 +605,22 @@ GrenadeJJ:
 		ContrailStartColorAlpha: 128
 		Speed: 200
 	Warhead@1Dam: SpreadDamage
-		Damage: 6000
+		Spread: 288
+		Falloff: 100, 50, 28, 18, 12, 6, 0
 		Versus:
 			None: 150
 			Wood: 65
+			Concrete: 100
 			Heavy: 20
 			Light: 95
-	-Warhead@2Dam:
 
 EMPGrenade:
 	Inherits: Grenade
 	Projectile: Bullet
 		Image: empgren
 	Warhead@1Dam: SpreadDamage
-		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
-	Warhead@2Dam: SpreadDamage
+		Versus:
+			Concrete: 85
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
 	Warhead@5emp: GrantExternalCondition
 		Range: 0c768
@@ -650,12 +642,12 @@ ShadowOperativeGrenade:
 	Projectile: Bullet
 		Image: shadgren
 	Warhead@1Dam: SpreadDamage
-		Damage: 3500
-	Warhead@2Dam: SpreadDamage
-		Damage: 3500
+		Damage: 7000
 		Versus:
+			Concrete: 100
 			Light: 100
-			Heavy: 100
+			Heavy: 75
+		ValidRelationships: Enemy, Neutral
 
 ShadowGliderGrenade:
 	Range: 1c0

@@ -159,6 +159,8 @@ OncePerFiveSecondChecks = function()
 end
 
 InitGDI = function()
+	RebuildExcludes.GDI = { Types = { "gtwr", "atwr" } }
+
 	AutoRepairAndRebuildBuildings(GDI, 15)
 	SetupRefAndSilosCaptureCredits(GDI)
 	AutoReplaceHarvesters(GDI)

@@ -2,9 +2,9 @@
 ProdigyPatrolPath = { ProdigyPatrol1.Location, ProdigyPatrol2.Location, ProdigyPatrol3.Location, ProdigyPatrol4.Location, ProdigyPatrol5.Location, ProdigyPatrol6.Location, ProdigyPatrol7.Location, ProdigyPatrol8.Location, ProdigyPatrol9.Location, ProdigyPatrol10.Location, ProdigyPatrol11.Location, ProdigyPatrol12.Location, ProdigyPatrol13.Location, ProdigyPatrol14.Location, ProdigyPatrol15.Location, ProdigyPatrol16.Location, ProdigyPatrol17.Location, ProdigyPatrol18.Location, ProdigyPatrol19.Location, ProdigyPatrol9.Location, ProdigyPatrol8.Location, ProdigyPatrol20.Location }
 
 ScrinReinforcementInterval = {
-	easy = DateTime.Seconds(45),
+	easy = DateTime.Seconds(40),
 	normal = DateTime.Seconds(30),
-	hard = DateTime.Seconds(15),
+	hard = DateTime.Seconds(20),
 }
 
 WorldLoaded = function()

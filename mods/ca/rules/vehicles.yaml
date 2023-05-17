@@ -1410,6 +1410,7 @@ HARV:
 	Inherits: ^Vehicle-NOUPG
 	Inherits@HARVBALANCE: ^HarvesterBalancer
 	Inherits@SELECTION: ^SelectableEconomicUnit
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 10
@@ -1740,7 +1741,7 @@ RAPC:
 	Valued:
 		Cost: 800
 	Mobile:
-		Speed: 100
+		Speed: 92
 	RevealsShroud:
 		Range: 6c0
 	Tooltip:
@@ -1794,7 +1795,7 @@ MNLY:
 		Description: Lays mines to destroy unwary enemy units.
 	TooltipExtras:
 		Weaknesses: • Unarmed
-		Attributes: • Can detect mines.
+		Attributes: • Can detect and disarm mines.
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -1822,6 +1823,7 @@ MNLY:
 	AmmoPool:
 		Ammo: 5
 		RearmSound: minelay1.aud
+		Armaments: none
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
@@ -1839,6 +1841,23 @@ MNLY:
 		RearmActors: fix, rep
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	Armament@PRIMARY:
+		Weapon: MineDefuser
+		Cursor: goldwrench
+		OutsideRangeCursor: goldwrench
+		Name: primary
+		TargetRelationships: Enemy, Neutral
+	AutoTarget:
+	AutoTargetPriority@MINEDEFUSER:
+		ValidTargets: Mine
+		InvalidTargets: NoAutoTarget
+	AttackFrontalCharged:
+		FacingTolerance: 0
+		ChargeLevel: 75
+		DischargeRate: 75
+		PauseOnCondition: empdisable || being-warped
+		ShowSelectionBar: true
+		SelectionBarColor: ffff00
 
 TRUK:
 	Inherits: ^Vehicle
@@ -2526,9 +2545,9 @@ HMMV:
 		ActiveCondition: gshield
 		ChargingColor: 008888
 		DrainingColor: 00ffff
-		Modifier: 25
+		Modifier: 40
 		Duration: 75
-		ChargeTime: 375
+		ChargeTime: 500
 		ActivateSound: gshieldup.aud
 		DeactivateSound: gshielddown.aud
 		RequiresCondition: pointdef-upgrade
@@ -2635,9 +2654,9 @@ GDRN:
 		ActiveCondition: gshield
 		ChargingColor: 008888
 		DrainingColor: 00FFFF61
-		Modifier: 25
+		Modifier: 40
 		Duration: 75
-		ChargeTime: 375
+		ChargeTime: 500
 		ActivateSound: gshieldup.aud
 		DeactivateSound: gshielddown.aud
 		RequiresCondition: pointdef-upgrade
@@ -3170,8 +3189,13 @@ MTNK:
 		ScaleChargeTimeWithDamage: true
 		ScaleChargeTimeWithDamageAmount: 7
 		RequiresCondition: pointdef-upgrade && !pointlaser-charging
+	GrantTimedCondition@NSHIELDVISUAL:
+		Condition: gshieldvisual
+		RequiresCondition: gshield
+		Duration: 8
+		ForceFullDuration: true
 	WithIdleOverlay@NSHIELD:
-		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
+		RequiresCondition: (nshield || gshieldvisual) && !(empdisable || invulnerability || invisibility)
 	UpgradeableTo:
 		Actors: mtnk.drone
 	Upgradeable@BDRONE:
@@ -3674,14 +3698,14 @@ MSAM:
 	Armament@PRIMARYUPG1:
 		Weapon: 227mm.Hypersonic
 		LocalOffset: 213,128,0, 213,-128,0
-		LocalYaw: 100, -100
+		LocalYaw: 75, -75
 		RequiresCondition: hypersonic-upgrade
 		ReloadingCondition: reloading
 	Armament@SECONDARYUPG1:
 		Name: secondary
 		Weapon: 227mmAA.Hypersonic
 		LocalOffset: 213,-128,0, 213,128,0
-		LocalYaw: 100, -100
+		LocalYaw: 75, -75
 		RequiresCondition: hypersonic-upgrade
 		ReloadingCondition: reloading
 	Armament@PRIMARYUPG2:
@@ -4127,6 +4151,7 @@ HARV.TD:
 	Inherits: ^VehicleTD-NOUPG
 	Inherits@HARVBALANCE: ^HarvesterBalancer
 	Inherits@SELECTION: ^SelectableEconomicUnit
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	RenderSprites:
 		Image: harv2
 	Valued:
@@ -5373,14 +5398,14 @@ HSAM:
 	Armament@PRIMARYUPG1:
 		Weapon: 227mm.Hypersonic
 		LocalOffset: 213,128,0, 213,-128,0
-		LocalYaw: 100, -100
+		LocalYaw: 75, -75
 		RequiresCondition: hypersonic-upgrade
 		ReloadingCondition: reloading
 	Armament@SECONDARYUPG1:
 		Name: secondary
 		Weapon: 227mmAA.Hypersonic
 		LocalOffset: 213,-128,0, 213,128,0
-		LocalYaw: 100, -100
+		LocalYaw: 75, -75
 		RequiresCondition: hypersonic-upgrade
 		ReloadingCondition: reloading
 	Armament@PRIMARYUPG2:
@@ -5714,7 +5739,7 @@ MSAR:
 	Inherits: ^VehicleTD
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Valued:
-		Cost: 1200
+		Cost: 1100
 	Tooltip:
 		Name: Mobile Sensor Array
 		RequiresCondition: !deployed
@@ -5729,7 +5754,7 @@ MSAR:
 		IconPalette: chrometd
 		Prerequisites: anyradar, ~vehicles.gdi, ~techlevel.medium
 		BuildDurationModifier: 50
-		Description: When deployed, detects enemies within a large radius.
+		Description: When deployed, detects enemy vehicles,\n  aircraft and structures within a large radius.
 	TooltipExtras:
 		Weaknesses: • Unarmed
 		Attributes: • Can detect cloaked units (when deployed)\n• Increases nearby ground unit vision range (when deployed)\n• Special Ability: Activate Sensor Array
@@ -5770,11 +5795,11 @@ MSAR:
 		UndeployOnMove: true
 		UndeployOnPickup: true
 	DetectCloaked@Deployed:
-		Range: 12c0
+		Range: 10c0
 		DetectionTypes: Cloak, Thief, AirCloak
 		RequiresCondition: deployed && !(empdisable || being-warped)
 	WithRangeCircle@Deployed:
-		Range: 12c0
+		Range: 10c0
 		Color: 999999AA
 		RequiresCondition: deployed && !(empdisable || being-warped)
 	ProvidesRadar:
@@ -5790,10 +5815,11 @@ MSAR:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 	RangedGpsRadarProvider:
-		Range: 18c0
+		Range: 24c0
+		TargetTypes: Vehicle, Air, Structure
 		RequiresCondition: deployed && !(empdisable || being-warped)
 	WithDetectionCircle:
-		Range: 18c0
+		Range: 24c0
 		RequiresCondition: deployed && !(empdisable || being-warped)
 		TrailCount: 3
 	ExternalCondition@JAMMED:
@@ -6159,6 +6185,7 @@ MEMP:
 	Inherits: ^TankTD
 	Inherits@IDISABLE: ^DisabledByRadarLoss
 	Inherits@HACKABLE: ^Hackable
+	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 410

@@ -1392,7 +1392,7 @@ A10:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 27000
+		HP: 28000
 	RevealsShroud:
 		Range: 11c0
 		MinRange: 9c0
@@ -1501,6 +1501,9 @@ A10:
 	-RangeMultiplier@SEEK:
 	-RangeMultiplier@SEEK2:
 	-RangeMultiplier@SEEK3:
+	-ReloadDelayMultiplier@BOMBARD:
+	-ReloadDelayMultiplier@BOMBARD2:
+	-ReloadDelayMultiplier@BOMBARD3:
 	RangeMultiplier@BOMBING:
 		Modifier: 600
 		RequiresCondition: bombing-run
@@ -2124,6 +2127,9 @@ ORCB:
 	-RangeMultiplier@SEEK:
 	-RangeMultiplier@SEEK2:
 	-RangeMultiplier@SEEK3:
+	-ReloadDelayMultiplier@BOMBARD:
+	-ReloadDelayMultiplier@BOMBARD2:
+	-ReloadDelayMultiplier@BOMBARD3:
 	GrantConditionOnOrders@ATTACKING:
 		Condition: attacking
 		OrderNames: Attack, ForceAttack, AttackMove
@@ -2208,12 +2214,12 @@ UAV:
 	DetectCloaked:
 		DetectionTypes: Cloak, Thief
 	RevealsShroud:
-		Range: 14c0
-		MinRange: 12c0
+		Range: 12c0
+		MinRange: 10c0
 		Type: GroundPosition
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 12c0
+		Range: 10c0
 		Type: GroundPosition
 	Interactable:
 	GivesExperience:
@@ -3506,5 +3512,8 @@ AURO:
 	-RangeMultiplier@SEEK:
 	-RangeMultiplier@SEEK2:
 	-RangeMultiplier@SEEK3:
+	-ReloadDelayMultiplier@BOMBARD:
+	-ReloadDelayMultiplier@BOMBARD2:
+	-ReloadDelayMultiplier@BOMBARD3:
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
