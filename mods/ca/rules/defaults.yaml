@@ -438,34 +438,34 @@
 		Modifier: 75
 	ChangesHealthVersus@ATOMIZED1:
 		RequiresCondition: atomized == 1
-		Step: -1300
+		Step: -400
 		Delay: 10
 		Versus:
 			None: 0
 			Wood: 0
-			Concrete: 100
-			Light: 60
-			Heavy: 80
+			Concrete: 90
+			Light: 70
+			Heavy: 100
 	ChangesHealthVersus@ATOMIZED2:
 		RequiresCondition: atomized == 2
-		Step: -2600
+		Step: -800
 		Delay: 10
 		Versus:
 			None: 0
 			Wood: 0
-			Concrete: 100
-			Light: 60
-			Heavy: 80
+			Concrete: 90
+			Light: 65
+			Heavy: 100
 	ChangesHealthVersus@ATOMIZED3:
 		RequiresCondition: atomized >= 3
-		Step: -3900
+		Step: -1200
 		Delay: 10
 		Versus:
 			None: 0
 			Wood: 0
-			Concrete: 100
-			Light: 60
-			Heavy: 80
+			Concrete: 90
+			Light: 65
+			Heavy: 100
 	Explodes@ATOMIZED:
 		Weapon: AtomizeSpreadInit
 		EmptyWeapon: AtomizeSpreadInit
@@ -3951,6 +3951,8 @@
 		QueuedAudio: Building
 		OnHoldAudio: OnHold
 		CancelledAudio: Cancelled
+	ProvidesPrerequisite@any:
+		Prerequisite: aircraft.any
 	Production@SQAIR:
 		Produces: AircraftSQ, Plane, Helicopter
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -3966,10 +3968,10 @@
 		ProductionType: AircraftMQ
 		RequiresCondition: global-multiqueue
 	ProductionCostMultiplier@MQS1:
-		Multiplier: 200
+		Multiplier: 160
 		Prerequisites: aircraft.any, global.multiqueuescaled, !optprod1.upgrade, !optprod2.upgrade
 	ProductionCostMultiplier@MQS2:
-		Multiplier: 150
+		Multiplier: 130
 		Prerequisites: aircraft.any, global.multiqueuescaled, optprod1.upgrade, !optprod2.upgrade
 
 ^ProducesHelicopters:

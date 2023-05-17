@@ -1449,19 +1449,19 @@ AtomizerBolts:
 		TrailPalette: scrin
 		TrailInterval: 1
 	Warhead@1Dam: SpreadDamage
-		Spread: 128
-		Damage: 5000
+		Spread: 448
+		Damage: 8000
 		ValidTargets: Ground, Water
 		Versus:
-			None: 60
-			Wood: 60
-			Light: 70
-			Heavy: 85
-			Concrete: 100
-		DamageTypes: Prone50Percent, TriggerProne, AtomizedDeath
-	Warhead@2Sup: GrantExternalCondition
+			None: 30
+			Wood: 30
+			Light: 65
+			Heavy: 100
+			Concrete: 90
+		DamageTypes: Prone50Percent, AtomizedDeath
+	Warhead@atomize: GrantExternalCondition
 		Range: 0c768
-		Duration: 120
+		Duration: 150
 		Condition: atomized
 		ValidTargets: Vehicle, Ship, Defense
 		ValidRelationships: Enemy, Neutral
@@ -1490,13 +1490,14 @@ AtomizerBoltsAA:
 			Light: 100
 			Concrete: 100
 			Brick: 100
-	Warhead@2Sup: GrantExternalCondition
+	Warhead@atomize: GrantExternalCondition
 		ValidTargets: Air, AirSmall
 		Range: 1c512
 	Warhead@3Eff: CreateEffect
 		ValidTargets: Air, AirSmall
 	Warhead@red: GrantExternalCondition
 		ValidTargets: Air, AirSmall
+		Range: 1c512
 
 AtomizeSpreadInit:
 	Projectile: InstantHit

@@ -1425,7 +1425,7 @@ IFVRocketsAAE.CRYO:
 		ContrailStartColor: 00FFFFE6
 		MinimumLaunchAngle: 100
 		MaximumLaunchAngle: 200
-		CloseEnough: 430
+		AllowSnapping: true
 	Warhead@1Dam: SpreadDamage
 		Damage: 900
 
@@ -1543,6 +1543,19 @@ StnkMissile:
 			None: 25
 			Wood: 75
 			Light: 100
+			Heavy: 70 # 30% of anti-heavy damage moved to tankbuster warhead
+	Warhead@tankbuster: SpreadDamage
+		Spread: 128
+		Damage: 5500
+		ValidTargets: Vehicle
+		Versus:
+			Heavy: 30
+			None: 0
+			Wood: 0
+			Light: 0
+			Concrete: 0
+			Brick: 0
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: xplos.aud
 	Warhead@4EffWater: CreateEffect
@@ -1586,19 +1599,12 @@ StnkMissile.TibCore:
 	Warhead@1Dam: SpreadDamage
 		Damage: 3850
 		Versus:
-			Heavy: 34
-	Warhead@antiHeavySplash: SpreadDamage
+			Heavy: 0
+	Warhead@tankbuster: SpreadDamage
 		Spread: 341
 		Damage: 3850
-		ValidTargets: Vehicle
 		Versus:
-			Heavy: 66
-			None: 0
-			Wood: 0
-			Light: 0
-			Concrete: 0
-			Brick: 0
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
+			Heavy: 100
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: tibcorehit1.aud, tibcorehit2.aud, tibcorehit3.aud
 	Warhead@tib: CreateEffect
