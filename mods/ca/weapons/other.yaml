@@ -1097,6 +1097,16 @@ PortaLaserE:
 	Inherits: PortaLaser
 	Range: 7c0
 
+PortaLaser.UPG:
+	Inherits: PortaLaser
+	Range: 6c512
+	StartBurstReport: lasgunupg.aud
+	Projectile: LaserZapCA
+		SecondaryBeamWidth: 75
+		SecondaryBeamColor: FF006660
+	Warhead@1Dam: SpreadDamage
+		Damage: 1800
+
 EnlightenedBeam:
 	ReloadDelay: 65
 	ValidTargets: Ground, Water
@@ -1198,10 +1208,14 @@ VenomLaser:
 VenomLaser.UPG:
 	Inherits: VenomLaser
 	Report: venmfireupg1.aud, venmfireupg1.aud
+	Range: 6c512
 	Projectile: LaserZapCA
 		Duration: 10
 		SecondaryBeamWidth: 75
 		SecondaryBeamColor: FF00FF60
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 6325
 
 VenomLaserAA:
 	Inherits: VenomLaser
@@ -1225,10 +1239,13 @@ VenomLaserAA:
 VenomLaserAA.UPG:
 	Inherits: VenomLaserAA
 	Report: venmfireupg1.aud, venmfireupg1.aud
+	Range: 6c512
 	Projectile: LaserZapCA
 		Duration: 10
 		SecondaryBeamWidth: 75
 		SecondaryBeamColor: FF00FF60
+	Warhead@1Dam: SpreadDamage
+		Damage: 4600
 
 PointLaser:
 	Inherits: Laser

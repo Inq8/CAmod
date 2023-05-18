@@ -2456,6 +2456,17 @@ TPLR:
 		StandSequences: stand, stand2
 	Voiced:
 		VoiceSet: TemplarVoice
+	Armament@PRIMARY:
+		Weapon: PortaLaser
+		LocalOffset: 427,0,341
+		RequiresCondition: !quantum-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: PortaLaser.UPG
+		LocalOffset: 427,0,341
+		RequiresCondition: quantum-upgrade
+	GrantConditionOnPrerequisite@QUANTUM:
+		Condition: quantum-upgrade
+		Prerequisites: quantum.upgrade
 
 JJET:
 	Inherits@1: ^ExistsInWorld
