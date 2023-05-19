@@ -74,6 +74,15 @@ Player:
 					Attractiveness: 1
 					TargetMetric: None
 					CheckRadius: 5c0
+			sathacklegion:
+				OrderName: sathacklegion
+				MinimumAttractiveness: 1
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 5c0
 			gdiuav:
 				OrderName: gdiuav
 				MinimumAttractiveness: 1
@@ -571,34 +580,6 @@ Player:
 					CheckRadius: 4c0
 			stealthgenpower:
 				OrderName: stealthgen
-				MinimumAttractiveness: 1000
-				FineScanRadius: 2
-				Consideration@1:
-					Against: Enemy
-					Types: Structure, Vehicle
-					Attractiveness: -10
-					TargetMetric: Value
-					CheckRadius: 3c0
-				Consideration@2:
-					Against: Enemy
-					Types: Infantry
-					Attractiveness: 2
-					TargetMetric: Value
-					CheckRadius: 2c0
-				Consideration@3:
-					Against: Ally
-					Types: Vehicle
-					Attractiveness: 3
-					TargetMetric: Value
-					CheckRadius: 3c0
-				Consideration@4:
-					Against: Ally
-					Types: Infantry
-					Attractiveness: -2
-					TargetMetric: Value
-					CheckRadius: 2c0
-			stealthgenshadowpower:
-				OrderName: stealthgenshadow
 				MinimumAttractiveness: 1000
 				FineScanRadius: 2
 				Consideration@1:

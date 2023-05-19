@@ -267,6 +267,7 @@ VEHICLES.SCRIN:
 	-GrantConditionOnPrerequisite@BIO:
 	-GrantConditionOnPrerequisite@HAZMAT:
 	-GrantConditionOnPrerequisite@HAZMATSOVIET:
+	-GrantConditionOnPrerequisite@HAZMATZOCOM:
 	-GrantCondition@HAZMAT:
 	-GrantCondition@HAZMATSOVIET:
 	-WithDecoration@HAZMAT:
@@ -4426,7 +4427,7 @@ MANI:
 		Icon: spresspower
 		ChargeInterval: 4500
 		Name: Suppression Field
-		Description: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.\n\nDamage dealt to affected units restores\n    the attacker's health.
+		Description: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.\n\nAffected units take damage over time.
 		Duration: 600
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -4445,7 +4446,7 @@ MANI:
 		Prerequisites: ~mani.collector
 		SupportPowerPaletteOrder: 20
 	ProductionCostMultiplier@COLLECTOR:
-		Multiplier: 90
+		Multiplier: 80
 		Prerequisites: player.collector
 
 RIFT:

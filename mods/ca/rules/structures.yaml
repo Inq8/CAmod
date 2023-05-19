@@ -87,7 +87,7 @@ MSLO:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
 	ProductionCostMultiplier@IRAQBONUS:
-		Multiplier: 90
+		Multiplier: 60
 		Prerequisites: player.iraq
 
 GAP:
@@ -4194,11 +4194,30 @@ HQ:
 		Types: SpyInfiltrate, SabInfiltrate
 	SpawnActorPowerCA@sathack:
 		Actor: camera.sathack
-		Prerequisites: ~radar.nod
+		Prerequisites: ~radar.nod, ~!radar.legion
 		LifeTime: 120
 		OrderName: sathack
 		Icon: hacksat
 		ChargeInterval: 4500
+		Name: Hack Satellite Uplink
+		Description: \nReveals the targeted area for a short time.
+		LaunchSound: hacksat.aud
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		PauseOnCondition: disabled || empdisable || being-warped
+		EffectImage: empty
+		EffectSequence: idle
+		EffectPalette: tseffect-ignore-lighting-alpha75
+		TargetCircleRange: 9c512
+		TargetCircleColor: 999999AA
+		SupportPowerPaletteOrder: 50
+	SpawnActorPowerCA@sathacklegion:
+		Actor: camera.sathack
+		Prerequisites: ~radar.legion
+		LifeTime: 120
+		OrderName: sathacklegion
+		Icon: hacksat
+		ChargeInterval: 3600
 		Name: Hack Satellite Uplink
 		Description: \nReveals the targeted area for a short time.
 		LaunchSound: hacksat.aud
@@ -4534,7 +4553,7 @@ EYE:
 	MustBeDestroyed:
 		RequiredForShortGame: false
 	ProductionCostMultiplier@ZocomBonus:
-		Multiplier: 90
+		Multiplier: 60
 		Prerequisites: player.zocom
 
 REP:
@@ -5139,6 +5158,9 @@ GTEK:
 		PauseOnCondition: disabled || empdisable ||  being-warped
 		SupportPowerPaletteOrder: 40
 	SupportPowerChargeBar:
+	ProductionCostMultiplier@TALONBONUS:
+		Multiplier: 90
+		Prerequisites: player.talon
 
 TMPL:
 	Inherits: ^BuildingTD
@@ -5744,6 +5766,10 @@ SGEN:
 		Description: Makes a group of units/structures invisible\n  for a short time.
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Cloaks nearby units and structures when not active\n• Requires power to operate\n• Special Ability: Tiberium Stealth
+		RequiresCondition: !sgen-shadow
+	TooltipExtras@SHADOW:
+		Attributes: • Maximum 1 can be built\n• Cloaks nearby units and structures\n• Requires power to operate\n• Special Ability: Tiberium Stealth
+		RequiresCondition: sgen-shadow
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -5774,7 +5800,6 @@ SGEN:
 		Factions: shadow
 		Prerequisite: sgen.shadow
 	GrantExternalConditionPowerCA@SGEN:
-		Prerequisites: ~!sgen.shadow
 		OrderName: stealthgen
 		Icon: invis
 		IconPalette: chrometd
@@ -5805,36 +5830,6 @@ SGEN:
 		SupportPowerPaletteOrder: 20
 	ExternalCondition@ACTIVE:
 		Condition: active
-	GrantExternalConditionPowerCA@SGENSHADOW:
-		Prerequisites: ~sgen.shadow
-		OrderName: stealthgenshadow
-		Icon: invis
-		IconPalette: chrometd
-		ChargeInterval: 4500
-		Weapon: StealthBubble
-		Name: Tiberium Stealth
-		Condition: sgen-invis
-		ValidRelationships: Ally, Neutral, Enemy
-		Dimensions: 7, 7
-		Footprint: __xxx__ _xxxxx_ xxxxxxx xxxxxxx xxxxxxx _xxxxx_ __xxx__
-		Duration: 750
-		ActivationDelay: 0
-		AirburstAltitude: 0c0
-		AllowMultiple: false
-		Description: \nMakes selected vehicles and structures\n    temporarily invisible\n\nWarning: Harmful to Infantry.
-		OnFireSound: cloak6.aud
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		InsufficientPowerSpeechNotification: InsufficientPower
-		BeginChargeSpeechNotification: ChemStealthCharging
-		EndChargeSpeechNotification: ChemStealthReady
-		EndChargeTextNotification: Stealth Generator ready.
-		DisplayRadarPing: True
-		Cursor: chemmissile
-		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayTimerRelationships: Ally, Neutral, Enemy
-		ActiveCondition: active
-		SupportPowerPaletteOrder: 20
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -5855,12 +5850,26 @@ SGEN:
 	WithRangeCircle@SGEN:
 		Range: 5c512
 		Color: 00aa00
+		RequiresCondition: !sgen-shadow
+	WithRangeCircle@SGENSHADOW:
+		Range: 9c512
+		Color: 00aa00
+		RequiresCondition: sgen-shadow
 	ProximityExternalCondition@SGEN:
 		Range: 5c512
 		Condition: msg-invis
 		MaximumVerticalOffset: 512
 		AffectsParent: true
-		RequiresCondition: !disabled && !empdisable && !being-warped && !active
+		RequiresCondition: !disabled && !empdisable && !being-warped && !active && !sgen-shadow
+	ProximityExternalCondition@SGENSHADOW:
+		Range: 9c512
+		Condition: msg-invis
+		MaximumVerticalOffset: 512
+		AffectsParent: true
+		RequiresCondition: !disabled && !empdisable && !being-warped && sgen-shadow
+	GrantConditionOnPrerequisite@SGENSHADOW:
+		Condition: sgen-shadow
+		Prerequisites: sgen.shadow
 
 CRAM:
 	Inherits: AGUN
@@ -6542,7 +6551,7 @@ UPGC:
 		Prerequisites: nshield
 		Condition: nshield-active
 	ProductionCostMultiplier@TALONBONUS:
-		Multiplier: 90
+		Multiplier: 80
 		Prerequisites: player.talon
 	-MindControllable:
 	-Targetable@HACKABLE:

@@ -409,11 +409,13 @@
 		Color: f454d0
 	ExternalCondition@SUPPRESSIONSIPHON:
 		Condition: suppression-siphon
-	ReflectsDamage@SUPPRESSIONSIPHON:
-		DamagePercentage: -30
-		ReflectToAttacker: true
-		ValidRelationships: Enemy
+	ChangesHealth@SUPPRESSIONSIPHON:
 		RequiresCondition: suppression-siphon
+		Step: 0
+		PercentageStep: -1
+		Delay: 25
+		StartIfBelow: 101
+		DamageTypes: BulletDeath
 	WithIdleOverlay@SUPPRESSIONSIPHON:
 		Sequence: idle
 		Image: siphon-overlay-lg
@@ -737,10 +739,13 @@
 ^HazmatUpgrade:
 	GrantConditionOnPrerequisite@HAZMAT:
 		Condition: hazmat-upgrade
-		Prerequisites: hazmat.upgrade
+		Prerequisites: hazmat.
 	GrantConditionOnPrerequisite@HAZMATSOVIET:
 		Condition: hazmatsoviet-upgrade
 		Prerequisites: hazmatsoviet.upgrade
+	GrantConditionOnPrerequisite@HAZMATZOCOM:
+		Condition: hazmat-upgrade
+		Prerequisites: player.zocom
 	GrantCondition@HAZMAT:
 		Condition: hazmatsuits
 		RequiresCondition: hazmat-upgrade && !hazmatsoviet-upgrade
@@ -1179,6 +1184,9 @@
 		CloakSound: cloak5.aud
 		UncloakSound: appear1.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish
+	DamageMultiplier@SGENCLOAK:
+		Modifier: 90
+		RequiresCondition: sgen-invis
 	ExternalCondition@SGENCLOAK:
 		Condition: sgen-invis
 	WithColoredOverlay@SGENCLOAK:
@@ -2170,6 +2178,7 @@
 	-GrantConditionOnPrerequisite@BIO:
 	-GrantConditionOnPrerequisite@HAZMAT:
 	-GrantConditionOnPrerequisite@HAZMATSOVIET:
+	-GrantConditionOnPrerequisite@HAZMATZOCOM:
 	-GrantCondition@HAZMAT:
 	-GrantCondition@HAZMATSOVIET:
 	-WithDecoration@HAZMAT:

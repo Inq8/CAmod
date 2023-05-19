@@ -91,6 +91,10 @@ World:
 	Tooltip@COMBATANT:
 		GenericVisibility: Enemy
 
+^HazmatUpgrade:
+	GrantConditionOnPrerequisite@HAZMATZOCOM:
+		Prerequisites: ~disabled
+
 ^Disabled:
 	Buildable:
 		Prerequisites: ~disabled
@@ -250,6 +254,10 @@ hold3.strat:
 	Interactable:
 	ScriptTriggers:
 	ProvidesPrerequisite@upgradename:
+
+hazmat.upgrade:
+	Buildable:
+		Prerequisites: anyradar, infantry.any, ~!player.soviet, ~!player.scrin, ~techlevel.medium
 
 radar.dummy:
 	AlwaysVisible:

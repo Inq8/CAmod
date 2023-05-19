@@ -598,8 +598,12 @@ P51:
 		FireDelay: 2
 		Weapon: Rocket.P51.L
 		LocalOffset: 0,413,0
+	Armament@QUINARY:
+		Name: missile
+		Weapon: CryoMissileP51
+		RequiresCondition: upg-crym
 	AttackBomberCA:
-		Armaments: gunr, gunl, rocketr, rocketl
+		Armaments: gunr, gunl, rocketr, rocketl, missile
 		FacingTolerance: 80
 	Aircraft:
 		CruiseAltitude: 2560
@@ -635,6 +639,9 @@ P51:
 		Experience: 1000
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	GrantConditionOnPrerequisite@CRYM:
+		Condition: upg-crym
+		Prerequisites: crym.upgrade
 
 TRAN:
 	Inherits: ^Helicopter
@@ -2584,6 +2591,9 @@ KIRO:
 		Prerequisites: aircraft.upgraded
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	ProductionCostMultiplier@YURIBONUS:
+		Multiplier: 90
+		Prerequisites: player.yuri
 
 OCAR:
 	Inherits: ^HelicopterTD
