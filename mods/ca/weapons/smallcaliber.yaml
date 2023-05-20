@@ -772,10 +772,6 @@ SNIPER:
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
 
-SNIPERE:
-	Inherits: SNIPER
-	Range: 6c0
-
 SNIPER.vehicle:
 	Inherits: SNIPER
 	Range: 7c0
@@ -826,6 +822,14 @@ SNIPER.vehicleElite:
 		Duration: 2
 		Condition: highlight
 		ValidTargets: DriverKillLow
+
+SNIPERE:
+	Inherits: SNIPER
+	Range: 7c0
+
+SNIPERE.UPG:
+	Inherits: SNIPER.vehicle
+	Range: 6c0
 
 SniperIFVGun:
 	Inherits: SNIPER.vehicle
