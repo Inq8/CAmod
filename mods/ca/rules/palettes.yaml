@@ -392,7 +392,7 @@
 	LightPaletteRotator:
 		ExcludePalettes: playerd2k, d2k, terrain, tiberiumpalette, bluetiberium, effect, tdeffect, scrineffect, desert, tseffect, ra2effect, tsunit, ra2unit, ra2unit-ignore-lighting-alpha75, tsunit-ignore-lighting-alpha75, tseffect-ignore-lighting-alpha75, tseffect-ignore-lighting-alpha90, effect-ignore-lighting-alpha85, ioncloud
 	ChronoshiftPaletteEffect:
-	CloakPaletteEffect:
+	CloakPaletteEffectCA:
 	FlashPaletteEffect@NUKE:
 		Type: Nuke
 		ExcludePalettes: cursor, chrome, chrometd, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud, effect-ignore-lighting
@@ -411,83 +411,77 @@
 	PaletteFromRGBA@invuln:
 		Name: invuln
 		A: 0
-	FlickeringPaletteEffect@IC:
+	PulsingPaletteEffect@IC:
 		PaletteName: invuln
-		BaseColor: 280000BB
-		AmplitudeRed: 30
-		AmplitudeGreen: 0
-		AmplitudeBlue: 0
-		QuantizationCount: 128
+		StartColor: 070000CC
+		EndColor: 66000070
+		PulseDuration: 35
+		PulseDelay: 5
 	PaletteFromRGBA@irrad:
 		Name: irrad
 		A: 0
-	FlickeringPaletteEffect@IRRADIATED:
+	PulsingPaletteEffect@IRRADIATED:
 		PaletteName: irrad
-		BaseColor: 55881144
-		AmplitudeRed: 0
-		AmplitudeGreen: 25
-		AmplitudeBlue: 0
-		QuantizationCount: 160
+		StartColor: 55a40066
+		EndColor: 7df100bb
+		PulseDuration: 35
+		PulseDelay: 5
 	PaletteFromRGBA@forces:
 		Name: forces
 		A: 0
-	FlickeringPaletteEffect@FS:
+	PulsingPaletteEffect@FS:
 		PaletteName: forces
-		BaseColor: 00008066
-		AmplitudeRed: 0
-		AmplitudeGreen: 0
-		AmplitudeBlue: 20
-		QuantizationCount: 96
+		StartColor: 00008066
+		EndColor: 0202bd99
+		PulseDuration: 20
 	PaletteFromRGBA@nrepair:
 		Name: nrepair
 		A: 0
-	FlickeringPaletteEffect@NREPAIR:
+	PulsingPaletteEffect@NREPAIR:
 		PaletteName: nrepair
-		BaseColor: 25cde90D
-		AmplitudeRed: 0
-		AmplitudeGreen: 0
-		AmplitudeBlue: 30
-		QuantizationCount: 96
+		StartColor: 00ffff99
+		EndColor: 00ffff55
+		PulseDuration: 10
 	PaletteFromRGBA@berserk:
 		Name: berserk
 		A: 0
-	FlickeringPaletteEffect@BERSERK:
+	PulsingPaletteEffect@BERSERK:
 		PaletteName: berserk
-		BaseColor: 66002288
-		AmplitudeRed: 66
-		AmplitudeGreen: 0
-		AmplitudeBlue: 22
-		QuantizationCount: 32
+		StartColor: 17000877
+		EndColor: ff0072a0
+		PulseDuration: 5
 	PaletteFromRGBA@frenzy:
 		Name: frenzy
 		A: 0
-	FlickeringPaletteEffect@FRENZY:
+	PulsingPaletteEffect@FRENZY:
 		PaletteName: frenzy
-		BaseColor: 44120066
-		AmplitudeRed: 11
-		AmplitudeGreen: 3
-		AmplitudeBlue: 0
-		QuantizationCount: 48
+		StartColor: 53150062
+		EndColor: b1320072
+		PulseDuration: 10
 	PaletteFromRGBA@temporal:
 		Name: temporal
 		A: 0
-	FlickeringPaletteEffect@temporal:
+	PulsingPaletteEffect@temporal:
 		PaletteName: temporal
-		BaseColor: 80D0FF10
-		AmplitudeRed: 8
-		AmplitudeGreen: 13
-		AmplitudeBlue: 16
-		QuantizationCount: 48
+		StartColor: 9adaffaa
+		EndColor: 9adaff88
+		PulseDuration: 30
 	PaletteFromRGBA@GYRO:
 		Name: gyro
 		A: 0
-	FlickeringPaletteEffect@GYRO:
+	PulsingPaletteEffect@GYRO:
 		PaletteName: gyro
-		BaseColor: 30300020
-		AmplitudeRed: 40
-		AmplitudeGreen: 40
-		AmplitudeBlue: 0
-		QuantizationCount: 128
+		StartColor: d7c00011
+		EndColor: d7c00092
+		PulseDuration: 35
+	PaletteFromRGBA@SUPPRESSION:
+		Name: suppression
+		A: 0
+	PulsingPaletteEffect@SUPPRESSION:
+		PaletteName: suppression
+		StartColor: ff28cf66
+		EndColor: ef3fc864
+		PulseDuration: 25
 	WeatherPaletteEffect@LIGHTNINGSTORM:
 		Type: LightningStorm
 		Color: 08112E03
