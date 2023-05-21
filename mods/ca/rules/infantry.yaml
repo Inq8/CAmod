@@ -105,9 +105,9 @@ E1:
 		HP: 5000
 	Armament@PRIMARY:
 		Weapon: M1Carbine
-	Armament@Garrison:
-		Name: mounted
-		Weapon: M1CarbineE
+	Armament@BATF:
+		Name: batf
+		Weapon: M1CarbineBATF
 		MuzzleSequence: garrison-muzzle
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
@@ -163,9 +163,9 @@ E2:
 		Weapon: Grenade
 		LocalOffset: 0,0,555
 		FireDelay: 15
-	Armament@Garrison:
-		Name: mounted
-		Weapon: GrenadeE
+	Armament@BATF:
+		Name: batf
+		Weapon: Grenade
 		FireDelay: 15
 	TakeCover:
 		ProneOffset: 256,64,-331
@@ -236,24 +236,14 @@ E3:
 		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
 		RequiresCondition: cryr-upgrade
-	Armament@GarrisonAA:
-		Name: mountedaa
-		Weapon: RedEyeE
+	Armament@BATF:
+		Name: batf
+		Weapon: DragonBATF
 		PauseOnCondition: !ammo
 		RequiresCondition: !cryr-upgrade
-	Armament@GarrisonAAUPG:
-		Name: mountedaa
-		Weapon: RedEye.CRYO
-		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade
-	Armament@Garrison:
-		Name: mounted
-		Weapon: DragonE
-		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade
-	Armament@GarrisonUPG:
-		Name: mounted
-		Weapon: DragonE.CRYO
+	Armament@BATFUPG:
+		Name: batf
+		Weapon: DragonBATF.CRYO
 		PauseOnCondition: !ammo
 		RequiresCondition: cryr-upgrade
 	AmmoPool:
@@ -366,24 +356,14 @@ U3:
 		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
 		RequiresCondition: cryr-upgrade && deployed
-	Armament@GarrisonAA:
-		Name: mountedaa
-		Weapon: RedEyeGI
+	Armament@BATF:
+		Name: batf
+		Weapon: DragonBATF.CYB
 		PauseOnCondition: !ammo
 		RequiresCondition: !cryr-upgrade
-	Armament@GarrisonAAUPG:
-		Name: mountedaa
-		Weapon: RedEyeGI.CRYO
-		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade
-	Armament@Garrison:
-		Name: mounted
-		Weapon: DragonGI
-		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade
-	Armament@GarrisonUPG:
-		Name: mounted
-		Weapon: DragonGI.CRYO
+	Armament@BATFUPG:
+		Name: batf
+		Weapon: DragonBATF.CRYO
 		PauseOnCondition: !ammo
 		RequiresCondition: cryr-upgrade
 	Armament@AIDummyAiming: ## Hack: Make AI deploy to attack air
@@ -566,9 +546,9 @@ E4:
 	Armament:
 		Weapon: FireballGun
 		LocalOffset: 341,0,256
-	Armament@Garrison:
-		Name: mounted
-		Weapon: FlamerE
+	Armament@BATF:
+		Name: batf
+		Weapon: FireballGun
 	TakeCover:
 		ProneOffset: 160,0,-256
 	WithMuzzleOverlay:
@@ -796,9 +776,9 @@ E7:
 		Voice: Move
 	Armament@PRIMARY:
 		Weapon: Colt45
-	Armament@mountedPRIMARY:
-		Weapon: Colt45E
-		Name: mounted
+	Armament@BATF:
+		Weapon: Colt45BATF
+		Name: batf
 		MuzzleSequence: garrison-muzzle
 	Armament@sapper:
 		Weapon: PlaceC4
@@ -1383,9 +1363,9 @@ SHOK:
 	Armament@PRIMARY:
 		Weapon: PortaTesla
 		LocalOffset: 427,0,341
-	Armament@Garrisoned:
-		Name: mounted
-		Weapon: PortaTeslaE
+	Armament@BATF:
+		Name: batf
+		Weapon: PortaTesla
 	Armament@CHARGE:
 		Name: secondary
 		Weapon: PortaTeslaCharge
@@ -1459,9 +1439,9 @@ N1:
 		HP: 5000
 	Armament@PRIMARY:
 		Weapon: M16Carbine
-	Armament@Garrison:
-		Name: mounted
-		Weapon: M16CarbineE
+	Armament@BATF:
+		Name: batf
+		Weapon: M16CarbineBATF
 		MuzzleSequence: garrison-muzzle
 	AttackFrontal:
 		PauseOnCondition: being-warped
@@ -1530,9 +1510,9 @@ N2:
 		LocalOffset: 0,0,555
 		FireDelay: 15
 		RequiresCondition: empgren-upgrade
-	Armament@Garrison:
-		Name: mounted
-		Weapon: GrenadeE
+	Armament@BATF:
+		Name: batf
+		Weapon: Grenade
 		FireDelay: 15
 	AttackFrontal:
 		PauseOnCondition: being-warped
@@ -1618,24 +1598,14 @@ N3:
 		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
 		RequiresCondition: tibcore-upgrade
-	Armament@GarrisonAA:
-		Name: mountedaa
-		Weapon: RedEyeE
+	Armament@BATF:
+		Name: batf
+		Weapon: DragonBATF.TD
 		PauseOnCondition: !ammo
 		RequiresCondition: !tibcore-upgrade
-	Armament@GarrisonAAUPG:
-		Name: mountedaa
-		Weapon: RedEye.TibCore
-		PauseOnCondition: !ammo
-		RequiresCondition: tibcore-upgrade
-	Armament@Garrison:
-		Name: mounted
-		Weapon: DragonE.TD
-		PauseOnCondition: !ammo
-		RequiresCondition: !tibcore-upgrade
-	Armament@GarrisonUPG:
-		Name: mounted
-		Weapon: DragonE.TibCore
+	Armament@BATFUPG:
+		Name: batf
+		Weapon: DragonBATF.TibCore
 		PauseOnCondition: !ammo
 		RequiresCondition: tibcore-upgrade
 	GrantConditionOnPrerequisite@TIBCORE:
@@ -1714,9 +1684,9 @@ N4:
 		MuzzlePalette: tdeffect
 	Armament@FF:
 		Weapon: FlamerTDFF
-	Armament@Garrison:
-		Name: mounted
-		Weapon: FlamerE
+	Armament@BATF:
+		Name: batf
+		Weapon: FlamerTDBATF
 	TakeCover:
 		SpeedModifier: 70
 		ProneOffset: 160,0,-254
@@ -1782,9 +1752,9 @@ N5:
 		MuzzlePalette: tdeffect
 	Armament@FF:
 		Weapon: ChemsprayTDFF
-	Armament@Garrison:
-		Name: mounted
-		Weapon: ChemsprayE
+	Armament@BATF:
+		Name: batf
+		Weapon: ChemsprayTD
 	Mobile:
 		Speed: 60
 		Voice: Move
@@ -1870,9 +1840,9 @@ RMBO:
 		Range: 6c0
 	Armament:
 		Weapon: smg
-	Armament@garrison:
-		Name: mounted
-		Weapon: smgE
+	Armament@BATF:
+		Name: batf
+		Weapon: smgBATF
 		MuzzleSequence: garrison-muzzle
 	Armament@sapper:
 		Weapon: PlaceC4
@@ -2040,14 +2010,14 @@ SNIP:
 	Armament@PRIMARYUPGELITE:
 		Weapon: sniper.vehicleElite
 		RequiresCondition: apb-upgrade && rank-veteran >= 3
-	Armament@Garrison:
-		Weapon: sniperE
-		Name: mounted
+	Armament@BATF:
+		Weapon: sniperBATF
+		Name: batf
 		MuzzleSequence: garrison-muzzle
 		RequiresCondition: !apb-upgrade
-	Armament@GarrisonUPG:
-		Weapon: sniperE.UPG
-		Name: mounted
+	Armament@BATFUPG:
+		Weapon: sniperBATF.UPG
+		Name: batf
 		MuzzleSequence: garrison-muzzle
 		RequiresCondition: apb-upgrade
 	Mobile:
@@ -2167,9 +2137,9 @@ BORI:
 	Armament@PRIMARY:
 		Name: secondary
 		Weapon: akm
-	Armament@Garrison:
-		Name: mounted
-		Weapon: akmE
+	Armament@BATF:
+		Name: batf
+		Weapon: akmBATF
 	Armament@flare:
 		Name: primary
 		Weapon: Flare
@@ -2245,9 +2215,9 @@ MORT:
 		Weapon: mortar
 		LocalOffset: 0,0,155
 		FireDelay: 15
-	Armament@Garrison:
-		Name: mounted
-		Weapon: mortarE
+	Armament@BATF:
+		Name: batf
+		Weapon: mortar
 		FireDelay: 15
 	AttackFrontal:
 		PauseOnCondition: being-warped
@@ -2328,9 +2298,9 @@ SAB:
 		Voice: Move
 	Armament:
 		Weapon: SilencedPPK
-	Armament@Garrison:
-		Name: mounted
-		Weapon: SilencedPPKE
+	Armament@BATF:
+		Name: batf
+		Weapon: SilencedPPKBATF
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
@@ -2414,9 +2384,9 @@ ACOL:
 	Armament@PRIMARY:
 		Weapon: PortaLaser
 		LocalOffset: 427,0,341
-	Armament@Garrison:
-		Name: mounted
-		Weapon: PortaLaserE
+	Armament@BATF:
+		Name: batf
+		Weapon: PortaLaser
 	TakeCover:
 		ProneOffset: 227,0,-245
 		PauseOnCondition: being-warped
@@ -2796,9 +2766,9 @@ E8:
 	Armament@PRIMARY:
 		Weapon: RadBeamWeapon
 		LocalOffset: 427,0,341
-	Armament@Garrison:
-		Name: mounted
-		Weapon: RadBeamWeaponE
+	Armament@BATF:
+		Name: batf
+		Weapon: RadBeamWeapon
 	TakeCover:
 		ProneOffset: 384,0,-395
 	AttackFrontal:
@@ -2925,8 +2895,8 @@ N1C:
 		VoiceSet: CyborgVoice
 	Armament@PRIMARY:
 		Weapon: Vulcan3
-	Armament@Garrison:
-		Name: mounted
+	Armament@BATF:
+		Name: batf
 		Weapon: Vulcan3
 		MuzzleSequence: garrison-muzzle
 	ProducibleWithLevel:
@@ -3007,24 +2977,14 @@ N3C:
 		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
 		RequiresCondition: tibcore-upgrade
-	Armament@GarrisonAA:
-		Name: mountedaa
-		Weapon: RedEyeE.CYB
+	Armament@BATF:
+		Name: batf
+		Weapon: DragonBATF.CYB
 		PauseOnCondition: !ammo
 		RequiresCondition: !tibcore-upgrade
-	Armament@GarrisonAAUPG:
-		Name: mountedaa
-		Weapon: RedEye.CYB.TibCore
-		PauseOnCondition: !ammo
-		RequiresCondition: tibcore-upgrade
-	Armament@Garrison:
-		Name: mounted
-		Weapon: DragonE.CYB
-		PauseOnCondition: !ammo
-		RequiresCondition: !tibcore-upgrade
-	Armament@GarrisonUPG:
-		Name: mounted
-		Weapon: DragonE.CYB.TibCore
+	Armament@BATFUPG:
+		Name: batf
+		Weapon: DragonBATF.CYB.TibCore
 		PauseOnCondition: !ammo
 		RequiresCondition: tibcore-upgrade
 	GrantConditionOnPrerequisite@TIBCORE:
@@ -3091,9 +3051,9 @@ RMBC:
 	Armament@PRIMARY:
 		Weapon: CyCannon
 		LocalOffset: 300,0,300
-	Armament@Garrison:
-		Name: mounted
-		Weapon: cycannon
+	Armament@BATF:
+		Name: batf
+		Weapon: CyCannon
 	Explodes:
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall
@@ -3171,10 +3131,9 @@ IVAN:
 		Weapon: Ivanbomb
 		LocalOffset: 0,0,555
 		FireDelay: 15
-	Armament@Garrison:
-		Name: mounted
+	Armament@BATF:
+		Name: batf
 		Weapon: Ivanbomb
-		FireDelay: 15
 	TakeCover:
 		ProneOffset: 256,64,-331
 	AttackFrontal:
@@ -3372,8 +3331,8 @@ SHAD:
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: ShadowOperativeGun
-	Armament@Garrison:
-		Name: mounted
+	Armament@BATF:
+		Name: batf
 		Weapon: ShadowOperativeGun
 	AttackFrontal:
 		Voice: Attack
@@ -3614,8 +3573,8 @@ BH:
 	Armament:
 		Weapon: BlackHandFlamer
 		LocalOffset: 300,0,180
-	Armament@Garrison:
-		Name: mounted
+	Armament@BATF:
+		Name: batf
 		Weapon: BlackHandFlamerWithSound
 	TakeCover:
 		ProneOffset: 160,0,-256
@@ -3698,6 +3657,9 @@ YURI:
 		Name: aidummy
 		RequiresCondition: botowner && !deployed
 		Weapon: YuriDummyAim
+	Armament@BATF:
+		Name: batf
+		Weapon: PsychicBeamBATF
 	MindController:
 		ArmamentNames: primary, secondary
 		Capacity: 3
@@ -3838,11 +3800,10 @@ SEAL:
 	Armament:
 		Weapon: mp5
 		PauseOnCondition: onwater
-	Armament@garrison:
-		Name: mounted
-		Weapon: mp5e
+	Armament@BATF:
+		Name: batf
+		Weapon: mp5BATF
 		MuzzleSequence: garrison-muzzle
-		PauseOnCondition: onwater
 	Armament@sapper:
 		Weapon: PlaceC4seal
 		Cursor: c4
@@ -4015,8 +3976,8 @@ ENLI:
 	Armament@PRIMARY:
 		Weapon: EnlightenedBeam
 		LocalOffset: 300,0,300
-	Armament@Garrison:
-		Name: mounted
+	Armament@BATF:
+		Name: batf
 		Weapon: EnlightenedBeam
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded

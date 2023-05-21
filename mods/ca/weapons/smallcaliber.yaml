@@ -490,7 +490,7 @@ M16Carbine:
 	Inherits: M1Carbine
 	Report: mgun2.aud
 
-M1CarbineE:
+M1CarbineBATF:
 	Inherits: M1Carbine
 	Burst: 3
 	BurstDelays: 2
@@ -507,11 +507,11 @@ M1CarbineE:
 			Light: 25
 			Heavy: 5
 
-M16CarbineE:
-	Inherits: M1CarbineE
+M16CarbineBATF:
+	Inherits: M1CarbineBATF
 
 BATFGun:
-	Inherits: M1CarbineE
+	Inherits: M1CarbineBATF
 	Range: 5c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 1800
@@ -648,7 +648,7 @@ SilencedPPK:
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
 
-SilencedPPKE:
+SilencedPPKBATF:
 	Inherits: SilencedPPK
 	Range: 5c0
 
@@ -670,7 +670,7 @@ Colt45:
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
 
-Colt45E:
+Colt45BATF:
 	Inherits: Colt45
 	Range: 6c0
 
@@ -690,7 +690,7 @@ SMG:
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
 
-SMGE:
+SMGBATF:
 	Inherits: SMG
 	Range: 6c0
 
@@ -711,7 +711,7 @@ MP5:
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piffs
 
-MP5E:
+MP5BATF:
 	Inherits: MP5
 	Range: 5c511
 
@@ -744,7 +744,7 @@ AKM:
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
 
-AKME:
+AKMBATF:
 	Inherits: AKM
 	Range: 6c0
 
@@ -823,11 +823,11 @@ SNIPER.vehicleElite:
 		Condition: highlight
 		ValidTargets: DriverKillLow
 
-SNIPERE:
+SNIPERBATF:
 	Inherits: SNIPER
 	Range: 7c0
 
-SNIPERE.UPG:
+SNIPERBATF.UPG:
 	Inherits: SNIPER.vehicle
 	Range: 6c0
 

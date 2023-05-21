@@ -2,6 +2,10 @@ WarriorGun:
 	Inherits: M1Carbine
 	Report: warrior-fire1.aud
 
+WarriorGunBATF:
+	Inherits: M1CarbineBATF
+	Report: warrior-fire1.aud
+
 DisintegratorBeam:
 	Inherits: Laser
 	ReloadDelay: 30
@@ -22,6 +26,11 @@ DisintegratorBeam:
 			Heavy: 100
 			Light: 34
 			Concrete: 75
+
+DisintegratorBeamE:
+	Inherits: DisintegratorBeam
+	Warhead@1Dam: SpreadDamage
+		Damage: 1700
 
 DisintegratorBeamAA:
 	Inherits: DisintegratorBeam

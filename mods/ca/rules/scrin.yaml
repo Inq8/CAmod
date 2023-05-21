@@ -342,9 +342,9 @@ S1:
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
 		LocalOffset: 150,0,400
-	Armament@Garrison:
-		Name: mounted
-		Weapon: WarriorGun
+	Armament@BATF:
+		Name: batf
+		Weapon: WarriorGunBATF
 		MuzzleSequence: garrison-muzzle
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
@@ -384,8 +384,8 @@ S2:
 	Armament@PRIMARY:
 		Weapon: RavagerShards
 		LocalOffset: 0,-100,250, 0,100,250
-	Armament@Garrison:
-		Name: mounted
+	Armament@BATF:
+		Name: batf
 		Weapon: RavagerShards
 	AttackFrontal:
 		PauseOnCondition: being-warped
@@ -432,10 +432,9 @@ S3:
 		Weapon: DisintegratorBeam
 		LocalOffset: 150,0,400
 		PauseOnCondition: !ammo
-	Armament@Garrison:
-		Name: mounted
-		Weapon: DisintegratorBeam
-		PauseOnCondition: !ammo
+	Armament@BATF:
+		Name: batf
+		Weapon: DisintegratorBeamE
 	AttackFrontal:
 		PauseOnCondition: being-warped
 		FacingTolerance: 0
@@ -485,8 +484,8 @@ S4:
 	Armament@PRIMARY:
 		Weapon: IntruderDiscs
 		LocalOffset: 150,0,400
-	Armament@Garrison:
-		Name: mounted
+	Armament@BATF:
+		Name: batf
 		Weapon: IntruderDiscs
 	AttackFrontal:
 		PauseOnCondition: being-warped
@@ -775,6 +774,9 @@ MAST:
 		Weapon: EnslaveVehicle
 		LocalOffset: 150,0,400
 		PauseOnCondition: !ammo || deployed
+	Armament@BATF:
+		Name: batf
+		Weapon: PsychicBeamBATF
 	MindController:
 		ArmamentNames: primary, secondary
 		Capacity: 3

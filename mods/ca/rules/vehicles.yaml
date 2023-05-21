@@ -6100,6 +6100,7 @@ BATF:
 			seal: loaded-seal
 			rmbo: loaded-cmdo
 			bori: loaded-cmdo
+			yuri: loaded-cmdo
 			acol: loaded
 			tplr: loaded
 			mort: loaded
@@ -6147,7 +6148,7 @@ BATF:
 		AddToArmyValue: true
 	AttackOpenTopped:
 		Voice: Attack
-		Armaments: mounted
+		Armaments: batf
 		PortOffsets: 825,0,256, 348,-482,256, -348,-482,256, -448,482,256, 448,482,256
 		PauseOnCondition: being-warped || empdisable
 		RequiresCondition: loaded || loaded-cmdo || loaded-seal || loaded-air
@@ -6170,19 +6171,13 @@ BATF:
 		RequiresCondition: loaded-repair
 	WithDecoration@COMMANDOSKULL:
 		RequiresCondition: loaded-cmdo
-		BlinkInterval: 64
-		BlinkPatterns:
-			loaded-cmdo: Off, On
 	WithDecoration@SEALSKULL:
-		RequiresCondition: loaded-seal
+		RequiresCondition: loaded-seal && !loaded-cmdo
 		Image: pips
 		Sequence: pip-seal
 		Palette: effect
 		Position: TopLeft
 		ValidRelationships: Ally, Enemy, Neutral
-		BlinkInterval: 64
-		BlinkPatterns:
-			loaded-seal: On, Off
 	-Targetable@HERO:
 
 BATF.AI:

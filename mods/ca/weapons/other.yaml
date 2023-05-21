@@ -164,74 +164,34 @@ NapalmtdBuilding:
 	-Warhead@3Eff:
 	-Warhead@Flames:
 
-Flamer:
+Chemspray:
 	ReloadDelay: 50
 	Range: 3c769
 	StartBurstReport: flamer2.aud
+	Burst: 5
+	BurstDelays: 5
 	Projectile: Bullet
 		Speed: 90
 		Inaccuracy: 484
-		Image: flameall
-		Palette: tseffect-ignore-lighting-alpha90
+		Image: chemall
+		Palette: ra2effect-ignore-lighting-alpha50
 		LaunchAngle: 5
-	Burst: 5
-	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
 		Spread: 288
 		Falloff: 100, 50, 25, 12, 6, 3, 0
-		Damage: 1300
+		Damage: 1450
 		Versus:
 			None: 300
 			Wood: 135
 			Tree: 120
-			Light: 59
-			Heavy: 30
-			Concrete: 30
 			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
-	Warhead@2Smu: LeaveSmudge
-		SmudgeType: Scorch
-		InvalidTargets: Vehicle, Building, Wall
-	Warhead@Flames: FireCluster
-		Weapon: BurnFx
-		RandomClusterCount: 1
-		Dimensions: 1,1
-		Footprint: x
-
-# --- old version
-BigFlamer:
-	Inherits: Flamer
-	Range: 4c256
-	StartBurstReport: flamer3.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: 2200
-		Versus:
-			Wood: 120
-
-FlamerE:
-	Inherits: Flamer
-	Range: 5c0
-
-# --- old version
-Chemspray:
-	Inherits: Flamer
-	Projectile: Bullet
-		Image: chemall
-		Palette: ra2effect-ignore-lighting-alpha50
-	Warhead@1Dam: SpreadDamage
-		Damage: 1450
-		Versus:
 			Concrete: 45
 			Light: 85
 			Heavy: 50
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
-	-Warhead@Flames:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
-
-ChemsprayE:
-	Inherits: Chemspray
-	Range: 5c0
+		InvalidTargets: Vehicle, Building, Wall
 
 FlamerTD:
 	ReloadDelay: 65
@@ -295,6 +255,10 @@ BigFlamerTD:
 		Versus:
 			Light: 100
 			Concrete: 45
+
+FlamerTDBATF:
+	Inherits: BigFlamerTD
+	Burst: 1
 
 BigFlamerTDFF:
 	Inherits: BigFlamerTD
@@ -471,10 +435,6 @@ PortaTesla:
 			Wood: 60
 			Heavy: 75
 			Concrete: 70
-
-PortaTeslaE:
-	Inherits: PortaTesla
-	Range: 7c0
 
 PortaTeslaCharge:
 	Inherits: ^TeslaWeapon
@@ -1092,10 +1052,6 @@ PortaLaser:
 			Wood: 55
 			Heavy: 55
 			Concrete: 40
-
-PortaLaserE:
-	Inherits: PortaLaser
-	Range: 7c0
 
 PortaLaser.UPG:
 	Inherits: PortaLaser
@@ -2151,10 +2107,6 @@ RadBeamWeapon:
 		Explosions: radhitsm
 		ExplosionPalette: caneon
 
-RadBeamWeaponE:
-	Inherits: RadBeamWeapon
-	Range: 7c0
-
 RadBeamWeaponHeavy:
 	Inherits: RadBeamWeapon
 	ReloadDelay: 80
@@ -2201,6 +2153,32 @@ RadEruptionWeapon:
 		Level: 250
 		MaxLevel: 750
 		LayerName: radioactivity.strong
+
+PsychicBeamBATF:
+	Inherits: RadBeamWeapon
+	ReloadDelay: 75
+	Report: mastermind-fire.aud
+	-Projectile:
+	Projectile: PlasmaBeam
+		Duration: 7
+		Colors: ff00ff08
+		InnerLightness: 200
+		OuterLightness: 100
+		Radius: 2
+		Distortion: 150
+		DistortionAnimation: 150
+		SegmentLength: 350
+		Inaccuracy: 128
+	Warhead@1Dam: SpreadDamage
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@2Dam: SpreadDamage
+		Spread: 512
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	-Warhead@2irrad:
+	Warhead@3Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: scrin
+		Image: enrvbolthit
 
 ^EnergyBlast:
 	ReloadDelay: 50
