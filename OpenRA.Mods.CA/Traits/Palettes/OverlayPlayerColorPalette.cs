@@ -16,9 +16,10 @@ using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
 using OpenRA.Traits;
 
-namespace OpenRA.Mods.CA.Traits.Render
+namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("More beautiful variant of the PlayerColorPalette by using the overlay blend mode.")]
+	[TraitLocation(SystemActors.World | SystemActors.EditorWorld)]
+	[Desc("Variant of the PlayerColorPalette using the overlay blend mode which increases contrast.")]
 	public class OverlayPlayerColorPaletteInfo : TraitInfo
 	{
 		[Desc("The name of the palette to base off.")]

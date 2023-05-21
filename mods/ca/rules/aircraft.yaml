@@ -2313,6 +2313,7 @@ RAH:
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Dock, Damage, Heal
+		CloakedCondition: hidden
 		RequiresCondition: !cloak-force-disabled && airborne && !invisibility && !alphacomanche-upgrade
 	Cloak@UPG:
 		DetectionTypes: AirCloak
@@ -2323,6 +2324,7 @@ RAH:
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Dock, Heal
+		CloakedCondition: hidden
 		RequiresCondition: airborne && !invisibility && alphacomanche-upgrade
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
@@ -2409,6 +2411,13 @@ RAH:
 		RequiresCondition: (stance-attackanything  || assault-move) && alphacomanche-upgrade
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Structure, Defense
 		InvalidTargets: NoAutoTarget
+	WithPlayerColorSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
+	WithShadow:
+		RequiresCondition: !invisibility && !hidden
+	WithShadow@CLOAKED:
+		ShadowColor: 00000033
+		RequiresCondition: invisibility || hidden
 
 KIRO:
 	Inherits: ^Helicopter

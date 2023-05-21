@@ -10,7 +10,6 @@
 #endregion
 
 using System.Collections.Generic;
-using System.Linq;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
@@ -18,19 +17,20 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Display a colored overlay when a timed condition is active.")]
-	public class WithModifiedPaletteInfo : ConditionalTraitInfo
+	[Desc("Overlays a copy of each renderable of the actor using the specified palette.",
+		"Will obscure the underlying renderables if the chosen palette has no transparency.")]
+	public class WithPalettedOverlayInfo : ConditionalTraitInfo
 	{
 		[PaletteReference]
 		[Desc("Palette to use when rendering the overlay")]
 		public readonly string Palette = "invuln";
 
-		public override object Create(ActorInitializer init) { return new WithModifiedPalette(this); }
+		public override object Create(ActorInitializer init) { return new WithPalettedOverlay(this); }
 	}
 
-	public class WithModifiedPalette : ConditionalTrait<WithModifiedPaletteInfo>, IRenderModifier
+	public class WithPalettedOverlay : ConditionalTrait<WithPalettedOverlayInfo>, IRenderModifier
 	{
-		public WithModifiedPalette(WithModifiedPaletteInfo info)
+		public WithPalettedOverlay(WithPalettedOverlayInfo info)
 			: base(info) { }
 
 		IEnumerable<IRenderable> IRenderModifier.ModifyRender(Actor self, WorldRenderer wr, IEnumerable<IRenderable> r)

@@ -10,6 +10,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using OpenRA.Graphics;
 using OpenRA.Primitives;
 using OpenRA.Traits;
@@ -23,6 +24,10 @@ namespace OpenRA.Mods.Common.Traits
 		[PaletteReference]
 		public readonly string Palette = "cloak";
 
+		public readonly int[] SkipIndexes = new int[] { 0, 4 };
+
+		public readonly int[] EraseIndexes = new int[] { };
+
 		public override object Create(ActorInitializer init) { return new CloakPaletteEffectCA(init, this); }
 	}
 
@@ -33,12 +38,10 @@ namespace OpenRA.Mods.Common.Traits
 
 		readonly Color[] colors =
 		{
-			Color.FromLinear(55, 205 / 255f, 205 / 255f, 205 / 255f),
-			Color.FromLinear(120, 205 / 255f, 205 / 255f, 230 / 255f),
-			Color.FromLinear(192, 180 / 255f, 180 / 255f, 255 / 255f),
-			Color.FromLinear(178, 205 / 255f, 250 / 255f, 220 / 255f),
-			//Color.FromLinear(70, 188 / 255f, 188 / 255f, 188 / 255f),
-			//Color.FromLinear(60, 164 / 255f, 164 / 255f, 164 / 255f),
+			Color.FromLinear(10, 0 / 255f, 0 / 255f, 0 / 255f),
+			Color.FromLinear(20, 0 / 255f, 0 / 255f, 0 / 255f),
+			Color.FromLinear(30, 0 / 255f, 0 / 255f, 0 / 255f),
+			Color.FromLinear(40, 0 / 255f, 0 / 255f, 0 / 255f)
 		};
 
 		public CloakPaletteEffectCA(ActorInitializer init, CloakPaletteEffectCAInfo info)
@@ -51,16 +54,26 @@ namespace OpenRA.Mods.Common.Traits
 			var i = (int)t;
 			var p = b[info.Palette];
 
-			for (var j = 0; j < colors.Length; j++)
+			for (var idx = 0; idx < 255; idx += 16)
 			{
-				var k = (i + j) % 16 + 0xb0;
-				p.SetColor(k, colors[j]);
+				for (var j = 0; j < colors.Length; j++)
+				{
+					var k = (i + j) % 16 + idx;
+
+					if (info.SkipIndexes.Contains(k))
+						continue;
+
+					p.SetColor(k, colors[j]);
+				}
 			}
+
+			foreach (var idx in info.EraseIndexes)
+				p.SetColor(idx, Color.FromArgb(0, 0, 0, 0));
 		}
 
 		void ITick.Tick(Actor self)
 		{
-			t += 0.25f;
+			t += 0.5f;
 			if (t >= 256) t = 0;
 		}
 	}

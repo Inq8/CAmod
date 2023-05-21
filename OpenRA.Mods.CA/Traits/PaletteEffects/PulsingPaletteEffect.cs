@@ -15,6 +15,8 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	[TraitLocation(SystemActors.World | SystemActors.EditorWorld)]
+	[Desc("Applies a pulsing effect to a specified palette.")]
 	public class PulsingPaletteEffectInfo : TraitInfo
 	{
 		[Desc("The palette to apply this effect to.")]

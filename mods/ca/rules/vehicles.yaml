@@ -1307,6 +1307,8 @@ SPEC:
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: ReturnFire
+	WithPlayerColorSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
 
 SAPC:
 	Inherits: ^Vehicle
@@ -1387,6 +1389,8 @@ SAPC:
 		Condition: cloak-force-disabled
 		Actions: Load
 		Duration: 30
+	WithPlayerColorSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
 
 SAPC.AI:
 	Inherits: SAPC
@@ -2105,7 +2109,7 @@ MSG:
 		Color: 00aa00
 	ProximityExternalCondition@MSG:
 		Range: 5c512
-		Condition: msg-invis
+		Condition: sgencloak
 		RequiresCondition: deployed
 		MaximumVerticalOffset: 512
 		AffectsParent: true
@@ -3263,7 +3267,7 @@ MTNK.Drone:
 	-ReloadDelayMultiplier@BERSERK:
 	-ExternalCondition@BERSERK:
 	-Berserkable@BERSERK:
-	-WithModifiedPalette@BERSERK:
+	-WithPalettedOverlay@BERSERK:
 	-TimedConditionBar@BERSERK:
 	-RejectsOrders@BERSERK:
 	-GrantCondition@BERSERK:
@@ -3327,6 +3331,7 @@ MDRN:
 	WithShadow:
 		Offset: 43, 128, -250
 		ZOffset: -129
+		RequiresCondition: !invisibility
 	TurretedFloating:
 		TurnSpeed: 18
 	AttackTurreted:
@@ -3559,6 +3564,7 @@ HTNK.Hover:
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
+		RequiresCondition: !invisibility
 	SpawnActorOnDeath:
 		Actor: HTNK.Hover.Husk
 		RequiresCondition: !being-warped && !onwater
@@ -3612,7 +3618,7 @@ HTNK.Drone:
 	-ReloadDelayMultiplier@BERSERK:
 	-ExternalCondition@BERSERK:
 	-Berserkable@BERSERK:
-	-WithModifiedPalette@BERSERK:
+	-WithPalettedOverlay@BERSERK:
 	-TimedConditionBar@BERSERK:
 	-RejectsOrders@BERSERK:
 	-GrantCondition@BERSERK:
@@ -3933,6 +3939,8 @@ STNK.Nod:
 		Prerequisites: tibcore.upgrade
 	WithShadow:
 		RequiresCondition: parachute
+	WithPlayerColorSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
 
 BIKE:
 	Inherits: ^VehicleTD
@@ -5360,6 +5368,7 @@ HSAM:
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
+		RequiresCondition: !invisibility
 	AutoTarget:
 		ScanRadius: 10
 	AttackTurreted:
@@ -5542,6 +5551,8 @@ RTNK:
 		Palette: player
 		IsPlayerPalette: true
 		Position: Center
+	WithPlayerColorSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
 
 V3RL:
 	Inherits: ^Vehicle

@@ -5794,11 +5794,6 @@ SGEN:
 		Range: 5c0
 		RequiresCondition: !disabled
 	WithBuildingBib:
-	ValidFactions:
-		Factions: blackh, marked, legion, shadow
-	ProvidesPrerequisiteValidatedFaction@shadow:
-		Factions: shadow
-		Prerequisite: sgen.shadow
 	GrantExternalConditionPowerCA@SGEN:
 		OrderName: stealthgen
 		Icon: invis
@@ -5806,7 +5801,7 @@ SGEN:
 		ChargeInterval: 4500
 		Weapon: StealthBubble
 		Name: Tiberium Stealth
-		Condition: sgen-invis
+		Condition: tibstealth
 		ValidRelationships: Ally, Neutral, Enemy
 		Dimensions: 7, 7
 		Footprint: __xxx__ _xxxxx_ xxxxxxx xxxxxxx xxxxxxx _xxxxx_ __xxx__
@@ -5857,19 +5852,19 @@ SGEN:
 		RequiresCondition: sgen-shadow
 	ProximityExternalCondition@SGEN:
 		Range: 5c512
-		Condition: msg-invis
+		Condition: sgencloak
 		MaximumVerticalOffset: 512
 		AffectsParent: true
 		RequiresCondition: !disabled && !empdisable && !being-warped && !active && !sgen-shadow
 	ProximityExternalCondition@SGENSHADOW:
 		Range: 9c512
-		Condition: msg-invis
+		Condition: sgencloak
 		MaximumVerticalOffset: 512
 		AffectsParent: true
 		RequiresCondition: !disabled && !empdisable && !being-warped && sgen-shadow
 	GrantConditionOnPrerequisite@SGENSHADOW:
 		Condition: sgen-shadow
-		Prerequisites: sgen.shadow
+		Prerequisites: player.shadow
 
 CRAM:
 	Inherits: AGUN

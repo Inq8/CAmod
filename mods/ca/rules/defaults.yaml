@@ -289,7 +289,7 @@
 		Condition: berserk
 	Berserkable@BERSERK:
 		RequiresCondition: berserkactive
-	WithModifiedPalette@BERSERK:
+	WithPalettedOverlay@BERSERK:
 		RequiresCondition: berserkactive
 		Palette: berserk
 	TimedConditionBar@BERSERK:
@@ -310,7 +310,7 @@
 		Modifier: 75
 	ExternalCondition@FRENZY:
 		Condition: frenzyinit
-	WithModifiedPalette@FRENZY:
+	WithPalettedOverlay@FRENZY:
 		RequiresCondition: frenzy
 		Palette: frenzy
 	TimedConditionBar@FRENZY:
@@ -349,7 +349,7 @@
 		SelectionBarColor: 40FFFF
 	Targetable@TEMPORAL:
 		TargetTypes: Temporal
-	WithModifiedPalette@TEMPORALl:
+	WithPalettedOverlay@TEMPORALl:
 		RequiresCondition: being-warped
 		Palette: temporal
 	WithIdleOverlay@TEMPORAL:
@@ -398,7 +398,7 @@
 		Modifier: 125
 	ExternalCondition@SUPPRESSION:
 		Condition: suppression
-	WithModifiedPalette@SUPPRESSION:
+	WithPalettedOverlay@SUPPRESSION:
 		RequiresCondition: suppression
 		Palette: suppression
 	TimedConditionBar@SUPPRESSION:
@@ -884,7 +884,7 @@
 		RequiresCondition: !parachute && damaged && !being-warped && !heal-cooldown
 
 ^IronCurtainable:
-	WithModifiedPalette@IRONCURTAIN:
+	WithPalettedOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability
 		Palette: invuln
 	DamageMultiplier@IRONCURTAIN:
@@ -912,7 +912,7 @@
 		Modifier: 60
 
 ^GyroStabilizers:
-	WithModifiedPalette@GYRO:
+	WithPalettedOverlay@GYRO:
 		RequiresCondition: gyrostabilizers
 		Palette: gyro
 	RangeMultiplier@GYRO:
@@ -944,7 +944,7 @@
 		RequiresCondition: gyrostabilizers
 
 ^Irradiatable:
-	WithModifiedPalette@IRRADIATABLE:
+	WithPalettedOverlay@IRRADIATABLE:
 		RequiresCondition: irradiated
 		Palette: irrad
 	TimedConditionBar@IRRADIATABLE:
@@ -1002,7 +1002,7 @@
 		ShowSelectionBar: false
 
 ^ForceShieldable:
-	WithModifiedPalette@FS:
+	WithPalettedOverlay@FS:
 		RequiresCondition: forceshield && !invulnerability
 		Palette: forces
 	DamageMultiplier@FS:
@@ -1050,7 +1050,7 @@
 		StartIfBelow: 100
 		DamageCooldown: 0
 		RequiresCondition: nrepair
-	WithModifiedPalette@NREPAIR:
+	WithPalettedOverlay@NREPAIR:
 		RequiresCondition: nrepair && damaged && !(empdisable || invulnerability || invisibility)
 		Palette: nrepair
 	TimedConditionBar@NREPAIR:
@@ -1168,41 +1168,40 @@
 		Condition: invisibility
 	GrantCondition@INVIS:
 		Condition: invisibility
-		RequiresCondition: sgen-invis || msg-invis
-	TimedConditionBar@SGENCLOAK:
-		Condition: sgen-invis
+		RequiresCondition: tibstealth || sgencloak
+	TimedConditionBar@TIBSTEALTH:
+		Condition: tibstealth
 		Color: 66dd00
-	Cloak@SGENCLOAK:
-		RequiresCondition: sgen-invis
+	Cloak@TIBSTEALTH:
+		RequiresCondition: tibstealth
 		InitialDelay: 0
 		CloakDelay: 25
-		IsPlayerPalette: true
+		IsPlayerPalette: false
 		Palette: cloakgreen
 		CloakSound: cloak5.aud
 		UncloakSound: appear1.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish
-	DamageMultiplier@SGENCLOAK:
+	DamageMultiplier@TIBSTEALTH:
 		Modifier: 90
-		RequiresCondition: sgen-invis
-	ExternalCondition@SGENCLOAK:
-		Condition: sgen-invis
-	WithColoredOverlay@SGENCLOAK:
-		Color: 00e40041
-		RequiresCondition: invisibility
+		RequiresCondition: tibstealth
+	ExternalCondition@TIBSTEALTH:
+		Condition: tibstealth
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Heavy, Critical
-	Cloak@MSGCLOAK:
-		RequiresCondition: msg-invis && !sgen-invis && !cloak-force-disabled
+	Cloak@SGENCLOAK:
+		RequiresCondition: sgencloak && !tibstealth && !cloak-force-disabled
 		InitialDelay: 0
 		CloakDelay: 150
-		IsPlayerPalette: true
-		Palette: cloakgreen
+		IsPlayerPalette: false
+		Palette: cloak
 		CloakSound: cloak5.aud
 		UncloakSound: appear1.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
-	ExternalCondition@MSGCLOAK:
-		Condition: msg-invis
+	ExternalCondition@SGENCLOAK:
+		Condition: sgencloak
+	WithPlayerColorSelectionBox@INVIS:
+		RequiresCondition: invisibility
 
 ^CrateCloak:
 	Cloak@CRATE-CLOAK:
@@ -2525,7 +2524,7 @@
 		EjectInAir: true
 		AllowUnsuitableCell: true
 		ChuteSound: chute1.aud
-	Cloak@SGENCLOAK:
+	Cloak@TIBSTEALTH:
 		RequiresCondition: invisibility || crate-cloak && (!cloak-force-disabled && !airborne && !being-warped)
 		CloakDelay: 90
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Damage, Heal
@@ -2559,6 +2558,8 @@
 	-SpeedMultiplier@chilled4:
 	-SpeedMultiplier@chilled5:
 	-SpeedMultiplier@chilled6:
+	WithShadow:
+		RequiresCondition: !invisibility
 
 ^PlaneTD:
 	Inherits@1: ^Plane
@@ -2687,7 +2688,7 @@
 	Inherits@gflash: ^WhiteFlash
 	Inherits@wflash: ^GreenFlash
 	Inherits@HACKABLE: ^Hackable
-	WithModifiedPalette@IRONCURTAIN:
+	WithPalettedOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield
 		Palette: invuln
 	Huntable:
@@ -2782,7 +2783,7 @@
 	Inherits@veilable: ^Veilable
 	Inherits@atomize: ^Atomizable
 	-SpeedMultiplier@concussion:
-	WithModifiedPalette@IRONCURTAIN:
+	WithPalettedOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability
 		Palette: invuln
 	Selectable:
@@ -2799,7 +2800,7 @@
 		RequiredForShortGame: false
 	-GivesBuildableArea:
 	-AcceptsDeliveredCash:
-	-WithModifiedPalette@FS:
+	-WithPalettedOverlay@FS:
 	-DamageMultiplier@FS:
 	-TimedConditionBar@FS:
 	-ExternalCondition@FS:
