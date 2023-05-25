@@ -5760,16 +5760,12 @@ SGEN:
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 130
-		Prerequisites: tmpl, ~structures.nod, ~techlevel.unrestricted
+		Prerequisites: tmpl, ~structures.nod, ~!player.shadow, ~techlevel.unrestricted
 		BuildLimit: 1
 		IconPalette: chrometd
 		Description: Makes a group of units/structures invisible\n  for a short time.
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Cloaks nearby units and structures when not active\n• Requires power to operate\n• Special Ability: Tiberium Stealth
-		RequiresCondition: !sgen-shadow
-	TooltipExtras@SHADOW:
-		Attributes: • Maximum 1 can be built\n• Cloaks nearby units and structures\n• Requires power to operate\n• Special Ability: Tiberium Stealth
-		RequiresCondition: sgen-shadow
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -5845,26 +5841,26 @@ SGEN:
 	WithRangeCircle@SGEN:
 		Range: 5c512
 		Color: 00aa00
-		RequiresCondition: !sgen-shadow
-	WithRangeCircle@SGENSHADOW:
-		Range: 9c512
-		Color: 00aa00
-		RequiresCondition: sgen-shadow
 	ProximityExternalCondition@SGEN:
 		Range: 5c512
 		Condition: sgencloak
 		MaximumVerticalOffset: 512
 		AffectsParent: true
-		RequiresCondition: !disabled && !empdisable && !being-warped && !active && !sgen-shadow
-	ProximityExternalCondition@SGENSHADOW:
+		RequiresCondition: !disabled && !empdisable && !being-warped && !active
+
+SGEN.Shadow:
+	Inherits: SGEN
+	Buildable:
+		Prerequisites: tmpl, ~structures.nod, ~player.shadow, ~techlevel.unrestricted
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Cloaks nearby units and structures\n• Requires power to operate\n• Special Ability: Tiberium Stealth
+	WithRangeCircle@SGEN:
 		Range: 9c512
-		Condition: sgencloak
-		MaximumVerticalOffset: 512
-		AffectsParent: true
-		RequiresCondition: !disabled && !empdisable && !being-warped && sgen-shadow
-	GrantConditionOnPrerequisite@SGENSHADOW:
-		Condition: sgen-shadow
-		Prerequisites: player.shadow
+	ProximityExternalCondition@SGEN:
+		Range: 9c512
+		RequiresCondition: !disabled && !empdisable && !being-warped
+	RenderSprites:
+		Image: sgen
 
 CRAM:
 	Inherits: AGUN

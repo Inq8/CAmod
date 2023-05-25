@@ -1379,7 +1379,7 @@ KirovBomb:
 			Light: 85
 			Heavy: 75
 			Concrete: 55
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, AirToGround
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
@@ -1396,7 +1396,7 @@ KirovBomb:
 KirovTeslaBomb:
 	Inherits: KirovBomb
 	Warhead@1Dam: SpreadDamage
-		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
+		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath, AirToGround
 	Warhead@3Eff: CreateEffect
 		Explosions: tsla_bomb
 		ExplosionPalette: ra2effect
@@ -1425,7 +1425,7 @@ KirovNukeBomb:
 		Versus:
 			Light: 100
 			Heavy: 90
-		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath, AirToGround
 	Warhead@3Eff: CreateEffect
 		Explosions: nuke3
 		ImpactSounds: kaboom1.aud
@@ -1807,8 +1807,8 @@ OrcaBomb:
 	InvalidTargets: Air
 	ReloadDelay: 50
 	Report: chute1.aud
-	Burst: 2
-	BurstDelays: 5
+	Burst: 3
+	BurstDelays: 7
 	Range: 2c0
 	TargetActorCenter: true
 	Projectile: GravityBomb
@@ -1818,15 +1818,15 @@ OrcaBomb:
 		Shadow: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 726
-		Damage: 700
+		Damage: 750
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Water
 		Versus:
-			None: 100
-			Wood: 20
-			Light: 20
-			Heavy: 40
-			Concrete: 20
+			None: 60
+			Wood: 100
+			Light: 40
+			Heavy: 50
+			Concrete: 40
 			Brick: 5
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
 	Warhead@2Smu: LeaveSmudge

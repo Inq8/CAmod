@@ -1140,7 +1140,7 @@ HIND:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 32000
+		HP: 34000
 	RevealsShroud:
 		Range: 11c0
 		MinRange: 9c0
@@ -1399,7 +1399,7 @@ A10:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 28000
+		HP: 30000
 	RevealsShroud:
 		Range: 11c0
 		MinRange: 9c0
@@ -2040,19 +2040,20 @@ ORCB:
 		BuildPaletteOrder: 130
 		Prerequisites: afld.gdi, ~aircraft.gdi, gtek, ~techlevel.high
 		IconPalette: chrometd
-		Description: VTOL bomber armed with EMP bombs.
+		Description: Heavy VTOL bomber armed with EMP bombs.
 	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
+		Strengths: • Strong vs Defenses, Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
+		Attributes: • Disables vehicles, defenses and buildings
 	Valued:
-		Cost: 1700
+		Cost: 2000
 	Tooltip:
 		Name: Orca Bomber
 		GenericName: Aircraft
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 30000
+		HP: 38000
 	RevealsShroud:
 		Range: 11c0
 		MinRange: 9c0
@@ -2066,7 +2067,7 @@ ORCB:
 		LocalOffset: 2,-256,-43, 2,256,-43
 		PauseOnCondition: !ammo
 	AttackAircraft:
-		FacingTolerance: 80
+		FacingTolerance: 512
 		Voice: Attack
 		AttackType: Strafe
 		StrafeRunLength: 3c0
@@ -2089,7 +2090,7 @@ ORCB:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
 	AmmoPool:
-		Ammo: 4
+		Ammo: 6
 		AmmoCondition: ammo
 		ReloadDelay: 45
 	WithAmmoPipsDecoration:
