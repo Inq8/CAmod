@@ -25,7 +25,7 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("Speed the pulse travels.")]
 		public readonly WDist Speed = new WDist(384);
 
-		[Desc("Visual speed of the projectile.")]
+		[Desc("Visual speed of the projectile. Set to zero to use the same speed as the pulse.")]
 		public readonly WDist VisualSpeed = WDist.Zero;
 
 		[Desc("Minimum distance travelled before doing damage.")]
@@ -37,7 +37,7 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("Maximum distance travelled by projectile visual (if present). Zero falls back to weapon range.")]
 		public readonly WDist VisualRange = WDist.Zero;
 
-		[Desc("Whether to ignore range modifiers, as these can mess up the relationship between ImpactSpacing, Speed and max range.")]
+		[Desc("Whether to ignore range modifiers, as these can mess up the relationship between ImpactInterval, Speed and max range.")]
 		public readonly bool IgnoreRangeModifiers = true;
 
 		[Desc("The maximum/constant/incremental inaccuracy used in conjunction with the InaccuracyType property.")]
@@ -46,7 +46,7 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("Controls the way inaccuracy is calculated. Possible values are 'Maximum' - scale from 0 to max with range, 'PerCellIncrement' - scale from 0 with range and 'Absolute' - use set value regardless of range.")]
 		public readonly InaccuracyType InaccuracyType = InaccuracyType.Maximum;
 
-		[Desc("Image to display.")]
+		[Desc("Projectile image to display.")]
 		public readonly string Image = null;
 
 		[SequenceReference(nameof(Image), allowNullImage: true)]

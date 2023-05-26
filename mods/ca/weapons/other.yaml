@@ -1095,7 +1095,7 @@ EnlightenedBeam:
 			Concrete: 45
 			Light: 80
 		ValidRelationships: Enemy, Neutral
-	Warhead@2Dam: SpreadDamage
+	Warhead@friendlyFire: SpreadDamage
 		Spread: 256
 		Damage: 2600
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
@@ -2338,11 +2338,11 @@ SonicPulse:
 			Concrete: 70
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Eff: CreateEffect
-		Explosions: sonicpulse1, sonicpulse2
+		Explosions: sonicblast1, sonicblast2
 		ExplosionPalette: effect-ignore-lighting-alpha40
 		ValidTargets: Ground, Air, Ship, Trees
 	Warhead@3Eff: CreateEffect
-		Explosions: sonicblast1, sonicblast2
+		Explosions: sonicpulse1, sonicpulse2
 		ExplosionPalette: effect-ignore-lighting-alpha40
 		ValidTargets: Ground, Air, Ship, Trees
 
@@ -2352,12 +2352,64 @@ SonicPulse.UPG:
 	Warhead@1Dam: SpreadDamage
 		Damage: 7200
 	Warhead@2Eff: CreateEffect
-		Explosions: sonicpulseupg1, sonicpulseupg2
-	Warhead@3Eff: CreateEffect
 		Explosions: sonicblastupg1, sonicblastupg2
+	Warhead@3Eff: CreateEffect
+		Explosions: sonicpulseupg1, sonicpulseupg2
 	Warhead@4Conc: GrantExternalCondition
 		Range: 1c0
 		Duration: 150
+		Condition: concussion
+		ValidTargets: Ground, Infantry, Vehicle, Ship
+		ValidRelationships: Enemy, Neutral
+
+DisruptorPulse:
+	Inherits: SonicPulse
+	ReloadDelay: 80
+	Range: 5c256
+	-Report:
+	StartBurstReport: sonic4.aud
+	Burst: 9
+	BurstDelays: 5
+	Projectile: LinearPulse
+		Speed: 384
+	Warhead@1Dam: SpreadDamage
+		Spread: 0c128
+		Damage: 2000
+		Versus:
+			None: 100
+			Wood: 25
+			Light: 25
+			Heavy: 15
+			Concrete: 35
+	Warhead@friendlyFire: SpreadDamage
+		Spread: 0c128
+		Damage: 500
+		Versus:
+			None: 100
+			Wood: 25
+			Light: 25
+			Heavy: 15
+			Concrete: 35
+		ValidRelationships: Ally
+		InvalidTargets: Disruptor
+	-Warhead@2Eff:
+	Warhead@2Eff: CreateFacingEffect
+		Explosions: sonicwave1, sonicwave2
+		ExplosionPalette: effect
+		ValidTargets: Ground, Air, Ship, Trees
+	-Warhead@3Eff:
+
+DisruptorPulse.UPG:
+	Inherits: DisruptorPulse
+	Range: 6c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 2200
+	Warhead@2Eff: CreateFacingEffect
+		Explosions: sonicwaveupg1, sonicwaveupg2
+		ExplosionPalette: effect
+	Warhead@4Conc: GrantExternalCondition
+		Range: 0c768
+		Duration: 75
 		Condition: concussion
 		ValidTargets: Ground, Infantry, Vehicle, Ship
 		ValidRelationships: Enemy, Neutral
