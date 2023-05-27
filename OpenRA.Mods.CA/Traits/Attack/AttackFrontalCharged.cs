@@ -50,7 +50,7 @@ namespace OpenRA.Mods.CA.Traits
 	public class AttackFrontalCharged : AttackFrontal, INotifyAttack, INotifySold, ISelectionBar
 	{
 		public new readonly AttackFrontalChargedInfo Info;
-
+		readonly IMove movement;
 		readonly Stack<int> chargingTokens = new Stack<int>();
 
 		bool charging;
@@ -85,11 +85,20 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
+		public bool IsTurning
+		{
+			get
+			{
+				return movement != null && (movement.CurrentMovementTypes & MovementType.Turn) != 0;
+			}
+		}
+
 		public AttackFrontalCharged(Actor self, AttackFrontalChargedInfo info)
 			: base(self, info)
 		{
 			Info = info;
 			shotsFired = 0;
+			movement = self.TraitOrDefault<IMove>();
 		}
 
 		protected override void TraitEnabled(Actor self)
@@ -114,7 +123,7 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			// Stop charging when we lose our target
-			charging = (self.CurrentActivity is AttackCharged || self.CurrentActivity is AttackMoveActivity) && !reloading && IsAiming;
+			charging = (self.CurrentActivity is AttackCharged || self.CurrentActivity is AttackMoveActivity) && !reloading && IsAiming && (ChargeLevel > 0 || !IsTurning);
 
 			var delta = charging ? Info.ChargeRate : -Info.DischargeRate;
 			ChargeLevel = (ChargeLevel + delta).Clamp(0, Info.ChargeLevel);

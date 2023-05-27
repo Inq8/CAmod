@@ -1272,14 +1272,16 @@ SPEC:
 	Armament:
 		Weapon: 155mmSpec
 		LocalOffset: 624,0,408
-		FireDelay: 25
-	Armament@TARGETTER:
-		Weapon: 155mmSpecTargeting
-	AttackFrontal:
+	AttackFrontalCharged:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
 		FacingTolerance: 0
+		ChargeLevel: 25
+		DischargeRate: 5
+		ShotsPerCharge: 3
+		ShowSelectionBar: true
+		SelectionBarColor: 666666
 	WithMuzzleOverlay:
 	Explodes:
 		Weapon: ArtilleryExplode

@@ -244,6 +244,10 @@ VEHICLES.SCRIN:
 		Margin: -6, 3
 		RequiresCondition: storm-level == 3
 
+^ScrinVehicleVoice:
+	Voiced:
+		VoiceSet: ScrinVehicleVoice
+
 #
 # ---- Infantry
 #
@@ -908,6 +912,7 @@ MAST:
 
 HARV.Scrin:
 	Inherits: HARV.TD
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Selectable:
 		DecorationBounds: 1792, 1792
 	RenderSprites:
@@ -940,6 +945,7 @@ GUNW:
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 24
@@ -1043,6 +1049,7 @@ SEEK:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1117,6 +1124,7 @@ LACE:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1197,6 +1205,7 @@ INTL:
 	Inherits@TRANSPORT: ^Transport
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1304,6 +1313,7 @@ CORR:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1365,6 +1375,7 @@ LCHR:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1513,6 +1524,7 @@ STCR:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@IONCONDUITS: ^IonConduits
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1582,6 +1594,7 @@ DEVO:
 	Inherits@BERSERK: ^Berserk
 	Inherits@RESCONV: ^ResourceConversion
 	Inherits@HOVERTRAIL: ^HoverTrail
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 220
@@ -1661,6 +1674,7 @@ DARK:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Buildable:
@@ -1735,6 +1749,7 @@ RUIN:
 	Inherits@BERSERK: ^Berserk
 	Inherits@RESCONV: ^ResourceConversion
 	Inherits@HOVERTRAIL: ^HoverTrail
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1835,6 +1850,7 @@ ATMZ:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -2077,6 +2093,7 @@ SMCV:
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 437
@@ -2145,6 +2162,7 @@ STMR:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 90
@@ -2157,8 +2175,6 @@ STMR:
 		Attributes: • Can detect submarines
 	Valued:
 		Cost: 1750
-	Voiced:
-		VoiceSet: VehicleVoice
 	Tooltip:
 		Name: Stormrider
 		GenericName: Aircraft
@@ -2278,6 +2294,7 @@ ENRV:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 170
@@ -2290,8 +2307,6 @@ ENRV:
 		Attributes: • Slows targets
 	Valued:
 		Cost: 2000
-	Voiced:
-		VoiceSet: VehicleVoice
 	Tooltip:
 		Name: Enervator
 		GenericName: Aircraft
