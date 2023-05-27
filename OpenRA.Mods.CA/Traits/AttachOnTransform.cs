@@ -37,7 +37,7 @@ namespace OpenRA.Mods.CA.Traits
 			Info = info;
 		}
 
-		void INotifyTransform.OnTransform(Actor self) {}
+		void INotifyTransform.OnTransform(Actor self) { }
 		void INotifyTransform.BeforeTransform(Actor self) { }
 		void INotifyTransform.AfterTransform(Actor toActor)
 		{
