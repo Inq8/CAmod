@@ -473,8 +473,9 @@ GTNK.squad:
 		UncloakSound: appear1.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Move, Damage, Heal
 		Palette: player
-		IsPlayerPalette: false
-		RequiresCondition: england && !cloak-force-disabled && !invisibility && !driver-dead && !empdisable && !being-warped
+		IsPlayerPalette: true
+		RequiresCondition: england && !cloak-force-disabled && !being-warped && !empdisable && !driver-dead
+		PauseOnCondition: invisibility
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	SpawnActorOnDeath:
@@ -1300,7 +1301,8 @@ SPEC:
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
-		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver-dead
+		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead
+		PauseOnCondition: invisibility
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	GrantConditionOnDamageState@UNCLOAK:
@@ -1378,7 +1380,8 @@ SAPC:
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
-		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver-dead
+		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead
+		PauseOnCondition: invisibility
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	GrantConditionOnDamageState@UNCLOAK:
@@ -2402,7 +2405,7 @@ QTNK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 90000
+		HP: 100000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -3901,7 +3904,8 @@ STNK.Nod:
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
-		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver-dead && !parachute
+		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute
+		PauseOnCondition: invisibility
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	GrantConditionOnDamageState@UNCLOAK:
@@ -5529,8 +5533,9 @@ RTNK:
 		UncloakSound: appear1.aud
 		UncloakOn: Attack, Dock, Move, Damage, Heal
 		Palette: player
-		IsPlayerPalette: false
-		RequiresCondition: !cloak-force-disabled && !invisibility && !driver-dead && !empdisable && !being-warped
+		IsPlayerPalette: true
+		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead
+		PauseOnCondition: invisibility
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	GrantConditionOnDamageState@UNCLOAK:

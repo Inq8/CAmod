@@ -72,6 +72,7 @@ ChemballLauncher:
 		Image: cb1
 		Palette: temptd
 	Warhead@1Dam: SpreadDamage
+		Spread: 288
 		Versus:
 			Heavy: 15
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
@@ -1172,6 +1173,8 @@ VenomLaser.UPG:
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
 		Damage: 6325
+		Versus:
+			Concrete: 55
 
 VenomLaserAA:
 	Inherits: VenomLaser
@@ -1816,8 +1819,8 @@ OrcaBomb:
 		Acceleration: 0, 0, 0
 		Shadow: true
 	Warhead@1Dam: SpreadDamage
-		Spread: 726
-		Damage: 750
+		Spread: 512
+		Damage: 740
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Water
 		Versus:
@@ -1827,7 +1830,7 @@ OrcaBomb:
 			Heavy: 50
 			Concrete: 40
 			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
+		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath, AirToGround
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Eff: CreateEffect
@@ -2123,7 +2126,7 @@ RadBeamWeaponHeavy:
 			Wood: 45
 			Concrete: 45
 			Light: 75
-			Heavy: 65
+			Heavy: 60
 	Warhead@2Dam: HealthPercentageDamage
 		Spread: 128
 		Damage: 200

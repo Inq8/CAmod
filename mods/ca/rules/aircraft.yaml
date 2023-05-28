@@ -2315,7 +2315,8 @@ RAH:
 		IsPlayerPalette: false
 		UncloakOn: Attack, Dock, Damage, Heal
 		CloakedCondition: hidden
-		RequiresCondition: !cloak-force-disabled && airborne && !invisibility && !alphacomanche-upgrade
+		RequiresCondition: !cloak-force-disabled && airborne && !being-warped && !alphacomanche-upgrade
+		PauseOnCondition: invisibility
 	Cloak@UPG:
 		DetectionTypes: AirCloak
 		InitialDelay: 100
@@ -2326,7 +2327,8 @@ RAH:
 		IsPlayerPalette: false
 		UncloakOn: Attack, Dock, Heal
 		CloakedCondition: hidden
-		RequiresCondition: airborne && !invisibility && alphacomanche-upgrade
+		RequiresCondition: airborne && !being-warped && alphacomanche-upgrade
+		PauseOnCondition: invisibility
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical

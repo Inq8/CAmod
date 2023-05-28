@@ -1310,7 +1310,8 @@ THF:
 		DetectionTypes: Cloak
 		IsPlayerPalette: false
 		CloakedCondition: hidden
-		RequiresCondition: !cloak-force-disabled
+		RequiresCondition: !cloak-force-disabled && !being-warped
+		PauseOnCondition: invisibility
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
@@ -2032,7 +2033,8 @@ SNIP:
 		UncloakSound: gstealof.aud
 		IsPlayerPalette: true
 		DetectionTypes: Cloak
-		RequiresCondition: !cloak-force-disabled
+		RequiresCondition: !cloak-force-disabled && !being-warped
+		PauseOnCondition: invisibility
 		UncloakOn: Move, Unload, Infiltrate, Demolish, Dock, Attack
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden)
@@ -2315,7 +2317,8 @@ SAB:
 		Palette: cloaktd
 		IsPlayerPalette: true
 		DetectionTypes: Cloak
-		RequiresCondition: can-cloak && !cloak-force-disabled
+		RequiresCondition: can-cloak && !cloak-force-disabled && !being-warped
+		PauseOnCondition: invisibility
 		UncloakOn: Unload, Infiltrate, Demolish, Dock, Attack, Damage
 		CloakSound: gstealon.aud
 		UncloakSound: gstealof.aud
@@ -3008,7 +3011,6 @@ RMBC:
 	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@EMP: ^EmpDisable
-	Inherits@CLOAK: ^Cloakable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
@@ -3927,7 +3929,6 @@ ENLI:
 	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@EMP: ^EmpDisable
-	Inherits@CLOAK: ^Cloakable
 	RenderSprites:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ

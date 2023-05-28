@@ -1190,7 +1190,8 @@
 		Condition: cloak-force-disabled
 		ValidDamageStates: Heavy, Critical
 	Cloak@SGENCLOAK:
-		RequiresCondition: sgencloak && !tibstealth && !cloak-force-disabled
+		RequiresCondition: sgencloak
+		PauseOnCondition: tibstealth
 		InitialDelay: 0
 		CloakDelay: 150
 		IsPlayerPalette: false
