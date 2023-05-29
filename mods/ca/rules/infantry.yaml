@@ -3178,7 +3178,7 @@ BRUT:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Immune to mind control
+		Attributes: • Immune to mind control\n• Self heals to 50% out of combat
 	RenderSprites:
 	Valued:
 		Cost: 450
@@ -3243,6 +3243,11 @@ BRUT:
 		Modifier: 90
 	DamageTypeDamageMultiplier@FLAKARMORMINOR:
 		Modifier: 95
+	ChangesHealth:
+		PercentageStep: 1
+		Delay: 25
+		StartIfBelow: 50
+		DamageCooldown: 150
 	-TakeCover:
 	-Captures@DRIVER_KILL:
 	-CaptureManager:
