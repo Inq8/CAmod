@@ -745,13 +745,19 @@ Ivanbomb:
 	Range: 3c725
 	Report: grenade1.aud
 	Projectile: Bullet
+		LaunchAngle: 80
 		Speed: 166
 		Inaccuracy: 0
 		Image: TNT
 		BounceCount: 2
-		BounceRangeModifier: 40
+		BounceRangeModifier: 60
 		BounceSound: dud2.aud
 		ValidBounceBlockerRelationships: Ally, Neutral, Enemy
+		ContrailLength: 10
+		ContrailStartColor: FF9900
+		ContrailStartColorAlpha: 192
+		ContrailEndColor: FF0000
+		ContrailWidth: 0c40
 	Warhead@AttachDelayedWeapon: AttachDelayedWeapon
 		Weapon: TNT
 		Type: tnt
@@ -759,7 +765,7 @@ Ivanbomb:
 		DeathTypes: ExplosionDeath
 		Range: 1
 		AttachSounds: icraatta.aud
-		MissSounds: dud1.aud
+		MissWeapon: DelayedTNT
 	Warhead@TargetValidator: SpreadDamage
 	Warhead@highlight: GrantExternalCondition
 		Range: 0c256
@@ -779,7 +785,7 @@ TNT:
 		Spread: 341
 		Damage: 2800
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
-		ValidTargets: Ground, Water
+		ValidTargets: Ground, Water, Air
 		Versus:
 			Light: 70
 			Heavy: 20
@@ -796,6 +802,22 @@ TNT:
 		RandomClusterCount: 3
 		Dimensions: 3,3
 		Footprint: xxx xxx xxx
+
+DelayedTNT:
+	Inherits: TNT
+	Warhead@1Dam: SpreadDamage
+		Delay: 50
+		ValidTargets: Ground, Water
+	Warhead@2Eff: CreateEffect
+		Delay: 50
+	Warhead@Smu: LeaveSmudge
+		Delay: 50
+	Warhead@Flames: FireCluster
+		Delay: 50
+	Warhead@tnt: CreateEffect
+		Image: groundtnt
+		Explosions: idle1, idle2, idle3, idle4, idle5, idle6, idle7, idle8
+		ValidTargets: Ground, Water
 
 DefuseKit:
 	ReloadDelay: 50

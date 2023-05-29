@@ -47,12 +47,19 @@ namespace OpenRA.Mods.CA.Warheads
 		[Desc("List of sounds that can be played if attaching is not possible.")]
 		public readonly string[] MissSounds = new string[0];
 
+		[WeaponReference]
+		public readonly string MissWeapon = null;
+
 		public WeaponInfo WeaponInfo;
+		public WeaponInfo MissWeaponInfo;
 
 		public void RulesetLoaded(Ruleset rules, WeaponInfo info)
 		{
 			if (!rules.Weapons.TryGetValue(Weapon.ToLowerInvariant(), out WeaponInfo))
 				throw new YamlException("Weapons Ruleset does not contain an entry '{0}'".F(Weapon.ToLowerInvariant()));
+
+			if (MissWeapon != null && !rules.Weapons.TryGetValue(MissWeapon.ToLowerInvariant(), out MissWeaponInfo))
+				throw new YamlException("Weapons Ruleset does not contain an entry '{0}'".F(MissWeapon.ToLowerInvariant()));
 		}
 
 		public int CalculatedTriggerTime { get; private set; }
@@ -71,6 +78,7 @@ namespace OpenRA.Mods.CA.Warheads
 
 			var world = firedBy.World;
 			var availableActors = firedBy.World.FindActorsOnCircle(pos, Range);
+
 			foreach (var actor in availableActors)
 			{
 				if (!IsValidAgainst(actor, firedBy))
@@ -105,13 +113,20 @@ namespace OpenRA.Mods.CA.Warheads
 					var attachSound = AttachSounds.RandomOrDefault(world.LocalRandom);
 					if (attachSound != null)
 						Game.Sound.Play(SoundType.World, attachSound, pos);
+
+					return;
 				}
-				else
-				{
-					var failSound = MissSounds.RandomOrDefault(world.LocalRandom);
-					if (failSound != null)
-						Game.Sound.Play(SoundType.World, failSound, pos);
-				}
+			}
+
+			if (MissWeapon != null)
+			{
+				MissWeaponInfo.Impact(Target.FromPos(pos), args.SourceActor);
+			}
+			else
+			{
+				var failSound = MissSounds.RandomOrDefault(world.LocalRandom);
+				if (failSound != null)
+					Game.Sound.Play(SoundType.World, failSound, pos);
 			}
 		}
 	}
