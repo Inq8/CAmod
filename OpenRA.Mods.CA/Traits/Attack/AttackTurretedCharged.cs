@@ -15,7 +15,8 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Actor has a visual turret used to attack.")]
+	[Desc("Actor has a visual turret used to attack and must charge before firing. ",
+		"Note: All armaments will share the charge, so its best suited for units with a single weapon.")]
 	public class AttackTurretedChargedInfo : AttackTurretedInfo, Requires<TurretedInfo>
 	{
 		[Desc("Amount of charge required to attack.")]
@@ -42,6 +43,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Charging sound audible through fog.")]
 		public readonly bool ChargeAudibleThroughFog = true;
+
+		[Desc("If true, will charge while turret is turning to face the target.")]
+		public readonly bool ChargeWhileTurning = false;
 
 		public readonly bool ShowSelectionBar = false;
 		public readonly Color SelectionBarColor = Color.FromArgb(128, 200, 255);
@@ -112,7 +116,7 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			// Stop charging when we lose our target
-			charging = !reloading && IsAiming && turretReady;
+			charging = !reloading && IsAiming && (Info.ChargeWhileTurning || turretReady);
 
 			if (charging && ChargeLevel == 0)
 				ChargeSound(self);

@@ -18,7 +18,8 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Unit got to face the target")]
+	[Desc("Unit must face the target and charge up to fire. ",
+		"Note: All armaments will share the charge, so its best suited for units with a single weapon.")]
 	public class AttackFrontalChargedInfo : AttackFrontalInfo, Requires<IFacingInfo>
 	{
 		[Desc("Amount of charge required to attack.")]
