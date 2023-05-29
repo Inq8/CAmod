@@ -226,6 +226,14 @@ namespace OpenRA.Mods.CA.Traits
 			return valued.Cost;
 		}
 
+		public int QueueCount
+		{
+			get
+			{
+				return queue.Count;
+			}
+		}
+
 		void GrantCondition(Actor self)
 		{
 			if (string.IsNullOrEmpty(Info.ConvertingCondition) || conditionToken != Actor.InvalidConditionToken)
