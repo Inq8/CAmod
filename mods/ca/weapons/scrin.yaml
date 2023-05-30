@@ -1282,8 +1282,7 @@ MothershipChargeBeam:
 	ReloadDelay: 3
 	Range: 0c512
 	TargetActorCenter: true
-	ValidTargets: Ground, Water
-	InvalidTargets: Infantry, Vehicle, Ship
+	ValidTargets: Structure
 	Projectile: PlasmaBeam
 		ForceVertical: true
 		Duration: 2
@@ -1301,8 +1300,7 @@ MothershipBeam:
 	ReloadDelay: 340
 	Range: 0c512
 	TargetActorCenter: true
-	ValidTargets: Ground, Water
-	InvalidTargets: Infantry, Vehicle, Ship
+	ValidTargets: Structure
 	Projectile: PlasmaBeam
 		ForceVertical: true
 		Duration: 240
@@ -1340,42 +1338,32 @@ MothershipBeam:
 		Intensity: 1
 		Multiplier: 0.1,0.1
 
-MothershipLaser:
-	Inherits: TripodLaser
+MothershipDiscs:
+	Inherits: DevastatorDiscs
 	Report: mshp-zap1.aud, mshp-zap2.aud
-	Range: 6c0
+	Range: 7c0
 	MinRange: 1c0
-	ReloadDelay: 120
-	ValidTargets: Infantry, Vehicle, Ship
-	Projectile: PlasmaBeam
-		Blockable: false
-		StartOffset: 0,672,0
-		FollowingOffset: 0,-112,0
-		Duration: 15
-		ImpactTicks: 0, 2, 4, 6, 8, 10, 12, 14
-		ZOffset: 512
-		Colors: 7d44ff96, eb66ff86, 5763ff96
-		MaxFacingDeviation: 256
+	ReloadDelay: 50
+	Burst: 3
+	BurstDelays: 8
+	InvalidTargets: Structure
+	Projectile: Bullet
+		Image: plasmatorp1
+		Palette: scrin
+		LaunchAngle: 0
+		Inaccuracy: 0c512
+		Shadow: true
+		ShadowColor: 00000033
+		Speed: 280
 	Warhead@1Dam: SpreadDamage
-		Damage: 1250
+		Spread: 448
+		Damage: 4500
 		Versus:
-			None: 75
-			Light: 85
-			Wood: 20
-	Warhead@3Eff: CreateEffect
-		Explosions: small_explosion_alt1, small_explosion_alt2, small_explosion_alt3
-
-MothershipLaserRight:
-	Inherits: MothershipLaser
-	Projectile: PlasmaBeam
-		StartOffset: 512,672,0
-		FollowingOffset: 0,-112,0
-
-MothershipLaserLeft:
-	Inherits: MothershipLaser
-	Projectile: PlasmaBeam
-		StartOffset: -512,-672,0
-		FollowingOffset: 0,112,0
+			None: 100
+			Wood: 45
+			Concrete: 45
+			Light: 70
+			Heavy: 100
 
 LeecherBeam:
 	ValidTargets: Ground, Water

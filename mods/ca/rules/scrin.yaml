@@ -2779,11 +2779,11 @@ MSHP:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 190
 		Prerequisites: sign, scrt, ~aircraft.scrin, ~techlevel.high
-		Description: Huge craft with powerful anti-structure beam weapon\n  and secondary beam weapons.
+		Description: Huge craft with powerful anti-structure beam weapon\n  and secondary plasma weapons.
 		IconPalette: chromes
 		BuildLimit: 1
 	TooltipExtras:
-		Strengths: • Strong vs Buildings, Defenses, Vehicles
+		Strengths: • Strong vs Buildings, Defenses, Heavy Armor, Light Armor, Infantry
 		Weaknesses: • Cannot attack Aircraft\n• Long charge time before firing anti-structure weapon\n• Cannot move while firing
 		Attributes: • Maximum 1 can be built\n• Can create wormholes
 	RenderSprites:
@@ -2827,36 +2827,28 @@ MSHP:
 		PauseOnCondition: attacking || ammo || cooldown
 	Armament@TERTIARY:
 		Name: tertiary
-		Turret: none
-		Weapon: MothershipLaser
-		LocalOffset: 400,0,-200
+		Turret: body
+		Weapon: MothershipDiscs
+		LocalOffset: 400,0,-200, 400,0,50, 400,0,300
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
-	Armament@TERTIARY2:
-		Name: tertiary
-		Turret: none
-		Weapon: MothershipLaserLeft
-		LocalOffset: 400,0,50
-		MuzzleSequence: muzzle
-		MuzzlePalette: scrin
-		FireDelay: 10
-	Armament@TERTIARY3:
-		Name: tertiary
-		Turret: none
-		Weapon: MothershipLaserRight
-		LocalOffset: 400,0,300
-		MuzzleSequence: muzzle
-		MuzzlePalette: scrin
-		FireDelay: 20
 	WithMuzzleOverlay:
 	Aircraft:
 		CruiseAltitude: 3c512
 		InitialFacing: 768
-		TurnSpeed: 16
+		TurnSpeed: 512
 		Speed: 38
 		AltitudeVelocity: 0c50
 		CanForceLand: False
 		Voice: Move
+	TurretedFloating@BODY:
+		Turret: body
+		TurnSpeed: 16
+		Offset: 0,0,0
+		RealignDelay: 50
+	WithSpriteTurret@BODY:
+		Turret: body
+		Sequence: idle
 	Selectable:
 		Bounds: 1792, 1792, 0, 85
 		DecorationBounds: 2048, 2218, 0, 42
@@ -2871,12 +2863,13 @@ MSHP:
 		RequiresCondition: empdisable && !being-warped
 	-Hovers@CRUISING:
 	WithFacingSpriteBody:
-	AttackFrontal:
+		Sequence: empty
+	AttackTurreted:
 		Armaments: primary, secondary, tertiary
-		FacingTolerance: 32
 		Voice: Attack
 		PauseOnCondition: empdisable || being-warped
 		ForceFireIgnoresActors: true
+		Turrets: body
 	-EjectOnDeath:
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
