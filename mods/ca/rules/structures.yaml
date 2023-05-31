@@ -5849,7 +5849,10 @@ SGEN:
 		Condition: sgencloak
 		MaximumVerticalOffset: 512
 		AffectsParent: true
-		RequiresCondition: !disabled && !empdisable && !being-warped && !active
+		RequiresCondition: !disabled && !empdisable && !being-warped && !active && !cloak-force-disabled
+	GrantConditionOnDamageState@UNCLOAK:
+		Condition: cloak-force-disabled
+		ValidDamageStates: Critical
 
 SGEN.Shadow:
 	Inherits: SGEN
@@ -5867,6 +5870,7 @@ SGEN.Shadow:
 	GrantExternalConditionPowerCA@SGEN:
 		-ActiveCondition:
 	-ExternalCondition@ACTIVE:
+	-GrantConditionOnDamageState@UNCLOAK:
 
 CRAM:
 	Inherits: AGUN

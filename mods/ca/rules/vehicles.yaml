@@ -2119,9 +2119,12 @@ MSG:
 	ProximityExternalCondition@MSG:
 		Range: 5c512
 		Condition: sgencloak
-		RequiresCondition: deployed
+		RequiresCondition: deployed && !cloak-force-disabled
 		MaximumVerticalOffset: 512
 		AffectsParent: true
+	GrantConditionOnDamageState@UNCLOAK:
+		Condition: cloak-force-disabled
+		ValidDamageStates: Critical
 
 TTRA:
 	Inherits: ^Tank
