@@ -24,6 +24,36 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 		{
 			return owner.SquadManager.FindClosestEnemy(owner.Units.First().CenterPosition);
 		}
+
+		protected Actor FindHighValueTarget(SquadCA owner)
+		{
+			return owner.SquadManager.FindHighValueTarget(owner.Units.First().CenterPosition);
+		}
+
+		protected bool FindNewTarget(SquadCA owner)
+		{
+			var highValueTargetRoll = owner.World.LocalRandom.Next(0, 100);
+
+			if (owner.SquadManager.Info.HighValueTargetPriority > highValueTargetRoll)
+			{
+				var highValueTarget = FindHighValueTarget(owner);
+				if (highValueTarget != null)
+				{
+					owner.TargetActor = highValueTarget;
+					return true;
+				}
+
+			}
+
+			var closestEnemy = FindClosestEnemy(owner);
+			if (closestEnemy != null)
+			{
+				owner.TargetActor = closestEnemy;
+				return true;
+			}
+
+			return false;
+		}
 	}
 
 	class GroundUnitsIdleStateCA : GroundStateBaseCA, IState
@@ -35,14 +65,8 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			if (!owner.IsValid)
 				return;
 
-			if (!owner.IsTargetValid)
-			{
-				var closestEnemy = FindClosestEnemy(owner);
-				if (closestEnemy == null)
-					return;
-
-				owner.TargetActor = closestEnemy;
-			}
+			if (!owner.IsTargetValid && !FindNewTarget(owner))
+				return;
 
 			var enemyUnits = owner.World.FindActorsInCircle(owner.TargetActor.CenterPosition, WDist.FromCells(owner.SquadManager.Info.IdleScanRadius))
 				.Where(owner.SquadManager.IsPreferredEnemyUnit).ToList();
@@ -77,16 +101,10 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			if (!owner.IsValid)
 				return;
 
-			if (!owner.IsTargetValid)
+			if (!owner.IsTargetValid && !FindNewTarget(owner))
 			{
-				var closestEnemy = FindClosestEnemy(owner);
-				if (closestEnemy != null)
-					owner.TargetActor = closestEnemy;
-				else
-				{
-					owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeStateCA(), true);
-					return;
-				}
+				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeStateCA(), true);
+				return;
 			}
 
 			var leader = owner.Units.ClosestTo(owner.TargetActor.CenterPosition);
@@ -160,16 +178,10 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			if (!owner.IsValid)
 				return;
 
-			if (!owner.IsTargetValid)
+			if (!owner.IsTargetValid && !FindNewTarget(owner))
 			{
-				var closestEnemy = FindClosestEnemy(owner);
-				if (closestEnemy != null)
-					owner.TargetActor = closestEnemy;
-				else
-				{
-					owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeStateCA(), true);
-					return;
-				}
+				owner.FuzzyStateMachine.ChangeState(owner, new GroundUnitsFleeStateCA(), true);
+				return;
 			}
 
 			var leader = owner.Units.ClosestTo(owner.TargetActor.CenterPosition);
