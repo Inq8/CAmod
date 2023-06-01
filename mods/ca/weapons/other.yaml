@@ -475,6 +475,7 @@ TTrackZap.UPG:
 		Amount: 1
 		AimChance: 100
 		ThrowWithoutTarget: false
+		AimTargetStances: Enemy, Neutral
 
 TTrackArc1:
 	Inherits: TTrackZap.UPG
@@ -1404,7 +1405,7 @@ KirovBomb:
 		Acceleration: 0, 0, 0
 		Shadow: True
 	Warhead@1Dam: SpreadDamage
-		Spread: 1c512
+		Spread: 1c0
 		Falloff: 100, 40, 20, 5
 		Damage: 13000
 		InvalidTargets: Air
@@ -1413,7 +1414,7 @@ KirovBomb:
 			Wood: 100
 			Light: 85
 			Heavy: 75
-			Concrete: 55
+			Concrete: 60
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, AirToGround
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
@@ -1439,15 +1440,34 @@ KirovTeslaBomb:
 	Warhead@5Tesla: FireShrapnel
 		Weapon: KirovTeslaArc
 		Amount: 3
-		AimChance: 85
+		AimChance: 100
 		AllowDirectHit: true
 		ThrowWithoutTarget: false
+		AimTargetStances: Enemy, Neutral
 
 KirovClusterBomb:
 	Inherits: KirovBomb
 	Warhead@1Dam: SpreadDamage
+		Spread: 1c512
 		Versus:
-			Concrete: 60
+			Concrete: 65
+	Warhead@3Eff: CreateEffect
+		Explosions: large_artillery_explosion
+		ImpactSounds: artyhit.aud, artyhit2.aud, artyhit3.aud
+	Warhead@Concussion1: GrantExternalCondition
+		Range: 0c768
+		Duration: 125
+		Condition: concussion
+		ValidTargets: Ground, Infantry, Vehicle, Ship
+	Warhead@Concussion2: GrantExternalCondition
+		Range: 1c768
+		Duration: 35
+		Condition: concussion
+		ValidTargets: Ground, Infantry, Vehicle, Ship
+	Warhead@5Shake: ShakeScreen
+		Duration: 5
+		Intensity: 1
+		Multiplier: 0.5,0.5
 	Warhead@6Cluster: FireCluster
 		Weapon: KirovCluster
 		RandomClusterCount: 3
@@ -1488,6 +1508,7 @@ KirovTeslaArc:
 	Inherits: TTankZap
 	Range: 4c0
 	Report: shktrop1.aud
+	ValidTargets: Infantry, Vehicle, Ship
 	Warhead@1Dam: SpreadDamage
 		Damage: 3000
 		ValidTargets: Infantry, Vehicle, Ship
