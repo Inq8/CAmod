@@ -789,6 +789,10 @@ ChaosGas:
 		Duration: 200
 		Condition: berserk
 		ValidTargets: Ground, Vehicle
+	Warhead@chaosClouds: SpawnActor
+		Actors: chaos.cloud1, chaos.cloud2
+		Range: 3
+		ValidTargets: Ground, Water
 
 ChaosDroneExplode:
 	Inherits: ChaosGas
@@ -803,7 +807,6 @@ ChaosDroneExplodeSmall:
 		ImpactActors: false
 	Warhead@chaos: GrantExternalCondition
 		Range: 1c512
-		Duration: 150
 
 CryoExplosion:
 	Warhead@2Eff: CreateEffect

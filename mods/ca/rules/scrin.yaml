@@ -1027,7 +1027,7 @@ SHRW:
 	Armor:
 		Type: Heavy
 	Health:
-		HP: 35000
+		HP: 32000
 	Mobile:
 		Speed: 92
 		TurnSpeed: 36
@@ -4905,8 +4905,6 @@ BUZZ:
 		Type: CenterPosition
 	Tooltip:
 		Name: Buzzer Swarm
-	Health:
-		HP: 1
 	RevealsShroud:
 		MinRange: 1c0
 		Range: 6c0
@@ -4944,17 +4942,15 @@ BUZZ.AI:
 	AttackWander:
 		WanderMoveRadius: 1
 		ReduceMoveRadiusDelay: 3
-	-Aircraft:
-	Mobile:
-		Speed: 33
-		Locomotor: cloud
 
 MSPK:
-	Interactable:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^SpriteActor
+	Inherits@selection: ^SelectableCombatUnit
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Tooltip:
 		Name: Mind Spark
 	RenderSprites:
-		Image: mindsparkanim
 		Palette: caneon
 	WithSpriteBody:
 	ClassicFacingBodyOrientation:
@@ -4965,28 +4961,25 @@ MSPK:
 	RevealsShroud:
 		Range: 5c0
 		Type: CenterPosition
-	Health:
-		HP: 1
-	PeriodicExplosion@1:
-		Weapon: MindSparkZapper
-	PeriodicExplosion@2:
-		Weapon: MindSparkHeroZapper
+	Armament@PRIMARY:
+		Weapon: MindSparkZap
+	AttackTurreted:
+	Turreted:
 	Aircraft:
 		CanHover: True
-		Speed: 15
+		Speed: 46
 		CruiseAltitude: 1
 		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,Water,Tree,River
 	KillsSelf:
 		Delay: 325
-	Wanders:
-		WanderMoveRadius: 1
-		ReduceMoveRadiusDelay: 3
 	WithDeathAnimation:
 		UseDeathTypeSuffix: false
 		CrushedSequence: die
 		FallbackSequence: die
 		DeathSequencePalette: caneon
 		DeathPaletteIsPlayerPalette: false
+	Voiced:
+		VoiceSet: MindSparkVoice
 
 camera.rift:
 	Interactable:

@@ -1174,7 +1174,8 @@ HACK:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
 	RenderRangeCircle:
-		Color: 00cc00
+		Color: 00cc00cc
+		RangeCircleType: Hack
 	RejectsOrders@AIHACKER:
 		RequiresCondition: bothacking
 	GrantConditionOnAttack@AIHACKER:
@@ -3700,7 +3701,7 @@ YURI:
 		KillSlavesDamageTypes: BulletDeath
 	GrantTimedConditionOnDeploy:
 		DeployedTicks: 35
-		CooldownTicks: 150
+		CooldownTicks: 100
 		DeployedCondition: deployed
 		DeployingCondition: deploying
 		DeployAnimation: deployed
@@ -3778,6 +3779,12 @@ YURI:
 	RangeMultiplier@RANK-ELITE:
 		Modifier: 115
 		RequiresCondition: rank-elite
+	RangedGpsRadarProvider:
+		Range: 13c0
+		TargetTypes: Infantry, Vehicle, Air, Structure
+	WithRangeCircle:
+		Range: 13c0
+		Color: cc00ff99
 
 SEAL:
 	Inherits: RMBO

@@ -99,7 +99,7 @@ GunWalkerZap:
 			Wood: 10
 			Concrete: 10
 			Light: 32
-			Heavy: 15
+			Heavy: 10
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 
@@ -1084,7 +1084,7 @@ ShardWalkerShards:
 		Versus:
 			Wood: 10
 			Light: 35
-			Heavy: 15
+			Heavy: 10
 			Concrete: 10
 
 ShardWalkerShardsAA:
@@ -1599,28 +1599,13 @@ MindSparkSpawnerSlave:
 	Warhead@Suppress: GrantExternalCondition
 		-Delay:
 
-MindSparkZapper:
+MindSparkZap:
 	ReloadDelay: 50
-	Range: 1c0
-	Projectile: InstantHit
-	Warhead@ARC: FireShrapnel
-		Weapon: MindSparkArc
-		AimChance: 100
-		Amount: 1
-
-MindSparkHeroZapper:
-	ReloadDelay: 400
-	Inherits: MindSparkZapper
-	Warhead@ARC: FireShrapnel
-		Weapon: MindSparkHeroArc
-
-MindSparkArc:
-	Range: 2c0
-	ValidTargets: Infantry, Vehicle, Ship, Defense
+	Range: 2c512
 	Report: mindspark-zap1.aud, mindspark-zap2.aud
 	Projectile: PlasmaBeam
 		Duration: 7
-		Colors: ba00ff66
+		Colors: c45dff88
 		InnerLightness: 200
 		OuterLightness: 100
 		Radius: 1
@@ -1632,15 +1617,8 @@ MindSparkArc:
 		Spread: 42
 		Damage: 25000
 		Versus:
-			Light: 25
-			Heavy: 25
+			Light: 20
+			Heavy: 15
 			Concrete: 10
+			Wood: 5
 		DamageTypes: ElectricityDeath
-		ValidTargets: Infantry, Vehicle, Ship, Defense
-		ValidRelationships: Enemy
-
-MindSparkHeroArc:
-	Inherits: MindSparkArc
-	ValidTargets: Hero
-	Warhead@1Dam: SpreadDamage
-		ValidTargets: Hero
