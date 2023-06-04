@@ -246,6 +246,29 @@ SmallBuildingExplode:
 		Dimensions: 2,2
 		Footprint: xx xx
 
+FakeBuildingExplode:
+	Warhead@1Dam: SpreadDamage
+		DamageTypes: DefaultDeath
+		Spread: 1c0
+		Falloff: 100, 50, 35, 22, 14, 0
+		Damage: 75000
+		Versus:
+			None: 30
+			Wood: 20
+			Concrete: 20
+			Light: 90
+
+FakeBuildingSelfDestruct:
+	Report: icolseta.aud
+	ReloadDelay: 200
+	Warhead@1Dam: HealthPercentageDamage
+		Delay: 20
+		Spread: 1c0
+		Damage: 100
+		ValidTargets: Structure
+		ValidRelationships: Ally
+		AffectsParent: true
+
 CivPanicExplosion:
 	Warhead@1Dam: SpreadDamage # Used to panic civilians which are emitted from a killed CivBuilding
 		Falloff: 100, 100

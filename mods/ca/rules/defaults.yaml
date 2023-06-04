@@ -2949,17 +2949,17 @@
 
 ^FakeBuilding:
 	Inherits: ^Building
+	Inherits@REDHIGHLIGHT: ^RedFlash
 	GivesBuildableArea:
 		AreaTypes: fake
 	RequiresBuildableArea:
 		AreaTypes: fake
 	Health:
 		HP: 10000
-	Explodes:
-		Weapon: Demolish
-		DamageThreshold: 70
 	RevealsShroud:
 		Range: 1c0
+	SoundOnDamageTransition:
+		-DamagedSounds:
 	WithDecoration@fake:
 		RequiresSelection: true
 		Image: pips
@@ -2968,9 +2968,28 @@
 		Position: Top
 		Margin: 0, 4
 	-SpawnActorsOnSell:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
 	-MustBeDestroyed:
 	MapEditorData:
 		Categories: Fake
+	TooltipExtras:
+		Attributes: • Can be detonated remotely
+	Explodes@FAKE:
+		Weapon: FakeBuildingExplode
+		DamageThreshold: 70
+		Type: CenterPosition
+	GrantConditionOnDeploy:
+		DeployedCondition: detonate
+		SkipMakeAnimation: true
+		DeployCursor: c4
+	GrantTimedCondition@highlight:
+		Duration: 2
+		Condition: redhighlight
+		RequiresCondition: detonate
+	PeriodicExplosion:
+		Weapon: FakeBuildingSelfDestruct
+		RequiresCondition: detonate
 
 ^InfiltratableFake:
 	Targetable:
