@@ -36,8 +36,10 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Enemy building types around which to scan for targets for naval squads.")]
 		public readonly HashSet<string> NavalProductionTypes = new HashSet<string>();
 
-		// [Desc("Own actor types that are prioritized when defending.")]
-		// public readonly HashSet<string> ProtectionTypes = new HashSet<string>();
+		/*
+		[Desc("Own actor types that are prioritized when defending.")]
+		public readonly HashSet<string> ProtectionTypes = new HashSet<string>();
+		*/
 
 		[Desc("Minimum number of units AI must have before attacking.")]
 		public readonly int SquadSize = 8;

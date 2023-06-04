@@ -56,7 +56,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		[SequenceReference]
 		[Desc("Sequence to play for granting actor when activated.",
-	"This requires the actor to have the WithSpriteBody trait or one of its derivatives.")]
+			"This requires the actor to have the WithSpriteBody trait or one of its derivatives.")]
 		public readonly string Sequence = "active";
 
 		[Desc("Duration of the condition (in ticks). Set to 0 for a permanent condition.")]

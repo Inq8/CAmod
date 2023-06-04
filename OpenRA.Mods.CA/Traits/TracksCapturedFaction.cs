@@ -12,7 +12,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Tag trait for Cash Hack support power.")]
+	[Desc("Saves to a list of captured factions to make captured production as accurate as possible.")]
 	public class TracksCapturedFactionInfo : TraitInfo
 	{
 		public override object Create(ActorInitializer init) { return new TracksCapturedFaction(this, init.Self); }

@@ -3974,7 +3974,7 @@ ENLI:
 	Health:
 		HP: 30000
 	Mobile:
-		Speed: 60
+		Speed: 54
 		Voice: Move
 		PauseOnCondition: being-warped || empdisable
 	AttackFrontal:
@@ -3992,6 +3992,12 @@ ENLI:
 	Armament@PRIMARY:
 		Weapon: EnlightenedBeam
 		LocalOffset: 300,0,300
+		PauseOnCondition: emp-attack || emp-fired
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: EnlightenedEmp
+		LocalOffset: 300,0,300
+		PauseOnCondition: !emp-attack
 	Armament@BATF:
 		Name: batf
 		Weapon: EnlightenedBeam
@@ -4019,17 +4025,22 @@ ENLI:
 		MinimumHealing: 2500
 		DamageTypes: DirectRepair
 		ShowSelectionBar: true
-	GrantTimedConditionOnDeploy:
-		DeployedCondition: triggered
-		CooldownTicks: 375
-		DeployedTicks: 5
-		StartsFullyCharged: true
-		RequiresCondition: !(empdisable || being-warped)
-		ShowSelectionBarWhenFull: false
-		ChargingColor: 88EEFF
-	PeriodicExplosion:
-		Weapon: EnlightenedEmp
-		RequiresCondition: triggered
-	WithColoredOverlay@EMP:
-		RequiresCondition: triggered
-		Color: 88EEFFcc
+	TargetedAttackAbility:
+		ActiveCondition: emp-attack
+		ArmamentName: secondary
+		CircleColor: b2b2e888
+		Type: EnlightenedEmp
+		TargetCircleRange: 0c768
+		TargetCircleColor: b2b2e8bb
+	GrantConditionOnAttack@EMPCOOLDOWN:
+		Condition: emp-fired
+		RevokeDelay: 65
+		ArmamentNames: secondary
+	AmmoPool:
+		Armaments: secondary
+		Ammo: 1
+	ReloadAmmoPoolCA:
+		Delay: 500 # equal to reload time of weapon
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: 00ddff

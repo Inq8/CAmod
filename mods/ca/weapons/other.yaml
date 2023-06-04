@@ -1120,24 +1120,24 @@ EnlightenedBeam:
 		MaxFacingDeviation: 64
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
-		Damage: 5200
+		Damage: 5000
 		Falloff: 100, 85, 60, 25, 0
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		Versus:
 			None: 10
 			Wood: 70
 			Concrete: 45
-			Light: 80
+			Light: 75
 		ValidRelationships: Enemy, Neutral
 	Warhead@friendlyFire: SpreadDamage
 		Spread: 256
-		Damage: 2600
+		Damage: 2500
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		Versus:
 			None: 10
 			Wood: 70
 			Concrete: 45
-			Light: 80
+			Light: 75
 		ValidRelationships: Ally
 	Warhead@2Eff: CreateEffect
 		Explosions: enliexplode1, enliexplode2
@@ -1148,23 +1148,34 @@ EnlightenedBeam:
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
 
 EnlightenedEmp:
-	ReloadDelay: 375
+	ReloadDelay: 500
+	Range: 5c512
+	Report: enli-empfire.aud
+	Projectile: Bullet
+		Blockable: false
+		Shadow: true
+		Image: enliempproj
+		Palette: effect
+		Speed: 170
+		TrailImage: smokey
+		TrailPalette: scrinplasma
+		LaunchAngle: 30
+		Inaccuracy: 128
 	Warhead@1Emp: GrantExternalCondition
-		Range: 1c896
-		Duration: 250
-		Condition: empdisable
-		ValidTargets: Ground, Vehicle, Defense
-		ValidRelationships: Enemy, Neutral
-	Warhead@2Emp: GrantExternalCondition
-		Range: 1c896
-		Duration: 250
+		Range: 0c768
+		Duration: 100
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle, Defense
 		InvalidTargets: Cyborg
-		ValidRelationships: Ally
+	Warhead@2Emp: GrantExternalCondition
+		Range: 0c768
+		Duration: 50
+		Condition: empdisable
+		ValidTargets: Cyborg
 	Warhead@3Eff_impact: CreateEffect
-		Explosions: enliemp1, enliemp2
-		ImpactSounds: enli-emp.aud
+		Explosions: enliemphit1, enliemphit2
+		ImpactSounds: enli-emphit.aud
+		Inaccuracy: 341
 
 VenomLaser:
 	ReloadDelay: 30

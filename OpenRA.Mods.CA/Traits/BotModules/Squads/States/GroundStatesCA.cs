@@ -42,7 +42,6 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 					owner.TargetActor = highValueTarget;
 					return true;
 				}
-
 			}
 
 			var closestEnemy = FindClosestEnemy(owner);
