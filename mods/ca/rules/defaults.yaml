@@ -2983,6 +2983,7 @@
 		DeployedCondition: detonate
 		SkipMakeAnimation: true
 		DeployCursor: c4
+		RequiresCondition: !detonate-disabled
 	GrantTimedCondition@highlight:
 		Duration: 2
 		Condition: redhighlight
@@ -2990,12 +2991,15 @@
 	PeriodicExplosion:
 		Weapon: FakeBuildingSelfDestruct
 		RequiresCondition: detonate
+	GrantTimedCondition@DETONATEDELAY:
+		Condition: detonate-disabled
+		Duration: 125
 
 ^InfiltratableFake:
 	Targetable:
-		TargetTypes: Ground, Structure, C4, TNT, DetonateAttack, SpyInfiltrate
+		TargetTypes: Ground, Structure, C4, TNT, DetonateAttack, SpyInfiltrate, SabInfiltrate
 	InfiltrateForDecoration:
-		Types: SpyInfiltrate
+		Types: SpyInfiltrate, SabInfiltrate
 		RequiresSelection: true
 		Image: pips
 		Palette: chrome

@@ -20,7 +20,8 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Actor can deploy to be able to target a location and fire a weapon at that target.")]
+	[Desc("Actor can deploy to be able to target a location and fire a weapon at that target.",
+		"Relies on the armament being paused if the ActiveCondition is not applied.")]
 	public class TargetedAttackAbilityInfo : PausableConditionalTraitInfo, Requires<AttackBaseInfo>
 	{
 		[VoiceReference]

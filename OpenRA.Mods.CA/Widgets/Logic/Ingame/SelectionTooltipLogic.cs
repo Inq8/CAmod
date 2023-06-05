@@ -14,6 +14,7 @@ using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Mods.Common.Widgets;
 using OpenRA.Primitives;
+using OpenRA.Traits;
 using OpenRA.Widgets;
 
 namespace OpenRA.Mods.CA.Widgets.Logic
@@ -90,21 +91,38 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			var descLabelPadding = descLabel.Bounds.Height;
 
-			// Name
+			var actorInfo = actor.Info;
 			var tooltip = actor.TraitsImplementing<Tooltip>().FirstOrDefault(t => !t.IsTraitDisabled);
-			var name = tooltip != null ? tooltip.Info.Name : actor.Info.Name;
+			var tooltipInfo = tooltip != null ? tooltip.Info : null;
+			var tooltipExtras = actor.TraitsImplementing<TooltipExtras>().FirstOrDefault(t => !t.IsTraitDisabled);
+			var tooltipExtrasInfo = tooltipExtras != null ? tooltipExtras.Info : null;
+
+			if (tooltipExtrasInfo != null && tooltipExtrasInfo.FakeActor != null)
+			{
+				var o = world.Selection.Actors.FirstOrDefault().Owner;
+				var stance = o == null || world.RenderPlayer == null ? PlayerRelationship.None : o.RelationshipWith(world.RenderPlayer);
+				if (stance == PlayerRelationship.Enemy)
+				{
+					actorInfo = mapRules.Actors[tooltipExtras.Info.FakeActor];
+					tooltipExtrasInfo = actorInfo.TraitInfoOrDefault<TooltipExtrasInfo>();
+					tooltipInfo = actorInfo.TraitInfoOrDefault<TooltipInfo>();
+				}
+			}
+
+			// Name
+			var name = tooltipInfo != null ? tooltipInfo.Name : actorInfo.Name;
 			nameLabel.Text = name;
 			var nameSize = font.Measure(name);
 
 			// Armor type
-			armorTypeLabel = GetArmorTypeLabel(armorTypeLabel, actor.Info);
+			armorTypeLabel = GetArmorTypeLabel(armorTypeLabel, actorInfo);
 			var armorTypeSize = armorTypeLabel.Text != "" ? font.Measure(armorTypeLabel.Text) : new int2(0, 0);
 			armorTypeIcon.Visible = armorTypeSize.Y > 0;
 			armorTypeLabel.Bounds.Y = armorTypeIcon.Bounds.Y;
 
 			// Cost
 			var cost = 0;
-			var valued = actor.Info.TraitInfoOrDefault<ValuedInfo>();
+			var valued = actorInfo.TraitInfoOrDefault<ValuedInfo>();
 			if (valued != null)
 				cost = valued.Cost;
 
@@ -114,11 +132,8 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			var costSize = font.Measure(costLabel.Text);
 
 			// Strengths, weaknesses & attributes
-			var tooltipExtras = actor.TraitsImplementing<TooltipExtras>().FirstOrDefault(t => !t.IsTraitDisabled);
-
-			if (tooltipExtras != null)
+			if (tooltipExtrasInfo != null)
 			{
-				var tooltipExtrasInfo = tooltipExtras.Info;
 				strengthsLabel.Text = tooltipExtrasInfo.Strengths.Replace("\\n", "\n");
 				weaknessesLabel.Text = tooltipExtrasInfo.Weaknesses.Replace("\\n", "\n");
 				attributesLabel.Text = tooltipExtrasInfo.Attributes.Replace("\\n", "\n");
@@ -137,7 +152,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			// Description
 			if (descLabel.Text == "")
 			{
-				var buildable = actor.Info.TraitInfoOrDefault<BuildableInfo>();
+				var buildable = actorInfo.TraitInfoOrDefault<BuildableInfo>();
 
 				if (buildable != null)
 				{

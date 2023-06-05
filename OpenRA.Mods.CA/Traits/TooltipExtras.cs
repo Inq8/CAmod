@@ -9,6 +9,7 @@
 #endregion
 
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
@@ -27,8 +28,12 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Attributes.")]
 		public readonly string Attributes = "";
 
+		[ActorReference]
+		[Desc("If set, will use name, price and description of this actor for selection tooltip.")]
+		public readonly string FakeActor = null;
+
 		[Desc("If true these tooltip extras are standard (used for the production tooltip).",
-			"False implies conditional (only used for selection tooltip).")]
+			"Otherwise they're only used for selection tooltip for actors where the conditions are met.")]
 		public readonly bool IsStandard = true;
 
 		public override object Create(ActorInitializer init) { return new TooltipExtras(init, this); }

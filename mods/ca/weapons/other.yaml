@@ -1149,7 +1149,7 @@ EnlightenedBeam:
 
 EnlightenedEmp:
 	ReloadDelay: 500
-	Range: 5c512
+	Range: 5c0
 	Report: enli-empfire.aud
 	Projectile: Bullet
 		Blockable: false
@@ -1165,13 +1165,13 @@ EnlightenedEmp:
 		Range: 0c768
 		Duration: 100
 		Condition: empdisable
-		ValidTargets: Ground, Vehicle, Defense
-		InvalidTargets: Cyborg
+		ValidTargets: Ground, Vehicle
+		InvalidTargets: Cyborg, Defense
 	Warhead@2Emp: GrantExternalCondition
 		Range: 0c768
 		Duration: 50
 		Condition: empdisable
-		ValidTargets: Cyborg
+		ValidTargets: Cyborg, Defense
 	Warhead@3Eff_impact: CreateEffect
 		Explosions: enliemphit1, enliemphit2
 		ImpactSounds: enli-emphit.aud
