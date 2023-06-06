@@ -238,6 +238,9 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			if (order.OrderString == "ReleaseSlave")
 			{
+				if (order.Target.Type != TargetType.Actor)
+					return;
+
 				order.Target.Actor.Trait<MindControllable>().RevokeMindControl(order.Target.Actor, 0);
 
 				if (Info.ReleaseSounds.Length > 0)

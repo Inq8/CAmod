@@ -6078,7 +6078,6 @@ PATR:
 		DischargeRate: 50
 		ShowSelectionBar: true
 		SelectionBarColor: FFFFFF
-		PersistentTargeting: false
 		ChargeWhileTurning: true
 	Armament:
 		Weapon: EMPMissileLauncher
@@ -6118,7 +6117,11 @@ PATR:
 	Selectable:
 		Bounds: 2048, 2048
 	RejectsOrders:
+		Except: Stop, Sell, PowerDown
+		RequiresCondition: !loaded-rocket
+	RejectsOrders@LOADED:
 		Except: Sell, PowerDown
+		RequiresCondition: loaded-rocket
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
@@ -6400,7 +6403,6 @@ UPGC:
 		ShotsPerCharge: 3
 		ShowSelectionBar: true
 		SelectionBarColor: FF4400
-		PersistentTargeting: false
 		ChargeWhileTurning: true
 	Armament@ROCKET:
 		RequiresCondition: tower.rocket
@@ -6427,7 +6429,11 @@ UPGC:
 		Prerequisites: ~techlevel.unrestricted
 		SupportPowerPaletteOrder: 30
 	RejectsOrders:
+		Except: Stop, Sell, PowerDown
+		RequiresCondition: !loaded-rocket
+	RejectsOrders@LOADED:
 		Except: Sell, PowerDown
+		RequiresCondition: loaded-rocket
 	AmmoPool:
 		Ammo: 3
 		ReloadCount: 3
