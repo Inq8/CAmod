@@ -29,7 +29,7 @@ namespace OpenRA.Mods.CA.Traits
 			// HACK: We don't want D2k bots to repair all their buildings on placement
 			// where half their HP is removed via neutral terrain damage.
 			// TODO: Implement concrete placement for D2k bots and remove this hack.
-			if (self.Owner.RelationshipWith(e.Attacker.Owner) == PlayerRelationship.Neutral)
+			if (self.IsDead || self.Owner.RelationshipWith(e.Attacker.Owner) == PlayerRelationship.Neutral)
 				return;
 
 			var rb = self.TraitOrDefault<RepairableBuilding>();
