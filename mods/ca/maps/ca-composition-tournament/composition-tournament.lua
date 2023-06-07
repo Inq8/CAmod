@@ -30,6 +30,7 @@ WorldLoaded = function()
     }
 
     Neutral = Player.GetPlayer("Neutral")
+    EmptyPlayer = Player.GetPlayer("Empty")
 
     Utils.Do(PossiblePlayers, function(p)
         if p ~= nil then
@@ -41,7 +42,7 @@ WorldLoaded = function()
     end)
 
     if #Players % 2 ~= 0 then
-        table.insert(Players, { InternalName = "Empty", IsBot = true, IsLocalPlayer = false })
+        table.insert(Players, EmptyPlayer)
     end
 
     BaseRadius = WDist.New(12288)
@@ -168,7 +169,7 @@ Tick = function()
                 end
 
                 EndMatchup(matchup)
-            elseif matchup.Winner == nil and not matchup.Player1.IsBot and not matchup.Player2.IsBot then
+            elseif matchup.Winner == nil and matchup.Player1.InternalName ~= "Empty" and matchup.Player2.InternalName ~= "Empty" then
                 activeMatchups = activeMatchups + 1
 
                 -- every 5 seconds check if players have active units
@@ -286,12 +287,12 @@ InitRound = function()
         for i=1, #roundMatchups do
             local matchup = roundMatchups[i]
 
-            if matchup.Player1.IsBot then
+            if matchup.Player1.InternalName == "Empty" then
                 if matchup.Player2.IsLocalPlayer then
                     Media.DisplayMessage("You have no opponent this round, please wait for the next one.", "Notification", HSLColor.FromHex("1E90FF"))
                 end
                 table.insert(SpectatorCams, Actor.Create("spectatorcam", true, { Owner = matchup.Player2 }))
-            elseif matchup.Player2.IsBot then
+            elseif matchup.Player2.InternalName == "Empty" then
                 if matchup.Player1.IsLocalPlayer then
                     Media.DisplayMessage("You have no opponent this round, please wait for the next one.", "Notification", HSLColor.FromHex("1E90FF"))
                 end
@@ -363,7 +364,7 @@ EndGame = function()
     end)
 
     Utils.Do(Players, function(p)
-        if p ~= Winner and not p.IsBot then
+        if p ~= Winner and p.InternalName ~= "Empty" then
             local utils = p.GetActorsByType("playerutils")
             Utils.Do(utils, function(u)
                 u.Destroy()
@@ -377,7 +378,7 @@ end
 
 ResetAll = function()
     Utils.Do(Players, function(p)
-        if not p.IsBot then
+        if p.InternalName ~= "Empty" then
             p.Cash = 0
             p.Resources = StartingCash
             local playerBuildings = p.GetActorsByTypes({ "miss", "weap", "tent", "afld", "fix" })

@@ -31,6 +31,39 @@ Player:
 		Enabled: True
 		DisplayOrder: 999
 		Prerequisites: global.satscan
+	SquadManagerBotModuleCA@normal:
+		SquadValue: 100
+		SquadValueRandomBonus: 0
+		SquadSize: 1
+		SquadSizeRandomBonus: 0
+		AirSquadTargetTypes:
+			heli: Aircraft, Vehicle
+			nhaw: Infantry
+			hind: Infantry, Vehicle
+			yak: Infantry, Aircraft
+			mig: Aircraft, Vehicle, Defense
+			suk: Vehicle, Defense
+			suk.upg: Vehicle
+			kiro: Infantry, Vehicle
+			orca: Aircraft, Vehicle
+			orcb: Vehicle, Defense
+			a10: Infantry
+			a10.upg: Infantry, Aircraft
+			apch: Infantry, Aircraft
+			venm: Infantry, Aircraft
+			rah: Infantry
+			harr: Infantry, Aircraft
+			scrn: Aircraft, Vehicle, Defense
+			stmr: Aircraft, Infantry
+			enrv: Aircraft, Vehicle, Defense
+			mshp: Infantry, Vehicle
+	CaptureManagerBotModuleCA:
+		CapturableActorTypes: miss
+	-ModularBot@BrutalAI:
+	-ModularBot@VeryHardAI:
+	-ModularBot@HardAI:
+	-ModularBot@EasyAI:
+	-ModularBot@NavalAI:
 
 playerutils:
 	AlwaysVisible:
@@ -253,6 +286,10 @@ AMCV:
 SMCV:
 	Buildable:
 		Prerequisites: ~disabled
+
+MSHP:
+	SpawnActorAbility:
+		Range: 10c0
 
 # ####
 
