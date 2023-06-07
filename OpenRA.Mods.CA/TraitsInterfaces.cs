@@ -65,4 +65,7 @@ namespace OpenRA.Mods.CA.Traits
 
 	[RequireExplicitImplementation]
 	public interface IPortableChronoModifier { int GetCooldownModifier(); int GetRangeModifier(); int GetExtraCharges(); }
+
+	[RequireExplicitImplementation]
+	public interface INotifyFallDown { void OnLanded(Actor self); }
 }

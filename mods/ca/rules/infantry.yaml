@@ -3407,6 +3407,7 @@ SGLI:
 		Type: GroundPosition
 	Voiced:
 		VoiceSet: ShadowOperativeVoice
+	DeathSounds:
 	Aircraft:
 		CruiseAltitude: 1c512
 		InitialFacing: 192
@@ -3447,7 +3448,7 @@ SGLI:
 		TargetTypes: AirSmall
 	GrantTimedCondition@GLIDING:
 		Condition: gliding
-		Duration: 1125
+		Duration: 1500
 	TimedConditionBar@GLIDING:
 		Condition: gliding
 		Color: 8A8A8A
@@ -3473,8 +3474,15 @@ SGLI.crashing:
 		Image: sgli
 	Aircraft:
 		Speed: 80
+	WithDeathAnimation:
+		DeathSequence: dead
+		FallbackSequence: dead
+		UseDeathTypeSuffix: false
+		DeathSequencePalette: player
 	ActorLostNotification:
 		Notification: AirUnitLost
+	-DeathSounds:
+	-UpdatesPlayerStatistics:
 	-SpawnActorOnDeath:
 	-GrantConditionOnDeploy:
 	-TransformOnCondition:
@@ -3491,22 +3499,20 @@ SGLI.crashing:
 		-RequiresCondition:
 	-MapEditorData:
 	-Cloak:
+	-Targetable@GROUND:
+	-Targetable@AIRBORNE:
+	-Targetable@c4:
+	-Targetable@tnt:
 
 SGLI.deployed:
 	Inherits: SGLI
-	FallsToEarth:
-		Moves: true
-		MaximumSpinSpeed: 0
-		Explosion:
-		Velocity: 90
+	FallsDownAndTransforms:
+		Actor: shad
+		FallVelocity: 90
+		ForwardVelocity: 45
+		SpawnActor: sgli.discarded
 	RenderSprites:
 		Image: sgli
-	SpawnActorOnDeath:
-		Actor: shad
-		RequiresCondition: !being-warped
-	SpawnActorOnDeath@gliderdiscarded:
-		Actor: sgli.discarded
-		RequiresCondition: !being-warped
 	Aircraft:
 		Speed: 45
 	AmbientSoundCA:
@@ -3535,14 +3541,11 @@ SGLI.discarded:
 	HitShape:
 	MapEditorData:
 		Categories: Husk
-	WithColoredOverlay@IDISABLE:
+	WithColoredOverlay:
 		Color: 00000060
-	ChangesHealth:
-		Step: -100
-		StartIfBelow: 101
-		Delay: 25
-	Health:
-		HP: 1000
+	KillsSelf:
+		RemoveInstead: true
+		Delay: 250
 	Armor:
 		Type: None
 	MapEditorData:
