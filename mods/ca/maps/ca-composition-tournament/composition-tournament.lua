@@ -10,6 +10,8 @@ PlayerScores = { }
 PlayerSurrenderTimes = { }
 
 WorldLoaded = function()
+    Media.DisplayMessage("Loading...", "Notification", HSLColor.FromHex("1E90FF"))
+
     PossiblePlayers = {
         Multi0 = Player.GetPlayer("Multi0"),
         Multi1 = Player.GetPlayer("Multi1"),
@@ -314,8 +316,10 @@ InitRound = function()
                     Camera.Position = Arenas[matchup.ArenaIdx].Base2Pos
                 end
 
-                table.insert(BaseBuilders, Actor.Create("basebuilder", true, { Owner = matchup.Player1, Location = Arenas[matchup.ArenaIdx].HQ.Location }))
-                table.insert(BaseBuilders, Actor.Create("basebuilder", true, { Owner = matchup.Player2, Location = Arenas[matchup.ArenaIdx].HQ.Location }))
+                local hqLocation = Arenas[matchup.ArenaIdx].HQ.Location
+
+                table.insert(BaseBuilders, Actor.Create("basebuilder", true, { Owner = matchup.Player1, Location = CPos.New(hqLocation.X - 11, hqLocation.Y) }))
+                table.insert(BaseBuilders, Actor.Create("basebuilder", true, { Owner = matchup.Player2, Location = CPos.New(hqLocation.X + 11, hqLocation.Y) }))
 
                 Trigger.AfterDelay(1, function()
                     Actor.Create("QueueUpdaterDummy", true, { Owner = matchup.Player1 })
