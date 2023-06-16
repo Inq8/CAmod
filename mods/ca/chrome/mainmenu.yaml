@@ -247,24 +247,102 @@ Container@MAINMENU:
 							Y: 5
 							Width: 200
 							Height: 200
-		Container@UPDATE_NOTICE:
-			X: (WINDOW_RIGHT - WIDTH) / 2
-			Y: 95
-			Width: 128
+		Container@EXTERNAL_LINKS:
+			Logic: ExternalLinksLogic
+			X: WINDOW_RIGHT - WIDTH - 25
+			Y: WINDOW_BOTTOM - HEIGHT - 25
+			Width: 270
+			Height: 32
 			Children:
-				Label@A:
-					Width: PARENT_RIGHT
-					Height: 25
-					Align: Center
-					Shadow: true
-					Text: You are running an outdated version of OpenRA.
-				Label@B:
-					Y: 20
-					Width: PARENT_RIGHT
-					Height: 25
-					Align: Center
-					Shadow: true
-					Text: Download the latest version from www.openra.net
+				ExternalLinkButton@DISCORD_LINK:
+					X: 0
+					Y: 0
+					Width: 32
+					Height: 32
+					Background: discord-icon
+					Align: Left
+					LeftMargin: 0
+					TooltipText: Discord Server
+					TooltipContainer: TOOLTIP_CONTAINER
+					Url: https://discord.gg/2fUxXEKQhP
+				ExternalLinkButton@YOUTUBE_LINK:
+					X: 34
+					Y: 0
+					Width: 32
+					Height: 32
+					Background: youtube-icon
+					Align: Left
+					LeftMargin: 0
+					TooltipText: YouTube Channel
+					TooltipContainer: TOOLTIP_CONTAINER
+					Url: https://www.youtube.com/@openracombinedarms
+				ExternalLinkButton@FACEBOOK_LINK:
+					X: 68
+					Y: 0
+					Width: 32
+					Height: 32
+					Background: facebook-icon
+					Align: Left
+					LeftMargin: 0
+					TooltipText: Facebook Page
+					TooltipContainer: TOOLTIP_CONTAINER
+					Url: https://www.facebook.com/openracombinedarms
+				ExternalLinkButton@TWITTER_LINK:
+					X: 102
+					Y: 0
+					Width: 32
+					Height: 32
+					Background: twitter-icon
+					Align: Left
+					LeftMargin: 0
+					TooltipText: Twitter
+					TooltipContainer: TOOLTIP_CONTAINER
+					Url: https://twitter.com/CombinedArmsMod
+				ExternalLinkButton@LADDER_LINK:
+					X: 136
+					Y: 0
+					Width: 32
+					Height: 32
+					Background: ladder-icon
+					Align: Left
+					LeftMargin: 0
+					TooltipText: 1v1 Ladder Website
+					TooltipContainer: TOOLTIP_CONTAINER
+					Url: http://caladder.darkademic.co.uk
+				ExternalLinkButton@SPREADSHEET_LINK:
+					X: 68  170
+					Y: 0
+					Width: 32
+					Height: 32
+					Background: spreadsheet-icon
+					Align: Left
+					LeftMargin: 0
+					TooltipText: Unit Stats Spreadsheet
+					TooltipContainer: TOOLTIP_CONTAINER
+					Url: https://docs.google.com/spreadsheets/d/1RDg36FKB2kTU-rlwn358B879DHYen2vcZTdE39-Fz6k
+				ExternalLinkButton@TECHTREE_LINK:
+					X: 204
+					Y: 0
+					Width: 32
+					Height: 32
+					Background: tree-icon
+					Align: Left
+					LeftMargin: 0
+					TooltipText: Tech Tree
+					TooltipContainer: TOOLTIP_CONTAINER
+					Url: https://www.darkademic.co.uk/ca/
+				ExternalLinkButton@MODDB_LINK:
+					X: 238
+					Y: 0
+					Width: 32
+					Height: 32
+					Background: moddb-icon
+					Align: Left
+					LeftMargin: 0
+					TooltipText: ModDB
+					TooltipContainer: TOOLTIP_CONTAINER
+					Url: https://www.moddb.com/mods/command-conquer-combined-arms
+				TooltipContainer@TOOLTIP_CONTAINER:
 		Container@PLAYER_PROFILE_CONTAINER:
 			X: 25
 			Y: 25
