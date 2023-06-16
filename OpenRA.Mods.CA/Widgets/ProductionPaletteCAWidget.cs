@@ -22,10 +22,7 @@ namespace OpenRA.Mods.CA.Widgets
 
 		[ObjectCreator.UseCtor]
 		public ProductionPaletteCAWidget(ModData modData, OrderManager orderManager, World world, WorldRenderer worldRenderer)
-			: base(modData, orderManager, world, worldRenderer)
-		{
-
-		}
+			: base(modData, orderManager, world, worldRenderer) { }
 
 		public override string GetCursor(int2 pos)
 		{

@@ -30,10 +30,7 @@ namespace OpenRA.Mods.CA.Widgets
 		}
 
 		protected ExternalLinkButtonWidget(ExternalLinkButtonWidget other)
-			: base(other)
-		{
-
-		}
+			: base(other) { }
 
 		public override void MouseEntered()
 		{
@@ -49,9 +46,8 @@ namespace OpenRA.Mods.CA.Widgets
 
 		public override bool HandleMouseInput(MouseInput mi)
 		{
-			if (mi.Event == MouseInputEvent.Up) {
+			if (mi.Event == MouseInputEvent.Up)
 				OpenUrl(Url);
-			}
 
 			return base.HandleMouseInput(mi);
 		}

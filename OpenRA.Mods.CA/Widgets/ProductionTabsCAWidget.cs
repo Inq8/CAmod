@@ -202,9 +202,8 @@ namespace OpenRA.Mods.CA.Widgets
 			var rightDisabled = startTabIndex >= numTabs - MaxTabsVisible;
 			var rightHover = Ui.MouseOverWidget == this && rightButtonRect.Contains(Viewport.LastMousePos);
 
-			if ((leftHover && !leftDisabled) || (rightHover && !rightDisabled)) {
+			if ((leftHover && !leftDisabled) || (rightHover && !rightDisabled))
 				hoverCursor = true;
-			}
 
 			ButtonWidget.DrawBackground(LeftButton, leftButtonRect, leftDisabled, leftPressed, leftHover, false);
 			ButtonWidget.DrawBackground(RightButton, rightButtonRect, rightDisabled, rightPressed, rightHover, false);
@@ -233,9 +232,8 @@ namespace OpenRA.Mods.CA.Widgets
 				var pressed = pressedTabIndex == tabIndex;
 				ButtonWidget.DrawBackground(TabButton, rect, false, pressed, hover, highlighted);
 
-				if (hover) {
+				if (hover)
 					hoverCursor = true;
-				}
 
 				contentWidth += TabWidth + TabSpacing;
 
@@ -410,7 +408,8 @@ namespace OpenRA.Mods.CA.Widgets
 			return false;
 		}
 
-		public override string GetCursor(int2 pos) {
+		public override string GetCursor(int2 pos)
+		{
 			return hoverCursor ? Cursor : null;
 		}
 	}
