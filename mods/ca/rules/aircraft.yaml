@@ -2414,8 +2414,9 @@ RAH:
 		RequiresCondition: (stance-attackanything  || assault-move) && alphacomanche-upgrade
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Structure, Defense
 		InvalidTargets: NoAutoTarget
-	WithPlayerColorSelectionBox@INVIS:
+	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
+		UsePlayerColor: true
 	WithShadow:
 		RequiresCondition: !invisibility && !hidden
 	WithShadow@CLOAKED:

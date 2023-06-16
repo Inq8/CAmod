@@ -1,25 +1,6 @@
 
 World:
-	StartingUnits@none:
-		Class: none
-		ClassName: None
-		-BaseActor:
-		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri, gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow, scrin, reaper, traveler, harbinger, collector
-	-StartingUnits@mcvonly:
-	-StartingUnits@lightallies:
-	-StartingUnits@lightsoviet:
-	-StartingUnits@heavyallies:
-	-StartingUnits@heavysoviet:
-	-StartingUnits@mcvonly2:
-	-StartingUnits@defaultgdia:
-	-StartingUnits@defaultnoda:
-	-StartingUnits@heavynoda:
-	-StartingUnits@heavygdia:
-	-StartingUnits@mcvonlyscrin:
-	-StartingUnits@lightscrin:
-	-StartingUnits@heavyscrin:
-	SpawnStartingUnits:
-		DropdownVisible: False
+	-SpawnStartingUnits:
 	MapBuildRadius:
 		AllyBuildRadiusCheckboxVisible: False
 		BuildRadiusCheckboxVisible: False
@@ -44,6 +25,7 @@ World:
 		TimeLimitDropdownVisible: False
 
 Player:
+	-ConquestVictoryConditions:
 	PlayerResources:
 		SelectableCash: 5000, 7500, 10000, 15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000, 75000, 100000, 200000
 		DefaultCash: 20000
@@ -1205,43 +1187,131 @@ shields.upgrade:
 FACT:
 	DamageMultiplier@1:
 		Modifier: 0
+	-Sellable:
+	-SpawnActorsOnSell:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
+	Capturable:
+		Types: None
+		RequiresCondition: being-captured
+	Targetable@TEMPORAL:
+		TargetTypes: None
+	Targetable@HACKABLE:
+		TargetTypes: None
 
 WEAP:
 	DamageMultiplier@1:
 		Modifier: 0
+	-Sellable:
+	-SpawnActorsOnSell:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
+	Capturable:
+		Types: None
+		RequiresCondition: being-captured
+	Targetable@TEMPORAL:
+		TargetTypes: None
+	Targetable@HACKABLE:
+		TargetTypes: None
 
 TENT:
 	DamageMultiplier@1:
 		Modifier: 0
+	-Sellable:
+	-SpawnActorsOnSell:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
+	Capturable:
+		Types: None
+		RequiresCondition: being-captured
+	Targetable@TEMPORAL:
+		TargetTypes: None
+	Targetable@HACKABLE:
+		TargetTypes: None
 
 AFLD:
 	DamageMultiplier@1:
 		Modifier: 0
+	-Sellable:
+	-SpawnActorsOnSell:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
 	-AirstrikePower@Russianparabombs:
 	-AirstrikePower@CarpetBomb:
 	-AirstrikePower@Iraqiparabombs:
 	-AirstrikePower@MutaBomb:
+	Capturable:
+		Types: None
+		RequiresCondition: being-captured
+	Targetable@TEMPORAL:
+		TargetTypes: None
+	Targetable@HACKABLE:
+		TargetTypes: None
 
 DOME:
 	DamageMultiplier@1:
 		Modifier: 0
+	-Sellable:
+	-SpawnActorsOnSell:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
 	-AirstrikePower@clustermines:
 	-SpawnActorPowerCA@VeilOfWar:
 	-ParatroopersPower@paratroopers:
 	-ParatroopersPower@Russianparatroopers:
 	-AirstrikePower@spyplane:
+	Capturable:
+		Types: None
+		RequiresCondition: being-captured
+	Targetable@TEMPORAL:
+		TargetTypes: None
+	Targetable@HACKABLE:
+		TargetTypes: None
 
 FIX:
 	DamageMultiplier@1:
 		Modifier: 0
+	-Sellable:
+	-SpawnActorsOnSell:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
+	Capturable:
+		Types: None
+		RequiresCondition: being-captured
+	Targetable@TEMPORAL:
+		TargetTypes: None
+	Targetable@HACKABLE:
+		TargetTypes: None
 
 NUK2:
 	DamageMultiplier@1:
 		Modifier: 0
+	-Sellable:
+	-SpawnActorsOnSell:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
+	Capturable:
+		Types: None
+		RequiresCondition: being-captured
+	Targetable@TEMPORAL:
+		TargetTypes: None
+	Targetable@HACKABLE:
+		TargetTypes: None
 
 SYRD:
 	DamageMultiplier@1:
 		Modifier: 0
+	-Sellable:
+	-SpawnActorsOnSell:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
+	Capturable:
+		Types: None
+		RequiresCondition: being-captured
+	Targetable@TEMPORAL:
+		TargetTypes: None
+	Targetable@HACKABLE:
+		TargetTypes: None
 
 SS:
 	Buildable:

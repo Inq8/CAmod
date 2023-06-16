@@ -104,6 +104,7 @@ RMBO:
 		Weaknesses: • Cannot attack Aircraft
 		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Voiced by Frank Klepacki
 	-Armament@sapper:
+	-GrantConditionOnPrerequisite@HAZMATZOCOM:
 	SpawnActorOnDeath@ONEDEATH:
 		Actor: death.first
 		RequiresCondition: !one-death
@@ -146,6 +147,11 @@ RMBO:
 	ProductionTimeMultiplier@FIVEDEATHS:
 		Multiplier: 600
 		Prerequisites: death.fifth
+	WithNameTagDecoration:
+		Position: Top
+		Font: Regular
+		Margin: 0, -20
+		UsePlayerColor: true
 
 RMBOSPAWN:
 	Inherits: CAMERA
@@ -179,6 +185,7 @@ RMBOSPAWN:
 		-PauseOnCondition:
 	Production@MQINF:
 		-PauseOnCondition:
+	ScriptTriggers:
 
 WORMHOLE:
 	MapEditorData:

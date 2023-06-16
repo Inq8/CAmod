@@ -193,70 +193,24 @@ MISS:
 	TooltipDescription@other:
 		Description: Capture this to win the matchup.
 
-WEAP:
-	-Sellable:
-	Capturable:
-		Types: None
-		RequiresCondition: being-captured
-	Targetable@TEMPORAL:
-		TargetTypes: None
-	Targetable@HACKABLE:
-		TargetTypes: None
-	-SpawnActorsOnSell:
-	-SpawnActorOnDeath:
-	-SpawnRandomActorOnDeath:
-
-TENT:
-	-Sellable:
-	Capturable:
-		Types: None
-		RequiresCondition: being-captured
-	Targetable@TEMPORAL:
-		TargetTypes: None
-	Targetable@HACKABLE:
-		TargetTypes: None
-	-SpawnActorsOnSell:
-	-SpawnActorOnDeath:
-	-SpawnRandomActorOnDeath:
-
-AFLD:
-	-Sellable:
-	Capturable:
-		Types: None
-		RequiresCondition: being-captured
-	Targetable@TEMPORAL:
-		TargetTypes: None
-	Targetable@HACKABLE:
-		TargetTypes: None
-	-SpawnActorsOnSell:
-	-SpawnActorOnDeath:
-	-SpawnRandomActorOnDeath:
-
 FIX:
 	Inherits@UPG: ^ProducesUpgrades
-	-Sellable:
-	Capturable:
-		Types: None
-		RequiresCondition: being-captured
-	Targetable@TEMPORAL:
-		TargetTypes: None
-	Targetable@HACKABLE:
-		TargetTypes: None
 	Production@SQBLD:
 		Produces: DefenseSQ
 		PauseOnCondition: forceshield || invulnerability || being-warped
 	ProductionBar@SQDEF:
 		ProductionType: DefenseSQ
 		Color: 8A8A8A
-	-SpawnActorsOnSell:
-	-SpawnActorOnDeath:
-	-SpawnRandomActorOnDeath:
 
 AGUN.AI:
 	Inherits: AGUN
 	RenderSprites:
 		Image: agun
 	-Targetable:
+	Targetable@TEMPORAL:
+		TargetTypes: None
+	Targetable@HACKABLE:
+		TargetTypes: None
 	Power:
 		Amount: 0
 	-Buildable:

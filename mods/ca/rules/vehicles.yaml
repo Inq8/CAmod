@@ -1311,8 +1311,9 @@ SPEC:
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: ReturnFire
-	WithPlayerColorSelectionBox@INVIS:
+	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
+		UsePlayerColor: true
 
 SAPC:
 	Inherits: ^Vehicle
@@ -1394,8 +1395,9 @@ SAPC:
 		Condition: cloak-force-disabled
 		Actions: Load
 		Duration: 30
-	WithPlayerColorSelectionBox@INVIS:
+	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
+		UsePlayerColor: true
 
 SAPC.AI:
 	Inherits: SAPC
@@ -3954,8 +3956,9 @@ STNK.Nod:
 		Prerequisites: tibcore.upgrade
 	WithShadow:
 		RequiresCondition: parachute
-	WithPlayerColorSelectionBox@INVIS:
+	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
+		UsePlayerColor: true
 
 BIKE:
 	Inherits: ^VehicleTD
@@ -5559,8 +5562,9 @@ RTNK:
 		Palette: player
 		IsPlayerPalette: true
 		Position: Center
-	WithPlayerColorSelectionBox@INVIS:
+	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
+		UsePlayerColor: true
 
 V3RL:
 	Inherits: ^Vehicle

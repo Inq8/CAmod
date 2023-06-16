@@ -736,7 +736,7 @@
 ^HazmatUpgrade:
 	GrantConditionOnPrerequisite@HAZMAT:
 		Condition: hazmat-upgrade
-		Prerequisites: hazmat.
+		Prerequisites: hazmat.upgrade
 	GrantConditionOnPrerequisite@HAZMATSOVIET:
 		Condition: hazmatsoviet-upgrade
 		Prerequisites: hazmatsoviet.upgrade
@@ -1198,8 +1198,9 @@
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 	ExternalCondition@SGENCLOAK:
 		Condition: sgencloak
-	WithPlayerColorSelectionBox@INVIS:
+	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility
+		UsePlayerColor: true
 
 ^CrateCloak:
 	Cloak@CRATE-CLOAK:

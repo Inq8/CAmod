@@ -199,4 +199,44 @@ WorldLoaded = function()
             end)
         end)
 	end)
+
+	Utils.Do(Players, function(player)
+		if player.InternalName ~= "Neutral" then
+			local spawns = player.GetActorsByType("rmbospawn")
+			local commandos = player.GetActorsByType("rmbo")
+
+			Utils.Do(spawns, function(s)
+				Trigger.OnProduction(s, function(producer, produced)
+					if produced.Type == "rmbo" then
+						Trigger.OnKilled(produced, function(self, killer)
+							AnnounceDeath(self)
+						end)
+					end
+				end)
+			end)
+
+			Utils.Do(commandos, function(c)
+				Trigger.OnKilled(c, function(self, killer)
+					AnnounceDeath(self)
+				end)
+			end)
+		end
+	end)
+end
+
+AnnounceDeath = function(killed)
+	local localPlayer
+	Utils.Do(Players, function(p)
+		if p.IsLocalPlayer then
+			localPlayer = p
+		end
+	end)
+
+	if localPlayer == nil then
+		return
+	elseif not killed.Owner.IsAlliedWith(localPlayer) then
+		return
+	end
+
+	Media.DisplayMessage(killed.Owner.Name .. " died!", "Notification", HSLColor.FromHex("1E90FF"))
 end
