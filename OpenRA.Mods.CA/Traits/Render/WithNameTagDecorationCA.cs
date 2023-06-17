@@ -28,17 +28,35 @@ namespace OpenRA.Mods.CA.Traits.Render
 
 		public readonly string Font = "TinyBold";
 
-		[Desc("Display in this color when not using the player color.")]
+		[Desc("What to base the color on.")]
+		public readonly ColorSource ColorSource = ColorSource.Fixed;
+
+		[Desc("Color of the box when not using player/relationship/team color.")]
 		public readonly Color Color = Color.White;
 
-		[Desc("Use the player color of the current owner.")]
-		public readonly bool UsePlayerColor = false;
+		[Desc("If ColorSource is Relationship, use this color for allies.")]
+		public readonly Color AllyColor = ChromeMetrics.Get<Color>("PlayerStanceColorAllies");
 
-		[Desc("Display in this color when not using the player color.")]
-		public readonly Color? ContrastColorDark = null;
+		[Desc("If ColorSource is Relationship, use this color for allies.")]
+		public readonly Color EnemyColor = ChromeMetrics.Get<Color>("PlayerStanceColorEnemies");
 
-		[Desc("Display in this color when not using the player color.")]
-		public readonly Color? ContrastColorLight = null;
+		[Desc("If ColorSource is Relationship, use this color for allies.")]
+		public readonly Color NeutralColor = ChromeMetrics.Get<Color>("PlayerStanceColorNeutrals");
+
+		[Desc("List of colors to use for teams.")]
+		public readonly Color[] TeamColors =
+		{
+			Color.FromArgb(0, 128, 255),
+			Color.FromArgb(255, 0, 0),
+			Color.FromArgb(255, 204, 0),
+			Color.FromArgb(0, 200, 0),
+		};
+
+		[Desc("Dark contrast color.")]
+		public readonly Color ContrastColorDark = ChromeMetrics.Get<Color>("TextContrastColorDark");
+
+		[Desc("Light contrast color.")]
+		public readonly Color ContrastColorLight = ChromeMetrics.Get<Color>("TextContrastColorLight");
 
 		public override object Create(ActorInitializer init) { return new WithNameTagDecorationCA(init.Self, this); }
 
@@ -56,16 +74,14 @@ namespace OpenRA.Mods.CA.Traits.Render
 		readonly SpriteFont font;
 		string name;
 		Color color;
-		Color bgDark;
-		Color bgLight;
+		PlayerRelationship relationship;
+		int team;
 
 		public WithNameTagDecorationCA(Actor self, WithNameTagDecorationCAInfo info)
 			: base(self, info)
 		{
 			font = Game.Renderer.Fonts[info.Font];
-			color = info.UsePlayerColor ? self.Owner.Color : info.Color;
-			bgDark = info.ContrastColorDark ?? ChromeMetrics.Get<Color>("TextContrastColorDark");
-			bgLight = info.ContrastColorLight ?? ChromeMetrics.Get<Color>("TextContrastColorLight");
+			Update(self);
 
 			name = self.Owner.PlayerName;
 			if (name.Length > info.MaxLength)
@@ -80,18 +96,61 @@ namespace OpenRA.Mods.CA.Traits.Render
 			var size = font.Measure(name);
 			return new IRenderable[]
 			{
-				new UITextRenderable(font, self.CenterPosition, screenPos - size / 2, 0, color, bgDark, bgLight, name)
+				new UITextRenderable(font, self.CenterPosition, screenPos - size / 2, 0, color, Info.ContrastColorDark, Info.ContrastColorLight, name)
 			};
 		}
 
 		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
 		{
-			if (Info.UsePlayerColor)
-				color = newOwner.Color;
+			Update(self);
 
 			name = self.Owner.PlayerName;
 			if (name.Length > Info.MaxLength)
 				name = name.Substring(0, Info.MaxLength);
+		}
+
+		void Update(Actor self)
+		{
+			var c = self.World.LobbyInfo.Clients.FirstOrDefault(i => i.Index == self.Owner.ClientIndex);
+			team = c?.Team ?? 0;
+
+			if (self.World.RenderPlayer != null)
+				relationship = self.Owner.RelationshipWith(self.World.RenderPlayer);
+			else
+				relationship = PlayerRelationship.None;
+
+			if (Info.ColorSource == ColorSource.Relationship)
+			{
+				switch (relationship)
+				{
+					case PlayerRelationship.Ally:
+						color = Info.AllyColor;
+						break;
+
+					case PlayerRelationship.Enemy:
+						color = Info.EnemyColor;
+						break;
+
+					default:
+						color = Info.NeutralColor;
+						break;
+				}
+			}
+			else if (Info.ColorSource == ColorSource.Team)
+			{
+				if (team > 0 && Info.TeamColors.Length >= team)
+					color = Info.TeamColors[team - 1];
+				else
+					color = Info.NeutralColor;
+			}
+			else if (Info.ColorSource == ColorSource.Player)
+			{
+				color = self.Owner.Color;
+			}
+			else
+			{
+				color = Info.Color;
+			}
 		}
 	}
 }

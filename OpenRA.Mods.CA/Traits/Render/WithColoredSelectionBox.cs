@@ -9,25 +9,44 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common.Graphics;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
 using OpenRA.Traits;
+using OpenRA.Widgets;
 
 namespace OpenRA.Mods.CA.Traits.Render
 {
-	[Desc("Renders a player coloured selection box.")]
+	public enum ColorSource { Fixed, Player, Relationship, Team }
+
+	[Desc("Renders a player colored selection box.")]
 	class WithColoredSelectionBoxInfo : ConditionalTraitInfo
 	{
-		[Desc("Use the player color of the current owner.")]
-		public readonly bool UsePlayerColor = false;
+		[Desc("What to base the color on.")]
+		public readonly ColorSource ColorSource = ColorSource.Fixed;
 
-		[Desc("Use red for hostile, green for friendly, grey for neutral (will override player color).")]
-		public readonly bool UseRelationshipColor = false;
-
-		[Desc("Color of the box when not using player colour or relationship color.")]
+		[Desc("Color of the box when not using player/relationship/team color.")]
 		public readonly Color Color = Color.White;
+
+		[Desc("If ColorSource is Relationship, use this color for allies.")]
+		public readonly Color AllyColor = ChromeMetrics.Get<Color>("PlayerStanceColorAllies");
+
+		[Desc("If ColorSource is Relationship, use this color for allies.")]
+		public readonly Color EnemyColor = ChromeMetrics.Get<Color>("PlayerStanceColorEnemies");
+
+		[Desc("If ColorSource is Relationship, use this color for allies.")]
+		public readonly Color NeutralColor = ChromeMetrics.Get<Color>("PlayerStanceColorNeutrals");
+
+		[Desc("List of colors to use for teams.")]
+		public readonly Color[] TeamColors =
+		{
+			Color.FromArgb(0, 128, 255),
+			Color.FromArgb(255, 0, 0),
+			Color.FromArgb(255, 204, 0),
+			Color.FromArgb(0, 200, 0),
+		};
 
 		[Desc("Player relationships who can view the decoration.")]
 		public readonly PlayerRelationship ValidRelationships = PlayerRelationship.Ally;
@@ -35,15 +54,19 @@ namespace OpenRA.Mods.CA.Traits.Render
 		public override object Create(ActorInitializer init) { return new WithColoredSelectionBox(init.Self, this); }
 	}
 
-	class WithColoredSelectionBox : ConditionalTrait<WithColoredSelectionBoxInfo>, IRenderAnnotations, INotifyCreated
+	class WithColoredSelectionBox : ConditionalTrait<WithColoredSelectionBoxInfo>, IRenderAnnotations, INotifyCreated, INotifyOwnerChanged
 	{
 		public new readonly WithColoredSelectionBoxInfo Info;
 		Selectable selectable;
+		Color color;
+		PlayerRelationship relationship;
+		int team;
 
 		public WithColoredSelectionBox(Actor self, WithColoredSelectionBoxInfo info)
 			: base(info)
 		{
 			Info = info;
+			Update(self);
 		}
 
 		protected override void Created(Actor self)
@@ -56,32 +79,14 @@ namespace OpenRA.Mods.CA.Traits.Render
 			if (IsTraitDisabled || selectable == null)
 				yield break;
 
-			var color = Info.UsePlayerColor ? self.Owner.Color : Info.Color;
-
 			if (self.World.RenderPlayer != null)
 			{
-				var relationship = self.Owner.RelationshipWith(self.World.RenderPlayer);
 				if (!Info.ValidRelationships.HasRelationship(relationship))
 					yield break;
-
-				if (Info.UseRelationshipColor)
-				{
-					switch (relationship)
-					{
-						case PlayerRelationship.Ally:
-							color = Color.Lime;
-							break;
-
-						case PlayerRelationship.Enemy:
-							color = Color.Red;
-							break;
-
-						default:
-							color = Color.Gray;
-							break;
-					}
-				}
 			}
+
+			if (self.World.FogObscures(self))
+				yield break;
 
 			var bounds = selectable.DecorationBounds(self, wr);
 			var boxBounds = new Rectangle(bounds.X, bounds.Y, bounds.Width, bounds.Height);
@@ -89,5 +94,54 @@ namespace OpenRA.Mods.CA.Traits.Render
 		}
 
 		bool IRenderAnnotations.SpatiallyPartitionable { get { return false; } }
+
+		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
+		{
+			Update(self);
+		}
+
+		void Update(Actor self)
+		{
+			var c = self.World.LobbyInfo.Clients.FirstOrDefault(i => i.Index == self.Owner.ClientIndex);
+			team = c?.Team ?? 0;
+
+			if (self.World.RenderPlayer != null)
+				relationship = self.Owner.RelationshipWith(self.World.RenderPlayer);
+			else
+				relationship = PlayerRelationship.None;
+
+			if (Info.ColorSource == ColorSource.Relationship)
+			{
+				switch (relationship)
+				{
+					case PlayerRelationship.Ally:
+						color = Info.AllyColor;
+						break;
+
+					case PlayerRelationship.Enemy:
+						color = Info.EnemyColor;
+						break;
+
+					default:
+						color = Info.NeutralColor;
+						break;
+				}
+			}
+			else if (Info.ColorSource == ColorSource.Team)
+			{
+				if (team > 0 && Info.TeamColors.Length >= team)
+					color = Info.TeamColors[team - 1];
+				else
+					color = Info.NeutralColor;
+			}
+			else if (Info.ColorSource == ColorSource.Player)
+			{
+				color = self.Owner.Color;
+			}
+			else
+			{
+				color = Info.Color;
+			}
+		}
 	}
 }
