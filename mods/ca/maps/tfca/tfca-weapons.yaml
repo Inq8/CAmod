@@ -1,0 +1,82 @@
+
+Dragon:
+	Range: 8c0
+	Projectile: MissileCA
+		RangeLimit: 10c0
+		Speed: 185
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Damage: 8500
+		Versus:
+			None: 100
+	Warhead@3Eff: CreateEffect
+		Explosions: large_explosion
+		ImpactSounds: kaboom15.aud
+
+Ivanbomb:
+	Range: 6c0
+	ReloadDelay: 35
+
+TNT:
+	Warhead@1Dam: SpreadDamage
+		Spread: 512
+
+HeavyFlameTankFlamer:
+	ReloadDelay: 4
+	-Burst:
+	-BurstDelays:
+	Warhead@1Dam: SpreadDamage
+		ValidRelationships: Enemy, Ally, Neutral
+		Damage: 450
+
+Uzi:
+	Inherits: M60mgTD
+	Range: 6c0
+	Projectile: Bullet
+		Speed: 700
+		ContrailLength: 9
+		ContrailStartColor: 88888844
+		ContrailStartColorAlpha: 68
+		Inaccuracy: 256
+	Warhead@1Dam: SpreadDamage
+		Damage: 1750
+
+TurretUzi:
+	Inherits: Uzi
+	Range: 7c0
+	Projectile: Bullet
+		Speed: 950
+
+MGattG:
+	Projectile: Bullet
+		Speed: 950
+		ContrailLength: 9
+		ContrailStartColor: 917d5544
+		ContrailStartColorAlpha: 75
+		Inaccuracy: 256
+	Warhead@1Dam: SpreadDamage
+		Damage: 500
+
+SNIPER:
+	ReloadDelay: 105
+	Range: 15c0
+	Report: snipe.aud
+	Projectile: InstantHit
+		Blockable: true
+	Warhead@1Dam: SpreadDamage
+		Damage: 20000
+
+SilencedPPK:
+	Range: 2c512
+	ReloadDelay: 65
+	Warhead@1Dam: SpreadDamage
+		Damage: 25000
+		ValidTargets: Barrel, Infantry, Vehicle
+
+Heal:
+	ReloadDelay: 45
+
+Repair:
+	ReloadDelay: 60
+	Warhead@highlight: GrantExternalCondition
+		ValidTargets: Structure
