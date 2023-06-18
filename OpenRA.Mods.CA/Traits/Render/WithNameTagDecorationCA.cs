@@ -35,13 +35,13 @@ namespace OpenRA.Mods.CA.Traits.Render
 		public readonly Color Color = Color.White;
 
 		[Desc("If ColorSource is Relationship, use this color for allies.")]
-		public readonly Color AllyColor = ChromeMetrics.Get<Color>("PlayerStanceColorAllies");
+		public readonly Color? AllyColor = null;
 
-		[Desc("If ColorSource is Relationship, use this color for allies.")]
-		public readonly Color EnemyColor = ChromeMetrics.Get<Color>("PlayerStanceColorEnemies");
+		[Desc("If ColorSource is Relationship, use this color for enemies.")]
+		public readonly Color? EnemyColor = null;
 
-		[Desc("If ColorSource is Relationship, use this color for allies.")]
-		public readonly Color NeutralColor = ChromeMetrics.Get<Color>("PlayerStanceColorNeutrals");
+		[Desc("If ColorSource is Relationship, use this color for neutrals.")]
+		public readonly Color? NeutralColor = null;
 
 		[Desc("List of colors to use for teams.")]
 		public readonly Color[] TeamColors =
@@ -53,10 +53,10 @@ namespace OpenRA.Mods.CA.Traits.Render
 		};
 
 		[Desc("Dark contrast color.")]
-		public readonly Color ContrastColorDark = ChromeMetrics.Get<Color>("TextContrastColorDark");
+		public readonly Color? ContrastColorDark;
 
 		[Desc("Light contrast color.")]
-		public readonly Color ContrastColorLight = ChromeMetrics.Get<Color>("TextContrastColorLight");
+		public readonly Color? ContrastColorLight;
 
 		public override object Create(ActorInitializer init) { return new WithNameTagDecorationCA(init.Self, this); }
 
@@ -74,6 +74,11 @@ namespace OpenRA.Mods.CA.Traits.Render
 		readonly SpriteFont font;
 		string name;
 		Color color;
+		Color allyColor;
+		Color enemyColor;
+		Color neutralColor;
+		Color contrastColorDark;
+		Color contrastColorLight;
 		PlayerRelationship relationship;
 		int team;
 
@@ -81,6 +86,11 @@ namespace OpenRA.Mods.CA.Traits.Render
 			: base(self, info)
 		{
 			font = Game.Renderer.Fonts[info.Font];
+			allyColor = Info.AllyColor ?? ChromeMetrics.Get<Color>("PlayerStanceColorAllies");
+			enemyColor = Info.EnemyColor ?? ChromeMetrics.Get<Color>("PlayerStanceColorEnemies");
+			neutralColor = Info.NeutralColor ?? ChromeMetrics.Get<Color>("PlayerStanceColorNeutrals");
+			contrastColorDark = Info.ContrastColorDark ?? ChromeMetrics.Get<Color>("TextContrastColorDark");
+			contrastColorLight = Info.ContrastColorLight ?? ChromeMetrics.Get<Color>("TextContrastColorLight");
 			Update(self);
 
 			name = self.Owner.PlayerName;
@@ -96,7 +106,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 			var size = font.Measure(name);
 			return new IRenderable[]
 			{
-				new UITextRenderable(font, self.CenterPosition, screenPos - size / 2, 0, color, Info.ContrastColorDark, Info.ContrastColorLight, name)
+				new UITextRenderable(font, self.CenterPosition, screenPos - size / 2, 0, color, contrastColorDark, contrastColorLight, name)
 			};
 		}
 
@@ -124,15 +134,15 @@ namespace OpenRA.Mods.CA.Traits.Render
 				switch (relationship)
 				{
 					case PlayerRelationship.Ally:
-						color = Info.AllyColor;
+						color = allyColor;
 						break;
 
 					case PlayerRelationship.Enemy:
-						color = Info.EnemyColor;
+						color = enemyColor;
 						break;
 
 					default:
-						color = Info.NeutralColor;
+						color = neutralColor;
 						break;
 				}
 			}
@@ -141,7 +151,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 				if (team > 0 && Info.TeamColors.Length >= team)
 					color = Info.TeamColors[team - 1];
 				else
-					color = Info.NeutralColor;
+					color = neutralColor;
 			}
 			else if (Info.ColorSource == ColorSource.Player)
 			{

@@ -31,13 +31,13 @@ namespace OpenRA.Mods.CA.Traits.Render
 		public readonly Color Color = Color.White;
 
 		[Desc("If ColorSource is Relationship, use this color for allies.")]
-		public readonly Color AllyColor = ChromeMetrics.Get<Color>("PlayerStanceColorAllies");
+		public readonly Color? AllyColor = null;
 
-		[Desc("If ColorSource is Relationship, use this color for allies.")]
-		public readonly Color EnemyColor = ChromeMetrics.Get<Color>("PlayerStanceColorEnemies");
+		[Desc("If ColorSource is Relationship, use this color for enemies.")]
+		public readonly Color? EnemyColor = null;
 
-		[Desc("If ColorSource is Relationship, use this color for allies.")]
-		public readonly Color NeutralColor = ChromeMetrics.Get<Color>("PlayerStanceColorNeutrals");
+		[Desc("If ColorSource is Relationship, use this color for neutrals.")]
+		public readonly Color? NeutralColor = null;
 
 		[Desc("List of colors to use for teams.")]
 		public readonly Color[] TeamColors =
@@ -59,6 +59,9 @@ namespace OpenRA.Mods.CA.Traits.Render
 		public new readonly WithColoredSelectionBoxInfo Info;
 		Selectable selectable;
 		Color color;
+		Color allyColor;
+		Color enemyColor;
+		Color neutralColor;
 		PlayerRelationship relationship;
 		int team;
 
@@ -66,6 +69,9 @@ namespace OpenRA.Mods.CA.Traits.Render
 			: base(info)
 		{
 			Info = info;
+			allyColor = Info.AllyColor ?? ChromeMetrics.Get<Color>("PlayerStanceColorAllies");
+			enemyColor = Info.EnemyColor ?? ChromeMetrics.Get<Color>("PlayerStanceColorEnemies");
+			neutralColor = Info.NeutralColor ?? ChromeMetrics.Get<Color>("PlayerStanceColorNeutrals");
 			Update(self);
 		}
 
@@ -115,15 +121,15 @@ namespace OpenRA.Mods.CA.Traits.Render
 				switch (relationship)
 				{
 					case PlayerRelationship.Ally:
-						color = Info.AllyColor;
+						color = allyColor;
 						break;
 
 					case PlayerRelationship.Enemy:
-						color = Info.EnemyColor;
+						color = enemyColor;
 						break;
 
 					default:
-						color = Info.NeutralColor;
+						color = neutralColor;
 						break;
 				}
 			}
@@ -132,7 +138,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 				if (team > 0 && Info.TeamColors.Length >= team)
 					color = Info.TeamColors[team - 1];
 				else
-					color = Info.NeutralColor;
+					color = neutralColor;
 			}
 			else if (Info.ColorSource == ColorSource.Player)
 			{
