@@ -635,6 +635,10 @@ Repair:
 		Condition: highlight
 		ValidTargets: Ground, Vehicle
 
+CyborgRepair:
+	Inherits: Repair
+	ReloadDelay: 75
+
 RepairIFV:
 	Inherits: Repair
 	ReloadDelay: 30
@@ -1157,19 +1161,19 @@ EnlightenedEmp:
 		Shadow: true
 		Image: enliempproj
 		Palette: effect
-		Speed: 170
+		Speed: 190
 		TrailImage: smokey
 		TrailPalette: scrinplasma
 		LaunchAngle: 30
 		Inaccuracy: 128
 	Warhead@1Emp: GrantExternalCondition
-		Range: 0c768
+		Range: 0c896
 		Duration: 100
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle
 		InvalidTargets: Cyborg, Defense
 	Warhead@2Emp: GrantExternalCondition
-		Range: 0c768
+		Range: 0c896
 		Duration: 50
 		Condition: empdisable
 		ValidTargets: Cyborg, Defense
