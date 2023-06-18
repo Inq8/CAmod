@@ -473,8 +473,9 @@ GTNK.squad:
 		UncloakSound: appear1.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Move, Damage, Heal
 		Palette: player
-		IsPlayerPalette: false
-		RequiresCondition: england && !cloak-force-disabled && !invisibility && !driver-dead && !empdisable && !being-warped
+		IsPlayerPalette: true
+		RequiresCondition: england && !cloak-force-disabled && !being-warped && !empdisable && !driver-dead
+		PauseOnCondition: invisibility
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	SpawnActorOnDeath:
@@ -781,7 +782,7 @@ GTNK.squad:
 		Description: Big and slow tank with anti-air capability.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
-		Attributes: • Can crush concrete walls
+		Attributes: • Can crush concrete walls\n• Self repairs to 50% out of combat
 	Valued:
 		Cost: 1700
 	Tooltip:
@@ -888,7 +889,7 @@ GTNK.squad:
 		Prerequisites: stek, ~vehicles.soviet, ~atomicengines.upgrade, ~!erad.upgrade, ~techlevel.high
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
-		Attributes: • Can crush concrete walls\n• Explodes and leaves radiation on death
+		Attributes: • Can crush concrete walls\n• Self repairs to 50% out of combat\n• Explodes and leaves radiation on death
 	Tooltip:
 		Name: Atomic Mammoth Tank
 	Explodes@ATOMICUPGRADE:
@@ -1217,6 +1218,8 @@ ISU:
 	ReloadAmmoPool@ATOMICAMMO:
 		Count: 3
 		RequiresCondition: atomic-ammo && has-atomic-ammo < 3
+	ReloadAmmoPoolCA@ATOMICAMMODECAY:
+		Count: -3
 	Explodes:
 		Weapon: ArtilleryExplode
 		LoadedChance: 75
@@ -1270,14 +1273,16 @@ SPEC:
 	Armament:
 		Weapon: 155mmSpec
 		LocalOffset: 624,0,408
-		FireDelay: 25
-	Armament@TARGETTER:
-		Weapon: 155mmSpecTargeting
-	AttackFrontal:
+	AttackFrontalCharged:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: empdisable || being-warped
-		FacingTolerance: 0
+		FacingTolerance: 32
+		ChargeLevel: 25
+		DischargeRate: 5
+		ShotsPerCharge: 3
+		ShowSelectionBar: true
+		SelectionBarColor: 666666
 	WithMuzzleOverlay:
 	Explodes:
 		Weapon: ArtilleryExplode
@@ -1296,7 +1301,8 @@ SPEC:
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
-		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver-dead
+		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead
+		PauseOnCondition: invisibility
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	GrantConditionOnDamageState@UNCLOAK:
@@ -1305,6 +1311,9 @@ SPEC:
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: ReturnFire
+	WithColoredSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
+		ColorSource: Player
 
 SAPC:
 	Inherits: ^Vehicle
@@ -1372,7 +1381,8 @@ SAPC:
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
-		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver-dead
+		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead
+		PauseOnCondition: invisibility
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	GrantConditionOnDamageState@UNCLOAK:
@@ -1385,6 +1395,9 @@ SAPC:
 		Condition: cloak-force-disabled
 		Actions: Load
 		Duration: 30
+	WithColoredSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
+		ColorSource: Player
 
 SAPC.AI:
 	Inherits: SAPC
@@ -1509,6 +1522,8 @@ HARV:
 		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
 	ChangesHealth@MINIDRONE:
 		Step: 2250
+	DamageTypeDamageMultiplier@A2GPROTECTION:
+		Modifier: 60
 
 HARV.Chrono:
 	Inherits: HARV
@@ -1550,6 +1565,7 @@ HARV.Chrono:
 MCV:
 	Inherits: ^Vehicle-NOUPG
 	Inherits@SELECTION: ^SelectableSupportUnit
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 435
@@ -1598,6 +1614,8 @@ MCV:
 	-Crushable:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
+	DamageTypeDamageMultiplier@A2GPROTECTION:
+		Modifier: 60
 
 JEEP:
 	Inherits: ^Vehicle
@@ -1919,7 +1937,7 @@ MGG:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 380
-		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
+		Prerequisites: atek, ~vehicles.mgg, ~techlevel.high
 		BuildDurationModifier: 50
 		Description: Regenerates the shroud nearby, obscuring enemy vision.\n  Can channel the effect to reduce enemy weapon range\n  and create persisting areas that do the same.
 	TooltipExtras:
@@ -1997,7 +2015,7 @@ MRJ:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 360
-		Prerequisites: techcenter, ~vehicles.mrj, ~techlevel.high
+		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
 		BuildDurationModifier: 50
 		Description: Support vehicle that jams enemy radar and guided missiles.
 	TooltipExtras:
@@ -2102,10 +2120,13 @@ MSG:
 		Color: 00aa00
 	ProximityExternalCondition@MSG:
 		Range: 5c512
-		Condition: msg-invis
-		RequiresCondition: deployed
+		Condition: sgencloak
+		RequiresCondition: deployed && !cloak-force-disabled
 		MaximumVerticalOffset: 512
 		AffectsParent: true
+	GrantConditionOnDamageState@UNCLOAK:
+		Condition: cloak-force-disabled
+		ValidDamageStates: Critical
 
 TTRA:
 	Inherits: ^Tank
@@ -2389,7 +2410,7 @@ QTNK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 90000
+		HP: 100000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -2423,7 +2444,7 @@ QTNK:
 	Targetable:
 		TargetTypes: Ground, MADTank, Vehicle, C4, ChaosImmune
 	ProductionCostMultiplier@UkraineBonus:
-		Multiplier: 90
+		Multiplier: 75
 		Prerequisites: player.ukraine
 	FirepowerMultiplier@MADIC:
 		Modifier: 40
@@ -2432,6 +2453,7 @@ QTNK:
 AMCV:
 	Inherits: ^VehicleTD-NOUPG
 	Inherits@SELECTION: ^SelectableSupportUnit
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 436
@@ -2481,6 +2503,8 @@ AMCV:
 	-Crushable:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
+	DamageTypeDamageMultiplier@A2GPROTECTION:
+		Modifier: 60
 
 HMMV:
 	Inherits: ^VehicleTD
@@ -3220,7 +3244,7 @@ MTNK.Drone:
 		IconPalette: chrometd
 		Description: Remotely piloted battle tank.
 	TooltipExtras:
-		Attributes: • Requires active radar communication
+		Attributes: • Requires active radar communication\n• Self repairs out of combat
 	Valued:
 		Cost: 775
 	Tooltip:
@@ -3259,7 +3283,7 @@ MTNK.Drone:
 	-ReloadDelayMultiplier@BERSERK:
 	-ExternalCondition@BERSERK:
 	-Berserkable@BERSERK:
-	-WithModifiedPalette@BERSERK:
+	-WithPalettedOverlay@BERSERK:
 	-TimedConditionBar@BERSERK:
 	-RejectsOrders@BERSERK:
 	-GrantCondition@BERSERK:
@@ -3323,6 +3347,7 @@ MDRN:
 	WithShadow:
 		Offset: 43, 128, -250
 		ZOffset: -129
+		RequiresCondition: !invisibility
 	TurretedFloating:
 		TurnSpeed: 18
 	AttackTurreted:
@@ -3423,7 +3448,7 @@ HTNK:
 		Description: Big and slow tank with anti-air capability.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
-		Attributes: • Can crush concrete walls
+		Attributes: • Can crush concrete walls\n• Self repairs to 50% out of combat
 	Valued:
 		Cost: 1700
 	Tooltip:
@@ -3535,7 +3560,7 @@ HTNK.Hover:
 		Prerequisites: gtek, ~vehicles.htnk, ~hovermam.upgrade, ~techlevel.high
 		Description: Big and fairly mobile tank with anti-air capability.
 	TooltipExtras:
-		Attributes: • Can traverse water
+		Attributes: • Can traverse water\n• Self repairs to 50% out of combat
 	Mobile:
 		Speed: 72
 		Locomotor: hover
@@ -3555,6 +3580,7 @@ HTNK.Hover:
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
+		RequiresCondition: !invisibility
 	SpawnActorOnDeath:
 		Actor: HTNK.Hover.Husk
 		RequiresCondition: !being-warped && !onwater
@@ -3574,7 +3600,7 @@ HTNK.Drone:
 		Prerequisites: ~mdrone.upgrade, gtek, ~vehicles.htnk, ~techlevel.high
 		Description: Remotely piloted heavy tank with anti-air capability.
 	TooltipExtras:
-		Attributes: • Can crush concrete walls\n• Requires active radar communication
+		Attributes: • Can crush concrete walls\n• Requires active radar communication\n• Self repairs out of combat
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -3608,7 +3634,7 @@ HTNK.Drone:
 	-ReloadDelayMultiplier@BERSERK:
 	-ExternalCondition@BERSERK:
 	-Berserkable@BERSERK:
-	-WithModifiedPalette@BERSERK:
+	-WithPalettedOverlay@BERSERK:
 	-TimedConditionBar@BERSERK:
 	-RejectsOrders@BERSERK:
 	-GrantCondition@BERSERK:
@@ -3876,14 +3902,15 @@ STNK.Nod:
 		Range: 4c0
 	Cloak@NORMAL:
 		InitialDelay: 75
-		CloakDelay: 75
+		CloakDelay: 76
 		CloakSound: trans1.aud
 		CloakedCondition: hidden
 		UncloakSound: appear1.aud
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
-		RequiresCondition: !cloak-force-disabled && !invisibility && !being-warped && !driver-dead && !parachute
+		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead && !parachute
+		PauseOnCondition: invisibility
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	GrantConditionOnDamageState@UNCLOAK:
@@ -3929,6 +3956,9 @@ STNK.Nod:
 		Prerequisites: tibcore.upgrade
 	WithShadow:
 		RequiresCondition: parachute
+	WithColoredSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
+		ColorSource: Player
 
 BIKE:
 	Inherits: ^VehicleTD
@@ -4240,6 +4270,8 @@ HARV.TD:
 		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
 	ChangesHealth@MINIDRONE:
 		Step: 2250
+	DamageTypeDamageMultiplier@A2GPROTECTION:
+		Modifier: 60
 
 BTR:
 	Inherits: ^Tank
@@ -4588,7 +4620,7 @@ IFV:
 		InvalidTargets: NoAutoTarget
 		ValidRelationships: Ally
 	Armament@Acol:
-		Weapon: LaserTur
+		Weapon: IFVLaser
 		LocalOffset: 385,0,300
 		RequiresCondition: acolturr
 	Armament@IVAN:
@@ -4973,7 +5005,7 @@ TITN:
 		Description: Tough, slow combat battle-mech.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
-		Attributes: • Can crush smaller vehicles and concrete walls
+		Attributes: • Can crush smaller vehicles and concrete walls\n• Self repairs to 50% out of combat
 	Valued:
 		Cost: 2000
 	Selectable:
@@ -5074,8 +5106,6 @@ TITN.RAIL:
 	Buildable:
 		BuildPaletteOrder: 304
 		Prerequisites: gtek, ~vehicles.talon, ~railgun.upgrade, ~techlevel.high
-	WithSpriteTurret@UPG:
-		Sequence: turret
 	Armament@PRIMARY:
 		Weapon: TitanRailgun
 		LocalOffset: 830,290,170
@@ -5265,25 +5295,15 @@ DISR:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Armament@PRIMARY:
-		Weapon: SonicZap
-		LocalOffset: 0,0,200
-		RequiresCondition: !sonic-upgrade
-	Armament@SECONDARY:
-		Weapon: SonicZapVisual
-		Name: secondary
-		LocalOffset: 0,0,200
+		Weapon: DisruptorPulse
+		LocalOffset: -100,0,200
 		RequiresCondition: !sonic-upgrade
 	Armament@PRIMARYUPG:
-		Weapon: SonicZap.UPG
-		LocalOffset: 0,0,200
-		RequiresCondition: sonic-upgrade
-	Armament@SECONDARYUPG:
-		Weapon: SonicZapVisual.UPG
-		Name: secondary
-		LocalOffset: 0,0,200
+		Weapon: DisruptorPulse.UPG
+		LocalOffset: -100,0,200
 		RequiresCondition: sonic-upgrade
 	Turreted:
-		TurnSpeed: 20
+		TurnSpeed: 16
 		Offset: -300,0,0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
@@ -5358,6 +5378,7 @@ HSAM:
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
+		RequiresCondition: !invisibility
 	AutoTarget:
 		ScanRadius: 10
 	AttackTurreted:
@@ -5518,8 +5539,9 @@ RTNK:
 		UncloakSound: appear1.aud
 		UncloakOn: Attack, Dock, Move, Damage, Heal
 		Palette: player
-		IsPlayerPalette: false
-		RequiresCondition: !cloak-force-disabled && !invisibility && !driver-dead && !empdisable && !being-warped
+		IsPlayerPalette: true
+		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead
+		PauseOnCondition: invisibility
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden || driver-dead)
 	GrantConditionOnDamageState@UNCLOAK:
@@ -5540,6 +5562,9 @@ RTNK:
 		Palette: player
 		IsPlayerPalette: true
 		Position: Center
+	WithColoredSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
+		ColorSource: Player
 
 V3RL:
 	Inherits: ^Vehicle
@@ -5739,7 +5764,7 @@ MSAR:
 	Inherits: ^VehicleTD
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Valued:
-		Cost: 1100
+		Cost: 1250
 	Tooltip:
 		Name: Mobile Sensor Array
 		RequiresCondition: !deployed
@@ -5752,7 +5777,7 @@ MSAR:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 370
 		IconPalette: chrometd
-		Prerequisites: anyradar, ~vehicles.gdi, ~techlevel.medium
+		Prerequisites: anyradar, ~vehicles.msar, ~techlevel.medium
 		BuildDurationModifier: 50
 		Description: When deployed, detects enemy vehicles,\n  aircraft and structures within a large radius.
 	TooltipExtras:
@@ -6087,6 +6112,7 @@ BATF:
 			seal: loaded-seal
 			rmbo: loaded-cmdo
 			bori: loaded-cmdo
+			yuri: loaded-cmdo
 			acol: loaded
 			tplr: loaded
 			mort: loaded
@@ -6134,7 +6160,7 @@ BATF:
 		AddToArmyValue: true
 	AttackOpenTopped:
 		Voice: Attack
-		Armaments: mounted
+		Armaments: batf
 		PortOffsets: 825,0,256, 348,-482,256, -348,-482,256, -448,482,256, 448,482,256
 		PauseOnCondition: being-warped || empdisable
 		RequiresCondition: loaded || loaded-cmdo || loaded-seal || loaded-air
@@ -6157,19 +6183,13 @@ BATF:
 		RequiresCondition: loaded-repair
 	WithDecoration@COMMANDOSKULL:
 		RequiresCondition: loaded-cmdo
-		BlinkInterval: 64
-		BlinkPatterns:
-			loaded-cmdo: Off, On
 	WithDecoration@SEALSKULL:
-		RequiresCondition: loaded-seal
+		RequiresCondition: loaded-seal && !loaded-cmdo
 		Image: pips
 		Sequence: pip-seal
 		Palette: effect
 		Position: TopLeft
 		ValidRelationships: Ally, Enemy, Neutral
-		BlinkInterval: 64
-		BlinkPatterns:
-			loaded-seal: On, Off
 	-Targetable@HERO:
 
 BATF.AI:
@@ -6319,7 +6339,7 @@ CDRN:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 126
+		Speed: 135
 		Voice: Move
 		PauseOnCondition: empdisable || being-warped || notmobile
 	RevealsShroud:
@@ -6329,9 +6349,7 @@ CDRN:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Explodes:
-		Weapon: ChaosDroneExplode
-		EmptyWeapon: ChaosDroneExplodeSmall
-		LoadedChance: 50
+		Weapon: ChaosDroneExplodeSmall
 	AttackFrontal:
 		FacingTolerance: 512
 		PauseOnCondition: empdisable || being-warped
@@ -6566,7 +6584,7 @@ APOC:
 		Description: Enormous slow tank with uranium shells and anti-air capability.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
-		Attributes: • Can crush smaller vehicles and concrete walls
+		Attributes: • Can crush smaller vehicles and concrete walls\n• Self repairs to 50% out of combat
 	Valued:
 		Cost: 2600
 	Tooltip:
@@ -6678,7 +6696,7 @@ APOC.ATOMIC:
 		Prerequisites: npwr, stek, ~vehicles.soviet, ~atomicengines.upgrade, ~techlevel.high
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor
-		Attributes: • Can crush smaller vehicles and concrete walls\n• Explodes and leaves radiation on death
+		Attributes: • Can crush smaller vehicles and concrete walls\n• Self repairs to 50% out of combat\n• Explodes and leaves radiation on death
 	WithFacingSpriteBody:
 	SpeedMultiplier:
 		Modifier: 125

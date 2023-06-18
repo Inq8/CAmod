@@ -2,6 +2,10 @@ WarriorGun:
 	Inherits: M1Carbine
 	Report: warrior-fire1.aud
 
+WarriorGunBATF:
+	Inherits: M1CarbineBATF
+	Report: warrior-fire1.aud
+
 DisintegratorBeam:
 	Inherits: Laser
 	ReloadDelay: 30
@@ -22,6 +26,11 @@ DisintegratorBeam:
 			Heavy: 100
 			Light: 34
 			Concrete: 75
+
+DisintegratorBeamE:
+	Inherits: DisintegratorBeam
+	Warhead@1Dam: SpreadDamage
+		Damage: 1700
 
 DisintegratorBeamAA:
 	Inherits: DisintegratorBeam
@@ -90,7 +99,7 @@ GunWalkerZap:
 			Wood: 10
 			Concrete: 10
 			Light: 32
-			Heavy: 15
+			Heavy: 10
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 
@@ -225,7 +234,7 @@ DevastatorDiscs:
 			Heavy: 25
 			Concrete: 100
 			Brick: 100
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigatedMinor
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigatedMinor, AirToGround
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 
@@ -507,11 +516,12 @@ RuinerCannon:
 	BurstDelays: 15
 	Range: 10c0
 	Projectile: Bullet
-		Speed: 195
+		Speed: 185
 		Image: tibglob
 		Palette: scrin
 		Inaccuracy: 682
 	Warhead@1Dam: SpreadDamage
+		Spread: 341
 		Damage: 5000
 		Versus:
 			None: 120
@@ -1074,8 +1084,8 @@ ShardWalkerShards:
 		Damage: 2600
 		Versus:
 			Wood: 10
-			Light: 35
-			Heavy: 15
+			Light: 32
+			Heavy: 10
 			Concrete: 10
 
 ShardWalkerShardsAA:
@@ -1160,7 +1170,7 @@ SuppressionField:
 		Spread: 1c0
 		Damage: 1
 	Warhead@2sup: GrantExternalCondition
-		Range: 3c512
+		Range: 3c0
 		Duration: 600
 		Condition: suppression
 		ValidTargets: Ground, Air, AirSmall, Ship
@@ -1168,7 +1178,7 @@ SuppressionField:
 SuppressionSiphonField:
 	Inherits: SuppressionField
 	Warhead@3siphon: GrantExternalCondition
-		Range: 3c512
+		Range: 3c0
 		Duration: 600
 		Condition: suppression-siphon
 		ValidTargets: Ground, Air, AirSmall, Ship
@@ -1182,7 +1192,7 @@ BuzzerSpawner:
 		Versus:
 			None: 100
 			Wood: 1
-			Light: 25
+			Light: 30
 			Heavy: 1
 			Concrete: 1
 			Brick: 0
@@ -1206,7 +1216,7 @@ BuzzerVortex:
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
 		Spread: 682
-		Falloff: 100, 70, 30, 0
+		Falloff: 100, 70, 40, 0
 		Damage: 150
 		Versus:
 			None: 100
@@ -1219,11 +1229,11 @@ BuzzerVortex:
 		ValidRelationships: Enemy, Neutral
 	Warhead@2Dam: HealthPercentageDamage
 		Spread: 1c0
-		Damage: 3
+		Damage: 4
 		Versus:
 			None: 100
 			Wood: 3
-			Light: 25
+			Light: 30
 			Heavy: 3
 			Concrete: 3
 			Brick: 0
@@ -1273,8 +1283,7 @@ MothershipChargeBeam:
 	ReloadDelay: 3
 	Range: 0c512
 	TargetActorCenter: true
-	ValidTargets: Ground, Water
-	InvalidTargets: Infantry, Vehicle, Ship
+	ValidTargets: Structure
 	Projectile: PlasmaBeam
 		ForceVertical: true
 		Duration: 2
@@ -1292,8 +1301,7 @@ MothershipBeam:
 	ReloadDelay: 340
 	Range: 0c512
 	TargetActorCenter: true
-	ValidTargets: Ground, Water
-	InvalidTargets: Infantry, Vehicle, Ship
+	ValidTargets: Structure
 	Projectile: PlasmaBeam
 		ForceVertical: true
 		Duration: 240
@@ -1331,42 +1339,32 @@ MothershipBeam:
 		Intensity: 1
 		Multiplier: 0.1,0.1
 
-MothershipLaser:
-	Inherits: TripodLaser
+MothershipDiscs:
+	Inherits: DevastatorDiscs
 	Report: mshp-zap1.aud, mshp-zap2.aud
-	Range: 6c0
+	Range: 7c0
 	MinRange: 1c0
-	ReloadDelay: 120
-	ValidTargets: Infantry, Vehicle, Ship
-	Projectile: PlasmaBeam
-		Blockable: false
-		StartOffset: 0,672,0
-		FollowingOffset: 0,-112,0
-		Duration: 15
-		ImpactTicks: 0, 2, 4, 6, 8, 10, 12, 14
-		ZOffset: 512
-		Colors: 7d44ff96, eb66ff86, 5763ff96
-		MaxFacingDeviation: 256
+	ReloadDelay: 50
+	Burst: 3
+	BurstDelays: 8
+	InvalidTargets: Structure
+	Projectile: Bullet
+		Image: plasmatorp1
+		Palette: scrin
+		LaunchAngle: 0
+		Inaccuracy: 0c512
+		Shadow: true
+		ShadowColor: 00000033
+		Speed: 280
 	Warhead@1Dam: SpreadDamage
-		Damage: 1250
+		Spread: 448
+		Damage: 4500
 		Versus:
-			None: 75
-			Light: 85
-			Wood: 20
-	Warhead@3Eff: CreateEffect
-		Explosions: small_explosion_alt1, small_explosion_alt2, small_explosion_alt3
-
-MothershipLaserRight:
-	Inherits: MothershipLaser
-	Projectile: PlasmaBeam
-		StartOffset: 512,672,0
-		FollowingOffset: 0,-112,0
-
-MothershipLaserLeft:
-	Inherits: MothershipLaser
-	Projectile: PlasmaBeam
-		StartOffset: -512,-672,0
-		FollowingOffset: 0,112,0
+			None: 100
+			Wood: 45
+			Concrete: 45
+			Light: 70
+			Heavy: 100
 
 LeecherBeam:
 	ValidTargets: Ground, Water
@@ -1449,19 +1447,19 @@ AtomizerBolts:
 		TrailPalette: scrin
 		TrailInterval: 1
 	Warhead@1Dam: SpreadDamage
-		Spread: 128
-		Damage: 5000
+		Spread: 448
+		Damage: 8000
 		ValidTargets: Ground, Water
 		Versus:
-			None: 60
-			Wood: 60
-			Light: 70
-			Heavy: 85
-			Concrete: 100
-		DamageTypes: Prone50Percent, TriggerProne, AtomizedDeath
-	Warhead@2Sup: GrantExternalCondition
+			None: 30
+			Wood: 30
+			Light: 65
+			Heavy: 100
+			Concrete: 90
+		DamageTypes: Prone50Percent, AtomizedDeath
+	Warhead@atomize: GrantExternalCondition
 		Range: 0c768
-		Duration: 120
+		Duration: 150
 		Condition: atomized
 		ValidTargets: Vehicle, Ship, Defense
 		ValidRelationships: Enemy, Neutral
@@ -1490,13 +1488,14 @@ AtomizerBoltsAA:
 			Light: 100
 			Concrete: 100
 			Brick: 100
-	Warhead@2Sup: GrantExternalCondition
+	Warhead@atomize: GrantExternalCondition
 		ValidTargets: Air, AirSmall
 		Range: 1c512
 	Warhead@3Eff: CreateEffect
 		ValidTargets: Air, AirSmall
 	Warhead@red: GrantExternalCondition
 		ValidTargets: Air, AirSmall
+		Range: 1c512
 
 AtomizeSpreadInit:
 	Projectile: InstantHit
@@ -1601,28 +1600,13 @@ MindSparkSpawnerSlave:
 	Warhead@Suppress: GrantExternalCondition
 		-Delay:
 
-MindSparkZapper:
+MindSparkZap:
 	ReloadDelay: 50
-	Range: 1c0
-	Projectile: InstantHit
-	Warhead@ARC: FireShrapnel
-		Weapon: MindSparkArc
-		AimChance: 100
-		Amount: 1
-
-MindSparkHeroZapper:
-	ReloadDelay: 400
-	Inherits: MindSparkZapper
-	Warhead@ARC: FireShrapnel
-		Weapon: MindSparkHeroArc
-
-MindSparkArc:
-	Range: 2c0
-	ValidTargets: Infantry, Vehicle, Ship, Defense
+	Range: 2c512
 	Report: mindspark-zap1.aud, mindspark-zap2.aud
 	Projectile: PlasmaBeam
 		Duration: 7
-		Colors: ba00ff66
+		Colors: c45dff88
 		InnerLightness: 200
 		OuterLightness: 100
 		Radius: 1
@@ -1634,15 +1618,8 @@ MindSparkArc:
 		Spread: 42
 		Damage: 25000
 		Versus:
-			Light: 25
-			Heavy: 25
+			Light: 20
+			Heavy: 15
 			Concrete: 10
+			Wood: 5
 		DamageTypes: ElectricityDeath
-		ValidTargets: Infantry, Vehicle, Ship, Defense
-		ValidRelationships: Enemy
-
-MindSparkHeroArc:
-	Inherits: MindSparkArc
-	ValidTargets: Hero
-	Warhead@1Dam: SpreadDamage
-		ValidTargets: Hero

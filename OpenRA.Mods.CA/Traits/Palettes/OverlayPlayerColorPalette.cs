@@ -1,24 +1,22 @@
 ﻿#region Copyright & License Information
-/*
- * Copyright 2016-2018 The KKnD Developers (see AUTHORS)
- * This file is part of KKnD, which is free software. It is made
- * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation, either version 3 of
- * the License, or (at your option) any later version. For more
- * information, see COPYING.
+/**
+ * Copyright (c) The OpenRA Combined Arms Developers (see CREDITS).
+ * This file is part of OpenRA Combined Arms, which is free software.
+ * It is made available to you under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. For more information, see COPYING.
  */
 #endregion
 
 using System.Collections.Generic;
-using System.Linq;
 using OpenRA.Graphics;
-using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
 using OpenRA.Traits;
 
-namespace OpenRA.Mods.CA.Traits.Render
+namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("More beautiful variant of the PlayerColorPalette by using the overlay blend mode.")]
+	[TraitLocation(SystemActors.World | SystemActors.EditorWorld)]
+	[Desc("Variant of the PlayerColorPalette using the overlay blend mode which increases contrast.")]
 	public class OverlayPlayerColorPaletteInfo : TraitInfo
 	{
 		[Desc("The name of the palette to base off.")]

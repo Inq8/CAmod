@@ -244,6 +244,10 @@ VEHICLES.SCRIN:
 		Margin: -6, 3
 		RequiresCondition: storm-level == 3
 
+^ScrinVehicleVoice:
+	Voiced:
+		VoiceSet: ScrinVehicleVoice
+
 #
 # ---- Infantry
 #
@@ -260,13 +264,14 @@ VEHICLES.SCRIN:
 		IdleSequences: idle1, idle2, idle3, idle4
 	WithDeathAnimation:
 		DeathSequencePalette: playerscrin
-		CrushedSequencePalette: scrin
+		CrushedSequencePalette: playerscrin
 	-GrantConditionOnTerrain@ONTIB:
 	-GrantStackingCondition@TIBEXPOSED:
 	-DamagedByTerrain@TIBDAMAGE:
 	-GrantConditionOnPrerequisite@BIO:
 	-GrantConditionOnPrerequisite@HAZMAT:
 	-GrantConditionOnPrerequisite@HAZMATSOVIET:
+	-GrantConditionOnPrerequisite@HAZMATZOCOM:
 	-GrantCondition@HAZMAT:
 	-GrantCondition@HAZMATSOVIET:
 	-WithDecoration@HAZMAT:
@@ -341,9 +346,9 @@ S1:
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
 		LocalOffset: 150,0,400
-	Armament@Garrison:
-		Name: mounted
-		Weapon: WarriorGun
+	Armament@BATF:
+		Name: batf
+		Weapon: WarriorGunBATF
 		MuzzleSequence: garrison-muzzle
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
@@ -383,8 +388,8 @@ S2:
 	Armament@PRIMARY:
 		Weapon: RavagerShards
 		LocalOffset: 0,-100,250, 0,100,250
-	Armament@Garrison:
-		Name: mounted
+	Armament@BATF:
+		Name: batf
 		Weapon: RavagerShards
 	AttackFrontal:
 		PauseOnCondition: being-warped
@@ -431,10 +436,9 @@ S3:
 		Weapon: DisintegratorBeam
 		LocalOffset: 150,0,400
 		PauseOnCondition: !ammo
-	Armament@Garrison:
-		Name: mounted
-		Weapon: DisintegratorBeam
-		PauseOnCondition: !ammo
+	Armament@BATF:
+		Name: batf
+		Weapon: DisintegratorBeamE
 	AttackFrontal:
 		PauseOnCondition: being-warped
 		FacingTolerance: 0
@@ -484,8 +488,8 @@ S4:
 	Armament@PRIMARY:
 		Weapon: IntruderDiscs
 		LocalOffset: 150,0,400
-	Armament@Garrison:
-		Name: mounted
+	Armament@BATF:
+		Name: batf
 		Weapon: IntruderDiscs
 	AttackFrontal:
 		PauseOnCondition: being-warped
@@ -774,6 +778,9 @@ MAST:
 		Weapon: EnslaveVehicle
 		LocalOffset: 150,0,400
 		PauseOnCondition: !ammo || deployed
+	Armament@BATF:
+		Name: batf
+		Weapon: PsychicBeamBATF
 	MindController:
 		ArmamentNames: primary, secondary
 		Capacity: 3
@@ -905,6 +912,7 @@ MAST:
 
 HARV.Scrin:
 	Inherits: HARV.TD
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Selectable:
 		DecorationBounds: 1792, 1792
 	RenderSprites:
@@ -913,6 +921,7 @@ HARV.Scrin:
 	WithShadow:
 		Offset: 43, 255, 0
 		ZOffset: -256
+		RequiresCondition: !invisibility
 	WithHarvestOverlay:
 		Palette: scrin
 		LocalOffset: 400, 0, 0
@@ -936,6 +945,7 @@ GUNW:
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 24
@@ -1017,7 +1027,7 @@ SHRW:
 	Armor:
 		Type: Heavy
 	Health:
-		HP: 35000
+		HP: 32000
 	Mobile:
 		Speed: 92
 		TurnSpeed: 36
@@ -1039,6 +1049,7 @@ SEEK:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1081,6 +1092,7 @@ SEEK:
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
+		RequiresCondition: !invisibility
 	Armament@PRIMARY:
 		Weapon: PlasmaDiscs
 		LocalOffset: 320,-25,320, 320,25,320
@@ -1112,6 +1124,7 @@ LACE:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1158,6 +1171,7 @@ LACE:
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
+		RequiresCondition: !invisibility
 	Armament@PRIMARY:
 		Weapon: LaceratorShards
 		LocalOffset: 0,70,320, 0,-70,320
@@ -1191,6 +1205,7 @@ INTL:
 	Inherits@TRANSPORT: ^Transport
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1249,6 +1264,7 @@ INTL:
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
+		RequiresCondition: !invisibility
 	Capturable:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
@@ -1297,6 +1313,7 @@ CORR:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1358,6 +1375,7 @@ LCHR:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1506,6 +1524,7 @@ STCR:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@IONCONDUITS: ^IonConduits
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1552,6 +1571,7 @@ STCR:
 	WithShadow:
 		Offset: 80, 80, 0
 		ZOffset: -81
+		RequiresCondition: !invisibility
 	SpawnActorOnDeath:
 		Actor: STCR.Husk
 		RequiresCondition: !being-warped
@@ -1574,6 +1594,7 @@ DEVO:
 	Inherits@BERSERK: ^Berserk
 	Inherits@RESCONV: ^ResourceConversion
 	Inherits@HOVERTRAIL: ^HoverTrail
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 220
@@ -1653,6 +1674,7 @@ DARK:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Buildable:
@@ -1710,6 +1732,7 @@ DARK:
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
+		RequiresCondition: !invisibility
 	GrantConditionOnTerrain@ONWATER:
 		TerrainTypes: Water
 		Condition: onwater
@@ -1726,6 +1749,7 @@ RUIN:
 	Inherits@BERSERK: ^Berserk
 	Inherits@RESCONV: ^ResourceConversion
 	Inherits@HOVERTRAIL: ^HoverTrail
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1788,6 +1812,7 @@ RUIN:
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
+		RequiresCondition: !invisibility
 	TurretedFloating:
 		TurnSpeed: 16
 		Offset: 0,0,0
@@ -1825,6 +1850,7 @@ ATMZ:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1866,6 +1892,7 @@ ATMZ:
 	WithShadow:
 		Offset: 43, 128, 0
 		ZOffset: -129
+		RequiresCondition: !invisibility
 	Armament:
 		Weapon: AtomizerBolts
 		LocalOffset: 350,0,350
@@ -2065,6 +2092,8 @@ SMCV:
 	Inherits: ^Vehicle-NOUPG
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Inherits@HOVERTRAIL: ^HoverTrail
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 437
@@ -2120,6 +2149,8 @@ SMCV:
 	Hovers:
 		BobDistance: -25
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
+	DamageTypeDamageMultiplier@A2GPROTECTION:
+		Modifier: 60
 
 #
 # ---- Aircraft
@@ -2131,6 +2162,7 @@ STMR:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 90
@@ -2143,8 +2175,6 @@ STMR:
 		Attributes: • Can detect submarines
 	Valued:
 		Cost: 1750
-	Voiced:
-		VoiceSet: VehicleVoice
 	Tooltip:
 		Name: Stormrider
 		GenericName: Aircraft
@@ -2264,6 +2294,7 @@ ENRV:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
+	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 170
@@ -2276,8 +2307,6 @@ ENRV:
 		Attributes: • Slows targets
 	Valued:
 		Cost: 2000
-	Voiced:
-		VoiceSet: VehicleVoice
 	Tooltip:
 		Name: Enervator
 		GenericName: Aircraft
@@ -2750,11 +2779,11 @@ MSHP:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 190
 		Prerequisites: sign, scrt, ~aircraft.scrin, ~techlevel.high
-		Description: Huge craft with powerful anti-structure beam weapon\n  and secondary beam weapons.
+		Description: Huge craft with powerful anti-structure beam weapon\n  and secondary plasma weapons.
 		IconPalette: chromes
 		BuildLimit: 1
 	TooltipExtras:
-		Strengths: • Strong vs Buildings, Defenses, Vehicles
+		Strengths: • Strong vs Buildings, Defenses, Heavy Armor, Light Armor, Infantry
 		Weaknesses: • Cannot attack Aircraft\n• Long charge time before firing anti-structure weapon\n• Cannot move while firing
 		Attributes: • Maximum 1 can be built\n• Can create wormholes
 	RenderSprites:
@@ -2798,36 +2827,28 @@ MSHP:
 		PauseOnCondition: attacking || ammo || cooldown
 	Armament@TERTIARY:
 		Name: tertiary
-		Turret: none
-		Weapon: MothershipLaser
-		LocalOffset: 400,0,-200
+		Turret: body
+		Weapon: MothershipDiscs
+		LocalOffset: 400,0,-200, 400,0,50, 400,0,300
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
-	Armament@TERTIARY2:
-		Name: tertiary
-		Turret: none
-		Weapon: MothershipLaserLeft
-		LocalOffset: 400,0,50
-		MuzzleSequence: muzzle
-		MuzzlePalette: scrin
-		FireDelay: 10
-	Armament@TERTIARY3:
-		Name: tertiary
-		Turret: none
-		Weapon: MothershipLaserRight
-		LocalOffset: 400,0,300
-		MuzzleSequence: muzzle
-		MuzzlePalette: scrin
-		FireDelay: 20
 	WithMuzzleOverlay:
 	Aircraft:
 		CruiseAltitude: 3c512
 		InitialFacing: 768
-		TurnSpeed: 16
+		TurnSpeed: 512
 		Speed: 38
 		AltitudeVelocity: 0c50
 		CanForceLand: False
 		Voice: Move
+	TurretedFloating@BODY:
+		Turret: body
+		TurnSpeed: 16
+		Offset: 0,0,0
+		RealignDelay: 50
+	WithSpriteTurret@BODY:
+		Turret: body
+		Sequence: idle
 	Selectable:
 		Bounds: 1792, 1792, 0, 85
 		DecorationBounds: 2048, 2218, 0, 42
@@ -2842,12 +2863,13 @@ MSHP:
 		RequiresCondition: empdisable && !being-warped
 	-Hovers@CRUISING:
 	WithFacingSpriteBody:
-	AttackFrontal:
+		Sequence: empty
+	AttackTurreted:
 		Armaments: primary, secondary, tertiary
-		FacingTolerance: 32
 		Voice: Attack
 		PauseOnCondition: empdisable || being-warped
 		ForceFireIgnoresActors: true
+		Turrets: body
 	-EjectOnDeath:
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
@@ -4409,7 +4431,7 @@ MANI:
 		EndChargeTextNotification: Suppression Field ready.
 		DisplayRadarPing: True
 		ActivationDelay: 0
-		TargetCircleRange: 3c512
+		TargetCircleRange: 3c0
 		TargetCircleColor: ff55ffcc
 		LaunchSound: suppression.aud
 		IncomingSound: suppression.aud
@@ -4425,7 +4447,7 @@ MANI:
 		Icon: spresspower
 		ChargeInterval: 4500
 		Name: Suppression Field
-		Description: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.\n\nDamage dealt to affected units restores\n    the attacker's health.
+		Description: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.\n\nAffected units take damage over time.
 		Duration: 600
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -4433,7 +4455,7 @@ MANI:
 		EndChargeTextNotification: Suppression Field ready.
 		DisplayRadarPing: True
 		ActivationDelay: 0
-		TargetCircleRange: 3c512
+		TargetCircleRange: 3c0
 		TargetCircleColor: ff55ffcc
 		LaunchSound: suppression.aud
 		IncomingSound: suppression.aud
@@ -4444,7 +4466,7 @@ MANI:
 		Prerequisites: ~mani.collector
 		SupportPowerPaletteOrder: 20
 	ProductionCostMultiplier@COLLECTOR:
-		Multiplier: 90
+		Multiplier: 80
 		Prerequisites: player.collector
 
 RIFT:
@@ -4543,6 +4565,9 @@ RIFT:
 		TargetTypes: SpyInfiltrate, SabInfiltrate
 	WithBuildingBib:
 		HasMinibib: true
+	ProductionCostMultiplier@HarbingerBonus:
+		Multiplier: 80
+		Prerequisites: player.harbinger
 
 PTUR:
 	Inherits: ^Defense
@@ -4883,8 +4908,6 @@ BUZZ:
 		Type: CenterPosition
 	Tooltip:
 		Name: Buzzer Swarm
-	Health:
-		HP: 1
 	RevealsShroud:
 		MinRange: 1c0
 		Range: 6c0
@@ -4922,17 +4945,15 @@ BUZZ.AI:
 	AttackWander:
 		WanderMoveRadius: 1
 		ReduceMoveRadiusDelay: 3
-	-Aircraft:
-	Mobile:
-		Speed: 33
-		Locomotor: cloud
 
 MSPK:
-	Interactable:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^SpriteActor
+	Inherits@selection: ^SelectableCombatUnit
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Tooltip:
 		Name: Mind Spark
 	RenderSprites:
-		Image: mindsparkanim
 		Palette: caneon
 	WithSpriteBody:
 	ClassicFacingBodyOrientation:
@@ -4943,28 +4964,25 @@ MSPK:
 	RevealsShroud:
 		Range: 5c0
 		Type: CenterPosition
-	Health:
-		HP: 1
-	PeriodicExplosion@1:
-		Weapon: MindSparkZapper
-	PeriodicExplosion@2:
-		Weapon: MindSparkHeroZapper
+	Armament@PRIMARY:
+		Weapon: MindSparkZap
+	AttackTurreted:
+	Turreted:
 	Aircraft:
 		CanHover: True
-		Speed: 15
+		Speed: 46
 		CruiseAltitude: 1
 		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,Water,Tree,River
 	KillsSelf:
 		Delay: 325
-	Wanders:
-		WanderMoveRadius: 1
-		ReduceMoveRadiusDelay: 3
 	WithDeathAnimation:
 		UseDeathTypeSuffix: false
 		CrushedSequence: die
 		FallbackSequence: die
 		DeathSequencePalette: caneon
 		DeathPaletteIsPlayerPalette: false
+	Voiced:
+		VoiceSet: MindSparkVoice
 
 camera.rift:
 	Interactable:

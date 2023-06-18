@@ -1,10 +1,10 @@
 ﻿#region Copyright & License Information
-/*
- * Copyright 2015- OpenRA.Mods.AS Developers (see AUTHORS)
- * This file is a part of a third-party plugin for OpenRA, which is
- * free software. It is made available to you under the terms of the
- * GNU General Public License as published by the Free Software
- * Foundation. For more information, see COPYING.
+/**
+ * Copyright (c) The OpenRA Combined Arms Developers (see CREDITS).
+ * This file is part of OpenRA Combined Arms, which is free software.
+ * It is made available to you under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. For more information, see COPYING.
  */
 #endregion
 
@@ -56,7 +56,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		[SequenceReference]
 		[Desc("Sequence to play for granting actor when activated.",
-	"This requires the actor to have the WithSpriteBody trait or one of its derivatives.")]
+			"This requires the actor to have the WithSpriteBody trait or one of its derivatives.")]
 		public readonly string Sequence = "active";
 
 		[Desc("Duration of the condition (in ticks). Set to 0 for a permanent condition.")]

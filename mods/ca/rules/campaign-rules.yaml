@@ -91,6 +91,10 @@ World:
 	Tooltip@COMBATANT:
 		GenericVisibility: Enemy
 
+^HazmatUpgrade:
+	GrantConditionOnPrerequisite@HAZMATZOCOM:
+		Prerequisites: ~disabled
+
 ^Disabled:
 	Buildable:
 		Prerequisites: ~disabled
@@ -251,6 +255,10 @@ hold3.strat:
 	ScriptTriggers:
 	ProvidesPrerequisite@upgradename:
 
+hazmat.upgrade:
+	Buildable:
+		Prerequisites: anyradar, infantry.any, ~!player.soviet, ~!player.scrin, ~techlevel.medium
+
 radar.dummy:
 	AlwaysVisible:
 	Interactable:
@@ -293,7 +301,34 @@ PROC.SCRIN:
 	InfiltrateForCash:
 		Maximum: 600
 
+# Remove faction bonuses
+
+MLRS:
+	-ProductionCostMultiplier@BlackhBonus:
+
+SHOK:
+	-ProductionCostMultiplier@RussiaBonus:
+
+TSLA:
+	-ProductionCostMultiplier@RussiaBonus:
+
+shields.upgrade:
+	-ProductionCostMultiplier@ReaperBonus:
+
+DEVO:
+	-ProductionCostMultiplier@REAPBONUS:
+
+PDOX:
+	-ProductionCostMultiplier@GermanyBonus:
+
+RIFT:
+	-ProductionCostMultiplier@HarbingerBonus:
+
+EYE:
+	-ProductionCostMultiplier@ZocomBonus:
+
 # For attack interval calculations, factoring in extra value from cargo
+
 SAPC.AI:
 	Valued:
 		Cost: 2100

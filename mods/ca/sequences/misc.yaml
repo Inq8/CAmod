@@ -341,6 +341,50 @@ explosion:
 		Length: 10
 		Tick: 40
 		ZOffset: 2048
+	sonicwave1: sonicwave
+		Frames: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
+		Start: 0
+		Length: 10
+		Tick: 60
+		Facings: 4
+		BlendMode: Additive
+		ZOffset: 2046
+		InterpolatedFacings: 32
+		Alpha: 0.18
+	sonicwave2: sonicwave
+		Frames: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
+		Start: 0
+		Length: 10
+		Tick: 60
+		Facings: 4
+		BlendMode: Additive
+		ZOffset: 2046
+		FlipX: true
+		FlipY: true
+		InterpolatedFacings: 32
+		Alpha: 0.18
+	sonicwaveupg1: sonicwaveupg
+		Frames: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
+		Start: 0
+		Length: 10
+		Tick: 60
+		Facings: 4
+		BlendMode: Additive
+		ZOffset: 2046
+		InterpolatedFacings: 32
+		Alpha: 0.22
+	sonicwaveupg2: sonicwaveupg
+		Frames: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
+		Start: 0
+		Length: 10
+		Tick: 60
+		Facings: 4
+		BlendMode: Additive
+		ZOffset: 2046
+		FlipX: true
+		FlipY: true
+		InterpolatedFacings: 32
+		Alpha: 0.22
 	fuelbomb: moab
 		Tick: 40
 	small_explosion_alt1: veh-hit-alt
@@ -374,11 +418,11 @@ explosion:
 		BlendMode: Additive
 		Alpha: 0.75
 		FlipX: true
-	enliemp1: enliemp
+	enliemphit1: enliemphit
 		BlendMode: Additive
 		Alpha: 0.75
 		Offset: 0, -6
-	enliemp2: enliemp
+	enliemphit2: enliemphit
 		BlendMode: Additive
 		Alpha: 0.75
 		Offset: 0, -6
@@ -414,6 +458,13 @@ rmbctorp:
 	Defaults:
 		IgnoreWorldTint: true
 	idle: rmbctorp
+		Length: *
+		ZOffset: 2046
+
+enliempproj:
+	Defaults:
+		IgnoreWorldTint: true
+	idle: enliempproj
 		Length: *
 		ZOffset: 2046
 
@@ -1916,6 +1967,7 @@ flameall:
 		Tick: 80
 		ZOffset: 1023
 		Offset: 0, 0, 6
+		InterpolatedFacings: 32
 
 flameallfast:
 	Defaults:
@@ -1926,6 +1978,7 @@ flameallfast:
 		Tick: 60
 		ZOffset: 1023
 		Offset: 0, 0, 6
+		InterpolatedFacings: 32
 
 flameallblack:
 	Defaults:
@@ -1936,6 +1989,7 @@ flameallblack:
 		Tick: 60
 		ZOffset: 1023
 		Offset: 0, 0, 6
+		InterpolatedFacings: 32
 
 thinblueflame:
 	Defaults:
@@ -1947,6 +2001,7 @@ thinblueflame:
 		ZOffset: 1023
 		Offset: 0, 0, 6
 		BlendMode: Additive
+		InterpolatedFacings: 32
 
 chemall:
 	idle: chemall
@@ -1955,6 +2010,7 @@ chemall:
 		Tick: 140
 		ZOffset: 1023
 		Offset: 0, 0, 6
+		InterpolatedFacings: 32
 
 chronoappear:
 	Defaults:
@@ -2061,6 +2117,27 @@ tnt:
 		Length: *
 	tntbig: tntoverlaybig
 		Length: *
+
+groundtnt:
+	Defaults:
+		Length: 1
+		Tick: 2000
+	idle1: tnt
+		Start: 0
+	idle2: tnt
+		Start: 1
+	idle3: tnt
+		Start: 2
+	idle4: tnt
+		Start: 3
+	idle5: tnt
+		Start: 4
+	idle6: tnt
+		Start: 5
+	idle7: tnt
+		Start: 6
+	idle8: tnt
+		Start: 7
 
 cryomiss:
 	idle: cryomiss

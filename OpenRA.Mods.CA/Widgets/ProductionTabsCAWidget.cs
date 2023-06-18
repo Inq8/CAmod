@@ -1,11 +1,10 @@
 #region Copyright & License Information
-/*
- * Copyright 2007-2022 The OpenRA Developers (see AUTHORS)
- * This file is part of OpenRA, which is free software. It is made
- * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation, either version 3 of
- * the License, or (at your option) any later version. For more
- * information, see COPYING.
+/**
+ * Copyright (c) The OpenRA Combined Arms Developers (see CREDITS).
+ * This file is part of OpenRA Combined Arms, which is free software.
+ * It is made available to you under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. For more information, see COPYING.
  */
 #endregion
 
@@ -14,10 +13,11 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Mods.Common.Widgets;
 using OpenRA.Primitives;
 using OpenRA.Widgets;
 
-namespace OpenRA.Mods.Common.Widgets
+namespace OpenRA.Mods.CA.Widgets
 {
 	public class ProductionTabCA
 	{
@@ -85,6 +85,7 @@ namespace OpenRA.Mods.Common.Widgets
 		public readonly HotkeyReference NextProductionTabKey = new HotkeyReference();
 
 		public readonly Dictionary<string, ProductionTabGroupCA> Groups;
+		public string Cursor = ChromeMetrics.Get<string>("ButtonCursor");
 
 		public string LeftButton = null;
 		public string RightButton = null;
@@ -94,6 +95,8 @@ namespace OpenRA.Mods.Common.Widgets
 		int contentWidth = 0;
 		bool leftPressed = false;
 		bool rightPressed = false;
+		int pressedTabIndex = -1;
+		bool hoverCursor = false;
 		SpriteFont font;
 		Rectangle leftButtonRect;
 		Rectangle rightButtonRect;
@@ -193,10 +196,14 @@ namespace OpenRA.Mods.Common.Widgets
 
 			var rb = RenderBounds;
 
+			hoverCursor = false;
 			var leftDisabled = startTabIndex == 0;
 			var leftHover = Ui.MouseOverWidget == this && leftButtonRect.Contains(Viewport.LastMousePos);
 			var rightDisabled = startTabIndex >= numTabs - MaxTabsVisible;
 			var rightHover = Ui.MouseOverWidget == this && rightButtonRect.Contains(Viewport.LastMousePos);
+
+			if ((leftHover && !leftDisabled) || (rightHover && !rightDisabled))
+				hoverCursor = true;
 
 			ButtonWidget.DrawBackground(LeftButton, leftButtonRect, leftDisabled, leftPressed, leftHover, false);
 			ButtonWidget.DrawBackground(RightButton, rightButtonRect, rightDisabled, rightPressed, rightHover, false);
@@ -222,7 +229,11 @@ namespace OpenRA.Mods.Common.Widgets
 				var rect = new Rectangle(origin.X + contentWidth, origin.Y, TabWidth, rb.Height);
 				var hover = !leftHover && !rightHover && Ui.MouseOverWidget == this && rect.Contains(Viewport.LastMousePos);
 				var highlighted = tab.Queue == CurrentQueue;
-				ButtonWidget.DrawBackground(TabButton, rect, false, false, hover, highlighted);
+				var pressed = pressedTabIndex == tabIndex;
+				ButtonWidget.DrawBackground(TabButton, rect, false, pressed, hover, highlighted);
+
+				if (hover)
+					hoverCursor = true;
 
 				contentWidth += TabWidth + TabSpacing;
 
@@ -303,6 +314,7 @@ namespace OpenRA.Mods.Common.Widgets
 
 		public override bool YieldMouseFocus(MouseInput mi)
 		{
+			pressedTabIndex = -1;
 			leftPressed = rightPressed = false;
 			return base.YieldMouseFocus(mi);
 		}
@@ -360,6 +372,7 @@ namespace OpenRA.Mods.Common.Widgets
 
 				if (Groups[queueGroup].Tabs.Count >= tabIndex)
 				{
+					pressedTabIndex = tabIndex;
 					var tab = Groups[queueGroup].Tabs[tabIndex];
 					CurrentQueue = tab.Queue;
 					Game.Sound.PlayNotification(world.Map.Rules, null, "Sounds", ClickSound, null);
@@ -393,6 +406,11 @@ namespace OpenRA.Mods.Common.Widgets
 			}
 
 			return false;
+		}
+
+		public override string GetCursor(int2 pos)
+		{
+			return hoverCursor ? Cursor : null;
 		}
 	}
 }

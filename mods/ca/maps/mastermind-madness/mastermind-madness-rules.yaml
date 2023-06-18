@@ -69,6 +69,12 @@ Player:
 		Visible: False
 		Values:
 			Single-Queue: global.singlequeue
+	-ModularBot@BrutalAI:
+	-ModularBot@VeryHardAI:
+	-ModularBot@HardAI:
+	-ModularBot@NormalAI:
+	-ModularBot@EasyAI:
+	-ModularBot@NavalAI:
 
 ^IndestructibleWhenNeutral:
 	GrantConditionIfOwnerIsNeutral@NEUTRAL:
@@ -82,7 +88,7 @@ Player:
 	GrantCondition@NEUTRALDISABLE:
 		Condition: being-warped
 		RequiresCondition: is-neutral
-	WithModifiedPalette@TEMPORALl:
+	WithPalettedOverlay@TEMPORALl:
 		RequiresCondition: being-warped && !is-neutral
 	WithColoredOverlay@TEMPORAL2:
 		RequiresCondition: being-warped && !is-neutral
@@ -203,6 +209,13 @@ MAST:
 		UncloakSound: gstealof.aud
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden)
+	WithNameTagDecorationCA:
+		Position: Top
+		Font: Regular
+		Margin: 0, -20
+		ColorSource: Player
+		ContrastColorLight: 000000
+		ValidRelationships: Ally, Enemy, Neutral
 
 RNDV:
 	Inherits@1: ^1x1Shape

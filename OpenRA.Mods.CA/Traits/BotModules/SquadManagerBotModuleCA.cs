@@ -1,11 +1,10 @@
 #region Copyright & License Information
-/*
- * Copyright 2007-2020 The OpenRA Developers (see AUTHORS)
- * This file is part of OpenRA, which is free software. It is made
- * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation, either version 3 of
- * the License, or (at your option) any later version. For more
- * information, see COPYING.
+/**
+ * Copyright (c) The OpenRA Combined Arms Developers (see CREDITS).
+ * This file is part of OpenRA Combined Arms, which is free software.
+ * It is made available to you under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. For more information, see COPYING.
  */
 #endregion
 
@@ -37,8 +36,11 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Enemy building types around which to scan for targets for naval squads.")]
 		public readonly HashSet<string> NavalProductionTypes = new HashSet<string>();
 
-		// [Desc("Own actor types that are prioritized when defending.")]
-		// public readonly HashSet<string> ProtectionTypes = new HashSet<string>();
+		/*
+		[Desc("Own actor types that are prioritized when defending.")]
+		public readonly HashSet<string> ProtectionTypes = new HashSet<string>();
+		*/
+
 		[Desc("Minimum number of units AI must have before attacking.")]
 		public readonly int SquadSize = 8;
 
@@ -48,9 +50,6 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Delay (in ticks) between giving out orders to units.")]
 		public readonly int AssignRolesInterval = 50;
 
-		[Desc("Delay (in ticks) between attempting rush attacks.")]
-		public readonly int RushInterval = 600;
-
 		[Desc("Delay (in ticks) between issuing a protection order.")]
 		public readonly int ProtectInterval = 50;
 
@@ -59,9 +58,6 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Minimum delay (in ticks) between creating squads.")]
 		public readonly int MinimumAttackForceDelay = 0;
-
-		[Desc("Radius in cells around enemy BaseBuilder (Construction Yard) where AI scans for targets to rush.")]
-		public readonly int RushAttackScanRadius = 15;
 
 		[Desc("Radius in cells around the base that should be scanned for units to be protected.")]
 		public readonly int ProtectUnitScanRadius = 15;
@@ -91,6 +87,12 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Random number of up to this value units is added to squad valuee when creating an attack squad.")]
 		public readonly int SquadValueRandomBonus = 0;
+
+		[Desc("Percent change for ground squads to attack a random priority target rather than the closest enemy.")]
+		public readonly int HighValueTargetPriority = 0;
+
+		[Desc("Actor types to prioritise based on HighValueTargetPriority.")]
+		public readonly HashSet<string> HighValueTargetTypes = new HashSet<string>();
 
 		[Desc("Percent change for air squads (that can attack aircraft) to prioritise enemy aircraft.")]
 		public readonly int AirToAirPriority = 85;
@@ -164,23 +166,29 @@ namespace OpenRA.Mods.CA.Traits
 			unitCannotBeOrdered = a => a == null || a.Owner != Player || a.IsDead || !a.IsInWorld;
 		}
 
-		// Use for proactive targeting.
-		public bool IsPreferredEnemyUnit(Actor a)
+		bool IsValidEnemyUnit(Actor a)
 		{
-			if (a == null || a.IsDead || Player.RelationshipWith(a.Owner) != PlayerRelationship.Enemy || a.Info.HasTraitInfo<HuskInfo>() || a.Info.HasTraitInfo<AircraftInfo>() || a.Info.HasTraitInfo<CarrierSlaveInfo>())
+			if (a == null || a.IsDead || Player.RelationshipWith(a.Owner) != PlayerRelationship.Enemy || a.Info.HasTraitInfo<HuskInfo>() || a.Info.HasTraitInfo<CarrierSlaveInfo>())
 				return false;
 
 			var targetTypes = a.GetEnabledTargetTypes();
 			return !targetTypes.IsEmpty && !targetTypes.Overlaps(Info.IgnoredEnemyTargetTypes);
 		}
 
+		// Use for proactive targeting.
+		public bool IsPreferredEnemyUnit(Actor a)
+		{
+			return IsValidEnemyUnit(a) && !a.Info.HasTraitInfo<AircraftInfo>();
+		}
+
 		public bool IsPreferredEnemyAircraft(Actor a)
 		{
-			if (a == null || a.IsDead || Player.RelationshipWith(a.Owner) != PlayerRelationship.Enemy || a.Info.HasTraitInfo<HuskInfo>() || !a.Info.HasTraitInfo<AircraftInfo>() || !a.Info.HasTraitInfo<AttackBaseInfo>() || a.Info.HasTraitInfo<CarrierSlaveInfo>())
-				return false;
+			return IsValidEnemyUnit(a) && a.Info.HasTraitInfo<AircraftInfo>() && a.Info.HasTraitInfo<AttackBaseInfo>();
+		}
 
-			var targetTypes = a.GetEnabledTargetTypes();
-			return !targetTypes.IsEmpty && !targetTypes.Overlaps(Info.IgnoredEnemyTargetTypes);
+		public bool IsHighValueTarget(Actor a)
+		{
+			return IsValidEnemyUnit(a) && Info.HighValueTargetTypes.Contains(a.Info.Name);
 		}
 
 		public bool IsAirSquadTargetType(Actor a, SquadCA owner)
@@ -219,10 +227,6 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override void TraitEnabled(Actor self)
 		{
-			// Avoid all AIs trying to rush in the same tick, randomize their initial rush a little.
-			var smallFractionOfRushInterval = Info.RushInterval / 20;
-			rushTicks = World.LocalRandom.Next(Info.RushInterval - smallFractionOfRushInterval, Info.RushInterval + smallFractionOfRushInterval);
-
 			// Avoid all AIs reevaluating assignments on the same tick, randomize their initial evaluation delay.
 			assignRolesTicks = World.LocalRandom.Next(0, Info.AssignRolesInterval);
 			attackForceTicks = World.LocalRandom.Next(0, Info.AttackForceInterval);
@@ -243,6 +247,12 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			var units = World.Actors.Where(IsPreferredEnemyUnit);
 			return units.Where(IsNotHiddenUnit).ClosestTo(pos) ?? units.ClosestTo(pos);
+		}
+
+		internal Actor FindHighValueTarget(WPos pos)
+		{
+			var units = World.Actors.Where(IsHighValueTarget);
+			return units.RandomOrDefault(World.LocalRandom);
 		}
 
 		internal Actor FindClosestEnemy(WPos pos, WDist radius)
@@ -287,12 +297,6 @@ namespace OpenRA.Mods.CA.Traits
 			unitsHangingAroundTheBase.RemoveAll(unitCannotBeOrdered);
 			foreach (var n in notifyIdleBaseUnits)
 				n.UpdatedIdleBaseUnits(unitsHangingAroundTheBase);
-
-			if (--rushTicks <= 0)
-			{
-				rushTicks = Info.RushInterval;
-				TryToRushAttack(bot);
-			}
 
 			if (--attackForceTicks <= 0)
 			{
@@ -419,39 +423,6 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (Info.SquadValue > 0)
 				desiredAttackForceValue = Info.SquadValue + World.LocalRandom.Next(Info.SquadValueRandomBonus);
-		}
-
-		void TryToRushAttack(IBot bot)
-		{
-			var allEnemyBaseBuilder = AIUtils.FindEnemiesByCommonName(Info.ConstructionYardTypes, Player);
-
-			// TODO: This should use common names & ExcludeFromSquads instead of hardcoding TraitInfo checks
-			var ownUnits = activeUnits
-				.Where(unit => unit.IsIdle && unit.Info.HasTraitInfo<AttackBaseInfo>()
-					&& !unit.Info.HasTraitInfo<AircraftInfo>() && !Info.NavalUnitsTypes.Contains(unit.Info.Name) && !unit.Info.HasTraitInfo<HarvesterInfo>()).ToList();
-
-			if (allEnemyBaseBuilder.Count == 0 || ownUnits.Count < Info.SquadSize)
-				return;
-
-			foreach (var b in allEnemyBaseBuilder)
-			{
-				// Don't rush enemy aircraft!
-				var enemies = World.FindActorsInCircle(b.CenterPosition, WDist.FromCells(Info.RushAttackScanRadius))
-					.Where(unit => IsPreferredEnemyUnit(unit) && unit.Info.HasTraitInfo<AttackBaseInfo>() && !Info.AirUnitsTypes.Contains(unit.Info.Name) && !Info.NavalUnitsTypes.Contains(unit.Info.Name)).ToList();
-
-				if (AttackOrFleeFuzzyCA.Rush.CanAttack(ownUnits, enemies))
-				{
-					var target = enemies.Count > 0 ? enemies.Random(World.LocalRandom) : b;
-					var rush = GetSquadOfType(SquadCAType.Rush);
-					if (rush == null)
-						rush = RegisterNewSquad(bot, SquadCAType.Rush, target);
-
-					foreach (var a3 in ownUnits)
-						rush.Units.Add(a3);
-
-					return;
-				}
-			}
 		}
 
 		void ProtectOwn(IBot bot, Actor attacker)

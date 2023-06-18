@@ -1,0 +1,589 @@
+World:
+	MissionData:
+		Briefing: ================\n\n- Two teams must fight over five objectives.\n-------------------------\n- Players have a set number of credits, refunded when a unit is lost so it can be replaced.\n-------------------------\n- Any unit can capture an objective.\n-------------------------\n- Points are gained by holding objectives.\n-------------------------\n- First team to 1500 points wins.\n\n================\n
+	LuaScript:
+		Scripts: tfca.lua
+	-SpawnStartingUnits:
+	MapBuildRadius:
+		AllyBuildRadiusCheckboxVisible: False
+		BuildRadiusCheckboxVisible: False
+	MapOptions:
+		TechLevelDropdownVisible: False
+		ShortGameCheckboxEnabled: True
+		ShortGameCheckboxLocked: True
+		ShortGameCheckboxVisible: False
+	CrateSpawner:
+		CheckboxEnabled: False
+		CheckboxLocked: True
+		CheckboxVisible: False
+	MapStartingLocations:
+		SeparateTeamSpawnsCheckboxVisible: False
+	TimeLimitManager:
+		TimeLimitLocked: True
+		TimeLimitDropdownVisible: False
+	ScriptLobbyDropdown@UNITSPERPLAYER:
+		ID: unitsperplayer
+		Label: Units Per Player
+		Description: Number of units each player can build
+		Values:
+			1: 1
+			2: 2
+			3: 3
+			4: 4
+			5: 5
+			6: 6
+			7: 7
+			8: 8
+			9: 9
+			10: 10
+			11: 11
+			12: 12
+			13: 13
+			14: 14
+			15: 15
+		Default: 1
+
+Player:
+	ConquestVictoryConditions:
+	PlayerResources:
+		SelectableCash: 0
+		DefaultCash: 0
+		DefaultCashDropdownVisible: False
+	LobbyPrerequisiteCheckbox@GLOBALBOUNTY:
+		Enabled: False
+		Locked: True
+		Visible: False
+	LobbyPrerequisiteCheckbox@FORCESHIELD:
+		Enabled: False
+		Visible: False
+	DeveloperMode:
+		CheckboxLocked: True
+		CheckboxVisible: False
+	LobbyPrerequisiteCheckbox@GLOBALFACTUNDEPLOY:
+		Visible: False
+	LobbyPrerequisiteCheckbox@NAVY:
+		Visible: False
+	LobbyPrerequisiteCheckbox@BALANCEDHARVESTING:
+		Visible: False
+	LobbyPrerequisiteCheckbox@REVEALONFIRE:
+		Enabled: False
+		Locked: True
+		Visible: False
+	LobbyPrerequisiteDropdown@QUEUETYPE:
+		DefaultValue: global.singlequeue
+		Visible: False
+		Values:
+			Single-Queue: global.singlequeue
+	Shroud:
+		ExploredMapCheckboxEnabled: False
+		ExploredMapCheckboxVisible: False
+		ExploredMapCheckboxLocked: True
+	-ModularBot@BrutalAI:
+	-ModularBot@VeryHardAI:
+	-ModularBot@HardAI:
+	-ModularBot@NormalAI:
+	-ModularBot@EasyAI:
+	-ModularBot@NavalAI:
+	LobbyPrerequisiteCheckbox@SHOWNAMES:
+		ID: shownames
+		Label: Show Names
+		Description: Show name tags above each unit
+		Enabled: True
+		DisplayOrder: 999
+		Prerequisites: global.shownames
+
+SPAWN:
+	Inherits: CAMERA
+	Inherits@PROD: ^ProducesInfantry
+	Tooltip:
+		Name: Spawn Point
+	Exit:
+	Production:
+		Produces: Infantry, Soldier
+	ProvidesPrerequisite:
+	WithSpriteBody:
+	-RenderSpritesEditorOnly:
+	RenderSprites:
+		Image: shab
+	WithIdleAnimation:
+		Sequences: idle
+		Interval: 25
+	Production@SQINF:
+		-PauseOnCondition:
+	Production@MQINF:
+		-PauseOnCondition:
+	ProvidesRadar:
+	ScriptTriggers:
+	MustBeDestroyed:
+		RequiredForShortGame: true
+
+^Soldier:
+	TakeCover:
+		DamageModifiers:
+			Prone50Percent: 75
+
+^TFUnit:
+	WithNameTagDecorationCA:
+		Position: Top
+		Font: Regular
+		Margin: 0, -20
+		ColorSource: Team
+		ContrastColorLight: 000000
+		ValidRelationships: Ally, Enemy, Neutral
+		RequiresCondition: shownames
+	GrantConditionOnPrerequisite@SHOWNAMES:
+		Condition: shownames
+		Prerequisites: global.shownames
+	WithColoredSelectionBox@REL:
+		ColorSource: Team
+		ValidRelationships: Ally, Enemy, Neutral
+	Buildable:
+		Prerequisites: spawn
+		BuildAtProductionType: Soldier
+		BuildDuration: 5
+		BuildDurationModifier: 100
+	Valued:
+		Cost: 1
+	CaptureManager:
+	Captures:
+		CaptureTypes: building
+		PlayerExperience: 25
+		CaptureDelay: 225
+		ConsumedByCapture: false
+
+XO:
+	Inherits@TFUNIT: ^TFUnit
+	Buildable:
+		Description: Armoured suit with dual chainguns.
+		BuildPaletteOrder: 6
+	TooltipExtras:
+		Strengths: • Durable\n• Self repairs
+		Weaknesses: • Slow\n• Must wind up to full damage
+	Mobile:
+		Speed: 75
+	RevealsShroud:
+		Range: 8c0
+	Health:
+		HP: 80000
+	Armor:
+		Type: None
+	Armament@PRIMARY:
+		Weapon: MGattG
+		LocalOffset: 400,-220,180, 400,220,180
+		MuzzleSequence: muzzle
+	-Armament@SECONDARY:
+	GrantConditionOnAttack@SPIN:
+		ArmamentNames: primary
+		Condition: spinning
+		RequiredShotsPerInstance: 1,2,4
+		MaximumInstances: 3
+		RevokeDelay: 40
+		RevokeOnNewTarget: False
+		RevokeAll: True
+	GrantConditionOnAttackCA@FIRE:
+		ArmamentNames: primary
+		Condition: firing
+		RevokeDelay: 6
+	FirepowerMultiplier@GAT1:
+		Modifier: 115
+		RequiresCondition: spinning == 1
+	FirepowerMultiplier@GAT2:
+		Modifier: 130
+		RequiresCondition: spinning == 2
+	FirepowerMultiplier@GAT3:
+		Modifier: 145
+		RequiresCondition: spinning >= 3
+	AmbientSoundCA@ATTACKSOUND1:
+		SoundFiles: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
+		RequiresCondition: firing && spinning == 1
+	AmbientSoundCA@ATTACKSOUND2:
+		InitialSound: vgatlo4a.aud
+		SoundFiles: vgatlo5a.aud, vgatlo5b.aud
+		RequiresCondition: firing && spinning == 2
+	AmbientSoundCA@ATTACKSOUND3:
+		InitialSound: vgatlo7a.aud
+		SoundFiles: vgatlo8a.aud, vgatlo8b.aud
+		RequiresCondition: firing && spinning >= 3
+	Targetable@HEAL:
+		TargetTypes: Heal
+		RequiresCondition: damaged
+	ChangesHealth@DEFAULT:
+		PercentageStep: 1
+		Delay: 25
+		StartIfBelow: 101
+		DamageCooldown: 150
+
+E3:
+	Inherits@TFUNIT: ^TFUnit
+	Buildable:
+		Description: Soldier armed with a rocket launcher.
+		BuildPaletteOrder: 3
+	TooltipExtras:
+		Strengths: • Good all-round damage dealer• Guided projectiles
+		Weaknesses: • Mediocre rate of fire\n• Slow projectiles
+	Mobile:
+		Speed: 100
+	RevealsShroud:
+		Range: 8c0
+	Health:
+		HP: 25000
+	ReloadAmmoPool:
+		Delay: 10
+	Armament@PRIMARY:
+		Weapon: Dragon
+	-Armament@PRIMARYUPG:
+	-Armament@SECONDARY:
+	-Armament@SECONDARYUPG:
+	-Armament@BATF:
+	-Armament@BATFUPG:
+
+MEDI:
+	Inherits@TFUNIT: ^TFUnit
+	Buildable:
+		BuildPaletteOrder: 5
+	Mobile:
+		Speed: 100
+	RevealsShroud:
+		Range: 8c0
+	Health:
+		HP: 20000
+
+E4:
+	Inherits@TFUNIT: ^TFUnit
+	Buildable:
+		Description: Soldier armed with a flamethrower.
+		BuildPaletteOrder: 7
+	TooltipExtras:
+		Strengths: • High sustained damage
+		Weaknesses: • Short range
+	Mobile:
+		Speed: 100
+	RevealsShroud:
+		Range: 8c0
+	Health:
+		HP: 20000
+	Armament:
+		Weapon: HeavyFlameTankFlamer
+		LocalOffset: 512,0,256
+	AmbientSoundCA:
+		SoundFiles: flamer-loop1.aud
+		InitialSound: flamer-start1.aud
+		FinalSound: flamer-end1.aud
+		RequiresCondition: attacking
+		InitialSoundLength: 20
+	GrantConditionOnAttackCA:
+		Condition: attacking
+		RevokeDelay: 5
+
+SEAL:
+	Inherits@TFUNIT: ^TFUnit
+	Tooltip:
+		Name: Navy SEAL (Scout)
+	Buildable:
+		Description: Fast soldier armed with a submachinegun.
+		BuildPaletteOrder: 1
+	TooltipExtras:
+		Strengths: • Very fast\n• Large vision radius
+		Weaknesses: • Mediocre damage\n• Fragile
+		Attributes: • Detects cloaked units
+	Mobile:
+		Speed: 150
+		Locomotor: foot
+		-Voice:
+	RevealsShroud:
+		Range: 12c0
+	Health:
+		HP: 15000
+	Voiced:
+		VoiceSet: GenericVoice
+	Armament:
+		Weapon: Uzi
+		LocalOffset: 427,0,341
+	-WithDecoration@COMMANDOSKULL:
+	-Armament@sapper:
+	-AmmoPool:
+	-ReloadAmmoPoolCA:
+	-Demolition:
+	Guard:
+		-Voice:
+	Passenger:
+		-Voice:
+	AttackMove:
+		-Voice:
+	AttackFrontal:
+		-Voice:
+	-AnnounceOnKill:
+
+E6:
+	Inherits@TFUNIT: ^TFUnit
+	Buildable:
+		Description: Soldier that can deploy and repair turrets.
+		BuildPaletteOrder: 9
+	TooltipExtras:
+		Weaknesses: • Unarmed
+		Attributes: • Detects mines\n• Defuses bombs
+	Mobile:
+		Speed: 100
+	RevealsShroud:
+		Range: 8c0
+	Health:
+		HP: 20000
+	Selectable:
+		Priority: 10
+	SpawnActorAbility:
+		Actor: gun
+		SkipMakeAnimations: false
+		Range: 5c0
+		CircleColor: 999999
+		SpawnSounds: placbldg.aud, build5.aud
+		AmmoPool: turretspawner
+	AmmoPool@TURRET:
+		Name: turretspawner
+		Armaments: none
+		Ammo: 1
+	ReloadAmmoPoolCA@TURRET:
+		AmmoPool: turretspawner
+		Delay: 750
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: FFAA00
+		ReloadWhenAmmoReaches: 0
+	WithAmmoPipsDecoration@TURRET:
+		AmmoPools: turretspawner
+		RequiresSelection: true
+		Position: BottomLeft
+		Margin: 4, 3
+	Captures:
+		CaptureDelay: 150
+	Armament:
+		Weapon: Repair
+		Cursor: repair
+		OutsideRangeCursor: repair
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+	Armament@defuse:
+		Weapon: DefuseKit
+		Cursor: goldwrench
+		OutsideRangeCursor: goldwrench
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+		Name: secondary
+	AutoTargetPriority@defuse:
+		ValidTargets: C4Attached
+		InvalidTargets: NoAutoTarget
+		ValidRelationships: Ally
+	AttackFrontal:
+		Voice: Action
+		PauseOnCondition: being-warped
+		FacingTolerance: 0
+	AttackSoundsCA@REPAIRSOUND:
+		Sounds: fixit1.aud
+	AutoTarget:
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Repair
+		ValidRelationships: Ally
+	-EngineerRepair:
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+	MineImmune:
+	DetectCloaked:
+		Range: 5c0
+		DetectionTypes: Mine
+
+SAB:
+	Inherits@TFUNIT: ^TFUnit
+	Buildable:
+		Description: Stealth infantry.
+		BuildPaletteOrder: 8
+	TooltipExtras:
+		Strengths: • High single-target burst damage
+		Weaknesses: • Short range\n• Fragile
+		Attributes: • Invisible when not attacking
+	Mobile:
+		Speed: 100
+	RevealsShroud:
+		Range: 8c0
+	Health:
+		HP: 15000
+	Selectable:
+		Priority: 10
+	-GrantChargingCondition@CLOAK:
+	-GrantConditionOnMovement:
+	Cloak:
+		RequiresCondition: !cloak-force-disabled && !being-warped
+		CloakDelay: 66
+	-ProductionCostMultiplier@LegionBonus:
+
+IVAN:
+	Inherits@TFUNIT: ^TFUnit
+	Buildable:
+		Description: Soldier armed with bombs and mines.
+		BuildPaletteOrder: 4
+	TooltipExtras:
+		Strengths: • High area damage
+		Weaknesses: • Has difficulty hitting moving targets
+		Attributes: • Lays mines
+	Mobile:
+		Speed: 125
+	RevealsShroud:
+		Range: 8c0
+	Health:
+		HP: 20000
+	Minelayer:
+		Mine: MINV
+		TileUnknownName: build-valid
+	MineImmune:
+	AmmoPool:
+		Ammo: 1
+		Armaments: none
+	WithAmmoPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+		FullSequence: pip-red
+	ReloadAmmoPoolCA:
+		Delay: 250
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: ff6600
+	Rearmable:
+		RearmActors: shad.rearm
+
+SNIP:
+	Inherits@TFUNIT: ^TFUnit
+	Buildable:
+		Description: Soldier armed with a sniper rifle.
+		BuildPaletteOrder: 2
+	TooltipExtras:
+		Strengths: • Long range\n• High single-target damage
+		Weaknesses: • Fragile\n• Slow
+		Attributes:
+	Mobile:
+		Speed: 75
+	RevealsShroud:
+		Range: 8c0
+	Health:
+		HP: 10000
+	AttackFrontalCharged:
+		ChargeLevel: 50
+	-Cloak@NORMAL:
+	-WithDecoration@hidden:
+	-WithColoredSelectionBox@INVIS:
+	Cloak@CRATE-CLOAK:
+		RequiresCondition: (crate-cloak) && !(cloak-force-disabled || invisibility)
+
+ATEK:
+	-Sellable:
+	-SpawnActorsOnSell:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
+	-Targetable:
+	Targetable@TEMPORAL:
+		TargetTypes: None
+	Targetable@HACKABLE:
+		TargetTypes: None
+	Power:
+		Amount: 0
+	-DummyGpsPower@NOFOG:
+	-DummyGpsPower@FOG:
+	-ProduceActorPowerCA@SatelliteLaunched:
+	-SupportPowerChargeBar:
+	-ProduceActorPowerCA@InitialSatelliteScan:
+	-ProduceActorPowerCA@SatelliteScan:
+	-ProduceActorPowerCA@SatelliteScanNoFog:
+	-GrantExternalConditionPowerCA@FSHIELD:
+	-DetonateWeaponPower@TEMPINC:
+	CaptureManager:
+		-BeingCapturedCondition:
+
+PROC:
+	-Sellable:
+	-SpawnActorsOnSell:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
+	-Targetable:
+	Targetable@TEMPORAL:
+		TargetTypes: None
+	Targetable@HACKABLE:
+		TargetTypes: None
+	Power:
+		Amount: 0
+	CaptureManager:
+		-BeingCapturedCondition:
+
+DOME:
+	-Sellable:
+	-SpawnActorsOnSell:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
+	-Targetable:
+	Targetable@TEMPORAL:
+		TargetTypes: None
+	Targetable@HACKABLE:
+		TargetTypes: None
+	Power:
+		Amount: 0
+	-AirstrikePower@clustermines:
+	-SpawnActorPowerCA@VeilOfWar:
+	-ParatroopersPower@paratroopers:
+	-ParatroopersPower@Russianparatroopers:
+	-AirstrikePower@spyplane:
+	-Targetable@INFILTRATION:
+	CaptureManager:
+		-BeingCapturedCondition:
+
+HQ:
+	-Sellable:
+	-SpawnActorsOnSell:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
+	-Targetable:
+	Targetable@TEMPORAL:
+		TargetTypes: None
+	Targetable@HACKABLE:
+		TargetTypes: None
+	Power:
+		Amount: 0
+	-Targetable@INFILTRATION:
+	CaptureManager:
+		-BeingCapturedCondition:
+
+APWR:
+	-Sellable:
+	-SpawnActorsOnSell:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
+	-Targetable:
+	Targetable@TEMPORAL:
+		TargetTypes: None
+	Targetable@HACKABLE:
+		TargetTypes: None
+	Power:
+		Amount: 0
+	-Targetable@INFILTRATION:
+	CaptureManager:
+		-BeingCapturedCondition:
+
+GUN:
+	Health:
+		HP: 50000
+	Armament:
+		Weapon: TurretUzi
+	Power:
+		Amount: 0
+	-RepairableBuilding:
+	-WithBuildingRepairDecoration:
+	-Sellable:
+	Targetable@REPAIR:
+		RequiresCondition: damaged && !being-warped
+		TargetTypes: Repair
+	GrantConditionOnDamageState@DAMAGED:
+		Condition: damaged
+		ValidDamageStates: Light, Medium, Heavy, Critical
+
+SPAWNGUN:
+	Inherits: GUN
+	DamageMultiplier@INVULN:
+		Modifier: 0
+	RenderSprites:
+		Image: gun

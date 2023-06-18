@@ -72,6 +72,7 @@ ChemballLauncher:
 		Image: cb1
 		Palette: temptd
 	Warhead@1Dam: SpreadDamage
+		Spread: 288
 		Versus:
 			Heavy: 15
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
@@ -164,74 +165,34 @@ NapalmtdBuilding:
 	-Warhead@3Eff:
 	-Warhead@Flames:
 
-Flamer:
+Chemspray:
 	ReloadDelay: 50
 	Range: 3c769
 	StartBurstReport: flamer2.aud
+	Burst: 5
+	BurstDelays: 5
 	Projectile: Bullet
 		Speed: 90
 		Inaccuracy: 484
-		Image: flameall
-		Palette: tseffect-ignore-lighting-alpha90
+		Image: chemall
+		Palette: ra2effect-ignore-lighting-alpha50
 		LaunchAngle: 5
-	Burst: 5
-	BurstDelays: 5
 	Warhead@1Dam: SpreadDamage
 		Spread: 288
 		Falloff: 100, 50, 25, 12, 6, 3, 0
-		Damage: 1300
+		Damage: 1450
 		Versus:
 			None: 300
 			Wood: 135
 			Tree: 120
-			Light: 59
-			Heavy: 30
-			Concrete: 30
 			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath
-	Warhead@2Smu: LeaveSmudge
-		SmudgeType: Scorch
-		InvalidTargets: Vehicle, Building, Wall
-	Warhead@Flames: FireCluster
-		Weapon: BurnFx
-		RandomClusterCount: 1
-		Dimensions: 1,1
-		Footprint: x
-
-# --- old version
-BigFlamer:
-	Inherits: Flamer
-	Range: 4c256
-	StartBurstReport: flamer3.aud
-	Warhead@1Dam: SpreadDamage
-		Damage: 2200
-		Versus:
-			Wood: 120
-
-FlamerE:
-	Inherits: Flamer
-	Range: 5c0
-
-# --- old version
-Chemspray:
-	Inherits: Flamer
-	Projectile: Bullet
-		Image: chemall
-		Palette: ra2effect-ignore-lighting-alpha50
-	Warhead@1Dam: SpreadDamage
-		Damage: 1450
-		Versus:
 			Concrete: 45
 			Light: 85
 			Heavy: 50
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
-	-Warhead@Flames:
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
-
-ChemsprayE:
-	Inherits: Chemspray
-	Range: 5c0
+		InvalidTargets: Vehicle, Building, Wall
 
 FlamerTD:
 	ReloadDelay: 65
@@ -296,6 +257,10 @@ BigFlamerTD:
 			Light: 100
 			Concrete: 45
 
+FlamerTDBATF:
+	Inherits: BigFlamerTD
+	Burst: 1
+
 BigFlamerTDFF:
 	Inherits: BigFlamerTD
 	Projectile: LinearPulse
@@ -344,11 +309,12 @@ HeavyFlameTankFlamer:
 
 HeavyFlameTankFlamer.UPG:
 	Inherits: HeavyFlameTankFlamer
+	ReloadDelay: 90
 	Projectile: LinearPulse
 		Image: flameallblack
 		Palette: scrin-ignore-lighting-alpha85
 	Warhead@1Dam: SpreadDamage
-		Falloff: 100, 60, 25, 0
+		Damage: 160
 		Versus:
 			Light: 100
 			Heavy: 70
@@ -472,10 +438,6 @@ PortaTesla:
 			Heavy: 75
 			Concrete: 70
 
-PortaTeslaE:
-	Inherits: PortaTesla
-	Range: 7c0
-
 PortaTeslaCharge:
 	Inherits: ^TeslaWeapon
 	ValidTargets: TeslaBoost
@@ -514,6 +476,7 @@ TTrackZap.UPG:
 		Amount: 1
 		AimChance: 100
 		ThrowWithoutTarget: false
+		AimTargetStances: Enemy, Neutral
 
 TTrackArc1:
 	Inherits: TTrackZap.UPG
@@ -672,6 +635,10 @@ Repair:
 		Condition: highlight
 		ValidTargets: Ground, Vehicle
 
+CyborgRepair:
+	Inherits: Repair
+	ReloadDelay: 75
+
 RepairIFV:
 	Inherits: Repair
 	ReloadDelay: 30
@@ -784,13 +751,19 @@ Ivanbomb:
 	Range: 3c725
 	Report: grenade1.aud
 	Projectile: Bullet
+		LaunchAngle: 80
 		Speed: 166
 		Inaccuracy: 0
 		Image: TNT
 		BounceCount: 2
-		BounceRangeModifier: 40
+		BounceRangeModifier: 60
 		BounceSound: dud2.aud
 		ValidBounceBlockerRelationships: Ally, Neutral, Enemy
+		ContrailLength: 10
+		ContrailStartColor: FF9900
+		ContrailStartColorAlpha: 192
+		ContrailEndColor: FF0000
+		ContrailWidth: 0c40
 	Warhead@AttachDelayedWeapon: AttachDelayedWeapon
 		Weapon: TNT
 		Type: tnt
@@ -798,7 +771,7 @@ Ivanbomb:
 		DeathTypes: ExplosionDeath
 		Range: 1
 		AttachSounds: icraatta.aud
-		MissSounds: dud1.aud
+		MissWeapon: DelayedTNT
 	Warhead@TargetValidator: SpreadDamage
 	Warhead@highlight: GrantExternalCondition
 		Range: 0c256
@@ -818,7 +791,7 @@ TNT:
 		Spread: 341
 		Damage: 2800
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
-		ValidTargets: Ground, Water
+		ValidTargets: Ground, Water, Air
 		Versus:
 			Light: 70
 			Heavy: 20
@@ -835,6 +808,22 @@ TNT:
 		RandomClusterCount: 3
 		Dimensions: 3,3
 		Footprint: xxx xxx xxx
+
+DelayedTNT:
+	Inherits: TNT
+	Warhead@1Dam: SpreadDamage
+		Delay: 50
+		ValidTargets: Ground, Water
+	Warhead@2Eff: CreateEffect
+		Delay: 50
+	Warhead@Smu: LeaveSmudge
+		Delay: 50
+	Warhead@Flames: FireCluster
+		Delay: 50
+	Warhead@tnt: CreateEffect
+		Image: groundtnt
+		Explosions: idle1, idle2, idle3, idle4, idle5, idle6, idle7, idle8
+		ValidTargets: Ground, Water
 
 DefuseKit:
 	ReloadDelay: 50
@@ -1093,9 +1082,25 @@ PortaLaser:
 			Heavy: 55
 			Concrete: 40
 
-PortaLaserE:
+PortaLaser.UPG:
 	Inherits: PortaLaser
-	Range: 7c0
+	Range: 6c512
+	StartBurstReport: lasgunupg.aud
+	Projectile: LaserZapCA
+		SecondaryBeamWidth: 75
+		SecondaryBeamColor: FF006660
+	Warhead@1Dam: SpreadDamage
+		Damage: 1800
+
+IFVLaser:
+	Inherits: PortaLaser
+	-Burst:
+	-StartBurstReport:
+	Report: venmfireupg1.aud, venmfireupg1.aud
+	Projectile: LaserZapCA
+		SecondaryBeamWidth: 75
+	Warhead@1Dam: SpreadDamage
+		Damage: 3750
 
 EnlightenedBeam:
 	ReloadDelay: 65
@@ -1120,24 +1125,24 @@ EnlightenedBeam:
 		MaxFacingDeviation: 64
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
-		Damage: 5200
+		Damage: 5000
 		Falloff: 100, 85, 60, 25, 0
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		Versus:
 			None: 10
 			Wood: 70
 			Concrete: 45
-			Light: 80
+			Light: 75
 		ValidRelationships: Enemy, Neutral
-	Warhead@2Dam: SpreadDamage
+	Warhead@friendlyFire: SpreadDamage
 		Spread: 256
-		Damage: 2600
+		Damage: 2500
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		Versus:
 			None: 10
 			Wood: 70
 			Concrete: 45
-			Light: 80
+			Light: 75
 		ValidRelationships: Ally
 	Warhead@2Eff: CreateEffect
 		Explosions: enliexplode1, enliexplode2
@@ -1148,23 +1153,34 @@ EnlightenedBeam:
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees, Creep
 
 EnlightenedEmp:
-	ReloadDelay: 375
+	ReloadDelay: 500
+	Range: 5c0
+	Report: enli-empfire.aud
+	Projectile: Bullet
+		Blockable: false
+		Shadow: true
+		Image: enliempproj
+		Palette: effect
+		Speed: 190
+		TrailImage: smokey
+		TrailPalette: scrinplasma
+		LaunchAngle: 30
+		Inaccuracy: 128
 	Warhead@1Emp: GrantExternalCondition
-		Range: 1c896
-		Duration: 250
+		Range: 0c896
+		Duration: 100
 		Condition: empdisable
-		ValidTargets: Ground, Vehicle, Defense
-		ValidRelationships: Enemy, Neutral
+		ValidTargets: Ground, Vehicle
+		InvalidTargets: Cyborg, Defense
 	Warhead@2Emp: GrantExternalCondition
-		Range: 1c896
-		Duration: 250
+		Range: 0c896
+		Duration: 50
 		Condition: empdisable
-		ValidTargets: Ground, Vehicle, Defense
-		InvalidTargets: Cyborg
-		ValidRelationships: Ally
+		ValidTargets: Cyborg, Defense
 	Warhead@3Eff_impact: CreateEffect
-		Explosions: enliemp1, enliemp2
-		ImpactSounds: enli-emp.aud
+		Explosions: enliemphit1, enliemphit2
+		ImpactSounds: enli-emphit.aud
+		Inaccuracy: 341
 
 VenomLaser:
 	ReloadDelay: 30
@@ -1198,10 +1214,16 @@ VenomLaser:
 VenomLaser.UPG:
 	Inherits: VenomLaser
 	Report: venmfireupg1.aud, venmfireupg1.aud
+	Range: 6c512
 	Projectile: LaserZapCA
 		Duration: 10
 		SecondaryBeamWidth: 75
 		SecondaryBeamColor: FF00FF60
+	Warhead@1Dam: SpreadDamage
+		Spread: 42
+		Damage: 6325
+		Versus:
+			Concrete: 55
 
 VenomLaserAA:
 	Inherits: VenomLaser
@@ -1225,10 +1247,13 @@ VenomLaserAA:
 VenomLaserAA.UPG:
 	Inherits: VenomLaserAA
 	Report: venmfireupg1.aud, venmfireupg1.aud
+	Range: 6c512
 	Projectile: LaserZapCA
 		Duration: 10
 		SecondaryBeamWidth: 75
 		SecondaryBeamColor: FF00FF60
+	Warhead@1Dam: SpreadDamage
+		Damage: 4600
 
 PointLaser:
 	Inherits: Laser
@@ -1396,7 +1421,7 @@ KirovBomb:
 		Acceleration: 0, 0, 0
 		Shadow: True
 	Warhead@1Dam: SpreadDamage
-		Spread: 1c512
+		Spread: 1c0
 		Falloff: 100, 40, 20, 5
 		Damage: 13000
 		InvalidTargets: Air
@@ -1405,8 +1430,8 @@ KirovBomb:
 			Wood: 100
 			Light: 85
 			Heavy: 75
-			Concrete: 55
-		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+			Concrete: 60
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, AirToGround
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Crater
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
@@ -1423,7 +1448,7 @@ KirovBomb:
 KirovTeslaBomb:
 	Inherits: KirovBomb
 	Warhead@1Dam: SpreadDamage
-		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
+		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath, AirToGround
 	Warhead@3Eff: CreateEffect
 		Explosions: tsla_bomb
 		ExplosionPalette: ra2effect
@@ -1431,15 +1456,34 @@ KirovTeslaBomb:
 	Warhead@5Tesla: FireShrapnel
 		Weapon: KirovTeslaArc
 		Amount: 3
-		AimChance: 85
+		AimChance: 100
 		AllowDirectHit: true
 		ThrowWithoutTarget: false
+		AimTargetStances: Enemy, Neutral
 
 KirovClusterBomb:
 	Inherits: KirovBomb
 	Warhead@1Dam: SpreadDamage
+		Spread: 1c512
 		Versus:
-			Concrete: 60
+			Concrete: 65
+	Warhead@3Eff: CreateEffect
+		Explosions: large_artillery_explosion
+		ImpactSounds: artyhit.aud, artyhit2.aud, artyhit3.aud
+	Warhead@Concussion1: GrantExternalCondition
+		Range: 0c768
+		Duration: 125
+		Condition: concussion
+		ValidTargets: Ground, Infantry, Vehicle, Ship
+	Warhead@Concussion2: GrantExternalCondition
+		Range: 1c768
+		Duration: 35
+		Condition: concussion
+		ValidTargets: Ground, Infantry, Vehicle, Ship
+	Warhead@5Shake: ShakeScreen
+		Duration: 5
+		Intensity: 1
+		Multiplier: 0.5,0.5
 	Warhead@6Cluster: FireCluster
 		Weapon: KirovCluster
 		RandomClusterCount: 3
@@ -1452,7 +1496,7 @@ KirovNukeBomb:
 		Versus:
 			Light: 100
 			Heavy: 90
-		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath, AirToGround
 	Warhead@3Eff: CreateEffect
 		Explosions: nuke3
 		ImpactSounds: kaboom1.aud
@@ -1468,7 +1512,7 @@ KirovChaosBomb:
 	Warhead@Cloud1: SpawnActor
 		Actors: chaos.cloud1, chaos.cloud2
 		Range: 5
-		ValidTargets: Ground, Water
+		ValidTargets: Ground, Water, Trees
 	Warhead@3Eff: CreateEffect
 		Explosions: chaosexplosion
 		ExplosionPalette: caneon
@@ -1480,6 +1524,7 @@ KirovTeslaArc:
 	Inherits: TTankZap
 	Range: 4c0
 	Report: shktrop1.aud
+	ValidTargets: Infantry, Vehicle, Ship
 	Warhead@1Dam: SpreadDamage
 		Damage: 3000
 		ValidTargets: Infantry, Vehicle, Ship
@@ -1757,7 +1802,7 @@ TitanRailgunImpact:
 		ValidRelationships: Enemy, Neutral, Ally
 
 IonZap:
-	ReloadDelay: 80
+	ReloadDelay: 85
 	Range: 5c768
 	Report: ion1.aud
 	InvalidTargets: Air
@@ -1782,9 +1827,8 @@ IonZap:
 		Inaccuracy: 64
 		ZOffset: 2045
 	Warhead@1Dam: SpreadDamage
-		Spread: 512
 		Damage: 12000
-		ValidRelationships: Ally, Neutral, Enemy
+		Spread: 448
 		InvalidTargets: Air
 		AffectsParent: false
 		Versus:
@@ -1834,8 +1878,8 @@ OrcaBomb:
 	InvalidTargets: Air
 	ReloadDelay: 50
 	Report: chute1.aud
-	Burst: 2
-	BurstDelays: 5
+	Burst: 3
+	BurstDelays: 7
 	Range: 2c0
 	TargetActorCenter: true
 	Projectile: GravityBomb
@@ -1844,18 +1888,18 @@ OrcaBomb:
 		Acceleration: 0, 0, 0
 		Shadow: true
 	Warhead@1Dam: SpreadDamage
-		Spread: 726
-		Damage: 700
+		Spread: 512
+		Damage: 740
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Water
 		Versus:
-			None: 100
-			Wood: 20
-			Light: 20
-			Heavy: 40
-			Concrete: 20
+			None: 60
+			Wood: 100
+			Light: 40
+			Heavy: 50
+			Concrete: 40
 			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
+		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath, AirToGround
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
 	Warhead@3Eff: CreateEffect
@@ -1896,6 +1940,7 @@ MicrowaveZap:
 		ZOffset: 6144
 	Warhead@1Dam: SpreadDamage
 		InvalidTargets: Air, Cyborg
+		Falloff: 100, 37, 14, 0
 		Spread: 512
 		Damage: 30000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
@@ -1910,6 +1955,7 @@ MicrowaveZap:
 		ValidTargets: Cyborg
 		InvalidTargets: Air
 		Spread: 341
+		Falloff: 100, 37, 14, 0
 		Damage: 30000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@emp: GrantExternalCondition
@@ -2134,10 +2180,6 @@ RadBeamWeapon:
 		Explosions: radhitsm
 		ExplosionPalette: caneon
 
-RadBeamWeaponE:
-	Inherits: RadBeamWeapon
-	Range: 7c0
-
 RadBeamWeaponHeavy:
 	Inherits: RadBeamWeapon
 	ReloadDelay: 80
@@ -2153,7 +2195,7 @@ RadBeamWeaponHeavy:
 			Wood: 45
 			Concrete: 45
 			Light: 75
-			Heavy: 65
+			Heavy: 60
 	Warhead@2Dam: HealthPercentageDamage
 		Spread: 128
 		Damage: 200
@@ -2184,6 +2226,32 @@ RadEruptionWeapon:
 		Level: 250
 		MaxLevel: 750
 		LayerName: radioactivity.strong
+
+PsychicBeamBATF:
+	Inherits: RadBeamWeapon
+	ReloadDelay: 75
+	Report: mastermind-fire.aud
+	-Projectile:
+	Projectile: PlasmaBeam
+		Duration: 7
+		Colors: ff00ff08
+		InnerLightness: 200
+		OuterLightness: 100
+		Radius: 2
+		Distortion: 150
+		DistortionAnimation: 150
+		SegmentLength: 350
+		Inaccuracy: 128
+	Warhead@1Dam: SpreadDamage
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@2Dam: SpreadDamage
+		Spread: 512
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	-Warhead@2irrad:
+	Warhead@3Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: scrin
+		Image: enrvbolthit
 
 ^EnergyBlast:
 	ReloadDelay: 50
@@ -2341,11 +2409,11 @@ SonicPulse:
 			Concrete: 70
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@2Eff: CreateEffect
-		Explosions: sonicpulse1, sonicpulse2
+		Explosions: sonicblast1, sonicblast2
 		ExplosionPalette: effect-ignore-lighting-alpha40
 		ValidTargets: Ground, Air, Ship, Trees
 	Warhead@3Eff: CreateEffect
-		Explosions: sonicblast1, sonicblast2
+		Explosions: sonicpulse1, sonicpulse2
 		ExplosionPalette: effect-ignore-lighting-alpha40
 		ValidTargets: Ground, Air, Ship, Trees
 
@@ -2355,12 +2423,64 @@ SonicPulse.UPG:
 	Warhead@1Dam: SpreadDamage
 		Damage: 7200
 	Warhead@2Eff: CreateEffect
-		Explosions: sonicpulseupg1, sonicpulseupg2
-	Warhead@3Eff: CreateEffect
 		Explosions: sonicblastupg1, sonicblastupg2
+	Warhead@3Eff: CreateEffect
+		Explosions: sonicpulseupg1, sonicpulseupg2
 	Warhead@4Conc: GrantExternalCondition
 		Range: 1c0
 		Duration: 150
+		Condition: concussion
+		ValidTargets: Ground, Infantry, Vehicle, Ship
+		ValidRelationships: Enemy, Neutral
+
+DisruptorPulse:
+	Inherits: SonicPulse
+	ReloadDelay: 80
+	Range: 5c256
+	-Report:
+	StartBurstReport: sonic4.aud
+	Burst: 9
+	BurstDelays: 5
+	Projectile: LinearPulse
+		Speed: 384
+	Warhead@1Dam: SpreadDamage
+		Spread: 0c128
+		Damage: 2000
+		Versus:
+			None: 100
+			Wood: 25
+			Light: 25
+			Heavy: 15
+			Concrete: 35
+	Warhead@friendlyFire: SpreadDamage
+		Spread: 0c128
+		Damage: 660
+		Versus:
+			None: 100
+			Wood: 25
+			Light: 25
+			Heavy: 15
+			Concrete: 35
+		ValidRelationships: Ally
+		InvalidTargets: Disruptor
+	-Warhead@2Eff:
+	Warhead@2Eff: CreateFacingEffect
+		Explosions: sonicwave1, sonicwave2
+		ExplosionPalette: effect
+		ValidTargets: Ground, Air, Ship, Trees
+	-Warhead@3Eff:
+
+DisruptorPulse.UPG:
+	Inherits: DisruptorPulse
+	Range: 6c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 2200
+	Warhead@2Eff: CreateFacingEffect
+		Explosions: sonicwaveupg1, sonicwaveupg2
+		ExplosionPalette: effect
+	Warhead@4Conc: GrantExternalCondition
+		Range: 0c768
+		Duration: 75
 		Condition: concussion
 		ValidTargets: Ground, Infantry, Vehicle, Ship
 		ValidRelationships: Enemy, Neutral

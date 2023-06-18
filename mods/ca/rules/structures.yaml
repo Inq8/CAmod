@@ -87,7 +87,7 @@ MSLO:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
 	ProductionCostMultiplier@IRAQBONUS:
-		Multiplier: 90
+		Multiplier: 60
 		Prerequisites: player.iraq
 
 GAP:
@@ -593,6 +593,9 @@ PDOX:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
+	ProductionCostMultiplier@GermanyBonus:
+		Multiplier: 80
+		Prerequisites: player.germany
 
 TSLA:
 	Inherits: ^Defense
@@ -1444,9 +1447,9 @@ WEAP:
 	ProvidesPrerequisiteValidatedFaction@yuri:
 		Factions: yuri
 		Prerequisite: vehicles.yuri
-	ProvidesPrerequisiteValidatedFaction@mrj:
+	ProvidesPrerequisiteValidatedFaction@mgg:
 		Factions: england, france, germany, usa
-		Prerequisite: vehicles.mrj
+		Prerequisite: vehicles.mgg
 	ProvidesPrerequisiteValidatedFaction@ifv:
 		Factions: england, france, germany, usa
 		Prerequisite: vehicles.ifv
@@ -3352,6 +3355,9 @@ WEAP.TD:
 	ProvidesPrerequisiteValidatedFaction@mlrs:
 		Factions: legion
 		Prerequisite: vehicles.mlrs
+	ProvidesPrerequisiteValidatedFaction@msar:
+		Factions: talon, zocom, eagle, arc
+		Prerequisite: vehicles.msar
 	WithBuildingBib:
 	WithProductionDoorOverlayCA:
 		RequiresCondition: !build-incomplete
@@ -4194,11 +4200,30 @@ HQ:
 		Types: SpyInfiltrate, SabInfiltrate
 	SpawnActorPowerCA@sathack:
 		Actor: camera.sathack
-		Prerequisites: ~radar.nod
+		Prerequisites: ~radar.nod, ~!radar.legion
 		LifeTime: 120
 		OrderName: sathack
 		Icon: hacksat
 		ChargeInterval: 4500
+		Name: Hack Satellite Uplink
+		Description: \nReveals the targeted area for a short time.
+		LaunchSound: hacksat.aud
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		PauseOnCondition: disabled || empdisable || being-warped
+		EffectImage: empty
+		EffectSequence: idle
+		EffectPalette: tseffect-ignore-lighting-alpha75
+		TargetCircleRange: 9c512
+		TargetCircleColor: 999999AA
+		SupportPowerPaletteOrder: 50
+	SpawnActorPowerCA@sathacklegion:
+		Actor: camera.sathack
+		Prerequisites: ~radar.legion
+		LifeTime: 120
+		OrderName: sathacklegion
+		Icon: hacksat
+		ChargeInterval: 3000
 		Name: Hack Satellite Uplink
 		Description: \nReveals the targeted area for a short time.
 		LaunchSound: hacksat.aud
@@ -4218,7 +4243,7 @@ HQ:
 		Type: ParadropInfantry
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
-		ChargeInterval: 7500
+		ChargeInterval: 6750
 		Name: Hacker Cell
 		Description: \nDeploy a squad of hackers that can remotely\n    capture buildings and take control of defenses.\n\nTarget infantry production structure to deploy.
 		Actors: hack, hack, hack
@@ -4234,7 +4259,7 @@ HQ:
 		Type: ParadropInfantry
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
-		ChargeInterval: 7500
+		ChargeInterval: 6750
 		Name: Hacker Cell (AI)
 		Description: \nDeploy a squad of hackers that can remotely\n    capture buildings and take control of defenses.
 		Actors: hack, hack, hack
@@ -4271,7 +4296,7 @@ HQ:
 		OrderName: cashhack
 		Icon: chack
 		ChargeInterval: 6000
-		Minimum: 500
+		Minimum: 750
 		Maximum: 2000
 		Prerequisites: ~radar.legion
 		AllowMultiple: false
@@ -4534,7 +4559,7 @@ EYE:
 	MustBeDestroyed:
 		RequiredForShortGame: false
 	ProductionCostMultiplier@ZocomBonus:
-		Multiplier: 90
+		Multiplier: 60
 		Prerequisites: player.zocom
 
 REP:
@@ -5139,6 +5164,9 @@ GTEK:
 		PauseOnCondition: disabled || empdisable ||  being-warped
 		SupportPowerPaletteOrder: 40
 	SupportPowerChargeBar:
+	ProductionCostMultiplier@TALONBONUS:
+		Multiplier: 90
+		Prerequisites: player.talon
 
 TMPL:
 	Inherits: ^BuildingTD
@@ -5738,7 +5766,7 @@ SGEN:
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 130
-		Prerequisites: tmpl, ~structures.nod, ~techlevel.unrestricted
+		Prerequisites: tmpl, ~structures.nod, ~!player.shadow, ~techlevel.unrestricted
 		BuildLimit: 1
 		IconPalette: chrometd
 		Description: Makes a group of units/structures invisible\n  for a short time.
@@ -5768,20 +5796,14 @@ SGEN:
 		Range: 5c0
 		RequiresCondition: !disabled
 	WithBuildingBib:
-	ValidFactions:
-		Factions: blackh, marked, legion, shadow
-	ProvidesPrerequisiteValidatedFaction@shadow:
-		Factions: shadow
-		Prerequisite: sgen.shadow
 	GrantExternalConditionPowerCA@SGEN:
-		Prerequisites: ~!sgen.shadow
 		OrderName: stealthgen
 		Icon: invis
 		IconPalette: chrometd
 		ChargeInterval: 4500
 		Weapon: StealthBubble
 		Name: Tiberium Stealth
-		Condition: sgen-invis
+		Condition: tibstealth
 		ValidRelationships: Ally, Neutral, Enemy
 		Dimensions: 7, 7
 		Footprint: __xxx__ _xxxxx_ xxxxxxx xxxxxxx xxxxxxx _xxxxx_ __xxx__
@@ -5805,36 +5827,6 @@ SGEN:
 		SupportPowerPaletteOrder: 20
 	ExternalCondition@ACTIVE:
 		Condition: active
-	GrantExternalConditionPowerCA@SGENSHADOW:
-		Prerequisites: ~sgen.shadow
-		OrderName: stealthgenshadow
-		Icon: invis
-		IconPalette: chrometd
-		ChargeInterval: 4500
-		Weapon: StealthBubble
-		Name: Tiberium Stealth
-		Condition: sgen-invis
-		ValidRelationships: Ally, Neutral, Enemy
-		Dimensions: 7, 7
-		Footprint: __xxx__ _xxxxx_ xxxxxxx xxxxxxx xxxxxxx _xxxxx_ __xxx__
-		Duration: 750
-		ActivationDelay: 0
-		AirburstAltitude: 0c0
-		AllowMultiple: false
-		Description: \nMakes selected vehicles and structures\n    temporarily invisible\n\nWarning: Harmful to Infantry.
-		OnFireSound: cloak6.aud
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		InsufficientPowerSpeechNotification: InsufficientPower
-		BeginChargeSpeechNotification: ChemStealthCharging
-		EndChargeSpeechNotification: ChemStealthReady
-		EndChargeTextNotification: Stealth Generator ready.
-		DisplayRadarPing: True
-		Cursor: chemmissile
-		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayTimerRelationships: Ally, Neutral, Enemy
-		ActiveCondition: active
-		SupportPowerPaletteOrder: 20
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
@@ -5857,10 +5849,31 @@ SGEN:
 		Color: 00aa00
 	ProximityExternalCondition@SGEN:
 		Range: 5c512
-		Condition: msg-invis
+		Condition: sgencloak
 		MaximumVerticalOffset: 512
 		AffectsParent: true
-		RequiresCondition: !disabled && !empdisable && !being-warped && !active
+		RequiresCondition: !disabled && !empdisable && !being-warped && !active && !cloak-force-disabled
+	GrantConditionOnDamageState@UNCLOAK:
+		Condition: cloak-force-disabled
+		ValidDamageStates: Critical
+
+SGEN.Shadow:
+	Inherits: SGEN
+	Buildable:
+		Prerequisites: tmpl, ~structures.nod, ~player.shadow, ~techlevel.unrestricted
+	TooltipExtras:
+		Attributes: • Maximum 1 can be built\n• Cloaks nearby units and structures\n• Requires power to operate\n• Special Ability: Tiberium Stealth
+	WithRangeCircle@SGEN:
+		Range: 9c512
+	ProximityExternalCondition@SGEN:
+		Range: 9c512
+		RequiresCondition: !disabled && !empdisable && !being-warped
+	RenderSprites:
+		Image: sgen
+	GrantExternalConditionPowerCA@SGEN:
+		-ActiveCondition:
+	-ExternalCondition@ACTIVE:
+	-GrantConditionOnDamageState@UNCLOAK:
 
 CRAM:
 	Inherits: AGUN
@@ -6049,7 +6062,7 @@ PATR:
 		Range: 5c0
 		RequiresCondition: !disabled
 	Turreted:
-		TurnSpeed: 8
+		TurnSpeed: 10
 		InitialFacing: 192
 		RealignDelay: -1
 		RequiresCondition: !build-incomplete
@@ -6061,9 +6074,14 @@ PATR:
 		Sequences: empty
 		Interval: 0
 		RequiresCondition: !loaded-rocket
-	AttackTurreted:
+	AttackTurretedCharged:
 		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 		RequiresCondition: loaded-rocket > 0
+		ChargeLevel: 50
+		DischargeRate: 50
+		ShowSelectionBar: true
+		SelectionBarColor: FFFFFF
+		ChargeWhileTurning: true
 	Armament:
 		Weapon: EMPMissileLauncher
 		LocalOffset: 511,396,511
@@ -6102,7 +6120,11 @@ PATR:
 	Selectable:
 		Bounds: 2048, 2048
 	RejectsOrders:
+		Except: Stop, Sell, PowerDown
+		RequiresCondition: !loaded-rocket
+	RejectsOrders@LOADED:
 		Except: Sell, PowerDown
+		RequiresCondition: loaded-rocket
 	InfiltrateForSupportPowerReset:
 		Types: SpyInfiltrate, SabInfiltrate
 		InfiltrationNotification: BuildingInfiltrated
@@ -6376,9 +6398,15 @@ UPGC:
 		Offset: -768,468,0
 		RequiresCondition: !build-incomplete
 		PauseOnCondition: disabled || empdisable || being-warped
-	AttackTurreted:
-		RequiresCondition: tower.rocket && loaded-rocket > 0
+	AttackTurretedCharged:
 		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
+		RequiresCondition: tower.rocket && loaded-rocket > 0
+		ChargeLevel: 45
+		DischargeRate: 45
+		ShotsPerCharge: 3
+		ShowSelectionBar: true
+		SelectionBarColor: FF4400
+		ChargeWhileTurning: true
 	Armament@ROCKET:
 		RequiresCondition: tower.rocket
 		Weapon: FirestormBarrage
@@ -6404,7 +6432,11 @@ UPGC:
 		Prerequisites: ~techlevel.unrestricted
 		SupportPowerPaletteOrder: 30
 	RejectsOrders:
+		Except: Stop, Sell, PowerDown
+		RequiresCondition: !loaded-rocket
+	RejectsOrders@LOADED:
 		Except: Sell, PowerDown
+		RequiresCondition: loaded-rocket
 	AmmoPool:
 		Ammo: 3
 		ReloadCount: 3
@@ -6542,7 +6574,7 @@ UPGC:
 		Prerequisites: nshield
 		Condition: nshield-active
 	ProductionCostMultiplier@TALONBONUS:
-		Multiplier: 90
+		Multiplier: 80
 		Prerequisites: player.talon
 	-MindControllable:
 	-Targetable@HACKABLE:
@@ -6729,6 +6761,12 @@ TMPP:
 		OverrideUnitBuildDurationModifier: true
 		EjectOnDeploy: true
 		ConvertingCondition: converting
+	WithUnitConverterCountDecoration:
+		Font: Bold
+		Position: Top
+		Color: FF0000
+		Margin: 0,-15
+		RequiresCondition: converting
 	PrimaryBuilding:
 		RequiresCondition: !converting && !global-multiqueue
 	-MindControllable:
@@ -6736,6 +6774,9 @@ TMPP:
 	-MindControllableProgressBar@HACKABLE:
 	-WithDecoration@HACKED:
 	-WithDecoration@RESTORING:
+	ProductionCostMultiplier@MARKEDBONUS:
+		Multiplier: 90
+		Prerequisites: player.marked
 
 MSLO.Nod:
 	Inherits: ^Building

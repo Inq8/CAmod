@@ -474,7 +474,7 @@ YAK:
 		Strengths: • Strong vs Infantry, Light Armor, Buildings, Aircraft
 		Weaknesses: • Weak vs Heavy Armor, Defenses
 	Valued:
-		Cost: 1250
+		Cost: 1200
 	Tooltip:
 		Name: Yak Attack Plane
 	UpdatesPlayerStatistics:
@@ -598,8 +598,12 @@ P51:
 		FireDelay: 2
 		Weapon: Rocket.P51.L
 		LocalOffset: 0,413,0
+	Armament@QUINARY:
+		Name: missile
+		Weapon: CryoMissileP51
+		RequiresCondition: upg-crym
 	AttackBomberCA:
-		Armaments: gunr, gunl, rocketr, rocketl
+		Armaments: gunr, gunl, rocketr, rocketl, missile
 		FacingTolerance: 80
 	Aircraft:
 		CruiseAltitude: 2560
@@ -635,6 +639,9 @@ P51:
 		Experience: 1000
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	GrantConditionOnPrerequisite@CRYM:
+		Condition: upg-crym
+		Prerequisites: crym.upgrade
 
 TRAN:
 	Inherits: ^Helicopter
@@ -1133,7 +1140,7 @@ HIND:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 32000
+		HP: 34000
 	RevealsShroud:
 		Range: 11c0
 		MinRange: 9c0
@@ -1167,7 +1174,7 @@ HIND:
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
 		TurnSpeed: 16
-		Speed: 135
+		Speed: 112
 		TakeoffSounds: htoff1.aud
 		LandingSounds: hland1.aud
 	AutoTarget:
@@ -1183,14 +1190,14 @@ HIND:
 		RequiresCondition: !airborne
 	AmmoPool@PRIMARY:
 		Name: primary
-		Ammo: 18
-		ReloadDelay: 8
+		Ammo: 10
+		ReloadDelay: 14
 		AmmoCondition: ammo
 		Armaments: primary
 	AmmoPool@SECONDARY:
 		Name: secondary
-		Ammo: 18
-		ReloadDelay: 8
+		Ammo: 12
+		ReloadDelay: 12
 		AmmoCondition: ammo2
 		Armaments: secondary
 	WithAmmoPipsDecoration@PRIMARY:
@@ -1198,7 +1205,7 @@ HIND:
 		Margin: 4, 3
 		RequiresSelection: true
 		AmmoPools: primary
-		PipCount: 6
+		PipCount: 5
 	WithAmmoPipsDecoration@SECONDARY:
 		Position: BottomLeft
 		Margin: 4, 7
@@ -1392,7 +1399,7 @@ A10:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 28000
+		HP: 30000
 	RevealsShroud:
 		Range: 11c0
 		MinRange: 9c0
@@ -2033,19 +2040,20 @@ ORCB:
 		BuildPaletteOrder: 130
 		Prerequisites: afld.gdi, ~aircraft.gdi, gtek, ~techlevel.high
 		IconPalette: chrometd
-		Description: VTOL bomber armed with EMP bombs.
+		Description: Heavy VTOL bomber armed with EMP bombs.
 	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
+		Strengths: • Strong vs Defenses, Heavy Armor, Light Armor
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
+		Attributes: • Disables vehicles, defenses and buildings
 	Valued:
-		Cost: 1700
+		Cost: 2000
 	Tooltip:
 		Name: Orca Bomber
 		GenericName: Aircraft
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 30000
+		HP: 38000
 	RevealsShroud:
 		Range: 11c0
 		MinRange: 9c0
@@ -2059,7 +2067,7 @@ ORCB:
 		LocalOffset: 2,-256,-43, 2,256,-43
 		PauseOnCondition: !ammo
 	AttackAircraft:
-		FacingTolerance: 80
+		FacingTolerance: 512
 		Voice: Attack
 		AttackType: Strafe
 		StrafeRunLength: 3c0
@@ -2082,7 +2090,7 @@ ORCB:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
 	AmmoPool:
-		Ammo: 4
+		Ammo: 6
 		AmmoCondition: ammo
 		ReloadDelay: 45
 	WithAmmoPipsDecoration:
@@ -2306,7 +2314,9 @@ RAH:
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Dock, Damage, Heal
-		RequiresCondition: !cloak-force-disabled && airborne && !invisibility && !alphacomanche-upgrade
+		CloakedCondition: hidden
+		RequiresCondition: !cloak-force-disabled && airborne && !being-warped && !alphacomanche-upgrade
+		PauseOnCondition: invisibility
 	Cloak@UPG:
 		DetectionTypes: AirCloak
 		InitialDelay: 100
@@ -2316,7 +2326,9 @@ RAH:
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Dock, Heal
-		RequiresCondition: airborne && !invisibility && alphacomanche-upgrade
+		CloakedCondition: hidden
+		RequiresCondition: airborne && !being-warped && alphacomanche-upgrade
+		PauseOnCondition: invisibility
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
@@ -2402,6 +2414,14 @@ RAH:
 		RequiresCondition: (stance-attackanything  || assault-move) && alphacomanche-upgrade
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Structure, Defense
 		InvalidTargets: NoAutoTarget
+	WithColoredSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
+		ColorSource: Player
+	WithShadow:
+		RequiresCondition: !invisibility && !hidden
+	WithShadow@CLOAKED:
+		ShadowColor: 00000033
+		RequiresCondition: invisibility || hidden
 
 KIRO:
 	Inherits: ^Helicopter
@@ -2425,7 +2445,7 @@ KIRO:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 100000
+		HP: 110000
 	Armor:
 		Type: Heavy
 	RevealsShroud:
@@ -2470,10 +2490,10 @@ KIRO:
 		RequiresSelection: true
 		PipCount: 5
 	ReloadAmmoPoolCA:
-		Delay: 125
+		Delay: 75
 		Count: 10
-		DelayOnFire: 50
-		DelayAfterReset: 50
+		DelayOnFire: 35
+		DelayAfterReset: 35
 		ShowSelectionBar: true
 		SelectionBarColor: ff00ff
 	AttackAircraft:
@@ -2485,7 +2505,7 @@ KIRO:
 		CruiseAltitude: 2c0
 		InitialFacing: 192
 		TurnSpeed: 12
-		Speed: 56
+		Speed: 49
 		Voice: Move
 		AltitudeVelocity: 0c50
 		CanForceLand: False
@@ -2553,7 +2573,7 @@ KIRO:
 		RequiresCondition: !airborne
 	DamageMultiplier@doorsopen:
 		RequiresCondition: doorsopen
-		Modifier: 150
+		Modifier: 133
 	GrantConditionOnAttack@doorsopen:
 		Condition: doorsopen
 		RevokeDelay: 50
@@ -2584,6 +2604,9 @@ KIRO:
 		Prerequisites: aircraft.upgraded
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	ProductionCostMultiplier@YURIBONUS:
+		Multiplier: 90
+		Prerequisites: player.yuri
 
 OCAR:
 	Inherits: ^HelicopterTD
@@ -3375,12 +3398,6 @@ VENM:
 	GrantConditionOnPrerequisite@QUANTUM:
 		Condition: quantum-upgrade
 		Prerequisites: quantum.upgrade
-	FirepowerMultiplier@QUANTUM:
-		Modifier: 115
-		RequiresCondition: quantum-upgrade
-	RangeMultiplier@QUANTUM:
-		Modifier: 115
-		RequiresCondition: quantum-upgrade
 
 AURO:
 	Inherits: ^PlaneTD

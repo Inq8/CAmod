@@ -289,7 +289,7 @@
 		Condition: berserk
 	Berserkable@BERSERK:
 		RequiresCondition: berserkactive
-	WithModifiedPalette@BERSERK:
+	WithPalettedOverlay@BERSERK:
 		RequiresCondition: berserkactive
 		Palette: berserk
 	TimedConditionBar@BERSERK:
@@ -310,7 +310,7 @@
 		Modifier: 75
 	ExternalCondition@FRENZY:
 		Condition: frenzyinit
-	WithModifiedPalette@FRENZY:
+	WithPalettedOverlay@FRENZY:
 		RequiresCondition: frenzy
 		Palette: frenzy
 	TimedConditionBar@FRENZY:
@@ -349,12 +349,9 @@
 		SelectionBarColor: 40FFFF
 	Targetable@TEMPORAL:
 		TargetTypes: Temporal
-	WithModifiedPalette@TEMPORALl:
+	WithPalettedOverlay@TEMPORALl:
 		RequiresCondition: being-warped
 		Palette: temporal
-	WithColoredOverlay@TEMPORAL2:
-		RequiresCondition: being-warped
-		Color: 00000060
 	WithIdleOverlay@TEMPORAL:
 		Sequence: chrono-overlay
 		RequiresCondition: being-warped
@@ -401,19 +398,21 @@
 		Modifier: 125
 	ExternalCondition@SUPPRESSION:
 		Condition: suppression
-	WithColoredOverlay@SUPPRESSION:
+	WithPalettedOverlay@SUPPRESSION:
 		RequiresCondition: suppression
-		Color: f454d064
+		Palette: suppression
 	TimedConditionBar@SUPPRESSION:
 		Condition: suppression
 		Color: f454d0
 	ExternalCondition@SUPPRESSIONSIPHON:
 		Condition: suppression-siphon
-	ReflectsDamage@SUPPRESSIONSIPHON:
-		DamagePercentage: -30
-		ReflectToAttacker: true
-		ValidRelationships: Enemy
+	ChangesHealth@SUPPRESSIONSIPHON:
 		RequiresCondition: suppression-siphon
+		Step: 0
+		PercentageStep: -1
+		Delay: 25
+		StartIfBelow: 101
+		DamageTypes: BulletDeath
 	WithIdleOverlay@SUPPRESSIONSIPHON:
 		Sequence: idle
 		Image: siphon-overlay-lg
@@ -438,34 +437,34 @@
 		Modifier: 75
 	ChangesHealthVersus@ATOMIZED1:
 		RequiresCondition: atomized == 1
-		Step: -1300
+		Step: -400
 		Delay: 10
 		Versus:
 			None: 0
 			Wood: 0
-			Concrete: 100
-			Light: 60
-			Heavy: 80
+			Concrete: 90
+			Light: 70
+			Heavy: 100
 	ChangesHealthVersus@ATOMIZED2:
 		RequiresCondition: atomized == 2
-		Step: -2600
+		Step: -800
 		Delay: 10
 		Versus:
 			None: 0
 			Wood: 0
-			Concrete: 100
-			Light: 60
-			Heavy: 80
+			Concrete: 90
+			Light: 65
+			Heavy: 100
 	ChangesHealthVersus@ATOMIZED3:
 		RequiresCondition: atomized >= 3
-		Step: -3900
+		Step: -1200
 		Delay: 10
 		Versus:
 			None: 0
 			Wood: 0
-			Concrete: 100
-			Light: 60
-			Heavy: 80
+			Concrete: 90
+			Light: 65
+			Heavy: 100
 	Explodes@ATOMIZED:
 		Weapon: AtomizeSpreadInit
 		EmptyWeapon: AtomizeSpreadInit
@@ -741,6 +740,9 @@
 	GrantConditionOnPrerequisite@HAZMATSOVIET:
 		Condition: hazmatsoviet-upgrade
 		Prerequisites: hazmatsoviet.upgrade
+	GrantConditionOnPrerequisite@HAZMATZOCOM:
+		Condition: hazmat-upgrade
+		Prerequisites: player.zocom
 	GrantCondition@HAZMAT:
 		Condition: hazmatsuits
 		RequiresCondition: hazmat-upgrade && !hazmatsoviet-upgrade
@@ -882,7 +884,7 @@
 		RequiresCondition: !parachute && damaged && !being-warped && !heal-cooldown
 
 ^IronCurtainable:
-	WithModifiedPalette@IRONCURTAIN:
+	WithPalettedOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability
 		Palette: invuln
 	DamageMultiplier@IRONCURTAIN:
@@ -907,10 +909,10 @@
 ^AirToGroundProtection:
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		DamageTypes: AirToGround
-		Modifier: 60
+		Modifier: 50
 
 ^GyroStabilizers:
-	WithModifiedPalette@GYRO:
+	WithPalettedOverlay@GYRO:
 		RequiresCondition: gyrostabilizers
 		Palette: gyro
 	RangeMultiplier@GYRO:
@@ -942,7 +944,7 @@
 		RequiresCondition: gyrostabilizers
 
 ^Irradiatable:
-	WithModifiedPalette@IRRADIATABLE:
+	WithPalettedOverlay@IRRADIATABLE:
 		RequiresCondition: irradiated
 		Palette: irrad
 	TimedConditionBar@IRRADIATABLE:
@@ -973,7 +975,7 @@
 		PlayOnce: True
 	FirepowerMultiplier@ATOMICAMMO:
 		RequiresCondition: has-atomic-ammo
-		Modifier: 150
+		Modifier: 180
 	Targetable@ATOMICAMMO:
 		TargetTypes: AtomicAmmoTargetable
 	AmmoPool@ATOMICAMMO:
@@ -995,12 +997,12 @@
 		RequiresCondition: atomic-ammo && has-atomic-ammo < 12
 	ReloadAmmoPoolCA@ATOMICAMMODECAY:
 		Count: -12
-		Delay: 2250
+		Delay: 3000
 		RequiresCondition: has-atomic-ammo
 		ShowSelectionBar: false
 
 ^ForceShieldable:
-	WithModifiedPalette@FS:
+	WithPalettedOverlay@FS:
 		RequiresCondition: forceshield && !invulnerability
 		Palette: forces
 	DamageMultiplier@FS:
@@ -1048,7 +1050,7 @@
 		StartIfBelow: 100
 		DamageCooldown: 0
 		RequiresCondition: nrepair
-	WithModifiedPalette@NREPAIR:
+	WithPalettedOverlay@NREPAIR:
 		RequiresCondition: nrepair && damaged && !(empdisable || invulnerability || invisibility)
 		Palette: nrepair
 	TimedConditionBar@NREPAIR:
@@ -1166,38 +1168,39 @@
 		Condition: invisibility
 	GrantCondition@INVIS:
 		Condition: invisibility
-		RequiresCondition: sgen-invis || msg-invis
-	TimedConditionBar@SGENCLOAK:
-		Condition: sgen-invis
+		RequiresCondition: tibstealth || sgencloak
+	TimedConditionBar@TIBSTEALTH:
+		Condition: tibstealth
 		Color: 66dd00
-	Cloak@SGENCLOAK:
-		RequiresCondition: sgen-invis
+	Cloak@TIBSTEALTH:
+		RequiresCondition: tibstealth
 		InitialDelay: 0
 		CloakDelay: 25
-		IsPlayerPalette: true
+		IsPlayerPalette: false
 		Palette: cloakgreen
 		CloakSound: cloak5.aud
 		UncloakSound: appear1.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish
-	ExternalCondition@SGENCLOAK:
-		Condition: sgen-invis
-	WithColoredOverlay@SGENCLOAK:
-		Color: 00e40041
-		RequiresCondition: invisibility
-	GrantConditionOnDamageState@UNCLOAK:
-		Condition: cloak-force-disabled
-		ValidDamageStates: Heavy, Critical
-	Cloak@MSGCLOAK:
-		RequiresCondition: msg-invis && !sgen-invis && !cloak-force-disabled
+	DamageMultiplier@TIBSTEALTH:
+		Modifier: 90
+		RequiresCondition: tibstealth
+	ExternalCondition@TIBSTEALTH:
+		Condition: tibstealth
+	Cloak@SGENCLOAK:
+		RequiresCondition: sgencloak
+		PauseOnCondition: tibstealth
 		InitialDelay: 0
 		CloakDelay: 150
-		IsPlayerPalette: true
-		Palette: cloakgreen
+		IsPlayerPalette: false
+		Palette: cloak
 		CloakSound: cloak5.aud
 		UncloakSound: appear1.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
-	ExternalCondition@MSGCLOAK:
-		Condition: msg-invis
+	ExternalCondition@SGENCLOAK:
+		Condition: sgencloak
+	WithColoredSelectionBox@INVIS:
+		RequiresCondition: invisibility
+		ColorSource: Player
 
 ^CrateCloak:
 	Cloak@CRATE-CLOAK:
@@ -1968,6 +1971,8 @@
 			FrozenDeath: 11
 			AtomizedDeath: 12
 		CrushedSequence: die-crushed
+		CrushedPaletteIsPlayerPalette: true
+		CrushedSequencePalette: player
 	AttackMove:
 	Passenger:
 		CargoType: Infantry
@@ -2170,6 +2175,7 @@
 	-GrantConditionOnPrerequisite@BIO:
 	-GrantConditionOnPrerequisite@HAZMAT:
 	-GrantConditionOnPrerequisite@HAZMATSOVIET:
+	-GrantConditionOnPrerequisite@HAZMATZOCOM:
 	-GrantCondition@HAZMAT:
 	-GrantCondition@HAZMATSOVIET:
 	-WithDecoration@HAZMAT:
@@ -2519,7 +2525,7 @@
 		EjectInAir: true
 		AllowUnsuitableCell: true
 		ChuteSound: chute1.aud
-	Cloak@SGENCLOAK:
+	Cloak@TIBSTEALTH:
 		RequiresCondition: invisibility || crate-cloak && (!cloak-force-disabled && !airborne && !being-warped)
 		CloakDelay: 90
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Damage, Heal
@@ -2553,6 +2559,8 @@
 	-SpeedMultiplier@chilled4:
 	-SpeedMultiplier@chilled5:
 	-SpeedMultiplier@chilled6:
+	WithShadow:
+		RequiresCondition: !invisibility
 
 ^PlaneTD:
 	Inherits@1: ^Plane
@@ -2681,7 +2689,7 @@
 	Inherits@gflash: ^WhiteFlash
 	Inherits@wflash: ^GreenFlash
 	Inherits@HACKABLE: ^Hackable
-	WithModifiedPalette@IRONCURTAIN:
+	WithPalettedOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield
 		Palette: invuln
 	Huntable:
@@ -2776,7 +2784,7 @@
 	Inherits@veilable: ^Veilable
 	Inherits@atomize: ^Atomizable
 	-SpeedMultiplier@concussion:
-	WithModifiedPalette@IRONCURTAIN:
+	WithPalettedOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability
 		Palette: invuln
 	Selectable:
@@ -2793,7 +2801,7 @@
 		RequiredForShortGame: false
 	-GivesBuildableArea:
 	-AcceptsDeliveredCash:
-	-WithModifiedPalette@FS:
+	-WithPalettedOverlay@FS:
 	-DamageMultiplier@FS:
 	-TimedConditionBar@FS:
 	-ExternalCondition@FS:
@@ -2944,17 +2952,17 @@
 
 ^FakeBuilding:
 	Inherits: ^Building
+	Inherits@REDHIGHLIGHT: ^RedFlash
 	GivesBuildableArea:
 		AreaTypes: fake
 	RequiresBuildableArea:
 		AreaTypes: fake
 	Health:
 		HP: 10000
-	Explodes:
-		Weapon: Demolish
-		DamageThreshold: 70
 	RevealsShroud:
 		Range: 1c0
+	SoundOnDamageTransition:
+		-DamagedSounds:
 	WithDecoration@fake:
 		RequiresSelection: true
 		Image: pips
@@ -2963,15 +2971,38 @@
 		Position: Top
 		Margin: 0, 4
 	-SpawnActorsOnSell:
+	-SpawnActorOnDeath:
+	-SpawnRandomActorOnDeath:
 	-MustBeDestroyed:
 	MapEditorData:
 		Categories: Fake
+	TooltipExtras:
+		Attributes: • Can be detonated remotely
+	Explodes@FAKE:
+		Weapon: FakeBuildingExplode
+		DamageThreshold: 70
+		Type: CenterPosition
+	GrantConditionOnDeploy:
+		DeployedCondition: detonate
+		SkipMakeAnimation: true
+		DeployCursor: c4
+		RequiresCondition: !detonate-disabled
+	GrantTimedCondition@highlight:
+		Duration: 2
+		Condition: redhighlight
+		RequiresCondition: detonate
+	PeriodicExplosion:
+		Weapon: FakeBuildingSelfDestruct
+		RequiresCondition: detonate
+	GrantTimedCondition@DETONATEDELAY:
+		Condition: detonate-disabled
+		Duration: 125
 
 ^InfiltratableFake:
 	Targetable:
-		TargetTypes: Ground, Structure, C4, TNT, DetonateAttack, SpyInfiltrate
+		TargetTypes: Ground, Structure, C4, TNT, DetonateAttack, SpyInfiltrate, SabInfiltrate
 	InfiltrateForDecoration:
-		Types: SpyInfiltrate
+		Types: SpyInfiltrate, SabInfiltrate
 		RequiresSelection: true
 		Image: pips
 		Palette: chrome
@@ -3951,6 +3982,8 @@
 		QueuedAudio: Building
 		OnHoldAudio: OnHold
 		CancelledAudio: Cancelled
+	ProvidesPrerequisite@any:
+		Prerequisite: aircraft.any
 	Production@SQAIR:
 		Produces: AircraftSQ, Plane, Helicopter
 		PauseOnCondition: forceshield || invulnerability || being-warped
@@ -3966,10 +3999,10 @@
 		ProductionType: AircraftMQ
 		RequiresCondition: global-multiqueue
 	ProductionCostMultiplier@MQS1:
-		Multiplier: 200
+		Multiplier: 160
 		Prerequisites: aircraft.any, global.multiqueuescaled, !optprod1.upgrade, !optprod2.upgrade
 	ProductionCostMultiplier@MQS2:
-		Multiplier: 150
+		Multiplier: 130
 		Prerequisites: aircraft.any, global.multiqueuescaled, optprod1.upgrade, !optprod2.upgrade
 
 ^ProducesHelicopters:

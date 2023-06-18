@@ -105,9 +105,9 @@ E1:
 		HP: 5000
 	Armament@PRIMARY:
 		Weapon: M1Carbine
-	Armament@Garrison:
-		Name: mounted
-		Weapon: M1CarbineE
+	Armament@BATF:
+		Name: batf
+		Weapon: M1CarbineBATF
 		MuzzleSequence: garrison-muzzle
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
@@ -163,9 +163,9 @@ E2:
 		Weapon: Grenade
 		LocalOffset: 0,0,555
 		FireDelay: 15
-	Armament@Garrison:
-		Name: mounted
-		Weapon: GrenadeE
+	Armament@BATF:
+		Name: batf
+		Weapon: Grenade
 		FireDelay: 15
 	TakeCover:
 		ProneOffset: 256,64,-331
@@ -236,24 +236,14 @@ E3:
 		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
 		RequiresCondition: cryr-upgrade
-	Armament@GarrisonAA:
-		Name: mountedaa
-		Weapon: RedEyeE
+	Armament@BATF:
+		Name: batf
+		Weapon: DragonBATF
 		PauseOnCondition: !ammo
 		RequiresCondition: !cryr-upgrade
-	Armament@GarrisonAAUPG:
-		Name: mountedaa
-		Weapon: RedEye.CRYO
-		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade
-	Armament@Garrison:
-		Name: mounted
-		Weapon: DragonE
-		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade
-	Armament@GarrisonUPG:
-		Name: mounted
-		Weapon: DragonE.CRYO
+	Armament@BATFUPG:
+		Name: batf
+		Weapon: DragonBATF.CRYO
 		PauseOnCondition: !ammo
 		RequiresCondition: cryr-upgrade
 	AmmoPool:
@@ -366,24 +356,14 @@ U3:
 		LocalOffset: 0,0,400
 		PauseOnCondition: !ammo
 		RequiresCondition: cryr-upgrade && deployed
-	Armament@GarrisonAA:
-		Name: mountedaa
-		Weapon: RedEyeGI
+	Armament@BATF:
+		Name: batf
+		Weapon: DragonBATF.CYB
 		PauseOnCondition: !ammo
 		RequiresCondition: !cryr-upgrade
-	Armament@GarrisonAAUPG:
-		Name: mountedaa
-		Weapon: RedEyeGI.CRYO
-		PauseOnCondition: !ammo
-		RequiresCondition: cryr-upgrade
-	Armament@Garrison:
-		Name: mounted
-		Weapon: DragonGI
-		PauseOnCondition: !ammo
-		RequiresCondition: !cryr-upgrade
-	Armament@GarrisonUPG:
-		Name: mounted
-		Weapon: DragonGI.CRYO
+	Armament@BATFUPG:
+		Name: batf
+		Weapon: DragonBATF.CRYO
 		PauseOnCondition: !ammo
 		RequiresCondition: cryr-upgrade
 	Armament@AIDummyAiming: ## Hack: Make AI deploy to attack air
@@ -566,9 +546,9 @@ E4:
 	Armament:
 		Weapon: FireballGun
 		LocalOffset: 341,0,256
-	Armament@Garrison:
-		Name: mounted
-		Weapon: FlamerE
+	Armament@BATF:
+		Name: batf
+		Weapon: FireballGun
 	TakeCover:
 		ProneOffset: 160,0,-256
 	WithMuzzleOverlay:
@@ -796,9 +776,9 @@ E7:
 		Voice: Move
 	Armament@PRIMARY:
 		Weapon: Colt45
-	Armament@mountedPRIMARY:
-		Weapon: Colt45E
-		Name: mounted
+	Armament@BATF:
+		Weapon: Colt45BATF
+		Name: batf
 		MuzzleSequence: garrison-muzzle
 	Armament@sapper:
 		Weapon: PlaceC4
@@ -1024,6 +1004,7 @@ CMEC:
 	Health:
 		HP: 17000
 	Mobile:
+		Speed: 46
 		Voice: Move
 		PauseOnCondition: being-warped
 	RevealsShroud:
@@ -1034,7 +1015,7 @@ CMEC:
 	Guard:
 		Voice: Move
 	Armament:
-		Weapon: Repair
+		Weapon: CyborgRepair
 		Cursor: repair
 		OutsideRangeCursor: repair
 		TargetRelationships: Ally
@@ -1193,7 +1174,8 @@ HACK:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
 	RenderRangeCircle:
-		Color: 00cc00
+		Color: 00cc00cc
+		RangeCircleType: Hack
 	RejectsOrders@AIHACKER:
 		RequiresCondition: bothacking
 	GrantConditionOnAttack@AIHACKER:
@@ -1328,7 +1310,9 @@ THF:
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Move
 		DetectionTypes: Cloak
 		IsPlayerPalette: false
-		RequiresCondition: !cloak-force-disabled
+		CloakedCondition: hidden
+		RequiresCondition: !cloak-force-disabled && !being-warped
+		PauseOnCondition: invisibility
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
@@ -1338,6 +1322,9 @@ THF:
 		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	-SpeedMultiplier@HAZMATSOVIET:
 	-GrantConditionOnTerrain@HAZMATSOVIET:
+	WithColoredSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
+		ColorSource: Player
 
 SHOK:
 	Inherits: ^Soldier
@@ -1379,9 +1366,9 @@ SHOK:
 	Armament@PRIMARY:
 		Weapon: PortaTesla
 		LocalOffset: 427,0,341
-	Armament@Garrisoned:
-		Name: mounted
-		Weapon: PortaTeslaE
+	Armament@BATF:
+		Name: batf
+		Weapon: PortaTesla
 	Armament@CHARGE:
 		Name: secondary
 		Weapon: PortaTeslaCharge
@@ -1455,9 +1442,9 @@ N1:
 		HP: 5000
 	Armament@PRIMARY:
 		Weapon: M16Carbine
-	Armament@Garrison:
-		Name: mounted
-		Weapon: M16CarbineE
+	Armament@BATF:
+		Name: batf
+		Weapon: M16CarbineBATF
 		MuzzleSequence: garrison-muzzle
 	AttackFrontal:
 		PauseOnCondition: being-warped
@@ -1526,9 +1513,9 @@ N2:
 		LocalOffset: 0,0,555
 		FireDelay: 15
 		RequiresCondition: empgren-upgrade
-	Armament@Garrison:
-		Name: mounted
-		Weapon: GrenadeE
+	Armament@BATF:
+		Name: batf
+		Weapon: Grenade
 		FireDelay: 15
 	AttackFrontal:
 		PauseOnCondition: being-warped
@@ -1614,24 +1601,14 @@ N3:
 		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
 		RequiresCondition: tibcore-upgrade
-	Armament@GarrisonAA:
-		Name: mountedaa
-		Weapon: RedEyeE
+	Armament@BATF:
+		Name: batf
+		Weapon: DragonBATF.TD
 		PauseOnCondition: !ammo
 		RequiresCondition: !tibcore-upgrade
-	Armament@GarrisonAAUPG:
-		Name: mountedaa
-		Weapon: RedEye.TibCore
-		PauseOnCondition: !ammo
-		RequiresCondition: tibcore-upgrade
-	Armament@Garrison:
-		Name: mounted
-		Weapon: DragonE.TD
-		PauseOnCondition: !ammo
-		RequiresCondition: !tibcore-upgrade
-	Armament@GarrisonUPG:
-		Name: mounted
-		Weapon: DragonE.TibCore
+	Armament@BATFUPG:
+		Name: batf
+		Weapon: DragonBATF.TibCore
 		PauseOnCondition: !ammo
 		RequiresCondition: tibcore-upgrade
 	GrantConditionOnPrerequisite@TIBCORE:
@@ -1710,9 +1687,9 @@ N4:
 		MuzzlePalette: tdeffect
 	Armament@FF:
 		Weapon: FlamerTDFF
-	Armament@Garrison:
-		Name: mounted
-		Weapon: FlamerE
+	Armament@BATF:
+		Name: batf
+		Weapon: FlamerTDBATF
 	TakeCover:
 		SpeedModifier: 70
 		ProneOffset: 160,0,-254
@@ -1778,9 +1755,9 @@ N5:
 		MuzzlePalette: tdeffect
 	Armament@FF:
 		Weapon: ChemsprayTDFF
-	Armament@Garrison:
-		Name: mounted
-		Weapon: ChemsprayE
+	Armament@BATF:
+		Name: batf
+		Weapon: ChemsprayTD
 	Mobile:
 		Speed: 60
 		Voice: Move
@@ -1866,9 +1843,9 @@ RMBO:
 		Range: 6c0
 	Armament:
 		Weapon: smg
-	Armament@garrison:
-		Name: mounted
-		Weapon: smgE
+	Armament@BATF:
+		Name: batf
+		Weapon: smgBATF
 		MuzzleSequence: garrison-muzzle
 	Armament@sapper:
 		Weapon: PlaceC4
@@ -2036,10 +2013,16 @@ SNIP:
 	Armament@PRIMARYUPGELITE:
 		Weapon: sniper.vehicleElite
 		RequiresCondition: apb-upgrade && rank-veteran >= 3
-	Armament@Garrison:
-		Weapon: sniperE
-		Name: mounted
+	Armament@BATF:
+		Weapon: sniperBATF
+		Name: batf
 		MuzzleSequence: garrison-muzzle
+		RequiresCondition: !apb-upgrade
+	Armament@BATFUPG:
+		Weapon: sniperBATF.UPG
+		Name: batf
+		MuzzleSequence: garrison-muzzle
+		RequiresCondition: apb-upgrade
 	Mobile:
 		Speed: 46
 		Voice: Move
@@ -2052,7 +2035,8 @@ SNIP:
 		UncloakSound: gstealof.aud
 		IsPlayerPalette: true
 		DetectionTypes: Cloak
-		RequiresCondition: !cloak-force-disabled
+		RequiresCondition: !cloak-force-disabled && !being-warped
+		PauseOnCondition: invisibility
 		UncloakOn: Move, Unload, Infiltrate, Demolish, Dock, Attack
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: crate-cloak && !(cloak-force-disabled || invisibility || hidden)
@@ -2074,7 +2058,7 @@ SNIP:
 		RequiresCondition: hidden
 	AttackFrontalCharged:
 		Voice: Attack
-		FacingTolerance: 0
+		FacingTolerance: 32
 		ChargeLevel: 25
 		ChargingCondition: aiming
 		PauseOnCondition: being-warped
@@ -2108,6 +2092,9 @@ SNIP:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
+	WithColoredSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
+		ColorSource: Player
 
 BORI:
 	Inherits: ^Soldier
@@ -2155,9 +2142,9 @@ BORI:
 	Armament@PRIMARY:
 		Name: secondary
 		Weapon: akm
-	Armament@Garrison:
-		Name: mounted
-		Weapon: akmE
+	Armament@BATF:
+		Name: batf
+		Weapon: akmBATF
 	Armament@flare:
 		Name: primary
 		Weapon: Flare
@@ -2233,9 +2220,9 @@ MORT:
 		Weapon: mortar
 		LocalOffset: 0,0,155
 		FireDelay: 15
-	Armament@Garrison:
-		Name: mounted
-		Weapon: mortarE
+	Armament@BATF:
+		Name: batf
+		Weapon: mortar
 		FireDelay: 15
 	AttackFrontal:
 		PauseOnCondition: being-warped
@@ -2289,13 +2276,8 @@ SAB:
 		Voice: Move
 	Guard:
 		Voice: Move
-	Infiltrates@tec:
-		Types: SabInfiltrate
-		PlayerExperience: 15
-		Notification: NewOptions
-		TextNotification: Building infiltrated.
-	Infiltrates@pwr:
-		Types: PowerInfiltrate
+	Infiltrates:
+		Types: SabInfiltrate, PowerInfiltrate
 		PlayerExperience: 15
 		Notification: BuildingInfiltrated
 		TextNotification: Building infiltrated.
@@ -2316,9 +2298,9 @@ SAB:
 		Voice: Move
 	Armament:
 		Weapon: SilencedPPK
-	Armament@Garrison:
-		Name: mounted
-		Weapon: SilencedPPKE
+	Armament@BATF:
+		Name: batf
+		Weapon: SilencedPPKBATF
 	AttackFrontal:
 		Voice: Attack
 		PauseOnCondition: being-warped
@@ -2333,7 +2315,8 @@ SAB:
 		Palette: cloaktd
 		IsPlayerPalette: true
 		DetectionTypes: Cloak
-		RequiresCondition: can-cloak && !cloak-force-disabled
+		RequiresCondition: can-cloak && !cloak-force-disabled && !being-warped
+		PauseOnCondition: invisibility
 		UncloakOn: Unload, Infiltrate, Demolish, Dock, Attack, Damage
 		CloakSound: gstealon.aud
 		UncloakSound: gstealof.aud
@@ -2369,6 +2352,9 @@ SAB:
 		DischargingColor: 999999
 		ChargeDelay: 250
 		ShowSelectionBarWhenFull: false
+	WithColoredSelectionBox@INVIS:
+		RequiresCondition: invisibility || hidden
+		ColorSource: Player
 
 ACOL:
 	Inherits: ^Cyborg
@@ -2400,9 +2386,9 @@ ACOL:
 	Armament@PRIMARY:
 		Weapon: PortaLaser
 		LocalOffset: 427,0,341
-	Armament@Garrison:
-		Name: mounted
-		Weapon: PortaLaserE
+	Armament@BATF:
+		Name: batf
+		Weapon: PortaLaser
 	TakeCover:
 		ProneOffset: 227,0,-245
 		PauseOnCondition: being-warped
@@ -2434,7 +2420,7 @@ ACOL:
 	Convertible:
 		SpawnActors: TPLR
 	UpgradeableTo:
-		Actors: tplr.upg
+		Actors: tplr
 
 TPLR:
 	Inherits: ACOL
@@ -2455,6 +2441,17 @@ TPLR:
 		StandSequences: stand, stand2
 	Voiced:
 		VoiceSet: TemplarVoice
+	Armament@PRIMARY:
+		Weapon: PortaLaser
+		LocalOffset: 427,0,341
+		RequiresCondition: !quantum-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: PortaLaser.UPG
+		LocalOffset: 427,0,341
+		RequiresCondition: quantum-upgrade
+	GrantConditionOnPrerequisite@QUANTUM:
+		Condition: quantum-upgrade
+		Prerequisites: quantum.upgrade
 
 JJET:
 	Inherits@1: ^ExistsInWorld
@@ -2771,9 +2768,9 @@ E8:
 	Armament@PRIMARY:
 		Weapon: RadBeamWeapon
 		LocalOffset: 427,0,341
-	Armament@Garrison:
-		Name: mounted
-		Weapon: RadBeamWeaponE
+	Armament@BATF:
+		Name: batf
+		Weapon: RadBeamWeapon
 	TakeCover:
 		ProneOffset: 384,0,-395
 	AttackFrontal:
@@ -2838,6 +2835,7 @@ E8:
 	-DamagedByTintedCells@RADWEAKHAZMAT:
 	-GrantConditionOnPrerequisite@HAZMAT:
 	-GrantConditionOnPrerequisite@HAZMATSOVIET:
+	-GrantConditionOnPrerequisite@HAZMATZOCOM:
 	-GrantCondition@HAZMAT:
 	-GrantCondition@HAZMATSOVIET:
 	-WithDecoration@HAZMAT:
@@ -2899,8 +2897,8 @@ N1C:
 		VoiceSet: CyborgVoice
 	Armament@PRIMARY:
 		Weapon: Vulcan3
-	Armament@Garrison:
-		Name: mounted
+	Armament@BATF:
+		Name: batf
 		Weapon: Vulcan3
 		MuzzleSequence: garrison-muzzle
 	ProducibleWithLevel:
@@ -2981,24 +2979,14 @@ N3C:
 		LocalOffset: 0,0,500
 		PauseOnCondition: !ammo
 		RequiresCondition: tibcore-upgrade
-	Armament@GarrisonAA:
-		Name: mountedaa
-		Weapon: RedEyeE.CYB
+	Armament@BATF:
+		Name: batf
+		Weapon: DragonBATF.CYB
 		PauseOnCondition: !ammo
 		RequiresCondition: !tibcore-upgrade
-	Armament@GarrisonAAUPG:
-		Name: mountedaa
-		Weapon: RedEye.CYB.TibCore
-		PauseOnCondition: !ammo
-		RequiresCondition: tibcore-upgrade
-	Armament@Garrison:
-		Name: mounted
-		Weapon: DragonE.CYB
-		PauseOnCondition: !ammo
-		RequiresCondition: !tibcore-upgrade
-	Armament@GarrisonUPG:
-		Name: mounted
-		Weapon: DragonE.CYB.TibCore
+	Armament@BATFUPG:
+		Name: batf
+		Weapon: DragonBATF.CYB.TibCore
 		PauseOnCondition: !ammo
 		RequiresCondition: tibcore-upgrade
 	GrantConditionOnPrerequisite@TIBCORE:
@@ -3022,7 +3010,6 @@ RMBC:
 	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@EMP: ^EmpDisable
-	Inherits@CLOAK: ^Cloakable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
@@ -3065,9 +3052,9 @@ RMBC:
 	Armament@PRIMARY:
 		Weapon: CyCannon
 		LocalOffset: 300,0,300
-	Armament@Garrison:
-		Name: mounted
-		Weapon: cycannon
+	Armament@BATF:
+		Name: batf
+		Weapon: CyCannon
 	Explodes:
 		Weapon: UnitExplodeSmall
 		EmptyWeapon: UnitExplodeSmall
@@ -3145,10 +3132,9 @@ IVAN:
 		Weapon: Ivanbomb
 		LocalOffset: 0,0,555
 		FireDelay: 15
-	Armament@Garrison:
-		Name: mounted
+	Armament@BATF:
+		Name: batf
 		Weapon: Ivanbomb
-		FireDelay: 15
 	TakeCover:
 		ProneOffset: 256,64,-331
 	AttackFrontal:
@@ -3156,6 +3142,7 @@ IVAN:
 		PauseOnCondition: being-warped
 		FacingTolerance: 0
 	WithInfantryBody:
+		StandSequences: stand
 		DefaultAttackSequence: throw
 		RequiresCondition: !parachute && !being-warped
 	WithInfantryBody@PARACHUTE:
@@ -3190,7 +3177,7 @@ BRUT:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Immune to mind control
+		Attributes: • Immune to mind control\n• Self heals to 50% out of combat
 	RenderSprites:
 	Valued:
 		Cost: 450
@@ -3255,6 +3242,11 @@ BRUT:
 		Modifier: 90
 	DamageTypeDamageMultiplier@FLAKARMORMINOR:
 		Modifier: 95
+	ChangesHealth:
+		PercentageStep: 1
+		Delay: 25
+		StartIfBelow: 50
+		DamageCooldown: 150
 	-TakeCover:
 	-Captures@DRIVER_KILL:
 	-CaptureManager:
@@ -3346,8 +3338,8 @@ SHAD:
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: ShadowOperativeGun
-	Armament@Garrison:
-		Name: mounted
+	Armament@BATF:
+		Name: batf
 		Weapon: ShadowOperativeGun
 	AttackFrontal:
 		Voice: Attack
@@ -3418,6 +3410,7 @@ SGLI:
 		Type: GroundPosition
 	Voiced:
 		VoiceSet: ShadowOperativeVoice
+	DeathSounds:
 	Aircraft:
 		CruiseAltitude: 1c512
 		InitialFacing: 192
@@ -3458,7 +3451,7 @@ SGLI:
 		TargetTypes: AirSmall
 	GrantTimedCondition@GLIDING:
 		Condition: gliding
-		Duration: 1125
+		Duration: 1500
 	TimedConditionBar@GLIDING:
 		Condition: gliding
 		Color: 8A8A8A
@@ -3484,8 +3477,15 @@ SGLI.crashing:
 		Image: sgli
 	Aircraft:
 		Speed: 80
+	WithDeathAnimation:
+		DeathSequence: dead
+		FallbackSequence: dead
+		UseDeathTypeSuffix: false
+		DeathSequencePalette: player
 	ActorLostNotification:
 		Notification: AirUnitLost
+	-DeathSounds:
+	-UpdatesPlayerStatistics:
 	-SpawnActorOnDeath:
 	-GrantConditionOnDeploy:
 	-TransformOnCondition:
@@ -3502,22 +3502,20 @@ SGLI.crashing:
 		-RequiresCondition:
 	-MapEditorData:
 	-Cloak:
+	-Targetable@GROUND:
+	-Targetable@AIRBORNE:
+	-Targetable@c4:
+	-Targetable@tnt:
 
 SGLI.deployed:
 	Inherits: SGLI
-	FallsToEarth:
-		Moves: true
-		MaximumSpinSpeed: 0
-		Explosion:
-		Velocity: 90
+	FallsDownAndTransforms:
+		Actor: shad
+		FallVelocity: 90
+		ForwardVelocity: 45
+		SpawnActor: sgli.discarded
 	RenderSprites:
 		Image: sgli
-	SpawnActorOnDeath:
-		Actor: shad
-		RequiresCondition: !being-warped
-	SpawnActorOnDeath@gliderdiscarded:
-		Actor: sgli.discarded
-		RequiresCondition: !being-warped
 	Aircraft:
 		Speed: 45
 	AmbientSoundCA:
@@ -3546,14 +3544,11 @@ SGLI.discarded:
 	HitShape:
 	MapEditorData:
 		Categories: Husk
-	WithColoredOverlay@IDISABLE:
+	WithColoredOverlay:
 		Color: 00000060
-	ChangesHealth:
-		Step: -100
-		StartIfBelow: 101
-		Delay: 25
-	Health:
-		HP: 1000
+	KillsSelf:
+		RemoveInstead: true
+		Delay: 250
 	Armor:
 		Type: None
 	MapEditorData:
@@ -3588,8 +3583,8 @@ BH:
 	Armament:
 		Weapon: BlackHandFlamer
 		LocalOffset: 300,0,180
-	Armament@Garrison:
-		Name: mounted
+	Armament@BATF:
+		Name: batf
 		Weapon: BlackHandFlamerWithSound
 	TakeCover:
 		ProneOffset: 160,0,-256
@@ -3646,7 +3641,7 @@ YURI:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Vehicles, Defenses, Buildings
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Shorter range and longer reload against vehicles\n• Special Ability: Mind Blast
+		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Shorter range and longer reload against vehicles\n• Psychic detection radius\n• Special Ability: Mind Blast
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -3672,6 +3667,9 @@ YURI:
 		Name: aidummy
 		RequiresCondition: botowner && !deployed
 		Weapon: YuriDummyAim
+	Armament@BATF:
+		Name: batf
+		Weapon: PsychicBeamBATF
 	MindController:
 		ArmamentNames: primary, secondary
 		Capacity: 3
@@ -3704,7 +3702,7 @@ YURI:
 		KillSlavesDamageTypes: BulletDeath
 	GrantTimedConditionOnDeploy:
 		DeployedTicks: 35
-		CooldownTicks: 150
+		CooldownTicks: 100
 		DeployedCondition: deployed
 		DeployingCondition: deploying
 		DeployAnimation: deployed
@@ -3782,6 +3780,13 @@ YURI:
 	RangeMultiplier@RANK-ELITE:
 		Modifier: 115
 		RequiresCondition: rank-elite
+	RangedGpsRadarProvider:
+		Range: 13c0
+		TargetTypes: Infantry, Vehicle, Air, Structure
+	WithRangeCircle:
+		Range: 13c0
+		Color: cc00ff77
+		BorderColor: 00000044
 
 SEAL:
 	Inherits: RMBO
@@ -3812,11 +3817,10 @@ SEAL:
 	Armament:
 		Weapon: mp5
 		PauseOnCondition: onwater
-	Armament@garrison:
-		Name: mounted
-		Weapon: mp5e
+	Armament@BATF:
+		Name: batf
+		Weapon: mp5BATF
 		MuzzleSequence: garrison-muzzle
-		PauseOnCondition: onwater
 	Armament@sapper:
 		Weapon: PlaceC4seal
 		Cursor: c4
@@ -3875,8 +3879,8 @@ XO:
 		Prerequisites: gtek, infantry.any, vehicles.any, ~pyle, ~techlevel.high
 		Description: Light battle-mech with a short-range laser\n  and a machine gun.
 	TooltipExtras:
-		Strengths: • Strong vs Heavy Armor, Light Armor, Infantry
-		Weaknesses: • Cannot attack Aircraft
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Buildings• Cannot attack Aircraft
 	Valued:
 		Cost: 1000
 	Selectable:
@@ -3933,12 +3937,13 @@ XO:
 		Modifier: 130
 	ReloadDelayMultiplier@GYRO:
 		Modifier: 130
+	GpsRadarDot:
+		Sequence: Infantry
 
 ENLI:
 	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@EMP: ^EmpDisable
-	Inherits@CLOAK: ^Cloakable
 	RenderSprites:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
@@ -3971,7 +3976,7 @@ ENLI:
 	Health:
 		HP: 30000
 	Mobile:
-		Speed: 60
+		Speed: 54
 		Voice: Move
 		PauseOnCondition: being-warped || empdisable
 	AttackFrontal:
@@ -3989,8 +3994,14 @@ ENLI:
 	Armament@PRIMARY:
 		Weapon: EnlightenedBeam
 		LocalOffset: 300,0,300
-	Armament@Garrison:
-		Name: mounted
+		PauseOnCondition: emp-attack || emp-fired
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: EnlightenedEmp
+		LocalOffset: 300,0,300
+		PauseOnCondition: !emp-attack
+	Armament@BATF:
+		Name: batf
 		Weapon: EnlightenedBeam
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
@@ -4016,17 +4027,20 @@ ENLI:
 		MinimumHealing: 2500
 		DamageTypes: DirectRepair
 		ShowSelectionBar: true
-	GrantTimedConditionOnDeploy:
-		DeployedCondition: triggered
-		CooldownTicks: 375
-		DeployedTicks: 5
-		StartsFullyCharged: true
-		RequiresCondition: !(empdisable || being-warped)
-		ShowSelectionBarWhenFull: false
-		ChargingColor: 88EEFF
-	PeriodicExplosion:
-		Weapon: EnlightenedEmp
-		RequiresCondition: triggered
-	WithColoredOverlay@EMP:
-		RequiresCondition: triggered
-		Color: 88EEFFcc
+	TargetedAttackAbility:
+		ActiveCondition: emp-attack
+		ArmamentName: secondary
+		CircleColor: b2b2e888
+		Type: EnlightenedEmp
+	GrantConditionOnAttack@EMPCOOLDOWN:
+		Condition: emp-fired
+		RevokeDelay: 65
+		ArmamentNames: secondary
+	AmmoPool:
+		Armaments: secondary
+		Ammo: 1
+	ReloadAmmoPoolCA:
+		Delay: 500 # equal to reload time of weapon
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: b8afff

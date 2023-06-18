@@ -1,11 +1,10 @@
 #region Copyright & License Information
-/*
- * Copyright 2007-2022 The OpenRA Developers (see AUTHORS)
- * This file is part of OpenRA, which is free software. It is made
- * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation, either version 3 of
- * the License, or (at your option) any later version. For more
- * information, see COPYING.
+/**
+ * Copyright (c) The OpenRA Combined Arms Developers (see CREDITS).
+ * This file is part of OpenRA Combined Arms, which is free software.
+ * It is made available to you under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. For more information, see COPYING.
  */
 #endregion
 
@@ -19,7 +18,8 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Unit got to face the target")]
+	[Desc("Unit must face the target and charge up to fire. ",
+		"Note: All armaments will share the charge, so its best suited for units with a single weapon.")]
 	public class AttackFrontalChargedInfo : AttackFrontalInfo, Requires<IFacingInfo>
 	{
 		[Desc("Amount of charge required to attack.")]
@@ -50,7 +50,7 @@ namespace OpenRA.Mods.CA.Traits
 	public class AttackFrontalCharged : AttackFrontal, INotifyAttack, INotifySold, ISelectionBar
 	{
 		public new readonly AttackFrontalChargedInfo Info;
-
+		readonly IMove movement;
 		readonly Stack<int> chargingTokens = new Stack<int>();
 
 		bool charging;
@@ -85,11 +85,20 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
+		public bool IsTurning
+		{
+			get
+			{
+				return movement != null && (movement.CurrentMovementTypes & MovementType.Turn) != 0;
+			}
+		}
+
 		public AttackFrontalCharged(Actor self, AttackFrontalChargedInfo info)
 			: base(self, info)
 		{
 			Info = info;
 			shotsFired = 0;
+			movement = self.TraitOrDefault<IMove>();
 		}
 
 		protected override void TraitEnabled(Actor self)
@@ -114,7 +123,7 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			// Stop charging when we lose our target
-			charging = (self.CurrentActivity is AttackCharged || self.CurrentActivity is AttackMoveActivity) && !reloading && IsAiming;
+			charging = (self.CurrentActivity is AttackCharged || self.CurrentActivity is AttackMoveActivity) && !reloading && IsAiming && (ChargeLevel > 0 || !IsTurning);
 
 			var delta = charging ? Info.ChargeRate : -Info.DischargeRate;
 			ChargeLevel = (ChargeLevel + delta).Clamp(0, Info.ChargeLevel);

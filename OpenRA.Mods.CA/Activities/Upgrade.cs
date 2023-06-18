@@ -1,11 +1,10 @@
 #region Copyright & License Information
-/*
- * Copyright 2007-2020 The OpenRA Developers (see AUTHORS)
- * This file is part of OpenRA, which is free software. It is made
- * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation, either version 3 of
- * the License, or (at your option) any later version. For more
- * information, see COPYING.
+/**
+ * Copyright (c) The OpenRA Combined Arms Developers (see CREDITS).
+ * This file is part of OpenRA Combined Arms, which is free software.
+ * It is made available to you under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. For more information, see COPYING.
  */
 #endregion
 
@@ -20,9 +19,8 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Activities
 {
-	/**
-	 * Activity runs while actor is searching for a location they can upgrade, moving to that location, and while the upgrade is being applied.
-	 */
+	[Desc("Activity whereby an actor searches for a location it can upgrade,",
+		"moves to that location, and receives the upgrade.")]
 	public class Upgrade : Activity
 	{
 		readonly PlayerResources playerResources;

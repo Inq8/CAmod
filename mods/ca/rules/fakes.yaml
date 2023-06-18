@@ -7,13 +7,15 @@ SYRF:
 		BuildPaletteOrder: 890
 		Queue: DefenseSQ, DefenseMQ
 		Prerequisites: syrd, ~structures.england, ~techlevel.low
-		Description: Looks like a Naval yard.
+		Description: Looks like a Naval yard. Packed with explosives.
 		Icon: fake-icon
 	Tooltip:
 		Name: Fake Naval Yard
 		GenericName: Shipyard
 		GenericVisibility: Enemy
 		GenericStancePrefix: False
+	TooltipExtras:
+		FakeActor: syrd
 	Targetable:
 		TargetTypes: Ground, Water, Structure, SpyInfiltrate
 		RequiresCondition: !being-warped
@@ -38,7 +40,7 @@ SYRF:
 	Health:
 		HP: 100000
 	Armor:
-		Type: Light
+		Type: Wood
 	MapEditorData:
 		ExcludeTilesets: INTERIOR
 	RequiresBuildableArea:
@@ -53,13 +55,15 @@ WEAF:
 		BuildPaletteOrder: 920
 		Prerequisites: weap, ~structures.england, ~techlevel.low
 		Queue: DefenseSQ, DefenseMQ
-		Description: Looks like a War Factory.
+		Description: Looks like a War Factory. Packed with explosives.
 		Icon: fake-icon
 	Tooltip:
 		Name: Fake War Factory
 		GenericName: War Factory
 		GenericVisibility: Enemy
 		GenericStancePrefix: False
+	TooltipExtras:
+		FakeActor: weap
 	Building:
 		Footprint: xxx xxx +++
 		Dimensions: 3,3
@@ -71,7 +75,7 @@ WEAF:
 		Sequence: build-top
 		RequiresCondition: !build-incomplete
 	Valued:
-		Cost: 200
+		Cost: 225
 	Health:
 		HP: 150000
 	Armor:
@@ -91,11 +95,13 @@ DOMF:
 		GenericName: Radar Dome
 		GenericVisibility: Enemy
 		GenericStancePrefix: False
+	TooltipExtras:
+		FakeActor: dome
 	Buildable:
 		BuildPaletteOrder: 930
 		Queue: DefenseSQ, DefenseMQ
 		Prerequisites: dome, ~structures.england, ~techlevel.medium
-		Description: Looks like a Radar Dome.
+		Description: Looks like a Radar Dome. Packed with explosives.
 		Icon: fake-icon
 	Building:
 		Footprint: xx xx ==
@@ -105,9 +111,9 @@ DOMF:
 	RenderSprites:
 		Image: DOME
 	Valued:
-		Cost: 180
+		Cost: 200
 	Health:
-		HP: 100000
+		HP: 110000
 	Armor:
 		Type: Wood
 	RequiresBuildableArea:
@@ -119,13 +125,15 @@ FACF:
 		BuildPaletteOrder: 1000
 		Queue: DefenseSQ, DefenseMQ
 		Prerequisites: ~structures.england
-		Description: Looks like a Construction Yard.
+		Description: Looks like a Construction Yard. Packed with explosives.
 		Icon: fake-icon
 	Tooltip:
 		Name: Fake Construction Yard
 		GenericName: Construction Yard
 		GenericVisibility: Enemy
 		GenericStancePrefix: False
+	TooltipExtras:
+		FakeActor: fact
 	Building:
 		Footprint: xxX xxx XxX ===
 		Dimensions: 3,4

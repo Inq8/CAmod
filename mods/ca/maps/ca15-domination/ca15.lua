@@ -132,7 +132,7 @@ WorldLoaded = function()
 		TempleDestroyed()
 	end)
 
-	Trigger.OnSold(TempleOfNod, functon(self)
+	Trigger.OnSold(TempleOfNod, function(self)
 		TempleDestroyed()
 	end)
 

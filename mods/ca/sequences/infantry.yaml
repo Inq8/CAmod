@@ -626,6 +626,7 @@ e4:
 				Offset: -7,8
 		Facings: 8
 		Length: 13
+		InterpolatedFacings: 16
 	chrono-overlay: chronofade_small
 		Length: *
 		BlendMode: Additive
@@ -2247,6 +2248,7 @@ n4:
 				Offset: -7,8
 		Facings: 8
 		Length: 13
+		InterpolatedFacings: 16
 	chrono-overlay: chronofade_small
 		Length: *
 		BlendMode: Additive
@@ -2369,6 +2371,7 @@ n5:
 				Offset: -3,2
 		Facings: 8
 		Length: 13
+		InterpolatedFacings: 16
 	chrono-overlay: chronofade_small
 		Length: *
 		BlendMode: Additive
@@ -3921,7 +3924,17 @@ sgli:
 	idle: sgli
 		UseClassicFacings: true
 		Facings: 32
-	icon: yakicon
+	dead: corpse1
+		Length: 6
+		Tick: 1600
+		ZOffset: -511
+		UseTilesetExtension: true
+		TilesetOverrides:
+			DESERT: TEMPERAT
+			INTERIOR: TEMPERAT
+			JUNGLE: TEMPERAT
+			WINTER: TEMPERAT
+			DUNE: TEMPERAT
 
 sgli.destroyed:
 	Inherits: ^VehicleOverlays

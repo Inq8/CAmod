@@ -66,6 +66,74 @@ VehicleVoice:
 		Action: ackno,affirm1,movout1
 		Unload: movout1
 
+ScrinInfantryVoice:
+	Variants:
+		allies: .s01,.s03
+		england: .s01,.s03
+		france: .s01,.s03
+		germany: .s01,.s03
+		usa: .s01,.s03
+		soviet: .s01,.s03
+		russia: .s01,.s03
+		ukraine: .s01,.s03
+		iraq: .s01,.s03
+		yuri: .s01,.s03
+		nod: .s01,.s03
+		blackh: .s01,.s03
+		marked: .s01,.s03
+		legion: .s01,.s03
+		shadow: .s01,.s03
+		gdi: .s01,.s03
+		talon: .s01,.s03
+		zocom: .s01,.s03
+		eagle: .s01,.s03
+		arc: .s01,.s03
+		scrin: .s01,.s03
+		reaper: .s01,.s03
+		traveler: .s01,.s03
+		harbinger: .s01,.s03
+		collector: .s01,.s03
+	Voices:
+		Select: await1,ready,report1,yessir1
+		Action: ackno,affirm1,noprob,overout,ritaway,roger,ugotit
+		Die: scrin-die1, scrin-die2, scrin-die3, scrin-die4, scrin-die5
+		Burned: scrin-firedeath
+		Zapped: scrin-die2, scrin-die5
+		Poisoned: scrin-die2, scrin-die5
+	DisableVariants: Die, Burned, Zapped, Poisoned
+
+ScrinVehicleVoice:
+	Variants:
+		allies: .s00,.s02
+		england: .s00,.s02
+		france: .s00,.s02
+		germany: .s00,.s02
+		usa: .s00,.s02
+		soviet: .s00,.s02
+		russia: .s00,.s02
+		ukraine: .s00,.s02
+		iraq: .s00,.s02
+		yuri: .s00,.s02
+		nod: .s00,.s02
+		blackh: .s00,.s02
+		marked: .s00,.s02
+		legion: .s00,.s02
+		shadow: .s00,.s02
+		gdi: .s00,.s02
+		talon: .s00,.s02
+		zocom: .s00,.s02
+		eagle: .s00,.s02
+		arc: .s00,.s02
+		scrin: .s00,.s02
+		reaper: .s00,.s02
+		traveler: .s00,.s02
+		harbinger: .s00,.s02
+		collector: .s00,.s02
+	Voices:
+		Select: vehic1,yessir1,report1,await1,unit1
+		Action: ackno,affirm1,movout1
+		Unload: movout1
+
 ^InfantryDeaths:
 	Voices:
 		Die: dedman1,dedman2,dedman3,dedman4,dedman5,dedman7,dedman8,nuyell1,nuyell12,nuyell3,nuyell4,nuyell5
@@ -74,6 +142,12 @@ VehicleVoice:
 		Poisoned: vtoxb,vtoxc,vtoxd,vtoxe,vtoxf,vtoxh
 
 EngineerVoice:
+	Variants:
+		soviet: _sov.aud
+		russia: _sov.aud
+		ukraine: _sov.aud
+		iraq: _sov.aud
+		yuri: _sov.aud
 	Inherits: ^InfantryDeaths
 	Voices:
 		Select: eengin1,eyessir1
@@ -551,14 +625,6 @@ ChronoMinerVoice:
 		Harvest: vchrhaa, vchrhab, vchrhac, vchrhad, vchrhae
 		Deliver: vchrgoa, vchrgob, vchrgoc, vchrgod, vchrgoe
 
-ScrinInfantryVoice:
-	Inherits: GenericVoice
-	Voices:
-		Die: scrin-die1, scrin-die2, scrin-die3, scrin-die4, scrin-die5
-		Burned: scrin-firedeath
-		Zapped: scrin-die2, scrin-die5
-		Poisoned: scrin-die2, scrin-die5
-
 MastermindVoice:
 	Voices:
 		Select: mastermind-select1, mastermind-select2, mastermind-select3
@@ -753,8 +819,8 @@ GrizzlyVoice:
 
 EnlightenedVoice:
 	Voices:
-		Select: enli-select1, enli-select2, enli-select3, enli-select4
-		Move: enli-move1, enli-move2, enli-move3, enli-move4
+		Select: enli-select1, enli-select2, enli-select3, enli-select4, enli-select5, enli-select6
+		Move: enli-move1, enli-move2, enli-move3, enli-move4, enli-move5
 		Action: enli-select1, enli-select2, enli-select3, enli-select4
 		Attack: enli-attack1, enli-attack2, enli-attack3, enli-attack4
 		Die: 22-n104, 22-n106, 22-n108
@@ -772,3 +838,10 @@ TemplarVoice:
 		Burned: 22-n104, 22-n106, 22-n108
 		Zapped: 22-n104, 22-n106, 22-n108
 		Poisoned: 22-n104, 22-n106, 22-n108
+
+MindSparkVoice:
+	Voices:
+		Select: mspk1, mspk2
+		Action: mspk1, mspk2
+		Move: mspk1, mspk2
+		Attack: mspk1, mspk2

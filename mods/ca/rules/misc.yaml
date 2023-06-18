@@ -372,20 +372,19 @@ camera.cloud:
 		QuantizedFacings: 1
 	AlwaysVisible:
 	HitShape:
-	Mobile:
+	Aircraft:
+		CanHover: True
 		Speed: 20
-		Locomotor: cloud
+		CruiseAltitude: 1
+		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,Water,Tree,River
 	Wanders:
 		WanderMoveRadius: 5
 		ReduceMoveRadiusDelay: 3
 	RevealsShroud:
-		Range: 6c0
-	Health:
-		HP: 30000
-	DamagedByTerrain:
-		Terrain: Clear, Rough, Road, Ore, Water, Gems, River, Tiberium, BlueTiberium
-		Damage: 500
-		DamageInterval: 5
+		Range: 2c0
+		Type: CenterPosition
+	KillsSelf:
+		Delay: 300
 		DamageTypes: ToxinDeath
 	Hovers:
 	WithDeathAnimation:
@@ -401,8 +400,8 @@ camera.cloud2:
 	Inherits: camera.cloud
 	RenderSprites:
 		Image: cloud2
-	DamagedByTerrain:
-		Damage: 300
+	KillsSelf:
+		Delay: 500
 
 chaos.cloud1:
 	Inherits: camera.cloud
@@ -413,7 +412,7 @@ chaos.cloud1:
 		DeathSequencePalette: caneon
 	PeriodicExplosion:
 		Weapon: ChaosCloud
-	Mobile:
+	Aircraft:
 		Speed: 10
 
 chaos.cloud2:
@@ -840,23 +839,23 @@ stolentech.dome:
 		Factions: russia, ukraine, iraq, yuri
 		Prerequisite: v2.upgrade
 
-# hq - mlrs from allies, aircraft veterancy from nod
+# hq - mobile sensor from allies, aircraft veterancy from nod
 stolentech.hq:
 	AlwaysVisible:
 	ValidFactions:
 		Factions: talon, zocom, eagle, arc, blackh, marked, legion, shadow
 	ProvidesPrerequisiteValidatedFaction@STOLENGDI:
 		Factions: talon, zocom, eagle, arc
-		Prerequisite: vehicles.msam
+		Prerequisite: vehicles.msar
 	ProvidesPrerequisiteValidatedFaction@STOLENNOD:
 		Factions: blackh, marked, legion, shadow
 		Prerequisite: aircraft.upgraded
 
-# atek - mrj
+# atek - mobile gap gen
 stolentech.atek:
 	AlwaysVisible:
 	ProvidesPrerequisite:
-		Prerequisite: vehicles.mrj
+		Prerequisite: vehicles.mgg
 
 # stek - mad tank
 stolentech.stek:

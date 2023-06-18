@@ -1,11 +1,10 @@
 #region Copyright & License Information
-/*
- * Copyright 2007-2020 The OpenRA Developers (see AUTHORS)
- * This file is part of OpenRA, which is free software. It is made
- * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation, either version 3 of
- * the License, or (at your option) any later version. For more
- * information, see COPYING.
+/**
+ * Copyright (c) The OpenRA Combined Arms Developers (see CREDITS).
+ * This file is part of OpenRA Combined Arms, which is free software.
+ * It is made available to you under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. For more information, see COPYING.
  */
 #endregion
 
@@ -34,7 +33,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		[ActorReference]
 		[FieldLoader.Require]
-		[Desc("Actor to spawn on death.")]
+		[Desc("Actor to spawn.")]
 		public readonly string Actor = null;
 
 		[CursorReference]
@@ -128,7 +127,6 @@ namespace OpenRA.Mods.CA.Traits
 				if (IsTraitDisabled)
 					yield break;
 
-				yield return new SpawnActorAbilityOrderTargeter(Info.TargetCursor);
 				yield return new DeployOrderTargeter("SpawnActorAbilityDeploy", 5,
 					() => CanSpawnActor ? Info.DeployCursor : Info.DeployBlockedCursor);
 			}
@@ -179,41 +177,6 @@ namespace OpenRA.Mods.CA.Traits
 		}
 	}
 
-	class SpawnActorAbilityOrderTargeter : IOrderTargeter
-	{
-		readonly string targetCursor;
-
-		public SpawnActorAbilityOrderTargeter(string targetCursor)
-		{
-			this.targetCursor = targetCursor;
-		}
-
-		public string OrderID => "SpawnActorAbility";
-		public int OrderPriority => 5;
-		public bool IsQueued { get; protected set; }
-		public bool TargetOverridesSelection(Actor self, in Target target, List<Actor> actorsAt, CPos xy, TargetModifiers modifiers) { return true; }
-
-		public bool CanTarget(Actor self, in Target target, ref TargetModifiers modifiers, ref string cursor)
-		{
-			if (modifiers.HasModifier(TargetModifiers.ForceMove))
-			{
-				var xy = self.World.Map.CellContaining(target.CenterPosition);
-
-				IsQueued = modifiers.HasModifier(TargetModifiers.ForceQueue);
-
-				if (self.IsInWorld && self.Owner.Shroud.IsExplored(xy))
-				{
-					cursor = targetCursor;
-					return true;
-				}
-
-				return false;
-			}
-
-			return false;
-		}
-	}
-
 	class SpawnActorAbilityOrderGenerator : OrderGenerator
 	{
 		readonly Actor self;
@@ -233,7 +196,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override IEnumerable<Order> OrderInner(World world, CPos cell, int2 worldPixel, MouseInput mi)
 		{
-			if (mi.Button == Game.Settings.Game.MouseButtonPreference.Cancel)
+			if (mi.Button == MouseButton.Right)
 			{
 				world.CancelInputMode();
 				yield break;
