@@ -75,9 +75,9 @@ Player:
 		Values:
 			Single-Queue: global.singlequeue
 	Shroud:
-		ExploredMapCheckboxEnabled: False
-		ExploredMapCheckboxVisible: False
-		ExploredMapCheckboxLocked: True
+		ExploredMapCheckboxEnabled: True
+		ExploredMapCheckboxVisible: True
+		ExploredMapCheckboxLocked: False
 	-ModularBot@BrutalAI:
 	-ModularBot@VeryHardAI:
 	-ModularBot@HardAI:
@@ -207,6 +207,8 @@ XO:
 	Targetable@HEAL:
 		TargetTypes: Heal
 		RequiresCondition: damaged
+	-Targetable@REPAIR:
+	-GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 	ChangesHealth@DEFAULT:
 		PercentageStep: 1
 		Delay: 25
