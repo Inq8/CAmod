@@ -174,6 +174,8 @@ WorldLoaded = function()
 			if actor.HasProperty("Kill") and not actor.IsDead then actor.Kill("BulletDeath") end
 		end)
 
+		Media.DisplayMessage("GDI are victorious!", "Notification", HSLColor.FromHex("E5D19C"))
+
         Trigger.AfterDelay(DateTime.Seconds(5), function()
             Utils.Do(NodPlayers, function(nodPlayer)
                 local nodActors = nodPlayer.GetActors()
@@ -181,6 +183,12 @@ WorldLoaded = function()
                     if nodActor.HasProperty("Kill") and not nodActor.IsDead then nodActor.Kill("BulletDeath") end
                 end)
             end)
+
+			Trigger.AfterDelay(DateTime.Seconds(2), function()
+				Utils.Do(NodWormholes, function(w)
+					w.Kill()
+				end)
+			end)
         end)
 	end)
 
@@ -190,6 +198,8 @@ WorldLoaded = function()
 			if actor.HasProperty("Kill") and not actor.IsDead then actor.Kill("BulletDeath") end
 		end)
 
+		Media.DisplayMessage("Nod are victorious!", "Notification", HSLColor.FromHex("FF0000"))
+
         Trigger.AfterDelay(DateTime.Seconds(5), function()
             Utils.Do(GDIPlayers, function(gdiPlayer)
                 local gdiActors = gdiPlayer.GetActors()
@@ -197,6 +207,12 @@ WorldLoaded = function()
                     if gdiActor.HasProperty("Kill") and not gdiActor.IsDead then gdiActor.Kill("BulletDeath") end
                 end)
             end)
+
+			Trigger.AfterDelay(DateTime.Seconds(2), function()
+				Utils.Do(Wormholes, function(w)
+					w.Kill()
+				end)
+			end)
         end)
 	end)
 
