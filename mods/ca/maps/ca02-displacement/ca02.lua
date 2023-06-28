@@ -177,6 +177,7 @@ WorldLoaded = function()
 	MissionPlayer = Greece
 	TimerTicks = 0
 	TrucksLost = 0
+	TrucksLostCurrentConvoy = 0
 	NextConvoyIdx = 1
 	CurrentConvoyArrivalComplete = false
 
@@ -316,6 +317,7 @@ InitConvoy = function()
 		Utils.Do(trucks, function(truck)
 			Trigger.OnKilled(truck, function(self, killer)
 				TrucksLost = TrucksLost + 1
+				TrucksLostCurrentConvoy = TrucksLostCurrentConvoy + 1
 				Media.PlaySpeechNotification(Greece, "ConvoyUnitLost")
 				Media.PlaySoundNotification(Greece, "AlertBuzzer")
 
@@ -326,6 +328,8 @@ InitConvoy = function()
 				if TrucksLost > MaxLosses[Difficulty] then
 					Greece.MarkFailedObjective(ObjectiveClearPath)
 					Greece.MarkFailedObjective(ObjectiveProtectConvoys)
+				elseif TrucksLostCurrentConvoy == 5 then
+					QueueNextConvoy(DateTime.Seconds(45))
 				end
 			end)
 
@@ -333,23 +337,28 @@ InitConvoy = function()
 				if CurrentConvoyArrivalComplete then
 					local numTrucks = #England.GetActorsByType("truk")
 					if numTrucks == 0 then
-						NextConvoyIdx = NextConvoyIdx + 1
-						if NextConvoyIdx <= #Convoys then
-							UserInterface.SetMissionText("Awaiting next convoy.")
-							Trigger.AfterDelay(DateTime.Seconds(15), function()
-								InitConvoy()
-							end)
-						else
-							ObjectiveDestroyScrinBase = Greece.AddObjective("Destroy the alien stronghold.")
-							Greece.MarkCompletedObjective(ObjectiveClearPath)
-							Greece.MarkCompletedObjective(ObjectiveProtectConvoys)
-							UserInterface.SetMissionText("Destroy the alien stronghold.", HSLColor.Yellow)
-						end
+						QueueNextConvoy(DateTime.Seconds(15))
 					end
 				end
 			end)
 		end)
 	end)
+end
+
+QueueNextConvoy = function(timeUntilNext)
+	NextConvoyIdx = NextConvoyIdx + 1
+	TrucksLostCurrentConvoy = 0
+	if NextConvoyIdx <= #Convoys then
+		UserInterface.SetMissionText("Awaiting next convoy.")
+		Trigger.AfterDelay(timeUntilNext, function()
+			InitConvoy()
+		end)
+	else
+		ObjectiveDestroyScrinBase = Greece.AddObjective("Destroy the alien stronghold.")
+		Greece.MarkCompletedObjective(ObjectiveClearPath)
+		Greece.MarkCompletedObjective(ObjectiveProtectConvoys)
+		UserInterface.SetMissionText("Destroy the alien stronghold.", HSLColor.Yellow)
+	end
 end
 
 InitScrin = function()
