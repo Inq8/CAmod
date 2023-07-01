@@ -85,6 +85,15 @@ Player:
 		Enabled: True
 		DisplayOrder: 999
 		Prerequisites: global.shownames
+	ModularBot@StandardAI:
+		Name: Bot
+		Type: bot
+	-ModularBot@BrutalAI:
+	-ModularBot@VeryHardAI:
+	-ModularBot@HardAI:
+	-ModularBot@NormalAI:
+	-ModularBot@EasyAI:
+	-ModularBot@NavalAI:
 
 SPAWN:
 	Inherits: CAMERA
@@ -576,6 +585,17 @@ GUN:
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
+	WithNameTagDecorationCA:
+		Position: Top
+		Font: Regular
+		Margin: 0, -20
+		ColorSource: Team
+		ContrastColorLight: 000000
+		ValidRelationships: Ally, Enemy, Neutral
+		RequiresCondition: shownames
+	GrantConditionOnPrerequisite@SHOWNAMES:
+		Condition: shownames
+		Prerequisites: global.shownames
 
 SPAWNGUN:
 	Inherits: GUN
@@ -583,3 +603,6 @@ SPAWNGUN:
 		Modifier: 0
 	RenderSprites:
 		Image: gun
+	-WithNameTagDecorationCA:
+	MustBeDestroyed:
+		RequiredForShortGame: true
