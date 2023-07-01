@@ -1,6 +1,6 @@
 World:
 	MissionData:
-		Briefing: ================\n\n- Two teams must fight over five objectives.\n-------------------------\n- Players have a set number of credits, refunded when a unit is lost so it can be replaced.\n-------------------------\n- Any unit can capture an objective.\n-------------------------\n- Points are gained by holding objectives.\n-------------------------\n- First team to 1500 points wins.\n\n================\n
+		Briefing: ================\n\n- Two teams must fight over five objectives.\n-------------------------\n- Players have a set number of credits, refunded when a unit is lost so it can be replaced.\n-------------------------\n- Faction choice has no effect.\n-------------------------\n- Any unit can capture an objective.\n-------------------------\n- Points are gained by holding objectives.\n-------------------------\n- First team to 1500 points wins.\n\n================\n
 	LuaScript:
 		Scripts: tfca.lua
 	-SpawnStartingUnits:
@@ -536,6 +536,8 @@ DOME:
 	-Targetable@INFILTRATION:
 	CaptureManager:
 		-BeingCapturedCondition:
+	-RangedGpsRadarProvider:
+	-WithRangeCircle:
 
 HQ:
 	-Sellable:
@@ -552,6 +554,8 @@ HQ:
 	-Targetable@INFILTRATION:
 	CaptureManager:
 		-BeingCapturedCondition:
+	-RangedGpsRadarProvider:
+	-WithRangeCircle:
 
 APWR:
 	-Sellable:
@@ -585,14 +589,9 @@ GUN:
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
-	WithNameTagDecorationCA:
-		Position: Top
-		Font: Regular
-		Margin: 0, -20
+	WithColoredSelectionBox@REL:
 		ColorSource: Team
-		ContrastColorLight: 000000
 		ValidRelationships: Ally, Enemy, Neutral
-		RequiresCondition: shownames
 	GrantConditionOnPrerequisite@SHOWNAMES:
 		Condition: shownames
 		Prerequisites: global.shownames
@@ -603,6 +602,7 @@ SPAWNGUN:
 		Modifier: 0
 	RenderSprites:
 		Image: gun
-	-WithNameTagDecorationCA:
 	MustBeDestroyed:
 		RequiredForShortGame: true
+	WithColoredSelectionBox@REL:
+		ColorSource: Player
