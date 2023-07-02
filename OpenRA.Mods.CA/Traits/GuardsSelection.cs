@@ -58,7 +58,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (order.Queued)
 				return;
 
-			var validOrders = new HashSet<string> { "AttackMove", "AssaultMove", "Attack", "ForceAttack", "Move", "KeepDistance" };
+			var validOrders = new HashSet<string> { "AttackMove", "AssaultMove", "Attack", "ForceAttack", "KeepDistance" };
 
 			if (!validOrders.Contains(order.OrderString))
 				return;
