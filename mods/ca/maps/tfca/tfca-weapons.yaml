@@ -81,3 +81,24 @@ Repair:
 	ReloadDelay: 60
 	Warhead@highlight: GrantExternalCondition
 		ValidTargets: Structure
+
+Pyroblast:
+	Inherits: FireballLauncher
+	Range: 8c0
+	ReloadDelay: 375
+	Projectile: BulletCA
+		Speed: 125
+	Warhead@1Dam: SpreadDamage
+		Spread: 768
+		Damage: 35000
+		Versus:
+			Concrete: 1
+	Warhead@3Eff: CreateEffect
+		Explosions: large_napalm
+		ImpactSounds: flamer2.aud
+		ImpactActors: true
+	-Warhead@2Dam:
+
+ATMine:
+	Warhead@1Dam: SpreadDamage
+		Damage: 75000
