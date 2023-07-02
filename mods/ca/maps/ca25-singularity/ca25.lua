@@ -6,7 +6,7 @@ NEReactors = { NEPower1, NEPower2, NEPower3, NEPower4, NEPower5, NEPower6, NEPow
 Squads = {
 	ScrinWest = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 35 } },
+			easy = { { MinTime = 0, Value = 30 } },
 			normal = { { MinTime = 0, Value = 50 } },
 			hard = { { MinTime = 0, Value = 70 } },
 		},
@@ -28,7 +28,7 @@ Squads = {
 	},
 	ScrinEast = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 35 } },
+			easy = { { MinTime = 0, Value = 30 } },
 			normal = { { MinTime = 0, Value = 50 } },
 			hard = { { MinTime = 0, Value = 70 } },
 		},
@@ -50,7 +50,7 @@ Squads = {
 	},
 	ScrinCenter = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 35 } },
+			easy = { { MinTime = 0, Value = 30 } },
 			normal = { { MinTime = 0, Value = 50 } },
 			hard = { { MinTime = 0, Value = 70 } },
 		},
@@ -74,7 +74,7 @@ Squads = {
 			hard = DateTime.Seconds(90)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 20 } },
+			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 15 } },
 			normal = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(12), Value = 33 } },
 			hard = { { MinTime = 0, Value = 30 }, { MinTime = DateTime.Minutes(10), Value = 50 } },
 		},
@@ -99,7 +99,7 @@ Squads = {
 			hard = DateTime.Seconds(90)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 20 } },
+			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 15 } },
 			normal = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(12), Value = 33 } },
 			hard = { { MinTime = 0, Value = 30 }, { MinTime = DateTime.Minutes(10), Value = 50 } },
 		},
@@ -125,7 +125,7 @@ Squads = {
 			hard = DateTime.Seconds(90)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 20 } },
+			easy = { { MinTime = 0, Value = 8 }, { MinTime = DateTime.Minutes(14), Value = 15 } },
 			normal = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(12), Value = 33 } },
 			hard = { { MinTime = 0, Value = 26 }, { MinTime = DateTime.Minutes(10), Value = 50 } },
 		},

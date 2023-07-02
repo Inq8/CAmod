@@ -19,7 +19,7 @@ Squads = {
 			hard = DateTime.Seconds(90)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 40 } },
+			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 35 } },
 			normal = { { MinTime = 0, Value = 34 }, { MinTime = DateTime.Minutes(12), Value = 68 } },
 			hard = { { MinTime = 0, Value = 52 }, { MinTime = DateTime.Minutes(10), Value = 105 } },
 		},
@@ -42,7 +42,7 @@ Squads = {
 			hard = DateTime.Seconds(120)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 20 } },
+			easy = { { MinTime = 0, Value = 5 }, { MinTime = DateTime.Minutes(14), Value = 15 } },
 			normal = { { MinTime = 0, Value = 16 }, { MinTime = DateTime.Minutes(12), Value = 32 } },
 			hard = { { MinTime = 0, Value = 28 }, { MinTime = DateTime.Minutes(10), Value = 55 } },
 		},

@@ -45,7 +45,7 @@ MaxLosses = {
 }
 
 TimeBetweenConvoys = {
-	easy = { DateTime.Minutes(3), DateTime.Minutes(8), DateTime.Seconds(210), DateTime.Minutes(4)  },
+	easy = { DateTime.Minutes(3), DateTime.Minutes(8), DateTime.Seconds(210), DateTime.Seconds(270)  },
 	normal = { DateTime.Minutes(2), DateTime.Minutes(7), DateTime.Seconds(165), DateTime.Minutes(4) },
 	hard = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Seconds(120), DateTime.Minutes(4) }
 }
@@ -60,7 +60,7 @@ Squads = {
 			hard = DateTime.Seconds(90)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(13), Value = 30 } },
+			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(13), Value = 25 } },
 			normal = { { MinTime = 0, Value = 35 }, { MinTime = DateTime.Minutes(11), Value = 45 } },
 			hard = { { MinTime = 0, Value = 60 }, { MinTime = DateTime.Minutes(9), Value = 70 } },
 		},
