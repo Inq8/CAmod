@@ -1,4 +1,5 @@
 UnitsPerPlayer = tonumber(Map.LobbyOption("unitsperplayer"))
+WinScore = tonumber(Map.LobbyOption("winscore"))
 
 WorldLoaded = function()
     Blue = Player.GetPlayer("Blue")
@@ -7,10 +8,12 @@ WorldLoaded = function()
     BlueScore = 0
     RedScore = 0
 
-    Players = Player.GetPlayers(function(p) return p.Team == 1 or p.Team == 2 and not p.IsNonCombatant end)
-    BluePlayers = Player.GetPlayers(function(p) return p.Team == 1 and not p.IsNonCombatant end)
-    RedPlayers = Player.GetPlayers(function(p) return p.Team == 2 and not p.IsNonCombatant end)
-    BotPlayers = Player.GetPlayers(function(p) return p.IsBot end)
+    Media.DisplayMessage("Loading...", "Notification", HSLColor.Lime)
+
+    Players = Player.GetPlayers(function(p) return (p.Team == 1 or p.Team == 2) and not p.IsNonCombatant and p.InternalName ~= "Blue" and p.InternalName ~= "Red" end)
+    BluePlayers = Player.GetPlayers(function(p) return p.Team == 1 and not p.IsNonCombatant and p.InternalName ~= "Blue" and p.InternalName ~= "Red" end)
+    RedPlayers = Player.GetPlayers(function(p) return p.Team == 2 and not p.IsNonCombatant and p.InternalName ~= "Blue" and p.InternalName ~= "Red" end)
+    BotPlayers = Player.GetPlayers(function(p) return p.IsBot and p.InternalName ~= "Blue" and p.InternalName ~= "Red" end)
     BuildableUnitTypes = { "seal", "e3", "e4", "ivan", "snip", "medi", "xo", "e6", "sab" }
     BotInfo = { }
     BotEngiTurrets = {
@@ -18,11 +21,11 @@ WorldLoaded = function()
     }
 
     Objectives = {
-        Tech = { Actor = Tech, Waypoints = { Tech1, Tech2, Tech3, Tech4 } },
-        Power = { Actor = Power, Waypoints = { Power1, Power2, Power3 } },
-        Ref = { Actor = Ref, Waypoints = { Ref1, Ref2, Ref3, Ref4, Ref5 } },
-        Comms = { Actor = Comms, Waypoints = { Comms1, Comms2, Comms3, Comms4 } },
-        Dome = { Actor = Dome, Waypoints = { Dome1, Dome2, Dome3, Dome4 } }
+        Tech = { Actor = Tech, Waypoints = { Tech1, Tech2, Tech3, Tech4 }, Name = "Tech Center" },
+        Power = { Actor = Power, Waypoints = { Power1, Power2, Power3 }, Name = "Power Plant" },
+        Ref = { Actor = Ref, Waypoints = { Ref1, Ref2, Ref3, Ref4, Ref5 }, Name = "Refinery" },
+        Comms = { Actor = Comms, Waypoints = { Comms1, Comms2, Comms3, Comms4 }, Name = "Comms Center" },
+        Dome = { Actor = Dome, Waypoints = { Dome1, Dome2, Dome3, Dome4 }, Name = "Radar Dome" }
     }
 
     BotSetup()
@@ -30,8 +33,10 @@ WorldLoaded = function()
     Utils.Do(Objectives, function(o)
         Trigger.OnCapture(o.Actor, function(self, captor, oldOwner, newOwner)
             if newOwner.Team == 1 then
+                Media.DisplayMessage("The blue team have captured the " .. o.Name .. "!", "Notification", HSLColor.FromHex("0080FF"))
                 self.Owner = Blue
             elseif newOwner.Team == 2 then
+                Media.DisplayMessage("The red team have captured the " .. o.Name .. "!", "Notification", HSLColor.Red)
                 self.Owner = Red
             end
         end)
@@ -41,6 +46,8 @@ WorldLoaded = function()
         p.Cash = UnitsPerPlayer
         local spawnId = p.Spawn
         local spawnPoint = Map.NamedActor("Spawn" .. spawnId)
+
+        Media.Debug(p.InternalName .. " " .. p.Team)
 
         if spawnPoint ~= nil then
             local spawner = Actor.Create("spawn", true, { Owner = p, Location = spawnPoint.Location })
@@ -54,38 +61,44 @@ WorldLoaded = function()
         end
     end)
 
-    if #BluePlayers > #RedPlayers and #RedPlayers > 0 then
-        local redExtra = (#BluePlayers - #RedPlayers) * UnitsPerPlayer
-        local redPlayerIdx = 1
+    BalanceUnits = Blue.HasPrerequisites({ "global.balanceunits" })
 
-        while(redExtra > 0)
-        do
-            RedPlayers[redPlayerIdx].Cash = RedPlayers[redPlayerIdx].Cash + 1
+    if BalanceUnits then
+        if #BluePlayers > #RedPlayers and #RedPlayers > 0 then
+            Media.DisplayMessage("Blue team has more players. Allocating extra credits.", "Notification", HSLColor.Yellow)
+            local redExtra = (#BluePlayers - #RedPlayers) * UnitsPerPlayer
+            local redPlayerIdx = 1
 
-            if #RedPlayers > redPlayerIdx then
-                redPlayerIdx = redPlayerIdx + 1
-            else
-                redPlayerIdx = 1
+            while(redExtra > 0)
+            do
+                RedPlayers[redPlayerIdx].Cash = RedPlayers[redPlayerIdx].Cash + 1
+
+                if #RedPlayers > redPlayerIdx then
+                    redPlayerIdx = redPlayerIdx + 1
+                else
+                    redPlayerIdx = 1
+                end
+
+                redExtra = redExtra - 1
             end
 
-            redExtra = redExtra - 1
-        end
+        elseif #RedPlayers > #BluePlayers and #BluePlayers > 0 then
+            Media.DisplayMessage("Red team has more players. Allocating extra credits.", "Notification", HSLColor.Yellow)
+            local blueExtra = (#RedPlayers - #BluePlayers) * UnitsPerPlayer
+            local bluePlayerIdx = 1
 
-    elseif #RedPlayers > #BluePlayers and #BluePlayers > 0 then
-        local blueExtra = (#RedPlayers - #BluePlayers) * UnitsPerPlayer
-        local bluePlayerIdx = 1
+            while(blueExtra > 0)
+            do
+                BluePlayers[bluePlayerIdx].Cash = BluePlayers[bluePlayerIdx].Cash + 1
 
-        while(blueExtra > 0)
-        do
-            BluePlayers[bluePlayerIdx].Cash = BluePlayers[bluePlayerIdx].Cash + 1
+                if #BluePlayers > bluePlayerIdx then
+                    bluePlayerIdx = bluePlayerIdx + 1
+                else
+                    bluePlayerIdx = 1
+                end
 
-            if #BluePlayers > bluePlayerIdx then
-                bluePlayerIdx = bluePlayerIdx + 1
-            else
-                bluePlayerIdx = 1
+                blueExtra = blueExtra - 1
             end
-
-            blueExtra = blueExtra - 1
         end
     end
 end
@@ -104,11 +117,11 @@ Tick = function()
             RedScore = RedScore + scoreAmounts[#redObjectives]
         end
 
-        if BlueScore >= 1500 then
-            BlueScore = 1500
+        if BlueScore >= WinScore then
+            BlueScore = WinScore
             BlueWins()
-        elseif RedScore >= 1500 then
-            RedScore = 1500
+        elseif RedScore >= WinScore then
+            RedScore = WinScore
             RedWins()
         end
 
@@ -126,7 +139,7 @@ UpdateScoresText = function()
         color = HSLColor.Red
     end
 
-    UserInterface.SetMissionText("Blue = " .. BlueScore .. " / 1500 -- vs -- Red = " .. RedScore .. " / 1500", color)
+    UserInterface.SetMissionText("Blue = " .. BlueScore .. " / " .. WinScore .. " -- vs -- Red = " .. RedScore .. " / " .. WinScore, color)
 end
 
 BlueWins = function()

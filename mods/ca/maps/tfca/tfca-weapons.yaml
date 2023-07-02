@@ -15,7 +15,18 @@ Dragon:
 
 Ivanbomb:
 	Range: 6c0
-	ReloadDelay: 35
+	ReloadDelay: 30
+
+BotIvanbomb:
+	Inherits: Ivanbomb
+	InvalidTargets: Defense
+
+BotIvanbombDef:
+	Inherits: Ivanbomb
+	Range: 8c0
+	ValidTargets: Defense
+	Projectile: Bullet
+		BounceCount: 0
 
 TNT:
 	Warhead@1Dam: SpreadDamage
@@ -66,6 +77,10 @@ SNIPER:
 	Warhead@1Dam: SpreadDamage
 		Damage: 20000
 
+BOTSNIPER:
+	Inherits: SNIPER
+	InvalidTargets: Defense
+
 SilencedPPK:
 	Range: 2c512
 	ReloadDelay: 65
@@ -75,7 +90,7 @@ SilencedPPK:
 		ValidTargets: Barrel, Infantry, Vehicle
 
 Heal:
-	ReloadDelay: 45
+	ReloadDelay: 40
 
 Repair:
 	ReloadDelay: 60

@@ -42,6 +42,17 @@ World:
 			14: 14
 			15: 15
 		Default: 1
+	ScriptLobbyDropdown@WINSCORE:
+		ID: winscore
+		Label: Score Required
+		Description: Points required to win the game
+		Values:
+			1000: 1000
+			1500: 1500
+			2000: 2000
+			2500: 2500
+			3000: 3000
+		Default: 1500
 
 Player:
 	ConquestVictoryConditions:
@@ -94,6 +105,13 @@ Player:
 	-ModularBot@NormalAI:
 	-ModularBot@EasyAI:
 	-ModularBot@NavalAI:
+	LobbyPrerequisiteCheckbox@BALANCEUNITS:
+		ID: balanceunits
+		Label: Balance Units
+		Description: Give extra units to team with fewer players
+		Enabled: True
+		DisplayOrder: 999
+		Prerequisites: global.balanceunits
 
 SPAWN:
 	Inherits: CAMERA
@@ -415,7 +433,7 @@ E6:
 		BuildPaletteOrder: 9
 	TooltipExtras:
 		Weaknesses: • Unarmed
-		Attributes: • Detects mines\n• Defuses bombs
+		Attributes: • Detects mines
 	Mobile:
 		Speed: 100
 	RevealsShroud:
@@ -455,17 +473,8 @@ E6:
 		OutsideRangeCursor: repair
 		TargetRelationships: Ally
 		ForceTargetRelationships: None
-	Armament@defuse:
-		Weapon: DefuseKit
-		Cursor: goldwrench
-		OutsideRangeCursor: goldwrench
-		TargetRelationships: Ally
-		ForceTargetRelationships: None
-		Name: secondary
-	AutoTargetPriority@defuse:
-		ValidTargets: C4Attached
-		InvalidTargets: NoAutoTarget
-		ValidRelationships: Ally
+	-Armament@defuse:
+	-AutoTargetPriority@defuse:
 	AttackFrontal:
 		Voice: Action
 		PauseOnCondition: being-warped
@@ -528,6 +537,8 @@ SAB:
 		RequiresSelection: true
 		Position: BottomLeft
 		Margin: 4, 3
+	AutoTarget:
+		ScanRadius: 7
 
 IVAN:
 	Inherits@TFUNIT: ^TFUnit
@@ -563,6 +574,27 @@ IVAN:
 		SelectionBarColor: ff6600
 	Rearmable:
 		RearmActors: shad.rearm
+	GrantConditionOnBotOwner@ISBOT:
+		Bots: bot
+		Condition: is-bot
+	Armament@PRIMARY:
+		PauseOnCondition: reloading
+	Armament@PRIMARYBOT:
+		PauseOnCondition: reloading
+		Weapon: BotIvanbomb
+		LocalOffset: 0,0,555
+		FireDelay: 15
+	Armament@PRIMARYBOTDEF:
+		Weapon: BotIvanbombDef
+		LocalOffset: 0,0,555
+		FireDelay: 15
+		ReloadingCondition: reloading
+		RequiresCondition: is-bot
+	AutoTargetPriority@DEFAULTDEF:
+		RequiresCondition: is-bot
+		ValidTargets: Defense
+		InvalidTargets: NoAutoTarget
+		Priority: 10
 
 SNIP:
 	Inherits@TFUNIT: ^TFUnit
@@ -586,6 +618,15 @@ SNIP:
 	-WithColoredSelectionBox@INVIS:
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: (crate-cloak) && !(cloak-force-disabled || invisibility)
+	Armament@PRIMARY:
+		Weapon: sniper
+		RequiresCondition: !is-bot
+	Armament@PRIMARYBOT:
+		Weapon: botsniper
+		RequiresCondition: is-bot
+	GrantConditionOnBotOwner@ISBOT:
+		Bots: bot
+		Condition: is-bot
 
 ATEK:
 	-Sellable:
