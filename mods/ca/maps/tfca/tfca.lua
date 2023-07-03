@@ -47,8 +47,6 @@ WorldLoaded = function()
         local spawnId = p.Spawn
         local spawnPoint = Map.NamedActor("Spawn" .. spawnId)
 
-        Media.Debug(p.InternalName .. " " .. p.Team)
-
         if spawnPoint ~= nil then
             local spawner = Actor.Create("spawn", true, { Owner = p, Location = spawnPoint.Location })
             Trigger.OnProduction(spawner, function(producer, produced)

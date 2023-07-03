@@ -1,6 +1,6 @@
 World:
 	MissionData:
-		Briefing: ================\n\n- Two teams must fight over five objectives.\n-------------------------\n- Players have a set number of credits, refunded when a unit is lost so it can be replaced.\n-------------------------\n- Faction choice has no effect.\n-------------------------\n- Any unit can capture an objective.\n-------------------------\n- Points are gained by holding objectives.\n-------------------------\n- First team to 1500 points wins.\n\n================\n
+		Briefing: ================\n\n- Two teams must fight over five objectives.\n-------------------------\n- Players have a set number of credits, refunded when a unit is lost so it can be replaced.\n-------------------------\n- Faction choice has no effect.\n-------------------------\n- Any unit can capture an objective.\n-------------------------\n- Points are gained by holding objectives.\n-------------------------\n- First team to reach the configured score wins.\n\n================\n
 	LuaScript:
 		Scripts: tfca.lua
 	-SpawnStartingUnits:
@@ -178,7 +178,7 @@ SPAWN:
 		RequiresCondition: shielded
 	DamageMultiplier@SHIELDED:
 		RequiresCondition: shielded
-		Modifier: 75
+		Modifier: 65
 	ChangesHealth@SHIELDED:
 		Step: 750
 		Delay: 25
@@ -300,12 +300,6 @@ MEDI:
 		Range: 8c0
 	Health:
 		HP: 20000
-	ProximityExternalCondition@PASSIVEHEAL:
-		Condition: hospitalheal
-		Range: 4c0
-	WithRangeCircle@PASSIVEHEAL:
-		Range: 4c0
-		Color: 00FF0080
 	SpawnActorAbility:
 		Actor: shieldzone
 		SkipMakeAnimations: false
@@ -613,6 +607,7 @@ SNIP:
 		HP: 10000
 	AttackFrontalCharged:
 		ChargeLevel: 50
+		Armaments: primary
 	-Cloak@NORMAL:
 	-WithDecoration@hidden:
 	-WithColoredSelectionBox@INVIS:
@@ -766,7 +761,6 @@ SHIELDZONE:
 		Range: 3c0
 		Condition: shielded
 		ValidRelationships: Ally
-	ProvidesPrerequisite@SHIELD:
 	KillsSelf:
 		RemoveInstead: true
 		Delay: 200
@@ -780,3 +774,16 @@ SPYREVEAL:
 	KillsSelf:
 		RemoveInstead: true
 		Delay: 75
+
+PYROZONE:
+	Inherits@1: CAMERA
+	-RevealsShroud:
+	WithRangeCircle:
+		Visible: Always
+		Color: ff6600aa
+		Range: 3c0
+	KillsSelf:
+		RemoveInstead: true
+		Delay: 200
+	PeriodicExplosion:
+		Weapon: PyroZone
