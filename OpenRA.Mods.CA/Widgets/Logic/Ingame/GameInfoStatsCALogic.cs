@@ -116,7 +116,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 				.GroupBy(p => (world.LobbyInfo.ClientWithIndex(p.Player.ClientIndex) ?? new Session.Client()).Team)
 				.OrderByDescending(g => g.Sum(gg => gg.PlayerStatistics?.Experience ?? 0));
 
-			var revealedPlayersManager = player.World.WorldActor.TraitOrDefault<RevealedPlayersManager>();
+			var revealedPlayersManager = player != null ? player.World.WorldActor.TraitOrDefault<RevealedPlayersManager>() : null;
 
 			foreach (var t in teams)
 			{
