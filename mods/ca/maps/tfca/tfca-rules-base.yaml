@@ -287,6 +287,13 @@ E3:
 		Modifier: 40
 	-ReloadDelayMultiplier@FRENZYDEBUFF:
 	-SpeedMultiplier@FRENZYDEBUFF:
+	GrantConditionOnBotOwner@ISBOT:
+		Bots: bot
+		Condition: is-bot
+	AutoTargetPriority@BOTPRIO:
+		RequiresCondition: is-bot
+		ValidTargets: Defense
+		Priority: 10
 
 MEDI:
 	Inherits@TFUNIT: ^TFUnit
@@ -327,7 +334,7 @@ E4:
 	TooltipExtras:
 		Strengths: • High sustained damage
 		Weaknesses: • Short range
-		Attributes: • Pyroblast ability
+		Attributes: • Pyroblast ability\n• Impervious to fire
 	Mobile:
 		Speed: 100
 	RevealsShroud:
@@ -369,6 +376,8 @@ E4:
 		Count: 1
 		ShowSelectionBar: true
 		SelectionBarColor: ff6600
+	Targetable@FIREPROOF:
+		TargetTypes: Fireproof
 
 SEAL:
 	Inherits@TFUNIT: ^TFUnit
@@ -572,12 +581,13 @@ IVAN:
 		Bots: bot
 		Condition: is-bot
 	Armament@PRIMARY:
-		PauseOnCondition: reloading
+		RequiresCondition: !is-bot
 	Armament@PRIMARYBOT:
 		PauseOnCondition: reloading
 		Weapon: BotIvanbomb
 		LocalOffset: 0,0,555
 		FireDelay: 15
+		RequiresCondition: is-bot
 	Armament@PRIMARYBOTDEF:
 		Weapon: BotIvanbombDef
 		LocalOffset: 0,0,555
@@ -587,7 +597,6 @@ IVAN:
 	AutoTargetPriority@DEFAULTDEF:
 		RequiresCondition: is-bot
 		ValidTargets: Defense
-		InvalidTargets: NoAutoTarget
 		Priority: 10
 
 SNIP:
@@ -598,7 +607,7 @@ SNIP:
 	TooltipExtras:
 		Strengths: • Long range\n• High single-target damage
 		Weaknesses: • Fragile\n• Slow
-		Attributes:
+		Attributes: • Must aim before shooting
 	Mobile:
 		Speed: 75
 	RevealsShroud:
@@ -741,14 +750,14 @@ GUN:
 
 SPAWNGUN:
 	Inherits: GUN
-	DamageMultiplier@INVULN:
-		Modifier: 0
 	RenderSprites:
 		Image: gun
 	MustBeDestroyed:
 		RequiredForShortGame: true
 	WithColoredSelectionBox@REL:
 		ColorSource: Player
+	-Targetable:
+	-Targetable@EXPLOSIVES:
 
 SHIELDZONE:
 	Inherits@1: CAMERA

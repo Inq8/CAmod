@@ -16,6 +16,8 @@ Dragon:
 Ivanbomb:
 	Range: 6c0
 	ReloadDelay: 30
+	Warhead@AttachDelayedWeapon: AttachDelayedWeapon
+		TriggerTime: 80
 
 BotIvanbomb:
 	Inherits: Ivanbomb
@@ -38,13 +40,14 @@ HeavyFlameTankFlamer:
 	-BurstDelays:
 	Warhead@1Dam: SpreadDamage
 		ValidRelationships: Enemy, Ally, Neutral
+		InvalidTargets: Fireproof
 		Damage: 450
 
 Uzi:
 	Inherits: M60mgTD
 	Range: 6c0
 	Projectile: Bullet
-		Speed: 700
+		Speed: 850
 		ContrailLength: 9
 		ContrailStartColor: 88888844
 		ContrailStartColorAlpha: 68
@@ -111,6 +114,7 @@ Pyroblast:
 	Warhead@1Dam: SpreadDamage
 		Spread: 768
 		Damage: 35000
+		InvalidTargets: Fireproof
 		Versus:
 			Concrete: 1
 	Warhead@3Eff: CreateEffect
