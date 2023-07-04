@@ -455,7 +455,7 @@ namespace OpenRA.Mods.CA.Traits
 			var newCapacity = info.Capacity;
 
 			// Modifiers have no effect if the base capacity is unlimited.
-			if (info.Capacity == 0)
+			if (info.Capacity <= 0)
 				return;
 
 			foreach (var capacityModifier in capacityModifiers)
