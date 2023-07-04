@@ -94,6 +94,12 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Cooldown between jumps (irrespective of charge).")]
 		public readonly int Cooldown = 0;
 
+		public readonly bool ShowSelectionBar = true;
+		public readonly bool ShowSelectionBarWhenFull = true;
+
+		[Desc("Selection bar color.")]
+		public readonly Color SelectionBarColor = Color.Magenta;
+
 		public override object Create(ActorInitializer init) { return new PortableChronoCA(init.Self, this); }
 	}
 
@@ -281,13 +287,16 @@ namespace OpenRA.Mods.CA.Traits
 
 		float ISelectionBar.GetValue()
 		{
-			if (IsTraitDisabled || chargeTick == 0)
+			if (!Info.ShowSelectionBar || IsTraitDisabled || chargeTick == ChargeDelay)
+				return 0f;
+
+			if (!Info.ShowSelectionBarWhenFull && chargeTick == 0)
 				return 0f;
 
 			return (float)(ChargeDelay - chargeTick) / ChargeDelay;
 		}
 
-		Color ISelectionBar.GetColor() { return Color.Magenta; }
+		Color ISelectionBar.GetColor() { return Info.SelectionBarColor; }
 		bool ISelectionBar.DisplayWhenEmpty => false;
 
 		protected override void TraitDisabled(Actor self)

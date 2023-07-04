@@ -23,7 +23,7 @@ MaxEnslavedUnitsKilled = {
 Squads = {
 	ScrinMain = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 40 } },
+			easy = { { MinTime = 0, Value = 35 } },
 			normal = { { MinTime = 0, Value = 68 } },
 			hard = { { MinTime = 0, Value = 105 } },
 		},

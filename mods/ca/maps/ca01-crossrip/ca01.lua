@@ -92,7 +92,7 @@ Squads = {
 			hard = DateTime.Minutes(2)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 50 } },
+			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(12), Value = 40 } },
 			normal = { { MinTime = 0, Value = 50 } },
 			hard = { { MinTime = 0, Value = 80 } },
 		},
@@ -147,7 +147,7 @@ Squads = {
 	Western = {
 		Player = nil,
 		Interval = {
-			easy = DateTime.Seconds(45),
+			easy = DateTime.Seconds(60),
 			normal = DateTime.Seconds(30),
 			hard = DateTime.Seconds(15)
 		},

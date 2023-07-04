@@ -87,7 +87,7 @@ Squads = {
 			hard = DateTime.Seconds(30)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 30 }, { MinTime = DateTime.Minutes(14), Value = 30 } },
+			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
 			normal = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(12), Value = 40 } },
 			hard = { { MinTime = 0, Value = 60 }, { MinTime = DateTime.Minutes(10), Value = 60 } },
 		},
@@ -110,7 +110,7 @@ Squads = {
 			hard = DateTime.Seconds(30)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 15 } },
+			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 15 } },
 			normal = { { MinTime = 0, Value = 30 }, { MinTime = DateTime.Minutes(12), Value = 30 } },
 			hard = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(10), Value = 40 } },
 		},
@@ -180,8 +180,8 @@ Squads = {
 			return PlayerHasNavalProduction(Greece)
 		end,
 		Interval = {
-			easy = DateTime.Seconds(45),
-			normal = DateTime.Seconds(30),
+			easy = DateTime.Seconds(60),
+			normal = DateTime.Seconds(40),
 			hard = DateTime.Seconds(20)
 		},
 		QueueProductionStatuses = {

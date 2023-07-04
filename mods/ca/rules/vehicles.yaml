@@ -1937,7 +1937,7 @@ MGG:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 380
-		Prerequisites: atek, ~vehicles.mgg, ~techlevel.high
+		Prerequisites: techcenter, ~vehicles.mgg, ~techlevel.high
 		BuildDurationModifier: 50
 		Description: Regenerates the shroud nearby, obscuring enemy vision.\n  Can channel the effect to reduce enemy weapon range\n  and create persisting areas that do the same.
 	TooltipExtras:
@@ -2368,6 +2368,7 @@ CTNK:
 		MaxDistance: 16
 		ResetRechargeOnUse: false
 		RequiresCondition: !empdisable && !being-warped
+		ShowSelectionBarWhenFull: false
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -5971,7 +5972,7 @@ WTNK:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses, Infantry
 		Weaknesses: • Weak vs Buildings\n• Cannot attack Aircraft
-		Attributes: • Briefly disables vehicles/defenses\n• Kills vehicle crews (with upgrade)
+		Attributes: • Briefly disables vehicles/defenses\n• Kills vehicle crews (with upgrade)\n• Crewless vehicles capturable by infantry
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -6502,6 +6503,7 @@ CHPR:
 		ChargeDelay: 375
 		MaxDistance: 18
 		RequiresCondition: !(empdisable && being-warped) && tflx-upgrade
+		ShowSelectionBarWhenFull: false
 	GrantConditionOnPrerequisite@TEMPORALFLUX:
 		Condition: tflx-upgrade
 		Prerequisites: tflx.upgrade

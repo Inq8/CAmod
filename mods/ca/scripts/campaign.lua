@@ -1,10 +1,9 @@
 --[[
-   Copyright 2007-2022 The OpenRA Developers (see AUTHORS)
-   This file is part of OpenRA, which is free software. It is made
-   available to you under the terms of the GNU General Public License
-   as published by the Free Software Foundation, either version 3 of
-   the License, or (at your option) any later version. For more
-   information, see COPYING.
+   Copyright (c) The OpenRA Combined Arms Developers (see CREDITS).
+   This file is part of OpenRA Combined Arms, which is free software.
+   It is made available to you under the terms of the GNU General Public License
+   as published by the Free Software Foundation, either version 3 of the License,
+   or (at your option) any later version. For more information, see COPYING.
 ]]
 
 Difficulty = Map.LobbyOption("difficulty")
@@ -687,22 +686,26 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 				local producerId = tostring(producer)
 				AddToSquadAssignmentQueue(producerId, squad)
 
-				-- add production trigger once for the producer (or add again if owner has changed)
+				-- add production trigger once for the producer (once for every owner, as the producer may be captured)
 				if OnProductionTriggers[producerId] == nil or OnProductionTriggers[producerId] ~= producer.Owner.InternalName then
 					OnProductionTriggers[producerId] = tostring(producer.Owner.InternalName)
 
 					-- add produced unit to list of idle units for the squad
 					Trigger.OnProduction(producer, function(p, produced)
-						if produced.Owner ~= p.Owner or produced.Owner ~= squad.Player then
-							produced.Owner = squad.Player
-							return
+						if produced.Owner == squad.Player then
+							HandleProducedSquadUnit(produced, producerId, squad)
 						end
-						HandleProducedSquadUnit(produced, producerId, squad)
 					end)
 				end
 
-				producer.Produce(nextUnit)
-				squad.WaveTotalCost = squad.WaveTotalCost + Actor.Cost(nextUnit)
+				local engineersNearby = Map.ActorsInCircle(producer.CenterPosition, WDist.New(2730), function(a)
+					return not a.IsDead and (a.Type == "e6" or a.Type == "n6" or a.Type == "s6" or a.Type == "mast") and a.Owner ~= producer.Owner
+				end)
+
+				if #engineersNearby == 0 then
+					producer.Produce(nextUnit)
+					squad.WaveTotalCost = squad.WaveTotalCost + Actor.Cost(nextUnit)
+				end
 			end
 
 			-- start producing the next unit

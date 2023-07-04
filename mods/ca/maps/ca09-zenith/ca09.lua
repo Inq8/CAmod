@@ -74,7 +74,7 @@ NukeTimer = {
 }
 
 HaloDropStart = {
-	easy = DateTime.Minutes(8),
+	easy = DateTime.Minutes(10),
 	normal = DateTime.Minutes(6),
 	hard = DateTime.Minutes(4)
 }

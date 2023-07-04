@@ -15,7 +15,7 @@ Squads = {
 	GreeceMain = {
 		Player = nil,
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
+			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
 			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 45 } },
 			hard = { { MinTime = 0, Value = 35 }, { MinTime = DateTime.Minutes(10), Value = 75 } },
 		},
@@ -29,7 +29,7 @@ Squads = {
 	GDIMain = {
 		Player = nil,
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
+			easy = { { MinTime = 0, Value = 10 }, { MinTime = DateTime.Minutes(14), Value = 25 } },
 			normal = { { MinTime = 0, Value = 25 }, { MinTime = DateTime.Minutes(12), Value = 45 } },
 			hard = { { MinTime = 0, Value = 35 }, { MinTime = DateTime.Minutes(10), Value = 75 } },
 		},

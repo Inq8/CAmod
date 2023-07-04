@@ -1,6 +1,6 @@
 World:
 	MissionData:
-		Briefing: ================\n\n- Two teams must fight over five objectives.\n-------------------------\n- Players have a set number of credits, refunded when a unit is lost so it can be replaced.\n-------------------------\n- Any unit can capture an objective.\n-------------------------\n- Points are gained by holding objectives.\n-------------------------\n- First team to 1500 points wins.\n\n================\n
+		Briefing: ================\n\n- Two teams must fight over five objectives.\n-------------------------\n- Players have a set number of credits, refunded when a unit is lost so it can be replaced.\n-------------------------\n- Faction choice has no effect.\n-------------------------\n- Any unit can capture an objective.\n-------------------------\n- Points are gained by holding objectives.\n-------------------------\n- First team to reach the configured score wins.\n\n================\n
 	LuaScript:
 		Scripts: tfca.lua
 	-SpawnStartingUnits:
@@ -42,6 +42,17 @@ World:
 			14: 14
 			15: 15
 		Default: 1
+	ScriptLobbyDropdown@WINSCORE:
+		ID: winscore
+		Label: Score Required
+		Description: Points required to win the game
+		Values:
+			1000: 1000
+			1500: 1500
+			2000: 2000
+			2500: 2500
+			3000: 3000
+		Default: 1500
 
 Player:
 	ConquestVictoryConditions:
@@ -78,12 +89,6 @@ Player:
 		ExploredMapCheckboxEnabled: True
 		ExploredMapCheckboxVisible: True
 		ExploredMapCheckboxLocked: False
-	-ModularBot@BrutalAI:
-	-ModularBot@VeryHardAI:
-	-ModularBot@HardAI:
-	-ModularBot@NormalAI:
-	-ModularBot@EasyAI:
-	-ModularBot@NavalAI:
 	LobbyPrerequisiteCheckbox@SHOWNAMES:
 		ID: shownames
 		Label: Show Names
@@ -91,6 +96,22 @@ Player:
 		Enabled: True
 		DisplayOrder: 999
 		Prerequisites: global.shownames
+	ModularBot@StandardAI:
+		Name: Bot
+		Type: bot
+	-ModularBot@BrutalAI:
+	-ModularBot@VeryHardAI:
+	-ModularBot@HardAI:
+	-ModularBot@NormalAI:
+	-ModularBot@EasyAI:
+	-ModularBot@NavalAI:
+	LobbyPrerequisiteCheckbox@BALANCEUNITS:
+		ID: balanceunits
+		Label: Balance Units
+		Description: Give extra units to team with fewer players
+		Enabled: True
+		DisplayOrder: 999
+		Prerequisites: global.balanceunits
 
 SPAWN:
 	Inherits: CAMERA
@@ -127,7 +148,7 @@ SPAWN:
 		Position: Top
 		Font: Regular
 		Margin: 0, -20
-		ColorSource: Team
+		ColorSource: Player
 		ContrastColorLight: 000000
 		ValidRelationships: Ally, Enemy, Neutral
 		RequiresCondition: shownames
@@ -150,6 +171,19 @@ SPAWN:
 		PlayerExperience: 25
 		CaptureDelay: 225
 		ConsumedByCapture: false
+	ExternalCondition@SHIELDED:
+		Condition: shielded
+	WithColoredOverlay@SHIELDED:
+		Color: 00ffbb99
+		RequiresCondition: shielded
+	DamageMultiplier@SHIELDED:
+		RequiresCondition: shielded
+		Modifier: 65
+	ChangesHealth@SHIELDED:
+		Step: 750
+		Delay: 25
+		StartIfBelow: 100
+		RequiresCondition: shielded
 
 XO:
 	Inherits@TFUNIT: ^TFUnit
@@ -212,7 +246,7 @@ XO:
 	ChangesHealth@DEFAULT:
 		PercentageStep: 1
 		Delay: 25
-		StartIfBelow: 101
+		StartIfBelow: 100
 		DamageCooldown: 150
 
 E3:
@@ -221,8 +255,9 @@ E3:
 		Description: Soldier armed with a rocket launcher.
 		BuildPaletteOrder: 3
 	TooltipExtras:
-		Strengths: • Good all-round damage dealer• Guided projectiles
+		Strengths: • Good all-round damage dealer\n• Guided projectiles\n• Decent HP
 		Weaknesses: • Mediocre rate of fire\n• Slow projectiles
+		Attributes: • Frenzy ability
 	Mobile:
 		Speed: 100
 	RevealsShroud:
@@ -238,17 +273,51 @@ E3:
 	-Armament@SECONDARYUPG:
 	-Armament@BATF:
 	-Armament@BATFUPG:
+	GrantTimedConditionOnDeploy:
+		DeployedTicks: 125
+		CooldownTicks: 1000
+		DeployedCondition: frenzy
+		ShowSelectionBar: true
+		ChargingColor: 770000
+		DischargingColor: ff0000
+		StartsFullyCharged: true
+		DeploySound: iteschaa.aud
+		ShowSelectionBarWhenFull: false
+	ReloadDelayMultiplier@FRENZY:
+		Modifier: 40
+	-ReloadDelayMultiplier@FRENZYDEBUFF:
+	-SpeedMultiplier@FRENZYDEBUFF:
 
 MEDI:
 	Inherits@TFUNIT: ^TFUnit
 	Buildable:
 		BuildPaletteOrder: 5
+	TooltipExtras:
+		Attributes: • Can create protective healing zones
 	Mobile:
 		Speed: 100
 	RevealsShroud:
 		Range: 8c0
 	Health:
 		HP: 20000
+	SpawnActorAbility:
+		Actor: shieldzone
+		SkipMakeAnimations: false
+		Range: 6c0
+		CircleColor: 00ffbbaa
+		SpawnSounds: srepaira.aud
+		AmmoPool: shieldspawner
+	AmmoPool@SHIELD:
+		Name: shieldspawner
+		Armaments: none
+		Ammo: 1
+	ReloadAmmoPoolCA@SHIELD:
+		AmmoPool: shieldspawner
+		Delay: 375
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: 00ffbb
+		ReloadWhenAmmoReaches: 0
 
 E4:
 	Inherits@TFUNIT: ^TFUnit
@@ -258,6 +327,7 @@ E4:
 	TooltipExtras:
 		Strengths: • High sustained damage
 		Weaknesses: • Short range
+		Attributes: • Pyroblast ability
 	Mobile:
 		Speed: 100
 	RevealsShroud:
@@ -267,6 +337,12 @@ E4:
 	Armament:
 		Weapon: HeavyFlameTankFlamer
 		LocalOffset: 512,0,256
+		PauseOnCondition: pyroblast-attack || pyroblast-fired
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: Pyroblast
+		LocalOffset: 512,0,256
+		PauseOnCondition: !pyroblast-attack
 	AmbientSoundCA:
 		SoundFiles: flamer-loop1.aud
 		InitialSound: flamer-start1.aud
@@ -276,6 +352,23 @@ E4:
 	GrantConditionOnAttackCA:
 		Condition: attacking
 		RevokeDelay: 5
+	TargetedAttackAbility:
+		ActiveCondition: pyroblast-attack
+		ArmamentName: secondary
+		CircleColor: ff6600aa
+		Type: Pyroblast
+	GrantConditionOnAttack@PYROBLASTCOOLDOWN:
+		Condition: pyroblast-fired
+		RevokeDelay: 50
+		ArmamentNames: secondary
+	AmmoPool:
+		Armaments: secondary
+		Ammo: 1
+	ReloadAmmoPoolCA:
+		Delay: 375 # equal to reload time of weapon
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: ff6600
 
 SEAL:
 	Inherits@TFUNIT: ^TFUnit
@@ -287,7 +380,7 @@ SEAL:
 	TooltipExtras:
 		Strengths: • Very fast\n• Large vision radius
 		Weaknesses: • Mediocre damage\n• Fragile
-		Attributes: • Detects cloaked units
+		Attributes: • Detects cloaked units\n• Teleport ability
 	Mobile:
 		Speed: 150
 		Locomotor: foot
@@ -315,6 +408,17 @@ SEAL:
 	AttackFrontal:
 		-Voice:
 	-AnnounceOnKill:
+	PortableChronoCA:
+		ChargeDelay: 375
+		MaxDistance: 12
+		ChronoshiftSound: scrinport.aud
+		TeleportCondition: blink
+		ConditionDuration: 3
+		SelectionBarColor: eeeeff
+		ShowSelectionBarWhenFull: false
+	WithColoredOverlay@BLINKFLASH:
+		Color: ffffff80
+		RequiresCondition: blink
 
 E6:
 	Inherits@TFUNIT: ^TFUnit
@@ -323,7 +427,7 @@ E6:
 		BuildPaletteOrder: 9
 	TooltipExtras:
 		Weaknesses: • Unarmed
-		Attributes: • Detects mines\n• Defuses bombs
+		Attributes: • Detects mines
 	Mobile:
 		Speed: 100
 	RevealsShroud:
@@ -363,17 +467,8 @@ E6:
 		OutsideRangeCursor: repair
 		TargetRelationships: Ally
 		ForceTargetRelationships: None
-	Armament@defuse:
-		Weapon: DefuseKit
-		Cursor: goldwrench
-		OutsideRangeCursor: goldwrench
-		TargetRelationships: Ally
-		ForceTargetRelationships: None
-		Name: secondary
-	AutoTargetPriority@defuse:
-		ValidTargets: C4Attached
-		InvalidTargets: NoAutoTarget
-		ValidRelationships: Ally
+	-Armament@defuse:
+	-AutoTargetPriority@defuse:
 	AttackFrontal:
 		Voice: Action
 		PauseOnCondition: being-warped
@@ -400,7 +495,7 @@ SAB:
 	TooltipExtras:
 		Strengths: • High single-target burst damage
 		Weaknesses: • Short range\n• Fragile
-		Attributes: • Invisible when not attacking
+		Attributes: • Invisible when not attacking\n• Remote reveal ability
 	Mobile:
 		Speed: 100
 	RevealsShroud:
@@ -415,6 +510,29 @@ SAB:
 		RequiresCondition: !cloak-force-disabled && !being-warped
 		CloakDelay: 66
 	-ProductionCostMultiplier@LegionBonus:
+	SpawnActorAbility:
+		Actor: spyreveal
+		SkipMakeAnimations: false
+		SpawnSounds: hacksat.aud
+		SelectTargetSpeechNotification: SelectTarget
+		AmmoPool: revealspawner
+	AmmoPool@REVEALSPAWNER:
+		Name: revealspawner
+		Armaments: none
+		Ammo: 1
+	ReloadAmmoPoolCA@REVEALSPAWNER:
+		AmmoPool: revealspawner
+		Delay: 375
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: ffffff
+	WithAmmoPipsDecoration@REVEALSPAWNER:
+		AmmoPools: revealspawner
+		RequiresSelection: true
+		Position: BottomLeft
+		Margin: 4, 3
+	AutoTarget:
+		ScanRadius: 7
 
 IVAN:
 	Inherits@TFUNIT: ^TFUnit
@@ -450,6 +568,27 @@ IVAN:
 		SelectionBarColor: ff6600
 	Rearmable:
 		RearmActors: shad.rearm
+	GrantConditionOnBotOwner@ISBOT:
+		Bots: bot
+		Condition: is-bot
+	Armament@PRIMARY:
+		PauseOnCondition: reloading
+	Armament@PRIMARYBOT:
+		PauseOnCondition: reloading
+		Weapon: BotIvanbomb
+		LocalOffset: 0,0,555
+		FireDelay: 15
+	Armament@PRIMARYBOTDEF:
+		Weapon: BotIvanbombDef
+		LocalOffset: 0,0,555
+		FireDelay: 15
+		ReloadingCondition: reloading
+		RequiresCondition: is-bot
+	AutoTargetPriority@DEFAULTDEF:
+		RequiresCondition: is-bot
+		ValidTargets: Defense
+		InvalidTargets: NoAutoTarget
+		Priority: 10
 
 SNIP:
 	Inherits@TFUNIT: ^TFUnit
@@ -468,11 +607,21 @@ SNIP:
 		HP: 10000
 	AttackFrontalCharged:
 		ChargeLevel: 50
+		Armaments: primary
 	-Cloak@NORMAL:
 	-WithDecoration@hidden:
 	-WithColoredSelectionBox@INVIS:
 	Cloak@CRATE-CLOAK:
 		RequiresCondition: (crate-cloak) && !(cloak-force-disabled || invisibility)
+	Armament@PRIMARY:
+		Weapon: sniper
+		RequiresCondition: !is-bot
+	Armament@PRIMARYBOT:
+		Weapon: botsniper
+		RequiresCondition: is-bot
+	GrantConditionOnBotOwner@ISBOT:
+		Bots: bot
+		Condition: is-bot
 
 ATEK:
 	-Sellable:
@@ -533,6 +682,8 @@ DOME:
 	-Targetable@INFILTRATION:
 	CaptureManager:
 		-BeingCapturedCondition:
+	-RangedGpsRadarProvider:
+	-WithRangeCircle:
 
 HQ:
 	-Sellable:
@@ -549,6 +700,8 @@ HQ:
 	-Targetable@INFILTRATION:
 	CaptureManager:
 		-BeingCapturedCondition:
+	-RangedGpsRadarProvider:
+	-WithRangeCircle:
 
 APWR:
 	-Sellable:
@@ -582,6 +735,9 @@ GUN:
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
+	WithColoredSelectionBox@REL:
+		ColorSource: Team
+		ValidRelationships: Ally, Enemy, Neutral
 
 SPAWNGUN:
 	Inherits: GUN
@@ -589,3 +745,45 @@ SPAWNGUN:
 		Modifier: 0
 	RenderSprites:
 		Image: gun
+	MustBeDestroyed:
+		RequiredForShortGame: true
+	WithColoredSelectionBox@REL:
+		ColorSource: Player
+
+SHIELDZONE:
+	Inherits@1: CAMERA
+	-RevealsShroud:
+	WithRangeCircle:
+		Visible: Always
+		Color: 00ffbbaa
+		Range: 3c0
+	ProximityExternalCondition@SHIELD:
+		Range: 3c0
+		Condition: shielded
+		ValidRelationships: Ally
+	KillsSelf:
+		RemoveInstead: true
+		Delay: 200
+
+SPYREVEAL:
+	Inherits: camera.sathack
+	RevealsShroud:
+		Range: 5c0
+	RenderSprites:
+		Image: satscansm
+	KillsSelf:
+		RemoveInstead: true
+		Delay: 75
+
+PYROZONE:
+	Inherits@1: CAMERA
+	-RevealsShroud:
+	WithRangeCircle:
+		Visible: Always
+		Color: ff6600aa
+		Range: 3c0
+	KillsSelf:
+		RemoveInstead: true
+		Delay: 200
+	PeriodicExplosion:
+		Weapon: PyroZone
