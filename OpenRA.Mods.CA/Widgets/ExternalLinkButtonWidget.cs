@@ -40,7 +40,7 @@ namespace OpenRA.Mods.CA.Widgets
 
 		public override void MouseExited()
 		{
-			base.MouseEntered();
+			base.MouseExited();
 			hovering = false;
 		}
 
