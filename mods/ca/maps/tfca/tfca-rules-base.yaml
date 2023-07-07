@@ -184,6 +184,11 @@ SPAWN:
 		Delay: 25
 		StartIfBelow: 100
 		RequiresCondition: shielded
+	FirepowerMultiplier@ENGIBUFF:
+		RequiresCondition: engibuff
+		Modifier: 115
+	ExternalCondition@ENGIBUFF:
+		Condition: engibuff
 
 XO:
 	Inherits@TFUNIT: ^TFUnit
@@ -436,7 +441,7 @@ E6:
 		BuildPaletteOrder: 9
 	TooltipExtras:
 		Weaknesses: • Unarmed
-		Attributes: • Detects mines
+		Attributes: • Detects mines\n• Nearby allies deal 15% more damage
 	Mobile:
 		Speed: 100
 	RevealsShroud:
@@ -495,6 +500,14 @@ E6:
 	DetectCloaked:
 		Range: 5c0
 		DetectionTypes: Mine
+	WithRangeCircle:
+		Color: ffff00aa
+		Range: 3c512
+		ValidRelationships: Ally
+	ProximityExternalCondition@ENGIBUFF:
+		Range: 3c512
+		Condition: engibuff
+		ValidRelationships: Ally
 
 SAB:
 	Inherits@TFUNIT: ^TFUnit
@@ -711,6 +724,14 @@ HQ:
 		-BeingCapturedCondition:
 	-RangedGpsRadarProvider:
 	-WithRangeCircle:
+	-SpawnActorPowerCA@sathack:
+	-SpawnActorPowerCA@sathacklegion:
+	-ProduceActorPowerCA@hackercell:
+	-ProduceActorPowerCA@hackercellAI:
+	-DropPodsPowerCA@Zocom:
+	-CashHackPower@Legion:
+	-AirstrikePower@BlackhandFirebomb:
+	-AirReinforcementsPower@ShadowTeam:
 
 APWR:
 	-Sellable:
@@ -766,6 +787,7 @@ SHIELDZONE:
 		Visible: Always
 		Color: 00ffbbaa
 		Range: 3c0
+		ValidRelationships: Ally
 	ProximityExternalCondition@SHIELD:
 		Range: 3c0
 		Condition: shielded
@@ -791,6 +813,7 @@ PYROZONE:
 		Visible: Always
 		Color: ff6600aa
 		Range: 3c0
+		ValidRelationships: Enemy, Ally
 	KillsSelf:
 		RemoveInstead: true
 		Delay: 200
