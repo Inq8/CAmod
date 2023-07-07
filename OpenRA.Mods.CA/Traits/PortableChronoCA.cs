@@ -357,7 +357,7 @@ namespace OpenRA.Mods.CA.Traits
 			info = portableChrono.Info;
 
 			selectedWithAbility = self.World.Selection.Actors
-				.Where(a => a.Info.HasTraitInfo<PortableChronoCAInfo>() && a != self && a.Owner == self.Owner)
+				.Where(a => a.Info.HasTraitInfo<PortableChronoCAInfo>() && a != self && a.Owner == self.Owner && !a.IsDead)
 				.Select(a => new TraitPair<PortableChronoCA>(a, a.Trait<PortableChronoCA>()));
 		}
 
