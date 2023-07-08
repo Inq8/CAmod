@@ -94,7 +94,7 @@ WorldLoaded = function()
 		end)
 	end
 
-	local revealPoints = { EntranceReveal1, EntranceReveal2, EntranceReveal3, EntranceReveal4, BridgeDefendersReveal1, BridgeDefendersReveal2 }
+	local revealPoints = { EntranceReveal1, EntranceReveal2, EntranceReveal3, EntranceReveal4, BridgeDefendersReveal1, BridgeDefendersReveal2, EmpDroneReveal }
 	Utils.Do(revealPoints, function(p)
 		Trigger.OnEnteredProximityTrigger(p.CenterPosition, WDist.New(11 * 1024), function(a, id)
 			if a.Owner == Nod and a.Type ~= "smallcamera" then
@@ -102,6 +102,10 @@ WorldLoaded = function()
 				if p == BridgeDefendersReveal1 and not BridgeTipShown then
 					BridgeTipShown = true
 					Tip("Too many guards up ahead. Find a way to neutralise them.")
+				end
+				if Difficulty ~= "hard" and p == EmpDroneReveal and not EmpDroneTipShown then
+					EmpDroneTipShown = true
+					Media.DisplayMessage("That E.M.P Drone could come in handy.", "Hacker", HSLColor.FromHex("00FF00"))
 				end
 				local camera = Actor.Create("smallcamera", true, { Owner = Nod, Location = p.Location })
 				Trigger.AfterDelay(DateTime.Seconds(4), function()

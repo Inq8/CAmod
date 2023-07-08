@@ -151,6 +151,9 @@ BlueWins = function()
     Utils.Do(spawnguns, function(g)
         g.Kill()
     end)
+    Utils.Do(Objectives, function(o)
+        o.Actor.Owner = Blue
+    end)
 end
 
 RedWins = function()
@@ -163,6 +166,9 @@ RedWins = function()
     local spawnguns = Blue.GetActorsByType("spawngun")
     Utils.Do(spawnguns, function(g)
         g.Kill()
+    end)
+    Utils.Do(Objectives, function(o)
+        o.Actor.Owner = Red
     end)
 end
 
@@ -248,7 +254,7 @@ BotTick = function()
 
                                     if BotEngiTurrets[selfString] ~= nil and not BotEngiTurrets[selfString].IsDead then
                                         local guardChance = Utils.RandomInteger(0, 100)
-                                        if guardChance > 50 then
+                                        if guardChance > 15 then
                                             self.Guard(BotEngiTurrets[selfString])
                                         end
                                     end
