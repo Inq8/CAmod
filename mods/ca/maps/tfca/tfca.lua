@@ -44,10 +44,10 @@ WorldLoaded = function()
 
     Utils.Do(Players, function(p)
         p.Cash = UnitsPerPlayer
-        local spawnId = p.Spawn
-        local spawnPoint = Map.NamedActor("Spawn" .. spawnId)
+        local spawnPoints = p.GetActorsByType("spawn")
 
-        if spawnPoint ~= nil then
+        if #spawnPoints > 0 then
+            spawnPoint = spawnPoints[1]
             local spawner = Actor.Create("spawn", true, { Owner = p, Location = spawnPoint.Location })
             Trigger.OnProduction(spawner, function(producer, produced)
                 Trigger.OnKilled(produced, function(self, killer)

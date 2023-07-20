@@ -490,7 +490,7 @@ OncePerFiveSecondChecks = function()
 end
 
 InitScrin = function()
-	RebuildExcludes.Scrin = { Types = { "sign", "rift", "reac", "rea2" } }
+	RebuildExcludes.Scrin = { Types = { "sign", "rfgn", "reac", "rea2" } }
 
 	AutoRepairBuildings(SignalTransmitterPlayer)
 

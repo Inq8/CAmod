@@ -4094,7 +4094,7 @@ SCRT:
 	SpawnActorPower@ICHORSEED:
 		OrderName: ichorseed
 		Icon: ichorpower
-		Actor: ichor.seeder
+		Actor: ichorseeder
 		ChargeInterval: 6000
 		Name: Ichor Seed
 		LifeTime: -1
@@ -4470,7 +4470,7 @@ MANI:
 		Multiplier: 80
 		Prerequisites: player.collector
 
-RIFT:
+RFGN:
 	Inherits: ^ScrinBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@SHAPE: ^2x2Shape
@@ -4520,7 +4520,7 @@ RIFT:
 		Description: \nInitiate a Rift which deals heavy damage\n    over time to a large area.
 		Weapon: RiftInit
 		AllowMultiple: false
-		CameraActor: camera
+		CameraActor: camera.dummy
 		CameraRemoveDelay: 375
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -4985,29 +4985,32 @@ MSPK:
 	Voiced:
 		VoiceSet: MindSparkVoice
 
-camera.rift:
+^RiftBase:
 	Interactable:
-	EditorOnlyTooltip:
-		Name: (support power)
+	ScriptTriggers:
 	RenderSprites:
-		Image: riftanim
-		Palette: effect-ignore-lighting-alpha85
 	WithSpriteBody:
-		StartSequence: spawn
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 1
 	HiddenUnderFog:
 		Type: GroundPosition
 	HitShape:
-	RevealsShroud:
-		Range: 6c0
-		Type: CenterPosition
-	Health:
-		HP: 1
-	PeriodicExplosion:
-		Weapon: Rift
 	Immobile:
 		OccupiesSpace: false
+
+Rift:
+	Inherits: ^RiftBase
+	EditorOnlyTooltip:
+		Name: (Rift)
+	RenderSprites:
+		Image: riftanim
+		Palette: effect-ignore-lighting-alpha85
+	PeriodicExplosion:
+		Weapon: Rift
+	KillsSelf:
+		Delay: 360
+	WithSpriteBody:
+		StartSequence: spawn
 	AmbientSound:
 		SoundFiles: rift1.aud, rift2.aud, rift3.aud
 		Interval: 50
@@ -5015,51 +5018,54 @@ camera.rift:
 		UseDeathTypeSuffix: false
 		CrushedSequence: fade
 		FallbackSequence: fade
-	KillsSelf:
-		Delay: 360
+	RevealsShroud:
+		Range: 10c0
+		Type: CenterPosition
 
-camera.minirift:
-	Inherits: camera.rift
+RiftMinor:
+	Inherits: ^RiftBase
+	EditorOnlyTooltip:
+		Name: (Minor Rift)
 	RenderSprites:
 		Image: miniriftanim
 	PeriodicExplosion:
 		Weapon: MiniRift
 	KillsSelf:
 		Delay: 120
-	WithSpriteBody:
-		-StartSequence:
-	-AmbientSound:
-	-WithDeathAnimation:
-	-RevealsShroud:
 	Targetable@RIFT:
 		TargetTypes: Rift
 
 camera.resourcescan:
 	Inherits: CAMERA
 	EditorOnlyTooltip:
-		Name: (support power proxy camera)
+		Name: (Resource Scan Camera)
 	RevealsShroud:
 		Range: 5c0
 
-camera.dummy:
-	Inherits: CAMERA
-	-RevealsShroud:
-	KillsSelf:
-		Delay: 25
-
-ichor.seeder:
-	Inherits: CAMERA
+IchorSeeder:
+	Interactable:
+	ScriptTriggers:
+	EditorOnlyTooltip:
+		Name: (Ichor Seeder)
+	Immobile:
+		OccupiesSpace: false
+	BodyOrientation:
+		QuantizedFacings: 1
+	WithSpriteBody:
+	MapEditorData:
+		Categories: System
 	HitShape:
-	Health:
-		HP: 1
+	HiddenUnderFog:
+		Type: GroundPosition
+	RevealsShroud:
+		Range: 4c0
+		Type: CenterPosition
 	SeedsResource:
 		ResourceType: Tiberium
 		Interval: 2
-	-RevealsShroud:
 	RenderSprites:
 		Image: ichorseed
 		Palette: scrin
-	-RenderSpritesEditorOnly:
 	WithDeathAnimation:
 		UseDeathTypeSuffix: False
 		CrushedSequence: fade
@@ -5068,10 +5074,16 @@ ichor.seeder:
 	KillsSelf:
 		Delay: 225
 
-ion.surge:
-	WithSpriteBody:
-	ClassicFacingBodyOrientation:
+IonSurge:
+	Interactable:
+	ScriptTriggers:
+	EditorOnlyTooltip:
+		Name: (Ion Surge)
+	BodyOrientation:
 		QuantizedFacings: 1
+	MapEditorData:
+		Categories: System
+	WithSpriteBody:
 	HitShape:
 	HiddenUnderFog:
 		Type: GroundPosition
@@ -5136,25 +5148,25 @@ WORMHOLE:
 
 # portal - infantry veterancy
 stolentech.port:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 		Prerequisite: barracks.upgraded
 
 # warp sphere - vehicle veterancy
 stolentech.wsph:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.upgraded
 
 # nerve center - aircraft veterancy
 stolentech.nerv:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 		Prerequisite: aircraft.upgraded
 
 # tech center - veterancy for all
 stolentech.scrt:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite@1:
 		Prerequisite: barracks.upgraded
 	ProvidesPrerequisite@2:
