@@ -45,7 +45,7 @@ MaxLosses = {
 }
 
 TimeBetweenConvoys = {
-	easy = { DateTime.Minutes(3), DateTime.Minutes(8), DateTime.Seconds(210), DateTime.Seconds(270)  },
+	easy = { DateTime.Minutes(3), DateTime.Minutes(8), DateTime.Seconds(210), DateTime.Minutes(5)  },
 	normal = { DateTime.Minutes(2), DateTime.Minutes(7), DateTime.Seconds(165), DateTime.Minutes(4) },
 	hard = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Seconds(120), DateTime.Minutes(4) }
 }
