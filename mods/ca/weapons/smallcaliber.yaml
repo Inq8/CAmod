@@ -62,10 +62,11 @@ FLAK-23-AG:
 		Speed: 682
 		Image: FLAKBALL
 		Blockable: True
-		Inaccuracy: 0c682
+		Inaccuracy: 341
 	Warhead@1Dam: SpreadDamage
 		ValidRelationships: Enemy, Neutral, Ally
 		-Range:
+		Damage: 1750
 		Spread: 0c128
 		Falloff: 100, 37, 14, 5, 0
 		Versus:
@@ -80,6 +81,7 @@ FLAK-23-AG:
 	Warhead@2Eff: CreateEffect
 		Explosions: flak_explosion_ground
 		ValidTargets: Ground, Ship, Trees
+		Inaccuracy: 341
 	Warhead@3EffWater: CreateEffect
 		Explosions: small_splash
 		ImpactSounds: splashm1.aud, splashm2.aud, splashm3.aud
