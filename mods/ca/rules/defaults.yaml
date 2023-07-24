@@ -273,25 +273,79 @@
 		Sequence: rank-veteran-1
 		Palette: effect
 		Position: BottomRight
-		Margin: 5, 6
+		Margin: 5, 2
 		ValidRelationships: Ally, Enemy
-		RequiresCondition: rank-veteran == 1
+		RequiresCondition: rank-veteran == 1 && !player-nod && !player-scrin
 	WithDecoration@RANK-2:
 		Image: rank
 		Sequence: rank-veteran-2
 		Palette: effect
 		Position: BottomRight
-		Margin: 5, 6
+		Margin: 5, 2
 		ValidRelationships: Ally, Enemy
-		RequiresCondition: rank-veteran == 2
+		RequiresCondition: rank-veteran == 2 && !player-nod && !player-scrin
 	WithDecoration@RANK-ELITE:
 		Image: rank
 		Sequence: rank-elite
 		Palette: effect
 		Position: BottomRight
-		Margin: 5, 6
+		Margin: 5, 2
 		ValidRelationships: Ally, Enemy
-		RequiresCondition: rank-elite
+		RequiresCondition: rank-elite && !player-nod && !player-scrin
+	WithDecoration@NODRANK-1:
+		Image: rank
+		Sequence: rank-veteran-1-nod
+		Palette: effect
+		Position: BottomRight
+		Margin: 5, 2
+		ValidRelationships: Ally, Enemy
+		RequiresCondition: rank-veteran == 1 && player-nod
+	WithDecoration@NODRANK-2:
+		Image: rank
+		Sequence: rank-veteran-2-nod
+		Palette: effect
+		Position: BottomRight
+		Margin: 5, 2
+		ValidRelationships: Ally, Enemy
+		RequiresCondition: rank-veteran == 2 && player-nod
+	WithDecoration@NODRANK-ELITE:
+		Image: rank
+		Sequence: rank-elite-nod
+		Palette: effect
+		Position: BottomRight
+		Margin: 5, 2
+		ValidRelationships: Ally, Enemy
+		RequiresCondition: rank-elite && player-nod
+	WithDecoration@SCRINRANK-1:
+		Image: rank
+		Sequence: rank-veteran-1-scrin
+		Palette: scrineffect
+		Position: BottomRight
+		Margin: 5, 2
+		ValidRelationships: Ally, Enemy
+		RequiresCondition: rank-veteran == 1 && player-scrin
+	WithDecoration@SCRINRANK-2:
+		Image: rank
+		Sequence: rank-veteran-2-scrin
+		Palette: scrineffect
+		Position: BottomRight
+		Margin: 5, 2
+		ValidRelationships: Ally, Enemy
+		RequiresCondition: rank-veteran == 2 && player-scrin
+	WithDecoration@SCRINRANK-ELITE:
+		Image: rank
+		Sequence: rank-elite-scrin
+		Palette: scrineffect
+		Position: BottomRight
+		Margin: 5, 2
+		ValidRelationships: Ally, Enemy
+		RequiresCondition: rank-elite && player-scrin
+	GrantConditionOnPrerequisite@NODRANK:
+		Condition: player-nod
+		Prerequisites: player.nod
+	GrantConditionOnPrerequisite@SCRINRANK:
+		Condition: player-scrin
+		Prerequisites: player.scrin
 
 ^Berserk:
 	SpeedMultiplier@BERSERK:
