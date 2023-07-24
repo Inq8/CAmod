@@ -3657,12 +3657,12 @@ YURI:
 	Armament@PRIMARY:
 		Weapon: EnslaveInfantry
 		LocalOffset: 150,0,400
-		PauseOnCondition: !ammo || deployed
+		PauseOnCondition: deployed
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: EnslaveVehicle
 		LocalOffset: 150,0,400
-		PauseOnCondition: !ammo || deployed
+		PauseOnCondition: deployed
 	Armament@AIDummyAiming: ## Hack: Make AI deploy to attack structures
 		PauseOnCondition: being-warped
 		Name: aidummy
@@ -3710,9 +3710,9 @@ YURI:
 		ShowSelectionBar: true
 		StartsFullyCharged: true
 		Voice: Demolish
-		PauseOnCondition: being-warped && parachute
+		PauseOnCondition: being-warped || parachute
 	AttackFrontal:
-		PauseOnCondition: being-warped && parachute
+		PauseOnCondition: !ammo || being-warped || parachute
 		Armaments: primary, secondary, aidummy
 		FacingTolerance: 0
 	RevealsShroud:

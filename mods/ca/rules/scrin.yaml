@@ -773,12 +773,12 @@ MAST:
 	Armament@PRIMARY:
 		Weapon: EnslaveInfantry
 		LocalOffset: 150,0,400
-		PauseOnCondition: !ammo || deployed
+		PauseOnCondition: deployed
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: EnslaveVehicle
 		LocalOffset: 150,0,400
-		PauseOnCondition: !ammo || deployed
+		PauseOnCondition: deployed
 	Armament@BATF:
 		Name: batf
 		Weapon: PsychicBeamBATF
@@ -816,7 +816,7 @@ MAST:
 		Voice: Action
 		PauseOnCondition: being-warped
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || !ammo
 		FacingTolerance: 0
 	Selectable:
 		DecorationBounds: 640, 896, -32, -256
