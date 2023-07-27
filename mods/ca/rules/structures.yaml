@@ -102,7 +102,7 @@ GAP:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 110
 		Prerequisites: atek, ~structures.allies, ~techlevel.high
-		Description: Regenerates the shroud nearby, obscuring enemy vision.\n  Can channel the effect to reduce enemy weapon range\n  and create persisting areas that do the same.
+		Description: Regenerates the shroud nearby, obscuring enemy vision.\n  Can channel the effect to reduce enemy weapon range and vision.
 	TooltipExtras:
 		Attributes: • Requires power to operate
 	Selectable:
@@ -124,19 +124,6 @@ GAP:
 		Weapon: GapBeam
 		LocalOffset: 0,0,1150
 		MuzzleSequence: muzzle
-		PauseOnCondition: cooldown
-	Armament@SECONDARY:
-		Name: secondary
-		Weapon: VeilSpawner
-		LocalOffset: 0,0,1150
-		PauseOnCondition: charged < 7
-		ReloadingCondition: cooldown
-	GrantConditionOnAttack@charge:
-		Condition: charged
-		IsCyclic: true
-		RevokeDelay: 25
-		MaximumInstances: 7
-		RevokeAll: true
 	WithMuzzleOverlay:
 	AttackTurreted:
 		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped

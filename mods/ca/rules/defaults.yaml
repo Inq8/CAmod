@@ -1406,6 +1406,9 @@
 	RangeMultiplier@GAPVEILED:
 		Modifier: 60
 		RequiresCondition: gapveiled
+	RevealsShroudMultiplier@GAPVEILED:
+		Modifier: 80
+		RequiresCondition: gapveiled
 	ExternalCondition@VEILED:
 		Condition: veiled
 	ExternalCondition@GAPVEILED:
@@ -1421,6 +1424,21 @@
 	Inherits: ^Veilable
 	WithIdleOverlay@VEILED:
 		Sequence: infantry
+
+^Jammable:
+	ReloadDelayMultiplier@JAMMED:
+		RequiresCondition: jammed
+		Modifier: 115
+	FirepowerMultiplier@JAMMED:
+		RequiresCondition: jammed
+		Modifier: 90
+	ExternalCondition@JAMMED:
+		Condition: jammed
+	WithIdleOverlay@JAMMED:
+		Sequence: idle
+		Image: jamdebuff
+		RequiresCondition: jammed
+		IsDecoration: True
 
 ^C4Plantable:
 	DelayedWeaponAttachable@C4:
@@ -1765,6 +1783,7 @@
 	Inherits@17: ^Concussion
 	Inherits@18: ^Suppressable
 	Inherits@19: ^CrateCloak
+	Inherits@20: ^Jammable
 	Inherits@C4: ^C4Plantable
 	Inherits@TNT: ^TNTPlantable
 	Inherits@gflash: ^GreenFlash
@@ -2344,6 +2363,7 @@
 	Inherits@16: ^Concussion
 	Inherits@17: ^Suppressable
 	Inherits@18: ^CrateCloak
+	Inherits@19: ^Jammable
 	Inherits@gflash: ^GreenFlash
 	Inherits@rflash: ^RedFlash
 	Inherits@wflash: ^WhiteFlash
@@ -2854,6 +2874,7 @@
 	Inherits@selection: ^SelectableCombatBuilding
 	Inherits@mind: ^MindControllable
 	Inherits@veilable: ^Veilable
+	Inherits@jammable: ^Jammable
 	Inherits@atomize: ^Atomizable
 	-SpeedMultiplier@concussion:
 	WithPalettedOverlay@IRONCURTAIN:

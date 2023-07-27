@@ -1652,10 +1652,15 @@ GapBeam:
 		TrackTarget: true
 	Warhead@1Dum: Dummy
 	Warhead@Debuff: GrantExternalCondition
-		Range: 0c512
+		Range: 1c512
 		Duration: 15
 		Condition: gapveiled
 		ValidRelationships: Enemy, Neutral
+	Warhead@2Eff: CreateEffect
+		Image: gap
+		Explosions: muzzle
+		ValidTargets: Ground, Ship, Trees
+		Inaccuracy: 128
 	Warhead@3Eff: CreateEffect
 		Explosions: veilcloudsm, veilcloudsmf
 		ExplosionPalette: effect-ignore-lighting-alpha40
@@ -1665,21 +1670,17 @@ MobileGapBeam:
 	Inherits: GapBeam
 	Range: 7c0
 
-VeilSpawner:
-	Range: 8c0
-	ReloadDelay: 75
-	Report: gapshot.aud
+RadarJammer:
+	ReloadDelay: 125
+	Report: jammed.aud
+	Range: 10c0
 	Projectile: InstantHit
 	Warhead@1Dum: Dummy
 	Warhead@2Spawn: SpawnActor
-		Actors: veil.minor
+		Actors: jamming.field
 		Range: 1
 		ForceGround: false
-		ValidTargets: Ground, Water, Veil, Trees
-
-MobileVeilSpawner:
-	Inherits: VeilSpawner
-	Range: 7c0
+		ValidTargets: Ground, Water, JammingField, Trees
 
 VeilSmall:
 	ReloadDelay: 10

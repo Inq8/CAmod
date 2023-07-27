@@ -1004,11 +1004,6 @@ veil:
 	Targetable@VEIL:
 		TargetTypes: Veil
 
-veil.minor:
-	Inherits: veil
-	KillsSelf:
-		Delay: 250
-
 veilofwar1:
 	Inherits: veil
 	KillsSelf:
@@ -1047,6 +1042,39 @@ veilofwar4:
 		Weapon: VeilFull
 	KillsSelf:
 		Delay: 275
+
+jamming.field:
+	Interactable:
+	ScriptTriggers:
+	EditorOnlyTooltip:
+		Name: (Jamming Field)
+	BodyOrientation:
+		QuantizedFacings: 1
+	MapEditorData:
+		Categories: System
+	WithSpriteBody:
+	HitShape:
+	HiddenUnderFog:
+		Type: GroundPosition
+	Immobile:
+		OccupiesSpace: false
+	RenderSprites:
+		Image: jamfield
+		Palette: effect
+	KillsSelf:
+		Delay: 250
+	WithRangeCircle@JAMMER:
+		Type: jamfield
+		Range: 5c0
+		Visible: Always
+		ValidRelationships: Ally, Enemy, Neutral
+		Color: 9999AAAA
+	ProximityExternalCondition@JAMMER:
+		Range: 5c0
+		ValidRelationships: Enemy, Neutral
+		Condition: jammed
+	Targetable@JFIELD:
+		TargetTypes: JammingField
 
 nshield:
 	Inherits@1: CAMERA
