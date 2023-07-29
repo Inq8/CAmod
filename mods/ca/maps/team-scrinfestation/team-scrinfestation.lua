@@ -1,7 +1,7 @@
 Players = Player.GetPlayers(function(p) return p.Team == 1 or p.Team == 2 end)
 GDIPlayers = Player.GetPlayers(function(p) return p.Team == 1 end)
 NodPlayers = Player.GetPlayers(function(p) return p.Team == 2 end)
-ScrinActorTypes = {"gunw", "corr", "ruin", "lchr", "dark", "ptur", "s1", "s2", "s3", "s4", "gscr", "feed"}
+ScrinActorTypes = {"gunw", "corr", "ruin", "lchr", "dark", "ptur", "s1", "s2", "s3", "s4", "gscr", "brst2"}
 
 GDIAttackPaths =
 {
@@ -42,13 +42,13 @@ ScrinSquads = {
 	{"s1", "s1", "s1", "s2", "gscr"},
 	{"s1", "s1", "s1", "s3", "gscr"},
 	{"s1", "s1", "s1", "s4", "gscr"},
-    {"s1", "s1", "s1", "feed2", "gscr"},
+    {"s1", "s1", "s1", "brst2", "gscr"},
 	{"gscr", "gscr", "gscr"},
 	{"s4", "s4", "s4"},
 	{"s1", "s1", "s1", "s1", "s1"},
 	{"s2", "s2", "s2"},
 	{"s3", "s3", "s1", "s1"},
-    {"feed2", "feed2", "s1", "s1"},
+    {"brst2", "brst2", "s1", "s1"},
 }
 
 GetNumPlayers = function(players)

@@ -30,7 +30,6 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("The condition to grant.")]
 		public readonly string Condition = null;
 
-		[FieldLoader.Require]
 		[Desc("Damage types that count for healing purposes.")]
 		public readonly BitSet<DamageType> DamageTypes = default;
 

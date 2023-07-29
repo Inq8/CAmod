@@ -1427,6 +1427,64 @@ LeecherOrbHeal:
 			Heavy: 100
 		ValidRelationships: Ally
 
+LeecherOrbHealInit:
+	ReloadDelay: 1500
+	Warhead@1Dam: SpreadDamage
+		Damage: -5000
+
+GreaterCoalescenceSpawner:
+	ReloadDelay: 1
+	Projectile: InstantExplode
+	Warhead@1Dum: Dummy
+	Warhead@Spawn: SpawnActor
+		Actors: grcl
+		Range: 1
+		ForceGround: false
+		ValidTargets: Ground, Water, Trees
+
+GreaterCoalescence:
+	ReloadDelay: 5
+	Warhead@1Dam: Dummy
+	Warhead@heal: SpreadDamage
+		Range: 0, 3c768
+		Falloff: 100, 100
+		Damage: -450
+		ValidTargets: Heal, Repair
+		Versus:
+			None: 50
+			Light: 75
+			Heavy: 100
+		ValidRelationships: Ally
+	Warhead@zaps: FireShrapnel
+		Weapon: GreaterCoalescenceZap
+		Amount: 3
+		AimChance: 100
+		AllowDirectHit: true
+		ThrowWithoutTarget: false
+		AimTargetStances: Enemy, Neutral
+
+GreaterCoalescenceZap:
+	Inherits: LeecherBeam
+	Range: 3c768
+	ValidTargets: Infantry, Vehicle, Structure, Ship
+	Projectile: PlasmaBeam
+		Duration: 6
+		Inaccuracy: 0
+		Colors: ee000006
+	Warhead@1Dam: SpreadDamage
+		Spread: 160
+		Damage: 150
+		Versus:
+			None: 100
+			Light: 100
+			Wood: 50
+			Heavy: 100
+			Concrete: 50
+		DamageTypes: TriggerProne, AtomizedDeath
+	Warhead@3Eff: CreateEffect
+		Image: leechhit
+		Inaccuracy: 128
+
 AtomizerBolts:
 	Report: atomizer-fire1.aud
 	ReloadDelay: 150
@@ -1447,11 +1505,12 @@ AtomizerBolts:
 		TrailPalette: scrin
 		TrailInterval: 1
 	Warhead@1Dam: SpreadDamage
-		Spread: 448
-		Damage: 8000
+		Spread: 512
+		Falloff: 100, 85, 60, 25, 0
+		Damage: 5000
 		ValidTargets: Ground, Water
 		Versus:
-			None: 30
+			None: 15
 			Wood: 30
 			Light: 65
 			Heavy: 100
@@ -1459,7 +1518,7 @@ AtomizerBolts:
 		DamageTypes: Prone50Percent, AtomizedDeath
 	Warhead@atomize: GrantExternalCondition
 		Range: 0c768
-		Duration: 150
+		Duration: 155
 		Condition: atomized
 		ValidTargets: Vehicle, Ship, Defense
 		ValidRelationships: Enemy, Neutral
@@ -1474,13 +1533,27 @@ AtomizerBolts:
 		Condition: redhighlight
 		ValidTargets: Vehicle, Ship, Defense
 
+AtomizedEcho:
+	Inherits: AtomizerBolts
+	ReloadDelay: 50
+	Report: atomizer-echo1.aud
+	-Projectile:
+	Projectile: InstantHit
+	-Warhead@atomize:
+	Warhead@1Dam: SpreadDamage
+		Damage: 3000
+		AffectsParent: true
+		ValidTargets: Vehicle, Ship, Defense, Air, AirSmall
+	Warhead@3Eff: CreateEffect
+		ValidTargets: Vehicle, Ship, Defense, Air, AirSmall
+		-ImpactSounds:
+
 AtomizerBoltsAA:
 	Inherits: AtomizerBolts
 	ValidTargets: Air, AirSmall
 	Projectile: Missile
 		Speed: 225
 	Warhead@1Dam: SpreadDamage
-		Damage: 5000
 		ValidTargets: Air, AirSmall
 		Versus:
 			None: 100
@@ -1515,13 +1588,13 @@ AtomizeSpread:
 		ValidTargets: Vehicle, Ship, Defense, Air
 		ValidRelationships: Ally
 
-FeederTargeting:
+BursterTargeting:
 	ValidTargets: Vehicle, Infantry, Structure
 	Range: 1c512
 	Projectile: InstantHit
 	Warhead@1Dam: TargetDamage
 
-FeederExplode:
+BursterExplode:
 	ValidTargets: Ground, Water
 	Warhead@1Dam: SpreadDamage
 		Damage: 12000
@@ -1548,27 +1621,6 @@ FeederExplode:
 		Delay: 1
 	Warhead@4Eff: CreateEffect
 		Explosions: artillery_explosion
-
-FeederExplodeFull:
-	Inherits: FeederExplode
-	Warhead@1Dam: SpreadDamage
-		Damage: 18000
-		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
-	Warhead@SDam: SpreadDamage
-		Damage: 6750
-	Warhead@3Eff: CreateEffect
-		Explosions: large_chem
-		ExplosionPalette: tdeffect-ignore-lighting-alpha85
-	Warhead@18Radio: CreateTintedCells
-		Level: 300
-		Falloff: 100, 55, 32, 5
-		LayerName: radioactivity.weak
-	Warhead@Shrap: FireShrapnel
-		Weapon: ChemDebris
-		Amount: 7
-		AimChance: 0
-		ValidTargets: Ground, Water, Infantry, Vehicle
-		ThrowWithoutTarget: true
 
 MindSparkSpawnerMaster:
 	ReloadDelay: 100

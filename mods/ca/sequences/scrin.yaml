@@ -334,52 +334,54 @@ s6:
 		Tick: 80
 	icon: s6icon
 
-feed:
+brst:
 	Inherits: ^ScrinCommonDeaths
-	idle: feed
+	stand: brst
 		Facings: 8
-	move: feed
+	stand2: brst
+		Facings: 8
+	run: brst
 		Start: 8
 		Length: 4
 		Facings: 8
 		Tick: 120
-	harvest: feed
+	shoot: brst
 		Start: 40
 		Length: 4
 		Facings: 8
 		Tick: 120
-	idle1: feed
+	idle1: brst
 		Length: 2
 		Tick: 120
-	idle2: feed
+	idle2: brst
 		Start: 2
 		Length: 2
 		Tick: 120
-	idle3: feed
+	idle3: brst
 		Start: 4
 		Length: 2
 		Tick: 120
-	idle4: feed
+	idle4: brst
 		Start: 6
 		Length: 2
 		Tick: 120
-	die1: feed
+	die1: brst
 		Start: 72
 		Length: 8
 		Tick: 80
-	die2: feed
+	die2: brst
 		Start: 80
 		Length: 8
 		Tick: 80
-	die3: feed
+	die3: brst
 		Start: 88
 		Length: 8
 		Tick: 80
-	die4: feed
+	die4: brst
 		Start: 88
 		Length: 8
 		Tick: 80
-	die7: feed
+	die7: brst
 		Start: 72
 		Length: 8
 		Tick: 80
@@ -396,7 +398,7 @@ feed:
 		BlendMode: Additive
 		Tick: 60
 		Length: *
-	icon: s2icon
+	icon: brsticon
 
 smedi:
 	Inherits: ^ScrinCommonDeaths
@@ -1803,11 +1805,23 @@ mspk:
 		BlendMode: Additive
 
 buzz:
-	idle: buzz
-		Tick: 60
+	Defaults:
 		Length: *
 		ZOffset: 2048
 		BlendMode: Additive
+	idle: buzz
+		Tick: 60
+	make: buzzmake
+	die: buzzmake
+		Frames: 5, 4, 3, 2, 1, 0
+
+grcl:
+	Defaults:
+		Alpha: 0.75
+		Length: *
+		ZOffset: 512
+	idle: grcl
+	make: grclmake
 
 ionsurge:
 	idle: ionsurgeloop
@@ -1837,14 +1851,6 @@ atomize-overlay:
 		Offset: 0, 0
 		UseTilesetCode: false
 		ZOffset: 512
-
-feederfull-overlay:
-	idle: leechhitlg
-		Frames: 4,5,6,7,8,9,10,11,12,13,12,11,10,9,8,7,6,5,4
-		BlendMode: Additive
-		Length: *
-		ZOffset: 2047
-		Offset: 0, -5
 
 siphon-overlay-sm:
 	idle: leechhit
