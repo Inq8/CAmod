@@ -197,9 +197,6 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			var armor = actor.TraitInfos<ArmorInfo>().FirstOrDefault();
 			armorTypeLabel.Text = armor != null ? armor.Type : "";
 
-			if (armorTypeLabel.Text != "" && actor.HasTraitInfo<AircraftInfo>())
-				armorTypeLabel.Text = "Aircraft";
-
 			// Hard coded, specific to CA - find a better way to set user-friendly names and colors for armor types
 			switch (armorTypeLabel.Text)
 			{
