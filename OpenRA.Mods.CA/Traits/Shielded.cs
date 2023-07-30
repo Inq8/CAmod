@@ -109,7 +109,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (strength == 0 || e.Damage.Value == 0 || e.Attacker == self)
 				return;
 
-			var damageAmt = Convert.ToInt32(e.Damage.Value / 0.01);
+			var damageAmt = e.Damage.Value * 100;
 			var damageTypes = e.Damage.DamageTypes;
 			var excessDamage = damageAmt - strength;
 			strength = Math.Max(strength - damageAmt, 0);
