@@ -1403,19 +1403,19 @@
 	WithIdleOverlay@VEILED:
 		Sequence: infantry
 
-^Jammable:
-	ReloadDelayMultiplier@JAMMED:
-		RequiresCondition: jammed
+^WeaponJammable:
+	ReloadDelayMultiplier@WEAPJAMMED:
+		RequiresCondition: weapjammed
 		Modifier: 115
-	FirepowerMultiplier@JAMMED:
-		RequiresCondition: jammed
+	FirepowerMultiplier@WEAPJAMMED:
+		RequiresCondition: weapjammed
 		Modifier: 90
-	ExternalCondition@JAMMED:
-		Condition: jammed
-	WithIdleOverlay@JAMMED:
+	ExternalCondition@WEAPJAMMED:
+		Condition: weapjammed
+	WithIdleOverlay@WEAPJAMMED:
 		Sequence: idle
 		Image: jamdebuff
-		RequiresCondition: jammed
+		RequiresCondition: weapjammed
 		IsDecoration: True
 
 ^C4Plantable:
@@ -1761,7 +1761,7 @@
 	Inherits@17: ^Concussion
 	Inherits@18: ^Suppressable
 	Inherits@19: ^CrateCloak
-	Inherits@20: ^Jammable
+	Inherits@20: ^WeaponJammable
 	Inherits@C4: ^C4Plantable
 	Inherits@TNT: ^TNTPlantable
 	Inherits@gflash: ^GreenFlash
@@ -2341,7 +2341,7 @@
 	Inherits@16: ^Concussion
 	Inherits@17: ^Suppressable
 	Inherits@18: ^CrateCloak
-	Inherits@19: ^Jammable
+	Inherits@19: ^WeaponJammable
 	Inherits@gflash: ^GreenFlash
 	Inherits@rflash: ^RedFlash
 	Inherits@wflash: ^WhiteFlash
@@ -2852,7 +2852,7 @@
 	Inherits@selection: ^SelectableCombatBuilding
 	Inherits@mind: ^MindControllable
 	Inherits@veilable: ^Veilable
-	Inherits@jammable: ^Jammable
+	Inherits@weapjammable: ^WeaponJammable
 	Inherits@atomize: ^Atomizable
 	-SpeedMultiplier@concussion:
 	WithPalettedOverlay@IRONCURTAIN:
