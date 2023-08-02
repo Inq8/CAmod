@@ -210,7 +210,9 @@ WorldLoaded = function()
 
 			Trigger.AfterDelay(DateTime.Seconds(2), function()
 				Utils.Do(Wormholes, function(w)
-					w.Kill()
+					if not w.IsDead then
+						w.Kill()
+					end
 				end)
 			end)
         end)
