@@ -1,17 +1,18 @@
 ^StructureOverlays:
-	emp-overlay: emp_fx01
+	emp-overlay:
+		Filename: emp_fx01.shp
 		Length: *
 		BlendMode: Additive
 		Offset: 0, 0
-		UseTilesetCode: false
 		ZOffset: 512
-	chrono-overlay: chronofade
+	chrono-overlay:
+		Filename: chronofade.shp
 		Length: *
 		BlendMode: Additive
 		Offset: 0, 0
-		UseTilesetCode: false
 		ZOffset: 512
-	mind-overlay: mindanim
+	mind-overlay:
+		Filename: mindanim.shp
 		Length: *
 		Tick: 200
 		BlendMode: Alpha
@@ -19,78 +20,113 @@
 
 fcom:
 	Inherits: ^StructureOverlays
-	idle: fcom
-	damaged-idle: fcom
+	idle:
+		Filename: fcom.shp
+	damaged-idle:
+		Filename: fcom.shp
 		Start: 1
-	make: fcommake
+	make:
+		Filename: fcommake.shp
 		Length: *
-	dead: fcom
+	dead:
+		Filename: fcom.shp
 		Start: 1
 		Tick: 800
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: missicon2
+	icon:
+		Filename: missicon2.shp
 
 fcom.destroyed:
-	idle: fcom
+	idle:
+		Filename: fcom.shp
 		Start: 1
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
 
 
 hosp:
 	Inherits: ^StructureOverlays
-	idle: hosp
+	idle:
+		Filename: hosp.shp
 		Length: 4
-	damaged-idle: hosp
+	damaged-idle:
+		Filename: hosp.shp
 		Start: 4
 		Length: 4
-	dead: hosp
+	dead:
+		Filename: hosp.shp
 		Start: 8
 		Tick: 800
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	make: hospmake
+	make:
+		Filename: hospmake.shp
 		Length: *
-	icon: hospicon
+	icon:
+		Filename: hospicon.shp
 
 hosp.destroyed:
-	idle: hosp
+	idle:
+		Filename: hosp.shp
 		Start: 8
 
 bio:
 	Inherits: ^StructureOverlays
-	idle: bio
-	damaged-idle: bio
+	idle:
+		Filename: bio.shp
+	damaged-idle:
+		Filename: bio.shp
 		Start: 1
-	dead: bio
+	dead:
+		Filename: bio.shp
 		Start: 2
 		Tick: 800
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	make: biomake
+	make:
+		Filename: biomake.shp
 		Length: *
-	icon: bioicnh
+	icon:
+		Filename: bioicnh.shp
 
 bio.destroyed:
-	idle: bio
+	idle:
+		Filename: bio.shp
 		Start: 2
 
 oilb:
 	Inherits: ^StructureOverlays
 	Defaults:
+		Filename: oilb.shp
 		Offset: 0,-6
 	idle:
 		Length: 14
@@ -99,773 +135,1090 @@ oilb:
 		Start: 14
 		Length: 14
 		Tick: 100
-	flare: burn-s
+	flare:
+		Filename: burn-s.shp
 		Start: 12
 		Length: 46
 		ZOffset: 511
-	damaged-flare: flmspt
+	damaged-flare:
+		Filename: flmspt.shp
 		Start: 50
 		Length: *
 		ZOffset: 511
 	dead:
 		Start: 28
 		Tick: 800
-	make: oilb
-	bib: bib3
+	make:
+		Filename: oilb.shp
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
 		Offset: 0,0
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
 
 oilb.destroyed:
 	Defaults:
 		Offset: 0,-6
-	idle: oilb
+	idle:
+		Filename: oilb.shp
 		Start: 28
 		Length: 1
-	idle-flare: flmspt
+	idle-flare:
+		Filename: flmspt.shp
 		Start: 50
 		Length: *
 		ZOffset: 511
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
 		Offset: 0,0
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
 
 orep:
 	Inherits: ^StructureOverlays
-	idle: orep
-	damaged-idle: orep
+	idle:
+		Filename: orep.shp
+	damaged-idle:
+		Filename: orep.shp
 		Start: 1
-	make: orepmake
+	make:
+		Filename: orepmake.shp
 		Length: *
-	dead: orep
+	dead:
+		Filename: orep.shp
 		Start: 1
 		Tick: 800
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: orepicon
+	icon:
+		Filename: orepicon.shp
 
 orep.destroyed:
-	idle: orep
+	idle:
+		Filename: orep.shp
 		Start: 1
 		Length: *
 		Offset: 0,-10
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
 
 fact:
 	Inherits: ^StructureOverlays
-	idle: fact
-	make: factmake
+	idle:
+		Filename: fact.shp
+	make:
+		Filename: factmake.shp
 		Length: *
 		Tick: 40
-	build: fact
+	build:
+		Filename: fact.shp
 		Start: 1
 		Length: 25
-	pdox: factpdox
+	pdox:
+		Filename: factpdox.shp
 		Length: 80
-	damaged-idle: fact
+	damaged-idle:
+		Filename: fact.shp
 		Start: 26
-	damaged-build: fact
+	damaged-build:
+		Filename: fact.shp
 		Start: 27
 		Length: 25
-	damaged-pdox: factpdox
+	damaged-pdox:
+		Filename: factpdox.shp
 		Start: 80
 		Length: 80
-	dead: factdead
+	dead:
+		Filename: factdead.shp
 		Tick: 800
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: facticon
-	fake-icon: facficon
+	icon:
+		Filename: facticon.shp
+	fake-icon:
+		Filename: facficon.shp
 
 proc:
 	Inherits: ^StructureOverlays
-	idle: proc
+	idle:
+		Filename: proc.shp
 		ZOffset: -1c511
-	damaged-idle: proc
+	damaged-idle:
+		Filename: proc.shp
 		Start: 1
 		ZOffset: -1c511
-	idle-top: proctop
+	idle-top:
+		Filename: proctop.shp
 		ZOffset: 0
-	damaged-idle-top: proctop
+	damaged-idle-top:
+		Filename: proctop.shp
 		Start: 1
 		ZOffset: 0
-	make: procmake
+	make:
+		Filename: procmake.shp
 		Length: *
-	dead: procdead
+	dead:
+		Filename: procdead.shp
 		Tick: 800
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: procicon
+	icon:
+		Filename: procicon.shp
 
 silo:
 	Inherits: ^StructureOverlays
-	idle: silo
+	idle:
+		Filename: silo.shp
 		Offset: 0,-1
-	damaged-idle: silo
+	damaged-idle:
+		Filename: silo.shp
 		Start: 9
 		Offset: 0,-1
-	stages: silo
+	stages:
+		Filename: silo.shp
 		Length: 9
 		Offset: 0,-1
-	damaged-stages: silo
+	damaged-stages:
+		Filename: silo.shp
 		Start: 9
 		Length: 9
 		Offset: 0,-1
-	make: silomake
+	make:
+		Filename: silomake.shp
 		Length: *
 		Offset: 0,-1
-	bib: mbSILO
+	bib:
+		Filename: mbSILO.tem
+		TilesetFilenames:
+			SNOW: mbSILO.sno
+			DESERT: mbSILO.des
+			JUNGLE: mbSILO.jun
+			WINTER: mbSILO.win
+			BARREN: mbSILO.des
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-			BARREN: DESERT
-	icon: siloicon
+	icon:
+		Filename: siloicon.shp
 
 powr:
 	Inherits: ^StructureOverlays
-	idle: powr
-	damaged-idle: powr
+	idle:
+		Filename: powr.shp
+	damaged-idle:
+		Filename: powr.shp
 		Start: 1
-	make: powrmake
+	make:
+		Filename: powrmake.shp
 		Length: *
-	dead: powrdead
+	dead:
+		Filename: powrdead.shp
 		Tick: 800
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: powricon
-	fake-icon: fpwricon
+	icon:
+		Filename: powricon.shp
+	fake-icon:
+		Filename: fpwricon.shp
 
 apwr:
 	Inherits: ^StructureOverlays
-	idle: apwr
+	idle:
+		Filename: apwr.shp
 		Offset: 0,-10
-	damaged-idle: apwr
+	damaged-idle:
+		Filename: apwr.shp
 		Start: 1
 		Offset: 0,-10
-	make: apwrmake
+	make:
+		Filename: apwrmake.shp
 		Length: *
 		Offset: 0,-10
-	dead: apwrdead
+	dead:
+		Filename: apwrdead.shp
 		Tick: 800
 		Offset: 0,-10
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: apwricon
-	fake-icon: fapwicon
+	icon:
+		Filename: apwricon.shp
+	fake-icon:
+		Filename: fapwicon.shp
 
 npwr:
 	Inherits: ^StructureOverlays
-	idle: npwr
+	idle:
+		Filename: npwr.shp
 		Length: 4
 		Tick: 1000
 		Offset: 0,-10
-	damaged-idle: npwrd
+	damaged-idle:
+		Filename: npwrd.shp
 		Length: 4
 		Tick: 1000
 		Offset: 0,-10
-	make: npwrmake
+	make:
+		Filename: npwrmake.shp
 		Length: *
 		Offset: 0,-10
-	dead: npwrd
+	dead:
+		Filename: npwrd.shp
 		Tick: 800
 		Offset: 0,-10
-	bib: bib1
+	bib:
+		Filename: bib1.tem
+		TilesetFilenames:
+			SNOW: bib1.sno
+			DESERT: bib1.des
+			JUNGLE: bib1.jun
+			WINTER: bib1.win
+			BARREN: bib1.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: npwricon
+	icon:
+		Filename: npwricon.shp
 
 tpwr:
 	Inherits: ^StructureOverlays
-	idle: tpwr
+	idle:
+		Filename: tpwr.shp
 		Offset: 0,-10
-	damaged-idle: tpwr
+	damaged-idle:
+		Filename: tpwr.shp
 		Start: 1
 		Offset: 0,-10
-	make: tpwrmake
+	make:
+		Filename: tpwrmake.shp
 		Length: *
 		Offset: 0,-10
-	dead: tpwr
+	dead:
+		Filename: tpwr.shp
 		Start: 1
 		Tick: 800
 		Offset: 0,-10
-	power: litning
+	power:
+		Filename: litning.shp
 		Length: *
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: tpwricon
+	icon:
+		Filename: tpwricon.shp
 
 barr:
 	Inherits: ^StructureOverlays
-	idle: barr
+	idle:
+		Filename: barr.shp
 		Length: 10
 		Offset: 0,-6
-	damaged-idle: barr
+	damaged-idle:
+		Filename: barr.shp
 		Start: 10
 		Length: 10
 		Offset: 0,-6
-	make: barrmake
+	make:
+		Filename: barrmake.shp
 		Length: *
 		Offset: 0,-6
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: barricon
+	icon:
+		Filename: barricon.shp
 
 tent:
 	Inherits: ^StructureOverlays
 	Defaults:
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-			JUNGLE: TEMPERAT
-			WINTER: TEMPERAT
-			BARREN: TEMPERAT
-			DUNE: DESERT
+		Filename: tent.tem
+		TilesetFilenames:
+			SNOW: tent.sno
+			DESERT: tent.des
 	idle:
 		Length: 10
 	damaged-idle:
 		Start: 10
 		Length: 10
-	make: tentmake
+	make:
+		Filename: tentmake.tem
+		TilesetFilenames:
+			SNOW: tentmake.sno
+			DESERT: tentmake.des
 		Length: *
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
 		Length: *
-		TilesetOverrides:
-			JUNGLE: JUNGLE
-	emp-overlay: emp_fx01
-		UseTilesetExtension: false
-	chrono-overlay: chronofade
-		UseTilesetExtension: false
-	mind-overlay: mindanim
+	emp-overlay:
+		Filename: emp_fx01.shp
+		TilesetFilenames:
+	chrono-overlay:
+		Filename: chronofade.shp
+		TilesetFilenames:
+	mind-overlay:
+		Filename: mindanim.shp
+		TilesetFilenames:
 		Length: *
 		Tick: 200
 		BlendMode: Alpha
 		Offset: 0, 0
-		UseTilesetExtension: false
-	icon: tenticon
-		UseTilesetExtension: false
+	icon:
+		Filename: tenticon.shp
+		TilesetFilenames:
 
 kenn:
 	Inherits: ^StructureOverlays
-	idle: kenn
-	damaged-idle: kenn
+	idle:
+		Filename: kenn.shp
+	damaged-idle:
+		Filename: kenn.shp
 		Start: 1
-	make: kennmake
+	make:
+		Filename: kennmake.shp
 		Length: *
-	bib: mbSILO
+	bib:
+		Filename: mbSILO.tem
+		TilesetFilenames:
+			SNOW: mbSILO.sno
+			INTERIOR: mbSILO.int
+			DESERT: mbSILO.des
+			JUNGLE: mbSILO.jun
+			WINTER: mbSILO.win
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			BARREN: TEMPERAT
-	icon: kennicon
+	icon:
+		Filename: kennicon.shp
 
 dome:
 	Inherits: ^StructureOverlays
-	idle: dome
-	damaged-idle: dome
+	idle:
+		Filename: dome.shp
+	damaged-idle:
+		Filename: dome.shp
 		Start: 1
-	make: domemake
+	make:
+		Filename: domemake.shp
 		Length: *
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: domeicon
-	fake-icon: domficon
+	icon:
+		Filename: domeicon.shp
+	fake-icon:
+		Filename: domficon.shp
 
 atek:
 	Inherits: ^StructureOverlays
-	idle: atek
-	damaged-idle: atek
+	idle:
+		Filename: atek.shp
+	damaged-idle:
+		Filename: atek.shp
 		Start: 1
-	make: atekmake
+	make:
+		Filename: atekmake.shp
 		Length: *
-	active: sputdoor
+	active:
+		Filename: sputdoor.shp
 		Length: *
 		Offset: -4,0
-	damaged-active: sputdoor
+	damaged-active:
+		Filename: sputdoor.shp
 		Length: *
 		Offset: -4,0
-	false-active: atek
-	damaged-false-active: atek
+	false-active:
+		Filename: atek.shp
+	damaged-false-active:
+		Filename: atek.shp
 		Start: 1
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: atekicon
-	fake-icon: ateficon
+	icon:
+		Filename: atekicon.shp
+	fake-icon:
+		Filename: ateficon.shp
 
 stek:
 	Inherits: ^StructureOverlays
-	idle: stek
-	active: stek
-	damaged-active: stek
+	idle:
+		Filename: stek.shp
+	active:
+		Filename: stek.shp
+	damaged-active:
+		Filename: stek.shp
 		Start: 1
-	damaged-idle: stek
+	damaged-idle:
+		Filename: stek.shp
 		Start: 1
-	make: stekmake
+	make:
+		Filename: stekmake.shp
 		Length: *
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: stekicon
+	icon:
+		Filename: stekicon.shp
 
 weap:
 	Inherits: ^StructureOverlays
-	idle: weap
-	damaged-idle: weap
+	idle:
+		Filename: weap.shp
+	damaged-idle:
+		Filename: weap.shp
 		Start: 1
-	place: weapmake
+	place:
+		Filename: weapmake.shp
 		Start: 14
-	make: weapmake
+	make:
+		Filename: weapmake.shp
 		Length: *
-	build-top: weap3
+	build-top:
+		Filename: weap3.shp
 		Length: 10
 		ZOffset: 511
-	damaged-build-top: weap2
+	damaged-build-top:
+		Filename: weap2.shp
 		Start: 4
 		Length: 4
 		ZOffset: 511
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
+	emp-overlay:
+		Filename: emp_fx01.shp
 		ZOffset: 2048
-	chrono-overlay: chronofade
+	chrono-overlay:
+		Filename: chronofade.shp
 		ZOffset: 2048
-	icon: weapicon
-	fake-icon: weaficon
+	icon:
+		Filename: weapicon.shp
+	fake-icon:
+		Filename: weaficon.shp
 
 hpad:
 	Inherits: ^StructureOverlays
-	idle: hpad
+	idle:
+		Filename: hpad.shp
 		ZOffset: -1023
-	damaged-idle: hpad
+	damaged-idle:
+		Filename: hpad.shp
 		Start: 7
 		ZOffset: -1023
-	active: hpad
+	active:
+		Filename: hpad.shp
 		Start: 1
 		Length: 6
 		Tick: 100
 		ZOffset: -1023
-	damaged-active: hpad
+	damaged-active:
+		Filename: hpad.shp
 		Start: 8
 		Length: 6
 		Tick: 100
 		ZOffset: -1023
-	make: hpadmake
+	make:
+		Filename: hpadmake.shp
 		Length: *
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: hpadicon
+	icon:
+		Filename: hpadicon.shp
 
 afld:
 	Inherits: ^StructureOverlays
-	idle: afldidle
+	idle:
+		Filename: afldidle.shp
 		Length: 8
 		Tick: 160
 		ZOffset: -1023
 		Offset: 0,-4
-	damaged-idle: afldidle
+	damaged-idle:
+		Filename: afldidle.shp
 		Start: 8
 		Length: 8
 		Tick: 160
 		ZOffset: -1023
 		Offset: 0,-4
-	active: afld
+	active:
+		Filename: afld.shp
 		Length: 8
 		Tick: 160
 		ZOffset: -1023
 		Offset: 0,-4
-	damaged-active: afld
+	damaged-active:
+		Filename: afld.shp
 		Start: 8
 		Length: 8
 		Tick: 160
 		ZOffset: -1023
 		Offset: 0,-4
-	make: afldmake
+	make:
+		Filename: afldmake.shp
 		Length: *
 		Offset: 0,-4
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
 		ZOffset: -1024
-	icon: afldicon
+	icon:
+		Filename: afldicon.shp
 
 spen:
 	Inherits: ^StructureOverlays
-	idle: spen
-	damaged-idle: spen
+	idle:
+		Filename: spen.shp
+	damaged-idle:
+		Filename: spen.shp
 		Start: 1
-	make: spenmake
+	make:
+		Filename: spenmake.shp
 		Length: *
-	icon: spenicon
+	icon:
+		Filename: spenicon.shp
 
 syrd:
 	Inherits: ^StructureOverlays
-	idle: syrd
-	damaged-idle: syrd
+	idle:
+		Filename: syrd.shp
+	damaged-idle:
+		Filename: syrd.shp
 		Start: 1
-	make: syrdmake
+	make:
+		Filename: syrdmake.shp
 		Length: *
-	icon: syrdicon
-	fake-icon: syrficon
+	icon:
+		Filename: syrdicon.shp
+	fake-icon:
+		Filename: syrficon.shp
 
 fix:
 	Inherits: ^StructureOverlays
-	idle: fix
+	idle:
+		Filename: fix.shp
 		Offset: 0,1
 		ZOffset: -1c511
-	damaged-idle: fix
+	damaged-idle:
+		Filename: fix.shp
 		Start: 7
 		Offset: 0,1
 		ZOffset: -1c511
-	active: fix
+	active:
+		Filename: fix.shp
 		Start: 1
 		Length: 6
 		Offset: 0,1
 		Tick: 100
 		ZOffset: -1c511
-	damaged-active: fix
+	damaged-active:
+		Filename: fix.shp
 		Start: 8
 		Length: 6
 		Offset: 0,1
 		Tick: 100
 		ZOffset: -1c511
-	make: fixmake
+	make:
+		Filename: fixmake.shp
 		Length: *
 		Offset: 0,1
-	bib: mbFIX
+	bib:
+		Filename: mbFIX.tem
+		TilesetFilenames:
+			SNOW: mbFIX.sno
+			INTERIOR: mbFIX.int
+			DESERT: mbFIX.des
+			JUNGLE: mbFIX.jun
+			WINTER: mbFIX.win
 		Length: *
 		ZOffset: -1c511
 		Offset: 0,-4
-		UseTilesetExtension: true
-		TilesetOverrides:
-			BARREN: TEMPERAT
-	icon: fixicon
-	fake-icon: fixficon
+	icon:
+		Filename: fixicon.shp
+	fake-icon:
+		Filename: fixficon.shp
 
 gun:
 	Inherits: ^StructureOverlays
-	idle: gunmake # Empty first frame. We need WithSpriteBody for the make anim, and WSB needs at least a placeholder default sequence to work
-	make: gunmake
+	idle: # Empty first frame. We need WithSpriteBody for the make anim, and WSB needs at least a placeholder default sequence to work
+		Filename: gunmake.shp
+	make:
+		Filename: gunmake.shp
 		Length: *
 	turret:
+		Filename: gun.shp
 		Facings: 32
 		UseClassicFacings: True
-	recoil: gun
+	recoil:
+		Filename: gun.shp
 		Start: 32
 		Facings: 32
 		UseClassicFacings: True
-	make: gunmake
+	make:
+		Filename: gunmake.shp
 		Length: *
-	damaged-turret: gun
+	damaged-turret:
+		Filename: gun.shp
 		Start: 64
 		Facings: 32
 		UseClassicFacings: True
-	damaged-recoil: gun
+	damaged-recoil:
+		Filename: gun.shp
 		Start: 96
 		Facings: 32
 		UseClassicFacings: True
-	muzzle: gunfire2
+	muzzle:
+		Filename: gunfire2.shp
 		Length: 5
-	bib: mbGUN
+	bib:
+		Filename: mbGUN.tem
+		TilesetFilenames:
+			SNOW: mbGUN.sno
+			INTERIOR: mbGUN.int
+			DESERT: mbGUN.des
+			JUNGLE: mbGUN.jun
+			WINTER: mbGUN.win
 		Length: *
 		Offset: -1,-1
-		UseTilesetExtension: true
-		TilesetOverrides:
-			BARREN: TEMPERAT
-	icon: gunicon
+	icon:
+		Filename: gunicon.shp
 
 agun:
 	Inherits: ^StructureOverlays
-	idle: gunmake # Empty first frame (agunmake has no empty frames). We need WithSpriteBody for the make anim, and WSB needs at least a placeholder default sequence to work
-	make: agunmake
+	idle: # Empty first frame (agunmake has no empty frames). We need WithSpriteBody for the make anim, and WSB needs at least a placeholder default sequence to work
+		Filename: gunmake.shp
+	make:
+		Filename: agunmake.shp
 		Length: *
 		Offset: 0,-13
 	turret:
+		Filename: agun.shp
 		Facings: 32
 		UseClassicFacings: True
 		Offset: 0,-13
-	recoil: agun
+	recoil:
+		Filename: agun.shp
 		Start: 32
 		Facings: 32
 		UseClassicFacings: True
 		Offset: 0,-13
-	make: agunmake
+	make:
+		Filename: agunmake.shp
 		Length: *
 		Offset: 0,-13
-	damaged-turret: agun
+	damaged-turret:
+		Filename: agun.shp
 		Start: 64
 		Facings: 32
 		UseClassicFacings: True
 		Offset: 0,-13
-	damaged-recoil: agun
+	damaged-recoil:
+		Filename: agun.shp
 		Start: 96
 		Facings: 32
 		UseClassicFacings: True
 		Offset: 0,-13
-	muzzle: gunfire2
+	muzzle:
+		Filename: gunfire2.shp
 		Start: 1
 		Length: 4
-	bib: mbAGUN
+	bib:
+		Filename: mbAGUN.tem
+		TilesetFilenames:
+			SNOW: mbAGUN.sno
+			INTERIOR: mbAGUN.int
+			DESERT: mbAGUN.des
+			WINTER: mbAGUN.win
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			JUNGLE: TEMPERAT
-			BARREN: TEMPERAT
-	icon: agunicon
+	icon:
+		Filename: agunicon.shp
 
 sam:
 	Inherits: ^StructureOverlays
-	idle: empty
-	damaged-idle: empty
-	turret: sam2
+	idle:
+		Filename: empty.shp
+	damaged-idle:
+		Filename: empty.shp
+	turret:
+		Filename: sam2.shp
 		Facings: 32
 		UseClassicFacings: True
 		Offset: -2,-2
-	damaged-turret: sam2
+	damaged-turret:
+		Filename: sam2.shp
 		Start: 34
 		Facings: 32
 		UseClassicFacings: True
 		Offset: -2,-2
-	make: sammake
+	make:
+		Filename: sammake.shp
 		Length: *
 		Offset: -2,-2
-	muzzle: samfire
+	muzzle:
+		Filename: samfire.shp
 		Length: 18
 		Facings: 8
-	bib: mbSAM
+	bib:
+		Filename: mbSAM.tem
+		TilesetFilenames:
+			SNOW: mbSAM.sno
+			INTERIOR: mbSAM.int
+			DESERT: mbSAM.des
+			JUNGLE: mbSAM.jun
+			WINTER: mbSAM.win
 		Length: *
 		Offset: 0,1
-		UseTilesetExtension: true
-		TilesetOverrides:
-			BARREN: TEMPERAT
-	icon: samicon
+	icon:
+		Filename: samicon.shp
 
 ftur:
 	Inherits: ^StructureOverlays
-	idle: ftur
+	idle:
+		Filename: ftur.shp
 		Offset: 0,-2
-	damaged-idle: ftur
+	damaged-idle:
+		Filename: ftur.shp
 		Start: 1
 		Offset: 0,-2
-	make: fturmake
+	make:
+		Filename: fturmake.shp
 		Length: *
 		Offset: 0,-2
-	bib: mbFTUR
+	bib:
+		Filename: mbFTUR.tem
+		TilesetFilenames:
+			SNOW: mbFTUR.sno
+			INTERIOR: mbFTUR.int
+			DESERT: mbFTUR.des
+			JUNGLE: mbFTUR.jun
+			WINTER: mbFTUR.win
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			BARREN: TEMPERAT
-	icon: fturicon
+	icon:
+		Filename: fturicon.shp
 
 tsla:
 	Inherits: ^StructureOverlays
-	idle: tsla
+	idle:
+		Filename: tsla.shp
 		Offset: 0,-13
-	damaged-idle: tsla
+	damaged-idle:
+		Filename: tsla.shp
 		Start: 10
 		Offset: 0,-13
-	make: tslamake
+	make:
+		Filename: tslamake.shp
 		Length: *
 		Offset: 0,-13
-	active: tsla
+	active:
+		Filename: tsla.shp
 		Start: 0
 		Length: 10
 		Tick: 100
 		Offset: 0,-13
-	damaged-active: tsla
+	damaged-active:
+		Filename: tsla.shp
 		Start: 11
 		Length: 9
 		Tick: 100
 		Offset: 0,-13
-	bib: mbTSLA
+	bib:
+		Filename: mbTSLA.tem
+		TilesetFilenames:
+			SNOW: mbTSLA.sno
+			INTERIOR: mbTSLA.int
+			DESERT: mbTSLA.des
+			JUNGLE: mbTSLA.jun
+			WINTER: mbTSLA.win
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			BARREN: TEMPERAT
-	icon: tslaicon
+	icon:
+		Filename: tslaicon.shp
 
 pbox:
 	Inherits: ^StructureOverlays
-	idle: pbox
-	damaged-idle: pbox
+	idle:
+		Filename: pbox.shp
+	damaged-idle:
+		Filename: pbox.shp
 		Start: 1
-	make: pboxmake
+	make:
+		Filename: pboxmake.shp
 		Length: *
-	muzzle: minigun
+	muzzle:
+		Filename: minigun.shp
 		Length: 6
 		Facings: 8
-	bib: mbPBOX
+	bib:
+		Filename: mbPBOX.tem
+		TilesetFilenames:
+			SNOW: mbPBOX.sno
+			INTERIOR: mbPBOX.int
+			DESERT: mbPBOX.des
+			WINTER: mbPBOX.win
 		Length: *
 		Offset: 0,-2
-		UseTilesetExtension: true
-		TilesetOverrides:
-			JUNGLE: TEMPERAT
-			BARREN: TEMPERAT
-	icon: pboxicon
+	icon:
+		Filename: pboxicon.shp
 
 hbox:
 	Inherits: ^StructureOverlays
 	Defaults:
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
+		Filename: hbox.tem
+		TilesetFilenames:
+			SNOW: hbox.sno
+			DESERT: hbox.des
+			JUNGLE: hbox.jun
+			WINTER: hbox.win
+			BARREN: hbox.bar
 	idle:
 	damaged-idle:
 		Start: 2
-	make: hboxmake
+	make:
+		Filename: hboxmake.tem
+		TilesetFilenames:
+			SNOW: hboxmake.sno
+			DESERT: hboxmake.des
+			JUNGLE: hboxmake.jun
+			WINTER: hboxmake.win
+			BARREN: hboxmake.bar
 		Length: *
-	muzzle: minigun
+	muzzle:
+		Filename: minigun.shp
+		TilesetFilenames:
 		Length: 6
 		Facings: 8
-		UseTilesetExtension: false
-	emp-overlay: emp_fx01
-		UseTilesetExtension: false
-	chrono-overlay: chronofade
-		UseTilesetExtension: false
-	mind-overlay: mindanim
+	emp-overlay:
+		Filename: emp_fx01.shp
+		TilesetFilenames:
+	chrono-overlay:
+		Filename: chronofade.shp
+		TilesetFilenames:
+	mind-overlay:
+		Filename: mindanim.shp
+		TilesetFilenames:
 		Length: *
 		Tick: 200
 		BlendMode: Alpha
 		Offset: 0, 0
-		UseTilesetExtension: false
-	icon: hboxicon
-		UseTilesetExtension: false
+	icon:
+		Filename: hboxicon.shp
+		TilesetFilenames:
 
 gap:
 	Inherits: ^StructureOverlays
-	idle: gap
+	idle:
+		Filename: gap.shp
 		Length: 32
 		Offset: 0,-14
-	damaged-idle: gap
+	damaged-idle:
+		Filename: gap.shp
 		Start: 32
 		Length: 32
 		Offset: 0,-14
-	make: gapmake
+	make:
+		Filename: gapmake.shp
 		Length: *
 		Offset: 0,-14
-	bib: mbGAP
+	bib:
+		Filename: mbGAP.tem
+		TilesetFilenames:
+			SNOW: mbGAP.sno
+			INTERIOR: mbGAP.int
+			DESERT: mbGAP.des
+			WINTER: mbGAP.win
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			JUNGLE: TEMPERAT
-			BARREN: TEMPERAT
-	muzzle: gapmuzzle
+	muzzle:
+		Filename: gapmuzzle.shp
 		Frames: 7,8,9,10,11,12,13,14,15,16,17,18
 		BlendMode: Subtractive
 		Tick: 60
 		Length: *
 		ZOffset: 2048
-	icon: gapicon
+	icon:
+		Filename: gapicon.shp
 
 iron:
 	Inherits: ^StructureOverlays
-	idle: iron
+	idle:
+		Filename: iron.shp
 		Offset: 0,-12
-	active: iron
+	active:
+		Filename: iron.shp
 		Length: 11
 		Offset: 0,-12
 		Tick: 140
-	damaged-idle: iron
+	damaged-idle:
+		Filename: iron.shp
 		Start: 11
 		Offset: 0,-12
-	damaged-active: iron
+	damaged-active:
+		Filename: iron.shp
 		Start: 11
 		Length: 11
 		Offset: 0,-12
-	make: ironmake
+	make:
+		Filename: ironmake.shp
 		Length: *
 		Offset: 0,-12
-	bib: mbIRON
+	bib:
+		Filename: mbIRON.tem
+		TilesetFilenames:
+			SNOW: mbIRON.sno
+			INTERIOR: mbIRON.int
+			DESERT: mbIRON.des
+			WINTER: mbIRON.win
 		Length: *
 		Offset: 0,2
-		UseTilesetExtension: true
-		TilesetOverrides:
-			JUNGLE: TEMPERAT
-			BARREN: TEMPERAT
-	icon: ironicon
+	icon:
+		Filename: ironicon.shp
 
 pdox:
 	Inherits: ^StructureOverlays
-	idle: pdox
-	damaged-idle: pdox
+	idle:
+		Filename: pdox.shp
+	damaged-idle:
+		Filename: pdox.shp
 		Start: 29
-	active: pdox
+	active:
+		Filename: pdox.shp
 		Length: 29
 		Tick: 140
-	damaged-active: pdox
+	damaged-active:
+		Filename: pdox.shp
 		Start: 29
 		Length: 29
-	make: pdoxmake
+	make:
+		Filename: pdoxmake.shp
 		Length: *
-	bib: mbPDOX
+	bib:
+		Filename: mbPDOX.tem
+		TilesetFilenames:
+			SNOW: mbPDOX.sno
+			INTERIOR: mbPDOX.int
+			DESERT: mbPDOX.des
+			WINTER: mbPDOX.win
 		Length: *
 		Offset: 0,-4
-		UseTilesetExtension: true
-		TilesetOverrides:
-			JUNGLE: TEMPERAT
-			BARREN: TEMPERAT
-	icon: pdoxicon
-	fake-icon: pdoficon
+	icon:
+		Filename: pdoxicon.shp
+	fake-icon:
+		Filename: pdoficon.shp
 
 mslo:
 	Inherits: ^StructureOverlays
 	Defaults:
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-			WINTER: TEMPERAT
-			DUNE: DESERT
+		Filename: mslo.tem
+		TilesetFilenames:
+			SNOW: mslo.sno
+			DESERT: mslo.des
+			JUNGLE: mslo.jun
+			BARREN: mslo.bar
 	idle:
 	damaged-idle:
 		Start: 8
-	make: mslomake
+	make:
+		Filename: mslomake.tem
+		TilesetFilenames:
+			SNOW: mslomake.sno
+			DESERT: mslomake.des
+			JUNGLE: mslomake.jun
+			BARREN: mslomake.bar
 		Length: *
 	active:
 		Start: 1
@@ -874,174 +1227,258 @@ mslo:
 	damaged-active:
 		Start: 9
 		Length: 7
-	emp-overlay: emp_fx01
-		UseTilesetExtension: false
-	chrono-overlay: chronofade
-		UseTilesetExtension: false
-	mind-overlay: mindanim
+	emp-overlay:
+		Filename: emp_fx01.shp
+		TilesetFilenames:
+	chrono-overlay:
+		Filename: chronofade.shp
+		TilesetFilenames:
+	mind-overlay:
+		Filename: mindanim.shp
+		TilesetFilenames:
 		Length: *
 		Tick: 200
 		BlendMode: Alpha
 		Offset: 0, 0
-		UseTilesetExtension: false
-	icon: msloicon2
-		UseTilesetExtension: false
-	fake-icon: mslficon
-		UseTilesetExtension: false
+	icon:
+		Filename: msloicon2.shp
+		TilesetFilenames:
+	fake-icon:
+		Filename: mslficon.shp
+		TilesetFilenames:
 
 miss:
 	Inherits: ^StructureOverlays
-	idle: miss
-	damaged-idle: miss
+	idle:
+		Filename: miss.shp
+	damaged-idle:
+		Filename: miss.shp
 		Start: 1
-	dead: miss
+	dead:
+		Filename: miss.shp
 		Start: 2
 		Tick: 800
-	make: missmake
+	make:
+		Filename: missmake.shp
 		Length: *
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: missicon
+	icon:
+		Filename: missicon.shp
 
 upgc:
 	Inherits: ^StructureOverlays
-	idle: upgc
+	idle:
+		Filename: upgc.shp
 		Length: 10
 		Tick: 120
-	active: upgc
+	active:
+		Filename: upgc.shp
 		Length: 10
 		Tick: 120
-	damaged-idle: upgc
+	damaged-idle:
+		Filename: upgc.shp
 		Start: 10
 		Length: 10
 		Tick: 120
-	damaged-active: upgc
+	damaged-active:
+		Filename: upgc.shp
 		Start: 10
 		Length: 10
 		Tick: 120
-	dead: upgc
+	dead:
+		Filename: upgc.shp
 		Start: 10
 		Length: 1
 		Tick: 800
-	make: upgcmake
+	make:
+		Filename: upgcmake.shp
 		Length: *
-	flare: smokland
+	flare:
+		Filename: smokland.shp
 		Length: 92
 		Tick: 120
 		ZOffset: 1023
-	turret-rocket: upgc-fstorm
+	turret-rocket:
+		Filename: upgc-fstorm.shp
 		Facings: 32
-		UseTilesetCode: false
-	turret-radar: upgc-aradar
+	turret-radar:
+		Filename: upgc-aradar.shp
 		Start: 0
 		Length: *
-		UseTilesetCode: false
-	turret-shield: upgc-nshieldoff
+	turret-shield:
+		Filename: upgc-nshieldoff.shp
 		Length: *
-		UseTilesetCode: false
-	turret-shield-active: upgc-nshield
+	turret-shield-active:
+		Filename: upgc-nshield.shp
 		Length: *
-		UseTilesetCode: false
-	turret-drop: upgc-dzone
+	turret-drop:
+		Filename: upgc-dzone.shp
 		Length: *
-		UseTilesetCode: false
 		Tick: 300
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: upgcicnh
+	icon:
+		Filename: upgcicnh.shp
 
 upgc.bomb:
-	place: upgc-fstorm
+	place:
+		TilesetFilenames:
+			SNOW: u.snogc-fstorm.shp
+			INTERIOR: u.intgc-fstorm.shp
+			TEMPERAT: u.temgc-fstorm.shp
+			DESERT: u.desgc-fstorm.shp
+			JUNGLE: u.jungc-fstorm.shp
+			WINTER: u.wingc-fstorm.shp
+			BARREN: u.bargc-fstorm.shp
 		Offset: 0, -8
-		UseTilesetCode: true
 		Start: 12
-	icon: upgc-fstormicnh
+	icon:
+		Filename: upgc-fstormicnh.shp
 
 upgc.seek:
-	place: upgc-aradar
+	place:
+		TilesetFilenames:
+			SNOW: u.snogc-aradar.shp
+			INTERIOR: u.intgc-aradar.shp
+			TEMPERAT: u.temgc-aradar.shp
+			DESERT: u.desgc-aradar.shp
+			JUNGLE: u.jungc-aradar.shp
+			WINTER: u.wingc-aradar.shp
+			BARREN: u.bargc-aradar.shp
 		Offset: -10, -22
-		UseTilesetCode: true
 		Start: 28
-	icon: upgc-aradaricnh
+	icon:
+		Filename: upgc-aradaricnh.shp
 
 upgc.hold:
-	place: upgc-nshieldoff
+	place:
+		TilesetFilenames:
+			SNOW: u.snogc-nshieldoff.shp
+			INTERIOR: u.intgc-nshieldoff.shp
+			TEMPERAT: u.temgc-nshieldoff.shp
+			DESERT: u.desgc-nshieldoff.shp
+			JUNGLE: u.jungc-nshieldoff.shp
+			WINTER: u.wingc-nshieldoff.shp
+			BARREN: u.bargc-nshieldoff.shp
 		Offset: -10, -22
-		UseTilesetCode: true
-	icon: upgc-nshieldicnh
+	icon:
+		Filename: upgc-nshieldicnh.shp
 
 upgc.drop:
-	place: upgc-dzone
+	place:
+		TilesetFilenames:
+			SNOW: u.snogc-dzone.shp
+			INTERIOR: u.intgc-dzone.shp
+			TEMPERAT: u.temgc-dzone.shp
+			DESERT: u.desgc-dzone.shp
+			JUNGLE: u.jungc-dzone.shp
+			WINTER: u.wingc-dzone.shp
+			BARREN: u.bargc-dzone.shp
 		Offset: -10, -22
-		UseTilesetCode: true
-	icon: upgc-dzoneicnh
+	icon:
+		Filename: upgc-dzoneicnh.shp
 
 gtek:
 	Inherits: ^StructureOverlays
-	idle: gtek
-	active: gtek
-	damaged-idle: gtek
+	idle:
+		Filename: gtek.shp
+	active:
+		Filename: gtek.shp
+	damaged-idle:
+		Filename: gtek.shp
 		Start: 1
-	damaged-active: gtek
+	damaged-active:
+		Filename: gtek.shp
 		Start: 1
-	dead: gtek
+	dead:
+		Filename: gtek.shp
 		Start: 2
 		Tick: 800
-	make: gtekmake
+	make:
+		Filename: gtekmake.shp
 		Length: *
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: gtekicnh
+	icon:
+		Filename: gtekicnh.shp
 
 miss.destroyed:
-	idle: miss
+	idle:
+		Filename: miss.shp
 		Start: 2
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
 
 brik:
-	idle: brik
+	idle:
+		Filename: brik.shp
 		Length: 16
-	scratched-idle: brik
+	scratched-idle:
+		Filename: brik.shp
 		Start: 16
 		Length: 16
-	damaged-idle: brik
+	damaged-idle:
+		Filename: brik.shp
 		Start: 32
 		Length: 16
-	icon: brikicon
+	icon:
+		Filename: brikicon.shp
 
 vgate:
-	make: vgate
+	make:
+		Filename: vgate.shp
 		Length: 7
-	idle: vgate
+	idle:
+		Filename: vgate.shp
 		Frames: 6, 5, 4, 3, 2, 1, 0
 		Length: 7
 		ZOffset: -1c511
-	damaged-idle: vgate
+	damaged-idle:
+		Filename: vgate.shp
 		Frames: 13, 12, 11, 10, 9, 8, 7
 		Length: 7
 		ZOffset: -1c511
 
 agate:
-	make: agate
+	make:
+		Filename: agate.shp
 		Length: 7
-	idle: agate
+	idle:
+		Filename: agate.shp
 		Frames: 6, 5, 4, 3, 2, 1, 0
 		Length: 7
 		ZOffset: -1c511
-	damaged-idle: agate
+	damaged-idle:
+		Filename: agate.shp
 		Frames: 13, 12, 11, 10, 9, 8, 7
 		Length: 7
 		ZOffset: -1c511
@@ -1050,1209 +1487,1706 @@ sgate:
 	Inherits: agate
 
 sbag:
-	idle: sbag
+	idle:
+		Filename: sbag.shp
 		Length: 16
-	damaged-idle: sbag
+	damaged-idle:
+		Filename: sbag.shp
 		Start: 32
 		Length: 16
-	icon: sbagicon
+	icon:
+		Filename: sbagicon.shp
 
 fenc:
-	idle: fenc
+	idle:
+		Filename: fenc.shp
 		Length: 16
-	damaged-idle: fenc
+	damaged-idle:
+		Filename: fenc.shp
 		Start: 16
 		Length: 16
-	icon: fencicon
+	icon:
+		Filename: fencicon.shp
 
 chain:
-	idle: chain
+	idle:
+		Filename: chain.shp
 		Length: 16
-	damaged-idle: chain
+	damaged-idle:
+		Filename: chain.shp
 		Start: 16
 		Length: 16
-	icon: chainicon
+	icon:
+		Filename: chainicon.shp
 
 cycl:
-	idle: cycl
+	idle:
+		Filename: cycl.shp
 		Length: 16
-	damaged-idle: cycl
+	damaged-idle:
+		Filename: cycl.shp
 		Start: 16
 		Length: 16
 
 pyle:
 	Inherits: ^StructureOverlays
-	idle: pyle
+	idle:
+		Filename: pyle.shp
 		Length: 10
 		Tick: 100
-	damaged-idle: pyle
+	damaged-idle:
+		Filename: pyle.shp
 		Start: 10
 		Length: 10
 		Tick: 100
-	dead: pyle
+	dead:
+		Filename: pyle.shp
 		Start: 20
 		Tick: 800
-	make: pylemake
+	make:
+		Filename: pylemake.shp
 		Length: *
 		Tick: 80
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: pyleicnh
+	icon:
+		Filename: pyleicnh.shp
 
 hand:
 	Inherits: ^StructureOverlays
-	idle: hand
-	active: hand
-	damaged-idle: hand
+	idle:
+		Filename: hand.shp
+	active:
+		Filename: hand.shp
+	damaged-idle:
+		Filename: hand.shp
 		Start: 1
-	damaged-active: hand
+	damaged-active:
+		Filename: hand.shp
 		Start: 1
-	dead: hand
+	dead:
+		Filename: hand.shp
 		Start: 2
 		Tick: 800
-	make: handmake
+	make:
+		Filename: handmake.shp
 		Length: *
 		Tick: 80
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: handicnh
+	icon:
+		Filename: handicnh.shp
 
 afac:
 	Inherits: ^StructureOverlays
-	idle: afac
+	idle:
+		Filename: afac.shp
 		Length: 4
 		Tick: 160
-	build: afac
+	build:
+		Filename: afac.shp
 		Start: 4
 		Length: 20
 		Tick: 100
-	pdox: afac
+	pdox:
+		Filename: afac.shp
 		Length: 4
 		Tick: 160
-	damaged-idle: afac
+	damaged-idle:
+		Filename: afac.shp
 		Start: 24
 		Length: 4
 		Tick: 160
-	damaged-build: afac
+	damaged-build:
+		Filename: afac.shp
 		Start: 28
 		Length: 20
 		Tick: 100
-	damaged-pdox: afac
+	damaged-pdox:
+		Filename: afac.shp
 		Start: 24
 		Length: 4
 		Tick: 160
-	dead: afac
+	dead:
+		Filename: afac.shp
 		Start: 48
 		Tick: 800
-	make: afacmake
+	make:
+		Filename: afacmake.shp
 		Length: *
 		Tick: 40
-	makenod: nodfactmake
+	makenod:
+		Filename: nodfactmake.shp
 		Length: *
 		Tick: 40
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: afacicon
+	icon:
+		Filename: afacicon.shp
 
 nuke:
 	Inherits: ^StructureOverlays
-	idle: nuke
+	idle:
+		Filename: nuke.shp
 		Length: 4
 		Tick: 1000
-	damaged-idle: nuke
+	damaged-idle:
+		Filename: nuke.shp
 		Start: 4
 		Length: 4
 		Tick: 1000
-	dead: nuke
+	dead:
+		Filename: nuke.shp
 		Start: 8
 		Tick: 1000
-	make: nukemake
+	make:
+		Filename: nukemake.shp
 		Length: *
 		Tick: 80
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: nukeicnh
+	icon:
+		Filename: nukeicnh.shp
 
 nuk2:
 	Inherits: ^StructureOverlays
-	idle: nuk2
+	idle:
+		Filename: nuk2.shp
 		Length: 4
 		Tick: 1000
-	damaged-idle: nuk2
+	damaged-idle:
+		Filename: nuk2.shp
 		Start: 4
 		Length: 4
 		Tick: 1000
-	dead: nuk2
+	dead:
+		Filename: nuk2.shp
 		Start: 8
 		Tick: 800
-	make: nuk2make
+	make:
+		Filename: nuk2make.shp
 		Length: *
 		Tick: 80
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: nuk2icnh
+	icon:
+		Filename: nuk2icnh.shp
 
 awep:
 	Inherits: ^StructureOverlays
-	idle: awep
-	damaged-idle: awep
+	idle:
+		Filename: awep.shp
+	damaged-idle:
+		Filename: awep.shp
 		Start: 1
-	dead: awep
+	dead:
+		Filename: awep.shp
 		Start: 2
 		Tick: 800
-	make: awepmake
+	make:
+		Filename: awepmake.shp
 		Length: *
 		Tick: 80
-	place: awepmake
+	place:
+		Filename: awepmake.shp
 		Start: 19
-	build-top: awep2
+	build-top:
+		Filename: awep2.shp
 		Length: 10
 		ZOffset: 511
-	damaged-build-top: awep2
+	damaged-build-top:
+		Filename: awep2.shp
 		Start: 10
 		Length: 10
 		ZOffset: 511
-	idle-top: awep2
-	damaged-idle-top: awep2
+	idle-top:
+		Filename: awep2.shp
+	damaged-idle-top:
+		Filename: awep2.shp
 		Start: 4
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	emp-overlay: emp_fx01
+	emp-overlay:
+		Filename: emp_fx01.shp
 		ZOffset: 2048
-	chrono-overlay: chronofade
+	chrono-overlay:
+		Filename: chronofade.shp
 		ZOffset: 2048
-	icon: awepicnh
+	icon:
+		Filename: awepicnh.shp
 
 astrip:
 	Inherits: ^StructureOverlays
-	idle: astrip
+	idle:
+		Filename: astrip.shp
 		Tick: 120
 		ZOffset: -1023
-	active: astrip
+	active:
+		Filename: astrip.shp
 		Length: 16
 		Tick: 120
 		ZOffset: -1023
-	damaged-idle: astrip
+	damaged-idle:
+		Filename: astrip.shp
 		Start: 16
 		Tick: 120
 		ZOffset: -1023
-	damaged-active: astrip
+	damaged-active:
+		Filename: astrip.shp
 		Start: 16
 		Length: 16
 		Tick: 120
 		ZOffset: -1023
-	idle-dish: astrip_d
+	idle-dish:
+		Filename: astrip_d.shp
 		Length: 16
 		Tick: 160
-	damaged-idle-dish: astrip_d
+	damaged-idle-dish:
+		Filename: astrip_d.shp
 		Start: 16
 		Length: 16
 		Tick: 160
-	dead: astrip
+	dead:
+		Filename: astrip.shp
 		Start: 32
 		ZOffset: -1023
 		Tick: 800
-	make: astripmake
+	make:
+		Filename: astripmake.shp
 		Length: *
 		Tick: 80
-	bib: bib1
+	bib:
+		Filename: bib1.tem
+		TilesetFilenames:
+			SNOW: bib1.sno
+			DESERT: bib1.des
+			JUNGLE: bib1.jun
+			WINTER: bib1.win
+			BARREN: bib1.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: astripicnh
+	icon:
+		Filename: astripicnh.shp
 
 tmpl:
 	Inherits: ^StructureOverlays
-	idle: tmpl
+	idle:
+		Filename: tmpl.shp
 		ZOffset: 1023
-	damaged-idle: tmpl
+	damaged-idle:
+		Filename: tmpl.shp
 		Start: 33
 		ZOffset: 1023
-	active: tmpl
+	active:
+		Filename: tmpl.shp
 		Length: 33
 		Tick: 25
 		ZOffset: 1023
-	damaged-active: tmpl
+	damaged-active:
+		Filename: tmpl.shp
 		Start: 33
 		Length: 33
 		Tick: 25
 		ZOffset: 1023
-	false-active: tmpl
+	false-active:
+		Filename: tmpl.shp
 		ZOffset: 1023
-	damaged-false-active: tmpl
+	damaged-false-active:
+		Filename: tmpl.shp
 		Start: 33
 		ZOffset: 1023
-	dead: tmpl
+	dead:
+		Filename: tmpl.shp
 		Start: 66
 		Tick: 800
-	make: tmplmake
+	make:
+		Filename: tmplmake.shp
 		Length: *
 		Tick: 60
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: tmplicnh
+	icon:
+		Filename: tmplicnh.shp
 
 nsam:
 	Inherits: ^StructureOverlays
-	closed-idle: nsam
+	closed-idle:
+		Filename: nsam.shp
 		Start: 0
-	opening: nsam
+	opening:
+		Filename: nsam.shp
 		Start: 1
 		Length: 16
 		Tick: 30
-	idle: nsam
+	idle:
+		Filename: nsam.shp
 		Start: 17
 		Facings: 32
 		UseClassicFacings: True
-	closing: nsam
+	closing:
+		Filename: nsam.shp
 		Start: 50
 		Length: 14
 		Tick: 30
-	damaged-closed-idle: nsam
+	damaged-closed-idle:
+		Filename: nsam.shp
 		Start: 64
-	damaged-opening: nsam
+	damaged-opening:
+		Filename: nsam.shp
 		Start: 65
 		Length: 16
 		Tick: 30
-	damaged-idle: nsam
+	damaged-idle:
+		Filename: nsam.shp
 		Start: 81
 		Facings: 32
 		UseClassicFacings: True
-	damaged-closing: nsam
+	damaged-closing:
+		Filename: nsam.shp
 		Start: 114
 		Length: 14
 		Tick: 30
-	dead: nsam
+	dead:
+		Filename: nsam.shp
 		Start: 128
 		Tick: 800
-	place: nsam
+	place:
+		Filename: nsam.shp
 		Start: 0
-	make: nsammake
+	make:
+		Filename: nsammake.shp
 		Length: 20
 		Tick: 30
-	muzzle: samfire
+	muzzle:
+		Filename: samfire.shp
 		Length: 18
 		Facings: 8
-	icon: samicon
+	icon:
+		Filename: samicon.shp
 
 hq:
 	Inherits: ^StructureOverlays
-	idle: hq
+	idle:
+		Filename: hq.shp
 		Length: 16
 		Tick: 100
-	damaged-idle: hq
+	damaged-idle:
+		Filename: hq.shp
 		Start: 16
 		Length: 16
 		Tick: 100
-	dead: hq
+	dead:
+		Filename: hq.shp
 		Start: 32
 		Tick: 800
-	make: hqmake
+	make:
+		Filename: hqmake.shp
 		Length: *
 		Tick: 80
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: hqicnh
+	icon:
+		Filename: hqicnh.shp
 
 hqr:
 	Inherits: ^StructureOverlays
-	idle: hqr
+	idle:
+		Filename: hqr.shp
 		Length: 16
 		Tick: 100
-	damaged-idle: hqr
+	damaged-idle:
+		Filename: hqr.shp
 		Start: 16
 		Length: 16
 		Tick: 100
-	dead: hqr
+	dead:
+		Filename: hqr.shp
 		Start: 32
 		Tick: 800
-	make: hqrmake
+	make:
+		Filename: hqrmake.shp
 		Length: *
 		Tick: 80
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: hqicnh
+	icon:
+		Filename: hqicnh.shp
 
 eye:
 	Inherits: ^StructureOverlays
-	idle: eye
+	idle:
+		Filename: eye.shp
 		Length: 16
 		Tick: 100
-	active: eye
+	active:
+		Filename: eye.shp
 		Length: 16
 		Tick: 100
-	damaged-idle: eye
+	damaged-idle:
+		Filename: eye.shp
 		Start: 16
 		Length: 16
 		Tick: 100
-	dead: eye
+	dead:
+		Filename: eye.shp
 		Start: 32
 		Tick: 800
-	make: eyemake
+	make:
+		Filename: eyemake.shp
 		Length: *
 		Tick: 80
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: eyeicnh
+	icon:
+		Filename: eyeicnh.shp
 
 obli:
 	Inherits: ^StructureOverlays
 	Defaults:
 		Offset: 0,-12
-	idle: obli
-	damaged-idle: obli
+	idle:
+		Filename: obli.shp
+	damaged-idle:
+		Filename: obli.shp
 		Start: 4
-	active: obli
+	active:
+		Filename: obli.shp
 		Length: 4
 		Tick: 680
-	damaged-active: obli
+	damaged-active:
+		Filename: obli.shp
 		Start: 4
 		Length: 4
 		Tick: 680
-	dead: obli
+	dead:
+		Filename: obli.shp
 		Start: 8
 		Tick: 800
-	make: oblimake
+	make:
+		Filename: oblimake.shp
 		Length: 13
 		Tick: 80
-	muzzle: lasermuzzle
+	muzzle:
+		Filename: lasermuzzle.shp
 		Length: 4
 		ZOffset: 2049
 		Offset: -2,0
-	muzzle2: lasermuzzle
+	muzzle2:
+		Filename: lasermuzzle.shp
 		Frames: 0,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,3
 		Length: *
 		ZOffset: 2049
 		Offset: -2,0
-	icon: obliicnh
+	icon:
+		Filename: obliicnh.shp
 		Offset: 0,0
-	bib: mbFTUR
+	bib:
+		Filename: mbFTUR.tem
+		TilesetFilenames:
+			SNOW: mbFTUR.sno
+			DESERT: mbFTUR.des
+			JUNGLE: mbFTUR.jun
+			WINTER: mbFTUR.win
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-			BARREN: TEMPERAT
 		Offset: -1,-3
 
 gtwr:
 	Inherits: ^StructureOverlays
-	idle: gtwr
-	make: gtwrmake
+	idle:
+		Filename: gtwr.shp
+	make:
+		Filename: gtwrmake.shp
 		Length: *
-	muzzle: minigun
+	muzzle:
+		Filename: minigun.shp
 		Length: 6
 		Facings: 8
-	icon: gtwricnh
-	damaged-idle: gtwr
+	icon:
+		Filename: gtwricnh.shp
+	damaged-idle:
+		Filename: gtwr.shp
 		Start: 1
-	dead: gtwrmake
+	dead:
+		Filename: gtwrmake.shp
 		Start: 2
 		Tick: 800
-	bib: mbFTUR
+	bib:
+		Filename: mbFTUR.tem
+		TilesetFilenames:
+			SNOW: mbFTUR.sno
+			DESERT: mbFTUR.des
+			JUNGLE: mbFTUR.jun
+			WINTER: mbFTUR.win
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-			BARREN: TEMPERAT
 
 atwr:
 	Inherits: ^StructureOverlays
 	Defaults:
 		Offset: 0,-13
-	idle: atwr
-	damaged-idle: atwr
+	idle:
+		Filename: atwr.shp
+	damaged-idle:
+		Filename: atwr.shp
 		Start: 1
-	dead: atwr
+	dead:
+		Filename: atwr.shp
 		Start: 2
 		Tick: 800
-	make: atwrmake
+	make:
+		Filename: atwrmake.shp
 		Length: *
 		Tick: 80
-	muzzle: gunfire2
+	muzzle:
+		Filename: gunfire2.shp
 		Length: *
-	icon: atwricnh
+	icon:
+		Filename: atwricnh.shp
 		Offset: 0,0
-	bib: mbFTUR
+	bib:
+		Filename: mbFTUR.tem
+		TilesetFilenames:
+			SNOW: mbFTUR.sno
+			DESERT: mbFTUR.des
+			JUNGLE: mbFTUR.jun
+			WINTER: mbFTUR.win
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-			BARREN: TEMPERAT
 		Offset: -3,0
 
 rep:
 	Inherits: ^StructureOverlays
-	idle: rep
+	idle:
+		Filename: rep.shp
 		Offset: 0,1
 		ZOffset: -1c511
-	damaged-idle: rep
+	damaged-idle:
+		Filename: rep.shp
 		Start: 7
 		Offset: 0,1
 		ZOffset: -1c511
-	active: rep
+	active:
+		Filename: rep.shp
 		Start: 1
 		Length: 6
 		Offset: 0,1
 		Tick: 100
 		ZOffset: -1c511
-	damaged-active: rep
+	damaged-active:
+		Filename: rep.shp
 		Start: 8
 		Length: 6
 		Offset: 0,1
 		Tick: 100
 		ZOffset: -1c511
-	make: repmake
+	make:
+		Filename: repmake.shp
 		Length: *
 		Offset: 0,1
-	dead: rep
+	dead:
+		Filename: rep.shp
 		Start: 14
 		Offset: 0,1
 		ZOffset: -1c511
 		Tick: 800
-	bib: mbFIX
+	bib:
+		Filename: mbFIX.tem
+		TilesetFilenames:
+			SNOW: mbFIX.sno
+			INTERIOR: mbFIX.int
+			DESERT: mbFIX.des
+			JUNGLE: mbFIX.jun
+			WINTER: mbFIX.win
 		Length: *
 		ZOffset: -1c511
 		Offset: 0,-4
-		UseTilesetExtension: true
-		TilesetOverrides:
-			BARREN: TEMPERAT
-	icon: repicnh
+	icon:
+		Filename: repicnh.shp
 
 silo2:
 	Inherits: ^StructureOverlays
-	idle: silo2
+	idle:
+		Filename: silo2.shp
 		Offset: 0,-1
-	damaged-idle: silo2
+	damaged-idle:
+		Filename: silo2.shp
 		Start: 5
 		Offset: 0,-1
-	dead: silo2
+	dead:
+		Filename: silo2.shp
 		Start: 10
 		Offset: 0,-1
 		Tick: 800
-	stages: silo2
+	stages:
+		Filename: silo2.shp
 		Length: 5
 		Offset: 0,-1
-	damaged-stages: silo2
+	damaged-stages:
+		Filename: silo2.shp
 		Start: 5
 		Length: 5
 		Offset: 0,-1
-	make: silo2make
+	make:
+		Filename: silo2make.shp
 		Length: *
 		Tick: 80
 		Offset: 0,-1
-	bib: mbSILO
+	bib:
+		Filename: mbSILO.tem
+		TilesetFilenames:
+			SNOW: mbSILO.sno
+			INTERIOR: mbSILO.int
+			DESERT: mbSILO.des
+			JUNGLE: mbSILO.jun
+			WINTER: mbSILO.win
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			BARREN: TEMPERAT
-	icon: silo2icnh
+	icon:
+		Filename: silo2icnh.shp
 
 gun2:
 	Inherits: ^StructureOverlays
-	idle: gun2make # Empty first frame. We need WithSpriteBody for the make anim, and WSB needs at least a placeholder default sequence to work
-	turret: gun2
+	idle: # Empty first frame. We need WithSpriteBody for the make anim, and WSB needs at least a placeholder default sequence to work
+		Filename: gun2make.shp
+	turret:
+		Filename: gun2.shp
 		Facings: 32
 		UseClassicFacings: True
-	recoil: gun2
+	recoil:
+		Filename: gun2.shp
 		Start: 32
 		Facings: 32
 		UseClassicFacings: True
-	damaged-turret: gun2
+	damaged-turret:
+		Filename: gun2.shp
 		Start: 64
 		Facings: 32
 		UseClassicFacings: True
-	damaged-recoil: gun2
+	damaged-recoil:
+		Filename: gun2.shp
 		Start: 96
 		Facings: 32
 		UseClassicFacings: True
-	make: gun2make
+	make:
+		Filename: gun2make.shp
 		Length: *
 		Tick: 80
-	muzzle: gunfire2
+	muzzle:
+		Filename: gunfire2.shp
 		Length: *
-	bib: mbGUN
-		UseTilesetExtension: true
-		TilesetOverrides:
-			WINTER: TEMPERAT
-			SNOW: TEMPERAT
-			BARREN: TEMPERAT
+	bib:
+		Filename: mbGUN.tem
+		TilesetFilenames:
+			INTERIOR: mbGUN.int
+			DESERT: mbGUN.des
+			JUNGLE: mbGUN.jun
 		Length: *
 		Offset: -1,-1
-	icon: gun2icnh
+	icon:
+		Filename: gun2icnh.shp
 
 ltur:
 	Inherits: ^StructureOverlays
-	idle: gunmake # Empty first frame (agunmake has no empty frames). We need WithSpriteBody for the make anim, and WSB needs at least a placeholder default sequence to work
-	make: lturmake
+	idle: # Empty first frame (agunmake has no empty frames). We need WithSpriteBody for the make anim, and WSB needs at least a placeholder default sequence to work
+		Filename: gunmake.shp
+	make:
+		Filename: lturmake.shp
 		Length: *
 		Tick: 80
 	turret:
+		Filename: ltur.shp
 		Facings: 32
 		UseClassicFacings: True
-	damaged-turret: ltur
+	damaged-turret:
+		Filename: ltur.shp
 		Start: 32
 		Facings: 32
 		UseClassicFacings: True
-	muzzle: gunfire2
+	muzzle:
+		Filename: gunfire2.shp
 		Length: *
-	bib: mbGUN
-		UseTilesetExtension: true
-		TilesetOverrides:
-			WINTER: TEMPERAT
-			SNOW: TEMPERAT
-			BARREN: TEMPERAT
+	bib:
+		Filename: mbGUN.tem
+		TilesetFilenames:
+			INTERIOR: mbGUN.int
+			DESERT: mbGUN.des
+			JUNGLE: mbGUN.jun
 		Length: *
 		Offset: -1,-1
-	icon: lturicnh
+	icon:
+		Filename: lturicnh.shp
 
 hpad2:
 	Inherits: ^StructureOverlays
-	idle: hpad2
+	idle:
+		Filename: hpad2.shp
 		ZOffset: -1023
-	damaged-idle: hpad2
+	damaged-idle:
+		Filename: hpad2.shp
 		Start: 7
 		ZOffset: -1023
-	active: hpad2
+	active:
+		Filename: hpad2.shp
 		Start: 1
 		Length: 6
 		Tick: 100
 		ZOffset: -1023
-	damaged-active: hpad2
+	damaged-active:
+		Filename: hpad2.shp
 		Start: 8
 		Length: 6
 		Tick: 100
 		ZOffset: -1023
-	dead: hpad2
+	dead:
+		Filename: hpad2.shp
 		Start: 14
 		ZOffset: -1023
 		Tick: 800
-	make: hpad2make
+	make:
+		Filename: hpad2make.shp
 		Length: *
 		Tick: 80
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: hpad2icnh
+	icon:
+		Filename: hpad2icnh.shp
 
 proc2:
 	Inherits: ^StructureOverlays
-	idle: proc2
+	idle:
+		Filename: proc2.shp
 		Length: 6
 		Tick: 120
 		Offset: 2,4
-	damaged-idle: proc2
+	damaged-idle:
+		Filename: proc2.shp
 		Start: 30
 		Length: 6
 		Tick: 120
 		Offset: 2,4
-	dead: proc2
+	dead:
+		Filename: proc2.shp
 		Start: 60
 		Tick: 800
 		Offset: 2,4
-	make: proc2make
+	make:
+		Filename: proc2make.shp
 		Length: *
 		Tick: 80
 		Offset: 2,4
-	resources: proc2twr
+	resources:
+		Filename: proc2twr.shp
 		Length: 6
 		Offset: -30,-17
-	damaged-resources: proc2twr
+	damaged-resources:
+		Filename: proc2twr.shp
 		Start: 6
 		Length: 6
 		Offset: -30,-17
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: proc2icnh
+	icon:
+		Filename: proc2icnh.shp
 
 afldgdi:
 	Inherits: ^StructureOverlays
-	idle: afldgdiidle
+	idle:
+		Filename: afldgdiidle.shp
 		Length: 16
 		Tick: 160
 		ZOffset: -1023
 		Offset: 0,-4
-	damaged-idle: afldgdiidle
+	damaged-idle:
+		Filename: afldgdiidle.shp
 		Start: 16
 		Length: 8
 		Tick: 160
 		ZOffset: -1023
 		Offset: 0,-4
-	active: afldgdi
+	active:
+		Filename: afldgdi.shp
 		Length: 16
 		Tick: 160
 		ZOffset: -1023
 		Offset: 0,-4
-	damaged-active: afldgdi
+	damaged-active:
+		Filename: afldgdi.shp
 		Start: 16
 		Length: 8
 		Tick: 160
 		ZOffset: -1023
 		Offset: 0,-4
-	make: afldgdimake
+	make:
+		Filename: afldgdimake.shp
 		Length: *
 		Offset: 0,-4
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
 		ZOffset: -1024
-	icon: afldicon
+	icon:
+		Filename: afldicon.shp
 
 nodhq:
 	Inherits: ^StructureOverlays
-	idle: nodhq
+	idle:
+		Filename: nodhq.shp
 		Length: 16
 		Tick: 100
-	damaged-idle: nodhq
+	damaged-idle:
+		Filename: nodhq.shp
 		Start: 16
 		Length: 16
 		Tick: 100
-	dead: nodhq
+	dead:
+		Filename: nodhq.shp
 		Start: 32
 		Tick: 800
-	make: nodhqmake
+	make:
+		Filename: nodhqmake.shp
 		Length: *
 		Tick: 80
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: hqicnh
+	icon:
+		Filename: hqicnh.shp
 
 nodnuke:
 	Inherits: ^StructureOverlays
-	idle: nodnuke
+	idle:
+		Filename: nodnuke.shp
 		Length: 4
 		Tick: 1000
-	damaged-idle: nodnuke
+	damaged-idle:
+		Filename: nodnuke.shp
 		Start: 4
 		Length: 4
 		Tick: 1000
-	dead: nodnuke
+	dead:
+		Filename: nodnuke.shp
 		Start: 8
 		Tick: 800
-	make: nodnukemake
+	make:
+		Filename: nodnukemake.shp
 		Length: *
 		Tick: 80
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: nukeicnh
+	icon:
+		Filename: nukeicnh.shp
 
 nodnuk2:
 	Inherits: ^StructureOverlays
-	idle: nodnuk2
+	idle:
+		Filename: nodnuk2.shp
 		Length: 4
 		Tick: 1000
-	damaged-idle: nodnuk2
+	damaged-idle:
+		Filename: nodnuk2.shp
 		Start: 4
 		Length: 4
 		Tick: 1000
-	dead: nodnuk2
+	dead:
+		Filename: nodnuk2.shp
 		Start: 8
 		Tick: 800
-	make: nodnuk2make
+	make:
+		Filename: nodnuk2make.shp
 		Length: *
 		Tick: 80
-	bib: bib3
+	bib:
+		Filename: bib3.tem
+		TilesetFilenames:
+			SNOW: bib3.sno
+			DESERT: bib3.des
+			JUNGLE: bib3.jun
+			WINTER: bib3.win
+			BARREN: bib3.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: nuk2icnh
+	icon:
+		Filename: nuk2icnh.shp
 
 nodfact:
 	Inherits: ^StructureOverlays
-	idle: nodfact
+	idle:
+		Filename: nodfact.shp
 		Length: 4
 		Tick: 160
-	build: nodfact
+	build:
+		Filename: nodfact.shp
 		Start: 4
 		Length: 20
 		Tick: 100
-	pdox: nodfact
+	pdox:
+		Filename: nodfact.shp
 		Length: 4
 		Tick: 160
-	damaged-idle: nodfact
+	damaged-idle:
+		Filename: nodfact.shp
 		Start: 24
 		Length: 4
 		Tick: 160
-	damaged-build: nodfact
+	damaged-build:
+		Filename: nodfact.shp
 		Start: 28
 		Length: 20
 		Tick: 100
-	damaged-pdox: nodfact
+	damaged-pdox:
+		Filename: nodfact.shp
 		Start: 24
 		Length: 4
 		Tick: 160
-	dead: nodfact
+	dead:
+		Filename: nodfact.shp
 		Start: 48
 		Tick: 800
-	make: nodfactmake
+	make:
+		Filename: nodfactmake.shp
 		Length: *
 		Tick: 40
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: afacicon
+	icon:
+		Filename: afacicon.shp
 
 nodproc:
 	Inherits: ^StructureOverlays
-	idle: nodproc
+	idle:
+		Filename: nodproc.shp
 		Length: 6
 		Tick: 120
 		Offset: 2,4
-	damaged-idle: nodproc
+	damaged-idle:
+		Filename: nodproc.shp
 		Start: 30
 		Length: 6
 		Tick: 120
 		Offset: 2,4
-	dead: nodproc
+	dead:
+		Filename: nodproc.shp
 		Start: 60
 		Tick: 800
 		Offset: 2,4
-	make: nodprocmake
+	make:
+		Filename: nodprocmake.shp
 		Length: *
 		Tick: 80
 		Offset: 2,4
-	resources: proc2twr
+	resources:
+		Filename: proc2twr.shp
 		Length: 6
 		Offset: -30,-17
-	damaged-resources: proc2twr
+	damaged-resources:
+		Filename: proc2twr.shp
 		Start: 6
 		Length: 6
 		Offset: -30,-17
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: proc2icnh
+	icon:
+		Filename: proc2icnh.shp
 
 nodsilo:
 	Inherits: ^StructureOverlays
-	idle: nodsilo
+	idle:
+		Filename: nodsilo.shp
 		Offset: 0,-1
-	damaged-idle: nodsilo
+	damaged-idle:
+		Filename: nodsilo.shp
 		Start: 5
 		Offset: 0,-1
-	dead: nodsilo
+	dead:
+		Filename: nodsilo.shp
 		Start: 10
 		Offset: 0,-1
 		Tick: 800
-	stages: nodsilo
+	stages:
+		Filename: nodsilo.shp
 		Length: 5
 		Offset: 0,-1
-	damaged-stages: nodsilo
+	damaged-stages:
+		Filename: nodsilo.shp
 		Start: 5
 		Length: 5
 		Offset: 0,-1
-	make: nodsilo2make
+	make:
+		Filename: nodsilo2make.shp
 		Length: *
 		Tick: 80
 		Offset: 0,-1
-	bib: mbSILO
+	bib:
+		Filename: mbSILO.tem
+		TilesetFilenames:
+			SNOW: mbSILO.sno
+			INTERIOR: mbSILO.int
+			DESERT: mbSILO.des
+			JUNGLE: mbSILO.jun
+			WINTER: mbSILO.win
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			BARREN: TEMPERAT
-	icon: silo2icnh
+	icon:
+		Filename: silo2icnh.shp
 
 pris:
 	Inherits: ^StructureOverlays
-	idle: pris
+	idle:
+		Filename: pris.shp
 		Length: 32
 		Tick: 150
 		Offset: 0,-13
-	damaged-idle: pris
+	damaged-idle:
+		Filename: pris.shp
 		Start: 32
 		Length: 32
 		Tick: 150
 		Offset: 0,-13
-	active: prisfire
+	active:
+		Filename: prisfire.shp
 		Length: 5
 		Tick: 150
 		Offset: 0,-13
-	damaged-active: prisfire
+	damaged-active:
+		Filename: prisfire.shp
 		Start: 5
 		Length: 5
 		Tick: 150
 		Offset: 0,-13
-	make: prismake
+	make:
+		Filename: prismake.shp
 		Length: 9
 		Tick: 60
 		Offset: 0,-13
-	bib: mbFTUR
+	bib:
+		Filename: mbFTUR.tem
+		TilesetFilenames:
+			SNOW: mbFTUR.sno
+			INTERIOR: mbFTUR.int
+			DESERT: mbFTUR.des
+			JUNGLE: mbFTUR.jun
+			WINTER: mbFTUR.win
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			BARREN: TEMPERAT
-	icon: prisicon
+	icon:
+		Filename: prisicon.shp
 
 spennod:
 	Inherits: ^StructureOverlays
-	idle: spennod
-	damaged-idle: spennod
+	idle:
+		Filename: spennod.shp
+	damaged-idle:
+		Filename: spennod.shp
 		Start: 1
-	make: spennodmake
+	make:
+		Filename: spennodmake.shp
 		Length: *
-	icon: spennodicnh
+	icon:
+		Filename: spennodicnh.shp
 
 htur:
 	Inherits: ^StructureOverlays
-	idle: empty
-	damaged-idle: empty
-	turret: htur
+	idle:
+		Filename: empty.shp
+	damaged-idle:
+		Filename: empty.shp
+	turret:
+		Filename: htur.shp
 		Facings: 32
 		UseClassicFacings: True
 		Offset: 0,0
-	damaged-turret: htur
+	damaged-turret:
+		Filename: htur.shp
 		Start: 32
 		Facings: 32
 		UseClassicFacings: True
 		Offset: 0,0
-	make: hturmake
+	make:
+		Filename: hturmake.shp
 		Length: *
 		Offset: 0,0
 		Tick: 75
-	muzzle: smokeygun
+	muzzle:
+		Filename: smokeygun.shp
 		Length: 12
 		Tick: 30
 		Offset: 0,0
-	bib: mbSAM
+	bib:
+		Filename: mbSAM.tem
+		TilesetFilenames:
+			SNOW: mbSAM.sno
+			INTERIOR: mbSAM.int
+			DESERT: mbSAM.des
+			JUNGLE: mbSAM.jun
+			WINTER: mbSAM.win
 		Length: *
 		Offset: 0,-5
-		UseTilesetExtension: true
-		TilesetOverrides:
-			BARREN: TEMPERAT
-	icon: hturicon
+	icon:
+		Filename: hturicon.shp
 
 ttur:
 	Inherits: ^StructureOverlays
-	idle: ttur
+	idle:
+		Filename: ttur.shp
 		Offset: 0,-2
-	damaged-idle: ttur
+	damaged-idle:
+		Filename: ttur.shp
 		Start: 1
 		Offset: 0,-2
-	make: tturmake
+	make:
+		Filename: tturmake.shp
 		Length: *
 		Offset: 0,-2
-	bib: mbFTUR
+	bib:
+		Filename: mbFTUR.tem
+		TilesetFilenames:
+			SNOW: mbFTUR.sno
+			INTERIOR: mbFTUR.int
+			DESERT: mbFTUR.des
+			JUNGLE: mbFTUR.jun
+			WINTER: mbFTUR.win
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			BARREN: TEMPERAT
-	icon: tturicon
+	icon:
+		Filename: tturicon.shp
 
 sgen:
 	Inherits: ^StructureOverlays
-	idle: sgen
+	idle:
+		Filename: sgen.shp
 		Offset: 0,-10
-	active: sgen
+	active:
+		Filename: sgen.shp
 		Length: 4
 		Offset: 0,-10
-	damaged-idle: sgen
+	damaged-idle:
+		Filename: sgen.shp
 		Start: 4
 		Offset: 0,-10
-	damaged-active: sgen
+	damaged-active:
+		Filename: sgen.shp
 		Start: 4
 		Length: 4
 		Offset: 0,-10
-	make: sgenmake
+	make:
+		Filename: sgenmake.shp
 		Length: *
 		Offset: 0,-10
-	dead: sgen
+	dead:
+		Filename: sgen.shp
 		Start: 4
 		Tick: 800
 		Offset: 0,-10
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: sgenicnh
+	icon:
+		Filename: sgenicnh.shp
 
 cram:
 	Inherits: ^StructureOverlays
-	idle: gunmake # Empty first frame (agunmake has no empty frames). We need WithSpriteBody for the make anim, and WSB needs at least a placeholder default sequence to work
-	make: agunmake
+	idle: # Empty first frame (agunmake has no empty frames). We need WithSpriteBody for the make anim, and WSB needs at least a placeholder default sequence to work
+		Filename: gunmake.shp
+	make:
+		Filename: crammake.shp
 		Length: *
 		Offset: 0,-13
 	turret:
+		Filename: cram.shp
 		Facings: 32
 		UseClassicFacings: True
 		Offset: 0,-13
-	make: crammake
+	make:
+		Filename: crammake.shp
 		Length: *
 		Offset: 0,-13
-	damaged-turret: cram
+	damaged-turret:
+		Filename: cram.shp
 		Start: 32
 		Facings: 32
 		UseClassicFacings: True
 		Offset: 0,-13
-	muzzle: gunfire2
+	muzzle:
+		Filename: gunfire2.shp
 		Start: 1
 		Length: 4
-	bib: mbAGUN
+	bib:
+		Filename: mbAGUN.tem
+		TilesetFilenames:
+			SNOW: mbAGUN.sno
+			INTERIOR: mbAGUN.int
+			DESERT: mbAGUN.des
+			WINTER: mbAGUN.win
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			JUNGLE: TEMPERAT
-			BARREN: TEMPERAT
-	icon: cramicnh
+	icon:
+		Filename: cramicnh.shp
 
 gsyrd:
 	Inherits: ^StructureOverlays
-	idle: gsyrd
-	damaged-idle: gsyrd
+	idle:
+		Filename: gsyrd.shp
+	damaged-idle:
+		Filename: gsyrd.shp
 		Start: 1
-	make: gsyrdmake
+	make:
+		Filename: gsyrdmake.shp
 		Length: *
-	icon: syrdicon
-	fake-icon: syrficon
+	icon:
+		Filename: syrdicon.shp
+	fake-icon:
+		Filename: syrficon.shp
 
 indp:
 	Inherits: ^StructureOverlays
-	idle: indp
+	idle:
+		Filename: indp.shp
 		Length: 4
 		Tick: 200
 		Offset: 0, -8
-	damaged-idle: indp
+	damaged-idle:
+		Filename: indp.shp
 		Start: 4
 		Length: 4
 		Tick: 200
 		Offset: 0, -8
-	make: indpmake
+	make:
+		Filename: indpmake.shp
 		Length: *
 		Offset: 0, -8
-	dead: indp
+	dead:
+		Filename: indp.shp
 		Start: 4
 		Tick: 800
 		Offset: 0, -8
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	icon: indpicon
+	icon:
+		Filename: indpicon.shp
 
 lasp:
 	Inherits: ^StructureOverlays
 	Defaults:
 		Offset: 0, 0, 0
-		UseTilesetCode: true
-	idle: lasp
+	idle:
+		TilesetFilenames:
+			SNOW: l.snosp.shp
+			INTERIOR: l.intsp.shp
+			TEMPERAT: l.temsp.shp
+			DESERT: l.dessp.shp
+			JUNGLE: l.junsp.shp
+			WINTER: l.winsp.shp
+			BARREN: l.barsp.shp
 		Start: 0
 		Length: 5
 		Tick: 250
-	idle-offline: lasp
+	idle-offline:
+		TilesetFilenames:
+			SNOW: l.snosp.shp
+			INTERIOR: l.intsp.shp
+			TEMPERAT: l.temsp.shp
+			DESERT: l.dessp.shp
+			JUNGLE: l.junsp.shp
+			WINTER: l.winsp.shp
+			BARREN: l.barsp.shp
 		Start: 0
 		Length: 1
-	damaged-idle: lasp
+	damaged-idle:
+		TilesetFilenames:
+			SNOW: l.snosp.shp
+			INTERIOR: l.intsp.shp
+			TEMPERAT: l.temsp.shp
+			DESERT: l.dessp.shp
+			JUNGLE: l.junsp.shp
+			WINTER: l.winsp.shp
+			BARREN: l.barsp.shp
 		Start: 5
 		Length: 5
 		Tick: 250
-	damaged-idle-offline: lasp
+	damaged-idle-offline:
+		TilesetFilenames:
+			SNOW: l.snosp.shp
+			INTERIOR: l.intsp.shp
+			TEMPERAT: l.temsp.shp
+			DESERT: l.dessp.shp
+			JUNGLE: l.junsp.shp
+			WINTER: l.winsp.shp
+			BARREN: l.barsp.shp
 		Start: 5
 		Length: 1
-	dead: lasp
+	dead:
+		TilesetFilenames:
+			SNOW: l.snosp.shp
+			INTERIOR: l.intsp.shp
+			TEMPERAT: l.temsp.shp
+			DESERT: l.dessp.shp
+			JUNGLE: l.junsp.shp
+			WINTER: l.winsp.shp
+			BARREN: l.barsp.shp
 		Start: 10
 		Tick: 400
-	make: laspmake
+	make:
+		TilesetFilenames:
+			SNOW: l.snospmake.shp
+			INTERIOR: l.intspmake.shp
+			TEMPERAT: l.temspmake.shp
+			DESERT: l.desspmake.shp
+			JUNGLE: l.junspmake.shp
+			WINTER: l.winspmake.shp
+			BARREN: l.barspmake.shp
 		Length: *
-	icon: lasficnh
+	icon:
+		Filename: lasficnh.shp
 		Offset: 0, 0
-		UseTilesetCode: false
 
 lasf:
 	Inherits: ^StructureOverlays
-	Defaults:
-		UseTilesetCode: true
-	idle: lasf
+	idle:
+		TilesetFilenames:
+			SNOW: l.snosf.shp
+			INTERIOR: l.intsf.shp
+			TEMPERAT: l.temsf.shp
+			DESERT: l.dessf.shp
+			JUNGLE: l.junsf.shp
+			WINTER: l.winsf.shp
+			BARREN: l.barsf.shp
 		Length: 1
-	disabled-x: lasf
+	disabled-x:
+		TilesetFilenames:
+			SNOW: l.snosf.shp
+			INTERIOR: l.intsf.shp
+			TEMPERAT: l.temsf.shp
+			DESERT: l.dessf.shp
+			JUNGLE: l.junsf.shp
+			WINTER: l.winsf.shp
+			BARREN: l.barsf.shp
 		Start: 4
 		Length: 1
 		ZRamp: 1
-	disabled-y: lasf
+	disabled-y:
+		TilesetFilenames:
+			SNOW: l.snosf.shp
+			INTERIOR: l.intsf.shp
+			TEMPERAT: l.temsf.shp
+			DESERT: l.dessf.shp
+			JUNGLE: l.junsf.shp
+			WINTER: l.winsf.shp
+			BARREN: l.barsf.shp
 		Start: 9
 		Length: 1
 		ZRamp: 1
-	enabled-x: lasf
+	enabled-x:
+		TilesetFilenames:
+			SNOW: l.snosf.shp
+			INTERIOR: l.intsf.shp
+			TEMPERAT: l.temsf.shp
+			DESERT: l.dessf.shp
+			JUNGLE: l.junsf.shp
+			WINTER: l.winsf.shp
+			BARREN: l.barsf.shp
 		Frames: 3,3,1,1,3,3,1,3,3,1,0,0,2,2,0,0
 		Length: 9
-	enabled-y: lasf
+	enabled-y:
+		TilesetFilenames:
+			SNOW: l.snosf.shp
+			INTERIOR: l.intsf.shp
+			TEMPERAT: l.temsf.shp
+			DESERT: l.dessf.shp
+			JUNGLE: l.junsf.shp
+			WINTER: l.winsf.shp
+			BARREN: l.barsf.shp
 		Frames: 7,5,7,5,6,8,6,8,7,5,7,5,6,8,6,8
 		Length: 9
 
 patr:
 	Inherits: ^StructureOverlays
-	idle: patr
+	idle:
+		Filename: patr.shp
 		Facings: 32
 		UseClassicFacings: True
 		Offset: 0,0
-	empty: patr-empty
+	empty:
+		Filename: patr-empty.shp
 		Facings: 32
 		UseClassicFacings: True
 		Offset: 0,0
-	damaged-idle: patr
+	damaged-idle:
+		Filename: patr.shp
 		Start: 32
 		Facings: 32
 		UseClassicFacings: True
 		Offset: 0,0
-	damaged-empty: patr-empty
+	damaged-empty:
+		Filename: patr-empty.shp
 		Start: 32
 		Facings: 32
 		UseClassicFacings: True
 		Offset: 0,0
-	make: patrmake
+	make:
+		Filename: patrmake.shp
 		Length: *
 		Offset: 0,0
 		Tick: 75
-	bib: mbSAM
+	bib:
+		Filename: mbSAM.tem
+		TilesetFilenames:
+			SNOW: mbSAM.sno
+			INTERIOR: mbSAM.int
+			DESERT: mbSAM.des
+			JUNGLE: mbSAM.jun
+			WINTER: mbSAM.win
 		Length: *
 		Offset: 0,5
-		UseTilesetExtension: true
-		TilesetOverrides:
-			BARREN: TEMPERAT
-	icon: patricnh
+	icon:
+		Filename: patricnh.shp
 
 weat:
 	Inherits: ^StructureOverlays
-	idle: weat
-	damaged-idle: weat
+	idle:
+		Filename: weat.shp
+	damaged-idle:
+		Filename: weat.shp
 		Start: 1
-	active: weat
+	active:
+		Filename: weat.shp
 		Start: 2
 		Length: 1
 		Tick: 10000
-	damaged-active: weat
+	damaged-active:
+		Filename: weat.shp
 		Start: 3
 		Length: 1
 		Tick: 10000
-	make: weatmake
+	make:
+		Filename: weatmake.shp
 		Length: *
-	active-overlay: DATA.R8
-		AddExtension: False
+	active-overlay:
+		Filename: DATA.R8
 		Start: 3947
 		Length: 17
 		Tick: 100
 		BlendMode: Additive
 		ZOffset: 511
-	bib: mbIRON
+	bib:
+		Filename: mbIRON.tem
+		TilesetFilenames:
+			SNOW: mbIRON.sno
+			INTERIOR: mbIRON.int
+			DESERT: mbIRON.des
+			WINTER: mbIRON.win
 		Length: *
 		Offset: 0,2
-		UseTilesetExtension: true
-		TilesetOverrides:
-			JUNGLE: TEMPERAT
-			BARREN: TEMPERAT
-	icon: weaticon
+	icon:
+		Filename: weaticon.shp
 
 nmslo:
 	Inherits: ^StructureOverlays
-	idle: nmslo
+	idle:
+		Filename: nmslo.shp
 		Offset: 0, -11
-	damaged-idle: nmslod
+	damaged-idle:
+		Filename: nmslod.shp
 		Offset: 0, -11
-	make: nmslomk
+	make:
+		Filename: nmslomk.shp
 		Length: *
 		Offset: 0, -11
-	active: nmslo
+	active:
+		Filename: nmslo.shp
 		Length: 17
 		Tick: 80
 		Offset: 0, -11
-	damaged-active: nmslod
+	damaged-active:
+		Filename: nmslod.shp
 		Length: 17
 		Tick: 80
 		Offset: 0, -11
-	icon: nmsloicnh
+	icon:
+		Filename: nmsloicnh.shp
 
 stwr:
 	Inherits: ^StructureOverlays
 	Defaults:
 		Offset: 0,-13
-	idle: empty
-	damaged-idle: empty
-	turret: stwr
+	idle:
+		Filename: empty.shp
+	damaged-idle:
+		Filename: empty.shp
+	turret:
+		Filename: stwr.shp
 		Facings: 32
 		UseClassicFacings: True
-	make: stwrmake
+	make:
+		Filename: stwrmake.shp
 		Length: *
-	damaged-turret: stwr
+	damaged-turret:
+		Filename: stwr.shp
 		Start: 32
 		Facings: 32
 		UseClassicFacings: True
-	dead: stwr
+	dead:
+		Filename: stwr.shp
 		Start: 64
-	bib: mbFTUR
+	bib:
+		Filename: mbFTUR.tem
+		TilesetFilenames:
+			SNOW: mbFTUR.sno
+			DESERT: mbFTUR.des
+			JUNGLE: mbFTUR.jun
+			WINTER: mbFTUR.win
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-			BARREN: TEMPERAT
 		Offset: 0, 2
-	icon: stwricon
+	icon:
+		Filename: stwricon.shp
 		Offset: 0,0
 
 tmpp:
 	Inherits: ^StructureOverlays
-	idle: tmpp
+	idle:
+		Filename: tmpp.shp
 		Length: 16
 		Tick: 200
-	damaged-idle: tmpp
+	damaged-idle:
+		Filename: tmpp.shp
 		Start: 16
 		Length: 16
 		Tick: 200
-	dead: tmpp
+	dead:
+		Filename: tmpp.shp
 		Start: 24
 		Tick: 800
-	bib: bib2
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
 		Length: *
-		UseTilesetExtension: true
-		TilesetOverrides:
-			INTERIOR: TEMPERAT
-	make: tmppmake
+	make:
+		Filename: tmppmake.shp
 		Length: *
-	icon: tmppicnh
+	icon:
+		Filename: tmppicnh.shp
