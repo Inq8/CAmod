@@ -80,7 +80,7 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				var thumpDamageWeaponToLower = ThumpDamageWeapon.ToLowerInvariant();
 				if (!rules.Weapons.TryGetValue(thumpDamageWeaponToLower, out var thumpDamageWeapon))
-					throw new YamlException("Weapons Ruleset does not contain an entry '{0}'".F(thumpDamageWeaponToLower));
+					throw new YamlException($"Weapons Ruleset does not contain an entry '{thumpDamageWeaponToLower}'");
 
 				ThumpDamageWeaponInfo = thumpDamageWeapon;
 			}
@@ -89,7 +89,7 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				var detonationWeaponToLower = DetonationWeapon.ToLowerInvariant();
 				if (!rules.Weapons.TryGetValue(detonationWeaponToLower, out var detonationWeapon))
-					throw new YamlException("Weapons Ruleset does not contain an entry '{0}'".F(detonationWeaponToLower));
+					throw new YamlException($"Weapons Ruleset does not contain an entry '{detonationWeapon}'");
 
 				DetonationWeaponInfo = detonationWeapon;
 			}

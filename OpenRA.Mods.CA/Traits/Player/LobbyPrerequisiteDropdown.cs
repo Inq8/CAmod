@@ -55,7 +55,7 @@ namespace OpenRA.Mods.CA.Traits
 			var options = Values.ToDictionary(x => x.Value, x => x.Key);
 			var defaultValue = DefaultValue == null ? options.First().Value : DefaultValue;
 
-			yield return new LobbyOption(ID, Label, Description, Visible, DisplayOrder,
+			yield return new LobbyOption(map, ID, Label, Description, Visible, DisplayOrder,
 				options, defaultValue, Locked);
 		}
 

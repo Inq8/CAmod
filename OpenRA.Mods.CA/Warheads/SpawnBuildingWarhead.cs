@@ -60,7 +60,7 @@ namespace OpenRA.Mods.CA.Warheads
 				var buildingInfo = actorInfo.TraitInfoOrDefault<BuildingInfo>();
 
 				if (buildingInfo == null)
-					throw new YamlException("SpawnBuildingWarhead cannot be used to spawn nonbuilding actor '{0}'".F(b));
+					throw new YamlException($"SpawnBuildingWarhead cannot be used to spawn nonbuilding actor '{b}'");
 			}
 		}
 
