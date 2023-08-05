@@ -548,12 +548,12 @@ World:
 	CreateMapPlayers:
 	StartingUnits@mcvonly:
 		Class: none
-		ClassName: MCV Only
+		ClassName: options-starting-units.mcv-only
 		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri
 		BaseActor: mcv
 	StartingUnits@lightallies:
 		Class: light
-		ClassName: Light Support
+		ClassName: options-starting-units.light-support
 		Factions: allies, england, france, germany, usa
 		BaseActor: mcv
 		SupportActors: e1,e1,e1,e3,e3
@@ -561,7 +561,7 @@ World:
 		OuterSupportRadius: 5
 	StartingUnits@lightsoviet:
 		Class: light
-		ClassName: Light Support
+		ClassName: options-starting-units.light-support
 		Factions: soviet, russia, ukraine, iraq, yuri
 		BaseActor: mcv
 		SupportActors: e1,e1,e1,e3,e3
@@ -569,7 +569,7 @@ World:
 		OuterSupportRadius: 5
 	StartingUnits@heavyallies:
 		Class: heavy
-		ClassName: Heavy Support
+		ClassName: options-starting-units.heavy-support
 		Factions: allies, england, france, germany, usa
 		BaseActor: mcv
 		SupportActors: e1,e1,e1,e3,e3,e3,2tnk,2tnk
@@ -577,7 +577,7 @@ World:
 		OuterSupportRadius: 5
 	StartingUnits@heavysoviet:
 		Class: heavy
-		ClassName: Heavy Support
+		ClassName: options-starting-units.heavy-support
 		Factions: soviet, russia, ukraine, iraq, yuri
 		BaseActor: mcv
 		SupportActors: e1,e1,e1,e3,e3,3tnk,3tnk
@@ -585,12 +585,12 @@ World:
 		OuterSupportRadius: 5
 	StartingUnits@mcvonly2:
 		Class: none
-		ClassName: MCV Only
+		ClassName: options-starting-units.mcv-only
 		Factions: gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow
 		BaseActor: amcv
 	StartingUnits@defaultgdia:
 		Class: light
-		ClassName: Light Support
+		ClassName: options-starting-units.light-support
 		Factions: gdi, talon, zocom, eagle, arc
 		BaseActor: amcv
 		SupportActors: n1,n1,n1,n3,n3
@@ -598,7 +598,7 @@ World:
 		OuterSupportRadius: 5
 	StartingUnits@defaultnoda:
 		Class: light
-		ClassName: Light Support
+		ClassName: options-starting-units.light-support
 		Factions: nod, blackh, marked, legion, shadow
 		BaseActor: amcv
 		SupportActors: n1,n1,n1,n3,n3
@@ -606,7 +606,7 @@ World:
 		OuterSupportRadius: 5
 	StartingUnits@heavynoda:
 		Class: heavy
-		ClassName: Heavy Support
+		ClassName: options-starting-units.heavy-support
 		Factions: nod, blackh, marked, legion, shadow
 		BaseActor: amcv
 		SupportActors: n1,n1,n1,n3,n3,mtnk,mtnk
@@ -614,7 +614,7 @@ World:
 		OuterSupportRadius: 5
 	StartingUnits@heavygdia:
 		Class: heavy
-		ClassName: Heavy Support
+		ClassName: options-starting-units.heavy-support
 		Factions: gdi, talon, zocom, eagle, arc
 		BaseActor: amcv
 		SupportActors: n1,n1,n1,n3,n3,mtnk,mtnk
@@ -622,12 +622,12 @@ World:
 		OuterSupportRadius: 5
 	StartingUnits@mcvonlyscrin:
 		Class: none
-		ClassName: MCV Only
+		ClassName: options-starting-units.mcv-only
 		Factions: scrin, reaper, traveler, harbinger, collector
 		BaseActor: smcv
 	StartingUnits@lightscrin:
 		Class: light
-		ClassName: Light Support
+		ClassName: options-starting-units.light-support
 		Factions: scrin, reaper, traveler, harbinger, collector
 		BaseActor: smcv
 		SupportActors: s1,s1,s1,s3,s3
@@ -635,7 +635,7 @@ World:
 		OuterSupportRadius: 5
 	StartingUnits@heavyscrin:
 		Class: heavy
-		ClassName: Heavy Support
+		ClassName: options-starting-units.heavy-support
 		Factions: scrin, reaper, traveler, harbinger, collector
 		BaseActor: smcv
 		SupportActors: s1,s1,s1,s3,s3,seek,gunw
@@ -695,11 +695,10 @@ World:
 			RandomNod: afac.colorpicker
 			RandomGdi: afac.colorpicker
 			RandomScrin: sfac.colorpicker
-		PresetValues: 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.84, 0.75, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.45, 0.45, 0.45, 0.45, 0.51, 0.47, 0.45, 0.45
 		HsvSaturationRange: 0.22, 0.97
-		HsvValueRange: 0.4, 0.95
-		PresetColors: F20C0C, F26A07, F2DB07, 18F221, 0790F2, 242DF2, 7818F2, F218EA, F29191, F2D7BD, F2CF74, 9DF2BF, 1DF2E5, 99ACF2, C39DF2, F299D9, F23A3A, F29F63, EAF249, 18F222, 07F2F2, 527FF2, B88AF2, EF5AF2
-		SimilarityThreshold: 0x20
+		HsvValueRange: 0.41, 0.95
+		PresetColors: F20C0C, F26A07, F2DB07, 18F221, 0790F2, 242DF2, 7818F2, F218EA, D68181, BFA995, F2CF74, 9DF2BF, 1DF2E5, 99ACF2, C39DF2, F299D9, 731C1C, 734B2F, 6F7322, 0B7310, 048282, 293F78, 574173, 712A73
+		SimilarityThreshold: 2
 	OrderEffects:
 		TerrainFlashImage: moveflsh
 		TerrainFlashSequence: idle
