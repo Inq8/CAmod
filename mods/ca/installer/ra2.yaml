@@ -1,6 +1,11 @@
 ra2: Red Alert 2 (Allied or Soviet Disc, English)
+	Type: Disc
 	IDFiles:
 		README.txt: e125e2742509d73b20dc4aa65b22497c805cd6f5
 	Install:
-		copy: .
-			^SupportDir|Content/ca/ra2/theme.mix: theme.mix
+		# RA2 music (optional):
+		ContentPackage:
+			Name: ra2music
+			Actions:
+				Copy: .
+					^SupportDir|Content/ca/ra2/theme.mix: theme.mix
