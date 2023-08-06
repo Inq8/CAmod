@@ -20,7 +20,7 @@ using OpenRA.Traits;
  * I tried implementing distance vector routing algorithm
  * but now I think it is an overkill,
  * because they take memory for each actor and they need to eachange information.
- * Also, C&C games, people just sell towers when they are done with it so
+ * Also people just sell towers when they are done with it so
  * that makes these overheads less worthy.
  */
 

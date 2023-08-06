@@ -1,14 +1,17 @@
 cnc95: C&C Gold (GDI or Nod Disc, English)
+	Type: Disc
 	IDFiles:
 		CONQUER.MIX: 833e02a09aae694659eb312d3838367f681d1b30
 	Install:
-		copy: .
-			^SupportDir|Content/ca/cnc/desert.mix: DESERT.MIX
-			^SupportDir|Content/ca/cnc/scores.mix: SCORES.mix
-cnc95-linux: C&C Gold (GDI or Nod Disc, English)
-	IDFiles:
-		conquer.mix: 833e02a09aae694659eb312d3838367f681d1b30
-	Install:
-		copy: .
-			^SupportDir|Content/ca/cnc/desert.mix: desert.mix
-			^SupportDir|Content/ca/cnc/scores.mix: scores.mix
+		# C&C Desert Tileset:
+		ContentPackage:
+			Name: cncdesert
+			Actions:
+				Copy: .
+					^SupportDir|Content/ca/cnc/desert.mix: DESERT.MIX
+		# Base game music (optional):
+		ContentPackage:
+			Name: music
+			Actions:
+				Copy: .
+					^SupportDir|Content/ca/cnc/scores.mix: SCORES.MIX

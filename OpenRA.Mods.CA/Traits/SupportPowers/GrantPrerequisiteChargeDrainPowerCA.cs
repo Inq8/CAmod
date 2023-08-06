@@ -46,6 +46,7 @@ namespace OpenRA.Mods.CA.Traits
 	public class GrantPrerequisiteChargeDrainPowerCA : SupportPower, ITechTreePrerequisite, INotifyOwnerChanged
 	{
 		readonly GrantPrerequisiteChargeDrainPowerCAInfo info;
+		readonly string[] prerequisites;
 		TechTree techTree;
 		bool active;
 
@@ -53,6 +54,7 @@ namespace OpenRA.Mods.CA.Traits
 			: base(self, info)
 		{
 			this.info = info;
+			prerequisites = new[] { info.Prerequisite };
 		}
 
 		protected override void Created(Actor self)
@@ -85,16 +87,7 @@ namespace OpenRA.Mods.CA.Traits
 			techTree.ActorChanged(self);
 		}
 
-		IEnumerable<string> ITechTreePrerequisite.ProvidesPrerequisites
-		{
-			get
-			{
-				if (!active)
-					yield break;
-
-				yield return info.Prerequisite;
-			}
-		}
+		IEnumerable<string> ITechTreePrerequisite.ProvidesPrerequisites => active ? prerequisites : Enumerable.Empty<string>();
 
 		public class DischargeableSupportPowerInstance : SupportPowerInstance
 		{
@@ -110,15 +103,11 @@ namespace OpenRA.Mods.CA.Traits
 			int additionalDischargeSubTicks = 0;
 
 			int dischargeModifier;
-			string activeText;
-			string availableText;
 
 			public DischargeableSupportPowerInstance(string key, GrantPrerequisiteChargeDrainPowerCAInfo info, SupportPowerManager manager)
 				: base(key, info, manager)
 			{
 				dischargeModifier = info.DischargeModifier;
-				activeText = info.ActiveText;
-				availableText = info.AvailableText;
 			}
 
 			void Deactivate()
@@ -201,18 +190,21 @@ namespace OpenRA.Mods.CA.Traits
 
 			public override string IconOverlayTextOverride()
 			{
-				if (!Active)
-					return null;
-
-				return active ? activeText : available ? availableText : null;
+				return GetTextOverride();
 			}
 
 			public override string TooltipTimeTextOverride()
 			{
-				if (!Active)
+				return GetTextOverride();
+			}
+
+			string GetTextOverride()
+			{
+				// NB: Info might return null if there are no instances
+				if (!Active || Info is not GrantPrerequisiteChargeDrainPowerCAInfo info)
 					return null;
 
-				return active ? activeText : available ? availableText : null;
+				return active ? info.ActiveText : available ? info.AvailableText : null;
 			}
 		}
 	}

@@ -280,6 +280,8 @@ VEHICLES.SCRIN:
 	-SpeedMultiplier@HAZMATSOVIET:
 	Targetable@HAZMAT:
 		-RequiresCondition:
+	WithDecoration@BINO:
+		-BlinkPatterns:
 	TakeCover:
 		ProneSequencePrefix:
 		ProneOffset: 0,0,0
@@ -534,7 +536,7 @@ S6:
 		HP: 2500
 	Passenger:
 		CustomPipType: yellow
-	EngineerRepair:
+	InstantlyRepairs:
 	RepairsBridges:
 		EnterBehaviour: Exit
 	CaptureManager:
@@ -2320,7 +2322,7 @@ ENRV:
 		EndColorUsePlayerColor: true
 		ZOffset: -512
 		TrailLength: 18
-		TrailWidth: 48
+		StartWidth: 48
 	Contrail@2:
 		Offset: -750,200,300
 		StartColorUsePlayerColor: true
@@ -2328,7 +2330,7 @@ ENRV:
 		EndColorUsePlayerColor: true
 		ZOffset: -512
 		TrailLength: 18
-		TrailWidth: 48
+		StartWidth: 48
 	SpawnActorOnDeath:
 		Actor: ENRV.Husk
 		RequiresCondition: !empdisable && !being-warped
@@ -4841,7 +4843,7 @@ SCOL.Temp:
 	-SpawnActorOnDeath:
 	-WithBuildingRepairDecoration:
 	-RepairableBuilding:
-	-EngineerRepairable:
+	-InstantlyRepairable:
 	-GrantConditionOnPowerState@LOWPOWER:
 	-WithColoredOverlay@IDISABLE:
 	-GrantCondition@IDISABLE:

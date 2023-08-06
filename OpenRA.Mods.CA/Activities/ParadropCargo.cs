@@ -22,7 +22,7 @@ namespace OpenRA.Mods.CA.Activities
 		readonly Aircraft aircraft;
 		readonly AttackAircraft attackAircraft;
 		readonly Cargo cargo;
-		readonly INotifyUnload[] notifiers;
+		readonly INotifyUnloadCargo[] notifiers;
 		readonly bool assignTargetOnFirstRun;
 		readonly bool returnToBase;
 		readonly int dropInterval;
@@ -42,7 +42,7 @@ namespace OpenRA.Mods.CA.Activities
 		public ParadropCargo(Actor self, in Target destination, int dropInterval, WDist dropRange, bool returnToBase)
 		{
 			cargo = self.Trait<Cargo>();
-			notifiers = self.TraitsImplementing<INotifyUnload>().ToArray();
+			notifiers = self.TraitsImplementing<INotifyUnloadCargo>().ToArray();
 			this.destination = destination;
 			this.dropInterval = dropInterval;
 			this.dropRange = dropRange;

@@ -328,11 +328,7 @@ namespace OpenRA.Mods.CA.Traits
 			var mindControllable = currentTarget.Actor.TraitOrDefault<MindControllable>();
 
 			if (mindControllable == null)
-			{
-				throw new InvalidOperationException(
-					"`{0}` tried to mindcontrol `{1}`, but the latter does not have the necessary trait!"
-					.F(self.Info.Name, currentTarget.Actor.Info.Name));
-			}
+				throw new InvalidOperationException($"`{self.Info.Name}` tried to mindcontrol `{currentTarget.Actor.Info.Name}`, but the latter does not have the necessary trait!");
 
 			if (mindControllable.IsTraitDisabled || mindControllable.IsTraitPaused)
 				return;

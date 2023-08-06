@@ -48,7 +48,7 @@ namespace OpenRA.Mods.CA.Traits
 		public void RulesetLoaded(Ruleset rules, ActorInfo ai)
 		{
 			if (!rules.Actors["player"].TraitInfos<TeleportNetworkManagerInfo>().Any(q => Type == q.Type))
-				throw new YamlException("Can't find a TeleportNetworkManager with Type '{0}'".F(Type));
+				throw new YamlException($"Can't find a TeleportNetworkManager with Type '{Type}'");
 		}
 
 		public override object Create(ActorInitializer init) { return new TeleportNetwork(this); }

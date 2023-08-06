@@ -32,8 +32,8 @@ Packages:
 	~temperat.mix
 	~snow.mix
 	~interior.mix
-	~./ra/scores.mix
 	~./cnc/scores.mix
+	~./ra/scores.mix
 	~./ts/scores.mix
 	~./ts/scores01.mix
 	~./ra2/theme.mix
@@ -184,6 +184,8 @@ Music:
 
 Translations:
 	common|languages/en.ftl
+	common|languages/rules/en.ftl
+	ca|languages/rules/en.ftl
 
 Hotkeys:
 	common|hotkeys/game.yaml
@@ -265,6 +267,14 @@ SoundFormats: Aud, Wav, Mp3
 SpriteFormats: ShpD2, R8, ShpTD, TmpRA, TmpTD, ShpTS
 
 SpriteSequenceFormat: ClassicTilesetSpecificSpriteSequence
+	TilesetCodes:
+		TEMPERAT: .tem
+		SNOW: .sno
+		INTERIOR: .int
+		DESERT: .des
+		JUNGLE: .jun
+		WINTER: .win
+		BARREN: .bar
 	TilesetExtensions:
 		TEMPERAT: .tem
 		SNOW: .sno
@@ -289,27 +299,27 @@ GameSpeeds:
 	DefaultSpeed: default
 	Speeds:
 		slowest:
-			Name: slowest
+			Name: options-game-speed.slowest
 			Timestep: 80
 			OrderLatency: 2
 		slower:
-			Name: slower
+			Name: options-game-speed.slower
 			Timestep: 50
 			OrderLatency: 3
 		default:
-			Name: normal
+			Name: options-game-speed.normal
 			Timestep: 40
 			OrderLatency: 3
 		fast:
-			Name: fast
+			Name: options-game-speed.fast
 			Timestep: 35
 			OrderLatency: 4
 		faster:
-			Name: faster
+			Name: options-game-speed.faster
 			Timestep: 30
 			OrderLatency: 4
 		fastest:
-			Name: fastest
+			Name: options-game-speed.fastest
 			Timestep: 20
 			OrderLatency: 6
 
@@ -322,50 +332,62 @@ ModContent:
 	QuickDownload: quickinstall
 	HeaderMessage: Game content may be extracted from the original game discs or an\nexisting digital install. OpenRA can also download the base game\nfiles from an online mirror of the 2008 freeware release of RA.
 	Packages:
-		base: Base Game Files
+		ContentPackage@base:
+			Title: Base Game Files
+			Identifier: base
 			TestFiles: ^SupportDir|Content/ca/allies.mix, ^SupportDir|Content/ca/conquer.mix, ^SupportDir|Content/ca/interior.mix, ^SupportDir|Content/ca/hires.mix, ^SupportDir|Content/ca/lores.mix, ^SupportDir|Content/ca/local.mix, ^SupportDir|Content/ca/speech.mix, ^SupportDir|Content/ca/russian.mix, ^SupportDir|Content/ca/snow.mix, ^SupportDir|Content/ca/sounds.mix, ^SupportDir|Content/ca/temperat.mix
-			Sources: allied, allied-linux, soviet, soviet-linux, tfd, origin-ra
+			Sources: allied, soviet, tfd, ra-origin, cncr-steam, cncr-origin
 			Required: true
 			Download: basefiles
-		aftermathbase: Aftermath Expansion Files
+		ContentPackage@aftermathbase:
+			Title: Aftermath Expansion Files
+			Identifier: aftermathbase
 			TestFiles: ^SupportDir|Content/ca/expand/expand2.mix
-			Sources: aftermath, aftermath-linux, tfd, origin-ra
+			Sources: aftermath, tfd, ra-origin, cncr-steam, cncr-origin
 			Required: true
 			Download: aftermath
-		cncdesert: C&C Desert Tileset
+		ContentPackage@cncdesert:
+			Title: C&C Desert Tileset
+			Identifier: cncdesert
 			TestFiles: ^SupportDir|Content/ca/cnc/desert.mix
-			Sources: tfd, origin-cnc, cnc95, cnc95-linux
+			Sources: cnc95, tfd, cnc-origin, cncr-steam, cncr-origin
 			Required: true
 			Download: cncdesert
-		music: Red Alert Music
-			TestFiles: ^SupportDir|Content/ca/ra/scores.mix
-			Sources: allied, allied-linux, soviet, soviet-linux, tfd, origin-ra
-			Download: music
-		cncmusic: C&C Music
+		ContentPackage@cncmusic:
+			Title: C&C Music
+			Identifier: cncmusic
 			TestFiles: ^SupportDir|Content/ca/cnc/scores.mix
 			Download: cncmusic
-			Sources: origin-cnc, tfd, cnc95
-		music-counterstrike: Counterstrike Music
-			TestFiles: ^SupportDir|Content/ca/expand/araziod.aud, ^SupportDir|Content/ca/expand/backstab.aud, ^SupportDir|Content/ca/expand/chaos2.aud, ^SupportDir|Content/ca/expand/shut_it.aud, ^SupportDir|Content/ca/expand/2nd_hand.aud, ^SupportDir|Content/ca/expand/twinmix1.aud, ^SupportDir|Content/ca/expand/under3.aud, ^SupportDir|Content/ca/expand/vr2.aud,
-			Sources: counterstrike, counterstrike-linux, origin-ra
-		music-aftermath: Aftermath Music
-			TestFiles: ^SupportDir|Content/ca/expand/await.aud, ^SupportDir|Content/ca/expand/bog.aud, ^SupportDir|Content/ca/expand/float_v2.aud, ^SupportDir|Content/ca/expand/gloom_ra.aud, ^SupportDir|Content/ca/expand/grndwire.aud, ^SupportDir|Content/ca/expand/rpt.aud, ^SupportDir|Content/ca/expand/search.aud, ^SupportDir|Content/ca/expand/traction.aud, ^SupportDir|Content/ca/expand/wastelnd.aud
-			Sources: aftermath, aftermath-linux, origin-ra
-		tsmusic: TibSun Music
+			Sources: cnc95, tfd, cnc-origin, cncr-steam, cncr-origin
+		ContentPackage@ramusic:
+			Title: Red Alert Music
+			Identifier: ramusic
+			TestFiles: ^SupportDir|Content/ca/ra/scores.mix
+			Sources: allied, soviet, tfd, ra-origin, cncr-steam, cncr-origin
+			Download: ramusic
+		ContentPackage@tsmusic:
+			Title: Tiberian Sun Music
+			Identifier: tsmusic
 			TestFiles: ^SupportDir|Content/ca/ts/scores.mix
 			Download: tsmusic
-			Sources: origin-ts, tfd
-		fsmusic: Firestorm Music
-			TestFiles: ^SupportDir|Content/ca/firestorm/linkup.aud, ^SupportDir|Content/ca/firestorm/hacker.aud
+		ContentPackage@fsmusic:
+			Title: Firestorm Music
+			Identifier: fsmusic
+			TestFiles: ^SupportDir|Content/ca/firestorm/dmachine.aud, ^SupportDir|Content/ca/firestorm/elusive.aud, ^SupportDir|Content/ca/firestorm/fsmap.aud, ^SupportDir|Content/ca/firestorm/fsmenu.aud, ^SupportDir|Content/ca/firestorm/hacker.aud, ^SupportDir|Content/ca/firestorm/infiltra.aud, ^SupportDir|Content/ca/firestorm/kmachine.aud, ^SupportDir|Content/ca/firestorm/linkup.aud, ^SupportDir|Content/ca/firestorm/rainnite.aud, ^SupportDir|Content/ca/firestorm/slavesys.aud
 			Download: fsmusic
-			Sources: tfd, origin-ts, fstorm
-		ra2music: RA2 Music
+		ContentPackage@ra2music:
+			Title: Red Alert 2 Music
+			Identifier: ra2music
 			TestFiles: ^SupportDir|Content/ca/ra2/theme.mix
-			Sources: ra2, origin-ra2, tfd
-		yrmusic: YR Music
+			Sources: ra2, ra2-origin
+		ContentPackage@yrmusic:
+			Title: Yuri's Revenge Music
+			Identifier: yrmusic
 			TestFiles: ^SupportDir|Content/ca/ra2/thememd.mix
-			Sources: ra2yr, origin-yr, tfd
-		camusic: CA Music
+			Sources: ra2yr, ra2-origin
+		ContentPackage@camusic:
+			Title: CA Music
+			Identifier: camusic
 			TestFiles: ^SupportDir|Content/ca/music/moi.mp3, ^SupportDir|Content/ca/music/drill.mp3, ^SupportDir|Content/ca/music/creep.mp3, ^SupportDir|Content/ca/music/radio2ca.mp3, ^SupportDir|Content/ca/music/subvn.mp3, ^SupportDir|Content/ca/music/recon.mp3, ^SupportDir|Content/ca/music/moi2.mp3
 			Download: camusic
 	Downloads:
@@ -379,8 +401,8 @@ ModContent:
 		ca|installer/origin.yaml
 		ca|installer/ra2.yaml
 		ca|installer/ra2yr.yaml
-		ca|installer/firestorm.yaml
 		ca|installer/soviet95.yaml
+		ca|installer/steam.yaml
 
 DiscordService:
 	ApplicationId: 787647352399200277
