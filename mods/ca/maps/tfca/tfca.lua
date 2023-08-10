@@ -42,21 +42,23 @@ WorldLoaded = function()
         end)
     end)
 
-    Utils.Do(Players, function(p)
-        p.Cash = UnitsPerPlayer
-        local spawnPoints = p.GetActorsByType("spawn")
+    Trigger.AfterDelay(1, function()
+        Utils.Do(Players, function(p)
+            p.Cash = UnitsPerPlayer
+            local spawnPoints = p.GetActorsByType("spawn")
 
-        if #spawnPoints > 0 then
-            spawnPoint = spawnPoints[1]
-            local spawner = Actor.Create("spawn", true, { Owner = p, Location = spawnPoint.Location })
-            Trigger.OnProduction(spawner, function(producer, produced)
-                Trigger.OnKilled(produced, function(self, killer)
-                    Trigger.AfterDelay(DateTime.Seconds(10), function()
-                        self.Owner.Cash = self.Owner.Cash + 1
+            if #spawnPoints > 0 then
+                spawnPoint = spawnPoints[1]
+                local spawner = Actor.Create("spawn", true, { Owner = p, Location = spawnPoint.Location })
+                Trigger.OnProduction(spawner, function(producer, produced)
+                    Trigger.OnKilled(produced, function(self, killer)
+                        Trigger.AfterDelay(DateTime.Seconds(10), function()
+                            self.Owner.Cash = self.Owner.Cash + 1
+                        end)
                     end)
                 end)
-            end)
-        end
+            end
+        end)
     end)
 
     BalanceUnits = Blue.HasPrerequisites({ "global.balanceunits" })
