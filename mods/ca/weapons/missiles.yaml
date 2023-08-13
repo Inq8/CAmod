@@ -143,7 +143,7 @@ MaverickSU:
 		Inaccuracy: 64
 		Blockable: false
 		Shadow: true
-		Speed: 341
+		Speed: 384
 		LaunchAngle: 0
 		Image: DRAGON
 		TrailImage: smokey
@@ -154,7 +154,7 @@ MaverickSU:
 	Warhead@1Dam: SpreadDamage
 		Damage: 16000
 		Spread: 448
-		Falloff: 100, 50, 33, 5, 0
+		Falloff: 100, 55, 35, 8, 0
 		Versus:
 			None: 0
 			Wood: 18
@@ -202,7 +202,7 @@ SeismicMissile:
 	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
 		Damage: 1850
-		Falloff: 1000, 368, 135, 50, 0
+		Falloff: 1000, 368, 135, 75, 0
 		ValidTargets: Ground, Water
 		Versus:
 			None: 10
@@ -771,6 +771,7 @@ StingerGTWR:
 
 APTusk:
 	Inherits: ^AntiGroundMissile
+	ValidTargets: Ground, Water, Air, AirSmall
 	ReloadDelay: 80
 	Range: 6c0
 	Burst: 2
@@ -790,6 +791,11 @@ APTusk:
 			Light: 60
 			Heavy: 100
 			Concrete: 85
+			Aircraft: 20
+	Warhead@5EffAir: CreateEffect
+		Explosions: med_explosion_air
+		ImpactSounds: kaboom25.aud
+		ValidTargets: Air, AirSmall
 
 TOW:
 	Inherits: ^AntiGroundMissile

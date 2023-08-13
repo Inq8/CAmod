@@ -125,7 +125,7 @@ Squads = {
 				},
 				{
 					Infantry = { "e3", "e1", "e1", "shok", "e1", "e2", "e3", "e4" }, -- 2110
-					Vehicles = { "3tnk", "4tnk", "katy" }, -- 3550
+					Vehicles = { { "3tnk", "3tnk.atomic" }, "4tnk", "katy" }, -- 3550
 					MinTime = DateTime.Minutes(9)
 				}
 			},
@@ -136,8 +136,8 @@ Squads = {
 					MaxTime = DateTime.Minutes(6)
 				},
 				{
-					Infantry = { "e3", "e1", "e1", "e3", "shok", "e1", "shok", "e1", "e2", "e3", "e4" }, -- 2510
-					Vehicles = { "3tnk", "4tnk", "btr.ai", "katy", "ttra" }, -- 5475 (+800)
+					Infantry = { "e3", "e1", "e1", "e3", "shok", "e1", { "shok", "n8" }, "e1", "e2", "e3", "e4" }, -- 2510
+					Vehicles = { { "3tnk", "3tnk.atomic" }, "4tnk", "btr.ai", { "katy", "v2rl" }, "ttra" }, -- 5475 (+800)
 					MinTime = DateTime.Minutes(6)
 				}
 			}
@@ -218,6 +218,7 @@ WorldLoaded = function()
 		Flamer1.Destroy()
 		TeslaCoil3.Destroy()
 		HardOnlyV2.Destroy()
+		HardOnlyKatyusha.Destroy()
 	end
 
 	if Difficulty == "easy" then
@@ -225,6 +226,8 @@ WorldLoaded = function()
 		SovietWestFlameTower2.Destroy()
 		TeslaCoil1.Destroy()
 		TeslaCoil2.Destroy()
+		NonEasyKatyusha.Destroy()
+		NonEasyV2.Destroy()
 	else
 		Ranger1.Destroy()
 	end

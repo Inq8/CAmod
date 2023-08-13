@@ -44,6 +44,11 @@ MaxLosses = {
 	hard = 0
 }
 
+NavalReinforcementsDelay = {
+	easy = DateTime.Minutes(2),
+	normal = DateTime.Minutes(4),
+}
+
 TimeBetweenConvoys = {
 	easy = { DateTime.Minutes(3), DateTime.Minutes(8), DateTime.Seconds(210), DateTime.Minutes(5)  },
 	normal = { DateTime.Minutes(2), DateTime.Minutes(7), DateTime.Seconds(165), DateTime.Minutes(4) },
@@ -194,9 +199,23 @@ WorldLoaded = function()
 		ObjectiveProtectConvoys = Greece.AddObjective("Do not lose more than " .. MaxLosses[Difficulty] .. " convoy trucks.")
 	end
 
+	if Difficulty ~= "hard" then
+		HardOnlyTripod1.Destroy()
+		HardOnlyShardLauncher1.Destroy()
+		HardOnlyShardLauncher2.Destroy()
+		HardOnlyStormColumn1.Destroy()
+		HardOnlyStormColumn2.Destroy()
+	end
+
 	Trigger.AfterDelay(DateTime.Seconds(15), function()
 		InitConvoy()
 	end)
+
+	if Difficulty ~= "hard" then
+		Trigger.AfterDelay(NavalReinforcementsDelay[Difficulty], function()
+			NavalReinforcements()
+		end)
+	end
 
 	-- When convoy units reach destination, remove them
 	Utils.Do(ConvoyExits, function(exitCells)
@@ -417,4 +436,14 @@ InitScrin = function()
 			end
 		end)
 	end)
+end
+
+NavalReinforcements = function()
+	if not NavalReinforcementsArrived then
+		NavalReinforcementsArrived = true
+		Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
+		Beacon.New(Greece, DestroyerSpawn1.CenterPosition)
+		Reinforcements.Reinforce(Greece, { "dd" }, { DestroyerSpawn1.Location, DestroyerRally1.Location })
+		Reinforcements.Reinforce(Greece, { "dd" }, { DestroyerSpawn2.Location, DestroyerRally2.Location })
+	end
 end

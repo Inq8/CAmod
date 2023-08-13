@@ -2321,10 +2321,10 @@ CTNK:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 260
 		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
-		Description: Teleporting tank armed with anti-ground missiles.
+		Description: Teleporting tank armed with twin missile launchers.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses, Buildings
-		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
+		Weaknesses: • Weak vs Infantry
 		Attributes: • Special Ability: Teleport
 	Valued:
 		Cost: 1350
@@ -2356,11 +2356,13 @@ CTNK:
 	PortableChronoCA:
 		Charges: 1
 		ChargeDelay: 375
-		Cooldown: 25
+		Cooldown: 75
 		MaxDistance: 16
 		ResetRechargeOnUse: false
 		RequiresCondition: !empdisable && !being-warped
 		ShowSelectionBarWhenFull: false
+		ShowCooldownSelectionBar: true
+		RequireEmptyDestination: true
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
