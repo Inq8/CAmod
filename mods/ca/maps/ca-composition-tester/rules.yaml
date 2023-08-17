@@ -5,6 +5,97 @@ World:
 	MissionData:
 		Briefing: Map for testing fixed value army compositions against each other. Requires 2+ players. Move the trucks into wormholes to reset/save/restore.
 
+Player:
+	Inherits@VEILOFWARPOWER: ^VeilOfWarPower
+	Inherits@CLUSTERMINESPOWER: ^ClusterMinesPower
+	Inherits@STRAFINGRUNPOWER: ^StrafingRunPower
+	Inherits@IRONCURTAINPOWER: ^IronCurtainPower
+	Inherits@PARABOMBSPOWER: ^ParabombsPower
+	Inherits@CARPETBOMBPOWER: ^CarpetBombPower
+	Inherits@ATOMBOMBPOWER: ^AtomBombPower
+	Inherits@MUTABOMBPOWER: ^MutaBombPower
+	Inherits@NANITEREPAIRPOWER: ^NaniteRepairPower
+	Inherits@NANITESHIELDPOWER: ^NaniteShieldPower
+	Inherits@SHADOWTEAMPOWER: ^ShadowTeamPower
+	Inherits@@INFERNOBOMBPOWER: ^InfernoBombPower
+	Inherits@FRENZYPOWER: ^FrenzyPower
+	Inherits@TIBSTEALTHPOWER: ^TibStealthPower
+	Inherits@STORMSPIKEPOWER: ^StormSpikePower
+	Inherits@BUZZERSWARMPOWER: ^BuzzerSwarmPower
+	Inherits@IONSURGEPOWER: ^IonSurgePower
+	Inherits@GREATERCOALESCENCEPOWER: ^GreaterCoalescencePower
+	Inherits@SUPPRESSIONPOWER: ^SuppressionPower
+	SpawnActorPowerCA@VeilOfWar:
+		-Prerequisites:
+		ChargeInterval: 1
+	AirstrikePower@clustermines:
+		-Prerequisites:
+		ChargeInterval: 1
+	ClassicAirstrikePower@Strafe:
+		-Prerequisites:
+		ChargeInterval: 1
+	AirstrikePower@Russianparabombs:
+		-Prerequisites:
+		ChargeInterval: 1
+	AirstrikePower@CarpetBomb:
+		-Prerequisites:
+		ChargeInterval: 1
+	AirstrikePower@Iraqiparabombs:
+		-Prerequisites:
+		ChargeInterval: 1
+	AirstrikePower@MutaBomb:
+		-Prerequisites:
+		ChargeInterval: 1
+	GrantExternalConditionPowerCA@IRONCURTAIN:
+		ChargeInterval: 1
+	GrantExternalConditionPowerCA@NREPAIR:
+		-Prerequisites:
+		ChargeInterval: 1
+	SpawnActorPowerCA@NSHIELD:
+		-Prerequisites:
+		ChargeInterval: 1
+	AirReinforcementsPower@ShadowTeam:
+		-Prerequisites:
+		ChargeInterval: 1
+	AirstrikePower@BlackhandFirebomb:
+		-Prerequisites:
+		ChargeInterval: 1
+	GrantExternalConditionPowerCA@Frenzy:
+		-Prerequisites:
+		ChargeInterval: 1
+	GrantExternalConditionPowerCA@SGEN:
+		-ActiveCondition:
+		ChargeInterval: 1
+	DetonateWeaponPower@STORMSPIKE:
+		-Prerequisites:
+		ChargeInterval: 1
+	DetonateWeaponPower@BUZZERSWARM:
+		-Prerequisites:
+		ChargeInterval: 1
+	DetonateWeaponPower@IONSURGE:
+		-Prerequisites:
+		ChargeInterval: 1
+	DetonateWeaponPower@GREATERCOALESCENCE:
+		-Prerequisites:
+		ChargeInterval: 1
+	DetonateWeaponPower@SUPPRESSION:
+		-Prerequisites:
+		ChargeInterval: 1
+	ExternalCondition@1:
+		Condition: disabled
+	ExternalCondition@2:
+		Condition: empdisable
+	ExternalCondition@3:
+		Condition: being-warped
+	ExternalCondition@4:
+		Condition: build-incomplete
+	ExternalCondition@5:
+		Condition: tower.shield
+
+PATR:
+	AttackOrderPower@EMPMISSILE:
+		ChargeInterval: 1
+
 DOME:
 	GpsRadarProvider:
 		RequiresCondition: gps-active

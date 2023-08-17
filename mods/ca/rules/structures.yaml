@@ -586,10 +586,10 @@ DOME:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@POWERDRAIN: ^PowerDrainableRadar
+	Inherits@UPG: ^ProducesUpgrades
 	Inherits@SOVIETRADARPOWERS: ^SovietRadarPowers
 	Inherits@VEILOFWARPOWER: ^VeilOfWarPower
 	Inherits@CLUSTERMINESPOWER: ^ClusterMinesPower
-	Inherits@UPG: ^ProducesUpgrades
 	Selectable:
 		Bounds: 2048, 2048
 	HitShape:
@@ -1459,8 +1459,8 @@ HPAD:
 	Inherits: ^Building
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
-	Inherits@SOVIETBOMBINGPOWERS: ^SovietBombingPowers
 	Inherits@AIR: ^ProducesHelicopters
+	Inherits@SOVIETBOMBINGPOWERS: ^SovietBombingPowers
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 768,-512,0, 768,512,0, -281,-512,0, -630,512,0
@@ -1549,8 +1549,8 @@ AFLD:
 	Inherits: ^Building
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@AIRCRAFTREPAIR: ^RepairsAircraftWithRepairBay
-	Inherits@SOVIETBOMBINGPOWERS: ^SovietBombingPowers
 	Inherits@AIR: ^ProducesAircraft
+	Inherits@SOVIETBOMBINGPOWERS: ^SovietBombingPowers
 	Inherits@STRAFINGRUNPOWER: ^StrafingRunPower
 	HitShape:
 		UseTargetableCellsOffsets: false
@@ -4081,6 +4081,7 @@ TMPL:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@UPG: ^ProducesUpgrades
+	Inherits@FRENZYPOWER: ^FrenzyPower
 	Inherits@CLUSTERMISSILEPOWER: ^ClusterMissilePower
 	Inherits@FORCESHIELDPOWER: ^ForceShieldPower
 	HitShape:
@@ -4849,7 +4850,7 @@ PATR:
 		Range: 5c0
 		RequiresCondition: !disabled
 	Turreted:
-		TurnSpeed: 10
+		TurnSpeed: 15
 		InitialFacing: 192
 		RealignDelay: -1
 		RequiresCondition: !build-incomplete
@@ -4864,8 +4865,8 @@ PATR:
 	AttackTurretedCharged:
 		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 		RequiresCondition: loaded-rocket > 0
-		ChargeLevel: 50
-		DischargeRate: 50
+		ChargeLevel: 35
+		DischargeRate: 35
 		ShowSelectionBar: true
 		SelectionBarColor: FFFFFF
 		ChargeWhileTurning: true
