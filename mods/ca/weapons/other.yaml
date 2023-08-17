@@ -297,10 +297,10 @@ HeavyFlameTankFlamer:
 	Inherits: BigFlamerTD
 	-Report:
 	ReloadDelay: 80
-	Burst: 30
+	Burst: 25
 	BurstDelays: 2
 	Warhead@1Dam: SpreadDamage
-		Damage: 155
+		Damage: 175
 		Versus:
 			None: 230
 	Warhead@2Smu: LeaveSmudge
@@ -314,7 +314,7 @@ HeavyFlameTankFlamer.UPG:
 		Image: flameallblack
 		Palette: scrin-ignore-lighting-alpha85
 	Warhead@1Dam: SpreadDamage
-		Damage: 160
+		Damage: 180
 		Versus:
 			Light: 100
 			Heavy: 70
@@ -520,11 +520,13 @@ TTankZap.UPG:
 		Amount: 1
 		AimChance: 100
 		ThrowWithoutTarget: false
+		AimTargetStances: Enemy, Neutral
 
 TTankArc:
 	Inherits: TTankZap
 	-Report:
 	Range: 2c512
+	ValidTargets: Infantry, Vehicle, Defense
 	Warhead@1Dam: SpreadDamage
 		ValidRelationships: Enemy, Neutral
 		ValidTargets: Infantry, Vehicle, Defense
