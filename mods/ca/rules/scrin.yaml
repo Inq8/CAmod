@@ -3766,6 +3766,10 @@ NERV:
 	Inherits@POWERDRAIN: ^PowerDrainableRadar
 	Inherits@UPG: ^ProducesUpgrades
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@RESOURCESCANPOWER: ^ResourceScanPower
+	Inherits@STORMSPIKEPOWER: ^StormSpikePower
+	Inherits@BUZZERSWARMPOWER: ^BuzzerSwarmPower
+	Inherits@IONSURGEPOWER: ^IonSurgePower
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 90
@@ -3846,114 +3850,15 @@ NERV:
 		Proxy: stolentech.nerv
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
-	RevealActorsPower@RESOURCESCAN:
-		CameraActor: camera.resourcescan
-		TargetActors: mine, gmine, split2, split3, splitblue, proc, proc.td, proc.scrin
-		LifeTime: 250
-		OrderName: resourcescan
-		Icon: rescanpower
-		ChargeInterval: 7500
-		Name: Resource Scan
-		Description: \nReveals the area surrounding all resources\n    on the map.
-		LaunchSound: tibscan.aud
-		PauseOnCondition: disabled || empdisable || being-warped
-		EffectImage: empty
-		EffectSequence: idle
-		EffectPalette: tseffect-ignore-lighting-alpha75
-		SupportPowerPaletteOrder: 50
-		EndChargeTextNotification: Resource Scan ready.
-	DetonateWeaponPower@BUZZERSWARM:
-		OrderName: buzzerswarm
-		Icon: buzzpower
-		IconPalette: chromes
-		Prerequisites: radar.harbinger, !botplayer
-		Cursor: ability
-		ChargeInterval: 7500
-		Name: Buzzer Swarm
-		ActivationDelay: 1
-		Description: \nSpawns a controllable swarm which damages anything nearby;\n    particularly harmful to infantry.
-		LaunchSound: buzzers-create.aud
-		Weapon: BuzzerSpawner
-		AirburstAltitude: 0c0
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		EndChargeTextNotification: Buzzer Swarm ready.
-		PauseOnCondition: disabled || empdisable || being-warped
-		CameraActor: camera.dummy
-		CameraRemoveDelay: 1
-		DisplayRadarPing: True
-		SupportPowerPaletteOrder: 50
-	DetonateWeaponPower@BUZZERSWARMAI:
-		OrderName: buzzerswarmai
-		Icon: buzzpower
-		IconPalette: chromes
-		Prerequisites: radar.harbinger, botplayer
-		Cursor: ability
-		ChargeInterval: 7500
-		Name: Buzzer Swarm (AI)
-		ActivationDelay: 1
-		Description: \nSpawns a controllable swarm which damages anything nearby;\n    particularly harmful to infantry.
-		LaunchSound: buzzers-create.aud
-		Weapon: BuzzerSpawnerAI
-		AirburstAltitude: 0c0
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		EndChargeTextNotification: Buzzer Swarm ready.
-		PauseOnCondition: disabled || empdisable || being-warped
-		CameraActor: camera.dummy
-		CameraRemoveDelay: 1
-		DisplayRadarPing: True
-		SupportPowerPaletteOrder: 50
-	DetonateWeaponPower@STORMSPIKE:
-		OrderName: stormspike
-		Icon: stormspikepower
-		IconPalette: chromes
-		Prerequisites: radar.reaper
-		Cursor: ability
-		ChargeInterval: 7500
-		Name: Storm Spike
-		ActivationDelay: 1
-		Description: \nCreates a temporary Storm Column defensive structure\n    at the target location.
-		LaunchSound: scrinbuild.aud
-		Weapon: StormSpikeSpawner
-		AirburstAltitude: 0c0
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		EndChargeTextNotification: Storm Spike ready.
-		PauseOnCondition: disabled || empdisable || being-warped
-		CameraActor: camera.dummy
-		CameraRemoveDelay: 1
-		DisplayRadarPing: True
-		SupportPowerPaletteOrder: 20
-	DetonateWeaponPower@IONSURGE:
-		OrderName: ionsurge
-		Icon: ionsurgepower
-		IconPalette: chromes
-		Prerequisites: radar.traveler
-		Cursor: ability
-		ChargeInterval: 6750
-		Name: Ion Surge
-		ActivationDelay: 1
-		Description: \nIncreases the movement speed of all friendly units\n    passing through the target area.
-		LaunchSound: ionsurge.aud
-		Weapon: IonSurgeSpawner
-		AirburstAltitude: 0c0
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		EndChargeTextNotification: Ion Surge ready.
-		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayRadarPing: True
-		CameraActor: camera.dummy
-		CameraRemoveDelay: 1
-		TargetCircleRange: 6c0
-		TargetCircleColor: b070ff90
-		SupportPowerPaletteOrder: 50
 
 SCRT:
 	Inherits: ^ScrinBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@UPG: ^ProducesUpgrades
+	Inherits@ICHORSEEDPOWER: ^IchorSeedPower
+	Inherits@FORCESHIELDPOWER: ^ForceShieldPower
+	Inherits@GREATERCOALESCENCEPOWER: ^GreaterCoalescencePower
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 150
@@ -4007,72 +3912,6 @@ SCRT:
 		Factions: collector
 		Prerequisite: scrt.collector
 	ProvidesPrerequisite@buildingname:
-	GrantExternalConditionPowerCA@FSHIELD:
-		OrderName: fshield
-		Icon: forceshield
-		ChargeInterval: 7500
-		Condition: forceshield
-		Dimensions: 7, 7
-		Footprint: ___x___ __xxx__ _xxxxx_ xxxxxxx _xxxxx_ __xxx__ ___x___
-		Duration: 250
-		Prerequisites: forceshield.enabled
-		Weapon: ForceShield
-		ActivationDelay: 5
-		AirburstAltitude: 0c0
-		AllowMultiple: false
-		Name: Force Shield
-		Description: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
-		OnFireSound: forceon.aud
-		DisplayTimerRelationships: Ally
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		InsufficientPowerSpeechNotification: InsufficientPower
-		EndChargeSpeechNotification: ForceShieldReady
-		EndChargeTextNotification: Force Shield ready.
-		DisplayRadarPing: True
-		Cursor: ability
-		PauseOnCondition: disabled || empdisable ||  being-warped
-		SupportPowerPaletteOrder: 40
-	SpawnActorPower@ICHORSEED:
-		OrderName: ichorseed
-		Icon: ichorpower
-		Actor: ichorseeder
-		ChargeInterval: 6000
-		Name: Ichor Seed
-		LifeTime: -1
-		AllowMultiple: false
-		Description: \nGrows tiberium at selected location.
-		LaunchSound: ichorseed.aud
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		InsufficientPowerSpeechNotification: InsufficientPower
-		EndChargeTextNotification: Ichor Seed ready.
-		PauseOnCondition: disabled || empdisable || being-warped
-		EffectImage: empty
-		EffectSequence: idle
-		EffectPalette: tseffect-ignore-lighting-alpha75
-		SupportPowerPaletteOrder: 40
-	DetonateWeaponPower@GREATERCOALESCENCE:
-		OrderName: greatercoalescence
-		Icon: grclpower
-		IconPalette: chromes
-		Prerequisites: scrt.collector
-		Cursor: ability
-		ChargeInterval: 6750
-		Name: Greater Coalescence
-		ActivationDelay: 1
-		Description: \nSpawns a controllable biomass which heals nearby allies\n    and sustains itself by feeding off enemies.\n\nFeeding from power plants will shut them down temporarily.
-		LaunchSound: grcl-spawn.aud
-		Weapon: GreaterCoalescenceSpawner
-		AirburstAltitude: 0c0
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		EndChargeTextNotification: Greater Coalescence ready.
-		PauseOnCondition: disabled || empdisable || being-warped
-		CameraActor: camera.dummy
-		CameraRemoveDelay: 1
-		DisplayRadarPing: True
-		SupportPowerPaletteOrder: 40
 
 GRAV:
 	Inherits: ^ScrinBuilding
@@ -4332,6 +4171,7 @@ MANI:
 	Inherits: ^ScrinBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@SUPPRESSIONPOWER: ^SuppressionPower
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 130
@@ -4381,54 +4221,6 @@ MANI:
 	ProvidesPrerequisiteValidatedFaction@collector:
 		Factions: collector
 		Prerequisite: mani.collector
-	DetonateWeaponPower@SUPPRESSION:
-		PauseOnCondition: disabled || empdisable || being-warped
-		OrderName: suppression
-		Icon: spresspower
-		ChargeInterval: 4500
-		Name: Suppression Field
-		Description: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.
-		Duration: 600
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		InsufficientPowerSpeechNotification: InsufficientPower
-		EndChargeTextNotification: Suppression Field ready.
-		DisplayRadarPing: True
-		ActivationDelay: 0
-		TargetCircleRange: 3c0
-		TargetCircleColor: ff55ffcc
-		LaunchSound: suppression.aud
-		IncomingSound: suppression.aud
-		DisplayTimerRelationships: Ally, Neutral, Enemy
-		Weapon: SuppressionField
-		CameraActor: camera.dummy
-		CameraRemoveDelay: 1
-		Prerequisites: ~!mani.collector
-		SupportPowerPaletteOrder: 20
-	DetonateWeaponPower@SUPPRESSIONSIPHON:
-		PauseOnCondition: disabled || empdisable || being-warped
-		OrderName: suppressionsiphon
-		Icon: spresspower
-		ChargeInterval: 4500
-		Name: Suppression Field
-		Description: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.\n\nAffected units take damage over time.
-		Duration: 600
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		InsufficientPowerSpeechNotification: InsufficientPower
-		EndChargeTextNotification: Suppression Field ready.
-		DisplayRadarPing: True
-		ActivationDelay: 0
-		TargetCircleRange: 3c0
-		TargetCircleColor: ff55ffcc
-		LaunchSound: suppression.aud
-		IncomingSound: suppression.aud
-		DisplayTimerRelationships: Ally, Neutral, Enemy
-		Weapon: SuppressionSiphonField
-		CameraActor: camera.dummy
-		CameraRemoveDelay: 1
-		Prerequisites: ~mani.collector
-		SupportPowerPaletteOrder: 20
 	ProductionCostMultiplier@COLLECTOR:
 		Multiplier: 80
 		Prerequisites: player.collector
@@ -4437,6 +4229,7 @@ RFGN:
 	Inherits: ^ScrinBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@RIFTPOWER: ^RiftPower
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 140
@@ -4473,41 +4266,6 @@ RFGN:
 	RevealsShroud@GAPGEN:
 		Range: 5c0
 		RequiresCondition: !disabled
-	DetonateWeaponPower@RiftGenerator:
-		OrderName: rift
-		Icon: riftpower
-		Cursor: ability
-		ChargeInterval: 13500
-		Name: Rift
-		ActivationDelay: 50
-		Description: \nInitiate a Rift which deals heavy damage\n    over time to a large area.
-		Weapon: RiftInit
-		AllowMultiple: false
-		CameraActor: camera.dummy
-		CameraRemoveDelay: 375
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		EndChargeSpeechNotification: RiftReady
-		EndChargeTextNotification: Rift Generator ready.
-		InsufficientPowerSpeechNotification: InsufficientPower
-		IncomingSpeechNotification: RiftApproach
-		IncomingTextNotification: Rift Generator activated.
-		IncomingSound: nukelaunch.aud
-		LaunchSound: nukelaunch.aud
-		DisplayTimerRelationships: Ally, Neutral, Enemy
-		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayBeacon: True
-		DisplayRadarPing: True
-		ArrowSequence: arrow
-		ClockSequence: clock
-		CircleSequence: circles
-		BeaconPoster: riftpower
-		TargetCircleRange: 6c512
-		TargetCircleColor: 0000FF90
-		Duration: 425
-		ActiveCondition: active
-		PaletteEffectType: LightningStorm
-		SupportPowerPaletteOrder: 10
 	WithIdleOverlay@ACTIVE:
 		Sequence: active-overlay
 		Palette: scrin
