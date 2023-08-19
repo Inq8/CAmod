@@ -415,9 +415,12 @@
 		DamageTypes: ChronoDeath
 		ScaleWithCurrentHealthPercentage: true
 		ShowSelectionBar: true
-		SelectionBarColor: 40FFFF
+		SelectionBarColor: b6f4ff
 	Targetable@TEMPORAL:
 		TargetTypes: Temporal
+	TimedConditionBar@TEMPORAL:
+		Color: b6f4ff
+		Condition: being-warped
 	WithPalettedOverlay@TEMPORALl:
 		RequiresCondition: being-warped
 		Palette: temporal
@@ -1798,7 +1801,7 @@
 		ValidDamageStates: Light, Medium, Heavy, Critical
 	Repairable:
 		RepairActors: fix, rep, srep
-	ChronoshiftableWithSpriteEffect:
+	ChronoshiftableCA:
 		Image: chrono
 		WarpInSequence: warpin
 		WarpOutSequence: warpout
@@ -2380,7 +2383,7 @@
 	ActorLostNotification:
 		Notification: NavalUnitLost
 		TextNotification: Naval unit lost.
-	ChronoshiftableWithSpriteEffect:
+	ChronoshiftableCA:
 		Image: chrono
 		WarpInSequence: warpin
 		WarpOutSequence: warpout
@@ -3297,7 +3300,7 @@
 	Targetable:
 		TargetTypes: Ground, Husk, NoAutoTarget
 		RequiresForceFire: true
-	ChronoshiftableWithSpriteEffect:
+	ChronoshiftableCA:
 		Image: chrono
 		WarpInSequence: warpin
 		WarpOutSequence: warpout

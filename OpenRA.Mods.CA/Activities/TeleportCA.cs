@@ -20,6 +20,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Activities
 {
+	[Desc("Same as Teleport but can be made to require an empty destination.")]
 	public class TeleportCA : Activity
 	{
 		readonly Actor teleporter;

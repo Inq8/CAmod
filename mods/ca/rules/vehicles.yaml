@@ -517,7 +517,7 @@ GTNK.squad:
 	-ActorLostNotification:
 	-SpawnActorOnDeath:
 	-Buildable:
-	-ChronoshiftableWithSpriteEffect:
+	-ChronoshiftableCA:
 
 3TNK:
 	Inherits: ^Tank
@@ -1152,7 +1152,7 @@ ARTY.TEMP:
 		RequiresCondition: !warpout
 	-ActorLostNotification:
 	-Buildable:
-	-ChronoshiftableWithSpriteEffect:
+	-ChronoshiftableCA:
 
 ISU:
 	Inherits: ^Tank
@@ -1681,7 +1681,7 @@ JEEP.TEMP:
 		RequiresCondition: !warpout
 	-ActorLostNotification:
 	-Buildable:
-	-ChronoshiftableWithSpriteEffect:
+	-ChronoshiftableCA:
 
 APC:
 	Inherits: ^Tank
@@ -2301,7 +2301,7 @@ DTRK:
 	-DamageMultiplier@IRONCURTAIN:
 	KillsSelf:
 		RequiresCondition: invulnerability || triggered || berserk
-	ChronoshiftableWithSpriteEffect:
+	ChronoshiftableCA:
 		ExplodeInstead: true
 	Passenger:
 		Voice: Move
@@ -2411,7 +2411,7 @@ QTNK:
 	Mobile:
 		PauseOnCondition: deployed || being-captured || empdisable || being-warped || driver-dead || notmobile
 		Speed: 46
-	ChronoshiftableWithSpriteEffect:
+	ChronoshiftableCA:
 		RequiresCondition: !deployed && !being-captured && !being-warped
 	RevealsShroud:
 		MinRange: 4c0
@@ -3429,7 +3429,7 @@ MDRN.Attached:
 	-MindControllableProgressBar@HACKABLE:
 	-WithDecoration@HACKED:
 	-WithDecoration@RESTORING:
-	-ChronoshiftableWithSpriteEffect:
+	-ChronoshiftableCA:
 
 HTNK:
 	Inherits: ^TankTD
@@ -5758,7 +5758,7 @@ TNKD.TEMP:
 	-ActorLostNotification:
 	-SpawnActorOnDeath:
 	-Buildable:
-	-ChronoshiftableWithSpriteEffect:
+	-ChronoshiftableCA:
 
 MSAR:
 	Inherits: ^VehicleTD
@@ -6265,7 +6265,7 @@ MEMP:
 		AmmoPool: explosion
 		Delay: 450
 		Count: 1
-	ChronoshiftableWithSpriteEffect:
+	ChronoshiftableCA:
 		RequiresCondition: !being-warped && !triggered
 	RevealsShroud:
 		MinRange: 4c0
