@@ -19,8 +19,10 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("Can be teleported via Chronoshift power.")]
-	public class ChronoshiftableWithSpriteEffectInfo : ChronoshiftableInfo
+	[Desc("Can be teleported via Chronoshift power.",
+		"Extends the base version, adding the ability to return to avoid death,",
+		"and adding warp in/out sprite effects.")]
+	public class ChronoshiftableCAInfo : ChronoshiftableInfo
 	{
 		[Desc("Image used for the teleport effects. Defaults to the actor's type.")]
 		public readonly string Image = null;
@@ -56,12 +58,12 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If ReturnToAvoidDeath is true, the actor to replace the normal husk with.")]
 		public readonly string ReturnToAvoidDeathHuskActor = "camera.dummy";
 
-		public override object Create(ActorInitializer init) { return new ChronoshiftableWithSpriteEffect(init, this); }
+		public override object Create(ActorInitializer init) { return new ChronoshiftableCA(init, this); }
 	}
 
-	public class ChronoshiftableWithSpriteEffect : Chronoshiftable, ITick, INotifyRemovedFromWorld, INotifyKilled, IHuskModifier
+	public class ChronoshiftableCA : Chronoshiftable, ITick, INotifyRemovedFromWorld, INotifyKilled, IHuskModifier
 	{
-		readonly ChronoshiftableWithSpriteEffectInfo info;
+		readonly ChronoshiftableCAInfo info;
 		readonly Actor self;
 		readonly string faction;
 		readonly IFacing facing;
@@ -70,7 +72,7 @@ namespace OpenRA.Mods.CA.Traits
 		bool killCargo;
 		bool returnToAvoidDeath;
 
-		public ChronoshiftableWithSpriteEffect(ActorInitializer init, ChronoshiftableWithSpriteEffectInfo info)
+		public ChronoshiftableCA(ActorInitializer init, ChronoshiftableCAInfo info)
 			: base(init, info)
 		{
 			this.info = info;
