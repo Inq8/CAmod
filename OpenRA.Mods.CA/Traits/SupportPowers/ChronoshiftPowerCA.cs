@@ -62,7 +62,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new ChronoshiftPowerCA(init.Self, this); }
 	}
 
-	sealed class ChronoshiftPowerCA : SupportPower
+	sealed class ChronoshiftPowerCA : SupportPower, IResolveOrder
 	{
 		readonly ChronoshiftPowerCAInfo info;
 		readonly IList<Actor> selectedActors;
@@ -106,8 +106,6 @@ namespace OpenRA.Mods.CA.Traits
 				if (self.Owner.Shroud.IsExplored(targetCell)) // && cs.CanChronoshiftTo(target, targetCell)
 					cs.Teleport(actor, targetCell, info.Duration, info.KillCargo, self);
 			}
-
-			selectedActors.Clear();
 		}
 
 		public IEnumerable<Actor> GetTargets(CPos xy)
@@ -138,6 +136,16 @@ namespace OpenRA.Mods.CA.Traits
 			return true;
 		}
 
+		public void ResolveOrder(Actor self, Order order)
+		{
+			if (order.OrderString == "SelectChronoshiftTargets")
+			{
+				selectedActors.Clear();
+				foreach (var a in order.ExtraActors)
+					selectedActors.Add(a);
+			}
+		}
+
 		sealed class SelectChronoshiftTarget : OrderGenerator
 		{
 			readonly ChronoshiftPowerCA power;
@@ -162,14 +170,8 @@ namespace OpenRA.Mods.CA.Traits
 				world.CancelInputMode();
 				if (mi.Button == MouseButton.Left)
 				{
-					power.selectedActors.Clear();
-					foreach (var unit in power.GetTargets(cell))
-					{
-						power.selectedActors.Add(unit);
-					}
-
-					if (power.selectedActors.Any())
-						world.OrderGenerator = new SelectDestination(world, order, manager, power, cell);
+					yield return new Order("SelectChronoshiftTargets", power.Self, false, power.GetTargets(cell).ToArray());
+					world.OrderGenerator = new SelectDestination(world, order, manager, power, cell);
 				}
 
 				yield break;

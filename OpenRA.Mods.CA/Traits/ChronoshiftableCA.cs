@@ -50,7 +50,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly string ReturnToAvoidDeathSound = null;
 
 		[Desc("Relationships that benefit from returning to avoid death.")]
-		public readonly PlayerRelationship ReturnToAvoidDeathRelationships = PlayerRelationship.Ally;
+		public readonly PlayerRelationship ReturnToAvoidDeathRelationships = PlayerRelationship.Ally | PlayerRelationship.Neutral | PlayerRelationship.Enemy;
 
 		[Desc("If ReturnToAvoidDeath is true the amount of HP restored on return.")]
 		public readonly int ReturnToAvoidDeathHealthPercent = 20;
