@@ -52,6 +52,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Cursor to display when the targeted area is blocked.")]
 		public readonly string TargetBlockedCursor = "move-blocked";
 
+		[Desc("Font to use for target count.")]
+		public readonly string TargetCountFont = "Regular";
+
 		public readonly bool ShowSelectionBoxes = false;
 		public readonly Color HoverSelectionBoxColor = Color.White;
 		public readonly Color SelectedSelectionBoxColor = Color.Lime;
@@ -142,6 +145,9 @@ namespace OpenRA.Mods.CA.Traits
 			if (Self.World.ShroudObscures(a.Location) || Self.World.FogObscures(a.Location))
 				return false;
 
+			if (!a.CanBeViewedByPlayer(Self.Owner))
+				return false;
+
 			return true;
 		}
 
@@ -209,13 +215,10 @@ namespace OpenRA.Mods.CA.Traits
 				{
 					foreach (var unit in targetUnits)
 					{
-						if (unit.CanBeViewedByPlayer(manager.Self.Owner))
-						{
-							var decorations = unit.TraitsImplementing<ISelectionDecorations>().FirstEnabledTraitOrDefault();
-							if (decorations != null)
-								foreach (var d in decorations.RenderSelectionAnnotations(unit, wr, power.info.HoverSelectionBoxColor))
-									yield return d;
-						}
+						var decorations = unit.TraitsImplementing<ISelectionDecorations>().FirstEnabledTraitOrDefault();
+						if (decorations != null)
+							foreach (var d in decorations.RenderSelectionAnnotations(unit, wr, power.info.HoverSelectionBoxColor))
+								yield return d;
 					}
 				}
 
@@ -229,6 +232,16 @@ namespace OpenRA.Mods.CA.Traits
 						1,
 						Color.FromArgb(96, Color.Black),
 						3);
+				}
+
+				if (power.info.MaxTargets > 0)
+				{
+					var font = Game.Renderer.Fonts[power.info.TargetCountFont];
+					var color = power.info.TargetCircleColor;
+					var text = targetUnits.Count() + " / " + power.info.MaxTargets;
+					var size = font.Measure(text);
+					var textPos = new int2(Viewport.LastMousePos.X - (size.X / 2), Viewport.LastMousePos.Y + size.Y + (size.Y / 2));
+					yield return new UITextRenderable(font, WPos.Zero, textPos, 0, color, text);
 				}
 			}
 

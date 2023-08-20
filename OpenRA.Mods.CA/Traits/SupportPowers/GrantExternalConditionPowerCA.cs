@@ -58,6 +58,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Minimum targets for power to activate.")]
 		public readonly int MinTargets = 1;
 
+		[Desc("Font to use for target count.")]
+		public readonly string TargetCountFont = "Regular";
+
 		[WeaponReference]
 		[Desc("Weapon to detonate at target location.")]
 		public readonly string ExplosionWeapon = null;
@@ -148,7 +151,8 @@ namespace OpenRA.Mods.CA.Traits
 					&& info.ValidRelationships.HasRelationship(Self.Owner.RelationshipWith(a.Owner))
 					&& (info.ValidTargets.IsEmpty || info.ValidTargets.Overlaps(a.GetAllTargetTypes()))
 					&& a.TraitsImplementing<ExternalCondition>().Any(t => t.Info.Condition == info.Condition && t.CanGrantCondition(Self))
-					&& !(info.TargetMustBeVisible && (Self.World.ShroudObscures(a.Location) || Self.World.FogObscures(a.Location))))
+					&& !(info.TargetMustBeVisible && (Self.World.ShroudObscures(a.Location) || Self.World.FogObscures(a.Location)))
+					&& a.CanBeViewedByPlayer(Self.Owner))
 				.OrderBy(a => (a.CenterPosition - centerPos).LengthSquared);
 
 			if (info.MaxTargets > 0)
@@ -194,10 +198,11 @@ namespace OpenRA.Mods.CA.Traits
 			protected override IEnumerable<IRenderable> RenderAnnotations(WorldRenderer wr, World world)
 			{
 				var xy = wr.Viewport.ViewToWorld(Viewport.LastMousePos);
+				var targetUnits = power.GetTargets(xy);
 
 				if (power.info.ShowSelectionBoxes)
 				{
-					foreach (var unit in power.GetTargets(xy))
+					foreach (var unit in targetUnits)
 					{
 						var decorations = unit.TraitsImplementing<ISelectionDecorations>().FirstEnabledTraitOrDefault();
 						if (decorations != null)
@@ -216,6 +221,16 @@ namespace OpenRA.Mods.CA.Traits
 						1,
 						Color.FromArgb(96, Color.Black),
 						3);
+				}
+
+				if (power.info.MaxTargets > 0)
+				{
+					var font = Game.Renderer.Fonts[power.info.TargetCountFont];
+					var color = power.info.TargetCircleColor;
+					var text = targetUnits.Count() + " / " + power.info.MaxTargets;
+					var size = font.Measure(text);
+					var textPos = new int2(Viewport.LastMousePos.X - (size.X / 2), Viewport.LastMousePos.Y + size.Y + (size.Y / 2));
+					yield return new UITextRenderable(font, WPos.Zero, textPos, 0, color, text);
 				}
 			}
 
