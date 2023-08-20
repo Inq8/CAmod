@@ -29,8 +29,11 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Maximum number of targets. Zero for no limit.")]
 		public readonly int MaxTargets = 0;
 
+		[Desc("If true, keeps formation of teleported units.")]
+		public readonly bool KeepFormation = false;
+
 		[Desc("Maximum distance a selected unit can move away from their initial location.")]
-		public readonly WDist LeashRange = WDist.FromCells(7);
+		public readonly WDist LeashRange = WDist.FromCells(12);
 
 		[Desc("Ticks until returning after teleportation.")]
 		public readonly int Duration = 750;
@@ -66,12 +69,14 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		readonly ChronoshiftPowerCAInfo info;
 		readonly IList<Actor> selectedActors;
+		uint selectionIteration;
 
 		public ChronoshiftPowerCA(Actor self, ChronoshiftPowerCAInfo info)
 			: base(self, info)
 		{
 			this.info = info;
 			selectedActors = new List<Actor>();
+			selectionIteration = 0;
 		}
 
 		public override void SelectTarget(Actor self, string order, SupportPowerManager manager)
@@ -85,7 +90,8 @@ namespace OpenRA.Mods.CA.Traits
 			PlayLaunchSounds();
 
 			var info = (ChronoshiftPowerCAInfo)Info;
-			var targetDelta = self.World.Map.CellContaining(order.Target.CenterPosition) - order.ExtraLocation;
+			var targetCell = self.World.Map.CellContaining(order.Target.CenterPosition);
+			var targetDelta = targetCell - order.ExtraLocation;
 
 			var actorsToTeleport = selectedActors.Where(a => IsValidTarget(a));
 
@@ -97,11 +103,14 @@ namespace OpenRA.Mods.CA.Traits
 				if (cs == null)
 					continue;
 
-				var unitDistMoved = actor.CenterPosition - self.World.Map.CenterOfCell(order.ExtraLocation);
-				if (unitDistMoved.Length > info.LeashRange.Length)
-					continue;
+				if (info.LeashRange > WDist.Zero)
+				{
+					var unitDistMoved = actor.CenterPosition - self.World.Map.CenterOfCell(order.ExtraLocation);
+					if (unitDistMoved.Length > info.LeashRange.Length)
+						continue;
+				}
 
-				var targetCell = actor.Location + targetDelta;
+				var destinationCell = info.KeepFormation ? actor.Location + targetDelta : targetCell;
 
 				if (self.Owner.Shroud.IsExplored(targetCell)) // && cs.CanChronoshiftTo(target, targetCell)
 					cs.Teleport(actor, targetCell, info.Duration, info.KillCargo, self);
@@ -143,6 +152,8 @@ namespace OpenRA.Mods.CA.Traits
 				selectedActors.Clear();
 				foreach (var a in order.ExtraActors)
 					selectedActors.Add(a);
+
+				selectionIteration = order.ExtraData;
 			}
 		}
 
@@ -170,8 +181,11 @@ namespace OpenRA.Mods.CA.Traits
 				world.CancelInputMode();
 				if (mi.Button == MouseButton.Left)
 				{
-					yield return new Order("SelectChronoshiftTargets", power.Self, false, power.GetTargets(cell).ToArray());
-					world.OrderGenerator = new SelectDestination(world, order, manager, power, cell);
+					var newSelectionIteration = power.selectionIteration + 1;
+					yield return new Order("SelectChronoshiftTargets", power.Self, false, power.GetTargets(cell).ToArray()) {
+						ExtraData = newSelectionIteration
+					};
+					world.OrderGenerator = new SelectDestination(world, order, manager, power, cell, newSelectionIteration);
 				}
 
 				yield break;
@@ -235,13 +249,15 @@ namespace OpenRA.Mods.CA.Traits
 			readonly CPos sourceLocation;
 			readonly SupportPowerManager manager;
 			readonly string order;
+			readonly uint expectedIteration;
 
-			public SelectDestination(World world, string order, SupportPowerManager manager, ChronoshiftPowerCA power, CPos sourceLocation)
+			public SelectDestination(World world, string order, SupportPowerManager manager, ChronoshiftPowerCA power, CPos sourceLocation, uint expectedIteration)
 			{
 				this.manager = manager;
 				this.order = order;
 				this.power = power;
 				this.sourceLocation = sourceLocation;
+				this.expectedIteration = expectedIteration;
 
 				var info = (ChronoshiftPowerCAInfo)power.Info;
 			}
@@ -287,29 +303,32 @@ namespace OpenRA.Mods.CA.Traits
 
 			protected override IEnumerable<IRenderable> RenderAnnotations(WorldRenderer wr, World world)
 			{
-				var xy = wr.Viewport.ViewToWorld(Viewport.LastMousePos);
-
-				foreach (var unit in power.selectedActors.Where(a => power.IsValidTarget(a)))
+				if (expectedIteration == power.selectionIteration)
 				{
-					if (unit.CanBeViewedByPlayer(manager.Self.Owner))
+					var xy = wr.Viewport.ViewToWorld(Viewport.LastMousePos);
+
+					foreach (var unit in power.selectedActors.Where(a => power.IsValidTarget(a)))
 					{
-						var decorations = unit.TraitsImplementing<ISelectionDecorations>().FirstEnabledTraitOrDefault();
-						if (decorations != null)
-							foreach (var d in decorations.RenderSelectionAnnotations(unit, wr, power.info.SelectedSelectionBoxColor))
-								yield return d;
+						if (unit.CanBeViewedByPlayer(manager.Self.Owner))
+						{
+							var decorations = unit.TraitsImplementing<ISelectionDecorations>().FirstEnabledTraitOrDefault();
+							if (decorations != null)
+								foreach (var d in decorations.RenderSelectionAnnotations(unit, wr, power.info.SelectedSelectionBoxColor))
+									yield return d;
+						}
 					}
-				}
 
-				if (power.info.ShowTargetCircle)
-				{
-					yield return new RangeCircleAnnotationRenderable(
-						world.Map.CenterOfCell(xy),
-						power.info.Range,
-						0,
-						power.info.TargetCircleUsePlayerColor ? power.Self.Owner.Color : power.info.DestinationCircleColor,
-						1,
-						Color.FromArgb(96, Color.Black),
-						3);
+					if (power.info.ShowDestinationCircle)
+					{
+						yield return new RangeCircleAnnotationRenderable(
+							world.Map.CenterOfCell(xy),
+							power.info.Range,
+							0,
+							power.info.TargetCircleUsePlayerColor ? power.Self.Owner.Color : power.info.DestinationCircleColor,
+							1,
+							Color.FromArgb(96, Color.Black),
+							3);
+					}
 				}
 			}
 
