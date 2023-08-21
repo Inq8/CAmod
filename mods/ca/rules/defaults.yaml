@@ -58,6 +58,14 @@
 			red: pip-red
 			blue: pip-blue
 
+^ChronoshiftableTransport:
+	Inherits: ^Transport
+	RejectsOrders@NOUNLOADCHRONO:
+		Reject: Unload
+		RequiresCondition: chronoshifted
+	ChronoshiftableCA:
+		Condition: chronoshifted
+
 # for upgrades, proxy powers, stolen tech, spawners etc
 ^InvisibleDummy:
 	AlwaysVisible:
@@ -1807,6 +1815,7 @@
 		WarpOutSequence: warpout
 		RequiresCondition: !being-warped
 		Palette: ra2effect-ignore-lighting-alpha75
+		ReturnToAvoidDeath: true
 	Passenger:
 		CargoType: Vehicle
 	AttackMove:

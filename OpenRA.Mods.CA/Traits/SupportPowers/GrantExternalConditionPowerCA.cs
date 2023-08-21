@@ -59,7 +59,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly int MinTargets = 1;
 
 		[Desc("Font to use for target count.")]
-		public readonly string TargetCountFont = "Regular";
+		public readonly string TargetCountFont = "Medium";
 
 		[WeaponReference]
 		[Desc("Weapon to detonate at target location.")]
@@ -229,7 +229,7 @@ namespace OpenRA.Mods.CA.Traits
 					var color = power.info.TargetCircleColor;
 					var text = targetUnits.Count() + " / " + power.info.MaxTargets;
 					var size = font.Measure(text);
-					var textPos = new int2(Viewport.LastMousePos.X - (size.X / 2), Viewport.LastMousePos.Y + size.Y + (size.Y / 2));
+					var textPos = new int2(Viewport.LastMousePos.X - (size.X / 2), Viewport.LastMousePos.Y + size.Y + (size.Y / 3));
 					yield return new UITextRenderable(font, WPos.Zero, textPos, 0, color, text);
 				}
 			}

@@ -1163,7 +1163,7 @@ INTL:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
-	Inherits@TRANSPORT: ^Transport
+	Inherits@TRANSPORT: ^ChronoshiftableTransport
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
@@ -4466,6 +4466,10 @@ SCOL:
 	SpawnActorOnDeath:
 		Actor: s1
 	-SpawnRandomActorOnDeath:
+	GrantConditionOnAttackCA@IONSTORM:
+		RequiresCondition: ioncon-upgrade && !(disabled || empdisable || being-warped)
+	GrantConditionOnDamage@IONSTORM:
+		RequiresCondition: ioncon-upgrade && !(disabled || empdisable || being-warped)
 
 STRM:
 	Inherits@1: ^ExistsInWorld
@@ -4617,6 +4621,10 @@ SCOL.Temp:
 		PauseOnCondition: build-incomplete || empdisable || being-warped
 	DetectCloaked:
 		RequiresCondition: !(empdisable || being-warped)
+	GrantConditionOnAttackCA@IONSTORM:
+		RequiresCondition: ioncon-upgrade && !(empdisable || being-warped)
+	GrantConditionOnDamage@IONSTORM:
+		RequiresCondition: ioncon-upgrade && !(empdisable || being-warped)
 
 #
 # ---- misc

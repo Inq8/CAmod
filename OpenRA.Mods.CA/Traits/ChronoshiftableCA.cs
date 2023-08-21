@@ -8,6 +8,8 @@
  */
 #endregion
 
+using System.Collections.Generic;
+using System.Linq;
 using OpenRA.Mods.Cnc.Activities;
 using OpenRA.Mods.Cnc.Traits;
 using OpenRA.Mods.Common;
@@ -39,6 +41,7 @@ namespace OpenRA.Mods.CA.Traits
 		[PaletteReference]
 		public readonly string Palette = "effect";
 
+		[GrantedConditionReference]
 		[Desc("Condition to apply while chronoshifted.")]
 		public readonly string Condition = null;
 
@@ -67,6 +70,8 @@ namespace OpenRA.Mods.CA.Traits
 		readonly Actor self;
 		readonly string faction;
 		readonly IFacing facing;
+		Cargo cargo;
+		List<Actor> cachedPassengers;
 		int conditionToken = Actor.InvalidConditionToken;
 		Actor chronosphere;
 		bool killCargo;
@@ -85,29 +90,39 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
+		protected override void Created(Actor self)
+		{
+			base.Created(self);
+
+			if (info.ReturnToAvoidDeath)
+				cargo = self.TraitOrDefault<Cargo>();
+		}
+
 		public override bool Teleport(Actor self, CPos targetLocation, int duration, bool killCargo, Actor chronosphere)
 		{
-			var image = info.Image ?? self.Info.Name;
-
-			var cachedSourcePosition = self.CenterPosition;
-			var cachedTargetPosition = self.World.Map.CenterOfCell(targetLocation);
-
-			self.World.AddFrameEndTask(w =>
-			{
-				if (info.WarpInSequence != null)
-					w.Add(new SpriteEffect(cachedSourcePosition, w, image, info.WarpInSequence, info.Palette));
-
-				if (info.WarpOutSequence != null)
-					w.Add(new SpriteEffect(cachedTargetPosition, w, image, info.WarpOutSequence, info.Palette));
-			});
+			this.chronosphere = chronosphere;
+			this.killCargo = killCargo;
 
 			if (info.ReturnToOrigin && info.Condition != null && ReturnTicks <= 0 && conditionToken == Actor.InvalidConditionToken)
 				conditionToken = self.GrantCondition(info.Condition);
 
-			this.chronosphere = chronosphere;
-			this.killCargo = killCargo;
+			var teleported = base.Teleport(self, targetLocation, duration, killCargo, chronosphere);
 
-			return base.Teleport(self, targetLocation, duration, killCargo, chronosphere);
+			if (teleported)
+			{
+				var warpInPos = self.CenterPosition;
+				var warpOutPos = self.World.Map.CenterOfCell(targetLocation);
+				WarpEffect(warpInPos, warpOutPos);
+
+				if (info.ReturnToAvoidDeath && !killCargo && cargo != null)
+				{
+					cachedPassengers = new List<Actor>();
+					foreach (var p in cargo.Passengers)
+						cachedPassengers.Add(p);
+				}
+			}
+
+			return teleported;
 		}
 
 		void ITick.Tick(Actor self)
@@ -139,11 +154,11 @@ namespace OpenRA.Mods.CA.Traits
 
 				self.World.AddFrameEndTask(w =>
 				{
-					WarpEffect(w, self.CenterPosition, self.World.Map.CenterOfCell(Origin));
+					WarpEffect(self.CenterPosition, self.World.Map.CenterOfCell(Origin));
 				});
 
 				// The actor is killed using Info.DamageTypes if the teleport fails
-				self.QueueActivity(false, new Teleport(chronosphere ?? self, Origin, null, true, killCargo, Info.ChronoshiftSound,
+				self.QueueActivity(false, new Teleport(chronosphere ?? self, Origin, null, killCargo, true, Info.ChronoshiftSound,
 					false, true, Info.DamageTypes));
 			}
 		}
@@ -177,6 +192,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (!returnToAvoidDeath || IsTraitDisabled)
 				return;
 
+			returnToAvoidDeath = false;
 			var defeated = self.Owner.WinState == WinState.Lost;
 			if (defeated)
 				return;
@@ -193,28 +209,43 @@ namespace OpenRA.Mods.CA.Traits
 				new HealthInit(info.ReturnToAvoidDeathHealthPercent)
 			};
 
+			if (!killCargo && cargo != null)
+			{
+				var passengers = new List<string>();
+				foreach (var passenger in cachedPassengers)
+				{
+					if (passenger.IsInWorld || !passenger.IsDead)
+						continue;
+
+					passengers.Add(passenger.Info.Name.ToLowerInvariant());
+				}
+
+				td.Add(new CargoInit(new CargoInfo(), passengers.ToArray()));
+			}
+
 			if (facing != null)
 				td.Add(new FacingInit(facing.Facing));
 
 			self.World.AddFrameEndTask(w =>
 			{
-				WarpEffect(w, self.CenterPosition, originLocation);
+				WarpEffect(self.CenterPosition, originLocation);
 				Game.Sound.Play(SoundType.World, info.ChronoshiftSound, self.CenterPosition);
 				var a = w.CreateActor(self.Info.Name, td);
-				a.QueueActivity(false, new Teleport(chronosphere ?? a, Origin, null, true, killCargo, Info.ChronoshiftSound,
+				a.QueueActivity(false, new Teleport(chronosphere ?? a, Origin, null, killCargo, true, Info.ChronoshiftSound,
 					false, true, Info.DamageTypes));
 			});
 		}
 
-		void WarpEffect(World w, WPos currentLocation, WPos destinationLocation)
+		void WarpEffect(WPos warpInPos, WPos warpOutPos)
 		{
 			var image = info.Image ?? self.Info.Name;
+			var w = self.World;
 
 			if (info.WarpInSequence != null)
-				w.Add(new SpriteEffect(currentLocation, w, image, info.WarpInSequence, info.Palette));
+				w.Add(new SpriteEffect(warpInPos, w, image, info.WarpInSequence, info.Palette));
 
 			if (info.WarpOutSequence != null)
-				w.Add(new SpriteEffect(destinationLocation, w, image, info.WarpOutSequence, info.Palette));
+				w.Add(new SpriteEffect(warpOutPos, w, image, info.WarpOutSequence, info.Palette));
 		}
 	}
 }

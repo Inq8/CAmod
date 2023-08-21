@@ -38,6 +38,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Ticks until returning after teleportation.")]
 		public readonly int Duration = 750;
 
+		[Desc("Duration for enemy units. Set to zero to use same as main duration.")]
+		public readonly int EnemyDuration = 375;
+
 		public readonly bool KillCargo = true;
 
 		[CursorReference]
@@ -53,7 +56,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly string TargetBlockedCursor = "move-blocked";
 
 		[Desc("Font to use for target count.")]
-		public readonly string TargetCountFont = "Regular";
+		public readonly string TargetCountFont = "Medium";
 
 		public readonly bool ShowSelectionBoxes = false;
 		public readonly Color HoverSelectionBoxColor = Color.White;
@@ -114,9 +117,13 @@ namespace OpenRA.Mods.CA.Traits
 				}
 
 				var destinationCell = info.KeepFormation ? actor.Location + targetDelta : targetCell;
+				var duration = info.Duration;
+
+				if (info.EnemyDuration != info.Duration && !actor.Owner.IsAlliedWith(self.Owner))
+					duration = info.EnemyDuration;
 
 				if (self.Owner.Shroud.IsExplored(targetCell)) // && cs.CanChronoshiftTo(target, targetCell)
-					cs.Teleport(actor, targetCell, info.Duration, info.KillCargo, self);
+					cs.Teleport(actor, targetCell, duration, info.KillCargo, self);
 			}
 		}
 
@@ -240,7 +247,7 @@ namespace OpenRA.Mods.CA.Traits
 					var color = power.info.TargetCircleColor;
 					var text = targetUnits.Count() + " / " + power.info.MaxTargets;
 					var size = font.Measure(text);
-					var textPos = new int2(Viewport.LastMousePos.X - (size.X / 2), Viewport.LastMousePos.Y + size.Y + (size.Y / 2));
+					var textPos = new int2(Viewport.LastMousePos.X - (size.X / 2), Viewport.LastMousePos.Y + size.Y + (size.Y / 3));
 					yield return new UITextRenderable(font, WPos.Zero, textPos, 0, color, text);
 				}
 			}

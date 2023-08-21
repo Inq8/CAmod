@@ -353,6 +353,9 @@ InitConvoy = function()
 			end)
 
 			Trigger.OnRemovedFromWorld(truck, function(a)
+				if not truck.IsDead then
+					return
+				end
 				if CurrentConvoyArrivalComplete then
 					local numTrucks = #England.GetActorsByType("truk")
 					if numTrucks == 0 then
