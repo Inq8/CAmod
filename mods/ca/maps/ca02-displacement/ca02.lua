@@ -226,6 +226,12 @@ WorldLoaded = function()
 		end)
 	end)
 
+	if Difficulty ~= "hard" then
+		Trigger.AfterDelay(DateTime.Minutes(1), function()
+			Tip("Resources in the vicinity are limited. Explore to find additional sources of income.")
+		end)
+	end
+
 	-- Easter egg
 	Trigger.OnKilled(Church, function(a)
 		Media.PlaySound("screams.aud")

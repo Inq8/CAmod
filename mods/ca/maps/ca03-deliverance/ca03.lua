@@ -234,6 +234,13 @@ WorldLoaded = function()
 		HardOnlySub4.Destroy()
 		HardOnlySub5.Destroy()
 
+		HardOnlyTeslaCoil1.Destroy()
+		HardOnlyTeslaCoil2.Destroy()
+		HardOnlyTeslaCoil3.Destroy()
+
+		HardOnlyKatyusha1.Destroy()
+		HardOnlyKatyusha2.Destroy()
+
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
 			Tip("If you put a Mechanic or Engineer inside an IFV it becomes a repair vehicle.")
 		end)
