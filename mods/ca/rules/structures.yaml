@@ -1978,8 +1978,7 @@ BARR:
 
 KENN:
 	Inherits: ^Building
-	Inherits@PRIMARY: ^PrimaryBuilding
-	Inherits@QUEUEUPDATER: ^QueueUpdater
+	Inherits@DOG: ^ProducesDogs
 	Selectable:
 		Bounds: 1024, 1024
 	Buildable:
@@ -2009,16 +2008,6 @@ KENN:
 		RequiresCondition: !being-captured
 		SpawnOffset: -280,400,0
 		ExitCell: -1,0
-	Production@SQ:
-		Produces: InfantrySQ, Dog
-		PauseOnCondition: forceshield || invulnerability || being-warped
-		RequiresCondition: !global-multiqueue
-	Production@MQ:
-		Produces: Dog
-		PauseOnCondition: forceshield || invulnerability || being-warped
-		RequiresCondition: global-multiqueue
-	ProductionBar:
-		ProductionType: InfantrySQ
 	ProvidesPrerequisite@dog:
 		Prerequisite: infantry.dog
 	-SpawnActorsOnSell:

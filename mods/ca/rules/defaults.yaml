@@ -3297,7 +3297,7 @@
 	CapturableProgressBar:
 	CapturableProgressBlink:
 	GivesCashOnCapture:
-		Amount: 100
+		Amount: 200
 	GrantConditionOnCapture:
 		Condition: salvaged
 	KillsSelf:
@@ -3943,8 +3943,6 @@
 		RequiresCondition: global-multiqueue
 	GrantExternalConditionToProduced:
 		Condition: produced
-	Targetable@INF:
-		TargetTypes: InfantryProducer
 	ProductionCostMultiplier@MQS1:
 		Multiplier: 300
 		Prerequisites: infantry.any, global.multiqueuescaled, !optprod1.upgrade, !optprod2.upgrade
@@ -3964,7 +3962,21 @@
 		ProductionType: InfantrySQ
 	ProductionBar@MQINF:
 		ProductionType: CyborgMQ
-	-Targetable@INF:
+	-ProductionCostMultiplier@MQS1:
+	-ProductionCostMultiplier@MQS2:
+
+^ProducesDogs:
+	Inherits: ^ProducesInfantry
+	ProductionQueue@MQINF:
+		Type: DogMQ
+	Production@SQINF:
+		Produces: InfantrySQ, Dog
+	Production@MQINF:
+		Produces: DogMQ, Dog
+	ProductionBar@SQINF:
+		ProductionType: InfantrySQ
+	ProductionBar@MQINF:
+		ProductionType: DogMQ
 	-ProductionCostMultiplier@MQS1:
 	-ProductionCostMultiplier@MQS2:
 
