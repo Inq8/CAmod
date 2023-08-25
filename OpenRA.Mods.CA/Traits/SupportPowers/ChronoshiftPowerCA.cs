@@ -149,7 +149,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (!a.TraitsImplementing<Chronoshiftable>().Any(cs => !cs.IsTraitDisabled))
 				return false;
 
-			if (Self.World.ShroudObscures(a.Location) || Self.World.FogObscures(a.Location))
+			if (!Self.Owner.Shroud.IsVisible(a.Location))
 				return false;
 
 			if (!a.CanBeViewedByPlayer(Self.Owner))
@@ -247,7 +247,7 @@ namespace OpenRA.Mods.CA.Traits
 					var color = power.info.TargetCircleColor;
 					var text = targetUnits.Count() + " / " + power.info.MaxTargets;
 					var size = font.Measure(text);
-					var textPos = new int2(Viewport.LastMousePos.X - (size.X / 2), Viewport.LastMousePos.Y + size.Y + (size.Y / 3));
+					var textPos = new int2(Viewport.LastMousePos.X - (size.X / 2), Viewport.LastMousePos.Y - (size.Y * 2) - (size.Y / 3));
 					yield return new UITextRenderable(font, WPos.Zero, textPos, 0, color, text);
 				}
 			}
@@ -314,6 +314,7 @@ namespace OpenRA.Mods.CA.Traits
 				// Cancel the OG if we can't use the power
 				if (!manager.Powers.TryGetValue(order, out var p) || !p.Active || !p.Ready)
 					world.CancelInputMode();
+
 			}
 
 			protected override IEnumerable<IRenderable> RenderAboveShroud(WorldRenderer wr, World world)
@@ -329,13 +330,22 @@ namespace OpenRA.Mods.CA.Traits
 
 					foreach (var unit in power.selectedActors.Where(a => power.IsValidTarget(a)))
 					{
-						if (unit.CanBeViewedByPlayer(manager.Self.Owner))
+						if (!unit.CanBeViewedByPlayer(manager.Self.Owner))
+							continue;
+
+						if (power.info.LeashRange > WDist.Zero)
 						{
-							var decorations = unit.TraitsImplementing<ISelectionDecorations>().FirstEnabledTraitOrDefault();
-							if (decorations != null)
-								foreach (var d in decorations.RenderSelectionAnnotations(unit, wr, power.info.SelectedSelectionBoxColor))
-									yield return d;
+							var unitDistMoved = unit.CenterPosition - world.Map.CenterOfCell(sourceLocation);
+							if (unitDistMoved.Length > power.info.LeashRange.Length)
+								continue;
 						}
+
+						var decorations = unit.TraitsImplementing<ISelectionDecorations>().FirstEnabledTraitOrDefault();
+						if (decorations == null)
+							continue;
+
+						foreach (var d in decorations.RenderSelectionAnnotations(unit, wr, power.info.SelectedSelectionBoxColor))
+							yield return d;
 					}
 
 					if (power.info.ShowDestinationCircle)

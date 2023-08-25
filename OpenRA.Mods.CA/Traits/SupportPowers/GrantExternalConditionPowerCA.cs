@@ -100,14 +100,26 @@ namespace OpenRA.Mods.CA.Traits
 		}
 	}
 
-	public class GrantExternalConditionPowerCA : SupportPower
+	public class GrantExternalConditionPowerCA : SupportPower, ITick, INotifyCreated
 	{
 		readonly GrantExternalConditionPowerCAInfo info;
+		int activeToken = Actor.InvalidConditionToken;
+		IConditionTimerWatcher[] watchers;
+
+		[Sync]
+		public int Ticks { get; private set; }
 
 		public GrantExternalConditionPowerCA(Actor self, GrantExternalConditionPowerCAInfo info)
 			: base(self, info)
 		{
 			this.info = info;
+		}
+
+		protected override void Created(Actor self)
+		{
+			watchers = self.TraitsImplementing<IConditionTimerWatcher>().Where(Notifies).ToArray();
+
+			base.Created(self);
 		}
 
 		public override void SelectTarget(Actor self, string order, SupportPowerManager manager)
@@ -119,6 +131,12 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			base.Activate(self, order, manager);
 			PlayLaunchSounds();
+
+			if (!string.IsNullOrEmpty(info.ActiveCondition) && activeToken == Actor.InvalidConditionToken)
+			{
+				Ticks = info.Duration;
+				activeToken = self.GrantCondition(info.ActiveCondition);
+			}
 
 			var wsb = self.TraitOrDefault<WithSpriteBody>();
 			if (wsb != null && wsb.DefaultAnimation.HasSequence(info.ActiveSequence))
@@ -151,7 +169,7 @@ namespace OpenRA.Mods.CA.Traits
 					&& info.ValidRelationships.HasRelationship(Self.Owner.RelationshipWith(a.Owner))
 					&& (info.ValidTargets.IsEmpty || info.ValidTargets.Overlaps(a.GetAllTargetTypes()))
 					&& a.TraitsImplementing<ExternalCondition>().Any(t => t.Info.Condition == info.Condition && t.CanGrantCondition(Self))
-					&& !(info.TargetMustBeVisible && (Self.World.ShroudObscures(a.Location) || Self.World.FogObscures(a.Location)))
+					&& (!info.TargetMustBeVisible || Self.Owner.Shroud.IsVisible(a.Location))
 					&& a.CanBeViewedByPlayer(Self.Owner))
 				.OrderBy(a => (a.CenterPosition - centerPos).LengthSquared);
 
@@ -160,6 +178,32 @@ namespace OpenRA.Mods.CA.Traits
 
 			return actorsInRange;
 		}
+
+		void RevokeCondition(Actor self)
+		{
+			if (activeToken != Actor.InvalidConditionToken)
+				activeToken = self.RevokeCondition(activeToken);
+		}
+
+		void ITick.Tick(Actor self)
+		{
+			if (IsTraitDisabled && activeToken != Actor.InvalidConditionToken)
+				RevokeCondition(self);
+
+			if (IsTraitPaused || IsTraitDisabled)
+				return;
+
+			foreach (var w in watchers)
+				w.Update(info.Duration, Ticks);
+
+			if (activeToken == Actor.InvalidConditionToken)
+				return;
+
+			if (--Ticks < 1)
+				RevokeCondition(self);
+		}
+
+		bool Notifies(IConditionTimerWatcher watcher) { return watcher.Condition == info.ActiveCondition; }
 
 		class SelectConditionTarget : OrderGenerator
 		{
