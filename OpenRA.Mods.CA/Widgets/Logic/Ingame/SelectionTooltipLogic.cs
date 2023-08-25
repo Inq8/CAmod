@@ -54,13 +54,17 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 		void UpdateTooltip()
 		{
-			if (world.Selection.Actors.Count() != 1)
+			var selectedActors = world.Selection.Actors;
+			var numSelectedActors = selectedActors.Count();
+			var uniqueActors = selectedActors.DistinctBy(a => a.Info.Name);
+
+			if (uniqueActors.Count() != 1)
 			{
 				HideTooltip();
 				return;
 			}
 
-			var actor = world.Selection.Actors.First();
+			var actor = selectedActors.First();
 			if (actor == null || actor.Info == null || actor.IsDead || !actor.IsInWorld || actor.Disposed)
 			{
 				HideTooltip();
@@ -99,7 +103,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			if (tooltipExtrasInfo != null && tooltipExtrasInfo.FakeActor != null)
 			{
-				var o = world.Selection.Actors.FirstOrDefault().Owner;
+				var o = actor.Owner;
 				var stance = o == null || world.RenderPlayer == null ? PlayerRelationship.None : o.RelationshipWith(world.RenderPlayer);
 				if (stance == PlayerRelationship.Enemy)
 				{
@@ -111,6 +115,11 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			// Name
 			var name = tooltipInfo != null ? tooltipInfo.Name : actorInfo.Name;
+
+			if (numSelectedActors > 1)
+				name = numSelectedActors.ToString() + "x " + name;
+				//name += " (x" + numSelectedActors.ToString() + ")";
+
 			nameLabel.Text = name;
 			var nameSize = font.Measure(name);
 
@@ -175,7 +184,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			descLabel.Bounds.Height += strengthsSize.Y + weaknessesSize.Y + attributesSize.Y + descLabelPadding + extrasSpacing;
 
-			var leftWidth = new[] { nameSize.X, descSize.X, strengthsSize.X, weaknessesSize.X, attributesSize.X }.Aggregate(Math.Max);
+			var leftWidth = new[] { nameSize.X, descSize.X, strengthsSize.X, weaknessesSize.X, attributesSize.X }.Aggregate(Math.Max) + 5;
 			var rightWidth = new[] { armorTypeSize.X, costSize.X }.Aggregate(Math.Max);
 
 			armorTypeIcon.Bounds.X = costIcon.Bounds.X = leftWidth + 2 * nameLabel.Bounds.X;
