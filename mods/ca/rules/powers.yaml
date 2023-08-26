@@ -44,6 +44,7 @@
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeSpeechNotification: VeilOfWarReady
 		EndChargeTextNotification: Veil of War ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayRadarPing: True
@@ -78,6 +79,7 @@
 		DirectionArrowAnimation: paradirection
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: ClusterMinesReady
 		EndChargeTextNotification: Cluster Mines ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		RequiresCondition: !build-incomplete
@@ -101,7 +103,7 @@
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
-		EndChargeSpeechNotification: Reinforce
+		EndChargeSpeechNotification: TemporalIncursionReady
 		EndChargeTextNotification: Temporal Incursion ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayRadarPing: True
@@ -135,6 +137,7 @@
 		Description: \nCalls in P51 ground attack planes to perform\n    strafing runs on the target.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: StrafingRunReady
 		EndChargeTextNotification: Strafing Run ready.
 		CameraActor: camera.paradrop
 		CameraRemoveDelay: 150
@@ -235,7 +238,7 @@
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		BeginChargeSpeechNotification: ChronosphereCharging
-		EndChargeSpeechNotification: ChronosphereReady
+		EndChargeSpeechNotification: TimeWarpReady
 		EndChargeTextNotification: Time Warp ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayBeacon: True
@@ -389,7 +392,7 @@
 		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
-		EndChargeSpeechNotification: Reinforce
+		EndChargeSpeechNotification: ParatroopersReady
 		EndChargeTextNotification: Paratroopers ready.
 		AllowImpassableCells: false
 		QuantizedFacings: 8
@@ -419,7 +422,7 @@
 		ReinforcementsArrivedSpeechNotification: ReinforcementsArrived
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
-		EndChargeSpeechNotification: Reinforce
+		EndChargeSpeechNotification: StormtroopersReady
 		EndChargeTextNotification: Stormtroopers ready.
 		AllowImpassableCells: false
 		QuantizedFacings: 8
@@ -444,6 +447,8 @@
 		Description: \nCalls in a Badger bomber which drops parachuted\n    bombs on your target.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: ParabombsReady
+		EndChargeTextNotification: Parabombs ready.
 		CameraActor: camera.paradrop
 		CameraRemoveDelay: 150
 		UnitType: badr.bomber
@@ -470,6 +475,8 @@
 		Description: \nCalls in a squad of Badgers which drop\n    bombs on your target.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: CarpetBombReady
+		EndChargeTextNotification: Carpet bombing ready.
 		CameraActor: camera.paradrop
 		CameraRemoveDelay: 150
 		UnitType: badr.cbomber
@@ -496,6 +503,8 @@
 		Description: \nCalls in a a Badger bomber which drops an\n    atom bomb on your target.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: AtomicBombReady
+		EndChargeTextNotification: Atomic bomb ready.
 		CameraActor: camera.paradrop
 		CameraRemoveDelay: 150
 		UnitType: badr.nbomber
@@ -523,6 +532,8 @@
 		Description: \nCalls in a Badger bomber which drops a genetic\n    mutation bomb on your target, transforming\n    infantry into Brutes under your control.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: GeneticMutationBombReady
+		EndChargeTextNotification: Genetic Mutation Bomb ready.
 		CameraActor: camera.paradrop
 		CameraRemoveDelay: 150
 		UnitType: badr.mbomber
@@ -577,6 +588,7 @@
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeSpeechNotification: AtomicShellsReady
 		EndChargeTextNotification: Atomic Shells ready.
 		DisplayRadarPing: True
 		Cursor: ability
@@ -604,6 +616,7 @@
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeSpeechNotification: AtomicShellsReady
 		EndChargeTextNotification: Atomic Shells ready.
 		DisplayRadarPing: True
 		Cursor: ability
@@ -1128,6 +1141,8 @@
 		LaunchSound: hacksat.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: SatelliteHackReady
+		EndChargeTextNotification: Satellite Hack ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		EffectImage: empty
 		EffectSequence: idle
@@ -1147,6 +1162,8 @@
 		LaunchSound: hacksat.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: SatelliteHackReady
+		EndChargeTextNotification: Satellite Hack ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		EffectImage: empty
 		EffectSequence: idle
@@ -1166,6 +1183,7 @@
 		Description: \nA B2 Stealth Bomber drops inferno bombs on your target.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: InfernoBombReady
 		EndChargeTextNotification: Inferno Bomb ready.
 		CameraActor: camera.paradrop
 		CameraRemoveDelay: 150
@@ -1197,7 +1215,7 @@
 		Description: \nDeploy a squad of hackers that can remotely\n    capture buildings and take control of defenses.\n\nTarget infantry production structure to deploy.
 		Actors: hack, hack, hack
 		LaunchSpeechNotification: ReinforcementsArrived
-		EndChargeSpeechNotification: Reinforce
+		EndChargeSpeechNotification: HackerCellReady
 		EndChargeTextNotification: Hacker Cell ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		SupportPowerPaletteOrder: 50
@@ -1213,7 +1231,7 @@
 		Description: \nDeploy a squad of hackers that can remotely\n    capture buildings and take control of defenses.
 		Actors: hack, hack, hack
 		LaunchSpeechNotification: ReinforcementsArrived
-		EndChargeSpeechNotification: Reinforce
+		EndChargeSpeechNotification: HackerCellReady
 		EndChargeTextNotification: Hacker Cell ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		SupportPowerPaletteOrder: 50
@@ -1235,6 +1253,7 @@
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeSpeechNotification: CashHackReady
 		EndChargeTextNotification: Cash Hack ready.
 		DisplayRadarPing: True
 		Cursor: ability
@@ -1252,7 +1271,7 @@
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		LaunchSpeechNotification: ReinforcementsArrived
-		EndChargeSpeechNotification: Reinforce
+		EndChargeSpeechNotification: ShadowTeamReady
 		EndChargeTextNotification: Shadow Team ready.
 		UnitType: sgli
 		QuantizedFacings: 8
@@ -1279,7 +1298,7 @@
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
-		IncomingSpeechNotification: MissileLaunchDetected
+		IncomingSpeechNotification: ClusMissileWarning
 		IncomingTextNotification: Cluster Missile launch detected.
 		MissileWeapon: deathhand
 		MissileImage: deathhand
@@ -1329,6 +1348,7 @@
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeSpeechNotification: FrenzyReady
 		EndChargeTextNotification: Frenzy ready.
 		DisplayRadarPing: True
 		Cursor: ability
@@ -1376,12 +1396,12 @@
 		ChargeInterval: 13500
 		Name: Chemical Missile
 		Description: \nLaunches an deadly Chemical Missile. Deals heavy damage\n    and creates toxic clouds which are extremely harmful to infantry.\n
-		EndChargeSpeechNotification: CMissileReady
+		EndChargeSpeechNotification: ChemMissileReady
 		EndChargeTextNotification: Chemical Missile ready.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
-		IncomingSpeechNotification: MissileLaunchDetected
+		IncomingSpeechNotification: ChemMissileWarning
 		IncomingTextNotification: Chemical Missile launch detected.
 		MissileWeapon: Chemicbm
 		MissileImage: Chemicbm
@@ -1425,6 +1445,7 @@
 		EffectSequence: idle
 		EffectPalette: tseffect-ignore-lighting-alpha75
 		SupportPowerPaletteOrder: 50
+		EndChargeSpeechNotification: ResourceScanReady
 		EndChargeTextNotification: Resource Scan ready.
 
 ^StormSpikePower:
@@ -1443,6 +1464,7 @@
 		AirburstAltitude: 0c0
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: StormSpikeReady
 		EndChargeTextNotification: Storm Spike ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		CameraActor: camera.dummy
@@ -1466,6 +1488,7 @@
 		AirburstAltitude: 0c0
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: BuzzerSwarmReady
 		EndChargeTextNotification: Buzzer Swarm ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		CameraActor: camera.dummy
@@ -1487,6 +1510,7 @@
 		AirburstAltitude: 0c0
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: BuzzerSwarmReady
 		EndChargeTextNotification: Buzzer Swarm ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		CameraActor: camera.dummy
@@ -1510,6 +1534,7 @@
 		AirburstAltitude: 0c0
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: IonSurgeReady
 		EndChargeTextNotification: Ion Surge ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		DisplayRadarPing: True
@@ -1533,6 +1558,7 @@
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeSpeechNotification: IchorSeedReady
 		EndChargeTextNotification: Ichor Seed ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		EffectImage: empty
@@ -1556,6 +1582,7 @@
 		AirburstAltitude: 0c0
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: GreaterCoalescenceReady
 		EndChargeTextNotification: Greater Coalescence ready.
 		PauseOnCondition: disabled || empdisable || being-warped
 		CameraActor: camera.dummy
@@ -1575,6 +1602,8 @@
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
+		BeginChargeSpeechNotification: SuppressionCharging
+		EndChargeSpeechNotification: SuppressionReady
 		EndChargeTextNotification: Suppression Field ready.
 		DisplayRadarPing: True
 		ActivationDelay: 0
@@ -1599,6 +1628,8 @@
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
+		BeginChargeSpeechNotification: SuppressionCharging
+		EndChargeSpeechNotification: SuppressionReady
 		EndChargeTextNotification: Suppression Field ready.
 		DisplayRadarPing: True
 		ActivationDelay: 0
@@ -1631,7 +1662,7 @@
 		EndChargeSpeechNotification: RiftReady
 		EndChargeTextNotification: Rift Generator ready.
 		InsufficientPowerSpeechNotification: InsufficientPower
-		IncomingSpeechNotification: RiftApproach
+		IncomingSpeechNotification: RiftWarning
 		IncomingTextNotification: Rift Generator activated.
 		IncomingSound: nukelaunch.aud
 		LaunchSound: nukelaunch.aud
