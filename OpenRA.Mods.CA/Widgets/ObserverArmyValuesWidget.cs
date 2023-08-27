@@ -25,6 +25,7 @@ namespace OpenRA.Mods.CA.Widgets
 		public readonly string HeadingFont = "Regular";
 		public readonly string Font = "Bold";
 		public readonly TextAlign Align = TextAlign.Right;
+		public readonly int ReplayYPosModifier = 0;
 
 		readonly SpriteFont font;
 		readonly SpriteFont headingFont;
@@ -42,6 +43,14 @@ namespace OpenRA.Mods.CA.Widgets
 			headingFont = Game.Renderer.Fonts[HeadingFont];
 			this.world = world;
 			armyValues = new List<ArmyValue>();
+		}
+
+		public override void Initialize(WidgetArgs args)
+		{
+			base.Initialize(args);
+
+			if (world.IsReplay)
+				Bounds.Y += ReplayYPosModifier;
 		}
 
 		class ArmyValue
