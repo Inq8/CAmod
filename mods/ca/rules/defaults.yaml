@@ -1239,8 +1239,8 @@
 		CloakDelay: 25
 		IsPlayerPalette: false
 		Palette: cloakgreen
-		CloakSound: cloak5.aud
-		UncloakSound: appear1.aud
+		CloakSound: cloak5md.aud
+		UncloakSound: appear1md.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish
 	DamageMultiplier@TIBSTEALTH:
 		Modifier: 90
@@ -1254,8 +1254,8 @@
 		CloakDelay: 150
 		IsPlayerPalette: false
 		Palette: cloak
-		CloakSound: cloak5.aud
-		UncloakSound: appear1.aud
+		CloakSound: cloak5md.aud
+		UncloakSound: appear1md.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 	ExternalCondition@SGENCLOAK:
 		Condition: sgencloak
@@ -1268,7 +1268,7 @@
 		InitialDelay: 90
 		CloakDelay: 90
 		CloakSound: trans1.aud
-		UncloakSound: appear1.aud
+		UncloakSound: appear1md.aud
 		Palette: cloak
 		IsPlayerPalette: false
 		RequiresCondition: (crate-cloak) && !(cloak-force-disabled || invisibility)
@@ -2186,6 +2186,12 @@
 	WithIdleOverlay@LCHRHEAL:
 		Sequence: infantry
 		Offset: 0,0,300
+	Cloak@TIBSTEALTH:
+		CloakSound: cloak5sm.aud
+		UncloakSound: appear1sm.aud
+	Cloak@SGENCLOAK:
+		CloakSound: cloak5sm.aud
+		UncloakSound: appear1sm.aud
 
 ^Soldier:
 	Inherits: ^Infantry
@@ -2840,6 +2846,12 @@
 		RequiresCondition: !invulnerability && !forceshield
 	DelayedWeaponAttachable@TNT:
 		RequiresCondition: !invulnerability && !forceshield
+	Cloak@TIBSTEALTH:
+		CloakSound: cloak5.aud
+		UncloakSound: appear1.aud
+	Cloak@SGENCLOAK:
+		CloakSound: cloak5.aud
+		UncloakSound: appear1.aud
 
 ^BuildingTD:
 	Inherits@1: ^Building
