@@ -288,12 +288,12 @@ WorldLoaded = function()
 
 			Trigger.AfterDelay(DateTime.Seconds(3), function()
 				if GDICommanderAlive then
-					Notification("GDI commander freed.")
-					Media.PlaySpeechNotification(Greece, "TargetFreed")
+					Notification("The GDI commander has been freed.")
+					Media.PlaySpeechNotification(Greece, "GDICommanderFreed")
 				end
 
 				Trigger.AfterDelay(DateTime.Seconds(3), function()
-					Media.PlaySpeechNotification(Greece, "AlliedReinforcementsWest")
+					Media.PlaySpeechNotification(Greece, "GDITransportInbound")
 					Notification("GDI transport en route.")
 					Reinforcements.ReinforceWithTransport(GDI, "tran.evac", nil, { GDIRescueSpawn.Location, GDIRescueRally.Location }, nil, function(transport, cargo)
 
@@ -377,6 +377,8 @@ end
 GDIBaseFound = function()
 	if not IsGDIBaseFound then
 		IsGDIBaseFound = true
+		Media.PlaySpeechNotification(Greece, "GDIBaseDiscovered")
+		Greece.PlayLowPowerNotification = false
 
 		local gdiForces = GDI.GetActors()
 		Utils.Do(gdiForces, function(a)
@@ -387,6 +389,10 @@ GDIBaseFound = function()
 
 		Trigger.AfterDelay(1, function()
 			Actor.Create("QueueUpdaterDummy", true, { Owner = Greece })
+		end)
+
+		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			Greece.PlayLowPowerNotification = true
 		end)
 
 		InitUSSRAttacks()
@@ -564,6 +570,16 @@ InitUSSRPatrols = function()
 end
 
 InitUSSRAttacks = function()
+	Trigger.AfterDelay(DateTime.Seconds(4), function()
+		local siegeUnits = Map.ActorsInBox(SiegeUnitsBoxTopLeft.CenterPosition, SiegeUnitsBoxBottomRight.CenterPosition, function(a)
+			return a.Owner == USSR and not a.IsDead and a.HasProperty("Hunt")
+		end)
+
+		Utils.Do(siegeUnits, function(a)
+			a.Hunt()
+		end)
+	end)
+
 	Trigger.AfterDelay(Squads.Main.Delay[Difficulty], function()
 		InitAttackSquad(Squads.Main, USSR)
 	end)

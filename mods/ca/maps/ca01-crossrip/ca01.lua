@@ -468,6 +468,7 @@ ChronosphereDiscovered = function()
 		IsBaseEstablished = true
 		IsChronosphereDiscovered = true
 		Notification("Commander, the Soviets have been attempting to reverse engineer stolen Chronosphere technology! Use whatever means necessary to cease their experiments.")
+		Media.PlaySpeechNotification(Greece, "SovietChronosphereDiscovered")
 
 		local autoCamera = Actor.Create("smallcamera", true, { Owner = Greece, Location = SovietChronosphereLocation })
 		Trigger.AfterDelay(DateTime.Seconds(5), autoCamera.Destroy)
@@ -512,17 +513,22 @@ InterdimensionalCrossrip = function()
 	Trigger.AfterDelay(1, SpawnWormhole)
 	Trigger.AfterDelay(2, SpawnTibTree)
 
-	Notification("What in God's name!? Fall back to your base, prepare for evacuation. We'll need whatever intel you found to fix .. whatever this is.")
 	ObjectiveDefendUntilEvacuation = Greece.AddObjective("Defend your base until evacuation is prepared.")
 
 	if ObjectiveCaptureOrDestroyChronosphere ~= nil then
 		Greece.MarkCompletedObjective(ObjectiveCaptureOrDestroyChronosphere)
 	end
 
-	Trigger.AfterDelay(12, function()
+	local unitLostSilencer = Actor.Create("unitlostsilencer", true, { Owner = Greece })
+
+	Trigger.AfterDelay(DateTime.Seconds(2), function()
 		ScrinInvasion()
-		Media.PlaySpeechNotification(Greece, "TimerStarted")
+		Notification("Unidentified hostile forces detected. Fall back to your base, and prepare for evacuation.")
+		Media.PlaySpeechNotification(Greece, "PrepareEvacuation")
 		TimerTicks = EvacuationTime[Difficulty]
+		Trigger.AfterDelay(DateTime.Seconds(7), function()
+			unitLostSilencer.Destroy()
+		end)
 	end)
 
 	Actor.Create("flare", true, { Owner = Greece, Location = Evac1.Location })

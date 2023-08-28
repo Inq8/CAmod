@@ -27,6 +27,24 @@ Player:
 	PlayerResources:
 		DefaultCash: 5000
 
+^Infantry:
+	ActorLostNotification:
+		RequiresCondition: !unit-lost-notification-silenced
+	GrantConditionOnPrerequisite@UNITLOSTSILENCED:
+		Condition: unit-lost-notification-silenced
+		Prerequisites: unitlostsilencer
+
+^VEHICLE-NOUPG:
+	ActorLostNotification:
+		RequiresCondition: !unit-lost-notification-silenced
+	GrantConditionOnPrerequisite@UNITLOSTSILENCED:
+		Condition: unit-lost-notification-silenced
+		Prerequisites: unitlostsilencer
+
+UNITLOSTSILENCER:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesPrerequisite:
+
 E7:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 

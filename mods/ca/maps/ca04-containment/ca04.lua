@@ -285,8 +285,8 @@ end
 DoShoreSAMFlare = function()
 	Trigger.AfterDelay(DateTime.Seconds(4), function()
 		ShoreSAMFlare = Actor.Create("flare", true, { Owner = Greece, Location = ShoreSAMFlareLocation })
-		Media.PlaySpeechNotification(Greece, "SignalFlare")
-		Notification("Signal flare detected. Shore SAM site located.")
+		Media.PlaySpeechNotification(Greece, "SAMLocated")
+		Notification("Signal flare detected. A shore SAM Site has been located.")
 		Beacon.New(Greece, ShoreSAMBeaconPosition)
 		Trigger.AfterDelay(DateTime.Seconds(10), function()
 			ShoreSAMFlare.Destroy()
@@ -377,6 +377,7 @@ DropChronoPrison = function()
 		local exitPath =  { CarryallEntryPoint.Location }
 		ReinforcementsCA.ReinforceWithTransport(Greece, "ocar.chpr", nil, entryPath, exitPath)
 		Notification("Rendezvous with the Chrono Prison and proceed to the Chronosphere.")
+		Media.PlaySpeechNotification(Greece, "ChronoPrisonRendezvous")
 
 		Trigger.OnEnteredProximityTrigger(CarryallDropPoint.CenterPosition, WDist.New(2048), function(a, id)
 			if a.Owner == Greece and a.Type == "chpr" then

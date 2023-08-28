@@ -325,6 +325,7 @@ InitNodAttacks = function()
 	if not NodAttacksInitialized then
 		NodAttacksInitialized = true
 		Notification("Nod forces have been alerted to your presence, prepare your defenses!")
+		Media.PlaySpeechNotification(Greece, "NodAlerted")
 
 		Utils.Do(Patrols, function(p)
 			Utils.Do(p.Units, function(unit)
