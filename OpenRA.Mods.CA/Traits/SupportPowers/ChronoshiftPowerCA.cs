@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Graphics;
 using OpenRA.Mods.Cnc.Traits;
+using OpenRA.Mods.Common.Effects;
 using OpenRA.Mods.Common.Graphics;
 using OpenRA.Mods.Common.Orders;
 using OpenRA.Mods.Common.Traits;
@@ -28,6 +29,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Maximum number of targets. Zero for no limit.")]
 		public readonly int MaxTargets = 0;
+
+		[Desc("Maximum number of enemy targets. Zero for no limit (MaxTargets still applies).")]
+		public readonly int MaxEnemyTargets = 0;
 
 		[Desc("If true, keeps formation of teleported units.")]
 		public readonly bool KeepFormation = false;
@@ -68,6 +72,23 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly bool ShowDestinationCircle = false;
 		public readonly Color DestinationCircleColor = Color.Lime;
 
+		[Desc("Warp from sequence sprite image.")]
+		public readonly string WarpFromImage = null;
+
+		[Desc("Warp from sequence.")]
+		[SequenceReference(nameof(WarpFromImage))]
+		public readonly string WarpFromSequence = null;
+
+		[Desc("Warp to sequence sprite image.")]
+		public readonly string WarpToImage = null;
+
+		[Desc("Warp to sequence.")]
+		[SequenceReference(nameof(WarpToSequence))]
+		public readonly string WarpToSequence = null;
+
+		[PaletteReference]
+		public readonly string WarpEffectPalette = "effect";
+
 		public override object Create(ActorInitializer init) { return new ChronoshiftPowerCA(init.Self, this); }
 	}
 
@@ -97,7 +118,9 @@ namespace OpenRA.Mods.CA.Traits
 
 			var info = (ChronoshiftPowerCAInfo)Info;
 			var targetCell = self.World.Map.CellContaining(order.Target.CenterPosition);
-			var targetDelta = targetCell - order.ExtraLocation;
+			var sourceCell = order.ExtraLocation;
+			var sourcePos = self.World.Map.CenterOfCell(sourceCell);
+			var targetDelta = targetCell - sourceCell;
 
 			var actorsToTeleport = selectedActors.Where(a => IsValidTarget(a));
 
@@ -111,7 +134,7 @@ namespace OpenRA.Mods.CA.Traits
 
 				if (info.LeashRange > WDist.Zero)
 				{
-					var unitDistMoved = actor.CenterPosition - self.World.Map.CenterOfCell(order.ExtraLocation);
+					var unitDistMoved = actor.CenterPosition - sourcePos;
 					if (unitDistMoved.Length > info.LeashRange.Length)
 						continue;
 				}
@@ -125,6 +148,12 @@ namespace OpenRA.Mods.CA.Traits
 				if (self.Owner.Shroud.IsExplored(targetCell)) // && cs.CanChronoshiftTo(target, targetCell)
 					cs.Teleport(actor, targetCell, duration, info.KillCargo, self);
 			}
+
+			if (info.WarpFromImage != null && info.WarpFromSequence != null)
+				self.World.Add(new SpriteEffect(sourcePos, self.World, info.WarpFromImage, info.WarpFromSequence, info.WarpEffectPalette));
+
+			if (info.WarpToImage != null && info.WarpToSequence != null)
+				self.World.Add(new SpriteEffect(order.Target.CenterPosition, self.World, info.WarpToImage, info.WarpToSequence, info.WarpEffectPalette));
 		}
 
 		public IEnumerable<Actor> GetTargets(CPos xy)
@@ -135,10 +164,29 @@ namespace OpenRA.Mods.CA.Traits
 				.Where(a => IsValidTarget(a))
 				.OrderBy(a => (a.CenterPosition - centerPos).LengthSquared);
 
-			if (info.MaxTargets > 0)
-				return actorsInRange.Take(info.MaxTargets);
+			var targets = new List<Actor>();
+			var enemyTargets = 0;
 
-			return actorsInRange;
+			foreach (var a in actorsInRange)
+			{
+				if (info.MaxTargets > 0 && targets.Count() >= info.MaxTargets)
+					break;
+
+				if (info.MaxEnemyTargets > 0)
+				{
+					var isEnemy = !a.Owner.IsAlliedWith(Self.Owner);
+
+					if (isEnemy && enemyTargets >= info.MaxEnemyTargets)
+						continue;
+
+					if (isEnemy)
+						enemyTargets++;
+				}
+
+				targets.Add(a);
+			}
+
+			return targets;
 		}
 
 		public bool IsValidTarget(Actor a)

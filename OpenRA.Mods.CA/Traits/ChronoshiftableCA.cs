@@ -23,19 +23,27 @@ namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Can be teleported via Chronoshift power.",
 		"Extends the base version, adding the ability to return to avoid death,",
-		"and adding warp in/out sprite effects.")]
+		"and adding warp to/from sprite effects.")]
 	public class ChronoshiftableCAInfo : ChronoshiftableInfo
 	{
 		[Desc("Image used for the teleport effects. Defaults to the actor's type.")]
 		public readonly string Image = null;
 
-		[Desc("Sequence used for the effect played where the unit jumped from.")]
+		[Desc("Sequence used for the effect played where the unit jumped from initially.")]
 		[SequenceReference("Image")]
-		public readonly string WarpInSequence = null;
+		public readonly string InitialWarpFromSequence = null;
 
-		[Desc("Sequence used for the effect played where the unit jumped to.")]
+		[Desc("Sequence used for the effect played where the unit jumped to initially.")]
 		[SequenceReference("Image")]
-		public readonly string WarpOutSequence = null;
+		public readonly string InitialWarpToSequence = null;
+
+		[Desc("Sequence used for the effect played where the unit jumped from when returning.")]
+		[SequenceReference("Image")]
+		public readonly string ReturnWarpFromSequence = null;
+
+		[Desc("Sequence used for the effect played where the unit jumped to when returning.")]
+		[SequenceReference("Image")]
+		public readonly string ReturnWarpToSequence = null;
 
 		[Desc("Palette to render the warp in/out sprites in.")]
 		[PaletteReference]
@@ -53,7 +61,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly string ReturnToAvoidDeathSound = null;
 
 		[Desc("Relationships that benefit from returning to avoid death.")]
-		public readonly PlayerRelationship ReturnToAvoidDeathRelationships = PlayerRelationship.Ally | PlayerRelationship.Neutral | PlayerRelationship.Enemy;
+		public readonly PlayerRelationship ReturnToAvoidDeathRelationships = PlayerRelationship.Ally;
 
 		[Desc("If ReturnToAvoidDeath is true the amount of HP restored on return.")]
 		public readonly int ReturnToAvoidDeathHealthPercent = 20;
@@ -110,9 +118,9 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (teleported)
 			{
-				var warpInPos = self.CenterPosition;
-				var warpOutPos = self.World.Map.CenterOfCell(targetLocation);
-				WarpEffect(warpInPos, warpOutPos);
+				var warpFromPos = self.CenterPosition;
+				var warpToPos = self.World.Map.CenterOfCell(targetLocation);
+				WarpEffect(warpFromPos, warpToPos, false);
 
 				if (info.ReturnToAvoidDeath && !killCargo && cargo != null)
 				{
@@ -154,7 +162,7 @@ namespace OpenRA.Mods.CA.Traits
 
 				self.World.AddFrameEndTask(w =>
 				{
-					WarpEffect(self.CenterPosition, self.World.Map.CenterOfCell(Origin));
+					WarpEffect(self.CenterPosition, self.World.Map.CenterOfCell(Origin), true);
 				});
 
 				// The actor is killed using Info.DamageTypes if the teleport fails
@@ -228,24 +236,26 @@ namespace OpenRA.Mods.CA.Traits
 
 			self.World.AddFrameEndTask(w =>
 			{
-				WarpEffect(self.CenterPosition, originLocation);
-				Game.Sound.Play(SoundType.World, info.ChronoshiftSound, self.CenterPosition);
+				WarpEffect(self.CenterPosition, originLocation, true);
 				var a = w.CreateActor(self.Info.Name, td);
-				a.QueueActivity(false, new Teleport(chronosphere ?? a, Origin, null, killCargo, true, Info.ChronoshiftSound,
+				a.QueueActivity(false, new Teleport(chronosphere ?? a, Origin, null, killCargo, false, Info.ChronoshiftSound,
 					false, true, Info.DamageTypes));
 			});
 		}
 
-		void WarpEffect(WPos warpInPos, WPos warpOutPos)
+		void WarpEffect(WPos warpFromPos, WPos warpToPos, bool isReturning)
 		{
 			var image = info.Image ?? self.Info.Name;
 			var w = self.World;
 
-			if (info.WarpInSequence != null)
-				w.Add(new SpriteEffect(warpInPos, w, image, info.WarpInSequence, info.Palette));
+			var warpFromSequence = isReturning ? info.ReturnWarpFromSequence : info.InitialWarpFromSequence;
+			var warpToSequence = isReturning ? info.ReturnWarpToSequence : info.InitialWarpToSequence;
 
-			if (info.WarpOutSequence != null)
-				w.Add(new SpriteEffect(warpOutPos, w, image, info.WarpOutSequence, info.Palette));
+			if (warpFromSequence != null)
+				w.Add(new SpriteEffect(warpFromPos, w, image, warpFromSequence, info.Palette));
+
+			if (warpToSequence != null)
+				w.Add(new SpriteEffect(warpToPos, w, image, warpToSequence, info.Palette));
 		}
 	}
 }

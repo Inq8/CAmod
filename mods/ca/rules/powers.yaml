@@ -263,7 +263,7 @@
 		Icon: chrono
 		ChargeInterval: 4500
 		Name: Chronoshift
-		Description: \nTeleports up to 9 selected units to a targeted location,\n    returning to their original location\n    after a short time.\n\nIf a unit is killed while Chronoshifted, it is returned to its\n    original location with 20% health.\n\nEnemy units are teleported for half duration.
+		Description: \nTeleports selected units to a targeted location,\n    returning them to their original location\n    after a short time.\n\nFriendly units:\n• Up to 9 targets\n• Returned with 20% health if killed\n\nEnemy units:\n• Up to 5 targets\n• Teleported for half duration\n\nWarning: All passengers are killed.
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -271,10 +271,12 @@
 		EndChargeSpeechNotification: ChronosphereReady
 		EndChargeTextNotification: Chronosphere ready.
 		LaunchSound: chrono2.aud
-		KillCargo: false
+		IncomingSound: chrono2.aud
+		KillCargo: true
 		DisplayRadarPing: True
 		Range: 4c512
 		MaxTargets: 9
+		MaxEnemyTargets: 5
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 		SupportPowerPaletteOrder: 20
 		ShowSelectionBoxes: true
@@ -282,6 +284,12 @@
 		ShowTargetCircle: true
 		TargetCircleColor: b6f4ff
 		ShowDestinationCircle: true
+		WarpFromImage: chronobubble
+		WarpFromSequence: warpin
+		WarpToImage: chronobubble
+		WarpToSequence: warpout
+		WarpEffectPalette: ra2effect-ignore-lighting-alpha75
+
 	DetonateWeaponPower@ChronoAI:
 		OrderName: Chronoshiftai
 		Prerequisites: botplayer
@@ -290,7 +298,7 @@
 		ChargeInterval: 7000
 		Name: Chronoshift
 		ActivationDelay: 25
-		Description: \nTeleports selected units to a targeted location,\n    returning to their original location\n    after a short time.
+		Description: \nTeleports selected units to a targeted location,\n    returning them to their original location\n    after a short time.\n\nFriendly units:\n• Up to 9 targets\n• Returned with 20% health if killed\n\nEnemy units:\n• Up to 5 targets\n• Teleported for half duration\n\nWarning: All passengers are killed.
 		Weapon: ChronoAI
 		AirburstAltitude: 0c0
 		AllowMultiple: false
@@ -640,7 +648,7 @@
 		ValidTargets: Vehicle, Ship, Structure
 		Duration: 600
 		AllowMultiple: false
-		Description: \nMakes up to 5 selected vehicles or structures\n    temporarily invulnerable\n\nWarning: Harmful to Infantry.
+		Description: \nMakes up to 5 selected vehicles or structures\n    temporarily invulnerable.\n\nWarning: Harmful to infantry.
 		OnFireSound: ironcur9.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -1368,7 +1376,7 @@
 		Range: 3c512
 		Duration: 600
 		AllowMultiple: false
-		Description: \nMakes selected vehicles and structures\n    temporarily invisible\n\nWarning: Harmful to Infantry.
+		Description: \nMakes selected vehicles and structures\n    temporarily invisible.\n\nWarning: Harmful to infantry.
 		OnFireSound: cloak6.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
