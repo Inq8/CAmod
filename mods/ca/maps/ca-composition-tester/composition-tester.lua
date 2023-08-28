@@ -286,7 +286,7 @@ Restore = function(players)
 
                             if u.Cargo ~= nil then
                                 Utils.Do(u.Cargo, function(c)
-                                    local passenger = Actor.Create(c, true, { Owner = p })
+                                    local passenger = Actor.Create(c, false, { Owner = p })
                                     newActor.LoadPassenger(passenger)
                                 end)
                             end

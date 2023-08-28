@@ -797,8 +797,9 @@ InvaderZap:
 		Palette: scrin
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
-		Spread: 341
+		Spread: 448
 		Damage: 850
+		InvalidTargets: Infantry
 		Versus:
 			None: 65
 			Wood: 10
@@ -806,6 +807,11 @@ InvaderZap:
 			Light: 85
 			Heavy: 100
 			Brick: 20
+		DamageTypes: FireDeath, AirToGround
+	Warhead@2Dam: SpreadDamage
+		Spread: 128
+		ValidTargets: Infantry
+		Damage: 850
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, AirToGround
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
@@ -825,7 +831,7 @@ InvaderZapAA:
 		Speed: 1c768
 	ValidTargets: Air, AirSmall
 	Warhead@1Dam: SpreadDamage
-		Damage: 200
+		Damage: 235
 		Range: 0, 0c64, 0c256, 1c0
 		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
@@ -836,8 +842,9 @@ InvaderZapAA:
 			Wood: 100
 			None: 100
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	-Warhead@2Dam:
 	Warhead@smallDamage: SpreadDamage
-		Damage: 220
+		Damage: 235
 		Spread: 341
 		Falloff: 100, 50, 14, 0
 		ValidTargets: AirSmall
@@ -1347,7 +1354,7 @@ MothershipDiscs:
 	MinRange: 1c0
 	ReloadDelay: 50
 	Burst: 3
-	BurstDelays: 8
+	BurstDelays: 7
 	InvalidTargets: Structure
 	Projectile: Bullet
 		Image: plasmatorp1
