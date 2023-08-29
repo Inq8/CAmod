@@ -152,6 +152,12 @@ WorldLoaded = function()
 		GDIDefender2.Destroy()
 		NorthGapGenerator.Destroy()
 		HardOnlyPower.Destroy()
+		Cryo1.Destroy()
+		Cryo2.Destroy()
+		Cryo3.Destroy()
+		Cryo4.Destroy()
+		Cryo5.Destroy()
+		Prism1.Destroy()
 
 		if Difficulty == "easy" then
 			GDIDefender1.Destroy()
@@ -159,6 +165,9 @@ WorldLoaded = function()
 			SouthGapGenerator2.Destroy()
 			SouthGapGenerator3.Destroy()
 			HardAndNormalOnlyPower.Destroy()
+			AGT1.Owner = Legion
+			Prism2.Destroy()
+			Prism3.Destroy()
 		end
 
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
