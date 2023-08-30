@@ -10,6 +10,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using OpenRA.Mods.CA.Activities;
 using OpenRA.Mods.Cnc.Activities;
 using OpenRA.Mods.Cnc.Traits;
 using OpenRA.Mods.Common;
@@ -22,10 +23,25 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Can be teleported via Chronoshift power.",
-		"Extends the base version, adding the ability to return to avoid death,",
+		"Copy of base version, adding the ability to return to avoid death,",
 		"and adding warp to/from sprite effects.")]
-	public class ChronoshiftableCAInfo : ChronoshiftableInfo
+	public class ChronoshiftableCAInfo : ConditionalTraitInfo
 	{
+		[Desc("Should the actor die instead of being teleported?")]
+		public readonly bool ExplodeInstead = false;
+
+		[Desc("Types of damage that this trait causes to self when 'ExplodeInstead' is true",
+			"or the return-to-origin is blocked. Leave empty for no damage types.")]
+		public readonly BitSet<DamageType> DamageTypes = default;
+
+		public readonly string ChronoshiftSound = "chrono2.aud";
+
+		[Desc("Should the actor return to its previous location after the chronoshift wore out?")]
+		public readonly bool ReturnToOrigin = true;
+
+		[Desc("The color the bar of the 'return-to-origin' logic has.")]
+		public readonly Color TimeBarColor = Color.White;
+
 		[Desc("Image used for the teleport effects. Defaults to the actor's type.")]
 		public readonly string Image = null;
 
@@ -61,7 +77,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly string ReturnToAvoidDeathSound = null;
 
 		[Desc("Relationships that benefit from returning to avoid death.")]
-		public readonly PlayerRelationship ReturnToAvoidDeathRelationships = PlayerRelationship.Ally;
+		public readonly PlayerRelationship ReturnToAvoidDeathRelationships = PlayerRelationship.Ally | PlayerRelationship.Neutral | PlayerRelationship.Enemy;
 
 		[Desc("If ReturnToAvoidDeath is true the amount of HP restored on return.")]
 		public readonly int ReturnToAvoidDeathHealthPercent = 20;
@@ -69,27 +85,58 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If ReturnToAvoidDeath is true, the actor to replace the normal husk with.")]
 		public readonly string ReturnToAvoidDeathHuskActor = "camera.dummy";
 
+		public override void RulesetLoaded(Ruleset rules, ActorInfo ai)
+		{
+			if (!ai.HasTraitInfo<MobileInfo>() && !ai.HasTraitInfo<HuskInfo>())
+				throw new YamlException("Chronoshiftable requires actors to have the Mobile or Husk traits.");
+		}
+
 		public override object Create(ActorInitializer init) { return new ChronoshiftableCA(init, this); }
 	}
 
-	public class ChronoshiftableCA : Chronoshiftable, ITick, INotifyRemovedFromWorld, INotifyKilled, IHuskModifier
+	public class ChronoshiftableCA : ConditionalTrait<ChronoshiftableCAInfo>, ITick, ISync, ISelectionBar,
+		IDeathActorInitModifier, ITransformActorInitModifier, INotifyRemovedFromWorld,
+		INotifyKilled, IHuskModifier
 	{
-		readonly ChronoshiftableCAInfo info;
 		readonly Actor self;
+		Actor chronosphere;
+		bool killCargo;
+		int duration;
+		IPositionable iPositionable;
+
+		// Return-to-origin logic
+		[Sync]
+		public CPos Origin;
+
+		[Sync]
+		public int ReturnTicks = 0;
+
+		readonly ChronoshiftableCAInfo info;
 		readonly string faction;
 		readonly IFacing facing;
 		Cargo cargo;
 		List<Actor> cachedPassengers;
 		int conditionToken = Actor.InvalidConditionToken;
-		Actor chronosphere;
-		bool killCargo;
 		bool returnToAvoidDeath;
 
 		public ChronoshiftableCA(ActorInitializer init, ChronoshiftableCAInfo info)
-			: base(init, info)
+			: base(info)
 		{
-			this.info = info;
 			self = init.Self;
+
+			var returnInit = init.GetOrDefault<ChronoshiftReturnInit>();
+			if (returnInit != null)
+			{
+				ReturnTicks = returnInit.Ticks;
+				duration = returnInit.Duration;
+				Origin = returnInit.Origin;
+
+				// Defer to the end of tick as the lazy value may reference an actor that hasn't been created yet
+				if (returnInit.Chronosphere != null)
+					init.World.AddFrameEndTask(w => chronosphere = returnInit.Chronosphere.Actor(init.World).Value);
+			}
+
+			this.info = info;
 
 			if (info.ReturnToAvoidDeath)
 			{
@@ -100,21 +147,19 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override void Created(Actor self)
 		{
+			iPositionable = self.OccupiesSpace as IPositionable;
 			base.Created(self);
 
 			if (info.ReturnToAvoidDeath)
 				cargo = self.TraitOrDefault<Cargo>();
 		}
 
-		public override bool Teleport(Actor self, CPos targetLocation, int duration, bool killCargo, Actor chronosphere)
+		public bool Teleport(Actor self, CPos targetLocation, int duration, bool killCargo, Actor chronosphere)
 		{
-			this.chronosphere = chronosphere;
-			this.killCargo = killCargo;
-
 			if (info.ReturnToOrigin && info.Condition != null && ReturnTicks <= 0 && conditionToken == Actor.InvalidConditionToken)
 				conditionToken = self.GrantCondition(info.Condition);
 
-			var teleported = base.Teleport(self, targetLocation, duration, killCargo, chronosphere);
+			var teleported = InnerTeleport(self, targetLocation, duration, killCargo, chronosphere);
 
 			if (teleported)
 			{
@@ -131,6 +176,43 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			return teleported;
+		}
+
+		// Copy of Teleport from Chronoshiftable but using TeleportCA
+		bool InnerTeleport(Actor self, CPos targetLocation, int duration, bool killCargo, Actor chronosphere)
+		{
+			if (IsTraitDisabled)
+				return false;
+
+			// Some things appear chronoshiftable, but instead they just die.
+			if (Info.ExplodeInstead)
+			{
+				self.World.AddFrameEndTask(w =>
+				{
+					// Damage is inflicted by the chronosphere
+					if (!self.Disposed)
+						self.Kill(chronosphere, Info.DamageTypes);
+				});
+				return true;
+			}
+
+			// Set up return-to-origin info
+			// If this actor is already counting down to return to
+			// an existing location then we shouldn't override it
+			if (ReturnTicks <= 0)
+			{
+				Origin = self.Location;
+				ReturnTicks = duration;
+			}
+
+			this.duration = duration;
+			this.chronosphere = chronosphere;
+			this.killCargo = killCargo;
+
+			// Set up the teleport
+			self.QueueActivity(false, new TeleportCA(chronosphere, targetLocation, null, killCargo, true, Info.ChronoshiftSound));
+
+			return true;
 		}
 
 		void ITick.Tick(Actor self)
@@ -166,10 +248,44 @@ namespace OpenRA.Mods.CA.Traits
 				});
 
 				// The actor is killed using Info.DamageTypes if the teleport fails
-				self.QueueActivity(false, new Teleport(chronosphere ?? self, Origin, null, killCargo, true, Info.ChronoshiftSound,
+				self.QueueActivity(false, new TeleportCA(chronosphere ?? self, Origin, null, killCargo, true, Info.ChronoshiftSound,
 					false, true, Info.DamageTypes));
 			}
 		}
+
+		// Can't be used in synced code, except with ignoreVis.
+		public virtual bool CanChronoshiftTo(Actor self, CPos targetLocation)
+		{
+			// TODO: Allow enemy units to be chronoshifted into bad terrain to kill them
+			return !IsTraitDisabled && iPositionable != null && iPositionable.CanEnterCell(targetLocation);
+		}
+
+		// Show the remaining time as a bar
+		float ISelectionBar.GetValue()
+		{
+			if (IsTraitDisabled || !Info.ReturnToOrigin)
+				return 0f;
+
+			// Otherwise an empty bar is rendered all the time
+			if (ReturnTicks == 0 || !self.Owner.IsAlliedWith(self.World.RenderPlayer))
+				return 0f;
+
+			return (float)ReturnTicks / duration;
+		}
+
+		Color ISelectionBar.GetColor() { return Info.TimeBarColor; }
+		bool ISelectionBar.DisplayWhenEmpty => false;
+
+		void ModifyActorInit(TypeDictionary init)
+		{
+			if (IsTraitDisabled || !Info.ReturnToOrigin || ReturnTicks <= 0)
+				return;
+
+			init.Add(new ChronoshiftReturnInit(ReturnTicks, duration, Origin, chronosphere));
+		}
+
+		void IDeathActorInitModifier.ModifyDeathActorInit(Actor self, TypeDictionary init) { ModifyActorInit(init); }
+		void ITransformActorInitModifier.ModifyTransformActorInit(Actor self, TypeDictionary init) { ModifyActorInit(init); }
 
 		void INotifyKilled.Killed(Actor self, AttackInfo e)
 		{
@@ -200,7 +316,6 @@ namespace OpenRA.Mods.CA.Traits
 			if (!returnToAvoidDeath || IsTraitDisabled)
 				return;
 
-			returnToAvoidDeath = false;
 			var defeated = self.Owner.WinState == WinState.Lost;
 			if (defeated)
 				return;
@@ -214,7 +329,8 @@ namespace OpenRA.Mods.CA.Traits
 				new EffectiveOwnerInit(self.Owner),
 				new OwnerInit(self.Owner),
 				new SkipMakeAnimsInit(),
-				new HealthInit(info.ReturnToAvoidDeathHealthPercent)
+				new HealthInit(info.ReturnToAvoidDeathHealthPercent),
+				new LocationInit(self.Location)
 			};
 
 			if (!killCargo && cargo != null)
@@ -238,8 +354,10 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				WarpEffect(self.CenterPosition, originLocation, true);
 				var a = w.CreateActor(self.Info.Name, td);
-				a.QueueActivity(false, new Teleport(chronosphere ?? a, Origin, null, killCargo, false, Info.ChronoshiftSound,
+				a.QueueActivity(false, new TeleportCA(chronosphere ?? a, Origin, null, killCargo, false, Info.ChronoshiftSound,
 					false, true, Info.DamageTypes));
+
+				returnToAvoidDeath = false;
 			});
 		}
 
@@ -256,6 +374,22 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (warpToSequence != null)
 				w.Add(new SpriteEffect(warpToPos, w, image, warpToSequence, info.Palette));
+		}
+	}
+
+	public class ChronoshiftReturnInit : CompositeActorInit, ISingleInstanceInit
+	{
+		public readonly int Ticks;
+		public readonly int Duration;
+		public readonly CPos Origin;
+		public readonly ActorInitActorReference Chronosphere;
+
+		public ChronoshiftReturnInit(int ticks, int duration, CPos origin, Actor chronosphere)
+		{
+			Ticks = ticks;
+			Duration = duration;
+			Origin = origin;
+			Chronosphere = chronosphere;
 		}
 	}
 }

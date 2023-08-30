@@ -47,6 +47,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		public readonly bool KillCargo = true;
 
+		[Desc("Target types that cannot be targeted for chronoshifting.")]
+		public readonly BitSet<TargetableType> InvalidTargetTypes = default(BitSet<TargetableType>);
+
 		[CursorReference]
 		[Desc("Cursor to display when selecting targets for the chronoshift.")]
 		public readonly string SelectionCursor = "chrono-select";
@@ -83,7 +86,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly string WarpToImage = null;
 
 		[Desc("Warp to sequence.")]
-		[SequenceReference(nameof(WarpToSequence))]
+		[SequenceReference(nameof(WarpToImage))]
 		public readonly string WarpToSequence = null;
 
 		[PaletteReference]
@@ -126,7 +129,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			foreach (var actor in actorsToTeleport)
 			{
-				var cs = actor.TraitsImplementing<Chronoshiftable>()
+				var cs = actor.TraitsImplementing<ChronoshiftableCA>()
 					.FirstEnabledConditionalTraitOrDefault();
 
 				if (cs == null)
@@ -164,37 +167,53 @@ namespace OpenRA.Mods.CA.Traits
 				.Where(a => IsValidTarget(a))
 				.OrderBy(a => (a.CenterPosition - centerPos).LengthSquared);
 
-			var targets = new List<Actor>();
-			var enemyTargets = 0;
-
-			foreach (var a in actorsInRange)
+			// If we have a target limit
+			if (info.MaxTargets > 0)
 			{
-				if (info.MaxTargets > 0 && targets.Count() >= info.MaxTargets)
-					break;
-
-				if (info.MaxEnemyTargets > 0)
+				// If no enemy target limit, or the overall target limit is lower
+				if (info.MaxEnemyTargets == 0 || info.MaxTargets < info.MaxEnemyTargets)
+					return actorsInRange.Take(info.MaxTargets);
+				else
 				{
-					var isEnemy = !a.Owner.IsAlliedWith(Self.Owner);
+					var targets = new List<Actor>();
+					var enemyTargets = 0;
 
-					if (isEnemy && enemyTargets >= info.MaxEnemyTargets)
-						continue;
+					foreach (var a in actorsInRange)
+					{
+						if (info.MaxTargets > 0 && targets.Count() >= info.MaxTargets)
+							break;
 
-					if (isEnemy)
-						enemyTargets++;
+						if (info.MaxEnemyTargets > 0)
+						{
+							var isEnemy = !a.Owner.IsAlliedWith(Self.Owner);
+
+							if (isEnemy && enemyTargets >= info.MaxEnemyTargets)
+								continue;
+
+							if (isEnemy)
+								enemyTargets++;
+						}
+
+						targets.Add(a);
+					}
+
+					return targets;
 				}
-
-				targets.Add(a);
 			}
-
-			return targets;
+			else
+				return actorsInRange;
 		}
 
 		public bool IsValidTarget(Actor a)
 		{
-			if (!a.IsInWorld || a.IsDead)
+			if (a == null || !a.IsInWorld || a.IsDead)
 				return false;
 
-			if (!a.TraitsImplementing<Chronoshiftable>().Any(cs => !cs.IsTraitDisabled))
+			if (!a.TraitsImplementing<ChronoshiftableCA>().Any(cs => !cs.IsTraitDisabled))
+				return false;
+
+			var targetTypes = a.GetEnabledTargetTypes();
+			if (targetTypes.Overlaps(info.InvalidTargetTypes))
 				return false;
 
 			if (!Self.Owner.Shroud.IsVisible(a.Location))
@@ -426,7 +445,7 @@ namespace OpenRA.Mods.CA.Traits
 				foreach (var unit in actorsToTeleport)
 				{
 					var targetCell = unit.Location + (xy - sourceLocation);
-					if (manager.Self.Owner.Shroud.IsExplored(targetCell)) // && unit.Trait<Chronoshiftable>().CanChronoshiftTo(unit, targetCell)
+					if (manager.Self.Owner.Shroud.IsExplored(targetCell)) // && unit.Trait<ChronoshiftableCA>().CanChronoshiftTo(unit, targetCell)
 					{
 						canTeleport = true;
 						break;

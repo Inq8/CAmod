@@ -259,11 +259,11 @@
 		Prerequisites: !botplayer
 		PauseOnCondition: disabled || empdisable || being-warped
 		Duration: 600
-		EnemyDuration: 300
+		EnemyDuration: 400
 		Icon: chrono
 		ChargeInterval: 4500
 		Name: Chronoshift
-		Description: \nTeleports selected units to a targeted location,\n    returning them to their original location\n    after a short time.\n\nFriendly units:\n• Up to 9 targets\n• Returned with 20% health if killed\n\nEnemy units:\n• Up to 5 targets\n• Teleported for half duration\n\nWarning: All passengers are killed.
+		Description: \nTeleports up to 9 selected vehicles to a targeted location,\n    returning them to their original location after a short time.\n\n• If killed, units are returned with 20% health\n• Units with larger health pools take additional damage\n• Passengers cannot be unloaded\n• Enemy units are teleported for reduced duration
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -272,11 +272,11 @@
 		EndChargeTextNotification: Chronosphere ready.
 		LaunchSound: chrono2.aud
 		IncomingSound: chrono2.aud
-		KillCargo: true
+		KillCargo: false
 		DisplayRadarPing: True
 		Range: 4c512
 		MaxTargets: 9
-		MaxEnemyTargets: 5
+		InvalidTargetTypes: Husk
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 		SupportPowerPaletteOrder: 20
 		ShowSelectionBoxes: true
@@ -298,7 +298,7 @@
 		ChargeInterval: 7000
 		Name: Chronoshift
 		ActivationDelay: 25
-		Description: \nTeleports selected units to a targeted location,\n    returning them to their original location\n    after a short time.\n\nFriendly units:\n• Up to 9 targets\n• Returned with 20% health if killed\n\nEnemy units:\n• Up to 5 targets\n• Teleported for half duration\n\nWarning: All passengers are killed.
+		Description: \nTeleports up to 9 selected vehicles to a targeted location,\n    returning them to their original location after a short time.\n\n• If killed, units are returned with 20% health\n• Units with larger health pools take additional damage\n• Passengers cannot be unloaded\n• Enemy units are teleported for reduced duration
 		Weapon: ChronoAI
 		AirburstAltitude: 0c0
 		AllowMultiple: false
@@ -1579,7 +1579,7 @@
 		IconPalette: chromes
 		Prerequisites: scrt.collector
 		Cursor: ability
-		ChargeInterval: 6750
+		ChargeInterval: 6000
 		Name: Greater Coalescence
 		ActivationDelay: 1
 		Description: \nSpawns a controllable biomass which heals nearby allies\n    and sustains itself by feeding off enemies.\n\nFeeding from power plants will shut them down temporarily.

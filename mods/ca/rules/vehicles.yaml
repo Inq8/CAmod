@@ -518,6 +518,7 @@ GTNK.squad:
 	-SpawnActorOnDeath:
 	-Buildable:
 	-ChronoshiftableCA:
+	-HealthCapDamageMultiplier@CHRONO:
 
 3TNK:
 	Inherits: ^Tank
@@ -1153,6 +1154,7 @@ ARTY.TEMP:
 	-ActorLostNotification:
 	-Buildable:
 	-ChronoshiftableCA:
+	-HealthCapDamageMultiplier@CHRONO:
 
 ISU:
 	Inherits: ^Tank
@@ -1320,7 +1322,8 @@ SAPC:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
-	Inherits@TRANSPORT: ^ChronoshiftableTransport
+	Inherits@TRANSPORT: ^Transport
+	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 255
@@ -1682,13 +1685,15 @@ JEEP.TEMP:
 	-ActorLostNotification:
 	-Buildable:
 	-ChronoshiftableCA:
+	-HealthCapDamageMultiplier@CHRONO:
 
 APC:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
-	Inherits@TRANSPORT: ^ChronoshiftableTransport
+	Inherits@TRANSPORT: ^Transport
+	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
@@ -2772,7 +2777,8 @@ APC2:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
-	Inherits@TRANSPORT: ^ChronoshiftableTransport
+	Inherits@TRANSPORT: ^Transport
+	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	RenderSprites:
 		FactionImages:
@@ -2888,7 +2894,8 @@ VULC:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
-	Inherits@TRANSPORT: ^ChronoshiftableTransport
+	Inherits@TRANSPORT: ^Transport
+	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Buildable:
@@ -3424,6 +3431,7 @@ MDRN.Attached:
 	-WithDecoration@HACKED:
 	-WithDecoration@RESTORING:
 	-ChronoshiftableCA:
+	-HealthCapDamageMultiplier@CHRONO:
 
 HTNK:
 	Inherits: ^TankTD
@@ -4270,7 +4278,8 @@ BTR:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@BERSERK: ^Berserk
-	Inherits@TRANSPORT: ^ChronoshiftableTransport
+	Inherits@TRANSPORT: ^Transport
+	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Buildable:
@@ -4348,7 +4357,8 @@ IFV:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
-	Inherits@TRANSPORT: ^ChronoshiftableTransport
+	Inherits@TRANSPORT: ^Transport
+	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
@@ -5753,6 +5763,7 @@ TNKD.TEMP:
 	-SpawnActorOnDeath:
 	-Buildable:
 	-ChronoshiftableCA:
+	-HealthCapDamageMultiplier@CHRONO:
 
 MSAR:
 	Inherits: ^VehicleTD
@@ -6029,7 +6040,8 @@ BATF:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
-	Inherits@TRANSPORT: ^ChronoshiftableTransport
+	Inherits@TRANSPORT: ^Transport
+	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@SHRAPNEL: ^ThrowsShrapnel
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability

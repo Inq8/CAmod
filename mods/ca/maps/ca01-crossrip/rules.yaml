@@ -41,6 +41,14 @@ Player:
 		Condition: unit-lost-notification-silenced
 		Prerequisites: unitlostsilencer
 
+BRUT.Mutating:
+	ActorLostNotification:
+		RequiresCondition: !unit-lost-notification-silenced
+
+GSCR.Mutating:
+	ActorLostNotification:
+		RequiresCondition: !unit-lost-notification-silenced
+
 UNITLOSTSILENCER:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:

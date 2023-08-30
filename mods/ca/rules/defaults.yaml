@@ -58,14 +58,6 @@
 			red: pip-red
 			blue: pip-blue
 
-^ChronoshiftableTransport:
-	Inherits: ^Transport
-	RejectsOrders@NOUNLOADCHRONO:
-		Reject: Unload
-		RequiresCondition: chronoshifted
-	ChronoshiftableCA:
-		Condition: chronoshifted
-
 # for upgrades, proxy powers, stolen tech, spawners etc
 ^InvisibleDummy:
 	AlwaysVisible:
@@ -414,6 +406,25 @@
 	Inherits: ^Frenzy
 	WithIdleOverlay@FRENZY:
 		Sequence: infantry
+
+^Chronoshiftable:
+	ChronoshiftableCA:
+		Image: chrono
+		InitialWarpFromSequence: warpin
+		ReturnWarpFromSequence: warpin
+		ReturnWarpToSequence: warpout
+		RequiresCondition: !being-warped
+		Palette: ra2effect-ignore-lighting-alpha75
+		ReturnToAvoidDeath: true
+		Condition: chronoshifted
+	HealthCapDamageMultiplier@CHRONO:
+		MaxHealthEquivalent: 47000
+		RequiresCondition: chronoshifted
+
+^NoUnloadWhenChronoshifted:
+	RejectsOrders@NOUNLOADCHRONO:
+		Reject: Unload
+		RequiresCondition: chronoshifted
 
 ^Warpable:
 	Warpable:
@@ -1781,6 +1792,7 @@
 	Inherits@bounty: ^GlobalBounty
 	Inherits@production: ^ProductionEfficiencyBoost
 	Inherits@selection: ^SelectableCombatUnit
+	Inherits@chrono: ^Chronoshiftable
 	Inherits@mind: ^MindControllable
 	Inherits@handicaps: ^PlayerHandicaps
 	Inherits@irrad: ^Irradiatable
@@ -1809,14 +1821,6 @@
 		ValidDamageStates: Light, Medium, Heavy, Critical
 	Repairable:
 		RepairActors: fix, rep, srep
-	ChronoshiftableCA:
-		Image: chrono
-		InitialWarpFromSequence: warpin
-		ReturnWarpFromSequence: warpin
-		ReturnWarpToSequence: warpout
-		RequiresCondition: !being-warped
-		Palette: ra2effect-ignore-lighting-alpha75
-		ReturnToAvoidDeath: true
 	Passenger:
 		CargoType: Vehicle
 	AttackMove:
@@ -2368,6 +2372,7 @@
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@production: ^ProductionEfficiencyBoost
+	Inherits@chrono: ^Chronoshiftable
 	Inherits@mind: ^MindControllable
 	Inherits@handicaps: ^PlayerHandicaps
 	Inherits@atomize: ^Atomizable
@@ -2398,12 +2403,6 @@
 	ActorLostNotification:
 		Notification: NavalUnitLost
 		TextNotification: Naval unit lost.
-	ChronoshiftableCA:
-		Image: chrono
-		InitialWarpFromSequence: warpin
-		ReturnWarpFromSequence: warpin
-		ReturnWarpToSequence: warpout
-		Palette: ra2effect-ignore-lighting-alpha75
 	RepairableNear:
 		RepairActors: syrd, spen, syrd.gdi, spen.nod
 	WithDamageOverlay:
@@ -3288,6 +3287,7 @@
 
 ^Husk:
 	Inherits: ^BasicHusk
+	Inherits@chrono: ^Chronoshiftable
 	Husk:
 		AllowedTerrain: Clear, Rough, Road, Ore, Gems, Beach, Tiberium, BlueTiberium
 	WithIdleOverlay@Burns:
@@ -3322,12 +3322,6 @@
 	Targetable:
 		TargetTypes: Ground, Husk, NoAutoTarget
 		RequiresForceFire: true
-	ChronoshiftableCA:
-		Image: chrono
-		InitialWarpFromSequence: warpin
-		ReturnWarpFromSequence: warpin
-		ReturnWarpToSequence: warpout
-		Palette: ra2effect-ignore-lighting-alpha75
 	Tooltip:
 		GenericName: Destroyed Vehicle
 	Explodes:
@@ -3338,6 +3332,11 @@
 		CrushClasses: wall
 		CrushSound: destw.aud
 		CrushedByFriendlies: True
+	ChronoshiftableCA:
+		ReturnToAvoidDeath: false
+		-RequiresCondition:
+		-Condition:
+	-HealthCapDamageMultiplier@CHRONO:
 
 ^HuskTD:
 	Inherits: ^Husk
