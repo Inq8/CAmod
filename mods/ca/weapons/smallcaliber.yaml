@@ -405,29 +405,30 @@ ChainGun.Yak.AA:
 
 ChainGun.P51.R:
 	Inherits: ^HeavyMG
-	Burst: 10
-	Range: 6c0
+	Burst: 9
+	Range: 7c0
 	ReloadDelay: 80
 	BurstDelays: 2
 	-Report:
 	StartBurstReport: gun13ext.aud
-	FirstBurstTargetOffset: -512,213,0
-	FollowingBurstTargetOffset: 478,0,0
+	FirstBurstTargetOffset: -1792,213,0
+	FollowingBurstTargetOffset: 448,0,0
 	MinRange: 1c0
 	Projectile: Bullet
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
-		Damage: 2800
+		Spread: 341
+		Damage: 3000
 		Versus:
 			None: 200
-			Wood: 15
+			Wood: 10
 			Light: 80
 			Heavy: 25
 			Concrete: 25
 
 ChainGun.P51.L:
 	Inherits: ChainGun.P51.R
-	FirstBurstTargetOffset: -512,-213,0
+	FirstBurstTargetOffset: -1792,-213,0
 
 Pistol:
 	Inherits: ^LightMG

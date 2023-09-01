@@ -1973,13 +1973,13 @@ BATFRockets:
 
 Rocket.P51.R:
 	ReloadDelay: 200
-	Range: 8c0
+	Range: 9c0
 	MinRange: 0c768
 	Report: vintatta.aud
 	Burst: 4
 	BurstDelays: 4
-	FirstBurstTargetOffset: -758,-613,0
-	FollowingBurstTargetOffset: 758,0,0
+	FirstBurstTargetOffset: -1024,-613,0
+	FollowingBurstTargetOffset: 682,0,0
 	ValidTargets: Ground, Water
 	InvalidTargets: Air
 	TargetActorCenter: true
@@ -1996,13 +1996,13 @@ Rocket.P51.R:
 		ContrailStartWidth: 48
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
-		Damage: 400
-		Falloff: 1000, 368, 135, 50, 18, 7, 0
+		Damage: 500
+		Falloff: 1000, 448, 192, 50, 18, 7, 0
 		Versus:
-			None: 100
-			Wood: 40
+			None: 85
+			Wood: 25
 			Concrete: 60
-			Light: 60
+			Light: 70
 			Heavy: 100
 			Brick: 75
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
@@ -2021,7 +2021,7 @@ Rocket.P51.R:
 
 Rocket.P51.L:
 	Inherits: Rocket.P51.R
-	FirstBurstTargetOffset: -758,613,0
+	FirstBurstTargetOffset: -1024,613,0
 
 RocketShells:
 	Inherits: JuggernautGun
