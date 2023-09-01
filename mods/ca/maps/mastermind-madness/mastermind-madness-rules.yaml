@@ -114,6 +114,8 @@ Player:
 		RequiresCondition: driver-dead
 
 MAST:
+	Inherits@CLUSTERMISSILEPOWER: ^ClusterMissilePower
+	Inherits@SATHACKPOWER: ^SatHackPower
 	-Passenger:
 	-GainsExperienceMultiplier:
 	-TakeCover:
@@ -131,56 +133,13 @@ MAST:
 	MustBeDestroyed:
 		RequiredForShortGame: true
 	SpawnActorPowerCA@sathack:
-		Actor: camera.sathack
-		LifeTime: 120
-		OrderName: sathack
-		Icon: hacksat
+		-Prerequisites:
+		-PauseOnCondition:
 		ChargeInterval: 2250
-		Name: Hack Satellite Uplink
-		Description: Reveals map terrain and provides tactical\ninformation.
-		LaunchSound: hacksat.aud
-		SelectTargetSpeechNotification: SelectTarget
-		EffectImage: empty
-		EffectSequence: idle
-		EffectPalette: tseffect-ignore-lighting-alpha75
-		TargetCircleRange: 9c512
-		TargetCircleColor: 999999AA
+	-SpawnActorPowerCA@sathacklegion:
 	NukePower@Cluster:
-		OrderName: clustermissile
-		Icon: clustermissile
-		IconPalette: chrometd
-		Cursor: ability
-		ChargeInterval: 10500
-		Name: Cluster Missile
-		Description: Launches an Cluster Missile,\nCauses damage over a large area.
-		EndChargeSpeechNotification: ClusMissileReady
-		SelectTargetSpeechNotification: SelectTarget
-		InsufficientPowerSpeechNotification: InsufficientPower
-		IncomingSpeechNotification: ClusMissileWarning
-		MissileWeapon: deathhand
-		MissileImage: deathhand
-		MissilePalette: temptd
-		LaunchSound: icbm1.aud
-		IncomingSound: icbm1.aud
-		SpawnOffset: 1024,80,0
-		DetonationAltitude: 3c0
-		RemoveMissileOnDetonation: True
-		FlightDelay: 225
-		FlightVelocity: 0c624
-		DisplayRadarPing: True
-		CameraRange: 10c0
-		ArrowSequence: arrow
-		ClockSequence: clockTD
-		CircleSequence: circles
-		TrailImage: smokey2
-		TrailSequences: idle
-		TrailPalette: tseffect-ignore-lighting-alpha75
-		DisplayBeacon: True
-		BeaconPoster: clustermissile
-		BeaconPosterPalette: temptd
-		CircleRanges: 3c0
-		CircleColor: BB0000AA
-		CircleBorderColor: 770000AA
+		-Prerequisites:
+		-PauseOnCondition:
 	GrantTimedConditionOnDeploy:
 		DeployedCondition: deployed
 		CooldownTicks: 1250

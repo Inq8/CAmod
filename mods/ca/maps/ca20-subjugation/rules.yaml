@@ -108,6 +108,7 @@ AMCV:
 
 MAST:
 	Inherits@DIFFICULTY: ^DifficultyModifiers
+	Inherits@RESOURCESCANPOWER: ^ResourceScanPower
 	-GainsExperience:
 	-ProducibleWithLevel:
 	Health:
@@ -115,20 +116,11 @@ MAST:
 	ExternalCondition@VET:
 		Condition: rank-veteran
 	RevealActorsPower@RESOURCESCAN:
-		CameraActor: camera.resourcescan
+		-PauseOnCondition:
 		TargetActors: bio, miss, truk
 		LifeTime: 125
-		OrderName: resourcescan
-		Icon: rescanpower
 		ChargeInterval: 4500
-		Name: Resource Scan
 		Description: \nReveals high concentrations of Tiberium.
-		LaunchSound: tibscan.aud
-		EffectImage: empty
-		EffectSequence: idle
-		EffectPalette: tseffect-ignore-lighting-alpha75
-		SupportPowerPaletteOrder: 50
-		EndChargeTextNotification: Resource Scan ready.
 	ProximityExternalCondition@MCPROTECTION:
 		RequiresCondition: rank-elite
 		Condition: mc-protection

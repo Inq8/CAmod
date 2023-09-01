@@ -78,31 +78,12 @@ YURI:
 	-WithRangeCircle:
 
 powerproxy.mutabomb:
+	Inherits@MUTABOMBPOWER: ^MutaBombPower
 	AirstrikePower@MutaBomb:
-		OrderName: mutabomb
-		Icon: mutabomb
-		IconPalette: scrin
+		-Prerequisites:
+		-PauseOnCondition:
 		ChargeInterval: 7500
 		StartFullyCharged: true
-		Name: Genetic Mutation Bomb
-		Description: \nCalls in a Badger bomber which drops a genetic\n    mutation bomb on your target, transforming\n    infantry into Brutes under your control.\n\nDoes not affect cyborgs.
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		CameraActor: camera
-		CameraRemoveDelay: 150
-		UnitType: badr.mbomber
-		QuantizedFacings: 8
-		DisplayBeacon: true
-		BeaconPoster: gmutation
-		BeaconPosterPalette: chromes
-		SquadSize: 1
-		SquadOffset: 0,1792,0
-		ArrowSequence: arrow
-		ClockSequence: clock
-		CircleSequence: circles
-		UseDirectionalTarget: True
-		DirectionArrowAnimation: paradirection
-		SupportPowerPaletteOrder: 45
 	AlwaysVisible:
 
 BRUT:
