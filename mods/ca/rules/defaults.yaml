@@ -1,8 +1,9 @@
 ^ExistsInWorld:
 	AppearsOnRadar:
 	CombatDebugOverlay:
-	GivesExperience:
+	GivesExperienceCA:
 		PlayerExperienceModifier: 1
+		ActorExperienceOnDamage: true
 	ScriptTriggers:
 	RenderDebugState:
 
@@ -243,7 +244,7 @@
 		Modifier: 90
 	DamageMultiplier@RANK-ELITE:
 		RequiresCondition: rank-elite
-		Modifier: 85
+		Modifier: 75
 	FirepowerMultiplier@RANK-1:
 		RequiresCondition: rank-veteran == 1
 		Modifier: 105
@@ -252,7 +253,7 @@
 		Modifier: 110
 	FirepowerMultiplier@RANK-ELITE:
 		RequiresCondition: rank-elite
-		Modifier: 125
+		Modifier: 130
 	ReloadDelayMultiplier@RANK-1:
 		RequiresCondition: rank-veteran == 1
 		Modifier: 95
@@ -3000,7 +3001,7 @@
 		Types: wall
 	Targetable:
 		TargetTypes: Ground, DetonateAttack, Wall, NoAutoTarget
-	-GivesExperience:
+	-GivesExperienceCA:
 	WithWallSpriteBody:
 	Sellable:
 		SellSounds: cashturn.aud
