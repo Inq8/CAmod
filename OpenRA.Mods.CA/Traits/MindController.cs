@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.CA.Orders;
+using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
@@ -85,6 +86,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If true, slaves can be targeted to release them.")]
 		public readonly bool ManualReleaseEnabled = false;
 
+		[Desc("Percentage of targets cost gained as XP when successfully mind controlled.")]
+		public readonly int ExperienceFromControl = 0;
+
 		public override object Create(ActorInitializer init) { return new MindController(init.Self, this); }
 	}
 
@@ -108,11 +112,15 @@ namespace OpenRA.Mods.CA.Traits
 		int progressToken = Actor.InvalidConditionToken;
 
 		GrantConditionOnDeploy deployTrait;
+		HashSet<Actor> slaveHistory;
+		GainsExperience gainsExperience;
 
 		public MindController(Actor self, MindControllerInfo info)
 			: base(info)
 		{
 			this.info = info;
+			slaveHistory = new HashSet<Actor>();
+			gainsExperience = self.TraitOrDefault<GainsExperience>();
 			ResetProgress(self);
 			capacityModifiers = self.TraitsImplementing<MindControllerCapacityModifier>();
 			UpdateCapacity(self);
@@ -349,6 +357,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (capacity > 0 && Info.DiscardOldest && slaves.Count() > capacity)
 				slaves[0].Trait<MindControllable>().RevokeMindControl(slaves[0], 0);
 
+			GiveExperience(currentTarget.Actor);
 			ControlComplete(self);
 			MaxControlledCheck(self);
 		}
@@ -470,6 +479,19 @@ namespace OpenRA.Mods.CA.Traits
 		public void ModifierUpdated()
 		{
 			refreshCapacity = true;
+		}
+
+		void GiveExperience(Actor slave)
+		{
+			if (gainsExperience == null || info.ExperienceFromControl == 0 || slaveHistory.Contains(slave))
+				return;
+
+			var valued = slave.Info.TraitInfoOrDefault<ValuedInfo>();
+			if (valued == null)
+				return;
+
+			slaveHistory.Add(slave);
+			gainsExperience.GiveExperience(Util.ApplyPercentageModifiers(valued.Cost, new int[] { 10000, info.ExperienceFromControl }));
 		}
 
 		IEnumerable<IOrderTargeter> IIssueOrder.Orders

@@ -750,6 +750,7 @@ MAST:
 		ControllingCondition: mindcontrolling
 		MaxControlledCondition: maxcontrolled
 		ManualReleaseEnabled: true
+		ExperienceFromControl: 100
 	WithMindControlArc@MC:
 		Color: c71585
 		Transparency: 55
@@ -2126,7 +2127,6 @@ SMCV:
 STMR:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
-	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
@@ -2258,7 +2258,6 @@ STMR:
 ENRV:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
-	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
@@ -2385,7 +2384,6 @@ ENRV:
 DEVA:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Buildable:
@@ -2519,7 +2517,6 @@ DEVA:
 PAC:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
-	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Buildable:
@@ -2733,11 +2730,11 @@ INVA:
 		TargetTypes: ICBM
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	GivesExperienceToMaster:
 
 MSHP:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Buildable:

@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.Common;
@@ -16,7 +17,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("This actor gives experience to a GainsExperience actor when they are killed.")]
+	[Desc("This actor gives experience to any masters with GainsExperience when dealing damage.")]
 	class GivesExperienceToMasterInfo : TraitInfo
 	{
 		[Desc("If -1, use the value of the unit cost.")]
@@ -28,56 +29,61 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Percentage of the `Experience` value that is being granted to the killing actor.")]
 		public readonly int ActorExperienceModifier = 10000;
 
-		public override object Create(ActorInitializer init) { return new GivesExperienceToMaster(this); }
+		public override object Create(ActorInitializer init) { return new GivesExperienceToMaster(init.Self, this); }
 	}
 
-	class GivesExperienceToMaster : INotifyKilled, INotifyCreated
+	class GivesExperienceToMaster : INotifyAppliedDamage, INotifyCreated
 	{
 		readonly GivesExperienceToMasterInfo info;
 
-		int exp;
-		IEnumerable<int> experienceModifiers;
+		IEnumerable<MindControllable> mindControllables;
+		IEnumerable<BaseSpawnerSlave> baseSpawnerSlaves;
 
-		public GivesExperienceToMaster(GivesExperienceToMasterInfo info)
+		public GivesExperienceToMaster(Actor self, GivesExperienceToMasterInfo info)
 		{
 			this.info = info;
 		}
 
 		void INotifyCreated.Created(Actor self)
 		{
-			var valued = self.Info.TraitInfoOrDefault<ValuedInfo>();
-			exp = info.Experience >= 0 ? info.Experience
+			mindControllables = self.TraitsImplementing<MindControllable>();
+			baseSpawnerSlaves = self.TraitsImplementing<BaseSpawnerSlave>();
+		}
+
+		void INotifyAppliedDamage.AppliedDamage(Actor self, Actor damaged, AttackInfo e)
+		{
+			// Don't notify suicides
+			if (damaged == e.Attacker)
+				return;
+
+			if (!info.ValidRelationships.HasRelationship(damaged.Owner.RelationshipWith(self.Owner)))
+				return;
+
+			var health = damaged.TraitOrDefault<Health>();
+			if (health == null)
+				return;
+
+			var appliedDamage = Math.Min(e.Damage.Value, health.HP);
+			if (appliedDamage == 0)
+				return;
+
+			var valued = damaged.Info.TraitInfoOrDefault<ValuedInfo>();
+			var exp = info.Experience >= 0 ? info.Experience
 				: valued != null ? valued.Cost : 0;
 
-			experienceModifiers = self.TraitsImplementing<IGivesExperienceModifier>().ToArray().Select(m => m.GetGivesExperienceModifier());
+			var experienceModifiers = damaged.TraitsImplementing<IGivesExperienceModifier>().ToArray().Select(m => m.GetGivesExperienceModifier()).Append(info.ActorExperienceModifier);
+			experienceModifiers = experienceModifiers.Append((int)(((float)e.Damage.Value / (float)health.MaxHP) * 100));
+
+			foreach (var mindControllable in mindControllables)
+				if (mindControllable.Master != null)
+					GiveExperience(mindControllable.Master, exp, experienceModifiers);
+
+			foreach (var baseSpawnerSlave in baseSpawnerSlaves)
+				if (baseSpawnerSlave.Master != null)
+					GiveExperience(baseSpawnerSlave.Master, exp, experienceModifiers);
 		}
 
-		void INotifyKilled.Killed(Actor self, AttackInfo e)
-		{
-			if (exp == 0 || e.Attacker == null || e.Attacker.Disposed)
-				return;
-
-			if (!info.ValidRelationships.HasRelationship(e.Attacker.Owner.RelationshipWith(self.Owner)))
-				return;
-
-			exp = Util.ApplyPercentageModifiers(exp, experienceModifiers);
-
-			var killer = e.Attacker;
-			if (killer != null)
-			{
-				var mindControllables = killer.TraitsImplementing<MindControllable>();
-				foreach (var mindControllable in mindControllables)
-					if (mindControllable.Master != null)
-						GiveExperience(mindControllable.Master, exp);
-
-				var baseSpawnerSlaves = killer.TraitsImplementing<BaseSpawnerSlave>();
-				foreach (var baseSpawnerSlave in baseSpawnerSlaves)
-					if (baseSpawnerSlave.Master != null)
-						GiveExperience(baseSpawnerSlave.Master, exp);
-			}
-		}
-
-		void GiveExperience(Actor master, int exp)
+		void GiveExperience(Actor master, int exp, IEnumerable<int> experienceModifiers)
 		{
 			if (master.IsDead)
 				return;
@@ -86,9 +92,10 @@ namespace OpenRA.Mods.CA.Traits
 			if (gainsExperience == null)
 				return;
 
-			var experienceModifier = master.TraitsImplementing<IGainsExperienceModifier>()
-				.Select(x => x.GetGainsExperienceModifier()).Append(info.ActorExperienceModifier);
-			gainsExperience.GiveExperience(Util.ApplyPercentageModifiers(exp, experienceModifier));
+			experienceModifiers = experienceModifiers.Concat(master.TraitsImplementing<IGainsExperienceModifier>()
+				.Select(x => x.GetGainsExperienceModifier()));
+
+			gainsExperience.GiveExperience(Util.ApplyPercentageModifiers(exp, experienceModifiers));
 		}
 	}
 }
