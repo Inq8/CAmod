@@ -770,6 +770,7 @@ DoInterceptors = function()
 		end
 
 		Trigger.OnIdle(interceptor1, function(a)
+			a.Stop()
 			a.Move(InterceptorExit1.Location)
 			a.Destroy()
 		end)
@@ -786,11 +787,13 @@ DoInterceptors = function()
 			end
 
 			Trigger.OnIdle(interceptor2, function(a)
+				a.Stop()
 				a.Move(InterceptorExit2.Location)
 				a.Destroy()
 			end)
 
 			Trigger.OnIdle(interceptor3, function(a)
+				a.Stop()
 				a.Move(InterceptorExit3.Location)
 				a.Destroy()
 			end)
