@@ -230,9 +230,9 @@
 	GainsExperience:
 		LevelUpNotification: LevelUp
 		Conditions:
-			200: rank-veteran
-			400: rank-veteran
-			800: rank-veteran
+			300: rank-veteran
+			600: rank-veteran
+			900: rank-veteran
 	GrantCondition@RANK-ELITE:
 		RequiresCondition: rank-veteran >= 3
 		Condition: rank-elite
@@ -2767,6 +2767,8 @@
 		Condition: flare
 	WithDecoration@tnt:
 		Sequence: tntbig
+	GivesExperienceCA:
+		ActorExperienceModifier: 5000
 
 ^Building:
 	Inherits@1: ^BasicBuilding
@@ -2947,6 +2949,8 @@
 		RequiresCondition: !invulnerability
 	RequiresBuildableArea:
 		AreaTypes: building, defense
+	GivesExperienceCA:
+		ActorExperienceModifier: 10000
 
 ^DefenseTD:
 	Inherits@1: ^Defense
