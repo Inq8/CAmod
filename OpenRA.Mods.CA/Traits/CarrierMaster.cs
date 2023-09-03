@@ -11,6 +11,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenRA.Mods.CA.Activities;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
@@ -30,6 +31,10 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("The condition to grant to self right after launching a spawned unit. (Used by V3 to make immobile.)")]
 		public readonly string LaunchingCondition = null;
 
+		[GrantedConditionReference]
+		[Desc("The condition to grant to self when slaves are entering.)")]
+		public readonly string BeingEnteredCondition = null;
+
 		[Desc("After this many ticks, we remove the condition.")]
 		public readonly int LaunchingTicks = 15;
 
@@ -41,6 +46,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Instantly repair spawners when they return?")]
 		public readonly bool InstantRepair = true;
+
+		[Desc("If true, all slaves must be inside carrier before rearming.")]
+		public readonly bool RearmAsGroup = false;
 
 		[GrantedConditionReference]
 		[Desc("The condition to grant to self while spawned units are loaded.",
@@ -73,6 +81,8 @@ namespace OpenRA.Mods.CA.Traits
 
 		int launchCondition = Actor.InvalidConditionToken;
 		int launchConditionTicks;
+
+		int beingEnteredToken = Actor.InvalidConditionToken;
 
 		Target currentTarget;
 		int maxDistanceCheckTicks;
@@ -139,8 +149,6 @@ namespace OpenRA.Mods.CA.Traits
 			if (carrierSlaveEntry == null)
 				return;
 
-			carrierSlaveEntry.IsLaunched = true; // mark as launched
-
 			if (CarrierMasterInfo.LaunchingCondition != null)
 			{
 				if (launchCondition == Actor.InvalidConditionToken)
@@ -150,6 +158,7 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			SpawnIntoWorld(self, carrierSlaveEntry.Actor, self.CenterPosition);
+			carrierSlaveEntry.IsLaunched = true; // mark as launched
 
 			if (spawnContainTokens.TryGetValue(a.Info.Name, out var spawnContainToken) && spawnContainToken.Count > 0)
 				self.RevokeCondition(spawnContainToken.Pop());
@@ -257,13 +266,27 @@ namespace OpenRA.Mods.CA.Traits
 				}
 			}
 
+			var slaveIsEntering = false;
+			var numLaunched = SlaveEntries.Count(a => a.IsLaunched);
+
 			// Rearm
 			foreach (var slaveEntry in SlaveEntries)
 			{
 				var carrierSlaveEntry = slaveEntry as CarrierSlaveEntry;
+				if (carrierSlaveEntry.Actor.CurrentActivity is EnterCarrierMaster)
+					slaveIsEntering = true;
+
+				if (CarrierMasterInfo.RearmAsGroup && numLaunched > 0)
+					continue;
+
 				if (carrierSlaveEntry.RearmTicks > 0)
 					carrierSlaveEntry.RearmTicks--;
 			}
+
+			if (slaveIsEntering && beingEnteredToken == Actor.InvalidConditionToken)
+				self.GrantCondition(CarrierMasterInfo.BeingEnteredCondition);
+			else if (!slaveIsEntering && beingEnteredToken != Actor.InvalidConditionToken)
+				self.RevokeCondition(beingEnteredToken);
 
 			// range check
 			RangeCheck(self);

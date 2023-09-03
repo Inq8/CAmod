@@ -716,6 +716,7 @@ CV:
 		TurnSpeed: 16
 		Speed: 31
 		Voice: Move
+		ImmovableCondition: drone-landing
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		Offset: 30,70,600
@@ -727,25 +728,19 @@ CV:
 		PauseOnCondition: empdisable || being-warped
 	CarrierMaster:
 		Actors: horn, horn, horn
-		RearmTicks: 150
+		RearmTicks: 75
 		RespawnTicks: 500
 		InstantRepair: true
 		SlaveDisposalOnKill: KillSlaves
 		SpawnAllAtOnce: true
 		RequiresCondition: !empdisable && !being-warped
+		BeingEnteredCondition: drone-landing
+		RearmAsGroup: true
 	WithSpawnerMasterPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
-	Exit@0:
-		SpawnOffset: 0,0,0
-		Facing: 0
-	Exit@1:
-		SpawnOffset: 0,0,0
-		Facing: 20
-	Exit@2:
-		SpawnOffset: 0,0,0
-		Facing: -20
+	Exit:
 	Armament:
 		Weapon: HornetLauncher
 		PauseOnCondition: under-bridge
