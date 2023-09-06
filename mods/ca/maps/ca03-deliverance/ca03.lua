@@ -289,12 +289,12 @@ WorldLoaded = function()
 			Trigger.AfterDelay(DateTime.Seconds(3), function()
 				if GDICommanderAlive then
 					Notification("The GDI commander has been freed.")
-					Media.PlaySpeechNotification(Greece, "GDICommanderFreed")
+					MediaCA.PlaySound("r_gdicmdrfreed.aud", "2")
 				end
 
 				Trigger.AfterDelay(DateTime.Seconds(3), function()
 					Media.PlaySpeechNotification(Greece, "GDITransportInbound")
-					Notification("GDI transport en route.")
+					MediaCA.PlaySound("r_gditraninbound.aud", "2")
 					Reinforcements.ReinforceWithTransport(GDI, "tran.evac", nil, { GDIRescueSpawn.Location, GDIRescueRally.Location }, nil, function(transport, cargo)
 
 						Trigger.AfterDelay(DateTime.Seconds(1), function()
@@ -377,7 +377,7 @@ end
 GDIBaseFound = function()
 	if not IsGDIBaseFound then
 		IsGDIBaseFound = true
-		Media.PlaySpeechNotification(Greece, "GDIBaseDiscovered")
+		MediaCA.PlaySound("r_gdibasediscovered.aud", "2")
 		Greece.PlayLowPowerNotification = false
 
 		local gdiForces = GDI.GetActors()

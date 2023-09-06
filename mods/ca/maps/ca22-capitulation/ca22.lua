@@ -335,7 +335,8 @@ InitUSSR = function()
 				if TimerTicks > MaxReactorFuelTime then
 					TimerTicks = MaxReactorFuelTime
 				end
-				Notification("A shipment of fuel has reached the Soviet reactor.")
+				Notification("A fuel shipment has reached the Soviet reactor.")
+				MediaCA.PlaySound("c_fuelshipment.aud", "2")
 			end
 		end
 	end)
@@ -389,13 +390,21 @@ ReactorStarved = function()
 			end
 		end)
 
-		local notificationText = "The Atomic Reactor is offline"
+		local notificationText = "Atomic Reactor shutting down."
 		if AreTeslaReactorsOffline then
-			notificationText = notificationText .. ". The Soviet base is now completely without power."
+			notificationText = notificationText .. ". The Soviet base is now without power."
 		else
-			notificationText = notificationText .. ", but the Telsa Reactors in the south-east continue to provide the base with power."
+			notificationText = notificationText .. ". The Telsa Reactors in the south-east continue to provide the base with power."
 		end
 		Notification(notificationText)
+		MediaCA.PlaySound("c_atomicshutdown.aud", "2")
+		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			if AreTeslaReactorsOffline then
+				MediaCA.PlaySound("c_sovietbasenopower.aud", "2")
+			else
+				MediaCA.PlaySound("c_teslareactorsremain.aud", "2")
+			end
+		end)
 	end
 end
 
@@ -420,11 +429,19 @@ TeslaReactorsOffline = function()
 
 		local notificationText = "Soviet secondary power is offline."
 		if IsReactorStarved then
-			notificationText = notificationText .. " The Soviet base is now completely without power."
+			notificationText = notificationText .. " The Soviet base is now without power."
 		else
 			notificationText = notificationText .. " Tesla Coils are no longer supercharged and some perimeter air defenses are down, however the Atomic Reactor continues to provide the base with power."
 		end
 		Notification(notificationText)
+		MediaCA.PlaySound("c_sovietsecondarypoweroffline.aud", "2")
+		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			if IsReactorStarved then
+				MediaCA.PlaySound("c_sovietbasenopower.aud", "2")
+			else
+				MediaCA.PlaySound("c_atomicup.aud", "2")
+			end
+		end)
 	end
 end
 

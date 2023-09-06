@@ -291,7 +291,8 @@ WorldLoaded = function()
 
 	Trigger.OnAllKilledOrCaptured(NWReactors, function()
 		ScrinDefenseBuff1.Destroy()
-		Notification("The north-west reactors are down. Scrin defenses have been weakened.")
+		Notification("The north-western reactors have been destroyed. Scrin defenses have been weakened.")
+		MediaCA.PlaySound("c_nwreactorsdown.aud", "2")
 
 		if ScrinDefenseBuff2.IsDead then
 			IonConduits.Destroy()
@@ -307,7 +308,8 @@ WorldLoaded = function()
 
 	Trigger.OnAllKilledOrCaptured(NEReactors, function()
 		ScrinDefenseBuff2.Destroy()
-		Notification("The north-east reactors are down. Scrin defenses have been weakened.")
+		Notification("The north-eastern reactors have been destroyed. Scrin defenses have been weakened.")
+		MediaCA.PlaySound("c_nereactorsdown.aud", "2")
 
 		if ScrinDefenseBuff1.IsDead then
 			IonConduits.Destroy()
@@ -354,7 +356,8 @@ WorldLoaded = function()
 	Trigger.OnDamaged(SignalTransmitter, function(self, attacker, damage)
 		if not SignalTransmitterDamageWarning and not FirstHackersArrived and self.Health < self.MaxHealth / 2 then
 			SignalTransmitterDamageWarning = true
-			Notification("Commander, we have reason to believe that the Signal Transmitter may be key to bringing the Mothership's shields down. Recommend we leave it intact until we have more details.")
+			Notification("We have reason to believe the Signal Transmitter may be key to bringing the Mothership's shields down. Recommend we leave it intact, pending confirmation.")
+			MediaCA.PlaySound("c_leavesignaltransmitter.aud", "2")
 		end
 	end)
 
@@ -375,7 +378,8 @@ WorldLoaded = function()
 		Trigger.OnDamaged(c, function(self, attacker, damage)
 			if not SleepingCyborgsMessageShown and not Mothership.IsDead and not self.IsDead and self.Health < self.MaxHealth * 0.8 then
 				SleepingCyborgsMessageShown = true
-				Notification("Those cyborgs appear to be in some kind of hibernation commander, and that enriched Tiberium is giving them some serious regeneration. Recommend we avoid firing on them, lest they wake up!")
+				Notification("Nod cyborgs appear to be in a hibernation state. The enriched Tiberium is providing powerful regeneration. Recommendation is to not engage.")
+				MediaCA.PlaySound("c_hibernation.aud", "2")
 			end
 		end)
 	end)
@@ -446,21 +450,24 @@ OncePerFiveSecondChecks = function()
 				GDI.MarkCompletedObjective(ObjectiveHackSignalTransmitter)
 			end
 
-			Notification("The Mothership's shields are down! Air attacks resuming.")
+			Notification("The Mothership's shields are down. Air attacks resuming.")
+			MediaCA.PlaySound("c_resuming.aud", "2")
 
 			Trigger.AfterDelay(DateTime.Seconds(10), function()
 				DoInterceptors()
 
 				Trigger.AfterDelay(DateTime.Seconds(15), function()
 					if not Mothership.IsDead then
-						Notification("Attack run successful! The Mothership's hull has sustained significant damage. Keep up the pressure Commander; next attack run ETA 2 minutes.")
+						Notification("Attack run successful. The Mothership's hull has sustained significant damage. Next attack run ETA 2 minutes.")
+						MediaCA.PlaySound("c_attackrunsuccess.aud", "2")
 
 						Trigger.AfterDelay(DateTime.Minutes(2), function()
 							DoInterceptors()
 
 							Trigger.AfterDelay(DateTime.Seconds(15), function()
 								if not Mothership.IsDead then
-									Notification("One more pass should do it commander, ETA 2 minutes.")
+									Notification("Estimate one more pass to destroy the Mothership, ETA 2 minutes.")
+									MediaCA.PlaySound("c_onemorepass.aud", "2")
 
 									Trigger.AfterDelay(DateTime.Minutes(2), function()
 										DoInterceptors()
@@ -618,7 +625,6 @@ InitHackers = function()
 			return
 		end
 
-		Media.DisplayMessage("Commander, we are sending you a squad of hackers. Use them to hack into the Scrin Signal Transmitter and we will be able to bring down the Mothership's shields.", "Nod Commander", HSLColor.FromHex("FF0000"))
 		DropHackers()
 		Beacon.New(GDI, SignalTransmitter.CenterPosition)
 	end)
@@ -626,7 +632,10 @@ end
 
 DropHackers = function()
 	Beacon.New(GDI, HackerDropLanding.CenterPosition)
-	Media.PlaySpeechNotification(GDI, "ReinforcementsArrived")
+
+	Notification("Nod Hackers en route. Use them to hack into the Scrin Signal Transmitter. They claim to be able to bring the Mothership's shields down.")
+	MediaCA.PlaySound("c_hackers.aud", "2")
+
 	local hackerFlare = Actor.Create("flare", true, { Owner = GDI, Location = HackerDropLanding.Location })
 	Trigger.AfterDelay(DateTime.Seconds(10), function()
 		hackerFlare.Destroy()
@@ -662,8 +671,8 @@ InitChronoTanks = function()
 			return
 		end
 
-		Notification("The Allies have provided us with a squadron of Chrono Tanks. We can use them to disrupt Scrin power in the north-east.")
-		Media.PlaySpeechNotification(GDI, "ReinforcementsArrived")
+		Notification("The Allies have provided a squadron of Chrono Tanks. Use them to destroy Scrin Reactors in the north-east.")
+		MediaCA.PlaySound("c_chronotanks.aud", "2")
 		local northEastPowerFlare = Actor.Create("flare", true, { Owner = GDI, Location = NorthEastPowerBeacon.Location })
 		Trigger.AfterDelay(DateTime.Seconds(10), function()
 			northEastPowerFlare.Destroy()
@@ -688,9 +697,9 @@ InitMADTankAttack = function()
 		if ScrinDefenseBuff1.IsDead then
 			return
 		end
-		Notification("Signal flare detected. The Soviets are sending a MAD Tank to disrupt Scrin power in the north-west. They have requested we rendezvous and provide escort.")
+		Notification("Signal flare detected. The Soviets are sending a MAD Tank to destroy Scrin Reactors in the north-west. They have requested a rendezvous to provide escort.")
+		MediaCA.PlaySound("c_madtank.aud", "2")
 
-		Media.PlaySpeechNotification(GDI, "SignalFlare")
 		local northWestPowerFlare = Actor.Create("flare", true, { Owner = GDI, Location = MADTankPath9.Location })
 		local madTankFlare = Actor.Create("flare", true, { Owner = GDI, Location = MADTankPath1.Location })
 		Trigger.AfterDelay(DateTime.Seconds(20), function()
@@ -710,6 +719,7 @@ InitMADTankAttack = function()
 		MADTank = Actor.Create("qtnk", true, { Owner = USSR, Location = MADTankSpawn.Location, Facing = Angle.East })
 		MADTank.Move(MADTankPath1.Location)
 		Notification("MAD Tank has arrived. Rendezvous to provide escort.")
+		MediaCA.PlaySound("c_madtankarrived.aud", "2")
 
 		Trigger.OnDamaged(MADTank, function(self, attacker, damage)
 			if self.Health < self.MaxHealth / 3 and not IsMADTankIronCurtained and not MADTank.IsDead then
@@ -741,6 +751,7 @@ SendMADTank = function()
 	if not MADTankEnRoute and not MADTank.IsDead then
 		MADTankEnRoute = true
 		Notification("MAD Tank en route to target.")
+		MediaCA.PlaySound("c_madtankenroute.aud", "2")
 		MADTank.Move(MADTankPath2.Location)
 		MADTank.Move(MADTankPath3.Location)
 		MADTank.Move(MADTankPath4.Location)
@@ -819,6 +830,8 @@ FlipSlaveFaction = function(player)
 		if ScrinDefenseBuff1.IsDead and ScrinDefenseBuff2.IsDead then
 			InitHackers()
 		end
+		Notification("Nod forces have been released from Scrin control.")
+		MediaCA.PlaySound("c_nodreleased.aud", "2")
 	elseif player == SovietSlaves then
 		targetPlayer = USSR
 		SovietsFreed = true
@@ -827,6 +840,8 @@ FlipSlaveFaction = function(player)
 		InitUSSR()
 		InitAttackSquad(Squads.ScrinWest, Scrin)
 		InitMADTankAttack()
+		Notification("Soviet forces have been released from Scrin control.")
+		MediaCA.PlaySound("c_sovietsreleased.aud", "2")
 	elseif player == AlliedSlaves then
 		targetPlayer = Greece
 		AlliesFreed = true
@@ -835,6 +850,8 @@ FlipSlaveFaction = function(player)
 		InitGreece()
 		InitAttackSquad(Squads.ScrinCenter, Scrin)
 		InitChronoTanks()
+		Notification("Allied forces have been released from Scrin control.")
+		MediaCA.PlaySound("c_alliesreleased.aud", "2")
 	end
 
 	local actors = player.GetActors()

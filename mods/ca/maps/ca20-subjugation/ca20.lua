@@ -131,8 +131,10 @@ WorldLoaded = function()
 				end
 				Scrin.MarkCompletedObjective(ObjectiveCaptureTibFacilities)
 				Notification("Enriched ichor consumed. Your Mastermind has become a Prodigy and is able to protect nearby units from Yuri's influence.")
+				MediaCA.PlaySound("s_prodigy.aud", "2")
 			else
 				Notification("Enriched ichor consumed. Mastermind mind control capacity increased by 1.")
+				MediaCA.PlaySound("s_ichorconsumed.aud", "2")
 			end
 		end)
 	end)
@@ -159,7 +161,16 @@ WorldLoaded = function()
 	Utils.Do(TibTrucks, function(t)
 		Trigger.AfterDelay(t.Delay[Difficulty], function()
 			if not t.Actor.IsDead and t.Actor.Owner == USSR and t.Objective == nil then
-				Notification("Enriched ichor shipment detected. Dispatch is imminent. Prevent it from reaching Yuri's command center.")
+
+				if not FirstShipmentAnnounced then
+					FirstShipmentAnnounced = true
+					Notification("Enriched ichor shipment detected. Dispatch is imminent. Prevent it from reaching Yuri's command center.")
+					MediaCA.PlaySound("s_firstichorshipment.aud", "2")
+				else
+					Notification("Enriched ichor shipment detected.")
+					MediaCA.PlaySound("s_ichorshipment.aud", "2")
+				end
+
 				t.Objective = Scrin.AddSecondaryObjective(t.ObjectiveText)
 				local camera = Actor.Create("smallcamera", true, { Owner = Scrin, Location = t.Actor.Location })
 				Trigger.AfterDelay(DateTime.Seconds(10), function()
@@ -177,6 +188,7 @@ WorldLoaded = function()
 								YuriHQ.GrantCondition("enriched")
 								a.Destroy()
 								Notification("A shipment of enriched ichor has reached Yuri's command center and he has grown more powerful.")
+								MediaCA.PlaySound("s_yuripower.aud", "2")
 								if t.Objective ~= nil and not Scrin.IsObjectiveCompleted(t.Objective) then
 									Scrin.MarkFailedObjective(t.Objective)
 								end

@@ -468,7 +468,7 @@ ChronosphereDiscovered = function()
 		IsBaseEstablished = true
 		IsChronosphereDiscovered = true
 		Notification("Commander, the Soviets have been attempting to reverse engineer stolen Chronosphere technology! Use whatever means necessary to cease their experiments.")
-		Media.PlaySpeechNotification(Greece, "SovietChronosphereDiscovered")
+		MediaCA.PlaySound("r_chronodisc.aud", "2")
 
 		local autoCamera = Actor.Create("smallcamera", true, { Owner = Greece, Location = SovietChronosphereLocation })
 		Trigger.AfterDelay(DateTime.Seconds(5), autoCamera.Destroy)
@@ -524,7 +524,7 @@ InterdimensionalCrossrip = function()
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
 		ScrinInvasion()
 		Notification("Unidentified hostile forces detected. Fall back to your base, and prepare for evacuation.")
-		Media.PlaySpeechNotification(Greece, "PrepareEvacuation")
+		MediaCA.PlaySound("r_evac.aud", "2")
 		TimerTicks = EvacuationTime[Difficulty]
 		Trigger.AfterDelay(DateTime.Seconds(7), function()
 			unitLostSilencer.Destroy()

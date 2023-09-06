@@ -173,6 +173,7 @@ WorldLoaded = function()
 	Trigger.AfterDelay(DateTime.Minutes(20), function()
 		Actor.Create("reaperaccess", true, { Owner = Scrin })
 		Notification("You have been granted access to Reaper Tripods.")
+		MediaCA.PlaySound("s_reaperaccess.aud", "2")
 	end)
 
 	Utils.Do(PowerGrids, function(grid)
@@ -184,6 +185,7 @@ WorldLoaded = function()
 			end)
 			DefensesOffline = true
 			Notification("Soviet power supply neutralized; defenses are now offline.")
+			MediaCA.PlaySound("s_sovietpoweroffline.aud", "2")
 		end)
 	end)
 
@@ -209,7 +211,8 @@ WorldLoaded = function()
 	Trigger.OnAllKilledOrCaptured(ForwardSAMs, function()
 		Actor.Create("fleetaccess", true, { Owner = Scrin })
 		Scrin.MarkCompletedObjective(ObjectiveDestroySAMs)
-		Notification("You now have access to Scrin fleet ships.")
+		Notification("Scrin fleet vessels now available.")
+		MediaCA.PlaySound("s_scrinfleet.aud", "2")
 
 		Trigger.AfterDelay(DateTime.Seconds(5), function()
 			Notification("Reinforcements have arrived.")
@@ -231,10 +234,14 @@ WorldLoaded = function()
 		if a.Owner == Scrin and a.Type ~= "camera" then
 			Trigger.RemoveProximityTrigger(id)
 
+			Notification("The entrance to the Soviet equipment holding area has been located.")
+			MediaCA.PlaySound("s_sovietholdingarea.aud", "2")
+
 			if not DefensesOffline then
-				Notification("The entrance to the Soviet equipment holding area has been located. Substantial defenses detected. Recommened neutralizing power before beginning assault.")
-			else
-				Notification("The entrance to the Soviet equipment holding area has been located.")
+				Trigger.AfterDelay(DateTime.Seconds(6), function()
+					Notification("Substantial defenses detected. Recommened neutralizing power before beginning assault.")
+					MediaCA.PlaySound("s_neutralizepower.aud", "2")
+				end)
 			end
 
 			Beacon.New(Scrin, TankYardReveal.CenterPosition)
