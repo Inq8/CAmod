@@ -224,6 +224,7 @@ WorldLoaded = function()
 			if a.Owner == Nod then
 				Trigger.RemoveProximityTrigger(id)
 				Notification("Researcher located.")
+				MediaCA.PlaySound("n_researcherlocated.aud", "2")
 				if ObjectiveRescueResearchers == nil then
 					ObjectiveRescueResearchers = Nod.AddObjective("Locate and rescue Nod researchers.")
 				end
@@ -239,6 +240,7 @@ WorldLoaded = function()
 				Trigger.RemoveProximityTrigger(id)
 				researcher.Owner = Nod
 				Notification("Escort researcher to evacuation point.")
+				MediaCA.PlaySound("n_escortresearcher.aud", "2")
 				InitEvacSite()
 			end
 		end)
@@ -264,30 +266,35 @@ WorldLoaded = function()
 				if Researcher1.Owner == EvacPlayer and Researcher2.Owner == EvacPlayer and not EvacStarted then
 					EvacStarted = true
 
-					if EvacFlare ~= nil then
-						EvacFlare.Destroy()
-					end
+					Notification("Evacuation transport inbound.")
+					MediaCA.PlaySound("n_evacinbound.aud", "2")
 
-					Reinforcements.ReinforceWithTransport(EvacPlayer, "tran.evac", nil, { EvacSpawn.Location, EvacPoint.Location }, nil, function(transport, cargo)
-						Notification("Evacuation transport inbound.")
-						Trigger.AfterDelay(DateTime.Seconds(1), function()
-							if not Researcher1.IsDead then
-								Researcher1.EnterTransport(transport)
-							end
-							if not Researcher1.IsDead then
-								Researcher2.EnterTransport(transport)
-							end
-						end)
-						Trigger.OnPassengerEntered(transport, function(t, passenger)
-							if t.PassengerCount == 2 then
-								EvacExiting = true
-								Media.PlaySpeechNotification(Nod, "TargetRescued")
-								t.Move(EvacSpawn.Location)
-								t.Destroy()
-								Trigger.AfterDelay(DateTime.Seconds(4), function()
-									Nod.MarkCompletedObjective(ObjectiveRescueResearchers)
-								end)
-							end
+					Trigger.AfterDelay(DateTime.Seconds(3), function()
+						if EvacFlare ~= nil then
+							EvacFlare.Destroy()
+						end
+
+						Reinforcements.ReinforceWithTransport(EvacPlayer, "tran.evac", nil, { EvacSpawn.Location, EvacPoint.Location }, nil, function(transport, cargo)
+
+							Trigger.AfterDelay(DateTime.Seconds(1), function()
+								if not Researcher1.IsDead then
+									Researcher1.EnterTransport(transport)
+								end
+								if not Researcher1.IsDead then
+									Researcher2.EnterTransport(transport)
+								end
+							end)
+							Trigger.OnPassengerEntered(transport, function(t, passenger)
+								if t.PassengerCount == 2 then
+									EvacExiting = true
+									Media.PlaySpeechNotification(Nod, "TargetRescued")
+									t.Move(EvacSpawn.Location)
+									t.Destroy()
+									Trigger.AfterDelay(DateTime.Seconds(4), function()
+										Nod.MarkCompletedObjective(ObjectiveRescueResearchers)
+									end)
+								end
+							end)
 						end)
 					end)
 				else

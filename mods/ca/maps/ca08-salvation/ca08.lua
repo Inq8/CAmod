@@ -192,7 +192,8 @@ SpawnWormhole = function()
 		randomDormantWormhole.SpawnCount = 0
 		local camera = Actor.Create("smallcamera", true, { Owner = Nod, Location = randomLocation })
 		Beacon.New(Nod, randomDormantWormhole.Actor.CenterPosition)
-		Notification("Scrin wormhole detected. Destroy it before Scrin reinforcements arrive.")
+		Notification("Scrin portal detected. Destroy it before Scrin reinforcements arrive.")
+		MediaCA.PlaySound("n_scrinportal.aud", "2")
 
 		UpdateScrinCounter()
 
