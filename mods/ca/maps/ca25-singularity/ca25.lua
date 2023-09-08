@@ -388,8 +388,10 @@ WorldLoaded = function()
 		if not CyborgsProvoked then
 			CyborgsProvoked = true
 			Utils.Do(cyborgs, function(c)
-				TargetSwapChance(c, 10)
-				c.GrantCondition("provoked")
+				if not c.IsDead then
+					TargetSwapChance(c, 10)
+					c.GrantCondition("provoked")
+				end
 			end)
 		end
 	end)
@@ -411,6 +413,10 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+
+	if Mothership.IsDead then
+		MoveCameraToFinale()
+	end
 end
 
 OncePerSecondChecks = function()
@@ -883,6 +889,9 @@ FlipSlaveFaction = function(player)
 end
 
 DoFinale = function()
+	Notification("Scrin mothership destroyed.")
+	MediaCA.PlaySound("c_mothershipdestroyed.aud", "2")
+
 	Lighting.Flash("Chronoshift", 10)
 
 	Lighting.Ambient = 0.8
@@ -942,5 +951,50 @@ CreatePermanentMothershipCamera = function()
 	if not Mothership.IsDead and not IsPermanentMothershipCameraCreated then
 		IsPermanentMothershipCameraCreated = true
 		Actor.Create("camera", true, { Owner = GDI, Location = Mothership.Location })
+	end
+end
+
+MoveCameraToFinale = function()
+	if FinaleFocused then
+		return
+	end
+
+	local cameraPos = Camera.Position
+	local targetPos = WormholeWP.CenterPosition
+
+	local movement = 2048
+
+	if cameraPos.X < targetPos.X then
+		if cameraPos.X + movement > targetPos.X then
+			newX = targetPos.X
+		else
+			newX = cameraPos.X + movement
+		end
+	elseif cameraPos.X > targetPos.X then
+		if cameraPos.X - movement < targetPos.X then
+			newX = targetPos.X
+		else
+			newX = cameraPos.X - movement
+		end
+	end
+
+	if cameraPos.Y < targetPos.Y then
+		if cameraPos.Y + movement > targetPos.Y then
+			newY = targetPos.Y
+		else
+			newY = cameraPos.Y + movement
+		end
+	elseif cameraPos.Y > targetPos.Y then
+		if cameraPos.Y - movement < targetPos.Y then
+			newY = targetPos.Y
+		else
+			newY = cameraPos.Y - movement
+		end
+	end
+
+	Camera.Position = WPos.New(newX, newY, 0)
+
+	if Camera.Position.X == targetPos.X and Camera.Position.Y == targetPos.Y then
+		FinaleFocused = true
 	end
 end

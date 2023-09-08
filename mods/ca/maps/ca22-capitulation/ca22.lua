@@ -192,8 +192,9 @@ WorldLoaded = function()
 	MissionPlayer = GDI
 	TimerTicks = MaxReactorFuelTime
 	CurrentDelivery = 1
+	McvArrived = false
 
-	Camera.Position = PlayerStart.CenterPosition
+	Camera.Position = Spy.CenterPosition
 
 	InitObjectives(GDI)
 	InitUSSR()
@@ -218,6 +219,13 @@ WorldLoaded = function()
 		DoDelivery()
 	end)
 
+	Trigger.AfterDelay(DateTime.Seconds(13), function()
+		Media.PlaySpeechNotification(GDI, "ReinforcementsArrived")
+		Notification("Reinforcements have arrived.")
+		Reinforcements.Reinforce(GDI, { "amcv" }, { McvSpawn.Location, PlayerStart.Location }, 75)
+		McvArrived = true
+	end)
+
 	local revealPoints = { SupplyReveal1, SupplyReveal2, SupplyReveal3 }
 	Utils.Do(revealPoints, function(p)
 		Trigger.OnEnteredProximityTrigger(p.CenterPosition, WDist.New(12 * 1024), function(a, id)
@@ -234,9 +242,10 @@ WorldLoaded = function()
 	end)
 
 	Spy.DisguiseAs(SpyDisguiseTarget)
-	Trigger.AfterDelay(DateTime.Seconds(5), function()
+	Trigger.AfterDelay(DateTime.Seconds(4), function()
 		Beacon.New(GDI, Spy.CenterPosition)
-		Media.DisplayMessage("Feels like they're getting suspicious, I'm getting out of here...", "Allied Spy", HSLColor.FromHex("1E90FF"))
+		Media.DisplayMessage("It feels like they're getting suspicious, I'm getting out of here...", "Allied Spy", HSLColor.FromHex("1E90FF"))
+		MediaCA.PlaySound("suspicious.aud", "2")
 		Spy.Move(SouthDelivery3.Location)
 		SpyKiller.Attack(Spy)
 	end)
@@ -245,6 +254,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	MoveCameraToStart()
 end
 
 OncePerSecondChecks = function()
@@ -262,7 +272,7 @@ OncePerSecondChecks = function()
 
 		UpdateObjectiveText()
 
-		if GDI.HasNoRequiredUnits() then
+		if McvArrived and GDI.HasNoRequiredUnits() then
 			GDI.MarkFailedObjective(ObjectiveCaptureOrDestroyBunker)
 		end
 	end
@@ -462,5 +472,50 @@ DisableMainPower = function()
 				a.GrantCondition("disabled")
 			end
 		end)
+	end
+end
+
+MoveCameraToStart = function()
+	if StartFocused or not McvArrived then
+		return
+	end
+
+	local cameraPos = Camera.Position
+	local targetPos = PlayerStart.CenterPosition
+
+	local movement = 1536
+
+	if cameraPos.X < targetPos.X then
+		if cameraPos.X + movement > targetPos.X then
+			newX = targetPos.X
+		else
+			newX = cameraPos.X + movement
+		end
+	elseif cameraPos.X > targetPos.X then
+		if cameraPos.X - movement < targetPos.X then
+			newX = targetPos.X
+		else
+			newX = cameraPos.X - movement
+		end
+	end
+
+	if cameraPos.Y < targetPos.Y then
+		if cameraPos.Y + movement > targetPos.Y then
+			newY = targetPos.Y
+		else
+			newY = cameraPos.Y + movement
+		end
+	elseif cameraPos.Y > targetPos.Y then
+		if cameraPos.Y - movement < targetPos.Y then
+			newY = targetPos.Y
+		else
+			newY = cameraPos.Y - movement
+		end
+	end
+
+	Camera.Position = WPos.New(newX, newY, 0)
+
+	if Camera.Position.X == targetPos.X and Camera.Position.Y == targetPos.Y then
+		StartFocused = true
 	end
 end
