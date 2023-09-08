@@ -241,9 +241,9 @@ Squads = {
 }
 
 RiftEnabledTime = {
-	easy = DateTime.Seconds((60 * 23) + 17),
-	normal = DateTime.Seconds((60 * 18) + 17),
-	hard = DateTime.Seconds((60 * 13) + 17),
+	easy = DateTime.Seconds((60 * 45) + 17),
+	normal = DateTime.Seconds((60 * 30) + 17),
+	hard = DateTime.Seconds((60 * 15) + 17),
 }
 
 MADTankAttackDelay = {
@@ -286,6 +286,12 @@ WorldLoaded = function()
 	InitNodSlaves()
 	InitSovietSlaves()
 	InitAlliedSlaves()
+
+	if Difficulty == "easy" then
+		HardNormalAA1.Destroy()
+		HardNormalAA2.Destroy()
+		HardNormalAA3.Destroy()
+	end
 
 	ObjectiveDestroyMothership = GDI.AddObjective("Destroy the Scrin Mothership.")
 
