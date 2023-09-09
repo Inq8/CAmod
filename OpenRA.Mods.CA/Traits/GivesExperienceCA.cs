@@ -75,7 +75,7 @@ namespace OpenRA.Mods.CA.Traits
 			GiveExperience(self, e, false);
 		}
 
-		void GiveExperience(Actor self, AttackInfo e, bool killed)
+		void GiveExperience(Actor self, AttackInfo e, bool fromKill)
 		{
 			if (exp == 0 || e.Attacker == null || e.Attacker.Disposed)
 				return;
@@ -85,29 +85,31 @@ namespace OpenRA.Mods.CA.Traits
 
 			exp = Util.ApplyPercentageModifiers(exp, experienceModifiers);
 
-			if (info.ActorExperienceOnDamage && !killed || !info.ActorExperienceOnDamage)
-			{
-				var killer = e.Attacker.TraitOrDefault<GainsExperience>();
-				if (killer != null)
-				{
-					var killerExperienceModifier = e.Attacker.TraitsImplementing<IGainsExperienceModifier>()
-						.Select(x => x.GetGainsExperienceModifier()).Append(info.ActorExperienceModifier);
-
-					// If applying based on damage, calculate the percentage of the total HP that the attack inflicted, and get that same percentage of the xp
-					if (info.ActorExperienceOnDamage && health != null)
-					{
-						var appliedDamage = Math.Min(e.Damage.Value, health.HP);
-						if (appliedDamage > 0)
-							killerExperienceModifier = killerExperienceModifier.Append((int)(((float)e.Damage.Value / (float)health.MaxHP) * 100));
-					}
-
-					killer.GiveExperience(Util.ApplyPercentageModifiers(exp, killerExperienceModifier));
-				}
-			}
-
-			if (killed)
+			if (fromKill)
 				e.Attacker.Owner.PlayerActor.TraitOrDefault<PlayerExperience>()
 					?.GiveExperience(Util.ApplyPercentageModifiers(exp, new[] { info.PlayerExperienceModifier }));
+
+			if (info.ActorExperienceOnDamage && (fromKill || health == null))
+				return;
+
+			var attacker = e.Attacker.TraitOrDefault<GainsExperience>();
+			if (attacker == null)
+				return;
+
+			var killerExperienceModifiers = e.Attacker.TraitsImplementing<IGainsExperienceModifier>()
+				.Select(x => x.GetGainsExperienceModifier()).Append(info.ActorExperienceModifier);
+
+			// If applying based on damage, calculate the percentage of the total HP that the attack inflicted, and get that same percentage of the xp
+			if (info.ActorExperienceOnDamage)
+			{
+				var appliedDamage = Math.Min(e.Damage.Value, health.HP);
+				if (appliedDamage <= 0)
+					return;
+
+				killerExperienceModifiers = killerExperienceModifiers.Append((int)(((float)e.Damage.Value / (float)health.MaxHP) * 100));
+			}
+
+			attacker.GiveExperience(Util.ApplyPercentageModifiers(exp, killerExperienceModifiers));
 		}
 	}
 }
