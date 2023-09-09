@@ -336,6 +336,9 @@ DevourerLaser:
 		Damage: 1100
 		Versus:
 			None: 20
+	Warhead@antiShip: SpreadDamage
+		ValidTargets: Water
+		Damage: 750
 
 DevourerLaserCharged:
 	Inherits: DevourerLaser
@@ -388,6 +391,9 @@ RiftCannon:
 			Light: 120
 			Heavy: 120
 		DamageTypes: BulletDeath
+	Warhead@antiShip: SpreadDamage
+		ValidTargets: Water
+		Damage: 4400
 	Warhead@prone: SpreadDamage
 		Spread: 512
 		Falloff: 100, 100, 0
@@ -438,12 +444,12 @@ MiniRift:
 		Range: 1c0
 		Duration: 10
 		Condition: slowed
-		ValidTargets: Vehicle, Cyborg
+		ValidTargets: Vehicle, Ship, Cyborg
 	Warhead@4Slow: GrantExternalCondition
 		Range: 2c0
 		Duration: 10
 		Condition: slowed
-		ValidTargets: Vehicle
+		ValidTargets: Vehicle, Ship
 		ValidRelationships: Enemy, Neutral
 
 CorrupterSpew:
