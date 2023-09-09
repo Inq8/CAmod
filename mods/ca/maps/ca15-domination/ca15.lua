@@ -28,6 +28,7 @@ WorldLoaded = function()
 	Nod = Player.GetPlayer("Nod")
 	MissionPlayer = USSR
 	TimerTicks = 0
+	TempleOfNodLocation = TempleOfNod.Location
 
 	Camera.Position = PlayerStart.CenterPosition
 

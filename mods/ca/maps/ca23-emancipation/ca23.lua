@@ -182,59 +182,67 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnKilled(Mastermind1, function(self, killer)
-		Notification("The first GDI base has been released from Scrin control.")
-		MediaCA.PlaySound("c_firstbasereleased.aud", "2")
-		if not Mastermind2.IsDead then
-			Trigger.AfterDelay(DateTime.Seconds(5), function()
-				Notification("The next GDI base is located to the north-east.")
-				MediaCA.PlaySound("c_secondbaselocated.aud", "2")
-			end)
-		end
+		Trigger.AfterDelay(DateTime.Seconds(1), function()
+			Notification("The first GDI base has been released from Scrin control.")
+			MediaCA.PlaySound("c_firstbasereleased.aud", "2")
+			if not Mastermind2.IsDead then
+				Trigger.AfterDelay(DateTime.Seconds(5), function()
+					Notification("The next GDI base is located to the north-east.")
+					MediaCA.PlaySound("c_secondbaselocated.aud", "2")
+				end)
+			end
+		end)
 	end)
 
 	Trigger.OnKilled(Mastermind2, function(self, killer)
-		Notification("The second GDI base has been released from Scrin control.")
-		MediaCA.PlaySound("c_secondbasereleased.aud", "2")
-		if not Mastermind3.IsDead then
-			Notification("GDI airbase located to the south-east.")
-			Trigger.AfterDelay(DateTime.Seconds(5), function()
-				MediaCA.PlaySound("c_airbaselocated.aud", "2")
-			end)
-		end
+		Trigger.AfterDelay(DateTime.Seconds(1), function()
+			Notification("The second GDI base has been released from Scrin control.")
+			MediaCA.PlaySound("c_secondbasereleased.aud", "2")
+			if not Mastermind3.IsDead then
+				Trigger.AfterDelay(DateTime.Seconds(5), function()
+					Notification("GDI airbase located to the south-east.")
+					MediaCA.PlaySound("c_airbaselocated.aud", "2")
+				end)
+			end
+		end)
 	end)
 
 	Trigger.OnKilled(Mastermind3, function(self, killer)
-		Notification("GDI airbase secured.")
-		MediaCA.PlaySound("c_airbasereleased.aud", "2")
+		Trigger.AfterDelay(DateTime.Seconds(1), function()
+			Notification("GDI airbase secured.")
+			MediaCA.PlaySound("c_airbasereleased.aud", "2")
 
-		if not Mastermind4.IsDead then
-			Trigger.AfterDelay(DateTime.Seconds(5), function()
-				Notification("The primary GDI base is located to the south.")
-				MediaCA.PlaySound("c_primarybaselocated.aud", "2")
-				if not Mastermind5.IsDead then
-					Trigger.AfterDelay(DateTime.Seconds(5), function()
-						Notification("We have also lost contact with our outpost on the island to the north.")
-						MediaCA.PlaySound("c_island.aud", "2")
-					end)
-				end
-			end)
-		elseif not Mastermind5.IsDead then
-			Trigger.AfterDelay(DateTime.Seconds(5), function()
-				Notification("We have also lost contact with our outpost on the island to the north.")
-				MediaCA.PlaySound("c_island.aud", "2")
-			end)
-		end
+			if not Mastermind4.IsDead then
+				Trigger.AfterDelay(DateTime.Seconds(5), function()
+					Notification("The primary GDI base is located to the south.")
+					MediaCA.PlaySound("c_primarybaselocated.aud", "2")
+					if not Mastermind5.IsDead then
+						Trigger.AfterDelay(DateTime.Seconds(5), function()
+							Notification("We have also lost contact with our outpost on the island to the north.")
+							MediaCA.PlaySound("c_island.aud", "2")
+						end)
+					end
+				end)
+			elseif not Mastermind5.IsDead then
+				Trigger.AfterDelay(DateTime.Seconds(5), function()
+					Notification("We have also lost contact with our outpost on the island to the north.")
+					MediaCA.PlaySound("c_island.aud", "2")
+				end)
+			end
+		end)
 	end)
 
 	Trigger.OnKilled(Mastermind4, function(self, killer)
-		Notification("The primary GDI base has been released from Scrin control.")
-		MediaCA.PlaySound("c_primarybasereleased.aud", "2")
-		if not Mastermind1.IsDead or not Mastermind2.IsDead or not Mastermind3.IsDead or not Mastermind5.IsDead then
-			Trigger.AfterDelay(DateTime.Seconds(5), function()
-				Notification("Eliminate the remaining Masterminds before assaulting the Scrin base.")
-				MediaCA.PlaySound("c_remainingmasterminds.aud", "2")
-			end)
-		end
+		Trigger.AfterDelay(DateTime.Seconds(1), function()
+			Notification("The primary GDI base has been released from Scrin control.")
+			MediaCA.PlaySound("c_primarybasereleased.aud", "2")
+			if not Mastermind1.IsDead or not Mastermind2.IsDead or not Mastermind3.IsDead or not Mastermind5.IsDead then
+				Trigger.AfterDelay(DateTime.Seconds(5), function()
+					Notification("Eliminate the remaining Masterminds before assaulting the Scrin base.")
+					MediaCA.PlaySound("c_remainingmasterminds.aud", "2")
+				end)
+			end
+		end)
 	end)
 
 	Trigger.OnKilled(Mastermind5, function(self, killer)
