@@ -434,6 +434,7 @@ HellfireAG.Harrier:
 
 HellfireAG.Horn:
 	Inherits: HellfireAG.Harrier
+	ReloadDelay: 50
 	Range: 5c0
 	MinRange: 1c0
 	Burst: 2
@@ -442,7 +443,9 @@ HellfireAG.Horn:
 		ContrailLength: 0
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 850
+		Damage: 500
+		Versus:
+			Concrete: 40
 
 HellfireAA:
 	Inherits: ^AirToAirMissile
@@ -683,7 +686,7 @@ Stinger:
 	Range: 9c0
 	Burst: 2
 	BurstDelays: 6
-	InvalidTargets: Underwater
+	InvalidTargets: Submarine
 	Projectile: MissileCA
 		Arm: 3
 		Inaccuracy: 0
@@ -694,6 +697,7 @@ Stinger:
 	Warhead@1Dam: SpreadDamage
 		Spread: 368
 		Damage: 7000
+		InvalidTargets: Submarine
 		Versus:
 			None: 36
 			Wood: 80
@@ -833,8 +837,6 @@ TorpTube:
 		Palette: shadow
 		MaximumLaunchAngle: 0
 		CruiseAltitude: 0
-		LockOnProbability: 90
-		LockOnInaccuracy: 128
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
 		Damage: 12000

@@ -19,7 +19,7 @@ SS:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 33000
+		HP: 25000
 	Armor:
 		Type: Light
 	Mobile:
@@ -87,7 +87,7 @@ MSUB:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 35000
+		HP: 30000
 	Armor:
 		Type: Light
 	Mobile:
@@ -165,7 +165,7 @@ DD:
 	Armament@SECONDARY:
 		Name: secondary
 		Turret: secondary
-		Weapon: DepthCharge.destroyer
+		Weapon: DoubleDepthCharge
 		LocalOffset: 0,-100,0, 0,100,0
 		LocalYaw: 80, -80
 		PauseOnCondition: under-bridge
@@ -184,6 +184,8 @@ DD:
 		DetectionTypes: Underwater
 		Range: 4c0
 	RenderDetectionCircle:
+		Color: 00ff0020
+		BorderColor: 00000020
 	Selectable:
 		DecorationBounds: 1621, 1621
 
@@ -365,6 +367,8 @@ PT:
 		DetectionTypes: Underwater
 		Range: 4c0
 	RenderDetectionCircle:
+		Color: 00ff0020
+		BorderColor: 00000020
 	Selectable:
 		DecorationBounds: 1536, 1536
 
@@ -436,6 +440,8 @@ PT2:
 		DetectionTypes: Underwater
 		Range: 4c0
 	RenderDetectionCircle:
+		Color: 00ff0020
+		BorderColor: 00000020
 	Selectable:
 		DecorationBounds: 1536, 1536
 
@@ -486,6 +492,10 @@ DD2:
 		Turret: secondary
 		Offset: 551,0,158
 		TurnSpeed: 1024
+	Turreted@TERTIARY:
+		Turret: tertiary
+		TurnSpeed: 15
+		Offset: -469,0,128
 	Armament@PRIMARY:
 		Turret: primary
 		Weapon: Railgun
@@ -502,15 +512,24 @@ DD2:
 		PauseOnCondition: under-bridge
 		RequiresCondition: pointdef-upgrade
 		ForceTargetRelationships: enemy
+	Armament@TERTIARY:
+		Name: tertiary
+		Turret: tertiary
+		Weapon: DoubleDepthCharge
+		LocalOffset: 0,-100,0, 0,100,0
+		LocalYaw: 80, -80
+		PauseOnCondition: under-bridge
 	AttackTurreted:
-		Turrets: primary, secondary
-		Armaments: primary, secondary
+		Turrets: primary, secondary, tertiary
+		Armaments: primary, secondary, tertiary
 		PauseOnCondition: empdisable || being-warped
 	AutoTarget:
 	DetectCloaked:
 		DetectionTypes: Underwater
 		Range: 4c0
 	RenderDetectionCircle:
+		Color: 00ff0020
+		BorderColor: 00000020
 	WithSpriteTurret@PRIMARY:
 		Turret: primary
 	WithMuzzleOverlay:
@@ -546,7 +565,7 @@ SS2:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 26500
+		HP: 24000
 	Armor:
 		Type: Light
 	Mobile:
@@ -614,7 +633,7 @@ ISUB:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 60000
+		HP: 35000
 	Armor:
 		Type: Light
 	Mobile:
@@ -807,6 +826,8 @@ SB:
 		DetectionTypes: Underwater
 		Range: 2c0
 	RenderDetectionCircle:
+		Color: 00ff0020
+		BorderColor: 00000020
 	Selectable:
 		DecorationBounds: 1536, 1536
 
@@ -861,5 +882,7 @@ SEAS:
 		DetectionTypes: Underwater
 		Range: 4c0
 	RenderDetectionCircle:
+		Color: 00ff0020
+		BorderColor: 00000020
 	Selectable:
 		DecorationBounds: 1536, 1536

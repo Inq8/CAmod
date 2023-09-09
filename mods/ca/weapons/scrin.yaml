@@ -157,6 +157,7 @@ PlasmaDiscs:
 	ReloadDelay: 75
 	Burst: 5
 	BurstDelays: 4
+	ValidTargets: Ground, Water, Underwater
 	Projectile: Missile
 		Image: plasdiscsm
 		TrailImage: smokey
@@ -174,6 +175,7 @@ PlasmaDiscs:
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		Damage: 2200
+		ValidTargets: Ground, Water, Underwater
 		Versus:
 			None: 30
 			Wood: 55
@@ -628,7 +630,6 @@ StormriderZap:
 	ReloadDelay: 70
 	Burst: 5
 	BurstDelays: 4
-	ValidTargets: Ground, Water, Underwater
 	Projectile: Bullet
 		Image: scrinzapdown
 		Inaccuracy: 42
@@ -636,7 +637,6 @@ StormriderZap:
 		Palette: scrin
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
-		ValidTargets: Ground, Water, Underwater
 		Spread: 256
 		Damage: 4800
 		Versus:
@@ -646,11 +646,6 @@ StormriderZap:
 			Light: 55
 			Heavy: 40
 			Brick: 20
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath, AirToGround
-	Warhead@2Dam: SpreadDamage
-		ValidTargets: Water
-		Spread: 128
-		Damage: 1000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, AirToGround
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
@@ -691,7 +686,6 @@ StormRiderZapAA:
 		Falloff: 100, 50, 14, 0
 		ValidTargets: AirSmall
 		ValidRelationships: Enemy, Neutral
-	-Warhead@2Dam:
 	-Warhead@2Smu:
 
 EnervatorBolts:
@@ -1117,6 +1111,7 @@ LaceratorShards:
 	Range: 5c0
 	StartBurstReport: lacerator-fire1.aud, lacerator-fire2.aud
 	ReloadDelay: 100
+	ValidTargets: Ground, Water, Underwater
 	Projectile: Missile
 		Image: bshard
 		ContrailLength: 9
@@ -1127,6 +1122,7 @@ LaceratorShards:
 	Warhead@1Dam: SpreadDamage
 		Damage: 2900
 		Spread: 128
+		ValidTargets: Ground, Water, Underwater
 		Versus:
 			None: 15
 			Wood: 55

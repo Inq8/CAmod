@@ -1031,7 +1031,7 @@ SEEK:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Buildings
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Can detect cloaked units and mines.\n• Can traverse water
+		Attributes: • Can detect cloaked units, submarines and mines.\n• Can traverse water
 	Mobile:
 		Speed: 113
 		Locomotor: lighthover
@@ -1064,7 +1064,7 @@ SEEK:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 5c0
-		DetectionTypes: Cloak, Thief, AirCloak, Mine
+		DetectionTypes: Cloak, Thief, AirCloak, Mine, Underwater
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -1078,6 +1078,10 @@ SEEK:
 		RequiresCondition: onwater && (empdisable || driver-dead)
 	Targetable@ONWATER:
 		TargetTypes: Water, Ship
+		RequiresCondition: onwater
+	RenderDetectionCircle:
+		Color: 00ff0020
+		BorderColor: 00000020
 		RequiresCondition: onwater
 
 LACE:
@@ -1106,7 +1110,7 @@ LACE:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Buildings
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Can detect cloaked units and mines.\n• Can traverse water
+		Attributes: • Can detect cloaked units, submarines and mines.\n• Can traverse water
 	Mobile:
 		TurnSpeed: 40
 		Speed: 144
@@ -1143,7 +1147,7 @@ LACE:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 5c0
-		DetectionTypes: Cloak, Thief, AirCloak, Mine
+		DetectionTypes: Cloak, Thief, AirCloak, Mine, Underwater
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -1157,6 +1161,10 @@ LACE:
 		RequiresCondition: onwater && (empdisable || driver-dead)
 	Targetable@ONWATER:
 		TargetTypes: Water, Ship
+		RequiresCondition: onwater
+	RenderDetectionCircle:
+		Color: 00ff0020
+		BorderColor: 00000020
 		RequiresCondition: onwater
 
 INTL:
@@ -2139,7 +2147,6 @@ STMR:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor, Buildings, Aircraft
 		Weaknesses: • Weak vs Defenses
-		Attributes: • Can detect submarines
 	Valued:
 		Cost: 1750
 	Tooltip:
@@ -2237,9 +2244,6 @@ STMR:
 		Margin: 4, 3
 		RequiresSelection: true
 		PipCount: 3
-	DetectCloaked:
-		DetectionTypes: Underwater
-		Range: 8c0
 	Rearmable:
 		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	GrantConditionOnDamageState@SmokeTrail:
