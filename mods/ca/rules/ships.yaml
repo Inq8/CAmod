@@ -659,11 +659,16 @@ ISUB:
 		RequiresSelection: true
 	Exit:
 		SpawnOffset: 0,-128,0
-	AttackFrontal:
+	AttackFrontalCharged:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: under-bridge || empdisable || being-warped
-		FacingTolerance: 0
+		FacingTolerance: 16
+		ChargeLevel: 50
+		DischargeRate: 5
+		ShowSelectionBar: true
+		SelectionBarColor: ffaa00
+		ChargingCondition: cloak-force-disabled
 	AutoTarget:
 		InitialStance: HoldFire
 	Selectable:
