@@ -1371,8 +1371,6 @@ SAPC:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
-	Targetable@DRIVERKILL:
-		RequiresCondition: !driver-dead && !cargo
 	Targetable@MINDCONTROL:
 		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
 	Cloak@NORMAL:
@@ -1744,8 +1742,6 @@ APC:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
-	Targetable@DRIVERKILL:
-		RequiresCondition: !driver-dead && !cargo
 	Targetable@MINDCONTROL:
 		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
 	UpgradeableTo:
@@ -2663,7 +2659,7 @@ GDRN:
 	Voiced:
 		VoiceSet: RobotTankVoice
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
@@ -2693,6 +2689,17 @@ GDRN:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 200
 		RequiresCondition: !mindcontrolled
+	-CaptureManager:
+	-Capturable:
+	-CaptureNotification:
+	-Capturable@DRIVER_DEAD:
+	-GrantConditionIfOwnerIsNeutral:
+	-ChangesHealth@DRIVER_DEAD:
+	-TooltipDescription@DRIVER_DEAD:
+	-Targetable@DRIVERKILL:
+	-Targetable@DRIVERKILLLOWHP:
+	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
+	-Targetable@AICAPTURE:
 
 GDRN.TOW:
 	Inherits: GDRN
@@ -2837,8 +2844,6 @@ APC2:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
-	Targetable@DRIVERKILL:
-		RequiresCondition: !driver-dead && !cargo
 	Targetable@MINDCONTROL:
 		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
 	Selectable:
@@ -3008,8 +3013,6 @@ VULC:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
-	Targetable@DRIVERKILL:
-		RequiresCondition: !driver-dead && !cargo
 	Targetable@MINDCONTROL:
 		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
 
@@ -3258,7 +3261,7 @@ MTNK.Drone:
 	Voiced:
 		VoiceSet: DroneVoice
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
 	ChangesHealth:
 		PercentageStep: 1
 		Delay: 25
@@ -3353,7 +3356,7 @@ MDRN:
 		Voice: Attack
 	WithSpriteTurret:
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
 	-WithDamageOverlay:
 	-CaptureManager:
 	-Capturable:
@@ -3615,7 +3618,7 @@ HTNK.Drone:
 	Voiced:
 		VoiceSet: DroneVoice
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
 	ChangesHealth:
 		StartIfBelow: 100
 		RequiresCondition: !mdrn-attached
@@ -4340,8 +4343,6 @@ BTR:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
-	Targetable@DRIVERKILL:
-		RequiresCondition: !driver-dead && !cargo
 
 BTR.AI:
 	Inherits: BTR
@@ -4780,8 +4781,6 @@ IFV:
 		RequiresCondition: !being-warped && !full
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !full
-	Targetable@DRIVERKILL:
-		RequiresCondition: !driver-dead && !full
 	Targetable@MINDCONTROL:
 		RequiresCondition: !full && !mindcontrolled && !hacked && !restoring
 	AutoTarget:
@@ -6173,8 +6172,6 @@ BATF:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
-	Targetable@DRIVERKILL:
-		RequiresCondition: !driver-dead && !cargo
 	Targetable@MINDCONTROL:
 		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
 	SpawnActorOnDeath:
@@ -6290,7 +6287,7 @@ MEMP:
 		Offset: 0, 0, 0
 		Sequence: emp-overlay
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
 	WithRangeCircle:
 		Color: 0000FF80
 		Range: 5c0
@@ -6389,7 +6386,7 @@ CDRN:
 		RequiresCondition: triggered && ammo
 		AmmoPoolName: explosion
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
 	Voiced:
 		VoiceSet: ChaosDroneVoice
 	-CaptureManager:

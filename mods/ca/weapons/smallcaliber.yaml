@@ -809,16 +809,13 @@ SNIPER.vehicle:
 SNIPER.vehicleElite:
 	Inherits: SNIPER.vehicle
 	Report: ijarwe2a.aud
-	Warhead@1Dam: SpreadDamage
-		InvalidTargets: DriverKillLow
-	Warhead@3Eff: CreateEffect
-		InvalidTargets: DriverKillLow
 	Warhead@Concussion: GrantExternalCondition
 		InvalidTargets: DriverKillLow
 	Warhead@DriverKill: ChangeOwnerToNeutral
 		ValidTargets: DriverKillLow
-		InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air, AirSmall, DriverKillImmune
+		InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air, AirSmall
 		ValidRelationships: Enemy
+		CargoEffect: Block
 		Range: 0c511
 	Warhead@highlight: GrantExternalCondition
 		Range: 0c511

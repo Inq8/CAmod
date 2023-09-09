@@ -10,16 +10,22 @@
 
 using System.Linq;
 using OpenRA.GameRules;
+using OpenRA.Mods.Common.Traits;
 using OpenRA.Mods.Common.Warheads;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Warheads
 {
+	public enum CargoEffect { None, Kill, Block }
+
 	[Desc("Changes targets to neutral.")]
 	public class ChangeOwnerToNeutralWarhead : Warhead
 	{
 		[Desc("Faction to change to.")]
 		public readonly string Owner = "Neutral";
+
+		[Desc("Whether cargo is killed, blocks neutralization, or has no effect.")]
+		public readonly CargoEffect CargoEffect = CargoEffect.Kill;
 
 		public readonly WDist Range = WDist.FromCells(1);
 
@@ -36,10 +42,29 @@ namespace OpenRA.Mods.CA.Warheads
 					continue;
 
 				if (!target.IsValidFor(firedBy))
-					return;
+					continue;
 
 				if (!IsValidAgainst(a, firedBy))
 					continue;
+
+				if (CargoEffect != CargoEffect.None)
+				{
+					var cargo = a.TraitOrDefault<Cargo>();
+					if (cargo != null)
+					{
+						if (CargoEffect == CargoEffect.Block && cargo.PassengerCount > 0)
+							continue;
+
+						if (CargoEffect == CargoEffect.Kill)
+						{
+							while (!cargo.IsEmpty())
+							{
+								var p = cargo.Unload(a);
+								p.Kill(firedBy);
+							}
+						}
+					}
+				}
 
 				a.ChangeOwner(a.World.Players.First(p => p.InternalName == Owner)); // Permanent
 
