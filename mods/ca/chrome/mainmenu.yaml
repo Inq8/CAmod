@@ -247,6 +247,34 @@ Container@MAINMENU:
 							Y: 5
 							Width: 200
 							Height: 200
+		Background@NEW_VERSION:
+			Logic: VersionCheckLogic
+			Background: dialog4
+			X: WINDOW_RIGHT - WIDTH - 25
+			Y: WINDOW_BOTTOM - 32 - HEIGHT - 25 - 2
+			Width: 270
+			Height: 65
+			Children:
+				Label@NEW_VERSION_LABEL:
+					X: 0
+					Y: 2
+					Width: PARENT_RIGHT
+					Height: 25
+					Align: Center
+					Font: Regular
+					Shadow: true
+					TextColor: ffff00
+					Text: Testing testing
+				ExternalLinkButton@NEW_VERSION_BUTTON:
+					X: PARENT_RIGHT / 2 - WIDTH / 2
+					Y: PARENT_BOTTOM - HEIGHT - 8
+					Width: 100
+					Height: 28
+					Background: button
+					Align: Center
+					Text: Download
+					Font: Regular
+					Url: null
 		Container@EXTERNAL_LINKS:
 			Logic: ExternalLinksLogic
 			X: WINDOW_RIGHT - WIDTH - 25
