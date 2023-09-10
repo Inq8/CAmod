@@ -664,6 +664,10 @@ NavalReinforcements = function()
 
 			local destroyers = { "dd", "dd", "dd" }
 
+			if Difficulty == "easy" then
+				destroyers = { "dd", "dd", "dd", "dd" }
+			end
+
 			Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
 			Beacon.New(Greece, CruiserSpawn.CenterPosition)
 			Reinforcements.Reinforce(Greece, cruisers, { CruiserSpawn.Location, CruiserDestination.Location }, 75)

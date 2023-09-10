@@ -205,17 +205,26 @@ WorldLoaded = function()
 		HardOnlyShardLauncher2.Destroy()
 		HardOnlyStormColumn1.Destroy()
 		HardOnlyStormColumn2.Destroy()
+
+		if Difficulty == "easy" then
+			NonEasyStormColumn1.Destroy()
+			NonEasyStormColumn2.Destroy()
+			NonEasyStormColumn3.Destroy()
+			NonEasyCorrupter1.Destroy()
+		end
+
+		Trigger.AfterDelay(NavalReinforcementsDelay[Difficulty], function()
+			NavalReinforcements()
+		end)
+
+		Trigger.AfterDelay(DateTime.Minutes(1), function()
+			Tip("Resources in the vicinity are limited. Explore to find additional sources of income.")
+		end)
 	end
 
 	Trigger.AfterDelay(DateTime.Seconds(15), function()
 		InitConvoy()
 	end)
-
-	if Difficulty ~= "hard" then
-		Trigger.AfterDelay(NavalReinforcementsDelay[Difficulty], function()
-			NavalReinforcements()
-		end)
-	end
 
 	-- When convoy units reach destination, remove them
 	Utils.Do(ConvoyExits, function(exitCells)
@@ -225,12 +234,6 @@ WorldLoaded = function()
 			end
 		end)
 	end)
-
-	if Difficulty ~= "hard" then
-		Trigger.AfterDelay(DateTime.Minutes(1), function()
-			Tip("Resources in the vicinity are limited. Explore to find additional sources of income.")
-		end)
-	end
 
 	-- Easter egg
 	Trigger.OnKilled(Church, function(a)

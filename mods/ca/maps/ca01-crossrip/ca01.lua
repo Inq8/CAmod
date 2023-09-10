@@ -87,12 +87,12 @@ Squads = {
 	Main = {
 		Player = nil,
 		Delay = {
-			easy = DateTime.Minutes(3),
-			normal = DateTime.Minutes(2) + DateTime.Seconds(30),
+			easy = DateTime.Minutes(4),
+			normal = DateTime.Minutes(3),
 			hard = DateTime.Minutes(2)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(12), Value = 40 } },
+			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(12), Value = 30 } },
 			normal = { { MinTime = 0, Value = 50 } },
 			hard = { { MinTime = 0, Value = 80 } },
 		},
@@ -228,6 +228,11 @@ WorldLoaded = function()
 		TeslaCoil2.Destroy()
 		NonEasyKatyusha.Destroy()
 		NonEasyV2.Destroy()
+		NonEasyHeavyTank1.Destroy()
+		NonEasyHeavyTank2.Destroy()
+		NonEasyHeavyTank3.Destroy()
+		NonEasyHeavyTank4.Destroy()
+		NonEasyMammoth1.Destroy()
 	else
 		Ranger1.Destroy()
 	end
