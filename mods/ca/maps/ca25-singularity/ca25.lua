@@ -282,6 +282,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(GDI)
+	AdjustStartingCash()
 	InitScrin()
 	InitNodSlaves()
 	InitSovietSlaves()

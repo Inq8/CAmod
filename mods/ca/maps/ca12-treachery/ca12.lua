@@ -112,6 +112,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(USSR)
+	AdjustStartingCash()
 	InitGreece()
 
 	HaloDropper = Actor.Create("powerproxy.halodrop", false, { Owner = USSR })

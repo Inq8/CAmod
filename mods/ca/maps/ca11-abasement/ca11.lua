@@ -175,6 +175,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(USSR)
+	AdjustStartingCash()
 	InitScrin()
 	InitNod()
 	SetupLightning()

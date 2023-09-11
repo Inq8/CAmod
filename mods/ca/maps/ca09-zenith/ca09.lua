@@ -101,6 +101,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Nod)
+	AdjustStartingCash()
 	InitUSSR()
 
 	ObjectiveKillSilos = Nod.AddObjective("Destroy Soviet missile silos before launch.")

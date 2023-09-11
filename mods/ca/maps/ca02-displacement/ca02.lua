@@ -189,6 +189,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerBarracks.CenterPosition
 
 	InitObjectives(Greece)
+	AdjustStartingCash()
 	InitScrin()
 
 	ObjectiveClearPath = Greece.AddObjective("Clear a path for inbound convoys.")
@@ -319,6 +320,13 @@ InitConvoy = function()
 	ConvoyFlare = Actor.Create("flare", true, { Owner = Greece, Location = nextConvoy.FlareWaypoint.Location })
 	Media.PlaySpeechNotification(Greece, "SignalFlare")
 	Beacon.New(Greece, nextConvoy.FlareWaypoint.CenterPosition)
+
+	if not FirstConvoyAnnounced then
+		FirstConvoyAnnounced = true
+		Trigger.AfterDelay(DateTime.Seconds(3), function()
+			MediaCA.PlaySound("r_firstconvoy.aud", "1.5")
+		end)
+	end
 
 	-- Set the timer
 	TimerTicks = TimeBetweenConvoys[Difficulty][NextConvoyIdx]

@@ -218,6 +218,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Greece)
+	AdjustStartingCash()
 	InitUSSR()
 
 	if Difficulty ~= "hard" then

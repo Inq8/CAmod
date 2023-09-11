@@ -26,6 +26,12 @@ HarvesterDeathDelayTime = {
 	hard = DateTime.Seconds(20),
 }
 
+CashAdjustments = {
+	easy = 3500,
+	normal = 0,
+	hard = -1500
+}
+
 CapturedCreditsAmount = 1250
 
 EnforceAiBuildRadius = false
@@ -1008,6 +1014,14 @@ SetupReveals = function(revealPoints, cameraType)
 			end
 		end)
 	end)
+end
+
+AdjustStartingCash = function(player)
+	if player == nil then
+		player = MissionPlayer
+	end
+
+	player.Cash = player.Cash + CashAdjustments[Difficulty]
 end
 
 -- Filters

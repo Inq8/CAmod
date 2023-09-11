@@ -193,7 +193,7 @@ WorldLoaded = function()
 		Notification("Reinforcements have arrived.")
 		Reinforcements.Reinforce(GDI, { "hmmv", "mtnk", "amcv", "mtnk" }, { McvSpawn.Location, McvRally.Location }, 75)
 		Beacon.New(GDI, McvRally.CenterPosition)
-		GDI.Cash = 5000
+		GDI.Cash = 5000 + CashAdjustments[Difficulty]
 	end)
 
 	Trigger.OnKilled(Church1, function(self, killer)
