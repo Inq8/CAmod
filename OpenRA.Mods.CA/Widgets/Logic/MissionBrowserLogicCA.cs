@@ -302,7 +302,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			if (selectedMap == null || selectedMap.WorldActorInfo == null)
 				return;
 
-			missionOptions.Clear();
+			// missionOptions.Clear();
 			optionsContainer.RemoveChildren();
 
 			var allOptions = selectedMap.PlayerActorInfo.TraitInfos<ILobbyOptions>()
@@ -318,7 +318,8 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			var yOffset = 0;
 			foreach (var option in allOptions.Where(o => o is LobbyBooleanOption))
 			{
-				missionOptions[option.Id] = option.DefaultValue;
+				if (!missionOptions.ContainsKey(option.Id))
+					missionOptions[option.Id] = option.DefaultValue;
 
 				if (checkboxColumns.Count == 0)
 				{
@@ -352,7 +353,8 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 
 			foreach (var option in allOptions.Where(o => o is not LobbyBooleanOption))
 			{
-				missionOptions[option.Id] = option.DefaultValue;
+				if (!missionOptions.ContainsKey(option.Id))
+					missionOptions[option.Id] = option.DefaultValue;
 
 				if (dropdownColumns.Count == 0)
 				{
