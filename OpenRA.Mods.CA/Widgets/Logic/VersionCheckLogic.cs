@@ -12,10 +12,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using OpenRA.Mods.Common.Widgets;
 using OpenRA.Support;
 using OpenRA.Widgets;
-using Newtonsoft.Json;
 
 namespace OpenRA.Mods.CA.Widgets.Logic
 {
@@ -35,7 +35,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		{
 			this.widget = widget;
 			var logDir = Platform.SupportDir + "Logs";
-			versionCheckFilePath = Path.Combine(logDir, "versioncheck.log");
+			versionCheckFilePath = Path.Combine(logDir, "ca-versioncheck.log");
 			updateAvailable = false;
 			widget.IsVisible = () => !Game.Settings.Debug.PerfGraph && updateAvailable;
 
@@ -126,13 +126,23 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 		VersionCheck GetLastVersionCheck()
 		{
-			if (!File.Exists(versionCheckFilePath))
-				return new VersionCheck() {
-					LastChecked = DateTime.MinValue
-				};
+			var versionCheck = new VersionCheck() {
+				LastChecked = DateTime.MinValue
+			};
 
-			var lastVersionCheckFileContents = File.ReadAllText(versionCheckFilePath);
-			return JsonConvert.DeserializeObject<VersionCheck>(lastVersionCheckFileContents);
+			if (!File.Exists(versionCheckFilePath))
+				return versionCheck;
+
+			try {
+				var lastVersionCheckFileContents = File.ReadAllText(versionCheckFilePath);
+				versionCheck = JsonConvert.DeserializeObject<VersionCheck>(lastVersionCheckFileContents);
+			}
+			catch
+			{
+				// do nothing
+			}
+
+			return versionCheck;
 		}
 
 		void SetLastVersionCheck(VersionCheck versionCheck)

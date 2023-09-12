@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using Newtonsoft.Json;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Network;
@@ -70,6 +71,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 		PlayingVideo playingVideo;
 		readonly Dictionary<string, string> missionOptions = new();
 		PanelType panel = PanelType.MissionInfo;
+		readonly string savedOptionsFilePath;
 
 		[ObjectCreator.UseCtor]
 		public MissionBrowserLogicCA(Widget widget, ModData modData, World world, Action onStart, Action onExit, string initialMap)
@@ -77,6 +79,9 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			this.modData = modData;
 			this.onStart = onStart;
 			Game.BeforeGameStart += OnGameStart;
+
+			var logDir = Platform.SupportDir + "Logs";
+			savedOptionsFilePath = Path.Combine(logDir, "ca-missionoptions.log");
 
 			missionList = widget.Get<ScrollPanelWidget>("MISSION_LIST");
 
@@ -302,6 +307,10 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			if (selectedMap == null || selectedMap.WorldActorInfo == null)
 				return;
 
+			var savedOptions = LoadSavedOptions();
+			foreach(KeyValuePair<string, string> option in savedOptions)
+				missionOptions[option.Key] = option.Value;
+
 			// missionOptions.Clear();
 			optionsContainer.RemoveChildren();
 
@@ -318,7 +327,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			var yOffset = 0;
 			foreach (var option in allOptions.Where(o => o is LobbyBooleanOption))
 			{
-				if (!missionOptions.ContainsKey(option.Id))
+				if (!missionOptions.ContainsKey(option.Id) || !( new[] { "True", "False" }.Contains(missionOptions[option.Id])))
 					missionOptions[option.Id] = option.DefaultValue;
 
 				if (checkboxColumns.Count == 0)
@@ -348,12 +357,14 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 						missionOptions[option.Id] = "False";
 					else
 						missionOptions[option.Id] = "True";
+
+					SaveOptions();
 				};
 			}
 
 			foreach (var option in allOptions.Where(o => o is not LobbyBooleanOption))
 			{
-				if (!missionOptions.ContainsKey(option.Id))
+				if (!missionOptions.ContainsKey(option.Id) || !option.Values.Select(opt => opt.Value).Contains(missionOptions[option.Id]))
 					missionOptions[option.Id] = option.DefaultValue;
 
 				if (dropdownColumns.Count == 0)
@@ -388,6 +399,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 						return item;
 					}
 
+					SaveOptions();
 					dropdown.ShowDropDown("LABEL_DROPDOWN_TEMPLATE", option.Values.Count * 30, option.Values, SetupItem);
 				};
 
@@ -502,6 +514,31 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			}
 			else
 				Game.CreateAndStartLocalServer(selectedMap.Uid, orders);
+		}
+
+		Dictionary<string, string> LoadSavedOptions()
+		{
+			var savedOptions = new Dictionary<string, string>();
+
+			if (!File.Exists(savedOptionsFilePath))
+				return savedOptions;
+
+			try {
+				var savedOptionsFileContents = File.ReadAllText(savedOptionsFilePath);
+				savedOptions = JsonConvert.DeserializeObject<Dictionary<string, string>>(savedOptionsFileContents);
+			}
+			catch
+			{
+				// do nothing
+			}
+
+			return savedOptions;
+		}
+
+		void SaveOptions()
+		{
+			var json = JsonConvert.SerializeObject(missionOptions);
+			File.WriteAllText(savedOptionsFilePath, json);
 		}
 	}
 }
