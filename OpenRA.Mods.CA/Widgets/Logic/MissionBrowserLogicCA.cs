@@ -361,7 +361,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 
 			foreach (var option in allOptions.Where(o => o is not LobbyBooleanOption))
 			{
-				if (!missionOptions.ContainsKey(option.Id) || !option.Values.Select(opt => opt.Value).Contains(missionOptions[option.Id]))
+				if (!missionOptions.ContainsKey(option.Id) || !option.Values.Select(opt => opt.Key).Contains(missionOptions[option.Id]))
 					missionOptions[option.Id] = option.DefaultValue;
 
 				if (dropdownColumns.Count == 0)
@@ -389,14 +389,17 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 					ScrollItemWidget SetupItem(KeyValuePair<string, string> c, ScrollItemWidget template)
 					{
 						bool IsSelected() => missionOptions[option.Id] == c.Key;
-						void OnClick() => missionOptions[option.Id] = c.Key;
+						void OnClick()
+						{
+							missionOptions[option.Id] = c.Key;
+							SaveOptions();
+						}
 
 						var item = ScrollItemWidget.Setup(template, IsSelected, OnClick);
 						item.Get<LabelWidget>("LABEL").GetText = () => c.Value;
 						return item;
 					}
 
-					SaveOptions();
 					dropdown.ShowDropDown("LABEL_DROPDOWN_TEMPLATE", option.Values.Count * 30, option.Values, SetupItem);
 				};
 
