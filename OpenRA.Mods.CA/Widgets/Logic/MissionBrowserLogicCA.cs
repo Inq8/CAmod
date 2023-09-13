@@ -1,11 +1,10 @@
 #region Copyright & License Information
-/*
- * Copyright (c) The OpenRA Developers and Contributors
- * This file is part of OpenRA, which is free software. It is made
- * available to you under the terms of the GNU General Public License
- * as published by the Free Software Foundation, either version 3 of
- * the License, or (at your option) any later version. For more
- * information, see COPYING.
+/**
+ * Copyright (c) The OpenRA Combined Arms Developers (see CREDITS).
+ * This file is part of OpenRA Combined Arms, which is free software.
+ * It is made available to you under the terms of the GNU General Public License
+ * as published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version. For more information, see COPYING.
  */
 #endregion
 
@@ -307,9 +306,7 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 			if (selectedMap == null || selectedMap.WorldActorInfo == null)
 				return;
 
-			var savedOptions = LoadSavedOptions();
-			foreach(KeyValuePair<string, string> option in savedOptions)
-				missionOptions[option.Key] = option.Value;
+			LoadSavedOptions();
 
 			// missionOptions.Clear();
 			optionsContainer.RemoveChildren();
@@ -516,29 +513,34 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 				Game.CreateAndStartLocalServer(selectedMap.Uid, orders);
 		}
 
-		Dictionary<string, string> LoadSavedOptions()
+		void LoadSavedOptions()
 		{
-			var savedOptions = new Dictionary<string, string>();
-
 			if (!File.Exists(savedOptionsFilePath))
-				return savedOptions;
+				return;
 
 			try {
 				var savedOptionsFileContents = File.ReadAllText(savedOptionsFilePath);
-				savedOptions = JsonConvert.DeserializeObject<Dictionary<string, string>>(savedOptionsFileContents);
+				var savedOptions = JsonConvert.DeserializeObject<Dictionary<string, string>>(savedOptionsFileContents);
+
+				foreach(KeyValuePair<string, string> option in savedOptions)
+					missionOptions[option.Key] = option.Value;
 			}
 			catch
 			{
 				// do nothing
 			}
-
-			return savedOptions;
 		}
 
 		void SaveOptions()
 		{
-			var json = JsonConvert.SerializeObject(missionOptions);
-			File.WriteAllText(savedOptionsFilePath, json);
+			try {
+				var json = JsonConvert.SerializeObject(missionOptions);
+				File.WriteAllText(savedOptionsFilePath, json);
+			}
+			catch
+			{
+				// do nothing
+			}
 		}
 	}
 }

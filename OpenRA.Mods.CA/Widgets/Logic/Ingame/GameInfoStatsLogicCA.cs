@@ -22,46 +22,46 @@ using OpenRA.Widgets;
 
 namespace OpenRA.Mods.CA.Widgets.Logic
 {
-	class GameInfoStatsCALogic : ChromeLogic
+	class GameInfoStatsLogicCA : ChromeLogic
 	{
 		[TranslationReference]
-		static readonly string Unmute = "unmute";
+		const string Unmute = "label-unmute-player";
 
 		[TranslationReference]
-		static readonly string Mute = "mute";
+		const string Mute = "label-mute-player";
 
 		[TranslationReference]
-		static readonly string Accomplished = "accomplished";
+		const string Accomplished = "label-mission-accomplished";
 
 		[TranslationReference]
-		static readonly string Failed = "failed";
+		const string Failed = "label-mission-failed";
 
 		[TranslationReference]
-		static readonly string InProgress = "in-progress";
+		const string InProgress = "label-mission-in-progress";
 
 		[TranslationReference("team")]
-		static readonly string TeamNumber = "team-number";
+		const string TeamNumber = "label-team-name";
 
 		[TranslationReference]
-		static readonly string NoTeam = "no-team";
+		const string NoTeam = "label-no-team";
 
 		[TranslationReference]
-		static readonly string Spectators = "spectators";
+		const string Spectators = "label-spectators";
 
 		[TranslationReference]
-		static readonly string Gone = "gone";
+		const string Gone = "label-client-state-disconnected";
 
 		[TranslationReference("player")]
-		static readonly string KickTitle = "kick-title";
+		const string KickTitle = "dialog-kick.title";
 
 		[TranslationReference]
-		static readonly string KickPrompt = "kick-prompt";
+		const string KickPrompt = "dialog-kick.prompt";
 
 		[TranslationReference]
-		static readonly string KickAccept = "kick-accept";
+		const string KickAccept = "dialog-kick.confirm";
 
 		[ObjectCreator.UseCtor]
-		public GameInfoStatsCALogic(Widget widget, ModData modData, World world, OrderManager orderManager, WorldRenderer worldRenderer, Action<bool> hideMenu)
+		public GameInfoStatsLogicCA(Widget widget, ModData modData, World world, OrderManager orderManager, WorldRenderer worldRenderer, Action<bool> hideMenu)
 		{
 			var player = world.LocalPlayer;
 			var playerPanel = widget.Get<ScrollPanelWidget>("PLAYER_LIST");
