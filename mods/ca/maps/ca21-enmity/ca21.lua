@@ -178,6 +178,24 @@ WorldLoaded = function()
 
 	ObjectiveEliminateNod = GDI.AddObjective("Eliminate all Nod forces.")
 
+	Trigger.AfterDelay(DateTime.Seconds(1), function()
+		local mainAmbushers = Map.ActorsInBox(MainAmbushTopLeft.CenterPosition, MainAmbushBottomRight.CenterPosition, function(a)
+			return a.Owner == Nod and not a.IsDead and a.HasProperty("Hunt")
+		end)
+
+		local secondaryAmbushers = Map.ActorsInBox(SecondaryAmbushTopLeft.CenterPosition, SecondaryAmbushBottomRight.CenterPosition, function(a)
+			return a.Owner == Nod and not a.IsDead and a.HasProperty("Hunt")
+		end)
+
+		Utils.Do(mainAmbushers, function(a)
+			a.Hunt()
+		end)
+
+		Utils.Do(secondaryAmbushers, function(a)
+			a.Hunt()
+		end)
+	end)
+
 	Trigger.AfterDelay(HoldOutTime[Difficulty] - DateTime.Seconds(20), function()
 		local mcvFlare = Actor.Create("flare", true, { Owner = GDI, Location = McvRally.Location })
 		Media.PlaySpeechNotification(GDI, "SignalFlare")

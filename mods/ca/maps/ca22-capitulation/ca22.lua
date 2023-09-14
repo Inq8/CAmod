@@ -483,34 +483,35 @@ MoveCameraToStart = function()
 
 	local cameraPos = Camera.Position
 	local targetPos = PlayerStart.CenterPosition
-
+	local newX = cameraPos.X
+	local newY = cameraPos.Y
 	local movement = 1536
 
-	if cameraPos.X < targetPos.X then
-		if cameraPos.X + movement > targetPos.X then
+	if newX < targetPos.X then
+		if newX + movement > targetPos.X then
 			newX = targetPos.X
 		else
-			newX = cameraPos.X + movement
+			newX = newX + movement
 		end
-	elseif cameraPos.X > targetPos.X then
-		if cameraPos.X - movement < targetPos.X then
+	elseif newX > targetPos.X then
+		if newX - movement < targetPos.X then
 			newX = targetPos.X
 		else
-			newX = cameraPos.X - movement
+			newX = newX - movement
 		end
 	end
 
-	if cameraPos.Y < targetPos.Y then
-		if cameraPos.Y + movement > targetPos.Y then
+	if newY < targetPos.Y then
+		if newY + movement > targetPos.Y then
 			newY = targetPos.Y
 		else
-			newY = cameraPos.Y + movement
+			newY = newY + movement
 		end
-	elseif cameraPos.Y > targetPos.Y then
-		if cameraPos.Y - movement < targetPos.Y then
+	elseif newY > targetPos.Y then
+		if newY - movement < targetPos.Y then
 			newY = targetPos.Y
 		else
-			newY = cameraPos.Y - movement
+			newY = newY - movement
 		end
 	end
 
