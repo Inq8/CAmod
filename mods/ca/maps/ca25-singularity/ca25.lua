@@ -337,13 +337,15 @@ WorldLoaded = function()
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(5), function()
-		Notification("Beginning air attack run. Let's see what we're up against.")
+		Notification("Beginning our attack run. Let's see what we're up against. Over.")
+		MediaCA.PlaySound("pilot_begin.aud", "1.5")
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(10), function()
 		DoInterceptors()
 		Trigger.AfterDelay(DateTime.Seconds(15), function()
-			Notification("We barely made a scratch! We'll need you to bring those shields down before we can do damage.")
+			Notification("We barely made a scratch! We'll need you to bring those shields down before we can do any damage. Over and out.")
+			MediaCA.PlaySound("pilot_barelyscratch.aud", "1.5")
 		end)
 	end)
 
@@ -468,6 +470,7 @@ OncePerFiveSecondChecks = function()
 
 			Trigger.AfterDelay(DateTime.Seconds(10), function()
 				DoInterceptors()
+				MediaCA.PlaySound("pilot_engaging.aud", "1.5")
 
 				Trigger.AfterDelay(DateTime.Seconds(15), function()
 					if not Mothership.IsDead then
@@ -476,6 +479,7 @@ OncePerFiveSecondChecks = function()
 
 						Trigger.AfterDelay(DateTime.Minutes(2), function()
 							DoInterceptors()
+							MediaCA.PlaySound("pilot_goingin.aud", "1.5")
 
 							Trigger.AfterDelay(DateTime.Seconds(15), function()
 								if not Mothership.IsDead then
@@ -484,6 +488,7 @@ OncePerFiveSecondChecks = function()
 
 									Trigger.AfterDelay(DateTime.Minutes(2), function()
 										DoInterceptors()
+										MediaCA.PlaySound("pilot_approach.aud", "1.5")
 									end)
 								end
 							end)
