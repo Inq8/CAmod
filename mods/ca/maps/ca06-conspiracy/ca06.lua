@@ -205,7 +205,15 @@ WorldLoaded = function()
 	Trigger.OnEnteredFootprint(SleeperAwakenTrigger, function(a, id)
 		if a.Owner == Nod then
 			Trigger.RemoveFootprintTrigger(id)
-			AwakenSleeperCell()
+			Media.DisplayMessage("The time has come, warriors of Nod.", "Nod Soldier", HSLColor.FromHex("FF0000"))
+			MediaCA.PlaySound("timehascome.aud", "2")
+			Trigger.AfterDelay(DateTime.Seconds(4), function()
+				Media.DisplayMessage("Down with GDI!", "Nod Soldier", HSLColor.FromHex("FF0000"))
+				MediaCA.PlaySound("downwithgdi.aud", "2")
+				Trigger.AfterDelay(15, function()
+					AwakenSleeperCell()
+				end)
+			end)
 		end
 	end)
 
