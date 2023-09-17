@@ -11,6 +11,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using OpenRA.Mods.Common.Widgets;
@@ -56,20 +57,18 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			}
 
 			var currentReleaseType = GetCurrentReleaseType();
-			var apiUrl = GetApiUrl(currentReleaseType);
 
 			Task.Run(async () =>
 			{
 				try
 				{
-					var client = HttpClientFactory.Create();
-					client.DefaultRequestHeaders.Add("User-Agent","OpenRA-CombinedArms");
-					client.DefaultRequestHeaders.Add("Accept", "application/vnd.github+json");
-					var httpResponseMessage = await client.GetAsync(apiUrl);
-					httpResponseMessage.EnsureSuccessStatusCode();
-					var result = await httpResponseMessage.Content.ReadAsStringAsync();
+					var releases = await GetReleases(false);
 
-					IList<Release> releases = JsonConvert.DeserializeObject<IList<Release>>(result);
+					if (currentReleaseType == ReleaseType.DevTest)
+					{
+						var devReleases = await GetReleases(true);
+						releases = releases.Concat(devReleases).OrderByDescending(r => r.created_at).ToList();
+					}
 
 					foreach (var release in releases)
 					{
@@ -99,6 +98,18 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			});
 		}
 
+		async Task<IList<Release>> GetReleases(bool dev)
+		{
+			var apiUrl = dev ? "https://api.github.com/repos/Darkademic/CAmod/releases" : "https://api.github.com/repos/Inq8/CAmod/releases";
+			var client = HttpClientFactory.Create();
+			client.DefaultRequestHeaders.Add("User-Agent","OpenRA-CombinedArms");
+			client.DefaultRequestHeaders.Add("Accept", "application/vnd.github+json");
+			var httpResponseMessage = await client.GetAsync(apiUrl);
+			httpResponseMessage.EnsureSuccessStatusCode();
+			var responseContent = await httpResponseMessage.Content.ReadAsStringAsync();
+			return JsonConvert.DeserializeObject<IList<Release>>(responseContent);
+		}
+
 		void DisplayAvailableUpdate(Release release)
 		{
 			updateAvailable = true;
@@ -110,18 +121,10 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		{
 			if (currentVersion.Contains("PreRelease"))
 				return ReleaseType.PreRelease;
-			else if (currentVersion.Contains("DevTest"))
+			else if (currentVersion == "prep-CA" || currentVersion.Contains("DevTest"))
 				return ReleaseType.DevTest;
 
 			return ReleaseType.Full;
-		}
-
-		string GetApiUrl(ReleaseType releaseType)
-		{
-			if (releaseType == ReleaseType.DevTest)
-				return "https://api.github.com/repos/Darkademic/CAmod/releases";
-
-			return "https://api.github.com/repos/Inq8/CAmod/releases";
 		}
 
 		VersionCheck GetLastVersionCheck()
@@ -166,6 +169,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			public string html_url { get; set; }
 			public bool prerelease { get; set; }
 			public bool draft { get; set; }
+			public DateTime created_at { get; set; }
 		}
 	}
 }
