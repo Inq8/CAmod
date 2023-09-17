@@ -1,0 +1,52 @@
+^Palettes:
+	FlashPaletteEffect@CHRONO:
+		Type: Chronoshift
+		ExcludePalettes: cursor, chrome, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, ca-prologue-01.lua
+	MissionData:
+		Briefing: The Soviets have captured one of our most important scientists, Professor Einstein.\n\nHe is currently being held inside a Soviet base not far from the border. It is crucial that he be rescued before he can be transported deeper into Soviet territory.\n\nUsing a small task force led by our special commando Tanya Adams, rescue Einstein and and bring him to the extraction point.\n\nThe Soviet base is protected by Tesla Coils. Cutting their power supply will render them inoperative.
+
+TRAN.Evac:
+	Cargo:
+		Types: Einstein
+		MaxWeight: 1
+	RejectsOrders:
+	-Selectable:
+	Interactable:
+
+EINSTEIN:
+	Passenger:
+		CargoType: Einstein
+
+C7:
+	-Crushable:
+	-Wanders:
+
+C8:
+	-Crushable:
+	-Wanders:
+
+TSLA:
+	Power:
+		Amount: -150
+
+E7:
+	AutoTarget:
+		InitialStance: HoldFire
+
+WARPIN:
+	Inherits: SMALLCAMERA
+	-RenderSpritesEditorOnly:
+	RenderSprites:
+		Image: empty
+	WithSpriteBody:
+	BodyOrientation:
+		QuantizedFacings: 1
+	WithRestartableIdleOverlay@WARPIN:
+		PlayOnce: true
+		Image: chronobubble
+		Sequence: warpin
+		Palette: ra2effect-ignore-lighting-alpha75
