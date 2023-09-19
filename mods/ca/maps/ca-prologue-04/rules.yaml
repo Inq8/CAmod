@@ -5,143 +5,186 @@
 
 World:
 	LuaScript:
-		Scripts: campaign.lua, ca-prologue-02.lua
+		Scripts: campaign.lua, ca-prologue-04.lua
 	MissionData:
-		Briefing: While we extracted all the information we needed from Einstein, Comrade Stalin was most displeased to learn of his escape.\n\nThe traitor who informed the Allies of the scientist's whereabouts has been identified, and Stalin demands retribution.\n\nGo to the village the traitor calls home. Wipe it out. Leave no survivors.\n\nThe Allies have set up a base nearby, to protect the village while they prepare to evacuate it. Once the village is destroyed, destroy the Allied base.
+		Briefing: Crticial components and supplies are being transported to a secret staging area. Few in the Brotherhood know the full details of this operation, but all will be revealed in time.\n\nGDI continue to threaten vital transportation routes, and you have been chosen to secure one such route in Egypt.\n\nGDI is blockading the Nile river with their fleet, and this is unacceptably delaying our progress.\n\nEstablish a foothold, then your objective is to destroy the GDI anti-aircraft systems that line the river bank. Once those are out of the way, Kane has a surprise in store for GDI's navy.
 	MusicPlaylist:
-		StartingMusic: chaos2
+		StartingMusic: fist226m
 
 Player:
 	PlayerResources:
 		DefaultCash: 10000
 
-^CivInfantry:
-	Wanders:
-		MinMoveDelay: 7500
-		MaxMoveDelay: 10000
+^TDPalette:
+	RenderSprites:
+		PlayerPalette: playertdunit
 
-MRJ:
+^Infantry:
+	RenderSprites:
+		PlayerPalette: playertdunit
+	WithDeathAnimation:
+		DeathSequencePalette: playertdunit
+
+^BuildingTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+^DefenseTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+HARV.TD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+AIRS:
+	-ParatroopersPower@blackhairdrop:
+
+HQ:
+	-DropPodsPowerCA@Zocom:
+	-AirstrikePower@BlackhandFirebomb:
+
+AMCV:
+	RenderSprites:
+		PlayerPalette: playertd
+
+MEMP:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-MGG:
+HTNK:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-IFV:
+MSAR:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-CRYO:
+DISR:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-CHPR:
+XO:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-CTNK:
+JJET:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-PTNK:
+MECH:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-TNKD:
+SAB:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-SPY:
+BH:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-E7:
+RMBO:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-SHOK:
+FTNK:
+	Buildable:
+		Prerequisites: anyradar, airs
+
+HFTK:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-THF:
+STNK.Nod:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-BORI:
+MLRS:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-TTNK:
+SAPC:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-TTRA:
+MNLY:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-V3RL:
+TMPL:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-4TNK:
+SPEN.nod:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-APOC:
+SYRD.gdi:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+	Capturable:
+		Types: none
+
+GTEK:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-QTNK:
+PATR:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-DTRK:
+UPGC:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-TPWR:
+EYE:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-DOME:
+ATWR:
+	Buildable:
+		Prerequisites: vehicles.any, ~structures.gdi
+
+STWR:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-TPWR:
+LASP:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-AFLD:
+LTUR:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-STEK:
+OBLI:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-NPWR:
+SGEN:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-INDP:
+TRAN:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-SPEN:
+APCH:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-IRON:
+RAH:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-TSLA:
+SCRN:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+	RenderSprites:
+		PlayerPalette: playertd
+
+HPAD.TD:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+	Power:
+		Amount: 0
+
+TMPP:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-SAM:
+MSLO.Nod:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-MSLO:
+ENLI:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-PRIS:
+RMBC:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-PDOX:
+tibcore.upgrade:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-WEAT:
+blacknapalm.upgrade:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-GAP:
+advcyborg.upgrade:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-AGUN:
+cyborgarmor.upgrade:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-OREP:
+cyborgspeed.upgrade:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
 
-ATEK:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-SYRD:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-HPAD:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
-
-APWR:
-	Inherits@CAMPAIGNDISABLED: ^Disabled
+DD2:
+	Armament@PRIMARY:
+		Weapon: Stinger

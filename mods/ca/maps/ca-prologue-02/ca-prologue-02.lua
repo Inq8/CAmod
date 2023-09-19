@@ -60,10 +60,11 @@ WorldLoaded = function()
 	end)
 
 	Trigger.AfterDelay(DateTime.Minutes(1), function()
-		BaseFlare = Actor.Create("flare", true, { Owner = USSR, Location = VillageCenter.Location })
+		local villageFlare = Actor.Create("flare", true, { Owner = USSR, Location = VillageCenter.Location })
 		Media.PlaySpeechNotification(USSR, "SignalFlare")
 		Notification("Signal flare detected.")
 		Beacon.New(USSR, VillageCenter.CenterPosition)
+		Trigger.AfterDelay(DateTime.Minutes(5), villageFlare.Destroy)
 	end)
 
 	local civilianActors = Civilians.GetActors()
@@ -85,6 +86,11 @@ WorldLoaded = function()
 			WarpInTeslaTanks()
 		end
 	end)
+end
+
+Tick = function()
+	OncePerSecondChecks()
+	OncePerFiveSecondChecks()
 end
 
 OncePerSecondChecks = function()
