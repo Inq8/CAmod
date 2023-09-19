@@ -246,6 +246,20 @@ SMALLCAMERA:
 	RevealsShroud:
 		Range: 5c0
 
+WARPIN:
+	Inherits: SMALLCAMERA
+	-RenderSpritesEditorOnly:
+	RenderSprites:
+		Image: empty
+	WithSpriteBody:
+	BodyOrientation:
+		QuantizedFacings: 1
+	WithRestartableIdleOverlay@WARPIN:
+		PlayOnce: true
+		Image: chronobubble
+		Sequence: warpin
+		Palette: ra2effect-ignore-lighting-alpha75
+
 POWERCHEAT:
 	AlwaysVisible:
 	Interactable:
