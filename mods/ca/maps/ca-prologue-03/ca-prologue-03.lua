@@ -119,7 +119,7 @@ OncePerSecondChecks = function()
 					Reinforcements.Reinforce(GDI, { "n1", "n2", "n1", "n2", "n1", "medi", "mtnk", "mtnk" }, { RescueSpawn.Location, RescueRally1.Location, RescueRally2.Location })
 
 					Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
-						Media.DisplayMessage("Hold your fire, we're GDI! Damn, we thought we'd lost the whole company! We've got a base set up not far from here, we'll take you there.", "GDI Soldier", HSLColor.FromHex("F2CF74"))
+						Media.DisplayMessage("Hold your fire, we're GDI! Damn, we thought we'd lost the whole company! We've got a base not far from here, we'll take you there.", "GDI Soldier", HSLColor.FromHex("F2CF74"))
 						MediaCA.PlaySound("holdfire.aud", "2")
 
 						Trigger.AfterDelay(DateTime.Seconds(12), function()

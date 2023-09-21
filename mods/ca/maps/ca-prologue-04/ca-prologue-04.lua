@@ -62,10 +62,6 @@ WorldLoaded = function()
 
 		Nod.MarkCompletedObjective(ObjectiveDestroyAA)
 	end)
-
-	Trigger.AfterDelay(DateTime.Seconds(6), function()
-		WarpInBanshees()
-	end)
 end
 
 Tick = function()

@@ -275,6 +275,8 @@ WorldLoaded = function()
 	NodSlaves = Player.GetPlayer("NodSlaves")
 	CyborgSlaves = Player.GetPlayer("CyborgSlaves")
 	Kane = Player.GetPlayer("Kane")
+	NeutralGDI = Player.GetPlayer("NeutralGDI")
+	NeutralScrin = Player.GetPlayer("NeutralScrin")
 	SignalTransmitterPlayer = Player.GetPlayer("SignalTransmitter") -- separate player to prevent AI from attacking it
 	MissionPlayer = GDI
 	TimerTicks = 0
@@ -349,15 +351,6 @@ WorldLoaded = function()
 		end)
 	end)
 
-	local wormholeFootprint = Utils.ExpandFootprint({ WormholeWP.Location }, true)
-	wormholeFootprint = Utils.ExpandFootprint(wormholeFootprint, true)
-	Trigger.OnEnteredFootprint(wormholeFootprint, function(a, id)
-		if a.Owner == Kane and not a.IsDead then
-			a.Stop()
-			a.Destroy()
-		end
-	end)
-
 	Trigger.OnKilled(Mothership, function(self, killer)
 		DoFinale()
 	end)
@@ -413,7 +406,8 @@ MoveToWormhole = function(a)
 		a.Stop()
 		a.Scatter()
 		a.Move(WormholeWP.Location)
-		Trigger.AfterDelay(DateTime.Seconds(7), function()
+		local randomDelay = Utils.RandomInteger(DateTime.Seconds(7), DateTime.Seconds(12))
+		Trigger.AfterDelay(randomDelay, function()
 			MoveToWormhole(a)
 		end)
 	end
@@ -446,6 +440,8 @@ OncePerSecondChecks = function()
 		if GDI.HasNoRequiredUnits() and not GDI.IsObjectiveCompleted(ObjectiveDestroyMothership) then
 			GDI.MarkFailedObjective(ObjectiveDestroyMothership)
 		end
+
+		RemoveCyborgsAtWormhole()
 	end
 end
 
@@ -898,6 +894,24 @@ FlipSlaveFaction = function(player)
 end
 
 DoFinale = function()
+	local centerActors = Map.ActorsInCircle(WormholeWP.CenterPosition, WDist.New(16 * 1024));
+	Utils.Do(centerActors, function(a)
+		if not a.IsDead and (a.HasProperty("StartBuildingRepairs") or a.Type == "swal") and a.Owner == Scrin then
+			if a.Type == "shar" or a.Type == "scol" or a.Type == "swal" then
+				a.Kill()
+			else
+				a.Owner = NeutralScrin
+			end
+		end
+	end)
+
+	local pacs = Scrin.GetActorsByTypes({ "pac", "deva", "stmr" })
+	Utils.Do(pacs, function(a)
+		if not a.IsDead then
+			a.Kill()
+		end
+	end)
+
 	Notification("Scrin mothership destroyed.")
 	MediaCA.PlaySound("c_mothershipdestroyed.aud", "2")
 
@@ -917,8 +931,9 @@ DoFinale = function()
 
 	local kane = Actor.Create("kane", true, { Owner = Kane, Location = KaneSpawn.Location, Facing = Angle.South })
 	Trigger.AfterDelay(DateTime.Seconds(5), function()
-		Media.DisplayMessage("Well commander, we meet at last, and will again. You have played your part impeccably.", "Kane", HSLColor.FromHex("FF0000"))
-		Beacon.New(GDI, WormholeWP.CenterPosition)
+		Media.DisplayMessage("Well commander, we meet at last! Your contribution has been invaluable, unwitting as it may be.", "Kane", HSLColor.FromHex("FF0000"))
+		MediaCA.PlaySound("outro.aud", "2.5")
+		Beacon.New(GDI, kane.CenterPosition)
 
 		local cyborgs = CyborgSlaves.GetActorsByTypes({ "rmbc", "enli", "tplr", "n3c" })
 
@@ -931,26 +946,35 @@ DoFinale = function()
 					a.GrantCondition("kane-revealed")
 					a.Scatter()
 				end
-				Trigger.AfterDelay(DateTime.Seconds(7), function()
+				Trigger.AfterDelay(DateTime.Seconds(15), function()
 					MoveToWormhole(a)
 				end)
 			end)
 		end)
 
-		Trigger.AfterDelay(DateTime.Seconds(5), function()
-			Media.DisplayMessage("The final domino falls and the way is open.", "Kane", HSLColor.FromHex("FF0000"))
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(6)), function()
+			kane.Move(kane.Location + CVec.New(0, 1))
+			Media.DisplayMessage("Ironic isn't it? That GDI should lay the foundation for the Brotherhood's ultimate victory.", "Kane", HSLColor.FromHex("FF0000"))
 		end)
 
-		Trigger.AfterDelay(DateTime.Seconds(10), function()
-			Media.DisplayMessage("Come brothers, our future awaits!", "Kane", HSLColor.FromHex("FF0000"))
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(12)), function()
+			Media.DisplayMessage("Of course the Allies and Soviets played their part as well.", "Kane", HSLColor.FromHex("FF0000"))
+		end)
+
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(16)), function()
+			Media.DisplayMessage("My painstaking manipulation of time and space finally bears fruit, and now we stand at the threshold.", "Kane", HSLColor.FromHex("FF0000"))
+		end)
+
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(22)), function()
+			Media.DisplayMessage("There is much yet to be done. I have no doubt our paths will cross again.", "Kane", HSLColor.FromHex("FF0000"))
+		end)
+
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(27)), function()
 			kane.Move(WormholeWP.Location)
-		end)
-
-		Trigger.AfterDelay(DateTime.Seconds(20), function()
 			UserInterface.SetMissionText("To be continued...", HSLColor.Red)
 		end)
 
-		Trigger.AfterDelay(DateTime.Seconds(30), function()
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(37)), function()
 			GDI.MarkCompletedObjective(ObjectiveDestroyMothership)
 		end)
 	end)
@@ -974,4 +998,18 @@ PanToFinale = function()
 	if Camera.Position.X == targetPos.X and Camera.Position.Y == targetPos.Y then
 		PanToFinaleComplete = true
 	end
+end
+
+RemoveCyborgsAtWormhole = function()
+	if not Mothership.IsDead then
+		return
+	end
+
+	local kaneTroops = Map.ActorsInCircle(WormholeWP.CenterPosition, WDist.New(2 * 1024))
+	Utils.Do(kaneTroops, function(a)
+		if a.Owner == Kane and not a.IsDead then
+			a.Stop()
+			a.Destroy()
+		end
+	end)
 end
