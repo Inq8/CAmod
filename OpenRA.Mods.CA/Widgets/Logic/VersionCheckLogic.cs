@@ -50,7 +50,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			var versionCheck = GetLastVersionCheck();
 			if (versionCheck.FromVersion == currentVersion && (DateTime.UtcNow - versionCheck.LastChecked).TotalHours < 3)
 			{
-				if (versionCheck.Release != null)
+				if (versionCheck.Release != null && versionCheck.Release.tag_name != currentVersion)
 					DisplayAvailableUpdate(versionCheck.Release);
 
 				return;
@@ -82,7 +82,10 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 							continue;
 
 						if (release.tag_name == currentVersion)
+						{
+							versionCheck.Release = release;
 							break;
+						}
 
 						DisplayAvailableUpdate(release);
 						versionCheck.Release = release;
