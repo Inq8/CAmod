@@ -422,10 +422,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
-
-	if Mothership.IsDead then
-		MoveCameraToFinale()
-	end
+	PanToFinale()
 end
 
 OncePerSecondChecks = function()
@@ -966,48 +963,15 @@ CreatePermanentMothershipCamera = function()
 	end
 end
 
-MoveCameraToFinale = function()
-	if FinaleFocused then
+PanToFinale = function()
+	if PanToFinaleComplete or not Mothership.IsDead then
 		return
 	end
 
-	local cameraPos = Camera.Position
 	local targetPos = WormholeWP.CenterPosition
-	local newX = cameraPos.X
-	local newY = cameraPos.Y
-	local movement = 2048
-
-	if newX < targetPos.X then
-		if newX + movement > targetPos.X then
-			newX = targetPos.X
-		else
-			newX = newX + movement
-		end
-	elseif newX > targetPos.X then
-		if newX - movement < targetPos.X then
-			newX = targetPos.X
-		else
-			newX = newX - movement
-		end
-	end
-
-	if newY < targetPos.Y then
-		if newY + movement > targetPos.Y then
-			newY = targetPos.Y
-		else
-			newY = newY + movement
-		end
-	elseif newY > targetPos.Y then
-		if newY - movement < targetPos.Y then
-			newY = targetPos.Y
-		else
-			newY = newY - movement
-		end
-	end
-
-	Camera.Position = WPos.New(newX, newY, 0)
+	PanToPos(targetPos, 2048)
 
 	if Camera.Position.X == targetPos.X and Camera.Position.Y == targetPos.Y then
-		FinaleFocused = true
+		PanToFinaleComplete = true
 	end
 end

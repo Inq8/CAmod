@@ -239,7 +239,7 @@ WorldLoaded = function()
 			MediaCA.PlaySound("s_sovietholdingarea.aud", "2")
 
 			if not DefensesOffline then
-				Trigger.AfterDelay(DateTime.Seconds(6), function()
+				Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(5)), function()
 					Notification("Substantial defenses detected. Recommened neutralizing power before beginning assault.")
 					MediaCA.PlaySound("s_neutralizepower.aud", "2")
 				end)

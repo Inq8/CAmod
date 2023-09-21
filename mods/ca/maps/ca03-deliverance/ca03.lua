@@ -293,7 +293,7 @@ WorldLoaded = function()
 					MediaCA.PlaySound("r_gdicmdrfreed.aud", "2")
 				end
 
-				Trigger.AfterDelay(DateTime.Seconds(3), function()
+				Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(3)), function()
 					Media.PlaySpeechNotification(Greece, "GDITransportInbound")
 					MediaCA.PlaySound("r_gditraninbound.aud", "2")
 					Reinforcements.ReinforceWithTransport(GDI, "tran.evac", nil, { GDIRescueSpawn.Location, GDIRescueRally.Location }, nil, function(transport, cargo)

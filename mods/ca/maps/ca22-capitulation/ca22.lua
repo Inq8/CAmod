@@ -255,7 +255,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
-	MoveCameraToStart()
+	PanToStart()
 end
 
 OncePerSecondChecks = function()
@@ -409,7 +409,7 @@ ReactorStarved = function()
 		end
 		Notification(notificationText)
 		MediaCA.PlaySound("c_atomicshutdown.aud", "2")
-		Trigger.AfterDelay(DateTime.Seconds(5), function()
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(3)), function()
 			if AreTeslaReactorsOffline then
 				MediaCA.PlaySound("c_sovietbasenopower.aud", "2")
 			else
@@ -446,7 +446,7 @@ TeslaReactorsOffline = function()
 		end
 		Notification(notificationText)
 		MediaCA.PlaySound("c_sovietsecondarypoweroffline.aud", "2")
-		Trigger.AfterDelay(DateTime.Seconds(5), function()
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(3)), function()
 			if IsReactorStarved then
 				MediaCA.PlaySound("c_sovietbasenopower.aud", "2")
 			else
@@ -476,48 +476,15 @@ DisableMainPower = function()
 	end
 end
 
-MoveCameraToStart = function()
-	if StartFocused or not McvArrived then
+PanToStart = function()
+	if PanToStartComplete or not McvArrived then
 		return
 	end
 
-	local cameraPos = Camera.Position
 	local targetPos = PlayerStart.CenterPosition
-	local newX = cameraPos.X
-	local newY = cameraPos.Y
-	local movement = 1536
-
-	if newX < targetPos.X then
-		if newX + movement > targetPos.X then
-			newX = targetPos.X
-		else
-			newX = newX + movement
-		end
-	elseif newX > targetPos.X then
-		if newX - movement < targetPos.X then
-			newX = targetPos.X
-		else
-			newX = newX - movement
-		end
-	end
-
-	if newY < targetPos.Y then
-		if newY + movement > targetPos.Y then
-			newY = targetPos.Y
-		else
-			newY = newY + movement
-		end
-	elseif newY > targetPos.Y then
-		if newY - movement < targetPos.Y then
-			newY = targetPos.Y
-		else
-			newY = newY - movement
-		end
-	end
-
-	Camera.Position = WPos.New(newX, newY, 0)
+	PanToPos(targetPos, 1536)
 
 	if Camera.Position.X == targetPos.X and Camera.Position.Y == targetPos.Y then
-		StartFocused = true
+		PanToStartComplete = true
 	end
 end

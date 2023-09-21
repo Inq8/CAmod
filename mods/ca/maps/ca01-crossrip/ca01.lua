@@ -527,7 +527,7 @@ InterdimensionalCrossrip = function()
 
 	local unitLostSilencer = Actor.Create("unitlostsilencer", true, { Owner = Greece })
 
-	Trigger.AfterDelay(DateTime.Seconds(2), function()
+	Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
 		ScrinInvasion()
 		Notification("Unidentified hostile forces detected. Fall back to your base, and prepare for evacuation.")
 		MediaCA.PlaySound("r_evac.aud", "2")

@@ -39,6 +39,13 @@ WorldLoaded = function()
 				Notification("GDI forces found.")
 				MediaCA.PlaySound("gdifound.aud", "2")
 
+				if g.Id == 2 then
+					Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
+						Media.DisplayMessage("Thank god! You found us!.", "GDI Soldier", HSLColor.FromHex("F2CF74"))
+						MediaCA.PlaySound("thankgod.aud", "2")
+					end)
+				end
+
 				local groupActors = Map.ActorsInCircle(g.Waypoint.CenterPosition, WDist.New(8 * 1024));
 				Utils.Do(groupActors, function(a)
 					if a.Owner == HiddenGDI and not a.IsDead then
@@ -60,6 +67,16 @@ WorldLoaded = function()
 		end)
 	end)
 
+	Trigger.AfterDelay(DateTime.Seconds(3), function()
+		Media.DisplayMessage("Commander what's going on, where the hell are we?!", "GDI Soldier", HSLColor.FromHex("F2CF74"))
+		MediaCA.PlaySound("wherearewe.aud", "2")
+
+		Trigger.AfterDelay(DateTime.Seconds(20), function()
+			Media.DisplayMessage("Come in, any GDI units, hostile troops have us pinned down.", "Radio", HSLColor.FromHex("F2CF74"))
+			MediaCA.PlaySound("pinned.aud", "2")
+		end)
+	end)
+
 	Trigger.AfterDelay(1, function()
 		local exitActors = Map.ActorsInCircle(SignalFlare.CenterPosition, WDist.New(8 * 1024));
 		local exitDefenders = Utils.Where(exitActors, function(a)
@@ -70,6 +87,9 @@ WorldLoaded = function()
 			ExitDefendersDead = true
 		end)
 	end)
+
+	DistGuns()
+	Chatter()
 end
 
 Tick = function()
@@ -98,8 +118,8 @@ OncePerSecondChecks = function()
 				Trigger.AfterDelay(DateTime.Seconds(2), function()
 					Reinforcements.Reinforce(GDI, { "n1", "n2", "n1", "n2", "n1", "medi", "mtnk", "mtnk" }, { RescueSpawn.Location, RescueRally1.Location, RescueRally2.Location })
 
-					Trigger.AfterDelay(DateTime.Seconds(2), function()
-						Media.DisplayMessage("Hold your fire, I'm GDI! Damn, we thought we'd lost the whole company! We've got a base set up not far from here, I'll take you there.", "GDI Soldier", HSLColor.FromHex("F2CF74"))
+					Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
+						Media.DisplayMessage("Hold your fire, we're GDI! Damn, we thought we'd lost the whole company! We've got a base set up not far from here, we'll take you there.", "GDI Soldier", HSLColor.FromHex("F2CF74"))
 						MediaCA.PlaySound("holdfire.aud", "2")
 
 						Trigger.AfterDelay(DateTime.Seconds(12), function()
@@ -122,5 +142,35 @@ InitUSSR = function()
 	Utils.Do(ussrGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
 		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsUSSRGroundHunterUnit)
+	end)
+end
+
+SetupAmbience = function()
+	DistGuns()
+	Chatter()
+end
+
+DistGuns = function()
+	local distGunsDelay = AdjustTimeForGameSpeed(Utils.RandomInteger(DateTime.Seconds(10), DateTime.Seconds(25)))
+	Trigger.AfterDelay(distGunsDelay, function()
+		if not GDI.IsObjectiveCompleted(ObjectiveLocateForces) then
+			local distGunSounds = { "distguns1.aud", "distguns2.aud", "distguns3.aud" }
+			Media.PlaySound(Utils.Random(distGunSounds))
+			DistGuns()
+		end
+	end)
+end
+
+Chatter = function()
+	local chatterSounds = { "chatter1.aud", "chatter2.aud", "chatter3.aud" }
+	local delay = 0
+
+	Utils.Do(Utils.Shuffle(chatterSounds), function(s)
+		delay = delay + AdjustTimeForGameSpeed(Utils.RandomInteger(DateTime.Seconds(60), DateTime.Seconds(120)))
+		Trigger.AfterDelay(delay, function()
+			if not GDI.IsObjectiveCompleted(ObjectiveLocateForces) then
+				MediaCA.PlaySound(s, "2")
+			end
+		end)
 	end)
 end

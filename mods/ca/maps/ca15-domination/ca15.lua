@@ -128,7 +128,7 @@ WorldLoaded = function()
 			InitEvacSite()
 		end
 
-		Trigger.AfterDelay(DateTime.Seconds(2), function()
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
 			MediaCA.PlaySound("r_codesacquired.aud", "2")
 			Notification("Cyborg encryption codes acquired.")
 		end)

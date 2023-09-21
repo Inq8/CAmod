@@ -90,7 +90,13 @@ EvacuateHelicopter = function()
 end
 
 SendCruisers = function()
+	CruisersArrived = true
+
+	Notification("Allied cruisers have arrived.")
+	MediaCA.PlaySound("r_alliedcruisers.aud", "2");
+	Actor.Create("camera", true, { Owner = Greece, Location = CruiserCameraPoint.Location })
 	Beacon.New(Greece, CruiserBeacon.CenterPosition)
+
 	local i = 1
 
 	Utils.Do(CruisersReinforcements, function(cruiser)
@@ -102,41 +108,43 @@ SendCruisers = function()
 	Trigger.AfterDelay(DateTime.Seconds(4), function()
 		Media.DisplayMessage("Encountering Soviet naval presence! We're under heavy fire!", "Cruiser Captain", HSLColor.FromHex("99ACF2"))
 		MediaCA.PlaySound("encountering.aud", "2")
-		Trigger.AfterDelay(DateTime.Seconds(5), function()
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
 			Media.DisplayMessage("This is impossible! These waters were cleared!", "Cruiser Captain", HSLColor.FromHex("99ACF2"))
 			MediaCA.PlaySound("impossible.aud", "2")
-			Trigger.AfterDelay(DateTime.Seconds(3), function()
+			Trigger.AfterDelay(DateTime.Seconds(2), function()
 				if not SubPen.IsDead and ObjectiveDestroySubPen == nil then
 					ObjectiveDestroySubPen = Greece.AddObjective("Destroy the Soviet Sub Pen.")
 					Beacon.New(Greece, SubPen.CenterPosition)
-				end
-			end)
-		end)
-	end)
+					Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
+						PrismsArrived = true
+						Trigger.AfterDelay(DateTime.Seconds(1), function()
+							Lighting.Flash("Chronoshift", 10)
+							Media.PlaySound("chrono2.aud")
+							Beacon.New(Greece, PrismBeacon.CenterPosition)
+							Actor.Create("warpin", true, { Owner = Greece, Location = PrismBeacon.Location })
+							Actor.Create("ptnk", true, { Owner = England, Location = PrismSpawn1.Location, Facing = Angle.East })
+							Actor.Create("ptnk", true, { Owner = England, Location = PrismSpawn2.Location, Facing = Angle.East })
+							Actor.Create("ptnk", true, { Owner = England, Location = PrismSpawn3.Location, Facing = Angle.East })
+							Trigger.AfterDelay(DateTime.Seconds(2), function()
+								Notification("Unidentified Allied units detected.")
+								MediaCA.PlaySound("r_unidentified.aud", "2")
 
-	Trigger.AfterDelay(DateTime.Seconds(15), function()
-		Lighting.Flash("Chronoshift", 10)
-		Media.PlaySound("chrono2.aud")
-		Beacon.New(Greece, PrismBeacon.CenterPosition)
-		Actor.Create("warpin", true, { Owner = Greece, Location = PrismBeacon.Location })
-		Actor.Create("ptnk", true, { Owner = England, Location = PrismSpawn1.Location, Facing = Angle.East })
-		Actor.Create("ptnk", true, { Owner = England, Location = PrismSpawn2.Location, Facing = Angle.East })
-		Actor.Create("ptnk", true, { Owner = England, Location = PrismSpawn3.Location, Facing = Angle.East })
-		Trigger.AfterDelay(DateTime.Seconds(2), function()
-			Notification("Unidentified Allied units detected.")
-			MediaCA.PlaySound("r_unidentified.aud", "2")
-
-			Trigger.AfterDelay(DateTime.Seconds(4), function()
-				Media.DisplayMessage("Another temporal disturbance.. Well, we can work this out later. For now, we are at your disposal commander.", "Unknown", HSLColor.FromHex("99ACF2"))
-				MediaCA.PlaySound("disturbance.aud", "2")
-				Trigger.AfterDelay(DateTime.Seconds(5), function()
-					local prismTanks = England.GetActorsByType("ptnk")
-					Utils.Do(prismTanks, function(a)
-						if not a.IsDead then
-							a.Owner = Greece
-						end
+								Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(3)), function()
+									Media.DisplayMessage("Another temporal disturbance.. Well, we can work this out later. For now, we are at your disposal commander.", "Unknown", HSLColor.FromHex("99ACF2"))
+									MediaCA.PlaySound("disturbance.aud", "2")
+									Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(5)), function()
+										local prismTanks = England.GetActorsByType("ptnk")
+										Utils.Do(prismTanks, function(a)
+											if not a.IsDead then
+												a.Owner = Greece
+											end
+										end)
+									end)
+								end)
+							end)
+						end)
 					end)
-				end)
+				end
 			end)
 		end)
 	end)
@@ -176,16 +184,14 @@ HelicopterGone = function()
 		end)
 
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
-			Notification("Allied cruisers have arrived.")
-			MediaCA.PlaySound("r_alliedcruisers.aud", "2");
-			Actor.Create("camera", true, { Owner = Greece, Location = CruiserCameraPoint.Location })
 			SendCruisers()
 		end)
 	end
 end
 
 Tick = function()
-
+	PanToCruisers()
+	PanToPrisms()
 end
 
 WorldLoaded = function()
@@ -231,4 +237,30 @@ WorldLoaded = function()
 			end
 		end
 	end)
+end
+
+PanToCruisers = function()
+	if PanToCruisersComplete or not CruisersArrived then
+		return
+	end
+
+	local targetPos = CruiserBeacon.CenterPosition
+	PanToPos(targetPos, 1024)
+
+	if Camera.Position.X == targetPos.X and Camera.Position.Y == targetPos.Y then
+		PanToCruisersComplete = true
+	end
+end
+
+PanToPrisms = function()
+	if PanToPrismsComplete or not PrismsArrived then
+		return
+	end
+
+	local targetPos = PrismBeacon.CenterPosition
+	PanToPos(targetPos, 1024)
+
+	if Camera.Position.X == targetPos.X and Camera.Position.Y == targetPos.Y then
+		PanToPrismsComplete = true
+	end
 end
