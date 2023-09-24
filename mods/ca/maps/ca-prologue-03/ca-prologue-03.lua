@@ -42,7 +42,7 @@ WorldLoaded = function()
 				if g.Id == 2 then
 					Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
 						Media.DisplayMessage("Thank god! You found us!.", "GDI Soldier", HSLColor.FromHex("F2CF74"))
-						MediaCA.PlaySound("thankgod.aud", "2")
+						MediaCA.PlaySound("thankgod.aud", "1.5")
 					end)
 				end
 
@@ -69,11 +69,11 @@ WorldLoaded = function()
 
 	Trigger.AfterDelay(DateTime.Seconds(3), function()
 		Media.DisplayMessage("Commander what's going on, where the hell are we?!", "GDI Soldier", HSLColor.FromHex("F2CF74"))
-		MediaCA.PlaySound("wherearewe.aud", "2")
+		Media.PlaySound("wherearewe.aud")
 
 		Trigger.AfterDelay(DateTime.Seconds(20), function()
 			Media.DisplayMessage("Come in, any GDI units, hostile troops have us pinned down.", "Radio", HSLColor.FromHex("F2CF74"))
-			MediaCA.PlaySound("pinned.aud", "2")
+			MediaCA.PlaySoundAtPos("pinned.aud", "2", Camera.Position + WVec.New(2560, 0, 0))
 		end)
 	end)
 
@@ -155,7 +155,9 @@ DistGuns = function()
 	Trigger.AfterDelay(distGunsDelay, function()
 		if not GDI.IsObjectiveCompleted(ObjectiveLocateForces) then
 			local distGunSounds = { "distguns1.aud", "distguns2.aud", "distguns3.aud" }
-			Media.PlaySound(Utils.Random(distGunSounds))
+			local cameraPos = Camera.Position
+			local posModifier = WVec.New(Utils.Random({ -5120, 3072, 5120 }), 0, 0)
+			MediaCA.PlaySoundAtPos(Utils.Random(distGunSounds), "1", cameraPos + posModifier)
 			DistGuns()
 		end
 	end)
@@ -169,7 +171,9 @@ Chatter = function()
 		delay = delay + AdjustTimeForGameSpeed(Utils.RandomInteger(DateTime.Seconds(60), DateTime.Seconds(120)))
 		Trigger.AfterDelay(delay, function()
 			if not GDI.IsObjectiveCompleted(ObjectiveLocateForces) then
-				MediaCA.PlaySound(s, "2")
+				local cameraPos = Camera.Position
+				local posModifier = WVec.New(Utils.Random({ -2560, 2560 }), 0, 0)
+				MediaCA.PlaySoundAtPos(s, "2", cameraPos + posModifier)
 			end
 		end)
 	end)

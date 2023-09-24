@@ -30,5 +30,11 @@ namespace OpenRA.Mods.CA.Scripting
 		{
 			Game.Sound.Play(SoundType.World, file, float.Parse(volumeModifier));
 		}
+
+		[Desc("Play a sound file at specific world position")]
+		public void PlaySoundAtPos(string file, string volumeModifier, WPos pos)
+		{
+			Game.Sound.Play(SoundType.World, file, pos, float.Parse(volumeModifier));
+		}
 	}
 }
