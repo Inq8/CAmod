@@ -250,7 +250,7 @@ EngineerDrop = function()
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
 		Notification("Engineering team inbound.")
-		MediaCA.PlaySound("r_engineeringteam.aud", "2")
+		MediaCA.PlaySound("r2_engineeringteam.aud", "2")
 	end)
 
 	DoHelicopterDrop(USSR, entryPath, "halo.engis", haloDropUnits, nil, function(t)
