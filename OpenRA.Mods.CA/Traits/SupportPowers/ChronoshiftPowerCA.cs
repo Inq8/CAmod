@@ -441,18 +441,10 @@ namespace OpenRA.Mods.CA.Traits
 				if (!actorsToTeleport.Any())
 					return false;
 
-				var canTeleport = false;
-				foreach (var unit in actorsToTeleport)
-				{
-					var targetCell = unit.Location + (xy - sourceLocation);
-					if (manager.Self.Owner.Shroud.IsExplored(targetCell)) // && unit.Trait<ChronoshiftableCA>().CanChronoshiftTo(unit, targetCell)
-					{
-						canTeleport = true;
-						break;
-					}
-				}
+				if (!manager.Self.Owner.Shroud.IsExplored(xy))
+					return false;
 
-				return canTeleport;
+				return true;
 			}
 
 			protected override string GetCursor(World world, CPos cell, int2 worldPixel, MouseInput mi)

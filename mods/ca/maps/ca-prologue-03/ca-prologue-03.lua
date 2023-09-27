@@ -21,7 +21,7 @@ WorldLoaded = function()
 	ObjectiveLocateForces = GDI.AddObjective("Locate all GDI forces.")
 	ObjectiveExit = GDI.AddObjective("Find an safe exit route.")
 
-    SetupReveals({ Reveal1, Reveal2, Reveal3, Reveal4 })
+    SetupReveals({ Reveal1, Reveal3, Reveal4 })
 
 	TroopGroups = {
 		{ Waypoint = Group1, Id = 1 },
@@ -30,6 +30,17 @@ WorldLoaded = function()
 		{ Waypoint = Group4, Id = 4 },
 		{ Waypoint = Group5, Id = 5 },
 	}
+
+	Trigger.OnEnteredProximityTrigger(Reveal2.CenterPosition, WDist.New(11 * 1024), function(a, id)
+		if a.Owner == MissionPlayer and a.Type ~= cameraType then
+			Trigger.RemoveProximityTrigger(id)
+			local camera = Actor.Create("smallcamera", true, { Owner = GDI, Location = Reveal2.Location })
+			Tip("When an enemy structure is destroyed under the fog of war, it won't disappear until its location is revealed again. The explosion sound and screen shake can be used to verify that a building has been destroyed.")
+			Trigger.AfterDelay(DateTime.Seconds(4), function()
+				camera.Destroy()
+			end)
+		end
+	end)
 
 	Utils.Do(TroopGroups, function(g)
 		Trigger.OnEnteredProximityTrigger(g.Waypoint.CenterPosition, WDist.New(7 * 1024), function(a, id)
