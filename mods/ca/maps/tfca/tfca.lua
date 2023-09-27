@@ -28,8 +28,6 @@ WorldLoaded = function()
         Dome = { Actor = Dome, Waypoints = { Dome1, Dome2, Dome3, Dome4 }, Name = "Radar Dome" }
     }
 
-    BotSetup()
-
     Utils.Do(Objectives, function(o)
         Trigger.OnCapture(o.Actor, function(self, captor, oldOwner, newOwner)
             if newOwner.Team == 1 then
@@ -43,6 +41,8 @@ WorldLoaded = function()
     end)
 
     Trigger.AfterDelay(1, function()
+        BotSetup()
+
         Utils.Do(Players, function(p)
             p.Cash = UnitsPerPlayer
             local spawnPoints = p.GetActorsByType("spawn")
