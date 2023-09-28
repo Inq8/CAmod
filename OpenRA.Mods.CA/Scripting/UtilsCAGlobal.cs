@@ -31,5 +31,11 @@ namespace OpenRA.Mods.CA.Scripting
 			var gameSpeeds = Game.ModData.Manifest.Get<GameSpeeds>();
 			return world.LobbyInfo.GlobalSettings.OptionOrDefault("gamespeed", gameSpeeds.DefaultSpeed);
 		}
+
+		[Desc("Returns whether fog of war is enabled.")]
+		public bool FogEnabled()
+		{
+			return world.LobbyInfo.GlobalSettings.OptionOrDefault("fog", true);
+		}
 	}
 }
