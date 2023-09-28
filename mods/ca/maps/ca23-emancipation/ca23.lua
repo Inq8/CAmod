@@ -171,50 +171,78 @@ WorldLoaded = function()
 
 	Trigger.OnAllKilled(Masterminds, function()
 		if ObjectiveEliminateScrin == nil then
-			ObjectiveEliminateScrin = GDI.AddObjective("Eliminate the Scrin presence.")
+			ObjectiveEliminateScrin = GDI.AddObjective("Destroy the remaining Scrin presence in the area.")
 		end
 		GDI.MarkCompletedObjective(ObjectiveLiberateBases)
 		if ObjectiveMinimiseCasualties ~= nil and EnslavedUnitsKilled <= MaxEnslavedUnitsKilled[Difficulty] then
 			GDI.MarkCompletedObjective(ObjectiveMinimiseCasualties)
 		end
 		UpdateObjectiveText()
+		MediaCA.PlaySound("c_destroyscrin.aud", "2")
 	end)
 
 	Trigger.OnKilled(Mastermind1, function(self, killer)
-		local notificationText = "Good work commander, the first outpost has been freed."
-		if not Mastermind2.IsDead then
-			notificationText = notificationText .. " Head north-east to find our next base."
-		end
-		Notification(notificationText)
+		Trigger.AfterDelay(DateTime.Seconds(1), function()
+			Notification("The first GDI base has been released from Scrin control.")
+			MediaCA.PlaySound("c_firstbasereleased.aud", "2")
+			if not Mastermind2.IsDead then
+				Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
+					Notification("The next GDI base is located to the north-east.")
+					MediaCA.PlaySound("c_secondbaselocated.aud", "2")
+				end)
+			end
+		end)
 	end)
 
 	Trigger.OnKilled(Mastermind2, function(self, killer)
-		local notificationText = "Excellent, the second base has been freed."
-		if not Mastermind3.IsDead then
-			notificationText = notificationText .. " Our airbase was located south-east of here."
-		end
-		Notification(notificationText)
+		Trigger.AfterDelay(DateTime.Seconds(1), function()
+			Notification("The second GDI base has been released from Scrin control.")
+			MediaCA.PlaySound("c_secondbasereleased.aud", "2")
+			if not Mastermind3.IsDead then
+				Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
+					Notification("GDI airbase located to the south-east.")
+					MediaCA.PlaySound("c_airbaselocated.aud", "2")
+				end)
+			end
+		end)
 	end)
 
 	Trigger.OnKilled(Mastermind3, function(self, killer)
-		local notificationText = "Great job, the airbase has been secured."
-		if not Mastermind4.IsDead then
-			notificationText = notificationText .. " The largest of our bases in the area was located south of the airbase."
-		end
-		if not Mastermind5.IsDead then
-			notificationText = notificationText .. " We have also lost contact with our outpost on the island to the north."
-		end
-		Notification(notificationText)
+		Trigger.AfterDelay(DateTime.Seconds(1), function()
+			Notification("GDI airbase secured.")
+			MediaCA.PlaySound("c_airbasereleased.aud", "2")
+
+			if not Mastermind4.IsDead then
+				Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
+					Notification("The primary GDI base is located to the south.")
+					MediaCA.PlaySound("c_primarybaselocated.aud", "2")
+					if not Mastermind5.IsDead then
+						Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
+							Notification("We have also lost contact with our outpost on the island to the north.")
+							MediaCA.PlaySound("c_island.aud", "2")
+						end)
+					end
+				end)
+			elseif not Mastermind5.IsDead then
+				Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
+					Notification("We have also lost contact with our outpost on the island to the north.")
+					MediaCA.PlaySound("c_island.aud", "2")
+				end)
+			end
+		end)
 	end)
 
 	Trigger.OnKilled(Mastermind4, function(self, killer)
-		local notificationText = "Our main base is no longer under Scrin control, well done commander."
-		if not Mastermind1.IsDead or not Mastermind2.IsDead or not Mastermind3.IsDead or not Mastermind5.IsDead then
-			notificationText = notificationText .. " Some of our forces are still enslaved. Eliminate the remaining Masterminds, then we can take the fight to the Scrin."
-		else
-			notificationText = notificationText .. " It's safe to say the Scrin have outsayed their welcome; give 'em hell commander."
-		end
-		Notification(notificationText)
+		Trigger.AfterDelay(DateTime.Seconds(1), function()
+			Notification("The primary GDI base has been released from Scrin control.")
+			MediaCA.PlaySound("c_primarybasereleased.aud", "2")
+			if not Mastermind1.IsDead or not Mastermind2.IsDead or not Mastermind3.IsDead or not Mastermind5.IsDead then
+				Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
+					Notification("Eliminate the remaining Masterminds before assaulting the Scrin base.")
+					MediaCA.PlaySound("c_remainingmasterminds.aud", "2")
+				end)
+			end
+		end)
 	end)
 
 	Trigger.OnKilled(Mastermind5, function(self, killer)

@@ -28,8 +28,6 @@ WorldLoaded = function()
         Dome = { Actor = Dome, Waypoints = { Dome1, Dome2, Dome3, Dome4 }, Name = "Radar Dome" }
     }
 
-    BotSetup()
-
     Utils.Do(Objectives, function(o)
         Trigger.OnCapture(o.Actor, function(self, captor, oldOwner, newOwner)
             if newOwner.Team == 1 then
@@ -42,63 +40,67 @@ WorldLoaded = function()
         end)
     end)
 
-    Utils.Do(Players, function(p)
-        p.Cash = UnitsPerPlayer
-        local spawnId = p.Spawn
-        local spawnPoint = Map.NamedActor("Spawn" .. spawnId)
+    Trigger.AfterDelay(1, function()
+        BotSetup()
 
-        if spawnPoint ~= nil then
-            local spawner = Actor.Create("spawn", true, { Owner = p, Location = spawnPoint.Location })
-            Trigger.OnProduction(spawner, function(producer, produced)
-                Trigger.OnKilled(produced, function(self, killer)
-                    Trigger.AfterDelay(DateTime.Seconds(10), function()
-                        self.Owner.Cash = self.Owner.Cash + 1
+        Utils.Do(Players, function(p)
+            p.Cash = UnitsPerPlayer
+            local spawnPoints = p.GetActorsByType("spawn")
+
+            if #spawnPoints > 0 then
+                spawnPoint = spawnPoints[1]
+                local spawner = Actor.Create("spawn", true, { Owner = p, Location = spawnPoint.Location })
+                Trigger.OnProduction(spawner, function(producer, produced)
+                    Trigger.OnKilled(produced, function(self, killer)
+                        Trigger.AfterDelay(DateTime.Seconds(10), function()
+                            self.Owner.Cash = self.Owner.Cash + 1
+                        end)
                     end)
                 end)
-            end)
+            end
+        end)
+
+        BalanceUnits = Blue.HasPrerequisites({ "global.balanceunits" })
+
+        if BalanceUnits then
+            if #BluePlayers > #RedPlayers and #RedPlayers > 0 then
+                Media.DisplayMessage("Blue team has more players. Allocating extra credits.", "Notification", HSLColor.Yellow)
+                local redExtra = (#BluePlayers - #RedPlayers) * UnitsPerPlayer
+                local redPlayerIdx = 1
+
+                while(redExtra > 0)
+                do
+                    RedPlayers[redPlayerIdx].Cash = RedPlayers[redPlayerIdx].Cash + 1
+
+                    if #RedPlayers > redPlayerIdx then
+                        redPlayerIdx = redPlayerIdx + 1
+                    else
+                        redPlayerIdx = 1
+                    end
+
+                    redExtra = redExtra - 1
+                end
+
+            elseif #RedPlayers > #BluePlayers and #BluePlayers > 0 then
+                Media.DisplayMessage("Red team has more players. Allocating extra credits.", "Notification", HSLColor.Yellow)
+                local blueExtra = (#RedPlayers - #BluePlayers) * UnitsPerPlayer
+                local bluePlayerIdx = 1
+
+                while(blueExtra > 0)
+                do
+                    BluePlayers[bluePlayerIdx].Cash = BluePlayers[bluePlayerIdx].Cash + 1
+
+                    if #BluePlayers > bluePlayerIdx then
+                        bluePlayerIdx = bluePlayerIdx + 1
+                    else
+                        bluePlayerIdx = 1
+                    end
+
+                    blueExtra = blueExtra - 1
+                end
+            end
         end
     end)
-
-    BalanceUnits = Blue.HasPrerequisites({ "global.balanceunits" })
-
-    if BalanceUnits then
-        if #BluePlayers > #RedPlayers and #RedPlayers > 0 then
-            Media.DisplayMessage("Blue team has more players. Allocating extra credits.", "Notification", HSLColor.Yellow)
-            local redExtra = (#BluePlayers - #RedPlayers) * UnitsPerPlayer
-            local redPlayerIdx = 1
-
-            while(redExtra > 0)
-            do
-                RedPlayers[redPlayerIdx].Cash = RedPlayers[redPlayerIdx].Cash + 1
-
-                if #RedPlayers > redPlayerIdx then
-                    redPlayerIdx = redPlayerIdx + 1
-                else
-                    redPlayerIdx = 1
-                end
-
-                redExtra = redExtra - 1
-            end
-
-        elseif #RedPlayers > #BluePlayers and #BluePlayers > 0 then
-            Media.DisplayMessage("Red team has more players. Allocating extra credits.", "Notification", HSLColor.Yellow)
-            local blueExtra = (#RedPlayers - #BluePlayers) * UnitsPerPlayer
-            local bluePlayerIdx = 1
-
-            while(blueExtra > 0)
-            do
-                BluePlayers[bluePlayerIdx].Cash = BluePlayers[bluePlayerIdx].Cash + 1
-
-                if #BluePlayers > bluePlayerIdx then
-                    bluePlayerIdx = bluePlayerIdx + 1
-                else
-                    bluePlayerIdx = 1
-                end
-
-                blueExtra = blueExtra - 1
-            end
-        end
-    end
 end
 
 Tick = function()

@@ -34,7 +34,7 @@ World:
 
 Player:
 	PlayerResources:
-		DefaultCash: 5000
+		DefaultCash: 6500
 
 ^TDPalette:
 	RenderSprites:
@@ -136,7 +136,7 @@ TSLA:
 	-Targetable@TeslaBoost:
 
 MSLO:
-	NukePower:
+	NukePower@ABomb:
 		DisplayTimerRelationships: Ally
 		ChargeInterval: 25
 		AllowMultiple: true
@@ -146,69 +146,27 @@ MSLO:
 		HP: 200000
 
 ^NukeDummy:
+	Inherits@ABOMBPOWER: ^ABombPower
 	AlwaysVisible:
 	Interactable:
 	ScriptTriggers:
+	NukePower@ABomb:
+		-PauseOnCondition:
 
 NukeDummyEasy:
 	Inherits: ^NukeDummy
-	NukePower@EASY:
-		Cursor: nuke
-		Icon: abomb
+	NukePower@ABomb:
 		ChargeInterval: 75000
-		Name: Atom Bomb
-		IncomingSound: nukelaunch.aud
-		IncomingSpeechNotification: AbombLaunchDetected
-		LaunchSound: nukelaunch.aud
-		MissileWeapon: atomic
-		MissileImage: atomic
-		MissileDelay: 5
-		SpawnOffset: 1c0,427,0
-		DisplayTimerRelationships: Ally, Neutral, Enemy
-		TrailImage: smokey2
-		TrailSequences: idle
-		TrailPalette: tseffect-ignore-lighting-alpha75
-		AllowMultiple: true
 
 NukeDummyNormal:
 	Inherits: ^NukeDummy
-	NukePower@NORMAL:
-		Cursor: nuke
-		Icon: abomb
+	NukePower@ABomb:
 		ChargeInterval: 60000
-		Name: Atom Bomb
-		IncomingSound: nukelaunch.aud
-		IncomingSpeechNotification: AbombLaunchDetected
-		LaunchSound: nukelaunch.aud
-		MissileWeapon: atomic
-		MissileImage: atomic
-		MissileDelay: 5
-		SpawnOffset: 1c0,427,0
-		DisplayTimerRelationships: Ally, Neutral, Enemy
-		TrailImage: smokey2
-		TrailSequences: idle
-		TrailPalette: tseffect-ignore-lighting-alpha75
-		AllowMultiple: true
 
 NukeDummyHard:
 	Inherits: ^NukeDummy
-	NukePower@HARD:
-		Cursor: nuke
-		Icon: abomb
+	NukePower@ABomb:
 		ChargeInterval: 45000
-		Name: Atom Bomb
-		IncomingSound: nukelaunch.aud
-		IncomingSpeechNotification: AbombLaunchDetected
-		LaunchSound: nukelaunch.aud
-		MissileWeapon: atomic
-		MissileImage: atomic
-		MissileDelay: 5
-		SpawnOffset: 1c0,427,0
-		DisplayTimerRelationships: Ally, Neutral, Enemy
-		TrailImage: smokey2
-		TrailSequences: idle
-		TrailPalette: tseffect-ignore-lighting-alpha75
-		AllowMultiple: true
 
 OILB:
 	CashTrickler:

@@ -100,6 +100,13 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Selection bar color.")]
 		public readonly Color SelectionBarColor = Color.Magenta;
 
+		public readonly bool ShowCooldownSelectionBar = false;
+
+		[Desc("Cooldown selection bar color.")]
+		public readonly Color CooldownSelectionBarColor = Color.Silver;
+
+		public readonly bool RequireEmptyDestination = false;
+
 		public override object Create(ActorInitializer init) { return new PortableChronoCA(init.Self, this); }
 	}
 
@@ -227,7 +234,7 @@ namespace OpenRA.Mods.CA.Traits
 				if (maxDistance != null)
 					self.QueueActivity(move.MoveWithinRange(order.Target, WDist.FromCells(maxDistance.Value), targetLineColor: Info.TargetLineColor));
 
-				self.QueueActivity(new TeleportCA(self, cell, maxDistance, Info.KillCargo, Info.FlashScreen, Info.ChronoshiftSound));
+				self.QueueActivity(new TeleportCA(self, cell, maxDistance, Info.KillCargo, Info.FlashScreen, Info.ChronoshiftSound, true, false, default(BitSet<DamageType>), Info.RequireEmptyDestination));
 				self.QueueActivity(move.MoveTo(cell, 5, targetLineColor: Info.TargetLineColor));
 				self.ShowTargetLines();
 			}
@@ -287,7 +294,13 @@ namespace OpenRA.Mods.CA.Traits
 
 		float ISelectionBar.GetValue()
 		{
-			if (!Info.ShowSelectionBar || IsTraitDisabled || chargeTick == ChargeDelay)
+			if (IsTraitDisabled)
+				return 0f;
+
+			if (Info.ShowCooldownSelectionBar && cooldownTicks > 0 && Charges > 0)
+				return (float)(Info.Cooldown - cooldownTicks) / Info.Cooldown;
+
+			if (!Info.ShowSelectionBar || chargeTick == ChargeDelay)
 				return 0f;
 
 			if (!Info.ShowSelectionBarWhenFull && chargeTick == 0)
@@ -296,7 +309,7 @@ namespace OpenRA.Mods.CA.Traits
 			return (float)(ChargeDelay - chargeTick) / ChargeDelay;
 		}
 
-		Color ISelectionBar.GetColor() { return Info.SelectionBarColor; }
+		Color ISelectionBar.GetColor() { return Info.ShowCooldownSelectionBar && cooldownTicks > 0 && Charges > 0 ? Info.CooldownSelectionBarColor : Info.SelectionBarColor; }
 		bool ISelectionBar.DisplayWhenEmpty => false;
 
 		protected override void TraitDisabled(Actor self)

@@ -1,0 +1,197 @@
+^Palettes:
+	FlashPaletteEffect@CHRONO:
+		Type: Chronoshift
+		ExcludePalettes: cursor, chrome, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, ca-prologue-04.lua
+	MissionData:
+		Briefing: Crticial components and supplies are being transported to a secret staging area. Few in the Brotherhood know the full details of this operation, but all will be revealed in time.\n\nGDI continue to threaten vital transportation routes, and you have been chosen to secure one such route in Egypt.\n\nGDI is blockading the Nile river with their fleet, and this is unacceptably delaying our progress.\n\nEstablish a foothold, then your objective is to destroy the GDI anti-aircraft systems that line the river bank. Once those are out of the way, Kane has a surprise in store for GDI's navy.
+	MusicPlaylist:
+		StartingMusic: fist226m
+
+Player:
+	PlayerResources:
+		DefaultCash: 10000
+
+^TDPalette:
+	RenderSprites:
+		PlayerPalette: playertdunit
+
+^Infantry:
+	RenderSprites:
+		PlayerPalette: playertdunit
+	WithDeathAnimation:
+		DeathSequencePalette: playertdunit
+
+^BuildingTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+^DefenseTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+HARV.TD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+AIRS:
+	-ParatroopersPower@blackhairdrop:
+
+HQ:
+	-DropPodsPowerCA@Zocom:
+	-AirstrikePower@BlackhandFirebomb:
+
+AMCV:
+	RenderSprites:
+		PlayerPalette: playertd
+
+LTNK:
+	Mobile:
+		Locomotor: tracked
+
+MEMP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+HTNK:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MSAR:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+DISR:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+XO:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+JJET:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MECH:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+SAB:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+BH:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+RMBO:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+FTNK:
+	Buildable:
+		Prerequisites: anyradar, airs
+
+HFTK:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+STNK.Nod:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MLRS:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+SAPC:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MNLY:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+TMPL:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+SPEN.nod:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+SYRD.gdi:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+	Capturable:
+		Types: none
+
+GTEK:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+PATR:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+UPGC:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+EYE:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+ATWR:
+	Buildable:
+		Prerequisites: vehicles.any, ~structures.gdi
+
+STWR:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+LASP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+LTUR:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+OBLI:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+SGEN:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+TRAN:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+APCH:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+RAH:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+SCRN:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+	RenderSprites:
+		PlayerPalette: playertd
+
+HPAD.TD:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+	Power:
+		Amount: 0
+
+AFLD.GDI:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+TMPP:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+MSLO.Nod:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+ENLI:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+RMBC:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+tibcore.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+blacknapalm.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+advcyborg.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+cyborgarmor.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+cyborgspeed.upgrade:
+	Inherits@CAMPAIGNDISABLED: ^Disabled
+
+DD2:
+	Armament@PRIMARY:
+		Weapon: Stinger

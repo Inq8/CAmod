@@ -27,14 +27,14 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new GrantConditionOnResupply(init.Self, this); }
 	}
 
-	public class GrantConditionOnResupply : PausableConditionalTrait<GrantConditionOnResupplyInfo>, INotifyBeingResupplied
+	public class GrantConditionOnResupply : PausableConditionalTrait<GrantConditionOnResupplyInfo>, INotifyDockClient
 	{
 		int conditionToken = Actor.InvalidConditionToken;
 
 		public GrantConditionOnResupply(Actor self, GrantConditionOnResupplyInfo info)
 			: base(info) { }
 
-		void INotifyBeingResupplied.StartingResupply(Actor self, Actor host)
+		void INotifyDockClient.Docked(Actor self, Actor host)
 		{
 			if (IsTraitDisabled || IsTraitPaused)
 				return;
@@ -42,7 +42,7 @@ namespace OpenRA.Mods.CA.Traits
 			GrantCondition(self);
 		}
 
-		void INotifyBeingResupplied.StoppingResupply(OpenRA.Actor self, OpenRA.Actor host)
+		void INotifyDockClient.Undocked(Actor self, Actor host)
 		{
 			if (!Info.GrantPermanently)
 				RevokeCondition(self);

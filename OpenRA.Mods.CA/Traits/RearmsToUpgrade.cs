@@ -48,7 +48,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new RearmsToUpgrade(init.Self, this); }
 	}
 
-	public class RearmsToUpgrade : PausableConditionalTrait<RearmsToUpgradeInfo>, INotifyBeingResupplied, ITick
+	public class RearmsToUpgrade : PausableConditionalTrait<RearmsToUpgradeInfo>, INotifyDockClient, ITick
 	{
 		public new RearmsToUpgradeInfo Info;
 		AmmoPool ammoPool;
@@ -67,12 +67,12 @@ namespace OpenRA.Mods.CA.Traits
 			ammoPool = self.TraitsImplementing<AmmoPool>().Single(ap => ap.Info.Name == Info.AmmoPool);
 		}
 
-		void INotifyBeingResupplied.StartingResupply(Actor self, Actor host)
+		void INotifyDockClient.Docked(Actor self, Actor host)
 		{
 			resupplying = true;
 		}
 
-		void INotifyBeingResupplied.StoppingResupply(OpenRA.Actor self, OpenRA.Actor host)
+		void INotifyDockClient.Undocked(Actor self, Actor host)
 		{
 			ResetDelay();
 			resupplying = false;

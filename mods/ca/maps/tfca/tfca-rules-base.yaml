@@ -3,7 +3,26 @@ World:
 		Briefing: ================\n\n- Two teams must fight over five objectives.\n-------------------------\n- Players have a set number of credits, refunded when a unit is lost so it can be replaced.\n-------------------------\n- Faction choice has no effect.\n-------------------------\n- Any unit can capture an objective.\n-------------------------\n- Points are gained by holding objectives.\n-------------------------\n- First team to reach the configured score wins.\n\n================\n
 	LuaScript:
 		Scripts: tfca.lua
-	-SpawnStartingUnits:
+	StartingUnits@none:
+		Class: none
+		ClassName: None
+		BaseActor: spawn
+		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri, gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow, scrin, reaper, traveler, harbinger, collector
+	-StartingUnits@mcvonly:
+	-StartingUnits@lightallies:
+	-StartingUnits@lightsoviet:
+	-StartingUnits@heavyallies:
+	-StartingUnits@heavysoviet:
+	-StartingUnits@mcvonly2:
+	-StartingUnits@defaultgdia:
+	-StartingUnits@defaultnoda:
+	-StartingUnits@heavynoda:
+	-StartingUnits@heavygdia:
+	-StartingUnits@mcvonlyscrin:
+	-StartingUnits@lightscrin:
+	-StartingUnits@heavyscrin:
+	SpawnStartingUnits:
+		DropdownVisible: False
 	MapBuildRadius:
 		AllyBuildRadiusCheckboxVisible: False
 		BuildRadiusCheckboxVisible: False
@@ -41,7 +60,7 @@ World:
 			13: 13
 			14: 14
 			15: 15
-		Default: 1
+		Default: 4
 	ScriptLobbyDropdown@WINSCORE:
 		ID: winscore
 		Label: Score Required
@@ -493,7 +512,7 @@ E6:
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Repair
 		ValidRelationships: Ally
-	-EngineerRepair:
+	-InstantlyRepairs:
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
 	MineImmune:

@@ -95,12 +95,12 @@ CRATE:
 		MaxAmount: 5
 		MinAmount: 1
 		MaxDuplicateValue: 1500
-	GiveMcvCrateAction@RA:
+	GiveBaseBuilderCrateAction@RA:
 		SelectionShares: 0
 		NoBaseSelectionShares: 100
 		ValidFactions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri
 		Units: mcv
-	GiveMcvCrateAction@TD:
+	GiveBaseBuilderCrateAction@TD:
 		SelectionShares: 0
 		NoBaseSelectionShares: 100
 		ValidFactions: gdi, talon, zocom, eagle, arc, nod, blackh, marked, legion, shadow
@@ -254,10 +254,9 @@ SCRATE:
 		Name: Steel Crate
 
 CAMERA:
-	Interactable:
+	Inherits@DUMMY: ^InvisibleDummy
 	EditorOnlyTooltip:
 		Name: (reveals area to owner)
-	AlwaysVisible:
 	Immobile:
 		OccupiesSpace: false
 	RevealsShroud:
@@ -270,6 +269,12 @@ CAMERA:
 		Image: camera
 	MapEditorData:
 		Categories: System
+
+camera.dummy:
+	Inherits: CAMERA
+	-RevealsShroud:
+	KillsSelf:
+		Delay: 25
 
 camera.paradrop:
 	Inherits: CAMERA
@@ -343,34 +348,34 @@ camera.hacker:
 		Delay: 50
 
 gps.satellite:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
-	Interactable:
 	Buildable:
 		Queue: SpySatellite
 	Tooltip:
 		Name: GPS Satellite
 
 gps.satellite.firstscan:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
-	Interactable:
 	Buildable:
 		Queue: SpySatellite
 	Tooltip:
 		Name: GPS Satellite
 
-camera.cloud:
+ToxicCloud:
 	Interactable:
+	ScriptTriggers:
 	EditorOnlyTooltip:
 		Name: (support power)
+	HiddenUnderFog:
+		Type: CenterPosition
 	RenderSprites:
 		Image: cloud1
 		Palette: tseffect-ignore-lighting-alpha75
 	WithSpriteBody:
 	BodyOrientation:
 		QuantizedFacings: 1
-	AlwaysVisible:
 	HitShape:
 	Aircraft:
 		CanHover: True
@@ -396,15 +401,15 @@ camera.cloud:
 	PeriodicExplosion:
 		Weapon: Cloud
 
-camera.cloud2:
-	Inherits: camera.cloud
+ToxicCloud2:
+	Inherits: ToxicCloud
 	RenderSprites:
 		Image: cloud2
 	KillsSelf:
 		Delay: 500
 
-chaos.cloud1:
-	Inherits: camera.cloud
+ChaosCloud:
+	Inherits: ToxicCloud
 	RenderSprites:
 		Image: chaoscloud1
 		Palette: caneon-ignore-lighting-alpha75
@@ -415,8 +420,8 @@ chaos.cloud1:
 	Aircraft:
 		Speed: 10
 
-chaos.cloud2:
-	Inherits: chaos.cloud1
+ChaosCloud2:
+	Inherits: ChaosCloud
 	RenderSprites:
 		Image: chaoscloud2
 
@@ -428,6 +433,8 @@ SONAR:
 		Range: 10c0
 
 FLARE:
+	Interactable:
+	ScriptTriggers:
 	Immobile:
 		OccupiesSpace: false
 	RevealsShroud:
@@ -442,7 +449,6 @@ FLARE:
 		QuantizedFacings: 1
 	HiddenUnderFog:
 		Type: CenterPosition
-	Interactable:
 	Tooltip:
 		Name: Flare
 		ShowOwnerRow: false
@@ -575,7 +581,7 @@ LAR2:
 		Name: Ant Larvae
 
 powerproxy.parabombs:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	AirstrikePower:
 		Icon: parabombs
 		Name: Parabombs (Single Use)
@@ -589,7 +595,7 @@ powerproxy.parabombs:
 		QuantizedFacings: 8
 		DisplayBeacon: True
 		BeaconPoster: pbmbicon
-		CameraActor: camera
+		CameraActor: camera.paradrop
 		CameraRemoveDelay: 150
 		ArrowSequence: arrow
 		ClockSequence: clock
@@ -598,7 +604,7 @@ powerproxy.parabombs:
 		SupportPowerPaletteOrder: 70
 
 powerproxy.sonarpulse:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	SpawnActorPower:
 		Icon: sonar
 		Name: Sonar Pulse
@@ -614,7 +620,7 @@ powerproxy.sonarpulse:
 		SupportPowerPaletteOrder: 70
 
 powerproxy.paratroopers:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ParatroopersPower:
 		Icon: paratroopers
 		SquadSize: 1
@@ -639,7 +645,7 @@ powerproxy.paratroopers:
 		SupportPowerPaletteOrder: 70
 
 powerproxy.paratroopers.allies:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ParatroopersPower:
 		Icon: paratroopers
 		SquadSize: 1
@@ -664,8 +670,7 @@ powerproxy.paratroopers.allies:
 		SupportPowerPaletteOrder: 70
 
 powerproxy.airborne:
-	Interactable:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ParatroopersPower:
 		OrderName: airborne
 		Icon: airborne
@@ -697,8 +702,7 @@ powerproxy.airborne:
 		Name: Guardian GIs (Single Use)
 
 powerproxy.airborne.tank:
-	Interactable:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ParatroopersPower:
 		OrderName: airbornetank
 		Icon: airdropicon
@@ -730,7 +734,7 @@ powerproxy.airborne.tank:
 		Name: Grizzly Tanks (Single Use)
 
 powerproxy.airstrike:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ClassicAirstrikePower:
 		Squad:
 			a10.bomber:
@@ -754,7 +758,7 @@ powerproxy.airstrike:
 		DisplayBeacon: True
 		BeaconPoster: a10airstrike
 		BeaconPosterPalette: temptd
-		CameraActor: camera
+		CameraActor: camera.paradrop
 		ArrowSequence: arrow
 		ClockSequence: clockTD
 		CircleSequence: circles
@@ -764,43 +768,43 @@ powerproxy.airstrike:
 		SupportPowerPaletteOrder: 70
 
 barracks.upgraded:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 
 vehicles.upgraded:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 
 aircraft.upgraded:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 
 # tent - medic
 stolentech.tent:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 		Prerequisite: infantry.medi
 
 # barr - thief
 stolentech.barr:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 		Prerequisite: infantry.thf
 
 # pyle - medic
 stolentech.pyle:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 		Prerequisite: infantry.medi
 
 # hand - chem mortar
 stolentech.hand:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 
 # ra weap - med tank from allies, heavy tank from soviets
 stolentech.weap:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ValidFactions:
 		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
 	ProvidesPrerequisiteValidatedFaction@STOLENALLIED:
@@ -812,7 +816,7 @@ stolentech.weap:
 
 # td weap - battle tank from gdi/legion, light tank if capturer is legion
 stolentech.weap.td:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite@STOLENGDI:
 		Prerequisite: vehicles.mtnk
 	ProvidesPrerequisite@STOLENNOD:
@@ -820,13 +824,13 @@ stolentech.weap.td:
 
 # airs - vehicle veterancy
 stolentech.airs:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite@VET:
 		Prerequisite: vehicles.upgraded
 
 # dome - ifv from allies, v2 from soviets
 stolentech.dome:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ValidFactions:
 		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
 	ProvidesPrerequisiteValidatedFaction@STOLENALLIED:
@@ -841,7 +845,7 @@ stolentech.dome:
 
 # hq - mobile sensor from allies, aircraft veterancy from nod
 stolentech.hq:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ValidFactions:
 		Factions: talon, zocom, eagle, arc, blackh, marked, legion, shadow
 	ProvidesPrerequisiteValidatedFaction@STOLENGDI:
@@ -853,25 +857,25 @@ stolentech.hq:
 
 # atek - mobile gap gen
 stolentech.atek:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.mgg
 
 # stek - mad tank
 stolentech.stek:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.qtnk
 
 # gtek - mobile emp
 stolentech.gtek:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.memp
 
 # tmpl - toxin truck
 stolentech.tmpl:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.ttrk
 
@@ -974,29 +978,29 @@ SPLITBLUE:
 		Condition: on-bluetib
 
 veil:
-	Inherits@1: CAMERA
-	Health:
-		HP: 1
+	Inherits@DUMMY: ^InvisibleDummy
+	EditorOnlyTooltip:
+		Name: (Veil of War)
+	Immobile:
+		OccupiesSpace: false
+	BodyOrientation:
+		QuantizedFacings: 1
+	WithSpriteBody:
+	MapEditorData:
+		Categories: System
 	HitShape:
 	CreatesShroud:
 		Range: 2c512
 		Type: CenterPosition
-	-RevealsShroud:
 	RenderShroudCircleCA:
 		Visible: Always
 		Color: 999999AA
-	-RenderSpritesEditorOnly:
 	RenderSprites:
 		Image: gpsscrambler
 	PeriodicExplosion:
 		Weapon: VeilSmall
 	Targetable@VEIL:
 		TargetTypes: Veil
-
-veil.minor:
-	Inherits: veil
-	KillsSelf:
-		Delay: 250
 
 veilofwar1:
 	Inherits: veil
@@ -1036,6 +1040,43 @@ veilofwar4:
 		Weapon: VeilFull
 	KillsSelf:
 		Delay: 275
+
+jamming.field:
+	Interactable:
+	ScriptTriggers:
+	EditorOnlyTooltip:
+		Name: (Jamming Field)
+	BodyOrientation:
+		QuantizedFacings: 1
+	MapEditorData:
+		Categories: System
+	WithSpriteBody:
+	HitShape:
+	HiddenUnderFog:
+		Type: GroundPosition
+	Immobile:
+		OccupiesSpace: false
+	RenderSprites:
+		Image: jamfield
+		Palette: effect
+	KillsSelf:
+		Delay: 250
+	WithRangeCircle@JAMMER:
+		Type: jamfield
+		Range: 5c0
+		Visible: Always
+		ValidRelationships: Ally, Enemy, Neutral
+		Color: 9999AAAA
+	ProximityExternalCondition@WEAPJAMMER:
+		Range: 5c0
+		ValidRelationships: Enemy, Neutral
+		Condition: weapjammed
+	ProximityExternalCondition@JAMMER:
+		Range: 5c0
+		ValidRelationships: Enemy, Neutral
+		Condition: jammed
+	Targetable@JFIELD:
+		TargetTypes: JammingField
 
 nshield:
 	Inherits@1: CAMERA
@@ -1093,7 +1134,7 @@ SHAB:
 
 # For MQ, ensures production tabs are updated properly
 QueueUpdaterDummy:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 	KillsSelf:
 		RemoveInstead: true

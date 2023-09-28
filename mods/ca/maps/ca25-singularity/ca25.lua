@@ -241,9 +241,9 @@ Squads = {
 }
 
 RiftEnabledTime = {
-	easy = DateTime.Seconds((60 * 23) + 17),
-	normal = DateTime.Seconds((60 * 18) + 17),
-	hard = DateTime.Seconds((60 * 13) + 17),
+	easy = DateTime.Seconds((60 * 45) + 17),
+	normal = DateTime.Seconds((60 * 30) + 17),
+	hard = DateTime.Seconds((60 * 15) + 17),
 }
 
 MADTankAttackDelay = {
@@ -275,6 +275,8 @@ WorldLoaded = function()
 	NodSlaves = Player.GetPlayer("NodSlaves")
 	CyborgSlaves = Player.GetPlayer("CyborgSlaves")
 	Kane = Player.GetPlayer("Kane")
+	NeutralGDI = Player.GetPlayer("NeutralGDI")
+	NeutralScrin = Player.GetPlayer("NeutralScrin")
 	SignalTransmitterPlayer = Player.GetPlayer("SignalTransmitter") -- separate player to prevent AI from attacking it
 	MissionPlayer = GDI
 	TimerTicks = 0
@@ -282,16 +284,24 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(GDI)
+	AdjustStartingCash()
 	InitScrin()
 	InitNodSlaves()
 	InitSovietSlaves()
 	InitAlliedSlaves()
 
+	if Difficulty == "easy" then
+		HardNormalAA1.Destroy()
+		HardNormalAA2.Destroy()
+		HardNormalAA3.Destroy()
+	end
+
 	ObjectiveDestroyMothership = GDI.AddObjective("Destroy the Scrin Mothership.")
 
 	Trigger.OnAllKilledOrCaptured(NWReactors, function()
 		ScrinDefenseBuff1.Destroy()
-		Notification("The north-west reactors are down. Scrin defenses have been weakened.")
+		Notification("The north-western reactors have been destroyed. Scrin defenses have been weakened.")
+		MediaCA.PlaySound("c_nwreactorsdown.aud", "2")
 
 		if ScrinDefenseBuff2.IsDead then
 			IonConduits.Destroy()
@@ -307,7 +317,8 @@ WorldLoaded = function()
 
 	Trigger.OnAllKilledOrCaptured(NEReactors, function()
 		ScrinDefenseBuff2.Destroy()
-		Notification("The north-east reactors are down. Scrin defenses have been weakened.")
+		Notification("The north-eastern reactors have been destroyed. Scrin defenses have been weakened.")
+		MediaCA.PlaySound("c_nereactorsdown.aud", "2")
 
 		if ScrinDefenseBuff1.IsDead then
 			IonConduits.Destroy()
@@ -328,23 +339,16 @@ WorldLoaded = function()
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(5), function()
-		Notification("Beginning air attack run. Let's see what we're up against.")
+		Media.DisplayMessage("Beginning our attack run. Let's see what we're up against. Over.", "GDI Pilot", HSLColor.FromHex("F2CF74"))
+		MediaCA.PlaySound("pilot_begin.aud", "1.5")
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(10), function()
 		DoInterceptors()
 		Trigger.AfterDelay(DateTime.Seconds(15), function()
-			Notification("We barely made a scratch! We'll need you to bring those shields down before we can do damage.")
+			Media.DisplayMessage("We barely made a scratch! We'll need you to bring those shields down before we can do any damage. Over and out.", "GDI Pilot", HSLColor.FromHex("F2CF74"))
+			MediaCA.PlaySound("pilot_barelyscratch.aud", "1.5")
 		end)
-	end)
-
-	local wormholeFootprint = Utils.ExpandFootprint({ WormholeWP.Location }, true)
-	wormholeFootprint = Utils.ExpandFootprint(wormholeFootprint, true)
-	Trigger.OnEnteredFootprint(wormholeFootprint, function(a, id)
-		if a.Owner == Kane and not a.IsDead then
-			a.Stop()
-			a.Destroy()
-		end
 	end)
 
 	Trigger.OnKilled(Mothership, function(self, killer)
@@ -354,7 +358,8 @@ WorldLoaded = function()
 	Trigger.OnDamaged(SignalTransmitter, function(self, attacker, damage)
 		if not SignalTransmitterDamageWarning and not FirstHackersArrived and self.Health < self.MaxHealth / 2 then
 			SignalTransmitterDamageWarning = true
-			Notification("Commander, we have reason to believe that the Signal Transmitter may be key to bringing the Mothership's shields down. Recommend we leave it intact until we have more details.")
+			Notification("We have reason to believe the Signal Transmitter may be key to bringing the Mothership's shields down. Recommend we leave it intact, pending confirmation.")
+			MediaCA.PlaySound("c_leavesignaltransmitter.aud", "2")
 		end
 	end)
 
@@ -375,7 +380,8 @@ WorldLoaded = function()
 		Trigger.OnDamaged(c, function(self, attacker, damage)
 			if not SleepingCyborgsMessageShown and not Mothership.IsDead and not self.IsDead and self.Health < self.MaxHealth * 0.8 then
 				SleepingCyborgsMessageShown = true
-				Notification("Those cyborgs appear to be in some kind of hibernation commander, and that enriched Tiberium is giving them some serious regeneration. Recommend we avoid firing on them, lest they wake up!")
+				Notification("Nod cyborgs appear to be in a hibernation state. The enriched Tiberium is providing powerful regeneration. Recommendation is to not engage.")
+				MediaCA.PlaySound("c_hibernation.aud", "2")
 			end
 		end)
 	end)
@@ -384,8 +390,10 @@ WorldLoaded = function()
 		if not CyborgsProvoked then
 			CyborgsProvoked = true
 			Utils.Do(cyborgs, function(c)
-				TargetSwapChance(c, 10)
-				c.GrantCondition("provoked")
+				if not c.IsDead then
+					TargetSwapChance(c, 10)
+					c.GrantCondition("provoked")
+				end
 			end)
 		end
 	end)
@@ -398,7 +406,8 @@ MoveToWormhole = function(a)
 		a.Stop()
 		a.Scatter()
 		a.Move(WormholeWP.Location)
-		Trigger.AfterDelay(DateTime.Seconds(7), function()
+		local randomDelay = Utils.RandomInteger(DateTime.Seconds(7), DateTime.Seconds(12))
+		Trigger.AfterDelay(randomDelay, function()
 			MoveToWormhole(a)
 		end)
 	end
@@ -407,6 +416,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	PanToFinale()
 end
 
 OncePerSecondChecks = function()
@@ -430,6 +440,8 @@ OncePerSecondChecks = function()
 		if GDI.HasNoRequiredUnits() and not GDI.IsObjectiveCompleted(ObjectiveDestroyMothership) then
 			GDI.MarkFailedObjective(ObjectiveDestroyMothership)
 		end
+
+		RemoveCyborgsAtWormhole()
 	end
 end
 
@@ -446,24 +458,30 @@ OncePerFiveSecondChecks = function()
 				GDI.MarkCompletedObjective(ObjectiveHackSignalTransmitter)
 			end
 
-			Notification("The Mothership's shields are down! Air attacks resuming.")
+			Notification("The Mothership's shields are down. Air attacks resuming.")
+			MediaCA.PlaySound("c_resuming.aud", "2")
 
 			Trigger.AfterDelay(DateTime.Seconds(10), function()
 				DoInterceptors()
+				MediaCA.PlaySound("pilot_engaging.aud", "1.5")
 
 				Trigger.AfterDelay(DateTime.Seconds(15), function()
 					if not Mothership.IsDead then
-						Notification("Attack run successful! The Mothership's hull has sustained significant damage. Keep up the pressure Commander; next attack run ETA 2 minutes.")
+						Notification("Attack run successful. The Mothership's hull has sustained significant damage. Next attack run ETA 2 minutes.")
+						MediaCA.PlaySound("c_attackrunsuccess.aud", "2")
 
 						Trigger.AfterDelay(DateTime.Minutes(2), function()
 							DoInterceptors()
+							MediaCA.PlaySound("pilot_goingin.aud", "1.5")
 
 							Trigger.AfterDelay(DateTime.Seconds(15), function()
 								if not Mothership.IsDead then
-									Notification("One more pass should do it commander, ETA 2 minutes.")
+									Notification("Estimate one more pass to destroy the Mothership, ETA 2 minutes.")
+									MediaCA.PlaySound("c_onemorepass.aud", "2")
 
 									Trigger.AfterDelay(DateTime.Minutes(2), function()
 										DoInterceptors()
+										MediaCA.PlaySound("pilot_approach.aud", "1.5")
 									end)
 								end
 							end)
@@ -490,7 +508,7 @@ OncePerFiveSecondChecks = function()
 end
 
 InitScrin = function()
-	RebuildExcludes.Scrin = { Types = { "sign", "rift", "reac", "rea2" } }
+	RebuildExcludes.Scrin = { Types = { "sign", "rfgn", "reac", "rea2" } }
 
 	AutoRepairBuildings(SignalTransmitterPlayer)
 
@@ -618,7 +636,6 @@ InitHackers = function()
 			return
 		end
 
-		Media.DisplayMessage("Commander, we are sending you a squad of hackers. Use them to hack into the Scrin Signal Transmitter and we will be able to bring down the Mothership's shields.", "Nod Commander", HSLColor.FromHex("FF0000"))
 		DropHackers()
 		Beacon.New(GDI, SignalTransmitter.CenterPosition)
 	end)
@@ -626,7 +643,10 @@ end
 
 DropHackers = function()
 	Beacon.New(GDI, HackerDropLanding.CenterPosition)
-	Media.PlaySpeechNotification(GDI, "ReinforcementsArrived")
+
+	Notification("Nod Hackers en route. Use them to hack into the Scrin Signal Transmitter. They claim to be able to bring the Mothership's shields down.")
+	MediaCA.PlaySound("c_hackers.aud", "2")
+
 	local hackerFlare = Actor.Create("flare", true, { Owner = GDI, Location = HackerDropLanding.Location })
 	Trigger.AfterDelay(DateTime.Seconds(10), function()
 		hackerFlare.Destroy()
@@ -662,8 +682,8 @@ InitChronoTanks = function()
 			return
 		end
 
-		Notification("The Allies have provided us with a squadron of Chrono Tanks. We can use them to disrupt Scrin power in the north-east.")
-		Media.PlaySpeechNotification(GDI, "ReinforcementsArrived")
+		Notification("The Allies have provided a squadron of Chrono Tanks. Use them to destroy Scrin Reactors in the north-east.")
+		MediaCA.PlaySound("c_chronotanks.aud", "2")
 		local northEastPowerFlare = Actor.Create("flare", true, { Owner = GDI, Location = NorthEastPowerBeacon.Location })
 		Trigger.AfterDelay(DateTime.Seconds(10), function()
 			northEastPowerFlare.Destroy()
@@ -688,9 +708,9 @@ InitMADTankAttack = function()
 		if ScrinDefenseBuff1.IsDead then
 			return
 		end
-		Notification("Signal flare detected. The Soviets are sending a MAD Tank to disrupt Scrin power in the north-west. They have requested we rendezvous and provide escort.")
+		Notification("Signal flare detected. The Soviets are sending a MAD Tank to destroy Scrin Reactors in the north-west. They have requested a rendezvous to provide escort.")
+		MediaCA.PlaySound("c_madtank.aud", "2")
 
-		Media.PlaySpeechNotification(GDI, "SignalFlare")
 		local northWestPowerFlare = Actor.Create("flare", true, { Owner = GDI, Location = MADTankPath9.Location })
 		local madTankFlare = Actor.Create("flare", true, { Owner = GDI, Location = MADTankPath1.Location })
 		Trigger.AfterDelay(DateTime.Seconds(20), function()
@@ -710,6 +730,7 @@ InitMADTankAttack = function()
 		MADTank = Actor.Create("qtnk", true, { Owner = USSR, Location = MADTankSpawn.Location, Facing = Angle.East })
 		MADTank.Move(MADTankPath1.Location)
 		Notification("MAD Tank has arrived. Rendezvous to provide escort.")
+		MediaCA.PlaySound("c_madtankarrived.aud", "2")
 
 		Trigger.OnDamaged(MADTank, function(self, attacker, damage)
 			if self.Health < self.MaxHealth / 3 and not IsMADTankIronCurtained and not MADTank.IsDead then
@@ -741,6 +762,7 @@ SendMADTank = function()
 	if not MADTankEnRoute and not MADTank.IsDead then
 		MADTankEnRoute = true
 		Notification("MAD Tank en route to target.")
+		MediaCA.PlaySound("c_madtankenroute.aud", "2")
 		MADTank.Move(MADTankPath2.Location)
 		MADTank.Move(MADTankPath3.Location)
 		MADTank.Move(MADTankPath4.Location)
@@ -770,6 +792,7 @@ DoInterceptors = function()
 		end
 
 		Trigger.OnIdle(interceptor1, function(a)
+			a.Stop()
 			a.Move(InterceptorExit1.Location)
 			a.Destroy()
 		end)
@@ -786,11 +809,13 @@ DoInterceptors = function()
 			end
 
 			Trigger.OnIdle(interceptor2, function(a)
+				a.Stop()
 				a.Move(InterceptorExit2.Location)
 				a.Destroy()
 			end)
 
 			Trigger.OnIdle(interceptor3, function(a)
+				a.Stop()
 				a.Move(InterceptorExit3.Location)
 				a.Destroy()
 			end)
@@ -816,6 +841,8 @@ FlipSlaveFaction = function(player)
 		if ScrinDefenseBuff1.IsDead and ScrinDefenseBuff2.IsDead then
 			InitHackers()
 		end
+		Notification("Nod forces have been released from Scrin control.")
+		MediaCA.PlaySound("c_nodreleased.aud", "2")
 	elseif player == SovietSlaves then
 		targetPlayer = USSR
 		SovietsFreed = true
@@ -824,6 +851,8 @@ FlipSlaveFaction = function(player)
 		InitUSSR()
 		InitAttackSquad(Squads.ScrinWest, Scrin)
 		InitMADTankAttack()
+		Notification("Soviet forces have been released from Scrin control.")
+		MediaCA.PlaySound("c_sovietsreleased.aud", "2")
 	elseif player == AlliedSlaves then
 		targetPlayer = Greece
 		AlliesFreed = true
@@ -832,6 +861,8 @@ FlipSlaveFaction = function(player)
 		InitGreece()
 		InitAttackSquad(Squads.ScrinCenter, Scrin)
 		InitChronoTanks()
+		Notification("Allied forces have been released from Scrin control.")
+		MediaCA.PlaySound("c_alliesreleased.aud", "2")
 	end
 
 	local actors = player.GetActors()
@@ -863,6 +894,27 @@ FlipSlaveFaction = function(player)
 end
 
 DoFinale = function()
+	local centerActors = Map.ActorsInCircle(WormholeWP.CenterPosition, WDist.New(16 * 1024));
+	Utils.Do(centerActors, function(a)
+		if not a.IsDead and (a.HasProperty("StartBuildingRepairs") or a.Type == "swal") and a.Owner == Scrin then
+			if a.Type == "shar" or a.Type == "scol" or a.Type == "swal" then
+				a.Kill()
+			else
+				a.Owner = NeutralScrin
+			end
+		end
+	end)
+
+	local pacs = Scrin.GetActorsByTypes({ "pac", "deva", "stmr" })
+	Utils.Do(pacs, function(a)
+		if not a.IsDead then
+			a.Kill()
+		end
+	end)
+
+	Notification("Scrin mothership destroyed.")
+	MediaCA.PlaySound("c_mothershipdestroyed.aud", "2")
+
 	Lighting.Flash("Chronoshift", 10)
 
 	Lighting.Ambient = 0.8
@@ -879,8 +931,9 @@ DoFinale = function()
 
 	local kane = Actor.Create("kane", true, { Owner = Kane, Location = KaneSpawn.Location, Facing = Angle.South })
 	Trigger.AfterDelay(DateTime.Seconds(5), function()
-		Media.DisplayMessage("Well commander, we meet at last, and will again. You have played your part impeccably.", "Kane", HSLColor.FromHex("FF0000"))
-		Beacon.New(GDI, WormholeWP.CenterPosition)
+		Media.DisplayMessage("Well commander, we meet at last! Your contribution has been invaluable, unwitting as it may be.", "Kane", HSLColor.FromHex("FF0000"))
+		MediaCA.PlaySound("outro.aud", "2.5")
+		Beacon.New(GDI, kane.CenterPosition)
 
 		local cyborgs = CyborgSlaves.GetActorsByTypes({ "rmbc", "enli", "tplr", "n3c" })
 
@@ -893,26 +946,35 @@ DoFinale = function()
 					a.GrantCondition("kane-revealed")
 					a.Scatter()
 				end
-				Trigger.AfterDelay(DateTime.Seconds(7), function()
+				Trigger.AfterDelay(DateTime.Seconds(15), function()
 					MoveToWormhole(a)
 				end)
 			end)
 		end)
 
-		Trigger.AfterDelay(DateTime.Seconds(5), function()
-			Media.DisplayMessage("The final domino falls and the way is open.", "Kane", HSLColor.FromHex("FF0000"))
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(6)), function()
+			kane.Move(kane.Location + CVec.New(0, 1))
+			Media.DisplayMessage("Ironic isn't it? That GDI should lay the foundation for the Brotherhood's ultimate victory.", "Kane", HSLColor.FromHex("FF0000"))
 		end)
 
-		Trigger.AfterDelay(DateTime.Seconds(10), function()
-			Media.DisplayMessage("Come brothers, our future awaits!", "Kane", HSLColor.FromHex("FF0000"))
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(12)), function()
+			Media.DisplayMessage("Of course the Allies and Soviets played their part as well.", "Kane", HSLColor.FromHex("FF0000"))
+		end)
+
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(16)), function()
+			Media.DisplayMessage("My painstaking manipulation of time and space finally bears fruit, and now we stand at the threshold.", "Kane", HSLColor.FromHex("FF0000"))
+		end)
+
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(22)), function()
+			Media.DisplayMessage("There is much yet to be done. I have no doubt our paths will cross again.", "Kane", HSLColor.FromHex("FF0000"))
+		end)
+
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(27)), function()
 			kane.Move(WormholeWP.Location)
-		end)
-
-		Trigger.AfterDelay(DateTime.Seconds(20), function()
 			UserInterface.SetMissionText("To be continued...", HSLColor.Red)
 		end)
 
-		Trigger.AfterDelay(DateTime.Seconds(30), function()
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(37)), function()
 			GDI.MarkCompletedObjective(ObjectiveDestroyMothership)
 		end)
 	end)
@@ -923,4 +985,31 @@ CreatePermanentMothershipCamera = function()
 		IsPermanentMothershipCameraCreated = true
 		Actor.Create("camera", true, { Owner = GDI, Location = Mothership.Location })
 	end
+end
+
+PanToFinale = function()
+	if PanToFinaleComplete or not Mothership.IsDead then
+		return
+	end
+
+	local targetPos = WormholeWP.CenterPosition
+	PanToPos(targetPos, 2048)
+
+	if Camera.Position.X == targetPos.X and Camera.Position.Y == targetPos.Y then
+		PanToFinaleComplete = true
+	end
+end
+
+RemoveCyborgsAtWormhole = function()
+	if not Mothership.IsDead then
+		return
+	end
+
+	local kaneTroops = Map.ActorsInCircle(WormholeWP.CenterPosition, WDist.New(2 * 1024))
+	Utils.Do(kaneTroops, function(a)
+		if a.Owner == Kane and not a.IsDead then
+			a.Stop()
+			a.Destroy()
+		end
+	end)
 end

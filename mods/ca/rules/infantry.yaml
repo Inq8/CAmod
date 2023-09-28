@@ -1,7 +1,7 @@
 DOG:
 	Inherits: ^Soldier
 	Buildable:
-		Queue: InfantrySQ, InfantryMQ
+		Queue: InfantrySQ, DogMQ
 		BuildAtProductionType: Dog
 		BuildPaletteOrder: 50
 		Prerequisites: kenn, ~infantry.dog
@@ -641,7 +641,7 @@ E6:
 		Prerequisites: entrench.upgrade
 	Passenger:
 		CustomPipType: yellow
-	EngineerRepair:
+	InstantlyRepairs:
 	RepairsBridges:
 		EnterBehaviour: Exit
 	CaptureManager:
@@ -714,7 +714,6 @@ SPY:
 		Types: SpyInfiltrate
 		Notification: BuildingInfiltrated
 		TextNotification: Building infiltrated.
-		PlayerExperience: 15
 	-WithInfantryBody:
 	WithDisguisingInfantryBody:
 		DefaultAttackSequence: shoot
@@ -1077,6 +1076,7 @@ CMEC:
 HACK:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: HackerCell
 	Valued:
@@ -1190,7 +1190,7 @@ HACK:
 EINSTEIN:
 	Inherits: ^CivInfantry
 	RenderSprites:
-		PlayerPalette: player
+		Palette: player
 	WithDeathAnimation:
 		DeathSequencePalette: player
 	-Wanders:
@@ -1293,7 +1293,6 @@ THF:
 		Types: ThiefInfiltrate
 		Notification: BuildingInfiltrated
 		TextNotification: Building infiltrated.
-		PlayerExperience: 15
 	Voiced:
 		VoiceSet: ThiefVoice
 	-TakeCover:
@@ -1714,8 +1713,6 @@ N4:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	Selectable:
-		Class: e4
 	Convertible:
 		SpawnActors: N5
 	UpgradeableTo:
@@ -1913,7 +1910,7 @@ N6:
 		Name: Engineer
 	Passenger:
 		CustomPipType: yellow
-	EngineerRepair:
+	InstantlyRepairs:
 	RepairsBridges:
 		EnterBehaviour: Exit
 	CaptureManager:
@@ -2278,7 +2275,6 @@ SAB:
 		Voice: Move
 	Infiltrates:
 		Types: SabInfiltrate, PowerInfiltrate
-		PlayerExperience: 15
 		Notification: BuildingInfiltrated
 		TextNotification: Building infiltrated.
 	Voiced:
@@ -2845,6 +2841,8 @@ E8:
 	-SpeedMultiplier@HAZMATSOVIET:
 	Targetable@HAZMAT:
 		-RequiresCondition:
+	WithDecoration@BINO:
+		-BlinkPatterns:
 	AutoDeployer@AI:
 		RequiresCondition: botowner && !deployed && !parachute
 		DeployChance: 20
@@ -3010,6 +3008,7 @@ RMBC:
 	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@EMP: ^EmpDisable
+	Inherits@chrono: ^Chronoshiftable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
@@ -3064,7 +3063,7 @@ RMBC:
 	-Crushable:
 	-KillsSelf@Immolate:
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4Immune, ChaosImmune, DriverKillImmune, Cyborg
+		TargetTypes: Ground, Vehicle, C4Immune, ChaosImmune, Cyborg
 	-Targetable@HEAL:
 	Targetable@REPAIR:
 		RequiresCondition: !parachute && damaged && !being-warped && !repair-cooldown
@@ -3195,7 +3194,7 @@ BRUT:
 	Passenger:
 		CargoType: Vehicle
 	RevealsShroud:
-		Range: 4c0
+		Range: 5c0
 	Selectable:
 		DecorationBounds: 640, 896, 0, -341
 	Targetable:
@@ -3657,12 +3656,12 @@ YURI:
 	Armament@PRIMARY:
 		Weapon: EnslaveInfantry
 		LocalOffset: 150,0,400
-		PauseOnCondition: !ammo || deployed
+		PauseOnCondition: deployed
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: EnslaveVehicle
 		LocalOffset: 150,0,400
-		PauseOnCondition: !ammo || deployed
+		PauseOnCondition: deployed
 	Armament@AIDummyAiming: ## Hack: Make AI deploy to attack structures
 		PauseOnCondition: being-warped
 		Name: aidummy
@@ -3679,6 +3678,7 @@ YURI:
 		ControllingCondition: mindcontrolling
 		MaxControlledCondition: maxcontrolled
 		ManualReleaseEnabled: true
+		ExperienceFromControl: 100
 	WithMindControlArc@MC:
 		Color: c71585
 		Transparency: 55
@@ -3710,9 +3710,9 @@ YURI:
 		ShowSelectionBar: true
 		StartsFullyCharged: true
 		Voice: Demolish
-		PauseOnCondition: being-warped && parachute
+		PauseOnCondition: being-warped || parachute
 	AttackFrontal:
-		PauseOnCondition: being-warped && parachute
+		PauseOnCondition: !ammo || being-warped || parachute
 		Armaments: primary, secondary, aidummy
 		FacingTolerance: 0
 	RevealsShroud:
@@ -3945,6 +3945,7 @@ ENLI:
 	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@EMP: ^EmpDisable
+	Inherits@chrono: ^Chronoshiftable
 	RenderSprites:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
@@ -3965,7 +3966,7 @@ ENLI:
 	-Crushable:
 	-KillsSelf@Immolate:
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4Immune, ChaosImmune, DriverKillImmune, Cyborg
+		TargetTypes: Ground, Vehicle, C4Immune, ChaosImmune, Cyborg
 	-Targetable@HEAL:
 	Targetable@REPAIR:
 		RequiresCondition: !parachute && damaged && !being-warped && !repair-cooldown

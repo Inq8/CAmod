@@ -184,6 +184,7 @@ WorldLoaded = function()
 	Camera.Position = McvLanding.CenterPosition
 
 	InitObjectives(Greece)
+	AdjustStartingCash()
 	InitNod()
 	DoMcvArrival()
 
@@ -325,6 +326,7 @@ InitNodAttacks = function()
 	if not NodAttacksInitialized then
 		NodAttacksInitialized = true
 		Notification("Nod forces have been alerted to your presence, prepare your defenses!")
+		MediaCA.PlaySound("r_nodalerted.aud", "2")
 
 		Utils.Do(Patrols, function(p)
 			Utils.Do(p.Units, function(unit)

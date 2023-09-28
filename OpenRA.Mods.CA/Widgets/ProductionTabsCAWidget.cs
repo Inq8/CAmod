@@ -30,14 +30,15 @@ namespace OpenRA.Mods.CA.Widgets
 	{
 		public List<ProductionTabCA> Tabs = new List<ProductionTabCA>();
 		public string Group;
-		public int NextQueueName = 1;
 		public bool Alert { get { return Tabs.Any(t => t.Queue.AllQueued().Any(i => i.Done)); } }
 
 		public void Update(IEnumerable<ProductionQueue> allQueues)
 		{
 			var queues = allQueues.Where(q => q.Info.Group == Group).ToList();
 			var tabs = new List<ProductionTabCA>();
-			var largestUsedName = 0;
+
+			Tabs = Tabs.OrderByDescending(t => t.Queue.AllItems().Count()).ToList();
+			var count = 1;
 
 			// Remove stale queues
 			foreach (var t in Tabs)
@@ -45,21 +46,20 @@ namespace OpenRA.Mods.CA.Widgets
 				if (!queues.Contains(t.Queue))
 					continue;
 
+				t.Name = (count++).ToString();
 				tabs.Add(t);
 				queues.Remove(t.Queue);
-				largestUsedName = Math.Max(int.Parse(t.Name), largestUsedName);
 			}
-
-			NextQueueName = largestUsedName + 1;
 
 			// Add new queues
 			foreach (var queue in queues)
 				tabs.Add(new ProductionTabCA()
 				{
-					Name = (NextQueueName++).ToString(),
+					Name = (count++).ToString(),
 					Queue = queue,
 					Actor = queue.GetType() == typeof(ProductionQueue) ? queue.Actor : null
 				});
+
 			Tabs = tabs;
 		}
 	}
@@ -91,6 +91,9 @@ namespace OpenRA.Mods.CA.Widgets
 		public string RightButton = null;
 		public string TabButton = "button";
 		public string Background = null;
+
+		public readonly Color TabColor = Color.White;
+		public readonly Color TabColorDone = Color.Gold;
 
 		int contentWidth = 0;
 		bool leftPressed = false;
@@ -240,7 +243,7 @@ namespace OpenRA.Mods.CA.Widgets
 				// Draw number label
 				var textSize = font.Measure(tab.Name);
 				var position = new int2(rect.X + (rect.Width - textSize.X) / 2, (rect.Y + (rect.Height - textSize.Y) / 2) - 1);
-				font.DrawText(tab.Name, position, tab.Queue.AllQueued().Any(i => i.Done) ? Color.Gold : Color.White);
+				font.DrawText(tab.Name, position, tab.Queue.AllQueued().Any(i => i.Done) ? TabColorDone : TabColor);
 
 				tabsShown++;
 			}

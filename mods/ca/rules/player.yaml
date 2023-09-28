@@ -150,7 +150,7 @@ Player:
 		DefaultCash: 6000
 		DefaultCashDropdownDisplayOrder: 1
 	DeveloperMode:
-		CheckboxDisplayOrder: 16
+		CheckboxDisplayOrder: 11
 	Shroud:
 		FogCheckboxEnabled: True
 		FogCheckboxLocked: False
@@ -158,45 +158,45 @@ Player:
 		ExploredMapCheckboxEnabled: True
 	LobbyPrerequisiteCheckbox@GLOBALBOUNTY:
 		ID: bounty
-		Label: Kill Bounties
-		Description: Players receive cash bonuses when killing enemy units
+		Label: checkbox-kill-bounties.label
+		Description: checkbox-kill-bounties.description
 		Enabled: True
-		DisplayOrder: 8
+		DisplayOrder: 2
 		Prerequisites: global-bounty
 	LobbyPrerequisiteCheckbox@GLOBALFACTUNDEPLOY:
 		ID: factundeploy
-		Label: Redeployable MCVs
-		Description: Allows undeploying Construction Yard
+		Label: checkbox-redeployable-mcvs.label
+		Description: checkbox-redeployable-mcvs.description
 		Enabled: True
 		DisplayOrder: 7
 		Prerequisites: global-factundeploy
 	LobbyPrerequisiteCheckbox@FORCESHIELD:
 		ID: forceshield
-		Label: Force Shield
-		Description: Grants all factions the Force Shield support power
+		Label: checkbox-force-shield.label
+		Description: checkbox-force-shield.description
 		Enabled: True
-		DisplayOrder: 12
+		DisplayOrder: 10
 		Prerequisites: forceshield.enabled
 	LobbyPrerequisiteCheckbox@NAVY:
 		ID: navy
-		Label: Naval Units
-		Description: Enables naval units
+		Label: checkbox-naval-units.label
+		Description: checkbox-naval-units.description
 		Enabled: True
 		DisplayOrder: 13
 		Prerequisites: techlevel.navy
 	LobbyPrerequisiteCheckbox@REVEALONFIRE:
 		ID: revealonfire
-		Label: Reveal on Fire
-		Description: Units reveal themselves when firing
+		Label: checkbox-reveal-on-fire.label
+		Description: checkbox-reveal-on-fire.description
 		Enabled: False
-		DisplayOrder: 14
+		DisplayOrder: 8
 		Prerequisites: global.revealonfire
 	LobbyPrerequisiteCheckbox@BALANCEDHARVESTING:
 		ID: balancedharvesting
-		Label: Balanced Harvesting
-		Description: Enables dynamic harvester speed to account for the direction of resources relative to refineries
+		Label: checkbox-balanced-harvesting.label
+		Description: checkbox-balanced-harvesting.description
 		Enabled: True
-		DisplayOrder: 15
+		DisplayOrder: 4
 		Prerequisites: global.balancedharvesting
 	LobbyPrerequisiteDropdown@QUEUETYPE:
 		ID: queuetype
@@ -215,23 +215,23 @@ Player:
 	PlayerStatistics:
 	PlaceBeacon:
 	ProvidesTechPrerequisite@infonly:
-		Name: Infantry Only
+		Name: options-tech-level.infantry-only
 		Prerequisites: techlevel.infonly
 		Id: infantryonly
 	ProvidesTechPrerequisite@low:
-		Name: Low
+		Name: options-tech-level.low
 		Prerequisites: techlevel.infonly, techlevel.low
 		Id: low
 	ProvidesTechPrerequisite@medium:
-		Name: Medium
+		Name: options-tech-level.medium
 		Prerequisites: techlevel.infonly, techlevel.low, techlevel.medium
 		Id: medium
 	ProvidesTechPrerequisite@high:
-		Name: High
+		Name: options-tech-level.high
 		Prerequisites: techlevel.infonly, techlevel.low, techlevel.medium, techlevel.high
 		Id: high
 	ProvidesTechPrerequisite@unrestricted:
-		Name: Super Weapons
+		Name: options-tech-level.unrestricted
 		Prerequisites: techlevel.infonly, techlevel.low, techlevel.medium, techlevel.high, techlevel.unrestricted
 		Id: unrestricted
 	ProvidesPrerequisite@allies:

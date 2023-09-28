@@ -40,6 +40,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Initial Delay")]
 		public readonly int InitialDelay = 0;
 
+		[Desc("If true, will apply firepower/reload modifiers.")]
+		public readonly bool ApplyModifiers = false;
+
 		public override object Create(ActorInitializer init) { return new PeriodicExplosion(init.Self, this); }
 
 		public override void RulesetLoaded(Ruleset rules, ActorInfo ai)
@@ -50,7 +53,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			var weaponToLower = Weapon.ToLowerInvariant();
 			if (!rules.Weapons.TryGetValue(weaponToLower, out weaponInfo))
-				throw new YamlException("Weapons Ruleset does not contain an entry '{0}'".F(weaponToLower));
+				throw new YamlException($"Weapons Ruleset does not contain an entry '{weaponToLower}'");
 
 			WeaponInfo = weaponInfo;
 		}
@@ -64,6 +67,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		int fireDelay;
 		int burst;
+		int initialDelay;
 		AmmoPool ammoPool;
 
 		List<(int Tick, Action Action)> delayedActions = new List<(int, Action)>();
@@ -75,6 +79,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			weapon = info.WeaponInfo;
 			burst = weapon.Burst;
+			initialDelay = info.InitialDelay;
 			body = self.TraitOrDefault<BodyOrientation>();
 		}
 
@@ -100,7 +105,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled)
 				return;
 
-			if (--fireDelay + Info.InitialDelay < 0)
+			if (--fireDelay + initialDelay < 0)
 			{
 				if (ammoPool != null && !ammoPool.TakeAmmo(self, 1))
 					return;
@@ -112,11 +117,13 @@ namespace OpenRA.Mods.CA.Traits
 				var args = new WarheadArgs
 				{
 					Weapon = weapon,
-					DamageModifiers = self.TraitsImplementing<IFirepowerModifier>().Select(a => a.GetFirepowerModifier()).ToArray(),
 					Source = self.CenterPosition,
 					SourceActor = self,
 					WeaponTarget = Target.FromPos(self.CenterPosition + localoffset)
 				};
+
+				if (info.ApplyModifiers)
+					args.DamageModifiers = self.TraitsImplementing<IFirepowerModifier>().Select(a => a.GetFirepowerModifier()).ToArray();
 
 				weapon.Impact(Target.FromPos(self.CenterPosition + localoffset), args);
 
@@ -135,9 +142,14 @@ namespace OpenRA.Mods.CA.Traits
 				}
 				else
 				{
-					var modifiers = self.TraitsImplementing<IReloadModifier>()
-						.Select(m => m.GetReloadModifier());
-					fireDelay = Util.ApplyPercentageModifiers(weapon.ReloadDelay, modifiers);
+					if (info.ApplyModifiers)
+					{
+						var modifiers = self.TraitsImplementing<IReloadModifier>().Select(m => m.GetReloadModifier());
+						fireDelay = Util.ApplyPercentageModifiers(weapon.ReloadDelay, modifiers);
+					}
+					else
+						fireDelay = weapon.ReloadDelay;
+
 					burst = weapon.Burst;
 
 					if (weapon.AfterFireSound != null && weapon.AfterFireSound.Length > 0)
@@ -148,11 +160,15 @@ namespace OpenRA.Mods.CA.Traits
 						});
 					}
 				}
+
+				initialDelay = 0;
 			}
 		}
 
 		protected override void TraitEnabled(Actor self)
 		{
+			initialDelay = info.InitialDelay;
+
 			if (info.ResetReloadWhenEnabled)
 			{
 				burst = weapon.Burst;

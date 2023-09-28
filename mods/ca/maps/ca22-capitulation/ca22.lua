@@ -192,10 +192,12 @@ WorldLoaded = function()
 	MissionPlayer = GDI
 	TimerTicks = MaxReactorFuelTime
 	CurrentDelivery = 1
+	McvArrived = false
 
-	Camera.Position = PlayerStart.CenterPosition
+	Camera.Position = Spy.CenterPosition
 
 	InitObjectives(GDI)
+	AdjustStartingCash()
 	InitUSSR()
 
 	ObjectiveCaptureOrDestroyBunker = GDI.AddObjective("Capture or destroy Stalin's bunker.")
@@ -218,6 +220,13 @@ WorldLoaded = function()
 		DoDelivery()
 	end)
 
+	Trigger.AfterDelay(DateTime.Seconds(13), function()
+		Media.PlaySpeechNotification(GDI, "ReinforcementsArrived")
+		Notification("Reinforcements have arrived.")
+		Reinforcements.Reinforce(GDI, { "amcv" }, { McvSpawn.Location, PlayerStart.Location }, 75)
+		McvArrived = true
+	end)
+
 	local revealPoints = { SupplyReveal1, SupplyReveal2, SupplyReveal3 }
 	Utils.Do(revealPoints, function(p)
 		Trigger.OnEnteredProximityTrigger(p.CenterPosition, WDist.New(12 * 1024), function(a, id)
@@ -234,9 +243,10 @@ WorldLoaded = function()
 	end)
 
 	Spy.DisguiseAs(SpyDisguiseTarget)
-	Trigger.AfterDelay(DateTime.Seconds(5), function()
+	Trigger.AfterDelay(DateTime.Seconds(4), function()
 		Beacon.New(GDI, Spy.CenterPosition)
-		Media.DisplayMessage("Feels like they're getting suspicious, I'm getting out of here...", "Allied Spy", HSLColor.FromHex("1E90FF"))
+		Media.DisplayMessage("It feels like they're getting suspicious, I'm getting out of here...", "Allied Spy", HSLColor.FromHex("1E90FF"))
+		MediaCA.PlaySound("suspicious.aud", "2")
 		Spy.Move(SouthDelivery3.Location)
 		SpyKiller.Attack(Spy)
 	end)
@@ -245,6 +255,7 @@ end
 Tick = function()
 	OncePerSecondChecks()
 	OncePerFiveSecondChecks()
+	PanToStart()
 end
 
 OncePerSecondChecks = function()
@@ -262,7 +273,7 @@ OncePerSecondChecks = function()
 
 		UpdateObjectiveText()
 
-		if GDI.HasNoRequiredUnits() then
+		if McvArrived and GDI.HasNoRequiredUnits() then
 			GDI.MarkFailedObjective(ObjectiveCaptureOrDestroyBunker)
 		end
 	end
@@ -335,7 +346,8 @@ InitUSSR = function()
 				if TimerTicks > MaxReactorFuelTime then
 					TimerTicks = MaxReactorFuelTime
 				end
-				Notification("A shipment of fuel has reached the Soviet reactor.")
+				Notification("A fuel shipment has reached the Soviet reactor.")
+				MediaCA.PlaySound("c_fuelshipment.aud", "2")
 			end
 		end
 	end)
@@ -389,13 +401,21 @@ ReactorStarved = function()
 			end
 		end)
 
-		local notificationText = "The Atomic Reactor is offline"
+		local notificationText = "Atomic Reactor shutting down."
 		if AreTeslaReactorsOffline then
-			notificationText = notificationText .. ". The Soviet base is now completely without power."
+			notificationText = notificationText .. ". The Soviet base is now without power."
 		else
-			notificationText = notificationText .. ", but the Telsa Reactors in the south-east continue to provide the base with power."
+			notificationText = notificationText .. ". The Telsa Reactors in the south-east continue to provide the base with power."
 		end
 		Notification(notificationText)
+		MediaCA.PlaySound("c_atomicshutdown.aud", "2")
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(3)), function()
+			if AreTeslaReactorsOffline then
+				MediaCA.PlaySound("c_sovietbasenopower.aud", "2")
+			else
+				MediaCA.PlaySound("c_teslareactorsremain.aud", "2")
+			end
+		end)
 	end
 end
 
@@ -420,11 +440,19 @@ TeslaReactorsOffline = function()
 
 		local notificationText = "Soviet secondary power is offline."
 		if IsReactorStarved then
-			notificationText = notificationText .. " The Soviet base is now completely without power."
+			notificationText = notificationText .. " The Soviet base is now without power."
 		else
 			notificationText = notificationText .. " Tesla Coils are no longer supercharged and some perimeter air defenses are down, however the Atomic Reactor continues to provide the base with power."
 		end
 		Notification(notificationText)
+		MediaCA.PlaySound("c_sovietsecondarypoweroffline.aud", "2")
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(3)), function()
+			if IsReactorStarved then
+				MediaCA.PlaySound("c_sovietbasenopower.aud", "2")
+			else
+				MediaCA.PlaySound("c_atomicup.aud", "2")
+			end
+		end)
 	end
 end
 
@@ -445,5 +473,18 @@ DisableMainPower = function()
 				a.GrantCondition("disabled")
 			end
 		end)
+	end
+end
+
+PanToStart = function()
+	if PanToStartComplete or not McvArrived then
+		return
+	end
+
+	local targetPos = PlayerStart.CenterPosition
+	PanToPos(targetPos, 1536)
+
+	if Camera.Position.X == targetPos.X and Camera.Position.Y == targetPos.Y then
+		PanToStartComplete = true
 	end
 end

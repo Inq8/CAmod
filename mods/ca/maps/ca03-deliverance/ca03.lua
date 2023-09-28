@@ -218,6 +218,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Greece)
+	AdjustStartingCash()
 	InitUSSR()
 
 	if Difficulty ~= "hard" then
@@ -233,6 +234,13 @@ WorldLoaded = function()
 		HardOnlySub3.Destroy()
 		HardOnlySub4.Destroy()
 		HardOnlySub5.Destroy()
+
+		HardOnlyTeslaCoil1.Destroy()
+		HardOnlyTeslaCoil2.Destroy()
+		HardOnlyTeslaCoil3.Destroy()
+
+		HardOnlyKatyusha1.Destroy()
+		HardOnlyKatyusha2.Destroy()
 
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
 			Tip("If you put a Mechanic or Engineer inside an IFV it becomes a repair vehicle.")
@@ -281,13 +289,13 @@ WorldLoaded = function()
 
 			Trigger.AfterDelay(DateTime.Seconds(3), function()
 				if GDICommanderAlive then
-					Notification("GDI commander freed.")
-					Media.PlaySpeechNotification(Greece, "TargetFreed")
+					Notification("The GDI commander has been freed.")
+					MediaCA.PlaySound("r_gdicmdrfreed.aud", "2")
 				end
 
-				Trigger.AfterDelay(DateTime.Seconds(3), function()
-					Media.PlaySpeechNotification(Greece, "AlliedReinforcementsWest")
-					Notification("GDI transport en route.")
+				Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(3)), function()
+					Media.PlaySpeechNotification(Greece, "GDITransportInbound")
+					MediaCA.PlaySound("r_gditraninbound.aud", "2")
 					Reinforcements.ReinforceWithTransport(GDI, "tran.evac", nil, { GDIRescueSpawn.Location, GDIRescueRally.Location }, nil, function(transport, cargo)
 
 						Trigger.AfterDelay(DateTime.Seconds(1), function()
@@ -370,6 +378,8 @@ end
 GDIBaseFound = function()
 	if not IsGDIBaseFound then
 		IsGDIBaseFound = true
+		MediaCA.PlaySound("r_gdibasediscovered.aud", "2")
+		Greece.PlayLowPowerNotification = false
 
 		local gdiForces = GDI.GetActors()
 		Utils.Do(gdiForces, function(a)
@@ -380,6 +390,10 @@ GDIBaseFound = function()
 
 		Trigger.AfterDelay(1, function()
 			Actor.Create("QueueUpdaterDummy", true, { Owner = Greece })
+		end)
+
+		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			Greece.PlayLowPowerNotification = true
 		end)
 
 		InitUSSRAttacks()
@@ -557,6 +571,16 @@ InitUSSRPatrols = function()
 end
 
 InitUSSRAttacks = function()
+	Trigger.AfterDelay(DateTime.Seconds(4), function()
+		local siegeUnits = Map.ActorsInBox(SiegeUnitsBoxTopLeft.CenterPosition, SiegeUnitsBoxBottomRight.CenterPosition, function(a)
+			return a.Owner == USSR and not a.IsDead and a.HasProperty("Hunt")
+		end)
+
+		Utils.Do(siegeUnits, function(a)
+			a.Hunt()
+		end)
+	end)
+
 	Trigger.AfterDelay(Squads.Main.Delay[Difficulty], function()
 		InitAttackSquad(Squads.Main, USSR)
 	end)
@@ -640,6 +664,10 @@ NavalReinforcements = function()
 			end
 
 			local destroyers = { "dd", "dd", "dd" }
+
+			if Difficulty == "easy" then
+				destroyers = { "dd", "dd", "dd", "dd" }
+			end
 
 			Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
 			Beacon.New(Greece, CruiserSpawn.CenterPosition)

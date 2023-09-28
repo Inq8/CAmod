@@ -106,6 +106,7 @@ WorldLoaded = function()
 	AttacksStarted = false
 
 	Camera.Position = PlayerStart.CenterPosition
+	USSR.PlayLowPowerNotification = false
 
 	InitObjectives(USSR)
 	InitGDI()
@@ -248,12 +249,13 @@ EngineerDrop = function()
 	local haloDropUnits = { "e6", "e6", "e6", "e6", "e6", "e6", "e6", "e6" }
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
-		Media.PlaySpeechNotification(USSR, "ReinforcementsArrived")
-		Notification("Reinforcements have arrived.")
+		Notification("Engineering team inbound.")
+		MediaCA.PlaySound("r2_engineeringteam.aud", "2")
 	end)
 
 	DoHelicopterDrop(USSR, entryPath, "halo.engis", haloDropUnits, nil, function(t)
 		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			USSR.PlayLowPowerNotification = true
 			if not t.IsDead then
 				t.Move(entryPath[1])
 				t.Destroy()

@@ -28,6 +28,7 @@ WorldLoaded = function()
 	Nod = Player.GetPlayer("Nod")
 	MissionPlayer = USSR
 	TimerTicks = 0
+	TempleOfNodLocation = TempleOfNod.Location
 
 	Camera.Position = PlayerStart.CenterPosition
 
@@ -126,6 +127,11 @@ WorldLoaded = function()
 			USSR.MarkCompletedObjective(ObjectiveDestroyTemple)
 			InitEvacSite()
 		end
+
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
+			MediaCA.PlaySound("r2_codesacquired.aud", "2")
+			Notification("Cyborg encryption codes acquired.")
+		end)
 	end)
 
 	Trigger.OnKilled(TempleOfNod, function(self, killer)
@@ -140,7 +146,8 @@ WorldLoaded = function()
 		if ObjectiveEscape ~= nil and not EvacStarted and a.Owner == USSR and a == Yuri then
 
 			if ObjectiveStealCodes == nil or not USSR.IsObjectiveCompleted(ObjectiveStealCodes) then
-				Notification("Cybernetics Lab has not been infiltrated!")
+				Notification("Encryption codes are required for mission completion.")
+				MediaCA.PlaySound("r2_codesrequired.aud", "2")
 				return
 			end
 
@@ -152,6 +159,7 @@ WorldLoaded = function()
 			end
 
 			Notification("Extraction transport inbound.")
+			MediaCA.PlaySound("r2_extraction.aud", "2")
 
 			Reinforcements.ReinforceWithTransport(USSR, "halo.paradrop", nil, { EvacSpawn.Location, EvacLanding.Location }, nil, function(transport, cargo)
 				transport.Land(EvacLanding)
@@ -166,6 +174,13 @@ WorldLoaded = function()
 					end
 				end)
 			end)
+		end
+	end)
+
+	Trigger.OnEnteredProximityTrigger(TempleOfNod.CenterPosition, WDist.New(10 * 1024), function(a, id)
+		if a.Owner == USSR and ObjectiveDestroyTemple ~= nil then
+			Trigger.RemoveProximityTrigger(id)
+			TempleDiscovered()
 		end
 	end)
 
@@ -252,6 +267,17 @@ TempleDestroyed = function()
 
 	if ObjectiveStealCodes ~= nil and USSR.IsObjectiveCompleted(ObjectiveStealCodes) then
 		InitEvacSite()
+	end
+end
+
+TempleDiscovered = function()
+	if not IsTempleDiscovered then
+		IsTempleDiscovered = true
+		Beacon.New(USSR, TempleOfNod.CenterPosition)
+		Notification("Temple of Nod located.")
+		MediaCA.PlaySound("r2_templelocated.aud", "2")
+		local autoCamera = Actor.Create("smallcamera", true, { Owner = USSR, Location = TempleOfNodLocation })
+		Trigger.AfterDelay(DateTime.Seconds(5), autoCamera.Destroy)
 	end
 end
 

@@ -1,3 +1,7 @@
+^ExistsInWorld:
+	GivesExperienceCA:
+		ActorExperienceOnDamage: false
+
 Player:
 	-ConquestVictoryConditions:
 	MissionObjectives:
@@ -7,8 +11,8 @@ Player:
 		ExploredMapCheckboxLocked: True
 		ExploredMapCheckboxVisible: False
 		FogCheckboxEnabled: True
-		FogCheckboxLocked: True
-		FogCheckboxVisible: False
+		FogCheckboxLocked: False
+		FogCheckboxVisible: True
 	PlayerResources:
 		DefaultCashDropdownLocked: True
 		DefaultCashDropdownVisible: False
@@ -66,8 +70,8 @@ World:
 		AllyBuildRadiusCheckboxLocked: True
 		AllyBuildRadiusCheckboxVisible: False
 		BuildRadiusCheckboxEnabled: True
-		BuildRadiusCheckboxLocked: True
-		BuildRadiusCheckboxVisible: False
+		BuildRadiusCheckboxLocked: False
+		BuildRadiusCheckboxVisible: True
 	MapOptions:
 		TechLevelDropdownLocked: True
 		TechLevelDropdownVisible: False
@@ -212,12 +216,7 @@ TRAN.Evac:
 		TurnToLand: True
 		InitialFacing: 0
 
-V01:
-	-SpawnRandomActorOnDeath@1:
-	-SpawnRandomActorOnDeath@2:
-	-SpawnRandomActorOnDeath@3:
-
-V25:
+^CivBuilding:
 	-SpawnRandomActorOnDeath@1:
 	-SpawnRandomActorOnDeath@2:
 	-SpawnRandomActorOnDeath@3:
@@ -241,6 +240,20 @@ SMALLCAMERA:
 	Inherits: CAMERA
 	RevealsShroud:
 		Range: 5c0
+
+WARPIN:
+	Inherits: SMALLCAMERA
+	-RenderSpritesEditorOnly:
+	RenderSprites:
+		Image: empty
+	WithSpriteBody:
+	BodyOrientation:
+		QuantizedFacings: 1
+	WithRestartableIdleOverlay@WARPIN:
+		PlayOnce: true
+		Image: chronobubble
+		Sequence: warpin
+		Palette: ra2effect-ignore-lighting-alpha75
 
 POWERCHEAT:
 	AlwaysVisible:
@@ -321,7 +334,7 @@ DEVO:
 PDOX:
 	-ProductionCostMultiplier@GermanyBonus:
 
-RIFT:
+RFGN:
 	-ProductionCostMultiplier@HarbingerBonus:
 
 EYE:

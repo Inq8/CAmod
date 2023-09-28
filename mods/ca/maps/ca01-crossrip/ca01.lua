@@ -87,12 +87,12 @@ Squads = {
 	Main = {
 		Player = nil,
 		Delay = {
-			easy = DateTime.Minutes(3),
-			normal = DateTime.Minutes(2) + DateTime.Seconds(30),
+			easy = DateTime.Minutes(4),
+			normal = DateTime.Minutes(3),
 			hard = DateTime.Minutes(2)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(12), Value = 40 } },
+			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(12), Value = 30 } },
 			normal = { { MinTime = 0, Value = 50 } },
 			hard = { { MinTime = 0, Value = 80 } },
 		},
@@ -125,7 +125,7 @@ Squads = {
 				},
 				{
 					Infantry = { "e3", "e1", "e1", "shok", "e1", "e2", "e3", "e4" }, -- 2110
-					Vehicles = { "3tnk", "4tnk", "katy" }, -- 3550
+					Vehicles = { { "3tnk", "3tnk.atomic" }, "4tnk", "katy" }, -- 3550
 					MinTime = DateTime.Minutes(9)
 				}
 			},
@@ -136,8 +136,8 @@ Squads = {
 					MaxTime = DateTime.Minutes(6)
 				},
 				{
-					Infantry = { "e3", "e1", "e1", "e3", "shok", "e1", "shok", "e1", "e2", "e3", "e4" }, -- 2510
-					Vehicles = { "3tnk", "4tnk", "btr.ai", "katy", "ttra" }, -- 5475 (+800)
+					Infantry = { "e3", "e1", "e1", "e3", "shok", "e1", { "shok", "n8" }, "e1", "e2", "e3", "e4" }, -- 2510
+					Vehicles = { { "3tnk", "3tnk.atomic" }, "4tnk", "btr.ai", { "katy", "v2rl" }, "ttra" }, -- 5475 (+800)
 					MinTime = DateTime.Minutes(6)
 				}
 			}
@@ -211,6 +211,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerMcv.CenterPosition
 
 	InitObjectives(Greece)
+	AdjustStartingCash()
 	InitUSSR()
 
 	if Difficulty ~= "hard" then
@@ -218,6 +219,7 @@ WorldLoaded = function()
 		Flamer1.Destroy()
 		TeslaCoil3.Destroy()
 		HardOnlyV2.Destroy()
+		HardOnlyKatyusha.Destroy()
 	end
 
 	if Difficulty == "easy" then
@@ -225,6 +227,13 @@ WorldLoaded = function()
 		SovietWestFlameTower2.Destroy()
 		TeslaCoil1.Destroy()
 		TeslaCoil2.Destroy()
+		NonEasyKatyusha.Destroy()
+		NonEasyV2.Destroy()
+		NonEasyHeavyTank1.Destroy()
+		NonEasyHeavyTank2.Destroy()
+		NonEasyHeavyTank3.Destroy()
+		NonEasyHeavyTank4.Destroy()
+		NonEasyMammoth1.Destroy()
 	else
 		Ranger1.Destroy()
 	end
@@ -465,6 +474,7 @@ ChronosphereDiscovered = function()
 		IsBaseEstablished = true
 		IsChronosphereDiscovered = true
 		Notification("Commander, the Soviets have been attempting to reverse engineer stolen Chronosphere technology! Use whatever means necessary to cease their experiments.")
+		MediaCA.PlaySound("r_chronodisc.aud", "2")
 
 		local autoCamera = Actor.Create("smallcamera", true, { Owner = Greece, Location = SovietChronosphereLocation })
 		Trigger.AfterDelay(DateTime.Seconds(5), autoCamera.Destroy)
@@ -509,17 +519,22 @@ InterdimensionalCrossrip = function()
 	Trigger.AfterDelay(1, SpawnWormhole)
 	Trigger.AfterDelay(2, SpawnTibTree)
 
-	Notification("What in God's name!? Fall back to your base, prepare for evacuation. We'll need whatever intel you found to fix .. whatever this is.")
 	ObjectiveDefendUntilEvacuation = Greece.AddObjective("Defend your base until evacuation is prepared.")
 
 	if ObjectiveCaptureOrDestroyChronosphere ~= nil then
 		Greece.MarkCompletedObjective(ObjectiveCaptureOrDestroyChronosphere)
 	end
 
-	Trigger.AfterDelay(12, function()
+	local unitLostSilencer = Actor.Create("unitlostsilencer", true, { Owner = Greece })
+
+	Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
 		ScrinInvasion()
-		Media.PlaySpeechNotification(Greece, "TimerStarted")
+		Notification("Unidentified hostile forces detected. Fall back to your base, and prepare for evacuation.")
+		MediaCA.PlaySound("r_evac.aud", "2")
 		TimerTicks = EvacuationTime[Difficulty]
+		Trigger.AfterDelay(DateTime.Seconds(7), function()
+			unitLostSilencer.Destroy()
+		end)
 	end)
 
 	Actor.Create("flare", true, { Owner = Greece, Location = Evac1.Location })

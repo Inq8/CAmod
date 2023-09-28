@@ -112,6 +112,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(USSR)
+	AdjustStartingCash()
 	InitGreece()
 
 	HaloDropper = Actor.Create("powerproxy.halodrop", false, { Owner = USSR })
@@ -181,6 +182,13 @@ WorldLoaded = function()
 		end
 	end)
 
+	Trigger.OnKilled(Boris, function(self, killer)
+		Trigger.AfterDelay(DateTime.Seconds(1), function()
+			Notification("Boris has been killed.")
+			MediaCA.PlaySound("r2_boriskilled.aud", "2")
+		end)
+	end)
+
 	Trigger.OnKilled(Bodyguard1, function(self, killer)
 		Trigger.AfterDelay(DateTime.Seconds(4), function()
 			if not TraitorGeneral.IsDead and TraitorGeneral.IsInWorld then
@@ -191,6 +199,7 @@ WorldLoaded = function()
 
 	Trigger.OnKilled(TraitorGeneral, function(self, killer)
 		USSR.MarkCompletedObjective(ObjectiveKillTraitor)
+		MediaCA.PlaySound("r2_yegeroveliminated.aud", "2")
 	end)
 
 	Trigger.OnAllKilled({ TraitorSAM1, TraitorSAM2 }, function()
@@ -381,6 +390,7 @@ TraitorHQKilledOrCaptured = function()
 		traitorGeneral.Move(TraitorGeneralSafePoint.Location)
 		Trigger.OnKilled(traitorGeneral, function(self, killer)
 			USSR.MarkCompletedObjective(ObjectiveKillTraitor)
+			MediaCA.PlaySound("r2_yegeroveliminated.aud", "2")
 		end)
 	end
 end

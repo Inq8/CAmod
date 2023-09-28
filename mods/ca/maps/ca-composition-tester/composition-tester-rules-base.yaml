@@ -81,7 +81,6 @@ Player:
 		Enabled: True
 		DisplayOrder: 999
 		Prerequisites: global.freeupgrades
-
 	ProvidesPrerequisite@PLAYERHUMAN:
 		Prerequisite: player.human
 		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri, talon, zocom, eagle, arc, blackh, marked, legion, shadow
@@ -100,7 +99,6 @@ Player:
 	ProvidesPrerequisite@PLAYERALLIESORGDIORNOD:
 		Prerequisite: player.alliesorgdiornod
 		Factions: england, france, germany, usa, talon, zocom, eagle, arc, blackh, marked, legion, shadow
-
 	-ProvidesTechPrerequisite@infonly:
 	-ProvidesTechPrerequisite@low:
 	-ProvidesTechPrerequisite@medium:
@@ -114,6 +112,8 @@ Player:
 		Name: Build Anything
 		Prerequisites: player.allies, player.soviet, player.gdi, player.nod, player.scrin, player.human, player.ra, player.td, player.alliesorgdi, player.alliesornod, player.alliesorgdiornod, techlevel.infonly, techlevel.low, techlevel.medium, techlevel.high, techlevel.unrestricted
 		Id: buildanything
+
+
 
 ^Upgrade:
 	Buildable:
@@ -717,6 +717,10 @@ S6:
 	Buildable:
 		Prerequisites: ~player.scrin
 
+BRST:
+	Buildable:
+		Prerequisites: ~player.scrin
+
 MAST:
 	Buildable:
 		Prerequisites: ~player.scrin, !mchero
@@ -1302,9 +1306,6 @@ SYRD:
 	DamageMultiplier@1:
 		Modifier: 0
 	-Sellable:
-	-SpawnActorsOnSell:
-	-SpawnActorOnDeath:
-	-SpawnRandomActorOnDeath:
 	Capturable:
 		Types: None
 		RequiresCondition: being-captured

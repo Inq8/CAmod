@@ -145,6 +145,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Nod)
+	AdjustStartingCash()
 	InitGDI()
 	InitGreece()
 
@@ -152,6 +153,12 @@ WorldLoaded = function()
 		GDIDefender2.Destroy()
 		NorthGapGenerator.Destroy()
 		HardOnlyPower.Destroy()
+		Cryo1.Destroy()
+		Cryo2.Destroy()
+		Cryo3.Destroy()
+		Cryo4.Destroy()
+		Cryo5.Destroy()
+		Prism1.Destroy()
 
 		if Difficulty == "easy" then
 			GDIDefender1.Destroy()
@@ -159,6 +166,9 @@ WorldLoaded = function()
 			SouthGapGenerator2.Destroy()
 			SouthGapGenerator3.Destroy()
 			HardAndNormalOnlyPower.Destroy()
+			AGT1.Owner = Legion
+			Prism2.Destroy()
+			Prism3.Destroy()
 		end
 
 		Trigger.AfterDelay(DateTime.Seconds(3), function()
@@ -195,7 +205,15 @@ WorldLoaded = function()
 	Trigger.OnEnteredFootprint(SleeperAwakenTrigger, function(a, id)
 		if a.Owner == Nod then
 			Trigger.RemoveFootprintTrigger(id)
-			AwakenSleeperCell()
+			Media.DisplayMessage("The time has come, warriors of Nod.", "Nod Soldier", HSLColor.FromHex("FF0000"))
+			MediaCA.PlaySound("timehascome.aud", "2")
+			Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
+				Media.DisplayMessage("Down with GDI!", "Nod Soldier", HSLColor.FromHex("FF0000"))
+				MediaCA.PlaySound("downwithgdi.aud", "2")
+				Trigger.AfterDelay(15, function()
+					AwakenSleeperCell()
+				end)
+			end)
 		end
 	end)
 
@@ -215,6 +233,7 @@ WorldLoaded = function()
 			if a.Owner == Nod then
 				Trigger.RemoveProximityTrigger(id)
 				Notification("Researcher located.")
+				MediaCA.PlaySound("n_researcherlocated.aud", "2")
 				if ObjectiveRescueResearchers == nil then
 					ObjectiveRescueResearchers = Nod.AddObjective("Locate and rescue Nod researchers.")
 				end
@@ -230,6 +249,7 @@ WorldLoaded = function()
 				Trigger.RemoveProximityTrigger(id)
 				researcher.Owner = Nod
 				Notification("Escort researcher to evacuation point.")
+				MediaCA.PlaySound("n_escortresearcher.aud", "2")
 				InitEvacSite()
 			end
 		end)
@@ -255,30 +275,35 @@ WorldLoaded = function()
 				if Researcher1.Owner == EvacPlayer and Researcher2.Owner == EvacPlayer and not EvacStarted then
 					EvacStarted = true
 
-					if EvacFlare ~= nil then
-						EvacFlare.Destroy()
-					end
+					Notification("Evacuation transport inbound.")
+					MediaCA.PlaySound("n_evacinbound.aud", "2")
 
-					Reinforcements.ReinforceWithTransport(EvacPlayer, "tran.evac", nil, { EvacSpawn.Location, EvacPoint.Location }, nil, function(transport, cargo)
-						Notification("Evacuation transport inbound.")
-						Trigger.AfterDelay(DateTime.Seconds(1), function()
-							if not Researcher1.IsDead then
-								Researcher1.EnterTransport(transport)
-							end
-							if not Researcher1.IsDead then
-								Researcher2.EnterTransport(transport)
-							end
-						end)
-						Trigger.OnPassengerEntered(transport, function(t, passenger)
-							if t.PassengerCount == 2 then
-								EvacExiting = true
-								Media.PlaySpeechNotification(Nod, "TargetRescued")
-								t.Move(EvacSpawn.Location)
-								t.Destroy()
-								Trigger.AfterDelay(DateTime.Seconds(4), function()
-									Nod.MarkCompletedObjective(ObjectiveRescueResearchers)
-								end)
-							end
+					Trigger.AfterDelay(DateTime.Seconds(3), function()
+						if EvacFlare ~= nil then
+							EvacFlare.Destroy()
+						end
+
+						Reinforcements.ReinforceWithTransport(EvacPlayer, "tran.evac", nil, { EvacSpawn.Location, EvacPoint.Location }, nil, function(transport, cargo)
+
+							Trigger.AfterDelay(DateTime.Seconds(1), function()
+								if not Researcher1.IsDead then
+									Researcher1.EnterTransport(transport)
+								end
+								if not Researcher1.IsDead then
+									Researcher2.EnterTransport(transport)
+								end
+							end)
+							Trigger.OnPassengerEntered(transport, function(t, passenger)
+								if t.PassengerCount == 2 then
+									EvacExiting = true
+									Media.PlaySpeechNotification(Nod, "TargetRescued")
+									t.Move(EvacSpawn.Location)
+									t.Destroy()
+									Trigger.AfterDelay(DateTime.Seconds(4), function()
+										Nod.MarkCompletedObjective(ObjectiveRescueResearchers)
+									end)
+								end
+							end)
 						end)
 					end)
 				else

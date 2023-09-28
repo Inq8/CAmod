@@ -19,7 +19,7 @@ SS:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 33000
+		HP: 25000
 	Armor:
 		Type: Light
 	Mobile:
@@ -87,7 +87,7 @@ MSUB:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 35000
+		HP: 30000
 	Armor:
 		Type: Light
 	Mobile:
@@ -165,7 +165,7 @@ DD:
 	Armament@SECONDARY:
 		Name: secondary
 		Turret: secondary
-		Weapon: DepthCharge.destroyer
+		Weapon: DoubleDepthCharge
 		LocalOffset: 0,-100,0, 0,100,0
 		LocalYaw: 80, -80
 		PauseOnCondition: under-bridge
@@ -184,6 +184,8 @@ DD:
 		DetectionTypes: Underwater
 		Range: 4c0
 	RenderDetectionCircle:
+		Color: 00ff0020
+		BorderColor: 00000020
 	Selectable:
 		DecorationBounds: 1621, 1621
 
@@ -300,7 +302,6 @@ LST:
 		PassengerFacing: 0
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
-	-ChronoshiftableWithSpriteEffect:
 	Selectable:
 		DecorationBounds: 1536, 1536
 	-InfiltrateToAttach@MINIDRONE:
@@ -366,6 +367,8 @@ PT:
 		DetectionTypes: Underwater
 		Range: 4c0
 	RenderDetectionCircle:
+		Color: 00ff0020
+		BorderColor: 00000020
 	Selectable:
 		DecorationBounds: 1536, 1536
 
@@ -437,6 +440,8 @@ PT2:
 		DetectionTypes: Underwater
 		Range: 4c0
 	RenderDetectionCircle:
+		Color: 00ff0020
+		BorderColor: 00000020
 	Selectable:
 		DecorationBounds: 1536, 1536
 
@@ -487,6 +492,10 @@ DD2:
 		Turret: secondary
 		Offset: 551,0,158
 		TurnSpeed: 1024
+	Turreted@TERTIARY:
+		Turret: tertiary
+		TurnSpeed: 15
+		Offset: -469,0,128
 	Armament@PRIMARY:
 		Turret: primary
 		Weapon: Railgun
@@ -503,15 +512,24 @@ DD2:
 		PauseOnCondition: under-bridge
 		RequiresCondition: pointdef-upgrade
 		ForceTargetRelationships: enemy
+	Armament@TERTIARY:
+		Name: tertiary
+		Turret: tertiary
+		Weapon: DoubleDepthCharge
+		LocalOffset: 0,-100,0, 0,100,0
+		LocalYaw: 80, -80
+		PauseOnCondition: under-bridge
 	AttackTurreted:
-		Turrets: primary, secondary
-		Armaments: primary, secondary
+		Turrets: primary, secondary, tertiary
+		Armaments: primary, secondary, tertiary
 		PauseOnCondition: empdisable || being-warped
 	AutoTarget:
 	DetectCloaked:
 		DetectionTypes: Underwater
 		Range: 4c0
 	RenderDetectionCircle:
+		Color: 00ff0020
+		BorderColor: 00000020
 	WithSpriteTurret@PRIMARY:
 		Turret: primary
 	WithMuzzleOverlay:
@@ -547,7 +565,7 @@ SS2:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 26500
+		HP: 24000
 	Armor:
 		Type: Light
 	Mobile:
@@ -615,7 +633,7 @@ ISUB:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 60000
+		HP: 35000
 	Armor:
 		Type: Light
 	Mobile:
@@ -641,11 +659,16 @@ ISUB:
 		RequiresSelection: true
 	Exit:
 		SpawnOffset: 0,-128,0
-	AttackFrontal:
+	AttackFrontalCharged:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
 		PauseOnCondition: under-bridge || empdisable || being-warped
-		FacingTolerance: 0
+		FacingTolerance: 16
+		ChargeLevel: 50
+		DischargeRate: 5
+		ShowSelectionBar: true
+		SelectionBarColor: ffaa00
+		ChargingCondition: cloak-force-disabled
 	AutoTarget:
 		InitialStance: HoldFire
 	Selectable:
@@ -717,6 +740,7 @@ CV:
 		TurnSpeed: 16
 		Speed: 31
 		Voice: Move
+		ImmovableCondition: drone-landing
 	WithIdleOverlay@SPINNER:
 		Sequence: spinner
 		Offset: 30,70,600
@@ -728,25 +752,19 @@ CV:
 		PauseOnCondition: empdisable || being-warped
 	CarrierMaster:
 		Actors: horn, horn, horn
-		RearmTicks: 150
+		RearmTicks: 75
 		RespawnTicks: 500
 		InstantRepair: true
 		SlaveDisposalOnKill: KillSlaves
 		SpawnAllAtOnce: true
 		RequiresCondition: !empdisable && !being-warped
+		BeingEnteredCondition: drone-landing
+		RearmAsGroup: true
 	WithSpawnerMasterPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
-	Exit@0:
-		SpawnOffset: 0,0,0
-		Facing: 0
-	Exit@1:
-		SpawnOffset: 0,0,0
-		Facing: 20
-	Exit@2:
-		SpawnOffset: 0,0,0
-		Facing: -20
+	Exit:
 	Armament:
 		Weapon: HornetLauncher
 		PauseOnCondition: under-bridge
@@ -813,6 +831,8 @@ SB:
 		DetectionTypes: Underwater
 		Range: 2c0
 	RenderDetectionCircle:
+		Color: 00ff0020
+		BorderColor: 00000020
 	Selectable:
 		DecorationBounds: 1536, 1536
 
@@ -867,5 +887,7 @@ SEAS:
 		DetectionTypes: Underwater
 		Range: 4c0
 	RenderDetectionCircle:
+		Color: 00ff0020
+		BorderColor: 00000020
 	Selectable:
 		DecorationBounds: 1536, 1536

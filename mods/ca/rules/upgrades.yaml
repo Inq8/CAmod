@@ -1,7 +1,5 @@
 ^Upgrade:
-	AlwaysVisible:
-	Interactable:
-	ScriptTriggers:
+	Inherits@DUMMY: ^InvisibleDummy
 	Buildable:
 		Queue: Upgrade
 		BuildLimit: 1
@@ -43,7 +41,7 @@ optprod1.upgrade:
 	TooltipExtras:
 		Strengths: + Reduced cost of additional infantry production by $500\n+ Reduced cost of additional vehicle production by $700\n+ Reduced cost of additional aircraft production by $150
 	Valued:
-		Cost: 500
+		Cost: 350
 	RenderSprites:
 		Image: optprod1.upgrade
 
@@ -58,7 +56,7 @@ optprod2.upgrade:
 	TooltipExtras:
 		Strengths: + Reduced cost of additional infantry production by $500\n+ Reduced cost of additional vehicle production by $700\n+ Reduced cost of additional aircraft production by $150
 	Valued:
-		Cost: 500
+		Cost: 350
 	RenderSprites:
 		Image: optprod2.upgrade
 
@@ -97,7 +95,7 @@ bombard.strat:
 		BuildPaletteOrder: 1
 		Prerequisites: ~player.gdi, anyradar, ~!seek.strat, ~!hold.strat, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Firepower focused strategy.
+		Description: Firepower focused strategy, required for:\n• Bombardier Upgrade\n• Hailstorm Missiles Upgrade\n\n
 	TooltipExtras:
 		Strengths: + Increases firepower and rate of fire of vehicles and aircraft by 3%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
@@ -132,7 +130,7 @@ seek.strat:
 		BuildPaletteOrder: 4
 		Prerequisites: ~player.gdi, anyradar, ~!bombard.strat, ~!hold.strat, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Speed and weapon range focused strategy.
+		Description: Speed and weapon range focused strategy, required for:\n• TOW Missile Upgrade\n• Hypersonic Missiles Upgrade\n\n
 	TooltipExtras:
 		Strengths: + Increases speed and weapon range of vehicles and aircraft by 5%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
@@ -167,7 +165,7 @@ hold.strat:
 		BuildPaletteOrder: 7
 		Prerequisites: ~player.gdi, anyradar, ~!bombard.strat, ~!seek.strat, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Defensive strategy.
+		Description: Defensive strategy, required for:\n• Point Defense Systems Upgrade\n• Hammerhead Missiles Upgrade\n\n
 	TooltipExtras:
 		Strengths: + Increases armor of vehicles and aircraft by 5%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
@@ -886,7 +884,7 @@ tflx.upgrade:
 		Prerequisites: ~player.germany, pdox, ~techlevel.high
 		Description: Upgrades Chrono Prisons granting them the ability to teleport\n  through time. Improves Chrono Tank chronoshifting.\n\nUpgrades: Chrono Prison\nUpgrades: Chrono Tank
 	TooltipExtras:
-		Strengths: + Add ability to teleport (Chrono Prison only)\n+ Increased teleport range (Chrono Tank only)\n+ Chrono Tank can teleport twice before recharging
+		Strengths: + Chrono Prison gains teleport ability\n+ Chrono Prison weapon range increased\n+ Chrono Tank teleport range increased\n+ Chrono Tank can teleport twice before recharging
 	Valued:
 		Cost: 1000
 	RenderSprites:

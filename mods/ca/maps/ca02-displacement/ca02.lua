@@ -44,8 +44,13 @@ MaxLosses = {
 	hard = 0
 }
 
+NavalReinforcementsDelay = {
+	easy = DateTime.Minutes(2),
+	normal = DateTime.Minutes(4),
+}
+
 TimeBetweenConvoys = {
-	easy = { DateTime.Minutes(3), DateTime.Minutes(8), DateTime.Seconds(210), DateTime.Seconds(270)  },
+	easy = { DateTime.Minutes(3), DateTime.Minutes(8), DateTime.Seconds(210), DateTime.Minutes(5)  },
 	normal = { DateTime.Minutes(2), DateTime.Minutes(7), DateTime.Seconds(165), DateTime.Minutes(4) },
 	hard = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Seconds(120), DateTime.Minutes(4) }
 }
@@ -184,6 +189,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerBarracks.CenterPosition
 
 	InitObjectives(Greece)
+	AdjustStartingCash()
 	InitScrin()
 
 	ObjectiveClearPath = Greece.AddObjective("Clear a path for inbound convoys.")
@@ -192,6 +198,29 @@ WorldLoaded = function()
 		ObjectiveProtectConvoys = Greece.AddObjective("Do not lose any convoy trucks.")
 	else
 		ObjectiveProtectConvoys = Greece.AddObjective("Do not lose more than " .. MaxLosses[Difficulty] .. " convoy trucks.")
+	end
+
+	if Difficulty ~= "hard" then
+		HardOnlyTripod1.Destroy()
+		HardOnlyShardLauncher1.Destroy()
+		HardOnlyShardLauncher2.Destroy()
+		HardOnlyStormColumn1.Destroy()
+		HardOnlyStormColumn2.Destroy()
+
+		if Difficulty == "easy" then
+			NonEasyStormColumn1.Destroy()
+			NonEasyStormColumn2.Destroy()
+			NonEasyStormColumn3.Destroy()
+			NonEasyCorrupter1.Destroy()
+		end
+
+		Trigger.AfterDelay(NavalReinforcementsDelay[Difficulty], function()
+			NavalReinforcements()
+		end)
+
+		Trigger.AfterDelay(DateTime.Minutes(1), function()
+			Tip("Resources in the vicinity are limited. Explore to find additional sources of income.")
+		end)
 	end
 
 	Trigger.AfterDelay(DateTime.Seconds(15), function()
@@ -292,6 +321,13 @@ InitConvoy = function()
 	Media.PlaySpeechNotification(Greece, "SignalFlare")
 	Beacon.New(Greece, nextConvoy.FlareWaypoint.CenterPosition)
 
+	if not FirstConvoyAnnounced then
+		FirstConvoyAnnounced = true
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(3)), function()
+			MediaCA.PlaySound("r_firstconvoy.aud", "1.5")
+		end)
+	end
+
 	-- Set the timer
 	TimerTicks = TimeBetweenConvoys[Difficulty][NextConvoyIdx]
 	UpdateConvoyCountdown()
@@ -334,6 +370,9 @@ InitConvoy = function()
 			end)
 
 			Trigger.OnRemovedFromWorld(truck, function(a)
+				if not truck.IsDead then
+					return
+				end
 				if CurrentConvoyArrivalComplete then
 					local numTrucks = #England.GetActorsByType("truk")
 					if numTrucks == 0 then
@@ -417,4 +456,14 @@ InitScrin = function()
 			end
 		end)
 	end)
+end
+
+NavalReinforcements = function()
+	if not NavalReinforcementsArrived then
+		NavalReinforcementsArrived = true
+		Media.PlaySpeechNotification(Greece, "ReinforcementsArrived")
+		Beacon.New(Greece, DestroyerSpawn1.CenterPosition)
+		Reinforcements.Reinforce(Greece, { "dd" }, { DestroyerSpawn1.Location, DestroyerRally1.Location })
+		Reinforcements.Reinforce(Greece, { "dd" }, { DestroyerSpawn2.Location, DestroyerRally2.Location })
+	end
 end

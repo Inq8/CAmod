@@ -470,7 +470,7 @@ GTNK.squad:
 		CloakDelay: 100
 		CloakSound: vmirat2a.aud
 		CloakedCondition: hidden
-		UncloakSound: appear1.aud
+		UncloakSound: appear1md.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Move, Damage, Heal
 		Palette: player
 		IsPlayerPalette: true
@@ -517,7 +517,8 @@ GTNK.squad:
 	-ActorLostNotification:
 	-SpawnActorOnDeath:
 	-Buildable:
-	-ChronoshiftableWithSpriteEffect:
+	-ChronoshiftableCA:
+	-HealthCapDamageMultiplier@CHRONO:
 
 3TNK:
 	Inherits: ^Tank
@@ -669,7 +670,7 @@ GTNK.squad:
 		Weapon: 125mmLasherAtomic
 		LocalOffset: 768,0,90
 	SpeedMultiplier:
-		Modifier: 120
+		Modifier: 125
 	GrantConditionOnMovement@LASHER:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		Condition: lasher-move
@@ -1152,7 +1153,8 @@ ARTY.TEMP:
 		RequiresCondition: !warpout
 	-ActorLostNotification:
 	-Buildable:
-	-ChronoshiftableWithSpriteEffect:
+	-ChronoshiftableCA:
+	-HealthCapDamageMultiplier@CHRONO:
 
 ISU:
 	Inherits: ^Tank
@@ -1297,7 +1299,7 @@ SPEC:
 		CloakDelay: 90
 		CloakSound: trans1.aud
 		CloakedCondition: hidden
-		UncloakSound: appear1.aud
+		UncloakSound: appear1md.aud
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
@@ -1321,6 +1323,7 @@ SAPC:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
+	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 255
@@ -1368,8 +1371,6 @@ SAPC:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
-	Targetable@DRIVERKILL:
-		RequiresCondition: !driver-dead && !cargo
 	Targetable@MINDCONTROL:
 		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
 	Cloak@NORMAL:
@@ -1377,7 +1378,7 @@ SAPC:
 		CloakDelay: 90
 		CloakSound: trans1.aud
 		CloakedCondition: hidden
-		UncloakSound: appear1.aud
+		UncloakSound: appear1md.aud
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
@@ -1681,7 +1682,8 @@ JEEP.TEMP:
 		RequiresCondition: !warpout
 	-ActorLostNotification:
 	-Buildable:
-	-ChronoshiftableWithSpriteEffect:
+	-ChronoshiftableCA:
+	-HealthCapDamageMultiplier@CHRONO:
 
 APC:
 	Inherits: ^Tank
@@ -1689,6 +1691,7 @@ APC:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
+	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
@@ -1739,8 +1742,6 @@ APC:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
-	Targetable@DRIVERKILL:
-		RequiresCondition: !driver-dead && !cargo
 	Targetable@MINDCONTROL:
 		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
 	UpgradeableTo:
@@ -1759,7 +1760,7 @@ RAPC:
 	Valued:
 		Cost: 800
 	Mobile:
-		Speed: 92
+		Speed: 82
 	RevealsShroud:
 		Range: 6c0
 	Tooltip:
@@ -1938,8 +1939,7 @@ MGG:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 380
 		Prerequisites: techcenter, ~vehicles.mgg, ~techlevel.high
-		BuildDurationModifier: 50
-		Description: Regenerates the shroud nearby, obscuring enemy vision.\n  Can channel the effect to reduce enemy weapon range\n  and create persisting areas that do the same.
+		Description: Regenerates the shroud nearby, obscuring enemy vision.\n  Can channel the effect to reduce enemy weapon range and vision.
 	TooltipExtras:
 		Attributes: • Special Ability: Toggle Gap Generator
 	Valued:
@@ -1984,28 +1984,17 @@ MGG:
 		Weapon: MobileGapBeam
 		LocalOffset: 0, 0, 200
 		MuzzleSequence: muzzle
-		PauseOnCondition: cooldown
-	Armament@SECONDARY:
-		Name: secondary
-		Weapon: MobileVeilSpawner
-		LocalOffset: 0, 0, 200
-		PauseOnCondition: charged < 7
-		ReloadingCondition: cooldown
 	WithMuzzleOverlay:
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
-	GrantConditionOnAttack@charge:
-		Condition: charged
-		IsCyclic: true
-		RevokeDelay: 25
-		MaximumInstances: 7
-		RevokeAll: true
 	Turreted:
 		Offset: -299,0,171
 
 MRJ:
 	Inherits: ^Vehicle
 	Inherits@AUTOTARGET: ^AutoTargetGround
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Vehicle, Ship, Defense
 	Valued:
 		Cost: 1000
 	Tooltip:
@@ -2016,11 +2005,10 @@ MRJ:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 360
 		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
-		BuildDurationModifier: 50
-		Description: Support vehicle that jams enemy radar and guided missiles.
+		Description: Support vehicle that can disrupt enemy targeting systems.
 	TooltipExtras:
 		Weaknesses: • Unarmed
-		Attributes: • Jams incoming guided missiles\n• Jams nearby enemy radar
+		Attributes: • Jamming fields reduce rate of fire and accuracy of enemy vehicles
 	Health:
 		HP: 22000
 	Armor:
@@ -2033,24 +2021,29 @@ MRJ:
 		Sequence: spinner
 		Offset: -256,0,256
 		PauseOnCondition: empdisable || being-warped
-	ProximityExternalCondition@JAMMER:
-		Range: 18c0
-		ValidRelationships: Enemy, Neutral
-		Condition: jammed
-	WithRangeCircle@JAMMER:
-		Type: jammer
-		Range: 18c0
-		Color: 0000FF80
-	JamsMissiles:
-		Range: 5c0
-		DeflectionRelationships: Neutral, Enemy
-		RequiresCondition: !empdisable
-	RenderJammerCircle:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
-	AttackOmni:
-	GuardsSelection:
-		RequiresCondition: !stance-attackanything
+	Armament:
+		Weapon: RadarJammer
+		LocalOffset: 0,0,0
+	AttackFrontalCharged:
+		ForceFireIgnoresActors: True
+		PauseOnCondition: empdisable || being-warped
+		FacingTolerance: 32
+		ChargeLevel: 125
+		DischargeRate: 5
+		ShotsPerCharge: 1
+		ShowSelectionBar: true
+		SelectionBarColor: ffffff
+		ChargingCondition: charging
+	AmbientSoundCA:
+		RequiresCondition: charging
+		SoundFiles: jammer.aud
+	WithIdleOverlay@JAMSIGNAL:
+		Sequence: jamsignal
+		RequiresCondition: charging
+		Offset: -256,0,256
+		IsDecoration: True
 
 MSG:
 	Inherits: ^Vehicle
@@ -2309,7 +2302,7 @@ DTRK:
 	-DamageMultiplier@IRONCURTAIN:
 	KillsSelf:
 		RequiresCondition: invulnerability || triggered || berserk
-	ChronoshiftableWithSpriteEffect:
+	ChronoshiftableCA:
 		ExplodeInstead: true
 	Passenger:
 		Voice: Move
@@ -2329,10 +2322,10 @@ CTNK:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 260
 		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
-		Description: Teleporting tank armed with anti-ground missiles.
+		Description: Teleporting tank armed with twin missile launchers.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses, Buildings
-		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
+		Weaknesses: • Weak vs Infantry
 		Attributes: • Special Ability: Teleport
 	Valued:
 		Cost: 1350
@@ -2364,11 +2357,13 @@ CTNK:
 	PortableChronoCA:
 		Charges: 1
 		ChargeDelay: 375
-		Cooldown: 25
+		Cooldown: 75
 		MaxDistance: 16
 		ResetRechargeOnUse: false
 		RequiresCondition: !empdisable && !being-warped
 		ShowSelectionBarWhenFull: false
+		ShowCooldownSelectionBar: true
+		RequireEmptyDestination: true
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -2417,7 +2412,7 @@ QTNK:
 	Mobile:
 		PauseOnCondition: deployed || being-captured || empdisable || being-warped || driver-dead || notmobile
 		Speed: 46
-	ChronoshiftableWithSpriteEffect:
+	ChronoshiftableCA:
 		RequiresCondition: !deployed && !being-captured && !being-warped
 	RevealsShroud:
 		MinRange: 4c0
@@ -2604,8 +2599,6 @@ HMMV.TOW:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor, Heavy Armor
 		Weaknesses: • Weak vs Defenses\n• Cannot attack Aircraft
-	Selectable:
-		Class: hmmv
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: TOW
@@ -2645,6 +2638,7 @@ GDRN:
 		TurnSpeed: 40
 		Speed: 126
 		Voice: Move
+		PauseOnCondition: empdisable || being-warped || notmobile
 	RevealsShroud:
 		MinRange: 5c0
 		Range: 7c0
@@ -2666,7 +2660,7 @@ GDRN:
 	Voiced:
 		VoiceSet: RobotTankVoice
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
@@ -2696,6 +2690,17 @@ GDRN:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 200
 		RequiresCondition: !mindcontrolled
+	-CaptureManager:
+	-Capturable:
+	-CaptureNotification:
+	-Capturable@DRIVER_DEAD:
+	-GrantConditionIfOwnerIsNeutral:
+	-ChangesHealth@DRIVER_DEAD:
+	-TooltipDescription@DRIVER_DEAD:
+	-Targetable@DRIVERKILL:
+	-Targetable@DRIVERKILLLOWHP:
+	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
+	-Targetable@AICAPTURE:
 
 GDRN.TOW:
 	Inherits: GDRN
@@ -2709,8 +2714,6 @@ GDRN.TOW:
 		Name: TOW Guardian Drone
 	Mobile:
 		Speed: 118
-	Selectable:
-		Class: gdrn
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: TOW
@@ -2783,6 +2786,7 @@ APC2:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
+	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	RenderSprites:
 		FactionImages:
@@ -2841,8 +2845,6 @@ APC2:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
-	Targetable@DRIVERKILL:
-		RequiresCondition: !driver-dead && !cargo
 	Targetable@MINDCONTROL:
 		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
 	Selectable:
@@ -2899,6 +2901,7 @@ VULC:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
+	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Buildable:
@@ -3011,12 +3014,8 @@ VULC:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
-	Targetable@DRIVERKILL:
-		RequiresCondition: !driver-dead && !cargo
 	Targetable@MINDCONTROL:
 		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
-	Selectable:
-		Class: apc
 
 VULC.AI:
 	Inherits: VULC
@@ -3263,7 +3262,7 @@ MTNK.Drone:
 	Voiced:
 		VoiceSet: DroneVoice
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
 	ChangesHealth:
 		PercentageStep: 1
 		Delay: 25
@@ -3358,7 +3357,7 @@ MDRN:
 		Voice: Attack
 	WithSpriteTurret:
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
 	-WithDamageOverlay:
 	-CaptureManager:
 	-Capturable:
@@ -3435,7 +3434,8 @@ MDRN.Attached:
 	-MindControllableProgressBar@HACKABLE:
 	-WithDecoration@HACKED:
 	-WithDecoration@RESTORING:
-	-ChronoshiftableWithSpriteEffect:
+	-ChronoshiftableCA:
+	-HealthCapDamageMultiplier@CHRONO:
 
 HTNK:
 	Inherits: ^TankTD
@@ -3619,7 +3619,7 @@ HTNK.Drone:
 	Voiced:
 		VoiceSet: DroneVoice
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
 	ChangesHealth:
 		StartIfBelow: 100
 		RequiresCondition: !mdrn-attached
@@ -3909,7 +3909,7 @@ STNK.Nod:
 		CloakDelay: 76
 		CloakSound: trans1.aud
 		CloakedCondition: hidden
-		UncloakSound: appear1.aud
+		UncloakSound: appear1md.aud
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
@@ -4053,7 +4053,7 @@ FTNK:
 		IconPalette: chrometd
 		Description: Tank armed with dual short-range flamethrowers.
 	TooltipExtras:
-		Strengths: • Strong vs Infantry, Buildings, Light Armor, Defenses
+		Strengths: • Strong vs Infantry, Buildings, Light Armor
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
 	Mobile:
 		Speed: 76
@@ -4104,8 +4104,8 @@ HFTK:
 		Prerequisites: anyradar, ~vehicles.blackh, ~techlevel.medium
 		Description: Heavy tank armed with dual short-range flamethrowers.
 	TooltipExtras:
-		Strengths: • Strong vs Infantry, Buildings, Light Armor, Defenses
-		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
+		Strengths: • Strong vs Infantry, Buildings, Light Armor
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
 	Valued:
 		Cost: 1000
 	Tooltip:
@@ -4174,7 +4174,7 @@ HFTK:
 		InitialSoundLength: 24
 	GrantConditionOnAttackCA:
 		Condition: attacking
-		RevokeDelay: 3
+		RevokeDelay: 10
 	WithShadow:
 		RequiresCondition: parachute
 	GrantConditionOnPrerequisite@UPG:
@@ -4283,6 +4283,7 @@ BTR:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
+	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Buildable:
@@ -4343,8 +4344,6 @@ BTR:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
-	Targetable@DRIVERKILL:
-		RequiresCondition: !driver-dead && !cargo
 
 BTR.AI:
 	Inherits: BTR
@@ -4361,6 +4360,7 @@ IFV:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
+	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
@@ -4726,7 +4726,7 @@ IFV:
 			smedi: medturr
 			mast: commturr
 			yuri: commturr
-			feed: ivanturr
+			brst: ivanturr
 			dog: nochange
 			ivan: ivanturr
 			bh: flamturr
@@ -4782,8 +4782,6 @@ IFV:
 		RequiresCondition: !being-warped && !full
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !full
-	Targetable@DRIVERKILL:
-		RequiresCondition: !driver-dead && !full
 	Targetable@MINDCONTROL:
 		RequiresCondition: !full && !mindcontrolled && !hacked && !restoring
 	AutoTarget:
@@ -5542,7 +5540,7 @@ RTNK:
 		CloakDelay: 100
 		CloakSound: vmirat2a.aud
 		CloakedCondition: hidden
-		UncloakSound: appear1.aud
+		UncloakSound: appear1md.aud
 		UncloakOn: Attack, Dock, Move, Damage, Heal
 		Palette: player
 		IsPlayerPalette: true
@@ -5764,7 +5762,8 @@ TNKD.TEMP:
 	-ActorLostNotification:
 	-SpawnActorOnDeath:
 	-Buildable:
-	-ChronoshiftableWithSpriteEffect:
+	-ChronoshiftableCA:
+	-HealthCapDamageMultiplier@CHRONO:
 
 MSAR:
 	Inherits: ^VehicleTD
@@ -5784,7 +5783,6 @@ MSAR:
 		BuildPaletteOrder: 370
 		IconPalette: chrometd
 		Prerequisites: anyradar, ~vehicles.msar, ~techlevel.medium
-		BuildDurationModifier: 50
 		Description: When deployed, detects enemy vehicles,\n  aircraft and structures within a large radius.
 	TooltipExtras:
 		Weaknesses: • Unarmed
@@ -5986,7 +5984,7 @@ WTNK:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 92
+		Speed: 82
 		Voice: Move
 	Passenger:
 		Voice: Move
@@ -6043,6 +6041,7 @@ BATF:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
+	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@SHRAPNEL: ^ThrowsShrapnel
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
@@ -6058,7 +6057,7 @@ BATF:
 	Tooltip:
 		Name: Battle Fortress
 	Health:
-		HP: 115000
+		HP: 120000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -6174,8 +6173,6 @@ BATF:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
-	Targetable@DRIVERKILL:
-		RequiresCondition: !driver-dead && !cargo
 	Targetable@MINDCONTROL:
 		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
 	SpawnActorOnDeath:
@@ -6272,7 +6269,7 @@ MEMP:
 		AmmoPool: explosion
 		Delay: 450
 		Count: 1
-	ChronoshiftableWithSpriteEffect:
+	ChronoshiftableCA:
 		RequiresCondition: !being-warped && !triggered
 	RevealsShroud:
 		MinRange: 4c0
@@ -6291,7 +6288,7 @@ MEMP:
 		Offset: 0, 0, 0
 		Sequence: emp-overlay
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
 	WithRangeCircle:
 		Color: 0000FF80
 		Range: 5c0
@@ -6390,7 +6387,7 @@ CDRN:
 		RequiresCondition: triggered && ammo
 		AmmoPoolName: explosion
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, DriverKillImmune, MindControlImmune
+		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
 	Voiced:
 		VoiceSet: ChaosDroneVoice
 	-CaptureManager:
@@ -6524,6 +6521,9 @@ CHPR:
 		Bots: brutal, vhard, hard, normal, easy, naval
 	WithIdleOverlay@MINDCONTROL:
 		Offset: -200,0,768
+	RangeMultiplier@TEMPORALFLUX:
+		RequiresCondition: tflx-upgrade
+		Modifier: 130
 
 CRYO:
 	Inherits: ^TankTD

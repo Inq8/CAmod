@@ -59,30 +59,20 @@ S4:
 	Mobile:
 		Speed: 46
 
-FEED2:
+BRST2:
 	Inherits: S1
 	RenderSprites:
-		Image: feed
+		Image: brst
 	ConvertsDamageToHealth:
-		DamagePercentConverted: 300
-	WithInfantryBody:
-		DefaultAttackSequence: harvest
+		DamagePercentConverted: 225
 	Armament@PRIMARY:
 		Weapon: LeecherBeam
 		LocalOffset: 150,0,200
 		-MuzzleSequence:
 	-Armament@BATF:
-	QuantizeFacingsFromSequence:
-		Sequence: idle
-	WithInfantryBody:
-		MoveSequence: move
-		StandSequences: idle
-	WithInfantryBody@Warped:
-		MoveSequence: move
-		StandSequences: idle
 	Explodes:
-		Weapon: FeederExplode
-		EmptyWeapon: FeederExplode
+		Weapon: BursterExplode
+		EmptyWeapon: BursterExplode
 
 GSCR:
 	Armor:
@@ -130,9 +120,9 @@ LCHR:
 		Speed: 53
 		TurnSpeed: 16
 	ConvertsDamageToHealth:
-		DamagePercentConverted: 300
+		DamagePercentConverted: 225
 
-camera.minirift:
+RiftMinor:
 	KillsSelf:
 		Delay: 875
 

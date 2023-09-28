@@ -29,7 +29,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (!teleporters.Any())
 				throw new YamlException("TeleportNetworkManager without TeleportNetwork actors.");
 			if (!teleporters.Any(a => a.TraitInfo<TeleportNetworkInfo>().Type == Type))
-				throw new YamlException("Can't find a TeleportNetwork with Type '{0}'".F(Type));
+				throw new YamlException($"Can't find a TeleportNetwork with Type '{Type}'");
 		}
 
 		public override object Create(ActorInitializer init) { return new TeleportNetworkManager(this); }

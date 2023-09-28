@@ -1,8 +1,9 @@
 ^ExistsInWorld:
 	AppearsOnRadar:
 	CombatDebugOverlay:
-	GivesExperience:
+	GivesExperienceCA:
 		PlayerExperienceModifier: 1
+		ActorExperienceOnDamage: true
 	ScriptTriggers:
 	RenderDebugState:
 
@@ -57,6 +58,12 @@
 			yellow: pip-yellow
 			red: pip-red
 			blue: pip-blue
+
+# for upgrades, proxy powers, stolen tech, spawners etc
+^InvisibleDummy:
+	AlwaysVisible:
+	Interactable:
+	ScriptTriggers:
 
 ^PrimaryBuilding:
 	PrimaryBuilding:
@@ -223,9 +230,9 @@
 	GainsExperience:
 		LevelUpNotification: LevelUp
 		Conditions:
-			200: rank-veteran
-			400: rank-veteran
-			800: rank-veteran
+			300: rank-veteran
+			600: rank-veteran
+			900: rank-veteran
 	GrantCondition@RANK-ELITE:
 		RequiresCondition: rank-veteran >= 3
 		Condition: rank-elite
@@ -237,7 +244,7 @@
 		Modifier: 90
 	DamageMultiplier@RANK-ELITE:
 		RequiresCondition: rank-elite
-		Modifier: 85
+		Modifier: 75
 	FirepowerMultiplier@RANK-1:
 		RequiresCondition: rank-veteran == 1
 		Modifier: 105
@@ -246,7 +253,7 @@
 		Modifier: 110
 	FirepowerMultiplier@RANK-ELITE:
 		RequiresCondition: rank-elite
-		Modifier: 125
+		Modifier: 130
 	ReloadDelayMultiplier@RANK-1:
 		RequiresCondition: rank-veteran == 1
 		Modifier: 95
@@ -267,25 +274,79 @@
 		Sequence: rank-veteran-1
 		Palette: effect
 		Position: BottomRight
-		Margin: 5, 6
+		Margin: 5, 2
 		ValidRelationships: Ally, Enemy
-		RequiresCondition: rank-veteran == 1
+		RequiresCondition: rank-veteran == 1 && !player-nod && !player-scrin
 	WithDecoration@RANK-2:
 		Image: rank
 		Sequence: rank-veteran-2
 		Palette: effect
 		Position: BottomRight
-		Margin: 5, 6
+		Margin: 5, 2
 		ValidRelationships: Ally, Enemy
-		RequiresCondition: rank-veteran == 2
+		RequiresCondition: rank-veteran == 2 && !player-nod && !player-scrin
 	WithDecoration@RANK-ELITE:
 		Image: rank
 		Sequence: rank-elite
 		Palette: effect
 		Position: BottomRight
-		Margin: 5, 6
+		Margin: 5, 2
 		ValidRelationships: Ally, Enemy
-		RequiresCondition: rank-elite
+		RequiresCondition: rank-elite && !player-nod && !player-scrin
+	WithDecoration@NODRANK-1:
+		Image: rank
+		Sequence: rank-veteran-1-nod
+		Palette: effect
+		Position: BottomRight
+		Margin: 5, 2
+		ValidRelationships: Ally, Enemy
+		RequiresCondition: rank-veteran == 1 && player-nod
+	WithDecoration@NODRANK-2:
+		Image: rank
+		Sequence: rank-veteran-2-nod
+		Palette: effect
+		Position: BottomRight
+		Margin: 5, 2
+		ValidRelationships: Ally, Enemy
+		RequiresCondition: rank-veteran == 2 && player-nod
+	WithDecoration@NODRANK-ELITE:
+		Image: rank
+		Sequence: rank-elite-nod
+		Palette: effect
+		Position: BottomRight
+		Margin: 5, 2
+		ValidRelationships: Ally, Enemy
+		RequiresCondition: rank-elite && player-nod
+	WithDecoration@SCRINRANK-1:
+		Image: rank
+		Sequence: rank-veteran-1-scrin
+		Palette: scrineffect
+		Position: BottomRight
+		Margin: 5, 2
+		ValidRelationships: Ally, Enemy
+		RequiresCondition: rank-veteran == 1 && player-scrin
+	WithDecoration@SCRINRANK-2:
+		Image: rank
+		Sequence: rank-veteran-2-scrin
+		Palette: scrineffect
+		Position: BottomRight
+		Margin: 5, 2
+		ValidRelationships: Ally, Enemy
+		RequiresCondition: rank-veteran == 2 && player-scrin
+	WithDecoration@SCRINRANK-ELITE:
+		Image: rank
+		Sequence: rank-elite-scrin
+		Palette: scrineffect
+		Position: BottomRight
+		Margin: 5, 2
+		ValidRelationships: Ally, Enemy
+		RequiresCondition: rank-elite && player-scrin
+	GrantConditionOnPrerequisite@NODRANK:
+		Condition: player-nod
+		Prerequisites: player.nod
+	GrantConditionOnPrerequisite@SCRINRANK:
+		Condition: player-scrin
+		Prerequisites: player.scrin
 
 ^Berserk:
 	SpeedMultiplier@BERSERK:
@@ -347,6 +408,25 @@
 	WithIdleOverlay@FRENZY:
 		Sequence: infantry
 
+^Chronoshiftable:
+	ChronoshiftableCA:
+		Image: chrono
+		InitialWarpFromSequence: warpin
+		ReturnWarpFromSequence: warpin
+		ReturnWarpToSequence: warpout
+		RequiresCondition: !being-warped
+		Palette: ra2effect-ignore-lighting-alpha75
+		ReturnToAvoidDeath: true
+		Condition: chronoshifted
+	HealthCapDamageMultiplier@CHRONO:
+		MaxHealthEquivalent: 47000
+		RequiresCondition: chronoshifted
+
+^NoUnloadWhenChronoshifted:
+	RejectsOrders@NOUNLOADCHRONO:
+		Reject: Unload
+		RequiresCondition: chronoshifted
+
 ^Warpable:
 	Warpable:
 		Condition: being-warped
@@ -355,9 +435,12 @@
 		DamageTypes: ChronoDeath
 		ScaleWithCurrentHealthPercentage: true
 		ShowSelectionBar: true
-		SelectionBarColor: 40FFFF
+		SelectionBarColor: b6f4ff
 	Targetable@TEMPORAL:
 		TargetTypes: Temporal
+	TimedConditionBar@TEMPORAL:
+		Color: b6f4ff
+		Condition: being-warped
 	WithPalettedOverlay@TEMPORALl:
 		RequiresCondition: being-warped
 		Palette: temporal
@@ -386,7 +469,7 @@
 ^TemporalReinforcement:
 	GrantTimedCondition@TEMPINC:
 		Condition: warpin
-		Duration: 750
+		Duration: 1000
 	KillsSelf@TEMPINC:
 		GrantsCondition: warpout
 		RequiresCondition: !warpin
@@ -441,43 +524,21 @@
 		Palette: scrin
 		RequiresCondition: atomized
 		IsDecoration: True
-	FirepowerMultiplier@ATOMIZED:
+	SpeedMultiplier@ATOMIZED:
 		RequiresCondition: atomized
-		Modifier: 75
-	ChangesHealthVersus@ATOMIZED1:
-		RequiresCondition: atomized == 1
-		Step: -400
-		Delay: 10
-		Versus:
-			None: 0
-			Wood: 0
-			Concrete: 90
-			Light: 70
-			Heavy: 100
-	ChangesHealthVersus@ATOMIZED2:
-		RequiresCondition: atomized == 2
-		Step: -800
-		Delay: 10
-		Versus:
-			None: 0
-			Wood: 0
-			Concrete: 90
-			Light: 65
-			Heavy: 100
-	ChangesHealthVersus@ATOMIZED3:
+		Modifier: 85
+	PeriodicExplosion@ATOMIZED:
+		Weapon: AtomizedEcho
+		RequiresCondition: atomized
+		InitialDelay: 50
+	PeriodicExplosion@ATOMIZED2:
+		Weapon: AtomizedEcho
+		RequiresCondition: atomized >= 2
+		InitialDelay: 50
+	PeriodicExplosion@ATOMIZED3:
+		Weapon: AtomizedEcho
 		RequiresCondition: atomized >= 3
-		Step: -1200
-		Delay: 10
-		Versus:
-			None: 0
-			Wood: 0
-			Concrete: 90
-			Light: 65
-			Heavy: 100
-	Explodes@ATOMIZED:
-		Weapon: AtomizeSpreadInit
-		EmptyWeapon: AtomizeSpreadInit
-		RequiresCondition: atomized
+		InitialDelay: 50
 
 ^IonSurgable:
 	TimedConditionBar@IONSURGE:
@@ -580,10 +641,10 @@
 		RequiresCondition: bombard
 		Modifier: 97
 	ReloadDelayMultiplier@BOMBARD2:
-		RequiresCondition: bombard
+		RequiresCondition: bombard2
 		Modifier: 97
 	ReloadDelayMultiplier@BOMBARD3:
-		RequiresCondition: bombard
+		RequiresCondition: bombard3
 		Modifier: 97
 	RangeMultiplier@SEEK:
 		RequiresCondition: seek
@@ -1055,7 +1116,7 @@
 ^NaniteRepair:
 	ChangesHealth@NREPAIR:
 		PercentageStep: 3
-		Delay: 30
+		Delay: 25
 		StartIfBelow: 100
 		DamageCooldown: 0
 		RequiresCondition: nrepair
@@ -1128,7 +1189,7 @@
 		CancelActivity: true
 	ChangesHealth@DRIVER_DEAD:
 		PercentageStep: -1
-		Delay: 30
+		Delay: 50
 		StartIfBelow: 101
 		DamageCooldown: 0
 		RequiresCondition: driver-dead
@@ -1190,8 +1251,8 @@
 		CloakDelay: 25
 		IsPlayerPalette: false
 		Palette: cloakgreen
-		CloakSound: cloak5.aud
-		UncloakSound: appear1.aud
+		CloakSound: cloak5md.aud
+		UncloakSound: appear1md.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish
 	DamageMultiplier@TIBSTEALTH:
 		Modifier: 90
@@ -1205,8 +1266,8 @@
 		CloakDelay: 150
 		IsPlayerPalette: false
 		Palette: cloak
-		CloakSound: cloak5.aud
-		UncloakSound: appear1.aud
+		CloakSound: cloak5md.aud
+		UncloakSound: appear1md.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Damage, Heal
 	ExternalCondition@SGENCLOAK:
 		Condition: sgencloak
@@ -1219,7 +1280,7 @@
 		InitialDelay: 90
 		CloakDelay: 90
 		CloakSound: trans1.aud
-		UncloakSound: appear1.aud
+		UncloakSound: appear1md.aud
 		Palette: cloak
 		IsPlayerPalette: false
 		RequiresCondition: (crate-cloak) && !(cloak-force-disabled || invisibility)
@@ -1346,6 +1407,9 @@
 	RangeMultiplier@GAPVEILED:
 		Modifier: 60
 		RequiresCondition: gapveiled
+	RevealsShroudMultiplier@GAPVEILED:
+		Modifier: 80
+		RequiresCondition: gapveiled
 	ExternalCondition@VEILED:
 		Condition: veiled
 	ExternalCondition@GAPVEILED:
@@ -1361,6 +1425,21 @@
 	Inherits: ^Veilable
 	WithIdleOverlay@VEILED:
 		Sequence: infantry
+
+^WeaponJammable:
+	ReloadDelayMultiplier@WEAPJAMMED:
+		RequiresCondition: weapjammed
+		Modifier: 120
+	FirepowerMultiplier@WEAPJAMMED:
+		RequiresCondition: weapjammed
+		Modifier: 90
+	ExternalCondition@WEAPJAMMED:
+		Condition: weapjammed
+	WithIdleOverlay@WEAPJAMMED:
+		Sequence: idle
+		Image: jamdebuff
+		RequiresCondition: weapjammed
+		IsDecoration: True
 
 ^C4Plantable:
 	DelayedWeaponAttachable@C4:
@@ -1454,7 +1533,6 @@
 			hack: hacked
 		RevokingConditions:
 			hack: restoring
-	GivesExperienceToMaster:
 
 ^MindControllable:
 	Inherits: ^MindControllableBase
@@ -1705,6 +1783,7 @@
 	Inherits@17: ^Concussion
 	Inherits@18: ^Suppressable
 	Inherits@19: ^CrateCloak
+	Inherits@20: ^WeaponJammable
 	Inherits@C4: ^C4Plantable
 	Inherits@TNT: ^TNTPlantable
 	Inherits@gflash: ^GreenFlash
@@ -1713,6 +1792,7 @@
 	Inherits@bounty: ^GlobalBounty
 	Inherits@production: ^ProductionEfficiencyBoost
 	Inherits@selection: ^SelectableCombatUnit
+	Inherits@chrono: ^Chronoshiftable
 	Inherits@mind: ^MindControllable
 	Inherits@handicaps: ^PlayerHandicaps
 	Inherits@irrad: ^Irradiatable
@@ -1741,13 +1821,6 @@
 		ValidDamageStates: Light, Medium, Heavy, Critical
 	Repairable:
 		RepairActors: fix, rep, srep
-	ChronoshiftableWithSpriteEffect:
-		Image: chrono
-		WarpInSequence: warpin
-		WarpOutSequence: warpout
-		RequiresCondition: !being-warped
-		Palette: ra2effect-ignore-lighting-alpha75
-		ReturnToAvoidDeath: true
 	Passenger:
 		CargoType: Vehicle
 	AttackMove:
@@ -2118,6 +2191,12 @@
 	WithIdleOverlay@LCHRHEAL:
 		Sequence: infantry
 		Offset: 0,0,300
+	Cloak@TIBSTEALTH:
+		CloakSound: cloak5sm.aud
+		UncloakSound: appear1sm.aud
+	Cloak@SGENCLOAK:
+		CloakSound: cloak5sm.aud
+		UncloakSound: appear1sm.aud
 
 ^Soldier:
 	Inherits: ^Infantry
@@ -2209,6 +2288,8 @@
 	-DamageTypeDamageMultiplier@FLAKARMOR:
 	-DamageTypeDamageMultiplier@FLAKARMORMINOR:
 	-GrantConditionOnPrerequisite@FLAKARMOR:
+	WithDecoration@BINO:
+		-BlinkPatterns:
 
 ^CivInfantry:
 	Inherits: ^Infantry
@@ -2284,12 +2365,15 @@
 	Inherits@16: ^Concussion
 	Inherits@17: ^Suppressable
 	Inherits@18: ^CrateCloak
+	Inherits@19: ^WeaponJammable
+	Inherits@slowable: ^Slowable
 	Inherits@gflash: ^GreenFlash
 	Inherits@rflash: ^RedFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@production: ^ProductionEfficiencyBoost
+	Inherits@chrono: ^Chronoshiftable
 	Inherits@mind: ^MindControllable
 	Inherits@handicaps: ^PlayerHandicaps
 	Inherits@atomize: ^Atomizable
@@ -2320,11 +2404,6 @@
 	ActorLostNotification:
 		Notification: NavalUnitLost
 		TextNotification: Naval unit lost.
-	ChronoshiftableWithSpriteEffect:
-		Image: chrono
-		WarpInSequence: warpin
-		WarpOutSequence: warpout
-		Palette: ra2effect-ignore-lighting-alpha75
 	RepairableNear:
 		RepairActors: syrd, spen, syrd.gdi, spen.nod
 	WithDamageOverlay:
@@ -2419,6 +2498,8 @@
 		DetectionTypes: Underwater
 		Range: 4c0
 	RenderDetectionCircle:
+		Color: 00ff0020
+		BorderColor: 00000020
 	Explodes:
 		Weapon: UnitExplodeSubmarine
 		EmptyWeapon: UnitExplodeSubmarine
@@ -2432,6 +2513,9 @@
 	-ExternalCondition@MINIDRONE:
 	-AttachableTo:
 	-AttachOnTransform@MINIDRONE:
+	WithColoredSelectionBox@INVIS:
+		RequiresCondition: invisibility || underwater
+		ColorSource: Player
 
 ^NeutralPlane:
 	Inherits@1: ^ExistsInWorld
@@ -2443,7 +2527,7 @@
 	OwnerLostAction:
 		Action: Kill
 	Armor:
-		Type: Light
+		Type: Aircraft
 	UpdatesPlayerStatistics:
 	AppearsOnRadar:
 		UseLocation: true
@@ -2670,7 +2754,7 @@
 		EmptyWeapon: BuildingExplode
 	CaptureNotification:
 		TextNotification: Structure captured.
-		LoseNotification: StructureLost
+		LoseNotification: OurBuildingCaptured
 		LoseTextNotification: Structure lost (captured).
 	ShakeOnDeath:
 	Guardable:
@@ -2689,6 +2773,8 @@
 		Condition: flare
 	WithDecoration@tnt:
 		Sequence: tntbig
+	GivesExperienceCA:
+		ActorExperienceModifier: 5000
 
 ^Building:
 	Inherits@1: ^BasicBuilding
@@ -2716,7 +2802,7 @@
 		PlayerExperience: 5
 		RepairingNotification: Repairing
 		RequiresCondition: !being-warped
-	EngineerRepairable:
+	InstantlyRepairable:
 	AcceptsDeliveredCash:
 	WithMakeAnimation:
 		Condition: build-incomplete
@@ -2769,6 +2855,12 @@
 		RequiresCondition: !invulnerability && !forceshield
 	DelayedWeaponAttachable@TNT:
 		RequiresCondition: !invulnerability && !forceshield
+	Cloak@TIBSTEALTH:
+		CloakSound: cloak5.aud
+		UncloakSound: appear1.aud
+	Cloak@SGENCLOAK:
+		CloakSound: cloak5.aud
+		UncloakSound: appear1.aud
 
 ^BuildingTD:
 	Inherits@1: ^Building
@@ -2794,6 +2886,7 @@
 	Inherits@selection: ^SelectableCombatBuilding
 	Inherits@mind: ^MindControllable
 	Inherits@veilable: ^Veilable
+	Inherits@weapjammable: ^WeaponJammable
 	Inherits@atomize: ^Atomizable
 	-SpeedMultiplier@concussion:
 	WithPalettedOverlay@IRONCURTAIN:
@@ -2862,6 +2955,8 @@
 		RequiresCondition: !invulnerability
 	RequiresBuildableArea:
 		AreaTypes: building, defense
+	GivesExperienceCA:
+		ActorExperienceModifier: 10000
 
 ^DefenseTD:
 	Inherits@1: ^Defense
@@ -2915,7 +3010,7 @@
 		Types: wall
 	Targetable:
 		TargetTypes: Ground, DetonateAttack, Wall, NoAutoTarget
-	-GivesExperience:
+	-GivesExperienceCA:
 	WithWallSpriteBody:
 	Sellable:
 		SellSounds: cashturn.aud
@@ -3202,6 +3297,7 @@
 
 ^Husk:
 	Inherits: ^BasicHusk
+	Inherits@chrono: ^Chronoshiftable
 	Husk:
 		AllowedTerrain: Clear, Rough, Road, Ore, Gems, Beach, Tiberium, BlueTiberium
 	WithIdleOverlay@Burns:
@@ -3225,7 +3321,7 @@
 	CapturableProgressBar:
 	CapturableProgressBlink:
 	GivesCashOnCapture:
-		Amount: 100
+		Amount: 200
 	GrantConditionOnCapture:
 		Condition: salvaged
 	KillsSelf:
@@ -3236,11 +3332,6 @@
 	Targetable:
 		TargetTypes: Ground, Husk, NoAutoTarget
 		RequiresForceFire: true
-	ChronoshiftableWithSpriteEffect:
-		Image: chrono
-		WarpInSequence: warpin
-		WarpOutSequence: warpout
-		Palette: ra2effect-ignore-lighting-alpha75
 	Tooltip:
 		GenericName: Destroyed Vehicle
 	Explodes:
@@ -3251,6 +3342,11 @@
 		CrushClasses: wall
 		CrushSound: destw.aud
 		CrushedByFriendlies: True
+	ChronoshiftableCA:
+		ReturnToAvoidDeath: false
+		-RequiresCondition:
+		-Condition:
+	-HealthCapDamageMultiplier@CHRONO:
 
 ^HuskTD:
 	Inherits: ^Husk
@@ -3447,6 +3543,7 @@
 	Inherits: ^SpriteActor
 	Interactable:
 		Bounds: 1024, 1024
+	ScriptTriggers:
 	WithSpriteBody:
 	HiddenUnderFog:
 	Mine:
@@ -3711,7 +3808,7 @@
 	Inherits@1: ^ExistsInWorld
 	Inherits@4: ^SpriteActor
 	Armor:
-		Type: Light
+		Type: Aircraft
 	BallisticMissile:
 		LaunchAngle: 128
 		Speed: 110
@@ -3870,8 +3967,6 @@
 		RequiresCondition: global-multiqueue
 	GrantExternalConditionToProduced:
 		Condition: produced
-	Targetable@INF:
-		TargetTypes: InfantryProducer
 	ProductionCostMultiplier@MQS1:
 		Multiplier: 300
 		Prerequisites: infantry.any, global.multiqueuescaled, !optprod1.upgrade, !optprod2.upgrade
@@ -3891,7 +3986,21 @@
 		ProductionType: InfantrySQ
 	ProductionBar@MQINF:
 		ProductionType: CyborgMQ
-	-Targetable@INF:
+	-ProductionCostMultiplier@MQS1:
+	-ProductionCostMultiplier@MQS2:
+
+^ProducesDogs:
+	Inherits: ^ProducesInfantry
+	ProductionQueue@MQINF:
+		Type: DogMQ
+	Production@SQINF:
+		Produces: InfantrySQ, Dog
+	Production@MQINF:
+		Produces: DogMQ, Dog
+	ProductionBar@SQINF:
+		ProductionType: InfantrySQ
+	ProductionBar@MQINF:
+		ProductionType: DogMQ
 	-ProductionCostMultiplier@MQS1:
 	-ProductionCostMultiplier@MQS2:
 

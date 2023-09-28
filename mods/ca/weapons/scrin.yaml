@@ -98,7 +98,7 @@ GunWalkerZap:
 			None: 100
 			Wood: 10
 			Concrete: 10
-			Light: 32
+			Light: 35
 			Heavy: 10
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
@@ -157,6 +157,7 @@ PlasmaDiscs:
 	ReloadDelay: 75
 	Burst: 5
 	BurstDelays: 4
+	ValidTargets: Ground, Water, Underwater
 	Projectile: Missile
 		Image: plasdiscsm
 		TrailImage: smokey
@@ -168,13 +169,13 @@ PlasmaDiscs:
 		HorizontalRateOfTurn: 30
 		RangeLimit: 6c512
 		LockOnProbability: 50
-		LockOnInaccuracy: 0
 		MinimumLaunchAngle: 80
 		MaximumLaunchAngle: 112
 		VerticalRateOfTurn: 60
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
 		Damage: 2200
+		ValidTargets: Ground, Water, Underwater
 		Versus:
 			None: 30
 			Wood: 55
@@ -201,7 +202,7 @@ IntruderDiscs:
 	Warhead@1Dam: SpreadDamage
 		Damage: 2850
 		Versus:
-			None: 25
+			None: 15
 			Wood: 100
 			Light: 65
 			Heavy: 90
@@ -335,6 +336,9 @@ DevourerLaser:
 		Damage: 1100
 		Versus:
 			None: 20
+	Warhead@antiShip: SpreadDamage
+		ValidTargets: Water
+		Damage: 750
 
 DevourerLaserCharged:
 	Inherits: DevourerLaser
@@ -387,13 +391,16 @@ RiftCannon:
 			Light: 120
 			Heavy: 120
 		DamageTypes: BulletDeath
+	Warhead@antiShip: SpreadDamage
+		ValidTargets: Water
+		Damage: 4400
 	Warhead@prone: SpreadDamage
 		Spread: 512
 		Falloff: 100, 100, 0
 		Damage: 1
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@Spawn: SpawnActor
-		Actors: camera.minirift
+		Actors: riftminor
 		Range: 1
 		ForceGround: false
 		ValidTargets: Ground, Water, Rift, Trees
@@ -437,12 +444,12 @@ MiniRift:
 		Range: 1c0
 		Duration: 10
 		Condition: slowed
-		ValidTargets: Vehicle, Cyborg
+		ValidTargets: Vehicle, Ship, Cyborg
 	Warhead@4Slow: GrantExternalCondition
 		Range: 2c0
 		Duration: 10
 		Condition: slowed
-		ValidTargets: Vehicle
+		ValidTargets: Vehicle, Ship
 		ValidRelationships: Enemy, Neutral
 
 CorrupterSpew:
@@ -558,7 +565,7 @@ RuinerCannonCharged:
 
 TripodLaser:
 	Inherits: ^ScrinPlasmaBeam
-	Range: 6c0
+	Range: 5c768
 	Report: tripod-fire1.aud, tripod-fire2.aud, tripod-fire3.aud
 	ReloadDelay: 65
 	Projectile: PlasmaBeam
@@ -572,9 +579,9 @@ TripodLaser:
 		Spread: 341
 		Damage: 900
 		Versus:
-			None: 95
+			None: 85
 			Light: 70
-			Wood: 70
+			Wood: 65
 			Heavy: 105
 			Concrete: 60
 
@@ -629,7 +636,6 @@ StormriderZap:
 	ReloadDelay: 70
 	Burst: 5
 	BurstDelays: 4
-	ValidTargets: Ground, Water, Underwater
 	Projectile: Bullet
 		Image: scrinzapdown
 		Inaccuracy: 42
@@ -637,7 +643,6 @@ StormriderZap:
 		Palette: scrin
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
-		ValidTargets: Ground, Water, Underwater
 		Spread: 256
 		Damage: 4800
 		Versus:
@@ -647,11 +652,6 @@ StormriderZap:
 			Light: 55
 			Heavy: 40
 			Brick: 20
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath, AirToGround
-	Warhead@2Dam: SpreadDamage
-		ValidTargets: Water
-		Spread: 128
-		Damage: 1000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, AirToGround
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
@@ -692,7 +692,6 @@ StormRiderZapAA:
 		Falloff: 100, 50, 14, 0
 		ValidTargets: AirSmall
 		ValidRelationships: Enemy, Neutral
-	-Warhead@2Dam:
 	-Warhead@2Smu:
 
 EnervatorBolts:
@@ -709,10 +708,9 @@ EnervatorBolts:
 		ContrailLength: 20
 		ContrailStartColor: FF00FF77
 		ContrailStartColorAlpha: 119
-		ContrailWidth: 32
+		ContrailStartWidth: 32
 		Jammable: true
 		LockOnProbability: 100
-		LockOnInaccuracy: 64
 		RangeLimit: 8c0
 		TrailImage: smokey
 		TrailPalette: scrinplasma
@@ -768,9 +766,7 @@ EnervatorBoltsAA:
 		ValidTargets: Air, AirSmall
 
 InvaderLauncher:
-	ReloadDelay: 10
-	Burst: 4
-	BurstDelays: 5
+	ReloadDelay: 5
 	Range: 10c0
 	ValidTargets: Air, AirSmall, Ground, Water
 	Projectile: InstantHit
@@ -797,8 +793,9 @@ InvaderZap:
 		Palette: scrin
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
-		Spread: 341
+		Spread: 448
 		Damage: 850
+		InvalidTargets: Infantry
 		Versus:
 			None: 65
 			Wood: 10
@@ -806,6 +803,11 @@ InvaderZap:
 			Light: 85
 			Heavy: 100
 			Brick: 20
+		DamageTypes: FireDeath, AirToGround
+	Warhead@2Dam: SpreadDamage
+		Spread: 128
+		ValidTargets: Infantry
+		Damage: 850
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, AirToGround
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
@@ -825,7 +827,7 @@ InvaderZapAA:
 		Speed: 1c768
 	ValidTargets: Air, AirSmall
 	Warhead@1Dam: SpreadDamage
-		Damage: 200
+		Damage: 235
 		Range: 0, 0c64, 0c256, 1c0
 		Falloff: 100, 100, 30, 15
 		ValidTargets: Air
@@ -836,8 +838,9 @@ InvaderZapAA:
 			Wood: 100
 			None: 100
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	-Warhead@2Dam:
 	Warhead@smallDamage: SpreadDamage
-		Damage: 220
+		Damage: 235
 		Spread: 341
 		Falloff: 100, 50, 14, 0
 		ValidTargets: AirSmall
@@ -1010,7 +1013,7 @@ ShardLauncher:
 	Projectile: Missile
 		Speed: 366
 		Palette: scrin
-		ContrailWidth: 0c48
+		ContrailStartWidth: 0c48
 		ContrailLength: 12
 		ContrailStartColor: 00FF00AA
 		ContrailStartColorAlpha: 170
@@ -1079,6 +1082,7 @@ ShardWalkerShards:
 		ContrailStartColorAlpha: 102
 		MinimumLaunchAngle: 80
 		MaximumLaunchAngle: 112
+		Inaccuracy: 0
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
 		Damage: 2600
@@ -1113,16 +1117,18 @@ LaceratorShards:
 	Range: 5c0
 	StartBurstReport: lacerator-fire1.aud, lacerator-fire2.aud
 	ReloadDelay: 100
+	ValidTargets: Ground, Water, Underwater
 	Projectile: Missile
 		Image: bshard
 		ContrailLength: 9
-		ContrailWidth: 0c32
+		ContrailStartWidth: 0c32
 		ContrailStartColor: 4455FFAA
 		ContrailStartColorAlpha: 170
 		Jammable: true
 	Warhead@1Dam: SpreadDamage
 		Damage: 2900
 		Spread: 128
+		ValidTargets: Ground, Water, Underwater
 		Versus:
 			None: 15
 			Wood: 55
@@ -1138,7 +1144,7 @@ RiftInit:
 	Projectile: InstantExplode
 	ReloadDelay: 1
 	Warhead@Spawn: SpawnActor
-		Actors: camera.rift
+		Actors: rift
 		Range: 1
 		ForceGround: false
 		ValidTargets: Ground, Water, Trees
@@ -1263,7 +1269,7 @@ IonSurgeSpawner:
 	ReloadDelay: 1
 	Projectile: InstantExplode
 	Warhead@Spawn: SpawnActor
-		Actors: ion.surge
+		Actors: ionsurge
 		Range: 1
 		ForceGround: false
 		ValidTargets: Ground, Water, Trees
@@ -1346,7 +1352,7 @@ MothershipDiscs:
 	MinRange: 1c0
 	ReloadDelay: 50
 	Burst: 3
-	BurstDelays: 8
+	BurstDelays: 7
 	InvalidTargets: Structure
 	Projectile: Bullet
 		Image: plasmatorp1
@@ -1390,7 +1396,7 @@ LeecherBeam:
 		DamageTypes: Prone50Percent, TriggerProne, AtomizedDeath, FlakVestMitigatedMinor
 		Versus:
 			None: 100
-			Light: 45
+			Light: 50
 			Wood: 65
 			Heavy: 15
 			Concrete: 15
@@ -1427,6 +1433,64 @@ LeecherOrbHeal:
 			Heavy: 100
 		ValidRelationships: Ally
 
+LeecherOrbHealInit:
+	ReloadDelay: 1500
+	Warhead@1Dam: SpreadDamage
+		Damage: -5000
+
+GreaterCoalescenceSpawner:
+	ReloadDelay: 1
+	Projectile: InstantExplode
+	Warhead@1Dum: Dummy
+	Warhead@Spawn: SpawnActor
+		Actors: grcl
+		Range: 1
+		ForceGround: false
+		ValidTargets: Ground, Water, Trees
+
+GreaterCoalescence:
+	ReloadDelay: 5
+	Warhead@1Dam: Dummy
+	Warhead@heal: SpreadDamage
+		Range: 0, 3c768
+		Falloff: 100, 100
+		Damage: -450
+		ValidTargets: Heal, Repair
+		Versus:
+			None: 50
+			Light: 75
+			Heavy: 100
+		ValidRelationships: Ally
+	Warhead@zaps: FireShrapnel
+		Weapon: GreaterCoalescenceZap
+		Amount: 3
+		AimChance: 100
+		AllowDirectHit: true
+		ThrowWithoutTarget: false
+		AimTargetStances: Enemy, Neutral
+
+GreaterCoalescenceZap:
+	Inherits: LeecherBeam
+	Range: 3c768
+	ValidTargets: Infantry, Vehicle, Structure, Ship
+	Projectile: PlasmaBeam
+		Duration: 6
+		Inaccuracy: 0
+		Colors: ee000006
+	Warhead@1Dam: SpreadDamage
+		Spread: 160
+		Damage: 150
+		Versus:
+			None: 100
+			Light: 100
+			Wood: 50
+			Heavy: 100
+			Concrete: 50
+		DamageTypes: TriggerProne, AtomizedDeath
+	Warhead@3Eff: CreateEffect
+		Image: leechhit
+		Inaccuracy: 128
+
 AtomizerBolts:
 	Report: atomizer-fire1.aud
 	ReloadDelay: 150
@@ -1439,19 +1503,18 @@ AtomizerBolts:
 		Palette: scrin
 		Inaccuracy: 128
 		Jammable: true
-		LockOnProbability: 100
-		LockOnInaccuracy: 64
 		RangeLimit: 12c0
 		CruiseAltitude: 1c512
 		TrailImage: atmzbolttrail
 		TrailPalette: scrin
 		TrailInterval: 1
 	Warhead@1Dam: SpreadDamage
-		Spread: 448
-		Damage: 8000
+		Spread: 512
+		Falloff: 100, 85, 60, 25, 0
+		Damage: 5000
 		ValidTargets: Ground, Water
 		Versus:
-			None: 30
+			None: 15
 			Wood: 30
 			Light: 65
 			Heavy: 100
@@ -1459,7 +1522,7 @@ AtomizerBolts:
 		DamageTypes: Prone50Percent, AtomizedDeath
 	Warhead@atomize: GrantExternalCondition
 		Range: 0c768
-		Duration: 150
+		Duration: 155
 		Condition: atomized
 		ValidTargets: Vehicle, Ship, Defense
 		ValidRelationships: Enemy, Neutral
@@ -1474,13 +1537,27 @@ AtomizerBolts:
 		Condition: redhighlight
 		ValidTargets: Vehicle, Ship, Defense
 
+AtomizedEcho:
+	Inherits: AtomizerBolts
+	ReloadDelay: 50
+	Report: atomizer-echo1.aud
+	-Projectile:
+	Projectile: InstantHit
+	-Warhead@atomize:
+	Warhead@1Dam: SpreadDamage
+		Damage: 3000
+		AffectsParent: true
+		ValidTargets: Vehicle, Ship, Defense, Air, AirSmall
+	Warhead@3Eff: CreateEffect
+		ValidTargets: Vehicle, Ship, Defense, Air, AirSmall
+		-ImpactSounds:
+
 AtomizerBoltsAA:
 	Inherits: AtomizerBolts
 	ValidTargets: Air, AirSmall
 	Projectile: Missile
 		Speed: 225
 	Warhead@1Dam: SpreadDamage
-		Damage: 5000
 		ValidTargets: Air, AirSmall
 		Versus:
 			None: 100
@@ -1515,13 +1592,13 @@ AtomizeSpread:
 		ValidTargets: Vehicle, Ship, Defense, Air
 		ValidRelationships: Ally
 
-FeederTargeting:
+BursterTargeting:
 	ValidTargets: Vehicle, Infantry, Structure
 	Range: 1c512
 	Projectile: InstantHit
 	Warhead@1Dam: TargetDamage
 
-FeederExplode:
+BursterExplode:
 	ValidTargets: Ground, Water
 	Warhead@1Dam: SpreadDamage
 		Damage: 12000
@@ -1548,27 +1625,6 @@ FeederExplode:
 		Delay: 1
 	Warhead@4Eff: CreateEffect
 		Explosions: artillery_explosion
-
-FeederExplodeFull:
-	Inherits: FeederExplode
-	Warhead@1Dam: SpreadDamage
-		Damage: 18000
-		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
-	Warhead@SDam: SpreadDamage
-		Damage: 6750
-	Warhead@3Eff: CreateEffect
-		Explosions: large_chem
-		ExplosionPalette: tdeffect-ignore-lighting-alpha85
-	Warhead@18Radio: CreateTintedCells
-		Level: 300
-		Falloff: 100, 55, 32, 5
-		LayerName: radioactivity.weak
-	Warhead@Shrap: FireShrapnel
-		Weapon: ChemDebris
-		Amount: 7
-		AimChance: 0
-		ValidTargets: Ground, Water, Infantry, Vehicle
-		ThrowWithoutTarget: true
 
 MindSparkSpawnerMaster:
 	ReloadDelay: 100

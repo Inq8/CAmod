@@ -6,7 +6,8 @@
    or (at your option) any later version. For more information, see COPYING.
 ]]
 
-Difficulty = Map.LobbyOption("difficulty")
+Difficulty = Map.LobbyOptionOrDefault("difficulty", "normal")
+GameSpeed = UtilsCA.GameSpeed()
 
 StructureBuildTimeMultipliers = {
 	easy = 3,
@@ -24,6 +25,12 @@ HarvesterDeathDelayTime = {
 	easy = DateTime.Seconds(60),
 	normal = DateTime.Seconds(40),
 	hard = DateTime.Seconds(20),
+}
+
+CashAdjustments = {
+	easy = 3500,
+	normal = 0,
+	hard = -1500
 }
 
 CapturedCreditsAmount = 1250
@@ -1008,6 +1015,78 @@ SetupReveals = function(revealPoints, cameraType)
 			end
 		end)
 	end)
+end
+
+AdjustStartingCash = function(player)
+	if player == nil then
+		player = MissionPlayer
+	end
+
+	player.Cash = player.Cash + CashAdjustments[Difficulty]
+end
+
+AdjustTimeForGameSpeed = function(ticks)
+	if (GameSpeed == "default") then
+		return ticks
+	end
+
+	if (GameSpeed == "fastest") then
+		return ticks * 2
+	end
+
+	if (GameSpeed == "faster") then
+		return ticks * 1.33
+	end
+
+	if (GameSpeed == "fast") then
+		return ticks * 1.14
+	end
+
+	if (GameSpeed == "slower") then
+		return ticks * 0.8
+	end
+
+	if (GameSpeed == "slowest") then
+		return ticks * 0.5
+	end
+
+	return ticks
+end
+
+PanToPos = function(targetPos, speed)
+	local cameraPos = Camera.Position
+	local newX = cameraPos.X
+	local newY = cameraPos.Y
+
+	if newX < targetPos.X then
+		if newX + speed > targetPos.X then
+			newX = targetPos.X
+		else
+			newX = newX + speed
+		end
+	elseif newX > targetPos.X then
+		if newX - speed < targetPos.X then
+			newX = targetPos.X
+		else
+			newX = newX - speed
+		end
+	end
+
+	if newY < targetPos.Y then
+		if newY + speed > targetPos.Y then
+			newY = targetPos.Y
+		else
+			newY = newY + speed
+		end
+	elseif newY > targetPos.Y then
+		if newY - speed < targetPos.Y then
+			newY = targetPos.Y
+		else
+			newY = newY - speed
+		end
+	end
+
+	Camera.Position = WPos.New(newX, newY, 0)
 end
 
 -- Filters

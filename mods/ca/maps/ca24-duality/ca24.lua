@@ -34,6 +34,7 @@ WorldLoaded = function()
 			Trigger.RemoveProximityTrigger(id)
 			Tanya.Owner = GDI
 			GDI.MarkCompletedObjective(ObjectiveFindTanya)
+			MediaCA.PlaySound("c_tanya.aud", "2")
 		end
 	end)
 
@@ -158,6 +159,7 @@ end
 ActivateProdigy = function()
 	if not Prodigy.IsDead then
 		Notification("We're tracking a powerful Scrin unit. Do not engage!")
+		MediaCA.PlaySound("c_powerfulscrin.aud", "2")
 		Prodigy.GrantCondition("activated")
 		Beacon.New(GDI, Prodigy.CenterPosition)
 
@@ -215,7 +217,7 @@ ScrinReinforcements = function()
 
 	Utils.Do(wormholes, function(wormhole)
 		local units = { }
-		local possibleUnits = { "s1", "s1", "s3", "gscr", "feed2", "s2", "s4" }
+		local possibleUnits = { "s1", "s1", "s3", "gscr", "brst2", "s2", "s4" }
 		for i=1, 4 do
 			table.insert(units, Utils.Random(possibleUnits))
 		end

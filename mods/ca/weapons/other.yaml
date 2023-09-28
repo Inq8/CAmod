@@ -297,10 +297,10 @@ HeavyFlameTankFlamer:
 	Inherits: BigFlamerTD
 	-Report:
 	ReloadDelay: 80
-	Burst: 30
+	Burst: 25
 	BurstDelays: 2
 	Warhead@1Dam: SpreadDamage
-		Damage: 155
+		Damage: 175
 		Versus:
 			None: 230
 	Warhead@2Smu: LeaveSmudge
@@ -314,7 +314,7 @@ HeavyFlameTankFlamer.UPG:
 		Image: flameallblack
 		Palette: scrin-ignore-lighting-alpha85
 	Warhead@1Dam: SpreadDamage
-		Damage: 160
+		Damage: 180
 		Versus:
 			Light: 100
 			Heavy: 70
@@ -520,11 +520,13 @@ TTankZap.UPG:
 		Amount: 1
 		AimChance: 100
 		ThrowWithoutTarget: false
+		AimTargetStances: Enemy, Neutral
 
 TTankArc:
 	Inherits: TTankZap
 	-Report:
 	Range: 2c512
+	ValidTargets: Infantry, Vehicle, Defense
 	Warhead@1Dam: SpreadDamage
 		ValidRelationships: Enemy, Neutral
 		ValidTargets: Infantry, Vehicle, Defense
@@ -763,7 +765,7 @@ Ivanbomb:
 		ContrailStartColor: FF9900
 		ContrailStartColorAlpha: 192
 		ContrailEndColor: FF0000
-		ContrailWidth: 0c40
+		ContrailStartWidth: 0c40
 	Warhead@AttachDelayedWeapon: AttachDelayedWeapon
 		Weapon: TNT
 		Type: tnt
@@ -1510,7 +1512,7 @@ KirovNukeBomb:
 KirovChaosBomb:
 	Inherits: KirovBomb
 	Warhead@Cloud1: SpawnActor
-		Actors: chaos.cloud1, chaos.cloud2
+		Actors: chaoscloud, chaoscloud2
 		Range: 5
 		ValidTargets: Ground, Water, Trees
 	Warhead@3Eff: CreateEffect
@@ -1652,10 +1654,15 @@ GapBeam:
 		TrackTarget: true
 	Warhead@1Dum: Dummy
 	Warhead@Debuff: GrantExternalCondition
-		Range: 0c512
+		Range: 1c512
 		Duration: 15
 		Condition: gapveiled
 		ValidRelationships: Enemy, Neutral
+	Warhead@2Eff: CreateEffect
+		Image: gap
+		Explosions: muzzle
+		ValidTargets: Ground, Ship, Trees
+		Inaccuracy: 128
 	Warhead@3Eff: CreateEffect
 		Explosions: veilcloudsm, veilcloudsmf
 		ExplosionPalette: effect-ignore-lighting-alpha40
@@ -1665,21 +1672,17 @@ MobileGapBeam:
 	Inherits: GapBeam
 	Range: 7c0
 
-VeilSpawner:
-	Range: 8c0
-	ReloadDelay: 75
-	Report: gapshot.aud
+RadarJammer:
+	ReloadDelay: 125
+	Report: jammed.aud
+	Range: 10c0
 	Projectile: InstantHit
 	Warhead@1Dum: Dummy
 	Warhead@2Spawn: SpawnActor
-		Actors: veil.minor
+		Actors: jamming.field
 		Range: 1
 		ForceGround: false
-		ValidTargets: Ground, Water, Veil, Trees
-
-MobileVeilSpawner:
-	Inherits: VeilSpawner
-	Range: 7c0
+		ValidTargets: Ground, Water, JammingField, Trees
 
 VeilSmall:
 	ReloadDelay: 10
@@ -1727,7 +1730,7 @@ Railgun:
 	ReloadDelay: 70
 	Range: 8c0
 	Report: railuse5.aud
-	InvalidTargets: Air
+	InvalidTargets: Air, Submarine
 	Projectile: Railgun
 		Duration: 10
 		Blockable: true
@@ -1742,9 +1745,9 @@ Railgun:
 	Warhead@1Dam: SpreadDamage
 		Spread: 0c64
 		Falloff: 100, 37, 14, 5, 0
-		Damage: 9000
+		Damage: 9500
 		ValidRelationships: Ally, Neutral, Enemy
-		InvalidTargets: Air
+		InvalidTargets: Air, Submarine
 		Versus:
 			None: 100
 			Wood: 65
@@ -1978,8 +1981,8 @@ MicrowaveZap.UPG:
 	Inherits: MicrowaveZap
 	Warhead@3: ChangeOwnerToNeutral
 		ValidTargets: DriverKill
-		InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air, DriverKillImmune
-		ValidRelationships: Enemy
+		InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air
+		CargoEffect: Kill
 		Range: 0c511
 	Warhead@emp: GrantExternalCondition
 		Range: 1c0
@@ -1993,9 +1996,7 @@ MicrowaveZap.UPG:
 		ValidTargets: Vehicle
 
 HornetLauncher:
-	ReloadDelay: 175
-	Burst: 5
-	BurstDelays: 15
+	ReloadDelay: 15
 	Range: 25c0
 	ValidTargets: Ground, Water
 	Projectile: InstantHit
@@ -2029,7 +2030,7 @@ V3Launcher:
 			Brick: 0
 
 ICBMLauncher:
-	ReloadDelay: 300
+	ReloadDelay: 250
 	Range: 25c0
 	MinRange: 10c0
 	Report: nukemisl.aud
@@ -2453,8 +2454,8 @@ DisruptorPulse:
 		Damage: 2000
 		Versus:
 			None: 100
-			Wood: 25
-			Light: 25
+			Wood: 28
+			Light: 28
 			Heavy: 15
 			Concrete: 35
 	Warhead@friendlyFire: SpreadDamage
@@ -2462,8 +2463,8 @@ DisruptorPulse:
 		Damage: 660
 		Versus:
 			None: 100
-			Wood: 25
-			Light: 25
+			Wood: 28
+			Light: 28
 			Heavy: 15
 			Concrete: 35
 		ValidRelationships: Ally
@@ -2505,7 +2506,7 @@ JDAM:
 	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
 		Damage: 5200
-		Falloff: 1000, 368, 135, 50, 0
+		Falloff: 1000, 448, 192, 50, 0
 		ValidTargets: Ground, Water
 		Versus:
 			None: 0

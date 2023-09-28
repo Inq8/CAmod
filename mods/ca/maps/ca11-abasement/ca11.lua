@@ -175,6 +175,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(USSR)
+	AdjustStartingCash()
 	InitScrin()
 	InitNod()
 	SetupLightning()
@@ -379,6 +380,7 @@ FlipNorthBase = function()
 		AutoRebuildBuilding(turret3, Nod)
 	end)
 
+	MediaCA.PlaySound("r2_northernnodbasesecured.aud", "2")
 	BaseFlipNotification()
 end
 
@@ -417,6 +419,7 @@ FlipSouthBase = function()
 		AutoRebuildBuilding(turret5, Nod)
 	end)
 
+	MediaCA.PlaySound("r2_southernnodbasesecured.aud", "2")
 	BaseFlipNotification()
 end
 
@@ -425,6 +428,7 @@ SignalTransmitterDiscovered = function()
 		IsSignalTransmitterDiscovered = true
 		Beacon.New(USSR, SignalTransmitter.CenterPosition)
 		Notification("Signal Transmitter located.")
+		MediaCA.PlaySound("r2_signaltransmitterlocated.aud", "2")
 		local autoCamera = Actor.Create("smallcamera", true, { Owner = USSR, Location = SignalTransmitterLocation })
 		Trigger.AfterDelay(DateTime.Seconds(5), autoCamera.Destroy)
 	end

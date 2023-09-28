@@ -178,6 +178,24 @@ WorldLoaded = function()
 
 	ObjectiveEliminateNod = GDI.AddObjective("Eliminate all Nod forces.")
 
+	Trigger.AfterDelay(DateTime.Seconds(1), function()
+		local mainAmbushers = Map.ActorsInBox(MainAmbushTopLeft.CenterPosition, MainAmbushBottomRight.CenterPosition, function(a)
+			return a.Owner == Nod and not a.IsDead and a.HasProperty("Hunt")
+		end)
+
+		local secondaryAmbushers = Map.ActorsInBox(SecondaryAmbushTopLeft.CenterPosition, SecondaryAmbushBottomRight.CenterPosition, function(a)
+			return a.Owner == Nod and not a.IsDead and a.HasProperty("Hunt")
+		end)
+
+		Utils.Do(mainAmbushers, function(a)
+			a.Hunt()
+		end)
+
+		Utils.Do(secondaryAmbushers, function(a)
+			a.Hunt()
+		end)
+	end)
+
 	Trigger.AfterDelay(HoldOutTime[Difficulty] - DateTime.Seconds(20), function()
 		local mcvFlare = Actor.Create("flare", true, { Owner = GDI, Location = McvRally.Location })
 		Media.PlaySpeechNotification(GDI, "SignalFlare")
@@ -193,7 +211,7 @@ WorldLoaded = function()
 		Notification("Reinforcements have arrived.")
 		Reinforcements.Reinforce(GDI, { "hmmv", "mtnk", "amcv", "mtnk" }, { McvSpawn.Location, McvRally.Location }, 75)
 		Beacon.New(GDI, McvRally.CenterPosition)
-		GDI.Cash = 5000
+		GDI.Cash = 5000 + CashAdjustments[Difficulty]
 	end)
 
 	Trigger.OnKilled(Church1, function(self, killer)
@@ -221,8 +239,9 @@ WorldLoaded = function()
 	end)
 
 	Trigger.AfterDelay(DateTime.Minutes(22), function()
-		Notification("Commander, we've equipped our recon drones with stealth detection. This should help you locate the Nod bases in the area.")
 		Actor.Create("recondronedetection", true, { Owner = GDI })
+		Notification("Recon Drones are now equipped with stealth detection. This should help you locate the Nod bases in the area.")
+		MediaCA.PlaySound("c_recondrones", "2")
 	end)
 end
 

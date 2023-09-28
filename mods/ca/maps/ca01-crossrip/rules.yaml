@@ -6,7 +6,7 @@ World:
 	LuaScript:
 		Scripts: campaign.lua, ca01.lua
 	MissionData:
-		Briefing: There have been reports of unusual energy readings emanating from a Soviet facility in the area.\n\nEstablish a base and investigate.\n\nIf the Soviets put up strong resistance then they must be hiding something of importance, in which case you are authorized to launch a full scale attack.\n\nUnfortunately we can't commit our most advanced equipment or aircraft until we've assessed if there is a significant threat.
+		Briefing: Strange and inexplicable occurrences continue to leave our best scientists dumbfounded.\n\nWe have detected unusual energy readings emanating from a Soviet facility in the area, and there may be a connection.\n\nEstablish a base and investigate.\n\nIf the Soviets put up strong resistance then they must be hiding something of importance, in which case you are authorized to launch a full scale attack.\n\nUnfortunately we can't commit our most advanced equipment or aircraft until we've assessed if there is a significant threat.
 		WinVideo: crontest.vqa
 		LossVideo: battle.vqa
 	MapOptions:
@@ -25,7 +25,33 @@ World:
 
 Player:
 	PlayerResources:
-		DefaultCash: 5000
+		DefaultCash: 6500
+
+^Infantry:
+	ActorLostNotification:
+		RequiresCondition: !unit-lost-notification-silenced
+	GrantConditionOnPrerequisite@UNITLOSTSILENCED:
+		Condition: unit-lost-notification-silenced
+		Prerequisites: unitlostsilencer
+
+^VEHICLE-NOUPG:
+	ActorLostNotification:
+		RequiresCondition: !unit-lost-notification-silenced
+	GrantConditionOnPrerequisite@UNITLOSTSILENCED:
+		Condition: unit-lost-notification-silenced
+		Prerequisites: unitlostsilencer
+
+BRUT.Mutating:
+	ActorLostNotification:
+		RequiresCondition: !unit-lost-notification-silenced
+
+GSCR.Mutating:
+	ActorLostNotification:
+		RequiresCondition: !unit-lost-notification-silenced
+
+UNITLOSTSILENCER:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesPrerequisite:
 
 E7:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -78,7 +104,7 @@ ATEK:
 
 PDOX:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
-	-ChronoshiftPower@chronoshift:
+	-ChronoshiftPowerCA@chronoshift:
 	-DetonateWeaponPower@ChronoAI:
 	-GrantExternalConditionPowerCA@TimeWarp:
 	Power:
@@ -166,11 +192,6 @@ TSLA:
 WORMHOLE:
 	-PopControlled:
 	-Targetable:
-
-V01:
-	-SpawnRandomActorOnDeath@1:
-	-SpawnRandomActorOnDeath@2:
-	-SpawnRandomActorOnDeath@3:
 
 HALO.paradrop:
 	Health:

@@ -62,16 +62,17 @@ FLAK-23-AG:
 		Speed: 682
 		Image: FLAKBALL
 		Blockable: True
-		Inaccuracy: 0c682
+		Inaccuracy: 341
 	Warhead@1Dam: SpreadDamage
 		ValidRelationships: Enemy, Neutral, Ally
 		-Range:
+		Damage: 1750
 		Spread: 0c128
 		Falloff: 100, 37, 14, 5, 0
 		Versus:
 			None: 100
 			Wood: 10
-			Light: 60
+			Light: 75
 			Heavy: 10
 			Concrete: 10
 			Brick: 20
@@ -80,6 +81,7 @@ FLAK-23-AG:
 	Warhead@2Eff: CreateEffect
 		Explosions: flak_explosion_ground
 		ValidTargets: Ground, Ship, Trees
+		Inaccuracy: 341
 	Warhead@3EffWater: CreateEffect
 		Explosions: small_splash
 		ImpactSounds: splashm1.aud, splashm2.aud, splashm3.aud
@@ -101,13 +103,14 @@ FLAK-SEAS-AG:
 	Report: vflaat1a.aud, vflaat1b.aud
 	Projectile: Bullet
 		LaunchAngle: 82
+		Speed: 768
 	Warhead@1Dam: SpreadDamage
 		Damage: 2200
 		Versus:
 			None: 150
 			Wood: 60
-			Light: 35
-			Heavy: 25
+			Light: 40
+			Heavy: 30
 			Concrete: 20
 
 Gatt:
@@ -403,29 +406,30 @@ ChainGun.Yak.AA:
 
 ChainGun.P51.R:
 	Inherits: ^HeavyMG
-	Burst: 10
-	Range: 6c0
+	Burst: 9
+	Range: 7c0
 	ReloadDelay: 80
 	BurstDelays: 2
 	-Report:
 	StartBurstReport: gun13ext.aud
-	FirstBurstTargetOffset: -512,213,0
-	FollowingBurstTargetOffset: 478,0,0
+	FirstBurstTargetOffset: -1792,213,0
+	FollowingBurstTargetOffset: 448,0,0
 	MinRange: 1c0
 	Projectile: Bullet
 		Blockable: false
 	Warhead@1Dam: SpreadDamage
-		Damage: 2800
+		Spread: 341
+		Damage: 3000
 		Versus:
 			None: 200
-			Wood: 15
+			Wood: 10
 			Light: 80
 			Heavy: 25
 			Concrete: 25
 
 ChainGun.P51.L:
 	Inherits: ChainGun.P51.R
-	FirstBurstTargetOffset: -512,-213,0
+	FirstBurstTargetOffset: -1792,-213,0
 
 Pistol:
 	Inherits: ^LightMG
@@ -499,7 +503,7 @@ M1CarbineBATF:
 	ReloadDelay: 10
 	Range: 6c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 600
+		Damage: 650
 		Versus:
 			None: 100
 			Wood: 15
@@ -526,7 +530,7 @@ M60mg:
 	Burst: 5
 	Warhead@1Dam: SpreadDamage
 		Versus:
-			Light: 60
+			Light: 75
 	Warhead@2Eff: CreateEffect
 		Explosions: piffs
 		Inaccuracy: 0
@@ -806,16 +810,13 @@ SNIPER.vehicle:
 SNIPER.vehicleElite:
 	Inherits: SNIPER.vehicle
 	Report: ijarwe2a.aud
-	Warhead@1Dam: SpreadDamage
-		InvalidTargets: DriverKillLow
-	Warhead@3Eff: CreateEffect
-		InvalidTargets: DriverKillLow
 	Warhead@Concussion: GrantExternalCondition
 		InvalidTargets: DriverKillLow
 	Warhead@DriverKill: ChangeOwnerToNeutral
 		ValidTargets: DriverKillLow
-		InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air, AirSmall, DriverKillImmune
+		InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air, AirSmall
 		ValidRelationships: Enemy
+		CargoEffect: Block
 		Range: 0c511
 	Warhead@highlight: GrantExternalCondition
 		Range: 0c511

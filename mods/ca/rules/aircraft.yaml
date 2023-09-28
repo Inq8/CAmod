@@ -44,7 +44,7 @@ BADR:
 		Type: CenterPosition
 		RequiresCondition: enable-smoke
 	RejectsOrders:
-	GivesExperience:
+	GivesExperienceCA:
 		Experience: 1000
 	Interactable:
 	GrantConditionOnDamageState@SmokeTrail:
@@ -103,7 +103,7 @@ BADR.Bomber:
 	RejectsOrders:
 	RenderSprites:
 		Image: badr
-	GivesExperience:
+	GivesExperienceCA:
 		Experience: 1000
 	Interactable:
 	GrantConditionOnDamageState@SmokeTrail:
@@ -183,7 +183,7 @@ B2B:
 		RequiresCondition: enable-smoke
 	-MapEditorData:
 	RejectsOrders:
-	GivesExperience:
+	GivesExperienceCA:
 		Experience: 1000
 	Interactable:
 	Cloak@NORMAL:
@@ -575,7 +575,7 @@ P51:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 28000
+		HP: 34000
 	RevealsShroud@GAPGEN:
 		Range: 9c0
 		Type: GroundPosition
@@ -609,7 +609,7 @@ P51:
 		CruiseAltitude: 2560
 		InitialFacing: 192
 		TurnSpeed: 16
-		Speed: 180
+		Speed: 216
 		RepulsionSpeed: 40
 		MaximumPitch: 56
 	WithMuzzleOverlay:
@@ -635,7 +635,7 @@ P51:
 		Offset: -98,623,30
 	-Selectable:
 	Interactable:
-	GivesExperience:
+	GivesExperienceCA:
 		Experience: 1000
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
@@ -756,7 +756,7 @@ TRAN.paradrop:
 		RequiresCondition: cruising
 	RejectsOrders:
 	Interactable:
-	GivesExperience:
+	GivesExperienceCA:
 		Experience: 1000
 	-Huntable:
 	-Buildable:
@@ -812,7 +812,7 @@ HALO.paradrop:
 		Repulsable: False
 	Hovers@CRUISING:
 		RequiresCondition: cruising
-	GivesExperience:
+	GivesExperienceCA:
 		Experience: 1000
 	RejectsOrders:
 	Interactable:
@@ -990,7 +990,7 @@ NHAW.paradrop:
 		RequiresCondition: cruising
 	RejectsOrders:
 	Interactable:
-	GivesExperience:
+	GivesExperienceCA:
 		Experience: 1000
 	Cargo:
 		-LoadedCondition:
@@ -1311,7 +1311,7 @@ SMIG:
 	Tooltip:
 		Name: Supersonic Bomber
 	Armor:
-		Type: Heavy
+		Type: Aircraft
 	Aircraft:
 		CruiseAltitude: 2260
 		TurnSpeed: 12
@@ -1382,13 +1382,13 @@ A10:
 		BuildPaletteOrder: 80
 		Prerequisites: afld.gdi, ~aircraft.gdi, ~!sidewinders.upgrade, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Attack aircraft with incendiary bombs.
+		Description: Attack aircraft armed with incendiary bombs.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
 		RequiresCondition: !sidewinders-upgrade
 	TooltipExtras@UPG:
-		Description: Attack aircraft with incendiary bombs\n  and air-to-air missiles.
+		Description: Attack aircraft armed with incendiary bombs\n  and air-to-air missiles.
 		Strengths: • Strong vs Buildings, Infantry, Light Armor, Aircraft
 		Weaknesses: • Weak vs Heavy Armor, Defenses
 		RequiresCondition: sidewinders-upgrade
@@ -1638,7 +1638,7 @@ A10.bomber:
 		Type: CenterPosition
 		RequiresCondition: enable-smoke
 	Interactable:
-	GivesExperience:
+	GivesExperienceCA:
 		Experience: 1000
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
@@ -1653,7 +1653,7 @@ C17:
 	Health:
 		HP: 40000
 	Armor:
-		Type: Heavy
+		Type: Aircraft
 	Aircraft:
 		CruiseAltitude: 2560
 		TurnSpeed: 20
@@ -1718,7 +1718,7 @@ C17:
 		RequiresCondition: enable-smoke
 	RejectsOrders:
 	Interactable:
-	GivesExperience:
+	GivesExperienceCA:
 		Experience: 1000
 	-MapEditorData:
 	GrantConditionOnDamageState@SmokeTrail:
@@ -1783,7 +1783,7 @@ APCH:
 	Inherits: ^HelicopterTD
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Valued:
-		Cost: 1350
+		Cost: 1400
 	Tooltip:
 		Name: Apache
 	UpdatesPlayerStatistics:
@@ -1794,7 +1794,7 @@ APCH:
 		BuildPaletteOrder: 30
 		Prerequisites: ~aircraft.apch, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Helicopter gunship with a chaingun.
+		Description: Helicopter gunship armed with a chaingun.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor, Aircraft
 		Weaknesses: • Weak vs Heavy Armor, Defenses
@@ -2192,7 +2192,7 @@ UAV:
 	Tooltip:
 		Name: Recon Drone
 	Armor:
-		Type: Light
+		Type: Aircraft
 	Aircraft:
 		CruiseAltitude: 2560
 		TurnSpeed: 28
@@ -2230,7 +2230,7 @@ UAV:
 		Range: 10c0
 		Type: GroundPosition
 	Interactable:
-	GivesExperience:
+	GivesExperienceCA:
 		Experience: 1000
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
@@ -2310,7 +2310,7 @@ RAH:
 		InitialDelay: 100
 		CloakDelay: 200
 		CloakSound: trans1.aud
-		UncloakSound: appear1.aud
+		UncloakSound: appear1md.aud
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Dock, Damage, Heal
@@ -2322,7 +2322,7 @@ RAH:
 		InitialDelay: 100
 		CloakDelay: 100
 		CloakSound: trans1.aud
-		UncloakSound: appear1.aud
+		UncloakSound: appear1md.aud
 		Palette: cloak
 		IsPlayerPalette: false
 		UncloakOn: Attack, Dock, Heal
@@ -2433,7 +2433,7 @@ KIRO:
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 160
 		Prerequisites: afld, stek, ~aircraft.soviet, ~techlevel.high
-		Description: Heavily armoured airship equipped with specialised bombs.
+		Description: Heavily armoured airship armed with specialised bombs.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets\n• Vulnerable when dropping bombs
@@ -2447,7 +2447,7 @@ KIRO:
 	Health:
 		HP: 110000
 	Armor:
-		Type: Heavy
+		Type: Aircraft
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -2652,7 +2652,7 @@ OCAR:
 	Health:
 		HP: 30000
 	Armor:
-		Type: Heavy
+		Type: Aircraft
 	RevealsShroud:
 		Range: 10c0
 		MinRange: 8c0
@@ -3092,20 +3092,19 @@ HORN:
 		CruiseAltitude: 1c513
 		InitialFacing: 192
 		TurnSpeed: 32
-		Speed: 195
+		Speed: 201
+		AltitudeVelocity: 120
 		MaximumPitch: 56
 		CanHover: False
 		CanSlide: False
-		RepulsionSpeed: 40
 		Repulsable: False
-		IdealSeparation: 0c256
 		VTOL: true
 		TakeoffSounds: mtoff1.aud, mtoff2.aud
 		LandingSounds: mland1.aud, mland2.aud
 	Rearmable:
 		RearmActors: cv
 	AmmoPool:
-		Ammo: 6
+		Ammo: 8
 		AmmoCondition: ammo
 	RejectsOrders:
 	-SpawnActorOnDeath:
@@ -3123,7 +3122,6 @@ HORN:
 		Type: CenterPosition
 		RequiresCondition: enable-smoke
 	CarrierSlave:
-		LandingDistance: 8c0
 	Contrail@1:
 		Offset: -432,0,0
 		StartColor: cc550080
@@ -3138,6 +3136,7 @@ HORN:
 		TargetTypes: ICBM
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	GivesExperienceToMaster:
 
 YF23.Bomber:
 	Inherits: ^PlaneTD
@@ -3215,7 +3214,7 @@ YF23.Bomber:
 		Type: CenterPosition
 		RequiresCondition: enable-smoke
 	Interactable:
-	GivesExperience:
+	GivesExperienceCA:
 		Experience: 1000
 	AutoTarget:
 		InitialStance: HoldFire
@@ -3235,7 +3234,7 @@ POD:
 	Health:
 		HP: 7200
 	Armor:
-		Type: Light
+		Type: Aircraft
 	Aircraft:
 		TurnSpeed: 20
 		Speed: 300

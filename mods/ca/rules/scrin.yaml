@@ -124,7 +124,7 @@ VEHICLES.SCRIN:
 
 ^ScrinShields:
 	Shielded:
-		MaxStrength: 6500
+		MaxStrength: 8000
 		RegenDelay: 350
 		RegenAmount: 250
 		RegenInterval: 5
@@ -280,6 +280,8 @@ VEHICLES.SCRIN:
 	-SpeedMultiplier@HAZMATSOVIET:
 	Targetable@HAZMAT:
 		-RequiresCondition:
+	WithDecoration@BINO:
+		-BlinkPatterns:
 	TakeCover:
 		ProneSequencePrefix:
 		ProneOffset: 0,0,0
@@ -310,11 +312,6 @@ VEHICLES.SCRIN:
 	GrantConditionOnPrerequisite@CARAPACE:
 		Condition: carapace-upgrade
 		Prerequisites: carapace.upgrade
-	TransformOnCondition@FEEDER:
-		RequiresCondition: feedermutation
-		IntoActor: feed
-	ExternalCondition@FEEDER:
-		Condition: feedermutation
 	SpawnActorOnDeath@GMUT:
 		Actor: gscr.mutating
 
@@ -539,7 +536,7 @@ S6:
 		HP: 2500
 	Passenger:
 		CustomPipType: yellow
-	EngineerRepair:
+	InstantlyRepairs:
 	RepairsBridges:
 		EnterBehaviour: Exit
 	CaptureManager:
@@ -568,84 +565,47 @@ S6:
 	Targetable:
 		TargetTypes: Ground, Infantry, ChaosImmune
 
-FEED:
+BRST:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 171
+		Prerequisites: scrt, ~infantry.scrin, ~techlevel.high
+		IconPalette: chromes
+		Description: Explodes on death or when triggered.
 	Valued:
-		Cost: 350
+		Cost: 600
 	Tooltip:
-		Name: Feeder
+		Name: Burster
 	TooltipExtras:
-		Description: Explodes on death or when triggered.\n  Increased damage after harvesting resources.
 		Strengths: • Strong vs Infantry, Buildings, Light Armor
 		Weaknesses: • Cannot attack Aircraft
 	Health:
-		HP: 8000
+		HP: 7000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Mobile:
 		Speed: 80
 	RevealsShroud:
 		Range: 7c0
-	Harvester:
-		Capacity: 10
-		Resources: Tiberium, BlueTiberium, Ore, Gems
-		HarvestFacings: 8
-		BaleLoadDelay: 18
-		DeliveryBuildings: none
-		FullyLoadedSpeed: 130
-		SearchFromProcRadius: 5
-		SearchFromHarvesterRadius: 5
-	WithHarvestAnimation:
-	WithMoveAnimation:
-	WithFacingSpriteBody:
-	QuantizeFacingsFromSequence:
-		-Sequence:
-	-WithInfantryBody:
-	-WithInfantryBody@Warped:
-	GrantConditionOnFullHarvester@FULL:
-		Condition: full
-	WithIdleOverlay@FULL:
-		Sequence: idle
-		Image: feederfull-overlay
-		Palette: scrin-ignore-lighting-alpha30
-		RequiresCondition: full
-	Explodes@EMPTY:
-		Weapon: FeederExplode
-		EmptyWeapon: FeederExplode
+	Explodes:
+		Weapon: BursterExplode
+		EmptyWeapon: BursterExplode
 		DamageSource: Killer
-		RequiresCondition: !full && !cooldown
-	Explodes@FULL:
-		Weapon: FeederExplodeFull
-		EmptyWeapon: FeederExplode
-		DamageSource: Killer
-		RequiresCondition: full && !cooldown
 	AttackFrontal:
 		FacingTolerance: 64
 	Armament@PRIMARY:
-		Weapon: FeederTargeting
+		Weapon: BursterTargeting
 	GrantConditionOnAttack:
 		Condition: triggered
-		RequiresCondition: !cooldown
 	GrantConditionOnDeploy:
 		DeployedCondition: triggered
-		RequiresCondition: !cooldown
-	GrantTimedCondition@COOLDOWN:
-		Duration: 50
-		Condition: cooldown
 	KillsSelf:
-		RequiresCondition: !cooldown && (triggered || berserk)
+		RequiresCondition: (triggered || berserk)
 	-TakeCover:
-	WithHarvesterCapacityBar:
-		SelectionBarColor: cc0000
-		DisplayWhenFull: false
-	WithIdleOverlay:
-		StartSequence: spawn-overlay
-		Palette: scrin
-	SpeedMultiplier@FULL:
-		RequiresCondition: full
-		Modifier: 120
 
 SMEDI:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -773,12 +733,12 @@ MAST:
 	Armament@PRIMARY:
 		Weapon: EnslaveInfantry
 		LocalOffset: 150,0,400
-		PauseOnCondition: !ammo || deployed
+		PauseOnCondition: deployed
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: EnslaveVehicle
 		LocalOffset: 150,0,400
-		PauseOnCondition: !ammo || deployed
+		PauseOnCondition: deployed
 	Armament@BATF:
 		Name: batf
 		Weapon: PsychicBeamBATF
@@ -790,6 +750,7 @@ MAST:
 		ControllingCondition: mindcontrolling
 		MaxControlledCondition: maxcontrolled
 		ManualReleaseEnabled: true
+		ExperienceFromControl: 100
 	WithMindControlArc@MC:
 		Color: c71585
 		Transparency: 55
@@ -816,7 +777,7 @@ MAST:
 		Voice: Action
 		PauseOnCondition: being-warped
 	AttackFrontal:
-		PauseOnCondition: being-warped
+		PauseOnCondition: being-warped || !ammo
 		FacingTolerance: 0
 	Selectable:
 		DecorationBounds: 640, 896, -32, -256
@@ -965,7 +926,7 @@ GUNW:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 30000
+		HP: 33000
 	Armor:
 		Type: Light
 	Mobile:
@@ -1026,9 +987,9 @@ SHRW:
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Armor:
-		Type: Heavy
+		Type: Light
 	Health:
-		HP: 32000
+		HP: 40000
 	Mobile:
 		Speed: 92
 		TurnSpeed: 36
@@ -1070,12 +1031,12 @@ SEEK:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Buildings
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Can detect cloaked units and mines.\n• Can traverse water
+		Attributes: • Can detect cloaked units, submarines and mines.\n• Can traverse water
 	Mobile:
 		Speed: 113
 		Locomotor: lighthover
 	Health:
-		HP: 22000
+		HP: 23000
 	Armor:
 		Type: Light
 	RevealsShroud:
@@ -1103,7 +1064,7 @@ SEEK:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 5c0
-		DetectionTypes: Cloak, Thief, AirCloak, Mine
+		DetectionTypes: Cloak, Thief, AirCloak, Mine, Underwater
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -1145,7 +1106,7 @@ LACE:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Buildings
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Can detect cloaked units and mines.\n• Can traverse water
+		Attributes: • Can detect cloaked units, submarines and mines.\n• Can traverse water
 	Mobile:
 		TurnSpeed: 40
 		Speed: 144
@@ -1155,11 +1116,11 @@ LACE:
 	Armor:
 		Type: Light
 	RevealsShroud:
-		MinRange: 4c0
-		Range: 6c0
+		MinRange: 5c0
+		Range: 7c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 4c0
+		Range: 5c0
 	Turreted:
 		TurnSpeed: 40
 		Offset: -50,0,0
@@ -1181,8 +1142,8 @@ LACE:
 	WithSpriteTurret:
 	IgnoresDisguise:
 	DetectCloaked:
-		Range: 6c0
-		DetectionTypes: Cloak, Thief, AirCloak, Mine
+		Range: 5c0
+		DetectionTypes: Cloak, Thief, AirCloak, Mine, Underwater
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -1204,6 +1165,7 @@ INTL:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
+	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
@@ -1270,8 +1232,6 @@ INTL:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
-	Targetable@DRIVERKILL:
-		RequiresCondition: !driver-dead && !cargo
 	Targetable@MINDCONTROL:
 		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
 	TurretedFloating:
@@ -1401,7 +1361,7 @@ LCHR:
 		Speed: 82
 		TurnSpeed: 20
 	Health:
-		HP: 28000
+		HP: 30000
 	Armor:
 		Type: Light
 	RevealsShroud:
@@ -1478,14 +1438,16 @@ LCHR.Orb:
 		Range: 4c0
 		Type: CenterPosition
 	Health:
-		HP: 30000
+		HP: 35000
 	Armor:
 		Type: Light
 	Valued:
-		Cost: 900
+		Cost: 1000
 	Immobile:
 		OccupiesSpace: true
-	PeriodicExplosion@1:
+	PeriodicExplosion@init:
+		Weapon: LeecherOrbHealInit
+	PeriodicExplosion@hot:
 		Weapon: LeecherOrbHeal
 	KillsSelf:
 		Delay: 0
@@ -1518,6 +1480,9 @@ LCHR.Orb:
 	AutoTarget:
 	TransfersStanceToDeathActor:
 	AttackOmni:
+	WithColoredSelectionBox@PLAYERBOX:
+		ColorSource: Player
+		ValidRelationships: Ally, Enemy
 
 STCR:
 	Inherits: ^Tank
@@ -1866,12 +1831,12 @@ ATMZ:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 285
 		Prerequisites: scrt, ~vehicles.collector, ~techlevel.high
-		Description: Lightly armored long-range support unit.
+		Description: Lightly armored long-range AoE anti-tank unit.
 		IconPalette: chrome
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Aircraft, Defenses
 		Weaknesses: • Weak vs Infantry, Buildings
-		Attributes: • Targets take damage over time\n• Targets have reduced firepower\n• Effect spreads when affected targets die\n• Can traverse water
+		Attributes: • Target and nearby units take damage over time\n• Targets have reduced speed\n• Can traverse water
 	Mobile:
 		Speed: 72
 		Locomotor: lighthover
@@ -2160,7 +2125,6 @@ SMCV:
 STMR:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
-	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
@@ -2173,7 +2137,6 @@ STMR:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor, Buildings, Aircraft
 		Weaknesses: • Weak vs Defenses
-		Attributes: • Can detect submarines
 	Valued:
 		Cost: 1750
 	Tooltip:
@@ -2271,9 +2234,6 @@ STMR:
 		Margin: 4, 3
 		RequiresSelection: true
 		PipCount: 3
-	DetectCloaked:
-		DetectionTypes: Underwater
-		Range: 8c0
 	Rearmable:
 		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	GrantConditionOnDamageState@SmokeTrail:
@@ -2292,7 +2252,6 @@ STMR:
 ENRV:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
-	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
@@ -2357,7 +2316,7 @@ ENRV:
 		EndColorUsePlayerColor: true
 		ZOffset: -512
 		TrailLength: 18
-		TrailWidth: 48
+		StartWidth: 48
 	Contrail@2:
 		Offset: -750,200,300
 		StartColorUsePlayerColor: true
@@ -2365,7 +2324,7 @@ ENRV:
 		EndColorUsePlayerColor: true
 		ZOffset: -512
 		TrailLength: 18
-		TrailWidth: 48
+		StartWidth: 48
 	SpawnActorOnDeath:
 		Actor: ENRV.Husk
 		RequiresCondition: !empdisable && !being-warped
@@ -2419,7 +2378,6 @@ ENRV:
 DEVA:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Buildable:
@@ -2547,15 +2505,12 @@ DEVA:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: aircraft.upgraded
-	Shielded:
-		MaxStrength: 8000
 	Turreted@SHIELDS:
 		Offset: -64,0,0
 
 PAC:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
-	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Buildable:
@@ -2600,7 +2555,7 @@ PAC:
 		CruiseAltitude: 2560
 		InitialFacing: 768
 		TurnSpeed: 16
-		Speed: 49
+		Speed: 60
 		AltitudeVelocity: 0c50
 		CanForceLand: False
 	Selectable:
@@ -2769,11 +2724,11 @@ INVA:
 		TargetTypes: ICBM
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	GivesExperienceToMaster:
 
 MSHP:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Buildable:
@@ -2937,7 +2892,7 @@ MSHP:
 	SpawnActorAbility:
 		Actor: wormhole
 		SkipMakeAnimations: false
-		Range: 20c0
+		Range: 28c0
 		CircleColor: 9988ff
 		SpawnSounds: wormhole-open.aud
 		SelectTargetSpeechNotification: SelectTarget
@@ -2948,7 +2903,7 @@ MSHP:
 		Ammo: 2
 	ReloadAmmoPoolCA@WORMHOLESPAWNER:
 		AmmoPool: wormholespawner
-		Delay: 750
+		Delay: 1125
 		Count: 2
 		ShowSelectionBar: true
 		SelectionBarColor: 9988ff
@@ -3801,6 +3756,10 @@ NERV:
 	Inherits@POWERDRAIN: ^PowerDrainableRadar
 	Inherits@UPG: ^ProducesUpgrades
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@RESOURCESCANPOWER: ^ResourceScanPower
+	Inherits@STORMSPIKEPOWER: ^StormSpikePower
+	Inherits@BUZZERSWARMPOWER: ^BuzzerSwarmPower
+	Inherits@IONSURGEPOWER: ^IonSurgePower
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 90
@@ -3881,137 +3840,15 @@ NERV:
 		Proxy: stolentech.nerv
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
-	RevealActorsPower@RESOURCESCAN:
-		CameraActor: camera.resourcescan
-		TargetActors: mine, gmine, split2, split3, splitblue, proc, proc.td, proc.scrin
-		LifeTime: 250
-		OrderName: resourcescan
-		Icon: rescanpower
-		ChargeInterval: 7500
-		Name: Resource Scan
-		Description: \nReveals the area surrounding all resources\n    on the map.
-		LaunchSound: tibscan.aud
-		PauseOnCondition: disabled || empdisable || being-warped
-		EffectImage: empty
-		EffectSequence: idle
-		EffectPalette: tseffect-ignore-lighting-alpha75
-		SupportPowerPaletteOrder: 50
-		EndChargeTextNotification: Resource Scan ready.
-	DetonateWeaponPower@BUZZERSWARM:
-		OrderName: buzzerswarm
-		Icon: buzzpower
-		IconPalette: chromes
-		Prerequisites: radar.harbinger, !botplayer
-		Cursor: ability
-		ChargeInterval: 7500
-		Name: Buzzer Swarm
-		ActivationDelay: 1
-		Description: \nSpawns a controllable swarm which damages anything nearby;\n    particularly harmful to infantry.
-		LaunchSound: buzzers-create.aud
-		Weapon: BuzzerSpawner
-		AirburstAltitude: 0c0
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		EndChargeTextNotification: Buzzer Swarm ready.
-		PauseOnCondition: disabled || empdisable || being-warped
-		CameraActor: camera.dummy
-		CameraRemoveDelay: 1
-		DisplayRadarPing: True
-		SupportPowerPaletteOrder: 50
-	DetonateWeaponPower@BUZZERSWARMAI:
-		OrderName: buzzerswarmai
-		Icon: buzzpower
-		IconPalette: chromes
-		Prerequisites: radar.harbinger, botplayer
-		Cursor: ability
-		ChargeInterval: 7500
-		Name: Buzzer Swarm (AI)
-		ActivationDelay: 1
-		Description: \nSpawns a controllable swarm which damages anything nearby;\n    particularly harmful to infantry.
-		LaunchSound: buzzers-create.aud
-		Weapon: BuzzerSpawnerAI
-		AirburstAltitude: 0c0
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		EndChargeTextNotification: Buzzer Swarm ready.
-		PauseOnCondition: disabled || empdisable || being-warped
-		CameraActor: camera.dummy
-		CameraRemoveDelay: 1
-		DisplayRadarPing: True
-		SupportPowerPaletteOrder: 50
-	DetonateWeaponPower@STORMSPIKE:
-		OrderName: stormspike
-		Icon: stormspikepower
-		IconPalette: chromes
-		Prerequisites: radar.reaper
-		Cursor: ability
-		ChargeInterval: 7500
-		Name: Storm Spike
-		ActivationDelay: 1
-		Description: \nCreates a temporary Storm Column defensive structure\n    at the target location.
-		LaunchSound: scrinbuild.aud
-		Weapon: StormSpikeSpawner
-		AirburstAltitude: 0c0
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		EndChargeTextNotification: Storm Spike ready.
-		PauseOnCondition: disabled || empdisable || being-warped
-		CameraActor: camera.dummy
-		CameraRemoveDelay: 1
-		DisplayRadarPing: True
-		SupportPowerPaletteOrder: 20
-	DetonateWeaponPower@IONSURGE:
-		OrderName: ionsurge
-		Icon: ionsurgepower
-		IconPalette: chromes
-		Prerequisites: radar.traveler
-		Cursor: ability
-		ChargeInterval: 6750
-		Name: Ion Surge
-		ActivationDelay: 1
-		Description: \nIncreases the movement speed of all friendly units\n    passing through the target area.
-		LaunchSound: ionsurge.aud
-		Weapon: IonSurgeSpawner
-		AirburstAltitude: 0c0
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		EndChargeTextNotification: Ion Surge ready.
-		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayRadarPing: True
-		CameraActor: camera.dummy
-		CameraRemoveDelay: 1
-		TargetCircleRange: 6c0
-		TargetCircleColor: b070ff90
-		SupportPowerPaletteOrder: 50
-	GrantExternalConditionPower@FEEDERMUTATION:
-		OrderName: feedermutation
-		Icon: feedermutation
-		Prerequisites: radar.collector
-		ChargeInterval: 6000
-		Name: Feeder Mutation
-		Condition: feedermutation
-		Dimensions: 1, 1
-		Footprint: x
-		ValidRelationships: Ally
-		Duration: 25
-		AllowMultiple: false
-		Description: \nTransforms Scrin infantry into Feeders; exploding infantry able to consume\n    resources for additional damage.
-		OnFireSound: feedermutation.aud
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		InsufficientPowerSpeechNotification: InsufficientPower
-		EndChargeTextNotification: Feeder Mutation ready.
-		DisplayRadarPing: True
-		Cursor: ability
-		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayTimerRelationships: Ally
-		SupportPowerPaletteOrder: 50
 
 SCRT:
 	Inherits: ^ScrinBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@UPG: ^ProducesUpgrades
+	Inherits@ICHORSEEDPOWER: ^IchorSeedPower
+	Inherits@FORCESHIELDPOWER: ^ForceShieldPower
+	Inherits@GREATERCOALESCENCEPOWER: ^GreaterCoalescencePower
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 150
@@ -4065,51 +3902,6 @@ SCRT:
 		Factions: collector
 		Prerequisite: scrt.collector
 	ProvidesPrerequisite@buildingname:
-	GrantExternalConditionPowerCA@FSHIELD:
-		OrderName: fshield
-		Icon: forceshield
-		ChargeInterval: 7500
-		Condition: forceshield
-		Dimensions: 7, 7
-		Footprint: ___x___ __xxx__ _xxxxx_ xxxxxxx _xxxxx_ __xxx__ ___x___
-		Duration: 250
-		Prerequisites: forceshield.enabled
-		Weapon: ForceShield
-		ActivationDelay: 5
-		AirburstAltitude: 0c0
-		AllowMultiple: false
-		Name: Force Shield
-		Description: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
-		OnFireSound: forceon.aud
-		DisplayTimerRelationships: Ally
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		InsufficientPowerSpeechNotification: InsufficientPower
-		EndChargeSpeechNotification: ForceShieldReady
-		EndChargeTextNotification: Force Shield ready.
-		DisplayRadarPing: True
-		Cursor: ability
-		PauseOnCondition: disabled || empdisable ||  being-warped
-		SupportPowerPaletteOrder: 40
-	SpawnActorPower@ICHORSEED:
-		OrderName: ichorseed
-		Icon: ichorpower
-		Actor: ichor.seeder
-		ChargeInterval: 6000
-		Name: Ichor Seed
-		LifeTime: -1
-		AllowMultiple: false
-		Description: \nGrows tiberium at selected location.
-		LaunchSound: ichorseed.aud
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		InsufficientPowerSpeechNotification: InsufficientPower
-		EndChargeTextNotification: Ichor Seed ready.
-		PauseOnCondition: disabled || empdisable || being-warped
-		EffectImage: empty
-		EffectSequence: idle
-		EffectPalette: tseffect-ignore-lighting-alpha75
-		SupportPowerPaletteOrder: 40
 
 GRAV:
 	Inherits: ^ScrinBuilding
@@ -4369,6 +4161,7 @@ MANI:
 	Inherits: ^ScrinBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@SUPPRESSIONPOWER: ^SuppressionPower
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 130
@@ -4418,62 +4211,15 @@ MANI:
 	ProvidesPrerequisiteValidatedFaction@collector:
 		Factions: collector
 		Prerequisite: mani.collector
-	DetonateWeaponPower@SUPPRESSION:
-		PauseOnCondition: disabled || empdisable || being-warped
-		OrderName: suppression
-		Icon: spresspower
-		ChargeInterval: 4500
-		Name: Suppression Field
-		Description: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.
-		Duration: 600
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		InsufficientPowerSpeechNotification: InsufficientPower
-		EndChargeTextNotification: Suppression Field ready.
-		DisplayRadarPing: True
-		ActivationDelay: 0
-		TargetCircleRange: 3c0
-		TargetCircleColor: ff55ffcc
-		LaunchSound: suppression.aud
-		IncomingSound: suppression.aud
-		DisplayTimerRelationships: Ally, Neutral, Enemy
-		Weapon: SuppressionField
-		CameraActor: camera.dummy
-		CameraRemoveDelay: 1
-		Prerequisites: ~!mani.collector
-		SupportPowerPaletteOrder: 20
-	DetonateWeaponPower@SUPPRESSIONSIPHON:
-		PauseOnCondition: disabled || empdisable || being-warped
-		OrderName: suppressionsiphon
-		Icon: spresspower
-		ChargeInterval: 4500
-		Name: Suppression Field
-		Description: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.\n\nAffected units take damage over time.
-		Duration: 600
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		InsufficientPowerSpeechNotification: InsufficientPower
-		EndChargeTextNotification: Suppression Field ready.
-		DisplayRadarPing: True
-		ActivationDelay: 0
-		TargetCircleRange: 3c0
-		TargetCircleColor: ff55ffcc
-		LaunchSound: suppression.aud
-		IncomingSound: suppression.aud
-		DisplayTimerRelationships: Ally, Neutral, Enemy
-		Weapon: SuppressionSiphonField
-		CameraActor: camera.dummy
-		CameraRemoveDelay: 1
-		Prerequisites: ~mani.collector
-		SupportPowerPaletteOrder: 20
 	ProductionCostMultiplier@COLLECTOR:
 		Multiplier: 80
 		Prerequisites: player.collector
 
-RIFT:
+RFGN:
 	Inherits: ^ScrinBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@SHAPE: ^2x2Shape
+	Inherits@RIFTPOWER: ^RiftPower
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 140
@@ -4510,41 +4256,6 @@ RIFT:
 	RevealsShroud@GAPGEN:
 		Range: 5c0
 		RequiresCondition: !disabled
-	DetonateWeaponPower@RiftGenerator:
-		OrderName: rift
-		Icon: riftpower
-		Cursor: ability
-		ChargeInterval: 13500
-		Name: Rift
-		ActivationDelay: 50
-		Description: \nInitiate a Rift which deals heavy damage\n    over time to a large area.
-		Weapon: RiftInit
-		AllowMultiple: false
-		CameraActor: camera
-		CameraRemoveDelay: 375
-		SelectTargetSpeechNotification: SelectTarget
-		SelectTargetTextNotification: Select target.
-		EndChargeSpeechNotification: RiftReady
-		EndChargeTextNotification: Rift Generator ready.
-		InsufficientPowerSpeechNotification: InsufficientPower
-		IncomingSpeechNotification: RiftApproach
-		IncomingTextNotification: Rift Generator activated.
-		IncomingSound: nukelaunch.aud
-		LaunchSound: nukelaunch.aud
-		DisplayTimerRelationships: Ally, Neutral, Enemy
-		PauseOnCondition: disabled || empdisable || being-warped
-		DisplayBeacon: True
-		DisplayRadarPing: True
-		ArrowSequence: arrow
-		ClockSequence: clock
-		CircleSequence: circles
-		BeaconPoster: riftpower
-		TargetCircleRange: 6c512
-		TargetCircleColor: 0000FF90
-		Duration: 425
-		ActiveCondition: active
-		PaletteEffectType: LightningStorm
-		SupportPowerPaletteOrder: 10
 	WithIdleOverlay@ACTIVE:
 		Sequence: active-overlay
 		Palette: scrin
@@ -4745,6 +4456,10 @@ SCOL:
 	SpawnActorOnDeath:
 		Actor: s1
 	-SpawnRandomActorOnDeath:
+	GrantConditionOnAttackCA@IONSTORM:
+		RequiresCondition: ioncon-upgrade && !(disabled || empdisable || being-warped)
+	GrantConditionOnDamage@IONSTORM:
+		RequiresCondition: ioncon-upgrade && !(disabled || empdisable || being-warped)
 
 STRM:
 	Inherits@1: ^ExistsInWorld
@@ -4755,6 +4470,7 @@ STRM:
 		Type: CenterPosition
 	Tooltip:
 		Name: Ion Storm
+	# required for death animation
 	Health:
 		HP: 1
 	HitShape:
@@ -4879,7 +4595,7 @@ SCOL.Temp:
 	-SpawnActorOnDeath:
 	-WithBuildingRepairDecoration:
 	-RepairableBuilding:
-	-EngineerRepairable:
+	-InstantlyRepairable:
 	-GrantConditionOnPowerState@LOWPOWER:
 	-WithColoredOverlay@IDISABLE:
 	-GrantCondition@IDISABLE:
@@ -4895,6 +4611,10 @@ SCOL.Temp:
 		PauseOnCondition: build-incomplete || empdisable || being-warped
 	DetectCloaked:
 		RequiresCondition: !(empdisable || being-warped)
+	GrantConditionOnAttackCA@IONSTORM:
+		RequiresCondition: ioncon-upgrade && !(empdisable || being-warped)
+	GrantConditionOnDamage@IONSTORM:
+		RequiresCondition: ioncon-upgrade && !(empdisable || being-warped)
 
 #
 # ---- misc
@@ -4909,6 +4629,11 @@ BUZZ:
 		Type: CenterPosition
 	Tooltip:
 		Name: Buzzer Swarm
+	TooltipExtras:
+		Description: Swarm of biometallic shards.
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
+		Attributes: • Untargetable
 	RevealsShroud:
 		MinRange: 1c0
 		Range: 6c0
@@ -4922,8 +4647,10 @@ BUZZ:
 	WithSpriteBody:
 	HitShape:
 	KillsSelf:
-		RemoveInstead: true
 		Delay: 450
+	# required for death animation
+	Health:
+		HP: 1
 	Aircraft:
 		CanHover: True
 		Speed: 33
@@ -4936,8 +4663,25 @@ BUZZ:
 		VoiceSet: BuzzersVoice
 	Armament@PRIMARY:
 		Weapon: BuzzerTargeting
+		RequiresCondition: alive
 	AttackFrontal:
 		FacingTolerance: 0
+	WithColoredSelectionBox@PLAYERBOX:
+		ColorSource: Player
+		ValidRelationships: Ally, Enemy
+	WithMakeAnimation:
+	WithDeathAnimation:
+		UseDeathTypeSuffix: false
+		CrushedSequence: die
+		FallbackSequence: die
+		DeathSequencePalette: scrin
+		DeathPaletteIsPlayerPalette: false
+	GrantTimedCondition:
+		Duration: 450
+		Condition: alive
+	TimedConditionBar@ALIVE:
+		Condition: alive
+		Color: 777777
 
 BUZZ.AI:
 	Inherits: BUZZ
@@ -4984,30 +4728,108 @@ MSPK:
 		DeathPaletteIsPlayerPalette: false
 	Voiced:
 		VoiceSet: MindSparkVoice
+	WithColoredSelectionBox@PLAYERBOX:
+		ColorSource: Player
+		ValidRelationships: Ally, Enemy
 
-camera.rift:
-	Interactable:
-	EditorOnlyTooltip:
-		Name: (support power)
+GRCL:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^SpriteActor
+	Inherits@selection: ^SelectableCombatUnit
+	HiddenUnderFog:
+		Type: CenterPosition
+	Tooltip:
+		Name: Greater Coalescence
+	TooltipExtras:
+		Description: Pulsing biomass that heals allies and feeds on enemies.
+		Attributes: • Heals nearby allies\n• Slows and drains health from enemies\n• Disables power plants and radars
 	RenderSprites:
-		Image: riftanim
-		Palette: effect-ignore-lighting-alpha85
+		Palette: caneon
+	WithMakeAnimation:
+	RevealsShroud:
+		MinRange: 1c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+		Type: CenterPosition
+	RevealsShroud@GAPGEN:
+		Range: 1c0
+		Type: CenterPosition
+	Targetable:
+		TargetTypes: Ground, Vehicle, C4Immune
+	Health:
+		HP: 50000
+	Armor:
+		Type: Light
+	PeriodicExplosion:
+		Weapon: GreaterCoalescence
 	WithSpriteBody:
-		StartSequence: spawn
+	HitShape:
+	Aircraft:
+		CanHover: True
+		Speed: 33
+		CruiseAltitude: 1
+		LandableTerrainTypes: Clear,Road,Rough,Ore,Gems,Tiberium,BlueTiberium,Water,Tree,River
+	Voiced:
+		VoiceSet: GiantScrinVoice
+	WithColoredSelectionBox@PLAYERBOX:
+		ColorSource: Player
+		ValidRelationships: Ally, Enemy
+	Explodes:
+		Weapon: LeecherExplode
+		EmptyWeapon: LeecherExplode
+	ConvertsDamageToHealth:
+		DamagePercentConverted: 200
+	ChangesHealth:
+		Step: -2000
+		StartIfBelow: 101
+		Delay: 25
+		RequiresCondition: !leeching
+	WithRangeCircle:
+		Range: 3c768
+		Color: ff000099
+	ProximityExternalCondition@HEAL:
+		Condition: lchr-healing
+		Range: 3c768
+	GrantConditionOnHealingReceived:
+		Condition: leeching
+		MinimumHealing: 100
+		StackDuration: 25
+	AmbientSoundCA:
+		SoundFiles: grcl-loop1.aud, grcl-loop2.aud
+		Delay: 0
+		Interval: 20
+		VolumeMultiplier: 0.8
+		RequiresCondition: leeching
+
+^RiftBase:
+	Interactable:
+	ScriptTriggers:
+	RenderSprites:
+	WithSpriteBody:
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 1
 	HiddenUnderFog:
 		Type: GroundPosition
 	HitShape:
-	RevealsShroud:
-		Range: 6c0
-		Type: CenterPosition
-	Health:
-		HP: 1
-	PeriodicExplosion:
-		Weapon: Rift
 	Immobile:
 		OccupiesSpace: false
+
+Rift:
+	Inherits: ^RiftBase
+	EditorOnlyTooltip:
+		Name: (Rift)
+	RenderSprites:
+		Image: riftanim
+		Palette: effect-ignore-lighting-alpha85
+	PeriodicExplosion:
+		Weapon: Rift
+	KillsSelf:
+		Delay: 360
+	# required for death animation
+	Health:
+		HP: 1
+	WithSpriteBody:
+		StartSequence: spawn
 	AmbientSound:
 		SoundFiles: rift1.aud, rift2.aud, rift3.aud
 		Interval: 50
@@ -5015,51 +4837,54 @@ camera.rift:
 		UseDeathTypeSuffix: false
 		CrushedSequence: fade
 		FallbackSequence: fade
-	KillsSelf:
-		Delay: 360
+	RevealsShroud:
+		Range: 10c0
+		Type: CenterPosition
 
-camera.minirift:
-	Inherits: camera.rift
+RiftMinor:
+	Inherits: ^RiftBase
+	EditorOnlyTooltip:
+		Name: (Minor Rift)
 	RenderSprites:
 		Image: miniriftanim
 	PeriodicExplosion:
 		Weapon: MiniRift
 	KillsSelf:
 		Delay: 120
-	WithSpriteBody:
-		-StartSequence:
-	-AmbientSound:
-	-WithDeathAnimation:
-	-RevealsShroud:
 	Targetable@RIFT:
 		TargetTypes: Rift
 
 camera.resourcescan:
 	Inherits: CAMERA
 	EditorOnlyTooltip:
-		Name: (support power proxy camera)
+		Name: (Resource Scan Camera)
 	RevealsShroud:
 		Range: 5c0
 
-camera.dummy:
-	Inherits: CAMERA
-	-RevealsShroud:
-	KillsSelf:
-		Delay: 25
-
-ichor.seeder:
-	Inherits: CAMERA
+IchorSeeder:
+	Interactable:
+	ScriptTriggers:
+	EditorOnlyTooltip:
+		Name: (Ichor Seeder)
+	Immobile:
+		OccupiesSpace: false
+	BodyOrientation:
+		QuantizedFacings: 1
+	WithSpriteBody:
+	MapEditorData:
+		Categories: System
 	HitShape:
-	Health:
-		HP: 1
+	HiddenUnderFog:
+		Type: GroundPosition
+	RevealsShroud:
+		Range: 4c0
+		Type: CenterPosition
 	SeedsResource:
 		ResourceType: Tiberium
 		Interval: 2
-	-RevealsShroud:
 	RenderSprites:
 		Image: ichorseed
 		Palette: scrin
-	-RenderSpritesEditorOnly:
 	WithDeathAnimation:
 		UseDeathTypeSuffix: False
 		CrushedSequence: fade
@@ -5068,10 +4893,16 @@ ichor.seeder:
 	KillsSelf:
 		Delay: 225
 
-ion.surge:
-	WithSpriteBody:
-	ClassicFacingBodyOrientation:
+IonSurge:
+	Interactable:
+	ScriptTriggers:
+	EditorOnlyTooltip:
+		Name: (Ion Surge)
+	BodyOrientation:
 		QuantizedFacings: 1
+	MapEditorData:
+		Categories: System
+	WithSpriteBody:
 	HitShape:
 	HiddenUnderFog:
 		Type: GroundPosition
@@ -5136,25 +4967,25 @@ WORMHOLE:
 
 # portal - infantry veterancy
 stolentech.port:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 		Prerequisite: barracks.upgraded
 
 # warp sphere - vehicle veterancy
 stolentech.wsph:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 		Prerequisite: vehicles.upgraded
 
 # nerve center - aircraft veterancy
 stolentech.nerv:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 		Prerequisite: aircraft.upgraded
 
 # tech center - veterancy for all
 stolentech.scrt:
-	AlwaysVisible:
+	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite@1:
 		Prerequisite: barracks.upgraded
 	ProvidesPrerequisite@2:

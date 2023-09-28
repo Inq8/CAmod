@@ -20,6 +20,7 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Activities
 {
+	[Desc("Same as Teleport but can be made to require an empty destination.")]
 	public class TeleportCA : Activity
 	{
 		readonly Actor teleporter;
@@ -30,14 +31,16 @@ namespace OpenRA.Mods.CA.Activities
 		readonly bool killCargo;
 		readonly bool screenFlash;
 		readonly string sound;
+		readonly bool requireEmptyDestination;
 
 		public TeleportCA(Actor teleporter, CPos destination, int? maximumDistance,
 			bool killCargo, bool screenFlash, string sound, bool interruptable = true,
-			bool killOnFailure = false, BitSet<DamageType> killDamageTypes = default(BitSet<DamageType>))
+			bool killOnFailure = false, BitSet<DamageType> killDamageTypes = default(BitSet<DamageType>),
+			bool requireEmptyDestination = false)
 		{
 			var max = teleporter.World.Map.Grid.MaximumTileSearchRange;
 			if (maximumDistance > max)
-				throw new InvalidOperationException("Teleport distance cannot exceed the value of MaximumTileSearchRange ({0}).".F(max));
+				throw new InvalidOperationException($"Teleport distance cannot exceed the value of MaximumTileSearchRange ({max}).");
 
 			this.teleporter = teleporter;
 			this.destination = destination;
@@ -47,6 +50,7 @@ namespace OpenRA.Mods.CA.Activities
 			this.sound = sound;
 			this.killOnFailure = killOnFailure;
 			this.killDamageTypes = killDamageTypes;
+			this.requireEmptyDestination = requireEmptyDestination;
 
 			if (!interruptable)
 				IsInterruptible = false;
@@ -134,7 +138,9 @@ namespace OpenRA.Mods.CA.Activities
 				destination = restrictTo.MinBy(x => (x - destination).LengthSquared);
 
 			var pos = self.Trait<IPositionable>();
-			if (pos.CanEnterCell(destination) && teleporter.Owner.Shroud.IsExplored(destination))
+			if (pos.CanEnterCell(destination)
+				&& teleporter.Owner.Shroud.IsExplored(destination)
+				&& (!requireEmptyDestination || !self.World.ActorMap.GetActorsAt(destination).Any()))
 				return destination;
 
 			var max = maximumDistance != null ? maximumDistance.Value : teleporter.World.Map.Grid.MaximumTileSearchRange;
@@ -142,7 +148,8 @@ namespace OpenRA.Mods.CA.Activities
 			{
 				if (teleporter.Owner.Shroud.IsExplored(tile)
 					&& (restrictTo == null || (restrictTo != null && restrictTo.Contains(tile)))
-					&& pos.CanEnterCell(tile))
+					&& pos.CanEnterCell(tile)
+					&& (!requireEmptyDestination || !self.World.ActorMap.GetActorsAt(tile).Any()))
 					return tile;
 			}
 
