@@ -35,7 +35,11 @@ WorldLoaded = function()
 		if a.Owner == MissionPlayer and a.Type ~= cameraType then
 			Trigger.RemoveProximityTrigger(id)
 			local camera = Actor.Create("smallcamera", true, { Owner = GDI, Location = Reveal2.Location })
-			Tip("When an enemy structure is destroyed under the fog of war, it won't disappear until its location is revealed again. The explosion sound and screen shake can be used to verify that a building has been destroyed.")
+
+			if UtilsCA.FogEnabled() then
+				Tip("When an enemy structure is destroyed under the fog of war, it won't disappear until its location is revealed again. The explosion sound and screen shake can be used to verify its destruction.")
+			end
+
 			Trigger.AfterDelay(DateTime.Seconds(4), function()
 				camera.Destroy()
 			end)
@@ -78,7 +82,7 @@ WorldLoaded = function()
 		end)
 	end)
 
-	Trigger.AfterDelay(DateTime.Seconds(3), function()
+	Trigger.AfterDelay(DateTime.Seconds(4), function()
 		Media.DisplayMessage("Commander what's going on, where the hell are we?!", "GDI Soldier", HSLColor.FromHex("F2CF74"))
 		Media.PlaySound("wherearewe.aud")
 
