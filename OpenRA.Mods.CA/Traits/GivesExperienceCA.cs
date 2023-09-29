@@ -42,7 +42,7 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		readonly GivesExperienceCAInfo info;
 
-		int exp;
+		int baseXp;
 		Health health;
 		IEnumerable<int> experienceModifiers;
 
@@ -56,7 +56,7 @@ namespace OpenRA.Mods.CA.Traits
 			health = self.TraitOrDefault<Health>();
 			var valued = self.Info.TraitInfoOrDefault<ValuedInfo>();
 
-			exp = info.Experience >= 0 ? info.Experience
+			baseXp = info.Experience >= 0 ? info.Experience
 				: valued != null ? valued.Cost : 0;
 
 			experienceModifiers = self.TraitsImplementing<IGivesExperienceModifier>().ToArray().Select(m => m.GetGivesExperienceModifier());
@@ -77,13 +77,13 @@ namespace OpenRA.Mods.CA.Traits
 
 		void GiveExperience(Actor self, AttackInfo e, bool fromKill)
 		{
-			if (exp == 0 || e.Attacker == null || e.Attacker.Disposed)
+			if (baseXp == 0 || e.Attacker == null || e.Attacker.Disposed)
 				return;
 
 			if (!info.ValidRelationships.HasRelationship(e.Attacker.Owner.RelationshipWith(self.Owner)))
 				return;
 
-			exp = Util.ApplyPercentageModifiers(exp, experienceModifiers);
+			var exp = Util.ApplyPercentageModifiers(baseXp, experienceModifiers);
 
 			if (fromKill)
 				e.Attacker.Owner.PlayerActor.TraitOrDefault<PlayerExperience>()
@@ -102,14 +102,18 @@ namespace OpenRA.Mods.CA.Traits
 			// If applying based on damage, calculate the percentage of the total HP that the attack inflicted, and get that same percentage of the xp
 			if (info.ActorExperienceOnDamage)
 			{
-				var appliedDamage = Math.Min(e.Damage.Value, health.HP);
+				var hpBefore = Math.Min(health.HP + e.Damage.Value, health.MaxHP);
+				var appliedDamage = Math.Min(e.Damage.Value, hpBefore);
+
 				if (appliedDamage <= 0)
 					return;
 
-				killerExperienceModifiers = killerExperienceModifiers.Append((int)(((float)e.Damage.Value / (float)health.MaxHP) * 100));
+				var damageRatio = (float)appliedDamage / (float)health.MaxHP;
+				killerExperienceModifiers = killerExperienceModifiers.Append((int)(damageRatio * 100));
 			}
 
-			attacker.GiveExperience(Util.ApplyPercentageModifiers(exp, killerExperienceModifiers));
+			exp = Util.ApplyPercentageModifiers(exp, killerExperienceModifiers);
+			attacker.GiveExperience(Math.Max(exp, 250)); // if less than 1% of target HP is lost, give a token amount of xp
 		}
 	}
 }
