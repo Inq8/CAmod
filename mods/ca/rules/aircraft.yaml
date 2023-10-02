@@ -1591,10 +1591,16 @@ A10.bomber:
 		HP: 36000
 	Armament:
 		Weapon: NapalmTD
-		LocalOffset: 0,-256,-43, 0,256,-43
+		LocalOffset: 2,-256,-43, 2,256,-43
 		PauseOnCondition: !ammo
+	Armament@PRIMARYBLD:
+		Weapon: NapalmTDBuilding
+		LocalOffset: 2,-256,-43, 2,256,-43
+		PauseOnCondition: !ammo
+		Name: primarybld
 	AttackBomberCA:
 		FacingTolerance: 512
+		Armaments: primary, primarybld, secondary
 	Aircraft:
 		CruiseAltitude: 2560
 		InitialFacing: 192
