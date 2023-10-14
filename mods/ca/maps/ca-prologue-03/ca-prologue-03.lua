@@ -68,7 +68,12 @@ WorldLoaded = function()
 					end
 				end)
 
-				if #GroupsFound == 5 then
+				local numGroupsFound = 0
+				for k,v in pairs(GroupsFound) do
+					numGroupsFound = numGroupsFound + 1
+				end
+
+				if numGroupsFound == 5 then
 					GDI.MarkCompletedObjective(ObjectiveLocateForces)
 
 					Trigger.AfterDelay(DateTime.Seconds(4), function()
