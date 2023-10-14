@@ -370,7 +370,7 @@ InitConvoy = function()
 			end)
 
 			Trigger.OnRemovedFromWorld(truck, function(a)
-				if not truck.IsDead then
+				if truck.IsDead then
 					return
 				end
 				if CurrentConvoyArrivalComplete then
