@@ -380,6 +380,12 @@ InitConvoy = function()
 					end
 				end
 			end)
+
+			Trigger.AfterDelay(DateTime.Seconds(180), function()
+				if not truck.IsDead and truck.IsInWorld then
+					truck.Destroy()
+				end
+			end)
 		end)
 	end)
 end
