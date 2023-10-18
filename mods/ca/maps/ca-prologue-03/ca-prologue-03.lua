@@ -52,12 +52,12 @@ WorldLoaded = function()
 				Trigger.RemoveProximityTrigger(id)
 				GroupsFound[g.Id] = true
 				Notification("GDI forces found.")
-				MediaCA.PlaySound("gdifound.aud", "2")
+				MediaCA.PlaySound("gdifound.aud", 2)
 
 				if g.Id == 2 then
 					Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
 						Media.DisplayMessage("Thank god! You found us!.", "GDI Soldier", HSLColor.FromHex("F2CF74"))
-						MediaCA.PlaySound("thankgod.aud", "1.5")
+						MediaCA.PlaySound("thankgod.aud", 1.5)
 					end)
 				end
 
@@ -93,7 +93,7 @@ WorldLoaded = function()
 
 		Trigger.AfterDelay(DateTime.Seconds(20), function()
 			Media.DisplayMessage("Come in, any GDI units, hostile troops have us pinned down.", "Radio", HSLColor.FromHex("F2CF74"))
-			MediaCA.PlaySoundAtPos("pinned.aud", "2", Camera.Position + WVec.New(2560, 0, 0))
+			MediaCA.PlaySoundAtPos("pinned.aud", 2, Camera.Position + WVec.New(2560, 0, 0))
 		end)
 	end)
 
@@ -140,7 +140,7 @@ OncePerSecondChecks = function()
 
 					Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
 						Media.DisplayMessage("Hold your fire, we're GDI! Damn, we thought we'd lost the whole company! We've got a base not far from here, we'll take you there.", "GDI Soldier", HSLColor.FromHex("F2CF74"))
-						MediaCA.PlaySound("holdfire.aud", "2")
+						MediaCA.PlaySound("holdfire.aud", 2)
 
 						Trigger.AfterDelay(DateTime.Seconds(12), function()
 							GDI.MarkCompletedObjective(ObjectiveExit)
@@ -193,7 +193,7 @@ Chatter = function()
 			if not GDI.IsObjectiveCompleted(ObjectiveLocateForces) then
 				local cameraPos = Camera.Position
 				local posModifier = WVec.New(Utils.Random({ -2560, 2560 }), 0, 0)
-				MediaCA.PlaySoundAtPos(s, "2", cameraPos + posModifier)
+				MediaCA.PlaySoundAtPos(s, 2, cameraPos + posModifier)
 			end
 		end)
 	end)

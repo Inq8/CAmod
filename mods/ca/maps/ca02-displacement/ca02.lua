@@ -324,7 +324,7 @@ InitConvoy = function()
 	if not FirstConvoyAnnounced then
 		FirstConvoyAnnounced = true
 		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(3)), function()
-			MediaCA.PlaySound("r_firstconvoy.aud", "1.5")
+			MediaCA.PlaySound("r_firstconvoy.aud", 1.5)
 		end)
 	end
 

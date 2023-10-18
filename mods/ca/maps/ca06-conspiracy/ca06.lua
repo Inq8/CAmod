@@ -206,10 +206,10 @@ WorldLoaded = function()
 		if a.Owner == Nod then
 			Trigger.RemoveFootprintTrigger(id)
 			Media.DisplayMessage("The time has come, warriors of Nod.", "Nod Soldier", HSLColor.FromHex("FF0000"))
-			MediaCA.PlaySound("timehascome.aud", "2")
+			MediaCA.PlaySound("timehascome.aud", 2)
 			Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
 				Media.DisplayMessage("Down with GDI!", "Nod Soldier", HSLColor.FromHex("FF0000"))
-				MediaCA.PlaySound("downwithgdi.aud", "2")
+				MediaCA.PlaySound("downwithgdi.aud", 2)
 				Trigger.AfterDelay(15, function()
 					AwakenSleeperCell()
 				end)
@@ -233,7 +233,7 @@ WorldLoaded = function()
 			if a.Owner == Nod then
 				Trigger.RemoveProximityTrigger(id)
 				Notification("Researcher located.")
-				MediaCA.PlaySound("n_researcherlocated.aud", "2")
+				MediaCA.PlaySound("n_researcherlocated.aud", 2)
 				if ObjectiveRescueResearchers == nil then
 					ObjectiveRescueResearchers = Nod.AddObjective("Locate and rescue Nod researchers.")
 				end
@@ -249,7 +249,7 @@ WorldLoaded = function()
 				Trigger.RemoveProximityTrigger(id)
 				researcher.Owner = Nod
 				Notification("Escort researcher to evacuation point.")
-				MediaCA.PlaySound("n_escortresearcher.aud", "2")
+				MediaCA.PlaySound("n_escortresearcher.aud", 2)
 				InitEvacSite()
 			end
 		end)
@@ -276,7 +276,7 @@ WorldLoaded = function()
 					EvacStarted = true
 
 					Notification("Evacuation transport inbound.")
-					MediaCA.PlaySound("n_evacinbound.aud", "2")
+					MediaCA.PlaySound("n_evacinbound.aud", 2)
 
 					Trigger.AfterDelay(DateTime.Seconds(3), function()
 						if EvacFlare ~= nil then

@@ -150,11 +150,11 @@ WarpInTeslaTanks = function()
 	Actor.Create("ttnk", true, { Owner = USSR, Location = TeslaSpawn2.Location, Facing = Angle.South })
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
 		Media.DisplayMessage("Greetings Comrades! The Soviet Empire truly knows no boundaries!", "Tesla Tank", HSLColor.FromHex("FF0000"))
-		MediaCA.PlaySound("greetings.aud", "2")
+		MediaCA.PlaySound("greetings.aud", 2)
 
 		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(6)), function()
 			Media.DisplayMessage("We understand that Comrade Stalin has his doubts about our agreement. We hope these gifts will put his mind at ease.", "Unknown", HSLColor.FromHex("999999"))
-			MediaCA.PlaySound("doubts.aud", "2")
+			MediaCA.PlaySound("doubts.aud", 2)
 		end)
 	end)
 end
