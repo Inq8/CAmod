@@ -193,6 +193,18 @@ UnitExplodeSmall:
 		Explosions: large_explosion
 		ImpactSounds: kaboom15.aud
 
+UnitExplodeGrenade:
+	Inherits: UnitExplodeSmall
+	Warhead@2Eff: CreateEffect
+		Explosions: med_explosion
+		ImpactSounds: kaboom25.aud
+
+UnitExplodeGrenadeTD:
+	Inherits: UnitExplodeGrenade
+	Warhead@2Eff: CreateEffect
+		Explosions: self_destruct
+		ImpactSounds: xplosml2.aud
+
 VisualExplodeSmall:
 	Inherits: UnitExplodeSmall
 	-Warhead@1Dam:

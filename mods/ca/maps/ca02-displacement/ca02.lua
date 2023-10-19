@@ -324,7 +324,7 @@ InitConvoy = function()
 	if not FirstConvoyAnnounced then
 		FirstConvoyAnnounced = true
 		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(3)), function()
-			MediaCA.PlaySound("r_firstconvoy.aud", "1.5")
+			MediaCA.PlaySound("r_firstconvoy.aud", 1.5)
 		end)
 	end
 
@@ -370,7 +370,7 @@ InitConvoy = function()
 			end)
 
 			Trigger.OnRemovedFromWorld(truck, function(a)
-				if not truck.IsDead then
+				if truck.IsDead then
 					return
 				end
 				if CurrentConvoyArrivalComplete then
@@ -378,6 +378,12 @@ InitConvoy = function()
 					if numTrucks == 0 then
 						QueueNextConvoy(DateTime.Seconds(15))
 					end
+				end
+			end)
+
+			Trigger.AfterDelay(DateTime.Seconds(180), function()
+				if not truck.IsDead and truck.IsInWorld then
+					truck.Destroy()
 				end
 			end)
 		end)

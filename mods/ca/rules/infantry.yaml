@@ -180,9 +180,9 @@ E2:
 		StandSequences: parachute
 		RequiresCondition: parachute
 	Explodes:
-		Weapon: UnitExplodeSmall
-		EmptyWeapon: UnitExplodeSmall
-		Chance: 33
+		Weapon: UnitExplodeGrenade
+		EmptyWeapon: UnitExplodeGrenade
+		Chance: 100
 		DamageSource: Killer
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
@@ -564,7 +564,7 @@ E4:
 	Explodes:
 		Weapon: UnitExplodeFlameSmall
 		EmptyWeapon: UnitExplodeFlameSmall
-		Chance: 33
+		Chance: 100
 		DamageSource: Killer
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:
@@ -1527,11 +1527,11 @@ N2:
 		StandSequences: parachute
 		RequiresCondition: parachute
 	Explodes:
-		Weapon: UnitExplodeSmall
-		EmptyWeapon: UnitExplodeSmall
-		Chance: 33
+		Weapon: UnitExplodeGrenadeTD
+		EmptyWeapon: UnitExplodeGrenadeTD
+		Chance: 100
 		DamageSource: Killer
-		RequiresCondition: !being-warped
+		RequiresCondition: !being-warped && !empgren-upgrade
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	WithProductionIconOverlay:
@@ -1705,7 +1705,7 @@ N4:
 	Explodes:
 		Weapon: UnitExplodeFlameSmall
 		EmptyWeapon: UnitExplodeFlameSmall
-		Chance: 33
+		Chance: 100
 		DamageSource: Killer
 		RequiresCondition: !being-warped
 	ProducibleWithLevel:

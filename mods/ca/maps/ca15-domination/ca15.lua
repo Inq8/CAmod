@@ -129,7 +129,7 @@ WorldLoaded = function()
 		end
 
 		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
-			MediaCA.PlaySound("r2_codesacquired.aud", "2")
+			MediaCA.PlaySound("r2_codesacquired.aud", 2)
 			Notification("Cyborg encryption codes acquired.")
 		end)
 	end)
@@ -147,7 +147,7 @@ WorldLoaded = function()
 
 			if ObjectiveStealCodes == nil or not USSR.IsObjectiveCompleted(ObjectiveStealCodes) then
 				Notification("Encryption codes are required for mission completion.")
-				MediaCA.PlaySound("r2_codesrequired.aud", "2")
+				MediaCA.PlaySound("r2_codesrequired.aud", 2)
 				return
 			end
 
@@ -159,7 +159,7 @@ WorldLoaded = function()
 			end
 
 			Notification("Extraction transport inbound.")
-			MediaCA.PlaySound("r2_extraction.aud", "2")
+			MediaCA.PlaySound("r2_extraction.aud", 2)
 
 			Reinforcements.ReinforceWithTransport(USSR, "halo.paradrop", nil, { EvacSpawn.Location, EvacLanding.Location }, nil, function(transport, cargo)
 				transport.Land(EvacLanding)
@@ -275,7 +275,7 @@ TempleDiscovered = function()
 		IsTempleDiscovered = true
 		Beacon.New(USSR, TempleOfNod.CenterPosition)
 		Notification("Temple of Nod located.")
-		MediaCA.PlaySound("r2_templelocated.aud", "2")
+		MediaCA.PlaySound("r2_templelocated.aud", 2)
 		local autoCamera = Actor.Create("smallcamera", true, { Owner = USSR, Location = TempleOfNodLocation })
 		Trigger.AfterDelay(DateTime.Seconds(5), autoCamera.Destroy)
 	end

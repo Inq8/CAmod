@@ -24,17 +24,16 @@ namespace OpenRA.Mods.CA.Scripting
 			world = context.World;
 		}
 
-		// todo: use number instead of string for volumeModifier
 		[Desc("Play a sound file")]
-		public void PlaySound(string file, string volumeModifier)
+		public void PlaySound(string file, double volumeModifier)
 		{
-			Game.Sound.Play(SoundType.World, file, float.Parse(volumeModifier));
+			Game.Sound.Play(SoundType.World, file, (float)volumeModifier);
 		}
 
 		[Desc("Play a sound file at specific world position")]
-		public void PlaySoundAtPos(string file, string volumeModifier, WPos pos)
+		public void PlaySoundAtPos(string file, double volumeModifier, WPos pos)
 		{
-			Game.Sound.Play(SoundType.World, file, pos, float.Parse(volumeModifier));
+			Game.Sound.Play(SoundType.World, file, pos, (float)volumeModifier);
 		}
 	}
 }

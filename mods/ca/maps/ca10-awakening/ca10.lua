@@ -153,7 +153,7 @@ WorldLoaded = function()
 	end
 
 	Trigger.AfterDelay(DateTime.Seconds(2), function()
-		MediaCA.PlaySound("n_defendtemple.aud", "2")
+		MediaCA.PlaySound("n_defendtemple.aud", 2)
 	end)
 
 	Trigger.OnKilled(TemplePrime, function(self, killer)
@@ -275,11 +275,11 @@ InitUSSR = function()
 		Trigger.AfterDelay(BaseAttemptTimes[attemptCount], function()
 			if ObjectiveDestroyBases == nil then
 				Notification("The Soviets are attempting to set up a base in the area.")
-				MediaCA.PlaySound("n_sovietbase.aud", "2")
+				MediaCA.PlaySound("n_sovietbase.aud", 2)
 				ObjectiveDestroyBases = Nod.AddSecondaryObjective("Crush any Soviet attempts to establish a base\nbefore the timer runs out.")
 			else
 				Notification("The Soviets are attempting to set up another base.")
-				MediaCA.PlaySound("n_anothersovietbase.aud", "2")
+				MediaCA.PlaySound("n_anothersovietbase.aud", 2)
 			end
 			Reinforcements.Reinforce(USSR, { "mcv" }, { attempt.SpawnLocation, attempt.DeployLocation }, 0, function(a)
 				a.Deploy()
@@ -371,7 +371,7 @@ DoHaloDrop = function()
 end
 
 DeployCyborgs = function()
-	MediaCA.PlaySound("n_cyborgscomplete.aud", "2")
+	MediaCA.PlaySound("n_cyborgscomplete.aud", 2)
 
 	if CyborgWaves == 0 then
 		CyborgFactory1.RallyPoint = CyborgRally1.Location

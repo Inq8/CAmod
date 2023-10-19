@@ -340,7 +340,7 @@ CheckFields = function()
 
 	if FieldsClearedAndBeingHarvested < PreviousFieldsClearedAndBeingHarvested then
 		Notification("You have lost control of an ichor field.")
-		MediaCA.PlaySound("s_ichorfieldlost.aud", "2")
+		MediaCA.PlaySound("s_ichorfieldlost.aud", 2)
 	end
 end
 

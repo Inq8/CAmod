@@ -139,7 +139,7 @@ WarpInBanshees = function()
 
 			Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(3)), function()
 				Media.DisplayMessage("You have done well commander! Now behold; a taste of things to come. Use them wisely.", "Kane", HSLColor.FromHex("FF0000"))
-				MediaCA.PlaySound("thingstocome.aud", "2")
+				MediaCA.PlaySound("thingstocome.aud", 2)
 			end)
 		end)
 	end)

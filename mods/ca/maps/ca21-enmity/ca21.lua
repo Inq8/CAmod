@@ -241,7 +241,7 @@ WorldLoaded = function()
 	Trigger.AfterDelay(DateTime.Minutes(22), function()
 		Actor.Create("recondronedetection", true, { Owner = GDI })
 		Notification("Recon Drones are now equipped with stealth detection. This should help you locate the Nod bases in the area.")
-		MediaCA.PlaySound("c_recondrones", "2")
+		MediaCA.PlaySound("c_recondrones", 2)
 	end)
 end
 
