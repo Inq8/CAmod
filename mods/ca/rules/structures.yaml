@@ -573,7 +573,7 @@ AGUN:
 		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	WithMuzzleOverlay:
 	RenderRangeCircle:
-		RangeCircleType: aa
+		RangeCircleType: DefenseRangeAA
 	Power:
 		Amount: -50
 	ClassicFacingBodyOrientation:
@@ -636,6 +636,7 @@ DOME:
 		TargetTypes: Vehicle, Air, Structure
 		RequiresCondition: !jammed && !disabled && !being-warped
 	WithRangeCircle:
+		Type: RadarDetection
 		Range: 12c0
 		RequiresCondition: !jammed && !disabled && !being-warped
 	InfiltrateForExploration:
@@ -956,7 +957,7 @@ SAM:
 		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	WithMuzzleOverlay:
 	RenderRangeCircle:
-		RangeCircleType: aa
+		RangeCircleType: DefenseRangeAA
 	Power:
 		Amount: -40
 	ClassicFacingBodyOrientation:
@@ -2172,6 +2173,7 @@ FIX:
 		Condition: aircraft-repair
 		Range: 10c0
 	WithRangeCircle@AIRCRAFTREPAIR:
+		Type: AircraftRepair
 		Color: FFD000AA
 		Range: 10c0
 
@@ -3194,6 +3196,8 @@ NSAM:
 	DetectCloaked:
 		DetectionTypes: AirCloak
 		RequiresCondition: !(disabled || empdisable || being-warped)
+	RenderRangeCircle:
+		RangeCircleType: DefenseRangeAA
 
 GTWR:
 	Inherits: ^DefenseTD
@@ -3492,6 +3496,7 @@ HQ:
 		TargetTypes: Vehicle, Air, Structure
 		RequiresCondition: !jammed && !disabled && !being-warped
 	WithRangeCircle:
+		Type: RadarDetection
 		Range: 12c0
 		RequiresCondition: !jammed && !disabled && !being-warped
 	WithBuildingBib:
@@ -3609,6 +3614,7 @@ EYE:
 		TargetTypes: Vehicle, Air, Structure
 		RequiresCondition: !jammed && !disabled && !being-warped
 	WithRangeCircle:
+		Type: RadarDetection
 		Range: 12c0
 		RequiresCondition: !jammed && !disabled && !being-warped
 	InfiltrateForExploration:
@@ -3701,6 +3707,7 @@ REP:
 		Condition: aircraft-repair
 		Range: 10c0
 	WithRangeCircle@AIRCRAFTREPAIR:
+		Type: AircraftRepair
 		Color: FFD000AA
 		Range: 10c0
 
@@ -4165,7 +4172,7 @@ PRIS:
 		Name: Prism Tower
 	Building:
 	Selectable:
-		DecorationBounds: 1024, 1962, 0, -426
+		DecorationBounds: 1024, 1962, 0, -560
 	Health:
 		HP: 40000
 	Armor:
@@ -4212,7 +4219,12 @@ PRIS:
 		Amount: -75
 	ProvidesPrerequisite@buildingname:
 	WithRangeCircle@SUPPORT:
+		Type: PrismSupport
 		Range: 5c0
+		Color: ffffff66
+	WithPrismLinkVisualization:
+		Range: 5c0
+		Color: 00ffffff
 
 SPEN.nod:
 	Inherits: ^Building
@@ -4622,6 +4634,7 @@ SGEN:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
 	WithRangeCircle@SGEN:
+		Type: StealthGenerator
 		Range: 5c512
 		Color: 00aa00
 	ProximityExternalCondition@SGEN:

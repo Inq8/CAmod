@@ -2108,6 +2108,7 @@ MSG:
 		UndeployOnMove: true
 		UndeployOnPickup: true
 	WithRangeCircle@MSG:
+		Type: StealthGenerator
 		RequiresCondition: deployed
 		Range: 5c512
 		Color: 00aa00
@@ -2434,6 +2435,7 @@ QTNK:
 	Selectable:
 		DecorationBounds: 1877, 1621, 0, -170
 	WithRangeCircle:
+		Type: MADTank
 		Color: FFFF0080
 		Range: 7c0
 	-Crushable:
@@ -4775,6 +4777,7 @@ IFV:
 		Condition: hospitalheal
 		Range: 3c512
 	WithRangeCircle@MEDIC:
+		Type: IFVHeal
 		Color: 00FF0080
 		Range: 3c512
 		RequiresCondition: medturr
@@ -5827,10 +5830,6 @@ MSAR:
 		Range: 10c0
 		DetectionTypes: Cloak, Thief, AirCloak
 		RequiresCondition: deployed && !(empdisable || being-warped)
-	WithRangeCircle@Deployed:
-		Range: 10c0
-		Color: 999999AA
-		RequiresCondition: deployed && !(empdisable || being-warped)
 	ProvidesRadar:
 		RequiresCondition: deployed && !(empdisable || being-warped)
 	Selectable:
@@ -6290,6 +6289,7 @@ MEMP:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
 	WithRangeCircle:
+		Type: MEMP
 		Color: 0000FF80
 		Range: 5c0
 	Voiced:
