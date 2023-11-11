@@ -3801,6 +3801,7 @@ NERV:
 		TargetTypes: Vehicle, Air, Structure
 		RequiresCondition: !jammed && !disabled && !being-warped
 	WithRangeCircle:
+		Type: RadarDetection
 		Range: 12c0
 		RequiresCondition: !jammed && !disabled && !being-warped
 	WithBuildingBib:
@@ -4113,6 +4114,7 @@ SREP:
 		Condition: aircraft-repair
 		Range: 10c0
 	WithRangeCircle@AIRCRAFTREPAIR:
+		Type: AircraftRepair
 		Color: FFD000AA
 		Range: 10c0
 
@@ -4394,7 +4396,7 @@ SHAR:
 		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	WithMuzzleOverlay:
 	RenderRangeCircle:
-		RangeCircleType: aa
+		RangeCircleType: DefenseRangeAA
 	Power:
 		Amount: -50
 	ClassicFacingBodyOrientation:
@@ -4757,7 +4759,7 @@ GRCL:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4Immune
 	Health:
-		HP: 50000
+		HP: 56000
 	Armor:
 		Type: Light
 	PeriodicExplosion:
@@ -4785,6 +4787,7 @@ GRCL:
 		Delay: 25
 		RequiresCondition: !leeching
 	WithRangeCircle:
+		Type: GreaterCoalescence
 		Range: 3c768
 		Color: ff000099
 	ProximityExternalCondition@HEAL:
@@ -4800,6 +4803,10 @@ GRCL:
 		Interval: 20
 		VolumeMultiplier: 0.8
 		RequiresCondition: leeching
+	WithShadow:
+		Offset: 80, 160, 0
+		ZOffset: -161
+		ShadowColor: 11000070
 
 ^RiftBase:
 	Interactable:
