@@ -2806,6 +2806,7 @@
 		RepairingNotification: Repairing
 		RequiresCondition: !being-warped
 	InstantlyRepairable:
+		RequiresCondition: !tnt && !c4
 	AcceptsDeliveredCash:
 	WithMakeAnimation:
 		Condition: build-incomplete
@@ -3747,6 +3748,75 @@
 	Inherits@selectiondecorations: ^Selectable
 	Selectable:
 		Priority: 2
+
+^EngineerBase:
+	Inherits@SELECTION: ^SelectableSupportUnit
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+		Description: Utility infantry used for capturing/repairing structures.
+	TooltipExtras:
+		Weaknesses: • Unarmed
+		Attributes: • Captures enemy buildings\n• Repairs friendly structures & bridges\n• Defuses mines and bombs
+	Valued:
+		Cost: 400
+	Passenger:
+		CustomPipType: yellow
+	InstantlyRepairs:
+	RepairsBridges:
+		EnterBehaviour: Exit
+	CaptureManager:
+	Captures:
+		CaptureTypes: building
+		PlayerExperience: 25
+		CaptureDelay: 150
+	Armament@bombdefuser:
+		Weapon: DefuseKit
+		Cursor: goldwrench
+		OutsideRangeCursor: goldwrench
+		TargetRelationships: Ally
+		ForceTargetRelationships: None
+	Armament@minedefuser:
+		Weapon: MineDefuser
+		Cursor: goldwrench
+		OutsideRangeCursor: goldwrench
+		PauseOnCondition: !ammo
+		Name: secondary
+	Armament@minedefusercharge:
+		Weapon: MineDefuserCharger
+		Cursor: goldwrench
+		OutsideRangeCursor: goldwrench
+		Name: tertiary
+	AmmoPool@minedefuser:
+		Ammo: 1
+		InitialAmmo: 0
+		AmmoCondition: ammo
+		Armaments: secondary
+	ReloadAmmoPoolCA@minedefuser:
+		Delay: 75
+		Count: 1
+		RequiresCondition: charging
+		ShowSelectionBar: true
+		SelectionBarColor: ffffff
+	GrantConditionOnAttack@CHARGING:
+		Condition: charging
+		ArmamentNames: tertiary
+		RevokeDelay: 7
+	AutoTarget:
+	AutoTargetPriority@defuse:
+		ValidTargets: C4Attached, TNTAttached
+		InvalidTargets: NoAutoTarget
+		ValidRelationships: Ally
+	AutoTargetPriority@mines:
+		ValidTargets: Mine
+		ValidRelationships: Enemy, Neutral
+	AttackFrontal:
+		Armaments: primary, secondary, tertiary
+		PauseOnCondition: being-warped
+		FacingTolerance: 0
+	DetectCloaked:
+		Range: 2c512
+		DetectionTypes: Mine
 
 ^Viceroid:
 	Inherits@1: ^ExistsInWorld

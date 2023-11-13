@@ -515,55 +515,15 @@ S4:
 
 S6:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
-	Inherits@SELECTION: ^SelectableSupportUnit
+	Inherits@ENGINEER: ^EngineerBase
 	Buildable:
-		Queue: InfantrySQ, InfantryMQ
-		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 32
 		Prerequisites: ~infantry.scrin
 		IconPalette: chrome
-		Description: Utility infantry used for capturing/repairing structures.
-	TooltipExtras:
-		Weaknesses: • Unarmed
-		Attributes: • Captures enemy buildings\n• Repairs friendly structures & bridges\n• Defuses bombs
-	Valued:
-		Cost: 400
 	Tooltip:
 		Name: Assimilator
-	UpdatesPlayerStatistics:
-		AddToArmyValue: true
-	Health:
-		HP: 2500
-	Passenger:
-		CustomPipType: yellow
-	InstantlyRepairs:
-	RepairsBridges:
-		EnterBehaviour: Exit
-	CaptureManager:
-	Captures:
-		CaptureTypes: building
-		PlayerExperience: 25
-		CaptureDelay: 150
-	Armament@defuse:
-		Weapon: DefuseKit
-		Cursor: goldwrench
-		OutsideRangeCursor: goldwrench
-		TargetRelationships: Ally
-		ForceTargetRelationships: None
-		Name: secondary
-	AutoTarget:
-	AutoTargetPriority@defuse:
-		ValidTargets: C4Attached, TNTAttached
-		InvalidTargets: NoAutoTarget
-		ValidRelationships: Ally
-	AttackFrontal:
-		Armaments: primary, secondary
-		PauseOnCondition: being-warped
-		FacingTolerance: 0
 	Voiced:
 		VoiceSet: AssimilatorVoice
-	Targetable:
-		TargetTypes: Ground, Infantry, ChaosImmune
 
 BRST:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
@@ -1031,7 +991,7 @@ SEEK:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Buildings
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Can detect cloaked units, submarines and mines.\n• Can traverse water
+		Attributes: • Can detect cloaked units and submarines.\n• Can traverse water
 	Mobile:
 		Speed: 113
 		Locomotor: lighthover
@@ -1064,7 +1024,7 @@ SEEK:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 5c0
-		DetectionTypes: Cloak, Thief, AirCloak, Mine, Underwater
+		DetectionTypes: Cloak, Thief, AirCloak, Underwater
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
@@ -1106,7 +1066,7 @@ LACE:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Buildings
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Can detect cloaked units, submarines and mines.\n• Can traverse water
+		Attributes: • Can detect cloaked units and submarines.\n• Can traverse water
 	Mobile:
 		TurnSpeed: 40
 		Speed: 144
@@ -1143,7 +1103,7 @@ LACE:
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 5c0
-		DetectionTypes: Cloak, Thief, AirCloak, Mine, Underwater
+		DetectionTypes: Cloak, Thief, AirCloak, Underwater
 		RequiresCondition: !(empdisable || being-warped)
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
