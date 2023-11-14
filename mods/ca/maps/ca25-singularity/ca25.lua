@@ -422,6 +422,7 @@ end
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
 		Scrin.Resources = Scrin.ResourceCapacity - 500
+		SignalTransmitterPlayer.Resources = SignalTransmitterPlayer.ResourceCapacity - 500
 		NodSlaves.Resources = NodSlaves.ResourceCapacity - 500
 		AlliedSlaves.Resources = AlliedSlaves.ResourceCapacity - 500
 		SovietSlaves.Resources = SovietSlaves.ResourceCapacity - 500

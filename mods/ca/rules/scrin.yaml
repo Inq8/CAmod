@@ -138,10 +138,12 @@ VEHICLES.SCRIN:
 		Condition: shields-upgrade
 		Prerequisites: shields.upgrade
 	WithSpriteTurret@SHIELDS:
+		Turret: shield
 		RequiresCondition: shields-upgrade && shields-up
 		Sequence: shield
 		Palette: scrinshield-ignore-lighting-alpha50
 	Turreted@SHIELDS:
+		Turret: shield
 		PauseOnCondition: shields-upgrade
 		RequiresCondition: shields-upgrade
 	SpeedMultiplier@SHIELDWARP:
@@ -2208,6 +2210,8 @@ STMR:
 	SpeedMultiplier@EMPDISABLE:
 		Modifier: 0
 		RequiresCondition: empdisable
+	GpsRadarDot:
+		Sequence: Plane
 
 ENRV:
 	Inherits: ^Helicopter
@@ -2334,6 +2338,8 @@ ENRV:
 		RequiresCondition: empdisable
 	Shielded:
 		MaxStrength: 5625
+	GpsRadarDot:
+		Sequence: Plane
 
 DEVA:
 	Inherits: ^Helicopter
@@ -2467,6 +2473,8 @@ DEVA:
 		Prerequisites: aircraft.upgraded
 	Turreted@SHIELDS:
 		Offset: -64,0,0
+	GpsRadarDot:
+		Sequence: Plane
 
 PAC:
 	Inherits: ^Helicopter
@@ -2600,6 +2608,8 @@ PAC:
 		MaxStrength: 13000
 	Turreted@SHIELDS:
 		Offset: -128,0,0
+	GpsRadarDot:
+		Sequence: Plane
 
 INVA:
 	Inherits: ^NeutralPlane
@@ -4763,10 +4773,42 @@ GRCL:
 		Interval: 20
 		VolumeMultiplier: 0.8
 		RequiresCondition: leeching
+	MapEditorData:
+		Categories: Critter
 	WithShadow:
 		Offset: 80, 160, 0
 		ZOffset: -161
 		ShadowColor: 11000070
+
+TBCL:
+	Inherits: GRCL
+	Tooltip:
+		Name: Tiberium Coalescence
+	TooltipExtras:
+		Description: Pulsing biomass that damages nearby units.
+		-Attributes:
+	PeriodicExplosion:
+		Weapon: TiberiumCoalescence
+	Explodes:
+		Weapon: CorrupterExplode
+		EmptyWeapon: CorrupterExplode
+	-GrantConditionOnHealingReceived:
+	-WithColoredSelectionBox@PLAYERBOX:
+	-ProximityExternalCondition@HEAL:
+	-ConvertsDamageToHealth:
+	-ChangesHealth:
+	-WithRangeCircle:
+	Health:
+		HP: 150000
+	AttackFrontal:
+		FacingTolerance: 0
+	Targetable@TBCL:
+		TargetTypes: TiberiumCoalescence
+	-AmbientSoundCA:
+	WithShadow:
+		ShadowColor: 00110070
+	GpsRadarDot:
+		Sequence: LargeInfantry
 
 ^RiftBase:
 	Interactable:

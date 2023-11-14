@@ -1,0 +1,276 @@
+^Palettes:
+	PaletteFromFile@terrain-temperat:
+		Filename: alien.pal
+	GlobalLightingPaletteEffect:
+		Red: 1.3
+		Green: 1
+		Blue: 1.5
+		Ambient: 0.4
+	FixedColorPalette@BlueTiberium:
+		Color: ffffff
+
+^BaseWorld:
+	TerrainLighting:
+	ResourceRenderer:
+		ResourceTypes:
+			BlueTiberium:
+				Name: Purified Tiberium
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, ca28.lua
+	MissionData:
+		Briefing: ———[    Nod Introduction    ]———\n\nKane's cyborgs poured from the gateway on the Scrin homeworld. Kane's manipulation of the timeline meant that the Scrin were completely unprepared, however it would not take long for them to mobilize.\n\nThe gateway's exit was shifted to present the Scrin with additional front to contend with, then using cloaked transports Kane accompanied a contingent of his most elite cyborgs, leaving the bulk of his army to prepare for the inevitable arrival of Scrin forces.\n\nHis destination had been revealed to him by the Tacitus, an artifact containing ancient knowledge, which after painstaking efforts had finally revealed its true purpose.\n\n———[    Mission Briefing (Nod)   ]———\n\nWe have arrived. Soon our great purpose here will become clear, but we must proceed quickly.\n\nThe Scrin will no doubt have been alerted to our presence, and being here we threaten them in a way they have not been threatened for millennia.\n\nSomewhere within the caves before us are remnants of a great project that was violently ended and buried long ago by those who still rule the Scrin to this day.\n\nA great conflict ended here, and its embers lie beneath our feet. I intend to reignite those embers.\n\nIf we are successful, it will herald the dawn of a new age for both the Scrin and Mankind.\n\nTake command. Lead us through the caves. I have brought with me the means to navigating the caves, and the means to recovering the knowledge that the Scrin rulers thought they had wiped from existence.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: Difficulty
+		Description: The difficulty of the mission
+		Values:
+			easy: Easy
+			normal: Normal
+			hard: Hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: nodcrush
+
+Player:
+	PlayerResources:
+		DefaultCash: 0
+
+^Cyborg:
+	ChangesHealth@THEAL:
+		PercentageStep: 5
+		DamageCooldown: 50
+
+KANE:
+	Inherits: ^Soldier
+	Inherits@SELECTION: ^SelectableSupportUnit
+	Tooltip:
+		Name: Kane
+	TooltipExtras:
+		Description: Leader of the Brotherhood of Nod.
+		Weaknesses: • Unarmed
+		Attributes: • Can create point-to-point wormholes\n• Can detect artifact fragments
+	Health:
+		HP: 40000
+	Mobile:
+		Speed: 60
+		Voice: Move
+	RevealsShroud:
+		Range: 7c512
+		RevealGeneratedShroud: False
+	-Crushable:
+	-TakeCover:
+	WithInfantryBody:
+		IdleSequences: stand
+		StandSequences: stand
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
+	Voiced:
+		VoiceSet: KaneVoice
+	SpawnActorAbility:
+		Actor: nodwormhole
+		SkipMakeAnimations: false
+		Range: 6c512
+		CircleColor: aa0000
+		SpawnSounds: wormhole-open.aud
+		AmmoPool: wormholespawner
+		CanTargetShroud: false
+		AllowedTerrainTypes: Clear, Rough, Road, Tiberium, BlueTiberium, Beach, Ore, Gems
+	AmmoPool@WORMHOLESPAWNER:
+		Name: wormholespawner
+		Armaments: none
+		Ammo: 2
+	ReloadAmmoPoolCA@WORMHOLESPAWNER:
+		AmmoPool: wormholespawner
+		Delay: 250
+		ShowSelectionBar: true
+		SelectionBarColor: aaaaaa
+	WithAmmoPipsDecoration@WORMHOLESPAWNER:
+		AmmoPools: wormholespawner
+		RequiresSelection: true
+		Position: BottomLeft
+		Margin: 4, 3
+	DetectCloaked:
+		DetectionTypes: ArtifactFragment
+		Range: 5c0
+	RenderDetectionCircle:
+		Color: ffffff20
+		BorderColor: 00000020
+	KeepsDistance:
+	CaptureManager:
+	Captures:
+		CaptureTypes: building
+		PlayerExperience: 25
+		CaptureDelay: 150
+		ConsumedByCapture: false
+
+SCRINWORMHOLE:
+	Inherits: WORMHOLE
+	RenderSprites:
+		Image: wormhole
+	-PopControlled:
+	Health:
+		HP: 140000
+
+NODWORMHOLE:
+	Inherits: WORMHOLE
+	RenderSprites:
+		Image: wormhole
+	-RevealsShroud:
+	Targetable:
+		TargetTypes: Wormhole
+
+caveshroud:
+	Inherits: ^InvisibleDummy
+	Immobile:
+	CreatesShroud:
+		Range: 13c512
+	EditorOnlyTooltip:
+		Name: (caveshroud)
+	WithSpriteBody:
+	RenderSpritesEditorOnly:
+		Image: waypoint
+	BodyOrientation:
+		QuantizedFacings: 1
+	MapEditorData:
+		Categories: System
+
+fragment:
+	Interactable:
+	ScriptTriggers:
+	Immobile:
+		OccupiesSpace: false
+	RenderSprites:
+		Image: fragment
+		Palette: scrin
+	WithSpriteBody:
+	BodyOrientation:
+		QuantizedFacings: 1
+	HiddenUnderFog:
+		Type: CenterPosition
+	Tooltip:
+		Name: Artifact Fragment
+		ShowOwnerRow: false
+	MapEditorData:
+		Categories: Decoration
+	Cloak:
+		Palette: scrin
+		DetectionTypes: ArtifactFragment
+	WithDeathAnimation:
+		DeathSequencePalette: scrin
+		UseDeathTypeSuffix: false
+		FallbackSequence: die
+		DeathPaletteIsPlayerPalette: false
+	Health:
+		HP: 1
+	HitShape:
+
+RMBC:
+	RevealsShroud:
+		RevealGeneratedShroud: False
+
+ENLI:
+	RevealsShroud:
+		RevealGeneratedShroud: False
+
+SHAD:
+	RevealsShroud:
+		RevealGeneratedShroud: False
+	ReloadAmmoPoolCA:
+		Delay: 1500
+		Count: 1
+		ShowSelectionBar: true
+		SelectionBarColor: aaaaaa
+	Health:
+		HP: 15000
+
+SHAB:
+	RevealsShroud:
+		RevealGeneratedShroud: False
+	-GrantTimedCondition@active:
+	-KillsSelf:
+
+ACOL:
+	RevealsShroud:
+		RevealGeneratedShroud: False
+
+TPLR:
+	RevealsShroud:
+		RevealGeneratedShroud: False
+	Health:
+		HP: 40000
+
+S2:
+	Mobile:
+		Speed: 46
+
+S3:
+	Mobile:
+		Speed: 46
+
+S4:
+	Mobile:
+		Speed: 46
+
+PURIFIER:
+	Inherits: ^TechBuilding
+	Inherits@shape: ^2x2Shape
+	Selectable:
+		Bounds: 2048, 2048
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	RevealsShroud:
+		Range: 10c0
+	CaptureManager:
+	CapturableProgressBlink:
+	Capturable:
+		Types: building
+	CapturableProgressBar:
+	Tooltip:
+		Name: Ancient Device
+	WithIdleOverlay@ACTIVE:
+		Sequence: purification
+		RequiresCondition: !is-neutral
+		Offset: 800,50,-150
+	GrantConditionIfOwnerIsNeutral@NEUTRAL:
+		Condition: is-neutral
+	SeedsResource:
+		ResourceType: BlueTiberium
+		Interval: 2
+		RequiresCondition: !is-neutral
+	Health:
+		HP: 150000
+	-CaptureNotification:
+
+PURIFIERLIGHT:
+	Inherits: ^InvisibleDummy
+	Immobile:
+	TerrainLightSource:
+		Range: 11c0
+		Intensity: 0.4
+		BlueTint: 1
+		RedTint: 1
+		GreenTint: 1
+	EditorOnlyTooltip:
+		Name: (purifierlight)
+	WithSpriteBody:
+	RenderSpritesEditorOnly:
+		Image: waypoint
+	BodyOrientation:
+		QuantizedFacings: 1
+	MapEditorData:
+		Categories: System
+
+# Hunt() requires only 1 AttackBase
+DEVA:
+	-AttackFrontalCharged:
+	-Armament@PRIMARYUPG:
+	-AmbientSound@CHARGE:
+	-WithIdleOverlay@CHARGE1:
+	-WithIdleOverlay@CHARGE2:
+	-WithIdleOverlay@CHARGE3:

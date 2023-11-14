@@ -121,7 +121,7 @@ end
 -- Functions
 
 InitGreece = function()
-	AutoRepairBuildings(Greece, 10)
+	AutoRepairBuildings(Greece)
 	SetupRefAndSilosCaptureCredits(Greece)
 	AutoReplaceHarvesters(Greece)
 

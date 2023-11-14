@@ -1,0 +1,290 @@
+^Palettes:
+	PaletteFromFile@terrain-temperat:
+		Filename: alien.pal
+	GlobalLightingPaletteEffect:
+		Red: 1.3
+		Green: 1
+		Blue: 1.5
+		Ambient: 0.5
+	FlashPaletteEffect@PURIFICATION:
+		Type: Purification
+		ExcludePalettes: cursor
+
+^BaseWorld:
+	TerrainLighting:
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, ca29.lua
+	MissionData:
+		Briefing: The final phase of our mission here begins. I have always known that Tiberium was the key to unlocking humanity's potential, however my understanding was incomplete. The green crystal now so familiar to us is in fact a corrupted abomination.\n\nMillennia ago, the Scrin discovered Tiberium on this world. It heralded a glorious age of progress and peace, as wars over resources and territory faded away. However this earlier form of the crystal did not have the same propensity to grow and spread, and scarcity threatened to undo the progress that had been made.\n\nExperiments to increase rate at which Tiberium propagates were conducted, and were ultimately successful, but the new form was not without its drawbacks. The crystal grew much more rapidly, but emitted a type of radiation that led to changes in Scrin physiology. Exposure led to dependence and addiction.\n\nThere were those who felt the risks were too great, however their voices were silenced. The green crystal allowed Scrin civilization to progress, but there were those who saw its potential as a tool of control. To be deprived of Tiberium would now often mean death to the majority of the Scrin, so those who controlled its production had great power. Eventually, a supreme leader emerged - the Overlord - who has ruled the Scrin ever since.\n\nPockets of resistance emerged, and secret experiments were undertaken to find ways to eliminate the negative effects of the green crystal, however they were mercilessly hunted down. Seeing the futility of their efforts, they decided to hide their research in the hope that one day it would be rediscovered and the Scrin could be liberated.\n\nData storage devices were hastily sent to planets that would be potential future targets for Scrin harvesting operations, along with small samples of Tiberium. A device had been created which could purify Tiberium, but it was completed too late and the rebels did not have sufficient crystal to power it.\n\nAs the Overlord's forces closed in, the rebels hid the device and accepted their fate.\n\nSo we do not come here as conquerors commander, but as saviours. The Overlord and his sycophants have ruled the Scrin for thousands of years, using the population's dependence on Tiberium, and the threat of its supply being interrupted, as an excuse for unlimited control. We now have the means of ending this tyranny.\n\nWe must power bring the device to full power. Once enough Scrin have their dependence on Tiberium broken, and they are told the truth, the choice between freedom and servitude will finally be theirs to make.
+	MapOptions:
+		ShortGameCheckboxEnabled: False
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: Difficulty
+		Description: The difficulty of the mission
+		Values:
+			easy: Easy
+			normal: Normal
+			hard: Hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: elusive
+
+Player:
+	PlayerResources:
+		DefaultCash: 5000
+	SupportPowerBotModule@CAMPAIGN:
+		Decisions:
+			stormspikepower:
+				OrderName: stormspike
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
+			buzzerswarmpower:
+				OrderName: buzzerswarmai
+				MinimumAttractiveness: 1000
+				FineScanRadius: 2
+				Consideration@3:
+					Against: Enemy
+					Types: Infantry
+					Attractiveness: 2
+					TargetMetric: Value
+					CheckRadius: 2c0
+			suppressionpower:
+				OrderName: suppression
+				MinimumAttractiveness: 2000
+				FineScanRadius: 2
+				Consideration@3:
+					Against: Enemy
+					Types: Vehicle, Infantry
+					Attractiveness: 2
+					TargetMetric: Value
+					CheckRadius: 3c0
+			riftpower:
+				OrderName: rift
+				MinimumAttractiveness: 3000
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 5c0
+				Consideration@2:
+					Against: Ally
+					Types: Air, Ground, Water
+					Attractiveness: -10
+					TargetMetric: Value
+					CheckRadius: 7c0
+
+^TDPalette:
+	RenderSprites:
+		PlayerPalette: playertdunit
+
+^Infantry:
+	RenderSprites:
+		PlayerPalette: playertdunit
+	WithDeathAnimation:
+		DeathSequencePalette: playertdunit
+
+SHAD:
+	RenderSprites:
+		PlayerPalette: playertd
+	WithDeathAnimation:
+		DeathSequencePalette: playertd
+
+RMBC:
+	RenderSprites:
+		PlayerPalette: playertd
+	WithDeathAnimation:
+		DeathSequencePalette: playertd
+
+ENLI:
+	RenderSprites:
+		PlayerPalette: playertd
+	WithDeathAnimation:
+		DeathSequencePalette: playertd
+
+^BuildingTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+^DefenseTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+SAPC:
+	RenderSprites:
+		PlayerPalette: playerraunit
+
+HARV.TD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+AMCV:
+	RenderSprites:
+		PlayerPalette: playertd
+
+LTNK:
+	Buildable:
+		Prerequisites: ~vehicles.nod
+
+WEAP.TD:
+	-ProvidesPrerequisiteValidatedFaction@mtnk:
+	-ProvidesPrerequisite@apc2:
+
+VENM:
+	Buildable:
+		Prerequisites: ~aircraft.nod
+
+SPEC:
+	Buildable:
+		Prerequisites: tmpl, ~vehicles.nod
+
+ACOL:
+	Buildable:
+		Prerequisites: anyradar, obli, ~infantry.nod, ~!tmpp
+
+TPLR:
+	Buildable:
+		Prerequisites: anyradar, obli, ~infantry.nod, ~tmpp
+
+BH:
+	Buildable:
+		Prerequisites: anyradar, ~infantry.nod, ~techlevel.medium
+
+HFTK:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.nod
+
+HQ:
+	-ProduceActorPowerCA@hackercell:
+	-ProduceActorPowerCA@hackercellAI:
+	-CashHackPower@Legion:
+
+LQTF:
+	Inherits: ^Building
+	Inherits@SHAPE: ^2x2Shape
+	Inherits@UPG: ^ProducesUpgrades
+	RenderSprites:
+		Image: bio
+	Selectable:
+		Bounds: 2048, 2048
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+	Tooltip:
+		Name: Liquid Tiberium Processing Plant
+	Health:
+		HP: 150000
+	Armor:
+		Type: Wood
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !prepping
+	ExternalCondition@PREP:
+		Condition: prepping
+	-Sellable:
+	-SpawnActorsOnSell:
+	-SpawnActorOnDeath:
+	CaptureManager:
+		-BeingCapturedCondition:
+	AmmoPool@LIQUIDTIB:
+		Ammo: 10
+		InitialAmmo: 0
+	WithAmmoPipsDecoration@LIQUIDTIB:
+		PipCount: 10
+		RequiresSelection: false
+		Position: BottomLeft
+		Margin: 4, 3
+	ProductionBar@UPG:
+		Color: 00FF00
+
+TTRK:
+	Buildable:
+		Prerequisites: vehicles.nod
+		Description: Tanker for carrying liquid Tiberium
+	Valued:
+		Cost: 1000
+	TooltipExtras:
+		Weaknesses: • Very weak armor\n• Extremely volatile when full
+		-Attributes:
+	Tooltip:
+		Name: Liquid Tiberium Tanker
+	-KillsSelf:
+	-AttackFrontal:
+	-Armament@PRIMARY:
+	-GrantConditionOnAttack:
+	-GrantConditionOnDeploy:
+	Voiced:
+		VoiceSet: VehicleVoice
+	Mobile:
+		Voice: Action
+	Passenger:
+		Voice: Action
+	AmmoPool@LIQUIDTIB:
+		Ammo: 1
+		InitialAmmo: 0
+		AmmoCondition: ammo
+	WithAmmoPipsDecoration@LIQUIDTIB:
+		PipCount: 1
+		RequiresSelection: false
+		Position: BottomLeft
+		Margin: 4, 3
+	Explodes:
+		RequiresCondition: ammo
+	Explodes@EMPTY:
+		Weapon: UnitExplodeSmall
+		EmptyWeapon: UnitExplodeSmall
+		RequiresCondition: !ammo
+
+liquidtib:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Liquid Tiberium
+	Buildable:
+		Prerequisites: lqtf
+		Description: Converts refined Tiberium into liquid Tiberium.
+		-BuildLimit:
+		BuildDuration: 125
+		BuildPaletteOrder: 999
+	Valued:
+		Cost: 10000
+	RenderSprites:
+
+NERV:
+	DetonateWeaponPower@BUZZERSWARMAI:
+		Prerequisites: nerv
+		ChargeInterval: 6750
+	DetonateWeaponPower@STORMSPIKE:
+		Prerequisites: nerv
+
+RFGN:
+	DetonateWeaponPower@RiftGenerator:
+		ChargeInterval: 13500
+		RequiresCondition: rift-enabled
+	ExternalCondition@RIFTENABLED:
+		Condition: rift-enabled
+
+MANI:
+	DetonateWeaponPower@SUPPRESSION:
+		DisplayTimerRelationships: Ally
+
+# Hunt() requires only 1 AttackBase
+DEVA:
+	-AttackFrontalCharged:
+	-Armament@PRIMARYUPG:
+	-AmbientSound@CHARGE:
+	-WithIdleOverlay@CHARGE1:
+	-WithIdleOverlay@CHARGE2:
+	-WithIdleOverlay@CHARGE3:

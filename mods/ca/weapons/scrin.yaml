@@ -1491,6 +1491,30 @@ GreaterCoalescenceZap:
 		Image: leechhit
 		Inaccuracy: 128
 
+TiberiumCoalescence:
+	Inherits: GreaterCoalescence
+	ReloadDelay: 8
+	-Warhead@heal:
+	Warhead@zaps: FireShrapnel
+		Weapon: TiberiumCoalescenceZap
+		ImpactSounds: grcl-loop1.aud, grcl-loop2.aud
+
+TiberiumCoalescenceZap:
+	Inherits: GreaterCoalescenceZap
+	Range: 4c512
+	Projectile: PlasmaBeam
+		Colors: 00660006
+		Duration: 9
+	Warhead@1Dam: SpreadDamage
+		Damage: 800
+		DamageTypes: TriggerProne, RadiationDeath
+	Warhead@3Eff: CreateEffect
+		Image: ruin
+		Explosions: muzzle
+		ExplosionPalette: scrin
+	-Warhead@DRAIN:
+	-Warhead@SLOW:
+
 AtomizerBolts:
 	Report: atomizer-fire1.aud
 	ReloadDelay: 150

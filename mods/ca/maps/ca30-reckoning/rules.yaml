@@ -1,0 +1,304 @@
+^Palettes:
+	PaletteFromFile@terrain-temperat:
+		Filename: alien.pal
+	GlobalLightingPaletteEffect:
+		Red: 1.3
+		Green: 1
+		Blue: 1.5
+		Ambient: 0.5
+	FixedColorPalette@BlueTiberium:
+		Color: ffffff
+
+^BaseWorld:
+	TerrainLighting:
+	ResourceRenderer:
+		ResourceTypes:
+			BlueTiberium:
+				Name: Purified Tiberium
+
+^BasePlayer:
+	PlayerResources:
+		ResourceValues:
+			BlueTiberium: 25
+
+World:
+	LuaScript:
+		Scripts: campaign.lua, ca30.lua
+	MissionData:
+		Briefing: The device worked perfectly. Scrin for many miles around are no longer dependent on Tiberium to survive, or have had their dependence significantly reduced. With additional uses of the device, all Scrin can be free of their affliction.\n\nFor us, it means that the Earth can be similarly cleansed, and the tremendous power of Tiberium can be leveraged without side-effects.\n\nNews spread quickly amongst the Scrin of the Overlord's deception. Of course, those willing to trust the word of a human remain a minority, and the effects of the device have not yet spread widely enough to aid in persuading the wider Scrin population.\n\nMany Scrin have risen up against the Overlord's armies however, and we are in the midst of a civil war.\n\nThe Overlord's forces are mobilizing across the planet, so we have precious little time to strike a decisive blow. I have been contacted by a leader amongst the rebels who has indicated where the Overlord's most elite forces are amassing, and it has been suggested that defeating him there will weaken his authority enough to tip the scales in the rebels' favour, at least until the device has made the enormity of what is transpiring evident to all Scrin.\n\nThe rebels have engaged these forces already. Our assistance will be unexpected thanks to our brothers fighting on multiple other fronts, so I want you to take a small force, aid the rebels while our forces accumulate, then destroy the Overlord's primary base in the area before his armies from across the planet arrive.
+	MapOptions:
+		ShortGameCheckboxEnabled: True
+	ScriptLobbyDropdown@DIFFICULTY:
+		ID: difficulty
+		Label: Difficulty
+		Description: The difficulty of the mission
+		Values:
+			easy: Easy
+			normal: Normal
+			hard: Hard
+		Default: normal
+	MusicPlaylist:
+		StartingMusic: gateway
+
+Player:
+	PlayerResources:
+		DefaultCash: 0
+	SupportPowerBotModule@CAMPAIGN:
+		Decisions:
+			stormspikepower:
+				OrderName: stormspike
+				MinimumAttractiveness: 5
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: None
+					CheckRadius: 8c0
+			buzzerswarmpower:
+				OrderName: buzzerswarmai
+				MinimumAttractiveness: 1000
+				FineScanRadius: 2
+				Consideration@3:
+					Against: Enemy
+					Types: Infantry
+					Attractiveness: 2
+					TargetMetric: Value
+					CheckRadius: 2c0
+			suppressionpower:
+				OrderName: suppression
+				MinimumAttractiveness: 3000
+				FineScanRadius: 2
+				Consideration@3:
+					Against: Enemy
+					Types: Vehicle, Infantry
+					Attractiveness: 2
+					TargetMetric: Value
+					CheckRadius: 3c0
+			riftpower:
+				OrderName: rift
+				MinimumAttractiveness: 3000
+				Consideration@1:
+					Against: Enemy
+					Types: Structure
+					Attractiveness: 1
+					TargetMetric: Value
+					CheckRadius: 5c0
+				Consideration@2:
+					Against: Ally
+					Types: Air, Ground, Water
+					Attractiveness: -10
+					TargetMetric: Value
+					CheckRadius: 7c0
+
+^TDPalette:
+	RenderSprites:
+		PlayerPalette: playertdunit
+
+^Infantry:
+	RenderSprites:
+		PlayerPalette: playertdunit
+	WithDeathAnimation:
+		DeathSequencePalette: playertdunit
+	DamagedByTerrain@TIBDAMAGE:
+		Terrain: Tiberium
+
+SHAD:
+	RenderSprites:
+		PlayerPalette: playertd
+	WithDeathAnimation:
+		DeathSequencePalette: playertd
+
+RMBC:
+	RenderSprites:
+		PlayerPalette: playertd
+	WithDeathAnimation:
+		DeathSequencePalette: playertd
+
+ENLI:
+	RenderSprites:
+		PlayerPalette: playertd
+	WithDeathAnimation:
+		DeathSequencePalette: playertd
+
+^BuildingTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+^DefenseTD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+SAPC:
+	RenderSprites:
+		PlayerPalette: playerraunit
+
+HARV.TD:
+	RenderSprites:
+		PlayerPalette: playertd
+
+AMCV:
+	RenderSprites:
+		PlayerPalette: playertd
+
+HQ:
+	-ProduceActorPowerCA@hackercell:
+	-ProduceActorPowerCA@hackercellAI:
+	-CashHackPower@Legion:
+
+TMPL:
+	GrantExternalConditionPowerCA@Frenzy:
+		-Prerequisites:
+
+VENM:
+	Buildable:
+		Prerequisites: ~aircraft.nod
+
+SPEC:
+	Buildable:
+		Prerequisites: tmpl, ~vehicles.nod
+
+ACOL:
+	Buildable:
+		Prerequisites: anyradar, obli, ~infantry.nod, ~!tmpp
+
+TPLR:
+	Buildable:
+		Prerequisites: anyradar, obli, ~infantry.nod, ~tmpp
+
+BH:
+	Buildable:
+		Prerequisites: anyradar, ~infantry.nod, ~techlevel.medium
+
+HFTK:
+	Buildable:
+		Prerequisites: anyradar, ~vehicles.nod
+
+LTNK:
+	Buildable:
+		Prerequisites: ~vehicles.nod
+
+WEAP.TD:
+	-ProvidesPrerequisiteValidatedFaction@mtnk:
+	-ProvidesPrerequisite@apc2:
+
+OTPD:
+	Inherits: TPOD
+	Inherits@SHIELDS: ^ScrinShields
+	Turreted@SHIELDS:
+		Offset: 0,0,0
+	GrantCondition@SHIELDS:
+		Condition: shields-upgrade
+	Tooltip:
+		Name: Exterminator Tripod
+	-Buildable:
+	-CaptureManager:
+	-Capturable:
+	-CaptureNotification:
+	-Capturable@DRIVER_DEAD:
+	-GrantConditionIfOwnerIsNeutral:
+	-ChangesHealth@DRIVER_DEAD:
+	-TooltipDescription@DRIVER_DEAD:
+	-Targetable@DRIVERKILL:
+	-Targetable@DRIVERKILLLOWHP:
+	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
+	-Targetable@AICAPTURE:
+	TooltipExtras:
+		Description: Super heavy assault walker with beam weapons.
+	Mobile:
+		Speed: 36
+		PauseOnCondition: empdisable || being-warped || notmobile
+		ImmovableCondition: alive
+	GrantCondition@ALIVE:
+		Condition: alive
+	Armament@PRIMARY:
+		Weapon: ExterminatorLaser
+		LocalOffset: 800,650,1000
+	Armament@PRIMARY2:
+		Weapon: ExterminatorLaser
+		LocalOffset: 800,450,1500
+		FireDelay: 2
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	Armament@SECONDARY:
+		Name: secondary
+		Weapon: ExterminatorLaserReversed
+		LocalOffset: 800,-650,1000
+	Armament@SECONDARY2:
+		Name: secondary
+		Weapon: ExterminatorLaserReversed
+		LocalOffset: 800,-450,1500
+		FireDelay: 22
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
+	Health:
+		HP: 850000
+	Shielded:
+		MaxStrength: 600000
+		RegenAmount: 1000
+	Valued:
+		Cost: 5000
+	RevealsShroud:
+		Range: 7c0
+	TurretedFloating:
+		TurnSpeed: 8
+	Selectable:
+		Bounds: 1800, 3200, 0, -600
+	AutoTarget:
+		InitialStanceAI: AttackAnything
+	SpawnActorOnDeath:
+		Actor: OTPD.Husk
+	ExternalCondition@NORMAL:
+		Condition: difficulty-normal
+	ExternalCondition@EASY:
+		Condition: difficulty-easy
+	FirepowerMultiplier@NORMAL:
+		Modifier: 75
+		RequiresCondition: difficulty-normal
+	FirepowerMultiplier@EASY:
+		Modifier: 50
+		RequiresCondition: difficulty-easy
+	DamageMultiplier@NORMAL:
+		Modifier: 115
+		RequiresCondition: difficulty-normal
+	DamageMultiplier@EASY:
+		Modifier: 130
+		RequiresCondition: difficulty-easy
+	MustBeDestroyed:
+		RequiredForShortGame: true
+
+OTPD.Husk:
+	Inherits: TPOD.Husk
+	Tooltip:
+		Name: Husk (Exterminator Tripod)
+	RenderSprites:
+		Image: otpd.destroyed
+
+NERV:
+	DetonateWeaponPower@BUZZERSWARMAI:
+		Prerequisites: nerv
+		ChargeInterval: 6750
+	DetonateWeaponPower@STORMSPIKE:
+		Prerequisites: nerv
+
+RFGN:
+	DetonateWeaponPower@RiftGenerator:
+		ChargeInterval: 13500
+		RequiresCondition: rift-enabled
+	ExternalCondition@RIFTENABLED:
+		Condition: rift-enabled
+
+MANI:
+	DetonateWeaponPower@SUPPRESSION:
+		DisplayTimerRelationships: Ally
+
+SWAL:
+	-ChangesHealth:
+
+# Hunt() requires only 1 AttackBase
+DEVA:
+	-AttackFrontalCharged:
+	-Armament@PRIMARYUPG:
+	-AmbientSound@CHARGE:
+	-WithIdleOverlay@CHARGE1:
+	-WithIdleOverlay@CHARGE2:
+	-WithIdleOverlay@CHARGE3:

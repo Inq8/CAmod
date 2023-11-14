@@ -9,6 +9,7 @@
 #endregion
 
 using System.Linq;
+using System.Collections.Generic;
 using OpenRA.Activities;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
@@ -27,8 +28,12 @@ namespace OpenRA.Mods.CA.Activities
 		readonly AmmoPool ammoPool;
 		readonly int range;
 		readonly bool avoidActors;
+		readonly WDist maxRange;
+		readonly bool spawnInShroud;
+		readonly HashSet<string> allowedTerrainTypes;
 
-		public SpawnActor(Actor self, CPos targetCell, WPos targetPos, string type, bool skipMakeAnims, string[] spawnSounds, AmmoPool ammoPool, int range, bool avoidActors)
+		public SpawnActor(Actor self, CPos targetCell, WPos targetPos, string type, bool skipMakeAnims, string[] spawnSounds,
+			AmmoPool ammoPool, int range, bool avoidActors, WDist maxRange, bool spawnInShroud, HashSet<string> allowedTerrainTypes)
 		{
 			this.targetPos = targetPos;
 			this.targetCell = targetCell;
@@ -38,6 +43,9 @@ namespace OpenRA.Mods.CA.Activities
 			this.ammoPool = ammoPool;
 			this.range = range;
 			this.avoidActors = avoidActors;
+			this.maxRange = maxRange;
+			this.spawnInShroud = spawnInShroud;
+			this.allowedTerrainTypes = allowedTerrainTypes;
 		}
 
 		public override bool Tick(Actor self)
@@ -73,6 +81,9 @@ namespace OpenRA.Mods.CA.Activities
 					{
 						while (cell.MoveNext() && !placed)
 						{
+							if (!IsValidTargetCell(cell.Current, self))
+								continue;
+
 							var actorsInCell = self.World.ActorMap.GetActorsAt(cell.Current);
 
 							if (actorsInCell.Any())
@@ -97,6 +108,9 @@ namespace OpenRA.Mods.CA.Activities
 						if (ai.HasTraitInfo<AircraftInfo>()
 							&& ai.TraitInfo<AircraftInfo>().CanEnterCell(self.World, unit, cell.Current, SubCell.FullCell, null, BlockedByActor.None))
 							subCell = SubCell.FullCell;
+
+						if (!IsValidTargetCell(cell.Current, self))
+							continue;
 
 						if (subCell != SubCell.Invalid)
 						{
@@ -126,6 +140,16 @@ namespace OpenRA.Mods.CA.Activities
 						Game.Sound.Play(SoundType.World, spawnSounds, self.World, unit.CenterPosition);
 				}
 			});
+		}
+
+		bool IsValidTargetCell(CPos cell, Actor self)
+		{
+			var targetPos = self.World.Map.CenterOfCell(cell);
+			var sourcePos = self.CenterPosition;
+
+			return ((targetPos - sourcePos).Length <= maxRange.Length
+				&& (spawnInShroud || self.Owner.Shroud.IsExplored(cell))
+				&& (allowedTerrainTypes.Count == 0 || allowedTerrainTypes.Contains(self.World.Map.GetTerrainInfo(cell).Type)));
 		}
 
 		TypeDictionary CreateTypeDictionary(Actor self, CPos targetCell)
