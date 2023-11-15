@@ -18,6 +18,9 @@ ExterminatorLaser:
 	Warhead@1Dam: SpreadDamage
 		Damage: 2250
 		Spread: 512
+		Versus:
+			Wood: 45
+			Concrete: 50
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion, small_explosion_alt1, small_explosion_alt2, small_explosion_alt3
 
@@ -26,3 +29,15 @@ ExterminatorLaserReversed:
 	Projectile: PlasmaBeam
 		StartOffset: -150,-300,0
 		FollowingOffset: 50,100,0
+
+MicrowaveZap:
+	Warhead@emp: GrantExternalCondition
+		InvalidTargets: ExterminatorTripod
+
+MicrowaveZap.UPG:
+	Warhead@emp2: GrantExternalCondition
+		Range: 0c511
+		Duration: 50
+		Condition: empdisable
+		ValidTargets: ExterminatorTripod
+		InvalidTargets: Shielded

@@ -154,6 +154,14 @@ WorldLoaded = function()
 			return
 		end
 
+		Trigger.AfterDelay(DateTime.Minutes(1), function()
+			Utils.Do({ ScrinRef1, ScrinRef2 }, function(a)
+				if not a.IsDead and a.Owner == Scrin then
+					a.Sell()
+				end
+			end)
+		end)
+
 		ObjectiveProtectNerveCenter = GDI.AddObjective("Protect the captured Nerve Center.")
 		ObjectiveDestroyScrinBase = GDI.AddObjective("Destroy the Scrin base.")
 		GDI.MarkCompletedObjective(ObjectiveCaptureNerveCenter)
@@ -302,7 +310,7 @@ CheckSensors = function()
 end
 
 InitScrin = function()
-	RebuildExcludes.Scrin = { Actors = { SPower1, SPower2, SPower3, SPowered1, SPowered2, SPowered3, SPowered4, SPowered5 } }
+	RebuildExcludes.Scrin = { Actors = { SPower1, SPower2, SPower3, SPowered1, SPowered2, SPowered3, SPowered4, SPowered5, ScrinSilo1, ScrinSilo2, ScrinSilo3, ScrinRef1, ScrinRef2, StormColumn1, StormColumn2, ShardLauncher1, ShardLauncher2 } }
 
 	AutoRepairAndRebuildBuildings(Scrin, 15)
 	SetupRefAndSilosCaptureCredits(Scrin)

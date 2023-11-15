@@ -132,6 +132,7 @@ WorldLoaded = function()
 
 	InitObjectives(GDI)
 	InitScrin()
+	AdjustStartingCash()
 	SetupLightning()
 	SetupIonStorm()
     UpdateMissionText()
@@ -295,7 +296,7 @@ UpdateMissionText = function()
     local missionText = "Waves remaining: " .. WavesRemaining
 
     if Difficulty ~= "hard" then
-        missionText = missionText .. " -- Ships escaped: " .. NumBreakthroughs .. "/" .. MaxBreakthroughs[Difficulty]
+        missionText = missionText .. " -- Fleet vessels escaped: " .. NumBreakthroughs .. "/" .. MaxBreakthroughs[Difficulty]
     end
 
     local color = HSLColor.Yellow

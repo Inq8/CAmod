@@ -104,6 +104,18 @@ WorldLoaded = function()
         MediaCA.PlaySound("kane_liquidt.aud", 2)
         Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(14)), function()
             Tip("Liquid Tiberium can be processed via the Upgrades tab. Move a tanker next to the processing plant to pick up a shipment, then take it to the cave entrance in the north-east.")
+            Utils.Do({ InitAttacker1, InitAttacker2, InitAttacker3, InitAttacker4 }, function(a)
+                if not a.IsDead then
+                    a.AttackMove(PlayerStart.Location)
+                end
+            end)
+            Trigger.AfterDelay(DateTime.Seconds(10), function()
+                Utils.Do({ InitAttacker5, InitAttacker6, InitAttacker7 }, function(a)
+                    if not a.IsDead then
+                        a.AttackMove(PlayerStart.Location)
+                    end
+                end)
+            end)
         end)
     end)
 
@@ -224,13 +236,13 @@ BeginScrinAttacks = function()
 end
 
 UpdateMissionText = function()
-    local shipmentsText = "Shipments Complete: " .. ShipmentsComplete .. "/5"
+    local shipmentsText = "Shipments complete: " .. ShipmentsComplete .. "/5"
     local cooldownText
 
     if TimerTicks > 0 then
-        cooldownText = " -- Plant Status: Ready in " .. Utils.FormatTime(TimerTicks)
+        cooldownText = " -- Plant status: Ready in " .. Utils.FormatTime(TimerTicks)
     else
-        cooldownText = " -- Plant Status: Ready"
+        cooldownText = " -- Plant status: Ready"
     end
 
     UserInterface.SetMissionText(shipmentsText .. cooldownText, HSLColor.Yellow)

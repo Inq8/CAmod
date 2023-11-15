@@ -42,7 +42,7 @@ World:
 
 Player:
 	PlayerResources:
-		DefaultCash: 0
+		DefaultCash: 6500
 	SupportPowerBotModule@CAMPAIGN:
 		Decisions:
 			stormspikepower:
@@ -231,12 +231,12 @@ OTPD:
 		MuzzleSequence: muzzle
 		MuzzlePalette: scrin
 	Health:
-		HP: 850000
+		HP: 900000
 	Shielded:
-		MaxStrength: 600000
+		MaxStrength: 650000
 		RegenAmount: 1000
 	Valued:
-		Cost: 5000
+		Cost: 10000
 	RevealsShroud:
 		Range: 7c0
 	TurretedFloating:
@@ -258,13 +258,18 @@ OTPD:
 		Modifier: 50
 		RequiresCondition: difficulty-easy
 	DamageMultiplier@NORMAL:
-		Modifier: 115
+		Modifier: 120
 		RequiresCondition: difficulty-normal
 	DamageMultiplier@EASY:
-		Modifier: 130
+		Modifier: 140
 		RequiresCondition: difficulty-easy
 	MustBeDestroyed:
 		RequiredForShortGame: true
+	Targetable@OTPD:
+		TargetTypes: ExterminatorTripod
+	Targetable@SHIELDED:
+		TargetTypes: Shielded
+		RequiresCondition: shields-up
 
 OTPD.Husk:
 	Inherits: TPOD.Husk

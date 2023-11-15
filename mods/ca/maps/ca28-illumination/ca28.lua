@@ -70,7 +70,8 @@ WorldLoaded = function()
     Neutral = Player.GetPlayer("Neutral")
 	MissionPlayer = Nod
 	TimerTicks = 0
-    FragmentsFound = 0
+    FragmentsAcquired = {}
+    FragmentsAcquiredCount = 0
     FragmentsDetected = {}
 
 	Camera.Position = PlayerStart.CenterPosition
@@ -100,43 +101,45 @@ WorldLoaded = function()
     Utils.Do(fragments, function(fragment)
         local loc = fragment.Location
         local pos = fragment.CenterPosition
+        local fragmentId = tostring(fragment)
 
         Trigger.OnEnteredProximityTrigger(pos, WDist.New(5 * 1024), function(a, id)
             if a.Owner == Nod and a.Type == "kane" then
-                table.insert(FragmentsDetected, fragment)
+                FragmentsDetected[fragmentId] = true
             end
         end)
 
         Trigger.OnEnteredFootprint({ loc }, function(a, id)
-            if not fragment.IsDead and a.Owner == Nod then
-                Utils.Do(FragmentsDetected, function(f)
-                    if f == fragment then
-                        Trigger.RemoveFootprintTrigger(id)
-                        fragment.Kill()
-                        FragmentsFound = FragmentsFound + 1
-                        Media.PlaySound("fragment.aud")
-                        Notification("Aritfact fragment found.")
+            if not fragment.IsDead and a.Owner == Nod and FragmentsDetected[fragmentId] ~= nil and FragmentsAcquired[fragmentId] == nil then
+                Trigger.RemoveFootprintTrigger(id)
+                fragment.Kill()
+                FragmentsAcquired[tostring(fragment)] = true
+                FragmentsAcquiredCount = FragmentsAcquiredCount + 1
+                Media.PlaySound("fragment.aud")
+                Notification("Aritfact fragment found.")
+                UpdateMissionText()
 
-                        if FragmentsFound == 5 then
-                            Nod.MarkCompletedObjective(ObjectiveFindFragments)
+                if FragmentsAcquiredCount == 5 then
+                    Nod.MarkCompletedObjective(ObjectiveFindFragments)
 
-                            Trigger.AfterDelay(DateTime.Seconds(5), function()
-                                CaveShroud.Destroy()
-                                Beacon.New(Nod, HiddenChamberEntrance.CenterPosition)
-                                Notification("A hidden chamber has been revealed.")
-                                ObjectiveExploreHiddenChamber = Nod.AddObjective("Explore the hidden chamber.")
+                    Trigger.AfterDelay(DateTime.Seconds(5), function()
+                        CaveShroud1.Destroy()
+                        CaveShroud2.Destroy()
+                        CaveShroud3.Destroy()
+                        CaveShroud4.Destroy()
+                        CaveShroud5.Destroy()
+                        CaveShroud6.Destroy()
+                        CaveShroud7.Destroy()
+                        Beacon.New(Nod, HiddenChamberEntrance.CenterPosition)
+                        Notification("A hidden chamber has been revealed.")
+                        ObjectiveExploreHiddenChamber = Nod.AddObjective("Explore the hidden chamber.")
 
-                                Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
-                                    Media.DisplayMessage("With the fragments combined the path to our goal is revealed. Now we must get to the chamber before the Scrin.", "Kane", HSLColor.FromHex("FF0000"))
-                                    MediaCA.PlaySound("kane_fragmentscombined.aud", 2)
-                                end)
-                            end)
-                        end
-
-                        UpdateMissionText()
-                        return
-                    end
-                end)
+                        Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
+                            Media.DisplayMessage("With the fragments combined the path to our goal is revealed. Now we must get to the chamber before the Scrin.", "Kane", HSLColor.FromHex("FF0000"))
+                            MediaCA.PlaySound("kane_fragmentscombined.aud", 2)
+                        end)
+                    end)
+                end
             end
         end)
     end)
@@ -158,7 +161,7 @@ WorldLoaded = function()
             Media.DisplayMessage("The Scrin have no doubt located us by now. Protect the device!", "Kane", HSLColor.FromHex("FF0000"))
             MediaCA.PlaySound("kane_protect.aud", 2)
             Trigger.AfterDelay(DateTime.Seconds(2), function()
-                ObjectiveDefendPurifier = Nod.AddObjective("Protect the ancient contraption.")
+                ObjectiveDefendPurifier = Nod.AddObjective("Protect the ancient device.")
                 InitFinalBattle()
             end)
         end)
@@ -210,10 +213,10 @@ OncePerFiveSecondChecks = function()
 end
 
 UpdateMissionText = function()
-    if FragmentsFound == 5 then
+    if FragmentsAcquiredCount == 5 then
         UserInterface.SetMissionText("")
     else
-        UserInterface.SetMissionText("Artifact fragments collected: " .. FragmentsFound .. "/5", HSLColor.Yellow)
+        UserInterface.SetMissionText("Artifact fragments collected: " .. FragmentsAcquiredCount .. "/5", HSLColor.Yellow)
     end
 end
 

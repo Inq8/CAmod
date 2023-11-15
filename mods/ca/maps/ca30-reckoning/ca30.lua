@@ -299,6 +299,8 @@ InitScrin = function()
 end
 
 InitScrinRebels = function()
+	RebuildExcludes.ScrinRebels = { Actors = { FallenRebel1, FallenRebel2, FallenRebel3, FallenRebel4, FallenRebel5, FallenRebel6, FallenRebel7, FallenRebel8, FallenRebel9, FallenRebel10 } }
+
 	AutoRepairAndRebuildBuildings(ScrinRebels, 15)
 	AutoReplaceHarvesters(ScrinRebels)
 
