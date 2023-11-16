@@ -1,5 +1,5 @@
 
-LiquidTibCooldown = DateTime.Minutes(5)
+LiquidTibCooldown = DateTime.Minutes(4)
 
 RiftEnabledTime = {
 	easy = DateTime.Seconds((60 * 45) + 17),
@@ -7,17 +7,21 @@ RiftEnabledTime = {
 	hard = DateTime.Seconds((60 * 15) + 17),
 }
 
+ScrinReinforcementSpawns = {
+    ScrinReinforcementsSpawn1, ScrinReinforcementsSpawn2, ScrinReinforcementsSpawn3, ScrinReinforcementsSpawn4, ScrinReinforcementsSpawn5, ScrinReinforcementsSpawn6, ScrinReinforcementsSpawn7, ScrinReinforcementsSpawn8
+}
+
 Squads = {
 	ScrinMain = {
 		Delay = {
-			easy = DateTime.Minutes(6),
-			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2)
+			easy = DateTime.Seconds(270),
+			normal = DateTime.Minutes(3),
+			hard = DateTime.Seconds(90)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 50 } },
-			normal = { { MinTime = 0, Value = 50 }, { MinTime = DateTime.Minutes(12), Value = 100 } },
-			hard = { { MinTime = 0, Value = 80 }, { MinTime = DateTime.Minutes(10), Value = 160 } },
+			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(12), Value = 50 } },
+			normal = { { MinTime = 0, Value = 50 }, { MinTime = DateTime.Minutes(10), Value = 100 } },
+			hard = { { MinTime = 0, Value = 80 }, { MinTime = DateTime.Minutes(8), Value = 160 } },
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -27,7 +31,7 @@ Squads = {
 		FollowLeader = true,
 		IdleUnits = { },
 		ProducerActors = { Infantry = { Portal1, Portal2 }, Vehicles = { WarpSphere1, WarpSphere2 }, Aircraft = { GravityStabilizer1, GravityStabilizer2 } },
-		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
+		ProducerTypes = { Infantry = { "port", "wormhole" }, Vehicles = { "wsph", "wormhole" }, Aircraft = { "grav", "hiddenspawner" } },
 		Units = UnitCompositions.Scrin.Main,
 		AttackPaths = {
             { ScrinAttack1a.Location, ScrinAttack1b.Location, ScrinAttack1c.Location, ScrinAttack1d.Location },
@@ -67,6 +71,26 @@ Squads = {
 			}
 		}
 	},
+	ScrinRebelsMain = {
+		AttackValuePerSecond = {
+			easy = { { MinTime = 0, Value = 70 } },
+			normal = { { MinTime = 0, Value = 70 } },
+			hard = { { MinTime = 0, Value = 70 } },
+		},
+		QueueProductionStatuses = {
+			Infantry = false,
+			Vehicles = false,
+            Aircraft = false
+		},
+		FollowLeader = true,
+		IdleUnits = { },
+		ProducerActors = nil,
+		ProducerTypes = { Infantry = { "wormhole" }, Vehicles = { "wormhole" }, Aircraft = { "grav" } },
+		Units = UnitCompositions.Scrin.Main,
+		AttackPaths = {
+            { ScrinBaseCenter.Location },
+        },
+	},
 }
 
 WorldLoaded = function()
@@ -82,10 +106,20 @@ WorldLoaded = function()
 	InitObjectives(Nod)
 	AdjustStartingCash()
 	InitScrin()
-    UpdateMissionText()
 
     ObjectiveChargeDevice = Nod.AddObjective("Bring the device to full power.")
 	ObjectiveProtectLiquidTib = Nod.AddObjective("Protect liquid Tiberium processing plant.")
+
+    UpdateMissionText()
+
+    if Difficulty == "easy" then
+        NormalHardOnlyCarrier1.Destroy()
+        NormalHardOnlyCarrier2.Destroy()
+    end
+
+    if Difficulty ~= "hard" then
+        HardOnlyCarrier1.Destroy()
+    end
 
     Trigger.OnKilled(LiquidTibFacility, function(self, killer)
         if not Nod.IsObjectiveCompleted(ObjectiveProtectLiquidTib) then
@@ -191,6 +225,14 @@ end
 OncePerFiveSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 125 == 0 then
 		UpdatePlayerBaseLocation()
+
+        if not ScrinReinforcementsEnabled then
+            local scrinProducerActors = Scrin.GetActorsByTypes({ "sfac", "wsph", "port" })
+
+            if #scrinProducerActors == 0 then
+                InitScrinReinforcements()
+            end
+        end
 	end
 end
 
@@ -209,7 +251,8 @@ InitScrin = function()
 	end)
 
 	if Difficulty == "hard" then
-        IonConduits = Actor.Create("ioncon.upgrade", true, { Owner = Scrin })
+        Actor.Create("ioncon.upgrade", true, { Owner = Scrin })
+		Actor.Create("shields.upgrade", true, { Owner = Scrin })
 
 		Trigger.AfterDelay(DateTime.Minutes(15), function()
 			Actor.Create("carapace.upgrade", true, { Owner = Scrin })
@@ -231,11 +274,16 @@ BeginScrinAttacks = function()
 	end)
 
 	Trigger.AfterDelay(Squads.ScrinAir.Delay[Difficulty], function()
-        InitAirAttackSquad(Squads.ScrinAir, Scrin, Nod, { "harv", "harv.td", "arty.nod", "mlrs", "obli", "atwr", "gtwr", "gun.nod", "hq", "nuk2", "rmbc", "enli", "tplr" })
+        InitAirAttackSquad(Squads.ScrinAir, Scrin, Nod, { "harv", "harv.td", "arty.nod", "mlrs", "obli", "gun.nod", "wtnk", "hq", "tmpl", "nuk2", "rmbc", "enli", "tplr" })
 	end)
 end
 
 UpdateMissionText = function()
+    if Nod.IsObjectiveCompleted(ObjectiveChargeDevice) then
+        UserInterface.SetMissionText("")
+        return
+    end
+
     local shipmentsText = "Shipments complete: " .. ShipmentsComplete .. "/5"
     local cooldownText
 
@@ -274,7 +322,19 @@ PurificationWave = function()
                 ObjectiveDestroyRemainingLoyalists = Nod.AddObjective("Eliminate any hostile Scrin remaining.")
                 Nod.MarkCompletedObjective(ObjectivePurify)
                 PurifyScrin()
-
+                InitScrinReinforcements()
+                InitRebelReinforcements()
+                if not IslandGrav1.IsDead then
+                    IslandGrav1.Kill()
+                end
+                if not IslandGrav2.IsDead then
+                    IslandGrav2.Kill()
+                end
+                local wormholes = Scrin.GetActorsByTypes({ "wormhole" }, function(w)
+                    if not w.IsDead then
+                        w.GrantCondition("regen-disabled")
+                    end
+                end)
                 Trigger.AfterDelay(AdjustTimeForGameSpeed(4), function()
                     Lighting.Flash("Purification", AdjustTimeForGameSpeed(10))
                     Trigger.AfterDelay(AdjustTimeForGameSpeed(4), function()
@@ -306,10 +366,59 @@ end
 Purify = function(a)
     Trigger.ClearAll(a)
     local random = Utils.RandomInteger(1,100)
-    if random > 30 then
+    local threshold
+
+    if Difficulty == "easy" then
+        threshold = 30
+    elseif Difficulty == "normal" then
+        threshold = 40
+    else
+        threshold = 50
+    end
+
+    if random > threshold then
         a.Owner = ScrinRebels
     end
     Trigger.AfterDelay(1, function()
         IdleHunt(a)
     end)
+end
+
+InitScrinReinforcements = function()
+    if not ScrinReinforcementsEnabled then
+        ScrinReinforcementsEnabled = true
+        Utils.Do(ScrinReinforcementSpawns, function(s)
+            SpawnWormhole(s.Location)
+        end)
+        Utils.Do({ ScrinHiddenSpawn1.Location, ScrinHiddenSpawn2.Location }, function(loc)
+            Actor.Create("hiddenspawner", true, { Owner = Scrin, Location = loc })
+        end)
+    end
+end
+
+SpawnWormhole = function(loc)
+    local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = loc })
+    Trigger.OnKilled(wormhole, function()
+        Trigger.AfterDelay(DateTime.Minutes(1), function()
+            if not Nod.IsObjectiveCompleted(ObjectiveChargeDevice) then
+                SpawnWormhole(loc)
+            end
+        end)
+    end)
+end
+
+InitRebelReinforcements = function()
+    local rebelSpawns = { RebelSpawnPoint1, RebelSpawnPoint2 }
+
+    Utils.Do(rebelSpawns, function(s)
+        local wormhole = Actor.Create("wormhole", true, { Owner = ScrinRebels, Location = s.Location })
+        local units = Reinforcements.Reinforce(ScrinRebels, { "s1", "s3", "intl.ai", "devo", "s4", "s1", "tpod", "gscr", "intl", "s1", "s1" }, { wormhole.Location }, 10)
+
+        Utils.Do(units, function(a)
+            a.AttackMove(ScrinBaseCenter.Location)
+            IdleHunt(a)
+        end)
+    end)
+
+    InitAttackSquad(Squads.ScrinRebelsMain, ScrinRebels, Scrin)
 end

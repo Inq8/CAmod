@@ -184,6 +184,7 @@ WEAP.TD:
 OTPD:
 	Inherits: TPOD
 	Inherits@SHIELDS: ^ScrinShields
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Turreted@SHIELDS:
 		Offset: 0,0,0
 	GrantCondition@SHIELDS:
@@ -270,6 +271,9 @@ OTPD:
 	Targetable@SHIELDED:
 		TargetTypes: Shielded
 		RequiresCondition: shields-up
+	DamageTypeDamageMultiplier@A2GPROTECTION:
+		Modifier: 75
+		RequiresCondition: !difficulty-easy
 
 OTPD.Husk:
 	Inherits: TPOD.Husk

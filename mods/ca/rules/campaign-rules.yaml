@@ -278,6 +278,35 @@ radar.dummy:
 	ScriptTriggers:
 	ProvidesRadar:
 
+HIDDENSPAWNER:
+	Inherits@0: ^InvisibleDummy
+	Inherits@1: ^ProducesInfantry
+	Inherits@2: ^ProducesVehicles
+	Inherits@3: ^ProducesAircraft
+	Building:
+		Dimensions: 1,1
+		Footprint: _
+		TerrainTypes: Clear,Road
+	EditorOnlyTooltip:
+		Name: (hiddenspawner)
+	AlwaysVisible:
+	WithSpriteBody:
+	RenderSpritesEditorOnly:
+		Image: waypoint
+	BodyOrientation:
+		QuantizedFacings: 1
+	MapEditorData:
+		Categories: System
+	Exit:
+		ExitCell: 0,2
+	RallyPoint:
+	ExternalCondition@FIX1:
+		Condition: forceshield
+	ExternalCondition@FIX3:
+		Condition: invulnerability
+	ExternalCondition@FIX2:
+		Condition: being-warped
+
 E2:
 	Buildable:
 		Prerequisites: ~infantry.e2, ~!pyle

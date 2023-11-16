@@ -132,6 +132,7 @@ WorldLoaded = function()
 		HardOnlyUnit2.Destroy()
 		HardOnlyUnit3.Destroy()
 		HardOnlyUnit4.Destroy()
+		HardOnlyUnit5.Destroy()
 	end
 
 	if Difficulty == "hard" then

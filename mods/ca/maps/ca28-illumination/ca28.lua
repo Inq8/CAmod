@@ -28,7 +28,7 @@ ScrinCompositions = {
 }
 
 FinalBattleInfantryList = {
-    easy = { "s1", "s1", "s1", "s3", "s1", "gscr" },
+    easy = { "s1", "s1", "s1", "s3", "gscr", "s1" },
     normal = { "s1", "gscr", "s3", "s4", "s1", "s1", "s2", "s1" },
     hard = { "gscr", "s1", "s3", "s4", "s1", "gscr", "s3", "s1" }
 }

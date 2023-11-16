@@ -63,6 +63,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		IdleUnits = { },
+		RandomProducerActor = true,
 		ProducerActors = { Infantry = LeftScrinSpawners, Vehicles = LeftScrinSpawners, Aircraft = LeftScrinSpawners },
 		ProducerTypes = nil,
 		Units = UnitCompositions.Scrin.Main,
@@ -90,6 +91,7 @@ Squads = {
 		},
 		FollowLeader = true,
 		IdleUnits = { },
+		RandomProducerActor = true,
 		ProducerActors = { Infantry = MiddleScrinSpawners, Vehicles = MiddleScrinSpawners, Aircraft = MiddleScrinSpawners },
 		ProducerTypes = nil,
 		Units = {
