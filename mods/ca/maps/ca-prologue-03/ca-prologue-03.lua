@@ -32,8 +32,9 @@ WorldLoaded = function()
 	}
 
 	Trigger.OnEnteredProximityTrigger(Reveal2.CenterPosition, WDist.New(11 * 1024), function(a, id)
-		if a.Owner == MissionPlayer and a.Type ~= cameraType then
+		if a.Owner == MissionPlayer and a.Type ~= cameraType and not FirstRevealComplete then
 			Trigger.RemoveProximityTrigger(id)
+			FirstRevealComplete = true
 			local camera = Actor.Create("smallcamera", true, { Owner = GDI, Location = Reveal2.Location })
 
 			if UtilsCA.FogEnabled() then
