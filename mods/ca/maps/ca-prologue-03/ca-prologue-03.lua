@@ -177,7 +177,7 @@ DistGuns = function()
 			local distGunSounds = { "distguns1.aud", "distguns2.aud", "distguns3.aud" }
 			local cameraPos = Camera.Position
 			local posModifier = WVec.New(Utils.Random({ -5120, 3072, 5120 }), 0, 0)
-			MediaCA.PlaySoundAtPos(Utils.Random(distGunSounds), "1", cameraPos + posModifier)
+			MediaCA.PlaySoundAtPos(Utils.Random(distGunSounds), 1, cameraPos + posModifier)
 			DistGuns()
 		end
 	end)
