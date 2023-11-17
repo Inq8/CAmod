@@ -64,12 +64,18 @@ PAC:
 		Speed: 49
 
 TBCL:
+	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Wanders:
 		MinMoveDelay: 0
 		MaxMoveDelay: 50
 		AvoidTerrainTypes: Beach, Water, Rock
 	Health:
-		HP: 300000
+		HP: 350000
+	ChangesHealth:
+		PercentageStep: 1
+		Delay: 50
+		StartIfBelow: 101
+		DamageCooldown: 0
 
 SCOL:
 	Power:

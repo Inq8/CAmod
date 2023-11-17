@@ -52,14 +52,14 @@ Squads = {
 			hard = DateTime.Minutes(2)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 35 } },
-			normal = { { MinTime = 0, Value = 34 }, { MinTime = DateTime.Minutes(12), Value = 68 } },
-			hard = { { MinTime = 0, Value = 52 }, { MinTime = DateTime.Minutes(10), Value = 105 } },
+			easy = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(14), Value = 35 }, { MinTime = DateTime.Minutes(16), Value = 45 } },
+			normal = { { MinTime = 0, Value = 34 }, { MinTime = DateTime.Minutes(12), Value = 68 }, { MinTime = DateTime.Minutes(15), Value = 80 } },
+			hard = { { MinTime = 0, Value = 52 }, { MinTime = DateTime.Minutes(10), Value = 105 }, { MinTime = DateTime.Minutes(14), Value = 120 } }
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
 			Vehicles = false,
-			Aircraft = false,
+			Aircraft = false
 		},
 		FollowLeader = true,
 		IdleUnits = { },
@@ -80,14 +80,14 @@ Squads = {
 			hard = DateTime.Minutes(3)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 5 }, { MinTime = DateTime.Minutes(14), Value = 15 } },
-			normal = { { MinTime = 0, Value = 16 }, { MinTime = DateTime.Minutes(12), Value = 32 } },
-			hard = { { MinTime = 0, Value = 28 }, { MinTime = DateTime.Minutes(10), Value = 55 } },
+			easy = { { MinTime = 0, Value = 5 }, { MinTime = DateTime.Minutes(14), Value = 15 }, { MinTime = DateTime.Minutes(16), Value = 20 } },
+			normal = { { MinTime = 0, Value = 16 }, { MinTime = DateTime.Minutes(12), Value = 32 }, { MinTime = DateTime.Minutes(15), Value = 45 } },
+			hard = { { MinTime = 0, Value = 28 }, { MinTime = DateTime.Minutes(10), Value = 55 }, { MinTime = DateTime.Minutes(14), Value = 75 } }
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
 			Vehicles = false,
-			Aircraft = false,
+			Aircraft = false
 		},
 		FollowLeader = true,
 		IdleUnits = { },
@@ -103,18 +103,22 @@ Squads = {
 			normal = {
 				{ Vehicles = { "seek", "intl.ai2" }, },
 				{ Vehicles = { "seek", "seek", "seek" }, },
-				{ Vehicles = { "lace", "lace", "lace" }, },
+				{ Vehicles = { "lace", "lace", "lace" }, }
 			},
 			hard = {
-				{ Vehicles = { "intl", "intl.ai2", "seek" }, },
-				{ Vehicles = { "seek", "seek", "seek" }, },
+				{ Vehicles = { "intl", "intl.ai2", "seek" }, MaxTime = DateTime.Minutes(7) },
+				{ Vehicles = { "seek", "seek", "seek" }, MaxTime = DateTime.Minutes(7) },
 				{ Vehicles = { "lace", "lace", "seek", "seek" }, },
-				{ Vehicles = { "devo", "intl.ai2", "ruin" }, MinTime = DateTime.Minutes(7) },
+				{ Vehicles = { "devo", "intl.ai2", "ruin", "seek" }, MinTime = DateTime.Minutes(7) },
+				{ Vehicles = { "intl", "intl.ai2", { "seek", "lace" }, { "devo", "dark", "ruin" }, { "devo", "dark", "ruin" }  }, MinTime = DateTime.Minutes(12) }
 			}
         },
 		AttackPaths = {
             { MAttackRally1.Location },
-            { MAttackRally2a.Location, MAttackRally2b.Location }
+            { MAttackRally1.Location },
+            { MAttackRally2a.Location, MAttackRally2b.Location },
+            { MAttackRally2a.Location, MAttackRally2b.Location },
+			{ RAttackRally1.Location, RAttackRally2.Location, RAttackRally3, MAttackRally2b.Location }
         },
 	},
 }
@@ -200,6 +204,13 @@ InitScrin = function()
 	AutoRepairBuildings(Scrin)
 	Actor.Create("ioncon.upgrade", true, { Owner = Scrin })
 
+	local scrinGroundAttackers = Scrin.GetGroundAttackers()
+
+	Utils.Do(scrinGroundAttackers, function(a)
+		TargetSwapChance(a, 10)
+		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
+	end)
+
 	Trigger.AfterDelay(Squads.ScrinMain.Delay[Difficulty], function()
 		InitAttackSquad(Squads.ScrinMain, Scrin)
 	end)
@@ -259,6 +270,15 @@ SendFleetWave = function()
     local composition = Utils.Random(FleetWaveCompositions[Difficulty])
     local interval = 1
     local currentWave = NextWave
+
+	if Difficulty == "hard" and currentWave >= 7 then
+		table.insert(composition, "pac")
+		table.insert(composition, "deva")
+	end
+
+	if Difficulty == "normal" and currentWave >= 9 then
+		table.insert(composition, "pac")
+	end
 
     -- for each unit in the wave, get the possible base spawn points, pick one and generate offsetted entry/exit
     Utils.Do(composition, function(shipType)

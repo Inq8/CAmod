@@ -412,7 +412,7 @@ InitRebelReinforcements = function()
 
     Utils.Do(rebelSpawns, function(s)
         local wormhole = Actor.Create("wormhole", true, { Owner = ScrinRebels, Location = s.Location })
-        local units = Reinforcements.Reinforce(ScrinRebels, { "s1", "s3", "intl.ai", "devo", "s4", "s1", "tpod", "gscr", "intl", "s1", "s1" }, { wormhole.Location }, 10)
+        local units = Reinforcements.Reinforce(ScrinRebels, { "s1", "s3", "intl.ai2", "devo", "s4", "s1", "tpod", "gscr", "intl", "s1", "s1" }, { wormhole.Location }, 10)
 
         Utils.Do(units, function(a)
             a.AttackMove(ScrinBaseCenter.Location)
