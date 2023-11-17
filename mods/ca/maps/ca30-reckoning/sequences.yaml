@@ -1,0 +1,42 @@
+otpd:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: otpd.shp
+		Facings: 1
+		Start: 32
+	turret:
+		Filename: otpd.shp
+		Facings: 32
+		UseClassicFacings: True
+	move:
+		Filename: otpd.shp
+		Start: 33
+		Facings: 8
+		Length: 14
+		Tick: 90
+	muzzle:
+		Filename: leechhit.shp
+		Length: *
+		Frames: 4,3,2,1,0,4,3,2,1,0
+		BlendMode: Additive
+	icon:
+		Filename: tpodicon.shp
+	shield:
+		Filename: otpdshield.shp
+		Facings: 1
+		ZOffset: 1022
+		BlendMode: Additive
+		Offset: 0,-12
+
+otpd.destroyed:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: otpd.shp
+		Facings: 1
+		Start: 32
+		ZOffset: -512
+	turret:
+		Filename: otpd.shp
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512

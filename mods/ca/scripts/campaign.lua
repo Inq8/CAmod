@@ -671,9 +671,14 @@ ProduceNextAttackSquadUnit = function(squad, queue, unitIndex)
 		Trigger.AfterDelay(buildTime, function()
 			local producer = nil
 
-			-- find appropriate producer actor (either the first specific actor, or if not found, randomly selected of from specified types)
+			-- find appropriate producer actor (either the first/random specific actor, or if not found, randomly selected of from specified types)
 			if squad.ProducerActors ~= nil and squad.ProducerActors[queue] ~= nil then
-				Utils.Do(squad.ProducerActors[queue], function(a)
+				local producerActors = squad.ProducerActors[queue]
+				if squad.RandomProducerActor then
+					producerActors = Utils.Shuffle(producerActors)
+				end
+
+				Utils.Do(producerActors, function(a)
 					if producer == nil and not a.IsDead and a.Owner == squad.Player then
 						producer = a
 					end

@@ -422,6 +422,7 @@ end
 OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
 		Scrin.Resources = Scrin.ResourceCapacity - 500
+		SignalTransmitterPlayer.Resources = SignalTransmitterPlayer.ResourceCapacity - 500
 		NodSlaves.Resources = NodSlaves.ResourceCapacity - 500
 		AlliedSlaves.Resources = AlliedSlaves.ResourceCapacity - 500
 		SovietSlaves.Resources = SovietSlaves.ResourceCapacity - 500
@@ -500,6 +501,7 @@ OncePerFiveSecondChecks = function()
 					return
 				end
 
+				MediaCA.PlaySound("seth_morehackers.aud", 2)
 				Media.DisplayMessage("We are sending you another squad of hackers. Perhaps you'll be more careful with them this time.", "Nod Commander", HSLColor.FromHex("FF0000"))
 				DropHackers()
 			end)
@@ -644,8 +646,8 @@ end
 DropHackers = function()
 	Beacon.New(GDI, HackerDropLanding.CenterPosition)
 
-	Notification("Nod Hackers en route. Use them to hack into the Scrin Signal Transmitter. They claim to be able to bring the Mothership's shields down.")
-	MediaCA.PlaySound("c_hackers.aud", 2)
+	MediaCA.PlaySound("seth_hackers.aud", 2)
+	Media.DisplayMessage("Attention GDI commander. We are sending you some of our hackers. Use them to hack into the Scrin Signal Transmitter. They will be able to bring the Mothership's shields down for you.", "Nod Commander", HSLColor.FromHex("FF0000"))
 
 	local hackerFlare = Actor.Create("flare", true, { Owner = GDI, Location = HackerDropLanding.Location })
 	Trigger.AfterDelay(DateTime.Seconds(10), function()
