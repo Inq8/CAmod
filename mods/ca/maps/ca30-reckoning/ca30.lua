@@ -6,9 +6,15 @@ ExterminatorsStartTime = {
 }
 
 ExterminatorsInterval = {
-	easy = DateTime.Minutes(5),
-	normal = DateTime.Minutes(4),
-	hard = DateTime.Minutes(3),
+	easy = DateTime.Minutes(7),
+	normal = DateTime.Minutes(5) + DateTime.Seconds(30),
+	hard = DateTime.Minutes(4),
+}
+
+ExterminatorAttackCount = {
+	easy = 4,
+	normal = 4,
+	hard = 5
 }
 
 ExterminatorPatrolPaths = {
@@ -16,6 +22,7 @@ ExterminatorPatrolPaths = {
 	{ Exterminator2Patrol1.Location, Exterminator2Patrol2.Location, Exterminator2Patrol3.Location, Exterminator2Patrol4.Location },
 	{ Exterminator3Patrol1.Location, Exterminator3Patrol2.Location, Exterminator3Patrol3.Location, Exterminator3Patrol4.Location },
 	{ Exterminator4Patrol1.Location, Exterminator4Patrol2.Location, Exterminator4Patrol3.Location, Exterminator4Patrol4.Location },
+	{ Exterminator5Patrol1.Location, Exterminator5Patrol2.Location, Exterminator5Patrol3.Location, Exterminator5Patrol4.Location },
 }
 
 RiftEnabledTime = {
@@ -32,9 +39,9 @@ Squads = {
 			hard = DateTime.Minutes(2)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 50 } },
-			normal = { { MinTime = 0, Value = 50 }, { MinTime = DateTime.Minutes(12), Value = 100 } },
-			hard = { { MinTime = 0, Value = 80 }, { MinTime = DateTime.Minutes(10), Value = 160 } },
+			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(16), Value = 50 } },
+			normal = { { MinTime = 0, Value = 50 }, { MinTime = DateTime.Minutes(14), Value = 100 } },
+			hard = { { MinTime = 0, Value = 80 }, { MinTime = DateTime.Minutes(12), Value = 160 } },
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -57,7 +64,7 @@ Squads = {
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 20 } },
 			normal = { { MinTime = 0, Value = 30 } },
-			hard = { { MinTime = 0, Value = 40 } },
+			hard = { { MinTime = 0, Value = 40 }, { MinTime = DateTime.Minutes(30), Value = 60 } },
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -76,9 +83,9 @@ Squads = {
 	},
 	ScrinRebelsMain = {
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 32 } },
-			normal = { { MinTime = 0, Value = 22 } },
-			hard = { { MinTime = 0, Value = 12 } },
+			easy = { { MinTime = 0, Value = 35 } },
+			normal = { { MinTime = 0, Value = 25 } },
+			hard = { { MinTime = 0, Value = 15 }, { MinTime = DateTime.Minutes(20), Value = 35 } },
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -321,7 +328,7 @@ InitScrinRebels = function()
 end
 
 SendNextExterminator = function()
-	if NextExterminatorIndex <= 4 and not Victory then
+	if NextExterminatorIndex <= ExterminatorAttackCount[Difficulty] and not Victory then
 		local wormhole = Actor.Create("wormhole", true, { Owner = Scrin, Location = ExterminatorSpawn.Location })
 
 		Trigger.AfterDelay(DateTime.Seconds(2), function()

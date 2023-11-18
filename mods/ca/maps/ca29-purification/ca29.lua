@@ -390,7 +390,7 @@ InitScrinReinforcements = function()
         Utils.Do(ScrinReinforcementSpawns, function(s)
             SpawnWormhole(s.Location)
         end)
-        Utils.Do({ ScrinHiddenSpawn1.Location, ScrinHiddenSpawn2.Location }, function(loc)
+        Utils.Do({ ScrinHiddenSpawn1.Location, ScrinHiddenSpawn2.Location, ScrinHiddenSpawn3.Location, ScrinHiddenSpawn4.Location, ScrinHiddenSpawn5.Location, ScrinHiddenSpawn6.Location }, function(loc)
             Actor.Create("hiddenspawner", true, { Owner = Scrin, Location = loc })
         end)
     end
