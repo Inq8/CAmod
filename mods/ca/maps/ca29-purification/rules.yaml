@@ -182,7 +182,6 @@ HQ:
 LQTF:
 	Inherits: ^Building
 	Inherits@SHAPE: ^2x2Shape
-	Inherits@UPG: ^ProducesUpgrades
 	RenderSprites:
 		Image: bio
 	Selectable:
@@ -202,10 +201,6 @@ LQTF:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
-	ProvidesPrerequisite@buildingname:
-		RequiresCondition: !prepping
-	ExternalCondition@PREP:
-		Condition: prepping
 	-Sellable:
 	-SpawnActorsOnSell:
 	-SpawnActorOnDeath:
@@ -219,10 +214,12 @@ LQTF:
 		RequiresSelection: false
 		Position: BottomLeft
 		Margin: 4, 3
-	ProductionBar@UPG:
-		Color: 00FF00
+	Explodes:
+		Weapon: UnitExplodeToxinTruck
+		EmptyWeapon: UnitExplodeToxinTruck
 
 TTRK:
+	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Prerequisites: vehicles.nod
 		Description: Tanker for carrying liquid Tiberium
@@ -262,20 +259,6 @@ TTRK:
 		RequiresCondition: !ammo
 	MustBeDestroyed:
 		RequiredForShortGame: true
-
-liquidtib:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Liquid Tiberium
-	Buildable:
-		Prerequisites: lqtf
-		Description: Converts refined Tiberium into liquid Tiberium.
-		-BuildLimit:
-		BuildDuration: 125
-		BuildPaletteOrder: 999
-	Valued:
-		Cost: 3000
-	RenderSprites:
 
 NERV:
 	DetonateWeaponPower@BUZZERSWARMAI:

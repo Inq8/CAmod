@@ -1,5 +1,5 @@
 
-LiquidTibCooldown = DateTime.Minutes(4)
+LiquidTibCooldown = DateTime.Minutes(5)
 
 RiftEnabledTime = {
 	easy = DateTime.Seconds((60 * 45) + 17),
@@ -99,7 +99,7 @@ WorldLoaded = function()
     ScrinRebels = Player.GetPlayer("ScrinRebels")
 	MissionPlayer = Nod
     ShipmentsComplete = 0
-	TimerTicks = 0
+	TimerTicks = DateTime.Seconds(60)
 
 	Camera.Position = PlayerStart.CenterPosition
 
@@ -127,17 +127,11 @@ WorldLoaded = function()
         end
     end)
 
-    Trigger.OnAnyProduction(function(producer, produced, productionType)
-        if produced.Owner == Nod and produced.Type == "liquidtib" then
-            LiquidTibProduced()
-        end
-    end)
-
     Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
-        Media.DisplayMessage("Commander, we must bring the device to full power as quickly as possible. Transporting crystals will take too long, so liquid Tiberium is our only option. Use your refined reserves to fill tankers with liquid T, then bring them to the entrance to the cave system", "Kane", HSLColor.FromHex("FF0000"))
+        Media.DisplayMessage("Commander, we must bring the device to full power as quickly as possible. Transporting crystals will take too long, so liquid Tiberium is our only option. We have set up a liquid T production facility. Do not let it be destroyed, and as each shipment becomes available load it into a tanker and bring it to the entrance of the cave system.", "Kane", HSLColor.FromHex("FF0000"))
         MediaCA.PlaySound("kane_liquidt.aud", 2)
-        Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(14)), function()
-            Tip("Liquid Tiberium can be processed via the Upgrades tab. Move a tanker next to the processing plant to pick up a shipment, then take it to the cave entrance in the north-east.")
+        Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(18)), function()
+            Tip("Move a tanker next to the processing plant to pick up a prepared shipment, then take it to the cave entrance in the north-east.")
             Utils.Do({ InitAttacker1, InitAttacker2, InitAttacker3, InitAttacker4 }, function(a)
                 if not a.IsDead then
                     a.AttackMove(PlayerStart.Location)
@@ -166,7 +160,8 @@ WorldLoaded = function()
             if a.AmmoCount("primary") == 1 then
                 a.Reload("primary", -1)
                 ShipmentsComplete = ShipmentsComplete + 1
-                Notification("Liquid Tiberium delivered.")
+                Notification("Liquid Tiberium shipment delivered.")
+                MediaCA.PlaySound("n_liquidtibdelivered.aud", 2)
                 UpdateMissionText()
                 if ShipmentsComplete == 5 then
                     PurificationWave()
@@ -194,6 +189,7 @@ OncePerSecondChecks = function()
 				TimerTicks = TimerTicks - 25
 			else
 				TimerTicks = 0
+                LiquidTibProduced()
 			end
 			UpdateMissionText()
 		end
@@ -285,26 +281,23 @@ UpdateMissionText = function()
     end
 
     local shipmentsText = "Shipments complete: " .. ShipmentsComplete .. "/5"
-    local cooldownText
-
-    if TimerTicks > 0 then
-        cooldownText = " -- Plant status: Ready in " .. Utils.FormatTime(TimerTicks)
-    else
-        cooldownText = " -- Plant status: Ready"
-    end
-
+    local cooldownText = " -- Next shipment ready in " .. Utils.FormatTime(TimerTicks)
     UserInterface.SetMissionText(shipmentsText .. cooldownText, HSLColor.Yellow)
 end
 
 LiquidTibProduced = function()
-    if not CooldownTip then
-        CooldownTip = true
-        Tip("The plant requires time to prepare before each batch of liquid Tiberium is produced.")
+    if Nod.IsObjectiveCompleted(ObjectiveChargeDevice) then
+        return
     end
 
     TimerTicks = LiquidTibCooldown
-    LiquidTibFacility.GrantCondition("prepping", LiquidTibCooldown)
-    LiquidTibFacility.Reload("primary", 1)
+    Notification("Liquid Tiberium shipment ready.")
+    MediaCA.PlaySound("n_liquidtibready.aud", 2)
+
+    if not LiquidTibFacility.IsDead then
+        LiquidTibFacility.Reload("primary", 1)
+        Beacon.New(Nod, LiquidTibFacility.CenterPosition)
+    end
 end
 
 PurificationWave = function()
