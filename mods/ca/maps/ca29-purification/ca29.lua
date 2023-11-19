@@ -323,10 +323,13 @@ PurificationWave = function()
                 if not IslandGrav2.IsDead then
                     IslandGrav2.Kill()
                 end
-                local wormholes = Scrin.GetActorsByTypes({ "wormhole" }, function(w)
-                    if not w.IsDead then
-                        w.GrantCondition("regen-disabled")
-                    end
+                Trigger.AfterDelay(1, function()
+                    local wormholes = Scrin.GetActorsByType("wormhole")
+                    Utils.Do(wormholes, function(w)
+                        if not w.IsDead then
+                            w.GrantCondition("regen-disabled")
+                        end
+                    end)
                 end)
                 Trigger.AfterDelay(AdjustTimeForGameSpeed(4), function()
                     Lighting.Flash("Purification", AdjustTimeForGameSpeed(10))
