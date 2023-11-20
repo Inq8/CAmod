@@ -344,26 +344,24 @@ SendNextExterminator = function()
 			end
 
 			local reinforcements = Reinforcements.Reinforce(Scrin, { "otpd" }, { ExterminatorSpawn.Location }, 10, function(a)
-				a.Patrol(ExterminatorPatrolPaths[NextExterminatorIndex])
-				IdleHunt(a)
+				local path = ExterminatorPatrolPaths[NextExterminatorIndex]
+				a.Patrol(path)
+
+				Trigger.OnIdle(a, function(self)
+					self.Patrol(path)
+				end)
 
 				if Difficulty ~= "hard" then
 					a.GrantCondition("difficulty-" .. Difficulty)
 				end
 
 				Trigger.AfterDelay(DateTime.Minutes(25), function()
-					if not a.IsDead then
-						a.Stop()
-					end
+					AggroExterminator(a)
 				end)
 
 				Trigger.OnDamaged(a, function(self, attacker, damage)
-					if attacker == MissionPlayer then
-						Trigger.ClearAll(a)
-						a.Stop()
-						Trigger.AfterDelay(1, function()
-							IdleHunt(a)
-						end)
+					if attacker.Owner == MissionPlayer and damage > 500 then
+						AggroExterminator(self)
 					end
 				end)
 
@@ -377,6 +375,16 @@ SendNextExterminator = function()
 					SendNextExterminator()
 				end)
 			end)
+		end)
+	end
+end
+
+AggroExterminator = function(a)
+	if not a.IsDead then
+		Trigger.ClearAll(a)
+		a.Stop()
+		Trigger.AfterDelay(1, function()
+			IdleHunt(a)
 		end)
 	end
 end
