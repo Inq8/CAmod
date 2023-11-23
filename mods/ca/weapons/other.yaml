@@ -2769,3 +2769,11 @@ MineDefuser:
 	Warhead@3Eff: CreateEffect
 		Explosions: med_explosion
 		ImpactSounds: mineblo1.aud
+
+MineDefuserCharger:
+	Inherits: MineDefuser
+	-Warhead@1Dam:
+	Warhead@Dummy: Dummy
+		ValidTargets: Mine
+	-Warhead@1Def:
+	-Warhead@3Eff:

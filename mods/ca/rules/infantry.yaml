@@ -578,25 +578,19 @@ E4:
 
 E6:
 	Inherits: ^Soldier
-	Inherits@SELECTION: ^SelectableSupportUnit
+	Inherits@ENGINEER: ^EngineerBase
 	Buildable:
-		Queue: InfantrySQ, InfantryMQ
-		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 30
+		BuildPaletteOrder: 31
 		Prerequisites: ~infantry.ra
-		Description: Utility infantry used for capturing/repairing structures.
-	TooltipExtras:
-		Weaknesses: • Unarmed
-		Attributes: • Captures enemy buildings\n• Repairs friendly structures & bridges\n• Defuses bombs
-	Valued:
-		Cost: 400
 	Tooltip:
 		Name: Engineer
-	UpdatesPlayerStatistics:
-		AddToArmyValue: true
+	Voiced:
+		VoiceSet: EngineerVoice
+	Targetable:
+		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	WithInfantryBody:
 		StandSequences: stand
-		RequiresCondition: undeployed && !parachute && !being-warped
+		RequiresCondition: !parachute && !being-warped
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
@@ -640,36 +634,6 @@ E6:
 	GrantConditionOnPrerequisite@ENTRENCH:
 		Condition: entrench-upgrade
 		Prerequisites: entrench.upgrade
-	Passenger:
-		CustomPipType: yellow
-	InstantlyRepairs:
-	RepairsBridges:
-		EnterBehaviour: Exit
-	CaptureManager:
-	Captures:
-		CaptureTypes: building
-		PlayerExperience: 25
-		CaptureDelay: 150
-	Armament@defuse:
-		Weapon: DefuseKit
-		Cursor: goldwrench
-		OutsideRangeCursor: goldwrench
-		TargetRelationships: Ally
-		ForceTargetRelationships: None
-		Name: secondary
-	AutoTarget:
-	AutoTargetPriority@defuse:
-		ValidTargets: C4Attached, TNTAttached
-		InvalidTargets: NoAutoTarget
-		ValidRelationships: Ally
-	AttackFrontal:
-		Armaments: primary, secondary
-		PauseOnCondition: being-warped
-		FacingTolerance: 0
-	Voiced:
-		VoiceSet: EngineerVoice
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 
 SPY:
 	Inherits: ^Soldier
@@ -1894,47 +1858,13 @@ RMBO:
 
 N6:
 	Inherits: ^Soldier
-	Inherits@SELECTION: ^SelectableSupportUnit
+	Inherits@ENGINEER: ^EngineerBase
 	Buildable:
-		Queue: InfantrySQ, InfantryMQ
-		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 31
 		Prerequisites: ~infantry.td
 		IconPalette: chrometd
-		Description: Utility infantry used for capturing/repairing structures.
-	TooltipExtras:
-		Weaknesses: • Unarmed
-		Attributes: • Captures enemy buildings\n• Repairs friendly structures & bridges\n• Defuses bombs
-	Valued:
-		Cost: 400
 	Tooltip:
 		Name: Engineer
-	Passenger:
-		CustomPipType: yellow
-	InstantlyRepairs:
-	RepairsBridges:
-		EnterBehaviour: Exit
-	CaptureManager:
-	Captures:
-		CaptureTypes: building
-		PlayerExperience: 25
-		CaptureDelay: 150
-	Armament@defuse:
-		Weapon: DefuseKit
-		Cursor: goldwrench
-		OutsideRangeCursor: goldwrench
-		TargetRelationships: Ally
-		ForceTargetRelationships: None
-		Name: secondary
-	AutoTarget:
-	AutoTargetPriority@defuse:
-		ValidTargets: C4Attached, TNTAttached
-		InvalidTargets: NoAutoTarget
-		ValidRelationships: Ally
-	AttackFrontal:
-		Armaments: primary, secondary
-		PauseOnCondition: being-warped
-		FacingTolerance: 0
 	Voiced:
 		VoiceSet: EngineerVoice
 	Targetable:

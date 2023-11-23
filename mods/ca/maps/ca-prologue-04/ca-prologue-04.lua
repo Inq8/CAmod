@@ -94,7 +94,7 @@ end
 -- Functions
 
 InitGDI = function()
-	AutoRepairBuildings(GDI, 10)
+	AutoRepairBuildings(GDI)
 	SetupRefAndSilosCaptureCredits(GDI)
 	AutoReplaceHarvesters(GDI)
 

@@ -32,8 +32,9 @@ WorldLoaded = function()
 	}
 
 	Trigger.OnEnteredProximityTrigger(Reveal2.CenterPosition, WDist.New(11 * 1024), function(a, id)
-		if a.Owner == MissionPlayer and a.Type ~= cameraType then
+		if a.Owner == MissionPlayer and a.Type ~= cameraType and not FirstRevealComplete then
 			Trigger.RemoveProximityTrigger(id)
+			FirstRevealComplete = true
 			local camera = Actor.Create("smallcamera", true, { Owner = GDI, Location = Reveal2.Location })
 
 			if UtilsCA.FogEnabled() then
@@ -155,7 +156,7 @@ end
 -- Functions
 
 InitUSSR = function()
-	AutoRepairBuildings(USSR, 10)
+	AutoRepairBuildings(USSR)
 
 	local ussrGroundAttackers = USSR.GetGroundAttackers()
 
@@ -177,7 +178,7 @@ DistGuns = function()
 			local distGunSounds = { "distguns1.aud", "distguns2.aud", "distguns3.aud" }
 			local cameraPos = Camera.Position
 			local posModifier = WVec.New(Utils.Random({ -5120, 3072, 5120 }), 0, 0)
-			MediaCA.PlaySoundAtPos(Utils.Random(distGunSounds), "1", cameraPos + posModifier)
+			MediaCA.PlaySoundAtPos(Utils.Random(distGunSounds), 1, cameraPos + posModifier)
 			DistGuns()
 		end
 	end)

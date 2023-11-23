@@ -73,6 +73,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If true allow targeting in shroud.")]
 		public readonly bool CanTargetShroud = true;
 
+		[Desc("List of valid terrain types to spawn at. Leave blank for any.")]
+		public readonly HashSet<string> AllowedTerrainTypes = new();
+
 		[Desc("Play a randomly selected sound from this list when spawning the actor.")]
 		public readonly string[] SpawnSounds = Array.Empty<string>();
 
@@ -161,7 +164,7 @@ namespace OpenRA.Mods.CA.Traits
 				if (Info.Range > WDist.Zero)
 					self.QueueActivity(move.MoveWithinRange(order.Target, Info.Range, targetLineColor: Info.TargetLineColor));
 
-				self.QueueActivity(new SpawnActor(self, cell, order.Target.CenterPosition, Info.Actor, Info.SkipMakeAnimations, Info.SpawnSounds, ammoPool, 3, true));
+				self.QueueActivity(new SpawnActor(self, cell, order.Target.CenterPosition, Info.Actor, Info.SkipMakeAnimations, Info.SpawnSounds, ammoPool, 3, true, Info.Range, Info.CanTargetShroud, Info.AllowedTerrainTypes));
 				self.ShowTargetLines();
 			}
 		}
@@ -252,7 +255,8 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			if (self.IsInWorld && self.Location != cell
 				&& ability.CanSpawnActor
-				&& (info.CanTargetShroud || self.Owner.Shroud.IsExplored(cell)))
+				&& (info.CanTargetShroud || self.Owner.Shroud.IsExplored(cell))
+				&& (info.AllowedTerrainTypes.Count == 0 || info.AllowedTerrainTypes.Contains(world.Map.GetTerrainInfo(cell).Type)))
 				return info.TargetCursor;
 			else
 				return info.TargetBlockedCursor;

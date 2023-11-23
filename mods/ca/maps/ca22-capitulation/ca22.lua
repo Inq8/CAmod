@@ -249,6 +249,10 @@ WorldLoaded = function()
 		MediaCA.PlaySound("suspicious.aud", 2)
 		Spy.Move(SouthDelivery3.Location)
 		SpyKiller.Attack(Spy)
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(10)), function()
+			Media.DisplayMessage("Attention you capitalist dogs! My defenses are impenetrable. Leave at once, or prepare to be crushed!", "Stalin", HSLColor.FromHex("DD0000"))
+			MediaCA.PlaySound("stalin_warning.aud", 2)
+		end)
 	end)
 end
 

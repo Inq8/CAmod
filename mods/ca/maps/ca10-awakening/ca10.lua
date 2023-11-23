@@ -194,6 +194,7 @@ OncePerSecondChecks = function()
 				TemplePrime.GrantCondition("awakening-complete")
 			end
 
+			MediaCA.PlaySound("n_cyborgscomplete.aud", 2)
 			DeployCyborgs()
 
 			if ObjectiveDestroyBases ~= nil then
@@ -371,8 +372,6 @@ DoHaloDrop = function()
 end
 
 DeployCyborgs = function()
-	MediaCA.PlaySound("n_cyborgscomplete.aud", 2)
-
 	if CyborgWaves == 0 then
 		CyborgFactory1.RallyPoint = CyborgRally1.Location
 		CyborgFactory2.RallyPoint = CyborgRally2.Location

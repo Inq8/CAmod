@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System;
 using System.Linq;
 using OpenRA.GameRules;
 using OpenRA.Mods.Common;
@@ -43,6 +44,9 @@ namespace OpenRA.Mods.CA.Warheads
 
 		[Desc("Does this weapon aim at the target's center regardless of other targetable offsets?")]
 		public readonly bool TargetActorCenter = false;
+
+		[Desc("List of sounds that can be played on impact.")]
+		public readonly string[] ImpactSounds = Array.Empty<string>();
 
 		WeaponInfo weapon;
 
@@ -108,6 +112,8 @@ namespace OpenRA.Mods.CA.Warheads
 					? world.SharedRandom.Next(Amount[0], Amount[1])
 					: Amount[0];
 
+			var targetFound = false;
+
 			for (var i = 0; i < amount; i++)
 			{
 				var shrapnelTarget = Target.Invalid;
@@ -127,6 +133,8 @@ namespace OpenRA.Mods.CA.Warheads
 
 				if (shrapnelTarget.Type == TargetType.Invalid)
 					continue;
+
+				targetFound = true;
 
 				var shrapnelFacing = (shrapnelTarget.CenterPosition - epicenter).Yaw;
 
@@ -164,6 +172,13 @@ namespace OpenRA.Mods.CA.Warheads
 					if (projectileArgs.Weapon.Report != null && projectileArgs.Weapon.Report.Length > 0)
 						Game.Sound.Play(SoundType.World, projectileArgs.Weapon.Report.Random(firedBy.World.SharedRandom), target.CenterPosition);
 				}
+			}
+
+			if (targetFound)
+			{
+				var impactSound = ImpactSounds.RandomOrDefault(world.LocalRandom);
+				if (impactSound != null)
+					Game.Sound.Play(SoundType.World, impactSound, target.CenterPosition);
 			}
 		}
 	}
