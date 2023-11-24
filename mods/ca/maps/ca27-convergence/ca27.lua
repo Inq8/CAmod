@@ -118,7 +118,7 @@ Squads = {
             { MAttackRally1.Location },
             { MAttackRally2a.Location, MAttackRally2b.Location },
             { MAttackRally2a.Location, MAttackRally2b.Location },
-			{ RAttackRally1.Location, RAttackRally2.Location, RAttackRally3, MAttackRally2b.Location }
+			{ RAttackRally1.Location, RAttackRally2.Location, RAttackRally3.Location, MAttackRally2b.Location }
         },
 	},
 }
