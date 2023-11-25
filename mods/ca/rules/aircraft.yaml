@@ -2614,6 +2614,8 @@ KIRO:
 	ProductionCostMultiplier@YURIBONUS:
 		Multiplier: 90
 		Prerequisites: player.yuri
+	GpsRadarDot:
+		Sequence: Plane
 
 OCAR:
 	Inherits: ^HelicopterTD
@@ -2878,7 +2880,7 @@ HARR:
 	Aircraft:
 		CruiseAltitude: 2560
 		TurnSpeed: 16
-		Speed: 201
+		Speed: 180
 		RepulsionSpeed: 40
 		MaximumPitch: 56
 		CanHover: False
@@ -2942,6 +2944,8 @@ HARR:
 		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	GpsRadarDot:
+		Sequence: Plane
 
 SCRN:
 	Inherits: ^HelicopterTD
@@ -3064,6 +3068,8 @@ SCRN:
 		Prerequisites: player.marked
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	GpsRadarDot:
+		Sequence: Plane
 
 HORN:
 	Inherits: ^NeutralPlane
