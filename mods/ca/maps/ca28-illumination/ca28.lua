@@ -78,7 +78,7 @@ WorldLoaded = function()
 
 	InitObjectives(Nod)
 
-    ObjectiveFindFragments = Nod.AddObjective("Find the five hidden artifact fragments.")
+    ObjectiveFindFragments = Nod.AddObjective("Find the six hidden artifact fragments.")
     ObjectiveKaneSurvives = Nod.AddObjective("Kane must survive.")
 
     local fragments = TibLifeforms.GetActorsByType("fragment")
@@ -91,7 +91,7 @@ WorldLoaded = function()
     Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod })
 
     Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
-        Media.DisplayMessage("There are five fragments of an artifact hidden within these caverns. We must find them all, then the assembled artifact will lead us to our goal.", "Kane", HSLColor.FromHex("FF0000"))
+        Media.DisplayMessage("There are six fragments of an artifact hidden within these caverns. Only I have the ability to detect them. Once we have them all, the assembled artifact will lead us to our goal.", "Kane", HSLColor.FromHex("FF0000"))
         MediaCA.PlaySound("kane_findfragments.aud", 2)
         Trigger.AfterDelay(DateTime.Seconds(2), function()
             Tip("Kane is able to create wormholes which can be used to travel between neighbouring chambers. Only Kane can detect the hidden artifact fragments.")
@@ -106,6 +106,12 @@ WorldLoaded = function()
         Trigger.OnEnteredProximityTrigger(pos, WDist.New(5 * 1024), function(a, id)
             if a.Owner == Nod and a.Type == "kane" then
                 FragmentsDetected[fragmentId] = true
+                if not FirstFragmentFound then
+                    FirstFragmentFound = true
+                    Beacon.New(Nod, pos)
+                    Media.DisplayMessage("There! We have already found the first fragment.", "Kane", HSLColor.FromHex("FF0000"))
+                    MediaCA.PlaySound("kane_firstfragment.aud", 2)
+                end
             end
         end)
 
@@ -116,13 +122,13 @@ WorldLoaded = function()
                 FragmentsAcquired[tostring(fragment)] = true
                 FragmentsAcquiredCount = FragmentsAcquiredCount + 1
                 Media.PlaySound("fragment.aud")
-                Notification("Aritfact fragment found.")
+                Notification("Aritfact fragment acquired.")
                 UpdateMissionText()
 
-                if FragmentsAcquiredCount == 5 then
+                if FragmentsAcquiredCount == 6 then
                     Nod.MarkCompletedObjective(ObjectiveFindFragments)
 
-                    Trigger.AfterDelay(DateTime.Seconds(5), function()
+                    Trigger.AfterDelay(DateTime.Seconds(2), function()
                         CaveShroud1.Destroy()
                         CaveShroud2.Destroy()
                         CaveShroud3.Destroy()
@@ -134,7 +140,12 @@ WorldLoaded = function()
                         Notification("A hidden chamber has been revealed.")
                         ObjectiveExploreHiddenChamber = Nod.AddObjective("Explore the hidden chamber.")
 
-                        Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
+                        local chamberCamera = Actor.Create("camera", true, { Owner = Nod, Location = HiddenChamberEntrance.Location })
+                        Trigger.AfterDelay(DateTime.Seconds(10), function()
+                            chamberCamera.Destroy()
+                        end)
+
+                        Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(1)), function()
                             Media.DisplayMessage("With the fragments combined the path to our goal is revealed. Now we must get to the chamber before the Scrin.", "Kane", HSLColor.FromHex("FF0000"))
                             MediaCA.PlaySound("kane_fragmentscombined.aud", 2)
                         end)
@@ -215,10 +226,10 @@ OncePerFiveSecondChecks = function()
 end
 
 UpdateMissionText = function()
-    if FragmentsAcquiredCount == 5 then
+    if FragmentsAcquiredCount == 6 then
         UserInterface.SetMissionText("")
     else
-        UserInterface.SetMissionText("Artifact fragments collected: " .. FragmentsAcquiredCount .. "/5", HSLColor.Yellow)
+        UserInterface.SetMissionText("Artifact fragments collected: " .. FragmentsAcquiredCount .. "/6", HSLColor.Yellow)
     end
 end
 

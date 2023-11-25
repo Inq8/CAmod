@@ -46,6 +46,8 @@ Player:
 
 KANE:
 	Inherits: ^Soldier
+	Inherits@CYBORGUPG: ^NodCyborgUpgrade
+	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Inherits@SELECTION: ^SelectableSupportUnit
 	Tooltip:
 		Name: Kane
@@ -54,9 +56,9 @@ KANE:
 		Weaknesses: • Unarmed
 		Attributes: • Can create point-to-point wormholes\n• Can detect artifact fragments
 	Health:
-		HP: 40000
+		HP: 35000
 	Mobile:
-		Speed: 60
+		Speed: 70
 		Voice: Move
 	RevealsShroud:
 		Range: 7c512
@@ -107,6 +109,9 @@ KANE:
 		PlayerExperience: 25
 		CaptureDelay: 150
 		ConsumedByCapture: false
+	WithDecoration@COMMANDOSKULL:
+		Image: pips
+		Sequence: pip-nod
 
 SCRINWORMHOLE:
 	Inherits: WORMHOLE
@@ -172,10 +177,14 @@ fragment:
 RMBC:
 	RevealsShroud:
 		RevealGeneratedShroud: False
+	Mobile:
+		Speed: 70
 
 ENLI:
 	RevealsShroud:
 		RevealGeneratedShroud: False
+	Mobile:
+		Speed: 70
 
 SHAD:
 	RevealsShroud:
@@ -187,6 +196,8 @@ SHAD:
 		SelectionBarColor: aaaaaa
 	Health:
 		HP: 15000
+	Mobile:
+		Speed: 70
 
 SHAB:
 	RevealsShroud:
@@ -197,12 +208,16 @@ SHAB:
 ACOL:
 	RevealsShroud:
 		RevealGeneratedShroud: False
+	Mobile:
+		Speed: 70
 
 TPLR:
 	RevealsShroud:
 		RevealGeneratedShroud: False
 	Health:
 		HP: 40000
+	Mobile:
+		Speed: 70
 
 S2:
 	Mobile:
