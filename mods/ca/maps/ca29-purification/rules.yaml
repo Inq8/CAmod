@@ -46,6 +46,12 @@ Player:
 					Attractiveness: 1
 					TargetMetric: None
 					CheckRadius: 8c0
+				Consideration@2:
+					Against: Enemy
+					Types: TibTruck
+					Attractiveness: -5000
+					TargetMetric: None
+					CheckRadius: 8c0
 			buzzerswarmpower:
 				OrderName: buzzerswarmai
 				MinimumAttractiveness: 1000
@@ -259,6 +265,8 @@ TTRK:
 		RequiresCondition: !ammo
 	MustBeDestroyed:
 		RequiredForShortGame: true
+	Targetable@TTRK:
+		TargetTypes: TibTruck
 
 NERV:
 	DetonateWeaponPower@BUZZERSWARMAI:

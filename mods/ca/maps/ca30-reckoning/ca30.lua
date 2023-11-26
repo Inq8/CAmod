@@ -26,9 +26,9 @@ ExterminatorPatrolPaths = {
 }
 
 RiftEnabledTime = {
-	easy = DateTime.Seconds((60 * 45) + 17),
-	normal = DateTime.Seconds((60 * 30) + 17),
-	hard = DateTime.Seconds((60 * 15) + 17),
+	easy = DateTime.Seconds((60 * 50) + 17),
+	normal = DateTime.Seconds((60 * 35) + 17),
+	hard = DateTime.Seconds((60 * 20) + 17),
 }
 
 Squads = {
@@ -242,7 +242,7 @@ InitScrin = function()
 
 	Utils.Do(scrinGroundAttackers, function(a)
 		TargetSwapChance(a, 10)
-		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit, function(p) return p == Nod or p == ScrinRebels end)
+		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnitExcludingExterminators, function(p) return p == Nod or p == ScrinRebels end)
 	end)
 
 	if Difficulty == "hard" then
@@ -355,7 +355,7 @@ SendNextExterminator = function()
 					a.GrantCondition("difficulty-" .. Difficulty)
 				end
 
-				Trigger.AfterDelay(DateTime.Minutes(25), function()
+				Trigger.AfterDelay(ExterminatorsInterval[Difficulty] * 7, function()
 					AggroExterminator(a)
 				end)
 
@@ -391,4 +391,8 @@ end
 
 IsScrinRebelGroundHunterUnit = function(actor)
 	return actor.Owner == ScrinRebels and IsGroundHunterUnit(actor) and actor.Type ~= "mast"
+end
+
+IsScrinGroundHunterUnitExcludingExterminators = function(actor)
+	return IsScrinGroundHunterUnit(actor) and actor.Type ~= "otpd"
 end
