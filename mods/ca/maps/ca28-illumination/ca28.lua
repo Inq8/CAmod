@@ -11,19 +11,19 @@ Caves = {
 
 MaxContinuousSpawns = {
     easy = 1,
-    normal = 2,
-    hard = 3
+    normal = 1,
+    hard = 2
 }
 
 ScrinCompositions = {
     easy = {
-        { "s1", "s1", "s1", "s3", "s2", "s1", "gscr", { "gunw", "intl" }, { "gunw", "intl" } }
+        { "s1", "s1", "s1", "s3", "s2", "s1", "gscr", "s1", "s1", "intl" , "s1", { "gunw", "shrw" }, "s1", "s1" }
     },
     normal = {
-        { "s1", "s1", "s1", "s3", "s2", "s1", "s1", "s3", "gscr", { "gunw", "intl", "shrw" }, { "devo", "dark", "lchr", "corr" }, { "tpod", "gunw", "intl" } }
+        { "s1", "s1", "s1", "s3", "s2", "s1", "s1", "s3", "gscr", { "gunw", "intl", "shrw" }, "s1", { "devo", "dark", "lchr", "corr" }, "s1", { "tpod", "stcr", "intl" } }
     },
     hard = {
-        { "s1", "s1", "s1", "s3", "s2", "s1", "s1", "s3", "s2", "gscr", "s4", { "gunw", "intl", "shrw" }, { "devo", "dark", "lchr", "corr" }, { "tpod", "rptp" }, { "intl", "devo" } }
+        { "s1", "s1", "s1", "s3", "s2", "s1", "s1", "s3", "s2", "gscr", "s4", { "gunw", "shrw" }, "s1", { "devo", "dark", "lchr", "corr" }, "gscr", { "tpod", "rptp" }, "s1", "gscr", { "intl", "stcr" }, "gscr" }
     }
 }
 
@@ -77,6 +77,7 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Nod)
+    InitScrin()
 
     ObjectiveFindFragments = Nod.AddObjective("Find the six hidden artifact fragments.")
     ObjectiveKaneSurvives = Nod.AddObjective("Kane must survive.")
@@ -103,7 +104,7 @@ WorldLoaded = function()
         local pos = fragment.CenterPosition
         local fragmentId = tostring(fragment)
 
-        Trigger.OnEnteredProximityTrigger(pos, WDist.New(5 * 1024), function(a, id)
+        Trigger.OnEnteredProximityTrigger(pos, WDist.New((5 * 1024) + 512), function(a, id)
             if a.Owner == Nod and a.Type == "kane" then
                 FragmentsDetected[fragmentId] = true
                 if not FirstFragmentFound then
@@ -284,7 +285,7 @@ SpawnScrinSquad = function(cave, continuous)
 
 	Utils.Do(units, function(a)
         a.Scatter()
-        a.Wait(Utils.RandomInteger(1, 40))
+        a.Wait(Utils.RandomInteger(1, 75))
         a.Scatter()
 		TargetSwapChance(a, 10)
 		ca28_CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
@@ -295,15 +296,19 @@ SpawnScrinSquad = function(cave, continuous)
         end)
 	end)
 
-    -- if any units are killed, activate continuous spawn and reduce the count
+    -- if all units in squad are killed, activate continuous spawn and reduce the count if it was a continuous squad
     Trigger.OnAllKilled(units, function()
-        if not cave.Wormhole.IsDead then
-            cave.ContinuousSpawn = true
+        if continuous then
             cave.NumSpawns = cave.NumSpawns - 1
             if cave.NumSpawns < 0 then
                 cave.NumSpawns = 0
             end
         end
+        Trigger.AfterDelay(DateTime.Seconds(15), function()
+            if not cave.Wormhole.IsDead then
+                cave.ContinuousSpawn = true
+            end
+        end)
     end)
 end
 
@@ -434,4 +439,13 @@ GetSquadComposition = function()
         end
     end)
     return composition
+end
+
+InitScrin = function()
+	local scrinGroundAttackers = Scrin.GetGroundAttackers()
+
+	Utils.Do(scrinGroundAttackers, function(a)
+		TargetSwapChance(a, 10)
+		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
+	end)
 end
