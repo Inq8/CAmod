@@ -754,6 +754,10 @@ HandleProducedSquadUnit = function(produced, producerId, squad)
 			end)
 		end
 
+		if squad.OnProducedAction ~= nil then
+			squad.OnProducedAction(produced)
+		end
+
 		TargetSwapChance(produced, 10)
 	end
 end
@@ -805,6 +809,12 @@ IsSquadInProduction = function(squad)
 end
 
 SendAttackSquad = function(squad)
+	Utils.Do(squad.IdleUnits, function(a)
+		if not a.IsDead then
+			a.Stop()
+		end
+	end)
+
 	if squad.IsAir ~= nil and squad.IsAir then
 		Utils.Do(squad.IdleUnits, function(a)
 			if not a.IsDead then

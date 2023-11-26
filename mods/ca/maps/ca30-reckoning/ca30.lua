@@ -134,16 +134,38 @@ Squads = {
 			}
 		},
 	},
+	ScrinAirToAir = {
+		Interval = {
+			hard = DateTime.Minutes(2)
+		},
+		QueueProductionStatuses = {
+			Aircraft = false
+		},
+		ActiveCondition = function()
+			return PlayerHasMassAir()
+		end,
+		OnProducedAction = function(a)
+			a.Patrol({ A2APatrol1.Location, A2APatrol2.Location, A2APatrol3.Location, A2APatrol4.Location, A2APatrol5.Location, A2APatrol6.Location, A2APatrol7.Location, A2APatrol8.Location })
+		end,
+		IdleUnits = { },
+		ProducerActors = nil,
+		ProducerTypes = { Aircraft = { "grav" } },
+		Units = {
+			hard = {
+				{ Aircraft = { { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" } } },
+			}
+		},
+	},
 	ScrinRebelsAir = {
 		Delay = {
-			easy = DateTime.Minutes(6),
+			easy = DateTime.Minutes(5),
 			normal = DateTime.Minutes(5),
-			hard = DateTime.Minutes(4)
+			hard = DateTime.Minutes(5)
 		},
 		Interval = {
-			easy = DateTime.Minutes(6),
+			easy = DateTime.Minutes(4),
 			normal = DateTime.Minutes(4),
-			hard = DateTime.Minutes(2)
+			hard = DateTime.Minutes(4)
 		},
 		QueueProductionStatuses = {
 			Aircraft = false
@@ -153,15 +175,16 @@ Squads = {
 		ProducerTypes = { Aircraft = { "grav" } },
 		Units = {
 			easy = {
-				{ Aircraft = { "stmr" } }
+				{ Aircraft = { "stmr", "stmr" } },
+				{ Aircraft = { "enrv" } },
 			},
 			normal = {
 				{ Aircraft = { "stmr", "stmr" } },
 				{ Aircraft = { "enrv" } },
 			},
 			hard = {
-				{ Aircraft = { "stmr", "stmr", "stmr" } },
-				{ Aircraft = { "enrv", "enrv" } },
+				{ Aircraft = { "stmr", "stmr" } },
+				{ Aircraft = { "enrv" } },
 			}
 		}
 	},
@@ -227,6 +250,13 @@ OncePerFiveSecondChecks = function()
 
 		if Nod.HasNoRequiredUnits() and not Victory then
 			Nod.MarkFailedObjective(ObjectiveDestroyOverlordForces)
+		end
+
+		if Difficulty == "hard" and not ScrinAirToAirInitialized then
+			if PlayerHasMassAir() then
+				ScrinAirToAirInitialized = true
+				InitAirAttackSquad(Squads.ScrinAirToAir, Scrin, Nod, { "scrn", "venm" })
+			end
 		end
 	end
 end
@@ -297,6 +327,11 @@ InitScrin = function()
 		if Difficulty ~= "hard" then
 			a.GrantCondition("difficulty-" .. Difficulty)
 		end
+		Trigger.OnDamaged(a, function(self, attacker, damage)
+			if attacker.Owner == MissionPlayer and damage > 500 then
+				AggroExterminator(self)
+			end
+		end)
 	end)
 
 	if Difficulty == "easy" then
@@ -355,7 +390,7 @@ SendNextExterminator = function()
 					a.GrantCondition("difficulty-" .. Difficulty)
 				end
 
-				Trigger.AfterDelay(ExterminatorsInterval[Difficulty] * 7, function()
+				Trigger.AfterDelay(ExterminatorsInterval[Difficulty] * 5, function()
 					AggroExterminator(a)
 				end)
 
@@ -384,6 +419,10 @@ AggroExterminator = function(a)
 		Trigger.ClearAll(a)
 		a.Stop()
 		Trigger.AfterDelay(1, function()
+			a.AttackMove(ExterminatorPatrolPaths[5][1])
+			a.AttackMove(ExterminatorPatrolPaths[5][2])
+			a.AttackMove(ExterminatorPatrolPaths[5][3])
+			a.AttackMove(ExterminatorPatrolPaths[5][4])
 			IdleHunt(a)
 		end)
 	end
@@ -395,4 +434,9 @@ end
 
 IsScrinGroundHunterUnitExcludingExterminators = function(actor)
 	return IsScrinGroundHunterUnit(actor) and actor.Type ~= "otpd"
+end
+
+PlayerHasMassAir = function()
+	local nodAir = Nod.GetActorsByTypes({ "scrn", "venm" })
+	return #nodAir > 8
 end
