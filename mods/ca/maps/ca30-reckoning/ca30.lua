@@ -22,7 +22,7 @@ ExterminatorPatrolPaths = {
 	{ Exterminator2Patrol1.Location, Exterminator2Patrol2.Location, Exterminator2Patrol3.Location, Exterminator2Patrol4.Location },
 	{ Exterminator3Patrol1.Location, Exterminator3Patrol2.Location, Exterminator3Patrol3.Location, Exterminator3Patrol4.Location },
 	{ Exterminator4Patrol1.Location, Exterminator4Patrol2.Location, Exterminator4Patrol3.Location, Exterminator4Patrol4.Location },
-	{ Exterminator5Patrol1.Location, Exterminator5Patrol2.Location, Exterminator5Patrol3.Location, Exterminator5Patrol4.Location },
+	{ Exterminator5Patrol1.Location, Exterminator5Patrol2.Location, Exterminator5Patrol3.Location, Exterminator5Patrol4.Location, Exterminator5Patrol5.Location, Exterminator5Patrol6.Location, Exterminator5Patrol7.Location },
 }
 
 RiftEnabledTime = {
@@ -38,6 +38,9 @@ Squads = {
 			normal = DateTime.Minutes(4),
 			hard = DateTime.Minutes(2)
 		},
+		ActiveCondition = function()
+			return DateTime.GameTime < DateTime.Minutes(35) or DateTime.GameTime > DateTime.Minutes(40)
+		end,
 		AttackValuePerSecond = {
 			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(16), Value = 50 } },
 			normal = { { MinTime = 0, Value = 50 }, { MinTime = DateTime.Minutes(14), Value = 100 } },
@@ -136,7 +139,7 @@ Squads = {
 	},
 	ScrinAirToAir = {
 		Interval = {
-			hard = DateTime.Minutes(2)
+			hard = DateTime.Seconds(90)
 		},
 		QueueProductionStatuses = {
 			Aircraft = false
@@ -152,7 +155,7 @@ Squads = {
 		ProducerTypes = { Aircraft = { "grav" } },
 		Units = {
 			hard = {
-				{ Aircraft = { { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" } } },
+				{ Aircraft = { { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" }, { "stmr" , "enrv" } } },
 			}
 		},
 	},
@@ -423,6 +426,9 @@ AggroExterminator = function(a)
 			a.AttackMove(ExterminatorPatrolPaths[5][2])
 			a.AttackMove(ExterminatorPatrolPaths[5][3])
 			a.AttackMove(ExterminatorPatrolPaths[5][4])
+			a.AttackMove(ExterminatorPatrolPaths[5][5])
+			a.AttackMove(ExterminatorPatrolPaths[5][6])
+			a.AttackMove(ExterminatorPatrolPaths[5][7])
 			IdleHunt(a)
 		end)
 	end
