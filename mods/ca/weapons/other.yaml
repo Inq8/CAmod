@@ -1841,7 +1841,7 @@ IonZap:
 			Heavy: 115
 			Concrete: 60
 			Brick: 75
-		DamageTypes: Prone100Percent, TriggerProne, ExplosionDeath
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 	Warhead@3Eff: CreateEffect
 		Explosions: shock_wave
 		ExplosionPalette: tseffect
@@ -2172,7 +2172,7 @@ RadBeamWeapon:
 			Brick: 0
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@2Dam: SpreadDamage
-		Spread: 341
+		Spread: 256
 		Damage: 3750
 		Falloff: 100, 37, 25, 15, 0
 		ValidTargets: Infantry
@@ -2202,22 +2202,17 @@ RadBeamWeaponHeavy:
 			Concrete: 45
 			Light: 75
 			Heavy: 60
-	Warhead@2Dam: HealthPercentageDamage
+	Warhead@3Dam: HealthPercentageDamage
 		Spread: 128
 		Damage: 200
 		ValidTargets: Infantry
-		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
-	Warhead@3Dam: SpreadDamage
-		Spread: 341
-		Damage: 2000
-		ValidTargets: Infantry
-		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+		DamageTypes: RadiationDeath
 	Warhead@1Radiation: CreateTintedCells
 		Spread: 1c0
 		Falloff: 65, 30, 5, 0
 		Level: 250
 		MaxLevel: 750
-		LayerName: radioactivity.strong
+		LayerName: radioactivity.medium
 	Warhead@3Eff: CreateEffect
 		Explosions: radhit
 	Warhead@4Eff: CreateEffect

@@ -11,19 +11,19 @@ Caves = {
 
 MaxContinuousSpawns = {
     easy = 1,
-    normal = 2,
-    hard = 3
+    normal = 1,
+    hard = 2
 }
 
 ScrinCompositions = {
     easy = {
-        { "s1", "s1", "s1", "s3", "s2", "s1", "gscr", { "gunw", "intl" }, { "gunw", "intl" } }
+        { "s1", "s1", "s1", "s3", "s2", "s1", "gscr", "s1", "s1", "intl" , "s1", { "gunw", "shrw" }, "s1", "s1" }
     },
     normal = {
-        { "s1", "s1", "s1", "s3", "s2", "s1", "s1", "s3", "gscr", { "gunw", "intl", "shrw" }, { "devo", "dark", "lchr", "corr" }, { "tpod", "gunw", "intl" } }
+        { "s1", "s1", "s1", "s3", "s2", "s1", "s1", "s3", "gscr", { "gunw", "intl", "shrw" }, "s1", { "devo", "dark", "lchr", "corr" }, "s1", { "tpod", "stcr", "intl" } }
     },
     hard = {
-        { "s1", "s1", "s1", "s3", "s2", "s1", "s1", "s3", "s2", "gscr", "s4", { "gunw", "intl", "shrw" }, { "devo", "dark", "lchr", "corr" }, { "tpod", "rptp" }, { "intl", "devo" } }
+        { "s1", "s1", "s1", "s3", "s2", "s1", "s1", "s3", "s2", "gscr", "s4", { "gunw", "shrw" }, "s1", { "devo", "dark", "lchr", "corr" }, "gscr", { "tpod", "rptp" }, "s1", "gscr", { "intl", "stcr" }, "gscr" }
     }
 }
 
@@ -77,8 +77,9 @@ WorldLoaded = function()
 	Camera.Position = PlayerStart.CenterPosition
 
 	InitObjectives(Nod)
+    InitScrin()
 
-    ObjectiveFindFragments = Nod.AddObjective("Find the five hidden artifact fragments.")
+    ObjectiveFindFragments = Nod.AddObjective("Find the six hidden artifact fragments.")
     ObjectiveKaneSurvives = Nod.AddObjective("Kane must survive.")
 
     local fragments = TibLifeforms.GetActorsByType("fragment")
@@ -91,10 +92,10 @@ WorldLoaded = function()
     Actor.Create("cyborgspeed.upgrade", true, { Owner = Nod })
 
     Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(2)), function()
-        Media.DisplayMessage("There are five fragments of an artifact hidden within these caverns. We must find them all, then the assembled artifact will lead us to our goal.", "Kane", HSLColor.FromHex("FF0000"))
+        Media.DisplayMessage("There are six fragments of an artifact hidden within these caverns. Only I have the ability to detect them. Once we have them all, the assembled artifact will lead us to our goal.", "Kane", HSLColor.FromHex("FF0000"))
         MediaCA.PlaySound("kane_findfragments.aud", 2)
-        Trigger.AfterDelay(DateTime.Seconds(2), function()
-            Tip("Kane is able to create wormholes which can be used to travel between neighbouring chambers. Only Kane can detect the hidden artifact fragments.")
+        Trigger.AfterDelay(DateTime.Seconds(4), function()
+            Tip("Kane is able to create wormholes which can be used to travel between neighboring chambers. Only Kane can detect the hidden artifact fragments.")
         end)
     end)
 
@@ -103,9 +104,15 @@ WorldLoaded = function()
         local pos = fragment.CenterPosition
         local fragmentId = tostring(fragment)
 
-        Trigger.OnEnteredProximityTrigger(pos, WDist.New(5 * 1024), function(a, id)
+        Trigger.OnEnteredProximityTrigger(pos, WDist.New((5 * 1024) + 512), function(a, id)
             if a.Owner == Nod and a.Type == "kane" then
                 FragmentsDetected[fragmentId] = true
+                if not FirstFragmentFound then
+                    FirstFragmentFound = true
+                    Beacon.New(Nod, pos)
+                    Media.DisplayMessage("There! We have already found the first fragment.", "Kane", HSLColor.FromHex("FF0000"))
+                    MediaCA.PlaySound("kane_firstfragment.aud", 2)
+                end
             end
         end)
 
@@ -116,13 +123,13 @@ WorldLoaded = function()
                 FragmentsAcquired[tostring(fragment)] = true
                 FragmentsAcquiredCount = FragmentsAcquiredCount + 1
                 Media.PlaySound("fragment.aud")
-                Notification("Aritfact fragment found.")
+                Notification("Aritfact fragment acquired.")
                 UpdateMissionText()
 
-                if FragmentsAcquiredCount == 5 then
+                if FragmentsAcquiredCount == 6 then
                     Nod.MarkCompletedObjective(ObjectiveFindFragments)
 
-                    Trigger.AfterDelay(DateTime.Seconds(5), function()
+                    Trigger.AfterDelay(DateTime.Seconds(2), function()
                         CaveShroud1.Destroy()
                         CaveShroud2.Destroy()
                         CaveShroud3.Destroy()
@@ -134,7 +141,12 @@ WorldLoaded = function()
                         Notification("A hidden chamber has been revealed.")
                         ObjectiveExploreHiddenChamber = Nod.AddObjective("Explore the hidden chamber.")
 
-                        Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
+                        local chamberCamera = Actor.Create("camera", true, { Owner = Nod, Location = HiddenChamberEntrance.Location })
+                        Trigger.AfterDelay(DateTime.Seconds(10), function()
+                            chamberCamera.Destroy()
+                        end)
+
+                        Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(1)), function()
                             Media.DisplayMessage("With the fragments combined the path to our goal is revealed. Now we must get to the chamber before the Scrin.", "Kane", HSLColor.FromHex("FF0000"))
                             MediaCA.PlaySound("kane_fragmentscombined.aud", 2)
                         end)
@@ -215,10 +227,10 @@ OncePerFiveSecondChecks = function()
 end
 
 UpdateMissionText = function()
-    if FragmentsAcquiredCount == 5 then
+    if FragmentsAcquiredCount == 6 then
         UserInterface.SetMissionText("")
     else
-        UserInterface.SetMissionText("Artifact fragments collected: " .. FragmentsAcquiredCount .. "/5", HSLColor.Yellow)
+        UserInterface.SetMissionText("Artifact fragments collected: " .. FragmentsAcquiredCount .. "/6", HSLColor.Yellow)
     end
 end
 
@@ -273,7 +285,7 @@ SpawnScrinSquad = function(cave, continuous)
 
 	Utils.Do(units, function(a)
         a.Scatter()
-        a.Wait(Utils.RandomInteger(1, 40))
+        a.Wait(Utils.RandomInteger(1, 75))
         a.Scatter()
 		TargetSwapChance(a, 10)
 		ca28_CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
@@ -284,15 +296,19 @@ SpawnScrinSquad = function(cave, continuous)
         end)
 	end)
 
-    -- if any units are killed, activate continuous spawn and reduce the count
+    -- if all units in squad are killed, activate continuous spawn and reduce the count if it was a continuous squad
     Trigger.OnAllKilled(units, function()
-        if not cave.Wormhole.IsDead then
-            cave.ContinuousSpawn = true
+        if continuous then
             cave.NumSpawns = cave.NumSpawns - 1
             if cave.NumSpawns < 0 then
                 cave.NumSpawns = 0
             end
         end
+        Trigger.AfterDelay(DateTime.Seconds(15), function()
+            if not cave.Wormhole.IsDead then
+                cave.ContinuousSpawn = true
+            end
+        end)
     end)
 end
 
@@ -423,4 +439,13 @@ GetSquadComposition = function()
         end
     end)
     return composition
+end
+
+InitScrin = function()
+	local scrinGroundAttackers = Scrin.GetGroundAttackers()
+
+	Utils.Do(scrinGroundAttackers, function(a)
+		TargetSwapChance(a, 10)
+		CallForHelpOnDamagedOrKilled(a, WDist.New(5120), IsScrinGroundHunterUnit)
+	end)
 end
