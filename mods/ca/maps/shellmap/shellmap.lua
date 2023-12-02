@@ -413,7 +413,7 @@ WorldLoaded = function()
 			InitAttackSquad(Squads.GDIVsScrin, GDI, Scrin)
 			InitAttackSquad(Squads.SovietVsGDI, USSR, GDI)
 			InitAttackSquad(Squads.NodVsScrin, Nod, Scrin)
-			InitAttackSquad(Squads.ScrinVsNod, Scrin,Nod)
+			InitAttackSquad(Squads.ScrinVsNod, Scrin, Nod)
 
             InitAirAttackSquad(Squads.GDIAir, GDI, Scrin, { "stmr", "enrv", "tpod", "devo", "ruin", "pac", "deva" })
             InitAirAttackSquad(Squads.SovietAir, USSR, GDI, { "orca", "a10", "msam", "htnk", "titn", "htnk.ion", "htnk.hover", "htnk.drone", "jugg" })
