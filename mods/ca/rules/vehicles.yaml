@@ -247,7 +247,11 @@ KATY:
 
 GTNK:
 	Inherits: 2TNK
-	-Buildable:
+	Buildable:
+		Queue: VehicleSQ, VehicleMQ
+		BuildPaletteOrder: 30
+		Prerequisites: ~vehicles.grizzly, ~techlevel.low
+		Description: Grizzly main battle tank.
 	Valued:
 		Cost: 875
 	Tooltip:
@@ -768,6 +772,126 @@ GTNK.squad:
 	-SpeedMultiplier@CRUSHSLOW:
 	-UpgradeableTo:
 	-Upgradeable@ATOMICLASHER:
+
+3TNK.RHINO:
+	Inherits: ^Tank
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@SLOWCRUSH: ^SlightlySlowedByCrushing
+	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
+	Inherits@ATOMICAMMO: ^AtomicAmmunition
+	Buildable:
+		Queue: VehicleSQ, VehicleMQ
+		BuildPaletteOrder: 32
+		Prerequisites: ~!atomicengines.upgrade, ~vehicles.rhino, ~techlevel.low
+		Description: Soviet designed heavy tank.
+	RenderSprites:
+		Image: rhin
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
+	Valued:
+		Cost: 1150
+	Tooltip:
+		Name: Rhino Heavy Tank
+		GenericName: Tank
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 68000
+	Armor:
+		Type: Heavy
+	Mobile:
+		Speed: 60
+		Voice: Move
+	Passenger:
+		Voice: Move
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 6c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Turreted:
+		TurnSpeed: 20
+		Offset: 0,0,0
+	Armament:
+		Weapon: 125mmRhino
+		Recoil: 128
+		RecoilRecovery: 38
+		LocalOffset: 768,0,90
+		MuzzleSequence: muzzle
+		PauseOnCondition: has-atomic-ammo || atomic-reloading
+		ReloadingCondition: reloading
+	Armament@ATOMICAMMO:
+		Weapon: 125mmRhinoAtomic
+		Recoil: 128
+		RecoilRecovery: 38
+		LocalOffset: 768,0,90
+		MuzzleSequence: muzzle
+		PauseOnCondition: !has-atomic-ammo || reloading
+		ReloadingCondition: atomic-reloading
+	AttackTurreted:
+		Voice: Attack
+		PauseOnCondition: empdisable || being-warped
+	AttackMove:
+		Voice: Attack
+	Voiced:
+		VoiceSet: SiegeTankVoice
+	WithMuzzleOverlay:
+	WithSpriteTurret:
+	WithFacingSpriteBody:
+	SpawnActorOnDeath:
+		Actor: 3TNK.RHIN.Husk
+		RequiresCondition: !being-warped
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
+	Selectable:
+		DecorationBounds: 1194, 1194
+		Class: 3tnk
+	UpgradeableTo:
+		Actors: 3tnk.rhino.atomic
+	Upgradeable@ATOMIC:
+		Type: atomicengines.upgrade
+		Actor: 3tnk.rhino.atomic
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
+		RequiresCondition: !mindcontrolled
+
+3TNK.RHINO.ATOMIC:
+	Inherits: 3TNK.RHINO
+	Inherits@SHRAPNEL: ^ThrowsShrapnel
+	RenderSprites:
+		Image: rhini
+	Buildable:
+		Queue: VehicleSQ, VehicleMQ
+		BuildPaletteOrder: 33
+		Prerequisites: ~atomicengines.upgrade, ~vehicles.rhino, ~techlevel.low
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor
+		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
+		Attributes: • Explodes and leaves radiation on death
+	Valued:
+		Cost: 1150
+	Tooltip:
+		Name: Atomic Rhino Heavy Tank
+		GenericName: Tank
+	Turreted:
+		Offset: 0,0,20
+	Selectable:
+		Class: 3tnk
+	SpeedMultiplier:
+		Modifier: 125
+	-SpawnActorOnDeath:
+	Explodes@ATOMICENGINES:
+		Weapon: UnitExplodeIraqTank
+		EmptyWeapon: UnitExplodeIraqTank
+		RequiresCondition: !being-warped
+	-Upgradeable@ATOMIC:
 
 4TNK:
 	Inherits: ^Tank

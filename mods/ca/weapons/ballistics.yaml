@@ -148,6 +148,14 @@
 			Concrete: 40
 			Heavy: 115
 
+125mmRhino:
+	Inherits: 125mm
+	Report: vrhiatta.aud, vrhiattb.aud, vrhiattc.aud, vrhiattd.aud
+	ReloadDelay: 70
+	Burst: 1
+	Warhead@1Dam: SpreadDamage
+		Damage: 7500
+
 125mmLasher:
 	Inherits: 125mm
 	Report: vlasatta.aud
@@ -173,6 +181,22 @@
 
 125mmLasherAtomic:
 	Inherits: 125mmLasher
+	Projectile: Bullet
+		Image: radball
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+	Warhead@3Eff: CreateEffect
+		Explosions: radhitsm
+		ExplosionPalette: caneon
+		Inaccuracy: 256
+	Warhead@18Radio: CreateTintedCells
+		Spread: 1c256
+		Level: 400
+		Falloff: 100, 32
+		LayerName: radioactivity.weak
+
+125mmRhinoAtomic:
+	Inherits: 125mmRhino
 	Projectile: Bullet
 		Image: radball
 	Warhead@1Dam: SpreadDamage

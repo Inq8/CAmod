@@ -802,17 +802,17 @@ stolentech.hand:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 
-# ra weap - med tank from allies, heavy tank from soviets
+# ra weap - grizzly tank from allies, rhino heavy tank from soviets
 stolentech.weap:
 	Inherits@DUMMY: ^InvisibleDummy
 	ValidFactions:
 		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
 	ProvidesPrerequisiteValidatedFaction@STOLENALLIED:
 		Factions: england, france, germany, usa
-		Prerequisite: vehicles.2tnk
+		Prerequisite: vehicles.grizzly
 	ProvidesPrerequisiteValidatedFaction@STOLENSOVIET:
 		Factions: russia, ukraine, iraq, yuri
-		Prerequisite: vehicles.3tnk
+		Prerequisite: vehicles.rhino
 
 # td weap - battle tank from gdi/legion, light tank if capturer is legion
 stolentech.weap.td:
