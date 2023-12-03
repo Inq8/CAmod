@@ -63,7 +63,7 @@ Squads = {
 	},
 	NodVsScrin = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 80 } },
+			normal = { { MinTime = 0, Value = 90 } },
 		},
 		DispatchDelay = DateTime.Seconds(30),
 		QueueProductionStatuses = { Infantry = false, Vehicles = false },
@@ -111,7 +111,7 @@ Squads = {
 	},
 	SovietVsGDI = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 100 } },
+			normal = { { MinTime = 0, Value = 110 } },
 		},
 		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = false,
@@ -122,7 +122,7 @@ Squads = {
 	},
 	ScrinVsGDI = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 110 } },
+			normal = { { MinTime = 0, Value = 125 } },
 		},
 		QueueProductionStatuses = { Infantry = false, Vehicles = false, Aircraft = false },
 		FollowLeader = false,
@@ -133,7 +133,7 @@ Squads = {
 	},
 	ScrinVsNod = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 80 } },
+			normal = { { MinTime = 0, Value = 90 } },
 		},
 		QueueProductionStatuses = { Infantry = false, Vehicles = false, Aircraft = false },
 		FollowLeader = false,
@@ -363,7 +363,10 @@ WorldLoaded = function()
             local nodShips = Nod.GetActorsByTypes({ "ss2", "sb" })
             Utils.Do(nodShips, function(a)
                 a.AttackMove(AlliedShipsStart.Location)
-				a.Destroy()
+				Trigger.OnIdle(a, function(self)
+					a.Move(AlliedShipsStart.Location)
+					a.Destroy()
+				end)
             end)
         end)
 	end)
