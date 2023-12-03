@@ -1,0 +1,241 @@
+^Palettes:
+	PaletteFromFile@terrain-temperat:
+		Filename: lush.pal
+	FlashPaletteEffect@LIGHTNINGSTRIKE:
+		Type: LightningStrike
+		ExcludePalettes: cursor, chrome, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud
+		Color: cccccc
+	FlashPaletteEffect@IONSTRIKE:
+		Type: IonStrike
+		ExcludePalettes: cursor, chrome, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud
+		Color: 46c32d
+	GlobalLightingPaletteEffect:
+		Green: 1.0
+		Ambient: 0.8
+		ExcludePalettes: fog, shroud, cursor, chrome, chrometd, chromes, colorpicker, colorpickertd, colorpickerscrin, fog, shroud, tseffect, ra2effect, ra2unit, tdeffect, effect,  effect-ignore-lighting, tdeffect-ignore-lighting-alpha85, d2keffect-ignore-lighting-alpha75, d2keffect-ignore-lighting-alpha50, ra2effect-ignore-lighting-alpha90, ra2effect-ignore-lighting-alpha75, ra2effect-ignore-lighting-alpha50, tseffect-ignore-lighting-alpha75, tsunit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha75, ra2unit-ignore-lighting-alpha90, tseffect-ignore-lighting-alpha90
+
+^BaseWorld:
+	TerrainLighting:
+
+World:
+	-CrateSpawner:
+	-StartGameNotification:
+	MusicPlaylist:
+		BackgroundMusic: moi2
+		AllowMuteBackgroundMusic: true
+		DisableWorldSounds: true
+	LuaScript:
+		Scripts: campaign.lua, shellmap.lua
+	WeatherOverlay@RAIN:
+		WindTick: 150, 550
+		UseSquares: false
+		ScatterDirection: 0, 0
+		Gravity: 20, 25
+		SwingOffset: 0, 0
+		SwingSpeed: 0, 0
+		SwingAmplitude: 0, 0
+		ParticleColors: 72aaae, 72aea6, 5caea3, 6da69f
+		LineTailAlphaValue: 30
+		ParticleSize: 1, 1
+		ParticleDensityFactor: 5
+
+SPLIT2:
+	TerrainLightSource:
+		Range: 6c0
+		Intensity: 0.1
+		GreenTint: 0.3
+	SeedsResource:
+		Interval: 35
+
+SPLIT3:
+	TerrainLightSource:
+		Range: 6c0
+		Intensity: 0.1
+		GreenTint: 0.3
+	SeedsResource:
+		Interval: 35
+
+SPLITBLUE:
+	TerrainLightSource:
+		Range: 6c0
+		Intensity: 0.1
+		BlueTint: 0.3
+	SeedsResource:
+		Interval: 35
+
+UPGC:
+	GrantCondition@RADAR:
+		Condition: tower.radar
+
+AIRS:
+	ProductionAirdropCA@SQVEH:
+		ProportionalSpeed: false
+	ProductionAirdropCA@MQVEH:
+		ProportionalSpeed: false
+
+powerproxy.paratroopers.xo:
+	Inherits: ^InvisibleDummy
+	ParatroopersPower:
+		UnitType: ocar.xo
+		DisplayBeacon: false
+		SquadSize: 1
+		DropItems: XO,XO,XO
+
+AURO:
+	GrantCondition@ABUR:
+		Condition: afterburner
+	SpeedMultiplier@AFTERBURNER:
+		Modifier: 250
+
+A10:
+	SpeedMultiplier@SPEEDBOOST:
+		Modifier: 155
+		RequiresCondition: speed-boost
+	ExternalCondition@SPEEDBOOST:
+		Condition: speed-boost
+
+SUK:
+	Aircraft:
+		Speed: 250
+
+# attack everything
+
+^AutoTargetGround:
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense
+		InvalidTargets: NoAutoTarget
+
+^AutoTargetAll:
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense
+		InvalidTargets: NoAutoTarget
+
+# hide icons, income text etc.
+
+^Building:
+	WithBuildingRepairDecoration:
+		Image: empty
+		Sequence: idle
+
+^GainsExperience:
+	GrantCondition@Shell:
+		Condition: shellmap
+	WithDecoration@RANK-1:
+		RequiresCondition: rank-veteran == 1 && !shellmap
+	WithDecoration@RANK-2:
+		RequiresCondition: rank-veteran == 2 && !shellmap
+	WithDecoration@RANK-ELITE:
+		RequiresCondition: rank-elite && !shellmap
+	GrantConditionOnPrerequisite@NODRANK:
+		Prerequisites: disabled
+	GrantConditionOnPrerequisite@SCRINRANK:
+		Prerequisites: disabled
+
+OILB:
+	CashTrickler:
+		ShowTicks: false
+
+PROC:
+	Refinery:
+		ShowTicks: false
+		UseStorage: false
+
+PROC.TD:
+	Refinery:
+		ShowTicks: false
+		UseStorage: false
+
+^GlobalBounty:
+	GivesBounty:
+		ShowBounty: false
+
+^Concussion:
+	WithDecoration@Concussion:
+		RequiresSelection: True
+
+^AuraHealable:
+	WithDecoration@REDCROSS:
+		Image: empty
+		Sequence: idle
+
+^TNTPlantable:
+	WithDecoration@tnt:
+		RequiresSelection: True
+
+veil:
+	-RenderShroudCircleCA:
+
+RMBO:
+	WithDecoration@COMMANDOSKULL:
+		Image: empty
+		Sequence: idle
+
+SEAL:
+	WithDecoration@COMMANDOSKULL:
+		Image: empty
+		Sequence: idle
+
+SS2:
+	-WithColoredSelectionBox@INVIS:
+	AutoTarget:
+		InitialStance: Defend
+
+STNK.Nod:
+	-WithColoredSelectionBox@INVIS:
+
+RAH:
+	-WithColoredSelectionBox@INVIS:
+
+# defense buffs
+
+BRIK:
+	DamageMultiplier:
+		Modifier: 10
+
+ATWR:
+	DamageMultiplier:
+		Modifier: 5
+
+STWR:
+	DamageMultiplier:
+		Modifier: 5
+
+OBLI:
+	DamageMultiplier:
+		Modifier: 5
+
+SCOL:
+	DamageMultiplier:
+		Modifier: 5
+
+PTUR:
+	DamageMultiplier:
+		Modifier: 5
+
+GUN.Nod:
+	DamageMultiplier:
+		Modifier: 5
+
+TSLA:
+	DamageMultiplier:
+		Modifier: 5
+
+FTUR:
+	DamageMultiplier:
+		Modifier: 5
+
+# Hunt() requires only 1 AttackBase
+
+BATF.AI:
+	-AttackFrontal:
+
+JJET:
+	-AttackAircraft:
+
+DEVA:
+	-AttackFrontalCharged:
+	-Armament@PRIMARYUPG:
+	-AmbientSound@CHARGE:
+	-WithIdleOverlay@CHARGE1:
+	-WithIdleOverlay@CHARGE2:
+	-WithIdleOverlay@CHARGE3:

@@ -1232,7 +1232,7 @@ UnitCompositions = {
 				{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n1" }, Vehicles = { "mtnk", "mtnk", "hmmv" }, MinTime = DateTime.Minutes(14) },
 				{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n1" }, Vehicles = { "mtnk", "vulc", "msam" }, MinTime = DateTime.Minutes(14) },
 				{ Infantry = { "jjet", "jjet", "bjet" }, Vehicles = { "vulc", "hmmv.tow" }, MinTime = DateTime.Minutes(14) },
-				{ Infantry = { "xo", "n1", "n1", "n3" }, Vehicles = { GDIMammothVariant }, MinTime = DateTime.Minutes(14) },
+				{ Infantry = { "n1", "n1", "n3" }, Vehicles = { GDIMammothVariant, "xo" }, MinTime = DateTime.Minutes(14) },
 			},
 			normal = {
 				{ Infantry = {}, Vehicles = { "apc2.gdiai", "gdrn", "hmmv", "hmmv"  }, MaxTime = DateTime.Minutes(12) },
@@ -1245,7 +1245,7 @@ UnitCompositions = {
 				{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n1", "n1", "n1", "n3" }, Vehicles = { "mtnk", "vulc", "apc2.gdiai", "vulc.ai" }, MinTime = DateTime.Minutes(12) },
 				{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n1", "n1", "n1", "n3" }, Vehicles = { "mtnk", "vulc", "apc2.gdiai", "msam" }, MinTime = DateTime.Minutes(12) },
 				{ Infantry = { "jjet", "jjet", "jjet", "bjet" }, Vehicles = { "vulc", "vulc", "hmmv.tow" }, MinTime = DateTime.Minutes(12) },
-				{ Infantry = { "xo", "xo", "n1", "n1", "n3" }, Vehicles = { GDIMammothVariant, "vulc", "hsam" }, MinTime = DateTime.Minutes(12) },
+				{ Infantry = { "n1", "n1", "n3" }, Vehicles = { GDIMammothVariant, "vulc", "hsam", "xo", "xo" }, MinTime = DateTime.Minutes(12) },
 			},
 			hard = {
 				{ Infantry = {}, Vehicles = { "vulc.ai", "gdrn", "gdrn", "hmmv", "hmmv" }, MaxTime = DateTime.Minutes(10) },
@@ -1258,7 +1258,7 @@ UnitCompositions = {
 				{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n1", "n1", "n1", "jjet", "n1", "n3" }, Vehicles = { "mtnk", "vulc", "vulc.ai", "vulc.ai", "msam" }, MinTime = DateTime.Minutes(10) },
 				{ Infantry = { "n3", "n1", "n1", "n1", "n3", "n1", "n1", "n1", "jjet", "n1", "n3" }, Vehicles = { "titn", GDIMammothVariant, "mtnk", "msam", "vulc" }, MinTime = DateTime.Minutes(10) },
 				{ Infantry = { "jjet", "jjet", "jjet", "bjet", "bjet" }, Vehicles = { "vulc", "vulc", "gdrn.tow", "hmmv.tow" }, MinTime = DateTime.Minutes(10) },
-				{ Infantry = { "xo", "xo", "xo", "n1", "n1", "n3" }, Vehicles = { "htnk", GDIMammothVariant, "hsam", "vulc" }, MinTime = DateTime.Minutes(10) },
+				{ Infantry = { "n1", "n1", "n3" }, Vehicles = { "htnk", GDIMammothVariant, "hsam", "vulc", "xo", "xo", "xo" }, MinTime = DateTime.Minutes(10) },
 			}
 		}
 	},
