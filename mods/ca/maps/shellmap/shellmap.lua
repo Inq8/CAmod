@@ -8,6 +8,7 @@ SealPatrolPath = { AlliedCamp.Location, ScrinAttack1.Location, SovietAttack3a.Lo
 UnitCompositionsShellmap = {
 	Soviet = {
 		normal = {
+			{ Infantry = { "e3", "e1", "e1", "e3", "e4" }, Vehicles = { "btr.ai" } },
 			{ Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "shok", "e3", "e4" }, Vehicles = { TeslaVariant, "btr.ai", SovietMammothVariant, SovietBasicArty } },
 			{ Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk", "btr.ai", SovietMammothVariant, SovietBasicArty } },
 			{ Infantry = { "e3", "e1", "e1", "shok", "e8", "e1", "e2", "e3", "e4" }, Vehicles = { "3tnk.atomic", "btr.ai", SovietMammothVariant, SovietBasicArty } },
@@ -29,6 +30,7 @@ UnitCompositionsShellmap = {
 	},
 	Nod = {
 		normal = {
+			{ Infantry = {}, Vehicles = { "bggy", "bike", "bike", "bike", "bggy" } },
 			{ Infantry = { "n1", "n3", "n4", "n1" }, Vehicles = { "bggy", "bike", "bike", "stnk.nod", "bike", "bggy" } },
 			{ Infantry = { "n3", "n1", "n1", "n4", "n1", "bh", "bh" }, Vehicles = { "ltnk", "ltnk", "hftk", "hftk", "bike" } },
 			{ Infantry = { "n3", "n1", "n1", "n4", "n1", "n1c", "acol", "n1" }, Vehicles = { "ltnk", "arty.nod", "ltnk", "stnk.nod" } },
@@ -40,7 +42,8 @@ UnitCompositionsShellmap = {
 		normal = {
 			{ Infantry = { "s3", "s1", "s1", "s1", "s3", "s1", "s4", "s4" }, Vehicles = { "intl.ai2", "intl.ai2", GunWalkerSeekerOrLacerator, CorrupterDevourerOrDarkener, CorrupterDevourerOrDarkener, GunWalkerSeekerOrLacerator } },
 			{ Infantry = { "s3", "s1", "s1", "s1", "s3", "s1", "s4", "s4" }, Vehicles = { "intl.ai2", "tpod", GunWalkerSeekerOrLacerator, CorrupterDevourerOrDarkener, CorrupterDevourerOrDarkener, GunWalkerSeekerOrLacerator } },
-			{ Infantry = {}, Vehicles = { "lace", "lace", "lace", "seek", "seek" }, Aircraft = {} }
+			{ Infantry = {}, Vehicles = { "lace", "lace", "lace", "seek", "seek" }, Aircraft = {} },
+			{ Infantry = {}, Vehicles = {}, Aircraft = { PacOrDevastator, "deva", "pac" } }
 		}
 	}
 }
@@ -108,7 +111,7 @@ Squads = {
 	},
 	SovietVsGDI = {
 		AttackValuePerSecond = {
-			normal = { { MinTime = 0, Value = 80 } },
+			normal = { { MinTime = 0, Value = 100 } },
 		},
 		QueueProductionStatuses = { Infantry = false, Vehicles = false },
 		FollowLeader = false,
@@ -360,6 +363,7 @@ WorldLoaded = function()
             local nodShips = Nod.GetActorsByTypes({ "ss2", "sb" })
             Utils.Do(nodShips, function(a)
                 a.AttackMove(AlliedShipsStart.Location)
+				a.Destroy()
             end)
         end)
 	end)
@@ -429,6 +433,12 @@ end
 
 DoSealDrop = function()
 	local entryPath = Utils.Random(SealDropPaths)
+
+	if not FirstSealDropDone then
+		FirstSealDropDone = true
+		entryPath = { SealDropSpawn.Location, SealDrop3.Location }
+	end
+
 	DoHelicopterDrop(Greece, entryPath, "nhaw", { "seal", "seal", "seal", "seal", "seal" },
 		function(u)
 			if not u.IsDead then
