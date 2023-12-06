@@ -28,7 +28,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly int RearmTicks = 150;
 
 		[GrantedConditionReference]
-		[Desc("The condition to grant to self right after launching a spawned unit. (Used by V3 to make immobile.)")]
+		[Desc("The condition to grant to self right after launching a spawned unit.")]
 		public readonly string LaunchingCondition = null;
 
 		[GrantedConditionReference]
@@ -273,7 +273,7 @@ namespace OpenRA.Mods.CA.Traits
 			foreach (var slaveEntry in SlaveEntries)
 			{
 				var carrierSlaveEntry = slaveEntry as CarrierSlaveEntry;
-				if (carrierSlaveEntry.Actor.CurrentActivity is EnterCarrierMaster)
+				if (carrierSlaveEntry.Actor.IsInWorld && carrierSlaveEntry.Actor.CurrentActivity is EnterCarrierMaster)
 					slaveIsEntering = true;
 
 				if (CarrierMasterInfo.RearmAsGroup && numLaunched > 0)
@@ -284,9 +284,9 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			if (slaveIsEntering && beingEnteredToken == Actor.InvalidConditionToken)
-				self.GrantCondition(CarrierMasterInfo.BeingEnteredCondition);
+				beingEnteredToken = self.GrantCondition(CarrierMasterInfo.BeingEnteredCondition);
 			else if (!slaveIsEntering && beingEnteredToken != Actor.InvalidConditionToken)
-				self.RevokeCondition(beingEnteredToken);
+				beingEnteredToken = self.RevokeCondition(beingEnteredToken);
 
 			// range check
 			RangeCheck(self);
