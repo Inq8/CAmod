@@ -18,9 +18,6 @@ namespace OpenRA.Mods.CA.Traits
 	[Desc("Can be slaved to a spawner.")]
 	public class CarrierSlaveInfo : BaseSpawnerSlaveInfo
 	{
-		[Desc("Move this close to the spawner, before entering it.")]
-		public readonly WDist LandingDistance = new WDist(5 * 1024);
-
 		public override object Create(ActorInitializer init) { return new CarrierSlave(init, this); }
 	}
 
