@@ -265,11 +265,11 @@ HackersDelay = {
 }
 
 WorldLoaded = function()
-    GDI = Player.GetPlayer("GDI")
+	GDI = Player.GetPlayer("GDI")
 	Greece = Player.GetPlayer("Greece")
 	USSR = Player.GetPlayer("USSR")
 	Nod = Player.GetPlayer("Nod")
-    Scrin = Player.GetPlayer("Scrin")
+	Scrin = Player.GetPlayer("Scrin")
 	AlliedSlaves = Player.GetPlayer("AlliedSlaves")
 	SovietSlaves = Player.GetPlayer("SovietSlaves")
 	NodSlaves = Player.GetPlayer("NodSlaves")

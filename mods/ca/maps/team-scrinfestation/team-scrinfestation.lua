@@ -42,13 +42,13 @@ ScrinSquads = {
 	{"s1", "s1", "s1", "s2", "gscr"},
 	{"s1", "s1", "s1", "s3", "gscr"},
 	{"s1", "s1", "s1", "s4", "gscr"},
-    {"s1", "s1", "s1", "brst2", "gscr"},
+	{"s1", "s1", "s1", "brst2", "gscr"},
 	{"gscr", "gscr", "gscr"},
 	{"s4", "s4", "s4"},
 	{"s1", "s1", "s1", "s1", "s1"},
 	{"s2", "s2", "s2"},
 	{"s3", "s3", "s1", "s1"},
-    {"brst2", "brst2", "s1", "s1"},
+	{"brst2", "brst2", "s1", "s1"},
 }
 
 GetNumPlayers = function(players)
@@ -121,8 +121,8 @@ end
 WorldLoaded = function()
 	Scrin = Player.GetPlayer("Scrin")
 	Neutral = Player.GetPlayer("Neutral")
-    GDI = Player.GetPlayer("Scrin")
-    Nod = Player.GetPlayer("Nod")
+	GDI = Player.GetPlayer("Scrin")
+	Nod = Player.GetPlayer("Nod")
 
 	local neutralSpawns = Neutral.GetActorsByType("rmbospawn")
 	Utils.Do(neutralSpawns, function(a)
@@ -130,10 +130,10 @@ WorldLoaded = function()
 	end)
 
 	local initialGdiPlayers = GetNumPlayers(GDIPlayers)
-    local initialNodPlayers = GetNumPlayers(NodPlayers)
+	local initialNodPlayers = GetNumPlayers(NodPlayers)
 
 	SendScrinUnits(WormholeNE, GDIAttackPaths[2], initialGdiPlayers)
-    SendScrinUnits(Nod_WormholeNE, NodAttackPaths[2], initialNodPlayers)
+	SendScrinUnits(Nod_WormholeNE, NodAttackPaths[2], initialNodPlayers)
 
 	if initialGdiPlayers > 1 then
 		SendScrinUnits(WormholeNW, GDIAttackPaths[1], initialGdiPlayers)
@@ -176,20 +176,20 @@ WorldLoaded = function()
 
 		Media.DisplayMessage("GDI are victorious!", "Notification", HSLColor.FromHex("E5D19C"))
 
-        Trigger.AfterDelay(DateTime.Seconds(5), function()
-            Utils.Do(NodPlayers, function(nodPlayer)
-                local nodActors = nodPlayer.GetActors()
-                Utils.Do(nodActors, function(nodActor)
-                    if nodActor.HasProperty("Kill") and not nodActor.IsDead then nodActor.Kill("BulletDeath") end
-                end)
-            end)
+		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			Utils.Do(NodPlayers, function(nodPlayer)
+				local nodActors = nodPlayer.GetActors()
+				Utils.Do(nodActors, function(nodActor)
+					if nodActor.HasProperty("Kill") and not nodActor.IsDead then nodActor.Kill("BulletDeath") end
+				end)
+			end)
 
 			Trigger.AfterDelay(DateTime.Seconds(2), function()
 				Utils.Do(NodWormholes, function(w)
 					w.Kill()
 				end)
 			end)
-        end)
+		end)
 	end)
 
 	Trigger.OnAllKilledOrCaptured(NodWormholes, function()
@@ -200,13 +200,13 @@ WorldLoaded = function()
 
 		Media.DisplayMessage("Nod are victorious!", "Notification", HSLColor.FromHex("FF0000"))
 
-        Trigger.AfterDelay(DateTime.Seconds(5), function()
-            Utils.Do(GDIPlayers, function(gdiPlayer)
-                local gdiActors = gdiPlayer.GetActors()
-                Utils.Do(gdiActors, function(gdiActor)
-                    if gdiActor.HasProperty("Kill") and not gdiActor.IsDead then gdiActor.Kill("BulletDeath") end
-                end)
-            end)
+		Trigger.AfterDelay(DateTime.Seconds(5), function()
+			Utils.Do(GDIPlayers, function(gdiPlayer)
+				local gdiActors = gdiPlayer.GetActors()
+				Utils.Do(gdiActors, function(gdiActor)
+					if gdiActor.HasProperty("Kill") and not gdiActor.IsDead then gdiActor.Kill("BulletDeath") end
+				end)
+			end)
 
 			Trigger.AfterDelay(DateTime.Seconds(2), function()
 				Utils.Do(Wormholes, function(w)
@@ -215,7 +215,7 @@ WorldLoaded = function()
 					end
 				end)
 			end)
-        end)
+		end)
 	end)
 
 	Utils.Do(Players, function(player)

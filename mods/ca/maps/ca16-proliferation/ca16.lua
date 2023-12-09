@@ -144,8 +144,8 @@ Squads = {
 }
 
 WorldLoaded = function()
-    Scrin = Player.GetPlayer("Scrin")
-    Nod = Player.GetPlayer("Nod")
+	Scrin = Player.GetPlayer("Scrin")
+	Nod = Player.GetPlayer("Nod")
 	MissionPlayer = Scrin
 	TimerTicks = MaintenanceDuration[Difficulty]
 	FieldsClearedAndBeingHarvested = 0

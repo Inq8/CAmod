@@ -98,7 +98,7 @@ AutoAttackStartTime = {
 WorldLoaded = function()
 	USSR = Player.GetPlayer("USSR")
 	GDI = Player.GetPlayer("GDI")
-    Greece = Player.GetPlayer("Greece")
+	Greece = Player.GetPlayer("Greece")
 	MissionPlayer = USSR
 	TimerTicks = 0
 	SiegeLosses = 0
@@ -110,7 +110,7 @@ WorldLoaded = function()
 
 	InitObjectives(USSR)
 	InitGDI()
-    InitGreece()
+	InitGreece()
 
 	ObjectiveDestroyBases = USSR.AddObjective("Break the siege and destroy the enemy bases.")
 	EngineerDrop()

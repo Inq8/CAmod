@@ -271,10 +271,10 @@ SpawnWormholeUnits = function(wormhole)
 end
 
 ShuffleInPlace = function(t)
-    for i = #t, 2, -1 do
-        local j = Utils.RandomInteger(1, i)
-        t[i], t[j] = t[j], t[i]
-    end
+	for i = #t, 2, -1 do
+		local j = Utils.RandomInteger(1, i)
+		t[i], t[j] = t[j], t[i]
+	end
 end
 
 UpdateScrinCounter = function()

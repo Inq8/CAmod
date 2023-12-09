@@ -1,38 +1,38 @@
 MaxBreakthroughs = {
-    easy = 6,
-    normal = 3,
-    hard = 0
+	easy = 6,
+	normal = 3,
+	hard = 0
 }
 
 FleetWaveCompositions = {
-    easy = {
-        { "pac", "pac", "deva" },
-        { "pac", "deva", "deva" }
-    },
-    normal = {
-        { "pac", "pac", "deva", "pac" },
-        { "pac", "deva", "deva", "pac" },
-    },
-    hard = {
-        { "pac", "pac", "deva", "pac", "deva" },
-        { "pac", "deva", "pac", "deva", "pac" },
-    }
+	easy = {
+		{ "pac", "pac", "deva" },
+		{ "pac", "deva", "deva" }
+	},
+	normal = {
+		{ "pac", "pac", "deva", "pac" },
+		{ "pac", "deva", "deva", "pac" },
+	},
+	hard = {
+		{ "pac", "pac", "deva", "pac", "deva" },
+		{ "pac", "deva", "pac", "deva", "pac" },
+	}
 }
 
 TimeBetweenWaves = {
-    easy = DateTime.Minutes(3),
-    normal = DateTime.Minutes(3),
-    hard = DateTime.Minutes(3),
+	easy = DateTime.Minutes(3),
+	normal = DateTime.Minutes(3),
+	hard = DateTime.Minutes(3),
 }
 
 FleetSpawns = {
-    Left = { LSpawn1, LSpawn2, LSpawn3 },
-    Middle = { MSpawn1, MSpawn2 },
-    Right = { RSpawn1, RSpawn2 }
+	Left = { LSpawn1, LSpawn2, LSpawn3 },
+	Middle = { MSpawn1, MSpawn2 },
+	Right = { RSpawn1, RSpawn2 }
 }
 
 WaveSpawns = {
-    FleetSpawns.Left, FleetSpawns.Left, FleetSpawns.Left, FleetSpawns.Middle, FleetSpawns.Right, FleetSpawns.Middle, FleetSpawns.Left, FleetSpawns.Right, FleetSpawns.Middle, FleetSpawns.Right
+	FleetSpawns.Left, FleetSpawns.Left, FleetSpawns.Left, FleetSpawns.Middle, FleetSpawns.Right, FleetSpawns.Middle, FleetSpawns.Left, FleetSpawns.Right, FleetSpawns.Middle, FleetSpawns.Right
 }
 
 UnitBuildTimeMultipliers = {
@@ -68,10 +68,10 @@ Squads = {
 		ProducerTypes = nil,
 		Units = UnitCompositions.Scrin.Main,
 		AttackPaths = {
-            { LAttackRally1a.Location, LAttackRally1b.Location },
-            { LAttackRally2a.Location, LAttackRally2b.Location },
-            { LAttackRally3a.Location, LAttackRally3b.Location }
-        },
+			{ LAttackRally1a.Location, LAttackRally1b.Location },
+			{ LAttackRally2a.Location, LAttackRally2b.Location },
+			{ LAttackRally3a.Location, LAttackRally3b.Location }
+		},
 	},
 	ScrinWater = {
 		Delay = {
@@ -112,27 +112,27 @@ Squads = {
 				{ Vehicles = { "devo", "intl.ai2", "ruin", "seek" }, MinTime = DateTime.Minutes(7) },
 				{ Vehicles = { "intl", "intl.ai2", { "seek", "lace" }, { "devo", "dark", "ruin" }, { "devo", "dark", "ruin" }  }, MinTime = DateTime.Minutes(12) }
 			}
-        },
+		},
 		AttackPaths = {
-            { MAttackRally1.Location },
-            { MAttackRally1.Location },
-            { MAttackRally2a.Location, MAttackRally2b.Location },
-            { MAttackRally2a.Location, MAttackRally2b.Location },
+			{ MAttackRally1.Location },
+			{ MAttackRally1.Location },
+			{ MAttackRally2a.Location, MAttackRally2b.Location },
+			{ MAttackRally2a.Location, MAttackRally2b.Location },
 			{ RAttackRally1.Location, RAttackRally2.Location, RAttackRally3.Location, MAttackRally2b.Location }
-        },
+		},
 	},
 }
 
 WorldLoaded = function()
-    Scrin = Player.GetPlayer("Scrin")
-    GDI = Player.GetPlayer("GDI")
-    TibLifeforms = Player.GetPlayer("TibLifeforms")
+	Scrin = Player.GetPlayer("Scrin")
+	GDI = Player.GetPlayer("GDI")
+	TibLifeforms = Player.GetPlayer("TibLifeforms")
 	MissionPlayer = GDI
 	TimerTicks = 0
-    WavesRemaining = #WaveSpawns
-    NumBreakthroughs = 0
-    NextWave = 1
-    FinalWaveArrived = false
+	WavesRemaining = #WaveSpawns
+	NumBreakthroughs = 0
+	NextWave = 1
+	FinalWaveArrived = false
 
 	Camera.Position = PlayerStart.CenterPosition
 
@@ -141,16 +141,16 @@ WorldLoaded = function()
 	AdjustStartingCash()
 	SetupLightning()
 	SetupIonStorm()
-    UpdateMissionText()
+	UpdateMissionText()
 
-    if Difficulty == "hard" then
+	if Difficulty == "hard" then
 		Sensor3.Destroy()
-    end
+	end
 
-    if Difficulty ~= "easy" then
-        Sensor1.Destroy()
+	if Difficulty ~= "easy" then
+		Sensor1.Destroy()
 		Sensor2.Destroy()
-    end
+	end
 
 	Trigger.AfterDelay(DateTime.Seconds(10), function()
 		if Difficulty == "hard" then
@@ -160,34 +160,34 @@ WorldLoaded = function()
 		end
 	end)
 
-    Trigger.AfterDelay(TimeBetweenWaves[Difficulty] + DateTime.Minutes(1), function()
-        SendFleetWave()
+	Trigger.AfterDelay(TimeBetweenWaves[Difficulty] + DateTime.Minutes(1), function()
+		SendFleetWave()
 
 		Trigger.AfterDelay(DateTime.Seconds(120), function()
 			Notification("The area across the river is infested with Tiberium lifeforms. You will need to use aicraft to intercept Scrin fleet vessels attempting to break through there.")
 			MediaCA.PlaySound("c_acrossriver.aud", 2)
 			Beacon.New(GDI, AcrossRiver.CenterPosition)
-            local acrossRiverCamera = Actor.Create("camera", true, { Owner = GDI, Location = AcrossRiver.Location })
-            Trigger.AfterDelay(DateTime.Seconds(10), function()
-                acrossRiverCamera.Destroy()
-            end)
+			local acrossRiverCamera = Actor.Create("camera", true, { Owner = GDI, Location = AcrossRiver.Location })
+			Trigger.AfterDelay(DateTime.Seconds(10), function()
+				acrossRiverCamera.Destroy()
+			end)
 		end)
-    end)
+	end)
 
 	if Difficulty == "hard" then
 		Actor.Create("shields.upgrade", true, { Owner = Scrin })
 	end
 
-    if Difficulty == "hard" then
-        ObjectiveStopFleet = GDI.AddObjective("Prevent any Scrin fleet vessels breaking through.")
-    else
-        ObjectiveStopFleet = GDI.AddObjective("Allow no more than " .. MaxBreakthroughs[Difficulty] .. " fleet vessels through.")
-    end
+	if Difficulty == "hard" then
+		ObjectiveStopFleet = GDI.AddObjective("Prevent any Scrin fleet vessels breaking through.")
+	else
+		ObjectiveStopFleet = GDI.AddObjective("Allow no more than " .. MaxBreakthroughs[Difficulty] .. " fleet vessels through.")
+	end
 
-    BottomOfMap = { }
-    for i=1, 128 do
-        table.insert(BottomOfMap, CPos.New(i,96))
-    end
+	BottomOfMap = { }
+	for i=1, 128 do
+		table.insert(BottomOfMap, CPos.New(i,96))
+	end
 end
 
 Tick = function()
@@ -199,15 +199,15 @@ OncePerSecondChecks = function()
 	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
 		Scrin.Resources = Scrin.ResourceCapacity - 500
 
-        if NumBreakthroughs > MaxBreakthroughs[Difficulty] then
-            GDI.MarkFailedObjective(ObjectiveStopFleet)
-        end
+		if NumBreakthroughs > MaxBreakthroughs[Difficulty] then
+			GDI.MarkFailedObjective(ObjectiveStopFleet)
+		end
 
-        if FinalWaveArrived and #Scrin.GetActorsByTypes({ "pac", "deva" }) == 0 then
-            GDI.MarkCompletedObjective(ObjectiveStopFleet)
-        end
+		if FinalWaveArrived and #Scrin.GetActorsByTypes({ "pac", "deva" }) == 0 then
+			GDI.MarkCompletedObjective(ObjectiveStopFleet)
+		end
 
-        UpdateMissionText()
+		UpdateMissionText()
 	end
 end
 
@@ -232,7 +232,7 @@ InitScrin = function()
 		InitAttackSquad(Squads.ScrinMain, Scrin)
 	end)
 
-    Trigger.AfterDelay(Squads.ScrinWater.Delay[Difficulty], function()
+	Trigger.AfterDelay(Squads.ScrinWater.Delay[Difficulty], function()
 		InitAttackSquad(Squads.ScrinWater, Scrin)
 	end)
 end
@@ -240,16 +240,16 @@ end
 SetupLightning = function()
 	local nextStrikeDelay = Utils.RandomInteger(DateTime.Seconds(8), DateTime.Seconds(25))
 	Trigger.AfterDelay(nextStrikeDelay, function()
-        LightningStrike()
-        SetupLightning()
+		LightningStrike()
+		SetupLightning()
 	end)
 end
 
 SetupIonStorm = function()
 	local nextStrikeDelay = Utils.RandomInteger(DateTime.Seconds(8), DateTime.Seconds(25))
 	Trigger.AfterDelay(nextStrikeDelay, function()
-        IonStorm()
-        SetupIonStorm()
+		IonStorm()
+		SetupIonStorm()
 	end)
 end
 
@@ -281,12 +281,12 @@ IonStorm = function()
 end
 
 SendFleetWave = function()
-    Notification("Scrin fleet vessels approaching.")
+	Notification("Scrin fleet vessels approaching.")
 	MediaCA.PlaySound("c_scrinfleetvessels.aud", 2)
 
-    local composition = Utils.Random(FleetWaveCompositions[Difficulty])
-    local interval = 1
-    local currentWave = NextWave
+	local composition = Utils.Random(FleetWaveCompositions[Difficulty])
+	local interval = 1
+	local currentWave = NextWave
 
 	if Difficulty == "hard" and currentWave >= 7 then
 		table.insert(composition, "pac")
@@ -299,9 +299,9 @@ SendFleetWave = function()
 
 	local xUsed = { }
 
-    -- for each unit in the wave, get the possible base spawn points, pick one and generate offsetted entry/exit
-    Utils.Do(composition, function(shipType)
-        Trigger.AfterDelay(interval, function()
+	-- for each unit in the wave, get the possible base spawn points, pick one and generate offsetted entry/exit
+	Utils.Do(composition, function(shipType)
+		Trigger.AfterDelay(interval, function()
 			local spawn = nil
 			local xOffset = nil
 			local entry = nil
@@ -311,14 +311,14 @@ SendFleetWave = function()
 				entry = spawn.Location + CVec.New(xOffset, 0)
 			end
 			xUsed[entry.X] = true
-            local exit = CPos.New(entry.X, 96)
+			local exit = CPos.New(entry.X, 96)
 			Beacon.New(GDI, spawn.CenterPosition + WVec.New(xOffset * 1024, 0, 0))
-            local ships = Reinforcements.Reinforce(Scrin, { shipType }, { entry, exit }, 25, function(self)
-                self.Destroy()
-                NumBreakthroughs = NumBreakthroughs + 1
+			local ships = Reinforcements.Reinforce(Scrin, { shipType }, { entry, exit }, 25, function(self)
+				self.Destroy()
+				NumBreakthroughs = NumBreakthroughs + 1
 				Media.PlaySoundNotification(GDI, "AlertBuzzer")
 				Notification("A Scrin fleet vessel has broken through.")
-            end)
+			end)
 			if Difficulty ~= "hard" then
 				local pathRenderer = Actor.Create("pathRenderer", true, { Owner = GDI, Location = entry })
 				Trigger.OnRemovedFromWorld(ships[1], function(self)
@@ -326,37 +326,37 @@ SendFleetWave = function()
 				end)
 			end
 			Media.PlaySound("beepslct.aud")
-        end)
-        interval = interval + DateTime.Seconds(5)
-    end)
+		end)
+		interval = interval + DateTime.Seconds(5)
+	end)
 
-    if currentWave == #WaveSpawns then
-        Trigger.AfterDelay(#composition * DateTime.Seconds(5), function()
-            FinalWaveArrived = true
-        end)
-    end
+	if currentWave == #WaveSpawns then
+		Trigger.AfterDelay(#composition * DateTime.Seconds(5), function()
+			FinalWaveArrived = true
+		end)
+	end
 
-    NextWave = NextWave + 1
-    WavesRemaining = WavesRemaining - 1
+	NextWave = NextWave + 1
+	WavesRemaining = WavesRemaining - 1
 
-    if NextWave <= #WaveSpawns then
-        Trigger.AfterDelay(TimeBetweenWaves[Difficulty], function()
-            SendFleetWave()
-        end)
-    end
+	if NextWave <= #WaveSpawns then
+		Trigger.AfterDelay(TimeBetweenWaves[Difficulty], function()
+			SendFleetWave()
+		end)
+	end
 end
 
 UpdateMissionText = function()
-    local missionText = "Waves remaining: " .. WavesRemaining
+	local missionText = "Waves remaining: " .. WavesRemaining
 
-    if Difficulty ~= "hard" then
-        missionText = missionText .. " -- Fleet vessels escaped: " .. NumBreakthroughs .. "/" .. MaxBreakthroughs[Difficulty]
-    end
+	if Difficulty ~= "hard" then
+		missionText = missionText .. " -- Fleet vessels escaped: " .. NumBreakthroughs .. "/" .. MaxBreakthroughs[Difficulty]
+	end
 
-    local color = HSLColor.Yellow
-    if Difficulty ~= "hard" and NumBreakthroughs >= MaxBreakthroughs[Difficulty] then
-        color = HSLColor.Red
-    end
+	local color = HSLColor.Yellow
+	if Difficulty ~= "hard" and NumBreakthroughs >= MaxBreakthroughs[Difficulty] then
+		color = HSLColor.Red
+	end
 
-    UserInterface.SetMissionText(missionText, color)
+	UserInterface.SetMissionText(missionText, color)
 end

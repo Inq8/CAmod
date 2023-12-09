@@ -103,7 +103,7 @@ Squads = {
 
 WorldLoaded = function()
 	USSR = Player.GetPlayer("USSR")
-    Greece = Player.GetPlayer("Greece")
+	Greece = Player.GetPlayer("Greece")
 	Traitor = Player.GetPlayer("Traitor")
 	USSRAbandoned = Player.GetPlayer("USSRAbandoned")
 	MissionPlayer = USSR

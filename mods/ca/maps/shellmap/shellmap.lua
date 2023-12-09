@@ -259,9 +259,9 @@ WorldLoaded = function()
 	Actor.Create("sidewinders.upgrade", true, { Owner = GDI })
 	Actor.Create("shields.upgrade", true, { Owner = Scrin })
 	Actor.Create("alphacomanche.upgrade", true, { Owner = Nod })
-    Actor.Create("tibcore.upgrade", true, { Owner = Nod })
+	Actor.Create("tibcore.upgrade", true, { Owner = Nod })
 
-    XODropProxy = Actor.Create("powerproxy.paratroopers.xo", true, { Owner = GDI, })
+	XODropProxy = Actor.Create("powerproxy.paratroopers.xo", true, { Owner = GDI, })
 
 	AutoRepairAndRebuildBuildings(Greece)
 	AutoReplaceHarvesters(Greece)
@@ -277,7 +277,7 @@ WorldLoaded = function()
 	local civilians = Civilian.GetActorsByTypes({ "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "tecn" })
 	Utils.Do(civilians, function(a)
 		local rand = Utils.RandomInteger(1,3)
-        a.Wait(Utils.RandomInteger(1,50))
+		a.Wait(Utils.RandomInteger(1,50))
 		if rand == 1 then
 			a.Move(CivilianRetreat1.Location)
 		else
@@ -347,7 +347,7 @@ WorldLoaded = function()
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(8), function()
-        local nodGroup3 = Map.ActorsInCircle(NodGroup3.CenterPosition, WDist.FromCells(4), function(a)
+		local nodGroup3 = Map.ActorsInCircle(NodGroup3.CenterPosition, WDist.FromCells(4), function(a)
 			return a.Owner == Nod and not a.IsDead and a.HasProperty("AttackMove")
 		end)
 		Utils.Do(nodGroup3, function(a)
@@ -359,16 +359,16 @@ WorldLoaded = function()
 			a.Patrol({ AlliedShipsDest.Location, AlliedShipsStart.Location })
 		end)
 
-        Trigger.AfterDelay(DateTime.Seconds(7), function()
-            local nodShips = Nod.GetActorsByTypes({ "ss2", "sb" })
-            Utils.Do(nodShips, function(a)
-                a.AttackMove(AlliedShipsStart.Location)
+		Trigger.AfterDelay(DateTime.Seconds(7), function()
+			local nodShips = Nod.GetActorsByTypes({ "ss2", "sb" })
+			Utils.Do(nodShips, function(a)
+				a.AttackMove(AlliedShipsStart.Location)
 				Trigger.OnIdle(a, function(self)
 					a.Move(AlliedShipsStart.Location)
 					a.Destroy()
 				end)
-            end)
-        end)
+			end)
+		end)
 	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(35), function()
@@ -381,18 +381,18 @@ WorldLoaded = function()
 		end)
 	end)
 
-    Trigger.AfterDelay(DateTime.Seconds(28), function()
-        Utils.Do({ Warthog1, Warthog2, Warthog3, Aurora1, Aurora2 }, function(a)
-            if not a.IsDead then
-                if a.Type == "a10" then
-                    a.GrantCondition("speed-boost")
-                end
-                a.Stance = "HoldFire"
-                a.Move(AirstrikeDest.Location)
-                a.Destroy()
-            end
-        end)
-    end)
+	Trigger.AfterDelay(DateTime.Seconds(28), function()
+		Utils.Do({ Warthog1, Warthog2, Warthog3, Aurora1, Aurora2 }, function(a)
+			if not a.IsDead then
+				if a.Type == "a10" then
+					a.GrantCondition("speed-boost")
+				end
+				a.Stance = "HoldFire"
+				a.Move(AirstrikeDest.Location)
+				a.Destroy()
+			end
+		end)
+	end)
 
 	Trigger.AfterDelay(DateTime.Seconds(120), function()
 		DoSealDrop()
@@ -411,9 +411,9 @@ WorldLoaded = function()
 		InitAttackSquad(Squads.NodVsGDI, Nod, GDI)
 		InitAttackSquad(Squads.GDIVsNod, GDI, Nod)
 
-        Trigger.AfterDelay(DateTime.Seconds(30), function()
-            InitAttackSquad(Squads.ScrinVsGDI, Scrin, GDI)
-        end)
+		Trigger.AfterDelay(DateTime.Seconds(30), function()
+			InitAttackSquad(Squads.ScrinVsGDI, Scrin, GDI)
+		end)
 
 		Trigger.AfterDelay(DateTime.Seconds(85), function()
 			InitAttackSquad(Squads.GDIVsSoviets, GDI, USSR)
@@ -422,16 +422,16 @@ WorldLoaded = function()
 			InitAttackSquad(Squads.NodVsScrin, Nod, Scrin)
 			InitAttackSquad(Squads.ScrinVsNod, Scrin, Nod)
 
-            InitAirAttackSquad(Squads.GDIAir, GDI, Scrin, { "stmr", "enrv", "tpod", "devo", "ruin", "pac", "deva" })
-            InitAirAttackSquad(Squads.SovietAir, USSR, GDI, { "orca", "a10", "msam", "htnk", "titn", "htnk.ion", "htnk.hover", "htnk.drone", "jugg" })
-            InitAirAttackSquad(Squads.ScrinAir, Scrin, GDI, { "orca", "a10", "msam", "htnk", "titn", "htnk.ion", "htnk.hover", "htnk.drone", "jugg" })
+			InitAirAttackSquad(Squads.GDIAir, GDI, Scrin, { "stmr", "enrv", "tpod", "devo", "ruin", "pac", "deva" })
+			InitAirAttackSquad(Squads.SovietAir, USSR, GDI, { "orca", "a10", "msam", "htnk", "titn", "htnk.ion", "htnk.hover", "htnk.drone", "jugg" })
+			InitAirAttackSquad(Squads.ScrinAir, Scrin, GDI, { "orca", "a10", "msam", "htnk", "titn", "htnk.ion", "htnk.hover", "htnk.drone", "jugg" })
 		end)
 
 		InitAirAttackSquad(Squads.GDIAir, GDI, Nod, { "arty.nod", "mlrs", "scrn", "apch", "venm", "rah", "rmbc", "ltnk" })
 		InitAirAttackSquad(Squads.NodAir, Nod, GDI, { "orca", "a10", "msam", "htnk", "titn", "htnk.ion", "htnk.hover", "htnk.drone", "jugg" })
 	end)
 
-    DoXODrop()
+	DoXODrop()
 end
 
 DoSealDrop = function()
@@ -464,11 +464,11 @@ DoSealDrop = function()
 end
 
 DoXODrop = function()
-    local aircraft = XODropProxy.TargetParatroopers(GDIAttack1.CenterPosition, Angle.East)
+	local aircraft = XODropProxy.TargetParatroopers(GDIAttack1.CenterPosition, Angle.East)
 
-    Utils.Do(aircraft, function(a)
-        Trigger.OnPassengerExited(a, function(t, p)
-            IdleHunt(p)
-        end)
-    end)
+	Utils.Do(aircraft, function(a)
+		Trigger.OnPassengerExited(a, function(t, p)
+			IdleHunt(p)
+		end)
+	end)
 end

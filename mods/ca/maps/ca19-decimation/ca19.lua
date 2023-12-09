@@ -146,8 +146,8 @@ Squads = {
 }
 
 WorldLoaded = function()
-    Scrin = Player.GetPlayer("Scrin")
-    USSR = Player.GetPlayer("USSR")
+	Scrin = Player.GetPlayer("Scrin")
+	USSR = Player.GetPlayer("USSR")
 	USSRUnmanned = Player.GetPlayer("USSRUnmanned")
 	MissionPlayer = Scrin
 	IslandAirfieldsEliminated = false
