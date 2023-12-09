@@ -297,12 +297,20 @@ SendFleetWave = function()
 		table.insert(composition, "pac")
 	end
 
+	local xUsed = { }
+
     -- for each unit in the wave, get the possible base spawn points, pick one and generate offsetted entry/exit
     Utils.Do(composition, function(shipType)
         Trigger.AfterDelay(interval, function()
-            local spawn = Utils.Random(WaveSpawns[currentWave])
-            local xOffset = Utils.RandomInteger(-5, 5)
-            local entry = spawn.Location + CVec.New(xOffset, 0)
+			local spawn = nil
+			local xOffset = nil
+			local entry = nil
+			while entry == nil or xUsed[entry.X] ~= nil do
+				spawn = Utils.Random(WaveSpawns[currentWave])
+				xOffset = Utils.RandomInteger(-7, 7)
+				entry = spawn.Location + CVec.New(xOffset, 0)
+			end
+			xUsed[entry.X] = true
             local exit = CPos.New(entry.X, 96)
 			Beacon.New(GDI, spawn.CenterPosition + WVec.New(xOffset * 1024, 0, 0))
             local ships = Reinforcements.Reinforce(Scrin, { shipType }, { entry, exit }, 25, function(self)
