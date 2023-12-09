@@ -144,16 +144,20 @@ WorldLoaded = function()
     UpdateMissionText()
 
     if Difficulty == "hard" then
-        Sensor2.Destroy()
 		Sensor3.Destroy()
     end
 
     if Difficulty ~= "easy" then
         Sensor1.Destroy()
+		Sensor2.Destroy()
     end
 
 	Trigger.AfterDelay(DateTime.Seconds(10), function()
-		Tip("Scrin fleet vessels will be pinged on the minimap when entering the area.")
+		if Difficulty == "hard" then
+			Tip("Scrin fleet vessels will be pinged on the minimap when entering the area.")
+		else
+			Tip("Scrin fleet vessels will be pinged on the minimap when entering the area and their paths will be visible as long as you have an active radar.")
+		end
 	end)
 
     Trigger.AfterDelay(TimeBetweenWaves[Difficulty] + DateTime.Minutes(1), function()
@@ -301,12 +305,18 @@ SendFleetWave = function()
             local entry = spawn.Location + CVec.New(xOffset, 0)
             local exit = CPos.New(entry.X, 96)
 			Beacon.New(GDI, spawn.CenterPosition + WVec.New(xOffset * 1024, 0, 0))
-            Reinforcements.Reinforce(Scrin, { shipType }, { entry, exit }, 25, function(self)
+            local ships = Reinforcements.Reinforce(Scrin, { shipType }, { entry, exit }, 25, function(self)
                 self.Destroy()
                 NumBreakthroughs = NumBreakthroughs + 1
 				Media.PlaySoundNotification(GDI, "AlertBuzzer")
 				Notification("A Scrin fleet vessel has broken through.")
             end)
+			if Difficulty ~= "hard" then
+				local pathRenderer = Actor.Create("pathRenderer", true, { Owner = GDI, Location = entry })
+				Trigger.OnRemovedFromWorld(ships[1], function(self)
+					pathRenderer.Destroy()
+				end)
+			end
 			Media.PlaySound("beepslct.aud")
         end)
         interval = interval + DateTime.Seconds(5)

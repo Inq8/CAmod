@@ -93,6 +93,25 @@ SHAR:
 	FirepowerMultiplier@BUFF:
 		Modifier: 120
 
+pathrenderer:
+	Inherits: ^InvisibleDummy
+	HitShape:
+	BodyOrientation:
+		QuantizedFacings: 1
+	Immobile:
+		OccupiesSpace: false
+	RenderLine:
+		Angle: 512
+		Length: 95c0
+		Color: ff000033
+		Width: 2
+		DashLength: 0c256
+		FadeTicks: 40
+		RequiresCondition: radarenabled
+	GrantConditionOnPrerequisite@RADAR:
+		Condition: radarenabled
+		Prerequisites: radar-active
+
 # Hunt() requires only 1 AttackBase
 DEVA:
 	-AttackFrontalCharged:
