@@ -143,6 +143,19 @@ WorldLoaded = function()
 	SetupIonStorm()
     UpdateMissionText()
 
+    if Difficulty == "hard" then
+        Sensor2.Destroy()
+		Sensor3.Destroy()
+    end
+
+    if Difficulty ~= "easy" then
+        Sensor1.Destroy()
+    end
+
+	Trigger.AfterDelay(DateTime.Seconds(10), function()
+		Tip("Scrin fleet vessels will be pinged on the minimap when entering the area.")
+	end)
+
     Trigger.AfterDelay(TimeBetweenWaves[Difficulty] + DateTime.Minutes(1), function()
         SendFleetWave()
 
@@ -162,9 +175,9 @@ WorldLoaded = function()
 	end
 
     if Difficulty == "hard" then
-        ObjectiveStopFleet = GDI.AddObjective("Prevent any Scrin fleet ships breaking through.")
+        ObjectiveStopFleet = GDI.AddObjective("Prevent any Scrin fleet vessels breaking through.")
     else
-        ObjectiveStopFleet = GDI.AddObjective("Allow no more than " .. MaxBreakthroughs[Difficulty] .. " fleet ships through.")
+        ObjectiveStopFleet = GDI.AddObjective("Allow no more than " .. MaxBreakthroughs[Difficulty] .. " fleet vessels through.")
     end
 
     BottomOfMap = { }
