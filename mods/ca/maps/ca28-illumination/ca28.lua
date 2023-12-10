@@ -46,8 +46,8 @@ FinalBattleInfantryInterval = {
 }
 
 FinalBattleVehicleInterval = {
-    easy = DateTime.Seconds(30),
-    normal = DateTime.Seconds(25),
+    easy = DateTime.Seconds(28),
+    normal = DateTime.Seconds(24),
     hard = DateTime.Seconds(20)
 }
 

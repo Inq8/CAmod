@@ -163,7 +163,7 @@ WorldLoaded = function()
     Trigger.AfterDelay(TimeBetweenWaves[Difficulty] + DateTime.Minutes(1), function()
         SendFleetWave()
 
-		Trigger.AfterDelay(DateTime.Seconds(40), function()
+		Trigger.AfterDelay(DateTime.Seconds(120), function()
 			Notification("The area across the river is infested with Tiberium lifeforms. You will need to use aicraft to intercept Scrin fleet vessels attempting to break through there.")
 			MediaCA.PlaySound("c_acrossriver.aud", 2)
 			Beacon.New(GDI, AcrossRiver.CenterPosition)
