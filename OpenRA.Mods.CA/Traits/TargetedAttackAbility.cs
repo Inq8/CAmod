@@ -205,7 +205,7 @@ namespace OpenRA.Mods.CA.Traits
 			info = ability.Info;
 
 			selectedWithAbility = self.World.Selection.Actors
-				.Where(a => a.Info.HasTraitInfo<TargetedAttackAbilityInfo>() && a != self && a.Owner == self.Owner)
+				.Where(a => a.Info.HasTraitInfo<TargetedAttackAbilityInfo>() && a != self && a.Owner == self.Owner && !a.IsDead)
 				.Select(a => new TraitPair<TargetedAttackAbility>(a, a.Trait<TargetedAttackAbility>()))
 				.Where(s => s.Trait.Info.Type == ability.Info.Type);
 		}
