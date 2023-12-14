@@ -14,6 +14,12 @@ ReinforcementsInterval = {
 	hard = DateTime.Minutes(5)
 }
 
+HarvesterDeathDelayTime = {
+	easy = DateTime.Seconds(30),
+	normal = DateTime.Seconds(25),
+	hard = DateTime.Seconds(20),
+}
+
 Squads = {
 	ScrinMain = {
 		Delay = {
@@ -22,9 +28,9 @@ Squads = {
 			hard = DateTime.Minutes(3)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(14), Value = 50 } },
-			normal = { { MinTime = 0, Value = 50 }, { MinTime = DateTime.Minutes(12), Value = 100 } },
-			hard = { { MinTime = 0, Value = 80 }, { MinTime = DateTime.Minutes(10), Value = 160 } },
+			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(13), Value = 50 } },
+			normal = { { MinTime = 0, Value = 50 }, { MinTime = DateTime.Minutes(11), Value = 100 } },
+			hard = { { MinTime = 0, Value = 80 }, { MinTime = DateTime.Minutes(9), Value = 160 } },
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -42,9 +48,11 @@ Squads = {
 	},
 	ScrinWater = {
 		Delay = {
+			normal = DateTime.Minutes(7),
 			hard = DateTime.Minutes(6)
 		},
 		AttackValuePerSecond = {
+			normal = { { MinTime = 0, Value = 20 } },
 			hard = { { MinTime = 0, Value = 28 }, { MinTime = DateTime.Minutes(10), Value = 55 } },
 		},
 		QueueProductionStatuses = {
@@ -56,6 +64,10 @@ Squads = {
 		ProducerActors = nil,
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" } },
 		Units = {
+			normal = {
+				{ Vehicles = { "intl.ai2", { "seek", "lace" } }, },
+				{ Vehicles = { { "seek", "lace" }, { "seek", "lace" }, { "seek", "lace" } }, },
+			},
 			hard = {
 				{ Vehicles = { "intl", "intl.ai2", "seek" }, },
 				{ Vehicles = { "seek", "seek", "seek" }, },
@@ -342,7 +354,7 @@ BeginScrinAttacks = function()
 		InitAirAttackSquad(Squads.ScrinAir, Scrin, GDI, { "harv.td", "msam", "hsam", "nuke", "nuk2", "orca", "a10", "a10.upg", "auro", "htnk", "htnk.drone", "htnk.ion", "htnk.hover", "titn", "titn.rail" })
 	end)
 
-	if Difficulty == "hard" then
+	if Difficulty ~= "easy" then
 		Trigger.AfterDelay(Squads.ScrinWater.Delay[Difficulty], function()
 			InitAttackSquad(Squads.ScrinWater, Scrin)
 		end)
@@ -352,11 +364,11 @@ end
 InitTibLifeforms = function()
 
 	if Difficulty ~= "hard" then
-		Blob2.Destroy()
+		Blob1.Destroy()
 	end
 
 	if Difficulty == "easy" then
-		Blob1.Destroy()
+		Blob2.Destroy()
 		Blob3.Destroy()
 		return
 	end

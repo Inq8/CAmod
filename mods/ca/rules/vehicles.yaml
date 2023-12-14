@@ -2001,6 +2001,9 @@ MNLY:
 		PauseOnCondition: empdisable || being-warped
 		ShowSelectionBar: true
 		SelectionBarColor: ffff00
+	-WithDecoration@BOMBARD:
+	-WithDecoration@BOMBARD2:
+	-WithDecoration@BOMBARD3:
 
 TRUK:
 	Inherits: ^Vehicle
@@ -2037,6 +2040,9 @@ TRUK:
 		TargetTypes: Ground, Vehicle, C4, ChaosImmune
 	-ProductionCostMultiplier@IndustrialPlantLevel1:
 	-ProductionCostMultiplier@IndustrialPlantLevel2:
+	-WithDecoration@BOMBARD:
+	-WithDecoration@BOMBARD2:
+	-WithDecoration@BOMBARD3:
 
 TRUK.DROP:
 	Inherits: TRUK
@@ -5981,6 +5987,9 @@ MSAR:
 	ProvidesPrerequisite@radar-active:
 		Prerequisite: radar-active
 		RequiresCondition: deployed && !(jammed || empdisable || being-warped)
+	-WithDecoration@BOMBARD:
+	-WithDecoration@BOMBARD2:
+	-WithDecoration@BOMBARD3:
 
 PTNK:
 	Inherits: ^Tank

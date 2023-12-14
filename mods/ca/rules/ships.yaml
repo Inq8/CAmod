@@ -746,9 +746,10 @@ CV:
 		Offset: 30,70,600
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !under-bridge
-	AttackOmni:
+	AttackFrontal:
 		Voice: Attack
 		TargetFrozenActors: True
+		FacingTolerance: 512
 		PauseOnCondition: empdisable || being-warped
 	CarrierMaster:
 		Actors: horn, horn, horn
@@ -760,6 +761,7 @@ CV:
 		RequiresCondition: !empdisable && !being-warped
 		BeingEnteredCondition: drone-landing
 		RearmAsGroup: true
+		MaxSlaveDistance: 20c0
 	WithSpawnerMasterPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
@@ -772,9 +774,8 @@ CV:
 		DecorationBounds: 1877, 1877
 	Voiced:
 		VoiceSet: DroneCarrVoice
-	WithRangeCircle@Attack:
-		Type: CarrierRange
-		Range: 25c0
+	RenderRangeCircle@Attack:
+		RangeCircleType: CarrierRange
 		Color: 0000FF80
 	ProductionCostMultiplier@arcBonus:
 		Multiplier: 90

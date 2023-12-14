@@ -435,13 +435,15 @@ SignalTransmitterDiscovered = function()
 end
 
 BaseFlipNotification = function()
-	Trigger.AfterDelay(DateTime.Seconds(3), function()
+	Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
 		if not IsFirstBaseFlipped then
 			IsFirstBaseFlipped = true
-			Media.DisplayMessage("Your efforts are appreciated. The Brotherhood will provide support.", "Nod Commander", HSLColor.FromHex("FF0000"))
+			MediaCA.PlaySound("seth_appreciate.aud", 2)
+			Media.DisplayMessage("The Brotherhood appreciates your efforts. We will begin deploying our troops to assist you.", "Nod Commander", HSLColor.FromHex("FF0000"))
 		elseif not IsSecondBaseFlipped then
 			IsSecondBaseFlipped = true
-			Media.DisplayMessage("Kane will be pleased. Now we must focus our efforts and secure the Signal Transmitter!", "Nod Commander", HSLColor.FromHex("FF0000"))
+			MediaCA.PlaySound("seth_kanepleased.aud", 2)
+			Media.DisplayMessage("Kane will be pleased. Now focus your efforts on securing the Signal Transmitter.", "Nod Commander", HSLColor.FromHex("FF0000"))
 		end
 	end)
 end

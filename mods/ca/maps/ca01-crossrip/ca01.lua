@@ -136,7 +136,7 @@ Squads = {
 					MaxTime = DateTime.Minutes(6)
 				},
 				{
-					Infantry = { "e3", "e1", "e1", "e3", "shok", "e1", { "shok", "n8" }, "e1", "e2", "e3", "e4" }, -- 2510
+					Infantry = { "e3", "e1", "e1", "e3", "shok", "e1", { "shok", "e8" }, "e1", "e2", "e3", "e4" }, -- 2510
 					Vehicles = { { "3tnk", "3tnk.atomic" }, "4tnk", "btr.ai", { "katy", "v2rl" }, "ttra" }, -- 5475 (+800)
 					MinTime = DateTime.Minutes(6)
 				}

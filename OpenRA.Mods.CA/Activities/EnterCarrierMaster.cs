@@ -53,6 +53,10 @@ namespace OpenRA.Mods.CA.Activities
 					foreach (var pool in ammoPools)
 						while (pool.GiveAmmo(self, 1))
 						{ }
+
+				var aircraft = self.TraitOrDefault<Aircraft>();
+				if (aircraft != null)
+					aircraft.RemoveInfluence();
 			});
 		}
 	}

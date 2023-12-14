@@ -19,7 +19,7 @@ WorldLoaded = function()
 	InitUSSR()
 
 	ObjectiveLocateForces = GDI.AddObjective("Locate all GDI forces.")
-	ObjectiveExit = GDI.AddObjective("Find an safe exit route.")
+	ObjectiveExit = GDI.AddObjective("Find a safe exit route.")
 
     SetupReveals({ Reveal1, Reveal3, Reveal4 })
 

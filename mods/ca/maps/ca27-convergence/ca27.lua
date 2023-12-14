@@ -143,10 +143,27 @@ WorldLoaded = function()
 	SetupIonStorm()
     UpdateMissionText()
 
+    if Difficulty == "hard" then
+		Sensor3.Destroy()
+    end
+
+    if Difficulty ~= "easy" then
+        Sensor1.Destroy()
+		Sensor2.Destroy()
+    end
+
+	Trigger.AfterDelay(DateTime.Seconds(10), function()
+		if Difficulty == "hard" then
+			Tip("Scrin fleet vessels will be pinged on the minimap when entering the area.")
+		else
+			Tip("Scrin fleet vessels will be pinged on the minimap when entering the area and their paths will be visible as long as you have an active radar.")
+		end
+	end)
+
     Trigger.AfterDelay(TimeBetweenWaves[Difficulty] + DateTime.Minutes(1), function()
         SendFleetWave()
 
-		Trigger.AfterDelay(DateTime.Seconds(40), function()
+		Trigger.AfterDelay(DateTime.Seconds(120), function()
 			Notification("The area across the river is infested with Tiberium lifeforms. You will need to use aicraft to intercept Scrin fleet vessels attempting to break through there.")
 			MediaCA.PlaySound("c_acrossriver.aud", 2)
 			Beacon.New(GDI, AcrossRiver.CenterPosition)
@@ -162,9 +179,9 @@ WorldLoaded = function()
 	end
 
     if Difficulty == "hard" then
-        ObjectiveStopFleet = GDI.AddObjective("Prevent any Scrin fleet ships breaking through.")
+        ObjectiveStopFleet = GDI.AddObjective("Prevent any Scrin fleet vessels breaking through.")
     else
-        ObjectiveStopFleet = GDI.AddObjective("Allow no more than " .. MaxBreakthroughs[Difficulty] .. " fleet ships through.")
+        ObjectiveStopFleet = GDI.AddObjective("Allow no more than " .. MaxBreakthroughs[Difficulty] .. " fleet vessels through.")
     end
 
     BottomOfMap = { }
@@ -280,20 +297,34 @@ SendFleetWave = function()
 		table.insert(composition, "pac")
 	end
 
+	local xUsed = { }
+
     -- for each unit in the wave, get the possible base spawn points, pick one and generate offsetted entry/exit
     Utils.Do(composition, function(shipType)
         Trigger.AfterDelay(interval, function()
-            local spawn = Utils.Random(WaveSpawns[currentWave])
-            local xOffset = Utils.RandomInteger(-5, 5)
-            local entry = spawn.Location + CVec.New(xOffset, 0)
+			local spawn = nil
+			local xOffset = nil
+			local entry = nil
+			while entry == nil or xUsed[entry.X] ~= nil do
+				spawn = Utils.Random(WaveSpawns[currentWave])
+				xOffset = Utils.RandomInteger(-7, 7)
+				entry = spawn.Location + CVec.New(xOffset, 0)
+			end
+			xUsed[entry.X] = true
             local exit = CPos.New(entry.X, 96)
 			Beacon.New(GDI, spawn.CenterPosition + WVec.New(xOffset * 1024, 0, 0))
-            Reinforcements.Reinforce(Scrin, { shipType }, { entry, exit }, 25, function(self)
+            local ships = Reinforcements.Reinforce(Scrin, { shipType }, { entry, exit }, 25, function(self)
                 self.Destroy()
                 NumBreakthroughs = NumBreakthroughs + 1
 				Media.PlaySoundNotification(GDI, "AlertBuzzer")
 				Notification("A Scrin fleet vessel has broken through.")
             end)
+			if Difficulty ~= "hard" then
+				local pathRenderer = Actor.Create("pathRenderer", true, { Owner = GDI, Location = entry })
+				Trigger.OnRemovedFromWorld(ships[1], function(self)
+					pathRenderer.Destroy()
+				end)
+			end
 			Media.PlaySound("beepslct.aud")
         end)
         interval = interval + DateTime.Seconds(5)

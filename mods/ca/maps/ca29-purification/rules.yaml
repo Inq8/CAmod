@@ -300,6 +300,7 @@ WORMHOLE:
 	Inherits@INF: ^ProducesInfantry
 	Inherits@VEH: ^ProducesVehicles
 	-PopControlled:
+	-TeleportNetwork:
 	Health:
 		HP: 500000
 	ChangesHealth:
@@ -318,3 +319,9 @@ WORMHOLE:
 		Condition: being-warped
 	MustBeDestroyed:
 		RequiredForShortGame: true
+
+# Removing TeleportNetwork from Wormhole above causes exception as no actors with TeleportNetwork are defined
+dummyteleport:
+	Inherits: ^InvisibleDummy
+	TeleportNetwork:
+		Type: Wormhole

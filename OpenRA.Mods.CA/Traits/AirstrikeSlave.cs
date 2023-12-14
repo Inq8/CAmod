@@ -16,13 +16,6 @@ namespace OpenRA.Mods.CA.Traits
 	[Desc("Can be slaved to a spawner.")]
 	public class AirstrikeSlaveInfo : BaseSpawnerSlaveInfo
 	{
-		[Desc("Move this close to the spawner, before entering it.")]
-		public readonly WDist LandingDistance = new WDist(5 * 1024);
-
-		[Desc("We consider this is close enought to the spawner and enter it, instead of trying to reach 0 distance." +
-			"This allows the spawned unit to enter the spawner while the spawner is moving.")]
-		public readonly WDist CloseEnoughDistance = new WDist(128);
-
 		public override object Create(ActorInitializer init) { return new AirstrikeSlave(init, this); }
 	}
 

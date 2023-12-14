@@ -14,14 +14,14 @@ ScrinReinforcementSpawns = {
 Squads = {
 	ScrinMain = {
 		Delay = {
-			easy = DateTime.Seconds(270),
-			normal = DateTime.Minutes(3),
-			hard = DateTime.Seconds(90)
+			easy = DateTime.Seconds(240),
+			normal = DateTime.Seconds(150),
+			hard = DateTime.Seconds(60)
 		},
 		AttackValuePerSecond = {
-			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(12), Value = 50 } },
-			normal = { { MinTime = 0, Value = 50 }, { MinTime = DateTime.Minutes(10), Value = 100 } },
-			hard = { { MinTime = 0, Value = 80 }, { MinTime = DateTime.Minutes(8), Value = 160 } },
+			easy = { { MinTime = 0, Value = 20 }, { MinTime = DateTime.Minutes(11), Value = 50 } },
+			normal = { { MinTime = 0, Value = 50 }, { MinTime = DateTime.Minutes(9), Value = 100 } },
+			hard = { { MinTime = 0, Value = 80 }, { MinTime = DateTime.Minutes(7), Value = 160 } },
 		},
 		QueueProductionStatuses = {
 			Infantry = false,
@@ -346,33 +346,40 @@ PurificationWave = function()
 end
 
 PurifyScrin = function()
-    local scrinToPurify = Utils.Where(Scrin.GetGroundAttackers(), IsScrinGroundHunterUnit)
+    local scrinGroundUnits = Utils.Shuffle(Utils.Where(Scrin.GetGroundAttackers(), IsScrinGroundHunterUnit))
+    local count = 1
 
-    Utils.Do(scrinToPurify, function(a)
-        Purify(a)
+    Utils.Do(scrinGroundUnits, function(a)
+        Purify(a, count)
+        count = count + 1
+        if count > 10 then
+            count = 1
+        end
 	end)
 
-    local scrinAirToPurify = Scrin.GetActorsByTypes({ "pac", "deva" })
+    local scrinAirUnits = Scrin.GetActorsByTypes({ "pac", "deva" })
+    count = 1
 
-    Utils.Do(scrinAirToPurify, function(a)
-        Purify(a)
+    Utils.Do(scrinAirUnits, function(a)
+        Purify(a, count)
+        count = count + 1
+        if count > 10 then
+            count = 1
+        end
     end)
 end
 
-Purify = function(a)
+Purify = function(a, count)
     Trigger.ClearAll(a)
-    local random = Utils.RandomInteger(1,100)
-    local threshold
+    local shouldConvert = false
 
-    if Difficulty == "easy" then
-        threshold = 30
-    elseif Difficulty == "normal" then
-        threshold = 40
-    else
-        threshold = 50
+    if Difficulty == "easy" and count % 3 > 0 then
+        shouldConvert = true
+    elseif count % 2 == 0 then
+        shouldConvert = true
     end
 
-    if random > threshold then
+    if shouldConvert then
         a.Owner = ScrinRebels
     end
     Trigger.AfterDelay(1, function()
