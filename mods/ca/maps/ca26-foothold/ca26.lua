@@ -43,8 +43,8 @@ Squads = {
 		ProducerTypes = { Infantry = { "port" }, Vehicles = { "wsph" }, Aircraft = { "grav" } },
 		Units = UnitCompositions.Scrin.Main,
 		AttackPaths = {
-            { ScrinAttack1.Location, ScrinAttack2.Location, ScrinAttack3.Location, ScrinAttack4.Location }
-        },
+			{ ScrinAttack1.Location, ScrinAttack2.Location, ScrinAttack3.Location, ScrinAttack4.Location }
+		},
 	},
 	ScrinWater = {
 		Delay = {
@@ -74,10 +74,10 @@ Squads = {
 				{ Vehicles = { "lace", "lace", "seek", "seek" }, },
 				{ Vehicles = { "devo", "intl.ai2", "ruin" }, MinTime = DateTime.Minutes(7) },
 			}
-        },
+		},
 		AttackPaths = {
-            { ScrinAttack1.Location, ScrinAttack2b.Location, ScrinAttack4.Location }
-        },
+			{ ScrinAttack1.Location, ScrinAttack2b.Location, ScrinAttack4.Location }
+		},
 	},
 	ScrinAir = {
 		Delay = {
@@ -113,9 +113,9 @@ Squads = {
 }
 
 WorldLoaded = function()
-    GDI = Player.GetPlayer("GDI")
-    Scrin = Player.GetPlayer("Scrin")
-    TibLifeforms = Player.GetPlayer("TibLifeforms")
+	GDI = Player.GetPlayer("GDI")
+	Scrin = Player.GetPlayer("Scrin")
+	TibLifeforms = Player.GetPlayer("TibLifeforms")
 	GatewayOwner = Player.GetPlayer("GatewayOwner")
 	MissionPlayer = GDI
 	TimerTicks = 0
@@ -127,10 +127,10 @@ WorldLoaded = function()
 	InitScrin()
 	InitTibLifeforms()
 
-    ObjectiveDeploySensorArrays = GDI.AddObjective("Deploy Sensor Arrays at target locations.")
+	ObjectiveDeploySensorArrays = GDI.AddObjective("Deploy Sensor Arrays at target locations.")
 	ObjectiveCaptureNerveCenter = GDI.AddObjective("Capture Scrin Nerve Center.")
 	SetupReveals({ Reveal1, Reveal2 })
-    CheckSensors()
+	CheckSensors()
 
 	if Difficulty ~= "easy" then
 		Trigger.AfterDelay(DateTime.Seconds(10), function()
@@ -240,7 +240,7 @@ OncePerSecondChecks = function()
 			GDI.MarkCompletedObjective(ObjectiveDestroyScrinBase)
 		end
 
-        CheckSensors()
+		CheckSensors()
 	end
 end
 
@@ -251,36 +251,36 @@ OncePerFiveSecondChecks = function()
 end
 
 CheckSensors = function()
-    if GDI.IsObjectiveCompleted(ObjectiveDeploySensorArrays) then
-        return
-    end
+	if GDI.IsObjectiveCompleted(ObjectiveDeploySensorArrays) then
+		return
+	end
 
-    NumSensorsDeployed = 0
+	NumSensorsDeployed = 0
 
-    Utils.Do(SensorZones, function(z)
+	Utils.Do(SensorZones, function(z)
 		local deployedSensors = Map.ActorsInCircle(z.CenterPosition, WDist.New(10 * 1024), function(a)
 			return a.Type == "deployedsensortoken"
 		end)
 
-        if #deployedSensors > 0 then
-            NumSensorsDeployed = NumSensorsDeployed + 1
-        end
-    end)
+		if #deployedSensors > 0 then
+			NumSensorsDeployed = NumSensorsDeployed + 1
+		end
+	end)
 
-    if NumSensorsDeployed == 4 then
-        UserInterface.SetMissionText("")
-        GDI.MarkCompletedObjective(ObjectiveDeploySensorArrays)
+	if NumSensorsDeployed == 4 then
+		UserInterface.SetMissionText("")
+		GDI.MarkCompletedObjective(ObjectiveDeploySensorArrays)
 		SensorZone1.Destroy()
 		SensorZone2.Destroy()
 		SensorZone3.Destroy()
 		SensorZone4.Destroy()
 
-        Trigger.AfterDelay(DateTime.Seconds(2), function()
+		Trigger.AfterDelay(DateTime.Seconds(2), function()
 
-            local nerveCenterCamera = Actor.Create("camera", true, { Owner = GDI, Location = NerveCenter1.Location })
-            Trigger.AfterDelay(DateTime.Seconds(10), function()
-                nerveCenterCamera.Destroy()
-            end)
+			local nerveCenterCamera = Actor.Create("camera", true, { Owner = GDI, Location = NerveCenter1.Location })
+			Trigger.AfterDelay(DateTime.Seconds(10), function()
+				nerveCenterCamera.Destroy()
+			end)
 
 			Beacon.New(GDI, NerveCenter1.CenterPosition)
 			MediaCA.PlaySound("c_nervecenterlocated.aud", 2)
@@ -316,10 +316,10 @@ CheckSensors = function()
 					end)
 				end
 			end)
-        end)
-    else
-        UserInterface.SetMissionText("Sensor arrays deployed: " .. NumSensorsDeployed .. "/4", HSLColor.Yellow)
-    end
+		end)
+	else
+		UserInterface.SetMissionText("Sensor arrays deployed: " .. NumSensorsDeployed .. "/4", HSLColor.Yellow)
+	end
 end
 
 InitScrin = function()

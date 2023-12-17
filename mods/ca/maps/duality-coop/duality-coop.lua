@@ -31,9 +31,9 @@ ScrinReinforcementInterval = {
 }
 
 WorldLoaded = function()
-    GDI = Player.GetPlayer("GDI")
+	GDI = Player.GetPlayer("GDI")
 	Greece = Player.GetPlayer("Greece")
-    Scrin = Player.GetPlayer("Scrin")
+	Scrin = Player.GetPlayer("Scrin")
 	MissionPlayer = GDI
 	TimerTicks = TimeLimit[Difficulty]
 	Players = { GDI, Greece }

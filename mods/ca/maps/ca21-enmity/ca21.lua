@@ -160,8 +160,8 @@ Squads = {
 }
 
 WorldLoaded = function()
-    GDI = Player.GetPlayer("GDI")
-    Nod = Player.GetPlayer("Nod")
+	GDI = Player.GetPlayer("GDI")
+	Nod = Player.GetPlayer("Nod")
 	MissionPlayer = GDI
 	EnforceAiBuildRadius = true
 

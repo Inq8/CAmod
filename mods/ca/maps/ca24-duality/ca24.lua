@@ -8,8 +8,8 @@ ScrinReinforcementInterval = {
 }
 
 WorldLoaded = function()
-    GDI = Player.GetPlayer("GDI")
-    Scrin = Player.GetPlayer("Scrin")
+	GDI = Player.GetPlayer("GDI")
+	Scrin = Player.GetPlayer("Scrin")
 	MissionPlayer = GDI
 	TimerTicks = 0
 

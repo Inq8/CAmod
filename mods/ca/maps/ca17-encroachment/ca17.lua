@@ -165,8 +165,8 @@ Squads = {
 }
 
 WorldLoaded = function()
-    Scrin = Player.GetPlayer("Scrin")
-    Greece = Player.GetPlayer("Greece")
+	Scrin = Player.GetPlayer("Scrin")
+	Greece = Player.GetPlayer("Greece")
 	GDI = Player.GetPlayer("GDI")
 	MissionPlayer = Scrin
 

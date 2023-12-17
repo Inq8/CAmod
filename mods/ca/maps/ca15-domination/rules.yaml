@@ -26,36 +26,6 @@ Player:
 	PowerManager:
 		AdviceInterval: 240000
 
-^TDPalette:
-	RenderSprites:
-		PlayerPalette: playertdunit
-
-^Infantry:
-	RenderSprites:
-		PlayerPalette: playertdunit
-	WithDeathAnimation:
-		DeathSequencePalette: playertdunit
-
-^BuildingTD:
-	RenderSprites:
-		PlayerPalette: playertd
-
-^DefenseTD:
-	RenderSprites:
-		PlayerPalette: playertd
-
-SAPC:
-	RenderSprites:
-		PlayerPalette: playerraunit
-
-HARV.TD:
-	RenderSprites:
-		PlayerPalette: playertd
-
-AMCV:
-	RenderSprites:
-		PlayerPalette: playertd
-
 TMPL:
 	-NukePower@Cluster:
 
@@ -141,20 +111,12 @@ N5:
 
 RMBC:
 	Inherits@DECRYPT: ^DecryptableCyborg
-	RenderSprites:
-		PlayerPalette: playertd
-	WithDeathAnimation:
-		DeathSequencePalette: playertd
 	DamageMultiplier@MCBUFF:
 		Modifier: 75
 		RequiresCondition: mindcontrolled
 
 ENLI:
 	Inherits@DECRYPT: ^DecryptableCyborg
-	RenderSprites:
-		PlayerPalette: playertd
-	WithDeathAnimation:
-		DeathSequencePalette: playertd
 	DamageMultiplier@MCBUFF:
 		Modifier: 70
 		RequiresCondition: mindcontrolled

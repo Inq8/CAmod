@@ -84,36 +84,6 @@ Player:
 					TargetMetric: Value
 					CheckRadius: 7c0
 
-^TDPalette:
-	RenderSprites:
-		PlayerPalette: playertdunit
-
-^Infantry:
-	RenderSprites:
-		PlayerPalette: playertdunit
-	WithDeathAnimation:
-		DeathSequencePalette: playertdunit
-
-^BuildingTD:
-	RenderSprites:
-		PlayerPalette: playertd
-
-^DefenseTD:
-	RenderSprites:
-		PlayerPalette: playertd
-
-SAPC:
-	RenderSprites:
-		PlayerPalette: playerraunit
-
-HARV.TD:
-	RenderSprites:
-		PlayerPalette: playertd
-
-AMCV:
-	RenderSprites:
-		PlayerPalette: playertd
-
 ^AiExtraPower:
 	PowerMultiplier@EXTRAPOWER:
 		Modifier: 200
@@ -301,10 +271,6 @@ mothership.shields:
 		Condition: kane-revealed
 	ExternalCondition@PROVOKED:
 		Condition: provoked
-	RenderSprites:
-		PlayerPalette: playertd
-	WithDeathAnimation:
-		DeathSequencePalette: playertd
 	AttackFrontal:
 		PauseOnCondition: !kane-revealed && bluebuff && !provoked
 

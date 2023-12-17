@@ -59,8 +59,8 @@ TibFacilities = { NTibFacility, STibFacility, ETibFacility }
 HindPatrolPath = { HindPatrol1.Location, HindPatrol2.Location, HindPatrol3.Location, HindPatrol4.Location, HindPatrol5.Location, HindPatrol6.Location, HindPatrol7.Location, HindPatrol8.Location, HindPatrol9.Location }
 
 WorldLoaded = function()
-    Scrin = Player.GetPlayer("Scrin")
-    USSR = Player.GetPlayer("USSR")
+	Scrin = Player.GetPlayer("Scrin")
+	USSR = Player.GetPlayer("USSR")
 	MissionPlayer = Scrin
 	TimerTicks = 0
 	TibFacilitiesCaptured = 0

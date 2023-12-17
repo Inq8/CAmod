@@ -50,9 +50,9 @@ GroundedAircraft = {
 }
 
 WorldLoaded = function()
-    Scrin = Player.GetPlayer("Scrin")
-    Greece = Player.GetPlayer("Greece")
-    GDI = Player.GetPlayer("GDI")
+	Scrin = Player.GetPlayer("Scrin")
+	Greece = Player.GetPlayer("Greece")
+	GDI = Player.GetPlayer("GDI")
 	MissionPlayer = Scrin
 	TimerTicks = 0
 	StormsEnded = false

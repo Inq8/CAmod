@@ -165,7 +165,7 @@ WorldLoaded = function()
 	USSR = Player.GetPlayer("USSR")
 	Nod = Player.GetPlayer("Nod")
 	NodAbandoned = Player.GetPlayer("NodAbandoned")
-    Scrin = Player.GetPlayer("Scrin")
+	Scrin = Player.GetPlayer("Scrin")
 	MissionPlayer = USSR
 	TimerTicks = 0
 

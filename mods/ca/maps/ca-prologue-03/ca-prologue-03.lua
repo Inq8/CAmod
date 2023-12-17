@@ -21,7 +21,7 @@ WorldLoaded = function()
 	ObjectiveLocateForces = GDI.AddObjective("Locate all GDI forces.")
 	ObjectiveExit = GDI.AddObjective("Find a safe exit route.")
 
-    SetupReveals({ Reveal1, Reveal3, Reveal4 })
+	SetupReveals({ Reveal1, Reveal3, Reveal4 })
 
 	TroopGroups = {
 		{ Waypoint = Group1, Id = 1 },

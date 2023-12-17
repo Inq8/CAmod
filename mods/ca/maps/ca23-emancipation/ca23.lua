@@ -137,9 +137,9 @@ Squads = {
 }
 
 WorldLoaded = function()
-    GDI = Player.GetPlayer("GDI")
-    Scrin = Player.GetPlayer("Scrin")
-    GDISlaves = Player.GetPlayer("GDISlaves")
+	GDI = Player.GetPlayer("GDI")
+	Scrin = Player.GetPlayer("Scrin")
+	GDISlaves = Player.GetPlayer("GDISlaves")
 	MissionPlayer = GDI
 	EnslavedUnitsKilled = 0
 

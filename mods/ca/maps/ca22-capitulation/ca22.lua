@@ -187,8 +187,8 @@ Squads = {
 }
 
 WorldLoaded = function()
-    GDI = Player.GetPlayer("GDI")
-    USSR = Player.GetPlayer("USSR")
+	GDI = Player.GetPlayer("GDI")
+	USSR = Player.GetPlayer("USSR")
 	MissionPlayer = GDI
 	TimerTicks = MaxReactorFuelTime
 	CurrentDelivery = 1

@@ -3,17 +3,17 @@ Players = Player.GetPlayers(function(p) return p.Team == 1 end)
 AttackPaths =
 {
 	{
-        { NW2.Location, NW3.Location, NW4.Location, NW5.Location, NW6.Location, NW7.Location, NW8.Location, NW9.Location },
-        { NE4.Location, NE5.Location, NE6.Location, NE7.Location },
-    },
-	{
-	    { NE2.Location, NE3.Location, NE4.Location, NE5.Location, NE6.Location, NE7.Location },
-        { NE2.Location, NE3.Location, NE4.Location, NW4.Location, NW5.Location, NW6.Location, NW7.Location, NW8.Location, NW9.Location },
+		{ NW2.Location, NW3.Location, NW4.Location, NW5.Location, NW6.Location, NW7.Location, NW8.Location, NW9.Location },
+		{ NE4.Location, NE5.Location, NE6.Location, NE7.Location },
 	},
 	{
-        { SE2.Location, NE3.Location, NE4.Location, NE5.Location, NE6.Location, NE7.Location },
-        { SE2.Location, NE3.Location, NE4.Location, NW4.Location, NW5.Location, NW6.Location, NW7.Location, NW8.Location, NW9.Location },
-    },
+		{ NE2.Location, NE3.Location, NE4.Location, NE5.Location, NE6.Location, NE7.Location },
+		{ NE2.Location, NE3.Location, NE4.Location, NW4.Location, NW5.Location, NW6.Location, NW7.Location, NW8.Location, NW9.Location },
+	},
+	{
+		{ SE2.Location, NE3.Location, NE4.Location, NE5.Location, NE6.Location, NE7.Location },
+		{ SE2.Location, NE3.Location, NE4.Location, NW4.Location, NW5.Location, NW6.Location, NW7.Location, NW8.Location, NW9.Location },
+	},
 }
 
 Wormholes = { WormholeNW, WormholeNE, WormholeSE }
@@ -22,17 +22,17 @@ ScrinSquads = {
 	{"s1", "s1", "s1", "s2", "gscr"},
 	{"s1", "s1", "s1", "s3", "gscr"},
 	{"s1", "s1", "s1", "s4", "gscr"},
-    {"s1", "s1", "s1", "brst2", "gscr"},
+	{"s1", "s1", "s1", "brst2", "gscr"},
 	{"gscr", "gscr", "gscr"},
 	{"s4", "s4", "s4"},
 	{"s1", "s1", "s1", "s1", "s1"},
 	{"s2", "s2", "s2"},
 	{"s3", "s3", "s1", "s1"},
-    {"brst2", "brst2", "s1", "s1"},
+	{"brst2", "brst2", "s1", "s1"},
 }
 
 GetNumPlayers = function()
-    local num = 0
+	local num = 0
 
 	Utils.Do(Players, function(player)
 		if player.InternalName ~= "Neutral" then
@@ -41,7 +41,7 @@ GetNumPlayers = function()
 		end
 	end)
 
-    return num
+	return num
 end
 
 IdleHunt = function(actor)
@@ -72,11 +72,11 @@ SendScrinUnits = function(wormhole, attackPaths)
 	local interval = math.floor((120 / GetNumPlayers()) + 0.5) + Utils.RandomInteger(-3,3)
 	local unitTypes = Utils.Random(ScrinSquads);
 	local units = Reinforcements.Reinforce(Scrin, unitTypes, { wormhole.Location }, 15)
-    local attackPath = attackPaths[1]
+	local attackPath = attackPaths[1]
 
-    if GetNumPlayers() > 2 then
-        attackPath = Utils.Random(attackPaths)
-    end
+	if GetNumPlayers() > 2 then
+		attackPath = Utils.Random(attackPaths)
+	end
 
 	Utils.Do(units, function(unit)
 		unit.Patrol(attackPath, true, 50)
@@ -119,22 +119,22 @@ WorldLoaded = function()
 		SendScrinUnits(WormholeSE, AttackPaths[3])
 	end
 
-    local scrinUnits = Scrin.GetActorsByTypes({"gunw", "corr", "ruin", "lchr", "dark", "ptur"})
+	local scrinUnits = Scrin.GetActorsByTypes({"gunw", "corr", "ruin", "lchr", "dark", "ptur"})
 
-    Utils.Do(scrinUnits, function(unit)
-        Trigger.OnDamaged(unit, function(self, attacker, damage)
-            if attacker.EffectiveOwner == Scrin then
-                return
-            end
-            local rand = Utils.RandomInteger(1,100)
-            if rand > 90 then
-                if unit.HasProperty("Attack") and not unit.IsDead then
-                    unit.Stop()
-                    unit.Attack(attacker)
-                end
-            end
-        end)
-    end)
+	Utils.Do(scrinUnits, function(unit)
+		Trigger.OnDamaged(unit, function(self, attacker, damage)
+			if attacker.EffectiveOwner == Scrin then
+				return
+			end
+			local rand = Utils.RandomInteger(1,100)
+			if rand > 90 then
+				if unit.HasProperty("Attack") and not unit.IsDead then
+					unit.Stop()
+					unit.Attack(attacker)
+				end
+			end
+		end)
+	end)
 
 	Trigger.OnAllKilledOrCaptured(Wormholes, function()
 		local actors = Scrin.GetActors()
