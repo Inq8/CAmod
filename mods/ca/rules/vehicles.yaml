@@ -6864,3 +6864,112 @@ APOC.ATOMIC:
 	-SpawnActorOnDeath:
 	-UpgradeableTo:
 	-Upgradeable@ATOMIC:
+
+THWK:
+	Inherits: ^TankTD
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	RenderSprites:
+	Valued:
+		Cost: 1500
+	Tooltip:
+		Name: Tomahawk Launcher
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		BuildPaletteOrder: 240
+		Prerequisites: gtek, ~vehicles.htnk, ~techlevel.high
+		Queue: VehicleSQ, VehicleMQ
+		IconPalette: chrometd
+		Description: Long-range incendiary missile artillery.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets\n• Cannot fire while moving
+	Mobile:
+		Speed: 43
+		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead || notmobile
+		BlockedCursor: move
+	Health:
+		HP: 30000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		MinRange: 4c0
+		Range: 5c0
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 4c0
+	Turreted:
+		TurnSpeed: 3
+		RealignDelay: 0
+	Armament@TARGETTER:
+		Weapon: HonestJohnTargeting
+	AttackTurreted:
+		TargetFrozenActors: True
+		ForceFireIgnoresActors: True
+		PauseOnCondition: empdisable || being-warped
+	WithSpriteTurret@OneMissile:
+		RequiresCondition: loaded
+	WithSpriteTurret@NoMissiles:
+		RequiresCondition: !loaded
+		Sequence: turret0
+	MissileSpawnerMaster:
+		Actors: TH
+		RespawnTicks: 249
+		LoadedCondition: loaded
+		LaunchingCondition: launching
+	Exit:
+		SpawnOffset: 0,-128,0
+	WithSpawnerMasterPipsDecoration:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+	GrantConditionOnAttack@AIMING:
+		ArmamentNames: targetter
+		Condition: aiming
+		RevokeDelay: 15
+		RevokeAll: false
+	GrantConditionOnMovement@MOVING:
+		ValidMovementTypes: Horizontal, Vertical, Turn
+		Condition: moving
+	Explodes:
+		Weapon: BarrelExplode
+	ProducibleWithLevel:
+		Prerequisites: vehicles.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: vehicles.upgraded
+	Selectable:
+		DecorationBounds: 1194, 1194
+
+TH:
+	Inherits: ^ShootableMissile
+	RenderSprites:
+		Palette: temptd
+	Valued:
+		Cost: 50
+	Tooltip:
+		Name: Tomahawk Missile
+	Tooltip@NoRow:
+		Name: Tomahawk Missile
+	Health:
+		HP: 5000
+	BallisticMissile:
+		LaunchAngle: 128
+		Speed: 165
+	LeavesTrailsCA:
+		Image: smokey2
+		Palette: tseffect-ignore-lighting-alpha75
+		MovingInterval: 3
+		Type: CenterPosition
+		Offsets: -200, 0, 0
+	MissileSpawnerSlave:
+	SpawnedExplodes:
+		Weapon: V3Weapon
+		EmptyWeapon: VisualExplodeHusk
+		RequiresCondition: !airborne
+	Explodes:
+		Weapon: V3ExplodeAirborne
+		RequiresCondition: airborne

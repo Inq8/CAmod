@@ -2040,3 +2040,80 @@ RocketShells:
 		CruiseAltitude: 2c0
 		Inaccuracy: 128
 		AllowSnapping: true
+
+Tomahawk:
+	ReloadDelay: 130
+	Range: 16c0
+	MinRange: 3c0
+	Report: rocket2.aud
+	Projectile: Bullet
+		Blockable: false
+		Shadow: true
+		Inaccuracy: 0c511
+		Image: thwkm
+		Palette: temptd
+		TrailImage: smokey
+		TrailDelay: 3
+		Speed: 210
+		LaunchAngle: 37
+	Warhead@1Dam: SpreadDamage
+		Spread: 512
+		Damage: 600
+		Falloff: 500, 368, 135, 50, 18, 7, 0
+		Versus:
+			None: 100
+			Wood: 100
+			Concrete: 80
+			Light: 70
+			Heavy: 35
+			Brick: 5
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigatedMinor
+	Warhead@2Dam: SpreadDamage
+		Spread: 512
+		Damage: 600
+		Falloff: 500, 368, 135, 50, 18, 7, 0
+		Delay: 3
+		Versus:
+			None: 100
+			Wood: 100
+			Concrete: 80
+			Light: 70
+			Heavy: 35
+			Brick: 5
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigatedMinor
+	Warhead@3Dam: SpreadDamage
+		Spread: 512
+		Damage: 600
+		Falloff: 500, 368, 135, 50, 18, 7, 0
+		Delay: 6
+		Versus:
+			None: 100
+			Wood: 100
+			Concrete: 80
+			Light: 70
+			Heavy: 35
+			Brick: 5
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigatedMinor
+	Warhead@4Dam: SpreadDamage
+		Spread: 512
+		Damage: 600
+		Falloff: 500, 368, 135, 50, 18, 7, 0
+		Delay: 9
+		Versus:
+			None: 100
+			Wood: 100
+			Concrete: 80
+			Light: 70
+			Heavy: 35
+			Brick: 5
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigatedMinor
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch
+	Warhead@3Eff: CreateEffect
+		Explosions: large_napalm
+		ImpactSounds: firebl3.aud
+	Warhead@Flames: FireCluster
+		Weapon: BurnFx
+		RandomClusterCount: 5
+		Dimensions: 3,3
+		Footprint: xxx xxx xxx
