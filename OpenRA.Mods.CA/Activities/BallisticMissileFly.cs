@@ -36,6 +36,7 @@ namespace OpenRA.Mods.CA.Activities
 			targetPos = t.CenterPosition; // fixed position == no homing
 			length = Math.Max((targetPos - initPos).Length / this.sbm.Info.Speed, 1);
 			facing = (targetPos - initPos).Yaw;
+			sbm.Facing = GetEffectiveFacing();
 		}
 
 		WAngle GetEffectiveFacing()

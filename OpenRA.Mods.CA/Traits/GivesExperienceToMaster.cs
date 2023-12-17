@@ -37,7 +37,7 @@ namespace OpenRA.Mods.CA.Traits
 		readonly GivesExperienceToMasterInfo info;
 
 		IEnumerable<MindControllable> mindControllables;
-		IEnumerable<BaseSpawnerSlave> baseSpawnerSlaves;
+		IEnumerable<SpawnerSlaveBase> spawnerSlaveBases;
 
 		public GivesExperienceToMaster(Actor self, GivesExperienceToMasterInfo info)
 		{
@@ -47,7 +47,7 @@ namespace OpenRA.Mods.CA.Traits
 		void INotifyCreated.Created(Actor self)
 		{
 			mindControllables = self.TraitsImplementing<MindControllable>();
-			baseSpawnerSlaves = self.TraitsImplementing<BaseSpawnerSlave>();
+			spawnerSlaveBases = self.TraitsImplementing<SpawnerSlaveBase>();
 		}
 
 		void INotifyAppliedDamage.AppliedDamage(Actor self, Actor damaged, AttackInfo e)
@@ -78,9 +78,9 @@ namespace OpenRA.Mods.CA.Traits
 				if (mindControllable.Master != null)
 					GiveExperience(mindControllable.Master, exp, experienceModifiers);
 
-			foreach (var baseSpawnerSlave in baseSpawnerSlaves)
-				if (baseSpawnerSlave.Master != null)
-					GiveExperience(baseSpawnerSlave.Master, exp, experienceModifiers);
+			foreach (var SpawnerSlaveBase in spawnerSlaveBases)
+				if (SpawnerSlaveBase.Master != null)
+					GiveExperience(SpawnerSlaveBase.Master, exp, experienceModifiers);
 		}
 
 		void GiveExperience(Actor master, int exp, IEnumerable<int> experienceModifiers)

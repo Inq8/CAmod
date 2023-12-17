@@ -11,12 +11,12 @@
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("This unit is \"slaved\" to a missile spawner master.")]
-	public class MissileSpawnerSlaveInfo : BaseSpawnerSlaveInfo
+	public class MissileSpawnerSlaveInfo : SpawnerSlaveBaseInfo
 	{
 		public override object Create(ActorInitializer init) { return new MissileSpawnerSlave(init, this); }
 	}
 
-	public class MissileSpawnerSlave : BaseSpawnerSlave
+	public class MissileSpawnerSlave : SpawnerSlaveBase
 	{
 		public CarrierSlaveInfo Info { get; set; }
 

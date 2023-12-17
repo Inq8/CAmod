@@ -18,7 +18,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("This actor can send in other actors to deliver an airstrike.")]
-	public class AirstrikeMasterInfo : BaseSpawnerMasterInfo
+	public class AirstrikeMasterInfo : SpawnerMasterBaseInfo
 	{
 		[Desc("Just send the spawnee and forget it.")]
 		public readonly bool SendAndForget = false;
@@ -60,9 +60,9 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new AirstrikeMaster(init, this); }
 	}
 
-	public class AirstrikeMaster : BaseSpawnerMaster, ITick, INotifyAttack, IResolveOrder
+	public class AirstrikeMaster : SpawnerMasterBase, ITick, INotifyAttack, IResolveOrder
 	{
-		class AirstrikeSlaveEntry : BaseSpawnerSlaveEntry
+		class AirstrikeSlaveEntry : SpawnerSlaveBaseEntry
 		{
 			public int RearmTicks = 0;
 			public new AirstrikeSlave SpawnerSlave;
@@ -97,7 +97,7 @@ namespace OpenRA.Mods.CA.Traits
 				Replenish(self, SlaveEntries);
 		}
 
-		public override BaseSpawnerSlaveEntry[] CreateSlaveEntries(BaseSpawnerMasterInfo info)
+		public override SpawnerSlaveBaseEntry[] CreateSlaveEntries(SpawnerMasterBaseInfo info)
 		{
 			var slaveEntries = new AirstrikeSlaveEntry[info.Actors.Length]; // For this class to use
 
@@ -107,7 +107,7 @@ namespace OpenRA.Mods.CA.Traits
 			return slaveEntries; // For the base class to use
 		}
 
-		public override void InitializeSlaveEntry(Actor slave, BaseSpawnerSlaveEntry entry)
+		public override void InitializeSlaveEntry(Actor slave, SpawnerSlaveBaseEntry entry)
 		{
 			var se = entry as AirstrikeSlaveEntry;
 			base.InitializeSlaveEntry(slave, se);

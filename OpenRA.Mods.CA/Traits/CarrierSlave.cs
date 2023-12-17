@@ -16,12 +16,12 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Can be slaved to a spawner.")]
-	public class CarrierSlaveInfo : BaseSpawnerSlaveInfo
+	public class CarrierSlaveInfo : SpawnerSlaveBaseInfo
 	{
 		public override object Create(ActorInitializer init) { return new CarrierSlave(init, this); }
 	}
 
-	public class CarrierSlave : BaseSpawnerSlave, INotifyIdle
+	public class CarrierSlave : SpawnerSlaveBase, INotifyIdle
 	{
 		readonly AmmoPool[] ammoPools;
 		public readonly CarrierSlaveInfo Info;
@@ -50,7 +50,7 @@ namespace OpenRA.Mods.CA.Traits
 			self.QueueActivity(false, new EnterCarrierMaster(self, Master, spawnerMaster));
 		}
 
-		public override void LinkMaster(Actor self, Actor master, BaseSpawnerMaster spawnerMaster)
+		public override void LinkMaster(Actor self, Actor master, SpawnerMasterBase spawnerMaster)
 		{
 			base.LinkMaster(self, master, spawnerMaster);
 			this.spawnerMaster = spawnerMaster as CarrierMaster;

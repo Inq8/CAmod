@@ -19,7 +19,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("This actor can spawn actors.")]
-	public class CarrierMasterInfo : BaseSpawnerMasterInfo
+	public class CarrierMasterInfo : SpawnerMasterBaseInfo
 	{
 		[Desc("Spawn is a missile that dies and not return.")]
 		public readonly bool SpawnIsMissile = false;
@@ -65,9 +65,9 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new CarrierMaster(init, this); }
 	}
 
-	public class CarrierMaster : BaseSpawnerMaster, ITick, IResolveOrder, INotifyAttack
+	public class CarrierMaster : SpawnerMasterBase, ITick, IResolveOrder, INotifyAttack
 	{
-		class CarrierSlaveEntry : BaseSpawnerSlaveEntry
+		class CarrierSlaveEntry : SpawnerSlaveBaseEntry
 		{
 			public int RearmTicks = 0;
 			public new CarrierSlave SpawnerSlave;
@@ -103,7 +103,7 @@ namespace OpenRA.Mods.CA.Traits
 				Replenish(self, SlaveEntries);
 		}
 
-		public override BaseSpawnerSlaveEntry[] CreateSlaveEntries(BaseSpawnerMasterInfo info)
+		public override SpawnerSlaveBaseEntry[] CreateSlaveEntries(SpawnerMasterBaseInfo info)
 		{
 			var slaveEntries = new CarrierSlaveEntry[info.Actors.Length]; // For this class to use
 
@@ -113,7 +113,7 @@ namespace OpenRA.Mods.CA.Traits
 			return slaveEntries; // For the base class to use
 		}
 
-		public override void InitializeSlaveEntry(Actor slave, BaseSpawnerSlaveEntry entry)
+		public override void InitializeSlaveEntry(Actor slave, SpawnerSlaveBaseEntry entry)
 		{
 			base.InitializeSlaveEntry(slave, entry);
 
@@ -235,7 +235,7 @@ namespace OpenRA.Mods.CA.Traits
 				loadedTokens.Push(self.GrantCondition(CarrierMasterInfo.LoadedCondition));
 		}
 
-		public override void Replenish(Actor self, BaseSpawnerSlaveEntry entry)
+		public override void Replenish(Actor self, SpawnerSlaveBaseEntry entry)
 		{
 			base.Replenish(self, entry);
 

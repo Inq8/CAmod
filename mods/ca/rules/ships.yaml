@@ -650,15 +650,14 @@ ISUB:
 		Weapon: ICBMLauncher
 	MissileSpawnerMaster:
 		Actors: ICBM
-		RespawnTicks: 300
+		RespawnTicks: 274
 		LaunchingCondition: launching
 		RequiresCondition: !empdisable && !being-warped
+		SpawnOffset: 800,0,400
 	WithSpawnerMasterPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
-	Exit:
-		SpawnOffset: 0,-128,0
 	AttackFrontalCharged:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
@@ -691,8 +690,10 @@ ICBM:
 	Health:
 		HP: 7500
 	BallisticMissile:
-		LaunchAngle: 155
+		LaunchAngle: 160
 		Speed: 140
+		MinAirborneAltitude: 256
+		AirborneCondition: airborne
 	LeavesTrailsCA:
 		Image: smokey2
 		Palette: tseffect-ignore-lighting-alpha75
@@ -703,6 +704,7 @@ ICBM:
 	SpawnedExplodes:
 		Weapon: HonestJohnSub
 		EmptyWeapon: VisualExplodeHusk
+		Type: Footprint
 		RequiresCondition: !airborne
 	Explodes:
 		Weapon: V3ExplodeAirborne

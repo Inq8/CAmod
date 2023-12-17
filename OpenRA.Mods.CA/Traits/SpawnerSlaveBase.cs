@@ -16,7 +16,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Can be slaved to a SpawnerMaster.")]
-	public class BaseSpawnerSlaveInfo : TraitInfo
+	public abstract class SpawnerSlaveBaseInfo : TraitInfo
 	{
 		[GrantedConditionReference]
 		[Desc("The condition to grant to slaves when the master actor is killed.")]
@@ -36,18 +36,18 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("The condition to grant when the master trait is paused.")]
 		public readonly string GrantConditionWhenMasterIsPaused = null;
 
-		public override object Create(ActorInitializer init) { return new BaseSpawnerSlave(init, this); }
+		public abstract override object Create(ActorInitializer init);
 	}
 
-	public class BaseSpawnerSlave : INotifyCreated, INotifyKilled, INotifyOwnerChanged
+	public abstract class SpawnerSlaveBase : INotifyCreated, INotifyKilled, INotifyOwnerChanged
 	{
 		protected AttackBase[] attackBases;
 
-		readonly BaseSpawnerSlaveInfo info;
+		readonly SpawnerSlaveBaseInfo info;
 
 		public bool HasFreeWill = false;
 
-		BaseSpawnerMaster spawnerMaster = null;
+		SpawnerMasterBase spawnerMaster = null;
 
 		public Actor Master { get; private set; }
 
@@ -57,7 +57,7 @@ namespace OpenRA.Mods.CA.Traits
 		int masterTraitDisabledConditionToken = Actor.InvalidConditionToken;
 		int masterTraitPausedConditionToken = Actor.InvalidConditionToken;
 
-		public BaseSpawnerSlave(ActorInitializer init, BaseSpawnerSlaveInfo info)
+		public SpawnerSlaveBase(ActorInitializer init, SpawnerSlaveBaseInfo info)
 		{
 			this.info = info;
 		}
@@ -80,7 +80,7 @@ namespace OpenRA.Mods.CA.Traits
 			spawnerMaster.OnSlaveKilled(Master, self);
 		}
 
-		public virtual void LinkMaster(Actor self, Actor master, BaseSpawnerMaster spawnerMaster)
+		public virtual void LinkMaster(Actor self, Actor master, SpawnerMasterBase spawnerMaster)
 		{
 			Master = master;
 			this.spawnerMaster = spawnerMaster;

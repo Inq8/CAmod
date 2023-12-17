@@ -25,18 +25,18 @@ namespace OpenRA.Mods.CA.Traits
 		GiveSlavesToAttacker
 	}
 
-	public class BaseSpawnerSlaveEntry
+	public class SpawnerSlaveBaseEntry
 	{
 		public string ActorName = null;
 		public Actor Actor = null;
-		public BaseSpawnerSlave SpawnerSlave = null;
+		public SpawnerSlaveBase SpawnerSlave = null;
 		public bool IsLaunched;
 
 		public bool IsValid { get { return Actor != null && !Actor.IsDead; } }
 	}
 
 	[Desc("This actor can spawn actors.")]
-	public class BaseSpawnerMasterInfo : PausableConditionalTraitInfo
+	public abstract class SpawnerMasterBaseInfo : PausableConditionalTraitInfo
 	{
 		[Desc("Spawn these units. Define this like paradrop support power.")]
 		public readonly string[] Actors;
@@ -76,20 +76,20 @@ namespace OpenRA.Mods.CA.Traits
 				throw new YamlException($"InitialActorCount must be -1 or non-negative. Actor type = {ai.Name}");
 		}
 
-		public override object Create(ActorInitializer init) { return new BaseSpawnerMaster(init, this); }
+		public abstract override object Create(ActorInitializer init);
 	}
 
-	public class BaseSpawnerMaster : PausableConditionalTrait<BaseSpawnerMasterInfo>, INotifyKilled, INotifyOwnerChanged, INotifyActorDisposing
+	public abstract class SpawnerMasterBase : PausableConditionalTrait<SpawnerMasterBaseInfo>, INotifyKilled, INotifyOwnerChanged, INotifyActorDisposing
 	{
 		readonly Actor self;
 
-		IFacing facing;
+		protected IFacing facing;
 
 		protected IReloadModifier[] reloadModifiers;
 
-		public readonly BaseSpawnerSlaveEntry[] SlaveEntries;
+		public readonly SpawnerSlaveBaseEntry[] SlaveEntries;
 
-		public BaseSpawnerMaster(ActorInitializer init, BaseSpawnerMasterInfo info)
+		public SpawnerMasterBase(ActorInitializer init, SpawnerMasterBaseInfo info)
 			: base(info)
 		{
 			self = init.Self;
@@ -104,12 +104,12 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		public virtual BaseSpawnerSlaveEntry[] CreateSlaveEntries(BaseSpawnerMasterInfo info)
+		public virtual SpawnerSlaveBaseEntry[] CreateSlaveEntries(SpawnerMasterBaseInfo info)
 		{
-			var slaveEntries = new BaseSpawnerSlaveEntry[info.Actors.Length];
+			var slaveEntries = new SpawnerSlaveBaseEntry[info.Actors.Length];
 
 			for (var i = 0; i < slaveEntries.Length; i++)
-				slaveEntries[i] = new BaseSpawnerSlaveEntry();
+				slaveEntries[i] = new SpawnerSlaveBaseEntry();
 
 			return slaveEntries;
 		}
@@ -127,7 +127,7 @@ namespace OpenRA.Mods.CA.Traits
 		/// Replenish destoyed slaves or create new ones from nothing.
 		/// Follows policy defined by Info.OneShotSpawn.
 		/// </summary>
-		public void Replenish(Actor self, BaseSpawnerSlaveEntry[] slaveEntries)
+		public void Replenish(Actor self, SpawnerSlaveBaseEntry[] slaveEntries)
 		{
 			if (Info.SpawnAllAtOnce)
 			{
@@ -152,7 +152,7 @@ namespace OpenRA.Mods.CA.Traits
 		/// <summary>
 		/// Replenish one slave entry.
 		/// </summary>
-		public virtual void Replenish(Actor self, BaseSpawnerSlaveEntry entry)
+		public virtual void Replenish(Actor self, SpawnerSlaveBaseEntry entry)
 		{
 			if (entry.IsValid)
 				throw new InvalidOperationException("Replenish must not be run on a valid entry!");
@@ -170,10 +170,10 @@ namespace OpenRA.Mods.CA.Traits
 		/// Slave entry initializer function.
 		/// Override this function from derived classes to initialize their own specific stuff.
 		/// </summary>
-		public virtual void InitializeSlaveEntry(Actor slave, BaseSpawnerSlaveEntry entry)
+		public virtual void InitializeSlaveEntry(Actor slave, SpawnerSlaveBaseEntry entry)
 		{
 			entry.Actor = slave;
-			entry.SpawnerSlave = slave.Trait<BaseSpawnerSlave>();
+			entry.SpawnerSlave = slave.Trait<SpawnerSlaveBase>();
 
 			if (IsTraitDisabled)
 				entry.SpawnerSlave.GrantMasterDisabledCondition(entry.Actor);
@@ -182,7 +182,7 @@ namespace OpenRA.Mods.CA.Traits
 				entry.SpawnerSlave.GrantMasterPausedCondition(entry.Actor);
 		}
 
-		protected BaseSpawnerSlaveEntry SelectEntryToSpawn(BaseSpawnerSlaveEntry[] slaveEntries)
+		protected SpawnerSlaveBaseEntry SelectEntryToSpawn(SpawnerSlaveBaseEntry[] slaveEntries)
 		{
 			// If any thing is marked dead or null, that's a candidate.
 			var candidates = slaveEntries.Where(m => !m.IsValid);
@@ -239,13 +239,18 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected void SetSpawnedFacing(Actor spawned, Exit exit)
 		{
-			WAngle facingOffset = facing == null ? WAngle.Zero : facing.Facing;
-
 			var exitFacing = exit != null && exit.Info.Facing != null ? exit.Info.Facing : WAngle.Zero;
+
+			SetSpawnedFacing(spawned, exitFacing.Value);
+		}
+
+		protected void SetSpawnedFacing(Actor spawned, WAngle launchFacing)
+		{
+			WAngle spawnerFacing = facing == null ? WAngle.Zero : facing.Facing;
 
 			var spawnFacing = spawned.TraitOrDefault<IFacing>();
 			if (spawnFacing != null)
-				spawnFacing.Facing = facingOffset + exitFacing.Value;
+				spawnFacing.Facing = launchFacing + spawnerFacing;
 		}
 
 		public void StopSlaves()
