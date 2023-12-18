@@ -22,6 +22,7 @@ namespace OpenRA.Mods.CA.Activities
 		readonly WPos launchPos;
 		WPos initTargetPos;
 		WPos targetPos;
+		WPos currentPos;
 		int length;
 		int ticks;
 		WAngle facing;
@@ -29,36 +30,35 @@ namespace OpenRA.Mods.CA.Activities
 		WDist maxAltitude;
 		WDist maxTargetMovement;
 		bool trackingLost;
-		bool isCruising;
-		bool isDeclining;
 		int launchAngleDegrees;
+		double launchAngleRad;
 
 		public CruiseMissileFly(Actor self, Target t, CruiseMissile cm, WDist maxAltitude, WDist maxTargetMovement)
 		{
 			this.cm = cm;
-			launchPos = self.CenterPosition;
+			launchPos = currentPos = self.CenterPosition;
 			initTargetPos = targetPos = t.CenterPosition;
 			target = t;
 			length = Math.Max((targetPos - launchPos).Length / this.cm.Info.Speed, 1);
 			facing = (targetPos - launchPos).Yaw;
 			cm.Facing = GetEffectiveFacing();
-			isCruising = false;
-			isDeclining = false;
 			trackingLost = false;
 			this.maxAltitude = maxAltitude;
 			this.maxTargetMovement = maxTargetMovement;
 			launchAngleDegrees = (int)(cm.Info.LaunchAngle.Angle / (1024f / 360f));
+			launchAngleRad = Math.PI * launchAngleDegrees / 180.0;
+			cm.SetState(CruiseMissileState.Ascending);
 		}
 
 		WAngle GetEffectiveFacing()
 		{
 			var at = (float)ticks / (length - 1);
 			var attitude = cm.Info.LaunchAngle.Tan() * (1 - 2 * at) / (4 * 1024);
-			if (isCruising)
+			if (cm.State == CruiseMissileState.Cruising)
 			{
 				attitude = 0f;
 			}
-			else if (isDeclining)
+			else if (cm.State == CruiseMissileState.Descending)
 			{
 				attitude *= 1.2f;
 			}
@@ -75,8 +75,8 @@ namespace OpenRA.Mods.CA.Activities
 
 		public void FlyToward(Actor self, CruiseMissile cm)
 		{
-			var pos = GetInterpolatedPos(launchPos, targetPos, launchAngleDegrees, ticks, length);
-			cm.SetPosition(self, pos);
+			currentPos = GetInterpolatedPos(launchPos, targetPos, launchAngleRad, ticks, length);
+			cm.SetPosition(self, currentPos);
 			cm.Facing = GetEffectiveFacing();
 		}
 
@@ -100,7 +100,12 @@ namespace OpenRA.Mods.CA.Activities
 				return true;
 			}
 
+			var previousZ = currentPos.Z;
 			FlyToward(self, cm);
+
+			if (currentPos.Z < previousZ)
+				cm.SetState(CruiseMissileState.Descending);
+
 			ticks++;
 			return false;
 		}
@@ -110,52 +115,12 @@ namespace OpenRA.Mods.CA.Activities
 			yield return Target.FromPos(targetPos);
 		}
 
-		/*
-		private WPos LerpQuadratic(in WPos a, in WPos b, WAngle pitch, int mul, int div)
+		private WPos GetInterpolatedPos(WPos start, WPos end, double launchAngleRad, int tick, int maxTick)
 		{
-			// Start with a linear lerp between the points
-			var ret = WPos.Lerp(a, b, mul, div);
+			if (maxTick < 1)
+				throw new ArgumentException("maxTick should be at least 1.");
 
-			if (pitch.Angle == 0)
-				return ret;
-
-			// Add an additional quadratic variation to height
-			// Uses decimal to avoid integer overflow
-			var steepnessFactor = 1.0m; // isDeclining ? 4.0m : 4.0m; // Adjust this factor to control the steepness
-			var offset = (decimal)(b - a).Length * pitch.Tan() * mul * (div - mul) / (1024 * div * div) * steepnessFactor;
-			var clampedOffset = (int)(offset + ret.Z).Clamp(int.MinValue, int.MaxValue);
-			var easedOffset = clampedOffset; // EaseInOut(ret.Z, clampedOffset, 0.35f, 0.35f);
-
-			var wasCruising = isCruising;
-			isCruising = easedOffset > maxAltitude.Length;
-
-			if (!isCruising && wasCruising)
-				isDeclining = true;
-
-			var finalOffset = isCruising ? maxAltitude.Length : easedOffset;
-
-			return new WPos(ret.X, ret.Y, finalOffset);
-		}
-
-		private static int EaseInOut(int start, int end, float easeInFactor, float easeOutFactor)
-		{
-			var t = 0.5f - 0.5f * (float)Math.Cos(Math.PI * 2.0 * 0.5f);
-			var factor = (1.0f - t) * easeInFactor + t * easeOutFactor;
-			return (int)(start + (end - start) * factor);
-		}
-		*/
-
-		private WPos GetInterpolatedPos(WPos start, WPos end, int launchAngle, int currentPoint, int numberOfPoints)
-		{
-			if (numberOfPoints < 2)
-			{
-				throw new ArgumentException("Number of points should be at least 2.");
-			}
-
-			// Convert launch angle to radians
-			double launchAngleRad = Math.PI * launchAngle / 180.0;
-
-			double t = (double)currentPoint / (numberOfPoints - 1);
+			double t = (double)tick / maxTick;
 
 			int interpolatedX = (int)(start.X + t * (end.X - start.X));
 			int interpolatedY = (int)(start.Y + t * (end.Y - start.Y));
@@ -165,13 +130,13 @@ namespace OpenRA.Mods.CA.Activities
 			double interpolatedZ = (1 - t) * (1 - t) * start.Z + 2 * (1 - t) * t * controlPointZ + t * t * end.Z;
 			var clampedZ = (int)interpolatedZ.Clamp(int.MinValue, int.MaxValue);
 
-			var wasCruising = isCruising;
-			isCruising = clampedZ > maxAltitude.Length;
+			var wasCruising = cm.State == CruiseMissileState.Cruising;
+			if (clampedZ > maxAltitude.Length)
+				cm.SetState(CruiseMissileState.Cruising);
+			else if (wasCruising)
+				cm.SetState(CruiseMissileState.Descending);
 
-			if (!isCruising && wasCruising)
-				isDeclining = true;
-
-        	var finalZ = isCruising ? maxAltitude.Length : clampedZ;
+        	var finalZ = cm.State == CruiseMissileState.Cruising ? maxAltitude.Length : clampedZ;
 
 			return new WPos(interpolatedX, interpolatedY, finalZ);
 		}

@@ -19,6 +19,8 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	public enum CruiseMissileState { Ascending, Cruising, Descending }
+
 	[Desc("This unit, when ordered to move, will fly up to its maximum altitude, fly straight, then descend and detonate itself upon reaching target.")]
 	public class CruiseMissileInfo : MissileBaseInfo
 	{
@@ -28,17 +30,52 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If a mobile target moves further than this beyond its initial location, the missile will lose tracking.")]
 		public readonly WDist MaxTargetMovement = WDist.Zero;
 
+		[GrantedConditionReference]
+		[Desc("The condition to grant when the missile is ascending.")]
+		public readonly string AscendingCondition = null;
+
+		[GrantedConditionReference]
+		[Desc("The condition to grant when the missile is descending.")]
+		public readonly string DescendingCondition = null;
+
 		public override object Create(ActorInitializer init) { return new CruiseMissile(init, this); }
 	}
 
 	public class CruiseMissile : MissileBase
 	{
 		private readonly CruiseMissileInfo cruiseMissileInfo;
+		int ascendingToken = Actor.InvalidConditionToken;
+		int descendingToken = Actor.InvalidConditionToken;
+		Actor self;
+
+		public CruiseMissileState State { get; private set; }
 
 		public CruiseMissile(ActorInitializer init, CruiseMissileInfo info)
 			: base(init, info)
 		{
 			cruiseMissileInfo = info;
+			self = init.Self;
+		}
+
+		public void SetState(CruiseMissileState newState)
+		{
+			State = newState;
+
+			if (cruiseMissileInfo.AscendingCondition != null)
+			{
+				if (State == CruiseMissileState.Ascending && ascendingToken == Actor.InvalidConditionToken)
+					ascendingToken = self.GrantCondition(cruiseMissileInfo.AscendingCondition);
+				else if (State != CruiseMissileState.Ascending && ascendingToken != Actor.InvalidConditionToken)
+					ascendingToken = self.RevokeCondition(ascendingToken);
+			}
+
+			if (cruiseMissileInfo.DescendingCondition != null)
+			{
+				if (State == CruiseMissileState.Descending && descendingToken == Actor.InvalidConditionToken)
+					descendingToken = self.GrantCondition(cruiseMissileInfo.DescendingCondition);
+				else if (State != CruiseMissileState.Descending && descendingToken != Actor.InvalidConditionToken)
+					descendingToken = self.RevokeCondition(descendingToken);
+			}
 		}
 
 		public override void SetTarget(Target target)
