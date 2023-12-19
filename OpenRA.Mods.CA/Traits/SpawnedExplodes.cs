@@ -57,7 +57,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (weapon.Report != null && weapon.Report.Length > 0)
 				Game.Sound.Play(SoundType.World, weapon.Report.Random(self.World.SharedRandom), self.CenterPosition);
 
-			var spawner = self.Trait<BaseSpawnerSlave>().Master;
+			var spawner = self.Trait<SpawnerSlaveBase>().Master;
 
 			var args = new ProjectileArgs
 			{

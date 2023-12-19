@@ -17,7 +17,7 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("This actor can spawn missile actors.")]
-	public class MissileSpawnerMasterInfo : BaseSpawnerMasterInfo
+	public class MissileSpawnerMasterInfo : SpawnerMasterBaseInfo
 	{
 		[GrantedConditionReference]
 		[Desc("The condition to grant to self right after launching a spawned unit. (Used by V3 to make immobile.)")]
@@ -38,14 +38,23 @@ namespace OpenRA.Mods.CA.Traits
 		[GrantedConditionReference]
 		public IEnumerable<string> LinterSpawnContainConditions { get { return SpawnContainConditions.Values; } }
 
+		[Desc("Offset at which the exiting actor is spawned relative to the center of the master actor/turret.")]
+		public readonly WVec SpawnOffset = WVec.Zero;
+
+		[Desc("Which turret (if present) should the missile be launched from.")]
+		public readonly string Turret = null;
+
 		public override object Create(ActorInitializer init) { return new MissileSpawnerMaster(init, this); }
 	}
 
-	public class MissileSpawnerMaster : BaseSpawnerMaster, ITick, INotifyAttack
+	public class MissileSpawnerMaster : SpawnerMasterBase, ITick, INotifyAttack
 	{
+		readonly BodyOrientation body;
 		readonly Dictionary<string, Stack<int>> spawnContainTokens = new Dictionary<string, Stack<int>>();
 		public readonly MissileSpawnerMasterInfo MissileSpawnerMasterInfo;
 		readonly Stack<int> loadedTokens = new Stack<int>();
+		Turreted turreted;
+		WAngle spawnFacing;
 
 		int respawnTicks = 0;
 
@@ -56,11 +65,13 @@ namespace OpenRA.Mods.CA.Traits
 			: base(init, info)
 		{
 			MissileSpawnerMasterInfo = info;
+			body = init.Self.TraitOrDefault<BodyOrientation>();
 		}
 
 		protected override void Created(Actor self)
 		{
 			base.Created(self);
+			turreted = self.TraitsImplementing<Turreted>().FirstOrDefault(t => t.Name == MissileSpawnerMasterInfo.Turret);
 
 			// Spawn initial load.
 			var burst = Info.InitialActorCount == -1 ? Info.Actors.Length : Info.InitialActorCount;
@@ -104,10 +115,16 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			// Program the trajectory.
-			var bm = se.Actor.Trait<BallisticMissile>();
-			bm.Target = Target.FromPos(target.CenterPosition);
+			var missileTrait = se.Actor.TraitOrDefault<MissileBase>();
+			missileTrait.SetTarget(target);
 
-			SpawnIntoWorld(self, se.Actor, self.CenterPosition);
+			var spawnPos = self.CenterPosition;
+			if (turreted != null && body != null)
+				spawnPos += turreted.Position(self);
+
+			spawnFacing = (target.CenterPosition - spawnPos).Yaw;
+
+			SpawnIntoWorld(self, se.Actor, spawnPos);
 
 			Stack<int> spawnContainToken;
 			if (spawnContainTokens.TryGetValue(a.Info.Name, out spawnContainToken) && spawnContainToken.Count > 0)
@@ -125,10 +142,10 @@ namespace OpenRA.Mods.CA.Traits
 
 			// Set clock so that regen happens.
 			if (respawnTicks <= 0) // Don't interrupt an already running timer!
-				respawnTicks = Info.RespawnTicks;
+				respawnTicks = Util.ApplyPercentageModifiers(Info.RespawnTicks, reloadModifiers.Select(rm => rm.GetReloadModifier()));
 		}
 
-		BaseSpawnerSlaveEntry GetLaunchable()
+		SpawnerSlaveBaseEntry GetLaunchable()
 		{
 			foreach (var se in SlaveEntries)
 				if (se.IsValid)
@@ -137,7 +154,7 @@ namespace OpenRA.Mods.CA.Traits
 			return null;
 		}
 
-		public override void Replenish(Actor self, BaseSpawnerSlaveEntry entry)
+		public override void Replenish(Actor self, SpawnerSlaveBaseEntry entry)
 		{
 			base.Replenish(self, entry);
 
@@ -170,20 +187,18 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		public override void SpawnIntoWorld(Actor self, Actor slave, WPos centerPosition)
+		public override void SpawnIntoWorld(Actor self, Actor slave, WPos pos)
 		{
-			var exit = self.RandomExitOrDefault(self.World, null);
-			SetSpawnedFacing(slave, exit);
+			SetSpawnedFacing(slave, spawnFacing);
+
+			var offset = body != null ? body.LocalToWorld(MissileSpawnerMasterInfo.SpawnOffset.Rotate(WRot.FromYaw(spawnFacing))) : WVec.Zero;
 
 			self.World.AddFrameEndTask(w =>
 			{
 				if (self.IsDead)
 					return;
 
-				var spawnOffset = exit == null ? WVec.Zero : exit.Info.SpawnOffset;
-				slave.Trait<IPositionable>().SetCenterPosition(slave, centerPosition + spawnOffset);
-
-				var location = self.World.Map.CellContaining(centerPosition + spawnOffset);
+				slave.Trait<IPositionable>().SetCenterPosition(slave, pos + offset);
 
 				w.Add(slave);
 			});

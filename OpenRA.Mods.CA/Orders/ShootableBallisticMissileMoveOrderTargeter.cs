@@ -23,7 +23,7 @@ namespace OpenRA.Mods.CA.Orders
 			return modifiers.HasModifier(TargetModifiers.ForceMove);
 		}
 
-		public ShootableBallisticMissileMoveOrderTargeter(BallisticMissileInfo info)
+		public ShootableBallisticMissileMoveOrderTargeter(MissileBaseInfo info)
 		{
 			OrderID = "Move";
 			OrderPriority = 4;

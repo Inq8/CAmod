@@ -14,12 +14,12 @@ using OpenRA.Traits;
 namespace OpenRA.Mods.CA.Traits
 {
 	[Desc("Can be slaved to a spawner.")]
-	public class AirstrikeSlaveInfo : BaseSpawnerSlaveInfo
+	public class AirstrikeSlaveInfo : SpawnerSlaveBaseInfo
 	{
 		public override object Create(ActorInitializer init) { return new AirstrikeSlave(init, this); }
 	}
 
-	public class AirstrikeSlave : BaseSpawnerSlave, INotifyIdle
+	public class AirstrikeSlave : SpawnerSlaveBase, INotifyIdle
 	{
 		public readonly AirstrikeSlaveInfo Info;
 
@@ -54,7 +54,7 @@ namespace OpenRA.Mods.CA.Traits
 			self.QueueActivity(false, new ReturnAirstrikeMaster(Master, spawnerMaster, finishEdge + spawnOffset));
 		}
 
-		public override void LinkMaster(Actor self, Actor master, BaseSpawnerMaster spawnerMaster)
+		public override void LinkMaster(Actor self, Actor master, SpawnerMasterBase spawnerMaster)
 		{
 			base.LinkMaster(self, master, spawnerMaster);
 			this.spawnerMaster = spawnerMaster as AirstrikeMaster;

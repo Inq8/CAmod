@@ -5757,9 +5757,10 @@ V3RL:
 		Name: reloading
 	MissileSpawnerMaster:
 		Actors: V3
-		RespawnTicks: 249
+		RespawnTicks: 235
 		LoadedCondition: loaded
 		LaunchingCondition: launching
+		SpawnOffset: 200,0,350
 	WithSpawnerMasterPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
@@ -5775,8 +5776,6 @@ V3RL:
 		DecorationBounds: 1194, 1194
 	Voiced:
 		VoiceSet: V3Voice
-	Exit:
-		SpawnOffset: 0,-128,0
 	ProductionCostMultiplier@UkraineBonus:
 		Multiplier: 90
 		Prerequisites: player.ukraine
@@ -5792,8 +5791,10 @@ V3:
 	Health:
 		HP: 5000
 	BallisticMissile:
-		LaunchAngle: 128
+		LaunchAngle: 110
 		Speed: 165
+		MinAirborneAltitude: 256
+		AirborneCondition: airborne
 	LeavesTrailsCA:
 		Image: smokey2
 		Palette: tseffect-ignore-lighting-alpha75
@@ -5803,6 +5804,7 @@ V3:
 	MissileSpawnerSlave:
 	SpawnedExplodes:
 		Weapon: V3Weapon
+		Type: Footprint
 		EmptyWeapon: VisualExplodeHusk
 		RequiresCondition: !airborne
 	Explodes:
