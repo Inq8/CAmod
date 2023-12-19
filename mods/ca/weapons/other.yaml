@@ -2474,7 +2474,7 @@ DisruptorPulse:
 		ValidTargets: Ground, Air, Ship, Trees
 	-Warhead@3Eff:
 
-DisruptorPulse.UPG:
+DisruptorPulse.Amp:
 	Inherits: DisruptorPulse
 	Range: 6c0
 	Warhead@1Dam: SpreadDamage
@@ -2488,6 +2488,14 @@ DisruptorPulse.UPG:
 		Condition: concussion
 		ValidTargets: Ground, Infantry, Vehicle, Ship
 		ValidRelationships: Enemy, Neutral
+
+DisruptorPulse.Seek3:
+	Inherits: DisruptorPulse
+	Range: 5c640
+
+DisruptorPulse.Amp.Seek3:
+	Inherits: DisruptorPulse.Amp
+	Range: 6c384
 
 JDAM:
 	ValidTargets: Ground, Water, Trees

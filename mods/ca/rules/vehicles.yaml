@@ -5432,14 +5432,22 @@ DISR:
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
-	Armament@PRIMARY:
+	Armament@primary:
 		Weapon: DisruptorPulse
 		LocalOffset: -100,0,200
-		RequiresCondition: !sonic-upgrade
-	Armament@PRIMARYUPG:
-		Weapon: DisruptorPulse.UPG
+		RequiresCondition: !sonic-upgrade && !seek3
+	Armament@primaryAmp:
+		Weapon: DisruptorPulse.Amp
 		LocalOffset: -100,0,200
-		RequiresCondition: sonic-upgrade
+		RequiresCondition: sonic-upgrade && !seek3
+	Armament@primarySeek3:
+		Weapon: DisruptorPulse.Seek3
+		LocalOffset: -100,0,200
+		RequiresCondition: !sonic-upgrade && seek3
+	Armament@primaryAmpSeek3:
+		Weapon: DisruptorPulse.Amp.Seek3
+		LocalOffset: -100,0,200
+		RequiresCondition: sonic-upgrade && seek3
 	Turreted:
 		TurnSpeed: 16
 		Offset: -300,0,0
@@ -5468,6 +5476,9 @@ DISR:
 	GrantConditionOnPrerequisite@SONIC:
 		Condition: sonic-upgrade
 		Prerequisites: sonic.upgrade
+	-RangeMultiplier@SEEK:
+	-RangeMultiplier@SEEK2:
+	-RangeMultiplier@SEEK3:
 
 HSAM:
 	Inherits: ^VehicleTD
