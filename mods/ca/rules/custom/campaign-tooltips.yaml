@@ -8,6 +8,19 @@
 		GenericVisibility: Enemy
 		ShowOwnerRow: false
 
+^ArmedCivilian:
+	Tooltip:
+		GenericVisibility: None
+	Tooltip@COMBATANT:
+		GenericVisibility: Enemy
+		ShowOwnerRow: false
+
+GNRL:
+	Tooltip:
+		-RequiresCondition:
+	-GrantConditionOnCombatantOwner@COMBATANT:
+	-Tooltip@COMBATANT:
+
 ^Ship:
 	Tooltip:
 		GenericVisibility: Enemy

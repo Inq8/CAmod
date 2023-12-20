@@ -2306,16 +2306,9 @@
 		Class: CivInfantry
 	Valued:
 		Cost: 10
-	GrantConditionOnCombatantOwner@COMBATANT:
-		Condition: owned-by-combatant
 	Tooltip:
 		Name: Civilian
-		GenericVisibility: None
-		RequiresCondition: !owned-by-combatant
-	Tooltip@COMBATANT:
-		Name: Technician
-		GenericVisibility: None
-		RequiresCondition: owned-by-combatant
+		ShowOwnerRow: false
 	RevealsShroud:
 		Range: 3c0
 	Passenger:
@@ -2328,11 +2321,19 @@
 		AvoidTerrainTypes: Tiberium, BlueTiberium
 	MapEditorData:
 		Categories: Civilian infantry
-	Convertible:
-		SpawnActors: N1C
 
 ^ArmedCivilian:
+	Inherits@civInfantry: ^CivInfantry
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Tooltip:
+		RequiresCondition: !owned-by-combatant
+	Tooltip@COMBATANT:
+		Name: Technician
+		RequiresCondition: owned-by-combatant
+	GrantConditionOnCombatantOwner@COMBATANT:
+		Condition: owned-by-combatant
+	Convertible:
+		SpawnActors: N1C
 	GrantConditionOnFaction@RA:
 		Factions: allies, england, france, germany, usa, soviet, russia, ukraine, iraq, yuri
 		Condition: ra-faction
