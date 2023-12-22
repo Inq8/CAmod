@@ -30,17 +30,20 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			return owner.SquadManager.FindHighValueTarget(owner.Units.First().CenterPosition);
 		}
 
-		protected bool FindNewTarget(SquadCA owner)
+		protected bool FindNewTarget(SquadCA owner, bool highValueCheck = false)
 		{
-			var highValueTargetRoll = owner.World.LocalRandom.Next(0, 100);
-
-			if (owner.SquadManager.Info.HighValueTargetPriority > highValueTargetRoll)
+			if (highValueCheck)
 			{
-				var highValueTarget = FindHighValueTarget(owner);
-				if (highValueTarget != null)
+				var highValueTargetRoll = owner.World.LocalRandom.Next(0, 100);
+
+				if (owner.SquadManager.Info.HighValueTargetPriority > highValueTargetRoll)
 				{
-					owner.TargetActor = highValueTarget;
-					return true;
+					var highValueTarget = FindHighValueTarget(owner);
+					if (highValueTarget != null)
+					{
+						owner.TargetActor = highValueTarget;
+						return true;
+					}
 				}
 			}
 
@@ -64,7 +67,7 @@ namespace OpenRA.Mods.CA.Traits.BotModules.Squads
 			if (!owner.IsValid)
 				return;
 
-			if (!owner.IsTargetValid && !FindNewTarget(owner))
+			if (!owner.IsTargetValid && !FindNewTarget(owner, true))
 				return;
 
 			var enemyUnits = owner.World.FindActorsInCircle(owner.TargetActor.CenterPosition, WDist.FromCells(owner.SquadManager.Info.IdleScanRadius))
