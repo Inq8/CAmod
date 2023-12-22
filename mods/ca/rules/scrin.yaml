@@ -1446,6 +1446,11 @@ LCHR.Orb:
 	WithColoredSelectionBox@PLAYERBOX:
 		ColorSource: Player
 		ValidRelationships: Ally, Enemy
+	WithRangeCircle:
+		Type: LeecherOrb
+		Range: 2c256
+		Color: ff666633
+		Visible: Always
 
 STCR:
 	Inherits: ^Tank
@@ -4729,7 +4734,7 @@ GRCL:
 	Targetable:
 		TargetTypes: Ground, Vehicle, C4Immune
 	Health:
-		HP: 56000
+		HP: 64000
 	Armor:
 		Type: Light
 	PeriodicExplosion:
@@ -4760,6 +4765,7 @@ GRCL:
 		Type: GreaterCoalescence
 		Range: 3c768
 		Color: ff000099
+		Visible: Always
 	ProximityExternalCondition@HEAL:
 		Condition: lchr-healing
 		Range: 3c768
