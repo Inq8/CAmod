@@ -48,3 +48,13 @@ C4:
 	Warhead@otpd: SpreadDamage
 		Damage: 300000
 		ValidTargets: ExterminatorTripod
+
+EnlightenedEmp:
+	Warhead@1Emp: GrantExternalCondition
+		InvalidTargets: ExterminatorTripod
+	Warhead@empExterminator: GrantExternalCondition
+		Range: 0c896
+		Duration: 30
+		Condition: empdisable
+		ValidTargets: ExterminatorTripod
+		InvalidTargets: Shielded
