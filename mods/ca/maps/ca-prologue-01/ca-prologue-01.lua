@@ -192,6 +192,13 @@ end
 Tick = function()
 	PanToCruisers()
 	PanToPrisms()
+	OncePerSecondChecks()
+end
+
+OncePerSecondChecks = function()
+	if DateTime.GameTime > 1 and DateTime.GameTime % 25 == 0 then
+		USSR.Resources = USSR.ResourceCapacity - 500
+	end
 end
 
 WorldLoaded = function()

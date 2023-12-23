@@ -87,6 +87,9 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly Color TargetCircleColor = Color.Red;
 		public readonly bool TargetCircleUsePlayerColor = false;
 
+		[Desc("Maximum altitude of targets.")]
+		public readonly WDist MaxAltitude = WDist.Zero;
+
 		public WeaponInfo WeaponInfo { get; private set; }
 
 		public override object Create(ActorInitializer init) { return new GrantExternalConditionPowerCA(init.Self, this); }
@@ -170,7 +173,8 @@ namespace OpenRA.Mods.CA.Traits
 					&& (info.ValidTargets.IsEmpty || info.ValidTargets.Overlaps(a.GetAllTargetTypes()))
 					&& a.TraitsImplementing<ExternalCondition>().Any(t => t.Info.Condition == info.Condition && t.CanGrantCondition(Self))
 					&& (!info.TargetMustBeVisible || Self.Owner.Shroud.IsVisible(a.Location))
-					&& a.CanBeViewedByPlayer(Self.Owner))
+					&& a.CanBeViewedByPlayer(Self.Owner)
+					&& a.CenterPosition.Z <= info.MaxAltitude.Length)
 				.OrderBy(a => (a.CenterPosition - centerPos).LengthSquared);
 
 			if (info.MaxTargets > 0)
