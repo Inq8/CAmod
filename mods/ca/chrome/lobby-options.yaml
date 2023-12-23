@@ -9,16 +9,24 @@ Container@LOBBY_OPTIONS_BIN:
 			Font: Bold
 			Align: Center
 			Text: Map Options
-		Button@LOAD_OPTIONS:
+		Button@RESET_OPTIONS:
 			X: PARENT_RIGHT - WIDTH
+			Y: 0 - 26
+			Width: 50
+			Height: 26
+			TooltipText: Reset options to map defaults
+			TooltipContainer: TOOLTIP_CONTAINER
+			Text: Reset
+		Button@LOAD_OPTIONS:
+			X: PARENT_RIGHT - WIDTH - 50
 			Y: 0 - 26
 			Width: 44
 			Height: 26
-			TooltipText: Load options
+			TooltipText: Load saved options
 			TooltipContainer: TOOLTIP_CONTAINER
 			Text: Load
 		Button@SAVE_OPTIONS:
-			X: PARENT_RIGHT - WIDTH - 44
+			X: PARENT_RIGHT - WIDTH - 50 - 44
 			Y: 0 - 26
 			Width: 44
 			Height: 26
