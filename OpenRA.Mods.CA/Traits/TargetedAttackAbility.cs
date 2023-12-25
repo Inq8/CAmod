@@ -43,6 +43,10 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Cursor to display when the targeted location is blocked.")]
 		public readonly string TargetBlockedCursor = "move-blocked";
 
+		[CursorReference]
+		[Desc("Cursor to display when targeting a teleport location with modifier key held.")]
+		public readonly string TargetModifiedCursor = null;
+
 		[Desc("Range circle color.")]
 		public readonly Color CircleColor = Color.FromArgb(128, Color.LawnGreen);
 
@@ -149,7 +153,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (order.OrderString == "TargetedAttackAbilityAttack" && order.Target.Type != TargetType.Invalid)
 			{
 				Enable(self);
-				attack.AttackTarget(order.Target, AttackSource.Default, false, true, true, Info.TargetLineColor);
+				attack.AttackTarget(order.Target, AttackSource.Default, order.Queued, true, true, Info.TargetLineColor);
 			}
 			else
 			{
@@ -205,7 +209,7 @@ namespace OpenRA.Mods.CA.Traits
 			info = ability.Info;
 
 			selectedWithAbility = self.World.Selection.Actors
-				.Where(a => a.Info.HasTraitInfo<TargetedAttackAbilityInfo>() && a != self && a.Owner == self.Owner && !a.IsDead)
+				.Where(a => a.Info.HasTraitInfo<TargetedAttackAbilityInfo>() && a.Owner == self.Owner && !a.IsDead)
 				.Select(a => new TraitPair<TargetedAttackAbility>(a, a.Trait<TargetedAttackAbility>()))
 				.Where(s => s.Trait.Info.Type == ability.Info.Type);
 		}
@@ -229,14 +233,22 @@ namespace OpenRA.Mods.CA.Traits
 
 				var target = underCursor != null ? Target.FromActor(underCursor) : Target.FromCell(world, cell);
 
-				yield return new Order("TargetedAttackAbilityAttack", self, target, mi.Modifiers.HasModifier(Modifiers.Shift));
+				var selectedOrderedByDistance = selectedWithAbility
+					.Where(a => !a.Actor.IsDead
+						&& a.Actor.Owner == self.Owner
+						&& a.Actor.IsInWorld
+						&& a.Trait.IsAvailable)
+					.OrderBy(a => (a.Actor.CenterPosition - target.CenterPosition).Length);
 
-				foreach (var other in selectedWithAbility)
+				if (mi.Modifiers.HasModifier(Modifiers.Ctrl))
 				{
-					if (other.Actor.IsInWorld && other.Trait.IsAvailable && other.Actor.Owner == self.Owner)
-					{
+					foreach (var other in selectedOrderedByDistance)
 						yield return new Order("TargetedAttackAbilityAttack", other.Actor, target, mi.Modifiers.HasModifier(Modifiers.Shift));
-					}
+				}
+				else
+				{
+					var closest = selectedOrderedByDistance.First();
+					yield return new Order("TargetedAttackAbilityAttack", closest.Actor, target, mi.Modifiers.HasModifier(Modifiers.Shift));
 				}
 			}
 		}
@@ -312,7 +324,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (self.IsInWorld && self.Location != cell
 				&& ability.IsAvailable
 				&& (info.CanTargetShroud || self.Owner.Shroud.IsExplored(cell)))
-				return info.TargetCursor;
+				return info.TargetModifiedCursor != null && mi.Modifiers.HasModifier(Modifiers.Ctrl) ? info.TargetModifiedCursor : info.TargetCursor;
 			else
 				return info.TargetBlockedCursor;
 		}

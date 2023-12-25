@@ -105,7 +105,12 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Cooldown selection bar color.")]
 		public readonly Color CooldownSelectionBarColor = Color.Silver;
 
+		[Desc("Whether to allow teleporting to destination cells that contain actors.")]
 		public readonly bool RequireEmptyDestination = false;
+
+		[CursorReference]
+		[Desc("Cursor to display when targeting a teleport location with modifier key held.")]
+		public readonly string TargetModifiedCursor = null;
 
 		public override object Create(ActorInitializer init) { return new PortableChronoCA(init.Self, this); }
 	}
@@ -370,7 +375,7 @@ namespace OpenRA.Mods.CA.Traits
 			info = portableChrono.Info;
 
 			selectedWithAbility = self.World.Selection.Actors
-				.Where(a => a.Info.HasTraitInfo<PortableChronoCAInfo>() && a != self && a.Owner == self.Owner && !a.IsDead)
+				.Where(a => a.Info.HasTraitInfo<PortableChronoCAInfo>() && a.Owner == self.Owner && !a.IsDead)
 				.Select(a => new TraitPair<PortableChronoCA>(a, a.Trait<PortableChronoCA>()));
 		}
 
@@ -387,14 +392,23 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				world.CancelInputMode();
 				var targetCell = Target.FromCell(world, cell);
-				yield return new Order("PortableChronoTeleport", self, targetCell, mi.Modifiers.HasModifier(Modifiers.Shift));
 
-				foreach (var other in selectedWithAbility)
+				var selectedOrderedByDistance = selectedWithAbility
+					.Where(a => !a.Actor.IsDead
+						&& a.Actor.Owner == self.Owner
+						&& a.Actor.IsInWorld
+						&& a.Trait.CanTeleport)
+					.OrderBy(a => (a.Actor.CenterPosition - targetCell.CenterPosition).Length);
+
+				if (mi.Modifiers.HasModifier(Modifiers.Ctrl))
 				{
-					if (other.Actor.IsInWorld && other.Trait.CanTeleport && other.Actor.Owner == self.Owner)
-					{
+					var closest = selectedOrderedByDistance.First();
+					yield return new Order("PortableChronoTeleport", closest.Actor, targetCell, mi.Modifiers.HasModifier(Modifiers.Shift));
+				}
+				else
+				{
+					foreach (var other in selectedOrderedByDistance)
 						yield return new Order("PortableChronoTeleport", other.Actor, targetCell, mi.Modifiers.HasModifier(Modifiers.Shift));
-					}
 				}
 			}
 		}
@@ -455,7 +469,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			if (self.IsInWorld && self.Location != cell
 				&& portableChrono.CanTeleport && self.Owner.Shroud.IsExplored(cell))
-				return info.TargetCursor;
+				return info.TargetModifiedCursor != null && mi.Modifiers.HasModifier(Modifiers.Ctrl) ? info.TargetModifiedCursor : info.TargetCursor;
 			else
 				return info.TargetBlockedCursor;
 		}
