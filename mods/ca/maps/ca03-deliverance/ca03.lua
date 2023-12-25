@@ -82,8 +82,8 @@ Squads = {
 	Main = {
 		Player = nil,
 		Delay = {
-			easy = DateTime.Seconds(90),
-			normal = DateTime.Seconds(60),
+			easy = DateTime.Seconds(150),
+			normal = DateTime.Seconds(90),
 			hard = DateTime.Seconds(30)
 		},
 		AttackValuePerSecond = {
@@ -180,9 +180,9 @@ Squads = {
 			return PlayerHasNavalProduction(Greece)
 		end,
 		Interval = {
-			easy = DateTime.Seconds(60),
-			normal = DateTime.Seconds(40),
-			hard = DateTime.Seconds(20)
+			easy = DateTime.Seconds(75),
+			normal = DateTime.Seconds(60),
+			hard = DateTime.Seconds(45)
 		},
 		QueueProductionStatuses = {
 			Ships = false
@@ -631,6 +631,10 @@ DoHaloDrop = function()
 end
 
 DoNavalDrop = function()
+	if SovietSouthSubPen1.IsDead and SovietSouthSubPen2.IsDead then
+		return
+	end
+
 	local navalDropPath = Utils.Random(NavalDropPaths)
 	local navalDropExitPath = { navalDropPath[2], navalDropPath[1] }
 	local navalDropUnits = { "3tnk", "btr.ai" }

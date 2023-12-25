@@ -185,6 +185,7 @@ WorldLoaded = function()
 	TrucksLostCurrentConvoy = 0
 	NextConvoyIdx = 1
 	CurrentConvoyArrivalComplete = false
+	PathsClear = false
 
 	Camera.Position = PlayerBarracks.CenterPosition
 
@@ -283,8 +284,13 @@ OncePerSecondChecks = function()
 			end
 		end
 
-		if ObjectiveDestroyScrinBase ~= nil and not HasOneOf(Scrin, { "reac", "rea2", "sfac", "proc.scrin", "port", "wsph", "nerv", "grav", "scrt", "srep" }) then
-			Greece.MarkCompletedObjective(ObjectiveDestroyScrinBase)
+		if DateTime.GameTime > DateTime.Minutes(15) and not HasOneOf(Scrin, { "reac", "rea2", "sfac", "proc.scrin", "port", "wsph", "nerv", "grav", "scrt", "srep" }) then
+			if ObjectiveDestroyScrinBase ~= nil and not Greece.IsObjectiveCompleted(ObjectiveDestroyScrinBase) then
+				Greece.MarkCompletedObjective(ObjectiveDestroyScrinBase)
+			end
+			if not PathsClear and not HasOneOf(Scrin, { "scol", "ptur" }) then
+				PathsClear = true
+			end
 		end
 	end
 end
@@ -329,7 +335,12 @@ InitConvoy = function()
 	end
 
 	-- Set the timer
-	TimerTicks = TimeBetweenConvoys[Difficulty][NextConvoyIdx]
+	if PathsClear then
+		TimerTicks = DateTime.Seconds(20)
+	else
+		TimerTicks = TimeBetweenConvoys[Difficulty][NextConvoyIdx]
+	end
+
 	UpdateConvoyCountdown()
 
 	-- Schedule convoy to arrive after timer expires
