@@ -2613,16 +2613,9 @@ flameall:
 		InterpolatedFacings: 32
 
 flameallfast:
-	Defaults:
-		IgnoreWorldTint: true
+	Inherits: flameall
 	idle:
-		Filename: flameall.shp
-		Length: 19
-		Facings: -8
 		Tick: 60
-		ZOffset: 1023
-		Offset: 0, 0, 6
-		InterpolatedFacings: 32
 
 flameallblack:
 	Defaults:
@@ -2658,6 +2651,11 @@ chemall:
 		ZOffset: 1023
 		Offset: 0, 0, 6
 		InterpolatedFacings: 32
+
+chemallfast:
+	Inherits: chemall
+	idle:
+		Tick: 60
 
 chronoappear:
 	Defaults:

@@ -299,6 +299,18 @@ ChemsprayTDFF:
 			Heavy: 40
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 
+ChemsprayTDBATF:
+	Inherits: BigFlamerTD
+	Burst: 1
+	Projectile: LinearPulse
+		Image: chemallfast
+		Palette: ra2effect-ignore-lighting-alpha90
+	Warhead@1Dam: SpreadDamage
+		Damage: 1100
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch-NoFlame
+
 HeavyFlameTankFlamer:
 	Inherits: BigFlamerTD
 	-Report:
