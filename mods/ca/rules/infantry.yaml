@@ -643,7 +643,6 @@ E6:
 SPY:
 	Inherits: ^Soldier
 	Inherits@SELECTION: ^SelectableSupportUnit
-	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -681,6 +680,10 @@ SPY:
 			rmbo: cmdo-disguise
 			e7: cmdo-disguise
 			bori: cmdo-disguise
+			mast: cmdo-disguise
+			yuri: cmdo-disguise
+			seal: seal-disguise
+			cmsr: cmsr-disguise
 	Infiltrates:
 		Types: SpyInfiltrate
 		Notification: BuildingInfiltrated
@@ -691,6 +694,7 @@ SPY:
 		IdleSequences: idle1,idle2
 		StandSequences: stand,stand2
 		RequiresCondition: !being-warped
+	WithDisguiseTargetPalette:
 	WithDecoration@disguise:
 		Image: pips
 		Sequence: pip-disguise
@@ -698,8 +702,27 @@ SPY:
 		Position: TopRight
 		RequiresCondition: disguise
 	IgnoresDisguise:
-	WithDecoration@COMMANDOSKULL:
+	WithDecoration@CommandoSkull:
+		Image: pips
+		Sequence: pip-skull
+		Palette: effect
+		Position: TopLeft
+		ValidRelationships: Ally, Enemy, Neutral
 		RequiresCondition: cmdo-disguise
+	WithDecoration@SealIcon:
+		Image: pips
+		Sequence: pip-seal
+		Palette: effect
+		Position: TopLeft
+		ValidRelationships: Ally, Enemy, Neutral
+		RequiresCondition: seal-disguise
+	WithDecoration@CommissarStar:
+		Image: pips
+		Sequence: pip-cmsr
+		Palette: effect
+		Position: TopLeft
+		ValidRelationships: Ally, Enemy, Neutral
+		RequiresCondition: cmsr-disguise
 	AttackMove:
 		Voice: Move
 	Voiced:
@@ -708,7 +731,6 @@ SPY:
 		TargetTypes: Ground, Infantry
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
-	-Targetable@HERO:
 
 E7:
 	Inherits: ^Soldier
