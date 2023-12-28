@@ -50,9 +50,9 @@ NavalReinforcementsDelay = {
 }
 
 TimeBetweenConvoys = {
-	easy = { DateTime.Minutes(3), DateTime.Minutes(8), DateTime.Seconds(210), DateTime.Minutes(5)  },
-	normal = { DateTime.Minutes(2), DateTime.Minutes(7), DateTime.Seconds(165), DateTime.Minutes(4) },
-	hard = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Seconds(120), DateTime.Minutes(4) }
+	easy = { DateTime.Minutes(3), DateTime.Minutes(8), DateTime.Minutes(4), DateTime.Minutes(5)  },
+	normal = { DateTime.Minutes(2), DateTime.Minutes(7), DateTime.Minutes(3), DateTime.Minutes(4) + DateTime.Seconds(30) },
+	hard = { DateTime.Minutes(1), DateTime.Minutes(6), DateTime.Minutes(2), DateTime.Minutes(4) }
 }
 
 -- Squads
@@ -79,37 +79,37 @@ Squads = {
 		Units = {
 			easy = {
 				{
-					Infantry = { "s1", "s1", "s1", "s3", "s3" }, -- 900
-					Vehicles = { "intl.ai2", "intl.ai2", "gunw" }, -- 2200 + 1025*2
+					Infantry = { "s1", "s1", "s1", "s3", "s3" },
+					Vehicles = { "intl.ai2", "intl.ai2", "gunw" },
 					MaxTime = DateTime.Minutes(13),
 				},
 				{
-					Infantry = { "s1", "s1", "s1", "s3", "s3" }, -- 900
-					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "gunw", "corr" }, -- 3900 + 1025*2
+					Infantry = { "s1", "s1", "s1", "s3", "s3" },
+					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "gunw", "corr" },
 					MinTime = DateTime.Minutes(13),
 				}
 			},
 			normal = {
 				{
-					Infantry = { "s1", "s1", "s1", "s1", "s3", "s3" }, -- 1000
-					Vehicles = { "intl.ai2", "intl.ai2", "gunw" }, -- 2200  + 1025*2
+					Infantry = { "s1", "s1", "s1", "s1", "s3", "s3" },
+					Vehicles = { "intl.ai2", "intl.ai2", "gunw" },
 					MaxTime = DateTime.Minutes(11),
 				},
 				{
-					Infantry = { "s1", "s1", "s1", "s1", "s3", "s3", "s4", "s4" }, -- 2000
-					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "corr", "devo", "seek", "seek" }, -- 6150 + 1025*2
+					Infantry = { "s1", "s1", "s1", "s1", "s3", "s3", "s4", "s4" },
+					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "corr", "devo", "seek", "seek" },
 					MinTime = DateTime.Minutes(11),
 				}
 			},
 			hard = {
 				{
-					Infantry = { "s1", "s1", "s1", "s1", "s3", "s3", "s4" }, -- 1500
-					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "seek" }, -- 2950 + 1025*2
+					Infantry = { "s1", "s1", "s1", "s1", "s3", "s3", "s4" },
+					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "seek" },
 					MaxTime = DateTime.Minutes(9),
 				},
 				{
-					Infantry = { "s1", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "s3", "s4" }, -- 2950
-					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "corr", "devo", "seek", "tpod", "seek" }, -- 7950
+					Infantry = { "s1", "s1", "s1", "s1", "s1", "s1", "s2", "s2", "s3", "s3", "s4" },
+					Vehicles = { "intl.ai2", "intl.ai2", "gunw", "corr", "devo", "seek", "tpod", "seek" },
 					MinTime = DateTime.Minutes(9),
 				}
 			}
@@ -290,6 +290,10 @@ OncePerSecondChecks = function()
 			end
 			if not PathsClear and not HasOneOf(Scrin, { "scol", "ptur" }) then
 				PathsClear = true
+				if TimerTicks > DateTime.Seconds(20) then
+					TimerTicks = DateTime.Seconds(20)
+					UpdateConvoyCountdown()
+				end
 			end
 		end
 	end
