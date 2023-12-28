@@ -82,6 +82,25 @@ DOG:
 	-Captures@DRIVER_KILL:
 	-CaptureManager:
 
+CDOG:
+	Inherits: DOG
+	Buildable:
+		Queue: InfantrySQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 50
+		Prerequisites: ~stolentech.barr
+		Description: Melee anti-infantry scout unit.
+	Valued:
+		Cost: 400
+	Tooltip:
+		Name: Cyberdog
+	Health:
+		HP: 15000
+	Voiced:
+		VoiceSet: CyberdogVoice
+	Armament:
+		Weapon: CyberdogJaw
+
 E1:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
@@ -1232,7 +1251,7 @@ THF:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 120
-		Prerequisites: anyradar, ~infantry.thf, ~techlevel.medium
+		Prerequisites: anyradar, ~barr, ~techlevel.medium
 		Description: Steals enemy credits and hijacks enemy vehicles.
 	TooltipExtras:
 		Weaknesses: • Unarmed
@@ -2123,34 +2142,29 @@ BORI:
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Infantry, Vehicle, Water, Underwater
 
-MORT:
+^MortarInfantryBase:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 250
-		Prerequisites: ~stolentech.hand
-		Description: Infantry armed with a Chemical Mortar.
 	TooltipExtras:
-		Strengths: • Strong vs Buildings, Infantry
-		Weaknesses: • Weak vs Vehicles\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
+		Strengths: • Strong vs Infantry, Buildings
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Valued:
-		Cost: 250
-	Tooltip:
-		Name: Chemical Mortar
+		Cost: 350
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 2500
+		HP: 3500
 	Armament@PRIMARY:
-		Weapon: mortar
-		LocalOffset: 0,0,155
+		Weapon: ChemicalMortar
+		LocalOffset: 200,0,155
 		FireDelay: 15
 	Armament@BATF:
 		Name: batf
-		Weapon: mortar
+		Weapon: ChemicalMortar
 		FireDelay: 15
 	AttackFrontal:
 		PauseOnCondition: being-warped
@@ -2161,16 +2175,62 @@ MORT:
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
-	Explodes:
-		Weapon: UnitExplodeChemSmall
-		EmptyWeapon: UnitExplodeChemSmall
-		Chance: 33
-		RequiresCondition: !being-warped
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
+
+MORT.Chem:
+	Inherits: ^MortarInfantryBase
+	RenderSprites:
+		Image: mortchem
+	Buildable:
+		BuildPaletteOrder: 250
+		Prerequisites: ~stolentech.hand
+		Description: Infantry armed with a Chemical Mortar.
+	Tooltip:
+		Name: Chemical Mortar
+	Explodes:
+		Weapon: UnitExplodeChemSmall
+		EmptyWeapon: UnitExplodeChemSmall
+		Chance: 33
+		RequiresCondition: !being-warped
+
+MORT.Cryo:
+	Inherits: ^MortarInfantryBase
+	RenderSprites:
+		Image: mortcryo
+	Buildable:
+		BuildPaletteOrder: 250
+		Prerequisites: ~stolentech.tent
+		Description: Infantry armed with a Cryo Mortar.
+	TooltipExtras:
+		Attributes: • Slows enemy movement and increases damage taken
+	Tooltip:
+		Name: Cryo Mortar
+	Armament@PRIMARY:
+		Weapon: CryoMortar
+	Armament@BATF:
+		Weapon: CryoMortar
+
+MORT.Sonic:
+	Inherits: ^MortarInfantryBase
+	RenderSprites:
+		Image: mortsonic
+	Buildable:
+		BuildPaletteOrder: 250
+		Prerequisites: ~stolentech.pyle
+		Description: Infantry armed with a Sonic Mortar.
+	Tooltip:
+		Name: Sonic Mortar
+	TooltipExtras:
+		Strengths: • Strong vs Defenses, Buildings
+		Attributes: • Slows enemy movement and rate of fire
+	Armament@PRIMARY:
+		Weapon: SonicMortar
+	Armament@BATF:
+		Weapon: SonicMortar
 
 SAB:
 	Inherits: ^Soldier

@@ -618,6 +618,67 @@ SMEDI:
 		ValidTargets: Infantry
 	KeepsDistance:
 
+CSCR:
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@CYBORGUPG: ^NodCyborgUpgrade
+	Inherits@SLOWABLE: ^Slowable
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 160
+		Prerequisites: ~stolentech.port
+		IconPalette: chromes
+		Description: Fast moving anti-personnel infantry.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Cyberscrin
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 13000
+	Mobile:
+		Speed: 77
+	Armament@PRIMARY:
+		Weapon: CyberscrinLaser
+		LocalOffset: 200,0,350
+		MuzzleSequence: muzzle
+		MuzzlePalette: caneon
+	Armament@BATF:
+		Name: batf
+		Weapon: CyberscrinLaser
+	WithMuzzleOverlay:
+	AttackFrontal:
+		PauseOnCondition: being-warped
+		FacingTolerance: 0
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+	-TakeCover:
+	Voiced:
+		VoiceSet: CyberscrinVoice
+	Targetable:
+		TargetTypes: Ground, Infantry, Cyborg
+	ExternalCondition@ONTIB:
+		Condition: on-tib
+	ChangesHealth@THEAL:
+		Step: 0
+		PercentageStep: 1
+		Delay: 15
+		StartIfBelow: 100
+		DamageCooldown: 150
+		RequiresCondition: on-tib
+		DamageTypes: ToxinDeath
+
 GSCR:
 	Inherits: BRUT
 	RenderSprites:
@@ -4981,11 +5042,10 @@ WORMHOLE:
 
 # infiltrator stolen tech
 
-# portal - infantry veterancy
+# portal - cyberscrin
 stolentech.port:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
-		Prerequisite: barracks.upgraded
 
 # warp sphere - vehicle veterancy
 stolentech.wsph:

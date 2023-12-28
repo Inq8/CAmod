@@ -678,25 +678,42 @@ ShadowGliderGrenade:
 	Projectile:
 		LaunchAngle: 0
 
-Mortar:
-	Inherits: ^Artillery
+^Mortar:
 	ReloadDelay: 90
 	Range: 7c0
-	MinRange: 1c0
+	MinRange: 2c0
 	Report: nade.aud
 	Projectile: Bullet
-		Speed: 166
-		LaunchAngle: 92
+		Speed: 150
+		LaunchAngle: 140
 		Inaccuracy: 768
-		Image: BOMB
+		Image: flakball
+		ContrailLength: 9
+		ContrailStartColor: ccccccaa
+		ContrailStartColorAlpha: 68
+		ContrailStartWidth: 42
 	Warhead@1Dam: SpreadDamage
-		Damage: 5500
+		Spread: 426
+		Damage: 5250
+		Falloff: 100, 50, 25, 0
 		Versus:
-			None: 60
-			Wood: 100
+			None: 100
+			Wood: 90
 			Light: 45
 			Heavy: 45
-			Concrete: 50
+			Concrete: 40
+	Warhead@4EffWater: CreateEffect
+		Explosions: small_splash
+		ImpactSounds: splashm1.aud, splashm2.aud, splashm3.aud
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
+
+ChemicalMortar:
+	Inherits: ^Mortar
+	Projectile: Bullet
+		Image: radball
+		ContrailStartColor: 00ff0044
+	Warhead@1Dam: SpreadDamage
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
@@ -704,15 +721,68 @@ Mortar:
 		Explosions: small_chem
 		ExplosionPalette: temptd
 		ImpactSounds: firetrt1.aud
-	Warhead@4EffWater: CreateEffect
-		Explosions: small_splash
-		ImpactSounds: splashm1.aud, splashm2.aud, splashm3.aud
 	Warhead@18Radio: CreateTintedCells
 		Spread: 1c0
 		Level: 50
 		Falloff: 100, 52, 10
 		MaxLevel: 300
 		LayerName: radioactivity.weak
+
+CryoMortar:
+	Inherits: ^Mortar
+	Projectile: Bullet
+		Image: cryoball
+		ContrailStartColor: 8fc6ffaa
+	Warhead@1Dam: SpreadDamage
+		Damage: 2500
+		Versus:
+			None: 90
+			Brick: 5
+		DamageTypes: Prone50Percent, TriggerProne, FrozenDeath
+	Warhead@3Eff: CreateEffect
+		Explosions: cryohit
+		ExplosionPalette: ra2effect-ignore-lighting-alpha75
+		ImpactSounds: cryoblast.aud
+	Warhead@chill1: GrantExternalCondition
+		Condition: chilled
+		Duration: 250
+		Range: 1c0
+		ValidRelationships: Enemy, Neutral
+	Warhead@chill2: GrantExternalCondition
+		Condition: chilled
+		Duration: 200
+		Range: 2c0
+		ValidRelationships: Enemy, Neutral
+	Warhead@chillally: GrantExternalCondition
+		Condition: chilled
+		Duration: 50
+		Range: 0c682
+		ValidRelationships: Ally
+	Warhead@cryoresidue: CreateTintedCells
+		LayerName: cryoresidue
+		Spread: 1c0
+		Level: 50
+		Falloff: 100, 75, 52, 15, 2
+		MaxLevel: 600
+
+SonicMortar:
+	Inherits: ^Mortar
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			None: 50
+			Wood: 100
+			Light: 60
+			Heavy: 30
+			Concrete: 100
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
+	Warhead@concussion: GrantExternalCondition
+		Condition: concussion
+		Duration: 75
+		Range: 1c768
+	Warhead@3Eff: CreateEffect
+		Explosions: sonicimpact
+		ExplosionPalette: effect
+		ImpactSounds: sonicmortarhit1.aud, sonicmortarhit2.aud
 
 DepthCharge:
 	Inherits: ^Artillery
