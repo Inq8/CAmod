@@ -1773,6 +1773,7 @@ JEEP:
 		MinRange: 6c0
 		Range: 8c0
 		RevealGeneratedShroud: False
+		RequiresCondition: !optics-active
 	RevealsShroud@GAPGEN:
 		Range: 6c0
 	Turreted:
@@ -1796,6 +1797,37 @@ JEEP:
 		Range: 6c0
 		DetectionTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
+	RevealsShroud@Optics:
+		MinRange: 6c0
+		Range: 12c0
+		RevealGeneratedShroud: False
+		RequiresCondition: optics-active
+	SpeedMultiplier@Optics:
+		Modifier: 75
+		RequiresCondition: optics-active
+	GrantTimedConditionOnDeploy@Optics:
+		DeployedCondition: optics-active
+		RequiresCondition: optics-upgrade
+		ShowSelectionBar: true
+		StartsFullyCharged: true
+		DeployedTicks: 250
+		CooldownTicks: 1000
+		ShowSelectionBarWhenFull: false
+		ChargingColor: 808080
+		DischargingColor: ffffff
+		DeploySound: optics-enable.aud
+		UndeploySound: optics-disable.aud
+	GrantConditionOnPrerequisite@Optics:
+		Condition: optics-upgrade
+		Prerequisites: optics.upgrade
+	WithDecoration@Optics:
+		Image: opticsactive
+		Sequence: idle
+		Palette: effect
+		Position: Top
+		ValidRelationships: Ally
+		Margin: 0, 8
+		RequiresCondition: optics-active
 
 JEEP.TEMP:
 	Inherits: JEEP
