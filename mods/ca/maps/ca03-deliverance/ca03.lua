@@ -23,13 +23,13 @@ SovietShorePatrolPath = { ShorePatrol1.Location, ShorePatrol2.Location }
 SovietHindPatrolPath = { NavalEastAssembly.Location, NavalSouthEastAssembly.Location, NavalSouthAssembly.Location, NavalSouthRally.Location, NavalForwardRally.Location, EastAssembly.Location, CentralPatrol3.Location }
 
 HaloDropPaths = {
-	{ HaloDrop1Spawn.Location, HaloDrop1Landing.Location },
-	{ HaloDrop2Spawn.Location, HaloDrop2Landing.Location },
-	{ HaloDrop3Spawn.Location, HaloDrop3Landing.Location },
-	{ HaloDrop4Spawn.Location, HaloDrop4Landing.Location },
-	{ HaloDrop5Spawn.Location, HaloDrop5Landing.Location },
-	{ HaloDrop6Spawn.Location, HaloDrop6Landing.Location },
-	{ HaloDrop7Spawn.Location, HaloDrop7Landing.Location }
+	{ HaloSpawn1.Location, HaloDrop1Mid.Location, HaloDrop1Landing.Location },
+	{ HaloSpawn1.Location, HaloDrop2Landing.Location },
+	{ HaloSpawn1.Location, HaloDrop1Mid.Location, HaloDrop3Landing.Location },
+	{ HaloSpawn1.Location, HaloDrop1Mid.Location, HaloDrop4Landing.Location },
+	{ HaloSpawn2.Location, HaloDrop5Landing.Location },
+	{ HaloSpawn2.Location, HaloDrop6Landing.Location },
+	{ HaloSpawn2.Location, HaloDrop6Landing.Location, HaloDrop7Landing.Location }
 }
 
 LateHaloDropPaths = {
@@ -492,9 +492,9 @@ end
 
 InitUSSR = function()
 	if Difficulty == "easy" then
-		RebuildExcludes.USSR = { Types = { "tsla", "ftur" } }
+		RebuildExcludes.USSR = { Types = { "tsla", "ftur" }, Actors = { NorthSAM1, NorthSAM2 } }
 	elseif Difficulty == "normal" then
-		RebuildExcludes.USSR = { Types = { "tsla" } }
+		RebuildExcludes.USSR = { Types = { "tsla" }, Actors = { NorthSAM1, NorthSAM2 } }
 	end
 
 	AutoRepairAndRebuildBuildings(USSR, 15)

@@ -6,15 +6,9 @@ GDIDefenders = { GDIDefender1, GDIDefender2, GDIDefender3, GDIDefender4, GDIDefe
 
 ChinookDropPaths = {
 	{ ChinookDrop1Spawn.Location, ChinookDrop1Landing.Location },
-	{ ChinookDrop2Spawn.Location, ChinookDrop2Landing.Location },
+	{ ChinookDrop2Spawn.Location, ChinookDrop2Mid.Location, ChinookDrop2Landing.Location },
 	{ ChinookDrop3Spawn.Location, ChinookDrop3Landing.Location },
 	{ ChinookDrop4Spawn.Location, ChinookDrop4Landing.Location }
-}
-
-CarryallDropPaths = {
-	{ GDIDropSpawn.Location, GDIDrop1.Location },
-	{ GDIDropSpawn.Location, GDIDrop2.Location },
-	{ GDIDropSpawn.Location, GDIDrop3.Location },
 }
 
 GDIReinforcementPath = { GDIReinforceSpawn.Location, GDIReinforceRally.Location }
