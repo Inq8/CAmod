@@ -2808,3 +2808,19 @@ MineDefuserCharger:
 		ValidTargets: Mine
 	-Warhead@1Def:
 	-Warhead@3Eff:
+
+DecoyBuggySpawner:
+	ReloadDelay: 1
+	Projectile: InstantExplode
+	Report: decoyspawn.aud
+	Warhead@Spawn: SpawnActor
+		Actors: bggy.decoy
+		Range: 2
+		ForceGround: false
+		MatchSourceFacing: true
+		ValidTargets: Ground, Water, Trees
+
+DecoyBuggyDespawn:
+	Report: decoydespawn.aud
+	Projectile: InstantHit
+	Warhead@Dummy: Dummy

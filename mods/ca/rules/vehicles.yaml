@@ -2912,6 +2912,102 @@ BGGY:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
+	AmmoPool@Decoy:
+		Name: decoyspawner
+		Armaments: decoyspawner
+		AmmoCondition: ammo
+	WithAmmoPipsDecoration@Decoy:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+		RequiresCondition: decoy-upgrade
+	ReloadAmmoPoolCA@Decoy:
+		AmmoPool: decoyspawner
+		Delay: 1000
+		ShowSelectionBar: true
+		SelectionBarColor: aaaaaa
+	GrantTimedConditionOnDeploy@Decoy:
+		DeployedCondition: spawndecoy
+		RequiresCondition: decoy-upgrade && !(empdisable || being-warped)
+		ShowSelectionBar: false
+		StartsFullyCharged: true
+		DeployedTicks: 1
+		CooldownTicks: 1000
+	PeriodicExplosion@Decoy:
+		Weapon: DecoyBuggySpawner
+		RequiresCondition: spawndecoy && ammo
+		AmmoPoolName: decoyspawner
+	GrantConditionOnPrerequisite@Decoy:
+		Condition: decoy-upgrade
+		Prerequisites: decoy.upgrade
+
+BGGY.Decoy:
+	Inherits: BGGY
+	RenderSprites:
+		Image: bggy
+	DamageMultiplier@DECOY:
+		Modifier: 0
+	Armament:
+		Weapon: M60mgTD.Decoy
+	Mobile:
+		PauseOnCondition: notmobile
+	-ActorLostNotification:
+	-Valued:
+	-Buildable:
+	-ProducibleWithLevel:
+	-WithProductionIconOverlay:
+	-IgnoresDisguise:
+	-DetectCloaked:
+	-RevealsShroud:
+	-RevealsShroud@GAPGEN:
+	-Repairable:
+	-Passenger:
+	-Berserkable@BERSERK:
+	-RejectsOrders@BERSERK:
+	-CaptureManager:
+	-Capturable:
+	-CaptureNotification:
+	-Capturable@DRIVER_DEAD:
+	-GrantConditionIfOwnerIsNeutral:
+	-ChangesHealth@DRIVER_DEAD:
+	-TooltipDescription@DRIVER_DEAD:
+	-Targetable@DRIVERKILL:
+	-Targetable@DRIVERKILLLOWHP:
+	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
+	-Targetable@AICAPTURE:
+	-AmmoPool@Decoy:
+	-WithAmmoPipsDecoration@Decoy:
+	-ReloadAmmoPoolCA@Decoy:
+	-GrantTimedConditionOnDeploy@Decoy:
+	-PeriodicExplosion@Decoy:
+	-GrantConditionOnPrerequisite@Decoy:
+	GrantTimedCondition@Decoy:
+		Condition: active
+		Duration: 250
+	GrantTimedCondition@DecoySpawn:
+		Condition: highlight
+		Duration: 1
+	GrantDelayedCondition@DecoyDespawn:
+		Condition: highlight
+		Delay: 249
+	KillsSelf:
+		RequiresCondition: !active
+	WithTextDecoration@Decoy:
+		Text: Decoy
+		ValidRelationships: Ally
+		Font: TinyBold
+		Position: Top
+		Margin: 0, 7
+	TimedConditionBar@Decoy:
+		Condition: active
+		Color: ffffff
+	WithPalettedOverlay@Decoy:
+		Palette: decoy
+		ValidRelationships: Ally
+	Explodes:
+		Weapon: DecoyBuggyDespawn
+		EmptyWeapon: DecoyBuggyDespawn
+		-RequiresCondition:
 
 APC2:
 	Inherits: ^TankTD

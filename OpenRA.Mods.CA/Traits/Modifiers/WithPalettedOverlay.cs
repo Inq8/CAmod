@@ -24,23 +24,31 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Palette to use when rendering the overlay")]
 		public readonly string Palette = "invuln";
 
-		public override object Create(ActorInitializer init) { return new WithPalettedOverlay(this); }
+		[Desc("Player relationships that see the overlay.")]
+		public readonly PlayerRelationship ValidRelationships = PlayerRelationship.Ally | PlayerRelationship.Neutral | PlayerRelationship.Enemy;
+
+		public override object Create(ActorInitializer init) { return new WithPalettedOverlay(init.Self, this); }
 	}
 
-	public class WithPalettedOverlay : ConditionalTrait<WithPalettedOverlayInfo>, IRenderModifier
+	public class WithPalettedOverlay : ConditionalTrait<WithPalettedOverlayInfo>, IRenderModifier, INotifyOwnerChanged
 	{
-		public WithPalettedOverlay(WithPalettedOverlayInfo info)
-			: base(info) { }
+		bool validRelationship;
+
+		public WithPalettedOverlay(Actor self, WithPalettedOverlayInfo info)
+			: base(info)
+		{
+			Update(self);
+		}
 
 		IEnumerable<IRenderable> IRenderModifier.ModifyRender(Actor self, WorldRenderer wr, IEnumerable<IRenderable> r)
 		{
 			if (IsTraitDisabled)
 				return r;
 
-			return ModifiedRender(self, wr, r);
+			return ModifiedRender(wr, r);
 		}
 
-		IEnumerable<IRenderable> ModifiedRender(Actor self, WorldRenderer wr, IEnumerable<IRenderable> r)
+		IEnumerable<IRenderable> ModifiedRender(WorldRenderer wr, IEnumerable<IRenderable> r)
 		{
 			if (IsTraitDisabled)
 				yield break;
@@ -51,7 +59,7 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				yield return a;
 
-				if (palette != null && !a.IsDecoration && a is IPalettedRenderable)
+				if (validRelationship && palette != null && !a.IsDecoration && a is IPalettedRenderable)
 					yield return ((IPalettedRenderable)a).WithPalette(palette)
 						.WithZOffset(a.ZOffset + 1)
 						.AsDecoration();
@@ -61,6 +69,17 @@ namespace OpenRA.Mods.CA.Traits
 		IEnumerable<Rectangle> IRenderModifier.ModifyScreenBounds(Actor self, WorldRenderer wr, IEnumerable<Rectangle> bounds)
 		{
 			return bounds;
+		}
+
+		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
+		{
+			Update(self);
+		}
+
+		void Update(Actor self)
+		{
+			var relationship = self.World.RenderPlayer != null ? self.Owner.RelationshipWith(self.World.RenderPlayer) : PlayerRelationship.None;
+			validRelationship = Info.ValidRelationships.HasRelationship(relationship);
 		}
 	}
 }

@@ -535,6 +535,21 @@ tibcore.upgrade:
 	RenderSprites:
 		Image: tibcore.upgrade
 
+decoy.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Decoy Projectors
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.nod, tmpl, ~techlevel.high
+		Description: Grant Buggies the ability to project decoys of themselves.\n\nUpgrades: Buggy
+	TooltipExtras:
+		Strengths: + Decoy projection ability
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: decoy.upgrade
+
 blacknapalm.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:

@@ -48,7 +48,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly bool ShowSelectionBar = true;
 		public readonly Color SelectionBarColor = Color.FromArgb(128, 200, 255);
 
-		public override object Create(ActorInitializer init) { return new ReloadAmmoPoolCA(this); }
+		public override object Create(ActorInitializer init) { return new ReloadAmmoPoolCA(init.Self, this); }
 
 		public override void RulesetLoaded(Ruleset rules, ActorInfo ai)
 		{
@@ -63,13 +63,17 @@ namespace OpenRA.Mods.CA.Traits
 	{
 		AmmoPool ammoPool;
 		IReloadAmmoModifier[] modifiers;
+		Actor self;
 
 		[Sync]
 		int remainingTicks;
 		int remainingDelay;
 
-		public ReloadAmmoPoolCA(ReloadAmmoPoolCAInfo info)
-			: base(info) { }
+		public ReloadAmmoPoolCA(Actor self, ReloadAmmoPoolCAInfo info)
+			: base(info)
+		{
+			this.self = self;
+		}
 
 		protected override void Created(Actor self)
 		{
@@ -137,7 +141,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		float ISelectionBar.GetValue()
 		{
-			if (!Info.ShowSelectionBar || remainingDelay > 0)
+			if (!Info.ShowSelectionBar || remainingDelay > 0 || !self.Owner.IsAlliedWith(self.World.RenderPlayer))
 				return 0;
 			var maxTicks = Util.ApplyPercentageModifiers(Info.Delay, modifiers.Select(m => m.GetReloadAmmoModifier()));
 			if (remainingTicks == maxTicks)
