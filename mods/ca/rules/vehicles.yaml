@@ -5807,9 +5807,8 @@ V3:
 		MinAirborneAltitude: 256
 		AirborneCondition: airborne
 	LeavesTrailsCA:
-		Image: smokey2
-		Palette: tseffect-ignore-lighting-alpha75
-		MovingInterval: 3
+		Image: smokey3
+		MovingInterval: 2
 		Type: CenterPosition
 		Offsets: -200, 0, 0
 	MissileSpawnerSlave:
@@ -6873,7 +6872,7 @@ THWK:
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	RenderSprites:
 	Valued:
-		Cost: 1500
+		Cost: 1700
 	Tooltip:
 		Name: Tomahawk Launcher
 	UpdatesPlayerStatistics:
@@ -6888,13 +6887,13 @@ THWK:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets\n• Cannot fire while moving
 	Mobile:
-		Speed: 43
-		PauseOnCondition: aiming || being-captured || empdisable || being-warped || driver-dead || notmobile
+		Speed: 44
+		PauseOnCondition: launching || aiming || being-captured || empdisable || being-warped || driver-dead || notmobile
 		BlockedCursor: move
 	Health:
-		HP: 30000
+		HP: 25000
 	Armor:
-		Type: Light
+		Type: Heavy
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -6902,10 +6901,10 @@ THWK:
 	RevealsShroud@GAPGEN:
 		Range: 4c0
 	Turreted:
-		TurnSpeed: 3
+		TurnSpeed: 4
 		RealignDelay: 0
 	Armament@TARGETTER:
-		Weapon: HonestJohnTargeting
+		Weapon: THLauncher
 	AttackTurreted:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
@@ -6920,8 +6919,7 @@ THWK:
 		RespawnTicks: 249
 		LoadedCondition: loaded
 		LaunchingCondition: launching
-	Exit:
-		SpawnOffset: 0,-128,0
+		SpawnOffset: 0,256,128
 	WithSpawnerMasterPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
@@ -6956,20 +6954,21 @@ TH:
 		Name: Tomahawk Missile
 	Health:
 		HP: 5000
-	BallisticMissile:
+	CruiseMissile:
 		LaunchAngle: 128
 		Speed: 165
+		MaxAltitude: 2c511
+		MaxTargetMovement: 21c0
 	LeavesTrailsCA:
-		Image: smokey2
-		Palette: tseffect-ignore-lighting-alpha75
-		MovingInterval: 3
+		Image: icbmsmoke
+		MovingInterval: 2
 		Type: CenterPosition
-		Offsets: -200, 0, 0
+		Offsets: -200, 0, -50
 	MissileSpawnerSlave:
 	SpawnedExplodes:
-		Weapon: V3Weapon
+		Weapon: THWeapon
 		EmptyWeapon: VisualExplodeHusk
 		RequiresCondition: !airborne
 	Explodes:
-		Weapon: V3ExplodeAirborne
+		Weapon: THExplodeAirborne
 		RequiresCondition: airborne

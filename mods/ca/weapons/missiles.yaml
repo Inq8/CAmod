@@ -1025,6 +1025,43 @@ V3Weapon:
 		Explosions: large_splash
 		ImpactSounds: splashl1.aud, splashl2.aud
 
+THWeapon:
+	Inherits: ^AntiGroundMissile
+	-Report:
+	ValidTargets: Ground, Trees, Water
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Damage: 3400
+		Falloff: 1000, 448, 192, 50, 18, 7, 0
+		ValidTargets: Ground, Water, Trees
+		Versus:
+			None: 90
+			Wood: 100
+			Light: 65
+			Heavy: 25
+			Concrete: 60
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
+	Warhead@antiHeavySplash: SpreadDamage
+		Damage: 3400
+		Spread: 448
+		Falloff: 1000, 448, 192, 50, 18, 7, 0
+		ValidTargets: Vehicle, Husk
+		Versus:
+			Heavy: 35
+			None: 0
+			Wood: 0
+			Light: 5
+			Concrete: 0
+			Brick: 0
+		DamageTypes: SmallExplosionDeath
+	Warhead@3Eff: CreateEffect
+		ImpactSounds: xplobig4.aud
+		Explosions: building, building2
+		ValidTargets: Ground, Air, Ship, Trees, ICBM
+	Warhead@4EffWater: CreateEffect
+		Explosions: large_splash
+		ImpactSounds: splashl1.aud, splashl2.aud
+
 KatyushaRockets:
 	Inherits: ^AntiGroundMissile
 	ReloadDelay: 240
@@ -2040,80 +2077,3 @@ RocketShells:
 		CruiseAltitude: 2c0
 		Inaccuracy: 128
 		AllowSnapping: true
-
-Tomahawk:
-	ReloadDelay: 130
-	Range: 16c0
-	MinRange: 3c0
-	Report: rocket2.aud
-	Projectile: Bullet
-		Blockable: false
-		Shadow: true
-		Inaccuracy: 0c511
-		Image: thwkm
-		Palette: temptd
-		TrailImage: smokey
-		TrailDelay: 3
-		Speed: 210
-		LaunchAngle: 37
-	Warhead@1Dam: SpreadDamage
-		Spread: 512
-		Damage: 600
-		Falloff: 500, 368, 135, 50, 18, 7, 0
-		Versus:
-			None: 100
-			Wood: 100
-			Concrete: 80
-			Light: 70
-			Heavy: 35
-			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigatedMinor
-	Warhead@2Dam: SpreadDamage
-		Spread: 512
-		Damage: 600
-		Falloff: 500, 368, 135, 50, 18, 7, 0
-		Delay: 3
-		Versus:
-			None: 100
-			Wood: 100
-			Concrete: 80
-			Light: 70
-			Heavy: 35
-			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigatedMinor
-	Warhead@3Dam: SpreadDamage
-		Spread: 512
-		Damage: 600
-		Falloff: 500, 368, 135, 50, 18, 7, 0
-		Delay: 6
-		Versus:
-			None: 100
-			Wood: 100
-			Concrete: 80
-			Light: 70
-			Heavy: 35
-			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigatedMinor
-	Warhead@4Dam: SpreadDamage
-		Spread: 512
-		Damage: 600
-		Falloff: 500, 368, 135, 50, 18, 7, 0
-		Delay: 9
-		Versus:
-			None: 100
-			Wood: 100
-			Concrete: 80
-			Light: 70
-			Heavy: 35
-			Brick: 5
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath, FlakVestMitigatedMinor
-	Warhead@2Smu: LeaveSmudge
-		SmudgeType: Scorch
-	Warhead@3Eff: CreateEffect
-		Explosions: large_napalm
-		ImpactSounds: firebl3.aud
-	Warhead@Flames: FireCluster
-		Weapon: BurnFx
-		RandomClusterCount: 5
-		Dimensions: 3,3
-		Footprint: xxx xxx xxx
