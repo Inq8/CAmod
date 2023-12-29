@@ -15,6 +15,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using OpenRA.Mods.Common.Widgets;
 using OpenRA.Network;
+using OpenRA.Primitives;
 using OpenRA.Traits;
 using OpenRA.Widgets;
 
@@ -37,6 +38,7 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		MapPreview mapPreview;
 
 		readonly string savedOptionsFilePath;
+		private bool hasSavedOptions;
 
 		[ObjectCreator.UseCtor]
 		internal LobbyOptionsLogicCA(Widget widget, OrderManager orderManager, Func<MapPreview> getMap, Func<bool> configurationDisabled)
@@ -53,12 +55,16 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 			var logDir = Platform.SupportDir + "Logs";
 			savedOptionsFilePath = Path.Combine(logDir, "ca-lobbyoptions.log");
+			hasSavedOptions = File.Exists(savedOptionsFilePath);
 			var loadOptions = widget.Parent.Get<ButtonWidget>("LOAD_OPTIONS");
 			var saveOptions = widget.Parent.Get<ButtonWidget>("SAVE_OPTIONS");
+			var resetOptions = widget.Parent.Get<ButtonWidget>("RESET_OPTIONS");
 			loadOptions.OnClick = () => LoadOptions();
-			loadOptions.IsDisabled = () => configurationDisabled();
+			loadOptions.IsDisabled = () => !hasSavedOptions || configurationDisabled();
 			saveOptions.OnClick = () => SaveOptions();
 			saveOptions.IsDisabled = () => configurationDisabled();
+			resetOptions.OnClick = () => ResetOptions();
+			resetOptions.IsDisabled = () => configurationDisabled();
 
 			mapPreview = getMap();
 			RebuildOptions();
@@ -204,23 +210,21 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 
 		void LoadOptions()
 		{
-			var savedOptions = new Dictionary<string, string>();
-
 			if (!File.Exists(savedOptionsFilePath))
 				return;
 
 			try {
 				var savedOptionsFileContents = File.ReadAllText(savedOptionsFilePath);
-				savedOptions = JsonConvert.DeserializeObject<Dictionary<string, string>>(savedOptionsFileContents);
+				var savedOptions = JsonConvert.DeserializeObject<Dictionary<string, string>>(savedOptionsFileContents);
 
 				foreach (var option in savedOptions)
 					orderManager.IssueOrder(Order.Command($"option {option.Key} {option.Value}"));
 
-				TextNotificationsManager.AddSystemLine("Lobby options loaded.");
+				TextNotificationsManager.AddChatLine(orderManager.Connection.LocalClientId, null, "Lobby options loaded.", Color.Lime, Color.Lime);
 			}
 			catch
 			{
-				TextNotificationsManager.AddSystemLine("Could not load lobby options.");
+				TextNotificationsManager.AddChatLine(orderManager.Connection.LocalClientId, null, "Could not load lobby options.", Color.OrangeRed, Color.OrangeRed);
 			}
 		}
 
@@ -245,12 +249,30 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			try {
 				var json = JsonConvert.SerializeObject(options);
 				File.WriteAllText(savedOptionsFilePath, json);
-				TextNotificationsManager.AddSystemLine("Lobby options saved.");
+				hasSavedOptions = true;
+				TextNotificationsManager.AddChatLine(orderManager.Connection.LocalClientId, null, "Lobby options saved.", Color.Lime, Color.Lime);
 			}
 			catch
 			{
-				TextNotificationsManager.AddSystemLine("Could not save lobby options.");
+				TextNotificationsManager.AddChatLine(orderManager.Connection.LocalClientId, null, "Could not save lobby options.", Color.OrangeRed, Color.OrangeRed);
 			}
+		}
+
+		void ResetOptions()
+		{
+			var allOptions = GetOptions();
+
+			foreach (var option in allOptions.Where(o => o is LobbyBooleanOption))
+			{
+				orderManager.IssueOrder(Order.Command($"option {option.Id} {option.DefaultValue}"));
+			}
+
+			foreach (var option in allOptions.Where(o => o is not LobbyBooleanOption))
+			{
+				orderManager.IssueOrder(Order.Command($"option {option.Id} {option.DefaultValue}"));
+			}
+
+			TextNotificationsManager.AddChatLine(orderManager.Connection.LocalClientId, null, "Lobby options reset.", Color.Lime, Color.Lime);
 		}
 	}
 }

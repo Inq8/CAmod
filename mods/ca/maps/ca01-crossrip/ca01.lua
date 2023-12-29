@@ -76,6 +76,11 @@ HaloDropInterval = {
 	hard = DateTime.Minutes(1)
 }
 
+NavalDropStart = {
+	normal = DateTime.Minutes(15),
+	hard = DateTime.Minutes(12)
+}
+
 NavalDropInterval = {
 	normal = DateTime.Minutes(5),
 	hard = DateTime.Minutes(3)
@@ -107,37 +112,37 @@ Squads = {
 		Units = {
 			easy = {
 				{
-					Infantry = { "e3", "e1", "e1", "e1", "e2", "e4" }, --960
-					Vehicles = { "3tnk", "btr" },  -- 1825
+					Infantry = { "e3", "e1", "e1", "e1", "e2", "e4" },
+					Vehicles = { "3tnk", "btr" },
 					MaxTime = DateTime.Minutes(12)
 				},
 				{
-					Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" }, -- 2110
-					Vehicles = { "4tnk", "btr.ai" }, -- 2375 (+800)
+					Infantry = { "e3", "e1", "e1", "shok", "shok", "e1", "e2", "e3", "e4" },
+					Vehicles = { "4tnk", "btr.ai" },
 					MinTime = DateTime.Minutes(12)
 				}
 			},
 			normal = {
 				{
-					Infantry = { "e3", "e1", "e1", "e1", "e1", "e2", "e4" }, -- 1060
-					Vehicles = { "3tnk", "btr.ai" }, -- 2500 (+800)
+					Infantry = { "e3", "e1", "e1", "e1", "e1", "e2", "e4" },
+					Vehicles = { "3tnk", "btr.ai" },
 					MaxTime = DateTime.Minutes(9)
 				},
 				{
-					Infantry = { "e3", "e1", "e1", "shok", "e1", "e2", "e3", "e4" }, -- 2110
-					Vehicles = { { "3tnk", "3tnk.atomic" }, "4tnk", "katy" }, -- 3550
+					Infantry = { "e3", "e1", "e1", "shok", "e1", "e2", "e3", "e4" },
+					Vehicles = { { "3tnk", "3tnk.atomic" }, "4tnk", "katy" },
 					MinTime = DateTime.Minutes(9)
 				}
 			},
 			hard = {
 				{
-					Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4" }, -- 1460
-					Vehicles = { "3tnk", "btr.ai", "3tnk" }, -- 2975 (+800)
+					Infantry = { "e3", "e1", "e1", "e1", "e1", "e1", "e2", "e3", "e4" },
+					Vehicles = { "3tnk", "btr.ai", "3tnk" },
 					MaxTime = DateTime.Minutes(6)
 				},
 				{
-					Infantry = { "e3", "e1", "e1", "e3", "shok", "e1", { "shok", "e8" }, "e1", "e2", "e3", "e4" }, -- 2510
-					Vehicles = { { "3tnk", "3tnk.atomic" }, "4tnk", "btr.ai", { "katy", "v2rl" }, "ttra" }, -- 5475 (+800)
+					Infantry = { "e3", "e1", "e1", "e3", "shok", "e1", { "shok", "e8" }, "e1", "e2", "e3", "e4" },
+					Vehicles = { { "3tnk", "3tnk.atomic" }, "4tnk", "btr.ai", { "katy", "v2rl" }, "ttra" },
 					MinTime = DateTime.Minutes(6)
 				}
 			}
@@ -169,8 +174,8 @@ Squads = {
 	Migs = {
 		Player = nil,
 		Delay = {
-			easy = DateTime.Minutes(12),
-			normal = DateTime.Minutes(9),
+			easy = DateTime.Minutes(14),
+			normal = DateTime.Minutes(10),
 			hard = DateTime.Minutes(6)
 		},
 		Interval = {
@@ -373,7 +378,7 @@ InitUSSR = function()
 		InitAttackSquad(Squads.Main, USSR)
 	end)
 
-	-- Eastern Halo drops start at 10 mins
+	-- Eastern Halo drops
 	Trigger.AfterDelay(HaloDropStart[Difficulty], function()
 		local eastHaloDropEntryPaths = {
 			{ CPos.New(EastHaloDrop.Location.X + 35, EastHaloDrop.Location.Y - 25), EastHaloDrop.Location },
@@ -382,7 +387,7 @@ InitUSSR = function()
 		DoHaloDrop(eastHaloDropEntryPaths)
 	end)
 
-	-- Western Halo drops start at 10:40 (hard only)
+	-- Western Halo drops (hard only)
 	if Difficulty == "hard" then
 		Trigger.AfterDelay(HaloDropStart[Difficulty] + DateTime.Seconds(40), function()
 			local westHaloDropEntryPaths = { { CPos.New(WestHaloDrop.Location.X - 35, WestHaloDrop.Location.Y - 25), WestHaloDrop.Location } }
@@ -390,9 +395,9 @@ InitUSSR = function()
 		end)
 	end
 
-	-- Beach drop at 12:00
+	-- Beach landings
 	if Difficulty ~= "easy" then
-		Trigger.AfterDelay(DateTime.Minutes(12), DoSovietNavalDrop)
+		Trigger.AfterDelay(NavalDropStart[Difficulty], DoSovietNavalDrop)
 	end
 
 	-- MiG attacks

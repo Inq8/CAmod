@@ -498,27 +498,27 @@ TargetSwapChance = function(unit, chance, isMissionPlayerFunc)
 	end)
 end
 
-CallForHelpOnDamagedOrKilled = function(actor, range, filter, isMissionPlayerFunc)
-	if isMissionPlayerFunc == nil then
-		isMissionPlayerFunc = function(p) return p == MissionPlayer end
+CallForHelpOnDamagedOrKilled = function(actor, range, filter, validAttackingPlayerFunc)
+	if validAttackingPlayerFunc == nil then
+		validAttackingPlayerFunc = function(p) return p == MissionPlayer end
 	end
 	Trigger.OnDamaged(actor, function(self, attacker, damage)
-		if isMissionPlayerFunc(attacker.Owner) then
-			CallForHelp(self, range, filter, isMissionPlayerFunc)
+		if validAttackingPlayerFunc(attacker.Owner) then
+			CallForHelp(self, range, filter, validAttackingPlayerFunc)
 		end
 	end)
 	Trigger.OnKilled(actor, function(self, killer)
-		if isMissionPlayerFunc(killer.Owner) then
-			CallForHelp(self, range, filter, isMissionPlayerFunc)
+		if validAttackingPlayerFunc(killer.Owner) then
+			CallForHelp(self, range, filter, validAttackingPlayerFunc)
 		end
 	end)
 end
 
-CallForHelp = function(self, range, filter, isMissionPlayerFunc)
-	if isMissionPlayerFunc == nil then
-		isMissionPlayerFunc = function(p) return p == MissionPlayer end
+CallForHelp = function(self, range, filter, validAttackingPlayerFunc)
+	if validAttackingPlayerFunc == nil then
+		validAttackingPlayerFunc = function(p) return p == MissionPlayer end
 	end
-	if isMissionPlayerFunc(self.Owner) then
+	if self.Owner == MissionPlayer then
 		return
 	end
 

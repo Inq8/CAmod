@@ -165,6 +165,12 @@ NapalmtdBuilding:
 	-Warhead@3Eff:
 	-Warhead@Flames:
 
+NapalmtdBomber:
+	Inherits: Napalmtd
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			Wood: 60
+
 Chemspray:
 	ReloadDelay: 50
 	Range: 3c769
@@ -292,6 +298,18 @@ ChemsprayTDFF:
 			Concrete: 40
 			Heavy: 40
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+
+ChemsprayTDBATF:
+	Inherits: BigFlamerTD
+	Burst: 1
+	Projectile: LinearPulse
+		Image: chemallfast
+		Palette: ra2effect-ignore-lighting-alpha90
+	Warhead@1Dam: SpreadDamage
+		Damage: 1100
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Scorch-NoFlame
 
 HeavyFlameTankFlamer:
 	Inherits: BigFlamerTD
@@ -546,6 +564,13 @@ DogJaw:
 		ValidTargets: Infantry
 		InvalidTargets: Ant, DogImmune
 		DamageTypes: DefaultDeath
+
+CyberdogJaw:
+	Inherits: DogJaw
+	Range: 4c512
+	Report: cdog-attack1.aud
+	Warhead@1Dam: TargetDamage
+		-InvalidTargets:
 
 BruteAttack:
 	ReloadDelay: 60
@@ -2474,7 +2499,7 @@ DisruptorPulse:
 		ValidTargets: Ground, Air, Ship, Trees
 	-Warhead@3Eff:
 
-DisruptorPulse.UPG:
+DisruptorPulse.Amp:
 	Inherits: DisruptorPulse
 	Range: 6c0
 	Warhead@1Dam: SpreadDamage
@@ -2488,6 +2513,14 @@ DisruptorPulse.UPG:
 		Condition: concussion
 		ValidTargets: Ground, Infantry, Vehicle, Ship
 		ValidRelationships: Enemy, Neutral
+
+DisruptorPulse.Seek3:
+	Inherits: DisruptorPulse
+	Range: 5c640
+
+DisruptorPulse.Amp.Seek3:
+	Inherits: DisruptorPulse.Amp
+	Range: 6c384
 
 JDAM:
 	ValidTargets: Ground, Water, Trees

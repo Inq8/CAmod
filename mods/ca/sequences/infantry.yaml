@@ -1184,62 +1184,52 @@ hack:
 		Filename: mediicon.shp
 
 dog:
-	stand:
+	Defaults:
 		Filename: dog.shp
+	stand:
 		Facings: 8
 	walk:
-		Filename: dog.shp
 		Start: 8
 		Length: 6
 		Facings: 8
 		Tick: 80
 	run:
-		Filename: dog.shp
 		Start: 56
 		Length: 6
 		Facings: 8
 		Tick: 80
 	eat:
-		Filename: dog.shp
 		Start: 104
 		Length: 14
 		Facings: 8
 		Tick: 120
 	idle1:
-		Filename: dog.shp
 		Start: 216
 		Length: 7
 		Tick: 120
 	idle2:
-		Filename: dog.shp
 		Start: 224
 		Length: 11
 		Tick: 120
 	die1:
-		Filename: dog.shp
 		Start: 236
 		Length: 6
 	die2:
-		Filename: dog.shp
 		Start: 242
 		Length: 9
 	die3:
-		Filename: dog.shp
 		Start: 236
 		Length: 6
 	die4:
-		Filename: dog.shp
 		Start: 242
 		Length: 9
 	die5:
-		Filename: dog.shp
 		Start: 251
 		Length: 14
 	die6:
 		Filename: electdog.shp
 		Length: *
 	die7:
-		Filename: dog.shp
 		Start: 236
 		Length: 6
 	die8:
@@ -1247,19 +1237,15 @@ dog:
 		Length: *
 		BlendMode: Alpha
 	die9:
-		Filename: dog.shp
 		Start: 236
 		Length: 6
 	die10:
-		Filename: dog.shp
 		Start: 236
 		Length: 6
 	die11:
-		Filename: dog.shp
 		Start: 236
 		Length: 6
 	die12:
-		Filename: dog.shp
 		Start: 236
 		Length: 6
 	die-crushed:
@@ -1289,6 +1275,15 @@ dog:
 		Offset: 0, 0
 	icon:
 		Filename: dogicon.shp
+
+cdog:
+	Inherits: dog
+	Defaults:
+		Filename: cdog.shp
+	jump:
+		Filename: cdogbullt.shp
+	icon:
+		Filename: cdogicon.shp
 
 spy:
 	Inherits: ^CommonDeaths
@@ -3106,102 +3101,84 @@ sab:
 	icon:
 		Filename: sabicon.shp
 
-mort:
+mortchem:
 	Inherits: ^CommonDeaths
+	Defaults:
+		Filename: mortchem.shp
 	stand:
-		Filename: mort.shp
 		Facings: 8
 	stand2:
-		Filename: mort.shp
 		Facings: 8
 	run:
-		Filename: mort.shp
 		Start: 16
 		Length: 6
 		Facings: 8
 		Tick: 100
 	throw:
-		Filename: mort.shp
 		Start: 64
 		Length: 20
 		Facings: 8
 	liedown:
-		Filename: mort.shp
 		Start: 224
 		Length: 2
 		Facings: 8
 	standup:
-		Filename: mort.shp
 		Start: 272
 		Length: 2
 		Facings: 8
 	prone-stand:
-		Filename: mort.shp
 		Start: 240
 		Stride: 4
 		Facings: 8
 	prone-stand2:
-		Filename: mort.shp
 		Start: 240
 		Stride: 4
 		Facings: 8
 	prone-run:
-		Filename: mort.shp
 		Start: 240
 		Length: 4
 		Facings: 8
 		Tick: 100
 	prone-throw:
-		Filename: mort.shp
 		Start: 288
 		Length: 12
 		Facings: 8
 	parachute:
-		Filename: mort.shp
 		Start: 528
 	idle1:
-		Filename: mort.shp
 		Start: 384
 		Length: 16
 		Tick: 120
 	idle2:
-		Filename: mort.shp
 		Start: 400
 		Length: 16
 		Tick: 120
 	cheer:
-		Filename: mort.shp
 		Start: 494
 		Length: 3
 		Facings: 8
 		Tick: 120
 	die1:
-		Filename: mort.shp
 		Start: 416
 		Length: 9
 		Tick: 80
 	die2:
-		Filename: mort.shp
 		Start: 424
 		Length: 8
 		Tick: 80
 	die3:
-		Filename: mort.shp
 		Start: 432
 		Length: 8
 		Tick: 80
 	die4:
-		Filename: mort.shp
 		Start: 440
 		Length: 12
 		Tick: 80
 	die5:
-		Filename: mort.shp
 		Start: 452
 		Length: 18
 		Tick: 80
 	die7:
-		Filename: mort.shp
 		Start: 416
 		Length: 9
 		Tick: 80
@@ -3225,7 +3202,21 @@ mort:
 		BlendMode: Alpha
 		Offset: 0, 0
 	icon:
-		Filename: morticon.shp
+		Filename: mortchemicon.shp
+
+mortcryo:
+	Inherits: mortchem
+	Defaults:
+		Filename: mortcryo.shp
+	icon:
+		Filename: mortcryoicon.shp
+
+mortsonic:
+	Inherits: mortchem
+	Defaults:
+		Filename: mortsonic.shp
+	icon:
+		Filename: mortsonicicon.shp
 
 sniper:
 	Inherits: ^CommonDeaths

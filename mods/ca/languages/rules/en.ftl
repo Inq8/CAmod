@@ -30,11 +30,26 @@ checkbox-balanced-harvesting =
     .label = Balanced Harvesting
     .description = Enables dynamic harvester speed to account for the direction of resources relative to refineries
 
+dropdown-queuetype =
+    .label = Production Type
+    .description = Single-Queue = One queue per production category\n\nMulti-Queue = One queue per production structure\n\nMulti-Queue Scaled = Multi-Queue, but where additional production structures have increased cost,\n                                   which can be reduced via T2/T3 upgrades
+
+options-queuetype =
+    .singlequeue = Single-Queue
+    .multiqueuefull = Multi-Queue
+    .multiqueuescaled = Multi-Queue Scaled
+
 ## World
 options-starting-units =
     .mcv-only = MCV Only
     .light-support = Light Support
     .heavy-support = Heavy Support
 
+dropdown-difficulty =
+    .label = Difficulty
+    .description = The difficulty of the mission
+
 options-difficulty =
-    .normal = Normal
+    .easy = Beginner
+    .normal = Veteran
+    .hard = Expert

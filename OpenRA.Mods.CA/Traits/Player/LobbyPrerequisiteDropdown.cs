@@ -24,18 +24,22 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly string ID = null;
 
 		[FieldLoader.Require]
+		[TranslationReference]
 		[Desc("Descriptive label for this dropdown.")]
 		public readonly string Label = null;
 
+		[TranslationReference]
 		[Desc("Tooltip description for this dropdown.")]
 		public readonly string Description = null;
 
 		[FieldLoader.Require]
-		[Desc("Option names and their values.")]
-		public readonly Dictionary<string, string> Values = new Dictionary<string, string>();
+		[Desc("Default option key in the `Values` list.")]
+		public readonly string Default = null;
 
-		[Desc("Default value.")]
-		public readonly string DefaultValue = null;
+		[FieldLoader.Require]
+		[TranslationReference(dictionaryReference: LintDictionaryReference.Values)]
+		[Desc("Options to choose from.")]
+		public readonly Dictionary<string, string> Values = null;
 
 		[Desc("Prevent the dropdown value from being changed in the lobby.")]
 		public readonly bool Locked = false;
@@ -46,17 +50,14 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Display order for the dropdown in the lobby.")]
 		public readonly int DisplayOrder = 0;
 
-		public HashSet<string> Prerequisites { get { return Values.Values.ToHashSet(); } }
+		public HashSet<string> Prerequisites { get { return Values.Keys.ToHashSet(); } }
 
 		IEnumerable<string> ITechTreePrerequisiteInfo.Prerequisites(ActorInfo info) { return Prerequisites; }
 
 		IEnumerable<LobbyOption> ILobbyOptions.LobbyOptions(MapPreview map)
 		{
-			var options = Values.ToDictionary(x => x.Value, x => x.Key);
-			var defaultValue = DefaultValue == null ? options.First().Value : DefaultValue;
-
 			yield return new LobbyOption(map, ID, Label, Description, Visible, DisplayOrder,
-				options, defaultValue, Locked);
+				Values, Default, Locked);
 		}
 
 		public override object Create(ActorInitializer init) { return new LobbyPrerequisiteDropdown(init.Self, this); }
@@ -75,7 +76,7 @@ namespace OpenRA.Mods.CA.Traits
 		void INotifyCreated.Created(Actor self)
 		{
 			var selectedPrerequisite = self.World.LobbyInfo.GlobalSettings
-				.OptionOrDefault(info.ID, info.DefaultValue);
+				.OptionOrDefault(info.ID, info.Default);
 
 			prerequisites.Add(selectedPrerequisite);
 		}

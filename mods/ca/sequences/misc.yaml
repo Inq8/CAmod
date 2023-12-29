@@ -65,6 +65,12 @@ radball:
 		Length: *
 		ZOffset: 2046
 
+cryoball:
+	idle:
+		Filename: cryoball.shp
+		Length: *
+		ZOffset: 2046
+
 explosion:
 	Defaults:
 		Length: *
@@ -388,6 +394,10 @@ explosion:
 	cryohit:
 		Filename: cryohit.shp
 		BlendMode: Additive
+	sonicimpact:
+		Filename: sonicimpact.shp
+		BlendMode: Additive
+		Alpha: 0.75
 	sonicblast1:
 		Filename: sonicblast.shp
 		Start: 0
@@ -2613,16 +2623,9 @@ flameall:
 		InterpolatedFacings: 32
 
 flameallfast:
-	Defaults:
-		IgnoreWorldTint: true
+	Inherits: flameall
 	idle:
-		Filename: flameall.shp
-		Length: 19
-		Facings: -8
 		Tick: 60
-		ZOffset: 1023
-		Offset: 0, 0, 6
-		InterpolatedFacings: 32
 
 flameallblack:
 	Defaults:
@@ -2658,6 +2661,11 @@ chemall:
 		ZOffset: 1023
 		Offset: 0, 0, 6
 		InterpolatedFacings: 32
+
+chemallfast:
+	Inherits: chemall
+	idle:
+		Tick: 60
 
 chronoappear:
 	Defaults:

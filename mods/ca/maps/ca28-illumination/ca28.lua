@@ -312,27 +312,27 @@ SpawnScrinSquad = function(cave, continuous)
 	end)
 end
 
-ca28_CallForHelpOnDamagedOrKilled = function(actor, range, filter, isMissionPlayerFunc)
-	if isMissionPlayerFunc == nil then
-		isMissionPlayerFunc = function(p) return p == MissionPlayer end
+ca28_CallForHelpOnDamagedOrKilled = function(actor, range, filter, validAttackingPlayerFunc)
+	if validAttackingPlayerFunc == nil then
+		validAttackingPlayerFunc = function(p) return p == MissionPlayer end
 	end
 	Trigger.OnDamaged(actor, function(self, attacker, damage)
-		if isMissionPlayerFunc(attacker.Owner) then
-			ca28_CallForHelp(self, range, attacker, filter, isMissionPlayerFunc)
+		if validAttackingPlayerFunc(attacker.Owner) then
+			ca28_CallForHelp(self, range, attacker, filter, validAttackingPlayerFunc)
 		end
 	end)
 	Trigger.OnKilled(actor, function(self, killer)
-		if isMissionPlayerFunc(killer.Owner) then
-			ca28_CallForHelp(self, range, killer, filter, isMissionPlayerFunc)
+		if validAttackingPlayerFunc(killer.Owner) then
+			ca28_CallForHelp(self, range, killer, filter, validAttackingPlayerFunc)
 		end
 	end)
 end
 
-ca28_CallForHelp = function(self, range, attacker, filter, isMissionPlayerFunc)
-	if isMissionPlayerFunc == nil then
-		isMissionPlayerFunc = function(p) return p == MissionPlayer end
+ca28_CallForHelp = function(self, range, attacker, filter, validAttackingPlayerFunc)
+	if validAttackingPlayerFunc == nil then
+		validAttackingPlayerFunc = function(p) return p == MissionPlayer end
 	end
-	if isMissionPlayerFunc(self.Owner) then
+	if validAttackingPlayerFunc(self.Owner) then
 		return
 	end
 	if attacker.IsDead then

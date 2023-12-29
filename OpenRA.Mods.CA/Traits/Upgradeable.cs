@@ -83,7 +83,6 @@ namespace OpenRA.Mods.CA.Traits
 		readonly PlayerResources playerResources;
 		readonly Actor self;
 		UpgradesManager upgradesManager;
-		Mobile mobile;
 		Upgrade currentUpgrade;
 
 		public UpgradeInfo UpgradeInfo { get; private set; }
@@ -109,7 +108,6 @@ namespace OpenRA.Mods.CA.Traits
 			this.self = self;
 			upgradesManager = self.Owner.PlayerActor.Trait<UpgradesManager>();
 			playerResources = self.Owner.PlayerActor.Trait<PlayerResources>();
-			mobile = self.TraitOrDefault<Mobile>();
 			unlocked = upgraded = false;
 			UpgradeInfo = new UpgradeInfo();
 		}

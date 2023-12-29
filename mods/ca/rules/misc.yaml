@@ -766,6 +766,8 @@ powerproxy.airstrike:
 		CircleDelay: 20
 		OrderName: crateairstrike
 		SupportPowerPaletteOrder: 70
+		DirectionArrowAnimation: paradirection
+		UseDirectionalTarget: true
 
 barracks.upgraded:
 	Inherits@DUMMY: ^InvisibleDummy
@@ -779,23 +781,20 @@ aircraft.upgraded:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 
-# tent - medic
+# tent - cryo mortar
 stolentech.tent:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
-		Prerequisite: infantry.medi
 
-# barr - thief
+# barr - cyberdog
 stolentech.barr:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
-		Prerequisite: infantry.thf
 
-# pyle - medic
+# pyle - sonic mortar
 stolentech.pyle:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
-		Prerequisite: infantry.medi
 
 # hand - chem mortar
 stolentech.hand:

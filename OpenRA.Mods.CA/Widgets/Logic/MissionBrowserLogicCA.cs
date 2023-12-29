@@ -46,6 +46,18 @@ namespace OpenRA.Mods.Common.Widgets.Logic
 		[TranslationReference]
 		const string CantPlayCancel = "dialog-cant-play-video.cancel";
 
+		// Added to prevent unused language string warnings
+		[TranslationReference]
+		const string DifficultyLabel = "dropdown-difficulty.label";
+		[TranslationReference]
+		const string DifficultyDescription = "dropdown-difficulty.description";
+		[TranslationReference]
+		const string DifficultyEasy = "options-difficulty.easy";
+		[TranslationReference]
+		const string DifficultyNormal = "options-difficulty.normal";
+		[TranslationReference]
+		const string DifficultyHard = "options-difficulty.hard";
+
 		readonly ModData modData;
 		readonly Action onStart;
 		readonly Widget missionDetail;

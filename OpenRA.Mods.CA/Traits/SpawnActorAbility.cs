@@ -52,6 +52,10 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Cursor to display when the targeted location is blocked.")]
 		public readonly string TargetBlockedCursor = "move-blocked";
 
+		[CursorReference]
+		[Desc("Cursor to display when targeting a teleport location with modifier key held.")]
+		public readonly string TargetModifiedCursor = null;
+
 		[Desc("Range circle color.")]
 		public readonly Color CircleColor = Color.FromArgb(128, Color.LawnGreen);
 
@@ -63,6 +67,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Range circle border width.")]
 		public readonly float CircleBorderWidth = 3;
+
+		public readonly WDist TargetCircleRange = WDist.Zero;
+		public readonly Color TargetCircleColor = Color.White;
 
 		[Desc("Color to use for the target line.")]
 		public readonly Color TargetLineColor = Color.LawnGreen;
@@ -86,6 +93,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Consume ammo from this ammo pool on use.")]
 		public readonly string AmmoPool = null;
 
+		[Desc("When selecting a group, different types will not be activated together.")]
+		public readonly string Type = null;
+
 		public override object Create(ActorInitializer init) { return new SpawnActorAbility(init, this); }
 	}
 
@@ -94,7 +104,6 @@ namespace OpenRA.Mods.CA.Traits
 		public new readonly SpawnActorAbilityInfo Info;
 
 		readonly IMove move;
-		readonly string faction;
 		AmmoPool ammoPool;
 
 		public SpawnActorAbility(ActorInitializer init, SpawnActorAbilityInfo info)
@@ -102,7 +111,6 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			Info = info;
 			move = init.Self.Trait<IMove>();
-			faction = init.GetValue<FactionInit, string>(init.Self.Owner.Faction.InternalName);
 		}
 
 		protected override void Created(Actor self)
@@ -185,6 +193,7 @@ namespace OpenRA.Mods.CA.Traits
 		readonly Actor self;
 		readonly SpawnActorAbility ability;
 		readonly SpawnActorAbilityInfo info;
+		readonly IEnumerable<TraitPair<SpawnActorAbility>> selectedWithAbility;
 
 		public SpawnActorAbilityOrderGenerator(Actor self, SpawnActorAbility ability)
 		{
@@ -195,6 +204,11 @@ namespace OpenRA.Mods.CA.Traits
 			if (ability.Info.SelectTargetSpeechNotification != null)
 				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech",
 					ability.Info.SelectTargetSpeechNotification, self.Owner.Faction.InternalName);
+
+			selectedWithAbility = self.World.Selection.Actors
+				.Where(a => a.Info.HasTraitInfo<SpawnActorAbilityInfo>() && a.Owner == self.Owner && !a.IsDead)
+				.Select(a => new TraitPair<SpawnActorAbility>(a, a.Trait<SpawnActorAbility>()))
+				.Where(s => s.Trait.Info.Type == ability.Info.Type);
 		}
 
 		protected override IEnumerable<Order> OrderInner(World world, CPos cell, int2 worldPixel, MouseInput mi)
@@ -210,7 +224,25 @@ namespace OpenRA.Mods.CA.Traits
 				&& (info.CanTargetShroud || self.Owner.Shroud.IsExplored(cell)))
 			{
 				world.CancelInputMode();
-				yield return new Order("SpawnActorAbility", self, Target.FromCell(world, cell), mi.Modifiers.HasModifier(Modifiers.Shift));
+				var targetCell = Target.FromCell(world, cell);
+
+				var selectedOrderedByDistance = selectedWithAbility
+					.Where(a => !a.Actor.IsDead
+						&& a.Actor.Owner == self.Owner
+						&& a.Actor.IsInWorld
+						&& a.Trait.CanSpawnActor)
+					.OrderBy(a => (a.Actor.CenterPosition - targetCell.CenterPosition).Length);
+
+				if (mi.Modifiers.HasModifier(Modifiers.Ctrl))
+				{
+					foreach (var other in selectedOrderedByDistance)
+						yield return new Order("SpawnActorAbility", other.Actor, Target.FromCell(world, cell), mi.Modifiers.HasModifier(Modifiers.Shift));
+				}
+				else
+				{
+					var closest = selectedOrderedByDistance.First();
+					yield return new Order("SpawnActorAbility", self, Target.FromCell(world, cell), mi.Modifiers.HasModifier(Modifiers.Shift));
+				}
 			}
 		}
 
@@ -249,6 +281,35 @@ namespace OpenRA.Mods.CA.Traits
 				info.CircleWidth,
 				info.CircleBorderColor,
 				info.CircleBorderWidth);
+
+			foreach (var other in selectedWithAbility)
+			{
+				if (other.Actor.IsInWorld && other.Trait.CanSpawnActor && self.Owner == self.World.LocalPlayer)
+				{
+					yield return new RangeCircleAnnotationRenderable(
+						other.Actor.CenterPosition + new WVec(0, other.Actor.CenterPosition.Z, 0),
+						other.Trait.Info.Range,
+						0,
+						other.Trait.Info.CircleColor,
+						other.Trait.Info.CircleWidth,
+						other.Trait.Info.CircleBorderColor,
+						other.Trait.Info.CircleBorderWidth);
+				}
+			}
+
+			if (ability.Info.TargetCircleRange > WDist.Zero)
+			{
+				var xy = wr.Viewport.ViewToWorld(Viewport.LastMousePos);
+
+				yield return new RangeCircleAnnotationRenderable(
+					world.Map.CenterOfCell(xy),
+					ability.Info.TargetCircleRange,
+					0,
+					ability.Info.TargetCircleColor,
+					1,
+					Color.FromArgb(96, Color.Black),
+					3);
+			}
 		}
 
 		protected override string GetCursor(World world, CPos cell, int2 worldPixel, MouseInput mi)
@@ -257,7 +318,7 @@ namespace OpenRA.Mods.CA.Traits
 				&& ability.CanSpawnActor
 				&& (info.CanTargetShroud || self.Owner.Shroud.IsExplored(cell))
 				&& (info.AllowedTerrainTypes.Count == 0 || info.AllowedTerrainTypes.Contains(world.Map.GetTerrainInfo(cell).Type)))
-				return info.TargetCursor;
+				return info.TargetModifiedCursor != null && mi.Modifiers.HasModifier(Modifiers.Ctrl) ? info.TargetModifiedCursor : info.TargetCursor;
 			else
 				return info.TargetBlockedCursor;
 		}

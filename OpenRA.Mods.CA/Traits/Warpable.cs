@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
 using OpenRA.Traits;
@@ -50,12 +51,12 @@ namespace OpenRA.Mods.CA.Traits
 		readonly WarpableInfo info;
 		readonly Health health;
 		readonly int requiredDamage;
-		int ScalingRequiredDamage { get { return 100 * health.HP / health.MaxHP * requiredDamage / 100; } }
+		int ScalingRequiredDamage { get { return Math.Max(100 * health.HP / health.MaxHP * requiredDamage / 100, 1); } }
 
 		int token = Actor.InvalidConditionToken;
 
 		[Sync]
-		int recievedDamage;
+		int receivedDamage;
 
 		[Sync]
 		int tick;
@@ -70,14 +71,14 @@ namespace OpenRA.Mods.CA.Traits
 
 		public void AddDamage(int damage, Actor damager)
 		{
-			recievedDamage = recievedDamage + damage;
+			receivedDamage = receivedDamage + damage;
 			tick = info.RevokeDelay;
 
 			if (info.ScaleWithCurrentHealthPercentage)
-				if (recievedDamage >= ScalingRequiredDamage)
+				if (receivedDamage >= ScalingRequiredDamage)
 					self.Kill(damager, info.DamageTypes);
 			else
-				if (recievedDamage >= requiredDamage)
+				if (receivedDamage >= requiredDamage)
 					self.Kill(damager, info.DamageTypes);
 
 			if (!string.IsNullOrEmpty(info.Condition) && token == Actor.InvalidConditionToken)
@@ -86,17 +87,17 @@ namespace OpenRA.Mods.CA.Traits
 
 		void ITick.Tick(Actor self)
 		{
-			if (recievedDamage > 0 && --tick < 0)
+			if (receivedDamage > 0 && --tick < 0)
 			{
 				if (info.RevokeRate == -1)
-					recievedDamage = 0;
+					receivedDamage = 0;
 				else
-					recievedDamage -= info.RevokeRate;
+					receivedDamage -= info.RevokeRate;
 
-				if (recievedDamage < 0)
-					recievedDamage = 0;
+				if (receivedDamage < 0)
+					receivedDamage = 0;
 
-				if (recievedDamage == 0 && token != Actor.InvalidConditionToken)
+				if (receivedDamage == 0 && token != Actor.InvalidConditionToken)
 					token = self.RevokeCondition(token);
 			}
 		}
@@ -107,9 +108,9 @@ namespace OpenRA.Mods.CA.Traits
 				return 0;
 
 			if (info.ScaleWithCurrentHealthPercentage)
-				return (float)recievedDamage / ScalingRequiredDamage;
+				return (float)receivedDamage / ScalingRequiredDamage;
 
-			return (float)recievedDamage / requiredDamage;
+			return (float)receivedDamage / requiredDamage;
 		}
 
 		bool ISelectionBar.DisplayWhenEmpty { get { return false; } }

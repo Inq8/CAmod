@@ -10,12 +10,12 @@ World:
 		ShortGameCheckboxEnabled: False
 	ScriptLobbyDropdown@DIFFICULTY:
 		ID: difficulty
-		Label: Difficulty
-		Description: The difficulty of the mission
+		Label: dropdown-difficulty.label
+		Description: dropdown-difficulty.description
 		Values:
-			easy: Easy
-			normal: Normal
-			hard: Hard
+			easy: options-difficulty.easy
+			normal: options-difficulty.normal
+			hard: options-difficulty.hard
 		Default: normal
 	MusicPlaylist:
 		StartingMusic: terminat
@@ -96,8 +96,6 @@ BORI:
 GNRL:
 	Tooltip:
 		Name: General Yegorov
-		-GenericVisibility:
-		-RequiresCondition:
 	RenderSprites:
 		Image: boris
 		-Palette:
@@ -110,8 +108,6 @@ GNRL:
 	DamageMultiplier@IMPERVIOUS:
 		Modifier: 0
 		RequiresCondition: impervious
-	-GrantConditionOnCombatantOwner@COMBATANT:
-	-Tooltip@COMBATANT:
 	-Valued:
 	-AttackFrontal:
 	-AttackMove:

@@ -69,11 +69,11 @@ Player:
 		Locked: True
 		Visible: False
 	LobbyPrerequisiteDropdown@QUEUETYPE:
-		DefaultValue: global.singlequeue
+		Default: global.singlequeue
 		Locked: True
 		Visible: False
 		Values:
-			Single-Queue: global.singlequeue
+			global.singlequeue: options-queuetype.singlequeue
 	LobbyPrerequisiteCheckbox@FREEUPGRADES:
 		ID: freeupgrades
 		Label: Free Upgrades
@@ -113,7 +113,9 @@ Player:
 		Prerequisites: player.allies, player.soviet, player.gdi, player.nod, player.scrin, player.human, player.ra, player.td, player.alliesorgdi, player.alliesornod, player.alliesorgdiornod, techlevel.infonly, techlevel.low, techlevel.medium, techlevel.high, techlevel.unrestricted
 		Id: buildanything
 
-
+^GainsExperience:
+	GainsExperienceMultiplier@NoExperience:
+		Modifier: 0
 
 ^Upgrade:
 	Buildable:
@@ -543,7 +545,23 @@ BORI:
 	ProvidesPrerequisite@GUNHERO:
 		Prerequisite: gunhero
 
-MORT:
+MORT.Chem:
+	Buildable:
+		Prerequisites: ~player.nod
+
+MORT.Cryo:
+	Buildable:
+		Prerequisites: ~player.nod
+
+MORT.Sonic:
+	Buildable:
+		Prerequisites: ~player.nod
+
+CSCR:
+	Buildable:
+		Prerequisites: ~player.nod
+
+CDOG:
 	Buildable:
 		Prerequisites: ~player.nod
 
@@ -604,6 +622,7 @@ YURI:
 SEAL:
 	Buildable:
 		Prerequisites: ~player.allies
+	-ProvidesPrerequisite@GUNHERO:
 
 XO:
 	Buildable:
