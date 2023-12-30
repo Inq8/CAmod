@@ -1645,6 +1645,10 @@ ifv:
 		Filename: bttnk.shp
 		Start: 32
 		Length: 32
+	psy:
+		Filename: ifvtur.shp
+		Start: 544
+		Length: 1
 	turret:
 		Filename: ifvtur.shp
 		Facings: 32
@@ -1699,6 +1703,38 @@ ifv:
 		Start: 352
 		Facings: 32
 		UseClassicFacings: True
+	turret12:
+		Filename: ifvtur.shp
+		Start: 384
+		Facings: 32
+		UseClassicFacings: True
+	turret13:
+		Filename: ifvtur.shp
+		Start: 416
+		Facings: 32
+		UseClassicFacings: True
+	turret14:
+		Filename: ifvtur.shp
+		Start: 448
+		Facings: 32
+		UseClassicFacings: True
+	turret15:
+		Filename: seek.shp
+		Start: 32
+		Facings: 32
+		UseClassicFacings: True
+		Offset: 0, 1
+	turret16:
+		Filename: ifvtur.shp
+		Start: 480
+		Facings: 32
+		UseClassicFacings: True
+		Offset: 0, 1
+	turret17:
+		Filename: ifvtur.shp
+		Start: 512
+		Facings: 32
+		UseClassicFacings: True
 	open:
 		Filename: ifv.shp
 		Start: 32
@@ -1721,6 +1757,26 @@ ifv.destroyed:
 		Start: 32
 		Facings: 32
 		UseClassicFacings: True
+
+reck:
+	Inherits: ifv
+	idle:
+		Filename: reck.shp
+	open:
+		Filename: reck.shp
+		Start: 3
+		Length: 1
+	unload:
+		Filename: reck.shp
+		Start: 3
+		Length: 1
+	icon:
+		Filename: reckicon.shp
+
+reck.destroyed:
+	Inherits: ifv.destroyed
+	idle:
+		Filename: reck.shp
 
 xo:
 	Inherits: ^VehicleOverlays

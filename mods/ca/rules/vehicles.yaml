@@ -4628,7 +4628,7 @@ IFV:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 120
-		Prerequisites: infantry.any, radarorrepair, ~vehicles.ifv, ~techlevel.medium
+		Prerequisites: infantry.any, radarorrepair, ~vehicles.allies, ~techlevel.medium
 		Description: Adaptable infantry transport.
 	Tooltip:
 		Name: Infantry Fighting Vehicle
@@ -4669,9 +4669,6 @@ IFV:
 	Tooltip@acolturr:
 		Name: Laser IFV
 		RequiresCondition: acolturr
-	Tooltip@rmbcturr:
-		Name: Cyborg Elite IFV
-		RequiresCondition: rmbcturr
 	Tooltip@snipturr:
 		Name: Sniper IFV
 		RequiresCondition: snipturr
@@ -4681,6 +4678,33 @@ IFV:
 	Tooltip@testurr:
 		Name: Tesla IFV
 		RequiresCondition: testurr
+	Tooltip@rmbcturr:
+		Name: Cyborg Elite IFV
+		RequiresCondition: rmbcturr
+	Tooltip@enliturr:
+		Name: Enlightened IFV
+		RequiresCondition: enliturr
+	Tooltip@bhturr:
+		Name: Black Hand IFV
+		RequiresCondition: bhturr
+	Tooltip@mortchemturr:
+		Name: Chemical Mortar IFV
+		RequiresCondition: mortchemturr
+	Tooltip@mortcryoturr:
+		Name: Cryo Mortar IFV
+		RequiresCondition: mortcryoturr
+	Tooltip@mortsonicturr:
+		Name: Sonic Mortar IFV
+		RequiresCondition: mortsonicturr
+	Tooltip@discturr:
+		Name: Intruder IFV
+		RequiresCondition: discturr
+	Tooltip@sharturr:
+		Name: Ravager IFV
+		RequiresCondition: sharturr
+	Tooltip@psyturr:
+		Name: Psychic IFV
+		RequiresCondition: psyturr
 	TooltipExtras:
 		Strengths: • Strong vs Aircraft, Heavy Armor
 		Weaknesses: • Weak vs Infantry
@@ -4850,11 +4874,20 @@ IFV:
 		Weapon: RadBeamWeapon
 		LocalOffset: 400,0,213
 		RequiresCondition: desoturr
+	Armament@ENLI:
+		Weapon: EnlightenedBeam
+		MuzzleSequence: muzzle
+		LocalOffset: 192,100,200, 192,-100,200
+		RequiresCondition: enliturr
 	Armament@RMBC:
 		Weapon: CyCannon
 		MuzzleSequence: muzzle
-		LocalOffset: 560,0,200
+		LocalOffset: 192,100,200, 192,-100,200
 		RequiresCondition: rmbcturr
+	Armament@BH:
+		Weapon: BlackHandFlamer
+		LocalOffset: 150,0,150
+		RequiresCondition: bhturr
 	Armament@Heal:
 		Weapon: Heal
 		Cursor: heal
@@ -4888,9 +4921,33 @@ IFV:
 		Weapon: IFVLaser
 		LocalOffset: 385,0,300
 		RequiresCondition: acolturr
+	Armament@Disc:
+		Weapon: IntruderDiscs
+		LocalOffset: 250,0,300
+		RequiresCondition: discturr
+	Armament@Shard:
+		Weapon: ShardWalkerShards
+		LocalOffset: 250,0,300
+		RequiresCondition: sharturr
+	Armament@ChemMortar:
+		Weapon: ChemicalMortar
+		LocalOffset: 150,0,500
+		RequiresCondition: mortchemturr
+	Armament@CryoMortar:
+		Weapon: CryoMortar
+		LocalOffset: 150,0,500
+		RequiresCondition: mortcryoturr
+	Armament@SonicMortar:
+		Weapon: SonicMortar
+		LocalOffset: 150,0,500
+		RequiresCondition: mortsonicturr
 	Armament@IVAN:
 		Weapon: IvanIFVTargeting
 		RequiresCondition: ivanturr
+	Armament@MC:
+		Weapon: PsychicBeamBATF
+		LocalOffset: 200,0,300
+		RequiresCondition: psyturr
 	AttackSoundsCA@REPAIRSOUND:
 		Sounds: repair11.aud
 		RequiresCondition: engturr
@@ -4904,6 +4961,11 @@ IFV:
 		Sequence: tesla
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: testurr
+	WithIdleOverlay@PSY:
+		Sequence: psy
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: psyturr
+		Palette: scrin
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !spyturr
@@ -4928,7 +4990,7 @@ IFV:
 		RequiresCondition: chemturr
 	WithSpriteTurret@las:
 		Sequence: turret7
-		RequiresCondition: acolturr || rmbcturr
+		RequiresCondition: acolturr
 	WithSpriteTurret@des:
 		Sequence: turret8
 		RequiresCondition: desoturr
@@ -4941,6 +5003,24 @@ IFV:
 	WithSpriteTurret@snip:
 		Sequence: turret11
 		RequiresCondition: snipturr
+	WithSpriteTurret@enli:
+		Sequence: turret12
+		RequiresCondition: enliturr
+	WithSpriteTurret@rmbc:
+		Sequence: turret13
+		RequiresCondition: rmbcturr
+	WithSpriteTurret@bh:
+		Sequence: turret14
+		RequiresCondition: bhturr
+	WithSpriteTurret@disc:
+		Sequence: turret15
+		RequiresCondition: discturr
+	WithSpriteTurret@shar:
+		Sequence: turret16
+		RequiresCondition: sharturr
+	WithSpriteTurret@mort:
+		Sequence: turret17
+		RequiresCondition: mortchemturr || mortcryoturr || mortsonicturr
 	Cargo:
 		Types: Infantry
 		MaxWeight: 1
@@ -4964,7 +5044,9 @@ IFV:
 			n6: engturr
 			mech: engturr
 			cmec: engturr
-			mort.chem: chemturr
+			mort.chem: mortchemturr
+			mort.cryo: mortcryoturr
+			mort.sonic: mortsonicturr
 			shok: testurr
 			rmbo: commturr
 			bori: commturr
@@ -4974,23 +5056,26 @@ IFV:
 			snip: snipturr
 			spy: spyturr
 			thf: spyturr
+			hack: spyturr
 			medi: medturr
 			acol: acolturr
 			tplr: acolturr
-			enli: acolturr
+			cscr: acolturr
+			enli: enliturr
 			rmbc: rmbcturr
 			s1: gunturr
-			s2: chemturr
+			s2: sharturr
 			s3: samturr
-			s4: acolturr
+			s4: discturr
 			s6: engturr
 			smedi: medturr
-			mast: commturr
-			yuri: commturr
+			mast: psyturr
+			yuri: psyturr
 			brst: ivanturr
 			dog: spyturr
+			cdog: spyturr
 			ivan: ivanturr
-			bh: flamturr
+			bh: bhturr
 			shad: spyturr
 			tecn: nochange
 			c1: nochange
@@ -5102,7 +5187,7 @@ IFV:
 	GuardsSelection@SPY:
 		RequiresCondition: spyturr && !stance-attackanything
 	WithDecoration@COMMANDOSKULL:
-		RequiresCondition: commturr
+		RequiresCondition: commturr || psyturr
 	-Targetable@HERO:
 	WithDecoration@SEALSKULL:
 		RequiresCondition: sealturr
@@ -5115,6 +5200,15 @@ IFV:
 		RequiresCondition: engturr || medturr || spyturr
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		RequiresCondition: !full || samturr
+	AmbientSoundCA:
+		SoundFiles: flamer-loop1.aud
+		InitialSound: flamer-start1.aud
+		FinalSound: flamer-end1.aud
+		RequiresCondition: bhturr && attacking
+		InitialSoundLength: 20
+	GrantConditionOnAttackCA:
+		Condition: attacking
+		RevokeDelay: 3
 
 IFV.AI:
 	Inherits: ^Tank
@@ -5254,6 +5348,68 @@ IFV.AI:
 		RequiresCondition: cryr-upgrade
 	ExternalCondition@CRYO:
 		Condition: cryr-upgrade
+
+RECK:
+	Inherits: IFV
+	RenderSprites:
+		Image: reck
+	Health:
+		HP: 30000
+	Mobile:
+		Speed: 82
+	Buildable:
+		Prerequisites: infantry.any, radarorrepair, ~vehicles.reck
+	Tooltip:
+		Name: Reckoner
+		RequiresCondition: !full || nochange
+	Tooltip@gunturr:
+		Name: MG Reckoner
+	Tooltip@fragturr:
+		Name: Grenade Reckoner
+	Tooltip@samturr:
+		Name: Missile Reckoner
+	Tooltip@engturr:
+		Name: Repair Reckoner
+	Tooltip@commturr:
+		Name: Commando Reckoner
+	Tooltip@chemturr:
+		Name: Chemical Reckoner
+	Tooltip@medturr:
+		Name: Medical Reckoner
+	Tooltip@ivanturr:
+		Name: Explosive Reckoner
+	Tooltip@flamturr:
+		Name: Flamethrower Reckoner
+	Tooltip@spyturr:
+		Name: Spy Reckoner
+	Tooltip@sealturr:
+		Name: SEAL Reckoner
+	Tooltip@acolturr:
+		Name: Laser Reckoner
+	Tooltip@snipturr:
+		Name: Sniper Reckoner
+	Tooltip@desoturr:
+		Name: Desolator Reckoner
+	Tooltip@testurr:
+		Name: Tesla Reckoner
+	Tooltip@rmbcturr:
+		Name: Cyborg Elite Reckoner
+	Tooltip@enliturr:
+		Name: Enlightened Reckoner
+	Tooltip@bhturr:
+		Name: Black Hand Reckoner
+	Tooltip@mortchemturr:
+		Name: Chemical Mortar Reckoner
+	Tooltip@mortcryoturr:
+		Name: Cryo Mortar Reckoner
+	Tooltip@mortsonicturr:
+		Name: Sonic Mortar Reckoner
+	Tooltip@discturr:
+		Name: Intruder Reckoner
+	Tooltip@sharturr:
+		Name: Ravager Reckoner
+	Tooltip@psyturr:
+		Name: Psychic Reckoner
 
 TITN:
 	Inherits: ^TankTD
