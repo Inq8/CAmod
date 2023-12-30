@@ -1921,7 +1921,7 @@ TPOD:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 310
-		Prerequisites: techcenter, ~vehicles.tpod, ~techlevel.high
+		Prerequisites: scrt, ~vehicles.tpod, ~techlevel.high
 		Description: Heavy assault walker with beam weapons.
 		IconPalette: chrome
 	TooltipExtras:
@@ -3797,6 +3797,7 @@ NERV:
 	Inherits@STORMSPIKEPOWER: ^StormSpikePower
 	Inherits@BUZZERSWARMPOWER: ^BuzzerSwarmPower
 	Inherits@IONSURGEPOWER: ^IonSurgePower
+	Inherits@TECHLOCKABLE: ^TechLockable
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 90
@@ -3849,25 +3850,33 @@ NERV:
 	-PowerMultiplier@POWERDRAIN:
 	ValidFactions:
 		Factions: reaper, traveler, harbinger, collector
+	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@anyradar:
 		Prerequisite: anyradar
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@radarorrepair:
 		Prerequisite: radarorrepair
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@scrinrad:
 		Prerequisite: radar.scrin
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@reaprad:
 		Factions: reaper
 		Prerequisite: radar.reaper
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@travrad:
 		Factions: traveler
 		Prerequisite: radar.traveler
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@harbrad:
 		Factions: harbinger
 		Prerequisite: radar.harbinger
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@desprad:
 		Factions: collector
 		Prerequisite: radar.collector
-	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 	ExternalCondition@JAMMED:
 		Condition: jammed
 	ProvidesPrerequisite@radar-active:
@@ -3887,6 +3896,7 @@ SCRT:
 	Inherits@ICHORSEEDPOWER: ^IchorSeedPower
 	Inherits@FORCESHIELDPOWER: ^ForceShieldPower
 	Inherits@GREATERCOALESCENCEPOWER: ^GreaterCoalescencePower
+	Inherits@TECHLOCKABLE: ^TechLockable
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 150
@@ -3931,15 +3941,19 @@ SCRT:
 		Amount: -150
 	ValidFactions:
 		Factions: reaper, traveler, harbinger, collector
+	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite:
-		Prerequisite: techcenter
+		Prerequisite: techcenter.any
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@harbscrt:
 		Factions: harbinger
 		Prerequisite: scrt.harbinger
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@collscrt:
 		Factions: collector
 		Prerequisite: scrt.collector
-	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 
 GRAV:
 	Inherits: ^ScrinBuilding
@@ -4039,6 +4053,7 @@ SIGN:
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@UPG: ^ProducesUpgrades
+	Inherits@TECHLOCKABLE: ^TechLockable
 	Selectable:
 		Bounds: 3072, 2048
 	Building:
@@ -4077,7 +4092,7 @@ SIGN:
 	Power:
 		Amount: -150
 	ProvidesPrerequisite@Name:
-		RequiresCondition: !being-warped
+		RequiresCondition: !tech-locked
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	SpawnActorOnDeath:

@@ -1582,6 +1582,25 @@
 		Delay: 20
 		RequiresCondition: hacked && !restoring
 
+^TechLockable:
+	InfiltrateForTimedCondition@TechLock:
+		Condition: tech-locked
+		Duration: 1500
+		Types: TechLockInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
+		ShowSelectionBar: true
+	WithDecoration@TechLock:
+		Image: hacked
+		Sequence: techlocked
+		RequiresCondition: tech-locked && !hacked
+		Position: Center
+		Palette: effect
+		ValidRelationships: Ally, Neutral, Enemy
+	Targetable@TechLock:
+		RequiresCondition: !being-warped
+		TargetTypes: TechLockInfiltrate
+
 ^GeneticallyMutatable:
 	ExternalCondition@GMUT:
 		Condition: geneticmutation

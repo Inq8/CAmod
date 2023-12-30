@@ -16,13 +16,15 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("CA version allows the spawned proxy actor to inherit the faction of the infiltrated actor,",
-		"or to be owned by the target.")]
-	class InfiltrateForSupportPowerCAInfo : TraitInfo
+	[Desc("The actor gains a timed condition when infiltrated.")]
+	class InfiltrateForTimedConditionInfo : TraitInfo
 	{
-		[ActorReference]
+		[GrantedConditionReference]
 		[FieldLoader.Require]
-		public readonly string Proxy = null;
+		public readonly string Condition = null;
+
+		[Desc("Condition duration. Use zero for infinite duration.")]
+		public readonly int Duration = 0;
 
 		[Desc("The `TargetTypes` from `Targetable` that are allowed to enter.")]
 		public readonly BitSet<TargetableType> Types = default(BitSet<TargetableType>);
@@ -35,20 +37,19 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Sound the perpetrator will hear after successful infiltration.")]
 		public readonly string InfiltrationNotification = null;
 
-		[Desc("If true, the spawned actor will use the target's faction.")]
-		public readonly bool UseTargetFaction = false;
+		public readonly bool ShowSelectionBar = false;
+		public readonly Color SelectionBarColor = Color.Red;
 
-		[Desc("If true, the spawned actor will be owned by the target.")]
-		public readonly bool UseTargetOwner = false;
-
-		public override object Create(ActorInitializer init) { return new InfiltrateForSupportPowerCA(this); }
+		public override object Create(ActorInitializer init) { return new InfiltrateForTimedCondition(this); }
 	}
 
-	class InfiltrateForSupportPowerCA : INotifyInfiltrated
+	class InfiltrateForTimedCondition : INotifyInfiltrated, ITick, ISelectionBar
 	{
-		readonly InfiltrateForSupportPowerCAInfo info;
+		readonly InfiltrateForTimedConditionInfo info;
+		int conditionToken = Actor.InvalidConditionToken;
+		int ticks;
 
-		public InfiltrateForSupportPowerCA(InfiltrateForSupportPowerCAInfo info)
+		public InfiltrateForTimedCondition(InfiltrateForTimedConditionInfo info)
 		{
 			this.info = info;
 		}
@@ -64,17 +65,29 @@ namespace OpenRA.Mods.CA.Traits
 			if (info.InfiltrationNotification != null)
 				Game.Sound.PlayNotification(self.World.Map.Rules, infiltrator.Owner, "Speech", info.InfiltrationNotification, infiltrator.Owner.Faction.InternalName);
 
-			var td = new TypeDictionary();
-
-			if (info.UseTargetFaction)
-				td.Add(new FactionInit(self.Owner.Faction.InternalName));
-
-			if (info.UseTargetOwner)
-				td.Add(new OwnerInit(self.Owner));
-			else
-				td.Add(new OwnerInit(infiltrator.Owner));
-
-			infiltrator.World.AddFrameEndTask(w => w.CreateActor(info.Proxy, td));
+			ticks = info.Duration;
+			conditionToken = self.GrantCondition(info.Condition);
 		}
+
+		void ITick.Tick(Actor self)
+		{
+			if (conditionToken == Actor.InvalidConditionToken)
+				return;
+
+			if (--ticks < 0)
+				conditionToken = self.RevokeCondition(conditionToken);
+		}
+
+		float ISelectionBar.GetValue()
+		{
+			if (!info.ShowSelectionBar || ticks <= 0)
+				return 0f;
+
+			return (float)ticks / info.Duration;
+		}
+
+		bool ISelectionBar.DisplayWhenEmpty { get { return false; } }
+
+		Color ISelectionBar.GetColor() { return info.SelectionBarColor; }
 	}
 }
