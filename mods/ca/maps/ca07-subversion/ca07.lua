@@ -73,7 +73,12 @@ WorldLoaded = function()
 	end)
 
 	Trigger.OnAllKilled(AlliedKeyBuildings, function()
-		Nod.MarkCompletedObjective(ObjectiveDestroyAlliedBase)
+		if not Nod.IsObjectiveCompleted(ObjectiveHackIonControl) then
+			Nod.MarkCompletedObjective(ObjectiveHackIonControl)
+		end
+		if ObjectiveDestroyAlliedBase ~= nil then
+			Nod.MarkCompletedObjective(ObjectiveDestroyAlliedBase)
+		end
 	end)
 
 	Trigger.OnAllKilled({ Hacker1, Hacker2 }, function()
