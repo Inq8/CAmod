@@ -260,15 +260,32 @@ bjet.upgrade:
 		Name: Research: Bombardier
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: ~player.gdi, gtek, ~bombard.strat, ~techlevel.high
+		Prerequisites: ~player.gdi, gtek, ~techlevel.high
 		Description: Allows construction of Bombardiers.\n\nReplaces: JumpJet Trooper
 	TooltipExtras:
-		Strengths: + Strong vs Buildingsn\n+ Increased range
+		Strengths: + Strong vs Buildings\n+ Increased range
 		Weaknesses: – Slow projectiles\n– Increased cost
 	Valued:
 		Cost: 1000
 	RenderSprites:
 		Image: bjet.upgrade
+
+thwk.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Tomahawk Launcher
+	Buildable:
+		BuildPaletteOrder: 30
+		IconPalette: chrometd
+		Prerequisites: ~player.gdi, gtek, ~bombard.strat, ~techlevel.high
+		Description: Allows construction of Tomahawk Missile Launchers.
+	TooltipExtras:
+		Strengths: + Strong vs Buildings\n+ Extremely long range
+		Weaknesses: – Projectiles can be shot down\n– Slow rate of fire
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: thwk.upgrade
 
 tow.upgrade:
 	Inherits: ^Upgrade

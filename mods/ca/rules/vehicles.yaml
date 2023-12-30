@@ -6879,7 +6879,7 @@ THWK:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 240
-		Prerequisites: gtek, ~vehicles.htnk, ~techlevel.high
+		Prerequisites: gtek, ~thwk.upgrade, ~techlevel.high
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd
 		Description: Long-range incendiary missile artillery.
@@ -6911,9 +6911,9 @@ THWK:
 		PauseOnCondition: empdisable || being-warped
 	WithSpriteTurret@OneMissile:
 		RequiresCondition: loaded
-	WithSpriteTurret@NoMissiles:
+	WithSpriteTurret@NoMissile:
 		RequiresCondition: !loaded
-		Sequence: turret0
+		Sequence: turret-empty
 	MissileSpawnerMaster:
 		Actors: TH
 		RespawnTicks: 249
