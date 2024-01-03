@@ -6882,18 +6882,20 @@ THWK:
 		Prerequisites: gtek, ~thwk.upgrade, ~techlevel.high
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd
-		Description: Long-range incendiary missile artillery.
+		Description: Extreme Long-range missile artillery.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets\n• Cannot fire while moving
 	Mobile:
 		Speed: 44
+		Voice: Move
 		PauseOnCondition: launching || aiming || being-captured || empdisable || being-warped || driver-dead || notmobile
-		BlockedCursor: move
+	Passenger:
+		Voice: Move
 	Health:
-		HP: 25000
+		HP: 22000
 	Armor:
-		Type: Heavy
+		Type: Light
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -6908,6 +6910,7 @@ THWK:
 	AttackTurreted:
 		TargetFrozenActors: True
 		ForceFireIgnoresActors: True
+		Voice: Attack
 		PauseOnCondition: empdisable || being-warped
 	WithSpriteTurret@OneMissile:
 		RequiresCondition: loaded
@@ -6934,6 +6937,8 @@ THWK:
 		Condition: moving
 	Explodes:
 		Weapon: BarrelExplode
+	Voiced:
+		VoiceSet: ThwkVoice
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
