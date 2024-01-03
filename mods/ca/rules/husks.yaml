@@ -1412,6 +1412,25 @@ OILB.Husk:
 	WithIdleOverlay@Burns:
 		Offset: -511,0,0
 
+OILR.Husk:
+	Inherits: ^TechHusk
+	Building:
+		Footprint: xxx xxx ===
+		Dimensions: 3,3
+		LocalCenterOffset: 0,-512,0
+	Tooltip:
+		Name: Ruin (Oil Refinery)
+	TransformOnCapture:
+		IntoActor: oilr
+	InfiltrateForTransform:
+		IntoActor: oilr
+	RenderSprites:
+		Image: OILR.destroyed
+	Explodes:
+		Weapon: BarrelExplode
+	WithIdleOverlay@Burns:
+		Offset: -511,0,0
+
 HARR.Husk:
 	Inherits: ^PlaneHusk
 	Tooltip:

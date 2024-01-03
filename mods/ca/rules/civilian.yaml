@@ -557,12 +557,13 @@ OILR:
 		Description: Provides 10% unit discount.
 		ValidRelationships: Ally
 	TooltipDescription@other:
-		Description: Capture to receive additional funds.
+		Description: Capture to receive a 10% production discount.
 		ValidRelationships: Neutral, Enemy
 	Explodes:
 		Weapon: BarrelExplode
+	ProvidesPrerequisite@buildingname:
 	SpawnActorOnDeath:
-		Actor: OILB.Husk
+		Actor: OILR.Husk
 		OwnerType: InternalName
 	-Explodes:
 	AppearsOnMapPreview:
@@ -570,12 +571,12 @@ OILR:
 		Condition: damaged
 	WithIdleOverlay@flare:
 		Sequence: flare
-		Offset: 2078,-480,0
+		Offset: 2500,-390,0
 		Palette: effect
 		RequiresCondition: !damaged
 	WithIdleOverlay@damaged-flare:
 		Sequence: damaged-flare
-		Offset: 2500,250,0
+		Offset: 2600,180,0
 		Palette: effect
 		RequiresCondition: damaged
 	GrantConditionIfOwnerIsNeutral:

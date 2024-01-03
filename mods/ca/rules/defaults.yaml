@@ -1765,6 +1765,11 @@
 		Multiplier: 85
 		Prerequisites: indp, indp.upgrade, !indplowpower
 
+^OilRefCostReduction:
+	ProductionCostMultiplier@OilRef:
+		Multiplier: 90
+		Prerequisites: oilr
+
 ^TDPalette:
 	RenderSprites:
 		PlayerPalette: playertd
@@ -1794,6 +1799,7 @@
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
 	Inherits@production: ^ProductionEfficiencyBoost
+	Inherits@oilcost: ^OilRefCostReduction
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@chrono: ^Chronoshiftable
 	Inherits@mind: ^MindControllable
@@ -1982,6 +1988,7 @@
 	Inherits@GMUT: ^GeneticallyMutatable
 	Inherits@handicaps: ^PlayerHandicaps
 	Inherits@BINOS: ^BinoUpgradeInfantry
+	Inherits@oilcost: ^OilRefCostReduction
 	Inherits@ionsurge: ^IonSurgableInfantry
 	Inherits@lchrheal: ^LeecherHealable
 	RenderSprites:
@@ -2377,6 +2384,7 @@
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@production: ^ProductionEfficiencyBoost
+	Inherits@oilcost: ^OilRefCostReduction
 	Inherits@chrono: ^Chronoshiftable
 	Inherits@mind: ^MindControllable
 	Inherits@handicaps: ^PlayerHandicaps
@@ -2613,6 +2621,7 @@
 	Inherits@rflash: ^RedFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@production: ^ProductionEfficiencyBoost
+	Inherits@oilcost: ^OilRefCostReduction
 	Inherits@C4: ^C4Plantable
 	Inherits@TNT: ^TNTPlantable
 	Inherits@ionsurge: ^IonSurgable
@@ -2791,6 +2800,7 @@
 	Inherits@wflash: ^WhiteFlash
 	Inherits@gflash: ^GreenFlash
 	Inherits@HACKABLE: ^Hackable
+	Inherits@oilcost: ^OilRefCostReduction
 	WithPalettedOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield
 		Palette: invuln
@@ -2986,6 +2996,7 @@
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^SpriteActor
 	Inherits@shape: ^1x1Shape
+	Inherits@oilcost: ^OilRefCostReduction
 	CustomRadarColor:
 		Color: EEEEEE
 	Inherits@3: ^Cloakable
