@@ -29,11 +29,12 @@ namespace OpenRA.Mods.CA.Activities
 		readonly Target target;
 		WDist maxAltitude;
 		WDist maxTargetMovement;
-		bool trackingLost;
+		bool trackTarget;
+		bool trackingActive;
 		int launchAngleDegrees;
 		double launchAngleRad;
 
-		public CruiseMissileFly(Actor self, Target t, CruiseMissile cm, WDist maxAltitude, WDist maxTargetMovement)
+		public CruiseMissileFly(Actor self, Target t, CruiseMissile cm, WDist maxAltitude, WDist maxTargetMovement, bool trackTarget)
 		{
 			this.cm = cm;
 			launchPos = currentPos = self.CenterPosition;
@@ -42,9 +43,10 @@ namespace OpenRA.Mods.CA.Activities
 			length = Math.Max((targetPos - launchPos).Length / this.cm.Info.Speed, 1);
 			facing = (targetPos - launchPos).Yaw;
 			cm.Facing = GetEffectiveFacing();
-			trackingLost = false;
+			trackingActive = !trackTarget;
 			this.maxAltitude = maxAltitude;
 			this.maxTargetMovement = maxTargetMovement;
+			this.trackTarget = trackTarget;
 			launchAngleDegrees = (int)(cm.Info.LaunchAngle.Angle / (1024f / 360f));
 			launchAngleRad = Math.PI * launchAngleDegrees / 180.0;
 			cm.SetState(CruiseMissileState.Ascending);
@@ -82,10 +84,10 @@ namespace OpenRA.Mods.CA.Activities
 
 		public override bool Tick(Actor self)
 		{
-			if (!trackingLost && maxTargetMovement > WDist.Zero && target.Type == TargetType.Actor && (initTargetPos - target.CenterPosition).Length > maxTargetMovement.Length)
-				trackingLost = true;
+			if (trackingActive && maxTargetMovement > WDist.Zero && target.Type == TargetType.Actor && (initTargetPos - target.CenterPosition).Length > maxTargetMovement.Length)
+				trackingActive = false;
 
-			if (!trackingLost && ((target.Type == TargetType.Actor && !target.Actor.IsDead) || (target.Type == TargetType.FrozenActor && target.FrozenActor != null)))
+			if (trackingActive && ((target.Type == TargetType.Actor && !target.Actor.IsDead) || (target.Type == TargetType.FrozenActor && target.FrozenActor != null)))
 				targetPos = target.CenterPosition;
 
 			var d = targetPos - self.CenterPosition;
