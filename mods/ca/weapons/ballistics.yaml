@@ -152,8 +152,9 @@
 	Inherits: 125mm
 	Report: vrhiatta.aud, vrhiattb.aud, vrhiattc.aud, vrhiattd.aud
 	Burst: 1
+	ReloadDelay: 75
 	Warhead@1Dam: SpreadDamage
-		Damage: 6250
+		Damage: 9250
 
 125mmLasher:
 	Inherits: 125mm
@@ -702,6 +703,7 @@ ShadowGliderGrenade:
 			Light: 45
 			Heavy: 45
 			Concrete: 40
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@4EffWater: CreateEffect
 		Explosions: small_splash
 		ImpactSounds: splashm1.aud, splashm2.aud, splashm3.aud
@@ -774,7 +776,6 @@ SonicMortar:
 			Light: 60
 			Heavy: 30
 			Concrete: 100
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@concussion: GrantExternalCondition
 		Condition: concussion
 		Duration: 75
@@ -783,6 +784,8 @@ SonicMortar:
 		Explosions: sonicimpact
 		ExplosionPalette: effect
 		ImpactSounds: sonicmortarhit1.aud, sonicmortarhit2.aud
+	Warhead@4Eff: CreateEffect
+		Explosions: med_explosion
 
 DepthCharge:
 	Inherits: ^Artillery

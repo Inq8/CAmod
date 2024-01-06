@@ -613,7 +613,7 @@ DOME:
 		LocalCenterOffset: 0,-512,0
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: SpyInfiltrate, SabInfiltrate
+		TargetTypes: SpyInfiltrate
 	Health:
 		HP: 110000
 	Armor:
@@ -641,7 +641,7 @@ DOME:
 		Range: 12c0
 		RequiresCondition: !jammed && !disabled && !being-warped
 	InfiltrateForExploration:
-		Types: SpyInfiltrate, SabInfiltrate
+		Types: SpyInfiltrate
 	Power:
 		Amount: -40
 	-PowerMultiplier@POWERDRAIN:
@@ -690,12 +690,6 @@ DOME:
 	ProvidesPrerequisite@radar-active:
 		Prerequisite: radar-active
 		RequiresCondition: !jammed && !disabled && !being-warped
-	InfiltrateForSupportPowerCA@STOLENTECH:
-		Types: SabInfiltrate
-		Proxy: stolentech.dome
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
-		UseTargetFaction: true
 	ExternalCondition@JAMMED:
 		Condition: jammed
 
@@ -1017,14 +1011,6 @@ ATEK:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -150
-	InfiltrateForSupportPower@STOLENTECH:
-		Types: SabInfiltrate
-		Proxy: stolentech.atek
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
-	Targetable@INFILTRATION:
-		RequiresCondition: !being-warped
-		TargetTypes: SabInfiltrate
 	GrantConditionOnFogEnabled@FOGENABLED:
 		Condition: fogenabled
 	ExternalCondition@DUMMY:
@@ -1559,12 +1545,18 @@ HPAD:
 	ProvidesPrerequisite@buildingname:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: SpyInfiltrate
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	InfiltrateForSupportPower:
 		Types: SpyInfiltrate
 		Proxy: powerproxy.paratroopers.allies
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+	InfiltrateForSupportPowerCA@STOLENTECH:
+		Types: SabInfiltrate
+		Proxy: stolentech.hpad
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
+		UseTargetFaction: true
 
 AFLD:
 	Inherits: ^Building
@@ -1628,10 +1620,15 @@ AFLD:
 	ProvidesPrerequisite@buildingname:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: SpyInfiltrate
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	InfiltrateForSupportPower:
 		Proxy: powerproxy.airstrike
 		Types: SpyInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
+	InfiltrateForSupportPower@STOLENTECH:
+		Types: SabInfiltrate
+		Proxy: stolentech.afld
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
 	WithResupplyAnimation:
@@ -1894,14 +1891,6 @@ STEK:
 		Factions: iraq
 		Prerequisite: stek.iraq
 		RequiresCondition: !tech-locked
-	InfiltrateForSupportPower@STOLENTECH:
-		Types: SabInfiltrate
-		Proxy: stolentech.stek
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
-	Targetable@INFILTRATION:
-		RequiresCondition: !being-warped
-		TargetTypes: SabInfiltrate
 
 BARR:
 	Inherits: ^Building
@@ -3588,12 +3577,6 @@ HQ:
 		RequiresCondition: !jammed && !disabled && !being-warped
 	ExternalCondition@JAMMED:
 		Condition: jammed
-	InfiltrateForSupportPowerCA@STOLENTECH:
-		Types: SabInfiltrate
-		Proxy: stolentech.hq
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
-		UseTargetFaction: true
 	ProductionCostMultiplier@ARCDISCOUNT:
 		Multiplier: 50
 		Prerequisites: anyradar, player.arc
@@ -3833,7 +3816,7 @@ HPAD.TD:
 	ProvidesPrerequisite@buildingname:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: SpyInfiltrate
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
 	InfiltrateForSupportPower:
@@ -3841,6 +3824,12 @@ HPAD.TD:
 		Proxy: powerproxy.paratroopers.allies
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+	InfiltrateForSupportPowerCA@STOLENTECH:
+		Types: SabInfiltrate
+		Proxy: stolentech.hpad.td
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
+		UseTargetFaction: true
 
 PROC.TD:
 	Inherits: ^BuildingTD
@@ -4036,12 +4025,17 @@ AFLD.GDI:
 	ProvidesPrerequisite@buildingname:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: SpyInfiltrate
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
 	InfiltrateForSupportPower:
 		Types: SpyInfiltrate
 		Proxy: powerproxy.airstrike
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
+	InfiltrateForSupportPower@STOLENTECH:
+		Types: SabInfiltrate
+		Proxy: stolentech.afld.gdi
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
 	SpawnActorOnDeath:
@@ -4089,11 +4083,6 @@ GTEK:
 	RevealsShroud@GAPGEN:
 		Range: 5c0
 		RequiresCondition: !disabled
-	InfiltrateForSupportPower@STOLENTECH:
-		Types: SabInfiltrate
-		Proxy: stolentech.gtek
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
 	WithBuildingBib:
 	Power:
 		Amount: -150
@@ -4184,11 +4173,6 @@ TMPL:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SabInfiltrate
-	InfiltrateForSupportPower@STOLENTECH:
-		Types: SabInfiltrate
-		Proxy: stolentech.tmpl
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
 	ValidFactions:
 		Factions: blackh, marked, legion, shadow
 	ProvidesPrerequisite@buildingname:

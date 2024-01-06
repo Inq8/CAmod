@@ -801,34 +801,8 @@ stolentech.hand:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 
-# ra weap - grizzly tank from allies, rhino heavy tank from soviets
+# ra weap - reckoner from allies, rhino heavy tank from soviets
 stolentech.weap:
-	Inherits@DUMMY: ^InvisibleDummy
-	ValidFactions:
-		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
-	ProvidesPrerequisiteValidatedFaction@STOLENALLIED:
-		Factions: england, france, germany, usa
-		Prerequisite: vehicles.grizzly
-	ProvidesPrerequisiteValidatedFaction@STOLENSOVIET:
-		Factions: russia, ukraine, iraq, yuri
-		Prerequisite: vehicles.rhino
-
-# td weap - battle tank from gdi/legion, light tank if capturer is legion
-stolentech.weap.td:
-	Inherits@DUMMY: ^InvisibleDummy
-	ProvidesPrerequisite@STOLENGDI:
-		Prerequisite: vehicles.mtnk
-	ProvidesPrerequisite@STOLENNOD:
-		Prerequisite: vehicles.ltnk
-
-# airs - vehicle veterancy
-stolentech.airs:
-	Inherits@DUMMY: ^InvisibleDummy
-	ProvidesPrerequisite@VET:
-		Prerequisite: vehicles.upgraded
-
-# dome - ifv from allies, v2 from soviets
-stolentech.dome:
 	Inherits@DUMMY: ^InvisibleDummy
 	ValidFactions:
 		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
@@ -837,46 +811,61 @@ stolentech.dome:
 		Prerequisite: vehicles.reck
 	ProvidesPrerequisiteValidatedFaction@STOLENSOVIET:
 		Factions: russia, ukraine, iraq, yuri
-		Prerequisite: vehicles.v2
-	ProvidesPrerequisiteValidatedFaction@STOLENSOVIET2:
-		Factions: russia, ukraine, iraq, yuri
-		Prerequisite: v2.upgrade
+		Prerequisite: vehicles.rhino
 
-# hq - mobile sensor from allies, aircraft veterancy from nod
-stolentech.hq:
+# td weap - pitbull from gdi, mantis from legion
+stolentech.weap.td:
+	Inherits@DUMMY: ^InvisibleDummy
+	ValidFactions:
+		Factions: talon, zocom, eagle, arc, legion
+	ProvidesPrerequisiteValidatedFaction@STOLENGDI:
+		Factions: talon, zocom, eagle, arc
+		Prerequisite: vehicles.pbul
+	ProvidesPrerequisiteValidatedFaction@STOLENNOD:
+		Factions: legion
+		Prerequisite: vehicles.mant
+
+# airs - mantis
+stolentech.airs:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesPrerequisite@STOLENNOD:
+		Prerequisite: vehicles.mant
+
+# afld - assault chopper
+stolentech.afld:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesPrerequisite@STOLENSOVIET:
+		Prerequisite: aircraft.acho
+
+# afld.gdi - shade
+stolentech.afld.gdi:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesPrerequisite@STOLENGDI:
+		Prerequisite: aircraft.shde
+
+# hpad - black eagle from allies, assault chopper from soviets
+stolentech.hpad:
+	Inherits@DUMMY: ^InvisibleDummy
+	ValidFactions:
+		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
+	ProvidesPrerequisiteValidatedFaction@STOLENALLIED:
+		Factions: england, france, germany, usa
+		Prerequisite: aircraft.beag
+	ProvidesPrerequisiteValidatedFaction@STOLENSOVIET:
+		Factions: russia, ukraine, iraq, yuri
+		Prerequisite: aircraft.acho
+
+# hpad.td - shade from gdi, vertigo from nod
+stolentech.hpad.td:
 	Inherits@DUMMY: ^InvisibleDummy
 	ValidFactions:
 		Factions: talon, zocom, eagle, arc, blackh, marked, legion, shadow
 	ProvidesPrerequisiteValidatedFaction@STOLENGDI:
 		Factions: talon, zocom, eagle, arc
-		Prerequisite: vehicles.msar
+		Prerequisite: aircraft.shde
 	ProvidesPrerequisiteValidatedFaction@STOLENNOD:
 		Factions: blackh, marked, legion, shadow
-		Prerequisite: aircraft.upgraded
-
-# atek - mobile gap gen
-stolentech.atek:
-	Inherits@DUMMY: ^InvisibleDummy
-	ProvidesPrerequisite:
-		Prerequisite: vehicles.mgg
-
-# stek - mad tank
-stolentech.stek:
-	Inherits@DUMMY: ^InvisibleDummy
-	ProvidesPrerequisite:
-		Prerequisite: vehicles.qtnk
-
-# gtek - mobile emp
-stolentech.gtek:
-	Inherits@DUMMY: ^InvisibleDummy
-	ProvidesPrerequisite:
-		Prerequisite: vehicles.memp
-
-# tmpl - toxin truck
-stolentech.tmpl:
-	Inherits@DUMMY: ^InvisibleDummy
-	ProvidesPrerequisite:
-		Prerequisite: vehicles.ttrk
+		Prerequisite: aircraft.vert
 
 mpspawn:
 	Interactable:

@@ -2824,3 +2824,136 @@ DecoyBuggyDespawn:
 	Report: decoydespawn.aud
 	Projectile: InstantHit
 	Warhead@Dummy: Dummy
+
+MantisLaser:
+	Inherits: Laser
+	Burst: 2
+	BurstDelays: 5
+	ReloadDelay: 10
+	ValidTargets: Air, AirSmall
+	Range: 7c512
+	Report: mantis-fire1.aud, mantis-fire2.aud
+	Projectile: LaserZapCA
+		Width: 42
+		SecondaryBeamWidth: 75
+		-HitAnim:
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Air, AirSmall
+		Damage: 2250
+	Warhead@3Eff: CreateEffect
+		Explosions: small_air_explosion
+		Inaccuracy: 256
+		ValidTargets: Air, AirSmall
+
+ViperLaser:
+	Inherits: DevourerLaser
+	Report: viper-fire1.aud
+	Projectile: PlasmaBeam
+		Colors: ff0000E6, cc0000E6
+
+ShadeEmp:
+	Inherits: EnlightenedEmp
+	ReloadDelay: 100
+	Range: 7c0
+	Report: enli-empfire.aud
+	Projectile: Bullet
+		Inaccuracy: 64
+		Blockable: false
+		Shadow: true
+		Speed: 384
+		LaunchAngle: 0
+		Image: enliempproj
+		Palette: effect
+		TrailImage: smokey
+		TrailPalette: scrinplasma
+		ContrailLength: 17
+		ContrailStartColor: 6c6cd4aa
+		ContrailStartColorAlpha: 170
+		ContrailStartWidth: 0c48
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Damage: 15000
+		ValidTargets: Ground, Water
+		Versus:
+			None: 75
+			Wood: 50
+			Light: 80
+			Heavy: 100
+			Concrete: 75
+			Brick: 5
+		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath, AirToGround
+	Warhead@1Emp: GrantExternalCondition
+		Range: 1c256
+		Duration: 325
+		Condition: empdisable
+		ValidTargets: Ground, Vehicle, Defense
+		InvalidTargets: Cyborg
+	Warhead@2Emp: GrantExternalCondition
+		Range: 1c256
+		Duration: 125
+		Condition: empdisable
+		ValidTargets: Cyborg
+	Warhead@3Eff_impact: CreateEffect
+		Explosions: enliemphit1, enliemphit2
+		ImpactSounds: enli-emphit.aud
+		Inaccuracy: 341
+
+ManticoreBolts:
+	Inherits: DevastatorDiscs
+	Report: mcor-fire1.aud, mcor-fire2.aud
+	ReloadDelay: 150
+	Burst: 4
+	Range: 14c0
+	Projectile: Bullet
+		Image: redplasmatorp
+		Palette: caneon
+		Inaccuracy: 1c0
+
+VertigoBomb:
+	Inherits: JDAM
+	Report: vert-bomb1.aud
+	Warhead@3Eff: CreateEffect
+		ImpactSounds: vert-bombhit1.aud, vert-bombhit2.aud
+
+PeacemakerBombs:
+	ReloadDelay: 6
+	Range: 2c0
+	Report: chute1.aud
+	Projectile: GravityBomb
+		Image: B2BOMB
+		Velocity: 20, 0, -60
+		Acceleration: 0, 0, 0
+		Shadow: true
+	Warhead@1Dam: SpreadDamage
+		Spread: 1c0
+		Damage: 25000
+		Versus:
+			None: 0
+			Wood: 30
+			Light: 70
+			Heavy: 100
+			Concrete: 55
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster, AirToGround
+	Warhead@2Dam: SpreadDamage
+		Spread: 512
+		Damage: 25000
+		Versus:
+			None: 25
+			Wood: 0
+			Light: 0
+			Heavy: 0
+			Concrete: 0
+			Brick: 0
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
+	Warhead@3Eff: CreateEffect
+		Explosions: building, building2
+		ImpactSounds: kaboom25.aud
+		ValidTargets: Ground, Ship, Trees
+	Warhead@4EffWater: CreateEffect
+		Explosions: small_splash
+		ImpactSounds: splash9.aud
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure

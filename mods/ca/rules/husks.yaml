@@ -466,12 +466,12 @@ HIND.Husk:
 		TrailWhileStationary: True
 		Type: CenterPosition
 	RevealsShroud:
-		Range: 10c0
-		MinRange: 8c0
+		Range: 11c0
+		MinRange: 9c0
 		Type: GroundPosition
 		RevealGeneratedShroud: false
 	RevealsShroud@GAPGEN:
-		Range: 8c0
+		Range: 9c0
 		Type: GroundPosition
 	RenderSprites:
 		Image: hind
@@ -1708,3 +1708,234 @@ APOC.Husk:
 		Anim: turret
 	RenderSprites:
 		Image: apoc.destroyed
+
+PMAK.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Peacemaker
+	Aircraft:
+		TurnSpeed: 7
+		Speed: 157
+	Contrail@1:
+		Offset: -300,-920,170
+	Contrail@2:
+		Offset: -300,920,170
+	LeavesTrails:
+		Offsets: -1c43,0,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+	RenderSprites:
+		Image: pmak
+
+PMAK.Husk.EMP:
+	Inherits: PMAK.Husk
+	Inherits: ^EmpVisualEffect
+
+PMAK.Husk.Empty:
+	Inherits: PMAK.Husk
+	Inherits: ^PlaneHuskEmpty
+
+PMAK.Husk.Empty.EMP:
+	Inherits: PMAK.Husk.Empty
+	Inherits: ^EmpVisualEffect
+
+BEAG.Husk:
+	Inherits: ^PlaneHusk
+	Tooltip:
+		Name: Black Eagle
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 201
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+	Contrail@1:
+		Offset: -400,-483,0
+	Contrail@2:
+		Offset: -400,483,0
+	RevealsShroud:
+		Range: 11c0
+		MinRange: 9c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 9c0
+		Type: GroundPosition
+	RenderSprites:
+		Image: beag
+
+BEAG.Husk.EMP:
+	Inherits: BEAG.Husk
+	Inherits: ^EmpVisualEffect
+
+BEAG.Husk.Empty:
+	Inherits: BEAG.Husk
+	Inherits: ^PlaneHuskEmpty
+
+BEAG.Husk.Empty.EMP:
+	Inherits: BEAG.Husk.Empty
+	Inherits: ^EmpVisualEffect
+
+ACHO.Husk:
+	Inherits: ^HelicopterHusk
+	Tooltip:
+		Name: Assault Chopper
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 112
+	WithIdleOverlay@ROTORAIR:
+		Sequence: rotor
+		Offset: 50,550,192
+	WithIdleOverlay@ROTORAIR2:
+		Sequence: rotor
+		Offset: 50,-550,192
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+	RevealsShroud:
+		Range: 11c0
+		MinRange: 9c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 9c0
+		Type: GroundPosition
+	RenderSprites:
+		Image: acho
+
+ACHO.Husk.EMP:
+	Inherits: HIND.Husk
+	Inherits: ^EmpVisualEffect
+
+ACHO.Husk.Empty:
+	Inherits: ^HelicopterHuskEmpty
+	Inherits: HIND.Husk
+
+ACHO.Husk.Empty.EMP:
+	Inherits: HIND.Husk.Empty
+	Inherits: ^EmpVisualEffect
+
+SHDE.Husk:
+	Inherits: ^PlaneHuskTD
+	Tooltip:
+		Name: Shade
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 225
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+	Contrail@1:
+		Offset: -380,-850,-20
+	Contrail@2:
+		Offset: -380,850,-20
+	RevealsShroud:
+		Range: 11c0
+		MinRange: 9c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 9c0
+		Type: GroundPosition
+	RenderSprites:
+		Image: shde
+
+SHDE.Husk.EMP:
+	Inherits: SHDE.Husk
+	Inherits: ^EmpVisualEffect
+
+SHDE.Husk.Empty:
+	Inherits: SHDE.Husk
+	Inherits: ^PlaneHuskEmpty
+
+SHDE.Husk.Empty.EMP:
+	Inherits: SHDE.Husk.Empty
+	Inherits: ^EmpVisualEffect
+
+VERT.Husk:
+	Inherits: ^PlaneHuskTD
+	Tooltip:
+		Name: Vertigo
+	Aircraft:
+		TurnSpeed: 4
+		Speed: 157
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+	Contrail@1:
+		Offset: -380,-850,-20
+	Contrail@2:
+		Offset: -380,850,-20
+	RevealsShroud:
+		Range: 11c0
+		MinRange: 9c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 9c0
+		Type: GroundPosition
+	RenderSprites:
+		Image: vert
+
+VERT.Husk.EMP:
+	Inherits: VERT.Husk
+	Inherits: ^EmpVisualEffect
+
+VERT.Husk.Empty:
+	Inherits: VERT.Husk
+	Inherits: ^PlaneHuskEmpty
+
+VERT.Husk.Empty.EMP:
+	Inherits: VERT.Husk.Empty
+	Inherits: ^EmpVisualEffect
+
+MCOR.Husk:
+	Inherits: ^HelicopterHuskTD
+	Tooltip:
+		Name: Manticore
+		GenericName: Destroyed Aircraft
+	Aircraft:
+		TurnSpeed: 8
+		Speed: 35
+	FallsToEarth:
+		MaximumSpinSpeed: 0
+	RevealsShroud:
+		Range: 10c0
+		MinRange: 8c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 8c0
+		Type: GroundPosition
+	RenderSprites:
+		Image: mcor
+	FallsToEarth:
+		Explosion: KirovExplode
+
+MCOR.Husk.EMP:
+	Inherits: MCOR.Husk
+	Inherits@EMP: ^EmpVisualEffect

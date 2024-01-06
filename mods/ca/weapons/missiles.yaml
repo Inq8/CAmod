@@ -821,6 +821,43 @@ TOW:
 			Concrete: 30
 			Light: 40
 
+EMPRocket:
+	Inherits: ^AntiGroundMissile
+	Range: 6c0
+	Report: pitbull-fire1.aud, pitbull-fire2.aud
+	ReloadDelay: 60
+	-Projectile:
+	Projectile: Bullet
+		Inaccuracy: 192
+		Image: dragon
+		Speed: 200
+		LaunchAngle: 70
+		TrailImage: smokey
+		Shadow: true
+		Blockable: false
+		ContrailLength: 17
+		ContrailStartColor: 6c6cd4aa
+		ContrailStartColorAlpha: 170
+		ContrailStartWidth: 0c48
+	Warhead@1Dam: SpreadDamage
+		Damage: 5000
+		Versus:
+			Wood: 40
+			Concrete: 30
+			Light: 60
+	Warhead@Emp: GrantExternalCondition
+		Range: 0c768
+		Duration: 40
+		Condition: empdisable
+		ValidTargets: Ground, Structure, Vehicle
+	Warhead@4Eff: CreateEffect
+		Explosions: med_explosion
+	Warhead@6Eff: CreateEffect
+		Image: sparks_overlay
+		Explosions: idle
+		ExplosionPalette: tseffect-ignore-lighting-alpha75
+		ImpactSounds: expnew16.aud
+
 TorpTube:
 	ReloadDelay: 100
 	Range: 9c0
@@ -1746,7 +1783,7 @@ Rah66AA:
 		ExplosionPalette: caneon
 		Image: tibexplodeair
 		ImpactSounds: firebl3.aud
-		ValidTargets: Air
+		ValidTargets: Air, AirSmall
 		Inaccuracy: 682
 
 Rah66AA.BlackHand:
@@ -2011,6 +2048,50 @@ Rocket.P51.R:
 Rocket.P51.L:
 	Inherits: Rocket.P51.R
 	FirstBurstTargetOffset: -1024,613,0
+
+BlackEagleMissiles:
+	Inherits: Maverick
+	Report: beag-fire1.aud, beag-fire2.aud
+	-Burst:
+	-BurstDelays:
+	Projectile: MissileCA
+		Image: MISSILE
+	Warhead@1Dam: SpreadDamage
+		Damage: 22000
+		Versus:
+			Concrete: 75
+	Warhead@VeiledCondition: GrantExternalCondition
+		Range: 2c512
+		Duration: 175
+		Condition: gapveiled
+		ValidTargets: Infantry, Vehicle, Ship
+	Warhead@3Eff: CreateEffect
+		Explosions: idle
+		Image: veilblast
+		ExplosionPalette: effect
+		ImpactSounds: veilblast.aud
+		ValidTargets: Ground, Air, Ship, Trees
+
+BlackEagleMissilesAA:
+	Inherits: MaverickAA
+	Report: beag-fire1.aud, beag-fire2.aud
+	-Burst:
+	-BurstDelays:
+	Projectile: MissileCA
+		Image: MISSILE
+	Warhead@1Dam: SpreadDamage
+		Damage: 12000
+	Warhead@VeiledCondition: GrantExternalCondition
+		Range: 2c512
+		Duration: 175
+		Condition: gapveiled
+		ValidTargets: Air, AirSmall
+	Warhead@3Eff: CreateEffect
+		Explosions: idle
+		Image: veilblast
+		ExplosionPalette: effect
+		ImpactSounds: veilblast.aud
+		ValidTargets: Ground, Air, Ship, Trees
 
 RocketShells:
 	Inherits: JuggernautGun

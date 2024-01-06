@@ -618,67 +618,6 @@ SMEDI:
 		ValidTargets: Infantry
 	KeepsDistance:
 
-CSCR:
-	Inherits@SCRININFANTRY: ^ScrinInfantry
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
-	Inherits@CYBORGUPG: ^NodCyborgUpgrade
-	Inherits@SLOWABLE: ^Slowable
-	Buildable:
-		Queue: InfantrySQ, InfantryMQ
-		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 160
-		Prerequisites: ~stolentech.port
-		IconPalette: chromes
-		Description: Fast moving anti-personnel infantry.
-	TooltipExtras:
-		Strengths: • Strong vs Infantry, Light Armor
-		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
-	Valued:
-		Cost: 500
-	Tooltip:
-		Name: Cyberscrin
-	UpdatesPlayerStatistics:
-		AddToArmyValue: true
-	Health:
-		HP: 13000
-	Mobile:
-		Speed: 77
-	Armament@PRIMARY:
-		Weapon: CyberscrinLaser
-		LocalOffset: 200,0,350
-		MuzzleSequence: muzzle
-		MuzzlePalette: caneon
-	Armament@BATF:
-		Name: batf
-		Weapon: CyberscrinLaser
-	WithMuzzleOverlay:
-	AttackFrontal:
-		PauseOnCondition: being-warped
-		FacingTolerance: 0
-	ProducibleWithLevel:
-		Prerequisites: barracks.upgraded
-	WithProductionIconOverlay:
-		Types: Veterancy
-		Prerequisites: barracks.upgraded
-	WithInfantryBody:
-		DefaultAttackSequence: shoot
-	-TakeCover:
-	Voiced:
-		VoiceSet: CyberscrinVoice
-	Targetable:
-		TargetTypes: Ground, Infantry, Cyborg
-	ExternalCondition@ONTIB:
-		Condition: on-tib
-	ChangesHealth@THEAL:
-		Step: 0
-		PercentageStep: 1
-		Delay: 15
-		StartIfBelow: 100
-		DamageCooldown: 150
-		RequiresCondition: on-tib
-		DamageTypes: ToxinDeath
-
 GSCR:
 	Inherits: BRUT
 	RenderSprites:
@@ -1202,7 +1141,7 @@ INTL:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 38
+		BuildPaletteOrder: 39
 		Prerequisites: ~vehicles.scrin, ~techlevel.low
 		Queue: VehicleSQ, VehicleMQ
 		Description: Heavily armoured front-line assault vehicle and troop carrier.
@@ -2246,7 +2185,7 @@ STMR:
 		Type: CenterPosition
 		RequiresCondition: enable-smoke
 	Selectable:
-		DecorationBounds: 1536, 1194
+		DecorationBounds: 1536, 1280
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
 	WithProductionIconOverlay:
@@ -2441,12 +2380,12 @@ DEVA:
 			PointA: 0,896
 			PointB: 0, -256
 	RevealsShroud:
-		Range: 8c0
-		MinRange: 7c0
+		Range: 10c0
+		MinRange: 8c0
 		Type: GroundPosition
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 7c0
+		Range: 8c0
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: DevastatorDiscs
@@ -3816,7 +3755,7 @@ NERV:
 		LocalCenterOffset: 0,-512,0
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: SpyInfiltrate, SabInfiltrate
+		TargetTypes: SpyInfiltrate
 	Health:
 		HP: 110000
 	Armor:
@@ -3844,7 +3783,7 @@ NERV:
 		RequiresCondition: !jammed && !disabled && !being-warped
 	WithBuildingBib:
 	InfiltrateForExploration:
-		Types: SpyInfiltrate, SabInfiltrate
+		Types: SpyInfiltrate
 	Power:
 		Amount: -40
 	-PowerMultiplier@POWERDRAIN:
@@ -3882,11 +3821,6 @@ NERV:
 	ProvidesPrerequisite@radar-active:
 		Prerequisite: radar-active
 		RequiresCondition: !jammed && !disabled && !being-warped
-	InfiltrateForSupportPower@STOLENTECH:
-		Types: SabInfiltrate
-		Proxy: stolentech.nerv
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
 
 SCRT:
 	Inherits: ^ScrinBuilding
@@ -3915,9 +3849,6 @@ SCRT:
 		Bounds: 2048, 2560
 	Health:
 		HP: 110000
-	Targetable@INFILTRATION:
-		RequiresCondition: !being-warped
-		TargetTypes: SabInfiltrate
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -3931,11 +3862,6 @@ SCRT:
 	RevealsShroud@GAPGEN:
 		Range: 5c0
 		RequiresCondition: !disabled
-	InfiltrateForSupportPower@STOLENTECH:
-		Types: SabInfiltrate
-		Proxy: stolentech.scrt
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
 	WithBuildingBib:
 	Power:
 		Amount: -150
@@ -4047,6 +3973,14 @@ GRAV:
 	AutoTarget:
 	AutoTargetPriority@DEFAULT:
 		ValidRelationships: Ally
+	InfiltrateForSupportPower@STOLENTECH:
+		Types: SabInfiltrate
+		Proxy: stolentech.grav
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SabInfiltrate
 
 SIGN:
 	Inherits: ^ScrinBuilding
@@ -5064,24 +4998,12 @@ stolentech.port:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 
-# warp sphere - vehicle veterancy
+# warp sphere - viper
 stolentech.wsph:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
-		Prerequisite: vehicles.upgraded
 
-# nerve center - aircraft veterancy
-stolentech.nerv:
+# gravity stabilizer - manticore
+stolentech.grav:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
-		Prerequisite: aircraft.upgraded
-
-# tech center - veterancy for all
-stolentech.scrt:
-	Inherits@DUMMY: ^InvisibleDummy
-	ProvidesPrerequisite@1:
-		Prerequisite: barracks.upgraded
-	ProvidesPrerequisite@2:
-		Prerequisite: vehicles.upgraded
-	ProvidesPrerequisite@3:
-		Prerequisite: aircraft.upgraded
