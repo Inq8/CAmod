@@ -94,6 +94,9 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled || IsTraitPaused)
 				return;
 
+			if (target.Type == TargetType.Invalid)
+				return;
+
 			if (!Info.ArmamentNames.Contains(a.Info.Name))
 				return;
 
