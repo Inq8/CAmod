@@ -703,11 +703,15 @@ ICBM:
 	MissileSpawnerSlave:
 	SpawnedExplodes:
 		Weapon: HonestJohnSub
-		EmptyWeapon: VisualExplodeHusk
 		Type: Footprint
 		RequiresCondition: !airborne
 	Explodes:
 		Weapon: V3ExplodeAirborne
+		RequiresCondition: airborne
+	ThrowsShrapnel@Debris:
+		Weapons: SmallDebris
+		Pieces: 3, 5
+		Range: 1c511, 3c0
 		RequiresCondition: airborne
 
 CV:

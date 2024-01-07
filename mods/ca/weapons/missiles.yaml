@@ -999,7 +999,6 @@ SCUD:
 		Spread: 341
 		Damage: 3400
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
-		ValidTargets: Ground, Water, Trees
 		Versus:
 			None: 90
 			Wood: 80
@@ -1031,10 +1030,9 @@ V3Weapon:
 	-Report:
 	ValidTargets: Ground, Trees, Water
 	Warhead@1Dam: SpreadDamage
-		Spread: 341
+		Spread: 448
 		Damage: 3400
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
-		ValidTargets: Ground, Water, Trees
 		Versus:
 			None: 90
 			Wood: 100
@@ -1044,7 +1042,7 @@ V3Weapon:
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@antiHeavySplash: SpreadDamage
 		Damage: 3400
-		Spread: 448
+		Spread: 512
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
 		ValidTargets: Vehicle, Husk
 		Versus:
@@ -2065,6 +2063,7 @@ BlackEagleMissiles:
 		Duration: 175
 		Condition: gapveiled
 		ValidTargets: Infantry, Vehicle, Ship
+		ValidRelationships: Enemy, Neutral
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		Image: veilblast
@@ -2086,6 +2085,7 @@ BlackEagleMissilesAA:
 		Duration: 175
 		Condition: gapveiled
 		ValidTargets: Air, AirSmall
+		ValidRelationships: Enemy, Neutral
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		Image: veilblast
