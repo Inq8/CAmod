@@ -7094,6 +7094,7 @@ MANT:
 	TooltipExtras:
 		Strengths: • Strong vs Aircraft
 		Weaknesses: • Cannot attack ground targets
+		Attributes: • Can detect cloaked aircraft.
 	Valued:
 		Cost: 1000
 	Selectable:
@@ -7123,7 +7124,7 @@ MANT:
 		MuzzleSequence: muzzle
 		MuzzlePalette: caneon
 	AttackFrontal:
-		PauseOnCondition: empdisable || being-warped
+		PauseOnCondition: !(empdisable || being-warped)
 		FacingTolerance: 24
 	WithMuzzleOverlay:
 	ProducibleWithLevel:
@@ -7131,6 +7132,10 @@ MANT:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
+	DetectCloaked:
+		Range: 8c0
+		DetectionTypes: AirCloak
+		RequiresCondition: !(empdisable || being-warped)
 
 VIPR:
 	Inherits: ^VehicleTD
