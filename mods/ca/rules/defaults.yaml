@@ -1582,6 +1582,25 @@
 		Delay: 20
 		RequiresCondition: hacked && !restoring
 
+^TechLockable:
+	InfiltrateForTimedCondition@TechLock:
+		Condition: tech-locked
+		Duration: 1500
+		Types: TechLockInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
+		ShowSelectionBar: true
+	WithDecoration@TechLock:
+		Image: hacked
+		Sequence: techlocked
+		RequiresCondition: tech-locked && !hacked
+		Position: Center
+		Palette: effect
+		ValidRelationships: Ally, Neutral, Enemy
+	Targetable@TechLock:
+		RequiresCondition: !being-warped
+		TargetTypes: TechLockInfiltrate
+
 ^GeneticallyMutatable:
 	ExternalCondition@GMUT:
 		Condition: geneticmutation
@@ -2597,12 +2616,12 @@
 		StartColorUsePlayerColor: false
 		ZOffset: -512
 		StartColor: FFFFFF80
-		StartColorAlpha: 128
+		StartColorAlpha: 96
 	Contrail@2:
 		StartColorUsePlayerColor: false
 		ZOffset: -512
 		StartColor: FFFFFF80
-		StartColorAlpha: 128
+		StartColorAlpha: 96
 	GpsRadarDot:
 		Sequence: Plane
 
@@ -2616,6 +2635,7 @@
 	Inherits@9: ^BotAirProductionBonus
 	Inherits@10: ^Chillable
 	Inherits@11: ^Suppressable
+	Inherits@12: ^Veilable
 	Inherits@CRATE-CLOAK: ^CrateCloak
 	Inherits@gflash: ^GreenFlash
 	Inherits@rflash: ^RedFlash
@@ -3394,12 +3414,12 @@
 		StartColorUsePlayerColor: false
 		ZOffset: -512
 		StartColor: FFFFFF80
-		StartColorAlpha: 128
+		StartColorAlpha: 96
 	Contrail@2:
 		StartColorUsePlayerColor: false
 		ZOffset: -512
 		StartColor: FFFFFF80
-		StartColorAlpha: 128
+		StartColorAlpha: 96
 
 ^PlaneHuskTD:
 	Inherits: ^PlaneHusk

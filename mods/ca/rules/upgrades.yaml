@@ -51,7 +51,7 @@ optprod2.upgrade:
 		Name: Upgrade: Optimized Production II
 	Buildable:
 		BuildPaletteOrder: 15
-		Prerequisites: techcenter, ~techlevel.high, ~global.multiqueuescaled, ~optprod1.upgrade
+		Prerequisites: techcenter.any, ~techlevel.high, ~global.multiqueuescaled, ~optprod1.upgrade
 		Description: Reduces the cost of additional infantry, vehicle and aircraft production structures.
 	TooltipExtras:
 		Strengths: + Reduced cost of additional infantry production by $500\n+ Reduced cost of additional vehicle production by $700\n+ Reduced cost of additional aircraft production by $150
@@ -66,7 +66,7 @@ flakarmor.upgrade:
 		Name: Upgrade: Advanced Flak Armor
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: techcenter, infantry.any, ~!player.nod, ~!player.scrin, ~techlevel.high
+		Prerequisites: techcenter.any, infantry.any, ~!player.nod, ~!player.scrin, ~techlevel.high
 		Description: Infantry are equiped with advanced flak armor which\n  provides protection against explosives.\n\nUpgrades: Infantry
 	TooltipExtras:
 		Strengths: + 40% reduced damage from explosives\n+ 20% reduced damage from incendiary explosives
@@ -552,6 +552,21 @@ tibcore.upgrade:
 	RenderSprites:
 		Image: tibcore.upgrade
 
+decoy.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Decoy Projectors
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.nod, tmpl, ~techlevel.high
+		Description: Grant Buggies the ability to project decoys of themselves.\n\nUpgrades: Buggy
+	TooltipExtras:
+		Strengths: + Decoy projection ability
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: decoy.upgrade
+
 blacknapalm.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -829,6 +844,21 @@ cryr.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: cryr.upgrade
+
+optics.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Advanced Optics
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.allies, atek, ~techlevel.high
+		Description: Equips rangers with advanced optics which temporarily extends their vision\n  at the cost of slower movement speed.\n\nUpgrades: Ranger
+	TooltipExtras:
+		Strengths: + Rangers can temporarily increase their vision range
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: optics.upgrade
 
 pcan.upgrade:
 	Inherits: ^Upgrade

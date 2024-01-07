@@ -618,67 +618,6 @@ SMEDI:
 		ValidTargets: Infantry
 	KeepsDistance:
 
-CSCR:
-	Inherits@SCRININFANTRY: ^ScrinInfantry
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
-	Inherits@CYBORGUPG: ^NodCyborgUpgrade
-	Inherits@SLOWABLE: ^Slowable
-	Buildable:
-		Queue: InfantrySQ, InfantryMQ
-		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 160
-		Prerequisites: ~stolentech.port
-		IconPalette: chromes
-		Description: Fast moving anti-personnel infantry.
-	TooltipExtras:
-		Strengths: • Strong vs Infantry, Light Armor
-		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
-	Valued:
-		Cost: 500
-	Tooltip:
-		Name: Cyberscrin
-	UpdatesPlayerStatistics:
-		AddToArmyValue: true
-	Health:
-		HP: 13000
-	Mobile:
-		Speed: 77
-	Armament@PRIMARY:
-		Weapon: CyberscrinLaser
-		LocalOffset: 200,0,350
-		MuzzleSequence: muzzle
-		MuzzlePalette: caneon
-	Armament@BATF:
-		Name: batf
-		Weapon: CyberscrinLaser
-	WithMuzzleOverlay:
-	AttackFrontal:
-		PauseOnCondition: being-warped
-		FacingTolerance: 0
-	ProducibleWithLevel:
-		Prerequisites: barracks.upgraded
-	WithProductionIconOverlay:
-		Types: Veterancy
-		Prerequisites: barracks.upgraded
-	WithInfantryBody:
-		DefaultAttackSequence: shoot
-	-TakeCover:
-	Voiced:
-		VoiceSet: CyberscrinVoice
-	Targetable:
-		TargetTypes: Ground, Infantry, Cyborg
-	ExternalCondition@ONTIB:
-		Condition: on-tib
-	ChangesHealth@THEAL:
-		Step: 0
-		PercentageStep: 1
-		Delay: 15
-		StartIfBelow: 100
-		DamageCooldown: 150
-		RequiresCondition: on-tib
-		DamageTypes: ToxinDeath
-
 GSCR:
 	Inherits: BRUT
 	RenderSprites:
@@ -1202,7 +1141,7 @@ INTL:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 38
+		BuildPaletteOrder: 39
 		Prerequisites: ~vehicles.scrin, ~techlevel.low
 		Queue: VehicleSQ, VehicleMQ
 		Description: Heavily armoured front-line assault vehicle and troop carrier.
@@ -1921,7 +1860,7 @@ TPOD:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 310
-		Prerequisites: techcenter, ~vehicles.tpod, ~techlevel.high
+		Prerequisites: scrt, ~vehicles.tpod, ~techlevel.high
 		Description: Heavy assault walker with beam weapons.
 		IconPalette: chrome
 	TooltipExtras:
@@ -2246,7 +2185,7 @@ STMR:
 		Type: CenterPosition
 		RequiresCondition: enable-smoke
 	Selectable:
-		DecorationBounds: 1536, 1194
+		DecorationBounds: 1536, 1280
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
 	WithProductionIconOverlay:
@@ -2441,12 +2380,12 @@ DEVA:
 			PointA: 0,896
 			PointB: 0, -256
 	RevealsShroud:
-		Range: 8c0
-		MinRange: 7c0
+		Range: 10c0
+		MinRange: 8c0
 		Type: GroundPosition
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 7c0
+		Range: 8c0
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: DevastatorDiscs
@@ -3797,6 +3736,7 @@ NERV:
 	Inherits@STORMSPIKEPOWER: ^StormSpikePower
 	Inherits@BUZZERSWARMPOWER: ^BuzzerSwarmPower
 	Inherits@IONSURGEPOWER: ^IonSurgePower
+	Inherits@TECHLOCKABLE: ^TechLockable
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 90
@@ -3815,7 +3755,7 @@ NERV:
 		LocalCenterOffset: 0,-512,0
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: SpyInfiltrate, SabInfiltrate
+		TargetTypes: SpyInfiltrate
 	Health:
 		HP: 110000
 	Armor:
@@ -3843,41 +3783,44 @@ NERV:
 		RequiresCondition: !jammed && !disabled && !being-warped
 	WithBuildingBib:
 	InfiltrateForExploration:
-		Types: SpyInfiltrate, SabInfiltrate
+		Types: SpyInfiltrate
 	Power:
 		Amount: -40
 	-PowerMultiplier@POWERDRAIN:
 	ValidFactions:
 		Factions: reaper, traveler, harbinger, collector
+	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@anyradar:
 		Prerequisite: anyradar
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@radarorrepair:
 		Prerequisite: radarorrepair
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@scrinrad:
 		Prerequisite: radar.scrin
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@reaprad:
 		Factions: reaper
 		Prerequisite: radar.reaper
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@travrad:
 		Factions: traveler
 		Prerequisite: radar.traveler
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@harbrad:
 		Factions: harbinger
 		Prerequisite: radar.harbinger
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@desprad:
 		Factions: collector
 		Prerequisite: radar.collector
-	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 	ExternalCondition@JAMMED:
 		Condition: jammed
 	ProvidesPrerequisite@radar-active:
 		Prerequisite: radar-active
 		RequiresCondition: !jammed && !disabled && !being-warped
-	InfiltrateForSupportPower@STOLENTECH:
-		Types: SabInfiltrate
-		Proxy: stolentech.nerv
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
 
 SCRT:
 	Inherits: ^ScrinBuilding
@@ -3887,6 +3830,7 @@ SCRT:
 	Inherits@ICHORSEEDPOWER: ^IchorSeedPower
 	Inherits@FORCESHIELDPOWER: ^ForceShieldPower
 	Inherits@GREATERCOALESCENCEPOWER: ^GreaterCoalescencePower
+	Inherits@TECHLOCKABLE: ^TechLockable
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 150
@@ -3905,9 +3849,6 @@ SCRT:
 		Bounds: 2048, 2560
 	Health:
 		HP: 110000
-	Targetable@INFILTRATION:
-		RequiresCondition: !being-warped
-		TargetTypes: SabInfiltrate
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -3921,25 +3862,24 @@ SCRT:
 	RevealsShroud@GAPGEN:
 		Range: 5c0
 		RequiresCondition: !disabled
-	InfiltrateForSupportPower@STOLENTECH:
-		Types: SabInfiltrate
-		Proxy: stolentech.scrt
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
 	WithBuildingBib:
 	Power:
 		Amount: -150
 	ValidFactions:
 		Factions: reaper, traveler, harbinger, collector
+	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite:
-		Prerequisite: techcenter
+		Prerequisite: techcenter.any
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@harbscrt:
 		Factions: harbinger
 		Prerequisite: scrt.harbinger
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@collscrt:
 		Factions: collector
 		Prerequisite: scrt.collector
-	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 
 GRAV:
 	Inherits: ^ScrinBuilding
@@ -4033,12 +3973,21 @@ GRAV:
 	AutoTarget:
 	AutoTargetPriority@DEFAULT:
 		ValidRelationships: Ally
+	InfiltrateForSupportPower@STOLENTECH:
+		Types: SabInfiltrate
+		Proxy: stolentech.grav
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SabInfiltrate
 
 SIGN:
 	Inherits: ^ScrinBuilding
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@UPG: ^ProducesUpgrades
+	Inherits@TECHLOCKABLE: ^TechLockable
 	Selectable:
 		Bounds: 3072, 2048
 	Building:
@@ -4077,11 +4026,13 @@ SIGN:
 	Power:
 		Amount: -150
 	ProvidesPrerequisite@Name:
-		RequiresCondition: !being-warped
+		RequiresCondition: !tech-locked
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	SpawnActorOnDeath:
 		RequiresCondition: !being-warped
+	WithDecoration@TechLock:
+		RequiresCondition: tech-locked
 	-MindControllable:
 	-Targetable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
@@ -5047,24 +4998,12 @@ stolentech.port:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 
-# warp sphere - vehicle veterancy
+# warp sphere - viper
 stolentech.wsph:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
-		Prerequisite: vehicles.upgraded
 
-# nerve center - aircraft veterancy
-stolentech.nerv:
+# gravity stabilizer - manticore
+stolentech.grav:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
-		Prerequisite: aircraft.upgraded
-
-# tech center - veterancy for all
-stolentech.scrt:
-	Inherits@DUMMY: ^InvisibleDummy
-	ProvidesPrerequisite@1:
-		Prerequisite: barracks.upgraded
-	ProvidesPrerequisite@2:
-		Prerequisite: vehicles.upgraded
-	ProvidesPrerequisite@3:
-		Prerequisite: aircraft.upgraded

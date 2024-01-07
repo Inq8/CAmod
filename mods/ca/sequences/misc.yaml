@@ -86,6 +86,9 @@ explosion:
 		Filename: wpifpif.shp
 	small_explosion:
 		Filename: veh-hit3.shp
+	small_air_explosion:
+		Filename: veh-hit2.shp
+		Scale: 0.5
 	med_explosion:
 		Filename: veh-hit2.shp
 	flak_explosion_ground:
@@ -2874,6 +2877,12 @@ hacked:
 		Start: 4
 		Length: 2
 		Tick: 250
+	techlocked:
+		Filename: hacked.shp
+		ZOffset: 2047
+		Start: 6
+		Length: 2
+		Tick: 500
 
 hacking:
 	hacking:
@@ -2934,3 +2943,29 @@ microwavehit:
 		Length: *
 		ZOffset: 2047
 		BlendMode: Additive
+
+opticsactive:
+	idle:
+		Filename: opticsactive.shp
+		Tick: 500
+		Length: *
+
+redplasmatorp:
+	Defaults:
+		IgnoreWorldTint: true
+		Alpha: 0.95
+	idle:
+		Filename: redplasmatorp.shp
+		Length: 5
+		Tick: 40
+		ZOffset: 2048
+
+veilblast:
+	Defaults:
+		IgnoreWorldTint: true
+		Length: *
+		Tick: 40
+		ZOffset: 2047
+		Filename: veilblast.shp
+		Alpha: 0.8
+	idle:
