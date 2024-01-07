@@ -1455,7 +1455,9 @@
 		Condition: c4seal
 		ProgressBarColor: FF000080
 		RequiresCondition: !invulnerability
-	Targetable@c4:
+	Targetable@C4Plantable:
+		TargetTypes: C4Plantable
+	Targetable@C4Attached:
 		TargetTypes: C4Attached
 		RequiresCondition: c4 || c4seal
 	WithDecoration@c4:
@@ -1487,7 +1489,9 @@
 		Condition: tnt
 		ProgressBarColor: FF000080
 		AttachLimit: 10
-	Targetable@tnt:
+	Targetable@TNTPlantable:
+		TargetTypes: TNTPlantable
+	Targetable@TNTAttached:
 		TargetTypes: TNTAttached
 		RequiresCondition: tnt
 	WithDecoration@tnt:
@@ -1806,8 +1810,8 @@
 	Inherits@18: ^Suppressable
 	Inherits@19: ^CrateCloak
 	Inherits@20: ^WeaponJammable
-	Inherits@C4: ^C4Plantable
-	Inherits@TNT: ^TNTPlantable
+	Inherits@C4Plantable: ^C4Plantable
+	Inherits@TNTPlantable: ^TNTPlantable
 	Inherits@gflash: ^GreenFlash
 	Inherits@rflash: ^RedFlash
 	Inherits@wflash: ^WhiteFlash
@@ -1833,10 +1837,14 @@
 	Selectable:
 		Bounds: 1024, 1024
 	Targetable:
+		TargetTypes: Ground, Vehicle
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Vehicle, C4, TNT
+	Targetable@C4Plantable:
+		RequiresCondition: !parachute && !being-warped
+	Targetable@TNTPlantable:
+		RequiresCondition: !parachute && !being-warped
 	Targetable@REPAIR:
-		RequiresCondition: !parachute && damaged && !being-warped && !repair-cooldown
+		RequiresCondition: !parachute && !being-warped && damaged && !repair-cooldown
 		TargetTypes: Repair
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
@@ -1994,7 +2002,7 @@
 	Inherits@15: ^Suppressable
 	Inherits@16: ^CrateCloak
 	Inherits@CLOAK: ^Cloakable
-	Inherits@TNT: ^TNTPlantable
+	Inherits@TNTPlantable: ^TNTPlantable
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@mind: ^MindControllable
@@ -2048,9 +2056,13 @@
 		DecorationBounds: 512, 725, 0, -256
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Infantry, Disguise, TNT
+		TargetTypes: Ground, Infantry
+	Targetable@SpyDisguise:
+		TargetTypes: SpyDisguise
+	Targetable@TNTPlantable:
+		RequiresCondition: !parachute && !being-warped
 	Targetable@HEAL:
-		RequiresCondition: !parachute && damaged && !being-warped
+		RequiresCondition: !parachute && !being-warped && damaged
 		TargetTypes: Heal
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
@@ -2262,8 +2274,9 @@
 	Inherits: ^Soldier
 	Inherits@CYBORGUPG: ^NodCyborgUpgrade
 	Inherits@SLOWABLE: ^Slowable
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, Cyborg
+	Targetable@Cyborg:
+		TargetTypes: Cyborg
+		RequiresCondition: !parachute && !being-warped
 	ExternalCondition@ONTIB:
 		Condition: on-tib
 	ChangesHealth@THEAL:
@@ -2400,7 +2413,8 @@
 	Inherits@mind: ^MindControllable
 	Inherits@handicaps: ^PlayerHandicaps
 	Inherits@atomize: ^Atomizable
-	Inherits@C4: ^C4Plantable
+	Inherits@C4Plantable: ^C4Plantable
+	Inherits@TNTPlantable: ^TNTPlantable
 	Inherits@minidrone: ^MiniDroneAttachable
 	Huntable:
 	RenderSprites:
@@ -2415,6 +2429,10 @@
 		Bounds: 1024, 1024
 	Targetable:
 		TargetTypes: Ground, Water, Ship
+		RequiresCondition: !being-warped
+	Targetable@C4Plantable:
+		RequiresCondition: !being-warped
+	Targetable@TNTPlantable:
 		RequiresCondition: !being-warped
 	Targetable@REPAIR:
 		RequiresCondition: damaged && !being-warped
@@ -2633,8 +2651,8 @@
 	Inherits@rflash: ^RedFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@production: ^ProductionEfficiencyBoost
-	Inherits@C4: ^C4Plantable
-	Inherits@TNT: ^TNTPlantable
+	Inherits@C4Plantable: ^C4Plantable
+	Inherits@TNTPlantable: ^TNTPlantable
 	Inherits@ionsurge: ^IonSurgable
 	Inherits@atomize: ^Atomizable
 	Huntable:
@@ -2658,14 +2676,18 @@
 		RequiresCondition: empdisable && cruising
 	Targetable@GROUND:
 		RequiresCondition: !airborne && !being-warped
-		TargetTypes: Ground, Vehicle, C4, TNT
+		TargetTypes: Ground, Vehicle
+	Targetable@C4Plantable:
+		RequiresCondition: !airborne && !being-warped
+	Targetable@TNTPlantable:
+		RequiresCondition: !airborne && !being-warped
 	Targetable@AIRBORNE:
 		RequiresCondition: airborne && !being-warped
 	Targetable@REPAIR:
 		RequiresCondition: !airborne && damaged && !being-warped
-	Targetable@c4:
+	Targetable@C4Attached:
 		RequiresCondition: c4 && !airborne
-	Targetable@tnt:
+	Targetable@TNTAttached:
 		RequiresCondition: tnt && !airborne
 	ProductionCostMultiplier@EagleBonus:
 		Multiplier: 90
@@ -2732,7 +2754,7 @@
 	Armor:
 		Type: None
 	Targetable:
-		TargetTypes: Ground, DemoTruck, Barrel, NoAutoTarget
+		TargetTypes: Ground, Barrel, NoAutoTarget
 	MapEditorData:
 		Categories: Decoration
 	Building:
@@ -2747,16 +2769,14 @@
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^IronCurtainable
 	Inherits@3: ^SpriteActor
-	Inherits@C4: ^C4Plantable
-	Inherits@TNT: ^TNTPlantable
+	Inherits@C4Plantable: ^C4Plantable
+	Inherits@TNTPlantable: ^TNTPlantable
 	Inherits@shape: ^1x1Shape
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableBuilding
 	Inherits@handicaps: ^PlayerHandicaps
 	Targetable:
 		TargetTypes: Ground, Structure, Building
-	Targetable@EXPLOSIVES:
-		TargetTypes: C4, TNT, DetonateAttack
 	Building:
 		Dimensions: 1,1
 		Footprint: x
@@ -2864,7 +2884,9 @@
 		RequiresCondition: !being-warped
 	Targetable:
 		RequiresCondition: !being-warped
-	Targetable@EXPLOSIVES:
+	Targetable@C4Plantable:
+		RequiresCondition: !being-warped
+	Targetable@TNTPlantable:
 		RequiresCondition: !being-warped
 	Targetable@HACKCAPTURABLE:
 		TargetTypes: HackCapturable
@@ -2921,8 +2943,6 @@
 		Bounds: 1024, 1024
 	Targetable:
 		TargetTypes: Ground, Structure, Defense
-	Targetable@EXPLOSIVES:
-		TargetTypes: C4, TNT, DetonateAttack
 	DetectCloaked:
 		DetectionTypes: Cloak, AirCloak
 		Range: 6c0
@@ -3035,7 +3055,7 @@
 	LineBuildNode:
 		Types: wall
 	Targetable:
-		TargetTypes: Ground, DetonateAttack, Wall, NoAutoTarget
+		TargetTypes: Ground, Wall, NoAutoTarget
 	-GivesExperienceCA:
 	WithWallSpriteBody:
 	Sellable:
@@ -3132,8 +3152,8 @@
 		Duration: 125
 
 ^InfiltratableFake:
-	Targetable:
-		TargetTypes: Ground, Structure, C4, TNT, DetonateAttack, SpyInfiltrate, SabInfiltrate
+	Targetable@Infiltration:
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	InfiltrateForDecoration:
 		Types: SpyInfiltrate, SabInfiltrate
 		RequiresSelection: true
@@ -3153,7 +3173,7 @@
 	Tooltip:
 		Name: Ammo Box
 	Targetable:
-		TargetTypes: Ground, C4, TNT, DetonateAttack, Structure, NoAutoTarget
+		TargetTypes: Ground, Structure, NoAutoTarget
 	Armor:
 		Type: Light
 	MapEditorData:
@@ -3783,6 +3803,8 @@
 		Cost: 400
 	Passenger:
 		CustomPipType: yellow
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	InstantlyRepairs:
 	RepairsBridges:
 		EnterBehaviour: Exit
@@ -3904,12 +3926,8 @@
 	Inherits@4: ^SpriteActor
 	Armor:
 		Type: Aircraft
-	Targetable@GROUND:
+	Targetable:
 		TargetTypes: ICBM
-		RequiresCondition: !airborne
-	Targetable@AIRBORNE:
-		TargetTypes: ICBM
-		RequiresCondition: airborne
 	HiddenUnderFog:
 		Type: GroundPosition
 	Tooltip:

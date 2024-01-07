@@ -52,9 +52,8 @@ DOG:
 		InitialStance: AttackAnything
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Infantry
-	Targetable:
-		RequiresCondition: !being-warped
-		TargetTypes: Ground, Infantry, ChaosImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	WithInfantryBody:
 		MoveSequence: walk
 		StandSequences: stand
@@ -81,6 +80,7 @@ DOG:
 	-TakeCover:
 	-Captures@DRIVER_KILL:
 	-CaptureManager:
+	-Targetable@SpyDisguise:
 
 E1:
 	Inherits: ^Soldier
@@ -586,8 +586,6 @@ E6:
 		Name: Engineer
 	Voiced:
 		VoiceSet: EngineerVoice
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	WithInfantryBody:
 		StandSequences: stand
 		RequiresCondition: !parachute && !being-warped
@@ -670,6 +668,7 @@ SPY:
 		CustomPipType: blue
 		Voice: Move
 	Disguise:
+		TargetTypes: SpyDisguise
 		DisguisedCondition: disguise
 		DisguisedAsConditions:
 			rmbo: cmdo-disguise
@@ -699,7 +698,9 @@ SPY:
 	Voiced:
 		VoiceSet: SpyVoice
 	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+		TargetTypes: Ground, Infantry
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	-Targetable@HERO:
 
 E7:
@@ -784,8 +785,10 @@ E7:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, MindControlImmune
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	-Crushable:
 	TakeCover:
 		SpeedModifier: 70
@@ -848,8 +851,8 @@ MEDI:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	GuardsSelection:
 		ValidTargets: Infantry
 	KeepsDistance:
@@ -938,8 +941,8 @@ MECH:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	GuardsSelection:
 		ValidTargets: Vehicle
 	Convertible:
@@ -1098,8 +1101,8 @@ HACK:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	GrantConditionOnDeploy@HACK:
 		DeployedCondition: deployed
 		UndeployedCondition: undeployed
@@ -1281,8 +1284,8 @@ THF:
 		ValidDamageStates: Critical
 	Mobile:
 		Speed: 54
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	-SpeedMultiplier@HAZMATSOVIET:
 	-GrantConditionOnTerrain@HAZMATSOVIET:
 	WithColoredSelectionBox@INVIS:
@@ -1850,8 +1853,10 @@ RMBO:
 	DetectCloaked:
 		DetectionTypes: Cloak, Thief
 		Range: 5c0
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, MindControlImmune
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	-Crushable:
 	TakeCover:
 		SpeedModifier: 70
@@ -1867,8 +1872,6 @@ N6:
 		Name: Engineer
 	Voiced:
 		VoiceSet: EngineerVoice
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	WithInfantryBody:
 		StandSequences: stand
 		RequiresCondition: !parachute && !being-warped
@@ -1888,7 +1891,11 @@ VICE:
 		Chance: 100
 	AttackWander:
 	Targetable:
-		TargetTypes: Ground, Infantry, Creep, ChaosImmune, MindControlImmune
+		TargetTypes: Ground, Infantry, Creep
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 
 SNIP:
 	Inherits: ^Soldier
@@ -2116,8 +2123,10 @@ BORI:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, MindControlImmune
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	TakeCover:
 		SpeedModifier: 70
 	AutoTargetPriority@DEFAULT:
@@ -2894,6 +2903,7 @@ RMBC:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@EMP: ^EmpDisable
 	Inherits@chrono: ^Chronoshiftable
+	Inherits@C4Plantable: ^C4Plantable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
@@ -2948,7 +2958,9 @@ RMBC:
 	-Crushable:
 	-KillsSelf@Immolate:
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4Immune, ChaosImmune, Cyborg
+		TargetTypes: Ground, Vehicle
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	-Targetable@HEAL:
 	Targetable@REPAIR:
 		RequiresCondition: !parachute && damaged && !being-warped && !repair-cooldown
@@ -3082,9 +3094,10 @@ BRUT:
 		Range: 5c0
 	Selectable:
 		DecorationBounds: 640, 896, 0, -341
-	Targetable:
-		RequiresCondition: !being-warped
-		TargetTypes: Ground, Infantry, MindControlImmune, DogImmune
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@DogImmune:
+		TargetTypes: DogImmune
 	Voiced:
 		VoiceSet: BruteVoice
 	WithInfantryBody:
@@ -3139,6 +3152,7 @@ BRUT:
 	-ExternalCondition@GMUT:
 	-SpawnActorOnDeath@GMUT:
 	-Targetable@GMUT:
+	-Targetable@SpyDisguise:
 
 BRUT.Mutating:
 	Inherits: BRUT
@@ -3389,8 +3403,8 @@ SGLI.crashing:
 	-Cloak:
 	-Targetable@GROUND:
 	-Targetable@AIRBORNE:
-	-Targetable@c4:
-	-Targetable@tnt:
+	-Targetable@C4Attached:
+	-Targetable@TNTAttached:
 
 SGLI.deployed:
 	Inherits: SGLI
@@ -3633,8 +3647,10 @@ YURI:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, MindControlImmune
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	GrantConditionOnAttack@AI:
 		Condition: aiattack
 		RequiresCondition: botowner
@@ -3834,6 +3850,7 @@ ENLI:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@EMP: ^EmpDisable
 	Inherits@chrono: ^Chronoshiftable
+	Inherits@C4Plantable: ^C4Plantable
 	RenderSprites:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
@@ -3854,7 +3871,9 @@ ENLI:
 	-Crushable:
 	-KillsSelf@Immolate:
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4Immune, ChaosImmune, Cyborg
+		TargetTypes: Ground, Vehicle
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	-Targetable@HEAL:
 	Targetable@REPAIR:
 		RequiresCondition: !parachute && damaged && !being-warped && !repair-cooldown

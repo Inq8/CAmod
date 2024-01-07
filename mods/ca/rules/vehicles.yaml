@@ -1602,8 +1602,8 @@ HARV:
 		RequiresCondition: !no-ore && ontib && !being-warped
 		Weapon: TibExplosion
 	-Crushable:
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	GrantConditionOnPrerequisite@OREPUPGRADE:
 		Prerequisites: charv.upgrade
 		Condition: charv-upgrade
@@ -1728,8 +1728,10 @@ MCV:
 	TransferTimedExternalConditionOnTransform@INVIS:
 		Condition: invisibility
 	-Crushable:
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 60
 
@@ -2005,8 +2007,8 @@ MNLY:
 		Image: MNLY
 	Rearmable:
 		RearmActors: fix, rep
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	Armament@PRIMARY:
 		Weapon: MineDefuser
 		Cursor: goldwrench
@@ -2059,8 +2061,8 @@ TRUK:
 	SpawnActorOnDeath:
 		Actor: moneycrate
 		RequiresCondition: !being-warped
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	-ProductionCostMultiplier@IndustrialPlantLevel1:
 	-ProductionCostMultiplier@IndustrialPlantLevel2:
 	-WithDecoration@BOMBARD:
@@ -2129,8 +2131,8 @@ MGG:
 	SpawnActorOnDeath:
 		Actor: MGG.Husk
 		RequiresCondition: !being-warped
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	GrantConditionOnDeploy:
 		DeployedCondition: mgg-disabled
 	Armament@PRIMARY:
@@ -2174,8 +2176,8 @@ MRJ:
 		Sequence: spinner
 		Offset: -256,0,256
 		PauseOnCondition: empdisable || being-warped
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	Armament:
 		Weapon: RadarJammer
 		LocalOffset: 0,0,0
@@ -2237,8 +2239,8 @@ MSG:
 	SpawnActorOnDeath:
 		Actor: MSG.Husk
 		RequiresCondition: !being-warped
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	GrantCondition@PREVIEWWORKAROUND:
 		Condition: real-actor
 	WithMakeAnimation:
@@ -2593,8 +2595,11 @@ QTNK:
 		Color: FFFF0080
 		Range: 7c0
 	-Crushable:
-	Targetable:
-		TargetTypes: Ground, MADTank, Vehicle, C4, ChaosImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
+	Targetable@MADTank:
+		RequiresCondition: !being-warped
+		TargetTypes: MADTank
 	ProductionCostMultiplier@UkraineBonus:
 		Multiplier: 75
 		Prerequisites: player.ukraine
@@ -2653,8 +2658,10 @@ AMCV:
 	TransferTimedExternalConditionOnTransform@INVIS:
 		Condition: invisibility
 	-Crushable:
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	DamageTypeDamageMultiplier@A2GPROTECTION:
 		Modifier: 60
 
@@ -2815,8 +2822,10 @@ GDRN:
 	WithSpriteTurret:
 	Voiced:
 		VoiceSet: RobotTankVoice
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	IgnoresDisguise:
 	DetectCloaked:
 		Range: 6c0
@@ -3512,8 +3521,10 @@ MTNK.Drone:
 		Actor: MTNK.Drone.Husk
 	Voiced:
 		VoiceSet: DroneVoice
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	ChangesHealth:
 		PercentageStep: 1
 		Delay: 25
@@ -3607,8 +3618,10 @@ MDRN:
 		Turrets: primary
 		Voice: Attack
 	WithSpriteTurret:
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	-WithDamageOverlay:
 	-CaptureManager:
 	-Capturable:
@@ -3869,8 +3882,10 @@ HTNK.Drone:
 		Actor: HTNK.DRONE.Husk
 	Voiced:
 		VoiceSet: DroneVoice
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	ChangesHealth:
 		StartIfBelow: 100
 		RequiresCondition: !mdrn-attached
@@ -4502,8 +4517,8 @@ HARV.TD:
 		RequiresCondition: !no-ore && ontib && !being-warped
 		Weapon: TibExplosion
 	-Crushable:
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	SpawnRandomActorOnDeath:
 		Actors: c1,c7,c10
 		Probability: 5
@@ -5739,9 +5754,9 @@ DISR:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: vehicles.upgraded
-	Targetable:
+	Targetable@Disruptor:
 		RequiresCondition: !being-warped
-		TargetTypes: Ground, Vehicle, C4, Disruptor
+		TargetTypes: Disruptor
 	Voiced:
 		VoiceSet: DisrVoice
 	-Crushable:
@@ -6091,10 +6106,14 @@ V3:
 	SpawnedExplodes:
 		Weapon: V3Weapon
 		Type: Footprint
-		EmptyWeapon: VisualExplodeHusk
 		RequiresCondition: !airborne
 	Explodes:
 		Weapon: V3ExplodeAirborne
+		RequiresCondition: airborne
+	ThrowsShrapnel@Debris:
+		Weapons: SmallDebris
+		Pieces: 3, 5
+		Range: 1c511, 3c0
 		RequiresCondition: airborne
 
 TNKD:
@@ -6260,8 +6279,8 @@ MSAR:
 		EnableSound: dsaping1.aud
 		AffectsParent: False
 		RequiresCondition: deployed && !(empdisable || being-warped)
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	RangedGpsRadarProvider:
 		Range: 24c0
 		TargetTypes: Vehicle, Air, Structure
@@ -6709,8 +6728,10 @@ MEMP:
 		Palette: tseffect-ignore-lighting-alpha75
 		Offset: 0, 0, 0
 		Sequence: emp-overlay
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	WithRangeCircle:
 		Type: MEMP
 		Color: 0000FF80
@@ -6809,8 +6830,10 @@ CDRN:
 		Weapon: ChaosGas
 		RequiresCondition: triggered && ammo
 		AmmoPoolName: explosion
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	Voiced:
 		VoiceSet: ChaosDroneVoice
 	-CaptureManager:

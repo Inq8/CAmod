@@ -260,13 +260,12 @@ VEHICLES.SCRIN:
 		PlayerPalette: playerscrin
 	Voiced:
 		VoiceSet: ScrinInfantryVoice
-	Targetable:
-		TargetTypes: Ground, Infantry, TNT
 	WithInfantryBody:
 		IdleSequences: idle1, idle2, idle3, idle4
 	WithDeathAnimation:
 		DeathSequencePalette: playerscrin
 		CrushedSequencePalette: playerscrin
+	-Targetable@SpyDisguise:
 	-GrantConditionOnTerrain@ONTIB:
 	-GrantStackingCondition@TIBEXPOSED:
 	-DamagedByTerrain@TIBDAMAGE:
@@ -803,7 +802,11 @@ MAST:
 		CaptureDelay: 150
 		ConsumedByCapture: false
 	Targetable:
-		TargetTypes: Ground, Infantry, MindControlImmune
+		TargetTypes: Ground, Infantry
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	WithIdleOverlay@mindcontrolling:
 		Sequence: mc
 		Palette: scrin
@@ -1394,7 +1397,7 @@ LCHR.Orb:
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 1
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4Immune
+		TargetTypes: Ground, Vehicle
 	HiddenUnderFog:
 		Type: CenterPosition
 	RevealsShroud:
@@ -2078,8 +2081,10 @@ SMCV:
 	TransferTimedExternalConditionOnTransform@INVIS:
 		Condition: invisibility
 	-Crushable:
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	Hovers:
 		BobDistance: -25
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
@@ -4745,7 +4750,7 @@ GRCL:
 		Range: 1c0
 		Type: CenterPosition
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4Immune
+		TargetTypes: Ground, Vehicle
 	Health:
 		HP: 64000
 	Armor:
