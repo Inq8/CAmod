@@ -298,6 +298,7 @@ ChemsprayTDFF:
 			Concrete: 40
 			Heavy: 40
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+		InvalidTargets: ChemWarrior
 
 ChemsprayTDBATF:
 	Inherits: BigFlamerTD
@@ -2954,3 +2955,13 @@ PeacemakerBombs:
 		ImpactSounds: splash9.aud
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure
+
+TibSurgeTargeter:
+	ReloadDelay: 750
+	Report: tibsurge.aud
+	Range: 8c0
+	Projectile: InstantHit
+	ValidTargets: Infantry, Vehicle, Structure
+	Warhead@Dummy: Dummy
+		ValidTargets:	Infantry, Vehicle, Structure
+		ValidRelationships: Enemy, Neutral

@@ -1699,6 +1699,7 @@ N5:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings
 		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Ability: Tiberium Surge
 	Valued:
 		Cost: 325
 	Tooltip:
@@ -1709,6 +1710,9 @@ N5:
 		HP: 17000
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+		AttackSequences:
+			primary: shoot
+			secondary: stand
 		RequiresCondition: !parachute && !being-warped
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
@@ -1718,11 +1722,17 @@ N5:
 		LocalOffset: 341,0,254
 		MuzzleSequence: muzzle
 		MuzzlePalette: tdeffect
+		PauseOnCondition: surge-targeted || surge-cooldown
 	Armament@FF:
 		Weapon: ChemsprayTDFF
+		PauseOnCondition: surge-targeted || surge-cooldown
 	Armament@BATF:
 		Name: batf
 		Weapon: ChemsprayTDBATF
+	Armament@Surge:
+		Name: secondary
+		Weapon: TibSurgeTargeter
+		PauseOnCondition: !surge-targeted
 	Mobile:
 		Speed: 60
 		Voice: Move
@@ -1758,6 +1768,44 @@ N5:
 	FirepowerMultiplier@BIOLAB:
 		RequiresCondition: biofirepower
 		Modifier: 110
+	TargetedAttackAbility@Surge:
+		ActiveCondition: surge-targeted
+		CircleColor: 00ff0066
+		Type: TibSurge
+		TargetModifiedCursor: ability2
+		DefaultGroupCastBehaviour: All
+		ArmamentName: secondary
+	Contrail@Surge:
+		Offset: -30,0,200
+		StartColorUsePlayerColor: false
+		ZOffset: -128
+		StartColor: 00ff0080
+		StartColorAlpha: 128
+		TrailLength: 10
+		RequiresCondition: surge-active
+	SpeedMultiplier@Surge:
+		RequiresCondition: surge-active
+		Modifier: 200
+	GrantConditionOnAttack@SurgeActive:
+		Condition: surge-active
+		RevokeDelay: 50
+		ArmamentNames: secondary
+	GrantConditionOnAttack@SurgeCooldown:
+		Condition: surge-cooldown
+		RevokeDelay: 1
+		ArmamentNames: secondary
+	AmmoPool@Surge:
+		Armaments: secondary
+		Ammo: 1
+	ReloadAmmoPool@Surge:
+		Delay: 750 # equal to reload time of weapon
+		Count: 1
+	WithAmmoPipsDecoration@Surge:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+	Targetable@ChemWarrior:
+		TargetTypes: ChemWarrior
 
 N5R1:
 	Inherits: N5
@@ -3575,7 +3623,9 @@ YURI:
 		ReleaseSounds: yuri-release.aud
 		ControllingCondition: mindcontrolling
 		MaxControlledCondition: maxcontrolled
-		ManualReleaseEnabled: true
+		ControlAtCapacityBehaviour: KillOldest
+		SlaveDeployEffect: Kill
+		SlaveKillDamageTypes: BulletDeath
 		ExperienceFromControl: 100
 	WithMindControlArc@MC:
 		Color: c71585
@@ -3597,18 +3647,19 @@ YURI:
 		Weapon: MindblastSlave
 		InitialDelay: 18
 		RequiresCondition: deployed && !being-warped
-		KillSlaveTypes: Infantry, Vehicle
-		KillSlavesDamageTypes: BulletDeath
 	GrantTimedConditionOnDeploy:
-		DeployedTicks: 35
-		CooldownTicks: 100
+		DeployedTicks: 25
+		CooldownTicks: 150
 		DeployedCondition: deployed
 		DeployingCondition: deploying
 		DeployAnimation: deployed
 		ShowSelectionBar: true
+		ShowSelectionBarWhenFull: false
 		StartsFullyCharged: true
 		Voice: Demolish
 		PauseOnCondition: being-warped || parachute
+		DischargingColor: bb0000
+		ChargingColor: cc00cc
 	AttackFrontal:
 		PauseOnCondition: !ammo || being-warped || parachute
 		Armaments: primary, secondary, aidummy
@@ -3689,6 +3740,7 @@ YURI:
 		Range: 13c0
 		Color: cc00ff77
 		BorderColor: 00000044
+	KeepsDistance:
 
 SEAL:
 	Inherits: RMBO

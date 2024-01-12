@@ -199,15 +199,7 @@ WorldLoaded = function()
 	Trigger.OnEnteredFootprint(SleeperAwakenTrigger, function(a, id)
 		if a.Owner == Nod then
 			Trigger.RemoveFootprintTrigger(id)
-			Media.DisplayMessage("The time has come, warriors of Nod.", "Nod Soldier", HSLColor.FromHex("FF0000"))
-			MediaCA.PlaySound("timehascome.aud", 2)
-			Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
-				Media.DisplayMessage("Down with GDI!", "Nod Soldier", HSLColor.FromHex("FF0000"))
-				MediaCA.PlaySound("downwithgdi.aud", 2)
-				Trigger.AfterDelay(15, function()
-					AwakenSleeperCell()
-				end)
-			end)
+			AwakenSleeperCell()
 		end
 	end)
 
@@ -349,60 +341,69 @@ OncePerFiveSecondChecks = function()
 end
 
 AwakenSleeperCell = function()
-	if not SleeperCellAwakened then
-		SleeperCellAwakened = true
-		UserInterface.SetMissionText("")
-		local legionForces = Legion.GetActors()
+	if SleeperCellAwakened then
+		return
+	end
+	SleeperCellAwakened = true
+	Media.DisplayMessage("The time has come, warriors of Nod.", "Nod Soldier", HSLColor.FromHex("FF0000"))
+	MediaCA.PlaySound("timehascome.aud", 2)
+	Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(4)), function()
+		Media.DisplayMessage("Down with GDI!", "Nod Soldier", HSLColor.FromHex("FF0000"))
+		MediaCA.PlaySound("downwithgdi.aud", 2)
+		Trigger.AfterDelay(15, function()
+			UserInterface.SetMissionText("")
+			local legionForces = Legion.GetActors()
 
-		Utils.Do(legionForces, function(self)
-			if self.Type ~= "player" then
-				self.Owner = Nod
-			end
-		end)
-
-		if not GDIBarracks.IsDead then
-			GDIBarracks.Kill()
-		end
-
-		if not GDICommsCenter.IsDead then
-			GDICommsCenter.Kill()
-		end
-
-		Trigger.AfterDelay(DateTime.Seconds(60), function()
-			Utils.Do(GDIDefenders, function(self)
-				if not self.IsDead then
-					self.AttackMove(GDIBaseCenter.Location)
-					CallForHelp(self, WDist.New(10240), IsGDIGroundHunterUnit)
+			Utils.Do(legionForces, function(self)
+				if self.Type ~= "player" then
+					self.Owner = Nod
 				end
 			end)
+
+			if not GDIBarracks.IsDead then
+				GDIBarracks.Kill()
+			end
+
+			if not GDICommsCenter.IsDead then
+				GDICommsCenter.Kill()
+			end
+
+			Trigger.AfterDelay(DateTime.Seconds(60), function()
+				Utils.Do(GDIDefenders, function(self)
+					if not self.IsDead then
+						self.AttackMove(GDIBaseCenter.Location)
+						CallForHelp(self, WDist.New(10240), IsGDIGroundHunterUnit)
+					end
+				end)
+			end)
+
+			if not GDIHarvester.IsDead then
+				GDIHarvester.Owner = Nod
+			end
+
+			Trigger.AfterDelay(1, function()
+				Actor.Create("QueueUpdaterDummy", true, { Owner = Nod })
+			end)
+
+			if ObjectiveRescueResearchers == nil then
+				ObjectiveRescueResearchers = Nod.AddObjective("Locate and rescue Nod researchers.")
+			end
+
+			if ObjectiveTakeOverBase ~= nil and not Nod.IsObjectiveCompleted(ObjectiveTakeOverBase) then
+				Nod.MarkCompletedObjective(ObjectiveTakeOverBase)
+			end
+
+			local extraPower1 = Actor.Create("apwr", true, { Owner = Greece, Location = ExtraPower1.Location })
+			local extraPower2 = Actor.Create("apwr", true, { Owner = Greece, Location = ExtraPower2.Location })
+			AutoRepairBuilding(extraPower1, Greece)
+			AutoRebuildBuilding(extraPower1, Greece, 15)
+			AutoRepairBuilding(extraPower2, Greece)
+			AutoRebuildBuilding(extraPower2, Greece, 15)
+
+			-- Initialise Allied attacks
+			InitAlliedAttacks()
 		end)
-
-		if not GDIHarvester.IsDead then
-			GDIHarvester.Owner = Nod
-		end
-
-		Trigger.AfterDelay(1, function()
-			Actor.Create("QueueUpdaterDummy", true, { Owner = Nod })
-		end)
-
-		if ObjectiveRescueResearchers == nil then
-			ObjectiveRescueResearchers = Nod.AddObjective("Locate and rescue Nod researchers.")
-		end
-
-		if ObjectiveTakeOverBase ~= nil and not Nod.IsObjectiveCompleted(ObjectiveTakeOverBase) then
-			Nod.MarkCompletedObjective(ObjectiveTakeOverBase)
-		end
-
-		local extraPower1 = Actor.Create("apwr", true, { Owner = Greece, Location = ExtraPower1.Location })
-		local extraPower2 = Actor.Create("apwr", true, { Owner = Greece, Location = ExtraPower2.Location })
-		AutoRepairBuilding(extraPower1, Greece)
-		AutoRebuildBuilding(extraPower1, Greece, 15)
-		AutoRepairBuilding(extraPower2, Greece)
-		AutoRebuildBuilding(extraPower2, Greece, 15)
-
-		-- Initialise Allied attacks
-		InitAlliedAttacks()
-	end
+	end)
 end
 
 InitEvacSite = function()

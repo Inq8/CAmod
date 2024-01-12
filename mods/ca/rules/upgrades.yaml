@@ -1066,6 +1066,22 @@ regen.upgrade:
 	RenderSprites:
 		Image: regen.upgrade
 
+hyper.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Hypercharge
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.scrin, scrt, ~techlevel.high
+		Description: Seekers and Lacerators gain Hypercharge ability, allow them to fire an uninterrupted barrage for a limited time.\n    After use, weapons are disabled and speed is reduced for a short time.\n\nUpgrades: Seeker\nUpgrades: Lacerator
+		IconPalette: chromes
+	TooltipExtras:
+		Strengths: + Hypercharge ability
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: hyper.upgrade
+
 stellar.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:

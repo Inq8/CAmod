@@ -246,6 +246,38 @@ VEHICLES.SCRIN:
 		Margin: -6, 3
 		RequiresCondition: storm-level == 3
 
+^Hypercharge:
+	GrantConditionOnPrerequisite@HYPERCHARGE:
+		Condition: hyper-upgrade
+		Prerequisites: hyper.upgrade
+	GrantTimedConditionOnDeploy@HYPERCHARGE:
+		DeployedTicks: 100
+		CooldownTicks: 500
+		DeployedCondition: hypercharged
+		ChargingCondition: hyperchargedebuff
+		ShowSelectionBar: true
+		ShowSelectionBarWhenFull: false
+		StartsFullyCharged: true
+		PauseOnCondition: being-warped || empdisable
+		DischargingColor: b396f3
+		ChargingColor: 8450f8
+		DeploySound: hypercharge.aud
+		RequiresCondition: hyper-upgrade
+	WithPalettedOverlay@HYPERCHARGE:
+		RequiresCondition: hypercharged && !(empdisable || invulnerability || invisibility)
+		Palette: hypercharge
+	WithIdleOverlay@HYPERCHARGE:
+		Sequence: emp-overlay
+		Palette: ionsurgeoverlay
+		RequiresCondition: hypercharged
+		IsDecoration: True
+	WithPalettedOverlay@HYPERCHARGEDEBUFF:
+		Palette: darkened
+		RequiresCondition: hyperchargedebuff
+	SpeedMultiplier@HYPERCHARGEDEBUFF:
+		Modifier: 75
+		RequiresCondition: hyperchargedebuff
+
 ^ScrinVehicleVoice:
 	Voiced:
 		VoiceSet: ScrinVehicleVoice
@@ -710,7 +742,9 @@ MAST:
 		ReleaseSounds: mastermind-release.aud
 		ControllingCondition: mindcontrolling
 		MaxControlledCondition: maxcontrolled
-		ManualReleaseEnabled: true
+		ControlAtCapacityBehaviour: KillOldest
+		SlaveDeployEffect: Kill
+		SlaveKillDamageTypes: BulletDeath
 		ExperienceFromControl: 100
 	WithMindControlArc@MC:
 		Color: c71585
@@ -727,16 +761,17 @@ MAST:
 		Weapon: MindSparkSpawnerSlave
 		InitialDelay: 18
 		RequiresCondition: deployed && !being-warped
-		KillSlaveTypes: Infantry, Vehicle
-		KillSlavesDamageTypes: BulletDeath
 	GrantTimedConditionOnDeploy:
-		DeployedTicks: 35
+		DeployedTicks: 25
 		CooldownTicks: 150
 		DeployedCondition: deployed
 		ShowSelectionBar: true
+		ShowSelectionBarWhenFull: false
 		StartsFullyCharged: true
 		Voice: Action
 		PauseOnCondition: being-warped
+		DischargingColor: bb0000
+		ChargingColor: cc00cc
 	AttackFrontal:
 		PauseOnCondition: being-warped || !ammo
 		FacingTolerance: 0
@@ -978,6 +1013,7 @@ SEEK:
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
+	Inherits@Hypercharge: ^Hypercharge
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1024,6 +1060,12 @@ SEEK:
 	Armament@PRIMARY:
 		Weapon: PlasmaDiscs
 		LocalOffset: 320,-25,320, 320,25,320
+		PauseOnCondition: hyperchargedebuff
+		RequiresCondition: !hypercharged
+	Armament@PRIMARYCHARGED:
+		Weapon: PlasmaDiscs.Hypercharged
+		LocalOffset: 320,-25,320, 320,25,320
+		RequiresCondition: hypercharged
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithSpriteTurret:
@@ -1053,6 +1095,7 @@ LACE:
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
+	Inherits@Hypercharge: ^Hypercharge
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1103,6 +1146,12 @@ LACE:
 	Armament@PRIMARY:
 		Weapon: LaceratorShards
 		LocalOffset: 0,70,320, 0,-70,320
+		PauseOnCondition: hyperchargedebuff
+		RequiresCondition: !hypercharged
+	Armament@PRIMARYCHARGED:
+		Weapon: LaceratorShards.Hypercharged
+		LocalOffset: 0,70,320, 0,-70,320
+		RequiresCondition: hypercharged
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithSpriteTurret:

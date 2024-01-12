@@ -190,6 +190,15 @@ PlasmaDiscs:
 		Explosions: small_explosion
 		ImpactSounds: seeker-hit1.aud, seeker-hit2.aud
 
+PlasmaDiscs.Hypercharged:
+	Inherits: PlasmaDiscs
+	Report: seeker-hyperfire1.aud, seeker-hyperfire2.aud
+	Burst: 1
+	ReloadDelay: 4
+	Range: 7c0
+	Projectile: Missile
+		RangeLimit: 7c0
+
 IntruderDiscs:
 	Inherits: PlasmaDiscs
 	-MinRange:
@@ -1141,7 +1150,7 @@ LaceratorShards:
 		Image: bshard
 		ContrailLength: 9
 		ContrailStartWidth: 0c32
-		ContrailStartColor: 4455FFAA
+		ContrailStartColor: 4455FF
 		ContrailStartColorAlpha: 170
 		Jammable: true
 	Warhead@1Dam: SpreadDamage
@@ -1157,6 +1166,17 @@ LaceratorShards:
 			Brick: 50
 	Warhead@3Eff: CreateEffect
 		Image: bshardhit
+
+LaceratorShards.Hypercharged:
+	Inherits: LaceratorShards
+	Burst: 1
+	ReloadDelay: 5
+	-StartBurstReport:
+	Range: 7c0
+	Report: lacerator-hyperfire1.aud, lacerator-hyperfire2.aud
+	Projectile: Missile
+		ContrailStartWidth: 0c48
+		ContrailStartColor: 7e00ff
 
 RiftInit:
 	ValidTargets: Ground, Water
