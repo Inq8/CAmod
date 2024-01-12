@@ -198,6 +198,8 @@ PlasmaDiscs.Hypercharged:
 	Range: 7c0
 	Projectile: Missile
 		RangeLimit: 7c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 1600
 
 IntruderDiscs:
 	Inherits: PlasmaDiscs
@@ -1039,7 +1041,7 @@ ShardLauncher:
 	Range: 8c0
 	ValidTargets: Air, AirSmall, ICBM
 	Projectile: Missile
-		Speed: 366
+		Speed: 341
 		Palette: scrin
 		ContrailStartWidth: 0c48
 		ContrailLength: 12
@@ -1052,19 +1054,19 @@ ShardLauncher:
 		HorizontalRateOfTurn: 140
 		RangeLimit: 9c0
 	Warhead@1Dam: SpreadDamage
-		ValidTargets: Air, ICBM
+		ValidTargets: Air
 		ValidRelationships: Enemy, Neutral
 		Range: 0, 0c64, 0c256, 3c768
 		Falloff: 100, 100, 30, 15
 		Damage: 2650
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 	Warhead@smallDamage: SpreadDamage
-		ValidTargets: AirSmall
+		ValidTargets: AirSmall, ICBM
 		ValidRelationships: Enemy, Neutral
 		Range: 0, 0c64, 0c256, 1c768
 		Falloff: 100, 70, 30, 10
 		Damage: 2650
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath, SAM
 	Warhead@3Eff: CreateEffect
 		Explosions: idle, idle2, idle3, idle4
 		ExplosionPalette: scrin
@@ -1177,6 +1179,8 @@ LaceratorShards.Hypercharged:
 	Projectile: Missile
 		ContrailStartWidth: 0c48
 		ContrailStartColor: 7e00ff
+	Warhead@1Dam: SpreadDamage
+		Damage: 2000
 
 RiftInit:
 	ValidTargets: Ground, Water
@@ -1612,7 +1616,7 @@ AtomizedEcho:
 		AffectsParent: true
 		ValidTargets: Vehicle, Ship, Defense, Air, AirSmall
 	Warhead@3Eff: CreateEffect
-		ValidTargets: Vehicle, Ship, Defense, Air, AirSmall
+		ValidTargets: Ground, Air, AirSmall
 		-ImpactSounds:
 
 AtomizerBoltsAA:

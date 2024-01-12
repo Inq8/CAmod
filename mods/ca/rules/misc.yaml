@@ -835,7 +835,7 @@ stolentech.airs:
 stolentech.afld:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite@STOLENSOVIET:
-		Prerequisite: aircraft.acho
+		Prerequisite: aircraft.kamv
 
 # afld.gdi - shade
 stolentech.afld.gdi:
@@ -853,7 +853,7 @@ stolentech.hpad:
 		Prerequisite: aircraft.beag
 	ProvidesPrerequisiteValidatedFaction@STOLENSOVIET:
 		Factions: russia, ukraine, iraq, yuri
-		Prerequisite: aircraft.acho
+		Prerequisite: aircraft.kamv
 
 # hpad.td - shade from gdi, vertigo from nod
 stolentech.hpad.td:
@@ -1050,13 +1050,13 @@ jamming.field:
 		Image: jamfield
 		Palette: effect
 	KillsSelf:
-		Delay: 250
+		Delay: 225
 	WithRangeCircle@JAMMER:
 		Type: JammingField
 		Range: 5c0
 		Visible: Always
 		ValidRelationships: Ally, Enemy, Neutral
-		Color: 9999AAAA
+		Color: c0c0d4AA
 	ProximityExternalCondition@WEAPJAMMER:
 		Range: 5c0
 		ValidRelationships: Enemy, Neutral

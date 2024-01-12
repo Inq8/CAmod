@@ -3779,14 +3779,14 @@ BEAG:
 	GpsRadarDot:
 		Sequence: Plane
 
-ACHO:
+KAMV:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 201
-		Prerequisites: ~aircraft.acho
+		Prerequisites: ~aircraft.kamv
 		Description: Durable helicopter gunship armed with\n  a chaingun and anti-tank rockets.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Heavy Armor, Light Armor
@@ -3794,7 +3794,7 @@ ACHO:
 	Valued:
 		Cost: 1800
 	Tooltip:
-		Name: Assault Chopper
+		Name: Kamov
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -3885,16 +3885,16 @@ ACHO:
 		PipCount: 6
 	WithMuzzleOverlay:
 	SpawnActorOnDeath:
-		Actor: ACHO.Husk
+		Actor: KAMV.Husk
 		RequiresCondition: ammo && !empdisable && !being-warped
 	SpawnActorOnDeath@Empty:
-		Actor: ACHO.Husk.empty
+		Actor: KAMV.Husk.empty
 		RequiresCondition: !ammo && !empdisable && !being-warped
 	SpawnActorOnDeath@EMP:
-		Actor: ACHO.Husk.EMP
+		Actor: KAMV.Husk.EMP
 		RequiresCondition: ammo && empdisable && !being-warped
 	SpawnActorOnDeath@EmptyEMP:
-		Actor: ACHO.Husk.empty.EMP
+		Actor: KAMV.Husk.empty.EMP
 		RequiresCondition: !ammo && empdisable && !being-warped
 	LeavesTrails:
 		Offsets: -427,0,0

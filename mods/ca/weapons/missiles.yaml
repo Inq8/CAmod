@@ -577,12 +577,13 @@ Nike:
 	Warhead@1Dam: SpreadDamage
 		Damage: 6750
 		Range: 0, 0c64, 0c256, 4c256
-		ValidTargets: Air, ICBM
+		ValidTargets: Air
 	Warhead@smallDamage: SpreadDamage
 		Damage: 6750
 		Range: 0, 0c64, 0c256, 2c256
 		Falloff: 100, 70, 30, 10
-		ValidTargets: AirSmall
+		ValidTargets: AirSmall, ICBM
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, SAM
 	Warhead@3Eff: CreateEffect
 		ValidTargets: Air, AirSmall, ICBM, Ground, Water, Trees
 
