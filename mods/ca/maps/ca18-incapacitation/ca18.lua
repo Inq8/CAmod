@@ -81,7 +81,7 @@ WorldLoaded = function()
 	end
 
 	Trigger.AfterDelay(DateTime.Seconds(3), function()
-		Tip("Intruders can teleport short distances (using either the deploy command or force move).")
+		Tip("Intruders can teleport short distances using either the deploy command or force move (they can be teleported as a group).")
 	end)
 
 	Utils.Do(GroundedAircraft, function(i)
