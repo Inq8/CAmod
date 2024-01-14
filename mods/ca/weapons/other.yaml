@@ -2967,3 +2967,24 @@ TibSurgeTargeter:
 	Warhead@Dummy: Dummy
 		ValidTargets:	Infantry, Vehicle, Structure
 		ValidRelationships: Enemy, Neutral
+
+FloatingDiscLaser:
+	Inherits: Laser
+	ValidTargets: Ground, Water, Air, AirSmall
+	ReloadDelay: 60
+	Range: 5c0
+	Report: vfloatta.aud
+	Projectile: LaserZapCA
+		Color: eb39d380
+		SecondaryBeamColor: eb39d340
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Ground, Water, Air, AirSmall
+		Damage: 13000
+		Versus:
+			None: 100
+			Light: 75
+			Wood: 100
+			Heavy: 75
+			Concrete: 75
+			Brick: 25
+			Aircraft: 35
