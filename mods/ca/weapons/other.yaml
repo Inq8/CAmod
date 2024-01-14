@@ -1757,7 +1757,7 @@ Railgun:
 	Range: 8c0
 	Report: railuse5.aud
 	InvalidTargets: Air, Submarine
-	Projectile: Railgun
+	Projectile: RailgunCA
 		Duration: 10
 		Blockable: true
 		DamageActorsInLine: false
@@ -1788,7 +1788,7 @@ TitanRailgun:
 	Report: titanrailgun1.aud, titanrailgun2.aud
 	ReloadDelay: 80
 	Range: 5c768
-	Projectile: Railgun
+	Projectile: RailgunCA
 		DamageActorsInLine: true
 		BeamColor: EEFFFFBB
 		BeamWidth: 48
@@ -1800,8 +1800,10 @@ TitanRailgun:
 		BeamAlphaDeltaPerTick: -8
 		HelixPitch: 682
 		ZOffset: 4096
+		PassthroughToMaxRange: true
+		PassthroughMinDistance: 2c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 6500
+		Damage: 5000
 		Versus:
 			None: 30
 			Wood: 70
@@ -1810,7 +1812,7 @@ TitanRailgun:
 			Concrete: 60
 		ValidRelationships: Enemy, Neutral
 	Warhead@2Dam: SpreadDamage
-		Damage: 1250
+		Damage: 1000
 		Versus:
 			None: 30
 			Wood: 70
@@ -1827,7 +1829,7 @@ TitanRailgunImpact:
 	-Warhead@2Dam:
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
-		Damage: 9500
+		Damage: 11000
 		ValidRelationships: Enemy, Neutral, Ally
 
 IonZap:
