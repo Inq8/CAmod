@@ -359,7 +359,10 @@ AbandonedBaseDiscovered = function()
 	end)
 
 	USSR.MarkCompletedObjective(ObjectiveFindSovietBase)
-	TraitorTechCenterDiscovered()
+
+	Trigger.AfterDelay(DateTime.Seconds(10), function()
+		TraitorTechCenterDiscovered()
+	end)
 
 	InitAlliedAttacks()
 
@@ -389,8 +392,10 @@ TraitorHQKilledOrCaptured = function()
 		local traitorGeneral = Actor.Create("gnrl", true, { Owner = Traitor, Location = TraitorHQSpawn.Location })
 		traitorGeneral.Move(TraitorGeneralSafePoint.Location)
 		Trigger.OnKilled(traitorGeneral, function(self, killer)
-			USSR.MarkCompletedObjective(ObjectiveKillTraitor)
 			MediaCA.PlaySound("r2_yegeroveliminated.aud", 2)
+			Trigger.AfterDelay(DateTime.Seconds(2), function()
+				USSR.MarkCompletedObjective(ObjectiveKillTraitor)
+			end)
 		end)
 	end
 end

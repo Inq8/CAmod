@@ -29,7 +29,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new GrantConditionOnOrders(init.Self, this); }
 	}
 
-	public class GrantConditionOnOrders : PausableConditionalTrait<GrantConditionOnOrdersInfo>, IResolveOrder
+	public class GrantConditionOnOrders : PausableConditionalTrait<GrantConditionOnOrdersInfo>, IResolveOrder, INotifyBecomingIdle
 	{
 		int conditionToken = Actor.InvalidConditionToken;
 
@@ -45,6 +45,11 @@ namespace OpenRA.Mods.CA.Traits
 				GrantCondition(self);
 			else
 				RevokeCondition(self);
+		}
+
+		void INotifyBecomingIdle.OnBecomingIdle(Actor self)
+		{
+			RevokeCondition(self);
 		}
 
 		void GrantCondition(Actor self)

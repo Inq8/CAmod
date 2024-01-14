@@ -407,8 +407,8 @@ namespace OpenRA.Mods.CA.Traits
 				}
 				else
 				{
-					foreach (var other in selectedOrderedByDistance)
-						yield return new Order("PortableChronoTeleport", other.Actor, targetCell, mi.Modifiers.HasModifier(Modifiers.Shift));
+					foreach (var s in selectedOrderedByDistance)
+						yield return new Order("PortableChronoTeleport", s.Actor, targetCell, mi.Modifiers.HasModifier(Modifiers.Shift));
 				}
 			}
 		}
@@ -440,27 +440,21 @@ namespace OpenRA.Mods.CA.Traits
 			if (!info.HasDistanceLimit)
 				yield break;
 
-			yield return new RangeCircleAnnotationRenderable(
-				self.CenterPosition,
-				WDist.FromCells(info.MaxDistance),
-				0,
-				info.CircleColor,
-				info.CircleWidth,
-				info.CircleBorderColor,
-				info.CircleBorderWidth);
-
-			foreach (var other in selectedWithAbility)
+			if (info.CircleWidth > 0)
 			{
-				if (other.Actor.IsInWorld && other.Trait.Info.HasDistanceLimit && other.Trait.CanTeleport && self.Owner == self.World.LocalPlayer)
+				foreach (var s in selectedWithAbility)
 				{
-					yield return new RangeCircleAnnotationRenderable(
-						other.Actor.CenterPosition + new WVec(0, other.Actor.CenterPosition.Z, 0),
-						WDist.FromCells(other.Trait.Info.MaxDistance),
-						0,
-						other.Trait.Info.CircleColor,
-						other.Trait.Info.CircleWidth,
-						other.Trait.Info.CircleBorderColor,
-						other.Trait.Info.CircleBorderWidth);
+					if (s.Actor.IsInWorld && s.Trait.Info.HasDistanceLimit && s.Trait.CanTeleport && self.Owner == self.World.LocalPlayer)
+					{
+						yield return new RangeCircleAnnotationRenderable(
+							s.Actor.CenterPosition + new WVec(0, s.Actor.CenterPosition.Z, 0),
+							WDist.FromCells(s.Trait.Info.MaxDistance),
+							0,
+							s.Trait.Info.CircleColor,
+							s.Trait.Info.CircleWidth,
+							s.Trait.Info.CircleBorderColor,
+							s.Trait.Info.CircleBorderWidth);
+					}
 				}
 			}
 		}

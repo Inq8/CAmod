@@ -298,6 +298,7 @@ ChemsprayTDFF:
 			Concrete: 40
 			Heavy: 40
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+		InvalidTargets: ChemWarrior
 
 ChemsprayTDBATF:
 	Inherits: BigFlamerTD
@@ -715,11 +716,11 @@ Demolish:
 		Footprint: xxx xxx xxx
 
 PlaceC4:
-	ReloadDelay: 10
+	ReloadDelay: 15
 	Range: 1c849
 	Projectile: InstantHit
 	Report: icolseta.aud
-	ValidTargets: C4, Vehicle, Structure
+	ValidTargets: C4Plantable
 	InvalidTargets: C4Attached, TNTAttached, C4Immune
 	Warhead@AttachDelayedWeapon: AttachDelayedWeapon
 		Weapon: C4
@@ -737,7 +738,7 @@ PlaceC4:
 PlaceC4Seal:
 	Inherits: PlaceC4
 	ReloadDelay: 50
-	ValidTargets: C4, Ship, Submarine, Structure
+	ValidTargets: C4Plantable
 	InvalidTargets: Vehicle, C4Attached, TNTAttached, C4Immune
 	Range: 1c255
 	Warhead@AttachDelayedWeapon: AttachDelayedWeapon
@@ -772,7 +773,7 @@ C4:
 
 Ivanbomb:
 	Inherits: ^Artillery
-	ValidTargets: Ground, TNT, Infantry, Vehicle, Structure
+	ValidTargets: Ground, TNTPlantable
 	InvalidTargets: C4Attached, C4Immune
 	ReloadDelay: 75
 	Range: 3c725
@@ -880,15 +881,12 @@ IFVDefuseKit:
 	Range: 4c511
 
 DemoTruckTargeting:
-	ValidTargets: DetonateAttack
-	Range: 2c0
+	Range: 1c849
 	Projectile: InstantHit
 	Warhead@1Dam: TargetDamage
-		ValidTargets: DetonateAttack
 
 IvanIFVTargeting:
 	Inherits: DemoTruckTargeting
-	ValidTargets: Ground, DetonateAttack
 
 Hack:
 	Range: 12c0
@@ -1701,7 +1699,7 @@ MobileGapBeam:
 	Range: 7c0
 
 RadarJammer:
-	ReloadDelay: 125
+	ReloadDelay: 150
 	Report: jammed.aud
 	Range: 10c0
 	Projectile: InstantHit
@@ -2975,3 +2973,13 @@ PeacemakerBombs:
 		ImpactSounds: splash9.aud
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure
+
+TibSurgeTargeter:
+	ReloadDelay: 750
+	Report: tibsurge.aud
+	Range: 8c0
+	Projectile: InstantHit
+	ValidTargets: Infantry, Vehicle, Structure
+	Warhead@Dummy: Dummy
+		ValidTargets:	Infantry, Vehicle, Structure
+		ValidRelationships: Enemy, Neutral

@@ -14,10 +14,15 @@ using System.Linq;
 using OpenRA.Mods.CA.Orders;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	public enum SlaveDeployEffect { None, Release, Kill }
+
+	public enum ControlAtCapacityBehaviour { BlockNew, KillOldest, ReleaseOldest }
+
 	[Desc("This actor can mind control other actors.")]
 	public class MindControllerInfo : PausableConditionalTraitInfo, Requires<ArmamentInfo>, Requires<HealthInfo>
 	{
@@ -28,9 +33,8 @@ namespace OpenRA.Mods.CA.Traits
 			"Use 0 or negative numbers for infinite.")]
 		public readonly int Capacity = 1;
 
-		[Desc("If the capacity is reached, discard the oldest mind controlled unit and control the new one",
-			"If false, controlling new units is forbidden after capacity is reached.")]
-		public readonly bool DiscardOldest = true;
+		[Desc("The behaviour when attempting to control a new target when capacity has been reached.")]
+		public readonly ControlAtCapacityBehaviour ControlAtCapacityBehaviour = ControlAtCapacityBehaviour.ReleaseOldest;
 
 		[Desc("Condition to grant to self when controlling actors. Can stack up by the number of enslaved actors. You can use this to forbid firing of the dummy MC weapon.")]
 		[GrantedConditionReference]
@@ -80,11 +84,14 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If true, slave will be released when attacking a new target.")]
 		public readonly bool ReleaseOnNewTarget = false;
 
-		[Desc("Cursor to use for targeting slaves to release.")]
-		public readonly string ReleaseSlaveCursor = "pinkdeploy";
+		[Desc("Cursor to use for targeting slaves to deploy.")]
+		public readonly string DeploySlaveCursor = "pinkdeploy";
 
-		[Desc("If true, slaves can be targeted to release them.")]
-		public readonly bool ManualReleaseEnabled = false;
+		[Desc("What happens when a slave is deployed while the master is selected.")]
+		public readonly SlaveDeployEffect SlaveDeployEffect = SlaveDeployEffect.None;
+
+		[Desc("Types of damage that this trait causes to slave if killed on deploying or when capacity exceeded. Leave empty for no damage types.")]
+		public readonly BitSet<DamageType> SlaveKillDamageTypes = default(BitSet<DamageType>);
 
 		[Desc("Percentage of targets cost gained as XP when successfully mind controlled.")]
 		public readonly int ExperienceFromControl = 0;
@@ -251,6 +258,14 @@ namespace OpenRA.Mods.CA.Traits
 
 				order.Target.Actor.Trait<MindControllable>().RevokeMindControl(order.Target.Actor, 0);
 
+				if (Info.SlaveDeployEffect == SlaveDeployEffect.Kill)
+				{
+					self.World.AddFrameEndTask(w => {
+						if (!order.Target.Actor.IsDead)
+							order.Target.Actor.Kill(order.Target.Actor, Info.SlaveKillDamageTypes);
+					});
+				}
+
 				if (Info.ReleaseSounds.Length > 0)
 				{
 					if (Info.ReleaseSoundControllerOnly)
@@ -341,7 +356,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (mindControllable.IsTraitDisabled || mindControllable.IsTraitPaused)
 				return;
 
-			if (capacity > 0 && !Info.DiscardOldest && slaves.Count() >= capacity)
+			if (capacity > 0 && Info.ControlAtCapacityBehaviour == ControlAtCapacityBehaviour.BlockNew && slaves.Count() >= capacity)
 				return;
 
 			if (mindControllable.Master != null)
@@ -354,8 +369,19 @@ namespace OpenRA.Mods.CA.Traits
 			StackControllingCondition(self, Info.ControllingCondition);
 			mindControllable.LinkMaster(currentTarget.Actor, self);
 
-			if (capacity > 0 && Info.DiscardOldest && slaves.Count() > capacity)
-				slaves[0].Trait<MindControllable>().RevokeMindControl(slaves[0], 0);
+			if (capacity > 0 && Info.ControlAtCapacityBehaviour != ControlAtCapacityBehaviour.BlockNew && slaves.Count() > capacity)
+			{
+				var oldestSlave = slaves[0];
+				oldestSlave.Trait<MindControllable>().RevokeMindControl(slaves[0], 0);
+
+				if (Info.ControlAtCapacityBehaviour == ControlAtCapacityBehaviour.KillOldest)
+				{
+					self.World.AddFrameEndTask(w => {
+						if (!oldestSlave.IsDead)
+							oldestSlave.Kill(oldestSlave, Info.SlaveKillDamageTypes);
+					});
+				}
+			}
 
 			GiveExperience(currentTarget.Actor);
 			ControlComplete(self);
@@ -500,15 +526,15 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				yield return new ReleaseSlaveOrderTargeter(
 					"ReleaseSlave",
-					6,
-					Info.ReleaseSlaveCursor,
-					(target, modifiers) => !modifiers.HasModifier(TargetModifiers.ForceMove) && IsManuallyReleasableSlave(target));
+					11,
+					Info.DeploySlaveCursor,
+					(target, modifiers) => !modifiers.HasModifier(TargetModifiers.ForceMove) && IsDeployableSlave(target));
 
 				yield return new ReleaseSlaveOrderTargeter(
 					"ReleaseSlave",
 					5,
-					Info.ReleaseSlaveCursor,
-					(target, modifiers) => modifiers.HasModifier(TargetModifiers.ForceMove) && IsManuallyReleasableSlave(target));
+					Info.DeploySlaveCursor,
+					(target, modifiers) => modifiers.HasModifier(TargetModifiers.ForceMove) && IsDeployableSlave(target));
 			}
 		}
 
@@ -520,9 +546,9 @@ namespace OpenRA.Mods.CA.Traits
 			return null;
 		}
 
-		bool IsManuallyReleasableSlave(Actor a)
+		bool IsDeployableSlave(Actor a)
 		{
-			if (!Info.ManualReleaseEnabled)
+			if (Info.SlaveDeployEffect == SlaveDeployEffect.None)
 				return false;
 
 			return slaves.Contains(a);

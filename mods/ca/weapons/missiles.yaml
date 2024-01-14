@@ -577,12 +577,13 @@ Nike:
 	Warhead@1Dam: SpreadDamage
 		Damage: 6750
 		Range: 0, 0c64, 0c256, 4c256
-		ValidTargets: Air, ICBM
+		ValidTargets: Air
 	Warhead@smallDamage: SpreadDamage
 		Damage: 6750
 		Range: 0, 0c64, 0c256, 2c256
 		Falloff: 100, 70, 30, 10
-		ValidTargets: AirSmall
+		ValidTargets: AirSmall, ICBM
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, SAM
 	Warhead@3Eff: CreateEffect
 		ValidTargets: Air, AirSmall, ICBM, Ground, Water, Trees
 
@@ -999,7 +1000,6 @@ SCUD:
 		Spread: 341
 		Damage: 3400
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
-		ValidTargets: Ground, Water, Trees
 		Versus:
 			None: 90
 			Wood: 80
@@ -1031,10 +1031,9 @@ V3Weapon:
 	-Report:
 	ValidTargets: Ground, Trees, Water
 	Warhead@1Dam: SpreadDamage
-		Spread: 341
+		Spread: 448
 		Damage: 3400
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
-		ValidTargets: Ground, Water, Trees
 		Versus:
 			None: 90
 			Wood: 100
@@ -1044,7 +1043,7 @@ V3Weapon:
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@antiHeavySplash: SpreadDamage
 		Damage: 3400
-		Spread: 448
+		Spread: 512
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
 		ValidTargets: Vehicle, Husk
 		Versus:
@@ -2102,6 +2101,7 @@ BlackEagleMissiles:
 		Duration: 175
 		Condition: gapveiled
 		ValidTargets: Infantry, Vehicle, Ship
+		ValidRelationships: Enemy, Neutral
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		Image: veilblast
@@ -2123,6 +2123,7 @@ BlackEagleMissilesAA:
 		Duration: 175
 		Condition: gapveiled
 		ValidTargets: Air, AirSmall
+		ValidRelationships: Enemy, Neutral
 	Warhead@3Eff: CreateEffect
 		Explosions: idle
 		Image: veilblast

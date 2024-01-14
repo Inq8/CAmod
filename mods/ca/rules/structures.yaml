@@ -331,7 +331,7 @@ IRON:
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 130
-		Prerequisites: stek, ~structures.soviet, ~techlevel.unrestricted
+		Prerequisites: stek, ~structures.soviet, ~techlevel.high
 		BuildLimit: 1
 		Description: Makes a group of units invulnerable\n  for a short time.
 	TooltipExtras:
@@ -387,7 +387,7 @@ PDOX:
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 130
-		Prerequisites: atek, ~structures.allies, ~techlevel.unrestricted
+		Prerequisites: atek, ~structures.allies, ~techlevel.high
 		BuildLimit: 1
 		Description: Can be used to teleports units anywhere on the map.
 	TooltipExtras:
@@ -547,11 +547,11 @@ AGUN:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
-		MinRange: 5c0
-		Range: 6c0
+		MinRange: 6c0
+		Range: 8c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 5c0
+		Range: 6c0
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
@@ -941,7 +941,7 @@ SAM:
 		Type: Concrete
 	RevealsShroud:
 		MinRange: 5c0
-		Range: 8c0
+		Range: 7c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 5c0
@@ -3187,7 +3187,7 @@ NSAM:
 		Type: Concrete
 	RevealsShroud:
 		MinRange: 5c0
-		Range: 8c0
+		Range: 7c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 5c0
@@ -4633,7 +4633,7 @@ SGEN:
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 130
-		Prerequisites: tmpl, ~structures.nod, ~!player.shadow, ~techlevel.unrestricted
+		Prerequisites: tmpl, ~structures.nod, ~!player.shadow, ~techlevel.high
 		BuildLimit: 1
 		IconPalette: chrometd
 		Description: Makes a group of units/structures invisible\n  for a short time.
@@ -4699,7 +4699,7 @@ SGEN:
 SGEN.Shadow:
 	Inherits: SGEN
 	Buildable:
-		Prerequisites: tmpl, ~structures.nod, ~player.shadow, ~techlevel.unrestricted
+		Prerequisites: tmpl, ~structures.nod, ~player.shadow, ~techlevel.high
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Cloaks nearby units and structures\n• Requires power to operate\n• Special Ability: Tiberium Stealth
 	WithRangeCircle@SGEN:
@@ -4873,7 +4873,7 @@ PATR:
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 130
-		Prerequisites: gtek, ~structures.gdi, ~techlevel.unrestricted
+		Prerequisites: gtek, ~structures.gdi, ~techlevel.high
 		BuildLimit: 1
 		IconPalette: chrometd
 		Description: Launches E.M. Pulse Missiles that\n  disable vehicles & structures.

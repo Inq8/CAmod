@@ -2509,7 +2509,7 @@ KIRO:
 		Voice: Move
 		AltitudeVelocity: 0c50
 		CanForceLand: False
-		IdealSeparation: 1c256
+		IdealSeparation: 0c768
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
@@ -3779,14 +3779,14 @@ BEAG:
 	GpsRadarDot:
 		Sequence: Plane
 
-ACHO:
+KAMV:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 201
-		Prerequisites: ~aircraft.acho
+		Prerequisites: ~aircraft.kamv
 		Description: Durable helicopter gunship armed with\n  a chaingun and anti-tank rockets.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Heavy Armor, Light Armor
@@ -3794,7 +3794,7 @@ ACHO:
 	Valued:
 		Cost: 1800
 	Tooltip:
-		Name: Assault Chopper
+		Name: Kamov
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
@@ -3885,16 +3885,16 @@ ACHO:
 		PipCount: 6
 	WithMuzzleOverlay:
 	SpawnActorOnDeath:
-		Actor: ACHO.Husk
+		Actor: KAMV.Husk
 		RequiresCondition: ammo && !empdisable && !being-warped
 	SpawnActorOnDeath@Empty:
-		Actor: ACHO.Husk.empty
+		Actor: KAMV.Husk.empty
 		RequiresCondition: !ammo && !empdisable && !being-warped
 	SpawnActorOnDeath@EMP:
-		Actor: ACHO.Husk.EMP
+		Actor: KAMV.Husk.EMP
 		RequiresCondition: ammo && empdisable && !being-warped
 	SpawnActorOnDeath@EmptyEMP:
-		Actor: ACHO.Husk.empty.EMP
+		Actor: KAMV.Husk.empty.EMP
 		RequiresCondition: !ammo && empdisable && !being-warped
 	LeavesTrails:
 		Offsets: -427,0,0
@@ -3954,7 +3954,6 @@ SHDE:
 		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 80
-		Voice: Attack
 		PersistentTargeting: false
 		OpportunityFire: true
 		PauseOnCondition: empdisable || being-warped
@@ -3969,7 +3968,6 @@ SHDE:
 		CanHover: False
 		TakeoffSounds: dropup1.aud
 		LandingSounds: dropdwn1.aud
-		Voice: Move
 		CanSlide: False
 		AltitudeVelocity: 0c200
 	AutoTarget:
@@ -4030,8 +4028,6 @@ SHDE:
 		RequiresCondition: enable-smoke
 	Selectable:
 		DecorationBounds: 1536, 1194
-	Voiced:
-		VoiceSet: ScrinVoice
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
 	WithProductionIconOverlay:

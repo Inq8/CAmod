@@ -29,7 +29,6 @@ namespace OpenRA.Mods.CA.Activities
 		readonly Target target;
 		WDist maxAltitude;
 		WDist maxTargetMovement;
-		bool trackTarget;
 		bool trackingActive;
 		int launchAngleDegrees;
 		double launchAngleRad;
@@ -46,7 +45,6 @@ namespace OpenRA.Mods.CA.Activities
 			trackingActive = !trackTarget;
 			this.maxAltitude = maxAltitude;
 			this.maxTargetMovement = maxTargetMovement;
-			this.trackTarget = trackTarget;
 			launchAngleDegrees = (int)(cm.Info.LaunchAngle.Angle / (1024f / 360f));
 			launchAngleRad = Math.PI * launchAngleDegrees / 180.0;
 			cm.SetState(CruiseMissileState.Ascending);
