@@ -1371,7 +1371,7 @@ LCHR:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
-		Attributes: • Regenerates health while dealing damage (without upgrade)\n• Disables power plants and radars\n• Slows vehicles & cyborgs\n• Regenerates and heals allies when in coalescence form (with upgrade)\n• Special Ability: Coalescence (with upgrade)
+		Attributes: • Regenerates health while dealing damage (without upgrade)\n• Disables power plants\n• Slows vehicles & cyborgs\n• Regenerates and heals allies when in coalescence form (with upgrade)\n• Special Ability: Coalescence (with upgrade)
 	Mobile:
 		Speed: 82
 		TurnSpeed: 20
@@ -3527,6 +3527,7 @@ REA2:
 PROC.SCRIN:
 	Inherits: ^ScrinBuilding
 	Inherits@BOTREF: ^BotRefinery
+	Inherits@ResourceDrainable: ^ResourceDrainable
 	HitShape:
 		Type: Rectangle
 			TopLeft: -1536, -512
@@ -3783,7 +3784,6 @@ WSPH:
 NERV:
 	Inherits: ^ScrinBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
-	Inherits@POWERDRAIN: ^PowerDrainableRadar
 	Inherits@UPG: ^ProducesUpgrades
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@RESOURCESCANPOWER: ^ResourceScanPower
@@ -3840,7 +3840,6 @@ NERV:
 		Types: SpyInfiltrate
 	Power:
 		Amount: -40
-	-PowerMultiplier@POWERDRAIN:
 	ValidFactions:
 		Factions: reaper, traveler, harbinger, collector
 	ProvidesPrerequisite@buildingname:
@@ -4786,7 +4785,7 @@ GRCL:
 		Name: Greater Coalescence
 	TooltipExtras:
 		Description: Pulsing biomass that heals allies and feeds on enemies.
-		Attributes: • Heals nearby allies\n• Slows and drains health from enemies\n• Disables power plants and radars
+		Attributes: • Heals nearby allies\n• Slows and drains health from enemies\n• Disables power plants
 	RenderSprites:
 		Palette: caneon
 	WithMakeAnimation:

@@ -2971,6 +2971,7 @@ TibSurgeTargeter:
 FloatingDiscLaser:
 	Inherits: Laser
 	ValidTargets: Ground, Water, Air, AirSmall
+	InvalidTargets: PowerDrainable, ResourceDrainable
 	ReloadDelay: 60
 	Range: 5c0
 	Report: vfloatta.aud
@@ -2979,6 +2980,7 @@ FloatingDiscLaser:
 		SecondaryBeamColor: eb39d340
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Ground, Water, Air, AirSmall
+		InvalidTargets: PowerDrainable, ResourceDrainable
 		Damage: 13000
 		Versus:
 			None: 100
@@ -2988,3 +2990,31 @@ FloatingDiscLaser:
 			Concrete: 75
 			Brick: 25
 			Aircraft: 35
+
+^FloatingDiscDrainer:
+	ReloadDelay: 10
+	Range: 0c512
+	Projectile: InstantHit
+	TargetActorCenter: true
+	Warhead@Dummy: Dummy
+		ValidRelationships: Enemy, Neutral
+
+FloatingDiscPowerDrainer:
+	Inherits: ^FloatingDiscDrainer
+	ValidTargets:	PowerDrainable
+	Warhead@PowerDrain: GrantExternalCondition
+		Range: 0c128
+		Duration: 11
+		Condition: discpowerdrain
+		ValidRelationships: Enemy, Neutral
+		ValidTargets: PowerDrainable
+
+FloatingDiscResourceDrainer:
+	Inherits: ^FloatingDiscDrainer
+	ValidTargets:	ResourceDrainable
+	Warhead@ResourceDrain: GrantExternalCondition
+		Range: 0c128
+		Duration: 11
+		Condition: resourcedrain
+		ValidRelationships: Enemy, Neutral
+		ValidTargets: ResourceDrainable

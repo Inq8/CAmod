@@ -578,21 +578,33 @@
 	PowerMultiplier@POWERDRAIN:
 		Modifier: 0
 		RequiresCondition: powerdrain
+	ExternalCondition@DiscPowerDrain:
+		Condition: discpowerdrain
+	Power@DiscPowerDrain:
+		Power: -10000
+		RequiresCondition: discpowerdrain
 	WithColoredOverlay@POWERDRAIN:
-		RequiresCondition: powerdrain
+		RequiresCondition: powerdrain || discpowerdrain
 		Color: 000000b4
 	WithDecoration@POWERDRAIN:
 		Image: poweroff
 		Sequence: offline
 		Palette: chrome
-		RequiresCondition: powerdrain
+		RequiresCondition: powerdrain || discpowerdrain
 		Position: Center
 
-^PowerDrainableRadar:
-	Inherits: ^PowerDrainable
-	GrantCondition@POWERDRAINJAMMED:
-		Condition: jammed
-		RequiresCondition: powerdrain
+^ResourceDrainable:
+	Targetable@ResourceDrain:
+		TargetTypes: ResourceDrainable
+	ExternalCondition@ResourceDrain:
+		Condition: resourcedrain
+	CashTrickler@ResourceDrain:
+		Interval: 50
+		Amount: -30
+		RequiresCondition: resourcedrain
+	WithColoredOverlay@ResourceDrain:
+		RequiresCondition: resourcedrain
+		Color: ffff0022
 
 ^GDIUpgrade:
 	GrantConditionOnPrerequisite@HOLD:
