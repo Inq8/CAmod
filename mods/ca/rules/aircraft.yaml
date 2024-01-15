@@ -4080,6 +4080,10 @@ VERT:
 		Weapon: VertigoBomb
 		LocalOffset: 2,0,-43
 		PauseOnCondition: !ammo
+	Armament@DECLOAK:
+		Name: secondary
+		Weapon: VertigoBombTargeter
+		PauseOnCondition: !ammo
 	AttackAircraft:
 		FacingTolerance: 80
 		PersistentTargeting: false
@@ -4103,6 +4107,7 @@ VERT:
 		Ammo: 1
 		ReloadDelay: 180
 		AmmoCondition: ammo
+		Armaments: primary
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
@@ -4176,6 +4181,9 @@ VERT:
 	GrantConditionOnDamageState@UNCLOAK:
 		Condition: cloak-force-disabled
 		ValidDamageStates: Critical
+	-RangeMultiplier@SEEK:
+	-RangeMultiplier@SEEK2:
+	-RangeMultiplier@SEEK3:
 
 MCOR:
 	Inherits: ^HelicopterTD
@@ -4329,7 +4337,7 @@ DISC:
 		RequiresCondition: resourcedraining
 	WithIdleOverlay@Drain:
 		Sequence: drain
-		Palette: effect-ignore-lighting-alpha85
+		Palette: effect
 		RequiresCondition: powerdraining || resourcedraining
 		IsDecoration: true
 	AmbientSoundCA@Drain:
@@ -4344,9 +4352,6 @@ DISC:
 	SpawnActorOnDeath@EMP:
 		Actor: DISC.Husk.EMP
 		RequiresCondition: airborne && empdisable && !being-warped
-	AutoTarget:
-		InitialStance: HoldFire
-		InitialStanceAI: AttackAnything
 	LeavesTrails@2:
 		Offsets: 0,300,0
 		MovingInterval: 2
