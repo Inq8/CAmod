@@ -4281,6 +4281,12 @@ DISC:
 	RevealsShroud@GAPGEN:
 		Range: 8c0
 		Type: GroundPosition
+	TargetSpecificOrderVoice:
+		Orders: Attack, ForceAttack
+		TargetTypeVoices:
+			PowerDrainable: Steal
+			ResourceDrainable: Steal
+		DefaultVoice: Attack
 	Aircraft:
 		Speed: 56
 		CruiseAltitude: 2560
@@ -4306,8 +4312,8 @@ DISC:
 	Turreted:
 		TurnSpeed: 512
 	WithAttackOverlay:
-    	Sequence: charge
-    	Palette: scrin
+		Sequence: charge
+		Palette: scrin
 	WithMuzzleOverlay:
 	GrantConditionOnAttackCA@PowerDrain:
 		Condition: powerdraining
