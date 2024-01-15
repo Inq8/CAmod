@@ -1807,7 +1807,7 @@ BEAG.Husk.Empty.EMP:
 KAMV.Husk:
 	Inherits: ^HelicopterHusk
 	Tooltip:
-		Name: Assault Chopper
+		Name: Kamov
 	Aircraft:
 		TurnSpeed: 4
 		Speed: 112
@@ -1958,3 +1958,32 @@ MCOR.Husk:
 MCOR.Husk.EMP:
 	Inherits: MCOR.Husk
 	Inherits@EMP: ^EmpVisualEffect
+
+DISC.Husk:
+	Inherits: ^HelicopterHusk
+	Tooltip:
+		Name: Floating Disc
+		TurnSpeed: 12
+		Speed: 112
+	LeavesTrails:
+		Offsets: -427,0,0
+		Image: smokey
+		MovingInterval: 3
+		StationaryInterval: 3
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+	RevealsShroud:
+		Range: 11c0
+		MinRange: 9c0
+		Type: GroundPosition
+		RevealGeneratedShroud: false
+	RevealsShroud@GAPGEN:
+		Range: 9c0
+		Type: GroundPosition
+	RenderSprites:
+		Image: disccrash
+
+DISC.Husk.EMP:
+	Inherits: HIND.Husk
+	Inherits: ^EmpVisualEffect

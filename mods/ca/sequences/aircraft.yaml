@@ -578,10 +578,36 @@ mcor:
 	icon:
 		Filename: mcoricnh.shp
 
-fdis:
-	Inherits: mcor
+disc:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: disc.shp
+		Length: *
+	muzzle:
+		Filename: scrinmuzz6.shp
+		Length: *
+		Tick: 40
+		ZOffset: 2049
+		BlendMode: Additive
 	drain:
 		Filename: diskray.shp
 		Length: *
 		ZOffset: -128
 		Offset: 0, 10
+		AlphaFade: True
+	charge:
+    	Filename: disccharge.shp
+		Length: *
+		Tick: 70
+		ZOffset: 1023
+		BlendMode: Additive
+		AlphaFade: True
+	icon:
+		Filename: discicon.shp
+
+disccrash:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: disccrash.shp
+		Facings: 32
+		UseClassicFacings: True

@@ -4253,8 +4253,8 @@ MCOR:
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
 
-FDIS:
-	Inherits: ^HelicopterTD
+DISC:
+	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Valued:
 		Cost: 2000
@@ -4267,13 +4267,10 @@ FDIS:
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 161
 		Prerequisites: afld, stek, ~aircraft.yuri, ~techlevel.high
-		IconPalette: chrometd
 		Description: Heavily armoured attack craft.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Light Armor
 		Attributes: • Shuts down power\n• Drains resources from refineries
-	RenderSprites:
-		Image: mcor
 	Health:
 		HP: 60000
 	RevealsShroud:
@@ -4289,17 +4286,29 @@ FDIS:
 		CruiseAltitude: 2560
 		AltitudeVelocity: 0c100
 		TurnSpeed: 512
-	AttackAircraft:
+		Voice: Move
+	AttackTurreted:
 		FacingTolerance: 512
 		Armaments: primary, secondary, tertiary
+		Voice: Attack
 	Armament@PRIMARY:
 		Weapon: FloatingDiscLaser
+		FireDelay: 5
+		LocalOffset: 828,0,0
+		MuzzleSequence: muzzle
+		MuzzlePalette: scrin
 	Armament@Secondary:
 		Weapon: FloatingDiscPowerDrainer
 		Name: secondary
 	Armament@Tertiary:
 		Weapon: FloatingDiscResourceDrainer
 		Name: tertiary
+	Turreted:
+		TurnSpeed: 512
+	WithAttackOverlay:
+    	Sequence: charge
+    	Palette: scrin
+	WithMuzzleOverlay:
 	GrantConditionOnAttackCA@PowerDrain:
 		Condition: powerdraining
 		RevokeDelay: 11
@@ -4324,25 +4333,39 @@ FDIS:
 		RequiresCondition: powerdraining || resourcedraining
 		InitialSoundLength: 33
 	SpawnActorOnDeath:
-		Actor: MCOR.Husk
+		Actor: DISC.Husk
 		RequiresCondition: airborne && !empdisable && !being-warped
 	SpawnActorOnDeath@EMP:
-		Actor: MCOR.Husk.EMP
+		Actor: DISC.Husk.EMP
 		RequiresCondition: airborne && empdisable && !being-warped
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
-	LeavesTrails:
-		Offsets: -427,0,0
+	LeavesTrails@2:
+		Offsets: 0,300,0
 		MovingInterval: 2
 		Image: smokey
-		StationaryInterval: 2
+		StationaryInterval: 10
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+		RequiresCondition: enable-smoke
+	LeavesTrails@3:
+		Offsets: 300,-300,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 15
+		StartDelay: 15
 		SpawnAtLastPosition: False
 		TrailWhileStationary: True
 		Type: CenterPosition
 		RequiresCondition: enable-smoke
 	Selectable:
 		DecorationBounds: 1792, 1536
+	Voiced:
+		VoiceSet: DiscVoice
+	SoundOnDamageTransition:
+		DestroyedSounds: diskdie1.aud
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
 	WithProductionIconOverlay:
@@ -4351,7 +4374,9 @@ FDIS:
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
 	AmbientSoundCA:
-		SoundFiles: vflolo2a.aud, vflolo2b.aud
+		SoundFiles: diskmolp2a.aud, diskmolp2b.aud
+		Interval: 15
+		VolumeMultiplier: 0.1
 	-RangeMultiplier@SEEK:
 	-RangeMultiplier@SEEK2:
 	-RangeMultiplier@SEEK3:
