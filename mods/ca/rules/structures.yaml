@@ -585,7 +585,6 @@ DOME:
 	Inherits: ^Building
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@SHAPE: ^2x2Shape
-	Inherits@POWERDRAIN: ^PowerDrainableRadar
 	Inherits@UPG: ^ProducesUpgrades
 	Inherits@SOVIETRADARPOWERS: ^SovietRadarPowers
 	Inherits@VEILOFWARPOWER: ^VeilOfWarPower
@@ -644,7 +643,6 @@ DOME:
 		Types: SpyInfiltrate
 	Power:
 		Amount: -40
-	-PowerMultiplier@POWERDRAIN:
 	ValidFactions:
 		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
 	ProvidesPrerequisite@buildingname:
@@ -1318,6 +1316,7 @@ FACT:
 PROC:
 	Inherits: ^Building
 	Inherits@BOTREF: ^BotRefinery
+	Inherits@ResourceDrainable: ^ResourceDrainable
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 60
@@ -1530,6 +1529,9 @@ HPAD:
 	ProvidesPrerequisiteValidatedFaction@yuri:
 		Factions: yuri
 		Prerequisite: aircraft.yuri
+	ProvidesPrerequisiteValidatedFaction@kiro:
+		Factions: russia, ukraine, iraq
+		Prerequisite: aircraft.kiro
 	ProvidesPrerequisiteValidatedFaction@chinookvisible:
 		Factions: allies, england, france, germany, gdi, zocom, eagle, talon, arc, nod, blackh, legion, marked, shadow
 		Prerequisite: aircraft.chinookvisible
@@ -1614,6 +1616,9 @@ AFLD:
 	ProvidesPrerequisiteValidatedFaction@yuri:
 		Factions: yuri
 		Prerequisite: aircraft.yuri
+	ProvidesPrerequisiteValidatedFaction@kiro:
+		Factions: russia, ukraine, iraq
+		Prerequisite: aircraft.kiro
 	SupportPowerChargeBar:
 	Power:
 		Amount: -20
@@ -3446,7 +3451,6 @@ OBLI:
 HQ:
 	Inherits: ^BuildingTD
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
-	Inherits@POWERDRAIN: ^PowerDrainableRadar
 	Inherits@UPG: ^ProducesUpgrades
 	Inherits@GDIRADARPOWERS: ^GDIRadarPowers
 	Inherits@SATHACKPOWER: ^SatHackPower
@@ -3525,7 +3529,6 @@ HQ:
 		Types: SpyInfiltrate, SabInfiltrate
 	Power:
 		Amount: -40
-	-PowerMultiplier@POWERDRAIN:
 	ValidFactions:
 		Factions: talon, zocom, eagle, arc, blackh, marked, legion, shadow
 	ProvidesPrerequisite@buildingname:
@@ -3587,7 +3590,6 @@ HQ:
 EYE:
 	Inherits: ^BuildingTD
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
-	Inherits@POWERDRAIN: ^PowerDrainableRadar
 	Inherits@IONCANNONPOWER: ^IonCannonPower
 	Inherits@SURGICALSTRIKEPOWER: ^SurgicalStrikePower
 	Selectable:
@@ -3654,7 +3656,6 @@ EYE:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
-	-PowerMultiplier@POWERDRAIN:
 	ValidFactions:
 		Factions: talon, zocom, eagle, arc
 	ProvidesPrerequisiteValidatedFaction@zoceye:
@@ -3834,6 +3835,7 @@ HPAD.TD:
 PROC.TD:
 	Inherits: ^BuildingTD
 	Inherits@BOTREF: ^BotRefinery
+	Inherits@ResourceDrainable: ^ResourceDrainable
 	HitShape:
 		Type: Rectangle
 			TopLeft: -1536, -512

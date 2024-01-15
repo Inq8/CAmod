@@ -2432,7 +2432,7 @@ KIRO:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 160
-		Prerequisites: afld, stek, ~aircraft.soviet, ~techlevel.high
+		Prerequisites: afld, stek, ~aircraft.kiro, ~techlevel.high
 		Description: Heavily armoured airship armed with specialised bombs.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
@@ -3553,7 +3553,7 @@ PMAK:
 		Description: Heavy bomber with powerful armor penetrating bombs.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Defenses, Light Armor
-		Weaknesses: • Weak vs Infantry\n	• Cannot attack Aircraft
+		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
 	Valued:
 		Cost: 2200
 	Tooltip:
@@ -3595,8 +3595,8 @@ PMAK:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
 	AmmoPool:
-		Ammo: 5
-		ReloadDelay: 36
+		Ammo: 3
+		ReloadDelay: 60
 		AmmoCondition: ammo
 	WithAmmoPipsDecoration:
 		Position: BottomLeft
@@ -3666,6 +3666,9 @@ PMAK:
 	GrantConditionOnAttack@BOMBING:
 		Condition: bombing-run
 		RevokeDelay: 7
+	-RangeMultiplier@SEEK:
+	-RangeMultiplier@SEEK2:
+	-RangeMultiplier@SEEK3:
 
 BEAG:
 	Inherits: ^Helicopter
@@ -4249,3 +4252,106 @@ MCOR:
 		Prerequisites: aircraft.upgraded
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+
+FDIS:
+	Inherits: ^HelicopterTD
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Valued:
+		Cost: 2000
+	Tooltip:
+		Name: Floating Disc
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		Queue: AircraftSQ, AircraftMQ
+		BuildAtProductionType: Helicopter
+		BuildPaletteOrder: 161
+		Prerequisites: afld, stek, ~aircraft.yuri, ~techlevel.high
+		IconPalette: chrometd
+		Description: Heavily armoured attack craft.
+	TooltipExtras:
+		Strengths: • Strong vs Buildings, Defenses, Light Armor
+		Attributes: • Shuts down power\n• Drains resources from refineries
+	RenderSprites:
+		Image: mcor
+	Health:
+		HP: 60000
+	RevealsShroud:
+		Range: 10c0
+		MinRange: 8c0
+		Type: GroundPosition
+		RevealGeneratedShroud: False
+	RevealsShroud@GAPGEN:
+		Range: 8c0
+		Type: GroundPosition
+	Aircraft:
+		Speed: 56
+		CruiseAltitude: 2560
+		AltitudeVelocity: 0c100
+		TurnSpeed: 512
+	AttackAircraft:
+		FacingTolerance: 512
+		Armaments: primary, secondary, tertiary
+	Armament@PRIMARY:
+		Weapon: FloatingDiscLaser
+	Armament@Secondary:
+		Weapon: FloatingDiscPowerDrainer
+		Name: secondary
+	Armament@Tertiary:
+		Weapon: FloatingDiscResourceDrainer
+		Name: tertiary
+	GrantConditionOnAttackCA@PowerDrain:
+		Condition: powerdraining
+		RevokeDelay: 11
+		ArmamentNames: secondary
+	GrantConditionOnAttackCA@ResourceDrain:
+		Condition: resourcedraining
+		RevokeDelay: 11
+		ArmamentNames: tertiary
+	CashTrickler@ResourceDrain:
+		Interval: 50
+		Amount: 30
+		RequiresCondition: resourcedraining
+	WithIdleOverlay@Drain:
+		Sequence: drain
+		Palette: effect-ignore-lighting-alpha85
+		RequiresCondition: powerdraining || resourcedraining
+		IsDecoration: true
+	AmbientSoundCA@Drain:
+		SoundFiles: vflolo5b.aud
+		InitialSound: vflolo4a.aud
+		FinalSound: vflolo6a.aud
+		RequiresCondition: powerdraining || resourcedraining
+		InitialSoundLength: 33
+	SpawnActorOnDeath:
+		Actor: MCOR.Husk
+		RequiresCondition: airborne && !empdisable && !being-warped
+	SpawnActorOnDeath@EMP:
+		Actor: MCOR.Husk.EMP
+		RequiresCondition: airborne && empdisable && !being-warped
+	AutoTarget:
+		InitialStance: HoldFire
+		InitialStanceAI: AttackAnything
+	LeavesTrails:
+		Offsets: -427,0,0
+		MovingInterval: 2
+		Image: smokey
+		StationaryInterval: 2
+		SpawnAtLastPosition: False
+		TrailWhileStationary: True
+		Type: CenterPosition
+		RequiresCondition: enable-smoke
+	Selectable:
+		DecorationBounds: 1792, 1536
+	ProducibleWithLevel:
+		Prerequisites: aircraft.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: aircraft.upgraded
+	GrantConditionOnDamageState@SmokeTrail:
+		Condition: enable-smoke
+	AmbientSoundCA:
+		SoundFiles: vflolo2a.aud, vflolo2b.aud
+	-RangeMultiplier@SEEK:
+	-RangeMultiplier@SEEK2:
+	-RangeMultiplier@SEEK3:

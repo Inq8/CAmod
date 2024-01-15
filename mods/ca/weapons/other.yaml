@@ -328,7 +328,7 @@ HeavyFlameTankFlamer:
 
 HeavyFlameTankFlamer.UPG:
 	Inherits: HeavyFlameTankFlamer
-	ReloadDelay: 90
+	ReloadDelay: 95
 	Projectile: LinearPulse
 		Image: flameallblack
 		Palette: scrin-ignore-lighting-alpha85
@@ -1757,7 +1757,7 @@ Railgun:
 	Range: 8c0
 	Report: railuse5.aud
 	InvalidTargets: Air, Submarine
-	Projectile: Railgun
+	Projectile: RailgunCA
 		Duration: 10
 		Blockable: true
 		DamageActorsInLine: false
@@ -1788,7 +1788,7 @@ TitanRailgun:
 	Report: titanrailgun1.aud, titanrailgun2.aud
 	ReloadDelay: 80
 	Range: 5c768
-	Projectile: Railgun
+	Projectile: RailgunCA
 		DamageActorsInLine: true
 		BeamColor: EEFFFFBB
 		BeamWidth: 48
@@ -1800,8 +1800,10 @@ TitanRailgun:
 		BeamAlphaDeltaPerTick: -8
 		HelixPitch: 682
 		ZOffset: 4096
+		PassthroughToMaxRange: true
+		PassthroughMinDistance: 2c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 6500
+		Damage: 5000
 		Versus:
 			None: 30
 			Wood: 70
@@ -1810,7 +1812,7 @@ TitanRailgun:
 			Concrete: 60
 		ValidRelationships: Enemy, Neutral
 	Warhead@2Dam: SpreadDamage
-		Damage: 1250
+		Damage: 1000
 		Versus:
 			None: 30
 			Wood: 70
@@ -1827,7 +1829,7 @@ TitanRailgunImpact:
 	-Warhead@2Dam:
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
-		Damage: 9500
+		Damage: 11000
 		ValidRelationships: Enemy, Neutral, Ally
 
 IonZap:
@@ -2932,8 +2934,8 @@ VertigoBomb:
 		ImpactSounds: vert-bombhit1.aud, vert-bombhit2.aud
 
 PeacemakerBombs:
-	ReloadDelay: 6
-	Range: 2c0
+	ReloadDelay: 10
+	Range: 2c256
 	Report: chute1.aud
 	Projectile: GravityBomb
 		Image: B2BOMB
@@ -2942,7 +2944,7 @@ PeacemakerBombs:
 		Shadow: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
-		Damage: 25000
+		Damage: 41500
 		Versus:
 			None: 0
 			Wood: 30
@@ -2952,7 +2954,7 @@ PeacemakerBombs:
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster, AirToGround
 	Warhead@2Dam: SpreadDamage
 		Spread: 512
-		Damage: 25000
+		Damage: 41500
 		Versus:
 			None: 25
 			Wood: 0
@@ -2983,3 +2985,54 @@ TibSurgeTargeter:
 	Warhead@Dummy: Dummy
 		ValidTargets:	Infantry, Vehicle, Structure
 		ValidRelationships: Enemy, Neutral
+
+FloatingDiscLaser:
+	Inherits: Laser
+	ValidTargets: Ground, Water, Air, AirSmall
+	InvalidTargets: PowerDrainable, ResourceDrainable
+	ReloadDelay: 60
+	Range: 5c0
+	Report: vfloatta.aud
+	Projectile: LaserZapCA
+		Color: eb39d380
+		SecondaryBeamColor: eb39d340
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Ground, Water, Air, AirSmall
+		InvalidTargets: PowerDrainable, ResourceDrainable
+		Damage: 13000
+		Versus:
+			None: 100
+			Light: 75
+			Wood: 100
+			Heavy: 75
+			Concrete: 75
+			Brick: 25
+			Aircraft: 35
+
+^FloatingDiscDrainer:
+	ReloadDelay: 10
+	Range: 0c512
+	Projectile: InstantHit
+	TargetActorCenter: true
+	Warhead@Dummy: Dummy
+		ValidRelationships: Enemy, Neutral
+
+FloatingDiscPowerDrainer:
+	Inherits: ^FloatingDiscDrainer
+	ValidTargets:	PowerDrainable
+	Warhead@PowerDrain: GrantExternalCondition
+		Range: 0c128
+		Duration: 11
+		Condition: discpowerdrain
+		ValidRelationships: Enemy, Neutral
+		ValidTargets: PowerDrainable
+
+FloatingDiscResourceDrainer:
+	Inherits: ^FloatingDiscDrainer
+	ValidTargets:	ResourceDrainable
+	Warhead@ResourceDrain: GrantExternalCondition
+		Range: 0c128
+		Duration: 11
+		Condition: resourcedrain
+		ValidRelationships: Enemy, Neutral
+		ValidTargets: ResourceDrainable
