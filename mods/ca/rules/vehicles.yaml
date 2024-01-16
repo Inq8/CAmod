@@ -7363,10 +7363,10 @@ THWK:
 		Prerequisites: gtek, ~thwk.upgrade, ~techlevel.high
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd
-		Description: Extreme Long-range missile artillery.
+		Description: Extreme long-range missile artillery.
 	TooltipExtras:
-		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
-		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets\n• Cannot fire while moving
+		Strengths: • Strong vs Buildings, Defenses, Light Armor
+		Weaknesses: • Cannot attack Aircraft\n• Has difficulty hitting moving targets\n• Cannot fire while moving\n• Rockets can be shot down by static anti-air defenses
 	Mobile:
 		Speed: 44
 		Voice: Move
@@ -7390,7 +7390,6 @@ THWK:
 		Weapon: THLauncher
 	AttackTurreted:
 		TargetFrozenActors: True
-		ForceFireIgnoresActors: True
 		Voice: Attack
 		PauseOnCondition: empdisable || being-warped
 	WithSpriteTurret@OneMissile:
@@ -7403,7 +7402,7 @@ THWK:
 		RespawnTicks: 249
 		LoadedCondition: loaded
 		LaunchingCondition: launching
-		SpawnOffset: 0,256,128
+		SpawnOffset: 100,426,512
 	WithSpawnerMasterPipsDecoration:
 		Position: BottomLeft
 		Margin: 4, 3
@@ -7441,8 +7440,10 @@ TH:
 		LaunchAngle: 128
 		Speed: 165
 		MaxAltitude: 2c511
-		MaxTargetMovement: 21c0
+		MinAirborneAltitude: 256
 		AirborneCondition: airborne
+		TrackTarget: true
+		MaxTargetMovement: 2c0
 	LeavesTrailsCA:
 		Image: icbmsmoke
 		MovingInterval: 2
@@ -7455,4 +7456,9 @@ TH:
 		RequiresCondition: !airborne
 	Explodes:
 		Weapon: THExplodeAirborne
+		RequiresCondition: airborne
+	ThrowsShrapnel@Debris:
+		Weapons: SmallDebris
+		Pieces: 3, 5
+		Range: 1c511, 3c0
 		RequiresCondition: airborne

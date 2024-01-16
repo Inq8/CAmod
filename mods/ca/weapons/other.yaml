@@ -2587,7 +2587,7 @@ JDAM:
 		RandomClusterCount: 3
 		Dimensions: 3,3
 		Footprint: xxx xxx xxx
-	Warhead@Concussion2: GrantExternalCondition
+	Warhead@Concussion: GrantExternalCondition
 		Range: 3c0
 		Duration: 70
 		Condition: concussion
@@ -2932,6 +2932,16 @@ VertigoBomb:
 	Report: vert-bomb1.aud
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: vert-bombhit1.aud, vert-bombhit2.aud
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			Wood: 80
+	-Warhead@Concussion:
+
+VertigoBombTargeter:
+	Range: 9c0
+	ReloadDelay: 50
+	Projectile: InstantHit
+	Warhead@1Dam: Dummy
 
 PeacemakerBombs:
 	ReloadDelay: 10

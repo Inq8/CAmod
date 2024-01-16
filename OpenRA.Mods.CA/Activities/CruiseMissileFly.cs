@@ -42,7 +42,7 @@ namespace OpenRA.Mods.CA.Activities
 			length = Math.Max((targetPos - launchPos).Length / this.cm.Info.Speed, 1);
 			facing = (targetPos - launchPos).Yaw;
 			cm.Facing = GetEffectiveFacing();
-			trackingActive = !trackTarget;
+			trackingActive = trackTarget;
 			this.maxAltitude = maxAltitude;
 			this.maxTargetMovement = maxTargetMovement;
 			launchAngleDegrees = (int)(cm.Info.LaunchAngle.Angle / (1024f / 360f));

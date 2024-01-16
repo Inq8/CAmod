@@ -39,7 +39,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly string DescendingCondition = null;
 
 		[Desc("If true, missile will track target.")]
-		public readonly bool TrackTarget = true;
+		public readonly bool TrackTarget = false;
 
 		public override object Create(ActorInitializer init) { return new CruiseMissile(init, this); }
 	}
