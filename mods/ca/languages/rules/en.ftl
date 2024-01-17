@@ -50,6 +50,6 @@ dropdown-difficulty =
     .description = The difficulty of the mission
 
 options-difficulty =
-    .easy = Beginner
-    .normal = Veteran
-    .hard = Expert
+    .easy = Easy
+    .normal = Normal
+    .hard = Hard

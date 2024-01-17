@@ -268,9 +268,10 @@
 			Tree: 200
 			Light: 92
 			Heavy: 115
-			Wood: 70
+			Wood: 75
 			Concrete: 60
 		InvalidTargets: Air, AirSmall
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated
 	Warhead@3Eff_impact: CreateEffect
 		Explosions: nuke3
 		ImpactSounds: kaboom1.aud, kaboom22.aud
@@ -280,7 +281,7 @@
 		SmudgeType: Scorch
 		InvalidTargets: Vehicle, Structure, Wall, Trees
 	Warhead@18Radio: CreateTintedCells
-		Level: 250
+		Level: 125
 		Falloff: 100, 55, 32, 5
 		LayerName: radioactivity.weak
 
@@ -291,6 +292,9 @@
 	Warhead@1Dam: SpreadDamage
 		Versus:
 			None: 60
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
+	Warhead@18Radio: CreateTintedCells
+		Level: 250
 
 183mm:
 	Inherits: ^Cannon
