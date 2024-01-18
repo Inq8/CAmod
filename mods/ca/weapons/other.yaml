@@ -2693,6 +2693,21 @@ AttachShadowBeacon:
 		SmudgeType: Crater
 		InvalidTargets: Structure, Wall, Trees
 
+TinyDebris:
+	Inherits: ^Debris
+	Projectile: Bullet
+		Image: dirt
+		Palette: terrain
+		Sequences: 1, 2, 3, 4, 5
+		BounceCount: 2
+		BounceRangeModifier: 10
+		InvalidBounceTerrain: Water
+	Warhead@1Dam: SpreadDamage
+		Damage: 1
+	-Warhead@2Eff:
+	-Warhead@3EffWater: CreateEffect
+	-Warhead@4Smu:
+
 SmallDebris:
 	Inherits: ^Debris
 
@@ -2944,19 +2959,21 @@ VertigoBombTargeter:
 	Warhead@1Dam: Dummy
 
 PeacemakerBombs:
-	ReloadDelay: 10
 	Range: 2c256
-	Report: chute1.aud
+	Report: bwhis.aud
+	Burst: 5
+	BurstDelays: 6
+	TargetActorCenter: true
 	Projectile: GravityBomb
-		Image: B2BOMB
+		Image: medbomb
 		Velocity: 20, 0, -60
 		Acceleration: 0, 0, 0
 		Shadow: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
-		Damage: 41500
+		Damage: 24900
 		Versus:
-			None: 0
+			None: 15
 			Wood: 30
 			Light: 70
 			Heavy: 100
@@ -2964,7 +2981,7 @@ PeacemakerBombs:
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster, AirToGround
 	Warhead@2Dam: SpreadDamage
 		Spread: 512
-		Damage: 41500
+		Damage: 24900
 		Versus:
 			None: 25
 			Wood: 0
@@ -2978,13 +2995,19 @@ PeacemakerBombs:
 		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
 	Warhead@3Eff: CreateEffect
 		Explosions: building, building2
-		ImpactSounds: kaboom25.aud
+		ImpactSounds: kaboom15.aud, kaboom12.aud
 		ValidTargets: Ground, Ship, Trees
 	Warhead@4EffWater: CreateEffect
 		Explosions: small_splash
-		ImpactSounds: splash9.aud
+		ImpactSounds: h2obomb2.aud
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure
+	Warhead@Shrap: FireShrapnel
+		Weapon: TinyDebris
+		Amount: 10
+		AimChance: 0
+		ValidTargets: Ground, Water, Infantry, Vehicle
+		ThrowWithoutTarget: true
 
 TibSurgeTargeter:
 	ReloadDelay: 750

@@ -3578,6 +3578,7 @@ PMAK:
 	AttackAircraft:
 		FacingTolerance: 512
 		PersistentTargeting: false
+		Voice: Attack
 		OpportunityFire: true
 		PauseOnCondition: empdisable || being-warped
 	Aircraft:
@@ -3587,15 +3588,16 @@ PMAK:
 		RepulsionSpeed: 40
 		MaximumPitch: 56
 		CanHover: False
-		TakeoffSounds: mtoff1.aud, mtoff2.aud
-		LandingSounds: mland1.aud, mland2.aud
+		Voice: Move
+		TakeoffSounds: btoff1.aud, btoff2.aud
+		LandingSounds: bland1.aud, bland2.aud
 		CanSlide: False
 		AltitudeVelocity: 0c200
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
 	AmmoPool:
-		Ammo: 3
+		Ammo: 5
 		ReloadDelay: 60
 		AmmoCondition: ammo
 	WithAmmoPipsDecoration:
@@ -3669,6 +3671,8 @@ PMAK:
 	-RangeMultiplier@SEEK:
 	-RangeMultiplier@SEEK2:
 	-RangeMultiplier@SEEK3:
+	Voiced:
+		VoiceSet: HarrierVoice
 
 BEAG:
 	Inherits: ^Helicopter
