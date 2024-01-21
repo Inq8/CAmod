@@ -92,14 +92,33 @@ EnslaveVehicle:
 	Range: 7c0
 	ReloadDelay: 35
 
-Singularity:
-	ReloadDelay: 10000
+MothershipExplosion:
+	Inherits: KirovExplode
+	ValidTargets: Ground, Water, Air, Wormhole
 	Projectile: InstantExplode
-	Warhead@1Dam: SpreadDamage
+	Warhead@defKiller: SpreadDamage
+		Damage: 300000
+		Spread: 12c0
+		Falloff: 100, 100, 0
+		ValidTargets: Defense
+	Warhead@infKiller: SpreadDamage
+		Delay: 10
+		Damage: 300000
+		Spread: 12c0
+		Falloff: 100, 100, 0
+		ValidTargets: Infantry
+		InvalidTargets: Cyborg
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
+	Warhead@wallKiller: SpreadDamage
 		Spread: 8c0
 		Damage: 80000
 		ValidTargets: Wall
-		Versus:
-			Wood: 150
-			Concrete: 150
-		DamageTypes: Prone50Percent, TriggerProne, FireDeath, Incendiary
+	Warhead@emp: GrantExternalCondition
+		Range: 20c0
+		Duration: 3000
+		Condition: empdisable
+		ValidTargets: Vehicle, Defense, Air
+		InvalidTargets: Cyborg
+	Warhead@empEffect: CreateEffect
+		ExplosionPalette: tsunit-ignore-lighting-alpha75
+		Explosions: pulse_explosion3

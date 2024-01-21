@@ -896,17 +896,6 @@ FlipSlaveFaction = function(player)
 end
 
 DoFinale = function()
-	local centerActors = Map.ActorsInCircle(WormholeWP.CenterPosition, WDist.New(16 * 1024));
-	Utils.Do(centerActors, function(a)
-		if not a.IsDead and (a.HasProperty("StartBuildingRepairs") or a.Type == "swal") and a.Owner == Scrin then
-			if a.Type == "shar" or a.Type == "scol" or a.Type == "swal" then
-				a.Kill()
-			else
-				a.Owner = NeutralScrin
-			end
-		end
-	end)
-
 	local pacs = Scrin.GetActorsByTypes({ "pac", "deva", "stmr" })
 	Utils.Do(pacs, function(a)
 		if not a.IsDead then
@@ -931,31 +920,34 @@ DoFinale = function()
 		Actor.Create("wormholelg", true, { Owner = Scrin, Location = WormholeWP.Location })
 	end)
 
+	Actor.Create("wormhole", true, { Owner = Kane, Location = KaneSpawn.Location })
 	local kane = Actor.Create("kane", true, { Owner = Kane, Location = KaneSpawn.Location, Facing = Angle.South })
-	Trigger.AfterDelay(DateTime.Seconds(5), function()
+
+	Trigger.AfterDelay(DateTime.Seconds(3), function()
+		kane.Move(KaneSpawn.Location + CVec.New(0, 3))
+	end)
+
+	local cyborgs = CyborgSlaves.GetActorsByTypes({ "rmbc", "enli", "tplr", "n3c" })
+
+	Utils.Do(cyborgs, function(a)
+		a.Owner = Kane
+	end)
+
+	Trigger.AfterDelay(DateTime.Seconds(6), function()
+		Beacon.New(GDI, kane.CenterPosition, 50)
 		Media.DisplayMessage("Well commander, we meet at last! Your contribution has been invaluable, unwitting as it may be.", "Kane", HSLColor.FromHex("FF0000"))
 		MediaCA.PlaySound("outro.aud", 2.5)
-		Beacon.New(GDI, kane.CenterPosition)
-
-		local cyborgs = CyborgSlaves.GetActorsByTypes({ "rmbc", "enli", "tplr", "n3c" })
 
 		Utils.Do(cyborgs, function(a)
-			a.Owner = Kane
-
-			Trigger.AfterDelay(1, function()
+			Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(25)), function()
 				if not a.IsDead then
-					a.Stop()
 					a.GrantCondition("kane-revealed")
-					a.Scatter()
 				end
-				Trigger.AfterDelay(DateTime.Seconds(15), function()
-					MoveToWormhole(a)
-				end)
+				MoveToWormhole(a)
 			end)
 		end)
 
 		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(6)), function()
-			kane.Move(kane.Location + CVec.New(0, 1))
 			Media.DisplayMessage("Ironic isn't it? That GDI should lay the foundation for the Brotherhood's ultimate victory.", "Kane", HSLColor.FromHex("FF0000"))
 		end)
 
@@ -967,7 +959,7 @@ DoFinale = function()
 			Media.DisplayMessage("My painstaking manipulation of time and space finally bears fruit, and now we stand at the threshold.", "Kane", HSLColor.FromHex("FF0000"))
 		end)
 
-		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(22)), function()
+		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(21)), function()
 			Media.DisplayMessage("There is much yet to be done. I have no doubt our paths will cross again.", "Kane", HSLColor.FromHex("FF0000"))
 		end)
 

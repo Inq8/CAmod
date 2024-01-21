@@ -110,8 +110,6 @@ WORMHOLE:
 WORMHOLELG:
 	Inherits: WORMHOLE
 	-Targetable:
-	PeriodicExplosion:
-		Weapon: Singularity
 
 MSHP:
 	Inherits@CAMPAIGNDISABLED: ^Disabled
@@ -145,6 +143,14 @@ MSHP:
 	GrantConditionOnPrerequisite@MSHPSHIELDS:
 		Condition: mothership-shields
 		Prerequisites: mothership.shields
+
+MSHP.Husk:
+	FallsToEarth:
+		Explosion: MothershipExplosion
+
+MSHP.Husk.Ground:
+	Explodes:
+		Weapon: MothershipExplosion
 
 MAST:
 	Inherits@CAMPAIGNDISABLED: ^Disabled

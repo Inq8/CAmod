@@ -7125,7 +7125,7 @@ MANT:
 		MuzzleSequence: muzzle
 		MuzzlePalette: caneon
 	AttackFrontal:
-		PauseOnCondition: !(empdisable || being-warped)
+		PauseOnCondition: empdisable || being-warped
 		FacingTolerance: 24
 	WithMuzzleOverlay:
 	ProducibleWithLevel:
@@ -7136,7 +7136,7 @@ MANT:
 	DetectCloaked:
 		Range: 8c0
 		DetectionTypes: AirCloak
-		RequiresCondition: !(empdisable || being-warped)
+		RequiresCondition: empdisable || being-warped
 
 VIPR:
 	Inherits: ^VehicleTD
