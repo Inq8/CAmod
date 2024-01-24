@@ -363,6 +363,7 @@ SUK:
 		AmmoUsage: 2
 	AttackAircraft:
 		FacingTolerance: 80
+		Voice: Attack
 		PersistentTargeting: false
 		OpportunityFire: true
 		PauseOnCondition: empdisable || being-warped
@@ -374,6 +375,7 @@ SUK:
 		RepulsionSpeed: 40
 		MaximumPitch: 56
 		TakeoffSounds: migtoff1.aud
+		Voice: Move
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
@@ -441,6 +443,8 @@ SUK:
 		Actors: suk.upg
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	Voiced:
+		VoiceSet: SukVoice
 
 SUK.UPG:
 	Inherits: SUK
