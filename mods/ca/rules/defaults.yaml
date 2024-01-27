@@ -371,7 +371,7 @@
 	RejectsOrders@BERSERK:
 		RequiresCondition: berserkactive
 	GrantCondition@BERSERK:
-		RequiresCondition: berserk && !invulnerability
+		RequiresCondition: berserk
 		Condition: berserkactive
 
 ^Frenzy:
@@ -1418,7 +1418,7 @@
 ^Veilable:
 	RangeMultiplier@VEILED:
 		Modifier: 80
-		RequiresCondition: veiled
+		RequiresCondition: veiled && !gapveiled
 	RangeMultiplier@GAPVEILED:
 		Modifier: 60
 		RequiresCondition: gapveiled
@@ -4045,11 +4045,11 @@
 		CancelledAudio: Cancelled
 	Production@SQBLD:
 		Produces: BuildingSQ, DefenseSQ
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: !global-multiqueue
 	Production@MQBLD:
 		Produces: BuildingMQ, DefenseMQ
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: global-multiqueue
 	ProductionBar@SQBLD:
 		ProductionType: BuildingSQ
@@ -4085,11 +4085,11 @@
 		CancelledAudio: Cancelled
 	Production@SQINF:
 		Produces: InfantrySQ, Cyborg, Soldier, ParadropInfantry
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: !global-multiqueue
 	Production@MQINF:
 		Produces: InfantryMQ, CyborgMQ, Cyborg, Soldier, ParadropInfantry
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: global-multiqueue
 	ProductionBar@SQINF:
 		ProductionType: InfantrySQ
@@ -4155,11 +4155,11 @@
 		CancelledAudio: Cancelled
 	Production@SQVEH:
 		Produces: VehicleSQ, ParadropVehicle, Powersuit
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: !global-multiqueue
 	Production@MQVEH:
 		Produces: VehicleMQ, ParadropVehicle, Powersuit
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: global-multiqueue
 	ProductionBar@SQVEH:
 		ProductionType: VehicleSQ
@@ -4193,11 +4193,11 @@
 		CancelledAudio: Cancelled
 	Production@SQNAV:
 		Produces: ShipSQ, Boat, Submarine
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: !global-multiqueue
 	Production@MQNAV:
 		Produces: ShipMQ, Boat, Submarine
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: global-multiqueue
 	ProductionBar@SQNAV:
 		ProductionType: ShipSQ
@@ -4210,7 +4210,7 @@
 	Inherits@QUEUEUPDATER: ^QueueUpdater
 	Production@UPG:
 		Produces: Upgrade
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 	ProductionBar@UPG:
 		ProductionType: Upgrade
 	Exit@UPG:
@@ -4239,11 +4239,11 @@
 		Prerequisite: aircraft.any
 	Production@SQAIR:
 		Produces: AircraftSQ, Plane, Helicopter
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: !global-multiqueue
 	Production@MQAIR:
 		Produces: AircraftMQ, Plane, Helicopter
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: global-multiqueue
 	ProductionBar@SQAIR:
 		ProductionType: AircraftSQ
