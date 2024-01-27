@@ -499,7 +499,7 @@ GTNK.squad:
 	AutoTargetPriority@TANKDEFAULT:
 		RequiresCondition: !stance-attackanything && !assault-move && germany
 		ValidTargets: Vehicle
-		InvalidTargets: NoAutoTarget, WaterStructure
+		InvalidTargets: NoAutoTarget
 		Priority: 10
 	AutoTargetPriority@TANKATTACKANYTHING:
 		RequiresCondition: (stance-attackanything || assault-move) && germany
@@ -887,7 +887,7 @@ GTNK.squad:
 4TNK:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeGround
 	Inherits@BERSERK: ^Berserk
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@ATOMICAMMO: ^AtomicAmmunition
@@ -1066,6 +1066,7 @@ GTNK.squad:
 		RequiresCondition: !mindcontrolled
 	-Upgradeable@ATOMIC:
 	-Upgradeable@ERAD:
+	-AutoTargetPriority@DeprioritizedAir:
 
 4TNK.ERADATOMIC:
 	Inherits: 4TNK.ATOMIC
@@ -2472,7 +2473,7 @@ DTRK:
 CTNK:
 	Inherits: ^Vehicle
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeGround
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Buildable:
@@ -3158,7 +3159,7 @@ APC2.Reinforce:
 
 VULC:
 	Inherits: ^TankTD
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
@@ -3704,7 +3705,7 @@ MDRN.Attached:
 HTNK:
 	Inherits: ^TankTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeGround
 	Inherits@BERSERK: ^Berserk
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Buildable:
@@ -3916,7 +3917,7 @@ HTNK.Drone:
 MSAM:
 	Inherits: ^TankTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeGround
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	RenderSprites:
@@ -4136,7 +4137,7 @@ MLRS:
 STNK.Nod:
 	Inherits: ^VehicleTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	RenderSprites:
@@ -4546,7 +4547,7 @@ HARV.TD:
 BTR:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
 	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
@@ -5422,7 +5423,7 @@ RECK:
 TITN:
 	Inherits: ^TankTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeGround
 	Inherits@BERSERK: ^Berserk
 	Inherits@SHRAPNEL: ^ThrowsShrapnel
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
@@ -5776,7 +5777,7 @@ DISR:
 HSAM:
 	Inherits: ^VehicleTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeGround
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@HOVERTRAIL: ^HoverTrail
@@ -6187,7 +6188,7 @@ TNKD:
 	AutoTargetPriority@TANKDEFAULT:
 		RequiresCondition: !stance-attackanything && !assault-move
 		ValidTargets: Vehicle
-		InvalidTargets: NoAutoTarget, WaterStructure
+		InvalidTargets: NoAutoTarget
 		Priority: 10
 	AutoTargetPriority@TANKATTACKANYTHING:
 		RequiresCondition: (stance-attackanything || assault-move)
@@ -6597,7 +6598,7 @@ BATF:
 	AutoTargetPriority@DEFAULT_AIR:
 		RequiresCondition: !stance-attackanything && !assault-move && loaded-air
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
-		InvalidTargets: NoAutoTarget, WaterStructure
+		InvalidTargets: NoAutoTarget
 	AutoTargetPriority@ATTACKANYTHING_AIR:
 		RequiresCondition: (stance-attackanything || assault-move) && loaded-air
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
@@ -6764,9 +6765,9 @@ CDRN:
 		Image: cdrone
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Infantry, Vehicle, Water
-		InvalidTargets: NoAutoTarget, WaterStructure, Underwater, Defense, ChaosImmune
+		InvalidTargets: NoAutoTarget, ChaosImmune
 	AutoTargetPriority@ATTACKANYTHING:
-		ValidTargets: Infantry, Vehicle, Water, Underwater
+		ValidTargets: Infantry, Vehicle, Water
 		InvalidTargets: NoAutoTarget, ChaosImmune
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
@@ -6852,7 +6853,7 @@ CDRN:
 
 CHPR:
 	Inherits: ^Tank
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
@@ -7209,7 +7210,7 @@ VIPR:
 APOC:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeGround
 	Inherits@BERSERK: ^Berserk
 	Inherits@SHRAPNEL: ^ThrowsShrapnel
 	Inherits@ATOMICAMMO: ^AtomicAmmunition

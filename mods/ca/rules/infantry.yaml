@@ -194,7 +194,7 @@ E2:
 
 E3:
 	Inherits: ^Soldier
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
@@ -305,7 +305,7 @@ E3:
 
 U3:
 	Inherits: ^Soldier
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
 	Valued:
@@ -1302,7 +1302,7 @@ SHOK:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	AutoTargetPriority@DEFAULT:
-		InvalidTargets: NoAutoTarget, WaterStructure, TeslaBoost
+		InvalidTargets: NoAutoTarget, TeslaBoost
 	AutoTargetPriority@ATTACKANYTHING:
 		InvalidTargets: NoAutoTarget, TeslaBoost
 	AutoTargetPriority@TESLANORMAL:
@@ -1528,7 +1528,7 @@ N2R1:
 
 N3:
 	Inherits: ^Soldier
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
@@ -2581,12 +2581,12 @@ JJET:
 	AutoTargetPriority@DEFAULT_AIR:
 		RequiresCondition: !stance-attackanything && !assault-move && airborne
 		ValidTargets: Vehicle, Water, Underwater, Defense
-		InvalidTargets: NoAutoTarget, WaterStructure
+		InvalidTargets: NoAutoTarget
 		Priority: 1
 	AutoTargetPriority@DEFAULT_AIR_ATTACK_INFANTRY:
 		RequiresCondition: !stance-attackanything && !assault-move && airborne
 		ValidTargets: Air, AirSmall, Infantry
-		InvalidTargets: NoAutoTarget, WaterStructure
+		InvalidTargets: NoAutoTarget
 		Priority: 10
 	AutoTargetPriority@ATTACKANYTHING_AIR:
 		RequiresCondition: (stance-attackanything || assault-move) && airborne
@@ -2862,7 +2862,7 @@ N1C:
 
 N3C:
 	Inherits: ^Cyborg
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 	Buildable:

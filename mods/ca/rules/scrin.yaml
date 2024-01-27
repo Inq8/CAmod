@@ -435,7 +435,7 @@ S2:
 
 S3:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
@@ -904,7 +904,7 @@ HARV.Scrin:
 GUNW:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
@@ -1833,7 +1833,7 @@ RUIN:
 ATMZ:
 	Inherits: ^Vehicle
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
@@ -2655,10 +2655,6 @@ PAC:
 		RequiresCondition: empdisable
 	Repairable:
 		RepairActors: fix, rep, srep
-	AutoTargetPriority@DEFAULT:
-		InvalidTargets: NoAutoTarget, WaterStructure, AirLowPriority
-	AutoTargetPriority@ATTACKANYTHING:
-		InvalidTargets: NoAutoTarget, AirLowPriority
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
 	WithProductionIconOverlay:

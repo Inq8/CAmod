@@ -1669,18 +1669,15 @@
 	AutoTarget:
 		AttackAnythingCondition: stance-attackanything
 	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !stance-attackanything
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
-		InvalidTargets: NoAutoTarget, WaterStructure
+		InvalidTargets: NoAutoTarget
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: stance-attackanything
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense, Mine
+		ValidTargets: Structure, Mine
 		InvalidTargets: NoAutoTarget
 
 ^AutoTargetGroundAssaultMove:
 	Inherits: ^AutoTargetGround
-	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !stance-attackanything && !assault-move
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: stance-attackanything || assault-move
 	AttackMove:
@@ -1689,12 +1686,6 @@
 ^AutoTargetGroundAssaultMovePrioritizeVehicles:
 	Inherits: ^AutoTargetGroundAssaultMove
 	AutoTargetPriority@DEFAULTVEH:
-		RequiresCondition: !stance-attackanything && !assault-move
-		ValidTargets: Vehicle, Ship
-		InvalidTargets: NoAutoTarget
-		Priority: 10
-	AutoTargetPriority@ATTACKANYTHINGVEH:
-		RequiresCondition: stance-attackanything || assault-move
 		ValidTargets: Vehicle, Ship
 		InvalidTargets: NoAutoTarget
 		Priority: 10
@@ -1702,12 +1693,6 @@
 ^AutoTargetGroundAssaultMovePrioritizeInfantry:
 	Inherits: ^AutoTargetGroundAssaultMove
 	AutoTargetPriority@DEFAULTINF:
-		RequiresCondition: !stance-attackanything && !assault-move
-		ValidTargets: Infantry
-		InvalidTargets: NoAutoTarget
-		Priority: 10
-	AutoTargetPriority@ATTACKANYTHINGINF:
-		RequiresCondition: stance-attackanything || assault-move
 		ValidTargets: Infantry
 		InvalidTargets: NoAutoTarget
 		Priority: 10
@@ -1721,12 +1706,7 @@
 	AutoTarget:
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Air, AirSmall
-		InvalidTargets: NoAutoTarget, AirLowPriority
-		Priority: 10
-	AutoTargetPriority@DEFAULTLOW:
-		ValidTargets: AirLowPriority
 		InvalidTargets: NoAutoTarget
-		Priority: 0
 
 ^AutoTargetAirICBM:
 	Inherits: ^AutoTargetAir
@@ -1737,45 +1717,37 @@
 	AutoTarget:
 		AttackAnythingCondition: stance-attackanything
 	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !stance-attackanything
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Defense
-		InvalidTargets: NoAutoTarget, WaterStructure, AirLowPriority
+		InvalidTargets: NoAutoTarget
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: stance-attackanything
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Structure, Defense
+		ValidTargets: Structure, Mine
 		InvalidTargets: NoAutoTarget
 
 ^AutoTargetAllAssaultMove:
 	Inherits: ^AutoTargetAll
-	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !stance-attackanything && !assault-move
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: stance-attackanything || assault-move
 	AttackMove:
 		AssaultMoveCondition: assault-move
 
-^AutoTargetAllAssaultMoveAntiAir:
+^AutoTargetAllAssaultMovePrioritizeGround:
+	Inherits: ^AutoTargetAllAssaultMove
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
+	AutoTargetPriority@ATTACKANYTHING:
+		ValidTargets: Structure, Mine
+	AutoTargetPriority@DeprioritizedAir:
+		ValidTargets: Air, AirSmall
+		InvalidTargets: NoAutoTarget
+		Priority: 0
+
+^AutoTargetAllAssaultMovePrioritizeAir:
 	Inherits: ^AutoTargetAllAssaultMove
 	AutoTargetPriority@DEFAULTAA:
-		RequiresCondition: !stance-attackanything && !assault-move
 		ValidTargets: Air, AirSmall
-		InvalidTargets: NoAutoTarget, AirLowPriority
-		Priority: 10
-	AutoTargetPriority@ATTACKANYTHINGAA:
-		RequiresCondition: stance-attackanything || assault-move
-		ValidTargets: Air, AirSmall
-		InvalidTargets: NoAutoTarget, AirLowPriority
-		Priority: 10
-	AutoTargetPriority@DEFAULTAALOW:
-		RequiresCondition: !stance-attackanything && !assault-move
-		ValidTargets: AirLowPriority
 		InvalidTargets: NoAutoTarget
-		Priority: 0
-	AutoTargetPriority@ATTACKANYTHINGAALOW:
-		RequiresCondition: stance-attackanything || assault-move
-		ValidTargets: AirLowPriority
-		InvalidTargets: NoAutoTarget
-		Priority: 0
+		Priority: 10
 
 ^AutoTargetAllNavalAssaultMove:
 	Inherits: ^AutoTargetAllAssaultMove

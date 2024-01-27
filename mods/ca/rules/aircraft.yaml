@@ -1524,23 +1524,19 @@ A10:
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
 	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !stance-attackanything && !assault-move && ammo && ammo2
+		RequiresCondition: ammo && ammo2
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: (stance-attackanything || assault-move) && ammo && ammo2
 	AutoTargetPriority@DEFAULTGROUND:
-		RequiresCondition: !stance-attackanything && !assault-move && ammo && !ammo2
+		RequiresCondition: ammo && !ammo2
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
-		InvalidTargets: NoAutoTarget, WaterStructure
+		InvalidTargets: NoAutoTarget
 	AutoTargetPriority@ATTACKANYTHINGGROUND:
 		RequiresCondition: (stance-attackanything || assault-move) && ammo && !ammo2
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense
+		ValidTargets: Structure
 		InvalidTargets: NoAutoTarget
 	AutoTargetPriority@DEFAULTAIR:
-		RequiresCondition: !stance-attackanything && !assault-move && !ammo && ammo2
-		ValidTargets: Air, AirSmall
-		InvalidTargets: NoAutoTarget, AirLowPriority
-	AutoTargetPriority@ATTACKANYTHINGAIR:
-		RequiresCondition: (stance-attackanything || assault-move) && !ammo && ammo2
+		RequiresCondition: !ammo && ammo2
 		ValidTargets: Air, AirSmall
 		InvalidTargets: NoAutoTarget
 	UpgradeableTo:
@@ -2407,16 +2403,16 @@ RAH:
 		Modifier: 110
 		RequiresCondition: alphacomanche-upgrade
 	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !stance-attackanything && !assault-move && !alphacomanche-upgrade
+		RequiresCondition: !alphacomanche-upgrade
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: (stance-attackanything  || assault-move) && !alphacomanche-upgrade
 	AutoTargetPriority@DEFAULTAA:
-		RequiresCondition: !stance-attackanything && !assault-move && alphacomanche-upgrade
+		RequiresCondition: alphacomanche-upgrade
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Defense
-		InvalidTargets: NoAutoTarget, WaterStructure, AirLowPriority
+		InvalidTargets: NoAutoTarget
 	AutoTargetPriority@ATTACKANYTHINGAA:
 		RequiresCondition: (stance-attackanything  || assault-move) && alphacomanche-upgrade
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Structure, Defense
+		ValidTargets: Structure
 		InvalidTargets: NoAutoTarget
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
