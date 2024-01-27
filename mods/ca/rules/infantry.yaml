@@ -952,7 +952,7 @@ MECH:
 		ValidTargets: Vehicle
 	Convertible:
 		SpawnActors: CMEC
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: cmec
 	KeepsDistance:
 
@@ -1436,7 +1436,7 @@ N1:
 		Class: e1
 	Convertible:
 		SpawnActors: N1C
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: n1c
 
 N1R1:
@@ -1613,7 +1613,7 @@ N3:
 		Class: e3
 	Convertible:
 		SpawnActors: N3C
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: n3c
 
 N3R1:
@@ -1687,7 +1687,7 @@ N4:
 		Prerequisites: barracks.upgraded
 	Convertible:
 		SpawnActors: N5
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: n5
 
 N5:
@@ -2364,7 +2364,7 @@ ACOL:
 		Prerequisites: barracks.upgraded
 	Convertible:
 		SpawnActors: TPLR
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: tplr
 
 TPLR:
@@ -2379,7 +2379,7 @@ TPLR:
 		Prerequisites: anyradar, obli, ~infantry.marked, ~tmpp, ~techlevel.high
 	-TakeCover:
 	-Convertible:
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Crushable:
 	WithInfantryBody:
 		IdleSequences: idle, idle2
@@ -2603,7 +2603,7 @@ JJET:
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: bjet
 
 BJET:
@@ -2642,7 +2642,7 @@ BJET:
 		IdleSequences: idle1-upg, idle2-upg
 		DefaultAttackSequence: attack-upg
 		RequiresCondition: !airborne
-	-UpgradeableTo:
+	-ReplacedInQueue:
 
 JJET.Husk:
 	ClassicFacingBodyOrientation:

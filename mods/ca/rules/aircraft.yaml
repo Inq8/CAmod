@@ -439,7 +439,7 @@ SUK:
 	GrantConditionOnPrerequisite@SEISMIC:
 		Condition: seismic-upgrade
 		Prerequisites: seismic.upgrade
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: suk.upg
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
@@ -463,7 +463,7 @@ SUK.UPG:
 		-RequiresCondition:
 	Selectable:
 		Class: suk
-	-UpgradeableTo:
+	-ReplacedInQueue:
 
 YAK:
 	Inherits: ^Plane
@@ -1539,7 +1539,7 @@ A10:
 		RequiresCondition: !ammo && ammo2
 		ValidTargets: Air, AirSmall
 		InvalidTargets: NoAutoTarget
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: a10.upg
 	ReloadAmmoPoolCA@NOSIDEWINDERS:
 		Delay: 25
@@ -1573,7 +1573,7 @@ A10.UPG:
 		-InitialAmmo:
 	Selectable:
 		Class: a10
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	WithAmmoPipsDecoration@SECONDARY:
 		-RequiresCondition:
 	-ReloadAmmoPoolCA@NOSIDEWINDERS:
