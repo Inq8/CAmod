@@ -439,7 +439,7 @@ SUK:
 	GrantConditionOnPrerequisite@SEISMIC:
 		Condition: seismic-upgrade
 		Prerequisites: seismic.upgrade
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: suk.upg
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
@@ -463,7 +463,7 @@ SUK.UPG:
 		-RequiresCondition:
 	Selectable:
 		Class: suk
-	-UpgradeableTo:
+	-ReplacedInQueue:
 
 YAK:
 	Inherits: ^Plane
@@ -1524,26 +1524,22 @@ A10:
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
 	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !stance-attackanything && !assault-move && ammo && ammo2
+		RequiresCondition: ammo && ammo2
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: (stance-attackanything || assault-move) && ammo && ammo2
 	AutoTargetPriority@DEFAULTGROUND:
-		RequiresCondition: !stance-attackanything && !assault-move && ammo && !ammo2
+		RequiresCondition: ammo && !ammo2
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
-		InvalidTargets: NoAutoTarget, WaterStructure
+		InvalidTargets: NoAutoTarget
 	AutoTargetPriority@ATTACKANYTHINGGROUND:
 		RequiresCondition: (stance-attackanything || assault-move) && ammo && !ammo2
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense
+		ValidTargets: Structure
 		InvalidTargets: NoAutoTarget
 	AutoTargetPriority@DEFAULTAIR:
-		RequiresCondition: !stance-attackanything && !assault-move && !ammo && ammo2
-		ValidTargets: Air, AirSmall
-		InvalidTargets: NoAutoTarget, AirLowPriority
-	AutoTargetPriority@ATTACKANYTHINGAIR:
-		RequiresCondition: (stance-attackanything || assault-move) && !ammo && ammo2
+		RequiresCondition: !ammo && ammo2
 		ValidTargets: Air, AirSmall
 		InvalidTargets: NoAutoTarget
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: a10.upg
 	ReloadAmmoPoolCA@NOSIDEWINDERS:
 		Delay: 25
@@ -1577,7 +1573,7 @@ A10.UPG:
 		-InitialAmmo:
 	Selectable:
 		Class: a10
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	WithAmmoPipsDecoration@SECONDARY:
 		-RequiresCondition:
 	-ReloadAmmoPoolCA@NOSIDEWINDERS:
@@ -2407,16 +2403,16 @@ RAH:
 		Modifier: 110
 		RequiresCondition: alphacomanche-upgrade
 	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !stance-attackanything && !assault-move && !alphacomanche-upgrade
+		RequiresCondition: !alphacomanche-upgrade
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: (stance-attackanything  || assault-move) && !alphacomanche-upgrade
 	AutoTargetPriority@DEFAULTAA:
-		RequiresCondition: !stance-attackanything && !assault-move && alphacomanche-upgrade
+		RequiresCondition: alphacomanche-upgrade
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Defense
-		InvalidTargets: NoAutoTarget, WaterStructure, AirLowPriority
+		InvalidTargets: NoAutoTarget
 	AutoTargetPriority@ATTACKANYTHINGAA:
 		RequiresCondition: (stance-attackanything  || assault-move) && alphacomanche-upgrade
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Structure, Defense
+		ValidTargets: Structure
 		InvalidTargets: NoAutoTarget
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
@@ -3941,7 +3937,7 @@ SHDE:
 		Description: Fast VTOL ground attack aircraft armed\n  with EMP weaponry.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
-		Weaknesses: • Weak vs Infantry, Buildings\n	• Cannot attack Aircraft
+		Weaknesses: • Weak vs Infantry, Buildings\n• Cannot attack Aircraft
 	Valued:
 		Cost: 1800
 	Tooltip:
@@ -4210,8 +4206,8 @@ MCOR:
 		IconPalette: chrometd
 		Description: Long ranged aircraft with dual plasma cannons.
 	TooltipExtras:
-		Strengths: • Strong vs Infantry, Light Armor, Aircraft
-		Weaknesses: • Weak vs Defenses
+		Strengths: • Strong vs Buildings, Defenses, Infantry
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
 	Aircraft:
 		CruiseAltitude: 2560
 		AltitudeVelocity: 0c100

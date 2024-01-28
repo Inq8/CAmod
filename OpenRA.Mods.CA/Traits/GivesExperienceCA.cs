@@ -113,7 +113,7 @@ namespace OpenRA.Mods.CA.Traits
 			}
 
 			exp = Util.ApplyPercentageModifiers(exp, killerExperienceModifiers);
-			attacker.GiveExperience(Math.Max(exp, 250)); // if less than 1% of target HP is lost, give a token amount of xp
+			attacker.GiveExperience(exp);
 		}
 	}
 }

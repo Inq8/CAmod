@@ -194,7 +194,7 @@ E2:
 
 E3:
 	Inherits: ^Soldier
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
@@ -305,7 +305,7 @@ E3:
 
 U3:
 	Inherits: ^Soldier
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
 	Valued:
@@ -645,7 +645,7 @@ SPY:
 		Description: Infiltrates enemy structures for intel or sabotage\n  Effects depend on the building infiltrated.
 	TooltipExtras:
 		Weaknesses: • Unarmed
-		Attributes: • Disguise as enemy infantry by right-clicking them
+		Attributes: • Disguise as enemy infantry by right-clicking them\n • Infiltration effects:\n    • Power Plants: Power outage\n    • Barracks/Factory: Infantry/vehicles produced as veteran\n    • Superweapons: Reset timer\n    • Radar: Reset shroud\n    • Helipad: Single-use paratroopers\n    • Airfield: Single-use airstrike
 	Valued:
 		Cost: 500
 	-Tooltip:
@@ -952,7 +952,7 @@ MECH:
 		ValidTargets: Vehicle
 	Convertible:
 		SpawnActors: CMEC
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: cmec
 	KeepsDistance:
 
@@ -1302,7 +1302,7 @@ SHOK:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	AutoTargetPriority@DEFAULT:
-		InvalidTargets: NoAutoTarget, WaterStructure, TeslaBoost
+		InvalidTargets: NoAutoTarget, TeslaBoost
 	AutoTargetPriority@ATTACKANYTHING:
 		InvalidTargets: NoAutoTarget, TeslaBoost
 	AutoTargetPriority@TESLANORMAL:
@@ -1436,7 +1436,7 @@ N1:
 		Class: e1
 	Convertible:
 		SpawnActors: N1C
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: n1c
 
 N1R1:
@@ -1528,7 +1528,7 @@ N2R1:
 
 N3:
 	Inherits: ^Soldier
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
@@ -1613,7 +1613,7 @@ N3:
 		Class: e3
 	Convertible:
 		SpawnActors: N3C
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: n3c
 
 N3R1:
@@ -1687,7 +1687,7 @@ N4:
 		Prerequisites: barracks.upgraded
 	Convertible:
 		SpawnActors: N5
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: n5
 
 N5:
@@ -2200,11 +2200,11 @@ SAB:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 140
 		Prerequisites: anyradar, ~hand, ~techlevel.medium
-		Description: Covert infantry that infiltrates enemy structures\n  and steals technology.
+		Description: Covert infantry that infiltrates enemy structures\n  to steal or lock technology.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Can only attack Infantry
-		Attributes: • Can detect spies and cloaked units\n• Limited stealth (drains while moving)
+		Attributes: • Can detect spies and cloaked units\n• Limited stealth (drains while moving)\n• Infiltrates production buildings to steal technology\n    • Allies: Cryo Mortar, Reckoner, Black Eagle\n    • Soviets: Cyberdog, Rhino Tank, Kamov\n    • GDI: Sonic Mortar, Pitbull, Shade\n    • Nod: Chem Mortar, Mantis, Vertigo\n    • Scrin: Cyberscrin, Viper, Manticore\n• Infiltrates radars/tech centers to lock technology
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2364,7 +2364,7 @@ ACOL:
 		Prerequisites: barracks.upgraded
 	Convertible:
 		SpawnActors: TPLR
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: tplr
 
 TPLR:
@@ -2379,7 +2379,7 @@ TPLR:
 		Prerequisites: anyradar, obli, ~infantry.marked, ~tmpp, ~techlevel.high
 	-TakeCover:
 	-Convertible:
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Crushable:
 	WithInfantryBody:
 		IdleSequences: idle, idle2
@@ -2581,12 +2581,12 @@ JJET:
 	AutoTargetPriority@DEFAULT_AIR:
 		RequiresCondition: !stance-attackanything && !assault-move && airborne
 		ValidTargets: Vehicle, Water, Underwater, Defense
-		InvalidTargets: NoAutoTarget, WaterStructure
+		InvalidTargets: NoAutoTarget
 		Priority: 1
 	AutoTargetPriority@DEFAULT_AIR_ATTACK_INFANTRY:
 		RequiresCondition: !stance-attackanything && !assault-move && airborne
 		ValidTargets: Air, AirSmall, Infantry
-		InvalidTargets: NoAutoTarget, WaterStructure
+		InvalidTargets: NoAutoTarget
 		Priority: 10
 	AutoTargetPriority@ATTACKANYTHING_AIR:
 		RequiresCondition: (stance-attackanything || assault-move) && airborne
@@ -2603,7 +2603,7 @@ JJET:
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: bjet
 
 BJET:
@@ -2642,7 +2642,7 @@ BJET:
 		IdleSequences: idle1-upg, idle2-upg
 		DefaultAttackSequence: attack-upg
 		RequiresCondition: !airborne
-	-UpgradeableTo:
+	-ReplacedInQueue:
 
 JJET.Husk:
 	ClassicFacingBodyOrientation:
@@ -2862,7 +2862,7 @@ N1C:
 
 N3C:
 	Inherits: ^Cyborg
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 	Buildable:

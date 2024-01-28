@@ -226,7 +226,6 @@ FlamerTD:
 			Brick: 5
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		ValidRelationships: Enemy, Neutral
-		DebugOverlayColor: ffaa00
 		Delay: 5
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -240,7 +239,7 @@ FlamerTDFF:
 	Warhead@1Dam: SpreadDamage
 		Falloff: 100, 50, 0
 		ValidRelationships: Ally
-		-DebugOverlayColor:
+		DebugOverlayColor: ffaa00
 	-Warhead@2Smu:
 
 BigFlamerTD:
@@ -276,7 +275,7 @@ BigFlamerTDFF:
 	Warhead@1Dam: SpreadDamage
 		Falloff: 100, 50, 0
 		ValidRelationships: Ally
-		-DebugOverlayColor:
+		DebugOverlayColor: ffaa00
 	-Warhead@2Smu:
 
 ChemsprayTD:
@@ -335,7 +334,6 @@ HeavyFlameTankFlamer.UPG:
 	Warhead@1Dam: SpreadDamage
 		Damage: 180
 		Versus:
-			Light: 100
 			Heavy: 70
 			Concrete: 60
 	Warhead@2Smu: LeaveSmudge
@@ -350,7 +348,7 @@ HeavyFlameTankFlamerFF:
 	Warhead@1Dam: SpreadDamage
 		Falloff: 100, 50, 0
 		ValidRelationships: Ally
-		-DebugOverlayColor:
+		DebugOverlayColor: ffaa00
 	-Warhead@2Smu:
 
 BlackHandFlamer:
@@ -2491,25 +2489,28 @@ DisruptorPulse:
 	Projectile: LinearPulse
 		Speed: 384
 	Warhead@1Dam: SpreadDamage
-		Spread: 0c128
-		Damage: 2000
+		Spread: 0c384
+		Damage: 800
 		Versus:
 			None: 100
-			Wood: 28
+			Wood: 60
 			Light: 28
-			Heavy: 15
+			Heavy: 12
 			Concrete: 35
 	Warhead@friendlyFire: SpreadDamage
-		Spread: 0c128
-		Damage: 660
+		Spread: 0c384
+		Falloff: 100, 75, 25, 0
+		Damage: 160
 		Versus:
 			None: 100
-			Wood: 28
+			Wood: 60
 			Light: 28
-			Heavy: 15
+			Heavy: 12
 			Concrete: 35
 		ValidRelationships: Ally
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		InvalidTargets: Disruptor
+		DebugOverlayColor: ffaa00
 	-Warhead@2Eff:
 	Warhead@2Eff: CreateFacingEffect
 		Explosions: sonicwave1, sonicwave2
@@ -2521,7 +2522,7 @@ DisruptorPulse.Amp:
 	Inherits: DisruptorPulse
 	Range: 6c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 2200
+		Damage: 880
 	Warhead@2Eff: CreateFacingEffect
 		Explosions: sonicwaveupg1, sonicwaveupg2
 		ExplosionPalette: effect
@@ -2705,7 +2706,7 @@ TinyDebris:
 	Warhead@1Dam: SpreadDamage
 		Damage: 1
 	-Warhead@2Eff:
-	-Warhead@3EffWater: CreateEffect
+	-Warhead@3EffWater:
 	-Warhead@4Smu:
 
 SmallDebris:

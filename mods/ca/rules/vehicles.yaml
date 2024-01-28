@@ -106,7 +106,7 @@ KATY:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: v2rl
 	Upgradeable@V2:
 		Type: v2.upgrade
@@ -499,7 +499,7 @@ GTNK.squad:
 	AutoTargetPriority@TANKDEFAULT:
 		RequiresCondition: !stance-attackanything && !assault-move && germany
 		ValidTargets: Vehicle
-		InvalidTargets: NoAutoTarget, WaterStructure
+		InvalidTargets: NoAutoTarget
 		Priority: 10
 	AutoTargetPriority@TANKATTACKANYTHING:
 		RequiresCondition: (stance-attackanything || assault-move) && germany
@@ -589,7 +589,7 @@ GTNK.squad:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: 3tnk.atomic, 3tnk.yuri, 3tnk.atomicyuri
 	Upgradeable@ATOMIC:
 		Type: atomicengines.upgrade
@@ -633,7 +633,7 @@ GTNK.squad:
 		Weapon: UnitExplodeIraqTank
 		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: !being-warped
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: 3tnk.atomicyuri
 	Upgradeable@ATOMICLASHER:
 		Type: lasher.upgrade
@@ -699,7 +699,7 @@ GTNK.squad:
 	-ExternalCondition@CRUSHSLOW:
 	-SpeedMultiplier@CRUSHATTEMPTSLOW:
 	-SpeedMultiplier@CRUSHSLOW:
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: 3tnk.atomicyuri
 	Upgradeable@ATOMICLASHER:
 		Type: atomicengines.upgrade
@@ -766,7 +766,7 @@ GTNK.squad:
 	-ExternalCondition@CRUSHSLOW:
 	-SpeedMultiplier@CRUSHATTEMPTSLOW:
 	-SpeedMultiplier@CRUSHSLOW:
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Upgradeable@ATOMICLASHER:
 
 3TNK.RHINO:
@@ -849,7 +849,7 @@ GTNK.squad:
 	Selectable:
 		DecorationBounds: 1194, 1194
 		Class: 3tnk
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: 3tnk.rhino.atomic
 	Upgradeable@ATOMIC:
 		Type: atomicengines.upgrade
@@ -881,13 +881,13 @@ GTNK.squad:
 		Weapon: UnitExplodeIraqTank
 		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: !being-warped
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Upgradeable@ATOMIC:
 
 4TNK:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeGround
 	Inherits@BERSERK: ^Berserk
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@ATOMICAMMO: ^AtomicAmmunition
@@ -980,7 +980,7 @@ GTNK.squad:
 	ReloadAmmoPool@ATOMICAMMO:
 		Count: 10
 		RequiresCondition: atomic-ammo && has-atomic-ammo < 10
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: 4tnk.atomic, 4tnk.erad, 4tnk.eradatomic
 	Upgradeable@ATOMIC:
 		Type: atomicengines.upgrade
@@ -1016,7 +1016,7 @@ GTNK.squad:
 		Class: 4tnk
 	SpeedMultiplier:
 		Modifier: 125
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: 4tnk.eradatomic
 	Upgradeable@ERADATOMIC:
 		Type: erad.upgrade
@@ -1056,7 +1056,7 @@ GTNK.squad:
 	-ReloadAmmoPoolCA@ATOMICAMMODECAY:
 	-DamagedByTintedCells@RADSTRONG:
 	-DamagedByTintedCells@RADMED:
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: 4tnk.eradatomic
 	Upgradeable@ERADATOMIC:
 		Type: atomicengines.upgrade
@@ -1066,6 +1066,7 @@ GTNK.squad:
 		RequiresCondition: !mindcontrolled
 	-Upgradeable@ATOMIC:
 	-Upgradeable@ERAD:
+	-AutoTargetPriority@DeprioritizedAir:
 
 4TNK.ERADATOMIC:
 	Inherits: 4TNK.ATOMIC
@@ -1091,7 +1092,7 @@ GTNK.squad:
 	-ReloadAmmoPoolCA@ATOMICAMMODECAY:
 	-Armament@ATOMICAMMO:
 	-Armament@SECONDARY:
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Upgradeable@ERADATOMIC:
 
 ARTY:
@@ -1163,7 +1164,7 @@ ARTY.nod:
 		Weapon: 155mmTD
 	Selectable:
 		Class: arty
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: howi
 	Upgradeable@HOWI:
 		Type: howi.upgrade
@@ -1192,7 +1193,7 @@ HOWI:
 		Speed: 64
 		TurnSpeed: 18
 	WithSpriteTurret:
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Upgradeable@HOWI:
 
 ARTY.Chrono:
@@ -1791,9 +1792,7 @@ JEEP:
 		DetectionTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
 	RevealsShroud@Optics:
-		MinRange: 6c0
 		Range: 12c0
-		RevealGeneratedShroud: False
 		RequiresCondition: optics-active
 	SpeedMultiplier@Optics:
 		Modifier: 75
@@ -1893,7 +1892,7 @@ APC:
 		RequiresCondition: driver-dead && !cargo
 	Targetable@MINDCONTROL:
 		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: rapc
 	Upgradeable@RAIDER:
 		Type: rapc.upgrade
@@ -1928,7 +1927,7 @@ RAPC:
 		Weapon: 76mm
 		LocalOffset: 500,0,250
 		MuzzleSequence: muzzle2
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Upgradeable@RAIDER:
 
 APC.AI:
@@ -1940,7 +1939,7 @@ APC.AI:
 		Prerequisites: ~botplayer, ~vehicles.allies, ~!rapc.upgrade, ~techlevel.low
 	Cargo:
 		InitialUnits: E1,E1,E1,E3,E3
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Upgradeable@RAIDER:
 
 RAPC.AI:
@@ -2472,7 +2471,7 @@ DTRK:
 CTNK:
 	Inherits: ^Vehicle
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeGround
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Buildable:
@@ -2737,7 +2736,7 @@ HMMV:
 	WithIdleOverlay@NSHIELD:
 		Image: nshield-overlay-sm
 		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: hmmv.tow
 	Upgradeable@TOW:
 		Type: tow.upgrade
@@ -2768,7 +2767,7 @@ HMMV.TOW:
 		LocalOffset: 250,100,150
 	WithSpriteTurret:
 		Sequence: turrettow
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Upgradeable@TOW:
 
 GDRN:
@@ -2847,7 +2846,7 @@ GDRN:
 	WithIdleOverlay@NSHIELD:
 		Image: nshield-overlay-sm
 		RequiresCondition: (nshield || gshield) && !(empdisable || invulnerability || invisibility)
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: gdrn.tow
 	Upgradeable@TOW:
 		Type: tow.upgrade
@@ -2885,7 +2884,7 @@ GDRN.TOW:
 		LocalOffset: 200,-150,250
 	WithSpriteTurret:
 		Sequence: turrettow
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Upgradeable@TOW:
 
 BGGY:
@@ -3110,7 +3109,7 @@ APC2:
 		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
 	Selectable:
 		Class: apc
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: vulc
 	Upgradeable@VULCAN:
 		Type: vulcan.upgrade
@@ -3127,7 +3126,7 @@ APC2.NODAI:
 		Image: APC2
 	Cargo:
 		InitialUnits: N1,N1,N1,N3,N4
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Upgradeable@VULCAN:
 
 APC2.GDIAI:
@@ -3139,7 +3138,7 @@ APC2.GDIAI:
 		Image: APC2
 	Cargo:
 		InitialUnits: N1,N1,N1,N2,N3
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Upgradeable@VULCAN:
 
 APC2.Reinforce:
@@ -3158,7 +3157,7 @@ APC2.Reinforce:
 
 VULC:
 	Inherits: ^TankTD
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
@@ -3481,7 +3480,7 @@ MTNK:
 		ForceFullDuration: true
 	WithIdleOverlay@NSHIELD:
 		RequiresCondition: (nshield || gshieldvisual) && !(empdisable || invulnerability || invisibility)
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: mtnk.drone
 	Upgradeable@BDRONE:
 		Type: bdrone.upgrade
@@ -3550,7 +3549,7 @@ MTNK.Drone:
 	-TimedConditionBar@BERSERK:
 	-RejectsOrders@BERSERK:
 	-GrantCondition@BERSERK:
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Upgradeable@BDRONE:
 
 MDRN:
@@ -3704,7 +3703,7 @@ MDRN.Attached:
 HTNK:
 	Inherits: ^TankTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeGround
 	Inherits@BERSERK: ^Berserk
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Buildable:
@@ -3777,7 +3776,7 @@ HTNK:
 	-Crushable:
 	WithIdleOverlay@MINDCONTROL:
 		Offset: 0,0,512
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: htnk.drone, htnk.ion, htnk.hover
 	Upgradeable@ION:
 		Type: ionmam.upgrade
@@ -3811,7 +3810,7 @@ HTNK.Ion:
 		LocalOffset: 870,0,360
 	SpawnActorOnDeath:
 		Actor: HTNK.Ion.Husk
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Upgradeable@ION:
 	-Upgradeable@HOVER:
 	-Upgradeable@DRONE:
@@ -3851,7 +3850,7 @@ HTNK.Hover:
 	SpawnActorOnDeath:
 		Actor: HTNK.Hover.Husk
 		RequiresCondition: !being-warped && !onwater
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Upgradeable@ION:
 	-Upgradeable@HOVER:
 	-Upgradeable@DRONE:
@@ -3908,7 +3907,7 @@ HTNK.Drone:
 	-TimedConditionBar@BERSERK:
 	-RejectsOrders@BERSERK:
 	-GrantCondition@BERSERK:
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Upgradeable@ION:
 	-Upgradeable@HOVER:
 	-Upgradeable@DRONE:
@@ -3916,7 +3915,7 @@ HTNK.Drone:
 MSAM:
 	Inherits: ^TankTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeGround
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	RenderSprites:
@@ -4136,7 +4135,7 @@ MLRS:
 STNK.Nod:
 	Inherits: ^VehicleTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	RenderSprites:
@@ -4384,7 +4383,7 @@ HFTK:
 	Armor:
 		Type: Heavy
 	Mobile:
-		Speed: 68
+		Speed: 60
 		Voice: Move
 	RevealsShroud:
 		MinRange: 4c0
@@ -4546,7 +4545,7 @@ HARV.TD:
 BTR:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
 	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
@@ -5422,7 +5421,7 @@ RECK:
 TITN:
 	Inherits: ^TankTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeGround
 	Inherits@BERSERK: ^Berserk
 	Inherits@SHRAPNEL: ^ThrowsShrapnel
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
@@ -5520,7 +5519,7 @@ TITN:
 		RequiresCondition: !being-warped
 	WithIdleOverlay@MINDCONTROL:
 		Offset: 0,0,512
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: titn.rail
 	Upgradeable@RAILGUN:
 		Type: railgun.upgrade
@@ -5547,7 +5546,7 @@ TITN.RAIL:
 		LocalOffset: 830,290,170
 	SpawnActorOnDeath:
 		Actor: TITN.RAIL.Husk
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Upgradeable@RAILGUN:
 
 JUGG:
@@ -5706,7 +5705,7 @@ DISR:
 		Description: Armored high-tech vehicle with medium-range sonic armament.
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Light Armor, Infantry
-		Weaknesses: • Cannot attack Aircraft
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft
 		Attributes: • Slows enemy movement and rate of fire (with upgrade)
 	Health:
 		HP: 70000
@@ -5776,7 +5775,7 @@ DISR:
 HSAM:
 	Inherits: ^VehicleTD
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeGround
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@HOVERTRAIL: ^HoverTrail
@@ -6187,7 +6186,7 @@ TNKD:
 	AutoTargetPriority@TANKDEFAULT:
 		RequiresCondition: !stance-attackanything && !assault-move
 		ValidTargets: Vehicle
-		InvalidTargets: NoAutoTarget, WaterStructure
+		InvalidTargets: NoAutoTarget
 		Priority: 10
 	AutoTargetPriority@TANKATTACKANYTHING:
 		RequiresCondition: (stance-attackanything || assault-move)
@@ -6362,7 +6361,7 @@ PTNK:
 		Prerequisites: vehicles.upgraded
 	Selectable:
 		DecorationBounds: 1194, 1194
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: pcan
 	Upgradeable@PCAN:
 		Type: pcan.upgrade
@@ -6397,7 +6396,7 @@ PCAN:
 		Voice: Attack
 		ChargeLevel: 15
 		ChargingSounds: pcancharge.aud
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Upgradeable@PCAN:
 
 WTNK:
@@ -6597,7 +6596,7 @@ BATF:
 	AutoTargetPriority@DEFAULT_AIR:
 		RequiresCondition: !stance-attackanything && !assault-move && loaded-air
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Defense
-		InvalidTargets: NoAutoTarget, WaterStructure
+		InvalidTargets: NoAutoTarget
 	AutoTargetPriority@ATTACKANYTHING_AIR:
 		RequiresCondition: (stance-attackanything || assault-move) && loaded-air
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, Structure, Defense
@@ -6764,9 +6763,9 @@ CDRN:
 		Image: cdrone
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Infantry, Vehicle, Water
-		InvalidTargets: NoAutoTarget, WaterStructure, Underwater, Defense, ChaosImmune
+		InvalidTargets: NoAutoTarget, ChaosImmune
 	AutoTargetPriority@ATTACKANYTHING:
-		ValidTargets: Infantry, Vehicle, Water, Underwater
+		ValidTargets: Infantry, Vehicle, Water
 		InvalidTargets: NoAutoTarget, ChaosImmune
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
@@ -6852,7 +6851,7 @@ CDRN:
 
 CHPR:
 	Inherits: ^Tank
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
@@ -7209,7 +7208,7 @@ VIPR:
 APOC:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeGround
 	Inherits@BERSERK: ^Berserk
 	Inherits@SHRAPNEL: ^ThrowsShrapnel
 	Inherits@ATOMICAMMO: ^AtomicAmmunition
@@ -7311,7 +7310,7 @@ APOC:
 	ReloadAmmoPool@ATOMICAMMO:
 		Count: 6
 		RequiresCondition: atomic-ammo && has-atomic-ammo < 6
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: apoc.atomic
 	Upgradeable@ATOMIC:
 		Type: atomicengines.upgrade
@@ -7342,7 +7341,7 @@ APOC.ATOMIC:
 		EmptyWeapon: UnitExplodeIraqTank
 		RequiresCondition: !being-warped
 	-SpawnActorOnDeath:
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Upgradeable@ATOMIC:
 
 THWK:

@@ -435,7 +435,7 @@ S2:
 
 S3:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
@@ -904,7 +904,7 @@ HARV.Scrin:
 GUNW:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
@@ -970,7 +970,7 @@ GUNW:
 	SpeedMultiplier@TRAVELERSPEED:
 		RequiresCondition: travelerspeed
 		Modifier: 115
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: shrw
 	Upgradeable@SHRW:
 		Type: shrw.upgrade
@@ -1003,7 +1003,7 @@ SHRW:
 		LocalOffset: 690,92,0, 690,-92,0
 	-GrantConditionOnFaction@TRAVELERSPEED:
 	-SpeedMultiplier@TRAVELERSPEED:
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Upgradeable@SHRW:
 
 SEEK:
@@ -1833,7 +1833,7 @@ RUIN:
 ATMZ:
 	Inherits: ^Vehicle
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
@@ -2655,10 +2655,6 @@ PAC:
 		RequiresCondition: empdisable
 	Repairable:
 		RepairActors: fix, rep, srep
-	AutoTargetPriority@DEFAULT:
-		InvalidTargets: NoAutoTarget, WaterStructure, AirLowPriority
-	AutoTargetPriority@ATTACKANYTHING:
-		InvalidTargets: NoAutoTarget, AirLowPriority
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
 	WithProductionIconOverlay:
@@ -4829,12 +4825,12 @@ GRCL:
 		RequiresCondition: !leeching
 	WithRangeCircle:
 		Type: GreaterCoalescence
-		Range: 3c768
+		Range: 4c512
 		Color: ff000099
 		Visible: Always
 	ProximityExternalCondition@HEAL:
 		Condition: lchr-healing
-		Range: 3c768
+		Range: 4c512
 	GrantConditionOnHealingReceived:
 		Condition: leeching
 		MinimumHealing: 100

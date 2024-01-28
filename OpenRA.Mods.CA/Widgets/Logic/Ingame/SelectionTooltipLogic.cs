@@ -114,11 +114,10 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 			}
 
 			// Name
-			var name = tooltipInfo != null ? tooltipInfo.Name : actorInfo.Name;
+			var name = tooltipInfo != null ? tooltipInfo.Name : char.ToUpper(actorInfo.Name[0]) + actorInfo.Name[1..];
 
 			if (numSelectedActors > 1)
 				name = numSelectedActors.ToString() + "x " + name;
-				//name += " (x" + numSelectedActors.ToString() + ")";
 
 			nameLabel.Text = name;
 			var nameSize = font.Measure(name);
