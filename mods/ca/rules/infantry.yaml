@@ -4200,6 +4200,17 @@ CSCR:
 		DamageCooldown: 150
 		RequiresCondition: on-tib
 		DamageTypes: ToxinDeath
+	WithDecoration@REDCROSS:
+		RequiresCondition: on-tib || (hospitalheal && damaged)
+	WithDecoration@RANK-1:
+		BlinkPatterns:
+			on-tib || (damaged && hospitalheal): On, Off
+	WithDecoration@RANK-2:
+		BlinkPatterns:
+			on-tib || (damaged && hospitalheal): On, Off
+	WithDecoration@RANK-ELITE:
+		BlinkPatterns:
+			on-tib || (damaged && hospitalheal): On, Off
 
 CMSR:
 	Inherits: ^Soldier
