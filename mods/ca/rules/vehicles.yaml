@@ -1794,16 +1794,13 @@ JEEP:
 	RevealsShroud@Optics:
 		Range: 12c0
 		RequiresCondition: optics-active
-	SpeedMultiplier@Optics:
-		Modifier: 75
-		RequiresCondition: optics-active
 	GrantTimedConditionOnDeploy@Optics:
 		DeployedCondition: optics-active
 		RequiresCondition: optics-upgrade
 		ShowSelectionBar: true
 		StartsFullyCharged: true
 		DeployedTicks: 250
-		CooldownTicks: 1000
+		CooldownTicks: 1250
 		ShowSelectionBarWhenFull: false
 		ChargingColor: 808080
 		DischargingColor: ffffff
@@ -2976,8 +2973,8 @@ BGGY.Decoy:
 	Inherits: BGGY
 	RenderSprites:
 		Image: bggy
-	DamageMultiplier@DECOY:
-		Modifier: 0
+	Health:
+		HP: 4000
 	Armament:
 		Weapon: M60mgTD.Decoy
 	Mobile:
@@ -3014,13 +3011,13 @@ BGGY.Decoy:
 	-GrantConditionOnPrerequisite@Decoy:
 	GrantTimedCondition@Decoy:
 		Condition: active
-		Duration: 250
+		Duration: 500
 	GrantTimedCondition@DecoySpawn:
 		Condition: highlight
 		Duration: 1
 	GrantDelayedCondition@DecoyDespawn:
 		Condition: highlight
-		Delay: 249
+		Delay: 499
 	KillsSelf:
 		RequiresCondition: !active
 	WithTextDecoration@Decoy:
@@ -7137,6 +7134,7 @@ MANT:
 		Range: 8c0
 		DetectionTypes: AirCloak
 		RequiresCondition: empdisable || being-warped
+	KeepsDistance:
 
 VIPR:
 	Inherits: ^VehicleTD

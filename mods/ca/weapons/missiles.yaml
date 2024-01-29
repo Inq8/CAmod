@@ -356,10 +356,10 @@ DragonBATF.CYB.TibCore:
 HellfireAG:
 	Inherits: ^AirToGroundMissile
 	Range: 6c0
-	ReloadDelay: 90
+	ReloadDelay: 70
 	MinRange: 1c256
 	Burst: 4
-	BurstDelays: 14
+	BurstDelays: 10
 	Projectile: MissileCA
 		Speed: 256
 		HorizontalRateOfTurn: 40
@@ -375,16 +375,16 @@ HellfireAG:
 HellfireAG.Orca:
 	Inherits: HellfireAG
 	Report: orcamis1.aud
-	BurstDelays: 11
+	BurstDelays: 8
 
 HindRockets:
 	Inherits: HellfireAG
 	Range: 5c512
-	ReloadDelay: 100
+	ReloadDelay: 70
 	Report: hind-rocket1.aud, hind-rocket2.aud
 	ValidTargets: Ground
 	InvalidTargets: Infantry
-	BurstDelays: 15
+	BurstDelays: 12
 	Burst: 6
 	Warhead@1Dam: SpreadDamage
 		Damage: 3200
@@ -452,7 +452,7 @@ HellfireAA:
 	Inherits: ^AirToAirMissile
 	ReloadDelay: 60
 	Burst: 4
-	BurstDelays: 14
+	BurstDelays: 10
 	Warhead@1Dam: SpreadDamage
 		Damage: 3000
 	Warhead@smallDamage: SpreadDamage
@@ -461,8 +461,7 @@ HellfireAA:
 HellfireAA.Orca:
 	Inherits: HellfireAA
 	Report: orcamis1.aud
-	ReloadDelay: 68
-	BurstDelays: 11
+	BurstDelays: 8
 
 HellfireAA.Harrier:
 	Inherits: HellfireAA
