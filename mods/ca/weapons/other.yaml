@@ -214,7 +214,7 @@ FlamerTD:
 		ForceGround: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 426
-		Falloff: 100, 60, 30, 0
+		Falloff: 100, 35, 10, 0
 		Damage: 1850
 		Versus:
 			None: 300
@@ -262,6 +262,12 @@ BigFlamerTD:
 			Light: 100
 			Concrete: 45
 
+BigFlamerTD.Decoy:
+	Inherits: BigFlamerTD
+	Warhead@1Dam: SpreadDamage
+		Damage: 0
+	-Warhead@2Smu:
+
 FlamerTDBATF:
 	Inherits: BigFlamerTD
 	Burst: 1
@@ -281,6 +287,7 @@ BigFlamerTDFF:
 ChemsprayTD:
 	Inherits: FlamerTD
 	Warhead@1Dam: SpreadDamage
+		Falloff: 100, 45, 20, 0
 		Damage: 2000
 		Versus:
 			Concrete: 40
@@ -318,12 +325,19 @@ HeavyFlameTankFlamer:
 	Burst: 25
 	BurstDelays: 2
 	Warhead@1Dam: SpreadDamage
+		Falloff: 100, 45, 20, 0
 		Damage: 175
 		Versus:
 			None: 230
 	Warhead@2Smu: LeaveSmudge
 		AirThreshold: 256
 		Chance: 10
+
+HeavyFlameTankFlamer.Decoy:
+	Inherits: HeavyFlameTankFlamer
+	Warhead@1Dam: SpreadDamage
+		Damage: 0
+	-Warhead@2Smu:
 
 HeavyFlameTankFlamer.UPG:
 	Inherits: HeavyFlameTankFlamer
@@ -338,6 +352,12 @@ HeavyFlameTankFlamer.UPG:
 			Concrete: 60
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch-Black
+
+HeavyFlameTankFlamer.UPG.Decoy:
+	Inherits: HeavyFlameTankFlamer.UPG
+	Warhead@1Dam: SpreadDamage
+		Damage: 0
+	-Warhead@2Smu:
 
 HeavyFlameTankFlamerFF:
 	Inherits: HeavyFlameTankFlamer
@@ -566,6 +586,7 @@ DogJaw:
 
 CyberdogJaw:
 	Inherits: DogJaw
+	ReloadDelay: 10
 	Range: 4c512
 	Report: cdog-attack1.aud
 	Warhead@1Dam: TargetDamage
@@ -2844,18 +2865,23 @@ MineDefuserCharger:
 	-Warhead@1Def:
 	-Warhead@3Eff:
 
-DecoyBuggySpawner:
+DecoyFlameTankSpawner:
 	ReloadDelay: 1
 	Projectile: InstantExplode
 	Report: decoyspawn.aud
 	Warhead@Spawn: SpawnActor
-		Actors: bggy.decoy
-		Range: 2
+		Actors: ftnk.decoy, ftnk.decoy
+		Range: 3
 		ForceGround: false
 		MatchSourceFacing: true
 		ValidTargets: Ground, Water, Trees
 
-DecoyBuggyDespawn:
+DecoyHeavyFlameTankSpawner:
+	Inherits: DecoyFlameTankSpawner
+	Warhead@Spawn: SpawnActor
+		Actors: hftk.decoy, hftk.decoy
+
+DecoyDespawn:
 	Report: decoydespawn.aud
 	Projectile: InstantHit
 	Warhead@Dummy: Dummy

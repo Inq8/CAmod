@@ -19,7 +19,7 @@ namespace OpenRA.Mods.CA.Traits.Render
 {
 	public enum RadiatingCircleVisibility { Always, WhenSelected }
 
-	[Desc("Copy of RenderDetectionCircle where the range can be specified rather than being based on DetectCloaked.")]
+	[Desc("Radiating circle overlay with an optional outer circle.")]
 	class WithRadiatingCircleInfo : ConditionalTraitInfo
 	{
 		[Desc("Range circle line width.")]
@@ -33,15 +33,11 @@ namespace OpenRA.Mods.CA.Traits.Render
 		public readonly int Interval = 0;
 
 		[Desc("Start color of the radiating circle.")]
-		public readonly Color Color = Color.FromArgb(48, Color.Red);
-
-		public readonly bool UsePlayerColor = false;
-
-		public readonly int? StartAlpha = null;
-		public readonly int? EndAlpha = null;
+		public readonly Color Color = Color.FromArgb(64, Color.Red);
 
 		[Desc("Range of the circle")]
 		public readonly WDist StartRadius = WDist.Zero;
+
 		[Desc("Range of the circle")]
 		public readonly WDist EndRadius = WDist.Zero;
 
@@ -49,9 +45,9 @@ namespace OpenRA.Mods.CA.Traits.Render
 
 		public readonly bool AlwaysShowMaxRange = false;
 
-		public readonly Color MaxRadiusColor = Color.FromArgb(96, Color.Red);
+		public readonly Color MaxRadiusColor = Color.FromArgb(128, Color.Red);
 
-		public readonly Color MaxRadiusFlashColor = Color.FromArgb(96, Color.Red);
+		public readonly Color MaxRadiusFlashColor = Color.FromArgb(128, Color.Red);
 
 		[Desc("Player relationships which will be able to see the circle.",
 			"Valid values are combinations of `None`, `Ally`, `Enemy` and `Neutral`.")]

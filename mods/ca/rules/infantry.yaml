@@ -4090,7 +4090,7 @@ MORT.Cryo:
 CDOG:
 	Inherits: DOG
 	Buildable:
-		Queue: InfantrySQ
+		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 251
 		Prerequisites: ~stolentech.barr
@@ -4105,6 +4105,8 @@ CDOG:
 		VoiceSet: CyberdogVoice
 	Armament:
 		Weapon: CyberdogJaw
+	GrantConditionOnAttack:
+		RevokeDelay: 20
 
 MORT.Sonic:
 	Inherits: ^MortarInfantryBase

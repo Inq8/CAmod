@@ -108,7 +108,7 @@ namespace OpenRA.Mods.CA.Traits
 		protected override void TraitEnabled(Actor self)
 		{
 			if (info.ResetTraitOnEnable)
-				ticks = info.ChargeDuration;
+				ticks = info.Immediate ? 0 : info.ChargeDuration;
 		}
 
 		void INotifyOwnerChanged.OnOwnerChanged(Actor self, Player oldOwner, Player newOwner)
