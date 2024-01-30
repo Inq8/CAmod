@@ -1794,16 +1794,13 @@ JEEP:
 	RevealsShroud@Optics:
 		Range: 12c0
 		RequiresCondition: optics-active
-	SpeedMultiplier@Optics:
-		Modifier: 75
-		RequiresCondition: optics-active
 	GrantTimedConditionOnDeploy@Optics:
 		DeployedCondition: optics-active
 		RequiresCondition: optics-upgrade
 		ShowSelectionBar: true
 		StartsFullyCharged: true
 		DeployedTicks: 250
-		CooldownTicks: 1000
+		CooldownTicks: 1250
 		ShowSelectionBarWhenFull: false
 		ChargingColor: 808080
 		DischargingColor: ffffff
@@ -2092,7 +2089,7 @@ MGG:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 380
-		Prerequisites: atek, ~techlevel.high
+		Prerequisites: atek, ~vehicles.allies, ~techlevel.high
 		Description: Regenerates the shroud nearby, obscuring enemy vision.\n  Can channel the effect to reduce enemy weapon range and vision.
 	TooltipExtras:
 		Attributes: • Special Ability: Toggle Gap Generator
@@ -2976,8 +2973,8 @@ BGGY.Decoy:
 	Inherits: BGGY
 	RenderSprites:
 		Image: bggy
-	DamageMultiplier@DECOY:
-		Modifier: 0
+	Health:
+		HP: 4000
 	Armament:
 		Weapon: M60mgTD.Decoy
 	Mobile:
@@ -3014,13 +3011,13 @@ BGGY.Decoy:
 	-GrantConditionOnPrerequisite@Decoy:
 	GrantTimedCondition@Decoy:
 		Condition: active
-		Duration: 250
+		Duration: 500
 	GrantTimedCondition@DecoySpawn:
 		Condition: highlight
 		Duration: 1
 	GrantDelayedCondition@DecoyDespawn:
 		Condition: highlight
-		Delay: 249
+		Delay: 499
 	KillsSelf:
 		RequiresCondition: !active
 	WithTextDecoration@Decoy:
@@ -6224,7 +6221,7 @@ MSAR:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 370
 		IconPalette: chrometd
-		Prerequisites: anyradar, ~vehicles.msar, ~techlevel.medium
+		Prerequisites: anyradar, ~vehicles.gdi, ~techlevel.medium
 		Description: When deployed, detects enemy vehicles,\n  aircraft and structures within a large radius.
 	TooltipExtras:
 		Weaknesses: • Unarmed
@@ -6655,7 +6652,7 @@ MEMP:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 410
 		IconPalette: chrometd
-		Prerequisites: gtek, ~techlevel.high
+		Prerequisites: gtek, ~vehicles.gdi, ~techlevel.high
 		Description: Remotely piloted vehicle, deploys to disable nearby vehicles & structures.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses, Buildings
@@ -7042,7 +7039,7 @@ PBUL:
 		Weaknesses: • Weak vs Infantry, Buildings\n• Cannot attack Aircraft
 		Attributes: • Can detect spies and cloaked units.
 	Valued:
-		Cost: 750
+		Cost: 675
 	Tooltip:
 		Name: Pitbull
 	UpdatesPlayerStatistics:
@@ -7137,6 +7134,7 @@ MANT:
 		Range: 8c0
 		DetectionTypes: AirCloak
 		RequiresCondition: empdisable || being-warped
+	KeepsDistance:
 
 VIPR:
 	Inherits: ^VehicleTD
@@ -7358,7 +7356,7 @@ THWK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 240
+		BuildPaletteOrder: 245
 		Prerequisites: gtek, ~thwk.upgrade, ~techlevel.high
 		Queue: VehicleSQ, VehicleMQ
 		IconPalette: chrometd

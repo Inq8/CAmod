@@ -310,7 +310,7 @@ GTChainGun:
 ChainGun:
 	Inherits: ^HeavyMG
 	Report: gun13.aud
-	ReloadDelay: 20
+	ReloadDelay: 16
 	Range: 5c512
 	MinRange: 0c768
 	Projectile: Bullet
@@ -452,6 +452,12 @@ Pistol:
 PistolTD:
 	Inherits: Pistol
 	Report: gun18.aud
+
+CommissarPistol:
+	Inherits: Pistol
+	Range: 5c0
+	Warhead@1Dam: SpreadDamage
+		Damage: 900
 
 M1Carbine:
 	Inherits: ^LightMG

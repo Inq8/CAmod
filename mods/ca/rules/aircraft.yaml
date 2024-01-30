@@ -220,7 +220,7 @@ MIG:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 18000
+		HP: 20000
 	RevealsShroud:
 		Range: 11c0
 		MinRange: 9c0
@@ -1041,7 +1041,7 @@ HELI:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 20000
+		HP: 22000
 	RevealsShroud:
 		Range: 11c0
 		MinRange: 9c0
@@ -1168,8 +1168,12 @@ HIND:
 		Name: secondary
 		Weapon: HindRockets.AnyTarget
 		LocalOffset: 85,-213,-185, 85,213,-185
-		PauseOnCondition: !ammo2
+		PauseOnCondition: !ammo2 || rockets-reloading
 		RequiresCondition: !ammo
+	GrantConditionOnAttack@RocketReload:
+		Condition: rockets-reloading
+		ArmamentNames: secondary
+		RevokeDelay: 12
 	AttackAircraft:
 		FacingTolerance: 80
 		AttackType: Hover
@@ -3829,8 +3833,12 @@ KAMV:
 		Name: secondary
 		Weapon: HindRockets.AnyTarget
 		LocalOffset: 85,-213,-185, 85,213,-185
-		PauseOnCondition: !ammo2
+		PauseOnCondition: !ammo2 || rockets-reloading
 		RequiresCondition: !ammo
+	GrantConditionOnAttack@RocketReload:
+		Condition: rockets-reloading
+		ArmamentNames: secondary
+		RevokeDelay: 12
 	AttackAircraft:
 		FacingTolerance: 80
 		AttackType: Hover
@@ -4083,13 +4091,13 @@ VERT:
 	Armament@PRIMARY:
 		Weapon: VertigoBomb
 		LocalOffset: 2,0,-43
-		PauseOnCondition: !ammo
+		PauseOnCondition: !ammo || prepping || hidden
 	Armament@DECLOAK:
 		Name: secondary
 		Weapon: VertigoBombTargeter
 		PauseOnCondition: !ammo
 	AttackAircraft:
-		FacingTolerance: 80
+		FacingTolerance: 40
 		PersistentTargeting: false
 		OpportunityFire: true
 		PauseOnCondition: empdisable || being-warped
@@ -4170,6 +4178,10 @@ VERT:
 	WithShadow@CLOAKED:
 		ShadowColor: 00000033
 		RequiresCondition: invisibility || hidden
+	GrantTimedCondition@Decloak:
+		Condition: prepping
+		Duration: 40
+		RequiresCondition: !hidden
 	Cloak:
 		DetectionTypes: AirCloak
 		InitialDelay: 100
@@ -4243,9 +4255,6 @@ MCOR:
 	SpawnActorOnDeath@EMP:
 		Actor: MCOR.Husk.EMP
 		RequiresCondition: airborne && empdisable && !being-warped
-	AutoTarget:
-		InitialStance: HoldFire
-		InitialStanceAI: AttackAnything
 	LeavesTrails:
 		Offsets: -427,0,0
 		MovingInterval: 2

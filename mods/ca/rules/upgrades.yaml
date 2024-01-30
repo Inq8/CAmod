@@ -95,7 +95,7 @@ bombard.strat:
 		BuildPaletteOrder: 1
 		Prerequisites: ~player.gdi, anyradar, ~!seek.strat, ~!hold.strat, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Firepower focused strategy, required for:\n• Bombardier Upgrade\n• Hailstorm Missiles Upgrade\n\n
+		Description: Firepower focused strategy, required for:\n• Tomahawk Launcher\n• Hailstorm Missiles Upgrade\n\n
 	TooltipExtras:
 		Strengths: + Increases firepower and rate of fire of vehicles and aircraft by 3%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
@@ -240,20 +240,6 @@ empgren.upgrade:
 	RenderSprites:
 		Image: empgren.upgrade
 
-strategic.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Strategy Dependent Upgrade
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.gdi, gtek, anystrategy, ~!bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
-		IconPalette: chrometd
-		Description: Upgrade depends on chosen strategy.\n\n• Bombardment: Bombardier upgrade\n• Seek & Destroy: TOW Missile upgrade\n• Hold the Line: Point Defense Systems upgrade
-	Valued:
-		Cost: 1000
-	RenderSprites:
-		Image: strategic.upgrade
-
 bjet.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -269,6 +255,20 @@ bjet.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: bjet.upgrade
+
+strategic.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Strategy Dependent Upgrade
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.gdi, gtek, anystrategy, ~!bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
+		IconPalette: chrometd
+		Description: Upgrade depends on chosen strategy.\n\n• Bombardment: Tomahawk Launcher research\n• Seek & Destroy: TOW Missile upgrade\n• Hold the Line: Point Defense Systems upgrade
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: strategic.upgrade
 
 thwk.upgrade:
 	Inherits: ^Upgrade
@@ -852,7 +852,7 @@ optics.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.allies, atek, ~techlevel.high
-		Description: Equips rangers with advanced optics which temporarily extends their vision\n  at the cost of slower movement speed.\n\nUpgrades: Ranger
+		Description: Equips rangers with advanced optics which temporarily extends their vision.\n\nUpgrades: Ranger
 	TooltipExtras:
 		Strengths: + Rangers can temporarily increase their vision range
 	Valued:

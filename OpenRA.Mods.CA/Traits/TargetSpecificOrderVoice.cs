@@ -48,7 +48,12 @@ namespace OpenRA.Mods.CA.Traits
 			if (order.Target.Type == TargetType.Invalid || order.Target.Type == TargetType.Terrain)
 				return Info.DefaultVoice;
 
-			var enabledTargetTypes = order.Target.Actor.GetEnabledTargetTypes();
+			var actor = order.Target.Type == TargetType.Actor ? order.Target.Actor : order.Target.FrozenActor.Actor;
+
+			if (actor == null || actor.IsDead)
+				return Info.DefaultVoice;
+
+			var enabledTargetTypes = actor.GetEnabledTargetTypes();
 			var matchingTargetType = enabledTargetTypes.FirstOrDefault(t => Info.TargetTypeVoices.ContainsKey(t));
 
 			if (matchingTargetType != null)

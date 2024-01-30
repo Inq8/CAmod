@@ -87,6 +87,7 @@ E1:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -141,6 +142,7 @@ E2:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -196,6 +198,7 @@ E3:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -525,6 +528,7 @@ E4:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -579,6 +583,7 @@ E4:
 E6:
 	Inherits: ^Soldier
 	Inherits@ENGINEER: ^EngineerBase
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		BuildPaletteOrder: 31
 		Prerequisites: ~infantry.ra
@@ -800,6 +805,7 @@ E7:
 
 MEDI:
 	Inherits: ^Soldier
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -864,6 +870,7 @@ MEDI:
 
 MECH:
 	Inherits: ^Soldier
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1301,6 +1308,7 @@ SHOK:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@Inspirable: ^Inspirable
 	AutoTargetPriority@DEFAULT:
 		InvalidTargets: NoAutoTarget, TeslaBoost
 	AutoTargetPriority@ATTACKANYTHING:
@@ -1393,6 +1401,7 @@ N1:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1454,6 +1463,7 @@ N2:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1530,6 +1540,7 @@ N3:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1631,6 +1642,7 @@ N4:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1922,6 +1934,7 @@ RMBO:
 N6:
 	Inherits: ^Soldier
 	Inherits@ENGINEER: ^EngineerBase
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		BuildPaletteOrder: 31
 		Prerequisites: ~infantry.td
@@ -2688,6 +2701,7 @@ E8:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -3053,6 +3067,7 @@ IVAN:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -4185,3 +4200,81 @@ CSCR:
 		DamageCooldown: 150
 		RequiresCondition: on-tib
 		DamageTypes: ToxinDeath
+	WithDecoration@REDCROSS:
+		RequiresCondition: on-tib || (hospitalheal && damaged)
+	WithDecoration@RANK-1:
+		BlinkPatterns:
+			on-tib || (damaged && hospitalheal): On, Off
+	WithDecoration@RANK-2:
+		BlinkPatterns:
+			on-tib || (damaged && hospitalheal): On, Off
+	WithDecoration@RANK-ELITE:
+		BlinkPatterns:
+			on-tib || (damaged && hospitalheal): On, Off
+
+CMSR:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 195
+		Prerequisites: stek, ~barr, ~techlevel.high
+		Description: Leads regular infantry into battle, motivating them\n  to move faster and fight harder.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry
+		Weaknesses: • Weak vs Light Armor, Heavy Armor, Defenses, Buildings\n• Cannot attack Aircraft
+		Attributes: • Increases speed and rate of fire of nearby infantry\n• Can detect cloaked units
+	Valued:
+		Cost: 800
+	Tooltip:
+		Name: Commissar
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 12000
+	Mobile:
+		Speed: 69
+	RevealsShroud:
+		Range: 6c0
+	Armament@PRIMARY:
+		Weapon: CommissarPistol
+	Armament@BATF:
+		Name: batf
+		Weapon: CommissarPistol
+		MuzzleSequence: garrison-muzzle
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+		IdleSequences: idle1,idle2
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
+	AttackFrontal:
+		PauseOnCondition: being-warped
+		FacingTolerance: 0
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
+	DetectCloaked:
+		DetectionTypes: Cloak, Thief
+		Range: 6c0
+	ProximityExternalCondition@Inspiration:
+		Range: 7c0
+		Condition: inspiration
+		ValidRelationships: Ally
+	WithDecoration@CMSRPIP:
+		Image: pips
+		Sequence: pip-cmsr
+		Palette: effect
+		Position: TopLeft
+		ValidRelationships: Ally, Enemy, Neutral
+	WithRadiatingCircle:
+		EndRadius: 7c0
+		Interval: 25
+		Duration: 50
+		ValidRelationships: Ally
+		AlwaysShowMaxRange: true
