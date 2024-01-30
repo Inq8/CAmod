@@ -331,7 +331,7 @@ IRON:
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 130
-		Prerequisites: stek, ~structures.soviet, ~techlevel.unrestricted
+		Prerequisites: stek, ~structures.soviet, ~techlevel.high
 		BuildLimit: 1
 		Description: Makes a group of units invulnerable\n  for a short time.
 	TooltipExtras:
@@ -387,7 +387,7 @@ PDOX:
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 130
-		Prerequisites: atek, ~structures.allies, ~techlevel.unrestricted
+		Prerequisites: atek, ~structures.allies, ~techlevel.high
 		BuildLimit: 1
 		Description: Can be used to teleports units anywhere on the map.
 	TooltipExtras:
@@ -547,11 +547,11 @@ AGUN:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
-		MinRange: 5c0
-		Range: 6c0
+		MinRange: 6c0
+		Range: 8c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 5c0
+		Range: 6c0
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
@@ -575,7 +575,7 @@ AGUN:
 	RenderRangeCircle:
 		RangeCircleType: DefenseRangeAA
 	Power:
-		Amount: -50
+		Amount: -40
 	ClassicFacingBodyOrientation:
 	DetectCloaked:
 		DetectionTypes: AirCloak
@@ -585,11 +585,11 @@ DOME:
 	Inherits: ^Building
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
 	Inherits@SHAPE: ^2x2Shape
-	Inherits@POWERDRAIN: ^PowerDrainableRadar
 	Inherits@UPG: ^ProducesUpgrades
 	Inherits@SOVIETRADARPOWERS: ^SovietRadarPowers
 	Inherits@VEILOFWARPOWER: ^VeilOfWarPower
 	Inherits@CLUSTERMINESPOWER: ^ClusterMinesPower
+	Inherits@TECHLOCKABLE: ^TechLockable
 	Selectable:
 		Bounds: 2048, 2048
 	HitShape:
@@ -612,7 +612,7 @@ DOME:
 		LocalCenterOffset: 0,-512,0
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: SpyInfiltrate, SabInfiltrate
+		TargetTypes: SpyInfiltrate
 	Health:
 		HP: 110000
 	Armor:
@@ -640,52 +640,56 @@ DOME:
 		Range: 12c0
 		RequiresCondition: !jammed && !disabled && !being-warped
 	InfiltrateForExploration:
-		Types: SpyInfiltrate, SabInfiltrate
+		Types: SpyInfiltrate
 	Power:
 		Amount: -40
-	-PowerMultiplier@POWERDRAIN:
 	ValidFactions:
 		Factions: england, france, germany, usa, russia, ukraine, iraq, yuri
+	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@anyradar:
 		Prerequisite: anyradar
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@radarorrepair:
 		Prerequisite: radarorrepair
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@allrad:
 		Factions: england, france, germany, usa
 		Prerequisite: radar.allies
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@engrad:
 		Factions: england
 		Prerequisite: radar.england
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@frarad:
 		Factions: france
 		Prerequisite: radar.france
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@sovrad:
 		Factions: russia, ukraine, iraq, yuri
 		Prerequisite: radar.soviet
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@rusrad:
 		Factions: russia
 		Prerequisite: radar.russia
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@ukrrad:
 		Factions: ukraine
 		Prerequisite: radar.ukraine
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@irarad:
 		Factions: iraq
 		Prerequisite: radar.iraq
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@yurirad:
 		Factions: yuri
 		Prerequisite: radar.yuri
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@radar-active:
 		Prerequisite: radar-active
 		RequiresCondition: !jammed && !disabled && !being-warped
-	ProvidesPrerequisite@buildingname:
-	InfiltrateForSupportPowerCA@STOLENTECH:
-		Types: SabInfiltrate
-		Proxy: stolentech.dome
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
 	ExternalCondition@JAMMED:
 		Condition: jammed
-
 
 PBOX:
 	Inherits: ^Defense
@@ -935,7 +939,7 @@ SAM:
 		Type: Concrete
 	RevealsShroud:
 		MinRange: 5c0
-		Range: 8c0
+		Range: 7c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 5c0
@@ -973,6 +977,7 @@ ATEK:
 	Inherits@GPSPOWER: ^GpsPower
 	Inherits@FORCESHIELDPOWER: ^ForceShieldPower
 	Inherits@TEMPINCPOWER: ^TemporalIncursionPower
+	Inherits@TECHLOCKABLE: ^TechLockable
 	Selectable:
 		Bounds: 2048, 2048
 	Buildable:
@@ -1004,17 +1009,6 @@ ATEK:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -150
-	ProvidesPrerequisite@buildingname:
-	ProvidesPrerequisite:
-		Prerequisite: techcenter
-	InfiltrateForSupportPower@STOLENTECH:
-		Types: SabInfiltrate
-		Proxy: stolentech.atek
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
-	Targetable@INFILTRATION:
-		RequiresCondition: !being-warped
-		TargetTypes: SabInfiltrate
 	GrantConditionOnFogEnabled@FOGENABLED:
 		Condition: fogenabled
 	ExternalCondition@DUMMY:
@@ -1037,15 +1031,23 @@ ATEK:
 		RequiresCondition: fogenabled
 	ValidFactions:
 		Factions: england, germany, france, usa
+	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
+	ProvidesPrerequisite:
+		Prerequisite: techcenter.any
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@germanyatek:
 		Factions: germany
 		Prerequisite: atek.germany
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@franceatek:
 		Factions: france
 		Prerequisite: atek.france
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@usaatek:
 		Factions: usa
 		Prerequisite: atek.usa
+		RequiresCondition: !tech-locked
 	Production@UPG:
 		Produces: Upgrade, SpySatellite
 	Exit@UPG:
@@ -1166,6 +1168,7 @@ WEAP:
 		Proxy: stolentech.weap
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+		UseTargetFaction: true
 	-ActorPreviewPlaceBuildingPreview:
 	SequencePlaceBuildingPreview:
 		Sequence: place
@@ -1313,6 +1316,7 @@ FACT:
 PROC:
 	Inherits: ^Building
 	Inherits@BOTREF: ^BotRefinery
+	Inherits@ResourceDrainable: ^ResourceDrainable
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 60
@@ -1525,6 +1529,9 @@ HPAD:
 	ProvidesPrerequisiteValidatedFaction@yuri:
 		Factions: yuri
 		Prerequisite: aircraft.yuri
+	ProvidesPrerequisiteValidatedFaction@kiro:
+		Factions: russia, ukraine, iraq
+		Prerequisite: aircraft.kiro
 	ProvidesPrerequisiteValidatedFaction@chinookvisible:
 		Factions: allies, england, france, germany, gdi, zocom, eagle, talon, arc, nod, blackh, legion, marked, shadow
 		Prerequisite: aircraft.chinookvisible
@@ -1540,12 +1547,18 @@ HPAD:
 	ProvidesPrerequisite@buildingname:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: SpyInfiltrate
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	InfiltrateForSupportPower:
 		Types: SpyInfiltrate
 		Proxy: powerproxy.paratroopers.allies
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+	InfiltrateForSupportPowerCA@STOLENTECH:
+		Types: SabInfiltrate
+		Proxy: stolentech.hpad
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
+		UseTargetFaction: true
 
 AFLD:
 	Inherits: ^Building
@@ -1603,16 +1616,24 @@ AFLD:
 	ProvidesPrerequisiteValidatedFaction@yuri:
 		Factions: yuri
 		Prerequisite: aircraft.yuri
+	ProvidesPrerequisiteValidatedFaction@kiro:
+		Factions: russia, ukraine, iraq
+		Prerequisite: aircraft.kiro
 	SupportPowerChargeBar:
 	Power:
 		Amount: -20
 	ProvidesPrerequisite@buildingname:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: SpyInfiltrate
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	InfiltrateForSupportPower:
 		Proxy: powerproxy.airstrike
 		Types: SpyInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
+	InfiltrateForSupportPower@STOLENTECH:
+		Types: SabInfiltrate
+		Proxy: stolentech.afld
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
 	WithResupplyAnimation:
@@ -1825,6 +1846,7 @@ STEK:
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@UPG: ^ProducesUpgrades
 	Inherits@FORCESHIELDPOWER: ^ForceShieldPower
+	Inherits@TECHLOCKABLE: ^TechLockable
 	Selectable:
 		Bounds: 3072, 2048
 	HitShape:
@@ -1856,27 +1878,24 @@ STEK:
 	Power:
 		Amount: -150
 	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite:
-		Prerequisite: techcenter
+		Prerequisite: techcenter.any
+		RequiresCondition: !tech-locked
 	ValidFactions:
 		Factions: russia, ukraine, iraq, yuri
 	ProvidesPrerequisiteValidatedFaction@russia:
 		Factions: russia
 		Prerequisite: stek.russia
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@ukraine:
 		Factions: ukraine
 		Prerequisite: stek.ukraine
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@iraq:
 		Factions: iraq
 		Prerequisite: stek.iraq
-	InfiltrateForSupportPower@STOLENTECH:
-		Types: SabInfiltrate
-		Proxy: stolentech.stek
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
-	Targetable@INFILTRATION:
-		RequiresCondition: !being-warped
-		TargetTypes: SabInfiltrate
+		RequiresCondition: !tech-locked
 
 BARR:
 	Inherits: ^Building
@@ -2376,7 +2395,15 @@ AIRCRAFT.CHINOOK:
 	Buildable:
 		Description: Helipad
 
-TECHCENTER:
+TECHCENTER.ANY:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Tech Center
+	Buildable:
+		Description: Tech Center
+
+TECHCENTER.TD:
 	AlwaysVisible:
 	Interactable:
 	Tooltip:
@@ -2729,9 +2756,6 @@ WEAP.TD:
 	ProvidesPrerequisiteValidatedFaction@mlrs:
 		Factions: legion
 		Prerequisite: vehicles.mlrs
-	ProvidesPrerequisiteValidatedFaction@msar:
-		Factions: talon, zocom, eagle, arc
-		Prerequisite: vehicles.msar
 	WithBuildingBib:
 	WithProductionDoorOverlayCA:
 		RequiresCondition: !build-incomplete
@@ -3165,7 +3189,7 @@ NSAM:
 		Type: Concrete
 	RevealsShroud:
 		MinRange: 5c0
-		Range: 8c0
+		Range: 7c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 5c0
@@ -3424,7 +3448,6 @@ OBLI:
 HQ:
 	Inherits: ^BuildingTD
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
-	Inherits@POWERDRAIN: ^PowerDrainableRadar
 	Inherits@UPG: ^ProducesUpgrades
 	Inherits@GDIRADARPOWERS: ^GDIRadarPowers
 	Inherits@SATHACKPOWER: ^SatHackPower
@@ -3432,6 +3455,7 @@ HQ:
 	Inherits@@INFERNOBOMBPOWER: ^InfernoBombPower
 	Inherits@CASHHACKPOWER: ^CashHackPower
 	Inherits@HACKERCELLPOWER: ^HackerCellPower
+	Inherits@TECHLOCKABLE: ^TechLockable
 	Selectable:
 		Bounds: 2048, 2304
 	HitShape:
@@ -3502,51 +3526,57 @@ HQ:
 		Types: SpyInfiltrate, SabInfiltrate
 	Power:
 		Amount: -40
-	-PowerMultiplier@POWERDRAIN:
 	ValidFactions:
 		Factions: talon, zocom, eagle, arc, blackh, marked, legion, shadow
+	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@anyradar:
 		Prerequisite: anyradar
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@radarorrepair:
 		Prerequisite: radarorrepair
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@gdirad:
 		Factions: talon, zocom, eagle, arc
 		Prerequisite: radar.gdi
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@talrad:
 		Factions: talon
 		Prerequisite: radar.talon
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@zocrad:
 		Factions: zocom
 		Prerequisite: radar.zocom
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@eagrad:
 		Factions: eagle
 		Prerequisite: radar.eagle
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@arcrad:
 		Factions: arc
 		Prerequisite: radar.arc
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@nodrad:
 		Factions: blackh, marked, legion, shadow
 		Prerequisite: radar.nod
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@bhrad:
 		Factions: blackh
 		Prerequisite: radar.blackh
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@legrad:
 		Factions: legion
 		Prerequisite: radar.legion
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@shadrad:
 		Factions: shadow
 		Prerequisite: radar.shadow
-	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@radar-active:
 		Prerequisite: radar-active
 		RequiresCondition: !jammed && !disabled && !being-warped
 	ExternalCondition@JAMMED:
 		Condition: jammed
-	InfiltrateForSupportPowerCA@STOLENTECH:
-		Types: SabInfiltrate
-		Proxy: stolentech.hq
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
 	ProductionCostMultiplier@ARCDISCOUNT:
 		Multiplier: 50
 		Prerequisites: anyradar, player.arc
@@ -3557,7 +3587,6 @@ HQ:
 EYE:
 	Inherits: ^BuildingTD
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
-	Inherits@POWERDRAIN: ^PowerDrainableRadar
 	Inherits@IONCANNONPOWER: ^IonCannonPower
 	Inherits@SURGICALSTRIKEPOWER: ^SurgicalStrikePower
 	Selectable:
@@ -3624,7 +3653,6 @@ EYE:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -200
-	-PowerMultiplier@POWERDRAIN:
 	ValidFactions:
 		Factions: talon, zocom, eagle, arc
 	ProvidesPrerequisiteValidatedFaction@zoceye:
@@ -3786,7 +3814,7 @@ HPAD.TD:
 	ProvidesPrerequisite@buildingname:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: SpyInfiltrate
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
 	InfiltrateForSupportPower:
@@ -3794,10 +3822,17 @@ HPAD.TD:
 		Proxy: powerproxy.paratroopers.allies
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
+	InfiltrateForSupportPowerCA@STOLENTECH:
+		Types: SabInfiltrate
+		Proxy: stolentech.hpad.td
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
+		UseTargetFaction: true
 
 PROC.TD:
 	Inherits: ^BuildingTD
 	Inherits@BOTREF: ^BotRefinery
+	Inherits@ResourceDrainable: ^ResourceDrainable
 	HitShape:
 		Type: Rectangle
 			TopLeft: -1536, -512
@@ -3989,12 +4024,17 @@ AFLD.GDI:
 	ProvidesPrerequisite@buildingname:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: SpyInfiltrate
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
 	InfiltrateForSupportPower:
 		Types: SpyInfiltrate
 		Proxy: powerproxy.airstrike
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
+	InfiltrateForSupportPower@STOLENTECH:
+		Types: SabInfiltrate
+		Proxy: stolentech.afld.gdi
 		InfiltrationNotification: BuildingInfiltrated
 		InfiltratedNotification: BaseAttack
 	SpawnActorOnDeath:
@@ -4009,6 +4049,7 @@ GTEK:
 	Inherits@UPG: ^ProducesUpgrades
 	Inherits@FORCESHIELDPOWER: ^ForceShieldPower
 	Inherits@NANITEREPAIRPOWER: ^NaniteRepairPower
+	Inherits@TECHLOCKABLE: ^TechLockable
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 150
@@ -4041,31 +4082,35 @@ GTEK:
 	RevealsShroud@GAPGEN:
 		Range: 5c0
 		RequiresCondition: !disabled
-	InfiltrateForSupportPower@STOLENTECH:
-		Types: SabInfiltrate
-		Proxy: stolentech.gtek
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
 	WithBuildingBib:
 	Power:
 		Amount: -150
 	ValidFactions:
 		Factions: talon, zocom, eagle, arc
+	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite:
-		Prerequisite: techcenter
+		Prerequisite: techcenter.any
+		RequiresCondition: !tech-locked
+	ProvidesPrerequisite@tdtek:
+		Prerequisite: techcenter.td
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@talongtek:
 		Factions: talon
 		Prerequisite: gtek.talon
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@arcgtek:
 		Factions: arc
 		Prerequisite: gtek.arc
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@zocomgtek:
 		Factions: zocom
 		Prerequisite: gtek.zocom
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@eaglegtek:
 		Factions: eagle
 		Prerequisite: gtek.eagle
-	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 	SupportPowerChargeBar:
 	ProductionCostMultiplier@TALONBONUS:
 		Multiplier: 90
@@ -4079,6 +4124,7 @@ TMPL:
 	Inherits@FRENZYPOWER: ^FrenzyPower
 	Inherits@CLUSTERMISSILEPOWER: ^ClusterMissilePower
 	Inherits@FORCESHIELDPOWER: ^ForceShieldPower
+	Inherits@TECHLOCKABLE: ^TechLockable
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 0,-896,0, 0,896,0, 840,0,0, -706,0,0, -706,-768,0, -706,640,0
@@ -4126,28 +4172,32 @@ TMPL:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SabInfiltrate
-	InfiltrateForSupportPower@STOLENTECH:
-		Types: SabInfiltrate
-		Proxy: stolentech.tmpl
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
 	ValidFactions:
 		Factions: blackh, marked, legion, shadow
 	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite:
-		Prerequisite: techcenter
+		Prerequisite: techcenter.any
+		RequiresCondition: !tech-locked
+	ProvidesPrerequisite@tdtek:
+		Prerequisite: techcenter.td
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@blackhtmpl:
 		Factions: blackh
 		Prerequisite: tmpl.blackh
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@markedtmpl:
 		Factions: marked
 		Prerequisite: tmpl.marked
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@legiontmpl:
 		Factions: legion
 		Prerequisite: tmpl.legion
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@shadowtmpl:
 		Factions: shadow
 		Prerequisite: tmpl.shadow
+		RequiresCondition: !tech-locked
 	GrantExternalConditionPowerCA@FSHIELD:
 		ActiveSequence: false-active
 
@@ -4582,7 +4632,7 @@ SGEN:
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 130
-		Prerequisites: tmpl, ~structures.nod, ~!player.shadow, ~techlevel.unrestricted
+		Prerequisites: tmpl, ~structures.nod, ~!player.shadow, ~techlevel.high
 		BuildLimit: 1
 		IconPalette: chrometd
 		Description: Makes a group of units/structures invisible\n  for a short time.
@@ -4648,7 +4698,7 @@ SGEN:
 SGEN.Shadow:
 	Inherits: SGEN
 	Buildable:
-		Prerequisites: tmpl, ~structures.nod, ~player.shadow, ~techlevel.unrestricted
+		Prerequisites: tmpl, ~structures.nod, ~player.shadow, ~techlevel.high
 	TooltipExtras:
 		Attributes: • Maximum 1 can be built\n• Cloaks nearby units and structures\n• Requires power to operate\n• Special Ability: Tiberium Stealth
 	WithRangeCircle@SGEN:
@@ -4822,7 +4872,7 @@ PATR:
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 130
-		Prerequisites: gtek, ~structures.gdi, ~techlevel.unrestricted
+		Prerequisites: gtek, ~structures.gdi, ~techlevel.high
 		BuildLimit: 1
 		IconPalette: chrometd
 		Description: Launches E.M. Pulse Missiles that\n  disable vehicles & structures.
@@ -4922,6 +4972,7 @@ INDP:
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@UPG: ^ProducesUpgrades
+	Inherits@TECHLOCKABLE: ^TechLockable
 	Selectable:
 		Bounds: 3072, 2816, 0, -256
 	HitShape:
@@ -4968,6 +5019,7 @@ INDP:
 		DeathSequence: dead
 		UseDeathTypeSuffix: false
 	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@disabled:
 		Prerequisite: indplowpower
 		RequiresCondition: disabled || empdisable || being-warped
@@ -4988,6 +5040,8 @@ INDP:
 	GrantCondition@DUMMY:
 		Condition: noupgrade
 		RequiresCondition: noupgrade
+	WithDecoration@TechLock:
+		RequiresCondition: tech-locked
 	-MindControllable:
 	-Targetable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
@@ -4999,6 +5053,7 @@ OREP:
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@UPG: ^ProducesUpgrades
+	Inherits@TECHLOCKABLE: ^TechLockable
 	Selectable:
 		Bounds: 3072, 2048
 	Building:
@@ -5029,7 +5084,6 @@ OREP:
 	-CapturableProgressBar:
 	-CapturableProgressBlink:
 	-CaptureManager:
-	ProvidesPrerequisite@buildingname:
 	Valued:
 		Cost: 2000
 	Tooltip:
@@ -5067,9 +5121,14 @@ OREP:
 		RequiresCondition: noupgrade
 	ValidFactions:
 		Factions: england, germany, france, usa
+	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@germanyorep:
 		Factions: germany
 		Prerequisite: orep.germany
+		RequiresCondition: !tech-locked
+	WithDecoration@TechLock:
+		RequiresCondition: tech-locked
 	-MindControllable:
 	-Targetable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
@@ -5084,6 +5143,7 @@ UPGC:
 	Inherits@FIRESTORMPOWER: ^FirestormPower
 	Inherits@ADVANCEDRADARPOWER: ^AdvancedRadarPower
 	Inherits@NANITESHIELDPOWER: ^NaniteShieldPower
+	Inherits@TECHLOCKABLE: ^TechLockable
 	Selectable:
 		Bounds: 3072, 2560, 0, 256
 	Building:
@@ -5288,6 +5348,8 @@ UPGC:
 	ProductionCostMultiplier@TALONBONUS:
 		Multiplier: 80
 		Prerequisites: player.talon
+	WithDecoration@TechLock:
+		RequiresCondition: tech-locked
 	-MindControllable:
 	-Targetable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
@@ -5394,6 +5456,7 @@ TMPP:
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@INF: ^ProducesCyborgs
 	Inherits@UPG: ^ProducesUpgrades
+	Inherits@TECHLOCKABLE: ^TechLockable
 	RenderSprites:
 		PlayerPalette: playertd
 	Selectable:
@@ -5439,15 +5502,18 @@ TMPP:
 		Name: Temple Prime
 	Power:
 		Amount: -150
-	ProvidesPrerequisite@Name:
-		RequiresCondition: !being-warped
+	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@nod:
 		Prerequisite: infantry.nod
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@marked:
 		Factions: marked
 		Prerequisite: infantry.marked
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@mech:
 		Prerequisite: infantry.mech
+		RequiresCondition: !tech-locked
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	SpawnActorOnDeath:
@@ -5481,6 +5547,8 @@ TMPP:
 		RequiresCondition: converting
 	PrimaryBuilding:
 		RequiresCondition: !converting && !global-multiqueue
+	WithDecoration@TechLock:
+		RequiresCondition: tech-locked
 	-MindControllable:
 	-Targetable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:

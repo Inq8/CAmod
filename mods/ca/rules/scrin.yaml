@@ -246,6 +246,38 @@ VEHICLES.SCRIN:
 		Margin: -6, 3
 		RequiresCondition: storm-level == 3
 
+^Hypercharge:
+	GrantConditionOnPrerequisite@HYPERCHARGE:
+		Condition: hyper-upgrade
+		Prerequisites: hyper.upgrade
+	GrantTimedConditionOnDeploy@HYPERCHARGE:
+		DeployedTicks: 100
+		CooldownTicks: 500
+		DeployedCondition: hypercharged
+		ChargingCondition: hyperchargedebuff
+		ShowSelectionBar: true
+		ShowSelectionBarWhenFull: false
+		StartsFullyCharged: true
+		PauseOnCondition: being-warped || empdisable
+		DischargingColor: b396f3
+		ChargingColor: 8450f8
+		DeploySound: hypercharge.aud
+		RequiresCondition: hyper-upgrade
+	WithPalettedOverlay@HYPERCHARGE:
+		RequiresCondition: hypercharged && !(empdisable || invulnerability || invisibility)
+		Palette: hypercharge
+	WithIdleOverlay@HYPERCHARGE:
+		Sequence: emp-overlay
+		Palette: ionsurgeoverlay
+		RequiresCondition: hypercharged
+		IsDecoration: True
+	WithPalettedOverlay@HYPERCHARGEDEBUFF:
+		Palette: darkened
+		RequiresCondition: hyperchargedebuff
+	SpeedMultiplier@HYPERCHARGEDEBUFF:
+		Modifier: 75
+		RequiresCondition: hyperchargedebuff
+
 ^ScrinVehicleVoice:
 	Voiced:
 		VoiceSet: ScrinVehicleVoice
@@ -260,13 +292,12 @@ VEHICLES.SCRIN:
 		PlayerPalette: playerscrin
 	Voiced:
 		VoiceSet: ScrinInfantryVoice
-	Targetable:
-		TargetTypes: Ground, Infantry, TNT
 	WithInfantryBody:
 		IdleSequences: idle1, idle2, idle3, idle4
 	WithDeathAnimation:
 		DeathSequencePalette: playerscrin
 		CrushedSequencePalette: playerscrin
+	-Targetable@SpyDisguise:
 	-GrantConditionOnTerrain@ONTIB:
 	-GrantStackingCondition@TIBEXPOSED:
 	-DamagedByTerrain@TIBDAMAGE:
@@ -404,7 +435,7 @@ S2:
 
 S3:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
@@ -618,67 +649,6 @@ SMEDI:
 		ValidTargets: Infantry
 	KeepsDistance:
 
-CSCR:
-	Inherits@SCRININFANTRY: ^ScrinInfantry
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
-	Inherits@CYBORGUPG: ^NodCyborgUpgrade
-	Inherits@SLOWABLE: ^Slowable
-	Buildable:
-		Queue: InfantrySQ, InfantryMQ
-		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 160
-		Prerequisites: ~stolentech.port
-		IconPalette: chromes
-		Description: Fast moving anti-personnel infantry.
-	TooltipExtras:
-		Strengths: • Strong vs Infantry, Light Armor
-		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
-	Valued:
-		Cost: 500
-	Tooltip:
-		Name: Cyberscrin
-	UpdatesPlayerStatistics:
-		AddToArmyValue: true
-	Health:
-		HP: 13000
-	Mobile:
-		Speed: 77
-	Armament@PRIMARY:
-		Weapon: CyberscrinLaser
-		LocalOffset: 200,0,350
-		MuzzleSequence: muzzle
-		MuzzlePalette: caneon
-	Armament@BATF:
-		Name: batf
-		Weapon: CyberscrinLaser
-	WithMuzzleOverlay:
-	AttackFrontal:
-		PauseOnCondition: being-warped
-		FacingTolerance: 0
-	ProducibleWithLevel:
-		Prerequisites: barracks.upgraded
-	WithProductionIconOverlay:
-		Types: Veterancy
-		Prerequisites: barracks.upgraded
-	WithInfantryBody:
-		DefaultAttackSequence: shoot
-	-TakeCover:
-	Voiced:
-		VoiceSet: CyberscrinVoice
-	Targetable:
-		TargetTypes: Ground, Infantry, Cyborg
-	ExternalCondition@ONTIB:
-		Condition: on-tib
-	ChangesHealth@THEAL:
-		Step: 0
-		PercentageStep: 1
-		Delay: 15
-		StartIfBelow: 100
-		DamageCooldown: 150
-		RequiresCondition: on-tib
-		DamageTypes: ToxinDeath
-
 GSCR:
 	Inherits: BRUT
 	RenderSprites:
@@ -772,7 +742,9 @@ MAST:
 		ReleaseSounds: mastermind-release.aud
 		ControllingCondition: mindcontrolling
 		MaxControlledCondition: maxcontrolled
-		ManualReleaseEnabled: true
+		ControlAtCapacityBehaviour: KillOldest
+		SlaveDeployEffect: Kill
+		SlaveKillDamageTypes: BulletDeath
 		ExperienceFromControl: 100
 	WithMindControlArc@MC:
 		Color: c71585
@@ -789,16 +761,17 @@ MAST:
 		Weapon: MindSparkSpawnerSlave
 		InitialDelay: 18
 		RequiresCondition: deployed && !being-warped
-		KillSlaveTypes: Infantry, Vehicle
-		KillSlavesDamageTypes: BulletDeath
 	GrantTimedConditionOnDeploy:
-		DeployedTicks: 35
-		CooldownTicks: 150
+		DeployedTicks: 25
+		CooldownTicks: 250
 		DeployedCondition: deployed
 		ShowSelectionBar: true
+		ShowSelectionBarWhenFull: false
 		StartsFullyCharged: true
 		Voice: Action
 		PauseOnCondition: being-warped
+		DischargingColor: bb0000
+		ChargingColor: cc00cc
 	AttackFrontal:
 		PauseOnCondition: being-warped || !ammo
 		FacingTolerance: 0
@@ -864,7 +837,11 @@ MAST:
 		CaptureDelay: 150
 		ConsumedByCapture: false
 	Targetable:
-		TargetTypes: Ground, Infantry, MindControlImmune
+		TargetTypes: Ground, Infantry
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	WithIdleOverlay@mindcontrolling:
 		Sequence: mc
 		Palette: scrin
@@ -927,7 +904,7 @@ HARV.Scrin:
 GUNW:
 	Inherits: ^Tank
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
@@ -993,7 +970,7 @@ GUNW:
 	SpeedMultiplier@TRAVELERSPEED:
 		RequiresCondition: travelerspeed
 		Modifier: 115
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: shrw
 	Upgradeable@SHRW:
 		Type: shrw.upgrade
@@ -1026,7 +1003,7 @@ SHRW:
 		LocalOffset: 690,92,0, 690,-92,0
 	-GrantConditionOnFaction@TRAVELERSPEED:
 	-SpeedMultiplier@TRAVELERSPEED:
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Upgradeable@SHRW:
 
 SEEK:
@@ -1036,6 +1013,7 @@ SEEK:
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
+	Inherits@Hypercharge: ^Hypercharge
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1082,6 +1060,12 @@ SEEK:
 	Armament@PRIMARY:
 		Weapon: PlasmaDiscs
 		LocalOffset: 320,-25,320, 320,25,320
+		PauseOnCondition: hyperchargedebuff
+		RequiresCondition: !hypercharged
+	Armament@PRIMARYCHARGED:
+		Weapon: PlasmaDiscs.Hypercharged
+		LocalOffset: 320,-25,320, 320,25,320
+		RequiresCondition: hypercharged
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithSpriteTurret:
@@ -1111,6 +1095,7 @@ LACE:
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
+	Inherits@Hypercharge: ^Hypercharge
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1161,6 +1146,12 @@ LACE:
 	Armament@PRIMARY:
 		Weapon: LaceratorShards
 		LocalOffset: 0,70,320, 0,-70,320
+		PauseOnCondition: hyperchargedebuff
+		RequiresCondition: !hypercharged
+	Armament@PRIMARYCHARGED:
+		Weapon: LaceratorShards.Hypercharged
+		LocalOffset: 0,70,320, 0,-70,320
+		RequiresCondition: hypercharged
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithSpriteTurret:
@@ -1202,7 +1193,7 @@ INTL:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
-		BuildPaletteOrder: 38
+		BuildPaletteOrder: 39
 		Prerequisites: ~vehicles.scrin, ~techlevel.low
 		Queue: VehicleSQ, VehicleMQ
 		Description: Heavily armoured front-line assault vehicle and troop carrier.
@@ -1380,7 +1371,7 @@ LCHR:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
-		Attributes: • Regenerates health while dealing damage (without upgrade)\n• Disables power plants and radars\n• Slows vehicles & cyborgs\n• Regenerates and heals allies when in coalescence form (with upgrade)\n• Special Ability: Coalescence (with upgrade)
+		Attributes: • Regenerates health while dealing damage (without upgrade)\n• Disables power plants\n• Slows vehicles & cyborgs\n• Regenerates and heals allies when in coalescence form (with upgrade)\n• Special Ability: Coalescence (with upgrade)
 	Mobile:
 		Speed: 82
 		TurnSpeed: 20
@@ -1455,7 +1446,7 @@ LCHR.Orb:
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 1
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4Immune
+		TargetTypes: Ground, Vehicle
 	HiddenUnderFog:
 		Type: CenterPosition
 	RevealsShroud:
@@ -1575,6 +1566,7 @@ STCR:
 		Locations: 0,0
 		KillOnRemove: false
 		RemoveOnDisable: false
+		RecreationInterval: 100
 	RangeMultiplier@IONSTORM1:
 		Modifier: 110
 	RangeMultiplier@IONSTORM2:
@@ -1842,7 +1834,7 @@ RUIN:
 ATMZ:
 	Inherits: ^Vehicle
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
@@ -1921,7 +1913,7 @@ TPOD:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 310
-		Prerequisites: techcenter, ~vehicles.tpod, ~techlevel.high
+		Prerequisites: scrt, ~vehicles.tpod, ~techlevel.high
 		Description: Heavy assault walker with beam weapons.
 		IconPalette: chrome
 	TooltipExtras:
@@ -2139,8 +2131,10 @@ SMCV:
 	TransferTimedExternalConditionOnTransform@INVIS:
 		Condition: invisibility
 	-Crushable:
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune, MindControlImmune
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	Hovers:
 		BobDistance: -25
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
@@ -2246,7 +2240,7 @@ STMR:
 		Type: CenterPosition
 		RequiresCondition: enable-smoke
 	Selectable:
-		DecorationBounds: 1536, 1194
+		DecorationBounds: 1536, 1280
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
 	WithProductionIconOverlay:
@@ -2441,12 +2435,12 @@ DEVA:
 			PointA: 0,896
 			PointB: 0, -256
 	RevealsShroud:
-		Range: 8c0
-		MinRange: 7c0
+		Range: 10c0
+		MinRange: 8c0
 		Type: GroundPosition
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 7c0
+		Range: 8c0
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: DevastatorDiscs
@@ -2662,10 +2656,6 @@ PAC:
 		RequiresCondition: empdisable
 	Repairable:
 		RepairActors: fix, rep, srep
-	AutoTargetPriority@DEFAULT:
-		InvalidTargets: NoAutoTarget, WaterStructure, AirLowPriority
-	AutoTargetPriority@ATTACKANYTHING:
-		InvalidTargets: NoAutoTarget, AirLowPriority
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded
 	WithProductionIconOverlay:
@@ -3534,6 +3524,7 @@ REA2:
 PROC.SCRIN:
 	Inherits: ^ScrinBuilding
 	Inherits@BOTREF: ^BotRefinery
+	Inherits@ResourceDrainable: ^ResourceDrainable
 	HitShape:
 		Type: Rectangle
 			TopLeft: -1536, -512
@@ -3790,13 +3781,13 @@ WSPH:
 NERV:
 	Inherits: ^ScrinBuilding
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDownOrForceDisable
-	Inherits@POWERDRAIN: ^PowerDrainableRadar
 	Inherits@UPG: ^ProducesUpgrades
 	Inherits@SHAPE: ^2x2Shape
 	Inherits@RESOURCESCANPOWER: ^ResourceScanPower
 	Inherits@STORMSPIKEPOWER: ^StormSpikePower
 	Inherits@BUZZERSWARMPOWER: ^BuzzerSwarmPower
 	Inherits@IONSURGEPOWER: ^IonSurgePower
+	Inherits@TECHLOCKABLE: ^TechLockable
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 90
@@ -3815,7 +3806,7 @@ NERV:
 		LocalCenterOffset: 0,-512,0
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
-		TargetTypes: SpyInfiltrate, SabInfiltrate
+		TargetTypes: SpyInfiltrate
 	Health:
 		HP: 110000
 	Armor:
@@ -3843,41 +3834,43 @@ NERV:
 		RequiresCondition: !jammed && !disabled && !being-warped
 	WithBuildingBib:
 	InfiltrateForExploration:
-		Types: SpyInfiltrate, SabInfiltrate
+		Types: SpyInfiltrate
 	Power:
 		Amount: -40
-	-PowerMultiplier@POWERDRAIN:
 	ValidFactions:
 		Factions: reaper, traveler, harbinger, collector
+	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@anyradar:
 		Prerequisite: anyradar
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@radarorrepair:
 		Prerequisite: radarorrepair
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@scrinrad:
 		Prerequisite: radar.scrin
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@reaprad:
 		Factions: reaper
 		Prerequisite: radar.reaper
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@travrad:
 		Factions: traveler
 		Prerequisite: radar.traveler
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@harbrad:
 		Factions: harbinger
 		Prerequisite: radar.harbinger
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@desprad:
 		Factions: collector
 		Prerequisite: radar.collector
-	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 	ExternalCondition@JAMMED:
 		Condition: jammed
 	ProvidesPrerequisite@radar-active:
 		Prerequisite: radar-active
 		RequiresCondition: !jammed && !disabled && !being-warped
-	InfiltrateForSupportPower@STOLENTECH:
-		Types: SabInfiltrate
-		Proxy: stolentech.nerv
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
 
 SCRT:
 	Inherits: ^ScrinBuilding
@@ -3887,6 +3880,7 @@ SCRT:
 	Inherits@ICHORSEEDPOWER: ^IchorSeedPower
 	Inherits@FORCESHIELDPOWER: ^ForceShieldPower
 	Inherits@GREATERCOALESCENCEPOWER: ^GreaterCoalescencePower
+	Inherits@TECHLOCKABLE: ^TechLockable
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 150
@@ -3905,9 +3899,6 @@ SCRT:
 		Bounds: 2048, 2560
 	Health:
 		HP: 110000
-	Targetable@INFILTRATION:
-		RequiresCondition: !being-warped
-		TargetTypes: SabInfiltrate
 	Armor:
 		Type: Wood
 	RevealsShroud:
@@ -3921,25 +3912,24 @@ SCRT:
 	RevealsShroud@GAPGEN:
 		Range: 5c0
 		RequiresCondition: !disabled
-	InfiltrateForSupportPower@STOLENTECH:
-		Types: SabInfiltrate
-		Proxy: stolentech.scrt
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
 	WithBuildingBib:
 	Power:
 		Amount: -150
 	ValidFactions:
 		Factions: reaper, traveler, harbinger, collector
+	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisite:
-		Prerequisite: techcenter
+		Prerequisite: techcenter.any
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@harbscrt:
 		Factions: harbinger
 		Prerequisite: scrt.harbinger
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@collscrt:
 		Factions: collector
 		Prerequisite: scrt.collector
-	ProvidesPrerequisite@buildingname:
+		RequiresCondition: !tech-locked
 
 GRAV:
 	Inherits: ^ScrinBuilding
@@ -4033,12 +4023,21 @@ GRAV:
 	AutoTarget:
 	AutoTargetPriority@DEFAULT:
 		ValidRelationships: Ally
+	InfiltrateForSupportPower@STOLENTECH:
+		Types: SabInfiltrate
+		Proxy: stolentech.grav
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
+	Targetable@INFILTRATION:
+		RequiresCondition: !being-warped
+		TargetTypes: SabInfiltrate
 
 SIGN:
 	Inherits: ^ScrinBuilding
 	Inherits@POWER_OUTAGE: ^DisableOnLowPowerOrForceDisabled
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@UPG: ^ProducesUpgrades
+	Inherits@TECHLOCKABLE: ^TechLockable
 	Selectable:
 		Bounds: 3072, 2048
 	Building:
@@ -4077,11 +4076,13 @@ SIGN:
 	Power:
 		Amount: -150
 	ProvidesPrerequisite@Name:
-		RequiresCondition: !being-warped
+		RequiresCondition: !tech-locked
 	Sellable:
 		RequiresCondition: !build-incomplete && !c4 && !being-warped
 	SpawnActorOnDeath:
 		RequiresCondition: !being-warped
+	WithDecoration@TechLock:
+		RequiresCondition: tech-locked
 	-MindControllable:
 	-Targetable@HACKABLE:
 	-MindControllableProgressBar@HACKABLE:
@@ -4204,7 +4205,7 @@ MANI:
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 130
-		Prerequisites: scrt, ~structures.scrin, ~techlevel.unrestricted
+		Prerequisites: scrt, ~structures.scrin, ~techlevel.high
 		BuildLimit: 1
 		IconPalette: chrome
 		Description: Slows enemy unit movement and rate of fire.
@@ -4409,11 +4410,11 @@ SHAR:
 	Armor:
 		Type: Concrete
 	RevealsShroud:
-		MinRange: 5c0
-		Range: 6c0
+		MinRange: 6c0
+		Range: 8c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 5c0
+		Range: 6c0
 	WithBuildingBib:
 		HasMinibib: true
 	Turreted:
@@ -4435,7 +4436,7 @@ SHAR:
 	RenderRangeCircle:
 		RangeCircleType: DefenseRangeAA
 	Power:
-		Amount: -50
+		Amount: -40
 	ClassicFacingBodyOrientation:
 	DetectCloaked:
 		DetectionTypes: AirCloak
@@ -4781,7 +4782,7 @@ GRCL:
 		Name: Greater Coalescence
 	TooltipExtras:
 		Description: Pulsing biomass that heals allies and feeds on enemies.
-		Attributes: • Heals nearby allies\n• Slows and drains health from enemies\n• Disables power plants and radars
+		Attributes: • Heals nearby allies\n• Slows and drains health from enemies\n• Disables power plants
 	RenderSprites:
 		Palette: caneon
 	WithMakeAnimation:
@@ -4794,7 +4795,7 @@ GRCL:
 		Range: 1c0
 		Type: CenterPosition
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4Immune
+		TargetTypes: Ground, Vehicle
 	Health:
 		HP: 64000
 	Armor:
@@ -4825,12 +4826,12 @@ GRCL:
 		RequiresCondition: !leeching
 	WithRangeCircle:
 		Type: GreaterCoalescence
-		Range: 3c768
+		Range: 4c512
 		Color: ff000099
 		Visible: Always
 	ProximityExternalCondition@HEAL:
 		Condition: lchr-healing
-		Range: 3c768
+		Range: 4c512
 	GrantConditionOnHealingReceived:
 		Condition: leeching
 		MinimumHealing: 100
@@ -5047,24 +5048,12 @@ stolentech.port:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
 
-# warp sphere - vehicle veterancy
+# warp sphere - viper
 stolentech.wsph:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
-		Prerequisite: vehicles.upgraded
 
-# nerve center - aircraft veterancy
-stolentech.nerv:
+# gravity stabilizer - manticore
+stolentech.grav:
 	Inherits@DUMMY: ^InvisibleDummy
 	ProvidesPrerequisite:
-		Prerequisite: aircraft.upgraded
-
-# tech center - veterancy for all
-stolentech.scrt:
-	Inherits@DUMMY: ^InvisibleDummy
-	ProvidesPrerequisite@1:
-		Prerequisite: barracks.upgraded
-	ProvidesPrerequisite@2:
-		Prerequisite: vehicles.upgraded
-	ProvidesPrerequisite@3:
-		Prerequisite: aircraft.upgraded

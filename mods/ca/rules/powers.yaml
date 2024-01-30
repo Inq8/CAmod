@@ -648,7 +648,7 @@
 		ValidTargets: Vehicle, Ship, Structure
 		Duration: 600
 		AllowMultiple: false
-		Description: \nMakes up to 5 selected vehicles or structures\n    temporarily invulnerable.\n\nWarning: Harmful to infantry.
+		Description: \nMakes up to 5 selected vehicles or structures\n    temporarily immune to damage.\n\nWarning: Harmful to infantry.
 		OnFireSound: ironcur9.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -914,7 +914,7 @@
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		RequiresCondition: tower.rocket
-		Prerequisites: ~techlevel.unrestricted
+		Prerequisites: ~techlevel.high
 		SupportPowerPaletteOrder: 30
 
 ^AdvancedRadarPower:
@@ -935,7 +935,7 @@
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
 		EndChargeTextNotification: Advanced Radar Scan ready.
-		Prerequisites: ~techlevel.unrestricted
+		Prerequisites: ~techlevel.high
 		EarlyDeactivationPenalty: 1500
 		SupportPowerPaletteOrder: 30
 
@@ -944,7 +944,7 @@
 		Actor: nshield
 		OrderName: nshieldorder
 		Icon: nshield
-		Prerequisites: ~techlevel.unrestricted
+		Prerequisites: ~techlevel.high
 		ChargeInterval: 6000
 		LifeTime: 375
 		Name: Nanite Shield
@@ -1294,7 +1294,7 @@
 		OrderName: clustermissile
 		Icon: clustermissile
 		IconPalette: chrometd
-		Prerequisites: ~techlevel.unrestricted
+		Prerequisites: ~techlevel.high
 		Cursor: ability
 		ChargeInterval: 10500
 		Name: Cluster Missile

@@ -27,7 +27,7 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Missile will cruise straight at this altitude.")]
 		public readonly WDist MaxAltitude = WDist.Zero;
 
-		[Desc("If a mobile target moves further than this beyond its initial location, the missile will lose tracking.")]
+		[Desc("If a mobile target moves further than this beyond its initial location, the missile will lose tracking. Zero means infinite tracking.")]
 		public readonly WDist MaxTargetMovement = WDist.Zero;
 
 		[GrantedConditionReference]
@@ -37,6 +37,9 @@ namespace OpenRA.Mods.CA.Traits
 		[GrantedConditionReference]
 		[Desc("The condition to grant when the missile is descending.")]
 		public readonly string DescendingCondition = null;
+
+		[Desc("If true, missile will track target.")]
+		public readonly bool TrackTarget = false;
 
 		public override object Create(ActorInitializer init) { return new CruiseMissile(init, this); }
 	}
@@ -85,7 +88,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override Activity GetActivity(Actor self, Target target)
 		{
-			return new CruiseMissileFly(self, target, this, cruiseMissileInfo.MaxAltitude, cruiseMissileInfo.MaxTargetMovement);
+			return new CruiseMissileFly(self, target, this, cruiseMissileInfo.MaxAltitude, cruiseMissileInfo.MaxTargetMovement, cruiseMissileInfo.TrackTarget);
 		}
 	}
 }

@@ -226,48 +226,41 @@ FTUR:
 # Make drones mindcontrollable and not disabled without radar
 
 HTNK.Drone:
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	-Targetable@MindControlImmune:
 	ProvidesPrerequisite@radar-active:
 		Prerequisite: radar-active
 
 MTNK.Drone:
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	-Targetable@MindControlImmune:
 	Power:
 		Amount: 0
 	ProvidesPrerequisite@radar-active:
 		Prerequisite: radar-active
 
 MEMP:
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	-Targetable@MindControlImmune:
 	Power:
 		Amount: 0
 	ProvidesPrerequisite@radar-active:
 		Prerequisite: radar-active
 
 CDRN:
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	-Targetable@MindControlImmune:
 	Power:
 		Amount: 0
 
 GDRN:
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	-Targetable@MindControlImmune:
 	Power:
 		Amount: 0
 
 MDRN:
-	Targetable:
-		TargetTypes: Ground, Vehicle, C4, ChaosImmune
+	-Targetable@MindControlImmune:
 	Power:
 		Amount: 0
 
 BRUT:
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, TNT, DogImmune
+	-Targetable@MindControlImmune:
 
 CRATE:
 	-GiveCashCrateAction:

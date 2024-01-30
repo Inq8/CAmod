@@ -52,9 +52,8 @@ DOG:
 		InitialStance: AttackAnything
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Infantry
-	Targetable:
-		RequiresCondition: !being-warped
-		TargetTypes: Ground, Infantry, ChaosImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	WithInfantryBody:
 		MoveSequence: walk
 		StandSequences: stand
@@ -81,31 +80,14 @@ DOG:
 	-TakeCover:
 	-Captures@DRIVER_KILL:
 	-CaptureManager:
-
-CDOG:
-	Inherits: DOG
-	Buildable:
-		Queue: InfantrySQ
-		BuildAtProductionType: Soldier
-		BuildPaletteOrder: 50
-		Prerequisites: ~stolentech.barr
-		Description: Melee anti-infantry scout unit.
-	Valued:
-		Cost: 400
-	Tooltip:
-		Name: Cyberdog
-	Health:
-		HP: 15000
-	Voiced:
-		VoiceSet: CyberdogVoice
-	Armament:
-		Weapon: CyberdogJaw
+	-Targetable@SpyDisguise:
 
 E1:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -160,6 +142,7 @@ E2:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -213,8 +196,9 @@ E2:
 
 E3:
 	Inherits: ^Soldier
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -324,7 +308,7 @@ E3:
 
 U3:
 	Inherits: ^Soldier
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
 	Valued:
@@ -544,6 +528,7 @@ E4:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -598,6 +583,7 @@ E4:
 E6:
 	Inherits: ^Soldier
 	Inherits@ENGINEER: ^EngineerBase
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		BuildPaletteOrder: 31
 		Prerequisites: ~infantry.ra
@@ -605,8 +591,6 @@ E6:
 		Name: Engineer
 	Voiced:
 		VoiceSet: EngineerVoice
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	WithInfantryBody:
 		StandSequences: stand
 		RequiresCondition: !parachute && !being-warped
@@ -666,7 +650,7 @@ SPY:
 		Description: Infiltrates enemy structures for intel or sabotage\n  Effects depend on the building infiltrated.
 	TooltipExtras:
 		Weaknesses: • Unarmed
-		Attributes: • Disguise as enemy infantry by right-clicking them
+		Attributes: • Disguise as enemy infantry by right-clicking them\n • Infiltration effects:\n    • Power Plants: Power outage\n    • Barracks/Factory: Infantry/vehicles produced as veteran\n    • Superweapons: Reset timer\n    • Radar: Reset shroud\n    • Helipad: Single-use paratroopers\n    • Airfield: Single-use airstrike
 	Valued:
 		Cost: 500
 	-Tooltip:
@@ -689,6 +673,7 @@ SPY:
 		CustomPipType: blue
 		Voice: Move
 	Disguise:
+		TargetTypes: SpyDisguise
 		DisguisedCondition: disguise
 		DisguisedAsConditions:
 			rmbo: cmdo-disguise
@@ -718,7 +703,9 @@ SPY:
 	Voiced:
 		VoiceSet: SpyVoice
 	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+		TargetTypes: Ground, Infantry
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	-Targetable@HERO:
 
 E7:
@@ -803,14 +790,22 @@ E7:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, MindControlImmune
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	-Crushable:
 	TakeCover:
 		SpeedModifier: 70
+	TargetSpecificOrderVoice:
+		Orders: Attack, ForceAttack
+		TargetTypeVoices:
+			Vehicle: Demolish
+			Structure: Demolish
 
 MEDI:
 	Inherits: ^Soldier
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -867,14 +862,15 @@ MEDI:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	GuardsSelection:
 		ValidTargets: Infantry
 	KeepsDistance:
 
 MECH:
 	Inherits: ^Soldier
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -957,13 +953,13 @@ MECH:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	GuardsSelection:
 		ValidTargets: Vehicle
 	Convertible:
 		SpawnActors: CMEC
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: cmec
 	KeepsDistance:
 
@@ -1117,8 +1113,8 @@ HACK:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	GrantConditionOnDeploy@HACK:
 		DeployedCondition: deployed
 		UndeployedCondition: undeployed
@@ -1300,8 +1296,8 @@ THF:
 		ValidDamageStates: Critical
 	Mobile:
 		Speed: 54
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	-SpeedMultiplier@HAZMATSOVIET:
 	-GrantConditionOnTerrain@HAZMATSOVIET:
 	WithColoredSelectionBox@INVIS:
@@ -1312,8 +1308,9 @@ SHOK:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@Inspirable: ^Inspirable
 	AutoTargetPriority@DEFAULT:
-		InvalidTargets: NoAutoTarget, WaterStructure, TeslaBoost
+		InvalidTargets: NoAutoTarget, TeslaBoost
 	AutoTargetPriority@ATTACKANYTHING:
 		InvalidTargets: NoAutoTarget, TeslaBoost
 	AutoTargetPriority@TESLANORMAL:
@@ -1404,6 +1401,7 @@ N1:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@BOTHELPER: ^BotCaptureHelper
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1447,7 +1445,7 @@ N1:
 		Class: e1
 	Convertible:
 		SpawnActors: N1C
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: n1c
 
 N1R1:
@@ -1465,6 +1463,7 @@ N2:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1539,8 +1538,9 @@ N2R1:
 
 N3:
 	Inherits: ^Soldier
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1624,7 +1624,7 @@ N3:
 		Class: e3
 	Convertible:
 		SpawnActors: N3C
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: n3c
 
 N3R1:
@@ -1642,6 +1642,7 @@ N4:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1698,7 +1699,7 @@ N4:
 		Prerequisites: barracks.upgraded
 	Convertible:
 		SpawnActors: N5
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: n5
 
 N5:
@@ -1715,6 +1716,7 @@ N5:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings
 		Weaknesses: • Cannot attack Aircraft
+		Attributes: • Ability: Tiberium Surge
 	Valued:
 		Cost: 325
 	Tooltip:
@@ -1725,6 +1727,9 @@ N5:
 		HP: 17000
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+		AttackSequences:
+			primary: shoot
+			secondary: stand
 		RequiresCondition: !parachute && !being-warped
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
@@ -1734,11 +1739,17 @@ N5:
 		LocalOffset: 341,0,254
 		MuzzleSequence: muzzle
 		MuzzlePalette: tdeffect
+		PauseOnCondition: surge-targeted || surge-cooldown
 	Armament@FF:
 		Weapon: ChemsprayTDFF
+		PauseOnCondition: surge-targeted || surge-cooldown
 	Armament@BATF:
 		Name: batf
 		Weapon: ChemsprayTDBATF
+	Armament@Surge:
+		Name: secondary
+		Weapon: TibSurgeTargeter
+		PauseOnCondition: !surge-targeted
 	Mobile:
 		Speed: 60
 		Voice: Move
@@ -1774,6 +1785,44 @@ N5:
 	FirepowerMultiplier@BIOLAB:
 		RequiresCondition: biofirepower
 		Modifier: 110
+	TargetedAttackAbility@Surge:
+		ActiveCondition: surge-targeted
+		CircleColor: 00ff0066
+		Type: TibSurge
+		TargetModifiedCursor: ability2
+		DefaultGroupCastBehaviour: All
+		ArmamentName: secondary
+	Contrail@Surge:
+		Offset: -30,0,200
+		StartColorUsePlayerColor: false
+		ZOffset: -128
+		StartColor: 00ff0080
+		StartColorAlpha: 128
+		TrailLength: 10
+		RequiresCondition: surge-active
+	SpeedMultiplier@Surge:
+		RequiresCondition: surge-active
+		Modifier: 200
+	GrantConditionOnAttack@SurgeActive:
+		Condition: surge-active
+		RevokeDelay: 50
+		ArmamentNames: secondary
+	GrantConditionOnAttack@SurgeCooldown:
+		Condition: surge-cooldown
+		RevokeDelay: 1
+		ArmamentNames: secondary
+	AmmoPool@Surge:
+		Armaments: secondary
+		Ammo: 1
+	ReloadAmmoPool@Surge:
+		Delay: 750 # equal to reload time of weapon
+		Count: 1
+	WithAmmoPipsDecoration@Surge:
+		Position: BottomLeft
+		Margin: 4, 3
+		RequiresSelection: true
+	Targetable@ChemWarrior:
+		TargetTypes: ChemWarrior
 
 N5R1:
 	Inherits: N5
@@ -1799,7 +1848,7 @@ RMBO:
 		AddToArmyValue: true
 	Buildable:
 		BuildPaletteOrder: 210
-		Prerequisites: ~infantry.td, techcenter, ~techlevel.high
+		Prerequisites: ~infantry.td, techcenter.td, ~techlevel.high
 		Queue: InfantrySQ, InfantryMQ
 		IconPalette: chrometd
 		BuildLimit: 1
@@ -1869,15 +1918,23 @@ RMBO:
 	DetectCloaked:
 		DetectionTypes: Cloak, Thief
 		Range: 5c0
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, MindControlImmune
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	-Crushable:
 	TakeCover:
 		SpeedModifier: 70
+	TargetSpecificOrderVoice:
+		Orders: Attack, ForceAttack
+		TargetTypeVoices:
+			Vehicle: Demolish
+			Structure: Demolish
 
 N6:
 	Inherits: ^Soldier
 	Inherits@ENGINEER: ^EngineerBase
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		BuildPaletteOrder: 31
 		Prerequisites: ~infantry.td
@@ -1886,8 +1943,6 @@ N6:
 		Name: Engineer
 	Voiced:
 		VoiceSet: EngineerVoice
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune
 	WithInfantryBody:
 		StandSequences: stand
 		RequiresCondition: !parachute && !being-warped
@@ -1907,7 +1962,11 @@ VICE:
 		Chance: 100
 	AttackWander:
 	Targetable:
-		TargetTypes: Ground, Infantry, Creep, ChaosImmune, MindControlImmune
+		TargetTypes: Ground, Infantry, Creep
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 
 SNIP:
 	Inherits: ^Soldier
@@ -2135,102 +2194,14 @@ BORI:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, MindControlImmune
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	TakeCover:
 		SpeedModifier: 70
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Infantry, Vehicle, Water, Underwater
-
-^MortarInfantryBase:
-	Inherits: ^Soldier
-	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
-	Inherits@BERSERK: ^Berserk
-	Buildable:
-		Queue: InfantrySQ, InfantryMQ
-		BuildAtProductionType: Soldier
-	TooltipExtras:
-		Strengths: • Strong vs Infantry, Buildings
-		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
-	Valued:
-		Cost: 350
-	UpdatesPlayerStatistics:
-		AddToArmyValue: true
-	Health:
-		HP: 3500
-	Armament@PRIMARY:
-		Weapon: ChemicalMortar
-		LocalOffset: 200,0,155
-		FireDelay: 15
-	Armament@BATF:
-		Name: batf
-		Weapon: ChemicalMortar
-		FireDelay: 15
-	AttackFrontal:
-		PauseOnCondition: being-warped
-		FacingTolerance: 0
-	WithInfantryBody:
-		DefaultAttackSequence: throw
-		RequiresCondition: !parachute && !being-warped
-	WithInfantryBody@PARACHUTE:
-		StandSequences: parachute
-		RequiresCondition: parachute
-	ProducibleWithLevel:
-		Prerequisites: barracks.upgraded
-	WithProductionIconOverlay:
-		Types: Veterancy
-		Prerequisites: barracks.upgraded
-
-MORT.Chem:
-	Inherits: ^MortarInfantryBase
-	RenderSprites:
-		Image: mortchem
-	Buildable:
-		BuildPaletteOrder: 250
-		Prerequisites: ~stolentech.hand
-		Description: Infantry armed with a Chemical Mortar.
-	Tooltip:
-		Name: Chemical Mortar
-	Explodes:
-		Weapon: UnitExplodeChemSmall
-		EmptyWeapon: UnitExplodeChemSmall
-		Chance: 33
-		RequiresCondition: !being-warped
-
-MORT.Cryo:
-	Inherits: ^MortarInfantryBase
-	RenderSprites:
-		Image: mortcryo
-	Buildable:
-		BuildPaletteOrder: 250
-		Prerequisites: ~stolentech.tent
-		Description: Infantry armed with a Cryo Mortar.
-	TooltipExtras:
-		Attributes: • Slows enemy movement and increases damage taken
-	Tooltip:
-		Name: Cryo Mortar
-	Armament@PRIMARY:
-		Weapon: CryoMortar
-	Armament@BATF:
-		Weapon: CryoMortar
-
-MORT.Sonic:
-	Inherits: ^MortarInfantryBase
-	RenderSprites:
-		Image: mortsonic
-	Buildable:
-		BuildPaletteOrder: 250
-		Prerequisites: ~stolentech.pyle
-		Description: Infantry armed with a Sonic Mortar.
-	Tooltip:
-		Name: Sonic Mortar
-	TooltipExtras:
-		Strengths: • Strong vs Defenses, Buildings
-		Attributes: • Slows enemy movement and rate of fire
-	Armament@PRIMARY:
-		Weapon: SonicMortar
-	Armament@BATF:
-		Weapon: SonicMortar
 
 SAB:
 	Inherits: ^Soldier
@@ -2242,11 +2213,11 @@ SAB:
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 140
 		Prerequisites: anyradar, ~hand, ~techlevel.medium
-		Description: Covert infantry that infiltrates enemy structures\n  and steals technology.
+		Description: Covert infantry that infiltrates enemy structures\n  to steal or lock technology.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Can only attack Infantry
-		Attributes: • Can detect spies and cloaked units\n• Limited stealth (drains while moving)
+		Attributes: • Can detect spies and cloaked units\n• Limited stealth (drains while moving)\n• Infiltrates production buildings to steal technology\n    • Allies: Cryo Mortar, Reckoner, Black Eagle\n    • Soviets: Cyberdog, Rhino Tank, Kamov\n    • GDI: Sonic Mortar, Pitbull, Shade\n    • Nod: Chem Mortar, Mantis, Vertigo\n    • Scrin: Cyberscrin, Viper, Manticore\n• Infiltrates radars/tech centers to lock technology
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2265,7 +2236,7 @@ SAB:
 	Guard:
 		Voice: Move
 	Infiltrates:
-		Types: SabInfiltrate, PowerInfiltrate
+		Types: SabInfiltrate, PowerInfiltrate, TechLockInfiltrate
 		Notification: BuildingInfiltrated
 		TextNotification: Building infiltrated.
 	Voiced:
@@ -2329,15 +2300,14 @@ SAB:
 		Prerequisites: player.legion
 	GrantChargingCondition@CLOAK:
 		Condition: can-cloak
-		InitialCharge: 1000
-		MaxCharge: 1000
+		InitialCharge: 500
+		MaxCharge: 500
+		ChargeRate: 2
 		PauseOnCondition: moving
 		RequiresCondition: !cloak-force-disabled
-		ChargeRate: 1
-		DischargeRate: 2
-		ChargingColor: 777777
-		DischargingColor: 999999
-		ChargeDelay: 250
+		ChargingColor: 999999
+		DischargingColor: EEEEEE
+		ChargeDelay: 75
 		ShowSelectionBarWhenFull: false
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
@@ -2407,7 +2377,7 @@ ACOL:
 		Prerequisites: barracks.upgraded
 	Convertible:
 		SpawnActors: TPLR
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: tplr
 
 TPLR:
@@ -2422,7 +2392,7 @@ TPLR:
 		Prerequisites: anyradar, obli, ~infantry.marked, ~tmpp, ~techlevel.high
 	-TakeCover:
 	-Convertible:
-	-UpgradeableTo:
+	-ReplacedInQueue:
 	-Crushable:
 	WithInfantryBody:
 		IdleSequences: idle, idle2
@@ -2624,12 +2594,12 @@ JJET:
 	AutoTargetPriority@DEFAULT_AIR:
 		RequiresCondition: !stance-attackanything && !assault-move && airborne
 		ValidTargets: Vehicle, Water, Underwater, Defense
-		InvalidTargets: NoAutoTarget, WaterStructure
+		InvalidTargets: NoAutoTarget
 		Priority: 1
 	AutoTargetPriority@DEFAULT_AIR_ATTACK_INFANTRY:
 		RequiresCondition: !stance-attackanything && !assault-move && airborne
 		ValidTargets: Air, AirSmall, Infantry
-		InvalidTargets: NoAutoTarget, WaterStructure
+		InvalidTargets: NoAutoTarget
 		Priority: 10
 	AutoTargetPriority@ATTACKANYTHING_AIR:
 		RequiresCondition: (stance-attackanything || assault-move) && airborne
@@ -2646,7 +2616,7 @@ JJET:
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
 		ValidDamageStates: Light, Medium, Heavy, Critical
-	UpgradeableTo:
+	ReplacedInQueue:
 		Actors: bjet
 
 BJET:
@@ -2685,7 +2655,7 @@ BJET:
 		IdleSequences: idle1-upg, idle2-upg
 		DefaultAttackSequence: attack-upg
 		RequiresCondition: !airborne
-	-UpgradeableTo:
+	-ReplacedInQueue:
 
 JJET.Husk:
 	ClassicFacingBodyOrientation:
@@ -2731,6 +2701,7 @@ E8:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -2905,7 +2876,7 @@ N1C:
 
 N3C:
 	Inherits: ^Cyborg
-	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMoveAntiAir
+	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeAir
 	Inherits@BERSERK: ^Berserk
 	RenderSprites:
 	Buildable:
@@ -3003,6 +2974,7 @@ RMBC:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@EMP: ^EmpDisable
 	Inherits@chrono: ^Chronoshiftable
+	Inherits@C4Plantable: ^C4Plantable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
@@ -3057,7 +3029,9 @@ RMBC:
 	-Crushable:
 	-KillsSelf@Immolate:
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4Immune, ChaosImmune, Cyborg
+		TargetTypes: Ground, Vehicle
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	-Targetable@HEAL:
 	Targetable@REPAIR:
 		RequiresCondition: !parachute && damaged && !being-warped && !repair-cooldown
@@ -3093,6 +3067,7 @@ IVAN:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@Inspirable: ^Inspirable
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -3191,9 +3166,10 @@ BRUT:
 		Range: 5c0
 	Selectable:
 		DecorationBounds: 640, 896, 0, -341
-	Targetable:
-		RequiresCondition: !being-warped
-		TargetTypes: Ground, Infantry, MindControlImmune, DogImmune
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@DogImmune:
+		TargetTypes: DogImmune
 	Voiced:
 		VoiceSet: BruteVoice
 	WithInfantryBody:
@@ -3248,6 +3224,7 @@ BRUT:
 	-ExternalCondition@GMUT:
 	-SpawnActorOnDeath@GMUT:
 	-Targetable@GMUT:
+	-Targetable@SpyDisguise:
 
 BRUT.Mutating:
 	Inherits: BRUT
@@ -3498,8 +3475,8 @@ SGLI.crashing:
 	-Cloak:
 	-Targetable@GROUND:
 	-Targetable@AIRBORNE:
-	-Targetable@c4:
-	-Targetable@tnt:
+	-Targetable@C4Attached:
+	-Targetable@TNTAttached:
 
 SGLI.deployed:
 	Inherits: SGLI
@@ -3671,7 +3648,9 @@ YURI:
 		ReleaseSounds: yuri-release.aud
 		ControllingCondition: mindcontrolling
 		MaxControlledCondition: maxcontrolled
-		ManualReleaseEnabled: true
+		ControlAtCapacityBehaviour: KillOldest
+		SlaveDeployEffect: Kill
+		SlaveKillDamageTypes: BulletDeath
 		ExperienceFromControl: 100
 	WithMindControlArc@MC:
 		Color: c71585
@@ -3693,18 +3672,19 @@ YURI:
 		Weapon: MindblastSlave
 		InitialDelay: 18
 		RequiresCondition: deployed && !being-warped
-		KillSlaveTypes: Infantry, Vehicle
-		KillSlavesDamageTypes: BulletDeath
 	GrantTimedConditionOnDeploy:
-		DeployedTicks: 35
-		CooldownTicks: 100
+		DeployedTicks: 25
+		CooldownTicks: 150
 		DeployedCondition: deployed
 		DeployingCondition: deploying
 		DeployAnimation: deployed
 		ShowSelectionBar: true
+		ShowSelectionBarWhenFull: false
 		StartsFullyCharged: true
 		Voice: Demolish
 		PauseOnCondition: being-warped || parachute
+		DischargingColor: bb0000
+		ChargingColor: cc00cc
 	AttackFrontal:
 		PauseOnCondition: !ammo || being-warped || parachute
 		Armaments: primary, secondary, aidummy
@@ -3742,8 +3722,10 @@ YURI:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, ChaosImmune, MindControlImmune
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	GrantConditionOnAttack@AI:
 		Condition: aiattack
 		RequiresCondition: botowner
@@ -3783,6 +3765,7 @@ YURI:
 		Range: 13c0
 		Color: cc00ff77
 		BorderColor: 00000044
+	KeepsDistance:
 
 SEAL:
 	Inherits: RMBO
@@ -3808,7 +3791,7 @@ SEAL:
 	Voiced:
 		VoiceSet: SealVoice
 	Mobile:
-		Speed: 72
+		Speed: 60
 		Locomotor: seal
 	Armament:
 		Weapon: mp5
@@ -3861,6 +3844,8 @@ SEAL:
 	WithDecoration@COMMANDOSKULL:
 		Sequence: pip-seal
 	-Targetable@HERO:
+	GrantConditionOnHealingReceived@HEALINGCOOLDOWN:
+		RequiredHealing: 40000
 
 XO:
 	Inherits: ^VehicleTD-NOUPG
@@ -3941,6 +3926,7 @@ ENLI:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@EMP: ^EmpDisable
 	Inherits@chrono: ^Chronoshiftable
+	Inherits@C4Plantable: ^C4Plantable
 	RenderSprites:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
@@ -3961,7 +3947,9 @@ ENLI:
 	-Crushable:
 	-KillsSelf@Immolate:
 	Targetable:
-		TargetTypes: Ground, Vehicle, C4Immune, ChaosImmune, Cyborg
+		TargetTypes: Ground, Vehicle
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	-Targetable@HEAL:
 	Targetable@REPAIR:
 		RequiresCondition: !parachute && damaged && !being-warped && !repair-cooldown
@@ -4042,3 +4030,251 @@ ENLI:
 		Count: 1
 		ShowSelectionBar: true
 		SelectionBarColor: b8afff
+
+^MortarInfantryBase:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Buildings
+		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving targets
+	Valued:
+		Cost: 350
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 3500
+	Armament@PRIMARY:
+		Weapon: ChemicalMortar
+		LocalOffset: 200,0,155
+		FireDelay: 15
+	Armament@BATF:
+		Name: batf
+		Weapon: ChemicalMortar
+		FireDelay: 15
+	AttackFrontal:
+		PauseOnCondition: being-warped
+		FacingTolerance: 0
+	WithInfantryBody:
+		DefaultAttackSequence: throw
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
+
+MORT.Cryo:
+	Inherits: ^MortarInfantryBase
+	RenderSprites:
+		Image: mortcryo
+	Buildable:
+		BuildPaletteOrder: 250
+		Prerequisites: ~stolentech.tent
+		Description: Infantry armed with a Cryo Mortar.
+	TooltipExtras:
+		Attributes: • Slows enemy movement and increases damage taken
+	Tooltip:
+		Name: Cryo Mortar
+	Armament@PRIMARY:
+		Weapon: CryoMortar
+	Armament@BATF:
+		Weapon: CryoMortar
+
+CDOG:
+	Inherits: DOG
+	Buildable:
+		Queue: InfantrySQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 251
+		Prerequisites: ~stolentech.barr
+		Description: Melee anti-infantry scout unit.
+	Valued:
+		Cost: 400
+	Tooltip:
+		Name: Cyberdog
+	Health:
+		HP: 15000
+	Voiced:
+		VoiceSet: CyberdogVoice
+	Armament:
+		Weapon: CyberdogJaw
+
+MORT.Sonic:
+	Inherits: ^MortarInfantryBase
+	RenderSprites:
+		Image: mortsonic
+	Buildable:
+		BuildPaletteOrder: 252
+		Prerequisites: ~stolentech.pyle
+		Description: Infantry armed with a Sonic Mortar.
+	Tooltip:
+		Name: Sonic Mortar
+	TooltipExtras:
+		Strengths: • Strong vs Defenses, Buildings
+		Attributes: • Slows enemy movement and rate of fire
+	Armament@PRIMARY:
+		Weapon: SonicMortar
+	Armament@BATF:
+		Weapon: SonicMortar
+
+MORT.Chem:
+	Inherits: ^MortarInfantryBase
+	RenderSprites:
+		Image: mortchem
+	Buildable:
+		BuildPaletteOrder: 253
+		Prerequisites: ~stolentech.hand
+		Description: Infantry armed with a Chemical Mortar.
+	Tooltip:
+		Name: Chemical Mortar
+	Explodes:
+		Weapon: UnitExplodeChemSmall
+		EmptyWeapon: UnitExplodeChemSmall
+		Chance: 33
+		RequiresCondition: !being-warped
+
+CSCR:
+	Inherits@SCRININFANTRY: ^ScrinInfantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@CYBORGUPG: ^NodCyborgUpgrade
+	Inherits@SLOWABLE: ^Slowable
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 254
+		Prerequisites: ~stolentech.port
+		IconPalette: chromes
+		Description: Fast moving anti-personnel infantry.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Cyberscrin
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 13000
+	Mobile:
+		Speed: 77
+	Armament@PRIMARY:
+		Weapon: CyberscrinLaser
+		LocalOffset: 200,0,350
+		MuzzleSequence: muzzle
+		MuzzlePalette: caneon
+	Armament@BATF:
+		Name: batf
+		Weapon: CyberscrinLaser
+	WithMuzzleOverlay:
+	AttackFrontal:
+		PauseOnCondition: being-warped
+		FacingTolerance: 0
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+	-TakeCover:
+	Voiced:
+		VoiceSet: CyberscrinVoice
+	Targetable:
+		TargetTypes: Ground, Infantry, Cyborg
+	ExternalCondition@ONTIB:
+		Condition: on-tib
+	ChangesHealth@THEAL:
+		Step: 0
+		PercentageStep: 1
+		Delay: 15
+		StartIfBelow: 100
+		DamageCooldown: 150
+		RequiresCondition: on-tib
+		DamageTypes: ToxinDeath
+	WithDecoration@REDCROSS:
+		RequiresCondition: on-tib || (hospitalheal && damaged)
+	WithDecoration@RANK-1:
+		BlinkPatterns:
+			on-tib || (damaged && hospitalheal): On, Off
+	WithDecoration@RANK-2:
+		BlinkPatterns:
+			on-tib || (damaged && hospitalheal): On, Off
+	WithDecoration@RANK-ELITE:
+		BlinkPatterns:
+			on-tib || (damaged && hospitalheal): On, Off
+
+CMSR:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 195
+		Prerequisites: stek, ~barr, ~techlevel.high
+		Description: Leads regular infantry into battle, motivating them\n  to move faster and fight harder.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry
+		Weaknesses: • Weak vs Light Armor, Heavy Armor, Defenses, Buildings\n• Cannot attack Aircraft
+		Attributes: • Increases speed and rate of fire of nearby infantry\n• Can detect cloaked units
+	Valued:
+		Cost: 800
+	Tooltip:
+		Name: Commissar
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 12000
+	Mobile:
+		Speed: 69
+	RevealsShroud:
+		Range: 6c0
+	Armament@PRIMARY:
+		Weapon: CommissarPistol
+	Armament@BATF:
+		Name: batf
+		Weapon: CommissarPistol
+		MuzzleSequence: garrison-muzzle
+	WithInfantryBody:
+		DefaultAttackSequence: shoot
+		IdleSequences: idle1,idle2
+		RequiresCondition: !parachute && !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
+	AttackFrontal:
+		PauseOnCondition: being-warped
+		FacingTolerance: 0
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
+	DetectCloaked:
+		DetectionTypes: Cloak, Thief
+		Range: 6c0
+	ProximityExternalCondition@Inspiration:
+		Range: 7c0
+		Condition: inspiration
+		ValidRelationships: Ally
+	WithDecoration@CMSRPIP:
+		Image: pips
+		Sequence: pip-cmsr
+		Palette: effect
+		Position: TopLeft
+		ValidRelationships: Ally, Enemy, Neutral
+	WithRadiatingCircle:
+		EndRadius: 7c0
+		Interval: 25
+		Duration: 50
+		ValidRelationships: Ally
+		AlwaysShowMaxRange: true

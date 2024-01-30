@@ -226,7 +226,6 @@ FlamerTD:
 			Brick: 5
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		ValidRelationships: Enemy, Neutral
-		DebugOverlayColor: ffaa00
 		Delay: 5
 	Warhead@2Smu: LeaveSmudge
 		SmudgeType: Scorch
@@ -240,7 +239,7 @@ FlamerTDFF:
 	Warhead@1Dam: SpreadDamage
 		Falloff: 100, 50, 0
 		ValidRelationships: Ally
-		-DebugOverlayColor:
+		DebugOverlayColor: ffaa00
 	-Warhead@2Smu:
 
 BigFlamerTD:
@@ -276,7 +275,7 @@ BigFlamerTDFF:
 	Warhead@1Dam: SpreadDamage
 		Falloff: 100, 50, 0
 		ValidRelationships: Ally
-		-DebugOverlayColor:
+		DebugOverlayColor: ffaa00
 	-Warhead@2Smu:
 
 ChemsprayTD:
@@ -298,6 +297,7 @@ ChemsprayTDFF:
 			Concrete: 40
 			Heavy: 40
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+		InvalidTargets: ChemWarrior
 
 ChemsprayTDBATF:
 	Inherits: BigFlamerTD
@@ -327,14 +327,13 @@ HeavyFlameTankFlamer:
 
 HeavyFlameTankFlamer.UPG:
 	Inherits: HeavyFlameTankFlamer
-	ReloadDelay: 90
+	ReloadDelay: 95
 	Projectile: LinearPulse
 		Image: flameallblack
 		Palette: scrin-ignore-lighting-alpha85
 	Warhead@1Dam: SpreadDamage
 		Damage: 180
 		Versus:
-			Light: 100
 			Heavy: 70
 			Concrete: 60
 	Warhead@2Smu: LeaveSmudge
@@ -349,7 +348,7 @@ HeavyFlameTankFlamerFF:
 	Warhead@1Dam: SpreadDamage
 		Falloff: 100, 50, 0
 		ValidRelationships: Ally
-		-DebugOverlayColor:
+		DebugOverlayColor: ffaa00
 	-Warhead@2Smu:
 
 BlackHandFlamer:
@@ -481,7 +480,7 @@ TTrackZap:
 	ReloadDelay: 125
 	Range: 8c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 13500
+		Damage: 14500
 		Versus:
 			Wood: 50
 			Concrete: 50
@@ -715,11 +714,11 @@ Demolish:
 		Footprint: xxx xxx xxx
 
 PlaceC4:
-	ReloadDelay: 10
+	ReloadDelay: 15
 	Range: 1c849
 	Projectile: InstantHit
 	Report: icolseta.aud
-	ValidTargets: C4, Vehicle, Structure
+	ValidTargets: C4Plantable
 	InvalidTargets: C4Attached, TNTAttached, C4Immune
 	Warhead@AttachDelayedWeapon: AttachDelayedWeapon
 		Weapon: C4
@@ -737,7 +736,7 @@ PlaceC4:
 PlaceC4Seal:
 	Inherits: PlaceC4
 	ReloadDelay: 50
-	ValidTargets: C4, Ship, Submarine, Structure
+	ValidTargets: C4Plantable
 	InvalidTargets: Vehicle, C4Attached, TNTAttached, C4Immune
 	Range: 1c255
 	Warhead@AttachDelayedWeapon: AttachDelayedWeapon
@@ -772,7 +771,7 @@ C4:
 
 Ivanbomb:
 	Inherits: ^Artillery
-	ValidTargets: Ground, TNT, Infantry, Vehicle, Structure
+	ValidTargets: Ground, TNTPlantable
 	InvalidTargets: C4Attached, C4Immune
 	ReloadDelay: 75
 	Range: 3c725
@@ -880,15 +879,12 @@ IFVDefuseKit:
 	Range: 4c511
 
 DemoTruckTargeting:
-	ValidTargets: DetonateAttack
-	Range: 2c0
+	Range: 1c849
 	Projectile: InstantHit
 	Warhead@1Dam: TargetDamage
-		ValidTargets: DetonateAttack
 
 IvanIFVTargeting:
 	Inherits: DemoTruckTargeting
-	ValidTargets: Ground, DetonateAttack
 
 Hack:
 	Range: 12c0
@@ -1701,7 +1697,7 @@ MobileGapBeam:
 	Range: 7c0
 
 RadarJammer:
-	ReloadDelay: 125
+	ReloadDelay: 150
 	Report: jammed.aud
 	Range: 10c0
 	Projectile: InstantHit
@@ -1759,7 +1755,7 @@ Railgun:
 	Range: 8c0
 	Report: railuse5.aud
 	InvalidTargets: Air, Submarine
-	Projectile: Railgun
+	Projectile: RailgunCA
 		Duration: 10
 		Blockable: true
 		DamageActorsInLine: false
@@ -1790,7 +1786,7 @@ TitanRailgun:
 	Report: titanrailgun1.aud, titanrailgun2.aud
 	ReloadDelay: 80
 	Range: 5c768
-	Projectile: Railgun
+	Projectile: RailgunCA
 		DamageActorsInLine: true
 		BeamColor: EEFFFFBB
 		BeamWidth: 48
@@ -1802,8 +1798,10 @@ TitanRailgun:
 		BeamAlphaDeltaPerTick: -8
 		HelixPitch: 682
 		ZOffset: 4096
+		PassthroughToMaxRange: true
+		PassthroughMinDistance: 2c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 6500
+		Damage: 5000
 		Versus:
 			None: 30
 			Wood: 70
@@ -1812,7 +1810,7 @@ TitanRailgun:
 			Concrete: 60
 		ValidRelationships: Enemy, Neutral
 	Warhead@2Dam: SpreadDamage
-		Damage: 1250
+		Damage: 1000
 		Versus:
 			None: 30
 			Wood: 70
@@ -1829,7 +1827,7 @@ TitanRailgunImpact:
 	-Warhead@2Dam:
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
-		Damage: 9500
+		Damage: 11000
 		ValidRelationships: Enemy, Neutral, Ally
 
 IonZap:
@@ -1920,15 +1918,15 @@ OrcaBomb:
 		Shadow: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
-		Damage: 740
+		Damage: 1600
 		Falloff: 1000, 368, 135, 50, 18, 7, 0
 		ValidTargets: Ground, Water
 		Versus:
-			None: 60
-			Wood: 100
-			Light: 40
-			Heavy: 50
-			Concrete: 40
+			None: 25
+			Wood: 50
+			Light: 75
+			Heavy: 100
+			Concrete: 35
 			Brick: 5
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath, AirToGround
 	Warhead@2Smu: LeaveSmudge
@@ -2044,6 +2042,24 @@ V3Launcher:
 	Range: 21c511
 	MinRange: 6c0
 	Report: vv3latta.aud, vv3lattb.aud
+	ValidTargets: Ground, Water
+	Projectile: InstantHit
+	Warhead@1Dam: TargetDamage
+		ValidTargets: Ground, Water
+		Damage: 50000
+		Versus:
+			None: 0
+			Wood: 0
+			Concrete: 0
+			Light: 0
+			Heavy: 0
+			Brick: 0
+
+THLauncher:
+	ReloadDelay: 250
+	Range: 21c511
+	MinRange: 6c0
+	Report: tomahawk.aud
 	ValidTargets: Ground, Water
 	Projectile: InstantHit
 	Warhead@1Dam: TargetDamage
@@ -2420,6 +2436,7 @@ SonicPulse:
 	ReloadDelay: 68
 	Range: 7c512
 	Report: sonicpulse1.aud, sonicpulse2.aud
+	TargetActorCenter: true
 	Projectile: LinearPulse
 		Speed: 768
 		ImpactInterval: 1
@@ -2473,25 +2490,28 @@ DisruptorPulse:
 	Projectile: LinearPulse
 		Speed: 384
 	Warhead@1Dam: SpreadDamage
-		Spread: 0c128
-		Damage: 2000
+		Spread: 0c384
+		Damage: 750
 		Versus:
 			None: 100
-			Wood: 28
+			Wood: 60
 			Light: 28
-			Heavy: 15
+			Heavy: 12
 			Concrete: 35
 	Warhead@friendlyFire: SpreadDamage
-		Spread: 0c128
-		Damage: 660
+		Spread: 0c384
+		Falloff: 100, 75, 25, 0
+		Damage: 150
 		Versus:
 			None: 100
-			Wood: 28
+			Wood: 60
 			Light: 28
-			Heavy: 15
+			Heavy: 12
 			Concrete: 35
 		ValidRelationships: Ally
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		InvalidTargets: Disruptor
+		DebugOverlayColor: ffaa00
 	-Warhead@2Eff:
 	Warhead@2Eff: CreateFacingEffect
 		Explosions: sonicwave1, sonicwave2
@@ -2503,7 +2523,7 @@ DisruptorPulse.Amp:
 	Inherits: DisruptorPulse
 	Range: 6c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 2200
+		Damage: 825
 	Warhead@2Eff: CreateFacingEffect
 		Explosions: sonicwaveupg1, sonicwaveupg2
 		ExplosionPalette: effect
@@ -2569,7 +2589,7 @@ JDAM:
 		RandomClusterCount: 3
 		Dimensions: 3,3
 		Footprint: xxx xxx xxx
-	Warhead@Concussion2: GrantExternalCondition
+	Warhead@Concussion: GrantExternalCondition
 		Range: 3c0
 		Duration: 70
 		Condition: concussion
@@ -2674,6 +2694,21 @@ AttachShadowBeacon:
 	Warhead@4Smu: LeaveSmudge
 		SmudgeType: Crater
 		InvalidTargets: Structure, Wall, Trees
+
+TinyDebris:
+	Inherits: ^Debris
+	Projectile: Bullet
+		Image: dirt
+		Palette: terrain
+		Sequences: 1, 2, 3, 4, 5
+		BounceCount: 2
+		BounceRangeModifier: 10
+		InvalidBounceTerrain: Water
+	Warhead@1Dam: SpreadDamage
+		Damage: 1
+	-Warhead@2Eff:
+	-Warhead@3EffWater:
+	-Warhead@4Smu:
 
 SmallDebris:
 	Inherits: ^Debris
@@ -2808,3 +2843,231 @@ MineDefuserCharger:
 		ValidTargets: Mine
 	-Warhead@1Def:
 	-Warhead@3Eff:
+
+DecoyBuggySpawner:
+	ReloadDelay: 1
+	Projectile: InstantExplode
+	Report: decoyspawn.aud
+	Warhead@Spawn: SpawnActor
+		Actors: bggy.decoy
+		Range: 2
+		ForceGround: false
+		MatchSourceFacing: true
+		ValidTargets: Ground, Water, Trees
+
+DecoyBuggyDespawn:
+	Report: decoydespawn.aud
+	Projectile: InstantHit
+	Warhead@Dummy: Dummy
+
+MantisLaser:
+	Inherits: Laser
+	Burst: 2
+	BurstDelays: 5
+	ReloadDelay: 10
+	ValidTargets: Air, AirSmall
+	Range: 7c512
+	Report: mantis-fire1.aud, mantis-fire2.aud
+	Projectile: LaserZapCA
+		Width: 42
+		SecondaryBeamWidth: 75
+		-HitAnim:
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Air, AirSmall
+		Damage: 2250
+	Warhead@3Eff: CreateEffect
+		Explosions: small_air_explosion
+		Inaccuracy: 256
+		ValidTargets: Air, AirSmall
+
+ViperLaser:
+	Inherits: DevourerLaser
+	Report: viper-fire1.aud
+	Projectile: PlasmaBeam
+		Colors: ff0000E6, cc0000E6
+
+ShadeEmp:
+	Inherits: EnlightenedEmp
+	ReloadDelay: 100
+	Range: 7c0
+	Report: enli-empfire.aud
+	Projectile: Bullet
+		Inaccuracy: 64
+		Blockable: false
+		Shadow: true
+		Speed: 384
+		LaunchAngle: 0
+		Image: enliempproj
+		Palette: effect
+		TrailImage: smokey
+		TrailPalette: scrinplasma
+		ContrailLength: 17
+		ContrailStartColor: 6c6cd4aa
+		ContrailStartColorAlpha: 170
+		ContrailStartWidth: 0c48
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Damage: 15000
+		ValidTargets: Ground, Water
+		Versus:
+			None: 75
+			Wood: 50
+			Light: 80
+			Heavy: 100
+			Concrete: 75
+			Brick: 5
+		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath, AirToGround
+	Warhead@1Emp: GrantExternalCondition
+		Range: 1c256
+		Duration: 325
+		Condition: empdisable
+		ValidTargets: Ground, Vehicle, Defense
+		InvalidTargets: Cyborg
+	Warhead@2Emp: GrantExternalCondition
+		Range: 1c256
+		Duration: 125
+		Condition: empdisable
+		ValidTargets: Cyborg
+	Warhead@3Eff_impact: CreateEffect
+		Explosions: enliemphit1, enliemphit2
+		ImpactSounds: enli-emphit.aud
+		Inaccuracy: 341
+
+ManticoreBolts:
+	Inherits: DevastatorDiscs
+	Report: mcor-fire1.aud, mcor-fire2.aud
+	ReloadDelay: 150
+	Burst: 4
+	Range: 14c0
+	Projectile: Bullet
+		Image: redplasmatorp
+		Palette: caneon
+		Inaccuracy: 1c0
+
+VertigoBomb:
+	Inherits: JDAM
+	Report: vert-bomb1.aud
+	Warhead@3Eff: CreateEffect
+		ImpactSounds: vert-bombhit1.aud, vert-bombhit2.aud
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			Wood: 80
+	-Warhead@Concussion:
+
+VertigoBombTargeter:
+	Range: 9c0
+	ReloadDelay: 50
+	Projectile: InstantHit
+	Warhead@1Dam: Dummy
+
+PeacemakerBombs:
+	Range: 1c832
+	Report: bwhis.aud
+	Burst: 5
+	BurstDelays: 6
+	TargetActorCenter: true
+	Projectile: GravityBomb
+		Image: medbomb
+		Velocity: 20, 0, -60
+		Acceleration: 0, 0, 0
+		Shadow: true
+	Warhead@1Dam: SpreadDamage
+		Spread: 1c0
+		Damage: 23500
+		Versus:
+			None: 20
+			Wood: 40
+			Light: 70
+			Heavy: 100
+			Concrete: 55
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster, AirToGround, FlakVestMitigated
+	Warhead@2Dam: SpreadDamage
+		Spread: 512
+		Damage: 23500
+		Versus:
+			None: 30
+			Wood: 0
+			Light: 0
+			Heavy: 0
+			Concrete: 0
+			Brick: 0
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, FlakVestMitigated
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
+	Warhead@3Eff: CreateEffect
+		Explosions: building, building2
+		ImpactSounds: kaboom15.aud, kaboom12.aud
+		ValidTargets: Ground, Ship, Trees
+	Warhead@4EffWater: CreateEffect
+		Explosions: small_splash
+		ImpactSounds: h2obomb2.aud
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure
+	Warhead@Shrap: FireShrapnel
+		Weapon: TinyDebris
+		Amount: 10
+		AimChance: 0
+		ValidTargets: Ground, Water, Infantry, Vehicle
+		ThrowWithoutTarget: true
+
+TibSurgeTargeter:
+	ReloadDelay: 750
+	Report: tibsurge.aud
+	Range: 8c0
+	Projectile: InstantHit
+	ValidTargets: Infantry, Vehicle, Structure
+	Warhead@Dummy: Dummy
+		ValidTargets:	Infantry, Vehicle, Structure
+		ValidRelationships: Enemy, Neutral
+
+FloatingDiscLaser:
+	Inherits: Laser
+	ValidTargets: Ground, Water, Air, AirSmall
+	InvalidTargets: PowerDrainable, ResourceDrainable
+	ReloadDelay: 60
+	Range: 5c0
+	Report: vfloatta.aud
+	Projectile: LaserZapCA
+		Color: eb39d380
+		SecondaryBeamColor: eb39d340
+	Warhead@1Dam: SpreadDamage
+		ValidTargets: Ground, Water, Air, AirSmall
+		InvalidTargets: PowerDrainable, ResourceDrainable
+		Damage: 13000
+		Versus:
+			None: 100
+			Light: 75
+			Wood: 100
+			Heavy: 75
+			Concrete: 75
+			Brick: 25
+			Aircraft: 35
+
+^FloatingDiscDrainer:
+	ReloadDelay: 10
+	Range: 0c512
+	Projectile: InstantHit
+	TargetActorCenter: true
+	Warhead@Dummy: Dummy
+		ValidRelationships: Enemy, Neutral
+
+FloatingDiscPowerDrainer:
+	Inherits: ^FloatingDiscDrainer
+	ValidTargets:	PowerDrainable
+	Warhead@PowerDrain: GrantExternalCondition
+		Range: 0c128
+		Duration: 11
+		Condition: discpowerdrain
+		ValidRelationships: Enemy, Neutral
+		ValidTargets: PowerDrainable
+
+FloatingDiscResourceDrainer:
+	Inherits: ^FloatingDiscDrainer
+	ValidTargets:	ResourceDrainable
+	Warhead@ResourceDrain: GrantExternalCondition
+		Range: 0c128
+		Duration: 11
+		Condition: resourcedrain
+		ValidRelationships: Enemy, Neutral
+		ValidTargets: ResourceDrainable

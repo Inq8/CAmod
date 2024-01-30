@@ -96,6 +96,14 @@ WEAP.TD:
 	-ProvidesPrerequisiteValidatedFaction@mtnk:
 	-ProvidesPrerequisite@apc2:
 
+MTNK:
+	Buildable:
+		Prerequisites: ~!bdrone.upgrade, ~vehicles.gdi
+
+MTNK.Drone:
+	Buildable:
+		Prerequisites: ~bdrone.upgrade, ~vehicles.gdi
+
 blacknapalm.upgrade:
 	Buildable:
 		Prerequisites: tmpl
@@ -265,8 +273,6 @@ WORMHOLE:
 		Condition: regen-disabled
 	ExternalCondition@FIX1:
 		Condition: forceshield
-	ExternalCondition@FIX3:
-		Condition: invulnerability
 	ExternalCondition@FIX2:
 		Condition: being-warped
 	MustBeDestroyed:

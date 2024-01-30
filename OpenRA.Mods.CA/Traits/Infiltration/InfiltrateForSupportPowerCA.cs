@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
@@ -15,7 +16,8 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	[Desc("CA version makes the spawned proxy actor inherit the faction of the infiltrated actor.")]
+	[Desc("CA version allows the spawned proxy actor to inherit the faction of the infiltrated actor,",
+		"or to be owned by the target.")]
 	class InfiltrateForSupportPowerCAInfo : TraitInfo
 	{
 		[ActorReference]
@@ -32,6 +34,12 @@ namespace OpenRA.Mods.CA.Traits
 		[NotificationReference("Speech")]
 		[Desc("Sound the perpetrator will hear after successful infiltration.")]
 		public readonly string InfiltrationNotification = null;
+
+		[Desc("If true, the spawned actor will use the target's faction.")]
+		public readonly bool UseTargetFaction = false;
+
+		[Desc("If true, the spawned actor will be owned by the target.")]
+		public readonly bool UseTargetOwner = false;
 
 		public override object Create(ActorInitializer init) { return new InfiltrateForSupportPowerCA(this); }
 	}
@@ -56,11 +64,17 @@ namespace OpenRA.Mods.CA.Traits
 			if (info.InfiltrationNotification != null)
 				Game.Sound.PlayNotification(self.World.Map.Rules, infiltrator.Owner, "Speech", info.InfiltrationNotification, infiltrator.Owner.Faction.InternalName);
 
-			infiltrator.World.AddFrameEndTask(w => w.CreateActor(info.Proxy, new TypeDictionary
-			{
-				new OwnerInit(infiltrator.Owner),
-				new FactionInit(self.Owner.Faction.InternalName)
-			}));
+			var td = new TypeDictionary();
+
+			if (info.UseTargetFaction)
+				td.Add(new FactionInit(self.Owner.Faction.InternalName));
+
+			if (info.UseTargetOwner)
+				td.Add(new OwnerInit(self.Owner));
+			else
+				td.Add(new OwnerInit(infiltrator.Owner));
+
+			infiltrator.World.AddFrameEndTask(w => w.CreateActor(info.Proxy, td));
 		}
 	}
 }

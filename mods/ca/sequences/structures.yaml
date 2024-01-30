@@ -184,6 +184,64 @@ oilb.destroyed:
 		Length: *
 		Offset: 0,0
 
+oilr:
+	Inherits: ^StructureOverlays
+	Defaults:
+		Filename: oilr.shp
+		Offset: 0,-6
+	idle:
+	damaged-idle:
+    	Start: 1
+		Length: 1
+	flare:
+		Filename: burn-s.shp
+		Start: 12
+		Length: 46
+		ZOffset: 511
+	damaged-flare:
+		Filename: flmspt.shp
+		Start: 50
+		Length: *
+		ZOffset: 511
+	dead:
+		Start: 2
+		Tick: 800
+	make:
+		Filename: oilr.shp
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
+		Length: *
+		Offset: 0,0
+
+oilr.destroyed:
+	Defaults:
+		Offset: 0,-6
+	idle:
+		Filename: oilr.shp
+		Start: 2
+		Length: 1
+	idle-flare:
+		Filename: flmspt.shp
+		Start: 50
+		Length: *
+		ZOffset: 511
+	bib:
+		Filename: bib2.tem
+		TilesetFilenames:
+			SNOW: bib2.sno
+			DESERT: bib2.des
+			JUNGLE: bib2.jun
+			WINTER: bib2.win
+			BARREN: bib2.bar
+		Length: *
+		Offset: 0,0
+
 orep:
 	Inherits: ^StructureOverlays
 	idle:

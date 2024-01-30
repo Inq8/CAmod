@@ -225,6 +225,8 @@ WorldLoaded = function()
 		TeslaCoil3.Destroy()
 		HardOnlyV2.Destroy()
 		HardOnlyKatyusha.Destroy()
+	else
+		Ranger1.Destroy()
 	end
 
 	if Difficulty == "easy" then
@@ -239,8 +241,6 @@ WorldLoaded = function()
 		NonEasyHeavyTank3.Destroy()
 		NonEasyHeavyTank4.Destroy()
 		NonEasyMammoth1.Destroy()
-	else
-		Ranger1.Destroy()
 	end
 
 	Trigger.AfterDelay(1, function()
@@ -381,8 +381,8 @@ InitUSSR = function()
 	-- Eastern Halo drops
 	Trigger.AfterDelay(HaloDropStart[Difficulty], function()
 		local eastHaloDropEntryPaths = {
-			{ CPos.New(EastHaloDrop.Location.X + 35, EastHaloDrop.Location.Y - 25), EastHaloDrop.Location },
-			{ CPos.New(EastHaloDrop.Location.X + 35, EastHaloDrop.Location.Y - 25), EastHaloDropAlt.Location },
+			{ HaloSpawn1.Location, HaloLanding1.Location },
+			{ HaloSpawn2.Location, HaloLanding2.Location },
 		}
 		DoHaloDrop(eastHaloDropEntryPaths)
 	end)
@@ -390,7 +390,7 @@ InitUSSR = function()
 	-- Western Halo drops (hard only)
 	if Difficulty == "hard" then
 		Trigger.AfterDelay(HaloDropStart[Difficulty] + DateTime.Seconds(40), function()
-			local westHaloDropEntryPaths = { { CPos.New(WestHaloDrop.Location.X - 35, WestHaloDrop.Location.Y - 25), WestHaloDrop.Location } }
+			local westHaloDropEntryPaths = { { HaloSpawn3.Location, HaloLanding3.Location } }
 			DoHaloDrop(westHaloDropEntryPaths)
 		end)
 	end

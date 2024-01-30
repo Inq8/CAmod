@@ -11,6 +11,7 @@
 using System.Linq;
 using OpenRA.GameRules;
 using OpenRA.Mods.CA.Activities;
+using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Effects;
 using OpenRA.Mods.Common.Traits;
@@ -62,6 +63,9 @@ namespace OpenRA.Mods.CA.Warheads
 
 		[Desc("For non-positionable actors only, whether to avoid spawning on top of existing actors.")]
 		public readonly bool AvoidActors = false;
+
+		[Desc("For actors with facing, match the facing of the source (if the source also has a facing) .")]
+		public readonly bool MatchSourceFacing = false;
 
 		public readonly bool UsePlayerPalette = false;
 
@@ -188,6 +192,13 @@ namespace OpenRA.Mods.CA.Warheads
 				td.Add(new OwnerInit(firedBy.World.Players.First(p => p.InternalName == InternalOwner)));
 
 			td.Add(new LocationInit(targetCell));
+
+			if (MatchSourceFacing)
+			{
+				var facing = firedBy.TraitOrDefault<IFacing>();
+				if (facing != null)
+					td.Add(new FacingInit(facing.Facing));
+			}
 
 			return td;
 		}

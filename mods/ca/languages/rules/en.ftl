@@ -3,8 +3,8 @@ options-tech-level =
     .infantry-only = Infantry Only
     .low = Low
     .medium = Medium
-    .high = High
-    .unrestricted = Unrestricted
+    .high = High • Superweapons Off
+    .unrestricted = High • Superweapons On
 
 checkbox-kill-bounties =
     .label = Kill Bounties
@@ -50,6 +50,6 @@ dropdown-difficulty =
     .description = The difficulty of the mission
 
 options-difficulty =
-    .easy = Beginner
-    .normal = Veteran
-    .hard = Expert
+    .easy = Easy
+    .normal = Normal
+    .hard = Hard

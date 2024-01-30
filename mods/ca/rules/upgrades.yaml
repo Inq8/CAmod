@@ -51,7 +51,7 @@ optprod2.upgrade:
 		Name: Upgrade: Optimized Production II
 	Buildable:
 		BuildPaletteOrder: 15
-		Prerequisites: techcenter, ~techlevel.high, ~global.multiqueuescaled, ~optprod1.upgrade
+		Prerequisites: techcenter.any, ~techlevel.high, ~global.multiqueuescaled, ~optprod1.upgrade
 		Description: Reduces the cost of additional infantry, vehicle and aircraft production structures.
 	TooltipExtras:
 		Strengths: + Reduced cost of additional infantry production by $500\n+ Reduced cost of additional vehicle production by $700\n+ Reduced cost of additional aircraft production by $150
@@ -66,7 +66,7 @@ flakarmor.upgrade:
 		Name: Upgrade: Advanced Flak Armor
 	Buildable:
 		BuildPaletteOrder: 30
-		Prerequisites: techcenter, infantry.any, ~!player.nod, ~!player.scrin, ~techlevel.high
+		Prerequisites: techcenter.any, infantry.any, ~!player.nod, ~!player.scrin, ~techlevel.high
 		Description: Infantry are equiped with advanced flak armor which\n  provides protection against explosives.\n\nUpgrades: Infantry
 	TooltipExtras:
 		Strengths: + 40% reduced damage from explosives\n+ 20% reduced damage from incendiary explosives
@@ -95,12 +95,12 @@ bombard.strat:
 		BuildPaletteOrder: 1
 		Prerequisites: ~player.gdi, anyradar, ~!seek.strat, ~!hold.strat, ~techlevel.medium
 		IconPalette: chrometd
-		Description: Firepower focused strategy, required for:\n• Bombardier Upgrade\n• Hailstorm Missiles Upgrade\n\n
+		Description: Firepower focused strategy, required for:\n• Tomahawk Launcher\n• Hailstorm Missiles Upgrade\n\n
 	TooltipExtras:
 		Strengths: + Increases firepower and rate of fire of vehicles and aircraft by 3%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
 	Valued:
-		Cost: 1250
+		Cost: 1000
 	RenderSprites:
 		Image: bombard.strat
 	AnnounceOnCreation:
@@ -135,7 +135,7 @@ seek.strat:
 		Strengths: + Increases speed and weapon range of vehicles and aircraft by 5%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
 	Valued:
-		Cost: 1250
+		Cost: 1000
 	RenderSprites:
 		Image: seek.strat
 	AnnounceOnCreation:
@@ -170,7 +170,7 @@ hold.strat:
 		Strengths: + Increases armor of vehicles and aircraft by 5%
 		Attributes: \n(!) Only ONE Strategy may be chosen.
 	Valued:
-		Cost: 1250
+		Cost: 1000
 	RenderSprites:
 		Image: hold.strat
 	AnnounceOnCreation:
@@ -240,6 +240,22 @@ empgren.upgrade:
 	RenderSprites:
 		Image: empgren.upgrade
 
+bjet.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Bombardier
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.gdi, gtek, ~techlevel.high
+		Description: Allows construction of Bombardiers.\n\nReplaces: JumpJet Trooper
+	TooltipExtras:
+		Strengths: + Strong vs Buildings\n+ Increased range
+		Weaknesses: – Slow projectiles\n– Increased cost
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: bjet.upgrade
+
 strategic.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -248,27 +264,28 @@ strategic.upgrade:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.gdi, gtek, anystrategy, ~!bombard.strat, ~!seek.strat, ~!hold.strat, ~techlevel.high
 		IconPalette: chrometd
-		Description: Upgrade depends on chosen strategy.\n\n• Bombardment: Bombardier upgrade\n• Seek & Destroy: TOW Missile upgrade\n• Hold the Line: Point Defense Systems upgrade
+		Description: Upgrade depends on chosen strategy.\n\n• Bombardment: Tomahawk Launcher research\n• Seek & Destroy: TOW Missile upgrade\n• Hold the Line: Point Defense Systems upgrade
 	Valued:
 		Cost: 1000
 	RenderSprites:
 		Image: strategic.upgrade
 
-bjet.upgrade:
+thwk.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
-		Name: Research: Bombardier
+		Name: Research: Tomahawk Launcher
 	Buildable:
 		BuildPaletteOrder: 30
+		IconPalette: chrometd
 		Prerequisites: ~player.gdi, gtek, ~bombard.strat, ~techlevel.high
-		Description: Allows construction of Bombardiers.\n\nReplaces: JumpJet Trooper
+		Description: Allows construction of Tomahawk Missile Launchers.
 	TooltipExtras:
-		Strengths: + Strong vs Buildingsn\n+ Increased range
-		Weaknesses: – Slow projectiles\n– Increased cost
+		Strengths: + Strong vs Buildings\n+ Extremely long range
+		Weaknesses: – Projectiles can be shot down\n– Slow rate of fire
 	Valued:
 		Cost: 1000
 	RenderSprites:
-		Image: bjet.upgrade
+		Image: thwk.upgrade
 
 tow.upgrade:
 	Inherits: ^Upgrade
@@ -534,6 +551,21 @@ tibcore.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: tibcore.upgrade
+
+decoy.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Decoy Projectors
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.nod, tmpl, ~techlevel.high
+		Description: Grant Buggies the ability to project decoys of themselves.\n\nUpgrades: Buggy
+	TooltipExtras:
+		Strengths: + Decoy projection ability
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: decoy.upgrade
 
 blacknapalm.upgrade:
 	Inherits: ^Upgrade
@@ -813,6 +845,21 @@ cryr.upgrade:
 	RenderSprites:
 		Image: cryr.upgrade
 
+optics.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Advanced Optics
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.allies, atek, ~techlevel.high
+		Description: Equips rangers with advanced optics which temporarily extends their vision.\n\nUpgrades: Ranger
+	TooltipExtras:
+		Strengths: + Rangers can temporarily increase their vision range
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: optics.upgrade
+
 pcan.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -1035,6 +1082,22 @@ regen.upgrade:
 		Cost: 1500
 	RenderSprites:
 		Image: regen.upgrade
+
+hyper.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Upgrade: Hypercharge
+	Buildable:
+		BuildPaletteOrder: 30
+		Prerequisites: ~player.scrin, scrt, ~techlevel.high
+		Description: Seekers and Lacerators gain Hypercharge ability, allow them to fire an uninterrupted barrage for a limited time.\n    After use, weapons are disabled and speed is reduced for a short time.\n\nUpgrades: Seeker\nUpgrades: Lacerator
+		IconPalette: chromes
+	TooltipExtras:
+		Strengths: + Hypercharge ability
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: hyper.upgrade
 
 stellar.upgrade:
 	Inherits: ^Upgrade

@@ -20,6 +20,8 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	public enum DefaultGroupCastBehaviour { ClosestOnly, All }
+
 	[Desc("Actor can deploy to be able to target a location and fire a weapon at that target.",
 		"Relies on the armament being paused if the ActiveCondition is not applied.")]
 	public class TargetedAttackAbilityInfo : PausableConditionalTraitInfo, Requires<AttackBaseInfo>
@@ -77,6 +79,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Desc("Ability type. When selecting a group, different types will not be activated together.")]
 		public readonly string Type = null;
+
+		[Desc("Use ClosestOnly so only the unit closest to the target will fire, or All so all will fire. Force firing will result in the opposite.")]
+		public readonly DefaultGroupCastBehaviour DefaultGroupCastBehaviour = DefaultGroupCastBehaviour.ClosestOnly;
 
 		public override object Create(ActorInitializer init) { return new TargetedAttackAbility(init, this); }
 	}
@@ -233,6 +238,9 @@ namespace OpenRA.Mods.CA.Traits
 
 				var target = underCursor != null ? Target.FromActor(underCursor) : Target.FromCell(world, cell);
 
+				if (!ability.Armament.Weapon.IsValidAgainst(target, world, self))
+					yield break;
+
 				var selectedOrderedByDistance = selectedWithAbility
 					.Where(a => !a.Actor.IsDead
 						&& a.Actor.Owner == self.Owner
@@ -240,15 +248,18 @@ namespace OpenRA.Mods.CA.Traits
 						&& a.Trait.IsAvailable)
 					.OrderBy(a => (a.Actor.CenterPosition - target.CenterPosition).Length);
 
-				if (mi.Modifiers.HasModifier(Modifiers.Ctrl))
-				{
-					foreach (var other in selectedOrderedByDistance)
-						yield return new Order("TargetedAttackAbilityAttack", other.Actor, target, mi.Modifiers.HasModifier(Modifiers.Shift));
-				}
-				else
+				var closestOnly = (info.DefaultGroupCastBehaviour == DefaultGroupCastBehaviour.ClosestOnly && !mi.Modifiers.HasModifier(Modifiers.Ctrl))
+					|| (info.DefaultGroupCastBehaviour == DefaultGroupCastBehaviour.All && mi.Modifiers.HasModifier(Modifiers.Ctrl));
+
+				if (closestOnly)
 				{
 					var closest = selectedOrderedByDistance.First();
 					yield return new Order("TargetedAttackAbilityAttack", closest.Actor, target, mi.Modifiers.HasModifier(Modifiers.Shift));
+				}
+				else
+				{
+					foreach (var s in selectedOrderedByDistance)
+						yield return new Order("TargetedAttackAbilityAttack", s.Actor, target, mi.Modifiers.HasModifier(Modifiers.Shift));
 				}
 			}
 		}
@@ -280,27 +291,21 @@ namespace OpenRA.Mods.CA.Traits
 			if (ability.Armament.MaxRange() == WDist.Zero)
 				yield break;
 
-			yield return new RangeCircleAnnotationRenderable(
-				self.CenterPosition + new WVec(0, self.CenterPosition.Z, 0),
-				ability.Armament.MaxRange(),
-				0,
-				info.CircleColor,
-				info.CircleWidth,
-				info.CircleBorderColor,
-				info.CircleBorderWidth);
-
-			foreach (var other in selectedWithAbility)
+			if (info.CircleWidth > 0)
 			{
-				if (other.Actor.IsInWorld && other.Trait.IsAvailable && self.Owner == self.World.LocalPlayer)
+				foreach (var other in selectedWithAbility)
 				{
-					yield return new RangeCircleAnnotationRenderable(
-						other.Actor.CenterPosition + new WVec(0, other.Actor.CenterPosition.Z, 0),
-						other.Trait.Armament.MaxRange(),
-						0,
-						other.Trait.Info.CircleColor,
-						other.Trait.Info.CircleWidth,
-						other.Trait.Info.CircleBorderColor,
-						other.Trait.Info.CircleBorderWidth);
+					if (other.Actor.IsInWorld && other.Trait.IsAvailable && self.Owner == self.World.LocalPlayer)
+					{
+						yield return new RangeCircleAnnotationRenderable(
+							other.Actor.CenterPosition + new WVec(0, other.Actor.CenterPosition.Z, 0),
+							other.Trait.Armament.MaxRange(),
+							0,
+							other.Trait.Info.CircleColor,
+							other.Trait.Info.CircleWidth,
+							other.Trait.Info.CircleBorderColor,
+							other.Trait.Info.CircleBorderWidth);
+					}
 				}
 			}
 

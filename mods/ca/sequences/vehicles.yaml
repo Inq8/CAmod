@@ -1645,6 +1645,10 @@ ifv:
 		Filename: bttnk.shp
 		Start: 32
 		Length: 32
+	psy:
+		Filename: ifvtur.shp
+		Start: 544
+		Length: 1
 	turret:
 		Filename: ifvtur.shp
 		Facings: 32
@@ -1697,6 +1701,38 @@ ifv:
 	turret11:
 		Filename: ifvtur.shp
 		Start: 352
+		Facings: 32
+		UseClassicFacings: True
+	turret12:
+		Filename: ifvtur.shp
+		Start: 384
+		Facings: 32
+		UseClassicFacings: True
+	turret13:
+		Filename: ifvtur.shp
+		Start: 416
+		Facings: 32
+		UseClassicFacings: True
+	turret14:
+		Filename: ifvtur.shp
+		Start: 448
+		Facings: 32
+		UseClassicFacings: True
+	turret15:
+		Filename: seek.shp
+		Start: 32
+		Facings: 32
+		UseClassicFacings: True
+		Offset: 0, 1
+	turret16:
+		Filename: ifvtur.shp
+		Start: 480
+		Facings: 32
+		UseClassicFacings: True
+		Offset: 0, 1
+	turret17:
+		Filename: ifvtur.shp
+		Start: 512
 		Facings: 32
 		UseClassicFacings: True
 	open:
@@ -2276,6 +2312,84 @@ apoci:
 	icon:
 		Filename: apociicon.shp
 
+
+reck:
+	Inherits: ifv
+	idle:
+		Filename: reck.shp
+	open:
+		Filename: reck.shp
+		Start: 3
+		Length: 1
+	unload:
+		Filename: reck.shp
+		Start: 3
+		Length: 1
+	icon:
+		Filename: reckicon.shp
+
+reck.destroyed:
+	Inherits: ifv.destroyed
+	idle:
+		Filename: reck.shp
+
+pbul:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: pbul.shp
+		Facings: 32
+		UseClassicFacings: True
+	turret:
+		Filename: ifvtur.shp
+		Facings: 32
+		UseClassicFacings: True
+	icon:
+		Filename: pbulicnh.shp
+
+mant:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: mant.shp
+		Facings: 32
+		Stride: 2
+		UseClassicFacings: True
+	move:
+		Filename: mant.shp
+		Facings: 32
+		Length: 2
+		Tick: 80
+		UseClassicFacings: True
+	muzzle:
+		Filename: lasermuzzle.shp
+		Length: *
+	icon:
+		Filename: manticnh.shp
+
+mant.destroyed:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: mant.shp
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512
+
+vipr:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: vipr.shp
+		Facings: 1
+		Start: 32
+	turret:
+		Filename: vipr.shp
+		Facings: 32
+		UseClassicFacings: True
+	muzzle:
+		Filename: lasermuzzle.shp
+		Frames: 0,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1
+		Length: *
+	icon:
+		Filename: vipricnh.shp
+
 rhin:
 	Inherits: ^VehicleOverlays
 	idle:
@@ -2321,3 +2435,36 @@ rhin.destroyed:
 		Start: 32
 		Facings: 32
 		UseClassicFacings: True
+
+thwk:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: thwk.shp
+		Facings: 32
+		UseClassicFacings: True
+	turret:
+		Filename: thwk.shp
+		Start: 32
+		Facings: 32
+		UseClassicFacings: True
+	turret-empty:
+		Filename: thwk.shp
+		Start: 64
+		Facings: 32
+		UseClassicFacings: True
+	icon:
+		Filename: thwkicnh.shp
+
+thwk.destroyed:
+	Inherits: ^VehicleOverlays
+	idle:
+		Filename: thwk.shp
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512
+	turret:
+		Filename: thwk.shp
+		Start: 64
+		Facings: 32
+		UseClassicFacings: True
+		ZOffset: -512

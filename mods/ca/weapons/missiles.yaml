@@ -356,10 +356,10 @@ DragonBATF.CYB.TibCore:
 HellfireAG:
 	Inherits: ^AirToGroundMissile
 	Range: 6c0
-	ReloadDelay: 90
+	ReloadDelay: 70
 	MinRange: 1c256
 	Burst: 4
-	BurstDelays: 14
+	BurstDelays: 10
 	Projectile: MissileCA
 		Speed: 256
 		HorizontalRateOfTurn: 40
@@ -375,16 +375,16 @@ HellfireAG:
 HellfireAG.Orca:
 	Inherits: HellfireAG
 	Report: orcamis1.aud
-	BurstDelays: 11
+	BurstDelays: 8
 
 HindRockets:
 	Inherits: HellfireAG
 	Range: 5c512
-	ReloadDelay: 100
+	ReloadDelay: 70
 	Report: hind-rocket1.aud, hind-rocket2.aud
 	ValidTargets: Ground
 	InvalidTargets: Infantry
-	BurstDelays: 15
+	BurstDelays: 12
 	Burst: 6
 	Warhead@1Dam: SpreadDamage
 		Damage: 3200
@@ -452,7 +452,7 @@ HellfireAA:
 	Inherits: ^AirToAirMissile
 	ReloadDelay: 60
 	Burst: 4
-	BurstDelays: 14
+	BurstDelays: 10
 	Warhead@1Dam: SpreadDamage
 		Damage: 3000
 	Warhead@smallDamage: SpreadDamage
@@ -461,8 +461,7 @@ HellfireAA:
 HellfireAA.Orca:
 	Inherits: HellfireAA
 	Report: orcamis1.aud
-	ReloadDelay: 68
-	BurstDelays: 11
+	BurstDelays: 8
 
 HellfireAA.Harrier:
 	Inherits: HellfireAA
@@ -565,7 +564,7 @@ APCTusk:
 Nike:
 	Inherits: ^AntiAirMissile
 	ReloadDelay: 20
-	Range: 8c0
+	Range: 7c512
 	Report: samshot1.aud
 	ValidTargets: Air, AirSmall, ICBM
 	Projectile: MissileCA
@@ -577,12 +576,13 @@ Nike:
 	Warhead@1Dam: SpreadDamage
 		Damage: 6750
 		Range: 0, 0c64, 0c256, 4c256
-		ValidTargets: Air, ICBM
+		ValidTargets: Air
 	Warhead@smallDamage: SpreadDamage
 		Damage: 6750
 		Range: 0, 0c64, 0c256, 2c256
 		Falloff: 100, 70, 30, 10
-		ValidTargets: AirSmall
+		ValidTargets: AirSmall, ICBM
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
 		ValidTargets: Air, AirSmall, ICBM, Ground, Water, Trees
 
@@ -821,6 +821,43 @@ TOW:
 			Concrete: 30
 			Light: 40
 
+EMPRockets:
+	Inherits: ^AntiGroundMissile
+	Range: 6c0
+	Report: pitbull-fire1.aud, pitbull-fire2.aud
+	ReloadDelay: 60
+	-Projectile:
+	Projectile: Bullet
+		Inaccuracy: 192
+		Image: dragon
+		Speed: 240
+		LaunchAngle: 70
+		TrailImage: smokey
+		Shadow: true
+		Blockable: false
+		ContrailLength: 17
+		ContrailStartColor: 6c6cd4aa
+		ContrailStartColorAlpha: 170
+		ContrailStartWidth: 0c48
+	Warhead@1Dam: SpreadDamage
+		Damage: 5000
+		Versus:
+			Wood: 40
+			Concrete: 30
+			Light: 60
+	Warhead@Emp: GrantExternalCondition
+		Range: 0c768
+		Duration: 40
+		Condition: empdisable
+		ValidTargets: Ground, Structure, Vehicle
+	Warhead@4Eff: CreateEffect
+		Explosions: med_explosion
+	Warhead@6Eff: CreateEffect
+		Image: sparks_overlay
+		Explosions: idle
+		ExplosionPalette: tseffect-ignore-lighting-alpha75
+		ImpactSounds: expnew16.aud
+
 TorpTube:
 	ReloadDelay: 100
 	Range: 9c0
@@ -962,7 +999,6 @@ SCUD:
 		Spread: 341
 		Damage: 3400
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
-		ValidTargets: Ground, Water, Trees
 		Versus:
 			None: 90
 			Wood: 80
@@ -994,10 +1030,9 @@ V3Weapon:
 	-Report:
 	ValidTargets: Ground, Trees, Water
 	Warhead@1Dam: SpreadDamage
-		Spread: 341
+		Spread: 448
 		Damage: 3400
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
-		ValidTargets: Ground, Water, Trees
 		Versus:
 			None: 90
 			Wood: 100
@@ -1007,7 +1042,7 @@ V3Weapon:
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
 	Warhead@antiHeavySplash: SpreadDamage
 		Damage: 3400
-		Spread: 448
+		Spread: 512
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
 		ValidTargets: Vehicle, Husk
 		Versus:
@@ -1019,6 +1054,30 @@ V3Weapon:
 			Brick: 0
 		DamageTypes: SmallExplosionDeath
 	Warhead@3Eff: CreateEffect
+		Explosions: building, building2
+		ValidTargets: Ground, Air, Ship, Trees, ICBM
+	Warhead@4EffWater: CreateEffect
+		Explosions: large_splash
+		ImpactSounds: splashl1.aud, splashl2.aud
+
+THWeapon:
+	Inherits: ^AntiGroundMissile
+	-Report:
+	ValidTargets: Ground, Trees, Water
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Damage: 3400
+		Falloff: 1000, 448, 192, 50, 18, 7, 0
+		ValidTargets: Ground, Water, Trees
+		Versus:
+			None: 60
+			Wood: 75
+			Light: 80
+			Heavy: 100
+			Concrete: 75
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
+	Warhead@3Eff: CreateEffect
+		ImpactSounds: xplobig4.aud
 		Explosions: building, building2
 		ValidTargets: Ground, Air, Ship, Trees, ICBM
 	Warhead@4EffWater: CreateEffect
@@ -1144,7 +1203,7 @@ HonestJohn:
 
 HonestJohn.UPG:
 	Inherits: HonestJohn
-	ReloadDelay: 140
+	ReloadDelay: 145
 	Warhead@1Dam: SpreadDamage
 		Damage: 1200
 		Versus:
@@ -1217,15 +1276,14 @@ BikeRockets.TibCore:
 		ContrailStartColor: 33aa00aa
 		ContrailStartColorAlpha: 170
 		ContrailStartWidth: 0c40
-		RangeLimit: 9c0
+		RangeLimit: 8c0
 	Report: tibcore1.aud, tibcore2.aud, tibcore3.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 4400
+		Damage: 4300
 		Versus:
-			Concrete: 70
 			Heavy: 34
 	Warhead@antiHeavySplash: SpreadDamage
-		Damage: 4400
+		Damage: 4300
 		Spread: 341
 		ValidTargets: Vehicle, Husk
 		Versus:
@@ -1255,9 +1313,9 @@ BikeRocketsAA.TibCore:
 		ContrailStartColorAlpha: 170
 		ContrailStartWidth: 0c40
 	Warhead@1Dam: SpreadDamage
-		Damage: 3960
+		Damage: 3870
 	Warhead@smallDamage: SpreadDamage
-		Damage: 3960
+		Damage: 3870
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: tibcorehit1.aud, tibcorehit2.aud, tibcorehit3.aud
 	Warhead@tib: CreateEffect
@@ -1746,7 +1804,7 @@ Rah66AA:
 		ExplosionPalette: caneon
 		Image: tibexplodeair
 		ImpactSounds: firebl3.aud
-		ValidTargets: Air
+		ValidTargets: Air, AirSmall
 		Inaccuracy: 682
 
 Rah66AA.BlackHand:
@@ -2011,6 +2069,52 @@ Rocket.P51.R:
 Rocket.P51.L:
 	Inherits: Rocket.P51.R
 	FirstBurstTargetOffset: -1024,613,0
+
+BlackEagleMissiles:
+	Inherits: Maverick
+	Report: beag-fire1.aud, beag-fire2.aud
+	-Burst:
+	-BurstDelays:
+	Projectile: MissileCA
+		Image: MISSILE
+	Warhead@1Dam: SpreadDamage
+		Damage: 22000
+		Versus:
+			Concrete: 75
+	Warhead@VeiledCondition: GrantExternalCondition
+		Range: 2c512
+		Duration: 175
+		Condition: gapveiled
+		ValidTargets: Infantry, Vehicle, Ship
+		ValidRelationships: Enemy, Neutral
+	Warhead@3Eff: CreateEffect
+		Explosions: idle
+		Image: veilblast
+		ExplosionPalette: effect
+		ImpactSounds: veilblast.aud
+		ValidTargets: Ground, Air, Ship, Trees
+
+BlackEagleMissilesAA:
+	Inherits: MaverickAA
+	Report: beag-fire1.aud, beag-fire2.aud
+	-Burst:
+	-BurstDelays:
+	Projectile: MissileCA
+		Image: MISSILE
+	Warhead@1Dam: SpreadDamage
+		Damage: 12000
+	Warhead@VeiledCondition: GrantExternalCondition
+		Range: 2c512
+		Duration: 175
+		Condition: gapveiled
+		ValidTargets: Air, AirSmall
+		ValidRelationships: Enemy, Neutral
+	Warhead@3Eff: CreateEffect
+		Explosions: idle
+		Image: veilblast
+		ExplosionPalette: effect
+		ImpactSounds: veilblast.aud
+		ValidTargets: Ground, Air, Ship, Trees
 
 RocketShells:
 	Inherits: JuggernautGun

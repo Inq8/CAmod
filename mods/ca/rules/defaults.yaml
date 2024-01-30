@@ -371,7 +371,7 @@
 	RejectsOrders@BERSERK:
 		RequiresCondition: berserkactive
 	GrantCondition@BERSERK:
-		RequiresCondition: berserk && !invulnerability
+		RequiresCondition: berserk
 		Condition: berserkactive
 
 ^Frenzy:
@@ -410,6 +410,16 @@
 	Inherits: ^Frenzy
 	WithIdleOverlay@FRENZY:
 		Sequence: infantry
+
+^Inspirable:
+	ExternalCondition@Inspiration:
+		Condition: inspiration
+	ReloadDelayMultiplier@Inspiration:
+		RequiresCondition: inspiration
+		Modifier: 90
+	SpeedMultiplier@Inspiration:
+		RequiresCondition: inspiration
+		Modifier: 150
 
 ^Chronoshiftable:
 	ChronoshiftableCA:
@@ -578,21 +588,33 @@
 	PowerMultiplier@POWERDRAIN:
 		Modifier: 0
 		RequiresCondition: powerdrain
+	ExternalCondition@DiscPowerDrain:
+		Condition: discpowerdrain
+	Power@DiscPowerDrain:
+		Amount: -10000
+		RequiresCondition: discpowerdrain
 	WithColoredOverlay@POWERDRAIN:
-		RequiresCondition: powerdrain
+		RequiresCondition: powerdrain || discpowerdrain
 		Color: 000000b4
 	WithDecoration@POWERDRAIN:
 		Image: poweroff
 		Sequence: offline
 		Palette: chrome
-		RequiresCondition: powerdrain
+		RequiresCondition: powerdrain || discpowerdrain
 		Position: Center
 
-^PowerDrainableRadar:
-	Inherits: ^PowerDrainable
-	GrantCondition@POWERDRAINJAMMED:
-		Condition: jammed
-		RequiresCondition: powerdrain
+^ResourceDrainable:
+	Targetable@ResourceDrain:
+		TargetTypes: ResourceDrainable
+	ExternalCondition@ResourceDrain:
+		Condition: resourcedrain
+	CashTrickler@ResourceDrain:
+		Interval: 50
+		Amount: -30
+		RequiresCondition: resourcedrain
+	WithColoredOverlay@ResourceDrain:
+		RequiresCondition: resourcedrain
+		Color: ffff0022
 
 ^GDIUpgrade:
 	GrantConditionOnPrerequisite@HOLD:
@@ -1406,7 +1428,7 @@
 ^Veilable:
 	RangeMultiplier@VEILED:
 		Modifier: 80
-		RequiresCondition: veiled
+		RequiresCondition: veiled && !gapveiled
 	RangeMultiplier@GAPVEILED:
 		Modifier: 60
 		RequiresCondition: gapveiled
@@ -1455,7 +1477,9 @@
 		Condition: c4seal
 		ProgressBarColor: FF000080
 		RequiresCondition: !invulnerability
-	Targetable@c4:
+	Targetable@C4Plantable:
+		TargetTypes: C4Plantable
+	Targetable@C4Attached:
 		TargetTypes: C4Attached
 		RequiresCondition: c4 || c4seal
 	WithDecoration@c4:
@@ -1487,7 +1511,9 @@
 		Condition: tnt
 		ProgressBarColor: FF000080
 		AttachLimit: 10
-	Targetable@tnt:
+	Targetable@TNTPlantable:
+		TargetTypes: TNTPlantable
+	Targetable@TNTAttached:
 		TargetTypes: TNTAttached
 		RequiresCondition: tnt
 	WithDecoration@tnt:
@@ -1582,6 +1608,25 @@
 		Delay: 20
 		RequiresCondition: hacked && !restoring
 
+^TechLockable:
+	InfiltrateForTimedCondition@TechLock:
+		Condition: tech-locked
+		Duration: 1500
+		Types: TechLockInfiltrate
+		InfiltrationNotification: BuildingInfiltrated
+		InfiltratedNotification: BaseAttack
+		ShowSelectionBar: true
+	WithDecoration@TechLock:
+		Image: hacked
+		Sequence: techlocked
+		RequiresCondition: tech-locked && !hacked
+		Position: Center
+		Palette: effect
+		ValidRelationships: Ally, Neutral, Enemy
+	Targetable@TechLock:
+		RequiresCondition: !being-warped
+		TargetTypes: TechLockInfiltrate
+
 ^GeneticallyMutatable:
 	ExternalCondition@GMUT:
 		Condition: geneticmutation
@@ -1634,18 +1679,15 @@
 	AutoTarget:
 		AttackAnythingCondition: stance-attackanything
 	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !stance-attackanything
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
 		InvalidTargets: NoAutoTarget, WaterStructure
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: stance-attackanything
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense, Mine
+		ValidTargets: Structure, Mine
 		InvalidTargets: NoAutoTarget
 
 ^AutoTargetGroundAssaultMove:
 	Inherits: ^AutoTargetGround
-	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !stance-attackanything && !assault-move
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: stance-attackanything || assault-move
 	AttackMove:
@@ -1654,12 +1696,6 @@
 ^AutoTargetGroundAssaultMovePrioritizeVehicles:
 	Inherits: ^AutoTargetGroundAssaultMove
 	AutoTargetPriority@DEFAULTVEH:
-		RequiresCondition: !stance-attackanything && !assault-move
-		ValidTargets: Vehicle, Ship
-		InvalidTargets: NoAutoTarget
-		Priority: 10
-	AutoTargetPriority@ATTACKANYTHINGVEH:
-		RequiresCondition: stance-attackanything || assault-move
 		ValidTargets: Vehicle, Ship
 		InvalidTargets: NoAutoTarget
 		Priority: 10
@@ -1667,12 +1703,6 @@
 ^AutoTargetGroundAssaultMovePrioritizeInfantry:
 	Inherits: ^AutoTargetGroundAssaultMove
 	AutoTargetPriority@DEFAULTINF:
-		RequiresCondition: !stance-attackanything && !assault-move
-		ValidTargets: Infantry
-		InvalidTargets: NoAutoTarget
-		Priority: 10
-	AutoTargetPriority@ATTACKANYTHINGINF:
-		RequiresCondition: stance-attackanything || assault-move
 		ValidTargets: Infantry
 		InvalidTargets: NoAutoTarget
 		Priority: 10
@@ -1686,12 +1716,7 @@
 	AutoTarget:
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Air, AirSmall
-		InvalidTargets: NoAutoTarget, AirLowPriority
-		Priority: 10
-	AutoTargetPriority@DEFAULTLOW:
-		ValidTargets: AirLowPriority
 		InvalidTargets: NoAutoTarget
-		Priority: 0
 
 ^AutoTargetAirICBM:
 	Inherits: ^AutoTargetAir
@@ -1702,45 +1727,37 @@
 	AutoTarget:
 		AttackAnythingCondition: stance-attackanything
 	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !stance-attackanything
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Defense
-		InvalidTargets: NoAutoTarget, WaterStructure, AirLowPriority
+		InvalidTargets: NoAutoTarget, WaterStructure
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: stance-attackanything
-		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Structure, Defense
+		ValidTargets: Structure, Mine
 		InvalidTargets: NoAutoTarget
 
 ^AutoTargetAllAssaultMove:
 	Inherits: ^AutoTargetAll
-	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !stance-attackanything && !assault-move
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: stance-attackanything || assault-move
 	AttackMove:
 		AssaultMoveCondition: assault-move
 
-^AutoTargetAllAssaultMoveAntiAir:
+^AutoTargetAllAssaultMovePrioritizeGround:
+	Inherits: ^AutoTargetAllAssaultMove
+	AutoTargetPriority@DEFAULT:
+		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
+	AutoTargetPriority@ATTACKANYTHING:
+		ValidTargets: Structure, Mine
+	AutoTargetPriority@DeprioritizedAir:
+		ValidTargets: Air, AirSmall
+		InvalidTargets: NoAutoTarget
+		Priority: 0
+
+^AutoTargetAllAssaultMovePrioritizeAir:
 	Inherits: ^AutoTargetAllAssaultMove
 	AutoTargetPriority@DEFAULTAA:
-		RequiresCondition: !stance-attackanything && !assault-move
 		ValidTargets: Air, AirSmall
-		InvalidTargets: NoAutoTarget, AirLowPriority
-		Priority: 10
-	AutoTargetPriority@ATTACKANYTHINGAA:
-		RequiresCondition: stance-attackanything || assault-move
-		ValidTargets: Air, AirSmall
-		InvalidTargets: NoAutoTarget, AirLowPriority
-		Priority: 10
-	AutoTargetPriority@DEFAULTAALOW:
-		RequiresCondition: !stance-attackanything && !assault-move
-		ValidTargets: AirLowPriority
 		InvalidTargets: NoAutoTarget
-		Priority: 0
-	AutoTargetPriority@ATTACKANYTHINGAALOW:
-		RequiresCondition: stance-attackanything || assault-move
-		ValidTargets: AirLowPriority
-		InvalidTargets: NoAutoTarget
-		Priority: 0
+		Priority: 10
 
 ^AutoTargetAllNavalAssaultMove:
 	Inherits: ^AutoTargetAllAssaultMove
@@ -1765,6 +1782,11 @@
 		Multiplier: 85
 		Prerequisites: indp, indp.upgrade, !indplowpower
 
+^OilRefCostReduction:
+	ProductionCostMultiplier@OilRef:
+		Multiplier: 90
+		Prerequisites: oilr
+
 ^TDPalette:
 	RenderSprites:
 		PlayerPalette: playertd
@@ -1787,13 +1809,14 @@
 	Inherits@18: ^Suppressable
 	Inherits@19: ^CrateCloak
 	Inherits@20: ^WeaponJammable
-	Inherits@C4: ^C4Plantable
-	Inherits@TNT: ^TNTPlantable
+	Inherits@C4Plantable: ^C4Plantable
+	Inherits@TNTPlantable: ^TNTPlantable
 	Inherits@gflash: ^GreenFlash
 	Inherits@rflash: ^RedFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@bounty: ^GlobalBounty
 	Inherits@production: ^ProductionEfficiencyBoost
+	Inherits@oilcost: ^OilRefCostReduction
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@chrono: ^Chronoshiftable
 	Inherits@mind: ^MindControllable
@@ -1814,10 +1837,14 @@
 	Selectable:
 		Bounds: 1024, 1024
 	Targetable:
+		TargetTypes: Ground, Vehicle
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Vehicle, C4, TNT
+	Targetable@C4Plantable:
+		RequiresCondition: !parachute && !being-warped
+	Targetable@TNTPlantable:
+		RequiresCondition: !parachute && !being-warped
 	Targetable@REPAIR:
-		RequiresCondition: !parachute && damaged && !being-warped && !repair-cooldown
+		RequiresCondition: !parachute && !being-warped && damaged && !repair-cooldown
 		TargetTypes: Repair
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
@@ -1975,13 +2002,14 @@
 	Inherits@15: ^Suppressable
 	Inherits@16: ^CrateCloak
 	Inherits@CLOAK: ^Cloakable
-	Inherits@TNT: ^TNTPlantable
+	Inherits@TNTPlantable: ^TNTPlantable
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@mind: ^MindControllable
 	Inherits@GMUT: ^GeneticallyMutatable
 	Inherits@handicaps: ^PlayerHandicaps
 	Inherits@BINOS: ^BinoUpgradeInfantry
+	Inherits@oilcost: ^OilRefCostReduction
 	Inherits@ionsurge: ^IonSurgableInfantry
 	Inherits@lchrheal: ^LeecherHealable
 	RenderSprites:
@@ -2029,9 +2057,13 @@
 		DecorationBounds: 512, 725, 0, -256
 	Targetable:
 		RequiresCondition: !parachute && !being-warped
-		TargetTypes: Ground, Infantry, Disguise, TNT
+		TargetTypes: Ground, Infantry
+	Targetable@SpyDisguise:
+		TargetTypes: SpyDisguise
+	Targetable@TNTPlantable:
+		RequiresCondition: !parachute && !being-warped
 	Targetable@HEAL:
-		RequiresCondition: !parachute && damaged && !being-warped
+		RequiresCondition: !parachute && !being-warped && damaged
 		TargetTypes: Heal
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
@@ -2243,8 +2275,9 @@
 	Inherits: ^Soldier
 	Inherits@CYBORGUPG: ^NodCyborgUpgrade
 	Inherits@SLOWABLE: ^Slowable
-	Targetable:
-		TargetTypes: Ground, Infantry, Disguise, Cyborg
+	Targetable@Cyborg:
+		TargetTypes: Cyborg
+		RequiresCondition: !parachute && !being-warped
 	ExternalCondition@ONTIB:
 		Condition: on-tib
 	ChangesHealth@THEAL:
@@ -2377,11 +2410,13 @@
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableCombatUnit
 	Inherits@production: ^ProductionEfficiencyBoost
+	Inherits@oilcost: ^OilRefCostReduction
 	Inherits@chrono: ^Chronoshiftable
 	Inherits@mind: ^MindControllable
 	Inherits@handicaps: ^PlayerHandicaps
 	Inherits@atomize: ^Atomizable
-	Inherits@C4: ^C4Plantable
+	Inherits@C4Plantable: ^C4Plantable
+	Inherits@TNTPlantable: ^TNTPlantable
 	Inherits@minidrone: ^MiniDroneAttachable
 	Huntable:
 	RenderSprites:
@@ -2396,6 +2431,10 @@
 		Bounds: 1024, 1024
 	Targetable:
 		TargetTypes: Ground, Water, Ship
+		RequiresCondition: !being-warped
+	Targetable@C4Plantable:
+		RequiresCondition: !being-warped
+	Targetable@TNTPlantable:
 		RequiresCondition: !being-warped
 	Targetable@REPAIR:
 		RequiresCondition: damaged && !being-warped
@@ -2589,12 +2628,12 @@
 		StartColorUsePlayerColor: false
 		ZOffset: -512
 		StartColor: FFFFFF80
-		StartColorAlpha: 128
+		StartColorAlpha: 96
 	Contrail@2:
 		StartColorUsePlayerColor: false
 		ZOffset: -512
 		StartColor: FFFFFF80
-		StartColorAlpha: 128
+		StartColorAlpha: 96
 	GpsRadarDot:
 		Sequence: Plane
 
@@ -2608,11 +2647,13 @@
 	Inherits@9: ^BotAirProductionBonus
 	Inherits@10: ^Chillable
 	Inherits@11: ^Suppressable
+	Inherits@12: ^Veilable
 	Inherits@CRATE-CLOAK: ^CrateCloak
 	Inherits@gflash: ^GreenFlash
 	Inherits@rflash: ^RedFlash
 	Inherits@wflash: ^WhiteFlash
 	Inherits@production: ^ProductionEfficiencyBoost
+	Inherits@oilcost: ^OilRefCostReduction
 	Inherits@C4: ^C4Plantable
 	Inherits@TNT: ^TNTPlantable
 	Inherits@ionsurge: ^IonSurgable
@@ -2638,14 +2679,18 @@
 		RequiresCondition: empdisable && cruising
 	Targetable@GROUND:
 		RequiresCondition: !airborne && !being-warped
-		TargetTypes: Ground, Vehicle, C4, TNT
+		TargetTypes: Ground, Vehicle
+	Targetable@C4Plantable:
+		RequiresCondition: !airborne && !being-warped
+	Targetable@TNTPlantable:
+		RequiresCondition: !airborne && !being-warped
 	Targetable@AIRBORNE:
 		RequiresCondition: airborne && !being-warped
 	Targetable@REPAIR:
 		RequiresCondition: !airborne && damaged && !being-warped
-	Targetable@c4:
+	Targetable@C4Attached:
 		RequiresCondition: c4 && !airborne
-	Targetable@tnt:
+	Targetable@TNTAttached:
 		RequiresCondition: tnt && !airborne
 	ProductionCostMultiplier@EagleBonus:
 		Multiplier: 90
@@ -2712,7 +2757,7 @@
 	Armor:
 		Type: None
 	Targetable:
-		TargetTypes: Ground, DemoTruck, Barrel, NoAutoTarget
+		TargetTypes: Ground, Barrel, NoAutoTarget
 	MapEditorData:
 		Categories: Decoration
 	Building:
@@ -2727,16 +2772,14 @@
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^IronCurtainable
 	Inherits@3: ^SpriteActor
-	Inherits@C4: ^C4Plantable
-	Inherits@TNT: ^TNTPlantable
+	Inherits@C4Plantable: ^C4Plantable
+	Inherits@TNTPlantable: ^TNTPlantable
 	Inherits@shape: ^1x1Shape
 	Inherits@bounty: ^GlobalBounty
 	Inherits@selection: ^SelectableBuilding
 	Inherits@handicaps: ^PlayerHandicaps
 	Targetable:
 		TargetTypes: Ground, Structure, Building
-	Targetable@EXPLOSIVES:
-		TargetTypes: C4, TNT, DetonateAttack
 	Building:
 		Dimensions: 1,1
 		Footprint: x
@@ -2791,6 +2834,7 @@
 	Inherits@wflash: ^WhiteFlash
 	Inherits@gflash: ^GreenFlash
 	Inherits@HACKABLE: ^Hackable
+	Inherits@oilcost: ^OilRefCostReduction
 	WithPalettedOverlay@IRONCURTAIN:
 		RequiresCondition: invulnerability && !forceshield
 		Palette: invuln
@@ -2844,7 +2888,9 @@
 		RequiresCondition: !being-warped
 	Targetable:
 		RequiresCondition: !being-warped
-	Targetable@EXPLOSIVES:
+	Targetable@C4Plantable:
+		RequiresCondition: !being-warped
+	Targetable@TNTPlantable:
 		RequiresCondition: !being-warped
 	Targetable@HACKCAPTURABLE:
 		TargetTypes: HackCapturable
@@ -2901,8 +2947,6 @@
 		Bounds: 1024, 1024
 	Targetable:
 		TargetTypes: Ground, Structure, Defense
-	Targetable@EXPLOSIVES:
-		TargetTypes: C4, TNT, DetonateAttack
 	DetectCloaked:
 		DetectionTypes: Cloak, AirCloak
 		Range: 6c0
@@ -2986,6 +3030,7 @@
 	Inherits@1: ^ExistsInWorld
 	Inherits@2: ^SpriteActor
 	Inherits@shape: ^1x1Shape
+	Inherits@oilcost: ^OilRefCostReduction
 	CustomRadarColor:
 		Color: EEEEEE
 	Inherits@3: ^Cloakable
@@ -3015,7 +3060,7 @@
 	LineBuildNode:
 		Types: wall
 	Targetable:
-		TargetTypes: Ground, DetonateAttack, Wall, NoAutoTarget
+		TargetTypes: Ground, Wall, NoAutoTarget
 	-GivesExperienceCA:
 	WithWallSpriteBody:
 	Sellable:
@@ -3112,8 +3157,8 @@
 		Duration: 125
 
 ^InfiltratableFake:
-	Targetable:
-		TargetTypes: Ground, Structure, C4, TNT, DetonateAttack, SpyInfiltrate, SabInfiltrate
+	Targetable@Infiltration:
+		TargetTypes: SpyInfiltrate, SabInfiltrate
 	InfiltrateForDecoration:
 		Types: SpyInfiltrate, SabInfiltrate
 		RequiresSelection: true
@@ -3133,7 +3178,7 @@
 	Tooltip:
 		Name: Ammo Box
 	Targetable:
-		TargetTypes: Ground, C4, TNT, DetonateAttack, Structure, NoAutoTarget
+		TargetTypes: Ground, Structure, NoAutoTarget
 	Armor:
 		Type: Light
 	MapEditorData:
@@ -3383,12 +3428,12 @@
 		StartColorUsePlayerColor: false
 		ZOffset: -512
 		StartColor: FFFFFF80
-		StartColorAlpha: 128
+		StartColorAlpha: 96
 	Contrail@2:
 		StartColorUsePlayerColor: false
 		ZOffset: -512
 		StartColor: FFFFFF80
-		StartColorAlpha: 128
+		StartColorAlpha: 96
 
 ^PlaneHuskTD:
 	Inherits: ^PlaneHusk
@@ -3763,6 +3808,8 @@
 		Cost: 400
 	Passenger:
 		CustomPipType: yellow
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
 	InstantlyRepairs:
 	RepairsBridges:
 		EnterBehaviour: Exit
@@ -3884,12 +3931,8 @@
 	Inherits@4: ^SpriteActor
 	Armor:
 		Type: Aircraft
-	Targetable@GROUND:
+	Targetable:
 		TargetTypes: ICBM
-		RequiresCondition: !airborne
-	Targetable@AIRBORNE:
-		TargetTypes: ICBM
-		RequiresCondition: airborne
 	HiddenUnderFog:
 		Type: GroundPosition
 	Tooltip:
@@ -3984,11 +4027,11 @@
 		CancelledAudio: Cancelled
 	Production@SQBLD:
 		Produces: BuildingSQ, DefenseSQ
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: !global-multiqueue
 	Production@MQBLD:
 		Produces: BuildingMQ, DefenseMQ
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: global-multiqueue
 	ProductionBar@SQBLD:
 		ProductionType: BuildingSQ
@@ -4024,11 +4067,11 @@
 		CancelledAudio: Cancelled
 	Production@SQINF:
 		Produces: InfantrySQ, Cyborg, Soldier, ParadropInfantry
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: !global-multiqueue
 	Production@MQINF:
 		Produces: InfantryMQ, CyborgMQ, Cyborg, Soldier, ParadropInfantry
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: global-multiqueue
 	ProductionBar@SQINF:
 		ProductionType: InfantrySQ
@@ -4094,11 +4137,11 @@
 		CancelledAudio: Cancelled
 	Production@SQVEH:
 		Produces: VehicleSQ, ParadropVehicle, Powersuit
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: !global-multiqueue
 	Production@MQVEH:
 		Produces: VehicleMQ, ParadropVehicle, Powersuit
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: global-multiqueue
 	ProductionBar@SQVEH:
 		ProductionType: VehicleSQ
@@ -4132,11 +4175,11 @@
 		CancelledAudio: Cancelled
 	Production@SQNAV:
 		Produces: ShipSQ, Boat, Submarine
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: !global-multiqueue
 	Production@MQNAV:
 		Produces: ShipMQ, Boat, Submarine
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: global-multiqueue
 	ProductionBar@SQNAV:
 		ProductionType: ShipSQ
@@ -4149,7 +4192,7 @@
 	Inherits@QUEUEUPDATER: ^QueueUpdater
 	Production@UPG:
 		Produces: Upgrade
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 	ProductionBar@UPG:
 		ProductionType: Upgrade
 	Exit@UPG:
@@ -4178,11 +4221,11 @@
 		Prerequisite: aircraft.any
 	Production@SQAIR:
 		Produces: AircraftSQ, Plane, Helicopter
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: !global-multiqueue
 	Production@MQAIR:
 		Produces: AircraftMQ, Plane, Helicopter
-		PauseOnCondition: forceshield || invulnerability || being-warped
+		PauseOnCondition: forceshield || being-warped
 		RequiresCondition: global-multiqueue
 	ProductionBar@SQAIR:
 		ProductionType: AircraftSQ

@@ -86,6 +86,9 @@ explosion:
 		Filename: wpifpif.shp
 	small_explosion:
 		Filename: veh-hit3.shp
+	small_air_explosion:
+		Filename: veh-hit2.shp
+		Scale: 0.5
 	med_explosion:
 		Filename: veh-hit2.shp
 	flak_explosion_ground:
@@ -699,6 +702,9 @@ pips:
 	pip-seal:
 		Filename: pip-seal.shp
 		Offset: -2, 0
+	pip-cmsr:
+		Filename: pip-cmsr.shp
+		Offset: -2, 0
 	pip-empty:
 		Filename: pips2.shp
 	pip-green:
@@ -822,6 +828,12 @@ v3:
 		Filename: v3.shp
 		Facings: 32
 		ZOffset: 1023
+
+th:
+	idle:
+		Filename: thwkm.shp
+		Facings: 32
+		ZOffset: 2046
 
 thawk:
 	idle:
@@ -997,8 +1009,21 @@ smokey:
 smokey2:
 	idle:
 		Filename: smokey2.shp
-		tick: 200
 		Length: *
+		ZOffset: 1023
+
+smokey3:
+	idle:
+		Filename: smokey3.shp
+		Length: *
+		Frames: 0, 1, 2, 4, 5, 6, 7, 8, 9, 6, 5, 6, 7, 8, 9, 10, 11, 12
+		ZOffset: 1023
+
+icbmsmoke:
+	idle:
+		Filename: icbmsmoke.shp
+		Length: *
+		Frames: 0, 1, 2, 4, 5, 6, 7, 8, 4, 6, 5, 6, 7, 8, 9, 10
 		ZOffset: 1023
 
 firetrail:
@@ -1380,6 +1405,18 @@ empbomblet:
 		Length: *
 		ZOffset: 1023
 
+medbomb:
+	idle:
+		Filename: medbomb.shp
+		Length: *
+		ZOffset: 1023
+
+bigbomb:
+	idle:
+		Filename: bigbomb.shp
+		Length: *
+		ZOffset: 1023
+
 parabomb:
 	open:
 		Filename: parabomb.shp
@@ -1400,12 +1437,6 @@ tbomb:
 		Filename: tbomb.shp
 		Start: 8
 		Length: 5
-		ZOffset: 1023
-
-b2bomb:
-	idle:
-		Filename: b2bomb.shp
-		Length: *
 		ZOffset: 1023
 
 smokland:
@@ -2855,6 +2886,12 @@ hacked:
 		Start: 4
 		Length: 2
 		Tick: 250
+	techlocked:
+		Filename: hacked.shp
+		ZOffset: 2047
+		Start: 6
+		Length: 2
+		Tick: 500
 
 hacking:
 	hacking:
@@ -2893,6 +2930,21 @@ dbrissm:
 	10:
 		Filename: dbrs10sm.shp
 
+dirt:
+	Defaults:
+		ZOffset: 1023
+		Length: *
+	1:
+		Filename: dirt.shp
+	2:
+		Filename: dirt.shp
+	3:
+		Filename: dirt.shp
+	4:
+		Filename: dirt.shp
+	5:
+		Filename: dirt.shp
+
 squad.airborne:
 	icon:
 		Filename: u3icon.shp
@@ -2915,3 +2967,29 @@ microwavehit:
 		Length: *
 		ZOffset: 2047
 		BlendMode: Additive
+
+opticsactive:
+	idle:
+		Filename: opticsactive.shp
+		Tick: 500
+		Length: *
+
+redplasmatorp:
+	Defaults:
+		IgnoreWorldTint: true
+		Alpha: 0.95
+	idle:
+		Filename: redplasmatorp.shp
+		Length: 5
+		Tick: 40
+		ZOffset: 2048
+
+veilblast:
+	Defaults:
+		IgnoreWorldTint: true
+		Length: *
+		Tick: 40
+		ZOffset: 2047
+		Filename: veilblast.shp
+		Alpha: 0.8
+	idle:

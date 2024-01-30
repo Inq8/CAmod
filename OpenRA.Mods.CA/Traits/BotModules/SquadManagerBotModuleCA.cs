@@ -181,6 +181,11 @@ namespace OpenRA.Mods.CA.Traits
 			return IsValidEnemyUnit(a) && !a.Info.HasTraitInfo<AircraftInfo>();
 		}
 
+		public bool IsPreferredEnemyBuilding(Actor a)
+		{
+			return IsValidEnemyUnit(a) && a.Info.HasTraitInfo<BuildingInfo>();
+		}
+
 		public bool IsPreferredEnemyAircraft(Actor a)
 		{
 			return IsValidEnemyUnit(a) && a.Info.HasTraitInfo<AircraftInfo>() && a.Info.HasTraitInfo<AttackBaseInfo>();
@@ -210,12 +215,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		public bool IsNotHiddenUnit(Actor a)
 		{
-			var visModifiers = a.TraitsImplementing<IVisibilityModifier>();
-			foreach (var v in visModifiers)
-				if (!v.IsVisible(a, Player))
-					return false;
-
-			return true;
+			return a.CanBeViewedByPlayer(Player);
 		}
 
 		protected override void Created(Actor self)
@@ -246,7 +246,7 @@ namespace OpenRA.Mods.CA.Traits
 		internal Actor FindClosestEnemy(WPos pos)
 		{
 			var units = World.Actors.Where(IsPreferredEnemyUnit);
-			return units.Where(IsNotHiddenUnit).ClosestTo(pos) ?? units.ClosestTo(pos);
+			return units.Where(IsNotHiddenUnit).ClosestTo(pos) ?? units.Where(IsPreferredEnemyBuilding).ClosestTo(pos) ?? units.ClosestTo(pos);
 		}
 
 		internal Actor FindHighValueTarget(WPos pos)
