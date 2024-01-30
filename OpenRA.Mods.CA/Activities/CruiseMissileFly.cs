@@ -35,10 +35,18 @@ namespace OpenRA.Mods.CA.Activities
 
 		public CruiseMissileFly(Actor self, Target t, CruiseMissile cm, WDist maxAltitude, WDist maxTargetMovement, bool trackTarget)
 		{
-			this.cm = cm;
+			if (cm == null)
+				this.cm = self.Trait<CruiseMissile>();
+			else
+				this.cm = cm;
+
+			if (t.Type == TargetType.Invalid && t.Actor != null && t.Actor.IsDead)
+				target = Target.FromPos(t.Actor.CenterPosition);
+			else
+				target = t;
+
 			launchPos = currentPos = self.CenterPosition;
-			initTargetPos = targetPos = t.CenterPosition;
-			target = t;
+			initTargetPos = targetPos = target.CenterPosition;
 			length = Math.Max((targetPos - launchPos).Length / this.cm.Info.Speed, 1);
 			facing = (targetPos - launchPos).Yaw;
 			cm.Facing = GetEffectiveFacing();
