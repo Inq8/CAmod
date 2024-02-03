@@ -1008,6 +1008,7 @@ GTNK.squad:
 		Attributes: • Can crush concrete walls\n• Self repairs to 50% out of combat\n• Explodes and leaves radiation on death
 	Tooltip:
 		Name: Atomic Mammoth Tank
+	-SpawnActorOnDeath:
 	Explodes@ATOMICUPGRADE:
 		Weapon: UnitExplodeIraqTank
 		EmptyWeapon: UnitExplodeIraqTank
@@ -1067,6 +1068,16 @@ GTNK.squad:
 	-Upgradeable@ATOMIC:
 	-Upgradeable@ERAD:
 	-AutoTargetPriority@DeprioritizedAir:
+	Voiced:
+		VoiceSet: EradVoice
+	AttackTurreted:
+		Voice: Attack
+	AttackMove:
+		Voice: Attack
+	Passenger:
+		Voice: Move
+	Mobile:
+		Voice: Move
 
 4TNK.ERADATOMIC:
 	Inherits: 4TNK.ATOMIC
@@ -1094,6 +1105,16 @@ GTNK.squad:
 	-Armament@SECONDARY:
 	-ReplacedInQueue:
 	-Upgradeable@ERADATOMIC:
+	Voiced:
+		VoiceSet: EradVoice
+	AttackTurreted:
+		Voice: Attack
+	AttackMove:
+		Voice: Attack
+	Passenger:
+		Voice: Move
+	Mobile:
+		Voice: Move
 
 ARTY:
 	Inherits: ^Vehicle
