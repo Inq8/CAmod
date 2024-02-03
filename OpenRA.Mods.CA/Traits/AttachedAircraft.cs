@@ -33,7 +33,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		protected override void Created(Actor self)
 		{
-			var newPosition = new WPos(self.CenterPosition.X, self.CenterPosition.X, Info.CruiseAltitude.Length);
+			var newPosition = new WPos(self.CenterPosition.X, self.CenterPosition.Y, Info.CruiseAltitude.Length);
 			SetPosition(self, newPosition);
 			SetCenterPosition(self, newPosition);
 			base.Created(self);

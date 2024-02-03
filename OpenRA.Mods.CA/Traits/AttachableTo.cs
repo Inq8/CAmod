@@ -30,15 +30,17 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new AttachableTo(init, this); }
 	}
 
-	public class AttachableTo : INotifyKilled, INotifyOwnerChanged, INotifyActorDisposing, IResolveOrder, INotifyStanceChanged,
-		INotifyAddedToWorld, INotifyRemovedFromWorld, INotifyCreated
+	public class AttachableTo : INotifyKilled, INotifyOwnerChanged, IResolveOrder, INotifyStanceChanged,
+		INotifyExitedCargo, INotifyEnteredCargo, INotifyCreated, INotifyTransform, INotifyRemovedFromWorld, INotifyAddedToWorld
 	{
 		public readonly AttachableToInfo Info;
 		public Carryable Carryable { get; private set; }
 		readonly Actor self;
 		readonly HashSet<Attachable> attached = new HashSet<Attachable>();
+		readonly HashSet<Attachable> attachedToTransfer = new HashSet<Attachable>();
 		Dictionary<string, int> attachedCounts = new Dictionary<string, int>();
 		Dictionary<string, int> limitTokens = new Dictionary<string, int>();
+		bool reserved;
 
 		public AttachableTo(ActorInitializer init, AttachableToInfo info)
 		{
@@ -54,6 +56,15 @@ namespace OpenRA.Mods.CA.Traits
 
 		public WPos CenterPosition { get { return self.CenterPosition; } }
 		public bool IsInWorld { get { return self.IsInWorld; } }
+
+		public bool Reserve()
+		{
+			if (reserved)
+				return false;
+
+			reserved = true;
+			return reserved;
+		}
 
 		void INotifyCreated.Created(Actor self)
 		{
@@ -88,11 +99,6 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		void INotifyActorDisposing.Disposing(Actor self)
-		{
-			Terminate();
-		}
-
 		void INotifyKilled.Killed(Actor self, AttackInfo e)
 		{
 			Terminate();
@@ -108,12 +114,33 @@ namespace OpenRA.Mods.CA.Traits
 			foreach (var attachable in attached)
 			{
 				if (attachable.IsValid)
-					attachable.AttachedToLost();
+					attachable.HostLost();
 			}
 		}
 
-		public bool Attach(Attachable attachable)
+		void INotifyTransform.BeforeTransform(Actor self) {}
+		void INotifyTransform.OnTransform(Actor self)
 		{
+			foreach (var attachable in attached)
+			{
+				if (attachable.IsValid)
+					attachedToTransfer.Add(attachable);
+			}
+		}
+		void INotifyTransform.AfterTransform(Actor toActor)
+		{
+			foreach (var attachable in attachedToTransfer)
+			{
+				if (attachable.IsValid)
+					attachable.HostTransformed(toActor);
+			}
+		}
+
+		public bool CanAttach(Attachable attachable, bool ignoreReservation = false)
+		{
+			if (reserved && !ignoreReservation)
+				return false;
+
 			if (!attachable.IsValid)
 				return false;
 
@@ -121,6 +148,14 @@ namespace OpenRA.Mods.CA.Traits
 				attachedCounts.ContainsKey(attachable.Info.AttachableType)
 				&& Info.LimitConditions.ContainsKey(attachable.Info.AttachableType)
 				&& attachedCounts[attachable.Info.AttachableType] >= Info.Limits[attachable.Info.AttachableType])
+				return false;
+
+			return true;
+		}
+
+		public bool Attach(Attachable attachable, bool ignoreReservation = false)
+		{
+			if (!CanAttach(attachable, ignoreReservation))
 				return false;
 
 			attached.Add(attachable);
@@ -137,6 +172,7 @@ namespace OpenRA.Mods.CA.Traits
 					limitTokens[attachable.Info.AttachableType] = self.GrantCondition(Info.LimitConditions[attachable.Info.AttachableType]);
 			}
 
+			reserved = false;
 			return true;
 		}
 
@@ -165,19 +201,32 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		void INotifyRemovedFromWorld.RemovedFromWorld(Actor self)
+		void INotifyEnteredCargo.OnEnteredCargo(Actor self, Actor cargo)
 		{
 			foreach (var attachable in attached)
-				attachable.ParentEnteredCargo();
+				attachable.HostEnteredCargo();
+		}
+
+		void INotifyExitedCargo.OnExitedCargo(Actor self, Actor cargo)
+		{
+			foreach (var attachable in attached)
+				attachable.HostExitedCargo();
+		}
+
+		void INotifyRemovedFromWorld.RemovedFromWorld(Actor self)
+		{
+			var carryable = self.TraitOrDefault<Carryable>();
+			if (carryable != null && carryable.Carrier != null)
+				foreach (var attachable in attached)
+					attachable.HostEnteredCargo();
 		}
 
 		void INotifyAddedToWorld.AddedToWorld(Actor self)
 		{
-			self.World.AddFrameEndTask(w =>
-			{
+			var carryable = self.TraitOrDefault<Carryable>();
+			if (carryable != null && carryable.Carrier != null)
 				foreach (var attachable in attached)
-					attachable.ParentExitedCargo();
-			});
+					attachable.HostExitedCargo();
 		}
 	}
 }

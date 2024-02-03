@@ -15,6 +15,7 @@ using OpenRA.Activities;
 using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Traits;
+using OpenRA.Primitives;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Activities
@@ -34,12 +35,14 @@ namespace OpenRA.Mods.CA.Activities
 		INotifyResupply[] notifyResupplies;
 		IMove move;
 		IMoveInfo moveInfo;
+		readonly Color targetLineColor;
 		Action<int> updateTicksRemaining;
 
 		bool upgradeInProgress = false;
 
-		public Upgrade(Actor self, Upgradeable upgradeable, PlayerResources playerResources, Action<int> updateTicksRemaining)
+		public Upgrade(Actor self, in Target target, Upgradeable upgradeable, PlayerResources playerResources, Action<int> updateTicksRemaining, Color? targetLineColor)
 		{
+			host = target;
 			this.upgradeable = upgradeable;
 			this.playerResources = playerResources;
 			this.updateTicksRemaining = updateTicksRemaining;
@@ -48,11 +51,14 @@ namespace OpenRA.Mods.CA.Activities
 			upgradingConditionToken = Actor.InvalidConditionToken;
 			move = self.TraitOrDefault<IMove>();
 			moveInfo = self.Info.TraitInfoOrDefault<IMoveInfo>();
+			this.targetLineColor = targetLineColor ?? moveInfo.GetTargetLineColor();
 		}
 
 		protected override void OnFirstRun(Actor self)
 		{
-			var hostActor = FindNearestHost(self);
+			// Host might be self if order issued via hotkey or upgrade button
+			var hostActor = host.Type != TargetType.Actor || host.Actor == self ? FindNearestHost(self) : host.Actor;
+
 			if (hostActor != null)
 			{
 				host = Target.FromActor(hostActor);
@@ -70,33 +76,29 @@ namespace OpenRA.Mods.CA.Activities
 			}
 
 			updateTicksRemaining(upgradeTicksRemaining);
-			var isHostInvalid = upgradeable.Info.UpgradeAtActors.Any() && (host.Actor == null || host.Type != TargetType.Actor || !host.Actor.IsInWorld);
-			var isCloseEnough = false;
+			var isHostInvalid = upgradeable.Info.UpgradeAtActors.Any() && (host.Actor == null || host.Type != TargetType.Actor || !host.Actor.IsInWorld || host.Actor == self);
 
-			if (!isHostInvalid)
+			if (isHostInvalid)
 			{
-				// Negative means there's no distance limit.
-				// If RepairableNear, use TargetablePositions instead of CenterPosition
-				// to ensure the actor moves close enough to the host.
-				// Otherwise check against host CenterPosition.
-				if (upgradeable.Info.UpgradeAtRange < WDist.Zero)
-					isCloseEnough = true;
-				else
-					isCloseEnough = (host.CenterPosition - self.CenterPosition).HorizontalLengthSquared <= upgradeable.Info.UpgradeAtRange.LengthSquared;
-			}
-
-			// This ensures transports are also cancelled when the host becomes invalid
-			if (!IsCanceling && isHostInvalid)
+				// This ensures transports are also cancelled when the host becomes invalid
 				Cancel(self, true);
-
-			if (IsCanceling || isHostInvalid)
-			{
 				return true;
 			}
-			else if (!isCloseEnough)
+
+			bool isCloseEnough;
+
+			// Negative means there's no distance limit.
+			// If RepairableNear, use TargetablePositions instead of CenterPosition
+			// to ensure the actor moves close enough to the host.
+			// Otherwise check against host CenterPosition.
+			if (upgradeable.Info.UpgradeAtRange < WDist.Zero)
+				isCloseEnough = true;
+			else
+				isCloseEnough = (host.CenterPosition - self.CenterPosition).HorizontalLengthSquared <= upgradeable.Info.UpgradeAtRange.LengthSquared;
+
+			if (!isCloseEnough)
 			{
-				var targetCell = self.World.Map.CellContaining(host.Actor.CenterPosition);
-				QueueChild(move.MoveWithinRange(host, upgradeable.Info.UpgradeAtRange - WDist.FromCells(1), targetLineColor: moveInfo.GetTargetLineColor()));
+				QueueChild(move.MoveWithinRange(host, upgradeable.Info.UpgradeAtRange - WDist.FromCells(1), targetLineColor: targetLineColor));
 				return false;
 			}
 
@@ -176,8 +178,13 @@ namespace OpenRA.Mods.CA.Activities
 
 		void Transform(Actor self, string faction)
 		{
-			var transform = new InstantTransform(self, upgradeable.Info.Actor) { ForceHealthPercentage = 0, Faction = faction, OnComplete = () => { CompleteUpgrade(self, faction); } };
-			transform.SkipMakeAnims = upgradeable.Info.SkipMakeAnims;
+			var transform = new InstantTransform(self, upgradeable.Info.Actor)
+			{
+				ForceHealthPercentage = 0,
+				Faction = faction,
+				OnComplete = (Actor a) => { CompleteUpgrade(self, faction); },
+				SkipMakeAnims = upgradeable.Info.SkipMakeAnims
+			};
 			QueueChild(transform);
 		}
 
@@ -218,7 +225,9 @@ namespace OpenRA.Mods.CA.Activities
 		public override IEnumerable<TargetLineNode> TargetLineNodes(Actor self)
 		{
 			if (ChildActivity == null)
-				yield return new TargetLineNode(host, moveInfo.GetTargetLineColor());
+			{
+				yield return new TargetLineNode(host, targetLineColor);
+			}
 			else
 			{
 				var current = ChildActivity;

@@ -1642,10 +1642,6 @@
 		RequiresCondition: geneticmutation
 
 ^MiniDroneAttachable:
-	InfiltrateToAttach@MINIDRONE:
-		Actor: mdrn.attached
-		Types: MiniDroneAttachable
-		InfiltratedSound: mdrn-attach.aud
 	Targetable@MINIDRONE:
 		TargetTypes: MiniDroneAttachable
 		RequiresCondition: !mdrn-attached
@@ -1662,9 +1658,6 @@
 			mdrn: 1
 		LimitConditions:
 			mdrn: mdrn-attached
-	AttachOnTransform@MINIDRONE:
-		Actor: mdrn.attached
-		RequiresCondition: mdrn-attached
 
 ^HoverTrail:
 	LeavesTrails:
@@ -2550,12 +2543,10 @@
 	-MustBeDestroyed:
 	Wanders@NOIDLENAVY:
 		RequiresCondition: (botowner && crossing-ford) ||  (botowner && under-bridge)
-	-InfiltrateToAttach@MINIDRONE:
 	-Targetable@MINIDRONE:
 	-ChangesHealth@MINIDRONE:
 	-ExternalCondition@MINIDRONE:
 	-AttachableTo:
-	-AttachOnTransform@MINIDRONE:
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || underwater
 		ColorSource: Player

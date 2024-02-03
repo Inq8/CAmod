@@ -3725,19 +3725,19 @@ MDRN:
 	-Targetable@DRIVERKILLLOWHP:
 	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
 	-Targetable@AICAPTURE:
-	-InfiltrateToAttach@MINIDRONE:
 	-Targetable@MINIDRONE:
 	-ChangesHealth@MINIDRONE:
 	-ExternalCondition@MINIDRONE:
-	-AttachOnTransform@MINIDRONE:
 	AttachableTo:
 		-Limits:
 		-LimitConditions:
 	Attachable:
-		AttachableType: mdrn
-	Infiltrates:
 		Types: MiniDroneAttachable
+		AttachableType: mdrn
 		ValidRelationships: Ally
+		MinAttachDistance: 1c512
+		OnAttachTransformInto: mdrn.attached
+		AttachSound: mdrn-attach.aud
 	-Carryable:
 	WithIdleOverlay@NSHIELD:
 		Image: nshield-overlay-sm
@@ -3748,7 +3748,6 @@ MDRN:
 MDRN.Attached:
 	Inherits: MDRN
 	-Buildable:
-	-Infiltrates:
 	-Selectable:
 	-Tooltip:
 	Interactable:
@@ -3780,6 +3779,7 @@ MDRN.Attached:
 	DamageMultiplier@ATTACHED:
 		Modifier: 15
 	Attachable:
+		OnDetachTransformInto: mdrn
 	ChangesHealth:
 		PercentageStep: 2
 		Delay: 25

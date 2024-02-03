@@ -25,7 +25,7 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("The `TargetTypes` from `Infiltrates.Types` that are allowed to enter.")]
 		public readonly BitSet<TargetableType> Types = default(BitSet<TargetableType>);
 
-		[Desc("List of sounds that can be played on successful infiltration.")]
+		[Desc("Sound played on successful infiltration.")]
 		public readonly string InfiltratedSound = null;
 
 		[NotificationReference("Speech")]
