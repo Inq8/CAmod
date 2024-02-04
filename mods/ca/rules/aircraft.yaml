@@ -2665,12 +2665,12 @@ OCAR:
 	Armor:
 		Type: Aircraft
 	RevealsShroud:
-		Range: 10c0
-		MinRange: 8c0
+		Range: 9c0
+		MinRange: 7c0
 		Type: GroundPosition
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 8c0
+		Range: 7c0
 		Type: GroundPosition
 	SpawnActorOnDeath:
 		Actor: OCAR.Husk
@@ -3320,6 +3320,11 @@ VENM:
 		TakeoffSounds: orcaup1.aud
 		LandingSounds: orcadwn1.aud
 		Speed: 180
+		Voice: Move
+	Voiced:
+		VoiceSet: VenomVoice
+	Guard:
+		Voice: Move
 	Health:
 		HP: 18000
 	RevealsShroud:
@@ -3365,6 +3370,7 @@ VENM:
 		PersistentTargeting: false
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
+		Voice: Attack
 	AmmoPool:
 		Ammo: 8
 		ReloadDelay: 15

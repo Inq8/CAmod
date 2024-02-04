@@ -2386,7 +2386,7 @@ NeutronCannon:
 		Versus:
 			Wood: 15
 			Concrete: 50
-			Heavy: 75
+			Heavy: 90
 			Light: 75
 			Brick: 5
 		ValidTargets: Temporal
@@ -2493,11 +2493,17 @@ SonicPulse.UPG:
 		Explosions: sonicblastupg1, sonicblastupg2
 	Warhead@3Eff: CreateEffect
 		Explosions: sonicpulseupg1, sonicpulseupg2
-	Warhead@4Conc: GrantExternalCondition
+	Warhead@ConcussionVehicles: GrantExternalCondition
 		Range: 1c0
 		Duration: 150
 		Condition: concussion
-		ValidTargets: Ground, Infantry, Vehicle, Ship
+		ValidTargets: Vehicle, Ship
+		ValidRelationships: Enemy, Neutral
+	Warhead@ConcussionInfantry: GrantExternalCondition
+		Range: 1c0
+		Duration: 25
+		Condition: concussion
+		ValidTargets: Infantry
 		ValidRelationships: Enemy, Neutral
 
 DisruptorPulse:
