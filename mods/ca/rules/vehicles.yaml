@@ -1791,6 +1791,7 @@ JEEP:
 		RequiresCondition: !optics-active
 	RevealsShroud@GAPGEN:
 		Range: 6c0
+		RequiresCondition: !optics-active
 	Turreted:
 		TurnSpeed: 40
 		Offset: 0,0,128
@@ -1813,7 +1814,7 @@ JEEP:
 		DetectionTypes: Cloak, Thief, AirCloak
 		RequiresCondition: !(empdisable || being-warped)
 	RevealsShroud@Optics:
-		Range: 12c0
+		Range: 13c0
 		RequiresCondition: optics-active
 	GrantTimedConditionOnDeploy@Optics:
 		DeployedCondition: optics-active
@@ -1837,6 +1838,16 @@ JEEP:
 		Position: Top
 		ValidRelationships: Ally
 		Margin: 0, 8
+		RequiresCondition: optics-active
+	WithRadiatingCircle:
+		EndRadius: 13c0
+		Color: 00bbff40
+		MaxRadiusColor: 00bbff66
+		MaxRadiusFlashColor: 00bbff66
+		Interval: 25
+		Duration: 50
+		ValidRelationships: Ally
+		AlwaysShowMaxRange: true
 		RequiresCondition: optics-active
 
 JEEP.TEMP:
@@ -2982,31 +2993,68 @@ BGGY:
 		StartsFullyCharged: true
 		DeployedTicks: 1
 		CooldownTicks: 1000
-	PeriodicExplosion@Decoy:
-		Weapon: DecoyBuggySpawner
-		RequiresCondition: spawndecoy && ammo
+	GrantConditionOnPrerequisite@BlackHandPlayer:
+		Condition: player-blackh
+		Prerequisites: player.blackh
+	PeriodicExplosion@DecoyFlameTank:
+		Weapon: DecoyFlameTankSpawner
+		RequiresCondition: spawndecoy && ammo && !player-blackh
+		AmmoPoolName: decoyspawner
+	PeriodicExplosion@DecoyHeavyFlameTank:
+		Weapon: DecoyHeavyFlameTankSpawner
+		RequiresCondition: spawndecoy && ammo && player-blackh
 		AmmoPoolName: decoyspawner
 	GrantConditionOnPrerequisite@Decoy:
 		Condition: decoy-upgrade
 		Prerequisites: decoy.upgrade
 
-BGGY.Decoy:
-	Inherits: BGGY
+^DecoyUnit:
+	GrantTimedCondition@Decoy:
+		Condition: active
+		Duration: 750
+	GrantTimedCondition@DecoySpawn:
+		Condition: highlight
+		Duration: 1
+	GrantDelayedCondition@DecoyDespawn:
+		Condition: highlight
+		Delay: 749
+	KillsSelf:
+		RequiresCondition: !active
+	WithTextDecoration@Decoy:
+		Text: Decoy
+		ValidRelationships: Ally
+		Font: TinyBold
+		Position: Top
+		Margin: 0, 7
+	TimedConditionBar@Decoy:
+		Condition: active
+		Color: ffffff
+	WithPalettedOverlay@Decoy:
+		Palette: decoy
+		ValidRelationships: Ally
+
+FTNK.Decoy:
+	Inherits: FTNK
+	Inherits@Decoy: ^DecoyUnit
 	RenderSprites:
-		Image: bggy
+		Image: ftnk
 	Health:
-		HP: 4000
-	Armament:
-		Weapon: M60mgTD.Decoy
+		HP: 500
 	Mobile:
 		PauseOnCondition: notmobile
+	Armament@PRIMARY:
+		Weapon: BigFlamerTD.Decoy
+	-Armament@FF:
+	Explodes:
+		Weapon: DecoyDespawn
+		EmptyWeapon: DecoyDespawn
+		-RequiresCondition:
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
 	-ActorLostNotification:
-	-Valued:
 	-Buildable:
 	-ProducibleWithLevel:
 	-WithProductionIconOverlay:
-	-IgnoresDisguise:
-	-DetectCloaked:
 	-RevealsShroud:
 	-RevealsShroud@GAPGEN:
 	-Repairable:
@@ -3024,39 +3072,65 @@ BGGY.Decoy:
 	-Targetable@DRIVERKILLLOWHP:
 	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
 	-Targetable@AICAPTURE:
-	-AmmoPool@Decoy:
-	-WithAmmoPipsDecoration@Decoy:
-	-ReloadAmmoPoolCA@Decoy:
-	-GrantTimedConditionOnDeploy@Decoy:
-	-PeriodicExplosion@Decoy:
-	-GrantConditionOnPrerequisite@Decoy:
-	GrantTimedCondition@Decoy:
-		Condition: active
-		Duration: 500
-	GrantTimedCondition@DecoySpawn:
-		Condition: highlight
-		Duration: 1
-	GrantDelayedCondition@DecoyDespawn:
-		Condition: highlight
-		Delay: 499
-	KillsSelf:
-		RequiresCondition: !active
-	WithTextDecoration@Decoy:
-		Text: Decoy
-		ValidRelationships: Ally
-		Font: TinyBold
-		Position: Top
-		Margin: 0, 7
-	TimedConditionBar@Decoy:
-		Condition: active
-		Color: ffffff
-	WithPalettedOverlay@Decoy:
-		Palette: decoy
-		ValidRelationships: Ally
+	-GivesExperienceCA:
+	-GrantConditionOnPrerequisite@GLOBALBOUNTY:
+	-GivesBounty:
+	-Targetable@REPAIR:
+	-GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
+	-UpdatesPlayerStatistics:
+	-RevealOnDeath:
+
+HFTK.Decoy:
+	Inherits: HFTK
+	Inherits@Decoy: ^DecoyUnit
+	RenderSprites:
+		Image: hftk
+	Armor:
+		Type: Light
+	Health:
+		HP: 500
+	Mobile:
+		PauseOnCondition: notmobile
+	Armament@PRIMARY:
+		Weapon: HeavyFlameTankFlamer.Decoy
+	Armament@PRIMARYUPG:
+		Weapon: HeavyFlameTankFlamer.UPG.Decoy
+	-Armament@FF:
+	-Armament@FFUPG:
 	Explodes:
-		Weapon: DecoyBuggyDespawn
-		EmptyWeapon: DecoyBuggyDespawn
+		Weapon: DecoyDespawn
+		EmptyWeapon: DecoyDespawn
 		-RequiresCondition:
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	-ActorLostNotification:
+	-Buildable:
+	-ProducibleWithLevel:
+	-WithProductionIconOverlay:
+	-RevealsShroud:
+	-RevealsShroud@GAPGEN:
+	-Repairable:
+	-Passenger:
+	-Berserkable@BERSERK:
+	-RejectsOrders@BERSERK:
+	-CaptureManager:
+	-Capturable:
+	-CaptureNotification:
+	-Capturable@DRIVER_DEAD:
+	-GrantConditionIfOwnerIsNeutral:
+	-ChangesHealth@DRIVER_DEAD:
+	-TooltipDescription@DRIVER_DEAD:
+	-Targetable@DRIVERKILL:
+	-Targetable@DRIVERKILLLOWHP:
+	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
+	-Targetable@AICAPTURE:
+	-GivesExperienceCA:
+	-GrantConditionOnPrerequisite@GLOBALBOUNTY:
+	-GivesBounty:
+	-Targetable@REPAIR:
+	-GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
+	-UpdatesPlayerStatistics:
+	-RevealOnDeath:
 
 APC2:
 	Inherits: ^TankTD
@@ -3651,19 +3725,19 @@ MDRN:
 	-Targetable@DRIVERKILLLOWHP:
 	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
 	-Targetable@AICAPTURE:
-	-InfiltrateToAttach@MINIDRONE:
 	-Targetable@MINIDRONE:
 	-ChangesHealth@MINIDRONE:
 	-ExternalCondition@MINIDRONE:
-	-AttachOnTransform@MINIDRONE:
 	AttachableTo:
 		-Limits:
 		-LimitConditions:
 	Attachable:
-		AttachableType: mdrn
-	Infiltrates:
 		Types: MiniDroneAttachable
+		AttachableType: mdrn
 		ValidRelationships: Ally
+		MinAttachDistance: 1c512
+		OnAttachTransformInto: mdrn.attached
+		AttachSound: mdrn-attach.aud
 	-Carryable:
 	WithIdleOverlay@NSHIELD:
 		Image: nshield-overlay-sm
@@ -3674,7 +3748,6 @@ MDRN:
 MDRN.Attached:
 	Inherits: MDRN
 	-Buildable:
-	-Infiltrates:
 	-Selectable:
 	-Tooltip:
 	Interactable:
@@ -3706,6 +3779,7 @@ MDRN.Attached:
 	DamageMultiplier@ATTACHED:
 		Modifier: 15
 	Attachable:
+		OnDetachTransformInto: mdrn
 	ChangesHealth:
 		PercentageStep: 2
 		Delay: 25
@@ -4953,15 +5027,15 @@ IFV:
 		RequiresCondition: sharturr
 	Armament@ChemMortar:
 		Weapon: ChemicalMortar
-		LocalOffset: 150,0,500
+		LocalOffset: 300,0,400
 		RequiresCondition: mortchemturr
 	Armament@CryoMortar:
 		Weapon: CryoMortar
-		LocalOffset: 150,0,500
+		LocalOffset: 300,0,400
 		RequiresCondition: mortcryoturr
 	Armament@SonicMortar:
 		Weapon: SonicMortar
-		LocalOffset: 150,0,500
+		LocalOffset: 300,0,400
 		RequiresCondition: mortsonicturr
 	Armament@IVAN:
 		Weapon: IvanIFVTargeting
@@ -5099,6 +5173,7 @@ IFV:
 			ivan: ivanturr
 			bh: bhturr
 			shad: spyturr
+			cmsr: spyturr
 			tecn: nochange
 			c1: nochange
 			c2: nochange

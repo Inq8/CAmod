@@ -312,6 +312,7 @@ IgnoredUnits = {
 	"badr.cbomber",
 	"badr.nbomber",
 	"badr.mbomber",
+	"badr.chaosbomber",
 	"b2b",
 	"p51",
 	"tran.paradrop",

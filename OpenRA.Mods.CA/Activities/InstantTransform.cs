@@ -30,7 +30,7 @@ namespace OpenRA.Mods.CA.Activities
 		public int ForceHealthPercentage = 0;
 		public bool SkipMakeAnims = false;
 		public string Faction = null;
-		public Action OnComplete;
+		public Action<Actor> OnComplete;
 
 		public InstantTransform(Actor self, string toActor)
 		{
@@ -93,11 +93,12 @@ namespace OpenRA.Mods.CA.Activities
 
 				Game.Sound.PlayNotification(self.World.Map.Rules, self.Owner, "Speech", Notification, self.Owner.Faction.InternalName);
 
+				var cell = self.Location + Offset;
 				var init = new TypeDictionary
 				{
-					new LocationInit(self.Location + Offset),
+					new LocationInit(cell),
 					new OwnerInit(self.Owner),
-					new CenterPositionInit(self.CenterPosition),
+					new CenterPositionInit(self.World.Map.CenterOfCell(cell) + new WVec(0, 0, self.CenterPosition.Z)),
 				};
 
 				var facing = self.TraitOrDefault<IFacing>();
@@ -142,14 +143,17 @@ namespace OpenRA.Mods.CA.Activities
 
 				self.ReplacedByActor = a;
 
-				if (selected)
-					w.Selection.Add(a);
+				if (a.TraitOrDefault<Selectable>() != null)
+				{
+					if (selected)
+						w.Selection.Add(a);
 
-				if (controlgroup.HasValue)
-					w.ControlGroups.AddToControlGroup(a, controlgroup.Value);
+					if (controlgroup.HasValue)
+						w.ControlGroups.AddToControlGroup(a, controlgroup.Value);
+				}
 
 				if (OnComplete != null)
-					OnComplete();
+					OnComplete(a);
 			});
 		}
 	}

@@ -5225,7 +5225,8 @@ UPGC:
 		ChargeDuration: 1500
 		Actors: truk.drop
 		ShowSelectionBar: true
-		RequiresCondition: tower.drop && !(empdisable || disabled || being-warped)
+		RequiresCondition: tower.drop
+		PauseOnCondition: empdisable || disabled || being-warped
 	Exit:
 		SpawnOffset: 511,511,0
 		ExitCell: 1,1

@@ -59,6 +59,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If UpgradeAtActors are set, defines the max distance to upgrade.")]
 		public readonly WDist UpgradeAtRange = WDist.FromCells(10);
 
+		[Desc("Color to use for the target line.")]
+		public readonly Color TargetLineColor = Color.Cyan;
+
 		[CursorReference]
 		[Desc("Cursor to display when able to be upgraded near target actor.")]
 		public readonly string UpgradeCursor = "upgrade";
@@ -138,7 +141,7 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (order.OrderString == "Upgrade" && CanUpgrade)
 			{
-				currentUpgrade = new Upgrade(self, this, playerResources, (int ticks) => upgradeTicksRemaining = ticks);
+				currentUpgrade = new Upgrade(self, order.Target, this, playerResources, (int ticks) => upgradeTicksRemaining = ticks, Info.TargetLineColor);
 
 				if (!order.Queued)
 					currentUpgrade.NextActivity?.Cancel(self);

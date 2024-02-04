@@ -559,7 +559,7 @@ decoy.upgrade:
 	Buildable:
 		BuildPaletteOrder: 30
 		Prerequisites: ~player.nod, tmpl, ~techlevel.high
-		Description: Grant Buggies the ability to project decoys of themselves.\n\nUpgrades: Buggy
+		Description: Grant Buggies the ability to project a pair of decoy Flame Tanks.\n\nUpgrades: Buggy
 	TooltipExtras:
 		Strengths: + Decoy projection ability
 	Valued:
@@ -830,6 +830,21 @@ rapc.upgrade:
 	RenderSprites:
 		Image: rapc.upgrade
 
+optics.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Advanced Optics
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~player.allies, atek, ~techlevel.high
+		Description: Equips rangers with advanced optics which temporarily extends their vision.\n\nUpgrades: Ranger
+	TooltipExtras:
+		Strengths: + Rangers can temporarily increase their vision range
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: optics.upgrade
+
 cryr.upgrade:
 	Inherits: ^Upgrade
 	Tooltip:
@@ -844,21 +859,6 @@ cryr.upgrade:
 		Cost: 1000
 	RenderSprites:
 		Image: cryr.upgrade
-
-optics.upgrade:
-	Inherits: ^Upgrade
-	Tooltip:
-		Name: Research: Advanced Optics
-	Buildable:
-		BuildPaletteOrder: 30
-		Prerequisites: ~player.allies, atek, ~techlevel.high
-		Description: Equips rangers with advanced optics which temporarily extends their vision.\n\nUpgrades: Ranger
-	TooltipExtras:
-		Strengths: + Rangers can temporarily increase their vision range
-	Valued:
-		Cost: 750
-	RenderSprites:
-		Image: optics.upgrade
 
 pcan.upgrade:
 	Inherits: ^Upgrade

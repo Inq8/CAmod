@@ -445,7 +445,7 @@
 ^ParabombsPower:
 	AirstrikePower@Russianparabombs:
 		OrderName: parabombs
-		Prerequisites: ~support.parabombs
+		Prerequisites: ~aircraft.russia
 		PauseOnCondition: empdisable || being-warped
 		Icon: parabombs
 		ChargeInterval: 7500
@@ -473,7 +473,7 @@
 ^CarpetBombPower:
 	AirstrikePower@CarpetBomb:
 		OrderName: carpetbomb
-		Prerequisites: ~radar.ukraine
+		Prerequisites: ~aircraft.ukraine
 		PauseOnCondition: empdisable || being-warped
 		Icon: carpetbomb
 		ChargeInterval: 10500
@@ -501,7 +501,7 @@
 ^AtomBombPower:
 	AirstrikePower@Iraqiparabombs:
 		OrderName: atombomb
-		Prerequisites: ~radar.iraq
+		Prerequisites: ~aircraft.iraq
 		PauseOnCondition: empdisable || being-warped
 		Icon: abombair
 		ChargeInterval: 10500
@@ -554,27 +554,50 @@
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
+		SupportPowerPaletteOrder: 50
+
+^ChaosBombsPower:
+	AirstrikePower@ChaosBombs:
+		OrderName: chaosbombs
+		Prerequisites: ~aircraft.yuri
+		PauseOnCondition: empdisable || being-warped
+		Icon: chaosbombs
+		ChargeInterval: 8250
+		Name: Chaos Bombs
+		Description: \nCalls in a Badger bomber which drops parachuted\n    chaos bombs on your target.
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: ParabombsReady
+		EndChargeTextNotification: Chaos bombs ready.
+		CameraActor: camera.paradrop
+		CameraRemoveDelay: 150
+		UnitType: badr.chaosbomber
+		QuantizedFacings: 8
+		DisplayBeacon: true
+		BeaconPoster: pbmbicon
+		SquadSize: 1
+		SquadOffset: 0,1792,0
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
+		UseDirectionalTarget: True
+		DirectionArrowAnimation: paradirection
 		SupportPowerPaletteOrder: 45
 
 ^SovietRadarPowers:
 	Inherits@SPYPLANEPOWER: ^SpyPlanePower
 	Inherits@PARATROOPERSPOWER: ^ParatroopersPower
 	Inherits@STORMTROOPERSPOWER: ^StormTroopersPower
+	Inherits@MUTABOMBPOWER: ^MutaBombPower
 	ProvidesPrerequisiteValidatedFaction@paratroopers:
 		Factions: ukraine, iraq
 		Prerequisite: support.paratroopers
-	ProvidesPrerequisiteValidatedFaction@stormtroopers:
-		Factions: russia
-		Prerequisite: support.stormtroopers
 
 ^SovietBombingPowers:
 	Inherits@PARABOMBSPOWER: ^ParabombsPower
 	Inherits@CARPETBOMBPOWER: ^CarpetBombPower
 	Inherits@ATOMBOMBPOWER: ^AtomBombPower
-	Inherits@MUTABOMBPOWER: ^MutaBombPower
-	ProvidesPrerequisiteValidatedFaction@parabombs:
-		Factions: russia, yuri
-		Prerequisite: support.parabombs
+	Inherits@CHAOSBOMBPOWER: ^ChaosBombsPower
 
 ^AtomicAmmoPower:
 	GrantExternalConditionPowerCA@ATOMICAMMO:

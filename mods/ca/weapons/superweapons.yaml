@@ -38,6 +38,17 @@ ParaBomb:
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure
 
+ChaosBomb:
+	Inherits: ParaBomb
+	Warhead@3Eff: CreateEffect
+		Explosions: chaosexplosion
+		ExplosionPalette: caneon
+		ImpactSounds: firebl3.aud
+	Warhead@Cloud1: SpawnActor
+		Actors: chaoscloud, chaoscloud2
+		Range: 5
+		ValidTargets: Ground, Water, Trees
+
 CarpetBomb:
 	Inherits: ParaBomb
 	Report: bwhis.aud
