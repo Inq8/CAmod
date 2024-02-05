@@ -5591,9 +5591,11 @@ TITN:
 		PauseOnCondition: empdisable || being-warped
 		Armaments: primary, secondary
 		Voice: Attack
+	AttackMove:
+		Voice: Attack
 	WithMuzzleOverlay:
 	Voiced:
-		VoiceSet: GhostVoice
+		VoiceSet: TitnVoice
 	ChangesHealth@DEFAULT:
 		PercentageStep: 1
 		Delay: 25
@@ -5683,6 +5685,7 @@ JUGG:
 	WithSpriteTurret:
 	AttackMove:
 		AttackMoveCondition: attack-move
+		Voice: Attack
 	Armament@PRIMARY:
 		Weapon: JuggernautGun
 		LocalOffset: 700,0,650, 700,100,650, 700,-100,650
@@ -5838,6 +5841,8 @@ DISR:
 		Offset: -300,0,0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
+		Voice: Attack
+	AttackMove:
 		Voice: Attack
 	WithSpriteTurret:
 	Selectable:
@@ -6057,6 +6062,8 @@ RTNK:
 	AttackTurreted:
 		Voice: Attack
 		PauseOnCondition: empdisable || being-warped
+	AttackMove:
+		Voice: Attack
 	WithMuzzleOverlay:
 	WithFacingSpriteBody:
 		RequiresCondition: !tree
@@ -6144,6 +6151,8 @@ V3RL:
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
 		FacingTolerance: 0
+	AttackMove:
+		Voice: Attack
 	WithFacingSpriteBody:
 		RequiresCondition: loaded
 		Name: loaded
@@ -6257,6 +6266,8 @@ TNKD:
 		MuzzleSequence: muzzle
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
+		Voice: Attack
+	AttackMove:
 		Voice: Attack
 	WithMuzzleOverlay:
 	WithSpriteTurret:
@@ -6441,6 +6452,8 @@ PTNK:
 		TargetFrozenActors: True
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
+	AttackMove:
+		Voice: Attack
 	WithSpriteTurret:
 	SpawnActorOnDeath:
 		Actor: PTNK.Husk
@@ -6549,6 +6562,8 @@ WTNK:
 		Voice: Attack
 		ChargeLevel: 9
 		ChargingSounds: coreup1.aud
+	AttackMove:
+		Voice: Attack
 	WithMuzzleOverlay:
 	WithSpriteTurret:
 	SpawnActorOnDeath:
@@ -6618,6 +6633,8 @@ BATF:
 		FacingTolerance: 24
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !(loaded || loaded-cmdo || loaded-seal || loaded-air)
+		Voice: Attack
+	AttackMove:
 		Voice: Attack
 	Armament@DEFAULT:
 		Name: primary
@@ -7493,6 +7510,8 @@ THWK:
 		TargetFrozenActors: True
 		Voice: Attack
 		PauseOnCondition: empdisable || being-warped
+	AttackMove:
+		Voice: Attack
 	WithSpriteTurret@OneMissile:
 		RequiresCondition: loaded
 	WithSpriteTurret@NoMissile:
