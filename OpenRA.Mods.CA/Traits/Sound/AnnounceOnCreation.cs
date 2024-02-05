@@ -16,10 +16,11 @@ namespace OpenRA.Mods.CA.Traits.Sound
 	[Desc("Play announcement when actor is created.")]
 	public class AnnounceOnCreationInfo : TraitInfo
 	{
-		[NotificationReference("Speech", "Sounds")]
-		public readonly string Notification = "UnitReady";
+		[NotificationReference("Speech")]
+		public readonly string SpeechNotification = null;
 
-		public readonly string Type = "Speech";
+		[NotificationReference("Sounds")]
+		public readonly string SoundNotification = null;
 
 		[Desc("Delay in ticks.")]
 		public readonly int Delay = 0;
@@ -56,7 +57,12 @@ namespace OpenRA.Mods.CA.Traits.Sound
 		void PlaySound(Actor self)
 		{
 			var player = info.NotifyAll ? self.World.LocalPlayer : self.Owner;
-			Game.Sound.PlayNotification(self.World.Map.Rules, player, info.Type, info.Notification, self.Owner.Faction.InternalName);
+
+			if (info.SoundNotification != null)
+				Game.Sound.PlayNotification(self.World.Map.Rules, player, "Sounds", info.SoundNotification, self.Owner.Faction.InternalName);
+
+			if (info.SpeechNotification != null)
+				Game.Sound.PlayNotification(self.World.Map.Rules, player, "Speech", info.SpeechNotification, self.Owner.Faction.InternalName);
 		}
 	}
 }
