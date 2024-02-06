@@ -500,7 +500,7 @@ TTrackZap:
 	ReloadDelay: 125
 	Range: 8c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 14500
+		Damage: 18500
 		Versus:
 			Wood: 50
 			Concrete: 50
@@ -543,7 +543,7 @@ TTankZap:
 	BurstDelays: 3
 	Range: 5c512
 	Warhead@1Dam: SpreadDamage
-		Damage: 3000
+		Damage: 3250
 		Versus:
 			None: 420
 			Wood: 60
@@ -1095,7 +1095,7 @@ XOLaser:
 		SecondaryBeamColor: 79cd0040
 	Warhead@1Dam: SpreadDamage
 		Spread: 42
-		Damage: 10000
+		Damage: 11000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, TankBuster
 		Versus:
 			None: 65
@@ -1955,7 +1955,10 @@ OrcaBomb:
 	Warhead@3Eff: CreateEffect
 		Explosions: pulse_explosion_small
 		ExplosionPalette: tseffect-ignore-lighting-alpha75
-		ImpactSounds: expnew16.aud
+		ImpactSounds: orcabomb1.aud, orcabomb2.aud
+	Warhead@4Eff: CreateEffect
+		Explosions: artillery_explosion
+		ValidTargets: Ground, Ship, Trees
 	Warhead@emp: GrantExternalCondition
 		Range: 1c512
 		Duration: 375
@@ -3005,7 +3008,7 @@ PeacemakerBombs:
 		Shadow: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
-		Damage: 23500
+		Damage: 24000
 		Versus:
 			None: 20
 			Wood: 40
@@ -3015,7 +3018,7 @@ PeacemakerBombs:
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster, AirToGround, FlakVestMitigated
 	Warhead@2Dam: SpreadDamage
 		Spread: 512
-		Damage: 23500
+		Damage: 24000
 		Versus:
 			None: 30
 			Wood: 0
