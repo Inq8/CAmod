@@ -189,7 +189,7 @@ VEHICLES.SCRIN:
 	GrantConditionOnDamage@IONSTORM:
 		Condition: storm-active
 		Duration: 75
-		RequiresCondition: ioncon-upgrade
+		RequiresCondition: ioncon-upgrade && !empdisable
 		ValidRelationships: Ally, Enemy, Neutral
 	GrantStackingCondition@IONSTORM:
 		Condition: storm-level
@@ -213,7 +213,7 @@ VEHICLES.SCRIN:
 		Modifier: 115
 		RequiresCondition: storm-level == 2
 	DamageMultiplier@IONSTORM2:
-		Modifier: 80
+		Modifier: 90
 		RequiresCondition: storm-level == 2
 	RangeMultiplier@IONSTORM3:
 		Modifier: 115
@@ -263,6 +263,7 @@ VEHICLES.SCRIN:
 		ChargingColor: 8450f8
 		DeploySound: hypercharge.aud
 		RequiresCondition: hyper-upgrade
+		DischargeOnAttack: true
 	WithPalettedOverlay@HYPERCHARGE:
 		RequiresCondition: hypercharged && !(empdisable || invulnerability || invisibility)
 		Palette: hypercharge
@@ -2871,7 +2872,7 @@ MSHP:
 	DeathSounds:
 		Voice: Die
 	AnnounceOnCreation:
-		Notification: MothershipDeployed
+		SpeechNotification: MothershipDeployed
 		Delay: 30
 	AmbientSoundCA:
 		SoundFiles: mshp-beamloop.aud

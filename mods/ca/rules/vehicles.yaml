@@ -157,11 +157,11 @@ KATY:
 		Name: body-water
 		RequiresCondition: onwater
 	RevealsShroud:
-		MinRange: 4c0
-		Range: 6c0
+		MinRange: 5c0
+		Range: 7c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
-		Range: 4c0
+		Range: 5c0
 	Turreted:
 		TurnSpeed: 28
 	Armament:
@@ -1403,6 +1403,11 @@ SPEC:
 		TurnSpeed: 20
 		Speed: 92
 		Locomotor: lighttracked
+		Voice: Move
+	AttackMove:
+		Voice: Move
+	Guard:
+		Voice: Move
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 5c0
@@ -1422,6 +1427,7 @@ SPEC:
 		ShotsPerCharge: 3
 		ShowSelectionBar: true
 		SelectionBarColor: 666666
+		Voice: Attack
 	WithMuzzleOverlay:
 	Explodes:
 		Weapon: ArtilleryExplode
@@ -1453,6 +1459,8 @@ SPEC:
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
+	Voiced:
+		VoiceSet: SpectreVoice
 
 SAPC:
 	Inherits: ^Vehicle
@@ -1822,7 +1830,7 @@ JEEP:
 		ShowSelectionBar: true
 		StartsFullyCharged: true
 		DeployedTicks: 250
-		CooldownTicks: 1250
+		CooldownTicks: 1000
 		ShowSelectionBarWhenFull: false
 		ChargingColor: 808080
 		DischargingColor: ffffff
@@ -2591,7 +2599,7 @@ QTNK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 100000
+		HP: 120000
 	Armor:
 		Type: Heavy
 	Mobile:
@@ -6202,6 +6210,7 @@ V3:
 		AirborneCondition: airborne
 	LeavesTrailsCA:
 		Image: smokey3
+		Sequences: idle, idle2, idle3, idle4
 		MovingInterval: 2
 		Type: CenterPosition
 		Offsets: -200, 0, 0
@@ -7471,7 +7480,7 @@ THWK:
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	RenderSprites:
 	Valued:
-		Cost: 1700
+		Cost: 1800
 	Tooltip:
 		Name: Tomahawk Launcher
 	UpdatesPlayerStatistics:
@@ -7566,6 +7575,7 @@ TH:
 		MaxTargetMovement: 2c0
 	LeavesTrailsCA:
 		Image: icbmsmoke
+		Sequences: idle, idle2, idle3, idle4
 		MovingInterval: 2
 		Type: CenterPosition
 		Offsets: -200, 0, -50
