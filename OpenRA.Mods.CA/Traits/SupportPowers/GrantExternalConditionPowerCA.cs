@@ -32,10 +32,6 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Duration of the condition (in ticks). Set to 0 for a permanent condition.")]
 		public readonly int Duration = 0;
 
-		[FieldLoader.Require]
-		[Desc("Range in which to apply condition.")]
-		public readonly WDist Range = WDist.Zero;
-
 		[Desc("Sound to instantly play at the targeted area.")]
 		public readonly string OnFireSound = null;
 
@@ -87,10 +83,31 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly Color TargetCircleColor = Color.Red;
 		public readonly bool TargetCircleUsePlayerColor = false;
 
+		[Desc("Target tint colour.")]
+		public readonly Color? TargetTintColor = null;
+
 		[Desc("Maximum altitude of targets.")]
 		public readonly WDist MaxAltitude = WDist.Zero;
 
 		public WeaponInfo WeaponInfo { get; private set; }
+
+		// Circle mode only
+
+		[Desc("Range in which to apply condition.")]
+		public readonly WDist Range = WDist.Zero;
+
+		// Footprint mode only
+
+		[Desc("Size of the footprint of the affected area.")]
+		public readonly CVec Dimensions = CVec.Zero;
+
+		[Desc("Actual footprint. Cells marked as x will be affected.")]
+		public readonly string Footprint = string.Empty;
+
+		public readonly string FootprintImage = "overlay";
+
+		[SequenceReference(nameof(FootprintImage))]
+		public readonly string FootprintSequence = "target-select";
 
 		public override object Create(ActorInitializer init) { return new GrantExternalConditionPowerCA(init.Self, this); }
 
@@ -108,6 +125,7 @@ namespace OpenRA.Mods.CA.Traits
 		readonly GrantExternalConditionPowerCAInfo info;
 		int activeToken = Actor.InvalidConditionToken;
 		IConditionTimerWatcher[] watchers;
+		readonly char[] footprint;
 
 		[Sync]
 		public int Ticks { get; private set; }
@@ -116,6 +134,7 @@ namespace OpenRA.Mods.CA.Traits
 			: base(self, info)
 		{
 			this.info = info;
+			footprint = info.Footprint.Where(c => !char.IsWhiteSpace(c)).ToArray();
 		}
 
 		protected override void Created(Actor self)
@@ -162,7 +181,15 @@ namespace OpenRA.Mods.CA.Traits
 			}
 		}
 
-		public IEnumerable<Actor> GetTargets(CPos xy)
+		private IEnumerable<Actor> GetTargets(CPos xy)
+		{
+			if (info.Footprint.Length > 0)
+				return GetTargetsInFootprint(xy);
+
+			return GetTargetsInCircle(xy);
+		}
+
+		private IEnumerable<Actor> GetTargetsInCircle(CPos xy)
 		{
 			var centerPos = Self.World.Map.CenterOfCell(xy);
 
@@ -181,6 +208,23 @@ namespace OpenRA.Mods.CA.Traits
 				return actorsInRange.Take(info.MaxTargets);
 
 			return actorsInRange;
+		}
+
+		private IEnumerable<Actor> GetTargetsInFootprint(CPos xy)
+		{
+			var tiles = CellsMatching(xy, footprint, info.Dimensions);
+			var units = new List<Actor>();
+			foreach (var t in tiles)
+				units.AddRange(Self.World.ActorMap.GetActorsAt(t));
+
+			return units.Distinct().Where(a =>
+			{
+				if (!info.ValidRelationships.HasRelationship(Self.Owner.RelationshipWith(a.Owner)))
+					return false;
+
+				return a.TraitsImplementing<ExternalCondition>()
+					.Any(t => t.Info.Condition == info.Condition && t.CanGrantCondition(Self));
+			});
 		}
 
 		void RevokeCondition(Actor self)
@@ -212,6 +256,10 @@ namespace OpenRA.Mods.CA.Traits
 		class SelectConditionTarget : OrderGenerator
 		{
 			readonly GrantExternalConditionPowerCA power;
+			readonly char[] footprint;
+			readonly CVec dimensions;
+			readonly Sprite tile;
+			readonly float alpha;
 			readonly SupportPowerManager manager;
 			readonly string order;
 
@@ -224,6 +272,15 @@ namespace OpenRA.Mods.CA.Traits
 				this.manager = manager;
 				this.order = order;
 				this.power = power;
+
+				if (power.info.Footprint.Length > 0)
+				{
+					footprint = power.info.Footprint.Where(c => !char.IsWhiteSpace(c)).ToArray();
+					dimensions = power.info.Dimensions;
+					var sequence = world.Map.Sequences.GetSequence(power.info.FootprintImage, power.info.FootprintSequence);
+					tile = sequence.GetSprite(0);
+					alpha = sequence.GetAlpha(0);
+				}
 			}
 
 			protected override IEnumerable<Order> OrderInner(World world, CPos cell, int2 worldPixel, MouseInput mi)
@@ -254,8 +311,10 @@ namespace OpenRA.Mods.CA.Traits
 					{
 						var decorations = unit.TraitsImplementing<ISelectionDecorations>().FirstEnabledTraitOrDefault();
 						if (decorations != null)
+						{
 							foreach (var d in decorations.RenderSelectionAnnotations(unit, wr, power.info.SelectionBoxColor))
 								yield return d;
+						}
 					}
 				}
 
@@ -284,7 +343,38 @@ namespace OpenRA.Mods.CA.Traits
 
 			protected override IEnumerable<IRenderable> Render(WorldRenderer wr, World world)
 			{
-				yield break;
+				var xy = wr.Viewport.ViewToWorld(Viewport.LastMousePos);
+
+				if (power.info.Footprint.Length > 0)
+				{
+					var pal = wr.Palette(TileSet.TerrainPaletteInternalName);
+
+					foreach (var t in power.CellsMatching(xy, footprint, dimensions))
+						yield return new SpriteRenderable(tile, wr.World.Map.CenterOfCell(t), WVec.Zero, -511, pal, 1f, alpha, float3.Ones, TintModifiers.IgnoreWorldTint, true);
+				}
+
+				if (power.info.TargetTintColor != null)
+				{
+					var targetUnits = power.GetTargets(xy);
+
+					foreach (var unit in targetUnits)
+					{
+						var renderables = unit.Render(wr)
+							.Where(r => !r.IsDecoration && r is IModifyableRenderable)
+							.Select(r =>
+							{
+								var mr = (IModifyableRenderable)r;
+								var tint = new float3(power.info.TargetTintColor.Value.R, power.info.TargetTintColor.Value.G, power.info.TargetTintColor.Value.B) / 255f;
+								mr = mr.WithTint(tint, mr.TintModifiers | TintModifiers.ReplaceColor).WithAlpha(power.info.TargetTintColor.Value.A / 255f);
+								return mr;
+							});
+
+						foreach (var r in renderables)
+						{
+							yield return r;
+						}
+					}
+				}
 			}
 
 			protected override string GetCursor(World world, CPos cell, int2 worldPixel, MouseInput mi)
