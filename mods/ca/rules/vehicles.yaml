@@ -3610,16 +3610,23 @@ MTNK.Drone:
 		Name: Battle Drone
 	Mobile:
 		PauseOnCondition: !radarenabled || empdisable || being-warped || notmobile
+		Voice: Move
+	Passenger:
+		Voice: Move
 	Turreted:
 		Offset: 0,0,20
 	Armament:
 		Weapon: 120mm.Drone
 	AttackTurreted:
 		PauseOnCondition: !radarenabled || empdisable || being-warped
+		Voice: Attack
+	AttackMove:
+		Voice: Attack
 	SpawnActorOnDeath:
 		Actor: MTNK.Drone.Husk
 	Voiced:
 		VoiceSet: DroneVoice
+		RequiresCondition: radarenabled
 	Targetable@MindControlImmune:
 		TargetTypes: MindControlImmune
 	Targetable@ChaosImmune:
@@ -3973,14 +3980,21 @@ HTNK.Drone:
 		Name: Mammoth Drone
 	Mobile:
 		PauseOnCondition: !radarenabled || empdisable || being-warped || notmobile
+		Voice: Move
+	Passenger:
+		Voice: Move
 	Armament@PRIMARY:
 		Weapon: 130mmTD.Drone
 	AttackTurreted:
 		PauseOnCondition: !radarenabled || empdisable || being-warped
+		Voice: Attack
+	AttackMove:
+		Voice: Attack
 	SpawnActorOnDeath:
 		Actor: HTNK.DRONE.Husk
 	Voiced:
 		VoiceSet: DroneVoice
+		RequiresCondition: radarenabled
 	Targetable@MindControlImmune:
 		TargetTypes: MindControlImmune
 	Targetable@ChaosImmune:
@@ -6791,9 +6805,14 @@ MEMP:
 		HP: 55000
 	Armor:
 		Type: Heavy
+	Selectable:
+		Voice: SelectEMP
 	Mobile:
 		PauseOnCondition: triggered || !radarenabled || empdisable || being-warped || notmobile
 		Speed: 126
+		Voice: Move
+	Passenger:
+		Voice: Move
 	GrantTimedConditionOnDeploy:
 		DeploySound: mobempcharge1.aud
 		DeployedCondition: triggered
@@ -6802,6 +6821,7 @@ MEMP:
 		RequiresCondition: radarenabled && !(empdisable || being-warped)
 		ChargingColor: 0277bd
 		DischargingColor: 03a9f4
+		Voice: Unload
 	PeriodicExplosion:
 		Weapon: MEMP
 		RequiresCondition: triggered && ammo
@@ -6858,6 +6878,7 @@ MEMP:
 		Range: 5c0
 	Voiced:
 		VoiceSet: DroneVoice
+		RequiresCondition: radarenabled
 	-CaptureManager:
 	-Capturable:
 	-CaptureNotification:
