@@ -284,13 +284,13 @@
 		HoverSelectionBoxColor: b6f4ff
 		ShowTargetCircle: true
 		TargetCircleColor: b6f4ff
+		TargetTintColor: b6f4ff33
 		ShowDestinationCircle: true
 		WarpFromImage: chronobubble
 		WarpFromSequence: warpin
 		WarpToImage: chronobubble
 		WarpToSequence: warpout
 		WarpEffectPalette: ra2effect-ignore-lighting-alpha75
-
 	DetonateWeaponPower@ChronoAI:
 		OrderName: Chronoshiftai
 		Prerequisites: botplayer
@@ -533,7 +533,7 @@
 		Prerequisites: ~radar.yuri
 		PauseOnCondition: empdisable || being-warped
 		Icon: mutabomb
-		IconPalette: scrin
+		IconPalette: chromes
 		ChargeInterval: 6750
 		Name: Genetic Mutation Bomb
 		Description: \nCalls in a Badger bomber which drops a genetic\n    mutation bomb on your target, transforming\n    infantry into Brutes under your control.
@@ -1714,3 +1714,38 @@
 		ActiveCondition: active
 		PaletteEffectType: LightningStorm
 		SupportPowerPaletteOrder: 10
+
+^FleetRecallPower:
+	RecallPower@Recall:
+		OrderName: Recall
+		PauseOnCondition: disabled || empdisable || being-warped
+		Icon: fleetrecall
+		IconPalette: chromes
+		ChargeInterval: 5250
+		Name: Recall
+		KeepFormation: true
+		Description: ok
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeSpeechNotification: FleetRecallReady
+		EndChargeTextNotification: Fleet Recall ready.
+		LaunchSound: fleetrecall.aud
+		IncomingSound: fleetrecall.aud
+		KillCargo: false
+		DisplayRadarPing: True
+		Range: 10c0
+		ValidTargetTypes: FleetRecallable
+		InvalidTargetTypes: Husk
+		DisplayTimerRelationships: Ally, Neutral
+		SupportPowerPaletteOrder: 30
+		ShowSelectionBoxes: true
+		SelectionBoxColor: 9500ff
+		ShowTargetCircle: true
+		TargetCircleColor: 9500ff
+		TargetTintColor: 9500ff33
+		WarpFromImage: fleetrecall
+		WarpFromSequence: idle
+		WarpToImage: fleetrecall
+		WarpToSequence: idle
+		WarpEffectPalette: scrineffect

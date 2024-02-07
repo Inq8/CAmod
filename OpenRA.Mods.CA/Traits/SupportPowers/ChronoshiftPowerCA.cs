@@ -92,6 +92,9 @@ namespace OpenRA.Mods.CA.Traits
 		[PaletteReference]
 		public readonly string WarpEffectPalette = "effect";
 
+		[Desc("Target tint colour.")]
+		public readonly Color? TargetTintColor = null;
+
 		public override object Create(ActorInitializer init) { return new ChronoshiftPowerCA(init.Self, this); }
 	}
 
@@ -321,7 +324,30 @@ namespace OpenRA.Mods.CA.Traits
 
 			protected override IEnumerable<IRenderable> Render(WorldRenderer wr, World world)
 			{
-				yield break;
+				var xy = wr.Viewport.ViewToWorld(Viewport.LastMousePos);
+
+				if (power.info.TargetTintColor != null)
+				{
+					var targetUnits = power.GetTargets(xy);
+
+					foreach (var unit in targetUnits)
+					{
+						var renderables = unit.Render(wr)
+							.Where(r => !r.IsDecoration && r is IModifyableRenderable)
+							.Select(r =>
+							{
+								var mr = (IModifyableRenderable)r;
+								var tint = new float3(power.info.TargetTintColor.Value.R, power.info.TargetTintColor.Value.G, power.info.TargetTintColor.Value.B) / 255f;
+								mr = mr.WithTint(tint, mr.TintModifiers | TintModifiers.ReplaceColor).WithAlpha(power.info.TargetTintColor.Value.A / 255f);
+								return mr;
+							});
+
+						foreach (var r in renderables)
+						{
+							yield return r;
+						}
+					}
+				}
 			}
 
 			protected override string GetCursor(World world, CPos cell, int2 worldPixel, MouseInput mi)

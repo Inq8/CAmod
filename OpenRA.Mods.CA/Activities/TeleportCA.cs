@@ -82,10 +82,13 @@ namespace OpenRA.Mods.CA.Activities
 			Game.Sound.Play(SoundType.World, sound, self.World.Map.CenterOfCell(destination));
 
 			var positionable = self.Trait<IPositionable>();
+			var aircraft = self.TraitOrDefault<Aircraft>();
 
 			var subCell = positionable.GetAvailableSubCell(destination);
 			if (subCell != SubCell.Invalid)
 				positionable.SetPosition(self, destination, subCell);
+			else if (aircraft != null)
+				positionable.SetPosition(self, destination);
 
 			self.Generation++;
 
