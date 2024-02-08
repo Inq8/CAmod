@@ -345,7 +345,7 @@ DevourerLaser:
 		ImpactTicks: 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 1100
+		Damage: 1200
 		Versus:
 			None: 20
 	Warhead@antiShip: SpreadDamage
@@ -369,7 +369,10 @@ DevourerLaserCharged:
 		FollowingOffset: 0,-24,0
 		RecalculateDistortionInterval: 2
 	Warhead@1Dam: SpreadDamage
-		Damage: 1350
+		Damage: 1550
+		Versus:
+			None: 30
+			Light: 85
 
 RiftCannon:
 	Inherits: ^ScrinLaser
@@ -385,7 +388,7 @@ RiftCannon:
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
 		Falloff: 100, 37, 23, 10, 0
-		Damage: 2500
+		Damage: 3500
 		Versus:
 			None: 15
 			Light: 75
@@ -422,9 +425,9 @@ MiniRift:
 	Range: 1c0
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
-		Spread: 682
+		Spread: 896
 		Damage: 840
-		Falloff: 100, 70, 0
+		Falloff: 100, 90, 0
 		Versus:
 			None: 3
 			Wood: 30
@@ -435,9 +438,9 @@ MiniRift:
 		DamageTypes: BulletDeath
 		ValidRelationships: Enemy, Neutral
 	Warhead@2Dam: SpreadDamage
-		Spread: 682
-		Damage: 210
-		Falloff: 100, 70, 0
+		Spread: 896
+		Damage: 168
+		Falloff: 100, 90, 0
 		Versus:
 			None: 3
 			Wood: 30

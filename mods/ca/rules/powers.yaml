@@ -1,13 +1,14 @@
 ^ForceShieldPower:
-	GrantExternalConditionPower@FSHIELD:
+	GrantExternalConditionPowerCA@FSHIELD:
 		OrderName: fshield
 		Icon: forceshield
 		ChargeInterval: 7500
 		Condition: forceshield
-		Dimensions: 5, 5
-		Footprint: __x__ _xxx_ xxxxx _xxx_ __x__
+		ValidTargets: Structure
 		Duration: 250
 		Prerequisites: ~forceshield.enabled
+		ExplosionWeapon: ForceShield
+		ExplosionDelay: 5
 		AllowMultiple: false
 		Name: Force Shield
 		Description: \nMakes selected friendly structures temporarily invulnerable.\n\nWarning: Causes power failure.
@@ -22,6 +23,12 @@
 		Cursor: ability
 		PauseOnCondition: disabled || empdisable ||  being-warped
 		SupportPowerPaletteOrder: 40
+		ShowSelectionBoxes: true
+		SelectionBoxColor: 0066ff
+		TargetTintColor: 0066ff40
+		ShowTargetCircle: true
+		TargetCircleColor: 0066ff
+		Range: 3c0
 
 ^VeilOfWarPower:
 	SpawnActorPowerCA@VeilOfWar:
@@ -277,13 +284,13 @@
 		HoverSelectionBoxColor: b6f4ff
 		ShowTargetCircle: true
 		TargetCircleColor: b6f4ff
+		TargetTintColor: b6f4ff33
 		ShowDestinationCircle: true
 		WarpFromImage: chronobubble
 		WarpFromSequence: warpin
 		WarpToImage: chronobubble
 		WarpToSequence: warpout
 		WarpEffectPalette: ra2effect-ignore-lighting-alpha75
-
 	DetonateWeaponPower@ChronoAI:
 		OrderName: Chronoshiftai
 		Prerequisites: botplayer
@@ -526,7 +533,7 @@
 		Prerequisites: ~radar.yuri
 		PauseOnCondition: empdisable || being-warped
 		Icon: mutabomb
-		IconPalette: scrin
+		IconPalette: chromes
 		ChargeInterval: 6750
 		Name: Genetic Mutation Bomb
 		Description: \nCalls in a Badger bomber which drops a genetic\n    mutation bomb on your target, transforming\n    infantry into Brutes under your control.
@@ -622,6 +629,7 @@
 		SelectionBoxColor: ffee00
 		ShowTargetCircle: true
 		TargetCircleColor: ffee00
+		TargetTintColor: ffee0033
 	GrantExternalConditionPowerCA@ATOMICAMMOIRAQ:
 		Prerequisites: ~npwr.iraq
 		OrderName: atomicammoiraq
@@ -650,6 +658,7 @@
 		SelectionBoxColor: ffee00
 		ShowTargetCircle: true
 		TargetCircleColor: ffee00
+		TargetTintColor: ffee0033
 
 ^IronCurtainPower:
 	GrantExternalConditionPowerCA@IRONCURTAIN:
@@ -680,6 +689,7 @@
 		SupportPowerPaletteOrder: 20
 		ShowTargetCircle: true
 		ShowSelectionBoxes: true
+		TargetTintColor: ff000033
 
 ^ABombPower:
 	NukePower@ABomb:
@@ -892,7 +902,7 @@
 		Condition: nrepair
 		Range: 4c512
 		MaxTargets: 10
-		Duration: 750
+		Duration: 625
 		Prerequisites: ~gtek.arc
 		ExplosionWeapon: RepairFlash
 		ExplosionDelay: 5
@@ -913,6 +923,7 @@
 		SelectionBoxColor: 00ddbb
 		ShowTargetCircle: true
 		TargetCircleColor: 00ddbb
+		TargetTintColor: 00ddbb40
 
 ^FirestormPower:
 	AttackOrderPower@ROCKET:
@@ -1703,3 +1714,38 @@
 		ActiveCondition: active
 		PaletteEffectType: LightningStorm
 		SupportPowerPaletteOrder: 10
+
+^FleetRecallPower:
+	RecallPower@Recall:
+		OrderName: Recall
+		PauseOnCondition: disabled || empdisable || being-warped
+		Icon: fleetrecall
+		IconPalette: chromes
+		ChargeInterval: 5250
+		Name: Recall
+		KeepFormation: true
+		Description: ok
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeSpeechNotification: FleetRecallReady
+		EndChargeTextNotification: Fleet Recall ready.
+		LaunchSound: fleetrecall.aud
+		IncomingSound: fleetrecall.aud
+		KillCargo: false
+		DisplayRadarPing: True
+		Range: 10c0
+		ValidTargetTypes: FleetRecallable
+		InvalidTargetTypes: Husk
+		DisplayTimerRelationships: Ally, Neutral
+		SupportPowerPaletteOrder: 30
+		ShowSelectionBoxes: true
+		SelectionBoxColor: 9500ff
+		ShowTargetCircle: true
+		TargetCircleColor: 9500ff
+		TargetTintColor: 9500ff33
+		WarpFromImage: fleetrecall
+		WarpFromSequence: idle
+		WarpToImage: fleetrecall
+		WarpToSequence: idle
+		WarpEffectPalette: scrineffect

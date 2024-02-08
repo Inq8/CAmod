@@ -157,6 +157,10 @@ VEHICLES.SCRIN:
 	WithIdleOverlay@TEMPORAL:
 		RequiresCondition: being-warped || shield-warped
 
+^FleetRecallable:
+	Targetable@FleetRecallable:
+		TargetTypes: FleetRecallable
+
 ^IonConduits:
 	GrantConditionOnPrerequisite@IONCON:
 		Condition: ioncon-upgrade
@@ -2152,6 +2156,7 @@ STMR:
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
+	Inherits@FleetRecallable: ^FleetRecallable
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 90
@@ -2281,6 +2286,7 @@ ENRV:
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
+	Inherits@FleetRecallable: ^FleetRecallable
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 170
@@ -2408,6 +2414,7 @@ DEVA:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
+	Inherits@FleetRecallable: ^FleetRecallable
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 170
@@ -2543,6 +2550,7 @@ PAC:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
+	Inherits@FleetRecallable: ^FleetRecallable
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 180
@@ -2675,6 +2683,7 @@ INVA:
 	Inherits@4: ^EmpDisable
 	Inherits@5: ^GDIUpgradeAircraft
 	Inherits@ionsurge: ^IonSurgable
+	Inherits@FleetRecallable: ^FleetRecallable
 	Valued:
 		Cost: 50
 	Tooltip:
@@ -2758,6 +2767,7 @@ MSHP:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
+	Inherits@FleetRecallable: ^FleetRecallable
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildPaletteOrder: 190
@@ -4039,6 +4049,7 @@ SIGN:
 	Inherits@SHAPE: ^3x2Shape
 	Inherits@UPG: ^ProducesUpgrades
 	Inherits@TECHLOCKABLE: ^TechLockable
+	Inherits@FLEETRECALL: ^FleetRecallPower
 	Selectable:
 		Bounds: 3072, 2048
 	Building:
