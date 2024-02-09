@@ -117,11 +117,10 @@ namespace OpenRA.Mods.CA.Traits.Render
 			{
 				var spawnCell = Info.SpawnAtLastPosition ? self.World.Map.CellContaining(cachedPosition) : self.World.Map.CellContaining(self.CenterPosition);
 
-				/* ---- removed for CA version for V3/ICBM
-				if (!self.World.Map.Contains(spawnCell))
-					return;
-				*/
-				var type = self.World.Map.GetTerrainInfo(spawnCell).Type;
+				// For CA shootable missiles, allow for cells not contained by map
+				var type = "Invalid";
+				if (self.World.Map.Contains(spawnCell))
+					type = self.World.Map.GetTerrainInfo(spawnCell).Type;
 
 				if (++offset >= Info.Offsets.Length)
 					offset = 0;
