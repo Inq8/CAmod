@@ -157,6 +157,17 @@ VEHICLES.SCRIN:
 	WithIdleOverlay@TEMPORAL:
 		RequiresCondition: being-warped || shield-warped
 
+^MothershipRearmable:
+	Targetable@MothershipRearmable:
+		TargetTypes: MothershipRearmable
+		RequiresCondition: ammo < 15
+	ReloadAmmoPool@MothershipRearmable:
+		Count: 3
+		Delay: 75
+		RequiresCondition: mshp-rearm
+	ExternalCondition@MothershipRearmable:
+		Condition: mshp-rearm
+
 ^FleetRecallable:
 	Targetable@FleetRecallable:
 		TargetTypes: FleetRecallable
@@ -473,7 +484,7 @@ S3:
 		PauseOnCondition: !ammo
 	Armament@BATF:
 		Name: batf
-		Weapon: DisintegratorBeamE
+		Weapon: DisintegratorBeamBATF
 	AttackFrontal:
 		PauseOnCondition: being-warped
 		FacingTolerance: 0
@@ -525,7 +536,7 @@ S4:
 		LocalOffset: 150,0,400
 	Armament@BATF:
 		Name: batf
-		Weapon: IntruderDiscs
+		Weapon: IntruderDiscsBATF
 	AttackFrontal:
 		PauseOnCondition: being-warped
 		FacingTolerance: 0
@@ -2155,6 +2166,7 @@ STMR:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
+	Inherits@MothershipRearmable: ^MothershipRearmable
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
@@ -2197,7 +2209,7 @@ STMR:
 		MuzzlePalette: scrin
 	WithMuzzleOverlay:
 	AttackAircraft:
-		FacingTolerance: 160
+		FacingTolerance: 512
 		PersistentTargeting: false
 		OpportunityFire: true
 		PauseOnCondition: empdisable || being-warped
@@ -2284,6 +2296,7 @@ ENRV:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
+	Inherits@MothershipRearmable: ^MothershipRearmable
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
@@ -2406,6 +2419,10 @@ ENRV:
 		MaxStrength: 5625
 	GpsRadarDot:
 		Sequence: Plane
+	Targetable@MothershipRearmable:
+		RequiresCondition: ammo < 5
+	ReloadAmmoPool@MothershipRearmable:
+		Count: 1
 
 DEVA:
 	Inherits: ^Helicopter
@@ -2763,6 +2780,7 @@ INVA:
 MSHP:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@HULLREGEN: ^HullRegen
 	Inherits@SHIELDS: ^ScrinShields
 	Inherits@FleetRecallable: ^FleetRecallable
@@ -2776,7 +2794,7 @@ MSHP:
 	TooltipExtras:
 		Strengths: • Strong vs Buildings, Defenses, Heavy Armor, Light Armor, Infantry
 		Weaknesses: • Cannot attack Aircraft\n• Long charge time before firing anti-structure weapon\n• Cannot move while firing
-		Attributes: • Maximum 1 can be built\n• Can create wormholes
+		Attributes: • Maximum 1 can be built\n• Can create wormholes\n• Can recharge nearby Stormriders/Enervators
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Voiced:
@@ -2949,6 +2967,9 @@ MSHP:
 		RequiresSelection: true
 		Position: BottomLeft
 		Margin: 4, 3
+	PeriodicExplosion:
+		Weapon: MothershipCharge
+		LocalOffset: 0,0,256
 
 #
 # ---- Husks

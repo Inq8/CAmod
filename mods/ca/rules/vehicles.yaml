@@ -4341,6 +4341,8 @@ STNK.Nod:
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
+	DamageTypeDamageMultiplier@A2GPROTECTION:
+		Modifier: 60
 
 BIKE:
 	Inherits: ^VehicleTD
@@ -4819,6 +4821,9 @@ IFV:
 	Tooltip@sharturr:
 		Name: Ravager IFV
 		RequiresCondition: sharturr
+	Tooltip@ggiturr:
+		Name: GGI IFV
+		RequiresCondition: ggiturr
 	Tooltip@psyturr:
 		Name: Psychic IFV
 		RequiresCondition: psyturr
@@ -4826,7 +4831,7 @@ IFV:
 		Strengths: • Strong vs Aircraft, Heavy Armor
 		Weaknesses: • Weak vs Infantry
 		Attributes: • Weapon/function changes depending on infantry passenger
-		RequiresCondition: !full || samturr || nochange
+		RequiresCondition: !full || samturr || ggiturr || nochange
 	TooltipExtras@gunturr:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
@@ -4939,21 +4944,21 @@ IFV:
 	Armament@E3:
 		Weapon: IFVRocketsE
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: samturr && !cryr-upgrade
+		RequiresCondition: (samturr || ggiturr) && !cryr-upgrade
 	Armament@E3AA:
 		Name: secondary
 		Weapon: IFVRocketsAAE
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: samturr && !cryr-upgrade
+		RequiresCondition: (samturr || ggiturr) && !cryr-upgrade
 	Armament@E3CRYO:
 		Weapon: IFVRocketsE.CRYO
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: samturr && cryr-upgrade
+		RequiresCondition: (samturr || ggiturr) && cryr-upgrade
 	Armament@E3CRYOAA:
 		Name: secondary
 		Weapon: IFVRocketsAAE.CRYO
 		LocalOffset: 192,100,176, 192,-100,176
-		RequiresCondition: samturr && cryr-upgrade
+		RequiresCondition: (samturr || ggiturr) && cryr-upgrade
 	Armament@E4:
 		Weapon: FireballLauncher
 		Recoil: 85
@@ -5087,12 +5092,15 @@ IFV:
 		PauseOnCondition: empdisable || being-warped
 		RequiresCondition: !spyturr
 	WithMuzzleOverlay:
-	WithSpriteTurret@samturr:
+	WithSpriteTurret@defaultturr:
 		RequiresCondition: !full || nochange
 		Sequence: turret
-	WithSpriteTurret@samturr2:
+	WithSpriteTurret@samturr:
 		RequiresCondition: samturr
 		Sequence: turret2
+	WithSpriteTurret@ggiturr:
+		RequiresCondition: ggiturr
+		Sequence: turret18
 	WithSpriteTurret@gun:
 		RequiresCondition: gunturr
 		Sequence: turret3
@@ -5153,7 +5161,7 @@ IFV:
 			n2: fragturr
 			n3: samturr
 			n3c: samturr
-			u3: samturr
+			u3: ggiturr
 			n4: flamturr
 			n5: chemturr
 			e8: desoturr
@@ -5255,27 +5263,27 @@ IFV:
 	AutoTargetPriority@DEFAULTAA:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Defense
 		InvalidTargets: NoAutoTarget
-		RequiresCondition: (!stance-attackanything && !assault-move) && (!full || samturr)
+		RequiresCondition: (!stance-attackanything && !assault-move) && (!full || samturr || ggiturr)
 	AutoTargetPriority@ATTACKANYTHINGAA:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Structure, Defense
 		InvalidTargets: NoAutoTarget
-		RequiresCondition: (stance-attackanything || assault-move) && (!full || samturr)
+		RequiresCondition: (stance-attackanything || assault-move) && (!full || samturr || ggiturr)
 	AutoTargetPriority@DEFAULTAAPRIO:
-		RequiresCondition: (!stance-attackanything && !assault-move) && (!full || samturr)
+		RequiresCondition: (!stance-attackanything && !assault-move) && (!full || samturr || ggiturr)
 		ValidTargets: Air, AirSmall
 		InvalidTargets: NoAutoTarget
 		Priority: 10
 	AutoTargetPriority@ATTACKANYTHINGAAPRIO:
-		RequiresCondition: (!stance-attackanything && !assault-move) && (!full || samturr)
+		RequiresCondition: (!stance-attackanything && !assault-move) && (!full || samturr || ggiturr)
 		ValidTargets: Air, AirSmall
 		InvalidTargets: NoAutoTarget
 		Priority: 10
 	AutoTargetPriority@DEFAULTG:
-		RequiresCondition: !stance-attackanything && !assault-move && full && !samturr
+		RequiresCondition: !stance-attackanything && !assault-move && full && !(samturr || ggiturr)
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
 		InvalidTargets: NoAutoTarget
 	AutoTargetPriority@ATTACKANYTHINGG:
-		RequiresCondition: (stance-attackanything || assault-move) && full && !samturr
+		RequiresCondition: (stance-attackanything || assault-move) && full && !(samturr || ggiturr)
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Structure, Defense, Mine
 		InvalidTargets: NoAutoTarget
 	AttackMove:
@@ -5317,7 +5325,7 @@ IFV:
 	KeepsDistance:
 		RequiresCondition: engturr || medturr || spyturr
 	DamageTypeDamageMultiplier@A2GPROTECTION:
-		RequiresCondition: !full || samturr
+		RequiresCondition: !full || samturr || ggiturr
 	AmbientSoundCA:
 		SoundFiles: flamer-loop1.aud
 		InitialSound: flamer-start1.aud
@@ -5333,6 +5341,15 @@ IFV:
 		Image: chrono
 		ExplodeInstead: true
 		RequiresCondition: ivanturr && !being-warped
+	DamageMultiplier@GGI:
+		RequiresCondition: ggiturr
+		Modifier: 80
+	FirepowerMultiplier@GGI:
+		RequiresCondition: ggiturr
+		Modifier: 105
+	RangeMultiplier@GGI:
+		RequiresCondition: ggiturr
+		Modifier: 115
 
 IFV.AI:
 	Inherits: ^Tank
@@ -5535,6 +5552,8 @@ RECK:
 		Name: Intruder Reckoner
 	Tooltip@sharturr:
 		Name: Ravager Reckoner
+	Tooltip@ggiturr:
+		Name: GGI Reckoner
 	Tooltip@psyturr:
 		Name: Psychic Reckoner
 
@@ -6697,6 +6716,7 @@ BATF:
 			bh: loaded
 			ivan: loaded
 			shad: loaded
+			medi: loaded-medic
 			mech: loaded-repair
 			seal: loaded-seal
 			rmbo: loaded-cmdo
@@ -6782,6 +6802,20 @@ BATF:
 		Position: TopLeft
 		ValidRelationships: Ally, Enemy, Neutral
 	-Targetable@HERO:
+	WithIdleOverlay@MEDIC:
+		Sequence: medic
+		PauseOnCondition: empdisable || being-warped
+		RequiresCondition: loaded-medic
+		Offset: 0,0,250
+	ProximityExternalCondition@MEDIC:
+		RequiresCondition: loaded-medic
+		Condition: hospitalheal
+		Range: 4c512
+	WithRangeCircle@MEDIC:
+		Type: IFVHeal
+		Color: 00FF0080
+		Range: 4c512
+		RequiresCondition: loaded-medic
 
 BATF.AI:
 	Inherits: BATF

@@ -27,10 +27,10 @@ DisintegratorBeam:
 			Light: 34
 			Concrete: 75
 
-DisintegratorBeamE:
+DisintegratorBeamBATF:
 	Inherits: DisintegratorBeam
 	Warhead@1Dam: SpreadDamage
-		Damage: 1700
+		Damage: 2250
 
 DisintegratorBeamAA:
 	Inherits: DisintegratorBeam
@@ -219,6 +219,11 @@ IntruderDiscs:
 			Heavy: 90
 			Concrete: 100
 
+IntruderDiscsBATF:
+	Inherits: IntruderDiscs
+	Warhead@1Dam: SpreadDamage
+		Damage: 2150
+
 DevastatorDiscs:
 	Inherits: PlasmaDiscs
 	Range: 16c0
@@ -388,7 +393,7 @@ RiftCannon:
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
 		Falloff: 100, 37, 23, 10, 0
-		Damage: 3500
+		Damage: 2500
 		Versus:
 			None: 15
 			Light: 75
@@ -425,9 +430,9 @@ MiniRift:
 	Range: 1c0
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
-		Spread: 896
+		Spread: 692
 		Damage: 840
-		Falloff: 100, 90, 0
+		Falloff: 100, 70, 0
 		Versus:
 			None: 3
 			Wood: 30
@@ -438,9 +443,9 @@ MiniRift:
 		DamageTypes: BulletDeath
 		ValidRelationships: Enemy, Neutral
 	Warhead@2Dam: SpreadDamage
-		Spread: 896
+		Spread: 692
 		Damage: 168
-		Falloff: 100, 90, 0
+		Falloff: 100, 70, 0
 		Versus:
 			None: 3
 			Wood: 30
@@ -1036,6 +1041,41 @@ GravityStabilizerZap:
 		Duration: 1
 		Condition: highlight
 		ValidTargets: Resupplying
+
+MothershipCharge:
+	ReloadDelay: 10
+	Warhead@Dummy: Dummy
+		ValidTargets: Ground, Water, Air
+	Warhead@Zaps: FireShrapnel
+		ValidTargets: Ground, Water, Air
+		Weapon: MothershipChargeZap
+		Amount: 3
+		AimChance: 100
+		AllowDirectHit: true
+		ThrowWithoutTarget: false
+		AimTargetStances: Ally
+		ImpactSounds: mshp-stmrcharge.aud
+
+MothershipChargeZap:
+	Inherits: GravityStabilizerZap
+	ValidTargets: MothershipRearmable
+	Range: 7c0
+	Projectile: ElectricBolt
+		TrackTarget: true
+		Colors: FFFFFF66, FFFFFF33
+		Duration: 3
+		Distortion: 160
+		DistortionAnimation: 160
+	Warhead@1Dum: Dummy
+		ValidRelationships: Ally
+		ValidTargets: MothershipRearmable
+	Warhead@highlight: GrantExternalCondition
+		ValidTargets: MothershipRearmable
+	Warhead@rearm: GrantExternalCondition
+		Range: 0c511
+		Duration: 80
+		Condition: mshp-rearm
+		ValidTargets: MothershipRearmable
 
 ShardLauncher:
 	StartBurstReport: shard-fire1.aud

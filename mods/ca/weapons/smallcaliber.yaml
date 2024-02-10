@@ -507,27 +507,14 @@ M1CarbineBATF:
 	-Report:
 	StartBurstReport: baocatta.aud, baocattb.aud, baocattc.aud
 	ReloadDelay: 10
-	Range: 6c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 650
-		Versus:
-			None: 100
-			Wood: 15
-			Concrete: 15
-			Light: 25
-			Heavy: 5
+		Damage: 750
 
 M16CarbineBATF:
 	Inherits: M1CarbineBATF
 
 BATFGun:
 	Inherits: M1CarbineBATF
-	Range: 5c0
-	Warhead@1Dam: SpreadDamage
-		Damage: 1800
-		Versus:
-			Wood: 10
-			Concrete: 5
 
 M60mg:
 	Inherits: ^LightMG
@@ -842,6 +829,10 @@ SNIPERBATF.UPG:
 
 SniperIFVGun:
 	Inherits: SNIPER.vehicle
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			Light: 60
+			Heavy: 60
 
 CommandoIFVGun:
 	Inherits: SMG
