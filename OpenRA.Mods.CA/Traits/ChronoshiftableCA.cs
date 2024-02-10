@@ -80,7 +80,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly PlayerRelationship ReturnToAvoidDeathRelationships = PlayerRelationship.Ally | PlayerRelationship.Neutral | PlayerRelationship.Enemy;
 
 		[Desc("If ReturnToAvoidDeath is true the amount of HP restored on return.")]
-		public readonly int ReturnToAvoidDeathHealthPercent = 20;
+		public readonly int ReturnToAvoidDeathHealthPercent = 10;
 
 		[Desc("If ReturnToAvoidDeath is true, the actor to replace the normal husk with.")]
 		public readonly string ReturnToAvoidDeathHuskActor = "camera.dummy";

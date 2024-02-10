@@ -10,6 +10,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using OpenRA.GameRules;
 using OpenRA.Graphics;
 using OpenRA.Mods.Common.Graphics;
@@ -117,6 +118,7 @@ namespace OpenRA.Mods.Common.Projectiles
 		readonly Animation hitanim;
 		public readonly Color BeamColor;
 		public readonly Color HelixColor;
+		readonly IEnumerable<int> rangeModifiers;
 
 		int ticks;
 		bool animationComplete;
@@ -142,6 +144,8 @@ namespace OpenRA.Mods.Common.Projectiles
 			BeamColor = beamColor;
 			HelixColor = helixColor;
 
+			rangeModifiers = args.SourceActor.TraitsImplementing<IRangeModifier>().ToArray().Select(m => m.GetRangeModifier());
+
 			if (info.Inaccuracy.Length > 0)
 			{
 				var maxInaccuracyOffset = Util.GetProjectileInaccuracy(info.Inaccuracy.Length, info.InaccuracyType, args);
@@ -158,7 +162,8 @@ namespace OpenRA.Mods.Common.Projectiles
 		{
 			if (info.PassthroughToMaxRange && (info.PassthroughMinDistance.Length == 0 || (target - args.Source).Length >= info.PassthroughMinDistance.Length))
 			{
-				var speed = new WVec(0, -args.Weapon.Range.Length, 0);
+			 	var weaponRange = new WDist(Util.ApplyPercentageModifiers(args.Weapon.Range.Length, rangeModifiers));
+				var speed = new WVec(0, -weaponRange.Length, 0);
 
 				if (info.PassthroughParallelToMuzzleOffset)
 				{

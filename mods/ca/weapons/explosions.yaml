@@ -228,7 +228,7 @@ V2Explode:
 V3ExplodeAirborne:
 	Inherits: ^Explosion
 	Warhead@1Dam: SpreadDamage
-		Range: 0, 2c0, 3c0
+		Range: 0, 1c768, 2c768
 		Falloff: 100, 100, 0
 		Damage: 5000
 		Versus:
@@ -243,22 +243,7 @@ V3ExplodeAirborne:
 		ImpactSounds: kaboom15.aud
 
 THExplodeAirborne:
-	Inherits: ^Explosion
-	Warhead@1Dam: SpreadDamage
-		Range: 0, 4c0, 5c0
-		Falloff: 100, 100, 0
-		Damage: 6750
-		ValidTargets: Ground, Water, Trees
-		Versus:
-			None: 10
-			Wood: 55
-			Light: 30
-			Heavy: 20
-			Concrete: 100
-		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath
-	Warhead@2Eff: CreateEffect
-		Explosions: artillery_explosion
-		ImpactSounds: kaboom15.aud
+	Inherits: V3ExplodeAirborne
 
 BuildingExplode:
 	Warhead@2Eff: CreateEffect

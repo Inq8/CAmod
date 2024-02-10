@@ -102,7 +102,7 @@ namespace OpenRA.Mods.CA.Activities
 			var move = cm.FlyStep(cm.Facing);
 
 			// Destruct so that Explodes will be called
-			if (d.HorizontalLengthSquared < move.HorizontalLengthSquared)
+			if (d.HorizontalLengthSquared < move.HorizontalLengthSquared || currentPos.Z <= 0)
 			{
 				Queue(new CallFunc(() => self.Kill(self)));
 				return true;
