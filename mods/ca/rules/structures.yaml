@@ -653,6 +653,9 @@ DOME:
 	ProvidesPrerequisite@radarorrepair:
 		Prerequisite: radarorrepair
 		RequiresCondition: !tech-locked
+	ProvidesPrerequisite@RadarOrAircraft:
+		Prerequisite: radaroraircraft
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@allrad:
 		Factions: england, france, germany, usa
 		Prerequisite: radar.allies
@@ -1545,6 +1548,8 @@ HPAD:
 		Factions: russia, ukraine, yuri
 		Prerequisite: aircraft.hind
 	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite@RadarOrAircraft:
+		Prerequisite: radaroraircraft
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
@@ -1619,10 +1624,12 @@ AFLD:
 	ProvidesPrerequisiteValidatedFaction@kiro:
 		Factions: russia, ukraine, iraq
 		Prerequisite: aircraft.kiro
+	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite@RadarOrAircraft:
+		Prerequisite: radaroraircraft
 	SupportPowerChargeBar:
 	Power:
 		Amount: -20
-	ProvidesPrerequisite@buildingname:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
@@ -2450,6 +2457,14 @@ RADARORREPAIR:
 		Name: Radar or Service Depot/Repair Facility
 	Buildable:
 		Description: Radar or Service Depot/Repair Facility
+
+RADARORAIRCRAFT:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Radar or Aircraft Production
+	Buildable:
+		Description: Radar or Aircraft Production
 
 VEHICLES.MCV:
 	AlwaysVisible:
@@ -3536,6 +3551,9 @@ HQ:
 	ProvidesPrerequisite@radarorrepair:
 		Prerequisite: radarorrepair
 		RequiresCondition: !tech-locked
+	ProvidesPrerequisite@RadarOrAircraft:
+		Prerequisite: radaroraircraft
+		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@gdirad:
 		Factions: talon, zocom, eagle, arc
 		Prerequisite: radar.gdi
@@ -3812,6 +3830,8 @@ HPAD.TD:
 	ProvidesPrerequisite@chinook:
 		Prerequisite: aircraft.chinook
 	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite@RadarOrAircraft:
+		Prerequisite: radaroraircraft
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
@@ -4018,10 +4038,12 @@ AFLD.GDI:
 		Prerequisite: aircraft.chinook
 	ProvidesPrerequisite@chinookvisible:
 		Prerequisite: aircraft.chinookvisible
+	ProvidesPrerequisite@RadarOrAircraft:
+		Prerequisite: radaroraircraft
+	ProvidesPrerequisite@buildingname:
 	SupportPowerChargeBar:
 	Power:
 		Amount: -20
-	ProvidesPrerequisite@buildingname:
 	Targetable@INFILTRATION:
 		RequiresCondition: !being-warped
 		TargetTypes: SpyInfiltrate, SabInfiltrate
