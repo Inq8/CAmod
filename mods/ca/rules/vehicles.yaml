@@ -451,6 +451,7 @@ GTNK.squad:
 	WithMirageSpriteBody:
 		RequiresCondition: tree && england
 		Name: tree
+		IsPlayerPalette: false
 	WithFacingSpriteBody:
 		RequiresCondition: !tree
 	WithSpriteTurret:
@@ -473,7 +474,7 @@ GTNK.squad:
 		UncloakSound: appear1md.aud
 		UncloakOn: Attack, Unload, Infiltrate, Demolish, Dock, Move, Damage, Heal
 		Palette: player
-		IsPlayerPalette: true
+		IsPlayerPalette: false
 		RequiresCondition: england && !cloak-force-disabled && !being-warped && !empdisable && !driver-dead
 		PauseOnCondition: invisibility
 	Cloak@CRATE-CLOAK:
@@ -6091,6 +6092,7 @@ RTNK:
 		EffectiveOwner: Self
 	WithMirageSpriteBody:
 		RequiresCondition: tree
+		IsPlayerPalette: false
 		Name: tree
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
@@ -6138,7 +6140,7 @@ RTNK:
 		UncloakSound: appear1md.aud
 		UncloakOn: Attack, Dock, Move, Damage, Heal
 		Palette: player
-		IsPlayerPalette: true
+		IsPlayerPalette: false
 		RequiresCondition: !cloak-force-disabled && !being-warped && !empdisable && !driver-dead
 		PauseOnCondition: invisibility
 	Cloak@CRATE-CLOAK:
@@ -6157,7 +6159,7 @@ RTNK:
 	WithDecoration@disguise:
 		RequiresCondition: hidden
 		Image: gpsdot
-		Sequence: Vehicle
+		Sequence: MirageTank
 		Palette: player
 		IsPlayerPalette: true
 		Position: Center
