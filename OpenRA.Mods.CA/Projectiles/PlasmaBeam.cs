@@ -360,7 +360,7 @@ namespace OpenRA.Mods.CA.Projectiles
 			CheckBlocked();
 			CalculateColors(direction);
 
-			if (++ticks >= info.Duration)
+			if (++ticks >= info.Duration || args.SourceActor.IsDead)
 			{
 				world.AddFrameEndTask(w => w.Remove(this));
 				return;
