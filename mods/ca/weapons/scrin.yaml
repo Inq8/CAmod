@@ -455,12 +455,12 @@ MiniRift:
 			Brick: 20
 		DamageTypes: BulletDeath
 		ValidRelationships: Ally
-	Warhead@3Slow: GrantExternalCondition
+	Warhead@3Slow: GrantExternalConditionCA
 		Range: 1c0
 		Duration: 10
 		Condition: slowed
 		ValidTargets: Vehicle, Ship, Cyborg
-	Warhead@4Slow: GrantExternalCondition
+	Warhead@4Slow: GrantExternalConditionCA
 		Range: 2c0
 		Duration: 10
 		Condition: slowed
@@ -765,7 +765,7 @@ EnervatorBolts:
 			Heavy: 100
 			Concrete: 100
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster, AirToGround
-	Warhead@2Sup: GrantExternalCondition
+	Warhead@2Sup: GrantExternalConditionCA
 		Range: 0c768
 		Duration: 75
 		Condition: suppression
@@ -801,7 +801,7 @@ EnervatorBoltsAA:
 		Falloff: 100, 50, 14, 0
 		ValidTargets: AirSmall
 		ValidRelationships: Enemy, Neutral
-	Warhead@2Sup: GrantExternalCondition
+	Warhead@2Sup: GrantExternalConditionCA
 		ValidTargets: Air, AirSmall
 
 InvaderLauncher:
@@ -994,7 +994,7 @@ IonCloudChargeZap:
 	-Warhead@1Dam:
 	-Warhead@2Smu:
 	-Warhead@3Eff:
-	Warhead@highlight: GrantExternalCondition
+	Warhead@highlight: GrantExternalConditionCA
 		Range: 0c511
 		Duration: 2
 		Condition: highlight
@@ -1036,7 +1036,7 @@ GravityStabilizerZap:
 		Width: 32
 	Warhead@1Dum: Dummy
 		ValidRelationships: Ally
-	Warhead@highlight: GrantExternalCondition
+	Warhead@highlight: GrantExternalConditionCA
 		Range: 0c511
 		Duration: 1
 		Condition: highlight
@@ -1069,9 +1069,9 @@ MothershipChargeZap:
 	Warhead@1Dum: Dummy
 		ValidRelationships: Ally
 		ValidTargets: MothershipRearmable
-	Warhead@highlight: GrantExternalCondition
+	Warhead@highlight: GrantExternalConditionCA
 		ValidTargets: MothershipRearmable
-	Warhead@rearm: GrantExternalCondition
+	Warhead@rearm: GrantExternalConditionCA
 		Range: 0c511
 		Duration: 80
 		Condition: mshp-rearm
@@ -1262,7 +1262,7 @@ SuppressionField:
 	Warhead@1Dam: SpreadDamage
 		Spread: 1c0
 		Damage: 1
-	Warhead@2sup: GrantExternalCondition
+	Warhead@2sup: GrantExternalConditionCA
 		Range: 3c0
 		Duration: 600
 		Condition: suppression
@@ -1270,7 +1270,7 @@ SuppressionField:
 
 SuppressionSiphonField:
 	Inherits: SuppressionField
-	Warhead@3siphon: GrantExternalCondition
+	Warhead@3siphon: GrantExternalConditionCA
 		Range: 3c0
 		Duration: 600
 		Condition: suppression-siphon
@@ -1365,7 +1365,7 @@ IonSurge:
 	ReloadDelay: 20
 	Range: 1c0
 	Projectile: InstantHit
-	Warhead@surge: GrantExternalCondition
+	Warhead@surge: GrantExternalConditionCA
 		Range: 6c0
 		Duration: 375
 		Condition: ionsurge
@@ -1488,12 +1488,12 @@ LeecherBeam:
 			Heavy: 15
 			Concrete: 15
 			Brick: 5
-	Warhead@DRAIN: GrantExternalCondition
+	Warhead@DRAIN: GrantExternalConditionCA
 		Range: 1c512
 		Duration: 100
 		Condition: powerdrain
 		ValidTargets: PowerDrainable
-	Warhead@SLOW: GrantExternalCondition
+	Warhead@SLOW: GrantExternalConditionCA
 		Range: 0c768
 		Duration: 30
 		Condition: slowed
@@ -1631,7 +1631,7 @@ AtomizerBolts:
 			Heavy: 100
 			Concrete: 90
 		DamageTypes: Prone50Percent, AtomizedDeath
-	Warhead@atomize: GrantExternalCondition
+	Warhead@atomize: GrantExternalConditionCA
 		Range: 0c768
 		Duration: 155
 		Condition: atomized
@@ -1642,7 +1642,7 @@ AtomizerBolts:
 		ExplosionPalette: scrin
 		Image: atmzbolthit
 		ImpactSounds: atomizer-hit1.aud
-	Warhead@red: GrantExternalCondition
+	Warhead@red: GrantExternalConditionCA
 		Range: 0c768
 		Duration: 2
 		Condition: redhighlight
@@ -1677,12 +1677,12 @@ AtomizerBoltsAA:
 			Light: 100
 			Concrete: 100
 			Brick: 100
-	Warhead@atomize: GrantExternalCondition
+	Warhead@atomize: GrantExternalConditionCA
 		ValidTargets: Air, AirSmall
 		Range: 1c512
 	Warhead@3Eff: CreateEffect
 		ValidTargets: Air, AirSmall
-	Warhead@red: GrantExternalCondition
+	Warhead@red: GrantExternalConditionCA
 		ValidTargets: Air, AirSmall
 		Range: 1c512
 
@@ -1697,7 +1697,7 @@ AtomizeSpreadInit:
 AtomizeSpread:
 	Range: 1c512
 	Projectile: InstantHit
-	Warhead@cond: GrantExternalCondition
+	Warhead@cond: GrantExternalConditionCA
 		Range: 0c512
 		Duration: 120
 		Condition: atomized
@@ -1753,7 +1753,7 @@ MindSparkSpawnerMaster:
 		ForceGround: false
 		ValidTargets: Ground, Water, Trees
 		Delay: 8
-	Warhead@Suppress: GrantExternalCondition
+	Warhead@Suppress: GrantExternalConditionCA
 		Range: 2c0
 		Duration: 325
 		Condition: suppression
@@ -1765,7 +1765,7 @@ MindSparkSpawnerSlave:
 	-Warhead@2Eff:
 	Warhead@Spawn: SpawnActor
 		-Delay:
-	Warhead@Suppress: GrantExternalCondition
+	Warhead@Suppress: GrantExternalConditionCA
 		-Delay:
 
 MindSparkZap:

@@ -3041,6 +3041,12 @@ BGGY:
 	WithPalettedOverlay@Decoy:
 		Palette: decoy
 		ValidRelationships: Ally
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@IronCurtainImmune:
+		TargetTypes: IronCurtainImmune
+	Targetable@ChronoshiftImmune:
+		TargetTypes: ChronoshiftImmune
 
 FTNK.Decoy:
 	Inherits: FTNK
@@ -3058,8 +3064,6 @@ FTNK.Decoy:
 		Weapon: DecoyDespawn
 		EmptyWeapon: DecoyDespawn
 		-RequiresCondition:
-	Targetable@MindControlImmune:
-		TargetTypes: MindControlImmune
 	-ActorLostNotification:
 	-Buildable:
 	-ProducibleWithLevel:
@@ -3088,10 +3092,6 @@ FTNK.Decoy:
 	-GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 	-UpdatesPlayerStatistics:
 	-RevealOnDeath:
-	-WithPalettedOverlay@IRONCURTAIN:
-	-DamageMultiplier@IRONCURTAIN:
-	-TimedConditionBar@IRONCURTAIN:
-	-ExternalCondition@INVULNERABILITY:
 
 HFTK.Decoy:
 	Inherits: HFTK
@@ -3114,8 +3114,6 @@ HFTK.Decoy:
 		Weapon: DecoyDespawn
 		EmptyWeapon: DecoyDespawn
 		-RequiresCondition:
-	Targetable@MindControlImmune:
-		TargetTypes: MindControlImmune
 	-ActorLostNotification:
 	-Buildable:
 	-ProducibleWithLevel:
@@ -3144,10 +3142,6 @@ HFTK.Decoy:
 	-GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 	-UpdatesPlayerStatistics:
 	-RevealOnDeath:
-	-WithPalettedOverlay@IRONCURTAIN:
-	-DamageMultiplier@IRONCURTAIN:
-	-TimedConditionBar@IRONCURTAIN:
-	-ExternalCondition@INVULNERABILITY:
 
 APC2:
 	Inherits: ^TankTD

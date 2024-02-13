@@ -796,7 +796,7 @@ SNIPER.vehicle:
 		ImpactSounds: splash9.aud
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
-	Warhead@Concussion: GrantExternalCondition
+	Warhead@Concussion: GrantExternalConditionCA
 		Range: 0c256
 		Duration: 75
 		Condition: concussion
@@ -805,7 +805,7 @@ SNIPER.vehicle:
 SNIPER.vehicleElite:
 	Inherits: SNIPER.vehicle
 	Report: ijarwe2a.aud
-	Warhead@Concussion: GrantExternalCondition
+	Warhead@Concussion: GrantExternalConditionCA
 		InvalidTargets: DriverKillLow
 	Warhead@DriverKill: ChangeOwnerToNeutral
 		ValidTargets: DriverKillLow
@@ -813,7 +813,7 @@ SNIPER.vehicleElite:
 		ValidRelationships: Enemy
 		CargoEffect: Block
 		Range: 0c511
-	Warhead@highlight: GrantExternalCondition
+	Warhead@highlight: GrantExternalConditionCA
 		Range: 0c511
 		Duration: 2
 		Condition: highlight

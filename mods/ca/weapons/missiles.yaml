@@ -222,12 +222,12 @@ SeismicMissile:
 		Explosions: med_splash
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
-	Warhead@Concussion1: GrantExternalCondition
+	Warhead@Concussion1: GrantExternalConditionCA
 		Range: 1c512
 		Duration: 275
 		Condition: concussion
 		ValidTargets: Ground, Infantry, Vehicle, Ship
-	Warhead@Concussion2: GrantExternalCondition
+	Warhead@Concussion2: GrantExternalConditionCA
 		Range: 3c0
 		Duration: 175
 		Condition: concussion
@@ -260,7 +260,7 @@ Dragon.CRYO:
 		Explosions: cryohit
 		ExplosionPalette: ra2effect-ignore-lighting-alpha75
 		ImpactSounds: cryohit.aud
-	Warhead@chill: GrantExternalCondition
+	Warhead@chill: GrantExternalConditionCA
 		Condition: chilled
 		Duration: 60
 		Range: 0c341
@@ -646,7 +646,7 @@ RedEye.CRYO:
 		Explosions: cryohit
 		ExplosionPalette: ra2effect-ignore-lighting-alpha75
 		ImpactSounds: cryoblast.aud
-	Warhead@chill: GrantExternalCondition
+	Warhead@chill: GrantExternalConditionCA
 		Condition: chilled
 		Duration: 60
 		Range: 0c341
@@ -846,7 +846,7 @@ EMPRockets:
 			Wood: 40
 			Concrete: 30
 			Light: 60
-	Warhead@Emp: GrantExternalCondition
+	Warhead@Emp: GrantExternalConditionCA
 		Range: 0c768
 		Duration: 40
 		Condition: empdisable
@@ -1387,7 +1387,7 @@ IFVRocketsE.CRYO:
 		Explosions: cryohit
 		ExplosionPalette: ra2effect-ignore-lighting-alpha75
 		ImpactSounds: cryohit.aud
-	Warhead@chill: GrantExternalCondition
+	Warhead@chill: GrantExternalConditionCA
 		Condition: chilled
 		Duration: 60
 		Range: 0c341
@@ -1415,7 +1415,7 @@ IFVRocketsAAE.CRYO:
 		Explosions: cryohit
 		ExplosionPalette: ra2effect-ignore-lighting-alpha75
 		ImpactSounds: cryoblast.aud
-	Warhead@chill: GrantExternalCondition
+	Warhead@chill: GrantExternalConditionCA
 		Condition: chilled
 		Duration: 60
 		Range: 0c341
@@ -1498,7 +1498,7 @@ IFVRocketsAAE.CRYO:
 	Warhead@4Eff: CreateEffect
 		ImpactSounds: xplobig4.aud
 		Explosions: artillery_explosion
-	Warhead@Concussion: GrantExternalCondition
+	Warhead@Concussion: GrantExternalConditionCA
 		Range: 0c768
 		Duration: 70
 		Condition: concussion
@@ -1854,7 +1854,7 @@ ScrinTorp:
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: expnew16.aud, expnew17.aud
-	Warhead@green: GrantExternalCondition
+	Warhead@green: GrantExternalConditionCA
 		Range: 0c511
 		Duration: 2
 		Condition: greenhighlight
@@ -1878,7 +1878,7 @@ ScrinTorpAA:
 		Damage: 4000
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: expnew17.aud
-	Warhead@green: GrantExternalCondition
+	Warhead@green: GrantExternalConditionCA
 		Range: 0c511
 		Duration: 2
 		Condition: greenhighlight
@@ -1961,17 +1961,17 @@ CryoMissile:
 		Explosions: cryoblast
 		ExplosionPalette: ra2effect-ignore-lighting-alpha75
 		ImpactSounds: cryoblast.aud
-	Warhead@chill1: GrantExternalCondition
+	Warhead@chill1: GrantExternalConditionCA
 		Condition: chilled
 		Duration: 250
 		Range: 1c0
 		ValidRelationships: Enemy, Neutral
-	Warhead@chill2: GrantExternalCondition
+	Warhead@chill2: GrantExternalConditionCA
 		Condition: chilled
 		Duration: 200
 		Range: 2c0
 		ValidRelationships: Enemy, Neutral
-	Warhead@chillally: GrantExternalCondition
+	Warhead@chillally: GrantExternalConditionCA
 		Condition: chilled
 		Duration: 50
 		Range: 0c682
@@ -1996,11 +1996,11 @@ CryoMissileNHAW:
 		LaunchAngle: 3
 	Warhead@1Dam: SpreadDamage
 		Damage: 1000
-	Warhead@chill1: GrantExternalCondition
+	Warhead@chill1: GrantExternalConditionCA
 		Range: 1c512
-	Warhead@chill2: GrantExternalCondition
+	Warhead@chill2: GrantExternalConditionCA
 		Range: 3c0
-	Warhead@chillally: GrantExternalCondition
+	Warhead@chillally: GrantExternalConditionCA
 		Range: 1c341
 	Warhead@cryoresidue: CreateTintedCells
 		Level: 200
@@ -2082,7 +2082,7 @@ BlackEagleMissiles:
 		Damage: 22000
 		Versus:
 			Concrete: 75
-	Warhead@VeiledCondition: GrantExternalCondition
+	Warhead@VeiledCondition: GrantExternalConditionCA
 		Range: 2c512
 		Duration: 175
 		Condition: gapveiled
@@ -2104,7 +2104,7 @@ BlackEagleMissilesAA:
 		Image: MISSILE
 	Warhead@1Dam: SpreadDamage
 		Damage: 12000
-	Warhead@VeiledCondition: GrantExternalCondition
+	Warhead@VeiledCondition: GrantExternalConditionCA
 		Range: 2c512
 		Duration: 175
 		Condition: gapveiled

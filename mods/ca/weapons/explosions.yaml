@@ -797,13 +797,13 @@ MEMP:
 	Warhead@2Eff: CreateEffect
 		ExplosionPalette: tsunit-ignore-lighting-alpha75
 		Explosions: pulse_explosion3
-	Warhead@emp: GrantExternalCondition
+	Warhead@emp: GrantExternalConditionCA
 		Range: 5c0
 		Duration: 300
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle, Air
 		InvalidTargets: Defense
-	Warhead@empdef: GrantExternalCondition
+	Warhead@empdef: GrantExternalConditionCA
 		Range: 5c0
 		Duration: 600
 		Condition: empdisable
@@ -828,7 +828,7 @@ ChaosGas:
 		Explosions: gasring2
 		ExplosionPalette: caneon-ignore-lighting-alpha75
 		ImpactSounds: vchaatta.aud
-	Warhead@chaos: GrantExternalCondition
+	Warhead@chaos: GrantExternalConditionCA
 		Range: 3c0
 		Duration: 200
 		Condition: berserk
@@ -849,7 +849,7 @@ ChaosDroneExplodeSmall:
 		ExplosionPalette: caneon
 		ImpactSounds: firebl3.aud
 		ImpactActors: false
-	Warhead@chaos: GrantExternalCondition
+	Warhead@chaos: GrantExternalConditionCA
 		Range: 1c512
 
 CryoExplosion:
@@ -857,7 +857,7 @@ CryoExplosion:
 		Explosions: cryoblast
 		ExplosionPalette: ra2effect-ignore-lighting-alpha75
 		ImpactSounds: cryoblast.aud
-	Warhead@chill: GrantExternalCondition
+	Warhead@chill: GrantExternalConditionCA
 		Condition: chilled
 		Duration: 150
 		Range: 1c768
