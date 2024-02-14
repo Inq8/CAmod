@@ -342,7 +342,7 @@ InterloperLaser:
 DevourerLaser:
 	Inherits: ^ScrinPlasmaBeam
 	Report: devourer-fire1.aud, devourer-fire2.aud
-	Range: 7c512
+	Range: 7c0
 	ReloadDelay: 95
 	Projectile: PlasmaBeam
 		StartOffset: 0,360,0
@@ -350,9 +350,10 @@ DevourerLaser:
 		ImpactTicks: 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 1200
+		Damage: 1300
 		Versus:
 			None: 20
+			Wood: 45
 	Warhead@antiShip: SpreadDamage
 		ValidTargets: Water
 		Damage: 750
@@ -374,7 +375,7 @@ DevourerLaserCharged:
 		FollowingOffset: 0,-24,0
 		RecalculateDistortionInterval: 2
 	Warhead@1Dam: SpreadDamage
-		Damage: 1550
+		Damage: 1750
 		Versus:
 			None: 30
 			Light: 85
@@ -383,7 +384,7 @@ RiftCannon:
 	Inherits: ^ScrinLaser
 	Report: darkener-fire1.aud, darkener-fire2.aud
 	ReloadDelay: 120
-	Range: 7c512
+	Range: 7c0
 	Projectile: LaserZapCA
 		Duration: 20
 		Color: 000000FF
@@ -396,7 +397,8 @@ RiftCannon:
 		Damage: 2500
 		Versus:
 			None: 15
-			Light: 75
+			Wood: 45
+			Light: 100
 			Brick: 75
 		DamageTypes: BulletDeath
 	Warhead@2Dam: HealthPercentageDamage
@@ -435,7 +437,7 @@ MiniRift:
 		Falloff: 100, 70, 0
 		Versus:
 			None: 3
-			Wood: 30
+			Wood: 45
 			Light: 90
 			Heavy: 100
 			Concrete: 95
@@ -448,7 +450,7 @@ MiniRift:
 		Falloff: 100, 70, 0
 		Versus:
 			None: 3
-			Wood: 30
+			Wood: 45
 			Light: 90
 			Heavy: 100
 			Concrete: 95
