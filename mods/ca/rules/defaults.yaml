@@ -931,7 +931,7 @@
 		Step: 500
 		Delay: 75
 		StartIfBelow: 100
-		DamageCooldown: 200
+		DamageCooldown: 100
 		RequiresCondition: hospitalheal
 	ExternalCondition@HOSPITAL:
 		Condition: hospitalheal
@@ -3236,6 +3236,9 @@
 		Condition: on-tib
 		Range: 4c0
 		ValidRelationships: Ally, Neutral, Enemy
+	GrantConditionOnPrerequisite@FastRegrowth:
+		Condition: fast-regrowth
+		Prerequisites: global.fastregrowth
 
 ^Tree:
 	Inherits@1: ^SpriteActor

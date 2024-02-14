@@ -47,6 +47,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Target types that cannot be recalled.")]
 		public readonly BitSet<TargetableType> InvalidTargetTypes = default(BitSet<TargetableType>);
 
+		[Desc("Player relationships that can be recalled.")]
+		public readonly PlayerRelationship ValidRelationships = PlayerRelationship.Ally;
+
 		[CursorReference]
 		[Desc("Cursor to display when the targeted area is blocked.")]
 		public readonly string TargetBlockedCursor = "move-blocked";
@@ -176,6 +179,9 @@ namespace OpenRA.Mods.CA.Traits
 		public bool IsValidTarget(Actor a)
 		{
 			if (a == null || !a.IsInWorld || a.IsDead)
+				return false;
+
+			if (!info.ValidRelationships.HasRelationship(Self.Owner.RelationshipWith(a.Owner)))
 				return false;
 
 			var targetTypes = a.GetEnabledTargetTypes();

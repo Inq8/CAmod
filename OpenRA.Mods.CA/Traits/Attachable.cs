@@ -348,7 +348,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (!attachable.Info.ValidRelationships.HasRelationship(stance))
 				return false;
 
-			if (!attachable.Info.Types.Overlaps(target.GetAllTargetTypes()))
+			if (!attachable.Info.Types.Overlaps(target.GetEnabledTargetTypes()))
 				return false;
 
 			cursor = target.TraitsImplementing<AttachableTo>().Any(x => x.CanAttach(attachable)) ? attachable.Info.EnterCursor : attachable.Info.BlockedCursor;

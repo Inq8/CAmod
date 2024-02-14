@@ -483,13 +483,13 @@ PortaTeslaCharge:
 	-Report:
 	-Warhead@1Dam:
 	-Warhead@2Smu:
-	Warhead@charge: GrantExternalCondition
+	Warhead@charge: GrantExternalConditionCA
 		Range: 42
 		Duration: 70
 		Condition: charged
 		ValidRelationships: Ally
 		ValidTargets: TeslaBoost
-	Warhead@highlight: GrantExternalCondition
+	Warhead@highlight: GrantExternalConditionCA
 		Range: 0c511
 		Duration: 2
 		Condition: highlight
@@ -676,7 +676,7 @@ Repair:
 	-Warhead@2Dam:
 	-Warhead@3Dam:
 	-Warhead@4Dam:
-	Warhead@highlight: GrantExternalCondition
+	Warhead@highlight: GrantExternalConditionCA
 		Range: 0c511
 		Duration: 2
 		Condition: highlight
@@ -706,7 +706,7 @@ RepairFlash:
 	-Warhead@2Dam:
 	-Warhead@3Dam:
 	-Warhead@4Dam:
-	Warhead@highlight: GrantExternalCondition
+	Warhead@highlight: GrantExternalConditionCA
 		Range: 2c511
 		Duration: 2
 		Condition: highlight
@@ -714,7 +714,7 @@ RepairFlash:
 
 ShieldFlash:
 	Inherits: RepairFlash
-	Warhead@highlight: GrantExternalCondition
+	Warhead@highlight: GrantExternalConditionCA
 		Range: 2c511
 		Duration: 2
 		Condition: highlight
@@ -748,7 +748,7 @@ PlaceC4:
 		DeathTypes: ExplosionDeath
 		Range: 1
 	Warhead@TargetValidator: SpreadDamage
-	Warhead@highlight: GrantExternalCondition
+	Warhead@highlight: GrantExternalConditionCA
 		Range: 0c256
 		Duration: 2
 		Condition: highlight
@@ -764,7 +764,7 @@ PlaceC4Seal:
 		TriggerTime: 20
 		Type: c4seal
 		ScaleTriggerTimeWithValue: true
-	Warhead@highlight: GrantExternalCondition
+	Warhead@highlight: GrantExternalConditionCA
 		ValidTargets: Ground, Structure
 
 C4:
@@ -820,7 +820,7 @@ Ivanbomb:
 		AttachSounds: icraatta.aud
 		MissWeapon: DelayedTNT
 	Warhead@TargetValidator: SpreadDamage
-	Warhead@highlight: GrantExternalCondition
+	Warhead@highlight: GrantExternalConditionCA
 		Range: 0c256
 		Duration: 2
 		Condition: highlight
@@ -881,7 +881,7 @@ DefuseKit:
 		Width: 48
 		Duration: 4
 		Color: FFFFFF80
-	Warhead@flash: GrantExternalCondition
+	Warhead@flash: GrantExternalConditionCA
 		Range: 128
 		Duration: 3
 		Condition: detach
@@ -925,7 +925,7 @@ Hack:
 		Actors: camera.hacker
 		Range: 1
 		ImpactActors: false
-	Warhead@green: GrantExternalCondition
+	Warhead@green: GrantExternalConditionCA
 		Range: 0c511
 		Duration: 2
 		Condition: greenhighlight
@@ -978,7 +978,7 @@ MADTankDetonate:
 			Heavy: 0
 			Concrete: 100
 			Brick: 100
-	Warhead@Concussion: GrantExternalCondition
+	Warhead@Concussion: GrantExternalConditionCA
 		Range: 7c0
 		Duration: 150
 		Condition: concussion
@@ -1213,13 +1213,13 @@ EnlightenedEmp:
 		Jammable: false
 		TrailImage: smokey
 		TrailPalette: scrinplasma
-	Warhead@1Emp: GrantExternalCondition
+	Warhead@1Emp: GrantExternalConditionCA
 		Range: 0c896
 		Duration: 100
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle
 		InvalidTargets: Cyborg, Defense
-	Warhead@2Emp: GrantExternalCondition
+	Warhead@2Emp: GrantExternalConditionCA
 		Range: 0c896
 		Duration: 50
 		Condition: empdisable
@@ -1249,7 +1249,7 @@ VenomLaser:
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath, AirToGround
 		Versus:
 			None: 250
-			Wood: 60
+			Wood: 50
 			Concrete: 40
 			Light: 95
 			Heavy: 65
@@ -1270,6 +1270,7 @@ VenomLaser.UPG:
 		Spread: 42
 		Damage: 6325
 		Versus:
+			Wood: 60
 			Concrete: 55
 
 VenomLaserAA:
@@ -1517,12 +1518,12 @@ KirovClusterBomb:
 	Warhead@3Eff: CreateEffect
 		Explosions: large_artillery_explosion
 		ImpactSounds: artyhit.aud, artyhit2.aud, artyhit3.aud
-	Warhead@Concussion1: GrantExternalCondition
+	Warhead@Concussion1: GrantExternalConditionCA
 		Range: 0c768
 		Duration: 125
 		Condition: concussion
 		ValidTargets: Ground, Infantry, Vehicle, Ship
-	Warhead@Concussion2: GrantExternalCondition
+	Warhead@Concussion2: GrantExternalConditionCA
 		Range: 1c768
 		Duration: 35
 		Condition: concussion
@@ -1654,7 +1655,7 @@ SonicZap.UPG:
 		Color: 00ffcc25
 	Warhead@1Dam: SpreadDamage
 		Damage: 820
-	Warhead@4Conc: GrantExternalCondition
+	Warhead@4Conc: GrantExternalConditionCA
 		Range: 0c512
 		Duration: 75
 		Condition: concussion
@@ -1698,7 +1699,7 @@ GapBeam:
 		DistortionAnimation: 64
 		TrackTarget: true
 	Warhead@1Dum: Dummy
-	Warhead@Debuff: GrantExternalCondition
+	Warhead@Debuff: GrantExternalConditionCA
 		Range: 1c512
 		Duration: 15
 		Condition: gapveiled
@@ -1733,7 +1734,7 @@ VeilSmall:
 	ReloadDelay: 10
 	Range: 1c0
 	Projectile: InstantHit
-	Warhead@Debuff: GrantExternalCondition
+	Warhead@Debuff: GrantExternalConditionCA
 		Range: 2c512
 		Duration: 15
 		Condition: veiled
@@ -1746,21 +1747,21 @@ VeilSmall:
 
 VeilMedium:
 	Inherits: VeilSmall
-	Warhead@Debuff: GrantExternalCondition
+	Warhead@Debuff: GrantExternalConditionCA
 		Range: 4c768
 	Warhead@Cloud: CreateEffect
 		Inaccuracy: 3c768
 
 VeilLarge:
 	Inherits: VeilSmall
-	Warhead@Debuff: GrantExternalCondition
+	Warhead@Debuff: GrantExternalConditionCA
 		Range: 7c0
 	Warhead@Cloud: CreateEffect
 		Inaccuracy: 6c0
 
 VeilFull:
 	Inherits: VeilSmall
-	Warhead@Debuff: GrantExternalCondition
+	Warhead@Debuff: GrantExternalConditionCA
 		Range: 9c256
 	Warhead@Cloud: CreateEffect
 		Inaccuracy: 7c512
@@ -1959,13 +1960,13 @@ OrcaBomb:
 	Warhead@4Eff: CreateEffect
 		Explosions: artillery_explosion
 		ValidTargets: Ground, Ship, Trees
-	Warhead@emp: GrantExternalCondition
+	Warhead@emp: GrantExternalConditionCA
 		Range: 1c512
 		Duration: 375
 		Condition: empdisable
 		ValidTargets: Ground, Structure, Vehicle
 		InvalidTargets: Defense
-	Warhead@empdef: GrantExternalCondition
+	Warhead@empdef: GrantExternalConditionCA
 		Range: 1c512
 		Duration: 625
 		Condition: empdisable
@@ -2011,12 +2012,12 @@ MicrowaveZap:
 		Falloff: 100, 37, 14, 0
 		Damage: 30000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
-	Warhead@emp: GrantExternalCondition
+	Warhead@emp: GrantExternalConditionCA
 		Range: 0c511
 		Duration: 100
 		Condition: empdisable
 		ValidTargets: Vehicle
-	Warhead@empdef: GrantExternalCondition
+	Warhead@empdef: GrantExternalConditionCA
 		Range: 0c511
 		Duration: 100
 		Condition: empdisable
@@ -2034,12 +2035,12 @@ MicrowaveZap.UPG:
 		InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air
 		CargoEffect: Kill
 		Range: 0c511
-	Warhead@emp: GrantExternalCondition
+	Warhead@emp: GrantExternalConditionCA
 		Range: 1c0
 		ValidTargets: Vehicle
-	Warhead@empdef: GrantExternalCondition
+	Warhead@empdef: GrantExternalConditionCA
 		Duration: 200
-	Warhead@highlight: GrantExternalCondition
+	Warhead@highlight: GrantExternalConditionCA
 		Range: 0c511
 		Duration: 2
 		Condition: highlight
@@ -2129,7 +2130,7 @@ Flare:
 		ZOffset: 4096
 	Warhead@1Dam: TargetDamage
 		ValidTargets: Structure
-	Warhead@2Con: GrantExternalCondition
+	Warhead@2Con: GrantExternalConditionCA
 		ValidTargets: Structure
 		Range: 0c32
 		Duration: 8
@@ -2167,7 +2168,7 @@ ChaosCloud:
 	Range: 1c0
 	ValidTargets: Ground, Water
 	Projectile: InstantHit
-	Warhead@1Cond: GrantExternalCondition
+	Warhead@1Cond: GrantExternalConditionCA
 		ValidTargets: Ground, Vehicle
 		Range: 1c512
 		Duration: 50
@@ -2245,7 +2246,7 @@ RadBeamWeapon:
 		Falloff: 100, 37, 25, 15, 0
 		ValidTargets: Infantry
 		DamageTypes: RadiationDeath
-	Warhead@2irrad: GrantExternalCondition
+	Warhead@2irrad: GrantExternalConditionCA
 		Range: 0c256
 		Duration: 250
 		Condition: irradiated
@@ -2369,7 +2370,7 @@ CyCannon:
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: expnew16.aud, expnew17.aud
-	Warhead@green: GrantExternalCondition
+	Warhead@green: GrantExternalConditionCA
 		Range: 0c511
 		Duration: 2
 		Condition: greenhighlight
@@ -2404,7 +2405,7 @@ NeutronCannonAA:
 	Warhead@ShieldDamage: SpreadDamage
 		Damage: 250
 		ValidTargets: Shielded
-	Warhead@ShieldWarp: GrantExternalCondition
+	Warhead@ShieldWarp: GrantExternalConditionCA
 		Range: 0c512
 		Duration: 10
 		Condition: shield-warped
@@ -2496,13 +2497,13 @@ SonicPulse.UPG:
 		Explosions: sonicblastupg1, sonicblastupg2
 	Warhead@3Eff: CreateEffect
 		Explosions: sonicpulseupg1, sonicpulseupg2
-	Warhead@ConcussionVehicles: GrantExternalCondition
+	Warhead@ConcussionVehicles: GrantExternalConditionCA
 		Range: 1c0
 		Duration: 150
 		Condition: concussion
 		ValidTargets: Vehicle, Ship
 		ValidRelationships: Enemy, Neutral
-	Warhead@ConcussionInfantry: GrantExternalCondition
+	Warhead@ConcussionInfantry: GrantExternalConditionCA
 		Range: 1c0
 		Duration: 25
 		Condition: concussion
@@ -2557,7 +2558,7 @@ DisruptorPulse.Amp:
 	Warhead@2Eff: CreateFacingEffect
 		Explosions: sonicwaveupg1, sonicwaveupg2
 		ExplosionPalette: effect
-	Warhead@4Conc: GrantExternalCondition
+	Warhead@4Conc: GrantExternalConditionCA
 		Range: 0c768
 		Duration: 75
 		Condition: concussion
@@ -2619,7 +2620,7 @@ JDAM:
 		RandomClusterCount: 3
 		Dimensions: 3,3
 		Footprint: xxx xxx xxx
-	Warhead@Concussion: GrantExternalCondition
+	Warhead@Concussion: GrantExternalConditionCA
 		Range: 3c0
 		Duration: 70
 		Condition: concussion
@@ -2684,7 +2685,7 @@ AttachShadowBeacon:
 		ValidTargets: ShadowBeacon
 	Warhead@TargetValidator: SpreadDamage
 		ValidTargets: ShadowBeacon
-	Warhead@highlight: GrantExternalCondition
+	Warhead@highlight: GrantExternalConditionCA
 		Range: 341
 		Duration: 2
 		Condition: redhighlight
@@ -2857,7 +2858,7 @@ MineDefuser:
 		Damage: 12000
 		ValidTargets: Mine
 		Delay: 5
-	Warhead@1Def: GrantExternalCondition
+	Warhead@1Def: GrantExternalConditionCA
 		Condition: defused
 		Range: 0c511
 		Duration: 25
@@ -2952,13 +2953,13 @@ ShadeEmp:
 			Concrete: 75
 			Brick: 5
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath, AirToGround
-	Warhead@1Emp: GrantExternalCondition
+	Warhead@1Emp: GrantExternalConditionCA
 		Range: 1c256
 		Duration: 325
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle, Defense
 		InvalidTargets: Cyborg
-	Warhead@2Emp: GrantExternalCondition
+	Warhead@2Emp: GrantExternalConditionCA
 		Range: 1c256
 		Duration: 125
 		Condition: empdisable
@@ -3090,7 +3091,7 @@ FloatingDiscLaser:
 FloatingDiscPowerDrainer:
 	Inherits: ^FloatingDiscDrainer
 	ValidTargets:	PowerDrainable
-	Warhead@PowerDrain: GrantExternalCondition
+	Warhead@PowerDrain: GrantExternalConditionCA
 		Range: 0c128
 		Duration: 11
 		Condition: discpowerdrain
@@ -3100,7 +3101,7 @@ FloatingDiscPowerDrainer:
 FloatingDiscResourceDrainer:
 	Inherits: ^FloatingDiscDrainer
 	ValidTargets:	ResourceDrainable
-	Warhead@ResourceDrain: GrantExternalCondition
+	Warhead@ResourceDrain: GrantExternalConditionCA
 		Range: 0c128
 		Duration: 11
 		Condition: resourcedrain

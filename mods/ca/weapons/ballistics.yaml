@@ -488,12 +488,12 @@ TitanGun:
 	Warhead@3Eff: CreateEffect
 		Explosions: large_artillery_explosion
 		ImpactSounds: artyhit.aud, artyhit2.aud, artyhit3.aud
-	Warhead@Concussion1: GrantExternalCondition
+	Warhead@Concussion1: GrantExternalConditionCA
 		Range: 0c768
 		Duration: 150
 		Condition: concussion
 		ValidTargets: Ground, Infantry, Vehicle, Ship
-	Warhead@Concussion2: GrantExternalCondition
+	Warhead@Concussion2: GrantExternalConditionCA
 		Range: 1c768
 		Duration: 50
 		Condition: concussion
@@ -638,8 +638,8 @@ GrenadeJJ:
 		Falloff: 100, 50, 28, 18, 12, 6, 0
 		Versus:
 			None: 150
-			Wood: 65
-			Concrete: 100
+			Wood: 80
+			Concrete: 80
 			Heavy: 20
 			Light: 95
 		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated, AirToGround
@@ -652,7 +652,7 @@ EMPGrenade:
 		Versus:
 			Concrete: 85
 		DamageTypes: Prone50Percent, TriggerProne, ElectricityDeath
-	Warhead@5emp: GrantExternalCondition
+	Warhead@5emp: GrantExternalConditionCA
 		Range: 0c768
 		Duration: 40
 		Condition: empdisable
@@ -753,17 +753,17 @@ CryoMortar:
 		Explosions: cryohit
 		ExplosionPalette: ra2effect-ignore-lighting-alpha75
 		ImpactSounds: cryoblast.aud
-	Warhead@chill1: GrantExternalCondition
+	Warhead@chill1: GrantExternalConditionCA
 		Condition: chilled
 		Duration: 250
 		Range: 1c0
 		ValidRelationships: Enemy, Neutral
-	Warhead@chill2: GrantExternalCondition
+	Warhead@chill2: GrantExternalConditionCA
 		Condition: chilled
 		Duration: 200
 		Range: 2c0
 		ValidRelationships: Enemy, Neutral
-	Warhead@chillally: GrantExternalCondition
+	Warhead@chillally: GrantExternalConditionCA
 		Condition: chilled
 		Duration: 50
 		Range: 0c682
@@ -784,7 +784,7 @@ SonicMortar:
 			Light: 60
 			Heavy: 30
 			Concrete: 100
-	Warhead@concussion: GrantExternalCondition
+	Warhead@concussion: GrantExternalConditionCA
 		Condition: concussion
 		Duration: 75
 		Range: 1c768

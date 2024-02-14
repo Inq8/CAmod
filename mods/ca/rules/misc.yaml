@@ -489,6 +489,10 @@ MINE:
 		Terrain: Ore
 	SeedsResource:
 		Interval: 70
+		RequiresCondition: !fast-regrowth
+	SeedsResource@FastRegrowth:
+		Interval: 35
+		RequiresCondition: fast-regrowth
 	MapEditorData:
 		Categories: Resource spawn
 	RequiresSpecificOwners:
@@ -497,6 +501,9 @@ MINE:
 		Condition: on-ore
 		Range: 4c0
 		ValidRelationships: Ally, Neutral, Enemy
+	GrantConditionOnPrerequisite@FastRegrowth:
+		Condition: fast-regrowth
+		Prerequisites: global.fastregrowth
 
 GMINE:
 	Inherits@1: ^SpriteActor
@@ -517,6 +524,12 @@ GMINE:
 		Terrain: Gems
 	SeedsResource:
 		ResourceType: Gems
+		Interval: 65
+		RequiresCondition: !fast-regrowth
+	SeedsResource@FastRegrowth:
+		ResourceType: Gems
+		Interval: 35
+		RequiresCondition: fast-regrowth
 	MapEditorData:
 		Categories: Resource spawn
 	RequiresSpecificOwners:
@@ -525,6 +538,9 @@ GMINE:
 		Condition: on-gems
 		Range: 4c0
 		ValidRelationships: Ally, Neutral, Enemy
+	GrantConditionOnPrerequisite@FastRegrowth:
+		Condition: fast-regrowth
+		Prerequisites: global.fastregrowth
 
 RAILMINE:
 	Inherits@1: ^SpriteActor
@@ -945,6 +961,11 @@ SPLIT2:
 	SeedsResource:
 		ResourceType: Tiberium
 		Interval: 70
+		RequiresCondition: !fast-regrowth
+	SeedsResource@FastRegrowth:
+		ResourceType: Tiberium
+		Interval: 35
+		RequiresCondition: fast-regrowth
 	AppearsOnMapPreview:
 		Terrain: Tiberium
 	MapEditorData:
@@ -958,6 +979,8 @@ SPLITBLUE:
 	RenderSprites:
 		Image: split3
 	SeedsResource:
+		ResourceType: BlueTiberium
+	SeedsResource@FastRegrowth:
 		ResourceType: BlueTiberium
 	AppearsOnMapPreview:
 		Terrain: BlueTiberium
@@ -1056,16 +1079,16 @@ jamming.field:
 		Delay: 225
 	WithRangeCircle@JAMMER:
 		Type: JammingField
-		Range: 5c0
+		Range: 6c0
 		Visible: Always
 		ValidRelationships: Ally, Enemy, Neutral
 		Color: c0c0d4AA
 	ProximityExternalCondition@WEAPJAMMER:
-		Range: 5c0
+		Range: 6c0
 		ValidRelationships: Enemy, Neutral
 		Condition: weapjammed
 	ProximityExternalCondition@JAMMER:
-		Range: 5c0
+		Range: 6c0
 		ValidRelationships: Enemy, Neutral
 		Condition: jammed
 	Targetable@JFIELD:

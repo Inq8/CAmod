@@ -222,12 +222,12 @@ SeismicMissile:
 		Explosions: med_splash
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
-	Warhead@Concussion1: GrantExternalCondition
+	Warhead@Concussion1: GrantExternalConditionCA
 		Range: 1c512
 		Duration: 275
 		Condition: concussion
 		ValidTargets: Ground, Infantry, Vehicle, Ship
-	Warhead@Concussion2: GrantExternalCondition
+	Warhead@Concussion2: GrantExternalConditionCA
 		Range: 3c0
 		Duration: 175
 		Condition: concussion
@@ -260,7 +260,7 @@ Dragon.CRYO:
 		Explosions: cryohit
 		ExplosionPalette: ra2effect-ignore-lighting-alpha75
 		ImpactSounds: cryohit.aud
-	Warhead@chill: GrantExternalCondition
+	Warhead@chill: GrantExternalConditionCA
 		Condition: chilled
 		Duration: 60
 		Range: 0c341
@@ -278,7 +278,7 @@ Dragon.TibCore:
 		ContrailStartColorAlpha: 170
 		ContrailStartWidth: 0c40
 	Warhead@1Dam: SpreadDamage
-		Damage: 7175
+		Damage: 5125
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: tibcorehit1.aud, tibcorehit2.aud, tibcorehit3.aud
 	Warhead@tib: CreateEffect
@@ -319,7 +319,7 @@ DragonBATF:
 	Projectile: MissileCA
 		RangeLimit: 7c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 3000
+		Damage: 3750
 
 DragonBATF.TD:
 	Inherits: DragonBATF
@@ -337,7 +337,7 @@ DragonBATF.CRYO:
 	Projectile: MissileCA
 		RangeLimit: 7c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 3000
+		Damage: 3750
 
 DragonBATF.TibCore:
 	Inherits: Dragon.TibCore
@@ -345,13 +345,13 @@ DragonBATF.TibCore:
 	Projectile: MissileCA
 		RangeLimit: 9c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 3250
+		Damage: 3850
 
 DragonBATF.CYB.TibCore:
 	Inherits: DragonBATF.TibCore
 	Report: itanweaa.aud, itanweab.aud, itanweac.aud
 	Warhead@1Dam: SpreadDamage
-		Damage: 4400
+		Damage: 5400
 
 HellfireAG:
 	Inherits: ^AirToGroundMissile
@@ -646,7 +646,7 @@ RedEye.CRYO:
 		Explosions: cryohit
 		ExplosionPalette: ra2effect-ignore-lighting-alpha75
 		ImpactSounds: cryoblast.aud
-	Warhead@chill: GrantExternalCondition
+	Warhead@chill: GrantExternalConditionCA
 		Condition: chilled
 		Duration: 60
 		Range: 0c341
@@ -801,7 +801,7 @@ TOW:
 	Range: 5c0
 	ValidTargets: Vehicle, Structure
 	Report: tow1.aud, tow2.aud
-	ReloadDelay: 150
+	ReloadDelay: 130
 	Projectile: MissileCA
 		Speed: 180
 		Inaccuracy: 0
@@ -820,6 +820,7 @@ TOW:
 			Wood: 40
 			Concrete: 30
 			Light: 40
+		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath, TankBuster
 
 EMPRockets:
 	Inherits: ^AntiGroundMissile
@@ -845,7 +846,7 @@ EMPRockets:
 			Wood: 40
 			Concrete: 30
 			Light: 60
-	Warhead@Emp: GrantExternalCondition
+	Warhead@Emp: GrantExternalConditionCA
 		Range: 0c768
 		Duration: 40
 		Condition: empdisable
@@ -1386,7 +1387,7 @@ IFVRocketsE.CRYO:
 		Explosions: cryohit
 		ExplosionPalette: ra2effect-ignore-lighting-alpha75
 		ImpactSounds: cryohit.aud
-	Warhead@chill: GrantExternalCondition
+	Warhead@chill: GrantExternalConditionCA
 		Condition: chilled
 		Duration: 60
 		Range: 0c341
@@ -1414,7 +1415,7 @@ IFVRocketsAAE.CRYO:
 		Explosions: cryohit
 		ExplosionPalette: ra2effect-ignore-lighting-alpha75
 		ImpactSounds: cryoblast.aud
-	Warhead@chill: GrantExternalCondition
+	Warhead@chill: GrantExternalConditionCA
 		Condition: chilled
 		Duration: 60
 		Range: 0c341
@@ -1497,7 +1498,7 @@ IFVRocketsAAE.CRYO:
 	Warhead@4Eff: CreateEffect
 		ImpactSounds: xplobig4.aud
 		Explosions: artillery_explosion
-	Warhead@Concussion: GrantExternalCondition
+	Warhead@Concussion: GrantExternalConditionCA
 		Range: 0c768
 		Duration: 70
 		Condition: concussion
@@ -1853,7 +1854,7 @@ ScrinTorp:
 	Warhead@3Eff: CreateEffect
 		Explosions: large_explosion
 		ImpactSounds: expnew16.aud, expnew17.aud
-	Warhead@green: GrantExternalCondition
+	Warhead@green: GrantExternalConditionCA
 		Range: 0c511
 		Duration: 2
 		Condition: greenhighlight
@@ -1877,7 +1878,7 @@ ScrinTorpAA:
 		Damage: 4000
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: expnew17.aud
-	Warhead@green: GrantExternalCondition
+	Warhead@green: GrantExternalConditionCA
 		Range: 0c511
 		Duration: 2
 		Condition: greenhighlight
@@ -1960,17 +1961,17 @@ CryoMissile:
 		Explosions: cryoblast
 		ExplosionPalette: ra2effect-ignore-lighting-alpha75
 		ImpactSounds: cryoblast.aud
-	Warhead@chill1: GrantExternalCondition
+	Warhead@chill1: GrantExternalConditionCA
 		Condition: chilled
 		Duration: 250
 		Range: 1c0
 		ValidRelationships: Enemy, Neutral
-	Warhead@chill2: GrantExternalCondition
+	Warhead@chill2: GrantExternalConditionCA
 		Condition: chilled
 		Duration: 200
 		Range: 2c0
 		ValidRelationships: Enemy, Neutral
-	Warhead@chillally: GrantExternalCondition
+	Warhead@chillally: GrantExternalConditionCA
 		Condition: chilled
 		Duration: 50
 		Range: 0c682
@@ -1995,11 +1996,11 @@ CryoMissileNHAW:
 		LaunchAngle: 3
 	Warhead@1Dam: SpreadDamage
 		Damage: 1000
-	Warhead@chill1: GrantExternalCondition
+	Warhead@chill1: GrantExternalConditionCA
 		Range: 1c512
-	Warhead@chill2: GrantExternalCondition
+	Warhead@chill2: GrantExternalConditionCA
 		Range: 3c0
-	Warhead@chillally: GrantExternalCondition
+	Warhead@chillally: GrantExternalConditionCA
 		Range: 1c341
 	Warhead@cryoresidue: CreateTintedCells
 		Level: 200
@@ -2081,7 +2082,7 @@ BlackEagleMissiles:
 		Damage: 22000
 		Versus:
 			Concrete: 75
-	Warhead@VeiledCondition: GrantExternalCondition
+	Warhead@VeiledCondition: GrantExternalConditionCA
 		Range: 2c512
 		Duration: 175
 		Condition: gapveiled
@@ -2103,7 +2104,7 @@ BlackEagleMissilesAA:
 		Image: MISSILE
 	Warhead@1Dam: SpreadDamage
 		Damage: 12000
-	Warhead@VeiledCondition: GrantExternalCondition
+	Warhead@VeiledCondition: GrantExternalConditionCA
 		Range: 2c512
 		Duration: 175
 		Condition: gapveiled

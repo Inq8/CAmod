@@ -496,7 +496,7 @@ U3.squad:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: ParadropInfantry
 		BuildPaletteOrder: 1000
-		Prerequisites: dome, ~infantry.usa, ~techlevel.medium
+		Prerequisites: radaroraircraft, ~infantry.usa, ~techlevel.medium
 		Description: Prepare five Guardian GIs for airdrop.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Aircraft, Buildings, Defenses
@@ -3774,7 +3774,7 @@ SEAL:
 	Tooltip:
 		Name: Navy SEAL
 	Health:
-		HP: 18000
+		HP: 16000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Buildable:
@@ -3844,6 +3844,8 @@ SEAL:
 	WithDecoration@COMMANDOSKULL:
 		Sequence: pip-seal
 	-Targetable@HERO:
+	-Targetable@MindControlImmune:
+	-Targetable@ChaosImmune:
 	GrantConditionOnHealingReceived@HEALINGCOOLDOWN:
 		RequiredHealing: 40000
 

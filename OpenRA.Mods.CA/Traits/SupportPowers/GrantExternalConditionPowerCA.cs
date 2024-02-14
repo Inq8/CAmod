@@ -36,7 +36,10 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly string OnFireSound = null;
 
 		[Desc("Target types that condition can be applied to. Leave empty for all types.")]
-		public readonly BitSet<TargetableType> ValidTargets = default(BitSet<TargetableType>);
+		public readonly BitSet<TargetableType> ValidTargets = default;
+
+		[Desc("Target types that condition can be applied to. Leave empty for all types.")]
+		public readonly BitSet<TargetableType> InvalidTargets = default;
 
 		[Desc("Player relationships which condition can be applied to.")]
 		public readonly PlayerRelationship ValidRelationships = PlayerRelationship.Ally;
@@ -197,7 +200,8 @@ namespace OpenRA.Mods.CA.Traits
 				.Where(a => a.IsInWorld
 					&& !a.IsDead
 					&& info.ValidRelationships.HasRelationship(Self.Owner.RelationshipWith(a.Owner))
-					&& (info.ValidTargets.IsEmpty || info.ValidTargets.Overlaps(a.GetAllTargetTypes()))
+					&& (info.ValidTargets.IsEmpty || info.ValidTargets.Overlaps(a.GetEnabledTargetTypes()))
+					&& (info.InvalidTargets.IsEmpty || !info.InvalidTargets.Overlaps(a.GetEnabledTargetTypes()))
 					&& a.TraitsImplementing<ExternalCondition>().Any(t => t.Info.Condition == info.Condition && t.CanGrantCondition(Self))
 					&& (!info.TargetMustBeVisible || Self.Owner.Shroud.IsVisible(a.Location))
 					&& a.CanBeViewedByPlayer(Self.Owner)

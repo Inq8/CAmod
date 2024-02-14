@@ -507,27 +507,14 @@ M1CarbineBATF:
 	-Report:
 	StartBurstReport: baocatta.aud, baocattb.aud, baocattc.aud
 	ReloadDelay: 10
-	Range: 6c0
 	Warhead@1Dam: SpreadDamage
-		Damage: 650
-		Versus:
-			None: 100
-			Wood: 15
-			Concrete: 15
-			Light: 25
-			Heavy: 5
+		Damage: 750
 
 M16CarbineBATF:
 	Inherits: M1CarbineBATF
 
 BATFGun:
 	Inherits: M1CarbineBATF
-	Range: 5c0
-	Warhead@1Dam: SpreadDamage
-		Damage: 1800
-		Versus:
-			Wood: 10
-			Concrete: 5
 
 M60mg:
 	Inherits: ^LightMG
@@ -809,7 +796,7 @@ SNIPER.vehicle:
 		ImpactSounds: splash9.aud
 		ValidTargets: Water, Underwater
 		InvalidTargets: Ship, Structure, Bridge
-	Warhead@Concussion: GrantExternalCondition
+	Warhead@Concussion: GrantExternalConditionCA
 		Range: 0c256
 		Duration: 75
 		Condition: concussion
@@ -818,7 +805,7 @@ SNIPER.vehicle:
 SNIPER.vehicleElite:
 	Inherits: SNIPER.vehicle
 	Report: ijarwe2a.aud
-	Warhead@Concussion: GrantExternalCondition
+	Warhead@Concussion: GrantExternalConditionCA
 		InvalidTargets: DriverKillLow
 	Warhead@DriverKill: ChangeOwnerToNeutral
 		ValidTargets: DriverKillLow
@@ -826,7 +813,7 @@ SNIPER.vehicleElite:
 		ValidRelationships: Enemy
 		CargoEffect: Block
 		Range: 0c511
-	Warhead@highlight: GrantExternalCondition
+	Warhead@highlight: GrantExternalConditionCA
 		Range: 0c511
 		Duration: 2
 		Condition: highlight
@@ -842,6 +829,10 @@ SNIPERBATF.UPG:
 
 SniperIFVGun:
 	Inherits: SNIPER.vehicle
+	Warhead@1Dam: SpreadDamage
+		Versus:
+			Light: 60
+			Heavy: 60
 
 CommandoIFVGun:
 	Inherits: SMG

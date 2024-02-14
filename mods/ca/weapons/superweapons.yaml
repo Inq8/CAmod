@@ -196,7 +196,7 @@ GeneticMutationBomb:
 		Velocity: 15, 0, -35
 		Acceleration: 0, 0, 0
 		Shadow: true
-	Warhead@COND: GrantExternalCondition
+	Warhead@COND: GrantExternalConditionCA
 		Range: 4c0
 		Duration: 16
 		Condition: geneticmutation
@@ -408,7 +408,7 @@ Empicbm:
 		ExplosionPalette: tseffect-ignore-lighting-alpha75
 		Explosions: pulse_explosion
 		ImpactSounds: empexpl.aud
-	Warhead@emp: GrantExternalCondition
+	Warhead@emp: GrantExternalConditionCA
 		Range: 5c0
 		Duration: 500
 		Condition: empdisable
@@ -475,12 +475,12 @@ EMPMissileLauncher:
 		ExplosionPalette: tseffect-ignore-lighting-alpha75
 		Explosions: pulse_explosion
 		ImpactSounds: empexpl.aud
-	Warhead@emp1: GrantExternalCondition
+	Warhead@emp1: GrantExternalConditionCA
 		Range: 2c256
 		Duration: 600
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle, Air
-	Warhead@emp2: GrantExternalCondition
+	Warhead@emp2: GrantExternalConditionCA
 		Range: 4c512
 		Duration: 300
 		Condition: empdisable
@@ -640,7 +640,7 @@ ForceShield:
 	Warhead@4Eff: CreateEffect
 		ExplosionPalette: effect-ignore-lighting-alpha85
 		Explosions: forceshield_effect
-	Warhead@fspower: GrantExternalCondition
+	Warhead@fspower: GrantExternalConditionCA
 		Range: 15c0
 		Duration: 500
 		Condition: forcedisabled
