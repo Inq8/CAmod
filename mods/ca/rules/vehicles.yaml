@@ -3299,33 +3299,58 @@ VULC:
 		Weapon: MGatt
 		LocalOffset: 220,0,350
 		MuzzleSequence: muzzle
-		PauseOnCondition: attacking-ground
+		PauseOnCondition: reload-ground
+		ReloadingCondition: reload-air
+		RequiresCondition: gattling < 2
+	Armament@GAT2:
+		Weapon: MGatt
+		LocalOffset: 220,0,350
+		MuzzleSequence: muzzle-huge
+		PauseOnCondition: reload-ground
+		ReloadingCondition: reload-air
+		RequiresCondition: gattling >= 2
 	Armament@GATG:
 		Name: secondary
 		Weapon: MGattG
 		LocalOffset: 321,0,85
 		MuzzleSequence: muzzle
-		PauseOnCondition: attacking-air
+		PauseOnCondition: reload-air
+		ReloadingCondition: reload-ground
+		RequiresCondition: gattling-ground < 2
+	Armament@GATG2:
+		Name: secondary
+		Weapon: MGattG
+		LocalOffset: 321,0,85
+		MuzzleSequence: muzzle-huge
+		PauseOnCondition: reload-air
+		ReloadingCondition: reload-ground
+		RequiresCondition: gattling-ground >= 2
 	FirepowerMultiplier@GAT1:
 		Modifier: 115
 		RequiresCondition: (attacking-air && gattling == 1) || (attacking-ground && gattling-ground == 1)
 	FirepowerMultiplier@GAT2:
 		Modifier: 130
-		RequiresCondition: (attacking-air && gattling == 2) || (attacking-ground && gattling-ground >= 2)
+		RequiresCondition: (attacking-air && gattling == 2) || (attacking-ground && (gattling-ground >= 2 && rank-veteran < 3))
 	FirepowerMultiplier@GAT3:
 		Modifier: 145
-		RequiresCondition: attacking-air && gattling >= 3
+		RequiresCondition: (attacking-air && gattling >= 3 || (attacking-ground && (gattling-ground >= 3 && rank-elite)))
+	AmbientSoundCA@ATTACKSOUNDINITIAL:
+		SoundFiles: vgatlo1a.aud
+		RequiresCondition: (attacking-air && gattling < 1) || (attacking-ground && gattling-ground < 1)
 	AmbientSoundCA@ATTACKSOUND1:
 		SoundFiles: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
+		FinalSound: vgatlo3a.aud
 		RequiresCondition: (attacking-air && gattling == 1) || (attacking-ground && gattling-ground == 1)
 	AmbientSoundCA@ATTACKSOUND2:
 		InitialSound: vgatlo4a.aud
 		SoundFiles: vgatlo5a.aud, vgatlo5b.aud
-		RequiresCondition: (attacking-air && gattling == 2) || (attacking-ground && gattling-ground >= 2)
+		FinalSound: vgatlo6a.aud
+		RequiresCondition: (attacking-air && gattling == 2) || (attacking-ground && (gattling-ground >= 2 && rank-veteran < 3))
 	AmbientSoundCA@ATTACKSOUND3:
-		InitialSound: vgatlo7a.aud
-		SoundFiles: vgatlo8a.aud, vgatlo8b.aud
-		RequiresCondition: attacking-air && gattling >= 3
+		InitialSound: vvullo7a.aud
+		SoundFiles: vvullo8a.aud, vvullo8b.aud
+		FinalSound: vvullo9a.aud
+		RequiresCondition: (attacking-air && gattling >= 3 || (attacking-ground && (gattling-ground >= 3 && rank-elite)))
 	GrantConditionOnAttackCA@ATTACKING-AIR:
 		ArmamentNames: primary
 		Condition: attacking-air
@@ -3336,7 +3361,7 @@ VULC:
 		RevokeDelay: 6
 	GrantConditionOnAttack:
 		Condition: gattling
-		RequiredShotsPerInstance: 1,2,4
+		RequiredShotsPerInstance: 2,4,6
 		MaximumInstances: 3
 		RevokeDelay: 40
 		RevokeOnNewTarget: False
@@ -3345,8 +3370,8 @@ VULC:
 	GrantConditionOnAttack@GROUND:
 		ArmamentNames: secondary
 		Condition: gattling-ground
-		RequiredShotsPerInstance: 1,4
-		MaximumInstances: 2
+		RequiredShotsPerInstance: 2,4,8
+		MaximumInstances: 3
 		RevokeDelay: 40
 		RevokeOnNewTarget: False
 		RevokeAll: True
@@ -3359,10 +3384,10 @@ VULC:
 		Offset: 0,0,150
 	WithMuzzleOverlay:
 	WithSpriteTurret:
-		RequiresCondition: !gattling-ground
+		RequiresCondition: !attacking-ground
 	WithSpriteTurret@GROUND:
 		Sequence: turret-ground
-		RequiresCondition: gattling-ground
+		RequiresCondition: attacking-ground
 	Cargo:
 		Types: Infantry
 		MaxWeight: 5
@@ -3630,6 +3655,9 @@ MTNK.Drone:
 	Voiced:
 		VoiceSet: DroneVoice
 		RequiresCondition: radarenabled
+	Voiced@OFFLINE:
+		VoiceSet: OfflineDroneVoice
+		RequiresCondition: !radarenabled
 	Targetable@MindControlImmune:
 		TargetTypes: MindControlImmune
 	Targetable@ChaosImmune:
@@ -3997,6 +4025,10 @@ HTNK.Drone:
 		Actor: HTNK.DRONE.Husk
 	Voiced:
 		VoiceSet: MamDroneVoice
+		RequiresCondition: radarenabled
+	Voiced@OFFLINE:
+		VoiceSet: OfflineDroneVoice
+		RequiresCondition: !radarenabled
 	Targetable@MindControlImmune:
 		TargetTypes: MindControlImmune
 	Targetable@ChaosImmune:
@@ -4672,7 +4704,7 @@ BTR:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 21
-		Prerequisites: ~vehicles.soviet, ~techlevel.low
+		Prerequisites: ~vehicles.soviet, ~!gattling.upgrade, ~techlevel.low
 		Description: Tough infantry transport.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor, Aircraft
@@ -4699,19 +4731,19 @@ BTR:
 	Turreted:
 		TurnSpeed: 40
 		Offset: 5,0,70
-	Armament@1:
+	Armament@GROUND:
+		Name: secondary
 		Weapon: FLAK-23-AG
 		LocalOffset: 392,0,276
 		MuzzleSequence: muzzle
-	Armament@2AA:
-		Name: secondary
+	Armament@AIR:
 		Weapon: FLAK-23-AA
 		LocalOffset: 392,0,276
 		MuzzleSequence: muzzle
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
-	WithSpriteTurret@TUR:
+	WithSpriteTurret@GROUND:
 		Sequence: turret
 	Cargo:
 		Types: Infantry
@@ -4727,6 +4759,12 @@ BTR:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
+	Upgradeable@GATTLING:
+		Type: gattling.upgrade
+		Actor: btr.yuri
+		UpgradeAtActors: fix, rep, srep
+		BuildDuration: 100
+		RequiresCondition: !mindcontrolled
 
 BTR.AI:
 	Inherits: BTR
@@ -4735,6 +4773,138 @@ BTR.AI:
 		Image: BTR
 	Buildable:
 		Prerequisites: ~botplayer, ~vehicles.soviet, ~techlevel.low
+	Cargo:
+		InitialUnits: E1,E1,E1,E3,E4
+
+BTR.YURI:
+	Inherits: BTR
+	RenderSprites:
+		Image: btry
+	Valued:
+		Cost: 700
+	Buildable:
+		Queue: VehicleSQ, VehicleMQ
+		BuildPaletteOrder: 21
+		Prerequisites: ~gattling.upgrade, ~vehicles.soviet, ~techlevel.low
+		Description: Tough infantry transport with armament improvements.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor, Aircraft
+		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses
+	Tooltip:
+		Name: Armored Personnel Carrier (Gattling BTR)
+	Armament@AIR:
+		Weapon: MGatt
+		LocalOffset: 320,50,350, 320,-50,350
+		MuzzleSequence: muzzle
+		PauseOnCondition: reload-ground
+		ReloadingCondition: reload-air
+		RequiresCondition: gattling < 2
+	Armament@AIR2:
+		Weapon: MGatt
+		LocalOffset: 320,50,350, 320,-50,350
+		MuzzleSequence: muzzle-huge
+		PauseOnCondition: reload-ground
+		ReloadingCondition: reload-air
+		RequiresCondition: gattling >= 2
+	Armament@GROUND:
+		Name: secondary
+		Weapon: MGattG
+		LocalOffset: 421,50,165, 421,-50,165
+		MuzzleSequence: muzzle
+		PauseOnCondition: reload-air
+		ReloadingCondition: reload-ground
+		RequiresCondition: gattling-ground < 2
+	Armament@GROUND2:
+		Name: secondary
+		Weapon: MGattG
+		LocalOffset: 421,50,165, 421,-50,165
+		MuzzleSequence: muzzle-huge
+		PauseOnCondition: reload-air
+		ReloadingCondition: reload-ground
+		RequiresCondition: gattling-ground >= 2
+	FirepowerMultiplier@GAT1:
+		Modifier: 115
+		RequiresCondition: (attacking-air && gattling == 1) || (attacking-ground && gattling-ground == 1)
+	FirepowerMultiplier@GAT2:
+		Modifier: 130
+		RequiresCondition: (attacking-air && gattling == 2) || (attacking-ground && (gattling-ground >= 2 && rank-veteran < 3))
+	FirepowerMultiplier@GAT3:
+		Modifier: 145
+		RequiresCondition: (attacking-air && gattling >= 3 || (attacking-ground && (gattling-ground >= 3 && rank-elite)))
+	AmbientSoundCA@ATTACKSOUNDINITIAL:
+		SoundFiles: vgatlo1a.aud
+		RequiresCondition: (attacking-air && gattling < 1) || (attacking-ground && gattling-ground < 1)
+	AmbientSoundCA@ATTACKSOUND1:
+		SoundFiles: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
+		FinalSound: vgatlo3a.aud
+		RequiresCondition: (attacking-air && gattling == 1) || (attacking-ground && gattling-ground == 1)
+	AmbientSoundCA@ATTACKSOUND2:
+		InitialSound: vgatlo4a.aud
+		SoundFiles: vgatlo5a.aud, vgatlo5b.aud
+		FinalSound: vgatlo6a.aud
+		RequiresCondition: (attacking-air && gattling == 2) || (attacking-ground && (gattling-ground >= 2 && rank-veteran < 3))
+	AmbientSoundCA@ATTACKSOUND3:
+		InitialSound: vgatlo7a.aud
+		SoundFiles: vgatlo8a.aud, vgatlo8b.aud
+		FinalSound: vgatlo9a.aud
+		RequiresCondition: (attacking-air && gattling >= 3 || (attacking-ground && (gattling-ground >= 3 && rank-elite)))
+	AmbientSoundCA@ATTACKSOUND4:
+		InitialSound: vgatlo7a.aud
+		SoundFiles: vgatlo8a.aud, vgatlo8b.aud
+		FinalSound: vgatlo9a.aud
+		RequiresCondition: (attacking-air && gattling >= 3 || (attacking-ground && (gattling-ground >= 3 && rank-elite)))
+	GrantConditionOnAttackCA@ATTACKING-AIR:
+		ArmamentNames: primary
+		Condition: attacking-air
+		RevokeDelay: 6
+	GrantConditionOnAttackCA@ATTACKING-GROUND:
+		ArmamentNames: secondary
+		Condition: attacking-ground
+		RevokeDelay: 6
+	GrantConditionOnAttack:
+		Condition: gattling
+		RequiredShotsPerInstance: 2,4,6
+		MaximumInstances: 3
+		RevokeDelay: 40
+		RevokeOnNewTarget: False
+		RevokeAll: True
+		RequiresCondition: !attacking-ground
+	GrantConditionOnAttack@GROUND:
+		ArmamentNames: secondary
+		Condition: gattling-ground
+		RequiredShotsPerInstance: 2,4,8
+		MaximumInstances: 3
+		RevokeDelay: 40
+		RevokeOnNewTarget: False
+		RevokeAll: True
+		RequiresCondition: !attacking-air
+	WithSpriteTurret@AIR:
+		RequiresCondition: !attacking-ground
+	WithSpriteTurret@GROUND:
+		Sequence: turret-ground
+		RequiresCondition: attacking-ground
+	Turreted:
+		TurnSpeed: 28
+		Offset: -50,0,0
+	AttackTurreted:
+		PauseOnCondition: empdisable || being-warped
+		Armaments: primary, secondary
+		Voice: Attack
+	Mobile:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Voiced:
+		VoiceSet: GattlingTankVoice
+	-Upgradeable@GATTLING:
+
+BTR.YURI.AI:
+	Inherits: BTR.YURI
+	Inherits@AIUNLOAD: ^AIUNLOAD
+	RenderSprites:
+		Image: btry
+	Buildable:
+		Prerequisites: ~botplayer, ~vehicles.soviet, ~gattling.upgrade, ~techlevel.low
 	Cargo:
 		InitialUnits: E1,E1,E1,E3,E4
 
@@ -6930,6 +7100,9 @@ MEMP:
 	Voiced:
 		VoiceSet: DroneVoice
 		RequiresCondition: radarenabled
+	Voiced@OFFLINE:
+		VoiceSet: OfflineDroneVoice
+		RequiresCondition: !radarenabled
 	-CaptureManager:
 	-Capturable:
 	-CaptureNotification:

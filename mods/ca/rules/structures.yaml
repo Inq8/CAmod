@@ -4755,16 +4755,22 @@ CRAM:
 	FirepowerMultiplier@GAT3:
 		Modifier: 145
 		RequiresCondition: firing && gatling >= 3
+	AmbientSoundCA@ATTACKSOUNDINITIAL:
+		SoundFiles: vgatlo1a.aud
+		RequiresCondition: firing && gatling < 1
 	AmbientSoundCA@ATTACKSOUND1:
 		SoundFiles: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
+		FinalSound: vgatlo3a.aud
 		RequiresCondition: firing && gatling == 1
 	AmbientSoundCA@ATTACKSOUND2:
 		InitialSound: vgatlo4a.aud
 		SoundFiles: vgatlo5a.aud, vgatlo5b.aud
+		FinalSound: vgatlo6a.aud
 		RequiresCondition: firing && gatling == 2
 	AmbientSoundCA@ATTACKSOUND3:
-		InitialSound: vgatlo7a.aud
-		SoundFiles: vgatlo8a.aud, vgatlo8b.aud
+		InitialSound: vvullo7a.aud
+		SoundFiles: vvullo8a.aud, vvullo8b.aud
+		FinalSound: vvullo9a.aud
 		RequiresCondition: firing && gatling >= 3
 	GrantConditionOnAttackCA@FIRING:
 		ArmamentNames: primary

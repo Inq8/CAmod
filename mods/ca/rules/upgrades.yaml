@@ -725,12 +725,28 @@ lasher.upgrade:
 		Prerequisites: ~player.yuri, anyradar, ~techlevel.medium
 		Description: Upgrades Heavy tanks with infantry crushing attachment\n  at the cost of some armor and firepower.\n\nReplaces: Heavy Tank
 	TooltipExtras:
-		Strengths: + 20% faster movement\n + Damages infantry it moves through\n+ Not slowed by infantry
+		Strengths: + 20% faster movement\n+ Improved crushing performance
 		Weaknesses: – Reduced hit points\n– Reduced firepower
 	Valued:
 		Cost: 1000
 	RenderSprites:
 		Image: lasher.upgrade
+
+gattling.upgrade:
+	Inherits: ^Upgrade
+	Tooltip:
+		Name: Research: Gattling BTR
+	Buildable:
+		BuildPaletteOrder: 20
+		Prerequisites: ~player.yuri, anyradar, ~techlevel.medium
+		Description: Upgrades BTR's with dual gattling cannons.\n\nReplaces: BTR
+	TooltipExtras:
+		Strengths: + Increased firepower
+		Weaknesses: – Increased production cost
+	Valued:
+		Cost: 750
+	RenderSprites:
+		Image: gattling.upgrade
 
 seismic.upgrade:
 	Inherits: ^Upgrade
