@@ -377,6 +377,20 @@ HellfireAG.Orca:
 	Report: orcamis1.aud
 	BurstDelays: 8
 
+HellfireAG.Cryo:
+	Inherits: HellfireAG
+	Projectile: MissileCA
+		Image: cryomiss
+	Warhead@3Eff: CreateEffect
+		Explosions: cryohit
+		ExplosionPalette: ra2effect-ignore-lighting-alpha75
+		ImpactSounds: cryohit.aud
+	Warhead@chill: GrantExternalConditionCA
+		Condition: chilled
+		Duration: 15
+		Range: 0c341
+		ValidRelationships: Enemy, Neutral
+
 HindRockets:
 	Inherits: HellfireAG
 	Range: 5c512
@@ -462,6 +476,20 @@ HellfireAA.Orca:
 	Inherits: HellfireAA
 	Report: orcamis1.aud
 	BurstDelays: 8
+
+HellfireAA.Cryo:
+	Inherits: HellfireAA
+	Projectile: MissileCA
+		Image: cryomiss
+	Warhead@3Eff: CreateEffect
+		Explosions: cryohit
+		ExplosionPalette: ra2effect-ignore-lighting-alpha75
+		ImpactSounds: cryohit.aud
+	Warhead@chill: GrantExternalConditionCA
+		Condition: chilled
+		Duration: 15
+		Range: 0c341
+		ValidRelationships: Enemy, Neutral
 
 HellfireAA.Harrier:
 	Inherits: HellfireAA

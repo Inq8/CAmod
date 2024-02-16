@@ -861,7 +861,7 @@ NHAW:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 44000
+		HP: 40000
 	RevealsShroud:
 		Range: 8c0
 		MinRange: 6c0
@@ -1058,12 +1058,29 @@ HELI:
 		Type: GroundPosition
 	Armament@PRIMARY:
 		Weapon: HellfireAA
-		LocalOffset: 0,-213,-85, 0,213,-85
+		LocalOffset: 0,213,-85, 0,-213,-85
 		PauseOnCondition: !ammo
+		RequiresCondition: !cryr-upgrade
+	Armament@PRIMARYUPG:
+		Weapon: HellfireAA.Cryo
+		LocalOffset: 0,213,-85, 0,-213,-85
+		PauseOnCondition: !ammo
+		RequiresCondition: cryr-upgrade
 	Armament@SECONDARY:
+		Name: secondary
 		Weapon: HellfireAG
 		LocalOffset: 0,213,-85, 0,-213,-85
 		PauseOnCondition: !ammo
+		RequiresCondition: !cryr-upgrade
+	Armament@SECONDARYUPG:
+		Name: secondary
+		Weapon: HellfireAG.Cryo
+		LocalOffset: 0,213,-85, 0,-213,-85
+		PauseOnCondition: !ammo
+		RequiresCondition: cryr-upgrade
+	GrantConditionOnPrerequisite@CRYO:
+		Condition: cryr-upgrade
+		Prerequisites: cryr.upgrade
 	AttackAircraft:
 		FacingTolerance: 80
 		AttackType: Hover
@@ -3694,6 +3711,7 @@ PMAK:
 BEAG:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
@@ -3806,6 +3824,7 @@ BEAG:
 KAMV:
 	Inherits: ^Helicopter
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
@@ -3949,6 +3968,7 @@ KAMV:
 SHDE:
 	Inherits: ^HelicopterTD
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMove
+	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
@@ -4074,6 +4094,7 @@ SHDE:
 VERT:
 	Inherits: ^HelicopterTD
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Buildable:
 		Queue: AircraftSQ, AircraftMQ
 		BuildAtProductionType: Helicopter
@@ -4217,6 +4238,7 @@ VERT:
 MCOR:
 	Inherits: ^HelicopterTD
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Valued:
 		Cost: 2000
 	Tooltip:
