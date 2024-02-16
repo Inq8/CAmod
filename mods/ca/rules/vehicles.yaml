@@ -3301,14 +3301,14 @@ VULC:
 		MuzzleSequence: muzzle
 		PauseOnCondition: reload-ground
 		ReloadingCondition: reload-air
-		RequiresCondition: gattling < 2
+		RequiresCondition: gattling < 12
 	Armament@GAT2:
 		Weapon: MGatt
 		LocalOffset: 220,0,350
 		MuzzleSequence: muzzle-huge
 		PauseOnCondition: reload-ground
 		ReloadingCondition: reload-air
-		RequiresCondition: gattling >= 2
+		RequiresCondition: gattling >= 12
 	Armament@GATG:
 		Name: secondary
 		Weapon: MGattG
@@ -3316,7 +3316,7 @@ VULC:
 		MuzzleSequence: muzzle
 		PauseOnCondition: reload-air
 		ReloadingCondition: reload-ground
-		RequiresCondition: gattling-ground < 2
+		RequiresCondition: gattling-ground < 14
 	Armament@GATG2:
 		Name: secondary
 		Weapon: MGattG
@@ -3324,33 +3324,33 @@ VULC:
 		MuzzleSequence: muzzle-huge
 		PauseOnCondition: reload-air
 		ReloadingCondition: reload-ground
-		RequiresCondition: gattling-ground >= 2
+		RequiresCondition: gattling-ground >= 14
 	FirepowerMultiplier@GAT1:
 		Modifier: 115
-		RequiresCondition: (attacking-air && gattling == 1) || (attacking-ground && gattling-ground == 1)
+		RequiresCondition: (attacking-air && gattling >= 1 && gattling < 3) || (attacking-ground && gattling-ground >= 1 && gattling-ground < 5)
 	FirepowerMultiplier@GAT2:
 		Modifier: 130
-		RequiresCondition: (attacking-air && gattling == 2) || (attacking-ground && (gattling-ground >= 2 && rank-veteran < 3))
+		RequiresCondition: (attacking-air && gattling >= 3 && gattling < 7) || (attacking-ground && (gattling-ground >= 5 && (gattling-ground < 10 || !rank-elite)))
 	FirepowerMultiplier@GAT3:
 		Modifier: 145
-		RequiresCondition: (attacking-air && gattling >= 3 || (attacking-ground && (gattling-ground >= 3 && rank-elite)))
+		RequiresCondition: (attacking-air && gattling >= 7 || (attacking-ground && (gattling-ground >= 10 && rank-elite)))
 	AmbientSoundCA@ATTACKSOUNDINITIAL:
 		SoundFiles: vgatlo1a.aud
-		RequiresCondition: (attacking-air && gattling < 1) || (attacking-ground && gattling-ground < 1)
+		RequiresCondition: (attacking-air && gattling < 2) || (attacking-ground && gattling-ground < 2)
 	AmbientSoundCA@ATTACKSOUND1:
 		SoundFiles: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
 		FinalSound: vgatlo3a.aud
-		RequiresCondition: (attacking-air && gattling == 1) || (attacking-ground && gattling-ground == 1)
+		RequiresCondition: (attacking-air && gattling >= 2 && gattling < 6) || (attacking-ground && gattling-ground >= 2 && gattling-ground < 6)
 	AmbientSoundCA@ATTACKSOUND2:
 		InitialSound: vgatlo4a.aud
 		SoundFiles: vgatlo5a.aud, vgatlo5b.aud
 		FinalSound: vgatlo6a.aud
-		RequiresCondition: (attacking-air && gattling == 2) || (attacking-ground && (gattling-ground >= 2 && rank-veteran < 3))
+		RequiresCondition: (attacking-air && gattling >= 6 && gattling < 12) || (attacking-ground && (gattling-ground >= 6 && (gattling-ground < 14 || !rank-elite)))
 	AmbientSoundCA@ATTACKSOUND3:
 		InitialSound: vvullo7a.aud
 		SoundFiles: vvullo8a.aud, vvullo8b.aud
 		FinalSound: vvullo9a.aud
-		RequiresCondition: (attacking-air && gattling >= 3 || (attacking-ground && (gattling-ground >= 3 && rank-elite)))
+		RequiresCondition: (attacking-air && gattling >= 12 || (attacking-ground && (gattling-ground >= 14 && rank-elite)))
 	GrantConditionOnAttackCA@ATTACKING-AIR:
 		ArmamentNames: primary
 		Condition: attacking-air
@@ -3361,8 +3361,7 @@ VULC:
 		RevokeDelay: 6
 	GrantConditionOnAttack:
 		Condition: gattling
-		RequiredShotsPerInstance: 2,4,6
-		MaximumInstances: 3
+		MaximumInstances: 12
 		RevokeDelay: 40
 		RevokeOnNewTarget: False
 		RevokeAll: True
@@ -3370,8 +3369,7 @@ VULC:
 	GrantConditionOnAttack@GROUND:
 		ArmamentNames: secondary
 		Condition: gattling-ground
-		RequiredShotsPerInstance: 2,4,8
-		MaximumInstances: 3
+		MaximumInstances: 14
 		RevokeDelay: 40
 		RevokeOnNewTarget: False
 		RevokeAll: True
@@ -4759,6 +4757,8 @@ BTR:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
+	ReplacedInQueue:
+		Actors: btr.yuri
 	Upgradeable@GATTLING:
 		Type: gattling.upgrade
 		Actor: btr.yuri
@@ -4798,14 +4798,14 @@ BTR.YURI:
 		MuzzleSequence: muzzle
 		PauseOnCondition: reload-ground
 		ReloadingCondition: reload-air
-		RequiresCondition: gattling < 2
+		RequiresCondition: gattling < 12
 	Armament@AIR2:
 		Weapon: MGatt
 		LocalOffset: 320,50,350, 320,-50,350
 		MuzzleSequence: muzzle-huge
 		PauseOnCondition: reload-ground
 		ReloadingCondition: reload-air
-		RequiresCondition: gattling >= 2
+		RequiresCondition: gattling >= 12
 	Armament@GROUND:
 		Name: secondary
 		Weapon: MGattG
@@ -4813,7 +4813,7 @@ BTR.YURI:
 		MuzzleSequence: muzzle
 		PauseOnCondition: reload-air
 		ReloadingCondition: reload-ground
-		RequiresCondition: gattling-ground < 2
+		RequiresCondition: gattling-ground < 14
 	Armament@GROUND2:
 		Name: secondary
 		Weapon: MGattG
@@ -4821,38 +4821,33 @@ BTR.YURI:
 		MuzzleSequence: muzzle-huge
 		PauseOnCondition: reload-air
 		ReloadingCondition: reload-ground
-		RequiresCondition: gattling-ground >= 2
+		RequiresCondition: gattling-ground >= 14
 	FirepowerMultiplier@GAT1:
 		Modifier: 115
-		RequiresCondition: (attacking-air && gattling == 1) || (attacking-ground && gattling-ground == 1)
+		RequiresCondition: (attacking-air && gattling >= 1 && gattling < 3) || (attacking-ground && gattling-ground >= 1 && gattling-ground < 5)
 	FirepowerMultiplier@GAT2:
 		Modifier: 130
-		RequiresCondition: (attacking-air && gattling == 2) || (attacking-ground && (gattling-ground >= 2 && rank-veteran < 3))
+		RequiresCondition: (attacking-air && gattling >= 3 && gattling < 7) || (attacking-ground && (gattling-ground >= 5 && (gattling-ground < 10 || !rank-elite)))
 	FirepowerMultiplier@GAT3:
 		Modifier: 145
-		RequiresCondition: (attacking-air && gattling >= 3 || (attacking-ground && (gattling-ground >= 3 && rank-elite)))
+		RequiresCondition: (attacking-air && gattling >= 7 || (attacking-ground && (gattling-ground >= 10 && rank-elite)))
 	AmbientSoundCA@ATTACKSOUNDINITIAL:
 		SoundFiles: vgatlo1a.aud
-		RequiresCondition: (attacking-air && gattling < 1) || (attacking-ground && gattling-ground < 1)
+		RequiresCondition: (attacking-air && gattling < 2) || (attacking-ground && gattling-ground < 2)
 	AmbientSoundCA@ATTACKSOUND1:
 		SoundFiles: vgatlo2a.aud, vgatlo2b.aud, vgatlo2c.aud
 		FinalSound: vgatlo3a.aud
-		RequiresCondition: (attacking-air && gattling == 1) || (attacking-ground && gattling-ground == 1)
+		RequiresCondition: (attacking-air && gattling >= 2 && gattling < 6) || (attacking-ground && gattling-ground >= 2 && gattling-ground < 6)
 	AmbientSoundCA@ATTACKSOUND2:
 		InitialSound: vgatlo4a.aud
 		SoundFiles: vgatlo5a.aud, vgatlo5b.aud
 		FinalSound: vgatlo6a.aud
-		RequiresCondition: (attacking-air && gattling == 2) || (attacking-ground && (gattling-ground >= 2 && rank-veteran < 3))
+		RequiresCondition: (attacking-air && gattling >= 6 && gattling < 12) || (attacking-ground && (gattling-ground >= 6 && (gattling-ground < 14 || !rank-elite)))
 	AmbientSoundCA@ATTACKSOUND3:
 		InitialSound: vgatlo7a.aud
 		SoundFiles: vgatlo8a.aud, vgatlo8b.aud
 		FinalSound: vgatlo9a.aud
-		RequiresCondition: (attacking-air && gattling >= 3 || (attacking-ground && (gattling-ground >= 3 && rank-elite)))
-	AmbientSoundCA@ATTACKSOUND4:
-		InitialSound: vgatlo7a.aud
-		SoundFiles: vgatlo8a.aud, vgatlo8b.aud
-		FinalSound: vgatlo9a.aud
-		RequiresCondition: (attacking-air && gattling >= 3 || (attacking-ground && (gattling-ground >= 3 && rank-elite)))
+		RequiresCondition: (attacking-air && gattling >= 12 || (attacking-ground && (gattling-ground >= 14 && rank-elite)))
 	GrantConditionOnAttackCA@ATTACKING-AIR:
 		ArmamentNames: primary
 		Condition: attacking-air
@@ -4863,8 +4858,7 @@ BTR.YURI:
 		RevokeDelay: 6
 	GrantConditionOnAttack:
 		Condition: gattling
-		RequiredShotsPerInstance: 2,4,6
-		MaximumInstances: 3
+		MaximumInstances: 12
 		RevokeDelay: 40
 		RevokeOnNewTarget: False
 		RevokeAll: True
@@ -4872,8 +4866,7 @@ BTR.YURI:
 	GrantConditionOnAttack@GROUND:
 		ArmamentNames: secondary
 		Condition: gattling-ground
-		RequiredShotsPerInstance: 2,4,8
-		MaximumInstances: 3
+		MaximumInstances: 14
 		RevokeDelay: 40
 		RevokeOnNewTarget: False
 		RevokeAll: True
