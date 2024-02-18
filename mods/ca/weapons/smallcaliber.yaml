@@ -832,13 +832,17 @@ SNIPERBATF.UPG:
 	Inherits: SNIPER.vehicle
 	Range: 6c0
 
-SniperIFVGun:
+SniperIFVGun.UPG:
 	Inherits: SNIPER.vehicle
 	ReloadDelay: 120
 	Warhead@1Dam: SpreadDamage
 		Versus:
-			Light: 55
-			Heavy: 55
+			Light: 40
+			Heavy: 50
+
+SniperIFVGun:
+	Inherits: SniperIFVGun.UPG
+	-Warhead@Concussion:
 
 CommandoIFVGun:
 	Inherits: SMG

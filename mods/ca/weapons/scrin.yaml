@@ -671,7 +671,7 @@ ReaperLaserChargedReversed:
 		FollowingOffset: 50,100,0
 
 StormriderZap:
-	Range: 6c0
+	Range: 5c768
 	Report: stormrider-fire1.aud, stormrider-fire2.aud, stormrider-fire3.aud
 	ReloadDelay: 70
 	Burst: 5
@@ -738,7 +738,7 @@ EnervatorBolts:
 	Inherits: ^AntiGroundMissile
 	Report: enervator-fire1.aud
 	ReloadDelay: 40
-	Range: 5c0
+	Range: 6c0
 	TargetActorCenter: true
 	Projectile: MissileCA
 		Speed: 341
@@ -757,7 +757,7 @@ EnervatorBolts:
 		-PointDefenseType:
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
-		Damage: 10000
+		Damage: 11500
 		ValidTargets: Ground, Water
 		Versus:
 			None: 30
@@ -779,6 +779,7 @@ EnervatorBolts:
 
 EnervatorBoltsAA:
 	Inherits: EnervatorBolts
+	Range: 5c0
 	ValidTargets: Air, AirSmall
 	Projectile: MissileCA
 		CloseEnough: 341
