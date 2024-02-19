@@ -1251,6 +1251,10 @@ INTL:
 		MaxWeight: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
+		PassengerConditions:
+			e6: engi-loaded
+			n6: engi-loaded
+			s6: engi-loaded
 	WithCargoPipsDecoration:
 	Hovers:
 		BobDistance: -25
@@ -1281,6 +1285,10 @@ INTL:
 	Targetable@ONWATER:
 		TargetTypes: Water, Ship
 		RequiresCondition: onwater
+	DetectCloaked:
+		Range: 4c0
+		DetectionTypes: Mine
+		RequiresCondition: engi-loaded
 
 INTL.AI:
 	Inherits: INTL

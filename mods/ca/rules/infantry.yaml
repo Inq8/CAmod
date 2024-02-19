@@ -593,7 +593,7 @@ E6:
 		VoiceSet: EngineerVoice
 	WithInfantryBody:
 		StandSequences: stand
-		RequiresCondition: !parachute && !being-warped
+		RequiresCondition: !parachute && !being-warped && undeployed
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
 		RequiresCondition: parachute
@@ -623,13 +623,13 @@ E6:
 	GrantTimedCondition@SETUP:
 		Condition: setting-up
 		RequiresCondition: !undeployed
-		Duration: 250
+		Duration: 125
 	GivesBuildableArea:
 		AreaTypes: defense
 		RequiresCondition: deployed && !setting-up
 	BaseProvider:
 		RequiresCondition: deployed && !setting-up
-		Range: 3c0
+		Range: 5c0
 	GrantCondition@EDITOR:
 		Condition: editorhack
 	WithInfantryBody@EDITOR:
@@ -2295,9 +2295,6 @@ SAB:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	ProductionCostMultiplier@LegionBonus:
-		Multiplier: 80
-		Prerequisites: player.legion
 	GrantChargingCondition@CLOAK:
 		Condition: can-cloak
 		InitialCharge: 500
@@ -4074,6 +4071,7 @@ ENLI:
 
 MORT.Cryo:
 	Inherits: ^MortarInfantryBase
+	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	RenderSprites:
 		Image: mortcryo
 	Buildable:
@@ -4091,6 +4089,7 @@ MORT.Cryo:
 
 CDOG:
 	Inherits: DOG
+	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -4112,6 +4111,7 @@ CDOG:
 
 MORT.Sonic:
 	Inherits: ^MortarInfantryBase
+	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	RenderSprites:
 		Image: mortsonic
 	Buildable:
@@ -4130,6 +4130,7 @@ MORT.Sonic:
 
 MORT.Chem:
 	Inherits: ^MortarInfantryBase
+	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	RenderSprites:
 		Image: mortchem
 	Buildable:
@@ -4150,6 +4151,7 @@ CSCR:
 	Inherits@BERSERK: ^Berserk
 	Inherits@CYBORGUPG: ^NodCyborgUpgrade
 	Inherits@SLOWABLE: ^Slowable
+	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
