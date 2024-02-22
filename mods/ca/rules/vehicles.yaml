@@ -1592,8 +1592,8 @@ HARV:
 		Resources: Tiberium, BlueTiberium, Ore, Gems
 		BaleUnloadDelay: 1
 		BaleLoadDelay: 4
-		SearchFromProcRadius: 8
-		SearchFromHarvesterRadius: 6
+		SearchFromProcRadius: 15
+		SearchFromHarvesterRadius: 8
 		HarvestFacings: 8
 		EmptyCondition: no-ore
 	WithHarvesterPipsDecoration:
@@ -2059,8 +2059,8 @@ MNLY:
 		InvalidTargets: NoAutoTarget
 	AttackFrontalCharged:
 		FacingTolerance: 0
-		ChargeLevel: 75
-		DischargeRate: 75
+		ChargeLevel: 50
+		DischargeRate: 50
 		PauseOnCondition: empdisable || being-warped
 		ShowSelectionBar: true
 		SelectionBarColor: ffff00
@@ -2142,9 +2142,9 @@ MGG:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 22000
+		HP: 25000
 	Armor:
-		Type: Heavy
+		Type: Light
 	Mobile:
 		Speed: 72
 	Carryable:
@@ -2203,9 +2203,9 @@ MRJ:
 		Weaknesses: • Unarmed
 		Attributes: • Jamming fields reduce rate of fire and accuracy of enemy vehicles/defenses
 	Health:
-		HP: 22000
+		HP: 25000
 	Armor:
-		Type: Heavy
+		Type: Light
 	Mobile:
 		Speed: 72
 	RevealsShroud:
@@ -3632,7 +3632,7 @@ MTNK.Drone:
 	TooltipExtras:
 		Attributes: • Requires active radar communication\n• Self repairs to 50% out of combat
 	Valued:
-		Cost: 775
+		Cost: 800
 	Tooltip:
 		Name: Battle Drone
 	Mobile:
@@ -4090,12 +4090,12 @@ MSAM:
 	Mobile:
 		Speed: 72
 	Health:
-		HP: 20000
+		HP: 22000
 	Armor:
 		Type: Light
 	RevealsShroud:
 		MinRange: 4c0
-		Range: 5c0
+		Range: 6c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
@@ -4623,8 +4623,8 @@ HARV.TD:
 		Resources: Tiberium, BlueTiberium, Ore, Gems
 		BaleUnloadDelay: 1
 		BaleLoadDelay: 4
-		SearchFromProcRadius: 8
-		SearchFromHarvesterRadius: 6
+		SearchFromProcRadius: 15
+		SearchFromHarvesterRadius: 8
 		HarvestFacings: 8
 		EmptyCondition: no-ore
 	WithHarvesterPipsDecoration:
@@ -4782,7 +4782,7 @@ BTR.YURI:
 	RenderSprites:
 		Image: btry
 	Valued:
-		Cost: 700
+		Cost: 750
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 21
@@ -5150,11 +5150,16 @@ IFV:
 		MuzzleSequence: muzzle
 		LocalOffset: 560,0,200
 		RequiresCondition: sealturr
-	Armament@SNIP:
+	Armament@Sniper:
 		Weapon: SniperIFVGun
 		MuzzleSequence: muzzle
 		LocalOffset: 560,0,200
-		RequiresCondition: snipturr
+		RequiresCondition: snipturr && !apb-upgrade
+	Armament@SniperUpg:
+		Weapon: SniperIFVGun.UPG
+		MuzzleSequence: muzzle
+		LocalOffset: 560,0,200
+		RequiresCondition: snipturr && apb-upgrade
 	Armament@Shok:
 		Weapon: TTankZap
 		LocalOffset: 0,0,213
@@ -5463,14 +5468,12 @@ IFV:
 		ValidTargets: Heal
 		RequiresCondition: medturr
 		ValidRelationships: Ally
+	GrantConditionOnPrerequisite@APB:
+		Condition: apb-upgrade
+		Prerequisites: apb.upgrade
 	GrantConditionOnPrerequisite@CRYO:
 		Condition: cryr-upgrade
 		Prerequisites: cryr.upgrade
-	GrantCondition@CRYO:
-		Condition: cryr-upgrade
-		RequiresCondition: cryr-upgrade
-	ExternalCondition@CRYO:
-		Condition: cryr-upgrade
 	GuardsSelection@REPAIR:
 		ValidTargets: Vehicle
 		RequiresCondition: engturr && !stance-attackanything
@@ -6117,12 +6120,12 @@ HSAM:
 		Speed: 92
 		Locomotor: hover
 	Health:
-		HP: 18500
+		HP: 20000
 	Armor:
 		Type: Light
 	RevealsShroud:
 		MinRange: 4c0
-		Range: 5c0
+		Range: 6c0
 		RevealGeneratedShroud: False
 	RevealsShroud@GAPGEN:
 		Range: 4c0
@@ -7723,7 +7726,7 @@ THWK:
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	RenderSprites:
 	Valued:
-		Cost: 1800
+		Cost: 2000
 	Tooltip:
 		Name: Tomahawk Launcher
 	UpdatesPlayerStatistics:
@@ -7758,6 +7761,7 @@ THWK:
 		RealignDelay: 0
 	Armament@TARGETTER:
 		Weapon: THLauncher
+		PauseOnCondition: moving
 	AttackTurreted:
 		TargetFrozenActors: True
 		Voice: Attack
@@ -7784,6 +7788,9 @@ THWK:
 		Condition: aiming
 		RevokeDelay: 15
 		RevokeAll: false
+	GrantConditionOnMovement@MOVING:
+		ValidMovementTypes: Horizontal, Vertical, Turn
+		Condition: moving
 	Explodes:
 		Weapon: BarrelExplode
 	Voiced:

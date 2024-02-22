@@ -3079,6 +3079,7 @@ FloatingDiscLaser:
 			Concrete: 75
 			Brick: 25
 			Aircraft: 35
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath, AirToGround
 
 ^FloatingDiscDrainer:
 	ReloadDelay: 10
@@ -3086,7 +3087,7 @@ FloatingDiscLaser:
 	Projectile: InstantHit
 	TargetActorCenter: true
 	Warhead@Dummy: Dummy
-		ValidRelationships: Enemy, Neutral
+		ValidRelationships: Enemy
 
 FloatingDiscPowerDrainer:
 	Inherits: ^FloatingDiscDrainer
@@ -3095,7 +3096,7 @@ FloatingDiscPowerDrainer:
 		Range: 0c128
 		Duration: 11
 		Condition: discpowerdrain
-		ValidRelationships: Enemy, Neutral
+		ValidRelationships: Enemy
 		ValidTargets: PowerDrainable
 
 FloatingDiscResourceDrainer:

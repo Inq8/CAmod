@@ -1,0 +1,244 @@
+
+World:
+	LuaScript:
+		Scripts: testing-grounds.lua
+	MapOptions:
+		TechLevel: buildanything
+	MapBuildRadius:
+		BuildRadiusCheckboxEnabled: False
+
+Player:
+	PlayerResources:
+		SelectableCash: 50000000
+		DefaultCash: 50000000
+	DeveloperMode:
+		CheckboxEnabled: True
+		CheckboxLocked: True
+		CheckboxVisible: False
+	ModularBot@DormantAI:
+		Name: Dormant AI
+		Type: dormant
+	-ModularBot@BrutalAI:
+	-ModularBot@VeryHardAI:
+	-ModularBot@HardAI:
+	-ModularBot@NormalAI:
+	-ModularBot@EasyAI:
+	-ModularBot@NavalAI:
+
+FACT:
+	-DamageMultiplier@1:
+
+WEAP:
+	-DamageMultiplier@1:
+
+TENT:
+	-DamageMultiplier@1:
+
+AFLD:
+	-DamageMultiplier@1:
+
+DOME:
+	-DamageMultiplier@1:
+
+FIX:
+	-DamageMultiplier@1:
+
+NUK2:
+	-DamageMultiplier@1:
+
+SYRD:
+	-DamageMultiplier@1:
+
+^Vehicle-NOUPG:
+	GrantConditionOnBotOwner@immobile:
+		Condition: notmobile
+		Bots: dormant
+	SpeedMultiplier@immobile:
+		Modifier: 0
+		RequiresCondition: notmobile
+
+^Infantry:
+	GrantConditionOnBotOwner@immobile:
+		Condition: notmobile
+		Bots: dormant
+	Mobile:
+		PauseOnCondition: being-warped || notmobile
+	SpeedMultiplier@immobile:
+		Modifier: 0
+		RequiresCondition: notmobile
+
+TSLA:
+	AttackTesla:
+		PauseOnCondition: dormant
+	GrantConditionOnBotOwner@dormant:
+		Condition: dormant
+		Bots: dormant
+
+FTUR:
+	AttackTurreted:
+		PauseOnCondition: dormant
+	GrantConditionOnBotOwner@dormant:
+		Condition: dormant
+		Bots: dormant
+
+#####################
+
+ActionWormhole:
+	Inherits: WORMHOLE
+	-PopControlled:
+	Targetable:
+		TargetTypes: None
+	-RallyPoint:
+	-TeleportNetwork:
+	WithTextDecoration:
+		Text: Action
+		Position: Top
+		Font: Small
+		ValidRelationships: Ally, Enemy, Neutral
+		Margin: 0, -15
+	RenderSprites:
+		Image: wormhole
+	GrantTimedConditionOnDeploy@Deploy:
+		DeployedCondition: deployed
+		CooldownTicks: 25
+		DeployedTicks: 1
+		StartsFullyCharged: true
+		ChargingColor: ff0000
+		DischargingColor: ffffff
+		ShowSelectionBarWhenFull: false
+	WithColoredOverlay@Deployed:
+		RequiresCondition: deployed
+		Color: ff0000aa
+	Production@Upgrade:
+		Produces: Upgrade
+	PeriodicProducerCA@Produce:
+		Actors: action.respawn
+		Type: Upgrade
+		ChargeDuration: 26
+		RequiresCondition: deployed
+		Immediate: true
+		ReadyAudio: UpgradeComplete
+		BlockedAudio: BuildingCannotPlaceAudio
+		ResetTraitOnEnable: true
+
+^InvisibleAction:
+	Inherits: ^InvisibleDummy
+	Buildable:
+		Queue: Upgrade
+	RenderSprites:
+		Image: strategic.upgrade
+	PopControlled:
+		Limit: 1
+	Tooltip:
+		Name: Invisible Action
+
+### --------
+
+wormhole.respawn:
+	Inherits: ActionWormhole
+	WithTextDecoration:
+		Text: Respawn
+		Color: 00FFFF
+	PeriodicProducerCA@Produce:
+		Actors: action.respawn
+		ReadyAudio: Building
+
+action.respawn:
+	Inherits: ^InvisibleAction
+
+### --------
+
+wormhole.clear.upgrades:
+	Inherits: ActionWormhole
+	WithTextDecoration:
+		Text: Clear Upgrades
+		Color: FF8800
+	PeriodicProducerCA@Produce:
+		Actors: action.clear.upgrades
+		ReadyAudio: Cancelled
+
+action.clear.upgrades:
+	Inherits: ^InvisibleAction
+
+### --------
+
+wormhole.enable.hazmat:
+	Inherits: ActionWormhole
+	WithTextDecoration:
+		Text: Enable Hazmat
+		Color: 00FF00
+	PeriodicProducerCA@Produce:
+		Actors: action.enable.hazmat
+
+action.enable.hazmat:
+	Inherits: ^InvisibleAction
+
+###
+
+wormhole.disable.hazmat:
+	Inherits: ActionWormhole
+	WithTextDecoration:
+		Text: Disable Hazmat
+		Color: FF0000
+	PeriodicProducerCA@Produce:
+		Actors: action.disable.hazmat
+		ReadyAudio: Cancelled
+
+action.disable.hazmat:
+	Inherits: ^InvisibleAction
+
+### --------
+
+wormhole.enable.flakarmor:
+	Inherits: ActionWormhole
+	WithTextDecoration:
+		Text: Enable Flak Armor
+		Color: 00FF00
+	PeriodicProducerCA@Produce:
+		Actors: action.enable.flakarmor
+
+action.enable.flakarmor:
+	Inherits: ^InvisibleAction
+
+###
+
+wormhole.disable.flakarmor:
+	Inherits: ActionWormhole
+	WithTextDecoration:
+		Text: Disable Flak Armor
+		Color: FF0000
+	PeriodicProducerCA@Produce:
+		Actors: action.disable.flakarmor
+		ReadyAudio: Cancelled
+
+action.disable.flakarmor:
+	Inherits: ^InvisibleAction
+
+### --------
+
+wormhole.enable.cyborgarmor:
+	Inherits: ActionWormhole
+	WithTextDecoration:
+		Text: Enable Cyborg Armor
+		Color: 00FF00
+	PeriodicProducerCA@Produce:
+		Actors: action.enable.cyborgarmor
+
+action.enable.cyborgarmor:
+	Inherits: ^InvisibleAction
+
+###
+
+wormhole.disable.cyborgarmor:
+	Inherits: ActionWormhole
+	WithTextDecoration:
+		Text: Disable Cyborg Armor
+		Color: FF0000
+	PeriodicProducerCA@Produce:
+		Actors: action.disable.cyborgarmor
+		ReadyAudio: Cancelled
+
+action.disable.cyborgarmor:
+	Inherits: ^InvisibleAction
+
+###
