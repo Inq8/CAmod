@@ -756,16 +756,24 @@ PlaceC4:
 
 PlaceC4Seal:
 	Inherits: PlaceC4
-	ReloadDelay: 50
+	ReloadDelay: 200
 	ValidTargets: C4Plantable
 	InvalidTargets: Vehicle, C4Attached, TNTAttached, C4Immune
-	Range: 1c255
 	Warhead@AttachDelayedWeapon: AttachDelayedWeapon
 		TriggerTime: 20
 		Type: c4seal
 		ScaleTriggerTimeWithValue: true
 	Warhead@highlight: GrantExternalConditionCA
 		ValidTargets: Ground, Structure
+
+PrepareC4Seal:
+	Inherits: PlaceC4Seal
+	ReloadDelay: 50
+	-Report:
+	-Warhead@AttachDelayedWeapon:
+	Warhead@Dummy: Dummy
+	Warhead@highlight: GrantExternalConditionCA
+		Condition: redhighlight
 
 C4:
 	Projectile: InstantHit

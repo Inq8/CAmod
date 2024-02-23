@@ -3796,7 +3796,10 @@ YURI:
 	KeepsDistance:
 
 SEAL:
-	Inherits: RMBO
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	Valued:
 		Cost: 1000
 	Tooltip:
@@ -3805,6 +3808,13 @@ SEAL:
 		HP: 16000
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
+	Passenger:
+		CustomPipType: red
+		Voice: Move
+	AttackMove:
+		Voice: Move
+	RevealsShroud:
+		Range: 6c0
 	Buildable:
 		BuildPaletteOrder: 185
 		Prerequisites: ~infantry.usa, atek, ~techlevel.high
@@ -3821,6 +3831,9 @@ SEAL:
 	Mobile:
 		Speed: 60
 		Locomotor: seal
+		Voice: Move
+	Guard:
+		Voice: Move
 	Armament:
 		Weapon: mp5
 		PauseOnCondition: onwater
@@ -3828,19 +3841,82 @@ SEAL:
 		Name: batf
 		Weapon: mp5BATF
 		MuzzleSequence: garrison-muzzle
-	Armament@sapper:
-		Weapon: PlaceC4seal
+	Armament@C4Place:
+		Weapon: PlaceC4Seal
 		Cursor: c4
 		OutsideRangeCursor: c4
 		Name: secondary
-		RequiresCondition: ammo
-	-ExternalCondition@PRODUCED:
-	-VoiceAnnouncement:
+		PauseOnCondition: !prepared && !onwater
+	Armament@C4Prepare:
+		Weapon: PrepareC4Seal
+		Cursor: c4
+		OutsideRangeCursor: c4
+		Name: tertiary
+		PauseOnCondition: !ammo
+		RequiresCondition: !onwater
+	AmmoPool@PreparedC4:
+		Name: prepared-c4
+		Ammo: 1
+		InitialAmmo: 0
+		AmmoCondition: prepared
+		Armaments: secondary
+	AmmoPool@C4:
+		Name: c4
+		Ammo: 1
+		AmmoCondition: ammo
+		Armaments: secondary
+	ReloadAmmoPoolCA@C4:
+		Delay: 250 # match PlaceC4Seal ReloadDelay
+		AmmoPool: c4
+		ShowSelectionBar: true
+		SelectionBarColor: 990000
+	ReloadAmmoPoolCA@PreparedC4:
+		AmmoPool: prepared-c4
+		Delay: 100
+		RequiresCondition: preparing-c4
+		ShowSelectionBar: true
+		SelectionBarColor: ff0000
+	GrantConditionOnAttack@PreparingC4:
+		Condition: preparing-c4
+		ArmamentNames: tertiary
+		RevokeDelay: 51
+	AttackFrontal:
+		Voice: Attack
+		Armaments: primary, secondary, tertiary
+		PauseOnCondition: being-warped
+		FacingTolerance: 0
+	Demolition:
+		DetonationDelay: 45
+		Voice: Demolish
+		DamageTypes: ExplosionDeath
+	AnnounceOnKill:
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
+	IgnoresDisguise:
+	DetectCloaked:
+		DetectionTypes: Cloak, Thief
+		Range: 5c0
+	-Crushable:
+	TakeCover:
+		SpeedModifier: 70
+	TargetSpecificOrderVoice:
+		Orders: Attack, ForceAttack
+		TargetTypeVoices:
+			Vehicle: Demolish
+			Structure: Demolish
 	GrantConditionOnTerrain:
 		TerrainTypes: Water
 		Condition: onwater
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
+		IdleSequences: idle1,idle2,idle3
+		AttackSequences:
+			primary: shoot
+			secondary: plant
+			tertiary: plant
 		RequiresCondition: !being-warped && !onwater && !parachute
 	WithInfantryBody@PARACHUTE:
 		StandSequences: parachute
@@ -3860,20 +3936,9 @@ SEAL:
 		FallbackSequence: splash
 		CrushedSequence: die-crushed
 		DeathSequence: splash
-	AmmoPool:
-		Armaments: secondary
-		Ammo: 1
-		AmmoCondition: ammo
-	ReloadAmmoPoolCA:
-		Delay: 300
-		Count: 1
-		ShowSelectionBar: true
-		SelectionBarColor: dd0000
 	WithDecoration@COMMANDOSKULL:
 		Sequence: pip-seal
 	-Targetable@HERO:
-	-Targetable@MindControlImmune:
-	-Targetable@ChaosImmune:
 	GrantConditionOnHealingReceived@HEALINGCOOLDOWN:
 		RequiredHealing: 40000
 
@@ -4131,6 +4196,8 @@ CDOG:
 		Cost: 400
 	Tooltip:
 		Name: Cyberdog
+	Armor:
+		Type: Light
 	Health:
 		HP: 15000
 	Voiced:
