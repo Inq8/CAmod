@@ -2616,6 +2616,7 @@ JDAM:
 		Explosions: fuelbomb1, fuelbomb2
 		ImpactSounds: xplobig4.aud
 	Warhead@Flames: FireCluster
+		InvalidTargets: Water
 		Weapon: BurnFx
 		RandomClusterCount: 3
 		Dimensions: 3,3
@@ -2630,10 +2631,10 @@ JDAM:
 		Intensity: 1
 		Multiplier: 0.5,0.5
 	Warhead@Shrap: FireShrapnel
-		Weapon: SmallDebris
-		Amount: 5
+		Weapon: TinyDebris
+		Amount: 10
 		AimChance: 0
-		ValidTargets: Ground, Water, Infantry, Vehicle
+		ValidTargets: Ground, Infantry, Vehicle
 		ThrowWithoutTarget: true
 
 HarvSwap:
@@ -2728,6 +2729,7 @@ AttachShadowBeacon:
 
 TinyDebris:
 	Inherits: ^Debris
+	ValidTargets: Ground, Trees
 	Projectile: Bullet
 		Image: dirt
 		Palette: terrain
@@ -3044,7 +3046,7 @@ PeacemakerBombs:
 		Weapon: TinyDebris
 		Amount: 10
 		AimChance: 0
-		ValidTargets: Ground, Water, Infantry, Vehicle
+		ValidTargets: Ground, Infantry, Vehicle
 		ThrowWithoutTarget: true
 
 TibSurgeTargeter:
@@ -3069,7 +3071,6 @@ FloatingDiscLaser:
 		SecondaryBeamColor: eb39d340
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Ground, Water, Air, AirSmall
-		InvalidTargets: PowerDrainable, ResourceDrainable
 		Damage: 13000
 		Versus:
 			None: 100

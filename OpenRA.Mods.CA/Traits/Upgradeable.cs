@@ -52,12 +52,15 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Voice to use on upgrade completion.")]
 		public readonly string UpgradeCompleteSpeechNotification = "UpgradeComplete";
 
+		[Desc("Sound to play on upgrade completion.")]
+		public readonly string UpgradeSound = "voveupgr.aud";
+
 		[ActorReference]
 		[Desc("If set, must upgrade near one of these actors.")]
 		public readonly HashSet<string> UpgradeAtActors = new HashSet<string> { };
 
 		[Desc("If UpgradeAtActors are set, defines the max distance to upgrade.")]
-		public readonly WDist UpgradeAtRange = WDist.FromCells(10);
+		public readonly WDist UpgradeAtRange = WDist.FromCells(3);
 
 		[Desc("Color to use for the target line.")]
 		public readonly Color TargetLineColor = Color.Cyan;
@@ -170,6 +173,7 @@ namespace OpenRA.Mods.CA.Traits
 		public void Complete()
 		{
 			upgraded = true;
+			Game.Sound.Play(SoundType.World, Info.UpgradeSound, self.CenterPosition);
 		}
 
 		public void UpdateManager()

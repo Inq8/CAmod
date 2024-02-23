@@ -127,8 +127,10 @@ Gatt:
 		Range: 0, 0c64, 0c256, 1c768
 		Falloff: 100, 70, 30, 10
 	Warhead@2Eff: CreateEffect
+		Explosions: piff
 		ValidTargets: Air, AirSmall, ICBM
-		ImpactSoundChance: 20
+		ImpactSounds: sirodefa.aud, sirodefb.aud, sirodefc.aud, sirodefd
+		ImpactSoundChance: 60
 
 MGatt:
 	Inherits: ^AACannon
@@ -457,6 +459,7 @@ PistolTD:
 
 CommissarPistol:
 	Inherits: Pistol
+	Report: icivattb.aud, icivatta.aud
 	Range: 6c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 900

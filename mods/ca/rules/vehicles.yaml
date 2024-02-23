@@ -5835,10 +5835,20 @@ TITN:
 		Actors: titn.rail
 	Upgradeable@RAILGUN:
 		Type: railgun.upgrade
+		UpgradingCondition: upgrading
 		Actor: titn.rail
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	WithDecoration@Upgradeable:
+		Image: upgrade
+		Palette: chrome
+		Sequence: upgrade
+		Position: Center
+		RequiresCondition: upgrading
+		BlinkInterval: 5
+		BlinkPattern: on
+		ValidRelationships: Ally, Neutral
 
 TITN.RAIL:
 	Inherits: TITN
@@ -5860,6 +5870,7 @@ TITN.RAIL:
 		Actor: TITN.RAIL.Husk
 	-ReplacedInQueue:
 	-Upgradeable@RAILGUN:
+	-WithDecoration@Upgradeable:
 
 JUGG:
 	Inherits: ^TankTD

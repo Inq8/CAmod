@@ -78,6 +78,8 @@ UnitExplodePlaneLight:
 	Inherits: UnitExplodePlane
 	Warhead@1Dam: SpreadDamage
 		Damage: 3000
+	Warhead@2Eff: CreateEffect
+		Explosions: napalm
 
 UnitExplodePlaneEmpty:
 	Inherits: UnitExplode
@@ -92,12 +94,14 @@ UnitExplodeHeli:
 			None: 30
 			Light: 30
 	Warhead@2Eff: CreateEffect
-		Explosions: napalm
+		Explosions: large_napalm
 
 UnitExplodeHeliEmpty:
 	Inherits: UnitExplodeHeli
 	Warhead@1Dam: SpreadDamage
 		Damage: 2000
+	Warhead@2Eff: CreateEffect
+		Explosions: napalm
 
 UnitExplodeDrone:
 	Inherits: UnitExplodeHeli
@@ -108,7 +112,7 @@ UnitExplodeDrone:
 			Light: 30
 
 UnitExplodeDroneEmpty:
-	Inherits: UnitExplodeHeli
+	Inherits: UnitExplodeHeliEmpty
 	Warhead@1Dam: SpreadDamage
 		Damage: 1000
 
