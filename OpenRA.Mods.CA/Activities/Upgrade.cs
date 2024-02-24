@@ -127,6 +127,10 @@ namespace OpenRA.Mods.CA.Activities
 			if (!upgradeInProgress)
 			{
 				upgradeInProgress = true;
+
+				if (!string.IsNullOrEmpty(upgradeable.Info.UpgradingCondition) && upgradingConditionToken == Actor.InvalidConditionToken)
+					upgradingConditionToken = self.GrantCondition(upgradeable.Info.UpgradingCondition);
+
 				upgradeable.UpdateManager();
 			}
 
