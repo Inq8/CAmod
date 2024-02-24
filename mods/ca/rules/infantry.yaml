@@ -1272,6 +1272,7 @@ GNRL:
 
 THF:
 	Inherits: ^Soldier
+	Inherits@SELECTION: ^SelectableSupportUnit
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -1366,7 +1367,7 @@ SHOK:
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	Health:
-		HP: 7000
+		HP: 8500
 	Mobile:
 		Voice: Move
 	RevealsShroud:
@@ -3186,7 +3187,7 @@ BRUT:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 66
+		Speed: 60
 		Voice: Move
 	Passenger:
 		CargoType: Vehicle
@@ -3938,6 +3939,7 @@ SEAL:
 		DeathSequence: splash
 	WithDecoration@COMMANDOSKULL:
 		Sequence: pip-seal
+	-AutoTargetPriority@ATTACKANYTHING:
 	-Targetable@HERO:
 
 XO:
