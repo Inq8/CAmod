@@ -756,7 +756,7 @@ PlaceC4:
 
 PlaceC4Seal:
 	Inherits: PlaceC4
-	ReloadDelay: 200
+	ReloadDelay: 250
 	ValidTargets: C4Plantable
 	InvalidTargets: Vehicle, C4Attached, TNTAttached, C4Immune
 	Warhead@AttachDelayedWeapon: AttachDelayedWeapon
@@ -1048,7 +1048,7 @@ Laser.Adv:
 
 LaserTur:
 	Inherits: Laser
-	ReloadDelay: 38
+	ReloadDelay: 34
 	Range: 6c0
 	Report: lastur1.aud
 	Projectile: LaserZapCA
@@ -1060,9 +1060,11 @@ LaserTur:
 	Warhead@1Dam: SpreadDamage
 		Damage: 5500
 		Versus:
-			Wood: 75
-			Heavy: 30
-			Concrete: 48
+			None: 320
+			Wood: 70
+			Light: 85
+			Heavy: 25
+			Concrete: 44
 
 LaserTur.Adv:
 	Inherits: LaserTur

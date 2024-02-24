@@ -890,23 +890,27 @@ InvaderZapAA:
 PlasmaTurretGun:
 	Range: 6c0
 	StartBurstReport: plasma-fire1.aud
-	ReloadDelay: 15
+	ReloadDelay: 14
 	Burst: 2
 	BurstDelays: 4
 	Projectile: InstantHit
-		Inaccuracy: 0c64
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Falloff: 100, 40, 7, 0
+		Falloff: 100, 47, 8, 0
 		Damage: 2100
 		Versus:
-			None: 100
+			None: 85
 			Wood: 50
-			Concrete: 32
+			Concrete: 30
 			Light: 55
 			Heavy: 40
 			Brick: 20
+		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
+	Warhead@2Dam: HealthPercentageDamage
+		Spread: 42
+		Damage: 10
+		ValidTargets: Infantry
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
