@@ -110,9 +110,19 @@ KATY:
 		Actors: v2rl
 	Upgradeable@V2:
 		Type: v2.upgrade
+		UpgradingCondition: upgrading
 		Actor: v2rl
 		UpgradeAtActors: fix, rep, srep
 		RequiresCondition: !mindcontrolled
+	WithDecoration@Upgradeable:
+		Image: upgrade
+		Palette: chrome
+		Sequence: upgrade
+		Position: Center
+		RequiresCondition: upgrading
+		BlinkInterval: 5
+		BlinkPattern: on
+		ValidRelationships: Ally, Neutral
 
 1TNK:
 	Inherits: ^Tank
@@ -594,16 +604,27 @@ GTNK.squad:
 		Actors: 3tnk.atomic, 3tnk.yuri, 3tnk.atomicyuri
 	Upgradeable@ATOMIC:
 		Type: atomicengines.upgrade
+		UpgradingCondition: upgrading
 		Actor: 3tnk.atomic
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
 	Upgradeable@LASHER:
 		Type: lasher.upgrade
+		UpgradingCondition: upgrading
 		Actor: 3tnk.yuri
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	WithDecoration@Upgradeable:
+		Image: upgrade
+		Palette: chrome
+		Sequence: upgrade
+		Position: Center
+		RequiresCondition: upgrading
+		BlinkInterval: 5
+		BlinkPattern: on
+		ValidRelationships: Ally, Neutral
 
 3TNK.ATOMIC:
 	Inherits: 3TNK
@@ -638,6 +659,7 @@ GTNK.squad:
 		Actors: 3tnk.atomicyuri
 	Upgradeable@ATOMICLASHER:
 		Type: lasher.upgrade
+		UpgradingCondition: upgrading
 		Actor: 3tnk.atomicyuri
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
@@ -704,6 +726,7 @@ GTNK.squad:
 		Actors: 3tnk.atomicyuri
 	Upgradeable@ATOMICLASHER:
 		Type: atomicengines.upgrade
+		UpgradingCondition: upgrading
 		Actor: 3tnk.atomicyuri
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
@@ -769,6 +792,7 @@ GTNK.squad:
 	-SpeedMultiplier@CRUSHSLOW:
 	-ReplacedInQueue:
 	-Upgradeable@ATOMICLASHER:
+	-WithDecoration@Upgradeable:
 
 3TNK.RHINO:
 	Inherits: ^Tank
@@ -855,10 +879,20 @@ GTNK.squad:
 		Actors: 3tnk.rhino.atomic
 	Upgradeable@ATOMIC:
 		Type: atomicengines.upgrade
+		UpgradingCondition: upgrading
 		Actor: 3tnk.rhino.atomic
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	WithDecoration@Upgradeable:
+		Image: upgrade
+		Palette: chrome
+		Sequence: upgrade
+		Position: Center
+		RequiresCondition: upgrading
+		BlinkInterval: 5
+		BlinkPattern: on
+		ValidRelationships: Ally, Neutral
 
 3TNK.RHINO.ATOMIC:
 	Inherits: 3TNK.RHINO
@@ -885,6 +919,7 @@ GTNK.squad:
 		RequiresCondition: !being-warped
 	-ReplacedInQueue:
 	-Upgradeable@ATOMIC:
+	-WithDecoration@Upgradeable:
 
 4TNK:
 	Inherits: ^Tank
@@ -986,16 +1021,27 @@ GTNK.squad:
 		Actors: 4tnk.atomic, 4tnk.erad, 4tnk.eradatomic
 	Upgradeable@ATOMIC:
 		Type: atomicengines.upgrade
+		UpgradingCondition: upgrading
 		Actor: 4tnk.atomic
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
 	Upgradeable@ERAD:
 		Type: erad.upgrade
+		UpgradingCondition: upgrading
 		Actor: 4tnk.erad
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	WithDecoration@Upgradeable:
+		Image: upgrade
+		Palette: chrome
+		Sequence: upgrade
+		Position: Center
+		RequiresCondition: upgrading
+		BlinkInterval: 5
+		BlinkPattern: on
+		ValidRelationships: Ally, Neutral
 
 4TNK.ATOMIC:
 	Inherits: 4TNK
@@ -1023,6 +1069,7 @@ GTNK.squad:
 		Actors: 4tnk.eradatomic
 	Upgradeable@ERADATOMIC:
 		Type: erad.upgrade
+		UpgradingCondition: upgrading
 		Actor: 4tnk.eradatomic
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
@@ -1063,6 +1110,7 @@ GTNK.squad:
 		Actors: 4tnk.eradatomic
 	Upgradeable@ERADATOMIC:
 		Type: atomicengines.upgrade
+		UpgradingCondition: upgrading
 		Actor: 4tnk.eradatomic
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
@@ -1107,6 +1155,7 @@ GTNK.squad:
 	-Armament@SECONDARY:
 	-ReplacedInQueue:
 	-Upgradeable@ERADATOMIC:
+	-WithDecoration@Upgradeable:
 	Voiced:
 		VoiceSet: EradVoice
 	AttackTurreted:
@@ -1935,9 +1984,19 @@ APC:
 		Actors: rapc
 	Upgradeable@RAIDER:
 		Type: rapc.upgrade
+		UpgradingCondition: upgrading
 		Actor: rapc
 		UpgradeAtActors: fix, rep, srep
 		RequiresCondition: !mindcontrolled
+	WithDecoration@Upgradeable:
+		Image: upgrade
+		Palette: chrome
+		Sequence: upgrade
+		Position: Center
+		RequiresCondition: upgrading
+		BlinkInterval: 5
+		BlinkPattern: on
+		ValidRelationships: Ally, Neutral
 
 RAPC:
 	Inherits: APC
@@ -1968,6 +2027,7 @@ RAPC:
 		MuzzleSequence: muzzle2
 	-ReplacedInQueue:
 	-Upgradeable@RAIDER:
+	-WithDecoration@Upgradeable:
 
 APC.AI:
 	Inherits: APC
@@ -1980,6 +2040,7 @@ APC.AI:
 		InitialUnits: E1,E1,E1,E3,E3
 	-ReplacedInQueue:
 	-Upgradeable@RAIDER:
+	-WithDecoration@Upgradeable:
 
 RAPC.AI:
 	Inherits: RAPC
@@ -2779,10 +2840,20 @@ HMMV:
 		Actors: hmmv.tow
 	Upgradeable@TOW:
 		Type: tow.upgrade
+		UpgradingCondition: upgrading
 		Actor: hmmv.tow
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 200
 		RequiresCondition: !mindcontrolled
+	WithDecoration@Upgradeable:
+		Image: upgrade
+		Palette: chrome
+		Sequence: upgrade
+		Position: Center
+		RequiresCondition: upgrading
+		BlinkInterval: 5
+		BlinkPattern: on
+		ValidRelationships: Ally, Neutral
 
 HMMV.TOW:
 	Inherits: HMMV
@@ -2808,6 +2879,7 @@ HMMV.TOW:
 		Sequence: turrettow
 	-ReplacedInQueue:
 	-Upgradeable@TOW:
+	-WithDecoration@Upgradeable:
 
 GDRN:
 	Inherits: ^Vehicle
@@ -2889,10 +2961,20 @@ GDRN:
 		Actors: gdrn.tow
 	Upgradeable@TOW:
 		Type: tow.upgrade
+		UpgradingCondition: upgrading
 		Actor: gdrn.tow
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 200
 		RequiresCondition: !mindcontrolled
+	WithDecoration@Upgradeable:
+		Image: upgrade
+		Palette: chrome
+		Sequence: upgrade
+		Position: Center
+		RequiresCondition: upgrading
+		BlinkInterval: 5
+		BlinkPattern: on
+		ValidRelationships: Ally, Neutral
 	-CaptureManager:
 	-Capturable:
 	-CaptureNotification:
@@ -2925,6 +3007,7 @@ GDRN.TOW:
 		Sequence: turrettow
 	-ReplacedInQueue:
 	-Upgradeable@TOW:
+	-WithDecoration@Upgradeable:
 
 BGGY:
 	Inherits: ^VehicleTD
@@ -3217,9 +3300,19 @@ APC2:
 		Actors: vulc
 	Upgradeable@VULCAN:
 		Type: vulcan.upgrade
+		UpgradingCondition: upgrading
 		Actor: vulc
 		UpgradeAtActors: fix, rep, srep
 		RequiresCondition: !mindcontrolled
+	WithDecoration@Upgradeable:
+		Image: upgrade
+		Palette: chrome
+		Sequence: upgrade
+		Position: Center
+		RequiresCondition: upgrading
+		BlinkInterval: 5
+		BlinkPattern: on
+		ValidRelationships: Ally, Neutral
 
 APC2.NODAI:
 	Inherits: APC2
@@ -3232,6 +3325,7 @@ APC2.NODAI:
 		InitialUnits: N1,N1,N1,N3,N4
 	-ReplacedInQueue:
 	-Upgradeable@VULCAN:
+	-WithDecoration@Upgradeable:
 
 APC2.GDIAI:
 	Inherits: APC2
@@ -3244,6 +3338,7 @@ APC2.GDIAI:
 		InitialUnits: N1,N1,N1,N2,N3
 	-ReplacedInQueue:
 	-Upgradeable@VULCAN:
+	-WithDecoration@Upgradeable:
 
 APC2.Reinforce:
 	Inherits: APC2
@@ -3615,11 +3710,21 @@ MTNK:
 		Actors: mtnk.drone
 	Upgradeable@BDRONE:
 		Type: bdrone.upgrade
+		UpgradingCondition: upgrading
 		Actor: mtnk.drone
 		UpgradeAtActors: fix, rep, srep
 		Cost: 0
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	WithDecoration@Upgradeable:
+		Image: upgrade
+		Palette: chrome
+		Sequence: upgrade
+		Position: Center
+		RequiresCondition: upgrading
+		BlinkInterval: 5
+		BlinkPattern: on
+		ValidRelationships: Ally, Neutral
 
 MTNK.Drone:
 	Inherits: MTNK
@@ -3692,6 +3797,7 @@ MTNK.Drone:
 	-GrantCondition@BERSERK:
 	-ReplacedInQueue:
 	-Upgradeable@BDRONE:
+	-WithDecoration@Upgradeable:
 
 MDRN:
 	Inherits: ^Vehicle
@@ -3921,22 +4027,34 @@ HTNK:
 		Actors: htnk.drone, htnk.ion, htnk.hover
 	Upgradeable@ION:
 		Type: ionmam.upgrade
+		UpgradingCondition: upgrading
 		Actor: htnk.ion
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
 	Upgradeable@HOVER:
 		Type: hovermam.upgrade
+		UpgradingCondition: upgrading
 		Actor: htnk.hover
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
 	Upgradeable@DRONE:
 		Type: mdrone.upgrade
+		UpgradingCondition: upgrading
 		Actor: htnk.drone
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	WithDecoration@Upgradeable:
+		Image: upgrade
+		Palette: chrome
+		Sequence: upgrade
+		Position: Center
+		RequiresCondition: upgrading
+		BlinkInterval: 5
+		BlinkPattern: on
+		ValidRelationships: Ally, Neutral
 
 HTNK.Ion:
 	Inherits: HTNK
@@ -3955,6 +4073,7 @@ HTNK.Ion:
 	-Upgradeable@ION:
 	-Upgradeable@HOVER:
 	-Upgradeable@DRONE:
+	-WithDecoration@Upgradeable:
 
 HTNK.Hover:
 	Inherits: HTNK
@@ -3995,6 +4114,7 @@ HTNK.Hover:
 	-Upgradeable@ION:
 	-Upgradeable@HOVER:
 	-Upgradeable@DRONE:
+	-WithDecoration@Upgradeable:
 
 HTNK.Drone:
 	Inherits: HTNK
@@ -4062,6 +4182,7 @@ HTNK.Drone:
 	-Upgradeable@ION:
 	-Upgradeable@HOVER:
 	-Upgradeable@DRONE:
+	-WithDecoration@Upgradeable:
 
 MSAM:
 	Inherits: ^TankTD
@@ -4766,10 +4887,20 @@ BTR:
 		Actors: btr.yuri
 	Upgradeable@GATTLING:
 		Type: gattling.upgrade
+		UpgradingCondition: upgrading
 		Actor: btr.yuri
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	WithDecoration@Upgradeable:
+		Image: upgrade
+		Palette: chrome
+		Sequence: upgrade
+		Position: Center
+		RequiresCondition: upgrading
+		BlinkInterval: 5
+		BlinkPattern: on
+		ValidRelationships: Ally, Neutral
 
 BTR.AI:
 	Inherits: BTR
@@ -4895,6 +5026,7 @@ BTR.YURI:
 	Voiced:
 		VoiceSet: GattlingTankVoice
 	-Upgradeable@GATTLING:
+	-WithDecoration@Upgradeable:
 
 BTR.YURI.AI:
 	Inherits: BTR.YURI
@@ -6709,10 +6841,20 @@ PTNK:
 		Actors: pcan
 	Upgradeable@PCAN:
 		Type: pcan.upgrade
+		UpgradingCondition: upgrading
 		Actor: pcan
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
+	WithDecoration@Upgradeable:
+		Image: upgrade
+		Palette: chrome
+		Sequence: upgrade
+		Position: Center
+		RequiresCondition: upgrading
+		BlinkInterval: 5
+		BlinkPattern: on
+		ValidRelationships: Ally, Neutral
 
 PCAN:
 	Inherits: PTNK
@@ -6742,6 +6884,7 @@ PCAN:
 		ChargingSounds: pcancharge.aud
 	-ReplacedInQueue:
 	-Upgradeable@PCAN:
+	-WithDecoration@Upgradeable:
 
 WTNK:
 	Inherits: ^TankTD
