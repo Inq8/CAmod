@@ -627,6 +627,17 @@
 		RequiresCondition: resourcedrain
 		Color: ffff0022
 
+^UpgradeOverlay:
+	WithDecoration@UpgradeOverlay:
+		Image: upgrade
+		Palette: chrome
+		Sequence: upgrade
+		Position: Center
+		RequiresCondition: upgrading
+		BlinkInterval: 5
+		BlinkPattern: on
+		ValidRelationships: Ally, Neutral
+
 ^GDIUpgrade:
 	GrantConditionOnPrerequisite@HOLD:
 		Condition: hold
