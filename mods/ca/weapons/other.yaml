@@ -1,6 +1,5 @@
 ^FireWeapon:
 	ValidTargets: Ground, Water, Trees
-	ReloadDelay: 65
 	Range: 5c0
 	Warhead@1Dam: SpreadDamage
 		Spread: 213
@@ -33,6 +32,7 @@ FireballLauncher:
 	Inherits: ^FireWeapon
 	Report: firebl3.aud
 	Range: 6c0
+	ReloadDelay: 62
 	Projectile: BulletCA
 		Speed: 250
 		TrailImage: fb2
@@ -64,7 +64,7 @@ FireballLauncher:
 
 ChemballLauncher:
 	Inherits: FireballLauncher
-	ReloadDelay: 60
+	ReloadDelay: 58
 	Projectile: BulletCA
 		TrailImage: cb2
 		TrailPalette: temptd
@@ -472,7 +472,7 @@ PortaTesla:
 		Versus:
 			None: 280
 			Wood: 60
-			Heavy: 75
+			Heavy: 70
 			Concrete: 70
 
 PortaTeslaCharge:
@@ -504,7 +504,7 @@ TTrackZap:
 		Versus:
 			Wood: 50
 			Concrete: 50
-			Light: 85
+			Light: 80
 
 TTrackZap.UPG:
 	Inherits: TTrackZap
@@ -543,12 +543,12 @@ TTankZap:
 	BurstDelays: 3
 	Range: 5c512
 	Warhead@1Dam: SpreadDamage
-		Damage: 3250
+		Damage: 3500
 		Versus:
-			None: 420
-			Wood: 60
-			Concrete: 60
-			Heavy: 85
+			None: 380
+			Wood: 55
+			Concrete: 55
+			Heavy: 80
 
 TTankZap.UPG:
 	Inherits: TTankZap
@@ -593,23 +593,23 @@ CyberdogJaw:
 		-InvalidTargets:
 
 BruteAttack:
-	ReloadDelay: 70
+	ReloadDelay: 95
 	Range: 1c512
 	Report: brutehit.aud
 	Projectile: InstantHit
 	InvalidTargets: Structure
 	TargetActorCenter: true
 	Warhead@1Dam: SpreadDamage
-		Spread: 128
+		Spread: 42
 		Damage: 10000
 		DamageTypes: DefaultDeath
 		InvalidTargets: Structure
 		Versus:
-			None: 100
-			Light: 60
-			Heavy: 75
-			Concrete: 35
-			Wood: 25
+			None: 40
+			Light: 75
+			Heavy: 100
+			Concrete: 50
+			Wood: 35
 
 BruteBuildingAttack:
 	Inherits: BruteAttack
@@ -735,7 +735,7 @@ Demolish:
 		Footprint: xxx xxx xxx
 
 PlaceC4:
-	ReloadDelay: 15
+	ReloadDelay: 25
 	Range: 1c849
 	Projectile: InstantHit
 	Report: icolseta.aud
@@ -756,16 +756,24 @@ PlaceC4:
 
 PlaceC4Seal:
 	Inherits: PlaceC4
-	ReloadDelay: 50
+	ReloadDelay: 250
 	ValidTargets: C4Plantable
 	InvalidTargets: Vehicle, C4Attached, TNTAttached, C4Immune
-	Range: 1c255
 	Warhead@AttachDelayedWeapon: AttachDelayedWeapon
 		TriggerTime: 20
 		Type: c4seal
 		ScaleTriggerTimeWithValue: true
 	Warhead@highlight: GrantExternalConditionCA
 		ValidTargets: Ground, Structure
+
+PrepareC4Seal:
+	Inherits: PlaceC4Seal
+	ReloadDelay: 50
+	-Report:
+	-Warhead@AttachDelayedWeapon:
+	Warhead@Dummy: Dummy
+	Warhead@highlight: GrantExternalConditionCA
+		Condition: redhighlight
 
 C4:
 	Projectile: InstantHit
@@ -1040,7 +1048,7 @@ Laser.Adv:
 
 LaserTur:
 	Inherits: Laser
-	ReloadDelay: 38
+	ReloadDelay: 34
 	Range: 6c0
 	Report: lastur1.aud
 	Projectile: LaserZapCA
@@ -1052,9 +1060,11 @@ LaserTur:
 	Warhead@1Dam: SpreadDamage
 		Damage: 5500
 		Versus:
-			Wood: 75
-			Heavy: 30
-			Concrete: 48
+			None: 320
+			Wood: 70
+			Light: 85
+			Heavy: 25
+			Concrete: 44
 
 LaserTur.Adv:
 	Inherits: LaserTur
@@ -2234,7 +2244,7 @@ RadBeamWeapon:
 		Damage: 16000
 		Versus:
 			None: 175
-			Light: 50
+			Light: 55
 			Heavy: 10
 			Wood: 12
 			Concrete: 12
@@ -2747,7 +2757,7 @@ BrassDebris:
 	ReloadDelay: 60
 	Range: 0c1
 	ValidTargets: Infantry, Vehicle, Building, Wall, Ground, Water, Air
-	Projectile: ProjetcileHusk
+	Projectile: ProjectileHusk
 		Velocity: 50, 0, 100
 		VelocityRandomFactor: 0, 15, 30
 		Acceleration: 0, 0, -30
@@ -2958,7 +2968,7 @@ ShadeEmp:
 		ContrailStartWidth: 0c48
 	Warhead@1Dam: SpreadDamage
 		Spread: 341
-		Damage: 15000
+		Damage: 17000
 		ValidTargets: Ground, Water
 		Versus:
 			None: 75

@@ -21,7 +21,7 @@ using Util = OpenRA.Mods.Common.Util;
 namespace OpenRA.Mods.CA.Projectiles
 {
 	[Desc("Projectile with customisable acceleration vector, recieve dead actor speed by using range modifier, used as aircraft husk.")]
-	public class ProjetcileHuskInfo : IProjectileInfo
+	public class ProjectileHuskInfo : IProjectileInfo
 	{
 		public readonly string Image = null;
 
@@ -93,12 +93,12 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("Use the Player Palette to render the trail sequence.")]
 		public readonly bool TrailUsePlayerPalette = false;
 
-		public IProjectile Create(ProjectileArgs args) { return new ProjetcileHusk(this, args); }
+		public IProjectile Create(ProjectileArgs args) { return new ProjectileHusk(this, args); }
 	}
 
-	public class ProjetcileHusk : IProjectile, ISync
+	public class ProjectileHusk : IProjectile, ISync
 	{
-		readonly ProjetcileHuskInfo info;
+		readonly ProjectileHuskInfo info;
 		readonly Animation anim;
 		readonly ProjectileArgs args;
 		readonly string trailPalette;
@@ -118,7 +118,7 @@ namespace OpenRA.Mods.CA.Projectiles
 		WPos pos, lastPos;
 		int smokeTicks;
 
-		public ProjetcileHusk(ProjetcileHuskInfo info, ProjectileArgs args)
+		public ProjectileHusk(ProjectileHuskInfo info, ProjectileArgs args)
 		{
 			this.info = info;
 			this.args = args;

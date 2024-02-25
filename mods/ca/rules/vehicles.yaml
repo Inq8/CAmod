@@ -61,6 +61,7 @@ KATY:
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 61
@@ -114,15 +115,6 @@ KATY:
 		Actor: v2rl
 		UpgradeAtActors: fix, rep, srep
 		RequiresCondition: !mindcontrolled
-	WithDecoration@Upgradeable:
-		Image: upgrade
-		Palette: chrome
-		Sequence: upgrade
-		Position: Center
-		RequiresCondition: upgrading
-		BlinkInterval: 5
-		BlinkPattern: on
-		ValidRelationships: Ally, Neutral
 
 1TNK:
 	Inherits: ^Tank
@@ -539,6 +531,7 @@ GTNK.squad:
 	Inherits@SLOWCRUSH: ^SlightlySlowedByCrushing
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@ATOMICAMMO: ^AtomicAmmunition
+	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 32
@@ -616,15 +609,6 @@ GTNK.squad:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
-	WithDecoration@Upgradeable:
-		Image: upgrade
-		Palette: chrome
-		Sequence: upgrade
-		Position: Center
-		RequiresCondition: upgrading
-		BlinkInterval: 5
-		BlinkPattern: on
-		ValidRelationships: Ally, Neutral
 
 3TNK.ATOMIC:
 	Inherits: 3TNK
@@ -792,7 +776,7 @@ GTNK.squad:
 	-SpeedMultiplier@CRUSHSLOW:
 	-ReplacedInQueue:
 	-Upgradeable@ATOMICLASHER:
-	-WithDecoration@Upgradeable:
+	-WithDecoration@UpgradeOverlay:
 
 3TNK.RHINO:
 	Inherits: ^Tank
@@ -803,6 +787,7 @@ GTNK.squad:
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@ATOMICAMMO: ^AtomicAmmunition
 	Inherits@InfiltratorStolenTech: ^InfiltratorStolenTech
+	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 701
@@ -884,15 +869,6 @@ GTNK.squad:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
-	WithDecoration@Upgradeable:
-		Image: upgrade
-		Palette: chrome
-		Sequence: upgrade
-		Position: Center
-		RequiresCondition: upgrading
-		BlinkInterval: 5
-		BlinkPattern: on
-		ValidRelationships: Ally, Neutral
 
 3TNK.RHINO.ATOMIC:
 	Inherits: 3TNK.RHINO
@@ -919,7 +895,7 @@ GTNK.squad:
 		RequiresCondition: !being-warped
 	-ReplacedInQueue:
 	-Upgradeable@ATOMIC:
-	-WithDecoration@Upgradeable:
+	-WithDecoration@UpgradeOverlay:
 
 4TNK:
 	Inherits: ^Tank
@@ -928,6 +904,7 @@ GTNK.squad:
 	Inherits@BERSERK: ^Berserk
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@ATOMICAMMO: ^AtomicAmmunition
+	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 290
@@ -1033,15 +1010,6 @@ GTNK.squad:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
-	WithDecoration@Upgradeable:
-		Image: upgrade
-		Palette: chrome
-		Sequence: upgrade
-		Position: Center
-		RequiresCondition: upgrading
-		BlinkInterval: 5
-		BlinkPattern: on
-		ValidRelationships: Ally, Neutral
 
 4TNK.ATOMIC:
 	Inherits: 4TNK
@@ -1155,7 +1123,7 @@ GTNK.squad:
 	-Armament@SECONDARY:
 	-ReplacedInQueue:
 	-Upgradeable@ERADATOMIC:
-	-WithDecoration@Upgradeable:
+	-WithDecoration@UpgradeOverlay:
 	Voiced:
 		VoiceSet: EradVoice
 	AttackTurreted:
@@ -1929,6 +1897,7 @@ APC:
 	Inherits@TRANSPORT: ^Transport
 	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 50
@@ -1988,15 +1957,6 @@ APC:
 		Actor: rapc
 		UpgradeAtActors: fix, rep, srep
 		RequiresCondition: !mindcontrolled
-	WithDecoration@Upgradeable:
-		Image: upgrade
-		Palette: chrome
-		Sequence: upgrade
-		Position: Center
-		RequiresCondition: upgrading
-		BlinkInterval: 5
-		BlinkPattern: on
-		ValidRelationships: Ally, Neutral
 
 RAPC:
 	Inherits: APC
@@ -2027,7 +1987,7 @@ RAPC:
 		MuzzleSequence: muzzle2
 	-ReplacedInQueue:
 	-Upgradeable@RAIDER:
-	-WithDecoration@Upgradeable:
+	-WithDecoration@UpgradeOverlay:
 
 APC.AI:
 	Inherits: APC
@@ -2040,7 +2000,7 @@ APC.AI:
 		InitialUnits: E1,E1,E1,E3,E3
 	-ReplacedInQueue:
 	-Upgradeable@RAIDER:
-	-WithDecoration@Upgradeable:
+	-WithDecoration@UpgradeOverlay:
 
 RAPC.AI:
 	Inherits: RAPC
@@ -2769,6 +2729,7 @@ HMMV:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@GAINSEXPERIENCE: ^GainsExperience
 	Inherits@BERSERK: ^Berserk
+	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	RenderSprites:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
@@ -2845,15 +2806,6 @@ HMMV:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 200
 		RequiresCondition: !mindcontrolled
-	WithDecoration@Upgradeable:
-		Image: upgrade
-		Palette: chrome
-		Sequence: upgrade
-		Position: Center
-		RequiresCondition: upgrading
-		BlinkInterval: 5
-		BlinkPattern: on
-		ValidRelationships: Ally, Neutral
 
 HMMV.TOW:
 	Inherits: HMMV
@@ -2879,13 +2831,14 @@ HMMV.TOW:
 		Sequence: turrettow
 	-ReplacedInQueue:
 	-Upgradeable@TOW:
-	-WithDecoration@Upgradeable:
+	-WithDecoration@UpgradeOverlay:
 
 GDRN:
 	Inherits: ^Vehicle
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@HACKABLE: ^Hackable
+	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	RenderSprites:
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
@@ -2966,15 +2919,6 @@ GDRN:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 200
 		RequiresCondition: !mindcontrolled
-	WithDecoration@Upgradeable:
-		Image: upgrade
-		Palette: chrome
-		Sequence: upgrade
-		Position: Center
-		RequiresCondition: upgrading
-		BlinkInterval: 5
-		BlinkPattern: on
-		ValidRelationships: Ally, Neutral
 	-CaptureManager:
 	-Capturable:
 	-CaptureNotification:
@@ -3007,7 +2951,7 @@ GDRN.TOW:
 		Sequence: turrettow
 	-ReplacedInQueue:
 	-Upgradeable@TOW:
-	-WithDecoration@Upgradeable:
+	-WithDecoration@UpgradeOverlay:
 
 BGGY:
 	Inherits: ^VehicleTD
@@ -3235,6 +3179,7 @@ APC2:
 	Inherits@TRANSPORT: ^Transport
 	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	RenderSprites:
 		FactionImages:
 			nod: apc2.nod
@@ -3304,15 +3249,6 @@ APC2:
 		Actor: vulc
 		UpgradeAtActors: fix, rep, srep
 		RequiresCondition: !mindcontrolled
-	WithDecoration@Upgradeable:
-		Image: upgrade
-		Palette: chrome
-		Sequence: upgrade
-		Position: Center
-		RequiresCondition: upgrading
-		BlinkInterval: 5
-		BlinkPattern: on
-		ValidRelationships: Ally, Neutral
 
 APC2.NODAI:
 	Inherits: APC2
@@ -3325,7 +3261,7 @@ APC2.NODAI:
 		InitialUnits: N1,N1,N1,N3,N4
 	-ReplacedInQueue:
 	-Upgradeable@VULCAN:
-	-WithDecoration@Upgradeable:
+	-WithDecoration@UpgradeOverlay:
 
 APC2.GDIAI:
 	Inherits: APC2
@@ -3338,7 +3274,7 @@ APC2.GDIAI:
 		InitialUnits: N1,N1,N1,N2,N3
 	-ReplacedInQueue:
 	-Upgradeable@VULCAN:
-	-WithDecoration@Upgradeable:
+	-WithDecoration@UpgradeOverlay:
 
 APC2.Reinforce:
 	Inherits: APC2
@@ -3618,6 +3554,7 @@ MTNK:
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlightlySlowedByCrushing
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
+	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	RenderSprites:
 		FactionImages:
 			nod: mtnk.nod
@@ -3728,15 +3665,6 @@ MTNK:
 		Cost: 0
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
-	WithDecoration@Upgradeable:
-		Image: upgrade
-		Palette: chrome
-		Sequence: upgrade
-		Position: Center
-		RequiresCondition: upgrading
-		BlinkInterval: 5
-		BlinkPattern: on
-		ValidRelationships: Ally, Neutral
 
 MTNK.Drone:
 	Inherits: MTNK
@@ -3809,7 +3737,7 @@ MTNK.Drone:
 	-GrantCondition@BERSERK:
 	-ReplacedInQueue:
 	-Upgradeable@BDRONE:
-	-WithDecoration@Upgradeable:
+	-WithDecoration@UpgradeOverlay:
 
 MDRN:
 	Inherits: ^Vehicle
@@ -3965,6 +3893,7 @@ HTNK:
 	Inherits@AUTOTARGET: ^AutoTargetAllAssaultMovePrioritizeGround
 	Inherits@BERSERK: ^Berserk
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
+	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 300
@@ -4058,15 +3987,6 @@ HTNK:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
-	WithDecoration@Upgradeable:
-		Image: upgrade
-		Palette: chrome
-		Sequence: upgrade
-		Position: Center
-		RequiresCondition: upgrading
-		BlinkInterval: 5
-		BlinkPattern: on
-		ValidRelationships: Ally, Neutral
 
 HTNK.Ion:
 	Inherits: HTNK
@@ -4085,7 +4005,7 @@ HTNK.Ion:
 	-Upgradeable@ION:
 	-Upgradeable@HOVER:
 	-Upgradeable@DRONE:
-	-WithDecoration@Upgradeable:
+	-WithDecoration@UpgradeOverlay:
 
 HTNK.Hover:
 	Inherits: HTNK
@@ -4126,7 +4046,7 @@ HTNK.Hover:
 	-Upgradeable@ION:
 	-Upgradeable@HOVER:
 	-Upgradeable@DRONE:
-	-WithDecoration@Upgradeable:
+	-WithDecoration@UpgradeOverlay:
 
 HTNK.Drone:
 	Inherits: HTNK
@@ -4194,7 +4114,7 @@ HTNK.Drone:
 	-Upgradeable@ION:
 	-Upgradeable@HOVER:
 	-Upgradeable@DRONE:
-	-WithDecoration@Upgradeable:
+	-WithDecoration@UpgradeOverlay:
 
 MSAM:
 	Inherits: ^TankTD
@@ -4837,6 +4757,7 @@ BTR:
 	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 21
@@ -4904,15 +4825,6 @@ BTR:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
-	WithDecoration@Upgradeable:
-		Image: upgrade
-		Palette: chrome
-		Sequence: upgrade
-		Position: Center
-		RequiresCondition: upgrading
-		BlinkInterval: 5
-		BlinkPattern: on
-		ValidRelationships: Ally, Neutral
 
 BTR.AI:
 	Inherits: BTR
@@ -5050,7 +4962,7 @@ BTR.YURI:
 	Voiced:
 		VoiceSet: GattlingTankVoice
 	-Upgradeable@GATTLING:
-	-WithDecoration@Upgradeable:
+	-WithDecoration@UpgradeOverlay:
 
 BTR.YURI.AI:
 	Inherits: BTR.YURI
@@ -5899,6 +5811,7 @@ TITN:
 	Inherits@SHRAPNEL: ^ThrowsShrapnel
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@GYRO: ^GyroStabilizers
+	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 303
@@ -6003,15 +5916,6 @@ TITN:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
-	WithDecoration@Upgradeable:
-		Image: upgrade
-		Palette: chrome
-		Sequence: upgrade
-		Position: Center
-		RequiresCondition: upgrading
-		BlinkInterval: 5
-		BlinkPattern: on
-		ValidRelationships: Ally, Neutral
 
 TITN.RAIL:
 	Inherits: TITN
@@ -6033,7 +5937,7 @@ TITN.RAIL:
 		Actor: TITN.RAIL.Husk
 	-ReplacedInQueue:
 	-Upgradeable@RAILGUN:
-	-WithDecoration@Upgradeable:
+	-WithDecoration@UpgradeOverlay:
 
 JUGG:
 	Inherits: ^TankTD
@@ -6806,6 +6710,7 @@ PTNK:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
+	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 230
@@ -6873,15 +6778,6 @@ PTNK:
 		UpgradeAtActors: fix, rep, srep
 		BuildDuration: 100
 		RequiresCondition: !mindcontrolled
-	WithDecoration@Upgradeable:
-		Image: upgrade
-		Palette: chrome
-		Sequence: upgrade
-		Position: Center
-		RequiresCondition: upgrading
-		BlinkInterval: 5
-		BlinkPattern: on
-		ValidRelationships: Ally, Neutral
 
 PCAN:
 	Inherits: PTNK
@@ -6911,7 +6807,7 @@ PCAN:
 		ChargingSounds: pcancharge.aud
 	-ReplacedInQueue:
 	-Upgradeable@PCAN:
-	-WithDecoration@Upgradeable:
+	-WithDecoration@UpgradeOverlay:
 
 WTNK:
 	Inherits: ^TankTD

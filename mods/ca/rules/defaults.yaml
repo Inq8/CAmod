@@ -627,6 +627,17 @@
 		RequiresCondition: resourcedrain
 		Color: ffff0022
 
+^UpgradeOverlay:
+	WithDecoration@UpgradeOverlay:
+		Image: upgrade
+		Palette: chrome
+		Sequence: upgrade
+		Position: Center
+		RequiresCondition: upgrading
+		BlinkInterval: 5
+		BlinkPattern: on
+		ValidRelationships: Ally, Neutral
+
 ^GDIUpgrade:
 	GrantConditionOnPrerequisite@HOLD:
 		Condition: hold
@@ -981,8 +992,8 @@
 ^HealingCooldown:
 	GrantConditionOnHealingReceived@HEALINGCOOLDOWN:
 		Condition: heal-cooldown
-		RequiredHealing: 75000
-		StackDuration: 625
+		RequiredHealing: 50000
+		StackDuration: 1125
 		MinimumHealing: 2500
 		DamageTypes: DirectHeal
 		ShowSelectionBar: true
@@ -2874,6 +2885,7 @@
 	Inherits@7: ^BotBuilding
 	Inherits@8: ^Chillable
 	Inherits@wflash: ^WhiteFlash
+	Inherits@rflash: ^RedFlash
 	Inherits@gflash: ^GreenFlash
 	Inherits@HACKABLE: ^Hackable
 	Inherits@oilcost: ^OilRefCostReduction
@@ -3152,7 +3164,6 @@
 
 ^FakeBuilding:
 	Inherits: ^Building
-	Inherits@REDHIGHLIGHT: ^RedFlash
 	GivesBuildableArea:
 		AreaTypes: fake
 	RequiresBuildableArea:
