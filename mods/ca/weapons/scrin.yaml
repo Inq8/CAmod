@@ -102,7 +102,6 @@ GunWalkerZap:
 			Heavy: 10
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
-
 GunwalkerZapVisual:
 	Inherits: GunWalkerZap
 	-Report:
@@ -119,6 +118,8 @@ GunwalkerZapVisual:
 		Image: scrinzaphit
 		ValidTargets: Ground, Ship, Air, AirSmall, Trees
 		Inaccuracy: 128
+		ImpactSounds: irocatta.aud, irocattb.aud, irocattc.aud
+		ImpactSoundChance: 100
 	Warhead@3EffWater: CreateEffect
 		Explosions: water_piffs
 		ValidTargets: Water, Underwater
@@ -149,6 +150,14 @@ GunWalkerZapAA:
 		ValidRelationships: Enemy, Neutral
 		Spread: 128
 		Falloff: 100, 50, 14, 0
+	Warhead@2Eff: CreateEffect
+		Explosions: idle
+		ExplosionPalette: scrin
+		Image: scrinzaphit
+		ValidTargets: Ground, Ship, Air, AirSmall, Trees
+		Inaccuracy: 128
+		ImpactSounds: irocatta.aud, irocattb.aud, irocattc.aud
+		ImpactSoundChance: 100
 
 PlasmaDiscs:
 	Range: 5c0
@@ -702,6 +711,8 @@ StormriderZap:
 		Image: scrinzaphit
 		ValidTargets: Ground, Ship, Air, AirSmall, Trees
 		Inaccuracy: 128
+		ImpactSounds: irocatta.aud, irocattb.aud, irocattc.aud
+		ImpactSoundChance: 100
 	Warhead@4EffWater: CreateEffect
 		Explosions: water_piffs
 		ValidTargets: Water, Underwater
@@ -1122,7 +1133,9 @@ ShardLauncher:
 		ExplosionPalette: scrin
 		Image: shardhit
 		ValidTargets: Air, AirSmall, ICBM, Ground, Water, Trees
-		Inaccuracy: 128
+		Inaccuracy: 171
+		ImpactSounds: gshardhit1.aud, gshardhit2.aud
+		ImpactSoundChance: 100
 
 RavagerShards:
 	Inherits: ShardLauncher

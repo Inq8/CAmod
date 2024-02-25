@@ -792,6 +792,9 @@ HALO:
 		MaxWeight: 10
 	Aircraft:
 		Speed: 155
+		Voice: Move
+		TakeoffSounds: vhalostaa.aud
+		LandingSounds: vhalolana.aud
 	Health:
 		HP: 44000
 	Buildable:
@@ -813,6 +816,10 @@ HALO:
 		RequiresCondition: dropcargo
 	GrantConditionOnAttack:
 		Condition: dropcargo
+	Voiced:
+		VoiceSet: HaloVoice
+	SoundOnDamageTransition:
+		DestroyedSounds: vhalodiea.aud
 
 HALO.paradrop:
 	Inherits: HALO
@@ -965,6 +972,7 @@ NHAW:
 		OpportunityFire: false
 		PauseOnCondition: empdisable || being-warped
 		ForceFireIgnoresActors: True
+		Voice: Attack
 	WithMuzzleOverlay:
 	GrantConditionOnPrerequisite@CRYM:
 		Condition: upg-crym
@@ -1181,6 +1189,9 @@ HIND:
 		LocalOffset: 500,0,-250
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
+		CasingWeapon: BrassDebrisAir
+		CasingSpawnLocalOffset: 400,-225,0
+		CasingTargetOffset: 400, -300, 0
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: HindRockets
@@ -1846,11 +1857,17 @@ APCH:
 		LocalOffset: 350,0,-150
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
+		CasingWeapon: BrassDebrisAir
+		CasingSpawnLocalOffset: 400,-225,0
+		CasingTargetOffset: 400, -300, 0
 	Armament@SECONDARY:
 		Weapon: HeliGunAA
 		LocalOffset: 350,0,-150
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
+		CasingWeapon: BrassDebrisAir
+		CasingSpawnLocalOffset: 400,-225,0
+		CasingTargetOffset: 400, -300, 0
 	AttackAircraft:
 		FacingTolerance: 80
 		AttackType: Hover
@@ -3048,13 +3065,13 @@ SCRN:
 		Offset: -300,-143,0
 		StartColorUsePlayerColor: false
 		StartColor: 00FF00
-		StartColorAlpha: 128
+		StartColorAlpha: 64
 		ZOffset: -512
 	Contrail@2:
 		Offset: -300,143,0
 		StartColorUsePlayerColor: false
 		StartColor: 00FF00
-		StartColorAlpha: 128
+		StartColorAlpha: 64
 		ZOffset: -512
 	SpawnActorOnDeath:
 		Actor: SCRN.Husk
@@ -3859,6 +3876,9 @@ KAMV:
 		LocalOffset: 500,0,-250
 		MuzzleSequence: muzzle
 		PauseOnCondition: !ammo
+		CasingWeapon: BrassDebrisAir
+		CasingSpawnLocalOffset: 400,-225,0
+		CasingTargetOffset: 400, -300, 0
 	Armament@SECONDARY:
 		Name: secondary
 		Weapon: HindRockets

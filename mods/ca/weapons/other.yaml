@@ -2754,7 +2754,7 @@ TinyDebris:
 	-Warhead@4Smu:
 
 BrassDebris:
-	ReloadDelay: 60
+	ReloadDelay: 10
 	Range: 0c1
 	ValidTargets: Infantry, Vehicle, Building, Wall, Ground, Water, Air
 	Projectile: ProjectileHusk
@@ -2765,6 +2765,13 @@ BrassDebris:
 		Image: brass
 		Sequences: 1, 2, 3, 4, 5
 		UseRangeModifierAsVelocityX: false
+
+BrassDebrisAir:
+	Inherits: BrassDebris
+	ReloadDelay: 10
+	Projectile: ProjetcileHusk
+		Velocity: 50, 0, 10
+		VelocityRandomFactor: 0, 15, 30
 
 SmallDebris:
 	Inherits: ^Debris
