@@ -1737,6 +1737,7 @@ N5:
 	Inherits: ^Cyborg
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
+	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
 		BuildAtProductionType: Cyborg
@@ -2410,6 +2411,7 @@ ACOL:
 
 TPLR:
 	Inherits: ACOL
+	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	Tooltip:
 		Name: Templar
 	Valued:
@@ -2730,6 +2732,7 @@ E8:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BERSERK: ^Berserk
 	Inherits@Inspirable: ^Inspirable
+	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
@@ -2849,6 +2852,7 @@ N1C:
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@BOTHELPER: ^BotCaptureHelper
 	Inherits@BERSERK: ^Berserk
+	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	RenderSprites:
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ, CyborgMQ
@@ -3162,6 +3166,7 @@ IVAN:
 BRUT:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	AutoTarget:
 		ScanRadius: 4
 		InitialStance: AttackAnything
@@ -3814,6 +3819,7 @@ SEAL:
 		Voice: Move
 	AttackMove:
 		Voice: Move
+		-AssaultMoveCondition:
 	RevealsShroud:
 		Range: 6c0
 	Buildable:
@@ -3939,6 +3945,8 @@ SEAL:
 		DeathSequence: splash
 	WithDecoration@COMMANDOSKULL:
 		Sequence: pip-seal
+	AutoTarget:
+		-AttackAnythingCondition:
 	-AutoTargetPriority@ATTACKANYTHING:
 	-Targetable@HERO:
 
