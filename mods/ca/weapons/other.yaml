@@ -2239,7 +2239,12 @@ RadBeamWeapon:
 		WaveLength: 384
 		Thickness: 32
 		ZOffset: 512
-	Warhead@1Dam: SpreadDamage
+	Warhead@1Dam: HealthPercentageDamage
+		Spread: 42
+		Damage: 150
+		ValidTargets: Infantry
+		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+	Warhead@2Dam: SpreadDamage
 		Spread: 42
 		Damage: 16000
 		Versus:
@@ -2250,7 +2255,8 @@ RadBeamWeapon:
 			Concrete: 12
 			Brick: 0
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
-	Warhead@2Dam: SpreadDamage
+		InvalidTargets: Infantry
+	Warhead@3Dam: SpreadDamage
 		Spread: 256
 		Damage: 3750
 		Falloff: 100, 37, 25, 15, 0
