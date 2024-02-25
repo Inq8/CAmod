@@ -1526,6 +1526,9 @@ SAPC:
 		MaxWeight: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
+	WithCargoSounds:
+		EnterSounds: genter1a.aud
+		ExitSounds: gexit1a.aud
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -1573,6 +1576,8 @@ SAPC.AI:
 		Prerequisites: ~botplayer, ~!tmpp, tmpl, ~vehicles.nod, ~techlevel.high
 	Cargo:
 		InitialUnits: N1,N1,N4,N3,N3
+	WithCargoSounds:
+		-EnterSounds:
 
 SAPC.AI2:
 	Inherits: SAPC
@@ -1826,6 +1831,9 @@ JEEP:
 		Weapon: M60mg
 		MuzzleSequence: muzzle
 		LocalOffset: 128,0,43
+		CasingWeapon: BrassDebris
+		CasingSpawnLocalOffset: 0,-125,200
+		CasingTargetOffset: 0, -500, 0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
@@ -1938,6 +1946,9 @@ APC:
 		MaxWeight: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
+	WithCargoSounds:
+		EnterSounds: genter1a.aud
+		ExitSounds: gexit1a.aud
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -1998,6 +2009,8 @@ APC.AI:
 		Prerequisites: ~botplayer, ~vehicles.allies, ~!rapc.upgrade, ~techlevel.low
 	Cargo:
 		InitialUnits: E1,E1,E1,E3,E3
+	WithCargoSounds:
+		-EnterSounds:
 	-ReplacedInQueue:
 	-Upgradeable@RAIDER:
 	-WithDecoration@UpgradeOverlay:
@@ -2011,6 +2024,8 @@ RAPC.AI:
 		Prerequisites: ~botplayer, ~vehicles.allies, ~rapc.upgrade, ~techlevel.medium
 	Cargo:
 		InitialUnits: E1,E1,E1,E3,E3
+	WithCargoSounds:
+		-EnterSounds:
 
 MNLY:
 	Inherits: ^Tank
@@ -2767,6 +2782,9 @@ HMMV:
 		Weapon: M60mgTD
 		LocalOffset: 171,0,85
 		MuzzleSequence: muzzle
+		CasingWeapon: BrassDebris
+		CasingSpawnLocalOffset: 0,-125,200
+		CasingTargetOffset: 0, -500, 0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
@@ -2995,6 +3013,9 @@ BGGY:
 		Weapon: M60mgTD
 		LocalOffset: 171,0,43
 		MuzzleSequence: muzzle
+		CasingWeapon: BrassDebris
+		CasingSpawnLocalOffset: 0,-125,200
+		CasingTargetOffset: 0, -500, 0
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
 	WithMuzzleOverlay:
@@ -3228,6 +3249,9 @@ APC2:
 		MaxWeight: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
+	WithCargoSounds:
+		EnterSounds: genter1a.aud
+		ExitSounds: gexit1a.aud
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -3437,6 +3461,9 @@ VULC:
 		MaxWeight: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
+	WithCargoSounds:
+		EnterSounds: genter1a.aud
+		ExitSounds: gexit1a.aud
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -3458,6 +3485,8 @@ VULC.AI:
 		Prerequisites: ~botplayer, ~vehicles.gdi, ~vulcan.upgrade, ~techlevel.medium
 	Cargo:
 		InitialUnits: N1,N1,N1,N2,N3
+	WithCargoSounds:
+		-EnterSounds:
 
 VULC.Reinforce:
 	Inherits: VULC
@@ -4813,6 +4842,9 @@ BTR:
 		MaxWeight: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
+	WithCargoSounds:
+		EnterSounds: genter1a.aud
+		ExitSounds: gexit1a.aud
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -4841,6 +4873,8 @@ BTR.AI:
 		Prerequisites: ~botplayer, ~vehicles.soviet, ~techlevel.low
 	Cargo:
 		InitialUnits: E1,E1,E1,E3,E4
+	WithCargoSounds:
+		-EnterSounds:
 
 BTR.YURI:
 	Inherits: BTR
@@ -4979,6 +5013,8 @@ BTR.YURI.AI:
 		Prerequisites: ~botplayer, ~vehicles.soviet, ~gattling.upgrade, ~techlevel.low
 	Cargo:
 		InitialUnits: E1,E1,E1,E3,E4
+	WithCargoSounds:
+		-EnterSounds:
 
 IFV:
 	Inherits: ^Tank
@@ -5181,6 +5217,9 @@ IFV:
 		MuzzleSequence: muzzle
 		LocalOffset: 250,0,150
 		RequiresCondition: gunturr
+		CasingWeapon: BrassDebris
+		CasingSpawnLocalOffset: 0,-125,200
+		CasingTargetOffset: 0, -500, 0
 	Armament@E2:
 		Weapon: 25mmFRAG
 		MuzzleSequence: muzzle
@@ -5223,11 +5262,17 @@ IFV:
 		MuzzleSequence: muzzle
 		LocalOffset: 560,0,200
 		RequiresCondition: commturr
+		CasingWeapon: BrassDebris
+		CasingSpawnLocalOffset: 0,-225,200
+		CasingTargetOffset: 0, -600, 0
 	Armament@SEAL:
 		Weapon: SealIFVGun
 		MuzzleSequence: muzzle
 		LocalOffset: 560,0,200
 		RequiresCondition: sealturr
+		CasingWeapon: BrassDebris
+		CasingSpawnLocalOffset: 0,-225,200
+		CasingTargetOffset: 0, -600, 0
 	Armament@Sniper:
 		Weapon: SniperIFVGun
 		MuzzleSequence: muzzle
@@ -5664,6 +5709,9 @@ IFV.AI:
 		MuzzleSequence: muzzle
 		LocalOffset: 250,0,150
 		RequiresCondition: gunturr
+		CasingWeapon: BrassDebris
+		CasingSpawnLocalOffset: 0,-125,200
+		CasingTargetOffset: 0, -500, 0
 	Armament@E3:
 		Weapon: IFVRocketsE
 		LocalOffset: 192,100,176, 192,-100,176
@@ -7004,6 +7052,9 @@ BATF:
 			s4: loaded
 			s6: loaded-repair
 			mast: loaded-cmdo
+	WithCargoSounds:
+		EnterSounds: genter1a.aud
+		ExitSounds: gexit1a.aud
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -7084,6 +7135,8 @@ BATF.AI:
 		Prerequisites: atek, ~vehicles.france, ~botplayer, ~techlevel.high
 	Cargo:
 		InitialUnits: E1,E1,E3,E3,E3
+	WithCargoSounds:
+		-EnterSounds:
 
 MEMP:
 	Inherits: ^TankTD

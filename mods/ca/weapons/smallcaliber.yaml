@@ -701,22 +701,18 @@ SMGBATF:
 
 MP5:
 	Inherits: AKM
-	Report: iseaatta.aud, iseaattb.aud
+	StartBurstReport: iseaatta.aud, iseaattb.aud
 	ReloadDelay: 10
-	-Burst:
 	Range: 6c0
 	Projectile: InstantHit
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
+		Damage: 1570
 		Versus:
 			Light: 35
 			Heavy: 15
 			Wood: 5
 			Concrete: 5
-	Warhead@2Eff: CreateEffect
-		Explosions: piffs
-	Warhead@3EffWater: CreateEffect
-		Explosions: water_piffs
 
 MP5BATF:
 	Inherits: MP5

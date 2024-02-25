@@ -2759,6 +2759,9 @@
 	-SpeedMultiplier@chilled10:
 	WithShadow:
 		RequiresCondition: !invisibility
+	SoundOnDamageTransitionCA:
+		DestroyedSounds: vrapdiea.aud, vrapdieb.aud
+		RequiresCondition: airborne
 
 ^PlaneTD:
 	Inherits@1: ^Plane
@@ -2786,6 +2789,9 @@
 	-Contrail@2:
 	GpsRadarDot:
 		Sequence: Helicopter
+	SoundOnDamageTransitionCA:
+		DestroyedSounds: vhelidi1a.aud, vhelidi2a.aud
+		RequiresCondition: airborne
 
 ^HelicopterTD:
 	Inherits@1: ^Helicopter
@@ -2844,7 +2850,7 @@
 	RequiresBuildableArea:
 		AreaTypes: building
 		Adjacent: 4
-	SoundOnDamageTransition:
+	SoundOnDamageTransitionCA:
 		DamagedSounds: kaboom1.aud, xplobig4.aud
 		DestroyedSounds: kaboom22.aud, crumble.aud, xplobig4.aud
 	WithSpriteBody:
@@ -3103,7 +3109,7 @@
 	RequiresBuildableArea:
 		AreaTypes: building
 		Adjacent: 7
-	SoundOnDamageTransition:
+	SoundOnDamageTransitionCA:
 		DamagedSounds: sandbag2.aud
 		DestroyedSounds: sandbag2.aud
 	Crushable:
@@ -3172,7 +3178,7 @@
 		HP: 10000
 	RevealsShroud:
 		Range: 1c0
-	SoundOnDamageTransition:
+	SoundOnDamageTransitionCA:
 		-DamagedSounds:
 	WithDecoration@fake:
 		RequiresSelection: true

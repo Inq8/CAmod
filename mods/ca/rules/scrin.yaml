@@ -1255,6 +1255,9 @@ INTL:
 			e6: engi-loaded
 			n6: engi-loaded
 			s6: engi-loaded
+	WithCargoSounds:
+		EnterSounds: genter1a.aud
+		ExitSounds: gexit1a.aud
 	WithCargoPipsDecoration:
 	Hovers:
 		BobDistance: -25
@@ -2298,6 +2301,7 @@ STMR:
 		RequiresCondition: empdisable
 	GpsRadarDot:
 		Sequence: Plane
+	-SoundOnDamageTransitionCA:
 
 ENRV:
 	Inherits: ^Helicopter
@@ -2431,6 +2435,7 @@ ENRV:
 		RequiresCondition: ammo < 5
 	ReloadAmmoPool@MothershipRearmable:
 		Count: 1
+	-SoundOnDamageTransitionCA:
 
 DEVA:
 	Inherits: ^Helicopter
@@ -2567,6 +2572,7 @@ DEVA:
 		Offset: -64,0,0
 	GpsRadarDot:
 		Sequence: Plane
+	-SoundOnDamageTransitionCA:
 
 PAC:
 	Inherits: ^Helicopter
@@ -2699,6 +2705,7 @@ PAC:
 		Offset: -128,0,0
 	GpsRadarDot:
 		Sequence: Plane
+	-SoundOnDamageTransitionCA:
 
 INVA:
 	Inherits: ^NeutralPlane
@@ -2980,6 +2987,7 @@ MSHP:
 		LocalOffset: 0,0,256
 	Targetable@FleetRecallable:
 		RequiresCondition: !attacking
+	-SoundOnDamageTransitionCA:
 
 #
 # ---- Husks
@@ -3103,12 +3111,12 @@ STMR.Husk:
 		Offset: -250,-250,100
 		StartColorUsePlayerColor: true
 		EndColorUsePlayerColor: true
-		StartColorAlpha: 255
+		StartColorAlpha: 64
 	Contrail@2:
 		Offset: -250,250,100
 		StartColorUsePlayerColor: true
 		EndColorUsePlayerColor: true
-		StartColorAlpha: 255
+		StartColorAlpha: 64
 	RevealsShroud:
 		Range: 11c0
 		MinRange: 9c0
@@ -3359,7 +3367,7 @@ SWAL:
 		Value: 0
 	Tooltip:
 		Name: Biometallic Wall
-	SoundOnDamageTransition:
+	SoundOnDamageTransitionCA:
 		DamagedSounds: crmble2.aud
 		DestroyedSounds: kaboom30.aud
 	Health:

@@ -257,7 +257,7 @@ MIG:
 		Speed: 201
 		RepulsionSpeed: 40
 		MaximumPitch: 56
-		TakeoffSounds: migtoff1.aud
+		TakeoffSounds: migtoff1.aud, cjetbanb.aud, cjetbanc.aud
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
@@ -320,6 +320,8 @@ MIG:
 		RearmActors: afld, afld.gdi
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	EjectOnDeath:
+		ChuteSound: gejecta.aud
 
 SUK:
 	Inherits: ^Plane
@@ -379,7 +381,7 @@ SUK:
 		Speed: 216
 		RepulsionSpeed: 40
 		MaximumPitch: 56
-		TakeoffSounds: migtoff1.aud
+		TakeoffSounds: migtoff1.aud, cjetbanb.aud, cjetbanc.aud
 		Voice: Move
 	AutoTarget:
 		InitialStance: HoldFire
@@ -450,6 +452,8 @@ SUK:
 		Condition: enable-smoke
 	Voiced:
 		VoiceSet: SukVoice
+	EjectOnDeath:
+		ChuteSound: gejecta.aud
 
 SUK.UPG:
 	Inherits: SUK
@@ -687,8 +691,8 @@ TRAN:
 		TurnSpeed: 20
 		Speed: 135
 		AltitudeVelocity: 0c58
-		TakeoffSounds: htoff1.aud
-		LandingSounds: hland1.aud
+		TakeoffSounds: vospstaa.aud
+		LandingSounds: vosplana.aud
 	ParaDrop:
 		ChuteSound: chute1.aud
 	AmmoPool:
@@ -735,6 +739,10 @@ TRAN:
 		Types: Infantry
 		MaxWeight: 8
 		LoadedCondition: cargo
+	WithCargoSounds:
+		EnterSounds: genter1a.aud
+		ExitSounds: gexit1a.aud
+		RequiresCondition: !airborne
 	SpawnActorOnDeath:
 		Actor: TRAN.Husk
 		RequiresCondition: !empdisable && !being-warped
@@ -818,8 +826,9 @@ HALO:
 		Condition: dropcargo
 	Voiced:
 		VoiceSet: HaloVoice
-	SoundOnDamageTransition:
+	SoundOnDamageTransitionCA:
 		DestroyedSounds: vhalodiea.aud
+		RequiresCondition: airborne
 
 HALO.paradrop:
 	Inherits: HALO
@@ -908,6 +917,10 @@ NHAW:
 		Types: Infantry
 		MaxWeight: 8
 		LoadedCondition: cargo
+	WithCargoSounds:
+		EnterSounds: genter1a.aud
+		ExitSounds: gexit1a.aud
+		RequiresCondition: !airborne
 	SpawnActorOnDeath:
 		Actor: NHAW.Husk
 		RequiresCondition: !upg-crym && !empdisable && !being-warped
@@ -1098,8 +1111,8 @@ HELI:
 	Aircraft:
 		TurnSpeed: 18
 		Speed: 157
-		TakeoffSounds: htoff1.aud
-		LandingSounds: hland1.aud
+		TakeoffSounds: vhelistaa.aud
+		LandingSounds: vhelilana.aud
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
@@ -1217,8 +1230,8 @@ HIND:
 	Aircraft:
 		TurnSpeed: 16
 		Speed: 112
-		TakeoffSounds: htoff1.aud
-		LandingSounds: hland1.aud
+		TakeoffSounds: vhelistaa.aud
+		LandingSounds: vhelilana.aud
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
@@ -1342,6 +1355,8 @@ U2:
 	-MapEditorData:
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	EjectOnDeath:
+		ChuteSound: gejecta.aud
 
 SMIG:
 	Inherits: ^NeutralPlane
@@ -1414,6 +1429,8 @@ SMIG:
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
 	GivesExperienceToMaster:
+	EjectOnDeath:
+		ChuteSound: gejecta.aud
 
 A10:
 	Inherits: ^PlaneTD
@@ -1479,7 +1496,7 @@ A10:
 		Speed: 180
 		RepulsionSpeed: 40
 		MaximumPitch: 56
-		TakeoffSounds: migtoff1.aud
+		TakeoffSounds: migtoff1.aud, cjetbanb.aud, cjetbanc.aud
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
@@ -1592,6 +1609,8 @@ A10:
 	GrantConditionOnBotOwner@BOTSIDEWINDERS:
 		Condition: resupplied-with-sidewinders
 		Bots: brutal, vhard, hard, normal, easy, naval
+	EjectOnDeath:
+		ChuteSound: gejecta.aud
 
 A10.UPG:
 	Inherits: A10
@@ -1649,6 +1668,7 @@ A10.bomber:
 		Image: a10
 	EjectOnDeath:
 		PilotActor: N1
+		ChuteSound: gejecta.aud
 	RejectsOrders:
 	Contrail@1:
 		Offset: -258,-823,0
@@ -1840,8 +1860,8 @@ APCH:
 		AltitudeVelocity: 0c100
 		TurnSpeed: 22
 		Speed: 168
-		TakeoffSounds: htoff1.aud
-		LandingSounds: hland1.aud
+		TakeoffSounds: vhelistaa.aud
+		LandingSounds: vhelilana.aud
 	Health:
 		HP: 15000
 	RevealsShroud:
@@ -2072,6 +2092,10 @@ ORCA:
 		RequiresCondition: abur-upgrade && afterburner && attacking && moving
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	SoundOnDamageTransitionCA:
+		DestroyedSounds: vcomdi1a.aud, vcomdi2a.aud
+	EjectOnDeath:
+		ChuteSound: gejecta.aud
 
 ORCB:
 	Inherits: ^HelicopterTD
@@ -2226,6 +2250,10 @@ ORCB:
 		RequiresCondition: abur-upgrade && afterburner && attacking && moving
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	SoundOnDamageTransitionCA:
+		DestroyedSounds: vcomdi1a.aud, vcomdi2a.aud
+	EjectOnDeath:
+		ChuteSound: gejecta.aud
 
 UAV:
 	Inherits: ^NeutralPlane
@@ -2346,8 +2374,8 @@ RAH:
 		AltitudeVelocity: 0c100
 		TurnSpeed: 18
 		Speed: 157
-		TakeoffSounds: htoff1.aud
-		LandingSounds: hland1.aud
+		TakeoffSounds: vhelistaa.aud
+		LandingSounds: vhelilana.aud
 		Voice: Move
 	Cloak@NORMAL:
 		DetectionTypes: AirCloak
@@ -2653,6 +2681,7 @@ KIRO:
 		Prerequisites: player.yuri
 	GpsRadarDot:
 		Sequence: Plane
+	-SoundOnDamageTransitionCA:
 
 OCAR:
 	Inherits: ^HelicopterTD
@@ -2757,6 +2786,10 @@ OCAR:
 		StartColorAlpha: 96
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	SoundOnDamageTransitionCA:
+		DestroyedSounds: vcomdi1a.aud, vcomdi2a.aud
+	EjectOnDeath:
+		ChuteSound: gejecta.aud
 
 OCAR.Reinforce:
 	Inherits: OCAR
@@ -2927,8 +2960,9 @@ HARR:
 		Voice: Move
 		CanSlide: False
 		AltitudeVelocity: 0c200
-	SoundOnDamageTransition:
+	SoundOnDamageTransitionCA:
 		DestroyedSounds: vintdiea.aud, vintdieb.aud
+		RequiresCondition: airborne
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
@@ -2988,6 +3022,8 @@ HARR:
 		Condition: enable-smoke
 	GpsRadarDot:
 		Sequence: Plane
+	EjectOnDeath:
+		ChuteSound: gejecta.aud
 
 SCRN:
 	Inherits: ^HelicopterTD
@@ -3112,6 +3148,10 @@ SCRN:
 		Condition: enable-smoke
 	GpsRadarDot:
 		Sequence: Plane
+	SoundOnDamageTransitionCA:
+		DestroyedSounds: vcomdi1a.aud, vcomdi2a.aud
+	EjectOnDeath:
+		ChuteSound: gejecta.aud
 
 HORN:
 	Inherits: ^NeutralPlane
@@ -3276,6 +3316,8 @@ YF23.Bomber:
 		InitialStanceAI: AttackAnything
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	EjectOnDeath:
+		ChuteSound: gejecta.aud
 
 POD:
 	Inherits@2: ^ExistsInWorld
@@ -3458,6 +3500,10 @@ VENM:
 	GrantConditionOnPrerequisite@QUANTUM:
 		Condition: quantum-upgrade
 		Prerequisites: quantum.upgrade
+	SoundOnDamageTransitionCA:
+		DestroyedSounds: vcomdi1a.aud, vcomdi2a.aud
+	EjectOnDeath:
+		ChuteSound: gejecta.aud
 
 AURO:
 	Inherits: ^PlaneTD
@@ -3594,6 +3640,8 @@ AURO:
 	-ReloadDelayMultiplier@BOMBARD3:
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	EjectOnDeath:
+		ChuteSound: gejecta.aud
 
 PMAK:
 	Inherits: ^Helicopter
@@ -3726,6 +3774,10 @@ PMAK:
 	-RangeMultiplier@SEEK3:
 	Voiced:
 		VoiceSet: PeaceVoice
+	SoundOnDamageTransitionCA:
+		DestroyedSounds: vcomdi1a.aud, vcomdi2a.aud
+	EjectOnDeath:
+		ChuteSound: gejecta.aud
 
 BEAG:
 	Inherits: ^Helicopter
@@ -3782,8 +3834,9 @@ BEAG:
 		LandingSounds: vblelo3.aud
 		CanSlide: False
 		AltitudeVelocity: 0c200
-	SoundOnDamageTransition:
+	SoundOnDamageTransitionCA:
 		DestroyedSounds: vblediea.aud, vbledieb.aud
+		RequiresCondition: airborne
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
@@ -3841,6 +3894,8 @@ BEAG:
 		Condition: enable-smoke
 	GpsRadarDot:
 		Sequence: Plane
+	EjectOnDeath:
+		ChuteSound: gejecta.aud
 
 KAMV:
 	Inherits: ^Helicopter
@@ -3988,6 +4043,8 @@ KAMV:
 		RearmActors: hpad, hpad.td, afld, afld.gdi, grav
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	EjectOnDeath:
+		ChuteSound: gejecta.aud
 
 SHDE:
 	Inherits: ^HelicopterTD
@@ -4114,6 +4171,10 @@ SHDE:
 		Condition: enable-smoke
 	GpsRadarDot:
 		Sequence: Plane
+	SoundOnDamageTransitionCA:
+		DestroyedSounds: vcomdi1a.aud, vcomdi2a.aud
+	EjectOnDeath:
+		ChuteSound: gejecta.aud
 
 VERT:
 	Inherits: ^HelicopterTD
@@ -4258,6 +4319,10 @@ VERT:
 	-RangeMultiplier@SEEK:
 	-RangeMultiplier@SEEK2:
 	-RangeMultiplier@SEEK3:
+	SoundOnDamageTransitionCA:
+		DestroyedSounds: vcomdi1a.aud, vcomdi2a.aud
+	EjectOnDeath:
+		ChuteSound: gejecta.aud
 
 MCOR:
 	Inherits: ^HelicopterTD
@@ -4332,6 +4397,10 @@ MCOR:
 		Prerequisites: aircraft.upgraded
 	GrantConditionOnDamageState@SmokeTrail:
 		Condition: enable-smoke
+	SoundOnDamageTransitionCA:
+		DestroyedSounds: vcomdi1a.aud, vcomdi2a.aud
+	EjectOnDeath:
+		ChuteSound: gejecta.aud
 
 DISC:
 	Inherits: ^Helicopter
@@ -4449,7 +4518,7 @@ DISC:
 		DecorationBounds: 1792, 1536
 	Voiced:
 		VoiceSet: DiscVoice
-	SoundOnDamageTransition:
+	SoundOnDamageTransitionCA:
 		DestroyedSounds: diskdie1.aud
 	ProducibleWithLevel:
 		Prerequisites: aircraft.upgraded

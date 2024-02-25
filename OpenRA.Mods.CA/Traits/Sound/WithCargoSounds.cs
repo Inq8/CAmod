@@ -43,6 +43,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyPassengerEntered.OnPassengerEntered(Actor self, Actor passenger)
 		{
+			if (IsTraitDisabled)
+				return;
+
 			if (Info.EnterSounds.Length > 0)
 			{
 				var pos = self.CenterPosition;
@@ -55,6 +58,9 @@ namespace OpenRA.Mods.CA.Traits
 
 		void INotifyPassengerExited.OnPassengerExited(Actor self, Actor passenger)
 		{
+			if (IsTraitDisabled)
+				return;
+
 			if (Info.ExitSounds.Length > 0)
 			{
 				var pos = self.CenterPosition;
