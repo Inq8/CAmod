@@ -430,10 +430,15 @@ SEAL:
 		Weapon: Uzi
 		LocalOffset: 427,0,341
 	-WithDecoration@COMMANDOSKULL:
-	-Armament@sapper:
-	-AmmoPool:
-	-ReloadAmmoPoolCA:
+	-Armament@C4Place:
+	-Armament@C4Prepare:
+	-AmmoPool@PreparedC4:
+	-AmmoPool@C4:
+	-ReloadAmmoPoolCA@C4:
+	-ReloadAmmoPoolCA@PreparedC4:
+	-GrantConditionOnAttack@PreparingC4:
 	-Demolition:
+	-TargetSpecificOrderVoice:
 	Guard:
 		-Voice:
 	Passenger:
@@ -441,7 +446,7 @@ SEAL:
 	AttackMove:
 		-Voice:
 	AttackFrontal:
-		-Voice:
+		Voice: Action
 	-AnnounceOnKill:
 	PortableChronoCA:
 		ChargeDelay: 375
