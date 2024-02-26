@@ -2237,6 +2237,13 @@ STMR:
 		LandingSounds: dropdwn1.aud
 		CanSlide: False
 		AltitudeVelocity: 0c120
+	RangeMultiplier@Volley:
+		Modifier: 130
+		RequiresCondition: volley
+	GrantConditionOnAttack@Volley:
+		ArmamentNames: primary, secondary
+		Condition: volley
+		RevokeDelay: 5
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything
@@ -2357,7 +2364,7 @@ ENRV:
 		TakeoffSounds: dropup1.aud
 		LandingSounds: dropdwn1.aud
 		CruiseAltitude: 2560
-		RepulsionSpeed: 40
+		IdealSeparation: 1c256
 		MaximumPitch: 56
 		CanSlide: True
 		AltitudeVelocity: 0c100
