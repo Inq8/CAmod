@@ -623,8 +623,7 @@ MGattG:
 	ReloadDelay: 80
 	Range: 5c512
 	Report: gun5.aud
-	ValidTargets: Ground, Infantry
-	InvalidTargets: Vehicle, Ship, Water, Structure, Wall, Husk
+	InvalidTargets: Vehicle, Ship, Water, Structure
 	Projectile: InstantHit
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
@@ -632,7 +631,8 @@ MGattG:
 		Damage: 15000
 		Versus:
 			Light: 15
-		ValidTargets: Barrel, Infantry, Mine
+			Brick: 15
+		ValidTargets: Barrel, Infantry, Mine, Wall, Husk
 		DamageTypes: Prone50Percent, TriggerProne, DefaultDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piff
@@ -700,19 +700,34 @@ SMGBATF:
 	Range: 6c0
 
 MP5:
-	Inherits: AKM
 	StartBurstReport: iseaatta.aud, iseaattb.aud
-	ReloadDelay: 10
+	ReloadDelay: 6
+	Burst: 3
+	BurstDelays: 2
 	Range: 6c0
+	InvalidTargets: Structure
 	Projectile: InstantHit
 		Blockable: true
 	Warhead@1Dam: SpreadDamage
+		Spread: 128
 		Damage: 1570
 		Versus:
+			None: 100
+			Wood: 15
 			Light: 35
 			Heavy: 15
-			Wood: 5
-			Concrete: 5
+			Concrete: 10
+			Brick: 10
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: piff
+		Inaccuracy: 171
+		ValidTargets: Ground, Ship, Air, AirSmall, Trees
+	Warhead@3EffWater: CreateEffect
+		Explosions: water_piff
+		Inaccuracy: 171
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge
 
 MP5BATF:
 	Inherits: MP5
@@ -724,7 +739,7 @@ AKM:
 	Burst: 3
 	BurstDelays: 2
 	Range: 7c0
-	InvalidTargets: Structure, Wall, Husk, Air, AirSmall
+	InvalidTargets: Structure
 	Projectile: InstantHit
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
@@ -854,18 +869,17 @@ CommandoIFVGun:
 	ReloadDelay: 10
 	Burst: 3
 	BurstDelays: 2
-	-Projectile:
-	Projectile: Bullet
-		Speed: 1c682
+	Projectile: InstantHit
+		Blockable: true
 	Warhead@1Dam: SpreadDamage
 		Damage: 4700
 
 SealIFVGun:
 	Inherits: MP5
-	ReloadDelay: 8
-	-Projectile:
-	Projectile: Bullet
-		Speed: 1c682
+	ReloadDelay: 4
+	-InvalidTargets:
+	Projectile: InstantHit
+		Blockable: true
 
 ShadowOperativeGun:
 	Inherits: ^HeavyMG
