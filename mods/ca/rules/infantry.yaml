@@ -2553,7 +2553,7 @@ JJET:
 		VTOL: true
 	AttackAircraft:
 		AttackType: Hover
-		FacingTolerance: 0
+		FacingTolerance: 40
 		Voice: Attack
 	Armament@AIRBORNE:
 		Weapon: M60mgJJ
@@ -2567,7 +2567,7 @@ JJET:
 	AttackFrontal:
 		PauseOnCondition: being-warped
 		Voice: Attack
-		FacingTolerance: 0
+		FacingTolerance: 40
 	WithInfantryBody:
 		IdleSequences: idle1,idle2
 		DefaultAttackSequence: attack
@@ -2686,6 +2686,8 @@ BJET:
 		DefaultAttackSequence: attack-upg
 		RequiresCondition: !airborne
 	-ReplacedInQueue:
+	-AutoTargetPriority@DEFAULT_AIR_ATTACK_INFANTRY:
+	-AutoTargetPriority@ATTACKANYTHING_AIR_ATTACK_INFANTRY:
 
 JJET.Husk:
 	ClassicFacingBodyOrientation:
