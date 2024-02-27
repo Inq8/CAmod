@@ -38,6 +38,10 @@ namespace OpenRA.Mods.CA.Traits.Render
 		[Desc("Range circle border width.")]
 		public readonly float ContrastColorWidth = 3;
 
+		[Desc("Player relationships which will be able to see the circle.",
+			"Valid values are combinations of `None`, `Ally`, `Enemy` and `Neutral`.")]
+		public readonly PlayerRelationship ValidRelationships = PlayerRelationship.Ally;
+
 		public override object Create(ActorInitializer init) { return new RenderShroudCircleCA(init.Self, this); }
 	}
 
@@ -64,10 +68,12 @@ namespace OpenRA.Mods.CA.Traits.Render
 
 		public IEnumerable<IRenderable> RangeCircleRenderables(Actor self, WorldRenderer wr, RangeCircleVisibility visibility)
 		{
-			if (!self.Owner.IsAlliedWith(self.World.RenderPlayer))
+			if (IsTraitDisabled)
 				yield break;
 
-			if (IsTraitDisabled)
+			var p = self.World.RenderPlayer;
+
+			if (p != null && !Info.ValidRelationships.HasRelationship(self.Owner.RelationshipWith(p)) && !(p.Spectating && !p.NonCombatant))
 				yield break;
 
 			if (info.Visible == visibility)
