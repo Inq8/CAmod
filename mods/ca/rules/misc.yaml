@@ -19,16 +19,14 @@ MINV:
 	ExternalCondition@DEFUSED:
 		Condition: defused
 
+MINVS:
+	Inherits: MINV
+
 # Only kept for backwards-compatibility with existing and imported maps, use MINV instead
 MINP:
 	Inherits: MINV
 	Explodes:
 		Weapon: APMine
-
-MINVS:
-	Inherits: ^Mine
-	Explodes:
-		Weapon: ATMine
 
 MINS:
 	Inherits: ^Mine
@@ -1009,6 +1007,7 @@ veil:
 	RenderShroudCircleCA:
 		Visible: Always
 		Color: 999999AA
+		ValidRelationships: Ally, Enemy, Neutral
 	RenderSprites:
 		Image: gpsscrambler
 	PeriodicExplosion:
