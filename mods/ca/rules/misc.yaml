@@ -1019,6 +1019,8 @@ veil:
 
 veilofwar1:
 	Inherits: veil
+	CreatesShroud:
+		Range: 3c512
 	KillsSelf:
 		Delay: 60
 	WithMakeAnimation:
@@ -1028,7 +1030,7 @@ veilofwar1:
 veilofwar2:
 	Inherits: veil
 	CreatesShroud:
-		Range: 4c512
+		Range: 5c512
 	PeriodicExplosion:
 		Weapon: VeilMedium
 	KillsSelf:
@@ -1039,22 +1041,11 @@ veilofwar2:
 veilofwar3:
 	Inherits: veil
 	CreatesShroud:
-		Range: 6c512
+		Range: 7c512
 	PeriodicExplosion:
 		Weapon: VeilLarge
 	KillsSelf:
-		Delay: 60
-	SpawnActorOnDeath:
-		Actor: veilofwar4
-
-veilofwar4:
-	Inherits: veil
-	CreatesShroud:
-		Range: 8c512
-	PeriodicExplosion:
-		Weapon: VeilFull
-	KillsSelf:
-		Delay: 275
+		Delay: 300
 
 jamming.field:
 	Interactable:
