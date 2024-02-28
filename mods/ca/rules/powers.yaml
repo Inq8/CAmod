@@ -602,7 +602,7 @@
 
 ^AtomicAmmoPower:
 	GrantExternalConditionPowerCA@ATOMICAMMO:
-		Prerequisites: ~!npwr.iraq
+		Prerequisites: ~!player.iraq
 		OrderName: atomicammo
 		Icon: atomicammo
 		ChargeInterval: 4500
@@ -631,7 +631,7 @@
 		TargetCircleColor: ffee00
 		TargetTintColor: ffee0033
 	GrantExternalConditionPowerCA@ATOMICAMMOIRAQ:
-		Prerequisites: ~npwr.iraq
+		Prerequisites: ~player.iraq
 		OrderName: atomicammoiraq
 		Icon: atomicammo
 		ChargeInterval: 4500
@@ -734,7 +734,7 @@
 ^ReconDronePower:
 	AirstrikePower@uav:
 		OrderName: gdiuav
-		Prerequisites: radar.gdi, ~!radar.arc
+		Prerequisites: ~!player.arc
 		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: uavicon
 		ChargeInterval: 3750
@@ -758,7 +758,7 @@
 		SupportPowerPaletteOrder: 50
 	AirstrikePower@uavST:
 		OrderName: gdiuavarc
-		Prerequisites: ~radar.arc
+		Prerequisites: ~player.arc
 		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: uavicon
 		ChargeInterval: 3000
@@ -1166,7 +1166,7 @@
 ^SatHackPower:
 	SpawnActorPowerCA@sathack:
 		Actor: camera.sathack
-		Prerequisites: ~radar.nod, ~!radar.legion
+		Prerequisites: ~!player.legion
 		LifeTime: 120
 		OrderName: sathack
 		Icon: hacksat
@@ -1187,7 +1187,7 @@
 		SupportPowerPaletteOrder: 50
 	SpawnActorPowerCA@sathacklegion:
 		Actor: camera.sathack
-		Prerequisites: ~radar.legion
+		Prerequisites: ~player.legion
 		LifeTime: 120
 		OrderName: sathacklegion
 		Icon: hacksat
@@ -1586,7 +1586,29 @@
 		OrderName: ichorseed
 		Icon: ichorpower
 		Actor: ichorseeder
+		Prerequisites: ~!player.reaper
 		ChargeInterval: 6000
+		Name: Ichor Seed
+		LifeTime: -1
+		AllowMultiple: false
+		Description: \nGrows tiberium at selected location.
+		LaunchSound: ichorseed.aud
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		InsufficientPowerSpeechNotification: InsufficientPower
+		EndChargeSpeechNotification: IchorSeedReady
+		EndChargeTextNotification: Ichor Seed ready.
+		PauseOnCondition: disabled || empdisable || being-warped
+		EffectImage: empty
+		EffectSequence: idle
+		EffectPalette: tseffect-ignore-lighting-alpha75
+		SupportPowerPaletteOrder: 40
+	SpawnActorPower@ICHORSEEDREAPER:
+		OrderName: ichorseedreaper
+		Icon: ichorpower
+		Actor: ichorseeder
+		Prerequisites: ~player.reaper
+		ChargeInterval: 4800
 		Name: Ichor Seed
 		LifeTime: -1
 		AllowMultiple: false
@@ -1654,7 +1676,7 @@
 		Weapon: SuppressionField
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
-		Prerequisites: ~!mani.collector
+		Prerequisites: ~!player.collector
 		SupportPowerPaletteOrder: 20
 	DetonateWeaponPower@SUPPRESSIONSIPHON:
 		PauseOnCondition: disabled || empdisable || being-warped
@@ -1680,7 +1702,7 @@
 		Weapon: SuppressionSiphonField
 		CameraActor: camera.dummy
 		CameraRemoveDelay: 1
-		Prerequisites: ~mani.collector
+		Prerequisites: ~player.collector
 		SupportPowerPaletteOrder: 20
 
 ^RiftPower:
