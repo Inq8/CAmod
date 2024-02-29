@@ -709,7 +709,7 @@ MAST:
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !maxcontrolled && !stance-attackanything && !assault-move
+		RequiresCondition: !maxcontrolled || stance-attackanything || assault-move
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
