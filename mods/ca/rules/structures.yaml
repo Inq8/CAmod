@@ -503,6 +503,8 @@ TSLA:
 	Power:
 		Amount: -100
 	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite@TeslaCoilOrSovietTechCenter:
+		Prerequisite: tslaorstek
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
 	ProductionCostMultiplier@RussiaBonus:
@@ -655,6 +657,9 @@ DOME:
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@RadarOrAircraft:
 		Prerequisite: radaroraircraft
+		RequiresCondition: !tech-locked
+	ProvidesPrerequisite@FlameTowerOrRadar:
+		Prerequisite: fturorradar
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@allrad:
 		Factions: england, france, germany, usa
@@ -902,6 +907,8 @@ FTUR:
 	Power:
 		Amount: -10
 	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite@FlameTowerOrRadar:
+		Prerequisite: fturorradar
 	Explodes:
 		Weapon: BuildingExplode
 		EmptyWeapon: BuildingExplode
@@ -1889,6 +1896,12 @@ STEK:
 	ProvidesPrerequisite:
 		Prerequisite: techcenter.any
 		RequiresCondition: !tech-locked
+	ProvidesPrerequisite@TeslaCoilOrSovietTechCenter:
+		Prerequisite: tslaorstek
+		RequiresCondition: !tech-locked
+	ProvidesPrerequisite@ChemTowerOrSovietTechCenter:
+		Prerequisite: tturorstek
+		RequiresCondition: !tech-locked
 	ValidFactions:
 		Factions: russia, ukraine, iraq, yuri
 	ProvidesPrerequisiteValidatedFaction@russia:
@@ -2465,6 +2478,38 @@ RADARORAIRCRAFT:
 		Name: Radar or Aircraft Production
 	Buildable:
 		Description: Radar or Aircraft Production
+
+TSLAORSTEK:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Tesla Coil or Soviet Tech Center
+	Buildable:
+		Description: Tesla Coil or Soviet Tech Center
+
+OBLIORTMPL:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Obelisk or Temple of Nod
+	Buildable:
+		Description: Obelisk or Temple of Nod
+
+TTURORSTEK:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Chem Tower or Soviet Tech Center
+	Buildable:
+		Description: Chem Tower or Soviet Tech Center
+
+FTURORRADAR:
+	AlwaysVisible:
+	Interactable:
+	Tooltip:
+		Name: Flame Tower or Radar
+	Buildable:
+		Description: Flame Tower or Radar
 
 VEHICLES.MCV:
 	AlwaysVisible:
@@ -3457,6 +3502,8 @@ OBLI:
 	Power:
 		Amount: -90
 	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite@ObeliskOrTemple:
+		Prerequisite: obliortmpl
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
 
@@ -3553,6 +3600,9 @@ HQ:
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@RadarOrAircraft:
 		Prerequisite: radaroraircraft
+		RequiresCondition: !tech-locked
+	ProvidesPrerequisite@FlameTowerOrRadar:
+		Prerequisite: fturorradar
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@gdirad:
 		Factions: talon, zocom, eagle, arc
@@ -4063,6 +4113,7 @@ AFLD.GDI:
 		Actor: n1
 	SpawnActorsOnSell:
 		ActorTypes: n1,n1,n1,n1,n1,n1,n1,n1,n1,n1,c1,c1,c1,c1,c7,c7,c7,c7,c10,c10
+		GuaranteedActorTypes: n1,n1
 
 GTEK:
 	Inherits: ^Building
@@ -4203,6 +4254,9 @@ TMPL:
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisite@tdtek:
 		Prerequisite: techcenter.td
+		RequiresCondition: !tech-locked
+	ProvidesPrerequisite@ObeliskOrTemple:
+		Prerequisite: obliortmpl
 		RequiresCondition: !tech-locked
 	ProvidesPrerequisiteValidatedFaction@blackhtmpl:
 		Factions: blackh
@@ -4641,6 +4695,10 @@ TTUR:
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@ftur:
 		Prerequisite: ftur
+	ProvidesPrerequisite@FlameTowerOrRadar:
+		Prerequisite: fturorradar
+	ProvidesPrerequisite@ChemTowerOrSovietTechCenter:
+		Prerequisite: tturorstek
 	Explodes:
 		Weapon: BuildingExplode
 		EmptyWeapon: BuildingExplode

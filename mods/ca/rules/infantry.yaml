@@ -535,7 +535,7 @@ E4:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 70
-		Prerequisites: ~barr, ftur, ~techlevel.low
+		Prerequisites: ~barr, fturorradar, ~techlevel.low
 		Description: Short-range anti-infantry/anti-structure infantry.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings
@@ -1296,12 +1296,14 @@ THF:
 		CustomPipType: blue
 	CaptureManager:
 	Captures:
+		Voice: Steal
 		CaptureTypes: vehicle
 		PlayerExperience: 15
 	Infiltrates:
 		Types: ThiefInfiltrate
 		Notification: BuildingInfiltrated
 		TextNotification: Building infiltrated.
+		Voice: Steal
 	Voiced:
 		VoiceSet: ThiefVoice
 	-TakeCover:
@@ -1326,6 +1328,11 @@ THF:
 		ValidDamageStates: Critical
 	Mobile:
 		Speed: 54
+	GrantConditionOnMovement@MOVING:
+		ValidMovementTypes: Horizontal, Vertical, Turn
+		Condition: moving
+	Crushable:
+		RequiresCondition: !moving
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
 	-SpeedMultiplier@HAZMATSOVIET:
@@ -1333,6 +1340,10 @@ THF:
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden
 		ColorSource: Player
+	TargetSpecificOrderVoice:
+		Orders: CaptureActor
+		TargetTypeVoices:
+			Vehicle: Steal
 
 SHOK:
 	Inherits: ^Soldier
@@ -1354,7 +1365,7 @@ SHOK:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 80
-		Prerequisites: tsla, anyradar, ~barr, ~techlevel.medium
+		Prerequisites: tslaorstek, anyradar, ~barr, ~techlevel.medium
 		Description: Elite infantry with portable Tesla weapon.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -2351,7 +2362,7 @@ ACOL:
 		BuildAtProductionType: Cyborg
 		BuildPaletteOrder: 170
 		IconPalette: chrometd
-		Prerequisites: anyradar, obli, ~infantry.marked, ~!tmpp, ~techlevel.medium
+		Prerequisites: obliortmpl, anyradar, ~infantry.marked, ~!tmpp, ~techlevel.medium
 		Description: Cyborg infantry with a laser weapon.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
@@ -2419,7 +2430,7 @@ TPLR:
 	Health:
 		HP: 21000
 	Buildable:
-		Prerequisites: anyradar, obli, ~infantry.marked, ~tmpp, ~techlevel.high
+		Prerequisites: obliortmpl, anyradar, ~infantry.marked, ~tmpp, ~techlevel.high
 	-TakeCover:
 	-Convertible:
 	-ReplacedInQueue:
@@ -2739,7 +2750,7 @@ E8:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier
 		BuildPaletteOrder: 130
-		Prerequisites: ~infantry.iraq, ttur, anyradar, ~techlevel.medium
+		Prerequisites: ~infantry.iraq, tturorstek, anyradar, ~techlevel.medium
 		Description: Anti-infantry unit with radiation based weaponry.
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
