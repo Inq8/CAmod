@@ -122,6 +122,9 @@ namespace OpenRA.Mods.CA.Projectiles
 		[Desc("If target direction angle changes this much then beam will shut off.")]
 		public readonly WAngle MaxFacingDeviation = new WAngle(512);
 
+		[Desc("To use the basic logic without a visual.")]
+		public readonly bool Invisible = false;
+
 		public IProjectile Create(ProjectileArgs args) { return new PlasmaBeam(args, this); }
 	}
 
@@ -214,6 +217,9 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		void CalculateColors(WVec direction)
 		{
+			if (info.Invisible)
+				return;
+
 			if (ticks > 0 && !info.RecalculateColors)
 				return;
 
@@ -296,6 +302,9 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		void CalculateBeam(WVec direction)
 		{
+			if (info.Invisible)
+				return;
+
 			CalculateDistortion(direction);
 
 			var shouldDistort = (ticks == 0 && info.Distortion != 0) || (ticks > 0 && info.DistortionAnimation != 0);
@@ -386,6 +395,9 @@ namespace OpenRA.Mods.CA.Projectiles
 
 		public IEnumerable<IRenderable> Render(WorldRenderer worldRenderer)
 		{
+			if (info.Invisible)
+				yield break;
+
 			if (worldRenderer.World.FogObscures(target) &&
 				worldRenderer.World.FogObscures(source))
 				yield break;

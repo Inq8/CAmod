@@ -790,21 +790,26 @@ MAST:
 		DischargingColor: bb0000
 		ChargingColor: cc00cc
 	AttackFrontal:
-		PauseOnCondition: being-warped || !ammo
+		PauseOnCondition: being-warped || parachute
 		FacingTolerance: 0
 	Selectable:
 		DecorationBounds: 640, 896, -32, -256
 	WithInfantryBody:
 		DefaultAttackSequence: shoot
-		RequiresCondition: !rank-elite
+		RequiresCondition: !rank-elite && !being-warped
+	WithInfantryBody@Warped:
+		RequiresCondition: !rank-elite && being-warped
 	WithDeathAnimation:
-		RequiresCondition: !rank-elite
-	WithInfantryBody@PRODIGY:
+		RequiresCondition: !rank-elite && !being-warped
+	WithInfantryBody@Prodigy:
 		StandSequences: pdgy-stand
 		MoveSequence: pdgy-run
 		IdleSequences: pdgy-idle1, pdgy-idle2, pdgy-idle3, pdgy-idle4
 		DefaultAttackSequence: pdgy-shoot
-		RequiresCondition: rank-elite && !transforming
+		RequiresCondition: rank-elite && !transforming && !being-warped
+	WithInfantryBody@ProdigyWarped:
+		StandSequences: pdgy-stand
+		RequiresCondition: rank-elite && !transforming && being-warped
 	WithDeathAnimation@PDGY:
 		DeathSequencePalette: playerscrin
 		CrushedSequencePalette: scrin
@@ -823,7 +828,7 @@ MAST:
 			FrozenDeath: 11
 			AtomizedDeath: 12
 		CrushedSequence: die-crushed
-		RequiresCondition: rank-elite && !transforming
+		RequiresCondition: rank-elite && !transforming && !being-warped
 	WithSpriteBody@PRODIGYMAKE:
 		RequiresCondition: transforming
 		Sequence: stand
@@ -870,7 +875,7 @@ MAST:
 		Ammo: 1
 		AmmoCondition: ammo
 	ReloadAmmoPool:
-		Delay: 35
+		Delay: 35 # matches EnslaveInfantry ReloadDelay
 		Count: 1
 	MindControllerCapacityModifier@RANK-1:
 		Amount: 1
