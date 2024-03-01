@@ -34,7 +34,7 @@ DOG:
 	Passenger:
 		Voice: Move
 	RevealsShroud:
-		Range: 5c512
+		Range: 6c0
 	Armament:
 		Weapon: DogJaw
 		ReloadingCondition: attack-cooldown
@@ -67,8 +67,11 @@ DOG:
 		RequiresCondition: run
 	IgnoresDisguise:
 	DetectCloaked:
-		DetectionTypes: Cloak, Thief, Mine
-		Range: 4c0
+		DetectionTypes: Cloak, AirCloak, Thief
+		Range: 6c0
+	DetectCloaked@Mine:
+		DetectionTypes: Mine
+		Range: 5c0
 	RangedGpsRadarProvider:
 		Range: 10c0
 		TargetTypes: Infantry
@@ -3648,7 +3651,7 @@ YURI:
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !maxcontrolled && !stance-attackanything && !assault-move
+		RequiresCondition: !maxcontrolled || stance-attackanything || assault-move
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
 		BuildAtProductionType: Soldier

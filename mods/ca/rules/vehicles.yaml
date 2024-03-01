@@ -495,17 +495,8 @@ GTNK.squad:
 	SpawnActorOnDeath@SOVIET:
 		Actor: 3TNK.Husk
 		RequiresCondition: warpin && soviet && !(being-warped || warpout)
-	AutoTargetPriority@DEFAULT:
-		ValidTargets: Infantry, Water, Underwater, Defense
-	AutoTargetPriority@ATTACKANYTHING:
-		ValidTargets: Infantry, Water, Underwater, Structure, Defense, Mine
-	AutoTargetPriority@TANKDEFAULT:
-		RequiresCondition: !stance-attackanything && !assault-move && germany
-		ValidTargets: Vehicle
-		InvalidTargets: NoAutoTarget
-		Priority: 10
-	AutoTargetPriority@TANKATTACKANYTHING:
-		RequiresCondition: (stance-attackanything || assault-move) && germany
+	AutoTargetPriority@TankDestroyer:
+		RequiresCondition: germany
 		ValidTargets: Vehicle
 		InvalidTargets: NoAutoTarget
 		Priority: 10
@@ -2152,7 +2143,7 @@ TRUK.DROP:
 	-DeliversCash:
 	CashTrickler:
 		Interval: 50
-		Amount: 750
+		Amount: 1000
 	KillsSelf:
 		Delay: 50
 		RemoveInstead: true
