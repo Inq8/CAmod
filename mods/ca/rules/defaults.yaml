@@ -1671,8 +1671,8 @@
 		Condition: tech-locked
 		Duration: 1000
 		Types: TechLockInfiltrate
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
+		InfiltrationNotification: TechnologyLocked
+		InfiltratedNotification: OurTechnologyLocked
 		ShowSelectionBar: true
 	WithDecoration@TechLock:
 		Image: hacked
@@ -1920,7 +1920,7 @@
 		CancelActivity: True
 		RequiresCondition: !being-warped
 	CaptureNotification:
-		Notification: UnitStolen
+		Notification: EnemyUnitStolen
 		TextNotification: Enemy unit stolen.
 		LoseNotification: UnitStolen
 		LoseTextNotification: Unit stolen.
