@@ -2243,7 +2243,7 @@ RadBeamWeapon:
 		Spread: 42
 		Damage: 300
 		ValidTargets: Infantry
-		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
+		DamageTypes: RadiationDeath
 	Warhead@2Dam: SpreadDamage
 		Spread: 42
 		Damage: 16000
@@ -2253,7 +2253,7 @@ RadBeamWeapon:
 			Heavy: 10
 			Wood: 12
 			Concrete: 12
-			Brick: 0
+			Brick: 12
 		DamageTypes: Prone50Percent, TriggerProne, RadiationDeath
 		InvalidTargets: Infantry
 	Warhead@3Dam: SpreadDamage
@@ -2279,19 +2279,15 @@ RadBeamWeaponHeavy:
 		Amplitude: 176
 		WaveLength: 384
 		Thickness: 64
-	Warhead@1Dam: SpreadDamage
-		Spread: 128
-		InvalidTargets: Infantry
+	Warhead@1Dam: HealthPercentageDamage
+		Spread: 256
+	Warhead@2Dam: SpreadDamage
+		Spread: 256
 		Versus:
 			Wood: 45
 			Concrete: 45
 			Light: 75
 			Heavy: 60
-	Warhead@3Dam: HealthPercentageDamage
-		Spread: 128
-		Damage: 200
-		ValidTargets: Infantry
-		DamageTypes: RadiationDeath
 	Warhead@1Radiation: CreateTintedCells
 		Spread: 1c0
 		Falloff: 65, 30, 5, 0
@@ -2328,9 +2324,13 @@ PsychicBeamBATF:
 		DistortionAnimation: 150
 		SegmentLength: 350
 		Inaccuracy: 128
-	Warhead@1Dam: SpreadDamage
+	Warhead@1Dam: HealthPercentageDamage
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@2Dam: SpreadDamage
+		Versus:
+			Heavy: 35
+		DamageTypes: Prone50Percent, TriggerProne, FireDeath
+	Warhead@3Dam: SpreadDamage
 		Spread: 512
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	-Warhead@2irrad:
