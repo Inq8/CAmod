@@ -70,6 +70,10 @@ EnslaveInfantry:
 		ValidTargets: Ground
 		ValidRelationships: Neutral, Enemy
 
+EnslaveInfantryTargeting:
+	Inherits: EnslaveInfantry
+	-Warhead@2Eff:
+
 EnslaveVehicle:
 	Range: 5c512
 	ReloadDelay: 100
@@ -1164,9 +1168,9 @@ RavagerShards:
 		Damage: 2200
 		Versus:
 			Wood: 15
-			Light: 45
+			Light: 50
 			Heavy: 10
-			Concrete: 30
+			Concrete: 20
 			Brick: 5
 	Warhead@3Eff: CreateEffect
 		ImpactSounds: gshardhitsm1.aud, gshardhitsm2.aud

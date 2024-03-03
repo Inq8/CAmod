@@ -192,120 +192,25 @@ MGatt:
 
 Vulcan:
 	Inherits: ^HeavyMG
+	-Projectile:
+	Projectile: PlasmaBeam
+		ImpactTicks: 0, 2, 4, 6, 8, 10
+		Radius: 1
+		Duration: 13
+		TrackTarget: true
+		Blockable: true
+		Invisible: true
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
 		Damage: 1000
 		Versus:
 			None: 220
-			Wood: 58
-			Light: 174
-			Heavy: 15
-			Concrete: 35
-	Warhead@4Dam_2: SpreadDamage
-		Spread: 128
-		Damage: 1000
-		Delay: 2
-		Versus:
-			None: 220
 			Wood: 56
-			Light: 174
+			Light: 58
 			Heavy: 15
 			Concrete: 35
 			Brick: 20
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
-	Warhead@4Eff_2: CreateEffect
-		Explosions: piffs
-		ValidTargets: Ground, Ship, Trees
-		Delay: 2
-	Warhead@4Eff_2Water: CreateEffect
-		Explosions: water_piffs
-		ValidTargets: Water, Underwater
-		InvalidTargets: Ship, Structure, Bridge
-		Delay: 2
-	Warhead@5Dam_3: SpreadDamage
-		Spread: 128
-		Damage: 1000
-		Delay: 4
-		Versus:
-			None: 220
-			Wood: 56
-			Light: 0
-			Heavy: 15
-			Concrete: 35
-			Brick: 20
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
-	Warhead@6Eff_3: CreateEffect
-		Explosions: piffs
-		ValidTargets: Ground, Ship, Trees
-		Delay: 4
-	Warhead@6Eff_3Water: CreateEffect
-		Explosions: water_piffs
-		ValidTargets: Water, Underwater
-		InvalidTargets: Ship, Structure, Bridge
-		Delay: 4
-	Warhead@7Dam_4: SpreadDamage
-		Spread: 128
-		Damage: 1000
-		Delay: 6
-		Versus:
-			None: 220
-			Wood: 56
-			Light: 0
-			Heavy: 15
-			Concrete: 35
-			Brick: 20
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
-	Warhead@8Eff_4: CreateEffect
-		Explosions: piffs
-		ValidTargets: Ground, Ship, Trees
-		Delay: 6
-	Warhead@8Eff_4Water: CreateEffect
-		Explosions: water_piffs
-		ValidTargets: Water, Underwater
-		InvalidTargets: Ship, Structure, Bridge
-		Delay: 6
-	Warhead@9Dam_5: SpreadDamage
-		Spread: 128
-		Damage: 1000
-		Delay: 8
-		Versus:
-			None: 220
-			Wood: 56
-			Light: 0
-			Heavy: 15
-			Concrete: 35
-			Brick: 20
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
-	Warhead@10Eff_5: CreateEffect
-		Explosions: piffs
-		ValidTargets: Ground, Ship, Trees
-		Delay: 8
-	Warhead@10Eff_5Water: CreateEffect
-		Explosions: water_piffs
-		ValidTargets: Water, Underwater
-		InvalidTargets: Ship, Structure, Bridge
-		Delay: 8
-	Warhead@11Dam_6: SpreadDamage
-		Spread: 128
-		Damage: 1000
-		Delay: 10
-		Versus:
-			None: 220
-			Wood: 56
-			Light: 0
-			Heavy: 15
-			Concrete: 35
-			Brick: 20
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
-	Warhead@12Eff_6: CreateEffect
-		Explosions: piffs
-		ValidTargets: Ground, Ship, Trees
-		Delay: 10
-	Warhead@12Eff_6Water: CreateEffect
-		Explosions: water_piffs
-		ValidTargets: Water, Underwater
-		InvalidTargets: Ship, Structure, Bridge
-		Delay: 10
 
 GTChainGun:
 	Inherits: Vulcan
@@ -701,7 +606,7 @@ SMGBATF:
 
 MP5:
 	StartBurstReport: iseaatta.aud, iseaattb.aud
-	ReloadDelay: 6
+	ReloadDelay: 10
 	Burst: 3
 	BurstDelays: 2
 	Range: 6c0
@@ -714,7 +619,7 @@ MP5:
 		Versus:
 			None: 100
 			Wood: 15
-			Light: 35
+			Light: 45
 			Heavy: 15
 			Concrete: 10
 			Brick: 10
@@ -787,7 +692,7 @@ SNIPER:
 		Spread: 42
 		Damage: 300
 		ValidTargets: Infantry
-		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+		DamageTypes: BulletDeath
 	Warhead@2Eff: CreateEffect
 		Explosions: piff
 		ValidTargets: Ground, Ship, Air, AirSmall, Trees
@@ -876,7 +781,7 @@ CommandoIFVGun:
 
 SealIFVGun:
 	Inherits: MP5
-	ReloadDelay: 4
+	ReloadDelay: 8
 	-InvalidTargets:
 	Projectile: InstantHit
 		Blockable: true

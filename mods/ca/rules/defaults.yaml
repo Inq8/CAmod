@@ -1671,8 +1671,8 @@
 		Condition: tech-locked
 		Duration: 1000
 		Types: TechLockInfiltrate
-		InfiltrationNotification: BuildingInfiltrated
-		InfiltratedNotification: BaseAttack
+		InfiltrationNotification: TechnologyLocked
+		InfiltratedNotification: OurTechnologyLocked
 		ShowSelectionBar: true
 	WithDecoration@TechLock:
 		Image: hacked
@@ -1920,10 +1920,10 @@
 		CancelActivity: True
 		RequiresCondition: !being-warped
 	CaptureNotification:
-		Notification: UnitStolen
-		TextNotification: Unit stolen.
-		LoseNotification: UnitLost
-		LoseTextNotification: Unit lost.
+		Notification: EnemyUnitStolen
+		TextNotification: Enemy unit stolen.
+		LoseNotification: UnitStolen
+		LoseTextNotification: Unit stolen.
 	MustBeDestroyed:
 	Voiced:
 		VoiceSet: VehicleVoice
@@ -2086,7 +2086,7 @@
 		Condition: tibexposed
 		RequiresCondition: on-tib
 		DelayPerInstance: 250
-		RevokeDelay: 500
+		RevokeDelay: 200
 	DamagedByTerrain@TIBDAMAGE:
 		Terrain: Tiberium, BlueTiberium
 		Damage: 125
