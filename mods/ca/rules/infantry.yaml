@@ -1297,16 +1297,15 @@ THF:
 		Range: 5c0
 	Passenger:
 		CustomPipType: blue
-	CaptureManager:
-	Captures:
-		Voice: Steal
-		CaptureTypes: vehicle
-		PlayerExperience: 15
 	Infiltrates:
 		Types: ThiefInfiltrate
 		Notification: BuildingInfiltrated
 		TextNotification: Building infiltrated.
 		Voice: Steal
+	Captures:
+		CaptureTypes: vehicle
+		PlayerExperience: 15
+		Voice: Hijack
 	Voiced:
 		VoiceSet: ThiefVoice
 	-TakeCover:
@@ -1331,6 +1330,7 @@ THF:
 		ValidDamageStates: Critical
 	Mobile:
 		Speed: 54
+		Voice: Move
 	GrantConditionOnMovement@MOVING:
 		ValidMovementTypes: Horizontal, Vertical, Turn
 		Condition: moving
@@ -1346,7 +1346,8 @@ THF:
 	TargetSpecificOrderVoice:
 		Orders: CaptureActor
 		TargetTypeVoices:
-			Vehicle: Steal
+			Vehicle: Hijack
+			Building: Steal
 
 SHOK:
 	Inherits: ^Soldier
