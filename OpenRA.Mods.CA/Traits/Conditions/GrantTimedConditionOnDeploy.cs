@@ -75,6 +75,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("If true, after deploying the condition will only start to drain after the actor attacks.")]
 		public readonly bool DischargeOnAttack = false;
 
+		[Desc("If DischargeOnAttack is true, maximum ticks before the condition will begin to drain regardless.")]
+		public readonly int MaxTicksBeforeDischarge = 0;
+
 		public readonly bool ShowSelectionBar = true;
 		public readonly bool ShowSelectionBarWhenFull = true;
 		public readonly bool ShowSelectionBarWhenEmpty = true;
@@ -100,6 +103,7 @@ namespace OpenRA.Mods.CA.Traits
 
 		[Sync]
 		int ticks;
+		int ticksUntilForcedDischarge;
 
 		TimedDeployState deployState;
 
@@ -129,6 +133,7 @@ namespace OpenRA.Mods.CA.Traits
 				chargingToken = self.GrantCondition(Info.ChargingCondition);
 			}
 
+			ticksUntilForcedDischarge = Info.MaxTicksBeforeDischarge;
 			base.Created(self);
 		}
 
@@ -215,6 +220,7 @@ namespace OpenRA.Mods.CA.Traits
 			RevokeDeployingCondition();
 
 			deployState = TimedDeployState.Active;
+			ticksUntilForcedDischarge = Info.MaxTicksBeforeDischarge;
 		}
 
 		void RevokeDeploy()
@@ -275,7 +281,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (deployState == TimedDeployState.Ready || deployState == TimedDeployState.Deploying || deployState == TimedDeployState.Undeploying)
 				return;
 
-			if (deployState == TimedDeployState.Active && Info.DischargeOnAttack && !attacked)
+			if (deployState == TimedDeployState.Active && Info.DischargeOnAttack && !attacked && (Info.MaxTicksBeforeDischarge == 0 || --ticksUntilForcedDischarge > 0))
 				return;
 
 			if (--ticks < 0)
