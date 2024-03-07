@@ -59,18 +59,12 @@ namespace OpenRA.Mods.CA.Traits
 			"This requires the actor to have the WithSpriteBody trait or one of its derivatives.")]
 		public readonly string Sequence = "active";
 
-		[Desc("Duration of the condition (in ticks). Set to 0 for a permanent condition.")]
-		public readonly int Duration = 0;
-
 		[Desc("Altitude above terrain below which to explode. Zero effectively deactivates airburst.")]
 		public readonly WDist AirburstAltitude = WDist.Zero;
 
 		public readonly WDist TargetCircleRange = WDist.Zero;
 		public readonly Color TargetCircleColor = Color.White;
 		public readonly bool TargetCircleUsePlayerColor = false;
-
-		[Desc("Amount of time to keep the actor alive in ticks. Value < 0 means this actor will not remove itself.")]
-		public readonly int LifeTime = 250;
 
 		public WeaponInfo WeaponInfo { get; private set; }
 
@@ -113,7 +107,7 @@ namespace OpenRA.Mods.CA.Traits
 			foreach (var launchpad in self.TraitsImplementing<INotifySupportPower>())
 				launchpad.Activated(self);
 
-			ticks = Info.Duration;
+			ticks = Info.ActivationDelay;
 
 			var targetPosition = order.Target.CenterPosition + new WVec(WDist.Zero, WDist.Zero, Info.AirburstAltitude);
 
@@ -189,7 +183,7 @@ namespace OpenRA.Mods.CA.Traits
 			self.World.OrderGenerator = new SelectDetonateWeaponPowerTarget(order, manager, this);
 		}
 
-		float FractionComplete { get { return ticks * 1f / Info.ActivationDelay; } }
+		float FractionComplete { get { return 1 - ticks * 1f / Info.ActivationDelay; } }
 	}
 
 	public class SelectDetonateWeaponPowerTarget : OrderGenerator
