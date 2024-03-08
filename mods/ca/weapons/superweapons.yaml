@@ -1266,8 +1266,8 @@ SubterraneanStrikeSpawner:
 		AvoidActors: true
 		Prerequisites: tmpp
 	Warhead@Shake: ShakeScreen
-		Duration: 5
-		Intensity: 1
+		Duration: 10
+		Intensity: 2
 		Multiplier: 0.5,0.5
 
 SubterraneanAPCUnburrow:
@@ -1277,20 +1277,29 @@ SubterraneanAPCUnburrow:
 		Explosions: unburrow
 		Image: substrikehole
 		ImpactSounds: subdril1.aud
-	Warhead@Shrap: FireShrapnel
+	Warhead@Dirt1: FireShrapnel
 		Weapon: TinyDebris
-		Amount: 100
+		Amount: 50
 		AimChance: 0
 		ValidTargets: Ground, Infantry, Vehicle
-		ThrowWithoutTarget: true	
+		ThrowWithoutTarget: true
+	Warhead@Dirt2: FireShrapnel
+		Weapon: BurrowDebris
+		Delay: 10
+		Amount: 25
+		AimChance: 0
+		ValidTargets: Ground, Infantry, Vehicle
+		ThrowWithoutTarget: true
 
 SubterraneanAPCBurrow:
 	Inherits: SubterraneanAPCUnburrow
 	Warhead@3Eff: CreateEffect
 		Explosions: burrow
-	Warhead@Shrap: FireShrapnel
-		Weapon: TinyDebris
-		Amount: 100
-		AimChance: 0
-		ValidTargets: Ground, Infantry, Vehicle
-		ThrowWithoutTarget: true	
+	Warhead@Dirt1: FireShrapnel
+		Weapon: BurrowDebris
+
+BurrowDebris:
+	Inherits: TinyDebris
+	Range: 1c512
+	Projectile: Bullet
+		BounceCount: 1

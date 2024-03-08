@@ -1829,7 +1829,11 @@ JEEP:
 	DetectCloaked:
 		Range: 6c0
 		DetectionTypes: Cloak, Thief, AirCloak
-		RequiresCondition: !(empdisable || being-warped)
+		RequiresCondition: !(empdisable || being-warped) && !optics-active
+	DetectCloaked@Optics:
+		Range: 8c0
+		DetectionTypes: Cloak, Thief, AirCloak
+		RequiresCondition: !(empdisable || being-warped) && optics-active
 	RevealsShroud@Optics:
 		Range: 13c0
 		RequiresCondition: optics-active
@@ -8058,6 +8062,9 @@ MOLE:
 		Weapon: SubterraneanAPCBurrow
 		RequiresCondition: !being-warped
 		ResetReloadWhenEnabled: false
+	SpawnActorOnDeath:
+		Actor: MOLE.Husk
+		RequiresCondition: !being-warped
 
 MOLE.UPG:
 	Inherits: MOLE

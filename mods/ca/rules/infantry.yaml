@@ -9,7 +9,7 @@ DOG:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Can only attack Infantry
-		Attributes: • Can detect spies, mines and cloaked units\n• Detects the scent of enemy infantry beyond vision range
+		Attributes: • Can detect cloaked units, spies, mines\n• Detects the scent of enemy infantry beyond vision range
 	RenderSprites:
 		PlayerPalette: player
 	WithDeathAnimation:
@@ -755,7 +755,7 @@ E7:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Plants C4 to destroy structures and vehicles
+		Attributes: • Maximum 1 can be trained\n• Can detect cloaked ground units and spies\n• Immune to mind control\n• Plants C4 to destroy structures and vehicles
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -1903,7 +1903,7 @@ RMBO:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Plants C4 to destroy structures and vehicles
+		Attributes: • Maximum 1 can be trained\n• Can detect cloaked ground units and spies\n• Immune to mind control\n• Plants C4 to destroy structures and vehicles
 	Mobile:
 		Speed: 60
 		Voice: Move
@@ -2166,7 +2166,7 @@ BORI:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Buildings, Defenses
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Calls airstrike on targeted structures
+		Attributes: • Maximum 1 can be trained\n• Can detect cloaked ground units and spies\n• Immune to mind control\n• Calls airstrike on targeted structures
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -2264,7 +2264,7 @@ SAB:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Can only attack Infantry
-		Attributes: • Can detect spies and cloaked units\n• Limited stealth (drains while moving)\n• Infiltrates production buildings to steal technology\n    • Allies: Cryo Mortar, Reckoner, Black Eagle\n    • Soviets: Cyberdog, Rhino Tank, Kamov\n    • GDI: Sonic Mortar, Pitbull, Shade\n    • Nod: Chem Mortar, Mantis, Vertigo\n    • Scrin: Cyberscrin, Viper, Manticore\n• Infiltrates radars/tech centers to lock technology
+		Attributes: • Can detect cloaked ground units and spies\n• Limited stealth (drains while moving)\n• Infiltrates production buildings to steal technology\n    • Allies: Cryo Mortar, Reckoner, Black Eagle\n    • Soviets: Cyberdog, Rhino Tank, Kamov\n    • GDI: Sonic Mortar, Pitbull, Shade\n    • Nod: Chem Mortar, Mantis, Vertigo\n    • Scrin: Cyberscrin, Viper, Manticore\n• Infiltrates radars/tech centers to lock technology
 	Valued:
 		Cost: 500
 	Tooltip:
@@ -2522,7 +2522,7 @@ JJET:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Aircraft
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses
-		Attributes: • Can detect cloaked units
+		Attributes: • Can detect cloaked ground units
 	Valued:
 		Cost: 350
 	Tooltip:
@@ -3321,7 +3321,7 @@ SHAD:
 		Description: Cloaked infantry deployed via glider.
 		Strengths: • Strong vs Buildings, Defenses, Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor\n• Cannot attack Aircraft\n• Has difficulty hitting moving vehicles
-		Attributes: • Cloaked when not in combat\n• Can place shadow beacons which provide vision\n• Shadow beacons attach to enemy vehicles that pass over them
+		Attributes: • Cloaked when not in combat\n• Can place shadow beacons which provide vision\n• Shadow beacons attach to enemy vehicles that pass over them\n• Can detect cloaked ground units and spies
 	UpdatesPlayerStatistics:
 		AddToArmyValue: true
 	RevealsShroud:
@@ -3662,7 +3662,7 @@ YURI:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Vehicles, Defenses, Buildings
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Shorter range and longer reload against vehicles\n• Psychic detection radius\n• Special Ability: Mind Blast
+		Attributes: • Maximum 1 can be trained\n• Can detect cloaked ground units and spies\n• Immune to mind control\n• Shorter range and longer reload against vehicles\n• Psychic detection radius\n• Special Ability: Mind Blast
 	Valued:
 		Cost: 1350
 	Tooltip:
@@ -3767,6 +3767,9 @@ YURI:
 		Voice: Build
 	AnnounceOnKill:
 	IgnoresDisguise:
+	DetectCloaked:
+		DetectionTypes: Cloak, Thief
+		Range: 5c0
 	ProducibleWithLevel:
 		Prerequisites: barracks.upgraded
 	WithProductionIconOverlay:
@@ -3848,7 +3851,7 @@ SEAL:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor, Buildings
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Can detect cloaked units\n• Plants C4 to destroy structures
+		Attributes: • Can detect cloaked units and spies\n• Plants C4 to destroy structures
 	Voiced:
 		VoiceSet: SealVoice
 	Mobile:
@@ -4353,7 +4356,7 @@ CMSR:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Weak vs Light Armor, Heavy Armor, Defenses, Buildings\n• Cannot attack Aircraft
-		Attributes: • Increases speed and rate of fire of nearby infantry\n• Can detect cloaked units
+		Attributes: • Increases speed and rate of fire of nearby infantry
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -4397,9 +4400,6 @@ CMSR:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
-	DetectCloaked:
-		DetectionTypes: Cloak, Thief
-		Range: 6c0
 	ProximityExternalCondition@Inspiration:
 		Range: 7c0
 		Condition: inspiration
