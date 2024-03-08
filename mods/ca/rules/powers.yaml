@@ -674,7 +674,7 @@
 		InvalidTargets: IronCurtainImmune
 		Duration: 600
 		AllowMultiple: false
-		Description: \nMakes up to 5 selected vehicles or structures\n    temporarily immune to damage.\n\nWarning: Harmful to infantry.
+		Description: \nMakes up to 5 selected vehicles or structures\n    temporarily immune to damage.\n\nAffected units have limited movement speed.\n\nWarning: Harmful to infantry.
 		OnFireSound: ironcur9.aud
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
@@ -997,7 +997,7 @@
 		SupportPowerPaletteOrder: 30
 
 ^EmpMissilePower:
-	AttackOrderPower@EMPMISSILE:
+	AttackOrderPowerCA@EMPMISSILE:
 		OrderName: empmissile
 		PauseOnCondition: empdisable || disabled || being-warped
 		Cursor: empmissile
@@ -1013,6 +1013,8 @@
 		InsufficientPowerSpeechNotification: InsufficientPower
 		DisplayTimerRelationships: Ally, Neutral, Enemy
 		SupportPowerPaletteOrder: 20
+		TargetCircleRadius: 4c512
+		TargetCircleColor: b2b2e888
 
 ^SurgicalStrikePower:
 	IonCannonPower@surgicals:
@@ -1683,7 +1685,7 @@
 		TargetCircleColor: ff000099
 
 ^SuppressionPower:
-	DetonateWeaponPower@SUPPRESSION:
+	GrantExternalConditionPowerCA@SUPPRESSION:
 		PauseOnCondition: disabled || empdisable || being-warped
 		OrderName: suppression
 		Icon: spresspower
@@ -1697,18 +1699,22 @@
 		EndChargeSpeechNotification: SuppressionReady
 		EndChargeTextNotification: Suppression Field ready.
 		DisplayRadarPing: True
-		ActivationDelay: 0
-		TargetCircleRange: 3c0
+		Range: 3c0
+		ShowTargetCircle: true
+		TargetTintColor: ff55ff33
 		TargetCircleColor: ff55ffcc
-		LaunchSound: suppression.aud
-		IncomingSound: suppression.aud
+		OnFireSound: suppression.aud
 		DisplayTimerRelationships: Ally, Neutral, Enemy
-		Weapon: SuppressionField
-		CameraActor: camera.dummy
-		CameraRemoveDelay: 1
 		Prerequisites: ~!player.collector
 		SupportPowerPaletteOrder: 20
-	DetonateWeaponPower@SUPPRESSIONSIPHON:
+		Condition: suppression
+		MinTargets: 1
+		ValidTargets: Ground, Air, AirSmall, Ship
+		ValidRelationships: Ally, Enemy, Neutral
+		Duration: 600
+		AllowMultiple: false
+		Cursor: ability
+	GrantExternalConditionPowerCA@SUPPRESSIONSIPHON:
 		PauseOnCondition: disabled || empdisable || being-warped
 		OrderName: suppressionsiphon
 		Icon: spresspower
@@ -1722,17 +1728,22 @@
 		EndChargeSpeechNotification: SuppressionReady
 		EndChargeTextNotification: Suppression Field ready.
 		DisplayRadarPing: True
-		ActivationDelay: 0
-		TargetCircleRange: 3c0
+		Range: 3c0
+		ShowTargetCircle: true
+		TargetTintColor: ff55ff33
 		TargetCircleColor: ff55ffcc
-		LaunchSound: suppression.aud
-		IncomingSound: suppression.aud
+		OnFireSound: suppression.aud
 		DisplayTimerRelationships: Ally, Neutral, Enemy
-		Weapon: SuppressionSiphonField
-		CameraActor: camera.dummy
-		CameraRemoveDelay: 1
 		Prerequisites: ~player.collector
 		SupportPowerPaletteOrder: 20
+		Condition: suppression
+		MinTargets: 1
+		ValidTargets: Ground, Air, AirSmall, Ship
+		ValidRelationships: Ally, Enemy, Neutral
+		Duration: 600
+		AllowMultiple: false
+		Cursor: ability
+		ExplosionWeapon: SuppressionSiphonField
 
 ^RiftPower:
 	DetonateWeaponPower@RiftGenerator:

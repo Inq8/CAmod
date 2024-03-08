@@ -476,13 +476,18 @@ EMPMissileLauncher:
 		Explosions: pulse_explosion
 		ImpactSounds: empexpl.aud
 	Warhead@emp1: GrantExternalConditionCA
-		Range: 2c256
+		Range: 1c512
 		Duration: 600
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle, Air
 	Warhead@emp2: GrantExternalConditionCA
-		Range: 4c512
+		Range: 3c0
 		Duration: 300
+		Condition: empdisable
+		ValidTargets: Ground, Vehicle, Air
+	Warhead@emp3: GrantExternalConditionCA
+		Range: 4c512
+		Duration: 150
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle, Air
 	Warhead@2Smu_impact: LeaveSmudge

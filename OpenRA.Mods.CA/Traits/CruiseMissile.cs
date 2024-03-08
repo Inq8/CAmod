@@ -50,6 +50,7 @@ namespace OpenRA.Mods.CA.Traits
 		int ascendingToken = Actor.InvalidConditionToken;
 		int descendingToken = Actor.InvalidConditionToken;
 		Actor self;
+		WPos initialTargetPos;
 
 		public CruiseMissileState State { get; private set; }
 
@@ -84,11 +85,12 @@ namespace OpenRA.Mods.CA.Traits
 		public override void SetTarget(Target target)
 		{
 			Target = target;
+			initialTargetPos = target.CenterPosition;
 		}
 
 		protected override Activity GetActivity(Actor self, Target target)
 		{
-			return new CruiseMissileFly(self, target, this, cruiseMissileInfo.MaxAltitude, cruiseMissileInfo.MaxTargetMovement, cruiseMissileInfo.TrackTarget);
+			return new CruiseMissileFly(self, target, initialTargetPos, this, cruiseMissileInfo.MaxAltitude, cruiseMissileInfo.MaxTargetMovement, cruiseMissileInfo.TrackTarget);
 		}
 	}
 }

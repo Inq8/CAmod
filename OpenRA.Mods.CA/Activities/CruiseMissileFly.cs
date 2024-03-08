@@ -33,15 +33,15 @@ namespace OpenRA.Mods.CA.Activities
 		int launchAngleDegrees;
 		double launchAngleRad;
 
-		public CruiseMissileFly(Actor self, Target t, CruiseMissile cm, WDist maxAltitude, WDist maxTargetMovement, bool trackTarget)
+		public CruiseMissileFly(Actor self, Target t, WPos initialTargetPos, CruiseMissile cm, WDist maxAltitude, WDist maxTargetMovement, bool trackTarget)
 		{
 			if (cm == null)
 				this.cm = self.Trait<CruiseMissile>();
 			else
 				this.cm = cm;
 
-			if (t.Type == TargetType.Invalid && t.Actor != null && t.Actor.IsDead)
-				target = Target.FromPos(t.Actor.CenterPosition);
+			if (t.Type == TargetType.Invalid && t.Actor != null && (t.Actor.IsDead || !t.Actor.IsInWorld))
+				target = Target.FromPos(initialTargetPos);
 			else
 				target = t;
 

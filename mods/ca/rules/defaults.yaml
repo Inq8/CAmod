@@ -275,7 +275,7 @@
 		PercentageStep: 5
 		Delay: 100
 		StartIfBelow: 100
-		DamageCooldown: 125
+		DamageCooldown: 150
 		RequiresCondition: rank-elite
 	WithDecoration@RANK-1:
 		Image: rank
@@ -1011,6 +1011,9 @@
 		Condition: invulnerability
 	ExternalCondition@INVULNERABILITY:
 		Condition: invulnerability
+	SpeedCapSpeedMultiplier@IRONCURTAIN:
+		RequiresCondition: invulnerability
+		MaxSpeed: 44
 
 ^IronCurtainable-Kills:
 	Inherits: ^IronCurtainable
@@ -2724,7 +2727,7 @@
 	Aircraft:
 		CruisingCondition: cruising
 		PauseOnCondition: empdisable && !airborne
-	KillsSelf:
+	KillsSelf@Emp:
 		RequiresCondition: empdisable && cruising
 	Targetable@GROUND:
 		RequiresCondition: !airborne && !being-warped
@@ -3169,6 +3172,14 @@
 		ValidRelationships: Ally, Enemy, Neutral
 	Targetable@HERO:
 		TargetTypes: Hero
+
+^CommandoRegen:
+	ChangesHealth@CommandoRegen:
+		PercentageStep: 5
+		Delay: 100
+		StartIfBelow: 100
+		DamageCooldown: 150
+		RequiresCondition: !rank-elite
 
 ^FakeBuilding:
 	Inherits: ^Building

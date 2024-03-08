@@ -708,6 +708,7 @@ MAST:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@CommandoRegen: ^CommandoRegen
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	AutoTargetPriority@DEFAULT:
 		RequiresCondition: !maxcontrolled || stance-attackanything || assault-move
@@ -894,6 +895,8 @@ MAST:
 	RangeMultiplier@RANK-ELITE:
 		Modifier: 115
 		RequiresCondition: rank-elite
+	ChangesHealth@ELITE:
+		Delay: 50
 
 #
 # ---- Vehicles
@@ -2312,7 +2315,7 @@ STMR:
 	Targetable@RESUPPLYING:
 		TargetTypes: Resupplying
 		RequiresCondition: resupplying
-	KillsSelf:
+	KillsSelf@Emp:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
 		Modifier: 0
@@ -2440,7 +2443,7 @@ ENRV:
 	Targetable@RESUPPLYING:
 		TargetTypes: Resupplying
 		RequiresCondition: resupplying
-	KillsSelf:
+	KillsSelf@Emp:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
 		Modifier: 0
@@ -2574,7 +2577,7 @@ DEVA:
 	ProductionCostMultiplier@HARBONUS:
 		Multiplier: 90
 		Prerequisites: player.harbinger
-	KillsSelf:
+	KillsSelf@Emp:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
 		Modifier: 0
@@ -2705,7 +2708,7 @@ PAC:
 	DeathSounds:
 		Voice: Die
 	-EjectOnDeath:
-	KillsSelf:
+	KillsSelf@Emp:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
 		Modifier: 0
@@ -2968,7 +2971,7 @@ MSHP:
 		Delay: 1
 		RequiresCondition: !charging && !attacking
 		ShowSelectionBar: false
-	KillsSelf:
+	KillsSelf@Emp:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
 		Modifier: 0

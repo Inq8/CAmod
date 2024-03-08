@@ -744,6 +744,7 @@ E7:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@CommandoRegen: ^CommandoRegen
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	Buildable:
 		Queue: InfantrySQ, InfantryMQ
@@ -834,6 +835,8 @@ E7:
 		TargetTypeVoices:
 			Vehicle: Demolish
 			Structure: Demolish
+	ChangesHealth@ELITE:
+		Delay: 50
 
 MEDI:
 	Inherits: ^Soldier
@@ -1886,6 +1889,7 @@ RMBO:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@CommandoRegen: ^CommandoRegen
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	Valued:
 		Cost: 1350
@@ -1977,6 +1981,8 @@ RMBO:
 		TargetTypeVoices:
 			Vehicle: Demolish
 			Structure: Demolish
+	ChangesHealth@ELITE:
+		Delay: 50
 
 N6:
 	Inherits: ^Soldier
@@ -2153,6 +2159,7 @@ BORI:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMovePrioritizeInfantry
 	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@CommandoRegen: ^CommandoRegen
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	RenderSprites:
 		Image: boris
@@ -2249,6 +2256,8 @@ BORI:
 		SpeedModifier: 70
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Infantry, Vehicle, Water, Underwater
+	ChangesHealth@ELITE:
+		Delay: 50
 
 SAB:
 	Inherits: ^Soldier
@@ -2655,7 +2664,7 @@ JJET:
 		ValidTargets: Air, AirSmall, Infantry
 		InvalidTargets: NoAutoTarget
 		Priority: 10
-	KillsSelf:
+	KillsSelf@Emp:
 		RequiresCondition: empdisable && cruising
 	GrantConditionOnDamageState@DAMAGED:
 		Condition: damaged
@@ -3649,6 +3658,7 @@ YURI:
 	Inherits: ^Soldier
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@CommandoRegen: ^CommandoRegen
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	AutoTargetPriority@DEFAULT:
 		RequiresCondition: !maxcontrolled || stance-attackanything || assault-move
@@ -3819,6 +3829,8 @@ YURI:
 		Color: cc00ff77
 		BorderColor: 00000044
 	KeepsDistance:
+	ChangesHealth@ELITE:
+		Delay: 50
 
 SEAL:
 	Inherits: ^Soldier

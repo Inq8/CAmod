@@ -1285,21 +1285,10 @@ Rift:
 			Brick: 75
 		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
 
-SuppressionField:
+SuppressionSiphonField:
 	Projectile: InstantExplode
 	ReloadDelay: 1
 	ValidTargets: Ground, Air, AirSmall, Ship
-	Warhead@1Dam: SpreadDamage
-		Spread: 1c0
-		Damage: 1
-	Warhead@2sup: GrantExternalConditionCA
-		Range: 3c0
-		Duration: 600
-		Condition: suppression
-		ValidTargets: Ground, Air, AirSmall, Ship
-
-SuppressionSiphonField:
-	Inherits: SuppressionField
 	Warhead@3siphon: GrantExternalConditionCA
 		Range: 3c0
 		Duration: 600
