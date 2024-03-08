@@ -351,7 +351,6 @@
 		BeaconPoster: stormicon
 		TargetCircleRange: 6c512
 		TargetCircleColor: 0000FF90
-		Duration: 350
 		ActiveCondition: active
 		PaletteEffectType: LightningStorm
 		SupportPowerPaletteOrder: 10
@@ -1081,8 +1080,8 @@
 		SupportPowerPaletteOrder: 10
 
 ^NodAirdropPowers:
-	ParatroopersPower@markedairdrop:
-		OrderName: markedairdrop
+	ParatroopersPower@NodAirDrop:
+		OrderName: nodairdrop
 		SquadSize: 3
 		UnitType: c17
 		Icon: airdropicon
@@ -1098,6 +1097,7 @@
 		LaunchSpeechNotification: ReinforcementsArrived
 		IncomingSpeechNotification: EnemyUnitsApproaching
 		IncomingTextNotification: Enemy air drop detected.
+		PauseOnCondition: empdisable || being-warped
 		CameraActor: camera.paradrop
 		DisplayBeacon: true
 		BeaconPoster: lrairdropicon
@@ -1106,7 +1106,7 @@
 		CircleSequence: circles
 		UseDirectionalTarget: True
 		DirectionArrowAnimation: paradirection
-		Prerequisites: vehicles.marked
+		Prerequisites: ~disabled
 		SupportPowerPaletteOrder: 60
 	ParatroopersPower@blackhairdrop:
 		OrderName: blackhairdrop
@@ -1125,6 +1125,7 @@
 		LaunchSpeechNotification: ReinforcementsArrived
 		IncomingSpeechNotification: EnemyUnitsApproaching
 		IncomingTextNotification: Enemy air drop detected.
+		PauseOnCondition: empdisable || being-warped
 		CameraActor: camera.paradrop
 		DisplayBeacon: true
 		BeaconPoster: lrairdropicon
@@ -1135,6 +1136,35 @@
 		DirectionArrowAnimation: paradirection
 		Prerequisites: vehicles.blackh
 		SupportPowerPaletteOrder: 60
+	DetonateWeaponPower@SubterraneanStrike:
+		OrderName: substrike
+		Icon: substrike
+		Prerequisites: vehicles.marked
+		Cursor: ability
+		ChargeInterval: 13500
+		Name: Subterranean Strike
+		ActivationDelay: 250
+		Description: \nDeploys a squad of elite cyborgs via\n    Subterranean APC.
+		LaunchSound: subrumble.aud
+		Weapon: SubterraneanStrikeSpawner
+		AirburstAltitude: 0c0
+		SelectTargetSpeechNotification: SelectTarget
+		SelectTargetTextNotification: Select target.
+		EndChargeSpeechNotification: Reinforce
+		EndChargeTextNotification: Subterranean Strike ready.
+		LaunchSpeechNotification: ReinforcementsArrived
+		IncomingSpeechNotification: EnemyUnitsApproaching
+		IncomingTextNotification: Enemy subterranean units detected.
+		PauseOnCondition: empdisable || being-warped
+		CameraActor: camera.dummy
+		CameraRemoveDelay: 1
+		DisplayBeacon: True
+		BeaconPoster: substrike
+		DisplayRadarPing: True
+		SupportPowerPaletteOrder: 60
+		ArrowSequence: arrow
+		ClockSequence: clock
+		CircleSequence: circles
 	ParatroopersPower@shadowairdrop:
 		OrderName: shadowairdrop
 		SquadSize: 2
@@ -1152,6 +1182,7 @@
 		LaunchSpeechNotification: ReinforcementsArrived
 		IncomingSpeechNotification: EnemyUnitsApproaching
 		IncomingTextNotification: Enemy air drop detected.
+		PauseOnCondition: empdisable || being-warped
 		CameraActor: camera.paradrop
 		DisplayBeacon: true
 		BeaconPoster: lrairdropicon
@@ -1659,7 +1690,6 @@
 		ChargeInterval: 4500
 		Name: Suppression Field
 		Description: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.
-		Duration: 600
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -1685,7 +1715,6 @@
 		ChargeInterval: 4500
 		Name: Suppression Field
 		Description: \nApplies a suppression field to the target area,\n    slowing unit movement and rate of fire.\n\nAffected units take damage over time.
-		Duration: 600
 		SelectTargetSpeechNotification: SelectTarget
 		SelectTargetTextNotification: Select target.
 		InsufficientPowerSpeechNotification: InsufficientPower
@@ -1737,7 +1766,6 @@
 		BeaconPoster: riftpower
 		TargetCircleRange: 6c512
 		TargetCircleColor: 0000FF90
-		Duration: 425
 		ActiveCondition: active
 		PaletteEffectType: LightningStorm
 		SupportPowerPaletteOrder: 10

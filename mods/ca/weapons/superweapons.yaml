@@ -1249,3 +1249,36 @@ MineSpawnerWater:
 		ForceGround: false
 		ValidTargets: Water, Air
 		InvalidTargets: Structure
+
+SubterraneanStrikeSpawner:
+	ReloadDelay: 1
+	Projectile: InstantExplode
+	Warhead@Spawn: SpawnActor
+		Actors: mole
+		Range: 3
+		ValidTargets: Ground, Water, Trees
+		AvoidActors: true
+		Prerequisites: !tmpp
+	Warhead@SpawnUpg: SpawnActor
+		Actors: mole.upg
+		Range: 3
+		ValidTargets: Ground, Water, Trees
+		AvoidActors: true
+		Prerequisites: tmpp
+	Warhead@Shake: ShakeScreen
+		Duration: 5
+		Intensity: 1
+		Multiplier: 0.5,0.5
+
+SubterraneanAPCUnburrow:
+	ReloadDelay: 500
+	Projectile: InstantExplode
+	Warhead@3Eff: CreateEffect
+		Explosions: unburrow
+		Image: substrikehole
+		ImpactSounds: subdril1.aud
+
+SubterraneanAPCBurrow:
+	Inherits: SubterraneanAPCUnburrow
+	Warhead@3Eff: CreateEffect
+		Explosions: burrow

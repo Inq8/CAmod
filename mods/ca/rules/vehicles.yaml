@@ -5793,11 +5793,12 @@ RECK:
 	RenderSprites:
 		Image: reck
 	Valued:
-		Cost: 825
+		Cost: 1000
 	Health:
-		HP: 30000
+		HP: 52000
 	Mobile:
-		Speed: 82
+		Speed: 60
+		TurnSpeed: 24
 	Buildable:
 		BuildPaletteOrder: 700
 		Prerequisites: infantry.any, radarorrepair, ~vehicles.reck
@@ -7980,3 +7981,96 @@ TH:
 		Pieces: 3, 5
 		Range: 1c511, 3c0
 		RequiresCondition: airborne
+
+MOLE:
+	Inherits: ^Vehicle-NOUPG
+	-Voiced:
+	-AttackMove:
+	-Guard:
+	-Repairable:
+	-Capturable:
+	-CaptureNotification:
+	-Parachutable:
+	-WithParachute:
+	-WithFacingSpriteBody:
+	-ChronoshiftableCA:
+	-HealthCapDamageMultiplier@CHRONO:
+	Tooltip:
+		Name: Subterranean APC
+	Valued:
+		Cost: 2000
+	Health:
+		HP: 52000
+	WithSpriteBody@Unburrowing:
+		Name: unburrowing
+		StartSequence: unburrow
+		RequiresCondition: unburrowing
+	WithSpriteBody@Arrived:
+		RequiresCondition: !burrowing && !being-warped && !unburrowing
+	WithSpriteBody@Warped:
+		Name: warped
+		Sequence: paused
+		RequiresCondition: !burrowing && being-warped && !unburrowing
+	WithSpriteBody@Burrowing:
+		StartSequence: burrow
+		Sequence: empty
+		RequiresCondition: burrowing
+		Name: burrowing
+	Explodes:
+		RequiresCondition: !burrowing && !being-warped
+	KillsSelf:
+		RemoveInstead: true
+		Delay: 35
+		RequiresCondition: burrowing
+	GrantTimedCondition@Unburrow:
+		Condition: unburrowing
+		Duration: 30
+	GrantDelayedCondition@Unload:
+		Delay: 100
+		Condition: unload
+		PauseOnCondition: being-warped
+	GrantDelayedCondition@Burrow:
+		Delay: 200
+		Condition: burrowing
+		PauseOnCondition: being-warped
+	ActorLostNotification:
+		RequiresCondition: !burrowing
+	Mobile:
+		Speed: 0
+		Locomotor: tracked
+	RejectsOrders:
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+	Targetable@ChaosImmune:
+		TargetTypes: ChaosImmune
+	Cargo:
+		InitialUnits: acol, acol, acol, acol
+	WithCargoSounds:
+		ExitSounds: gexit1a.aud
+	UnloadOnCondition@Unload:
+		RequiresCondition: unload
+		BotOnly: False
+	Targetable:
+		RequiresCondition: !being-warped && !burrowing && !unburrowing
+	Targetable@C4Plantable:
+		RequiresCondition: !being-warped && !burrowing && !unburrowing
+	Targetable@TNTPlantable:
+		RequiresCondition: !being-warped && !burrowing && !unburrowing
+	Targetable@REPAIR:
+		RequiresCondition: !being-warped && damaged && !repair-cooldown && !burrowing && !unburrowing
+	PeriodicExplosion@Unburrow:
+		Weapon: SubterraneanAPCUnburrow
+		RequiresCondition: !being-warped
+		ResetReloadWhenEnabled: false
+	PeriodicExplosion@Burrow:
+		InitialDelay: 200
+		Weapon: SubterraneanAPCBurrow
+		RequiresCondition: !being-warped
+		ResetReloadWhenEnabled: false
+
+MOLE.UPG:
+	Inherits: MOLE
+	RenderSprites:
+		Image: mole
+	Cargo:
+		InitialUnits: tplr, tplr, tplr, tplr

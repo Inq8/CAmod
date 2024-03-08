@@ -8,6 +8,7 @@
  */
 #endregion
 
+using System;
 using System.Linq;
 using OpenRA.GameRules;
 using OpenRA.Mods.CA.Activities;
@@ -69,6 +70,9 @@ namespace OpenRA.Mods.CA.Warheads
 
 		public readonly bool UsePlayerPalette = false;
 
+		[Desc("Will only spawn if the owner of the source actor has these prerequisites.")]
+		public readonly string[] Prerequisites = Array.Empty<string>();
+
 		public void RulesetLoaded(Ruleset rules, WeaponInfo info)
 		{
 			foreach (var a in Actors)
@@ -84,6 +88,10 @@ namespace OpenRA.Mods.CA.Warheads
 		public override void DoImpact(in Target target, WarheadArgs args)
 		{
 			var firedBy = args.SourceActor;
+
+			if (Prerequisites.Length > 0 && !firedBy.Owner.PlayerActor.Trait<TechTree>().HasPrerequisites(Prerequisites))
+				return;
+
 			if (!target.IsValidFor(firedBy))
 				return;
 

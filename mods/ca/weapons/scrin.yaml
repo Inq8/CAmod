@@ -214,6 +214,7 @@ PlasmaDiscs.Hypercharged:
 		RangeLimit: 7c0
 	Warhead@1Dam: SpreadDamage
 		Damage: 1600
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated, TankBuster
 
 IntruderDiscs:
 	Inherits: PlasmaDiscs
@@ -755,7 +756,7 @@ StormRiderZapAA:
 EnervatorBolts:
 	Inherits: ^AntiGroundMissile
 	Report: enervator-fire1.aud
-	ReloadDelay: 40
+	ReloadDelay: 50
 	Range: 6c0
 	TargetActorCenter: true
 	Projectile: MissileCA
@@ -775,7 +776,7 @@ EnervatorBolts:
 		-PointDefenseType:
 	Warhead@1Dam: SpreadDamage
 		Spread: 128
-		Damage: 11500
+		Damage: 13000
 		ValidTargets: Ground, Water
 		Versus:
 			None: 30
@@ -1253,6 +1254,7 @@ LaceratorShards.Hypercharged:
 		ContrailStartColor: 7e00ff
 	Warhead@1Dam: SpreadDamage
 		Damage: 2000
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath, TankBuster
 
 RiftInit:
 	ValidTargets: Ground, Water
