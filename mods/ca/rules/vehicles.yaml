@@ -918,8 +918,10 @@ GTNK.squad:
 	Mobile:
 		Speed: 44
 		Locomotor: heavytracked
+		Voice: Move
 	Passenger:
 		Weight: 2
+		Voice: Move
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -953,6 +955,11 @@ GTNK.squad:
 		MuzzleSequence: muzzle
 	AttackTurreted:
 		PauseOnCondition: empdisable || being-warped
+		Voice: Attack
+	AttackMove:
+		Voice: Attack
+	Voiced:
+		VoiceSet: MammothRUVoice
 	WithMuzzleOverlay:
 	WithFacingSpriteBody:
 	WithSpriteTurret:
@@ -1079,14 +1086,6 @@ GTNK.squad:
 	-AutoTargetPriority@DeprioritizedAir:
 	Voiced:
 		VoiceSet: EradVoice
-	AttackTurreted:
-		Voice: Attack
-	AttackMove:
-		Voice: Attack
-	Passenger:
-		Voice: Move
-	Mobile:
-		Voice: Move
 
 4TNK.ERADATOMIC:
 	Inherits: 4TNK.ATOMIC
@@ -1117,14 +1116,6 @@ GTNK.squad:
 	-WithDecoration@UpgradeOverlay:
 	Voiced:
 		VoiceSet: EradVoice
-	AttackTurreted:
-		Voice: Attack
-	AttackMove:
-		Voice: Attack
-	Passenger:
-		Voice: Move
-	Mobile:
-		Voice: Move
 
 ARTY:
 	Inherits: ^Vehicle
