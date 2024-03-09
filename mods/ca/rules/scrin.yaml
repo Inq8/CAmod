@@ -708,6 +708,7 @@ MAST:
 	Inherits@SCRININFANTRY: ^ScrinInfantry
 	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
 	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@CommandoRegen: ^CommandoRegen
 	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
 	AutoTargetPriority@DEFAULT:
 		RequiresCondition: !maxcontrolled || stance-attackanything || assault-move
@@ -722,7 +723,7 @@ MAST:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Vehicles, Defenses, Buildings
 		Weaknesses: • Cannot attack Aircraft
-		Attributes: • Maximum 1 can be trained\n• Can detect cloaked units\n• Immune to mind control\n• Can capture enemy buildings\n• Shorter range and longer reload against vehicles\n• Special Ability: Mind Shatter
+		Attributes: • Maximum 1 can be trained\n• Can detect cloaked ground units and spies\n• Immune to mind control\n• Can capture enemy buildings\n• Shorter range and longer reload against vehicles\n• Special Ability: Mind Shatter
 	Voiced:
 		VoiceSet: MastermindVoice
 	Valued:
@@ -741,6 +742,10 @@ MAST:
 		Speed: 60
 	RevealsShroud:
 		Range: 7c0
+	IgnoresDisguise:
+	DetectCloaked:
+		DetectionTypes: Cloak, Thief
+		Range: 5c0
 	Armament@PRIMARY:
 		Weapon: EnslaveInfantry
 		LocalOffset: 150,0,400
@@ -890,6 +895,8 @@ MAST:
 	RangeMultiplier@RANK-ELITE:
 		Modifier: 115
 		RequiresCondition: rank-elite
+	ChangesHealth@ELITE:
+		Delay: 50
 
 #
 # ---- Vehicles
@@ -1056,7 +1063,7 @@ SEEK:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Buildings
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Can detect cloaked units and submarines.\n• Can traverse water
+		Attributes: • Can detect cloaked units, spies and submarines.\n• Can traverse water
 	Mobile:
 		Speed: 113
 		Locomotor: lighthover
@@ -1138,7 +1145,7 @@ LACE:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Buildings
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
-		Attributes: • Can detect cloaked units and submarines.\n• Can traverse water
+		Attributes: • Can detect cloaked units, spies and submarines.\n• Can traverse water
 	Mobile:
 		TurnSpeed: 40
 		Speed: 144
@@ -2308,7 +2315,7 @@ STMR:
 	Targetable@RESUPPLYING:
 		TargetTypes: Resupplying
 		RequiresCondition: resupplying
-	KillsSelf:
+	KillsSelf@Emp:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
 		Modifier: 0
@@ -2436,7 +2443,7 @@ ENRV:
 	Targetable@RESUPPLYING:
 		TargetTypes: Resupplying
 		RequiresCondition: resupplying
-	KillsSelf:
+	KillsSelf@Emp:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
 		Modifier: 0
@@ -2570,7 +2577,7 @@ DEVA:
 	ProductionCostMultiplier@HARBONUS:
 		Multiplier: 90
 		Prerequisites: player.harbinger
-	KillsSelf:
+	KillsSelf@Emp:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
 		Modifier: 0
@@ -2701,7 +2708,7 @@ PAC:
 	DeathSounds:
 		Voice: Die
 	-EjectOnDeath:
-	KillsSelf:
+	KillsSelf@Emp:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
 		Modifier: 0
@@ -2964,7 +2971,7 @@ MSHP:
 		Delay: 1
 		RequiresCondition: !charging && !attacking
 		ShowSelectionBar: false
-	KillsSelf:
+	KillsSelf@Emp:
 		RequiresCondition: empdisable && cruising && !shields-upgrade
 	SpeedMultiplier@EMPDISABLE:
 		Modifier: 0

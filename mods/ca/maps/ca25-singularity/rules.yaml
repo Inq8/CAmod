@@ -129,7 +129,7 @@ MSHP:
 	-AmmoPool:
 	-ReloadAmmoPoolCA@CHARGE:
 	-ReloadAmmoPoolCA@DRAIN:
-	-KillsSelf:
+	-KillsSelf@Emp:
 	AmbientSoundCA:
 		-RequiresCondition:
 		AudibleThroughFog: false
@@ -163,6 +163,7 @@ MAST:
 	DamageTypeDamageMultiplier@FLAKARMORMINOR:
 		-RequiresCondition:
 	-GrantConditionOnPrerequisite@CARAPACE:
+	-ChangesHealth@CommandoRegen:
 
 QTNK:
 	-FirepowerMultiplier@MADIC:
@@ -512,7 +513,7 @@ RFGN:
 		Condition: rift-enabled
 
 MANI:
-	DetonateWeaponPower@SUPPRESSION:
+	GrantExternalConditionPowerCA@SUPPRESSION:
 		DisplayTimerRelationships: Ally
 
 TMPL:
