@@ -733,7 +733,7 @@
 ^ReconDronePower:
 	AirstrikePower@uav:
 		OrderName: gdiuav
-		Prerequisites: ~!player.arc
+		Prerequisites: ~radar.gdi, ~!player.arc
 		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: uavicon
 		ChargeInterval: 3750
@@ -757,7 +757,7 @@
 		SupportPowerPaletteOrder: 50
 	AirstrikePower@uavST:
 		OrderName: gdiuavarc
-		Prerequisites: ~player.arc
+		Prerequisites: ~radar.gdi, ~player.arc
 		PauseOnCondition: disabled || empdisable || being-warped
 		Icon: uavicon
 		ChargeInterval: 3000
@@ -1199,7 +1199,7 @@
 ^SatHackPower:
 	SpawnActorPowerCA@sathack:
 		Actor: camera.sathack
-		Prerequisites: ~!player.legion
+		Prerequisites: ~radar.nod, ~!player.legion
 		LifeTime: 120
 		OrderName: sathack
 		Icon: hacksat
@@ -1220,7 +1220,7 @@
 		SupportPowerPaletteOrder: 50
 	SpawnActorPowerCA@sathacklegion:
 		Actor: camera.sathack
-		Prerequisites: ~player.legion
+		Prerequisites: ~radar.nod, ~player.legion
 		LifeTime: 120
 		OrderName: sathacklegion
 		Icon: hacksat
