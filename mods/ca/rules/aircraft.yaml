@@ -1585,10 +1585,10 @@ A10:
 	AutoTargetPriority@DEFAULTGROUND:
 		RequiresCondition: ammo && !ammo2
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
-		InvalidTargets: NoAutoTarget
+		InvalidTargets: NoAutoTarget, AntiAirDefense
 	AutoTargetPriority@ATTACKANYTHINGGROUND:
 		RequiresCondition: (stance-attackanything || assault-move) && ammo && !ammo2
-		ValidTargets: Structure
+		ValidTargets: Structure, AntiAirDefense
 		InvalidTargets: NoAutoTarget
 	AutoTargetPriority@DEFAULTAIR:
 		RequiresCondition: !ammo && ammo2
@@ -2481,10 +2481,10 @@ RAH:
 	AutoTargetPriority@DEFAULTAA:
 		RequiresCondition: alphacomanche-upgrade
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Defense
-		InvalidTargets: NoAutoTarget
+		InvalidTargets: NoAutoTarget, AntiAirDefense
 	AutoTargetPriority@ATTACKANYTHINGAA:
 		RequiresCondition: (stance-attackanything  || assault-move) && alphacomanche-upgrade
-		ValidTargets: Structure
+		ValidTargets: Structure, AntiAirDefense
 		InvalidTargets: NoAutoTarget
 	WithColoredSelectionBox@INVIS:
 		RequiresCondition: invisibility || hidden

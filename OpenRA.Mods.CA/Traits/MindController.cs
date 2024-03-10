@@ -11,6 +11,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenRA.GameRules;
 using OpenRA.Mods.CA.Orders;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
@@ -19,9 +20,9 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	public enum SlaveDeployEffect { None, Release, Kill }
+	public enum SlaveDeployEffect { None, Release, Detonate, Kill }
 
-	public enum ControlAtCapacityBehaviour { BlockNew, KillOldest, ReleaseOldest }
+	public enum ControlAtCapacityBehaviour { BlockNew, ReleaseOldest, DetonateOldest, KillOldest }
 
 	[Desc("This actor can mind control other actors.")]
 	public class MindControllerInfo : PausableConditionalTraitInfo, Requires<ArmamentInfo>, Requires<HealthInfo>
@@ -87,8 +88,14 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Cursor to use for targeting slaves to deploy.")]
 		public readonly string DeploySlaveCursor = "pinkdeploy";
 
-		[Desc("What happens when a slave is deployed while the master is selected.")]
+		[Desc("What happens when a slave is deployed while the master is selected (unrelated to when the master is deployed).")]
 		public readonly SlaveDeployEffect SlaveDeployEffect = SlaveDeployEffect.None;
+
+		[Desc("Weapon to detonate if SlaveDeployEffect is Detonate.")]
+		[WeaponReference]
+		public readonly string SlaveDetonateWeapon = null;
+
+		public WeaponInfo SlaveDetonateWeaponInfo { get; private set; }
 
 		[Desc("Types of damage that this trait causes to slave if killed on deploying or when capacity exceeded. Leave empty for no damage types.")]
 		public readonly BitSet<DamageType> SlaveKillDamageTypes = default(BitSet<DamageType>);
@@ -97,6 +104,22 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly int ExperienceFromControl = 0;
 
 		public override object Create(ActorInitializer init) { return new MindController(init.Self, this); }
+
+		public override void RulesetLoaded(Ruleset rules, ActorInfo ai)
+		{
+			base.RulesetLoaded(rules, ai);
+
+			if (SlaveDetonateWeapon != null)
+			{
+				WeaponInfo weaponInfo;
+
+				var slaveDetonateWeaponToLower = (SlaveDetonateWeapon ?? string.Empty).ToLowerInvariant();
+				if (!rules.Weapons.TryGetValue(slaveDetonateWeaponToLower, out weaponInfo))
+					throw new YamlException($"Weapons Ruleset does not contain an entry '{slaveDetonateWeaponToLower}'");
+
+				SlaveDetonateWeaponInfo = weaponInfo;
+			}
+		}
 	}
 
 	public class MindController : PausableConditionalTrait<MindControllerInfo>, INotifyAttack, INotifyKilled, INotifyActorDisposing, INotifyCreated, IIssueOrder, IResolveOrder, ITick
@@ -265,6 +288,10 @@ namespace OpenRA.Mods.CA.Traits
 							order.Target.Actor.Kill(order.Target.Actor, Info.SlaveKillDamageTypes);
 					});
 				}
+				else if (Info.SlaveDeployEffect == SlaveDeployEffect.Detonate)
+				{
+					self.World.AddFrameEndTask(w => DetonateSlave(self, order.Target.Actor));
+				}
 
 				if (Info.ReleaseSounds.Length > 0)
 				{
@@ -380,6 +407,10 @@ namespace OpenRA.Mods.CA.Traits
 						if (!oldestSlave.IsDead)
 							oldestSlave.Kill(oldestSlave, Info.SlaveKillDamageTypes);
 					});
+				}
+				else if (Info.ControlAtCapacityBehaviour == ControlAtCapacityBehaviour.DetonateOldest)
+				{
+					self.World.AddFrameEndTask(w => DetonateSlave(self, oldestSlave));
 				}
 			}
 
@@ -552,6 +583,29 @@ namespace OpenRA.Mods.CA.Traits
 				return false;
 
 			return slaves.Contains(a);
+		}
+
+		void DetonateSlave(Actor self, Actor slave)
+		{
+			if (slave.IsDead && !slave.IsInWorld)
+				return;
+
+			if (Info.SlaveDetonateWeapon == null)
+				return;
+
+			var weapon = Info.SlaveDetonateWeaponInfo;
+			var pos = Target.FromPos(slave.CenterPosition);
+
+			var args = new WarheadArgs
+			{
+				Weapon = weapon,
+				DamageModifiers = self.TraitsImplementing<IFirepowerModifier>().Select(a => a.GetFirepowerModifier()).ToArray(),
+				Source = self.CenterPosition,
+				SourceActor = self,
+				WeaponTarget = pos
+			};
+
+			weapon.Impact(pos, args);
 		}
 	}
 }

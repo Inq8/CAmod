@@ -2640,30 +2640,6 @@ JJET:
 	Selectable:
 		Bounds: 768, 768, 0, -256
 		DecorationBounds: 512, 725, 0, -256
-	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !stance-attackanything && !assault-move && !airborne
-	AutoTargetPriority@ATTACKANYTHING:
-		RequiresCondition: (stance-attackanything || assault-move) && !airborne
-	AutoTargetPriority@DEFAULT_AIR:
-		RequiresCondition: !stance-attackanything && !assault-move && airborne
-		ValidTargets: Vehicle, Water, Underwater, Defense
-		InvalidTargets: NoAutoTarget
-		Priority: 1
-	AutoTargetPriority@DEFAULT_AIR_ATTACK_INFANTRY:
-		RequiresCondition: !stance-attackanything && !assault-move && airborne
-		ValidTargets: Air, AirSmall, Infantry
-		InvalidTargets: NoAutoTarget
-		Priority: 10
-	AutoTargetPriority@ATTACKANYTHING_AIR:
-		RequiresCondition: (stance-attackanything || assault-move) && airborne
-		ValidTargets: Vehicle, Water, Underwater, Structure, Defense
-		InvalidTargets: NoAutoTarget
-		Priority: 1
-	AutoTargetPriority@ATTACKANYTHING_AIR_ATTACK_INFANTRY:
-		RequiresCondition: (stance-attackanything || assault-move) && airborne
-		ValidTargets: Air, AirSmall, Infantry
-		InvalidTargets: NoAutoTarget
-		Priority: 10
 	KillsSelf@Emp:
 		RequiresCondition: empdisable && cruising
 	GrantConditionOnDamageState@DAMAGED:
@@ -2709,8 +2685,6 @@ BJET:
 		DefaultAttackSequence: attack-upg
 		RequiresCondition: !airborne
 	-ReplacedInQueue:
-	-AutoTargetPriority@DEFAULT_AIR_ATTACK_INFANTRY:
-	-AutoTargetPriority@ATTACKANYTHING_AIR_ATTACK_INFANTRY:
 
 JJET.Husk:
 	ClassicFacingBodyOrientation:

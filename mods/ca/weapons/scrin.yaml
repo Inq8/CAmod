@@ -88,6 +88,19 @@ EnslaveVehicle:
 		ValidTargets: Ground
 		ValidRelationships: Neutral, Enemy
 
+DetonateSlave:
+	Range: 1c0
+	ReloadDelay: 1
+	Projectile: InstantHit
+	Warhead@1Dam: HealthPercentageDamage
+		Spread: 42
+		Damage: 300
+		ValidTargets: Infantry, Vehicle, Ship, Air, AirSmall
+		DamageTypes: BulletDeath
+	Warhead@3Eff: CreateEffect
+		Explosions: med_explosion
+		ImpactSounds: kaboom12.aud
+
 GunWalkerZap:
 	Range: 5c0
 	Report: gunwalker-fire1.aud, gunwalker-fire2.aud

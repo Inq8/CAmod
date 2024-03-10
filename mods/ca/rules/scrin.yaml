@@ -765,8 +765,9 @@ MAST:
 		ReleaseSounds: mastermind-release.aud
 		ControllingCondition: mindcontrolling
 		MaxControlledCondition: maxcontrolled
-		ControlAtCapacityBehaviour: KillOldest
-		SlaveDeployEffect: Kill
+		ControlAtCapacityBehaviour: DetonateOldest
+		SlaveDeployEffect: Detonate
+		SlaveDetonateWeapon: DetonateSlave
 		SlaveKillDamageTypes: BulletDeath
 		ExperienceFromControl: 100
 	WithMindControlArc@MC:
@@ -4463,6 +4464,7 @@ SHAR:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetAirICBM
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	Inherits@AntiAirDefense: ^AntiAirDefense
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Buildable:

@@ -1734,10 +1734,10 @@
 		AttackAnythingCondition: stance-attackanything
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
-		InvalidTargets: NoAutoTarget, WaterStructure
+		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: stance-attackanything
-		ValidTargets: Structure, Mine
+		ValidTargets: Structure, AntiAirDefense, Mine
 		InvalidTargets: NoAutoTarget
 
 ^AutoTargetGroundAssaultMove:
@@ -1782,10 +1782,10 @@
 		AttackAnythingCondition: stance-attackanything
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Defense
-		InvalidTargets: NoAutoTarget, WaterStructure
+		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: stance-attackanything
-		ValidTargets: Structure, Mine
+		ValidTargets: Structure, AntiAirDefense, Mine
 		InvalidTargets: NoAutoTarget
 
 ^AutoTargetAllAssaultMove:
@@ -1799,8 +1799,6 @@
 	Inherits: ^AutoTargetAllAssaultMove
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
-	AutoTargetPriority@ATTACKANYTHING:
-		ValidTargets: Structure, Mine
 	AutoTargetPriority@DeprioritizedAir:
 		ValidTargets: Air, AirSmall
 		InvalidTargets: NoAutoTarget
@@ -3077,6 +3075,10 @@
 	Inherits@1: ^Defense
 	Inherits@TDPAL: ^TDPalette
 	ActorPreviewPlaceBuildingPreview:
+
+^AntiAirDefense:
+	Targetable@AntiAirDefense:
+		TargetTypes: AntiAirDefense
 
 ^BuildingPlug:
 	Interactable:
