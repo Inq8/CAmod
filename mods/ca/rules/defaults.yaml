@@ -1246,13 +1246,16 @@
 	CaptureManager:
 	Targetable@DRIVERKILL:
 		TargetTypes: DriverKill
-		RequiresCondition: !driver-dead && !invulnerability
+		RequiresCondition: !driver-dead && hp-below-75-perc && !invulnerability
 	Targetable@DRIVERKILLLOWHP:
 		TargetTypes: DriverKillLow
-		RequiresCondition: !driver-dead && target-lowhp && !invulnerability
-	GrantConditionOnDamageState@DRIVERKILLLOWHP:
-		Condition: target-lowhp
+		RequiresCondition: !driver-dead && hp-below-50-perc && !invulnerability
+	GrantConditionOnDamageState@DriverKillLessThan50:
+		Condition: hp-below-50-perc
 		ValidDamageStates: Heavy, Critical
+	GrantConditionOnDamageState@DriverKillLessThan75:
+		Condition: hp-below-75-perc
+		ValidDamageStates: Medium, Heavy, Critical
 	Targetable@AICAPTURE:
 		TargetTypes: NoCrew
 		RequiresCondition: driver-dead
@@ -1617,6 +1620,7 @@
 
 ^MindControllableBase:
 	MindControllable:
+		KillCargo: true
 		ControlledConditions:
 			mast: mindcontrolled
 			yuri: mindcontrolled
