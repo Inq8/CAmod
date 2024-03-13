@@ -1161,9 +1161,10 @@ HACK:
 	DeployOnAttack:
 		RequiresCondition: undeployed
 	MindController:
+		ControlType: Hack
 		ArmamentNames: primary
 		Capacity: -1
-		TicksToControl: 300
+		TicksToControl: 150
 		TicksToRevoke: 25
 		InitSounds: hacker-init.aud
 		InitSoundControllerOnly: true
@@ -1172,6 +1173,8 @@ HACK:
 		ProgressCondition: hacking
 		UndeployOnControl: true
 		UndeployOnInterrupt: true
+		TargetTypeTicksToControl:
+			Structure: 300
 	WithDecoration@HACKEDIN:
 		Image: hacking
 		Sequence: hacking
@@ -3675,14 +3678,16 @@ YURI:
 		Name: batf
 		Weapon: PsychicBeamBATF
 	MindController:
+		ControlType: MindControl
 		ArmamentNames: primary, secondary
 		Capacity: 3
 		ControlSounds: iyurat1a.aud
 		ReleaseSounds: yuri-release.aud
 		ControllingCondition: mindcontrolling
 		MaxControlledCondition: maxcontrolled
-		ControlAtCapacityBehaviour: KillOldest
-		SlaveDeployEffect: Kill
+		ControlAtCapacityBehaviour: DetonateOldest
+		SlaveDeployEffect: Detonate
+		SlaveDetonateWeapon: DetonateSlave
 		SlaveKillDamageTypes: BulletDeath
 		ExperienceFromControl: 100
 	WithMindControlArc@MC:

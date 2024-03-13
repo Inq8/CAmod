@@ -1633,12 +1633,21 @@
 	Targetable@MINDCONTROL:
 		TargetTypes: MindControllable
 		RequiresCondition: !mindcontrolled && !hacked && !restoring
+	MindControllableProgressBar@MINDCONTROL:
+		ControlTypes: MindControl
+		Color: ff00ff
+		RequiresCondition: !mindcontrolled
 	WithIdleOverlay@MINDCONTROL:
 		Sequence: mind-overlay
 		Palette: scrin
 		RequiresCondition: mindcontrolled
 		Offset: 0,0,300
 		IsDecoration: True
+	ExternalCondition@PHIGH:
+		Condition: pinkhighlight
+	WithColoredOverlay@PHIGH:
+		Color: ff00ff80
+		RequiresCondition: pinkhighlight
 
 ^Hackable:
 	Inherits: ^MindControllableBase
@@ -1646,6 +1655,7 @@
 		TargetTypes: Hackable
 		RequiresCondition: !mindcontrolled && !hacked
 	MindControllableProgressBar@HACKABLE:
+		ControlTypes: Hack
 		Color: 1ce312
 		RequiresCondition: !hacked
 	WithDecoration@HACKED:
@@ -3764,6 +3774,9 @@
 	PowerMultiplier@POWERDOWN:
 		RequiresCondition: powerdown
 		Modifier: 0
+	RevealsShroudMultiplier@POWERDOWN:
+		RequiresCondition: lowpower || powerdown || empdisable
+		Modifier: 50
 	WithBuildingRepairDecoration:
 		Offsets:
 			powerdown: -10, 0
