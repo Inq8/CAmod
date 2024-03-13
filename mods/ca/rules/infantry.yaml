@@ -9,7 +9,7 @@ DOG:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry
 		Weaknesses: • Can only attack Infantry
-		Attributes: • Can detect cloaked units, spies, mines\n• Detects the scent of enemy infantry beyond vision range
+		Attributes: • Can detect cloaked units, spies, mines\n• Detects the scent of enemy infantry beyond vision range\n• Immune to mind control
 	RenderSprites:
 		PlayerPalette: player
 	WithDeathAnimation:
@@ -54,6 +54,8 @@ DOG:
 		ValidTargets: Infantry
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
 	WithInfantryBody:
 		MoveSequence: walk
 		StandSequences: stand
@@ -823,6 +825,8 @@ E7:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
+	Targetable@Hero:
+		TargetTypes: Hero
 	Targetable@MindControlImmune:
 		TargetTypes: MindControlImmune
 	Targetable@ChaosImmune:
@@ -1972,6 +1976,8 @@ RMBO:
 	DetectCloaked:
 		DetectionTypes: Cloak, Thief
 		Range: 5c0
+	Targetable@Hero:
+		TargetTypes: Hero
 	Targetable@MindControlImmune:
 		TargetTypes: MindControlImmune
 	Targetable@ChaosImmune:
@@ -2250,6 +2256,8 @@ BORI:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
+	Targetable@Hero:
+		TargetTypes: Hero
 	Targetable@MindControlImmune:
 		TargetTypes: MindControlImmune
 	Targetable@ChaosImmune:
@@ -3669,6 +3677,7 @@ YURI:
 		Weapon: EnslaveVehicle
 		LocalOffset: 150,0,400
 		PauseOnCondition: deployed
+		RequiresCondition: vs-vehicle-ammo
 	Armament@AIDummyAiming: ## Hack: Make AI deploy to attack structures
 		PauseOnCondition: being-warped
 		Name: aidummy
@@ -3690,6 +3699,8 @@ YURI:
 		SlaveDetonateWeapon: DetonateSlave
 		SlaveKillDamageTypes: BulletDeath
 		ExperienceFromControl: 100
+		TargetTypeTicksToControl:
+			MindControlResistant: 105
 	WithMindControlArc@MC:
 		Color: c71585
 		Transparency: 55
@@ -3763,6 +3774,8 @@ YURI:
 	WithProductionIconOverlay:
 		Types: Veterancy
 		Prerequisites: barracks.upgraded
+	Targetable@Hero:
+		TargetTypes: Hero
 	Targetable@MindControlImmune:
 		TargetTypes: MindControlImmune
 	Targetable@ChaosImmune:
@@ -3783,8 +3796,17 @@ YURI:
 	AmmoPool:
 		Ammo: 1
 		AmmoCondition: ammo
+	AmmoPool@Vehicles:
+		Name: secondary
+		Armaments: secondary
+		Ammo: 1
+		AmmoCondition: vs-vehicle-ammo
 	ReloadAmmoPool:
 		Delay: 35 # matches EnslaveInfantry ReloadDelay
+		Count: 1
+	ReloadAmmoPool@Vehicles:
+		AmmoPool: secondary
+		Delay: 100
 		Count: 1
 	MindControllerCapacityModifier@RANK-1:
 		Amount: 1
@@ -3957,7 +3979,6 @@ SEAL:
 	AutoTarget:
 		-AttackAnythingCondition:
 	-AutoTargetPriority@ATTACKANYTHING:
-	-Targetable@HERO:
 
 XO:
 	Inherits: ^VehicleTD-NOUPG

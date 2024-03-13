@@ -1620,7 +1620,6 @@
 
 ^MindControllableBase:
 	MindControllable:
-		KillCargo: true
 		ControlledConditions:
 			mast: mindcontrolled
 			yuri: mindcontrolled
@@ -1648,6 +1647,9 @@
 	WithColoredOverlay@PHIGH:
 		Color: ff00ff80
 		RequiresCondition: pinkhighlight
+	RejectsOrders@MindControlled:
+		Reject: Unload
+		RequiresCondition: mindcontrolled
 
 ^Hackable:
 	Inherits: ^MindControllableBase
@@ -2006,9 +2008,6 @@
 		ShowSelectionBar: true
 	ExternalCondition@UNITSELL:
 		Condition: unit-sellable
-	ProximityExternalCondition@ONPAD:
-		Condition: unit-onpad
-		Range: 1c0
 	Sellable:
 		RequiresCondition: unit-sellable && !c4 && !being-captured && !being-warped
 		SellSounds: cashturntd.aud
@@ -2790,9 +2789,6 @@
 		RequiresCondition: airborne
 	ExternalCondition@UNITSELL:
 		Condition: unit-sellable
-	ProximityExternalCondition@ONPAD:
-		Condition: unit-onpad
-		Range: 1c0
 	Sellable:
 		RequiresCondition: unit-sellable && !c4 && !being-warped
 		SellSounds: cashturntd.aud
@@ -3034,7 +3030,6 @@
 	Inherits@botbonus: ^BotDefenseProductionBonus
 	Inherits@Concussion: ^Concussion
 	Inherits@selection: ^SelectableCombatBuilding
-	Inherits@mind: ^MindControllable
 	Inherits@veilable: ^Veilable
 	Inherits@weapjammable: ^WeaponJammable
 	Inherits@atomize: ^Atomizable
@@ -3208,8 +3203,6 @@
 		Palette: effect
 		Position: TopLeft
 		ValidRelationships: Ally, Enemy, Neutral
-	Targetable@HERO:
-		TargetTypes: Hero
 
 ^CommandoRegen:
 	ChangesHealth@CommandoRegen:

@@ -2194,10 +2194,10 @@ FIX:
 	ProximityExternalCondition@UNITSELL:
 		Condition: unit-sellable
 		Range: 1c0
-	ExternalCondition@ONPAD:
-		Condition: unit-onpad
+	GrantConditionOnResupplying@Resupplying:
+		Condition: resupplying
 	Sellable:
-		RequiresCondition: !unit-onpad && !build-incomplete && !c4 && !being-captured && !being-warped && !hacked
+		RequiresCondition: !resupplying && !build-incomplete && !c4 && !being-captured && !being-warped && !hacked
 	WithBuildingBib:
 		HasMinibib: true
 	WithResupplyAnimation:
@@ -3803,10 +3803,10 @@ REP:
 	ProximityExternalCondition@UNITSELL:
 		Condition: unit-sellable
 		Range: 1c0
-	ExternalCondition@ONPAD:
-		Condition: unit-onpad
+	GrantConditionOnResupplying@Resupplying:
+		Condition: resupplying
 	Sellable:
-		RequiresCondition: !unit-onpad && !build-incomplete && !c4 && !being-captured && !being-warped && !hacked
+		RequiresCondition: !resupplying && !build-incomplete && !c4 && !being-captured && !being-warped && !hacked
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair
@@ -5030,7 +5030,6 @@ PATR:
 	Armament:
 		Weapon: EMPMissileLauncher
 		LocalOffset: 511,396,511
-
 	AmmoPool:
 		Ammo: 1
 		ReloadCount: 1
@@ -5071,7 +5070,6 @@ PATR:
 		Types: building
 	CapturableProgressBar:
 	CapturableProgressBlink:
-	-Targetable@MINDCONTROL:
 
 INDP:
 	Inherits: ^Building

@@ -1985,7 +1985,6 @@ OrcaBomb:
 
 MicrowaveZap:
 	ValidTargets: Ground, Water
-	InvalidTargets: Air
 	TargetActorCenter: true
 	ReloadDelay: 170
 	Range: 7c0
@@ -2004,9 +2003,9 @@ MicrowaveZap:
 		HitAnimPalette: tseffect-ignore-lighting-alpha75
 		ZOffset: 6144
 	Warhead@1Dam: SpreadDamage
-		InvalidTargets: Air, Cyborg
+		InvalidTargets: Infantry
 		Falloff: 100, 37, 14, 0
-		Spread: 512
+		Spread: 448
 		Damage: 30000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
@@ -2017,10 +2016,8 @@ MicrowaveZap:
 			Heavy: 60
 			Brick: 5
 	Warhead@2Dam: SpreadDamage
-		ValidTargets: Cyborg
-		InvalidTargets: Air
-		Spread: 341
-		Falloff: 100, 37, 14, 0
+		ValidTargets: Infantry
+		Spread: 42
 		Damage: 30000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@emp: GrantExternalConditionCA

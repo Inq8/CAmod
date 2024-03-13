@@ -59,9 +59,14 @@ DisintegratorBeamAA:
 EnslaveInfantry:
 	Range: 7c0
 	ReloadDelay: 35
-	Projectile: InstantHit
+	Projectile: ArcLaserZap
+		Color: c7158537
+		Angle: 60
+		Width: 86
+		Duration: 20
+		HitAnim: empty
 	ValidTargets: MindControllable
-	InvalidTargets: Vehicle, Ship, Defense, MindControlImmune
+	InvalidTargets: Vehicle, Ship, MindControlImmune
 	Warhead@1Dam: TargetDamage
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
@@ -76,34 +81,13 @@ EnslaveInfantry:
 		ValidTargets: Infantry
 		ValidRelationships: Neutral, Enemy
 
-EnslaveInfantryTargeting:
-	Inherits: EnslaveInfantry
-	-Warhead@2Eff:
-
 EnslaveVehicle:
+	Inherits: EnslaveInfantry
 	Range: 5c512
-	ReloadDelay: 35
-	Projectile: ArcLaserZap
-		Color: c7158537
-		Angle: 60
-		Width: 86
-		Duration: 20
-		HitAnim: empty
-	ValidTargets: MindControllable
-	InvalidTargets: Infantry, Defense, MindControlImmune
-	Warhead@1Dam: TargetDamage
-	Warhead@2Eff: CreateEffect
-		Explosions: idle
-		ExplosionPalette: scrin
-		Image: mindcontrol
-		ValidTargets: Ground
-		ValidRelationships: Neutral, Enemy
+	InvalidTargets: Infantry, MindControlImmune
 	Warhead@PinkHighlight: GrantExternalConditionCA
-		Range: 0c341
-		Duration: 2
-		Condition: pinkhighlight
 		ValidTargets: Vehicle
-		ValidRelationships: Neutral, Enemy
+
 
 DetonateSlave:
 	Range: 1c0
