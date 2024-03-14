@@ -69,6 +69,12 @@ EnslaveInfantry:
 		Image: mindcontrol
 		ValidTargets: Ground
 		ValidRelationships: Neutral, Enemy
+	Warhead@PinkHighlight: GrantExternalConditionCA
+		Range: 0c341
+		Duration: 2
+		Condition: pinkhighlight
+		ValidTargets: Infantry
+		ValidRelationships: Neutral, Enemy
 
 EnslaveInfantryTargeting:
 	Inherits: EnslaveInfantry
@@ -76,8 +82,13 @@ EnslaveInfantryTargeting:
 
 EnslaveVehicle:
 	Range: 5c512
-	ReloadDelay: 100
-	Projectile: InstantHit
+	ReloadDelay: 35
+	Projectile: ArcLaserZap
+		Color: c7158537
+		Angle: 60
+		Width: 86
+		Duration: 20
+		HitAnim: empty
 	ValidTargets: MindControllable
 	InvalidTargets: Infantry, Defense, MindControlImmune
 	Warhead@1Dam: TargetDamage
@@ -87,6 +98,25 @@ EnslaveVehicle:
 		Image: mindcontrol
 		ValidTargets: Ground
 		ValidRelationships: Neutral, Enemy
+	Warhead@PinkHighlight: GrantExternalConditionCA
+		Range: 0c341
+		Duration: 2
+		Condition: pinkhighlight
+		ValidTargets: Vehicle
+		ValidRelationships: Neutral, Enemy
+
+DetonateSlave:
+	Range: 1c0
+	ReloadDelay: 1
+	Projectile: InstantHit
+	Warhead@1Dam: HealthPercentageDamage
+		Spread: 42
+		Damage: 300
+		ValidTargets: Infantry, Vehicle, Ship, Air, AirSmall
+		DamageTypes: BulletDeath
+	Warhead@3Eff: CreateEffect
+		Explosions: med_explosion
+		ImpactSounds: kaboom12.aud
 
 GunWalkerZap:
 	Range: 5c0

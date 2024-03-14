@@ -2932,7 +2932,8 @@ GDRN:
 	-TooltipDescription@DRIVER_DEAD:
 	-Targetable@DRIVERKILL:
 	-Targetable@DRIVERKILLLOWHP:
-	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
+	-GrantConditionOnDamageState@DriverKillLessThan50:
+	-GrantConditionOnDamageState@DriverKillLessThan75:
 	-Targetable@AICAPTURE:
 
 GDRN.TOW:
@@ -3118,7 +3119,8 @@ FTNK.Decoy:
 	-TooltipDescription@DRIVER_DEAD:
 	-Targetable@DRIVERKILL:
 	-Targetable@DRIVERKILLLOWHP:
-	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
+	-GrantConditionOnDamageState@DriverKillLessThan50:
+	-GrantConditionOnDamageState@DriverKillLessThan75:
 	-Targetable@AICAPTURE:
 	-GivesExperienceCA:
 	-GrantConditionOnPrerequisite@GLOBALBOUNTY:
@@ -3168,7 +3170,8 @@ HFTK.Decoy:
 	-TooltipDescription@DRIVER_DEAD:
 	-Targetable@DRIVERKILL:
 	-Targetable@DRIVERKILLLOWHP:
-	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
+	-GrantConditionOnDamageState@DriverKillLessThan50:
+	-GrantConditionOnDamageState@DriverKillLessThan75:
 	-Targetable@AICAPTURE:
 	-GivesExperienceCA:
 	-GrantConditionOnPrerequisite@GLOBALBOUNTY:
@@ -3740,7 +3743,8 @@ MTNK.Drone:
 	-TooltipDescription@DRIVER_DEAD:
 	-Targetable@DRIVERKILL:
 	-Targetable@DRIVERKILLLOWHP:
-	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
+	-GrantConditionOnDamageState@DriverKillLessThan50:
+	-GrantConditionOnDamageState@DriverKillLessThan75:
 	-Targetable@AICAPTURE:
 	-SpeedMultiplier@BERSERK:
 	-ReloadDelayMultiplier@BERSERK:
@@ -3833,7 +3837,8 @@ MDRN:
 	-TooltipDescription@DRIVER_DEAD:
 	-Targetable@DRIVERKILL:
 	-Targetable@DRIVERKILLLOWHP:
-	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
+	-GrantConditionOnDamageState@DriverKillLessThan50:
+	-GrantConditionOnDamageState@DriverKillLessThan75:
 	-Targetable@AICAPTURE:
 	-Targetable@MINIDRONE:
 	-ChangesHealth@MINIDRONE:
@@ -4122,7 +4127,8 @@ HTNK.Drone:
 	-TooltipDescription@DRIVER_DEAD:
 	-Targetable@DRIVERKILL:
 	-Targetable@DRIVERKILLLOWHP:
-	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
+	-GrantConditionOnDamageState@DriverKillLessThan50:
+	-GrantConditionOnDamageState@DriverKillLessThan75:
 	-Targetable@AICAPTURE:
 	-SpeedMultiplier@BERSERK:
 	-ReloadDelayMultiplier@BERSERK:
@@ -6873,7 +6879,7 @@ WTNK:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses, Infantry
 		Weaknesses: • Weak vs Buildings\n• Cannot attack Aircraft
-		Attributes: • Briefly disables vehicles/defenses\n• Kills vehicle crews (with upgrade)\n• Crewless vehicles capturable by infantry
+		Attributes: • Briefly disables vehicles/defenses\n• Kills crew of vehicles with less than 75% HP (with upgrade)\n• Crewless vehicles capturable by infantry
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -7244,7 +7250,8 @@ MEMP:
 	-TooltipDescription@DRIVER_DEAD:
 	-Targetable@DRIVERKILL:
 	-Targetable@DRIVERKILLLOWHP:
-	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
+	-GrantConditionOnDamageState@DriverKillLessThan50:
+	-GrantConditionOnDamageState@DriverKillLessThan75:
 	-Targetable@AICAPTURE:
 	WithColoredOverlay@DRONEDISABLE:
 		RequiresCondition: (!radarenabled || empdisable) && !triggered
@@ -7342,7 +7349,8 @@ CDRN:
 	-TooltipDescription@DRIVER_DEAD:
 	-Targetable@DRIVERKILL:
 	-Targetable@DRIVERKILLLOWHP:
-	-GrantConditionOnDamageState@DRIVERKILLLOWHP:
+	-GrantConditionOnDamageState@DriverKillLessThan50:
+	-GrantConditionOnDamageState@DriverKillLessThan75:
 	-Targetable@AICAPTURE:
 
 CHPR:

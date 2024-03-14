@@ -759,14 +759,16 @@ MAST:
 		Name: batf
 		Weapon: PsychicBeamBATF
 	MindController:
+		ControlType: MindControl
 		ArmamentNames: primary, secondary
 		Capacity: 3
 		ControlSounds: mastermind-fire.aud
 		ReleaseSounds: mastermind-release.aud
 		ControllingCondition: mindcontrolling
 		MaxControlledCondition: maxcontrolled
-		ControlAtCapacityBehaviour: KillOldest
-		SlaveDeployEffect: Kill
+		ControlAtCapacityBehaviour: DetonateOldest
+		SlaveDeployEffect: Detonate
+		SlaveDetonateWeapon: DetonateSlave
 		SlaveKillDamageTypes: BulletDeath
 		ExperienceFromControl: 100
 	WithMindControlArc@MC:
@@ -4463,6 +4465,7 @@ SHAR:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetAirICBM
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	Inherits@AntiAirDefense: ^AntiAirDefense
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Buildable:
@@ -4566,7 +4569,7 @@ SCOL:
 	AttackOmni:
 		PauseOnCondition: build-incomplete || disabled || empdisable || being-warped
 	Power:
-		Amount: -100
+		Amount: -85
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
 	SpawnActorOnDeath:

@@ -1246,13 +1246,16 @@
 	CaptureManager:
 	Targetable@DRIVERKILL:
 		TargetTypes: DriverKill
-		RequiresCondition: !driver-dead && !invulnerability
+		RequiresCondition: !driver-dead && hp-below-75-perc && !invulnerability
 	Targetable@DRIVERKILLLOWHP:
 		TargetTypes: DriverKillLow
-		RequiresCondition: !driver-dead && target-lowhp && !invulnerability
-	GrantConditionOnDamageState@DRIVERKILLLOWHP:
-		Condition: target-lowhp
+		RequiresCondition: !driver-dead && hp-below-50-perc && !invulnerability
+	GrantConditionOnDamageState@DriverKillLessThan50:
+		Condition: hp-below-50-perc
 		ValidDamageStates: Heavy, Critical
+	GrantConditionOnDamageState@DriverKillLessThan75:
+		Condition: hp-below-75-perc
+		ValidDamageStates: Medium, Heavy, Critical
 	Targetable@AICAPTURE:
 		TargetTypes: NoCrew
 		RequiresCondition: driver-dead
@@ -1617,6 +1620,7 @@
 
 ^MindControllableBase:
 	MindControllable:
+		KillCargo: true
 		ControlledConditions:
 			mast: mindcontrolled
 			yuri: mindcontrolled
@@ -1629,12 +1633,21 @@
 	Targetable@MINDCONTROL:
 		TargetTypes: MindControllable
 		RequiresCondition: !mindcontrolled && !hacked && !restoring
+	MindControllableProgressBar@MINDCONTROL:
+		ControlTypes: MindControl
+		Color: ff00ff
+		RequiresCondition: !mindcontrolled
 	WithIdleOverlay@MINDCONTROL:
 		Sequence: mind-overlay
 		Palette: scrin
 		RequiresCondition: mindcontrolled
 		Offset: 0,0,300
 		IsDecoration: True
+	ExternalCondition@PHIGH:
+		Condition: pinkhighlight
+	WithColoredOverlay@PHIGH:
+		Color: ff00ff80
+		RequiresCondition: pinkhighlight
 
 ^Hackable:
 	Inherits: ^MindControllableBase
@@ -1642,6 +1655,7 @@
 		TargetTypes: Hackable
 		RequiresCondition: !mindcontrolled && !hacked
 	MindControllableProgressBar@HACKABLE:
+		ControlTypes: Hack
 		Color: 1ce312
 		RequiresCondition: !hacked
 	WithDecoration@HACKED:
@@ -1734,10 +1748,10 @@
 		AttackAnythingCondition: stance-attackanything
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
-		InvalidTargets: NoAutoTarget, WaterStructure
+		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: stance-attackanything
-		ValidTargets: Structure, Mine
+		ValidTargets: Structure, AntiAirDefense, Mine
 		InvalidTargets: NoAutoTarget
 
 ^AutoTargetGroundAssaultMove:
@@ -1782,10 +1796,10 @@
 		AttackAnythingCondition: stance-attackanything
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Air, AirSmall, Defense
-		InvalidTargets: NoAutoTarget, WaterStructure
+		InvalidTargets: NoAutoTarget, WaterStructure, AntiAirDefense
 	AutoTargetPriority@ATTACKANYTHING:
 		RequiresCondition: stance-attackanything
-		ValidTargets: Structure, Mine
+		ValidTargets: Structure, AntiAirDefense, Mine
 		InvalidTargets: NoAutoTarget
 
 ^AutoTargetAllAssaultMove:
@@ -1799,8 +1813,6 @@
 	Inherits: ^AutoTargetAllAssaultMove
 	AutoTargetPriority@DEFAULT:
 		ValidTargets: Infantry, Vehicle, Water, Underwater, Defense
-	AutoTargetPriority@ATTACKANYTHING:
-		ValidTargets: Structure, Mine
 	AutoTargetPriority@DeprioritizedAir:
 		ValidTargets: Air, AirSmall
 		InvalidTargets: NoAutoTarget
@@ -3078,6 +3090,10 @@
 	Inherits@TDPAL: ^TDPalette
 	ActorPreviewPlaceBuildingPreview:
 
+^AntiAirDefense:
+	Targetable@AntiAirDefense:
+		TargetTypes: AntiAirDefense
+
 ^BuildingPlug:
 	Interactable:
 	AlwaysVisible:
@@ -3758,6 +3774,9 @@
 	PowerMultiplier@POWERDOWN:
 		RequiresCondition: powerdown
 		Modifier: 0
+	RevealsShroudMultiplier@POWERDOWN:
+		RequiresCondition: lowpower || powerdown || empdisable
+		Modifier: 50
 	WithBuildingRepairDecoration:
 		Offsets:
 			powerdown: -10, 0

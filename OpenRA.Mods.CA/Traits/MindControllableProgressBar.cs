@@ -19,13 +19,16 @@ namespace OpenRA.Mods.CA.Traits
 	[RequireExplicitImplementation]
 	public interface IMindControlProgressWatcher
 	{
-		void Update(Actor self, Actor captor, Actor target, int progress, int total);
+		void Update(Actor self, Actor captor, Actor target, int progress, int total, string controlType);
 	}
 
 	[Desc("Visualize capture progress.")]
 	class MindControllableProgressBarInfo : ConditionalTraitInfo, Requires<MindControllableInfo>
 	{
-		public readonly Color Color = Color.Orange;
+		[FieldLoader.Require]
+		public readonly HashSet<string> ControlTypes = null;
+
+		public readonly Color Color = Color.HotPink;
 
 		public override object Create(ActorInitializer init) { return new MindControllableProgressBar(init.Self, this); }
 	}
@@ -37,9 +40,9 @@ namespace OpenRA.Mods.CA.Traits
 		public MindControllableProgressBar(Actor self, MindControllableProgressBarInfo info)
 			: base(info) { }
 
-		void IMindControlProgressWatcher.Update(Actor self, Actor captor, Actor target, int current, int total)
+		void IMindControlProgressWatcher.Update(Actor self, Actor captor, Actor target, int current, int total, string controlType)
 		{
-			if (IsTraitDisabled || self != target)
+			if (IsTraitDisabled || self != target || !Info.ControlTypes.Contains(controlType))
 				return;
 
 			if (total == 0)

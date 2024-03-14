@@ -11,6 +11,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenRA.GameRules;
 using OpenRA.Mods.CA.Orders;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Traits;
@@ -19,13 +20,17 @@ using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
-	public enum SlaveDeployEffect { None, Release, Kill }
+	public enum SlaveDeployEffect { None, Release, Detonate, Kill }
 
-	public enum ControlAtCapacityBehaviour { BlockNew, KillOldest, ReleaseOldest }
+	public enum ControlAtCapacityBehaviour { BlockNew, ReleaseOldest, DetonateOldest, KillOldest }
 
 	[Desc("This actor can mind control other actors.")]
 	public class MindControllerInfo : PausableConditionalTraitInfo, Requires<ArmamentInfo>, Requires<HealthInfo>
 	{
+		[FieldLoader.Require]
+		[Desc("Named type of mind control. Determines which progress bar is shown.")]
+		public readonly string ControlType = null;
+
 		[Desc("Name of the armaments that grant this condition.")]
 		public readonly HashSet<string> ArmamentNames = new HashSet<string>() { "primary" };
 
@@ -69,6 +74,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Ticks attacking taken to mind control something.")]
 		public readonly int TicksToControl = 0;
 
+		[Desc("Ticks attacking taken to mind control something.")]
+		public readonly Dictionary<string, int> TargetTypeTicksToControl = new Dictionary<string, int>();
+
 		[Desc("Ticks taken for mind control to wear off after controller loses control.")]
 		public readonly int TicksToRevoke = 0;
 
@@ -87,8 +95,14 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Cursor to use for targeting slaves to deploy.")]
 		public readonly string DeploySlaveCursor = "pinkdeploy";
 
-		[Desc("What happens when a slave is deployed while the master is selected.")]
+		[Desc("What happens when a slave is deployed while the master is selected (unrelated to when the master is deployed).")]
 		public readonly SlaveDeployEffect SlaveDeployEffect = SlaveDeployEffect.None;
+
+		[Desc("Weapon to detonate if SlaveDeployEffect is Detonate.")]
+		[WeaponReference]
+		public readonly string SlaveDetonateWeapon = null;
+
+		public WeaponInfo SlaveDetonateWeaponInfo { get; private set; }
 
 		[Desc("Types of damage that this trait causes to slave if killed on deploying or when capacity exceeded. Leave empty for no damage types.")]
 		public readonly BitSet<DamageType> SlaveKillDamageTypes = default(BitSet<DamageType>);
@@ -97,6 +111,22 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly int ExperienceFromControl = 0;
 
 		public override object Create(ActorInitializer init) { return new MindController(init.Self, this); }
+
+		public override void RulesetLoaded(Ruleset rules, ActorInfo ai)
+		{
+			base.RulesetLoaded(rules, ai);
+
+			if (SlaveDetonateWeapon != null)
+			{
+				WeaponInfo weaponInfo;
+
+				var slaveDetonateWeaponToLower = (SlaveDetonateWeapon ?? string.Empty).ToLowerInvariant();
+				if (!rules.Weapons.TryGetValue(slaveDetonateWeaponToLower, out weaponInfo))
+					throw new YamlException($"Weapons Ruleset does not contain an entry '{slaveDetonateWeaponToLower}'");
+
+				SlaveDetonateWeaponInfo = weaponInfo;
+			}
+		}
 	}
 
 	public class MindController : PausableConditionalTrait<MindControllerInfo>, INotifyAttack, INotifyKilled, INotifyActorDisposing, INotifyCreated, IIssueOrder, IResolveOrder, ITick
@@ -115,6 +145,8 @@ namespace OpenRA.Mods.CA.Traits
 		// Only tracked when TicksToControl greater than zero
 		Target lastTarget = Target.Invalid;
 		Target currentTarget = Target.Invalid;
+		int lastTargetTicksToControl;
+		int currentTargetTicksToControl;
 		int controlTicks;
 		int progressToken = Actor.InvalidConditionToken;
 
@@ -169,21 +201,13 @@ namespace OpenRA.Mods.CA.Traits
 			if (refreshCapacity)
 				UpdateCapacity(self);
 
-			if (Info.TicksToControl == 0)
+			if (currentTargetTicksToControl == 0)
 				return;
 
 			if (currentTarget.Type != TargetType.Actor)
-			{
-				if (Info.UndeployOnInterrupt && deployTrait != null && deployTrait.DeployState == DeployState.Deployed)
-				{
-					ResetProgress(self);
-					deployTrait.Undeploy();
-				}
-
 				return;
-			}
 
-			if (controlTicks < Info.TicksToControl)
+			if (controlTicks < currentTargetTicksToControl)
 				controlTicks++;
 
 			GrantProgressCondition(self);
@@ -196,9 +220,9 @@ namespace OpenRA.Mods.CA.Traits
 					Game.Sound.Play(SoundType.World, Info.InitSounds.Random(self.World.SharedRandom), self.CenterPosition);
 			}
 
-			UpdateProgressBar(self, currentTarget);
+			UpdateProgressBar(self, currentTarget, currentTargetTicksToControl);
 
-			if (controlTicks == Info.TicksToControl)
+			if (controlTicks == currentTargetTicksToControl)
 				AddSlave(self);
 		}
 
@@ -265,6 +289,10 @@ namespace OpenRA.Mods.CA.Traits
 							order.Target.Actor.Kill(order.Target.Actor, Info.SlaveKillDamageTypes);
 					});
 				}
+				else if (Info.SlaveDeployEffect == SlaveDeployEffect.Detonate)
+				{
+					self.World.AddFrameEndTask(w => DetonateSlave(self, order.Target.Actor));
+				}
 
 				if (Info.ReleaseSounds.Length > 0)
 				{
@@ -277,27 +305,33 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 			}
 
-			// For all other order, if target has changed, reset progress
+			// For all other orders, if target has changed, reset progress
 			if (order.Target.Actor != currentTarget.Actor)
 			{
+				if (Info.UndeployOnInterrupt && deployTrait != null && deployTrait.DeployState == DeployState.Deployed && currentTarget.Actor != null && order.OrderString != "GrantConditionOnDeploy")
+					deployTrait.Undeploy();
+
 				ResetProgress(self);
 				lastTarget = currentTarget;
+				lastTargetTicksToControl = currentTargetTicksToControl;
 				currentTarget = Target.Invalid;
+				currentTargetTicksToControl = 0;
 			}
 		}
 
 		void ResetProgress(Actor self)
 		{
-			if (Info.TicksToControl == 0)
-				return;
-
 			controlTicks = 0;
 			RevokeProgressCondition(self);
-			UpdateProgressBar(self, lastTarget);
-			UpdateProgressBar(self, currentTarget);
+
+			if (lastTargetTicksToControl > 0)
+				UpdateProgressBar(self, lastTarget, lastTargetTicksToControl);
+
+			if (currentTargetTicksToControl > 0)
+				UpdateProgressBar(self, currentTarget, currentTargetTicksToControl);
 		}
 
-		void UpdateProgressBar(Actor self, Target target)
+		void UpdateProgressBar(Actor self, Target target, int ticksToControl)
 		{
 			if (target.Type != TargetType.Actor)
 				return;
@@ -305,7 +339,7 @@ namespace OpenRA.Mods.CA.Traits
 			var targetWatchers = target.Actor.TraitsImplementing<IMindControlProgressWatcher>().ToArray();
 
 			foreach (var w in targetWatchers)
-				w.Update(target.Actor, self, target.Actor, controlTicks, Info.TicksToControl);
+				w.Update(target.Actor, self, target.Actor, controlTicks, ticksToControl, Info.ControlType);
 		}
 
 		void INotifyAttack.PreparingAttack(Actor self, in Target target, Armament a, Barrel barrel) { }
@@ -324,14 +358,30 @@ namespace OpenRA.Mods.CA.Traits
 			lastTarget = currentTarget;
 			currentTarget = target;
 
-			if (TargetChanged() && Info.TicksToControl > 0)
+			if (TargetChanged() && (Info.TicksToControl > 0 || Info.TargetTypeTicksToControl.Any()))
 			{
+				lastTargetTicksToControl = currentTargetTicksToControl;
+				currentTargetTicksToControl = Info.TicksToControl;
+
+				if (Info.TargetTypeTicksToControl.Any())
+				{
+					var targetTypes = currentTarget.Actor.GetEnabledTargetTypes();
+					var matchingTargetTypeTicks = Info.TargetTypeTicksToControl.Where(t => targetTypes.Contains(t.Key));
+
+					if (matchingTargetTypeTicks.Any())
+					{
+						var maxTicksToControl = matchingTargetTypeTicks.Max(t => t.Value);
+						currentTargetTicksToControl = Math.Max(maxTicksToControl, currentTargetTicksToControl);
+					}
+				}
+
 				ResetProgress(self);
 
 				if (Info.ReleaseOnNewTarget)
 					ReleaseSlaves(self, Info.TicksToRevoke);
 
-				return;
+				if (currentTargetTicksToControl > 0)
+					return;
 			}
 
 			AddSlave(self);
@@ -342,7 +392,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled || IsTraitPaused)
 				return;
 
-			if (controlTicks < Info.TicksToControl)
+			if (controlTicks < currentTargetTicksToControl)
 				return;
 
 			if (self.Owner.RelationshipWith(currentTarget.Actor.Owner) == PlayerRelationship.Ally)
@@ -380,6 +430,10 @@ namespace OpenRA.Mods.CA.Traits
 						if (!oldestSlave.IsDead)
 							oldestSlave.Kill(oldestSlave, Info.SlaveKillDamageTypes);
 					});
+				}
+				else if (Info.ControlAtCapacityBehaviour == ControlAtCapacityBehaviour.DetonateOldest)
+				{
+					self.World.AddFrameEndTask(w => DetonateSlave(self, oldestSlave));
 				}
 			}
 
@@ -552,6 +606,29 @@ namespace OpenRA.Mods.CA.Traits
 				return false;
 
 			return slaves.Contains(a);
+		}
+
+		void DetonateSlave(Actor self, Actor slave)
+		{
+			if (slave.IsDead && !slave.IsInWorld)
+				return;
+
+			if (Info.SlaveDetonateWeapon == null)
+				return;
+
+			var weapon = Info.SlaveDetonateWeaponInfo;
+			var pos = Target.FromPos(slave.CenterPosition);
+
+			var args = new WarheadArgs
+			{
+				Weapon = weapon,
+				DamageModifiers = self.TraitsImplementing<IFirepowerModifier>().Select(a => a.GetFirepowerModifier()).ToArray(),
+				Source = self.CenterPosition,
+				SourceActor = self,
+				WeaponTarget = pos
+			};
+
+			weapon.Impact(pos, args);
 		}
 	}
 }

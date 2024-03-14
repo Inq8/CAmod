@@ -501,7 +501,7 @@ TSLA:
 		MaxCharges: 3
 		ReloadDelay: 120
 	Power:
-		Amount: -100
+		Amount: -75
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@TeslaCoilOrSovietTechCenter:
 		Prerequisite: tslaorstek
@@ -529,6 +529,7 @@ AGUN:
 	Inherits@IDISABLE: ^DisableOnLowPowerOrPowerDown
 	Inherits@AUTOTARGET: ^AutoTargetAirICBM
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	Inherits@AntiAirDefense: ^AntiAirDefense
 	Buildable:
 		Queue: DefenseSQ, DefenseMQ
 		BuildPaletteOrder: 90
@@ -921,6 +922,7 @@ SAM:
 	Inherits@AUTOTARGET: ^AutoTargetAirICBM
 	Inherits@SHAPE: ^2x1Shape
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	Inherits@AntiAirDefense: ^AntiAirDefense
 	Selectable:
 		Bounds: 2048, 1024
 	HitShape:
@@ -3221,6 +3223,7 @@ NSAM:
 	Inherits@AUTOTARGET: ^AutoTargetAirICBM
 	Inherits@SHAPE: ^2x1Shape
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	Inherits@AntiAirDefense: ^AntiAirDefense
 	Selectable:
 		Bounds: 2048, 1024
 	HitShape:
@@ -3344,7 +3347,7 @@ ATWR:
 		Weaknesses: • Cannot attack Aircraft
 		Attributes: • Requires power to operate\n• Can detect cloaked units
 	Valued:
-		Cost: 1000
+		Cost: 1100
 	Tooltip:
 		Name: Advanced Guard Tower
 	Health:
@@ -3374,7 +3377,7 @@ ATWR:
 	ClassicFacingBodyOrientation:
 		QuantizedFacings: 8
 	Power:
-		Amount: -50
+		Amount: -70
 	DetectCloaked:
 		RequiresCondition: !(disabled || empdisable || being-warped)
 
@@ -4340,7 +4343,7 @@ PRIS:
 		Weapon: PrisLaserSupport
 		LocalOffset: 0,0,1024
 	Power:
-		Amount: -75
+		Amount: -80
 	ProvidesPrerequisite@buildingname:
 	WithRangeCircle@SUPPORT:
 		Type: PrismSupport

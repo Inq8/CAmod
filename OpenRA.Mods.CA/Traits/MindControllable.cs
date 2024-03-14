@@ -24,6 +24,9 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Map player to transfer this actor to if the owner lost the game.")]
 		public readonly string FallbackOwner = "Creeps";
 
+		[Desc("If true, cargo will be killed on being mind controlled.")]
+		public readonly bool KillCargo = false;
+
 		[ActorReference(dictionaryReference: LintDictionaryReference.Keys)]
 		[Desc("Condition to grant when under mindcontrol.",
 			"A dictionary of [actor id]: [condition].")]
@@ -67,12 +70,13 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			self.CancelActivity();
 
+			if (info.KillCargo)
+				KillCargo(self, master);
+
 			if (Master == null)
 				creatorOwner = self.Owner;
 
 			controlChanging = true;
-
-			var oldOwner = self.Owner;
 			self.ChangeOwner(master.Owner);
 
 			UnlinkMaster(self, Master);
@@ -97,6 +101,9 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			if (master == null)
 				return;
+
+			if (info.KillCargo)
+				KillCargo(self, master);
 
 			self.World.AddFrameEndTask(_ =>
 			{
@@ -150,6 +157,19 @@ namespace OpenRA.Mods.CA.Traits
 				Game.Sound.Play(SoundType.World, info.RevokeControlSounds.Random(self.World.SharedRandom), self.CenterPosition);
 
 			self.World.AddFrameEndTask(_ => controlChanging = false);
+		}
+
+		void KillCargo(Actor self, Actor master)
+		{
+			var cargo = self.TraitOrDefault<Cargo>();
+			if (cargo != null && master != null)
+			{
+				while (!cargo.IsEmpty())
+				{
+					var a = cargo.Unload(self);
+					a.Kill(master);
+				}
+			}
 		}
 
 		void ITick.Tick(Actor self)

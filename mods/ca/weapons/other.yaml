@@ -2027,12 +2027,7 @@ MicrowaveZap:
 		Range: 0c511
 		Duration: 100
 		Condition: empdisable
-		ValidTargets: Vehicle
-	Warhead@empdef: GrantExternalConditionCA
-		Range: 0c511
-		Duration: 100
-		Condition: empdisable
-		ValidTargets: Defense
+		ValidTargets: Vehicle, Defense
 	Warhead@3Eff: CreateEffect
 		Image: microwavehit
 		Explosions: idle
@@ -2043,19 +2038,20 @@ MicrowaveZap.UPG:
 	Inherits: MicrowaveZap
 	Warhead@3: ChangeOwnerToNeutral
 		ValidTargets: DriverKill
-		InvalidTargets: Infantry, Ship, Structure, Wall, Husk, Air
 		CargoEffect: Kill
 		Range: 0c511
 	Warhead@emp: GrantExternalConditionCA
 		Range: 1c0
-		ValidTargets: Vehicle
-	Warhead@empdef: GrantExternalConditionCA
-		Duration: 200
+	Warhead@emp2: GrantExternalConditionCA
+		Range: 0c511
+		Duration: 125
+		Condition: empdisable
+		ValidTargets: Vehicle, Defense
 	Warhead@highlight: GrantExternalConditionCA
 		Range: 0c511
 		Duration: 2
 		Condition: highlight
-		ValidTargets: Vehicle
+		ValidTargets: DriverKill
 
 HornetLauncher:
 	ReloadDelay: 15
