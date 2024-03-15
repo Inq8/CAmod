@@ -4220,6 +4220,13 @@ SREP:
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
 	WithResupplyAnimation:
 		RequiresCondition: !build-incomplete
+	ProximityExternalCondition@UNITSELL:
+		Condition: unit-sellable
+		Range: 1c0
+	ExternalCondition@ONPAD:
+		Condition: unit-onpad
+	Sellable:
+		RequiresCondition: !unit-onpad && !build-incomplete && !c4 && !being-captured && !being-warped && !hacked
 	Power:
 		Amount: -30
 	ProvidesPrerequisite@buildingname:
@@ -4721,6 +4728,7 @@ SCOL.Temp:
 	-PowerMultiplier@TEMPORAL:
 	-PowerMultiplier@POWERDOWN:
 	-WithDecoration@POWERDOWN:
+	-RevealsShroudMultiplier@POWERDOWN:
 	-ToggleConditionOnOrder:
 	-Armament:
 	Armament:

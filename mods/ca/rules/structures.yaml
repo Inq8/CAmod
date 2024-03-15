@@ -2191,6 +2191,13 @@ FIX:
 		FinishRepairingTextNotification: Unit repaired.
 		PlayerExperience: 5
 		RequiresCondition: !forceshield && !invulnerability && !being-warped
+	ProximityExternalCondition@UNITSELL:
+		Condition: unit-sellable
+		Range: 1c0
+	ExternalCondition@ONPAD:
+		Condition: unit-onpad
+	Sellable:
+		RequiresCondition: !unit-onpad && !build-incomplete && !c4 && !being-captured && !being-warped && !hacked
 	WithBuildingBib:
 		HasMinibib: true
 	WithResupplyAnimation:
@@ -3793,6 +3800,13 @@ REP:
 		RequiresCondition: !build-incomplete
 	Power:
 		Amount: -30
+	ProximityExternalCondition@UNITSELL:
+		Condition: unit-sellable
+		Range: 1c0
+	ExternalCondition@ONPAD:
+		Condition: unit-onpad
+	Sellable:
+		RequiresCondition: !unit-onpad && !build-incomplete && !c4 && !being-captured && !being-warped && !hacked
 	ProvidesPrerequisite@buildingname:
 	ProvidesPrerequisite@repair:
 		Prerequisite: repair

@@ -2935,6 +2935,8 @@ GDRN:
 	-GrantConditionOnDamageState@DriverKillLessThan50:
 	-GrantConditionOnDamageState@DriverKillLessThan75:
 	-Targetable@AICAPTURE:
+	Sellable:
+		RequiresCondition: unit-sellable && !c4 && !being-warped
 
 GDRN.TOW:
 	Inherits: GDRN
@@ -3129,6 +3131,9 @@ FTNK.Decoy:
 	-GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 	-UpdatesPlayerStatistics:
 	-RevealOnDeath:
+	-Sellable:
+	-ProximityExternalCondition@ONPAD:
+	-ExternalCondition@UNITSELL:
 
 HFTK.Decoy:
 	Inherits: HFTK
@@ -3180,6 +3185,9 @@ HFTK.Decoy:
 	-GrantConditionOnHealingReceived@REPAIRCOOLDOWN:
 	-UpdatesPlayerStatistics:
 	-RevealOnDeath:
+	-Sellable:
+	-ProximityExternalCondition@ONPAD:
+	-ExternalCondition@UNITSELL:
 
 APC2:
 	Inherits: ^TankTD
@@ -3757,6 +3765,8 @@ MTNK.Drone:
 	-ReplacedInQueue:
 	-Upgradeable@BDRONE:
 	-WithDecoration@UpgradeOverlay:
+	Sellable:
+		RequiresCondition: unit-sellable && !c4 && !being-warped
 
 MDRN:
 	Inherits: ^Vehicle
@@ -3859,6 +3869,8 @@ MDRN:
 	Explodes:
 		Weapon: VisualExplodeSmall
 		EmptyWeapon: VisualExplodeSmall
+	Sellable:
+		RequiresCondition: unit-sellable && !c4 && !being-warped
 
 MDRN.Attached:
 	Inherits: MDRN
@@ -4143,6 +4155,8 @@ HTNK.Drone:
 	-Upgradeable@HOVER:
 	-Upgradeable@DRONE:
 	-WithDecoration@UpgradeOverlay:
+	Sellable:
+		RequiresCondition: unit-sellable && !c4 && !being-warped
 
 MSAM:
 	Inherits: ^TankTD
@@ -5748,6 +5762,7 @@ IFV.AI:
 	-Capturable:
 	-Capturable@DRIVER_DEAD:
 	-Targetable@DRIVERKILL:
+	-GrantConditionOnDamageState@DriverKillLessThan75:
 	AutoTarget:
 		AttackAnythingCondition: stance-attackanything
 		ScanRadius: 6
@@ -7257,6 +7272,8 @@ MEMP:
 		RequiresCondition: (!radarenabled || empdisable) && !triggered
 	WithDecoration@DRONEDISABLE:
 		RequiresCondition: (!radarenabled || empdisable) && !triggered
+	Sellable:
+		RequiresCondition: unit-sellable && !c4 && !being-warped
 
 CDRN:
 	Inherits: ^VehicleTD
@@ -7352,6 +7369,8 @@ CDRN:
 	-GrantConditionOnDamageState@DriverKillLessThan50:
 	-GrantConditionOnDamageState@DriverKillLessThan75:
 	-Targetable@AICAPTURE:
+	Sellable:
+		RequiresCondition: unit-sellable && !c4 && !being-warped
 
 CHPR:
 	Inherits: ^Tank
