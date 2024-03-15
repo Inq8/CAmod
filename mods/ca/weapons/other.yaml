@@ -769,12 +769,17 @@ PlaceC4Seal:
 
 PrepareC4Seal:
 	Inherits: PlaceC4Seal
-	ReloadDelay: 50
+	ReloadDelay: 25
 	-Report:
 	-Warhead@AttachDelayedWeapon:
 	Warhead@Dummy: Dummy
 	Warhead@highlight: GrantExternalConditionCA
 		Condition: redhighlight
+	Warhead@ProgressBar: GrantExternalConditionCA
+		Range: 0c256
+		Condition: c4seal-preparing
+		Duration: 25
+		ValidTargets: Structure
 
 C4:
 	Projectile: InstantHit

@@ -3912,12 +3912,17 @@ SEAL:
 		AmmoPool: prepared-c4
 		Delay: 100
 		RequiresCondition: preparing-c4
-		ShowSelectionBar: true
-		SelectionBarColor: ff0000
+		ShowSelectionBar: false
+	ReloadAmmoPoolCA@CancelC4:
+		AmmoPool: prepared-c4
+		Delay: 1
+		Count: -1
+		ShowSelectionBar: false
+		RequiresCondition: !preparing-c4 && prepared
 	GrantConditionOnAttack@PreparingC4:
 		Condition: preparing-c4
 		ArmamentNames: tertiary
-		RevokeDelay: 51
+		RevokeDelay: 26
 	AttackFrontal:
 		Voice: Attack
 		Armaments: primary, secondary, tertiary

@@ -1568,6 +1568,13 @@
 		Delay: 9
 		Interval: 9
 		RequiresCondition: c4seal
+	ExternalCondition@SealC4Progress:
+		Condition: c4seal-preparing
+	GrantChargingCondition@SealC4Progress:
+		Condition: c4seal-progress
+		ShowSelectionBarWhenEmpty: false
+		ChargingColor: ff0000
+		RequiresCondition: c4seal-preparing
 
 ^TNTPlantable:
 	DelayedWeaponAttachable@TNT:
