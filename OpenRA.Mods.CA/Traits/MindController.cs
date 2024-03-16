@@ -93,7 +93,7 @@ namespace OpenRA.Mods.CA.Traits
 		public readonly bool ReleaseOnNewTarget = false;
 
 		[Desc("Cursor to use for targeting slaves to deploy.")]
-		public readonly string DeploySlaveCursor = "pinkdeploy";
+		public readonly string DeploySlaveCursor = "mc-deploy";
 
 		[Desc("What happens when a slave is deployed while the master is selected (unrelated to when the master is deployed).")]
 		public readonly SlaveDeployEffect SlaveDeployEffect = SlaveDeployEffect.None;
