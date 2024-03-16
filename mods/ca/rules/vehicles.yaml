@@ -1518,6 +1518,8 @@ SAPC:
 	WithCargoSounds:
 		EnterSounds: genter1a.aud
 		ExitSounds: gexit1a.aud
+	CargoBlocked:
+		RequiresCondition: mindcontrolled
 	WithDecoration@COMMANDOSKULL:
 		RequiresCondition: loaded-cmdo
 	ProducibleWithLevel:
@@ -1957,6 +1959,8 @@ APC:
 	WithCargoSounds:
 		EnterSounds: genter1a.aud
 		ExitSounds: gexit1a.aud
+	CargoBlocked:
+		RequiresCondition: mindcontrolled
 	WithDecoration@COMMANDOSKULL:
 		RequiresCondition: loaded-cmdo
 	ProducibleWithLevel:
@@ -3282,6 +3286,8 @@ APC2:
 	WithCargoSounds:
 		EnterSounds: genter1a.aud
 		ExitSounds: gexit1a.aud
+	CargoBlocked:
+		RequiresCondition: mindcontrolled
 	WithDecoration@COMMANDOSKULL:
 		RequiresCondition: loaded-cmdo
 	ProducibleWithLevel:
@@ -3507,6 +3513,8 @@ VULC:
 	WithCargoSounds:
 		EnterSounds: genter1a.aud
 		ExitSounds: gexit1a.aud
+	CargoBlocked:
+		RequiresCondition: mindcontrolled
 	WithDecoration@COMMANDOSKULL:
 		RequiresCondition: loaded-cmdo
 	ProducibleWithLevel:
@@ -4919,6 +4927,8 @@ BTR:
 	WithCargoSounds:
 		EnterSounds: genter1a.aud
 		ExitSounds: gexit1a.aud
+	CargoBlocked:
+		RequiresCondition: mindcontrolled
 	WithDecoration@COMMANDOSKULL:
 		RequiresCondition: loaded-cmdo
 	Targetable@MindControlResistant:
@@ -5523,9 +5533,6 @@ IFV:
 	WithSpriteTurret@mort:
 		Sequence: turret17
 		RequiresCondition: mortchemturr || mortcryoturr || mortsonicturr
-	WithCargoSounds:
-		EnterSounds: vifvtran.aud
-		ExitSounds: vifvtran.aud
 	Cargo:
 		Types: Infantry
 		MaxWeight: 1
@@ -5594,6 +5601,11 @@ IFV:
 			c8: nochange
 			c9: nochange
 			c10: nochange
+	WithCargoSounds:
+		EnterSounds: vifvtran.aud
+		ExitSounds: vifvtran.aud
+	CargoBlocked:
+		RequiresCondition: mindcontrolled
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -5635,8 +5647,6 @@ IFV:
 		RequiresCondition: !being-warped && !full
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !full
-	Targetable@MINDCONTROL:
-		RequiresCondition: !full && !mindcontrolled && !hacked && !restoring
 	Targetable@MindControlResistant:
 		TargetTypes: MindControlResistant
 		RequiresCondition: full
@@ -7144,6 +7154,8 @@ BATF:
 	WithCargoSounds:
 		EnterSounds: genter1a.aud
 		ExitSounds: gexit1a.aud
+	CargoBlocked:
+		RequiresCondition: mindcontrolled
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:

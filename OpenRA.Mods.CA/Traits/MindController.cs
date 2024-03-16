@@ -580,7 +580,7 @@ namespace OpenRA.Mods.CA.Traits
 			{
 				yield return new ReleaseSlaveOrderTargeter(
 					"ReleaseSlave",
-					11,
+					101,
 					Info.DeploySlaveCursor,
 					(target, modifiers) => !modifiers.HasModifier(TargetModifiers.ForceMove) && IsDeployableSlave(target));
 

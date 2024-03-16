@@ -1571,10 +1571,13 @@
 	ExternalCondition@SealC4Progress:
 		Condition: c4seal-preparing
 	GrantChargingCondition@SealC4Progress:
-		Condition: c4seal-progress
+		Condition: c4seal-prepared
 		ShowSelectionBarWhenEmpty: false
 		ChargingColor: ff0000
 		RequiresCondition: c4seal-preparing
+	Targetable@SealC4Progress: # Only required for yaml warning, as c4seal-prepared isn't used for anything (GrantChargingCondition just used for the progress bar)
+		TargetTypes: SealC4Prepared
+		RequiresCondition: c4seal-prepared
 
 ^TNTPlantable:
 	DelayedWeaponAttachable@TNT:
@@ -2180,6 +2183,7 @@
 	Passenger:
 		CargoType: Infantry
 		CargoCondition: disable-experience
+	PassengerBlocked:
 	GainsExperienceMultiplier:
 		Modifier: 0
 		RequiresCondition: disable-experience
