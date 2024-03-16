@@ -852,12 +852,14 @@ TOW:
 
 EMPRockets:
 	Inherits: ^AntiGroundMissile
-	Range: 6c0
+	Range: 7c0
 	Report: pitbull-fire1.aud, pitbull-fire2.aud
-	ReloadDelay: 60
+	ReloadDelay: 150
+	Burst: 4
+	BurstDelays: 8
 	-Projectile:
 	Projectile: Bullet
-		Inaccuracy: 192
+		Inaccuracy: 2c0
 		Image: dragon
 		Speed: 240
 		LaunchAngle: 70
@@ -869,14 +871,20 @@ EMPRockets:
 		ContrailStartColorAlpha: 170
 		ContrailStartWidth: 0c48
 	Warhead@1Dam: SpreadDamage
-		Damage: 5000
+		Spread: 341
+		Damage: 2000
 		Versus:
 			Wood: 40
 			Concrete: 30
-			Light: 60
+			Light: 70
 	Warhead@Emp: GrantExternalConditionCA
-		Range: 0c768
+		Range: 0c341
 		Duration: 40
+		Condition: empdisable
+		ValidTargets: Ground, Structure, Vehicle
+	Warhead@Emp2: GrantExternalConditionCA
+		Range: 0c682
+		Duration: 20
 		Condition: empdisable
 		ValidTargets: Ground, Structure, Vehicle
 	Warhead@4Eff: CreateEffect
