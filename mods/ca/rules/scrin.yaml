@@ -754,8 +754,7 @@ MAST:
 		Name: secondary
 		Weapon: EnslaveVehicle
 		LocalOffset: 150,0,400
-		PauseOnCondition: deployed
-		RequiresCondition: vs-vehicle-ammo
+		PauseOnCondition: deployed || !vs-vehicle-ammo
 	Armament@BATF:
 		Name: batf
 		Weapon: PsychicBeamBATF
@@ -884,6 +883,11 @@ MAST:
 		Offset: 0,0,400
 	Passenger:
 		CustomPipType: red
+	AutoTargetPriority@VEHCOOLDOWN:
+		ValidTargets: Infantry
+		InvalidTargets: NoAutoTarget
+		Priority: 10
+		RequiresCondition: !vs-vehicle-ammo
 	AmmoPool:
 		Ammo: 1
 		AmmoCondition: ammo

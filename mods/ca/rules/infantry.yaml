@@ -3676,8 +3676,7 @@ YURI:
 		Name: secondary
 		Weapon: EnslaveVehicle
 		LocalOffset: 150,0,400
-		PauseOnCondition: deployed
-		RequiresCondition: vs-vehicle-ammo
+		PauseOnCondition: deployed || !vs-vehicle-ammo
 	Armament@AIDummyAiming: ## Hack: Make AI deploy to attack structures
 		PauseOnCondition: being-warped
 		Name: aidummy
@@ -3793,6 +3792,11 @@ YURI:
 	GrantConditionOnBotOwner@IAMBOT:
 		Condition: botowner
 		Bots: brutal, vhard, hard, normal, easy, naval
+	AutoTargetPriority@VEHCOOLDOWN:
+		ValidTargets: Infantry
+		InvalidTargets: NoAutoTarget
+		Priority: 10
+		RequiresCondition: !vs-vehicle-ammo
 	AmmoPool:
 		Ammo: 1
 		AmmoCondition: ammo
@@ -4383,7 +4387,6 @@ CMSR:
 		HP: 12000
 	Mobile:
 		Voice: Move
-		Speed: 69
 	AttackMove:
 		Voice: Move
 	Passenger:
@@ -4436,3 +4439,5 @@ CMSR:
 		Duration: 50
 		ValidRelationships: Ally
 		AlwaysShowMaxRange: true
+	SpeedMultiplier@Inspiration:
+		Modifier: 133
