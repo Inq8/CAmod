@@ -593,6 +593,7 @@ DOME:
 	Inherits@VEILOFWARPOWER: ^VeilOfWarPower
 	Inherits@CLUSTERMINESPOWER: ^ClusterMinesPower
 	Inherits@TECHLOCKABLE: ^TechLockable
+	Inherits@ProductionOptimizer1: ^ProductionOptimizer1
 	Selectable:
 		Bounds: 2048, 2048
 	HitShape:
@@ -606,7 +607,7 @@ DOME:
 	TooltipExtras:
 		Attributes: • Requires power to operate\n• Detects nearby enemy vehicles, aircraft and structures in fog of war
 	Valued:
-		Cost: 1600
+		Cost: 1800
 	Tooltip:
 		Name: Radar Dome
 	Building:
@@ -990,6 +991,7 @@ ATEK:
 	Inherits@FORCESHIELDPOWER: ^ForceShieldPower
 	Inherits@TEMPINCPOWER: ^TemporalIncursionPower
 	Inherits@TECHLOCKABLE: ^TechLockable
+	Inherits@ProductionOptimizer2: ^ProductionOptimizer2
 	Selectable:
 		Bounds: 2048, 2048
 	Buildable:
@@ -1863,6 +1865,7 @@ STEK:
 	Inherits@UPG: ^ProducesUpgrades
 	Inherits@FORCESHIELDPOWER: ^ForceShieldPower
 	Inherits@TECHLOCKABLE: ^TechLockable
+	Inherits@ProductionOptimizer2: ^ProductionOptimizer2
 	Selectable:
 		Bounds: 3072, 2048
 	HitShape:
@@ -2980,13 +2983,13 @@ AIRS:
 		Prerequisites: global.multiqueuefull
 	ProductionCostMultiplier@MQS1:
 		Multiplier: 160
-		Prerequisites: global.multiqueuescaled, vehicles.any, !optprod1.upgrade, !optprod2.upgrade
+		Prerequisites: global.multiqueuescaled, vehicles.any, !optimized.production1, !optimized.production2
 	ProductionCostMultiplier@MQS2:
 		Multiplier: 125
-		Prerequisites: global.multiqueuescaled, vehicles.any, optprod1.upgrade, !optprod2.upgrade
+		Prerequisites: global.multiqueuescaled, vehicles.any, optimized.production1, !optimized.production2
 	ProductionCostMultiplier@MQS3:
 		Multiplier: 90
-		Prerequisites: global.multiqueuescaled, vehicles.any, optprod1.upgrade, optprod2.upgrade
+		Prerequisites: global.multiqueuescaled, vehicles.any, optimized.production1, optimized.production2
 	ProductionCostMultiplier@MQS4:
 		Multiplier: 90
 		Prerequisites: global.multiqueuescaled, !vehicles.any
@@ -3528,6 +3531,7 @@ HQ:
 	Inherits@CASHHACKPOWER: ^CashHackPower
 	Inherits@HACKERCELLPOWER: ^HackerCellPower
 	Inherits@TECHLOCKABLE: ^TechLockable
+	Inherits@ProductionOptimizer1: ^ProductionOptimizer1
 	Selectable:
 		Bounds: 2048, 2304
 	HitShape:
@@ -3552,7 +3556,7 @@ HQ:
 	TooltipExtras:
 		Attributes: • Requires power to operate\n• Detects nearby enemy vehicles, aircraft and structures in fog of war
 	Valued:
-		Cost: 1600
+		Cost: 1800
 	Tooltip:
 		Name: Comm. Center
 		RequiresCondition: !arc-built
@@ -4140,6 +4144,7 @@ GTEK:
 	Inherits@FORCESHIELDPOWER: ^ForceShieldPower
 	Inherits@NANITEREPAIRPOWER: ^NaniteRepairPower
 	Inherits@TECHLOCKABLE: ^TechLockable
+	Inherits@ProductionOptimizer2: ^ProductionOptimizer2
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 150
@@ -4215,6 +4220,7 @@ TMPL:
 	Inherits@CLUSTERMISSILEPOWER: ^ClusterMissilePower
 	Inherits@FORCESHIELDPOWER: ^ForceShieldPower
 	Inherits@TECHLOCKABLE: ^TechLockable
+	Inherits@ProductionOptimizer2: ^ProductionOptimizer2
 	HitShape:
 		UseTargetableCellsOffsets: false
 		TargetableOffsets: 0,0,0, 0,-896,0, 0,896,0, 840,0,0, -706,0,0, -706,-768,0, -706,640,0

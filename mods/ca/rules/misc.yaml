@@ -1139,6 +1139,18 @@ SHAB:
 	KillsSelf:
 		RequiresCondition: !active
 
+optimized.production1:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesPrerequisite:
+	PopControlled:
+		Limit: 1
+
+optimized.production2:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesPrerequisite:
+	PopControlled:
+		Limit: 1
+
 # For MQ, ensures production tabs are updated properly
 QueueUpdaterDummy:
 	Inherits@DUMMY: ^InvisibleDummy

@@ -4114,6 +4114,24 @@
 		Condition: global-multiqueue
 		Prerequisites: global.multiqueuescaled
 
+^ProductionOptimizer1:
+	ProvidesPrerequisite@ProductionOptimizer1:
+		Prerequisite: optimized.production1
+	FreeActor@ProductionOptimizer1:
+		Actor: optimized.production1
+	SpawnActorOnCapture@ProductionOptimizer1:
+		Actor: optimized.production1
+		Delay: 1
+
+^ProductionOptimizer2:
+	ProvidesPrerequisite@ProductionOptimizer2:
+		Prerequisite: optimized.production2
+	FreeActor@ProductionOptimizer2:
+		Actor: optimized.production2
+	SpawnActorOnCapture@ProductionOptimizer2:
+		Actor: optimized.production2
+		Delay: 1
+
 ^ProducesBuildings:
 	Inherits@QUEUEUPDATER: ^QueueUpdater
 	Inherits@PRIMARY: ^PrimaryBuilding
@@ -4203,10 +4221,10 @@
 		Condition: produced
 	ProductionCostMultiplier@MQS1:
 		Multiplier: 300
-		Prerequisites: infantry.any, global.multiqueuescaled, !optprod1.upgrade, !optprod2.upgrade
+		Prerequisites: infantry.any, global.multiqueuescaled, !optimized.production1, !optimized.production2
 	ProductionCostMultiplier@MQS2:
 		Multiplier: 200
-		Prerequisites: infantry.any, global.multiqueuescaled, optprod1.upgrade, !optprod2.upgrade
+		Prerequisites: infantry.any, global.multiqueuescaled, optimized.production1, !optimized.production2
 
 ^ProducesCyborgs:
 	Inherits: ^ProducesInfantry
@@ -4271,10 +4289,10 @@
 		RequiresCondition: global-multiqueue
 	ProductionCostMultiplier@MQS1:
 		Multiplier: 170
-		Prerequisites: vehicles.any, global.multiqueuescaled, !optprod1.upgrade, !optprod2.upgrade
+		Prerequisites: vehicles.any, global.multiqueuescaled, !optimized.production1, !optimized.production2
 	ProductionCostMultiplier@MQS2:
 		Multiplier: 135
-		Prerequisites: vehicles.any, global.multiqueuescaled, optprod1.upgrade, !optprod2.upgrade
+		Prerequisites: vehicles.any, global.multiqueuescaled, optimized.production1, !optimized.production2
 
 ^ProducesNaval:
 	Inherits@QUEUEUPDATER: ^QueueUpdater
@@ -4355,10 +4373,10 @@
 		RequiresCondition: global-multiqueue
 	ProductionCostMultiplier@MQS1:
 		Multiplier: 160
-		Prerequisites: aircraft.any, global.multiqueuescaled, !optprod1.upgrade, !optprod2.upgrade
+		Prerequisites: aircraft.any, global.multiqueuescaled, !optimized.production1, !optimized.production2
 	ProductionCostMultiplier@MQS2:
 		Multiplier: 130
-		Prerequisites: aircraft.any, global.multiqueuescaled, optprod1.upgrade, !optprod2.upgrade
+		Prerequisites: aircraft.any, global.multiqueuescaled, optimized.production1, !optimized.production2
 
 ^ProducesHelicopters:
 	Inherits@AIR: ^ProducesAircraft
