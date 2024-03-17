@@ -1124,7 +1124,8 @@ ShardLauncher:
 	Range: 8c0
 	ValidTargets: Air, AirSmall, ICBM
 	Projectile: Missile
-		Speed: 341
+		Speed: 448
+		CloseEnough: 448
 		Palette: scrin
 		ContrailStartWidth: 0c48
 		ContrailLength: 12
@@ -1135,7 +1136,7 @@ ShardLauncher:
 		Inaccuracy: 0
 		Image: shard
 		HorizontalRateOfTurn: 140
-		RangeLimit: 9c0
+		RangeLimit: 10c512
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air
 		ValidRelationships: Enemy, Neutral
@@ -1167,7 +1168,8 @@ RavagerShards:
 	BurstDelays: 5
 	Range: 5c0
 	Projectile: Missile
-		Speed: 213
+		Speed: 265
+		CloseEnough: 265
 		ContrailLength: 9
 		ContrailStartColor: 00FF0044
 		ContrailStartColorAlpha: 68
@@ -1194,7 +1196,7 @@ ShardWalkerShards:
 	Inherits: RavagerShards
 	StartBurstReport: shard-fire1.aud
 	Projectile: Missile
-		Speed: 250
+		Speed: 265
 		ContrailStartColor: 00FF0066
 		ContrailStartColorAlpha: 102
 		MinimumLaunchAngle: 80
@@ -1215,10 +1217,8 @@ ShardWalkerShardsAA:
 	BurstDelays: 5
 	Range: 8c512
 	Projectile: Missile
-		RangeLimit: 8c512
 		ContrailStartColor: 00FF0066
 		ContrailStartColorAlpha: 102
-		Speed: 300
 	Warhead@1Dam: SpreadDamage
 		Damage: 1800
 		Range: 0, 0c64, 0c256, 3c0
