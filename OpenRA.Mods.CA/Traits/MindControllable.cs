@@ -10,11 +10,14 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Traits;
 
 namespace OpenRA.Mods.CA.Traits
 {
+	public enum CargoBehaviour { DoNothing, Eject, Kill }
+
 	[Desc("This actor can be mind controlled by other actors.")]
 	public class MindControllableInfo : PausableConditionalTraitInfo
 	{
@@ -24,8 +27,8 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Map player to transfer this actor to if the owner lost the game.")]
 		public readonly string FallbackOwner = "Creeps";
 
-		[Desc("If true, cargo will be killed on being mind controlled.")]
-		public readonly bool KillCargo = false;
+		[Desc("What happens to cargo on being mind controlled, and when control is lost.")]
+		public readonly CargoBehaviour CargoBehaviour = CargoBehaviour.DoNothing;
 
 		[ActorReference(dictionaryReference: LintDictionaryReference.Keys)]
 		[Desc("Condition to grant when under mindcontrol.",
@@ -46,7 +49,7 @@ namespace OpenRA.Mods.CA.Traits
 		public override object Create(ActorInitializer init) { return new MindControllable(init.Self, this); }
 	}
 
-	public class MindControllable : PausableConditionalTrait<MindControllableInfo>, INotifyKilled, INotifyActorDisposing, INotifyOwnerChanged, INotifyTransform, ITick
+	public class MindControllable : PausableConditionalTrait<MindControllableInfo>, INotifyKilled, INotifyActorDisposing, INotifyOwnerChanged, INotifyTransform, ITick, INotifyPassengerExited
 	{
 		readonly MindControllableInfo info;
 		Player creatorOwner;
@@ -70,8 +73,7 @@ namespace OpenRA.Mods.CA.Traits
 		{
 			self.CancelActivity();
 
-			if (info.KillCargo)
-				KillCargo(self, master);
+			HandleCargo(self, master);
 
 			if (Master == null)
 				creatorOwner = self.Owner;
@@ -102,8 +104,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (master == null)
 				return;
 
-			if (info.KillCargo)
-				KillCargo(self, master);
+			HandleCargo(self, master);
 
 			self.World.AddFrameEndTask(_ =>
 			{
@@ -159,15 +160,23 @@ namespace OpenRA.Mods.CA.Traits
 			self.World.AddFrameEndTask(_ => controlChanging = false);
 		}
 
-		void KillCargo(Actor self, Actor master)
+		void HandleCargo(Actor self, Actor master)
 		{
 			var cargo = self.TraitOrDefault<Cargo>();
 			if (cargo != null && master != null)
 			{
-				while (!cargo.IsEmpty())
+				if (info.CargoBehaviour == CargoBehaviour.Kill)
 				{
-					var a = cargo.Unload(self);
-					a.Kill(master);
+					while (!cargo.IsEmpty())
+					{
+						var a = cargo.Unload(self);
+						a.Kill(master);
+					}
+				}
+				else if (info.CargoBehaviour == CargoBehaviour.Eject && !cargo.IsEmpty())
+				{
+					self.CancelActivity();
+					self.QueueActivity(new UnloadCargo(self, WDist.FromCells(5)));
 				}
 			}
 		}
@@ -236,6 +245,14 @@ namespace OpenRA.Mods.CA.Traits
 				else
 					self.ChangeOwner(creatorOwner);
 			}
+		}
+
+		void INotifyPassengerExited.OnPassengerExited(Actor self, Actor passenger)
+		{
+			if (Master == null && passenger.Owner != creatorOwner)
+				return;
+
+			passenger.ChangeOwner(creatorOwner);
 		}
 	}
 }

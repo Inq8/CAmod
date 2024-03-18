@@ -505,7 +505,7 @@ TTrackZap:
 		Versus:
 			Wood: 50
 			Concrete: 50
-			Light: 80
+			Light: 75
 
 TTrackZap.UPG:
 	Inherits: TTrackZap
@@ -769,12 +769,17 @@ PlaceC4Seal:
 
 PrepareC4Seal:
 	Inherits: PlaceC4Seal
-	ReloadDelay: 50
+	ReloadDelay: 25
 	-Report:
 	-Warhead@AttachDelayedWeapon:
 	Warhead@Dummy: Dummy
 	Warhead@highlight: GrantExternalConditionCA
 		Condition: redhighlight
+	Warhead@ProgressBar: GrantExternalConditionCA
+		Range: 0c256
+		Condition: c4seal-preparing
+		Duration: 25
+		ValidTargets: Structure
 
 C4:
 	Projectile: InstantHit
@@ -1112,7 +1117,7 @@ XOLaser:
 			None: 65
 			Wood: 40
 			Concrete: 75
-			Light: 95
+			Light: 80
 			Heavy: 100
 
 PortaLaser:
@@ -1352,7 +1357,7 @@ PrisLaser:
 		Damage: 13000
 		DamageTypes: Prone50Percent, TriggerProne, ExplosionDeath
 		Versus:
-			None: 45
+			None: 40
 			Wood: 40
 			Concrete: 90
 			Light: 75
@@ -1396,7 +1401,7 @@ PrisBurst:
 		Spread: 256
 		Damage: 6500
 		Versus:
-			None: 75
+			None: 50
 			Wood: 40
 			Concrete: 25
 			Light: 100
@@ -1985,7 +1990,6 @@ OrcaBomb:
 
 MicrowaveZap:
 	ValidTargets: Ground, Water
-	InvalidTargets: Air
 	TargetActorCenter: true
 	ReloadDelay: 170
 	Range: 7c0
@@ -2004,9 +2008,9 @@ MicrowaveZap:
 		HitAnimPalette: tseffect-ignore-lighting-alpha75
 		ZOffset: 6144
 	Warhead@1Dam: SpreadDamage
-		InvalidTargets: Air, Cyborg
+		InvalidTargets: Infantry
 		Falloff: 100, 37, 14, 0
-		Spread: 512
+		Spread: 448
 		Damage: 30000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 		Versus:
@@ -2017,10 +2021,8 @@ MicrowaveZap:
 			Heavy: 60
 			Brick: 5
 	Warhead@2Dam: SpreadDamage
-		ValidTargets: Cyborg
-		InvalidTargets: Air
-		Spread: 341
-		Falloff: 100, 37, 14, 0
+		ValidTargets: Infantry
+		Spread: 42
 		Damage: 30000
 		DamageTypes: Prone50Percent, TriggerProne, FireDeath
 	Warhead@emp: GrantExternalConditionCA
@@ -2486,7 +2488,7 @@ SonicPulse:
 		ValidTargets: Ground, Water
 		ValidRelationships: Enemy, Neutral
 		Versus:
-			None: 60
+			None: 45
 			Wood: 45
 			Light: 90
 			Heavy: 100

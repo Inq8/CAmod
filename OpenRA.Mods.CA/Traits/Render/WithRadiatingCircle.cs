@@ -28,8 +28,6 @@ namespace OpenRA.Mods.CA.Traits.Render
 		[Desc("Range of the circle")]
 		public readonly WDist Range = WDist.Zero;
 
-		public readonly WDist Speed = WDist.Zero;
-
 		public readonly int Interval = 0;
 
 		[Desc("Start color of the radiating circle.")]

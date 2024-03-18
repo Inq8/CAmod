@@ -59,9 +59,14 @@ DisintegratorBeamAA:
 EnslaveInfantry:
 	Range: 7c0
 	ReloadDelay: 35
-	Projectile: InstantHit
+	Projectile: ArcLaserZap
+		Color: c7158537
+		Angle: 60
+		Width: 86
+		Duration: 20
+		HitAnim: empty
 	ValidTargets: MindControllable
-	InvalidTargets: Vehicle, Ship, Defense, MindControlImmune
+	InvalidTargets: Vehicle, Ship, MindControlImmune
 	Warhead@1Dam: TargetDamage
 	Warhead@2Eff: CreateEffect
 		Explosions: idle
@@ -76,34 +81,13 @@ EnslaveInfantry:
 		ValidTargets: Infantry
 		ValidRelationships: Neutral, Enemy
 
-EnslaveInfantryTargeting:
-	Inherits: EnslaveInfantry
-	-Warhead@2Eff:
-
 EnslaveVehicle:
+	Inherits: EnslaveInfantry
 	Range: 5c512
-	ReloadDelay: 35
-	Projectile: ArcLaserZap
-		Color: c7158537
-		Angle: 60
-		Width: 86
-		Duration: 20
-		HitAnim: empty
-	ValidTargets: MindControllable
-	InvalidTargets: Infantry, Defense, MindControlImmune
-	Warhead@1Dam: TargetDamage
-	Warhead@2Eff: CreateEffect
-		Explosions: idle
-		ExplosionPalette: scrin
-		Image: mindcontrol
-		ValidTargets: Ground
-		ValidRelationships: Neutral, Enemy
+	InvalidTargets: Infantry, MindControlImmune
 	Warhead@PinkHighlight: GrantExternalConditionCA
-		Range: 0c341
-		Duration: 2
-		Condition: pinkhighlight
 		ValidTargets: Vehicle
-		ValidRelationships: Neutral, Enemy
+
 
 DetonateSlave:
 	Range: 1c0
@@ -1140,7 +1124,8 @@ ShardLauncher:
 	Range: 8c0
 	ValidTargets: Air, AirSmall, ICBM
 	Projectile: Missile
-		Speed: 341
+		Speed: 448
+		CloseEnough: 448
 		Palette: scrin
 		ContrailStartWidth: 0c48
 		ContrailLength: 12
@@ -1151,7 +1136,7 @@ ShardLauncher:
 		Inaccuracy: 0
 		Image: shard
 		HorizontalRateOfTurn: 140
-		RangeLimit: 9c0
+		RangeLimit: 10c512
 	Warhead@1Dam: SpreadDamage
 		ValidTargets: Air
 		ValidRelationships: Enemy, Neutral
@@ -1183,7 +1168,8 @@ RavagerShards:
 	BurstDelays: 5
 	Range: 5c0
 	Projectile: Missile
-		Speed: 213
+		Speed: 265
+		CloseEnough: 265
 		ContrailLength: 9
 		ContrailStartColor: 00FF0044
 		ContrailStartColorAlpha: 68
@@ -1210,7 +1196,7 @@ ShardWalkerShards:
 	Inherits: RavagerShards
 	StartBurstReport: shard-fire1.aud
 	Projectile: Missile
-		Speed: 250
+		Speed: 265
 		ContrailStartColor: 00FF0066
 		ContrailStartColorAlpha: 102
 		MinimumLaunchAngle: 80
@@ -1231,10 +1217,8 @@ ShardWalkerShardsAA:
 	BurstDelays: 5
 	Range: 8c512
 	Projectile: Missile
-		RangeLimit: 8c512
 		ContrailStartColor: 00FF0066
 		ContrailStartColorAlpha: 102
-		Speed: 300
 	Warhead@1Dam: SpreadDamage
 		Damage: 1800
 		Range: 0, 0c64, 0c256, 3c0
@@ -1415,8 +1399,8 @@ IonSurge:
 	Range: 1c0
 	Projectile: InstantHit
 	Warhead@surge: GrantExternalConditionCA
-		Range: 6c0
-		Duration: 375
+		Range: 5c0
+		Duration: 300
 		Condition: ionsurge
 		ValidTargets: IonSurgable
 		ValidRelationships: Ally

@@ -1470,6 +1470,7 @@ SAPC:
 	Inherits@BERSERK: ^Berserk
 	Inherits@TRANSPORT: ^Transport
 	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
+	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 255
@@ -1508,9 +1509,19 @@ SAPC:
 		MaxWeight: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
+		PassengerConditions:
+			e7: loaded-cmdo
+			rmbo: loaded-cmdo
+			bori: loaded-cmdo
+			yuri: loaded-cmdo
+			mast: loaded-cmdo
 	WithCargoSounds:
 		EnterSounds: genter1a.aud
 		ExitSounds: gexit1a.aud
+	CargoBlocked:
+		RequiresCondition: mindcontrolled
+	WithDecoration@COMMANDOSKULL:
+		RequiresCondition: loaded-cmdo
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -1520,8 +1531,12 @@ SAPC:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
-	Targetable@MINDCONTROL:
-		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
+	Targetable@MindControlResistant:
+		TargetTypes: MindControlResistant
+		RequiresCondition: cargo
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+		RequiresCondition: loaded-cmdo
 	Cloak@NORMAL:
 		InitialDelay: 90
 		CloakDelay: 90
@@ -1582,7 +1597,7 @@ HARV:
 		Prerequisites: anyrefinery, ~vehicles.ra, ~!charv.upgrade, ~techlevel.low
 		Description: Collects Ore, Gems and Tiberium for processing.
 	TooltipExtras:
-		Weaknesses: • Unarmed
+		Weaknesses: • Unarmed\n• Resistant to mind control
 	Valued:
 		Cost: 1400
 	Tooltip:
@@ -1640,6 +1655,8 @@ HARV:
 	-Crushable:
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
+	Targetable@MindControlResistant:
+		TargetTypes: MindControlResistant
 	GrantConditionOnPrerequisite@OREPUPGRADE:
 		Prerequisites: charv.upgrade
 		Condition: charv-upgrade
@@ -1892,6 +1909,7 @@ APC:
 	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
+	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 50
@@ -1932,9 +1950,19 @@ APC:
 		MaxWeight: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
+		PassengerConditions:
+			e7: loaded-cmdo
+			rmbo: loaded-cmdo
+			bori: loaded-cmdo
+			yuri: loaded-cmdo
+			mast: loaded-cmdo
 	WithCargoSounds:
 		EnterSounds: genter1a.aud
 		ExitSounds: gexit1a.aud
+	CargoBlocked:
+		RequiresCondition: mindcontrolled
+	WithDecoration@COMMANDOSKULL:
+		RequiresCondition: loaded-cmdo
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -1944,8 +1972,12 @@ APC:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
-	Targetable@MINDCONTROL:
-		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
+	Targetable@MindControlResistant:
+		TargetTypes: MindControlResistant
+		RequiresCondition: cargo
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+		RequiresCondition: loaded-cmdo
 	ReplacedInQueue:
 		Actors: rapc
 	Upgradeable@RAIDER:
@@ -2354,7 +2386,7 @@ TTRA:
 		Weaknesses: • Cannot attack Aircraft
 		Attributes: • Jams nearby enemy radar
 	Valued:
-		Cost: 1250
+		Cost: 1350
 	Tooltip:
 		Name: Tesla Track
 		GenericName: Tank
@@ -2365,7 +2397,7 @@ TTRA:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 72
+		Speed: 68
 		Voice: Move
 	RevealsShroud:
 		MinRange: 4c0
@@ -2853,7 +2885,7 @@ GDRN:
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Light Armor, Buildings
 		Weaknesses: • Weak vs Infantry, Defenses\n• Cannot attack Aircraft
-		Attributes: • Can detect spies and cloaked units.
+		Attributes: • Can detect spies and cloaked units.\n• Immune to mind control
 	Valued:
 		Cost: 450
 	Tooltip:
@@ -3132,7 +3164,6 @@ FTNK.Decoy:
 	-UpdatesPlayerStatistics:
 	-RevealOnDeath:
 	-Sellable:
-	-ProximityExternalCondition@ONPAD:
 	-ExternalCondition@UNITSELL:
 
 HFTK.Decoy:
@@ -3186,7 +3217,6 @@ HFTK.Decoy:
 	-UpdatesPlayerStatistics:
 	-RevealOnDeath:
 	-Sellable:
-	-ProximityExternalCondition@ONPAD:
 	-ExternalCondition@UNITSELL:
 
 APC2:
@@ -3198,6 +3228,7 @@ APC2:
 	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
+	Inherits@COMMANDOSKULL: ^CommandoSkull
 	RenderSprites:
 		FactionImages:
 			nod: apc2.nod
@@ -3246,9 +3277,19 @@ APC2:
 		MaxWeight: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
+		PassengerConditions:
+			e7: loaded-cmdo
+			rmbo: loaded-cmdo
+			bori: loaded-cmdo
+			yuri: loaded-cmdo
+			mast: loaded-cmdo
 	WithCargoSounds:
 		EnterSounds: genter1a.aud
 		ExitSounds: gexit1a.aud
+	CargoBlocked:
+		RequiresCondition: mindcontrolled
+	WithDecoration@COMMANDOSKULL:
+		RequiresCondition: loaded-cmdo
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -3258,8 +3299,12 @@ APC2:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
-	Targetable@MINDCONTROL:
-		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
+	Targetable@MindControlResistant:
+		TargetTypes: MindControlResistant
+		RequiresCondition: cargo
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+		RequiresCondition: loaded-cmdo
 	Selectable:
 		Class: apc
 	ReplacedInQueue:
@@ -3322,6 +3367,7 @@ VULC:
 	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 52
@@ -3458,9 +3504,19 @@ VULC:
 		MaxWeight: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
+		PassengerConditions:
+			e7: loaded-cmdo
+			rmbo: loaded-cmdo
+			bori: loaded-cmdo
+			yuri: loaded-cmdo
+			mast: loaded-cmdo
 	WithCargoSounds:
 		EnterSounds: genter1a.aud
 		ExitSounds: gexit1a.aud
+	CargoBlocked:
+		RequiresCondition: mindcontrolled
+	WithDecoration@COMMANDOSKULL:
+		RequiresCondition: loaded-cmdo
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -3470,8 +3526,12 @@ VULC:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
-	Targetable@MINDCONTROL:
-		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
+	Targetable@MindControlResistant:
+		TargetTypes: MindControlResistant
+		RequiresCondition: cargo
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+		RequiresCondition: loaded-cmdo
 
 VULC.AI:
 	Inherits: VULC
@@ -3705,7 +3765,7 @@ MTNK.Drone:
 		IconPalette: chrometd
 		Description: Remotely piloted battle tank.
 	TooltipExtras:
-		Attributes: • Requires active radar communication\n• Self repairs to 50% out of combat
+		Attributes: • Requires active radar communication\n• Self repairs to 50% out of combat\n• Immune to mind control
 	Valued:
 		Cost: 800
 	Tooltip:
@@ -3782,7 +3842,7 @@ MDRN:
 	TooltipExtras:
 		Strengths: • Strong vs Infantry, Light Armor
 		Weaknesses: • Weak vs Heavy Armor, Buildings, Defenses\n• Cannot attack Aircraft
-		Attributes: • Attaches to vehicles to provide support and repairs
+		Attributes: • Attaches to vehicles to provide support and repairs\n• Immune to mind control
 	Valued:
 		Cost: 225
 	UpdatesPlayerStatistics:
@@ -4098,7 +4158,7 @@ HTNK.Drone:
 		Prerequisites: ~mdrone.upgrade, gtek, ~vehicles.htnk, ~techlevel.high
 		Description: Remotely piloted heavy tank with anti-air capability.
 	TooltipExtras:
-		Attributes: • Can crush concrete walls\n• Requires active radar communication\n• Self repairs out of combat
+		Attributes: • Can crush concrete walls\n• Requires active radar communication\n• Self repairs out of combat\n• Immune to mind control
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -4713,7 +4773,7 @@ HARV.TD:
 		IconPalette: chrometd
 		Description: Collects Ore, Gems and Tiberium for processing.
 	TooltipExtras:
-		Weaknesses: • Unarmed
+		Weaknesses: • Unarmed\n• Resistant to mind control
 	Selectable:
 		Priority: 7
 		DecorationBounds: 1536, 1536
@@ -4766,6 +4826,8 @@ HARV.TD:
 	-Crushable:
 	Targetable@ChaosImmune:
 		TargetTypes: ChaosImmune
+	Targetable@MindControlResistant:
+		TargetTypes: MindControlResistant
 	SpawnRandomActorOnDeath:
 		Actors: c1,c7,c10
 		Probability: 5
@@ -4800,6 +4862,7 @@ BTR:
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
+	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 21
@@ -4855,9 +4918,25 @@ BTR:
 		MaxWeight: 5
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
+		PassengerConditions:
+			e7: loaded-cmdo
+			rmbo: loaded-cmdo
+			bori: loaded-cmdo
+			yuri: loaded-cmdo
+			mast: loaded-cmdo
 	WithCargoSounds:
 		EnterSounds: genter1a.aud
 		ExitSounds: gexit1a.aud
+	CargoBlocked:
+		RequiresCondition: mindcontrolled
+	WithDecoration@COMMANDOSKULL:
+		RequiresCondition: loaded-cmdo
+	Targetable@MindControlResistant:
+		TargetTypes: MindControlResistant
+		RequiresCondition: cargo
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+		RequiresCondition: loaded-cmdo
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -5454,9 +5533,6 @@ IFV:
 	WithSpriteTurret@mort:
 		Sequence: turret17
 		RequiresCondition: mortchemturr || mortcryoturr || mortsonicturr
-	WithCargoSounds:
-		EnterSounds: vifvtran.aud
-		ExitSounds: vifvtran.aud
 	Cargo:
 		Types: Infantry
 		MaxWeight: 1
@@ -5525,6 +5601,11 @@ IFV:
 			c8: nochange
 			c9: nochange
 			c10: nochange
+	WithCargoSounds:
+		EnterSounds: vifvtran.aud
+		ExitSounds: vifvtran.aud
+	CargoBlocked:
+		RequiresCondition: mindcontrolled
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -5566,8 +5647,12 @@ IFV:
 		RequiresCondition: !being-warped && !full
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !full
-	Targetable@MINDCONTROL:
-		RequiresCondition: !full && !mindcontrolled && !hacked && !restoring
+	Targetable@MindControlResistant:
+		TargetTypes: MindControlResistant
+		RequiresCondition: full
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+		RequiresCondition: commturr || psyturr
 	AutoTarget:
 		AttackAnythingCondition: stance-attackanything
 		ScanRadius: 6
@@ -5623,7 +5708,6 @@ IFV:
 		RequiresCondition: spyturr && !stance-attackanything
 	WithDecoration@COMMANDOSKULL:
 		RequiresCondition: commturr || psyturr
-	-Targetable@HERO:
 	WithDecoration@SEALSKULL:
 		RequiresCondition: sealturr
 		Image: pips
@@ -6905,7 +6989,7 @@ WTNK:
 	Armor:
 		Type: Light
 	Mobile:
-		Speed: 82
+		Speed: 68
 		Voice: Move
 	Passenger:
 		Voice: Move
@@ -7070,6 +7154,8 @@ BATF:
 	WithCargoSounds:
 		EnterSounds: genter1a.aud
 		ExitSounds: gexit1a.aud
+	CargoBlocked:
+		RequiresCondition: mindcontrolled
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithProductionIconOverlay:
@@ -7106,8 +7192,12 @@ BATF:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
-	Targetable@MINDCONTROL:
-		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
+	Targetable@MindControlResistant:
+		TargetTypes: MindControlResistant
+		RequiresCondition: cargo
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+		RequiresCondition: loaded-cmdo
 	SpawnActorOnDeath:
 		Actor: BATF.Husk
 		RequiresCondition: !being-warped
@@ -7126,7 +7216,6 @@ BATF:
 		Palette: effect
 		Position: TopLeft
 		ValidRelationships: Ally, Enemy, Neutral
-	-Targetable@HERO:
 	WithIdleOverlay@MEDIC:
 		Sequence: medic
 		PauseOnCondition: empdisable || being-warped
@@ -7568,13 +7657,13 @@ PBUL:
 		BuildPaletteOrder: 703
 		IconPalette: chrometd
 		Prerequisites: anyradar, ~vehicles.pbul
-		Description: Fast scout & anti-tank vehicle with EMP rockets.
+		Description: Fast scout vehicle with EMP rockets.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Defenses, Light Armor
-		Weaknesses: • Weak vs Infantry, Buildings\n• Cannot attack Aircraft
+		Weaknesses: • Weak vs Infantry, Buildings\n• Inaccurate projectiles\n• Cannot attack Aircraft
 		Attributes: • Can detect spies and cloaked units.
 	Valued:
-		Cost: 675
+		Cost: 1000
 	Tooltip:
 		Name: Pitbull
 	UpdatesPlayerStatistics:

@@ -754,7 +754,7 @@ MAST:
 		Name: secondary
 		Weapon: EnslaveVehicle
 		LocalOffset: 150,0,400
-		PauseOnCondition: deployed
+		PauseOnCondition: deployed || !vs-vehicle-ammo
 	Armament@BATF:
 		Name: batf
 		Weapon: PsychicBeamBATF
@@ -771,6 +771,8 @@ MAST:
 		SlaveDetonateWeapon: DetonateSlave
 		SlaveKillDamageTypes: BulletDeath
 		ExperienceFromControl: 100
+		TargetTypeTicksToControl:
+			MindControlResistant: 105
 	WithMindControlArc@MC:
 		Color: c71585
 		Transparency: 55
@@ -866,8 +868,11 @@ MAST:
 		PlayerExperience: 25
 		CaptureDelay: 150
 		ConsumedByCapture: false
+		EnterCursor: mc-capture
 	Targetable:
 		TargetTypes: Ground, Infantry
+	Targetable@Hero:
+		TargetTypes: Hero
 	Targetable@MindControlImmune:
 		TargetTypes: MindControlImmune
 	Targetable@ChaosImmune:
@@ -879,11 +884,25 @@ MAST:
 		Offset: 0,0,400
 	Passenger:
 		CustomPipType: red
+	AutoTargetPriority@VEHCOOLDOWN:
+		ValidTargets: Infantry
+		InvalidTargets: NoAutoTarget
+		Priority: 10
+		RequiresCondition: !vs-vehicle-ammo
 	AmmoPool:
 		Ammo: 1
 		AmmoCondition: ammo
+	AmmoPool@Vehicles:
+		Name: secondary
+		Armaments: secondary
+		Ammo: 1
+		AmmoCondition: vs-vehicle-ammo
 	ReloadAmmoPool:
 		Delay: 35 # matches EnslaveInfantry ReloadDelay
+		Count: 1
+	ReloadAmmoPool@Vehicles:
+		AmmoPool: secondary
+		Delay: 100
 		Count: 1
 	MindControllerCapacityModifier@RANK-1:
 		Amount: 1
@@ -1216,6 +1235,7 @@ INTL:
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
+	Inherits@COMMANDOSKULL: ^CommandoSkull
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Valued:
@@ -1268,13 +1288,22 @@ INTL:
 		LoadingCondition: notmobile
 		LoadedCondition: cargo
 		PassengerConditions:
-			e6: engi-loaded
-			n6: engi-loaded
-			s6: engi-loaded
+			e6: loaded-engi
+			n6: loaded-engi
+			s6: loaded-engi
+			e7: loaded-cmdo
+			rmbo: loaded-cmdo
+			bori: loaded-cmdo
+			yuri: loaded-cmdo
+			mast: loaded-cmdo
 	WithCargoSounds:
 		EnterSounds: genter1a.aud
 		ExitSounds: gexit1a.aud
+	CargoBlocked:
+		RequiresCondition: mindcontrolled
 	WithCargoPipsDecoration:
+	WithDecoration@COMMANDOSKULL:
+		RequiresCondition: loaded-cmdo
 	Hovers:
 		BobDistance: -25
 		RequiresCondition: !empdisable && !being-warped && !driver-dead
@@ -1286,8 +1315,12 @@ INTL:
 		RequiresCondition: !being-warped && !cargo
 	Capturable@DRIVER_DEAD:
 		RequiresCondition: driver-dead && !cargo
-	Targetable@MINDCONTROL:
-		RequiresCondition: !cargo && !mindcontrolled && !hacked && !restoring
+	Targetable@MindControlResistant:
+		TargetTypes: MindControlResistant
+		RequiresCondition: cargo
+	Targetable@MindControlImmune:
+		TargetTypes: MindControlImmune
+		RequiresCondition: loaded-cmdo
 	TurretedFloating:
 		TurnSpeed: 16
 		Offset: 0,0,0
@@ -1307,7 +1340,7 @@ INTL:
 	DetectCloaked:
 		Range: 4c0
 		DetectionTypes: Mine
-		RequiresCondition: engi-loaded
+		RequiresCondition: loaded-engi
 
 INTL.AI:
 	Inherits: INTL
@@ -1315,6 +1348,8 @@ INTL.AI:
 		Image: INTL
 	Buildable:
 		Prerequisites: ~botplayer, ~vehicles.scrin, ~!scrt, ~techlevel.low
+	WithCargoSounds:
+		-EnterSounds:
 
 INTL.AI2:
 	Inherits: INTL.AI
@@ -1705,6 +1740,7 @@ DARK:
 	Inherits@BERSERK: ^Berserk
 	Inherits@HOVERTRAIL: ^HoverTrail
 	Inherits@SCRINVEHICLEVOICE: ^ScrinVehicleVoice
+	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	RenderSprites:
 		PlayerPalette: playerscrin
 	Buildable:
@@ -1731,7 +1767,7 @@ DARK:
 	Mobile:
 		TurnSpeed: 20
 		Speed: 60
-		Locomotor: lighthover
+		Locomotor: hover
 	RevealsShroud:
 		MinRange: 4c0
 		Range: 6c0
@@ -3860,6 +3896,7 @@ NERV:
 	Inherits@BUZZERSWARMPOWER: ^BuzzerSwarmPower
 	Inherits@IONSURGEPOWER: ^IonSurgePower
 	Inherits@TECHLOCKABLE: ^TechLockable
+	Inherits@ProductionOptimizer1: ^ProductionOptimizer1
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 90
@@ -3869,7 +3906,7 @@ NERV:
 	TooltipExtras:
 		Attributes: • Requires power to operate\n• Detects nearby enemy vehicles, aircraft and structures in fog of war
 	Valued:
-		Cost: 1600
+		Cost: 1800
 	Tooltip:
 		Name: Nerve Center
 	Building:
@@ -3959,6 +3996,7 @@ SCRT:
 	Inherits@FORCESHIELDPOWER: ^ForceShieldPower
 	Inherits@GREATERCOALESCENCEPOWER: ^GreaterCoalescencePower
 	Inherits@TECHLOCKABLE: ^TechLockable
+	Inherits@ProductionOptimizer2: ^ProductionOptimizer2
 	Buildable:
 		Queue: BuildingSQ, BuildingMQ
 		BuildPaletteOrder: 150
@@ -4223,10 +4261,10 @@ SREP:
 	ProximityExternalCondition@UNITSELL:
 		Condition: unit-sellable
 		Range: 1c0
-	ExternalCondition@ONPAD:
-		Condition: unit-onpad
+	GrantConditionOnResupplying@Resupplying:
+		Condition: resupplying
 	Sellable:
-		RequiresCondition: !unit-onpad && !build-incomplete && !c4 && !being-captured && !being-warped && !hacked
+		RequiresCondition: !resupplying && !build-incomplete && !c4 && !being-captured && !being-warped && !hacked
 	Power:
 		Amount: -30
 	ProvidesPrerequisite@buildingname:
@@ -5083,6 +5121,12 @@ IonSurge:
 	AmbientSound:
 		SoundFiles: ionsurgeloop.aud
 		Interval: 50
+	WithRangeCircle@IonSurge:
+		Type: IonSurge
+		Range: 5c0
+		Visible: Always
+		ValidRelationships: Ally
+		Color: b070ff90
 
 WORMHOLE:
 	Inherits@1: ^ExistsInWorld

@@ -599,7 +599,7 @@ LAR2:
 
 powerproxy.parabombs:
 	Inherits@DUMMY: ^InvisibleDummy
-	AirstrikePower:
+	AirstrikePowerCA:
 		Icon: parabombs
 		Name: Parabombs (Single Use)
 		Description: A Badger drops a load of parachuted bombs on your target.
@@ -1072,7 +1072,7 @@ jamming.field:
 		Range: 6c0
 		Visible: Always
 		ValidRelationships: Ally, Enemy, Neutral
-		Color: c0c0d4AA
+		UsePlayerColor: true
 	ProximityExternalCondition@WEAPJAMMER:
 		Range: 6c0
 		ValidRelationships: Enemy, Neutral
@@ -1138,6 +1138,18 @@ SHAB:
 		Duration: 4500
 	KillsSelf:
 		RequiresCondition: !active
+
+optimized.production1:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesPrerequisite:
+	PopControlled:
+		Limit: 1
+
+optimized.production2:
+	Inherits@DUMMY: ^InvisibleDummy
+	ProvidesPrerequisite:
+	PopControlled:
+		Limit: 1
 
 # For MQ, ensures production tabs are updated properly
 QueueUpdaterDummy:
