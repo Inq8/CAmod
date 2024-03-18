@@ -1471,6 +1471,7 @@ SAPC:
 	Inherits@TRANSPORT: ^Transport
 	Inherits@NOUNLOADCHRONO: ^NoUnloadWhenChronoshifted
 	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@AIUNLOAD: ^AIUNLOAD
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 255
@@ -1566,7 +1567,6 @@ SAPC:
 
 SAPC.AI:
 	Inherits: SAPC
-	Inherits@AIUNLOAD: ^AIUNLOAD
 	RenderSprites:
 		Image: sapc
 	Buildable:
@@ -1578,7 +1578,6 @@ SAPC.AI:
 
 SAPC.AI2:
 	Inherits: SAPC
-	Inherits@AIUNLOAD: ^AIUNLOAD
 	RenderSprites:
 		Image: sapc
 	Buildable:
@@ -1910,6 +1909,7 @@ APC:
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@AIUNLOAD: ^AIUNLOAD
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 50
@@ -2020,7 +2020,6 @@ RAPC:
 
 APC.AI:
 	Inherits: APC
-	Inherits@AIUNLOAD: ^AIUNLOAD
 	RenderSprites:
 		Image: APC
 	Buildable:
@@ -2035,7 +2034,6 @@ APC.AI:
 
 RAPC.AI:
 	Inherits: RAPC
-	Inherits@AIUNLOAD: ^AIUNLOAD
 	RenderSprites:
 		Image: RAPC
 	Buildable:
@@ -3229,6 +3227,7 @@ APC2:
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@AIUNLOAD: ^AIUNLOAD
 	RenderSprites:
 		FactionImages:
 			nod: apc2.nod
@@ -3318,7 +3317,6 @@ APC2:
 
 APC2.NODAI:
 	Inherits: APC2
-	Inherits@AIUNLOAD: ^AIUNLOAD
 	Buildable:
 		Prerequisites: ~botplayer, ~vehicles.nod, ~!vulcan.upgrade, ~vehicles.apc2, ~techlevel.low
 	RenderSprites:
@@ -3331,7 +3329,6 @@ APC2.NODAI:
 
 APC2.GDIAI:
 	Inherits: APC2
-	Inherits@AIUNLOAD: ^AIUNLOAD
 	Buildable:
 		Prerequisites: ~botplayer, ~vehicles.gdi, ~!vulcan.upgrade, ~vehicles.apc2, ~techlevel.low
 	RenderSprites:
@@ -3368,6 +3365,7 @@ VULC:
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@AIUNLOAD: ^AIUNLOAD
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 52
@@ -3535,7 +3533,6 @@ VULC:
 
 VULC.AI:
 	Inherits: VULC
-	Inherits@AIUNLOAD: ^AIUNLOAD
 	RenderSprites:
 		Image: VULC
 	Buildable:
@@ -4863,6 +4860,7 @@ BTR:
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
 	Inherits@UpgradeOverlay: ^UpgradeOverlay
 	Inherits@COMMANDOSKULL: ^CommandoSkull
+	Inherits@AIUNLOAD: ^AIUNLOAD
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 21
@@ -4958,7 +4956,6 @@ BTR:
 
 BTR.AI:
 	Inherits: BTR
-	Inherits@AIUNLOAD: ^AIUNLOAD
 	RenderSprites:
 		Image: BTR
 	Buildable:
@@ -5117,6 +5114,7 @@ IFV:
 	Inherits@SLOWCRUSH: ^SlowedByCrushing
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Inherits@A2GPROTECTION: ^AirToGroundProtection
+	Inherits@AIEJECT: ^AIEJECT
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 120
@@ -7052,6 +7050,7 @@ BATF:
 	Inherits@SHRAPNEL: ^ThrowsShrapnel
 	Inherits@COMMANDOSKULL: ^CommandoSkull
 	Inherits@TANKBUSTERVULN: ^TankBusterVulnerability
+	Inherits@AIEJECT: ^AIEJECT
 	Buildable:
 		Queue: VehicleSQ, VehicleMQ
 		BuildPaletteOrder: 340
@@ -7230,6 +7229,8 @@ BATF:
 		Color: 00FF0080
 		Range: 4c512
 		RequiresCondition: loaded-medic
+	GrantConditionOnDamageState@AIEJECT:
+		ValidDamageStates: Critical
 
 BATF.AI:
 	Inherits: BATF

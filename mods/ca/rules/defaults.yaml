@@ -4097,6 +4097,12 @@
 	UnloadOnCondition@AIUNLOAD:
 		RequiresCondition: damage || aiming
 
+^AIEJECT:
+	GrantConditionOnDamageState@AIEJECT:
+		Condition: damage
+	UnloadOnCondition@AIEJECT:
+		RequiresCondition: damage
+
 ^QueueUpdater:
 	FreeActor@QUEUEUPDATER:
 		Actor: QueueUpdaterDummy
