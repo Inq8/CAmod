@@ -964,7 +964,9 @@ DoFinale = function()
 		end)
 
 		Trigger.AfterDelay(AdjustTimeForGameSpeed(DateTime.Seconds(27)), function()
-			kane.Move(WormholeWP.Location)
+			if not kane.IsDead then
+				kane.Move(WormholeWP.Location)
+			end
 			UserInterface.SetMissionText("To be continued...", HSLColor.Red)
 		end)
 
