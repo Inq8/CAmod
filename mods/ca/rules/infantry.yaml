@@ -2793,7 +2793,6 @@ E8:
 	PeriodicExplosion:
 		Weapon: RadEruptionWeapon
 		RequiresCondition: deployed
-		InitialDelay: 20
 	Targetable@DESOLATOR:
 		TargetTypes: Desolator
 	GrantConditionOnDeploy:
@@ -3479,6 +3478,7 @@ SGLI:
 	-Contrail@1:
 	-Contrail@2:
 	-ActorLostNotification:
+	-SoundOnDamageTransitionCA:
 
 SGLI.crashing:
 	Inherits: SGLI
@@ -4018,7 +4018,7 @@ XO:
 	Armor:
 		Type: Light
 	Mobile:
-		TurnSpeed: 40
+		TurnSpeed: 54
 		Speed: 54
 		Voice: Move
 	Passenger:
@@ -4057,9 +4057,9 @@ XO:
 		Sequences: descend
 	-WithParachute:
 	RangeMultiplier@GYRO:
-		Modifier: 130
+		Modifier: 140
 	ReloadDelayMultiplier@GYRO:
-		Modifier: 150
+		Modifier: 140
 	GpsRadarDot:
 		Sequence: Infantry
 
