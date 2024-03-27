@@ -314,7 +314,7 @@ DragonGI.CRYO:
 
 DragonBATF:
 	Inherits: Dragon
-	Range: 6c0
+	Range: 5c768
 	Projectile: MissileCA
 		RangeLimit: 7c0
 	Warhead@1Dam: SpreadDamage
@@ -332,7 +332,7 @@ DragonBATF.CYB:
 
 DragonBATF.CRYO:
 	Inherits: Dragon.CRYO
-	Range: 6c0
+	Range: 5c768
 	Projectile: MissileCA
 		RangeLimit: 7c0
 	Warhead@1Dam: SpreadDamage
@@ -340,7 +340,7 @@ DragonBATF.CRYO:
 
 DragonBATF.TibCore:
 	Inherits: Dragon.TibCore
-	Range: 6c0
+	Range: 5c768
 	Projectile: MissileCA
 		RangeLimit: 9c0
 	Warhead@1Dam: SpreadDamage
@@ -861,7 +861,7 @@ EMPRockets:
 	Projectile: Bullet
 		Inaccuracy: 2c0
 		Image: dragon
-		Speed: 240
+		Speed: 270
 		LaunchAngle: 70
 		TrailImage: smokey
 		Shadow: true
@@ -1033,7 +1033,7 @@ SCUD:
 		Shadow: True
 		LaunchAngle: 62
 	Warhead@1Dam: SpreadDamage
-		Spread: 341
+		Spread: 384
 		Damage: 3400
 		Falloff: 1000, 448, 192, 50, 18, 7, 0
 		Versus:
@@ -1869,7 +1869,7 @@ ScrinTorp:
 	Warhead@1Dam: SpreadDamage
 		Spread: 512
 		Damage: 800
-		Falloff: 1000, 400, 160, 64, 26, 10, 0
+		Falloff: 1000, 448, 192, 64, 26, 10, 0
 		ValidTargets: Ground, Water
 		Versus:
 			None: 15
@@ -2045,16 +2045,6 @@ CryoMissileNHAW:
 CryoMissileP51:
 	Inherits: CryoMissileNHAW
 	ReloadDelay: 200
-
-BATFRockets:
-	Inherits: Dragon
-	Burst: 2
-	Range: 4c768
-	Warhead@1Dam: SpreadDamage
-		Damage: 2200
-		Versus:
-			Concrete: 55
-			Light: 25
 
 Rocket.P51.R:
 	ReloadDelay: 200

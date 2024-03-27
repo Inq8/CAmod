@@ -26,6 +26,15 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Order name that toggles the condition.")]
 		public readonly HashSet<string> OrderNames = new HashSet<string> { };
 
+		[Desc("Only grant condition if the target is an actor?")]
+		public readonly bool RequiresActorTarget = false;
+
+		[Desc("Sound to play when condition is granted.")]
+		public readonly string ActiveSound = null;
+
+		[Desc("Valid relationships of the attacker for triggering the condition.")]
+		public readonly PlayerRelationship ValidTargetRelationships = PlayerRelationship.Ally | PlayerRelationship.Neutral | PlayerRelationship.Enemy;
+
 		public override object Create(ActorInitializer init) { return new GrantConditionOnOrders(init.Self, this); }
 	}
 
@@ -39,6 +48,18 @@ namespace OpenRA.Mods.CA.Traits
 		void IResolveOrder.ResolveOrder(Actor self, Order order)
 		{
 			if (IsTraitDisabled || IsTraitPaused)
+				return;
+
+			if (Info.RequiresActorTarget && order.Target.Type != TargetType.Actor && order.Target.Type != TargetType.FrozenActor)
+				return;
+
+			Actor targetActor = null;
+			if (order.Target.Type == TargetType.Actor)
+				targetActor = order.Target.Actor;
+			else if (order.Target.Type == TargetType.FrozenActor)
+				targetActor = order.Target.FrozenActor.Actor;
+
+			if (targetActor != null && !Info.ValidTargetRelationships.HasRelationship(targetActor.Owner.RelationshipWith(self.Owner)))
 				return;
 
 			if (Info.OrderNames.Contains(order.OrderString))
@@ -55,7 +76,12 @@ namespace OpenRA.Mods.CA.Traits
 		void GrantCondition(Actor self)
 		{
 			if (conditionToken == Actor.InvalidConditionToken)
+			{
 				conditionToken = self.GrantCondition(Info.Condition);
+
+				if (!string.IsNullOrEmpty(Info.ActiveSound))
+					Game.Sound.Play(SoundType.World, Info.ActiveSound, self.CenterPosition);
+			}
 		}
 
 		void RevokeCondition(Actor self)

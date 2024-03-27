@@ -3521,7 +3521,7 @@ AURO:
 		Weaknesses: • Cannot attack Aircraft
 		Attributes: • Uses afterburner on approach to target
 	Valued:
-		Cost: 2200
+		Cost: 2300
 	Tooltip:
 		Name: Aurora
 	UpdatesPlayerStatistics:
@@ -3566,14 +3566,18 @@ AURO:
 		Position: BottomLeft
 		Margin: 4, 3
 		RequiresSelection: true
-	GrantConditionOnActivity@AFTERBURNER:
+	GrantConditionOnOrders@AFTERBURNER:
 		Condition: afterburner
 		ActiveSound: cjetband.aud
+		OrderNames: Attack, ForceAttack
+		RequiresActorTarget: true
+		ValidTargetRelationships: Enemy, Neutral
+		RequiresCondition: ammo
 	SpeedMultiplier@AFTERBURNER:
 		Modifier: 170
 		RequiresCondition: afterburner && ammo
 	DamageMultiplier@AFTERBURNER:
-		Modifier: 80
+		Modifier: 90
 		RequiresCondition: afterburner && ammo
 	GrantConditionOnAttack@AFTERBURNERFINAL:
 		Condition: afterburner-final
@@ -3652,12 +3656,12 @@ PMAK:
 		BuildAtProductionType: Helicopter
 		BuildPaletteOrder: 111
 		Prerequisites: atek, ~aircraft.allies, ~techlevel.high
-		Description: Heavy bomber with powerful armor penetrating bombs.
+		Description: Heavy VTOL bomber with powerful armor penetrating bombs.
 	TooltipExtras:
 		Strengths: • Strong vs Heavy Armor, Defenses, Light Armor
 		Weaknesses: • Weak vs Infantry\n• Cannot attack Aircraft
 	Valued:
-		Cost: 2400
+		Cost: 2500
 	Tooltip:
 		Name: Peacemaker
 		GenericName: Aircraft
@@ -3694,7 +3698,7 @@ PMAK:
 		TakeoffSounds: btoff1.aud, btoff2.aud
 		LandingSounds: bland1.aud, bland2.aud
 		CanSlide: False
-		AltitudeVelocity: 0c200
+		AltitudeVelocity: 0c100
 	AutoTarget:
 		InitialStance: HoldFire
 		InitialStanceAI: AttackAnything

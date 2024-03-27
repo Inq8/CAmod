@@ -132,7 +132,7 @@ namespace OpenRA.Mods.CA.Traits
 			if (!Info.ArmamentNames.Contains(a.Info.Name))
 				return;
 
-			if (Info.RequiresActorTarget && target.Type != TargetType.Actor)
+			if (Info.RequiresActorTarget && target.Type != TargetType.Actor && target.Type != TargetType.FrozenActor)
 				return;
 
 			if (Info.RevokeOnNewTarget)
