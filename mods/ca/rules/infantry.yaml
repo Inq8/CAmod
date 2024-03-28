@@ -4034,6 +4034,10 @@ XO:
 	WithMoveAnimation:
 	WithAttackAnimation:
 		Sequence: shoot
+		RequiresCondition: !moving
+	GrantConditionOnMovement@MOVING:
+		ValidMovementTypes: Horizontal, Vertical, Turn
+		Condition: moving
 	Armament@PRIMARY:
 		Weapon: M60mgXO
 		LocalOffset: 400,-220,180
@@ -4042,10 +4046,11 @@ XO:
 		Name: secondary
 		Weapon: XOLaser
 		LocalOffset: 400,220,180
-	AttackFrontal:
+	AttackFollowFrontal:
 		PauseOnCondition: empdisable || being-warped
 		Voice: Attack
-		FacingTolerance: 0
+		FacingTolerance: 32
+		RangeMargin: 0
 	ProducibleWithLevel:
 		Prerequisites: vehicles.upgraded
 	WithMuzzleOverlay:

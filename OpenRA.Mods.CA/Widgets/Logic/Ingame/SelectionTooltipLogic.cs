@@ -9,6 +9,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.CA.Traits;
 using OpenRA.Mods.Common.Traits;
@@ -56,9 +57,14 @@ namespace OpenRA.Mods.CA.Widgets.Logic
 		{
 			var selectedActors = world.Selection.Actors;
 			var numSelectedActors = selectedActors.Count();
-			var uniqueActors = selectedActors.DistinctBy(a => a.Info.Name);
+			var uniqueActors = new HashSet<string>();
 
-			if (uniqueActors.Count() != 1)
+			foreach (var a in selectedActors)
+			{
+				uniqueActors.Add(a.Info.Name);
+			}
+
+			if (uniqueActors.Count != 1)
 			{
 				HideTooltip();
 				return;
