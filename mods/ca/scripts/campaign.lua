@@ -1119,7 +1119,7 @@ IsUSSRGroundHunterUnit = function(actor)
 end
 
 IsGDIGroundHunterUnit = function(actor)
-	return actor.Owner == GDI and (IsGroundHunterUnit(actor) or actor.Type == "jjet") and actor.Type ~= "msam" and actor.Type ~= "memp"
+	return actor.Owner == GDI and (IsGroundHunterUnit(actor) or actor.Type == "jjet") and actor.Type ~= "msam" and actor.Type ~= "memp" and actor.Type ~= "thwk"
 end
 
 IsNodGroundHunterUnit = function(actor)
