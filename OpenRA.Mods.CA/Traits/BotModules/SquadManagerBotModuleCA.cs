@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenRA.Mods.CA.Traits.BotModules.Squads;
+using OpenRA.Mods.Common.Activities;
 using OpenRA.Mods.Common.Traits;
 using OpenRA.Primitives;
 using OpenRA.Traits;
@@ -163,7 +164,7 @@ namespace OpenRA.Mods.CA.Traits
 			World = self.World;
 			Player = self.Owner;
 
-			unitCannotBeOrdered = a => a == null || a.Owner != Player || a.IsDead || !a.IsInWorld;
+			unitCannotBeOrdered = a => a == null || a.Owner != Player || a.IsDead || !a.IsInWorld || a.CurrentActivity is Enter;
 		}
 
 		bool IsValidEnemyUnit(Actor a)

@@ -1962,24 +1962,19 @@ Player:
 			bori: 15
 			yuri: 15
 			mast: 15
-			apc.ai: 20
-			sapc.ai: 10
-			sapc.ai2: 10
-			intl.ai: 10
-			intl.ai2: 10
+			apc: 20
+			sapc: 10
+			intl: 10
 			jeep: 30
-			apc2.nodai: 20
-			apc2.gdiai: 20
-			rapc.ai: 20
-			vulc.ai: 10
+			apc2: 20
+			rapc: 20
+			vulc: 10
 			hmmv: 30
 			gdrn: 30
 			mdrn: 20
 			xo: 20
 			btr: 20
-			btr.ai: 10
 			btr.yuri: 20
-			btr.yuri.ai: 10
 			gunw: 20
 			shrw: 20
 			bggy: 30
@@ -1996,7 +1991,7 @@ Player:
 			ruin: 20
 			atmz: 20
 			1tnk: 70
-			ifv.ai: 70
+			ifv: 70
 			2tnk: 45
 			gtnk.squad: 20
 			tnkd: 45
@@ -2037,7 +2032,7 @@ Player:
 			nhaw: 3
 			ctnk: 3
 			chpr: 3
-			batf.ai: 10
+			batf: 10
 			wtnk: 3
 			ttnk: 25
 			ttra: 25
@@ -2097,18 +2092,16 @@ Player:
 			mrj: 1
 			cdrn: 1
 			nhaw: 1
-			apc.ai: 2
-			apc2.nodai: 2
-			apc2.gdiai: 2
-			rapc.ai: 2
-			vulc.ai: 5
-			btr.ai: 5
-			btr.yuri.ai: 5
+			apc: 2
+			apc2: 2
+			rapc: 2
+			vulc: 5
+			btr: 5
+			btr.yuri: 5
+			sapc: 1
 			hmmv: 2
 			bggy: 2
 			jeep: 2
-			sapc.ai: 1
-			sapc.ai2: 1
 			e6: 1
 			n6: 1
 			s6: 1
@@ -2245,23 +2238,18 @@ Player:
 			bori: 15
 			yuri: 15
 			mast: 15
-			apc.ai: 20
-			sapc.ai: 10
-			sapc.ai2: 10
-			intl.ai: 10
-			intl.ai2: 10
+			apc: 20
+			sapc: 10
+			intl: 10
 			jeep: 30
-			apc2.nodai: 20
-			apc2.gdiai: 20
-			vulc.ai: 10
+			apc2: 20
+			vulc: 10
 			hmmv: 30
 			gdrn: 30
 			mdrn: 20
 			xo: 20
 			btr: 20
-			btr.ai: 10
 			btr.yuri: 20
-			btr.yuri.ai: 10
 			gunw: 20
 			shrw: 20
 			bggy: 30
@@ -2278,7 +2266,7 @@ Player:
 			ruin: 20
 			atmz: 20
 			1tnk: 70
-			ifv.ai: 70
+			ifv: 70
 			2tnk: 45
 			gtnk.squad: 20
 			tnkd: 45
@@ -2319,7 +2307,7 @@ Player:
 			nhaw: 3
 			ctnk: 3
 			chpr: 3
-			batf.ai: 10
+			batf: 10
 			wtnk: 3
 			ttnk: 25
 			ttra: 25
@@ -2379,18 +2367,16 @@ Player:
 			mrj: 1
 			cdrn: 1
 			nhaw: 1
-			apc.ai: 2
-			apc2.nodai: 2
-			apc2.gdiai: 2
-			rapc.ai: 2
-			vulc.ai: 5
-			btr.ai: 5
-			btr.yuri.ai: 5
+			apc: 2
+			apc2: 2
+			rapc: 2
+			vulc: 5
+			btr: 5
+			btr.yuri: 5
+			sapc: 1
 			hmmv: 2
 			bggy: 2
 			jeep: 2
-			sapc.ai: 1
-			sapc.ai2: 1
 			e6: 1
 			n6: 1
 			s6: 1
@@ -2526,7 +2512,7 @@ Player:
 			ruin: 20
 			atmz: 20
 			1tnk: 70
-			ifv.ai: 70
+			ifv: 70
 			2tnk: 45
 			gtnk.squad: 20
 			tnkd: 45
@@ -2567,7 +2553,7 @@ Player:
 			nhaw: 3
 			ctnk: 3
 			chpr: 3
-			batf.ai: 10
+			batf: 10
 			wtnk: 3
 			ttnk: 25
 			ttra: 25
@@ -2770,7 +2756,7 @@ Player:
 			ruin: 20
 			atmz: 20
 			1tnk: 70
-			ifv.ai: 70
+			ifv: 70
 			2tnk: 45
 			gtnk.squad: 20
 			tnkd: 45
@@ -2811,7 +2797,7 @@ Player:
 			nhaw: 3
 			ctnk: 3
 			chpr: 3
-			batf.ai: 10
+			batf: 10
 			wtnk: 3
 			ttnk: 25
 			ttra: 25
@@ -2994,3 +2980,21 @@ Player:
 			deva: 3
 			pac: 3
 			mshp: 1
+	LoadCargoBotModule:
+		RequiresCondition: enable-brutal-ai || enable-vhard-ai || enable-hard-ai || enable-normal-ai || enable-easy-ai || enable-naval-ai
+		TransportTypesAndLoadRequirement: 
+			apc: IdleUnit
+			sapc: IdleUnit
+			intl: IdleUnit
+			apc2: IdleUnit
+			apc2.reinforce: IdleUnit
+			rapc: IdleUnit
+			vulc: IdleUnit
+			btr: IdleUnit
+			btr.yuri: IdleUnit
+			ifv: All
+			batf: All
+			reck: All
+		PassengerTypes: e1, e1r1, e2, e3, e3r1, e4, n1, n1r1, n2, n2r1, n3, n3r1, n4, n5, n5r1, n1c, n3c, s1, s2, s3, s4, feed, u3, rmbc, enli, mort, shok, e8, snip, bjet, acol, tplr, bh, ivan, rmbo, e7, seal, bori
+		ScanTick: 203
+		ValidTransportOwner: AlliedBot
