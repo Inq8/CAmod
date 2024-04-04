@@ -3575,10 +3575,10 @@ AURO:
 		RequiresCondition: ammo
 	SpeedMultiplier@AFTERBURNER:
 		Modifier: 170
-		RequiresCondition: afterburner && ammo
+		RequiresCondition: afterburner
 	DamageMultiplier@AFTERBURNER:
 		Modifier: 90
-		RequiresCondition: afterburner && ammo
+		RequiresCondition: afterburner
 	GrantConditionOnAttack@AFTERBURNERFINAL:
 		Condition: afterburner-final
 		RevokeDelay: 40
@@ -3595,6 +3595,7 @@ AURO:
 		StartColor: cc550080
 		StartColorAlpha: 128
 		TrailLength: 10
+		RequiresCondition: !afterburner
 	Contrail@AB2:
 		Offset: -400,70,-50
 		StartColorUsePlayerColor: false
@@ -3602,6 +3603,25 @@ AURO:
 		StartColor: cc550080
 		StartColorAlpha: 128
 		TrailLength: 10
+		RequiresCondition: !afterburner
+	Contrail@AB3:
+		Offset: -400,-70,-50
+		StartColorUsePlayerColor: false
+		ZOffset: -512
+		StartColor: cc550080
+		StartColorAlpha: 128
+		TrailLength: 15
+		StartWidth: 80
+		RequiresCondition: afterburner
+	Contrail@AB4:
+		Offset: -400,70,-50
+		StartColorUsePlayerColor: false
+		ZOffset: -512
+		StartColor: cc550080
+		StartColorAlpha: 128
+		TrailLength: 15
+		StartWidth: 80
+		RequiresCondition: afterburner
 	Contrail@1:
 		Offset: -400,-800,-50
 	Contrail@2:

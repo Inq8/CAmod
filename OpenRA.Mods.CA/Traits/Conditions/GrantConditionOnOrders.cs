@@ -50,8 +50,14 @@ namespace OpenRA.Mods.CA.Traits
 			if (IsTraitDisabled || IsTraitPaused)
 				return;
 
+			if (!Info.OrderNames.Contains(order.OrderString))
+				RevokeCondition(self);
+
 			if (Info.RequiresActorTarget && order.Target.Type != TargetType.Actor && order.Target.Type != TargetType.FrozenActor)
 				return;
+
+			if (Info.OrderNames.Contains(order.OrderString))
+				GrantCondition(self);
 
 			Actor targetActor = null;
 			if (order.Target.Type == TargetType.Actor)
@@ -61,11 +67,6 @@ namespace OpenRA.Mods.CA.Traits
 
 			if (targetActor != null && !Info.ValidTargetRelationships.HasRelationship(targetActor.Owner.RelationshipWith(self.Owner)))
 				return;
-
-			if (Info.OrderNames.Contains(order.OrderString))
-				GrantCondition(self);
-			else
-				RevokeCondition(self);
 		}
 
 		void INotifyBecomingIdle.OnBecomingIdle(Actor self)
