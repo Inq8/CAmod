@@ -3150,3 +3150,72 @@ FloatingDiscResourceDrainer:
 		Condition: resourcedrain
 		ValidRelationships: Enemy, Neutral
 		ValidTargets: ResourceDrainable
+
+ZoneTrooperRailgun:
+	ReloadDelay: 70
+	Range: 6c0
+	Report: ztrp-fire1.aud, ztrp-fire2.aud, ztrp-fire3.aud
+	Projectile: RailgunCA
+		Duration: 10
+		Blockable: true
+		DamageActorsInLine: false
+		BeamColor: 00FFFFC8
+		BeamWidth: 40
+		HelixThickness: 16
+		HelixRadius: 32
+		HitAnim: explosion
+		HitAnimSequence: small_explosion
+		ZOffset: 2046
+	Warhead@1Dam: SpreadDamage
+		Spread: 0c64
+		Falloff: 100, 37, 14, 5, 0
+		Damage: 9500
+		ValidRelationships: Ally, Neutral, Enemy
+		InvalidTargets: Air, Submarine
+		Versus:
+			None: 20
+			Wood: 50
+			Light: 80
+			Heavy: 100
+			Concrete: 75
+			Brick: 75
+		DamageTypes: Prone100Percent, TriggerProne, ExplosionDeath
+
+ZoneRaiderGrenade:
+	ReloadDelay: 60
+	Range: 6c0
+	Report: zrai-fire1.aud, zrai-fire2.aud
+	Projectile: Bullet
+		Speed: 750
+		Image: BOMB
+		Shadow: true
+		Inaccuracy: 554
+		LaunchAngle: 75
+		Blockable: false
+		ContrailLength: 30
+		ContrailStartColor: 5bd8c3
+		ContrailStartColorAlpha: 128
+	Warhead@1Dam: SpreadDamage
+		Spread: 288
+		Falloff: 100, 50, 28, 18, 12, 6, 0
+		Damage: 6000
+		Versus:
+			None: 20
+			Wood: 50
+			Light: 80
+			Heavy: 100
+			Concrete: 75
+			Brick: 75
+		DamageTypes: Prone50Percent, TriggerProne, SmallExplosionDeath, FlakVestMitigated
+	Warhead@2Smu: LeaveSmudge
+		SmudgeType: Crater
+		InvalidTargets: Vehicle, Structure, Wall, Husk, Trees
+	Warhead@3Eff: CreateEffect
+		Explosions: med_explosion
+		ImpactSounds: kaboom25.aud
+		ValidTargets: Ground, Ship, Trees
+	Warhead@4EffWater: CreateEffect
+		Explosions: small_splash
+		ImpactSounds: splashm1.aud, splashm2.aud, splashm3.aud
+		ValidTargets: Water, Underwater
+		InvalidTargets: Ship, Structure, Bridge

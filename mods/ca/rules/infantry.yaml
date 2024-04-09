@@ -4446,3 +4446,223 @@ CMSR:
 		AlwaysShowMaxRange: true
 	SpeedMultiplier@Inspiration:
 		Modifier: 133
+
+ZTRP:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 130
+		Prerequisites: ~disabled, pyle, gtek, ~techlevel.high
+		Description: Elite infantry armed with a railgun and equipped\n  with a jump pack.
+		IconPalette: chrometd
+	TooltipExtras:
+		Strengths: • Strong vs Heavy Armor, Light Armor, Defenses
+		Weaknesses: • Weak vs Infantry, Buildings\n• Cannot attack Aircraft
+		Attributes: • Can jump short distances.
+	Valued:
+		Cost: 800
+	Tooltip:
+		Name: Zone Trooper
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 15000
+	Mobile:
+		Voice: Move
+	RevealsShroud:
+		Range: 6c0
+	Armament@PRIMARY:
+		Weapon: ZoneTrooperRailgun
+		LocalOffset: 350,0,341
+	Armament@BATF:
+		Name: batf
+		Weapon: ZoneTrooperRailgun
+	AttackFrontal:
+		Voice: Attack
+		PauseOnCondition: being-warped
+		FacingTolerance: 0
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Guard:
+		Voice: Move
+	Voiced:
+		VoiceSet: ZoneTrooperVoice
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
+	-Crushable:
+	-TakeCover:
+	WithInfantryBody:
+		IdleSequences: idle, idle2
+		StandSequences: stand, stand2
+		DefaultAttackSequence: shoot
+		RequiresCondition: !being-warped && !jumping
+	WithInfantryBody@Jump:
+		StandSequences: jump
+		MoveSequence: jump
+		RequiresCondition: !being-warped && jumping
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
+	-GrantConditionOnTerrain@ONTIB:
+	-GrantStackingCondition@TIBEXPOSED:
+	-DamagedByTerrain@TIBDAMAGE:
+	-DamagedByTintedCells@RADSTRONG:
+	-DamagedByTintedCells@RADSTRONGHAZMAT:
+	-DamagedByTintedCells@RADSTRONGHAZMATSOVIET:
+	-DamagedByTintedCells@RADMED:
+	-DamagedByTintedCells@RADMEDHAZMAT:
+	-DamagedByTintedCells@RADWEAK:
+	-DamagedByTintedCells@RADWEAKHAZMAT:
+	-GrantConditionOnPrerequisite@HAZMAT:
+	-GrantConditionOnPrerequisite@HAZMATSOVIET:
+	-GrantConditionOnPrerequisite@HAZMATZOCOM:
+	-GrantConditionOnPrerequisite@BIO:
+	-GrantCondition@HAZMAT:
+	-GrantCondition@HAZMATSOVIET:
+	-WithDecoration@HAZMAT:
+	-WithDecoration@HAZMATSOVIET:
+	-GrantConditionOnTerrain@HAZMATSOVIET:
+	-SpeedMultiplier@HAZMATSOVIET:
+	Targetable@HAZMAT:
+		-RequiresCondition:
+	WithDecoration@BINO:
+		-BlinkPatterns:
+	TargetedLeapAbility:
+		TakeOffSounds: ztrp-jump1.aud, ztrp-jump2.aud
+		LandingSounds: ztrp-land1.aud, ztrp-land2.aud
+		LeapCondition: jumping
+		ShowSelectionBarWhenFull: false
+		ChargeDelay: 125
+		SelectionBarColor: ffaa00
+		CircleColor: ffaa00a0
+		MaxDistance: 7
+		Speed: 175
+	Contrail@Jumping:
+		Offset: -30,0,350
+		StartColorUsePlayerColor: false
+		ZOffset: -128
+		StartColor: ff990090
+		StartColorAlpha: 128
+		TrailLength: 12
+		RequiresCondition: jumping
+	WithShadow@Jump:
+		RequiresCondition: jumping
+	Targetable@Jump:
+		RequiresCondition: jumping && !being-warped
+		TargetTypes: AirSmall
+	Targetable@TEMPORAL:
+		TargetTypes: Temporal
+		RequiresCondition: !jumping
+
+ZRAI:
+	Inherits: ZTRP
+	Buildable:
+		Description: Elite infantry armed with a sonic grenade launcher\n  and equipped with a jump pack.
+	Tooltip:
+		Name: Zone Raider
+	Armament@PRIMARY:
+		Weapon: ZoneRaiderGrenade
+		LocalOffset: 350,0,341
+	Armament@BATF:
+		Name: batf
+		Weapon: ZoneRaiderGrenade
+	Voiced:
+		VoiceSet: ZoneRaiderVoice
+	Mobile:
+		Speed: 60
+	TargetedLeapAbility:
+		MaxDistance: 10
+		Speed: 200
+
+ENFO:
+	Inherits: ^Soldier
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Inherits@BERSERK: ^Berserk
+	Inherits@HEALINGCOOLDOWN: ^HealingCooldown
+	Buildable:
+		Queue: InfantrySQ, InfantryMQ
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 130
+		Prerequisites: ~disabled, tent, atek, ~techlevel.high
+		Description: Elite short-range front-line infantry.
+	TooltipExtras:
+		Strengths: • Strong vs Infantry, Light Armor
+		Weaknesses: • Weak vs Heavy Armor, Defenses\n• Cannot attack Aircraft
+	Valued:
+		Cost: 850
+	Tooltip:
+		Name: Enforcer
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Health:
+		HP: 22500
+	Mobile:
+		Voice: Move
+	RevealsShroud:
+		Range: 6c0
+	Armament@PRIMARY:
+		Weapon: EnforcerShotgun
+		LocalOffset: 350,0,341
+	Armament@BATF:
+		Name: batf
+		Weapon: EnforcerShotgun
+	AttackFrontal:
+		Voice: Attack
+		PauseOnCondition: being-warped
+		FacingTolerance: 0
+	AttackMove:
+		Voice: Move
+	Passenger:
+		Voice: Move
+	Guard:
+		Voice: Move
+	Voiced:
+		VoiceSet: EnforcerVoice
+	ProducibleWithLevel:
+		Prerequisites: barracks.upgraded
+	WithProductionIconOverlay:
+		Types: Veterancy
+		Prerequisites: barracks.upgraded
+	-Crushable:
+	-TakeCover:
+	WithInfantryBody:
+		IdleSequences: idle, idle2
+		StandSequences: stand, stand2
+		DefaultAttackSequence: shoot
+		RequiresCondition: !being-warped
+	WithInfantryBody@PARACHUTE:
+		StandSequences: parachute
+		RequiresCondition: parachute
+	-GrantConditionOnTerrain@ONTIB:
+	-GrantStackingCondition@TIBEXPOSED:
+	-DamagedByTerrain@TIBDAMAGE:
+	-DamagedByTintedCells@RADSTRONG:
+	-DamagedByTintedCells@RADSTRONGHAZMAT:
+	-DamagedByTintedCells@RADSTRONGHAZMATSOVIET:
+	-DamagedByTintedCells@RADMED:
+	-DamagedByTintedCells@RADMEDHAZMAT:
+	-DamagedByTintedCells@RADWEAK:
+	-DamagedByTintedCells@RADWEAKHAZMAT:
+	-GrantConditionOnPrerequisite@BIO:
+	-GrantConditionOnPrerequisite@HAZMAT:
+	-GrantConditionOnPrerequisite@HAZMATSOVIET:
+	-GrantConditionOnPrerequisite@HAZMATZOCOM:
+	-GrantCondition@HAZMAT:
+	-GrantCondition@HAZMATSOVIET:
+	-WithDecoration@HAZMAT:
+	-WithDecoration@HAZMATSOVIET:
+	-GrantConditionOnTerrain@HAZMATSOVIET:
+	-SpeedMultiplier@HAZMATSOVIET:
+	Targetable@HAZMAT:
+		-RequiresCondition:
+	WithDecoration@BINO:
+		-BlinkPatterns:

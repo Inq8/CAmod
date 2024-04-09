@@ -839,3 +839,24 @@ HeliGunAA:
 	Warhead@2Eff: CreateEffect
 		-ImpactSounds: flakhit1.aud, flakhit2.aud, flakhit3.aud
 		-ImpactSoundChance: 100
+
+EnforcerShotgun:
+	Range: 4c0
+	Report: enfo-fire1.aud, enfo-fire2.aud
+	ReloadDelay: 35
+	Projectile: InstantHit
+		Blockable: true
+	Warhead@1Dam: SpreadDamage
+		Spread: 341
+		Damage: 4500
+		Versus:
+			None: 100
+			Wood: 40
+			Light: 70
+			Heavy: 20
+			Concrete: 20
+			Brick: 10
+		DamageTypes: Prone50Percent, TriggerProne, BulletDeath
+	Warhead@2Eff: CreateEffect
+		Explosions: piffs
+		ValidTargets: Ground, Ship, Air, AirSmall, Trees
