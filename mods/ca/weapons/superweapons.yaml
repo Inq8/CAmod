@@ -413,6 +413,7 @@ Empicbm:
 		Duration: 500
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle, Air
+		InvalidTargets: EmpImmune
 	Warhead@2Smu_impact: LeaveSmudge
 		SmudgeType: Scorch-NoFlame
 	Warhead@3Smu_area: LeaveSmudge
@@ -480,16 +481,19 @@ EMPMissileLauncher:
 		Duration: 600
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle, Air
+		InvalidTargets: EmpImmune
 	Warhead@emp2: GrantExternalConditionCA
 		Range: 3c0
 		Duration: 300
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle, Air
+		InvalidTargets: EmpImmune
 	Warhead@emp3: GrantExternalConditionCA
 		Range: 4c512
 		Duration: 150
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle, Air
+		InvalidTargets: EmpImmune
 	Warhead@2Smu_impact: LeaveSmudge
 		SmudgeType: Crater
 	Warhead@3Smu_area: LeaveSmudge

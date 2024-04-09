@@ -1234,12 +1234,13 @@ EnlightenedEmp:
 		Duration: 100
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle
-		InvalidTargets: Cyborg, Defense
+		InvalidTargets: Cyborg, Defense, EmpImmune
 	Warhead@2Emp: GrantExternalConditionCA
 		Range: 0c896
 		Duration: 50
 		Condition: empdisable
 		ValidTargets: Cyborg, Defense
+		InvalidTargets: EmpImmune
 	Warhead@3Eff_impact: CreateEffect
 		Explosions: enliemphit1, enliemphit2
 		ImpactSounds: enli-emphit.aud
@@ -1982,12 +1983,13 @@ OrcaBomb:
 		Duration: 375
 		Condition: empdisable
 		ValidTargets: Ground, Structure, Vehicle
-		InvalidTargets: Defense
+		InvalidTargets: Defense, EmpImmune
 	Warhead@empdef: GrantExternalConditionCA
 		Range: 1c512
 		Duration: 625
 		Condition: empdisable
 		ValidTargets: Defense
+		InvalidTargets: EmpImmune
 
 MicrowaveZap:
 	ValidTargets: Ground, Water
@@ -2031,6 +2033,7 @@ MicrowaveZap:
 		Duration: 100
 		Condition: empdisable
 		ValidTargets: Vehicle, Defense
+		InvalidTargets: EmpImmune
 	Warhead@3Eff: CreateEffect
 		Image: microwavehit
 		Explosions: idle
@@ -2050,6 +2053,7 @@ MicrowaveZap.UPG:
 		Duration: 125
 		Condition: empdisable
 		ValidTargets: Vehicle, Defense
+		InvalidTargets: EmpImmune
 	Warhead@highlight: GrantExternalConditionCA
 		Range: 0c511
 		Duration: 2
@@ -3001,12 +3005,13 @@ ShadeEmp:
 		Duration: 325
 		Condition: empdisable
 		ValidTargets: Ground, Vehicle, Defense
-		InvalidTargets: Cyborg
+		InvalidTargets: Cyborg, EmpImmune
 	Warhead@2Emp: GrantExternalConditionCA
 		Range: 1c256
 		Duration: 125
 		Condition: empdisable
 		ValidTargets: Cyborg
+		InvalidTargets: EmpImmune
 	Warhead@3Eff_impact: CreateEffect
 		Explosions: enliemphit1, enliemphit2
 		ImpactSounds: enli-emphit.aud
