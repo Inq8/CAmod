@@ -3894,7 +3894,6 @@ SEAL:
 		Cursor: c4
 		OutsideRangeCursor: c4
 		Name: tertiary
-		PauseOnCondition: !ammo
 		RequiresCondition: !onwater
 	AmmoPool@PreparedC4:
 		Name: prepared-c4
@@ -3902,16 +3901,6 @@ SEAL:
 		InitialAmmo: 0
 		AmmoCondition: prepared
 		Armaments: secondary
-	AmmoPool@C4:
-		Name: c4
-		Ammo: 1
-		AmmoCondition: ammo
-		Armaments: secondary
-	ReloadAmmoPoolCA@C4:
-		Delay: 250 # match PlaceC4Seal ReloadDelay
-		AmmoPool: c4
-		ShowSelectionBar: true
-		SelectionBarColor: 990000
 	ReloadAmmoPoolCA@PreparedC4:
 		AmmoPool: prepared-c4
 		Delay: 100
@@ -3985,9 +3974,6 @@ SEAL:
 		DeathSequence: splash
 	WithDecoration@COMMANDOSKULL:
 		Sequence: pip-seal
-	AutoTarget:
-		-AttackAnythingCondition:
-	-AutoTargetPriority@ATTACKANYTHING:
 
 XO:
 	Inherits: ^VehicleTD-NOUPG
