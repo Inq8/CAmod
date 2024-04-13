@@ -1113,7 +1113,7 @@ HACK:
 	Mobile:
 		Speed: 60
 		Voice: Move
-		PauseOnCondition: hacking || being-warped
+		PauseOnCondition: being-warped
 		RequireForceMoveCondition: hacking
 	RevealsShroud:
 		Range: 5c0
@@ -1175,8 +1175,7 @@ HACK:
 		ControlSounds: hacker-hacked.aud
 		ControllingCondition: hacked-in
 		ProgressCondition: hacking
-		UndeployOnControl: true
-		UndeployOnInterrupt: true
+		AutoUndeploy: true
 		TargetTypeTicksToControl:
 			Structure: 300
 	WithDecoration@HACKEDIN:

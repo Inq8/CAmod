@@ -83,11 +83,8 @@ namespace OpenRA.Mods.CA.Traits
 		[Desc("Ticks taken for mind control to wear off after controller dies. Use -1 to use TicksToRevoke value.")]
 		public readonly int TicksToRevokeOnDeath = -1;
 
-		[Desc("If true, undeploy when control is gained of target.")]
-		public readonly bool UndeployOnControl = false;
-
-		[Desc("If true and TicksToControl > 0, undeploy if interrupted (e.g. if target dies).")]
-		public readonly bool UndeployOnInterrupt = false;
+		[Desc("If true, undeploy when control is gained of target, or if interrupted (e.g. if target dies).")]
+		public readonly bool AutoUndeploy = false;
 
 		[Desc("If true, slave will be released when attacking a new target.")]
 		public readonly bool ReleaseOnNewTarget = false;
@@ -205,7 +202,12 @@ namespace OpenRA.Mods.CA.Traits
 				return;
 
 			if (currentTarget.Type != TargetType.Actor)
+			{
+				if (Info.AutoUndeploy && deployTrait != null && deployTrait.DeployState == DeployState.Deployed)
+					ResolveOrder(self, new Order("Stop", self, false)); // for some reason Undeploy() doesn't work properly here
+
 				return;
+			}
 
 			if (controlTicks < currentTargetTicksToControl)
 				controlTicks++;
@@ -273,7 +275,7 @@ namespace OpenRA.Mods.CA.Traits
 				maxControlledToken = self.RevokeCondition(maxControlledToken);
 		}
 
-		void IResolveOrder.ResolveOrder(Actor self, Order order)
+		public void ResolveOrder(Actor self, Order order)
 		{
 			if (order.OrderString == "ReleaseSlave")
 			{
@@ -308,15 +310,20 @@ namespace OpenRA.Mods.CA.Traits
 			// For all other orders, if target has changed, reset progress
 			if (order.Target.Actor != currentTarget.Actor)
 			{
-				if (Info.UndeployOnInterrupt && deployTrait != null && deployTrait.DeployState == DeployState.Deployed && currentTarget.Actor != null && order.OrderString != "GrantConditionOnDeploy")
+				if (Info.AutoUndeploy && deployTrait != null && deployTrait.DeployState == DeployState.Deployed && currentTarget.Actor != null && order.OrderString != "GrantConditionOnDeploy")
 					deployTrait.Undeploy();
 
 				ResetProgress(self);
-				lastTarget = currentTarget;
-				lastTargetTicksToControl = currentTargetTicksToControl;
-				currentTarget = Target.Invalid;
-				currentTargetTicksToControl = 0;
+				ResetTarget();
 			}
+		}
+
+		void ResetTarget()
+		{
+			lastTarget = currentTarget;
+			lastTargetTicksToControl = currentTargetTicksToControl;
+			currentTarget = Target.Invalid;
+			currentTargetTicksToControl = 0;
 		}
 
 		void ResetProgress(Actor self)
@@ -452,14 +459,11 @@ namespace OpenRA.Mods.CA.Traits
 					Game.Sound.Play(SoundType.World, Info.ControlSounds.Random(self.World.SharedRandom), self.CenterPosition);
 			}
 
-			if (Info.UndeployOnControl)
-			{
-				if (deployTrait != null && deployTrait.DeployState == DeployState.Deployed)
-					deployTrait.Undeploy();
-			}
+			if (Info.AutoUndeploy && deployTrait != null && deployTrait.DeployState == DeployState.Deployed)
+				deployTrait.Undeploy();
 
 			ResetProgress(self);
-			currentTarget = Target.Invalid;
+			ResetTarget();
 		}
 
 		public void ReleaseSlaves(Actor self, int ticks)
